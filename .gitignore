@@ -54,3 +54,10 @@ profile
 **/Builds/AndroidStudio
 doxygen/doc
 extras/Projucer/JUCECompileEngine.dylib
+Builds/VisualStudio2015/Flap.vcxproj
+Builds/VisualStudio2015/Flap.vcxproj.filters
+Builds/VisualStudio2015/icon.ico
+Builds/VisualStudio2015/resources.rc
+JuceLibraryCode/BinaryData.cpp
+JuceLibraryCode/BinaryData.h
+Builds/VisualStudio2015/Flap.sln
