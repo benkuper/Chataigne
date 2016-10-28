@@ -13,6 +13,7 @@
 #include "Inspector.h"
 #include "FlapLoggerUI.h"
 #include "MainComponent.h"
+#include "InputManagerUI.h"
 
 ShapeShifterContent * ShapeShifterFactory::createContentForIndex(PanelName pn)
 {
@@ -21,18 +22,22 @@ ShapeShifterContent * ShapeShifterFactory::createContentForIndex(PanelName pn)
 	switch (pn)
 	{
 	case InputsPanel:
-		//return new AugmentaSourcesManagerUI(AugmentaSourcesManager::getInstance());
+		return new InputManagerUI(InputManager::getInstance());
+		break;
+	case OutputsPanel:
 		break;
 
 	case StateMachinePanel:
-		//return new AugmentaMergerUI(AugmentaMerger::getInstance());
+
 		break;
 
 	case TimeMachinePanel:
 		break;
 
-	case OutputsPanel:
-		//return new AugmentaOutputsManagerUI(AugmentaOutputsManager::getInstance());
+	case StatesPanel:
+		break;
+
+	case SequencesPanel:
 		break;
 
 	case InspectorPanel:

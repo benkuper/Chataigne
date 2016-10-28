@@ -9,7 +9,10 @@
  */
 
 #include "Engine.h"
-
+#include "InputManager.h"
+#include "OutputManager.h"
+#include "StateManager.h"
+#include "SequenceManager.h"
 #include "FlapLogger.h"
 #include "PresetManager.h"
 #include "StringUtil.h"
@@ -31,8 +34,9 @@ Engine::Engine():FileBasedDocument (filenameSuffix,
 
 Engine::~Engine(){
 
-	//delete managers
-
+//delete managers
+  
+InputManager::deleteInstance();
 
   PresetManager::deleteInstance();
   FlapLogger::deleteInstance();

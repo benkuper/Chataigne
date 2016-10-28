@@ -284,7 +284,7 @@ void ShapeShifterManager::loadDefaultLayoutFile()
 	File defaultFile = File::getSpecialLocation(File::SpecialLocationType::userDocumentsDirectory).getChildFile(flapSubFolder + "/default." + flapLayoutExtension);
 	if (defaultFile.exists())
 	{
-		loadLayoutFromFile();
+		loadLayoutFromFile(defaultFile);
 	} else
 	{
 		//String defaultLayoutFileData = String::fromUTF8(BinaryData::default_flaplayout);
