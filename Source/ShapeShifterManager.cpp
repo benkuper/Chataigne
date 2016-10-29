@@ -18,13 +18,13 @@ ShapeShifterManager::ShapeShifterManager() :
 	mainContainer(ShapeShifterContainer::Direction::VERTICAL),
 	currentCandidatePanel(nullptr)
 {
-
+	lastFile = File::getSpecialLocation(File::SpecialLocationType::userDocumentsDirectory).getChildFile(flapSubFolder + "/_lastSession." + flapLayoutExtension);
 }
 
 ShapeShifterManager::~ShapeShifterManager()
 {
 	openedWindows.clear();
-	File lastFile = File::getSpecialLocation(File::SpecialLocationType::userDocumentsDirectory).getChildFile(flapSubFolder+"/ _lastSession."+flapLayoutExtension);
+	
 	saveCurrentLayoutToFile(lastFile);
 
 }
@@ -268,7 +268,6 @@ void ShapeShifterManager::loadLayoutFromFile(const File & fromFile)
 
 void ShapeShifterManager::loadLastSessionLayoutFile()
 {
-	File lastFile = File::getSpecialLocation(File::SpecialLocationType::userDocumentsDirectory).getChildFile(flapSubFolder+"/_lastSession."+flapLayoutExtension);
 	if (lastFile.exists())
 	{
 		loadLayoutFromFile(lastFile);

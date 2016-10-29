@@ -57,14 +57,10 @@ void StateEditor::resized()
 	nameUI->setBounds(h);
 }
 
+
 void StateEditor::controllableFeedbackUpdateInternal(Controllable * c)
 {
-	if (c == item->editorPosition)
-	{
-		DBG(item->editorPosition->getPoint().toString());
-		Point<int> r = Point<int>(getParentComponent()->getWidth(),getParentComponent()->getHeight());
-		setTopLeftPosition((item->editorPosition->getPoint()*r).toInt());
-	}
+	if (c == item->editorPosition) stateEditorListeners.call(&StateEditor::Listener::editorGrabbed, this);
 }
 
 //GRABBER

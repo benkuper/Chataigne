@@ -23,6 +23,9 @@ public:
 	StateManager();
 	~StateManager();
 
+
+	State * addItem(const Point<float> &initialPosition);
+
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(StateManager)
 };
 

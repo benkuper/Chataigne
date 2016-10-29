@@ -25,6 +25,7 @@ public:
 
 	ShapeShifterContainer mainContainer;
 
+	File lastFile;
 	const String flapLayoutExtension = "flaplayout";
 	const String flapSubFolder = "Flap/layouts";
 

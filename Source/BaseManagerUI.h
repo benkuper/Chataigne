@@ -37,15 +37,17 @@ public:
 	virtual void paint(Graphics &g) override;
 	virtual void resized() override;
 	
+	virtual void addItemFromMenu();
+
 	virtual U * addItemUI(T * item);
+	virtual void addItemUIInternal(U *) {}
 	virtual void removeItemUI(T * item);
+	virtual void removeItemUIInternal(U *) {}
+
 	U * getUIForItem(T * item);
 
 	void itemAdded(BaseItem * item) override;
 	void itemRemoved(BaseItem * item) override;
-
-	virtual void itemAddedInternal(T * ) {}
-	virtual void itemRemovedInternal(T * ) {}
 
 
 };
@@ -83,7 +85,7 @@ void BaseManagerUI<M, T, U>::mouseDown(const MouseEvent & e)
 			switch (result)
 			{
 			case 1:
-				manager->addItem();
+				addItemFromMenu();
 				break;
 			}
 		}
@@ -109,11 +111,18 @@ void BaseManagerUI<M, T, U>::resized()
 }
 
 template<class M, class T, class U>
+inline void BaseManagerUI<M, T, U>::addItemFromMenu()
+{
+	manager->BaseManager<T>::addItem();
+}
+
+template<class M, class T, class U>
 U * BaseManagerUI<M, T, U>::addItemUI(T * item)
 {
 	U * tui = new U(item);
 	itemsUI.add(tui);
 	addAndMakeVisible(static_cast<BaseItemUI<T>*>(tui));
+	addItemUIInternal(tui);
 	resized();
 
 	return tui;
@@ -126,6 +135,7 @@ void BaseManagerUI<M, T, U>::removeItemUI(T * item)
 	if (tui == nullptr) return;
 
 	removeChildComponent(static_cast<BaseItemUI<T>*>(tui));
+	removeItemUIInternal(tui);
 	itemsUI.removeObject(tui);
 	resized();
 }
@@ -141,14 +151,12 @@ template<class M, class T, class U>
 void BaseManagerUI<M, T, U>::itemAdded(BaseItem * item)
 {
 	addItemUI(static_cast<T*>(item));
-	itemAddedInternal(static_cast<T*>(item));
 }
 
 template<class M, class T, class U>
 void BaseManagerUI<M, T, U>::itemRemoved(BaseItem * item)
 {
 	removeItemUI(static_cast<T*>(item));
-	itemRemovedInternal(static_cast<T*>(item));
 }
 
 

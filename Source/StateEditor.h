@@ -48,6 +48,17 @@ public:
 
 	Grabber grabber;
 
+	class Listener
+	{
+	public:
+		virtual ~Listener() {}
+		virtual void editorGrabbed(StateEditor *) {}
+	};
+
+	ListenerList<Listener> stateEditorListeners;
+	void addStateEditorListener(Listener* newListener) { stateEditorListeners.add(newListener); }
+	void removeStateEditorListener(Listener* listener) { stateEditorListeners.remove(listener); }
+
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(StateEditor)
 };
 
