@@ -11,7 +11,7 @@
 #include "StateManagerUI.h"
 
 StateManagerUI::StateManagerUI(StateManager * _manager) :
-	BaseManagerUI<StateManager, State, StateUI>("States", _manager)
+	BaseManagerShapeShifterUI<StateManager, State, StateUI>("States", _manager)
 {
 	addItemText = "Add State";
 }

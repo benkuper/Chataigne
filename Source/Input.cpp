@@ -12,9 +12,9 @@
 
 Input::Input() :
 	BaseItem("Input")
-  {
-  }
+{
+}
 
-  Input::~Input()
-  {
-  }
+Input::~Input()
+{
+}

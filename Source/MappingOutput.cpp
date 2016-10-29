@@ -9,3 +9,12 @@
 */
 
 #include "MappingOutput.h"
+
+MappingOutput::MappingOutput() :
+	BaseItem("MappingOutput")
+{
+}
+
+MappingOutput::~MappingOutput()
+{
+}

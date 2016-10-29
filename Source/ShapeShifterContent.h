@@ -14,12 +14,13 @@
 #include "JuceHeader.h"//keep
 #include "InspectableComponent.h"
 
-class ShapeShifterContent : public InspectableComponent
+class ShapeShifterContent
 {
 public:
-	ShapeShifterContent(const String &_contentName);
+	ShapeShifterContent(Component * contentComponent, const String &_contentName);
 	virtual ~ShapeShifterContent();
 
+	Component * contentComponent;
 	String contentName;
 
 	bool contentIsFlexible;
@@ -29,5 +30,17 @@ public:
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ShapeShifterContent)
 };
 
+//Helper class if child class doesn't need to inherit a subclass of Component
+class ShapeShifterContentComponent :
+	public Component,
+	public ShapeShifterContent
+{
+public:
+	ShapeShifterContentComponent(const String &contentName) :
+		ShapeShifterContent(this, contentName)
+	{
+
+	}
+};
 
 #endif  // SHAPESHIFTERCONTENT_H_INCLUDED

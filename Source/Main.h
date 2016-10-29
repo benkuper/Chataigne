@@ -40,6 +40,7 @@ public:
 	ScopedPointer<ApplicationProperties> appProperties;
 	ScopedPointer<Engine> engine;
 
+	
 	const String getApplicationName() override { return ProjectInfo::projectName; }
 	const String getApplicationVersion() override { return ProjectInfo::versionString; }
 	bool moreThanOneInstanceAllowed() override { return true; }
@@ -102,6 +103,7 @@ OpenGLContext * getOpenGLContext() { return &getApp().mainWindow->openGLContext;
 ApplicationProperties& getAppProperties() { return *getApp().appProperties; }
 ApplicationCommandManager& getCommandManager() { return getApp().commandManager; }
 FlapApplication::MainWindow * getMainWindow() { return getApp().mainWindow; }
+Engine & getEngine() { return *getApp().engine; }
 //==============================================================================
 // This macro generates the main() routine that launches the app.
 START_JUCE_APPLICATION(FlapApplication)

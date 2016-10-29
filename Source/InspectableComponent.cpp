@@ -23,7 +23,10 @@ InspectableComponent::InspectableComponent(ControllableContainer * relatedContai
 	canInspectChildContainersBeyondRecursion(true),
 	isSelected(false),
 	repaintOnSelectionChanged(true),
-	bringToFrontOnSelect(true)
+	bringToFrontOnSelect(true),
+	autoDrawHighlightWhenSelected(true),
+	rounderCornerSize(4),
+	autoSelectWithChildRespect(true)
 {
 }
 
@@ -35,6 +38,38 @@ InspectableComponent::~InspectableComponent()
 InspectorEditor * InspectableComponent::getEditor()
 {
 	return new GenericControllableContainerEditor(this);
+}
+
+void InspectableComponent::mouseDown(const MouseEvent & e)
+{
+	if (autoSelectWithChildRespect)
+	{
+		Component * c = e.eventComponent;
+
+		bool foundAChildComponent = false;
+		while (c != this)
+		{
+			InspectableComponent * ie = dynamic_cast<InspectableComponent *>(c);
+			if (ie != nullptr)
+			{
+				foundAChildComponent = true;
+				break;
+			}
+			c = c->getParentComponent();
+		}
+
+		DBG(relatedControllableContainer->niceName << " found a child component ? " << String(foundAChildComponent));
+		if (!foundAChildComponent) selectThis();
+	}
+}
+
+void InspectableComponent::paintOverChildren(Graphics & g)
+{
+	if (autoDrawHighlightWhenSelected && isSelected)
+	{
+		g.setColour(HIGHLIGHT_COLOR);
+		g.drawRoundedRectangle(getLocalBounds().toFloat(), rounderCornerSize, 1);
+	}
 }
 
 void InspectableComponent::selectThis()

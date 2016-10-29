@@ -9,3 +9,14 @@
 */
 
 #include "MappingOutputUI.h"
+
+MappingOutputUI::MappingOutputUI(MappingOutput * input) :
+	BaseItemUI<MappingOutput>(input)
+{
+
+}
+
+MappingOutputUI::~MappingOutputUI()
+{
+
+}

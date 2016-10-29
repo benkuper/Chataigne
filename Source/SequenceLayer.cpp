@@ -9,3 +9,12 @@
 */
 
 #include "SequenceLayer.h"
+
+SequenceLayer::SequenceLayer() :
+	BaseItem("SequenceLayer")
+{
+}
+
+SequenceLayer::~SequenceLayer()
+{
+}

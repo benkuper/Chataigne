@@ -13,6 +13,39 @@
 
 //#include "GitSha.h"
 
+FlapLoggerUI::FlapLoggerUI(const String &contentName, FlapLogger * l) :
+	logger(l),
+	ShapeShifterContentComponent(contentName),
+	logList(this),
+	maxNumElement(500),
+	totalLogRow(0)
+{
+	logger->addLogListener(this);
+	TableHeaderComponent * thc = new TableHeaderComponent();
+	thc->addColumn("Time", 1, 60);
+	thc->addColumn("Source", 2, 80);
+	thc->addColumn("Content", 3, 400);
+
+
+	logListComponent = new TableListBox("FlapLogger", &logList);
+	logListComponent->setRowHeight(13);
+	logListComponent->setHeaderHeight(20);
+	logListComponent->getViewport()->setScrollBarThickness(10);
+
+	logListComponent->setColour(TableListBox::backgroundColourId, BG_COLOR);
+	logListComponent->setHeader(thc);
+	addAndMakeVisible(logListComponent);
+
+	LOG("F.L.A.P. v" + String(ProjectInfo::versionString));
+
+	LOG("please provide logFile for any bug report :\nlogFile in " + l->fileWriter.getFilePath());
+
+	clearB.setButtonText("Clear");
+	clearB.addListener(this);
+	addAndMakeVisible(clearB);
+
+}
+
 
 void FlapLoggerUI::newMessage(const String & s)
 {
@@ -59,38 +92,6 @@ void FlapLoggerUI::handleAsyncUpdate(){
     repaint();
 }
 
-FlapLoggerUI::FlapLoggerUI(const String &contentName, FlapLogger * l) :
-logger(l),
-ShapeShifterContent(contentName),
-logList(this),
-maxNumElement(500),
-totalLogRow(0)
-{
-    logger->addLogListener(this);
-    TableHeaderComponent * thc = new TableHeaderComponent();
-    thc->addColumn("Time", 1, 60);
-    thc->addColumn("Source", 2, 80);
-    thc->addColumn("Content", 3, 400);
-
-
-    logListComponent = new TableListBox("FlapLogger", &logList);
-    logListComponent->setRowHeight(13);
-    logListComponent->setHeaderHeight(20);
-    logListComponent->getViewport()->setScrollBarThickness(10);
-
-    logListComponent->setColour(TableListBox::backgroundColourId, BG_COLOR);
-    logListComponent->setHeader(thc);
-    addAndMakeVisible(logListComponent);
-
-    LOG("F.L.A.P. v" + String(ProjectInfo::versionString));
-
-    LOG("please provide logFile for any bug report :\nlogFile in " + l->fileWriter.getFilePath());
-
-    clearB.setButtonText("Clear");
-    clearB.addListener(this);
-    addAndMakeVisible(clearB);
-
-}
 
 FlapLoggerUI::~FlapLoggerUI() {
 

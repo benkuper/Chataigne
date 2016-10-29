@@ -9,3 +9,15 @@
 */
 
 #include "ActionUI.h"
+
+
+ActionUI::ActionUI(Action * input) :
+	BaseItemUI<Action>(input)
+{
+
+}
+
+ActionUI::~ActionUI()
+{
+
+}

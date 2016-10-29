@@ -9,3 +9,18 @@
 */
 
 #include "Action.h"
+
+
+Action::Action() :
+	BaseItem("Action")
+{
+}
+
+Action::~Action()
+{
+}
+
+void Action::onContainerParameterChangedInternal(Parameter * p)
+{
+	if (p == enabled) actionListeners.call(&Action::ActionListener::actionEnableChanged,this);
+}

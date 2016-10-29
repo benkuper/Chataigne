@@ -13,6 +13,8 @@
 
 
 #include "BaseItem.h"
+#include "ActionManager.h"
+#include "MappingManager.h"
 
 class State :
 	public BaseItem
@@ -23,6 +25,9 @@ public:
 
 	//UI
 	Point2DParameter * editorPosition;
+
+	ActionManager am;
+	MappingManager mm;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(State)
 };

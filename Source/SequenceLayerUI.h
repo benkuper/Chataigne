@@ -12,6 +12,20 @@
 #define SEQUENCELAYERUI_H_INCLUDED
 
 
+#include "BaseItemUI.h"
+#include "SequenceLayer.h"
+
+class SequenceLayerUI :
+	public BaseItemUI<SequenceLayer>
+{
+public:
+	SequenceLayerUI(SequenceLayer *);
+	virtual ~SequenceLayerUI();
+
+	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(SequenceLayerUI)
+};
+
+
 
 
 

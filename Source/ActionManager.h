@@ -12,6 +12,34 @@
 #define ACTIONMANAGER_H_INCLUDED
 
 
+#include "BaseManager.h"
+#include "Action.h"
+class ActionManager :
+	public BaseManager<Action>,
+	public Action::ActionListener
+{
+public:
+	juce_DeclareSingleton(ActionManager, true)
+
+	ActionManager();
+	~ActionManager();
+
+	class Listener
+	{
+	public:
+		virtual ~Listener() {}
+		virtual void actionEnableChanged(Action *) {}
+		virtual void actionValidationChanged(Action *) {}
+		virtual void actionActivationChanged(Action *) {}
+	};
+
+	ListenerList<Listener> actionManagerListeners;
+	void addActionManagerListener(Listener* newListener) { actionManagerListeners.add(newListener); }
+	void removeActionManagerListener(Listener* listener) { actionManagerListeners.remove(listener); }
+
+	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ActionManager)
+
+};
 
 
 

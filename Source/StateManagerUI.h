@@ -13,11 +13,11 @@
 
 
 #include "StateManager.h"
-#include "BaseManagerUI.h"
+#include "BaseManagerShapeShifterUI.h"
 #include "StateUI.h"
 
 class StateManagerUI :
-	public BaseManagerUI<StateManager, State, StateUI>
+	public BaseManagerShapeShifterUI<StateManager, State, StateUI>
 {
 public:
 	StateManagerUI(StateManager *_manager);

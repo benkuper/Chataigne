@@ -9,3 +9,14 @@
 */
 
 #include "MappingFilterManager.h"
+
+juce_ImplementSingleton(MappingFilterManager)
+
+MappingFilterManager::MappingFilterManager() :
+	BaseManager<MappingFilter>("MappingFilters")
+{
+}
+
+MappingFilterManager::~MappingFilterManager()
+{
+}

@@ -9,3 +9,14 @@
 */
 
 #include "MappingOutputManager.h"
+
+juce_ImplementSingleton(MappingOutputManager)
+
+MappingOutputManager::MappingOutputManager() :
+	BaseManager<MappingOutput>("MappingOutputs")
+{
+}
+
+MappingOutputManager::~MappingOutputManager()
+{
+}

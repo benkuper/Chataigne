@@ -9,3 +9,12 @@
 */
 
 #include "Mapping.h"
+
+Mapping::Mapping() :
+	BaseItem("Mapping")
+{
+}
+
+Mapping::~Mapping()
+{
+}

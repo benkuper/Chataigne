@@ -26,6 +26,7 @@ public :
 	virtual void clear() {}
 
 	void onContainerParameterChanged(Parameter *) override;
+	virtual void onContainerParameterChangedInternal(Parameter *) {} //child classes override this function
 	void childAddressChanged(ControllableContainer *) override;
 
 	class  Listener

@@ -9,3 +9,13 @@
 */
 
 #include "MappingManagerUI.h"
+
+MappingManagerUI::MappingManagerUI(MappingManager * _manager) :
+	BaseManagerUI<MappingManager, Mapping, MappingUI>("Mappings", _manager)
+{
+	addItemText = "Add Mapping";
+}
+
+MappingManagerUI::~MappingManagerUI()
+{
+}

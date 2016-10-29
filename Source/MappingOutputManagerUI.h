@@ -13,6 +13,22 @@
 
 
 
+#include "BaseManagerUI.h"
+#include "MappingOutputUI.h"
+#include "MappingOutputManager.h"
+
+class MappingOutputManagerUI :
+	public BaseManagerUI<MappingOutputManager, MappingOutput, MappingOutputUI>
+{
+public:
+
+	MappingOutputManagerUI(MappingOutputManager *_manager);
+	~MappingOutputManagerUI();
+
+	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MappingOutputManagerUI)
+};
+
+
 
 
 #endif  // MAPPINGOUTPUTMANAGERUI_H_INCLUDED

@@ -12,6 +12,19 @@
 #define MAPPINGUI_H_INCLUDED
 
 
+#include "BaseItemUI.h"
+#include "Mapping.h"
+
+class MappingUI :
+	public BaseItemUI<Mapping>
+{
+public:
+	MappingUI(Mapping *);
+	virtual ~MappingUI();
+
+	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MappingUI)
+};
+
 
 
 

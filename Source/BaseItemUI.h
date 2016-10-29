@@ -34,7 +34,6 @@ public:
 	ScopedPointer<BoolToggleUI> enabledBT;
 	ScopedPointer<ImageButton> removeBT;
 
-	virtual void mouseDown(const MouseEvent &e);
 	virtual void paint(Graphics &g) override;
 	virtual void resized() override;
 
@@ -79,20 +78,13 @@ BaseItemUI<T>::~BaseItemUI()
 	removeBT->removeListener(this);
 }
 
-template<class T>
-inline void BaseItemUI<T>::mouseDown(const MouseEvent & e)
-{
-	if(e.mods.isLeftButtonDown()) selectThis();
-}
 
 template<class T>
 void BaseItemUI<T>::paint(Graphics &g)
 {
 	Rectangle<float> r = getLocalBounds().toFloat();
 	g.setColour(getBaseItem()->enabled->boolValue()?BG_COLOR.brighter(.1f):BG_COLOR.darker(.1f));
-	g.fillRoundedRectangle(r, 2);
-	g.setColour(isSelected ? HIGHLIGHT_COLOR : BG_COLOR.brighter(.2f));
-	g.drawRoundedRectangle(r, 2, 2);
+	g.fillRoundedRectangle(r, 4);
 }
 
 template<class T>

@@ -12,6 +12,18 @@
 #define SEQUENCELAYER_H_INCLUDED
 
 
+#include "BaseItem.h"
+
+class SequenceLayer :
+	public BaseItem
+{
+public:
+	SequenceLayer();
+	virtual ~SequenceLayer();
+
+	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(SequenceLayer)
+};
+
 
 
 

@@ -19,6 +19,7 @@
 #include "StateManagerUI.h"
 #include "StateMachineView.h"
 #include "TimeMachineView.h"
+#include "Outliner.h"
 
 ShapeShifterContent * ShapeShifterFactory::createContentForIndex(PanelName pn)
 {
@@ -57,6 +58,9 @@ ShapeShifterContent * ShapeShifterFactory::createContentForIndex(PanelName pn)
 	case LoggerPanel:
 		return new FlapLoggerUI(contentName, FlapLogger::getInstance());
 		break;
+
+	case OutlinerPanel:
+		return new Outliner("Outliner");
 
 
 	default:

@@ -9,3 +9,13 @@
 */
 
 #include "Consequence.h"
+
+
+Consequence::Consequence() :
+	BaseItem("Consequence")
+{
+}
+
+Consequence::~Consequence()
+{
+}

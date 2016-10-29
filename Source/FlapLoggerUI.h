@@ -15,7 +15,8 @@
 #include "ShapeShifterContent.h"
 #include "DebugHelpers.h"
 
-class FlapLoggerUI : public ShapeShifterContent,
+class FlapLoggerUI : 
+	public ShapeShifterContentComponent,
 	public FlapLogger::Listener,
 	public TextButton::Listener,
 public AsyncUpdater

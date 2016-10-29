@@ -23,8 +23,8 @@
 #define TEXT_COLOR      Colour(0xffCCCCCC)
 #define TEXTNAME_COLOR  Colour(0xff999999)
 
-#define AUDIO_COLOR     Colours::cadetblue
-#define DATA_COLOR      Colours::pink
+#define ACTION_COLOR     Colours::cadetblue
+#define MAPPING_COLOR      Colours::pink
 
 #define FEEDBACK_COLOR		Colour(0xff18b5ef)
 #define PARAMETER_FRONT_COLOR Colour(0xff99ff66)

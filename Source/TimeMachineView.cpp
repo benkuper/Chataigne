@@ -11,7 +11,7 @@
 #include "TimeMachineView.h"
 
 TimeMachineView::TimeMachineView(SequenceManager * _manager) :
-	ShapeShifterContent("Time Machine"),
+	ShapeShifterContent(this, "Time Machine"),
 	manager(_manager)
   {
   }

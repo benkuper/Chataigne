@@ -12,11 +12,11 @@
 #define OUTPUTMANAGERUI_H_INCLUDED
 
 #include "OutputManager.h"
-#include "BaseManagerUI.h"
+#include "BaseManagerShapeShifterUI.h"
 #include "OutputUI.h"
 
 class OutputManagerUI :
-	public BaseManagerUI<OutputManager, Output, OutputUI>
+	public BaseManagerShapeShifterUI<OutputManager, Output, OutputUI>
 {
 public:
 	OutputManagerUI(OutputManager *_manager);

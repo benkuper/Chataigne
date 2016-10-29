@@ -12,6 +12,18 @@
 #define MAPPING_H_INCLUDED
 
 
+#include "BaseItem.h"
+
+class Mapping :
+	public BaseItem
+{
+public:
+	Mapping();
+	virtual ~Mapping();
+
+	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Mapping)
+};
+
 
 
 

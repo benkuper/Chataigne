@@ -9,3 +9,58 @@
 */
 
 #include "ConditionManager.h"
+
+juce_ImplementSingleton(ConditionManager)
+
+ConditionManager::ConditionManager() :
+	BaseManager<Condition>("Conditions")
+{
+}
+
+ConditionManager::~ConditionManager()
+{
+}
+
+void ConditionManager::conditionEnableChanged(Condition * c)
+{
+}
+
+void ConditionManager::conditionValidationChanged(Condition * c)
+{
+}
+
+void ConditionManager::conditionActivationChanged(Condition * c)
+{
+}
+
+bool ConditionManager::areAllConditionActive()
+{
+	for (auto &c : items)
+	{
+		if (!c->enabled->boolValue()) continue;
+		if (!c->isActive->boolValue()) return false;
+	}
+
+	return true;
+}
+
+int ConditionManager::getNumEnabledConditions()
+{
+	int result = 0;
+	for (auto &c : items)
+	{
+		if (c->enabled->boolValue()) result++;
+	}
+	return result;
+}
+
+int ConditionManager::getNumActivatedConditions()
+{
+	int result = 0;
+	for (auto &c : items)
+	{
+		if (!c->enabled->boolValue()) continue;
+		if (c->isActive->boolValue()) result++;
+	}
+	return result;
+}

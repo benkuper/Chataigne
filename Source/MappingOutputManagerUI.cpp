@@ -9,3 +9,14 @@
 */
 
 #include "MappingOutputManagerUI.h"
+
+
+MappingOutputManagerUI::MappingOutputManagerUI(MappingOutputManager * _manager) :
+	BaseManagerUI<MappingOutputManager, MappingOutput, MappingOutputUI>("MappingOutputs", _manager)
+{
+	addItemText = "Add Output";
+}
+
+MappingOutputManagerUI::~MappingOutputManagerUI()
+{
+}

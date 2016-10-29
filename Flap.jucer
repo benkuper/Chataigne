@@ -12,6 +12,10 @@
       <FILE id="ayG8rv" name="removeBT.png" compile="0" resource="1" file="Resources/removeBT.png"/>
     </GROUP>
     <GROUP id="{31908E9E-F626-E2D6-1A6D-E188C9D72C25}" name="Source">
+      <GROUP id="{9130C4F6-2D12-F02B-4A47-874447AF8B3F}" name="Outliner">
+        <FILE id="xUR4bA" name="Outliner.cpp" compile="1" resource="0" file="Source/Outliner.cpp"/>
+        <FILE id="oIJhug" name="Outliner.h" compile="0" resource="0" file="Source/Outliner.h"/>
+      </GROUP>
       <GROUP id="{4B3FD114-4268-0636-928E-6A41D74C7361}" name="Common">
         <FILE id="wew3ZW" name="ProgressNotifier.cpp" compile="1" resource="0"
               file="Source/ProgressNotifier.cpp"/>
@@ -101,6 +105,10 @@
             <FILE id="uxthfU" name="PresetManager.h" compile="0" resource="0" file="Source/PresetManager.h"/>
           </GROUP>
           <GROUP id="{3494DD39-F8EC-9CF3-17FC-56FA55DD23A4}" name="ui">
+            <FILE id="YwlcrS" name="ControllableEditor.cpp" compile="1" resource="0"
+                  file="Source/ControllableEditor.cpp"/>
+            <FILE id="cnZPJJ" name="ControllableEditor.h" compile="0" resource="0"
+                  file="Source/ControllableEditor.h"/>
             <FILE id="wNZfnz" name="ControllableUI.cpp" compile="1" resource="0"
                   file="Source/ControllableUI.cpp"/>
             <FILE id="u3COj5" name="ControllableUI.h" compile="0" resource="0"
@@ -152,6 +160,8 @@
           <GROUP id="{9CFD8ABC-B151-C9B1-3170-F337A2876DE7}" name="Manager">
             <GROUP id="{04523331-54D0-EF5C-9ECA-C42754582F66}" name="ui">
               <FILE id="jCyMQj" name="BaseItemUI.h" compile="0" resource="0" file="Source/BaseItemUI.h"/>
+              <FILE id="nHZFTl" name="BaseManagerShapeShifterUI.h" compile="0" resource="0"
+                    file="Source/BaseManagerShapeShifterUI.h"/>
               <FILE id="xKEcR5" name="BaseManagerUI.h" compile="0" resource="0" file="Source/BaseManagerUI.h"/>
             </GROUP>
             <FILE id="pNWqED" name="BaseManager.h" compile="0" resource="0" file="Source/BaseManager.h"/>

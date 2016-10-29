@@ -56,7 +56,7 @@ void ShapeShifterPanel::setCurrentContent(ShapeShifterContent * _content)
 	{
 		ShapeShifterPanelTab * tab = header.getTabForContent(currentContent);
 		if(tab != nullptr) tab->setSelected(false);
-		removeChildComponent(currentContent);
+		removeChildComponent(currentContent->contentComponent);
 		currentContent->contentIsShown = false;
 	}
 
@@ -68,7 +68,7 @@ void ShapeShifterPanel::setCurrentContent(ShapeShifterContent * _content)
 		ShapeShifterPanelTab * tab = header.getTabForContent(currentContent);
 		if (tab != nullptr) tab->setSelected(true);
 
-		addAndMakeVisible(currentContent);
+		addAndMakeVisible(currentContent->contentComponent);
 
 		currentContent->contentIsShown = true;
 	}
@@ -128,7 +128,7 @@ void ShapeShifterPanel::resized()
 	header.setBounds(r.removeFromTop(headerHeight));
 	if (currentContent != nullptr)
 	{
-		currentContent->setBounds(r);
+		currentContent->contentComponent->setBounds(r);
 	}
 }
 

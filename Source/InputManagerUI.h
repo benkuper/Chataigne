@@ -11,12 +11,12 @@
 #ifndef INPUTMANAGERUI_H_INCLUDED
 #define INPUTMANAGERUI_H_INCLUDED
 
-#include "BaseManagerUI.h"
+#include "BaseManagerShapeShifterUI.h"
 #include "InputUI.h"
 #include "InputManager.h"
 
 class InputManagerUI :
-	public BaseManagerUI<InputManager,Input, InputUI>
+	public BaseManagerShapeShifterUI<InputManager,Input, InputUI>
 {
 public:
 

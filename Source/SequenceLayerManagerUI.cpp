@@ -9,3 +9,14 @@
 */
 
 #include "SequenceLayerManagerUI.h"
+
+
+SequenceLayerManagerUI::SequenceLayerManagerUI(SequenceLayerManager * _manager) :
+	BaseManagerUI<SequenceLayerManager, SequenceLayer, SequenceLayerUI>("SequenceLayers", _manager)
+{
+	addItemText = "Add Layer";
+}
+
+SequenceLayerManagerUI::~SequenceLayerManagerUI()
+{
+}

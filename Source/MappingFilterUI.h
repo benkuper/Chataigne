@@ -12,6 +12,19 @@
 #define MAPPINGFILTERUI_H_INCLUDED
 
 
+#include "BaseItemUI.h"
+#include "MappingFilter.h"
+
+class MappingFilterUI :
+	public BaseItemUI<MappingFilter>
+{
+public:
+	MappingFilterUI(MappingFilter *);
+	virtual ~MappingFilterUI();
+
+	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MappingFilterUI)
+};
+
 
 
 

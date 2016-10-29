@@ -34,6 +34,8 @@ void BaseItem::onContainerParameterChanged(Parameter * p)
 	{
 		setNiceName(nameParam->stringValue());
 	}
+
+	onContainerParameterChangedInternal(p);;
 }
 
 void BaseItem::childAddressChanged(ControllableContainer *)

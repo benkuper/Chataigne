@@ -9,3 +9,14 @@
 */
 
 #include "SequenceLayerManager.h"
+
+juce_ImplementSingleton(SequenceLayerManager)
+
+SequenceLayerManager::SequenceLayerManager() :
+	BaseManager<SequenceLayer>("SequenceLayers")
+{
+}
+
+SequenceLayerManager::~SequenceLayerManager()
+{
+}

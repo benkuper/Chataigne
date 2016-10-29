@@ -11,6 +11,18 @@
 #ifndef CONDITIONUI_H_INCLUDED
 #define CONDITIONUI_H_INCLUDED
 
+#include "BaseItemUI.h"
+#include "Condition.h"
+
+class ConditionUI :
+	public BaseItemUI<Condition>
+{
+public:
+	ConditionUI(Condition *);
+	virtual ~ConditionUI();
+
+	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ConditionUI)
+};
 
 
 

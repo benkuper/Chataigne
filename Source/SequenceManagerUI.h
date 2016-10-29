@@ -13,11 +13,11 @@
 
 
 #include "SequenceManager.h"
-#include "BaseManagerUI.h"
+#include "BaseManagerShapeShifterUI.h"
 #include "SequenceUI.h"
 
 class SequenceManagerUI :
-	public BaseManagerUI<SequenceManager, Sequence, SequenceUI>
+	public BaseManagerShapeShifterUI<SequenceManager, Sequence, SequenceUI>
 {
 public:
 	SequenceManagerUI(SequenceManager *_manager);

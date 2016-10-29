@@ -16,6 +16,7 @@
 #include "Style.h"
 
 class TimeMachineView :
+	public Component,
 	public ShapeShifterContent
 {
 public:

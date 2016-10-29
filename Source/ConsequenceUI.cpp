@@ -9,3 +9,14 @@
 */
 
 #include "ConsequenceUI.h"
+
+ConsequenceUI::ConsequenceUI(Consequence * input) :
+	BaseItemUI<Consequence>(input)
+{
+
+}
+
+ConsequenceUI::~ConsequenceUI()
+{
+
+}

@@ -13,6 +13,22 @@
 
 
 
+#include "BaseManagerUI.h"
+#include "MappingUI.h"
+#include "MappingManager.h"
+
+class MappingManagerUI :
+	public BaseManagerUI<MappingManager, Mapping, MappingUI>
+{
+public:
+
+	MappingManagerUI(MappingManager *_manager);
+	~MappingManagerUI();
+
+	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MappingManagerUI)
+};
+
+
 
 
 #endif  // MAPPINGMANAGERUI_H_INCLUDED

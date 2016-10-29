@@ -12,6 +12,18 @@
 #define MAPPINGFILTER_H_INCLUDED
 
 
+#include "BaseItem.h"
+
+class MappingFilter :
+	public BaseItem
+{
+public:
+	MappingFilter();
+	virtual ~MappingFilter();
+
+	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MappingFilter)
+};
+
 
 
 

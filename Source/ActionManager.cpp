@@ -9,3 +9,15 @@
 */
 
 #include "ActionManager.h"
+
+
+juce_ImplementSingleton(ActionManager)
+
+ActionManager::ActionManager() :
+	BaseManager<Action>("Actions")
+{
+}
+
+ActionManager::~ActionManager()
+{
+}

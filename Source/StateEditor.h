@@ -13,7 +13,8 @@
 
 #include "BaseItemUI.h"
 #include "State.h"
-
+#include "ActionManagerUI.h"
+#include "MappingManagerUI.h"
 
 
 class StateEditor :
@@ -26,6 +27,9 @@ public:
 	const int grabberHeight = 10;
 	const int headerHeight = 15;
 	const int headerGap = 5;
+
+	ActionManagerUI amui;
+	MappingManagerUI mmui;
 
 	//interaction
 	Point<float> posAtMouseDown;
@@ -46,7 +50,15 @@ public:
 		JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Grabber)
 	};
 
+	class Resizer : public ResizableCornerComponent
+	{
+	public:
+		Resizer(Component * targetComponent) : ResizableCornerComponent(targetComponent, nullptr) {}
+		~Resizer() {}
+	};
+
 	Grabber grabber;
+	ResizableCornerComponent resizer;
 
 	class Listener
 	{

@@ -342,9 +342,9 @@ void ControllableContainer::updateChildrenControlAddress()
 
 }
 
-Array<Controllable*> ControllableContainer::getAllControllables(bool recursive,bool getNotExposed)
+Array<WeakReference<Controllable>> ControllableContainer::getAllControllables(bool recursive,bool getNotExposed)
 {
-  Array<Controllable*> result;
+  Array<WeakReference<Controllable>> result;
   for (auto &c : controllables)
   {
     if (getNotExposed || c->isControllableExposed) result.add(c);
@@ -642,10 +642,10 @@ var ControllableContainer::getJSONData()
   var paramsData;
 
 
-  Array<Controllable *> cont = ControllableContainer::getAllControllables(saveAndLoadRecursiveData, true);
+  Array<WeakReference<Controllable>> cont = ControllableContainer::getAllControllables(saveAndLoadRecursiveData, true);
 
   for (auto &c : cont) {
-    Parameter * base = dynamic_cast<Parameter*>(c);
+    Parameter * base = dynamic_cast<Parameter*>(c.get());
     if (base )
     {
       if(base->isSavable){
@@ -655,7 +655,7 @@ var ControllableContainer::getJSONData()
         paramsData.append(pData);
       }
     }
-    else if (dynamic_cast<Trigger*>(c) != nullptr) {
+    else if (dynamic_cast<Trigger*>(c.get()) != nullptr) {
 
     }
     else {

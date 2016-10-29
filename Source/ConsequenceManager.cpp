@@ -9,3 +9,15 @@
 */
 
 #include "ConsequenceManager.h"
+
+
+juce_ImplementSingleton(ConsequenceManager)
+
+ConsequenceManager::ConsequenceManager() :
+	BaseManager<Consequence>("Consequences")
+{
+}
+
+ConsequenceManager::~ConsequenceManager()
+{
+}

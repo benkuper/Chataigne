@@ -21,14 +21,23 @@
 const char* const filenameSuffix = ".flap";
 const char* const filenameWildcard = "*.flap";
 
-Engine::Engine():FileBasedDocument (filenameSuffix,
+Engine::Engine():
+	FileBasedDocument (filenameSuffix,
                                     filenameWildcard,
                                     "Load a Flap Document",
-                                    "Save a Flap Document"){
+                                    "Save a Flap Document"),
+	ControllableContainer("Root")
+{
   
+  skipControllableNameInAddress = true;
+
   //to move into engine
   Logger::setCurrentLogger(FlapLogger::getInstance());
 
+  addChildControllableContainer(InputManager::getInstance());
+  addChildControllableContainer(OutputManager::getInstance());
+  addChildControllableContainer(StateManager::getInstance());
+  addChildControllableContainer(SequenceManager::getInstance());
 }
 
 

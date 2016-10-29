@@ -9,3 +9,16 @@
 */
 
 #include "ConditionUI.h"
+
+
+
+ConditionUI::ConditionUI(Condition * input) :
+	BaseItemUI<Condition>(input)
+{
+
+}
+
+ConditionUI::~ConditionUI()
+{
+
+}

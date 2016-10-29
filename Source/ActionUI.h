@@ -12,6 +12,20 @@
 #define ACTIONUI_H_INCLUDED
 
 
+#include "BaseItemUI.h"
+#include "Action.h"
+
+class ActionUI :
+	public BaseItemUI<Action>
+{
+public:
+	ActionUI(Action *);
+	virtual ~ActionUI();
+
+	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ActionUI)
+};
+
+
 
 
 

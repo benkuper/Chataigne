@@ -12,6 +12,21 @@
 #define ACTIONMANAGERUI_H_INCLUDED
 
 
+#include "ActionUI.h"
+#include "BaseManagerUI.h"
+#include "ActionManager.h"
+
+class ActionManagerUI :
+	public BaseManagerUI<ActionManager, Action, ActionUI>
+{
+public:
+
+	ActionManagerUI(ActionManager *_manager);
+	~ActionManagerUI();
+
+	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ActionManagerUI)
+};
+
 
 
 

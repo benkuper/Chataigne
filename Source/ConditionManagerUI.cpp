@@ -9,3 +9,14 @@
 */
 
 #include "ConditionManagerUI.h"
+
+
+ConditionManagerUI::ConditionManagerUI(ConditionManager * _manager) :
+	BaseManagerUI<ConditionManager, Condition, ConditionUI>("Conditions", _manager)
+{
+	addItemText = "Add Condition";
+}
+
+ConditionManagerUI::~ConditionManagerUI()
+{
+}

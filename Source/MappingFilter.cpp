@@ -9,3 +9,12 @@
 */
 
 #include "MappingFilter.h"
+
+MappingFilter::MappingFilter() :
+	BaseItem("MappingFilter")
+{
+}
+
+MappingFilter::~MappingFilter()
+{
+}

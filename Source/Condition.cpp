@@ -9,3 +9,17 @@
 */
 
 #include "Condition.h"
+
+Condition::Condition() :
+	BaseItem("Condition")
+{
+	isActive = addBoolParameter("Is Active", "Where the condition passed the test or not.", false);
+	isActive->isEditable = false;
+
+	isValid = addBoolParameter("Is Valid", "Whether the condition is well parametered and can be processed.", false);
+	isValid->isEditable = false;
+}
+
+Condition::~Condition()
+{
+}

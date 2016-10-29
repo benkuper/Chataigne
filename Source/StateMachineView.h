@@ -15,11 +15,11 @@
 
 #include "StateManager.h"
 #include "StateEditor.h"
-#include "BaseManagerUI.h"
+#include "BaseManagerShapeShifterUI.h"
 #include "Style.h"
 
 class StateMachineView :
-	public BaseManagerUI<StateManager,State,StateEditor>,
+	public BaseManagerShapeShifterUI<StateManager,State,StateEditor>,
 	public StateEditor::Listener
 {
 public:
@@ -39,7 +39,6 @@ public:
 	bool keyPressed(const KeyPress &e) override;
 
 	void paint(Graphics &g) override;
-	void paintOverChildren(Graphics &g) override;
 	void resized() override;
 	
 	

@@ -17,10 +17,14 @@
 
 #include "DebugHelpers.h"
 #include "ProgressNotifier.h"
-class AudioFucker;
+#include "ControllableContainer.h"
 
 
-class Engine:public FileBasedDocument,AsyncUpdater,public ProgressNotifier
+class Engine:
+	public ControllableContainer,
+	public FileBasedDocument,
+	AsyncUpdater,
+	public ProgressNotifier
 {
 public:
     Engine();

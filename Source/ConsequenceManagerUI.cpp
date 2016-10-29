@@ -9,3 +9,13 @@
 */
 
 #include "ConsequenceManagerUI.h"
+
+ConsequenceManagerUI::ConsequenceManagerUI(ConsequenceManager * _manager) :
+	BaseManagerUI<ConsequenceManager, Consequence, ConsequenceUI>("Consequences", _manager)
+{
+	addItemText = "Add Consequence";
+}
+
+ConsequenceManagerUI::~ConsequenceManagerUI()
+{
+}

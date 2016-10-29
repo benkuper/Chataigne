@@ -34,7 +34,14 @@ public:
 	bool canInspectChildContainersBeyondRecursion;
 
 	bool repaintOnSelectionChanged;
+	bool autoDrawHighlightWhenSelected;
+	bool autoSelectWithChildRespect;
 	bool bringToFrontOnSelect;
+
+	void mouseDown(const MouseEvent &e) override;
+
+	float rounderCornerSize;
+	virtual void paintOverChildren(Graphics &g) override;
 
 	bool isSelected;
 	virtual void selectThis();
@@ -42,6 +49,7 @@ public:
 
 	virtual void setSelectedInternal(bool value); //to be overriden
 
+	
 public:
 	//Listener
 	class  InspectableListener

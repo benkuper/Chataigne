@@ -74,7 +74,7 @@ public:
 
     OwnedArray<Controllable,CriticalSection> controllables;
     Array<WeakReference<ControllableContainer>  > controllableContainers;
-    ControllableContainer * parentContainer;
+    WeakReference<ControllableContainer> parentContainer;
 
 	void addParameter(Parameter * p);
     FloatParameter * addFloatParameter(const String &niceName, const String &description, const float &initialValue, const float &minValue = 0, const float &maxValue = 1, const bool &enabled = true);
@@ -110,7 +110,7 @@ public:
     void updateChildrenControlAddress();
 
 
-    virtual Array<Controllable *> getAllControllables(bool recursive = false, bool getNotExposed = false);
+    virtual Array<WeakReference<Controllable>> getAllControllables(bool recursive = false, bool getNotExposed = false);
     virtual Array<Parameter *> getAllParameters(bool recursive = false, bool getNotExposed = false);
     virtual Controllable * getControllableForAddress(String addressSplit, bool recursive = true, bool getNotExposed = false);
     virtual Controllable * getControllableForAddress(StringArray addressSplit, bool recursive = true, bool getNotExposed = false);

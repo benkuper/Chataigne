@@ -17,6 +17,8 @@ DoubleSliderUI::DoubleSliderUI(Point2DParameter * parameter) :
 	xSlider(&xParam), ySlider(&yParam),
 	p2d(parameter)
 {
+	xParam.defaultValue = 0;
+	yParam.defaultValue = 0;
 	xParam.addAsyncCoalescedListener(this);
 	yParam.addAsyncCoalescedListener(this);
 

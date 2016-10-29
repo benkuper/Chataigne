@@ -12,7 +12,7 @@
 #include "AssetManager.h"
 
 StateMachineView::StateMachineView(StateManager * _manager) :
-	BaseManagerUI("State Machine", _manager),
+	BaseManagerShapeShifterUI("State Machine", _manager),
 	manager(_manager)
 {
 	addItemText = "Add State";
@@ -84,15 +84,6 @@ void StateMachineView::paint(Graphics & g)
 	
 }
 
-void StateMachineView::paintOverChildren(Graphics & g)
-{
-	if (isSelected)
-	{
-		g.setColour(HIGHLIGHT_COLOR);
-		g.drawRect(getLocalBounds(), 1);
-	}
-}
-
 void StateMachineView::resized()
 {
 	Rectangle<int> r = getLocalBounds();
@@ -108,7 +99,7 @@ void StateMachineView::updateEditorPosition(StateEditor * se)
 	Point<int> pe = getSize()*se->item->editorPosition->getPoint();
 	pe += getSize() / 2; //position at center of window
 	pe += viewOffset;
-	se->setCentrePosition(pe.x,pe.y);
+	se->setTopLeftPosition(pe.x,pe.y);
 }
 
 void StateMachineView::addItemFromMenu()

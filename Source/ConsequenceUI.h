@@ -12,6 +12,20 @@
 #define CONSEQUENCEUI_H_INCLUDED
 
 
+#include "BaseItemUI.h"
+#include "Consequence.h"
+
+class ConsequenceUI :
+	public BaseItemUI<Consequence>
+{
+public:
+	ConsequenceUI(Consequence *);
+	virtual ~ConsequenceUI();
+
+	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ConsequenceUI)
+};
+
+
 
 
 

@@ -9,3 +9,14 @@
 */
 
 #include "MappingManager.h"
+
+juce_ImplementSingleton(MappingManager)
+
+MappingManager::MappingManager() :
+	BaseManager<Mapping>("Mappings")
+{
+}
+
+MappingManager::~MappingManager()
+{
+}

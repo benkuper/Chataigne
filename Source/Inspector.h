@@ -58,9 +58,9 @@ public:
 
 };
 
-class InspectorViewport : public ShapeShifterContent, public Inspector::InspectorListener {
+class InspectorViewport : public ShapeShifterContentComponent, public Inspector::InspectorListener {
 public:
-	InspectorViewport(const String &contentName, Inspector * _inspector) :inspector(_inspector), ShapeShifterContent(contentName)
+	InspectorViewport(const String &contentName, Inspector * _inspector) :inspector(_inspector), ShapeShifterContentComponent(contentName)
 	{
 		vp.setViewedComponent(inspector, false);
 		vp.setScrollBarsShown(true, false);

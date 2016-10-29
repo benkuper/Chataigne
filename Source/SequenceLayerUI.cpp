@@ -9,3 +9,14 @@
 */
 
 #include "SequenceLayerUI.h"
+
+SequenceLayerUI::SequenceLayerUI(SequenceLayer * input) :
+	BaseItemUI<SequenceLayer>(input)
+{
+
+}
+
+SequenceLayerUI::~SequenceLayerUI()
+{
+
+}

@@ -12,9 +12,9 @@
 
 
 InputManagerUI::InputManagerUI(InputManager * _manager) :
-	BaseManagerUI<InputManager,Input,InputUI>("Inputs", _manager)
+	BaseManagerShapeShifterUI<InputManager,Input,InputUI>("Inputs", _manager)
 {
-	addItemText = "Add Source";
+	addItemText = "Add Input";
 }
 
 InputManagerUI::~InputManagerUI()

@@ -9,3 +9,15 @@
 */
 
 #include "MappingUI.h"
+
+
+MappingUI::MappingUI(Mapping * input) :
+	BaseItemUI<Mapping>(input)
+{
+
+}
+
+MappingUI::~MappingUI()
+{
+
+}

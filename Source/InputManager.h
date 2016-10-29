@@ -13,6 +13,7 @@
 
 #include "BaseManager.h"
 #include "Input.h"
+
 class InputManager :
 	public BaseManager<Input>
 {
@@ -25,4 +26,6 @@ public:
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(InputManager)
 
 };
+
+
 #endif  // INPUTMANAGER_H_INCLUDED
