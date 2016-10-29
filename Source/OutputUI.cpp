@@ -9,3 +9,12 @@
 */
 
 #include "OutputUI.h"
+
+OutputUI::OutputUI(Output * output) :
+	BaseItemUI<Output>(output)
+{
+}
+
+OutputUI::~OutputUI()
+{
+}

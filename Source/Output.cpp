@@ -9,3 +9,12 @@
 */
 
 #include "Output.h"
+
+Output::Output() :
+	BaseItem("Output")
+  {
+  }
+
+  Output::~Output()
+  {
+  }

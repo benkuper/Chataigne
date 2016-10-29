@@ -9,3 +9,14 @@
 */
 
 #include "StateManager.h"
+
+juce_ImplementSingleton(StateManager)
+
+StateManager::StateManager() :
+	BaseManager<State>("States")
+{
+}
+
+StateManager::~StateManager()
+{
+}

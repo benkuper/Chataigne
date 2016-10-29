@@ -19,9 +19,14 @@ public :
 	BaseItem(const String &name = "baseItem");
 	virtual ~BaseItem();
 
-	
+	BoolParameter * enabled;
+	StringParameter * nameParam;
+
 	void remove();
 	virtual void clear() {}
+
+	void onContainerParameterChanged(Parameter *) override;
+	void childAddressChanged(ControllableContainer *) override;
 
 	class  Listener
 	{

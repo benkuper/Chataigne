@@ -11,7 +11,19 @@
 #ifndef OUTPUTMANAGERUI_H_INCLUDED
 #define OUTPUTMANAGERUI_H_INCLUDED
 
+#include "OutputManager.h"
+#include "BaseManagerUI.h"
+#include "OutputUI.h"
 
+class OutputManagerUI :
+	public BaseManagerUI<OutputManager, Output, OutputUI>
+{
+public:
+	OutputManagerUI(OutputManager *_manager);
+	~OutputManagerUI();
+
+	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(OutputManagerUI)
+};
 
 
 

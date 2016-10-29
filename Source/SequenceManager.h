@@ -12,6 +12,22 @@
 #define SEQUENCEMANAGER_H_INCLUDED
 
 
+#include "BaseManager.h"
+#include "Sequence.h"
+
+class SequenceManager :
+	public BaseManager<Sequence>
+{
+public:
+	juce_DeclareSingleton(SequenceManager, false)
+
+		SequenceManager();
+	~SequenceManager();
+
+	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(SequenceManager)
+};
+
+
 
 
 

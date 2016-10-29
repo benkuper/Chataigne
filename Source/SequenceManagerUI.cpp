@@ -9,3 +9,13 @@
 */
 
 #include "SequenceManagerUI.h"
+
+SequenceManagerUI::SequenceManagerUI(SequenceManager * _manager) :
+	BaseManagerUI<SequenceManager, Sequence, SequenceUI>("Sequences", _manager)
+{
+	addItemText = "Add Sequence";
+}
+
+SequenceManagerUI::~SequenceManagerUI()
+{
+}

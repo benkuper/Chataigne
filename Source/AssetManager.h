@@ -20,6 +20,7 @@ public:
 	AssetManager();
 	virtual ~AssetManager();
 
+	Image getGridImage();
 	ImageButton * getRemoveBT();
 	ImageButton * getConfigBT();
 

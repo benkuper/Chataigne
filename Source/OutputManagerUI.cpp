@@ -9,3 +9,13 @@
 */
 
 #include "OutputManagerUI.h"
+
+OutputManagerUI::OutputManagerUI(OutputManager * _manager) :
+	BaseManagerUI<OutputManager,Output,OutputUI>("Outputs",_manager)
+{
+	addItemText = "Add Output";
+}
+
+OutputManagerUI::~OutputManagerUI()
+{
+}

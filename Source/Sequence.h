@@ -11,6 +11,18 @@
 #ifndef SEQUENCE_H_INCLUDED
 #define SEQUENCE_H_INCLUDED
 
+#include "BaseItem.h"
+
+class Sequence :
+	public BaseItem
+{
+public:
+	Sequence();
+	virtual ~Sequence();
+
+
+	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Sequence)
+};
 
 
 

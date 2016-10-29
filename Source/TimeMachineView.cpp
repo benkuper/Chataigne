@@ -9,3 +9,18 @@
 */
 
 #include "TimeMachineView.h"
+
+TimeMachineView::TimeMachineView(SequenceManager * _manager) :
+	ShapeShifterContent("Time Machine"),
+	manager(_manager)
+  {
+  }
+
+TimeMachineView::~TimeMachineView()
+{
+}
+
+void TimeMachineView::paint(Graphics & g)
+{
+	g.fillAll(BG_COLOR.darker(.3f));
+}

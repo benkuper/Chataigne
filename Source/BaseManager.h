@@ -67,8 +67,10 @@ T * BaseManager<T>::addItem()
 {
 	T * item = new T();
 	items.add(item);
-	addChildControllableContainer(static_cast<ControllableContainer *>(item));
-	static_cast<BaseItem *>(item)->addBaseItemListener(this);
+	BaseItem * bi = static_cast<BaseItem *>(item);
+	addChildControllableContainer(bi);
+	bi->nameParam->setValue(bi->niceName);
+	bi->addBaseItemListener(this);
 	baseManagerListeners.call(&BaseManager::Listener::itemAdded, item);
 	return item;
 }
@@ -77,8 +79,9 @@ template<class T>
 void BaseManager<T>::removeItem(T * item)
 {
 	items.removeObject(item, false);
-	removeChildControllableContainer(static_cast<ControllableContainer *>(item));
-	static_cast<BaseItem *>(item)->removeBaseItemListener(this);
+	BaseItem * bi = static_cast<BaseItem *>(item);
+	removeChildControllableContainer(bi);
+	bi->removeBaseItemListener(this);
 	baseManagerListeners.call(&BaseManager::Listener::itemRemoved, item);
 	delete item;
 }

@@ -9,3 +9,11 @@
 */
 
 #include "StateUI.h"
+StateUI::StateUI(State * state) :
+	BaseItemUI<State>(state)
+{
+}
+
+StateUI::~StateUI()
+{
+}

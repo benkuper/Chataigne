@@ -12,6 +12,11 @@ AssetManager::~AssetManager()
 
 }
 
+Image AssetManager::getGridImage()
+{
+	return ImageCache::getFromMemory(BinaryData::removeBT_png, BinaryData::removeBT_pngSize);
+}
+
 ImageButton * AssetManager::getRemoveBT()
 {
 	Image removeImage = ImageCache::getFromMemory(BinaryData::removeBT_png, BinaryData::removeBT_pngSize);

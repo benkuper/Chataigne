@@ -191,6 +191,9 @@ Controllable * ControllableContainer::getControllableByName(const String & name,
 
 void ControllableContainer::addChildControllableContainer(ControllableContainer * container)
 {
+ 
+  String targetName = getUniqueNameInContainer(container->niceName);
+  container->setNiceName(targetName);
 
   controllableContainers.add(container);
   container->addControllableContainerListener(this);

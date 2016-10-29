@@ -14,6 +14,11 @@
 #include "FlapLoggerUI.h"
 #include "MainComponent.h"
 #include "InputManagerUI.h"
+#include "OutputManagerUI.h"
+#include "SequenceManagerUI.h"
+#include "StateManagerUI.h"
+#include "StateMachineView.h"
+#include "TimeMachineView.h"
 
 ShapeShifterContent * ShapeShifterFactory::createContentForIndex(PanelName pn)
 {
@@ -25,20 +30,25 @@ ShapeShifterContent * ShapeShifterFactory::createContentForIndex(PanelName pn)
 		return new InputManagerUI(InputManager::getInstance());
 		break;
 	case OutputsPanel:
+		return new OutputManagerUI(OutputManager::getInstance());
 		break;
 
 	case StateMachinePanel:
-
+		return new StateMachineView(StateManager::getInstance());
 		break;
 
 	case TimeMachinePanel:
+		return new TimeMachineView(SequenceManager::getInstance());
 		break;
 
 	case StatesPanel:
+		return new StateManagerUI(StateManager::getInstance());
 		break;
 
 	case SequencesPanel:
+		return new SequenceManagerUI(SequenceManager::getInstance());
 		break;
+
 
 	case InspectorPanel:
 		return new InspectorViewport(contentName, Inspector::getInstance());

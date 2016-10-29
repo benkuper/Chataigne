@@ -30,19 +30,23 @@ public:
 	
 	//ui
 	String addItemText;
-	int itemHeight = 15;
+	int itemHeight = 20;
 	int gap = 2;
 
 	virtual void mouseDown(const MouseEvent &e) override;
 	virtual void paint(Graphics &g) override;
 	virtual void resized() override;
-
-	virtual void addItemUI(T * item);
+	
+	virtual U * addItemUI(T * item);
 	virtual void removeItemUI(T * item);
 	U * getUIForItem(T * item);
 
 	void itemAdded(BaseItem * item) override;
 	void itemRemoved(BaseItem * item) override;
+
+	virtual void itemAddedInternal(T * ) {}
+	virtual void itemRemovedInternal(T * ) {}
+
 
 };
 
@@ -51,6 +55,7 @@ BaseManagerUI<M, T, U>::BaseManagerUI(const String &contentName, M * _manager) :
 	ShapeShifterContent(contentName),
 	manager(_manager)
 {
+	relatedControllableContainer = static_cast<ControllableContainer *>(manager);
 	static_cast<BaseManager<T>*>(manager)->addBaseManagerListener(this);
 	addItemText = "Add Item";
 }
@@ -65,7 +70,10 @@ BaseManagerUI<M, T, U>::~BaseManagerUI()
 template<class M, class T, class U>
 void BaseManagerUI<M, T, U>::mouseDown(const MouseEvent & e)
 {
-	if (e.mods.isRightButtonDown())
+	if (e.mods.isLeftButtonDown())
+	{
+		selectThis();
+	} else if (e.mods.isRightButtonDown())
 	{
 		PopupMenu p;
 		p.addItem(1, addItemText);
@@ -79,7 +87,7 @@ void BaseManagerUI<M, T, U>::mouseDown(const MouseEvent & e)
 				break;
 			}
 		}
-	}
+	} 
 }
 
 template<class M, class T, class U>
@@ -101,12 +109,14 @@ void BaseManagerUI<M, T, U>::resized()
 }
 
 template<class M, class T, class U>
-void BaseManagerUI<M, T, U>::addItemUI(T * item)
+U * BaseManagerUI<M, T, U>::addItemUI(T * item)
 {
 	U * tui = new U(item);
 	itemsUI.add(tui);
 	addAndMakeVisible(static_cast<BaseItemUI<T>*>(tui));
 	resized();
+
+	return tui;
 }
 
 template<class M, class T, class U>
@@ -131,12 +141,15 @@ template<class M, class T, class U>
 void BaseManagerUI<M, T, U>::itemAdded(BaseItem * item)
 {
 	addItemUI(static_cast<T*>(item));
+	itemAddedInternal(static_cast<T*>(item));
 }
 
 template<class M, class T, class U>
 void BaseManagerUI<M, T, U>::itemRemoved(BaseItem * item)
 {
 	removeItemUI(static_cast<T*>(item));
+	itemRemovedInternal(static_cast<T*>(item));
 }
+
 
 #endif  // BASEMANAGERUI_H_INCLUDED

@@ -12,6 +12,18 @@
 #define STATEUI_H_INCLUDED
 
 
+#include "BaseItemUI.h"
+#include "State.h"
+
+class StateUI :
+	public BaseItemUI<State>
+{
+public:
+	StateUI(State * output);
+	virtual ~StateUI();
+
+	JUCE_DECLARE_NON_COPYABLE(StateUI)
+};
 
 
 

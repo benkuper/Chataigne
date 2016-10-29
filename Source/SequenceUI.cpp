@@ -9,3 +9,12 @@
 */
 
 #include "SequenceUI.h"
+
+SequenceUI::SequenceUI(Sequence * sequence) :
+	BaseItemUI<Sequence>(sequence)
+{
+}
+
+SequenceUI::~SequenceUI()
+{
+}

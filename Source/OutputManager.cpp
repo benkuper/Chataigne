@@ -9,3 +9,14 @@
 */
 
 #include "OutputManager.h"
+
+juce_ImplementSingleton(OutputManager)
+
+OutputManager::OutputManager() :
+	BaseManager<Output>("Outputs")
+{
+}
+
+OutputManager::~OutputManager()
+{
+}

@@ -9,3 +9,13 @@
 */
 
 #include "State.h"
+
+State::State() :
+	BaseItem("State")
+{
+	editorPosition = addPoint2DParameter("Position", "Position in State Machine view");
+}
+
+State::~State()
+{
+}

@@ -13,8 +13,10 @@
 InputUI::InputUI(Input * input) :
 	BaseItemUI<Input>(input)
 {
+	
 }
 
 InputUI::~InputUI()
 {
+
 }

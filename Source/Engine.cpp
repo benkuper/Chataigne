@@ -36,7 +36,10 @@ Engine::~Engine(){
 
 //delete managers
   
-InputManager::deleteInstance();
+  InputManager::deleteInstance();
+  OutputManager::deleteInstance();
+  StateManager::deleteInstance();
+  SequenceManager::deleteInstance();
 
   PresetManager::deleteInstance();
   FlapLogger::deleteInstance();

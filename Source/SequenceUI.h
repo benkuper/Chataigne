@@ -11,6 +11,20 @@
 #ifndef SEQUENCEUI_H_INCLUDED
 #define SEQUENCEUI_H_INCLUDED
 
+#include "BaseItemUI.h"
+#include "Sequence.h"
+
+class SequenceUI :
+	public BaseItemUI<Sequence>
+{
+public:
+	SequenceUI(Sequence * output);
+	virtual ~SequenceUI();
+
+	JUCE_DECLARE_NON_COPYABLE(SequenceUI)
+};
+
+
 
 
 

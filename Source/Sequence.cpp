@@ -9,3 +9,11 @@
 */
 
 #include "Sequence.h"
+Sequence::Sequence() :
+	BaseItem("Sequence")
+{
+}
+
+Sequence::~Sequence()
+{
+}
