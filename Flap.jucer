@@ -203,6 +203,9 @@
                     file="Source/ConditionManager.h"/>
             </GROUP>
             <GROUP id="{0A23E296-656D-518E-2323-EACB0750AC2B}" name="ui">
+              <FILE id="SUmLL9" name="ActionEditor.cpp" compile="1" resource="0"
+                    file="Source/ActionEditor.cpp"/>
+              <FILE id="roKvPP" name="ActionEditor.h" compile="0" resource="0" file="Source/ActionEditor.h"/>
               <FILE id="VIZtUo" name="ActionManagerUI.cpp" compile="1" resource="0"
                     file="Source/ActionManagerUI.cpp"/>
               <FILE id="l77mVH" name="ActionManagerUI.h" compile="0" resource="0"
@@ -346,8 +349,8 @@
                   file="Source/TransitionManager.h"/>
           </GROUP>
           <GROUP id="{96196884-0BE6-CF6D-F72B-E2E96115246B}" name="ui">
-            <FILE id="EPh5uD" name="StateEditor.cpp" compile="1" resource="0" file="Source/StateEditor.cpp"/>
-            <FILE id="PNDmkW" name="StateEditor.h" compile="0" resource="0" file="Source/StateEditor.h"/>
+            <FILE id="EPh5uD" name="StateViewUI.cpp" compile="1" resource="0" file="Source/StateViewUI.cpp"/>
+            <FILE id="PNDmkW" name="StateViewUI.h" compile="0" resource="0" file="Source/StateViewUI.h"/>
             <FILE id="KluOf6" name="StateMachineView.cpp" compile="1" resource="0"
                   file="Source/StateMachineView.cpp"/>
             <FILE id="HzXSHJ" name="StateMachineView.h" compile="0" resource="0"

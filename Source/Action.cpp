@@ -14,6 +14,8 @@
 Action::Action() :
 	BaseItem("Action")
 {
+	addChildControllableContainer(&cdm);
+	addChildControllableContainer(&csm);
 }
 
 Action::~Action()

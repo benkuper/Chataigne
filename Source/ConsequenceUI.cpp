@@ -13,6 +13,7 @@
 ConsequenceUI::ConsequenceUI(Consequence * input) :
 	BaseItemUI<Consequence>(input)
 {
+	autoSelectWithChildRespect = false;
 
 }
 

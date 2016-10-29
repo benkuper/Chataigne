@@ -58,7 +58,7 @@ void InspectableComponent::mouseDown(const MouseEvent & e)
 			c = c->getParentComponent();
 		}
 
-		DBG(relatedControllableContainer->niceName << " found a child component ? " << String(foundAChildComponent));
+		//DBG(relatedControllableContainer->niceName << " found a child component ? " << String(foundAChildComponent));
 		if (!foundAChildComponent) selectThis();
 	}
 }
@@ -68,7 +68,7 @@ void InspectableComponent::paintOverChildren(Graphics & g)
 	if (autoDrawHighlightWhenSelected && isSelected)
 	{
 		g.setColour(HIGHLIGHT_COLOR);
-		g.drawRoundedRectangle(getLocalBounds().toFloat(), rounderCornerSize, 1);
+		g.drawRoundedRectangle(getLocalBounds().toFloat(), rounderCornerSize, 2);
 	}
 }
 

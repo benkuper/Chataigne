@@ -90,11 +90,11 @@ void StateMachineView::resized()
 
 	for (auto &tui : itemsUI)
 	{
-		updateEditorPosition(tui);
+		updateViewUIPosition(tui);
 	}
 }
 
-void StateMachineView::updateEditorPosition(StateEditor * se)
+void StateMachineView::updateViewUIPosition(StateViewUI * se)
 {
 	Point<int> pe = getSize()*se->item->editorPosition->getPoint();
 	pe += getSize() / 2; //position at center of window
@@ -143,18 +143,18 @@ void StateMachineView::frameView()
 	repaint();
 }
 
-void StateMachineView::addItemUIInternal(StateEditor * se)
+void StateMachineView::addItemUIInternal(StateViewUI * se)
 {
-	se->addStateEditorListener(this);
+	se->addStateViewUIListener(this);
 }
 
-void StateMachineView::removeItemUIInternal(StateEditor * se)
+void StateMachineView::removeItemUIInternal(StateViewUI * se)
 {
-	se->removeStateEditorListener(this);
+	se->removeStateViewUIListener(this);
 }
 
-void StateMachineView::editorGrabbed(StateEditor * se)
+void StateMachineView::editorGrabbed(StateViewUI * se)
 {
-	updateEditorPosition(se);
+	updateViewUIPosition(se);
 }
 

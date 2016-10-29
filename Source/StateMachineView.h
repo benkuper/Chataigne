@@ -14,13 +14,13 @@
 #pragma warning(disable:4244 4100 4305)
 
 #include "StateManager.h"
-#include "StateEditor.h"
+#include "StateViewUI.h"
 #include "BaseManagerShapeShifterUI.h"
 #include "Style.h"
 
 class StateMachineView :
-	public BaseManagerShapeShifterUI<StateManager,State,StateEditor>,
-	public StateEditor::Listener
+	public BaseManagerShapeShifterUI<StateManager,State,StateViewUI>,
+	public StateViewUI::Listener
 {
 public:
 	StateMachineView(StateManager * _manager);
@@ -42,7 +42,7 @@ public:
 	void resized() override;
 	
 	
-	void updateEditorPosition(StateEditor * se);
+	void updateViewUIPosition(StateViewUI * se);
 
 	void addItemFromMenu() override;
 	
@@ -53,9 +53,9 @@ public:
 	void homeView();
 	void frameView();
 
-	void addItemUIInternal(StateEditor * se) override;
-	void removeItemUIInternal(StateEditor * se) override;
-	void editorGrabbed(StateEditor * se) override;
+	void addItemUIInternal(StateViewUI * se) override;
+	void removeItemUIInternal(StateViewUI * se) override;
+	void editorGrabbed(StateViewUI * se) override;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(StateMachineView)
 };

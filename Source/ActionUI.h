@@ -22,6 +22,9 @@ public:
 	ActionUI(Action *);
 	virtual ~ActionUI();
 
+
+	InspectorEditor * getEditor() override;
+
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ActionUI)
 };
 

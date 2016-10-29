@@ -40,6 +40,5 @@ void BaseItem::onContainerParameterChanged(Parameter * p)
 
 void BaseItem::childAddressChanged(ControllableContainer *)
 {
-	DBG("here");
 	nameParam->setValue(niceName);
 }

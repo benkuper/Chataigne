@@ -1,16 +1,16 @@
 /*
   ==============================================================================
 
-    StateEditor.cpp
+    StateViewUI.cpp
     Created: 28 Oct 2016 8:27:57pm
     Author:  bkupe
 
   ==============================================================================
 */
 
-#include "StateEditor.h"
+#include "StateViewUI.h"
 
-StateEditor::StateEditor(State * state) :
+StateViewUI::StateViewUI(State * state) :
 	BaseItemUI<State>(state),
 	amui(&state->am),
 	mmui(&state->mm),
@@ -30,11 +30,11 @@ StateEditor::StateEditor(State * state) :
 	addAndMakeVisible(&resizer);
 }
 
-StateEditor::~StateEditor()
+StateViewUI::~StateViewUI()
 {
 }
 
-void StateEditor::mouseDown(const MouseEvent & e)
+void StateViewUI::mouseDown(const MouseEvent & e)
 {
 	BaseItemUI<State>::mouseDown(e);
 
@@ -44,7 +44,7 @@ void StateEditor::mouseDown(const MouseEvent & e)
 	}
 }
 
-void StateEditor::mouseDrag(const MouseEvent & e)
+void StateViewUI::mouseDrag(const MouseEvent & e)
 {
 	if (e.mods.isLeftButtonDown() && e.eventComponent == &grabber)
 	{
@@ -53,7 +53,7 @@ void StateEditor::mouseDrag(const MouseEvent & e)
 	}
 }
 
-void StateEditor::resized()
+void StateViewUI::resized()
 {
 	Rectangle<int> r = getLocalBounds().reduced(2);
 
@@ -86,14 +86,14 @@ void StateEditor::resized()
 }
 
 
-void StateEditor::controllableFeedbackUpdateInternal(Controllable * c)
+void StateViewUI::controllableFeedbackUpdateInternal(Controllable * c)
 {
-	if (c == item->editorPosition) stateEditorListeners.call(&StateEditor::Listener::editorGrabbed, this);
+	if (c == item->editorPosition) stateEditorListeners.call(&StateViewUI::Listener::editorGrabbed, this);
 }
 
 //GRABBER
 
-void StateEditor::Grabber::paint(Graphics & g)
+void StateViewUI::Grabber::paint(Graphics & g)
 {
 	Rectangle<int> r = getLocalBounds();
 	g.setColour(BG_COLOR.brighter(.2f));

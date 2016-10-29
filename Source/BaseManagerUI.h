@@ -69,9 +69,13 @@ BaseManagerUI<M, T, U>::BaseManagerUI(const String & contentName, M * _manager) 
 	bgColor(BG_COLOR),
 	managerUIName(contentName)
 {
-	relatedControllableContainer = static_cast<ControllableContainer *>(manager);
-	static_cast<BaseManager<T>*>(manager)->addBaseManagerListener(this);
 	addItemText = "Add Item";
+	relatedControllableContainer = static_cast<ControllableContainer *>(manager);
+
+	BaseManager<T>* baseM = static_cast<BaseManager<T>*>(manager);
+	baseM->addBaseManagerListener(this);
+	//add existing items
+	for (auto &t : baseM->items) addItemUI(t);
 }
 
 

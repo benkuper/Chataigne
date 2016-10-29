@@ -9,7 +9,7 @@
 */
 
 #include "ActionUI.h"
-
+#include "ActionEditor.h"
 
 ActionUI::ActionUI(Action * input) :
 	BaseItemUI<Action>(input)
@@ -20,4 +20,9 @@ ActionUI::ActionUI(Action * input) :
 ActionUI::~ActionUI()
 {
 
+}
+
+InspectorEditor * ActionUI::getEditor()
+{
+	return new ActionEditor(this);
 }

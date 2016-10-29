@@ -15,6 +15,7 @@
 ConditionUI::ConditionUI(Condition * input) :
 	BaseItemUI<Condition>(input)
 {
+	autoSelectWithChildRespect = false;
 
 }
 

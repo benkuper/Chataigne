@@ -21,15 +21,15 @@ ConditionManager::~ConditionManager()
 {
 }
 
-void ConditionManager::conditionEnableChanged(Condition * c)
+void ConditionManager::conditionEnableChanged(Condition *)
 {
 }
 
-void ConditionManager::conditionValidationChanged(Condition * c)
+void ConditionManager::conditionValidationChanged(Condition *)
 {
 }
 
-void ConditionManager::conditionActivationChanged(Condition * c)
+void ConditionManager::conditionActivationChanged(Condition *)
 {
 }
 

@@ -1,15 +1,15 @@
 /*
   ==============================================================================
 
-    StateEditor.h
+    StateViewUI.h
     Created: 28 Oct 2016 8:27:57pm
     Author:  bkupe
 
   ==============================================================================
 */
 
-#ifndef STATEEDITOR_H_INCLUDED
-#define STATEEDITOR_H_INCLUDED
+#ifndef STATEVIEWUI_H_INCLUDED
+#define STATEVIEWUI_H_INCLUDED
 
 #include "BaseItemUI.h"
 #include "State.h"
@@ -17,12 +17,12 @@
 #include "MappingManagerUI.h"
 
 
-class StateEditor :
+class StateViewUI :
 	public BaseItemUI<State>
 {
 public:
-	StateEditor(State * state);
-	~StateEditor();
+	StateViewUI(State * state);
+	~StateViewUI();
 
 	const int grabberHeight = 10;
 	const int headerHeight = 15;
@@ -64,14 +64,14 @@ public:
 	{
 	public:
 		virtual ~Listener() {}
-		virtual void editorGrabbed(StateEditor *) {}
+		virtual void editorGrabbed(StateViewUI *) {}
 	};
 
 	ListenerList<Listener> stateEditorListeners;
-	void addStateEditorListener(Listener* newListener) { stateEditorListeners.add(newListener); }
-	void removeStateEditorListener(Listener* listener) { stateEditorListeners.remove(listener); }
+	void addStateViewUIListener(Listener* newListener) { stateEditorListeners.add(newListener); }
+	void removeStateViewUIListener(Listener* listener) { stateEditorListeners.remove(listener); }
 
-	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(StateEditor)
+	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(StateViewUI)
 };
 
-#endif  // STATEEDITOR_H_INCLUDED
+#endif  // STATEVIEWUI_H_INCLUDED

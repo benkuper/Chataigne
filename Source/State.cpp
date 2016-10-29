@@ -15,6 +15,9 @@ State::State() :
 {
 	editorPosition = addPoint2DParameter("Position", "Position in State Machine view");
 	editorPosition->setBounds(-100, -100,100,100);
+
+	addChildControllableContainer(&am);
+	addChildControllableContainer(&mm);
 }
 
 State::~State()

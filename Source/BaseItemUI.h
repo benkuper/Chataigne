@@ -75,6 +75,7 @@ BaseItemUI<T>::BaseItemUI(T * _item) :
 template<class T>
 BaseItemUI<T>::~BaseItemUI()
 {
+	getBaseItem()->removeControllableContainerListener(this);
 	removeBT->removeListener(this);
 }
 
