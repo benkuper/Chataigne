@@ -12,7 +12,7 @@
 #include "AssetManager.h"
 
 StateMachineView::StateMachineView(StateManager * _manager) :
-	BaseManagerShapeShifterUI("State Machine", _manager),
+	BaseManagerShapeShifterUI("State Machine", _manager, false),
 	manager(_manager)
 {
 	addItemText = "Add State";

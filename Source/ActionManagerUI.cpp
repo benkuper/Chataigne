@@ -19,4 +19,5 @@ ActionManagerUI::ActionManagerUI(ActionManager * _manager) :
 
 ActionManagerUI::~ActionManagerUI()
 {
+
 }

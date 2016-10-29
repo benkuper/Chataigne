@@ -23,14 +23,18 @@ class BaseManagerUI :
 	public BaseManager<T>::Listener
 {
 public:
-	BaseManagerUI<M, T, U>(const String &contentName, M * _manager);
+	BaseManagerUI<M, T, U>(const String &contentName, M * _manager, bool _useViewport = true);
 	virtual ~BaseManagerUI();
 
 	M * manager;
 	OwnedArray<U> itemsUI;
 	
-	
 	//ui
+	bool useViewport; //TODO, create a BaseManagerViewportUI
+	Component container;
+	Viewport viewport; //TODO derive BaseManagerUI from viewport, change InspectableComponent to Inspectable and keep subclass InspectableComponent for inspectable that don't need to derive Component elsewhere (same as ShapeShifterContent & ShapeShifterContentComponent)
+
+	//style
 	Colour bgColor;
 	int labelHeight = 10;
 	String managerUIName;
@@ -39,16 +43,17 @@ public:
 	bool drawContour;
 	bool drawHighlightWhenSelected;
 
-	int itemHeight = 20;
+	//layout
+	bool fixedItemHeight;
 	int gap = 2;
 
 	virtual void mouseDown(const MouseEvent &e) override;
 	virtual void paint(Graphics &g) override;
 
 	virtual void resized() override;
-	
-	virtual void addItemFromMenu();
+	void childBoundsChanged(Component *) override;
 
+	virtual void addItemFromMenu();
 	virtual U * addItemUI(T * item);
 	virtual void addItemUIInternal(U *) {}
 	virtual void removeItemUI(T * item);
@@ -59,18 +64,28 @@ public:
 	void itemAdded(BaseItem * item) override;
 	void itemRemoved(BaseItem * item) override;
 
-
 };
 
 template<class M, class T, class U>
-BaseManagerUI<M, T, U>::BaseManagerUI(const String & contentName, M * _manager) :
+BaseManagerUI<M, T, U>::BaseManagerUI(const String & contentName, M * _manager, bool _useViewport) :
 	manager(_manager),
 	drawContour(false),
 	bgColor(BG_COLOR),
-	managerUIName(contentName)
+	managerUIName(contentName),
+	fixedItemHeight(true),
+	useViewport(_useViewport)
 {
 	addItemText = "Add Item";
 	relatedControllableContainer = static_cast<ControllableContainer *>(manager);
+
+	if (useViewport)
+	{
+		viewport.setViewedComponent(&container, false);
+		viewport.setScrollBarsShown(true, false);
+		viewport.setScrollOnDragEnabled(false);
+		viewport.setScrollBarThickness(10);
+		addAndMakeVisible(viewport);
+	} 
 
 	BaseManager<T>* baseM = static_cast<BaseManager<T>*>(manager);
 	baseM->addBaseManagerListener(this);
@@ -137,14 +152,36 @@ void BaseManagerUI<M, T, U>::paint(Graphics & g)
 template<class M, class T, class U>
 void BaseManagerUI<M, T, U>::resized()
 {
+	
 	Rectangle<int> r = getLocalBounds().reduced(2);
 	if (drawContour) r.removeFromTop(15);
+
+	if (useViewport)
+	{
+		viewport.setBounds(r);
+		r.removeFromRight(10);
+		r.setTop(0);
+	}
+
+	
 	for (auto &ui : itemsUI)
 	{
 		BaseItemUI<T> * bui = static_cast<BaseItemUI<T>*>(ui);
-		bui->setBounds(r.removeFromTop(itemHeight));
-		r.removeFromTop(gap);
+		Rectangle<int> tr = r.withHeight(bui->getHeight());
+		bui->setBounds(tr);
+		r.translate(0, tr.getHeight() + gap);
 	}
+
+	if (useViewport && itemsUI.size() > 0)
+	{
+		container.setBounds(getLocalBounds().withHeight(static_cast<BaseItemUI<T>*>(itemsUI[itemsUI.size() - 1])->getBottom()));
+	}
+}
+
+template<class M, class T, class U>
+inline void BaseManagerUI<M, T, U>::childBoundsChanged(Component *)
+{
+	resized();
 }
 
 template<class M, class T, class U>
@@ -158,7 +195,8 @@ U * BaseManagerUI<M, T, U>::addItemUI(T * item)
 {
 	U * tui = new U(item);
 	itemsUI.add(tui);
-	addAndMakeVisible(static_cast<BaseItemUI<T>*>(tui));
+	if(useViewport) container.addAndMakeVisible(static_cast<BaseItemUI<T>*>(tui));
+	else addAndMakeVisible(static_cast<BaseItemUI<T>*>(tui));
 	addItemUIInternal(tui);
 	resized();
 
@@ -171,7 +209,8 @@ void BaseManagerUI<M, T, U>::removeItemUI(T * item)
 	U * tui = getUIForItem(item);
 	if (tui == nullptr) return;
 
-	removeChildComponent(static_cast<BaseItemUI<T>*>(tui));
+	if(useViewport) container.removeChildComponent(static_cast<BaseItemUI<T>*>(tui));
+	else container.removeChildComponent(static_cast<BaseItemUI<T>*>(tui));
 	removeItemUIInternal(tui);
 	itemsUI.removeObject(tui);
 	resized();

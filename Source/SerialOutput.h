@@ -1,11 +1,18 @@
 /*
   ==============================================================================
 
-    InputChooser.cpp
-    Created: 28 Oct 2016 8:10:28pm
+    SerialOutput.h
+    Created: 29 Oct 2016 7:18:19pm
     Author:  bkupe
 
   ==============================================================================
 */
 
-#include "InputChooser.h"
+#ifndef SERIALOUTPUT_H_INCLUDED
+#define SERIALOUTPUT_H_INCLUDED
+
+
+
+
+
+#endif  // SERIALOUTPUT_H_INCLUDED

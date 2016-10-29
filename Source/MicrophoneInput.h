@@ -1,11 +1,18 @@
 /*
   ==============================================================================
 
-    OutputChooser.cpp
-    Created: 28 Oct 2016 8:10:32pm
+    MicrophoneInput.h
+    Created: 29 Oct 2016 7:22:49pm
     Author:  bkupe
 
   ==============================================================================
 */
 
-#include "OutputChooser.h"
+#ifndef MICROPHONEINPUT_H_INCLUDED
+#define MICROPHONEINPUT_H_INCLUDED
+
+
+
+
+
+#endif  // MICROPHONEINPUT_H_INCLUDED

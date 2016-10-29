@@ -1,18 +1,11 @@
 /*
   ==============================================================================
 
-    InputChooser.h
-    Created: 28 Oct 2016 8:10:28pm
+    MIDIOutput.cpp
+    Created: 29 Oct 2016 7:19:01pm
     Author:  bkupe
 
   ==============================================================================
 */
 
-#ifndef INPUTCHOOSER_H_INCLUDED
-#define INPUTCHOOSER_H_INCLUDED
-
-
-
-
-
-#endif  // INPUTCHOOSER_H_INCLUDED
+#include "MIDIOutput.h"

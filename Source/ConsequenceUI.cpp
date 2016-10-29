@@ -14,7 +14,7 @@ ConsequenceUI::ConsequenceUI(Consequence * input) :
 	BaseItemUI<Consequence>(input)
 {
 	autoSelectWithChildRespect = false;
-
+	setSize(10, 40);
 }
 
 ConsequenceUI::~ConsequenceUI()

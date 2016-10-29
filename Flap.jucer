@@ -149,14 +149,7 @@
       </GROUP>
       <GROUP id="{6A99D434-563F-6FEC-8395-5EB79B3D3075}" name="Flap">
         <GROUP id="{6C7DFFF7-D47E-97B5-FE74-27F24C7A349F}" name="Common">
-          <GROUP id="{00DB7CFA-CACA-0D02-4E20-E907A0900C31}" name="Helpers">
-            <FILE id="RMtGo2" name="InputChooser.cpp" compile="1" resource="0"
-                  file="Source/InputChooser.cpp"/>
-            <FILE id="SZRb1T" name="InputChooser.h" compile="0" resource="0" file="Source/InputChooser.h"/>
-            <FILE id="weZ0rR" name="OutputChooser.cpp" compile="1" resource="0"
-                  file="Source/OutputChooser.cpp"/>
-            <FILE id="fJQ8NJ" name="OutputChooser.h" compile="0" resource="0" file="Source/OutputChooser.h"/>
-          </GROUP>
+          <GROUP id="{00DB7CFA-CACA-0D02-4E20-E907A0900C31}" name="Helpers"/>
           <GROUP id="{9CFD8ABC-B151-C9B1-3170-F337A2876DE7}" name="Manager">
             <GROUP id="{04523331-54D0-EF5C-9ECA-C42754582F66}" name="ui">
               <FILE id="jCyMQj" name="BaseItemUI.h" compile="0" resource="0" file="Source/BaseItemUI.h"/>
@@ -369,6 +362,57 @@
           <FILE id="TeO8GH" name="StateManager.h" compile="0" resource="0" file="Source/StateManager.h"/>
         </GROUP>
         <GROUP id="{3E28AE4C-C6FC-E838-ECFB-FC6B50C2EF68}" name="Output">
+          <GROUP id="{F6E0EDA0-2A0D-2758-75EB-48544438B3E6}" name="modules">
+            <GROUP id="{10A19AF9-3223-B5E5-0F0F-5416CFF75210}" name="osc">
+              <FILE id="tMiqsn" name="OSCOutput.cpp" compile="1" resource="0" file="Source/OSCOutput.cpp"/>
+              <FILE id="M4VagL" name="OSCOutput.h" compile="0" resource="0" file="Source/OSCOutput.h"/>
+              <GROUP id="{129A4A05-39C9-38F5-F5C9-211839AC5A05}" name="bglove">
+                <FILE id="xxdUpF" name="BGloveOutput.cpp" compile="1" resource="0"
+                      file="Source/BGloveOutput.cpp"/>
+                <FILE id="w4uxYY" name="BGloveOutput.h" compile="0" resource="0" file="Source/BGloveOutput.h"/>
+              </GROUP>
+              <GROUP id="{B54ADB40-59FB-E720-1172-011D64B5421B}" name="custom">
+                <FILE id="xBBAEN" name="CustomOSCOutput.cpp" compile="1" resource="0"
+                      file="Source/CustomOSCOutput.cpp"/>
+                <FILE id="BIKdAK" name="CustomOSCOutput.h" compile="0" resource="0"
+                      file="Source/CustomOSCOutput.h"/>
+              </GROUP>
+              <GROUP id="{602E7522-B0B8-EFD6-426E-412675133972}" name="bento">
+                <FILE id="LP4Dq8" name="BentoOutput.cpp" compile="1" resource="0" file="Source/BentoOutput.cpp"/>
+                <FILE id="LJbeAw" name="BentoOutput.h" compile="0" resource="0" file="Source/BentoOutput.h"/>
+              </GROUP>
+              <GROUP id="{FF4C0D27-23DC-BB1E-4E0B-8686D1DCA680}" name="live">
+                <FILE id="IAoJSV" name="LiveOutput.cpp" compile="1" resource="0" file="Source/LiveOutput.cpp"/>
+                <FILE id="X1nUKg" name="LiveOutput.h" compile="0" resource="0" file="Source/LiveOutput.h"/>
+              </GROUP>
+              <GROUP id="{326ADCEF-1F21-DD81-9FE2-03A6C9AFAE13}" name="dlight">
+                <FILE id="uUxzjc" name="DLightOutput.cpp" compile="1" resource="0"
+                      file="Source/DLightOutput.cpp"/>
+                <FILE id="p30XXh" name="DLightOutput.h" compile="0" resource="0" file="Source/DLightOutput.h"/>
+              </GROUP>
+              <GROUP id="{549453D8-DE77-3CA0-EF72-27B5126B2B14}" name="millumin">
+                <FILE id="sDN6ua" name="MilluminOutput.cpp" compile="1" resource="0"
+                      file="Source/MilluminOutput.cpp"/>
+                <FILE id="kZKkOH" name="MilluminOutput.h" compile="0" resource="0"
+                      file="Source/MilluminOutput.h"/>
+              </GROUP>
+              <GROUP id="{BF093733-18A9-3232-92C5-8EF7D8E70785}" name="resolume">
+                <FILE id="aQARef" name="ResolumeOutput.cpp" compile="1" resource="0"
+                      file="Source/ResolumeOutput.cpp"/>
+                <FILE id="bR0r8N" name="ResolumeOutput.h" compile="0" resource="0"
+                      file="Source/ResolumeOutput.h"/>
+              </GROUP>
+            </GROUP>
+            <GROUP id="{F2940651-B670-E674-2846-13DED6538A06}" name="midi">
+              <FILE id="wFbUUc" name="MIDIOutput.cpp" compile="1" resource="0" file="Source/MIDIOutput.cpp"/>
+              <FILE id="eYXzzk" name="MIDIOutput.h" compile="0" resource="0" file="Source/MIDIOutput.h"/>
+            </GROUP>
+            <GROUP id="{3AA08DC8-7AB1-255C-F13A-7381F9190556}" name="serial">
+              <FILE id="gQJZAM" name="SerialOutput.cpp" compile="1" resource="0"
+                    file="Source/SerialOutput.cpp"/>
+              <FILE id="KdpShL" name="SerialOutput.h" compile="0" resource="0" file="Source/SerialOutput.h"/>
+            </GROUP>
+          </GROUP>
           <GROUP id="{416377FB-AFEB-6276-547A-05281D4ECB29}" name="ui">
             <FILE id="kUp7A3" name="OutputManagerUI.cpp" compile="1" resource="0"
                   file="Source/OutputManagerUI.cpp"/>
@@ -384,6 +428,90 @@
           <FILE id="dzz9H4" name="OutputManager.h" compile="0" resource="0" file="Source/OutputManager.h"/>
         </GROUP>
         <GROUP id="{A9A8ED45-01A7-5C77-F0C1-636F048908AC}" name="Input">
+          <GROUP id="{02D83D79-C7E3-7025-EAEE-46E8688244AC}" name="microphone">
+            <FILE id="RAAaWQ" name="MicrophoneInput.cpp" compile="1" resource="0"
+                  file="Source/MicrophoneInput.cpp"/>
+            <FILE id="jawwga" name="MicrophoneInput.h" compile="0" resource="0"
+                  file="Source/MicrophoneInput.h"/>
+          </GROUP>
+          <GROUP id="{7D98F38B-D115-3A0A-8CF9-70BA23951FE8}" name="leap">
+            <FILE id="qPSxLk" name="LeapMotionInput.cpp" compile="1" resource="0"
+                  file="Source/LeapMotionInput.cpp"/>
+            <FILE id="zoPXPb" name="LeapMotionInput.h" compile="0" resource="0"
+                  file="Source/LeapMotionInput.h"/>
+          </GROUP>
+          <GROUP id="{81F248E6-5740-AD32-3758-B261E898922F}" name="kinect">
+            <FILE id="igAbHn" name="KinectV2Input.cpp" compile="1" resource="0"
+                  file="Source/KinectV2Input.cpp"/>
+            <FILE id="GUKOlu" name="KinectV2Input.h" compile="0" resource="0" file="Source/KinectV2Input.h"/>
+            <FILE id="V11was" name="KinectInput.cpp" compile="1" resource="0" file="Source/KinectInput.cpp"/>
+            <FILE id="qLuzYZ" name="KinectInput.h" compile="0" resource="0" file="Source/KinectInput.h"/>
+          </GROUP>
+          <GROUP id="{783B46C5-42E5-D369-F0C3-147B623558AC}" name="serial">
+            <GROUP id="{1C5A439B-88DF-E343-4CAD-4E5ADFC79C0C}" name="makeymakey">
+              <FILE id="dJ3AwD" name="MakeyMakeyInput.cpp" compile="1" resource="0"
+                    file="Source/MakeyMakeyInput.cpp"/>
+              <FILE id="exR1WE" name="MakeyMakeyInput.h" compile="0" resource="0"
+                    file="Source/MakeyMakeyInput.h"/>
+            </GROUP>
+            <FILE id="s90Uj9" name="SerialInput.cpp" compile="1" resource="0" file="Source/SerialInput.cpp"/>
+            <FILE id="C5fYXd" name="SerialInput.h" compile="0" resource="0" file="Source/SerialInput.h"/>
+          </GROUP>
+          <GROUP id="{DF400B8A-ACAE-DA4F-BE28-778D63D720CB}" name="midi">
+            <FILE id="CksWEZ" name="MIDIInputModule.cpp" compile="1" resource="0"
+                  file="Source/MIDIInputModule.cpp"/>
+            <FILE id="zKWmD3" name="MIDIInputModule.h" compile="0" resource="0"
+                  file="Source/MIDIInputModule.h"/>
+          </GROUP>
+          <GROUP id="{3B6A23A7-BA9B-7FD5-F882-377356362446}" name="myo">
+            <FILE id="neBx9o" name="MyoInput.cpp" compile="1" resource="0" file="Source/MyoInput.cpp"/>
+            <FILE id="XJfquy" name="MyoInput.h" compile="0" resource="0" file="Source/MyoInput.h"/>
+          </GROUP>
+          <GROUP id="{F3EE9907-02E8-26FF-4F80-AB785727E37C}" name="osc">
+            <GROUP id="{7A411F6A-96E5-97E9-89B9-7CD89CB72B03}" name="bento">
+              <FILE id="NsAlPA" name="BentoInput.cpp" compile="1" resource="0" file="Source/BentoInput.cpp"/>
+              <FILE id="uuofMe" name="BentoInput.h" compile="0" resource="0" file="Source/BentoInput.h"/>
+            </GROUP>
+            <FILE id="Hi405T" name="OSCInput.cpp" compile="1" resource="0" file="Source/OSCInput.cpp"/>
+            <FILE id="GwcUxE" name="OSCInput.h" compile="0" resource="0" file="Source/OSCInput.h"/>
+            <GROUP id="{D3A9FFCD-4063-1D0F-3F47-D2AA576163B9}" name="ui">
+              <FILE id="dmVUue" name="OSCInputUI.cpp" compile="1" resource="0" file="Source/OSCInputUI.cpp"/>
+              <FILE id="o0okCg" name="OSCInputUI.h" compile="0" resource="0" file="Source/OSCInputUI.h"/>
+            </GROUP>
+            <GROUP id="{725F299B-4972-D857-5400-57EB8633E4A9}" name="custom">
+              <FILE id="PMAPTY" name="CustomOSCInput.cpp" compile="1" resource="0"
+                    file="Source/CustomOSCInput.cpp"/>
+              <FILE id="ZOWy9Q" name="CustomOSCInput.h" compile="0" resource="0"
+                    file="Source/CustomOSCInput.h"/>
+            </GROUP>
+            <GROUP id="{AE7C4819-D360-5DA3-520B-E536BF8503A7}" name="augmenta">
+              <FILE id="v1W5cH" name="AugmentaInput.cpp" compile="1" resource="0"
+                    file="Source/AugmentaInput.cpp"/>
+              <FILE id="LFGvHu" name="AugmentaInput.h" compile="0" resource="0" file="Source/AugmentaInput.h"/>
+            </GROUP>
+            <GROUP id="{32646055-4725-F118-981C-E1A3470AF46E}" name="bglove">
+              <FILE id="EuERmi" name="BGloveInput.cpp" compile="1" resource="0" file="Source/BGloveInput.cpp"/>
+              <FILE id="l6ngjV" name="BGloveInput.h" compile="0" resource="0" file="Source/BGloveInput.h"/>
+            </GROUP>
+            <GROUP id="{ACDF7EB5-3DCB-12ED-8548-533F627E66D3}" name="live">
+              <FILE id="qPFY1b" name="LiveInput.cpp" compile="1" resource="0" file="Source/LiveInput.cpp"/>
+              <FILE id="W00FB1" name="LiveInput.h" compile="0" resource="0" file="Source/LiveInput.h"/>
+            </GROUP>
+            <GROUP id="{DB761556-EA01-9253-F83C-8F004500BBCF}" name="dlight">
+              <FILE id="NW0dqS" name="DLightInput.cpp" compile="1" resource="0" file="Source/DLightInput.cpp"/>
+              <FILE id="WUzI9n" name="DLightInput.h" compile="0" resource="0" file="Source/DLightInput.h"/>
+            </GROUP>
+            <GROUP id="{6B3BB76B-C4EB-0942-C4F9-44DE6981C565}" name="millumin">
+              <FILE id="RqLt6H" name="MilluminInput.cpp" compile="1" resource="0"
+                    file="Source/MilluminInput.cpp"/>
+              <FILE id="Yn8vMs" name="MilluminInput.h" compile="0" resource="0" file="Source/MilluminInput.h"/>
+            </GROUP>
+            <GROUP id="{C97371DB-4467-9960-F4A3-E82AC8476891}" name="resolume">
+              <FILE id="aBLJbO" name="ResolumeInput.cpp" compile="1" resource="0"
+                    file="Source/ResolumeInput.cpp"/>
+              <FILE id="KqPj6T" name="ResolumeInput.h" compile="0" resource="0" file="Source/ResolumeInput.h"/>
+            </GROUP>
+          </GROUP>
           <GROUP id="{F5F1C4D9-9DA3-FC9F-3BE5-6E0079CE02E6}" name="ui">
             <FILE id="STTWsQ" name="InputManagerUI.cpp" compile="1" resource="0"
                   file="Source/InputManagerUI.cpp"/>

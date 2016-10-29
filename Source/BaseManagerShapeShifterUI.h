@@ -20,8 +20,8 @@ class BaseManagerShapeShifterUI :
 	public ShapeShifterContent
 {
 public:
-	BaseManagerShapeShifterUI<M, T, U>(const String &contentName, M * _manager) :
-		BaseManagerUI<M, T, U>(contentName, _manager),
+	BaseManagerShapeShifterUI<M, T, U>(const String &contentName, M * _manager, bool useViewport = true) :
+		BaseManagerUI<M, T, U>(contentName, _manager, useViewport),
 		ShapeShifterContent(this,contentName)
 	{
 

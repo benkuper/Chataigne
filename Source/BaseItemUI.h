@@ -30,6 +30,10 @@ public:
 
 	T * item;
 
+	//layout
+	int headerHeight;
+	int headerGap;
+
 	ScopedPointer<StringParameterUI> nameUI;
 	ScopedPointer<BoolToggleUI> enabledBT;
 	ScopedPointer<ImageButton> removeBT;
@@ -54,7 +58,8 @@ private:
 template<class T>
 BaseItemUI<T>::BaseItemUI(T * _item) :
 	InspectableComponent(_item),
-	item(_item)
+	item(_item),
+	headerHeight(16), headerGap(5)
 {
 	addMouseListener(this, true);
 
@@ -70,6 +75,7 @@ BaseItemUI<T>::BaseItemUI(T * _item) :
 	addAndMakeVisible(removeBT);
 	removeBT->addListener(this);
 
+	setSize(100, headerHeight+4);
 }
 
 template<class T>
@@ -91,12 +97,14 @@ void BaseItemUI<T>::paint(Graphics &g)
 template<class T>
 void BaseItemUI<T>::resized()
 {
+	//Header
 	Rectangle<int> r = getLocalBounds().reduced(2);
-	enabledBT->setBounds(r.removeFromLeft(r.getHeight()));
-	r.removeFromLeft(2);
-	removeBT->setBounds(r.removeFromRight(r.getHeight()));
-	r.removeFromRight(2);
-	nameUI->setBounds(r);
+	Rectangle<int> h = r.withHeight(headerHeight);
+	enabledBT->setBounds(h.removeFromLeft(h.getHeight()));
+	h.removeFromLeft(2);
+	removeBT->setBounds(h.removeFromRight(h.getHeight()));
+	h.removeFromRight(2);
+	nameUI->setBounds(h);
 }
 
 template<class T>

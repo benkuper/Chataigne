@@ -25,8 +25,6 @@ public:
 	~StateViewUI();
 
 	const int grabberHeight = 10;
-	const int headerHeight = 15;
-	const int headerGap = 5;
 
 	ActionManagerUI amui;
 	MappingManagerUI mmui;
