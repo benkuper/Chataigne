@@ -18,25 +18,40 @@
 
 
 class StateViewUI :
-	public BaseItemUI<State>
+	public BaseItemUI<State>,
+	public ActionManagerUI::ManagerUIListener,
+	public MappingManagerUI::ManagerUIListener
 {
 public:
 	StateViewUI(State * state);
 	~StateViewUI();
 
-	const int grabberHeight = 10;
-
 	ActionManagerUI amui;
 	MappingManagerUI mmui;
+
+	ResizableCornerComponent resizer;
+	const int grabberHeight = 10;
+
+	//layout
+	Component contentContainer;
 
 	//interaction
 	Point<float> posAtMouseDown;
 
+	void updateMiniModeUI();
+
 	void mouseDown(const MouseEvent &e) override;
 	void mouseDrag(const MouseEvent &e) override;
-	void resized() override;
+	void mouseDoubleClick(const MouseEvent &e) override;
 
+	void resized() override;
+	void childBoundsChanged(Component *) override;
 	void controllableFeedbackUpdateInternal(Controllable *) override;
+
+	void itemUIAdded(ActionUI *) override;
+	void itemUIRemoved(ActionUI *) override;
+	void itemUIAdded(MappingUI *) override;
+	void itemUIRemoved(MappingUI *) override;
 
 	class Grabber : public Component
 	{
@@ -47,17 +62,9 @@ public:
 		
 		JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Grabber)
 	};
-
-	class Resizer : public ResizableCornerComponent
-	{
-	public:
-		Resizer(Component * targetComponent) : ResizableCornerComponent(targetComponent, nullptr) {}
-		~Resizer() {}
-	};
-
 	Grabber grabber;
-	ResizableCornerComponent resizer;
 
+	
 	class Listener
 	{
 	public:

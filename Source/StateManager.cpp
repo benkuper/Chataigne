@@ -24,6 +24,6 @@ StateManager::~StateManager()
 State * StateManager::addItem(const Point<float>& initialPosition)
 {
 	State * s = BaseManager<State>::addItem();
-	s->editorPosition->setPoint(initialPosition);
+	s->viewUIPosition->setPoint(initialPosition);
 	return s;
 }

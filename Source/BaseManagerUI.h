@@ -64,8 +64,23 @@ public:
 
 	U * getUIForItem(T * item);
 
+	int getContentHeight();
+
 	void itemAdded(BaseItem * item) override;
 	void itemRemoved(BaseItem * item) override;
+
+	class  ManagerUIListener
+	{
+	public:
+		/** Destructor. */
+		virtual ~ManagerUIListener() {}
+		virtual void itemUIAdded(U *) {}
+		virtual void itemUIRemoved(U *) {}
+	};
+
+	ListenerList<ManagerUIListener> managerUIListeners;
+	void addManagerUIListener(ManagerUIListener* newListener) { managerUIListeners.add(newListener); }
+	void removeManagerUIListener(ManagerUIListener* listener) { managerUIListeners.remove(listener); }
 
 };
 
@@ -208,7 +223,7 @@ U * BaseManagerUI<M, T, U>::addItemUI(T * item)
 	else addAndMakeVisible(static_cast<BaseItemUI<T>*>(tui));
 	addItemUIInternal(tui);
 	resized();
-
+	managerUIListeners.call(&ManagerUIListener::itemUIAdded, tui);
 	return tui;
 }
 
@@ -221,7 +236,9 @@ void BaseManagerUI<M, T, U>::removeItemUI(T * item)
 	if(useViewport) container.removeChildComponent(static_cast<BaseItemUI<T>*>(tui));
 	else container.removeChildComponent(static_cast<BaseItemUI<T>*>(tui));
 	removeItemUIInternal(tui);
-	itemsUI.removeObject(tui);
+	itemsUI.removeObject(tui,false);
+	managerUIListeners.call(&ManagerUIListener::itemUIRemoved, tui);
+	delete tui;
 	resized();
 }
 
@@ -230,6 +247,12 @@ U * BaseManagerUI<M, T, U>::getUIForItem(T * item)
 {
 	for (auto &ui : itemsUI) if (static_cast<BaseItemUI<T>*>(ui)->item == item) return ui;
 	return nullptr;
+}
+
+template<class M, class T, class U>
+inline int BaseManagerUI<M, T, U>::getContentHeight()
+{
+	return container.getHeight() + 20;
 }
 
 template<class M, class T, class U>

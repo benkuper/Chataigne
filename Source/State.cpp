@@ -13,8 +13,10 @@
 State::State() :
 	BaseItem("State")
 {
-	editorPosition = addPoint2DParameter("Position", "Position in State Machine view");
-	editorPosition->setBounds(-100, -100,100,100);
+	viewUIPosition = addPoint2DParameter("Position", "Position in State Machine view");
+	viewUIPosition->setBounds(-100, -100,100,100);
+
+	miniMode = addBoolParameter("Mini Mode", "Set the mini mode",false);
 
 	addChildControllableContainer(&am);
 	addChildControllableContainer(&mm);

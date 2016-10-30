@@ -16,6 +16,8 @@ BaseItem::BaseItem(const String &name) :
 {
 	enabled = addBoolParameter("Enabled", "Enable / Disable this component", true);
 	nameParam = addStringParameter("Name", "Name of the component", niceName);
+	enabled->hideInEditor = true;
+	nameParam->hideInEditor = true;
 }
 
 BaseItem::~BaseItem()

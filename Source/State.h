@@ -24,7 +24,8 @@ public:
 	virtual ~State();
 
 	//UI
-	Point2DParameter * editorPosition;
+	Point2DParameter * viewUIPosition;
+	BoolParameter * miniMode;
 
 	ActionManager am;
 	MappingManager mm;

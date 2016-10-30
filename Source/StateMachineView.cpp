@@ -96,7 +96,7 @@ void StateMachineView::resized()
 
 void StateMachineView::updateViewUIPosition(StateViewUI * se)
 {
-	Point<int> pe = getSize()*se->item->editorPosition->getPoint();
+	Point<int> pe = getSize()*se->item->viewUIPosition->getPoint();
 	pe += getSize() / 2; //position at center of window
 	pe += viewOffset;
 	se->setTopLeftPosition(pe.x,pe.y);
@@ -122,7 +122,7 @@ Point<float> StateMachineView::getEditorsCenter()
 	Point<float> average;
 	for (auto &se : itemsUI)
 	{
-		average += se->item->editorPosition->getPoint();
+		average += se->item->viewUIPosition->getPoint();
 	}
 	average /= itemsUI.size();
 	return average;
