@@ -50,7 +50,6 @@ void Outliner::paint(Graphics & g)
 void Outliner::rebuildTree()
 {
 	ScopedPointer<XmlElement> os = treeView.getOpennessState(true);
-
 	rootItem->clearSubItems(); //should not rebuild from zero to allow use of OpennessRestorer
 	buildTree(rootItem, &getEngine());
 	rootItem->setOpen(true);
@@ -81,6 +80,7 @@ void Outliner::buildTree(OutlinerItem * parentItem, ControllableContainer * pare
 
 	for (auto &c : childControllables)
 	{
+		if (c->hideInOutliner) continue;
 		OutlinerItem * cItem = new OutlinerItem(c);
 		parentItem->addSubItem(cItem);
 	}
@@ -97,18 +97,22 @@ void Outliner::childStructureChanged(ControllableContainer *)
 
 OutlinerItem::OutlinerItem(ControllableContainer * _container) :
 	InspectableContent(_container),
+	itemName(_container->niceName),
 	container(_container), controllable(nullptr), isContainer(true)
 {
+	container->addControllableContainerListener(this);
 }
 
 OutlinerItem::OutlinerItem(Controllable * _controllable) :
 	InspectableContent(_controllable),
+	itemName(_controllable->niceName),
 	container(nullptr), controllable(_controllable), isContainer(false)
 {
 }
 
 OutlinerItem::~OutlinerItem()
 {
+	if(isContainer) container->removeControllableContainerListener(this);
 	masterReference.clear();
 }
 
@@ -156,27 +160,55 @@ void OutlinerItem::inspectableSelectionChanged(Inspectable * i)
 
 }
 
+void OutlinerItemComponent::itemNameChanged()
+{
+	label.setText(item->container->niceName, dontSendNotification);
+}
+
+
+
 
 // OutlinerItemComponent
 
 OutlinerItemComponent::OutlinerItemComponent(OutlinerItem * _item) : 
 	InspectableContentComponent(_item->inspectable),
 	item(_item),
-	label("label",_item->isContainer? item->container->niceName : item->controllable->niceName)	
+	label("label",_item->itemName)	
 {
-
+	item->addItemListener(this);
 	autoDrawHighlightWhenSelected = false;
 	setTooltip(item->isContainer ? item->container->getControlAddress() : item->controllable->description + "\nControl Address : " + item->controllable->controlAddress);
 	addAndMakeVisible(&label);
-	label.setInterceptsMouseClicks(false, false);
+
+
+	label.setFont(label.getFont().withHeight(12));
+	label.setColour(label.backgroundWhenEditingColourId, Colours::white);
+	
+	
+	if (item->isContainer && item->container->nameCanBeChangedByUser)
+	{
+		label.addListener(this);
+		label.setEditable(false, true);
+		label.addMouseListener(this,true);
+	} else
+	{
+		label.setInterceptsMouseClicks(false, false);
+	}
+}
+
+OutlinerItemComponent::~OutlinerItemComponent()
+{
+	if(!item.wasObjectDeleted()) item->removeItemListener(this);
 }
 
 void OutlinerItemComponent::paint(Graphics & g)
 {
 	Rectangle<int> r = getLocalBounds();
 	
-	Colour c = item->isContainer ? HIGHLIGHT_COLOR : TEXT_COLOR;
+	Colour c = BLUE_COLOR;
+	if (item->isContainer) c = item->container->nameCanBeChangedByUser ? HIGHLIGHT_COLOR : TEXT_COLOR;
 	
+
 	int labelWidth = label.getFont().getStringWidth(label.getText());
 	
 	if (item->isSelected())
@@ -188,4 +220,24 @@ void OutlinerItemComponent::paint(Graphics & g)
 	r.removeFromLeft(3);
 	label.setBounds(r);
 	label.setColour(Label::textColourId, item->isSelected() ? Colours::grey.darker() : c);	
+}
+
+
+void OutlinerItem::childAddressChanged(ControllableContainer *)
+{
+	if (isContainer)
+	{
+		itemName = container->niceName;
+		itemListeners.call(&OutlinerItemListener::itemNameChanged);
+	}
+}
+void OutlinerItemComponent::labelTextChanged(Label *)
+{
+	if (item.wasObjectDeleted()) return;
+	item->container->setNiceName(label.getText());
+}
+
+void OutlinerItemComponent::mouseDown(const MouseEvent &e)
+{
+	InspectableContentComponent::mouseDown(e);
 }

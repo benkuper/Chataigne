@@ -24,8 +24,14 @@
 #define TEXTNAME_COLOR  Colour(0xff999999)
 
 #define ACTION_COLOR     Colours::cadetblue
-#define MAPPING_COLOR      Colours::pink
+#define MAPPING_COLOR    Colours::pink
 
+
+//COLORS
+#define GREEN_COLOR		Colour(0xff99ff66)
+#define BLUE_COLOR		Colour(0xff18b5ef)
+
+//PARAMETERS
 #define FEEDBACK_COLOR		Colour(0xff18b5ef)
 #define PARAMETER_FRONT_COLOR Colour(0xff99ff66)
 

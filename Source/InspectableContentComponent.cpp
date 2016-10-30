@@ -44,8 +44,10 @@ void InspectableContentComponent::mouseDown(const MouseEvent & e)
 			c = c->getParentComponent();
 		}
 
-		//DBG(relatedControllableContainer->niceName << " found a child component ? " << String(foundAChildComponent));
-		if (!foundAChildComponent) inspectable->selectThis();
+		if (!foundAChildComponent)
+		{
+			inspectable->selectThis();
+		}
 	}
 }
 

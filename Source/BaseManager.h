@@ -59,8 +59,7 @@ BaseManager<T>::BaseManager(const String & name) :
 	selectItemWhenCreated(true)
 {
 	setCanHavePresets(false);
-
-
+	nameCanBeChangedByUser = false;
 }
 
 template<class T>

@@ -16,8 +16,9 @@ BaseItem::BaseItem(const String &name) :
 {
 	enabled = addBoolParameter("Enabled", "Enable / Disable this component", true);
 	nameParam = addStringParameter("Name", "Name of the component", niceName);
-	enabled->hideInEditor = true;
+	enabled->hideInOutliner = true;
 	nameParam->hideInEditor = true;
+	nameParam->hideInOutliner = true;
 }
 
 BaseItem::~BaseItem()
@@ -40,7 +41,8 @@ void BaseItem::onContainerParameterChanged(Parameter * p)
 	onContainerParameterChangedInternal(p);;
 }
 
-void BaseItem::childAddressChanged(ControllableContainer *)
+void BaseItem::onContainerNiceNameChanged()
 {
+	DBG("here !");
 	nameParam->setValue(niceName);
 }

@@ -13,7 +13,8 @@
 
 #include "ControllableContainer.h"
 
-class BaseItem : public ControllableContainer
+class BaseItem : 
+	public ControllableContainer
 {
 public :
 	BaseItem(const String &name = "baseItem");
@@ -27,7 +28,8 @@ public :
 
 	void onContainerParameterChanged(Parameter *) override;
 	virtual void onContainerParameterChangedInternal(Parameter *) {} //child classes override this function
-	void childAddressChanged(ControllableContainer *) override;
+
+	void onContainerNiceNameChanged() override;
 
 	class  Listener
 	{

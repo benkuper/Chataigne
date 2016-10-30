@@ -75,6 +75,8 @@ public:
     void setAutoShortName();
 	void setCanHavePresets(bool value);
 
+	bool nameCanBeChangedByUser;
+
 	Uuid uid;
 
     OwnedArray<Controllable,CriticalSection> controllables;
@@ -162,6 +164,8 @@ private:
     //      or overriding parameterValueChanged and needing to call ControllableContainer::parameterValueChanged in implementation (it should stay independent as a different mechanism)
     //      or using dispatch feedback that triggers only exposedParams
 
+	virtual void onContainerNiceNameChanged() {};
+	virtual void onContainerShortNameChanged() {};
     virtual void onContainerParameterChanged(Parameter *) {};
 	virtual void onContainerTriggerTriggered(Trigger *) {};
     virtual void onContainerParameterChangedAsync(Parameter *,const var & /*value*/){};

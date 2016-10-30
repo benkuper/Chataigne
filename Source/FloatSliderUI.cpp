@@ -34,7 +34,7 @@ void FloatSliderUI::paint(Graphics & g)
 
     if(shouldBailOut())return;
 
-	Colour baseColour = parameter->isEditable? defaultColor :FEEDBACK_COLOR;
+	Colour baseColour = parameter->isEditable? defaultColor : FEEDBACK_COLOR;
     Colour c = (isMouseButtonDown() && changeParamOnMouseUpOnly) ? HIGHLIGHT_COLOR : baseColour;
 
     Rectangle<int> sliderBounds = getLocalBounds();

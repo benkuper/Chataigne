@@ -18,25 +18,38 @@
 #include "ControllableEditor.h"
 
 class OutlinerItem;
-class OutlinerItemComponent : public InspectableContentComponent, public SettableTooltipClient
+class  OutlinerItemListener
+{
+public:
+	/** Destructor. */
+	virtual ~OutlinerItemListener() {}
+	virtual void itemNameChanged() {};
+};
+
+class OutlinerItemComponent : 
+	public InspectableContentComponent, 
+	public SettableTooltipClient,
+	public ControllableContainerListener,
+	public OutlinerItemListener,
+	public Label::Listener
 {
 public:
 	OutlinerItemComponent(OutlinerItem * item);
-	
+	~OutlinerItemComponent();
 
 	WeakReference<OutlinerItem> item;
-
-	
 	Label label;
 	
 	void paint(Graphics &g) override;
-
-
+	void itemNameChanged() override;
+	void labelTextChanged(Label*) override;
+	void mouseDown(const MouseEvent &e) override;
 };
 
 class OutlinerItem :
 	public TreeViewItem,
-	public InspectableContent
+	public InspectableContent,
+	public ControllableContainerListener
 {
 public:
 	OutlinerItem(ControllableContainer * container);
@@ -44,6 +57,7 @@ public:
 	~OutlinerItem();
 
 	bool isContainer;
+	String itemName;
 
 	ControllableContainer * container;
 	Controllable * controllable;
@@ -54,6 +68,12 @@ public:
 
 	String getUniqueName() const override;
 	void inspectableSelectionChanged(Inspectable * inspectable) override;
+	
+	void childAddressChanged(ControllableContainer *) override;
+
+	ListenerList<OutlinerItemListener> itemListeners;
+	void addItemListener(OutlinerItemListener* newListener) { itemListeners.add(newListener); }
+	void removeItemListener(OutlinerItemListener* listener) { itemListeners.remove(listener); }
 
 	WeakReference<OutlinerItem>::Master masterReference;
 };
@@ -73,8 +93,6 @@ public:
 
 	void resized() override;
 	void paint(Graphics &g) override;
-
-	
 
 	void rebuildTree();
 	void buildTree(OutlinerItem * parentItem, ControllableContainer * parentContainer);

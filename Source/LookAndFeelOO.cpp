@@ -9,8 +9,9 @@
 */
 
 #include "LookAndFeelOO.h"
-
 #include "Style.h"
+
+#pragma warning(disable:4244)
 
 //juce_ImplementSingleton(LookAndFeelOO);
 
@@ -47,7 +48,7 @@ void LookAndFeelOO::drawButtonBackground (Graphics& g,
                                            const Colour& backgroundColour,
                                            bool isMouseOverButton,
                                            bool isButtonDown)
-{
+{ 
     Colour baseColour (backgroundColour.withMultipliedSaturation (button.hasKeyboardFocus (true) ? 1.3f : 0.9f)
                        .withMultipliedAlpha (button.isEnabled() ? 0.9f : 0.5f));
 
@@ -719,12 +720,12 @@ void LookAndFeelOO::drawBubble (Graphics& g, BubbleComponent& comp,
 void LookAndFeelOO::preparePopupMenuWindow (Component& /*newWindow*/) {};
 Font LookAndFeelOO::getPopupMenuFont()
 {
-    return Font (17.0f);
+    return Font (14.0f);
 }
 
 void LookAndFeelOO::getIdealPopupMenuItemSize (const String& text, const bool isSeparator,
                                                 int standardMenuItemHeight, int& idealWidth, int& idealHeight)
-{
+{ 
     if (isSeparator)
     {
         idealWidth = 50;
@@ -745,15 +746,18 @@ void LookAndFeelOO::getIdealPopupMenuItemSize (const String& text, const bool is
 void LookAndFeelOO::drawPopupMenuBackground (Graphics& g, int width, int height)
 {
     const Colour background (findColour (PopupMenu::backgroundColourId));
-
+	 
     g.fillAll (background);
-    g.setColour (background.overlaidWith (Colour (0x2badd8e6)));
+    
+	/*
+	g.setColour (background.overlaidWith (Colour (0x2badd8e6)));
 
     for (int i = 0; i < height; i += 3)
         g.fillRect (0, i, width, 1);
+		*/
 
 #if ! JUCE_MAC
-    g.setColour (findColour (PopupMenu::textColourId).withAlpha (0.6f));
+    g.setColour (findColour (PopupMenu::backgroundColourId).brighter(.3f).withAlpha (0.2f));
     g.drawRect (0, 0, width, height);
 #endif
 }
@@ -894,14 +898,17 @@ int LookAndFeelOO::getMenuWindowFlags()
 
 void LookAndFeelOO::drawMenuBarBackground (Graphics& g, int width, int height, bool, MenuBarComponent& menuBar)
 {
-    const Colour baseColour (LookAndFeelHelpers::createBaseColour (menuBar.findColour (PopupMenu::backgroundColourId),
+	 const Colour baseColour (LookAndFeelHelpers::createBaseColour (menuBar.findColour (PopupMenu::backgroundColourId),
                                                                    false, false, false));
-
+	 /*
     if (menuBar.isEnabled())
         drawShinyButtonShape (g, -4.0f, 0.0f, width + 8.0f, (float) height,
-                              0.0f, baseColour, 0.4f, true, true, true, true);
-    else
+                              0.0f, baseColour, 0.4f, true, true, true, true)
+							  
+    else*/
         g.fillAll (baseColour);
+		g.setColour(baseColour.darker());
+		g.drawLine(0, height, width, height, 2);
 }
 
 Font LookAndFeelOO::getMenuBarFont (MenuBarComponent& menuBar, int /*itemIndex*/, const String& /*itemText*/)

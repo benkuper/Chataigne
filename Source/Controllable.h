@@ -52,6 +52,7 @@ public:
   bool isControllableExposed;
   bool isControllableFeedbackOnly;
   bool hideInEditor;
+  bool hideInOutliner;
   String controlAddress;
 
   bool replaceSlashesInShortName;

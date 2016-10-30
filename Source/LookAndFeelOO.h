@@ -57,11 +57,11 @@ namespace LookAndFeelHelpers {
         TreeView::dragAndDropIndicatorColourId,     0x80ff0000,
         TreeView::selectedItemBackgroundColourId,   0x00000000,
 
-        PopupMenu::backgroundColourId,              0xffffffff,
-        PopupMenu::textColourId,                    0xff000000,
-        PopupMenu::headerTextColourId,              0xff000000,
-        PopupMenu::highlightedTextColourId,         0xffffffff,
-        PopupMenu::highlightedBackgroundColourId,   0x991111aa,
+        PopupMenu::backgroundColourId,              BG_COLOR.getARGB(),
+        PopupMenu::textColourId,                    TEXT_COLOR.getARGB(),
+        PopupMenu::headerTextColourId,              0xff000000, 
+        PopupMenu::highlightedTextColourId,         BG_COLOR.getARGB(),
+        PopupMenu::highlightedBackgroundColourId,   HIGHLIGHT_COLOR.getARGB(),
 
         ComboBox::buttonColourId,                   0xffCCCCCC,
         ComboBox::outlineColourId,                  standardOutlineColour,

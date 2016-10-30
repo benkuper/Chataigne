@@ -33,14 +33,17 @@ ControllableContainer::ControllableContainer(const String & niceName) :
 	saveAndLoadRecursiveData(true),
 	numContainerIndexed(0),
 	localIndexedPosition(-1),
-	presetSavingIsRecursive(false)
+	presetSavingIsRecursive(false),
+	nameCanBeChangedByUser(true)
 {
   setNiceName(niceName);
   currentPresetName = addStringParameter("Preset", "Current Preset", "");
   currentPresetName->hideInEditor = true;
+  currentPresetName->hideInOutliner = true;
+
   savePresetTrigger = addTrigger("Save Preset", "Save current preset");
   savePresetTrigger->hideInEditor = true;
-
+  
 }
 
 ControllableContainer::~ControllableContainer()
@@ -160,6 +163,7 @@ void ControllableContainer::newMessage(const Parameter::ParamWithValue& pv){
 void ControllableContainer::setNiceName(const String &_niceName) {
   if (niceName == _niceName) return;
   niceName = _niceName;
+  onContainerNiceNameChanged();
   if (!hasCustomShortName) setAutoShortName();
 }
 
@@ -167,6 +171,7 @@ void ControllableContainer::setCustomShortName(const String &_shortName){
   shortName = _shortName;
   hasCustomShortName = true;
   updateChildrenControlAddress();
+  onContainerShortNameChanged();
   controllableContainerListeners.call(&ControllableContainerListener::childAddressChanged,this);
 }
 
@@ -174,6 +179,7 @@ void ControllableContainer::setAutoShortName() {
   hasCustomShortName = false;
   shortName = StringUtil::toShortName(niceName);
   updateChildrenControlAddress();
+  onContainerShortNameChanged();
   controllableContainerListeners.call(&ControllableContainerListener::childAddressChanged,this);
 }
 

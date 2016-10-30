@@ -47,6 +47,7 @@ public:
 	void controllableFeedbackUpdate(ControllableContainer *, Controllable *) override;
 	virtual void controllableFeedbackUpdateInternal(Controllable *) {} //override this in child classes
 
+
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(BaseItemUI<T>)
 
 private:
@@ -126,6 +127,7 @@ inline void BaseItemUI<T>::controllableFeedbackUpdate(ControllableContainer *, C
 	if (c == getBaseItem()->enabled) repaint();
 	controllableFeedbackUpdateInternal(c);
 }
+
 
 
 
