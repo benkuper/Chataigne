@@ -9,3 +9,9 @@
 */
 
 #include "KinectInput.h"
+
+KinectInput::KinectInput() :
+	Input("Kinect")
+{
+
+}

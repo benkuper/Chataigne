@@ -13,6 +13,17 @@
 
 
 
+#include "Input.h"
+
+class MicrophoneInput :
+	public Input
+{
+public:
+	MicrophoneInput();
+	~MicrophoneInput() {}
+
+	static MicrophoneInput * create() { return new MicrophoneInput(); }
+};
 
 
 #endif  // MICROPHONEINPUT_H_INCLUDED

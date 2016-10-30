@@ -9,3 +9,9 @@
 */
 
 #include "ResolumeInput.h"
+
+ResolumeInput::ResolumeInput() :
+	OSCInput("Resolume")
+{
+
+}

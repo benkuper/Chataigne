@@ -9,3 +9,9 @@
 */
 
 #include "LiveInput.h"
+
+LiveInput::LiveInput() :
+	OSCInput("Live")
+{
+
+}

@@ -9,3 +9,9 @@
 */
 
 #include "AugmentaInput.h"
+
+AugmentaInput::AugmentaInput() :
+	OSCInput("Augmenta")
+{
+
+}

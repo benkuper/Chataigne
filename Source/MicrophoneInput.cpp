@@ -9,3 +9,9 @@
 */
 
 #include "MicrophoneInput.h"
+
+MicrophoneInput::MicrophoneInput() :
+	Input("Microphone")
+{
+
+}

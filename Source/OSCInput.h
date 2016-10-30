@@ -11,7 +11,15 @@
 #ifndef OSCINPUT_H_INCLUDED
 #define OSCINPUT_H_INCLUDED
 
+#include "Input.h"
 
+class OSCInput :
+	public Input
+{
+public:
+	OSCInput(const String &name = "OSC Input");
+	~OSCInput() {}
+};
 
 
 

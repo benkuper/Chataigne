@@ -1,11 +1,11 @@
 /*
   ==============================================================================
 
-    MIDIOutput.cpp
-    Created: 29 Oct 2016 7:19:01pm
+    MIDIOutputModule.cpp
+    Created: 30 Oct 2016 1:42:35pm
     Author:  bkupe
 
   ==============================================================================
 */
 
-#include "MIDIOutput.h"
+#include "MIDIOutputModule.h"

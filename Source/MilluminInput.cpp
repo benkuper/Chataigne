@@ -9,3 +9,9 @@
 */
 
 #include "MilluminInput.h"
+
+MilluminInput::MilluminInput() :
+	OSCInput("Millumin")
+{
+
+}

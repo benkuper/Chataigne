@@ -1,27 +1,26 @@
 /*
   ==============================================================================
 
-    MyoInput.h
-    Created: 29 Oct 2016 7:12:00pm
+    DMXInput.h
+    Created: 30 Oct 2016 1:42:41pm
     Author:  bkupe
 
   ==============================================================================
 */
 
-#ifndef MYOINPUT_H_INCLUDED
-#define MYOINPUT_H_INCLUDED
-
+#ifndef DMXINPUT_H_INCLUDED
+#define DMXINPUT_H_INCLUDED
 
 #include "Input.h"
 
-class MyoInput :
+class DMXInput :
 	public Input
 {
 public:
-	MyoInput();
-	~MyoInput() {}
+	DMXInput();
+	~DMXInput() {}
 
-	static MyoInput * create() { return new MyoInput(); }
+	static DMXInput * create() { return new DMXInput(); }
 };
 
-#endif  // MYOINPUT_H_INCLUDED
+#endif  // DMXINPUT_H_INCLUDED

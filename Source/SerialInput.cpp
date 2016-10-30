@@ -9,3 +9,9 @@
 */
 
 #include "SerialInput.h"
+
+SerialInput::SerialInput() :
+	Input("Serial")
+{
+
+}

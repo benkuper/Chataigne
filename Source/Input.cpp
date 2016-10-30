@@ -10,11 +10,20 @@
 
 #include "Input.h"
 
-Input::Input() :
-	BaseItem("Input")
+Input::Input(const String &name) :
+	BaseItem(name),
+	valueContainer("Values")
 {
+	recursiveInspectionLevel = 1;
+	addChildControllableContainer(&valueContainer);
 }
 
 Input::~Input()
 {
+
+}
+
+Array<WeakReference<Controllable>> Input::getValueControllables()
+{
+	return valueContainer.getAllControllables();
 }

@@ -9,3 +9,9 @@
 */
 
 #include "BGloveInput.h"
+
+BGloveInput::BGloveInput() :
+	OSCInput("BGlove")
+{
+
+}

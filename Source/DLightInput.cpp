@@ -9,3 +9,9 @@
 */
 
 #include "DLightInput.h"
+
+DLightInput::DLightInput() :
+	OSCInput("D-Light")
+{
+
+}

@@ -11,7 +11,18 @@
 #ifndef AUGMENTAINPUT_H_INCLUDED
 #define AUGMENTAINPUT_H_INCLUDED
 
+#include "OSCInput.h"
 
+class AugmentaInput :
+	public OSCInput
+{
+public:
+	AugmentaInput();
+	~AugmentaInput() {}
+
+
+	static AugmentaInput * create() { return new AugmentaInput(); }
+};
 
 
 

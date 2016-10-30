@@ -1,11 +1,18 @@
 /*
   ==============================================================================
 
-    MakeyMakeyInput.cpp
-    Created: 29 Oct 2016 7:15:27pm
+    MIDIOutputModule.h
+    Created: 30 Oct 2016 1:42:35pm
     Author:  bkupe
 
   ==============================================================================
 */
 
-#include "MakeyMakeyInput.h"
+#ifndef MIDIOUTPUTMODULE_H_INCLUDED
+#define MIDIOUTPUTMODULE_H_INCLUDED
+
+
+
+
+
+#endif  // MIDIOUTPUTMODULE_H_INCLUDED

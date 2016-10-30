@@ -9,3 +9,9 @@
 */
 
 #include "CustomOSCInput.h"
+
+CustomOSCInput::CustomOSCInput() :
+	OSCInput("Custom OSC")
+{
+
+}

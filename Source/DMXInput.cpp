@@ -1,18 +1,17 @@
 /*
   ==============================================================================
 
-    MIDIOutput.h
-    Created: 29 Oct 2016 7:19:01pm
+    DMXInput.cpp
+    Created: 30 Oct 2016 1:42:41pm
     Author:  bkupe
 
   ==============================================================================
 */
 
-#ifndef MIDIOUTPUT_H_INCLUDED
-#define MIDIOUTPUT_H_INCLUDED
+#include "DMXInput.h"
 
+DMXInput::DMXInput() :
+	Input("DMX")
+{
 
-
-
-
-#endif  // MIDIOUTPUT_H_INCLUDED
+}

@@ -11,8 +11,16 @@
 #ifndef CUSTOMOSCINPUT_H_INCLUDED
 #define CUSTOMOSCINPUT_H_INCLUDED
 
+#include "OSCInput.h"
 
+class CustomOSCInput :
+	public OSCInput
+{
+public:
+	CustomOSCInput();
+	~CustomOSCInput() {}
 
-
+	static CustomOSCInput * create() { return new CustomOSCInput(); }
+};
 
 #endif  // CUSTOMOSCINPUT_H_INCLUDED

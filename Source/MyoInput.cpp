@@ -9,3 +9,9 @@
 */
 
 #include "MyoInput.h"
+
+MyoInput::MyoInput() :
+	Input("Myo")
+{
+
+}

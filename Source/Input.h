@@ -17,8 +17,11 @@ class Input :
 	public BaseItem
 {
 public:
-	Input();
+	Input(const String &name = "Input");
 	virtual ~Input();
+
+	ControllableContainer valueContainer;
+	Array<WeakReference<Controllable>> getValueControllables();
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Input)
 };

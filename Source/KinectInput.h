@@ -11,8 +11,16 @@
 #ifndef KINECTINPUT_H_INCLUDED
 #define KINECTINPUT_H_INCLUDED
 
+#include "Input.h"
 
+class KinectInput :
+	public Input
+{
+public:
+	KinectInput();
+	~KinectInput() {}
 
-
+	static KinectInput * create() { return new KinectInput(); }
+};
 
 #endif  // KINECTINPUT_H_INCLUDED

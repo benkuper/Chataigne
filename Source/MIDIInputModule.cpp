@@ -9,3 +9,9 @@
 */
 
 #include "MIDIInputModule.h"
+
+MIDIInputModule::MIDIInputModule() :
+	Input("MIDI")
+{
+
+}

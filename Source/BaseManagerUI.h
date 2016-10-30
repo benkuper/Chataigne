@@ -39,10 +39,12 @@ public:
 	Colour bgColor;
 	int labelHeight = 10;
 	String managerUIName;
-
-	String addItemText;
 	bool drawContour;
 	bool drawHighlightWhenSelected;
+
+	//menu
+	bool useDefaultMenu;
+	String addItemText;
 
 	//layout
 	bool fixedItemHeight;
@@ -75,7 +77,8 @@ BaseManagerUI<M, T, U>::BaseManagerUI(const String & contentName, M * _manager, 
 	bgColor(BG_COLOR),
 	managerUIName(contentName),
 	fixedItemHeight(true),
-	useViewport(_useViewport)
+	useViewport(_useViewport),
+	useDefaultMenu(true)
 {
 	highlightColor = LIGHTCONTOUR_COLOR;
 	addItemText = "Add Item";
@@ -111,16 +114,19 @@ void BaseManagerUI<M, T, U>::mouseDown(const MouseEvent & e)
 	{
 	} else if (e.mods.isRightButtonDown())
 	{
-		PopupMenu p;
-		p.addItem(1, addItemText);
-		int result = p.show();
-		if (result)
+		if (useDefaultMenu)
 		{
-			switch (result)
+			PopupMenu p;
+			p.addItem(1, addItemText);
+			int result = p.show();
+			if (result)
 			{
-			case 1:
-				addItemFromMenu();
-				break;
+				switch (result)
+				{
+				case 1:
+					addItemFromMenu();
+					break;
+				}
 			}
 		}
 	} 

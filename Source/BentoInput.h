@@ -11,8 +11,16 @@
 #ifndef BENTOINPUT_H_INCLUDED
 #define BENTOINPUT_H_INCLUDED
 
+#include "OSCInput.h"
 
+class BentoInput :
+	public OSCInput
+{
+public:
+	BentoInput();
+	~BentoInput() {}
 
-
+	static BentoInput * create() { return new BentoInput(); }
+};
 
 #endif  // BENTOINPUT_H_INCLUDED

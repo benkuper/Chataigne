@@ -26,6 +26,7 @@ public :
 	OwnedArray<T> items;
 	
 	T * addItem();
+	void addItem(T *);
 	void removeItem(T *);
 
 	bool selectItemWhenCreated;
@@ -58,6 +59,8 @@ BaseManager<T>::BaseManager(const String & name) :
 	selectItemWhenCreated(true)
 {
 	setCanHavePresets(false);
+
+
 }
 
 template<class T>
@@ -70,16 +73,23 @@ template<class T>
 T * BaseManager<T>::addItem()
 {
 	T * item = new T();
+	addItem(item);
+	return item;
+}
+
+template<class T>
+inline void BaseManager<T>::addItem(T * item)
+{
+	jassert(items.indexOf(item) == -1); //be sure item is no here already
+
 	items.add(item);
 	BaseItem * bi = static_cast<BaseItem *>(item);
 	addChildControllableContainer(bi);
 	bi->nameParam->setValue(bi->niceName);
 	bi->addBaseItemListener(this);
 	baseManagerListeners.call(&BaseManager::Listener::itemAdded, item);
-	
-	if (selectItemWhenCreated) bi->selectThis();
 
-	return item;
+	if (selectItemWhenCreated) bi->selectThis();
 }
 
 template<class T>

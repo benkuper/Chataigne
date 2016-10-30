@@ -9,6 +9,7 @@
 */
 
 #include "InputManager.h"
+#include "InputFactory.h"
 
 juce_ImplementSingleton(InputManager)
 
@@ -19,4 +20,5 @@ InputManager::InputManager() :
 
 InputManager::~InputManager()
 {
+	InputFactory::deleteInstance();
 }

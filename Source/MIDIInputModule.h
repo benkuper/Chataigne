@@ -15,5 +15,17 @@
 //Put "*Module" to avoid confusion with JUCE MIDI classes
 
 
+#include "Input.h"
+
+class MIDIInputModule :
+	public Input
+{
+public:
+	MIDIInputModule();
+	~MIDIInputModule() {}
+
+	static MIDIInputModule * create() { return new MIDIInputModule(); }
+};
+
 
 #endif  // MIDIINPUTMODULE_H_INCLUDED

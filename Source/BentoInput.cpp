@@ -9,3 +9,9 @@
 */
 
 #include "BentoInput.h"
+
+BentoInput::BentoInput() :
+	OSCInput("Bento")
+{
+
+}

@@ -9,3 +9,8 @@
 */
 
 #include "OSCInput.h"
+
+OSCInput::OSCInput(const String & name) :
+	Input(name)
+{
+}

@@ -408,8 +408,10 @@
               </GROUP>
             </GROUP>
             <GROUP id="{F2940651-B670-E674-2846-13DED6538A06}" name="midi">
-              <FILE id="wFbUUc" name="MIDIOutput.cpp" compile="1" resource="0" file="Source/MIDIOutput.cpp"/>
-              <FILE id="eYXzzk" name="MIDIOutput.h" compile="0" resource="0" file="Source/MIDIOutput.h"/>
+              <FILE id="Audwn7" name="MIDIOutputModule.cpp" compile="1" resource="0"
+                    file="Source/MIDIOutputModule.cpp"/>
+              <FILE id="NPPHSU" name="MIDIOutputModule.h" compile="0" resource="0"
+                    file="Source/MIDIOutputModule.h"/>
             </GROUP>
             <GROUP id="{3AA08DC8-7AB1-255C-F13A-7381F9190556}" name="serial">
               <FILE id="gQJZAM" name="SerialOutput.cpp" compile="1" resource="0"
@@ -432,6 +434,12 @@
           <FILE id="dzz9H4" name="OutputManager.h" compile="0" resource="0" file="Source/OutputManager.h"/>
         </GROUP>
         <GROUP id="{A9A8ED45-01A7-5C77-F0C1-636F048908AC}" name="Input">
+          <FILE id="Aud3Vg" name="InputFactory.cpp" compile="1" resource="0"
+                file="Source/InputFactory.cpp"/>
+          <GROUP id="{A7DFA803-6400-2166-6192-BC05D7D4EA99}" name="dmx">
+            <FILE id="SRrMYx" name="DMXInput.cpp" compile="1" resource="0" file="Source/DMXInput.cpp"/>
+            <FILE id="oOyNVj" name="DMXInput.h" compile="0" resource="0" file="Source/DMXInput.h"/>
+          </GROUP>
           <GROUP id="{02D83D79-C7E3-7025-EAEE-46E8688244AC}" name="microphone">
             <FILE id="RAAaWQ" name="MicrophoneInput.cpp" compile="1" resource="0"
                   file="Source/MicrophoneInput.cpp"/>
@@ -452,12 +460,6 @@
             <FILE id="qLuzYZ" name="KinectInput.h" compile="0" resource="0" file="Source/KinectInput.h"/>
           </GROUP>
           <GROUP id="{783B46C5-42E5-D369-F0C3-147B623558AC}" name="serial">
-            <GROUP id="{1C5A439B-88DF-E343-4CAD-4E5ADFC79C0C}" name="makeymakey">
-              <FILE id="dJ3AwD" name="MakeyMakeyInput.cpp" compile="1" resource="0"
-                    file="Source/MakeyMakeyInput.cpp"/>
-              <FILE id="exR1WE" name="MakeyMakeyInput.h" compile="0" resource="0"
-                    file="Source/MakeyMakeyInput.h"/>
-            </GROUP>
             <FILE id="s90Uj9" name="SerialInput.cpp" compile="1" resource="0" file="Source/SerialInput.cpp"/>
             <FILE id="C5fYXd" name="SerialInput.h" compile="0" resource="0" file="Source/SerialInput.h"/>
           </GROUP>
@@ -524,6 +526,7 @@
             <FILE id="plzHdB" name="InputUI.cpp" compile="1" resource="0" file="Source/InputUI.cpp"/>
             <FILE id="Y9V7pa" name="InputUI.h" compile="0" resource="0" file="Source/InputUI.h"/>
           </GROUP>
+          <FILE id="uI10gr" name="InputFactory.h" compile="0" resource="0" file="Source/InputFactory.h"/>
           <FILE id="tQszO7" name="Input.cpp" compile="1" resource="0" file="Source/Input.cpp"/>
           <FILE id="hI9HMo" name="Input.h" compile="0" resource="0" file="Source/Input.h"/>
           <FILE id="mky3UW" name="InputManager.cpp" compile="1" resource="0"

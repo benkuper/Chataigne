@@ -9,3 +9,9 @@
 */
 
 #include "LeapMotionInput.h"
+
+LeapMotionInput::LeapMotionInput() :
+	Input("Leap Motion")
+{
+
+}
