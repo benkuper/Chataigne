@@ -27,3 +27,10 @@ Array<WeakReference<Controllable>> Input::getValueControllables()
 {
 	return valueContainer.getAllControllables();
 }
+
+var Input::getJSONData()
+{
+	var data = BaseItem::getJSONData();
+	data.getDynamicObject()->setProperty("type", getTypeString());
+	return data;
+}

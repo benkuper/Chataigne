@@ -22,6 +22,7 @@ public:
 	~MyoInput() {}
 
 	static MyoInput * create() { return new MyoInput(); }
+	virtual String getTypeString() const override { return "Myo"; }
 };
 
 #endif  // MYOINPUT_H_INCLUDED

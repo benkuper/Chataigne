@@ -20,9 +20,10 @@ public:
 	InspectableContent(Inspectable * inspectable);
 	virtual ~InspectableContent();
 
-	Inspectable * inspectable;
+	WeakReference<Inspectable> inspectable;
 
 	void inspectableSelectionChanged(Inspectable *) override;
+	void inspectableDestroyed(Inspectable *) override;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(InspectableContent)
 };

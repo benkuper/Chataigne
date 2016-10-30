@@ -25,6 +25,7 @@ public:
 	~MIDIInputModule() {}
 
 	static MIDIInputModule * create() { return new MIDIInputModule(); }
+	virtual String getTypeString() const override { return "MIDI"; }
 };
 
 

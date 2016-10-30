@@ -21,6 +21,7 @@ public:
 	~MilluminInput() {}
 
 	static MilluminInput * create() { return new MilluminInput(); }
+	virtual String getTypeString() const override { return "Millumin"; }
 };
 
 #endif  // MILLUMININPUT_H_INCLUDED

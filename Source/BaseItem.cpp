@@ -38,11 +38,10 @@ void BaseItem::onContainerParameterChanged(Parameter * p)
 		setNiceName(nameParam->stringValue());
 	}
 
-	onContainerParameterChangedInternal(p);;
+	onContainerParameterChangedInternal(p);
 }
 
 void BaseItem::onContainerNiceNameChanged()
 {
-	DBG("here !");
 	nameParam->setValue(niceName);
 }

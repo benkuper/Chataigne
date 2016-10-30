@@ -151,7 +151,7 @@ void LookAndFeelOO::drawToggleButton (Graphics& g, ToggleButton& button,
         g.drawRect (0, 0, button.getWidth(), button.getHeight());
     }
 
-    float fontSize = jmin (15.0f, button.getHeight() * 0.75f);
+    float fontSize = jmin (12.0f, button.getHeight() * 0.75f);
     const float tickWidth = fontSize * 1.1f;
 
     drawTickBox (g, button, 4.0f, (button.getHeight() - tickWidth) * 0.5f,
@@ -1786,7 +1786,7 @@ void LookAndFeelOO::positionDocumentWindowButtons (DocumentWindow&,
 
 int LookAndFeelOO::getDefaultMenuBarHeight()
 {
-    return 24;
+    return 20;
 }
 
 //==============================================================================

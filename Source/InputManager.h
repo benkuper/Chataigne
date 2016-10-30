@@ -23,6 +23,8 @@ public:
 	InputManager();
 	~InputManager();
 
+	virtual void addItemFromData(var data) override;
+
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(InputManager)
 
 };

@@ -21,6 +21,8 @@ public:
 	~DMXInput() {}
 
 	static DMXInput * create() { return new DMXInput(); }
+	virtual String getTypeString() const override { return "DMX"; } 
+
 };
 
 #endif  // DMXINPUT_H_INCLUDED

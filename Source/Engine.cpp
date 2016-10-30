@@ -16,7 +16,7 @@
 #include "FlapLogger.h"
 #include "PresetManager.h"
 #include "StringUtil.h"
-
+#include "Outliner.h"
 
 const char* const filenameSuffix = ".flap";
 const char* const filenameWildcard = "*.flap";
@@ -82,10 +82,17 @@ void Engine::parseCommandline(const String & commandLine){
 
 void Engine::clear(){
   
+  Outliner::getInstance()->clear();
+  Outliner::getInstance()->enabled = false;
 
   PresetManager::getInstance()->clear();
  
-  //clear managers
+  InputManager::getInstance()->clear();
+  OutputManager::getInstance()->clear();
+  StateManager::getInstance()->clear();
+  SequenceManager::getInstance()->clear();
+
+  Outliner::getInstance()->enabled = true;
 
   changed();    //fileDocument
 }

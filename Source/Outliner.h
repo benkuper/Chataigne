@@ -82,14 +82,19 @@ class Outliner : public ShapeShifterContentComponent,
 				 public ControllableContainerListener
 {
 public:
+	juce_DeclareSingleton(Outliner, true)
 
-	Outliner(const String &contentName);
+	Outliner(const String &contentName = "");
 	~Outliner();
 
 	TreeView treeView;
 	ScopedPointer<OutlinerItem> rootItem;
 
 	bool showHiddenContainers; //include or exclude in treeview the "skipInAddress" containers (may be later exposed to user as an option)
+	bool enabled; //update or not
+
+	void clear();
+	
 
 	void resized() override;
 	void paint(Graphics &g) override;

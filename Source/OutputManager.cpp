@@ -20,3 +20,12 @@ OutputManager::OutputManager() :
 OutputManager::~OutputManager()
 {
 }
+
+void OutputManager::addItemFromData(var data)
+{
+	String outputType = data.getProperty("type", "");
+	if (outputType.isEmpty()) return;
+	//Output * o = OutputFactory::getInstance()->createOutput(outputType);
+	//addItem(o);
+	addItem(); //tmp
+}

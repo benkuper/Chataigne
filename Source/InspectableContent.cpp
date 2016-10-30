@@ -18,10 +18,15 @@ InspectableContent::InspectableContent(Inspectable * _inspectable) :
 
 InspectableContent::~InspectableContent()
 {
-	inspectable->removeInspectableListener(this);
+	if(!inspectable.wasObjectDeleted()) inspectable->removeInspectableListener(this);
 }
 
 void InspectableContent::inspectableSelectionChanged(Inspectable *)
 {
 
+}
+
+void InspectableContent::inspectableDestroyed(Inspectable *)
+{
+	inspectable->removeInspectableListener(this);
 }

@@ -21,6 +21,8 @@ public:
 	~KinectInput() {}
 
 	static KinectInput * create() { return new KinectInput(); }
+	virtual String getTypeString() const override { return "Kinect"; }
+
 };
 
 #endif  // KINECTINPUT_H_INCLUDED

@@ -21,6 +21,7 @@ public:
 	~ResolumeInput() {}
 
 	static ResolumeInput * create() { return new ResolumeInput(); }
+	virtual String getTypeString() const override { return "Resolume"; }
 };
 
 

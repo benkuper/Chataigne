@@ -22,6 +22,7 @@ public:
 
 
 	static BGloveInput * create() { return new BGloveInput(); }
+	virtual String getTypeString() const override { return "BGlove"; }
 };
 
 #endif  // BGLOVEINPUT_H_INCLUDED

@@ -22,6 +22,7 @@ public:
 	~LeapMotionInput() {}
 
 	static LeapMotionInput * create() { return new LeapMotionInput(); }
+	virtual String getTypeString() const override { return "Leap"; }
 };
 
 

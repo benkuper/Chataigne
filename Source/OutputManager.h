@@ -23,6 +23,8 @@ public:
 	OutputManager();
 	~OutputManager();
 
+	virtual void addItemFromData(var data) override;
+
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(OutputManager)
 };
 

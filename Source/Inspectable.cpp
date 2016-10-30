@@ -23,6 +23,7 @@ Inspectable::Inspectable(const String & _inspectableType) :
 Inspectable::~Inspectable()
 {
 	listeners.call(&InspectableListener::inspectableDestroyed, this);
+	masterReference.clear();
 }
 
 

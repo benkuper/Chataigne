@@ -26,7 +26,8 @@ public :
 	OwnedArray<T> items;
 	
 	T * addItem();
-	void addItem(T *);
+	void addItem(T *, var data = var()); //if data is not empty, load data
+	virtual void addItemFromData(var data);; //to be overriden for specific item creation
 	void removeItem(T *);
 
 	bool selectItemWhenCreated;
@@ -34,6 +35,8 @@ public :
 	void clear();
 	void askForRemoveBaseItem(BaseItem * item) override;
 
+	var getJSONData() override;
+	void loadJSONDataInternal(var data) override;
 
 	class  Listener
 	{
@@ -58,6 +61,7 @@ BaseManager<T>::BaseManager(const String & name) :
 	ControllableContainer(name),
 	selectItemWhenCreated(true)
 {
+	saveAndLoadRecursiveData = false;
 	setCanHavePresets(false);
 	nameCanBeChangedByUser = false;
 }
@@ -77,18 +81,28 @@ T * BaseManager<T>::addItem()
 }
 
 template<class T>
-inline void BaseManager<T>::addItem(T * item)
+inline void BaseManager<T>::addItem(T * item, var data)
 {
 	jassert(items.indexOf(item) == -1); //be sure item is no here already
+	if (item == nullptr) return;
 
 	items.add(item);
 	BaseItem * bi = static_cast<BaseItem *>(item);
 	addChildControllableContainer(bi);
 	bi->nameParam->setValue(bi->niceName);
 	bi->addBaseItemListener(this);
-	baseManagerListeners.call(&BaseManager::Listener::itemAdded, item);
+	
+	if(!data.isVoid()) bi->loadJSONData(data);
 
+	baseManagerListeners.call(&BaseManager::Listener::itemAdded, item);
 	if (selectItemWhenCreated) bi->selectThis();
+}
+
+//if data is not empty, load data
+template<class T>
+void BaseManager<T>::addItemFromData(var data) 
+{
+	addItem(new T(), data);
 }
 
 template<class T>
@@ -112,6 +126,31 @@ template<class T>
 void BaseManager<T>::askForRemoveBaseItem(BaseItem * item)
 {
 	removeItem(static_cast<T*>(item));
+}
+
+template<class T>
+var BaseManager<T>::getJSONData()
+{
+	var data = ControllableContainer::getJSONData();
+	var itemsData = var();
+	for (auto &t : items)
+	{
+		itemsData.append(t->getJSONData());
+	}
+	data.getDynamicObject()->setProperty("items", itemsData);
+
+	return data;
+}
+
+template<class T>
+void BaseManager<T>::loadJSONDataInternal(var data)
+{ 
+	Array<var> * itemsData = data.getProperty("items",var()).getArray();
+	if (itemsData == nullptr) return;
+	for (auto &td : *itemsData)
+	{ 
+		addItemFromData(td);
+	}
 }
 
 

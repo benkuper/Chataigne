@@ -22,6 +22,7 @@ public:
 
 
 	static DLightInput * create() { return new DLightInput(); }
+	virtual String getTypeString() const override { return "DLight"; }
 };
 
 

@@ -37,7 +37,6 @@ public:
 
 	virtual InspectorEditor * getEditor() { jassert(false);  return nullptr; } //to override !
 
-public:
 	//Listener
 	class  InspectableListener
 	{
@@ -52,6 +51,8 @@ public:
 	void addInspectableListener(InspectableListener* newListener) { listeners.add(newListener); }
 	void removeInspectableListener(InspectableListener* listener) { listeners.remove(listener); }
 
+
+	WeakReference<Inspectable>::Master masterReference;
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Inspectable)
 };
 

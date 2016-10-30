@@ -22,6 +22,7 @@ public:
 
 
 	static AugmentaInput * create() { return new AugmentaInput(); }
+	virtual String getTypeString() const override { return "Augmenta"; }
 };
 
 

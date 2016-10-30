@@ -22,6 +22,7 @@ public:
 	~KinectV2Input() {}
 
 	static KinectV2Input * create() { return new KinectV2Input(); }
+	virtual String getTypeString() const override { return "KinectV2"; }
 };
 
 

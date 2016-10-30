@@ -12,9 +12,12 @@
 #include "Engine.h"
 #include "Style.h"
 
+juce_ImplementSingleton(Outliner)
 Engine& getEngine();
 
-Outliner::Outliner(const String &contentName) : ShapeShifterContentComponent(contentName)
+Outliner::Outliner(const String &contentName) : 
+	ShapeShifterContentComponent(contentName),
+	enabled(true)
 {
 	getEngine().addControllableContainerListener(this);
 
@@ -34,6 +37,11 @@ Outliner::~Outliner()
 	getEngine().removeControllableContainerListener(this);
 }
 
+void Outliner::clear()
+{
+	rootItem->clearSubItems();
+}
+
 void Outliner::resized()
 {
 	Rectangle<int> r = getLocalBounds();
@@ -50,7 +58,7 @@ void Outliner::paint(Graphics & g)
 void Outliner::rebuildTree()
 {
 	ScopedPointer<XmlElement> os = treeView.getOpennessState(true);
-	rootItem->clearSubItems(); //should not rebuild from zero to allow use of OpennessRestorer
+	clear();
 	buildTree(rootItem, &getEngine());
 	rootItem->setOpen(true);
 
@@ -59,7 +67,7 @@ void Outliner::rebuildTree()
 
 void Outliner::buildTree(OutlinerItem * parentItem, ControllableContainer * parentContainer)
 {
-
+	if (parentContainer == nullptr) return;
 	Array<WeakReference<ControllableContainer>> childContainers = parentContainer->controllableContainers;
 	for (auto &cc : childContainers)
 	{
@@ -89,7 +97,7 @@ void Outliner::buildTree(OutlinerItem * parentItem, ControllableContainer * pare
 
 void Outliner::childStructureChanged(ControllableContainer *)
 {
-	rebuildTree();
+	if(enabled) rebuildTree();
 }
 
 

@@ -21,6 +21,7 @@ public:
 	~LiveInput() {}
 
 	static LiveInput * create() { return new LiveInput(); }
+	virtual String getTypeString() const override { return "Live"; }
 };
 
 

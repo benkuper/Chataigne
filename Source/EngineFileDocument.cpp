@@ -13,6 +13,10 @@
 
 #include "Inspector.h"
 #include "PresetManager.h"
+#include "InputManager.h"
+#include "OutputManager.h"
+#include "StateManager.h"
+#include "SequenceManager.h"
 
 
 /*================================
@@ -179,9 +183,11 @@ var Engine::getJSONData()
   data.getDynamicObject()->setProperty("metaData", metaData);
 
   data.getDynamicObject()->setProperty("presetManager", PresetManager::getInstance()->getJSONData());
-  //data.getDynamicObject()->setProperty("sourceManager", AugmentaSourcesManager::getInstance()->getJSONData());
-  //data.getDynamicObject()->setProperty("merger", AugmentaMerger::getInstance()->getJSONData());
- // data.getDynamicObject()->setProperty("outputManager", AugmentaOutputsManager::getInstance()->getJSONData());
+  data.getDynamicObject()->setProperty("inputManager", InputManager::getInstance()->getJSONData());
+  data.getDynamicObject()->setProperty("outputManager", OutputManager::getInstance()->getJSONData());
+  data.getDynamicObject()->setProperty("stateManager", StateManager::getInstance()->getJSONData());
+  data.getDynamicObject()->setProperty("sequenceManager", SequenceManager::getInstance()->getJSONData());
+
 
   return data;
 }
@@ -209,26 +215,28 @@ void Engine::loadJSONData (var data,ProgressTask * loadingTask)
 
   DynamicObject * d = data.getDynamicObject();
   ProgressTask * presetTask = loadingTask->addTask("presetManager");
-  //ProgressTask * sourceManagerTask = loadingTask->addTask("sourceManager");
-  //ProgressTask * mergerTask = loadingTask->addTask("controllerManager");
-  //ProgressTask * outputManagerTask = loadingTask->addTask("outputManager");
+  ProgressTask * inputManagerTask = loadingTask->addTask("sourceManager");
+  ProgressTask * outputManagerTask = loadingTask->addTask("outputManager");
+  ProgressTask * stateTask = loadingTask->addTask("stateManager");
+  ProgressTask * sequenceTask = loadingTask->addTask("sequenceManager");
 
   presetTask->start();
   if (d->hasProperty("presetManager")) PresetManager::getInstance()->loadJSONData(d->getProperty("presetManager"));
   presetTask->end();
 
-  /*
-  sourceManagerTask->start();
-  if (d->hasProperty("sourceManager")) AugmentaSourcesManager::getInstance()->loadJSONData(d->getProperty("sourceManager"));
-  sourceManagerTask->end();
-  mergerTask->start();
-  if (d->hasProperty("merger")) AugmentaMerger::getInstance()->loadJSONData(d->getProperty("merger"));
-  mergerTask->end();
-
+  inputManagerTask->start();
+  if (d->hasProperty("inputManager")) InputManager::getInstance()->loadJSONData(d->getProperty("inputManager"));
+  inputManagerTask->end();
   outputManagerTask->start();
-  if (d->hasProperty("outputManager"))AugmentaOutputsManager::getInstance()->loadJSONData(d->getProperty("outputManager"));
+  if (d->hasProperty("outputManager")) InputManager::getInstance()->loadJSONData(d->getProperty("outputManager"));
   outputManagerTask->end();
-  */
+  stateTask->start();
+  if (d->hasProperty("stateManager")) StateManager::getInstance()->loadJSONData(d->getProperty("stateManager"));
+  stateTask->end();
+  sequenceTask->start();
+  if (d->hasProperty("outputManager")) SequenceManager::getInstance()->loadJSONData(d->getProperty("sequenceManager"));
+  sequenceTask->end();
+
 
   if (Inspector::getInstanceWithoutCreating() != nullptr) Inspector::getInstance()->setEnabled(true); //Re enable editor
 

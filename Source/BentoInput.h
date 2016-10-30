@@ -21,6 +21,7 @@ public:
 	~BentoInput() {}
 
 	static BentoInput * create() { return new BentoInput(); }
+	virtual String getTypeString() const override { return "Bento"; }
 };
 
 #endif  // BENTOINPUT_H_INCLUDED

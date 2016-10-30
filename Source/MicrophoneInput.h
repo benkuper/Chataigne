@@ -23,6 +23,7 @@ public:
 	~MicrophoneInput() {}
 
 	static MicrophoneInput * create() { return new MicrophoneInput(); }
+	virtual String getTypeString() const override { return "Microphone"; }
 };
 
 

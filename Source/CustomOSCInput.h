@@ -21,6 +21,7 @@ public:
 	~CustomOSCInput() {}
 
 	static CustomOSCInput * create() { return new CustomOSCInput(); }
+	virtual String getTypeString() const override { return "OSC"; }
 };
 
 #endif  // CUSTOMOSCINPUT_H_INCLUDED

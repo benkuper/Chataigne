@@ -21,6 +21,7 @@ public:
 	~SerialInput() {}
 
 	static SerialInput * create() { return new SerialInput(); }
+	virtual String getTypeString() const override { return "Serial"; }
 };
 
 
