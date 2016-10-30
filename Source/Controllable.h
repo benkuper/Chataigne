@@ -13,10 +13,13 @@
 
 
 #include "JuceHeader.h"//keep
+#include "Inspectable.h"
+
 class ControllableContainer;
 class ControllableUI;
 
-class Controllable
+class Controllable :
+	public Inspectable
 {
 public:
   enum Type { //Add type here if creating new type of Controllable
@@ -91,6 +94,9 @@ public:
 
   //Script set method handling
  // static var setControllableValue(const juce::var::NativeFunctionArgs& a);
+
+
+  InspectorEditor * getEditor() override;
 
 private:
 

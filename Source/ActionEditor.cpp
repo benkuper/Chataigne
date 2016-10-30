@@ -10,11 +10,11 @@
 
 #include "ActionEditor.h"
 
-ActionEditor::ActionEditor(ActionUI * _actionUI) :
-	CustomEditor(_actionUI),
-	action(_actionUI->item),
-	cdmui(&_actionUI->item->cdm),
-	csmui(&_actionUI->item->csm)
+ActionEditor::ActionEditor(Action * _action) :
+	CustomEditor(_action),
+	action(_action),
+	cdmui(&_action->cdm),
+	csmui(&_action->csm)
 {
 	addAndMakeVisible(&cdmui);
 	addAndMakeVisible(&csmui);

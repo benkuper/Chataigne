@@ -21,8 +21,3 @@ ActionUI::~ActionUI()
 {
 
 }
-
-InspectorEditor * ActionUI::getEditor()
-{
-	return new ActionEditor(this);
-}

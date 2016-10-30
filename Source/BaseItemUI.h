@@ -11,7 +11,7 @@
 #ifndef BASEITEMUI_H_INCLUDED
 #define BASEITEMUI_H_INCLUDED
 
-#include "InspectableComponent.h"
+#include "InspectableContentComponent.h"
 #include "BaseItem.h"
 #include "AssetManager.h"
 #include "Style.h"
@@ -20,7 +20,7 @@
 
 template<class T>
 class BaseItemUI : 
-	public InspectableComponent,
+	public InspectableContentComponent,
 	public ControllableContainerListener,
 	public ButtonListener
 {
@@ -57,7 +57,7 @@ private:
 
 template<class T>
 BaseItemUI<T>::BaseItemUI(T * _item) :
-	InspectableComponent(_item),
+	InspectableContentComponent(_item),
 	item(_item),
 	headerHeight(16), headerGap(5)
 {

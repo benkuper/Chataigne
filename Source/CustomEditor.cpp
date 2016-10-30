@@ -10,8 +10,8 @@
 
 #include "CustomEditor.h"
 
-CustomEditor::CustomEditor(InspectableComponent * sourceComponent) :
-	InspectorEditor(sourceComponent)
+CustomEditor::CustomEditor(Inspectable * sourceInspectable) :
+	InspectorEditor(sourceInspectable)
 {
 }
 

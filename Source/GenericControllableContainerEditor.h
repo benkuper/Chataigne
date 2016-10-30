@@ -83,7 +83,7 @@ public:
 class GenericControllableContainerEditor : public InspectorEditor, public ButtonListener, public ControllableContainerListener
 {
 public :
-	GenericControllableContainerEditor(InspectableComponent * sourceComponent);
+	GenericControllableContainerEditor(ControllableContainer * sourceInspectable);
 	virtual ~GenericControllableContainerEditor();
 
 	TextButton parentBT;

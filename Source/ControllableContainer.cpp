@@ -10,12 +10,11 @@
 
 #include "ControllableContainer.h"
 
-
 #include "ControllableUI.h"
-
 #include "DebugHelpers.h"
 #include "StringUtil.h"
 
+#include "GenericControllableContainerEditor.h"
 
 const Identifier ControllableContainer::presetIdentifier("preset");
 const Identifier ControllableContainer::paramIdentifier("parameters");
@@ -56,6 +55,7 @@ void ControllableContainer::clear(){
   controllables.clear();
   controllableContainers.clear();
 }
+
 
 void ControllableContainer::addParameter(Parameter * p)
 {
@@ -175,6 +175,12 @@ void ControllableContainer::setAutoShortName() {
   shortName = StringUtil::toShortName(niceName);
   updateChildrenControlAddress();
   controllableContainerListeners.call(&ControllableContainerListener::childAddressChanged,this);
+}
+
+void ControllableContainer::setCanHavePresets(bool value)
+{
+	canHavePresets = value;
+	currentPresetName->isControllableExposed = false; 
 }
 
 
@@ -752,4 +758,9 @@ String ControllableContainer::getUniqueNameInContainer(const String & sourceName
   }
 
   return resultName;
+}
+
+
+InspectorEditor * ControllableContainer::getEditor() { 
+	return new GenericControllableContainerEditor(this); 
 }

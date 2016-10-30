@@ -14,40 +14,48 @@
 
 #include "ShapeShifterContent.h"
 #include "ControllableContainer.h"
-#include "InspectableComponent.h"
+#include "InspectableContentComponent.h"
 #include "ControllableEditor.h"
 
 class OutlinerItem;
-class OutlinerItemComponent : public InspectableComponent, public SettableTooltipClient
+class OutlinerItemComponent : public InspectableContentComponent, public SettableTooltipClient
 {
 public:
 	OutlinerItemComponent(OutlinerItem * item);
-	OutlinerItem * item;
+	
+
+	WeakReference<OutlinerItem> item;
+
 	
 	Label label;
 	
 	void paint(Graphics &g) override;
-	void mouseDown(const MouseEvent &e) override;
 
-	InspectorEditor * getEditor() override;
+
 };
 
-class OutlinerItem : public TreeViewItem
+class OutlinerItem :
+	public TreeViewItem,
+	public InspectableContent
 {
 public:
 	OutlinerItem(ControllableContainer * container);
 	OutlinerItem(Controllable * controllable);
+	~OutlinerItem();
 
 	bool isContainer;
 
 	ControllableContainer * container;
 	Controllable * controllable;
-	InspectableComponent * inspectable;
-
 
 	virtual bool mightContainSubItems() override;
 
 	Component * createItemComponent() override;
+
+	String getUniqueName() const override;
+	void inspectableSelectionChanged(Inspectable * inspectable) override;
+
+	WeakReference<OutlinerItem>::Master masterReference;
 };
 
 class Outliner : public ShapeShifterContentComponent,

@@ -9,7 +9,7 @@
 */
 
 #include "Action.h"
-
+#include "ActionEditor.h"
 
 Action::Action() :
 	BaseItem("Action")
@@ -25,4 +25,9 @@ Action::~Action()
 void Action::onContainerParameterChangedInternal(Parameter * p)
 {
 	if (p == enabled) actionListeners.call(&Action::ActionListener::actionEnableChanged,this);
+}
+
+InspectorEditor * Action::getEditor()
+{
+	return new ActionEditor(this);
 }

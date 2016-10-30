@@ -13,13 +13,14 @@
 
 #pragma warning(disable:4244)
 
+#include "InspectableContentComponent.h"
 #include "BaseManager.h"
 #include "BaseItemUI.h"
 #include "Style.h"
 
 template<class M, class T, class U>
 class BaseManagerUI :
-	public InspectableComponent,
+	public InspectableContentComponent,
 	public BaseManager<T>::Listener
 {
 public:
@@ -32,7 +33,7 @@ public:
 	//ui
 	bool useViewport; //TODO, create a BaseManagerViewportUI
 	Component container;
-	Viewport viewport; //TODO derive BaseManagerUI from viewport, change InspectableComponent to Inspectable and keep subclass InspectableComponent for inspectable that don't need to derive Component elsewhere (same as ShapeShifterContent & ShapeShifterContentComponent)
+	Viewport viewport;
 
 	//style
 	Colour bgColor;
@@ -68,6 +69,7 @@ public:
 
 template<class M, class T, class U>
 BaseManagerUI<M, T, U>::BaseManagerUI(const String & contentName, M * _manager, bool _useViewport) :
+	InspectableContentComponent(_manager),
 	manager(_manager),
 	drawContour(false),
 	bgColor(BG_COLOR),
@@ -75,8 +77,8 @@ BaseManagerUI<M, T, U>::BaseManagerUI(const String & contentName, M * _manager, 
 	fixedItemHeight(true),
 	useViewport(_useViewport)
 {
+	highlightColor = LIGHTCONTOUR_COLOR;
 	addItemText = "Add Item";
-	relatedControllableContainer = static_cast<ControllableContainer *>(manager);
 
 	if (useViewport)
 	{
@@ -103,7 +105,8 @@ BaseManagerUI<M, T, U>::~BaseManagerUI()
 template<class M, class T, class U>
 void BaseManagerUI<M, T, U>::mouseDown(const MouseEvent & e)
 {
-	InspectableComponent::mouseDown(e);
+	InspectableContentComponent::mouseDown(e);
+
 	if (e.mods.isLeftButtonDown())
 	{
 	} else if (e.mods.isRightButtonDown())

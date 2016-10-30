@@ -13,15 +13,15 @@
 
 #include "JuceHeader.h"//keep
 
-class InspectableComponent;
+class Inspectable;
 
 class InspectorEditor : public Component, public ComponentListener
 {
 public:
-	InspectorEditor(InspectableComponent * sourceComponent);
+	InspectorEditor(Inspectable * sourceInspectable);
 	virtual ~InspectorEditor();
 
-	InspectableComponent * sourceComponent;
+	Inspectable * sourceInspectable;
 
 	void resized() override;
 

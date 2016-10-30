@@ -32,6 +32,8 @@ public:
 
 	void onContainerParameterChangedInternal(Parameter * p) override;
 
+	InspectorEditor * getEditor() override;
+
 	class ActionListener
 	{
 	public:

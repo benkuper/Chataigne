@@ -15,6 +15,7 @@ juce_ImplementSingleton(ConditionManager)
 ConditionManager::ConditionManager() :
 	BaseManager<Condition>("Conditions")
 {
+	selectItemWhenCreated = false;
 }
 
 ConditionManager::~ConditionManager()

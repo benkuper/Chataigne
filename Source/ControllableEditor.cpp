@@ -11,8 +11,9 @@
 #include "ControllableEditor.h"
 #include "ControllableUI.h"
 
-ControllableEditor::ControllableEditor(InspectableComponent * sourceComponent, Controllable * _controllable) :
-	CustomEditor(sourceComponent), controllable(_controllable),
+ControllableEditor::ControllableEditor(Controllable * _controllable) :
+	CustomEditor((Inspectable *)controllable), 
+	controllable(_controllable),
 	label("Label")
 {
 	ui = controllable->createDefaultUI();

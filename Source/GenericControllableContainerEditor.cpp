@@ -12,19 +12,15 @@
 #include "InspectableComponent.h"
 #include "ControllableUI.h"
 
-GenericControllableContainerEditor::GenericControllableContainerEditor(InspectableComponent * sourceComponent) :
-	InspectorEditor(sourceComponent),
+GenericControllableContainerEditor::GenericControllableContainerEditor(ControllableContainer * _sourceContainer) :
+	InspectorEditor((Inspectable *)_sourceContainer),
+	sourceContainer(_sourceContainer),
 	parentBT("Up","Go back to parent container")
 {
 
 	parentBT.addListener(this);
-
-	sourceContainer = sourceComponent->relatedControllableContainer;
-	addChildComponent(parentBT);
-
-	
+	addChildComponent(parentBT);	
 	setCurrentInspectedContainer(sourceContainer);
-
 	sourceContainer->addControllableContainerListener(this);
 
 	resized();
@@ -60,7 +56,7 @@ void GenericControllableContainerEditor::setCurrentInspectedContainer(Controllab
 		jassert(tc != nullptr); //If here, trying to inspect a container that is not a child of the source inspectable container
 	}
 
-	innerContainer = new CCInnerContainer(this,cc, 0, ccLevel == 0?sourceComponent->recursiveInspectionLevel:0, sourceComponent->canInspectChildContainersBeyondRecursion);
+	innerContainer = new CCInnerContainer(this,cc, 0, ccLevel == 0? sourceInspectable->recursiveInspectionLevel:0, sourceInspectable->canInspectChildContainersBeyondRecursion);
 	addAndMakeVisible(innerContainer);
 
 

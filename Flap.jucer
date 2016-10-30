@@ -105,6 +105,10 @@
             <FILE id="uxthfU" name="PresetManager.h" compile="0" resource="0" file="Source/PresetManager.h"/>
           </GROUP>
           <GROUP id="{3494DD39-F8EC-9CF3-17FC-56FA55DD23A4}" name="ui">
+            <FILE id="LUVvye" name="GenericControllableContainerEditor.cpp" compile="1"
+                  resource="0" file="Source/GenericControllableContainerEditor.cpp"/>
+            <FILE id="OYxmdk" name="GenericControllableContainerEditor.h" compile="0"
+                  resource="0" file="Source/GenericControllableContainerEditor.h"/>
             <FILE id="YwlcrS" name="ControllableEditor.cpp" compile="1" resource="0"
                   file="Source/ControllableEditor.cpp"/>
             <FILE id="cnZPJJ" name="ControllableEditor.h" compile="0" resource="0"
@@ -528,14 +532,16 @@
         </GROUP>
       </GROUP>
       <GROUP id="{2DF4D64E-836D-4E93-62F8-4821230FE70D}" name="Inspector">
-        <FILE id="LUVvye" name="GenericControllableContainerEditor.cpp" compile="1"
-              resource="0" file="Source/GenericControllableContainerEditor.cpp"/>
-        <FILE id="OYxmdk" name="GenericControllableContainerEditor.h" compile="0"
-              resource="0" file="Source/GenericControllableContainerEditor.h"/>
-        <FILE id="GbEV8t" name="InspectableComponent.cpp" compile="1" resource="0"
-              file="Source/InspectableComponent.cpp"/>
-        <FILE id="La4Qcp" name="InspectableComponent.h" compile="0" resource="0"
-              file="Source/InspectableComponent.h"/>
+        <FILE id="x8ry75" name="InspectableContent.cpp" compile="1" resource="0"
+              file="Source/InspectableContent.cpp"/>
+        <FILE id="vsAh9m" name="InspectableContent.h" compile="0" resource="0"
+              file="Source/InspectableContent.h"/>
+        <FILE id="dxb7YU" name="Inspectable.cpp" compile="1" resource="0" file="Source/Inspectable.cpp"/>
+        <FILE id="FKw1d1" name="Inspectable.h" compile="0" resource="0" file="Source/Inspectable.h"/>
+        <FILE id="GbEV8t" name="InspectableContentComponent.cpp" compile="1"
+              resource="0" file="Source/InspectableContentComponent.cpp"/>
+        <FILE id="La4Qcp" name="InspectableContentComponent.h" compile="0"
+              resource="0" file="Source/InspectableContentComponent.h"/>
         <FILE id="jYwqk3" name="Inspector.cpp" compile="1" resource="0" file="Source/Inspector.cpp"/>
         <FILE id="A1OMYJ" name="Inspector.h" compile="0" resource="0" file="Source/Inspector.h"/>
         <FILE id="gZMHpf" name="InspectorEditor.cpp" compile="1" resource="0"

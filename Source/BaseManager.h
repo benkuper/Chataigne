@@ -22,13 +22,15 @@ public :
 	BaseManager<T>(const String &name);
 	virtual ~BaseManager<T>();
 
+
 	OwnedArray<T> items;
 	
 	T * addItem();
 	void removeItem(T *);
 
-	void clear();
+	bool selectItemWhenCreated;
 
+	void clear();
 	void askForRemoveBaseItem(BaseItem * item) override;
 
 
@@ -52,8 +54,10 @@ public :
 
 template<class T>
 BaseManager<T>::BaseManager(const String & name) :
-	ControllableContainer(name)
+	ControllableContainer(name),
+	selectItemWhenCreated(true)
 {
+	setCanHavePresets(false);
 }
 
 template<class T>
@@ -72,6 +76,9 @@ T * BaseManager<T>::addItem()
 	bi->nameParam->setValue(bi->niceName);
 	bi->addBaseItemListener(this);
 	baseManagerListeners.call(&BaseManager::Listener::itemAdded, item);
+	
+	if (selectItemWhenCreated) bi->selectThis();
+
 	return item;
 }
 

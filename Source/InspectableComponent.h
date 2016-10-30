@@ -12,61 +12,7 @@
 #define INSPECTABLECOMPONENT_H_INCLUDED
 
 #include "JuceHeader.h"//keep
-
-class ControllableContainer;
-class Inspector;
-class InspectorEditor;
-
-class InspectableComponent : public Component
-{
-public:
-	InspectableComponent(ControllableContainer * relatedContainer = nullptr, const String &inspectableType = "none");
-
-	virtual ~InspectableComponent();
-
-	Inspector * inspector;
-	const String inspectableType;
-
-	virtual InspectorEditor * getEditor();
-
-	ControllableContainer * relatedControllableContainer;
-	int recursiveInspectionLevel;
-	bool canInspectChildContainersBeyondRecursion;
-
-	bool repaintOnSelectionChanged;
-	bool autoDrawHighlightWhenSelected;
-	bool autoSelectWithChildRespect;
-	bool bringToFrontOnSelect;
-
-	void mouseDown(const MouseEvent &e) override;
-
-	float rounderCornerSize;
-	virtual void paintOverChildren(Graphics &g) override;
-
-	bool isSelected;
-	virtual void selectThis();
-	virtual void setSelected(bool value);
-
-	virtual void setSelectedInternal(bool value); //to be overriden
-
-	
-public:
-	//Listener
-	class  InspectableListener
-	{
-	public:
-		/** Destructor. */
-		virtual ~InspectableListener() {}
-		virtual void inspectableSelectionChanged(InspectableComponent *) {};
-		virtual void inspectableRemoved(InspectableComponent *) {};
-	};
-
-	ListenerList<InspectableListener> listeners;
-	void addInspectableListener(InspectableListener* newListener) { listeners.add(newListener); }
-	void removeInspectableListener(InspectableListener* listener) { listeners.remove(listener); }
-
-	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(InspectableComponent)
-};
+#include "Inspectable.h"
 
 
 

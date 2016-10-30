@@ -12,17 +12,17 @@
 #define INSPECTOR_H_INCLUDED
 
 #include "ShapeShifterContent.h"
-#include "InspectableComponent.h"
+#include "Inspectable.h"
 #include "InspectorEditor.h"
 
-class Inspector : public Component, public InspectableComponent::InspectableListener, public InspectorEditor::InspectorEditorListener
+class Inspector : public Component, public Inspectable::InspectableListener, public InspectorEditor::InspectorEditorListener
 {
 public:
 	juce_DeclareSingleton(Inspector, false);
 	Inspector();
 	virtual ~Inspector();
 
-	InspectableComponent * currentComponent;
+	Inspectable * currentInspectable;
 
 	ScopedPointer<InspectorEditor> currentEditor;
 
@@ -31,14 +31,14 @@ public:
 
 	void clear();
 
-	void setCurrentComponent(InspectableComponent * component);
+	void setCurrentInspectable(Inspectable * component);
 
 	void resized() override;
 
 	void clearEditor();
-	void inspectCurrentComponent();
+	void inspectCurrent();
 
-	void inspectableRemoved(InspectableComponent * component) override;
+	void inspectableDestroyed(Inspectable * component) override;
 
 	void contentSizeChanged(InspectorEditor *) override;
 	//Listener
@@ -47,7 +47,7 @@ public:
 	public:
 		/** Destructor. */
 		virtual ~InspectorListener() {}
-		virtual void currentComponentChanged(Inspector * ) {};
+		virtual void currentInspectableChanged(Inspector * ) {};
 		virtual void contentSizeChanged(Inspector *) {};
 	};
 
@@ -96,7 +96,7 @@ public:
 	Viewport vp;
 	Inspector * inspector;
 
-	void currentComponentChanged(Inspector *) override { resized(); }
+	void currentInspectableChanged(Inspector *) override { resized(); }
 	void contentSizeChanged(Inspector *) override { resized(); }
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(InspectorViewport)

@@ -18,7 +18,7 @@ class ControllableEditor :
 	public CustomEditor
 {
 public:
-	ControllableEditor(InspectableComponent * sourceComponent, Controllable * controllable);
+	ControllableEditor(Controllable * controllable);
 
 	Controllable * controllable;
 	

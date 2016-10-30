@@ -20,10 +20,9 @@ class ActionEditor :
 	public CustomEditor
 {
 public:
-	ActionEditor(ActionUI * _action);
+	ActionEditor(Action * _action);
 	~ActionEditor();
 
-	ActionUI * actionUI;
 	Action * action;
 
 	ConditionManagerUI cdmui;

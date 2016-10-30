@@ -13,7 +13,7 @@ juce_ImplementSingleton(Inspector)
 
 Inspector::Inspector() :
 	currentEditor(nullptr),
-	currentComponent(nullptr),
+	currentInspectable(nullptr),
 	isEnabled(true)
 {
 }
@@ -27,37 +27,37 @@ void Inspector::setEnabled(bool value)
 {
 	if (isEnabled == value) return;
 
-	if (!value) setCurrentComponent(nullptr);
+	if (!value) setCurrentInspectable(nullptr);
 	isEnabled = value;
 }
 
 void Inspector::clear()
 {
-	setCurrentComponent(nullptr);
+	setCurrentInspectable(nullptr);
 }
 
-void Inspector::setCurrentComponent(InspectableComponent * c)
+void Inspector::setCurrentInspectable(Inspectable * c)
 {
-	if (c == currentComponent) return;
+	if (c == currentInspectable) return;
 	if (!isEnabled) return;
 
-	if (currentComponent != nullptr)
+	if (currentInspectable != nullptr)
 	{
 		clearEditor();
-		currentComponent->setSelected(false);
-		currentComponent->removeInspectableListener(this);
+		currentInspectable->setSelected(false);
+		currentInspectable->removeInspectableListener(this);
 	}
 
-	currentComponent = c;
+	currentInspectable = c;
 
-	if (currentComponent != nullptr)
+	if (currentInspectable != nullptr)
 	{
-		currentComponent->setSelected(true);
-		currentComponent->addInspectableListener(this);
-		inspectCurrentComponent();
+		currentInspectable->setSelected(true);
+		currentInspectable->addInspectableListener(this);
+		inspectCurrent();
 	}
 
-	listeners.call(&InspectorListener::currentComponentChanged, this);
+	listeners.call(&InspectorListener::currentInspectableChanged, this);
 }
 
 void Inspector::resized()
@@ -75,22 +75,30 @@ void Inspector::clearEditor()
 	}
 }
 
-void Inspector::inspectCurrentComponent()
+void Inspector::inspectCurrent()
 {
-	if (currentComponent == nullptr) return;
-	if (currentEditor != nullptr) currentEditor->removeInspectorEditorListener(this);
-	currentEditor = currentComponent->getEditor();
-	if (currentEditor != nullptr) currentEditor->addInspectorEditorListener(this);
-	addAndMakeVisible(currentEditor);
+	if (currentInspectable == nullptr) return;
+	
+	if (currentEditor != nullptr)
+	{
+		currentEditor->removeInspectorEditorListener(this);
+	}
 
-	getTopLevelComponent()->toFront(true);
+	currentEditor = currentInspectable->getEditor();
+	
+	if (currentEditor != nullptr)
+	{
+		currentEditor->addInspectorEditorListener(this);
+		addAndMakeVisible(currentEditor);
+		getTopLevelComponent()->toFront(true);
+	}
 
 	resized();
 }
 
-void Inspector::inspectableRemoved(InspectableComponent * component)
+void Inspector::inspectableDestroyed(Inspectable * inspectable)
 {
-	if (component == currentComponent) setCurrentComponent(nullptr);
+	if (inspectable == currentInspectable) setCurrentInspectable(nullptr);
 }
 
 void Inspector::contentSizeChanged(InspectorEditor *)

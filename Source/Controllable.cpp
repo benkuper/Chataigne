@@ -12,6 +12,7 @@
 #include "ControllableContainer.h"
 //#include "JsHelpers.h"
 #include "StringUtil.h"
+#include "ControllableEditor.h"
 
 Controllable::Controllable(const Type &type, const String & niceName, const String &description, bool enabled) :
     type(type),
@@ -84,6 +85,9 @@ String Controllable::getControlAddress(ControllableContainer * relativeTo)
   return parentContainer->getControlAddress(relativeTo) + "/"+shortName;
 #endif
 }
+
+
+InspectorEditor * Controllable::getEditor() { return new ControllableEditor(this); }
 
 /*
 DynamicObject * Controllable::createDynamicObject()

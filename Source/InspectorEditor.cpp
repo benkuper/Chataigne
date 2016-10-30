@@ -10,8 +10,8 @@
 
 #include "InspectorEditor.h"
 
-InspectorEditor::InspectorEditor(InspectableComponent * _sourceComponent) :
-	sourceComponent(_sourceComponent)
+InspectorEditor::InspectorEditor(Inspectable * _sourceInspectable) :
+	sourceInspectable(_sourceInspectable)
 {
 }
 

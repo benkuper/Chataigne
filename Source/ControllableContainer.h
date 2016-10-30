@@ -11,6 +11,7 @@
 #ifndef CONTROLLABLECONTAINER_H_INCLUDED
 #define CONTROLLABLECONTAINER_H_INCLUDED
 
+
 #include "Controllable.h"
 #include "FloatParameter.h" //keep
 #include "IntParameter.h" //keep
@@ -23,6 +24,8 @@
 #include "Trigger.h"
 #include "PresetManager.h"
 #include "DebugHelpers.h" //keep
+
+#include "Inspectable.h"
 
 class ControllableContainer;
 
@@ -40,7 +43,6 @@ public:
 	virtual void childStructureChanged(ControllableContainer *) {}
     virtual void childAddressChanged(ControllableContainer * ){};
     virtual void controllableContainerPresetLoaded(ControllableContainer *) {}
-
 };
 
 
@@ -48,6 +50,8 @@ class ControllableContainer :	public Parameter::Listener,
 								public Parameter::AsyncListener, 
 								public Trigger::Listener, 
 							    public ControllableContainerListener
+								,public Inspectable
+
 
 {
 public:
@@ -69,6 +73,7 @@ public:
     void setNiceName(const String &_niceName);
     void setCustomShortName(const String &_shortName);
     void setAutoShortName();
+	void setCanHavePresets(bool value);
 
 	Uuid uid;
 
@@ -149,6 +154,7 @@ public:
 	virtual void childStructureChanged(ControllableContainer *)override;
 
 	String getUniqueNameInContainer(const String &sourceName, int suffix = 0);
+
 private:
     // internal callback that a controllableContainer can override to react to any of it's parameter change
     //@ ben this is to avoid either:
@@ -174,7 +180,11 @@ public:
     ListenerList<ControllableContainerListener> controllableContainerListeners;
     void addControllableContainerListener(ControllableContainerListener* newListener) { controllableContainerListeners.add(newListener);}
     void removeControllableContainerListener(ControllableContainerListener* listener) { controllableContainerListeners.remove(listener);}
-  void clear();
+    void clear();
+	
+	
+	
+	InspectorEditor * getEditor() override;
 
 
 protected :
