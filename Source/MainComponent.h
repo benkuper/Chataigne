@@ -31,10 +31,8 @@ class MainContentComponent   : public Component, public ApplicationCommandTarget
 {
 public:
     //==============================================================================
-    MainContentComponent(Engine * e);
+    MainContentComponent();
     ~MainContentComponent();
-
-	Engine * engine;
 
 	void init();
 

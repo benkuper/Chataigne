@@ -38,7 +38,6 @@ public:
 
 	ApplicationCommandManager commandManager;
 	ScopedPointer<ApplicationProperties> appProperties;
-	ScopedPointer<Engine> engine;
 
 	
 	const String getApplicationName() override { return ProjectInfo::projectName; }
@@ -67,7 +66,7 @@ public:
 	class MainWindow : public DocumentWindow
 	{
 	public:
-		MainWindow(Engine * e, String name);
+		MainWindow(String name);
 
 		void closeButtonPressed() override;
 
@@ -103,7 +102,6 @@ OpenGLContext * getOpenGLContext() { return &getApp().mainWindow->openGLContext;
 ApplicationProperties& getAppProperties() { return *getApp().appProperties; }
 ApplicationCommandManager& getCommandManager() { return getApp().commandManager; }
 FlapApplication::MainWindow * getMainWindow() { return getApp().mainWindow; }
-Engine & getEngine() { return *getApp().engine; }
 //==============================================================================
 // This macro generates the main() routine that launches the app.
 START_JUCE_APPLICATION(FlapApplication)

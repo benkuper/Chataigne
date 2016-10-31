@@ -13,17 +13,16 @@
 #include "Style.h"
 
 juce_ImplementSingleton(Outliner)
-Engine& getEngine();
 
 Outliner::Outliner(const String &contentName) : 
 	ShapeShifterContentComponent(contentName),
 	enabled(true)
 {
-	getEngine().addControllableContainerListener(this);
+	Engine::getInstance()->addControllableContainerListener(this);
 
 	showHiddenContainers = false;
 	
-	rootItem = new OutlinerItem(&getEngine());
+	rootItem = new OutlinerItem(Engine::getInstance());
 	treeView.setRootItem(rootItem);
 	treeView.setRootItemVisible(false);
 	addAndMakeVisible(treeView);
@@ -34,7 +33,10 @@ Outliner::Outliner(const String &contentName) :
 
 Outliner::~Outliner()
 {
-	getEngine().removeControllableContainerListener(this);
+	DBG("Outliner destroy, engine ?" << (int)Engine::getInstanceWithoutCreating());
+	if (Engine::getInstanceWithoutCreating() != nullptr) 
+		Engine::getInstanceWithoutCreating()->removeControllableContainerListener(this);
+
 }
 
 void Outliner::clear()
@@ -57,9 +59,11 @@ void Outliner::paint(Graphics & g)
 
 void Outliner::rebuildTree()
 {
+	if (Engine::getInstanceWithoutCreating() == nullptr) return;
+
 	ScopedPointer<XmlElement> os = treeView.getOpennessState(true);
 	clear();
-	buildTree(rootItem, &getEngine());
+	buildTree(rootItem, Engine::getInstance());
 	rootItem->setOpen(true);
 
 	treeView.restoreOpennessState(*os, true);

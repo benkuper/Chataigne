@@ -11,9 +11,9 @@
 
 
 //==============================================================================
-MainContentComponent::MainContentComponent(Engine * e) : engine(e)
+MainContentComponent::MainContentComponent()
 {
-	engine->addEngineListener(this);
+	Engine::getInstance()->addEngineListener(this);
 
 	setSize(800, 600);
 	LookAndFeel::setDefaultLookAndFeel(lookAndFeelOO = new LookAndFeelOO);
@@ -39,8 +39,8 @@ MainContentComponent::~MainContentComponent()
 #if JUCE_MAC
     setMacMainMenu(nullptr,nullptr,"");
 #endif
-	engine->removeEngineListener(this);
 
+	if(Engine::getInstanceWithoutCreating() != nullptr) Engine::getInstanceWithoutCreating()->removeEngineListener(this);
 	ShapeShifterManager::deleteInstance();
 
 }

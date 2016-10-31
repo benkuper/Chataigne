@@ -14,9 +14,9 @@ inline void FlapApplication::initialise(const String & commandLine)
 	appProperties = new ApplicationProperties();
 	appProperties->setStorageParameters(options);
 
-	engine = new Engine();
-	mainWindow = new MainWindow(engine, getApplicationName());
+	mainWindow = new MainWindow(getApplicationName());
 
+	Engine * engine = Engine::getInstance();
 	engine->parseCommandline(commandLine);
 	if (!engine->getFile().existsAsFile()) {
 		engine->createNewGraph();
@@ -28,9 +28,9 @@ inline void FlapApplication::initialise(const String & commandLine)
 inline void FlapApplication::shutdown()
 {
 	// Add your application's shutdown code here..
-
 	mainWindow = nullptr; // (deletes our window)
-	engine = nullptr;
+	
+	Engine::deleteInstance();
 }
 
 //==============================================================================
@@ -49,13 +49,13 @@ inline void FlapApplication::anotherInstanceStarted(const String & commandLine)
 	// the other instance's command-line arguments were.
 }
 
-inline FlapApplication::MainWindow::MainWindow(Engine * e, String name) : DocumentWindow(name,
+inline FlapApplication::MainWindow::MainWindow(String name) : DocumentWindow(name,
 	Colours::lightgrey,
 	DocumentWindow::allButtons)
 	//,sender("SpoutMainAugmenta")
 {
 	setUsingNativeTitleBar(true);
-	mainComponent = new MainContentComponent(e);
+	mainComponent = new MainContentComponent();
 	setContentOwned(mainComponent, true);
 	setResizable(true, true);
 	setOpaque(true);

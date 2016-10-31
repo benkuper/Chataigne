@@ -18,6 +18,8 @@
 #include "StringUtil.h"
 #include "Outliner.h"
 
+juce_ImplementSingleton(Engine) 
+
 const char* const filenameSuffix = ".flap";
 const char* const filenameWildcard = "*.flap";
 
@@ -44,7 +46,9 @@ Engine::Engine():
 Engine::~Engine(){
 
 //delete managers
-  
+	DBG("Engine destroy");
+  Outliner::deleteInstance();
+
   InputManager::deleteInstance();
   OutputManager::deleteInstance();
   StateManager::deleteInstance();
@@ -82,8 +86,11 @@ void Engine::parseCommandline(const String & commandLine){
 
 void Engine::clear(){
   
-  Outliner::getInstance()->clear();
-  Outliner::getInstance()->enabled = false;
+	if (Outliner::getInstanceWithoutCreating())
+	{
+		Outliner::getInstanceWithoutCreating()->clear();
+		Outliner::getInstanceWithoutCreating()->enabled = false;
+	}
 
   PresetManager::getInstance()->clear();
  
@@ -92,7 +99,7 @@ void Engine::clear(){
   StateManager::getInstance()->clear();
   SequenceManager::getInstance()->clear();
 
-  Outliner::getInstance()->enabled = true;
+  if (Outliner::getInstanceWithoutCreating()) Outliner::getInstanceWithoutCreating()->enabled = true;
 
   changed();    //fileDocument
 }

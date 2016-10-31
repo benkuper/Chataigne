@@ -122,8 +122,8 @@ bool MainContentComponent::perform(const InvocationInfo& info) {
       int result = AlertWindow::showYesNoCancelBox(AlertWindow::QuestionIcon, "Save document", "Do you want to save the document before creating a new one ?");
       if (result != 0)
       {
-        if (result == 1) engine->save(true, true);
-        engine->createNewGraph();
+        if (result == 1) Engine::getInstance()->save(true, true);
+        Engine::getInstance()->createNewGraph();
 
       }
     }
@@ -134,8 +134,8 @@ bool MainContentComponent::perform(const InvocationInfo& info) {
       int result = AlertWindow::showYesNoCancelBox(AlertWindow::QuestionIcon, "Save document", "Do you want to save the document before opening a new one ?");
       if (result != 0)
       {
-		if (result == 1) engine->save(true, true);
-		engine->loadFromUserSpecifiedFile(true);
+		if (result == 1) Engine::getInstance()->save(true, true);
+		Engine::getInstance()->loadFromUserSpecifiedFile(true);
       }
     }
       break;
@@ -143,22 +143,22 @@ bool MainContentComponent::perform(const InvocationInfo& info) {
     case CommandIDs::openLastDocument:
     {
       // TODO implement the JUCE version calling change every time something is made (maybe todo with undomanager)
-      //			int result = engine->saveIfNeededAndUserAgrees();
+      //			int result = Engine::getInstance()->saveIfNeededAndUserAgrees();
       int result = AlertWindow::showYesNoCancelBox(AlertWindow::QuestionIcon, "Save document", "Do you want to save the document before opening the last one ?");
       if (result != 0)
       {
-        if (result == 1) engine->save(true, true);
-        engine->loadFrom(engine->getLastDocumentOpened(),true);
+        if (result == 1) Engine::getInstance()->save(true, true);
+        Engine::getInstance()->loadFrom(Engine::getInstance()->getLastDocumentOpened(),true);
       }
     }
       break;
 
     case CommandIDs::save:
-      engine->save (true, true);
+      Engine::getInstance()->save (true, true);
       break;
 
     case CommandIDs::saveAs:
-      engine->saveAs (File::nonexistent, true, true, true);
+      Engine::getInstance()->saveAs (File::nonexistent, true, true, true);
       break;
 
 
@@ -182,7 +182,7 @@ void MainContentComponent::menuItemSelected(int menuItemID, int topLevelMenuInde
     RecentlyOpenedFilesList recentFiles;
     recentFiles.restoreFromString (getAppProperties().getUserSettings()
                                    ->getValue ("recentFiles"));
-    engine->loadFrom(recentFiles.getFile(menuItemID-CommandIDs::lastFileStartID),true);
+    Engine::getInstance()->loadFrom(recentFiles.getFile(menuItemID-CommandIDs::lastFileStartID),true);
   }
 }
 

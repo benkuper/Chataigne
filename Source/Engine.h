@@ -27,6 +27,8 @@ class Engine:
 	public ProgressNotifier
 {
 public:
+	juce_DeclareSingleton(Engine,true)
+
     Engine();
     ~Engine();
 
