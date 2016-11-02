@@ -16,6 +16,7 @@ juce_ImplementSingleton(InputManager)
 InputManager::InputManager() :
 	BaseManager<Input>("Inputs")
 {
+
 }
 
 InputManager::~InputManager()

@@ -36,6 +36,7 @@ public:
 	FloatSliderUI ySlider;
 	FloatSliderUI zSlider;
 
+	void setForceFeedbackOnlyInternal() override;
 	void resized() override;
 
 protected:

@@ -11,13 +11,24 @@
 #include "ActionUI.h"
 #include "ActionEditor.h"
 
-ActionUI::ActionUI(Action * input) :
-	BaseItemUI<Action>(input)
+ActionUI::ActionUI(Action * _action) :
+	BaseItemUI<Action>(_action),
+	action(_action)
 {
-
+	validUI = action->cdm.isValid->createToggle();
+	validUI->showLabel = false;
+	validUI->showValue = false;
+	addAndMakeVisible(validUI);
 }
 
 ActionUI::~ActionUI()
 {
 
+}
+
+void ActionUI::resized()
+{
+	BaseItemUI::resized();
+	Rectangle<int> r = getLocalBounds().withRight(removeBT->getX() - 2).reduced(2);
+	validUI->setBounds(r.removeFromRight(headerHeight));
 }

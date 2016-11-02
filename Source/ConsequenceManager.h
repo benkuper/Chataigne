@@ -21,8 +21,10 @@ class ConsequenceManager :
 public:
 	juce_DeclareSingleton(ConsequenceManager, true)
 
-		ConsequenceManager();
+	ConsequenceManager();
 	~ConsequenceManager();
+
+
 
 	class ConsequenceManagerListener
 	{

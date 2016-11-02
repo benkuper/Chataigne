@@ -65,7 +65,12 @@ void EnumParameterUI::enumOptionRemoved(EnumParameter *, const String &)
 	updateComboBox();
 }
 
-void EnumParameterUI::valueChanged(const var & value) 
+void EnumParameterUI::setForceFeedbackOnlyInternal()
+{
+	cb.setEnabled(parameter->isEditable && !forceFeedbackOnly);
+}
+
+void EnumParameterUI::valueChanged(const var & value)
 {
 	cb.setSelectedId(keyIdMap[value], dontSendNotification);
 }

@@ -41,6 +41,14 @@ void DoubleSliderUI::resized()
 	ySlider.setBounds(r.removeFromRight(r.getWidth() - 10));
 }
 
+
+void DoubleSliderUI::setForceFeedbackOnlyInternal()
+{
+	xSlider.setForceFeedbackOnly(!parameter->isEditable || forceFeedbackOnly);
+	ySlider.setForceFeedbackOnly(!parameter->isEditable || forceFeedbackOnly);
+
+}
+
 void DoubleSliderUI::newMessage(const Parameter::ParamWithValue & p)
 {
 	if (p.parameter == parameter)

@@ -24,9 +24,12 @@ public:
     ScopedPointer<BetterStepper> slider;
 
     void resized() override;
+
 protected:
     void valueChanged(const var &) override;
     void rangeChanged(Parameter * p) override;
+
+	void setForceFeedbackOnlyInternal() override;
 
     // Inherited via Listener
     virtual void sliderValueChanged(Slider * slider) override;

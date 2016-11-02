@@ -21,6 +21,10 @@ public :
 	InputUI(Input *);
 	virtual ~InputUI();
 
+	void resized() override;
+
+	ScopedPointer<TriggerBlinkUI> activityUI;
+
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(InputUI)
 };
 

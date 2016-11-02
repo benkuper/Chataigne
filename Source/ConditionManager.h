@@ -24,19 +24,22 @@ public:
 	ConditionManager();
 	~ConditionManager();
 
-	void conditionEnableChanged(Condition *);
-	void conditionValidationChanged(Condition *);
-	void conditionActivationChanged(Condition *);
+	void addItemInternal(Condition *, var data) override;
+	void removeItemInternal(Condition *) override;
 
-	bool areAllConditionActive();
+	BoolParameter * isValid;
+	void checkAllConditions();
+
+	bool areAllConditionsValid();
 	int getNumEnabledConditions();
-	int getNumActivatedConditions();
+	int getNumValidConditions();
+
+	void conditionValidationChanged(Condition *);
 
 	class ConditionManagerListener
 	{
 	public:
 		virtual ~ConditionManagerListener() {}
-		virtual void conditionManagerActivationChanged(ConditionManager *) {}
 		virtual void conditionManagerValidationChanged(ConditionManager *) {}
 	};
 

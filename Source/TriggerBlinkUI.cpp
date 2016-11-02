@@ -19,7 +19,7 @@ TriggerBlinkUI::TriggerBlinkUI(Trigger *t) :
 	intensity(0),
 	animateIntensity(true),
 	offColor(NORMAL_COLOR),
-	onColor(HIGHLIGHT_COLOR)
+	onColor(FEEDBACK_COLOR)
 {
     setSize(30, 20);
 
@@ -36,13 +36,11 @@ void TriggerBlinkUI::setTriggerReference(Trigger * t) {
     }
 
     trigger = t;
-
     trigger->addAsyncTriggerListener(this);
 }
 
 void TriggerBlinkUI::triggerTriggered(const Trigger *) {
     startBlink();
-
 }
 
 void TriggerBlinkUI::paint(Graphics& g)
@@ -63,7 +61,6 @@ void TriggerBlinkUI::startBlink(){
     intensity = 1;
 	if (!animateIntensity) repaint();
 	startTimer(animateIntensity ? refreshPeriod : blinkTime);
-
 }
 
 void TriggerBlinkUI::timerCallback(){
@@ -88,6 +85,5 @@ void TriggerBlinkUI::timerCallback(){
 
 
 void TriggerBlinkUI::mouseDown(const MouseEvent&) {
-    trigger->trigger();
-
+    if(!forceFeedbackOnly) trigger->trigger();
 }

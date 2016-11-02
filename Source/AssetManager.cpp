@@ -29,6 +29,12 @@ ImageButton * AssetManager::getConfigBT()
 	return getSetupBTImage(removeImage);
 }
 
+ImageButton * AssetManager::getTargetBT()
+{
+	Image removeImage = ImageCache::getFromMemory(BinaryData::target_png, BinaryData::target_pngSize);
+	return getSetupBTImage(removeImage);
+}
+
 ImageButton * AssetManager::getSetupBTImage(const Image & image)
 {
 	ImageButton * removeBT = new ImageButton();

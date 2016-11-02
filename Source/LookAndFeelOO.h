@@ -45,7 +45,7 @@ namespace LookAndFeelHelpers {
         CaretComponent::caretColourId,              0xff000000,
 
         Label::backgroundColourId,                  0x00000000,
-        Label::textColourId,                        0xff000000,
+        Label::textColourId,                        TEXT_COLOR.getARGB(),
         Label::outlineColourId,                     0x00000000,
 
         ScrollBar::backgroundColourId,              BG_COLOR.brighter(.2f).getARGB(),
@@ -56,6 +56,8 @@ namespace LookAndFeelHelpers {
         TreeView::backgroundColourId,               0x00000000,
         TreeView::dragAndDropIndicatorColourId,     0x80ff0000,
         TreeView::selectedItemBackgroundColourId,   0x00000000,
+		TreeView::oddItemsColourId,					0,
+		TreeView::evenItemsColourId,				0,
 
         PopupMenu::backgroundColourId,              BG_COLOR.getARGB(),
         PopupMenu::textColourId,                    TEXT_COLOR.getARGB(),

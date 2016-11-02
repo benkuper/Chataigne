@@ -16,9 +16,12 @@ OSCInput::OSCInput(const String & name) :
 
 	localPort = addIntParameter("Local Port", "Local Port to bind to receive OSC Messages", 12000, 1024, 65535);
 	localPort->hideInOutliner = true;
+	localPort->isTargettable = false;
+
 	isConnected = addBoolParameter("Is Receiving", "Is the receiver bound the the local port", false);
 	isConnected->isEditable = false;
 	isConnected->hideInOutliner = true;
+	isConnected->isTargettable = false;
 
 	receiver.addListener(this);
 	setupReceiver();

@@ -18,6 +18,10 @@ StringParameter::StringParameter(const String & niceName, const String &descript
 
 }
 
+StringParameter::~StringParameter()
+{
+}
+
 
 
 StringParameterUI * StringParameter::createStringParameterUI(StringParameter * target)
@@ -32,13 +36,11 @@ ControllableUI* StringParameter::createDefaultUI(Controllable * targetControllab
 };
 
 
-void StringParameter::setValue(var _value,bool silentSet,bool force ){
-    
-   
+void StringParameter::setValue(var _value,bool silentSet,bool force )
+{
     if (!force && value.toString() == _value.toString()) return;
     
     setValueInternal(_value);
-    
     
     if(_value != defaultValue) isOverriden = true;
     

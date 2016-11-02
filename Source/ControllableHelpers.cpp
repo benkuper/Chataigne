@@ -26,25 +26,29 @@ ControllableContainerPopupMenu::~ControllableContainerPopupMenu()
 
 void ControllableContainerPopupMenu::populateMenu(PopupMenu * subMenu, ControllableContainer * container, int &currentId)
 {
+	for (auto &cc : container->controllableContainers)
+	{
+
+		if (!cc->isTargettable) continue;
+
+		PopupMenu p;
+		populateMenu(&p, cc, currentId);
+		subMenu->addSubMenu(cc->niceName, p);
+	}
+
 	if (subMenu != this)
 	{
 		for (auto &c : container->controllables)
 		{
-			if (c->isControllableExposed)
-			{
-				subMenu->addItem(currentId, c->niceName);
-				controllableList.add(c);
-				currentId++;
-			}
+			if (!c->isTargettable || !c->isControllableExposed) continue;
+
+			subMenu->addItem(currentId, c->niceName);
+			controllableList.add(c);
+			currentId++;
 		}
 	}
 
-	for (auto &cc : container->controllableContainers)
-	{
-		PopupMenu p;
-		populateMenu(&p, cc,currentId);
-		subMenu->addSubMenu(cc->niceName, p);
-	}
+	
 }
 
 Controllable * ControllableContainerPopupMenu::showAndGetControllable()
@@ -54,46 +58,6 @@ Controllable * ControllableContainerPopupMenu::showAndGetControllable()
 	if (result == 0) return nullptr;
 
 	return controllableList[result-1];
-}
-
-
-
-ControllableChooser::ControllableChooser(ControllableContainer * container) :
-	rootContainer(container),
-	TextButton("Target")
-{
-	addListener(this);
-	setTooltip("Choose a target");
-}
-
-ControllableChooser::~ControllableChooser()
-{
-	removeListener(this);
-}
-
-void ControllableChooser::setCurrentControllale(Controllable * c)
-{
-	if (currentControllable == c) return;
-	currentControllable = c;
-
-	if(c != nullptr)
-	{
-		setTooltip("Current Controllable :" + c->niceName + String("\n") + c->controlAddress);
-		setButtonText(c->niceName);
-	}else
-	{
-		setTooltip("Choose a controllable");
-		setButtonText("Target");
-	}
-
-	listeners.call(&Listener::choosedControllableChanged, c);
-}
-
-void ControllableChooser::buttonClicked(Button *)
-{
-	ControllableContainerPopupMenu p(rootContainer);
-	Controllable * c = p.showAndGetControllable();
-	if(c != nullptr) setCurrentControllale(c);
 }
 
 int ControllableUIComparator::compareElements(ControllableUI * c1, ControllableUI * c2)

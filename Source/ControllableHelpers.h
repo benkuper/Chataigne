@@ -32,7 +32,7 @@ public:
 };
 
 
-class ControllableChooser : public TextButton, public ButtonListener
+class ControllableChooser : public Component, public ButtonListener
 {
 public :
 	ControllableChooser(ControllableContainer * rootContainer = nullptr);
@@ -55,7 +55,7 @@ public :
 	void addControllableChooserListener(Listener* newListener) { listeners.add(newListener); }
 	void removeControllableChooserListener(Listener* listener) { listeners.remove(listener); }
 
-	virtual void buttonClicked(Button * b) override;
+	
 };
 
 //Comparator class to sort controllable array by name

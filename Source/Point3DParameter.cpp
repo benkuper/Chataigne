@@ -45,7 +45,6 @@ void Point3DParameter::setVector(float _x, float _y, float _z)
 void Point3DParameter::setValueInternal(var & _value)
 {
 	if (!_value.isArray()) return;
-	DBG("set value internal : " << value[0].toString());
 	if (autoAdaptRange)
 	{
 		bool hasChanged = false;

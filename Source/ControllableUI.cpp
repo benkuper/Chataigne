@@ -11,8 +11,9 @@
 #include "ControllableUI.h"
 
 ControllableUI::ControllableUI(Controllable * controllable) :
-    controllable(controllable),
-Component(controllable->niceName)
+	Component(controllable->niceName),
+	controllable(controllable),
+	forceFeedbackOnly(false)
 {
     jassert(controllable!=nullptr);
     updateTooltip();
@@ -23,6 +24,12 @@ Component(controllable->niceName)
 ControllableUI::~ControllableUI()
 {
     if(controllable.get())controllable->removeControllableListener(this);
+}
+
+void ControllableUI::setForceFeedbackOnly(bool value)
+{
+	setRepaintsOnMouseActivity(false);
+	forceFeedbackOnly = value;
 }
 
 void ControllableUI::controllableStateChanged(Controllable * c)

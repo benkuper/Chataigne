@@ -23,6 +23,7 @@ public:
 	Image getGridImage();
 	ImageButton * getRemoveBT();
 	ImageButton * getConfigBT();
+	ImageButton * getTargetBT();
 
 	ImageButton * getSetupBTImage(const Image & image);
 };

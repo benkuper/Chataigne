@@ -37,6 +37,8 @@ public:
     bool nameLabelIsVisible;
     void setNameLabelVisible(bool visible);
 
+	virtual void setForceFeedbackOnlyInternal() override;
+
 	//void paint(Graphics &g) override;
     void resized() override;
 

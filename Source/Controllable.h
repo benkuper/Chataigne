@@ -31,9 +31,7 @@ public:
 	ENUM,
 	POINT2D,
 	POINT3D,
-    RANGE,
-    PROXY,
-
+    TARGET,
   };
 
 
@@ -54,6 +52,9 @@ public:
   bool hideInEditor;
   bool hideInOutliner;
   String controlAddress;
+
+  //ControllableChooser
+  bool isTargettable;
 
   //save & load
   bool isSavable;

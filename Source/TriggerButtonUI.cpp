@@ -33,8 +33,8 @@ void TriggerButtonUI::paint (Graphics& g)
 {
     Point<int> center = getBounds().getCentre();
 
-
-    Colour c = isMouseOverOrDragging() ? (isMouseButtonDown() ? HIGHLIGHT_COLOR : NORMAL_COLOR.brighter()) : NORMAL_COLOR;
+	Colour c = NORMAL_COLOR;
+	if (!forceFeedbackOnly) c = isMouseOverOrDragging() ? (isMouseButtonDown() ? HIGHLIGHT_COLOR : NORMAL_COLOR.brighter()) : NORMAL_COLOR;
 
     g.setGradientFill(ColourGradient(c,(float)center.x,(float)center.y,c.darker(.2f),2.f,2.f,true));
     g.fillRoundedRectangle(getLocalBounds().toFloat(), 4.f);
@@ -50,21 +50,20 @@ void TriggerButtonUI::resized()
 }
 
 void TriggerButtonUI::mouseDown (const MouseEvent&){
-    trigger->trigger();
-
+	if (!forceFeedbackOnly) trigger->trigger();
 }
 
 void TriggerButtonUI::mouseExit(const MouseEvent &)
 {
-    repaint();
+    if(!forceFeedbackOnly) repaint();
 }
 
 void TriggerButtonUI::mouseUp(const MouseEvent &)
 {
-    repaint();
+	if (!forceFeedbackOnly) repaint();
 }
 
 void TriggerButtonUI::mouseEnter(const MouseEvent &)
 {
-    repaint();
+	if (!forceFeedbackOnly) repaint();
 }

@@ -16,33 +16,53 @@ ConditionManager::ConditionManager() :
 	BaseManager<Condition>("Conditions")
 {
 	selectItemWhenCreated = false;
+	isValid = addBoolParameter("Is Valid","Indicates if all the conditions are valid. If so, the consequences are triggered one time, at the moment the action becomes valid.",false);
+	isValid->isSavable = false;
+	isValid->isEditable = false;
+
 }
 
 ConditionManager::~ConditionManager()
 {
 }
 
-void ConditionManager::conditionEnableChanged(Condition *)
+void ConditionManager::addItemInternal(Condition * c, var data)
 {
+	c->addConditionListener(this);
 }
+
+void ConditionManager::removeItemInternal(Condition * c)
+{
+	c->removeConditionListener(this);
+}
+
+void ConditionManager::checkAllConditions()
+{
+	bool valid = areAllConditionsValid();
+	if (valid != isValid->boolValue())
+	{
+		isValid->setValue(valid);
+		conditionManagerListeners.call(&ConditionManagerListener::conditionManagerValidationChanged, this);
+	}
+}
+
 
 void ConditionManager::conditionValidationChanged(Condition *)
 {
+	checkAllConditions();
 }
 
-void ConditionManager::conditionActivationChanged(Condition *)
+bool ConditionManager::areAllConditionsValid()
 {
-}
-
-bool ConditionManager::areAllConditionActive()
-{
+	bool hasAtLeastOneValid = false;
 	for (auto &c : items)
 	{
 		if (!c->enabled->boolValue()) continue;
-		if (!c->isActive->boolValue()) return false;
+		if (c->isValid->boolValue()) hasAtLeastOneValid = true;
+		else return false;
 	}
 
-	return true;
+	return hasAtLeastOneValid;
 }
 
 int ConditionManager::getNumEnabledConditions()
@@ -55,13 +75,13 @@ int ConditionManager::getNumEnabledConditions()
 	return result;
 }
 
-int ConditionManager::getNumActivatedConditions()
+int ConditionManager::getNumValidConditions()
 {
 	int result = 0;
 	for (auto &c : items)
 	{
 		if (!c->enabled->boolValue()) continue;
-		if (c->isActive->boolValue()) result++;
+		if (c->isValid->boolValue()) result++;
 	}
 	return result;
 }

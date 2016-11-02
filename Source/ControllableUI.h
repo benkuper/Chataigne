@@ -21,9 +21,12 @@ public:
     ControllableUI(Controllable * controllable);
     virtual ~ControllableUI();
 
-    String tooltip;
-
+	String tooltip;
     WeakReference<Controllable>  controllable;
+
+	bool forceFeedbackOnly; //if false, will rely on Controllable isEditable property. if true, will be force to no editable
+	void setForceFeedbackOnly(bool value);
+	virtual void setForceFeedbackOnlyInternal() {}
 
     // Inherited via Listener
     virtual void controllableStateChanged(Controllable * c) override;

@@ -124,7 +124,6 @@ void Parameter::loadJSONDataInternal(var data)
 	}
 	if (data.getDynamicObject()->hasProperty("value"))
 	{
-		DBG("Parameter load json value : " << data.getProperty("value", "{no value}").toString());
 		setValue(data.getProperty("value", 0));
 	}
 }

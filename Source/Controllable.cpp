@@ -25,7 +25,8 @@ Controllable::Controllable(const Type &type, const String & niceName, const Stri
 	hideInOutliner(false),
 	replaceSlashesInShortName(true),
 	isSavable(true),
-	saveValueOnly(true)
+	saveValueOnly(true),
+	isTargettable(true)
 {
 
     setEnabled(enabled);

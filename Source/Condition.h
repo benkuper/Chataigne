@@ -11,28 +11,37 @@
 #ifndef CONDITION_H_INCLUDED
 #define CONDITION_H_INCLUDED
 
-
-
-
 #include "BaseItem.h"
+#include "BaseComparator.h"
 
 class Condition :
-	public BaseItem
+	public BaseItem,
+	public BaseComparator::ComparatorListener
 {
 public:
 	Condition();
 	virtual ~Condition();
 
-	BoolParameter * isValid; //whether the action can process or not
-	BoolParameter * isActive;
-	
+	BoolParameter * isValid;
+	TargetParameter * sourceTarget;
+	WeakReference<Controllable> sourceControllable;
+	ScopedPointer<BaseComparator> comparator;
+
+
+	var getJSONData() override;
+	void loadJSONDataInternal(var data) override;
+
+	void setSourceControllable(WeakReference<Controllable> c);
+	void onContainerParameterChangedInternal(Parameter *) override;
+	void comparatorValidationChanged(BaseComparator *) override;
+
 	class ConditionListener
 	{
 	public:
 		virtual ~ConditionListener() {}
 		virtual void conditionEnableChanged(Condition *) {}
 		virtual void conditionValidationChanged(Condition *) {}
-		virtual void conditionActivationChanged(Condition *) {}
+		virtual void conditionSourceChanged(Condition *) {}
 	};
 
 

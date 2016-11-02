@@ -21,6 +21,7 @@ Input::Input(const String &name) :
 
 	logIncomingData = addBoolParameter("Log Incoming Data", "Enable / Disable logging of incoming data for this input", false);
 	logIncomingData->hideInOutliner = true;
+	logIncomingData->isTargettable = false;
 
 	activityTrigger = addTrigger("Activity", "Activity Signal");
 	activityTrigger->hideInEditor = true;

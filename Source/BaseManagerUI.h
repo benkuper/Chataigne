@@ -183,7 +183,7 @@ void BaseManagerUI<M, T, U>::resized()
 	if (useViewport)
 	{
 		viewport.setBounds(r);
-		r.removeFromRight(10);
+		r.removeFromRight(drawContour?14:10);
 		r.setTop(0);
 	}
 

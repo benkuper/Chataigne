@@ -37,6 +37,7 @@ public:
     void resized() override;
 
 protected:
+	void setForceFeedbackOnlyInternal() override;
 	virtual void newMessage(const Parameter::ParamWithValue & p) override;
 
 	//void valueChanged(const var &) override;

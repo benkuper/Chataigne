@@ -48,3 +48,8 @@ void FloatStepperUI::rangeChanged(Parameter * p){
     slider->setRange((float)p->minimumValue, (float)p->maximumValue,1);
 
 }
+
+void FloatStepperUI::setForceFeedbackOnlyInternal()
+{
+	slider->setTextBoxIsEditable(parameter->isEditable && !forceFeedbackOnly);
+}

@@ -22,6 +22,12 @@ public:
 	ActionUI(Action *);
 	virtual ~ActionUI();
 
+	Action * action;
+
+	void resized() override;
+
+	ScopedPointer<BoolToggleUI> validUI;
+
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ActionUI)
 };
 

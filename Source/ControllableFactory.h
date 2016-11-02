@@ -19,6 +19,7 @@
 #include "Point2DParameter.h"
 #include "Point3DParameter.h"
 #include "EnumParameter.h"
+#include "TargetParameter.h"
 
 class ControllableDefinition
 {

@@ -37,6 +37,14 @@ TripleSliderUI::~TripleSliderUI()
 
 }
 
+void TripleSliderUI::setForceFeedbackOnlyInternal()
+{
+	xSlider.setForceFeedbackOnly(!parameter->isEditable || forceFeedbackOnly);
+	ySlider.setForceFeedbackOnly(!parameter->isEditable || forceFeedbackOnly);
+	zSlider.setForceFeedbackOnly(!parameter->isEditable || forceFeedbackOnly);
+
+}
+
 void TripleSliderUI::resized()
 {
 	Rectangle<int> r = getLocalBounds();

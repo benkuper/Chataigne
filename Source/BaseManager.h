@@ -27,8 +27,12 @@ public :
 	
 	T * addItem();
 	void addItem(T *, var data = var()); //if data is not empty, load data
-	virtual void addItemFromData(var data);; //to be overriden for specific item creation
+	virtual void addItemFromData(var data); //to be overriden for specific item creation (from data)
 	void removeItem(T *);
+
+	//to override for specific handling like adding custom listeners, etc.
+	virtual void addItemInternal(T *, var data) {}
+	virtual void removeItemInternal(T *) {}
 
 	bool selectItemWhenCreated;
 
@@ -93,7 +97,7 @@ inline void BaseManager<T>::addItem(T * item, var data)
 	bi->addBaseItemListener(this);
 	
 	if(!data.isVoid()) bi->loadJSONData(data);
-
+	addItemInternal(item, data);
 	baseManagerListeners.call(&BaseManager::Listener::itemAdded, item);
 	if (selectItemWhenCreated) bi->selectThis();
 }
@@ -108,9 +112,11 @@ void BaseManager<T>::addItemFromData(var data)
 template<class T>
 void BaseManager<T>::removeItem(T * item)
 {
+
 	items.removeObject(item, false);
 	BaseItem * bi = static_cast<BaseItem *>(item);
 	removeChildControllableContainer(bi);
+	removeItemInternal(item);
 	bi->removeBaseItemListener(this);
 	baseManagerListeners.call(&BaseManager::Listener::itemRemoved, item);
 	delete item;

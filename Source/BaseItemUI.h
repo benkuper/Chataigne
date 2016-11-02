@@ -30,6 +30,9 @@ public:
 
 	T * item;
 
+	//ui
+	Colour bgColor;
+
 	//layout
 	int headerHeight;
 	int headerGap;
@@ -60,7 +63,8 @@ template<class T>
 BaseItemUI<T>::BaseItemUI(T * _item) :
 	InspectableContentComponent(_item),
 	item(_item),
-	headerHeight(16), headerGap(5)
+	headerHeight(16), headerGap(5),
+	bgColor(BG_COLOR.brighter(.1f))
 {
 	addMouseListener(this, true);
 
@@ -91,7 +95,7 @@ template<class T>
 void BaseItemUI<T>::paint(Graphics &g)
 {
 	Rectangle<float> r = getLocalBounds().toFloat();
-	g.setColour(getBaseItem()->enabled->boolValue()?BG_COLOR.brighter(.1f):BG_COLOR.darker(.1f));
+	g.setColour(getBaseItem()->enabled->boolValue()?bgColor:bgColor.darker(.2f));
 	g.fillRoundedRectangle(r, 4);
 }
 

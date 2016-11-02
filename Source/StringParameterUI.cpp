@@ -66,6 +66,11 @@ void StringParameterUI::setNameLabelVisible(bool visible)
     nameLabel.setVisible(visible);
 }
 
+void StringParameterUI::setForceFeedbackOnlyInternal()
+{
+	valueLabel.setEditable(false, parameter->isEditable && !forceFeedbackOnly);
+}
+
 /*
 void StringParameterUI::paint(Graphics & g)
 {

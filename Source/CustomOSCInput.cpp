@@ -17,6 +17,7 @@ CustomOSCInput::CustomOSCInput() :
 	valuesCC.saveAndLoadRecursiveData = false;
 
 	autoAdd = addBoolParameter("Auto Add", "Add automatically any message that is received\nand try to create the corresponding value depending on the message content.", true);
+	autoAdd->isTargettable = false;
 
 }
 

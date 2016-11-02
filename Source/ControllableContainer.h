@@ -20,6 +20,7 @@
 #include "EnumParameter.h"
 #include "Point2DParameter.h"
 #include "Point3DParameter.h"
+class TargetParameter; //avoid cycle dependency
 
 #include "Trigger.h"
 #include "PresetManager.h"
@@ -77,6 +78,7 @@ public:
 	void setCanHavePresets(bool value);
 
 	bool nameCanBeChangedByUser;
+	bool isTargettable; //for controllableChooser
 
 	//save / load
 	bool presetSavingIsRecursive;
@@ -100,6 +102,7 @@ public:
 	EnumParameter * addEnumParameter(const String &niceName, const String &description, const bool &enabled = true);
 	Point2DParameter * addPoint2DParameter(const String &niceName, const String &description, const bool &enabled = true);
 	Point3DParameter * addPoint3DParameter(const String &niceName, const String &description, const bool &enabled = true);
+	TargetParameter * addTargetParameter(const String &niceName, const String &description, WeakReference<ControllableContainer> rootReference = nullptr, const bool &enabled = true);
 	Trigger * addTrigger(const String &niceName, const String &description, const bool &enabled = true);
 
 	void addTriggerInternal(Trigger * t);

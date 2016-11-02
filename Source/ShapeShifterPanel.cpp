@@ -347,7 +347,6 @@ void ShapeShifterPanel::loadLayoutInternal(var layout)
 	}
 	if (layout.getDynamicObject()->hasProperty("currentContent"))
 	{
-		DBG("Load panel current content " << layout.getDynamicObject()->getProperty("currentContent").toString());
 		setCurrentContent(layout.getDynamicObject()->getProperty("currentContent").toString());
 	}
 }

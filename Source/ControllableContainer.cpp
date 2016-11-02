@@ -15,6 +15,8 @@
 #include "StringUtil.h"
 #include "ControllableFactory.h"
 
+#include "TargetParameter.h"
+
 #include "GenericControllableContainerEditor.h"
 
 
@@ -31,15 +33,19 @@ ControllableContainer::ControllableContainer(const String & niceName) :
 	localIndexedPosition(-1),
 	presetSavingIsRecursive(false),
 	saveAndLoadName(false),
-	nameCanBeChangedByUser(true)
+	nameCanBeChangedByUser(true),
+	isTargettable(true)
 {
   setNiceName(niceName);
+
   currentPresetName = addStringParameter("Preset", "Current Preset", "");
   currentPresetName->hideInEditor = true;
   currentPresetName->hideInOutliner = true;
+  currentPresetName->isTargettable = false;
 
   savePresetTrigger = addTrigger("Save Preset", "Save current preset");
-  savePresetTrigger->hideInEditor = true;
+  savePresetTrigger->hideInEditor = true; 
+  savePresetTrigger->isTargettable = false;
   
 }
 
@@ -120,6 +126,14 @@ Point3DParameter * ControllableContainer::addPoint3DParameter(const String & _ni
 {
 	String targetName = getUniqueNameInContainer(_niceName);
 	Point3DParameter * p = new Point3DParameter(targetName, _description, enabled);
+	addParameterInternal(p);
+	return p;
+}
+
+TargetParameter * ControllableContainer::addTargetParameter(const String & _niceName, const String & _description, WeakReference<ControllableContainer> rootReference, const bool & enabled)
+{
+	String targetName = getUniqueNameInContainer(_niceName);
+	TargetParameter * p = new TargetParameter(targetName, _description, "", rootReference, enabled);
 	addParameterInternal(p);
 	return p;
 }
@@ -205,7 +219,7 @@ void ControllableContainer::setAutoShortName() {
 void ControllableContainer::setCanHavePresets(bool value)
 {
 	canHavePresets = value;
-	currentPresetName->isControllableExposed = false; 
+	currentPresetName->isControllableExposed = value; 
 }
 
 
@@ -463,7 +477,7 @@ Controllable * ControllableContainer::getControllableForAddress(StringArray addr
   {
     for (auto &cc : controllableContainers)
     {
-
+		if (cc.wasObjectDeleted()) continue;
       if (!cc->skipControllableNameInAddress)
       {
         if (cc->shortName == addressSplit[0])
