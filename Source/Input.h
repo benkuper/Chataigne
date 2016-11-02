@@ -20,11 +20,13 @@ public:
 	Input(const String &name = "Input");
 	virtual ~Input();
 
-	ControllableContainer valueContainer;
+	BoolParameter * logIncomingData; 
+	Trigger * activityTrigger;
+
+	ControllableContainer valuesCC;
 	Array<WeakReference<Controllable>> getValueControllables();
 
 	virtual var getJSONData() override;
-
 	virtual String getTypeString() const { jassert(false); return ""; } //should be overriden
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Input)

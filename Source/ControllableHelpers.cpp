@@ -9,6 +9,7 @@
 */
 
 #include "ControllableHelpers.h"
+#include "ControllableUI.h"
 #include "DebugHelpers.h"
 #include "ControllableContainer.h"
 
@@ -93,4 +94,14 @@ void ControllableChooser::buttonClicked(Button *)
 	ControllableContainerPopupMenu p(rootContainer);
 	Controllable * c = p.showAndGetControllable();
 	if(c != nullptr) setCurrentControllale(c);
+}
+
+int ControllableUIComparator::compareElements(ControllableUI * c1, ControllableUI * c2)
+{
+	return c1->controllable->niceName.compareIgnoreCase(c2->controllable->niceName);
+}
+
+int ControllableComparator::compareElements(Controllable * c1, Controllable * c2)
+{
+	return c1->niceName.compareIgnoreCase(c2->niceName);
 }

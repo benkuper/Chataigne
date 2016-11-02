@@ -20,6 +20,10 @@ public:
 	CustomOSCInput();
 	~CustomOSCInput() {}
 
+	BoolParameter * autoAdd;
+
+	void processMessageInternal(const OSCMessage &msg) override;
+
 	static CustomOSCInput * create() { return new CustomOSCInput(); }
 	virtual String getTypeString() const override { return "OSC"; }
 };

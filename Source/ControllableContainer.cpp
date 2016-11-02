@@ -23,6 +23,7 @@ const Identifier ControllableContainer::paramIdentifier("parameters");
 const Identifier ControllableContainer::controlAddressIdentifier("controlAddress");
 const Identifier ControllableContainer::valueIdentifier("value");
 
+ControllableComparator ControllableContainer::comparator;
 
 ControllableContainer::ControllableContainer(const String & niceName) :
 	parentContainer(nullptr),
@@ -336,6 +337,12 @@ String ControllableContainer::getControlAddress(ControllableContainer * relative
   }
   if(addressArray.size()==0)return "";
   else return "/" + addressArray.joinIntoString("/");
+}
+
+void ControllableContainer::orderControllablesAlphabetically()
+{
+	controllables.sort(ControllableContainer::comparator, true);
+	controllableContainerListeners.call(&ControllableContainerListener::controllableContainerReordered, this);
 }
 
 void ControllableContainer::setParentContainer(ControllableContainer * container)

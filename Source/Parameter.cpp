@@ -18,10 +18,14 @@ Parameter::Parameter(const Type &type, const String &niceName, const String &des
     isSavable(true),
 	isPresettable(true),
 	isOverriden(false),
-    queuedNotifier(100)
+    queuedNotifier(100),
+	autoAdaptRange(false)
 {
     minimumValue = minValue;
     maximumValue = maxValue;
+	defaultMinValue = minValue;
+	defaultMaxValue = maxValue;
+
     defaultValue = initialValue;
 
     resetValue(true);
@@ -46,13 +50,18 @@ void Parameter::setValue(var _value, bool silentSet, bool force)
     if (!silentSet) notifyValueChanged();
 }
 
-void Parameter::setRange(var min, var max){
+void Parameter::setRange(var min, var max, bool setDefaultRange){
+	if (setDefaultRange)
+	{
+		defaultMinValue = min;
+		defaultMaxValue = max;
+	}
     minimumValue = min;
     maximumValue = max;
     listeners.call(&Listener::parameterRangeChanged,this);
 	var arr;
 	arr.append(minimumValue);arr.append(maximumValue);
-  queuedNotifier.addMessage(new ParamWithValue(this,arr));
+	queuedNotifier.addMessage(new ParamWithValue(this,arr));
 }
 
 void Parameter::setValueInternal(var & _value) //to override by child classes

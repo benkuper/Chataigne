@@ -7,7 +7,7 @@
 
   ==============================================================================
 */
-
+/*
 #ifndef CONTROLLABLEEDITOR_H_INCLUDED
 #define CONTROLLABLEEDITOR_H_INCLUDED
 
@@ -16,15 +16,12 @@
 #include "ControllableContainer.h"
 class ControllableUI;
 
-
-
 //  base class for displaying an UI presenting all control available in ControllableContainer
 
 class ControllableContainerEditor: public Component, public ControllableContainerListener
 {
 public:
     ControllableContainerEditor(ControllableContainer * ,Component*);
-
 
     virtual ~ControllableContainerEditor();
 
@@ -58,3 +55,4 @@ protected:
 
 
 #endif  // CONTROLLABLEEDITOR_H_INCLUDED
+*/

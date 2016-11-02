@@ -15,6 +15,7 @@
 #include "ControllableContainer.h"
 #include "ControllableUI.h"
 #include "PresetChooser.h"
+#include "ControllableHelpers.h"
 
 class GenericControllableContainerEditor;
 
@@ -46,14 +47,19 @@ public:
 
 	GenericControllableContainerEditor * editor;
 
+	static ControllableUIComparator comparator;
+
 	int level;
 	int maxLevel;
 	bool canAccessLowerContainers;
+
+	void resetAndBuild();
 
 	void paint(Graphics &g) override;
 	void resized() override;
 	void clear();
 
+	
 
 	void addControllableUI(Controllable * c);
 	void removeControllableUI(Controllable *c);
@@ -63,6 +69,7 @@ public:
 
 	void addCCLink(ControllableContainer * cc);
 	void removeCCLink(ControllableContainer * cc);
+	
 
 	int getContentHeight();
 
@@ -74,13 +81,17 @@ public:
 	void controllableRemoved(Controllable *)override;
 	void controllableContainerAdded(ControllableContainer *)override;
 	void controllableContainerRemoved(ControllableContainer *)override;
-	void childStructureChanged(ControllableContainer *)override;
+	void childStructureChanged(ControllableContainer *) override;
+	void controllableContainerReordered(ControllableContainer *) override;
 
 	void buttonClicked(Button * b)override;
 };
 
 
-class GenericControllableContainerEditor : public InspectorEditor, public ButtonListener, public ControllableContainerListener
+class GenericControllableContainerEditor : 
+	public InspectorEditor, 
+	public ButtonListener, 
+	public ControllableContainerListener
 {
 public :
 	GenericControllableContainerEditor(ControllableContainer * sourceInspectable);

@@ -26,12 +26,17 @@ public:
     var lastValue;
     var minimumValue;
     var maximumValue;
-    void setRange(var,var);
+
+	var defaultMinValue;//for autoAdaptRange
+	var defaultMaxValue;
+   
+	void setRange(var,var, bool setDefaultRange = true);
 
 	bool isEditable;
     bool isSavable;
     bool isPresettable;
     bool isOverriden;
+	bool autoAdaptRange;
 
     void resetValue(bool silentSet = false);
     virtual void setValue(var _value, bool silentSet = false, bool force = false);

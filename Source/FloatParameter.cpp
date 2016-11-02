@@ -21,7 +21,11 @@ FloatParameter::FloatParameter(const String & niceName, const String &descriptio
 
 void FloatParameter::setValueInternal(var & _value)
 {
-    value = jlimit<double>(minimumValue, maximumValue, _value);
+	if ((float)value < (float)minimumValue && autoAdaptRange) setRange(value, maximumValue, false);
+	else if ((float)value > (float)maximumValue && autoAdaptRange) setRange(minimumValue, value, false);
+	
+	if ((float)minimumValue > (float)maximumValue) return;
+	value = jlimit<float>(minimumValue, maximumValue, _value);
 }
 
 FloatSliderUI * FloatParameter::createSlider(FloatParameter * target)

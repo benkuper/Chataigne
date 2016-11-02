@@ -12,20 +12,26 @@
 
 Input::Input(const String &name) :
 	BaseItem(name),
-	valueContainer("Values")
+	valuesCC("Values")
 {
 	recursiveInspectionLevel = 1;
-	addChildControllableContainer(&valueContainer);
+	addChildControllableContainer(&valuesCC);
+
+	logIncomingData = addBoolParameter("Log Incoming Data", "Enable / Disable logging of incoming data for this input", false);
+	logIncomingData->hideInOutliner = true;
+
+	activityTrigger = addTrigger("Activity", "Activity Signal");
+	activityTrigger->hideInEditor = true;
 }
 
 Input::~Input()
 {
-
+	
 }
 
 Array<WeakReference<Controllable>> Input::getValueControllables()
 {
-	return valueContainer.getAllControllables();
+	return valuesCC.getAllControllables();
 }
 
 var Input::getJSONData()

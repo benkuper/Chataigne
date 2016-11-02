@@ -14,6 +14,7 @@
 #include "JuceHeader.h"//keep
 class ControllableContainer;
 class Controllable;
+class ControllableUI;
 
 
 class ControllableContainerPopupMenu : public PopupMenu
@@ -56,5 +57,20 @@ public :
 
 	virtual void buttonClicked(Button * b) override;
 };
+
+//Comparator class to sort controllable array by name
+class ControllableComparator
+{
+public:
+	int compareElements(Controllable* c1, Controllable* c2);
+};
+
+
+class ControllableUIComparator
+{
+public:
+	int compareElements(ControllableUI* c1, ControllableUI* c2);
+};
+
 
 #endif  // CONTROLLABLEHELPERS_H_INCLUDED

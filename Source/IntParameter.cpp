@@ -20,6 +20,9 @@ IntParameter::IntParameter(const String & niceName, const String &description, c
 
 void IntParameter::setValueInternal(var & _value)
 {
+	if ((int)value < (int)minimumValue && autoAdaptRange) setRange(value, maximumValue,false);
+	else if ((int)value >(int)maximumValue && autoAdaptRange) setRange(minimumValue, value, false);
+
     this->value = jlimit<int>(minimumValue, maximumValue, _value);
 }
 

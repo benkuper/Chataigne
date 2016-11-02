@@ -27,6 +27,8 @@
 
 #include "Inspectable.h"
 
+#include "ControllableHelpers.h"
+
 class ControllableContainer;
 
 //Listener
@@ -43,6 +45,7 @@ public:
 	virtual void childStructureChanged(ControllableContainer *) {}
     virtual void childAddressChanged(ControllableContainer * ){};
     virtual void controllableContainerPresetLoaded(ControllableContainer *) {}
+	virtual void controllableContainerReordered(ControllableContainer *) {}
 };
 
 
@@ -68,7 +71,6 @@ public:
 	Trigger * savePresetTrigger;
 	PresetManager::Preset * currentPreset;
 
-	
     bool skipControllableNameInAddress;
     void setNiceName(const String &_niceName);
     void setCustomShortName(const String &_shortName);
@@ -76,6 +78,8 @@ public:
 	void setCanHavePresets(bool value);
 
 	bool nameCanBeChangedByUser;
+
+	static ControllableComparator comparator;
 
 	Uuid uid;
 
@@ -124,6 +128,7 @@ public:
 	bool containsControllable(Controllable * c, int maxSearchLevels = -1);
 	String getControlAddress(ControllableContainer * relativeTo=nullptr);
 
+	void orderControllablesAlphabetically();
     
 	virtual bool loadPresetWithName(const String &name);
     virtual bool loadPreset(PresetManager::Preset * preset);

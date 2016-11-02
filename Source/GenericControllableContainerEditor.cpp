@@ -12,6 +12,8 @@
 #include "InspectableComponent.h"
 #include "ControllableUI.h"
 
+ControllableUIComparator CCInnerContainer::comparator;
+
 GenericControllableContainerEditor::GenericControllableContainerEditor(ControllableContainer * _sourceContainer) :
 	InspectorEditor((Inspectable *)_sourceContainer),
 	sourceContainer(_sourceContainer),
@@ -138,9 +140,23 @@ CCInnerContainer::CCInnerContainer(GenericControllableContainerEditor * _editor,
 	containerLabel.setSize(containerLabel.getFont().getStringWidth(containerLabel.getText()) + 10,14);
 	containerLabel.setColour(containerLabel.textColourId, TEXTNAME_COLOR);
 
+	if (container->canHavePresets)
+	{
+		presetChooser = new PresetChooser(container);
+		addAndMakeVisible(presetChooser);
+	}
+
+	resetAndBuild();
+
+}
+
+void CCInnerContainer::resetAndBuild()
+{
+	clear();
+
 	for (auto &c : container->controllables)
 	{
-		if(!c->hideInEditor) addControllableUI(c);
+		if (!c->hideInEditor) addControllableUI(c);
 	}
 
 	if (level < maxLevel)
@@ -149,20 +165,13 @@ CCInnerContainer::CCInnerContainer(GenericControllableContainerEditor * _editor,
 		{
 			addCCInnerUI(cc);
 		}
-	}else if (level == maxLevel && canAccessLowerContainers)
+	} else if (level == maxLevel && canAccessLowerContainers)
 	{
 		for (auto &cc : container->controllableContainers)
 		{
 			addCCLink(cc);
 		}
 	}
-
-	if (container->canHavePresets)
-	{
-		presetChooser = new PresetChooser(container);
-		addAndMakeVisible(presetChooser);
-	}
-
 }
 
 CCInnerContainer::~CCInnerContainer()
@@ -277,6 +286,8 @@ int CCInnerContainer::getContentHeight()
 	return h;
 }
 
+
+
 void CCInnerContainer::paint(Graphics & g)
 {
 	//if (level == 0) return;
@@ -309,6 +320,7 @@ void CCInnerContainer::resized()
 		cui->setBounds(r.removeFromTop(controllableHeight));
 		r.removeFromTop(gap);
 	}
+
 	r.removeFromTop(ccGap);
 
 	if (canAccessLowerContainers)
@@ -362,11 +374,15 @@ void CCInnerContainer::controllableContainerRemoved(ControllableContainer * cc)
 	removeCCLink(cc);
 }
 
-
 void CCInnerContainer::childStructureChanged(ControllableContainer *)
 {
-	//resized();
+	//resetAndBuild();
+}
 
+void CCInnerContainer::controllableContainerReordered(ControllableContainer *)
+{
+	controllablesUI.sort(CCInnerContainer::comparator, true); 
+	resized();
 }
 
 void CCInnerContainer::buttonClicked(Button * b)
