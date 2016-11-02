@@ -30,10 +30,12 @@ public:
 	BoolParameter * isActive;
 	BoolParameter * isValid; //whether the action can process or not
 
+	var getJSONData() override;
+	void loadJSONDataInternal(var data) override;
+
 	void onContainerParameterChangedInternal(Parameter * p) override;
 
-	InspectorEditor * getEditor() override;
-
+		
 	class ActionListener
 	{
 	public:
@@ -46,6 +48,10 @@ public:
 	ListenerList<ActionListener> actionListeners;
 	void addActionListener(ActionListener* newListener) { actionListeners.add(newListener); }
 	void removeActionListener(ActionListener* listener) { actionListeners.remove(listener); }
+
+
+	InspectorEditor * getEditor() override;
+
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Action)
 };

@@ -13,7 +13,7 @@
 juce_ImplementSingleton(MappingFilterManager)
 
 MappingFilterManager::MappingFilterManager() :
-	BaseManager<MappingFilter>("MappingFilters")
+	BaseManager<MappingFilter>("Filters")
 {
 }
 

@@ -66,7 +66,6 @@ public:
     bool hasCustomShortName;
 
 	bool canHavePresets;
-	bool presetSavingIsRecursive;
 	StringParameter * currentPresetName;
 	Trigger * savePresetTrigger;
 	PresetManager::Preset * currentPreset;
@@ -79,6 +78,11 @@ public:
 
 	bool nameCanBeChangedByUser;
 
+	//save / load
+	bool presetSavingIsRecursive;
+	bool saveAndLoadRecursiveData;
+	bool saveAndLoadName;
+
 	static ControllableComparator comparator;
 
 	Uuid uid;
@@ -87,6 +91,7 @@ public:
     Array<WeakReference<ControllableContainer>  > controllableContainers;
     WeakReference<ControllableContainer> parentContainer;
 
+	void addControllable(Controllable * p);
 	void addParameter(Parameter * p);
     FloatParameter * addFloatParameter(const String &niceName, const String &description, const float &initialValue, const float &minValue = 0, const float &maxValue = 1, const bool &enabled = true);
     IntParameter * addIntParameter(const String &niceName, const String &description, const int &initialValue, const int &minValue, const int &maxValue, const bool &enabled = true);
@@ -96,6 +101,10 @@ public:
 	Point2DParameter * addPoint2DParameter(const String &niceName, const String &description, const bool &enabled = true);
 	Point3DParameter * addPoint3DParameter(const String &niceName, const String &description, const bool &enabled = true);
 	Trigger * addTrigger(const String &niceName, const String &description, const bool &enabled = true);
+
+	void addTriggerInternal(Trigger * t);
+	void addParameterInternal(Parameter * p);
+
 
     void removeControllable(Controllable * c);
     Controllable * getControllableByName(const String &name, bool searchNiceNameToo = false);
@@ -122,7 +131,7 @@ public:
 
 
     virtual Array<WeakReference<Controllable>> getAllControllables(bool recursive = false, bool getNotExposed = false);
-    virtual Array<Parameter *> getAllParameters(bool recursive = false, bool getNotExposed = false);
+    virtual Array<WeakReference<Parameter>> getAllParameters(bool recursive = false, bool getNotExposed = false);
     virtual Controllable * getControllableForAddress(String addressSplit, bool recursive = true, bool getNotExposed = false);
     virtual Controllable * getControllableForAddress(StringArray addressSplit, bool recursive = true, bool getNotExposed = false);
 	bool containsControllable(Controllable * c, int maxSearchLevels = -1);
@@ -153,9 +162,8 @@ public:
     virtual void triggerTriggered(Trigger * p) override;
 
 
-	bool saveAndLoadRecursiveData;
 	virtual var getJSONData();
-	virtual void loadJSONData(var data);
+	virtual void loadJSONData(var data, bool createIfNotThere = false);
 	virtual void loadJSONDataInternal(var /*data*/) { /* to be overriden by child classes */ }
 
 	virtual void childStructureChanged(ControllableContainer *)override;
@@ -174,8 +182,8 @@ private:
     virtual void onContainerParameterChanged(Parameter *) {};
 	virtual void onContainerTriggerTriggered(Trigger *) {};
     virtual void onContainerParameterChangedAsync(Parameter *,const var & /*value*/){};
-    void addParameterInternal(Parameter * p);
 
+	
     int numContainerIndexed;
     int localIndexedPosition;
     
@@ -194,18 +202,6 @@ public:
 	
 	
 	InspectorEditor * getEditor() override;
-
-
-protected :
-
-    /// identifiers
-
-    static const Identifier presetIdentifier;
-    static const Identifier paramIdentifier;
-
-    static const Identifier controlAddressIdentifier;
-    static const Identifier valueIdentifier;
-
 
 private:
 

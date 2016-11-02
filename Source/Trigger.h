@@ -64,6 +64,10 @@ public:
 	void addAsyncTriggerListener(AsyncListener * l){queuedNotifier.addListener(l);}
 	void removeAsyncTriggerListener(AsyncListener * l){queuedNotifier.removeListener(l);}
 	
+
+	static Trigger * create() { return new Trigger("New Trigger",""); }
+	virtual String getTypeString() const override { return "Trigger"; }
+
 private:
 	WeakReference<Trigger>::Master masterReference;
 	friend class WeakReference<Trigger>;

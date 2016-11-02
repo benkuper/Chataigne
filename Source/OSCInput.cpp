@@ -76,8 +76,9 @@ void OSCInput::processMessage(const OSCMessage & msg)
 }
 
 
-void OSCInput::onContainerParameterChanged(Parameter * p)
+void OSCInput::onContainerParameterChangedInternal(Parameter * p)
 {
+	Input::onContainerParameterChangedInternal(p);
 	if (p == localPort) setupReceiver();
 }
 

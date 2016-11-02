@@ -47,6 +47,10 @@ public:
 	void addEnumParameterListener(Listener* newListener) { enumListeners.add(newListener); }
 	void removeEnumParameterListener(Listener* listener) { enumListeners.remove(listener); }
 
+
+	static EnumParameter * create() { return new EnumParameter("new Enum Parameter",""); }
+	virtual String getTypeString() const override { return "Enum"; }
+
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(EnumParameter)
 };
 

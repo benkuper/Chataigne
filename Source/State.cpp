@@ -13,6 +13,8 @@
 State::State() :
 	BaseItem("State")
 {
+	saveAndLoadRecursiveData = false; //custom inner data
+
 	viewUIPosition = addPoint2DParameter("Position", "Position in State Machine view");
 	viewUIPosition->setBounds(-100, -100,100,100);
 	viewUIPosition->hideInOutliner = true;
@@ -27,4 +29,19 @@ State::State() :
 
 State::~State()
 {
+}
+
+var State::getJSONData()
+{
+	var data = BaseItem::getJSONData();
+	data.getDynamicObject()->setProperty("actions", am.getJSONData());
+	data.getDynamicObject()->setProperty("mappings", mm.getJSONData());
+	return data;
+}
+
+void State::loadJSONDataInternal(var data)
+{
+	BaseItem::loadJSONDataInternal(data);
+	am.loadJSONData(data.getProperty("actions", var()));
+	mm.loadJSONData(data.getProperty("mappings", var()));
 }

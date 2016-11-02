@@ -24,6 +24,9 @@ public:
 
 	void processMessageInternal(const OSCMessage &msg) override;
 
+	var getJSONData() override;
+	void loadJSONDataInternal(var data) override;
+
 	static CustomOSCInput * create() { return new CustomOSCInput(); }
 	virtual String getTypeString() const override { return "OSC"; }
 };

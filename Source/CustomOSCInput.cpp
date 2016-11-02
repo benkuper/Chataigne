@@ -11,9 +11,12 @@
 #include "CustomOSCInput.h"
 
 CustomOSCInput::CustomOSCInput() :
-	OSCInput("Custom OSC")
+	OSCInput("OSC")
 {
-	autoAdd = addBoolParameter("Auto Add", "Add automatically any message that is received\nand try to create the corresponding value depending on the message content.", false);
+
+	valuesCC.saveAndLoadRecursiveData = false;
+
+	autoAdd = addBoolParameter("Auto Add", "Add automatically any message that is received\nand try to create the corresponding value depending on the message content.", true);
 
 }
 
@@ -59,7 +62,7 @@ void CustomOSCInput::processMessageInternal(const OSCMessage & msg)
 			break;
 
 		case Controllable::POINT3D:
-			if (msg.size() >= 3) ((Point3DParameter *)c)->setPoint(Vector3D<float>(getFloatArg(msg[0]), getFloatArg(msg[1]),getFloatArg(msg[2])));
+			if (msg.size() >= 3) ((Point3DParameter *)c)->setVector(Vector3D<float>(getFloatArg(msg[0]), getFloatArg(msg[1]),getFloatArg(msg[2])));
 			break;
 
 		default:
@@ -86,20 +89,44 @@ void CustomOSCInput::processMessageInternal(const OSCMessage & msg)
 		case 2:
 			//duplicate because may have other mechanism
 			if (msg[0].isInt32()) c = valuesCC.addIntParameter(cNiceName, "", msg[0].getInt32(), INT_MIN, INT_MAX);
-			else if (msg[0].isFloat32()) c = valuesCC.addFloatParameter(cNiceName, "", msg[0].getFloat32());
+			else if (msg[0].isFloat32())
+			{
+				c = valuesCC.addPoint2DParameter(cNiceName, "");
+				((Point2DParameter *)c)->setPoint(msg[0].getFloat32(), msg[1].getFloat32());
+			}
 			else if (msg[0].isString()) c = valuesCC.addStringParameter(cNiceName, "", msg[0].getString());
 			((Parameter *)c)->autoAdaptRange = true;
 			break;
 
 		case 3:
 			if (msg[0].isInt32()) c = valuesCC.addIntParameter(cNiceName, "", msg[0].getInt32(), msg[1].getInt32(),msg[2].getInt32());
-			else if (msg[0].isFloat32()) c = valuesCC.addFloatParameter(cNiceName, "", msg[0].getFloat32(), msg[1].getFloat32(),msg[2].getFloat32());
+			else if (msg[0].isFloat32())
+			{
+				c = valuesCC.addPoint3DParameter(cNiceName, "");
+				((Point3DParameter *)c)->setVector(msg[0].getFloat32(), msg[1].getFloat32(),msg[1].getFloat32());
+			}
 			else if (msg[0].isString()) c = valuesCC.addStringParameter(cNiceName, "", msg[0].getString());
 			((Parameter *)c)->autoAdaptRange = true;
 			break;
 		}
 
+		c->saveValueOnly = false;
 		c->setCustomShortName(cShortName); //force safeName for search
 		valuesCC.orderControllablesAlphabetically();
 	}
+}
+
+var CustomOSCInput::getJSONData()
+{
+	var data = OSCInput::getJSONData();
+	var itemsData = var();
+	data.getDynamicObject()->setProperty("values", valuesCC.getJSONData());
+	return data;
+}
+
+void CustomOSCInput::loadJSONDataInternal(var data)
+{
+	OSCInput::loadJSONDataInternal(data);
+	valuesCC.loadJSONData(data.getProperty("values", var()),true);
+	valuesCC.orderControllablesAlphabetically();
 }

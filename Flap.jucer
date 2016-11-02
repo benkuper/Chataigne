@@ -94,6 +94,10 @@
                     file="Source/StringParameterUI.cpp"/>
               <FILE id="tCHzno" name="StringParameterUI.h" compile="0" resource="0"
                     file="Source/StringParameterUI.h"/>
+              <FILE id="z4eS7N" name="TripleSliderUI.cpp" compile="1" resource="0"
+                    file="Source/TripleSliderUI.cpp"/>
+              <FILE id="XUElF5" name="TripleSliderUI.h" compile="0" resource="0"
+                    file="Source/TripleSliderUI.h"/>
             </GROUP>
           </GROUP>
           <GROUP id="{C4D0B4DA-D6AA-0958-3AB9-A6E4D02D7FAC}" name="Preset">
@@ -139,6 +143,10 @@
                 resource="0" file="Source/ControllableContainerEditor.cpp"/>
           <FILE id="C8j6Co" name="ControllableContainerEditor.h" compile="0"
                 resource="0" file="Source/ControllableContainerEditor.h"/>
+          <FILE id="vo83H1" name="ControllableFactory.cpp" compile="1" resource="0"
+                file="Source/ControllableFactory.cpp"/>
+          <FILE id="ILy9pg" name="ControllableFactory.h" compile="0" resource="0"
+                file="Source/ControllableFactory.h"/>
           <FILE id="jB1TM7" name="ControllableHelpers.cpp" compile="1" resource="0"
                 file="Source/ControllableHelpers.cpp"/>
           <FILE id="vanIip" name="ControllableHelpers.h" compile="0" resource="0"

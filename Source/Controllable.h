@@ -55,6 +55,11 @@ public:
   bool hideInOutliner;
   String controlAddress;
 
+  //save & load
+  bool isSavable;
+  bool saveValueOnly;
+
+
   bool replaceSlashesInShortName;
 
   ControllableContainer * parentContainer;
@@ -67,6 +72,11 @@ public:
 
   void setParentContainer(ControllableContainer * container);
   void updateControlAddress();
+
+  virtual var getJSONData(ControllableContainer * relativeTo = nullptr);
+  virtual var getJSONDataInternal(); // to be overriden
+  virtual void loadJSONData(var data);
+  virtual void loadJSONDataInternal(var data) {} //to be overriden
 
   String getControlAddress(ControllableContainer * relativeTo = nullptr);
 
@@ -98,6 +108,8 @@ public:
 
 
   InspectorEditor * getEditor() override;
+
+  virtual String getTypeString() const { jassert(false); return ""; } //should be overriden
 
 private:
 

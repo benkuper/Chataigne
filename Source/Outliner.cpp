@@ -88,7 +88,7 @@ void Outliner::buildTree(OutlinerItem * parentItem, ControllableContainer * pare
 		
 	}
 	
-	Array<Parameter *> childControllables = parentContainer->getAllParameters(false);
+	Array<WeakReference<Parameter>> childControllables = parentContainer->getAllParameters(false);
 
 	for (auto &c : childControllables)
 	{

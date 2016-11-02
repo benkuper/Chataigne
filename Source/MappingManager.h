@@ -14,6 +14,7 @@
 
 #include "BaseManager.h"
 #include "Mapping.h"
+
 class MappingManager :
 	public BaseManager<Mapping>
 {

@@ -32,6 +32,10 @@ public:
 	bool checkValueIsTheSame(var newValue, var oldValue) override;
 
 	ControllableUI * createDefaultUI(Controllable * targetControllable = nullptr) override;
+
+	static Point2DParameter * create() { return new Point2DParameter("New Point2D Parameter", "", 0); }
+	virtual String getTypeString() const override { return "Point 2D"; }
+
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Point2DParameter)
 };
 

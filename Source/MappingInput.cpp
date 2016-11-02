@@ -9,3 +9,13 @@
 */
 
 #include "MappingInput.h"
+
+MappingInput::MappingInput() :
+	ControllableContainer("Input")
+{
+	nameCanBeChangedByUser = false;
+}
+
+MappingInput::~MappingInput()
+{
+}

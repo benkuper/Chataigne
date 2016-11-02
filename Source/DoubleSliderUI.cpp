@@ -19,6 +19,7 @@ DoubleSliderUI::DoubleSliderUI(Point2DParameter * parameter) :
 {
 	xParam.defaultValue = 0;
 	yParam.defaultValue = 0;
+
 	xParam.addAsyncCoalescedListener(this);
 	yParam.addAsyncCoalescedListener(this);
 
@@ -53,5 +54,9 @@ void DoubleSliderUI::newMessage(const Parameter::ParamWithValue & p)
 	} else if (p.parameter == &yParam)
 	{
 		if (yParam.floatValue() != p2d->y) p2d->setPoint(xParam.floatValue(), yParam.floatValue());
+	} else if (p.isRange())
+	{
+		xParam.setRange(p.value[0], p.value[1]);
+		yParam.setRange(p.value[2], p.value[3]);
 	}
 }

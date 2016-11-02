@@ -16,15 +16,17 @@ MainContentComponent::MainContentComponent()
 	Engine::getInstance()->addEngineListener(this);
 
 	setSize(800, 600);
+	
 	LookAndFeel::setDefaultLookAndFeel(lookAndFeelOO = new LookAndFeelOO);
-
+	
 	ShapeShifterManager::getInstance()->loadLastSessionLayoutFile();
-
+	
 	(&getCommandManager())->registerAllCommandsForTarget(this);
 	(&getCommandManager())->setFirstCommandTarget(this);
-
+	
 	(&getCommandManager())->getKeyMappings()->resetToDefaultMappings();
 	addKeyListener((&getCommandManager())->getKeyMappings());
+	
 
 #if JUCE_MAC
 	setMacMainMenu(this, nullptr, "");

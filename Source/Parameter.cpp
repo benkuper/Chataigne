@@ -15,11 +15,11 @@
 Parameter::Parameter(const Type &type, const String &niceName, const String &description, var initialValue, var minValue = var(), var maxValue = var(), bool enabled) :
 	Controllable(type, niceName, description, enabled),
 	isEditable(true),
-    isSavable(true),
-	isPresettable(true),
+   isPresettable(true),
 	isOverriden(false),
     queuedNotifier(100),
 	autoAdaptRange(false)
+	
 {
     minimumValue = minValue;
     maximumValue = maxValue;
@@ -101,6 +101,32 @@ float Parameter::getNormalizedValue() {
 void Parameter::notifyValueChanged() {
     listeners.call(&Listener::parameterValueChanged, this);
     queuedNotifier.addMessage(new ParamWithValue(this,value));
+}
+
+var Parameter::getJSONDataInternal()
+{
+	var data = Controllable::getJSONDataInternal();
+	data.getDynamicObject()->setProperty("value", value);
+	if (saveValueOnly) return data;
+	data.getDynamicObject()->setProperty("minValue", minimumValue);
+	data.getDynamicObject()->setProperty("maxValue", maximumValue);
+	return data;
+}
+
+void Parameter::loadJSONDataInternal(var data)
+{
+	Controllable::loadJSONDataInternal(data);
+
+	if (!saveValueOnly)
+	{
+		if (data.getDynamicObject()->hasProperty("minValue")) setValue(data.getProperty("minValue", var()));
+		if (data.getDynamicObject()->hasProperty("maxValue")) setValue(data.getProperty("maxValue", var()));
+	}
+	if (data.getDynamicObject()->hasProperty("value"))
+	{
+		DBG("Parameter load json value : " << data.getProperty("value", "{no value}").toString());
+		setValue(data.getProperty("value", 0));
+	}
 }
 
 /*

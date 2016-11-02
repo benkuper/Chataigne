@@ -13,15 +13,10 @@
 #include "ControllableUI.h"
 #include "DebugHelpers.h"
 #include "StringUtil.h"
+#include "ControllableFactory.h"
 
 #include "GenericControllableContainerEditor.h"
 
-const Identifier ControllableContainer::presetIdentifier("preset");
-const Identifier ControllableContainer::paramIdentifier("parameters");
-
-
-const Identifier ControllableContainer::controlAddressIdentifier("controlAddress");
-const Identifier ControllableContainer::valueIdentifier("value");
 
 ControllableComparator ControllableContainer::comparator;
 
@@ -30,11 +25,12 @@ ControllableContainer::ControllableContainer(const String & niceName) :
 	hasCustomShortName(false),
 	skipControllableNameInAddress(false),
 	currentPreset(nullptr),
-	canHavePresets(true),
+	canHavePresets(false),
 	saveAndLoadRecursiveData(true),
 	numContainerIndexed(0),
 	localIndexedPosition(-1),
 	presetSavingIsRecursive(false),
+	saveAndLoadName(false),
 	nameCanBeChangedByUser(true)
 {
   setNiceName(niceName);
@@ -60,6 +56,12 @@ void ControllableContainer::clear(){
   controllableContainers.clear();
 }
 
+
+void ControllableContainer::addControllable(Controllable * c)
+{
+	if(c->type == Controllable::TRIGGER) addTriggerInternal((Trigger *)c);
+	else addParameterInternal((Parameter *)c);
+}
 
 void ControllableContainer::addParameter(Parameter * p)
 {
@@ -126,13 +128,29 @@ Trigger * ControllableContainer::addTrigger(const String & _niceName, const Stri
 {
   String targetName = getUniqueNameInContainer(_niceName);
   Trigger * t = new Trigger(targetName, _description, enabled);
-  controllables.add(t);
-  t->setParentContainer(this);
-  t->addTriggerListener(this);
-
-  controllableContainerListeners.call(&ControllableContainerListener::controllableAdded, t);
-  notifyStructureChanged();
+  addTriggerInternal(t);
   return t;
+}
+
+
+void ControllableContainer::addTriggerInternal(Trigger * t)
+{
+	controllables.add(t);
+	t->setParentContainer(this);
+	t->addTriggerListener(this);
+
+	controllableContainerListeners.call(&ControllableContainerListener::controllableAdded, t);
+	notifyStructureChanged();
+}
+
+void ControllableContainer::addParameterInternal(Parameter * p)
+{
+	p->setParentContainer(this);
+	controllables.add(p);
+	p->addParameterListener(this);
+	p->addAsyncParameterListener(this);
+	controllableContainerListeners.call(&ControllableContainerListener::controllableAdded, p);
+	notifyStructureChanged();
 }
 
 void ControllableContainer::removeControllable(Controllable * c)
@@ -328,6 +346,7 @@ ControllableContainer * ControllableContainer::getControllableContainerForAddres
 }
 
 String ControllableContainer::getControlAddress(ControllableContainer * relativeTo){
+
   StringArray addressArray;
   ControllableContainer * pc = this;
   while (pc != relativeTo && pc != nullptr)
@@ -377,9 +396,10 @@ Array<WeakReference<Controllable>> ControllableContainer::getAllControllables(bo
   return result;
 }
 
-Array<Parameter*> ControllableContainer::getAllParameters(bool recursive, bool getNotExposed)
+Array<WeakReference<Parameter>> ControllableContainer::getAllParameters(bool recursive, bool getNotExposed)
 {
-  Array<Parameter*> result;
+  Array<WeakReference<Parameter>> result;
+
   for (auto &c : controllables)
   {
     if (c->type == Controllable::Type::TRIGGER) continue;
@@ -640,18 +660,6 @@ void ControllableContainer::triggerTriggered(Trigger * t)
 }
 
 
-void ControllableContainer::addParameterInternal(Parameter * p)
-{
-  p->setParentContainer(this);
-  controllables.add(p);
-  p->addParameterListener(this);
-  p->addAsyncParameterListener(this);
-  controllableContainerListeners.call(&ControllableContainerListener::controllableAdded, p);
-  notifyStructureChanged();
-}
-
-
-
 
 
 var ControllableContainer::getJSONData()
@@ -660,27 +668,13 @@ var ControllableContainer::getJSONData()
 
   var paramsData;
 
+  Array<WeakReference<Parameter>> cont = ControllableContainer::getAllParameters(saveAndLoadRecursiveData, true);
 
-  Array<WeakReference<Controllable>> cont = ControllableContainer::getAllControllables(saveAndLoadRecursiveData, true);
-
-  for (auto &c : cont) {
-    Parameter * base = dynamic_cast<Parameter*>(c.get());
-    if (base )
-    {
-      if(base->isSavable){
-        var pData(new DynamicObject());
-        pData.getDynamicObject()->setProperty(controlAddressIdentifier, base->getControlAddress(this));
-        pData.getDynamicObject()->setProperty(valueIdentifier, base->value);
-        paramsData.append(pData);
-      }
-    }
-    else if (dynamic_cast<Trigger*>(c.get()) != nullptr) {
-
-    }
-    else {
-      // should never happen un less another Controllable type than parameter or trigger has been introduced
-      jassertfalse;
-    }
+  for (auto &wc : cont) {
+	  if (wc.wasObjectDeleted()) continue;
+	  if (!wc->isSavable) continue;
+	  if (wc == currentPresetName && !canHavePresets) continue;
+	  paramsData.append(wc->getJSONData(this));
   }
 
   /*
@@ -690,42 +684,50 @@ var ControllableContainer::getJSONData()
    }
    */
 
-
   data.getDynamicObject()->setProperty("uid",uid.toString());
-  data.getDynamicObject()->setProperty(paramIdentifier, paramsData);
-
+  data.getDynamicObject()->setProperty("parameters", paramsData);
+  if (saveAndLoadName)
+  {
+	  data.getDynamicObject()->setProperty("niceName", niceName);
+	  if (hasCustomShortName) data.getDynamicObject()->setProperty("shortName", shortName);
+  }
   return data;
 }
 
-void ControllableContainer::loadJSONData(var data)
+void ControllableContainer::loadJSONData(var data, bool createIfNotThere)
 {
+  if (data.isVoid()) return;
 
   if (data.getDynamicObject()->hasProperty("uid")) uid = data.getDynamicObject()->getProperty("uid");
+  if (data.getDynamicObject()->hasProperty("niceName")) setNiceName(data.getDynamicObject()->getProperty("niceName"));
+  if (data.getDynamicObject()->hasProperty("shortName")) setCustomShortName(data.getDynamicObject()->getProperty("shortName"));
 
-  // @ ben we don't want to load preset when loading from file, do we?
-
-  //    if (data.getDynamicObject()->hasProperty(presetIdentifier))
-  //    {
-  //        loadPresetWithName(data.getDynamicObject()->getProperty("preset"));
-  //    }
-
-  // TODO switch Array to dynamic object (to avoid to store control address and store parameters in a namedValueSet )
-  Array<var> * paramsData = data.getDynamicObject()->getProperty(paramIdentifier).getArray();
+  Array<var> * paramsData = data.getDynamicObject()->getProperty("parameters").getArray();
 
   if (paramsData != nullptr)
   {
 	  for (var &pData : *paramsData)
 	  {
-		  String pControlAddress = pData.getDynamicObject()->getProperty(controlAddressIdentifier);
+		  DynamicObject * o = pData.getDynamicObject();
+		  String pControlAddress = o->getProperty("controlAddress");
 
 		  Controllable * c = getControllableForAddress(pControlAddress, saveAndLoadRecursiveData, true);
+		  if (c != nullptr)
+		  {
+			  if (Parameter * p = dynamic_cast<Parameter*>(c)) {
+				  //                we don't load preset when already loading a state
+				  if (p->shortName != "preset" && p->isSavable) p->loadJSONData(pData.getDynamicObject());
 
-		  if (Parameter * p = dynamic_cast<Parameter*>(c)) {
-			  //                we don't load preset when already loading a state
-			  if (p->shortName != presetIdentifier.toString() && p->isSavable) p->setValue(pData.getDynamicObject()->getProperty(valueIdentifier));
-
-		  } else {
-			  //NLOG("LoadJSON : "+niceName,"Parameter not found "+ pControlAddress);
+			  }
+		  } else if (!saveAndLoadRecursiveData && createIfNotThere)
+		  {
+			  c = ControllableFactory::getInstance()->createControllable(o->getProperty("type"));
+			  if (c != nullptr)
+			  {
+				  c->saveValueOnly = false; //auto set here because it will likely need that if it has been created from data
+				  c->loadJSONData(pData);
+				  addControllable(c);
+			  }
 		  }
 	  }
   }

@@ -23,8 +23,11 @@ Controllable::Controllable(const Type &type, const String & niceName, const Stri
     isControllableFeedbackOnly(false),
     hideInEditor(false),
 	hideInOutliner(false),
-	replaceSlashesInShortName(true)
+	replaceSlashesInShortName(true),
+	isSavable(true),
+	saveValueOnly(true)
 {
+
     setEnabled(enabled);
     setNiceName(niceName);
 }
@@ -75,6 +78,32 @@ void Controllable::updateControlAddress()
 {
 	this->controlAddress = getControlAddress();
 	listeners.call(&Listener::controllableControlAddressChanged, this);
+}
+
+var Controllable::getJSONData(ControllableContainer * relativeTo)
+{
+	var data = getJSONDataInternal();
+	data.getDynamicObject()->setProperty("controlAddress", getControlAddress(relativeTo));
+	
+	if(saveValueOnly) return data;
+	
+	data.getDynamicObject()->setProperty("type", getTypeString());
+	data.getDynamicObject()->setProperty("niceName", niceName);
+	if (hasCustomShortName) data.getDynamicObject()->setProperty("shortName", shortName);
+
+	return data;
+}
+
+var Controllable::getJSONDataInternal() 
+{
+	return var(new DynamicObject());
+}
+
+void Controllable::loadJSONData(var data)
+{
+	if (data.getDynamicObject()->hasProperty("niceName")) setNiceName(data.getProperty("niceName", ""));
+	if (data.getDynamicObject()->hasProperty("shortName")) setCustomShortName(data.getProperty("shortName", ""));	
+	loadJSONDataInternal(data);
 }
 
 String Controllable::getControlAddress(ControllableContainer * relativeTo)

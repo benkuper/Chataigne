@@ -11,7 +11,17 @@
 #ifndef MAPPINGINPUT_H_INCLUDED
 #define MAPPINGINPUT_H_INCLUDED
 
+#include "ControllableContainer.h"
 
+class MappingInput :
+	public ControllableContainer
+{
+public:
+	MappingInput();
+	~MappingInput();
+
+	Controllable * referenceInput;
+};
 
 
 

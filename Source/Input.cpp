@@ -14,6 +14,8 @@ Input::Input(const String &name) :
 	BaseItem(name),
 	valuesCC("Values")
 {
+	saveAndLoadRecursiveData = false; //manage value ourselves
+
 	recursiveInspectionLevel = 1;
 	addChildControllableContainer(&valuesCC);
 

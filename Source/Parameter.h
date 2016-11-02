@@ -32,9 +32,9 @@ public:
    
 	void setRange(var,var, bool setDefaultRange = true);
 
-	bool isEditable;
-    bool isSavable;
-    bool isPresettable;
+
+	bool isEditable; 
+	bool isPresettable;
     bool isOverriden;
 	bool autoAdaptRange;
 
@@ -57,6 +57,10 @@ public:
 
     void notifyValueChanged();
 
+
+	virtual var getJSONDataInternal() override;
+	virtual void loadJSONDataInternal(var data) override;
+	
 	//virtual DynamicObject * createDynamicObject() override;
 
     //Listener

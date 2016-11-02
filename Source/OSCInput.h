@@ -36,7 +36,7 @@ public:
 	void processMessage(const OSCMessage & msg);
 	virtual void processMessageInternal(const OSCMessage &) {}
 
-	virtual void onContainerParameterChanged(Parameter * p);
+	virtual void onContainerParameterChangedInternal(Parameter * p);
 	virtual void oscMessageReceived(const OSCMessage & message) override;
 };
 

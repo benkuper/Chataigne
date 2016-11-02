@@ -13,7 +13,7 @@
 juce_ImplementSingleton(MappingOutputManager)
 
 MappingOutputManager::MappingOutputManager() :
-	BaseManager<MappingOutput>("MappingOutputs")
+	BaseManager<MappingOutput>("Outputs")
 {
 }
 

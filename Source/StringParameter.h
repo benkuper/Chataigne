@@ -27,6 +27,11 @@ public:
     void setValueInternal(var&)override;
     StringParameterUI * createStringParameterUI(StringParameter * target = nullptr);
     ControllableUI* createDefaultUI(Controllable * targetControllable = nullptr) override;
+
+
+	static StringParameter * create() { return new StringParameter("New StringParameter", "",""); }
+	virtual String getTypeString() const override { return "String"; }
+
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(StringParameter)
 };
 

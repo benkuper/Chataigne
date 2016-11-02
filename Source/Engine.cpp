@@ -17,6 +17,7 @@
 #include "PresetManager.h"
 #include "StringUtil.h"
 #include "Outliner.h"
+#include "ControllableFactory.h"
 
 juce_ImplementSingleton(Engine) 
 
@@ -57,6 +58,8 @@ Engine::~Engine(){
   PresetManager::deleteInstance();
   FlapLogger::deleteInstance();
   Logger::setCurrentLogger(nullptr);
+
+  ControllableFactory::deleteInstance();
 
 }
 

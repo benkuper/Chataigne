@@ -6,6 +6,7 @@ inline void FlapApplication::initialise(const String & commandLine)
 {
 	// This method is where you should put your application's initialisation code..
 
+	
 	PropertiesFile::Options options;
 	options.applicationName = "Flap";
 	options.filenameSuffix = "settings";
@@ -22,7 +23,7 @@ inline void FlapApplication::initialise(const String & commandLine)
 		engine->createNewGraph();
 		engine->setChangedFlag(false);
 	}
-
+	
 }
 
 inline void FlapApplication::shutdown()

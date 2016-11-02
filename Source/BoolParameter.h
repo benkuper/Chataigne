@@ -25,6 +25,9 @@ public:
     BoolToggleUI * createToggle(BoolParameter * target = nullptr);
     ControllableUI * createDefaultUI(Controllable * targetControllable = nullptr) override;
 
+	static BoolParameter * create() { return new BoolParameter("New Bool Parameter", "", false); }
+	virtual String getTypeString() const override { return "Boolean"; }
+
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(BoolParameter)
 };
 

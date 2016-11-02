@@ -30,6 +30,11 @@ public:
     FloatStepperUI * createStepper(FloatParameter * target = nullptr);
     ControllableUI * createDefaultUI(Controllable * targetControllable = nullptr) override;
 
+
+	static FloatParameter * create() { return new FloatParameter("New Float Parameter", "",0); }
+	virtual String getTypeString() const override { return "Float"; }
+
+
    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(FloatParameter)
 };
 

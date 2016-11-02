@@ -30,6 +30,9 @@ public:
 	ActionManager am;
 	MappingManager mm;
 
+	var getJSONData() override;
+	void loadJSONDataInternal(var data) override;
+
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(State)
 };
 

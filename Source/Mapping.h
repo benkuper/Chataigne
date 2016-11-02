@@ -14,12 +14,23 @@
 
 #include "BaseItem.h"
 
+#include "MappingInput.h"
+#include "MappingFilterManager.h"
+#include "MappingOutputManager.h"
+
 class Mapping :
 	public BaseItem
 {
 public:
 	Mapping();
 	virtual ~Mapping();
+
+	MappingInput input;
+	MappingFilterManager fm;
+	MappingOutputManager om;
+
+	var getJSONData() override;
+	void loadJSONDataInternal(var data) override;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Mapping)
 };

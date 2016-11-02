@@ -45,7 +45,7 @@ public:
 	String inputType;
 	std::function<Input*()> createFunc;
 
-	InputDefinition(String menuPath, String type, std::function<Input*()> createFunc) :
+	InputDefinition(const String &menuPath, const String &type, std::function<Input*()> createFunc) :
 		menuPath(menuPath), 
 		inputType(type),
 		createFunc(createFunc)
