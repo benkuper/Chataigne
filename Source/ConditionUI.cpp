@@ -38,7 +38,7 @@ void ConditionUI::resized()
 	Rectangle<int> r = getLocalBounds().reduced(2);
 	r.removeFromTop(headerHeight + headerGap);
 
-	Rectangle<int> sr = r.removeFromTop(15);
+	Rectangle<int> sr = r.withHeight(headerHeight);
 	if (sourceFeedbackUI != nullptr)
 	{
 		sourceFeedbackUI->setBounds(sr.removeFromRight(jmax<int>(sr.getWidth() / 3, 60)));
@@ -46,15 +46,14 @@ void ConditionUI::resized()
 	}
 	targetUI->setBounds(sr);
 
-	r.removeFromTop(3);
+	r.translate(0, headerHeight);
 
 	if (comparatorUI != nullptr)
 	{
 		comparatorUI->setBounds(r.withHeight(comparatorUI->getHeight()));
 		if (comparatorUI->getBottom() != getHeight()) setSize(getWidth(), comparatorUI->getBottom());
-	}
+	} 
 
-	
 }
 
 void ConditionUI::paintOverChildren(Graphics & g)
@@ -99,4 +98,9 @@ void ConditionUI::conditionSourceChanged(Condition *)
 void ConditionUI::conditionValidationChanged(Condition *)
 {
 	repaint();
+}
+
+void ConditionUI::childBoundsChanged(Component *)
+{
+	resized();
 }

@@ -19,7 +19,7 @@ class TargetParameterUI :
 	public ButtonListener
 {
 public:
-	TargetParameterUI(TargetParameter * parameter, const String &noTargetText = "[No element selected]");
+	TargetParameterUI(TargetParameter * parameter, const String &noTargetText = "[Click to select an element]");
 	~TargetParameterUI();
 
 	String noTargetText;

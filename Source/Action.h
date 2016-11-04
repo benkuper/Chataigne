@@ -17,8 +17,7 @@
 
 class Action :
 	public BaseItem,
-	public Condition::ConditionListener,
-	public Consequence::ConsequenceListener
+	public ConditionManager::ConditionManagerListener
 {
 public:
 	Action();
@@ -35,7 +34,8 @@ public:
 
 	void onContainerParameterChangedInternal(Parameter * p) override;
 
-		
+	void conditionManagerValidationChanged(ConditionManager *) override;
+
 	class ActionListener
 	{
 	public:

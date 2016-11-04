@@ -12,18 +12,36 @@
 #define OUTPUT_H_INCLUDED
 
 #include "BaseItem.h"
+class CommandDefinition;
 
 class Output :
 	public BaseItem
 {
 public:
-	Output();
+	Output(const String &name = "Output");
 	virtual ~Output();
 
+	OwnedArray<CommandDefinition> commandDefs;
+	
+	PopupMenu commandMenu;
+	void rebuildCommandMenu(int baseID);
+	PopupMenu getCommandMenu(int baseID);
+
+	virtual String getTypeString() const { jassert(false); return "Output"; } //should always overriden
+
+	class  OutputListener
+	{
+	public:
+		/** Destructor. */
+		virtual ~OutputListener() {}
+		virtual void outputCommandChanged(Output *) {}
+	};
+
+	ListenerList<OutputListener> outputListeners;
+	void addOutputListener(OutputListener* newListener) { outputListeners.add(newListener); }
+	void removeOutputListener(OutputListener* listener) { outputListeners.remove(listener); }
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Output)
 };
-
-
 
 #endif  // OUTPUT_H_INCLUDED

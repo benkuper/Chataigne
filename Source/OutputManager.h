@@ -13,6 +13,7 @@
 
 #include "BaseManager.h"
 #include "Output.h"
+#include "CommandFactory.h"
 
 class OutputManager :
 	public BaseManager<Output>
@@ -25,9 +26,11 @@ public:
 
 	virtual void addItemFromData(var data) override;
 
+
+	PopupMenu getAllOutputsCommandMenu();
+	CommandDefinition * getCommandDefinitionForItemID(int id);
+
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(OutputManager)
 };
-
-
 
 #endif  // OUTPUTMANAGER_H_INCLUDED

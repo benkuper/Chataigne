@@ -21,22 +21,7 @@ Author:  bkupe
 ==============================================================================
 */
 
-#include "CustomOSCInput.h"
-#include "MIDIInputModule.h"
-#include "DMXInput.h"
-#include "SerialInput.h"
-#include "AugmentaInput.h"
-#include "BentoInput.h"
-#include "BGloveInput.h"
-#include "DLightInput.h"
-#include "LiveInput.h"
-#include "MilluminInput.h"
-#include "ResolumeInput.h"
-#include "MyoInput.h"
-#include "MicrophoneInput.h"
-#include "LeapMotionInput.h"
-#include "KinectInput.h"
-#include "KinectV2Input.h"
+#include "Input.h"
 
 class InputDefinition
 {

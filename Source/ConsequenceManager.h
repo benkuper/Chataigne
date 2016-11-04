@@ -24,7 +24,9 @@ public:
 	ConsequenceManager();
 	~ConsequenceManager();
 
+	Trigger * triggerAll;
 
+	void onContainerTriggerTriggered(Trigger *) override;
 
 	class ConsequenceManagerListener
 	{

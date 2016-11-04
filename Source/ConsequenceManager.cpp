@@ -17,8 +17,17 @@ ConsequenceManager::ConsequenceManager() :
 	BaseManager<Consequence>("Consequences")
 {
 	selectItemWhenCreated = false;
+	triggerAll = addTrigger("Trigger All", "Trigger all the consequences in the manager");
 }
 
 ConsequenceManager::~ConsequenceManager()
 {
+}
+
+void ConsequenceManager::onContainerTriggerTriggered(Trigger * t)
+{
+	if (t == triggerAll)
+	{
+		for (auto &c : items) c->trigger->trigger();
+	}
 }

@@ -17,7 +17,8 @@ class Controllable;
 class ControllableUI;
 
 
-class ControllableContainerPopupMenu : public PopupMenu
+class ControllableContainerPopupMenu : 
+	public PopupMenu
 {
 public:
 	ControllableContainerPopupMenu(ControllableContainer * rootContainer);
@@ -26,9 +27,7 @@ public:
 	Array<Controllable *> controllableList;
 	void populateMenu(PopupMenu *subMenu, ControllableContainer * container, int &currentId);
 
-
 	Controllable * showAndGetControllable();
-
 };
 
 

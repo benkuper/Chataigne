@@ -21,7 +21,8 @@ TargetParameterUI::TargetParameterUI(TargetParameter * parameter, const String &
 	setInterceptsMouseClicks(true, true);
 
 	targetBT = AssetManager::getInstance()->getTargetBT();
-
+	targetBT->setInterceptsMouseClicks(false, false);
+	
 	addAndMakeVisible(targetBT);
 	
 	targetBT->addListener(this); 

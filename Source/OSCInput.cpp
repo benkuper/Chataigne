@@ -29,8 +29,7 @@ OSCInput::OSCInput(const String & name) :
 
 void OSCInput::setupReceiver()
 {
-	if(isConnected->boolValue()) receiver.disconnect();
-	bool result = receiver.connect(localPort->intValue());;
+	bool result = receiver.connect(localPort->intValue());
 	isConnected->setValue(result);
 
 	Array<IPAddress> ad;

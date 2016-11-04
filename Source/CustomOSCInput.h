@@ -29,6 +29,8 @@ public:
 
 	static CustomOSCInput * create() { return new CustomOSCInput(); }
 	virtual String getTypeString() const override { return "OSC"; }
+
+	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(CustomOSCInput)
 };
 
 #endif  // CUSTOMOSCINPUT_H_INCLUDED

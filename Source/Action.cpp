@@ -18,6 +18,8 @@ Action::Action() :
 
 	addChildControllableContainer(&cdm);
 	addChildControllableContainer(&csm);
+
+	cdm.addConditionManagerListener(this);
 }
 
 Action::~Action()
@@ -42,6 +44,11 @@ void Action::loadJSONDataInternal(var data)
 void Action::onContainerParameterChangedInternal(Parameter * p)
 {
 	if (p == enabled) actionListeners.call(&Action::ActionListener::actionEnableChanged,this);
+}
+
+void Action::conditionManagerValidationChanged(ConditionManager *)
+{
+	if (cdm.isValid->boolValue()) csm.triggerAll->trigger();
 }
 
 InspectorEditor * Action::getEditor()

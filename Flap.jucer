@@ -170,6 +170,14 @@
       </GROUP>
       <GROUP id="{6A99D434-563F-6FEC-8395-5EB79B3D3075}" name="Flap">
         <GROUP id="{6C7DFFF7-D47E-97B5-FE74-27F24C7A349F}" name="Common">
+          <GROUP id="{E7C8AAFC-E2FA-90D0-859B-423BC528A52F}" name="Command">
+            <FILE id="m7AMBt" name="BaseCommand.cpp" compile="1" resource="0" file="Source/BaseCommand.cpp"/>
+            <FILE id="ermHIT" name="BaseCommand.h" compile="0" resource="0" file="Source/BaseCommand.h"/>
+            <FILE id="udVfFR" name="CommandFactory.cpp" compile="1" resource="0"
+                  file="Source/CommandFactory.cpp"/>
+            <FILE id="UD0p9m" name="CommandFactory.h" compile="0" resource="0"
+                  file="Source/CommandFactory.h"/>
+          </GROUP>
           <GROUP id="{00DB7CFA-CACA-0D02-4E20-E907A0900C31}" name="Helpers"/>
           <GROUP id="{9CFD8ABC-B151-C9B1-3170-F337A2876DE7}" name="Manager">
             <GROUP id="{04523331-54D0-EF5C-9ECA-C42754582F66}" name="ui">
@@ -425,8 +433,15 @@
           <FILE id="TeO8GH" name="StateManager.h" compile="0" resource="0" file="Source/StateManager.h"/>
         </GROUP>
         <GROUP id="{3E28AE4C-C6FC-E838-ECFB-FC6B50C2EF68}" name="Output">
+          <GROUP id="{9CBED371-6C90-1A5F-40D6-67BF01F05D5A}" name="command">
+            <FILE id="RqB4nO" name="OutputCommand.cpp" compile="1" resource="0"
+                  file="Source/OutputCommand.cpp"/>
+            <FILE id="uoWywc" name="OutputCommand.h" compile="0" resource="0" file="Source/OutputCommand.h"/>
+          </GROUP>
           <GROUP id="{F6E0EDA0-2A0D-2758-75EB-48544438B3E6}" name="modules">
             <GROUP id="{10A19AF9-3223-B5E5-0F0F-5416CFF75210}" name="osc">
+              <FILE id="hmrek1" name="OSCCommand.cpp" compile="1" resource="0" file="Source/OSCCommand.cpp"/>
+              <FILE id="ETPBfb" name="OSCCommand.h" compile="0" resource="0" file="Source/OSCCommand.h"/>
               <FILE id="tMiqsn" name="OSCOutput.cpp" compile="1" resource="0" file="Source/OSCOutput.cpp"/>
               <FILE id="M4VagL" name="OSCOutput.h" compile="0" resource="0" file="Source/OSCOutput.h"/>
               <GROUP id="{129A4A05-39C9-38F5-F5C9-211839AC5A05}" name="bglove">
@@ -435,6 +450,12 @@
                 <FILE id="w4uxYY" name="BGloveOutput.h" compile="0" resource="0" file="Source/BGloveOutput.h"/>
               </GROUP>
               <GROUP id="{B54ADB40-59FB-E720-1172-011D64B5421B}" name="custom">
+                <GROUP id="{F5B7EC4A-6A44-F254-87DF-43AEBA997EC1}" name="commands">
+                  <FILE id="lv7MmC" name="CustomOSCCommand.cpp" compile="1" resource="0"
+                        file="Source/CustomOSCCommand.cpp"/>
+                  <FILE id="H1znNn" name="CustomOSCCommand.h" compile="0" resource="0"
+                        file="Source/CustomOSCCommand.h"/>
+                </GROUP>
                 <FILE id="xBBAEN" name="CustomOSCOutput.cpp" compile="1" resource="0"
                       file="Source/CustomOSCOutput.cpp"/>
                 <FILE id="BIKdAK" name="CustomOSCOutput.h" compile="0" resource="0"
@@ -460,6 +481,20 @@
                       file="Source/MilluminOutput.h"/>
               </GROUP>
               <GROUP id="{BF093733-18A9-3232-92C5-8EF7D8E70785}" name="resolume">
+                <GROUP id="{DF8332B1-E904-037C-CFF6-826235CCF3E7}" name="commands">
+                  <FILE id="BJA4v0" name="ResolumeClipCommand.cpp" compile="1" resource="0"
+                        file="Source/ResolumeClipCommand.cpp"/>
+                  <FILE id="zvqTkB" name="ResolumeClipCommand.h" compile="0" resource="0"
+                        file="Source/ResolumeClipCommand.h"/>
+                  <FILE id="tinSTu" name="ResolumeCompositionCommand.cpp" compile="1"
+                        resource="0" file="Source/ResolumeCompositionCommand.cpp"/>
+                  <FILE id="E4bt0a" name="ResolumeCompositionCommand.h" compile="0" resource="0"
+                        file="Source/ResolumeCompositionCommand.h"/>
+                  <FILE id="yQWzTb" name="ResolumeLayerCommand.cpp" compile="1" resource="0"
+                        file="Source/ResolumeLayerCommand.cpp"/>
+                  <FILE id="pQAfUn" name="ResolumeLayerCommand.h" compile="0" resource="0"
+                        file="Source/ResolumeLayerCommand.h"/>
+                </GROUP>
                 <FILE id="aQARef" name="ResolumeOutput.cpp" compile="1" resource="0"
                       file="Source/ResolumeOutput.cpp"/>
                 <FILE id="bR0r8N" name="ResolumeOutput.h" compile="0" resource="0"
@@ -488,6 +523,9 @@
           </GROUP>
           <FILE id="fu59wv" name="Output.cpp" compile="1" resource="0" file="Source/Output.cpp"/>
           <FILE id="adEnVy" name="Output.h" compile="0" resource="0" file="Source/Output.h"/>
+          <FILE id="OzuTND" name="OutputFactory.cpp" compile="1" resource="0"
+                file="Source/OutputFactory.cpp"/>
+          <FILE id="tLrFHo" name="OutputFactory.h" compile="0" resource="0" file="Source/OutputFactory.h"/>
           <FILE id="UI53q2" name="OutputManager.cpp" compile="1" resource="0"
                 file="Source/OutputManager.cpp"/>
           <FILE id="dzz9H4" name="OutputManager.h" compile="0" resource="0" file="Source/OutputManager.h"/>

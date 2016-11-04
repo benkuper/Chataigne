@@ -15,9 +15,24 @@ ConsequenceUI::ConsequenceUI(Consequence * input) :
 {
 	autoSelectWithChildRespect = false;
 	setSize(10, 40);
+	removeMouseListener(this);
+
 }
 
 ConsequenceUI::~ConsequenceUI()
 {
 
+}
+
+void ConsequenceUI::mouseDown(const MouseEvent & e)
+{
+	BaseItemUI::mouseDown(e);
+	if (e.mods.isRightButtonDown())
+	{
+		CommandDefinition * d = CommandFactory::showMenuAndGetCommand();
+		if (d != nullptr)
+		{
+			item->setCommand(d);
+		}
+	}
 }

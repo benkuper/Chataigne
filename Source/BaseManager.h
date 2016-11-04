@@ -105,7 +105,7 @@ inline void BaseManager<T>::addItem(T * item, var data)
 //if data is not empty, load data
 template<class T>
 void BaseManager<T>::addItemFromData(var data) 
-{
+{ 
 	addItem(new T(), data);
 }
 

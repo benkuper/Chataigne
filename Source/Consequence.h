@@ -12,6 +12,8 @@
 #define CONSEQUENCE_H_INCLUDED
 
 #include "BaseItem.h"
+#include "OutputManager.h"
+class BaseCommand;
 
 class Consequence :
 	public BaseItem
@@ -20,15 +22,21 @@ public:
 	Consequence();
 	virtual ~Consequence();
 
+	Trigger * trigger;
+	
+
+	ScopedPointer<BaseCommand> command;
+	void setCommand(CommandDefinition *);
+	
+	void onContainerTriggerTriggered(Trigger *) override;
+
 	class ConsequenceListener
 	{
 	public:
 		virtual ~ConsequenceListener() {}
-		virtual void consequenceEnableChanged(Consequence *) {}
-		virtual void consequenceValidationChanged(Consequence *) {}
 		virtual void consequenceTriggered(Consequence *) {}
+		virtual void consequenceCommandChanged(Consequence *) {}
 	};
-
 
 	ListenerList<ConsequenceListener> consequenceListeners;
 	void addConsequenceListener(ConsequenceListener* newListener) { consequenceListeners.add(newListener); }

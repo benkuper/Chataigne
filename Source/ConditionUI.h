@@ -37,6 +37,7 @@ public:
 	void conditionSourceChanged(Condition *);
 	void conditionValidationChanged(Condition *);
 
+	void childBoundsChanged(Component *) override;
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ConditionUI)
 };
 

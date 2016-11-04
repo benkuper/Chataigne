@@ -9,3 +9,13 @@
 */
 
 #include "ResolumeOutput.h"
+#include "OSCCommand.h"
+#include "CommandFactory.h"
+
+ResolumeOutput::ResolumeOutput() :
+	OSCOutput("Resolume")
+{
+	
+	commandDefs.add(CommandDefinition::createDef(this, "Composition", "Stop Composition", &OSCCommand::create)->addParam("address", "/composition/stop"));
+	
+}
