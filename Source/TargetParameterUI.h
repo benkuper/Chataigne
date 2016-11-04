@@ -20,7 +20,7 @@ class TargetParameterUI :
 {
 public:
 	TargetParameterUI(TargetParameter * parameter, const String &noTargetText = "[Click to select an element]");
-	~TargetParameterUI();
+	virtual ~TargetParameterUI();
 
 	String noTargetText;
 	Label label;
@@ -33,7 +33,9 @@ public:
 
 	void updateLabel();
 	
-	void mouseDown(const MouseEvent &e);
+	virtual void showPopupAndGetTarget();//can be overriden to get specific PopupMenu
+	void mouseDown(const MouseEvent &e); 
+
 
 	virtual void buttonClicked(Button * b) override;
 protected:

@@ -14,16 +14,26 @@
 
 #include "BaseItemUI.h"
 #include "Consequence.h"
+#include "CommandChooserUI.h"
 
 class ConsequenceUI :
-	public BaseItemUI<Consequence>
+	public BaseItemUI<Consequence>,
+	public CommandChooserUI::Listener,
+	public Consequence::ConsequenceListener
 {
 public:
 	ConsequenceUI(Consequence *);
 	virtual ~ConsequenceUI();
 
-	void mouseDown(const MouseEvent &e) override;
+	CommandChooserUI chooser;
 
+	void resized() override;
+
+	void updateChooserLabel();
+
+	void definitionChosen(CommandDefinition * d) override;
+
+	void consequenceCommandChanged(Consequence*) override;
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ConsequenceUI)
 };
 

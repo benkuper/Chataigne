@@ -177,6 +177,10 @@
                   file="Source/CommandFactory.cpp"/>
             <FILE id="UD0p9m" name="CommandFactory.h" compile="0" resource="0"
                   file="Source/CommandFactory.h"/>
+            <FILE id="mRa65V" name="CommandChooserUI.cpp" compile="1" resource="0"
+                  file="Source/CommandChooserUI.cpp"/>
+            <FILE id="AoIL08" name="CommandChooserUI.h" compile="0" resource="0"
+                  file="Source/CommandChooserUI.h"/>
           </GROUP>
           <GROUP id="{00DB7CFA-CACA-0D02-4E20-E907A0900C31}" name="Helpers"/>
           <GROUP id="{9CFD8ABC-B151-C9B1-3170-F337A2876DE7}" name="Manager">

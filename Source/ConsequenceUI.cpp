@@ -10,29 +10,61 @@
 
 #include "ConsequenceUI.h"
 
-ConsequenceUI::ConsequenceUI(Consequence * input) :
-	BaseItemUI<Consequence>(input)
+ConsequenceUI::ConsequenceUI(Consequence * consequence) :
+	BaseItemUI<Consequence>(consequence)
 {
 	autoSelectWithChildRespect = false;
 	setSize(10, 40);
 	removeMouseListener(this);
+	item->addConsequenceListener(this);
+	chooser.addChooserListener(this);
+	addAndMakeVisible(&chooser);
 
+	updateChooserLabel();
 }
 
 ConsequenceUI::~ConsequenceUI()
 {
+	item->removeConsequenceListener(this);
 
 }
 
-void ConsequenceUI::mouseDown(const MouseEvent & e)
+void ConsequenceUI::resized()
 {
-	BaseItemUI::mouseDown(e);
-	if (e.mods.isRightButtonDown())
+	BaseItemUI::resized();
+	Rectangle<int> r = getLocalBounds().reduced(2);
+	r.removeFromTop(headerHeight + headerGap);
+
+	Rectangle<int> sr = r.withHeight(headerHeight);
+	
+	chooser.setBounds(sr);
+
+	r.translate(0, headerHeight);
+
+	/*
+	if (commandUI != nullptr)
 	{
-		CommandDefinition * d = CommandFactory::showMenuAndGetCommand();
-		if (d != nullptr)
-		{
-			item->setCommand(d);
-		}
+		commandUI->setBounds(r.withHeight(commandUI->getHeight()));
+		if (commandUI->getBottom() != getHeight()) setSize(getWidth(), commandUI->getBottom());
 	}
+	*/
+}
+
+void ConsequenceUI::updateChooserLabel()
+{
+	String text;
+	if (item->command != nullptr)
+		text = item->command->container->niceName + ":" + item->commandDefinition->inputType;
+
+	chooser.setLabel(text);
+}
+
+void ConsequenceUI::definitionChosen(CommandDefinition * d)
+{
+	item->setCommand(d);
+}
+
+void ConsequenceUI::consequenceCommandChanged(Consequence *)
+{
+	updateChooserLabel();
 }

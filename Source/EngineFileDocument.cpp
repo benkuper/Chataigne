@@ -228,7 +228,7 @@ void Engine::loadJSONData (var data,ProgressTask * loadingTask)
   if (d->hasProperty("inputManager")) InputManager::getInstance()->loadJSONData(d->getProperty("inputManager"));
   inputManagerTask->end();
   outputManagerTask->start();
-  if (d->hasProperty("outputManager")) InputManager::getInstance()->loadJSONData(d->getProperty("outputManager"));
+  if (d->hasProperty("outputManager")) OutputManager::getInstance()->loadJSONData(d->getProperty("outputManager"));
   outputManagerTask->end();
   stateTask->start();
   if (d->hasProperty("stateManager")) StateManager::getInstance()->loadJSONData(d->getProperty("stateManager"));

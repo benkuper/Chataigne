@@ -307,17 +307,26 @@ ControllableContainer * ControllableContainer::getControllableContainerByName(co
 
 }
 
-ControllableContainer * ControllableContainer::getControllableContainerForAddress( StringArray  addressSplit)
+ControllableContainer * ControllableContainer::getControllableContainerForAddress(const String&  address, bool recursive, bool getNotExposed)
+{
+	StringArray addrArray;
+	addrArray.addTokens(address, juce::StringRef("/"), juce::StringRef("\""));
+	addrArray.remove(0);
+
+	return getControllableContainerForAddress(addrArray, recursive, getNotExposed);
+}
+
+ControllableContainer * ControllableContainer::getControllableContainerForAddress( StringArray  addressSplit, bool recursive, bool getNotExposed)
 {
 
   if (addressSplit.size() == 0) jassertfalse; // SHOULD NEVER BE THERE !
 
-  bool isTargetAControllable = addressSplit.size() == 1;
+  bool isTargetFinal = addressSplit.size() == 1;
 
-  if (isTargetAControllable)
+  if (isTargetFinal)
   {
 
-    if(ControllableContainer * res = getControllableContainerByName(addressSplit[0]))
+    if(ControllableContainer * res = getControllableContainerByName(addressSplit[0]))   //get not exposed here here ?
       return res;
 
     //no found in direct children Container, maybe in a skip container ?
@@ -325,11 +334,11 @@ ControllableContainer * ControllableContainer::getControllableContainerForAddres
     {
       if (cc->skipControllableNameInAddress)
       {
-        if (ControllableContainer * res = cc->getControllableContainerForAddress(addressSplit)) return res;
+        if (ControllableContainer * res = cc->getControllableContainerForAddress(addressSplit, recursive, getNotExposed)) return res;
       }
     }
   }
-  else
+  else //if recursive here ?
   {
     for (auto &cc : controllableContainers)
     {
@@ -339,7 +348,7 @@ ControllableContainer * ControllableContainer::getControllableContainerForAddres
         if (cc->shortName == addressSplit[0])
         {
           addressSplit.remove(0);
-          return cc->getControllableContainerForAddress(addressSplit);
+          return cc->getControllableContainerForAddress(addressSplit, recursive, getNotExposed);
         }
       }
       else
@@ -348,7 +357,7 @@ ControllableContainer * ControllableContainer::getControllableContainerForAddres
         if (tc != nullptr)
         {
           addressSplit.remove(0);
-          return tc->getControllableContainerForAddress(addressSplit);
+          return tc->getControllableContainerForAddress(addressSplit,recursive,getNotExposed);
         }
 
       }
@@ -434,7 +443,7 @@ Array<WeakReference<Parameter>> ControllableContainer::getAllParameters(bool rec
 
 
 
-Controllable * ControllableContainer::getControllableForAddress(String address, bool recursive, bool getNotExposed)
+Controllable * ControllableContainer::getControllableForAddress(const String &address, bool recursive, bool getNotExposed)
 {
   StringArray addrArray;
   addrArray.addTokens(address, juce::StringRef("/"), juce::StringRef("\""));
@@ -467,13 +476,13 @@ Controllable * ControllableContainer::getControllableForAddress(StringArray addr
     {
       if (cc->skipControllableNameInAddress)
       {
-        Controllable * tc = cc->getControllableByName(addressSplit[0]);
+        Controllable * tc = cc->getControllableByName(addressSplit[0]);  //get not exposed here here ?
 
         if (tc != nullptr) return tc;
       }
     }
   }
-  else
+  else  //if recursive here ?
   {
     for (auto &cc : controllableContainers)
     {

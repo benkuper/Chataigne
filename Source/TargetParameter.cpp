@@ -16,10 +16,12 @@ TargetParameter::TargetParameter(const String & niceName, const String & descrip
 	StringParameter(niceName,description,initialValue,enabled),
 	useGhosting(true),
 	rootContainer(rootReference),
-	target(nullptr)
+	target(nullptr),
+	targetType(CONTROLLABLE)
 {
-	if (rootContainer == nullptr) rootContainer = Engine::getInstanceWithoutCreating();
 	type = TARGET;
+	if (rootContainer == nullptr) rootContainer = Engine::getInstanceWithoutCreating();
+	
 }
 
 TargetParameter::~TargetParameter()
@@ -50,18 +52,35 @@ void TargetParameter::setValueFromTarget(Controllable * c)
 	setValue(c->getControlAddress(rootContainer));
 }
 
+void TargetParameter::setValueFromTarget(ControllableContainer * cc)
+{
+	if (cc == targetContainer) return;
+	setValue(cc->getControlAddress(rootContainer));
+}
+
 void TargetParameter::setValueInternal(var & newVal)
 {
 	StringParameter::setValueInternal(newVal);
 
 	if (newVal.toString().isNotEmpty())
 	{
-		WeakReference<Controllable> c = rootContainer->getControllableForAddress(newVal.toString());
-		if(c != nullptr) setTarget(c);
-		else setGhostValue(newVal.toString());
+		if (targetType == CONTAINER)
+		{
+			WeakReference<ControllableContainer> cc = rootContainer->getControllableContainerForAddress(newVal.toString());
+			if (cc != nullptr) setTarget(cc);
+			else setGhostValue(newVal.toString());
+		} else
+		{
+			WeakReference<Controllable> c = rootContainer->getControllableForAddress(newVal.toString());
+			if (c != nullptr) setTarget(c);
+			else setGhostValue(newVal.toString());
+		}
+		
 	} else
 	{
-		setTarget(nullptr);
+		if(targetType == CONTAINER) setTarget((ControllableContainer *)nullptr);
+		else setTarget((ControllableContainer *)nullptr);
+
 		setGhostValue(String::empty);
 	}
 }
@@ -82,6 +101,22 @@ void TargetParameter::setTarget(WeakReference<Controllable> c)
 	}
 }
 
+void TargetParameter::setTarget(WeakReference<ControllableContainer> cc)
+{
+	if (targetContainer != nullptr)
+	{
+		if (!targetContainer.wasObjectDeleted()) targetContainer->removeControllableContainerListener(this);
+	}
+
+	targetContainer = cc;
+
+	if (targetContainer != nullptr)
+	{
+		targetContainer->addControllableContainerListener(this);
+		setGhostValue(String::empty);
+	}
+}
+
 void TargetParameter::childStructureChanged(ControllableContainer *)
 {
 	if (target == nullptr && ghostValue.isNotEmpty())
@@ -94,6 +129,16 @@ void TargetParameter::childStructureChanged(ControllableContainer *)
 void TargetParameter::controllableRemoved(Controllable * c)
 {
 	if (c == target || target.wasObjectDeleted())
+	{
+		String oldValue = stringValue();
+		setValue(String::empty);
+		setGhostValue(oldValue);
+	}
+}
+
+void TargetParameter::controllableContainerRemoved(ControllableContainer * cc)
+{
+	if (cc == targetContainer || targetContainer.wasObjectDeleted())
 	{
 		String oldValue = stringValue();
 		setValue(String::empty);

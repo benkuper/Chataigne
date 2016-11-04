@@ -26,6 +26,9 @@ public:
 	PopupMenu commandMenu;
 	void rebuildCommandMenu(int baseID);
 	PopupMenu getCommandMenu(int baseID);
+	CommandDefinition * getCommandDefinitionFor(const String &menuPath, const String &inputType);
+
+	var getJSONData() override;
 
 	virtual String getTypeString() const { jassert(false); return "Output"; } //should always overriden
 

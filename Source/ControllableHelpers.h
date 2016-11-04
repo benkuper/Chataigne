@@ -17,12 +17,12 @@ class Controllable;
 class ControllableUI;
 
 
-class ControllableContainerPopupMenu : 
+class ControllableChooserPopupMenu : 
 	public PopupMenu
 {
 public:
-	ControllableContainerPopupMenu(ControllableContainer * rootContainer);
-	virtual ~ControllableContainerPopupMenu();
+	ControllableChooserPopupMenu(ControllableContainer * rootContainer);
+	virtual ~ControllableChooserPopupMenu();
 
 	Array<Controllable *> controllableList;
 	void populateMenu(PopupMenu *subMenu, ControllableContainer * container, int &currentId);
@@ -30,7 +30,7 @@ public:
 	Controllable * showAndGetControllable();
 };
 
-
+/*
 class ControllableChooser : public Component, public ButtonListener
 {
 public :
@@ -45,7 +45,6 @@ public :
 	class  Listener
 	{
 	public:
-		/** Destructor. */
 		virtual ~Listener() {}
 		virtual void choosedControllableChanged(Controllable *) {};
 	};
@@ -53,9 +52,8 @@ public :
 	ListenerList<Listener> listeners;
 	void addControllableChooserListener(Listener* newListener) { listeners.add(newListener); }
 	void removeControllableChooserListener(Listener* listener) { listeners.remove(listener); }
-
-	
 };
+*/
 
 //Comparator class to sort controllable array by name
 class ControllableComparator

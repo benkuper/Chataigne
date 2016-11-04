@@ -23,12 +23,15 @@ public:
 	virtual ~Consequence();
 
 	Trigger * trigger;
-	
 
 	ScopedPointer<BaseCommand> command;
+	CommandDefinition * commandDefinition;
+
 	void setCommand(CommandDefinition *);
-	
 	void onContainerTriggerTriggered(Trigger *) override;
+
+	var getJSONData() override;
+	void loadJSONDataInternal(var data) override;
 
 	class ConsequenceListener
 	{

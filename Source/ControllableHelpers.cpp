@@ -13,18 +13,18 @@
 #include "DebugHelpers.h"
 #include "ControllableContainer.h"
 
-ControllableContainerPopupMenu::ControllableContainerPopupMenu(ControllableContainer * rootContainer)
+ControllableChooserPopupMenu::ControllableChooserPopupMenu(ControllableContainer * rootContainer)
 {
 	int id = 1;
 	//if (rootContainer == nullptr) rootContainer = NodeManager::getInstance(); //to replace with global app container containing nodes, controllers, rules, etc...
 	populateMenu(this, rootContainer,id);
 }
 
-ControllableContainerPopupMenu::~ControllableContainerPopupMenu()
+ControllableChooserPopupMenu::~ControllableChooserPopupMenu()
 {
 }
 
-void ControllableContainerPopupMenu::populateMenu(PopupMenu * subMenu, ControllableContainer * container, int &currentId)
+void ControllableChooserPopupMenu::populateMenu(PopupMenu * subMenu, ControllableContainer * container, int &currentId)
 {
 	for (auto &cc : container->controllableContainers)
 	{
@@ -51,7 +51,7 @@ void ControllableContainerPopupMenu::populateMenu(PopupMenu * subMenu, Controlla
 	
 }
 
-Controllable * ControllableContainerPopupMenu::showAndGetControllable()
+Controllable * ControllableChooserPopupMenu::showAndGetControllable()
 {
 	int result = show();
 

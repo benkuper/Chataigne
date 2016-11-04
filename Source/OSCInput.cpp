@@ -18,10 +18,11 @@ OSCInput::OSCInput(const String & name) :
 	localPort->hideInOutliner = true;
 	localPort->isTargettable = false;
 
-	isConnected = addBoolParameter("Is Receiving", "Is the receiver bound the the local port", false);
+	isConnected = addBoolParameter("Is Connected", "Is the receiver bound the the local port", false);
 	isConnected->isEditable = false;
 	isConnected->hideInOutliner = true;
 	isConnected->isTargettable = false;
+	isConnected->isSavable = false;
 
 	receiver.addListener(this);
 	setupReceiver();

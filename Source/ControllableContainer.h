@@ -127,7 +127,8 @@ public:
     virtual void localIndexChanged();
 
     ControllableContainer * getControllableContainerByName(const String &name, bool searchNiceNameToo = false);
-    ControllableContainer * getControllableContainerForAddress( StringArray  address);
+    ControllableContainer * getControllableContainerForAddress(const String &address, bool recursive = false, bool getNotExposed = false);
+	ControllableContainer * getControllableContainerForAddress(StringArray  addressSplit, bool recursive = false, bool getNotExposed = false);
 
     void setParentContainer(ControllableContainer * container);
     void updateChildrenControlAddress();
@@ -135,7 +136,7 @@ public:
 
     virtual Array<WeakReference<Controllable>> getAllControllables(bool recursive = false, bool getNotExposed = false);
     virtual Array<WeakReference<Parameter>> getAllParameters(bool recursive = false, bool getNotExposed = false);
-    virtual Controllable * getControllableForAddress(String addressSplit, bool recursive = true, bool getNotExposed = false);
+    virtual Controllable * getControllableForAddress(const String &address, bool recursive = true, bool getNotExposed = false);
     virtual Controllable * getControllableForAddress(StringArray addressSplit, bool recursive = true, bool getNotExposed = false);
 	bool containsControllable(Controllable * c, int maxSearchLevels = -1);
 	String getControlAddress(ControllableContainer * relativeTo=nullptr);

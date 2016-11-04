@@ -63,3 +63,16 @@ PopupMenu Output::getCommandMenu(int baseID)
 	rebuildCommandMenu(baseID);
 	return commandMenu;
 }
+
+CommandDefinition * Output::getCommandDefinitionFor(const String & menuPath, const String & inputType)
+{
+	for (auto &d : commandDefs) if (d->menuPath == menuPath && d->inputType == inputType) return d;
+	return nullptr;
+}
+
+var Output::getJSONData()
+{	
+	var data = BaseItem::getJSONData();
+	data.getDynamicObject()->setProperty("type", getTypeString());
+	return data;
+}

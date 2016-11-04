@@ -61,20 +61,43 @@ void TargetParameterUI::resized()
 void TargetParameterUI::updateLabel()
 {
 	String newText;
-	if (targetParameter->target != nullptr) newText = targetParameter->target->getControlAddress();
-	else if (targetParameter->ghostValue.isNotEmpty()) newText = "### " + targetParameter->ghostValue;
-	else newText = noTargetText;
+	if (targetParameter->targetType == TargetParameter::TargetType::CONTROLLABLE)
+	{
+		if (targetParameter->target != nullptr) newText = targetParameter->target->getControlAddress();
+	} else //TargetType::CONTAINER
+	{
+		if (targetParameter->targetContainer != nullptr) newText = targetParameter->targetContainer->getControlAddress();
+	}
+
+	if (newText.isEmpty())
+	{
+		if (targetParameter->ghostValue.isNotEmpty()) newText = "### " + targetParameter->ghostValue;
+		else newText = noTargetText;
+	}
+
 	label.setText(newText, dontSendNotification);
+}
+
+void TargetParameterUI::showPopupAndGetTarget()
+{
+	if (targetParameter->targetType == TargetParameter::TargetType::CONTROLLABLE)
+	{
+		ControllableChooserPopupMenu p(targetParameter->rootContainer);
+		Controllable * c = p.showAndGetControllable();
+		if (c != nullptr) ((TargetParameter *)parameter.get())->setValueFromTarget(c);
+	} else
+	{
+		//No handle for container for now
+	}
 }
 
 void TargetParameterUI::mouseDown(const MouseEvent & )
 {
 	if (!targetParameter->isEditable || forceFeedbackOnly) return;
 
-	ControllableContainerPopupMenu p(targetParameter->rootContainer);
-	Controllable * c = p.showAndGetControllable();
-	if (c != nullptr) ((TargetParameter *)parameter.get())->setValueFromTarget(c);
+	showPopupAndGetTarget();
 }
+
 void TargetParameterUI::buttonClicked(Button * b)
 {
 	if (b == targetBT) {} // move code here ?

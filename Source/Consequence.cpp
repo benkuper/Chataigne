@@ -10,10 +10,12 @@
 
 #include "Consequence.h"
 #include "CommandFactory.h"
+#include "Engine.h"
 
 Consequence::Consequence() :
 	BaseItem("Consequence")
 {
+	saveAndLoadRecursiveData = false;
 	trigger = addTrigger("Trigger", "Trigger this consequence");
 }
 
@@ -29,7 +31,9 @@ void Consequence::setCommand(CommandDefinition * commandDef)
 
 	}
 
+	commandDefinition = commandDef;
 	if (commandDef != nullptr) command = commandDef->create(CommandContext::ACTION);
+
 	else command = nullptr;
 
 	if (command != nullptr)
@@ -46,4 +50,36 @@ void Consequence::onContainerTriggerTriggered(Trigger * t)
 	{
 		if (command != nullptr) command->trigger();
 	}
+}
+
+var Consequence::getJSONData()
+{
+	var data = BaseItem::getJSONData();
+	if (command != nullptr)
+	{
+		data.getDynamicObject()->setProperty("commandOutput", command->container->getControlAddress());
+		data.getDynamicObject()->setProperty("commandPath", commandDefinition->menuPath);
+		data.getDynamicObject()->setProperty("commandType", commandDefinition->inputType);
+	}
+	return data;
+}
+
+void Consequence::loadJSONDataInternal(var data)
+{
+	BaseItem::loadJSONDataInternal(data);
+	if (data.getDynamicObject()->hasProperty("commandOutput"))
+	{
+		Output * o = (Output *)Engine::getInstance()->getControllableContainerForAddress(data.getProperty("commandOutput", ""));
+		if (o != nullptr)
+		{
+			
+			String menuPath = data.getProperty("commandPath", "");
+			String inputType = data.getProperty("commandType", "");
+			setCommand(o->getCommandDefinitionFor(menuPath, inputType));
+		} else
+		{
+			DBG("Output not found : " << data.getProperty("commandOutput", "").toString());
+		}
+	}
+
 }

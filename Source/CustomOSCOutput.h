@@ -21,7 +21,7 @@ public:
 	virtual ~CustomOSCOutput();
 
 	static CustomOSCOutput * create() { return new CustomOSCOutput(); }
-	virtual String getTypeString() const { return "CustomOSC"; }
+	virtual String getTypeString() const { return "OSC"; }
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(CustomOSCOutput)
 };
