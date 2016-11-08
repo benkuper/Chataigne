@@ -13,8 +13,10 @@
 TimeMachineView::TimeMachineView(SequenceManager * _manager) :
 	ShapeShifterContent(this, "Time Machine"),
 	manager(_manager)
-  {
-  }
+{
+	contentIsFlexible = true;
+
+}
 
 TimeMachineView::~TimeMachineView()
 {

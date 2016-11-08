@@ -379,26 +379,38 @@
                     file="Source/SequenceEditor.cpp"/>
               <FILE id="mXjUcL" name="SequenceEditor.h" compile="0" resource="0"
                     file="Source/SequenceEditor.h"/>
-              <FILE id="S7xJkX" name="SequenceManagerUI.cpp" compile="1" resource="0"
-                    file="Source/SequenceManagerUI.cpp"/>
-              <FILE id="aMpGrT" name="SequenceManagerUI.h" compile="0" resource="0"
-                    file="Source/SequenceManagerUI.h"/>
               <FILE id="F4e0iU" name="SequenceUI.cpp" compile="1" resource="0" file="Source/SequenceUI.cpp"/>
               <FILE id="b5M58J" name="SequenceUI.h" compile="0" resource="0" file="Source/SequenceUI.h"/>
-              <FILE id="VHnxss" name="TimeMachineView.cpp" compile="1" resource="0"
-                    file="Source/TimeMachineView.cpp"/>
-              <FILE id="CH9Q38" name="TimeMachineView.h" compile="0" resource="0"
-                    file="Source/TimeMachineView.h"/>
             </GROUP>
             <FILE id="YXl9Vr" name="Sequence.cpp" compile="1" resource="0" file="Source/Sequence.cpp"/>
             <FILE id="bQXOym" name="Sequence.h" compile="0" resource="0" file="Source/Sequence.h"/>
-            <FILE id="WBOiVa" name="SequenceManager.cpp" compile="1" resource="0"
-                  file="Source/SequenceManager.cpp"/>
-            <FILE id="IUsIVe" name="SequenceManager.h" compile="0" resource="0"
-                  file="Source/SequenceManager.h"/>
           </GROUP>
+          <GROUP id="{2C1EEC8A-4A4F-7275-48C4-B12076854376}" name="ui">
+            <FILE id="S7xJkX" name="SequenceManagerUI.cpp" compile="1" resource="0"
+                  file="Source/SequenceManagerUI.cpp"/>
+            <FILE id="aMpGrT" name="SequenceManagerUI.h" compile="0" resource="0"
+                  file="Source/SequenceManagerUI.h"/>
+            <FILE id="VHnxss" name="TimeMachineView.cpp" compile="1" resource="0"
+                  file="Source/TimeMachineView.cpp"/>
+            <FILE id="CH9Q38" name="TimeMachineView.h" compile="0" resource="0"
+                  file="Source/TimeMachineView.h"/>
+          </GROUP>
+          <FILE id="WBOiVa" name="SequenceManager.cpp" compile="1" resource="0"
+                file="Source/SequenceManager.cpp"/>
+          <FILE id="IUsIVe" name="SequenceManager.h" compile="0" resource="0"
+                file="Source/SequenceManager.h"/>
         </GROUP>
         <GROUP id="{6118C3CC-68D9-30B7-4C57-FBC6D5FB1BC3}" name="StateMachine">
+          <GROUP id="{4485092C-E002-D2BD-7AE7-9807C77E0B7C}" name="State">
+            <GROUP id="{6AD9892C-48DC-2866-1C57-80747C03FC4D}" name="ui">
+              <FILE id="EPh5uD" name="StateViewUI.cpp" compile="1" resource="0" file="Source/StateViewUI.cpp"/>
+              <FILE id="PNDmkW" name="StateViewUI.h" compile="0" resource="0" file="Source/StateViewUI.h"/>
+              <FILE id="iTdBZl" name="StateUI.cpp" compile="1" resource="0" file="Source/StateUI.cpp"/>
+              <FILE id="QLcJZ4" name="StateUI.h" compile="0" resource="0" file="Source/StateUI.h"/>
+            </GROUP>
+            <FILE id="hcrqkB" name="State.cpp" compile="1" resource="0" file="Source/State.cpp"/>
+            <FILE id="AnFYvm" name="State.h" compile="0" resource="0" file="Source/State.h"/>
+          </GROUP>
           <GROUP id="{D7AF6390-BF25-0509-7049-EBEB8223ABDD}" name="Transition">
             <GROUP id="{290F443E-597B-C298-175E-DA2BE7FDDA5F}" name="ui">
               <FILE id="sRhbyL" name="TransitionConnector.cpp" compile="1" resource="0"
@@ -417,8 +429,6 @@
                   file="Source/TransitionManager.h"/>
           </GROUP>
           <GROUP id="{96196884-0BE6-CF6D-F72B-E2E96115246B}" name="ui">
-            <FILE id="EPh5uD" name="StateViewUI.cpp" compile="1" resource="0" file="Source/StateViewUI.cpp"/>
-            <FILE id="PNDmkW" name="StateViewUI.h" compile="0" resource="0" file="Source/StateViewUI.h"/>
             <FILE id="KluOf6" name="StateMachineView.cpp" compile="1" resource="0"
                   file="Source/StateMachineView.cpp"/>
             <FILE id="HzXSHJ" name="StateMachineView.h" compile="0" resource="0"
@@ -427,11 +437,7 @@
                   file="Source/StateManagerUI.cpp"/>
             <FILE id="EFJm9S" name="StateManagerUI.h" compile="0" resource="0"
                   file="Source/StateManagerUI.h"/>
-            <FILE id="iTdBZl" name="StateUI.cpp" compile="1" resource="0" file="Source/StateUI.cpp"/>
-            <FILE id="QLcJZ4" name="StateUI.h" compile="0" resource="0" file="Source/StateUI.h"/>
           </GROUP>
-          <FILE id="hcrqkB" name="State.cpp" compile="1" resource="0" file="Source/State.cpp"/>
-          <FILE id="AnFYvm" name="State.h" compile="0" resource="0" file="Source/State.h"/>
           <FILE id="jp4XXE" name="StateManager.cpp" compile="1" resource="0"
                 file="Source/StateManager.cpp"/>
           <FILE id="TeO8GH" name="StateManager.h" compile="0" resource="0" file="Source/StateManager.h"/>

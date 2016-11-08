@@ -16,7 +16,7 @@
 
 class OSCInput :
 	public Input,
-	public OSCReceiver::Listener<OSCReceiver::MessageLoopCallback>
+	public OSCReceiver::Listener<OSCReceiver::RealtimeCallback>
 	//public OSCReceiver::Listener<OSCReceiver::RealtimeCallback> //must change with that later !
 {
 public:

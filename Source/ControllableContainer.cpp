@@ -34,7 +34,8 @@ ControllableContainer::ControllableContainer(const String & niceName) :
 	presetSavingIsRecursive(false),
 	saveAndLoadName(false),
 	nameCanBeChangedByUser(true),
-	isTargettable(true)
+	isTargettable(true),
+	queuedNotifier(50) //what to put in max size ??
 {
   setNiceName(niceName);
 
@@ -154,6 +155,7 @@ void ControllableContainer::addTriggerInternal(Trigger * t)
 	t->addTriggerListener(this);
 
 	controllableContainerListeners.call(&ControllableContainerListener::controllableAdded, t);
+	queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableAdded, this,t));
 	notifyStructureChanged();
 }
 
@@ -164,12 +166,14 @@ void ControllableContainer::addParameterInternal(Parameter * p)
 	p->addParameterListener(this);
 	p->addAsyncParameterListener(this);
 	controllableContainerListeners.call(&ControllableContainerListener::controllableAdded, p);
+	queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableAdded, this, p));
 	notifyStructureChanged();
 }
 
 void ControllableContainer::removeControllable(Controllable * c)
 {
   controllableContainerListeners.call(&ControllableContainerListener::controllableRemoved, c);
+  queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableRemoved, this, c));
 
   if(Parameter * p = dynamic_cast<Parameter*>(c)){
     p->removeParameterListener(this);
@@ -183,6 +187,8 @@ void ControllableContainer::removeControllable(Controllable * c)
 void ControllableContainer::notifyStructureChanged(){
 
   controllableContainerListeners.call(&ControllableContainerListener::childStructureChanged, this);
+  queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ChildStructureChanged, this));
+
 }
 
 void ControllableContainer::newMessage(const Parameter::ParamWithValue& pv){
@@ -190,7 +196,7 @@ void ControllableContainer::newMessage(const Parameter::ParamWithValue& pv){
     loadPresetWithName(pv.parameter->stringValue());
   }
   if(!pv.isRange()){
-  onContainerParameterChangedAsync(pv.parameter, pv.value);
+	onContainerParameterChangedAsync(pv.parameter, pv.value);
   }
 }
 void ControllableContainer::setNiceName(const String &_niceName) {
@@ -206,6 +212,8 @@ void ControllableContainer::setCustomShortName(const String &_shortName){
   updateChildrenControlAddress();
   onContainerShortNameChanged();
   controllableContainerListeners.call(&ControllableContainerListener::childAddressChanged,this);
+  queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ChildAddressChanged, this));
+
 }
 
 void ControllableContainer::setAutoShortName() {
@@ -214,6 +222,8 @@ void ControllableContainer::setAutoShortName() {
   updateChildrenControlAddress();
   onContainerShortNameChanged();
   controllableContainerListeners.call(&ControllableContainerListener::childAddressChanged,this);
+  queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ChildAddressChanged, this));
+
 }
 
 void ControllableContainer::setCanHavePresets(bool value)
@@ -244,6 +254,8 @@ void ControllableContainer::addChildControllableContainer(ControllableContainer 
   container->addControllableContainerListener(this);
   container->setParentContainer(this);
   controllableContainerListeners.call(&ControllableContainerListener::controllableContainerAdded, container);
+  queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerAdded, this, container));
+
   notifyStructureChanged();
 }
 
@@ -257,6 +269,8 @@ void ControllableContainer::removeChildControllableContainer(ControllableContain
   this->controllableContainers.removeAllInstancesOf(container);
   container->removeControllableContainerListener(this);
   controllableContainerListeners.call(&ControllableContainerListener::controllableContainerRemoved, container);
+  queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerRemoved, this, container));
+
   notifyStructureChanged();
   container->setParentContainer(nullptr);
 }
@@ -272,6 +286,8 @@ void ControllableContainer::addChildIndexedControllableContainer(ControllableCon
   container->addControllableContainerListener(this);
   container->setParentContainer(this);
   controllableContainerListeners.call(&ControllableContainerListener::controllableContainerAdded, container);
+  queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerAdded, this, container));
+
   notifyStructureChanged();
 }
 
@@ -385,6 +401,8 @@ void ControllableContainer::orderControllablesAlphabetically()
 {
 	controllables.sort(ControllableContainer::comparator, true);
 	controllableContainerListeners.call(&ControllableContainerListener::controllableContainerReordered, this);
+	queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerReordered, this));
+
 }
 
 void ControllableContainer::setParentContainer(ControllableContainer * container)
@@ -567,6 +585,8 @@ bool ControllableContainer::loadPreset(PresetManager::Preset * preset)
   currentPresetName->setValue(currentPreset->name, false);
 
   controllableContainerListeners.call(&ControllableContainerListener::controllableContainerPresetLoaded, this);
+  queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerPresetLoaded, this));
+
   return true;
 }
 
@@ -652,6 +672,7 @@ void ControllableContainer::dispatchFeedback(Controllable * c)
   //    @ben removed else here to enable containerlistener call back of non root (proxies) is it overkill?
   if (parentContainer != nullptr){ parentContainer->dispatchFeedback(c); }
   controllableContainerListeners.call(&ControllableContainerListener::controllableFeedbackUpdate,this, c);
+  queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableFeedbackUpdate, this, c));
 
 }
 

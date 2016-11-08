@@ -15,6 +15,7 @@ StateMachineView::StateMachineView(StateManager * _manager) :
 	BaseManagerShapeShifterUI("State Machine", _manager, false),
 	manager(_manager)
 {
+	contentIsFlexible = true;
 	addItemText = "Add State";
 	setWantsKeyboardFocus(true);
 }
@@ -53,7 +54,6 @@ void StateMachineView::mouseUp(const MouseEvent & e)
 
 bool StateMachineView::keyPressed(const KeyPress & e)
 {
-	DBG("key press " << e.getKeyCode());
 	if (e.getKeyCode() == KeyPress::createFromDescription("f").getKeyCode())
 	{
 		frameView();

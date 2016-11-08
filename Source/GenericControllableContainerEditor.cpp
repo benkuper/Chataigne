@@ -132,7 +132,7 @@ CCInnerContainer::CCInnerContainer(GenericControllableContainerEditor * _editor,
 	canAccessLowerContainers(_canAccessLowerContainers),
 	containerLabel("containerLabel",_container->niceName)
 {
-	container->addControllableContainerListener(this);
+	container->addAsyncContainerListener(this);
 
 	addAndMakeVisible(containerLabel);
 	containerLabel.setFont(containerLabel.getFont().withHeight(10));
@@ -176,7 +176,7 @@ void CCInnerContainer::resetAndBuild()
 
 CCInnerContainer::~CCInnerContainer()
 {
-	container->removeControllableContainerListener(this);
+	container->removeAsyncContainerListener(this);
 	clear();
 }
 
@@ -264,6 +264,46 @@ CCInnerContainer::CCLinkBT * CCInnerContainer::getCCLinkForCC(ControllableContai
 	return nullptr;
 }
 
+void CCInnerContainer::newMessage(const ContainerAsyncEvent & p)
+{
+	switch (p.type)
+	{
+	case ContainerAsyncEvent::ControllableAdded:
+		if (p.targetControllable->parentContainer != container) return;
+		if (p.targetControllable->hideInEditor) return;
+		addControllableUI(p.targetControllable);
+		break;
+
+	case ContainerAsyncEvent::ControllableRemoved:
+		removeControllableUI(p.targetControllable);
+		break;
+
+	case ContainerAsyncEvent::ControllableContainerAdded:
+		if (p.targetContainer->parentContainer != container) return;
+
+		if (level < maxLevel) addCCInnerUI(p.targetContainer);
+		else if (canAccessLowerContainers) addCCLink(p.targetContainer);
+		break;
+
+	case ContainerAsyncEvent::ControllableContainerRemoved:
+		removeCCInnerUI(p.targetContainer);
+		removeCCLink(p.targetContainer);
+		break;
+
+	case ContainerAsyncEvent::ChildStructureChanged:
+		//nothing ?
+		break;
+
+	case ContainerAsyncEvent::ControllableContainerReordered:
+		controllablesUI.sort(CCInnerContainer::comparator, true);
+		resized();
+		break;
+
+
+
+	}
+}
+
 int CCInnerContainer::getContentHeight()
 {
 	int gap = 2;
@@ -348,42 +388,6 @@ void CCInnerContainer::clear()
 	lowerContainerLinks.clear();
 }
 
-void CCInnerContainer::controllableAdded(Controllable * c)
-{
-	if (c->parentContainer != container) return;
-	if (c->hideInEditor) return;
-	addControllableUI(c);
-}
-
-void CCInnerContainer::controllableRemoved(Controllable * c)
-{
-	removeControllableUI(c);
-}
-
-void CCInnerContainer::controllableContainerAdded(ControllableContainer * cc)
-{
-	if (cc->parentContainer != container) return;
-
-	if (level < maxLevel) addCCInnerUI(cc);
-	else if (canAccessLowerContainers) addCCLink(cc);
-}
-
-void CCInnerContainer::controllableContainerRemoved(ControllableContainer * cc)
-{
-	removeCCInnerUI(cc);
-	removeCCLink(cc);
-}
-
-void CCInnerContainer::childStructureChanged(ControllableContainer *)
-{
-	//resetAndBuild();
-}
-
-void CCInnerContainer::controllableContainerReordered(ControllableContainer *)
-{
-	controllablesUI.sort(CCInnerContainer::comparator, true); 
-	resized();
-}
 
 void CCInnerContainer::buttonClicked(Button * b)
 {

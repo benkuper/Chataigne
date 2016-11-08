@@ -21,6 +21,7 @@ public:
 	CommandChooserUI();
 	virtual ~CommandChooserUI();
 
+	bool commandIsSet;
 	String noTargetText;
 	Label label;
 	ScopedPointer<ImageButton> targetBT;

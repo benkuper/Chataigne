@@ -16,7 +16,7 @@ InputUI::InputUI(Input * input) :
 {
 	activityUI = input->activityTrigger->createBlinkUI();
 	activityUI->showLabel = false;
-	activityUI->animateIntensity = false;
+	//activityUI->animateIntensity = false;
 	addAndMakeVisible(activityUI);
 }
 

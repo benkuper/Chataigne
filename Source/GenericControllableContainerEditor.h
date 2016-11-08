@@ -21,7 +21,7 @@ class GenericControllableContainerEditor;
 
 class CCInnerContainer :
 	public Component,
-	public ControllableContainerListener,
+	public ControllableContainer::ContainerAsyncListener,
 	public ButtonListener
 {
 public:
@@ -77,12 +77,15 @@ public:
 	CCInnerContainer * getInnerContainerForCC(ControllableContainer * cc);
 	CCLinkBT * getCCLinkForCC(ControllableContainer * cc);
 
+	void newMessage(const ContainerAsyncEvent & p) override;
+	/*
 	void controllableAdded(Controllable *)override;
 	void controllableRemoved(Controllable *)override;
 	void controllableContainerAdded(ControllableContainer *)override;
 	void controllableContainerRemoved(ControllableContainer *)override;
 	void childStructureChanged(ControllableContainer *) override;
 	void controllableContainerReordered(ControllableContainer *) override;
+	*/
 
 	void buttonClicked(Button * b)override;
 };

@@ -49,6 +49,32 @@ public:
 	virtual void controllableContainerReordered(ControllableContainer *) {}
 };
 
+// ASYNC
+class  ContainerAsyncEvent {
+public:
+	enum EventType {
+		ControllableAdded,
+		ControllableRemoved,
+		ControllableContainerAdded,
+		ControllableContainerRemoved,
+		ControllableFeedbackUpdate,
+		ChildStructureChanged,
+		ChildAddressChanged,
+		ControllableContainerPresetLoaded,
+		ControllableContainerReordered
+	};
+
+	ContainerAsyncEvent(EventType _type, ControllableContainer* _source) : type(_type), source(_source) {} 
+	ContainerAsyncEvent(EventType _type, ControllableContainer* _source, Controllable *_target) : type(_type), source(_source),targetControllable(_target) {}
+	ContainerAsyncEvent(EventType _type, ControllableContainer* _source, ControllableContainer *_target) : type(_type), source(_source),targetContainer(_target) {}
+
+	EventType type;
+	ControllableContainer * source;
+	ControllableContainer * targetContainer;
+	Controllable * targetControllable;
+};
+
+
 
 class ControllableContainer :	public Parameter::Listener,
 								public Parameter::AsyncListener, 
@@ -201,7 +227,14 @@ public:
     ListenerList<ControllableContainerListener> controllableContainerListeners;
     void addControllableContainerListener(ControllableContainerListener* newListener) { controllableContainerListeners.add(newListener);}
     void removeControllableContainerListener(ControllableContainerListener* listener) { controllableContainerListeners.remove(listener);}
-    void clear();
+    
+	QueuedNotifier<ContainerAsyncEvent> queuedNotifier;
+	typedef QueuedNotifier<ContainerAsyncEvent>::Listener ContainerAsyncListener;
+
+	void addAsyncContainerListener(ContainerAsyncListener* newListener) { queuedNotifier.addListener(newListener); }
+	void removeAsyncContainerListener(ContainerAsyncListener* listener) { queuedNotifier.removeListener(listener); }
+	
+	void clear();
 	
 	
 	
