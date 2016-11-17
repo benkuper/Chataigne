@@ -10,6 +10,7 @@
 
 #include "TimeMachineView.h"
 
+
 TimeMachineView::TimeMachineView(SequenceManager * _manager) :
 	ShapeShifterContentComponent("Time Machine"),
 	manager(_manager) 
@@ -18,11 +19,13 @@ TimeMachineView::TimeMachineView(SequenceManager * _manager) :
 
 	addAndMakeVisible(panelContainer);
 	addAndMakeVisible(timelineContainer);
+
+	Inspector::getInstance()->addInspectorListener(this);
 }
 
 TimeMachineView::~TimeMachineView()
 {
-	
+	if(Inspector::getInstanceWithoutCreating()) Inspector::getInstance()->removeInspectorListener(this);
 }
 
 void TimeMachineView::paint(Graphics & g)
@@ -53,15 +56,15 @@ void TimeMachineView::setSequence(Sequence * sequence)
 		editor = new SequenceEditor(sequence);
 		addAndMakeVisible(editor);
 	}
+	resized();
 }
 
 void TimeMachineView::currentInspectableChanged(Inspector * i)
 {
-	DBG("current inspectable changed !");
-	if (static_cast<Sequence *>(i->currentInspectable) != nullptr)
+	if (dynamic_cast<Sequence *>(i->currentInspectable) != nullptr)
 	{
 		setSequence(static_cast<Sequence *>(i->currentInspectable));
-	} else if (static_cast<SequenceLayer *>(i->currentInspectable))
+	} else if (dynamic_cast<SequenceLayer *>(i->currentInspectable) != nullptr)
 	{
 		setSequence(static_cast<SequenceLayer *>(i->currentInspectable)->sequence);
 	}

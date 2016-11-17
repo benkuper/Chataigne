@@ -21,8 +21,13 @@ public:
 	SequenceEditor(Sequence * _sequence);
 	virtual ~SequenceEditor();
 
+
+	void paint(Graphics &g) override;
+
 	Sequence * sequence;
 	SequenceLayerManagerUI lmui;
+
+	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(SequenceEditor)
 };
 
 

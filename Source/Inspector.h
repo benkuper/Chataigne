@@ -56,6 +56,7 @@ public:
 	void removeInspectorListener(InspectorListener* listener) { listeners.remove(listener); }
 
 
+	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Inspector)
 };
 
 class InspectorViewport : public ShapeShifterContentComponent, public Inspector::InspectorListener {

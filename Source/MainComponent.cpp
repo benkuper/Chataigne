@@ -9,7 +9,6 @@
 #include "MainComponent.h"
 
 
-
 //==============================================================================
 MainContentComponent::MainContentComponent()
 {
@@ -44,7 +43,6 @@ MainContentComponent::~MainContentComponent()
 
 	if(Engine::getInstanceWithoutCreating() != nullptr) Engine::getInstanceWithoutCreating()->removeEngineListener(this);
 	ShapeShifterManager::deleteInstance();
-
 }
 
 void MainContentComponent::init()

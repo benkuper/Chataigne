@@ -20,3 +20,8 @@ SequenceEditor::SequenceEditor(Sequence * _sequence) :
 SequenceEditor::~SequenceEditor()
 {
 }
+
+void SequenceEditor::paint(Graphics & g)
+{
+	g.fillAll(Colours::red);
+}

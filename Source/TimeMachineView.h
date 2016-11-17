@@ -22,11 +22,11 @@ class TimeMachineView :
 	public Inspector::InspectorListener
 {
 public:
-	TimeMachineView(SequenceManager * _manager);
+	
+	TimeMachineView(SequenceManager * _manager = nullptr);
 	~TimeMachineView();
 
 	
-
 	SequenceManager * manager;
 
 	ScopedPointer<SequenceEditor> editor;
