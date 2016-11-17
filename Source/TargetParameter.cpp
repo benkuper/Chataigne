@@ -22,11 +22,13 @@ TargetParameter::TargetParameter(const String & niceName, const String & descrip
 	type = TARGET;
 	if (rootContainer == nullptr) rootContainer = Engine::getInstanceWithoutCreating();
 	
+	argumentsDescription = "target";
 }
 
 TargetParameter::~TargetParameter()
 {
 	if (rootContainer != nullptr) rootContainer->removeControllableContainerListener(this);
+	setTarget((ControllableContainer *)nullptr);
 	setValue("");
 }
 

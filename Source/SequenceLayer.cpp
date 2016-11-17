@@ -11,10 +11,24 @@
 #include "SequenceLayer.h"
 
 SequenceLayer::SequenceLayer() :
-	BaseItem("SequenceLayer")
+	BaseItem("layer")
 {
 }
 
 SequenceLayer::~SequenceLayer()
 {
 }
+
+void SequenceLayer::setSequence(Sequence * _sequence)
+{
+	jassert(sequence != nullptr);
+
+	sequence = _sequence;
+	sequence->addSequenceListener(this);
+}
+
+void SequenceLayer::sequenceCurrentTimeChanged(Sequence *, bool /*evaluateSkippedData*/)
+{
+
+}
+

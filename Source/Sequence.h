@@ -13,12 +13,46 @@
 
 #include "BaseItem.h"
 
+class SequenceLayerManager;
+
 class Sequence :
 	public BaseItem
 {
 public:
 	Sequence();
 	virtual ~Sequence();
+
+	enum Type { TRIGGER, MAPPING };
+
+	Type type;
+
+	FloatParameter * totalTime;
+	FloatParameter * currentTime;
+	FloatParameter * playSpeed;
+	IntParameter * fps;
+
+	Trigger * playTrigger;
+	Trigger * pauseTrigger;
+	Trigger * stopTrigger;
+
+	BoolParameter * isPlaying;
+
+	ScopedPointer<SequenceLayerManager> layerManager;
+
+	void onContainerParameterChangedInternal(Parameter *);
+	void onContainerTriggerTriggered(Trigger *) override;
+
+	class SequenceListener
+	{
+	public:
+		virtual ~SequenceListener() {}
+		virtual void sequencePlayStateChanged(Sequence *) {}
+		virtual void sequenceCurrentTimeChanged(Sequence * , bool /*evaluateSkippedData*/) {}
+	};
+
+	ListenerList<SequenceListener> sequenceListeners;
+	void addSequenceListener(SequenceListener* newListener) { sequenceListeners.add(newListener); }
+	void removeSequenceListener(SequenceListener* listener) { sequenceListeners.remove(listener); }
 
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Sequence)

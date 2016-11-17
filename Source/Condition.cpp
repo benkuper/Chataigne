@@ -46,7 +46,7 @@ void Condition::setSourceControllable(WeakReference<Controllable> c)
 {
 	if (!sourceControllable.wasObjectDeleted() && sourceControllable != nullptr)
 	{
-		if(sourceControllable->type == Controllable::TRIGGER) ((Trigger *)c.get())->removeTriggerListener(this);
+		if(sourceControllable->type == Controllable::TRIGGER) ((Trigger *)sourceControllable.get())->removeTriggerListener(this);
 		else ((Parameter *)sourceControllable.get())->removeParameterListener(this);
 	}
 

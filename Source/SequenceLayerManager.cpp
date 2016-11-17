@@ -10,13 +10,17 @@
 
 #include "SequenceLayerManager.h"
 
-juce_ImplementSingleton(SequenceLayerManager)
-
-SequenceLayerManager::SequenceLayerManager() :
-	BaseManager<SequenceLayer>("SequenceLayers")
+SequenceLayerManager::SequenceLayerManager(Sequence * _sequence) :
+	BaseManager<SequenceLayer>("Layers"),
+	sequence(_sequence)
 {
 }
 
 SequenceLayerManager::~SequenceLayerManager()
 {
+}
+
+void SequenceLayerManager::addItemInternal(SequenceLayer * sl, var data)
+{
+	sl->setSequence(sequence);
 }

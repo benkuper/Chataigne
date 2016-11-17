@@ -49,6 +49,8 @@ public:
 	void removeComparatorListener(ComparatorListener* listener) { comparatorListeners.remove(listener); }
 
 	virtual BaseComparatorUI * createUI();
+
+	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(BaseComparator)
 };
 
 class TriggerComparator :
@@ -65,6 +67,8 @@ public:
 	virtual void compare() override;
 
 	void triggerTriggered(Trigger *) override;
+
+	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(TriggerComparator)
 };
 
 class ParameterComparator :
@@ -83,6 +87,8 @@ public:
 	IntParameter * compareFrequency;
 
 	void parameterValueChanged(Parameter * p);
+
+	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ParameterComparator)
 };
 
 

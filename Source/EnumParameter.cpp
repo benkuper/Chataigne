@@ -22,12 +22,29 @@ void EnumParameter::addOption(String key, var data)
 {
 	enumValues.set(key, data);
 	enumListeners.call(&Listener::enumOptionAdded, this, key);
+
+	updateArgDescription();
 }
 
 void EnumParameter::removeOption(String key)
 {
 	enumValues.remove(key);
 	enumListeners.call(&Listener::enumOptionRemoved, this, key);
+	updateArgDescription();
+}
+
+void EnumParameter::updateArgDescription()
+{
+	argumentsDescription = "";
+	HashMap<String, var>::Iterator i(enumValues);
+	int index = 1;
+	while (i.next())
+	{
+		argumentsDescription += i.getKey();
+		if(index < enumValues.size()-1) argumentsDescription += " | ";
+		index++;
+	}
+
 }
 
 

@@ -13,13 +13,22 @@
 
 
 #include "BaseItem.h"
+#include "Sequence.h"
 
 class SequenceLayer :
-	public BaseItem
+	public BaseItem,
+	public Sequence::SequenceListener
 {
 public:
 	SequenceLayer();
 	virtual ~SequenceLayer();
+
+	Sequence * sequence;
+
+	void setSequence(Sequence * _sequence);
+
+
+	void sequenceCurrentTimeChanged(Sequence * _sequence, bool evaluateSkippedData);
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(SequenceLayer)
 };

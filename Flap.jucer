@@ -356,7 +356,19 @@
         <GROUP id="{13952242-1FC5-C04E-F9EB-9F54AFB0B92B}" name="TimeMachine">
           <GROUP id="{CF065BB5-FDEA-7828-22CD-69EF20EB30A1}" name="Sequence">
             <GROUP id="{C33992D5-08C2-5AEB-B040-E6518FCCB5F1}" name="Layer">
+              <GROUP id="{70F92DAD-DDC6-7312-077D-F4347202223B}" name="layers">
+                <FILE id="jLTkCT" name="MappingLayer.cpp" compile="1" resource="0"
+                      file="Source/MappingLayer.cpp"/>
+                <FILE id="JRYfKE" name="MappingLayer.h" compile="0" resource="0" file="Source/MappingLayer.h"/>
+                <FILE id="f0plxm" name="TriggerLayer.cpp" compile="1" resource="0"
+                      file="Source/TriggerLayer.cpp"/>
+                <FILE id="c4bmKn" name="TriggerLayer.h" compile="0" resource="0" file="Source/TriggerLayer.h"/>
+              </GROUP>
               <GROUP id="{7696F047-AA67-832E-1E36-F2E29558388C}" name="ui">
+                <FILE id="xCB1Q8" name="SequenceLayerPanel.cpp" compile="1" resource="0"
+                      file="Source/SequenceLayerPanel.cpp"/>
+                <FILE id="FvmqG7" name="SequenceLayerPanel.h" compile="0" resource="0"
+                      file="Source/SequenceLayerPanel.h"/>
                 <FILE id="fPbTEX" name="SequenceLayerUI.cpp" compile="1" resource="0"
                       file="Source/SequenceLayerUI.cpp"/>
                 <FILE id="UM4zlQ" name="SequenceLayerUI.h" compile="0" resource="0"

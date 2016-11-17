@@ -15,6 +15,7 @@ BoolParameter::BoolParameter(const String & niceName, const String &description,
     Parameter(Type::BOOL, niceName, description, initialValue, false, true, enabled)
 {
     setValue(initialValue);
+	argumentsDescription = "0/1";
 }
 
 BoolToggleUI * BoolParameter::createToggle(BoolParameter * target)

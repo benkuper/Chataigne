@@ -9,3 +9,14 @@
 */
 
 #include "SequenceEditor.h"
+
+SequenceEditor::SequenceEditor(Sequence * _sequence) :
+	lmui(_sequence->layerManager),
+	sequence(_sequence)
+{
+	
+}
+
+SequenceEditor::~SequenceEditor()
+{
+}

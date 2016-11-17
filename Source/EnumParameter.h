@@ -24,6 +24,7 @@ public:
 	void addOption(String key, var data);
 	void removeOption(String key);
 
+	void updateArgDescription();
 
 	HashMap<String, var> enumValues;
 

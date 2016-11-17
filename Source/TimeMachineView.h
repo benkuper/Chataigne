@@ -14,18 +14,33 @@
 #include "SequenceManager.h"
 #include "ShapeShifterContent.h"
 #include "Style.h"
+#include "SequenceEditor.h"
+#include "Inspector.h"
 
 class TimeMachineView :
-	public Component,
-	public ShapeShifterContent
+	public ShapeShifterContentComponent,
+	public Inspector::InspectorListener
 {
 public:
 	TimeMachineView(SequenceManager * _manager);
 	~TimeMachineView();
 
-	void paint(Graphics &g) override;
+	
 
 	SequenceManager * manager;
+
+	ScopedPointer<SequenceEditor> editor;
+
+	const float headerHeight = 60;
+
+	Component panelContainer;
+	Component timelineContainer;
+
+	void paint(Graphics &g) override;
+	void resized() override;
+
+	void setSequence(Sequence * sequence);
+	void currentInspectableChanged(Inspector *) override;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(TimeMachineView)
 };

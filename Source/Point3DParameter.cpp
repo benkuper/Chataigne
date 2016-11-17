@@ -23,6 +23,7 @@ Point3DParameter::Point3DParameter(const String & niceName, const String & descr
 	value.append(0);
 
 	//hideInEditor = true;
+	argumentsDescription = "float, float, float";
 }
 
 void Point3DParameter::setVector(Vector3D<float> _value)

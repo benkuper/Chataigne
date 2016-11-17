@@ -22,6 +22,7 @@ Point2DParameter::Point2DParameter(const String & niceName, const String & descr
 	value.append(0);
 
 	//hideInEditor = true;
+	argumentsDescription = "float, float";
 }
 
 void Point2DParameter::setPoint(Point<float> _value)

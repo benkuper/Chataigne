@@ -43,7 +43,7 @@ public:
   String niceName;
   String shortName;
   String description;
-
+  String argumentsDescription;
 
   bool enabled;
   bool hasCustomShortName;

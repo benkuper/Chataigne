@@ -9,6 +9,7 @@
 */
 
 #include "ControllableUI.h"
+#include "Parameter.h"
 
 ControllableUI::ControllableUI(Controllable * controllable) :
 	Component(controllable->niceName),
@@ -44,7 +45,17 @@ void ControllableUI::controllableControlAddressChanged(Controllable *)
 
 void ControllableUI::updateTooltip()
 {
-    tooltip = controllable->description + "\nControl Address : " + controllable->controlAddress;
+	tooltip = controllable->description + "\nControl Address : " + controllable->controlAddress;
+	bool readOnly = false;
+	if (controllable->type != Controllable::Type::TRIGGER)
+	{
+		tooltip += " (" + controllable->argumentsDescription + ")";
+		if (((Parameter *)controllable.get())->isEditable == false) readOnly = true;
+		
+	}
+	if (controllable->isControllableFeedbackOnly) readOnly = true;
+	if (readOnly) tooltip += " (read only)";
+
     setTooltip(tooltip);
 }
 

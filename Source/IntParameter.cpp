@@ -15,7 +15,7 @@
 IntParameter::IntParameter(const String & niceName, const String &description, const int & initialValue, const int & minValue, const int & maxValue, bool enabled) :
     Parameter(Type::INT, niceName, description, initialValue, minValue, maxValue, enabled)
 {
-
+	argumentsDescription = "int";
 }
 
 void IntParameter::setValueInternal(var & _value)

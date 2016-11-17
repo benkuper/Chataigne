@@ -196,9 +196,11 @@ void BaseManagerUI<M, T, U>::resized()
 		r.translate(0, tr.getHeight() + gap);
 	}
 
-	if (useViewport && itemsUI.size() > 0)
+	if (useViewport) 
 	{
-		container.setBounds(getLocalBounds().withHeight(static_cast<BaseItemUI<T>*>(itemsUI[itemsUI.size() - 1])->getBottom()));
+		float th = 0;
+		if (itemsUI.size() > 0) th = static_cast<BaseItemUI<T>*>(itemsUI[itemsUI.size() - 1])->getBottom();
+		container.setBounds(getLocalBounds().withHeight(th));
 	}
 }
 
