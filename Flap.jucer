@@ -185,6 +185,8 @@
           <GROUP id="{00DB7CFA-CACA-0D02-4E20-E907A0900C31}" name="Helpers"/>
           <GROUP id="{9CFD8ABC-B151-C9B1-3170-F337A2876DE7}" name="Manager">
             <GROUP id="{04523331-54D0-EF5C-9ECA-C42754582F66}" name="ui">
+              <FILE id="vXgimL" name="BaseItemMinimalUI.h" compile="0" resource="0"
+                    file="Source/BaseItemMinimalUI.h"/>
               <FILE id="jCyMQj" name="BaseItemUI.h" compile="0" resource="0" file="Source/BaseItemUI.h"/>
               <FILE id="nHZFTl" name="BaseManagerShapeShifterUI.h" compile="0" resource="0"
                     file="Source/BaseManagerShapeShifterUI.h"/>
@@ -356,27 +358,75 @@
         <GROUP id="{13952242-1FC5-C04E-F9EB-9F54AFB0B92B}" name="TimeMachine">
           <GROUP id="{CF065BB5-FDEA-7828-22CD-69EF20EB30A1}" name="Sequence">
             <GROUP id="{C33992D5-08C2-5AEB-B040-E6518FCCB5F1}" name="Layer">
+              <FILE id="TF6qQl" name="SequenceLayerFactory.cpp" compile="1" resource="0"
+                    file="Source/SequenceLayerFactory.cpp"/>
+              <FILE id="h5ij9T" name="SequenceLayerFactory.h" compile="0" resource="0"
+                    file="Source/SequenceLayerFactory.h"/>
               <GROUP id="{70F92DAD-DDC6-7312-077D-F4347202223B}" name="layers">
-                <FILE id="jLTkCT" name="MappingLayer.cpp" compile="1" resource="0"
-                      file="Source/MappingLayer.cpp"/>
-                <FILE id="JRYfKE" name="MappingLayer.h" compile="0" resource="0" file="Source/MappingLayer.h"/>
-                <FILE id="f0plxm" name="TriggerLayer.cpp" compile="1" resource="0"
-                      file="Source/TriggerLayer.cpp"/>
-                <FILE id="c4bmKn" name="TriggerLayer.h" compile="0" resource="0" file="Source/TriggerLayer.h"/>
+                <GROUP id="{122AB14B-C267-A6B7-0275-346D9B3E14F8}" name="audio">
+                  <GROUP id="{EB54BFA5-4F11-11C6-394D-D4B460DFE9BD}" name="ui">
+                    <FILE id="dBqvSD" name="AudioLayerPanel.cpp" compile="1" resource="0"
+                          file="Source/AudioLayerPanel.cpp"/>
+                    <FILE id="iWrz0l" name="AudioLayerPanel.h" compile="0" resource="0"
+                          file="Source/AudioLayerPanel.h"/>
+                    <FILE id="nJrK06" name="AudioLayerTimeline.cpp" compile="1" resource="0"
+                          file="Source/AudioLayerTimeline.cpp"/>
+                    <FILE id="NQ3h1q" name="AudioLayerTimeline.h" compile="0" resource="0"
+                          file="Source/AudioLayerTimeline.h"/>
+                  </GROUP>
+                  <FILE id="mQf2oO" name="AudioLayer.cpp" compile="1" resource="0" file="Source/AudioLayer.cpp"/>
+                  <FILE id="fGw6H6" name="AudioLayer.h" compile="0" resource="0" file="Source/AudioLayer.h"/>
+                </GROUP>
+                <GROUP id="{FEFCE264-DD26-702C-627A-1F28E2CDAFEC}" name="mapping">
+                  <GROUP id="{3AD8DA16-48A6-BBE6-F37D-01C374ADD04C}" name="ui">
+                    <FILE id="jH5pfw" name="MappingLayerPanel.cpp" compile="1" resource="0"
+                          file="Source/MappingLayerPanel.cpp"/>
+                    <FILE id="FrJ5Um" name="MappingLayerPanel.h" compile="0" resource="0"
+                          file="Source/MappingLayerPanel.h"/>
+                    <FILE id="NJiz7o" name="MappingLayerTimeline.cpp" compile="1" resource="0"
+                          file="Source/MappingLayerTimeline.cpp"/>
+                    <FILE id="CryFJi" name="MappingLayerTimeline.h" compile="0" resource="0"
+                          file="Source/MappingLayerTimeline.h"/>
+                  </GROUP>
+                  <FILE id="jLTkCT" name="MappingLayer.cpp" compile="1" resource="0"
+                        file="Source/MappingLayer.cpp"/>
+                  <FILE id="JRYfKE" name="MappingLayer.h" compile="0" resource="0" file="Source/MappingLayer.h"/>
+                </GROUP>
+                <GROUP id="{10117456-5D27-D282-8629-DC52343DD5E4}" name="trigger">
+                  <GROUP id="{929A0600-5102-D2CC-B67C-2431328CEC67}" name="ui">
+                    <FILE id="rORA9h" name="TriggerLayerPanel.cpp" compile="1" resource="0"
+                          file="Source/TriggerLayerPanel.cpp"/>
+                    <FILE id="P04Rcg" name="TriggerLayerPanel.h" compile="0" resource="0"
+                          file="Source/TriggerLayerPanel.h"/>
+                    <FILE id="zASVxE" name="TriggerLayerTimeline.cpp" compile="1" resource="0"
+                          file="Source/TriggerLayerTimeline.cpp"/>
+                    <FILE id="rYgQAk" name="TriggerLayerTimeline.h" compile="0" resource="0"
+                          file="Source/TriggerLayerTimeline.h"/>
+                  </GROUP>
+                  <FILE id="kNy3zM" name="TimeTrigger.cpp" compile="1" resource="0" file="Source/TimeTrigger.cpp"/>
+                  <FILE id="BoFRkc" name="TimeTrigger.h" compile="0" resource="0" file="Source/TimeTrigger.h"/>
+                  <FILE id="f0plxm" name="TriggerLayer.cpp" compile="1" resource="0"
+                        file="Source/TriggerLayer.cpp"/>
+                  <FILE id="c4bmKn" name="TriggerLayer.h" compile="0" resource="0" file="Source/TriggerLayer.h"/>
+                </GROUP>
               </GROUP>
               <GROUP id="{7696F047-AA67-832E-1E36-F2E29558388C}" name="ui">
+                <FILE id="N3pzSK" name="SequenceLayerTimelineManagerUI.cpp" compile="1"
+                      resource="0" file="Source/SequenceLayerTimelineManagerUI.cpp"/>
+                <FILE id="MTeBwj" name="SequenceLayerTimelineManagerUI.h" compile="0"
+                      resource="0" file="Source/SequenceLayerTimelineManagerUI.h"/>
                 <FILE id="xCB1Q8" name="SequenceLayerPanel.cpp" compile="1" resource="0"
                       file="Source/SequenceLayerPanel.cpp"/>
                 <FILE id="FvmqG7" name="SequenceLayerPanel.h" compile="0" resource="0"
                       file="Source/SequenceLayerPanel.h"/>
-                <FILE id="fPbTEX" name="SequenceLayerUI.cpp" compile="1" resource="0"
-                      file="Source/SequenceLayerUI.cpp"/>
-                <FILE id="UM4zlQ" name="SequenceLayerUI.h" compile="0" resource="0"
-                      file="Source/SequenceLayerUI.h"/>
-                <FILE id="w28s9M" name="SequenceLayerManagerUI.h" compile="0" resource="0"
-                      file="Source/SequenceLayerManagerUI.h"/>
-                <FILE id="UZAYhm" name="SequenceLayerManagerUI.cpp" compile="1" resource="0"
-                      file="Source/SequenceLayerManagerUI.cpp"/>
+                <FILE id="fPbTEX" name="SequenceLayerTimeline.cpp" compile="1" resource="0"
+                      file="Source/SequenceLayerTimeline.cpp"/>
+                <FILE id="UM4zlQ" name="SequenceLayerTimeline.h" compile="0" resource="0"
+                      file="Source/SequenceLayerTimeline.h"/>
+                <FILE id="w28s9M" name="SequenceLayerPanelManagerUI.h" compile="0"
+                      resource="0" file="Source/SequenceLayerPanelManagerUI.h"/>
+                <FILE id="UZAYhm" name="SequenceLayerPanelManagerUI.cpp" compile="1"
+                      resource="0" file="Source/SequenceLayerPanelManagerUI.cpp"/>
               </GROUP>
               <FILE id="r63mtY" name="SequenceLayerManager.cpp" compile="1" resource="0"
                     file="Source/SequenceLayerManager.cpp"/>
@@ -391,6 +441,14 @@
                     file="Source/SequenceEditor.cpp"/>
               <FILE id="mXjUcL" name="SequenceEditor.h" compile="0" resource="0"
                     file="Source/SequenceEditor.h"/>
+              <FILE id="qXddD6" name="SequenceTimelineNavigationUI.cpp" compile="1"
+                    resource="0" file="Source/SequenceTimelineNavigationUI.cpp"/>
+              <FILE id="E9o6Ph" name="SequenceTimelineNavigationUI.h" compile="0"
+                    resource="0" file="Source/SequenceTimelineNavigationUI.h"/>
+              <FILE id="OD8e5y" name="SequenceTransportUI.cpp" compile="1" resource="0"
+                    file="Source/SequenceTransportUI.cpp"/>
+              <FILE id="A6Cy0H" name="SequenceTransportUI.h" compile="0" resource="0"
+                    file="Source/SequenceTransportUI.h"/>
               <FILE id="F4e0iU" name="SequenceUI.cpp" compile="1" resource="0" file="Source/SequenceUI.cpp"/>
               <FILE id="b5M58J" name="SequenceUI.h" compile="0" resource="0" file="Source/SequenceUI.h"/>
             </GROUP>

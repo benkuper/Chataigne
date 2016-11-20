@@ -11,7 +11,10 @@
 #ifndef SEQUENCEEDITOR_H_INCLUDED
 #define SEQUENCEEDITOR_H_INCLUDED
 
-#include "SequenceLayerManagerUI.h"
+#include "SequenceLayerPanelManagerUI.h"
+#include "SequenceLayerTimelineManagerUI.h"
+#include "SequenceTransportUI.h"
+#include "SequenceTimelineNavigationUI.h"
 
 class SequenceEditor :
 	public Component,
@@ -21,11 +24,23 @@ public:
 	SequenceEditor(Sequence * _sequence);
 	virtual ~SequenceEditor();
 
+	Sequence * sequence;
+	//ui
+	Component panelContainer;
+	Component timelineContainer;
+
+	SequenceTransportUI transportUI;
+	SequenceTimelineNavigationUI navigationUI;
+	SequenceLayerPanelManagerUI panelManagerUI;
+	SequenceLayerTimelineManagerUI timelineManagerUI;
+
+	//layout
+	const float headerHeight = 60;
+	float panelWidth;
 
 	void paint(Graphics &g) override;
-
-	Sequence * sequence;
-	SequenceLayerManagerUI lmui;
+	void resized() override;
+	
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(SequenceEditor)
 };

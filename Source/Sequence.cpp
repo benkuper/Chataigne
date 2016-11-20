@@ -61,7 +61,7 @@ void Sequence::onContainerParameterChangedInternal(Parameter * p)
 
 void Sequence::onContainerTriggerTriggered(Trigger * t)
 {
-	if (t = playTrigger)
+	if (t == playTrigger)
 	{
 		isPlaying->setValue(true);
 	} else if(t == stopTrigger)

@@ -17,9 +17,7 @@ TimeMachineView::TimeMachineView(SequenceManager * _manager) :
 {
 	contentIsFlexible = true;
 
-	addAndMakeVisible(panelContainer);
-	addAndMakeVisible(timelineContainer);
-
+	
 	Inspector::getInstance()->addInspectorListener(this);
 }
 

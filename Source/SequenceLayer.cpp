@@ -10,13 +10,15 @@
 
 #include "SequenceLayer.h"
 
-SequenceLayer::SequenceLayer() :
-	BaseItem("layer")
+SequenceLayer::SequenceLayer(const String &name) :
+	BaseItem(name)
 {
+	uiHeight = addIntParameter("UI Height", "Height of the layer in the editor", 60, 20, 300);
 }
 
 SequenceLayer::~SequenceLayer()
 {
+	sequence->removeSequenceListener(this);
 }
 
 void SequenceLayer::setSequence(Sequence * _sequence)
@@ -25,6 +27,15 @@ void SequenceLayer::setSequence(Sequence * _sequence)
 
 	sequence = _sequence;
 	sequence->addSequenceListener(this);
+
+	init();
+}
+
+var SequenceLayer::getJSONData()
+{
+	var data = BaseItem::getJSONData();
+	data.getDynamicObject()->setProperty("type", getTypeString());
+	return data;
 }
 
 void SequenceLayer::sequenceCurrentTimeChanged(Sequence *, bool /*evaluateSkippedData*/)

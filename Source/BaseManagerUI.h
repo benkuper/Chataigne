@@ -15,8 +15,24 @@
 
 #include "InspectableContentComponent.h"
 #include "BaseManager.h"
-#include "BaseItemUI.h"
+#include "BaseItemMinimalUI.h"
 #include "Style.h"
+
+template<class M, class T, class U>
+class BaseManagerUI;
+
+template<class M, class T, class U>
+class ManagerUIItemContainer :
+	public Component
+{
+public:
+	ManagerUIItemContainer<M,T,U>(BaseManagerUI<M,T,U> * _mui) : mui(_mui){};
+	~ManagerUIItemContainer() {}
+
+	BaseManagerUI<M,T,U> * mui;
+
+	void childBoundsChanged(Component * c) { mui->childBoundsChanged(c); }
+};
 
 template<class M, class T, class U>
 class BaseManagerUI :
@@ -32,7 +48,8 @@ public:
 	
 	//ui
 	bool useViewport; //TODO, create a BaseManagerViewportUI
-	Component container;
+	
+	ManagerUIItemContainer<M, T, U> container;
 	Viewport viewport;
 
 	//style
@@ -54,7 +71,7 @@ public:
 	virtual void paint(Graphics &g) override;
 
 	virtual void resized() override;
-	void childBoundsChanged(Component *) override;
+	virtual void childBoundsChanged(Component *) override;
 
 	virtual void addItemFromMenu();
 	virtual U * addItemUI(T * item);
@@ -88,6 +105,7 @@ template<class M, class T, class U>
 BaseManagerUI<M, T, U>::BaseManagerUI(const String & contentName, M * _manager, bool _useViewport) :
 	InspectableContentComponent(_manager),
 	manager(_manager),
+	container(this),
 	drawContour(false),
 	bgColor(BG_COLOR),
 	managerUIName(contentName),
@@ -190,7 +208,7 @@ void BaseManagerUI<M, T, U>::resized()
 	
 	for (auto &ui : itemsUI)
 	{
-		BaseItemUI<T> * bui = static_cast<BaseItemUI<T>*>(ui);
+		BaseItemMinimalUI<T> * bui = static_cast<BaseItemMinimalUI<T>*>(ui);
 		Rectangle<int> tr = r.withHeight(bui->getHeight());
 		bui->setBounds(tr);
 		r.translate(0, tr.getHeight() + gap);
@@ -199,19 +217,19 @@ void BaseManagerUI<M, T, U>::resized()
 	if (useViewport) 
 	{
 		float th = 0;
-		if (itemsUI.size() > 0) th = static_cast<BaseItemUI<T>*>(itemsUI[itemsUI.size() - 1])->getBottom();
+		if (itemsUI.size() > 0) th = static_cast<BaseItemMinimalUI<T>*>(itemsUI[itemsUI.size() - 1])->getBottom();
 		container.setBounds(getLocalBounds().withHeight(th));
 	}
 }
 
 template<class M, class T, class U>
-inline void BaseManagerUI<M, T, U>::childBoundsChanged(Component *)
+void BaseManagerUI<M, T, U>::childBoundsChanged(Component *)
 {
 	resized();
 }
 
 template<class M, class T, class U>
-inline void BaseManagerUI<M, T, U>::addItemFromMenu()
+void BaseManagerUI<M, T, U>::addItemFromMenu()
 {
 	manager->BaseManager<T>::addItem();
 }
@@ -221,8 +239,8 @@ U * BaseManagerUI<M, T, U>::addItemUI(T * item)
 {
 	U * tui = new U(item);
 	itemsUI.add(tui);
-	if(useViewport) container.addAndMakeVisible(static_cast<BaseItemUI<T>*>(tui));
-	else addAndMakeVisible(static_cast<BaseItemUI<T>*>(tui));
+	if(useViewport) container.addAndMakeVisible(static_cast<BaseItemMinimalUI<T>*>(tui));
+	else addAndMakeVisible(static_cast<BaseItemMinimalUI<T>*>(tui));
 	addItemUIInternal(tui);
 	resized();
 	managerUIListeners.call(&ManagerUIListener::itemUIAdded, tui);
@@ -235,8 +253,8 @@ void BaseManagerUI<M, T, U>::removeItemUI(T * item)
 	U * tui = getUIForItem(item);
 	if (tui == nullptr) return;
 
-	if(useViewport) container.removeChildComponent(static_cast<BaseItemUI<T>*>(tui));
-	else container.removeChildComponent(static_cast<BaseItemUI<T>*>(tui));
+	if(useViewport) container.removeChildComponent(static_cast<BaseItemMinimalUI<T>*>(tui));
+	else container.removeChildComponent(static_cast<BaseItemMinimalUI<T>*>(tui));
 	removeItemUIInternal(tui);
 	itemsUI.removeObject(tui,false);
 	managerUIListeners.call(&ManagerUIListener::itemUIRemoved, tui);
@@ -247,12 +265,12 @@ void BaseManagerUI<M, T, U>::removeItemUI(T * item)
 template<class M, class T, class U>
 U * BaseManagerUI<M, T, U>::getUIForItem(T * item)
 {
-	for (auto &ui : itemsUI) if (static_cast<BaseItemUI<T>*>(ui)->item == item) return ui;
+	for (auto &ui : itemsUI) if (static_cast<BaseItemMinimalUI<T>*>(ui)->item == item) return ui;
 	return nullptr;
 }
 
 template<class M, class T, class U>
-inline int BaseManagerUI<M, T, U>::getContentHeight()
+int BaseManagerUI<M, T, U>::getContentHeight()
 {
 	return container.getHeight() + 20;
 }

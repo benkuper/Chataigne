@@ -20,15 +20,28 @@ class SequenceLayer :
 	public Sequence::SequenceListener
 {
 public:
-	SequenceLayer();
+	SequenceLayer(const String &name = "New Layer");
 	virtual ~SequenceLayer();
 
 	Sequence * sequence;
 
+	//UI
+	IntParameter * uiHeight;
+
+	//Methods
 	void setSequence(Sequence * _sequence);
 
+	virtual void init() {}; //to override after setSequence
 
+	//Save / Load
+	virtual var getJSONData() override;
+	
+	//Handlers
 	void sequenceCurrentTimeChanged(Sequence * _sequence, bool evaluateSkippedData);
+
+
+	//Factory
+	virtual String getTypeString() const { jassert(false); return ""; } //should be overriden
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(SequenceLayer)
 };

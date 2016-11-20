@@ -9,3 +9,20 @@
 */
 
 #include "TriggerLayer.h"
+
+TriggerLayer::TriggerLayer() :
+	SequenceLayer("New Trigger Layer")
+  {
+  }
+
+  TriggerLayer::~TriggerLayer()
+  {
+  }
+
+  void TriggerLayer::init()
+  {
+  }
+
+  void TriggerLayer::loadJSONDataInternal(var data)
+  {
+  }

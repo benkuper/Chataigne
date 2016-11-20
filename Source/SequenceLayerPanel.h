@@ -12,6 +12,20 @@
 #define SEQUENCELAYERPANEL_H_INCLUDED
 
 
+#include "BaseItemUI.h"
+#include "SequenceLayer.h"
+
+class SequenceLayerPanel :
+	public BaseItemUI<SequenceLayer>
+{
+public:
+	SequenceLayerPanel(SequenceLayer *);
+	virtual ~SequenceLayerPanel();
+
+	void controllableFeedbackUpdateInternal(Controllable *) override;
+
+	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(SequenceLayerPanel)
+};
 
 
 

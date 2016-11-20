@@ -11,27 +11,20 @@
 #ifndef BASEITEMUI_H_INCLUDED
 #define BASEITEMUI_H_INCLUDED
 
-#include "InspectableContentComponent.h"
-#include "BaseItem.h"
+
+#include "BaseItemMinimalUI.h"
 #include "AssetManager.h"
-#include "Style.h"
 #include "BoolToggleUI.h"
 #include "StringParameterUI.h"
 
 template<class T>
 class BaseItemUI : 
-	public InspectableContentComponent,
-	public ControllableContainerListener,
+	public BaseItemMinimalUI<T>,
 	public ButtonListener
 {
 public:
 	BaseItemUI<T>(T * _item);
 	virtual ~BaseItemUI<T>();
-
-	T * item;
-
-	//ui
-	Colour bgColor;
 
 	//layout
 	int headerHeight;
@@ -41,35 +34,25 @@ public:
 	ScopedPointer<BoolToggleUI> enabledBT;
 	ScopedPointer<ImageButton> removeBT;
 
-	virtual void paint(Graphics &g) override;
 	virtual void resized() override;
 
 	void buttonClicked(Button *b) override;
 	virtual void buttonClickedInternal(Button *){} //override this in child classes
 
-	void controllableFeedbackUpdate(ControllableContainer *, Controllable *) override;
-	virtual void controllableFeedbackUpdateInternal(Controllable *) {} //override this in child classes
-
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(BaseItemUI<T>)
 
-private:
-	BaseItem * getBaseItem() { return static_cast<BaseItem *>(item); }
+
 };
 
 
 
 template<class T>
 BaseItemUI<T>::BaseItemUI(T * _item) :
-	InspectableContentComponent(_item),
-	item(_item),
-	headerHeight(16), headerGap(5),
-	bgColor(BG_COLOR.brighter(.1f))
+	BaseItemMinimalUI<T>(_item),
+	headerHeight(16), headerGap(5)
 {
-	addMouseListener(this, true);
 
-	getBaseItem()->addControllableContainerListener(this);
-	
 	nameUI = getBaseItem()->nameParam->createStringParameterUI();
 	addAndMakeVisible(nameUI);
 
@@ -86,17 +69,7 @@ BaseItemUI<T>::BaseItemUI(T * _item) :
 template<class T>
 BaseItemUI<T>::~BaseItemUI()
 {
-	getBaseItem()->removeControllableContainerListener(this);
 	removeBT->removeListener(this);
-}
-
-
-template<class T>
-void BaseItemUI<T>::paint(Graphics &g)
-{
-	Rectangle<float> r = getLocalBounds().toFloat();
-	g.setColour(getBaseItem()->enabled->boolValue()?bgColor:bgColor.darker(.2f));
-	g.fillRoundedRectangle(r, 4);
 }
 
 template<class T>
@@ -122,15 +95,8 @@ void BaseItemUI<T>::buttonClicked(Button * b)
 	}
 
 	buttonClickedInternal(b);
-	
 }
 
-template<class T>
-inline void BaseItemUI<T>::controllableFeedbackUpdate(ControllableContainer *, Controllable * c)
-{
-	if (c == getBaseItem()->enabled) repaint();
-	controllableFeedbackUpdateInternal(c);
-}
 
 
 

@@ -21,7 +21,7 @@ class SequenceManager :
 public:
 	juce_DeclareSingleton(SequenceManager, false)
 
-		SequenceManager();
+	SequenceManager();
 	~SequenceManager();
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(SequenceManager)

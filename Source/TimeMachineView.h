@@ -26,16 +26,11 @@ public:
 	TimeMachineView(SequenceManager * _manager = nullptr);
 	~TimeMachineView();
 
-	
 	SequenceManager * manager;
 
 	ScopedPointer<SequenceEditor> editor;
 
-	const float headerHeight = 60;
-
-	Component panelContainer;
-	Component timelineContainer;
-
+	
 	void paint(Graphics &g) override;
 	void resized() override;
 

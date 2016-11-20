@@ -9,6 +9,7 @@
 */
 
 #include "SequenceManager.h"
+#include "SequenceLayerFactory.h"
 
 juce_ImplementSingleton(SequenceManager)
 
@@ -19,4 +20,5 @@ SequenceManager::SequenceManager() :
 
 SequenceManager::~SequenceManager()
 {
+	SequenceLayerFactory::deleteInstance();
 }

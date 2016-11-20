@@ -22,10 +22,7 @@ public:
 	Sequence();
 	virtual ~Sequence();
 
-	enum Type { TRIGGER, MAPPING };
-
-	Type type;
-
+	
 	FloatParameter * totalTime;
 	FloatParameter * currentTime;
 	FloatParameter * playSpeed;

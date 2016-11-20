@@ -9,3 +9,20 @@
 */
 
 #include "MappingLayer.h"
+
+MappingLayer::MappingLayer() :
+	SequenceLayer("New Mapping Layer")
+{
+}
+
+MappingLayer::~MappingLayer()
+{
+}
+
+void MappingLayer::init()
+{
+}
+
+void MappingLayer::loadJSONDataInternal(var data)
+{
+}
