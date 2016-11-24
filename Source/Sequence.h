@@ -22,7 +22,6 @@ public:
 	Sequence();
 	virtual ~Sequence();
 
-	
 	FloatParameter * totalTime;
 	FloatParameter * currentTime;
 	FloatParameter * playSpeed;
@@ -35,6 +34,13 @@ public:
 	BoolParameter * isPlaying;
 
 	ScopedPointer<SequenceLayerManager> layerManager;
+
+
+	//UI
+	const float minViewTime = 1; //in seconds
+	FloatParameter * viewStartTime;
+	FloatParameter * viewEndTime;
+
 
 	void onContainerParameterChangedInternal(Parameter *);
 	void onContainerTriggerTriggered(Trigger *) override;

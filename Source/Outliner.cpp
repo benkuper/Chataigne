@@ -33,7 +33,7 @@ Outliner::Outliner(const String &contentName) :
 
 Outliner::~Outliner()
 {
-	DBG("Outliner destroy, engine ?" << (int)Engine::getInstanceWithoutCreating());
+	//DBG("Outliner destroy, engine ?" << (int)Engine::getInstanceWithoutCreating());
 	if (Engine::getInstanceWithoutCreating() != nullptr) 
 		Engine::getInstanceWithoutCreating()->removeControllableContainerListener(this);
 

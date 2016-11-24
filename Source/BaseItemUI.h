@@ -53,17 +53,17 @@ BaseItemUI<T>::BaseItemUI(T * _item) :
 	headerHeight(16), headerGap(5)
 {
 
-	nameUI = getBaseItem()->nameParam->createStringParameterUI();
-	addAndMakeVisible(nameUI);
+	nameUI = this->getBaseItem()->nameParam->createStringParameterUI();
+	this->addAndMakeVisible(nameUI);
 
-	enabledBT = getBaseItem()->enabled->createToggle();
-	addAndMakeVisible(enabledBT);
+	enabledBT = this->getBaseItem()->enabled->createToggle();
+	this->addAndMakeVisible(enabledBT);
 
 	removeBT = AssetManager::getInstance()->getRemoveBT();
-	addAndMakeVisible(removeBT);
+	this->addAndMakeVisible(removeBT);
 	removeBT->addListener(this);
 
-	setSize(100, headerHeight+4);
+	this->setSize(100, headerHeight+4);
 }
 
 template<class T>
@@ -76,7 +76,7 @@ template<class T>
 void BaseItemUI<T>::resized()
 {
 	//Header
-	Rectangle<int> r = getLocalBounds().reduced(2);
+	Rectangle<int> r = this->getLocalBounds().reduced(2);
 	Rectangle<int> h = r.withHeight(headerHeight);
 	enabledBT->setBounds(h.removeFromLeft(h.getHeight()));
 	h.removeFromLeft(2);
@@ -90,7 +90,7 @@ void BaseItemUI<T>::buttonClicked(Button * b)
 {
 	if (b == removeBT)
 	{
-		getBaseItem()->remove();
+		this->getBaseItem()->remove();
 		return;
 	}
 

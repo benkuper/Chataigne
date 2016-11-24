@@ -16,7 +16,8 @@ MainContentComponent::MainContentComponent()
 
 	setSize(800, 600);
 	
-	LookAndFeel::setDefaultLookAndFeel(lookAndFeelOO = new LookAndFeelOO);
+	lookAndFeelOO = new LookAndFeelOO();
+	LookAndFeel::setDefaultLookAndFeel(lookAndFeelOO);
 	
 	ShapeShifterManager::getInstance()->loadLastSessionLayoutFile();
 	

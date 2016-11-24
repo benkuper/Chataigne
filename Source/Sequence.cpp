@@ -24,12 +24,18 @@ Sequence::Sequence() :
 	stopTrigger = addTrigger("Stop", "Stops the sequence and set the current time at 0.");
 	pauseTrigger = addTrigger("Pause", "Pause the sequence and keep the current time as is.");
 
+
+	viewStartTime = addFloatParameter("View start time", "Start time of the view", 0, 0, totalTime->floatValue() - minViewTime);
+	viewEndTime = addFloatParameter("View end time", "End time of the view", totalTime->floatValue(), minViewTime, totalTime->floatValue());
+
 	isPlaying = addBoolParameter("Is Playing", "Is the sequence playing ?", false);
 	isPlaying->isControllableFeedbackOnly = true;
 	isPlaying->isEditable = false;
 
 	layerManager = new SequenceLayerManager(this);
 	addChildControllableContainer(layerManager);
+
+	
 }
 
 Sequence::~Sequence()
@@ -44,6 +50,8 @@ void Sequence::onContainerParameterChangedInternal(Parameter * p)
 	} else if (p == totalTime)
 	{
 		currentTime->setRange(0, totalTime->floatValue());
+		viewStartTime->setRange(0, totalTime->floatValue() - minViewTime);
+		viewEndTime->setRange(minViewTime, totalTime->floatValue());
 	} else if (p == currentTime)
 	{
 		//layers will be listeners of this sequence, no need to transfer event from here

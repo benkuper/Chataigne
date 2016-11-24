@@ -235,6 +235,18 @@ public:
 
     void drawAlertBox (Graphics&, AlertWindow&, const Rectangle<int>& textArea, TextLayout&) override;
     int getAlertBoxWindowFlags() override;
+#if JUCE_LINUX
+	Array<int> getWidthsForTextButtons(AlertWindow &, const Array<TextButton *> & buttons) override
+	{
+		Array<int> w;
+		for (int i =0;i<buttons.size();i++)
+		{
+			w.add(buttons.getUnchecked(i)->getWidth());
+		}
+
+		return w;
+	}
+#endif
     int getAlertWindowButtonHeight() override;
 
     /** Override this function to supply a custom font for the alert window title.

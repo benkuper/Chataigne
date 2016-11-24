@@ -19,7 +19,7 @@ SequenceTransportUI::~SequenceTransportUI()
 {
 }
 
-void SequenceTransportUI::paint(Graphics & g)
+void SequenceTransportUI::paint(Graphics &)
 {
 	//g.fillAll(Colours::green);
 }

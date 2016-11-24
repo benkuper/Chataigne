@@ -122,7 +122,7 @@ BaseManagerUI<M, T, U>::BaseManagerUI(const String & contentName, M * _manager, 
 		viewport.setScrollBarsShown(true, false);
 		viewport.setScrollOnDragEnabled(false);
 		viewport.setScrollBarThickness(10);
-		addAndMakeVisible(viewport);
+		this->addAndMakeVisible(viewport);
 	} 
 
 	BaseManager<T>* baseM = static_cast<BaseManager<T>*>(manager);
@@ -254,7 +254,7 @@ void BaseManagerUI<M, T, U>::removeItemUI(T * item)
 	if (tui == nullptr) return;
 
 	if(useViewport) container.removeChildComponent(static_cast<BaseItemMinimalUI<T>*>(tui));
-	else container.removeChildComponent(static_cast<BaseItemMinimalUI<T>*>(tui));
+	else removeChildComponent(static_cast<BaseItemMinimalUI<T>*>(tui));
 	removeItemUIInternal(tui);
 	itemsUI.removeObject(tui,false);
 	managerUIListeners.call(&ManagerUIListener::itemUIRemoved, tui);

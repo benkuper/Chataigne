@@ -12,6 +12,8 @@
 #define SEQUENCETIMELINENAVIGATIONUI_H_INCLUDED
 
 #include "Sequence.h"
+#include "SequenceTimelineSeeker.h"
+#include "SequenceTimelineHeader.h"
 
 class SequenceTimelineNavigationUI :
 	public Component
@@ -22,7 +24,11 @@ public:
 
 	Sequence * sequence;
 
+	SequenceTimelineSeeker seeker;
+	SequenceTimelineHeader header;
+
 	void paint(Graphics &g) override;
+	void resized() override;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(SequenceTimelineNavigationUI)
 };

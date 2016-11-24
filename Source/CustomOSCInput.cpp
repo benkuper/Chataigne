@@ -81,7 +81,7 @@ void CustomOSCInput::processMessageInternal(const OSCMessage & msg)
 			break;
 
 		case 1:
-			if (msg[0].isInt32()) c = valuesCC.addIntParameter(cNiceName, "", msg[0].getInt32(), INT_MIN, INT_MAX);
+			if (msg[0].isInt32()) c = valuesCC.addIntParameter(cNiceName, "", msg[0].getInt32(), msg[0].getInt32(), msg[0].getInt32());
 			else if (msg[0].isFloat32()) c = valuesCC.addFloatParameter(cNiceName, "", msg[0].getFloat32());
 			else if (msg[0].isString()) c = valuesCC.addStringParameter(cNiceName, "", msg[0].getString());
 			((Parameter *)c)->autoAdaptRange = true;
@@ -89,7 +89,7 @@ void CustomOSCInput::processMessageInternal(const OSCMessage & msg)
 
 		case 2:
 			//duplicate because may have other mechanism
-			if (msg[0].isInt32()) c = valuesCC.addIntParameter(cNiceName, "", msg[0].getInt32(), INT_MIN, INT_MAX);
+			if (msg[0].isInt32()) c = valuesCC.addIntParameter(cNiceName, "", msg[0].getInt32(), msg[0].getInt32(), msg[1].getInt32());
 			else if (msg[0].isFloat32())
 			{
 				c = valuesCC.addPoint2DParameter(cNiceName, "");
