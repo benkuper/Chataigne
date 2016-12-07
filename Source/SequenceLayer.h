@@ -37,7 +37,7 @@ public:
 	virtual var getJSONData() override;
 	
 	//Handlers
-	void sequenceCurrentTimeChanged(Sequence * _sequence, bool evaluateSkippedData);
+	void sequenceCurrentTimeChanged(Sequence * _sequence, bool evaluateSkippedData) override;
 
 
 	//Factory

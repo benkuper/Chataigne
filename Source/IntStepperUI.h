@@ -13,7 +13,7 @@
 
 #include "FloatStepperUI.h"
 
-class IntStepperUI : public FloatStepperUI
+class IntStepperUI : public FloatStepperUI 
 {
 public:
     IntStepperUI(Parameter * parameter);

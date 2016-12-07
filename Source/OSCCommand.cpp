@@ -45,6 +45,10 @@ void OSCCommand::trigger()
 			m.addFloat32(((Point3DParameter *)a)->y);
 			m.addFloat32(((Point3DParameter *)a)->z);
 			break;
+			
+		default:
+		 //not handle
+		 break;
 
 		}
 	}

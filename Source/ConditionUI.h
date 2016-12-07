@@ -34,8 +34,8 @@ public:
 	void paintOverChildren(Graphics &g) override;
 	void updateSourceUI();
 
-	void conditionSourceChanged(Condition *);
-	void conditionValidationChanged(Condition *);
+	void conditionSourceChanged(Condition *) override;
+	void conditionValidationChanged(Condition *) override;
 
 	void childBoundsChanged(Component *) override;
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ConditionUI)

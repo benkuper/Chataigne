@@ -48,6 +48,10 @@ public:
 		case Controllable::POINT3D:
 			return new Point3DComparator(c);
 			break;
+			
+		default:
+		    //not handled now
+		    break;
 
 		}
 		return nullptr;

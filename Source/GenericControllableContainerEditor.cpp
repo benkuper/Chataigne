@@ -299,7 +299,9 @@ void CCInnerContainer::newMessage(const ContainerAsyncEvent & p)
 		resized();
 		break;
 
-
+    default:
+    //not handled
+    break;
 
 	}
 }

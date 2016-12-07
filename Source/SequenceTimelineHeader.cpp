@@ -41,13 +41,13 @@ void SequenceTimelineHeader::paint(Graphics & g)
 		{
 			g.setColour(BG_COLOR);
 			//g.drawLine(tx, 0, tx, getHeight(), 1);
-			g.drawVerticalLine(tx, 0, getHeight());
+			g.drawVerticalLine(tx, 0, (float)getHeight());
 			g.setFont(10);
 			g.drawText(String(i), tx+2, 2, 20, 10, Justification::topLeft);
 		} else
 		{
 			g.setColour(BG_COLOR.darker(.2f));
-			g.drawVerticalLine(tx, 0, getHeight());
+			g.drawVerticalLine(tx, 0, (float)getHeight());
 		}
 
 		
@@ -62,7 +62,7 @@ int SequenceTimelineHeader::getXForTime(float time)
 {
 	float viewStart = sequence->viewStartTime->floatValue();
 	float viewEnd = sequence->viewEndTime->floatValue();
-	return jmap<float>(time, viewStart, viewEnd, 0, getWidth());
+	return (int)jmap<float>(time, viewStart, viewEnd, 0, (float)getWidth());
 }
 
 void SequenceTimelineHeader::newMessage(const ContainerAsyncEvent & e)
@@ -82,6 +82,10 @@ void SequenceTimelineHeader::newMessage(const ContainerAsyncEvent & e)
 
 		}
 		break;
+		
+	default:
+	//other events not handled 
+	break;
 	}
 }
 

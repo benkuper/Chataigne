@@ -818,20 +818,20 @@
                        isDebug="0" optimisation="3" targetName="Flap"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
-        <MODULEPATH id="juce_core" path="../../../../Softwares/Juce 4.3.0/JUCE/modules"/>
-        <MODULEPATH id="juce_events" path="../../../../Softwares/Juce 4.3.0/JUCE/modules"/>
-        <MODULEPATH id="juce_graphics" path="../../../../Softwares/Juce 4.3.0/JUCE/modules"/>
-        <MODULEPATH id="juce_data_structures" path="../../../../Softwares/Juce 4.3.0/JUCE/modules"/>
-        <MODULEPATH id="juce_gui_basics" path="../../../../Softwares/Juce 4.3.0/JUCE/modules"/>
-        <MODULEPATH id="juce_gui_extra" path="../../../../Softwares/Juce 4.3.0/JUCE/modules"/>
-        <MODULEPATH id="juce_cryptography" path="../../../../Softwares/Juce 4.3.0/JUCE/modules"/>
-        <MODULEPATH id="juce_video" path="../../../../Softwares/Juce 4.3.0/JUCE/modules"/>
-        <MODULEPATH id="juce_opengl" path="../../../../Softwares/Juce 4.3.0/JUCE/modules"/>
-        <MODULEPATH id="juce_audio_basics" path="../../../../Softwares/Juce 4.3.0/JUCE/modules"/>
-        <MODULEPATH id="juce_audio_devices" path="../../../../Softwares/Juce 4.3.0/JUCE/modules"/>
-        <MODULEPATH id="juce_audio_formats" path="../../../../Softwares/Juce 4.3.0/JUCE/modules"/>
-        <MODULEPATH id="juce_audio_processors" path="../../../../Softwares/Juce 4.3.0/JUCE/modules"/>
-        <MODULEPATH id="juce_osc" path="../../../../Softwares/Juce 4.3.0/JUCE/modules"/>
+        <MODULEPATH id="juce_core" path="D:/Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_events" path="D:/Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_graphics" path="D:/Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_data_structures" path="D:/Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="D:/Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="D:/Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_cryptography" path="D:/Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_video" path="D:/Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_opengl" path="D:/Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_basics" path="D:/Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_devices" path="D:/Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_formats" path="D:/Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_processors" path="D:/Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_osc" path="D:/Softwares/JUCE/modules"/>
       </MODULEPATHS>
     </VS2015>
     <LINUX_MAKE targetFolder="Builds/LinuxMakefile" smallIcon="nVz6Li" bigIcon="nVz6Li"
@@ -859,24 +859,24 @@
     </LINUX_MAKE>
     <XCODE_MAC targetFolder="Builds/MacOSX" smallIcon="nVz6Li" bigIcon="nVz6Li">
       <CONFIGURATIONS>
-        <CONFIGURATION name="Debug" isDebug="1" optimisation="1" targetName="Flap"/>
+        <CONFIGURATION name="Debug" isDebug="1" optimisation="1" targetName="Flap" cppLanguageStandard="c++11"/>
         <CONFIGURATION name="Release" isDebug="0" optimisation="3" targetName="Flap"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
-        <MODULEPATH id="juce_video" path="../../../../Softwares/Juce 4.3.0/JUCE/modules"/>
-        <MODULEPATH id="juce_osc" path="../../../../Softwares/Juce 4.3.0/JUCE/modules"/>
-        <MODULEPATH id="juce_opengl" path="../../../../Softwares/Juce 4.3.0/JUCE/modules"/>
-        <MODULEPATH id="juce_gui_extra" path="../../../../Softwares/Juce 4.3.0/JUCE/modules"/>
-        <MODULEPATH id="juce_gui_basics" path="../../../../Softwares/Juce 4.3.0/JUCE/modules"/>
-        <MODULEPATH id="juce_graphics" path="../../../../Softwares/Juce 4.3.0/JUCE/modules"/>
-        <MODULEPATH id="juce_events" path="../../../../Softwares/Juce 4.3.0/JUCE/modules"/>
-        <MODULEPATH id="juce_data_structures" path="../../../../Softwares/Juce 4.3.0/JUCE/modules"/>
-        <MODULEPATH id="juce_cryptography" path="../../../../Softwares/Juce 4.3.0/JUCE/modules"/>
-        <MODULEPATH id="juce_core" path="../../../../Softwares/Juce 4.3.0/JUCE/modules"/>
-        <MODULEPATH id="juce_audio_processors" path="../../../../Softwares/Juce 4.3.0/JUCE/modules"/>
-        <MODULEPATH id="juce_audio_formats" path="../../../../Softwares/Juce 4.3.0/JUCE/modules"/>
-        <MODULEPATH id="juce_audio_devices" path="../../../../Softwares/Juce 4.3.0/JUCE/modules"/>
-        <MODULEPATH id="juce_audio_basics" path="../../../../Softwares/Juce 4.3.0/JUCE/modules"/>
+        <MODULEPATH id="juce_video" path="/Users/benkuper/Dev/JUCE/modules"/>
+        <MODULEPATH id="juce_osc" path="/Users/benkuper/Dev/JUCE/modules"/>
+        <MODULEPATH id="juce_opengl" path="/Users/benkuper/Dev/JUCE/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="/Users/benkuper/Dev/JUCE/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="/Users/benkuper/Dev/JUCE/modules"/>
+        <MODULEPATH id="juce_graphics" path="/Users/benkuper/Dev/JUCE/modules"/>
+        <MODULEPATH id="juce_events" path="/Users/benkuper/Dev/JUCE/modules"/>
+        <MODULEPATH id="juce_data_structures" path="/Users/benkuper/Dev/JUCE/modules"/>
+        <MODULEPATH id="juce_cryptography" path="/Users/benkuper/Dev/JUCE/modules"/>
+        <MODULEPATH id="juce_core" path="/Users/benkuper/Dev/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_processors" path="/Users/benkuper/Dev/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_formats" path="/Users/benkuper/Dev/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_devices" path="/Users/benkuper/Dev/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_basics" path="/Users/benkuper/Dev/JUCE/modules"/>
       </MODULEPATHS>
     </XCODE_MAC>
   </EXPORTFORMATS>

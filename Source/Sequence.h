@@ -42,7 +42,7 @@ public:
 	FloatParameter * viewEndTime;
 
 
-	void onContainerParameterChangedInternal(Parameter *);
+	void onContainerParameterChangedInternal(Parameter *) override;
 	void onContainerTriggerTriggered(Trigger *) override;
 
 	class SequenceListener

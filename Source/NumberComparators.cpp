@@ -47,7 +47,7 @@ BaseComparatorUI * FloatComparator::createUI()
 
 IntComparator::IntComparator(Controllable * c) :
 	ParameterComparator(c),
-	intParam((IntParameter *)intParam)
+	intParam((IntParameter *)c)
 {
 	addCompareOption("=", equalsId);
 	addCompareOption(">", greaterId);

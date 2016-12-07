@@ -53,7 +53,7 @@ public:
     //    #endif
 
     // our Saving methods
-    var getJSONData();
+    var getJSONData() override;
     void loadJSONData(var data,ProgressTask * loadingTask);
 
     bool checkFileVersion(DynamicObject * metaData);

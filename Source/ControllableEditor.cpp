@@ -12,7 +12,7 @@
 #include "ControllableUI.h"
 
 ControllableEditor::ControllableEditor(Controllable * _controllable) :
-	CustomEditor((Inspectable *)controllable), 
+	CustomEditor((Inspectable *)_controllable), 
 	controllable(_controllable),
 	label("Label")
 {

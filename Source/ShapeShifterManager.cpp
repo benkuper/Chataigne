@@ -102,7 +102,7 @@ ShapeShifterWindow * ShapeShifterManager::showPanelWindowForContent(PanelName pa
 	if (c == nullptr) return nullptr;
 
 	ShapeShifterPanel * newP = createPanel(c);
-	Rectangle<int> r(300, 500);
+	Rectangle<int> r(100,100,300, 500);
 	ShapeShifterWindow * w = showPanelWindow(newP, r);
 	return w;
 }
@@ -129,7 +129,7 @@ void ShapeShifterManager::showContent(String contentName)
 			mainContainer.insertPanelAt(newP, 0);
 		} else
 		{
-			Rectangle<int> r(300, 500);
+			Rectangle<int> r(100,100,300, 500);
 			showPanelWindow(newP, r);
 		}
 	}

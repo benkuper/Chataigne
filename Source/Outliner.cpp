@@ -11,7 +11,7 @@
 #include "Outliner.h"
 #include "Engine.h"
 #include "Style.h"
-
+ 
 juce_ImplementSingleton(Outliner)
 
 Outliner::Outliner(const String &contentName) : 

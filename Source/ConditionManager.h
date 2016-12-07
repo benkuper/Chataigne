@@ -34,7 +34,7 @@ public:
 	int getNumEnabledConditions();
 	int getNumValidConditions();
 
-	void conditionValidationChanged(Condition *);
+	void conditionValidationChanged(Condition *) override;
 
 	class ConditionManagerListener
 	{

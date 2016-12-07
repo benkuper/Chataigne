@@ -24,7 +24,7 @@ public:
 	Sequence * sequence;
 
 	void paint(Graphics &g) override;
-	void resized();
+	void resized() override;
 
 	int getXForTime(float time);
 

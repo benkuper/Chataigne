@@ -18,7 +18,7 @@ class OSCInput :
 	public Input,
 	public OSCReceiver::Listener<OSCReceiver::RealtimeCallback>
 	//public OSCReceiver::Listener<OSCReceiver::RealtimeCallback> //must change with that later !
-{
+{ 
 public:
 	OSCInput(const String &name = "OSC Input");
 	~OSCInput() {}
@@ -36,7 +36,7 @@ public:
 	void processMessage(const OSCMessage & msg);
 	virtual void processMessageInternal(const OSCMessage &) {}
 
-	virtual void onContainerParameterChangedInternal(Parameter * p);
+	virtual void onContainerParameterChangedInternal(Parameter * p) override;
 	virtual void oscMessageReceived(const OSCMessage & message) override;
 };
 

@@ -34,7 +34,7 @@ public:
 	void updateLabel();
 	
 	virtual void showPopupAndGetTarget();//can be overriden to get specific PopupMenu
-	void mouseDown(const MouseEvent &e); 
+	void mouseDown(const MouseEvent &e) override;
 
 
 	virtual void buttonClicked(Button * b) override;
