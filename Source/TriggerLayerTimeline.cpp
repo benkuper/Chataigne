@@ -9,3 +9,14 @@
 */
 
 #include "TriggerLayerTimeline.h"
+#include "Style.h"
+
+TriggerLayerTimeline::TriggerLayerTimeline(TriggerLayer * layer) :
+	SequenceLayerTimeline(layer),
+	triggerLayer(layer)
+{
+}
+
+TriggerLayerTimeline::~TriggerLayerTimeline()
+{
+}

@@ -11,24 +11,24 @@
 #ifndef OSCCOMMAND_H_INCLUDED
 #define OSCCOMMAND_H_INCLUDED
 
-#include "OutputCommand.h"
+#include "ModuleCommand.h"
 
-class OSCOutput;
+class OSCModule;
 
 class OSCCommand :
-	public OutputCommand
+	public ModuleCommand
 {
 public:
-	OSCCommand(OSCOutput * _output, CommandContext context, var params);
+	OSCCommand(OSCModule * _module, CommandContext context, var params);
 	virtual ~OSCCommand();
 
-	OSCOutput * oscOutput;
+	OSCModule * oscModule;
 	StringParameter * address;
 	Array<Parameter *> arguments;
 
 	void trigger() override;
 
-	static BaseCommand * create(ControllableContainer * output, CommandContext context, var params) { return new OSCCommand((OSCOutput *)output, context, params); }
+	static BaseCommand * create(ControllableContainer * module, CommandContext context, var params) { return new OSCCommand((OSCModule *)module, context, params); }
 };
 
 

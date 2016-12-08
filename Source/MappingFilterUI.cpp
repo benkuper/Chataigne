@@ -10,8 +10,8 @@
 
 #include "MappingFilterUI.h"
 
-MappingFilterUI::MappingFilterUI(MappingFilter * input) :
-	BaseItemUI<MappingFilter>(input)
+MappingFilterUI::MappingFilterUI(MappingFilter * filter) :
+	BaseItemUI<MappingFilter>(filter)
 {
 
 }

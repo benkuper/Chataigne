@@ -27,6 +27,10 @@ public :
 	static TriggerLayer * create() { return new TriggerLayer(); }
 	virtual String getTypeString() const override { return "Trigger"; }
 
+
+	virtual SequenceLayerPanel * getPanel() override;
+	virtual SequenceLayerTimeline * getTimelineUI() override;
+
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(TriggerLayer)
 };
 

@@ -9,11 +9,11 @@
 */
 
 #include "OSCCommand.h"
-#include "OSCOutput.h"
+#include "OSCModule.h"
 
-OSCCommand::OSCCommand(OSCOutput * _output, CommandContext context, var params) :
-	OutputCommand(_output,context, params),
-	oscOutput(_output)
+OSCCommand::OSCCommand(OSCModule * _module, CommandContext context, var params) :
+	ModuleCommand(_module,context, params),
+	oscModule(_module)
 {
 	address = addStringParameter("Address", "Adress of the OSC Message (e.g. /example)", params.getProperty("address","/example"));
 }
@@ -24,7 +24,7 @@ OSCCommand::~OSCCommand()
 
 void OSCCommand::trigger()
 {
-	if (oscOutput == nullptr) return;
+	if (oscModule == nullptr) return;
 
 	OSCMessage m(address->stringValue());
 	
@@ -53,5 +53,5 @@ void OSCCommand::trigger()
 		}
 	}
 
-	oscOutput->sendOSC(m);
+	oscModule->sendOSC(m);
 }

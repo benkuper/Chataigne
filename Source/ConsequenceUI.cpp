@@ -9,6 +9,7 @@
 */
 
 #include "ConsequenceUI.h"
+#include "CommandFactory.h"
 
 ConsequenceUI::ConsequenceUI(Consequence * consequence) :
 	BaseItemUI<Consequence>(consequence)
@@ -54,7 +55,7 @@ void ConsequenceUI::updateChooserLabel()
 {
 	String text;
 	if (item->command != nullptr)
-		text = item->command->container->niceName + ":" + item->commandDefinition->inputType;
+		text = item->command->container->niceName + ":" + item->commandDefinition->commandType;
 
 	chooser.setLabel(text);
 }

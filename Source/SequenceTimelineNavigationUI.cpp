@@ -32,11 +32,12 @@ void SequenceTimelineNavigationUI::resized()
 {
 	Rectangle<int> r = getLocalBounds();
 	
-	//compensate for layerTiemlineManagerUI margins
+	//compensate for layerTimelineManagerUI margins
 	r.removeFromLeft(4);
 	r.removeFromRight(10);
+	r.removeFromTop(4);
 
-	seeker.setBounds(r.removeFromTop(20));
-	r.removeFromTop(2);
+	seeker.setBounds(r.removeFromTop(15));
+	r.removeFromTop(3);
 	header.setBounds(r);
 }

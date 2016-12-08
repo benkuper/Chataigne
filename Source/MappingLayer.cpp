@@ -9,6 +9,8 @@
 */
 
 #include "MappingLayer.h"
+#include "MappingLayerPanel.h"
+#include "MappingLayerTimeline.h"
 
 MappingLayer::MappingLayer() :
 	SequenceLayer("New Mapping Layer")
@@ -25,4 +27,14 @@ void MappingLayer::init()
 
 void MappingLayer::loadJSONDataInternal(var data)
 {
+}
+
+SequenceLayerPanel * MappingLayer::getPanel()
+{
+	return new MappingLayerPanel(this);
+}
+
+SequenceLayerTimeline * MappingLayer::getTimelineUI()
+{
+	return new MappingLayerTimeline(this);
 }

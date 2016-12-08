@@ -26,7 +26,9 @@ Controllable::Controllable(const Type &type, const String & niceName, const Stri
 	replaceSlashesInShortName(true),
 	isSavable(true),
 	saveValueOnly(true),
-	isTargettable(true)
+	isTargettable(true),
+	isCustomizableByUser(false),
+	isRemovableByUser(false)
 {
 
     setEnabled(enabled);
@@ -78,7 +80,12 @@ void Controllable::setParentContainer(ControllableContainer * container)
 void Controllable::updateControlAddress()
 {
 	this->controlAddress = getControlAddress();
-	listeners.call(&Listener::controllableControlAddressChanged, this);
+	listeners.call(&Listener::controllableControlAddressChanged, this); 
+}
+
+void Controllable::remove()
+{
+	listeners.call(&Controllable::Listener::askForRemoveControllable, this);
 }
 
 var Controllable::getJSONData(ControllableContainer * relativeTo)
@@ -90,6 +97,9 @@ var Controllable::getJSONData(ControllableContainer * relativeTo)
 	
 	data.getDynamicObject()->setProperty("type", getTypeString());
 	data.getDynamicObject()->setProperty("niceName", niceName);
+	data.getDynamicObject()->setProperty("customizable", isCustomizableByUser);
+	data.getDynamicObject()->setProperty("removable", isRemovableByUser);
+
 	if (hasCustomShortName) data.getDynamicObject()->setProperty("shortName", shortName);
 
 	return data;
@@ -104,6 +114,8 @@ void Controllable::loadJSONData(var data)
 {
 	if (data.getDynamicObject()->hasProperty("niceName")) setNiceName(data.getProperty("niceName", ""));
 	if (data.getDynamicObject()->hasProperty("shortName")) setCustomShortName(data.getProperty("shortName", ""));	
+	if (data.getDynamicObject()->hasProperty("customizable")) setCustomShortName(data.getProperty("customizable", false));
+	if (data.getDynamicObject()->hasProperty("removable")) setCustomShortName(data.getProperty("removable",false));
 	loadJSONDataInternal(data);
 }
 

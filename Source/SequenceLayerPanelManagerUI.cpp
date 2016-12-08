@@ -31,3 +31,8 @@ void SequenceLayerPanelManagerUI::mouseDown(const MouseEvent & e)
 		if (i != nullptr) manager->addItem(i);
 	}
 }
+
+SequenceLayerPanel * SequenceLayerPanelManagerUI::createUIForItem(SequenceLayer * layer)
+{
+	return layer->getPanel();
+}

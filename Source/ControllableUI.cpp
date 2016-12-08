@@ -10,6 +10,7 @@
 
 #include "ControllableUI.h"
 #include "Parameter.h"
+#include "AssetManager.h"
 
 ControllableUI::ControllableUI(Controllable * controllable) :
 	Component(controllable->niceName),
@@ -20,6 +21,7 @@ ControllableUI::ControllableUI(Controllable * controllable) :
     updateTooltip();
     controllable->addControllableListener(this);
 
+	
 }
 
 ControllableUI::~ControllableUI()
@@ -75,15 +77,58 @@ labelWidth(_labelWidth){
   controllableLabel.setText(ui->controllable->niceName, dontSendNotification);
   controllableLabel.setTooltip(ui->tooltip);
 
+  
+  if (controllable->isCustomizableByUser)
+  {
+	  editBT = AssetManager::getInstance()->getConfigBT();
+	  editBT->addListener(this);
+	  addAndMakeVisible(editBT);
+  }
+
+  if (controllable->isRemovableByUser)
+  {
+	  removeBT = AssetManager::getInstance()->getRemoveBT();
+	  removeBT->addListener(this);
+	  addAndMakeVisible(removeBT);
+  }
+
   addAndMakeVisible(ui);
+
   setBounds(ownedControllableUI->getBounds()
-            .withTrimmedRight(-labelWidth)
-            .withHeight(jmax((int)controllableLabel.getFont().getHeight() + 4,ownedControllableUI->getHeight())));
+	  .withTrimmedRight(-labelWidth)
+	  .withHeight(jmax((int)controllableLabel.getFont().getHeight() + 4, ownedControllableUI->getHeight())));
+
 }
 
 void NamedControllableUI::resized(){
-  Rectangle<int> area  = getLocalBounds();
-  controllableLabel.setBounds(area.removeFromLeft(labelWidth));
-		area.removeFromLeft(10);
-  ownedControllableUI->setBounds(area);
+  Rectangle<int> r  = getLocalBounds();
+  controllableLabel.setBounds(r.removeFromLeft(labelWidth));
+  r.removeFromLeft(5);
+
+  if(controllable->isRemovableByUser)
+  { 
+	  removeBT->setBounds(r.removeFromRight(r.getHeight()));
+	  r.removeFromRight(2);
+  }
+
+  if (controllable->isCustomizableByUser)
+  {
+	  editBT->setBounds(r.removeFromRight(r.getHeight()));
+	  r.removeFromRight(2);
+  }
+
+  ownedControllableUI->setBounds(r);
+}
+
+void NamedControllableUI::buttonClicked(Button * b)
+{
+	if (b == removeBT)
+	{
+		DBG("REMOVE");
+		controllable->remove();
+	}
+	else if (b == editBT)
+	{
+		//Edit
+	}
 }

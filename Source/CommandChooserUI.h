@@ -11,7 +11,7 @@
 #ifndef COMMANDTARGETUI_H_INCLUDED
 #define COMMANDTARGETUI_H_INCLUDED
 
-#include "OutputManager.h"
+#include "ModuleManagerUI.h"
 
 class CommandChooserUI :
 	public Component,

@@ -30,11 +30,11 @@ It contains the basic startup code for a Juce application.
 #include "Engine.h"
 
 //==============================================================================
-class FlapApplication : public JUCEApplication
+class ChataigneApplication : public JUCEApplication
 {
 public:
 	//==============================================================================
-	FlapApplication() {}
+	ChataigneApplication() {}
 
 	ApplicationCommandManager commandManager;
 	ScopedPointer<ApplicationProperties> appProperties;
@@ -97,14 +97,14 @@ public:
 
 
 
-static FlapApplication& getApp() { return *dynamic_cast<FlapApplication*>(JUCEApplication::getInstance()); }
+static ChataigneApplication& getApp() { return *dynamic_cast<ChataigneApplication*>(JUCEApplication::getInstance()); }
 OpenGLContext * getOpenGLContext() { return &getApp().mainWindow->openGLContext; }
 ApplicationProperties& getAppProperties() { return *getApp().appProperties; }
 ApplicationCommandManager& getCommandManager() { return getApp().commandManager; }
-FlapApplication::MainWindow * getMainWindow() { return getApp().mainWindow; }
+ChataigneApplication::MainWindow * getMainWindow() { return getApp().mainWindow; }
 //==============================================================================
 // This macro generates the main() routine that launches the app.
-START_JUCE_APPLICATION(FlapApplication)
+START_JUCE_APPLICATION(ChataigneApplication)
 
 
 

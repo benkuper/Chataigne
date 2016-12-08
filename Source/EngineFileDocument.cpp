@@ -13,8 +13,7 @@
 
 #include "Inspector.h"
 #include "PresetManager.h"
-#include "InputManager.h"
-#include "OutputManager.h"
+#include "ModuleManager.h"
 #include "StateManager.h"
 #include "SequenceManager.h"
 
@@ -24,8 +23,6 @@
  */
 
 ApplicationProperties & getAppProperties();
-
-AudioDeviceManager & getAudioDeviceManager();
 
 String Engine::getDocumentTitle() {
   if (! getFile().exists())
@@ -183,8 +180,7 @@ var Engine::getJSONData()
   data.getDynamicObject()->setProperty("metaData", metaData);
 
   data.getDynamicObject()->setProperty("presetManager", PresetManager::getInstance()->getJSONData());
-  data.getDynamicObject()->setProperty("inputManager", InputManager::getInstance()->getJSONData());
-  data.getDynamicObject()->setProperty("outputManager", OutputManager::getInstance()->getJSONData());
+  data.getDynamicObject()->setProperty("moduleManager", ModuleManager::getInstance()->getJSONData());
   data.getDynamicObject()->setProperty("stateManager", StateManager::getInstance()->getJSONData());
   data.getDynamicObject()->setProperty("sequenceManager", SequenceManager::getInstance()->getJSONData());
 
@@ -215,8 +211,7 @@ void Engine::loadJSONData (var data,ProgressTask * loadingTask)
 
   DynamicObject * d = data.getDynamicObject();
   ProgressTask * presetTask = loadingTask->addTask("presetManager");
-  ProgressTask * inputManagerTask = loadingTask->addTask("sourceManager");
-  ProgressTask * outputManagerTask = loadingTask->addTask("outputManager");
+  ProgressTask * moduleManagerTask = loadingTask->addTask("moduleManager");
   ProgressTask * stateTask = loadingTask->addTask("stateManager");
   ProgressTask * sequenceTask = loadingTask->addTask("sequenceManager");
 
@@ -224,12 +219,9 @@ void Engine::loadJSONData (var data,ProgressTask * loadingTask)
   if (d->hasProperty("presetManager")) PresetManager::getInstance()->loadJSONData(d->getProperty("presetManager"));
   presetTask->end();
 
-  inputManagerTask->start();
-  if (d->hasProperty("inputManager")) InputManager::getInstance()->loadJSONData(d->getProperty("inputManager"));
-  inputManagerTask->end();
-  outputManagerTask->start();
-  if (d->hasProperty("outputManager")) OutputManager::getInstance()->loadJSONData(d->getProperty("outputManager"));
-  outputManagerTask->end();
+  moduleManagerTask->start();
+  if (d->hasProperty("moduleManager")) ModuleManager::getInstance()->loadJSONData(d->getProperty("inputManager"));
+  moduleManagerTask->end();
   stateTask->start();
   if (d->hasProperty("stateManager")) StateManager::getInstance()->loadJSONData(d->getProperty("stateManager"));
   stateTask->end();

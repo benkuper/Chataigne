@@ -15,7 +15,7 @@ Sequence::Sequence() :
 	BaseItem("Sequence")
 {
 	totalTime = addFloatParameter("Total Time", "Total time of this sequence, in seconds", 30, 1, 3600); //max 1h
-	currentTime = addFloatParameter("Current Time", "Current position in time of this sequence", 0, 0,totalTime->maximumValue);
+	currentTime = addFloatParameter("Current Time", "Current position in time of this sequence", 0, 0,totalTime->floatValue());
 	playSpeed = addFloatParameter("Play Speed", "Playing speed factor, 1 is normal speed, 2 is double speed and 0.5 is half speed",1,0,10);
 	fps = addIntParameter("FPS", "Frame Per Second.\nDefines the number of times per seconds the sequence is evaluated, the higher the value is, the more previse the calculation will be.\n \
 									This setting also sets how many messages per seconds are sent from layer with automations.", 50, 1, 100);

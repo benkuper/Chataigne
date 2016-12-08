@@ -57,9 +57,9 @@ var Consequence::getJSONData()
 	var data = BaseItem::getJSONData();
 	if (command != nullptr)
 	{
-		data.getDynamicObject()->setProperty("commandOutput", command->container->getControlAddress());
+		data.getDynamicObject()->setProperty("commandModule", command->container->getControlAddress());
 		data.getDynamicObject()->setProperty("commandPath", commandDefinition->menuPath);
-		data.getDynamicObject()->setProperty("commandType", commandDefinition->inputType);
+		data.getDynamicObject()->setProperty("commandType", commandDefinition->commandType);
 	}
 	return data;
 }
@@ -67,18 +67,18 @@ var Consequence::getJSONData()
 void Consequence::loadJSONDataInternal(var data)
 {
 	BaseItem::loadJSONDataInternal(data);
-	if (data.getDynamicObject()->hasProperty("commandOutput"))
+	if (data.getDynamicObject()->hasProperty("commandModule"))
 	{
-		Output * o = (Output *)Engine::getInstance()->getControllableContainerForAddress(data.getProperty("commandOutput", ""));
-		if (o != nullptr)
+		Module * m = (Module *)Engine::getInstance()->getControllableContainerForAddress(data.getProperty("commandModule", ""));
+		if (m != nullptr)
 		{
 			
 			String menuPath = data.getProperty("commandPath", "");
-			String inputType = data.getProperty("commandType", "");
-			setCommand(o->getCommandDefinitionFor(menuPath, inputType));
+			String commandType = data.getProperty("commandType", "");
+			setCommand(m->getCommandDefinitionFor(menuPath, commandType));
 		} else
 		{
-			DBG("Output not found : " << data.getProperty("commandOutput", "").toString());
+			DBG("Output not found : " << data.getProperty("commandModule", "").toString());
 		}
 	}
 

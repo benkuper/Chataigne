@@ -11,6 +11,7 @@
 #include "CommandChooserUI.h"
 #include "AssetManager.h"
 #include "Style.h"
+#include "CommandFactory.h"
 
 CommandChooserUI::CommandChooserUI() :
 	noTargetText("[Click to select a command]"),

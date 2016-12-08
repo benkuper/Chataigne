@@ -12,7 +12,7 @@
 #define CONSEQUENCE_H_INCLUDED
 
 #include "BaseItem.h"
-#include "OutputManager.h"
+#include "ModuleManager.h"
 class BaseCommand;
 
 class Consequence :

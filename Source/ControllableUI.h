@@ -41,7 +41,9 @@ protected :
 
 //    this class allow to automaticly generate label / ui element for parameter listing in editor
 //    it owns the created component
-class NamedControllableUI : public ControllableUI
+class NamedControllableUI : 
+	public ControllableUI,
+	public ButtonListener
 {
 public:
   NamedControllableUI(ControllableUI * ui,int _labelWidth);
@@ -49,6 +51,11 @@ public:
     Label controllableLabel;
     int labelWidth;
     ScopedPointer <ControllableUI > ownedControllableUI;
+
+	ScopedPointer<ImageButton> editBT;
+	ScopedPointer<ImageButton> removeBT;
+
+	void buttonClicked(Button * b) override;
 };
 
 

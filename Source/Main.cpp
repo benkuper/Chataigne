@@ -2,13 +2,13 @@
 
 //==============================================================================
 
-inline void FlapApplication::initialise(const String & commandLine)
+inline void ChataigneApplication::initialise(const String & commandLine)
 {
 	// This method is where you should put your application's initialisation code..
 
 	
 	PropertiesFile::Options options;
-	options.applicationName = "Flap";
+	options.applicationName = "Chataigne";
 	options.filenameSuffix = "settings";
 	options.osxLibrarySubFolder = "Preferences";
 
@@ -26,7 +26,7 @@ inline void FlapApplication::initialise(const String & commandLine)
 	
 }
 
-inline void FlapApplication::shutdown()
+inline void ChataigneApplication::shutdown()
 {
 	// Add your application's shutdown code here..
 	mainWindow = nullptr; // (deletes our window)
@@ -36,21 +36,21 @@ inline void FlapApplication::shutdown()
 
 //==============================================================================
 
-inline void FlapApplication::systemRequestedQuit()
+inline void ChataigneApplication::systemRequestedQuit()
 {
 	// This is called when the app is being asked to quit: you can ignore this
 	// request and let the app carry on running, or call quit() to allow the app to close.
 	quit();
 }
 
-inline void FlapApplication::anotherInstanceStarted(const String & commandLine)
+inline void ChataigneApplication::anotherInstanceStarted(const String & commandLine)
 {
 	// When another instance of the app is launched while this one is running,
 	// this method is invoked, and the commandLine parameter tells you what
 	// the other instance's command-line arguments were.
 }
 
-inline FlapApplication::MainWindow::MainWindow(String name) : DocumentWindow(name,
+inline ChataigneApplication::MainWindow::MainWindow(String name) : DocumentWindow(name,
 	Colours::lightgrey,
 	DocumentWindow::allButtons)
 	//,sender("SpoutMainAugmenta")
@@ -83,7 +83,7 @@ inline FlapApplication::MainWindow::MainWindow(String name) : DocumentWindow(nam
 	mainComponent->init();
 }
 
-inline void FlapApplication::MainWindow::closeButtonPressed()
+inline void ChataigneApplication::MainWindow::closeButtonPressed()
 {
 	// This is called when the user tries to close this window. Here, we'll just
 	// ask the app to quit when this happens, but you can change this to do

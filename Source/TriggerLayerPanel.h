@@ -11,7 +11,20 @@
 #ifndef TRIGGERLAYERPANEL_H_INCLUDED
 #define TRIGGERLAYERPANEL_H_INCLUDED
 
+#include "SequenceLayerPanel.h"
+#include "TriggerLayer.h"
 
+class TriggerLayerPanel :
+	public SequenceLayerPanel
+{
+public:
+	TriggerLayerPanel(TriggerLayer * layer);
+	~TriggerLayerPanel();
+	
+	TriggerLayer * triggerLayer;
+
+	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(TriggerLayerPanel)
+};
 
 
 

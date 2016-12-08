@@ -15,6 +15,9 @@
 #include "BaseItem.h"
 #include "Sequence.h"
 
+class SequenceLayerPanel;
+class SequenceLayerTimeline;
+
 class SequenceLayer :
 	public BaseItem,
 	public Sequence::SequenceListener
@@ -42,6 +45,10 @@ public:
 
 	//Factory
 	virtual String getTypeString() const { jassert(false); return ""; } //should be overriden
+
+	//UI
+	virtual SequenceLayerPanel * getPanel();
+	virtual SequenceLayerTimeline * getTimelineUI();
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(SequenceLayer)
 };

@@ -11,8 +11,8 @@
 #include "MappingUI.h"
 
 
-MappingUI::MappingUI(Mapping * input) :
-	BaseItemUI<Mapping>(input)
+MappingUI::MappingUI(Mapping * mapping) :
+	BaseItemUI<Mapping>(mapping)
 {
 
 }

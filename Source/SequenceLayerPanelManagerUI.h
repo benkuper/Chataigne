@@ -27,6 +27,8 @@ public:
 
 	void mouseDown(const MouseEvent &e) override;
 
+	SequenceLayerPanel * createUIForItem(SequenceLayer * layer) override;
+
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(SequenceLayerPanelManagerUI)
 };
 

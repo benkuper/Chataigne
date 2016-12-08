@@ -9,3 +9,15 @@
 */
 
 #include "TriggerLayerPanel.h"
+
+TriggerLayerPanel::TriggerLayerPanel(TriggerLayer * layer) :
+	SequenceLayerPanel(layer),
+	triggerLayer(layer)
+{
+
+	bgColor = ACTION_COLOR.withSaturation(.2f).darker(1);
+}
+
+TriggerLayerPanel::~TriggerLayerPanel()
+{
+}

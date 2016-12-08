@@ -75,7 +75,10 @@ public:
 
 	virtual void addItemFromMenu();
 	virtual U * addItemUI(T * item);
+	virtual U * createUIForItem(T * item);
 	virtual void addItemUIInternal(U *) {}
+
+
 	virtual void removeItemUI(T * item);
 	virtual void removeItemUIInternal(U *) {}
 
@@ -237,7 +240,7 @@ void BaseManagerUI<M, T, U>::addItemFromMenu()
 template<class M, class T, class U>
 U * BaseManagerUI<M, T, U>::addItemUI(T * item)
 {
-	U * tui = new U(item);
+	U * tui = createUIForItem(item);
 	itemsUI.add(tui);
 	if(useViewport) container.addAndMakeVisible(static_cast<BaseItemMinimalUI<T>*>(tui));
 	else addAndMakeVisible(static_cast<BaseItemMinimalUI<T>*>(tui));
@@ -245,6 +248,12 @@ U * BaseManagerUI<M, T, U>::addItemUI(T * item)
 	resized();
 	managerUIListeners.call(&ManagerUIListener::itemUIAdded, tui);
 	return tui;
+}
+
+template<class M, class T, class U>
+inline U * BaseManagerUI<M, T, U>::createUIForItem(T * item)
+{
+	return new U(item);
 }
 
 template<class M, class T, class U>

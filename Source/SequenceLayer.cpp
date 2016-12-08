@@ -9,6 +9,8 @@
 */
 
 #include "SequenceLayer.h"
+#include "SequenceLayerPanel.h"
+#include "SequenceLayerTimeline.h"
 
 SequenceLayer::SequenceLayer(const String &name) :
 	BaseItem(name)
@@ -41,5 +43,15 @@ var SequenceLayer::getJSONData()
 void SequenceLayer::sequenceCurrentTimeChanged(Sequence *, bool /*evaluateSkippedData*/)
 {
 
+}
+
+SequenceLayerPanel * SequenceLayer::getPanel()
+{
+	return new SequenceLayerPanel(this);
+}
+
+SequenceLayerTimeline * SequenceLayer::getTimelineUI()
+{
+	return new SequenceLayerTimeline(this);
 }
 

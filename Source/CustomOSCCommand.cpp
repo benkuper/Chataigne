@@ -10,8 +10,8 @@
 
 #include "CustomOSCCommand.h"
 
-CustomOSCCommand::CustomOSCCommand(CustomOSCOutput * output, CommandContext context, var params) :
-	OSCCommand(output, context, params)
+CustomOSCCommand::CustomOSCCommand(CustomOSCModule * module, CommandContext context, var params) :
+	OSCCommand(module, context, params)
 {
 }
 

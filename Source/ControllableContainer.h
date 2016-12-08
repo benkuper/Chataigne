@@ -76,12 +76,13 @@ public:
 
 
 
-class ControllableContainer :	public Parameter::Listener,
-								public Parameter::AsyncListener, 
-								public Trigger::Listener, 
-							    public ControllableContainerListener
-								,public Inspectable
-
+class ControllableContainer :	
+	public Parameter::Listener,
+	public Controllable::Listener,
+	public Parameter::AsyncListener, 
+	public Trigger::Listener, 
+	public ControllableContainerListener,
+	public Inspectable
 
 {
 public:
@@ -190,6 +191,8 @@ public:
     virtual void parameterValueChanged(Parameter * p) override;
     // Inherited via Trigger::Listener
     virtual void triggerTriggered(Trigger * p) override;
+
+	virtual void askForRemoveControllable(Controllable * c) override;
 
 
 	virtual var getJSONData();

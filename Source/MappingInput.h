@@ -20,7 +20,7 @@ public:
 	MappingInput();
 	~MappingInput();
 
-	Controllable * referenceInput;
+	Controllable * referenceModule;
 };
 
 

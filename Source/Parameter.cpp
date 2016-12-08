@@ -44,7 +44,6 @@ void Parameter::setValue(var _value, bool silentSet, bool force)
     lastValue = var(value);
     setValueInternal(_value);
 
-
     if(_value != defaultValue) isOverriden = true;
 
     if (!silentSet) notifyValueChanged();

@@ -51,6 +51,7 @@ public:
   bool isControllableFeedbackOnly;
   bool hideInEditor;
   bool hideInOutliner;
+ 
   String controlAddress;
 
   //ControllableChooser
@@ -60,6 +61,10 @@ public:
   bool isSavable;
   bool saveValueOnly;
 
+
+  //user control
+  bool isCustomizableByUser;
+  bool isRemovableByUser;
 
   bool replaceSlashesInShortName;
 
@@ -73,6 +78,8 @@ public:
 
   void setParentContainer(ControllableContainer * container);
   void updateControlAddress();
+
+  void remove(); // called from external to make this object ask for remove
 
   virtual var getJSONData(ControllableContainer * relativeTo = nullptr);
   virtual var getJSONDataInternal(); // to be overriden
@@ -97,6 +104,7 @@ public:
     virtual void controllableControlAddressChanged(Controllable * ) {};
     virtual void controllableNameChanged(Controllable *) {};
     virtual void controllableRemoved(Controllable * ) {};
+	virtual void askForRemoveControllable(Controllable *) {}
   };
 
   ListenerList<Listener> listeners;

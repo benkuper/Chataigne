@@ -12,17 +12,17 @@
 #define RESOLUMECOMPOSITIONCOMMAND_H_INCLUDED
 
 #include "OSCCommand.h"
-#include "ResolumeOutput.h"
+#include "ResolumeModule.h"
 
 class ResolumeCompositionCommand:
 	public OSCCommand
 {
 public:
-	ResolumeCompositionCommand(ResolumeOutput * output, CommandContext context, var params);
+	ResolumeCompositionCommand(ResolumeModule * output, CommandContext context, var params);
 	~ResolumeCompositionCommand();
 
 
-	static ResolumeCompositionCommand * create(ControllableContainer * output, CommandContext context, var params) { return new ResolumeCompositionCommand((ResolumeOutput *)output, context, params); }
+	static ResolumeCompositionCommand * create(ControllableContainer * module, CommandContext context, var params) { return new ResolumeCompositionCommand((ResolumeModule *)module, context, params); }
 };
 
 

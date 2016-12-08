@@ -12,6 +12,21 @@
 #define MAPPINGLAYERPANEL_H_INCLUDED
 
 
+#include "SequenceLayerPanel.h"
+#include "MappingLayer.h"
+
+class MappingLayerPanel :
+	public SequenceLayerPanel
+{
+public:
+	MappingLayerPanel(MappingLayer * layer);
+	~MappingLayerPanel();
+
+	MappingLayer * mappingLayer;
+
+	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MappingLayerPanel)
+};
+
 
 
 

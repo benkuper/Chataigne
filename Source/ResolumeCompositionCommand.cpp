@@ -10,8 +10,8 @@
 
 #include "ResolumeCompositionCommand.h"
 
-ResolumeCompositionCommand::ResolumeCompositionCommand(ResolumeOutput * output, CommandContext context, var params) :
-	OSCCommand(output,context,params)
+ResolumeCompositionCommand::ResolumeCompositionCommand(ResolumeModule * module, CommandContext context, var params) :
+	OSCCommand(module,context,params)
 {
 }
 

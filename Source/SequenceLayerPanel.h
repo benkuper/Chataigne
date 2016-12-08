@@ -22,6 +22,10 @@ public:
 	SequenceLayerPanel(SequenceLayer *);
 	virtual ~SequenceLayerPanel();
 
+	void resized() override;
+
+	ResizableBorderComponent resizer;
+
 	void controllableFeedbackUpdateInternal(Controllable *) override;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(SequenceLayerPanel)

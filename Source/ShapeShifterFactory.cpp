@@ -11,10 +11,9 @@
 #include "ShapeShifterFactory.h"
 
 #include "Inspector.h"
-#include "FlapLoggerUI.h"
+#include "CustomLoggerUI.h"
 #include "MainComponent.h"
-#include "InputManagerUI.h"
-#include "OutputManagerUI.h"
+#include "ModuleManagerUI.h"
 #include "SequenceManagerUI.h"
 #include "StateManagerUI.h"
 #include "StateMachineView.h"
@@ -27,11 +26,8 @@ ShapeShifterContent * ShapeShifterFactory::createContentForIndex(PanelName pn)
 
 	switch (pn)
 	{
-	case InputsPanel:
-		return new InputManagerUI(InputManager::getInstance());
-		break;
-	case OutputsPanel:
-		return new OutputManagerUI(OutputManager::getInstance());
+	case ModulesPanel:
+		return new ModuleManagerUI(ModuleManager::getInstance());
 		break;
 
 	case StateMachinePanel:
@@ -56,7 +52,7 @@ ShapeShifterContent * ShapeShifterFactory::createContentForIndex(PanelName pn)
 		break;
 
 	case LoggerPanel:
-		return new FlapLoggerUI(contentName, FlapLogger::getInstance());
+		return new CustomLoggerUI(contentName, CustomLogger::getInstance());
 		break;
 
 	case OutlinerPanel:

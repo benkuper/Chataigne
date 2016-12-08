@@ -21,7 +21,7 @@ class CommandDefinition
 {
 public:
 	String menuPath;
-	String inputType;
+	String commandType;
 	ControllableContainer * container;
 	var params;
 

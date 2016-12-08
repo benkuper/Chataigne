@@ -15,6 +15,9 @@ SequenceTimelineHeader::SequenceTimelineHeader(Sequence * _sequence) :
 	sequence(_sequence)
 {
 	sequence->addAsyncContainerListener(this);
+	addAndMakeVisible(needle);
+
+	setSize(6, 20);
 }
 
 SequenceTimelineHeader::~SequenceTimelineHeader()
@@ -30,6 +33,7 @@ void SequenceTimelineHeader::paint(Graphics & g)
 	//Draw ticks
 	float start = floorf(sequence->viewStartTime->floatValue());
 	float end = floorf(sequence->viewEndTime->floatValue());
+
 
 	int numDivisions = 2;
 
@@ -56,6 +60,27 @@ void SequenceTimelineHeader::paint(Graphics & g)
 
 void SequenceTimelineHeader::resized()
 {
+	Rectangle<int> r = getLocalBounds();
+	Rectangle<int> nr = r.withSize(10, getHeight());
+	nr.setPosition(getXForTime(sequence->currentTime->floatValue())-needle.getWidth()/2, 0);
+	needle.setBounds(nr);
+}
+
+void SequenceTimelineHeader::mouseDown(const MouseEvent & e)
+{
+	DBG("mosue down !");
+	if (e.mods.isLeftButtonDown())
+	{
+		sequence->currentTime->setValue(getTimeForX(e.getPosition().x));
+	}
+}
+
+void SequenceTimelineHeader::mouseDrag(const MouseEvent & e)
+{
+	if(e.mods.isLeftButtonDown())
+	{
+		sequence->currentTime->setValue(getTimeForX(e.getPosition().x));
+	}
 }
 
 int SequenceTimelineHeader::getXForTime(float time)
@@ -63,6 +88,13 @@ int SequenceTimelineHeader::getXForTime(float time)
 	float viewStart = sequence->viewStartTime->floatValue();
 	float viewEnd = sequence->viewEndTime->floatValue();
 	return (int)jmap<float>(time, viewStart, viewEnd, 0, (float)getWidth());
+}
+
+float SequenceTimelineHeader::getTimeForX(int tx)
+{
+	float viewStart = sequence->viewStartTime->floatValue();
+	float viewEnd = sequence->viewEndTime->floatValue();
+	return jmap<float>((float)tx, 0, (float)getWidth(), viewStart, viewEnd);
 }
 
 void SequenceTimelineHeader::newMessage(const ContainerAsyncEvent & e)
@@ -74,12 +106,13 @@ void SequenceTimelineHeader::newMessage(const ContainerAsyncEvent & e)
 		if (e.targetControllable == sequence->viewStartTime || e.targetControllable == sequence->viewEndTime)
 		{
 			repaint();
+			resized();
 		} else if (e.targetControllable == sequence->currentTime)
 		{
-
+			resized();
 		} else if (e.targetControllable == sequence->totalTime)
 		{
-
+			resized();
 		}
 		break;
 		
@@ -89,3 +122,12 @@ void SequenceTimelineHeader::newMessage(const ContainerAsyncEvent & e)
 	}
 }
 
+void TimeNeedleUI::paint(Graphics & g)
+{
+	g.setColour(HIGHLIGHT_COLOR);
+	Path p;
+	p.addRectangle(getWidth() / 2 - 1, 0, 2, getHeight());
+	p.addTriangle(0, 0, getWidth(), 0, getWidth()/2.f, 4);
+	p.addTriangle(0, getHeight(), getWidth() / 2, getHeight() - 4, getWidth(), getHeight());
+	g.fillPath(p);
+}

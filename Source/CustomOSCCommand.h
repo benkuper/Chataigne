@@ -12,16 +12,16 @@
 #define CUSTOMOSCCOMMAND_H_INCLUDED
 
 #include "OSCCommand.h"
-#include "CustomOSCOutput.h"
+#include "CustomOSCModule.h"
 
 class CustomOSCCommand :
 	public OSCCommand
 {
 public:
-	CustomOSCCommand(CustomOSCOutput * output, CommandContext context, var params);
+	CustomOSCCommand(CustomOSCModule * output, CommandContext context, var params);
 	~CustomOSCCommand();
 
-	static CustomOSCCommand * create(ControllableContainer * output, CommandContext context, var params) { return new CustomOSCCommand((CustomOSCOutput *)output, context, params); }
+	static CustomOSCCommand * create(ControllableContainer * module, CommandContext context, var params) { return new CustomOSCCommand((CustomOSCModule *)module, context, params); }
 };
 
 

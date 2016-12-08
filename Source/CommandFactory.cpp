@@ -9,12 +9,12 @@
 */
 
 #include "CommandFactory.h"
-#include "OutputManager.h"
+#include "ModuleManager.h"
 
 CommandDefinition::CommandDefinition(ControllableContainer * _container, const String & menuPath, const String & type, 
 	CreateCommandFunc createFunc) :
 	menuPath(menuPath),
-	inputType(type),
+	commandType(type),
 	createFunc(createFunc),
 	container(_container)
 {
@@ -40,9 +40,9 @@ CommandDefinition * CommandDefinition::addParam(const String & paramName, var va
 
 CommandDefinition * CommandFactory::showMenuAndGetCommand()
 {
-	PopupMenu m = OutputManager::getInstance()->getAllOutputsCommandMenu();
+	PopupMenu m = ModuleManager::getInstance()->getAllModulesCommandMenu();
 	int result = m.show();
-	if (result > 0) return OutputManager::getInstance()->getCommandDefinitionForItemID(result);
+	if (result > 0) return ModuleManager::getInstance()->getCommandDefinitionForItemID(result);
 
 	return nullptr;
 }

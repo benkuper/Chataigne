@@ -9,3 +9,15 @@
 */
 
 #include "MappingLayerTimeline.h"
+
+#include "Style.h"
+
+MappingLayerTimeline::MappingLayerTimeline(MappingLayer * layer) :
+	SequenceLayerTimeline(layer),
+	mappingLayer(layer)
+{
+}
+
+MappingLayerTimeline::~MappingLayerTimeline()
+{
+}

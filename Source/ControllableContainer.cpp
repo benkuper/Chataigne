@@ -68,18 +68,19 @@ void ControllableContainer::addControllable(Controllable * c)
 {
 	if(c->type == Controllable::TRIGGER) addTriggerInternal((Trigger *)c);
 	else addParameterInternal((Parameter *)c);
+	c->addControllableListener(this);
 }
 
 void ControllableContainer::addParameter(Parameter * p)
 {
-  addParameterInternal(p);
+  addControllable(p);
 }
 
 FloatParameter * ControllableContainer::addFloatParameter(const String & _niceName, const String & description, const float & initialValue, const float & minValue, const float & maxValue, const bool & enabled)
 {
   String targetName = getUniqueNameInContainer(_niceName);
   FloatParameter * p = new FloatParameter(targetName, description, initialValue, minValue, maxValue, enabled);
-  addParameterInternal(p);
+  addControllable(p);
   return p;
 }
 
@@ -87,7 +88,7 @@ IntParameter * ControllableContainer::addIntParameter(const String & _niceName, 
 {
   String targetName = getUniqueNameInContainer(_niceName);
   IntParameter * p = new IntParameter(targetName, _description, initialValue, minValue, maxValue, enabled);
-  addParameterInternal(p);
+  addControllable(p);
   return p;
 }
 
@@ -95,7 +96,7 @@ BoolParameter * ControllableContainer::addBoolParameter(const String & _niceName
 {
   String targetName = getUniqueNameInContainer(_niceName);
   BoolParameter * p = new BoolParameter(targetName, _description, value, enabled);
-  addParameterInternal(p);
+  addControllable(p);
   return p;
 }
 
@@ -103,7 +104,7 @@ StringParameter * ControllableContainer::addStringParameter(const String & _nice
 {
   String targetName = getUniqueNameInContainer(_niceName);
   StringParameter * p = new StringParameter(targetName, _description, value, enabled);
-  addParameterInternal(p);
+  addControllable(p);
   return p;
 }
 
@@ -111,7 +112,7 @@ EnumParameter * ControllableContainer::addEnumParameter(const String & _niceName
 {
 	String targetName = getUniqueNameInContainer(_niceName);
 	EnumParameter * p = new EnumParameter(targetName, _description, enabled);
-	addParameterInternal(p);
+	addControllable(p);
 	return p;
 }
 
@@ -119,7 +120,7 @@ Point2DParameter * ControllableContainer::addPoint2DParameter(const String & _ni
 {
 	String targetName = getUniqueNameInContainer(_niceName);
 	Point2DParameter * p = new Point2DParameter(targetName, _description, enabled);
-	addParameterInternal(p);
+	addControllable(p);
 	return p;
 }
 
@@ -127,7 +128,7 @@ Point3DParameter * ControllableContainer::addPoint3DParameter(const String & _ni
 {
 	String targetName = getUniqueNameInContainer(_niceName);
 	Point3DParameter * p = new Point3DParameter(targetName, _description, enabled);
-	addParameterInternal(p);
+	addControllable(p);
 	return p;
 }
 
@@ -135,7 +136,7 @@ TargetParameter * ControllableContainer::addTargetParameter(const String & _nice
 {
 	String targetName = getUniqueNameInContainer(_niceName);
 	TargetParameter * p = new TargetParameter(targetName, _description, "", rootReference, enabled);
-	addParameterInternal(p);
+	addControllable(p);
 	return p;
 }
 
@@ -143,7 +144,7 @@ Trigger * ControllableContainer::addTrigger(const String & _niceName, const Stri
 {
   String targetName = getUniqueNameInContainer(_niceName);
   Trigger * t = new Trigger(targetName, _description, enabled);
-  addTriggerInternal(t);
+  addControllable(t);
   return t;
 }
 
@@ -161,7 +162,7 @@ void ControllableContainer::addTriggerInternal(Trigger * t)
 
 void ControllableContainer::addParameterInternal(Parameter * p)
 {
-	p->setParentContainer(this);
+	p->setParentContainer(this); 
 	controllables.add(p);
 	p->addParameterListener(this);
 	p->addAsyncParameterListener(this);
@@ -179,6 +180,9 @@ void ControllableContainer::removeControllable(Controllable * c)
     p->removeParameterListener(this);
     p->removeAsyncParameterListener(this);
   }
+  
+  c->removeControllableListener(this);
+
   controllables.removeObject(c);
   notifyStructureChanged();
 }
@@ -701,6 +705,11 @@ void ControllableContainer::triggerTriggered(Trigger * t)
 
 	
 
+}
+
+void ControllableContainer::askForRemoveControllable(Controllable * c)
+{
+	removeControllable(c);
 }
 
 

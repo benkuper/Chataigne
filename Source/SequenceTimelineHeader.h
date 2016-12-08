@@ -13,6 +13,16 @@
 
 #include "Sequence.h"
 
+class TimeNeedleUI :
+	public Component
+{
+public:
+	TimeNeedleUI() {}
+	~TimeNeedleUI() {}
+
+	void paint(Graphics &g) override;
+};
+
 class SequenceTimelineHeader :
 	public Component,
 	public ControllableContainer::ContainerAsyncListener
@@ -23,10 +33,16 @@ public:
 
 	Sequence * sequence;
 
+	TimeNeedleUI needle;
+
 	void paint(Graphics &g) override;
 	void resized() override;
 
+	void mouseDown(const MouseEvent &e) override;
+	void mouseDrag(const MouseEvent &e) override;
+
 	int getXForTime(float time);
+	float getTimeForX(int tx);
 
 	void newMessage(const ContainerAsyncEvent &e) override;
 

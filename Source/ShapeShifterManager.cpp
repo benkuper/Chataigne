@@ -18,7 +18,7 @@ ShapeShifterManager::ShapeShifterManager() :
 	mainContainer(ShapeShifterContainer::Direction::VERTICAL),
 	currentCandidatePanel(nullptr)
 {
-	lastFile = File::getSpecialLocation(File::SpecialLocationType::userDocumentsDirectory).getChildFile(flapSubFolder + "/_lastSession." + flapLayoutExtension);
+	lastFile = File::getSpecialLocation(File::SpecialLocationType::userDocumentsDirectory).getChildFile(appSubFolder + "/_lastSession." + appLayoutExtension);
 }
 
 ShapeShifterManager::~ShapeShifterManager()
@@ -238,7 +238,7 @@ var ShapeShifterManager::getCurrentLayout()
 void ShapeShifterManager::loadLayoutFromFile(int fileIndexInLayoutFolder)
 {
 
-	File destDir = File::getSpecialLocation(File::SpecialLocationType::userDocumentsDirectory).getChildFile(flapSubFolder);
+	File destDir = File::getSpecialLocation(File::SpecialLocationType::userDocumentsDirectory).getChildFile(appSubFolder);
 	if (!destDir.exists())
 	{
 		destDir.createDirectory();
@@ -247,7 +247,7 @@ void ShapeShifterManager::loadLayoutFromFile(int fileIndexInLayoutFolder)
 	File layoutFile;
 	if (fileIndexInLayoutFolder == -1)
 	{
-		FileChooser fc("Load layout", destDir, "*."+flapLayoutExtension);
+		FileChooser fc("Load layout", destDir, "*."+appLayoutExtension);
 		if (!fc.browseForFileToOpen()) return;
 		layoutFile = fc.getResult();
 	} else
@@ -280,7 +280,7 @@ void ShapeShifterManager::loadLastSessionLayoutFile()
 
 void ShapeShifterManager::loadDefaultLayoutFile()
 {
-	File defaultFile = File::getSpecialLocation(File::SpecialLocationType::userDocumentsDirectory).getChildFile(flapSubFolder + "/default." + flapLayoutExtension);
+	File defaultFile = File::getSpecialLocation(File::SpecialLocationType::userDocumentsDirectory).getChildFile(appSubFolder + "/default." + appLayoutExtension);
 	if (defaultFile.exists())
 	{
 		loadLayoutFromFile(defaultFile);
@@ -293,10 +293,10 @@ void ShapeShifterManager::loadDefaultLayoutFile()
 
 void ShapeShifterManager::saveCurrentLayout()
 {
-	File destDir = File::getSpecialLocation(File::SpecialLocationType::userDocumentsDirectory).getChildFile(flapSubFolder);
+	File destDir = File::getSpecialLocation(File::SpecialLocationType::userDocumentsDirectory).getChildFile(appSubFolder);
 	if (!destDir.exists()) destDir.createDirectory();
 
-	FileChooser fc("Save layout", destDir, "*."+flapLayoutExtension);
+	FileChooser fc("Save layout", destDir, "*."+appLayoutExtension);
 	if (fc.browseForFileToSave(true))
 	{
 		saveCurrentLayoutToFile(fc.getResult());
@@ -319,14 +319,14 @@ void ShapeShifterManager::saveCurrentLayoutToFile(const File &toFile)
 
 Array<File> ShapeShifterManager::getLayoutFiles()
 {
-	File layoutFolder = File::getSpecialLocation(File::SpecialLocationType::userDocumentsDirectory).getChildFile(flapSubFolder);
+	File layoutFolder = File::getSpecialLocation(File::SpecialLocationType::userDocumentsDirectory).getChildFile(appSubFolder);
 	if (!layoutFolder.exists())
 	{
 		layoutFolder.createDirectory();
 	}
 
 	Array<File> layoutFiles;
-	layoutFolder.findChildFiles(layoutFiles, File::findFiles, false, "*."+flapLayoutExtension);
+	layoutFolder.findChildFiles(layoutFiles, File::findFiles, false, "*."+appLayoutExtension);
 
 	return layoutFiles;
 }

@@ -9,11 +9,10 @@
  */
 
 #include "Engine.h"
-#include "InputManager.h"
-#include "OutputManager.h"
+#include "ModuleManager.h"
 #include "StateManager.h"
 #include "SequenceManager.h"
-#include "FlapLogger.h"
+#include "CustomLogger.h"
 #include "PresetManager.h"
 #include "StringUtil.h"
 #include "Outliner.h"
@@ -21,24 +20,23 @@
 
 juce_ImplementSingleton(Engine) 
 
-const char* const filenameSuffix = ".flap";
-const char* const filenameWildcard = "*.flap";
+const char* const filenameSuffix = ".noisette";
+const char* const filenameWildcard = "*.noisette";
 
 Engine::Engine():
 	FileBasedDocument (filenameSuffix,
                                     filenameWildcard,
-                                    "Load a Flap Document",
-                                    "Save a Flap Document"),
+                                    "Load a Noisette",
+                                    "Save a Noisette"),
 	ControllableContainer("Root")
 {
   
   skipControllableNameInAddress = true;
 
   //to move into engine
-  Logger::setCurrentLogger(FlapLogger::getInstance());
+  Logger::setCurrentLogger(CustomLogger::getInstance());
 
-  addChildControllableContainer(InputManager::getInstance());
-  addChildControllableContainer(OutputManager::getInstance());
+  addChildControllableContainer(ModuleManager::getInstance());
   addChildControllableContainer(StateManager::getInstance());
   addChildControllableContainer(SequenceManager::getInstance());
 }
@@ -50,13 +48,12 @@ Engine::~Engine(){
 	DBG("Engine destroy");
   Outliner::deleteInstance();
 
-  InputManager::deleteInstance();
-  OutputManager::deleteInstance();
+  ModuleManager::deleteInstance();
   StateManager::deleteInstance();
   SequenceManager::deleteInstance();
 
   PresetManager::deleteInstance();
-  FlapLogger::deleteInstance();
+  CustomLogger::deleteInstance();
   Logger::setCurrentLogger(nullptr);
 
   ControllableFactory::deleteInstance();
@@ -97,8 +94,7 @@ void Engine::clear(){
 
   PresetManager::getInstance()->clear();
  
-  InputManager::getInstance()->clear();
-  OutputManager::getInstance()->clear();
+  ModuleManager::getInstance()->clear();
   StateManager::getInstance()->clear();
   SequenceManager::getInstance()->clear();
 

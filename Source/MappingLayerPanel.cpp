@@ -9,3 +9,15 @@
 */
 
 #include "MappingLayerPanel.h"
+
+MappingLayerPanel::MappingLayerPanel(MappingLayer * layer) :
+	SequenceLayerPanel(layer),
+	mappingLayer(layer)
+{
+
+	bgColor = MAPPING_COLOR.withSaturation(.2f).darker(1);;
+}
+
+MappingLayerPanel::~MappingLayerPanel()
+{
+}

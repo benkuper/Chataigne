@@ -29,6 +29,9 @@ public:
 	static MappingLayer * create() { return new MappingLayer(); }
 	virtual String getTypeString() const override { return "Mapping"; }
 
+	virtual SequenceLayerPanel * getPanel() override;
+	virtual SequenceLayerTimeline * getTimelineUI() override;
+
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MappingLayer)
 };
 

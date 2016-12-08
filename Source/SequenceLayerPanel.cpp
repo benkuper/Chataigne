@@ -11,14 +11,23 @@
 #include "SequenceLayerPanel.h"
 
 SequenceLayerPanel::SequenceLayerPanel(SequenceLayer * layer) :
-	BaseItemUI<SequenceLayer>(layer)
+	BaseItemUI<SequenceLayer>(layer),
+	resizer(this,nullptr)
 {
 	setSize(100, item->uiHeight->intValue());
+	addAndMakeVisible(&resizer);
 }
 
 SequenceLayerPanel::~SequenceLayerPanel()
 {
 
+}
+
+void SequenceLayerPanel::resized()
+{
+	BaseItemUI::resized();
+	item->uiHeight->setValue(getHeight());
+	resizer.setBounds(getLocalBounds());
 }
 
 void SequenceLayerPanel::controllableFeedbackUpdateInternal(Controllable * c)
@@ -27,4 +36,5 @@ void SequenceLayerPanel::controllableFeedbackUpdateInternal(Controllable * c)
 	{
 		setSize(getWidth(), item->uiHeight->intValue());
 	}
+
 }

@@ -21,6 +21,11 @@ SequenceLayerTimelineManagerUI::~SequenceLayerTimelineManagerUI()
 {
 }
 
+SequenceLayerTimeline * SequenceLayerTimelineManagerUI::createUIForItem(SequenceLayer * layer)
+{
+	return layer->getTimelineUI();
+}
+
 void SequenceLayerTimelineManagerUI::mouseDown(const MouseEvent & e)
 {
 	BaseManagerUI::mouseDown(e);

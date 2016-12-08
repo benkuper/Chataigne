@@ -23,6 +23,7 @@ public:
 	SequenceLayerTimelineManagerUI(SequenceLayerManager *_manager);
 	~SequenceLayerTimelineManagerUI();
 
+	SequenceLayerTimeline * createUIForItem(SequenceLayer * layer) override;
 
 	void mouseDown(const MouseEvent &e) override;
 

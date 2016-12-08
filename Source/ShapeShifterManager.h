@@ -15,6 +15,8 @@
 #include "ShapeShifterWindow.h"
 #include "ShapeShifterFactory.h"
 
+
+
 class ShapeShifterManager :
 	public ShapeShifterPanel::Listener
 {
@@ -26,8 +28,8 @@ public:
 	ShapeShifterContainer mainContainer;
 
 	File lastFile;
-	const String flapLayoutExtension = "flaplayout";
-	const String flapSubFolder = "Flap/layouts";
+	const String appLayoutExtension = "chalayout";
+	const String appSubFolder = "Chataigne/layouts";
 
 	OwnedArray<ShapeShifterPanel> openedPanels;
 	OwnedArray<ShapeShifterWindow> openedWindows;
