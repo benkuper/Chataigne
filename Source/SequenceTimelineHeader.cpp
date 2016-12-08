@@ -87,6 +87,7 @@ int SequenceTimelineHeader::getXForTime(float time)
 {
 	float viewStart = sequence->viewStartTime->floatValue();
 	float viewEnd = sequence->viewEndTime->floatValue();
+	if (viewStart == viewEnd) return 0;
 	return (int)jmap<float>(time, viewStart, viewEnd, 0, (float)getWidth());
 }
 

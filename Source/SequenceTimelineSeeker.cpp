@@ -16,6 +16,7 @@ SequenceTimelineSeeker::SequenceTimelineSeeker(Sequence * _sequence) :
 {
 	addAndMakeVisible(&handle);
 	sequence->addAsyncContainerListener(this);
+	handle.addMouseListener(this,false);
 }
 
 SequenceTimelineSeeker::~SequenceTimelineSeeker()
@@ -27,6 +28,11 @@ void SequenceTimelineSeeker::paint(Graphics & g)
 {
 	g.setColour(BG_COLOR);
 	g.fillRoundedRectangle(getLocalBounds().toFloat(),2);
+	g.setColour(BG_COLOR.darker());
+	g.drawRoundedRectangle(getLocalBounds().toFloat(), 2, 2);
+	g.setColour(HIGHLIGHT_COLOR);
+	float tx = getXForTime(sequence->currentTime->floatValue());
+	g.drawLine(tx, 0, tx, getHeight(), 2);
 }
 
 void SequenceTimelineSeeker::resized()
@@ -46,15 +52,24 @@ void SequenceTimelineSeeker::mouseDown(const MouseEvent & e)
 
 void SequenceTimelineSeeker::mouseDrag(const MouseEvent & e)
 {
-	float relative = abs(timeAnchor - viewStartAtMouseDown) / (viewEndAtMouseDown - viewStartAtMouseDown);
-
-	float offsetX = e.getOffsetFromDragStart().x;
-	float offsetY = e.getOffsetFromDragStart().y;
-	float viewTime = (viewEndAtMouseDown - viewStartAtMouseDown) + offsetY;
+	if (e.originalComponent != &handle) return;
 	
+	float offsetX = e.getOffsetFromDragStart().x;
+	float offsetY = e.getOffsetFromDragStart().y / sequence->totalTime->floatValue();
+
+	/*
+	float viewTime = (viewEndAtMouseDown - viewStartAtMouseDown);
+	if (viewTime == 0) return;
+	float viewTimeFactor = ((viewTime - offsetY) / viewTime);
+	if (viewTimeFactor == 0) return;
+
 	float destAnchor = timeAnchor + getTimeForX(offsetX);
-	//float newViewStart = destAnchor - (timeAnchor - viewStartAtMouseDown)*relative;
-	//float newViewEnd = destAnchor + (timeAnchor + viewEndAtMouseDown)*relative;
+	float newViewStart = destAnchor - (timeAnchor-viewStartAtMouseDown)*viewTimeFactor;
+	float newViewEnd = destAnchor - (timeAnchor-viewEndAtMouseDown)*viewTimeFactor;
+	
+	sequence->viewStartTime->setValue(newViewStart);
+	sequence->viewEndTime->setValue(newViewEnd);
+	*/
 
 	sequence->viewStartTime->setValue(viewStartAtMouseDown + getTimeForX(offsetX));
 	sequence->viewEndTime->setValue(viewEndAtMouseDown + getTimeForX(offsetX));
@@ -84,10 +99,12 @@ void SequenceTimelineSeeker::newMessage(const ContainerAsyncEvent & e)
 		}
 		else if (e.targetControllable == sequence->currentTime)
 		{
+			repaint();
 			resized();
 		}
 		else if (e.targetControllable == sequence->totalTime)
 		{
+			repaint();
 			resized();
 		}
 		break;
