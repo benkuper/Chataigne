@@ -15,8 +15,20 @@ TriggerLayerTimeline::TriggerLayerTimeline(TriggerLayer * layer) :
 	SequenceLayerTimeline(layer),
 	triggerLayer(layer)
 {
+	ttmui = new TimeTriggerManagerUI(this, &layer->ttm);
+	addAndMakeVisible(ttmui);
 }
 
 TriggerLayerTimeline::~TriggerLayerTimeline()
 {
+}
+
+void TriggerLayerTimeline::resized()
+{
+	ttmui->setBounds(getLocalBounds());
+}
+
+void TriggerLayerTimeline::updateContent()
+{
+	ttmui->updateContent();
 }

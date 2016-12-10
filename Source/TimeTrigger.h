@@ -11,7 +11,22 @@
 #ifndef TIMETRIGGER_H_INCLUDED
 #define TIMETRIGGER_H_INCLUDED
 
+#include "Action.h"
 
+class TimeTrigger :
+	public Action
+{
+public:
+	TimeTrigger(float time = 0, const String &name = "Trigger");
+	virtual ~TimeTrigger();
+
+	FloatParameter * time;
+	bool isTriggered;
+	
+	//ui
+	FloatParameter * flagY;
+
+};
 
 
 

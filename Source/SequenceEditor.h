@@ -18,7 +18,8 @@
 
 class SequenceEditor :
 	public Component,
-	public Sequence::SequenceListener
+	public Sequence::SequenceListener,
+	public ScrollBarListener
 {
 public:
 	SequenceEditor(Sequence * _sequence);
@@ -35,14 +36,20 @@ public:
 	SequenceLayerTimelineManagerUI timelineManagerUI;
 
 	//layout
-	const float headerHeight = 60;
+	const float headerHeight = 50;
 	float panelWidth;
 
 	void paint(Graphics &g) override;
 	void resized() override;
 	
+	// Inherited via Listener
+	virtual void scrollBarMoved(ScrollBar * scrollBarThatHasMoved, double newRangeStart) override;
 
+	void mouseWheelMove(const MouseEvent &e, const MouseWheelDetails &) override;
+	
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(SequenceEditor)
+
+		
 };
 
 

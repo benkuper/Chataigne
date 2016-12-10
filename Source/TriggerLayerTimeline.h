@@ -13,6 +13,7 @@
 
 #include "SequenceLayerTimeline.h"
 #include "TriggerLayer.h"
+#include "TimeTriggerManagerUI.h"
 
 class TriggerLayerTimeline :
 	public SequenceLayerTimeline
@@ -22,7 +23,11 @@ public:
 	~TriggerLayerTimeline();
 
 	TriggerLayer * triggerLayer;
+	ScopedPointer<TimeTriggerManagerUI> ttmui;
 
+	void resized() override;
+	virtual void updateContent() override;
+	
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(TriggerLayerTimeline)
 
 };

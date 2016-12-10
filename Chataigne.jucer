@@ -80,6 +80,10 @@
                     file="Source/EnumParameterUI.cpp"/>
               <FILE id="cYXo9m" name="EnumParameterUI.h" compile="0" resource="0"
                     file="Source/EnumParameterUI.h"/>
+              <FILE id="HJfE0f" name="FloatParameterLabelUI.cpp" compile="1" resource="0"
+                    file="Source/FloatParameterLabelUI.cpp"/>
+              <FILE id="zdfeRC" name="FloatParameterLabelUI.h" compile="0" resource="0"
+                    file="Source/FloatParameterLabelUI.h"/>
               <FILE id="sAEQcr" name="FloatSliderUI.cpp" compile="1" resource="0"
                     file="Source/FloatSliderUI.cpp"/>
               <FILE id="r6KkTL" name="FloatSliderUI.h" compile="0" resource="0" file="Source/FloatSliderUI.h"/>
@@ -393,6 +397,13 @@
                 </GROUP>
                 <GROUP id="{10117456-5D27-D282-8629-DC52343DD5E4}" name="trigger">
                   <GROUP id="{929A0600-5102-D2CC-B67C-2431328CEC67}" name="ui">
+                    <FILE id="pDF6eT" name="TimeTriggerManagerUI.cpp" compile="1" resource="0"
+                          file="Source/TimeTriggerManagerUI.cpp"/>
+                    <FILE id="bl7PO5" name="TimeTriggerManagerUI.h" compile="0" resource="0"
+                          file="Source/TimeTriggerManagerUI.h"/>
+                    <FILE id="XtKIy8" name="TimeTriggerUI.cpp" compile="1" resource="0"
+                          file="Source/TimeTriggerUI.cpp"/>
+                    <FILE id="dhbOWO" name="TimeTriggerUI.h" compile="0" resource="0" file="Source/TimeTriggerUI.h"/>
                     <FILE id="rORA9h" name="TriggerLayerPanel.cpp" compile="1" resource="0"
                           file="Source/TriggerLayerPanel.cpp"/>
                     <FILE id="P04Rcg" name="TriggerLayerPanel.h" compile="0" resource="0"
@@ -404,6 +415,10 @@
                   </GROUP>
                   <FILE id="kNy3zM" name="TimeTrigger.cpp" compile="1" resource="0" file="Source/TimeTrigger.cpp"/>
                   <FILE id="BoFRkc" name="TimeTrigger.h" compile="0" resource="0" file="Source/TimeTrigger.h"/>
+                  <FILE id="u9oJyz" name="TimeTriggerManager.cpp" compile="1" resource="0"
+                        file="Source/TimeTriggerManager.cpp"/>
+                  <FILE id="DfUwPD" name="TimeTriggerManager.h" compile="0" resource="0"
+                        file="Source/TimeTriggerManager.h"/>
                   <FILE id="f0plxm" name="TriggerLayer.cpp" compile="1" resource="0"
                         file="Source/TriggerLayer.cpp"/>
                   <FILE id="c4bmKn" name="TriggerLayer.h" compile="0" resource="0" file="Source/TriggerLayer.h"/>

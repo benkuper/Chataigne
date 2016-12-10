@@ -20,7 +20,7 @@ class Action :
 	public ConditionManager::ConditionManagerListener
 {
 public:
-	Action();
+	Action(const String &name = "Action");
 	virtual ~Action();
 
 	ConditionManager cdm;
@@ -28,13 +28,15 @@ public:
 
 	BoolParameter * isActive;
 	BoolParameter * isValid; //whether the action can process or not
+	Trigger * trigger;
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
 
 	void onContainerParameterChangedInternal(Parameter * p) override;
-
+	void onContainerTriggerTriggered(Trigger *);
 	void conditionManagerValidationChanged(ConditionManager *) override;
+
 
 	class ActionListener
 	{

@@ -26,6 +26,12 @@ SequenceEditor::SequenceEditor(Sequence * _sequence) :
 	
 	timelineContainer.addAndMakeVisible(&navigationUI);
 	timelineContainer.addAndMakeVisible(&timelineManagerUI);
+
+	panelManagerUI.viewport.getVerticalScrollBar()->addListener(this);
+	timelineManagerUI.viewport.getVerticalScrollBar()->addListener(this);
+
+	panelManagerUI.viewport.addMouseListener(this, true);
+	timelineManagerUI.viewport.addMouseListener(this, true);
 }
 
 SequenceEditor::~SequenceEditor()
@@ -55,4 +61,32 @@ void SequenceEditor::resized()
 
 	panelManagerUI.setBounds(panelR);
 	timelineManagerUI.setBounds(timelineR);
+	
+	
 }
+
+void SequenceEditor::scrollBarMoved(ScrollBar * scrollBarThatHasMoved, double /*newRangeStart*/)
+{
+	if (scrollBarThatHasMoved == panelManagerUI.viewport.getVerticalScrollBar())
+	{
+		timelineManagerUI.viewport.setViewPosition(panelManagerUI.viewport.getViewPosition());
+	}
+	else
+	{
+		panelManagerUI.viewport.setViewPosition(timelineManagerUI.viewport.getViewPosition());
+	}
+}
+
+void SequenceEditor::mouseWheelMove(const MouseEvent & e, const MouseWheelDetails &)
+{
+	Point<int> p = e.getEventRelativeTo(this).getPosition();
+	if (panelManagerUI.contains(p)) //hack, need to ask Jules about listenedComponent for direct listener to event information, also have a unique "scrollbar" event for wheel+drag
+	{
+		timelineManagerUI.viewport.setViewPosition(panelManagerUI.viewport.getViewPosition());
+	}
+	else
+	{
+		panelManagerUI.viewport.setViewPosition(timelineManagerUI.viewport.getViewPosition());
+	}
+}
+

@@ -12,7 +12,7 @@
 #define TRIGGERLAYER_H_INCLUDED
 
 #include "SequenceLayer.h"
-#include "TimeTrigger.h"
+#include "TimeTriggerManager.h"
 
 class TriggerLayer :
 	public SequenceLayer
@@ -20,6 +20,8 @@ class TriggerLayer :
 public :
 	TriggerLayer();
 	~TriggerLayer();
+
+	TimeTriggerManager ttm;
 
 	void init() override;
 	void loadJSONDataInternal(var data) override;

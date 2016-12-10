@@ -35,9 +35,9 @@ void SequenceTimelineNavigationUI::resized()
 	//compensate for layerTimelineManagerUI margins
 	r.removeFromLeft(4);
 	r.removeFromRight(10);
+	
 	r.removeFromTop(4);
-
 	seeker.setBounds(r.removeFromTop(15));
-	r.removeFromTop(3);
+	r.reduce(0, 2);
 	header.setBounds(r);
 }

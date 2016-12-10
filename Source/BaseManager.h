@@ -49,6 +49,7 @@ public :
 		virtual ~Listener() {}
 		virtual void itemAdded(BaseItem *) {}
 		virtual void itemRemoved(BaseItem *) {}
+		virtual void itemsReordered() {}
 	};
 
 	ListenerList<Listener> baseManagerListeners;

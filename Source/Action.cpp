@@ -11,8 +11,9 @@
 #include "Action.h"
 #include "ActionEditor.h"
 
-Action::Action() :
-	BaseItem("Action")
+
+Action::Action(const String & name) :
+	BaseItem(name)
 {
 	saveAndLoadRecursiveData = false;
 
@@ -20,9 +21,11 @@ Action::Action() :
 	addChildControllableContainer(&csm);
 
 	cdm.addConditionManagerListener(this);
+
+	trigger = addTrigger("Trigger", "Triggers the action");
 }
 
-Action::~Action()
+  Action::~Action()
 {
 }
 
@@ -44,6 +47,14 @@ void Action::loadJSONDataInternal(var data)
 void Action::onContainerParameterChangedInternal(Parameter * p)
 {
 	if (p == enabled) actionListeners.call(&Action::ActionListener::actionEnableChanged,this);
+}
+
+void Action::onContainerTriggerTriggered(Trigger * t)
+{
+	if (t == trigger)
+	{
+		csm.triggerAll->trigger();
+	}
 }
 
 void Action::conditionManagerValidationChanged(ConditionManager *)

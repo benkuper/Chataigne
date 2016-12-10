@@ -1,0 +1,125 @@
+/*
+  ==============================================================================
+
+    TimeTriggerUI.cpp
+    Created: 10 Dec 2016 11:57:16am
+    Author:  Ben
+
+  ==============================================================================
+*/
+
+#include "TimeTriggerUI.h"
+
+TimeTriggerUI::TimeTriggerUI(TimeTrigger * _tt) :
+	BaseItemUI<TimeTrigger>(_tt),
+	tt(_tt)
+{
+	nameUI->setAutoSize(true);
+	
+	autoDrawHighlightWhenSelected = false;
+	setName(_tt->niceName);
+
+	updateSizeFromName();
+}
+
+TimeTriggerUI::~TimeTriggerUI()
+{
+}
+
+void TimeTriggerUI::paint(Graphics & g)
+{
+	Colour c = inspectable->isSelected ? HIGHLIGHT_COLOR : (item->enabled->boolValue() ? BG_COLOR.brighter() : BG_COLOR.darker());
+	
+	g.setColour(c);
+	
+	g.fillRect(flagRect);
+	g.setColour(c.darker());
+	g.drawRect(flagRect);
+	
+
+	g.setColour(c);
+	g.drawVerticalLine(0, 0, (float)getHeight());
+
+}
+
+void TimeTriggerUI::resized()
+{
+	Rectangle<int> r = getLocalBounds();
+	
+	int ty = (int)(item->flagY->floatValue()*(getHeight() - 20));
+	
+	flagRect = r.translated(0, ty).withHeight(20);
+	lineRect = r.withWidth(6);
+
+	Rectangle<int> p = flagRect.reduced(2, 2);
+	if (item->isSelected)
+	{
+
+		removeBT->setBounds(p.removeFromRight(p.getHeight()));
+		p.removeFromRight(2);
+		enabledBT->setBounds(p.removeFromRight(15));
+		p.removeFromRight(2);
+	}
+
+	nameUI->setBounds(p.withWidth(nameUI->getWidth()));
+}
+
+bool TimeTriggerUI::hitTest(int x, int y)
+{
+	if (flagRect.contains(x, y)) return true;
+	if (lineRect.contains(x, y)) return true;
+	return false;
+}
+
+void TimeTriggerUI::updateSizeFromName()
+{
+	int newWidth = jmax<int>(nameUI->getWidth() + 10, 20);
+	if (item->isSelected) newWidth += removeBT->getWidth() + enabledBT->getWidth() + 10;
+	setSize(newWidth, getHeight());
+}
+
+void TimeTriggerUI::mouseDown(const MouseEvent & e)
+{
+	BaseItemUI::mouseDown(e);
+	timeAtMouseDown = tt->time->floatValue();
+	posAtMouseDown = getX();
+	flagYAtMouseDown = item->flagY->floatValue();
+}
+
+void TimeTriggerUI::mouseDrag(const MouseEvent & e)
+{
+	BaseItemUI::mouseDrag(e);
+	triggerUIListeners.call(&TimeTriggerUIListener::timeTriggerDragged, this, e);
+	
+	if (!e.mods.isCommandDown())
+	{
+		float ty = flagYAtMouseDown + e.getOffsetFromDragStart().y*1.f / (getHeight() - 20);
+		item->flagY->setValue(ty);
+	}
+	
+}
+
+void TimeTriggerUI::controllableFeedbackUpdateInternal(Controllable * c)
+{
+	if (c == item->time)
+	{
+		triggerUIListeners.call(&TimeTriggerUIListener::timeTriggerTimeChanged, this);
+	}
+	else if (c == item->nameParam)
+	{
+		updateSizeFromName();
+	}
+	else if (c == item->flagY)
+	{ 
+		resized();
+	}
+}
+
+void TimeTriggerUI::inspectableSelectionChanged(Inspectable * i)
+{
+	BaseItemUI::inspectableSelectionChanged(i);
+	removeBT->setVisible(item->isSelected);
+	enabledBT->setVisible(item->isSelected);
+
+	updateSizeFromName();
+}

@@ -38,6 +38,16 @@ ControllableUI * Trigger::createDefaultUI(Controllable * targetControllable){
     return createBlinkUI(dynamic_cast<Trigger *>(targetControllable));
 }
 
+void Trigger::trigger()
+{
+	if (enabled && !isTriggering) {
+		isTriggering = true;
+		listeners.call(&Listener::triggerTriggered, this);
+		queuedNotifier.addMessage(new WeakReference<Trigger>(this));
+		isTriggering = false;
+	}
+}
+
 /*
 DynamicObject * Trigger::createDynamicObject()
 {

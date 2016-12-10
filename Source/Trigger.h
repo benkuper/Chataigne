@@ -30,16 +30,7 @@ public:
 	ControllableUI * createDefaultUI(Controllable * targetControllable = nullptr) override;
 	
 	//virtual DynamicObject * createDynamicObject() override;
-	
-	void trigger()
-	{
-		if (enabled && !isTriggering){
-			isTriggering = true;
-			listeners.call(&Listener::triggerTriggered, this);
-			queuedNotifier.addMessage(new WeakReference<Trigger>(this));
-			isTriggering = false;
-		}
-	}
+	virtual void trigger();
 	
 	// avoid feedback loop in listeners
 	bool isTriggering;

@@ -23,7 +23,15 @@ public:
 	virtual ~SequenceLayerTimeline();
 
 
+	int getXForTime(float time);
+	float getTimeForX(int tx, bool offsetStart = true);
+
+	virtual void updateContent() {} // to be overriden
+	virtual void paintOverChildren(Graphics & g) override;
+
 	void controllableFeedbackUpdateInternal(Controllable * c) override;
+
+
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(SequenceLayerTimeline)
 };

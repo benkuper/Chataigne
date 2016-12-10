@@ -14,27 +14,27 @@
 
 TriggerLayer::TriggerLayer() :
 	SequenceLayer("New Trigger Layer")
-  {
-  }
+{
+}
 
-  TriggerLayer::~TriggerLayer()
-  {
-  }
+TriggerLayer::~TriggerLayer()
+{
+}
 
-  void TriggerLayer::init()
-  {
-  }
+void TriggerLayer::init()
+{
+}
 
-  void TriggerLayer::loadJSONDataInternal(var data)
-  {
-  }
+void TriggerLayer::loadJSONDataInternal(var data)
+{
+}
 
-  SequenceLayerPanel * TriggerLayer::getPanel()
-  {
-	  return new TriggerLayerPanel(this);
-  }
+SequenceLayerPanel * TriggerLayer::getPanel()
+{
+	return new TriggerLayerPanel(this);
+}
 
-  SequenceLayerTimeline * TriggerLayer::getTimelineUI()
-  {
-	  return new TriggerLayerTimeline(this);
-  }
+SequenceLayerTimeline * TriggerLayer::getTimelineUI()
+{
+	return new TriggerLayerTimeline(this);
+}

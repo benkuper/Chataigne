@@ -29,6 +29,9 @@ public:
 	void trigger() override;
 
 	static BaseCommand * create(ControllableContainer * module, CommandContext context, var params) { return new OSCCommand((OSCModule *)module, context, params); }
+
+
+	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(OSCCommand)
 };
 
 

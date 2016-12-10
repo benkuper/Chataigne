@@ -38,7 +38,11 @@ public:
 	//interaction
 	float viewStartAtMouseDown;
 	float viewEndAtMouseDown;
-	float timeAnchor;
+	float timeAnchorAtMouseDown;
+	float viewTimeAtMouseDown;
+	const float minActionDistX = 10;
+	const float minActionDistY = 15;
+	const float zoomSensitivity = .002f;
 
 	void paint(Graphics &g) override;
 	void resized() override;

@@ -51,7 +51,7 @@ void Sequence::onContainerParameterChangedInternal(Parameter * p)
 	{
 		currentTime->setRange(0, totalTime->floatValue());
 		viewStartTime->setRange(0, totalTime->floatValue() - minViewTime);
-		viewEndTime->setRange(minViewTime, totalTime->floatValue());
+		viewEndTime->setRange(viewStartTime->floatValue()+minViewTime, totalTime->floatValue());
 	} else if (p == currentTime)
 	{
 		//layers will be listeners of this sequence, no need to transfer event from here
@@ -64,6 +64,10 @@ void Sequence::onContainerParameterChangedInternal(Parameter * p)
 	} else if (p == fps)
 	{
 
+	}
+	else if (p == viewStartTime)
+	{
+		viewEndTime->setRange(viewStartTime->floatValue() + minViewTime, totalTime->floatValue()); //Should be a range value
 	}
 }
 

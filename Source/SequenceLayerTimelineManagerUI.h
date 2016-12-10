@@ -25,6 +25,8 @@ public:
 
 	SequenceLayerTimeline * createUIForItem(SequenceLayer * layer) override;
 
+	void resized() override;
+
 	void mouseDown(const MouseEvent &e) override;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(SequenceLayerTimelineManagerUI)

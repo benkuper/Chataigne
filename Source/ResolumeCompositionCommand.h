@@ -23,6 +23,8 @@ public:
 
 
 	static ResolumeCompositionCommand * create(ControllableContainer * module, CommandContext context, var params) { return new ResolumeCompositionCommand((ResolumeModule *)module, context, params); }
+
+	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ResolumeCompositionCommand)
 };
 
 

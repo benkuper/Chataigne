@@ -47,32 +47,52 @@ void SequenceTimelineSeeker::mouseDown(const MouseEvent & e)
 {
 	viewStartAtMouseDown = sequence->viewStartTime->floatValue();
 	viewEndAtMouseDown = sequence->viewEndTime->floatValue();
-	timeAnchor = getTimeForX(e.getMouseDownPosition().x);
+	timeAnchorAtMouseDown = getTimeForX(e.getEventRelativeTo(this).x);
+	viewTimeAtMouseDown = (viewEndAtMouseDown - viewStartAtMouseDown);
+
+	//DBG("viewStartAtMouseDown : " << viewStartAtMouseDown << "/ viewEndAtMouseDown : " << viewEndAtMouseDown << "/ timeAnchorAtMouseDown : " << timeAnchorAtMouseDown);
+
 }
 
 void SequenceTimelineSeeker::mouseDrag(const MouseEvent & e)
 {
-	if (e.originalComponent != &handle) return;
+	if (e.originalComponent == &handle)
+	{
+		
+		float offsetX = e.getOffsetFromDragStart().x;
+		float offsetY = e.getOffsetFromDragStart().y;
+
+		offsetX = offsetX < 0 ? jmin<int>(offsetX + minActionDistX, 0) : jmax<int>(offsetX - minActionDistX, 0);
+		offsetY = offsetY< 0 ? jmin<int>(offsetY + minActionDistY, 0) : jmax<int>(offsetY - minActionDistY, 0);
+
+		offsetY *= sequence->totalTime->floatValue();
+		if (e.mods.isShiftDown()) offsetY *= 2;
+		if (e.mods.isAltDown()) offsetY /= 2;
+		offsetY *= zoomSensitivity;
+
+		float viewTimeFactor = ((viewTimeAtMouseDown - offsetY) / viewTimeAtMouseDown);
+
+		if (viewTimeFactor == 0) return;
+
+		float startDist = timeAnchorAtMouseDown - viewStartAtMouseDown;
+		float endDist = timeAnchorAtMouseDown - viewEndAtMouseDown;
+		float newViewStart = timeAnchorAtMouseDown - startDist*viewTimeFactor + getTimeForX(offsetX);
+		float newViewEnd = timeAnchorAtMouseDown - endDist*viewTimeFactor + getTimeForX(offsetX);
+		
+		//newViewEnd = jmax<float>(newViewEnd, newViewStart + 1);
+
+		sequence->viewStartTime->setValue(newViewStart);
+		sequence->viewEndTime->setValue(newViewEnd);
+		
+		
+	}
+	else
+	{
+		float destTime = getTimeForX(e.getPosition().x);
+		sequence->viewStartTime->setValue(destTime -viewTimeAtMouseDown/2);
+		sequence->viewEndTime->setValue(destTime+viewTimeAtMouseDown/2);
+	}
 	
-	float offsetX = e.getOffsetFromDragStart().x;
-	float offsetY = e.getOffsetFromDragStart().y / sequence->totalTime->floatValue();
-
-	/*
-	float viewTime = (viewEndAtMouseDown - viewStartAtMouseDown);
-	if (viewTime == 0) return;
-	float viewTimeFactor = ((viewTime - offsetY) / viewTime);
-	if (viewTimeFactor == 0) return;
-
-	float destAnchor = timeAnchor + getTimeForX(offsetX);
-	float newViewStart = destAnchor - (timeAnchor-viewStartAtMouseDown)*viewTimeFactor;
-	float newViewEnd = destAnchor - (timeAnchor-viewEndAtMouseDown)*viewTimeFactor;
-	
-	sequence->viewStartTime->setValue(newViewStart);
-	sequence->viewEndTime->setValue(newViewEnd);
-	*/
-
-	sequence->viewStartTime->setValue(viewStartAtMouseDown + getTimeForX(offsetX));
-	sequence->viewEndTime->setValue(viewEndAtMouseDown + getTimeForX(offsetX));
 }
 
 

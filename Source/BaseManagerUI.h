@@ -18,6 +18,23 @@
 #include "BaseItemMinimalUI.h"
 #include "Style.h"
 
+template<class T>
+class BaseManagerItemComparator
+{
+public:
+	template<class T>
+	BaseManagerItemComparator(BaseManager<T> * _manager) :manager(_manager) {}
+	
+	BaseManager<T> * manager;
+
+	template<class T>
+	int compareElements(BaseItemMinimalUI<T> * u1, BaseItemMinimalUI<T> * u2)
+	{
+		return (manager->items.indexOf(u1->item) < manager->items.indexOf(u2->item)) ? -1 : 1;
+	}
+};
+
+
 template<class M, class T, class U>
 class BaseManagerUI;
 
@@ -45,19 +62,20 @@ public:
 
 	M * manager;
 	OwnedArray<U> itemsUI;
-	
+	BaseManagerItemComparator<T> managerComparator;
+
 	//ui
 	bool useViewport; //TODO, create a BaseManagerViewportUI
 	
 	ManagerUIItemContainer<M, T, U> container;
 	Viewport viewport;
-
-	//style
+	
 	Colour bgColor;
 	int labelHeight = 10;
 	String managerUIName;
 	bool drawContour;
 	bool drawHighlightWhenSelected;
+	bool transparentBG;
 
 	//menu
 	bool useDefaultMenu;
@@ -88,6 +106,7 @@ public:
 
 	void itemAdded(BaseItem * item) override;
 	void itemRemoved(BaseItem * item) override;
+	void itemsReordered() override;
 
 	class  ManagerUIListener
 	{
@@ -111,10 +130,12 @@ BaseManagerUI<M, T, U>::BaseManagerUI(const String & contentName, M * _manager, 
 	container(this),
 	drawContour(false),
 	bgColor(BG_COLOR),
+	transparentBG(false),
 	managerUIName(contentName),
 	fixedItemHeight(true),
 	useViewport(_useViewport),
-	useDefaultMenu(true)
+	useDefaultMenu(true),
+	managerComparator(_manager)
 {
 	highlightColor = LIGHTCONTOUR_COLOR;
 	addItemText = "Add Item";
@@ -174,8 +195,12 @@ void BaseManagerUI<M, T, U>::paint(Graphics & g)
 	if (drawContour)
 	{
 		Rectangle<int> r = getLocalBounds();
-		g.setColour(bgColor);
-		g.fillRoundedRectangle(r.toFloat(),4);
+		if (!transparentBG)
+		{
+			g.setColour(bgColor);
+			g.fillRoundedRectangle(r.toFloat(), 4);
+		}
+		
 		Colour contourColor = bgColor.brighter(.3f);
 		g.setColour(contourColor);
 		g.drawRoundedRectangle(r.toFloat(), 4, 2);
@@ -190,7 +215,7 @@ void BaseManagerUI<M, T, U>::paint(Graphics & g)
 		g.drawText(manager->niceName, tr, Justification::centred, 1);
 	}else
 	{
-		g.fillAll(bgColor);
+		if(!transparentBG)	g.fillAll(bgColor);
 	}
 }
 
@@ -294,6 +319,12 @@ template<class M, class T, class U>
 void BaseManagerUI<M, T, U>::itemRemoved(BaseItem * item)
 {
 	removeItemUI(static_cast<T*>(item));
+}
+
+template<class M, class T, class U>
+inline void BaseManagerUI<M, T, U>::itemsReordered()
+{
+	itemsUI.sort(managerComparator);
 }
 
 

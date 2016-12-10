@@ -14,7 +14,9 @@
 
 #include "ParameterUI.h"
 
-class StringParameterUI : public ParameterUI, public Label::Listener
+class StringParameterUI : 
+	public ParameterUI, 
+	public Label::Listener
 {
 public:
     StringParameterUI(Parameter * p);
@@ -45,11 +47,11 @@ public:
 
 protected:
     void valueChanged(const var & v) override;
-
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(StringParameterUI)
-
-        // Inherited via Listener
     virtual void labelTextChanged(Label * labelThatHasChanged) override;
+
+
+	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(StringParameterUI)
+
 };
 
 
