@@ -62,7 +62,6 @@ Array<TimeTrigger*> TimeTriggerManager::getTriggersInTimespan(float startTime, f
 
 void TimeTriggerManager::controllableFeedbackUpdate(ControllableContainer * cc, Controllable * c)
 {
-	
 	TimeTrigger * t = dynamic_cast<TimeTrigger *>(cc);
 	if (t != nullptr)
 	{

@@ -22,6 +22,21 @@ AutomationUI::~AutomationUI()
 {
 }
 
+void AutomationUI::paint(Graphics & g)
+{
+	BaseManagerUI::paint(g);
+
+	if (itemsUI.size() < 2) return;
+	int len = itemsUI.size() - 1;
+	for (int i = 0; i < len; i++)
+	{
+		g.setColour(Colours::white);
+		Point<int> p1 = itemsUI[i]->getBounds().getCentre();
+		Point<int> p2 = itemsUI[i + 1]->getBounds().getCentre();
+		g.drawLine(p1.x, p1.y, p2.x, p2.y, 2);
+	}
+}
+
 void AutomationUI::resized()
 {
 	const float pointSize = 6;
@@ -31,6 +46,12 @@ void AutomationUI::resized()
 		int ty = (1 - kui->item->value->floatValue() / manager->valueMax)*getHeight() - pointSize / 2;
 		kui->setBounds(tx, ty, pointSize,pointSize);
 	}
+}
+
+void AutomationUI::itemsReordered()
+{
+	BaseManagerUI::itemsReordered();
+	repaint();
 }
 
 void AutomationUI::mouseDown(const MouseEvent & e)

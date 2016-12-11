@@ -22,7 +22,10 @@ public:
 	AutomationUI(Automation * _automation);
 	virtual ~AutomationUI();
 	
+	void paint(Graphics &g) override;
 	void resized() override;
+
+	void itemsReordered() override;
 
 	void mouseDown(const MouseEvent &e) override;
 };
