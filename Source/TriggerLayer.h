@@ -18,15 +18,14 @@ class TriggerLayer :
 	public SequenceLayer
 {
 public :
-	TriggerLayer();
+	TriggerLayer(Sequence * _sequence);
 	~TriggerLayer();
 
 	TimeTriggerManager ttm;
 
-	void init() override;
 	void loadJSONDataInternal(var data) override;
 
-	static TriggerLayer * create() { return new TriggerLayer(); }
+	static TriggerLayer * create(Sequence * sequence) { return new TriggerLayer(sequence); }
 	virtual String getTypeString() const override { return "Trigger"; }
 
 

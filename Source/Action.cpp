@@ -13,7 +13,8 @@
 
 
 Action::Action(const String & name) :
-	BaseItem(name)
+	BaseItem(name),
+	autoTriggerWhenAllConditionAreActives(true)
 {
 	saveAndLoadRecursiveData = false;
 

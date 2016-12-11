@@ -23,7 +23,7 @@ StateManager::~StateManager()
 
 State * StateManager::addItem(const Point<float>& initialPosition)
 {
-	State * s = BaseManager<State>::addItem();
+	State * s = BaseManager::addItem();
 	s->viewUIPosition->setPoint(initialPosition);
 	return s;
 }

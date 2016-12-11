@@ -35,6 +35,8 @@ public:
 
 	TimeNeedleUI needle;
 
+	//interaction
+
 	void paint(Graphics &g) override;
 	void resized() override;
 

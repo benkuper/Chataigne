@@ -24,6 +24,8 @@ SequenceTimelineSeeker::~SequenceTimelineSeeker()
 	sequence->removeAsyncContainerListener(this);
 }
 
+#pragma warning (push)
+#pragma warning(disable:4244)
 void SequenceTimelineSeeker::paint(Graphics & g)
 {
 	g.setColour(BG_COLOR);
@@ -53,6 +55,7 @@ void SequenceTimelineSeeker::mouseDown(const MouseEvent & e)
 	//DBG("viewStartAtMouseDown : " << viewStartAtMouseDown << "/ viewEndAtMouseDown : " << viewEndAtMouseDown << "/ timeAnchorAtMouseDown : " << timeAnchorAtMouseDown);
 
 }
+
 
 void SequenceTimelineSeeker::mouseDrag(const MouseEvent & e)
 {
@@ -147,3 +150,5 @@ void SeekHandle::paint(Graphics & g)
 void SeekHandle::resized()
 {
 }
+
+#pragma warning (pop)

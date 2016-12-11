@@ -19,16 +19,13 @@ class AudioLayer :
 	public SequenceLayer
 {
 public:
-	AudioLayer();
+	AudioLayer(Sequence * sequence);
 	~AudioLayer();
-
-
-	void init() override;
 
 	void loadJSONDataInternal(var data) override;
 
 
-	static AudioLayer * create() { return new AudioLayer(); }
+	static AudioLayer * create(Sequence * sequence) { return new AudioLayer(sequence); }
 	virtual String getTypeString() const override { return "Audio"; }
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(AudioLayer)

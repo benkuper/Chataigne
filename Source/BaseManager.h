@@ -25,6 +25,8 @@ public :
 
 	OwnedArray<T> items;
 	
+
+	virtual T * createItem(); //to override if special constructor to use
 	T * addItem();
 	void addItem(T *, var data = var()); //if data is not empty, load data
 	virtual void addItemFromData(var data); //to be overriden for specific item creation (from data)
@@ -78,9 +80,14 @@ inline BaseManager<T>::~BaseManager()
 }
 
 template<class T>
+T * BaseManager<T>::createItem() {
+	return new T();
+}
+
+template<class T>
 T * BaseManager<T>::addItem()
 {
-	T * item = new T();
+	T * item = createItem();
 	addItem(item);
 	return item;
 }

@@ -173,6 +173,26 @@
       </GROUP>
       <GROUP id="{6A99D434-563F-6FEC-8395-5EB79B3D3075}" name="Chataigne">
         <GROUP id="{6C7DFFF7-D47E-97B5-FE74-27F24C7A349F}" name="Common">
+          <GROUP id="{35974B24-06CE-D2B0-10E2-28EC5F180B57}" name="Automation">
+            <GROUP id="{119C0D0B-5C9F-590C-778F-E6320A718265}" name="easing">
+              <FILE id="s1c61E" name="Easing.cpp" compile="1" resource="0" file="Source/Easing.cpp"/>
+              <FILE id="X3EWJU" name="Easing.h" compile="0" resource="0" file="Source/Easing.h"/>
+            </GROUP>
+            <GROUP id="{291CDE68-998A-6011-15C9-6E9F700A1C2F}" name="ui">
+              <FILE id="UboRBn" name="AutomationKeyUI.cpp" compile="1" resource="0"
+                    file="Source/AutomationKeyUI.cpp"/>
+              <FILE id="ZAM8fU" name="AutomationKeyUI.h" compile="0" resource="0"
+                    file="Source/AutomationKeyUI.h"/>
+              <FILE id="lgRvdf" name="AutomationUI.cpp" compile="1" resource="0"
+                    file="Source/AutomationUI.cpp"/>
+              <FILE id="jvzzbU" name="AutomationUI.h" compile="0" resource="0" file="Source/AutomationUI.h"/>
+            </GROUP>
+            <FILE id="V8qcgy" name="Automation.cpp" compile="1" resource="0" file="Source/Automation.cpp"/>
+            <FILE id="ueu4VC" name="Automation.h" compile="0" resource="0" file="Source/Automation.h"/>
+            <FILE id="uCoOam" name="AutomationKey.cpp" compile="1" resource="0"
+                  file="Source/AutomationKey.cpp"/>
+            <FILE id="KzTWEH" name="AutomationKey.h" compile="0" resource="0" file="Source/AutomationKey.h"/>
+          </GROUP>
           <GROUP id="{E7C8AAFC-E2FA-90D0-859B-423BC528A52F}" name="Command">
             <FILE id="m7AMBt" name="BaseCommand.cpp" compile="1" resource="0" file="Source/BaseCommand.cpp"/>
             <FILE id="ermHIT" name="BaseCommand.h" compile="0" resource="0" file="Source/BaseCommand.h"/>

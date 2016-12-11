@@ -23,7 +23,7 @@ class SequenceLayer :
 	public Sequence::SequenceListener
 {
 public:
-	SequenceLayer(const String &name = "New Layer");
+	SequenceLayer(Sequence * _sequence = nullptr, const String &name = "New Layer");
 	virtual ~SequenceLayer();
 
 	Sequence * sequence;
@@ -31,17 +31,10 @@ public:
 	//UI
 	IntParameter * uiHeight;
 
-	//Methods
-	void setSequence(Sequence * _sequence);
-
-	virtual void init() {}; //to override after setSequence
-
 	//Save / Load
 	virtual var getJSONData() override;
-	
-	//Handlers
-	void sequenceCurrentTimeChanged(Sequence * _sequence, bool evaluateSkippedData) override;
 
+	//Handlers
 
 	//Factory
 	virtual String getTypeString() const { jassert(false); return ""; } //should be overriden

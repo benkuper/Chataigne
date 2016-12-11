@@ -23,6 +23,8 @@ public:
 	Action(const String &name = "Action");
 	virtual ~Action();
 
+	bool autoTriggerWhenAllConditionAreActives; //default true, but if false, let use Actions as user check tool without auto behavior (like TimeTriggers)
+
 	ConditionManager cdm;
 	ConsequenceManager csm;
 

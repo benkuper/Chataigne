@@ -12,10 +12,16 @@
 #include "SequenceLayerPanel.h"
 #include "SequenceLayerTimeline.h"
 
-SequenceLayer::SequenceLayer(const String &name) :
-	BaseItem(name)
+SequenceLayer::SequenceLayer(Sequence * _sequence, const String &name) :
+	BaseItem(name),
+	sequence(_sequence)
 {
+	jassert(sequence != nullptr);
+
 	uiHeight = addIntParameter("UI Height", "Height of the layer in the editor", 60, 20, 300);
+	sequence = _sequence;
+	sequence->addSequenceListener(this);
+
 }
 
 SequenceLayer::~SequenceLayer()
@@ -23,26 +29,11 @@ SequenceLayer::~SequenceLayer()
 	sequence->removeSequenceListener(this);
 }
 
-void SequenceLayer::setSequence(Sequence * _sequence)
-{
-	jassert(sequence != nullptr);
-
-	sequence = _sequence;
-	sequence->addSequenceListener(this);
-
-	init();
-}
-
 var SequenceLayer::getJSONData()
 {
 	var data = BaseItem::getJSONData();
 	data.getDynamicObject()->setProperty("type", getTypeString());
 	return data;
-}
-
-void SequenceLayer::sequenceCurrentTimeChanged(Sequence *, bool /*evaluateSkippedData*/)
-{
-
 }
 
 SequenceLayerPanel * SequenceLayer::getPanel()

@@ -21,11 +21,12 @@ public:
 	virtual ~TimeTrigger();
 
 	FloatParameter * time;
-	bool isTriggered;
+	BoolParameter * isTriggered;
 	
 	//ui
 	FloatParameter * flagY;
 
+	void onContainerTriggerTriggered(Trigger * t) override;
 };
 
 

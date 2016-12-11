@@ -23,6 +23,7 @@ Sequence::Sequence() :
 	playTrigger = addTrigger("Play", "Play the sequence");
 	stopTrigger = addTrigger("Stop", "Stops the sequence and set the current time at 0.");
 	pauseTrigger = addTrigger("Pause", "Pause the sequence and keep the current time as is.");
+	togglePlayTrigger = addTrigger("TogglePlay", "Toggle between play/pause or play/stop depending on sequence settings");
 
 
 	viewStartTime = addFloatParameter("View start time", "Start time of the view", 0, 0, totalTime->floatValue() - minViewTime);
@@ -47,23 +48,41 @@ void Sequence::onContainerParameterChangedInternal(Parameter * p)
 	if (p == enabled)
 	{
 
-	} else if (p == totalTime)
+	}
+	else if (p == currentTime)
+	{
+		sequenceListeners.call(&SequenceListener::sequenceCurrentTimeChanged, this, prevTime, isPlaying->boolValue());
+		prevTime = currentTime->floatValue();
+	}
+	else if (p == totalTime)
 	{
 		currentTime->setRange(0, totalTime->floatValue());
 		viewStartTime->setRange(0, totalTime->floatValue() - minViewTime);
 		viewEndTime->setRange(viewStartTime->floatValue()+minViewTime, totalTime->floatValue());
-	} else if (p == currentTime)
-	{
-		//layers will be listeners of this sequence, no need to transfer event from here
+		sequenceListeners.call(&SequenceListener::sequenceTotalTimeChanged, this);
 	} else if (p == playSpeed)
 	{
 
 	} else if (p == isPlaying)
 	{
+		if (isPlaying->boolValue())
+		{
+			prevMillis = Time::getMillisecondCounter();
+			prevTime = currentTime->floatValue();
+			startTimer(1000/fps->intValue());
+		}
+		else
+		{
+			stopTimer();
+		}
 
 	} else if (p == fps)
 	{
-
+		if (isPlaying->boolValue())
+		{
+			stopTimer();
+			startTimer(1000/fps->intValue());
+		}
 	}
 	else if (p == viewStartTime)
 	{
@@ -83,5 +102,19 @@ void Sequence::onContainerTriggerTriggered(Trigger * t)
 	} else if (t == pauseTrigger)
 	{
 		isPlaying->setValue(false);
+	}else if (t == togglePlayTrigger)
+	{
+		isPlaying->setValue(!isPlaying->boolValue());
 	}
+}
+
+void Sequence::hiResTimerCallback()
+{
+	jassert(isPlaying->boolValue());
+
+	uint32 millis = Time::getMillisecondCounter();
+	float deltaTime = (millis - prevMillis)/1000.f;
+	currentTime->setValue(currentTime->floatValue() + deltaTime);
+	prevMillis = millis;
+	
 }

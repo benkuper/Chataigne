@@ -46,7 +46,8 @@ public:
 	virtual void scrollBarMoved(ScrollBar * scrollBarThatHasMoved, double newRangeStart) override;
 
 	void mouseWheelMove(const MouseEvent &e, const MouseWheelDetails &) override;
-	
+	bool keyPressed(const KeyPress &key) override;
+
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(SequenceEditor)
 
 		

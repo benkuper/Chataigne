@@ -24,8 +24,11 @@ public:
 
     //settings
     Direction orientation;
-	Colour defaultColor;
+	Colour bgColor;
+	Colour customColor;
+	bool useCustomColor;
 
+	
 	bool changeParamOnMouseUpOnly;
     bool assignOnMousePosDirect;
     float scaleFactor;
@@ -35,7 +38,11 @@ public:
     //interaction
     float initValue;
 
-    void paint(Graphics &g) override;
+	void setFrontColor(Colour c);
+	void resetFrontColor();
+	
+	
+	void paint(Graphics &g) override;
     void mouseDown(const MouseEvent &e) override;
     void mouseDrag(const MouseEvent &e) override;
     void mouseUp(const MouseEvent &e) override;

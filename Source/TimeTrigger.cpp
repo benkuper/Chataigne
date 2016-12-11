@@ -17,9 +17,21 @@ TimeTrigger::TimeTrigger(float _time, const String &name) :
 	nameParam = addStringParameter("name", "Name of the trigger", name);
 	time = addFloatParameter("Time", "Time at which the action is triggered", _time, 0, 3600);
 	flagY = addFloatParameter("Flag Y", "Position of the trigger's flag", 0);
+	isTriggered = addBoolParameter("Is Triggered", "Is this Time Trigger already triggered during this playing ?", false);
+
+	autoTriggerWhenAllConditionAreActives = false;
 }
 
 TimeTrigger::~TimeTrigger()
 {
 
+}
+
+void TimeTrigger::onContainerTriggerTriggered(Trigger * t)
+{
+	Action::onContainerTriggerTriggered(t);
+	if (t == trigger)
+	{
+		isTriggered->setValue(true);
+	}
 }

@@ -14,13 +14,14 @@ SequenceLayerManager::SequenceLayerManager(Sequence * _sequence) :
 	BaseManager<SequenceLayer>("Layers"),
 	sequence(_sequence)
 {
+	skipControllableNameInAddress = true;
 }
 
 SequenceLayerManager::~SequenceLayerManager()
 {
 }
 
-void SequenceLayerManager::addItemInternal(SequenceLayer * sl, var data)
+SequenceLayer * SequenceLayerManager::createItem()
 {
-	sl->setSequence(sequence);
+	return new SequenceLayer(sequence);
 }

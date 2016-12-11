@@ -12,18 +12,17 @@
 #include "TriggerLayerPanel.h"
 #include "TriggerLayerTimeline.h"
 
-TriggerLayer::TriggerLayer() :
-	SequenceLayer("New Trigger Layer")
+TriggerLayer::TriggerLayer(Sequence * _sequence) :
+	SequenceLayer(_sequence, "New Trigger Layer"),
+	ttm(_sequence)
 {
+	addChildControllableContainer(&ttm);
 }
 
 TriggerLayer::~TriggerLayer()
 {
 }
 
-void TriggerLayer::init()
-{
-}
 
 void TriggerLayer::loadJSONDataInternal(var data)
 {

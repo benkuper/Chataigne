@@ -18,9 +18,9 @@ class SequenceLayerDefinition
 {
 public:
 	String type;
-	std::function<SequenceLayer*()> createFunc;
+	std::function<SequenceLayer*(Sequence *)> createFunc;
 
-	SequenceLayerDefinition(const String &_type, std::function<SequenceLayer*()> createFunc) :
+	SequenceLayerDefinition(const String &_type, std::function<SequenceLayer*(Sequence *)> createFunc) :
 		type(_type),
 		createFunc(createFunc)
 	{}
@@ -39,20 +39,20 @@ public:
 
 	void buildPopupMenu();
 
-	static SequenceLayer * showCreateMenu()
+	static SequenceLayer * showCreateMenu(Sequence * sequence)
 	{
 		int result = getInstance()->menu.show();
 		if (result == 0) return nullptr;
 		else
 		{
 			SequenceLayerDefinition * d = getInstance()->layerDefs[result - 1];//result 0 is no result
-			return d->createFunc();
+			return d->createFunc(sequence);
 		}
 	}
 
-	static SequenceLayer * createSequenceLayer(const String &inputType)
+	static SequenceLayer * createSequenceLayer(Sequence * sequence, const String &inputType)
 	{
-		for (auto &d : getInstance()->layerDefs) if (d->type == inputType) return d->createFunc();
+		for (auto &d : getInstance()->layerDefs) if (d->type == inputType) return d->createFunc(sequence);
 		return nullptr;
 	}
 

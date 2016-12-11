@@ -12,6 +12,7 @@
 #define TIMETRIGGERMANAGER_H_INCLUDED
 
 #include "TimeTrigger.h"
+#include "Sequence.h"
 
 class TimeTriggerComparator
 {
@@ -25,11 +26,14 @@ public:
 };
 
 class TimeTriggerManager :
-	public BaseManager<TimeTrigger>
+	public BaseManager<TimeTrigger>,
+	public Sequence::SequenceListener
 {
 public:
-	TimeTriggerManager();
+	TimeTriggerManager(Sequence * sequence);
 	~TimeTriggerManager();
+
+	Sequence * sequence;
 
 	static TimeTriggerComparator comparator;
 
@@ -38,7 +42,12 @@ public:
 	
 	void reorderTriggers();
 
+	Array<TimeTrigger *> getTriggersInTimespan(float startTime, float endTime, bool includeAlreadyTriggered = false);
+
 	void controllableFeedbackUpdate(ControllableContainer * cc, Controllable * c) override; 
+
+	void sequenceCurrentTimeChanged(Sequence * _sequence, float prevTime, bool evaluateSkippedData) override;
+
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(TimeTriggerManager)
 };

@@ -10,16 +10,12 @@
 
 #include "AudioLayer.h"
 
-AudioLayer::AudioLayer() :
-	SequenceLayer("New Audio Layer")
+AudioLayer::AudioLayer(Sequence * _sequence) :
+	SequenceLayer(_sequence,"New Audio Layer")
 {
 }
 
 AudioLayer::~AudioLayer()
-{
-}
-
-void AudioLayer::init()
 {
 }
 

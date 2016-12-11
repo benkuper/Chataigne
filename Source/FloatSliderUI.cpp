@@ -13,35 +13,50 @@
 
 //==============================================================================
 FloatSliderUI::FloatSliderUI(Parameter * parameter) :
-ParameterUI(parameter), fixedDecimals(2),
-defaultColor(PARAMETER_FRONT_COLOR)
+	ParameterUI(parameter), fixedDecimals(2),
+	useCustomColor(false),
+	bgColor(BG_COLOR.brighter(.1f))
 {
     assignOnMousePosDirect = false;
     changeParamOnMouseUpOnly = false;
     orientation = HORIZONTAL;
-    setSize(100,10);
     scaleFactor = 1;
 
+
+	setSize(100, 10);
 }
 
 FloatSliderUI::~FloatSliderUI()
 {
 }
 
+void FloatSliderUI::setFrontColor(Colour c)
+{
+	customColor = c;
+	useCustomColor = true;
+	repaint();
+}
+
+void FloatSliderUI::resetFrontColor()
+{
+	useCustomColor = false;
+	repaint();
+}
+
 
 void FloatSliderUI::paint(Graphics & g)
 {
 
-    if(shouldBailOut())return;
-
-	Colour baseColour = (parameter->isEditable && !forceFeedbackOnly)? defaultColor : FEEDBACK_COLOR;
+	if (shouldBailOut())return;
+	
+	Colour baseColour = useCustomColor ? customColor : ((parameter->isEditable && !forceFeedbackOnly)? PARAMETER_FRONT_COLOR : FEEDBACK_COLOR);
     Colour c = (isMouseButtonDown() && changeParamOnMouseUpOnly) ? HIGHLIGHT_COLOR : baseColour;
 
     Rectangle<int> sliderBounds = getLocalBounds();
 
 
     float normalizedValue = getParamNormalizedValue();
-    g.setColour(BG_COLOR.brighter(.1f));
+    g.setColour(bgColor);
     g.fillRoundedRectangle(sliderBounds.toFloat(), 2);
 
     g.setColour(c);
@@ -74,7 +89,7 @@ void FloatSliderUI::paint(Graphics & g)
             destRect = Rectangle<int>(0, 0, sliderBounds.getHeight(), sliderBounds.getWidth()).withSizeKeepingCentre(sliderBounds.getHeight(), 12);
         }else
         {
-            destRect = sliderBounds.withSizeKeepingCentre(sliderBounds.getWidth(), 12);
+            destRect = sliderBounds.withSizeKeepingCentre(sliderBounds.getWidth(), getHeight()-2);
         }
 		String text = "";
 		if (showLabel)

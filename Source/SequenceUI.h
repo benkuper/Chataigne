@@ -13,13 +13,21 @@
 
 #include "BaseItemUI.h"
 #include "Sequence.h"
+#include "FloatSliderUI.h"
 
 class SequenceUI :
-	public BaseItemUI<Sequence>
+	public BaseItemUI<Sequence>,
+	public Sequence::SequenceListener
 {
 public:
 	SequenceUI(Sequence * output);
 	virtual ~SequenceUI();
+
+	ScopedPointer<FloatSliderUI> timeUI;
+
+	void resized() override;
+
+	void controllableFeedbackUpdateInternal(Controllable *) override;
 
 	JUCE_DECLARE_NON_COPYABLE(SequenceUI)
 };

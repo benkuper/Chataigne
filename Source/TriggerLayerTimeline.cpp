@@ -15,6 +15,8 @@ TriggerLayerTimeline::TriggerLayerTimeline(TriggerLayer * layer) :
 	SequenceLayerTimeline(layer),
 	triggerLayer(layer)
 {
+	bgColor = ACTION_COLOR.withSaturation(.2f).darker(1);
+
 	ttmui = new TimeTriggerManagerUI(this, &layer->ttm);
 	addAndMakeVisible(ttmui);
 }

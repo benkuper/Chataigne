@@ -14,10 +14,18 @@
 
 MappingLayerTimeline::MappingLayerTimeline(MappingLayer * layer) :
 	SequenceLayerTimeline(layer),
-	mappingLayer(layer)
+	mappingLayer(layer),
+	automationUI(&layer->automation)
 {
+	bgColor = MAPPING_COLOR.withSaturation(.2f).darker(1);
+	addAndMakeVisible(&automationUI);
 }
 
 MappingLayerTimeline::~MappingLayerTimeline()
 {
+}
+
+void MappingLayerTimeline::resized()
+{
+	automationUI.setBounds(getLocalBounds());
 }

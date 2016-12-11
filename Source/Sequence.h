@@ -16,7 +16,8 @@
 class SequenceLayerManager;
 
 class Sequence :
-	public BaseItem
+	public BaseItem,
+	public HighResolutionTimer
 {
 public:
 	Sequence();
@@ -30,11 +31,15 @@ public:
 	Trigger * playTrigger;
 	Trigger * pauseTrigger;
 	Trigger * stopTrigger;
+	Trigger * togglePlayTrigger;
 
 	BoolParameter * isPlaying;
 
 	ScopedPointer<SequenceLayerManager> layerManager;
 
+	//Temp variables
+	uint32 prevMillis; 
+	float prevTime;
 
 	//UI
 	const float minViewTime = 1; //in seconds
@@ -45,12 +50,15 @@ public:
 	void onContainerParameterChangedInternal(Parameter *) override;
 	void onContainerTriggerTriggered(Trigger *) override;
 
+	virtual void hiResTimerCallback() override;
+
 	class SequenceListener
 	{
 	public:
 		virtual ~SequenceListener() {}
 		virtual void sequencePlayStateChanged(Sequence *) {}
-		virtual void sequenceCurrentTimeChanged(Sequence * , bool /*evaluateSkippedData*/) {}
+		virtual void sequenceCurrentTimeChanged(Sequence * , float /*prevTime*/, bool /*evaluateSkippedData*/) {}
+		virtual void sequenceTotalTimeChanged(Sequence *) {}
 	};
 
 	ListenerList<SequenceListener> sequenceListeners;
@@ -59,6 +67,8 @@ public:
 
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Sequence)
+
+		
 };
 
 

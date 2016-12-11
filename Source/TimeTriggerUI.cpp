@@ -28,16 +28,16 @@ TimeTriggerUI::~TimeTriggerUI()
 
 void TimeTriggerUI::paint(Graphics & g)
 {
-	Colour c = inspectable->isSelected ? HIGHLIGHT_COLOR : (item->enabled->boolValue() ? BG_COLOR.brighter() : BG_COLOR.darker());
+	Colour c = BG_COLOR.brighter(.1f);
+	if (item->isTriggered->boolValue()) c = GREEN_COLOR.darker();
+	if (item->isSelected) c = HIGHLIGHT_COLOR;
+	if (!item->enabled->boolValue()) c = c.darker(.6f);
 	
 	g.setColour(c);
 	
 	g.fillRect(flagRect);
 	g.setColour(c.darker());
 	g.drawRect(flagRect);
-	
-
-	g.setColour(c);
 	g.drawVerticalLine(0, 0, (float)getHeight());
 
 }
@@ -112,6 +112,10 @@ void TimeTriggerUI::controllableFeedbackUpdateInternal(Controllable * c)
 	else if (c == item->flagY)
 	{ 
 		resized();
+	}
+	else if (c == item->isTriggered)
+	{
+		repaint();
 	}
 }
 

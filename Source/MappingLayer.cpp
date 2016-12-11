@@ -12,18 +12,16 @@
 #include "MappingLayerPanel.h"
 #include "MappingLayerTimeline.h"
 
-MappingLayer::MappingLayer() :
-	SequenceLayer("New Mapping Layer")
+MappingLayer::MappingLayer(Sequence *_sequence) :
+	SequenceLayer(_sequence, "New Mapping Layer")
 {
+	automation.positionMax = sequence->totalTime->floatValue();
 }
 
 MappingLayer::~MappingLayer()
 {
 }
 
-void MappingLayer::init()
-{
-}
 
 void MappingLayer::loadJSONDataInternal(var data)
 {
@@ -37,4 +35,9 @@ SequenceLayerPanel * MappingLayer::getPanel()
 SequenceLayerTimeline * MappingLayer::getTimelineUI()
 {
 	return new MappingLayerTimeline(this);
+}
+
+void MappingLayer::sequenceTotalTimeChanged(Sequence *)
+{
+	automation.positionMax = sequence->totalTime->floatValue();
 }

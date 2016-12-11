@@ -90,3 +90,21 @@ void SequenceEditor::mouseWheelMove(const MouseEvent & e, const MouseWheelDetail
 	}
 }
 
+bool SequenceEditor::keyPressed(const KeyPress & key)
+{
+	if (sequence == nullptr) return false;
+
+	if (key.getKeyCode() == KeyPress::spaceKey)
+	{
+		sequence->togglePlayTrigger->trigger();
+		return true;
+	}
+	else if (key.getKeyCode() == KeyPress::homeKey)
+	{
+		sequence->currentTime->setValue(0);
+	}
+	
+
+	return false;
+}
+

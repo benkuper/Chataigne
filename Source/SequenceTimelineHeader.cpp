@@ -99,7 +99,6 @@ void SequenceTimelineHeader::resized()
 
 void SequenceTimelineHeader::mouseDown(const MouseEvent & e)
 {
-	DBG("mosue down !");
 	if (e.mods.isLeftButtonDown())
 	{
 		sequence->currentTime->setValue(getTimeForX(e.getPosition().x));

@@ -14,8 +14,11 @@ SequenceLayerPanel::SequenceLayerPanel(SequenceLayer * layer) :
 	BaseItemUI<SequenceLayer>(layer),
 	resizer(this,nullptr)
 {
-	setSize(100, item->uiHeight->intValue());
+	
 	addAndMakeVisible(&resizer);
+	resizer.toBack();
+
+	setSize(100, item->uiHeight->intValue());
 }
 
 SequenceLayerPanel::~SequenceLayerPanel()

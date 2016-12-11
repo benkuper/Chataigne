@@ -53,6 +53,8 @@ void TimeLabel::labelTextChanged(Label *)
 	parameter->setValue(timeStringToValue(valueLabel.getText()));
 }
 
+#pragma warning (push)
+#pragma warning(disable:4244)
 String TimeLabel::valueToTimeString(float timeVal) const
 {
 	int hours = floor<int>(timeVal / 3600);
@@ -83,3 +85,6 @@ float TimeLabel::timeStringToValue(String str) const
 	
 	return value;
 }
+
+#pragma warning (pop)
+
