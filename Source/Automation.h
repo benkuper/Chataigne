@@ -35,13 +35,14 @@ public:
 	float valueMax;
 	float positionMax;
 
+	void setPositionMax(float val);
+
 	static AutomationKeyComparator comparator;
+	
+	void addItem(const float position, const float value);
+	void reorderItems() override;
 
-	void addItemInternal(AutomationKey *, var data) override;
-	void reorderKeys();
-
-	AutomationKey * addItem(const float position, const float value);
-
+	AutomationKey * getClosestKeyForPos(float pos, int start = -1, int end = -1);
 
 	void controllableFeedbackUpdate(ControllableContainer * cc, Controllable *c) override;
 

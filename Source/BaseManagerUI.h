@@ -104,8 +104,8 @@ public:
 
 	int getContentHeight();
 
-	void itemAdded(BaseItem * item) override;
-	void itemRemoved(BaseItem * item) override;
+	void itemAdded(T * item) override;
+	void itemRemoved(T * item) override;
 	void itemsReordered() override;
 
 	class  ManagerUIListener
@@ -310,15 +310,15 @@ int BaseManagerUI<M, T, U>::getContentHeight()
 }
 
 template<class M, class T, class U>
-void BaseManagerUI<M, T, U>::itemAdded(BaseItem * item)
+void BaseManagerUI<M, T, U>::itemAdded(T * item)
 {
-	addItemUI(static_cast<T*>(item));
+	addItemUI(item);
 }
 
 template<class M, class T, class U>
-void BaseManagerUI<M, T, U>::itemRemoved(BaseItem * item)
+void BaseManagerUI<M, T, U>::itemRemoved(T * item)
 {
-	removeItemUI(static_cast<T*>(item));
+	removeItemUI(item);
 }
 
 template<class M, class T, class U>

@@ -37,10 +37,9 @@ public:
 
 	static TimeTriggerComparator comparator;
 
-	void addItemInternal(TimeTrigger *, var data) override;
-	void removeItemInternal(TimeTrigger *) override;
-	
-	void reorderTriggers();
+	void addTriggerAt(float time);
+
+	void reorderItems() override;
 
 	Array<TimeTrigger *> getTriggersInTimespan(float startTime, float endTime, bool includeAlreadyTriggered = false);
 

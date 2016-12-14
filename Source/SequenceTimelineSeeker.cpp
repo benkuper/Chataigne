@@ -59,6 +59,8 @@ void SequenceTimelineSeeker::mouseDown(const MouseEvent & e)
 
 void SequenceTimelineSeeker::mouseDrag(const MouseEvent & e)
 {
+
+	
 	if (e.originalComponent == &handle)
 	{
 		

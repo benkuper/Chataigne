@@ -13,6 +13,8 @@
 AutomationKeyUI::AutomationKeyUI(AutomationKey * key) :
 	BaseItemMinimalUI(key)
 {
+	autoDrawHighlightWhenSelected = false;
+	setRepaintsOnMouseActivity(true);
 }
 
 AutomationKeyUI::~AutomationKeyUI()
@@ -21,8 +23,16 @@ AutomationKeyUI::~AutomationKeyUI()
 
 void AutomationKeyUI::paint(Graphics & g)
 {
-	g.setColour(GREEN_COLOR);
-	g.fillEllipse(getLocalBounds().toFloat());
+	int rad = AutomationKeyUI::handleSize;
+	if (isMouseOver() || item->isSelected) rad += 3;
+	Rectangle<float> er = getLocalBounds().withSizeKeepingCentre(rad, rad).toFloat();
+	
+	Colour c = item->isSelected ? HIGHLIGHT_COLOR : FRONT_COLOR;
+	Colour cc = isMouseOver() ? YELLOW_COLOR : c.darker(.3f);
+	g.setColour(c);
+	g.fillEllipse(er);
+	g.setColour(cc);
+	g.drawEllipse(er,1);
 }
 
 void AutomationKeyUI::resized()

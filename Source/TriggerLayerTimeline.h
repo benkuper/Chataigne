@@ -22,7 +22,6 @@ public:
 	TriggerLayerTimeline(TriggerLayer * layer);
 	~TriggerLayerTimeline();
 
-	TriggerLayer * triggerLayer;
 	ScopedPointer<TimeTriggerManagerUI> ttmui;
 
 	void resized() override;

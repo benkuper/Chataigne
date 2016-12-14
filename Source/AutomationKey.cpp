@@ -17,8 +17,8 @@ AutomationKey::AutomationKey()
 	value = addFloatParameter("Value", "Value of the key", 0, 0, 1);
 
 	//to change
-	position->autoAdaptRange = true;
-	value->autoAdaptRange = true;
+	//position->autoAdaptRange = true;
+	//value->autoAdaptRange = true;
 }
 
 AutomationKey::~AutomationKey()

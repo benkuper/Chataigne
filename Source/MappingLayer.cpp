@@ -15,7 +15,7 @@
 MappingLayer::MappingLayer(Sequence *_sequence) :
 	SequenceLayer(_sequence, "New Mapping Layer")
 {
-	automation.positionMax = sequence->totalTime->floatValue();
+	automation.setPositionMax(sequence->totalTime->floatValue());
 }
 
 MappingLayer::~MappingLayer()
@@ -39,5 +39,5 @@ SequenceLayerTimeline * MappingLayer::getTimelineUI()
 
 void MappingLayer::sequenceTotalTimeChanged(Sequence *)
 {
-	automation.positionMax = sequence->totalTime->floatValue();
+	automation.setPositionMax(sequence->totalTime->floatValue());
 }

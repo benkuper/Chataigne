@@ -25,23 +25,48 @@ Automation::~Automation()
 
 }
 
-void Automation::addItemInternal(AutomationKey *, var data)
-{
-	reorderKeys();
-}
-
-void Automation::reorderKeys()
+void Automation::reorderItems()
 {
 	items.sort(Automation::comparator, true);
-	baseManagerListeners.call(&Listener::itemsReordered);
+	BaseManager::reorderItems();
 }
 
-AutomationKey * Automation::addItem(const float position, const float value)
+AutomationKey * Automation::getClosestKeyForPos(float pos, int start, int end)
 {
-	AutomationKey * k = BaseManager::addItem();
+	if (items.size() == 0) return nullptr;
+
+	if (start == -1) start = 0;
+	if (end == -1) end = items.size() - 1;
+
+	if (end == start) return items[start];
+
+	int midIndex = (start + end) / 2;
+	float medPos = items[midIndex]->position->floatValue();
+
+	if (pos == medPos) return items[midIndex];
+	else if (pos > medPos)
+	{
+		return getClosestKeyForPos(medPos + 1, end);
+	}
+	else
+	{
+		return getClosestKeyForPos(start, medPos);
+	}
+}
+
+void Automation::setPositionMax(float val)
+{
+	positionMax = val;
+	for (auto &k : items) k->position->setRange(0, positionMax);
+}
+
+void Automation::addItem(const float position, const float value)
+{
+	AutomationKey * k = new AutomationKey();
+	k->position->setRange(0, positionMax);
 	k->position->setValue(position);
 	k->value->setValue(value);
-	return k;
+	BaseManager::addItem(k);
 }
 
 void Automation::controllableFeedbackUpdate(ControllableContainer * cc, Controllable * c)

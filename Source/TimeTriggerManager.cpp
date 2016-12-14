@@ -28,23 +28,16 @@ TimeTriggerManager::~TimeTriggerManager()
 }
 
 
-
-
-void TimeTriggerManager::addItemInternal(TimeTrigger * , var )
+void TimeTriggerManager::addTriggerAt(float time)
 {
-	reorderTriggers();
+	TimeTrigger * t = new TimeTrigger(time);
+	BaseManager::addItem(t);
 }
 
-void TimeTriggerManager::removeItemInternal(TimeTrigger *)
-{
-	//reorderTriggers();
-}
-
-
-void TimeTriggerManager::reorderTriggers()
+void TimeTriggerManager::reorderItems()
 {
 	items.sort(TimeTriggerManager::comparator, true);
-	baseManagerListeners.call(&Listener::itemsReordered);
+	BaseManager::reorderItems();
 }
 
 Array<TimeTrigger*> TimeTriggerManager::getTriggersInTimespan(float startTime, float endTime, bool includeAlreadyTriggered)

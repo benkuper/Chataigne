@@ -32,6 +32,8 @@ public :
 	virtual void addItemFromData(var data); //to be overriden for specific item creation (from data)
 	void removeItem(T *);
 
+	virtual void reorderItems(); //to be overriden if needed
+
 	//to override for specific handling like adding custom listeners, etc.
 	virtual void addItemInternal(T *, var data) {}
 	virtual void removeItemInternal(T *) {}
@@ -49,8 +51,8 @@ public :
 	public:
 		/** Destructor. */
 		virtual ~Listener() {}
-		virtual void itemAdded(BaseItem *) {}
-		virtual void itemRemoved(BaseItem *) {}
+		virtual void itemAdded(T *) {}
+		virtual void itemRemoved(T *) {}
 		virtual void itemsReordered() {}
 	};
 
@@ -106,7 +108,10 @@ inline void BaseManager<T>::addItem(T * item, var data)
 	
 	if(!data.isVoid()) bi->loadJSONData(data);
 	addItemInternal(item, data);
+	
 	baseManagerListeners.call(&BaseManager::Listener::itemAdded, item);
+	reorderItems();
+
 	if (selectItemWhenCreated) bi->selectThis();
 }
 
@@ -128,6 +133,12 @@ void BaseManager<T>::removeItem(T * item)
 	bi->removeBaseItemListener(this);
 	baseManagerListeners.call(&BaseManager::Listener::itemRemoved, item);
 	delete item;
+}
+
+template<class T>
+void BaseManager<T>::reorderItems()
+{
+	baseManagerListeners.call(&Listener::itemsReordered);
 }
 
 template<class T>

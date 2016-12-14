@@ -12,8 +12,7 @@
 #include "Style.h"
 
 TriggerLayerTimeline::TriggerLayerTimeline(TriggerLayer * layer) :
-	SequenceLayerTimeline(layer),
-	triggerLayer(layer)
+	SequenceLayerTimeline(layer)
 {
 	bgColor = ACTION_COLOR.withSaturation(.2f).darker(1);
 

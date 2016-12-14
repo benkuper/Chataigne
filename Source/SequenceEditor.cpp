@@ -30,8 +30,8 @@ SequenceEditor::SequenceEditor(Sequence * _sequence) :
 	panelManagerUI.viewport.getVerticalScrollBar()->addListener(this);
 	timelineManagerUI.viewport.getVerticalScrollBar()->addListener(this);
 
-	panelManagerUI.viewport.addMouseListener(this, true);
-	timelineManagerUI.viewport.addMouseListener(this, true);
+	panelManagerUI.viewport.addMouseListener(this, false);
+	timelineManagerUI.viewport.addMouseListener(this, false);
 }
 
 SequenceEditor::~SequenceEditor()
@@ -79,6 +79,7 @@ void SequenceEditor::scrollBarMoved(ScrollBar * scrollBarThatHasMoved, double /*
 
 void SequenceEditor::mouseWheelMove(const MouseEvent & e, const MouseWheelDetails &)
 {
+
 	Point<int> p = e.getEventRelativeTo(this).getPosition();
 	if (panelManagerUI.contains(p)) //hack, need to ask Jules about listenedComponent for direct listener to event information, also have a unique "scrollbar" event for wheel+drag
 	{

@@ -48,10 +48,8 @@ void TimeTriggerManagerUI::placeTimeTriggerUI(TimeTriggerUI * ttui)
 
 void TimeTriggerManagerUI::addItemFromMenu()
 {
-	
 	float time = timeline->getTimeForX(getMouseXYRelative().x);
-	TimeTrigger * t = new TimeTrigger(time);
-	manager->addItem(t);
+	manager->addTriggerAt(time);
 }
 
 void TimeTriggerManagerUI::addItemUIInternal(TimeTriggerUI * ttui)

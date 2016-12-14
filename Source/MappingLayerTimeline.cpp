@@ -14,7 +14,6 @@
 
 MappingLayerTimeline::MappingLayerTimeline(MappingLayer * layer) :
 	SequenceLayerTimeline(layer),
-	mappingLayer(layer),
 	automationUI(&layer->automation)
 {
 	bgColor = MAPPING_COLOR.withSaturation(.2f).darker(1);
@@ -25,7 +24,21 @@ MappingLayerTimeline::~MappingLayerTimeline()
 {
 }
 
+void MappingLayerTimeline::updateContent()
+{
+	automationUI.setViewRange(item->sequence->viewStartTime->floatValue(), item->sequence->viewEndTime->floatValue());
+}
+
 void MappingLayerTimeline::resized()
 {
 	automationUI.setBounds(getLocalBounds());
+}
+
+void MappingLayerTimeline::controllableFeedbackUpdateInternal(Controllable * c)
+{
+	SequenceLayerTimeline::controllableFeedbackUpdateInternal(c);
+	if (c == item->sequence->currentTime)
+	{
+		automationUI.setCurrentPosition(item->sequence->currentTime->floatValue());
+	}
 }

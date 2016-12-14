@@ -21,11 +21,14 @@ public:
 	AutomationKeyUI(AutomationKey *);
 	virtual ~AutomationKeyUI();
 	
+	const static int handleSize = 6;
+
+
 	void paint(Graphics &g) override;
 	void resized() override;
+
+	//void mouseDrag(const MouseEvent &e) override;
 };
-
-
 
 
 #endif  // AUTOMATIONKEYUI_H_INCLUDED

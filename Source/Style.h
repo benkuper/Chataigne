@@ -27,6 +27,8 @@
 #define MAPPING_COLOR    Colours::pink
 
 
+#define YELLOW_COLOR Colours::yellow
+
 //COLORS
 #define GREEN_COLOR		Colour(0xff99ff66)
 #define BLUE_COLOR		Colour(0xff18b5ef)
