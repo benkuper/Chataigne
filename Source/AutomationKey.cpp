@@ -29,7 +29,7 @@ float AutomationKey::getValue(AutomationKey * nextKey, const float & _pos)
 {
 	float relPos = jmap<float>(_pos, position->floatValue(), nextKey->position->floatValue(), 0, 1);
 
-	jassert(_pos >= 0 && _pos <= 1);
+	jassert(relPos >= 0 && relPos <= 1);
 
 	return easing->getValue(value->floatValue(), nextKey->value->floatValue(), relPos);
 }

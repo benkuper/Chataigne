@@ -30,9 +30,10 @@ public:
 	int lastROIKey;
 
 	float currentPosition;
+	float currentValue;
 	AutomationKeyUI * currentUI;
 
-	void setCurrentPosition(float val);
+	void setCurrentPosition(float pos);
 
 	void setViewRange(float start, float end);
 	void updateROI();

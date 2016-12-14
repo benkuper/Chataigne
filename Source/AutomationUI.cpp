@@ -25,14 +25,12 @@ AutomationUI::~AutomationUI()
 {
 }
 
-void AutomationUI::setCurrentPosition(float val)
+void AutomationUI::setCurrentPosition(float pos)
 {
-	currentPosition = val;
+	currentPosition = pos;
 	currentUI = getClosestKeyUIForPos(currentPosition);
-	if (currentUI != nullptr)
-	{
-		currentUI->inspectable->selectThis();
-	}
+	currentValue = manager->getValueForPosition(pos);
+	repaint();
 }
 
 void AutomationUI::setViewRange(float start, float end)
@@ -80,13 +78,17 @@ void AutomationUI::paint(Graphics & g)
 	BaseManagerUI::paint(g);
 
 	if (itemsUI.size() < 2) return;
-	
+
 	int count = 0;
 	for (int i = firstROIKey; i < lastROIKey; i++)
-	{ 
-			drawTransition(g, itemsUI[i], itemsUI[i + 1]);
-			count++;
+	{
+		drawTransition(g, itemsUI[i], itemsUI[i + 1]);
+		count++;
 	}
+
+	Rectangle<int> vr = getLocalBounds().withTop(getHeight() - jmap<float>(currentValue, 0, manager->valueMax, 0, getHeight()));
+	g.setColour(Colours::purple.withAlpha(.1f));
+	g.fillRect(vr);
 }
 
 void AutomationUI::drawTransition(Graphics & g, AutomationKeyUI * k1, AutomationKeyUI * k2)
@@ -94,7 +96,10 @@ void AutomationUI::drawTransition(Graphics & g, AutomationKeyUI * k1, Automation
 	Point<int> p1 = k1->getBounds().getCentre();
 	Point<int> p2 = k2->getBounds().getCentre();
 	
-	g.setColour(k1->item->isSelected ? HIGHLIGHT_COLOR : FRONT_COLOR); 
+	Colour c = FRONT_COLOR;
+	if (k1->item->isSelected) c = HIGHLIGHT_COLOR;
+	if (k1 == currentUI) c = c.brighter();
+	g.setColour(c); 
 	g.drawLine(p1.x, p1.y, p2.x, p2.y, 1);
 }
 

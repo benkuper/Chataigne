@@ -38,19 +38,25 @@ AutomationKey * Automation::getClosestKeyForPos(float pos, int start, int end)
 	if (start == -1) start = 0;
 	if (end == -1) end = items.size() - 1;
 
-	if (end == start) return items[start];
 
-	int midIndex = (start + end) / 2;
+	if (pos < items[0]->position->floatValue()) return items[0];
+	if (pos > items[items.size() - 1]->position->floatValue()) return items[items.size() - 1];
+
+
+	if (end - start <= 1) return items[start];
+
+	int midIndex = (int)floor((start + end) / 2);
 	float medPos = items[midIndex]->position->floatValue();
 
 	if (pos == medPos) return items[midIndex];
+
 	else if (pos > medPos)
 	{
-		return getClosestKeyForPos(medPos + 1, end);
+		return getClosestKeyForPos(pos, midIndex, end);
 	}
 	else
 	{
-		return getClosestKeyForPos(start, medPos);
+		return getClosestKeyForPos(pos, start, midIndex);
 	}
 }
 
@@ -58,6 +64,16 @@ void Automation::setPositionMax(float val)
 {
 	positionMax = val;
 	for (auto &k : items) k->position->setRange(0, positionMax);
+}
+
+float Automation::getValueForPosition(float pos)
+{
+	if (pos <= items[0]->position->floatValue()) return items[0]->value->floatValue();
+	else if (pos >= items[items.size() - 1]->position->floatValue()) return items[items.size() - 1]->value->floatValue();
+	
+	AutomationKey * k = getClosestKeyForPos(pos);
+	if (k == nullptr) return 0;
+	return k->getValue(items[items.indexOf(k) + 1], pos);
 }
 
 void Automation::addItem(const float position, const float value)

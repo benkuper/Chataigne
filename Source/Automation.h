@@ -37,6 +37,8 @@ public:
 
 	void setPositionMax(float val);
 
+	float getValueForPosition(float pos);
+
 	static AutomationKeyComparator comparator;
 	
 	void addItem(const float position, const float value);
