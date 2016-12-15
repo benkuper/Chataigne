@@ -13,6 +13,8 @@
 
 #include "JuceHeader.h"
 
+class EasingUI;
+
 class Easing
 {
 public:
@@ -23,6 +25,7 @@ public:
 	
 	Type type;
 	virtual float getValue(const float &start, const float &end, const float &weight) = 0;//must be overriden
+
 };
 
 
@@ -36,6 +39,7 @@ public:
 	{
 		return start + (end - start)*weight;
 	}
+
 };
 
 class HoldEasing :

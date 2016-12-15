@@ -16,7 +16,8 @@
 #include "AutomationKeyUI.h"
 
 class AutomationUI :
-	public BaseManagerUI<Automation,AutomationKey,AutomationKeyUI>
+	public BaseManagerUI<Automation,AutomationKey,AutomationKeyUI>,
+	public ControllableContainer::ContainerAsyncListener
 {
 public:
 	AutomationUI(Automation * _automation);
@@ -61,6 +62,9 @@ public:
 
 	void mouseDown(const MouseEvent &e) override;
 	void mouseDrag(const MouseEvent &e) override;
+
+	void newMessage(const ContainerAsyncEvent &e) override;
+
 };
 
 

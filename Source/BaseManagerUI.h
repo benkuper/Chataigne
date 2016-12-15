@@ -299,8 +299,9 @@ void BaseManagerUI<M, T, U>::removeItemUI(T * item)
 template<class M, class T, class U>
 U * BaseManagerUI<M, T, U>::getUIForItem(T * item)
 {
-	for (auto &ui : itemsUI) if (static_cast<BaseItemMinimalUI<T>*>(ui)->item == item) return ui;
-	return nullptr;
+	//for (auto &ui : itemsUI) if (static_cast<BaseItemMinimalUI<T>*>(ui)->item == item) return ui; //brute search, not needed if ui/items are synchronized
+	return itemsUI[static_cast<BaseManager<T>*>(manager)->items.indexOf(item)];
+	//return nullptr;
 }
 
 template<class M, class T, class U>

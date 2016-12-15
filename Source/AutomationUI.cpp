@@ -18,11 +18,12 @@ AutomationUI::AutomationUI(Automation * _automation) :
 	transparentBG = true;
 	useDefaultMenu = false;
 	setViewRange(0, manager->positionMax);
-
+	manager->addAsyncContainerListener(this);
 }
 
 AutomationUI::~AutomationUI()
 {
+	manager->removeAsyncContainerListener(this);
 }
 
 void AutomationUI::setCurrentPosition(float pos)
@@ -77,6 +78,7 @@ void AutomationUI::paint(Graphics & g)
 {
 	BaseManagerUI::paint(g);
 
+	
 	if (itemsUI.size() < 2) return;
 
 	int count = 0;
@@ -85,6 +87,7 @@ void AutomationUI::paint(Graphics & g)
 		drawTransition(g, itemsUI[i], itemsUI[i + 1]);
 		count++;
 	}
+	
 
 	Rectangle<int> vr = getLocalBounds().withTop(getHeight() - jmap<float>(currentValue, 0, manager->valueMax, 0, getHeight()));
 	g.setColour(Colours::purple.withAlpha(.1f));
@@ -100,7 +103,23 @@ void AutomationUI::drawTransition(Graphics & g, AutomationKeyUI * k1, Automation
 	if (k1->item->isSelected) c = HIGHLIGHT_COLOR;
 	if (k1 == currentUI) c = c.brighter();
 	g.setColour(c); 
-	g.drawLine(p1.x, p1.y, p2.x, p2.y, 1);
+
+	if (k1->item->easing != nullptr)
+	{
+		switch (k1->item->easing->type)
+		{
+		case Easing::Type::LINEAR:
+			g.drawLine(p1.x, p1.y, p2.x, p2.y, 1);
+			break;
+
+		case Easing::Type::HOLD:
+			g.drawLine(p1.x, p1.y, p2.x, p1.y, 1);
+			g.drawLine(p2.x, p1.y, p2.x, p2.y, 1); 
+			break;
+		}
+		
+	}
+	
 }
 
 
@@ -114,7 +133,7 @@ void AutomationUI::resized()
 	}
 }
 
-void AutomationUI::placeKeyUI(AutomationKeyUI * kui)
+void AutomationUI::placeKeyUI(AutomationKeyUI * kui) 
 {
 	int tx = getXForPos(kui->item->position->floatValue());
 	int ty = (1 - kui->item->value->floatValue() / manager->valueMax)*getHeight();
@@ -220,9 +239,33 @@ void AutomationUI::mouseDrag(const MouseEvent & e)
 			float val = (1 - mp.y*1.f / getHeight())*manager->valueMax;
 			kui->item->position->setValue(pos);
 			kui->item->value->setValue(val);
-			placeKeyUI(kui);
-			repaint();
+			
 		}
 	}
+}
+
+void AutomationUI::newMessage(const ContainerAsyncEvent & e)
+{
+	if (e.type == ContainerAsyncEvent::EventType::ControllableFeedbackUpdate)
+	{
+		if (e.targetControllable != nullptr)
+		{
+			AutomationKey * k = dynamic_cast<AutomationKey *>(e.targetControllable->parentContainer);
+			if (k != nullptr)
+			{
+				if (e.targetControllable == k->easingType)
+				{
+					repaint();
+				}
+				else if (e.targetControllable == k->position || e.targetControllable == k->value)
+				{
+					placeKeyUI(getUIForItem(k));
+					repaint();
+				}
+			}
+		}
+		
+	}
+	
 }
 

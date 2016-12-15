@@ -25,6 +25,8 @@ SequenceTimelineHeader::~SequenceTimelineHeader()
 	sequence->removeAsyncContainerListener(this);
 }
 
+#pragma warning(push)
+#pragma warning(disable:4244)
 void SequenceTimelineHeader::paint(Graphics & g)
 {
 	g.setColour(BG_COLOR.darker(.1f));
@@ -97,6 +99,8 @@ void SequenceTimelineHeader::resized()
 	needle.setBounds(nr);
 }
 
+#pragma warning(pop)
+
 void SequenceTimelineHeader::mouseDown(const MouseEvent & e)
 {
 	if (e.mods.isLeftButtonDown())
@@ -153,6 +157,8 @@ void SequenceTimelineHeader::newMessage(const ContainerAsyncEvent & e)
 	}
 }
 
+#pragma warning(push)
+#pragma warning(disable:4244)
 void TimeNeedleUI::paint(Graphics & g)
 {
 	g.setColour(HIGHLIGHT_COLOR);
@@ -162,3 +168,4 @@ void TimeNeedleUI::paint(Graphics & g)
 	g.fillPath(p);
 	g.drawVerticalLine(getWidth() / 2, 0, getHeight());
 }
+#pragma warning(pop)

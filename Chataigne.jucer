@@ -175,7 +175,6 @@
         <GROUP id="{6C7DFFF7-D47E-97B5-FE74-27F24C7A349F}" name="Common">
           <GROUP id="{35974B24-06CE-D2B0-10E2-28EC5F180B57}" name="Automation">
             <GROUP id="{119C0D0B-5C9F-590C-778F-E6320A718265}" name="easing">
-              <GROUP id="{EA6F771F-744D-8561-7D50-8736697A9E15}" name="variants"/>
               <FILE id="s1c61E" name="Easing.cpp" compile="1" resource="0" file="Source/Easing.cpp"/>
               <FILE id="X3EWJU" name="Easing.h" compile="0" resource="0" file="Source/Easing.h"/>
             </GROUP>

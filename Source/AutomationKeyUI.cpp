@@ -21,11 +21,13 @@ AutomationKeyUI::~AutomationKeyUI()
 {
 }
 
+
 void AutomationKeyUI::paint(Graphics & g)
 {
+
 	int rad = AutomationKeyUI::handleSize;
 	if (isMouseOver() || item->isSelected) rad += 3;
-	Rectangle<float> er = getLocalBounds().withSizeKeepingCentre(rad, rad).toFloat();
+	Rectangle<float> er = getLocalBounds().withSizeKeepingCentre(rad,rad).toFloat();
 	
 	Colour c = item->isSelected ? HIGHLIGHT_COLOR : FRONT_COLOR;
 	Colour cc = isMouseOver() ? YELLOW_COLOR : c.darker(.3f);
@@ -33,8 +35,4 @@ void AutomationKeyUI::paint(Graphics & g)
 	g.fillEllipse(er);
 	g.setColour(cc);
 	g.drawEllipse(er,1);
-}
-
-void AutomationKeyUI::resized()
-{
 }

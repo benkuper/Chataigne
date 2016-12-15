@@ -94,24 +94,24 @@ void CustomOSCModule::processMessageInternal(const OSCMessage & msg)
 
 		case 2:
 			//duplicate because may have other mechanism
-			if (msg[0].isInt32()) c = valuesCC.addIntParameter(cNiceName, "", msg[0].getInt32(), msg[0].getInt32(), msg[1].getInt32());
+			if (msg[0].isInt32()) c = valuesCC.addIntParameter(cNiceName, "", getIntArg(msg[0]),getIntArg(msg[1]),getIntArg(msg[2]));
 			else if (msg[0].isFloat32())
 			{
 				c = valuesCC.addPoint2DParameter(cNiceName, "");
-				((Point2DParameter *)c)->setPoint(msg[0].getFloat32(), msg[1].getFloat32());
+				((Point2DParameter *)c)->setPoint(getFloatArg(msg[0]),getFloatArg(msg[1]));
 			}
-			else if (msg[0].isString()) c = valuesCC.addStringParameter(cNiceName, "", msg[0].getString());
+			else if (msg[0].isString()) c = valuesCC.addStringParameter(cNiceName, "", getStringArg(msg[0]));
 			((Parameter *)c)->autoAdaptRange = true;
 			break;
 
 		case 3:
-			if (msg[0].isInt32()) c = valuesCC.addIntParameter(cNiceName, "", msg[0].getInt32(), msg[1].getInt32(),msg[2].getInt32());
+			if (msg[0].isInt32()) c = valuesCC.addIntParameter(cNiceName, "", getIntArg(msg[0]),getIntArg(msg[1]),getIntArg(msg[2]));
 			else if (msg[0].isFloat32())
 			{
 				c = valuesCC.addPoint3DParameter(cNiceName, "");
-				((Point3DParameter *)c)->setVector(msg[0].getFloat32(), msg[1].getFloat32(),msg[1].getFloat32());
+				((Point3DParameter *)c)->setVector(getFloatArg(msg[0]), getFloatArg(msg[1]), getFloatArg(msg[2]));
 			}
-			else if (msg[0].isString()) c = valuesCC.addStringParameter(cNiceName, "", msg[0].getString());
+			else if (msg[0].isString()) c = valuesCC.addStringParameter(cNiceName, "", getStringArg(msg[0]));
 			((Parameter *)c)->autoAdaptRange = true;
 			break;
 		}

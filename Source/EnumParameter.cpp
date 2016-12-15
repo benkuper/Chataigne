@@ -48,6 +48,11 @@ void EnumParameter::updateArgDescription()
 }
 
 
+void EnumParameter::setValueWithKey(String key)
+{
+	setValue(enumValues[key]);
+}
+
 EnumParameterUI * EnumParameter::createUI(EnumParameter * target)
 {
 	if (target == nullptr) target = this;

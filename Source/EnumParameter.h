@@ -29,6 +29,8 @@ public:
 	HashMap<String, var> enumValues;
 
 	var getValueData() { return enumValues[value]; };
+
+	void setValueWithKey(String data);
 	
 	EnumParameterUI * createUI(EnumParameter * target = nullptr);
 	ControllableUI * createDefaultUI(Controllable * targetControllable = nullptr) override;

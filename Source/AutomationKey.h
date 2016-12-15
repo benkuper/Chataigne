@@ -24,10 +24,13 @@ public:
 	FloatParameter * position; //depends on parent automation
 	FloatParameter * value; //0-1
 
+	EnumParameter * easingType;
+
 	ScopedPointer<Easing> easing;
 
-
 	float getValue(AutomationKey * nextKey, const float &position);
+
+	void onContainerParameterChangedInternal(Parameter *) override;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(AutomationKey)
 };

@@ -105,13 +105,13 @@ void NamedControllableUI::resized(){
   controllableLabel.setBounds(r.removeFromLeft(labelWidth));
   r.removeFromLeft(5);
 
-  if(controllable->isRemovableByUser)
+  if(controllable->isRemovableByUser && removeBT != nullptr)
   { 
 	  removeBT->setBounds(r.removeFromRight(r.getHeight()));
 	  r.removeFromRight(2);
   }
 
-  if (controllable->isCustomizableByUser)
+  if (controllable->isCustomizableByUser && editBT != nullptr)
   {
 	  editBT->setBounds(r.removeFromRight(r.getHeight()));
 	  r.removeFromRight(2);

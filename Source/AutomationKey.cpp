@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    AutomationKey.cpp
-    Created: 11 Dec 2016 1:22:20pm
-    Author:  Ben
+	AutomationKey.cpp
+	Created: 11 Dec 2016 1:22:20pm
+	Author:  Ben
 
   ==============================================================================
 */
@@ -13,12 +13,15 @@
 AutomationKey::AutomationKey()
 {
 	easing = new LinearEasing();
-	position = addFloatParameter("Position","Position of the key", 0, 0, 5);
+	position = addFloatParameter("Position", "Position of the key", 0, 0, 5);
 	value = addFloatParameter("Value", "Value of the key", 0, 0, 1);
 
-	//to change
-	//position->autoAdaptRange = true;
-	//value->autoAdaptRange = true;
+	easingType = addEnumParameter("EasingType", "Type of transition to the next key");
+
+	easingType->addOption("Linear", Easing::Type::LINEAR);
+	easingType->addOption("Hold", Easing::Type::HOLD);
+
+	easingType->setValue("Linear");
 }
 
 AutomationKey::~AutomationKey()
@@ -32,4 +35,21 @@ float AutomationKey::getValue(AutomationKey * nextKey, const float & _pos)
 	jassert(relPos >= 0 && relPos <= 1);
 
 	return easing->getValue(value->floatValue(), nextKey->value->floatValue(), relPos);
+}
+
+void AutomationKey::onContainerParameterChangedInternal(Parameter * p)
+{
+	if (p == easingType)
+	{
+		switch ((Easing::Type)(int)easingType->getValueData())
+		{
+		case Easing::Type::LINEAR:
+			easing = new LinearEasing();
+			break;
+
+		case Easing::Type::HOLD:
+			easing = new HoldEasing();
+			break;
+		}
+	}
 }
