@@ -19,6 +19,8 @@ AutomationUI::AutomationUI(Automation * _automation) :
 	useDefaultMenu = false;
 	setViewRange(0, manager->positionMax);
 	manager->addAsyncContainerListener(this);
+
+
 }
 
 AutomationUI::~AutomationUI()
@@ -71,7 +73,7 @@ void AutomationUI::updateROI()
 	{
 		itemsUI[i]->setVisible(true);
 	}
-	
+	resized();
 }
 
 void AutomationUI::paint(Graphics & g)
@@ -81,35 +83,32 @@ void AutomationUI::paint(Graphics & g)
 	
 	if (itemsUI.size() < 2) return;
 
-	int count = 0;
-	int ty = getHeight() - jmap<float>(currentValue, 0, manager->valueMax, 0, getHeight());
+	//int count = 0;
+	int ty = (1 - currentValue) * getHeight();
 	Rectangle<int> vr = getLocalBounds().withTop(ty);
 	g.setColour(Colours::purple.withAlpha(.1f));
 	g.fillRect(vr);
 	g.setColour(Colours::yellow);
 	g.drawEllipse(Rectangle<int>(0, 0, 5, 5).withCentre(Point<int>(getXForPos(currentPosition), ty)).toFloat(),2);
 
-
+	/*
 	for (int i = firstROIKey; i < lastROIKey; i++)
 	{
 		drawTransition(g, itemsUI[i], itemsUI[i + 1]);
 		count++;
 	}
-	
+	*/
 
 	
 }
 
+/*
 void AutomationUI::drawTransition(Graphics & g, AutomationKeyUI * k1, AutomationKeyUI * k2)
 {
 	Point<int> p1 = k1->getBounds().getCentre();
 	Point<int> p2 = k2->getBounds().getCentre();
 	
-	Colour c = FRONT_COLOR;
-	if (k1->item->isSelected) c = HIGHLIGHT_COLOR;
-	if (k1 == currentUI) c = c.brighter();
-	g.setColour(c); 
-
+	
 	Easing * e = k1->item->easing;
 	if (e != nullptr)
 	{
@@ -137,24 +136,51 @@ void AutomationUI::drawTransition(Graphics & g, AutomationKeyUI * k1, Automation
 	}
 	
 }
+*/
 
 
 void AutomationUI::resized()
 {
 	if (itemsUI.size() == 0) return;
 
-	for (int i = firstROIKey;i<=lastROIKey;i++)
+	for (int i = lastROIKey;i>=firstROIKey;i--)
 	{
-		placeKeyUI(itemsUI[i]);
+		placeKeyUI(itemsUI[i],false);
+		itemsUI[i]->toBack(); // place each ui in front of its right
 	}
 }
 
-void AutomationUI::placeKeyUI(AutomationKeyUI * kui) 
+void AutomationUI::placeKeyUI(AutomationKeyUI * kui, bool placePrevKUI) 
 {
+	int index = itemsUI.indexOf(kui);
+
 	int tx = getXForPos(kui->item->position->floatValue());
-	int ty = (1 - kui->item->value->floatValue() / manager->valueMax)*getHeight();
-	Rectangle<int> kr = Rectangle<int>(0, 0, AutomationKeyUI::handleSize + 10, AutomationKeyUI::handleSize + 10).withCentre(Point<int>(tx, ty));
+	int ty = (1 - kui->item->value->floatValue())*getHeight();
+	Rectangle<int> kr;
+	
+	if (index < itemsUI.size()-1)
+	{
+		AutomationKeyUI * nextKey = itemsUI[index + 1];
+		int tx2 = getXForPos(nextKey->item->position->floatValue());
+		int ty2 = (1 - nextKey->item->value->floatValue())*getHeight();
+		//Rectangle<int> kr2 = Rectangle<int>(0, 0, AutomationKeyUI::handleClickZone, AutomationKeyUI::handleClickZone).withCentre(Point<int>(tx2, ty2));
+		kr = Rectangle<int>(tx, 0, tx2-tx, getHeight()).expanded(AutomationKeyUI::handleClickZone / 2, 0);
+		kui->setKeyPositions(ty, ty2);
+	}
+	else
+	{
+		kr = Rectangle<int>(0, 0, AutomationKeyUI::handleClickZone, getHeight()).withPosition(tx - AutomationKeyUI::handleClickZone / 2, 0);
+		kui->setKeyPositions(ty, 0);
+	}
+
 	kui->setBounds(kr);
+
+	if (placePrevKUI && index > 0)
+	{
+		placeKeyUI(itemsUI[index - 1],false);
+	}
+
+	
 }
 
 
@@ -209,26 +235,24 @@ void AutomationUI::itemAdded(AutomationKey * k)
 {
 	BaseManagerUI::itemAdded(k);
 	updateROI();
-	resized();
+	
 }
 
 void AutomationUI::itemsReordered()
 {
 	BaseManagerUI::itemsReordered();
 	updateROI();
-	repaint();
 }
 
 void AutomationUI::addItemUIInternal(AutomationKeyUI * kui)
 {
-	kui->addMouseListener(this, false);
+	kui->handle.addMouseListener(this, false);
 }
 
 void AutomationUI::removeItemUIInternal(AutomationKeyUI * kui)
 {
-	kui->removeMouseListener(this);
+	kui->handle.removeMouseListener(this);
 	updateROI();
-	repaint();
 }
 
 void AutomationUI::mouseDown(const MouseEvent & e)
@@ -237,10 +261,14 @@ void AutomationUI::mouseDown(const MouseEvent & e)
 
 	if (e.eventComponent == this)
 	{
-		if (e.mods.isCtrlDown())
+		if (e.mods.isLeftButtonDown())
 		{
-			manager->addItem(getPosForX(e.getPosition().x), (1 - e.getPosition().y*1.f / getHeight())*manager->valueMax);
+			if (e.mods.isCtrlDown())
+			{
+				manager->addItem(getPosForX(e.getPosition().x), (1 - e.getPosition().y*1.f / getHeight()));
+			}
 		}
+		
 	}
 	
 }
@@ -249,14 +277,16 @@ void AutomationUI::mouseDrag(const MouseEvent & e)
 {
 	if (e.originalComponent != this)
 	{
-		AutomationKeyUI * kui = dynamic_cast<AutomationKeyUI *>(e.originalComponent);
-		if (kui != nullptr)
+		AutomationKeyUI::Handle * h = dynamic_cast<AutomationKeyUI::Handle *>(e.eventComponent);
+
+		if (h != nullptr)
 		{
+			AutomationKeyUI * kui = static_cast<AutomationKeyUI *>(h->getParentComponent());
 			if (e.mods.isLeftButtonDown())
 			{
 				Point<int> mp = e.getEventRelativeTo(this).getPosition();
 				float pos = getPosForX(mp.x);
-				float val = (1 - mp.y*1.f / getHeight())*manager->valueMax;
+				float val = (1 - mp.y*1.f / getHeight());
 				kui->item->position->setValue(pos);
 				kui->item->value->setValue(val);
 			}
@@ -293,8 +323,8 @@ void AutomationUI::mouseDrag(const MouseEvent & e)
 						CubicEasing * qe = static_cast<CubicEasing *>(es);
 
 						Point<float> targetPoint = Point<float>(
-							jmap<float>(mp.x, kui->getBounds().getCentreX(), k2->getBounds().getCentreX(), 0, 1),
-							jmap<float>(mp.y, kui->getBounds().getCentreY(), k2->getBounds().getCentreY(), 0, 1)
+							jmap<float>(mp.x, kui->getBounds().getX()+AutomationKeyUI::handleClickZone/2, k2->getBounds().getRight()-AutomationKeyUI::handleClickZone / 2, 0, 1),
+							jmap<float>(mp.y, kui->keyYPos1, kui->keyYPos2, 0, 1)
 							);
 						
 						if(e.mods.isCtrlDown()) qe->anchor2->setPoint(targetPoint);
@@ -319,12 +349,12 @@ void AutomationUI::newMessage(const ContainerAsyncEvent & e)
 			{
 				if (e.targetControllable == k->easingType)
 				{
-					repaint();
+					//repaint();
 				}
 				else if (e.targetControllable == k->position || e.targetControllable == k->value)
 				{
 					placeKeyUI(getUIForItem(k));
-					repaint();
+					//repaint();
 				}
 			}
 		}

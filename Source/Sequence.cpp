@@ -116,5 +116,9 @@ void Sequence::hiResTimerCallback()
 	float deltaTime = (millis - prevMillis)/1000.f;
 	currentTime->setValue(currentTime->floatValue() + deltaTime);
 	prevMillis = millis;
-	
+
+	if (currentTime->floatValue() == (float)currentTime->maximumValue)
+	{
+		stopTrigger->trigger();
+	}
 }

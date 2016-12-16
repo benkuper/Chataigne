@@ -32,7 +32,6 @@ public:
 	Automation();
 	virtual ~Automation();
 
-	float valueMax;
 	float positionMax;
 
 	void setPositionMax(float val);

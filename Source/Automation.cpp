@@ -14,7 +14,6 @@ AutomationKeyComparator Automation::comparator;
 
 Automation::Automation() :
 	BaseManager("Automation"),
-	valueMax(1),
 	positionMax(1)
 {
 	
@@ -68,6 +67,7 @@ void Automation::setPositionMax(float val)
 
 float Automation::getValueForPosition(float pos)
 {
+	if (items.size() == 0) return 0;
 	if (pos <= items[0]->position->floatValue()) return items[0]->value->floatValue();
 	else if (pos >= items[items.size() - 1]->position->floatValue()) return items[items.size() - 1]->value->floatValue();
 	

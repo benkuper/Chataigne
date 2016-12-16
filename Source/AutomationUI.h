@@ -41,11 +41,10 @@ public:
 
 	void paint(Graphics &g) override;
 
-	void drawTransition(Graphics &g, AutomationKeyUI * p1, AutomationKeyUI *p2);
+	//void drawTransition(Graphics &g, AutomationKeyUI * p1, AutomationKeyUI *p2);
 
 	void resized() override;
-
-	void placeKeyUI(AutomationKeyUI * kui);
+	void placeKeyUI(AutomationKeyUI * kui, bool placePrevKUI = true);
 
 	int getXForPos(float time);
 	float getPosForX(int tx, bool offsetStart = true);
@@ -63,6 +62,7 @@ public:
 
 	void mouseDown(const MouseEvent &e) override;
 	void mouseDrag(const MouseEvent &e) override;
+
 
 	void newMessage(const ContainerAsyncEvent &e) override;
 
