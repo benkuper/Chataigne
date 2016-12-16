@@ -119,20 +119,18 @@ void AutomationUI::drawTransition(Graphics & g, AutomationKeyUI * k1, Automation
 			g.drawLine(p1.x, p1.y, p2.x, p2.y, 1);
 			break;
 
-		case Easing::Type::HOLD:
-			g.drawLine(p1.x, p1.y, p2.x, p1.y, 1);
-			g.drawLine(p2.x, p1.y, p2.x, p2.y, 1); 
-			break;
-
-		case Easing::Type::QUADRATIC:
+		case Easing::Type::BEZIER:
 			Path p;
-			QuadraticEasing * qe = static_cast<QuadraticEasing *>(e);
+			CubicEasing * ce = static_cast<CubicEasing *>(e);
 			p.startNewSubPath(p1.x, p1.y);
-			Point<float> a = Point<float>(jmap<float>(qe->anchor->getPoint().x, p1.x, p2.x), jmap<float>(qe->anchor->getPoint().y, p1.y, p2.y));
-			p.quadraticTo(a, p2.toFloat());
+			Point<float> a = Point<float>(jmap<float>(ce->anchor1->getPoint().x, p1.x, p2.x), jmap<float>(ce->anchor1->getPoint().y, p1.y, p2.y));
+			Point<float> b = Point<float>(jmap<float>(ce->anchor2->getPoint().x, p1.x, p2.x), jmap<float>(ce->anchor2->getPoint().y, p1.y, p2.y));
+			p.cubicTo(a,b, p2.toFloat());
 			g.strokePath(p, PathStrokeType(1));
 			g.setColour(Colours::red);
 			g.fillEllipse(Rectangle<int>(0, 0,5,5).toFloat().withCentre(a));
+			g.setColour(Colours::blue);
+			g.fillEllipse(Rectangle<int>(0, 0, 5, 5).toFloat().withCentre(b));
 			break;
 		}
 		
@@ -267,7 +265,9 @@ void AutomationUI::mouseDrag(const MouseEvent & e)
 				Easing * es = kui->item->easing;
 				switch (es->type)
 				{
+					/*
 				case Easing::QUADRATIC:
+					
 					if (itemsUI.indexOf(kui) < itemsUI.size() - 1)
 					{
 						AutomationKeyUI * k2 = itemsUI[itemsUI.indexOf(kui) + 1];
@@ -282,9 +282,10 @@ void AutomationUI::mouseDrag(const MouseEvent & e)
 						repaint();
 					}
 					
+					
 					break;
-
-				case Easing::CUBIC:
+					*/
+				case Easing::BEZIER:
 					if (itemsUI.indexOf(kui) < itemsUI.size() - 1)
 					{
 						AutomationKeyUI * k2 = itemsUI[itemsUI.indexOf(kui) + 1];

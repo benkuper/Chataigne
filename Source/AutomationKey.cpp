@@ -20,8 +20,7 @@ AutomationKey::AutomationKey()
 
 	easingType->addOption("Linear", Easing::LINEAR);
 	easingType->addOption("Hold", Easing::HOLD);
-	easingType->addOption("Quadratic", Easing::QUADRATIC);
-	easingType->addOption("Cubic", Easing::CUBIC);
+	easingType->addOption("Bezier", Easing::BEZIER);
 
 	easingType->setValueWithKey("Linear");
 
@@ -52,11 +51,7 @@ void AutomationKey::setEasing(Easing::Type t)
 		easing = new HoldEasing();
 		break;
 
-	case Easing::QUADRATIC:
-		easing = new QuadraticEasing();
-		break;
-
-	case Easing::CUBIC:
+	case Easing::BEZIER:
 		easing = new CubicEasing();
 		break;
 	}
