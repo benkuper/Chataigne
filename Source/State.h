@@ -25,6 +25,8 @@ public:
 
 	//UI
 	Point2DParameter * viewUIPosition;
+	Point2DParameter * viewUISize;
+
 	BoolParameter * miniMode;
 
 	ActionManager am;

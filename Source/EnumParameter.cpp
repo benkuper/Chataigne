@@ -47,10 +47,50 @@ void EnumParameter::updateArgDescription()
 
 }
 
-
 void EnumParameter::setValueWithKey(String key)
 {
-	setValue(enumValues[key]);
+	DBG("set value " << key);
+	setValue(key);
+}
+
+void EnumParameter::setNext(bool loop)
+{
+	DBG("set next");
+	HashMap<String, var>::Iterator i(enumValues);
+	int index = 0;
+	String firstKey;
+	while (i.next())
+	{
+		if (index == 0) firstKey = i.getKey(); 
+		if (i.getKey() == getValueKey())
+		{
+			DBG("found current key");
+			if (i.next())
+			{
+				DBG("next is 0 <<" << i.getKey());
+				setValueWithKey(i.getKey());
+			}
+			else if (loop)
+			{
+				setValueWithKey(firstKey);
+				
+			}
+			return;
+		}
+		index++;
+	}
+}
+
+int EnumParameter::getKeyIndex(String key)
+{
+	HashMap<String, var>::Iterator i(enumValues);
+	int index = 0;
+	while (i.next())
+	{
+		if (i.getKey() == key) return index;
+		index++;
+	}
+	return -1;
 }
 
 EnumParameterUI * EnumParameter::createUI(EnumParameter * target)

@@ -91,7 +91,7 @@ public:
 	virtual void resized() override;
 	virtual void childBoundsChanged(Component *) override;
 
-	virtual void addItemFromMenu();
+	virtual void addItemFromMenu(Point<int> mouseDownPos);
 	virtual U * addItemUI(T * item);
 	virtual U * createUIForItem(T * item);
 	virtual void addItemUIInternal(U *) {}
@@ -100,7 +100,7 @@ public:
 	virtual void removeItemUI(T * item);
 	virtual void removeItemUIInternal(U *) {}
 
-	U * getUIForItem(T * item);
+	U * getUIForItem(T * item, bool directIndexAccess = true);
 
 	int getContentHeight();
 
@@ -181,7 +181,7 @@ void BaseManagerUI<M, T, U>::mouseDown(const MouseEvent & e)
 				switch (result)
 				{
 				case 1:
-					addItemFromMenu();
+					addItemFromMenu(e.getEventRelativeTo(this).getMouseDownPosition());
 					break;
 				}
 			}
@@ -222,7 +222,8 @@ void BaseManagerUI<M, T, U>::paint(Graphics & g)
 template<class M, class T, class U>
 void BaseManagerUI<M, T, U>::resized()
 {
-	
+	if (getWidth() == 0 || getHeight() == 0) return;
+
 	Rectangle<int> r = getLocalBounds().reduced(2);
 	if (drawContour) r.removeFromTop(15);
 
@@ -257,8 +258,8 @@ void BaseManagerUI<M, T, U>::childBoundsChanged(Component *)
 }
 
 template<class M, class T, class U>
-void BaseManagerUI<M, T, U>::addItemFromMenu()
-{
+void BaseManagerUI<M, T, U>::addItemFromMenu(Point<int>) 
+{ 
 	manager->BaseManager<T>::addItem();
 }
 
@@ -284,24 +285,29 @@ inline U * BaseManagerUI<M, T, U>::createUIForItem(T * item)
 template<class M, class T, class U>
 void BaseManagerUI<M, T, U>::removeItemUI(T * item)
 {
-	U * tui = getUIForItem(item);
+	U * tui = getUIForItem(item,false);
 	if (tui == nullptr) return;
 
 	if(useViewport) container.removeChildComponent(static_cast<BaseItemMinimalUI<T>*>(tui));
 	else removeChildComponent(static_cast<BaseItemMinimalUI<T>*>(tui));
-	removeItemUIInternal(tui);
+	
 	itemsUI.removeObject(tui,false);
+	removeItemUIInternal(tui);
+
 	managerUIListeners.call(&ManagerUIListener::itemUIRemoved, tui);
+
 	delete tui;
+
 	resized();
 }
 
 template<class M, class T, class U>
-U * BaseManagerUI<M, T, U>::getUIForItem(T * item)
+U * BaseManagerUI<M, T, U>::getUIForItem(T * item, bool directIndexAccess)
 {
-	//for (auto &ui : itemsUI) if (static_cast<BaseItemMinimalUI<T>*>(ui)->item == item) return ui; //brute search, not needed if ui/items are synchronized
-	return itemsUI[static_cast<BaseManager<T>*>(manager)->items.indexOf(item)];
-	//return nullptr;
+	if(directIndexAccess) return itemsUI[static_cast<BaseManager<T>*>(manager)->items.indexOf(item)];
+	
+	for (auto &ui : itemsUI) if (static_cast<BaseItemMinimalUI<T>*>(ui)->item == item) return ui; //brute search, not needed if ui/items are synchronized
+	return nullptr;
 }
 
 template<class M, class T, class U>

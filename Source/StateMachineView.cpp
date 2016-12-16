@@ -18,6 +18,12 @@ StateMachineView::StateMachineView(StateManager * _manager) :
 	contentIsFlexible = true;
 	addItemText = "Add State";
 	setWantsKeyboardFocus(true);
+	
+	//more generic way to automatically handle createdUI ?
+	for (auto &tui : itemsUI)
+	{
+		tui->addStateViewUIListener(this);
+	}
 }
 
 StateMachineView::~StateMachineView()
@@ -101,10 +107,9 @@ void StateMachineView::updateViewUIPosition(StateViewUI * se)
 	pe += viewOffset;
 	se->setTopLeftPosition(pe.x,pe.y);
 }
-
-void StateMachineView::addItemFromMenu()
+void StateMachineView::addItemFromMenu(Point<int> mouseDownPos)
 {
-	manager->addItem(getViewMousePosition().toFloat() / getSize());
+	manager->addItem(mouseDownPos.toFloat() / getSize());
 }
 
 Point<int> StateMachineView::getSize()

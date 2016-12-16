@@ -82,6 +82,14 @@ void AutomationUI::paint(Graphics & g)
 	if (itemsUI.size() < 2) return;
 
 	int count = 0;
+	int ty = getHeight() - jmap<float>(currentValue, 0, manager->valueMax, 0, getHeight());
+	Rectangle<int> vr = getLocalBounds().withTop(ty);
+	g.setColour(Colours::purple.withAlpha(.1f));
+	g.fillRect(vr);
+	g.setColour(Colours::yellow);
+	g.drawEllipse(Rectangle<int>(0, 0, 5, 5).withCentre(Point<int>(getXForPos(currentPosition), ty)).toFloat(),2);
+
+
 	for (int i = firstROIKey; i < lastROIKey; i++)
 	{
 		drawTransition(g, itemsUI[i], itemsUI[i + 1]);
@@ -89,9 +97,7 @@ void AutomationUI::paint(Graphics & g)
 	}
 	
 
-	Rectangle<int> vr = getLocalBounds().withTop(getHeight() - jmap<float>(currentValue, 0, manager->valueMax, 0, getHeight()));
-	g.setColour(Colours::purple.withAlpha(.1f));
-	g.fillRect(vr);
+	
 }
 
 void AutomationUI::drawTransition(Graphics & g, AutomationKeyUI * k1, AutomationKeyUI * k2)
@@ -104,9 +110,10 @@ void AutomationUI::drawTransition(Graphics & g, AutomationKeyUI * k1, Automation
 	if (k1 == currentUI) c = c.brighter();
 	g.setColour(c); 
 
-	if (k1->item->easing != nullptr)
+	Easing * e = k1->item->easing;
+	if (e != nullptr)
 	{
-		switch (k1->item->easing->type)
+		switch (e->type)
 		{
 		case Easing::Type::LINEAR:
 			g.drawLine(p1.x, p1.y, p2.x, p2.y, 1);
@@ -115,6 +122,17 @@ void AutomationUI::drawTransition(Graphics & g, AutomationKeyUI * k1, Automation
 		case Easing::Type::HOLD:
 			g.drawLine(p1.x, p1.y, p2.x, p1.y, 1);
 			g.drawLine(p2.x, p1.y, p2.x, p2.y, 1); 
+			break;
+
+		case Easing::Type::QUADRATIC:
+			Path p;
+			QuadraticEasing * qe = static_cast<QuadraticEasing *>(e);
+			p.startNewSubPath(p1.x, p1.y);
+			Point<float> a = Point<float>(jmap<float>(qe->anchor->getPoint().x, p1.x, p2.x), jmap<float>(qe->anchor->getPoint().y, p1.y, p2.y));
+			p.quadraticTo(a, p2.toFloat());
+			g.strokePath(p, PathStrokeType(1));
+			g.setColour(Colours::red);
+			g.fillEllipse(Rectangle<int>(0, 0,5,5).toFloat().withCentre(a));
 			break;
 		}
 		
@@ -211,6 +229,8 @@ void AutomationUI::addItemUIInternal(AutomationKeyUI * kui)
 void AutomationUI::removeItemUIInternal(AutomationKeyUI * kui)
 {
 	kui->removeMouseListener(this);
+	updateROI();
+	repaint();
 }
 
 void AutomationUI::mouseDown(const MouseEvent & e)
@@ -234,12 +254,55 @@ void AutomationUI::mouseDrag(const MouseEvent & e)
 		AutomationKeyUI * kui = dynamic_cast<AutomationKeyUI *>(e.originalComponent);
 		if (kui != nullptr)
 		{
-			Point<int> mp = e.getEventRelativeTo(this).getPosition();
-			float pos = getPosForX(mp.x);
-			float val = (1 - mp.y*1.f / getHeight())*manager->valueMax;
-			kui->item->position->setValue(pos);
-			kui->item->value->setValue(val);
-			
+			if (e.mods.isLeftButtonDown())
+			{
+				Point<int> mp = e.getEventRelativeTo(this).getPosition();
+				float pos = getPosForX(mp.x);
+				float val = (1 - mp.y*1.f / getHeight())*manager->valueMax;
+				kui->item->position->setValue(pos);
+				kui->item->value->setValue(val);
+			}
+			else if (e.mods.isRightButtonDown())
+			{
+				Easing * es = kui->item->easing;
+				switch (es->type)
+				{
+				case Easing::QUADRATIC:
+					if (itemsUI.indexOf(kui) < itemsUI.size() - 1)
+					{
+						AutomationKeyUI * k2 = itemsUI[itemsUI.indexOf(kui) + 1];
+						Point<int> mp = e.getEventRelativeTo(this).getPosition();
+						QuadraticEasing * qe = static_cast<QuadraticEasing *>(es);
+
+						Point<float> targetPoint = Point<float>(
+							jmap<float>(mp.x, kui->getBounds().getCentreX(), k2->getBounds().getCentreX(), 0, 1),
+							jmap<float>(mp.y, kui->getBounds().getCentreY(), k2->getBounds().getCentreY(), 0, 1)
+						);
+						qe->anchor->setPoint(targetPoint);
+						repaint();
+					}
+					
+					break;
+
+				case Easing::CUBIC:
+					if (itemsUI.indexOf(kui) < itemsUI.size() - 1)
+					{
+						AutomationKeyUI * k2 = itemsUI[itemsUI.indexOf(kui) + 1];
+						Point<int> mp = e.getEventRelativeTo(this).getPosition();
+						CubicEasing * qe = static_cast<CubicEasing *>(es);
+
+						Point<float> targetPoint = Point<float>(
+							jmap<float>(mp.x, kui->getBounds().getCentreX(), k2->getBounds().getCentreX(), 0, 1),
+							jmap<float>(mp.y, kui->getBounds().getCentreY(), k2->getBounds().getCentreY(), 0, 1)
+							);
+						
+						if(e.mods.isCtrlDown()) qe->anchor2->setPoint(targetPoint);
+						else qe->anchor1->setPoint(targetPoint);
+						repaint();
+					}
+					break;
+				}
+			}			
 		}
 	}
 }

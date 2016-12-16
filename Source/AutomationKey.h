@@ -28,6 +28,8 @@ public:
 
 	ScopedPointer<Easing> easing;
 
+	void setEasing(Easing::Type t);
+
 	float getValue(AutomationKey * nextKey, const float &position);
 
 	void onContainerParameterChangedInternal(Parameter *) override;

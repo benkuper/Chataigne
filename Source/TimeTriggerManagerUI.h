@@ -30,9 +30,13 @@ public:
 	void resized() override;
 	void updateContent();
 
+
+
 	void placeTimeTriggerUI(TimeTriggerUI *);
 
-	void addItemFromMenu() override;
+	void mouseDown(const MouseEvent &e) override;
+
+	void addItemFromMenu(Point<int> mouseDownPos) override;
 	void addItemUIInternal(TimeTriggerUI * ttui) override;
 	void removeItemUIInternal(TimeTriggerUI * ttui) override;
 

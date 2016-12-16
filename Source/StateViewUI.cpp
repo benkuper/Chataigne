@@ -29,8 +29,9 @@ StateViewUI::StateViewUI(State * state) :
 	contentContainer.addAndMakeVisible(&amui);
 	contentContainer.addAndMakeVisible(&mmui);	
 
+	
+	setSize(item->viewUISize->getPoint().x,item->viewUISize->getPoint().y);
 	updateMiniModeUI();
-	setSize(200, 250);
 	
 }
 
@@ -84,7 +85,7 @@ void StateViewUI::resized()
 
 	//Grabber
 	grabber.setBounds(r.removeFromTop(grabberHeight));
-	grabber.repaint();
+	grabber.repaint(); 
 
 	//Resizer
 	if (!item->miniMode->boolValue())
@@ -110,6 +111,8 @@ void StateViewUI::resized()
 		int gap = 4;
 		int amHeight = jmax<int>(amui.getContentHeight(), 30);
 		int mmHeight = jmax<int>(mmui.getContentHeight(), 30);
+
+		item->viewUISize->setPoint(getWidth(), getHeight());
 
 		if ((amHeight > cr.getHeight()/2 || mmHeight > cr.getHeight() /2) && amHeight + mmHeight + gap <= cr.getHeight())
 		{

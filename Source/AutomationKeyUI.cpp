@@ -13,6 +13,8 @@
 AutomationKeyUI::AutomationKeyUI(AutomationKey * key) :
 	BaseItemMinimalUI(key)
 {
+	removeMouseListener(this);
+
 	autoDrawHighlightWhenSelected = false;
 	setRepaintsOnMouseActivity(true);
 }
@@ -35,4 +37,26 @@ void AutomationKeyUI::paint(Graphics & g)
 	g.fillEllipse(er);
 	g.setColour(cc);
 	g.drawEllipse(er,1);
+}
+
+void AutomationKeyUI::mouseDown(const MouseEvent & e)
+{
+	BaseItemMinimalUI::mouseDown(e);
+	if (e.eventComponent != this) return;
+	DBG("keyUI mouse down");
+
+	if (e.mods.isLeftButtonDown())
+	{
+		if (e.mods.isCtrlDown())
+		{
+			if (e.mods.isAltDown())
+			{
+				item->easingType->setNext();
+			}
+			else
+			{
+				item->remove();
+			}
+		}
+	}
 }

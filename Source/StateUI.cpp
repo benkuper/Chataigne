@@ -16,4 +16,5 @@ StateUI::StateUI(State * state) :
 
 StateUI::~StateUI()
 {
+	DBG("StateUI destructor");
 }

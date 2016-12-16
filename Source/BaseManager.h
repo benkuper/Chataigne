@@ -125,13 +125,14 @@ void BaseManager<T>::addItemFromData(var data)
 template<class T>
 void BaseManager<T>::removeItem(T * item)
 {
-
 	items.removeObject(item, false);
 	BaseItem * bi = static_cast<BaseItem *>(item);
 	removeChildControllableContainer(bi);
 	removeItemInternal(item);
 	bi->removeBaseItemListener(this);
+
 	baseManagerListeners.call(&BaseManager::Listener::itemRemoved, item);
+
 	delete item;
 }
 

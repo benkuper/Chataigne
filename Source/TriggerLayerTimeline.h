@@ -27,6 +27,7 @@ public:
 	void resized() override;
 	virtual void updateContent() override;
 	
+	
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(TriggerLayerTimeline)
 
 };

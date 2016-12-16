@@ -44,7 +44,7 @@ public:
 	
 	void updateViewUIPosition(StateViewUI * se);
 
-	void addItemFromMenu() override;
+	void addItemFromMenu(Point<int> mouseDownPos) override;
 	
 	Point<int> getSize();
 	Point<int> getViewMousePosition();

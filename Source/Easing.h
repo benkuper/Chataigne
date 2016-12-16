@@ -11,14 +11,15 @@
 #ifndef EASING_H_INCLUDED
 #define EASING_H_INCLUDED
 
-#include "JuceHeader.h"
+#include "ControllableContainer.h"
 
 class EasingUI;
 
-class Easing
+class Easing :
+	public ControllableContainer
 {
 public:
-	enum Type { LINEAR, EASE_IN, EASE_OUT, HOLD };
+	enum Type { LINEAR, QUADRATIC, CUBIC, HOLD };
 
 	Easing(Type type);
 	virtual ~Easing();
@@ -55,6 +56,42 @@ public:
 	}
 };
 
+class QuadraticEasing :
+	public Easing
+{
+public:
+	QuadraticEasing();
+	Point2DParameter * anchor;
+
+	virtual float getValue(const float &start, const float &end, const float &weight) override
+	{
+		float relAnchor = jmap<float>(anchor->getPoint().y, start, end);
+		
+		float iw = 1 - weight;
+		float x = iw * iw * 0 + 2 * iw * weight * anchor->getPoint().x + weight * weight * 1;
+
+		float invX = 1 - x;
+		float y = invX * invX * start + 2 * invX *x * relAnchor + x * x * end;
+		
+		return y;// map<float>(x, start, end);
+	}
+};
+
+
+class CubicEasing :
+	public Easing
+{
+public:
+	CubicEasing();
+	Point2DParameter * anchor1;
+	Point2DParameter * anchor2;
+
+	virtual float getValue(const float &start, const float &end, const float &weight) override
+	{
+		if (weight >= 1) return end;
+		return start;
+	}
+};
 
 
 

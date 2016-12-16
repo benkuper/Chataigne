@@ -17,8 +17,13 @@ State::State() :
 
 	viewUIPosition = addPoint2DParameter("Position", "Position in State Machine view");
 	viewUIPosition->setBounds(-100, -100,100,100);
+	viewUIPosition->hideInEditor = true;
 	viewUIPosition->hideInOutliner = true;
 	viewUIPosition->isTargettable = false;
+
+	viewUISize = addPoint2DParameter("Size", "Size in State Machine view");
+	viewUISize->setBounds(30,60,500,500);
+	viewUISize->setPoint(200, 250);
 
 	miniMode = addBoolParameter("Mini Mode", "Set the mini mode",false);
 	miniMode->hideInOutliner = true;

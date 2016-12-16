@@ -12,20 +12,59 @@
 
 AutomationKey::AutomationKey()
 {
-	easing = new LinearEasing();
 	position = addFloatParameter("Position", "Position of the key", 0, 0, 5);
 	value = addFloatParameter("Value", "Value of the key", 0, 0, 1);
 
+
 	easingType = addEnumParameter("EasingType", "Type of transition to the next key");
 
-	easingType->addOption("Linear", Easing::Type::LINEAR);
-	easingType->addOption("Hold", Easing::Type::HOLD);
+	easingType->addOption("Linear", Easing::LINEAR);
+	easingType->addOption("Hold", Easing::HOLD);
+	easingType->addOption("Quadratic", Easing::QUADRATIC);
+	easingType->addOption("Cubic", Easing::CUBIC);
 
-	easingType->setValue("Linear");
+	easingType->setValueWithKey("Linear");
+
+	setEasing(Easing::LINEAR);
 }
 
 AutomationKey::~AutomationKey()
 {
+}
+
+void AutomationKey::setEasing(Easing::Type t)
+{
+
+	if (easing != nullptr)
+	{
+		if (easing->type == t) return;
+
+		removeChildControllableContainer(easing);
+	}
+
+	switch (t)
+	{
+	case Easing::LINEAR:
+		easing = new LinearEasing();
+		break;
+
+	case Easing::HOLD:
+		easing = new HoldEasing();
+		break;
+
+	case Easing::QUADRATIC:
+		easing = new QuadraticEasing();
+		break;
+
+	case Easing::CUBIC:
+		easing = new CubicEasing();
+		break;
+	}
+
+	if (easing != nullptr)
+	{
+		addChildControllableContainer(easing);
+	}
 }
 
 float AutomationKey::getValue(AutomationKey * nextKey, const float & _pos)
@@ -41,15 +80,6 @@ void AutomationKey::onContainerParameterChangedInternal(Parameter * p)
 {
 	if (p == easingType)
 	{
-		switch ((Easing::Type)(int)easingType->getValueData())
-		{
-		case Easing::Type::LINEAR:
-			easing = new LinearEasing();
-			break;
-
-		case Easing::Type::HOLD:
-			easing = new HoldEasing();
-			break;
-		}
+		setEasing((Easing::Type)(int)easingType->getValueData());
 	}
 }
