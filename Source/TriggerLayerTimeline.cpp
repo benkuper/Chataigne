@@ -18,6 +18,8 @@ TriggerLayerTimeline::TriggerLayerTimeline(TriggerLayer * layer) :
 
 	ttmui = new TimeTriggerManagerUI(this, &layer->ttm);
 	addAndMakeVisible(ttmui);
+
+	updateContent();
 }
 
 TriggerLayerTimeline::~TriggerLayerTimeline()

@@ -15,6 +15,7 @@ MappingOutputManagerUI::MappingOutputManagerUI(MappingOutputManager * _manager) 
 	BaseManagerUI<MappingOutputManager, MappingOutput, MappingOutputUI>("MappingOutputs", _manager)
 {
 	addItemText = "Add Output";
+	addExistingItems();
 }
 
 MappingOutputManagerUI::~MappingOutputManagerUI()

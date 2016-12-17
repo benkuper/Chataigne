@@ -19,11 +19,7 @@ StateMachineView::StateMachineView(StateManager * _manager) :
 	addItemText = "Add State";
 	setWantsKeyboardFocus(true);
 	
-	//more generic way to automatically handle createdUI ?
-	for (auto &tui : itemsUI)
-	{
-		tui->addStateViewUIListener(this);
-	}
+	addExistingItems();
 }
 
 StateMachineView::~StateMachineView()

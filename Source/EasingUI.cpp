@@ -14,9 +14,12 @@
 #pragma warning(disable:4244)
 
 EasingUI::EasingUI(Easing * e) :
+	InspectableContentComponent(e),
 	easing(e),
 	y1(0),y2(0)
 {
+	autoDrawHighlightWhenSelected = false;
+	bringToFrontOnSelect = false; 
 	setRepaintsOnMouseActivity(true);
 	easing->addAsyncContainerListener(this);
 }
@@ -36,22 +39,14 @@ void EasingUI::setKeyPositions(const int &k1, const int &k2)
 
 void EasingUI::paint(Graphics &g)
 {
-	/*
-	if (isMouseOver())
-	{
-		g.setColour(Colours::purple.withAlpha(.2f));
-		g.fillPath(hitPath);
-	}
-	*/
 	Colour c = FRONT_COLOR;
-	if (isMouseOver()) c = HIGHLIGHT_COLOR;
-	//if (k1 == currentUI) c = c.brighter();
+	if (easing->isSelected) c = HIGHLIGHT_COLOR;
+	if (isMouseOver()) c = c.brighter();
+
 	g.setColour(c);
 	g.strokePath(drawPath, PathStrokeType(isMouseOver()?2:1));
 
 	paintInternal(g);
-	//g.setColour(Colours::purple);
-	//g.strokePath(hitPath, PathStrokeType(1));
 }
 
 void EasingUI::resized()
@@ -66,6 +61,8 @@ void EasingUI::generatePath()
 	generatePathInternal();
 
 	if(drawPath.getLength()) buildHitPath();
+
+	repaint();
 }
 
 void EasingUI::buildHitPath()
@@ -162,6 +159,7 @@ void LinearEasingUI::generatePathInternal()
 HoldEasingUI::HoldEasingUI(HoldEasing * e) :
 	EasingUI(e)
 {
+
 }
 
 void HoldEasingUI::generatePathInternal()
@@ -174,7 +172,37 @@ void HoldEasingUI::generatePathInternal()
 CubicEasingUI::CubicEasingUI(CubicEasing * e) :
 	EasingUI(e)
 {
+	addChildComponent(h1);
+	addChildComponent(h2);
+	h1.setVisible(easing->isSelected);
+	h2.setVisible(easing->isSelected);
 
+	h1.addMouseListener(this,false);
+	h2.addMouseListener(this,false);
+}
+
+bool CubicEasingUI::hitTest(int tx, int ty)
+{
+	bool result = EasingUI::hitTest(tx, ty);
+	if(easing->isSelected)
+	{
+		result = result || h1.hitTest(tx, ty) || h2.hitTest(tx, ty);
+	}
+	return result;
+}
+
+void CubicEasingUI::resized()
+{
+	Point<int> p1 = Point<int>(0, y1);
+	Point<int> p2 = Point<int>(getWidth(), y2);
+
+	CubicEasing * ce = static_cast<CubicEasing *>(easing);
+
+	Point<float> a = Point<float>(jmap<float>(ce->anchor1->getPoint().x, p1.x, p2.x), jmap<float>(ce->anchor1->getPoint().y, p1.y, p2.y));
+	Point<float> b = Point<float>(jmap<float>(ce->anchor2->getPoint().x, p1.x, p2.x), jmap<float>(ce->anchor2->getPoint().y, p1.y, p2.y));
+
+	h1.setBounds(Rectangle<int>(0, 0, 10,10).withCentre(a.toInt()));
+	h2.setBounds(Rectangle<int>(0, 0, 10,10).withCentre(b.toInt()));
 }
 
 void CubicEasingUI::generatePathInternal()
@@ -188,24 +216,30 @@ void CubicEasingUI::generatePathInternal()
 	Point<float> b = Point<float>(jmap<float>(ce->anchor2->getPoint().x, p1.x, p2.x), jmap<float>(ce->anchor2->getPoint().y, p1.y, p2.y));
 
 	drawPath.cubicTo(a, b, p2.toFloat());
-
-	
 }
 
 void CubicEasingUI::paintInternal(Graphics & g)
-{
-	CubicEasing * ce = static_cast<CubicEasing *>(easing);
+{ 
+	if (!easing->isSelected) return;
+
 	Point<int> p1 = Point<int>(0, y1);
 	Point<int> p2 = Point<int>(getWidth(), y2);
-	Point<float> a = Point<float>(jmap<float>(ce->anchor1->getPoint().x, p1.x, p2.x), jmap<float>(ce->anchor1->getPoint().y, p1.y, p2.y));
-	Point<float> b = Point<float>(jmap<float>(ce->anchor2->getPoint().x, p1.x, p2.x), jmap<float>(ce->anchor2->getPoint().y, p1.y, p2.y));
 
-	g.setColour(Colours::red);
-	g.drawLine(p1.x, p1.y, a.x, a.y);
-	g.fillEllipse(Rectangle<int>(0, 0, 5, 5).toFloat().withCentre(a));
-	g.setColour(Colours::blue);
-	g.drawLine(p2.x, p2.y, b.x, b.y);
-	g.fillEllipse(Rectangle<int>(0, 0, 5, 5).toFloat().withCentre(b));
+	Colour c = LIGHTCONTOUR_COLOR;
+	if (isMouseOver()) c = c.brighter();
+	g.setColour(c);
+
+	g.drawLine(p1.x, p1.y, h1.getBounds().getCentreX(), h1.getBounds().getCentreY());
+	g.drawLine(p2.x, p2.y, h2.getBounds().getCentreX(), h2.getBounds().getCentreY());
+	
+}
+
+void CubicEasingUI::inspectableSelectionChanged(Inspectable *)
+{
+	h1.setVisible(easing->isSelected);
+	h2.setVisible(easing->isSelected);
+	resized();
+	repaint();
 }
 
 void CubicEasingUI::easingControllableFeedbackUpdate(Controllable * c)
@@ -213,6 +247,30 @@ void CubicEasingUI::easingControllableFeedbackUpdate(Controllable * c)
 	CubicEasing * ce = static_cast<CubicEasing *>(easing);
 	if (c == ce->anchor1 || c == ce->anchor2)
 	{
-		//repaint();
+		generatePath();
+		resized();
 	}
+}
+
+void CubicEasingUI::mouseDrag(const MouseEvent & e)
+{
+	if (e.eventComponent == &h1 || e.eventComponent == &h2)
+	{
+		CubicEasing * ce = static_cast<CubicEasing *>(easing);
+		
+		Point2DParameter * targetAnchor = (e.eventComponent == &h1) ? ce->anchor1 : ce->anchor2;
+		Point<int> mp = e.getEventRelativeTo(this).getPosition();
+		
+		Point<float> targetPoint = Point<float>(mp.x*1.f/ getWidth(), jmap<float>(mp.y,y1,y2,0,1));
+		targetAnchor->setPoint(targetPoint);
+	}
+}
+
+
+void EasingUI::EasingHandle::paint(Graphics & g)
+{
+	Colour c = LIGHTCONTOUR_COLOR;
+	if (isMouseOver()) c = c.brighter();
+	g.setColour(c);
+	g.fillEllipse(getLocalBounds().reduced(3).toFloat());
 }

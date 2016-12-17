@@ -41,11 +41,12 @@ public:
 	int keyYPos1;
 	int keyYPos2;
 
+	void paint(Graphics &) override {}; //avoid default item painting
+
 	void setEasingUI(EasingUI * eui);
 
 	void setKeyPositions(const int &k1, const int &k2);
 
-	void paint(Graphics &g) override;
 	void resized() override;
 
 	bool hitTest(int tx, int ty) override;
@@ -54,6 +55,7 @@ public:
 
 	void controllableFeedbackUpdateInternal(Controllable * c) override;
 
+	void inspectableSelectionChanged(Inspectable *) override;
 
 };
 

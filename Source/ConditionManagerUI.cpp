@@ -17,6 +17,8 @@ ConditionManagerUI::ConditionManagerUI(ConditionManager * _manager) :
 
 	autoSelectWithChildRespect = false;
 	addItemText = "Add Condition";
+
+	addExistingItems();
 }
 
 ConditionManagerUI::~ConditionManagerUI()

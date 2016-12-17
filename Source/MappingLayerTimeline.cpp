@@ -18,6 +18,8 @@ MappingLayerTimeline::MappingLayerTimeline(MappingLayer * layer) :
 {
 	bgColor = MAPPING_COLOR.withSaturation(.2f).darker(1);
 	addAndMakeVisible(&automationUI);
+
+	updateContent();
 }
 
 MappingLayerTimeline::~MappingLayerTimeline()

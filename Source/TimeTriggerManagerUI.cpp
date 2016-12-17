@@ -17,6 +17,8 @@ TimeTriggerManagerUI::TimeTriggerManagerUI(TriggerLayerTimeline * _timeline, Tim
 {
 	addItemText = "Add Trigger";
 	transparentBG = true;
+
+	addExistingItems();
 }
 
 TimeTriggerManagerUI::~TimeTriggerManagerUI()

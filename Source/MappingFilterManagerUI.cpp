@@ -15,6 +15,7 @@ MappingFilterManagerUI::MappingFilterManagerUI(MappingFilterManager * _manager) 
 	BaseManagerUI<MappingFilterManager, MappingFilter, MappingFilterUI>("MappingFilters", _manager)
 {
 	addItemText = "Add Filter";
+	addExistingItems();
 }
 
 MappingFilterManagerUI::~MappingFilterManagerUI()

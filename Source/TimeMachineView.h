@@ -19,7 +19,8 @@
 
 class TimeMachineView :
 	public ShapeShifterContentComponent,
-	public Inspector::InspectorListener
+	public Inspector::InspectorListener,
+	public SequenceManager::Listener
 {
 public:
 	
@@ -36,6 +37,8 @@ public:
 
 	void setSequence(Sequence * sequence);
 	void currentInspectableChanged(Inspector *) override;
+
+	void itemRemoved(Sequence *) override;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(TimeMachineView)
 };

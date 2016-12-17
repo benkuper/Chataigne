@@ -76,6 +76,7 @@ public:
 	bool drawContour;
 	bool drawHighlightWhenSelected;
 	bool transparentBG;
+	bool resizeOnChildBoundsChanged;
 
 	//menu
 	bool useDefaultMenu;
@@ -84,6 +85,8 @@ public:
 	//layout
 	bool fixedItemHeight;
 	int gap = 2;
+
+	void addExistingItems();
 
 	virtual void mouseDown(const MouseEvent &e) override;
 	virtual void paint(Graphics &g) override;
@@ -135,6 +138,7 @@ BaseManagerUI<M, T, U>::BaseManagerUI(const String & contentName, M * _manager, 
 	fixedItemHeight(true),
 	useViewport(_useViewport),
 	useDefaultMenu(true),
+	resizeOnChildBoundsChanged(true),
 	managerComparator(_manager)
 {
 	highlightColor = LIGHTCONTOUR_COLOR;
@@ -151,8 +155,8 @@ BaseManagerUI<M, T, U>::BaseManagerUI(const String & contentName, M * _manager, 
 
 	BaseManager<T>* baseM = static_cast<BaseManager<T>*>(manager);
 	baseM->addBaseManagerListener(this);
-	//add existing items
-	for (auto &t : baseM->items) addItemUI(t);
+
+	//must call addExistingItems from child class to get overrides
 }
 
 
@@ -160,6 +164,15 @@ template<class M, class T, class U>
 BaseManagerUI<M, T, U>::~BaseManagerUI()
 {
 	static_cast<BaseManager<T>*>(manager)->removeBaseManagerListener(this);
+}
+
+template<class M, class T, class U>
+void BaseManagerUI<M, T, U>::addExistingItems()
+{
+
+	//add existing items
+	for (auto &t : manager->items) addItemUI(t);
+	resized();
 }
 
 template<class M, class T, class U>
@@ -254,7 +267,7 @@ void BaseManagerUI<M, T, U>::resized()
 template<class M, class T, class U>
 void BaseManagerUI<M, T, U>::childBoundsChanged(Component *)
 {
-	resized();
+	if(resizeOnChildBoundsChanged) resized();
 }
 
 template<class M, class T, class U>

@@ -15,6 +15,8 @@ ConsequenceManagerUI::ConsequenceManagerUI(ConsequenceManager * _manager) :
 {
 	autoSelectWithChildRespect = false;
 	addItemText = "Add Consequence";
+
+	addExistingItems();
 }
 
 ConsequenceManagerUI::~ConsequenceManagerUI()

@@ -16,6 +16,7 @@ MappingLayer::MappingLayer(Sequence *_sequence) :
 	SequenceLayer(_sequence, "New Mapping Layer")
 {
 	automation.setPositionMax(sequence->totalTime->floatValue());
+	addChildControllableContainer(&automation);
 }
 
 MappingLayer::~MappingLayer()

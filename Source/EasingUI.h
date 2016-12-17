@@ -12,9 +12,10 @@
 #define EASINGUI_H_INCLUDED
 
 #include "Easing.h"
+#include "InspectableContentComponent.h"
 
 class EasingUI :
-	public Component,
+	public InspectableContentComponent,
 	public ControllableContainer::ContainerAsyncListener
 {
 public:
@@ -46,6 +47,16 @@ public:
 	virtual void newMessage(const ContainerAsyncEvent &e) override;
 	virtual void easingControllableFeedbackUpdate(Controllable *) {}
 
+
+
+	class EasingHandle :
+		public Component
+	{
+	public :
+		EasingHandle() {}
+		void paint(Graphics &g) override;
+	};
+
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(EasingUI)
 };
 
@@ -74,11 +85,22 @@ class CubicEasingUI :
 {
 public:
 	CubicEasingUI(CubicEasing * e);
-	void generatePathInternal() override;
+	
+	EasingHandle h1;
+	EasingHandle h2;
 
+
+	bool hitTest(int tx, int ty) override;
+
+	void resized() override;
+
+	void generatePathInternal() override;
 	void paintInternal(Graphics &g) override;
 
-	virtual void easingControllableFeedbackUpdate(Controllable * c) override;
+	void inspectableSelectionChanged(Inspectable *) override;
+	void easingControllableFeedbackUpdate(Controllable *) override;
+
+	void mouseDrag(const MouseEvent &e) override;
 };
 
 #endif  // EASINGUI_H_INCLUDED

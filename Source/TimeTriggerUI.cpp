@@ -19,7 +19,10 @@ TimeTriggerUI::TimeTriggerUI(TimeTrigger * _tt) :
 	autoDrawHighlightWhenSelected = false;
 	setName(_tt->niceName);
 
+	removeBT->setVisible(item->isSelected);
+	enabledBT->setVisible(item->isSelected);
 	updateSizeFromName();
+
 }
 
 TimeTriggerUI::~TimeTriggerUI()

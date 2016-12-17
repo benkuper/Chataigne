@@ -20,7 +20,9 @@ AutomationUI::AutomationUI(Automation * _automation) :
 	setViewRange(0, manager->positionMax);
 	manager->addAsyncContainerListener(this);
 
+	resizeOnChildBoundsChanged = false;
 
+	addExistingItems();
 }
 
 AutomationUI::~AutomationUI()
@@ -33,7 +35,7 @@ void AutomationUI::setCurrentPosition(float pos)
 	currentPosition = pos;
 	currentUI = getClosestKeyUIForPos(currentPosition);
 	currentValue = manager->getValueForPosition(pos);
-	repaint();
+	repaint(); //to specify ?d
 }
 
 void AutomationUI::setViewRange(float start, float end)
@@ -80,7 +82,6 @@ void AutomationUI::paint(Graphics & g)
 {
 	BaseManagerUI::paint(g);
 
-	
 	if (itemsUI.size() < 2) return;
 
 	//int count = 0;
@@ -88,55 +89,9 @@ void AutomationUI::paint(Graphics & g)
 	Rectangle<int> vr = getLocalBounds().withTop(ty);
 	g.setColour(Colours::purple.withAlpha(.1f));
 	g.fillRect(vr);
-	g.setColour(Colours::yellow);
-	g.drawEllipse(Rectangle<int>(0, 0, 5, 5).withCentre(Point<int>(getXForPos(currentPosition), ty)).toFloat(),2);
-
-	/*
-	for (int i = firstROIKey; i < lastROIKey; i++)
-	{
-		drawTransition(g, itemsUI[i], itemsUI[i + 1]);
-		count++;
-	}
-	*/
-
-	
+	g.setColour(Colours::orange);
+	g.drawEllipse(Rectangle<int>(0, 0, 3,3).withCentre(Point<int>(getXForPos(currentPosition), ty)).toFloat(), 1);
 }
-
-/*
-void AutomationUI::drawTransition(Graphics & g, AutomationKeyUI * k1, AutomationKeyUI * k2)
-{
-	Point<int> p1 = k1->getBounds().getCentre();
-	Point<int> p2 = k2->getBounds().getCentre();
-	
-	
-	Easing * e = k1->item->easing;
-	if (e != nullptr)
-	{
-		switch (e->type)
-		{
-		case Easing::Type::LINEAR:
-			g.drawLine(p1.x, p1.y, p2.x, p2.y, 1);
-			break;
-
-		case Easing::Type::BEZIER:
-			Path p;
-			CubicEasing * ce = static_cast<CubicEasing *>(e);
-			p.startNewSubPath(p1.x, p1.y);
-			Point<float> a = Point<float>(jmap<float>(ce->anchor1->getPoint().x, p1.x, p2.x), jmap<float>(ce->anchor1->getPoint().y, p1.y, p2.y));
-			Point<float> b = Point<float>(jmap<float>(ce->anchor2->getPoint().x, p1.x, p2.x), jmap<float>(ce->anchor2->getPoint().y, p1.y, p2.y));
-			p.cubicTo(a,b, p2.toFloat());
-			g.strokePath(p, PathStrokeType(1));
-			g.setColour(Colours::red);
-			g.fillEllipse(Rectangle<int>(0, 0,5,5).toFloat().withCentre(a));
-			g.setColour(Colours::blue);
-			g.fillEllipse(Rectangle<int>(0, 0, 5, 5).toFloat().withCentre(b));
-			break;
-		}
-		
-	}
-	
-}
-*/
 
 
 void AutomationUI::resized()
@@ -289,50 +244,6 @@ void AutomationUI::mouseDrag(const MouseEvent & e)
 				float val = (1 - mp.y*1.f / getHeight());
 				kui->item->position->setValue(pos);
 				kui->item->value->setValue(val);
-			}
-			else if (e.mods.isRightButtonDown())
-			{
-				Easing * es = kui->item->easing;
-				switch (es->type)
-				{
-					/*
-				case Easing::QUADRATIC:
-					
-					if (itemsUI.indexOf(kui) < itemsUI.size() - 1)
-					{
-						AutomationKeyUI * k2 = itemsUI[itemsUI.indexOf(kui) + 1];
-						Point<int> mp = e.getEventRelativeTo(this).getPosition();
-						QuadraticEasing * qe = static_cast<QuadraticEasing *>(es);
-
-						Point<float> targetPoint = Point<float>(
-							jmap<float>(mp.x, kui->getBounds().getCentreX(), k2->getBounds().getCentreX(), 0, 1),
-							jmap<float>(mp.y, kui->getBounds().getCentreY(), k2->getBounds().getCentreY(), 0, 1)
-						);
-						qe->anchor->setPoint(targetPoint);
-						repaint();
-					}
-					
-					
-					break;
-					*/
-				case Easing::BEZIER:
-					if (itemsUI.indexOf(kui) < itemsUI.size() - 1)
-					{
-						AutomationKeyUI * k2 = itemsUI[itemsUI.indexOf(kui) + 1];
-						Point<int> mp = e.getEventRelativeTo(this).getPosition();
-						CubicEasing * qe = static_cast<CubicEasing *>(es);
-
-						Point<float> targetPoint = Point<float>(
-							jmap<float>(mp.x, kui->getBounds().getX()+AutomationKeyUI::handleClickZone/2, k2->getBounds().getRight()-AutomationKeyUI::handleClickZone / 2, 0, 1),
-							jmap<float>(mp.y, kui->keyYPos1, kui->keyYPos2, 0, 1)
-							);
-						
-						if(e.mods.isCtrlDown()) qe->anchor2->setPoint(targetPoint);
-						else qe->anchor1->setPoint(targetPoint);
-						repaint();
-					}
-					break;
-				}
 			}			
 		}
 	}

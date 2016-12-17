@@ -16,13 +16,14 @@ TimeMachineView::TimeMachineView(SequenceManager * _manager) :
 	manager(_manager) 
 {
 	contentIsFlexible = true;
-
-	
 	Inspector::getInstance()->addInspectorListener(this);
+
+	SequenceManager::getInstance()->addBaseManagerListener(this);
 }
 
 TimeMachineView::~TimeMachineView()
 {
+	SequenceManager::getInstance()->removeBaseManagerListener(this);
 	if(Inspector::getInstanceWithoutCreating()) Inspector::getInstance()->removeInspectorListener(this);
 }
 
@@ -47,6 +48,7 @@ void TimeMachineView::setSequence(Sequence * sequence)
 	{
 		removeChildComponent(editor);
 		editor = nullptr;
+		
 	}
 
 	if (sequence != nullptr)
@@ -59,11 +61,19 @@ void TimeMachineView::setSequence(Sequence * sequence)
 
 void TimeMachineView::currentInspectableChanged(Inspector * i)
 {
-	if (dynamic_cast<Sequence *>(i->currentInspectable) != nullptr)
+	ControllableContainer * cc = dynamic_cast<ControllableContainer *>(i->currentInspectable);
+	Sequence * s = nullptr;
+	while (cc != nullptr)
 	{
-		setSequence(static_cast<Sequence *>(i->currentInspectable));
-	} else if (dynamic_cast<SequenceLayer *>(i->currentInspectable) != nullptr)
-	{
-		setSequence(static_cast<SequenceLayer *>(i->currentInspectable)->sequence);
+		s = dynamic_cast<Sequence *>(cc);
+		if (s != nullptr) break;
+		cc = cc->parentContainer;
 	}
+
+	if(s != nullptr) setSequence(s);
+}
+
+void TimeMachineView::itemRemoved(Sequence *s)
+{
+	if (editor != nullptr && s == editor->sequence) setSequence(nullptr);
 }

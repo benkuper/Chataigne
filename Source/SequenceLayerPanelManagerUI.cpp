@@ -15,6 +15,7 @@ SequenceLayerPanelManagerUI::SequenceLayerPanelManagerUI(SequenceLayerManager * 
 	BaseManagerUI<SequenceLayerManager, SequenceLayer, SequenceLayerPanel>("SequenceLayers", _manager)
 {
 	useDefaultMenu = false;
+	addExistingItems();
 }
 
 SequenceLayerPanelManagerUI::~SequenceLayerPanelManagerUI()

@@ -15,6 +15,7 @@ SequenceLayerTimelineManagerUI::SequenceLayerTimelineManagerUI(SequenceLayerMana
 	BaseManagerUI<SequenceLayerManager, SequenceLayer, SequenceLayerTimeline>("Layers", _manager)
 {
 	useDefaultMenu = false;
+	addExistingItems();
 }
 
 SequenceLayerTimelineManagerUI::~SequenceLayerTimelineManagerUI()

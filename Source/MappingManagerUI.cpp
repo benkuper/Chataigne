@@ -14,6 +14,8 @@ MappingManagerUI::MappingManagerUI(MappingManager * _manager) :
 	BaseManagerUI<MappingManager, Mapping, MappingUI>("Mappings", _manager)
 {
 	addItemText = "Add Mapping";
+
+	addExistingItems();
 }
 
 MappingManagerUI::~MappingManagerUI()

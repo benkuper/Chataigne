@@ -56,21 +56,16 @@ void AutomationKeyUI::setKeyPositions(const int &k1, const int &k2)
 	if (easingUI != nullptr) easingUI->setKeyPositions(keyYPos1, keyYPos2);
 
 	Rectangle<int> hr = getLocalBounds().withSize(AutomationKeyUI::handleClickZone, AutomationKeyUI::handleClickZone)
-		.withCentre(Point<int>(AutomationKeyUI::handleClickZone / 2, (1 - item->value->floatValue())*getHeight()));
+		.withCentre(Point<int>(AutomationKeyUI::handleClickZone / 2, (int)((1 - item->value->floatValue())*getHeight())));
 
 	handle.setBounds(hr);
-}
-
-void AutomationKeyUI::paint(Graphics & g)
-{
-	handle.highlight = item->isSelected;
 }
 
 void AutomationKeyUI::resized()
 {
 
 	Rectangle<int> hr = getLocalBounds().withSize(AutomationKeyUI::handleClickZone, AutomationKeyUI::handleClickZone)
-		.withCentre(Point<int>(AutomationKeyUI::handleClickZone / 2, (1 - item->value->floatValue())*getHeight()));
+		.withCentre(Point<int>(AutomationKeyUI::handleClickZone / 2, (int)((1 - item->value->floatValue())*getHeight())));
 
 	handle.setBounds(hr);
 
@@ -115,6 +110,12 @@ void AutomationKeyUI::controllableFeedbackUpdateInternal(Controllable * c)
 	}
 }
 
+void AutomationKeyUI::inspectableSelectionChanged(Inspectable * i)
+{
+	BaseItemMinimalUI::inspectableSelectionChanged(i);
+	handle.highlight = item->isSelected;
+}
+
 AutomationKeyUI::Handle::Handle() : 
 	highlight(false)
 {
@@ -136,3 +137,4 @@ void AutomationKeyUI::Handle::paint(Graphics & g)
 	g.setColour(cc);
 	g.drawEllipse(er, 1);
 }
+

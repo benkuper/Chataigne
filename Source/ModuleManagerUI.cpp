@@ -15,7 +15,7 @@ ModuleManagerUI::ModuleManagerUI(ModuleManager * _manager) :
 	BaseManagerShapeShifterUI<ModuleManager, Module, ModuleUI>("Modules", _manager)
 {
 	useDefaultMenu = false;
-
+	addExistingItems();
 }
 
 ModuleManagerUI::~ModuleManagerUI()
