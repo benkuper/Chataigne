@@ -264,6 +264,38 @@ void CubicEasingUI::mouseDrag(const MouseEvent & e)
 		Point<float> targetPoint = Point<float>(mp.x*1.f/ getWidth(), jmap<float>(mp.y,y1,y2,0,1));
 		targetAnchor->setPoint(targetPoint);
 	}
+	else
+	{
+		CubicEasing * ce = static_cast<CubicEasing *>(easing);
+
+		Point<int> p1 = Point<int>(0, y1);
+		Point<int> p2 = Point<int>(getWidth(), y2);
+		Point<int> mp = e.getEventRelativeTo(this).getPosition();
+		Point<int> mp1;
+		Point<int> mp2;
+		
+		if (e.mods.isShiftDown())
+		{
+			mp1 = Point<int>(mp.x, p1.y);
+			mp2 = Point<int>(p2.x - mp.x, p2.y);
+		}
+		else if (e.mods.isAltDown())
+		{
+			mp1 = Point<int>(p1.x, mp.y);
+			mp2 = Point<int>(p2.x, p1.y + (p2.y-mp.y));
+		}
+		else
+		{
+			mp1 = (p1 + mp) / 2;
+			mp2 = (p2 + mp) / 2;
+		}
+		
+		Point<float> t1 = Point<float>(mp1.x*1.f / getWidth(), jmap<float>(mp1.y, y1, y2, 0, 1));
+		Point<float> t2 = Point<float>(mp2.x*1.f / getWidth(), jmap<float>(mp2.y, y1, y2, 0, 1));
+
+		ce->anchor1->setPoint(t1);
+		ce->anchor2->setPoint(t2);
+	}
 }
 
 

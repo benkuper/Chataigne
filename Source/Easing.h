@@ -66,7 +66,41 @@ public:
 
 	virtual float getValue(const float &start, const float &end, const float &weight) override;
 
-	Array<float> solveCubic(float a, float b, float c, float d);
+	void onContainerParameterChanged(Parameter * p) override;
+	class Bezier
+	{
+	public:
+		Point<float> a;
+		Point<float> b;
+		Point<float> c;
+
+		const float epsilon = 1e-6f; //Precision
+
+		void setup(const Point<float> &a1, const Point<float> &a2)
+		{
+			c.setXY(3 * a1.x, 3 * a1.y);
+			b.setXY(3 * (a2.x - a1.x) - c.x, 3 * (a2.y - a1.y) - c.y);
+			a.setXY(1 - c.x - b.x, 1 - c.y - b.y);
+		}
+
+		inline float sampleCurveX(float t) {
+			return ((a.x * t + b.x) * t + c.x) * t;
+		}
+		inline float sampleCurveY(float t) {
+			return ((a.y * t + b.y) * t + c.y) * t;
+		}
+
+		inline float sampleCurveDerivativeX(float t) {
+			return (3 * a.x * t + 2 * b.x) * t + c.x;
+		}
+
+		float getValueForX(const float &tx);
+
+		float solveCurveX(const float &tx);
+	};
+
+	Bezier bezier;
+	//Array<float> solveCubic(float a, float b, float c, float d);
 
 	EasingUI * createUI() override;
 };
