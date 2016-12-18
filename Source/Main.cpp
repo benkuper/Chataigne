@@ -15,10 +15,13 @@ inline void ChataigneApplication::initialise(const String & commandLine)
 	appProperties = new ApplicationProperties();
 	appProperties->setStorageParameters(options);
 
+	
 	mainWindow = new MainWindow(getApplicationName());
-
+	
 	Engine * engine = Engine::getInstance();
+	
 	engine->parseCommandline(commandLine);
+	
 	if (!engine->getFile().existsAsFile()) {
 		engine->createNewGraph();
 		engine->setChangedFlag(false);

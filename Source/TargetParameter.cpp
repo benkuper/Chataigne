@@ -29,6 +29,7 @@ TargetParameter::~TargetParameter()
 {
 	if (rootContainer != nullptr) rootContainer->removeControllableContainerListener(this);
 	setTarget((ControllableContainer *)nullptr);
+	setTarget((Controllable *)nullptr);
 	setValue("");
 }
 

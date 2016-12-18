@@ -72,40 +72,43 @@ public:
 	ControllableContainer * source;
 	ControllableContainer * targetContainer;
 	Controllable * targetControllable;
+
+	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ContainerAsyncEvent)
 };
 
 
 
-class ControllableContainer :	
+class ControllableContainer :
 	public Parameter::Listener,
 	public Controllable::Listener,
-	public Parameter::AsyncListener, 
-	public Trigger::Listener, 
+	public Parameter::AsyncListener,
+	public Trigger::Listener,
 	public ControllableContainerListener,
 	public Inspectable
 
 {
 public:
-    ControllableContainer(const String &niceName);
-    virtual ~ControllableContainer();
+	ControllableContainer(const String &niceName);
+	virtual ~ControllableContainer();
 
-    String niceName;
-    String shortName;
-    bool hasCustomShortName;
+	String niceName;
+	String shortName;
+	bool hasCustomShortName;
 
 	bool canHavePresets;
 	StringParameter * currentPresetName;
 	Trigger * savePresetTrigger;
 	PresetManager::Preset * currentPreset;
 
-    bool skipControllableNameInAddress;
-    void setNiceName(const String &_niceName);
-    void setCustomShortName(const String &_shortName);
-    void setAutoShortName();
+	bool skipControllableNameInAddress;
+	void setNiceName(const String &_niceName);
+	void setCustomShortName(const String &_shortName);
+	void setAutoShortName();
 	void setCanHavePresets(bool value);
 
 	bool nameCanBeChangedByUser;
 	bool isTargettable; //for controllableChooser
+	bool hideInEditor;
 
 	//save / load
 	bool presetSavingIsRecursive;
@@ -116,16 +119,16 @@ public:
 
 	Uuid uid;
 
-    OwnedArray<Controllable,CriticalSection> controllables;
-    Array<WeakReference<ControllableContainer>  > controllableContainers;
-    WeakReference<ControllableContainer> parentContainer;
+	OwnedArray<Controllable, CriticalSection> controllables;
+	Array<WeakReference<ControllableContainer>  > controllableContainers;
+	WeakReference<ControllableContainer> parentContainer;
 
 	void addControllable(Controllable * p);
 	void addParameter(Parameter * p);
-    FloatParameter * addFloatParameter(const String &niceName, const String &description, const float &initialValue, const float &minValue = 0, const float &maxValue = 1, const bool &enabled = true);
-    IntParameter * addIntParameter(const String &niceName, const String &description, const int &initialValue, const int &minValue, const int &maxValue, const bool &enabled = true);
-    BoolParameter * addBoolParameter(const String &niceName, const String &description, const bool &value, const bool &enabled = true);
-    StringParameter * addStringParameter(const String &niceName, const String &description, const String &value, const bool &enabled = true);
+	FloatParameter * addFloatParameter(const String &niceName, const String &description, const float &initialValue, const float &minValue = 0, const float &maxValue = 1, const bool &enabled = true);
+	IntParameter * addIntParameter(const String &niceName, const String &description, const int &initialValue, const int &minValue, const int &maxValue, const bool &enabled = true);
+	BoolParameter * addBoolParameter(const String &niceName, const String &description, const bool &value, const bool &enabled = true);
+	StringParameter * addStringParameter(const String &niceName, const String &description, const String &value, const bool &enabled = true);
 	EnumParameter * addEnumParameter(const String &niceName, const String &description, const bool &enabled = true);
 	Point2DParameter * addPoint2DParameter(const String &niceName, const String &description, const bool &enabled = true);
 	Point3DParameter * addPoint3DParameter(const String &niceName, const String &description, const bool &enabled = true);
@@ -136,61 +139,61 @@ public:
 	void addParameterInternal(Parameter * p);
 
 
-    void removeControllable(Controllable * c);
-    Controllable * getControllableByName(const String &name, bool searchNiceNameToo = false);
+	void removeControllable(Controllable * c);
+	Controllable * getControllableByName(const String &name, bool searchNiceNameToo = false);
 
-    void addChildControllableContainer(ControllableContainer * container);
-    void removeChildControllableContainer(ControllableContainer *container);
-    // add indexed container (ensure localIndex and position in the child container array are the same)
-    // idx of -1 add after the ast indexed (may be not the last, array can contain other non indexed elements)
-    void addChildIndexedControllableContainer(ControllableContainer * container,int idx = -1);
-    void removeChildIndexedControllableContainer(int idx);
-    int getNumberOfIndexedContainer();
-    int getIndexedPosition();
-    bool hasIndexedContainers();
-    bool isIndexedContainer();
-    // can be overriden if indexed container are removed from the middle of the list,
-    // allowing Indexed containers to react to index change
-    virtual void localIndexChanged();
+	void addChildControllableContainer(ControllableContainer * container);
+	void removeChildControllableContainer(ControllableContainer *container);
+	// add indexed container (ensure localIndex and position in the child container array are the same)
+	// idx of -1 add after the ast indexed (may be not the last, array can contain other non indexed elements)
+	void addChildIndexedControllableContainer(ControllableContainer * container, int idx = -1);
+	void removeChildIndexedControllableContainer(int idx);
+	int getNumberOfIndexedContainer();
+	int getIndexedPosition();
+	bool hasIndexedContainers();
+	bool isIndexedContainer();
+	// can be overriden if indexed container are removed from the middle of the list,
+	// allowing Indexed containers to react to index change
+	virtual void localIndexChanged();
 
-    ControllableContainer * getControllableContainerByName(const String &name, bool searchNiceNameToo = false);
-    ControllableContainer * getControllableContainerForAddress(const String &address, bool recursive = false, bool getNotExposed = false);
+	ControllableContainer * getControllableContainerByName(const String &name, bool searchNiceNameToo = false);
+	ControllableContainer * getControllableContainerForAddress(const String &address, bool recursive = false, bool getNotExposed = false);
 	ControllableContainer * getControllableContainerForAddress(StringArray  addressSplit, bool recursive = false, bool getNotExposed = false);
 
-    void setParentContainer(ControllableContainer * container);
-    void updateChildrenControlAddress();
+	void setParentContainer(ControllableContainer * container);
+	void updateChildrenControlAddress();
 
 
-    virtual Array<WeakReference<Controllable>> getAllControllables(bool recursive = false, bool getNotExposed = false);
-    virtual Array<WeakReference<Parameter>> getAllParameters(bool recursive = false, bool getNotExposed = false);
-    virtual Controllable * getControllableForAddress(const String &address, bool recursive = true, bool getNotExposed = false);
-    virtual Controllable * getControllableForAddress(StringArray addressSplit, bool recursive = true, bool getNotExposed = false);
+	virtual Array<WeakReference<Controllable>> getAllControllables(bool recursive = false, bool getNotExposed = false);
+	virtual Array<WeakReference<Parameter>> getAllParameters(bool recursive = false, bool getNotExposed = false);
+	virtual Controllable * getControllableForAddress(const String &address, bool recursive = true, bool getNotExposed = false);
+	virtual Controllable * getControllableForAddress(StringArray addressSplit, bool recursive = true, bool getNotExposed = false);
 	bool containsControllable(Controllable * c, int maxSearchLevels = -1);
-	String getControlAddress(ControllableContainer * relativeTo=nullptr);
+	String getControlAddress(ControllableContainer * relativeTo = nullptr);
 
 	void orderControllablesAlphabetically();
-    
+
 	virtual bool loadPresetWithName(const String &name);
-    virtual bool loadPreset(PresetManager::Preset * preset);
+	virtual bool loadPreset(PresetManager::Preset * preset);
 	virtual PresetManager::Preset* saveNewPreset(const String &name);
-    virtual bool saveCurrentPreset();
+	virtual bool saveCurrentPreset();
 	virtual int getNumPresets();
 
-    virtual bool resetFromPreset();
+	virtual bool resetFromPreset();
 
-    //    to be overriden
-    virtual void loadPresetInternal(PresetManager::Preset *){};
-    virtual void savePresetInternal(PresetManager::Preset *){};
+	//    to be overriden
+	virtual void loadPresetInternal(PresetManager::Preset *) {};
+	virtual void savePresetInternal(PresetManager::Preset *) {};
 
 	virtual String getPresetFilter();
 	virtual var getPresetValueFor(Parameter * p);//Any parameter that is part of a this preset can use this function
 
-    void dispatchFeedback(Controllable * c);
+	void dispatchFeedback(Controllable * c);
 
-    // Inherited via Parameter::Listener
-    virtual void parameterValueChanged(Parameter * p) override;
-    // Inherited via Trigger::Listener
-    virtual void triggerTriggered(Trigger * p) override;
+	// Inherited via Parameter::Listener
+	virtual void parameterValueChanged(Parameter * p) override;
+	// Inherited via Trigger::Listener
+	virtual void triggerTriggered(Trigger * p) override;
 
 	virtual void askForRemoveControllable(Controllable * c) override;
 
@@ -204,16 +207,19 @@ public:
 	String getUniqueNameInContainer(const String &sourceName, int suffix = 0);
 
 private:
-    // internal callback that a controllableContainer can override to react to any of it's parameter change
-    //@ ben this is to avoid either:
-    //      adding controllableContainerListener for each implementation
-    //      or overriding parameterValueChanged and needing to call ControllableContainer::parameterValueChanged in implementation (it should stay independent as a different mechanism)
-    //      or using dispatch feedback that triggers only exposedParams
+	// internal callback that a controllableContainer can override to react to any of it's parameter change
+	//@ ben this is to avoid either:
+	//      adding controllableContainerListener for each implementation
+	//      or overriding parameterValueChanged and needing to call ControllableContainer::parameterValueChanged in implementation (it should stay independent as a different mechanism)
+	//      or using dispatch feedback that triggers only exposedParams
 
 	virtual void onContainerNiceNameChanged() {};
 	virtual void onContainerShortNameChanged() {};
-    virtual void onContainerParameterChanged(Parameter *) {};
+	virtual void onContainerParameterChanged(Parameter *) {};
+	virtual void onExternalParameterChanged(Parameter *) {}; //When listening to other child controllable then this container's children
 	virtual void onContainerTriggerTriggered(Trigger *) {};
+	virtual void onExternalTriggerTriggered(Trigger *) {}; //When listening to other child controllable then this container's children
+
     virtual void onContainerParameterChangedAsync(Parameter *,const var & /*value*/){};
 
 	

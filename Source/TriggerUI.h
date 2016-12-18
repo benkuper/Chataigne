@@ -21,7 +21,6 @@ public :
     virtual ~TriggerUI();
 
     WeakReference<Trigger>  trigger;
-	bool showLabel;
 
     // Inherited via AsyncListener
 	void newMessage(const WeakReference<Trigger> &) override;

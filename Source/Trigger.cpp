@@ -35,7 +35,8 @@ TriggerBlinkUI * Trigger::createBlinkUI(Trigger * target)
 }
 
 ControllableUI * Trigger::createDefaultUI(Controllable * targetControllable){
-    return createBlinkUI(dynamic_cast<Trigger *>(targetControllable));
+	if (isControllableFeedbackOnly) return createBlinkUI(dynamic_cast<Trigger *>(targetControllable));
+	else return createButtonUI(dynamic_cast<Trigger *>(targetControllable));
 }
 
 void Trigger::trigger()

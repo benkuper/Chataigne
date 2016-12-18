@@ -13,7 +13,7 @@
 
 
 #include "Controllable.h"
-#include "Style.h"//keep
+#include "Style.h"//keep 
 
 class ControllableUI : public Component, public SettableTooltipClient, public Controllable::Listener
 {
@@ -23,6 +23,8 @@ public:
 
 	String tooltip;
     WeakReference<Controllable>  controllable;
+
+	bool showLabel;
 
 	bool forceFeedbackOnly; //if false, will rely on Controllable isEditable property. if true, will be force to no editable
 	void setForceFeedbackOnly(bool value);

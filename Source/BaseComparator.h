@@ -86,7 +86,7 @@ public:
 	EnumParameter * whenToCompare;
 	IntParameter * compareFrequency;
 
-	void parameterValueChanged(Parameter * p);
+	void onExternalParameterChanged(Parameter * p) override;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ParameterComparator)
 };

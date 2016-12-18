@@ -35,6 +35,7 @@ ControllableContainer::ControllableContainer(const String & niceName) :
 	saveAndLoadName(false),
 	nameCanBeChangedByUser(true),
 	isTargettable(true),
+	hideInEditor(false),
 	queuedNotifier(50) //what to put in max size ??
 {
   setNiceName(niceName);
@@ -684,27 +685,32 @@ void ControllableContainer::dispatchFeedback(Controllable * c)
 
 void ControllableContainer::parameterValueChanged(Parameter * p)
 {
-	onContainerParameterChanged(p);
-	if (p->isControllableExposed) dispatchFeedback(p);
+	if (p->parentContainer == this)
+	{
+		onContainerParameterChanged(p);
+		if (p->isControllableExposed) dispatchFeedback(p);
+	}
+	else
+	{
+		onExternalParameterChanged(p);
+	}
+	
 }
 
 
 void ControllableContainer::triggerTriggered(Trigger * t)
 {
-
-	if (t == savePresetTrigger)
+	if (t->parentContainer == this)
 	{
-		saveCurrentPreset();
-		
-	} else
+		if (t == savePresetTrigger) saveCurrentPreset();
+		else onContainerTriggerTriggered(t);
+	}
+	else
 	{
-		onContainerTriggerTriggered(t);
+		onExternalTriggerTriggered(t);
 	}
 
     if (t->isControllableExposed) dispatchFeedback(t);
-
-	
-
 }
 
 void ControllableContainer::askForRemoveControllable(Controllable * c)

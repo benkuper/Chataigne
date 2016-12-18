@@ -38,9 +38,10 @@ public:
 
 
 	virtual void buttonClicked(Button * b) override;
+
 protected:
 	void valueChanged(const var & v) override;
-
+	//void controllableStateChanged(Controllable *) override;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(TargetParameterUI)
 };

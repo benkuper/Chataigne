@@ -153,23 +153,24 @@ CCInnerContainer::CCInnerContainer(GenericControllableContainerEditor * _editor,
 void CCInnerContainer::resetAndBuild()
 {
 	clear();
+	if (container->hideInEditor) return;
 
 	for (auto &c : container->controllables)
 	{
 		if (!c->hideInEditor) addControllableUI(c);
 	}
 
-	if (level < maxLevel)
+	if (level < maxLevel || container->recursiveInspectionLevel > 0)
 	{
 		for (auto &cc : container->controllableContainers)
 		{
-			addCCInnerUI(cc);
+			if(!cc->hideInEditor) addCCInnerUI(cc);
 		}
 	} else if (level == maxLevel && canAccessLowerContainers)
 	{
 		for (auto &cc : container->controllableContainers)
 		{
-			addCCLink(cc);
+			if (!cc->hideInEditor) addCCLink(cc);
 		}
 	}
 }

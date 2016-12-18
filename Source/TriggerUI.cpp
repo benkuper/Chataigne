@@ -12,8 +12,7 @@
 
 TriggerUI::TriggerUI(Trigger * trigger) :
     ControllableUI(trigger),
-    trigger(trigger),
-	showLabel(true)
+    trigger(trigger)
 {
     trigger->addAsyncTriggerListener(this);
 }

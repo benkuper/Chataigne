@@ -47,57 +47,65 @@ void SequenceTimelineSeeker::resized()
 
 void SequenceTimelineSeeker::mouseDown(const MouseEvent & e)
 {
-	viewStartAtMouseDown = sequence->viewStartTime->floatValue();
-	viewEndAtMouseDown = sequence->viewEndTime->floatValue();
-	timeAnchorAtMouseDown = getTimeForX(e.getEventRelativeTo(this).x);
-	viewTimeAtMouseDown = (viewEndAtMouseDown - viewStartAtMouseDown);
+	if (e.mods.isLeftButtonDown())
+	{
+		viewStartAtMouseDown = sequence->viewStartTime->floatValue();
+		viewEndAtMouseDown = sequence->viewEndTime->floatValue();
+		timeAnchorAtMouseDown = getTimeForX(e.getEventRelativeTo(this).x);
+		viewTimeAtMouseDown = (viewEndAtMouseDown - viewStartAtMouseDown);
+	}
+	else
+	{
+		sequence->viewStartTime->setValue(0);
+		sequence->viewEndTime->setValue(sequence->totalTime->floatValue());
+	}
 
 	//DBG("viewStartAtMouseDown : " << viewStartAtMouseDown << "/ viewEndAtMouseDown : " << viewEndAtMouseDown << "/ timeAnchorAtMouseDown : " << timeAnchorAtMouseDown);
-
 }
 
 
 void SequenceTimelineSeeker::mouseDrag(const MouseEvent & e)
 {
 
-	
-	if (e.originalComponent == &handle)
+	if (e.mods.isLeftButtonDown())
 	{
-		
-		float offsetX = e.getOffsetFromDragStart().x;
-		float offsetY = e.getOffsetFromDragStart().y;
+		if (e.originalComponent == &handle)
+		{
 
-		offsetX = offsetX < 0 ? jmin<int>(offsetX + minActionDistX, 0) : jmax<int>(offsetX - minActionDistX, 0);
-		offsetY = offsetY< 0 ? jmin<int>(offsetY + minActionDistY, 0) : jmax<int>(offsetY - minActionDistY, 0);
+			float offsetX = e.getOffsetFromDragStart().x;
+			float offsetY = e.getOffsetFromDragStart().y;
 
-		offsetY *= sequence->totalTime->floatValue();
-		if (e.mods.isShiftDown()) offsetY *= 2;
-		if (e.mods.isAltDown()) offsetY /= 2;
-		offsetY *= zoomSensitivity;
+			offsetX = offsetX < 0 ? jmin<int>(offsetX + minActionDistX, 0) : jmax<int>(offsetX - minActionDistX, 0);
+			offsetY = offsetY< 0 ? jmin<int>(offsetY + minActionDistY, 0) : jmax<int>(offsetY - minActionDistY, 0);
 
-		float viewTimeFactor = ((viewTimeAtMouseDown - offsetY) / viewTimeAtMouseDown);
+			offsetY *= sequence->totalTime->floatValue();
+			if (e.mods.isShiftDown()) offsetY *= 2;
+			if (e.mods.isAltDown()) offsetY /= 2;
+			offsetY *= zoomSensitivity;
 
-		if (viewTimeFactor == 0) return;
+			float viewTimeFactor = ((viewTimeAtMouseDown - offsetY) / viewTimeAtMouseDown);
 
-		float startDist = timeAnchorAtMouseDown - viewStartAtMouseDown;
-		float endDist = timeAnchorAtMouseDown - viewEndAtMouseDown;
-		float newViewStart = timeAnchorAtMouseDown - startDist*viewTimeFactor + getTimeForX(offsetX);
-		float newViewEnd = timeAnchorAtMouseDown - endDist*viewTimeFactor + getTimeForX(offsetX);
-		
-		//newViewEnd = jmax<float>(newViewEnd, newViewStart + 1);
+			if (viewTimeFactor == 0) return;
 
-		sequence->viewStartTime->setValue(newViewStart);
-		sequence->viewEndTime->setValue(newViewEnd);
-		
-		
+			float startDist = timeAnchorAtMouseDown - viewStartAtMouseDown;
+			float endDist = timeAnchorAtMouseDown - viewEndAtMouseDown;
+			float newViewStart = timeAnchorAtMouseDown - startDist*viewTimeFactor + getTimeForX(offsetX);
+			float newViewEnd = timeAnchorAtMouseDown - endDist*viewTimeFactor + getTimeForX(offsetX);
+
+			//newViewEnd = jmax<float>(newViewEnd, newViewStart + 1);
+
+			sequence->viewStartTime->setValue(newViewStart);
+			sequence->viewEndTime->setValue(newViewEnd);
+
+
+		}
+		else
+		{
+			float destTime = getTimeForX(e.getPosition().x);
+			sequence->viewStartTime->setValue(destTime - viewTimeAtMouseDown / 2);
+			sequence->viewEndTime->setValue(destTime + viewTimeAtMouseDown / 2);
+		}
 	}
-	else
-	{
-		float destTime = getTimeForX(e.getPosition().x);
-		sequence->viewStartTime->setValue(destTime -viewTimeAtMouseDown/2);
-		sequence->viewEndTime->setValue(destTime+viewTimeAtMouseDown/2);
-	}
-	
 }
 
 

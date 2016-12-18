@@ -172,8 +172,8 @@ void StateViewUI::itemUIRemoved(MappingUI *)
 void StateViewUI::Grabber::paint(Graphics & g)
 {
 	Rectangle<int> r = getLocalBounds();
-	g.setColour(BG_COLOR.brighter(.2f));
-	int numLines = 3;
+	g.setColour(BG_COLOR.brighter(.3f));
+	const int numLines = 3;
 	for (int i = 0; i < numLines; i++)
 	{
 		float th = (i + 1)*(float)getHeight() / ((float)numLines + 1);

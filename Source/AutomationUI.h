@@ -34,7 +34,8 @@ public:
 	float currentValue;
 	AutomationKeyUI * currentUI;
 
-	void setCurrentPosition(float pos);
+	void setCurrentPosition(const float &pos);
+	void setCurrentValue(const float &val);
 
 	void setViewRange(float start, float end);
 	void updateROI();

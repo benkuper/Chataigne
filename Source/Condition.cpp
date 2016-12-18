@@ -55,8 +55,10 @@ void Condition::setSourceControllable(WeakReference<Controllable> c)
 
 	if (sourceControllable != nullptr)
 	{
+		/*
 		if (sourceControllable->type == Controllable::TRIGGER) ((Trigger *)c.get())->addTriggerListener(this);
 		else ((Parameter *)sourceControllable.get())->addParameterListener(this);
+		*/
 
 		var oldData = var();
 		if (comparator != nullptr) oldData = comparator->getJSONData();
@@ -91,7 +93,7 @@ void Condition::onContainerParameterChangedInternal(Parameter * p)
 	} else if (p == isValid)
 	{
 		conditionListeners.call(&ConditionListener::conditionValidationChanged, this);
-	}if (p == enabled)
+	}else if (p == enabled)
 	{
 		isValid->setValue(false);
 	}

@@ -16,6 +16,7 @@ juce_ImplementSingleton(SequenceManager)
 SequenceManager::SequenceManager() :
 	BaseManager<Sequence>("Sequences")
 {
+	
 }
 
 SequenceManager::~SequenceManager()

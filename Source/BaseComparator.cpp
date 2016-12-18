@@ -90,8 +90,7 @@ ParameterComparator::~ParameterComparator()
 	sourceParameter->removeParameterListener(this);
 }
 
-void ParameterComparator::parameterValueChanged(Parameter * p)
+void ParameterComparator::onExternalParameterChanged(Parameter * p)
 {
 	if (p == sourceParameter) compare();
-	else ControllableContainer::parameterValueChanged(p);
 }

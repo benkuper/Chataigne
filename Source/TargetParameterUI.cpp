@@ -80,6 +80,8 @@ void TargetParameterUI::updateLabel()
 
 void TargetParameterUI::showPopupAndGetTarget()
 {
+	if (!parameter->enabled) return;
+
 	if (targetParameter->targetType == TargetParameter::TargetType::CONTROLLABLE)
 	{
 		ControllableChooserPopupMenu p(targetParameter->rootContainer);
@@ -108,3 +110,17 @@ void TargetParameterUI::valueChanged(const var &)
 	updateLabel();
 	repaint();
 }
+
+/*
+void TargetParameterUI::controllableStateChanged(Controllable *)
+{
+	if (parameter->enabled)
+	{
+		setInterceptsMouseClicks(true, true);
+	}
+	else
+	{
+		setInterceptsMouseClicks(false, false);
+	}
+}
+*/

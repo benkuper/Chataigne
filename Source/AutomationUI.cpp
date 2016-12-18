@@ -30,11 +30,16 @@ AutomationUI::~AutomationUI()
 	manager->removeAsyncContainerListener(this);
 }
 
-void AutomationUI::setCurrentPosition(float pos)
+void AutomationUI::setCurrentPosition(const float &pos)
 {
 	currentPosition = pos;
 	currentUI = getClosestKeyUIForPos(currentPosition);
-	currentValue = manager->getValueForPosition(pos);
+	
+}
+
+void AutomationUI::setCurrentValue(const float &val)
+{
+	currentValue = val;
 	repaint(); //to specify ?d
 }
 

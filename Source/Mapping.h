@@ -29,6 +29,10 @@ public:
 	MappingFilterManager fm;
 	MappingOutputManager om;
 
+
+	bool inputIsLocked;
+	void lockInputTo(Parameter * lockParam);
+
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
 

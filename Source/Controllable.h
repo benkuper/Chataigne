@@ -74,7 +74,7 @@ public:
   void setCustomShortName(const String &_shortName);
   void setAutoShortName();
 
-  void setEnabled(bool value, bool silentSet = false, bool force = false);
+  virtual void setEnabled(bool value, bool silentSet = false, bool force = false);
 
   void setParentContainer(ControllableContainer * container);
   void updateControlAddress();

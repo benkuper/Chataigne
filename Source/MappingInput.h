@@ -12,6 +12,7 @@
 #define MAPPINGINPUT_H_INCLUDED
 
 #include "ControllableContainer.h"
+#include "TargetParameter.h"
 
 class MappingInput :
 	public ControllableContainer
@@ -20,7 +21,26 @@ public:
 	MappingInput();
 	~MappingInput();
 
-	Controllable * referenceModule;
+	TargetParameter * inputTarget;
+	Parameter * inputReference;
+
+	void setInput(Parameter * input);
+
+	void onContainerParameterChanged(Parameter * p) override;
+	void onExternalParameterChanged(Parameter *p) override;
+
+	class  Listener
+	{
+	public:
+		/** Destructor. */
+		virtual ~Listener() {}
+		virtual void inputReferenceChanged(Parameter *) {};
+		virtual void inputParameterValueChanged(Parameter *) {};
+	};
+
+	ListenerList<Listener> mappinginputListeners;
+	void addMappingInputListener(Listener* newListener) { mappinginputListeners.add(newListener); }
+	void removeMappingInputListener(Listener* listener) { mappinginputListeners.remove(listener); }
 };
 
 

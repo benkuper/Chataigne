@@ -13,6 +13,8 @@
 
 #include "SequenceLayer.h"
 #include "Automation.h"
+#include "Mapping.h"
+
 class MappingLayer :
 	public SequenceLayer
 {
@@ -20,7 +22,11 @@ public:
 	MappingLayer(Sequence * _sequence);
 	~MappingLayer();
 
-	Automation automation;
+	FloatParameter * curveValue; //later : float / point2d / point3d / color (4d) for multi curve layer
+	FloatParameter * mappedValue; //later : polymorph out from mapping, depending on filters
+
+	Automation automation; //later: automation Manager to allow for multi curve layer
+	Mapping mapping;
 
 	void loadJSONDataInternal(var data) override;
 
@@ -32,6 +38,7 @@ public:
 	virtual SequenceLayerTimeline * getTimelineUI() override;
 
 	virtual void sequenceTotalTimeChanged(Sequence *) override;
+	virtual void sequenceCurrentTimeChanged(Sequence *, float /*prevTime */, bool /*evaluateSkippedData */) override;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MappingLayer)
 };

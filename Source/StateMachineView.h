@@ -48,6 +48,7 @@ public:
 	
 	Point<int> getSize();
 	Point<int> getViewMousePosition();
+	Point<int> getViewPos(const Point<int> &originalPos);
 	Point<float> getEditorsCenter();
 
 	void homeView();

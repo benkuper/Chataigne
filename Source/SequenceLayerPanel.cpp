@@ -14,7 +14,7 @@ SequenceLayerPanel::SequenceLayerPanel(SequenceLayer * layer) :
 	BaseItemUI<SequenceLayer>(layer),
 	resizer(this,nullptr)
 {
-	resizer.setBorderThickness(BorderSize<int>(0, 0, 3, 0));
+	resizer.setBorderThickness(BorderSize<int>(0, 0, 6, 0));
 	addAndMakeVisible(&resizer);
 	resizer.toBack();
 

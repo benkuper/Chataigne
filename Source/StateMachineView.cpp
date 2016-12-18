@@ -105,7 +105,7 @@ void StateMachineView::updateViewUIPosition(StateViewUI * se)
 }
 void StateMachineView::addItemFromMenu(Point<int> mouseDownPos)
 {
-	manager->addItem(mouseDownPos.toFloat() / getSize());
+	manager->addItem(getViewPos(mouseDownPos).toFloat() / getSize());
 }
 
 Point<int> StateMachineView::getSize()
@@ -115,7 +115,12 @@ Point<int> StateMachineView::getSize()
 
 Point<int> StateMachineView::getViewMousePosition()
 {
-	return getMouseXYRelative() - getSize() / 2 - viewOffset;
+	return getViewPos(getMouseXYRelative());
+}
+
+Point<int> StateMachineView::getViewPos(const Point<int> &originalPos)
+{
+	return originalPos - getSize() / 2 - viewOffset;
 }
 
 Point<float> StateMachineView::getEditorsCenter()

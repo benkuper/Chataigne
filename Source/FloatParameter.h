@@ -30,6 +30,7 @@ public:
     FloatStepperUI * createStepper(FloatParameter * target = nullptr);
     ControllableUI * createDefaultUI(Controllable * targetControllable = nullptr) override;
 
+	bool checkValueIsTheSame(var oldValue, var newValue) override;
 
 	static FloatParameter * create() { return new FloatParameter("New Float Parameter", "",0); }
 	virtual String getTypeString() const override { return "Float"; }

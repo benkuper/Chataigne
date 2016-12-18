@@ -20,7 +20,6 @@ AutomationKeyUI::AutomationKeyUI(AutomationKey * key) :
 	//removeMouseListener(this);
 
 	autoDrawHighlightWhenSelected = false;
-	setRepaintsOnMouseActivity(true);
 
 	setEasingUI(item->easing != nullptr ? item->easing->createUI() : nullptr);
 }

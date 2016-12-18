@@ -15,13 +15,15 @@
 ControllableUI::ControllableUI(Controllable * controllable) :
 	Component(controllable->niceName),
 	controllable(controllable),
-	forceFeedbackOnly(false)
+	forceFeedbackOnly(false),
+	showLabel(true)
 {
     jassert(controllable!=nullptr);
     updateTooltip();
     controllable->addControllableListener(this);
 
-	
+	setEnabled(controllable->enabled);
+	setInterceptsMouseClicks(controllable->enabled,controllable->enabled);
 }
 
 ControllableUI::~ControllableUI()
@@ -37,7 +39,9 @@ void ControllableUI::setForceFeedbackOnly(bool value)
 
 void ControllableUI::controllableStateChanged(Controllable * c)
 {
+	setEnabled(c->enabled);
     setAlpha(c->enabled ? 1 : .5f);
+	setInterceptsMouseClicks(controllable->enabled, controllable->enabled);
 }
 
 void ControllableUI::controllableControlAddressChanged(Controllable *)

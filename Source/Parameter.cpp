@@ -57,10 +57,14 @@ void Parameter::setRange(var min, var max, bool setDefaultRange){
 	}
     minimumValue = min;
     maximumValue = max;
+
+	
     listeners.call(&Listener::parameterRangeChanged,this);
 	var arr;
 	arr.append(minimumValue);arr.append(maximumValue);
 	queuedNotifier.addMessage(new ParamWithValue(this,arr));
+
+	setValue(value); //if value is outside range, this will change the value
 }
 
 void Parameter::setValueInternal(var & _value) //to override by child classes

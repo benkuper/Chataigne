@@ -43,3 +43,9 @@ FloatStepperUI * FloatParameter::createStepper(FloatParameter * target)
 ControllableUI * FloatParameter::createDefaultUI(Controllable * targetControllable) {
     return createSlider(dynamic_cast<FloatParameter *>(targetControllable));
 }
+
+bool FloatParameter::checkValueIsTheSame(var oldValue, var newValue)
+{
+	return jlimit<float>(minimumValue, maximumValue, newValue) == (float)oldValue;
+}
+

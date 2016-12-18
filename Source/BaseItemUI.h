@@ -30,6 +30,7 @@ public:
 	int headerHeight;
 	int headerGap;
 
+
 	ScopedPointer<StringParameterUI> nameUI;
 	ScopedPointer<BoolToggleUI> enabledBT;
 	ScopedPointer<ImageButton> removeBT;
@@ -63,6 +64,7 @@ BaseItemUI<T>::BaseItemUI(T * _item) :
 	this->addAndMakeVisible(removeBT);
 	removeBT->addListener(this);
 
+	setHighlightOnMouseOver(true);
 	this->setSize(100, headerHeight+4);
 }
 

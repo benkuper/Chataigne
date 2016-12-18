@@ -28,6 +28,9 @@ public:
 	
 	//ui
 	Colour bgColor;
+	bool highlightOnMouseOver;
+
+	void setHighlightOnMouseOver(bool highlight);
 
 	void paint(Graphics &g) override;
 
@@ -49,7 +52,8 @@ template<class T>
 BaseItemMinimalUI<T>::BaseItemMinimalUI(T * _item) :
 	InspectableContentComponent(_item),
 	item(_item),
-	bgColor(BG_COLOR.brighter(.1f))
+	bgColor(BG_COLOR.brighter(.1f)),
+	highlightOnMouseOver(false)
 {
 	addMouseListener(this, true);
 	getBaseItem()->addAsyncContainerListener(this);
@@ -65,10 +69,19 @@ BaseItemMinimalUI<T>::~BaseItemMinimalUI()
 
 
 template<class T>
+void BaseItemMinimalUI<T>::setHighlightOnMouseOver(bool highlight)
+{
+	setRepaintsOnMouseActivity(highlight);
+	highlightOnMouseOver = highlight;
+}
+
+template<class T>
 void BaseItemMinimalUI<T>::paint(Graphics &g)
 {
 	Rectangle<float> r = getLocalBounds().toFloat();
-	g.setColour(getBaseItem()->enabled->boolValue() ? bgColor : bgColor.darker(.2f));
+	Colour c = getBaseItem()->enabled->boolValue() ? bgColor : bgColor.darker(.3f);
+	if (highlightOnMouseOver && isMouseOver(true)) c = c.brighter(.03f);
+	g.setColour(c);
 	g.fillRoundedRectangle(r, 4);
 }
 

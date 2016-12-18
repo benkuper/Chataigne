@@ -39,8 +39,14 @@ void MappingLayerTimeline::resized()
 void MappingLayerTimeline::controllableFeedbackUpdateInternal(Controllable * c)
 {
 	SequenceLayerTimeline::controllableFeedbackUpdateInternal(c);
-	if (c == item->sequence->currentTime)
+	MappingLayer * ml = static_cast<MappingLayer *>(item);
+
+	if (c == ml->sequence->currentTime)
 	{
 		automationUI.setCurrentPosition(item->sequence->currentTime->floatValue());
+	}
+	else if (c == ml->curveValue)
+	{
+		automationUI.setCurrentValue(ml->curveValue->floatValue());
 	}
 }

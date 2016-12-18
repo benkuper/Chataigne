@@ -28,6 +28,8 @@ public:
 	void populateMenu(PopupMenu *subMenu, ControllableContainer * container, int &currentId);
 
 	Controllable * showAndGetControllable();
+
+	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ControllableChooserPopupMenu)
 };
 
 /*
@@ -59,14 +61,20 @@ public :
 class ControllableComparator
 {
 public:
+	ControllableComparator() {}
 	int compareElements(Controllable* c1, Controllable* c2);
+
+	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ControllableComparator)
 };
 
 
 class ControllableUIComparator
 {
 public:
+	ControllableUIComparator() {}
 	int compareElements(ControllableUI* c1, ControllableUI* c2);
+
+	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ControllableUIComparator)
 };
 
 

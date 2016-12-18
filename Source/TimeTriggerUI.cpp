@@ -39,7 +39,7 @@ void TimeTriggerUI::paint(Graphics & g)
 	g.setColour(c);
 	
 	g.fillRect(flagRect);
-	g.setColour(c.darker());
+	g.setColour(c.brighter());
 	g.drawRect(flagRect);
 	g.drawVerticalLine(0, 0, (float)getHeight());
 

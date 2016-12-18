@@ -11,11 +11,50 @@
 #include "MappingInput.h"
 
 MappingInput::MappingInput() :
-	ControllableContainer("Input")
+	ControllableContainer("Input"),
+	inputReference(nullptr)
 {
 	nameCanBeChangedByUser = false;
+	inputTarget = addTargetParameter("Input", "Parameter to be the input");
 }
 
 MappingInput::~MappingInput()
 {
+	DBG("destructor");
+	setInput(nullptr);
+}
+
+void MappingInput::setInput(Parameter * _input)
+{
+	if (inputReference != nullptr)
+	{
+		DBG("Remove listener !");
+		inputReference->removeParameterListener(this);
+	}
+	
+	DBG("Set input reference " << (int)_input);
+	inputReference = _input;
+
+	if (inputReference != nullptr)
+	{
+		inputReference->addParameterListener(this);
+	}
+
+	mappinginputListeners.call(&MappingInput::Listener::inputReferenceChanged, inputReference);
+}
+
+void MappingInput::onContainerParameterChanged(Parameter * p)
+{
+	if (p == inputTarget)
+	{
+		setInput(inputTarget->target.wasObjectDeleted() ? nullptr : dynamic_cast<Parameter *>(inputTarget->target.get()));
+	}
+}
+
+void MappingInput::onExternalParameterChanged(Parameter * p)
+{
+	if (p == inputReference)
+	{
+		mappinginputListeners.call(&MappingInput::Listener::inputParameterValueChanged, inputReference);
+	}
 }

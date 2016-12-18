@@ -73,6 +73,7 @@ BaseManager<T>::BaseManager(const String & name) :
 	saveAndLoadRecursiveData = false;
 	setCanHavePresets(false);
 	nameCanBeChangedByUser = false;
+	hideInEditor = true;
 }
 
 template<class T>

@@ -11,8 +11,11 @@
 #include "Mapping.h"
 
 Mapping::Mapping() :
-	BaseItem("Mapping")
+	BaseItem("Mapping"),
+	inputIsLocked(false)
 {
+	recursiveInspectionLevel = 1;
+
 	saveAndLoadRecursiveData = false;
 	addChildControllableContainer(&input);
 	addChildControllableContainer(&fm);
@@ -21,6 +24,17 @@ Mapping::Mapping() :
 
 Mapping::~Mapping()
 {
+}
+
+void Mapping::lockInputTo(Parameter * lockParam)
+{
+	inputIsLocked = lockParam != nullptr;
+	input.inputTarget->setEnabled(!inputIsLocked);
+	if (!inputIsLocked)
+	{
+		input.setInput(lockParam);
+	}
+	
 }
 
 var Mapping::getJSONData()
