@@ -29,7 +29,6 @@ public:
 	MappingFilterManager fm;
 	MappingOutputManager om;
 
-
 	bool inputIsLocked;
 	void lockInputTo(Parameter * lockParam);
 

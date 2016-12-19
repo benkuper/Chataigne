@@ -20,7 +20,8 @@ CustomOSCModule::CustomOSCModule() :
 	autoAdd = addBoolParameter("Auto Add", "Add automatically any message that is received\nand try to create the corresponding value depending on the message content.", true);
 	autoAdd->isTargettable = false;
 
-	commandDefs.add(new CommandDefinition(this, "", "Custom Message", &CustomOSCCommand::create));
+	defManager.addItem(CommandDefinition::createDef(this, "", "Custom Message", &CustomOSCCommand::create));
+	defManager.hideInEditor = false;
 }
 
 void CustomOSCModule::processMessageInternal(const OSCMessage & msg)

@@ -12,33 +12,7 @@
 #define COMMANDFACTORY_H_INCLUDED
 
 
-#include "JuceHeader.h"
-#include "BaseCommand.h"
-
-typedef std::function<BaseCommand*(ControllableContainer *, CommandContext, var params)> CreateCommandFunc;
-
-class CommandDefinition
-{
-public:
-	String menuPath;
-	String commandType;
-	ControllableContainer * container;
-	var params;
-
-	CreateCommandFunc createFunc;
-
-	CommandDefinition(ControllableContainer * container,
-					  const String &menuPath, 
-					  const String &type, 
-					  CreateCommandFunc createFunc 
-		);
-
-	BaseCommand * create(CommandContext context);
-
-	static CommandDefinition * createDef(ControllableContainer * container, const String &menuPath, const String &type, CreateCommandFunc createFunc);
-	CommandDefinition * addParam(const String &paramName, var value);
-
-};
+#include "CommandDefinition.h"
 
 class CommandFactory
 {

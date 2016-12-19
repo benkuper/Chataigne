@@ -29,11 +29,7 @@ Mapping::~Mapping()
 void Mapping::lockInputTo(Parameter * lockParam)
 {
 	inputIsLocked = lockParam != nullptr;
-	input.inputTarget->setEnabled(!inputIsLocked);
-	if (!inputIsLocked)
-	{
-		input.setInput(lockParam);
-	}
+	if (inputIsLocked) input.lockInput(lockParam);
 	
 }
 

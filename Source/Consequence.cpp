@@ -75,7 +75,7 @@ void Consequence::loadJSONDataInternal(var data)
 			
 			String menuPath = data.getProperty("commandPath", "");
 			String commandType = data.getProperty("commandType", "");
-			setCommand(m->getCommandDefinitionFor(menuPath, commandType));
+			setCommand(m->defManager.getCommandDefinitionFor(menuPath, commandType));
 		} else
 		{
 			DBG("Output not found : " << data.getProperty("commandModule", "").toString());

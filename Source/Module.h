@@ -13,6 +13,7 @@
 
 
 #include "BaseItem.h"
+#include "CommandDefinitionManager.h"
 
 class CommandDefinition;
 
@@ -29,14 +30,7 @@ public:
 	ControllableContainer valuesCC;
 	Array<WeakReference<Controllable>> getValueControllables();
 
-
-	OwnedArray<CommandDefinition> commandDefs;
-
-	PopupMenu commandMenu;
-	void rebuildCommandMenu(int baseID);
-	PopupMenu getCommandMenu(int baseID);
-	CommandDefinition * getCommandDefinitionFor(const String &menuPath, const String &moduleType);
-
+	CommandDefinitionManager defManager;
 
 	virtual var getJSONData() override;
 

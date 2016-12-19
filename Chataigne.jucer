@@ -198,6 +198,14 @@
             <FILE id="KzTWEH" name="AutomationKey.h" compile="0" resource="0" file="Source/AutomationKey.h"/>
           </GROUP>
           <GROUP id="{E7C8AAFC-E2FA-90D0-859B-423BC528A52F}" name="Command">
+            <FILE id="C1hNyN" name="CommandDefinition.cpp" compile="1" resource="0"
+                  file="Source/CommandDefinition.cpp"/>
+            <FILE id="fpS2bd" name="CommandDefinition.h" compile="0" resource="0"
+                  file="Source/CommandDefinition.h"/>
+            <FILE id="DP7DYb" name="CommandDefinitionManager.cpp" compile="1" resource="0"
+                  file="Source/CommandDefinitionManager.cpp"/>
+            <FILE id="yXGZfp" name="CommandDefinitionManager.h" compile="0" resource="0"
+                  file="Source/CommandDefinitionManager.h"/>
             <FILE id="m7AMBt" name="BaseCommand.cpp" compile="1" resource="0" file="Source/BaseCommand.cpp"/>
             <FILE id="ermHIT" name="BaseCommand.h" compile="0" resource="0" file="Source/BaseCommand.h"/>
             <FILE id="udVfFR" name="CommandFactory.cpp" compile="1" resource="0"
@@ -215,6 +223,8 @@
               <FILE id="vXgimL" name="BaseItemMinimalUI.h" compile="0" resource="0"
                     file="Source/BaseItemMinimalUI.h"/>
               <FILE id="jCyMQj" name="BaseItemUI.h" compile="0" resource="0" file="Source/BaseItemUI.h"/>
+              <FILE id="NwOzf7" name="GenericManagerEditor.h" compile="0" resource="0"
+                    file="Source/GenericManagerEditor.h"/>
               <FILE id="nHZFTl" name="BaseManagerShapeShifterUI.h" compile="0" resource="0"
                     file="Source/BaseManagerShapeShifterUI.h"/>
               <FILE id="xKEcR5" name="BaseManagerUI.h" compile="0" resource="0" file="Source/BaseManagerUI.h"/>
@@ -571,6 +581,12 @@
               </GROUP>
               <GROUP id="{725F299B-4972-D857-5400-57EB8633E4A9}" name="custom">
                 <GROUP id="{054F9429-4D5F-5398-2370-34DC34C50A1E}" name="commands">
+                  <GROUP id="{3B147154-3CFA-970E-E371-6120BD47FB29}" name="ui">
+                    <FILE id="dQtZiH" name="CustomOSCCommandCreator.cpp" compile="1" resource="0"
+                          file="Source/CustomOSCCommandCreator.cpp"/>
+                    <FILE id="YRlOlu" name="CustomOSCCommandCreator.h" compile="0" resource="0"
+                          file="Source/CustomOSCCommandCreator.h"/>
+                  </GROUP>
                   <FILE id="lv7MmC" name="CustomOSCCommand.cpp" compile="1" resource="0"
                         file="Source/CustomOSCCommand.cpp"/>
                   <FILE id="H1znNn" name="CustomOSCCommand.h" compile="0" resource="0"

@@ -30,7 +30,7 @@ StateMachineView::~StateMachineView()
 void StateMachineView::mouseDown(const MouseEvent & e)
 {
 	BaseManagerUI::mouseDown(e);
-	if (e.mods.isAltDown())
+	if ((e.mods.isLeftButtonDown() && e.mods.isAltDown()) || e.mods.isMiddleButtonDown())
 	{
 		setMouseCursor(MouseCursor::UpDownLeftRightResizeCursor);
 		updateMouseCursor();
@@ -40,7 +40,7 @@ void StateMachineView::mouseDown(const MouseEvent & e)
 
 void StateMachineView::mouseDrag(const MouseEvent & e)
 {
-	if (e.mods.isAltDown())
+	if ((e.mods.isLeftButtonDown() && e.mods.isAltDown()) || e.mods.isMiddleButtonDown())
 	{
 		viewOffset = initViewOffset + e.getOffsetFromDragStart();
 		resized();

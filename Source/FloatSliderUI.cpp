@@ -15,7 +15,7 @@
 FloatSliderUI::FloatSliderUI(Parameter * parameter) :
 	ParameterUI(parameter), fixedDecimals(2),
 	useCustomColor(false),
-	bgColor(BG_COLOR.brighter(.1f))
+	bgColor(BG_COLOR.darker(.2f))
 {
     assignOnMousePosDirect = false;
     changeParamOnMouseUpOnly = false;

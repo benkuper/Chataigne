@@ -35,7 +35,7 @@ void ModuleManager::addItemFromData(var data)
 PopupMenu ModuleManager::getAllModulesCommandMenu()
 {
 	PopupMenu menu;
-	for (int i = 0; i < items.size(); i++) menu.addSubMenu(items[i]->niceName, items[i]->getCommandMenu(i * 1000));
+	for (int i = 0; i < items.size(); i++) menu.addSubMenu(items[i]->niceName, items[i]->defManager.getCommandMenu(i * 1000));
 	return menu;
 }
 
@@ -44,5 +44,5 @@ CommandDefinition * ModuleManager::getCommandDefinitionForItemID(int itemID)
 	if (itemID <= 0) return nullptr;
 	int outputIndex = (int)floor(itemID / 1000);
 	int commandIndex = itemID % 1000 - 1;
-	return items[outputIndex]->commandDefs[commandIndex];
+	return items[outputIndex]->defManager.items[commandIndex];
 }

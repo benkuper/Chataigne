@@ -22,7 +22,7 @@ public:
 	EasingUI(Easing * e);
 	virtual ~EasingUI();
 
-	Easing * easing;
+	WeakReference<Easing> easing;
 
 	int y1;
 	int y2;

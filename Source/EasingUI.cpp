@@ -26,7 +26,7 @@ EasingUI::EasingUI(Easing * e) :
 
 EasingUI::~EasingUI()
 {
-	easing->removeAsyncContainerListener(this);
+	if(!easing.wasObjectDeleted()) easing->removeAsyncContainerListener(this);
 }
 
 void EasingUI::setKeyPositions(const int &k1, const int &k2)
@@ -196,7 +196,7 @@ void CubicEasingUI::resized()
 	Point<int> p1 = Point<int>(0, y1);
 	Point<int> p2 = Point<int>(getWidth(), y2);
 
-	CubicEasing * ce = static_cast<CubicEasing *>(easing);
+	CubicEasing * ce = static_cast<CubicEasing *>(easing.get());
 
 	Point<float> a = Point<float>(jmap<float>(ce->anchor1->getPoint().x, p1.x, p2.x), jmap<float>(ce->anchor1->getPoint().y, p1.y, p2.y));
 	Point<float> b = Point<float>(jmap<float>(ce->anchor2->getPoint().x, p1.x, p2.x), jmap<float>(ce->anchor2->getPoint().y, p1.y, p2.y));
@@ -210,7 +210,7 @@ void CubicEasingUI::generatePathInternal()
 	Point<int> p1 = Point<int>(0, y1);
 	Point<int> p2 = Point<int>(getWidth(), y2);
 
-	CubicEasing * ce = static_cast<CubicEasing *>(easing);
+	CubicEasing * ce = static_cast<CubicEasing *>(easing.get());
 	
 	Point<float> a = Point<float>(jmap<float>(ce->anchor1->getPoint().x, p1.x, p2.x), jmap<float>(ce->anchor1->getPoint().y, p1.y, p2.y));
 	Point<float> b = Point<float>(jmap<float>(ce->anchor2->getPoint().x, p1.x, p2.x), jmap<float>(ce->anchor2->getPoint().y, p1.y, p2.y));
@@ -244,7 +244,7 @@ void CubicEasingUI::inspectableSelectionChanged(Inspectable *)
 
 void CubicEasingUI::easingControllableFeedbackUpdate(Controllable * c)
 {
-	CubicEasing * ce = static_cast<CubicEasing *>(easing);
+	CubicEasing * ce = static_cast<CubicEasing *>(easing.get());
 	if (c == ce->anchor1 || c == ce->anchor2)
 	{
 		generatePath();
@@ -256,7 +256,7 @@ void CubicEasingUI::mouseDrag(const MouseEvent & e)
 {
 	if (e.eventComponent == &h1 || e.eventComponent == &h2)
 	{
-		CubicEasing * ce = static_cast<CubicEasing *>(easing);
+		CubicEasing * ce = static_cast<CubicEasing *>(easing.get());
 		
 		Point2DParameter * targetAnchor = (e.eventComponent == &h1) ? ce->anchor1 : ce->anchor2;
 		Point<int> mp = e.getEventRelativeTo(this).getPosition();
@@ -266,7 +266,7 @@ void CubicEasingUI::mouseDrag(const MouseEvent & e)
 	}
 	else
 	{
-		CubicEasing * ce = static_cast<CubicEasing *>(easing);
+		CubicEasing * ce = static_cast<CubicEasing *>(easing.get());
 
 		Point<int> p1 = Point<int>(0, y1);
 		Point<int> p2 = Point<int>(getWidth(), y2);

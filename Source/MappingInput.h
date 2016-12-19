@@ -24,6 +24,7 @@ public:
 	TargetParameter * inputTarget;
 	Parameter * inputReference;
 
+	void lockInput(Parameter * input);
 	void setInput(Parameter * input);
 
 	void onContainerParameterChanged(Parameter * p) override;

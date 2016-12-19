@@ -21,7 +21,6 @@ ConditionUI::ConditionUI(Condition * _condition) :
 	condition->addConditionListener(this);
 	addAndMakeVisible(targetUI);
 	setSize(100, 50);
-	bgColor = BG_COLOR.darker(.1f);
 	updateSourceUI();
 }
 

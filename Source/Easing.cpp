@@ -19,6 +19,7 @@ Easing::Easing(Type _type) :
 
 Easing::~Easing()
 {
+	masterReference.clear();
 }
 
 

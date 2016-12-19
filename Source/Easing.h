@@ -31,6 +31,10 @@ public:
 	virtual EasingUI * createUI() = 0; //must be overriden
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Easing)
 
+private :
+	WeakReference<Easing>::Master masterReference;
+	friend class WeakReference<Easing>;
+
 };
 
 

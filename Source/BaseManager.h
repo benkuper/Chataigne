@@ -22,7 +22,6 @@ public :
 	BaseManager<T>(const String &name);
 	virtual ~BaseManager<T>();
 
-
 	OwnedArray<T> items;
 	
 
@@ -59,7 +58,8 @@ public :
 	ListenerList<Listener> baseManagerListeners;
 	void addBaseManagerListener(Listener* newListener) { baseManagerListeners.add(newListener); }
 	void removeBaseManagerListener(Listener* listener) { baseManagerListeners.remove(listener); }
-
+	 
+	InspectorEditor * getEditor() override;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(BaseManager<T>)
 };
@@ -77,7 +77,7 @@ BaseManager<T>::BaseManager(const String & name) :
 }
 
 template<class T>
-inline BaseManager<T>::~BaseManager()
+BaseManager<T>::~BaseManager()
 {
 	clear();
 }
@@ -181,6 +181,12 @@ void BaseManager<T>::loadJSONDataInternal(var data)
 }
 
 
+#include "GenericManagerEditor.h"
+template<class T>
+InspectorEditor * BaseManager<T>::getEditor()
+{
+	return new GenericManagerEditor<T>(this);
+}
 
 
 #endif  // BASEMANAGER_H_INCLUDED
