@@ -236,6 +236,7 @@ void CubicEasingUI::paintInternal(Graphics & g)
 
 void CubicEasingUI::inspectableSelectionChanged(Inspectable *)
 {
+	if (easing.wasObjectDeleted()) return;
 	h1.setVisible(easing->isSelected);
 	h2.setVisible(easing->isSelected);
 	resized();

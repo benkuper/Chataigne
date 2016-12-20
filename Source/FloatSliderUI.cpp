@@ -15,7 +15,7 @@
 FloatSliderUI::FloatSliderUI(Parameter * parameter) :
 	ParameterUI(parameter), fixedDecimals(2),
 	useCustomColor(false),
-	bgColor(BG_COLOR.darker(.2f))
+	bgColor(BG_COLOR.darker(.1f))
 {
     assignOnMousePosDirect = false;
     changeParamOnMouseUpOnly = false;
@@ -58,17 +58,17 @@ void FloatSliderUI::paint(Graphics & g)
     float normalizedValue = getParamNormalizedValue();
     g.setColour(bgColor);
     g.fillRoundedRectangle(sliderBounds.toFloat(), 2);
-
+	
     g.setColour(c);
     float drawPos = 0;
     if (orientation == HORIZONTAL)
     {
         drawPos = changeParamOnMouseUpOnly ? getMouseXYRelative().x : normalizedValue*getWidth();
-        g.fillRoundedRectangle(sliderBounds.removeFromLeft((int)drawPos).toFloat(), 2.f);
+        g.fillRoundedRectangle(sliderBounds.removeFromLeft((int)drawPos).reduced(1).toFloat(), 2);
     }
     else {
         drawPos = changeParamOnMouseUpOnly ? getMouseXYRelative().y : normalizedValue*getHeight();
-        g.fillRoundedRectangle(sliderBounds.removeFromBottom((int)drawPos).toFloat(), 2.f);
+        g.fillRoundedRectangle(sliderBounds.removeFromBottom((int)drawPos).reduced(1).toFloat(), 2);
     }
 
 
@@ -86,10 +86,10 @@ void FloatSliderUI::paint(Graphics & g)
             at = at.rotated((float)(-double_Pi / 2.0f));// , sliderBounds.getCentreX(), sliderBounds.getCentreY());
             at = at.translated(0.f,(float)sliderBounds.getHeight());
             g.addTransform(at);
-            destRect = Rectangle<int>(0, 0, sliderBounds.getHeight(), sliderBounds.getWidth()).withSizeKeepingCentre(sliderBounds.getHeight(), 12);
+            destRect = Rectangle<int>(0, 0, sliderBounds.getHeight(), sliderBounds.getWidth()).withSizeKeepingCentre(sliderBounds.getHeight(), 10);
         }else
         {
-            destRect = sliderBounds.withSizeKeepingCentre(sliderBounds.getWidth(), getHeight()-2);
+            destRect = sliderBounds.withSizeKeepingCentre(sliderBounds.getWidth(), getHeight());
         }
 		String text = "";
 		if (showLabel)
@@ -98,8 +98,13 @@ void FloatSliderUI::paint(Graphics & g)
 			if (showValue) text += " : ";
 		}
 		if (showValue) text += String::formatted("%." + String(fixedDecimals) + "f", parameter->floatValue());
+		g.setFont(getHeight() - 4);
         g.drawFittedText(text, destRect, Justification::centred,1);
     }
+
+	g.setColour(bgColor.brighter(.1f));
+	g.drawRoundedRectangle(sliderBounds.toFloat(), 2, 1);
+
 }
 
 void FloatSliderUI::mouseDown(const MouseEvent & e)

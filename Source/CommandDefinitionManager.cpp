@@ -14,7 +14,7 @@
 CommandDefinitionManager::CommandDefinitionManager() :
 	BaseManager("Definitions")
 {
-	recursiveInspectionLevel = 1;
+	canInspectChildContainers = true;
 }
 
 CommandDefinitionManager::~CommandDefinitionManager()

@@ -7,14 +7,15 @@
 
   ==============================================================================
 */
+#include "InspectableEditor.h"
 
-#include "CustomEditor.h"
-
-CustomEditor::CustomEditor(Inspectable * sourceInspectable) :
-	InspectorEditor(sourceInspectable)
+InspectableEditor::InspectableEditor(WeakReference<Inspectable> _inspectable) :
+	inspectable(_inspectable),
+	fitToContent(false)
 {
+
 }
 
-CustomEditor::~CustomEditor()
+InspectableEditor::~InspectableEditor()
 {
 }

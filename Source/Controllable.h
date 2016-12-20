@@ -116,7 +116,7 @@ public:
  // static var setControllableValue(const juce::var::NativeFunctionArgs& a);
 
 
-  InspectorEditor * getEditor() override;
+  virtual InspectableEditor * getEditor(bool /*isRootEditor*/) override;
 
   virtual String getTypeString() const { jassert(false); return ""; } //should be overriden
 

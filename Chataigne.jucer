@@ -151,10 +151,6 @@
                 file="Source/ControllableContainer.cpp"/>
           <FILE id="sCBHxj" name="ControllableContainer.h" compile="0" resource="0"
                 file="Source/ControllableContainer.h"/>
-          <FILE id="EzsYnM" name="ControllableContainerEditor.cpp" compile="1"
-                resource="0" file="Source/ControllableContainerEditor.cpp"/>
-          <FILE id="C8j6Co" name="ControllableContainerEditor.h" compile="0"
-                resource="0" file="Source/ControllableContainerEditor.h"/>
           <FILE id="vo83H1" name="ControllableFactory.cpp" compile="1" resource="0"
                 file="Source/ControllableFactory.cpp"/>
           <FILE id="ILy9pg" name="ControllableFactory.h" compile="0" resource="0"
@@ -657,13 +653,10 @@
               resource="0" file="Source/InspectableContentComponent.h"/>
         <FILE id="jYwqk3" name="Inspector.cpp" compile="1" resource="0" file="Source/Inspector.cpp"/>
         <FILE id="A1OMYJ" name="Inspector.h" compile="0" resource="0" file="Source/Inspector.h"/>
-        <FILE id="gZMHpf" name="InspectorEditor.cpp" compile="1" resource="0"
-              file="Source/InspectorEditor.cpp"/>
-        <FILE id="W7Lpnt" name="InspectorEditor.h" compile="0" resource="0"
-              file="Source/InspectorEditor.h"/>
-        <FILE id="ObKCyn" name="CustomEditor.cpp" compile="1" resource="0"
-              file="Source/CustomEditor.cpp"/>
-        <FILE id="sPOFRY" name="CustomEditor.h" compile="0" resource="0" file="Source/CustomEditor.h"/>
+        <FILE id="ObKCyn" name="InspectableEditor.cpp" compile="1" resource="0"
+              file="Source/InspectableEditor.cpp"/>
+        <FILE id="sPOFRY" name="InspectableEditor.h" compile="0" resource="0"
+              file="Source/InspectableEditor.h"/>
       </GROUP>
       <GROUP id="{070E9CF8-5A7F-C6FC-2E30-5BC3BB47385D}" name="Logger">
         <FILE id="ZM2OHT" name="CustomLogger.cpp" compile="1" resource="0"

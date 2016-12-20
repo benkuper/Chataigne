@@ -63,7 +63,8 @@ void Action::conditionManagerValidationChanged(ConditionManager *)
 	if (cdm.isValid->boolValue()) csm.triggerAll->trigger();
 }
 
-InspectorEditor * Action::getEditor()
+
+InspectableEditor * Action::getEditor(bool /*isRoot*/)
 {
 	return new ActionEditor(this);
 }

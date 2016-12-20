@@ -15,7 +15,7 @@
 MappingLayer::MappingLayer(Sequence *_sequence) :
 	SequenceLayer(_sequence, "New Mapping Layer")
 {
-	recursiveInspectionLevel = 1;
+	canInspectChildContainers = true;
 
 	automation.setPositionMax(sequence->totalTime->floatValue());
 	addChildControllableContainer(&automation);

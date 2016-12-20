@@ -14,8 +14,6 @@
 
 Inspectable::Inspectable(const String & _inspectableType) :
 	inspectableType(_inspectableType),
-	recursiveInspectionLevel(0),
-	canInspectChildContainersBeyondRecursion(true),
 	isSelected(false)
 {
 }

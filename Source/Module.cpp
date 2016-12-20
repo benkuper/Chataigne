@@ -17,7 +17,8 @@ Module::Module(const String &name) :
 {
 	saveAndLoadRecursiveData = false; //manage value ourselves
 
-	recursiveInspectionLevel = 1;
+	canInspectChildContainers = true;
+
 	addChildControllableContainer(&valuesCC);
 	addChildControllableContainer(&defManager);
 

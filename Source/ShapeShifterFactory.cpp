@@ -48,7 +48,7 @@ ShapeShifterContent * ShapeShifterFactory::createContentForIndex(PanelName pn)
 
 
 	case InspectorPanel:
-		return new InspectorViewport(contentName, Inspector::getInstance());
+		return Inspector::getInstance();
 		break;
 
 	case LoggerPanel:
@@ -57,7 +57,7 @@ ShapeShifterContent * ShapeShifterFactory::createContentForIndex(PanelName pn)
 
 	case OutlinerPanel:
 		return new Outliner("Outliner");
-
+		break;
 
 	default:
 		DBG("Panel not handled : " << contentName << ", index in names = " << globalPanelNames.strings.indexOf(contentName));

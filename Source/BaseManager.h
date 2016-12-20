@@ -59,7 +59,7 @@ public :
 	void addBaseManagerListener(Listener* newListener) { baseManagerListeners.add(newListener); }
 	void removeBaseManagerListener(Listener* listener) { baseManagerListeners.remove(listener); }
 	 
-	InspectorEditor * getEditor() override;
+	InspectableEditor * getEditor(bool /*isRoot*/) override;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(BaseManager<T>)
 };
@@ -183,7 +183,7 @@ void BaseManager<T>::loadJSONDataInternal(var data)
 
 #include "GenericManagerEditor.h"
 template<class T>
-InspectorEditor * BaseManager<T>::getEditor()
+InspectableEditor * BaseManager<T>::getEditor(bool /*isRoot*/)
 {
 	return new GenericManagerEditor<T>(this);
 }

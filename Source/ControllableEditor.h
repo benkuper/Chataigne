@@ -11,14 +11,14 @@
 #ifndef CONTROLLABLEEDITOR_H_INCLUDED
 #define CONTROLLABLEEDITOR_H_INCLUDED
 
-#include "CustomEditor.h"
+#include "InspectableEditor.h"
 #include "Controllable.h"
 
 class ControllableEditor : 
-	public CustomEditor
+	public InspectableEditor
 {
 public:
-	ControllableEditor(Controllable * controllable);
+	ControllableEditor(Controllable * controllable, bool isRootEditor);  //Todo : handle full feedback if is root
 
 	Controllable * controllable;
 	
@@ -26,8 +26,6 @@ public:
 	ScopedPointer<ControllableUI> ui;
 
 	void resized() override;
-
-	int getContentHeight() override;
 
 };
 

@@ -13,7 +13,7 @@
 
 #include "JuceHeader.h"
 
-class InspectorEditor;
+class InspectableEditor;
 class Inspector;
 
 class Inspectable
@@ -25,9 +25,6 @@ public:
 	Inspector * inspector;
 	const String inspectableType;
 
-	int recursiveInspectionLevel;
-	bool canInspectChildContainersBeyondRecursion;
-
 
 	bool isSelected;
 	virtual void selectThis();
@@ -35,7 +32,7 @@ public:
 
 	virtual void setSelectedInternal(bool value); //to be overriden
 
-	virtual InspectorEditor * getEditor() { jassert(false);  return nullptr; } //to override !
+	virtual InspectableEditor * getEditor(bool /*isRootEditor*/) { jassert(false);  return nullptr; } //to override !
 
 	//Listener
 	class  InspectableListener

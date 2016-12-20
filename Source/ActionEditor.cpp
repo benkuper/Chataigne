@@ -11,11 +11,13 @@
 #include "ActionEditor.h"
 
 ActionEditor::ActionEditor(Action * _action) :
-	CustomEditor(_action),
+	InspectableEditor(_action),
 	action(_action),
 	cdmui(&_action->cdm),
 	csmui(&_action->csm)
 {
+	fitToContent = true;
+
 	addAndMakeVisible(&cdmui);
 	addAndMakeVisible(&csmui);
 
@@ -35,7 +37,3 @@ void ActionEditor::resized()
 	csmui.setBounds(r);
 }
 
-int ActionEditor::getContentHeight()
-{
-	return 0;
-}

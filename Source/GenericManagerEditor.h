@@ -33,8 +33,9 @@ public:
 
 
 template<class T>
-GenericManagerEditor<T>::GenericManagerEditor(BaseManager<T> * manager) :
-	GenericControllableContainerEditor(manager),
+GenericManagerEditor<T>::GenericManagerEditor(BaseManager<T> * _manager) :
+	GenericControllableContainerEditor(_manager),
+	manager(_manager),
 	addItemText("Add item")
 {
 	DBG("Generic Manager editor !");

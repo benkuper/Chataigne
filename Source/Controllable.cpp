@@ -130,7 +130,10 @@ String Controllable::getControlAddress(ControllableContainer * relativeTo)
 }
 
 
-InspectorEditor * Controllable::getEditor() { return new ControllableEditor(this); }
+InspectableEditor * Controllable::getEditor(bool isRootEditor) {
+
+	return new ControllableEditor(this,isRootEditor); 
+}
 
 /*
 DynamicObject * Controllable::createDynamicObject()

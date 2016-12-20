@@ -11,8 +11,8 @@
 #include "ControllableEditor.h"
 #include "ControllableUI.h"
 
-ControllableEditor::ControllableEditor(Controllable * _controllable) :
-	CustomEditor((Inspectable *)_controllable), 
+ControllableEditor::ControllableEditor(Controllable * _controllable, bool /*isRootEditor*/) :
+	InspectableEditor(_controllable), 
 	controllable(_controllable),
 	label("Label")
 {
@@ -21,21 +21,18 @@ ControllableEditor::ControllableEditor(Controllable * _controllable) :
 
 	addAndMakeVisible(&label);
 
-	label.setJustificationType(Justification::centred);
+	label.setJustificationType(Justification::left);
 	label.setFont(label.getFont().withHeight(12));
-	label.setText("Editing " + _controllable->niceName,dontSendNotification);
+	label.setText(controllable->niceName,dontSendNotification);
+
+	setSize(100, 16);
 }
 
 void ControllableEditor::resized()
 {
-	Rectangle<int> r = getLocalBounds().reduced(2);
-	label.setBounds(r.removeFromTop(12));
+	Rectangle<int> r = getLocalBounds();// .withHeight(16);
+	label.setBounds(r.removeFromLeft(jmin<int>(getWidth()/3,100)));
 
-	r.removeFromTop(5);
-	ui->setBounds(r.removeFromTop(20));
-}
-
-int ControllableEditor::getContentHeight()
-{
-	return 50;
+	r.removeFromLeft(3);
+	ui->setBounds(r.removeFromRight(jmin<int>(getWidth()*2/3-10,150)));
 }

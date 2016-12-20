@@ -12,10 +12,18 @@
 juce_ImplementSingleton(Inspector)
 
 Inspector::Inspector() :
-	currentEditor(nullptr),
+	ShapeShifterContentComponent("Inspector"),
 	currentInspectable(nullptr),
-	isEnabled(true)
+	currentEditor(nullptr)
 {
+	contentIsFlexible = false;
+
+	vp.setScrollBarsShown(true, false);
+	vp.setScrollOnDragEnabled(false);
+	vp.setScrollBarThickness(10);
+	addAndMakeVisible(vp);
+
+	resized();
 }
 
 Inspector::~Inspector()
@@ -23,85 +31,62 @@ Inspector::~Inspector()
 	clear();
 }
 
-void Inspector::setEnabled(bool value)
+void Inspector::resized()
 {
-	if (isEnabled == value) return;
+	Rectangle<int> r = getLocalBounds().reduced(3);
+	vp.setBounds(r);
+	r.removeFromRight(10);
 
-	if (!value) setCurrentInspectable(nullptr);
-	isEnabled = value;
+	if (currentEditor != nullptr)
+	{
+		if (!currentEditor->fitToContent) r.setHeight(currentEditor->getHeight());
+		currentEditor->setBounds(r);
+	}
 }
+
+void Inspector::setCurrentInspectable(WeakReference<Inspectable> inspectable)
+{
+	if (inspectable == currentInspectable)
+	{
+		return;
+	}
+
+	if (currentInspectable != nullptr)
+	{
+		if (!currentInspectable.wasObjectDeleted())
+		{
+			currentInspectable->removeInspectableListener(this); 
+			currentInspectable->setSelected(false);
+		}
+
+		if (currentEditor != nullptr)
+		{
+			vp.setViewedComponent(nullptr);
+			currentEditor = nullptr;
+		}
+	}
+	currentInspectable = inspectable;
+
+	if (currentInspectable.get() != nullptr)
+	{
+		currentInspectable->setSelected(true);
+		currentInspectable->addInspectableListener(this);
+		currentEditor = currentInspectable->getEditor(true);
+	}
+
+	vp.setViewedComponent(currentEditor, false);
+	resized();
+
+	listeners.call(&InspectorListener::currentInspectableChanged, this);
+}
+
 
 void Inspector::clear()
 {
 	setCurrentInspectable(nullptr);
 }
 
-void Inspector::setCurrentInspectable(Inspectable * c)
+void Inspector::inspectableDestroyed(Inspectable * i)
 {
-	if (c == currentInspectable) return;
-	if (!isEnabled) return;
-
-	if (currentInspectable != nullptr)
-	{
-		clearEditor();
-		currentInspectable->setSelected(false);
-		currentInspectable->removeInspectableListener(this);
-	}
-
-	currentInspectable = c;
-
-	if (currentInspectable != nullptr)
-	{
-		currentInspectable->setSelected(true);
-		currentInspectable->addInspectableListener(this);
-		inspectCurrent();
-	}
-
-	listeners.call(&InspectorListener::currentInspectableChanged, this);
-}
-
-void Inspector::resized()
-{
-	if (currentEditor != nullptr) currentEditor->setBounds(getLocalBounds().reduced(5));
-}
-
-void Inspector::clearEditor()
-{
-	if (currentEditor != nullptr)
-	{
-		removeChildComponent(currentEditor);
-		currentEditor->clear();
-		currentEditor = nullptr;
-	}
-}
-
-void Inspector::inspectCurrent()
-{
-	if (currentInspectable == nullptr) return;
-	
-	if (currentEditor != nullptr)
-	{
-		currentEditor->removeInspectorEditorListener(this);
-	}
-
-	currentEditor = currentInspectable->getEditor();
-	
-	if (currentEditor != nullptr)
-	{
-		currentEditor->addInspectorEditorListener(this);
-		addAndMakeVisible(currentEditor);
-		getTopLevelComponent()->toFront(true);
-	}
-
-	resized();
-}
-
-void Inspector::inspectableDestroyed(Inspectable * inspectable)
-{
-	if (inspectable == currentInspectable) setCurrentInspectable(nullptr);
-}
-
-void Inspector::contentSizeChanged(InspectorEditor *)
-{
-	listeners.call(&InspectorListener::contentSizeChanged, this);
+	if (currentInspectable == i) setCurrentInspectable(nullptr);
 }

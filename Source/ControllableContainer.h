@@ -27,9 +27,9 @@ class TargetParameter; //avoid cycle dependency
 #include "DebugHelpers.h" //keep
 
 #include "Inspectable.h"
-
 #include "ControllableHelpers.h"
 
+class InspectableEditor;
 class ControllableContainer;
 
 //Listener
@@ -108,7 +108,10 @@ public:
 
 	bool nameCanBeChangedByUser;
 	bool isTargettable; //for controllableChooser
+
+	//Editor
 	bool hideInEditor;
+	bool canInspectChildContainers;
 
 	//save / load
 	bool presetSavingIsRecursive;
@@ -247,7 +250,7 @@ public:
 	
 	
 	
-	InspectorEditor * getEditor() override;
+	virtual InspectableEditor * getEditor(bool /*isRootEditor*/) override;
 
 private:
 

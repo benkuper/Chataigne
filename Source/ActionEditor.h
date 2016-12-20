@@ -11,13 +11,13 @@
 #ifndef ACTIONEDITOR_H_INCLUDED
 #define ACTIONEDITOR_H_INCLUDED
 
-#include "CustomEditor.h"
+#include "InspectableEditor.h"
 #include "ActionUI.h"
 #include "ConditionManagerUI.h"
 #include "ConsequenceManagerUI.h"
 
 class ActionEditor :
-	public CustomEditor
+	public InspectableEditor
 {
 public:
 	ActionEditor(Action * _action);
@@ -28,10 +28,8 @@ public:
 	ConditionManagerUI cdmui;
 	ConsequenceManagerUI csmui;
 
-
 	void resized() override;
 
-	int getContentHeight() override;
 };
 
 

@@ -14,7 +14,7 @@ Mapping::Mapping() :
 	BaseItem("Mapping"),
 	inputIsLocked(false)
 {
-	recursiveInspectionLevel = 1;
+	canInspectChildContainers = true;
 
 	saveAndLoadRecursiveData = false;
 	addChildControllableContainer(&input);
