@@ -21,8 +21,9 @@ Point3DComparator::Point3DComparator(Controllable * c) :
 	addCompareOption("Magnitude <", magnLessId);
 
 
-	ref = addPoint3DParameter("Reference", "Comparison Reference to check against source value", p3dParam->defaultValue);
-	ref->setBounds(p3dParam->minX, p3dParam->minY, p3dParam->minZ, p3dParam->maxX,p3dParam->maxY,p3dParam->maxZ);
+	p3dRef = addPoint3DParameter("Reference", "Comparison Reference to check against source value", p3dParam->defaultValue);
+	p3dRef->setBounds(p3dParam->minX, p3dParam->minY, p3dParam->minZ, p3dParam->maxX,p3dParam->maxY,p3dParam->maxZ);
+	reference = p3dRef;
 
 	valParam = addFloatParameter("Reference 2", "Depending on the comparison function, will act as reference for distance, magniture or other value reference to check against.", 0);
 }
@@ -34,7 +35,7 @@ Point3DComparator::~Point3DComparator()
 void Point3DComparator::compare()
 {
 	Vector3D<float> p = p3dParam->getVector();
-	Vector3D<float> r = ref->getVector();
+	Vector3D<float> r = p3dRef->getVector();
 	/*
 	if (currentFunctionId == equalsId)				setValid(p.);
 	else if (currentFunctionId == distGreaterId)	setValid(p.getDistanceFrom(r) > valParam->floatValue());

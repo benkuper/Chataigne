@@ -26,7 +26,7 @@ public:
 	const Identifier endsWidth = "endsWidth";
 
 	StringParameter * stringParam;
-	StringParameter * ref;
+	StringParameter * stringRef;
 
 	virtual void compare() override;
 

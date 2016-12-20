@@ -25,6 +25,7 @@ public:
 	virtual ~Module();
 
 	BoolParameter * logIncomingData;
+	BoolParameter * logOutgoingData;
 	Trigger * activityTrigger;
 
 	ControllableContainer valuesCC;

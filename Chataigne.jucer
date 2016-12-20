@@ -213,7 +213,26 @@
             <FILE id="AoIL08" name="CommandChooserUI.h" compile="0" resource="0"
                   file="Source/CommandChooserUI.h"/>
           </GROUP>
-          <GROUP id="{00DB7CFA-CACA-0D02-4E20-E907A0900C31}" name="Helpers"/>
+          <GROUP id="{00DB7CFA-CACA-0D02-4E20-E907A0900C31}" name="MIDI">
+            <GROUP id="{6A517320-E014-4F0A-1B7F-E6E464B84224}" name="ui">
+              <FILE id="Oe1yNO" name="MIDIDeviceChooser.cpp" compile="1" resource="0"
+                    file="Source/MIDIDeviceChooser.cpp"/>
+              <FILE id="Wh0ulF" name="MIDIDeviceChooser.h" compile="0" resource="0"
+                    file="Source/MIDIDeviceChooser.h"/>
+              <FILE id="fHAxLy" name="MIDIDeviceParameterUI.cpp" compile="1" resource="0"
+                    file="Source/MIDIDeviceParameterUI.cpp"/>
+              <FILE id="TBcxiG" name="MIDIDeviceParameterUI.h" compile="0" resource="0"
+                    file="Source/MIDIDeviceParameterUI.h"/>
+            </GROUP>
+            <FILE id="FAYcVe" name="MIDIDevice.cpp" compile="1" resource="0" file="Source/MIDIDevice.cpp"/>
+            <FILE id="cK99oo" name="MIDIDevice.h" compile="0" resource="0" file="Source/MIDIDevice.h"/>
+            <FILE id="mG4iwZ" name="MIDIDeviceParameter.cpp" compile="1" resource="0"
+                  file="Source/MIDIDeviceParameter.cpp"/>
+            <FILE id="dIKOx5" name="MIDIDeviceParameter.h" compile="0" resource="0"
+                  file="Source/MIDIDeviceParameter.h"/>
+            <FILE id="Srx4vB" name="MIDIManager.cpp" compile="1" resource="0" file="Source/MIDIManager.cpp"/>
+            <FILE id="TSICfD" name="MIDIManager.h" compile="0" resource="0" file="Source/MIDIManager.h"/>
+          </GROUP>
           <GROUP id="{9CFD8ABC-B151-C9B1-3170-F337A2876DE7}" name="Manager">
             <GROUP id="{04523331-54D0-EF5C-9ECA-C42754582F66}" name="ui">
               <FILE id="vXgimL" name="BaseItemMinimalUI.h" compile="0" resource="0"
@@ -276,10 +295,6 @@
                         file="Source/BaseComparatorUI.cpp"/>
                   <FILE id="ffPwkt" name="BaseComparatorUI.h" compile="0" resource="0"
                         file="Source/BaseComparatorUI.h"/>
-                  <FILE id="X3qjKZ" name="FloatComparatorUI.cpp" compile="1" resource="0"
-                        file="Source/FloatComparatorUI.cpp"/>
-                  <FILE id="WL2zgt" name="FloatComparatorUI.h" compile="0" resource="0"
-                        file="Source/FloatComparatorUI.h"/>
                 </GROUP>
                 <FILE id="xwGscf" name="BaseComparator.cpp" compile="1" resource="0"
                       file="Source/BaseComparator.cpp"/>
@@ -566,6 +581,21 @@
         </GROUP>
         <GROUP id="{8FC20544-FEBB-B3BA-CF48-50962AA7C07C}" name="Module">
           <GROUP id="{766BCE2E-5C2E-5A80-EC80-7FFA2C7ABBBA}" name="modules">
+            <GROUP id="{07899DEF-BE17-A9F4-6EF1-ED24D507DC55}" name="midi">
+              <GROUP id="{26AC336F-4247-0FA3-BBC3-11AE607B239B}" name="commands">
+                <FILE id="m4XAdQ" name="MIDICommands.cpp" compile="1" resource="0"
+                      file="Source/MIDICommands.cpp"/>
+                <FILE id="R3DyrG" name="MIDICommands.h" compile="0" resource="0" file="Source/MIDICommands.h"/>
+              </GROUP>
+              <GROUP id="{5E084893-BD83-3991-D955-7B19D9169311}" name="ui">
+                <FILE id="v00SBr" name="MIDIModuleEditor.cpp" compile="1" resource="0"
+                      file="Source/MIDIModuleEditor.cpp"/>
+                <FILE id="PQ7r7M" name="MIDIModuleEditor.h" compile="0" resource="0"
+                      file="Source/MIDIModuleEditor.h"/>
+              </GROUP>
+              <FILE id="z9jJC7" name="MIDIModule.cpp" compile="1" resource="0" file="Source/MIDIModule.cpp"/>
+              <FILE id="zwyCZl" name="MIDIModule.h" compile="0" resource="0" file="Source/MIDIModule.h"/>
+            </GROUP>
             <GROUP id="{F3EE9907-02E8-26FF-4F80-AB785727E37C}" name="osc">
               <GROUP id="{EF0BB1F4-C5D3-E71D-7AF4-34115A3BAA40}" name="commands">
                 <FILE id="cNQ6Ia" name="OSCCommand.cpp" compile="1" resource="0" file="Source/OSCCommand.cpp"/>
@@ -582,6 +612,10 @@
                           file="Source/CustomOSCCommandCreator.cpp"/>
                     <FILE id="YRlOlu" name="CustomOSCCommandCreator.h" compile="0" resource="0"
                           file="Source/CustomOSCCommandCreator.h"/>
+                    <FILE id="n52FX4" name="CustomOSCCommandEditor.cpp" compile="1" resource="0"
+                          file="Source/CustomOSCCommandEditor.cpp"/>
+                    <FILE id="KyG0PE" name="CustomOSCCommandEditor.h" compile="0" resource="0"
+                          file="Source/CustomOSCCommandEditor.h"/>
                   </GROUP>
                   <FILE id="lv7MmC" name="CustomOSCCommand.cpp" compile="1" resource="0"
                         file="Source/CustomOSCCommand.cpp"/>

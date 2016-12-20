@@ -10,8 +10,9 @@
 
 #include "ControllableEditor.h"
 #include "ControllableUI.h"
+#include "AssetManager.h"
 
-ControllableEditor::ControllableEditor(Controllable * _controllable, bool /*isRootEditor*/) :
+ControllableEditor::ControllableEditor(Controllable * _controllable, bool /*isRootEditor*/, int initHeight) :
 	InspectableEditor(_controllable), 
 	controllable(_controllable),
 	label("Label")
@@ -25,7 +26,14 @@ ControllableEditor::ControllableEditor(Controllable * _controllable, bool /*isRo
 	label.setFont(label.getFont().withHeight(12));
 	label.setText(controllable->niceName,dontSendNotification);
 
-	setSize(100, 16);
+	if (controllable->isRemovableByUser)
+	{
+		removeBT = AssetManager::getInstance()->getRemoveBT();
+		removeBT->addListener(this);
+		addAndMakeVisible(removeBT);
+	}
+
+	setSize(100, initHeight);
 }
 
 void ControllableEditor::resized()
@@ -34,5 +42,20 @@ void ControllableEditor::resized()
 	label.setBounds(r.removeFromLeft(jmin<int>(getWidth()/3,100)));
 
 	r.removeFromLeft(3);
+
+	if (controllable->isRemovableByUser && removeBT != nullptr)
+	{
+		removeBT->setBounds(r.removeFromRight(r.getHeight()));
+		r.removeFromRight(2);
+	}
+	
 	ui->setBounds(r.removeFromRight(jmin<int>(getWidth()*2/3-10,150)));
+}
+
+void ControllableEditor::buttonClicked(Button * b)
+{
+	if (b == removeBT)
+	{
+		controllable->remove();
+	}
 }

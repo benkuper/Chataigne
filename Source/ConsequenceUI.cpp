@@ -21,7 +21,7 @@ ConsequenceUI::ConsequenceUI(Consequence * consequence) :
 	chooser.addChooserListener(this);
 	addAndMakeVisible(&chooser);
 
-	updateChooserLabel();
+	updateCommandUI();
 }
 
 ConsequenceUI::~ConsequenceUI()
@@ -37,18 +37,16 @@ void ConsequenceUI::resized()
 	r.removeFromTop(headerHeight + headerGap);
 
 	Rectangle<int> sr = r.withHeight(headerHeight);
-	
 	chooser.setBounds(sr);
 
 	r.translate(0, headerHeight);
-
-	/*
-	if (commandUI != nullptr)
+	
+	if (commandEditor != nullptr)
 	{
-		commandUI->setBounds(r.withHeight(commandUI->getHeight()));
-		if (commandUI->getBottom() != getHeight()) setSize(getWidth(), commandUI->getBottom());
+		commandEditor->setBounds(r.withHeight(commandEditor->getHeight()));
+		if (commandEditor->getBottom() != getHeight()) setSize(getWidth(), commandEditor->getBottom());
 	}
-	*/
+	
 }
 
 void ConsequenceUI::updateChooserLabel()
@@ -60,6 +58,23 @@ void ConsequenceUI::updateChooserLabel()
 	chooser.setLabel(text);
 }
 
+void ConsequenceUI::updateCommandUI()
+{
+	if (commandEditor != nullptr) removeChildComponent(commandEditor);
+	if (item->command != nullptr)
+	{
+		commandEditor = item->command->getEditor(false);
+		addAndMakeVisible(commandEditor);
+	}
+	else
+	{
+		commandEditor = nullptr;
+	}
+	updateChooserLabel();
+
+	resized();
+}
+
 void ConsequenceUI::definitionChosen(CommandDefinition * d)
 {
 	item->setCommand(d);
@@ -67,5 +82,5 @@ void ConsequenceUI::definitionChosen(CommandDefinition * d)
 
 void ConsequenceUI::consequenceCommandChanged(Consequence *)
 {
-	updateChooserLabel();
+	updateCommandUI();
 }

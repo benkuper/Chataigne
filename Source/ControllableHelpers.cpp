@@ -12,6 +12,7 @@
 #include "ControllableUI.h"
 #include "DebugHelpers.h"
 #include "ControllableContainer.h"
+#include "InspectableEditor.h"
 
 ControllableChooserPopupMenu::ControllableChooserPopupMenu(ControllableContainer * rootContainer)
 {
@@ -60,12 +61,9 @@ Controllable * ControllableChooserPopupMenu::showAndGetControllable()
 	return controllableList[result-1];
 }
 
-int ControllableUIComparator::compareElements(ControllableUI * c1, ControllableUI * c2)
-{
-	return c1->controllable->niceName.compareIgnoreCase(c2->controllable->niceName);
-}
 
 int ControllableComparator::compareElements(Controllable * c1, Controllable * c2)
 {
 	return c1->niceName.compareIgnoreCase(c2->niceName);
 }
+

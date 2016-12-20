@@ -252,12 +252,9 @@ public:
 	
 	virtual InspectableEditor * getEditor(bool /*isRootEditor*/) override;
 
-private:
-
-  
-
+protected:
     void notifyStructureChanged();
-  void newMessage(const Parameter::ParamWithValue&)override;
+    void newMessage(const Parameter::ParamWithValue&)override;
 
     WeakReference<ControllableContainer>::Master masterReference;
     friend class WeakReference<ControllableContainer>;

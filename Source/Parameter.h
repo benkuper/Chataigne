@@ -82,10 +82,14 @@ public:
     // ASYNC
     class  ParamWithValue{
     public:
-        ParamWithValue(Parameter * p,var v):parameter(p),value(v){}
+		enum Type { VALUE, RANGE };
+
+		ParamWithValue(Parameter * p,var v,Type t):parameter(p),value(v),type(t){}
+		Type type;
+
         Parameter * parameter;
         var value;
-        bool isRange() const{return value.isArray();}
+		bool isRange() const { return type == RANGE; }
 
     };
     QueuedNotifier<ParamWithValue> queuedNotifier;

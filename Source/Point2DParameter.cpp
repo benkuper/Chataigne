@@ -69,7 +69,7 @@ void Point2DParameter::setValueInternal(var & _value)
 			listeners.call(&Listener::parameterRangeChanged, this);
 			var arr;
 			arr.append(minX); arr.append(maxX); arr.append(minY); arr.append(maxY);
-			queuedNotifier.addMessage(new ParamWithValue(this, arr));
+			queuedNotifier.addMessage(new ParamWithValue(this, arr,ParamWithValue::RANGE));
 		}
 	}
 
@@ -90,7 +90,7 @@ void Point2DParameter::setBounds(float _minX, float _minY, float _maxX, float _m
 	listeners.call(&Listener::parameterRangeChanged, this);
 	var arr;
 	arr.append(minX); arr.append(maxX); arr.append(minY); arr.append(maxY);
-	queuedNotifier.addMessage(new ParamWithValue(this, arr));
+	queuedNotifier.addMessage(new ParamWithValue(this, arr,ParamWithValue::RANGE));
 }
 
 Point<float> Point2DParameter::getPoint() {

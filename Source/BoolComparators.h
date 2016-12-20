@@ -23,7 +23,7 @@ public:
 	const Identifier equalsId = "=";
 
 	BoolParameter * boolParam;
-	BoolParameter * ref;
+	BoolParameter * boolRef;
 
 	virtual void compare() override;
 

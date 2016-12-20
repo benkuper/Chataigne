@@ -81,7 +81,7 @@ void Point3DParameter::setValueInternal(var & _value)
 			listeners.call(&Listener::parameterRangeChanged, this);
 			var arr;
 			arr.append(minX); arr.append(maxX); arr.append(minY); arr.append(maxY); arr.append(minZ);  arr.append(maxZ);
-			queuedNotifier.addMessage(new ParamWithValue(this, arr));
+			queuedNotifier.addMessage(new ParamWithValue(this, arr,ParamWithValue::RANGE));
 		}
 	}
 
@@ -108,7 +108,7 @@ void Point3DParameter::setBounds(float _minX, float _minY, float _minZ, float _m
 	listeners.call(&Listener::parameterRangeChanged, this);
 	var arr;
 	arr.append(minX); arr.append(maxX); arr.append(minY); arr.append(maxY); arr.append(minZ); arr.append(maxZ);
-	queuedNotifier.addMessage(new ParamWithValue(this, arr));
+	queuedNotifier.addMessage(new ParamWithValue(this, arr,ParamWithValue::RANGE));
 }
 
 Vector3D<float> Point3DParameter::getVector() {

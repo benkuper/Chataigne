@@ -13,9 +13,11 @@
 
 OSCCommand::OSCCommand(OSCModule * _module, CommandContext context, var params) :
 	ModuleCommand(_module,context, params),
-	oscModule(_module)
+	oscModule(_module),
+	argumentsContainer("Arguments")
 {
 	address = addStringParameter("Address", "Adress of the OSC Message (e.g. /example)", params.getProperty("address","/example"));
+	addChildControllableContainer(&argumentsContainer);
 }
 
 OSCCommand::~OSCCommand()
@@ -28,14 +30,16 @@ void OSCCommand::trigger()
 
 	OSCMessage m(address->stringValue());
 	
-	for (auto &a : arguments)
+	for (auto &a : argumentsContainer.controllables)
 	{
-		switch (a->type)
+		Parameter * p = static_cast<Parameter *>(a);
+		if (p == nullptr) continue;
+		switch (p->type)
 		{
-		case Controllable::BOOL: m.addInt32(a->boolValue() ? 1 : 0); break;
-		case Controllable::INT: m.addInt32(a->intValue()); break;
-		case Controllable::FLOAT: m.addFloat32(a->floatValue()); break;
-		case Controllable::STRING: m.addString(a->stringValue()); break;
+		case Controllable::BOOL: m.addInt32(p->boolValue() ? 1 : 0); break;
+		case Controllable::INT: m.addInt32(p->intValue()); break;
+		case Controllable::FLOAT: m.addFloat32(p->floatValue()); break;
+		case Controllable::STRING: m.addString(p->stringValue()); break;
 		case Controllable::POINT2D:
 			m.addFloat32(((Point2DParameter *)a)->x);
 			m.addFloat32(((Point2DParameter *)a)->y);

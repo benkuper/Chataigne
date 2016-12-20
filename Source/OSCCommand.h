@@ -24,7 +24,7 @@ public:
 
 	OSCModule * oscModule;
 	StringParameter * address;
-	Array<Parameter *> arguments;
+	ControllableContainer argumentsContainer;
 
 	void trigger() override;
 

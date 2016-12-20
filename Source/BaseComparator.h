@@ -26,6 +26,7 @@ public:
 	void setValid(bool value);
 
 	Controllable * source;
+	Controllable * reference;
 	EnumParameter * compareFunction;
 	BoolParameter * alwaysDispatch;
 

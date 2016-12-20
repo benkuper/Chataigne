@@ -50,6 +50,7 @@ void Parameter::setValue(var _value, bool silentSet, bool force)
 }
 
 void Parameter::setRange(var min, var max, bool setDefaultRange){
+
 	if (setDefaultRange)
 	{
 		defaultMinValue = min;
@@ -62,7 +63,7 @@ void Parameter::setRange(var min, var max, bool setDefaultRange){
     listeners.call(&Listener::parameterRangeChanged,this);
 	var arr;
 	arr.append(minimumValue);arr.append(maximumValue);
-	queuedNotifier.addMessage(new ParamWithValue(this,arr));
+	queuedNotifier.addMessage(new ParamWithValue(this,arr,ParamWithValue::RANGE));
 
 	setValue(value); //if value is outside range, this will change the value
 }
@@ -71,6 +72,7 @@ void Parameter::setValueInternal(var & _value) //to override by child classes
 {
 
     value = _value;
+
 #ifdef JUCE_DEBUG
     checkVarIsConsistentWithType();
 #endif
@@ -103,7 +105,7 @@ float Parameter::getNormalizedValue() {
 
 void Parameter::notifyValueChanged() {
     listeners.call(&Listener::parameterValueChanged, this);
-    queuedNotifier.addMessage(new ParamWithValue(this,value));
+    queuedNotifier.addMessage(new ParamWithValue(this,value,ParamWithValue::VALUE));
 }
 
 var Parameter::getJSONDataInternal()
@@ -122,9 +124,9 @@ void Parameter::loadJSONDataInternal(var data)
 
 	if (!saveValueOnly)
 	{
-		if (data.getDynamicObject()->hasProperty("minValue")) setValue(data.getProperty("minValue", var()));
-		if (data.getDynamicObject()->hasProperty("maxValue")) setValue(data.getProperty("maxValue", var()));
+		setRange(data.getProperty("minValue", minimumValue), data.getProperty("maxValue", maximumValue));
 	}
+
 	if (data.getDynamicObject()->hasProperty("value"))
 	{
 		setValue(data.getProperty("value", 0));

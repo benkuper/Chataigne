@@ -26,6 +26,7 @@ GenericControllableContainerEditor::GenericControllableContainerEditor(WeakRefer
 	containerLabel.setColour(containerLabel.backgroundColourId, BG_COLOR.brighter(.2f));
 	containerLabel.setSize(containerLabel.getFont().getStringWidth(containerLabel.getText()) + 10, 14);
 	containerLabel.setColour(containerLabel.textColourId, TEXTNAME_COLOR);
+	containerLabel.setInterceptsMouseClicks(false, false);
 
 	if (container->canHavePresets)
 	{
@@ -71,20 +72,22 @@ void GenericControllableContainerEditor::resetAndBuild()
 }
 
 
-void GenericControllableContainerEditor::addEditorUI(ControllableContainer * cc)
+void GenericControllableContainerEditor::addEditorUI(ControllableContainer * cc, bool resize)
 {
 	InspectableEditor * ccui = cc->getEditor(false);
 	childEditors.add(ccui);
 	addAndMakeVisible(ccui);
+	if (resize) resized();
 }
 
-void GenericControllableContainerEditor::removeEditorUI(ControllableContainer * cc)
+void GenericControllableContainerEditor::removeEditorUI(ControllableContainer * cc, bool resize)
 {
 	InspectableEditor * ccui = getEditorForInspectable(cc);
 	if (ccui == nullptr) return;
 
 	removeChildComponent(ccui);
 	childEditors.removeObject(ccui);
+	if (resize) resized();
 }
 
 InspectableEditor * GenericControllableContainerEditor::getEditorForInspectable(Inspectable * i)
@@ -97,22 +100,24 @@ InspectableEditor * GenericControllableContainerEditor::getEditorForInspectable(
 	return nullptr;
 }
 
-void GenericControllableContainerEditor::addControllableUI(Controllable * c)
+void GenericControllableContainerEditor::addControllableUI(Controllable * c, bool resize)
 {
 	if (c->isControllableFeedbackOnly || !c->isControllableExposed || c->hideInEditor) return;
 
 	InspectableEditor * cui = c->getEditor(false);
 	childEditors.add(cui);
 	addAndMakeVisible(cui);
+	if (resize) resized();
 }
 
-void GenericControllableContainerEditor::removeControllableUI(Controllable * c)
+void GenericControllableContainerEditor::removeControllableUI(Controllable * c, bool resize)
 {
 	InspectableEditor * cui = getEditorForInspectable(c);
 	if (cui == nullptr) return;
 
 	removeChildComponent(cui);
 	childEditors.removeObject(cui);
+	if (resize) resized();
 
 }
 
@@ -123,21 +128,21 @@ void GenericControllableContainerEditor::newMessage(const ContainerAsyncEvent & 
 	case ContainerAsyncEvent::ControllableAdded:
 		if (p.targetControllable->parentContainer != container) return;
 		if (p.targetControllable->hideInEditor) return;
-		addControllableUI(p.targetControllable);
+		addControllableUI(p.targetControllable,true);
 		break;
 
 	case ContainerAsyncEvent::ControllableRemoved:
-		removeControllableUI(p.targetControllable);
+		removeControllableUI(p.targetControllable,true);
 		break;
 
 	case ContainerAsyncEvent::ControllableContainerAdded:
 		if (p.targetContainer->parentContainer != container) return;
 
-		if (container->canInspectChildContainers) addEditorUI(p.targetContainer);
+		if (container->canInspectChildContainers) addEditorUI(p.targetContainer,true);
 		break;
 
 	case ContainerAsyncEvent::ControllableContainerRemoved:
-		removeEditorUI(p.targetContainer);
+		removeEditorUI(p.targetContainer,true);
 		break;
 
 	case ContainerAsyncEvent::ChildStructureChanged:
@@ -145,7 +150,6 @@ void GenericControllableContainerEditor::newMessage(const ContainerAsyncEvent & 
 		break;
 
 	case ContainerAsyncEvent::ControllableContainerReordered:
-		//controllablesUI.sort(CCInnerContainer::comparator, true);
 		//resized();
 		break;
 
@@ -154,6 +158,11 @@ void GenericControllableContainerEditor::newMessage(const ContainerAsyncEvent & 
     break;
 
 	}
+}
+
+void GenericControllableContainerEditor::childBoundsChanged(Component *)
+{
+	resized();
 }
 
 void GenericControllableContainerEditor::paint(Graphics & g)

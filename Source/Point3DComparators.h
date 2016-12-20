@@ -28,7 +28,7 @@ public:
 
 
 	Point3DParameter * p3dParam;
-	Point3DParameter * ref;
+	Point3DParameter * p3dRef;
 	FloatParameter * valParam;
 
 	virtual void compare() override;

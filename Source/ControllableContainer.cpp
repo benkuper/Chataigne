@@ -40,14 +40,18 @@ ControllableContainer::ControllableContainer(const String & niceName) :
 {
   setNiceName(niceName);
 
-  currentPresetName = addStringParameter("Preset", "Current Preset", "");
-  currentPresetName->hideInEditor = true;
-  currentPresetName->hideInOutliner = true;
-  currentPresetName->isTargettable = false;
+  if (canHavePresets)
+  {
+	  currentPresetName = addStringParameter("Preset", "Current Preset", "");
+	  currentPresetName->hideInEditor = true;
+	  currentPresetName->hideInOutliner = true;
+	  currentPresetName->isTargettable = false;
 
-  savePresetTrigger = addTrigger("Save Preset", "Save current preset");
-  savePresetTrigger->hideInEditor = true; 
-  savePresetTrigger->isTargettable = false;
+	  savePresetTrigger = addTrigger("Save Preset", "Save current preset");
+	  savePresetTrigger->hideInEditor = true;
+	  savePresetTrigger->isTargettable = false;
+  }
+  
   
 }
 
@@ -234,7 +238,9 @@ void ControllableContainer::setAutoShortName() {
 void ControllableContainer::setCanHavePresets(bool value)
 {
 	canHavePresets = value;
-	currentPresetName->isControllableExposed = value; 
+	
+	//TODO, create triggers and string parameter here instead of having them everywhere
+	//currentPresetName->isControllableExposed = value;
 }
 
 

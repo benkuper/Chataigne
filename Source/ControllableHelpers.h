@@ -68,14 +68,6 @@ public:
 };
 
 
-class ControllableUIComparator
-{
-public:
-	ControllableUIComparator() {}
-	int compareElements(ControllableUI* c1, ControllableUI* c2);
-
-	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ControllableUIComparator)
-};
 
 
 #endif  // CONTROLLABLEHELPERS_H_INCLUDED

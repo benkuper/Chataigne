@@ -23,7 +23,8 @@ class Controllable :
 {
 public:
   enum Type { //Add type here if creating new type of Controllable
-    TRIGGER,
+	CUSTOM,
+	TRIGGER,
     FLOAT,
     INT,
     BOOL,
@@ -31,7 +32,7 @@ public:
 	ENUM,
 	POINT2D,
 	POINT3D,
-    TARGET,
+    TARGET
   };
 
 

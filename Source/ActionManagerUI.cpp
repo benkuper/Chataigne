@@ -23,3 +23,10 @@ ActionManagerUI::~ActionManagerUI()
 {
 
 }
+
+void ActionManagerUI::addItemFromMenu(Point<int>)
+{
+	Action * a = manager->addItem();
+	a->cdm.addItem();
+	a->csm.addItem();
+}

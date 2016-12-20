@@ -19,6 +19,9 @@ BaseComparatorUI::BaseComparatorUI(BaseComparator * _comparator) :
 	addAndMakeVisible(compareFuncUI);
 	addAndMakeVisible(alwaysDispatchUI);
 
+	refUI = comparator->reference->createDefaultUI();
+	addAndMakeVisible(refUI);
+
 	setSize(10, 60); //init size
 }
 
@@ -28,8 +31,12 @@ BaseComparatorUI::~BaseComparatorUI()
 
 void BaseComparatorUI::resized()
 {
-	Rectangle<int> r = getLocalBounds().removeFromTop(16);
-	alwaysDispatchUI->setBounds(r.removeFromRight(r.getHeight()));
-	r.removeFromRight(2);
-	compareFuncUI->setBounds(r);
+	Rectangle<int> r = getLocalBounds();
+	Rectangle<int> hr = r.removeFromTop(16);
+	alwaysDispatchUI->setBounds(hr.removeFromRight(60));
+	hr.removeFromRight(2);
+	compareFuncUI->setBounds(hr);
+
+	r.removeFromTop(2);
+	refUI->setBounds(r.removeFromTop(14));
 }

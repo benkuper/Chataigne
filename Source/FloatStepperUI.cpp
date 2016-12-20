@@ -17,7 +17,7 @@ FloatStepperUI::FloatStepperUI(Parameter * _parameter) :
 	slider = new BetterStepper(tooltip);
 	
     addAndMakeVisible(slider);
-    slider->setRange(parameter->minimumValue, parameter->maximumValue,1);
+    slider->setRange((int)parameter->minimumValue-1, (int)parameter->maximumValue+1,1);
     slider->setValue(parameter->floatValue());
     slider->addListener(this);
 	slider->setTextBoxIsEditable(_parameter->isEditable);
@@ -44,8 +44,8 @@ void FloatStepperUI::sliderValueChanged(Slider * _slider)
 {
 	parameter->setValue(_slider->getValue());
 }
-void FloatStepperUI::rangeChanged(Parameter * p){
-    slider->setRange((float)p->minimumValue, (float)p->maximumValue,1);
+void FloatStepperUI::rangeChanged(Parameter *){
+	slider->setRange((int)parameter->minimumValue - 1, (int)parameter->maximumValue + 1, 1);
 
 }
 

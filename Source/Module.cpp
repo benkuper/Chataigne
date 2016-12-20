@@ -22,9 +22,16 @@ Module::Module(const String &name) :
 	addChildControllableContainer(&valuesCC);
 	addChildControllableContainer(&defManager);
 
+	
+
 	logIncomingData = addBoolParameter("Log Incoming Data", "Enable / Disable logging of incoming data for this module", false);
 	logIncomingData->hideInOutliner = true;
 	logIncomingData->isTargettable = false;
+
+	logOutgoingData = addBoolParameter("Log Outgoing Data", "Enable / Disable logging of outgoing data for this module", false);
+	logOutgoingData->hideInOutliner = true;
+	logOutgoingData->isTargettable = false;
+
 
 	activityTrigger = addTrigger("Activity", "Activity Signal");
 	activityTrigger->hideInEditor = true;

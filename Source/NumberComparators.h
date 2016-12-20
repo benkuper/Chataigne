@@ -30,11 +30,10 @@ public:
 	const Identifier inRangeId = "range";
 
 	FloatParameter * floatParam;
-	FloatParameter * ref;
+	FloatParameter * floatRef;
 
 	virtual void compare() override;
 
-	virtual BaseComparatorUI * createUI() override;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(FloatComparator)
 };
@@ -55,9 +54,10 @@ public:
 	const Identifier inRangeId = "range";
 
 	IntParameter * intParam;
-	IntParameter * ref;
+	IntParameter *  intRef;
 
-	virtual void compare() override;
+	virtual void compare() override; 
+
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(IntComparator)
 };

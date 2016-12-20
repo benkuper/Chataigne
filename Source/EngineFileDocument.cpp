@@ -94,9 +94,9 @@ void Engine::loadDocumentAsync(const File & file){
     parseTask->start();
     jsonData = JSON::parse(*is);
     parseTask->end();
-    loadTask->start();
+    //loadTask->start();
     loadJSONData(jsonData,loadTask);
-    loadTask->end();
+   // loadTask->end();
 
 
   }// deletes data before launching audio, (data not needed after loaded)
@@ -191,12 +191,16 @@ var Engine::getJSONData()
 /// ===================
 // loading
 
-void Engine::loadJSONData (var data,ProgressTask * loadingTask)
+void Engine::loadJSONData (var data,ProgressTask * loadingTask) 
 {
-
+	DynamicObject * dObject = data.getDynamicObject();
+	if (dObject == nullptr)
+	{
+		DBG("SHIIIIT");
+		return;
+	}
   DynamicObject * md = data.getDynamicObject()->getProperty("metaData").getDynamicObject();
   bool versionChecked = checkFileVersion(md);
-
 
   if (!versionChecked)
   {
@@ -210,24 +214,28 @@ void Engine::loadJSONData (var data,ProgressTask * loadingTask)
 
 
   DynamicObject * d = data.getDynamicObject();
+  /*
   ProgressTask * presetTask = loadingTask->addTask("presetManager");
   ProgressTask * moduleManagerTask = loadingTask->addTask("moduleManager");
   ProgressTask * stateTask = loadingTask->addTask("stateManager");
   ProgressTask * sequenceTask = loadingTask->addTask("sequenceManager");
+  */
 
-  presetTask->start();
+  //presetTask->start();
   if (d->hasProperty("presetManager")) PresetManager::getInstance()->loadJSONData(d->getProperty("presetManager"));
-  presetTask->end();
+  //presetTask->end();
 
-  moduleManagerTask->start();
-  if (d->hasProperty("moduleManager")) ModuleManager::getInstance()->loadJSONData(d->getProperty("inputManager"));
-  moduleManagerTask->end();
-  stateTask->start();
+  //moduleManagerTask->start();
+  if (d->hasProperty("moduleManager")) ModuleManager::getInstance()->loadJSONData(d->getProperty("moduleManager"));
+  //moduleManagerTask->end();
+
+  //stateTask->start();
   if (d->hasProperty("stateManager")) StateManager::getInstance()->loadJSONData(d->getProperty("stateManager"));
-  stateTask->end();
-  sequenceTask->start();
-  if (d->hasProperty("outputManager")) SequenceManager::getInstance()->loadJSONData(d->getProperty("sequenceManager"));
-  sequenceTask->end();
+ // stateTask->end();
+
+ // sequenceTask->start();
+  if (d->hasProperty("sequenceManager")) SequenceManager::getInstance()->loadJSONData(d->getProperty("sequenceManager"));
+ // sequenceTask->end();
 
 
   if (Inspector::getInstanceWithoutCreating() != nullptr) Inspector::getInstance()->setEnabled(true); //Re enable editor

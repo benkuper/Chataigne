@@ -29,7 +29,7 @@ public:
 
 
 	Point2DParameter * p2dParam;
-	Point2DParameter * ref;
+	Point2DParameter * p2dRef;
 	FloatParameter * valParam;
 
 	virtual void compare() override;

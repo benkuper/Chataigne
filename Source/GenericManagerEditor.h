@@ -38,7 +38,6 @@ GenericManagerEditor<T>::GenericManagerEditor(BaseManager<T> * _manager) :
 	manager(_manager),
 	addItemText("Add item")
 {
-	DBG("Generic Manager editor !");
 	setInterceptsMouseClicks(true, true);
 }
 

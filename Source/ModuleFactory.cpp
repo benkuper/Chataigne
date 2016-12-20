@@ -12,11 +12,13 @@
 
 #include "CustomOSCModule.h"
 #include "ResolumeModule.h"
+#include "MIDIModule.h"
 
 juce_ImplementSingleton(ModuleFactory)
 
 ModuleFactory::ModuleFactory() {
 	moduleDefs.add(new ModuleDefinition("Generic", "OSC", &CustomOSCModule::create));
+	moduleDefs.add(new ModuleDefinition("Generic", "MIDI", &MIDIModule::create));
 	moduleDefs.add(new ModuleDefinition("Video", "Resolume", &ResolumeModule::create));
 
 	buildPopupMenu();

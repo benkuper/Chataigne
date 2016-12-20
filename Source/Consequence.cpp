@@ -48,6 +48,7 @@ void Consequence::onContainerTriggerTriggered(Trigger * t)
 {
 	if (t == trigger)
 	{
+		DBG("consequence trigger");
 		if (command != nullptr) command->trigger();
 	}
 }

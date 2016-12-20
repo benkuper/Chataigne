@@ -15,18 +15,21 @@
 #include "Controllable.h"
 
 class ControllableEditor : 
-	public InspectableEditor
+	public InspectableEditor,
+	public ButtonListener
 {
 public:
-	ControllableEditor(Controllable * controllable, bool isRootEditor);  //Todo : handle full feedback if is root
+	ControllableEditor(Controllable * controllable, bool isRootEditor, int initHeight = 16);  //Todo : handle full feedback if is root
 
 	Controllable * controllable;
 	
 	Label label;
 	ScopedPointer<ControllableUI> ui;
+	ScopedPointer<ImageButton> removeBT;
 
 	void resized() override;
 
+	void buttonClicked(Button * b);
 };
 
 

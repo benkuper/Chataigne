@@ -9,6 +9,7 @@
 */
 
 #include "CustomOSCCommand.h"
+#include "CustomOSCCommandEditor.h"
 
 CustomOSCCommand::CustomOSCCommand(CustomOSCModule * module, CommandContext context, var params) :
 	OSCCommand(module, context, params)
@@ -17,4 +18,9 @@ CustomOSCCommand::CustomOSCCommand(CustomOSCModule * module, CommandContext cont
 
 CustomOSCCommand::~CustomOSCCommand()
 {
+}
+
+InspectableEditor * CustomOSCCommand::getEditor(bool)
+{
+	return new CustomOSCCommandEditor(this, false);
 }

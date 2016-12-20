@@ -16,7 +16,8 @@ BoolComparator::BoolComparator(Controllable * c) :
 {
 	addCompareOption("=", equalsId);
 
-	ref = addBoolParameter("Reference", "Comparison Reference to check against source value", boolParam->defaultValue);
+	boolRef = addBoolParameter("Reference", "Comparison Reference to check against source value", boolParam->defaultValue);
+	reference = boolRef;
 }
 
 BoolComparator::~BoolComparator()
@@ -25,5 +26,5 @@ BoolComparator::~BoolComparator()
 
 void BoolComparator::compare()
 {
-	if (currentFunctionId == equalsId) setValid(boolParam->boolValue() > ref->boolValue());
+	if (currentFunctionId == equalsId) setValid(boolParam->boolValue() > boolRef->boolValue());
 }

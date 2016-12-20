@@ -28,6 +28,7 @@ void ConsequenceManager::onContainerTriggerTriggered(Trigger * t)
 {
 	if (t == triggerAll)
 	{
+		DBG("Trigger All from CSM");
 		for (auto &c : items) c->trigger->trigger();
 	}
 }

@@ -15,6 +15,9 @@ CommandDefinitionManager::CommandDefinitionManager() :
 	BaseManager("Definitions")
 {
 	canInspectChildContainers = true;
+	hideInEditor = true;
+	isTargettable = false;
+	selectItemWhenCreated = false;
 }
 
 CommandDefinitionManager::~CommandDefinitionManager()

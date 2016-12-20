@@ -98,7 +98,7 @@ void FloatSliderUI::paint(Graphics & g)
 			if (showValue) text += " : ";
 		}
 		if (showValue) text += String::formatted("%." + String(fixedDecimals) + "f", parameter->floatValue());
-		g.setFont(getHeight() - 4);
+		g.setFont((float)getHeight() - 4);
         g.drawFittedText(text, destRect, Justification::centred,1);
     }
 

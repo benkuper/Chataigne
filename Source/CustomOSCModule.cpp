@@ -22,6 +22,7 @@ CustomOSCModule::CustomOSCModule() :
 
 	defManager.addItem(CommandDefinition::createDef(this, "", "Custom Message", &CustomOSCCommand::create));
 	defManager.hideInEditor = false;
+
 }
 
 void CustomOSCModule::processMessageInternal(const OSCMessage & msg)
@@ -117,10 +118,10 @@ void CustomOSCModule::processMessageInternal(const OSCMessage & msg)
 			break;
 		}
 
+		c->setCustomShortName(cShortName); //force safeName for search
 		c->isCustomizableByUser = true;
 		c->isRemovableByUser = true;
 		c->saveValueOnly = false;
-		c->setCustomShortName(cShortName); //force safeName for search
 		valuesCC.orderControllablesAlphabetically();
 	}
 }
@@ -128,8 +129,8 @@ void CustomOSCModule::processMessageInternal(const OSCMessage & msg)
 var CustomOSCModule::getJSONData()
 {
 	var data = OSCModule::getJSONData();
-	var itemsData = var();
 	data.getDynamicObject()->setProperty("values", valuesCC.getJSONData());
+	data.getDynamicObject()->setProperty("definitions", defManager.getJSONData());
 	return data;
 }
 
@@ -137,6 +138,7 @@ void CustomOSCModule::loadJSONDataInternal(var data)
 {
 	OSCModule::loadJSONDataInternal(data);
 	valuesCC.loadJSONData(data.getProperty("values", var()), true);
-
 	valuesCC.orderControllablesAlphabetically();
+	defManager.loadJSONData(data.getProperty("definitions", var()), true);
+
 }

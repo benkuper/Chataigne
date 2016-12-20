@@ -28,8 +28,7 @@ public:
 	ScopedPointer<BoolToggleUI> alwaysDispatchUI;
 	ScopedPointer<EnumParameterUI> compareFuncUI;
 
-	ControllableUI * refUI;
-
+	ScopedPointer<ControllableUI> refUI;
 	void resized() override;
 };
 

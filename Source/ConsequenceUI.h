@@ -26,11 +26,13 @@ public:
 	virtual ~ConsequenceUI();
 
 	CommandChooserUI chooser;
+	ScopedPointer<InspectableEditor> commandEditor;
 
 	void resized() override;
 
 	void updateChooserLabel();
 
+	void updateCommandUI();
 	void definitionChosen(CommandDefinition * d) override;
 
 	void consequenceCommandChanged(Consequence*) override;

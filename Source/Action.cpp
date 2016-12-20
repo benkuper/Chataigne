@@ -52,6 +52,7 @@ void Action::onContainerParameterChangedInternal(Parameter * p)
 
 void Action::onContainerTriggerTriggered(Trigger * t)
 {
+	
 	if (t == trigger)
 	{
 		csm.triggerAll->trigger();
@@ -60,7 +61,11 @@ void Action::onContainerTriggerTriggered(Trigger * t)
 
 void Action::conditionManagerValidationChanged(ConditionManager *)
 {
-	if (cdm.isValid->boolValue()) csm.triggerAll->trigger();
+	DBG("Condition validation changed");
+	if (cdm.isValid->boolValue())
+	{
+		csm.triggerAll->trigger();
+	}
 }
 
 

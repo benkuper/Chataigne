@@ -17,6 +17,7 @@
 #include "StringUtil.h"
 #include "Outliner.h"
 #include "ControllableFactory.h"
+#include "MIDIManager.h"
 
 juce_ImplementSingleton(Engine) 
 
@@ -39,6 +40,8 @@ Engine::Engine():
   addChildControllableContainer(ModuleManager::getInstance());
   addChildControllableContainer(StateManager::getInstance());
   addChildControllableContainer(SequenceManager::getInstance());
+
+  MIDIManager::getInstance(); //Trigger MIDIManager singleton constructor
 }
 
 
@@ -57,6 +60,8 @@ Engine::~Engine(){
   Logger::setCurrentLogger(nullptr);
 
   ControllableFactory::deleteInstance();
+  
+  MIDIManager::deleteInstance();
 
 }
 

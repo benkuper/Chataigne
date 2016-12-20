@@ -11,6 +11,7 @@
 #include "Condition.h"
 #include "TargetParameter.h"
 #include  "ComparatorFactory.h"
+#include "ModuleManager.h"
 
 Condition::Condition() :
 	BaseItem("Condition")
@@ -19,7 +20,7 @@ Condition::Condition() :
 	isValid->isEditable = false;
 	isValid->isSavable = false;
 
-	sourceTarget = addTargetParameter("Source", "Element that will be the source to check if condition is active or not");
+	sourceTarget = addTargetParameter("Source", "Element that will be the source to check if condition is active or not",ModuleManager::getInstance());
 	
 
 }

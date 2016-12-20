@@ -32,7 +32,6 @@ public:
 
 	OwnedArray<InspectableEditor> childEditors;
 
-	//static ControllableUIComparator comparator;
 
 	void resetAndBuild();
 
@@ -40,15 +39,17 @@ public:
 	void resized() override;
 	void clear();
 
-	void addControllableUI(Controllable * c);
-	void removeControllableUI(Controllable *c);
+	void addControllableUI(Controllable * c, bool resize = false);
+	void removeControllableUI(Controllable *c, bool resize = false);
 
-	void addEditorUI(ControllableContainer * cc);
-	void removeEditorUI(ControllableContainer * cc);
+	void addEditorUI(ControllableContainer * cc, bool resize = false);
+	void removeEditorUI(ControllableContainer * cc, bool resize = false);
 	
 	InspectableEditor * getEditorForInspectable(Inspectable * i);
 	
 	void newMessage(const ContainerAsyncEvent & p) override;
+
+	void childBoundsChanged(Component *);
 };
 
 

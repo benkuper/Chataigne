@@ -20,7 +20,8 @@ StringComparator::StringComparator(Controllable * c) :
 	addCompareOption("Starts with", startsWith);
 	addCompareOption("Ends with", endsWidth);
 
-	ref = addStringParameter("Reference", "Comparison Reference to check against source value", stringParam->defaultValue);
+	stringRef = addStringParameter("Reference", "Comparison Reference to check against source value", stringParam->defaultValue);
+	reference = stringRef;
 }
 
 StringComparator::~StringComparator()
@@ -29,8 +30,8 @@ StringComparator::~StringComparator()
 
 void StringComparator::compare()
 {
-	if (currentFunctionId == equalsId)				setValid(stringParam->stringValue() == ref->stringValue());
-	else if (currentFunctionId == containsId)		setValid(stringParam->stringValue().contains(ref->stringValue()));
-	else if (currentFunctionId == startsWith)		setValid(stringParam->stringValue().startsWith(ref->stringValue()));
-	else if (currentFunctionId == endsWidth)		setValid(stringParam->stringValue().endsWith(ref->stringValue()));
+	if (currentFunctionId == equalsId)				setValid(stringParam->stringValue() == stringRef->stringValue());
+	else if (currentFunctionId == containsId)		setValid(stringParam->stringValue().contains(stringRef->stringValue()));
+	else if (currentFunctionId == startsWith)		setValid(stringParam->stringValue().startsWith(stringRef->stringValue()));
+	else if (currentFunctionId == endsWidth)		setValid(stringParam->stringValue().endsWith(stringRef->stringValue()));
 }
