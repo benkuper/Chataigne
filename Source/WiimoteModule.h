@@ -8,6 +8,7 @@
   ==============================================================================
 */
 
+/*
 #ifndef WIIMOTEMODULE_H_INCLUDED
 #define WIIMOTEMODULE_H_INCLUDED
 
@@ -53,3 +54,4 @@ public:
 
 
 #endif  // WIIMOTEMODULE_H_INCLUDED
+*/

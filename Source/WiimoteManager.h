@@ -8,6 +8,7 @@
   ==============================================================================
 */
 
+/*
 #ifndef WIIMOTEMANAGER_H_INCLUDED
 #define WIIMOTEMANAGER_H_INCLUDED
 
@@ -106,3 +107,4 @@ public:
 
 
 #endif  // WIIMOTEMANAGER_H_INCLUDED
+*/

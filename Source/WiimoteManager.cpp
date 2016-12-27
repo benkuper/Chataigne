@@ -8,6 +8,7 @@
   ==============================================================================
 */
 
+/*
 #include "WiimoteManager.h"
 #include "DebugHelpers.h"
 
@@ -170,3 +171,4 @@ void Wiimote::setBatteryLevel(float value)
 		listeners.call(&Listener::wiimoteBatteryLevelChanged, this);
 	}
 }
+*/

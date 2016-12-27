@@ -1,0 +1,393 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<JUCERPROJECT id="K5cQB4" name="WiimotePlugin" projectType="dll" version="1.0.0"
+              bundleIdentifier="benkuper.chataigne.WiimotePlugin" includeBinaryInAppConfig="1"
+              jucerVersion="4.3.0" companyName="Ben Kuper">
+  <MAINGROUP id="IoyFyL" name="WiimotePlugin">
+    <GROUP id="{719EB595-0BB3-F2ED-280B-BE6A837B420E}" name="Source">
+      <GROUP id="{E3E46705-C88C-5E64-6499-5EB5A2CC78B9}" name="assets">
+        <FILE id="ndsiLL" name="configBT.png" compile="0" resource="1" file="../../Resources/configBT.png"/>
+        <FILE id="eLY6rW" name="removeBT.png" compile="0" resource="1" file="../../Resources/removeBT.png"/>
+        <FILE id="lNqMoB" name="target.png" compile="0" resource="1" file="../../Resources/target.png"/>
+      </GROUP>
+      <GROUP id="{69B80643-E8BE-FA46-A21D-1D173F0664F9}" name="chataigne">
+        <FILE id="pMCVS7" name="Action.cpp" compile="1" resource="0" file="../../Source/Action.cpp"/>
+        <FILE id="Sre5NB" name="ActionEditor.cpp" compile="1" resource="0"
+              file="../../Source/ActionEditor.cpp"/>
+        <FILE id="zqbruY" name="ActionManager.cpp" compile="1" resource="0"
+              file="../../Source/ActionManager.cpp"/>
+        <FILE id="rvCblZ" name="ActionManagerUI.cpp" compile="1" resource="0"
+              file="../../Source/ActionManagerUI.cpp"/>
+        <FILE id="OtxXan" name="ActionUI.cpp" compile="1" resource="0" file="../../Source/ActionUI.cpp"/>
+        <FILE id="SOunst" name="AssetManager.cpp" compile="1" resource="0"
+              file="../../Source/AssetManager.cpp"/>
+        <FILE id="CgZDim" name="AudioLayer.cpp" compile="1" resource="0" file="../../Source/AudioLayer.cpp"/>
+        <FILE id="kImDZg" name="AudioLayerPanel.cpp" compile="1" resource="0"
+              file="../../Source/AudioLayerPanel.cpp"/>
+        <FILE id="sPk74f" name="AudioLayerTimeline.cpp" compile="1" resource="0"
+              file="../../Source/AudioLayerTimeline.cpp"/>
+        <FILE id="OLb7tV" name="Automation.cpp" compile="1" resource="0" file="../../Source/Automation.cpp"/>
+        <FILE id="UVhO1V" name="AutomationKey.cpp" compile="1" resource="0"
+              file="../../Source/AutomationKey.cpp"/>
+        <FILE id="eFm7Ga" name="AutomationKeyUI.cpp" compile="1" resource="0"
+              file="../../Source/AutomationKeyUI.cpp"/>
+        <FILE id="LqIj7g" name="AutomationUI.cpp" compile="1" resource="0"
+              file="../../Source/AutomationUI.cpp"/>
+        <FILE id="d0ugct" name="BaseCommand.cpp" compile="1" resource="0" file="../../Source/BaseCommand.cpp"/>
+        <FILE id="R27s3W" name="BaseComparator.cpp" compile="1" resource="0"
+              file="../../Source/BaseComparator.cpp"/>
+        <FILE id="wY1aOx" name="BaseComparatorUI.cpp" compile="1" resource="0"
+              file="../../Source/BaseComparatorUI.cpp"/>
+        <FILE id="Z0XGOl" name="BaseItem.cpp" compile="1" resource="0" file="../../Source/BaseItem.cpp"/>
+        <FILE id="b5g851" name="BetterStepper.cpp" compile="1" resource="0"
+              file="../../Source/BetterStepper.cpp"/>
+        <FILE id="JTSu2s" name="BoolComparators.cpp" compile="1" resource="0"
+              file="../../Source/BoolComparators.cpp"/>
+        <FILE id="iufGhE" name="BoolParameter.cpp" compile="1" resource="0"
+              file="../../Source/BoolParameter.cpp"/>
+        <FILE id="SkTO8P" name="BoolToggleUI.cpp" compile="1" resource="0"
+              file="../../Source/BoolToggleUI.cpp"/>
+        <FILE id="lC17Vq" name="CommandChooserUI.cpp" compile="1" resource="0"
+              file="../../Source/CommandChooserUI.cpp"/>
+        <FILE id="FqVpyd" name="CommandDefinition.cpp" compile="1" resource="0"
+              file="../../Source/CommandDefinition.cpp"/>
+        <FILE id="je8s1S" name="CommandDefinitionManager.cpp" compile="1" resource="0"
+              file="../../Source/CommandDefinitionManager.cpp"/>
+        <FILE id="frwiwm" name="CommandFactory.cpp" compile="1" resource="0"
+              file="../../Source/CommandFactory.cpp"/>
+        <FILE id="b2WZTg" name="ComparatorFactory.cpp" compile="1" resource="0"
+              file="../../Source/ComparatorFactory.cpp"/>
+        <FILE id="WRqEZ0" name="Condition.cpp" compile="1" resource="0" file="../../Source/Condition.cpp"/>
+        <FILE id="uLjL9T" name="ConditionManager.cpp" compile="1" resource="0"
+              file="../../Source/ConditionManager.cpp"/>
+        <FILE id="DrPxqw" name="ConditionManagerUI.cpp" compile="1" resource="0"
+              file="../../Source/ConditionManagerUI.cpp"/>
+        <FILE id="NFeLcx" name="ConditionUI.cpp" compile="1" resource="0" file="../../Source/ConditionUI.cpp"/>
+        <FILE id="M82OPj" name="Consequence.cpp" compile="1" resource="0" file="../../Source/Consequence.cpp"/>
+        <FILE id="gepny1" name="ConsequenceManager.cpp" compile="1" resource="0"
+              file="../../Source/ConsequenceManager.cpp"/>
+        <FILE id="UZC8tM" name="ConsequenceManagerUI.cpp" compile="1" resource="0"
+              file="../../Source/ConsequenceManagerUI.cpp"/>
+        <FILE id="wD9zqx" name="ConsequenceUI.cpp" compile="1" resource="0"
+              file="../../Source/ConsequenceUI.cpp"/>
+        <FILE id="gLhUdX" name="Controllable.cpp" compile="1" resource="0"
+              file="../../Source/Controllable.cpp"/>
+        <FILE id="ljQVxE" name="ControllableContainer.cpp" compile="1" resource="0"
+              file="../../Source/ControllableContainer.cpp"/>
+        <FILE id="rU2rrY" name="ControllableEditor.cpp" compile="1" resource="0"
+              file="../../Source/ControllableEditor.cpp"/>
+        <FILE id="I015C9" name="ControllableFactory.cpp" compile="1" resource="0"
+              file="../../Source/ControllableFactory.cpp"/>
+        <FILE id="LdGDnp" name="ControllableHelpers.cpp" compile="1" resource="0"
+              file="../../Source/ControllableHelpers.cpp"/>
+        <FILE id="UI2KrS" name="ControllableIndexedContainer.cpp" compile="1"
+              resource="0" file="../../Source/ControllableIndexedContainer.cpp"/>
+        <FILE id="nBCyoP" name="ControllableUI.cpp" compile="1" resource="0"
+              file="../../Source/ControllableUI.cpp"/>
+        <FILE id="JTbZ2E" name="CustomLogger.cpp" compile="1" resource="0"
+              file="../../Source/CustomLogger.cpp"/>
+        <FILE id="IbH4kG" name="CustomLoggerUI.cpp" compile="1" resource="0"
+              file="../../Source/CustomLoggerUI.cpp"/>
+        <FILE id="EP1ij8" name="CustomOSCCommand.cpp" compile="1" resource="0"
+              file="../../Source/CustomOSCCommand.cpp"/>
+        <FILE id="PLldTd" name="CustomOSCCommandCreator.cpp" compile="1" resource="0"
+              file="../../Source/CustomOSCCommandCreator.cpp"/>
+        <FILE id="mOP8E1" name="CustomOSCCommandEditor.cpp" compile="1" resource="0"
+              file="../../Source/CustomOSCCommandEditor.cpp"/>
+        <FILE id="lDqZY4" name="CustomOSCModule.cpp" compile="1" resource="0"
+              file="../../Source/CustomOSCModule.cpp"/>
+        <FILE id="mcq2uu" name="CustomOSCModuleEditor.cpp" compile="1" resource="0"
+              file="../../Source/CustomOSCModuleEditor.cpp"/>
+        <FILE id="Go5qFp" name="DoubleSliderUI.cpp" compile="1" resource="0"
+              file="../../Source/DoubleSliderUI.cpp"/>
+        <FILE id="yySRr1" name="Easing.cpp" compile="1" resource="0" file="../../Source/Easing.cpp"/>
+        <FILE id="WZsiw0" name="EasingUI.cpp" compile="1" resource="0" file="../../Source/EasingUI.cpp"/>
+        <FILE id="GPnTV8" name="Engine.cpp" compile="1" resource="0" file="../../Source/Engine.cpp"/>
+        <FILE id="hsaF0l" name="EngineFileDocument.cpp" compile="1" resource="0"
+              file="../../Source/EngineFileDocument.cpp"/>
+        <FILE id="tN78X3" name="EnumParameter.cpp" compile="1" resource="0"
+              file="../../Source/EnumParameter.cpp"/>
+        <FILE id="ieqBAO" name="EnumParameterUI.cpp" compile="1" resource="0"
+              file="../../Source/EnumParameterUI.cpp"/>
+        <FILE id="gE4z6b" name="FloatParameter.cpp" compile="1" resource="0"
+              file="../../Source/FloatParameter.cpp"/>
+        <FILE id="EZz5vH" name="FloatParameterLabelUI.cpp" compile="1" resource="0"
+              file="../../Source/FloatParameterLabelUI.cpp"/>
+        <FILE id="W0a3No" name="FloatSliderUI.cpp" compile="1" resource="0"
+              file="../../Source/FloatSliderUI.cpp"/>
+        <FILE id="VFEpEH" name="FloatStepperUI.cpp" compile="1" resource="0"
+              file="../../Source/FloatStepperUI.cpp"/>
+        <FILE id="f89RIn" name="GamepadManager.cpp" compile="1" resource="0"
+              file="../../Source/GamepadManager.cpp"/>
+        <FILE id="h8M2WN" name="GamepadModule.cpp" compile="1" resource="0"
+              file="../../Source/GamepadModule.cpp"/>
+        <FILE id="tunHS5" name="GapGrabber.cpp" compile="1" resource="0" file="../../Source/GapGrabber.cpp"/>
+        <FILE id="wzMOxW" name="GenericControllableContainerEditor.cpp" compile="1"
+              resource="0" file="../../Source/GenericControllableContainerEditor.cpp"/>
+        <FILE id="RBHiY9" name="HIDModule.cpp" compile="1" resource="0" file="../../Source/HIDModule.cpp"/>
+        <FILE id="rcBId0" name="HIDModuleEditor.cpp" compile="1" resource="0"
+              file="../../Source/HIDModuleEditor.cpp"/>
+        <FILE id="eMlojX" name="HIDModuleUI.cpp" compile="1" resource="0" file="../../Source/HIDModuleUI.cpp"/>
+        <FILE id="sqtqSc" name="Inspectable.cpp" compile="1" resource="0" file="../../Source/Inspectable.cpp"/>
+        <FILE id="niITo7" name="InspectableContent.cpp" compile="1" resource="0"
+              file="../../Source/InspectableContent.cpp"/>
+        <FILE id="HLCUaa" name="InspectableContentComponent.cpp" compile="1"
+              resource="0" file="../../Source/InspectableContentComponent.cpp"/>
+        <FILE id="OLGoW6" name="InspectableEditor.cpp" compile="1" resource="0"
+              file="../../Source/InspectableEditor.cpp"/>
+        <FILE id="vXOXNC" name="Inspector.cpp" compile="1" resource="0" file="../../Source/Inspector.cpp"/>
+        <FILE id="evMz3f" name="IntParameter.cpp" compile="1" resource="0"
+              file="../../Source/IntParameter.cpp"/>
+        <FILE id="BEutIu" name="IntSliderUI.cpp" compile="1" resource="0" file="../../Source/IntSliderUI.cpp"/>
+        <FILE id="oJngDL" name="IntStepperUI.cpp" compile="1" resource="0"
+              file="../../Source/IntStepperUI.cpp"/>
+        <FILE id="h8SY49" name="LookAndFeelOO.cpp" compile="1" resource="0"
+              file="../../Source/LookAndFeelOO.cpp"/>
+        <FILE id="Ut5HzG" name="Mapping.cpp" compile="1" resource="0" file="../../Source/Mapping.cpp"/>
+        <FILE id="sH7sEB" name="MappingFilter.cpp" compile="1" resource="0"
+              file="../../Source/MappingFilter.cpp"/>
+        <FILE id="AQJaZR" name="MappingFilterManager.cpp" compile="1" resource="0"
+              file="../../Source/MappingFilterManager.cpp"/>
+        <FILE id="bRxHo4" name="MappingFilterManagerUI.cpp" compile="1" resource="0"
+              file="../../Source/MappingFilterManagerUI.cpp"/>
+        <FILE id="FyB28O" name="MappingFilterUI.cpp" compile="1" resource="0"
+              file="../../Source/MappingFilterUI.cpp"/>
+        <FILE id="WRlWJJ" name="MappingInput.cpp" compile="1" resource="0"
+              file="../../Source/MappingInput.cpp"/>
+        <FILE id="nIM3yQ" name="MappingInputUI.cpp" compile="1" resource="0"
+              file="../../Source/MappingInputUI.cpp"/>
+        <FILE id="zsplaI" name="MappingLayer.cpp" compile="1" resource="0"
+              file="../../Source/MappingLayer.cpp"/>
+        <FILE id="baXSjW" name="MappingLayerPanel.cpp" compile="1" resource="0"
+              file="../../Source/MappingLayerPanel.cpp"/>
+        <FILE id="zyhU4U" name="MappingLayerTimeline.cpp" compile="1" resource="0"
+              file="../../Source/MappingLayerTimeline.cpp"/>
+        <FILE id="dQHkBs" name="MappingManager.cpp" compile="1" resource="0"
+              file="../../Source/MappingManager.cpp"/>
+        <FILE id="xXgpZq" name="MappingManagerUI.cpp" compile="1" resource="0"
+              file="../../Source/MappingManagerUI.cpp"/>
+        <FILE id="GKXHdL" name="MappingOutput.cpp" compile="1" resource="0"
+              file="../../Source/MappingOutput.cpp"/>
+        <FILE id="NPdY8m" name="MappingOutputManager.cpp" compile="1" resource="0"
+              file="../../Source/MappingOutputManager.cpp"/>
+        <FILE id="mCiNNt" name="MappingOutputManagerUI.cpp" compile="1" resource="0"
+              file="../../Source/MappingOutputManagerUI.cpp"/>
+        <FILE id="jO6jRc" name="MappingOutputUI.cpp" compile="1" resource="0"
+              file="../../Source/MappingOutputUI.cpp"/>
+        <FILE id="HTkH3K" name="MappingUI.cpp" compile="1" resource="0" file="../../Source/MappingUI.cpp"/>
+        <FILE id="cQnMjO" name="MIDICommands.cpp" compile="1" resource="0"
+              file="../../Source/MIDICommands.cpp"/>
+        <FILE id="fNIYBO" name="MIDIDevice.cpp" compile="1" resource="0" file="../../Source/MIDIDevice.cpp"/>
+        <FILE id="NODQmT" name="MIDIDeviceChooser.cpp" compile="1" resource="0"
+              file="../../Source/MIDIDeviceChooser.cpp"/>
+        <FILE id="ubMwFu" name="MIDIDeviceParameter.cpp" compile="1" resource="0"
+              file="../../Source/MIDIDeviceParameter.cpp"/>
+        <FILE id="NPOR6l" name="MIDIDeviceParameterUI.cpp" compile="1" resource="0"
+              file="../../Source/MIDIDeviceParameterUI.cpp"/>
+        <FILE id="XG8Ijm" name="MIDIManager.cpp" compile="1" resource="0" file="../../Source/MIDIManager.cpp"/>
+        <FILE id="ExjKxZ" name="MIDIModule.cpp" compile="1" resource="0" file="../../Source/MIDIModule.cpp"/>
+        <FILE id="VXksQv" name="MIDIModuleEditor.cpp" compile="1" resource="0"
+              file="../../Source/MIDIModuleEditor.cpp"/>
+        <FILE id="fF4kr3" name="Module.cpp" compile="1" resource="0" file="../../Source/Module.cpp"/>
+        <FILE id="rKnpMI" name="ModuleCommand.cpp" compile="1" resource="0"
+              file="../../Source/ModuleCommand.cpp"/>
+        <FILE id="lKJwm3" name="ModuleFactory.cpp" compile="1" resource="0"
+              file="../../Source/ModuleFactory.cpp"/>
+        <FILE id="l26tb5" name="ModuleManager.cpp" compile="1" resource="0"
+              file="../../Source/ModuleManager.cpp"/>
+        <FILE id="h8ilnf" name="ModuleManagerUI.cpp" compile="1" resource="0"
+              file="../../Source/ModuleManagerUI.cpp"/>
+        <FILE id="ILg2cs" name="ModuleUI.cpp" compile="1" resource="0" file="../../Source/ModuleUI.cpp"/>
+        <FILE id="Ms5x9r" name="NumberComparators.cpp" compile="1" resource="0"
+              file="../../Source/NumberComparators.cpp"/>
+        <FILE id="idQLvj" name="OSCCommand.cpp" compile="1" resource="0" file="../../Source/OSCCommand.cpp"/>
+        <FILE id="hI5uv3" name="OSCModule.cpp" compile="1" resource="0" file="../../Source/OSCModule.cpp"/>
+        <FILE id="rL3FQn" name="OSCModuleBaseEditor.cpp" compile="1" resource="0"
+              file="../../Source/OSCModuleBaseEditor.cpp"/>
+        <FILE id="FMS6w0" name="OSCModuleUI.cpp" compile="1" resource="0" file="../../Source/OSCModuleUI.cpp"/>
+        <FILE id="xZsKmH" name="Outliner.cpp" compile="1" resource="0" file="../../Source/Outliner.cpp"/>
+        <FILE id="VxFKGn" name="Parameter.cpp" compile="1" resource="0" file="../../Source/Parameter.cpp"/>
+        <FILE id="bmvXAY" name="ParameterUI.cpp" compile="1" resource="0" file="../../Source/ParameterUI.cpp"/>
+        <FILE id="xNWQeH" name="PluginManager.cpp" compile="1" resource="0"
+              file="../../Source/PluginManager.cpp"/>
+        <FILE id="YRHF79" name="Point2DComparators.cpp" compile="1" resource="0"
+              file="../../Source/Point2DComparators.cpp"/>
+        <FILE id="UogDdR" name="Point2DParameter.cpp" compile="1" resource="0"
+              file="../../Source/Point2DParameter.cpp"/>
+        <FILE id="yBwOpd" name="Point3DComparators.cpp" compile="1" resource="0"
+              file="../../Source/Point3DComparators.cpp"/>
+        <FILE id="YalgIL" name="Point3DParameter.cpp" compile="1" resource="0"
+              file="../../Source/Point3DParameter.cpp"/>
+        <FILE id="s9Ng1L" name="PresetChooser.cpp" compile="1" resource="0"
+              file="../../Source/PresetChooser.cpp"/>
+        <FILE id="lo1zxg" name="PresetManager.cpp" compile="1" resource="0"
+              file="../../Source/PresetManager.cpp"/>
+        <FILE id="Z5C4Sl" name="ProgressNotifier.cpp" compile="1" resource="0"
+              file="../../Source/ProgressNotifier.cpp"/>
+        <FILE id="uEjBWq" name="ProgressWindow.cpp" compile="1" resource="0"
+              file="../../Source/ProgressWindow.cpp"/>
+        <FILE id="vkzDiK" name="ResolumeClipCommand.cpp" compile="1" resource="0"
+              file="../../Source/ResolumeClipCommand.cpp"/>
+        <FILE id="zdlgv5" name="ResolumeCompositionCommand.cpp" compile="1"
+              resource="0" file="../../Source/ResolumeCompositionCommand.cpp"/>
+        <FILE id="LhMNUF" name="ResolumeLayerCommand.cpp" compile="1" resource="0"
+              file="../../Source/ResolumeLayerCommand.cpp"/>
+        <FILE id="rMWomG" name="ResolumeModule.cpp" compile="1" resource="0"
+              file="../../Source/ResolumeModule.cpp"/>
+        <FILE id="pTn1vz" name="Sequence.cpp" compile="1" resource="0" file="../../Source/Sequence.cpp"/>
+        <FILE id="H5cW2i" name="SequenceEditor.cpp" compile="1" resource="0"
+              file="../../Source/SequenceEditor.cpp"/>
+        <FILE id="btMdgX" name="SequenceLayer.cpp" compile="1" resource="0"
+              file="../../Source/SequenceLayer.cpp"/>
+        <FILE id="ZNbeGI" name="SequenceLayerFactory.cpp" compile="1" resource="0"
+              file="../../Source/SequenceLayerFactory.cpp"/>
+        <FILE id="lWMR8X" name="SequenceLayerManager.cpp" compile="1" resource="0"
+              file="../../Source/SequenceLayerManager.cpp"/>
+        <FILE id="USREEd" name="SequenceLayerPanel.cpp" compile="1" resource="0"
+              file="../../Source/SequenceLayerPanel.cpp"/>
+        <FILE id="SBSoKh" name="SequenceLayerPanelManagerUI.cpp" compile="1"
+              resource="0" file="../../Source/SequenceLayerPanelManagerUI.cpp"/>
+        <FILE id="g8Ku1s" name="SequenceLayerTimeline.cpp" compile="1" resource="0"
+              file="../../Source/SequenceLayerTimeline.cpp"/>
+        <FILE id="mmmOV2" name="SequenceLayerTimelineManagerUI.cpp" compile="1"
+              resource="0" file="../../Source/SequenceLayerTimelineManagerUI.cpp"/>
+        <FILE id="yA2Y1q" name="SequenceManager.cpp" compile="1" resource="0"
+              file="../../Source/SequenceManager.cpp"/>
+        <FILE id="OUFt62" name="SequenceManagerUI.cpp" compile="1" resource="0"
+              file="../../Source/SequenceManagerUI.cpp"/>
+        <FILE id="joJF83" name="SequenceTimelineHeader.cpp" compile="1" resource="0"
+              file="../../Source/SequenceTimelineHeader.cpp"/>
+        <FILE id="N8HAyy" name="SequenceTimelineNavigationUI.cpp" compile="1"
+              resource="0" file="../../Source/SequenceTimelineNavigationUI.cpp"/>
+        <FILE id="JU2Svx" name="SequenceTimelineSeeker.cpp" compile="1" resource="0"
+              file="../../Source/SequenceTimelineSeeker.cpp"/>
+        <FILE id="kHPlUN" name="SequenceTransportUI.cpp" compile="1" resource="0"
+              file="../../Source/SequenceTransportUI.cpp"/>
+        <FILE id="hFoS2J" name="SequenceUI.cpp" compile="1" resource="0" file="../../Source/SequenceUI.cpp"/>
+        <FILE id="cVKEdg" name="ShapeShifter.cpp" compile="1" resource="0"
+              file="../../Source/ShapeShifter.cpp"/>
+        <FILE id="R9iIh1" name="ShapeShifterContainer.cpp" compile="1" resource="0"
+              file="../../Source/ShapeShifterContainer.cpp"/>
+        <FILE id="IIulap" name="ShapeShifterContent.cpp" compile="1" resource="0"
+              file="../../Source/ShapeShifterContent.cpp"/>
+        <FILE id="n0Aaji" name="ShapeShifterFactory.cpp" compile="1" resource="0"
+              file="../../Source/ShapeShifterFactory.cpp"/>
+        <FILE id="ek1X7F" name="ShapeShifterManager.cpp" compile="1" resource="0"
+              file="../../Source/ShapeShifterManager.cpp"/>
+        <FILE id="a2b7gf" name="ShapeShifterPanel.cpp" compile="1" resource="0"
+              file="../../Source/ShapeShifterPanel.cpp"/>
+        <FILE id="DFLza5" name="ShapeShifterPanelHeader.cpp" compile="1" resource="0"
+              file="../../Source/ShapeShifterPanelHeader.cpp"/>
+        <FILE id="meM5cc" name="ShapeShifterPanelTab.cpp" compile="1" resource="0"
+              file="../../Source/ShapeShifterPanelTab.cpp"/>
+        <FILE id="qtNnva" name="ShapeShifterWindow.cpp" compile="1" resource="0"
+              file="../../Source/ShapeShifterWindow.cpp"/>
+        <FILE id="S0HfDe" name="State.cpp" compile="1" resource="0" file="../../Source/State.cpp"/>
+        <FILE id="jVuqAH" name="StateMachineView.cpp" compile="1" resource="0"
+              file="../../Source/StateMachineView.cpp"/>
+        <FILE id="fDWlwt" name="StateManager.cpp" compile="1" resource="0"
+              file="../../Source/StateManager.cpp"/>
+        <FILE id="NsVm97" name="StateManagerUI.cpp" compile="1" resource="0"
+              file="../../Source/StateManagerUI.cpp"/>
+        <FILE id="sAcaq3" name="StateUI.cpp" compile="1" resource="0" file="../../Source/StateUI.cpp"/>
+        <FILE id="WLPOuJ" name="StateViewUI.cpp" compile="1" resource="0" file="../../Source/StateViewUI.cpp"/>
+        <FILE id="j1w55B" name="StringComparators.cpp" compile="1" resource="0"
+              file="../../Source/StringComparators.cpp"/>
+        <FILE id="ldwfTC" name="StringParameter.cpp" compile="1" resource="0"
+              file="../../Source/StringParameter.cpp"/>
+        <FILE id="MzytTj" name="StringParameterUI.cpp" compile="1" resource="0"
+              file="../../Source/StringParameterUI.cpp"/>
+        <FILE id="Fx7iBG" name="TargetParameter.cpp" compile="1" resource="0"
+              file="../../Source/TargetParameter.cpp"/>
+        <FILE id="EvpweG" name="TargetParameterUI.cpp" compile="1" resource="0"
+              file="../../Source/TargetParameterUI.cpp"/>
+        <FILE id="NWV4L0" name="TimeMachineEditor.cpp" compile="1" resource="0"
+              file="../../Source/TimeMachineEditor.cpp"/>
+        <FILE id="tz22Gu" name="TimeMachineView.cpp" compile="1" resource="0"
+              file="../../Source/TimeMachineView.cpp"/>
+        <FILE id="Y6ERII" name="TimeTrigger.cpp" compile="1" resource="0" file="../../Source/TimeTrigger.cpp"/>
+        <FILE id="fIIySV" name="TimeTriggerManager.cpp" compile="1" resource="0"
+              file="../../Source/TimeTriggerManager.cpp"/>
+        <FILE id="af4Pik" name="TimeTriggerManagerUI.cpp" compile="1" resource="0"
+              file="../../Source/TimeTriggerManagerUI.cpp"/>
+        <FILE id="yuqiOR" name="TimeTriggerUI.cpp" compile="1" resource="0"
+              file="../../Source/TimeTriggerUI.cpp"/>
+        <FILE id="EKZ3JK" name="Transition.cpp" compile="1" resource="0" file="../../Source/Transition.cpp"/>
+        <FILE id="PFxybs" name="TransitionConnector.cpp" compile="1" resource="0"
+              file="../../Source/TransitionConnector.cpp"/>
+        <FILE id="N5sHcd" name="TransitionManager.cpp" compile="1" resource="0"
+              file="../../Source/TransitionManager.cpp"/>
+        <FILE id="BhVGrB" name="TransitionUI.cpp" compile="1" resource="0"
+              file="../../Source/TransitionUI.cpp"/>
+        <FILE id="CWgp7E" name="Trigger.cpp" compile="1" resource="0" file="../../Source/Trigger.cpp"/>
+        <FILE id="cYI2qz" name="TriggerBlinkUI.cpp" compile="1" resource="0"
+              file="../../Source/TriggerBlinkUI.cpp"/>
+        <FILE id="FdjJ6z" name="TriggerButtonUI.cpp" compile="1" resource="0"
+              file="../../Source/TriggerButtonUI.cpp"/>
+        <FILE id="Hn1Jp1" name="TriggerLayer.cpp" compile="1" resource="0"
+              file="../../Source/TriggerLayer.cpp"/>
+        <FILE id="Po2GLr" name="TriggerLayerPanel.cpp" compile="1" resource="0"
+              file="../../Source/TriggerLayerPanel.cpp"/>
+        <FILE id="dFJp0M" name="TriggerLayerTimeline.cpp" compile="1" resource="0"
+              file="../../Source/TriggerLayerTimeline.cpp"/>
+        <FILE id="Ss1WKW" name="TriggerUI.cpp" compile="1" resource="0" file="../../Source/TriggerUI.cpp"/>
+        <FILE id="PNfH5m" name="TripleSliderUI.cpp" compile="1" resource="0"
+              file="../../Source/TripleSliderUI.cpp"/>
+        <FILE id="uwSxXP" name="WiimoteManager.cpp" compile="1" resource="0"
+              file="../../Source/WiimoteManager.cpp"/>
+        <FILE id="c45Jlo" name="WiimoteModule.cpp" compile="1" resource="0"
+              file="../../Source/WiimoteModule.cpp"/>
+      </GROUP>
+      <GROUP id="{E9D016A2-43BE-B115-0EC7-FC2FC7A7F726}" name="ui"/>
+      <FILE id="zY9sPH" name="WiimotePlugin.cpp" compile="1" resource="0"
+            file="Source/WiimotePlugin.cpp"/>
+      <FILE id="NvmiOi" name="WiimotePlugin.h" compile="0" resource="0" file="Source/WiimotePlugin.h"/>
+    </GROUP>
+  </MAINGROUP>
+  <EXPORTFORMATS>
+    <VS2015 targetFolder="Builds/VisualStudio2015">
+      <CONFIGURATIONS>
+        <CONFIGURATION name="Debug" winWarningLevel="4" generateManifest="1" winArchitecture="32-bit"
+                       isDebug="1" optimisation="1" targetName="WiimotePlugin" headerPath="../../../Source"/>
+        <CONFIGURATION name="Release" winWarningLevel="4" generateManifest="1" winArchitecture="32-bit"
+                       isDebug="0" optimisation="3" targetName="WiimotePlugin"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_core" path="../../../../../../Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_events" path="../../../../../../Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_graphics" path="../../../../../../Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_data_structures" path="../../../../../../Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="../../../../../../Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="../../../../../../Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_cryptography" path="../../../../../../Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_video" path="../../../../../../Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_opengl" path="../../../../../../Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_basics" path="../../../../../../Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_devices" path="../../../../../../Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_formats" path="../../../../../../Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_processors" path="../../../../../../Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_osc" path="../../../../../../Softwares/JUCE/modules"/>
+      </MODULEPATHS>
+    </VS2015>
+  </EXPORTFORMATS>
+  <MODULES>
+    <MODULE id="juce_audio_basics" showAllCode="1" useLocalCopy="0"/>
+    <MODULE id="juce_audio_devices" showAllCode="1" useLocalCopy="0"/>
+    <MODULE id="juce_audio_formats" showAllCode="1" useLocalCopy="0"/>
+    <MODULE id="juce_audio_processors" showAllCode="1" useLocalCopy="0"/>
+    <MODULE id="juce_core" showAllCode="1" useLocalCopy="0"/>
+    <MODULE id="juce_cryptography" showAllCode="1" useLocalCopy="0"/>
+    <MODULE id="juce_data_structures" showAllCode="1" useLocalCopy="0"/>
+    <MODULE id="juce_events" showAllCode="1" useLocalCopy="0"/>
+    <MODULE id="juce_graphics" showAllCode="1" useLocalCopy="0"/>
+    <MODULE id="juce_gui_basics" showAllCode="1" useLocalCopy="0"/>
+    <MODULE id="juce_gui_extra" showAllCode="1" useLocalCopy="0"/>
+    <MODULE id="juce_opengl" showAllCode="1" useLocalCopy="0"/>
+    <MODULE id="juce_osc" showAllCode="1" useLocalCopy="0"/>
+    <MODULE id="juce_video" showAllCode="1" useLocalCopy="0"/>
+  </MODULES>
+  <JUCEOPTIONS/>
+  <LIVE_SETTINGS>
+    <WINDOWS/>
+  </LIVE_SETTINGS>
+</JUCERPROJECT>
