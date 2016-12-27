@@ -30,6 +30,9 @@ public:
 	static CustomOSCModule * create() { return new CustomOSCModule(); }
 	virtual String getTypeString() const override { return "OSC"; }
 
+	InspectableEditor * getEditor(bool isRoot) override;
+
+
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(CustomOSCModule)
 };
 

@@ -10,8 +10,8 @@
 
 #include "ActionEditor.h"
 
-ActionEditor::ActionEditor(Action * _action) :
-	InspectableEditor(_action),
+ActionEditor::ActionEditor(Action * _action, bool isRoot) :
+	InspectableEditor(_action, isRoot),
 	action(_action),
 	cdmui(&_action->cdm),
 	csmui(&_action->csm)

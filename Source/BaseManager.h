@@ -183,9 +183,9 @@ void BaseManager<T>::loadJSONDataInternal(var data)
 
 #include "GenericManagerEditor.h"
 template<class T>
-InspectableEditor * BaseManager<T>::getEditor(bool /*isRoot*/)
+InspectableEditor * BaseManager<T>::getEditor(bool isRoot)
 {
-	return new GenericManagerEditor<T>(this);
+	return new GenericManagerEditor<T>(this, isRoot);
 }
 
 

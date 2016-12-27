@@ -22,7 +22,7 @@ class GenericManagerEditor :
 	public GenericControllableContainerEditor
 {
 public:
-	GenericManagerEditor(BaseManager<T> * manager);
+	GenericManagerEditor(BaseManager<T> * manager, bool isRoot);
 	~GenericManagerEditor();
 
 	String addItemText;
@@ -33,8 +33,8 @@ public:
 
 
 template<class T>
-GenericManagerEditor<T>::GenericManagerEditor(BaseManager<T> * _manager) :
-	GenericControllableContainerEditor(_manager),
+GenericManagerEditor<T>::GenericManagerEditor(BaseManager<T> * _manager, bool isRoot) :
+	GenericControllableContainerEditor(_manager, isRoot),
 	manager(_manager),
 	addItemText("Add item")
 {

@@ -22,7 +22,7 @@ class GenericControllableContainerEditor :
 	public ControllableContainer::ContainerAsyncListener
 {
 public:
-	GenericControllableContainerEditor(WeakReference<Inspectable> _inspectable);
+	GenericControllableContainerEditor(WeakReference<Inspectable> _inspectable, bool isRoot);
 	virtual ~GenericControllableContainerEditor();
 
 	Label containerLabel;

@@ -9,12 +9,14 @@
 */
 #include "InspectableEditor.h"
 
-InspectableEditor::InspectableEditor(WeakReference<Inspectable> _inspectable) :
+InspectableEditor::InspectableEditor(WeakReference<Inspectable> _inspectable, bool _isRoot) :
 	inspectable(_inspectable),
+	isRoot(_isRoot),
 	fitToContent(false)
 {
 
 }
+
 
 InspectableEditor::~InspectableEditor()
 {

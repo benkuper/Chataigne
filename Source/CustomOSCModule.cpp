@@ -11,6 +11,7 @@
 #include "CustomOSCModule.h"
 #include "CommandFactory.h"
 #include "CustomOSCCommand.h"
+#include "CustomOSCModuleEditor.h"
 
 CustomOSCModule::CustomOSCModule() :
 	OSCModule("OSC")
@@ -21,7 +22,7 @@ CustomOSCModule::CustomOSCModule() :
 	autoAdd->isTargettable = false;
 
 	defManager.addItem(CommandDefinition::createDef(this, "", "Custom Message", &CustomOSCCommand::create));
-	defManager.hideInEditor = false;
+	//defManager.hideInEditor = false;
 
 }
 
@@ -43,7 +44,6 @@ void CustomOSCModule::processMessageInternal(const OSCMessage & msg)
 		case Controllable::FLOAT:
 			if (msg.size() >= 1)
 			{
-				DBG("controllable is float ");
 				FloatParameter *f = (FloatParameter *)c;
 				if (msg.size() >= 3) f->setRange(getFloatArg(msg[1]), getFloatArg(msg[2]));
 				f->setValue(getFloatArg(msg[0]));
@@ -54,7 +54,6 @@ void CustomOSCModule::processMessageInternal(const OSCMessage & msg)
 			if (msg.size() >= 1)
 			{
 				IntParameter *i = (IntParameter *)c;
-				DBG("controllable is int " << getIntArg(msg[0]) << "auto adapt ? " << String(i->autoAdaptRange));
 				if (msg.size() >= 3) i->setRange(getIntArg(msg[1]), getIntArg(msg[2]));
 
 				i->setValue(getIntArg(msg[0]));
@@ -141,4 +140,9 @@ void CustomOSCModule::loadJSONDataInternal(var data)
 	valuesCC.orderControllablesAlphabetically();
 	defManager.loadJSONData(data.getProperty("definitions", var()), true);
 
+}
+
+InspectableEditor * CustomOSCModule::getEditor(bool isRoot)
+{
+	return new CustomOSCModuleEditor(this,isRoot);
 }

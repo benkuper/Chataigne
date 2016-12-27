@@ -14,8 +14,8 @@
 
 //ControllableUIComparator CCInnerContainer::comparator;
 
-GenericControllableContainerEditor::GenericControllableContainerEditor(WeakReference<Inspectable> inspectable) :
-	InspectableEditor(inspectable),
+GenericControllableContainerEditor::GenericControllableContainerEditor(WeakReference<Inspectable> inspectable, bool isRoot) :
+	InspectableEditor(inspectable, isRoot),
 	container(dynamic_cast<ControllableContainer *>(inspectable.get())),
 	containerLabel("containerLabel", dynamic_cast<ControllableContainer *>(inspectable.get())->niceName)
 {

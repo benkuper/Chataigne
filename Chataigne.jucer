@@ -659,6 +659,10 @@
                 <FILE id="F1p8Ca" name="OSCCommand.h" compile="0" resource="0" file="Source/OSCCommand.h"/>
               </GROUP>
               <GROUP id="{D3A9FFCD-4063-1D0F-3F47-D2AA576163B9}" name="ui">
+                <FILE id="wmKYPg" name="OSCModuleBaseEditor.cpp" compile="1" resource="0"
+                      file="Source/OSCModuleBaseEditor.cpp"/>
+                <FILE id="oNtnFs" name="OSCModuleBaseEditor.h" compile="0" resource="0"
+                      file="Source/OSCModuleBaseEditor.h"/>
                 <FILE id="dmVUue" name="OSCModuleUI.cpp" compile="1" resource="0" file="Source/OSCModuleUI.cpp"/>
                 <FILE id="o0okCg" name="OSCModuleUI.h" compile="0" resource="0" file="Source/OSCModuleUI.h"/>
               </GROUP>
@@ -683,6 +687,10 @@
                       file="Source/CustomOSCModule.cpp"/>
                 <FILE id="ZOWy9Q" name="CustomOSCModule.h" compile="0" resource="0"
                       file="Source/CustomOSCModule.h"/>
+                <FILE id="giYU8X" name="CustomOSCModuleEditor.cpp" compile="1" resource="0"
+                      file="Source/CustomOSCModuleEditor.cpp"/>
+                <FILE id="ykdqMh" name="CustomOSCModuleEditor.h" compile="0" resource="0"
+                      file="Source/CustomOSCModuleEditor.h"/>
               </GROUP>
               <GROUP id="{BF093733-18A9-3232-92C5-8EF7D8E70785}" name="resolume">
                 <GROUP id="{DF8332B1-E904-037C-CFF6-826235CCF3E7}" name="commands">

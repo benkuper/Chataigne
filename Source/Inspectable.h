@@ -32,7 +32,7 @@ public:
 
 	virtual void setSelectedInternal(bool value); //to be overriden
 
-	virtual InspectableEditor * getEditor(bool /*isRootEditor*/) { jassert(false);  return nullptr; } //to override !
+	virtual InspectableEditor * getEditor(bool /*isRoot*/) { jassert(false);  return nullptr; } //to override !
 
 	//Listener
 	class  InspectableListener

@@ -44,7 +44,7 @@ void GamepadModule::deviceRemovedCallback(Gamepad_device * device)
 {
 }
 */
-void GamepadModule::timerCallback(int timerID)
+void GamepadModule::timerCallback(int /*timerID*/)
 {
 }
 

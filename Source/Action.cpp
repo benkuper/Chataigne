@@ -69,7 +69,7 @@ void Action::conditionManagerValidationChanged(ConditionManager *)
 }
 
 
-InspectableEditor * Action::getEditor(bool /*isRoot*/)
+InspectableEditor * Action::getEditor(bool isRoot)
 {
-	return new ActionEditor(this);
+	return new ActionEditor(this,isRoot);
 }

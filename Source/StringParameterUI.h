@@ -28,6 +28,7 @@ public:
 	String prefix;
 	String suffix;
 
+	bool opaqueBackground;
 	float maxFontHeight;
 
 	bool autoSize;
@@ -38,6 +39,8 @@ public:
 
     bool nameLabelIsVisible;
     void setNameLabelVisible(bool visible);
+
+	void setOpaqueBackground(bool value);
 
 	virtual void setForceFeedbackOnlyInternal() override;
 

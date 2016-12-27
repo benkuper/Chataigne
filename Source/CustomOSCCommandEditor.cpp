@@ -10,8 +10,8 @@
 
 #include "CustomOSCCommandEditor.h"
 
-CustomOSCCommandEditor::CustomOSCCommandEditor(CustomOSCCommand * _command, bool) :
-	GenericControllableContainerEditor(_command),
+CustomOSCCommandEditor::CustomOSCCommandEditor(CustomOSCCommand * _command, bool isRoot) :
+	GenericControllableContainerEditor(_command, isRoot),
 	command(_command)
 {
 

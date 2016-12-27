@@ -12,8 +12,8 @@
 #include "ControllableUI.h"
 #include "AssetManager.h"
 
-ControllableEditor::ControllableEditor(Controllable * _controllable, bool /*isRootEditor*/, int initHeight) :
-	InspectableEditor(_controllable), 
+ControllableEditor::ControllableEditor(Controllable * _controllable, bool isRoot, int initHeight) :
+	InspectableEditor(_controllable,isRoot), 
 	controllable(_controllable),
 	label("Label")
 {

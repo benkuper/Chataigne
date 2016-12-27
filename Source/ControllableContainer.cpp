@@ -841,7 +841,7 @@ String ControllableContainer::getUniqueNameInContainer(const String & sourceName
 }
 
 
-InspectableEditor * ControllableContainer::getEditor(bool /*isRootEditor*/) 
+InspectableEditor * ControllableContainer::getEditor(bool isRoot) 
 {
-	return new GenericControllableContainerEditor(this); 
+	return new GenericControllableContainerEditor(this, isRoot); 
 }

@@ -20,7 +20,7 @@ class ActionEditor :
 	public InspectableEditor
 {
 public:
-	ActionEditor(Action * _action);
+	ActionEditor(Action * _action, bool isRoot);
 	~ActionEditor();
 
 	Action * action;

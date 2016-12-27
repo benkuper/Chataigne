@@ -1064,7 +1064,7 @@ void LookAndFeelOO::positionComboBoxText (ComboBox& box, Label& label)
 //==============================================================================
 Font LookAndFeelOO::getLabelFont (Label& label)
 {
-    return label.getFont();
+    return label.getFont().withHeight(12);
 }
 
 void LookAndFeelOO::drawLabel (Graphics& g, Label& label)
@@ -1341,7 +1341,6 @@ public:
 Label* LookAndFeelOO::createSliderTextBox (Slider& slider)
 {
     Label* const l = new SliderLabelComp();
-
     l->setJustificationType (Justification::centred);
     l->setKeyboardType (TextInputTarget::decimalKeyboard);
 
@@ -1358,7 +1357,7 @@ Label* LookAndFeelOO::createSliderTextBox (Slider& slider)
                               ? 0.7f : 1.0f));
     l->setColour (TextEditor::outlineColourId, slider.findColour (Slider::textBoxOutlineColourId));
     l->setColour (TextEditor::highlightColourId, slider.findColour (Slider::textBoxHighlightColourId));
-
+	l->setFont(l->getFont().withHeight(12));
     return l;
 }
 

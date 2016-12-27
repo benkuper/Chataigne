@@ -18,10 +18,11 @@ class InspectableEditor :
 	public Component
 {
 public:
-	InspectableEditor(WeakReference<Inspectable> inspectable);
+	InspectableEditor(WeakReference<Inspectable> inspectable, bool isRoot);
 	virtual ~InspectableEditor();
 
 	bool fitToContent; 
+	bool isRoot;
 
 	WeakReference<Inspectable> inspectable;
 

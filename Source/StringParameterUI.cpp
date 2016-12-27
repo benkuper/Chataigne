@@ -13,7 +13,7 @@
 #include "Style.h"
 
 StringParameterUI::StringParameterUI(Parameter * p) :
-    ParameterUI(p), autoSize(false), maxFontHeight(12)
+    ParameterUI(p), autoSize(false), maxFontHeight(12),opaqueBackground(false)
 {
 
     addChildComponent(nameLabel);
@@ -66,6 +66,12 @@ void StringParameterUI::setNameLabelVisible(bool visible)
     nameLabel.setVisible(visible);
 }
 
+void StringParameterUI::setOpaqueBackground(bool value)
+{
+	opaqueBackground = value;
+	valueLabel.setColour(valueLabel.backgroundColourId, opaqueBackground ? BG_COLOR.brighter(.2f) : Colours::transparentBlack);
+}
+
 void StringParameterUI::setForceFeedbackOnlyInternal()
 {
 	valueLabel.setEditable(false, parameter->isEditable && !forceFeedbackOnly);
@@ -86,7 +92,6 @@ void StringParameterUI::resized()
 	{
 		nameLabel.setBounds(r.removeFromLeft(nameLabelWidth));
 		nameLabel.setFont(nameLabel.getFont().withHeight(jmin<float>((float)r.getHeight(), maxFontHeight)));
-
 	}
 
 	valueLabel.setBounds(r);
