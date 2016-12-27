@@ -39,46 +39,86 @@ void SequenceTimelineHeader::paint(Graphics & g)
 	float start = floorf(sequence->viewStartTime->floatValue());
 	float end = floorf(sequence->viewEndTime->floatValue());
 
+	int minGap = 10;
+	int fadeGap = 25;
 
-	int numDivisions = 1;
+	float secondGap = getWidth() / (end - start);
+	float minuteGap = (getWidth() / (end - start)) * 60;
+
+	bool showSeconds = minuteGap > minGap;
+	
+	int secondSteps = 1;
+	int minuteSteps = 1;
+
+	if (showSeconds)
+	{
+		while (secondGap < minGap)
+		{
+			secondSteps *= 2;
+			secondGap = (getWidth() / (end - start))*secondSteps;
+		}
+	}
+	else
+	{
+		while (minuteGap < minGap)
+		{
+			minuteSteps *= 2;
+			minuteGap = ((getWidth() / (end - start)) * 60)*minuteSteps;
+		}
+	}
+	
+	int minuteStartTime = floor<int>((start / minuteSteps) / 60)*minuteSteps;
+	int minuteEndTime = ceil<int>((end / minuteSteps) / 60)*minuteSteps;
 
 
 	g.setFont(10);
-	
-	for (float i = start; i <= end; i+= 1.f/numDivisions)
+	float fadeAlpha = jlimit<float>(0, 1, jmap<float>(secondGap, minGap, fadeGap, 0, 1));
+
+
+	for (float i = minuteStartTime; i <= minuteEndTime; i += minuteSteps)
 	{
-		int tx = getXForTime(i);
+		int mtx = getXForTime(i*60);
 
-		if ((int)i == i) //is a tick on a second
-		{
-			
-			if (fmodf(i, 60) == 0)
-			{
-				g.setColour(BG_COLOR.brighter(.6f));
-				//g.drawLine(tx, 0, tx, getHeight(), 1);
-				g.drawVerticalLine(tx, 0, (float)getHeight());
-				g.setColour(BG_COLOR.darker(.6f));
-				g.drawRoundedRectangle(getLocalBounds().toFloat(), 2, 2);
+		//Draw minute
+		g.setColour(BG_COLOR.brighter(.6f));
+		//g.drawLine(tx, 0, tx, getHeight(), 1);
+		g.drawVerticalLine(mtx, 0, (float)getHeight());
+		g.setColour(BG_COLOR.darker(.6f));
+		g.drawRoundedRectangle(getLocalBounds().toFloat(), 2, 2);
 
-				g.setColour(BG_COLOR.brighter(.7f));
-				g.fillRoundedRectangle(tx-10,0, 20, 12, 2);
-				g.setColour(BG_COLOR.darker());
-				g.drawText(String(floor<int>(i / 60)) + "'", tx-10, 2, 20, 10, Justification::centred);
-			}
-			else
-			{
-				g.setColour(BG_COLOR.brighter(.1f));
-				//g.drawLine(tx, 0, tx, getHeight(), 1);
-				g.drawVerticalLine(tx, 0, (float)getHeight());
-				g.setColour(BG_COLOR.darker(.3f));
-				g.drawText(String(fmodf(i, 60)), tx - 10, 2, 20, 10, Justification::centred);
-			}
-		} else
+		g.setColour(BG_COLOR.brighter(.7f));
+		g.fillRoundedRectangle(mtx - 10, 0, 20, 12, 2);
+		g.setColour(BG_COLOR.darker());
+		g.drawText(String(i) + "'", mtx - 10, 2, 20, 10, Justification::centred);
+
+		if (showSeconds)
 		{
-			g.setColour(BG_COLOR);
-			g.drawVerticalLine(tx, 0, (float)getHeight());
-		}		
+			int sIndex = 0;
+			for (int s = secondSteps; s < 60 && i*60+s <= end; s += secondSteps)
+			{
+				int stx = getXForTime(i * 60 + s);
+
+				float alpha = 1;
+				if (sIndex % 2 == 0) alpha = fadeAlpha;
+				g.setColour(BG_COLOR.brighter(.1f).withAlpha(alpha));
+				//g.drawLine(tx, 0, tx, getHeight(), 1);
+				g.drawVerticalLine(stx, 0, (float)getHeight());
+				g.setColour(BG_COLOR.darker(.3f).withAlpha(alpha));
+				g.drawText(String(s), stx - 10, 2, 20, 10, Justification::centred);
+
+				//show subsecond ?
+				/*
+				g.setColour(BG_COLOR);
+				g.drawVerticalLine(tx, 0, (float)getHeight());
+				*/
+
+				sIndex++;
+				
+			}
+		}
+		
 	}
+
 
 	
 	g.setColour(BG_COLOR.brighter(.7f));

@@ -41,7 +41,7 @@ void WiimoteManager::removeWiimote(Wiimote * w)
 void WiimoteManager::run()
 {
 	wiimote** devices = wiiuse_init(MAX_WIIMOTES);
-	int numFound = wiiuse_find(devices, MAX_WIIMOTES, 5);
+	int numFound = wiiuse_find(devices, MAX_WIIMOTES, 1);
 	int numConnected = wiiuse_connect(devices, MAX_WIIMOTES);
 	
 	if (!numConnected)
@@ -53,14 +53,14 @@ void WiimoteManager::run()
 	NLOG("Wiimote", "Connected to " << numConnected << " wiimotes (of " << numFound << " found)");
 
 	
-	for (int i = 0; i < numConnected; ++i) {
+	for (int i = 0; i < MAX_WIIMOTES; ++i) {
 		addWiimote(devices[i]);
 	}
 	
 
 	while (!threadShouldExit())
 	{
-		if (wiiuse_poll(devices, numConnected)) {
+		if (wiiuse_poll(devices, MAX_WIIMOTES)) {
 			for (auto &w : wiimotes)
 			{
 				w->update();
@@ -97,10 +97,14 @@ bool Wiimote::isButtonDown(WiimoteButton b)
 
 void Wiimote::update()
 {
-	
+	setConnected(WIIMOTE_IS_CONNECTED(device));
+	setBatteryLevel(device->battery_level);
+	DBG("Exp : " << (int)device->expansion_state);
+
 	switch (device->event)
 	{
 	case WIIUSE_EVENT_TYPE::WIIUSE_EVENT:
+		DBG("BT " << (int)device->btns << " / Nunchuck bt : " << (int)device->exp.nunchuk.btns);
 		for (int i = 0; i < NUM_WIIMOTE_BUTTONS; i++) setButton(i, device->btns >> i & 1);
 		setAccel(device->gforce.x, device->gforce.y, device->gforce.z);
 		break;
@@ -111,17 +115,17 @@ void Wiimote::update()
 	case WIIUSE_EVENT_TYPE::WIIUSE_DISCONNECT:
 		break;
 
-	case WIIUSE_EVENT_TYPE::WIIUSE_STATUS:
-		DBG("Status");
+	case WIIUSE_EVENT_TYPE::WIIUSE_NUNCHUK_INSERTED:
+		DBG("Nunchuk ON");
 		listeners.call(&Listener::wiimoteNunchuckPlugged,this);
 		break;
 
-		/*
+		
 	case WIIUSE_EVENT_TYPE::WIIUSE_NUNCHUK_REMOVED:
 		DBG("Nunchuk OFF");
 		listeners.call(&Listener::wiimoteNunchuckUnplugged, this);
 		break;
-		*/
+		
 
 	case WIIUSE_EVENT_TYPE::WIIUSE_CLASSIC_CTRL_INSERTED:
 		break;
@@ -147,4 +151,22 @@ void Wiimote::setAccel(float x, float y, float z)
 	gforceY = y;
 	gforceZ = z;
 	listeners.call(&Listener::wiimoteOrientationUpdated, this);
+}
+
+void Wiimote::setConnected(bool value)
+{
+	if (isConnected != value)
+	{
+		isConnected = value;
+		listeners.call(isConnected?&Listener::wiimoteDisconnected:&Listener::wiimoteDisconnected,this);
+	}
+}
+
+void Wiimote::setBatteryLevel(float value)
+{
+	if (batteryLevel != value)
+	{
+		batteryLevel = value;
+		listeners.call(&Listener::wiimoteBatteryLevelChanged, this);
+	}
 }

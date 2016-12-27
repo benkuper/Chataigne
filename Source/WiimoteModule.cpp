@@ -14,9 +14,18 @@ WiimoteModule::WiimoteModule(const String & name) :
 	Module(name),
 	device(nullptr)
 {
+	deviceID = addIntParameter("Device Select", "Select the ID of the device, depending on how many wiimotes are connected (max 4)", 1, 1, 4);
+
 	connected = valuesCC.addBoolParameter("Connected", "Wiimote is connected ?", false);
+	connected->isControllableFeedbackOnly = true;
+	nunchuckConnected = valuesCC.addBoolParameter("Nunchuck", "Nunchuck is connected ? ", false);
+	nunchuckConnected->isControllableFeedbackOnly = true;
+	batteryLevel = valuesCC.addFloatParameter("Battery", "Battery level of the wiimote", 0,0,1);
+	batteryLevel->isControllableFeedbackOnly = true;
 	pitch = valuesCC.addFloatParameter("Pitch", "Pitch of the wiimote", 0, -1, 1);
+	pitch->isControllableFeedbackOnly = true;
 	roll = valuesCC.addFloatParameter("Roll", "Roll of the wiimote", 0, -1, 1);
+	roll->isControllableFeedbackOnly = true;
 
 	buttons.add(valuesCC.addBoolParameter("Button 2", "Button 2", false));
 	buttons.add(valuesCC.addBoolParameter("Button 1", "Button 2", false));
@@ -32,7 +41,9 @@ WiimoteModule::WiimoteModule(const String & name) :
 	buttons.add(valuesCC.addBoolParameter("Button Up", "Button 2", false));
 	buttons.add(valuesCC.addBoolParameter("Button Plus", "Button 2", false));
 
+	for (auto &p : buttons) p->isControllableFeedbackOnly = true;
 	
+
 	WiimoteManager::getInstance()->addListener(this);
 }
 
@@ -97,4 +108,20 @@ void WiimoteModule::wiimoteOrientationUpdated(Wiimote * w)
 		if (abs(r - roll->floatValue() > .5f)) roll->setValue(r);
 		else roll->setValue(roll->floatValue() + (r - roll->floatValue())*.5f);
 	}
+}
+
+void WiimoteModule::wiimoteBatteryLevelChanged(Wiimote *)
+{
+	DBG("Battery level > " << device->batteryLevel);
+	batteryLevel->setValue(device->batteryLevel);
+}
+
+void WiimoteModule::wiimoteNunchuckPlugged(Wiimote *)
+{
+	nunchuckConnected->setValue(true);
+}
+
+void WiimoteModule::wiimoteNunchuckUnplugged(Wiimote *)
+{
+	nunchuckConnected->setValue(false);
 }

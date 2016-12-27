@@ -15,12 +15,13 @@
 ControllableUI::ControllableUI(Controllable * controllable) :
 	Component(controllable->niceName),
 	controllable(controllable),
-	forceFeedbackOnly(false),
+	forceFeedbackOnly(controllable->isControllableFeedbackOnly),
 	showLabel(true)
 {
     jassert(controllable!=nullptr);
     updateTooltip();
     controllable->addControllableListener(this);
+
 
 	setEnabled(controllable->enabled);
 	setInterceptsMouseClicks(controllable->enabled,controllable->enabled);

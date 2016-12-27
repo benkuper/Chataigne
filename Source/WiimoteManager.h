@@ -14,7 +14,7 @@
 #include "JuceHeader.h"
 #include "wiiuse.h"
 
-#define MAX_WIIMOTES 4
+#define MAX_WIIMOTES 2
 #define NUM_WIIMOTE_BUTTONS 13
 
 class Wiimote
@@ -28,6 +28,9 @@ public:
 
 	enum WiimoteButton {TWO,ONE, B, A,MINUS,C,Z,HOME,LEFT,RIGHT,DOWN,UP,PLUS};
 
+	bool isConnected;
+	float batteryLevel;
+
 	bool buttons[NUM_WIIMOTE_BUTTONS]; //11 one wiimote, 2 on nunchuck
 	float gforceX;
 	float gforceY;
@@ -40,7 +43,6 @@ public:
 	float joystickX;
 	float joystickY;
 
-
 	bool isButtonDown(WiimoteButton);
 	void update();
 
@@ -48,12 +50,13 @@ public:
 	{
 	public:
 		virtual ~Listener() {}
-		virtual void deviceDisconnected(Wiimote *) {}
+		virtual void wiimoteDisconnected(Wiimote *) {}
 		virtual void wiimoteButtonPressed(Wiimote *,WiimoteButton) {}
 		virtual void wiimoteButtonReleased(Wiimote *,WiimoteButton) {}
 		virtual void wiimoteOrientationUpdated(Wiimote *) {}
 		virtual void wiimoteNunchuckPlugged(Wiimote *) {}
 		virtual void wiimoteNunchuckUnplugged(Wiimote *) {}
+		virtual void wiimoteBatteryLevelChanged(Wiimote *) {}
 	};
 
 	ListenerList<Listener> listeners;
@@ -64,6 +67,9 @@ public:
 private :
 	void setButton(int index, bool value);
 	void setAccel(float x, float y, float z);
+	void setConnected(bool value);
+	void setBatteryLevel(float value);
+
 };
 
 class WiimoteManager :

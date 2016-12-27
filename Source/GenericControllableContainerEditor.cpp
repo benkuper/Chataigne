@@ -102,7 +102,7 @@ InspectableEditor * GenericControllableContainerEditor::getEditorForInspectable(
 
 void GenericControllableContainerEditor::addControllableUI(Controllable * c, bool resize)
 {
-	if (c->isControllableFeedbackOnly || !c->isControllableExposed || c->hideInEditor) return;
+	if (!c->isControllableExposed || c->hideInEditor) return;
 
 	InspectableEditor * cui = c->getEditor(false);
 	childEditors.add(cui);

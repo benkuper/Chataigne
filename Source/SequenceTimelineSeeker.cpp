@@ -60,6 +60,9 @@ void SequenceTimelineSeeker::mouseDown(const MouseEvent & e)
 		sequence->viewEndTime->setValue(sequence->totalTime->floatValue());
 	}
 
+	DBG("Unbounded ? " << (int)e.source.canDoUnboundedMovement());
+	e.source.enableUnboundedMouseMovement(true, false);
+
 	//DBG("viewStartAtMouseDown : " << viewStartAtMouseDown << "/ viewEndAtMouseDown : " << viewEndAtMouseDown << "/ timeAnchorAtMouseDown : " << timeAnchorAtMouseDown);
 }
 
@@ -96,8 +99,8 @@ void SequenceTimelineSeeker::mouseDrag(const MouseEvent & e)
 
 			sequence->viewStartTime->setValue(newViewStart);
 			sequence->viewEndTime->setValue(newViewEnd);
-
-
+			
+			
 		}
 		else
 		{
@@ -106,6 +109,11 @@ void SequenceTimelineSeeker::mouseDrag(const MouseEvent & e)
 			sequence->viewEndTime->setValue(destTime + viewTimeAtMouseDown / 2);
 		}
 	}
+}
+
+void SequenceTimelineSeeker::mouseUp(const MouseEvent & e)
+{
+	e.source.enableUnboundedMouseMovement(false, true);
 }
 
 

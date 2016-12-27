@@ -24,7 +24,13 @@ public:
 	WiimoteModule(const String &name = "Wiimote");
 	~WiimoteModule();
 
+	//Control params
+	IntParameter * deviceID;
+	FloatParameter * batteryLevel;
+
+	//Value params
 	BoolParameter * connected;
+	BoolParameter * nunchuckConnected;
 	FloatParameter * pitch;
 	FloatParameter * roll;
 	Array<BoolParameter *> buttons;
@@ -36,6 +42,9 @@ public:
 	void wiimoteButtonPressed(Wiimote *, Wiimote::WiimoteButton b) override;
 	void wiimoteButtonReleased(Wiimote *, Wiimote::WiimoteButton b) override;
 	void wiimoteOrientationUpdated(Wiimote *) override;
+	void wiimoteBatteryLevelChanged(Wiimote *) override;
+	void wiimoteNunchuckPlugged(Wiimote *) override;
+	void wiimoteNunchuckUnplugged(Wiimote *) override;
 
 	static WiimoteModule * create() { return new WiimoteModule(); }
 	virtual String getTypeString() const override { return "Wiimote"; }
