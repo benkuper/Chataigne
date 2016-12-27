@@ -13,14 +13,20 @@
 #include "CustomOSCModule.h"
 #include "ResolumeModule.h"
 #include "MIDIModule.h"
+#include "HIDModule.h"
+#include "GamepadModule.h"
+#include "WiimoteModule.h"
 
 juce_ImplementSingleton(ModuleFactory)
 
 ModuleFactory::ModuleFactory() {
 	moduleDefs.add(new ModuleDefinition("Generic", "OSC", &CustomOSCModule::create));
 	moduleDefs.add(new ModuleDefinition("Generic", "MIDI", &MIDIModule::create));
-	moduleDefs.add(new ModuleDefinition("Video", "Resolume", &ResolumeModule::create));
+	moduleDefs.add(new ModuleDefinition("Generic", "HID", &HIDModule::create));
+	moduleDefs.add(new ModuleDefinition("Generic", "Gamepad", &GamepadModule::create));
 
+	moduleDefs.add(new ModuleDefinition("Controller", "Wiimote", &WiimoteModule::create));
+	moduleDefs.add(new ModuleDefinition("Video", "Resolume", &ResolumeModule::create));
 	buildPopupMenu();
 }
 

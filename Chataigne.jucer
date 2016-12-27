@@ -12,6 +12,7 @@
       <FILE id="jZoDQ1" name="target.png" compile="0" resource="1" file="Resources/target.png"/>
     </GROUP>
     <GROUP id="{31908E9E-F626-E2D6-1A6D-E188C9D72C25}" name="Source">
+      <GROUP id="{385034AB-BB8A-1A0B-677C-4890320C1929}" name="External"/>
       <GROUP id="{9130C4F6-2D12-F02B-4A47-874447AF8B3F}" name="Outliner">
         <FILE id="xUR4bA" name="Outliner.cpp" compile="1" resource="0" file="Source/Outliner.cpp"/>
         <FILE id="oIJhug" name="Outliner.h" compile="0" resource="0" file="Source/Outliner.h"/>
@@ -169,6 +170,12 @@
       </GROUP>
       <GROUP id="{6A99D434-563F-6FEC-8395-5EB79B3D3075}" name="Chataigne">
         <GROUP id="{6C7DFFF7-D47E-97B5-FE74-27F24C7A349F}" name="Common">
+          <GROUP id="{70631E35-1CB6-82B1-0572-78D8D2F56250}" name="Gamepad">
+            <FILE id="R3pTTu" name="GamepadManager.cpp" compile="1" resource="0"
+                  file="Source/GamepadManager.cpp"/>
+            <FILE id="MEc76B" name="GamepadManager.h" compile="0" resource="0"
+                  file="Source/GamepadManager.h"/>
+          </GROUP>
           <GROUP id="{35974B24-06CE-D2B0-10E2-28EC5F180B57}" name="Automation">
             <GROUP id="{119C0D0B-5C9F-590C-778F-E6320A718265}" name="easing">
               <GROUP id="{EA6F771F-744D-8561-7D50-8736697A9E15}" name="ui">
@@ -581,6 +588,56 @@
         </GROUP>
         <GROUP id="{8FC20544-FEBB-B3BA-CF48-50962AA7C07C}" name="Module">
           <GROUP id="{766BCE2E-5C2E-5A80-EC80-7FFA2C7ABBBA}" name="modules">
+            <GROUP id="{1EF47452-4E53-4604-DAF3-FA36FE1B647C}" name="wiimote">
+              <GROUP id="{71F486F6-8868-00F2-72AC-772F58CF2CDE}" name="lib">
+                <GROUP id="{67FA4F29-3478-39DC-E803-2ED1159AF7CA}" name="wiiuse">
+                  <GROUP id="{55FAFC92-010F-7031-E488-81ECFCDF7093}" name="os_mac">
+                    <FILE id="zWRNSq" name="os_mac.c" compile="1" resource="0" file="Source/wiiuse/os_mac/os_mac.c"/>
+                    <FILE id="vvZwDP" name="os_mac.m" compile="1" resource="0" file="Source/wiiuse/os_mac/os_mac.m"/>
+                    <FILE id="cXQbOe" name="os_mac_find.m" compile="1" resource="0" file="Source/wiiuse/os_mac/os_mac_find.m"/>
+                    <FILE id="dt5SdG" name="os_mac_interface.m" compile="1" resource="0"
+                          file="Source/wiiuse/os_mac/os_mac_interface.m"/>
+                  </GROUP>
+                  <FILE id="NB1mR6" name="classic.c" compile="1" resource="0" file="Source/wiiuse/classic.c"/>
+                  <FILE id="eW4pMd" name="dynamics.c" compile="1" resource="0" file="Source/wiiuse/dynamics.c"/>
+                  <FILE id="r1uuW6" name="events.c" compile="1" resource="0" file="Source/wiiuse/events.c"/>
+                  <FILE id="d0EHWP" name="guitar_hero_3.c" compile="1" resource="0" file="Source/wiiuse/guitar_hero_3.c"/>
+                  <FILE id="KjCYCP" name="io.c" compile="1" resource="0" file="Source/wiiuse/io.c"/>
+                  <FILE id="YsMMr9" name="ir.c" compile="1" resource="0" file="Source/wiiuse/ir.c"/>
+                  <FILE id="SEziUE" name="motion_plus.c" compile="1" resource="0" file="Source/wiiuse/motion_plus.c"/>
+                  <FILE id="Nw2CCe" name="nunchuk.c" compile="1" resource="0" file="Source/wiiuse/nunchuk.c"/>
+                  <FILE id="c7wjVQ" name="os_nix.c" compile="1" resource="0" file="Source/wiiuse/os_nix.c"/>
+                  <FILE id="p602BA" name="os_win.c" compile="1" resource="0" file="Source/wiiuse/os_win.c"/>
+                  <FILE id="XW4X7a" name="util.c" compile="1" resource="0" file="Source/wiiuse/util.c"/>
+                  <FILE id="nSxnZO" name="wiiboard.c" compile="1" resource="0" file="Source/wiiuse/wiiboard.c"/>
+                  <FILE id="BveAO0" name="wiiuse.c" compile="1" resource="0" file="Source/wiiuse/wiiuse.c"/>
+                </GROUP>
+              </GROUP>
+              <FILE id="cfwwHd" name="WiimoteManager.cpp" compile="1" resource="0"
+                    file="Source/WiimoteManager.cpp"/>
+              <FILE id="wXCIWH" name="WiimoteManager.h" compile="0" resource="0"
+                    file="Source/WiimoteManager.h"/>
+              <FILE id="lI21xf" name="WiimoteModule.cpp" compile="1" resource="0"
+                    file="Source/WiimoteModule.cpp"/>
+              <FILE id="ngOz3J" name="WiimoteModule.h" compile="0" resource="0" file="Source/WiimoteModule.h"/>
+            </GROUP>
+            <GROUP id="{8C1F4F42-D147-0C87-C287-A37FFCD87532}" name="gamepad">
+              <FILE id="jwqoKt" name="GamepadModule.cpp" compile="1" resource="0"
+                    file="Source/GamepadModule.cpp"/>
+              <FILE id="F2pT1U" name="GamepadModule.h" compile="0" resource="0" file="Source/GamepadModule.h"/>
+            </GROUP>
+            <GROUP id="{6EE36E9C-C9D7-2799-B1A9-208E57828C02}" name="hid">
+              <GROUP id="{C6B4F0EF-E160-42C3-E2A8-E3F593B999EC}" name="ui">
+                <FILE id="zhCivn" name="HIDModuleEditor.cpp" compile="1" resource="0"
+                      file="Source/HIDModuleEditor.cpp"/>
+                <FILE id="FemZA5" name="HIDModuleEditor.h" compile="0" resource="0"
+                      file="Source/HIDModuleEditor.h"/>
+                <FILE id="Tk2Yzf" name="HIDModuleUI.cpp" compile="1" resource="0" file="Source/HIDModuleUI.cpp"/>
+                <FILE id="FnD3gx" name="HIDModuleUI.h" compile="0" resource="0" file="Source/HIDModuleUI.h"/>
+              </GROUP>
+              <FILE id="uhZZzG" name="HIDModule.cpp" compile="1" resource="0" file="Source/HIDModule.cpp"/>
+              <FILE id="PIsgiY" name="HIDModule.h" compile="0" resource="0" file="Source/HIDModule.h"/>
+            </GROUP>
             <GROUP id="{07899DEF-BE17-A9F4-6EF1-ED24D507DC55}" name="midi">
               <GROUP id="{26AC336F-4247-0FA3-BBC3-11AE607B239B}" name="commands">
                 <FILE id="m4XAdQ" name="MIDICommands.cpp" compile="1" resource="0"
@@ -764,12 +821,14 @@
   </MAINGROUP>
   <EXPORTFORMATS>
     <VS2015 targetFolder="Builds/VisualStudio2015" smallIcon="nVz6Li" bigIcon="nVz6Li"
-            extraDefs="">
+            extraDefs="" externalLibraries="Setupapi.lib&#10;hid.lib">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" winWarningLevel="4" generateManifest="1" winArchitecture="32-bit"
-                       isDebug="1" optimisation="1" targetName="Chataigne"/>
+                       isDebug="1" optimisation="1" targetName="Chataigne" headerPath="../../External/wiiuse"
+                       libraryPath=""/>
         <CONFIGURATION name="Release" winWarningLevel="4" generateManifest="1" winArchitecture="32-bit"
-                       isDebug="0" optimisation="3" targetName="Chataigne"/>
+                       isDebug="0" optimisation="3" targetName="Chataigne" libraryPath=""
+                       headerPath="../../External/wiiuse"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_core" path="D:/Softwares/JUCE/modules"/>

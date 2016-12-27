@@ -18,6 +18,8 @@
 #include "Outliner.h"
 #include "ControllableFactory.h"
 #include "MIDIManager.h"
+#include "GamepadManager.h"
+#include "WiimoteManager.h"
 
 juce_ImplementSingleton(Engine) 
 
@@ -62,7 +64,8 @@ Engine::~Engine(){
   ControllableFactory::deleteInstance();
   
   MIDIManager::deleteInstance();
-
+  GamepadManager::deleteInstance();
+  WiimoteManager::deleteInstance();
 }
 
 void Engine::parseCommandline(const String & commandLine){

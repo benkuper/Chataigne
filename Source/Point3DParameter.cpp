@@ -35,6 +35,13 @@ void Point3DParameter::setVector(float _x, float _y, float _z)
 {
 	var d;
 
+	if (_x < minX && autoAdaptRange) minX = _x;
+	if (_x > maxX && autoAdaptRange) maxX = _x;
+	if (_y < minY && autoAdaptRange) minY = _y;
+	if (_y > maxY && autoAdaptRange) maxY = _y;
+	if (_z < minZ && autoAdaptRange) minZ = _z;
+	if (_z > maxZ && autoAdaptRange) maxZ = _z;
+
 	d.append(jlimit<float>(minX, maxX, _x));
 	d.append(jlimit<float>(minY, maxY, _y));
 	d.append(jlimit<float>(minZ, maxZ, _z));
