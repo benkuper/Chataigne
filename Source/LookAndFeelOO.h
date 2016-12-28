@@ -90,7 +90,7 @@ namespace LookAndFeelHelpers {
 		Slider::trackColourId,                      0x7fffffff,
 		Slider::rotarySliderFillColourId,           0x7f0000ff,
 		Slider::rotarySliderOutlineColourId,        0x66000000,
-		Slider::textBoxTextColourId,                FRONT_COLOR.darker(.1f).getARGB(),
+		Slider::textBoxTextColourId,                TEXT_COLOR.getARGB(),
 		Slider::textBoxBackgroundColourId,          BG_COLOR.darker(.1f).getARGB(),
 		Slider::textBoxHighlightColourId,           textHighlightColour,
 		Slider::textBoxOutlineColourId,             BG_COLOR.brighter(.1f).getARGB() ,

@@ -11,14 +11,13 @@
 #ifndef OSCMODULEBASEEDITOR_H_INCLUDED
 #define OSCMODULEBASEEDITOR_H_INCLUDED
 
+#include "ModuleEditor.h"
 #include "OSCModule.h"
 #include "IntStepperUI.h"
-#include "BoolToggleUI.h"
-#include "StringParameterUI.h"
+
 
 class OSCModuleBaseEditor :
-	public InspectableEditor,
-	public ControllableContainer::ContainerAsyncListener
+	public ModuleEditor
 {
 public:
 	OSCModuleBaseEditor(OSCModule * oscModule, bool isRoot);
@@ -35,12 +34,12 @@ public:
 	ScopedPointer<IntStepperUI> remotePortUI;
 	ScopedPointer<BoolToggleUI> useLocalUI;
 
+	virtual void resizedInternal(Rectangle<int> &r);
+	virtual void resizedOSCInternal(Rectangle<int> &) {} //to be overriden by child classes
 
-	virtual void resized();
-	virtual int resizedInternal(Rectangle<int> r) { return 0; } //to be overriden by child classes
+	virtual void controllableFeedbackAsyncUpdate(Controllable * c) override;
 
-	void newMessage(const ContainerAsyncEvent &e) override;
-	virtual void controllableFeedbackAsyncUpdate(Controllable * c);
+	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(OSCModuleBaseEditor)
 };
 
 

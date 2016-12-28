@@ -37,6 +37,8 @@ public:
 
 	virtual String getTypeString() const { jassert(false); return ""; } //should be overriden
 
+	//virtual InspectableEditor * getEditor(bool isRoot) override;
+
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Module)
 };
 

@@ -65,7 +65,7 @@ Engine::~Engine(){
   
   MIDIManager::deleteInstance();
   GamepadManager::deleteInstance();
-  //WiimoteManager::deleteInstance();
+  WiimoteManager::deleteInstance();
 }
 
 void Engine::parseCommandline(const String & commandLine){

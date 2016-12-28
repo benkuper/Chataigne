@@ -25,9 +25,10 @@ CustomOSCModuleEditor::~CustomOSCModuleEditor()
 {
 }
 
-int CustomOSCModuleEditor::resizedInternal(Rectangle<int> r)
+void CustomOSCModuleEditor::resizedOSCInternal(Rectangle<int> &r)
 {
 	autoAddUI->setBounds(r.withHeight(14));
-	valuesEditor->setBounds(r.translated(0,16));
-	return r.withBottom(valuesEditor->getBottom()).getHeight();
+	r.translate(0,16);
+	valuesEditor->setBounds(r);
+	r.setBottom(valuesEditor->getBottom());
 }

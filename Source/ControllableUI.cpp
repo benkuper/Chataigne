@@ -16,7 +16,8 @@ ControllableUI::ControllableUI(Controllable * controllable) :
 	Component(controllable->niceName),
 	controllable(controllable),
 	forceFeedbackOnly(controllable->isControllableFeedbackOnly),
-	showLabel(true)
+	showLabel(true),
+	opaqueBackground(false)
 {
     jassert(controllable!=nullptr);
     updateTooltip();
@@ -30,6 +31,11 @@ ControllableUI::ControllableUI(Controllable * controllable) :
 ControllableUI::~ControllableUI()
 {
     if(controllable.get())controllable->removeControllableListener(this);
+}
+
+void ControllableUI::setOpaqueBackground(bool value)
+{
+	opaqueBackground = value;
 }
 
 void ControllableUI::setForceFeedbackOnly(bool value)

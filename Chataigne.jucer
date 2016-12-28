@@ -725,6 +725,9 @@
             <FILE id="SrCoY7" name="ModuleCommand.h" compile="0" resource="0" file="Source/ModuleCommand.h"/>
           </GROUP>
           <GROUP id="{67BC73CD-B94B-C59C-7AE7-3A6E8643517A}" name="ui">
+            <FILE id="cAALpT" name="ModuleEditor.cpp" compile="1" resource="0"
+                  file="Source/ModuleEditor.cpp"/>
+            <FILE id="xZERFs" name="ModuleEditor.h" compile="0" resource="0" file="Source/ModuleEditor.h"/>
             <FILE id="lbKfus" name="ModuleManagerUI.cpp" compile="1" resource="0"
                   file="Source/ModuleManagerUI.cpp"/>
             <FILE id="PLqo2M" name="ModuleManagerUI.h" compile="0" resource="0"

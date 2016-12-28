@@ -8,7 +8,7 @@
   ==============================================================================
 */
 
-/*
+
 #ifndef WIIMOTEMANAGER_H_INCLUDED
 #define WIIMOTEMANAGER_H_INCLUDED
 
@@ -102,9 +102,10 @@ public:
 	void addListener(Listener* newListener) { listeners.add(newListener); }
 	void removeListener(Listener* listener) { listeners.remove(listener); }
 
+	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(WiimoteManager)
+
 };
 
 
 
 #endif  // WIIMOTEMANAGER_H_INCLUDED
-*/

@@ -26,7 +26,7 @@ public:
 	ScopedPointer<BoolToggleUI> autoAddUI;
 	ScopedPointer<InspectableEditor> valuesEditor;
 
-	int resizedInternal(Rectangle<int> r) override;
+	void resizedOSCInternal(Rectangle<int> &r) override;
 };
 
 

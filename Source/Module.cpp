@@ -10,6 +10,7 @@
 
 #include "Module.h"
 #include "CommandFactory.h"
+#include "ModuleEditor.h"
 
 Module::Module(const String &name) :
 	BaseItem(name),
@@ -24,11 +25,11 @@ Module::Module(const String &name) :
 
 	
 
-	logIncomingData = addBoolParameter("Log Incoming Data", "Enable / Disable logging of incoming data for this module", false);
+	logIncomingData = addBoolParameter("Log Incoming", "Enable / Disable logging of incoming data for this module", false);
 	logIncomingData->hideInOutliner = true;
 	logIncomingData->isTargettable = false;
 
-	logOutgoingData = addBoolParameter("Log Outgoing Data", "Enable / Disable logging of outgoing data for this module", false);
+	logOutgoingData = addBoolParameter("Log Outgoing", "Enable / Disable logging of outgoing data for this module", false);
 	logOutgoingData->hideInOutliner = true;
 	logOutgoingData->isTargettable = false;
 
@@ -54,3 +55,10 @@ var Module::getJSONData()
 	data.getDynamicObject()->setProperty("type", getTypeString());
 	return data;
 }
+
+/*
+InspectableEditor * Module::getEditor(bool isRoot)
+{
+	return new ModuleEditor(this, isRoot);
+}
+*/

@@ -13,7 +13,7 @@
 #include "Style.h"
 
 StringParameterUI::StringParameterUI(Parameter * p) :
-    ParameterUI(p), autoSize(false), maxFontHeight(12),opaqueBackground(false)
+    ParameterUI(p), autoSize(false), maxFontHeight(12)
 {
 
     addChildComponent(nameLabel);
@@ -22,11 +22,12 @@ StringParameterUI::StringParameterUI(Parameter * p) :
 
     nameLabel.setJustificationType(Justification::topLeft);
     nameLabel.setText(prefix+parameter->niceName+suffix, NotificationType::dontSendNotification);
-    nameLabel.setColour(Label::ColourIds::textColourId, TEXTNAME_COLOR);
+    nameLabel.setColour(nameLabel.textColourId, TEXTNAME_COLOR);
 
     valueLabel.setJustificationType(Justification::topLeft);
     valueLabel.setText(parameter->value,NotificationType::dontSendNotification);
-    valueLabel.setColour(Label::ColourIds::textColourId, TEXT_COLOR);
+    valueLabel.setColour(valueLabel.textColourId, TEXT_COLOR);
+
 	valueLabel.setEditable(false,parameter->isEditable);
 	valueLabel.addListener(this);
 
@@ -68,8 +69,9 @@ void StringParameterUI::setNameLabelVisible(bool visible)
 
 void StringParameterUI::setOpaqueBackground(bool value)
 {
-	opaqueBackground = value;
-	valueLabel.setColour(valueLabel.backgroundColourId, opaqueBackground ? BG_COLOR.brighter(.2f) : Colours::transparentBlack);
+	ParameterUI::setOpaqueBackground(value);
+	valueLabel.setColour(valueLabel.backgroundColourId, opaqueBackground?BG_COLOR.darker(.1f):Colours::transparentBlack);
+	valueLabel.setColour(valueLabel.outlineColourId, opaqueBackground ? BG_COLOR.brighter(.1f):Colours::transparentWhite);
 }
 
 void StringParameterUI::setForceFeedbackOnlyInternal()

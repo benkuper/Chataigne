@@ -8,7 +8,7 @@
   ==============================================================================
 */
 
-/*
+
 #include "WiimoteModule.h"
 
 WiimoteModule::WiimoteModule(const String & name) :
@@ -126,5 +126,3 @@ void WiimoteModule::wiimoteNunchuckUnplugged(Wiimote *)
 {
 	nunchuckConnected->setValue(false);
 }
-
-*/

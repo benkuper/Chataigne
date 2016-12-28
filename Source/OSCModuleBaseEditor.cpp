@@ -11,7 +11,7 @@
 #include "OSCModuleBaseEditor.h"
 
 OSCModuleBaseEditor::OSCModuleBaseEditor(OSCModule * _oscModule, bool isRoot) :
-	InspectableEditor(_oscModule, isRoot),
+	ModuleEditor(_oscModule, isRoot),
 	oscModule(_oscModule),
 	receiveLabel("Receive","Receive"),
 	sendLabel("Send","Send")
@@ -45,12 +45,12 @@ OSCModuleBaseEditor::~OSCModuleBaseEditor()
 	oscModule->removeAsyncContainerListener(this);
 }
 
-void OSCModuleBaseEditor::resized()
+void OSCModuleBaseEditor::resizedInternal(Rectangle<int> &r)
 {
-	Rectangle<int> r = getLocalBounds().reduced(2);
 	Rectangle<int> localR = r.withHeight(14);
-	Rectangle<int> remoteR = r.translated(0, localR.getBottom()+5).withHeight(14);
-	
+	DBG("resized internal " << r.toString());
+	Rectangle<int> remoteR = localR.withY(localR.getBottom() + 5);
+
 	receiveLabel.setBounds(localR.removeFromLeft(60));
 
 	isConnectedUI->setBounds(localR.removeFromRight(100));
@@ -60,26 +60,16 @@ void OSCModuleBaseEditor::resized()
 	sendLabel.setBounds(remoteR.removeFromLeft(60));
 	remotePortUI->setBounds(remoteR.removeFromLeft(80));
 	useLocalUI->setBounds(remoteR.removeFromLeft(50));
-	remoteHostUI->setBounds(remoteR.reduced(2,0));
+	remoteHostUI->setBounds(remoteR.reduced(2, 0));
 
-	r.setTop(remoteR.getBottom() + 10);
-	r.translate(0,resizedInternal(r)+5);
-
-	setBounds(getLocalBounds().withBottom(r.getY()));
-}
-
-void OSCModuleBaseEditor::newMessage(const ContainerAsyncEvent & e)
-{
-	switch (e.type)
-	{
-	case ContainerAsyncEvent::ControllableFeedbackUpdate:
-		controllableFeedbackAsyncUpdate(e.targetControllable);
-		break;
-	}
+	r.setY(remoteR.getBottom()+5);
+	resizedOSCInternal(r);
 }
 
 void OSCModuleBaseEditor::controllableFeedbackAsyncUpdate(Controllable * c)
 {
+	ModuleEditor::controllableFeedbackAsyncUpdate(c);
+
 	if (c == oscModule->useLocal)
 	{
 		remoteHostUI->setEnabled(!oscModule->useLocal->boolValue());

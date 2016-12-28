@@ -25,6 +25,9 @@ public:
     WeakReference<Controllable>  controllable;
 
 	bool showLabel;
+	bool opaqueBackground;
+
+	virtual void setOpaqueBackground(bool value);
 
 	bool forceFeedbackOnly; //if false, will rely on Controllable isEditable property. if true, will be force to no editable
 	void setForceFeedbackOnly(bool value);

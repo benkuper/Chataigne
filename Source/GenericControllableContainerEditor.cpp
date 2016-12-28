@@ -190,5 +190,5 @@ void GenericControllableContainerEditor::resized()
 		r.translate(0, th + 2);
 	}
 
-	setSize(getWidth(),r.getY()+2);
+	setSize(getWidth(),jmax<int>(r.getY()+2,50));
 }

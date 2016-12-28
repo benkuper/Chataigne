@@ -8,7 +8,7 @@
   ==============================================================================
 */
 
-/*
+
 #ifndef WIIMOTEMODULE_H_INCLUDED
 #define WIIMOTEMODULE_H_INCLUDED
 
@@ -50,8 +50,9 @@ public:
 	static WiimoteModule * create() { return new WiimoteModule(); }
 	virtual String getTypeString() const override { return "Wiimote"; }
 
+	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(WiimoteModule)
+
 };
 
 
 #endif  // WIIMOTEMODULE_H_INCLUDED
-*/
