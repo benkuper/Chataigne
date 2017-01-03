@@ -184,10 +184,13 @@ CubicEasingUI::CubicEasingUI(CubicEasing * e) :
 bool CubicEasingUI::hitTest(int tx, int ty)
 {
 	bool result = EasingUI::hitTest(tx, ty);
+
 	if(easing->isSelected)
 	{
-		result = result || h1.hitTest(tx, ty) || h2.hitTest(tx, ty);
+		if (&h1 != nullptr) result |= h1.getLocalBounds().contains(h1.getMouseXYRelative());
+		if(&h2 != nullptr) result |= h2.getLocalBounds().contains(h2.getMouseXYRelative());
 	}
+
 	return result;
 }
 
@@ -200,9 +203,9 @@ void CubicEasingUI::resized()
 
 	Point<float> a = Point<float>(jmap<float>(ce->anchor1->getPoint().x, p1.x, p2.x), jmap<float>(ce->anchor1->getPoint().y, p1.y, p2.y));
 	Point<float> b = Point<float>(jmap<float>(ce->anchor2->getPoint().x, p1.x, p2.x), jmap<float>(ce->anchor2->getPoint().y, p1.y, p2.y));
-
-	h1.setBounds(Rectangle<int>(0, 0, 10,10).withCentre(a.toInt()));
-	h2.setBounds(Rectangle<int>(0, 0, 10,10).withCentre(b.toInt()));
+	 
+	h1.setBounds(Rectangle<int>(0, 0, 16,16).withCentre(a.toInt()));
+	h2.setBounds(Rectangle<int>(0, 0, 16,16).withCentre(b.toInt()));
 }
 
 void CubicEasingUI::generatePathInternal()
@@ -300,10 +303,15 @@ void CubicEasingUI::mouseDrag(const MouseEvent & e)
 }
 
 
+EasingUI::EasingHandle::EasingHandle() 
+{
+	setRepaintsOnMouseActivity(true);
+}
+
 void EasingUI::EasingHandle::paint(Graphics & g)
 {
-	Colour c = LIGHTCONTOUR_COLOR;
-	if (isMouseOver()) c = c.brighter();
+	Colour c =LIGHTCONTOUR_COLOR;
+	if (isMouseOver()) c = c.brighter(.8f);
 	g.setColour(c);
-	g.fillEllipse(getLocalBounds().reduced(3).toFloat());
+	g.fillEllipse(getLocalBounds().reduced(isMouseOver()?3:5).toFloat());
 }

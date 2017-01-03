@@ -53,7 +53,7 @@ public:
 		public Component
 	{
 	public :
-		EasingHandle() {}
+		EasingHandle();
 		void paint(Graphics &g) override;
 	};
 
