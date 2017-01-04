@@ -23,7 +23,7 @@ public:
 	ModuleManagerUI(ModuleManager *_manager);
 	~ModuleManagerUI();
 
-	void mouseDown(const MouseEvent &e) override;
+	void showMenuAndAddItem(bool ,Point<int>) override;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ModuleManagerUI)
 };

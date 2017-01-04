@@ -14,7 +14,6 @@
 SequenceLayerPanelManagerUI::SequenceLayerPanelManagerUI(SequenceLayerManager * _manager) :
 	BaseManagerUI<SequenceLayerManager, SequenceLayer, SequenceLayerPanel>("SequenceLayers", _manager)
 {
-	useDefaultMenu = false;
 	addExistingItems();
 }
 
@@ -23,14 +22,10 @@ SequenceLayerPanelManagerUI::~SequenceLayerPanelManagerUI()
 }
 
 
-void SequenceLayerPanelManagerUI::mouseDown(const MouseEvent & e)
+void SequenceLayerPanelManagerUI::showMenuAndAddItem(bool /*isFromAddButton*/, Point<int>)
 {
-	BaseManagerUI::mouseDown(e);
-	if (e.mods.isRightButtonDown())
-	{
-		SequenceLayer * i = SequenceLayerFactory::getInstance()->showCreateMenu(manager->sequence);
-		if (i != nullptr) manager->addItem(i);
-	}
+	SequenceLayer * i = SequenceLayerFactory::getInstance()->showCreateMenu(manager->sequence);
+	if (i != nullptr) manager->addItem(i);
 }
 
 SequenceLayerPanel * SequenceLayerPanelManagerUI::createUIForItem(SequenceLayer * layer)

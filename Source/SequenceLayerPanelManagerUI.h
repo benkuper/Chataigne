@@ -25,7 +25,7 @@ public:
 	~SequenceLayerPanelManagerUI();
 
 
-	void mouseDown(const MouseEvent &e) override;
+	void showMenuAndAddItem(bool isFromAddButton, Point<int>) override;
 
 	SequenceLayerPanel * createUIForItem(SequenceLayer * layer) override;
 

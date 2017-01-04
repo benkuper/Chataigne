@@ -17,6 +17,7 @@
 #include "BaseManager.h"
 #include "BaseItemMinimalUI.h"
 #include "Style.h"
+#include "AssetManager.h"
 
 template<class T>
 class BaseManagerItemComparator
@@ -54,7 +55,8 @@ public:
 template<class M, class T, class U>
 class BaseManagerUI :
 	public InspectableContentComponent,
-	public BaseManager<T>::Listener
+	public BaseManager<T>::Listener,
+	public ButtonListener
 {
 public:
 	BaseManagerUI<M, T, U>(const String &contentName, M * _manager, bool _useViewport = true);
@@ -77,11 +79,12 @@ public:
 	bool drawHighlightWhenSelected;
 	bool transparentBG;
 	bool resizeOnChildBoundsChanged;
-	bool showAddItemIcon;
+
+	ScopedPointer<ImageButton> addItemBT;
 
 	//menu
-	bool useDefaultMenu;
 	String addItemText;
+
 
 	//layout
 	bool fixedItemHeight;
@@ -95,7 +98,8 @@ public:
 	virtual void resized() override;
 	virtual void childBoundsChanged(Component *) override;
 
-	virtual void addItemFromMenu(Point<int> mouseDownPos);
+	virtual void showMenuAndAddItem(bool isFromAddButton, Point<int> mouseDownPos);
+	virtual void addItemFromMenu(bool isFromAddButton, Point<int> mouseDownPos);
 	virtual U * addItemUI(T * item);
 	virtual U * createUIForItem(T * item);
 	virtual void addItemUIInternal(U *) {}
@@ -104,6 +108,8 @@ public:
 	virtual void removeItemUI(T * item);
 	virtual void removeItemUIInternal(U *) {}
 
+	//menu
+	
 	U * getUIForItem(T * item, bool directIndexAccess = true);
 
 	int getContentHeight();
@@ -111,6 +117,8 @@ public:
 	void itemAdded(T * item) override;
 	void itemRemoved(T * item) override;
 	void itemsReordered() override;
+
+	void buttonClicked(Button *) override;
 
 	class  ManagerUIListener
 	{
@@ -138,7 +146,6 @@ BaseManagerUI<M, T, U>::BaseManagerUI(const String & contentName, M * _manager, 
 	managerUIName(contentName),
 	fixedItemHeight(true),
 	useViewport(_useViewport),
-	useDefaultMenu(true),
 	resizeOnChildBoundsChanged(true),
 	managerComparator(_manager)
 {
@@ -156,6 +163,10 @@ BaseManagerUI<M, T, U>::BaseManagerUI(const String & contentName, M * _manager, 
 
 	BaseManager<T>* baseM = static_cast<BaseManager<T>*>(manager);
 	baseM->addBaseManagerListener(this);
+
+	addItemBT = AssetManager::getInstance()->getAddBT();
+	addAndMakeVisible(addItemBT);
+	addItemBT->addListener(this);
 
 	//must call addExistingItems from child class to get overrides
 }
@@ -185,21 +196,7 @@ void BaseManagerUI<M, T, U>::mouseDown(const MouseEvent & e)
 	{
 	} else if (e.mods.isRightButtonDown())
 	{
-		if (useDefaultMenu)
-		{
-			PopupMenu p;
-			p.addItem(1, addItemText);
-			int result = p.show();
-			if (result)
-			{
-				switch (result)
-				{
-				case 1:
-					addItemFromMenu(e.getEventRelativeTo(this).getMouseDownPosition());
-					break;
-				}
-			}
-		}
+		showMenuAndAddItem(false, e.getEventRelativeTo(this).getMouseDownPosition());
 	} 
 }
 
@@ -239,7 +236,10 @@ void BaseManagerUI<M, T, U>::resized()
 	if (getWidth() == 0 || getHeight() == 0) return;
 
 	Rectangle<int> r = getLocalBounds().reduced(2);
-	if (drawContour) r.removeFromTop(15);
+	
+	addItemBT->setBounds(r.withSize(24, 24).withX(r.getWidth() - 24));
+	r.removeFromTop(24);
+		
 
 	if (useViewport)
 	{
@@ -247,7 +247,6 @@ void BaseManagerUI<M, T, U>::resized()
 		r.removeFromRight(drawContour?14:10);
 		r.setTop(0);
 	}
-
 	
 	for (auto &ui : itemsUI)
 	{
@@ -272,8 +271,30 @@ void BaseManagerUI<M, T, U>::childBoundsChanged(Component *)
 }
 
 template<class M, class T, class U>
-void BaseManagerUI<M, T, U>::addItemFromMenu(Point<int>) 
-{ 
+void BaseManagerUI<M, T, U>::showMenuAndAddItem(bool isFromAddButton, Point<int> mouseDownPos)
+{
+	if (isFromAddButton)
+	{
+		manager->BaseManager<T>::addItem();
+		return;
+	}
+
+	PopupMenu p;
+	p.addItem(1, addItemText);
+
+	int result = p.show(); 
+	switch (result)
+	{
+	case 1:
+		addItemFromMenu(isFromAddButton,mouseDownPos);
+		break;
+	}
+	
+}
+
+template<class M, class T, class U>
+void BaseManagerUI<M, T, U>::addItemFromMenu(bool, Point<int>)
+{
 	manager->BaseManager<T>::addItem();
 }
 
@@ -343,9 +364,18 @@ void BaseManagerUI<M, T, U>::itemRemoved(T * item)
 }
 
 template<class M, class T, class U>
-inline void BaseManagerUI<M, T, U>::itemsReordered()
+void BaseManagerUI<M, T, U>::itemsReordered()
 {
 	itemsUI.sort(managerComparator);
+}
+
+template<class M, class T, class U>
+void BaseManagerUI<M, T, U>::buttonClicked(Button  * b)
+{
+	if (b == addItemBT)
+	{
+		showMenuAndAddItem(true,Point<int>());
+	}
 }
 
 

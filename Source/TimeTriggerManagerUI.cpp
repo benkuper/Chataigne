@@ -18,6 +18,8 @@ TimeTriggerManagerUI::TimeTriggerManagerUI(TriggerLayerTimeline * _timeline, Tim
 	addItemText = "Add Trigger";
 	transparentBG = true;
 
+	addItemBT->setVisible(false);
+
 	addExistingItems();
 }
 
@@ -61,8 +63,10 @@ void TimeTriggerManagerUI::mouseDown(const MouseEvent & e)
 	}
 }
 
-void TimeTriggerManagerUI::addItemFromMenu(Point<int> mouseDownPos)
+void TimeTriggerManagerUI::addItemFromMenu(bool isFromAddButton, Point<int> mouseDownPos)
 {
+	if (isFromAddButton) return;
+
 	float time = timeline->getTimeForX(mouseDownPos.x);
 	manager->addTriggerAt(time);
 }

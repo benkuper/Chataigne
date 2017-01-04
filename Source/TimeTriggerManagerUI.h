@@ -36,7 +36,7 @@ public:
 
 	void mouseDown(const MouseEvent &e) override;
 
-	void addItemFromMenu(Point<int> mouseDownPos) override;
+	void addItemFromMenu(bool, Point<int> mouseDownPos) override;
 	void addItemUIInternal(TimeTriggerUI * ttui) override;
 	void removeItemUIInternal(TimeTriggerUI * ttui) override;
 

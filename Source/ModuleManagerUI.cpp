@@ -14,7 +14,6 @@
 ModuleManagerUI::ModuleManagerUI(ModuleManager * _manager) :
 	BaseManagerShapeShifterUI<ModuleManager, Module, ModuleUI>("Modules", _manager)
 {
-	useDefaultMenu = false;
 	addExistingItems();
 }
 
@@ -22,12 +21,8 @@ ModuleManagerUI::~ModuleManagerUI()
 {
 }
 
-void ModuleManagerUI::mouseDown(const MouseEvent & e)
+void ModuleManagerUI::showMenuAndAddItem(bool, Point<int>)
 {
-	BaseManagerUI::mouseDown(e);
-	if (e.mods.isRightButtonDown())
-	{
-		Module * i = ModuleFactory::getInstance()->showCreateMenu();
-		if (i != nullptr) manager->addItem(i);
-	}
+	Module * m = ModuleFactory::getInstance()->showCreateMenu();
+	if (m != nullptr) manager->addItem(m);
 }

@@ -16,7 +16,6 @@ AutomationUI::AutomationUI(Automation * _automation) :
 	currentUI(nullptr)
 {
 	transparentBG = true;
-	useDefaultMenu = false;
 	setViewRange(0, manager->positionMax);
 	manager->addAsyncContainerListener(this);
 

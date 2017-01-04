@@ -60,6 +60,7 @@ public:
 	void addItemUIInternal(AutomationKeyUI *) override;
 	void removeItemUIInternal(AutomationKeyUI *) override;
 
+	void showMenuAndAddItem(bool, Point<int>) override {}; //no menu
 
 	void mouseDown(const MouseEvent &e) override;
 	void mouseDrag(const MouseEvent &e) override;

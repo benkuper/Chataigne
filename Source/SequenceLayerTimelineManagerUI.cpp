@@ -14,7 +14,6 @@
 SequenceLayerTimelineManagerUI::SequenceLayerTimelineManagerUI(SequenceLayerManager * _manager) :
 	BaseManagerUI<SequenceLayerManager, SequenceLayer, SequenceLayerTimeline>("Layers", _manager)
 {
-	useDefaultMenu = false;
 	addExistingItems();
 }
 
@@ -33,12 +32,8 @@ void SequenceLayerTimelineManagerUI::resized()
 
 }
 
-void SequenceLayerTimelineManagerUI::mouseDown(const MouseEvent & e)
+void SequenceLayerTimelineManagerUI::showMenuAndAddItem(bool, Point<int>)
 {
-	BaseManagerUI::mouseDown(e);
-	if (e.mods.isRightButtonDown())
-	{
-		SequenceLayer * i = SequenceLayerFactory::getInstance()->showCreateMenu(manager->sequence);
-		if (i != nullptr) manager->addItem(i);
-	}
+	SequenceLayer * i = SequenceLayerFactory::getInstance()->showCreateMenu(manager->sequence);
+	if (i != nullptr) manager->addItem(i);
 }

@@ -90,6 +90,8 @@ void StateMachineView::resized()
 {
 	Rectangle<int> r = getLocalBounds();
 
+	addItemBT->setBounds(r.withSize(24, 24).withX(r.getWidth() - 24));
+
 	for (auto &tui : itemsUI)
 	{
 		updateViewUIPosition(tui);
@@ -103,7 +105,8 @@ void StateMachineView::updateViewUIPosition(StateViewUI * se)
 	pe += viewOffset;
 	se->setTopLeftPosition(pe.x,pe.y);
 }
-void StateMachineView::addItemFromMenu(Point<int> mouseDownPos)
+
+void StateMachineView::addItemFromMenu(bool isFromAddButton, Point<int> mouseDownPos)
 {
 	manager->addItem(getViewPos(mouseDownPos).toFloat() / getSize());
 }

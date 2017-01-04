@@ -24,7 +24,7 @@ public:
 	ActionManagerUI(ActionManager *_manager);
 	~ActionManagerUI();
 
-	void addItemFromMenu(Point<int> mouseDownPos) override;
+	void addItemFromMenu(bool isFromAddButton, Point<int> mouseDownPos) override;
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ActionManagerUI)
 };
 
