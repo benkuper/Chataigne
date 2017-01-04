@@ -82,14 +82,14 @@ void WiimoteModule::wiimoteButtonPressed(Wiimote * w, Wiimote::WiimoteButton b)
 {
 	if (w != device) return;
 	buttons[(int)b]->setValue(true);
-	activityTrigger->trigger();
+	inActivityTrigger->trigger();
 }
 
 void WiimoteModule::wiimoteButtonReleased(Wiimote * w, Wiimote::WiimoteButton b)
 {
 	if (w != device) return;
 	buttons[(int)b]->setValue(false);
-	activityTrigger->trigger();
+	inActivityTrigger->trigger();
 }
 
 void WiimoteModule::wiimoteOrientationUpdated(Wiimote * w)
@@ -113,7 +113,6 @@ void WiimoteModule::wiimoteOrientationUpdated(Wiimote * w)
 
 void WiimoteModule::wiimoteBatteryLevelChanged(Wiimote *)
 {
-	DBG("Battery level > " << device->batteryLevel);
 	batteryLevel->setValue(device->batteryLevel);
 }
 

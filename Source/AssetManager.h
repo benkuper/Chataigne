@@ -20,12 +20,17 @@ public:
 	AssetManager();
 	virtual ~AssetManager();
 
-	Image getGridImage();
 	ImageButton * getRemoveBT();
 	ImageButton * getConfigBT();
 	ImageButton * getTargetBT();
+	ImageButton * getPowerBT();  
+	ImageButton * getAddBT();
 
+	Image getInImage();
+	Image getOutImage();
+	
 	ImageButton * getSetupBTImage(const Image & image);
+	ImageButton * getToggleBTImage(const Image &image);
 };
 
 

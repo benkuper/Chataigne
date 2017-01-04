@@ -14,7 +14,7 @@
 
 #include "BaseItemMinimalUI.h"
 #include "AssetManager.h"
-#include "BoolToggleUI.h"
+#include "BoolImageToggleUI.h"
 #include "StringParameterUI.h"
 
 template<class T>
@@ -32,7 +32,7 @@ public:
 
 
 	ScopedPointer<StringParameterUI> nameUI;
-	ScopedPointer<BoolToggleUI> enabledBT;
+	ScopedPointer<BoolImageToggleUI> enabledBT;
 	ScopedPointer<ImageButton> removeBT;
 
 	virtual void resized() override;
@@ -57,7 +57,7 @@ BaseItemUI<T>::BaseItemUI(T * _item) :
 	nameUI = this->getBaseItem()->nameParam->createStringParameterUI();
 	this->addAndMakeVisible(nameUI);
 
-	enabledBT = this->getBaseItem()->enabled->createToggle();
+	enabledBT = this->getBaseItem()->enabled->createImageToggle(AssetManager::getInstance()->getPowerBT());
 	this->addAndMakeVisible(enabledBT);
 
 	removeBT = AssetManager::getInstance()->getRemoveBT();

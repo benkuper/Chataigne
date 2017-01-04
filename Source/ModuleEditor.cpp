@@ -9,12 +9,13 @@
 */
 
 #include "ModuleEditor.h"
+#include "AssetManager.h"
 
 ModuleEditor::ModuleEditor(Module * _module, bool isRoot) :
 	InspectableEditor(_module,isRoot),
 	module(_module)
 {
-	enabledUI = module->enabled->createToggle();
+	enabledUI = module->enabled->createImageToggle(AssetManager::getInstance()->getPowerBT());
 	nameUI = module->nameParam->createStringParameterUI();
 	logIncomingUI = module->logIncomingData->createToggle();
 	logOutgoingUI = module->logOutgoingData->createToggle();

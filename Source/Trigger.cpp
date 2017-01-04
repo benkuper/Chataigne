@@ -12,6 +12,7 @@
 
 #include "TriggerButtonUI.h"
 #include "TriggerBlinkUI.h"
+#include "TriggerImageUI.h"
 
 //#include "JsHelpers.h"
 
@@ -26,6 +27,12 @@ TriggerButtonUI * Trigger::createButtonUI(Trigger * target)
 {
 	if (target == nullptr) target = this;
     return new TriggerButtonUI(target);
+}
+
+TriggerImageUI * Trigger::createImageUI(const Image &image, Trigger * target)
+{
+	if (target == nullptr) target = this;
+	return new TriggerImageUI(this, image);
 }
 
 TriggerBlinkUI * Trigger::createBlinkUI(Trigger * target)

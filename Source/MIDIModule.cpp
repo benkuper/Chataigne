@@ -39,6 +39,7 @@ void MIDIModule::sendNoteOn(int pitch, int velocity, int channel)
 {
 	if (outputDevice == nullptr) return;
 	if (logOutgoingData->boolValue()) NLOG(niceName, "Send Note on " << MIDIManager::getNoteName(pitch) << ", " << velocity << ", " << channel);
+	outActivityTrigger->trigger();
 	outputDevice->sendNoteOn(pitch, velocity, channel);
 }
 
@@ -46,6 +47,7 @@ void MIDIModule::sendNoteOff(int pitch, int channel)
 {
 	if (outputDevice == nullptr) return;
 	if (logOutgoingData->boolValue()) NLOG(niceName, "Send Note off " << MIDIManager::getNoteName(pitch) << ", " << channel);
+	outActivityTrigger->trigger();
 	outputDevice->sendNoteOff(pitch, channel);
 }
 
@@ -53,6 +55,7 @@ void MIDIModule::sendControlChange(int number, int value, int channel)
 {
 	if (outputDevice == nullptr) return;
 	if (logOutgoingData->boolValue()) NLOG(niceName, "Send Control Change " << number << ", " << value << ", " << channel);
+	outActivityTrigger->trigger();
 	outputDevice->sendControlChange(number,value,channel);
 }
 
@@ -92,7 +95,7 @@ void MIDIModule::updateMIDIDevices()
 
 void MIDIModule::noteOnReceived(const int & channel, const int & pitch, const int & velocity)
 {
-	activityTrigger->trigger();
+	inActivityTrigger->trigger();
 	if (logIncomingData->boolValue())  NLOG(niceName, "Note On : " << channel << ", " << MIDIManager::getNoteName(pitch) << ", " << velocity);
 
 	updateValue(MIDIManager::getNoteName(pitch) + " (" + String(channel) + ")", velocity);
@@ -100,7 +103,7 @@ void MIDIModule::noteOnReceived(const int & channel, const int & pitch, const in
 
 void MIDIModule::noteOffReceived(const int & channel, const int & pitch, const int & velocity)
 {
-	activityTrigger->trigger();
+	inActivityTrigger->trigger();
 	if (logIncomingData->boolValue()) NLOG(niceName, "Note Off : " << channel << ", " << MIDIManager::getNoteName(pitch) << ", " << velocity);
 
 	updateValue(MIDIManager::getNoteName(pitch) + " (" + String(channel) + ")", velocity);
@@ -109,7 +112,7 @@ void MIDIModule::noteOffReceived(const int & channel, const int & pitch, const i
 
 void MIDIModule::controlChangeReceived(const int & channel, const int & number, const int & value)
 {
-	activityTrigger->trigger();
+	inActivityTrigger->trigger();
 	if (logIncomingData->boolValue()) NLOG(niceName, "Control Change : " << channel << ", " << number << ", " << value);
 
 	updateValue("CC"+String(number)+" ("+String(channel)+")", value);

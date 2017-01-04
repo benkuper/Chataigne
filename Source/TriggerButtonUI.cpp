@@ -18,7 +18,7 @@ TriggerButtonUI::TriggerButtonUI(Trigger *t) :
     TriggerUI(t)
 {
     setSize(20, 15);
-	setRepaintsOnMouseActivity(true);
+	if(!forceFeedbackOnly) setRepaintsOnMouseActivity(true);
 }
 
 TriggerButtonUI::~TriggerButtonUI()
@@ -56,30 +56,4 @@ void TriggerButtonUI::paint (Graphics& g)
 		g.setColour(Colours::white.darker(.1f));
 		g.drawFittedText(trigger->niceName, getLocalBounds().reduced(2), Justification::centred, 1);
 	}
-}
-
-void TriggerButtonUI::resized()
-{
-    // This method is where you should set the bounds of any child
-    // components that your component contains..
-
-}
-
-void TriggerButtonUI::mouseDown (const MouseEvent&){
-	if (!forceFeedbackOnly) trigger->trigger();
-}
-
-void TriggerButtonUI::mouseExit(const MouseEvent &)
-{
-    if(!forceFeedbackOnly) repaint();
-}
-
-void TriggerButtonUI::mouseUp(const MouseEvent &)
-{
-	if (!forceFeedbackOnly) repaint();
-}
-
-void TriggerButtonUI::mouseEnter(const MouseEvent &)
-{
-	if (!forceFeedbackOnly) repaint();
 }

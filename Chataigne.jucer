@@ -6,10 +6,16 @@
               companyEmail="benjamin@kuperberg.fr" defines="">
   <MAINGROUP id="EDDVhd" name="Chataigne">
     <GROUP id="{E61F6705-4C4B-3F04-F742-20CC91F590E4}" name="Resources">
-      <FILE id="ItCrkG" name="configBT.png" compile="0" resource="1" file="Resources/configBT.png"/>
+      <FILE id="fwyowN" name="add.png" compile="0" resource="1" file="Resources/add.png"/>
+      <FILE id="F1lP95" name="cancel.png" compile="0" resource="1" file="Resources/cancel.png"/>
+      <FILE id="OC2eSU" name="check.png" compile="0" resource="1" file="Resources/check.png"/>
       <FILE id="nVz6Li" name="icon.png" compile="0" resource="1" file="Resources/icon.png"/>
-      <FILE id="ayG8rv" name="removeBT.png" compile="0" resource="1" file="Resources/removeBT.png"/>
+      <FILE id="WlJm0v" name="in.png" compile="0" resource="1" file="Resources/in.png"/>
+      <FILE id="NkuJtC" name="out.png" compile="0" resource="1" file="Resources/out.png"/>
+      <FILE id="ndrCCq" name="power.png" compile="0" resource="1" file="Resources/power.png"/>
+      <FILE id="MfpZ5J" name="settings.png" compile="0" resource="1" file="Resources/settings.png"/>
       <FILE id="jZoDQ1" name="target.png" compile="0" resource="1" file="Resources/target.png"/>
+      <FILE id="q5DIE7" name="uncheck.png" compile="0" resource="1" file="Resources/uncheck.png"/>
     </GROUP>
     <GROUP id="{31908E9E-F626-E2D6-1A6D-E188C9D72C25}" name="Source">
       <GROUP id="{385034AB-BB8A-1A0B-677C-4890320C1929}" name="External"/>
@@ -70,6 +76,10 @@
               <FILE id="aXivyi" name="BetterStepper.cpp" compile="1" resource="0"
                     file="Source/BetterStepper.cpp"/>
               <FILE id="T1kbx0" name="BetterStepper.h" compile="0" resource="0" file="Source/BetterStepper.h"/>
+              <FILE id="XV767g" name="BoolImageToggleUI.cpp" compile="1" resource="0"
+                    file="Source/BoolImageToggleUI.cpp"/>
+              <FILE id="G7ND1c" name="BoolImageToggleUI.h" compile="0" resource="0"
+                    file="Source/BoolImageToggleUI.h"/>
               <FILE id="mzp8Og" name="BoolToggleUI.cpp" compile="1" resource="0"
                     file="Source/BoolToggleUI.cpp"/>
               <FILE id="I8s1j8" name="BoolToggleUI.h" compile="0" resource="0" file="Source/BoolToggleUI.h"/>
@@ -122,6 +132,10 @@
             <FILE id="uxthfU" name="PresetManager.h" compile="0" resource="0" file="Source/PresetManager.h"/>
           </GROUP>
           <GROUP id="{3494DD39-F8EC-9CF3-17FC-56FA55DD23A4}" name="ui">
+            <FILE id="gKsJ5o" name="TriggerImageUI.cpp" compile="1" resource="0"
+                  file="Source/TriggerImageUI.cpp"/>
+            <FILE id="AbcbLU" name="TriggerImageUI.h" compile="0" resource="0"
+                  file="Source/TriggerImageUI.h"/>
             <FILE id="LUVvye" name="GenericControllableContainerEditor.cpp" compile="1"
                   resource="0" file="Source/GenericControllableContainerEditor.cpp"/>
             <FILE id="OYxmdk" name="GenericControllableContainerEditor.h" compile="0"

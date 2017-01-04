@@ -11,6 +11,7 @@
 #include "ShapeShifterPanelTab.h"
 #include "Style.h"
 #include "ShapeShifterManager.h"
+#include "AssetManager.h"
 
 ShapeShifterPanelTab::ShapeShifterPanelTab(ShapeShifterContent * _content) : content(_content), selected(false)
 {
@@ -23,17 +24,9 @@ ShapeShifterPanelTab::ShapeShifterPanelTab(ShapeShifterContent * _content) : con
 
 	addAndMakeVisible(&panelLabel);
 
-	Image removeImage = ImageCache::getFromMemory(BinaryData::removeBT_png, BinaryData::removeBT_pngSize);
-
-	closePanelBT.setImages(false, true, true, removeImage,
-		0.7f, Colours::transparentBlack,
-		removeImage, 1.0f, Colours::transparentBlack,
-		removeImage, 1.0f, Colours::white.withAlpha(.7f),
-		0.5f);
-	closePanelBT.addListener(this);
-
+	closePanelBT = AssetManager::getInstance()->getRemoveBT();
+	closePanelBT->addListener(this);
 	addAndMakeVisible(closePanelBT);
-
 
 	setSize(getLabelWidth(), 20);
 }
@@ -60,7 +53,7 @@ void ShapeShifterPanelTab::paint(Graphics & g)
 void ShapeShifterPanelTab::resized()
 {
 	Rectangle<int> r = getLocalBounds();
-	closePanelBT.setBounds(r.removeFromRight(r.getHeight()).reduced(3));
+	closePanelBT->setBounds(r.removeFromRight(r.getHeight()).reduced(3));
 	panelLabel.setBounds(r);
 }
 
@@ -71,5 +64,5 @@ int ShapeShifterPanelTab::getLabelWidth()
 
 void ShapeShifterPanelTab::buttonClicked(Button * b)
 {
-	if(b == &closePanelBT) tabListeners.call(&TabListener::askForRemoveTab, this);
+	if(b == closePanelBT) tabListeners.call(&TabListener::askForRemoveTab, this);
 }

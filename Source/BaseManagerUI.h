@@ -77,6 +77,7 @@ public:
 	bool drawHighlightWhenSelected;
 	bool transparentBG;
 	bool resizeOnChildBoundsChanged;
+	bool showAddItemIcon;
 
 	//menu
 	bool useDefaultMenu;

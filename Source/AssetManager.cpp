@@ -12,20 +12,15 @@ AssetManager::~AssetManager()
 
 }
 
-Image AssetManager::getGridImage()
-{
-	return ImageCache::getFromMemory(BinaryData::removeBT_png, BinaryData::removeBT_pngSize);
-}
-
 ImageButton * AssetManager::getRemoveBT()
 {
-	Image removeImage = ImageCache::getFromMemory(BinaryData::removeBT_png, BinaryData::removeBT_pngSize);
+	Image removeImage = ImageCache::getFromMemory(BinaryData::cancel_png, BinaryData::cancel_pngSize);
 	return getSetupBTImage(removeImage);
 }
 
 ImageButton * AssetManager::getConfigBT()
 {
-	Image removeImage = ImageCache::getFromMemory(BinaryData::configBT_png, BinaryData::configBT_pngSize);
+	Image removeImage = ImageCache::getFromMemory(BinaryData::settings_png, BinaryData::settings_pngSize);
 	return getSetupBTImage(removeImage);
 }
 
@@ -35,13 +30,47 @@ ImageButton * AssetManager::getTargetBT()
 	return getSetupBTImage(removeImage);
 }
 
+ImageButton * AssetManager::getPowerBT()
+{
+	Image removeImage = ImageCache::getFromMemory(BinaryData::power_png, BinaryData::power_pngSize);
+	return getToggleBTImage(removeImage);
+}
+
+ImageButton * AssetManager::getAddBT()
+{
+	Image removeImage = ImageCache::getFromMemory(BinaryData::add_png, BinaryData::add_pngSize);
+	return getSetupBTImage(removeImage);
+}
+
+Image AssetManager::getInImage()
+{
+	return ImageCache::getFromMemory(BinaryData::in_png, BinaryData::in_pngSize);
+}
+
+Image AssetManager::getOutImage()
+{
+	return ImageCache::getFromMemory(BinaryData::out_png, BinaryData::out_pngSize);
+}
+
 ImageButton * AssetManager::getSetupBTImage(const Image & image)
 {
-	ImageButton * removeBT = new ImageButton();
-	removeBT->setImages(false, true, true, image,
-		0.7f, Colours::transparentBlack,
+	ImageButton * bt = new ImageButton();
+	bt->setImages(false, true, true, 
+		image, 0.7f, Colours::transparentBlack,
 		image, 1.0f, Colours::transparentBlack,
-		image, 1.0f, Colours::white.withAlpha(.7f),
-		0.5f);
-	return removeBT;
+		image, 1.0f, Colours::white.withAlpha(.7f),0);
+	return bt;
+}
+
+ImageButton * AssetManager::getToggleBTImage(const Image & image)
+{
+	ImageButton * bt = new ImageButton();
+	Image offImage = image.createCopy();
+	offImage.desaturate();
+
+	bt->setImages(false, true, true, 
+		offImage, 0.5f, Colours::transparentBlack,
+		offImage, 1.0f, Colours::white.withAlpha(.2f),
+		image, 1.0f, Colours::transparentBlack, 0);
+	return bt; 
 }

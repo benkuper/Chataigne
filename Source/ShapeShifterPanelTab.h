@@ -22,7 +22,7 @@ public:
 
 	ShapeShifterContent * content;
 	Label panelLabel;
-	ImageButton closePanelBT;
+	ScopedPointer<ImageButton> closePanelBT;
 
 	bool selected;
 	void setSelected(bool value);

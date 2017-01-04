@@ -10,6 +10,7 @@
 
 #include "BoolParameter.h"
 #include "BoolToggleUI.h"
+#include "BoolImageToggleUI.h"
 
 BoolParameter::BoolParameter(const String & niceName, const String &description, bool initialValue, bool enabled) :
     Parameter(Type::BOOL, niceName, description, initialValue, false, true, enabled)
@@ -22,6 +23,12 @@ BoolToggleUI * BoolParameter::createToggle(BoolParameter * target)
 {
 	if (target == nullptr) target = this;
     return new BoolToggleUI(target);
+}
+
+BoolImageToggleUI * BoolParameter::createImageToggle(ImageButton * bt, BoolParameter * target)
+{
+	if (target == nullptr) target = this;
+	return new BoolImageToggleUI(bt, target);
 }
 
 

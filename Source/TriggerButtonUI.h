@@ -26,14 +26,8 @@ public:
     TriggerButtonUI(Trigger * t);
     ~TriggerButtonUI();
 
-    ComponentAnimator animator;
 
     void paint (Graphics&) override;
-    void resized() override;
-    void mouseDown (const MouseEvent& event) override;
-    void mouseUp(const MouseEvent& event) override;
-    void mouseEnter(const MouseEvent& event) override;
-    void mouseExit(const MouseEvent& event) override;
     void triggerTriggered(const Trigger * p) override ;
 
 private:

@@ -14,6 +14,7 @@
 #include "InspectableEditor.h"
 #include "Module.h"
 #include "BoolToggleUI.h"
+#include "BoolImageToggleUI.h"
 #include "StringParameterUI.h"
 
 class ModuleEditor :
@@ -27,7 +28,7 @@ public:
 	Module * module;
 
 	
-	ScopedPointer<BoolToggleUI> enabledUI;
+	ScopedPointer<BoolImageToggleUI> enabledUI;
 	ScopedPointer<StringParameterUI> nameUI;
 	ScopedPointer<BoolToggleUI> logIncomingUI;
 	ScopedPointer<BoolToggleUI> logOutgoingUI;

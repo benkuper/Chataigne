@@ -23,7 +23,8 @@ public:
 
 	void resized() override;
 
-	ScopedPointer<TriggerBlinkUI> activityUI;
+	ScopedPointer<TriggerImageUI> inActivityUI;
+	ScopedPointer<TriggerImageUI> outActivityUI;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ModuleUI)
 };

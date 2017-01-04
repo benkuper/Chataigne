@@ -16,6 +16,7 @@
 
 class TriggerButtonUI;
 class TriggerBlinkUI;
+class TriggerImageUI;
 
 class Trigger : public Controllable
 {
@@ -26,6 +27,7 @@ public:
 	
 	
 	TriggerButtonUI * createButtonUI(Trigger * target = nullptr);
+	TriggerImageUI * createImageUI(const Image &image, Trigger * target = nullptr);
 	TriggerBlinkUI * createBlinkUI(Trigger * target = nullptr);
 	ControllableUI * createDefaultUI(Controllable * targetControllable = nullptr) override;
 	

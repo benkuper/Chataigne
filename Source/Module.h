@@ -26,7 +26,9 @@ public:
 
 	BoolParameter * logIncomingData;
 	BoolParameter * logOutgoingData;
-	Trigger * activityTrigger;
+	
+	Trigger * inActivityTrigger;
+	Trigger * outActivityTrigger;
 
 	ControllableContainer valuesCC;
 	Array<WeakReference<Controllable>> getValueControllables();

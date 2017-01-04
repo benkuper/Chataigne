@@ -23,7 +23,6 @@ Module::Module(const String &name) :
 	addChildControllableContainer(&valuesCC);
 	addChildControllableContainer(&defManager);
 
-	
 
 	logIncomingData = addBoolParameter("Log Incoming", "Enable / Disable logging of incoming data for this module", false);
 	logIncomingData->hideInOutliner = true;
@@ -34,8 +33,11 @@ Module::Module(const String &name) :
 	logOutgoingData->isTargettable = false;
 
 
-	activityTrigger = addTrigger("Activity", "Activity Signal");
-	activityTrigger->hideInEditor = true;
+	inActivityTrigger = addTrigger("IN Activity", "Incoming Activity Signal");
+	inActivityTrigger->hideInEditor = true;
+
+	outActivityTrigger = addTrigger("OUT Activity", "Outgoing Activity Signal");
+	outActivityTrigger->hideInEditor = true;
 }
 
 Module::~Module()

@@ -14,6 +14,7 @@
 #include "Parameter.h"
 
 class BoolToggleUI;
+class BoolImageToggleUI;
 
 class BoolParameter : public Parameter
 {
@@ -23,7 +24,8 @@ public:
 
     //ui creation
     BoolToggleUI * createToggle(BoolParameter * target = nullptr);
-    ControllableUI * createDefaultUI(Controllable * targetControllable = nullptr) override;
+	BoolImageToggleUI * createImageToggle(ImageButton * image, BoolParameter * target = nullptr);
+	ControllableUI * createDefaultUI(Controllable * targetControllable = nullptr) override;
 
 	static BoolParameter * create() { return new BoolParameter("New Bool Parameter", "", false); }
 	virtual String getTypeString() const override { return "Boolean"; }

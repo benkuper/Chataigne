@@ -83,7 +83,7 @@ void OSCModule::processMessage(const OSCMessage & msg)
 		NLOG(niceName, msg.getAddressPattern().toString() << " :" << s);
 	}
 
-	activityTrigger->trigger();
+	inActivityTrigger->trigger();
 
 	processMessageInternal(msg);
 }
@@ -96,7 +96,16 @@ void OSCModule::setupSender()
 
 void OSCModule::sendOSC(const OSCMessage & msg)
 {
-	DBG("OSC Output :: Send osc " << msg.getAddressPattern().toString());
+	if (logOutgoingData->boolValue())
+	{
+		NLOG(niceName, "Send OSC : " << msg.getAddressPattern().toString());
+		for (auto &a : msg)
+		{
+			LOG(getStringArg(a));
+		}
+	}
+
+	outActivityTrigger->trigger();
 	sender.send(msg);
 }
 
