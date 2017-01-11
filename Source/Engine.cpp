@@ -20,6 +20,7 @@
 #include "MIDIManager.h"
 #include "GamepadManager.h"
 #include "WiimoteManager.h"
+#include "Inspector.h"
 
 juce_ImplementSingleton(Engine) 
 
@@ -50,7 +51,7 @@ Engine::Engine():
 Engine::~Engine(){
 
 //delete managers
-	DBG("Engine destroy");
+	
   Outliner::deleteInstance();
 
   ModuleManager::deleteInstance();
@@ -66,6 +67,8 @@ Engine::~Engine(){
   MIDIManager::deleteInstance();
   GamepadManager::deleteInstance();
   WiimoteManager::deleteInstance();
+
+  Inspector::deleteInstance();
 }
 
 void Engine::parseCommandline(const String & commandLine){

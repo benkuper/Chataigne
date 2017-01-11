@@ -14,9 +14,8 @@
 #include "ShapeShifterContent.h"
 #include "InspectableEditor.h"
 
-
 class Inspector :
-	public ShapeShifterContentComponent,
+	public Component,
 	public Inspectable::InspectableListener
 {
 public:
@@ -47,6 +46,28 @@ public:
 
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Inspector)
+};
+
+
+class InspectorUI :
+	public ShapeShifterContentComponent
+{
+public:
+	InspectorUI() :
+		ShapeShifterContentComponent("Inspector")
+	{
+		addAndMakeVisible(Inspector::getInstance());
+	}
+
+	~InspectorUI()
+	{
+		Inspector::deleteInstance();
+	}
+
+	void resized()
+	{
+		Inspector::getInstance()->setBounds(getLocalBounds());
+	}
 };
 
 #endif  // INSPECTOR_H_INCLUDED

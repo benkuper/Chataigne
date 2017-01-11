@@ -15,6 +15,8 @@ AutomationUI::AutomationUI(Automation * _automation) :
 	firstROIKey(0),lastROIKey(0), currentPosition(0),
 	currentUI(nullptr)
 {
+	animateItemOnAdd = false;
+
 	transparentBG = true;
 	setViewRange(0, manager->positionMax);
 	manager->addAsyncContainerListener(this);

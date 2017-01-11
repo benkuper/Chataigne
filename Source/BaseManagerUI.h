@@ -85,6 +85,9 @@ public:
 	//menu
 	String addItemText;
 
+	//Animation
+	bool animateItemOnAdd;
+	ComponentAnimator itemAnimator;
 
 	//layout
 	bool fixedItemHeight;
@@ -100,7 +103,7 @@ public:
 
 	virtual void showMenuAndAddItem(bool isFromAddButton, Point<int> mouseDownPos);
 	virtual void addItemFromMenu(bool isFromAddButton, Point<int> mouseDownPos);
-	virtual U * addItemUI(T * item);
+	virtual U * addItemUI(T * item, bool animate = false);
 	virtual U * createUIForItem(T * item);
 	virtual void addItemUIInternal(U *) {}
 
@@ -119,6 +122,7 @@ public:
 	void itemsReordered() override;
 
 	void buttonClicked(Button *) override;
+
 
 	class  ManagerUIListener
 	{
@@ -147,7 +151,8 @@ BaseManagerUI<M, T, U>::BaseManagerUI(const String & contentName, M * _manager, 
 	fixedItemHeight(true),
 	useViewport(_useViewport),
 	resizeOnChildBoundsChanged(true),
-	managerComparator(_manager)
+	managerComparator(_manager),
+	animateItemOnAdd(true)
 {
 	highlightColor = LIGHTCONTOUR_COLOR;
 	addItemText = "Add Item";
@@ -183,7 +188,7 @@ void BaseManagerUI<M, T, U>::addExistingItems()
 {
 
 	//add existing items
-	for (auto &t : manager->items) addItemUI(t);
+	for (auto &t : manager->items) addItemUI(t,false);
 	resized();
 }
 
@@ -299,14 +304,28 @@ void BaseManagerUI<M, T, U>::addItemFromMenu(bool, Point<int>)
 }
 
 template<class M, class T, class U>
-U * BaseManagerUI<M, T, U>::addItemUI(T * item)
+U * BaseManagerUI<M, T, U>::addItemUI(T * item, bool animate)
 {
 	U * tui = createUIForItem(item);
 	itemsUI.add(tui);
-	if(useViewport) container.addAndMakeVisible(static_cast<BaseItemMinimalUI<T>*>(tui));
-	else addAndMakeVisible(static_cast<BaseItemMinimalUI<T>*>(tui));
+
+	BaseItemMinimalUI<T> * bui = static_cast<BaseItemMinimalUI<T>*>(tui);
+
+	if(useViewport) container.addAndMakeVisible(bui);
+	else addAndMakeVisible(bui);
+
 	addItemUIInternal(tui);
-	resized();
+	
+	if (animate)
+	{
+		Rectangle<int> tb = bui->getBounds();
+		bui->setSize(10, 10);
+
+		itemAnimator.animateComponent(bui, tb, 1, 200, false, 1, 0);
+	}
+	
+	//resized();
+
 	managerUIListeners.call(&ManagerUIListener::itemUIAdded, tui);
 	return tui;
 }
@@ -354,7 +373,7 @@ int BaseManagerUI<M, T, U>::getContentHeight()
 template<class M, class T, class U>
 void BaseManagerUI<M, T, U>::itemAdded(T * item)
 {
-	addItemUI(item);
+	addItemUI(item,animateItemOnAdd);
 }
 
 template<class M, class T, class U>

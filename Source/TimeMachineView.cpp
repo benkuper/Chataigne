@@ -17,7 +17,6 @@ TimeMachineView::TimeMachineView(SequenceManager * _manager) :
 {
 	contentIsFlexible = true;
 	Inspector::getInstance()->addInspectorListener(this);
-
 	SequenceManager::getInstance()->addBaseManagerListener(this);
 }
 
@@ -59,6 +58,7 @@ void TimeMachineView::setSequence(Sequence * sequence)
 	resized();
 }
 
+
 void TimeMachineView::currentInspectableChanged(Inspector * i)
 {
 	if (i->currentInspectable.wasObjectDeleted()) return;
@@ -75,6 +75,7 @@ void TimeMachineView::currentInspectableChanged(Inspector * i)
 
 	if(s != nullptr) setSequence(s);
 }
+
 
 void TimeMachineView::itemRemoved(Sequence *s)
 {

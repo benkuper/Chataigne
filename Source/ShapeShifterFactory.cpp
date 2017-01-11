@@ -48,7 +48,7 @@ ShapeShifterContent * ShapeShifterFactory::createContentForIndex(PanelName pn)
 
 
 	case InspectorPanel:
-		return Inspector::getInstance();
+		return new InspectorUI();
 		break;
 
 	case LoggerPanel:

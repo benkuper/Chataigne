@@ -30,8 +30,6 @@ public:
 	void resized() override;
 	void updateContent();
 
-
-
 	void placeTimeTriggerUI(TimeTriggerUI *);
 
 	void mouseDown(const MouseEvent &e) override;

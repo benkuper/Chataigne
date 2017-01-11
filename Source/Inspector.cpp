@@ -12,11 +12,9 @@
 juce_ImplementSingleton(Inspector)
 
 Inspector::Inspector() :
-	ShapeShifterContentComponent("Inspector"),
 	currentInspectable(nullptr),
 	currentEditor(nullptr)
 {
-	contentIsFlexible = false;
 
 	vp.setScrollBarsShown(true, false);
 	vp.setScrollOnDragEnabled(false);

@@ -29,6 +29,7 @@ void Inspectable::selectThis()
 {
 	if (Inspector::getInstanceWithoutCreating() == nullptr)
 	{
+		DBG("Create an Inspector !");
 		ShapeShifterManager::getInstance()->showPanelWindowForContent(PanelName::InspectorPanel);
 	}
 
