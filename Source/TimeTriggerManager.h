@@ -37,7 +37,7 @@ public:
 
 	static TimeTriggerComparator comparator;
 
-	void addTriggerAt(float time);
+	void addTriggerAt(float time,float flagYPos);
 
 	void reorderItems() override;
 

@@ -17,7 +17,7 @@ class TimeTrigger :
 	public Action
 {
 public:
-	TimeTrigger(float time = 0, const String &name = "Trigger");
+	TimeTrigger(float time = 0, float flagYPos = 0, const String &name = "Trigger");
 	virtual ~TimeTrigger();
 
 	FloatParameter * time;

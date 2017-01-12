@@ -19,8 +19,6 @@ StateMachineView::StateMachineView(StateManager * _manager) :
 	addItemText = "Add State";
 	setWantsKeyboardFocus(true);
 	
-	
-
 	addExistingItems();
 }
 

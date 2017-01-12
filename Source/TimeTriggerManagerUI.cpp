@@ -58,7 +58,7 @@ void TimeTriggerManagerUI::mouseDown(const MouseEvent & e)
 		if (e.mods.isCtrlDown())
 		{
 			float time = timeline->getTimeForX(getMouseXYRelative().x);
-			manager->addTriggerAt(time);
+			manager->addTriggerAt(time,getMouseXYRelative().y*1.f/getHeight());
 		}
 	}
 }
@@ -68,7 +68,7 @@ void TimeTriggerManagerUI::addItemFromMenu(bool isFromAddButton, Point<int> mous
 	if (isFromAddButton) return;
 
 	float time = timeline->getTimeForX(mouseDownPos.x);
-	manager->addTriggerAt(time);
+	manager->addTriggerAt(time, mouseDownPos.y*1.f / getHeight());
 }
 
 void TimeTriggerManagerUI::addItemUIInternal(TimeTriggerUI * ttui)

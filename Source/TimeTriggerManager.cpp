@@ -28,9 +28,9 @@ TimeTriggerManager::~TimeTriggerManager()
 }
 
 
-void TimeTriggerManager::addTriggerAt(float time)
+void TimeTriggerManager::addTriggerAt(float time,float flagY)
 {
-	TimeTrigger * t = new TimeTrigger(time);
+	TimeTrigger * t = new TimeTrigger(time,flagY);
 	BaseManager::addItem(t);
 }
 
