@@ -32,7 +32,6 @@ void CustomOSCCommandEditor::mouseDown(const MouseEvent & e)
 		p.addItem(2,"Add Float Argument");
 		p.addItem(3,"Add String Argument");
 
-		String id = String(command->argumentsContainer.controllables.size() + 1);
 
 		if (command->argumentsContainer.controllables.size() > 0)
 		{
@@ -40,26 +39,24 @@ void CustomOSCCommandEditor::mouseDown(const MouseEvent & e)
 		}
 		
 		
-		Parameter * pp = nullptr;
 		int result = p.show();
 
 		switch (result)
 		{
 		case 1:
-			pp = command->argumentsContainer.addIntParameter("#" + id, "Argument #" + id+", type int", 0, -1000,1000);
+			command->addIntArgument();
 			break;
 		case 2:
-			pp = command->argumentsContainer.addFloatParameter("#" + id, "Argument #" + id + ", type int", 0, 0, 1);
+			command->addFloatArgument();
 			break;
 		case 3:
-			pp = command->argumentsContainer.addStringParameter("#" + id, "Argument #" + id + ", type int","myString");
+			command->addStringArgument();
 			break;
 		case 4:
-			command->argumentsContainer.removeControllable(command->argumentsContainer.controllables[command->argumentsContainer.controllables.size() - 1]);
+			command->removeLastArgument();
 			break;
 		}
 
-		//if (pp != nullptr) pp->autoAdaptRange = true;
 		resized();
 	}
 }

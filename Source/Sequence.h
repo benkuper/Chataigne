@@ -46,6 +46,10 @@ public:
 	FloatParameter * viewStartTime;
 	FloatParameter * viewEndTime;
 
+	
+	var getJSONData() override;
+	void loadJSONDataInternal(var data) override;
+
 
 	void onContainerParameterChangedInternal(Parameter *) override;
 	void onContainerTriggerTriggered(Trigger *) override;

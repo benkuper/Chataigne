@@ -53,6 +53,7 @@ void InspectableContentComponent::mouseDown(const MouseEvent & e)
 
 void InspectableContentComponent::paintOverChildren(Graphics & g)
 {
+	if (inspectable.wasObjectDeleted()) return;
 	if (autoDrawHighlightWhenSelected && inspectable->isSelected)
 	{
 		g.setColour(highlightColor);

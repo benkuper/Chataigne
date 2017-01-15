@@ -18,10 +18,17 @@ BoolImageToggleUI::BoolImageToggleUI(ImageButton * i, BoolParameter *p) :
 	addAndMakeVisible(bt);
 	bt->addListener(this);
 	bt->setToggleState(boolParam->boolValue(), dontSendNotification);
+	bt->setTooltip(tooltip);
 }
 
 BoolImageToggleUI::~BoolImageToggleUI()
 {
+}
+
+void BoolImageToggleUI::setTooltip(const String & value)
+{
+	ParameterUI::setTooltip(value);
+	bt->setTooltip(value);
 }
 
 void BoolImageToggleUI::resized()

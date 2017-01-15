@@ -76,10 +76,16 @@ float Automation::getValueForPosition(float pos)
 	return k->getValue(items[items.indexOf(k) + 1], pos);
 }
 
-void Automation::addItem(const float position, const float value)
+AutomationKey * Automation::createItem()
 {
 	AutomationKey * k = new AutomationKey();
 	k->position->setRange(0, positionMax);
+	return k;
+}
+
+void Automation::addItem(const float position, const float value)
+{
+	AutomationKey * k = createItem();
 	k->position->setValue(position);
 	k->value->setValue(value);
 	BaseManager::addItem(k);

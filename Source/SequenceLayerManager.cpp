@@ -9,6 +9,7 @@
 */
 
 #include "SequenceLayerManager.h"
+#include "SequenceLayerFactory.h"
 
 SequenceLayerManager::SequenceLayerManager(Sequence * _sequence) :
 	BaseManager<SequenceLayer>("Layers"),
@@ -24,4 +25,16 @@ SequenceLayerManager::~SequenceLayerManager()
 SequenceLayer * SequenceLayerManager::createItem()
 {
 	return new SequenceLayer(sequence);
+}
+
+void SequenceLayerManager::addItemFromData(var data)
+{
+	String layerType = data.getProperty("type", "none");
+	if (layerType.isEmpty()) return;
+	SequenceLayer * i = SequenceLayerFactory::getInstance()->createSequenceLayer(sequence,layerType);
+	if (i != nullptr) addItem(i, data);
+	else
+	{
+		
+	}
 }

@@ -16,7 +16,6 @@ MIDIModule::MIDIModule(const String & name) :
 	inputDevice(nullptr),
 	outputDevice(nullptr)
 {
-	valuesCC.saveAndLoadRecursiveData = false;
 	
 	midiParam = new MIDIDeviceParameter("Devices");
 	addParameter(midiParam);

@@ -16,7 +16,6 @@
 CustomOSCModule::CustomOSCModule() :
 	OSCModule("OSC")
 {
-	valuesCC.saveAndLoadRecursiveData = false;
 
 	autoAdd = addBoolParameter("Auto Add", "Add automatically any message that is received\nand try to create the corresponding value depending on the message content.", true);
 	autoAdd->isTargettable = false;
@@ -125,6 +124,7 @@ void CustomOSCModule::processMessageInternal(const OSCMessage & msg)
 	}
 }
 
+
 var CustomOSCModule::getJSONData()
 {
 	var data = OSCModule::getJSONData();
@@ -139,7 +139,6 @@ void CustomOSCModule::loadJSONDataInternal(var data)
 	valuesCC.loadJSONData(data.getProperty("values", var()), true);
 	valuesCC.orderControllablesAlphabetically();
 	defManager.loadJSONData(data.getProperty("definitions", var()), true);
-
 }
 
 InspectableEditor * CustomOSCModule::getEditor(bool isRoot)

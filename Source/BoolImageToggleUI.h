@@ -25,6 +25,8 @@ public:
 	BoolParameter * boolParam;
 	ScopedPointer<ImageButton> bt;
 
+	void setTooltip(const String &value) override;
+
 	void resized() override;
 
 	void valueChanged(const var &) override;

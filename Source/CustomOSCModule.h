@@ -24,6 +24,8 @@ public:
 
 	void processMessageInternal(const OSCMessage &msg) override;
 
+	
+
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
 

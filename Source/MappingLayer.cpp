@@ -33,8 +33,17 @@ MappingLayer::~MappingLayer()
 
 }
 
+var MappingLayer::getJSONData()
+{
+	var data = SequenceLayer::getJSONData();
+	data.getDynamicObject()->setProperty("automation", automation.getJSONData());
+	return data;
+}
+
 void MappingLayer::loadJSONDataInternal(var data)
 {
+	SequenceLayer::loadJSONDataInternal(data);
+	automation.loadJSONData(data.getProperty("automation", var()));
 }
 
 SequenceLayerPanel * MappingLayer::getPanel()

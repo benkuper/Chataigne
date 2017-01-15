@@ -24,8 +24,17 @@ TriggerLayer::~TriggerLayer()
 }
 
 
+var TriggerLayer::getJSONData()
+{
+	var data = SequenceLayer::getJSONData();
+	data.getDynamicObject()->setProperty("triggerManager", ttm.getJSONData());
+	return data;
+}
+
 void TriggerLayer::loadJSONDataInternal(var data)
 {
+	SequenceLayer::loadJSONDataInternal(data);
+	ttm.loadJSONData(data.getProperty("triggerManager", var()));
 }
 
 SequenceLayerPanel * TriggerLayer::getPanel()

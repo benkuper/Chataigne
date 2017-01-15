@@ -13,8 +13,6 @@
 State::State() :
 	BaseItem("State")
 {
-	saveAndLoadRecursiveData = false; //custom inner data
-
 	viewUIPosition = addPoint2DParameter("Position", "Position in State Machine view");
 	viewUIPosition->setBounds(-100, -100,100,100);
 	viewUIPosition->hideInEditor = true;

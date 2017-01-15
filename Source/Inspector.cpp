@@ -44,6 +44,8 @@ void Inspector::resized()
 
 void Inspector::setCurrentInspectable(WeakReference<Inspectable> inspectable)
 {
+	if (!isEnabled()) return;
+
 	if (inspectable == currentInspectable)
 	{
 		return;

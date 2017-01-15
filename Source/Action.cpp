@@ -16,8 +16,6 @@ Action::Action(const String & name) :
 	BaseItem(name),
 	autoTriggerWhenAllConditionAreActives(true)
 {
-	saveAndLoadRecursiveData = false;
-
 	addChildControllableContainer(&cdm);
 	addChildControllableContainer(&csm);
 

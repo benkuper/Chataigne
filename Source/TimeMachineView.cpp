@@ -61,6 +61,7 @@ void TimeMachineView::setSequence(Sequence * sequence)
 
 void TimeMachineView::currentInspectableChanged(Inspector * i)
 {
+	DBG("INSPECTABLE CHANGED");
 	if (i->currentInspectable.wasObjectDeleted()) return;
 	ControllableContainer * cc = dynamic_cast<ControllableContainer *>(i->currentInspectable.get());	
 	if (cc == nullptr) return;

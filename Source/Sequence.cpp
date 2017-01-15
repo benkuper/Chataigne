@@ -43,6 +43,19 @@ Sequence::~Sequence()
 {
 }
 
+var Sequence::getJSONData()
+{
+	var data = BaseItem::getJSONData();
+	data.getDynamicObject()->setProperty("layerManager", layerManager->getJSONData());
+	return data;
+}
+
+void Sequence::loadJSONDataInternal(var data)
+{
+	BaseItem::loadJSONDataInternal(data);
+	layerManager->loadJSONData(data.getProperty("layerManager", var()));
+}
+
 void Sequence::onContainerParameterChangedInternal(Parameter * p)
 {
 	if (p == enabled)

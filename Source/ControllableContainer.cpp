@@ -28,7 +28,7 @@ ControllableContainer::ControllableContainer(const String & niceName) :
 	skipControllableNameInAddress(false),
 	currentPreset(nullptr),
 	canHavePresets(false),
-	saveAndLoadRecursiveData(true),
+	saveAndLoadRecursiveData(false),
 	numContainerIndexed(0),
 	localIndexedPosition(-1),
 	presetSavingIsRecursive(false),
@@ -777,6 +777,7 @@ void ControllableContainer::loadJSONData(var data, bool createIfNotThere)
 		  String pControlAddress = o->getProperty("controlAddress");
 
 		  Controllable * c = getControllableForAddress(pControlAddress, saveAndLoadRecursiveData, true);
+		
 		  if (c != nullptr)
 		  {
 			  if (Parameter * p = dynamic_cast<Parameter*>(c)) {

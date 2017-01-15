@@ -23,6 +23,7 @@ public:
 	~SequenceLayerManager();
 
 	SequenceLayer * createItem() override;
+	void addItemFromData(var data) override;
 
 	Sequence * sequence;
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(SequenceLayerManager)

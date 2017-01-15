@@ -28,6 +28,8 @@ public:
 	Automation automation; //later: automation Manager to allow for multi curve layer
 	Mapping mapping;
 
+
+	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
 
 

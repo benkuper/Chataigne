@@ -16,8 +16,6 @@ Module::Module(const String &name) :
 	BaseItem(name),
 	valuesCC("Values")
 {
-	saveAndLoadRecursiveData = false; //manage value ourselves
-
 	canInspectChildContainers = true;
 
 	addChildControllableContainer(&valuesCC);

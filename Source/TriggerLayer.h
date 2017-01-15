@@ -23,6 +23,7 @@ public :
 
 	TimeTriggerManager ttm;
 
+	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
 
 	static TriggerLayer * create(Sequence * sequence) { return new TriggerLayer(sequence); }

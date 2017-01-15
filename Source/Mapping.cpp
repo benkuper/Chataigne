@@ -15,8 +15,6 @@ Mapping::Mapping() :
 	inputIsLocked(false)
 {
 	canInspectChildContainers = true;
-
-	saveAndLoadRecursiveData = false;
 	addChildControllableContainer(&input);
 	addChildControllableContainer(&fm);
 	addChildControllableContainer(&om);

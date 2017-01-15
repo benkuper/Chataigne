@@ -22,8 +22,16 @@ public:
 	~CustomOSCCommand();
 	
 
-	InspectableEditor * getEditor(bool /*isRoot*/) override;
+	void addIntArgument();
+	void addFloatArgument();
+	void addStringArgument();
+	void addArgument(Parameter *);
+	void removeLastArgument();
 
+	var getJSONData() override;
+	void loadJSONDataInternal(var data) override;
+
+	InspectableEditor * getEditor(bool /*isRoot*/) override;
 	static CustomOSCCommand * create(ControllableContainer * module, CommandContext context, var params) { return new CustomOSCCommand((CustomOSCModule *)module, context, params); }
 
 

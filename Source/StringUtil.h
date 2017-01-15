@@ -76,16 +76,22 @@ public:
     StringArray sa;
     sa.addTokens(res, false);
     int index = 0;
+
     for (auto &s : sa.strings)
     {
       if (s.isEmpty()) continue;
-      String initial = s.substring(0, 1);
-      String upperCaseWord = s.replaceSection(0, 1, index == 0 ? initial.toLowerCase() : initial.toUpperCase());
-      s.swapWith(upperCaseWord);
-
-
-
-      index++;
+	  if (s.toUpperCase() == s)
+	  {
+		  String lowerFull = s.toLowerCase();
+		  s.swapWith(lowerFull);
+	  } else
+	  {
+		  String initial = s.substring(0, 1);
+		  String upperCaseWord = s.replaceSection(0, 1, index == 0 ? initial.toLowerCase() : initial.toUpperCase());
+		  s.swapWith(upperCaseWord);
+		  index++;
+	  }
+     
     }
 
     return sa.joinIntoString("");

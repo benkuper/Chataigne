@@ -40,6 +40,7 @@ public:
 
 	static AutomationKeyComparator comparator;
 	
+	AutomationKey * createItem() override;
 	void addItem(const float position, const float value);
 	void reorderItems() override;
 

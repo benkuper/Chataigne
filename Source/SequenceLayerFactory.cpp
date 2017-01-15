@@ -17,7 +17,7 @@
 juce_ImplementSingleton(SequenceLayerFactory)
 
 SequenceLayerFactory::SequenceLayerFactory() {
-	layerDefs.add(new SequenceLayerDefinition("Triggers", &TriggerLayer::create));
+	layerDefs.add(new SequenceLayerDefinition("Trigger", &TriggerLayer::create));
 	layerDefs.add(new SequenceLayerDefinition("Mapping", &MappingLayer::create));
 	layerDefs.add(new SequenceLayerDefinition("Audio", &AudioLayer::create));
 

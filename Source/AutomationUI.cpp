@@ -113,6 +113,7 @@ void AutomationUI::resized()
 
 void AutomationUI::placeKeyUI(AutomationKeyUI * kui, bool placePrevKUI) 
 {
+	
 	int index = itemsUI.indexOf(kui);
 
 	int tx = getXForPos(kui->item->position->floatValue());

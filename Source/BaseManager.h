@@ -70,7 +70,6 @@ BaseManager<T>::BaseManager(const String & name) :
 	ControllableContainer(name),
 	selectItemWhenCreated(true)
 {
-	saveAndLoadRecursiveData = false;
 	setCanHavePresets(false);
 	nameCanBeChangedByUser = false;
 	hideInEditor = true;
@@ -120,7 +119,7 @@ inline void BaseManager<T>::addItem(T * item, var data)
 template<class T>
 void BaseManager<T>::addItemFromData(var data) 
 { 
-	addItem(new T(), data);
+	addItem(createItem(), data);
 }
 
 template<class T>
