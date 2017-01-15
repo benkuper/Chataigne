@@ -7,7 +7,8 @@
 */
 
 #include "MainComponent.h"
-
+#include "Inspector.h"
+#include "UserOSCCommandModelManagerUI.h"
 
 //==============================================================================
 MainContentComponent::MainContentComponent()
@@ -44,6 +45,8 @@ MainContentComponent::~MainContentComponent()
 
 	if(Engine::getInstanceWithoutCreating() != nullptr) Engine::getInstanceWithoutCreating()->removeEngineListener(this);
 	ShapeShifterManager::deleteInstance();
+	Inspector::deleteInstance();
+	if(UserOSCCommandModelManagerWindow::getInstanceWithoutCreating() != nullptr) UserOSCCommandModelManagerWindow::deleteInstance();
 }
 
 void MainContentComponent::init()

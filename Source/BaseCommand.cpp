@@ -11,7 +11,7 @@
 #include "BaseCommand.h"
 
 BaseCommand::BaseCommand(ControllableContainer * _container, CommandContext _context, var _params) :
-	BaseItem("Command"),
+	ControllableContainer("Command"),
 	container(_container),
 	params(_params),
 	context(_context)

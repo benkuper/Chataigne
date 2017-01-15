@@ -685,11 +685,47 @@
               </GROUP>
               <GROUP id="{725F299B-4972-D857-5400-57EB8633E4A9}" name="custom">
                 <GROUP id="{054F9429-4D5F-5398-2370-34DC34C50A1E}" name="commands">
+                  <GROUP id="{7006A5C5-4F64-5AC5-84CA-FF17A52209BC}" name="user">
+                    <GROUP id="{AA4047DB-9521-A804-2662-257FB65454B3}" name="model">
+                      <FILE id="eDhc6j" name="UserOSCCommandModel.cpp" compile="1" resource="0"
+                            file="Source/UserOSCCommandModel.cpp"/>
+                      <FILE id="BlqXoi" name="UserOSCCommandModel.h" compile="0" resource="0"
+                            file="Source/UserOSCCommandModel.h"/>
+                      <FILE id="EQM9at" name="UserOSCCommandModelManager.cpp" compile="1"
+                            resource="0" file="Source/UserOSCCommandModelManager.cpp"/>
+                      <FILE id="TRsbeC" name="UserOSCCommandModelManager.h" compile="0" resource="0"
+                            file="Source/UserOSCCommandModelManager.h"/>
+                      <GROUP id="{44D5D604-861C-F995-4FD9-D78439A22095}" name="ui">
+                        <FILE id="RkxHvt" name="UserOSCCommandModelEditor.cpp" compile="1"
+                              resource="0" file="Source/UserOSCCommandModelEditor.cpp"/>
+                        <FILE id="W7mXHG" name="UserOSCCommandModelEditor.h" compile="0" resource="0"
+                              file="Source/UserOSCCommandModelEditor.h"/>
+                        <FILE id="dQtZiH" name="UserOSCCommandModelManagerUI.cpp" compile="1"
+                              resource="0" file="Source/UserOSCCommandModelManagerUI.cpp"/>
+                        <FILE id="YRlOlu" name="UserOSCCommandModelManagerUI.h" compile="0"
+                              resource="0" file="Source/UserOSCCommandModelManagerUI.h"/>
+                        <FILE id="gKv2de" name="UserOSCCommandModelUI.cpp" compile="1" resource="0"
+                              file="Source/UserOSCCommandModelUI.cpp"/>
+                        <FILE id="RPSp08" name="UserOSCCommandModelUI.h" compile="0" resource="0"
+                              file="Source/UserOSCCommandModelUI.h"/>
+                      </GROUP>
+                    </GROUP>
+                    <GROUP id="{C2F018E6-94A6-E54E-EB92-7DBC9D1A37B3}" name="ui">
+                      <FILE id="eJsZK9" name="UserOSCCommandEditor.cpp" compile="1" resource="0"
+                            file="Source/UserOSCCommandEditor.cpp"/>
+                      <FILE id="qz77OX" name="UserOSCCommandEditor.h" compile="0" resource="0"
+                            file="Source/UserOSCCommandEditor.h"/>
+                    </GROUP>
+                    <FILE id="tdXJbr" name="UserOSCCommand.cpp" compile="1" resource="0"
+                          file="Source/UserOSCCommand.cpp"/>
+                    <FILE id="ogoqrW" name="UserOSCCommand.h" compile="0" resource="0"
+                          file="Source/UserOSCCommand.h"/>
+                  </GROUP>
                   <GROUP id="{3B147154-3CFA-970E-E371-6120BD47FB29}" name="ui">
-                    <FILE id="dQtZiH" name="CustomOSCCommandCreator.cpp" compile="1" resource="0"
-                          file="Source/CustomOSCCommandCreator.cpp"/>
-                    <FILE id="YRlOlu" name="CustomOSCCommandCreator.h" compile="0" resource="0"
-                          file="Source/CustomOSCCommandCreator.h"/>
+                    <FILE id="giYU8X" name="CustomOSCModuleEditor.cpp" compile="1" resource="0"
+                          file="Source/CustomOSCModuleEditor.cpp"/>
+                    <FILE id="ykdqMh" name="CustomOSCModuleEditor.h" compile="0" resource="0"
+                          file="Source/CustomOSCModuleEditor.h"/>
                     <FILE id="n52FX4" name="CustomOSCCommandEditor.cpp" compile="1" resource="0"
                           file="Source/CustomOSCCommandEditor.cpp"/>
                     <FILE id="KyG0PE" name="CustomOSCCommandEditor.h" compile="0" resource="0"
@@ -704,10 +740,6 @@
                       file="Source/CustomOSCModule.cpp"/>
                 <FILE id="ZOWy9Q" name="CustomOSCModule.h" compile="0" resource="0"
                       file="Source/CustomOSCModule.h"/>
-                <FILE id="giYU8X" name="CustomOSCModuleEditor.cpp" compile="1" resource="0"
-                      file="Source/CustomOSCModuleEditor.cpp"/>
-                <FILE id="ykdqMh" name="CustomOSCModuleEditor.h" compile="0" resource="0"
-                      file="Source/CustomOSCModuleEditor.h"/>
               </GROUP>
               <GROUP id="{BF093733-18A9-3232-92C5-8EF7D8E70785}" name="resolume">
                 <GROUP id="{DF8332B1-E904-037C-CFF6-826235CCF3E7}" name="commands">

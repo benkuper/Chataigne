@@ -22,7 +22,6 @@ CustomOSCModule::CustomOSCModule() :
 
 	defManager.addItem(CommandDefinition::createDef(this, "", "Custom Message", &CustomOSCCommand::create));
 	//defManager.hideInEditor = false;
-
 }
 
 void CustomOSCModule::processMessageInternal(const OSCMessage & msg)

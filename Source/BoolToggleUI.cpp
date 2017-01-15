@@ -38,13 +38,13 @@ void BoolToggleUI::paint(Graphics & g)
 
 	if (isMouseOver()) c = c.brighter();
 
-    g.setGradientFill(ColourGradient(c.brighter(),(float)getLocalBounds().getCentreX(),(float)getLocalBounds().getCentreY(), c.darker(), 2.f,2.f,true));
+    g.setGradientFill(ColourGradient(c.brighter(.2f),(float)getLocalBounds().getCentreX(),(float)getLocalBounds().getCentreY(), c.darker(.2f), 2.f,2.f,true));
     g.fillRoundedRectangle(getLocalBounds().toFloat(),2);
 
 	if (showLabel)
 	{
 		g.setFont(10);
-		g.setColour(Colours::white.darker(.1f));
+		g.setColour(Colours::white);// .darker(.1f));
 		g.drawText(parameter->niceName, getLocalBounds().reduced(2).toFloat(), Justification::centred);
 	}
 }

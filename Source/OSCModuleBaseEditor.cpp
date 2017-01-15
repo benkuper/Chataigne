@@ -48,7 +48,7 @@ OSCModuleBaseEditor::~OSCModuleBaseEditor()
 void OSCModuleBaseEditor::resizedInternal(Rectangle<int> &r)
 {
 	Rectangle<int> localR = r.withHeight(14);
-	DBG("resized internal " << r.toString());
+	
 	Rectangle<int> remoteR = localR.withY(localR.getBottom() + 5);
 
 	receiveLabel.setBounds(localR.removeFromLeft(60));

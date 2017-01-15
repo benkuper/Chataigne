@@ -15,7 +15,8 @@
 #include "CustomOSCModule.h"
 
 class CustomOSCModuleEditor :
-	public OSCModuleBaseEditor
+	public OSCModuleBaseEditor,
+	public ButtonListener
 {
 public:
 	CustomOSCModuleEditor(CustomOSCModule * cModule, bool isRoot);
@@ -25,8 +26,16 @@ public:
 
 	ScopedPointer<BoolToggleUI> autoAddUI;
 	ScopedPointer<InspectableEditor> valuesEditor;
+	TextButton manageCommandsBT;
+
+	void showCommandCreatorWindow();
 
 	void resizedOSCInternal(Rectangle<int> &r) override;
+
+	void buttonClicked(Button * b) override;
+
+
+	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(CustomOSCModuleEditor)
 };
 
 

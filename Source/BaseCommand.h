@@ -11,11 +11,11 @@
 #ifndef BASECOMMAND_H_INCLUDED
 #define BASECOMMAND_H_INCLUDED
 
-#include "BaseItem.h"
+#include "ControllableContainer.h"
 enum CommandContext { ACTION, MAPPING };
 
 class BaseCommand :
-	public BaseItem
+	public ControllableContainer
 {
 public:
 	BaseCommand(ControllableContainer * container, CommandContext context, var params);
