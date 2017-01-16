@@ -18,6 +18,7 @@ CustomOSCCommand::CustomOSCCommand(CustomOSCModule * module, CommandContext cont
 
 CustomOSCCommand::~CustomOSCCommand()
 {
+	masterReference.clear();
 }
 
 

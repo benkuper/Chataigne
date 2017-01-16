@@ -19,6 +19,7 @@ UserOSCCommand::UserOSCCommand(CustomOSCModule * _module, CommandContext context
 	jassert(model != nullptr);
 	
 	address->setValue(model->addressParam->stringValue());
+	address->isEditable = model->addressIsEditable->boolValue();
 	rebuildArgsFromModel();
 }
 

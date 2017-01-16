@@ -16,10 +16,12 @@ juce_ImplementSingleton(UserOSCCommandModelManagerWindow)
 UserOSCCommandModelManagerWindow::UserOSCCommandModelManagerWindow(const String &_name) :
 	ShapeShifterContentComponent(_name)
 {
+	Inspector::getInstance()->addInspectorListener(this);
 }
 
 UserOSCCommandModelManagerWindow::~UserOSCCommandModelManagerWindow()
 {
+	if(Inspector::getInstanceWithoutCreating() != nullptr) Inspector::getInstance()->removeInspectorListener(this);
 }
 
 
@@ -49,10 +51,16 @@ void UserOSCCommandModelManagerWindow::resized()
 	if (modelManagerUI != nullptr) modelManagerUI->setBounds(getLocalBounds().reduced(2));
 }
 
+void UserOSCCommandModelManagerWindow::currentInspectableChanged(Inspector * i)
+{
+	CustomOSCModule * m = dynamic_cast<CustomOSCModule *>(i->currentInspectable.get());
+	if(m != nullptr) editModule(m);
+}
+
 //ManagerUI
 
 UserOSCCommandModelManagerUI::UserOSCCommandModelManagerUI(UserOSCCommandModelManager * manager, const String &moduleName) :
-	BaseManagerUI("Models for " + moduleName,manager)
+	BaseManagerUI("Command Models for " + moduleName,manager)
 {
 	drawContour = true;
 }

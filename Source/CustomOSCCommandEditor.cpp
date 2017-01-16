@@ -25,6 +25,7 @@ void CustomOSCCommandEditor::mouseDown(const MouseEvent & e)
 {
 	GenericControllableContainerEditor::mouseDown(e);
 
+	if (command.wasObjectDeleted()) return;
 	if (e.mods.isRightButtonDown())
 	{
 		PopupMenu p;

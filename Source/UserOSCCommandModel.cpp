@@ -18,7 +18,7 @@ UserOSCCommandModel::UserOSCCommandModel() :
 	argumentsContainer("arguments")
 {
 	addressParam = addStringParameter("OSC Address", "OSC Adress that will sent", "/example");
-	addressIsEditable = addBoolParameter("Editable", "If check, the address will be editable in each command created", false);
+	addressIsEditable = addBoolParameter("Address is Editable", "If check, the address will be editable in each command created", false);
 	addChildControllableContainer(&argumentsContainer);	
 }
 
@@ -51,7 +51,6 @@ void UserOSCCommandModel::addStringArgument()
 void UserOSCCommandModel::addArgument(Parameter * p)
 {
 	p->saveValueOnly = false;
-	p->isRemovableByUser = true;
 	OSCCommandModelArgument * a = new OSCCommandModelArgument(p);
 	arguments.add(a);
 	argumentsContainer.addChildControllableContainer(a);

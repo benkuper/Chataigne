@@ -21,7 +21,7 @@ public:
 	CustomOSCCommandEditor(CustomOSCCommand * command, bool isRoot);
 	~CustomOSCCommandEditor();
 
-	CustomOSCCommand * command;
+	WeakReference<CustomOSCCommand> command;
 
 	void mouseDown(const MouseEvent &e) override;
 
