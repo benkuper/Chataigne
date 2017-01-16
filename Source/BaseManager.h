@@ -103,7 +103,7 @@ inline void BaseManager<T>::addItem(T * item, var data)
 	items.add(item);
 	BaseItem * bi = static_cast<BaseItem *>(item);
 	addChildControllableContainer(bi);
-	bi->nameParam->setValue(bi->niceName);
+	 bi->nameParam->setValue(bi->niceName);
 	bi->addBaseItemListener(this);
 	
 	if(!data.isVoid()) bi->loadJSONData(data);

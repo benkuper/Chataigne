@@ -322,6 +322,7 @@ var ShapeShifterPanel::getCurrentLayout()
 	var tabData;
 	for (auto &t : header.tabs)
 	{
+		if (t->content == nullptr) continue; 
 		var tData(new DynamicObject());
 		tData.getDynamicObject()->setProperty("name", t->content->contentName);
 		tabData.append(tData);

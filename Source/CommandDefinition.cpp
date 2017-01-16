@@ -13,6 +13,7 @@
 CommandDefinition::CommandDefinition()
 {
 }
+
 void CommandDefinition::setup(ControllableContainer * _container, const String & _menuPath, const String & _commandType,
 	CreateCommandFunc _createFunc)
 {
@@ -20,7 +21,7 @@ void CommandDefinition::setup(ControllableContainer * _container, const String &
 	this->commandType = _commandType;
 	this->createFunc = _createFunc;
 	this->container = _container;
-	setNiceName(menuPath.isNotEmpty()?menuPath+"_"+commandType:commandType);
+	//setNiceName(menuPath.isNotEmpty()?menuPath+"_"+commandType:commandType);
 
 	params = var(new DynamicObject());
 }

@@ -19,7 +19,6 @@ Module::Module(const String &name) :
 	canInspectChildContainers = true;
 
 	addChildControllableContainer(&valuesCC);
-	addChildControllableContainer(&defManager);
 
 
 	logIncomingData = addBoolParameter("Log Incoming", "Enable / Disable logging of incoming data for this module", false);

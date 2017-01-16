@@ -13,8 +13,8 @@
 juce_ImplementSingleton(UserOSCCommandModelManagerWindow)
 
 
-UserOSCCommandModelManagerWindow::UserOSCCommandModelManagerWindow() :
-	ResizableWindow("OSC Command Model Manager",false)
+UserOSCCommandModelManagerWindow::UserOSCCommandModelManagerWindow(const String &_name) :
+	ShapeShifterContentComponent(_name)
 {
 }
 
@@ -30,35 +30,31 @@ void UserOSCCommandModelManagerWindow::editModule(CustomOSCModule * _module)
 	
 	if (module != nullptr)
 	{
-
+		removeChildComponent(modelManagerUI);
+		modelManagerUI = nullptr;
 	}
 
 	module = _module;
 
 	if (module != nullptr)
 	{
-		DBG("Edit module : " << _module->niceName);
-		addToDesktop();
-		setResizable(true, true);
-		setDraggable(true);
-		setBounds(Rectangle<int>(10, 10, 500, 500));
-		setVisible(true);
-		toFront(true);
+		modelManagerUI = new UserOSCCommandModelManagerUI(&module->umm, module->niceName);
+		contentComponent->addAndMakeVisible(modelManagerUI);
+		resized();
 	}
 }
 
-void UserOSCCommandModelManagerWindow::userTriedToCloseWindow()
+void UserOSCCommandModelManagerWindow::resized()
 {
-	//Close window
-	setVisible(false);
-	removeFromDesktop();
+	if (modelManagerUI != nullptr) modelManagerUI->setBounds(getLocalBounds().reduced(2));
 }
 
 //ManagerUI
 
-UserOSCCommandModelManagerUI::UserOSCCommandModelManagerUI(UserOSCCommandModelManager * manager) :
-	BaseManagerUI("Models",manager)
+UserOSCCommandModelManagerUI::UserOSCCommandModelManagerUI(UserOSCCommandModelManager * manager, const String &moduleName) :
+	BaseManagerUI("Models for " + moduleName,manager)
 {
+	drawContour = true;
 }
 
 UserOSCCommandModelManagerUI::~UserOSCCommandModelManagerUI()

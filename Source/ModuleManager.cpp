@@ -44,5 +44,5 @@ CommandDefinition * ModuleManager::getCommandDefinitionForItemID(int itemID)
 	if (itemID <= 0) return nullptr;
 	int outputIndex = (int)floor(itemID / 1000);
 	int commandIndex = itemID % 1000 - 1;
-	return items[outputIndex]->defManager.items[commandIndex];
+	return items[outputIndex]->defManager.definitions[commandIndex];
 }

@@ -53,13 +53,16 @@ BaseItemUI<T>::BaseItemUI(T * _item) :
 	BaseItemMinimalUI<T>(_item),
 	headerHeight(16), headerGap(5)
 {
-
+	
 	nameUI = this->getBaseItem()->nameParam->createStringParameterUI();
 	this->addAndMakeVisible(nameUI);
 
-	enabledBT = this->getBaseItem()->enabled->createImageToggle(AssetManager::getInstance()->getPowerBT());
-	this->addAndMakeVisible(enabledBT);
-
+	if (this->getBaseItem()->canBeDisabled)
+	{
+		enabledBT = this->getBaseItem()->enabled->createImageToggle(AssetManager::getInstance()->getPowerBT());
+		this->addAndMakeVisible(enabledBT);
+	}
+	
 	removeBT = AssetManager::getInstance()->getRemoveBT();
 	this->addAndMakeVisible(removeBT);
 	removeBT->addListener(this);
@@ -80,10 +83,15 @@ void BaseItemUI<T>::resized()
 	//Header
 	Rectangle<int> r = this->getLocalBounds().reduced(2);
 	Rectangle<int> h = r.withHeight(headerHeight);
-	enabledBT->setBounds(h.removeFromLeft(h.getHeight()));
-	h.removeFromLeft(2);
+	if(enabledBT != nullptr)
+	{
+		enabledBT->setBounds(h.removeFromLeft(h.getHeight()));
+		h.removeFromLeft(2);
+	}
+
 	removeBT->setBounds(h.removeFromRight(h.getHeight()));
 	h.removeFromRight(2);
+	
 	nameUI->setBounds(h);
 }
 

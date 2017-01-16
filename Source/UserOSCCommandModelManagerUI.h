@@ -14,48 +14,36 @@
 #include "UserOSCCommandModelManager.h"
 #include "UserOSCCommandModelUI.h"
 #include "CustomOSCModule.h"
-#include "BaseManagerShapeShifterUI.h"
-
-class CustomOSCArgumentUI :
-	public Component
-{
-public:
-	CustomOSCArgumentUI();
-	ComboBox typeBox;
-	Label defaultValue;
-	ToggleButton getFromMapping;
-	Slider mappingValueId;
-
-	void resized() override;
-};
+#include "BaseManagerUI.h"
+#include "ShapeShifterPanel.h"
 
 
 class UserOSCCommandModelManagerUI :
 	public BaseManagerUI<UserOSCCommandModelManager, UserOSCCommandModel, UserOSCCommandModelUI>
 {
 public:
-	UserOSCCommandModelManagerUI(UserOSCCommandModelManager * manager);
+	UserOSCCommandModelManagerUI(UserOSCCommandModelManager * manager, const String &moduleName);
 	~UserOSCCommandModelManagerUI();
+
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UserOSCCommandModelManagerUI)
 };
 
-class UserOSCCommandModelManagerWindow :
-	public ResizableWindow
+class UserOSCCommandModelManagerWindow : 
+	public ShapeShifterContentComponent
 	
 {
 public:
 	juce_DeclareSingleton(UserOSCCommandModelManagerWindow,false)
 public:
-	UserOSCCommandModelManagerWindow();
+	UserOSCCommandModelManagerWindow(const String &name = "OSC Models");
 	~UserOSCCommandModelManagerWindow();
 
 	CustomOSCModule * module;
 	ScopedPointer<UserOSCCommandModelManagerUI> modelManagerUI;
 
 	void editModule(CustomOSCModule * module);
+	void resized() override;
 
-	void userTriedToCloseWindow() override;
-	
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UserOSCCommandModelManagerWindow)
 };
 

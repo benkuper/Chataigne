@@ -49,12 +49,6 @@ void CustomOSCCommand::addArgument(Parameter * p)
 	argumentsContainer.addControllable(p);
 }
 
-void CustomOSCCommand::removeLastArgument()
-{
-	if (argumentsContainer.controllables.size() == 0) return;
-	argumentsContainer.removeControllable(argumentsContainer.controllables[argumentsContainer.controllables.size() - 1]);
-}
-
 var CustomOSCCommand::getJSONData()
 {
 	var data = OSCCommand::getJSONData();
@@ -65,7 +59,6 @@ var CustomOSCCommand::getJSONData()
 void CustomOSCCommand::loadJSONDataInternal(var data)
 {
 	OSCCommand::loadJSONDataInternal(data);
-	DBG("here custom OSCCommand loadJSON Data internal");
 	argumentsContainer.loadJSONData(data.getProperty("arguments", var()), true);
 }
 

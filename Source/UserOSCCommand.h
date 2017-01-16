@@ -22,8 +22,10 @@ public:
 	UserOSCCommand(CustomOSCModule * module, CommandContext context, var params);
 	virtual ~UserOSCCommand();
 
-	CustomOSCModule * module;
+	CustomOSCModule * cModule;
 	UserOSCCommandModel * model;
+
+	void rebuildArgsFromModel();
 
 	InspectableEditor * getEditor(bool /*isRoot*/) override;
 	static UserOSCCommand * create(ControllableContainer * module, CommandContext context, var params) { return new UserOSCCommand((CustomOSCModule *)module, context, params); }

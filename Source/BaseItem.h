@@ -17,11 +17,13 @@ class BaseItem :
 	public ControllableContainer
 {
 public :
-	BaseItem(const String &name = "baseItem");
+	BaseItem(const String &name = "baseItem", bool canBeDisabled = true);
 	virtual ~BaseItem();
 
 	BoolParameter * enabled;
 	StringParameter * nameParam;
+
+	bool canBeDisabled;
 
 	void remove();
 	virtual void clear() {}

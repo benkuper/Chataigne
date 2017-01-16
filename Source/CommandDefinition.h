@@ -12,22 +12,22 @@
 #define COMMANDDEFINITION_H_INCLUDED
 
 #include "BaseCommand.h"
-#include "BaseItem.h"
+class ControllableContainer;
 
 typedef std::function<BaseCommand*(ControllableContainer *, CommandContext, var params)> CreateCommandFunc;
 
-class CommandDefinition :
-	public BaseItem
+class CommandDefinition
 {
 public:
+	CommandDefinition();
+	virtual ~CommandDefinition() {}
+	
 	String menuPath;
 	String commandType;
 	ControllableContainer * container;
 	var params;
 
 	CreateCommandFunc createFunc;
-
-	CommandDefinition();
 
 	void setup(ControllableContainer * container,
 		const String &menuPath,

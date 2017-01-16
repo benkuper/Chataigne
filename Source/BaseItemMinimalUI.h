@@ -79,7 +79,9 @@ template<class T>
 void BaseItemMinimalUI<T>::paint(Graphics &g)
 {
 	Rectangle<float> r = getLocalBounds().toFloat();
-	Colour c = getBaseItem()->enabled->boolValue() ? bgColor : bgColor.darker(.3f);
+	bool isItemEnabled = getBaseItem()->canBeDisabled ? getBaseItem()->enabled->boolValue() : true;
+
+	Colour c = isItemEnabled ? bgColor : bgColor.darker(.3f);
 	if (highlightOnMouseOver && isMouseOver(true)) c = c.brighter(.03f);
 	g.setColour(c);
 	g.fillRoundedRectangle(r, 4);

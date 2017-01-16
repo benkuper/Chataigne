@@ -11,16 +11,19 @@
 #include "BaseItem.h"
 
 
-BaseItem::BaseItem(const String &name) :
-	ControllableContainer(name)
+BaseItem::BaseItem(const String &name, bool _canBeDisabled) :
+	ControllableContainer(name),
+	canBeDisabled(_canBeDisabled)
 {
 	saveAndLoadName = true;
 
-	enabled = addBoolParameter("Enabled", "Enable / Disable this component", true);
-	nameParam = addStringParameter("Name", "Name of the component", niceName);
+	if (canBeDisabled)
+	{
+		enabled = addBoolParameter("Enabled", "Enable / Disable this component", true);
+		enabled->hideInOutliner = true;
+	}
 
-	enabled->hideInOutliner = true;
-	
+	nameParam = addStringParameter("Name", "Name of the component", niceName);
 	nameParam->hideInEditor = true;
 	nameParam->hideInOutliner = true;
 	nameParam->isTargettable = false;

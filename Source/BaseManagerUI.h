@@ -228,7 +228,7 @@ void BaseManagerUI<M, T, U>::paint(Graphics & g)
 		Colour textColor = contourColor.withBrightness(contourColor.getBrightness() > .5f ? .1f : .9f).withAlpha(1.f);
 		g.setColour(textColor);
 
-		g.drawText(manager->niceName, tr, Justification::centred, 1);
+		g.drawText(managerUIName, tr, Justification::centred, 1);
 	}else
 	{
 		if(!transparentBG)	g.fillAll(bgColor);

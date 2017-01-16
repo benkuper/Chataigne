@@ -14,12 +14,16 @@
 #include "CommandDefinition.h"
 #include "BaseManager.h"
 
-class CommandDefinitionManager :
-	public BaseManager<CommandDefinition>
+class CommandDefinitionManager
 {
 public:
 	CommandDefinitionManager();
 	~CommandDefinitionManager();
+
+	OwnedArray<CommandDefinition> definitions;
+
+	void add(CommandDefinition * def);
+	void remove(CommandDefinition * def);
 
 	PopupMenu commandMenu;
 	void rebuildCommandMenu(int baseID);

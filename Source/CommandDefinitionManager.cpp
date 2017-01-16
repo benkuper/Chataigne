@@ -11,17 +11,23 @@
 #include "CommandDefinitionManager.h"
 
 
-CommandDefinitionManager::CommandDefinitionManager() :
-	BaseManager("Definitions")
+CommandDefinitionManager::CommandDefinitionManager()
 {
-	canInspectChildContainers = true;
-	hideInEditor = true;
-	isTargettable = false;
-	selectItemWhenCreated = false;
+
 }
 
 CommandDefinitionManager::~CommandDefinitionManager()
 {
+}
+
+void CommandDefinitionManager::add(CommandDefinition * def)
+{
+	definitions.add(def);
+}
+
+void CommandDefinitionManager::remove(CommandDefinition * def)
+{
+	definitions.removeObject(def);
 }
 
 void CommandDefinitionManager::rebuildCommandMenu(int baseID)
@@ -30,9 +36,9 @@ void CommandDefinitionManager::rebuildCommandMenu(int baseID)
 	OwnedArray<PopupMenu> subMenus;
 	Array<String> subMenuNames;
 
-	for (auto &d : items)
+	for (auto &d : definitions)
 	{
-		int itemID = items.indexOf(d) + 1 + baseID;//start at baseID + 1 for menu
+		int itemID = definitions.indexOf(d) + 1 + baseID;//start at baseID + 1 for menu
 		if (d->menuPath.isEmpty())
 		{
 			commandMenu.addItem(itemID, d->commandType);
@@ -70,7 +76,7 @@ PopupMenu CommandDefinitionManager::getCommandMenu(int baseID)
 
 CommandDefinition * CommandDefinitionManager::getCommandDefinitionFor(const String & menuPath, const String & moduleType)
 {
-	for (auto &d : items) if (d->menuPath == menuPath && d->commandType == moduleType) return d;
+	for (auto &d : definitions) if (d->menuPath == menuPath && d->commandType == moduleType) return d;
 	return nullptr;
 }
 

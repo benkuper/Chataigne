@@ -21,12 +21,10 @@ public:
 	CustomOSCCommand(CustomOSCModule * output, CommandContext context, var params);
 	~CustomOSCCommand();
 	
-
 	void addIntArgument();
 	void addFloatArgument();
 	void addStringArgument();
 	void addArgument(Parameter *);
-	void removeLastArgument();
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;

@@ -169,6 +169,7 @@ ShapeShifterPanel * ShapeShifterManager::checkCandidateTargetForPanel(ShapeShift
 			candidate = p;
 		}
 	}
+
 	setCurrentCandidatePanel(candidate);
 
 	if(currentCandidatePanel != nullptr) currentCandidatePanel->checkAttachZone(panel);
@@ -201,7 +202,6 @@ ShapeShifterWindow * ShapeShifterManager::getWindowForPanel(ShapeShifterPanel * 
 void ShapeShifterManager::loadLayout(var layout)
 {
 	clearAllPanelsAndWindows();
-
 	mainContainer.loadLayout(layout.getDynamicObject()->getProperty("mainLayout"));
 
 	Array<var>* wData = layout.getDynamicObject()->getProperty("windows").getArray();

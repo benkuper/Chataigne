@@ -31,13 +31,6 @@ void CustomOSCCommandEditor::mouseDown(const MouseEvent & e)
 		p.addItem(1,"Add Int Argument");
 		p.addItem(2,"Add Float Argument");
 		p.addItem(3,"Add String Argument");
-
-
-		if (command->argumentsContainer.controllables.size() > 0)
-		{
-			p.addItem(4, "Remove last argument");
-		}
-		
 		
 		int result = p.show();
 
@@ -51,9 +44,6 @@ void CustomOSCCommandEditor::mouseDown(const MouseEvent & e)
 			break;
 		case 3:
 			command->addStringArgument();
-			break;
-		case 4:
-			command->removeLastArgument();
 			break;
 		}
 

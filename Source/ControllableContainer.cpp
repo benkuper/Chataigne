@@ -211,8 +211,8 @@ void ControllableContainer::newMessage(const Parameter::ParamWithValue& pv){
 void ControllableContainer::setNiceName(const String &_niceName) {
   if (niceName == _niceName) return;
   niceName = _niceName;
-  onContainerNiceNameChanged();
   if (!hasCustomShortName) setAutoShortName();
+  onContainerNiceNameChanged();
 }
 
 void ControllableContainer::setCustomShortName(const String &_shortName){
@@ -232,7 +232,6 @@ void ControllableContainer::setAutoShortName() {
   onContainerShortNameChanged();
   controllableContainerListeners.call(&ControllableContainerListener::childAddressChanged,this);
   queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ChildAddressChanged, this));
-
 }
 
 void ControllableContainer::setCanHavePresets(bool value)

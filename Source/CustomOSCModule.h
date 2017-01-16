@@ -12,15 +12,19 @@
 #define CUSTOMOSCMODULE_H_INCLUDED
 
 #include "OSCModule.h"
+#include "UserOSCCommandModelManager.h"
 
 class CustomOSCModule :
-	public OSCModule
+	public OSCModule,
+	public UserOSCCommandModelManager::Listener
 {
 public:
 	CustomOSCModule();
 	~CustomOSCModule() {}
 
 	BoolParameter * autoAdd;
+
+	UserOSCCommandModelManager umm;
 
 	void processMessageInternal(const OSCMessage &msg) override;
 
@@ -33,6 +37,12 @@ public:
 
 	InspectableEditor * getEditor(bool isRoot) override;
 
+	//ModelManager callbacks
+	void itemAdded(UserOSCCommandModel * model);
+	void itemRemoved(UserOSCCommandModel * model);
+
+	CommandDefinition * getDefinitionForModel(UserOSCCommandModel * model);
+	UserOSCCommandModel * getModelForName(const String &modelName);
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(CustomOSCModule)
 };

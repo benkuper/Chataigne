@@ -19,6 +19,7 @@
 #include "StateMachineView.h"
 #include "TimeMachineView.h"
 #include "Outliner.h"
+#include "UserOSCCommandModelManagerUI.h"
 
 ShapeShifterContent * ShapeShifterFactory::createContentForIndex(PanelName pn)
 {
@@ -56,7 +57,11 @@ ShapeShifterContent * ShapeShifterFactory::createContentForIndex(PanelName pn)
 		break;
 
 	case OutlinerPanel:
-		return new Outliner("Outliner");
+		return new Outliner(contentName);
+		break;
+
+	case OSCCommandModelPanel:
+		return UserOSCCommandModelManagerWindow::getInstance();
 		break;
 
 	default:
