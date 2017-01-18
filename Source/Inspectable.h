@@ -27,6 +27,8 @@ public:
 
 
 	bool isSelected;
+	bool isSelectable;
+
 	virtual void selectThis();
 	virtual void setSelected(bool value);
 

@@ -27,8 +27,11 @@ public:
 	ScopedPointer<ControllableUI> ui;
 	ScopedPointer<ImageButton> removeBT;
 
-	void resized() override;
+	bool showLabel;
 
+	void setShowLabel(bool value);
+
+	void resized() override;
 	void buttonClicked(Button * b);
 };
 

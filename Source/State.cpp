@@ -22,6 +22,9 @@ State::State() :
 	viewUISize = addPoint2DParameter("Size", "Size in State Machine view");
 	viewUISize->setBounds(30,60,500,500);
 	viewUISize->setPoint(200, 250);
+	viewUISize->hideInEditor = true;
+	viewUISize->hideInOutliner = true;
+	viewUISize->isTargettable = false;
 
 	miniMode = addBoolParameter("Mini Mode", "Set the mini mode",false);
 	miniMode->hideInOutliner = true;

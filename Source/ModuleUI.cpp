@@ -28,10 +28,8 @@ ModuleUI::~ModuleUI()
 
 }
 
-void ModuleUI::resized()
+void ModuleUI::resizedInternalHeader(Rectangle<int>& r)
 {
-	BaseItemUI::resized();
-	Rectangle<int> r = getLocalBounds().withRight(removeBT->getX() - 2).reduced(2);
 	outActivityUI->setBounds(r.removeFromRight(headerHeight));
 	inActivityUI->setBounds(r.removeFromRight(headerHeight));
 }

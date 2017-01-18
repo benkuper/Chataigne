@@ -28,6 +28,8 @@ InspectableContentComponent::~InspectableContentComponent()
 
 void InspectableContentComponent::mouseDown(const MouseEvent & e)
 {
+	if (!inspectable->isSelectable) return;
+
 	if (autoSelectWithChildRespect)
 	{
 		Component * c = e.eventComponent;

@@ -182,28 +182,6 @@
           <FILE id="rZKBRp" name="Trigger.h" compile="0" resource="0" file="Source/Trigger.h"/>
         </GROUP>
       </GROUP>
-      <GROUP id="{E0F1A125-84A7-ED5C-8D6A-735A660A6079}" name="comparators">
-        <FILE id="jssh1a" name="BoolComparators.cpp" compile="1" resource="0"
-              file="Source/BoolComparators.cpp"/>
-        <FILE id="PVA8zS" name="BoolComparators.h" compile="0" resource="0"
-              file="Source/BoolComparators.h"/>
-        <FILE id="Bbocbf" name="NumberComparators.cpp" compile="1" resource="0"
-              file="Source/NumberComparators.cpp"/>
-        <FILE id="yqjWhs" name="NumberComparators.h" compile="0" resource="0"
-              file="Source/NumberComparators.h"/>
-        <FILE id="NKGoj5" name="Point2DComparators.cpp" compile="1" resource="0"
-              file="Source/Point2DComparators.cpp"/>
-        <FILE id="K7kHqo" name="Point2DComparators.h" compile="0" resource="0"
-              file="Source/Point2DComparators.h"/>
-        <FILE id="OlDsam" name="Point3DComparators.cpp" compile="1" resource="0"
-              file="Source/Point3DComparators.cpp"/>
-        <FILE id="PGfJIG" name="Point3DComparators.h" compile="0" resource="0"
-              file="Source/Point3DComparators.h"/>
-        <FILE id="mKVvmV" name="StringComparators.cpp" compile="1" resource="0"
-              file="Source/StringComparators.cpp"/>
-        <FILE id="Rnya7X" name="StringComparators.h" compile="0" resource="0"
-              file="Source/StringComparators.h"/>
-      </GROUP>
       <GROUP id="{6A99D434-563F-6FEC-8395-5EB79B3D3075}" name="Chataigne">
         <GROUP id="{6C7DFFF7-D47E-97B5-FE74-27F24C7A349F}" name="Common">
           <GROUP id="{70631E35-1CB6-82B1-0572-78D8D2F56250}" name="Plugin">
@@ -277,6 +255,10 @@
           </GROUP>
           <GROUP id="{9CFD8ABC-B151-C9B1-3170-F337A2876DE7}" name="Manager">
             <GROUP id="{04523331-54D0-EF5C-9ECA-C42754582F66}" name="ui">
+              <FILE id="Of2V96" name="BaseItemEditor.cpp" compile="1" resource="0"
+                    file="Source/BaseItemEditor.cpp"/>
+              <FILE id="Y0j3Ph" name="BaseItemEditor.h" compile="0" resource="0"
+                    file="Source/BaseItemEditor.h"/>
               <FILE id="vXgimL" name="BaseItemMinimalUI.h" compile="0" resource="0"
                     file="Source/BaseItemMinimalUI.h"/>
               <FILE id="jCyMQj" name="BaseItemUI.h" compile="0" resource="0" file="Source/BaseItemUI.h"/>
@@ -310,6 +292,28 @@
             </GROUP>
             <GROUP id="{769E1555-7F3A-B046-7FF9-5B14A6197BBD}" name="Condition">
               <GROUP id="{B168FE5B-E463-8457-D620-EA993DA00F90}" name="Comparator">
+                <GROUP id="{E0F1A125-84A7-ED5C-8D6A-735A660A6079}" name="comparators">
+                  <FILE id="jssh1a" name="BoolComparators.cpp" compile="1" resource="0"
+                        file="Source/BoolComparators.cpp"/>
+                  <FILE id="PVA8zS" name="BoolComparators.h" compile="0" resource="0"
+                        file="Source/BoolComparators.h"/>
+                  <FILE id="Bbocbf" name="NumberComparators.cpp" compile="1" resource="0"
+                        file="Source/NumberComparators.cpp"/>
+                  <FILE id="yqjWhs" name="NumberComparators.h" compile="0" resource="0"
+                        file="Source/NumberComparators.h"/>
+                  <FILE id="NKGoj5" name="Point2DComparators.cpp" compile="1" resource="0"
+                        file="Source/Point2DComparators.cpp"/>
+                  <FILE id="K7kHqo" name="Point2DComparators.h" compile="0" resource="0"
+                        file="Source/Point2DComparators.h"/>
+                  <FILE id="OlDsam" name="Point3DComparators.cpp" compile="1" resource="0"
+                        file="Source/Point3DComparators.cpp"/>
+                  <FILE id="PGfJIG" name="Point3DComparators.h" compile="0" resource="0"
+                        file="Source/Point3DComparators.h"/>
+                  <FILE id="mKVvmV" name="StringComparators.cpp" compile="1" resource="0"
+                        file="Source/StringComparators.cpp"/>
+                  <FILE id="Rnya7X" name="StringComparators.h" compile="0" resource="0"
+                        file="Source/StringComparators.h"/>
+                </GROUP>
                 <GROUP id="{CA3D4989-B1DE-2DAA-5075-B24D325812D1}" name="ui">
                   <FILE id="SaDY36" name="BaseComparatorUI.cpp" compile="1" resource="0"
                         file="Source/BaseComparatorUI.cpp"/>
@@ -684,6 +688,12 @@
                 <FILE id="o0okCg" name="OSCModuleUI.h" compile="0" resource="0" file="Source/OSCModuleUI.h"/>
               </GROUP>
               <GROUP id="{725F299B-4972-D857-5400-57EB8633E4A9}" name="custom">
+                <GROUP id="{609C3BCD-D82F-A0F9-92AC-FCCC9018DA82}" name="ui">
+                  <FILE id="giYU8X" name="CustomOSCModuleEditor.cpp" compile="1" resource="0"
+                        file="Source/CustomOSCModuleEditor.cpp"/>
+                  <FILE id="ykdqMh" name="CustomOSCModuleEditor.h" compile="0" resource="0"
+                        file="Source/CustomOSCModuleEditor.h"/>
+                </GROUP>
                 <GROUP id="{054F9429-4D5F-5398-2370-34DC34C50A1E}" name="commands">
                   <GROUP id="{7006A5C5-4F64-5AC5-84CA-FF17A52209BC}" name="user">
                     <GROUP id="{AA4047DB-9521-A804-2662-257FB65454B3}" name="model">
@@ -722,10 +732,6 @@
                           file="Source/UserOSCCommand.h"/>
                   </GROUP>
                   <GROUP id="{3B147154-3CFA-970E-E371-6120BD47FB29}" name="ui">
-                    <FILE id="giYU8X" name="CustomOSCModuleEditor.cpp" compile="1" resource="0"
-                          file="Source/CustomOSCModuleEditor.cpp"/>
-                    <FILE id="ykdqMh" name="CustomOSCModuleEditor.h" compile="0" resource="0"
-                          file="Source/CustomOSCModuleEditor.h"/>
                     <FILE id="n52FX4" name="CustomOSCCommandEditor.cpp" compile="1" resource="0"
                           file="Source/CustomOSCCommandEditor.cpp"/>
                     <FILE id="KyG0PE" name="CustomOSCCommandEditor.h" compile="0" resource="0"

@@ -16,6 +16,7 @@
 
 GenericControllableContainerEditor::GenericControllableContainerEditor(WeakReference<Inspectable> inspectable, bool isRoot) :
 	InspectableEditor(inspectable, isRoot),
+	headerHeight(12),
 	container(dynamic_cast<ControllableContainer *>(inspectable.get())),
 	containerLabel("containerLabel", dynamic_cast<ControllableContainer *>(inspectable.get())->niceName)
 {
@@ -54,6 +55,8 @@ void GenericControllableContainerEditor::clear()
 
 void GenericControllableContainerEditor::resetAndBuild()
 {
+	//DBG("Reset and build " << container->niceName << "/ " << container->controllableContainers.size() << " / " << (int)(container->canInspectChildContainers));
+
 	clear();
 	if (container->hideInEditor) return;
 
@@ -66,6 +69,7 @@ void GenericControllableContainerEditor::resetAndBuild()
 	{
 		for (auto &cc : container->controllableContainers)
 		{
+			//DBG("CC hide ? " << (int)(cc->hideInEditor));
 			if(!cc->hideInEditor) addEditorUI(cc);
 		}
 	}
@@ -174,8 +178,7 @@ void GenericControllableContainerEditor::paint(Graphics & g)
 void GenericControllableContainerEditor::resized()
 {
 	containerLabel.setBounds(getLocalBounds().removeFromTop(containerLabel.getHeight()).withSizeKeepingCentre(containerLabel.getWidth(), containerLabel.getHeight()));
-	
-	Rectangle<int> r = getLocalBounds().reduced(5).translated(0,12);
+	Rectangle<int> r = getLocalBounds().reduced(5).translated(0,headerHeight);
 
 	if (container->canHavePresets)
 	{

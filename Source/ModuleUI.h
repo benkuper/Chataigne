@@ -21,7 +21,7 @@ public:
 	ModuleUI(Module *);
 	virtual ~ModuleUI();
 
-	void resized() override;
+	void resizedInternalHeader(Rectangle<int> &r) override;
 
 	ScopedPointer<TriggerImageUI> inActivityUI;
 	ScopedPointer<TriggerImageUI> outActivityUI;

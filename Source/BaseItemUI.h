@@ -36,10 +36,9 @@ public:
 	ScopedPointer<ImageButton> removeBT;
 
 	virtual void resized() override;
+	virtual void resizedInternalHeader(Rectangle<int> &) {}
 
 	void buttonClicked(Button *b) override;
-	virtual void buttonClickedInternal(Button *){} //override this in child classes
-
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(BaseItemUI<T>)
 
@@ -91,7 +90,8 @@ void BaseItemUI<T>::resized()
 
 	removeBT->setBounds(h.removeFromRight(h.getHeight()));
 	h.removeFromRight(2);
-	
+
+	resizedInternalHeader(h);
 	nameUI->setBounds(h);
 }
 
@@ -103,8 +103,6 @@ void BaseItemUI<T>::buttonClicked(Button * b)
 		this->getBaseItem()->remove();
 		return;
 	}
-
-	buttonClickedInternal(b);
 }
 
 

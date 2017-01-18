@@ -25,6 +25,8 @@ public:
 	GenericControllableContainerEditor(WeakReference<Inspectable> _inspectable, bool isRoot);
 	virtual ~GenericControllableContainerEditor();
 
+	int headerHeight;
+	 
 	Label containerLabel;
 
 	WeakReference<ControllableContainer> container;

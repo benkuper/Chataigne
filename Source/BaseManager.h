@@ -72,7 +72,7 @@ BaseManager<T>::BaseManager(const String & name) :
 {
 	setCanHavePresets(false);
 	nameCanBeChangedByUser = false;
-	hideInEditor = true;
+	isSelectable = false;
 }
 
 template<class T>

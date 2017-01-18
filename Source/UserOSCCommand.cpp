@@ -33,15 +33,15 @@ void UserOSCCommand::rebuildArgsFromModel()
 
 	//TODO : SlaveParameter ?
 	Parameter * p = nullptr;
-	for (auto &a : model->arguments)
+	for (auto &a : model->arguments.items)
 	{
 		Parameter * ap = a->param;
 		switch (ap->type)
 		{
-		case Controllable::BOOL: p = new BoolParameter(a->argumentName->stringValue(), ap->description, ap->value); break;
-		case Controllable::INT: p = new IntParameter(a->argumentName->stringValue(), ap->description, ap->value,ap->minimumValue,ap->maximumValue); break;
-		case Controllable::FLOAT: p = new FloatParameter(a->argumentName->stringValue(), ap->description, ap->value, ap->minimumValue, ap->maximumValue); break;
-		case Controllable::STRING: p = new StringParameter(a->argumentName->stringValue(), ap->description, ap->value); break;
+		case Controllable::BOOL: p = new BoolParameter(a->niceName, ap->description, ap->value); break;
+		case Controllable::INT: p = new IntParameter(a->niceName, ap->description, ap->value,ap->minimumValue,ap->maximumValue); break;
+		case Controllable::FLOAT: p = new FloatParameter(a->niceName, ap->description, ap->value, ap->minimumValue, ap->maximumValue); break;
+		case Controllable::STRING: p = new StringParameter(a->niceName, ap->description, ap->value); break;
 		}
 		
 		argumentsContainer.addParameter(p);

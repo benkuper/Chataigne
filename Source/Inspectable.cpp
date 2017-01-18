@@ -14,7 +14,8 @@
 
 Inspectable::Inspectable(const String & _inspectableType) :
 	inspectableType(_inspectableType),
-	isSelected(false)
+	isSelected(false),
+	isSelectable(true)
 {
 }
 
@@ -38,7 +39,9 @@ void Inspectable::selectThis()
 
 void Inspectable::setSelected(bool value)
 {
+	if (!isSelectable) return; 
 	if (value == isSelected) return;
+
 	isSelected = value;
 
 	setSelectedInternal(value);

@@ -11,15 +11,12 @@
 #ifndef MODULEEDITOR_H_INCLUDED
 #define MODULEEDITOR_H_INCLUDED
 
-#include "InspectableEditor.h"
+#include "BaseItemEditor.h"
 #include "Module.h"
 #include "BoolToggleUI.h"
-#include "BoolImageToggleUI.h"
-#include "StringParameterUI.h"
 
 class ModuleEditor :
-	public InspectableEditor,
-	public ControllableContainer::ContainerAsyncListener
+	public BaseItemEditor
 {
 public:
 	ModuleEditor(Module * module, bool isRoot);
@@ -27,21 +24,15 @@ public:
 
 	Module * module;
 
-	
-	ScopedPointer<BoolImageToggleUI> enabledUI;
-	ScopedPointer<StringParameterUI> nameUI;
 	ScopedPointer<BoolToggleUI> logIncomingUI;
 	ScopedPointer<BoolToggleUI> logOutgoingUI;
-	
-	const int headerHeight = 20;
 
-	void paint(Graphics &g) override;
-	void resized() override; 
+	void resizedInternalHeader(Rectangle<int> &r) override; 
+
 	virtual void resizedInternal(Rectangle<int> &) { }
 
-	void newMessage(const ContainerAsyncEvent &e) override;
-	virtual void controllableFeedbackAsyncUpdate(Controllable * c);
-
+	void controllableFeedbackAsyncUpdate(Controllable * c) override;
+	
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ModuleEditor)
 };
 

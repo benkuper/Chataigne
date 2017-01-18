@@ -45,7 +45,7 @@ OSCModuleBaseEditor::~OSCModuleBaseEditor()
 	oscModule->removeAsyncContainerListener(this);
 }
 
-void OSCModuleBaseEditor::resizedInternal(Rectangle<int> &r)
+void OSCModuleBaseEditor::resizedInternalContent(Rectangle<int> &r)
 {
 	Rectangle<int> localR = r.withHeight(14);
 	
@@ -63,7 +63,7 @@ void OSCModuleBaseEditor::resizedInternal(Rectangle<int> &r)
 	remoteHostUI->setBounds(remoteR.reduced(2, 0));
 
 	r.setY(remoteR.getBottom()+5);
-	resizedOSCInternal(r);
+	resizedOSCInternalContent(r);
 }
 
 void OSCModuleBaseEditor::controllableFeedbackAsyncUpdate(Controllable * c)

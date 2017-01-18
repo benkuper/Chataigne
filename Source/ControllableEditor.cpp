@@ -15,18 +15,19 @@
 ControllableEditor::ControllableEditor(Controllable * _controllable, bool isRoot, int initHeight) :
 	InspectableEditor(_controllable,isRoot), 
 	controllable(_controllable),
-	label("Label")
+	label("Label"),
+	showLabel(true)
 {
 	ui = controllable->createDefaultUI();
 	ui->setOpaqueBackground(true);
 	addAndMakeVisible(ui);
 
 	addAndMakeVisible(&label);
-
 	label.setJustificationType(Justification::left);
 	label.setFont(label.getFont().withHeight(12));
-	label.setText(controllable->niceName,dontSendNotification);
-
+	label.setText(controllable->niceName, dontSendNotification);
+	
+	
 	if (controllable->isRemovableByUser)
 	{
 		removeBT = AssetManager::getInstance()->getRemoveBT();
@@ -37,12 +38,28 @@ ControllableEditor::ControllableEditor(Controllable * _controllable, bool isRoot
 	setSize(100, initHeight);
 }
 
-void ControllableEditor::resized()
+  void ControllableEditor::setShowLabel(bool value)
+  {
+	  if (showLabel == value) return;
+	  showLabel = value;
+	  if (showLabel)
+	  {
+		  addAndMakeVisible(&label);
+	  } else
+	  {
+		  removeChildComponent(&label);
+	  }
+  }
+
+  void ControllableEditor::resized()
 {
 	Rectangle<int> r = getLocalBounds();// .withHeight(16);
-	label.setBounds(r.removeFromLeft(jmin<int>(getWidth()/3,100)));
 
-	r.removeFromLeft(3);
+	if (showLabel)
+	{
+		label.setBounds(r.removeFromLeft(jmin<int>(getWidth() / 3, 100)));
+		r.removeFromLeft(3);
+	}
 
 	if (controllable->isRemovableByUser && removeBT != nullptr)
 	{
@@ -50,7 +67,10 @@ void ControllableEditor::resized()
 		r.removeFromRight(2);
 	}
 	
-	ui->setBounds(r.removeFromRight(jmin<int>(getWidth()*2/3-10,150)));
+
+	if (showLabel) r = r.removeFromRight(jmin<int>(getWidth() * 2 / 3 - 10, 150));
+	ui->setBounds(r);
+
 }
 
 void ControllableEditor::buttonClicked(Button * b)

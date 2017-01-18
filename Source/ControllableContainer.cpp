@@ -36,6 +36,7 @@ ControllableContainer::ControllableContainer(const String & niceName) :
 	nameCanBeChangedByUser(true),
 	isTargettable(true),
 	hideInEditor(false),
+	canInspectChildContainers(true),
 	queuedNotifier(50) //what to put in max size ??
 {
   setNiceName(niceName);

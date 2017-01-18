@@ -112,7 +112,6 @@ public:
 	virtual void removeItemUIInternal(U *) {}
 
 	//menu
-	
 	U * getUIForItem(T * item, bool directIndexAccess = true);
 
 	int getContentHeight();

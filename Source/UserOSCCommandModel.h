@@ -11,22 +11,40 @@
 #ifndef USEROSCCOMMANDMODEL_H_INCLUDED
 #define USEROSCCOMMANDMODEL_H_INCLUDED
 
-#include "BaseItem.h"
+#include "BaseManager.h"
 #include "CommandDefinition.h"
-#include "ControllableContainer.h"
 
 class UserOSCCommandDefinition;
 
 class OSCCommandModelArgument :
-	public ControllableContainer
+	public BaseItem
 {
 public:
-	OSCCommandModelArgument(Parameter * p);
+	OSCCommandModelArgument(const String &name = "arg", Parameter * p = nullptr);
 	Parameter * param;
-	StringParameter * argumentName; 
+	//StringParameter * argumentName; 
 	BoolParameter * useForMapping;
 	BoolParameter * editable;
 
+	InspectableEditor * getEditor(bool isRoot) override;
+	
+	void onContainerNiceNameChanged() override;
+};
+
+class OSCCommandModelArgumentManager :
+	public BaseManager<OSCCommandModelArgument>
+{
+public:
+	OSCCommandModelArgumentManager();
+	~OSCCommandModelArgumentManager() {}
+
+	void addItemWithParam(Parameter * p);
+	void addItemFromType(Parameter::Type type);
+
+	void autoRenameItems();
+	void removeItemInternal(OSCCommandModelArgument * i) override;
+	InspectableEditor * getEditor(bool isRoot) override;
+	
 };
 
 class UserOSCCommandModel :
@@ -39,13 +57,11 @@ public:
 	StringParameter * addressParam;
 	BoolParameter * addressIsEditable;
 
-	ControllableContainer argumentsContainer;
-	OwnedArray<OSCCommandModelArgument> arguments;
+	OSCCommandModelArgumentManager arguments;
 
-	void addIntArgument();
-	void addFloatArgument();
-	void addStringArgument();
-	void addArgument(Parameter *);
+	var getJSONData() override;
+	void loadJSONDataInternal(var data) override;
+	
 
 	InspectableEditor * getEditor(bool /*isRoot*/) override;
 
@@ -61,6 +77,8 @@ public:
 	~UserOSCCommandDefinition();
 
 	UserOSCCommandModel * model;
+
+	
 
 	void childAddressChanged(ControllableContainer * cc) override;
 

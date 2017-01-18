@@ -32,13 +32,15 @@ void CustomOSCModuleEditor::showCommandCreatorWindow()
 	UserOSCCommandModelManagerWindow::getInstance()->editModule(cModule);
 }
 
-void CustomOSCModuleEditor::resizedOSCInternal(Rectangle<int> &r)
+void CustomOSCModuleEditor::resizedOSCInternalContent(Rectangle<int> &r)
 {
+
 	Rectangle<int> br = r.withHeight(18);
 	autoAddUI->setBounds(br.removeFromLeft(50)); 
 	br.removeFromLeft(5);
 
+
 	r.translate(0,br.getHeight()+2);
-	valuesEditor->setBounds(r);
+	valuesEditor->setBounds(r.withHeight(valuesEditor->getHeight()));
 	r.setBottom(valuesEditor->getBottom());
 }

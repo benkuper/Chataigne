@@ -9,7 +9,7 @@
 */
 
 #include "BaseItem.h"
-
+#include "BaseItemEditor.h"
 
 BaseItem::BaseItem(const String &name, bool _canBeDisabled) :
 	ControllableContainer(name),
@@ -52,4 +52,9 @@ void BaseItem::onContainerParameterChanged(Parameter * p)
 void BaseItem::onContainerNiceNameChanged()
 {
 	nameParam->setValue(niceName);
+}
+
+InspectableEditor * BaseItem::getEditor(bool isRoot)
+{
+	return new BaseItemEditor(this,isRoot);
 }

@@ -14,46 +14,28 @@
 #include "UserOSCCommand.h"
 
 UserOSCCommandModel::UserOSCCommandModel() :
-	BaseItem("New Model",false),
-	argumentsContainer("arguments")
+	BaseItem("New Model",false)
 {
 	addressParam = addStringParameter("OSC Address", "OSC Adress that will sent", "/example");
-	addressIsEditable = addBoolParameter("Address is Editable", "If check, the address will be editable in each command created", false);
-	addChildControllableContainer(&argumentsContainer);	
+	addressIsEditable = addBoolParameter("Editable", "If check, the address will be editable in each command created", false);
+	addChildControllableContainer(&arguments);
 }
 
 UserOSCCommandModel::~UserOSCCommandModel()
 {
-	argumentsContainer.clear();
 }
 
-void UserOSCCommandModel::addIntArgument()
+
+var UserOSCCommandModel::getJSONData()
 {
-	String id = String(argumentsContainer.controllables.size() + 1);
-	Parameter * p = new IntParameter("#" + id, "Argument #" + id + ", type int", 0, -1000, 1000);
-	addArgument(p);
+	var data = BaseItem::getJSONData();
+	data.getDynamicObject()->setProperty("arguments", arguments.getJSONData());
+	return data;
 }
 
-void UserOSCCommandModel::addFloatArgument()
+void UserOSCCommandModel::loadJSONDataInternal(var data)
 {
-	String id = String(argumentsContainer.controllables.size() + 1);
-	Parameter * p = new FloatParameter("#" + id, "Argument #" + id + ", type int", 0, 0, 1);
-	addArgument(p);
-}
-
-void UserOSCCommandModel::addStringArgument()
-{
-	String id = String(argumentsContainer.controllables.size() + 1);
-	Parameter * p = new StringParameter("#" + id, "Argument #" + id + ", type int", "myString");
-	addArgument(p);
-}
-
-void UserOSCCommandModel::addArgument(Parameter * p)
-{
-	p->saveValueOnly = false;
-	OSCCommandModelArgument * a = new OSCCommandModelArgument(p);
-	arguments.add(a);
-	argumentsContainer.addChildControllableContainer(a);
+	arguments.loadJSONData(data.getProperty("arguments", var()));
 }
 
 InspectableEditor * UserOSCCommandModel::getEditor(bool isRoot)
@@ -65,14 +47,30 @@ InspectableEditor * UserOSCCommandModel::getEditor(bool isRoot)
 
 //MODEL ARGUMENT
 
-OSCCommandModelArgument::OSCCommandModelArgument(Parameter * _p) :
-	ControllableContainer("arg"),
+OSCCommandModelArgument::OSCCommandModelArgument(const String &name, Parameter * _p) :
+	BaseItem(name),
 	param(_p)
 {
+	isSelectable = false;
+	canBeDisabled = false;
+	
+	jassert(param != nullptr);
 	addControllable(param);
-	argumentName = addStringParameter("Argument name", "Name for the argument", "Arg");
+
+	//argumentName = addStringParameter("Argument name", "Name for the argument", "Arg");
 	useForMapping = addBoolParameter("Use for mapping", "Check this to automatically set its value when used in a mapping flow.", false);
 	editable = addBoolParameter("Editable", "If uncheck, argument will always be used at its default value, and not visible in the command editor", true);
+}
+
+InspectableEditor * OSCCommandModelArgument::getEditor(bool isRoot)
+{
+	return new OSCCommandModelArgumentEditor(this, isRoot);
+}
+
+void OSCCommandModelArgument::onContainerNiceNameChanged()
+{
+	BaseItem::onContainerNiceNameChanged();
+	param->setNiceName(niceName);
 }
 
 UserOSCCommandDefinition::UserOSCCommandDefinition(UserOSCCommandModel * _model) :
@@ -106,4 +104,61 @@ UserOSCCommandDefinition * UserOSCCommandDefinition::createDef(ControllableConta
 	def->setup(container, "", def->model->niceName, createFunc);
 	def->addParam("model", def->model->shortName);
 	return def;
+}
+
+
+//MANAGER
+
+OSCCommandModelArgumentManager::OSCCommandModelArgumentManager() : 
+	BaseManager("arguments") 
+{
+	selectItemWhenCreated = false;
+}
+
+void OSCCommandModelArgumentManager::addItemWithParam(Parameter * p)
+{
+	OSCCommandModelArgument * a = new OSCCommandModelArgument("#"+String(items.size()+1),p);
+	addItem(a);
+}
+
+void OSCCommandModelArgumentManager::addItemFromType(Parameter::Type type)
+{
+	Parameter * p = nullptr;
+	String id = String(items.size()+1);
+	switch (type)
+	{
+	case Parameter::STRING:
+		p = new StringParameter("#" + id, "Argument #" + id + ", type int", "myString");
+		break;
+	case Parameter::FLOAT:
+		p = new FloatParameter("#" + id, "Argument #" + id + ", type foat", 0, 0, 1);
+		break;
+	case Parameter::INT:
+		p = new IntParameter("#" + id, "Argument #" + id + ", type int", 0, -1000, 1000);
+		break;
+	case Parameter::BOOL:
+		p = new BoolParameter("#" + id, "Argument #" + id + ", type bool", false);
+		break;
+	}
+	
+	jassert(p != nullptr);
+	addItemWithParam(p);
+}
+
+void OSCCommandModelArgumentManager::autoRenameItems()
+{
+	for (int i = 0; i < items.size(); i++)
+	{
+		if(items[i]->niceName.startsWithChar('#')) items[i]->setNiceName("#" + String(i+1));
+	}
+}
+
+void OSCCommandModelArgumentManager::removeItemInternal(OSCCommandModelArgument *)
+{
+	autoRenameItems();
+}
+
+InspectableEditor * OSCCommandModelArgumentManager::getEditor(bool isRoot)
+{
+	return new UserOSCCommandModelArgumentManagerEditor(this,isRoot);
 }
