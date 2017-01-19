@@ -15,7 +15,7 @@ juce_ImplementSingleton(MappingFilterManager)
 MappingFilterManager::MappingFilterManager() :
 	BaseManager<MappingFilter>("Filters")
 {
-	hideInEditor = false;
+	selectItemWhenCreated = false;
 }
 
 MappingFilterManager::~MappingFilterManager()

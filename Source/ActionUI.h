@@ -14,6 +14,7 @@
 
 #include "BaseItemUI.h"
 #include "Action.h"
+#include "BoolToggleUI.h"
 
 class ActionUI :
 	public BaseItemUI<Action>

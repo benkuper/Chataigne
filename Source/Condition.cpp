@@ -16,6 +16,8 @@
 Condition::Condition() :
 	BaseItem("Condition")
 {
+	isSelectable = false;
+
 	isValid = addBoolParameter("Is Valid", "Where the condition passed the test or not.", false);
 	isValid->isEditable = false;
 	isValid->isSavable = false;

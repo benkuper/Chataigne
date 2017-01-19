@@ -9,7 +9,6 @@
 */
 
 #include "ActionUI.h"
-#include "ActionEditor.h"
 
 ActionUI::ActionUI(Action * _action) :
 	BaseItemUI<Action>(_action),

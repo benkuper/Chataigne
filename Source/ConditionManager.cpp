@@ -16,6 +16,7 @@ ConditionManager::ConditionManager() :
 	BaseManager<Condition>("Conditions")
 {
 	selectItemWhenCreated = false;
+
 	isValid = addBoolParameter("Is Valid","Indicates if all the conditions are valid. If so, the consequences are triggered one time, at the moment the action becomes valid.",false);
 	isValid->isSavable = false;
 	isValid->isEditable = false;

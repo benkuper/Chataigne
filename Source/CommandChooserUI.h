@@ -18,8 +18,10 @@ class CommandChooserUI :
 	public ButtonListener
 {
 public:
-	CommandChooserUI();
+	CommandChooserUI(CommandContext context);
 	virtual ~CommandChooserUI();
+
+	CommandContext context;
 
 	bool commandIsSet;
 	String noTargetText;

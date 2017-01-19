@@ -11,14 +11,16 @@
 #ifndef MAPPINGOUTPUT_H_INCLUDED
 #define MAPPINGOUTPUT_H_INCLUDED
 
-#include "BaseItem.h"
+#include "BaseCommandHandler.h"
 
 class MappingOutput :
-	public BaseItem
+	public BaseCommandHandler
 {
 public:
 	MappingOutput();
 	virtual ~MappingOutput();
+
+	void setValue(var value);
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MappingOutput)
 };

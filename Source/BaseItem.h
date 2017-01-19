@@ -33,7 +33,6 @@ public :
 
 	void onContainerNiceNameChanged() override;
 
-	InspectableEditor * getEditor(bool isRoot) override;
 
 	class  Listener
 	{

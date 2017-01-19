@@ -32,12 +32,13 @@ void ModuleManager::addItemFromData(var data)
 	if (i != nullptr) addItem(i, data);
 }
 
-PopupMenu ModuleManager::getAllModulesCommandMenu()
+PopupMenu ModuleManager::getAllModulesCommandMenu(CommandContext context)
 {
 	PopupMenu menu;
-	for (int i = 0; i < items.size(); i++) menu.addSubMenu(items[i]->niceName, items[i]->defManager.getCommandMenu(i * 1000));
+	for (int i = 0; i < items.size(); i++) menu.addSubMenu(items[i]->niceName, items[i]->defManager.getCommandMenu(i * 1000,context));
 	return menu;
 }
+
 
 CommandDefinition * ModuleManager::getCommandDefinitionForItemID(int itemID)
 {

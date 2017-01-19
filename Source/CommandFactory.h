@@ -17,7 +17,7 @@
 class CommandFactory
 {
 public:
-	static CommandDefinition * showMenuAndGetCommand();
+	static CommandDefinition * showMenuAndGetCommand(CommandContext context);
 };
 
 

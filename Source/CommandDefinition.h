@@ -19,9 +19,10 @@ typedef std::function<BaseCommand*(ControllableContainer *, CommandContext, var 
 class CommandDefinition
 {
 public:
-	CommandDefinition();
+	CommandDefinition() {}
 	virtual ~CommandDefinition() {}
 	
+	CommandContext context;
 	String menuPath;
 	String commandType;
 	ControllableContainer * container;
@@ -32,11 +33,12 @@ public:
 	void setup(ControllableContainer * container,
 		const String &menuPath,
 		const String &type,
+		CommandContext context,
 		CreateCommandFunc createFunc);
 
 	BaseCommand * create(CommandContext context);
 
-	static CommandDefinition * createDef(ControllableContainer * container, const String &menuPath, const String &type, CreateCommandFunc createFunc);
+	static CommandDefinition * createDef(ControllableContainer * container, const String &menuPath, const String &type, CreateCommandFunc createFunc, CommandContext context = CommandContext::BOTH);
 	CommandDefinition * addParam(const String &paramName, var value);
 
 };

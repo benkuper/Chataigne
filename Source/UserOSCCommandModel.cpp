@@ -101,7 +101,7 @@ void UserOSCCommandDefinition::childAddressChanged(ControllableContainer * cc)
 UserOSCCommandDefinition * UserOSCCommandDefinition::createDef(ControllableContainer * container, UserOSCCommandModel * _model,CreateCommandFunc createFunc)
 {
 	UserOSCCommandDefinition *def = new UserOSCCommandDefinition(_model);
-	def->setup(container, "", def->model->niceName, createFunc);
+	def->setup(container, "", def->model->niceName, CommandContext::BOTH, createFunc);
 	def->addParam("model", def->model->shortName);
 	return def;
 }

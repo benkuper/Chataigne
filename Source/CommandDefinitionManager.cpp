@@ -30,7 +30,7 @@ void CommandDefinitionManager::remove(CommandDefinition * def)
 	definitions.removeObject(def);
 }
 
-void CommandDefinitionManager::rebuildCommandMenu(int baseID)
+void CommandDefinitionManager::rebuildCommandMenu(int baseID, CommandContext context)
 {
 	commandMenu.clear();
 	OwnedArray<PopupMenu> subMenus;
@@ -38,6 +38,8 @@ void CommandDefinitionManager::rebuildCommandMenu(int baseID)
 
 	for (auto &d : definitions)
 	{
+		if (context != CommandContext::BOTH && context != d->context) continue;
+
 		int itemID = definitions.indexOf(d) + 1 + baseID;//start at baseID + 1 for menu
 		if (d->menuPath.isEmpty())
 		{
@@ -68,9 +70,10 @@ void CommandDefinitionManager::rebuildCommandMenu(int baseID)
 	for (int i = 0; i < subMenus.size(); i++) commandMenu.addSubMenu(subMenuNames[i], *subMenus[i]);
 }
 
-PopupMenu CommandDefinitionManager::getCommandMenu(int baseID)
+
+PopupMenu CommandDefinitionManager::getCommandMenu(int baseID, CommandContext context)
 {
-	rebuildCommandMenu(baseID);
+	rebuildCommandMenu(baseID, context);
 	return commandMenu;
 }
 

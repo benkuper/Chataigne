@@ -33,7 +33,6 @@ public:
 	IntParameter * remotePort;
 	OSCSender sender;
 
-
 	//RECEIVE
 	void setupReceiver();
 	float getFloatArg(OSCArgument a);

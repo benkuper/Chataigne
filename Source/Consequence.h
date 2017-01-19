@@ -11,34 +11,23 @@
 #ifndef CONSEQUENCE_H_INCLUDED
 #define CONSEQUENCE_H_INCLUDED
 
-#include "BaseItem.h"
-#include "ModuleManager.h"
-class BaseCommand;
+#include "BaseCommandHandler.h"
 
 class Consequence :
-	public BaseItem
+	public BaseCommandHandler
 {
 public:
 	Consequence();
 	virtual ~Consequence();
 
 	Trigger * trigger;
-
-	ScopedPointer<BaseCommand> command;
-	CommandDefinition * commandDefinition;
-
-	void setCommand(CommandDefinition *);
 	void onContainerTriggerTriggered(Trigger *) override;
-
-	var getJSONData() override;
-	void loadJSONDataInternal(var data) override;
 
 	class ConsequenceListener
 	{
 	public:
 		virtual ~ConsequenceListener() {}
 		virtual void consequenceTriggered(Consequence *) {}
-		virtual void consequenceCommandChanged(Consequence *) {}
 	};
 
 	ListenerList<ConsequenceListener> consequenceListeners;

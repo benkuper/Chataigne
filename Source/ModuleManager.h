@@ -25,7 +25,7 @@ public:
 
 	virtual void addItemFromData(var data) override;
 
-	PopupMenu getAllModulesCommandMenu();
+	PopupMenu getAllModulesCommandMenu(CommandContext context);
 	CommandDefinition * getCommandDefinitionForItemID(int id);
 
 

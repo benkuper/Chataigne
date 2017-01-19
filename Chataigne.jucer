@@ -214,6 +214,16 @@
             <FILE id="KzTWEH" name="AutomationKey.h" compile="0" resource="0" file="Source/AutomationKey.h"/>
           </GROUP>
           <GROUP id="{E7C8AAFC-E2FA-90D0-859B-423BC528A52F}" name="Command">
+            <FILE id="gIeRan" name="BaseCommandHandler.cpp" compile="1" resource="0"
+                  file="Source/BaseCommandHandler.cpp"/>
+            <FILE id="NEs70O" name="BaseCommandHandler.h" compile="0" resource="0"
+                  file="Source/BaseCommandHandler.h"/>
+            <GROUP id="{D2DBE4AC-35AB-8D3A-FE4E-BF5B8540D68E}" name="ui">
+              <FILE id="As2rOa" name="BaseCommandHandlerEditor.cpp" compile="1" resource="0"
+                    file="Source/BaseCommandHandlerEditor.cpp"/>
+              <FILE id="mSU10f" name="BaseCommandHandlerEditor.h" compile="0" resource="0"
+                    file="Source/BaseCommandHandlerEditor.h"/>
+            </GROUP>
             <FILE id="C1hNyN" name="CommandDefinition.cpp" compile="1" resource="0"
                   file="Source/CommandDefinition.cpp"/>
             <FILE id="fpS2bd" name="CommandDefinition.h" compile="0" resource="0"
@@ -274,15 +284,6 @@
           </GROUP>
           <GROUP id="{797800DA-0DCB-1B89-AF24-83A7716BB83C}" name="Action">
             <GROUP id="{E5695483-8CF1-233B-B7FA-0DB866638800}" name="Consequence">
-              <GROUP id="{8A4F3DD2-2914-97CE-A6DB-608E9454906E}" name="ui">
-                <FILE id="JVnWeL" name="ConsequenceManagerUI.cpp" compile="1" resource="0"
-                      file="Source/ConsequenceManagerUI.cpp"/>
-                <FILE id="HsDMg1" name="ConsequenceManagerUI.h" compile="0" resource="0"
-                      file="Source/ConsequenceManagerUI.h"/>
-                <FILE id="u2jfW0" name="ConsequenceUI.cpp" compile="1" resource="0"
-                      file="Source/ConsequenceUI.cpp"/>
-                <FILE id="FjwIjk" name="ConsequenceUI.h" compile="0" resource="0" file="Source/ConsequenceUI.h"/>
-              </GROUP>
               <FILE id="wuf520" name="Consequence.cpp" compile="1" resource="0" file="Source/Consequence.cpp"/>
               <FILE id="X3tD6S" name="Consequence.h" compile="0" resource="0" file="Source/Consequence.h"/>
               <FILE id="Mud4rA" name="ConsequenceManager.cpp" compile="1" resource="0"
@@ -345,9 +346,6 @@
                     file="Source/ConditionManager.h"/>
             </GROUP>
             <GROUP id="{0A23E296-656D-518E-2323-EACB0750AC2B}" name="ui">
-              <FILE id="SUmLL9" name="ActionEditor.cpp" compile="1" resource="0"
-                    file="Source/ActionEditor.cpp"/>
-              <FILE id="roKvPP" name="ActionEditor.h" compile="0" resource="0" file="Source/ActionEditor.h"/>
               <FILE id="VIZtUo" name="ActionManagerUI.cpp" compile="1" resource="0"
                     file="Source/ActionManagerUI.cpp"/>
               <FILE id="l77mVH" name="ActionManagerUI.h" compile="0" resource="0"
@@ -374,16 +372,6 @@
               <FILE id="B1bYRH" name="MappingInput.h" compile="0" resource="0" file="Source/MappingInput.h"/>
             </GROUP>
             <GROUP id="{18518876-74C1-2B25-1A4A-02F7AB24FFB8}" name="Output">
-              <GROUP id="{5C583B99-90CB-DA96-EC0A-625FC344B9E5}" name="ui">
-                <FILE id="bxtmpq" name="MappingOutputManagerUI.cpp" compile="1" resource="0"
-                      file="Source/MappingOutputManagerUI.cpp"/>
-                <FILE id="C8C69n" name="MappingOutputManagerUI.h" compile="0" resource="0"
-                      file="Source/MappingOutputManagerUI.h"/>
-                <FILE id="JmbOl7" name="MappingOutputUI.cpp" compile="1" resource="0"
-                      file="Source/MappingOutputUI.cpp"/>
-                <FILE id="pE9S9B" name="MappingOutputUI.h" compile="0" resource="0"
-                      file="Source/MappingOutputUI.h"/>
-              </GROUP>
               <FILE id="oukCyf" name="MappingOutput.cpp" compile="1" resource="0"
                     file="Source/MappingOutput.cpp"/>
               <FILE id="ftf39y" name="MappingOutput.h" compile="0" resource="0" file="Source/MappingOutput.h"/>

@@ -16,6 +16,6 @@ ResolumeModule::ResolumeModule() :
 	OSCModule("Resolume")
 {
 	
-	defManager.add(CommandDefinition::createDef(this, "Composition", "Stop Composition", &OSCCommand::create)->addParam("address", "/composition/stop"));
+	defManager.add(CommandDefinition::createDef(this, "Composition", "Stop Composition", &OSCCommand::create, CommandContext::ACTION)->addParam("address", "/composition/stop"));
 	
 }

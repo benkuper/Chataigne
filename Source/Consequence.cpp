@@ -13,8 +13,10 @@
 #include "Engine.h"
 
 Consequence::Consequence() :
-	BaseItem("Consequence")
+	BaseCommandHandler("Consequence")
 {
+	isSelectable = false;
+
 	trigger = addTrigger("Trigger", "Trigger this consequence");
 }
 
@@ -23,67 +25,11 @@ Consequence::~Consequence()
 }
 
 
-void Consequence::setCommand(CommandDefinition * commandDef)
-{
-	if (command != nullptr)
-	{
-
-	}
-
-	commandDefinition = commandDef;
-	if (commandDef != nullptr) command = commandDef->create(CommandContext::ACTION);
-
-	else command = nullptr;
-
-	if (command != nullptr)
-	{
-
-	}
-
-	consequenceListeners.call(&ConsequenceListener::consequenceCommandChanged, this);
-}
 
 void Consequence::onContainerTriggerTriggered(Trigger * t)
 {
 	if (t == trigger)
 	{
-		DBG("consequence trigger");
 		if (command != nullptr) command->trigger();
 	}
-}
-
-var Consequence::getJSONData()
-{
-	var data = BaseItem::getJSONData();
-	if (command != nullptr)
-	{
-		data.getDynamicObject()->setProperty("commandModule", command->container->getControlAddress());
-		data.getDynamicObject()->setProperty("commandPath", commandDefinition->menuPath);
-		data.getDynamicObject()->setProperty("commandType", commandDefinition->commandType);
-		data.getDynamicObject()->setProperty("command", command->getJSONData());
-	}
-	return data;
-}
-
-void Consequence::loadJSONDataInternal(var data)
-{
-	BaseItem::loadJSONDataInternal(data);
-	if (data.getDynamicObject()->hasProperty("commandModule"))
-	{
-		Module * m = (Module *)Engine::getInstance()->getControllableContainerForAddress(data.getProperty("commandModule", ""));
-		if (m != nullptr)
-		{
-			String menuPath = data.getProperty("commandPath", "");
-			String commandType = data.getProperty("commandType", "");
-			setCommand(m->defManager.getCommandDefinitionFor(menuPath, commandType));
-			if (command != nullptr)
-			{
-				command->loadJSONData(data.getProperty("command",var()));
-			}
-		} else
-		{
-			DBG("Output not found : " << data.getProperty("commandModule", "").toString());
-		}
-	}
-
 }

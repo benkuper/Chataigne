@@ -9,12 +9,20 @@
 */
 
 #include "MappingOutput.h"
+#include "BaseCommand.h"
+#include "Engine.h"
 
 MappingOutput::MappingOutput() :
-	BaseItem("MappingOutput")
+	BaseCommandHandler("MappingOutput")
 {
+	isSelectable = false;
 }
 
 MappingOutput::~MappingOutput()
 {
+}
+
+void MappingOutput::setValue(var value)
+{
+	if(command != nullptr) command->setValue(value);
 }

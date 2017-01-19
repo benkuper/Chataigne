@@ -13,6 +13,7 @@
 MappingFilter::MappingFilter() :
 	BaseItem("MappingFilter")
 {
+	isSelectable = false;
 }
 
 MappingFilter::~MappingFilter()

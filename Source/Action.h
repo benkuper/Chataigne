@@ -54,7 +54,7 @@ public:
 	void removeActionListener(ActionListener* listener) { actionListeners.remove(listener); }
 
 
-	InspectableEditor * getEditor(bool /*isRoot*/) override;
+	//InspectableEditor * getEditor(bool /*isRoot*/) override;
 
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Action)

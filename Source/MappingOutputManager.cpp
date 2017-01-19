@@ -15,7 +15,7 @@ juce_ImplementSingleton(MappingOutputManager)
 MappingOutputManager::MappingOutputManager() :
 	BaseManager<MappingOutput>("Outputs")
 {
-	hideInEditor = false;
+	selectItemWhenCreated = false;
 }
 
 MappingOutputManager::~MappingOutputManager()

@@ -10,33 +10,29 @@
 
 #include "CommandDefinition.h"
 
-CommandDefinition::CommandDefinition()
-{
-}
-
-void CommandDefinition::setup(ControllableContainer * _container, const String & _menuPath, const String & _commandType,
+void CommandDefinition::setup(ControllableContainer * _container, const String & _menuPath, const String & _commandType, CommandContext _context,
 	CreateCommandFunc _createFunc)
 {
 	this->menuPath = _menuPath;
 	this->commandType = _commandType;
 	this->createFunc = _createFunc;
 	this->container = _container;
-	//setNiceName(menuPath.isNotEmpty()?menuPath+"_"+commandType:commandType);
+	this->context = _context;
 
 	params = var(new DynamicObject());
 }
 
 
-BaseCommand * CommandDefinition::create(CommandContext context)
+BaseCommand * CommandDefinition::create(CommandContext _context)
 {
-	BaseCommand * c = createFunc(container, context, params);
+	BaseCommand * c = createFunc(container, _context, params);
 	return c;
 }
 
-CommandDefinition * CommandDefinition::createDef(ControllableContainer * container, const String & menuPath, const String & type, CreateCommandFunc createFunc)
+CommandDefinition * CommandDefinition::createDef(ControllableContainer * container, const String & menuPath, const String & type, CreateCommandFunc createFunc, CommandContext context)
 {
 	CommandDefinition *def = new CommandDefinition();
-	def->setup(container, menuPath, type, createFunc);
+	def->setup(container, menuPath, type, context, createFunc);
 	return def;
 }
 
