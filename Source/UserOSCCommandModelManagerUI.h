@@ -34,8 +34,6 @@ class UserOSCCommandModelManagerWindow :
 	
 {
 public:
-	juce_DeclareSingleton(UserOSCCommandModelManagerWindow,false)
-public:
 	UserOSCCommandModelManagerWindow(const String &name = "OSC Models");
 	~UserOSCCommandModelManagerWindow();
 

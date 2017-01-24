@@ -10,13 +10,13 @@
 
 #include "UserOSCCommandModelManagerUI.h"
 
-juce_ImplementSingleton(UserOSCCommandModelManagerWindow)
 
 
 UserOSCCommandModelManagerWindow::UserOSCCommandModelManagerWindow(const String &_name) :
 	ShapeShifterContentComponent(_name)
 {
 	Inspector::getInstance()->addInspectorListener(this);
+	
 }
 
 UserOSCCommandModelManagerWindow::~UserOSCCommandModelManagerWindow()
@@ -63,6 +63,7 @@ UserOSCCommandModelManagerUI::UserOSCCommandModelManagerUI(UserOSCCommandModelMa
 	BaseManagerUI("Command Models for " + moduleName,manager)
 {
 	drawContour = true;
+	addExistingItems();
 }
 
 UserOSCCommandModelManagerUI::~UserOSCCommandModelManagerUI()

@@ -12,6 +12,7 @@
 #include "TargetParameter.h"
 #include  "ComparatorFactory.h"
 #include "ModuleManager.h"
+#include "ConditionEditor.h"
 
 Condition::Condition() :
 	BaseItem("Condition")
@@ -106,4 +107,9 @@ void Condition::comparatorValidationChanged(BaseComparator *)
 {
 	isValid->setValue(comparator->isValid);
 	
+}
+
+InspectableEditor * Condition::getEditor(bool isRoot)
+{
+	return new ConditionEditor(this, isRoot);
 }

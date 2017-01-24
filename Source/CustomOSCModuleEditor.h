@@ -26,8 +26,6 @@ public:
 	ScopedPointer<BoolToggleUI> autoAddUI;
 	ScopedPointer<InspectableEditor> valuesEditor;
 
-	void showCommandCreatorWindow();
-
 	void resizedOSCInternalContent(Rectangle<int> &r) override;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(CustomOSCModuleEditor)

@@ -1,30 +1,31 @@
 /*
   ==============================================================================
 
-    ConditionUI.h
+    ConditionEditor.h
     Created: 28 Oct 2016 8:07:05pm
     Author:  bkupe
 
   ==============================================================================
 */
 
-#ifndef CONDITIONUI_H_INCLUDED
-#define CONDITIONUI_H_INCLUDED
+#ifndef ConditionEditor_H_INCLUDED
+#define ConditionEditor_H_INCLUDED
 
-#include "BaseItemUI.h"
+#include "BaseItemEditor.h"
 #include "Condition.h"
 #include "TargetParameterUI.h"
 #include "BaseComparatorUI.h"
 
-class ConditionUI :
-	public BaseItemUI<Condition>,
+class ConditionEditor :
+	public BaseItemEditor,
 	public Condition::ConditionListener
 {
 public:
-	ConditionUI(Condition *);
-	virtual ~ConditionUI();
+	ConditionEditor(Condition *, bool isRoot);
+	virtual ~ConditionEditor();
 
-	void resized() override;
+	
+	void resizedInternalContent(Rectangle<int> &r) override;
 
 	Condition * condition;
 	ScopedPointer<TargetParameterUI> targetUI;
@@ -38,10 +39,10 @@ public:
 	void conditionValidationChanged(Condition *) override;
 
 	void childBoundsChanged(Component *) override;
-	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ConditionUI)
+	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ConditionEditor)
 };
 
 
 
 
-#endif  // CONDITIONUI_H_INCLUDED
+#endif  // ConditionEditor_H_INCLUDED

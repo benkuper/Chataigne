@@ -9,6 +9,7 @@
 */
 
 #include "ConditionManager.h"
+#include "ConditionManagerEditor.h"
 
 juce_ImplementSingleton(ConditionManager)
 
@@ -51,6 +52,11 @@ void ConditionManager::checkAllConditions()
 void ConditionManager::conditionValidationChanged(Condition *)
 {
 	checkAllConditions();
+}
+
+InspectableEditor * ConditionManager::getEditor(bool isRoot)
+{
+	return new ConditionManagerEditor(this, isRoot);
 }
 
 bool ConditionManager::areAllConditionsValid()

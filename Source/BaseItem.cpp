@@ -53,3 +53,8 @@ void BaseItem::onContainerNiceNameChanged()
 {
 	nameParam->setValue(niceName);
 }
+
+InspectableEditor * BaseItem::getEditor(bool isRoot)
+{
+	return new BaseItemEditor(this,isRoot);
+}

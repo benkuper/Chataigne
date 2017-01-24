@@ -31,7 +31,7 @@ public:
 	ScopedPointer<StringParameterUI> nameUI;
 	ScopedPointer<ImageButton> removeBT;
 
-	float headerHeight;
+	int headerHeight;
 
 	bool paintHeaderOnly;
 

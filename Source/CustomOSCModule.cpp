@@ -130,6 +130,7 @@ var CustomOSCModule::getJSONData()
 {
 	var data = OSCModule::getJSONData();
 	data.getDynamicObject()->setProperty("values", valuesCC.getJSONData());
+	data.getDynamicObject()->setProperty("models", umm.getJSONData());
 	return data;
 }
 
@@ -138,6 +139,8 @@ void CustomOSCModule::loadJSONDataInternal(var data)
 	OSCModule::loadJSONDataInternal(data);
 	valuesCC.loadJSONData(data.getProperty("values", var()), true);
 	valuesCC.orderControllablesAlphabetically();
+	umm.loadJSONData(data.getProperty("models", var()),true);
+
 }
 
 InspectableEditor * CustomOSCModule::getEditor(bool isRoot)

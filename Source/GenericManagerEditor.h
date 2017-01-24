@@ -77,7 +77,7 @@ void GenericManagerEditor<T>::addExistingItems()
 {
 
 	//add existing items
-	for (auto &t : manager->items) addItemUI(t, false);
+	for (auto &t : manager->items) addEditorUI(t, false);
 	resized();
 }
 
@@ -124,7 +124,7 @@ inline void GenericManagerEditor<T>::buttonClicked(Button * b)
 	{
 		showMenuAndAddItem(true);
 	}
-}
+} 
 
 template<class T>
 void GenericManagerEditor<T>::mouseDown(const MouseEvent & e)

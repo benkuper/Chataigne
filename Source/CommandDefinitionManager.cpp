@@ -38,9 +38,10 @@ void CommandDefinitionManager::rebuildCommandMenu(int baseID, CommandContext con
 
 	for (auto &d : definitions)
 	{
-		if (context != CommandContext::BOTH && context != d->context) continue;
+		if (context != CommandContext::BOTH && d->context != CommandContext::BOTH && context != d->context) continue;
 
-		int itemID = definitions.indexOf(d) + 1 + baseID;//start at baseID + 1 for menu
+		int itemID = definitions.indexOf(d) + 1 + baseID; //start at baseID + 1 for menu
+
 		if (d->menuPath.isEmpty())
 		{
 			commandMenu.addItem(itemID, d->commandType);

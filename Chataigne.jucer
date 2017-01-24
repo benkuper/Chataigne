@@ -331,12 +331,14 @@
                       file="Source/ComparatorFactory.h"/>
               </GROUP>
               <GROUP id="{6E088B90-7091-75C6-4B65-2EF1286C2A6F}" name="ui">
-                <FILE id="VroQQY" name="ConditionManagerUI.cpp" compile="1" resource="0"
-                      file="Source/ConditionManagerUI.cpp"/>
-                <FILE id="xE4dGT" name="ConditionManagerUI.h" compile="0" resource="0"
-                      file="Source/ConditionManagerUI.h"/>
-                <FILE id="aO7fuv" name="ConditionUI.cpp" compile="1" resource="0" file="Source/ConditionUI.cpp"/>
-                <FILE id="Yp6Abo" name="ConditionUI.h" compile="0" resource="0" file="Source/ConditionUI.h"/>
+                <FILE id="VroQQY" name="ConditionManagerEditor.cpp" compile="1" resource="0"
+                      file="Source/ConditionManagerEditor.cpp"/>
+                <FILE id="xE4dGT" name="ConditionManagerEditor.h" compile="0" resource="0"
+                      file="Source/ConditionManagerEditor.h"/>
+                <FILE id="aO7fuv" name="ConditionEditor.cpp" compile="1" resource="0"
+                      file="Source/ConditionEditor.cpp"/>
+                <FILE id="Yp6Abo" name="ConditionEditor.h" compile="0" resource="0"
+                      file="Source/ConditionEditor.h"/>
               </GROUP>
               <FILE id="Kyggr9" name="Condition.cpp" compile="1" resource="0" file="Source/Condition.cpp"/>
               <FILE id="gnmFm6" name="Condition.h" compile="0" resource="0" file="Source/Condition.h"/>

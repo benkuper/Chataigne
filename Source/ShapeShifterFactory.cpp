@@ -61,7 +61,7 @@ ShapeShifterContent * ShapeShifterFactory::createContentForIndex(PanelName pn)
 		break;
 
 	case OSCCommandModelPanel:
-		return UserOSCCommandModelManagerWindow::getInstance();
+		return new UserOSCCommandModelManagerWindow(contentName);
 		break;
 
 	default:

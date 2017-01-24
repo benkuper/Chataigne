@@ -37,6 +37,8 @@ public:
 
 	InspectableEditor * getEditor(bool isRoot) override;
 
+	
+
 	//ModelManager callbacks
 	void itemAdded(UserOSCCommandModel * model);
 	void itemRemoved(UserOSCCommandModel * model);

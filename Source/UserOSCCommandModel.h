@@ -59,9 +59,10 @@ public:
 
 	OSCCommandModelArgumentManager arguments;
 
+	
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
-	
+
 
 	InspectableEditor * getEditor(bool /*isRoot*/) override;
 
@@ -77,7 +78,6 @@ public:
 	~UserOSCCommandDefinition();
 
 	UserOSCCommandModel * model;
-
 	
 
 	void childAddressChanged(ControllableContainer * cc) override;

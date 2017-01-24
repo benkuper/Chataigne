@@ -20,7 +20,11 @@ Action::Action(const String & name) :
 
 	cdm.addConditionManagerListener(this);
 
+	isValid = addBoolParameter("Is Valid", "Are all condition valids ?", false);
+	isValid->hideInEditor = true;
 	trigger = addTrigger("Trigger", "Triggers the action");
+
+
 }
 
   Action::~Action()

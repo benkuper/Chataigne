@@ -27,11 +27,6 @@ CustomOSCModuleEditor::~CustomOSCModuleEditor()
 {
 }
 
-void CustomOSCModuleEditor::showCommandCreatorWindow()
-{
-	UserOSCCommandModelManagerWindow::getInstance()->editModule(cModule);
-}
-
 void CustomOSCModuleEditor::resizedOSCInternalContent(Rectangle<int> &r)
 {
 

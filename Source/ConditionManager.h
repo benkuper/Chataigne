@@ -36,6 +36,8 @@ public:
 
 	void conditionValidationChanged(Condition *) override;
 
+	InspectableEditor * getEditor(bool isRoot) override;
+
 	class ConditionManagerListener
 	{
 	public:

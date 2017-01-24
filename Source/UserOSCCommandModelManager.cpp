@@ -18,3 +18,8 @@ UserOSCCommandModelManager::UserOSCCommandModelManager() :
 UserOSCCommandModelManager::~UserOSCCommandModelManager()
 {
 }
+
+void UserOSCCommandModelManager::addItemInternal(UserOSCCommandModel *, var data)
+{
+	DBG("Add item internal model");
+}

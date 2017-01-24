@@ -14,6 +14,7 @@ UserOSCCommandEditor::UserOSCCommandEditor(UserOSCCommand * _command, bool isRoo
 	GenericControllableContainerEditor(_command, isRoot),
 	command(_command)
 {
+
 }
 
 UserOSCCommandEditor::~UserOSCCommandEditor()

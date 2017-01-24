@@ -46,6 +46,8 @@ void UserOSCCommand::rebuildArgsFromModel()
 		
 		argumentsContainer.addParameter(p);
 	}
+
+	argumentsContainer.hideInEditor = model->arguments.items.size() == 0;
 }
 
 InspectableEditor * UserOSCCommand::getEditor(bool isRoot)

@@ -36,13 +36,13 @@ OSCModuleBaseEditor::OSCModuleBaseEditor(OSCModule * _oscModule, bool isRoot) :
 	addAndMakeVisible(&sendLabel);
 
 	remoteHostUI->setEnabled(!oscModule->useLocal->boolValue());
-
+	
 	oscModule->addAsyncContainerListener(this);
 }
 
 OSCModuleBaseEditor::~OSCModuleBaseEditor()
 {
-	oscModule->removeAsyncContainerListener(this);
+	if(!inspectable.wasObjectDeleted()) oscModule->removeAsyncContainerListener(this);
 }
 
 void OSCModuleBaseEditor::resizedInternalContent(Rectangle<int> &r)

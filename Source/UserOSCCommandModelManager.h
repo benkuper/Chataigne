@@ -20,6 +20,9 @@ class UserOSCCommandModelManager :
 public:
 	UserOSCCommandModelManager();
 	virtual ~UserOSCCommandModelManager();
+	
+
+	void addItemInternal(UserOSCCommandModel *, var data) override;
 
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UserOSCCommandModelManager)

@@ -1,22 +1,21 @@
 /*
   ==============================================================================
 
-    ConditionUI.cpp
+    ConditionEditor.cpp
     Created: 28 Oct 2016 8:07:05pm
     Author:  bkupe
 
   ==============================================================================
 */
 
-#include "ConditionUI.h"
+#include "ConditionEditor.h"
 
 
 
-ConditionUI::ConditionUI(Condition * _condition) :
-	BaseItemUI<Condition>(_condition),
+ConditionEditor::ConditionEditor(Condition * _condition, bool isRoot) :
+	BaseItemEditor(_condition, isRoot),
 	condition(_condition)
 {
-	autoSelectWithChildRespect = false;
 	targetUI = condition->sourceTarget->createTargetUI();
 	condition->addConditionListener(this);
 	addAndMakeVisible(targetUI);
@@ -24,19 +23,13 @@ ConditionUI::ConditionUI(Condition * _condition) :
 	updateSourceUI();
 }
 
-ConditionUI::~ConditionUI()
+ConditionEditor::~ConditionEditor()
 {
 	condition->removeConditionListener(this);
 }
 
-
-void ConditionUI::resized()
+void ConditionEditor::resizedInternalContent(Rectangle<int>& r)
 {
-	BaseItemUI::resized();
-
-	Rectangle<int> r = getLocalBounds().reduced(2);
-	r.removeFromTop(headerHeight + headerGap);
-
 	Rectangle<int> sr = r.withHeight(headerHeight);
 	if (sourceFeedbackUI != nullptr)
 	{
@@ -49,15 +42,14 @@ void ConditionUI::resized()
 
 	if (comparatorUI != nullptr)
 	{
-		comparatorUI->setBounds(r.withHeight(comparatorUI->getHeight()));
-		if (comparatorUI->getBottom() != getHeight()) setSize(getWidth(), comparatorUI->getBottom());
+		r.setHeight(comparatorUI->getHeight());
+		comparatorUI->setBounds(r);
 	} 
-
+	
 }
 
-void ConditionUI::paintOverChildren(Graphics & g)
+void ConditionEditor::paintOverChildren(Graphics & g)
 {
-	BaseItemUI::paintOverChildren(g);
 	if (condition->isValid->boolValue())
 	{
 		g.setColour(condition->enabled->boolValue()?GREEN_COLOR:LIGHTCONTOUR_COLOR);
@@ -65,7 +57,7 @@ void ConditionUI::paintOverChildren(Graphics & g)
 	}
 }
 
-void ConditionUI::updateSourceUI()
+void ConditionEditor::updateSourceUI()
 {
 	if (sourceFeedbackUI != nullptr) removeChildComponent(sourceFeedbackUI);
 	if (condition->sourceControllable != nullptr)
@@ -89,17 +81,17 @@ void ConditionUI::updateSourceUI()
 	resized();
 }
 
-void ConditionUI::conditionSourceChanged(Condition *)
+void ConditionEditor::conditionSourceChanged(Condition *)
 {
 	updateSourceUI();
 }
 
-void ConditionUI::conditionValidationChanged(Condition *)
+void ConditionEditor::conditionValidationChanged(Condition *)
 {
 	repaint();
 }
 
-void ConditionUI::childBoundsChanged(Component *)
+void ConditionEditor::childBoundsChanged(Component *)
 {
 	resized();
 }

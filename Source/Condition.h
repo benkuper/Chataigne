@@ -35,6 +35,8 @@ public:
 	void onContainerParameterChangedInternal(Parameter *) override;
 	void comparatorValidationChanged(BaseComparator *) override;
 
+	InspectableEditor * getEditor(bool isRoot) override;
+
 	class ConditionListener
 	{
 	public:
@@ -48,6 +50,7 @@ public:
 	ListenerList<ConditionListener> conditionListeners;
 	void addConditionListener(ConditionListener* newListener) { conditionListeners.add(newListener); }
 	void removeConditionListener(ConditionListener* listener) { conditionListeners.remove(listener); }
+
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Condition)
 };

@@ -25,7 +25,6 @@ UserOSCCommandModel::~UserOSCCommandModel()
 {
 }
 
-
 var UserOSCCommandModel::getJSONData()
 {
 	var data = BaseItem::getJSONData();
@@ -35,6 +34,7 @@ var UserOSCCommandModel::getJSONData()
 
 void UserOSCCommandModel::loadJSONDataInternal(var data)
 {
+	DBG("Load jsondata internal " << niceName);
 	arguments.loadJSONData(data.getProperty("arguments", var()));
 }
 

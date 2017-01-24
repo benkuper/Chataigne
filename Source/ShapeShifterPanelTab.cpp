@@ -20,6 +20,7 @@ ShapeShifterPanelTab::ShapeShifterPanelTab(ShapeShifterContent * _content) : con
 	panelLabel.setFont(12);
 	panelLabel.setColour(panelLabel.textColourId, TEXT_COLOR);
 	panelLabel.setJustificationType(Justification::centred);
+	jassert(content != nullptr);
 	panelLabel.setText(content == nullptr?"[No content]":content->contentName, NotificationType::dontSendNotification);
 
 	addAndMakeVisible(&panelLabel);
