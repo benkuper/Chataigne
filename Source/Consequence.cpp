@@ -9,14 +9,12 @@
 */
 
 #include "Consequence.h"
-#include "CommandFactory.h"
-#include "Engine.h"
+#include "ConsequenceEditor.h"
 
 Consequence::Consequence() :
 	BaseCommandHandler("Consequence")
 {
 	isSelectable = false;
-
 	trigger = addTrigger("Trigger", "Trigger this consequence");
 }
 
@@ -32,4 +30,9 @@ void Consequence::onContainerTriggerTriggered(Trigger * t)
 	{
 		if (command != nullptr) command->trigger();
 	}
+}
+
+InspectableEditor * Consequence::getEditor(bool isRoot)
+{
+	return new ConsequenceEditor(this, isRoot);
 }

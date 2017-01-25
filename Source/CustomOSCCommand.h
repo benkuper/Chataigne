@@ -14,6 +14,7 @@
 #include "OSCCommand.h"
 #include "CustomOSCModule.h"
 
+
 class CustomOSCCommand :
 	public OSCCommand
 {

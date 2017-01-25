@@ -30,7 +30,7 @@ ConditionEditor::~ConditionEditor()
 
 void ConditionEditor::resizedInternalContent(Rectangle<int>& r)
 {
-	Rectangle<int> sr = r.withHeight(headerHeight);
+	Rectangle<int> sr = r.withHeight(16).reduced(2,0);
 	if (sourceFeedbackUI != nullptr)
 	{
 		sourceFeedbackUI->setBounds(sr.removeFromRight(jmax<int>(sr.getWidth() / 3, 60)));
@@ -38,13 +38,14 @@ void ConditionEditor::resizedInternalContent(Rectangle<int>& r)
 	}
 	targetUI->setBounds(sr);
 
-	r.translate(0, headerHeight);
+	r.translate(0, 18);
 
 	if (comparatorUI != nullptr)
 	{
 		r.setHeight(comparatorUI->getHeight());
 		comparatorUI->setBounds(r);
 	} 
+	r.translate(0, 2);
 	
 }
 

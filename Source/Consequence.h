@@ -23,6 +23,8 @@ public:
 	Trigger * trigger;
 	void onContainerTriggerTriggered(Trigger *) override;
 
+	InspectableEditor * getEditor(bool isRoot) override;
+
 	class ConsequenceListener
 	{
 	public:

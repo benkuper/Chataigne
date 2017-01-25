@@ -15,7 +15,6 @@ ConditionManagerEditor::ConditionManagerEditor(ConditionManager * _manager, bool
 	GenericManagerEditor<Condition>(_manager, isRoot)
 {
 	addItemText = "Add Condition";
-	addExistingItems();
 }
 
 ConditionManagerEditor::~ConditionManagerEditor()

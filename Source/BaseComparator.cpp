@@ -22,7 +22,7 @@ BaseComparator::BaseComparator(Controllable * _source) :
 	compareFunction->hideInOutliner = true;
 	compareFunction->isTargettable = false;
 
-	alwaysDispatch = addBoolParameter("Validity Change Only", "Whether the comparator notifies only when validity changes (OFF),  or each time the comparator is checked. (ON)",false);
+	//alwaysDispatch = addBoolParameter("Dispatch on change", "Whether the comparator notifies only when validity changes (OFF),  or each time the comparator is checked. (ON)",false);
 }
 
 BaseComparator::~BaseComparator()
@@ -31,7 +31,7 @@ BaseComparator::~BaseComparator()
 
 void BaseComparator::setValid(bool value)
 {
-	if (isValid == value && alwaysDispatch->boolValue()) return;
+	if (isValid == value/* && alwaysDispatch->boolValue()*/) return;
 
 
 	isValid = value;
@@ -45,7 +45,14 @@ void BaseComparator::addCompareOption(const String & name, const Identifier & fu
 
 void BaseComparator::onContainerParameterChanged(Parameter * p)
 {
-	if (p == compareFunction) currentFunctionId = compareFunction->getValueData().toString();
+	if (p == compareFunction)
+	{
+		currentFunctionId = compareFunction->getValueData().toString();
+		compare();
+	} else if (p == reference)
+	{
+		compare();
+	}
 }
 
 BaseComparatorUI * BaseComparator::createUI()

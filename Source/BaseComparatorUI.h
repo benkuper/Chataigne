@@ -13,8 +13,8 @@
 
 #include "BaseComparator.h"
 #include "EnumParameterUI.h"
-#include "ControllableUI.h"
 #include "BoolToggleUI.h"
+#include "ControllableEditor.h"
 
 class BaseComparatorUI :
 	public Component
@@ -25,10 +25,10 @@ public:
 
 	BaseComparator * comparator;
 
-	ScopedPointer<BoolToggleUI> alwaysDispatchUI;
+	//ScopedPointer<BoolToggleUI> alwaysDispatchUI;
 	ScopedPointer<EnumParameterUI> compareFuncUI;
 
-	ScopedPointer<ControllableUI> refUI;
+	ScopedPointer<ControllableEditor> refEditor;
 	void resized() override;
 };
 

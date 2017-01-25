@@ -39,6 +39,7 @@ public:
 	void onContainerTriggerTriggered(Trigger *);
 	void conditionManagerValidationChanged(ConditionManager *) override;
 
+	InspectableEditor * getEditor(bool isRoot) override;
 
 	class ActionListener
 	{

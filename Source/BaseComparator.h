@@ -28,7 +28,7 @@ public:
 	Controllable * source;
 	Controllable * reference;
 	EnumParameter * compareFunction;
-	BoolParameter * alwaysDispatch;
+	//BoolParameter * alwaysDispatch;
 
 	Identifier currentFunctionId;
 
@@ -83,9 +83,6 @@ public:
 
 	const Identifier valueChangeId = "valueChange";
 	const Identifier always = "always";
-
-	EnumParameter * whenToCompare;
-	IntParameter * compareFrequency;
 
 	void onExternalParameterChanged(Parameter * p) override;
 

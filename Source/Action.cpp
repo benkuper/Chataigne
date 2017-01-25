@@ -9,7 +9,7 @@
 */
 
 #include "Action.h"
-
+#include "ActionEditor.h"
 
 Action::Action(const String & name) :
 	BaseItem(name),
@@ -67,4 +67,9 @@ void Action::conditionManagerValidationChanged(ConditionManager *)
 	{
 		csm.triggerAll->trigger();
 	}
+}
+
+InspectableEditor * Action::getEditor(bool isRoot)
+{
+	return new ActionEditor(this,isRoot);
 }

@@ -284,6 +284,16 @@
           </GROUP>
           <GROUP id="{797800DA-0DCB-1B89-AF24-83A7716BB83C}" name="Action">
             <GROUP id="{E5695483-8CF1-233B-B7FA-0DB866638800}" name="Consequence">
+              <GROUP id="{9FB564A9-C7BD-8893-5458-027460564BC3}" name="ui">
+                <FILE id="hcGZzI" name="ConsequenceEditor.cpp" compile="1" resource="0"
+                      file="Source/ConsequenceEditor.cpp"/>
+                <FILE id="Ldhpv6" name="ConsequenceEditor.h" compile="0" resource="0"
+                      file="Source/ConsequenceEditor.h"/>
+                <FILE id="xjyKeE" name="ConsequenceManagerEditor.cpp" compile="1" resource="0"
+                      file="Source/ConsequenceManagerEditor.cpp"/>
+                <FILE id="wu12UK" name="ConsequenceManagerEditor.h" compile="0" resource="0"
+                      file="Source/ConsequenceManagerEditor.h"/>
+              </GROUP>
               <FILE id="wuf520" name="Consequence.cpp" compile="1" resource="0" file="Source/Consequence.cpp"/>
               <FILE id="X3tD6S" name="Consequence.h" compile="0" resource="0" file="Source/Consequence.h"/>
               <FILE id="Mud4rA" name="ConsequenceManager.cpp" compile="1" resource="0"
@@ -348,6 +358,9 @@
                     file="Source/ConditionManager.h"/>
             </GROUP>
             <GROUP id="{0A23E296-656D-518E-2323-EACB0750AC2B}" name="ui">
+              <FILE id="ztgUPf" name="ActionEditor.cpp" compile="1" resource="0"
+                    file="Source/ActionEditor.cpp"/>
+              <FILE id="zy6k0u" name="ActionEditor.h" compile="0" resource="0" file="Source/ActionEditor.h"/>
               <FILE id="VIZtUo" name="ActionManagerUI.cpp" compile="1" resource="0"
                     file="Source/ActionManagerUI.cpp"/>
               <FILE id="l77mVH" name="ActionManagerUI.h" compile="0" resource="0"

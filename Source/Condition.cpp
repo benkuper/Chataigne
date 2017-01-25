@@ -72,6 +72,7 @@ void Condition::setSourceControllable(WeakReference<Controllable> c)
 		{
 			if(!oldData.isVoid()) comparator->loadJSONData(oldData);
 			comparator->addComparatorListener(this);
+			comparator->compare();
 		}
 		
 		

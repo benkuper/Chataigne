@@ -9,6 +9,7 @@
 */
 
 #include "ConsequenceManager.h"
+#include "ConsequenceManagerEditor.h"
 
 
 juce_ImplementSingleton(ConsequenceManager)
@@ -31,4 +32,9 @@ void ConsequenceManager::onContainerTriggerTriggered(Trigger * t)
 		DBG("Trigger All from CSM");
 		for (auto &c : items) c->trigger->trigger();
 	}
+}
+
+InspectableEditor * ConsequenceManager::getEditor(bool isRoot)
+{
+	return new ConsequenceManagerEditor(this, isRoot);
 }
