@@ -56,6 +56,7 @@ void Parameter::setRange(var min, var max, bool setDefaultRange){
 		defaultMinValue = min;
 		defaultMaxValue = max;
 	}
+
     minimumValue = min;
     maximumValue = max;
 

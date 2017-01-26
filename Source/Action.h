@@ -23,6 +23,8 @@ public:
 	Action(const String &name = "Action");
 	virtual ~Action();
 
+	bool forceDisabled; //to disable from parent, ex. an ActionManager
+
 	bool autoTriggerWhenAllConditionAreActives; //default true, but if false, let use Actions as user check tool without auto behavior (like TimeTriggers)
 
 	ConditionManager cdm;

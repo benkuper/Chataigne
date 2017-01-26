@@ -14,24 +14,6 @@
 #include "Sequence.h"
 #include "FloatParameterLabelUI.h"
 
-class TimeLabel : 
-	public FloatParameterLabelUI
-{
-public:
-	TimeLabel(FloatParameter * p);
-	~TimeLabel();
-
-protected:
-	void valueChanged(const var &) override;
-	void labelTextChanged(Label * l) override;
-
-
-	String valueToTimeString(float val) const;
-	float timeStringToValue(String str) const;
-
-	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(TimeLabel)
-};
-
 class SequenceTransportUI :
 	public Component
 {

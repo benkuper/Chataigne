@@ -13,20 +13,22 @@
 BaseCommand::BaseCommand(ControllableContainer * _container, CommandContext _context, var _params) :
 	ControllableContainer("Command"),
 	container(_container),
+	targetMappingParameter(nullptr),
 	params(_params),
 	context(_context)
 {
 }
 
-
-BaseCommand::~BaseCommand()
+void BaseCommand::setTargetMappingParameter(Parameter * p)
 {
-}
-
-void BaseCommand::trigger()
-{
+	if (targetMappingParameter != nullptr) targetMappingParameter->hideInEditor = false;
+	targetMappingParameter = p;
+	if (targetMappingParameter != nullptr) targetMappingParameter->hideInEditor = true;
 }
 
 void BaseCommand::setValue(var value)
 {
+	if (targetMappingParameter == nullptr) return;
+	targetMappingParameter->setValue(value);
+	trigger();
 }

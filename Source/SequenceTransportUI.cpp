@@ -32,7 +32,7 @@ void SequenceTransportUI::resized()
 	timeLabel.setBounds(r);
 }
 
-TimeLabel::TimeLabel(FloatParameter * p) :
+TimeLabel::TimeLabel(Parameter * p) :
 	FloatParameterLabelUI(p)
 {
 	valueChanged(parameter->value);

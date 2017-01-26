@@ -28,6 +28,8 @@ public:
 
 	InspectableEditor * getEditor(bool isRoot) override;
 	
+	var getJSONData() override;
+
 	void onContainerNiceNameChanged() override;
 };
 
@@ -38,8 +40,10 @@ public:
 	OSCCommandModelArgumentManager();
 	~OSCCommandModelArgumentManager() {}
 
-	void addItemWithParam(Parameter * p);
-	void addItemFromType(Parameter::Type type);
+	void addItemWithParam(Parameter * p, var data = var());
+	void addItemFromType(Parameter::Type type, var data = var());
+
+	void addItemFromData(var data) override;
 
 	void autoRenameItems();
 	void removeItemInternal(OSCCommandModelArgument * i) override;

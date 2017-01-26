@@ -16,6 +16,7 @@
 #include "HIDModule.h"
 #include "GamepadModule.h"
 #include "WiimoteModule.h"
+#include "ReaperModule.h"
 
 juce_ImplementSingleton(ModuleFactory)
 
@@ -26,7 +27,11 @@ ModuleFactory::ModuleFactory() {
 	moduleDefs.add(new ModuleDefinition("Generic", "Gamepad", &GamepadModule::create));
 
 	moduleDefs.add(new ModuleDefinition("Controller", "Wiimote", &WiimoteModule::create));
+	
+	moduleDefs.add(new ModuleDefinition("Audio", "Reaper", &ReaperModule::create));
+
 	moduleDefs.add(new ModuleDefinition("Video", "Resolume", &ResolumeModule::create));
+
 	buildPopupMenu();
 }
 

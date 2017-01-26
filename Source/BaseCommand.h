@@ -19,15 +19,18 @@ class BaseCommand :
 {
 public:
 	BaseCommand(ControllableContainer * container, CommandContext context, var params);
-	virtual ~BaseCommand();
+	virtual ~BaseCommand() {}
 
 	CommandContext context;
 	ControllableContainer * container;
 	var params;
 
-	virtual void trigger(); //for trigger context, to override
-	virtual void setValue(var value); //for mapping context
 
+	Parameter * targetMappingParameter;
+	void setTargetMappingParameter(Parameter * p);
+
+	virtual void trigger() {} //for trigger context, to override
+	virtual void setValue(var value); //for mapping context
 
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(BaseCommand)

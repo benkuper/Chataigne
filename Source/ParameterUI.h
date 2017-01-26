@@ -23,7 +23,7 @@ public:
     WeakReference<Parameter> parameter;
 
 	bool showValue;
-
+	void showEditWindow() override;
 protected:
 
 

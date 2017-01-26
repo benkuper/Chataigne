@@ -47,7 +47,6 @@ public:
 	void setupSender();
 	void sendOSC(const OSCMessage &msg);
 
-
 	virtual void onContainerParameterChangedInternal(Parameter * p) override;
 	virtual void oscMessageReceived(const OSCMessage & message) override;
 };

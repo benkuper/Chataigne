@@ -26,6 +26,7 @@ public:
 	StringParameter * address;
 	ControllableContainer argumentsContainer;
 
+
 	void trigger() override;
 
 	static BaseCommand * create(ControllableContainer * module, CommandContext context, var params) { return new OSCCommand((OSCModule *)module, context, params); }

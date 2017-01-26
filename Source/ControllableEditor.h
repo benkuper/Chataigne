@@ -25,12 +25,13 @@ public:
 	
 	Label label;
 	ScopedPointer<ControllableUI> ui;
+	ScopedPointer<ImageButton> editBT;
 	ScopedPointer<ImageButton> removeBT;
 
 	bool showLabel;
-
 	void setShowLabel(bool value);
-
+	
+	
 	void resized() override;
 	void buttonClicked(Button * b);
 };

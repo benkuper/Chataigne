@@ -678,7 +678,30 @@
               <FILE id="zwyCZl" name="MIDIModule.h" compile="0" resource="0" file="Source/MIDIModule.h"/>
             </GROUP>
             <GROUP id="{F3EE9907-02E8-26FF-4F80-AB785727E37C}" name="osc">
+              <GROUP id="{5EE41BB6-946E-F03C-ABC0-C5DA4D692EB1}" name="reaper">
+                <GROUP id="{2FFF729B-7424-DBFF-23C6-324194AD31C1}" name="commands">
+                  <GROUP id="{DC649BB3-B664-A599-328B-66C03AA95C89}" name="ui">
+                    <FILE id="HsrYnS" name="ReaperTimeCommandUI.cpp" compile="1" resource="0"
+                          file="Source/ReaperTimeCommandUI.cpp"/>
+                    <FILE id="XJiSpP" name="ReaperTimeCommandUI.h" compile="0" resource="0"
+                          file="Source/ReaperTimeCommandUI.h"/>
+                  </GROUP>
+                  <FILE id="lC9FCe" name="ReaperTimeCommand.cpp" compile="1" resource="0"
+                        file="Source/ReaperTimeCommand.cpp"/>
+                  <FILE id="BTNa24" name="ReaperTimeCommand.h" compile="0" resource="0"
+                        file="Source/ReaperTimeCommand.h"/>
+                </GROUP>
+                <FILE id="L15xml" name="ReaperModule.cpp" compile="1" resource="0"
+                      file="Source/ReaperModule.cpp"/>
+                <FILE id="R55PNW" name="ReaperModule.h" compile="0" resource="0" file="Source/ReaperModule.h"/>
+              </GROUP>
               <GROUP id="{EF0BB1F4-C5D3-E71D-7AF4-34115A3BAA40}" name="commands">
+                <GROUP id="{2C9C250C-4A0D-1575-1B6D-23E70F14F239}" name="ui">
+                  <FILE id="q8DlBM" name="OSCCommandEditor.cpp" compile="1" resource="0"
+                        file="Source/OSCCommandEditor.cpp"/>
+                  <FILE id="wLAJry" name="OSCCommandEditor.h" compile="0" resource="0"
+                        file="Source/OSCCommandEditor.h"/>
+                </GROUP>
                 <FILE id="cNQ6Ia" name="OSCCommand.cpp" compile="1" resource="0" file="Source/OSCCommand.cpp"/>
                 <FILE id="F1p8Ca" name="OSCCommand.h" compile="0" resource="0" file="Source/OSCCommand.h"/>
               </GROUP>

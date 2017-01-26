@@ -56,5 +56,5 @@ void BaseItem::onContainerNiceNameChanged()
 
 InspectableEditor * BaseItem::getEditor(bool isRoot)
 {
-	return new BaseItemEditor(this,isRoot);
+	return ControllableContainer::getEditor(isRoot);// new BaseItemEditor(this, isRoot);
 }

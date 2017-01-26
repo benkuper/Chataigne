@@ -44,6 +44,7 @@ void UserOSCCommand::rebuildArgsFromModel()
 		case Controllable::STRING: p = new StringParameter(a->niceName, ap->description, ap->value); break;
 		}
 		
+		p->isEditable = a->editable->boolValue();
 		argumentsContainer.addParameter(p);
 	}
 

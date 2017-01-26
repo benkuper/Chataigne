@@ -13,7 +13,8 @@
 
 Action::Action(const String & name) :
 	BaseItem(name),
-	autoTriggerWhenAllConditionAreActives(true)
+	autoTriggerWhenAllConditionAreActives(true),
+	forceDisabled(false)
 {
 	addChildControllableContainer(&cdm);
 	addChildControllableContainer(&csm);
@@ -23,8 +24,6 @@ Action::Action(const String & name) :
 	isValid = addBoolParameter("Is Valid", "Are all condition valids ?", false);
 	isValid->hideInEditor = true;
 	trigger = addTrigger("Trigger", "Triggers the action");
-
-
 }
 
   Action::~Action()
@@ -53,7 +52,8 @@ void Action::onContainerParameterChangedInternal(Parameter * p)
 
 void Action::onContainerTriggerTriggered(Trigger * t)
 {
-	
+	if (!enabled->boolValue() || forceDisabled) return;
+
 	if (t == trigger)
 	{
 		csm.triggerAll->trigger();

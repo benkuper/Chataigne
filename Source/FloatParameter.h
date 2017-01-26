@@ -17,6 +17,8 @@
 
 class FloatSliderUI;
 class FloatStepperUI;
+class FloatParameterLabelUI;
+class TimeLabel;
 
 class FloatParameter : public Parameter
 {
@@ -26,8 +28,14 @@ public:
 
     void setValueInternal(var & _value) override;
 
+	enum UIType { SLIDER, STEPPER, LABEL, TIME };
+	UIType defaultUI;
+
     FloatSliderUI * createSlider(FloatParameter * target = nullptr);
     FloatStepperUI * createStepper(FloatParameter * target = nullptr);
+	FloatParameterLabelUI * createLabelParameter(FloatParameter * target = nullptr);
+	TimeLabel * createTimeLabelParameter(FloatParameter * target = nullptr);
+
     ControllableUI * createDefaultUI(Controllable * targetControllable = nullptr) override;
 
 	bool checkValueIsTheSame(var oldValue, var newValue) override;

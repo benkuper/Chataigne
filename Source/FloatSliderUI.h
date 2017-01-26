@@ -13,6 +13,7 @@
 
 #include "ParameterUI.h"
 
+
 class FloatSliderUI    : public ParameterUI
 {
 
@@ -40,7 +41,6 @@ public:
 
 	void setFrontColor(Colour c);
 	void resetFrontColor();
-	
 	
 	void paint(Graphics &g) override;
     void mouseDown(const MouseEvent &e) override;

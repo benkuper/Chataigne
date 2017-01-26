@@ -33,6 +33,7 @@ void FloatStepperUI::resized()
     slider->setBounds(getLocalBounds());
 }
 
+
 void FloatStepperUI::valueChanged(const var & value)
 {
     if ((float)value == slider->getValue()) return;

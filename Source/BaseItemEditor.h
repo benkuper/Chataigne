@@ -35,7 +35,6 @@ public:
 
 	bool paintHeaderOnly;
 
-
 	virtual void paint(Graphics &g) override;
 	virtual void resized() override;
 	virtual void resizedInternalHeader(Rectangle<int> &) {}

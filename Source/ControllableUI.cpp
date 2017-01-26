@@ -33,6 +33,11 @@ ControllableUI::~ControllableUI()
     if(controllable.get())controllable->removeControllableListener(this);
 }
 
+void ControllableUI::mouseDoubleClick(const MouseEvent & e)
+{
+	showEditWindow();
+}
+
 void ControllableUI::setOpaqueBackground(bool value)
 {
 	opaqueBackground = value;
@@ -70,76 +75,4 @@ void ControllableUI::updateTooltip()
 	if (readOnly) tooltip += " (read only)";
 
     setTooltip(tooltip);
-}
-
-
-//////////////////
-// NamedControllableUI
-
-NamedControllableUI::NamedControllableUI(ControllableUI * ui,int _labelWidth):
-ControllableUI(ui->controllable),
-ownedControllableUI(ui),
-labelWidth(_labelWidth){
-
-  addAndMakeVisible(controllableLabel);
-
-  controllableLabel.setJustificationType(Justification::centredLeft);
-  controllableLabel.setColour(Label::ColourIds::textColourId, TEXT_COLOR);
-  controllableLabel.setText(ui->controllable->niceName, dontSendNotification);
-  controllableLabel.setTooltip(ui->tooltip);
-
-  
-  if (controllable->isCustomizableByUser)
-  {
-	  editBT = AssetManager::getInstance()->getConfigBT();
-	  editBT->addListener(this);
-	  addAndMakeVisible(editBT);
-  }
-
-  if (controllable->isRemovableByUser)
-  {
-	  removeBT = AssetManager::getInstance()->getRemoveBT();
-	  removeBT->addListener(this);
-	  addAndMakeVisible(removeBT);
-  }
-
-  addAndMakeVisible(ui);
-
-  setBounds(ownedControllableUI->getBounds()
-	  .withTrimmedRight(-labelWidth)
-	  .withHeight(jmax((int)controllableLabel.getFont().getHeight() + 4, ownedControllableUI->getHeight())));
-
-}
-
-void NamedControllableUI::resized(){
-  Rectangle<int> r  = getLocalBounds();
-  controllableLabel.setBounds(r.removeFromLeft(labelWidth));
-  r.removeFromLeft(5);
-
-  if(controllable->isRemovableByUser && removeBT != nullptr)
-  { 
-	  removeBT->setBounds(r.removeFromRight(r.getHeight()));
-	  r.removeFromRight(2);
-  }
-
-  if (controllable->isCustomizableByUser && editBT != nullptr)
-  {
-	  editBT->setBounds(r.removeFromRight(r.getHeight()));
-	  r.removeFromRight(2);
-  }
-
-  ownedControllableUI->setBounds(r);
-}
-
-void NamedControllableUI::buttonClicked(Button * b)
-{
-	if (b == removeBT)
-	{
-		DBG("REMOVE");
-		controllable->remove();
-	}
-	else if (b == editBT)
-	{
-		//Edit
-	}
 }

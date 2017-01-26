@@ -22,7 +22,6 @@ FloatSliderUI::FloatSliderUI(Parameter * parameter) :
     orientation = HORIZONTAL;
     scaleFactor = 1;
 
-
 	setSize(100, 10);
 }
 
@@ -158,21 +157,6 @@ void FloatSliderUI::mouseUp(const MouseEvent &me)
 	if (!parameter->isEditable || forceFeedbackOnly) return;
 
 	BailOutChecker checker (this);
-
-	if (me.getNumberOfClicks() >= 2) {
-		AlertWindow nameWindow("Set a value", "Set a new value for this parameter", AlertWindow::AlertIconType::NoIcon, this);
-		nameWindow.addTextEditor("newValue", parameter->stringValue());
-		nameWindow.addButton("OK", 1, KeyPress(KeyPress::returnKey));
-		nameWindow.addButton("Cancel", 0, KeyPress(KeyPress::escapeKey));
-
-		int result = nameWindow.runModalLoop();
-
-		if (result)
-		{
-			float newValue = nameWindow.getTextEditorContents("newValue").getFloatValue();
-			parameter->setValue(newValue);
-		}
-	}
 	
     if (changeParamOnMouseUpOnly)
     {
@@ -187,6 +171,8 @@ void FloatSliderUI::mouseUp(const MouseEvent &me)
         setMouseCursor(MouseCursor::NormalCursor);
     }
 }
+
+
 
 float FloatSliderUI::getValueFromMouse()
 {

@@ -12,6 +12,7 @@
 #include "UserOSCCommandModel.h"
 #include "UserOSCCommandModelEditor.h"
 #include "UserOSCCommand.h"
+#include "ControllableFactory.h"
 
 UserOSCCommandModel::UserOSCCommandModel() :
 	BaseItem("New Model",false)
@@ -53,7 +54,9 @@ OSCCommandModelArgument::OSCCommandModelArgument(const String &name, Parameter *
 {
 	isSelectable = false;
 	canBeDisabled = false;
-	
+	param->isCustomizableByUser = true;
+	param->saveValueOnly = false;
+
 	jassert(param != nullptr);
 	addControllable(param);
 
@@ -65,6 +68,13 @@ OSCCommandModelArgument::OSCCommandModelArgument(const String &name, Parameter *
 InspectableEditor * OSCCommandModelArgument::getEditor(bool isRoot)
 {
 	return new OSCCommandModelArgumentEditor(this, isRoot);
+}
+
+var OSCCommandModelArgument::getJSONData()
+{
+	var data = BaseItem::getJSONData();
+	data.getDynamicObject()->setProperty("type", param->getTypeString());
+	return data;
 }
 
 void OSCCommandModelArgument::onContainerNiceNameChanged()
@@ -115,16 +125,17 @@ OSCCommandModelArgumentManager::OSCCommandModelArgumentManager() :
 	selectItemWhenCreated = false;
 }
 
-void OSCCommandModelArgumentManager::addItemWithParam(Parameter * p)
+void OSCCommandModelArgumentManager::addItemWithParam(Parameter * p, var data)
 {
 	OSCCommandModelArgument * a = new OSCCommandModelArgument("#"+String(items.size()+1),p);
 	addItem(a);
 }
 
-void OSCCommandModelArgumentManager::addItemFromType(Parameter::Type type)
+void OSCCommandModelArgumentManager::addItemFromType(Parameter::Type type, var data)
 {
 	Parameter * p = nullptr;
 	String id = String(items.size()+1);
+	
 	switch (type)
 	{
 	case Parameter::STRING:
@@ -143,6 +154,14 @@ void OSCCommandModelArgumentManager::addItemFromType(Parameter::Type type)
 	
 	jassert(p != nullptr);
 	addItemWithParam(p);
+}
+
+void OSCCommandModelArgumentManager::addItemFromData(var data)
+{
+	String s = data.getProperty("type", "");
+	DBG("add item from data : " << s);
+	if (s.isEmpty()) return;
+	addItemWithParam((Parameter *)ControllableFactory::createControllable(s), data);
 }
 
 void OSCCommandModelArgumentManager::autoRenameItems()

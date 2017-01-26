@@ -27,40 +27,26 @@ public:
 	bool showLabel;
 	bool opaqueBackground;
 
+	void mouseDoubleClick(const MouseEvent &e) override;
+
 	virtual void setOpaqueBackground(bool value);
 
 	bool forceFeedbackOnly; //if false, will rely on Controllable isEditable property. if true, will be force to no editable
 	void setForceFeedbackOnly(bool value);
 	virtual void setForceFeedbackOnlyInternal() {}
 
+
+	virtual void showEditWindow() {} //to be overriden by children
+
     // Inherited via Listener
     virtual void controllableStateChanged(Controllable * c) override;
     virtual void controllableControlAddressChanged(Controllable * c) override;
+
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ControllableUI)
 
 protected :
     void updateTooltip();
-};
-
-
-//    this class allow to automaticly generate label / ui element for parameter listing in editor
-//    it owns the created component
-class NamedControllableUI : 
-	public ControllableUI,
-	public ButtonListener
-{
-public:
-  NamedControllableUI(ControllableUI * ui,int _labelWidth);
-  void resized()override;
-    Label controllableLabel;
-    int labelWidth;
-    ScopedPointer <ControllableUI > ownedControllableUI;
-
-	ScopedPointer<ImageButton> editBT;
-	ScopedPointer<ImageButton> removeBT;
-
-	void buttonClicked(Button * b) override;
 };
 
 

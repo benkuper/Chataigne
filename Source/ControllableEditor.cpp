@@ -35,6 +35,13 @@ ControllableEditor::ControllableEditor(Controllable * _controllable, bool isRoot
 		addAndMakeVisible(removeBT);
 	}
 
+	if (controllable->isCustomizableByUser)
+	{
+		editBT = AssetManager::getInstance()->getConfigBT();
+		editBT->addListener(this);
+		addAndMakeVisible(editBT);
+	}
+
 	setSize(100, initHeight);
 }
 
@@ -66,6 +73,12 @@ ControllableEditor::ControllableEditor(Controllable * _controllable, bool isRoot
 		removeBT->setBounds(r.removeFromRight(r.getHeight()));
 		r.removeFromRight(2);
 	}
+
+	if (controllable->isCustomizableByUser && editBT != nullptr)
+	{
+		editBT->setBounds(r.removeFromRight(r.getHeight()));
+		r.removeFromRight(2);
+	}
 	
 
 	if (showLabel) r = r.removeFromRight(jmin<int>(getWidth() * 2 / 3 - 10, 150));
@@ -78,5 +91,8 @@ void ControllableEditor::buttonClicked(Button * b)
 	if (b == removeBT)
 	{
 		controllable->remove();
+	} else if (b == editBT)
+	{
+		ui->showEditWindow();
 	}
 }
