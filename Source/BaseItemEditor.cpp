@@ -32,17 +32,20 @@
 		  this->addAndMakeVisible(removeBT);
 		  removeBT->addListener(this);
 	  }
+
+	  item->addAsyncContainerListener(this);
 }
 
 BaseItemEditor::~BaseItemEditor()
 {
+	if (!inspectable.wasObjectDeleted()) item->removeAsyncContainerListener(this);
 }
 
 void BaseItemEditor::paint(Graphics & g)
 {
 	Rectangle<int> r = getLocalBounds();
 	if(paintHeaderOnly) r.setHeight((int)headerHeight);
-	Colour c = (item->canBeDisabled && item->enabled->boolValue()) ? BG_COLOR.brighter(.1f):BG_COLOR.darker(.1f);
+	Colour c = (item->canBeDisabled && item->enabled->boolValue()) ? BG_COLOR.brighter().withAlpha(.3f) : BG_COLOR.darker().withAlpha(.6f);
 	g.setColour(c);
 	g.fillRoundedRectangle(r.toFloat(), 2);
 
@@ -67,9 +70,9 @@ void BaseItemEditor::resized()
 
 	r.translate(0, hr.getBottom() + 5);
 	r.setHeight(0); //if no override, ensure bottom is set
-
+	r.reduce(2, 0);
 	resizedInternalContent(r);
-	setBounds(getLocalBounds().withBottom(r.getBottom()));
+	setBounds(getLocalBounds().withBottom(r.getBottom()+2));
 
 	
 }
@@ -83,6 +86,11 @@ void BaseItemEditor::newMessage(const ContainerAsyncEvent & e)
 		controllableFeedbackAsyncUpdate(e.targetControllable);
 		break;
 	}
+}
+
+void BaseItemEditor::controllableFeedbackAsyncUpdate(Controllable * c)
+{
+	if (c == item->enabled) repaint();
 }
 
 void BaseItemEditor::childBoundsChanged(Component *)

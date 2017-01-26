@@ -122,6 +122,7 @@ public:
 
 	void buttonClicked(Button *) override;
 
+	void inspectableDestroyed(Inspectable *) override;
 
 	class  ManagerUIListener
 	{
@@ -179,7 +180,7 @@ BaseManagerUI<M, T, U>::BaseManagerUI(const String & contentName, M * _manager, 
 template<class M, class T, class U>
 BaseManagerUI<M, T, U>::~BaseManagerUI()
 {
-	static_cast<BaseManager<T>*>(manager)->removeBaseManagerListener(this);
+	if(!inspectable.wasObjectDeleted()) static_cast<BaseManager<T>*>(manager)->removeBaseManagerListener(this);
 }
 
 template<class M, class T, class U>
@@ -394,6 +395,12 @@ void BaseManagerUI<M, T, U>::buttonClicked(Button  * b)
 	{
 		showMenuAndAddItem(true,Point<int>());
 	}
+}
+
+template<class M, class T, class U>
+void BaseManagerUI<M, T, U>::inspectableDestroyed(Inspectable *)
+{
+	if(manager != nullptr) static_cast<BaseManager<T>*>(manager)->removeBaseManagerListener(this);
 }
 
 

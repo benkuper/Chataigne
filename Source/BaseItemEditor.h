@@ -41,11 +41,12 @@ public:
 	virtual void resizedInternalContent(Rectangle<int> &) {}
 
 	void newMessage(const ContainerAsyncEvent &e) override;
-	virtual void controllableFeedbackAsyncUpdate(Controllable *) {}
+	virtual void controllableFeedbackAsyncUpdate(Controllable *);
 
 	virtual void childBoundsChanged(Component *) override;
 
 	void buttonClicked(Button *b) override;
+
 };
 
 

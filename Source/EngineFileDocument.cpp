@@ -46,14 +46,20 @@ void Engine::createNewGraph(){
 }
 
 Result Engine::loadDocument (const File& file){
-  if(isLoadingFile){
+  
+	if(isLoadingFile){
     // TODO handle quick reloading of file
     return Result::fail("engine already loading");
   }
+
   isLoadingFile = true;
   engineListeners.call(&EngineListener::startLoadFile);
 
-  if(Inspector::getInstanceWithoutCreating() != nullptr) Inspector::getInstance()->setEnabled(false); //avoid creation of inspector editor while recreating all nodes, controllers, rules,etc. from file
+  if (Inspector::getInstanceWithoutCreating() != nullptr)
+  {
+	  Inspector::getInstance()->clear();
+	  Inspector::getInstance()->setEnabled(false); //avoid creation of inspector editor while recreating all nodes, controllers, rules,etc. from file
+  }
 
 #ifdef MULTITHREADED_LOADING
   fileLoader = new FileLoader(this,file);
@@ -72,9 +78,11 @@ void Engine::loadDocumentAsync(const File & file){
 
   clearTasks();
   taskName = "Loading File";
+  
   ProgressTask * clearTask = addTask("clearing");
   ProgressTask * parseTask = addTask("parsing");
   ProgressTask * loadTask = addTask("loading");
+
   clearTask->start();
   clear();
   clearTask->end();

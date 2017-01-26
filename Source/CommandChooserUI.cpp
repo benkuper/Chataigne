@@ -54,7 +54,7 @@ void CommandChooserUI::paint(Graphics & g)
 void CommandChooserUI::resized()
 {
 	Rectangle<int> r = getLocalBounds();
-	targetBT->setBounds(r.removeFromLeft(r.getHeight()).reduced(2));
+	targetBT->setBounds(r.removeFromLeft(r.getHeight()).reduced(4));
 	r.removeFromLeft(2);
 	label.setBounds(r.reduced(0, 2));
 }

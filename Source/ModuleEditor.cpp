@@ -38,6 +38,7 @@ void ModuleEditor::resizedInternalHeader(Rectangle<int>& r)
 
 void ModuleEditor::controllableFeedbackAsyncUpdate(Controllable * c)
 {
+	BaseItemEditor::controllableFeedbackAsyncUpdate(c);
 	if (c == module->logIncomingData)
 	{
 

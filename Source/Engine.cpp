@@ -9,6 +9,7 @@
  */
 
 #include "Engine.h"
+#include "Inspector.h"
 #include "ModuleManager.h"
 #include "StateManager.h"
 #include "SequenceManager.h"
@@ -93,21 +94,30 @@ void Engine::parseCommandline(const String & commandLine){
 
 }
 
-void Engine::clear(){
-  
+void Engine::clear() {
+
+
 	if (Outliner::getInstanceWithoutCreating())
 	{
 		Outliner::getInstanceWithoutCreating()->clear();
 		Outliner::getInstanceWithoutCreating()->enabled = false;
 	}
 
-  PresetManager::getInstance()->clear();
- 
-  ModuleManager::getInstance()->clear();
-  StateManager::getInstance()->clear();
-  SequenceManager::getInstance()->clear();
+	if (Inspector::getInstanceWithoutCreating())
+	{
+		Inspector::getInstance()->clear();
+		Inspector::getInstance()->setEnabled(false);
+	}
 
-  if (Outliner::getInstanceWithoutCreating()) Outliner::getInstanceWithoutCreating()->enabled = true;
+	ModuleManager::getInstance()->clear();
+	StateManager::getInstance()->clear();
+	SequenceManager::getInstance()->clear();
 
-  changed();    //fileDocument
+	PresetManager::getInstance()->clear();
+
+	if (Outliner::getInstanceWithoutCreating()) Outliner::getInstanceWithoutCreating()->enabled = true;
+
+	if (Inspector::getInstanceWithoutCreating()) Inspector::getInstance()->setEnabled(true);
+
+	changed();    //fileDocument
 }

@@ -51,6 +51,19 @@ void UserOSCCommand::rebuildArgsFromModel()
 	argumentsContainer.hideInEditor = model->arguments.items.size() == 0;
 }
 
+var UserOSCCommand::getJSONData()
+{
+	var data = OSCCommand::getJSONData();
+	data.getDynamicObject()->setProperty("arguments", argumentsContainer.getJSONData());
+	return data;
+}
+
+void UserOSCCommand::loadJSONDataInternal(var data)
+{
+	OSCCommand::loadJSONDataInternal(data);
+	argumentsContainer.loadJSONData(data.getProperty("arguments", var()), true);
+}
+
 InspectableEditor * UserOSCCommand::getEditor(bool isRoot)
 {
 	return new UserOSCCommandEditor(this, isRoot);

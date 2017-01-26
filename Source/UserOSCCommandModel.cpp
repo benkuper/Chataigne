@@ -49,11 +49,10 @@ InspectableEditor * UserOSCCommandModel::getEditor(bool isRoot)
 //MODEL ARGUMENT
 
 OSCCommandModelArgument::OSCCommandModelArgument(const String &name, Parameter * _p) :
-	BaseItem(name),
+	BaseItem(name,false),
 	param(_p)
 {
 	isSelectable = false;
-	canBeDisabled = false;
 	param->isCustomizableByUser = true;
 	param->saveValueOnly = false;
 
@@ -74,6 +73,7 @@ var OSCCommandModelArgument::getJSONData()
 {
 	var data = BaseItem::getJSONData();
 	data.getDynamicObject()->setProperty("type", param->getTypeString());
+	data.getDynamicObject()->setProperty("param", param->getJSONData());
 	return data;
 }
 
@@ -128,7 +128,7 @@ OSCCommandModelArgumentManager::OSCCommandModelArgumentManager() :
 void OSCCommandModelArgumentManager::addItemWithParam(Parameter * p, var data)
 {
 	OSCCommandModelArgument * a = new OSCCommandModelArgument("#"+String(items.size()+1),p);
-	addItem(a);
+	addItem(a,data);
 }
 
 void OSCCommandModelArgumentManager::addItemFromType(Parameter::Type type, var data)
@@ -153,7 +153,7 @@ void OSCCommandModelArgumentManager::addItemFromType(Parameter::Type type, var d
 	}
 	
 	jassert(p != nullptr);
-	addItemWithParam(p);
+	addItemWithParam(p,data);
 }
 
 void OSCCommandModelArgumentManager::addItemFromData(var data)
