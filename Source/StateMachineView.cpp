@@ -19,7 +19,13 @@ StateMachineView::StateMachineView(StateManager * _manager) :
 	addItemText = "Add State";
 	setWantsKeyboardFocus(true);
 	
-	addExistingItems();
+	
+	addExistingItems(false);
+
+	stmUI = new StateTransitionManagerUI(this, &manager->stm);
+	addAndMakeVisible(stmUI, 0);
+
+	resized();
 }
 
 StateMachineView::~StateMachineView()
@@ -44,7 +50,7 @@ void StateMachineView::mouseDrag(const MouseEvent & e)
 	{
 		viewOffset = initViewOffset + e.getOffsetFromDragStart();
 		resized();
-		repaint();
+		repaint(); 
 	}
 }
 
@@ -64,6 +70,12 @@ bool StateMachineView::keyPressed(const KeyPress & e)
 	{
 		homeView();
 		return true;
+	} else if (e.getKeyCode() == KeyPress::createFromDescription("a").getKeyCode())
+	{
+		if (itemsUI.size() >= 2)
+		{
+			manager->stm.addItem(itemsUI[0]->item, itemsUI[1]->item);
+		}
 	}
 
 	return false;
@@ -89,7 +101,8 @@ void StateMachineView::paint(Graphics & g)
 void StateMachineView::resized()
 {
 	Rectangle<int> r = getLocalBounds();
-
+	stmUI->setBounds(r);
+	 
 	addItemBT->setBounds(r.withSize(24, 24).withX(r.getWidth() - 24));
 
 	for (auto &tui : itemsUI)

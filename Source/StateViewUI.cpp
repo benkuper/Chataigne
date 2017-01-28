@@ -16,7 +16,13 @@ StateViewUI::StateViewUI(State * state) :
 	mmui(&state->mm),
 	resizer(this,nullptr)
 {
+	activeUI = state->active->createToggle();
+	permanentUI = state->permanent->createToggle();
 	
+
+	addAndMakeVisible(activeUI);
+	addAndMakeVisible(permanentUI);
+
 	amui.drawContour = true;
 	mmui.drawContour = true;
 	amui.bgColor = ACTION_COLOR.withSaturation(.2f).darker(1);
@@ -27,9 +33,11 @@ StateViewUI::StateViewUI(State * state) :
 	addAndMakeVisible(&grabber);
 
 	contentContainer.addAndMakeVisible(&amui);
-	contentContainer.addAndMakeVisible(&mmui);	
+	contentContainer.addAndMakeVisible(&mmui);
 
-	
+	//force color here
+	bgColor = item->active->boolValue() ? (item->permanent->boolValue() ? GREEN_COLOR : FEEDBACK_COLOR).darker(.5f) : BG_COLOR.brighter(.1f);
+
 	setSize(item->viewUISize->getPoint().x,item->viewUISize->getPoint().y);
 	updateMiniModeUI();
 	
@@ -101,6 +109,10 @@ void StateViewUI::resized()
 	h.removeFromLeft(2);
 	removeBT->setBounds(h.removeFromRight(h.getHeight()));
 	h.removeFromRight(2);
+	permanentUI->setBounds(h.removeFromRight(50));
+	h.removeFromRight(2);
+	activeUI->setBounds(h.removeFromRight(50));
+	h.removeFromRight(2);
 	nameUI->setBounds(h);
 
 	
@@ -145,26 +157,31 @@ void StateViewUI::controllableFeedbackUpdateInternal(Controllable * c)
 {
 	if (c == item->viewUIPosition) stateEditorListeners.call(&StateViewUI::Listener::editorGrabbed, this);
 	else if (c == item->miniMode) updateMiniModeUI();
+	else if (c == item->active || c == item->permanent)
+	{
+		bgColor = item->active->boolValue() ? (item->permanent->boolValue() ? GREEN_COLOR : FEEDBACK_COLOR) : BG_COLOR.brighter(.1f);
+		repaint();
+	}
 }
 
 void StateViewUI::itemUIAdded(ActionUI *)
 {
-	resized();
+	//resized();
 }
 
 void StateViewUI::itemUIRemoved(ActionUI *)
 {
-	resized();
+	//resized();
 }
 
 void StateViewUI::itemUIAdded(MappingUI *)
 {
-	resized();
+	//resized();
 }
 
 void StateViewUI::itemUIRemoved(MappingUI *)
 {
-	resized();
+	//resized();
 }
 
 //GRABBER

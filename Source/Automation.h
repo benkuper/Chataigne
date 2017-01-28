@@ -48,6 +48,8 @@ public:
 
 	void controllableFeedbackUpdate(ControllableContainer * cc, Controllable *c) override;
 
+	InspectableEditor * getEditor(bool isRoot) override;
+
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Automation)
 };
 

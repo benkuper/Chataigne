@@ -11,7 +11,7 @@
 #include "BaseItemEditor.h"
 #include "AssetManager.h"
 
-  BaseItemEditor::BaseItemEditor(BaseItem * bi, bool isRoot) :
+ BaseItemEditor::BaseItemEditor(BaseItem * bi, bool isRoot) :
 	  InspectableEditor(bi, isRoot),
 	  headerHeight(20),
 	  item(bi),

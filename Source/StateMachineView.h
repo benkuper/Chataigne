@@ -17,6 +17,7 @@
 #include "StateViewUI.h"
 #include "BaseManagerShapeShifterUI.h"
 #include "Style.h"
+#include "StateTransitionManagerUI.h"
 
 class StateMachineView :
 	public BaseManagerShapeShifterUI<StateManager,State,StateViewUI>,
@@ -27,6 +28,8 @@ public:
 	~StateMachineView();
 	
 	StateManager * manager;
+
+	ScopedPointer<StateTransitionManagerUI> stmUI;
 	
 	Point<int> viewOffset; //in pixels, viewOffset of 0 means zeroPos is at the center of the window
 						   

@@ -9,6 +9,7 @@
 */
 
 #include "Automation.h"
+#include "BaseItemEditor.h"
 
 AutomationKeyComparator Automation::comparator;
 
@@ -112,4 +113,9 @@ void Automation::controllableFeedbackUpdate(ControllableContainer * cc, Controll
 		}
 
 	}
+}
+
+InspectableEditor * Automation::getEditor(bool isRoot)
+{
+	return new InspectableEditor(this, isRoot); //avoid having mess in editor when a lot of items
 }

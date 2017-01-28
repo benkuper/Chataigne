@@ -18,6 +18,7 @@
 #include "BaseItemMinimalUI.h"
 #include "Style.h"
 #include "AssetManager.h"
+#include "Engine.h"
 
 template<class T>
 class BaseManagerItemComparator
@@ -52,11 +53,14 @@ public:
 	void childBoundsChanged(Component * c) { mui->childBoundsChanged(c); }
 };
 
+
+
 template<class M, class T, class U>
 class BaseManagerUI :
 	public InspectableContentComponent,
 	public BaseManager<T>::Listener,
-	public ButtonListener
+	public ButtonListener,
+	public Engine::EngineListener
 {
 public:
 	BaseManagerUI<M, T, U>(const String &contentName, M * _manager, bool _useViewport = true);
@@ -93,7 +97,7 @@ public:
 	bool fixedItemHeight;
 	int gap = 2;
 
-	void addExistingItems();
+	void addExistingItems(bool resizeAfter = true);
 
 	virtual void mouseDown(const MouseEvent &e) override;
 	virtual void paint(Graphics &g) override;
@@ -124,6 +128,11 @@ public:
 
 	void inspectableDestroyed(Inspectable *) override;
 
+	//From Engine Listener
+	bool tmpAnimate;
+	void startLoadFile() override;
+	void endLoadFile() override;
+
 	class  ManagerUIListener
 	{
 	public:
@@ -136,8 +145,9 @@ public:
 	ListenerList<ManagerUIListener> managerUIListeners;
 	void addManagerUIListener(ManagerUIListener* newListener) { managerUIListeners.add(newListener); }
 	void removeManagerUIListener(ManagerUIListener* listener) { managerUIListeners.remove(listener); }
-
 };
+
+#include "Engine.h"
 
 template<class M, class T, class U>
 BaseManagerUI<M, T, U>::BaseManagerUI(const String & contentName, M * _manager, bool _useViewport) :
@@ -173,6 +183,8 @@ BaseManagerUI<M, T, U>::BaseManagerUI(const String & contentName, M * _manager, 
 	addAndMakeVisible(addItemBT);
 	addItemBT->addListener(this);
 
+	Engine::getInstance()->addEngineListener(this);
+
 	//must call addExistingItems from child class to get overrides
 }
 
@@ -181,15 +193,16 @@ template<class M, class T, class U>
 BaseManagerUI<M, T, U>::~BaseManagerUI()
 {
 	if(!inspectable.wasObjectDeleted()) static_cast<BaseManager<T>*>(manager)->removeBaseManagerListener(this);
+	if (Engine::getInstanceWithoutCreating()) Engine::getInstance()->removeEngineListener(this);
 }
 
 template<class M, class T, class U>
-void BaseManagerUI<M, T, U>::addExistingItems()
+void BaseManagerUI<M, T, U>::addExistingItems(bool resizeAfter)
 {
 
 	//add existing items
 	for (auto &t : manager->items) addItemUI(t,false);
-	resized();
+	if(resizeAfter) resized();
 }
 
 template<class M, class T, class U>
@@ -320,11 +333,14 @@ U * BaseManagerUI<M, T, U>::addItemUI(T * item, bool animate)
 	{
 		Rectangle<int> tb = bui->getBounds();
 		bui->setSize(10, 10);
-
 		itemAnimator.animateComponent(bui, tb, 1, 200, false, 1, 0);
+	} else
+	{
+		//DBG("resized");  
+		//resized();
 	}
 	
-	//resized();
+	
 
 	managerUIListeners.call(&ManagerUIListener::itemUIAdded, tui);
 	return tui;
@@ -401,6 +417,20 @@ template<class M, class T, class U>
 void BaseManagerUI<M, T, U>::inspectableDestroyed(Inspectable *)
 {
 	if(manager != nullptr) static_cast<BaseManager<T>*>(manager)->removeBaseManagerListener(this);
+}
+
+template<class M, class T, class U>
+inline void BaseManagerUI<M, T, U>::startLoadFile()
+{
+	tmpAnimate = animateItemOnAdd;
+	animateItemOnAdd = false;
+}
+
+template<class M, class T, class U>
+inline void BaseManagerUI<M, T, U>::endLoadFile()
+{
+	animateItemOnAdd = tmpAnimate;
+	resized();
 }
 
 

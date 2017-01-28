@@ -13,6 +13,9 @@
 State::State() :
 	BaseItem("State")
 {
+	active = addBoolParameter("Active", "If active, the state's actions and mappings will be effective, otherwise this state won't do anything.", false);
+	permanent = addBoolParameter("Permanent", "If permanent, the state won't be affected by the state machine logic, i.e. deactivating when another state is activated.",false);
+
 	viewUIPosition = addPoint2DParameter("Position", "Position in State Machine view");
 	viewUIPosition->setBounds(-100, -100,100,100);
 	viewUIPosition->hideInEditor = true;
@@ -37,6 +40,17 @@ State::State() :
 
 State::~State()
 {
+	masterReference.clear();
+}
+
+
+void State::onContainerParameterChanged(Parameter *p)
+{
+	if (p == active)
+	{
+		stateListeners.call(&StateListener::stateActivationChanged, this);
+
+	}
 }
 
 var State::getJSONData()

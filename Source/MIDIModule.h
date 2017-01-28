@@ -48,6 +48,8 @@ public:
 
 	static MIDIModule * create() { return new MIDIModule(); }
 	virtual String getTypeString() const override { return "MIDI"; }
+
+	InspectableEditor * getEditor(bool isRoot) override;
 };
 
 

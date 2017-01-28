@@ -23,6 +23,10 @@ public:
 	State();
 	virtual ~State();
 
+	//
+	BoolParameter * active;
+	BoolParameter * permanent;
+
 	//UI
 	Point2DParameter * viewUIPosition;
 	Point2DParameter * viewUISize;
@@ -32,8 +36,27 @@ public:
 	ActionManager am;
 	MappingManager mm;
 
+	void onContainerParameterChanged(Parameter *) override;
+
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
+
+	class StateListener
+	{
+	public:
+		virtual ~StateListener() {}
+		virtual void stateActivationChanged(State *) {}
+	};
+
+	ListenerList<StateListener> stateListeners;
+	void addStateListener(StateListener* newListener) { stateListeners.add(newListener); }
+	void removeStateListener(StateListener* listener) { stateListeners.remove(listener); }
+
+
+
+private:
+	WeakReference<State>::Master masterReference;
+	friend class WeakReference<State>;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(State)
 };

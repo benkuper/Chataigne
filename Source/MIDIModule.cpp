@@ -10,6 +10,7 @@
 
 #include "MIDIModule.h"
 #include "MIDICommands.h"
+#include "MIDIModuleEditor.h"
 
 MIDIModule::MIDIModule(const String & name) :
 	Module(name),
@@ -152,4 +153,9 @@ void MIDIModule::loadJSONDataInternal(var data)
 	DBG("Values cc load with create if not there");
 	valuesCC.loadJSONData(data.getProperty("values", var()), true);
 	valuesCC.orderControllablesAlphabetically();
+}
+
+InspectableEditor * MIDIModule::getEditor(bool isRoot)
+{
+	return new MIDIModuleEditor(this,isRoot);
 }

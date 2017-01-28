@@ -227,7 +227,18 @@ void AutomationUI::mouseDown(const MouseEvent & e)
 		{
 			if (e.mods.isCtrlDown())
 			{
-				manager->addItem(getPosForX(e.getPosition().x), (1 - e.getPosition().y*1.f / getHeight()));
+				if (e.mods.isShiftDown())
+				{
+					for (int i = 0; i < 200; i++)
+					{
+						Random rn;
+						manager->addItem(rn.nextFloat()*manager->positionMax, rn.nextFloat());
+					}
+				} else
+				{
+					manager->addItem(getPosForX(e.getPosition().x), (1 - e.getPosition().y*1.f / getHeight()));
+				}
+				
 			}
 		}
 		

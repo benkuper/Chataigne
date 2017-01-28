@@ -13,9 +13,11 @@
 
 #include "BaseManager.h"
 #include "State.h"
+#include "StateTransitionManager.h"
 
 class StateManager :
-	public BaseManager<State>
+	public BaseManager<State>,
+	public State::StateListener
 {
 public:
 	juce_DeclareSingleton(StateManager, false)
@@ -23,8 +25,16 @@ public:
 	StateManager();
 	~StateManager();
 
+	StateTransitionManager stm;
+
+	WeakReference<State> activeState;
+	void setActiveState(State * s);
 
 	State * addItem(const Point<float> &initialPosition);
+	void addItemInternal(State * s, var data) override;
+	void removeItemInternal(State * s) override;
+
+	void stateActivationChanged(State * s) override;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(StateManager)
 };

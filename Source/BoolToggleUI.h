@@ -25,7 +25,7 @@ public:
     void paint(Graphics &g) override;
     void mouseDown(const MouseEvent &e) override;
     void mouseUp(const MouseEvent &e) override;
-
+	void mouseDoubleClick(const MouseEvent &) override {} //disable double click on toggle
 protected:
     void valueChanged(const var & ) override;
 

@@ -577,20 +577,23 @@
           </GROUP>
           <GROUP id="{D7AF6390-BF25-0509-7049-EBEB8223ABDD}" name="Transition">
             <GROUP id="{290F443E-597B-C298-175E-DA2BE7FDDA5F}" name="ui">
-              <FILE id="sRhbyL" name="TransitionConnector.cpp" compile="1" resource="0"
-                    file="Source/TransitionConnector.cpp"/>
-              <FILE id="Y8Fzy8" name="TransitionConnector.h" compile="0" resource="0"
-                    file="Source/TransitionConnector.h"/>
-              <FILE id="DcYFrr" name="TransitionUI.cpp" compile="1" resource="0"
-                    file="Source/TransitionUI.cpp"/>
-              <FILE id="TKQDSl" name="TransitionUI.h" compile="0" resource="0" file="Source/TransitionUI.h"/>
+              <FILE id="rYQXFw" name="StateTransitionManagerUI.cpp" compile="1" resource="0"
+                    file="Source/StateTransitionManagerUI.cpp"/>
+              <FILE id="lOmHnC" name="StateTransitionManagerUI.h" compile="0" resource="0"
+                    file="Source/StateTransitionManagerUI.h"/>
+              <FILE id="DcYFrr" name="StateTransitionUI.cpp" compile="1" resource="0"
+                    file="Source/StateTransitionUI.cpp"/>
+              <FILE id="TKQDSl" name="StateTransitionUI.h" compile="0" resource="0"
+                    file="Source/StateTransitionUI.h"/>
             </GROUP>
-            <FILE id="LBYzSa" name="Transition.cpp" compile="1" resource="0" file="Source/Transition.cpp"/>
-            <FILE id="iKVsgr" name="Transition.h" compile="0" resource="0" file="Source/Transition.h"/>
-            <FILE id="aiKAmo" name="TransitionManager.cpp" compile="1" resource="0"
-                  file="Source/TransitionManager.cpp"/>
-            <FILE id="ycwMN2" name="TransitionManager.h" compile="0" resource="0"
-                  file="Source/TransitionManager.h"/>
+            <FILE id="LBYzSa" name="StateTransition.cpp" compile="1" resource="0"
+                  file="Source/StateTransition.cpp"/>
+            <FILE id="iKVsgr" name="StateTransition.h" compile="0" resource="0"
+                  file="Source/StateTransition.h"/>
+            <FILE id="aiKAmo" name="StateTransitionManager.cpp" compile="1" resource="0"
+                  file="Source/StateTransitionManager.cpp"/>
+            <FILE id="ycwMN2" name="StateTransitionManager.h" compile="0" resource="0"
+                  file="Source/StateTransitionManager.h"/>
           </GROUP>
           <GROUP id="{96196884-0BE6-CF6D-F72B-E2E96115246B}" name="ui">
             <FILE id="KluOf6" name="StateMachineView.cpp" compile="1" resource="0"

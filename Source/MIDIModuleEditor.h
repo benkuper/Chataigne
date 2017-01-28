@@ -11,6 +11,28 @@
 #ifndef MIDIMODULEEDITOR_H_INCLUDED
 #define MIDIMODULEEDITOR_H_INCLUDED
 
+#include "ModuleEditor.h"
+#include "MIDIModule.h"
+#include "MIDIDeviceChooser.h"
+
+#include "MIDIDeviceParameterUI.h"
+#include "BoolToggleUI.h"
+
+class MIDIModuleEditor :
+	public ModuleEditor
+{
+public:
+	MIDIModuleEditor(MIDIModule * _module, bool isRoot);
+	~MIDIModuleEditor();
+
+	MIDIModule * midiModule;
+	
+	ScopedPointer<ControllableEditor> deviceChooser;
+	ScopedPointer<BoolToggleUI> autoAddUI;
+	ScopedPointer<InspectableEditor> valuesUI;
+
+	void resizedInternalContent(Rectangle<int> &r) override;
+};
 
 
 

@@ -26,6 +26,9 @@ public:
 	StateViewUI(State * state);
 	~StateViewUI();
 
+	ScopedPointer<BoolToggleUI> activeUI;
+	ScopedPointer<BoolToggleUI> permanentUI;
+
 	ActionManagerUI amui;
 	MappingManagerUI mmui;
 
