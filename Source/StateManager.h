@@ -36,6 +36,11 @@ public:
 
 	void stateActivationChanged(State * s) override;
 
+	var getJSONData() override;
+	void loadJSONDataInternal(var data) override;
+
+	InspectableEditor * getEditor(bool isRoot) override;
+
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(StateManager)
 };
 

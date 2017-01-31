@@ -62,10 +62,9 @@ void Action::onContainerTriggerTriggered(Trigger * t)
 
 void Action::conditionManagerValidationChanged(ConditionManager *)
 {
-	DBG("Condition validation changed");
 	if (cdm.isValid->boolValue())
 	{
-		csm.triggerAll->trigger();
+		trigger->trigger(); //force trigger from onContainerTriggerTriggered, for derivating child classes
 	}
 }
 

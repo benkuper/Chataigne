@@ -27,8 +27,9 @@ public :
 
 	StateMachineView * stateView;
 
+	
 	void resized() override;
-
+	
 	StateTransitionUI * createUIForItem(StateTransition *) override;
 	void addItemUIInternal(StateTransitionUI * sui) override;
 };

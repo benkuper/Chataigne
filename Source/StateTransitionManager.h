@@ -14,14 +14,22 @@
 #include "BaseManager.h"
 #include "StateTransition.h"
 
+class StateManager;
+
 class StateTransitionManager :
 	public BaseManager<StateTransition>
 {
 public:
-	StateTransitionManager();
+	StateTransitionManager(StateManager * sm);
 	~StateTransitionManager();
 
+	StateManager *sm;
+
+	void addItemFromData(var data) override;
+
 	void addItem(State * source, State * dest, var data = var());
+
+	void removeAllLinkedTransitions(State * linkedState);
 
 	StateTransition * getItemForSourceAndDest(State * source, State * dest);
 };

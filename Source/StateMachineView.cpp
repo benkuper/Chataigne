@@ -13,17 +13,20 @@
 
 StateMachineView::StateMachineView(StateManager * _manager) :
 	BaseManagerShapeShifterUI("State Machine", _manager, false),
-	manager(_manager)
+	manager(_manager),
+	transitionCreationMode(false),
+	transitionCreationSourceUI(nullptr)
 {
 	contentIsFlexible = true;
 	addItemText = "Add State";
 	setWantsKeyboardFocus(true);
 	
-	
 	addExistingItems(false);
 
 	stmUI = new StateTransitionManagerUI(this, &manager->stm);
 	addAndMakeVisible(stmUI, 0);
+
+	bgColor = BG_COLOR.darker(.3f);
 
 	resized();
 }
@@ -52,6 +55,11 @@ void StateMachineView::mouseDrag(const MouseEvent & e)
 		resized();
 		repaint(); 
 	}
+}
+
+void StateMachineView::mouseMove(const MouseEvent & e)
+{
+	if(transitionCreationMode) repaint();
 }
 
 void StateMachineView::mouseUp(const MouseEvent & e)
@@ -95,8 +103,18 @@ void StateMachineView::paint(Graphics & g)
 	g.drawLine(center.x, 0, center.x, getHeight(),2);
 	g.drawLine(0, center.y, getWidth(), center.y,2);
 	
-	
+	if (transitionCreationMode)
+
+	{
+		//Point<int> midP = (transitionCreationSourceUI->getBounds().getCentre() + getMouseXYRelative()) / 2;
+		Point<int> sourceP = transitionCreationSourceUI->getBounds().getConstrainedPoint(getMouseXYRelative());
+		g.setColour(HIGHLIGHT_COLOR);
+		Line<float> line(sourceP.x, sourceP.y, getMouseXYRelative().x, getMouseXYRelative().y);
+		float dl[] = {5,5};
+		g.drawDashedLine(line, dl, 2);
+	}
 }
+
 
 void StateMachineView::resized()
 {
@@ -150,6 +168,34 @@ Point<float> StateMachineView::getEditorsCenter()
 	return average;
 }
 
+
+void StateMachineView::startCreateTransition(StateViewUI * sourceUI)
+{
+	transitionCreationMode = true;
+	transitionCreationSourceUI = sourceUI;
+
+	for (auto &sui : itemsUI)
+	{
+		if (sui == sourceUI) continue;
+		sui->setTransitionReceptionMode(true);
+	}
+}
+
+void StateMachineView::finishCreateTransition(StateViewUI * destUI)
+{
+	transitionCreationMode = false;
+
+	if (transitionCreationSourceUI != nullptr && destUI != nullptr)
+	{
+		manager->stm.addItem(transitionCreationSourceUI->item, destUI->item);
+	}
+
+	for (auto &sui : itemsUI)
+	{
+		sui->setTransitionReceptionMode(false);
+	}
+}
+
 void StateMachineView::homeView()
 {
 	viewOffset = Point<int>();
@@ -167,6 +213,7 @@ void StateMachineView::frameView()
 
 void StateMachineView::addItemUIInternal(StateViewUI * se)
 {
+	updateViewUIPosition(se);
 	se->addStateViewUIListener(this);
 }
 
@@ -178,5 +225,15 @@ void StateMachineView::removeItemUIInternal(StateViewUI * se)
 void StateMachineView::editorGrabbed(StateViewUI * se)
 {
 	updateViewUIPosition(se);
+}
+
+void StateMachineView::askCreateTransitionFromUI(StateViewUI * se)
+{
+	startCreateTransition(se);
+}
+
+void StateMachineView::askFinishTransitionFromUI(StateViewUI * se)
+{
+	finishCreateTransition(se);
 }
 

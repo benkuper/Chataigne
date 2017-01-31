@@ -39,11 +39,15 @@ public :
 
 	bool selectItemWhenCreated;
 
+	T * getItemWithName(const String &itemShortName);
+
 	void clear();
 	void askForRemoveBaseItem(BaseItem * item) override;
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
+
+
 
 	class  Listener
 	{
@@ -140,6 +144,17 @@ template<class T>
 void BaseManager<T>::reorderItems()
 {
 	baseManagerListeners.call(&Listener::itemsReordered);
+}
+
+template<class T>
+inline T * BaseManager<T>::getItemWithName(const String & itemShortName)
+{
+	for (auto &t : items)
+	{
+		if (((BaseItem *)t)->shortName == itemShortName) return t;
+	}
+
+	return nullptr;
 }
 
 template<class T>

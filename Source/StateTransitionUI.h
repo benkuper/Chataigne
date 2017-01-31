@@ -26,14 +26,21 @@ public:
 	StateViewUI * sourceSUI;
 	StateViewUI * destSUI;
 
+	Path hitPath;
+
 	void updateBounds();
+
+	void mouseMove(const MouseEvent &e) { repaint(); }
 
 	void paint(Graphics &g) override;
 	void paintOverChildren(Graphics &g) override;
 	void resized() override;
 
+	bool hitTest(int x, int y) override;
+
 	void editorGrabbed(StateViewUI *) override;
-	
+	void editorMiniModeChanged(StateViewUI *) override;
+	void editorSelectionChanged(StateViewUI *) override;
 };
 
 

@@ -15,6 +15,7 @@
 #include "BaseItem.h"
 #include "ActionManager.h"
 #include "MappingManager.h"
+#include "StateTransition.h"
 
 class State :
 	public BaseItem
@@ -32,6 +33,10 @@ public:
 	Point2DParameter * viewUISize;
 
 	BoolParameter * miniMode;
+
+	//Transition
+	Array<StateTransition *> inTransitions;
+	Array<StateTransition *> outTransitions;
 
 	ActionManager am;
 	MappingManager mm;

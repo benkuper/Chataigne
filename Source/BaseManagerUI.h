@@ -221,16 +221,18 @@ void BaseManagerUI<M, T, U>::mouseDown(const MouseEvent & e)
 template<class M, class T, class U>
 void BaseManagerUI<M, T, U>::paint(Graphics & g)
 {
+	Rectangle<int> r = getLocalBounds();
+	
+	if (!transparentBG)
+	{
+		g.setColour(bgColor);
+		g.fillRoundedRectangle(r.toFloat(), 4);
+	}
+	
 	if (drawContour)
 	{
-		Rectangle<int> r = getLocalBounds();
-		if (!transparentBG)
-		{
-			g.setColour(bgColor);
-			g.fillRoundedRectangle(r.toFloat(), 4);
-		}
 		
-		Colour contourColor = bgColor.brighter(.3f);
+		Colour contourColor = bgColor.brighter(.2f);
 		g.setColour(contourColor);
 		g.drawRoundedRectangle(r.toFloat(), 4, 2);
 		

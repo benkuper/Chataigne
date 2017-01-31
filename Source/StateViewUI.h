@@ -41,20 +41,23 @@ public:
 	//interaction
 	Point<float> posAtMouseDown;
 
+	//transition
+	bool transitionReceptionMode;
+	void setTransitionReceptionMode(bool value);
+
 	void updateMiniModeUI();
 
 	void mouseDown(const MouseEvent &e) override;
 	void mouseDrag(const MouseEvent &e) override;
 	void mouseDoubleClick(const MouseEvent &e) override;
 
+	void paintOverChildren(Graphics &g) override;
+
 	void resized() override;
 	void childBoundsChanged(Component *) override;
 	void controllableFeedbackUpdateInternal(Controllable *) override;
 
-	void itemUIAdded(ActionUI *) override;
-	void itemUIRemoved(ActionUI *) override;
-	void itemUIAdded(MappingUI *) override;
-	void itemUIRemoved(MappingUI *) override;
+	void inspectableSelectionChanged(Inspectable *) override;
 
 	class Grabber : public Component
 	{
@@ -73,6 +76,10 @@ public:
 	public:
 		virtual ~Listener() {}
 		virtual void editorGrabbed(StateViewUI *) {}
+		virtual void editorMiniModeChanged(StateViewUI *) {}
+		virtual void editorSelectionChanged(StateViewUI *) {}
+		virtual void askCreateTransitionFromUI(StateViewUI *) {}
+		virtual void askFinishTransitionFromUI(StateViewUI *) {}
 	};
 
 	ListenerList<Listener> stateEditorListeners;

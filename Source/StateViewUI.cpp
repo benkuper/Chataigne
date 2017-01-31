@@ -14,12 +14,12 @@ StateViewUI::StateViewUI(State * state) :
 	BaseItemUI<State>(state),
 	amui(&state->am),
 	mmui(&state->mm),
-	resizer(this,nullptr)
+	resizer(this,nullptr),
+	transitionReceptionMode(false)
 {
 	activeUI = state->active->createToggle();
 	permanentUI = state->permanent->createToggle();
 	
-
 	addAndMakeVisible(activeUI);
 	addAndMakeVisible(permanentUI);
 
@@ -47,6 +47,14 @@ StateViewUI::~StateViewUI()
 {
 }
 
+void StateViewUI::setTransitionReceptionMode(bool value)
+{
+	transitionReceptionMode = value;
+	amui.setEnabled(!transitionReceptionMode);
+	mmui.setEnabled(!transitionReceptionMode);
+	grabber.setEnabled(!transitionReceptionMode);
+}
+
 void StateViewUI::updateMiniModeUI()
 {
 	if (item->miniMode->boolValue())
@@ -61,16 +69,34 @@ void StateViewUI::updateMiniModeUI()
 		setSize(getWidth(), contentContainer.getBottom());
 	}
 	
+	stateEditorListeners.call(&Listener::editorMiniModeChanged, this);
 }
 
 void StateViewUI::mouseDown(const MouseEvent & e)
 {
 	BaseItemUI<State>::mouseDown(e);
 
-	if (e.mods.isLeftButtonDown())
+	if (transitionReceptionMode)
 	{
-		if (e.eventComponent == &grabber) posAtMouseDown = item->viewUIPosition->getPoint();
-	}
+		stateEditorListeners.call(&Listener::askFinishTransitionFromUI, this);
+	} else
+	{
+		if (e.mods.isLeftButtonDown())
+		{
+			if (e.eventComponent == &grabber) posAtMouseDown = item->viewUIPosition->getPoint();
+		} else if (e.mods.isRightButtonDown())
+		{
+			PopupMenu p;
+			p.addItem(1, "Create Transition");
+			int result = p.show();
+			switch (result)
+			{
+			case 1:
+				stateEditorListeners.call(&Listener::askCreateTransitionFromUI, this);
+				break;
+			}
+		}
+	}	
 }
 
 void StateViewUI::mouseDrag(const MouseEvent & e)
@@ -85,6 +111,16 @@ void StateViewUI::mouseDrag(const MouseEvent & e)
 void StateViewUI::mouseDoubleClick(const MouseEvent & e)
 {
 	if (e.eventComponent == &grabber) item->miniMode->setValue(!item->miniMode->boolValue());
+}
+
+void StateViewUI::paintOverChildren(Graphics & g)
+{
+	BaseItemUI::paintOverChildren(g);
+
+	if (transitionReceptionMode && isMouseOver(true))
+	{
+		g.fillAll(HIGHLIGHT_COLOR.withAlpha(.2f));
+	}
 }
 
 void StateViewUI::resized()
@@ -164,24 +200,10 @@ void StateViewUI::controllableFeedbackUpdateInternal(Controllable * c)
 	}
 }
 
-void StateViewUI::itemUIAdded(ActionUI *)
+void StateViewUI::inspectableSelectionChanged(Inspectable * i)
 {
-	//resized();
-}
-
-void StateViewUI::itemUIRemoved(ActionUI *)
-{
-	//resized();
-}
-
-void StateViewUI::itemUIAdded(MappingUI *)
-{
-	//resized();
-}
-
-void StateViewUI::itemUIRemoved(MappingUI *)
-{
-	//resized();
+	BaseItemUI::inspectableSelectionChanged(i);
+	stateEditorListeners.call(&Listener::editorSelectionChanged, this);
 }
 
 //GRABBER

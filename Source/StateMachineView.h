@@ -28,8 +28,11 @@ public:
 	~StateMachineView();
 	
 	StateManager * manager;
-
+	
+	//Transitions
 	ScopedPointer<StateTransitionManagerUI> stmUI;
+	bool transitionCreationMode;
+	StateViewUI * transitionCreationSourceUI;
 	
 	Point<int> viewOffset; //in pixels, viewOffset of 0 means zeroPos is at the center of the window
 						   
@@ -38,6 +41,7 @@ public:
 
 	void mouseDown(const MouseEvent &e) override;
 	void mouseDrag(const MouseEvent &e) override;
+	void mouseMove(const MouseEvent &e) override;
 	void mouseUp(const MouseEvent &e) override;
 	bool keyPressed(const KeyPress &e) override;
 
@@ -54,12 +58,23 @@ public:
 	Point<int> getViewPos(const Point<int> &originalPos);
 	Point<float> getEditorsCenter();
 
+
+	//Transition
+	void startCreateTransition(StateViewUI * sourceUI);
+	void finishCreateTransition(StateViewUI * destUI);
+
+
+
 	void homeView();
 	void frameView();
 
 	void addItemUIInternal(StateViewUI * se) override;
 	void removeItemUIInternal(StateViewUI * se) override;
+
+	//From StateViewUI listener
 	void editorGrabbed(StateViewUI * se) override;
+	void askCreateTransitionFromUI(StateViewUI * se) override;
+	void askFinishTransitionFromUI(StateViewUI * se) override;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(StateMachineView)
 };

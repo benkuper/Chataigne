@@ -19,6 +19,7 @@ StateTransitionManagerUI::StateTransitionManagerUI(StateMachineView * sv, StateT
 	animateItemOnAdd = false;
 	setInterceptsMouseClicks(false, true);
 	removeChildComponent(addItemBT);
+	
 	addExistingItems();
 }
 
@@ -30,13 +31,9 @@ StateTransitionManagerUI::~StateTransitionManagerUI()
 
 void StateTransitionManagerUI::resized()
 {
-	/*
-	for (auto &ui : itemsUI)
-	{
-		
-	}
-	*/
+
 }
+
 
 StateTransitionUI * StateTransitionManagerUI::createUIForItem(StateTransition * s)
 {

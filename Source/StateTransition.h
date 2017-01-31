@@ -12,7 +12,7 @@
 #define STATETRANSITION_H_INCLUDED
 
 #include "Action.h"
-#include "State.h"
+class State;
 
 class StateTransition :
 	public Action
@@ -24,7 +24,10 @@ public:
 	WeakReference<State> sourceState;
 	WeakReference<State> destState;
 
+	var getJSONData() override;
+
 	void onContainerTriggerTriggered(Trigger *) override;
+
 };
 
 #endif  // STATETRANSITION_H_INCLUDED
