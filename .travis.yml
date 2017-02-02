@@ -1,6 +1,9 @@
 sudo: required
-dist: trusty
+os:
+    - linux
+    - osx
 
+dist: trusty
 language: cpp
 
 git:

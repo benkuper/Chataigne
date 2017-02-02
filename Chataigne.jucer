@@ -967,6 +967,28 @@
         <MODULEPATH id="juce_audio_basics" path="$JUCE_MODULES_PATH"/>
       </MODULEPATHS>
     </LINUX_MAKE>
+    <XCODE_MAC targetFolder="Builds/MacOSX" smallIcon="nVz6Li" bigIcon="nVz6Li">
+      <CONFIGURATIONS>
+        <CONFIGURATION name="Debug" isDebug="1" optimisation="1" targetName="Chataigne"/>
+        <CONFIGURATION name="Release" isDebug="0" optimisation="3" targetName="Chataigne"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_video" path="/Applications/JUCE/modules"/>
+        <MODULEPATH id="juce_osc" path="/Applications/JUCE/modules"/>
+        <MODULEPATH id="juce_opengl" path="/Applications/JUCE/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="/Applications/JUCE/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="/Applications/JUCE/modules"/>
+        <MODULEPATH id="juce_graphics" path="/Applications/JUCE/modules"/>
+        <MODULEPATH id="juce_events" path="/Applications/JUCE/modules"/>
+        <MODULEPATH id="juce_data_structures" path="/Applications/JUCE/modules"/>
+        <MODULEPATH id="juce_cryptography" path="/Applications/JUCE/modules"/>
+        <MODULEPATH id="juce_core" path="/Applications/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_processors" path="/Applications/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_formats" path="/Applications/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_devices" path="/Applications/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_basics" path="/Applications/JUCE/modules"/>
+      </MODULEPATHS>
+    </XCODE_MAC>
   </EXPORTFORMATS>
   <MODULES>
     <MODULE id="juce_audio_basics" showAllCode="1" useLocalCopy="1"/>
