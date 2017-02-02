@@ -30,6 +30,7 @@ before_install:
     - cd ..
     - pwd
     - git clone --depth=1 --branch=master https://github.com/julianstorer/juce.git JUCE
+	- export JUCE_MODULES_PATH=/home/travis/benkuper/JUCE/modules
     - pwd
     - ls -d */
 
