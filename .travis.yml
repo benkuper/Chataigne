@@ -41,9 +41,9 @@ branches:
         - master
 
 script:
-    - make -C "benkuper/Chataigne/Builds/LinuxMakefile" CFLAGS=-DJUCE_STRING_UTF_TYPE=8
-    - make -C "benkuper/Chataigne/Builds/LinuxMakefile" clean
-    - make -C "benkuper/Chataigne/Builds/LinuxMakefile" CFLAGS=-DJUCE_STRING_UTF_TYPE=16
-    - make -C "benkuper/Chataigne/Builds/LinuxMakefile" clean
-    - make -C "benkuper/Chataigne/Builds/LinuxMakefile" CFLAGS=-DJUCE_STRING_UTF_TYPE=32
-    - make -C "benkuper/Chataigne/Builds/LinuxMakefile" clean
+    - make -C "Chataigne/Builds/LinuxMakefile" CFLAGS=-DJUCE_STRING_UTF_TYPE=8
+    - make -C "Chataigne/Builds/LinuxMakefile" clean
+    - make -C "Chataigne/Builds/LinuxMakefile" CFLAGS=-DJUCE_STRING_UTF_TYPE=16
+    - make -C "Chataigne/Builds/LinuxMakefile" clean
+    - make -C "Chataigne/Builds/LinuxMakefile" CFLAGS=-DJUCE_STRING_UTF_TYPE=32
+    - make -C "Chataigne/Builds/LinuxMakefile" clean
