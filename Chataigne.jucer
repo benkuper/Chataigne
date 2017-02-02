@@ -967,10 +967,13 @@
         <MODULEPATH id="juce_audio_basics" path="$JUCE_MODULES_PATH"/>
       </MODULEPATHS>
     </LINUX_MAKE>
-    <XCODE_MAC targetFolder="Builds/MacOSX" smallIcon="nVz6Li" bigIcon="nVz6Li">
+    <XCODE_MAC targetFolder="Builds/MacOSX" smallIcon="nVz6Li" bigIcon="nVz6Li"
+               externalLibraries="" extraFrameworks="IOBluetooth">
       <CONFIGURATIONS>
-        <CONFIGURATION name="Debug" isDebug="1" optimisation="1" targetName="Chataigne"/>
-        <CONFIGURATION name="Release" isDebug="0" optimisation="3" targetName="Chataigne"/>
+        <CONFIGURATION name="Debug" isDebug="1" optimisation="1" targetName="Chataigne"
+                       headerPath="../../External/wiiuse"/>
+        <CONFIGURATION name="Release" isDebug="0" optimisation="3" targetName="Chataigne"
+                       headerPath="../../External/wiiuse"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_video" path="/Applications/JUCE/modules"/>

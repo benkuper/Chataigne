@@ -35,7 +35,7 @@
 
 #import "os_mac.h"
 
-#import "../events.h"
+#import "events.h"
 
 #import <IOBluetooth/IOBluetoothUtilities.h>
 #import <IOBluetooth/objc/IOBluetoothDevice.h>

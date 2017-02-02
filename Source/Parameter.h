@@ -84,7 +84,7 @@ public:
     public:
 		enum Type { VALUE, RANGE };
 
-		ParamWithValue(Parameter * p,var v,Type t):parameter(p),value(v),type(t){}
+		ParamWithValue(Parameter * p,var v,Type t):type(t),parameter(p),value(v){}
 		Type type;
 
         Parameter * parameter;

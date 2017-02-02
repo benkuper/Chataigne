@@ -41,7 +41,11 @@
 #endif
 
 unsigned long wiiuse_os_ticks() {
-	struct timespec ts;
+	struct timespec
+    {
+        unsigned int	tv_sec;			/* seconds */
+        clock_res_t		tv_nsec;		/* nanoseconds */
+    }ts;
   	clock_serv_t cclock;
   	mach_timespec_t mts;
   	host_get_clock_service(mach_host_self(), CALENDAR_CLOCK, &cclock);
