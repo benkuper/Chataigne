@@ -948,20 +948,20 @@
         <CONFIGURATION name="Release" isDebug="0" optimisation="3" targetName="Chataigne"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
-        <MODULEPATH id="juce_video" path="$JUCE_MODULES_PATH"/>
-        <MODULEPATH id="juce_osc" path="$JUCE_MODULES_PATH"/>
-        <MODULEPATH id="juce_opengl" path="$JUCE_MODULES_PATH"/>
-        <MODULEPATH id="juce_gui_extra" path="$JUCE_MODULES_PATH"/>
-        <MODULEPATH id="juce_gui_basics" path="$JUCE_MODULES_PATH"/>
-        <MODULEPATH id="juce_graphics" path="$JUCE_MODULES_PATH"/>
-        <MODULEPATH id="juce_events" path="$JUCE_MODULES_PATH"/>
-        <MODULEPATH id="juce_data_structures" path="$JUCE_MODULES_PATH"/>
-        <MODULEPATH id="juce_cryptography" path="$JUCE_MODULES_PATH"/>
-        <MODULEPATH id="juce_core" path="$JUCE_MODULES_PATH"/>
-        <MODULEPATH id="juce_audio_processors" path="$JUCE_MODULES_PATH"/>
-        <MODULEPATH id="juce_audio_formats" path="$JUCE_MODULES_PATH"/>
-        <MODULEPATH id="juce_audio_devices" path="$JUCE_MODULES_PATH"/>
-        <MODULEPATH id="juce_audio_basics" path="$JUCE_MODULES_PATH"/>
+        <MODULEPATH id="juce_video" path="/home/travis/build/benkuper/JUCE/modules"/>
+        <MODULEPATH id="juce_osc" path="/home/travis/build/benkuper/JUCE/modules"/>
+        <MODULEPATH id="juce_opengl" path="/home/travis/build/benkuper/JUCE/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="/home/travis/build/benkuper/JUCE/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="/home/travis/build/benkuper/JUCE/modules"/>
+        <MODULEPATH id="juce_graphics" path="/home/travis/build/benkuper/JUCE/modules"/>
+        <MODULEPATH id="juce_events" path="/home/travis/build/benkuper/JUCE/modules"/>
+        <MODULEPATH id="juce_data_structures" path="/home/travis/build/benkuper/JUCE/modules"/>
+        <MODULEPATH id="juce_cryptography" path="/home/travis/build/benkuper/JUCE/modules"/>
+        <MODULEPATH id="juce_core" path="/home/travis/build/benkuper/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_processors" path="/home/travis/build/benkuper/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_formats" path="/home/travis/build/benkuper/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_devices" path="/home/travis/build/benkuper/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_basics" path="/home/travis/build/benkuper/JUCE/modules"/>
       </MODULEPATHS>
     </LINUX_MAKE>
   </EXPORTFORMATS>
