@@ -23,6 +23,7 @@ before_install:
         libcurl4-gnutls-dev+
         libasound2-dev
         libjack-dev
+        realpath
     - sudo apt-get update --fix-missing
     - sudo apt-get update -qq
     - pwd
@@ -30,7 +31,8 @@ before_install:
     - cd ..
     - pwd
     - git clone --depth=1 --branch=master https://github.com/julianstorer/juce.git JUCE
-    - export JUCE_MODULES_PATH=/home/travis/benkuper/JUCE/modules
+    - export JUCE_MODULES_PATH=$(realpath .)/JUCE/modules
+    - echo $JUCE_MODULES_PATH
     - pwd
     - ls -d */
 
