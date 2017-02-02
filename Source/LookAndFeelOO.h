@@ -202,7 +202,8 @@ namespace LookAndFeelHelpers {
 };
 
 
-class LookAndFeelOO:public LookAndFeel{
+class LookAndFeelOO:
+	public LookAndFeel{
 public:
 //  juce_DeclareSingleton(LookAndFeelOO, true);
     LookAndFeelOO();
@@ -235,7 +236,7 @@ public:
 
     void drawAlertBox (Graphics&, AlertWindow&, const Rectangle<int>& textArea, TextLayout&) override;
     int getAlertBoxWindowFlags() override;
-#if JUCE_LINUX
+
 	Array<int> getWidthsForTextButtons(AlertWindow &, const Array<TextButton *> & buttons) override
 	{
 		Array<int> w;
@@ -246,7 +247,7 @@ public:
 
 		return w;
 	}
-#endif
+
     int getAlertWindowButtonHeight() override;
 
     /** Override this function to supply a custom font for the alert window title.
@@ -544,6 +545,7 @@ private:
     class SliderLabelComp;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (LookAndFeelOO)
+
 };
 
 #endif  // LOOKANDFEELOO_H_INCLUDED
