@@ -29,9 +29,12 @@
  */
 
 
-#include "os.h"
+
 
 #if defined __APPLE__
+
+#include "os.h"
+
 #ifdef __MACH__
 	#include <mach/clock.h>
 	#include <mach/mach.h>

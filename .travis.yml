@@ -24,6 +24,7 @@ before_install:
         libasound2-dev
         libjack-dev
         realpath
+        libbluetooth-dev
     - sudo apt-get update --fix-missing
     - sudo apt-get update -qq
     - pwd
@@ -31,8 +32,6 @@ before_install:
     - cd ..
     - pwd
     - git clone --depth=1 --branch=master https://github.com/julianstorer/juce.git JUCE
-    - export JUCE_MODULES_PATH=$(realpath .)/JUCE/modules
-    - echo $JUCE_MODULES_PATH
     - pwd
     - ls -d */
 
@@ -45,8 +44,8 @@ branches:
 
 script:
     - make -C "Chataigne/Builds/LinuxMakefile" CFLAGS=-DJUCE_STRING_UTF_TYPE=8
-    - make -C "Chataigne/Builds/LinuxMakefile" clean
-    - make -C "Chataigne/Builds/LinuxMakefile" CFLAGS=-DJUCE_STRING_UTF_TYPE=16
-    - make -C "Chataigne/Builds/LinuxMakefile" clean
-    - make -C "Chataigne/Builds/LinuxMakefile" CFLAGS=-DJUCE_STRING_UTF_TYPE=32
-    - make -C "Chataigne/Builds/LinuxMakefile" clean
+#    - make -C "Chataigne/Builds/LinuxMakefile" clean
+#    - make -C "Chataigne/Builds/LinuxMakefile" CFLAGS=-DJUCE_STRING_UTF_TYPE=16
+#    - make -C "Chataigne/Builds/LinuxMakefile" clean
+#    - make -C "Chataigne/Builds/LinuxMakefile" CFLAGS=-DJUCE_STRING_UTF_TYPE=32
+#    - make -C "Chataigne/Builds/LinuxMakefile" clean

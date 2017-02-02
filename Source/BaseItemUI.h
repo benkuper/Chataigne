@@ -66,7 +66,7 @@ BaseItemUI<T>::BaseItemUI(T * _item) :
 	this->addAndMakeVisible(removeBT);
 	removeBT->addListener(this);
 
-	setHighlightOnMouseOver(true);
+	BaseItemMinimalUI<T>::setHighlightOnMouseOver(true);
 	this->setSize(100, headerHeight+4);
 }
 

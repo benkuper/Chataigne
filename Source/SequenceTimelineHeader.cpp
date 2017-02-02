@@ -67,8 +67,8 @@ void SequenceTimelineHeader::paint(Graphics & g)
 		}
 	}
 	
-	int minuteStartTime = floor<int>((start / minuteSteps) / 60)*minuteSteps;
-	int minuteEndTime = ceil<int>((end / minuteSteps) / 60)*minuteSteps;
+	int minuteStartTime = floor((start / minuteSteps) / 60)*minuteSteps;
+	int minuteEndTime = ceil((end / minuteSteps) / 60)*minuteSteps;
 
 
 	g.setFont(10);
@@ -124,7 +124,7 @@ void SequenceTimelineHeader::paint(Graphics & g)
 	g.setColour(BG_COLOR.brighter(.7f));
 	g.fillRoundedRectangle(0, 0, 20, 12, 2);
 	g.setColour(BG_COLOR.darker());
-	g.drawText(String(floor<int>(start / 60)) + "'", 2, 2, 18, 10, Justification::centred);
+	g.drawText(String(floor(start / 60)) + "'", 2, 2, 18, 10, Justification::centred);
 
 	g.setColour(BG_COLOR.darker(.6f));
 	g.drawRoundedRectangle(getLocalBounds().toFloat(), 2, 2);

@@ -20,17 +20,15 @@
 #include "AssetManager.h"
 #include "Engine.h"
 
-template<class T>
+template<class IT>
 class BaseManagerItemComparator
 {
 public:
-	template<class T>
-	BaseManagerItemComparator(BaseManager<T> * _manager) :manager(_manager) {}
+	BaseManagerItemComparator(BaseManager<IT> * _manager) :manager(_manager) {}
 	
-	BaseManager<T> * manager;
+	BaseManager<IT> * manager;
 
-	template<class T>
-	int compareElements(BaseItemMinimalUI<T> * u1, BaseItemMinimalUI<T> * u2)
+	int compareElements(BaseItemMinimalUI<IT> * u1, BaseItemMinimalUI<IT> * u2)
 	{
 		return (manager->items.indexOf(u1->item) < manager->items.indexOf(u2->item)) ? -1 : 1;
 	}

@@ -33,9 +33,9 @@ public:
 	InspectableEditor * getEditor(bool /*isRoot*/) override;
 	static CustomOSCCommand * create(ControllableContainer * module, CommandContext context, var params) { return new CustomOSCCommand((CustomOSCModule *)module, context, params); }
 
-
+private:
 	WeakReference<CustomOSCCommand>::Master masterReference;
-	friend class CustomOSCCommand;
+	friend class WeakReference<CustomOSCCommand>;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(CustomOSCCommand)
 };

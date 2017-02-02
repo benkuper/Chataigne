@@ -14,7 +14,7 @@ ReaperTimeCommand::ReaperTimeCommand(ReaperModule * _module, CommandContext cont
 	OSCCommand(_module,context,params),
 	reaperModule(_module)
 {
-	timeParam = argumentsContainer.addFloatParameter("Time", "Target time on the Reaper timeline", 0, (float)INT_MAX);
+	timeParam = argumentsContainer.addFloatParameter("Time", "Target time on the Reaper timeline", 0, 10000);
 	timeParam->defaultUI = FloatParameter::SLIDER;
 	setTargetMappingParameter(timeParam);
 }

@@ -38,7 +38,6 @@ void MappingInput::setInput(Parameter * _input)
 		inputReference->removeParameterListener(this);
 	}
 	
-	DBG("Set input reference " << (int)_input);
 	inputReference = _input;
 
 	if (inputReference != nullptr)

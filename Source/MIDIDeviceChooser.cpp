@@ -69,10 +69,10 @@ void MIDIDeviceChooser::resized()
 
 	if (showOutputs)
 	{
-		Rectangle<int> or = r.removeFromTop(th);
-		//outputLabel.setBounds(or.removeFromLeft(50));
+		Rectangle<int> outR = r.removeFromTop(th);
+		//outputLabel.setBounds(outR.removeFromLeft(50));
 		//r.removeFromLeft(10);
-		outputBox.setBounds(or);
+		outputBox.setBounds(outR);
 	}
 }
 

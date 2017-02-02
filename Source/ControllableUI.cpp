@@ -33,7 +33,7 @@ ControllableUI::~ControllableUI()
     if(controllable.get())controllable->removeControllableListener(this);
 }
 
-void ControllableUI::mouseDoubleClick(const MouseEvent & e)
+void ControllableUI::mouseDoubleClick(const MouseEvent &)
 {
 	showEditWindow();
 }

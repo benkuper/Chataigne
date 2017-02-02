@@ -57,8 +57,8 @@ void TimeLabel::labelTextChanged(Label *)
 #pragma warning(disable:4244)
 String TimeLabel::valueToTimeString(float timeVal) const
 {
-	int hours = floor<int>(timeVal / 3600);
-	int minutes = floor<int>(fmodf(timeVal,3600) / 60);
+	int hours = floor(timeVal / 3600);
+	int minutes = floor(fmodf(timeVal,3600) / 60);
 	float seconds = fmodf(timeVal, 60);
 	return String::formatted("%02i:%02i:%06.3f", hours, minutes, seconds);
 }

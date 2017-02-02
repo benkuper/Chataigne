@@ -33,7 +33,6 @@ public:
 	void setHighlightOnMouseOver(bool highlight);
 
 	void paint(Graphics &g) override;
-
 	void newMessage(const ContainerAsyncEvent &e) override;
 
 	//void controllableFeedbackUpdate(ControllableContainer *, Controllable *) override;

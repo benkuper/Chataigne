@@ -152,7 +152,7 @@ void FloatSliderUI::mouseDrag(const MouseEvent & e)
     }
 }
 
-void FloatSliderUI::mouseUp(const MouseEvent &me)
+void FloatSliderUI::mouseUp(const MouseEvent &)
 {
 	if (!parameter->isEditable || forceFeedbackOnly) return;
 
