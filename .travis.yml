@@ -10,10 +10,10 @@ branches:
     - master
 
 os: linux
-dist:trusty
+dist: trusty
 compiler: g++
-sudo:required
-compiler:clang
+sudo: required
+compiler: clang
 
 before_install:
     - sudo apt-get update --fix-missing
