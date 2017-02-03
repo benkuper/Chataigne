@@ -1,16 +1,23 @@
-sudo: required
-os:
-    - linux
-    - osx
-
-dist: trusty
 language: cpp
+dist: trusty
+sudo: required
 
-git:
-    depth: 1
+notifications:
+  email: false
 
-before_install:
-    - export DEBIAN_FRONTEND=noninteractive
+branches:
+  only:
+    - master
+
+matrix:
+  include:
+  - os: linux
+    dist:trusty
+    compiler: g++
+    sudo:required
+    compiler:clang
+
+    before_install:
     - sudo apt-get update --fix-missing
     - sudo apt-get install -qq
         clang
@@ -28,6 +35,7 @@ before_install:
         libjack-dev
         realpath
         libbluetooth-dev
+
     - sudo apt-get update --fix-missing
     - sudo apt-get update -qq
     - pwd
@@ -37,18 +45,6 @@ before_install:
     - git clone --depth=1 --branch=master https://github.com/julianstorer/juce.git JUCE
     - pwd
     - ls -d */
-
-compiler:
-    - clang
-
-branches:
-    only:
-        - master
-
-script:
-    - make -C "Chataigne/Builds/LinuxMakefile" CFLAGS=-DJUCE_STRING_UTF_TYPE=8
-#    - make -C "Chataigne/Builds/LinuxMakefile" clean
-#    - make -C "Chataigne/Builds/LinuxMakefile" CFLAGS=-DJUCE_STRING_UTF_TYPE=16
-#    - make -C "Chataigne/Builds/LinuxMakefile" clean
-#    - make -C "Chataigne/Builds/LinuxMakefile" CFLAGS=-DJUCE_STRING_UTF_TYPE=32
-#    - make -C "Chataigne/Builds/LinuxMakefile" clean
+    
+    script:
+    - make -C "Chataigne/Builds/LinuxMakefile"
