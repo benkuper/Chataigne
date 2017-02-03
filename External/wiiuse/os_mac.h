@@ -39,7 +39,7 @@
 #import <IOBluetooth/objc/IOBluetoothDevice.h>
 #import <IOBluetooth/objc/IOBluetoothL2CAPChannel.h>
 
-#import "../wiiuse_internal.h"
+#import "wiiuse_internal.h"
 
 
 #if defined(MAC_OS_X_VERSION_10_7) && MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_7
