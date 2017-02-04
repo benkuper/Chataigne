@@ -38,6 +38,7 @@ public:
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
 
+	void inputReferenceChanged(MappingInput *) override;
 	void inputParameterValueChanged(MappingInput *) override;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Mapping)

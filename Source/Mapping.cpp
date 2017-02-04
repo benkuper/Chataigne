@@ -37,7 +37,7 @@ void Mapping::process()
 {
 	if (input.inputReference == nullptr) return;
 
-	Parameter * filteredParam = fm.processFilters(input.inputReference);
+	Parameter * filteredParam = fm.processFilters();
 	om.setValue(filteredParam->value);
 }
 
@@ -56,6 +56,13 @@ void Mapping::loadJSONDataInternal(var data)
 	input.loadJSONData(data.getProperty("input", var()));
 	fm.loadJSONData(data.getProperty("filters", var()));
 	om.loadJSONData(data.getProperty("outputs", var()));
+
+	fm.setupSource(input.inputReference);
+}
+
+void Mapping::inputReferenceChanged(MappingInput *)
+{
+	fm.setupSource(input.inputReference);
 }
 
 void Mapping::inputParameterValueChanged(MappingInput *)

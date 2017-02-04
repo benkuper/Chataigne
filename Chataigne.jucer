@@ -422,6 +422,10 @@
                       file="Source/SimpleSmoothFilter.h"/>
               </GROUP>
               <GROUP id="{5620881D-EA20-B1A7-A928-DC6D4E6B9305}" name="ui">
+                <FILE id="ECWTiK" name="MappingFilterEditor.cpp" compile="1" resource="0"
+                      file="Source/MappingFilterEditor.cpp"/>
+                <FILE id="RVaSQb" name="MappingFilterEditor.h" compile="0" resource="0"
+                      file="Source/MappingFilterEditor.h"/>
                 <FILE id="nUIZg7" name="MappingFilterManagerEditor.cpp" compile="1"
                       resource="0" file="Source/MappingFilterManagerEditor.cpp"/>
                 <FILE id="FCnqzD" name="MappingFilterManagerEditor.h" compile="0" resource="0"

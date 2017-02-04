@@ -13,7 +13,8 @@
 #include "MappingFilterFactory.h"
 
 MappingFilterManager::MappingFilterManager() :
-	BaseManager<MappingFilter>("Filters")
+	BaseManager<MappingFilter>("Filters"),
+	inputSourceParam(nullptr)
 {
 	selectItemWhenCreated = false;
 }
@@ -22,9 +23,16 @@ MappingFilterManager::~MappingFilterManager()
 {
 }
 
-Parameter * MappingFilterManager::processFilters(Parameter * p)
+void MappingFilterManager::setupSource(Parameter * source)
 {
-	Parameter * fp = p;
+	inputSourceParam = source;
+	rebuildFilterChain();
+}
+
+
+Parameter * MappingFilterManager::processFilters()
+{
+	Parameter * fp = inputSourceParam;
 	for (auto &f : items)
 	{
 		fp = f->process(fp);
@@ -33,12 +41,32 @@ Parameter * MappingFilterManager::processFilters(Parameter * p)
 	return fp;
 }
 
+void MappingFilterManager::rebuildFilterChain()
+{
+	Parameter * fp = inputSourceParam;
+	for (auto &f : items)
+	{
+		f->setupSource(fp);
+		fp = f->filteredParameter;
+	}
+}
+
 void MappingFilterManager::addItemFromData(var data)
 {
 	String moduleType = data.getProperty("type", "none");
 	if (moduleType.isEmpty()) return;
 	MappingFilter * i = MappingFilterFactory::getInstance()->createModule(moduleType);
 	if (i != nullptr) addItem(i, data);
+}
+
+void MappingFilterManager::addItemInternal(MappingFilter * , var)
+{
+	rebuildFilterChain();
+}
+
+void MappingFilterManager::removeItemInternal(MappingFilter *)
+{
+	rebuildFilterChain();
 }
 
 InspectableEditor * MappingFilterManager::getEditor(bool isRoot)

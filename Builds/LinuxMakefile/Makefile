@@ -157,6 +157,7 @@ OBJECTS := \
   $(JUCE_OBJDIR)/LagFilter_15ce140b.o \
   $(JUCE_OBJDIR)/SimpleRemapFilter_6a007ff0.o \
   $(JUCE_OBJDIR)/SimpleSmoothFilter_df9c3321.o \
+  $(JUCE_OBJDIR)/MappingFilterEditor_1ce883d4.o \
   $(JUCE_OBJDIR)/MappingFilterManagerEditor_32b692bd.o \
   $(JUCE_OBJDIR)/MappingFilter_6ebc7a47.o \
   $(JUCE_OBJDIR)/MappingFilterFactory_c29e56cd.o \
@@ -783,6 +784,11 @@ $(JUCE_OBJDIR)/SimpleRemapFilter_6a007ff0.o: ../../Source/SimpleRemapFilter.cpp
 $(JUCE_OBJDIR)/SimpleSmoothFilter_df9c3321.o: ../../Source/SimpleSmoothFilter.cpp
 	-@mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling SimpleSmoothFilter.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/MappingFilterEditor_1ce883d4.o: ../../Source/MappingFilterEditor.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling MappingFilterEditor.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/MappingFilterManagerEditor_32b692bd.o: ../../Source/MappingFilterManagerEditor.cpp

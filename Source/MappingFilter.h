@@ -21,14 +21,30 @@ public:
 	MappingFilter(const String &name = "MappingFilter");
 	virtual ~MappingFilter();
 
+	Parameter * sourceParam;
 	Parameter * filteredParameter;
-	void setupParameter(Parameter * source);
+
+	void setupSource(Parameter * source);
 	virtual Parameter * setupParameterInternal(Parameter * source);
 
-	Parameter * process(Parameter * sourceParam);
+	Parameter * process(Parameter * source);
 	virtual void processInternal(Parameter * /*source*/, Parameter * /*target*/) {}
 
 	var getJSONData() override;
+
+	InspectableEditor * getEditor(bool isRoot) override;
+
+	class  FilterListener
+	{
+	public:
+		/** Destructor. */
+		virtual ~FilterListener() {}
+		virtual void filteredParamChanged(MappingFilter *) {};
+	};
+
+	ListenerList<FilterListener> mappingFilterListeners;
+	void addMappingFilterListener(FilterListener* newListener) { mappingFilterListeners.add(newListener); }
+	void removeMappingFilterListener(FilterListener* listener) { mappingFilterListeners.remove(listener); }
 
 	virtual String getTypeString() const { jassert(false); return "[ERROR]"; }
 

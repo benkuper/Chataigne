@@ -21,9 +21,17 @@ public:
 	MappingFilterManager();
 	~MappingFilterManager();
 
-	Parameter * processFilters(Parameter * p);
+	Parameter * inputSourceParam;
+	void setupSource(Parameter * source);
+	void rebuildFilterChain();
+	
+	Parameter * processFilters();
+	
 
 	void addItemFromData(var data) override;
+	void addItemInternal(MappingFilter * m, var data) override;
+	void removeItemInternal(MappingFilter *) override;
+	
 
 	InspectableEditor * getEditor(bool isRoot) override;
 
