@@ -18,10 +18,14 @@ class MappingFilterManager :
 	public BaseManager<MappingFilter>
 {
 public:
-	juce_DeclareSingleton(MappingFilterManager, true)
-
-		MappingFilterManager();
+	MappingFilterManager();
 	~MappingFilterManager();
+
+	Parameter * processFilters(Parameter * p);
+
+	void addItemFromData(var data) override;
+
+	InspectableEditor * getEditor(bool isRoot) override;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MappingFilterManager)
 

@@ -24,13 +24,13 @@ public:
 	ConditionEditor(Condition *, bool isRoot);
 	virtual ~ConditionEditor();
 
-	
-	void resizedInternalContent(Rectangle<int> &r) override;
 
 	Condition * condition;
 	ScopedPointer<TargetParameterUI> targetUI;
 	ScopedPointer<ControllableUI> sourceFeedbackUI;
 	ScopedPointer<BaseComparatorUI> comparatorUI;
+	
+	void resizedInternalContent(Rectangle<int> &r) override;
 	
 	void paintOverChildren(Graphics &g) override;
 	void updateSourceUI();

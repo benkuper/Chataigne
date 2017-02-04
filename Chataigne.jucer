@@ -377,16 +377,22 @@
           <GROUP id="{0AD6B590-641F-8AAB-B140-AB14DC6905D8}" name="Mapping">
             <GROUP id="{207D2841-DB7C-D3BB-0E72-1B1487D28404}" name="Input">
               <GROUP id="{FAC1239C-CEF0-A69C-07B2-A906322559A0}" name="ui">
-                <FILE id="L6M6Hz" name="MappingInputUI.cpp" compile="1" resource="0"
-                      file="Source/MappingInputUI.cpp"/>
-                <FILE id="yMyPsX" name="MappingInputUI.h" compile="0" resource="0"
-                      file="Source/MappingInputUI.h"/>
+                <FILE id="L6M6Hz" name="MappingInputEditor.cpp" compile="1" resource="0"
+                      file="Source/MappingInputEditor.cpp"/>
+                <FILE id="yMyPsX" name="MappingInputEditor.h" compile="0" resource="0"
+                      file="Source/MappingInputEditor.h"/>
               </GROUP>
               <FILE id="tyyq0u" name="MappingInput.cpp" compile="1" resource="0"
                     file="Source/MappingInput.cpp"/>
               <FILE id="B1bYRH" name="MappingInput.h" compile="0" resource="0" file="Source/MappingInput.h"/>
             </GROUP>
             <GROUP id="{18518876-74C1-2B25-1A4A-02F7AB24FFB8}" name="Output">
+              <GROUP id="{5C583B99-90CB-DA96-EC0A-625FC344B9E5}" name="ui">
+                <FILE id="v8IwLE" name="MappingOutputEditor.cpp" compile="1" resource="0"
+                      file="Source/MappingOutputEditor.cpp"/>
+                <FILE id="SHTIiV" name="MappingOutputEditor.h" compile="0" resource="0"
+                      file="Source/MappingOutputEditor.h"/>
+              </GROUP>
               <FILE id="oukCyf" name="MappingOutput.cpp" compile="1" resource="0"
                     file="Source/MappingOutput.cpp"/>
               <FILE id="ftf39y" name="MappingOutput.h" compile="0" resource="0" file="Source/MappingOutput.h"/>
@@ -396,19 +402,38 @@
                     file="Source/MappingOutputManager.h"/>
             </GROUP>
             <GROUP id="{2AC385C9-84A1-53E7-151F-36CA39F36FE7}" name="Filter">
+              <GROUP id="{B0B4810E-8573-A36C-4561-1CE52F06C6BA}" name="filters">
+                <FILE id="Zy0njO" name="CurveMapFilter.cpp" compile="1" resource="0"
+                      file="Source/CurveMapFilter.cpp"/>
+                <FILE id="g6Fuvk" name="CurveMapFilter.h" compile="0" resource="0"
+                      file="Source/CurveMapFilter.h"/>
+                <FILE id="zSgxZo" name="InverseFilter.cpp" compile="1" resource="0"
+                      file="Source/InverseFilter.cpp"/>
+                <FILE id="O0jaCt" name="InverseFilter.h" compile="0" resource="0" file="Source/InverseFilter.h"/>
+                <FILE id="Iqwwn4" name="LagFilter.cpp" compile="1" resource="0" file="Source/LagFilter.cpp"/>
+                <FILE id="U46NtO" name="LagFilter.h" compile="0" resource="0" file="Source/LagFilter.h"/>
+                <FILE id="OZCzh6" name="SimpleRemapFilter.cpp" compile="1" resource="0"
+                      file="Source/SimpleRemapFilter.cpp"/>
+                <FILE id="sIVpEC" name="SimpleRemapFilter.h" compile="0" resource="0"
+                      file="Source/SimpleRemapFilter.h"/>
+                <FILE id="Y501Cj" name="SimpleSmoothFilter.cpp" compile="1" resource="0"
+                      file="Source/SimpleSmoothFilter.cpp"/>
+                <FILE id="RhnAaD" name="SimpleSmoothFilter.h" compile="0" resource="0"
+                      file="Source/SimpleSmoothFilter.h"/>
+              </GROUP>
               <GROUP id="{5620881D-EA20-B1A7-A928-DC6D4E6B9305}" name="ui">
-                <FILE id="MXbxcz" name="MappingFilterManagerUI.cpp" compile="1" resource="0"
-                      file="Source/MappingFilterManagerUI.cpp"/>
-                <FILE id="KRbAGQ" name="MappingFilterManagerUI.h" compile="0" resource="0"
-                      file="Source/MappingFilterManagerUI.h"/>
-                <FILE id="uURlCY" name="MappingFilterUI.cpp" compile="1" resource="0"
-                      file="Source/MappingFilterUI.cpp"/>
-                <FILE id="SN7wWp" name="MappingFilterUI.h" compile="0" resource="0"
-                      file="Source/MappingFilterUI.h"/>
+                <FILE id="nUIZg7" name="MappingFilterManagerEditor.cpp" compile="1"
+                      resource="0" file="Source/MappingFilterManagerEditor.cpp"/>
+                <FILE id="FCnqzD" name="MappingFilterManagerEditor.h" compile="0" resource="0"
+                      file="Source/MappingFilterManagerEditor.h"/>
               </GROUP>
               <FILE id="l81ugg" name="MappingFilter.cpp" compile="1" resource="0"
                     file="Source/MappingFilter.cpp"/>
               <FILE id="c77Lug" name="MappingFilter.h" compile="0" resource="0" file="Source/MappingFilter.h"/>
+              <FILE id="ohZsDt" name="MappingFilterFactory.cpp" compile="1" resource="0"
+                    file="Source/MappingFilterFactory.cpp"/>
+              <FILE id="gR8X8j" name="MappingFilterFactory.h" compile="0" resource="0"
+                    file="Source/MappingFilterFactory.h"/>
               <FILE id="AAXygr" name="MappingFilterManager.cpp" compile="1" resource="0"
                     file="Source/MappingFilterManager.cpp"/>
               <FILE id="fnnp6H" name="MappingFilterManager.h" compile="0" resource="0"

@@ -160,7 +160,7 @@ void StateViewUI::resized()
 		int amHeight = jmax<int>(amui.getContentHeight(), 30);
 		int mmHeight = jmax<int>(mmui.getContentHeight(), 30);
 
-		item->viewUISize->setPoint(getWidth(), getHeight());
+		item->viewUISize->setPoint(getWidth(), getHeight()+12); //should look into that +12, if not there, size shrinks between saves
 
 		if ((amHeight > cr.getHeight()/2 || mmHeight > cr.getHeight() /2) && amHeight + mmHeight + gap <= cr.getHeight())
 		{

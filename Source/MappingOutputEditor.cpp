@@ -1,11 +1,11 @@
 /*
   ==============================================================================
 
-    MappingInputUI.cpp
-    Created: 28 Oct 2016 8:11:42pm
-    Author:  bkupe
+    MappingOutputEditor.cpp
+    Created: 3 Feb 2017 12:59:10pm
+    Author:  Ben
 
   ==============================================================================
 */
 
-#include "MappingInputUI.h"
+#include "MappingOutputEditor.h"

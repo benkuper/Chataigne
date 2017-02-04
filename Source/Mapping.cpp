@@ -18,6 +18,8 @@ Mapping::Mapping() :
 	addChildControllableContainer(&input);
 	addChildControllableContainer(&fm);
 	addChildControllableContainer(&om);
+
+	input.addMappingInputListener(this);
 }
 
 Mapping::~Mapping()
@@ -29,6 +31,14 @@ void Mapping::lockInputTo(Parameter * lockParam)
 	inputIsLocked = lockParam != nullptr;
 	if (inputIsLocked) input.lockInput(lockParam);
 	
+}
+
+void Mapping::process()
+{
+	if (input.inputReference == nullptr) return;
+
+	Parameter * filteredParam = fm.processFilters(input.inputReference);
+	om.setValue(filteredParam->value);
 }
 
 var Mapping::getJSONData()
@@ -46,4 +56,10 @@ void Mapping::loadJSONDataInternal(var data)
 	input.loadJSONData(data.getProperty("input", var()));
 	fm.loadJSONData(data.getProperty("filters", var()));
 	om.loadJSONData(data.getProperty("outputs", var()));
+}
+
+void Mapping::inputParameterValueChanged(MappingInput *)
+{
+	if (!enabled->boolValue()) return;
+	process();
 }

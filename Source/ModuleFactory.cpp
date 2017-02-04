@@ -35,14 +35,23 @@ ModuleFactory::ModuleFactory() {
 	buildPopupMenu();
 }
 
-inline void ModuleFactory::buildPopupMenu()
+void ModuleFactory::buildPopupMenu()
 {
 	OwnedArray<PopupMenu> subMenus;
 	Array<String> subMenuNames;
 
 	for (auto &d : moduleDefs)
 	{
+		int itemID = moduleDefs.indexOf(d) + 1;//start at 1 for menu
+
+		if (d->menuPath.isEmpty())
+		{
+			menu.addItem(itemID, d->moduleType);
+			continue;
+		}
+
 		int subMenuIndex = -1;
+
 		for (int i = 0; i < subMenus.size(); i++)
 		{
 			if (subMenuNames[i] == d->menuPath)
@@ -58,7 +67,6 @@ inline void ModuleFactory::buildPopupMenu()
 			subMenuIndex = subMenus.size() - 1;
 		}
 
-		int itemID = moduleDefs.indexOf(d) + 1;//start at 1 for menu
 		subMenus[subMenuIndex]->addItem(itemID, d->moduleType);
 	}
 

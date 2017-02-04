@@ -10,10 +10,10 @@
 
 #include "MappingOutput.h"
 #include "BaseCommand.h"
-#include "Engine.h"
+#include "Engine.h" 
 
 MappingOutput::MappingOutput() :
-	BaseCommandHandler("MappingOutput")
+	BaseCommandHandler("MappingOutput",CommandContext::MAPPING)
 {
 	isSelectable = false;
 }
@@ -24,5 +24,6 @@ MappingOutput::~MappingOutput()
 
 void MappingOutput::setValue(var value)
 {
+	if (!enabled->boolValue()) return;
 	if(command != nullptr) command->setValue(value);
 }

@@ -21,9 +21,9 @@ BaseCommand::BaseCommand(ControllableContainer * _container, CommandContext _con
 
 void BaseCommand::setTargetMappingParameter(Parameter * p)
 {
-	if (targetMappingParameter != nullptr) targetMappingParameter->hideInEditor = false;
+	if (targetMappingParameter != nullptr) targetMappingParameter->isControllableFeedbackOnly = false;
 	targetMappingParameter = p;
-	if (targetMappingParameter != nullptr) targetMappingParameter->hideInEditor = true;
+	if (targetMappingParameter != nullptr) targetMappingParameter->isControllableFeedbackOnly = true;
 }
 
 void BaseCommand::setValue(var value)

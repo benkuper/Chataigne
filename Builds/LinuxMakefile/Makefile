@@ -147,13 +147,19 @@ OBJECTS := \
   $(JUCE_OBJDIR)/ActionUI_e36558d3.o \
   $(JUCE_OBJDIR)/Action_97be92bf.o \
   $(JUCE_OBJDIR)/ActionManager_9ed61c78.o \
-  $(JUCE_OBJDIR)/MappingInputUI_8f4826b9.o \
+  $(JUCE_OBJDIR)/MappingInputEditor_9e41cd32.o \
   $(JUCE_OBJDIR)/MappingInput_19a7a225.o \
+  $(JUCE_OBJDIR)/MappingOutputEditor_3b183a1d.o \
   $(JUCE_OBJDIR)/MappingOutput_7f60db50.o \
   $(JUCE_OBJDIR)/MappingOutputManager_681d3ec7.o \
-  $(JUCE_OBJDIR)/MappingFilterManagerUI_447b69c4.o \
-  $(JUCE_OBJDIR)/MappingFilterUI_f2877e5b.o \
+  $(JUCE_OBJDIR)/CurveMapFilter_84c144ce.o \
+  $(JUCE_OBJDIR)/InverseFilter_66642a29.o \
+  $(JUCE_OBJDIR)/LagFilter_15ce140b.o \
+  $(JUCE_OBJDIR)/SimpleRemapFilter_6a007ff0.o \
+  $(JUCE_OBJDIR)/SimpleSmoothFilter_df9c3321.o \
+  $(JUCE_OBJDIR)/MappingFilterManagerEditor_32b692bd.o \
   $(JUCE_OBJDIR)/MappingFilter_6ebc7a47.o \
+  $(JUCE_OBJDIR)/MappingFilterFactory_c29e56cd.o \
   $(JUCE_OBJDIR)/MappingFilterManager_c0562bf0.o \
   $(JUCE_OBJDIR)/MappingManagerUI_a4d2f6dc.o \
   $(JUCE_OBJDIR)/MappingUI_56e9fc43.o \
@@ -729,14 +735,19 @@ $(JUCE_OBJDIR)/ActionManager_9ed61c78.o: ../../Source/ActionManager.cpp
 	@echo "Compiling ActionManager.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
 
-$(JUCE_OBJDIR)/MappingInputUI_8f4826b9.o: ../../Source/MappingInputUI.cpp
+$(JUCE_OBJDIR)/MappingInputEditor_9e41cd32.o: ../../Source/MappingInputEditor.cpp
 	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling MappingInputUI.cpp"
+	@echo "Compiling MappingInputEditor.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/MappingInput_19a7a225.o: ../../Source/MappingInput.cpp
 	-@mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling MappingInput.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/MappingOutputEditor_3b183a1d.o: ../../Source/MappingOutputEditor.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling MappingOutputEditor.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/MappingOutput_7f60db50.o: ../../Source/MappingOutput.cpp
@@ -749,19 +760,44 @@ $(JUCE_OBJDIR)/MappingOutputManager_681d3ec7.o: ../../Source/MappingOutputManage
 	@echo "Compiling MappingOutputManager.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
 
-$(JUCE_OBJDIR)/MappingFilterManagerUI_447b69c4.o: ../../Source/MappingFilterManagerUI.cpp
+$(JUCE_OBJDIR)/CurveMapFilter_84c144ce.o: ../../Source/CurveMapFilter.cpp
 	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling MappingFilterManagerUI.cpp"
+	@echo "Compiling CurveMapFilter.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
 
-$(JUCE_OBJDIR)/MappingFilterUI_f2877e5b.o: ../../Source/MappingFilterUI.cpp
+$(JUCE_OBJDIR)/InverseFilter_66642a29.o: ../../Source/InverseFilter.cpp
 	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling MappingFilterUI.cpp"
+	@echo "Compiling InverseFilter.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/LagFilter_15ce140b.o: ../../Source/LagFilter.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling LagFilter.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/SimpleRemapFilter_6a007ff0.o: ../../Source/SimpleRemapFilter.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling SimpleRemapFilter.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/SimpleSmoothFilter_df9c3321.o: ../../Source/SimpleSmoothFilter.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling SimpleSmoothFilter.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/MappingFilterManagerEditor_32b692bd.o: ../../Source/MappingFilterManagerEditor.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling MappingFilterManagerEditor.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/MappingFilter_6ebc7a47.o: ../../Source/MappingFilter.cpp
 	-@mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling MappingFilter.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/MappingFilterFactory_c29e56cd.o: ../../Source/MappingFilterFactory.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling MappingFilterFactory.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/MappingFilterManager_c0562bf0.o: ../../Source/MappingFilterManager.cpp

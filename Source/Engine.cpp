@@ -18,6 +18,7 @@
 #include "StringUtil.h"
 #include "Outliner.h"
 #include "ControllableFactory.h"
+#include "MappingFilterFactory.h"
 #include "MIDIManager.h"
 #include "GamepadManager.h"
 #include "WiimoteManager.h"
@@ -63,6 +64,7 @@ Engine::~Engine(){
   Logger::setCurrentLogger(nullptr);
 
   ControllableFactory::deleteInstance();
+  MappingFilterFactory::deleteInstance();
   
   MIDIManager::deleteInstance();
   GamepadManager::deleteInstance();

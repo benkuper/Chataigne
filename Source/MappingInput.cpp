@@ -9,6 +9,7 @@
 */
 
 #include "MappingInput.h"
+#include "MappingInputEditor.h"
 
 MappingInput::MappingInput() :
 	ControllableContainer("Input"),
@@ -45,7 +46,7 @@ void MappingInput::setInput(Parameter * _input)
 		inputReference->addParameterListener(this);
 	}
 
-	mappinginputListeners.call(&MappingInput::Listener::inputReferenceChanged, inputReference);
+	mappinginputListeners.call(&MappingInput::Listener::inputReferenceChanged, this);
 }
 
 void MappingInput::onContainerParameterChanged(Parameter * p)
@@ -60,6 +61,11 @@ void MappingInput::onExternalParameterChanged(Parameter * p)
 {
 	if (p == inputReference)
 	{
-		mappinginputListeners.call(&MappingInput::Listener::inputParameterValueChanged, inputReference);
+		mappinginputListeners.call(&MappingInput::Listener::inputParameterValueChanged, this);
 	}
+}
+
+InspectableEditor * MappingInput::getEditor(bool isRoot)
+{
+	return new MappingInputEditor(this,isRoot);
 }

@@ -12,6 +12,7 @@
 #define BASEMANAGER_H_INCLUDED
 
 #include "BaseItem.h"
+#include "GenericManagerEditor.h"
 
 template <class T>
 class BaseManager :
@@ -195,7 +196,6 @@ void BaseManager<T>::loadJSONDataInternal(var data)
 }
 
 
-#include "GenericManagerEditor.h"
 template<class T>
 InspectableEditor * BaseManager<T>::getEditor(bool isRoot)
 {

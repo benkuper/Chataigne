@@ -30,13 +30,16 @@ public:
 	void onContainerParameterChanged(Parameter * p) override;
 	void onExternalParameterChanged(Parameter *p) override;
 
+
+	InspectableEditor * getEditor(bool isRoot) override;
+
 	class  Listener
 	{
 	public:
 		/** Destructor. */
 		virtual ~Listener() {}
-		virtual void inputReferenceChanged(Parameter *) {};
-		virtual void inputParameterValueChanged(Parameter *) {};
+		virtual void inputReferenceChanged(MappingInput *) {};
+		virtual void inputParameterValueChanged(MappingInput *) {};
 	};
 
 	ListenerList<Listener> mappinginputListeners;

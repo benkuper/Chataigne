@@ -245,7 +245,7 @@ public:
 			w.add(buttons.getUnchecked(i)->getWidth());
 		}
 
-		return w;
+		return w; 
 	}
 
     int getAlertWindowButtonHeight() override;

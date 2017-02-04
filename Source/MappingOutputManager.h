@@ -19,10 +19,10 @@ class MappingOutputManager :
 	public BaseManager<MappingOutput>
 {
 public:
-	juce_DeclareSingleton(MappingOutputManager, true)
-
-		MappingOutputManager();
+	MappingOutputManager();
 	~MappingOutputManager();
+
+	void setValue(var value);
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MappingOutputManager)
 

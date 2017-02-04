@@ -18,8 +18,19 @@ class MappingFilter :
 	public BaseItem
 {
 public:
-	MappingFilter();
+	MappingFilter(const String &name = "MappingFilter");
 	virtual ~MappingFilter();
+
+	Parameter * filteredParameter;
+	void setupParameter(Parameter * source);
+	virtual Parameter * setupParameterInternal(Parameter * source);
+
+	Parameter * process(Parameter * sourceParam);
+	virtual void processInternal(Parameter * /*source*/, Parameter * /*target*/) {}
+
+	var getJSONData() override;
+
+	virtual String getTypeString() const { jassert(false); return "[ERROR]"; }
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MappingFilter)
 };

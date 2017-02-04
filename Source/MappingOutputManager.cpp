@@ -10,8 +10,6 @@
 
 #include "MappingOutputManager.h"
 
-juce_ImplementSingleton(MappingOutputManager)
-
 MappingOutputManager::MappingOutputManager() :
 	BaseManager<MappingOutput>("Outputs")
 {
@@ -20,4 +18,12 @@ MappingOutputManager::MappingOutputManager() :
 
 MappingOutputManager::~MappingOutputManager()
 {
+}
+
+void MappingOutputManager::setValue(var value)
+{
+	for (auto &o : items)
+	{
+		o->setValue(value);
+	}
 }

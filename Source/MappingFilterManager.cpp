@@ -9,8 +9,8 @@
 */
 
 #include "MappingFilterManager.h"
-
-juce_ImplementSingleton(MappingFilterManager)
+#include "MappingFilterManagerEditor.h"
+#include "MappingFilterFactory.h"
 
 MappingFilterManager::MappingFilterManager() :
 	BaseManager<MappingFilter>("Filters")
@@ -20,4 +20,28 @@ MappingFilterManager::MappingFilterManager() :
 
 MappingFilterManager::~MappingFilterManager()
 {
+}
+
+Parameter * MappingFilterManager::processFilters(Parameter * p)
+{
+	Parameter * fp = p;
+	for (auto &f : items)
+	{
+		fp = f->process(fp);
+	}
+	
+	return fp;
+}
+
+void MappingFilterManager::addItemFromData(var data)
+{
+	String moduleType = data.getProperty("type", "none");
+	if (moduleType.isEmpty()) return;
+	MappingFilter * i = MappingFilterFactory::getInstance()->createModule(moduleType);
+	if (i != nullptr) addItem(i, data);
+}
+
+InspectableEditor * MappingFilterManager::getEditor(bool isRoot)
+{
+	return new MappingFilterManagerEditor(this,isRoot);
 }

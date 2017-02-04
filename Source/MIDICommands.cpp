@@ -33,8 +33,8 @@ MIDINoteAndCCCommand::MIDINoteAndCCCommand(MIDIModule * module, CommandContext c
 		noteEnum->addOption(MidiMessage::getMidiNoteName(i, true, false, 5), i);
 	}
 	octave = addIntParameter("Octave", "Octave for the note", 5,0,10);
-
-	if(type != NOTE_OFF) velocity = addIntParameter("Velocity", "Velocity of the note, between 0 and 127", 127, 0, 127);
+	velocity = addIntParameter("Velocity", "Velocity of the note, between 0 and 127", type == NOTE_OFF?0:127, 0, 127);
+	velocity->isEditable = context != MAPPING;
 }
 
 MIDINoteAndCCCommand::~MIDINoteAndCCCommand()
@@ -45,11 +45,7 @@ MIDINoteAndCCCommand::~MIDINoteAndCCCommand()
 void MIDINoteAndCCCommand::setValue(var value)
 {
 	ModuleCommand::setValue(value);
-	if (type != NOTE_OFF)
-	{
-		velocity->setValue(value, true);
-	}
-		
+	velocity->setValue(value, true);		
 	trigger();
 }
 

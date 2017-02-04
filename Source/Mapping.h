@@ -19,7 +19,8 @@
 #include "MappingOutputManager.h"
 
 class Mapping :
-	public BaseItem
+	public BaseItem,
+	public MappingInput::Listener
 {
 public:
 	Mapping();
@@ -32,8 +33,12 @@ public:
 	bool inputIsLocked;
 	void lockInputTo(Parameter * lockParam);
 
+	void process();
+
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
+
+	void inputParameterValueChanged(MappingInput *) override;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Mapping)
 };
