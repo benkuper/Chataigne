@@ -237,15 +237,17 @@ public:
     void drawAlertBox (Graphics&, AlertWindow&, const Rectangle<int>& textArea, TextLayout&) override;
     int getAlertBoxWindowFlags() override;
 
+
 	Array<int> getWidthsForTextButtons(AlertWindow &, const Array<TextButton *> & buttons) override
 	{
 		Array<int> w;
-		for (int i =0;i<buttons.size();i++)
+		
+		for (int i = 0; i<buttons.size(); i++)
 		{
-			w.add(buttons.getUnchecked(i)->getWidth());
+			w.add(jmax<int>(buttons.getUnchecked(i)->getWidth(),60));
 		}
 
-		return w; 
+		return w;
 	}
 
     int getAlertWindowButtonHeight() override;

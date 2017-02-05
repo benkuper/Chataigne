@@ -15,9 +15,14 @@
 MappingFilter::MappingFilter(const String &name) :
 	BaseItem(name),
 	filteredParameter(nullptr),
-	sourceParam(nullptr)
+	sourceParam(nullptr),
+	filterParams("filterParams")
 {
 	isSelectable = false;
+
+	filterParams.skipControllableNameInAddress = true;
+	addChildControllableContainer(&filterParams);
+	filterParams.addControllableContainerListener(this);
 }
 
 MappingFilter::~MappingFilter()
@@ -33,7 +38,9 @@ void MappingFilter::setupSource(Parameter * source)
 	
 	sourceParam = source;
 
-	filteredParameter = setupParameterInternal(source);
+	if(source != nullptr) filteredParameter = setupParameterInternal(source);
+	else filteredParameter = nullptr;
+
 	if (filteredParameter != nullptr)
 	{
 		filteredParameter->isControllableFeedbackOnly = true;
@@ -53,12 +60,17 @@ Parameter * MappingFilter::setupParameterInternal(Parameter * source)
 	return p;
 }
 
+void MappingFilter::controllableFeedbackUpdate(ControllableContainer * cc, Controllable * p)
+{
+	if (cc == &filterParams) filterParamChanged((Parameter *)p);
+}
+
 Parameter * MappingFilter::process(Parameter * source)
 {
 	if(!enabled->boolValue()) return source; //default or disabled does nothing
-	if (sourceParam == nullptr || filteredParameter == nullptr || source != sourceParam) return source;
+	if (sourceParam == nullptr || filteredParameter == nullptr || filteredParameter.wasObjectDeleted() || source != sourceParam) return source;
 
-	processInternal(sourceParam,filteredParameter); 
+	processInternal(); 
 
 	return filteredParameter;
 }
@@ -67,10 +79,17 @@ var MappingFilter::getJSONData()
 {
 	var data = BaseItem::getJSONData();
 	data.getDynamicObject()->setProperty("type", getTypeString());
+	data.getDynamicObject()->setProperty("filterParams", filterParams.getJSONData());
 	return data;
+}
+
+void MappingFilter::loadJSONDataInternal(var data)
+{
+	BaseItem::loadJSONDataInternal(data);
+	filterParams.loadJSONData(data.getProperty("filterParams", var()));
 }
 
 InspectableEditor * MappingFilter::getEditor(bool isRoot)
 {
-	return new MappingFilterEditor(this,isRoot);
+	return new GenericMappingFilterEditor(this,isRoot);
 }

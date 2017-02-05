@@ -41,6 +41,8 @@ public:
 	void inputReferenceChanged(MappingInput *) override;
 	void inputParameterValueChanged(MappingInput *) override;
 
+	InspectableEditor * getEditor(bool isRoot) override;
+
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Mapping)
 };
 

@@ -13,6 +13,7 @@
 
 #include "BaseItemEditor.h"
 #include "MappingFilter.h"
+#include "GenericControllableContainerEditor.h"
 
 class MappingFilterEditor :
 	public BaseItemEditor,
@@ -25,7 +26,7 @@ public:
 	MappingFilter * filter;
 
 	void resizedInternalContent(Rectangle<int> &r) override;
-	virtual void resizedInternalFilter(Rectangle<int> &) {};
+	virtual void resizedInternalFilter(Rectangle<int> &) {}
 	ScopedPointer<ParameterUI> filteredUI;
 
 	void updateFilteredUI();
@@ -33,7 +34,17 @@ public:
 	void filteredParamChanged(MappingFilter *) override;
 };
 
+class GenericMappingFilterEditor :
+	public MappingFilterEditor
+{
+public:
+	GenericMappingFilterEditor(MappingFilter * m, bool isRoot);
+	~GenericMappingFilterEditor();
 
+	GenericControllableContainerEditor paramContainer;
+
+	void resizedInternalFilter(Rectangle<int> &r);
+};
 
 
 #endif  // MAPPINGFILTEREDITOR_H_INCLUDED

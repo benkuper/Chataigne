@@ -15,6 +15,7 @@ Easing::Easing(Type _type) :
 	type(_type),
 	ControllableContainer("ease")
 {
+	isSelectable = false;
 }
 
 Easing::~Easing()

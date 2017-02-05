@@ -32,8 +32,10 @@ public:
 	Automation();
 	virtual ~Automation();
 
-	float positionMax;
+	//ui
+	bool showUIInEditor;
 
+	float positionMax;
 	void setPositionMax(float val);
 
 	float getValueForPosition(float pos);

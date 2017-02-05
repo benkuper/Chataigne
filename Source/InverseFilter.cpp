@@ -19,7 +19,7 @@ InverseFilter::~InverseFilter()
 {
 }
 
-void InverseFilter::processInternal(Parameter * source, Parameter * target)
+void InverseFilter::processInternal()
 {
-	target->setValue(jmap<float>(source->getNormalizedValue(), source->maximumValue, source->minimumValue));
+	filteredParameter->setValue(jmap<float>(sourceParam->getNormalizedValue(), sourceParam->maximumValue, sourceParam->minimumValue));
 }

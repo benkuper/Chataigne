@@ -9,13 +9,14 @@
 */
 
 #include "Automation.h"
-#include "BaseItemEditor.h"
+#include "AutomationEditor.h"
 
 AutomationKeyComparator Automation::comparator;
 
 Automation::Automation() :
 	BaseManager("Automation"),
-	positionMax(1)
+	positionMax(1),
+	showUIInEditor(false)
 {
 	
 }
@@ -117,5 +118,5 @@ void Automation::controllableFeedbackUpdate(ControllableContainer * cc, Controll
 
 InspectableEditor * Automation::getEditor(bool isRoot)
 {
-	return new InspectableEditor(this, isRoot); //avoid having mess in editor when a lot of items
+	return new AutomationEditor(this, isRoot);
 }

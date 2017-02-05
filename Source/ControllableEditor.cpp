@@ -19,6 +19,7 @@ ControllableEditor::ControllableEditor(Controllable * _controllable, bool isRoot
 	showLabel(true)
 {
 	ui = controllable->createDefaultUI();
+	ui->showLabel = false;
 	ui->setOpaqueBackground(true);
 	addAndMakeVisible(ui);
 

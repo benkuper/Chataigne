@@ -20,7 +20,7 @@ public:
 	InverseFilter();
 	~InverseFilter();
 
-	void processInternal(Parameter * source, Parameter * target) override;
+	void processInternal() override;
 	
 	static InverseFilter * create() { return new InverseFilter(); }
 	virtual String getTypeString() const override { return "Inverse"; }

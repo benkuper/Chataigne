@@ -31,10 +31,11 @@ void MappingFilterEditor::resizedInternalContent(Rectangle<int>& r)
 	if (filteredUI != nullptr)
 	{
 		r.setY(r.getBottom() + 5);
-		r.setHeight(filteredUI->getHeight());
+		r.setHeight(14);
 		filteredUI->setBounds(r);
 	}
 }
+
 
 void MappingFilterEditor::updateFilteredUI()
 {
@@ -57,4 +58,22 @@ void MappingFilterEditor::updateFilteredUI()
 void MappingFilterEditor::filteredParamChanged(MappingFilter *)
 {
 	updateFilteredUI();
+}
+
+GenericMappingFilterEditor::GenericMappingFilterEditor(MappingFilter * m, bool isRoot) :
+	MappingFilterEditor(m, isRoot),
+	paramContainer(&m->filterParams,false)
+{
+	if(filter->filterParams.controllables.size() || filter->filterParams.controllableContainers.size() > 0) addAndMakeVisible(&paramContainer);
+}
+
+GenericMappingFilterEditor::~GenericMappingFilterEditor()
+{
+}
+
+void GenericMappingFilterEditor::resizedInternalFilter(Rectangle<int>& r)
+{
+	if (filter->filterParams.controllables.size() == 0 && filter->filterParams.controllableContainers.size() == 0) return;
+	r.setHeight(paramContainer.getHeight());
+	paramContainer.setBounds(r);
 }

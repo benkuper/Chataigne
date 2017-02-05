@@ -199,6 +199,10 @@
               <FILE id="X3EWJU" name="Easing.h" compile="0" resource="0" file="Source/Easing.h"/>
             </GROUP>
             <GROUP id="{291CDE68-998A-6011-15C9-6E9F700A1C2F}" name="ui">
+              <FILE id="Z0WmQC" name="AutomationEditor.cpp" compile="1" resource="0"
+                    file="Source/AutomationEditor.cpp"/>
+              <FILE id="eStdTU" name="AutomationEditor.h" compile="0" resource="0"
+                    file="Source/AutomationEditor.h"/>
               <FILE id="UboRBn" name="AutomationKeyUI.cpp" compile="1" resource="0"
                     file="Source/AutomationKeyUI.cpp"/>
               <FILE id="ZAM8fU" name="AutomationKeyUI.h" compile="0" resource="0"
@@ -403,6 +407,12 @@
             </GROUP>
             <GROUP id="{2AC385C9-84A1-53E7-151F-36CA39F36FE7}" name="Filter">
               <GROUP id="{B0B4810E-8573-A36C-4561-1CE52F06C6BA}" name="filters">
+                <GROUP id="{8F9F1D85-4A15-F5C6-3DA8-D7D63D54413A}" name="ui">
+                  <FILE id="JAuuiW" name="CurveMapFilterEditor.cpp" compile="1" resource="0"
+                        file="Source/CurveMapFilterEditor.cpp"/>
+                  <FILE id="LSfb17" name="CurveMapFilterEditor.h" compile="0" resource="0"
+                        file="Source/CurveMapFilterEditor.h"/>
+                </GROUP>
                 <FILE id="Zy0njO" name="CurveMapFilter.cpp" compile="1" resource="0"
                       file="Source/CurveMapFilter.cpp"/>
                 <FILE id="g6Fuvk" name="CurveMapFilter.h" compile="0" resource="0"
@@ -444,6 +454,9 @@
                     file="Source/MappingFilterManager.h"/>
             </GROUP>
             <GROUP id="{A2BC90CF-AB5A-6E79-661D-52E7E0AA4F6B}" name="ui">
+              <FILE id="usLYhw" name="MappingEditor.cpp" compile="1" resource="0"
+                    file="Source/MappingEditor.cpp"/>
+              <FILE id="J5spEi" name="MappingEditor.h" compile="0" resource="0" file="Source/MappingEditor.h"/>
               <FILE id="JO8Hfy" name="MappingManagerUI.cpp" compile="1" resource="0"
                     file="Source/MappingManagerUI.cpp"/>
               <FILE id="Z27FqQ" name="MappingManagerUI.h" compile="0" resource="0"

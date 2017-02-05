@@ -108,6 +108,7 @@ OBJECTS := \
   $(JUCE_OBJDIR)/PluginManager_45f89b5b.o \
   $(JUCE_OBJDIR)/EasingUI_9ec4c08.o \
   $(JUCE_OBJDIR)/Easing_d662cf34.o \
+  $(JUCE_OBJDIR)/AutomationEditor_4fb789ed.o \
   $(JUCE_OBJDIR)/AutomationKeyUI_3d6674bd.o \
   $(JUCE_OBJDIR)/AutomationUI_697778f4.o \
   $(JUCE_OBJDIR)/Automation_126c4720.o \
@@ -152,6 +153,7 @@ OBJECTS := \
   $(JUCE_OBJDIR)/MappingOutputEditor_3b183a1d.o \
   $(JUCE_OBJDIR)/MappingOutput_7f60db50.o \
   $(JUCE_OBJDIR)/MappingOutputManager_681d3ec7.o \
+  $(JUCE_OBJDIR)/CurveMapFilterEditor_30170d1b.o \
   $(JUCE_OBJDIR)/CurveMapFilter_84c144ce.o \
   $(JUCE_OBJDIR)/InverseFilter_66642a29.o \
   $(JUCE_OBJDIR)/LagFilter_15ce140b.o \
@@ -162,6 +164,7 @@ OBJECTS := \
   $(JUCE_OBJDIR)/MappingFilter_6ebc7a47.o \
   $(JUCE_OBJDIR)/MappingFilterFactory_c29e56cd.o \
   $(JUCE_OBJDIR)/MappingFilterManager_c0562bf0.o \
+  $(JUCE_OBJDIR)/MappingEditor_6e89cdbc.o \
   $(JUCE_OBJDIR)/MappingManagerUI_a4d2f6dc.o \
   $(JUCE_OBJDIR)/MappingUI_56e9fc43.o \
   $(JUCE_OBJDIR)/Mapping_bdf5522f.o \
@@ -541,6 +544,11 @@ $(JUCE_OBJDIR)/Easing_d662cf34.o: ../../Source/Easing.cpp
 	@echo "Compiling Easing.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
 
+$(JUCE_OBJDIR)/AutomationEditor_4fb789ed.o: ../../Source/AutomationEditor.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling AutomationEditor.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
 $(JUCE_OBJDIR)/AutomationKeyUI_3d6674bd.o: ../../Source/AutomationKeyUI.cpp
 	-@mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling AutomationKeyUI.cpp"
@@ -761,6 +769,11 @@ $(JUCE_OBJDIR)/MappingOutputManager_681d3ec7.o: ../../Source/MappingOutputManage
 	@echo "Compiling MappingOutputManager.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
 
+$(JUCE_OBJDIR)/CurveMapFilterEditor_30170d1b.o: ../../Source/CurveMapFilterEditor.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling CurveMapFilterEditor.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
 $(JUCE_OBJDIR)/CurveMapFilter_84c144ce.o: ../../Source/CurveMapFilter.cpp
 	-@mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling CurveMapFilter.cpp"
@@ -809,6 +822,11 @@ $(JUCE_OBJDIR)/MappingFilterFactory_c29e56cd.o: ../../Source/MappingFilterFactor
 $(JUCE_OBJDIR)/MappingFilterManager_c0562bf0.o: ../../Source/MappingFilterManager.cpp
 	-@mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling MappingFilterManager.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/MappingEditor_6e89cdbc.o: ../../Source/MappingEditor.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling MappingEditor.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/MappingManagerUI_a4d2f6dc.o: ../../Source/MappingManagerUI.cpp

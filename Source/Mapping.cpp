@@ -9,6 +9,7 @@
 */
 
 #include "Mapping.h"
+#include "MappingEditor.h"
 
 Mapping::Mapping() :
 	BaseItem("Mapping"),
@@ -69,4 +70,9 @@ void Mapping::inputParameterValueChanged(MappingInput *)
 {
 	if (!enabled->boolValue()) return;
 	process();
+}
+
+InspectableEditor * Mapping::getEditor(bool isRoot)
+{
+	return new MappingEditor(this, isRoot);
 }

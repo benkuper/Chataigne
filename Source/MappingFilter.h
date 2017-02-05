@@ -22,15 +22,21 @@ public:
 	virtual ~MappingFilter();
 
 	Parameter * sourceParam;
-	Parameter * filteredParameter;
+	WeakReference<Parameter> filteredParameter;
+
+	ControllableContainer filterParams;
 
 	void setupSource(Parameter * source);
 	virtual Parameter * setupParameterInternal(Parameter * source);
 
+	void controllableFeedbackUpdate(ControllableContainer *, Controllable * p) override;
+	virtual void filterParamChanged(Parameter * ) {};
+
 	Parameter * process(Parameter * source);
-	virtual void processInternal(Parameter * /*source*/, Parameter * /*target*/) {}
+	virtual void processInternal() {}
 
 	var getJSONData() override;
+	void loadJSONDataInternal(var data) override;
 
 	InspectableEditor * getEditor(bool isRoot) override;
 

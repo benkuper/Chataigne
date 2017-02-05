@@ -12,9 +12,10 @@
 
 AutomationKey::AutomationKey()
 {
+	isSelectable = false;
+
 	position = addFloatParameter("Position", "Position of the key", 0, 0, 5);
 	value = addFloatParameter("Value", "Value of the key", 0, 0, 1);
-
 
 	easingType = addEnumParameter("EasingType", "Type of transition to the next key");
 
