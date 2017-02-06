@@ -52,15 +52,15 @@ class OutlinerItem :
 	public ControllableContainerListener
 {
 public:
-	OutlinerItem(ControllableContainer * container);
-	OutlinerItem(Controllable * controllable);
+	OutlinerItem(WeakReference<ControllableContainer> container);
+	OutlinerItem(WeakReference<Controllable> controllable);
 	~OutlinerItem();
 
 	bool isContainer;
 	String itemName;
 
-	ControllableContainer * container;
-	Controllable * controllable;
+	WeakReference<ControllableContainer> container;
+	WeakReference<Controllable> controllable;
 
 	virtual bool mightContainSubItems() override;
 
@@ -95,6 +95,7 @@ public:
 
 	void clear();
 	
+	void setEnabled(bool value);
 
 	void resized() override;
 	void paint(Graphics &g) override;

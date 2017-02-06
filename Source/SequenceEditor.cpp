@@ -32,6 +32,8 @@ SequenceEditor::SequenceEditor(Sequence * _sequence) :
 
 	panelManagerUI.viewport.addMouseListener(this, false);
 	timelineManagerUI.viewport.addMouseListener(this, false);
+	addMouseListener(this, true);
+
 }
 
 SequenceEditor::~SequenceEditor()
@@ -79,13 +81,11 @@ void SequenceEditor::scrollBarMoved(ScrollBar * scrollBarThatHasMoved, double /*
 
 void SequenceEditor::mouseWheelMove(const MouseEvent & e, const MouseWheelDetails &)
 {
-
-	Point<int> p = e.getEventRelativeTo(this).getPosition();
-	if (panelManagerUI.contains(p)) //hack, need to ask Jules about listenedComponent for direct listener to event information, also have a unique "scrollbar" event for wheel+drag
+	if (panelManagerUI.isMouseOver(true)) //hack, need to ask Jules about listenedComponent for direct listener to event information, also have a unique "scrollbar" event for wheel+drag
 	{
 		timelineManagerUI.viewport.setViewPosition(panelManagerUI.viewport.getViewPosition());
 	}
-	else
+	else if(timelineManagerUI.isMouseOver(true))
 	{
 		panelManagerUI.viewport.setViewPosition(timelineManagerUI.viewport.getViewPosition());
 	}

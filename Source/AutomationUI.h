@@ -34,6 +34,7 @@ public:
 	float currentValue;
 	AutomationKeyUI * currentUI;
 
+
 	void setCurrentPosition(const float &pos);
 	void setCurrentValue(const float &val);
 
@@ -42,9 +43,10 @@ public:
 
 	void paint(Graphics &g) override;
 
-	//void drawTransition(Graphics &g, AutomationKeyUI * p1, AutomationKeyUI *p2);
+
 
 	void resized() override;
+	void placeAllKeysUI(bool placePrevKUIs = true);
 	void placeKeyUI(AutomationKeyUI * kui, bool placePrevKUI = true);
 
 	int getXForPos(float time);
@@ -65,6 +67,7 @@ public:
 	void mouseDown(const MouseEvent &e) override;
 	void mouseDrag(const MouseEvent &e) override;
 
+	
 
 	void newMessage(const ContainerAsyncEvent &e) override;
 

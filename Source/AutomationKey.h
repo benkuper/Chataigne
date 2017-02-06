@@ -31,8 +31,10 @@ public:
 	void setEasing(Easing::Type t);
 
 	float getValue(AutomationKey * nextKey, const float &position);
-
 	void onContainerParameterChangedInternal(Parameter *) override;
+
+	var getJSONData() override;
+	void loadJSONDataInternal(var data) override;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(AutomationKey)
 };

@@ -44,6 +44,20 @@ void Outliner::clear()
 	rootItem->clearSubItems();
 }
 
+void Outliner::setEnabled(bool value)
+{
+	if (enabled == value) return;
+	if (enabled)
+	{
+		Engine::getInstance()->addControllableContainerListener(this);
+		rebuildTree();
+	} else
+	{
+		clear();
+		Engine::getInstance()->removeControllableContainerListener(this);
+	}
+}
+
 void Outliner::resized()
 {
 	Rectangle<int> r = getLocalBounds();
@@ -88,7 +102,7 @@ void Outliner::buildTree(OutlinerItem * parentItem, ControllableContainer * pare
 		
 	}
 	
-	Array<WeakReference<Parameter>> childControllables = parentContainer->getAllParameters(false);
+	Array<WeakReference<Controllable>> childControllables = parentContainer->getAllControllables(false);
 
 	for (auto &c : childControllables)
 	{
@@ -107,7 +121,7 @@ void Outliner::childStructureChanged(ControllableContainer *)
 
 // OUTLINER ITEM
 
-OutlinerItem::OutlinerItem(ControllableContainer * _container) :
+OutlinerItem::OutlinerItem(WeakReference<ControllableContainer> _container) :
 	InspectableContent(_container),
 	itemName(_container->niceName),
 	container(_container), controllable(nullptr), isContainer(true)
@@ -115,7 +129,7 @@ OutlinerItem::OutlinerItem(ControllableContainer * _container) :
 	container->addControllableContainerListener(this);
 }
 
-OutlinerItem::OutlinerItem(Controllable * _controllable) :
+OutlinerItem::OutlinerItem(WeakReference<Controllable> _controllable) :
 	InspectableContent(_controllable),
 	itemName(_controllable->niceName),
 	container(nullptr), controllable(_controllable), isContainer(false)
@@ -141,7 +155,9 @@ Component * OutlinerItem::createItemComponent()
 
 String OutlinerItem::getUniqueName() const
 {
-	String n = isContainer ? container->getControlAddress() : controllable->getControlAddress();
+	if ((isContainer && container.wasObjectDeleted()) || (!isContainer && controllable.wasObjectDeleted())) return String::empty;
+
+	String n = isContainer ? container.get()->getControlAddress() : controllable.get()->getControlAddress();
 	if (n.isEmpty()) n = isContainer ? container->shortName : controllable->shortName;
 
 	return n;

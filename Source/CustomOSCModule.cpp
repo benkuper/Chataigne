@@ -78,7 +78,7 @@ void CustomOSCModule::processMessageInternal(const OSCMessage & msg)
 			break;
 		}
 
-	} else if(autoAdd->boolValue()) //if auto add, add a new value
+	} else if(autoAdd != nullptr && autoAdd->boolValue()) //if auto add, add a new value
 	{
 		const int numArgs = msg.size();
 		switch (numArgs)

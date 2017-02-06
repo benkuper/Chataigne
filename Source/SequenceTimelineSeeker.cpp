@@ -60,7 +60,6 @@ void SequenceTimelineSeeker::mouseDown(const MouseEvent & e)
 		sequence->viewEndTime->setValue(sequence->totalTime->floatValue());
 	}
 
-	DBG("Unbounded ? " << (int)e.source.canDoUnboundedMovement());
 	e.source.enableUnboundedMouseMovement(true, false);
 
 	//DBG("viewStartAtMouseDown : " << viewStartAtMouseDown << "/ viewEndAtMouseDown : " << viewEndAtMouseDown << "/ timeAnchorAtMouseDown : " << timeAnchorAtMouseDown);

@@ -24,7 +24,6 @@ AutomationUI::AutomationUI(Automation * _automation) :
 	resizeOnChildBoundsChanged = false;
 
 	addExistingItems();
-	resized();
 }
 
 AutomationUI::~AutomationUI()
@@ -102,11 +101,13 @@ void AutomationUI::paint(Graphics & g)
 
 void AutomationUI::resized()
 {
+	if (getParentComponent() == nullptr) return;
+	if (getWidth() == 0 || getHeight() == 0) return;
 	if (itemsUI.size() == 0) return;
 
-	for (int i = lastROIKey;i>=firstROIKey;i--)
+	for (int i = lastROIKey; i >= firstROIKey; i--)
 	{
-		placeKeyUI(itemsUI[i],false);
+		placeKeyUI(itemsUI[i], true);
 		itemsUI[i]->toBack(); // place each ui in front of its right
 	}
 }
@@ -260,7 +261,7 @@ void AutomationUI::mouseDrag(const MouseEvent & e)
 				float val = (1 - mp.y*1.f / getHeight());
 				kui->item->position->setValue(pos);
 				kui->item->value->setValue(val);
-			}			
+			}
 		}
 	}
 }

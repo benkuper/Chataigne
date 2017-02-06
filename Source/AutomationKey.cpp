@@ -79,3 +79,16 @@ void AutomationKey::onContainerParameterChangedInternal(Parameter * p)
 		setEasing((Easing::Type)(int)easingType->getValueData());
 	}
 }
+
+var AutomationKey::getJSONData()
+{
+	var data = BaseItem::getJSONData();
+	if (easing != nullptr) data.getDynamicObject()->setProperty("easing", easing->getJSONData());
+	return data;
+}
+
+void AutomationKey::loadJSONDataInternal(var data)
+{
+	BaseItem::loadJSONDataInternal(data);
+	if (easing != nullptr) easing->loadJSONData(data.getProperty("easing", var()));
+}

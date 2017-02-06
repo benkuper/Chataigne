@@ -41,6 +41,8 @@ Sequence::Sequence() :
 
 Sequence::~Sequence()
 {
+	stopTimer();
+	stopTrigger->trigger();
 }
 
 var Sequence::getJSONData()

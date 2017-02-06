@@ -46,6 +46,7 @@ Engine::Engine():
   addChildControllableContainer(SequenceManager::getInstance());
 
   MIDIManager::getInstance(); //Trigger MIDIManager singleton constructor
+  InspectableSelectionManager::getInstance(); //selectionManager constructor
 }
 
 

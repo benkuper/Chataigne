@@ -331,6 +331,7 @@ U * BaseManagerUI<M, T, U>::addItemUI(T * item, bool animate)
 	
 	if (animate)
 	{
+		DBG("Animate item !");
 		Rectangle<int> tb = bui->getBounds();
 		bui->setSize(10, 10);
 		itemAnimator.animateComponent(bui, tb, 1, 200, false, 1, 0);

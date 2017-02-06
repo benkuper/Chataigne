@@ -21,8 +21,9 @@ AutomationEditor::AutomationEditor(Automation * automation, bool isRoot) :
 		automationUI->transparentBG = false;
 
 		addAndMakeVisible(automationUI);
-		setSize(100, 100);
 		automationUI->setViewRange(0, automation->positionMax);
+		setSize(100, 100);
+
 	}
 }
 

@@ -16,6 +16,7 @@
 #include "ModuleManager.h"
 #include "StateManager.h"
 #include "SequenceManager.h"
+#include "Outliner.h"
 
 
 /*================================
@@ -55,11 +56,7 @@ Result Engine::loadDocument (const File& file){
   isLoadingFile = true;
   engineListeners.call(&EngineListener::startLoadFile);
 
-  if (InspectableSelectionManager::getInstanceWithoutCreating() != nullptr)
-  {
-	  InspectableSelectionManager::getInstance()->clearSelection();
-	  InspectableSelectionManager::getInstance()->setEnabled(false); //avoid creation of inspector editor while recreating all nodes, controllers, rules,etc. from file
-  }
+  if (InspectableSelectionManager::getInstanceWithoutCreating() != nullptr)  InspectableSelectionManager::getInstance()->setEnabled(false); //avoid creation of inspector editor while recreating all nodes, controllers, rules,etc. from file
 
 #ifdef MULTITHREADED_LOADING
   fileLoader = new FileLoader(this,file);
@@ -207,46 +204,51 @@ void Engine::loadJSONData (var data,ProgressTask * loadingTask)
 		DBG("SHIIIIT");
 		return;
 	}
-  DynamicObject * md = data.getDynamicObject()->getProperty("metaData").getDynamicObject();
-  bool versionChecked = checkFileVersion(md);
 
-  if (!versionChecked)
-  {
-    String versionString = md->hasProperty("version") ? md->getProperty("version").toString() : "?";
-    AlertWindow::showMessageBox(AlertWindow::AlertIconType::WarningIcon, "You're old, bitch !", "File version (" + versionString + ") is not supported anymore.\n(Minimum supported version : " + getMinimumRequiredFileVersion() + ")");
-    return;
-  }
+	DynamicObject * md = data.getDynamicObject()->getProperty("metaData").getDynamicObject();
+	bool versionChecked = checkFileVersion(md);
 
-
-  clear();
+	if (!versionChecked)
+	{
+		String versionString = md->hasProperty("version") ? md->getProperty("version").toString() : "?";
+		AlertWindow::showMessageBox(AlertWindow::AlertIconType::WarningIcon, "You're old, bitch !", "File version (" + versionString + ") is not supported anymore.\n(Minimum supported version : " + getMinimumRequiredFileVersion() + ")");
+		return;
+	}
 
 
-  DynamicObject * d = data.getDynamicObject();
-  /*
-  ProgressTask * presetTask = loadingTask->addTask("presetManager");
-  ProgressTask * moduleManagerTask = loadingTask->addTask("moduleManager");
-  ProgressTask * stateTask = loadingTask->addTask("stateManager");
-  ProgressTask * sequenceTask = loadingTask->addTask("sequenceManager");
-  */
-
-  //presetTask->start();
-  if (d->hasProperty("presetManager")) PresetManager::getInstance()->loadJSONData(d->getProperty("presetManager"));
-  //presetTask->end();
-
-  //moduleManagerTask->start();
-  if (d->hasProperty("moduleManager")) ModuleManager::getInstance()->loadJSONData(d->getProperty("moduleManager"));
-  //moduleManagerTask->end();
-
-  //stateTask->start();
-  if (d->hasProperty("stateManager")) StateManager::getInstance()->loadJSONData(d->getProperty("stateManager"));
- // stateTask->end();
-
- // sequenceTask->start();
-  if (d->hasProperty("sequenceManager")) SequenceManager::getInstance()->loadJSONData(d->getProperty("sequenceManager"));
- // sequenceTask->end();
+	clear();
 
 
-  if (InspectableSelectionManager::getInstanceWithoutCreating() != nullptr) InspectableSelectionManager::getInstance()->setEnabled(true); //Re enable editor
+
+	if (InspectableSelectionManager::getInstanceWithoutCreating() != nullptr) InspectableSelectionManager::getInstance()->setEnabled(false); //avoid creation of inspector editor while recreating all nodes, controllers, rules,etc. from file
+	if (Outliner::getInstanceWithoutCreating() != nullptr) Outliner::getInstance()->setEnabled(false);
+
+	DynamicObject * d = data.getDynamicObject();
+	/*
+	ProgressTask * presetTask = loadingTask->addTask("presetManager");
+	ProgressTask * moduleManagerTask = loadingTask->addTask("moduleManager");
+	ProgressTask * stateTask = loadingTask->addTask("stateManager");
+	ProgressTask * sequenceTask = loadingTask->addTask("sequenceManager");
+	*/
+
+	//presetTask->start();
+	if (d->hasProperty("presetManager")) PresetManager::getInstance()->loadJSONData(d->getProperty("presetManager"));
+	//presetTask->end();
+
+	//moduleManagerTask->start();
+	if (d->hasProperty("moduleManager")) ModuleManager::getInstance()->loadJSONData(d->getProperty("moduleManager"));
+	//moduleManagerTask->end();
+
+	//stateTask->start();
+	if (d->hasProperty("stateManager")) StateManager::getInstance()->loadJSONData(d->getProperty("stateManager"));
+	// stateTask->end();
+
+	// sequenceTask->start();
+	if (d->hasProperty("sequenceManager")) SequenceManager::getInstance()->loadJSONData(d->getProperty("sequenceManager"));
+	// sequenceTask->end();
+
+	if (InspectableSelectionManager::getInstanceWithoutCreating() != nullptr) InspectableSelectionManager::getInstance()->setEnabled(true); //Re enable editor
+	if (Outliner::getInstanceWithoutCreating() != nullptr) Outliner::getInstance()->setEnabled(true);
 
 }
 
