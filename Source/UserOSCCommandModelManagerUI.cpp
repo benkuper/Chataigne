@@ -15,13 +15,13 @@
 UserOSCCommandModelManagerWindow::UserOSCCommandModelManagerWindow(const String &_name) :
 	ShapeShifterContentComponent(_name)
 {
-	Inspector::getInstance()->addInspectorListener(this);
+	InspectableSelectionManager::getInstance()->addSelectionListener(this);
 	
 }
 
 UserOSCCommandModelManagerWindow::~UserOSCCommandModelManagerWindow()
 {
-	if(Inspector::getInstanceWithoutCreating() != nullptr) Inspector::getInstance()->removeInspectorListener(this);
+	if(InspectableSelectionManager::getInstanceWithoutCreating() != nullptr) InspectableSelectionManager::getInstance()->removeSelectionListener(this);
 }
 
 
@@ -51,9 +51,9 @@ void UserOSCCommandModelManagerWindow::resized()
 	if (modelManagerUI != nullptr) modelManagerUI->setBounds(getLocalBounds().reduced(2));
 }
 
-void UserOSCCommandModelManagerWindow::currentInspectableChanged(Inspector * i)
+void UserOSCCommandModelManagerWindow::currentInspectableSelectionChanged(Inspectable *, Inspectable * i)
 {
-	CustomOSCModule * m = dynamic_cast<CustomOSCModule *>(i->currentInspectable.get());
+	CustomOSCModule * m = dynamic_cast<CustomOSCModule *>(i);
 	if(m != nullptr) editModule(m);
 }
 

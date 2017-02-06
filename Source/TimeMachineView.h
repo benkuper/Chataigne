@@ -15,11 +15,11 @@
 #include "ShapeShifterContent.h"
 #include "Style.h"
 #include "SequenceEditor.h"
-#include "Inspector.h"
+#include "InspectableSelectionManager.h"
 
 class TimeMachineView :
 	public ShapeShifterContentComponent,
-	public Inspector::InspectorListener,
+	public InspectableSelectionManager::Listener,
 	public SequenceManager::Listener
 {
 public:
@@ -36,7 +36,7 @@ public:
 	void resized() override;
 
 	void setSequence(Sequence * sequence);
-	void currentInspectableChanged(Inspector *) override;
+	void currentInspectableSelectionChanged(Inspectable *, Inspectable *) override;
 
 	void itemRemoved(Sequence *) override;
 

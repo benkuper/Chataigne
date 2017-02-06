@@ -9,13 +9,15 @@
 */
 
 #include "Inspectable.h"
-#include "Inspector.h"
+#include "InspectableSelectionManager.h"
 #include "ShapeShifterManager.h"
 
 Inspectable::Inspectable(const String & _inspectableType) :
 	inspectableType(_inspectableType),
 	isSelected(false),
-	isSelectable(true)
+	isSelectable(true),
+	showInspectorOnSelect(true),
+	targetInspector(nullptr) //default nullptr will target main inspector
 {
 }
 
@@ -28,13 +30,8 @@ Inspectable::~Inspectable()
 
 void Inspectable::selectThis()
 {
-	if (Inspector::getInstanceWithoutCreating() == nullptr)
-	{
-		DBG("Create an Inspector !");
-		ShapeShifterManager::getInstance()->showPanelWindowForContent(PanelName::InspectorPanel);
-	}
-
-	Inspector::getInstance()->setCurrentInspectable(this);
+	if (InspectableSelectionManager::getInstanceWithoutCreating() == nullptr) return;
+	InspectableSelectionManager::getInstance()->setCurrentInspectable(this);
 }
 
 void Inspectable::setSelected(bool value)

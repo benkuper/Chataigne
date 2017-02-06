@@ -14,7 +14,6 @@ AutomationEditor::AutomationEditor(Automation * automation, bool isRoot) :
 	InspectableEditor(automation, isRoot),
 	automationUI(nullptr)
 {
-	DBG("Automation UI : " << (int)(automation->showUIInEditor));
 	if (automation->showUIInEditor)
 	{
 		automationUI = new AutomationUI(automation);
@@ -23,6 +22,7 @@ AutomationEditor::AutomationEditor(Automation * automation, bool isRoot) :
 
 		addAndMakeVisible(automationUI);
 		setSize(100, 100);
+		automationUI->setViewRange(0, automation->positionMax);
 	}
 }
 
@@ -32,6 +32,5 @@ AutomationEditor::~AutomationEditor()
 
 void AutomationEditor::resized()
 {
-	DBG("Resized  " << getLocalBounds().toString());
 	if (automationUI != nullptr) automationUI->setBounds(getLocalBounds());
 }

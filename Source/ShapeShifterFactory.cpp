@@ -47,9 +47,8 @@ ShapeShifterContent * ShapeShifterFactory::createContentForIndex(PanelName pn)
 		return new SequenceManagerUI(SequenceManager::getInstance());
 		break;
 
-
 	case InspectorPanel:
-		return new InspectorUI();
+		return new InspectorUI(true); //Inspector created by Panels is set to main inspector and is assured unique by the ShapeShifterManager panel handling
 		break;
 
 	case LoggerPanel:

@@ -16,7 +16,7 @@
 #include "CustomOSCModule.h"
 #include "BaseManagerUI.h"
 #include "ShapeShifterPanel.h"
-#include "Inspector.h"
+#include "InspectableSelectionManager.h"
 
 class UserOSCCommandModelManagerUI :
 	public BaseManagerUI<UserOSCCommandModelManager, UserOSCCommandModel, UserOSCCommandModelUI>
@@ -30,7 +30,7 @@ public:
 
 class UserOSCCommandModelManagerWindow : 
 	public ShapeShifterContentComponent,
-	public Inspector::InspectorListener
+	public InspectableSelectionManager::Listener
 	
 {
 public:
@@ -43,7 +43,7 @@ public:
 	void editModule(CustomOSCModule * module);
 	void resized() override;
 
-	void currentInspectableChanged(Inspector *) override;
+	void currentInspectableSelectionChanged(Inspectable *, Inspectable *) override;
 	
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UserOSCCommandModelManagerWindow)
 };

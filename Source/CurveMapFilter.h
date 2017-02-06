@@ -26,6 +26,11 @@ public:
 	void processInternal() override;
 
 
+	InspectableEditor * getEditor(bool isRoot) override;
+
+	var getJSONData() override;
+	void loadJSONDataInternal(var data) override;
+
 	static CurveMapFilter * create() { return new CurveMapFilter(); }
 	String getTypeString() const override { return "Curve Map"; }
 };

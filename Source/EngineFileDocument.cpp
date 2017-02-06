@@ -55,10 +55,10 @@ Result Engine::loadDocument (const File& file){
   isLoadingFile = true;
   engineListeners.call(&EngineListener::startLoadFile);
 
-  if (Inspector::getInstanceWithoutCreating() != nullptr)
+  if (InspectableSelectionManager::getInstanceWithoutCreating() != nullptr)
   {
-	  Inspector::getInstance()->clear();
-	  Inspector::getInstance()->setEnabled(false); //avoid creation of inspector editor while recreating all nodes, controllers, rules,etc. from file
+	  InspectableSelectionManager::getInstance()->clearSelection();
+	  InspectableSelectionManager::getInstance()->setEnabled(false); //avoid creation of inspector editor while recreating all nodes, controllers, rules,etc. from file
   }
 
 #ifdef MULTITHREADED_LOADING
@@ -246,7 +246,7 @@ void Engine::loadJSONData (var data,ProgressTask * loadingTask)
  // sequenceTask->end();
 
 
-  if (Inspector::getInstanceWithoutCreating() != nullptr) Inspector::getInstance()->setEnabled(true); //Re enable editor
+  if (InspectableSelectionManager::getInstanceWithoutCreating() != nullptr) InspectableSelectionManager::getInstance()->setEnabled(true); //Re enable editor
 
 }
 

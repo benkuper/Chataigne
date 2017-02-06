@@ -12,10 +12,22 @@
 #define CURVEMAPFILTEREDITOR_H_INCLUDED
 
 #include "MappingFilterEditor.h"
+#include "AutomationEditor.h"
+#include "CurveMapFilter.h"
+
 class CurveMapFilterEditor :
 	public MappingFilterEditor
 {
+public:
+	CurveMapFilterEditor(CurveMapFilter * m, bool isRoot);
+	~CurveMapFilterEditor();
 
+	CurveMapFilter * cmf;
+	AutomationEditor ae;
+
+	void resizedInternalFilter(Rectangle<int> &r) override;
+
+	void controllableFeedbackAsyncUpdate(Controllable *) override;
 };
 
 

@@ -9,12 +9,14 @@
 */
 
 #include "Inspector.h"
-juce_ImplementSingleton(Inspector)
 
-Inspector::Inspector() :
+Inspector::Inspector(bool isMain) :
 	currentInspectable(nullptr),
-	currentEditor(nullptr)
+	currentEditor(nullptr),
+	isMainInspector(isMain)
 {
+	
+	if (InspectableSelectionManager::getInstanceWithoutCreating() != nullptr) InspectableSelectionManager::getInstance()->addSelectionListener(this);
 
 	vp.setScrollBarsShown(true, false);
 	vp.setScrollOnDragEnabled(false);
@@ -24,8 +26,10 @@ Inspector::Inspector() :
 	resized();
 }
 
+
 Inspector::~Inspector()
 {
+	if (InspectableSelectionManager::getInstanceWithoutCreating() != nullptr) InspectableSelectionManager::getInstance()->removeSelectionListener(this); 
 	clear();
 }
 
@@ -89,4 +93,33 @@ void Inspector::clear()
 void Inspector::inspectableDestroyed(Inspectable * i)
 {
 	if (currentInspectable == i) setCurrentInspectable(nullptr);
+}
+
+void Inspector::currentInspectableSelectionChanged(Inspectable * oldI, Inspectable * newI)
+{
+	if (newI == nullptr)
+	{
+		if (oldI == currentInspectable) setCurrentInspectable(nullptr);
+	} else
+	{
+		if (!newI->showInspectorOnSelect) return;
+		if (newI->targetInspector == this) setCurrentInspectable(newI);
+		else if (newI->targetInspector == nullptr && isMainInspector) setCurrentInspectable(newI);
+	}
+}
+
+InspectorUI::InspectorUI(bool isMainInspector) :
+	ShapeShifterContentComponent("Inspector"),
+	inspector(isMainInspector)
+{
+	addAndMakeVisible(&inspector);
+}
+
+InspectorUI::~InspectorUI()
+{
+}
+
+void InspectorUI::resized()
+{
+	inspector.setBounds(getLocalBounds());
 }

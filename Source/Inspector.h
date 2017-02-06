@@ -13,15 +13,18 @@
 
 #include "ShapeShifterContent.h"
 #include "InspectableEditor.h"
+#include "InspectableSelectionManager.h"
 
 class Inspector :
 	public Component,
-	public Inspectable::InspectableListener
+	public Inspectable::InspectableListener,
+	public InspectableSelectionManager::Listener
 {
 public:
-	juce_DeclareSingleton(Inspector, false);
-	Inspector();
+	Inspector(bool isMainInspector);
 	virtual ~Inspector();
+
+	bool isMainInspector;
 
 	WeakReference<Inspectable> currentInspectable;
 	Viewport vp;
@@ -32,6 +35,8 @@ public:
 	void clear();
 
 	void inspectableDestroyed(Inspectable * inspectable);
+
+	void currentInspectableSelectionChanged(Inspectable * oldI, Inspectable * newI);
 
 	class  InspectorListener
 	{
@@ -44,7 +49,6 @@ public:
 	void addInspectorListener(InspectorListener* newListener) { listeners.add(newListener); }
 	void removeInspectorListener(InspectorListener* listener) { listeners.remove(listener); }
 
-
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Inspector)
 };
 
@@ -53,21 +57,12 @@ class InspectorUI :
 	public ShapeShifterContentComponent
 {
 public:
-	InspectorUI() :
-		ShapeShifterContentComponent("Inspector")
-	{
-		addAndMakeVisible(Inspector::getInstance());
-	}
+	InspectorUI(bool isMainInspector);
+	~InspectorUI();
 
-	~InspectorUI()
-	{
-		Inspector::deleteInstance();
-	}
+	Inspector inspector;
 
-	void resized()
-	{
-		Inspector::getInstance()->setBounds(getLocalBounds());
-	}
+	void resized() override;
 };
 
 #endif  // INSPECTOR_H_INCLUDED

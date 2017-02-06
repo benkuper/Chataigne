@@ -12,7 +12,7 @@
 
 AutomationKey::AutomationKey()
 {
-	isSelectable = false;
+	showInspectorOnSelect = false;
 
 	position = addFloatParameter("Position", "Position of the key", 0, 0, 5);
 	value = addFloatParameter("Value", "Value of the key", 0, 0, 1);

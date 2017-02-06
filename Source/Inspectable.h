@@ -22,12 +22,12 @@ public:
 	Inspectable(const String &_inspectableType = "none");
 	virtual ~Inspectable();
 
-	Inspector * inspector;
+	Inspector * targetInspector;
 	const String inspectableType;
-
 
 	bool isSelected;
 	bool isSelectable;
+	bool showInspectorOnSelect;
 
 	virtual void selectThis();
 	virtual void setSelected(bool value);

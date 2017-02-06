@@ -18,7 +18,6 @@
       <FILE id="q5DIE7" name="uncheck.png" compile="0" resource="1" file="Resources/uncheck.png"/>
     </GROUP>
     <GROUP id="{31908E9E-F626-E2D6-1A6D-E188C9D72C25}" name="Source">
-      <GROUP id="{385034AB-BB8A-1A0B-677C-4890320C1929}" name="External"/>
       <GROUP id="{9130C4F6-2D12-F02B-4A47-874447AF8B3F}" name="Outliner">
         <FILE id="xUR4bA" name="Outliner.cpp" compile="1" resource="0" file="Source/Outliner.cpp"/>
         <FILE id="oIJhug" name="Outliner.h" compile="0" resource="0" file="Source/Outliner.h"/>
@@ -868,23 +867,29 @@
           <FILE id="lM7mBW" name="Module.h" compile="0" resource="0" file="Source/Module.h"/>
         </GROUP>
       </GROUP>
-      <GROUP id="{2DF4D64E-836D-4E93-62F8-4821230FE70D}" name="Inspector">
+      <GROUP id="{2DF4D64E-836D-4E93-62F8-4821230FE70D}" name="Inspectable">
+        <FILE id="iHpgy4" name="InspectableSelectionManager.cpp" compile="1"
+              resource="0" file="Source/InspectableSelectionManager.cpp"/>
+        <FILE id="redMTy" name="InspectableSelectionManager.h" compile="0"
+              resource="0" file="Source/InspectableSelectionManager.h"/>
+        <GROUP id="{EFA481DF-EC3F-903E-59D6-3C67CBF87D76}" name="ui">
+          <FILE id="GbEV8t" name="InspectableContentComponent.cpp" compile="1"
+                resource="0" file="Source/InspectableContentComponent.cpp"/>
+          <FILE id="La4Qcp" name="InspectableContentComponent.h" compile="0"
+                resource="0" file="Source/InspectableContentComponent.h"/>
+          <FILE id="jYwqk3" name="Inspector.cpp" compile="1" resource="0" file="Source/Inspector.cpp"/>
+          <FILE id="A1OMYJ" name="Inspector.h" compile="0" resource="0" file="Source/Inspector.h"/>
+          <FILE id="ObKCyn" name="InspectableEditor.cpp" compile="1" resource="0"
+                file="Source/InspectableEditor.cpp"/>
+          <FILE id="sPOFRY" name="InspectableEditor.h" compile="0" resource="0"
+                file="Source/InspectableEditor.h"/>
+        </GROUP>
         <FILE id="x8ry75" name="InspectableContent.cpp" compile="1" resource="0"
               file="Source/InspectableContent.cpp"/>
         <FILE id="vsAh9m" name="InspectableContent.h" compile="0" resource="0"
               file="Source/InspectableContent.h"/>
         <FILE id="dxb7YU" name="Inspectable.cpp" compile="1" resource="0" file="Source/Inspectable.cpp"/>
         <FILE id="FKw1d1" name="Inspectable.h" compile="0" resource="0" file="Source/Inspectable.h"/>
-        <FILE id="GbEV8t" name="InspectableContentComponent.cpp" compile="1"
-              resource="0" file="Source/InspectableContentComponent.cpp"/>
-        <FILE id="La4Qcp" name="InspectableContentComponent.h" compile="0"
-              resource="0" file="Source/InspectableContentComponent.h"/>
-        <FILE id="jYwqk3" name="Inspector.cpp" compile="1" resource="0" file="Source/Inspector.cpp"/>
-        <FILE id="A1OMYJ" name="Inspector.h" compile="0" resource="0" file="Source/Inspector.h"/>
-        <FILE id="ObKCyn" name="InspectableEditor.cpp" compile="1" resource="0"
-              file="Source/InspectableEditor.cpp"/>
-        <FILE id="sPOFRY" name="InspectableEditor.h" compile="0" resource="0"
-              file="Source/InspectableEditor.h"/>
       </GROUP>
       <GROUP id="{070E9CF8-5A7F-C6FC-2E30-5BC3BB47385D}" name="Logger">
         <FILE id="ZM2OHT" name="CustomLogger.cpp" compile="1" resource="0"

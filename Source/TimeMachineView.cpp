@@ -16,14 +16,14 @@ TimeMachineView::TimeMachineView(SequenceManager * _manager) :
 	manager(_manager) 
 {
 	contentIsFlexible = true;
-	Inspector::getInstance()->addInspectorListener(this);
+	InspectableSelectionManager::getInstance()->addSelectionListener(this);
 	SequenceManager::getInstance()->addBaseManagerListener(this);
 }
 
 TimeMachineView::~TimeMachineView()
 {
 	SequenceManager::getInstance()->removeBaseManagerListener(this);
-	if(Inspector::getInstanceWithoutCreating()) Inspector::getInstance()->removeInspectorListener(this);
+	if(InspectableSelectionManager::getInstanceWithoutCreating()) InspectableSelectionManager::getInstance()->removeSelectionListener(this);
 }
 
 void TimeMachineView::paint(Graphics & g)
@@ -58,11 +58,9 @@ void TimeMachineView::setSequence(Sequence * sequence)
 	resized();
 }
 
-
-void TimeMachineView::currentInspectableChanged(Inspector * i)
+void TimeMachineView::currentInspectableSelectionChanged(Inspectable *, Inspectable * i)
 {
-	if (i->currentInspectable.wasObjectDeleted()) return;
-	ControllableContainer * cc = dynamic_cast<ControllableContainer *>(i->currentInspectable.get());	
+	ControllableContainer * cc = dynamic_cast<ControllableContainer *>(i);	
 	if (cc == nullptr) return;
 
 	Sequence * s = nullptr;

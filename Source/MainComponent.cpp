@@ -45,7 +45,6 @@ MainContentComponent::~MainContentComponent()
 
 	if(Engine::getInstanceWithoutCreating() != nullptr) Engine::getInstanceWithoutCreating()->removeEngineListener(this);
 	ShapeShifterManager::deleteInstance();
-	Inspector::deleteInstance();
 	
 }
 

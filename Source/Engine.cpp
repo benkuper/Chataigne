@@ -9,7 +9,6 @@
  */
 
 #include "Engine.h"
-#include "Inspector.h"
 #include "ModuleManager.h"
 #include "StateManager.h"
 #include "SequenceManager.h"
@@ -22,6 +21,7 @@
 #include "MIDIManager.h"
 #include "GamepadManager.h"
 #include "WiimoteManager.h"
+#include "InspectableSelectionManager.h"
 
 juce_ImplementSingleton(Engine) 
 
@@ -53,6 +53,7 @@ Engine::~Engine(){
 
 //delete managers
 	
+  InspectableSelectionManager::deleteInstance();
   Outliner::deleteInstance();
 
   ModuleManager::deleteInstance();
@@ -105,10 +106,10 @@ void Engine::clear() {
 		Outliner::getInstanceWithoutCreating()->enabled = false;
 	}
 
-	if (Inspector::getInstanceWithoutCreating())
+	if (InspectableSelectionManager::getInstanceWithoutCreating())
 	{
-		Inspector::getInstance()->clear();
-		Inspector::getInstance()->setEnabled(false);
+		InspectableSelectionManager::getInstance()->clearSelection();
+		InspectableSelectionManager::getInstance()->setEnabled(false);
 	}
 
 	ModuleManager::getInstance()->clear();
@@ -119,7 +120,7 @@ void Engine::clear() {
 
 	if (Outliner::getInstanceWithoutCreating()) Outliner::getInstanceWithoutCreating()->enabled = true;
 
-	if (Inspector::getInstanceWithoutCreating()) Inspector::getInstance()->setEnabled(true);
+	if (InspectableSelectionManager::getInstanceWithoutCreating()) InspectableSelectionManager::getInstance()->setEnabled(true);
 
 	changed();    //fileDocument
 }

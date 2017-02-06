@@ -263,11 +263,12 @@ OBJECTS := \
   $(JUCE_OBJDIR)/ModuleManager_e189d682.o \
   $(JUCE_OBJDIR)/ModuleFactory_e3d2015f.o \
   $(JUCE_OBJDIR)/Module_f57faff5.o \
-  $(JUCE_OBJDIR)/InspectableContent_25389b34.o \
-  $(JUCE_OBJDIR)/Inspectable_484e00cf.o \
+  $(JUCE_OBJDIR)/InspectableSelectionManager_676e38f0.o \
   $(JUCE_OBJDIR)/InspectableContentComponent_c06df73.o \
   $(JUCE_OBJDIR)/Inspector_d6237cd8.o \
   $(JUCE_OBJDIR)/InspectableEditor_630d045c.o \
+  $(JUCE_OBJDIR)/InspectableContent_25389b34.o \
+  $(JUCE_OBJDIR)/Inspectable_484e00cf.o \
   $(JUCE_OBJDIR)/CustomLogger_b7c36c6a.o \
   $(JUCE_OBJDIR)/CustomLoggerUI_159a73be.o \
   $(JUCE_OBJDIR)/LookAndFeelOO_b6d1a33f.o \
@@ -1319,14 +1320,9 @@ $(JUCE_OBJDIR)/Module_f57faff5.o: ../../Source/Module.cpp
 	@echo "Compiling Module.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
 
-$(JUCE_OBJDIR)/InspectableContent_25389b34.o: ../../Source/InspectableContent.cpp
+$(JUCE_OBJDIR)/InspectableSelectionManager_676e38f0.o: ../../Source/InspectableSelectionManager.cpp
 	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling InspectableContent.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/Inspectable_484e00cf.o: ../../Source/Inspectable.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling Inspectable.cpp"
+	@echo "Compiling InspectableSelectionManager.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/InspectableContentComponent_c06df73.o: ../../Source/InspectableContentComponent.cpp
@@ -1342,6 +1338,16 @@ $(JUCE_OBJDIR)/Inspector_d6237cd8.o: ../../Source/Inspector.cpp
 $(JUCE_OBJDIR)/InspectableEditor_630d045c.o: ../../Source/InspectableEditor.cpp
 	-@mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling InspectableEditor.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/InspectableContent_25389b34.o: ../../Source/InspectableContent.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling InspectableContent.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/Inspectable_484e00cf.o: ../../Source/Inspectable.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling Inspectable.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/CustomLogger_b7c36c6a.o: ../../Source/CustomLogger.cpp
