@@ -24,6 +24,7 @@ AutomationUI::AutomationUI(Automation * _automation) :
 	resizeOnChildBoundsChanged = false;
 
 	addExistingItems();
+	resized();
 }
 
 AutomationUI::~AutomationUI()
@@ -87,7 +88,6 @@ void AutomationUI::updateROI()
 void AutomationUI::paint(Graphics & g)
 {
 	BaseManagerUI::paint(g);
-
 	if (itemsUI.size() < 2) return;
 
 	//int count = 0;
@@ -113,8 +113,8 @@ void AutomationUI::resized()
 
 void AutomationUI::placeKeyUI(AutomationKeyUI * kui, bool placePrevKUI) 
 {
-	
 	int index = itemsUI.indexOf(kui);
+	if (kui == nullptr) return;
 
 	int tx = getXForPos(kui->item->position->floatValue());
 	int ty = (1 - kui->item->value->floatValue())*getHeight();
@@ -141,8 +141,6 @@ void AutomationUI::placeKeyUI(AutomationKeyUI * kui, bool placePrevKUI)
 	{
 		placeKeyUI(itemsUI[index - 1],false);
 	}
-
-	
 }
 
 
@@ -271,7 +269,15 @@ void AutomationUI::newMessage(const ContainerAsyncEvent & e)
 {
 	if (e.type == ContainerAsyncEvent::EventType::ControllableFeedbackUpdate)
 	{
-		if (e.targetControllable != nullptr)
+		if (e.targetControllable == manager->position)
+		{
+			setCurrentPosition(manager->position->floatValue());
+			repaint();
+		} else if (e.targetControllable == manager->value)
+		{
+			setCurrentValue(manager->value->floatValue());
+			repaint();
+		}else if (e.targetControllable != nullptr)
 		{
 			AutomationKey * k = dynamic_cast<AutomationKey *>(e.targetControllable->parentContainer);
 			if (k != nullptr)

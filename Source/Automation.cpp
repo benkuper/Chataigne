@@ -18,7 +18,9 @@ Automation::Automation() :
 	positionMax(1),
 	showUIInEditor(false)
 {
-	
+	position = addFloatParameter("Position", "The current position in the automation. Used for automatic retrieve value and feedback.", 0, 0, positionMax);
+	value = addFloatParameter("Value", "The current value, depending on the position", 0, 0, 1);
+	value->isControllableFeedbackOnly = true;
 }
 
 Automation::~Automation()
@@ -64,6 +66,7 @@ AutomationKey * Automation::getClosestKeyForPos(float pos, int start, int end)
 void Automation::setPositionMax(float val)
 {
 	positionMax = val;
+	position->setRange(0, positionMax);
 	for (auto &k : items) k->position->setRange(0, positionMax);
 }
 
@@ -85,11 +88,11 @@ AutomationKey * Automation::createItem()
 	return k;
 }
 
-void Automation::addItem(const float position, const float value)
+void Automation::addItem(const float _position, const float _value)
 {
 	AutomationKey * k = createItem();
-	k->position->setValue(position);
-	k->value->setValue(value);
+	k->position->setValue(_position);
+	k->value->setValue(_value);
 	BaseManager::addItem(k);
 }
 
@@ -113,6 +116,14 @@ void Automation::controllableFeedbackUpdate(ControllableContainer * cc, Controll
 			}
 		}
 
+	}
+}
+
+void Automation::onContainerParameterChanged(Parameter * p)
+{
+	if (p == position)
+	{
+		value->setValue(getValueForPosition(position->floatValue()));
 	}
 }
 

@@ -9,7 +9,7 @@
 */
 
 #include "CurveMapFilterEditor.h"
-
+/*
 CurveMapFilterEditor::CurveMapFilterEditor(CurveMapFilter * m, bool isRoot) :
 	MappingFilterEditor(m,isRoot),
 	cmf(m),
@@ -37,3 +37,4 @@ void CurveMapFilterEditor::controllableFeedbackAsyncUpdate(Controllable * c)
 		ae.automationUI->setCurrentValue(filter->filteredParameter->getNormalizedValue());
 	}
 }
+*/

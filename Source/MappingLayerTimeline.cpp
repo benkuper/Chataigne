@@ -35,9 +35,10 @@ void MappingLayerTimeline::resized()
 {
 	automationUI.setBounds(getLocalBounds());
 }
-
+/*
 void MappingLayerTimeline::controllableFeedbackUpdateInternal(Controllable * c)
 {
+	
 	SequenceLayerTimeline::controllableFeedbackUpdateInternal(c);
 	MappingLayer * ml = static_cast<MappingLayer *>(item);
 
@@ -49,4 +50,6 @@ void MappingLayerTimeline::controllableFeedbackUpdateInternal(Controllable * c)
 	{
 		automationUI.setCurrentValue(ml->curveValue->floatValue());
 	}
+	
 }
+*/

@@ -63,6 +63,6 @@ void MappingLayer::sequenceTotalTimeChanged(Sequence *)
 
 void MappingLayer::sequenceCurrentTimeChanged(Sequence *, float, bool)
 {
-	float val = automation.getValueForPosition(sequence->currentTime->floatValue());
-	curveValue->setValue(val);
+	automation.position->setValue(sequence->currentTime->floatValue());
+	curveValue->setValue(automation.value->floatValue());
 }

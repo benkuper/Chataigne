@@ -28,12 +28,8 @@ CurveMapFilter::~CurveMapFilter()
 
 void CurveMapFilter::processInternal()
 {
-	filteredParameter->setNormalizedValue(curve.getValueForPosition(sourceParam->getNormalizedValue()));
-}
-
-InspectableEditor * CurveMapFilter::getEditor(bool isRoot)
-{
-	return new CurveMapFilterEditor(this, isRoot);
+	curve.position->setValue(sourceParam->getNormalizedValue());
+	filteredParameter->setNormalizedValue(curve.value->floatValue());
 }
 
 var CurveMapFilter::getJSONData()
@@ -48,3 +44,11 @@ void CurveMapFilter::loadJSONDataInternal(var data)
 	MappingFilter::loadJSONDataInternal(data);
 	curve.loadJSONData(data.getProperty("curve", var()), true);
 }
+
+
+/*
+InspectableEditor * CurveMapFilter::getEditor(bool isRoot)
+{
+	return new CurveMapFilterEditor(this, isRoot);
+}
+*/

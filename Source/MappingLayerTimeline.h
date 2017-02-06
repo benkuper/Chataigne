@@ -27,7 +27,7 @@ public:
 	void updateContent() override;
 	void resized();
 	
-	void controllableFeedbackUpdateInternal(Controllable * c) override;
+	//void controllableFeedbackUpdateInternal(Controllable * c) override;
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MappingLayerTimeline)
 
 };

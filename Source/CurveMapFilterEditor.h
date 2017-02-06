@@ -11,6 +11,7 @@
 #ifndef CURVEMAPFILTEREDITOR_H_INCLUDED
 #define CURVEMAPFILTEREDITOR_H_INCLUDED
 
+/*
 #include "MappingFilterEditor.h"
 #include "AutomationEditor.h"
 #include "CurveMapFilter.h"
@@ -29,6 +30,6 @@ public:
 
 	void controllableFeedbackAsyncUpdate(Controllable *) override;
 };
-
+*/
 
 #endif  // CURVEMAPFILTEREDITOR_H_INCLUDED

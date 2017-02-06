@@ -187,6 +187,7 @@ var BaseManager<T>::getJSONData()
 template<class T>
 void BaseManager<T>::loadJSONDataInternal(var data)
 { 
+	clear();
 	Array<var> * itemsData = data.getProperty("items",var()).getArray();
 	if (itemsData == nullptr) return;
 	for (auto &td : *itemsData)
