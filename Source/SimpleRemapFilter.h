@@ -30,6 +30,8 @@ public:
 
 	static SimpleRemapFilter * create() { return new SimpleRemapFilter(); }
 	String getTypeString() const override { return "Simple Remap"; }
+
+	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(SimpleRemapFilter)
 };
 
 

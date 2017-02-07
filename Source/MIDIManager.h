@@ -56,9 +56,9 @@ public:
 	// Inherited via Timer
 	virtual void timerCallback() override;
 	
-	static String getNoteName(const int &pitch)
+	static String getNoteName(const int &pitch, bool includeOctave = true)
 	{
-		return MidiMessage::getMidiNoteName(pitch, true, true, 5);
+		return MidiMessage::getMidiNoteName(pitch, true, includeOctave, 5);
 	}
 
 	JUCE_DECLARE_NON_COPYABLE(MIDIManager)

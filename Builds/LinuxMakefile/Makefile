@@ -153,7 +153,6 @@ OBJECTS := \
   $(JUCE_OBJDIR)/MappingOutputEditor_3b183a1d.o \
   $(JUCE_OBJDIR)/MappingOutput_7f60db50.o \
   $(JUCE_OBJDIR)/MappingOutputManager_681d3ec7.o \
-  $(JUCE_OBJDIR)/CurveMapFilterEditor_30170d1b.o \
   $(JUCE_OBJDIR)/CurveMapFilter_84c144ce.o \
   $(JUCE_OBJDIR)/InverseFilter_66642a29.o \
   $(JUCE_OBJDIR)/LagFilter_15ce140b.o \
@@ -209,6 +208,8 @@ OBJECTS := \
   $(JUCE_OBJDIR)/StateMachineView_e5001744.o \
   $(JUCE_OBJDIR)/StateManagerUI_e1b7a4f9.o \
   $(JUCE_OBJDIR)/StateManager_b261b065.o \
+  $(JUCE_OBJDIR)/AudioModuleEditor_42dcabd0.o \
+  $(JUCE_OBJDIR)/AudioModule_88fd4f43.o \
   $(JUCE_OBJDIR)/os_mac_efb3b999.o \
   $(JUCE_OBJDIR)/classic_291bdabc.o \
   $(JUCE_OBJDIR)/dynamics_fa2596f4.o \
@@ -293,6 +294,7 @@ OBJECTS := \
   $(JUCE_OBJDIR)/juce_audio_devices_a742c38b.o \
   $(JUCE_OBJDIR)/juce_audio_formats_5a29c68a.o \
   $(JUCE_OBJDIR)/juce_audio_processors_dea3173d.o \
+  $(JUCE_OBJDIR)/juce_audio_utils_c7eb679f.o \
   $(JUCE_OBJDIR)/juce_core_75b14332.o \
   $(JUCE_OBJDIR)/juce_cryptography_6de2ebff.o \
   $(JUCE_OBJDIR)/juce_data_structures_72d3da2c.o \
@@ -770,11 +772,6 @@ $(JUCE_OBJDIR)/MappingOutputManager_681d3ec7.o: ../../Source/MappingOutputManage
 	@echo "Compiling MappingOutputManager.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
 
-$(JUCE_OBJDIR)/CurveMapFilterEditor_30170d1b.o: ../../Source/CurveMapFilterEditor.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling CurveMapFilterEditor.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
 $(JUCE_OBJDIR)/CurveMapFilter_84c144ce.o: ../../Source/CurveMapFilter.cpp
 	-@mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling CurveMapFilter.cpp"
@@ -1048,6 +1045,16 @@ $(JUCE_OBJDIR)/StateManagerUI_e1b7a4f9.o: ../../Source/StateManagerUI.cpp
 $(JUCE_OBJDIR)/StateManager_b261b065.o: ../../Source/StateManager.cpp
 	-@mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling StateManager.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/AudioModuleEditor_42dcabd0.o: ../../Source/AudioModuleEditor.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling AudioModuleEditor.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/AudioModule_88fd4f43.o: ../../Source/AudioModule.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling AudioModule.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/os_mac_efb3b999.o: ../../Source/wiiuse/os_mac/os_mac.c
@@ -1468,6 +1475,11 @@ $(JUCE_OBJDIR)/juce_audio_formats_5a29c68a.o: ../../JuceLibraryCode/juce_audio_f
 $(JUCE_OBJDIR)/juce_audio_processors_dea3173d.o: ../../JuceLibraryCode/juce_audio_processors.cpp
 	-@mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling juce_audio_processors.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/juce_audio_utils_c7eb679f.o: ../../JuceLibraryCode/juce_audio_utils.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling juce_audio_utils.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/juce_core_75b14332.o: ../../JuceLibraryCode/juce_core.cpp

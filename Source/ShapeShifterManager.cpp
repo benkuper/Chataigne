@@ -202,6 +202,7 @@ ShapeShifterWindow * ShapeShifterManager::getWindowForPanel(ShapeShifterPanel * 
 void ShapeShifterManager::loadLayout(var layout)
 {
 	clearAllPanelsAndWindows();
+	if (layout.getDynamicObject() == nullptr) return;
 	mainContainer.loadLayout(layout.getDynamicObject()->getProperty("mainLayout"));
 
 	Array<var>* wData = layout.getDynamicObject()->getProperty("windows").getArray();
@@ -210,7 +211,7 @@ void ShapeShifterManager::loadLayout(var layout)
 	{
 		for (auto &wd : *wData)
 		{
-			DynamicObject * d = wd.getDynamicObject();
+			ScopedPointer<DynamicObject> d = wd.getDynamicObject();
 			ShapeShifterPanel * p = createPanel(nullptr);
 			p->loadLayout(d->getProperty("panel"));
 			Rectangle<int> bounds(d->getProperty("x"),d->getProperty("y"),d->getProperty("width"),d->getProperty("height"));
@@ -221,9 +222,8 @@ void ShapeShifterManager::loadLayout(var layout)
 
 var ShapeShifterManager::getCurrentLayout()
 {
-	DynamicObject * d = new DynamicObject();
-	var layout(d);
-	d->setProperty("mainLayout", mainContainer.getCurrentLayout());
+	var layout(new DynamicObject());
+	layout.getDynamicObject()->setProperty("mainLayout", mainContainer.getCurrentLayout());
 
 	var wData;
 	for (auto &w : openedWindows)

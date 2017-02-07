@@ -69,7 +69,7 @@ ShapeShifterContent * ShapeShifterFactory::createContentForIndex(PanelName pn)
 	return nullptr;
 }
 
-ShapeShifterContent * ShapeShifterFactory::createContentForName(String name)
+ShapeShifterContent * ShapeShifterFactory::createContentForName(const String &name)
 {
 	return createContentForIndex((PanelName)globalPanelNames.strings.indexOf(name));
 }

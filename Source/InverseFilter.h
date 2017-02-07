@@ -24,6 +24,8 @@ public:
 	
 	static InverseFilter * create() { return new InverseFilter(); }
 	virtual String getTypeString() const override { return "Inverse"; }
+
+	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(InverseFilter)
 };
 
 

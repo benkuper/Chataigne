@@ -39,6 +39,7 @@ void Mapping::process()
 	if (input.inputReference == nullptr) return;
 
 	Parameter * filteredParam = fm.processFilters();
+	if (filteredParam == nullptr) return;
 	om.setValue(filteredParam->value);
 }
 

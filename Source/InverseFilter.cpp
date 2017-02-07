@@ -21,5 +21,6 @@ InverseFilter::~InverseFilter()
 
 void InverseFilter::processInternal()
 {
+	
 	filteredParameter->setValue(jmap<float>(sourceParam->getNormalizedValue(), sourceParam->maximumValue, sourceParam->minimumValue));
 }

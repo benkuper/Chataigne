@@ -46,7 +46,6 @@ public:
 
 
 	void resized() override;
-	void placeAllKeysUI(bool placePrevKUIs = true);
 	void placeKeyUI(AutomationKeyUI * kui, bool placePrevKUI = true);
 
 	int getXForPos(float time);
@@ -70,6 +69,8 @@ public:
 	
 
 	void newMessage(const ContainerAsyncEvent &e) override;
+
+	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(AutomationUI)
 
 };
 

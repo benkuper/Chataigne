@@ -16,6 +16,7 @@ MappingFilter::MappingFilter(const String &name) :
 	BaseItem(name),
 	filteredParameter(nullptr),
 	sourceParam(nullptr),
+	autoSetRange(true),
 	filterParams("filterParams")
 {
 	isSelectable = false;
@@ -69,6 +70,11 @@ Parameter * MappingFilter::process(Parameter * source)
 {
 	if(!enabled->boolValue()) return source; //default or disabled does nothing
 	if (sourceParam == nullptr || filteredParameter == nullptr || filteredParameter.wasObjectDeleted() || source != sourceParam) return source;
+	
+	if (autoSetRange && (filteredParameter->minimumValue != sourceParam->minimumValue || filteredParameter->maximumValue != sourceParam->maximumValue))
+	{
+		filteredParameter->setRange(sourceParam->minimumValue, sourceParam->maximumValue);
+	}
 
 	processInternal(); 
 

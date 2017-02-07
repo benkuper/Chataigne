@@ -14,7 +14,8 @@ SimpleRemapFilter::SimpleRemapFilter() :
 	MappingFilter("Remap")
 {
 	targetMin = filterParams.addFloatParameter("Target Min", "New minimum for output", 0, -1000, 1000);
-	targetMax = filterParams.addFloatParameter("Target Max", "New maximum for output", 0, -1000, 1000);
+	targetMax = filterParams.addFloatParameter("Target Max", "New maximum for output", 1, -1000, 1000);
+	autoSetRange = false;
 }
 
 SimpleRemapFilter::~SimpleRemapFilter()
@@ -37,7 +38,8 @@ void SimpleRemapFilter::filterParamChanged(Parameter * p)
 {
 	if (p == targetMin || p == targetMax)
 	{
-		if(filteredParameter != nullptr) filteredParameter->setRange(targetMin->value, targetMax->value);
+
+		if(filteredParameter != nullptr) filteredParameter->setRange(targetMin->value, jmax<float>(targetMax->value,targetMin->value));
 	}
 }
 

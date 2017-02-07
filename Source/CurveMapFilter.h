@@ -25,8 +25,6 @@ public:
 
 	void processInternal() override;
 
-
-
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
 
@@ -34,6 +32,8 @@ public:
 
 	static CurveMapFilter * create() { return new CurveMapFilter(); }
 	String getTypeString() const override { return "Curve Map"; }
+
+	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(CurveMapFilter)
 };
 
 

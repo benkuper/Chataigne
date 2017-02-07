@@ -34,7 +34,6 @@ String Engine::getDocumentTitle() {
 
 void Engine::createNewGraph(){
   engineListeners.call(&EngineListener::startLoadFile);
-  DBG("create new graph");
   clear();
   isLoadingFile = true;
 

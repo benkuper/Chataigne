@@ -9,7 +9,6 @@
 */
 
 #include "CurveMapFilter.h"
-#include "CurveMapFilterEditor.h"
 
 CurveMapFilter::CurveMapFilter() :
 	MappingFilter(getTypeString())

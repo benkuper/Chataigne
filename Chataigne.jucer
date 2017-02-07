@@ -406,12 +406,6 @@
             </GROUP>
             <GROUP id="{2AC385C9-84A1-53E7-151F-36CA39F36FE7}" name="Filter">
               <GROUP id="{B0B4810E-8573-A36C-4561-1CE52F06C6BA}" name="filters">
-                <GROUP id="{8F9F1D85-4A15-F5C6-3DA8-D7D63D54413A}" name="ui">
-                  <FILE id="JAuuiW" name="CurveMapFilterEditor.cpp" compile="1" resource="0"
-                        file="Source/CurveMapFilterEditor.cpp"/>
-                  <FILE id="LSfb17" name="CurveMapFilterEditor.h" compile="0" resource="0"
-                        file="Source/CurveMapFilterEditor.h"/>
-                </GROUP>
                 <FILE id="Zy0njO" name="CurveMapFilter.cpp" compile="1" resource="0"
                       file="Source/CurveMapFilter.cpp"/>
                 <FILE id="g6Fuvk" name="CurveMapFilter.h" compile="0" resource="0"
@@ -652,6 +646,22 @@
         </GROUP>
         <GROUP id="{8FC20544-FEBB-B3BA-CF48-50962AA7C07C}" name="Module">
           <GROUP id="{766BCE2E-5C2E-5A80-EC80-7FFA2C7ABBBA}" name="modules">
+            <GROUP id="{5D8075B9-A82A-4F9F-D7BE-2C452ACB19CD}" name="audio">
+              <GROUP id="{82F2973E-907D-8772-1FEB-87BD84D1E329}" name="libs">
+                <GROUP id="{B0B28BE4-92BF-F583-B619-DDD6371372BA}" name="pitch">
+                  <FILE id="fClJua" name="PitchMPM.h" compile="0" resource="0" file="Source/pitch/PitchMPM.h"/>
+                  <FILE id="AKXR5u" name="PitchYIN.h" compile="0" resource="0" file="Source/pitch/PitchYIN.h"/>
+                </GROUP>
+              </GROUP>
+              <GROUP id="{19C7B7B8-482F-28DC-1F70-E8653620C2C5}" name="ui">
+                <FILE id="cAc8A6" name="AudioModuleEditor.cpp" compile="1" resource="0"
+                      file="Source/AudioModuleEditor.cpp"/>
+                <FILE id="sa1W6f" name="AudioModuleEditor.h" compile="0" resource="0"
+                      file="Source/AudioModuleEditor.h"/>
+              </GROUP>
+              <FILE id="t9WkH6" name="AudioModule.cpp" compile="1" resource="0" file="Source/AudioModule.cpp"/>
+              <FILE id="vreQm4" name="AudioModule.h" compile="0" resource="0" file="Source/AudioModule.h"/>
+            </GROUP>
             <GROUP id="{1EF47452-4E53-4604-DAF3-FA36FE1B647C}" name="wiimote">
               <GROUP id="{71F486F6-8868-00F2-72AC-772F58CF2CDE}" name="lib">
                 <GROUP id="{67FA4F29-3478-39DC-E803-2ED1159AF7CA}" name="wiiuse">
@@ -966,11 +976,11 @@
             extraDefs="" externalLibraries="Setupapi.lib&#10;hid.lib">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" winWarningLevel="4" generateManifest="1" winArchitecture="32-bit"
-                       isDebug="1" optimisation="1" targetName="Chataigne" headerPath="../../External/wiiuse"
+                       isDebug="1" optimisation="1" targetName="Chataigne" headerPath="../../External/wiiuse&#10;$(ASIOSDK)\common"
                        libraryPath=""/>
         <CONFIGURATION name="Release" winWarningLevel="4" generateManifest="1" winArchitecture="32-bit"
                        isDebug="0" optimisation="3" targetName="Chataigne" libraryPath=""
-                       headerPath="../../External/wiiuse"/>
+                       headerPath="../../External/wiiuse&#10;$(ASIOSDK)\common"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_core" path="D:/Softwares/JUCE/modules"/>
@@ -987,6 +997,7 @@
         <MODULEPATH id="juce_audio_formats" path="D:/Softwares/JUCE/modules"/>
         <MODULEPATH id="juce_audio_processors" path="D:/Softwares/JUCE/modules"/>
         <MODULEPATH id="juce_osc" path="D:/Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_utils" path="../../../../Softwares/JUCE/modules"/>
       </MODULEPATHS>
     </VS2015>
     <LINUX_MAKE targetFolder="Builds/LinuxMakefile" smallIcon="nVz6Li" bigIcon="nVz6Li"
@@ -1012,6 +1023,7 @@
         <MODULEPATH id="juce_audio_formats" path="$JUCE_MODULES_PATH"/>
         <MODULEPATH id="juce_audio_devices" path="$JUCE_MODULES_PATH"/>
         <MODULEPATH id="juce_audio_basics" path="$JUCE_MODULES_PATH"/>
+        <MODULEPATH id="juce_audio_utils" path="../../../../Softwares/JUCE/modules"/>
       </MODULEPATHS>
     </LINUX_MAKE>
     <XCODE_MAC targetFolder="Builds/MacOSX" smallIcon="nVz6Li" bigIcon="nVz6Li"
@@ -1037,6 +1049,7 @@
         <MODULEPATH id="juce_audio_formats" path="/Applications/JUCE/modules"/>
         <MODULEPATH id="juce_audio_devices" path="/Applications/JUCE/modules"/>
         <MODULEPATH id="juce_audio_basics" path="/Applications/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_utils" path="../../../../Softwares/JUCE/modules"/>
       </MODULEPATHS>
     </XCODE_MAC>
   </EXPORTFORMATS>
@@ -1045,6 +1058,7 @@
     <MODULE id="juce_audio_devices" showAllCode="1" useLocalCopy="1"/>
     <MODULE id="juce_audio_formats" showAllCode="1" useLocalCopy="1"/>
     <MODULE id="juce_audio_processors" showAllCode="1" useLocalCopy="1"/>
+    <MODULE id="juce_audio_utils" showAllCode="1" useLocalCopy="1"/>
     <MODULE id="juce_core" showAllCode="1" useLocalCopy="1"/>
     <MODULE id="juce_cryptography" showAllCode="1" useLocalCopy="1"/>
     <MODULE id="juce_data_structures" showAllCode="1" useLocalCopy="1"/>
@@ -1056,7 +1070,7 @@
     <MODULE id="juce_osc" showAllCode="1" useLocalCopy="1"/>
     <MODULE id="juce_video" showAllCode="1" useLocalCopy="1"/>
   </MODULES>
-  <JUCEOPTIONS/>
+  <JUCEOPTIONS JUCE_ASIO="enabled" JUCE_WASAPI="enabled"/>
   <LIVE_SETTINGS>
     <WINDOWS/>
   </LIVE_SETTINGS>

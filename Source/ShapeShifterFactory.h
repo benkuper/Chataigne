@@ -23,7 +23,7 @@ class ShapeShifterFactory
 {
 public:
 	static ShapeShifterContent * createContentForIndex(PanelName panelName);
-	static ShapeShifterContent * createContentForName(String name);
+	static ShapeShifterContent * createContentForName(const String &name);
 };
 
 
