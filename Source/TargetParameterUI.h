@@ -31,11 +31,10 @@ public:
 	void paint(Graphics &g) override;
 	void resized() override;
 
-	void updateLabel();
+	virtual void updateLabel();
 	
 	virtual void showPopupAndGetTarget();//can be overriden to get specific PopupMenu
 	void mouseDown(const MouseEvent &e) override;
-
 
 	virtual void buttonClicked(Button * b) override;
 

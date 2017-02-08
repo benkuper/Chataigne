@@ -244,6 +244,7 @@ public:
 	typedef QueuedNotifier<ContainerAsyncEvent>::Listener ContainerAsyncListener;
 
 	void addAsyncContainerListener(ContainerAsyncListener* newListener) { queuedNotifier.addListener(newListener); }
+	void addAsyncCoalescedContainerListener(ContainerAsyncListener * newListener) {queuedNotifier.addAsyncCoalescedListener(newListener); }
 	void removeAsyncContainerListener(ContainerAsyncListener* listener) { queuedNotifier.removeListener(listener); }
 	
 	void clear();

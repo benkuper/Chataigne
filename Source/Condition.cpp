@@ -15,7 +15,8 @@
 #include "ConditionEditor.h"
 
 Condition::Condition() :
-	BaseItem("Condition")
+	BaseItem("Condition"),
+	validationAsyncNotifier(1000)
 {
 	isSelectable = false;
 
@@ -59,11 +60,6 @@ void Condition::setSourceControllable(WeakReference<Controllable> c)
 
 	if (sourceControllable != nullptr)
 	{
-		/*
-		if (sourceControllable->type == Controllable::TRIGGER) ((Trigger *)c.get())->addTriggerListener(this);
-		else ((Parameter *)sourceControllable.get())->addParameterListener(this);
-		*/
-
 		var oldData = var();
 		if (comparator != nullptr) oldData = comparator->getJSONData();
 		comparator = ComparatorFactory::createComparatorForControllable(sourceControllable);
@@ -98,6 +94,7 @@ void Condition::onContainerParameterChangedInternal(Parameter * p)
 	} else if (p == isValid)
 	{
 		conditionListeners.call(&ConditionListener::conditionValidationChanged, this);
+		validationAsyncNotifier.addMessage(new ValidationAsyncEvent(isValid->boolValue()));
 	}else if (p == enabled)
 	{
 		isValid->setValue(false);

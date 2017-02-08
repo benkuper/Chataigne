@@ -36,8 +36,7 @@ OSCModuleBaseEditor::OSCModuleBaseEditor(OSCModule * _oscModule, bool isRoot) :
 	addAndMakeVisible(&sendLabel);
 
 	remoteHostUI->setEnabled(!oscModule->useLocal->boolValue());
-	
-	oscModule->addAsyncContainerListener(this);
+
 }
 
 OSCModuleBaseEditor::~OSCModuleBaseEditor()

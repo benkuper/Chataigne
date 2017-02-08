@@ -14,7 +14,9 @@
 
 #include "JuceHeader.h"//keep
 template<typename MessageClass,class CriticalSectionToUse = CriticalSection>
-class QueuedNotifier:public  AsyncUpdater{
+class QueuedNotifier:
+	public  AsyncUpdater
+{
 public:
 
     QueuedNotifier(int _maxSize):fifo(_maxSize){
@@ -22,7 +24,12 @@ public:
 
     }
 
-    virtual ~QueuedNotifier() {cancelPendingUpdate();}
+    virtual ~QueuedNotifier() {
+		listeners.clear();
+		lastListeners.clear();
+		messageQueue.clear();
+		cancelPendingUpdate();
+	}
 
 
 
@@ -49,21 +56,20 @@ public:
         else{
 
             // add if we are in a decent array size
-            {
-            int start1,size1,start2,size2;
-            fifo.prepareToWrite(1, start1, size1, start2, size2);
-                if(size1>0){
-                    if(messageQueue.size()<maxSize){messageQueue.add(msg);}
-                    else{messageQueue.set(start1,msg);}
-                }
-                if(size2>0){
-                    if(messageQueue.size()<maxSize){messageQueue.add(msg);}
-                    else{messageQueue.set(start2,msg);}
-                }
+            
+			int start1,size1,start2,size2;
+			fifo.prepareToWrite(1, start1, size1, start2, size2);
+			if(size1>0){
+				if(messageQueue.size()<maxSize){messageQueue.add(msg);}
+				else{messageQueue.set(start1,msg);}
+			}
+			if(size2>0){
+				if(messageQueue.size()<maxSize){messageQueue.add(msg);}
+				else{messageQueue.set(start2,msg);}
+			}
 
-            fifo.finishedWrite (size1 + size2);
-
-            }
+			fifo.finishedWrite (size1 + size2);
+            
             triggerAsyncUpdate();
         }
 
@@ -73,13 +79,11 @@ public:
     void addListener(Listener* newListener) { listeners.add(newListener); }
     void addAsyncCoalescedListener(Listener* newListener) { lastListeners.add(newListener); }
     void removeListener(Listener* listener) { listeners.remove(listener);lastListeners.remove(listener); }
+
 private:
 
     void handleAsyncUpdate() override
     {
-
-
-
             int start1,size1,start2,size2;
             fifo.prepareToRead(fifo.getNumReady(), start1, size1, start2, size2);
 
@@ -97,10 +101,6 @@ private:
                 lastListeners.call(&Listener::newMessage,*messageQueue.getUnchecked(start1+size1-1));
 
             fifo.finishedRead(size1 + size2);
-
-
-
-
     }
 
 

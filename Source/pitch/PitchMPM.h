@@ -1,6 +1,9 @@
 #include "JuceHeader.h"
 #include <float.h>
 
+#pragma once
+#pragma warning(push)
+#pragma warning(disable:4244)
 /*
  *  Adapted for JUCE from the McLeod Pitch Method implementation in https://github.com/sevagh/pitch-detection
  */
@@ -11,7 +14,7 @@
 
 class PitchMPM
 {
-
+	 
 public:
 
     PitchMPM(int bufferSize) : bufferSize (bufferSize), sampleRate (44100)
@@ -194,3 +197,5 @@ private:
     }
 
 };
+
+#pragma warning(pop)

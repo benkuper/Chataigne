@@ -25,6 +25,8 @@ public:
 	AudioDeviceSelectorComponent selector;
 
 	ScopedPointer<InspectableEditor> gainSlider;
+	ScopedPointer<InspectableEditor> thresholdSlider;
+	
 	ScopedPointer<InspectableEditor> valuesCCEditor;
 
 	void resizedInternalContent(Rectangle<int> &r) override;

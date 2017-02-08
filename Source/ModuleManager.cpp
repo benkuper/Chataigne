@@ -32,6 +32,33 @@ void ModuleManager::addItemFromData(var data)
 	if (i != nullptr) addItem(i, data);
 }
 
+PopupMenu ModuleManager::getAllModulesInputValuesMenu(bool parametersOnly)
+{
+	PopupMenu menu;
+	for (int i = 0; i < items.size(); i++)
+	{
+		PopupMenu sMenu;
+		int numValues = items[i]->valuesCC.controllables.size();
+		for (int j = 0; j < numValues; j++)
+		{
+			Controllable * c = items[i]->valuesCC.controllables[j];
+			if (c->type == Controllable::TRIGGER && parametersOnly) continue;
+			sMenu.addItem(i * 1000 + j + 1, c->niceName);
+		}
+		menu.addSubMenu(items[i]->niceName, sMenu);
+	}
+
+	return menu;
+}
+
+Controllable * ModuleManager::getControllableForItemID(int itemID)
+{
+	if (itemID <= 0) return nullptr;
+	int moduleIndex = (int)floor((itemID-1) / 1000);
+	int valueIndex = (itemID-1) % 1000;
+	return items[moduleIndex]->valuesCC.controllables[valueIndex];
+}
+
 PopupMenu ModuleManager::getAllModulesCommandMenu(CommandContext context)
 {
 	PopupMenu menu;
@@ -43,7 +70,7 @@ PopupMenu ModuleManager::getAllModulesCommandMenu(CommandContext context)
 CommandDefinition * ModuleManager::getCommandDefinitionForItemID(int itemID)
 {
 	if (itemID <= 0) return nullptr;
-	int outputIndex = (int)floor(itemID / 1000);
+	int moduleIndex = (int)floor(itemID / 1000);
 	int commandIndex = itemID % 1000 - 1;
-	return items[outputIndex]->defManager.definitions[commandIndex];
+	return items[moduleIndex]->defManager.definitions[commandIndex];
 }

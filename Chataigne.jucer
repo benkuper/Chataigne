@@ -217,16 +217,20 @@
             <FILE id="KzTWEH" name="AutomationKey.h" compile="0" resource="0" file="Source/AutomationKey.h"/>
           </GROUP>
           <GROUP id="{E7C8AAFC-E2FA-90D0-859B-423BC528A52F}" name="Command">
+            <GROUP id="{D2DBE4AC-35AB-8D3A-FE4E-BF5B8540D68E}" name="ui">
+              <FILE id="As2rOa" name="BaseCommandHandlerEditor.cpp" compile="1" resource="0"
+                    file="Source/BaseCommandHandlerEditor.cpp"/>
+              <FILE id="mRa65V" name="CommandChooserUI.cpp" compile="1" resource="0"
+                    file="Source/CommandChooserUI.cpp"/>
+              <FILE id="AoIL08" name="CommandChooserUI.h" compile="0" resource="0"
+                    file="Source/CommandChooserUI.h"/>
+              <FILE id="mSU10f" name="BaseCommandHandlerEditor.h" compile="0" resource="0"
+                    file="Source/BaseCommandHandlerEditor.h"/>
+            </GROUP>
             <FILE id="gIeRan" name="BaseCommandHandler.cpp" compile="1" resource="0"
                   file="Source/BaseCommandHandler.cpp"/>
             <FILE id="NEs70O" name="BaseCommandHandler.h" compile="0" resource="0"
                   file="Source/BaseCommandHandler.h"/>
-            <GROUP id="{D2DBE4AC-35AB-8D3A-FE4E-BF5B8540D68E}" name="ui">
-              <FILE id="As2rOa" name="BaseCommandHandlerEditor.cpp" compile="1" resource="0"
-                    file="Source/BaseCommandHandlerEditor.cpp"/>
-              <FILE id="mSU10f" name="BaseCommandHandlerEditor.h" compile="0" resource="0"
-                    file="Source/BaseCommandHandlerEditor.h"/>
-            </GROUP>
             <FILE id="C1hNyN" name="CommandDefinition.cpp" compile="1" resource="0"
                   file="Source/CommandDefinition.cpp"/>
             <FILE id="fpS2bd" name="CommandDefinition.h" compile="0" resource="0"
@@ -241,10 +245,6 @@
                   file="Source/CommandFactory.cpp"/>
             <FILE id="UD0p9m" name="CommandFactory.h" compile="0" resource="0"
                   file="Source/CommandFactory.h"/>
-            <FILE id="mRa65V" name="CommandChooserUI.cpp" compile="1" resource="0"
-                  file="Source/CommandChooserUI.cpp"/>
-            <FILE id="AoIL08" name="CommandChooserUI.h" compile="0" resource="0"
-                  file="Source/CommandChooserUI.h"/>
           </GROUP>
           <GROUP id="{00DB7CFA-CACA-0D02-4E20-E907A0900C31}" name="MIDI">
             <GROUP id="{6A517320-E014-4F0A-1B7F-E6E464B84224}" name="ui">
@@ -860,6 +860,10 @@
             <FILE id="cAALpT" name="ModuleEditor.cpp" compile="1" resource="0"
                   file="Source/ModuleEditor.cpp"/>
             <FILE id="xZERFs" name="ModuleEditor.h" compile="0" resource="0" file="Source/ModuleEditor.h"/>
+            <FILE id="gUSScE" name="ModuleInputValueChooserUI.cpp" compile="1"
+                  resource="0" file="Source/ModuleInputValueChooserUI.cpp"/>
+            <FILE id="G1Lvti" name="ModuleInputValueChooserUI.h" compile="0" resource="0"
+                  file="Source/ModuleInputValueChooserUI.h"/>
             <FILE id="lbKfus" name="ModuleManagerUI.cpp" compile="1" resource="0"
                   file="Source/ModuleManagerUI.cpp"/>
             <FILE id="PLqo2M" name="ModuleManagerUI.h" compile="0" resource="0"

@@ -17,14 +17,12 @@ ControllableUI(parameter),
 showValue(true)
 {
     parameter->addAsyncCoalescedListener(this);
-    parameter->addParameterListener(this);
 
 }
 
 ParameterUI::~ParameterUI()
 {
-    if(parameter.get()){
-        parameter->removeParameterListener(this);
+    if(!parameter.wasObjectDeleted()){
         parameter->removeAsyncParameterListener(this);
     }
 }

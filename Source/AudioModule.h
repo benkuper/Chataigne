@@ -30,6 +30,7 @@ public:
 	AudioBuffer<float> buffer;
 
 	FloatParameter * gain;
+	FloatParameter * activityThreshold;
 
 	FloatParameter * volume;
 	FloatParameter * frequency;

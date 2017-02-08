@@ -14,10 +14,9 @@
 
 TargetParameterUI::TargetParameterUI(TargetParameter * parameter, const String &_noTargetText) :
 	ParameterUI(parameter),
+	targetParameter(parameter),
 	noTargetText(_noTargetText)
 {
-
-	targetParameter = parameter;
 	setInterceptsMouseClicks(true, true);
 
 	targetBT = AssetManager::getInstance()->getTargetBT();
@@ -86,7 +85,7 @@ void TargetParameterUI::showPopupAndGetTarget()
 	{
 		ControllableChooserPopupMenu p(targetParameter->rootContainer);
 		Controllable * c = p.showAndGetControllable();
-		if (c != nullptr) ((TargetParameter *)parameter.get())->setValueFromTarget(c);
+		if (c != nullptr) targetParameter->setValueFromTarget(c);
 	} else
 	{
 		//No handle for container for now

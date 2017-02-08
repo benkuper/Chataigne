@@ -37,7 +37,8 @@ ControllableContainer::ControllableContainer(const String & niceName) :
 	isTargettable(true),
 	hideInEditor(false),
 	canInspectChildContainers(true),
-	queuedNotifier(50) //what to put in max size ??
+	queuedNotifier(500) //what to put in max size ?? 
+					    //500 seems ok on my compute, but if too low, generates leaks when closing app while heavy use of async (like  parameter update from audio signal)
 {
   setNiceName(niceName);
 
@@ -60,13 +61,15 @@ ControllableContainer::~ControllableContainer()
 {
   //controllables.clear();
   //DBG("CLEAR CONTROLLABLE CONTAINER");
-
   clear();
   masterReference.clear();
 }
+
+
 void ControllableContainer::clear(){
   controllables.clear();
   controllableContainers.clear();
+  queuedNotifier.cancelPendingUpdate();
 }
 
 

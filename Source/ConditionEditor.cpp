@@ -16,8 +16,10 @@ ConditionEditor::ConditionEditor(Condition * _condition, bool isRoot) :
 	BaseItemEditor(_condition, isRoot),
 	condition(_condition)
 {
-	targetUI = condition->sourceTarget->createTargetUI();
+	targetUI = new ModuleInputValueChooserUI(condition->sourceTarget, false);
 	condition->addConditionListener(this);
+	condition->addAsyncCoalescedValidationListener(this);
+
 	addAndMakeVisible(targetUI);
 	setSize(100, 50);
 	updateSourceUI();
@@ -25,7 +27,11 @@ ConditionEditor::ConditionEditor(Condition * _condition, bool isRoot) :
 
 ConditionEditor::~ConditionEditor()
 {
-	condition->removeConditionListener(this);
+	if (!inspectable.wasObjectDeleted())
+	{
+		condition->removeConditionListener(this);
+		condition->removeAsyncValidationListener(this);
+	}
 }
 
 void ConditionEditor::resizedInternalContent(Rectangle<int>& r)
@@ -87,7 +93,7 @@ void ConditionEditor::conditionSourceChanged(Condition *)
 	updateSourceUI();
 }
 
-void ConditionEditor::conditionValidationChanged(Condition *)
+void ConditionEditor::newMessage(const Condition::ValidationAsyncEvent & e)
 {
 	repaint();
 }

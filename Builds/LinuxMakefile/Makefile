@@ -113,13 +113,13 @@ OBJECTS := \
   $(JUCE_OBJDIR)/AutomationUI_697778f4.o \
   $(JUCE_OBJDIR)/Automation_126c4720.o \
   $(JUCE_OBJDIR)/AutomationKey_e849a129.o \
-  $(JUCE_OBJDIR)/BaseCommandHandler_1a071039.o \
   $(JUCE_OBJDIR)/BaseCommandHandlerEditor_aad35c46.o \
+  $(JUCE_OBJDIR)/CommandChooserUI_aed1be8d.o \
+  $(JUCE_OBJDIR)/BaseCommandHandler_1a071039.o \
   $(JUCE_OBJDIR)/CommandDefinition_40c7095f.o \
   $(JUCE_OBJDIR)/CommandDefinitionManager_f438f1d8.o \
   $(JUCE_OBJDIR)/BaseCommand_529ec09b.o \
   $(JUCE_OBJDIR)/CommandFactory_88728348.o \
-  $(JUCE_OBJDIR)/CommandChooserUI_aed1be8d.o \
   $(JUCE_OBJDIR)/MIDIDeviceChooser_670213e5.o \
   $(JUCE_OBJDIR)/MIDIDeviceParameterUI_d72a4b27.o \
   $(JUCE_OBJDIR)/MIDIDevice_b230ec0.o \
@@ -259,6 +259,7 @@ OBJECTS := \
   $(JUCE_OBJDIR)/OSCModule_ae2b3a2c.o \
   $(JUCE_OBJDIR)/ModuleCommand_8819a720.o \
   $(JUCE_OBJDIR)/ModuleEditor_e42c3f02.o \
+  $(JUCE_OBJDIR)/ModuleInputValueChooserUI_984ffe5d.o \
   $(JUCE_OBJDIR)/ModuleManagerUI_e76eb7d6.o \
   $(JUCE_OBJDIR)/ModuleUI_d5540089.o \
   $(JUCE_OBJDIR)/ModuleManager_e189d682.o \
@@ -572,14 +573,19 @@ $(JUCE_OBJDIR)/AutomationKey_e849a129.o: ../../Source/AutomationKey.cpp
 	@echo "Compiling AutomationKey.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
 
-$(JUCE_OBJDIR)/BaseCommandHandler_1a071039.o: ../../Source/BaseCommandHandler.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling BaseCommandHandler.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
 $(JUCE_OBJDIR)/BaseCommandHandlerEditor_aad35c46.o: ../../Source/BaseCommandHandlerEditor.cpp
 	-@mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling BaseCommandHandlerEditor.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/CommandChooserUI_aed1be8d.o: ../../Source/CommandChooserUI.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling CommandChooserUI.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/BaseCommandHandler_1a071039.o: ../../Source/BaseCommandHandler.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling BaseCommandHandler.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/CommandDefinition_40c7095f.o: ../../Source/CommandDefinition.cpp
@@ -600,11 +606,6 @@ $(JUCE_OBJDIR)/BaseCommand_529ec09b.o: ../../Source/BaseCommand.cpp
 $(JUCE_OBJDIR)/CommandFactory_88728348.o: ../../Source/CommandFactory.cpp
 	-@mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling CommandFactory.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/CommandChooserUI_aed1be8d.o: ../../Source/CommandChooserUI.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling CommandChooserUI.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/MIDIDeviceChooser_670213e5.o: ../../Source/MIDIDeviceChooser.cpp
@@ -1300,6 +1301,11 @@ $(JUCE_OBJDIR)/ModuleCommand_8819a720.o: ../../Source/ModuleCommand.cpp
 $(JUCE_OBJDIR)/ModuleEditor_e42c3f02.o: ../../Source/ModuleEditor.cpp
 	-@mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling ModuleEditor.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/ModuleInputValueChooserUI_984ffe5d.o: ../../Source/ModuleInputValueChooserUI.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling ModuleInputValueChooserUI.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/ModuleManagerUI_e76eb7d6.o: ../../Source/ModuleManagerUI.cpp

@@ -18,6 +18,8 @@ AudioModule::AudioModule(const String & name) :
 {
 	
 	gain = addFloatParameter("Gain", "Gain for the input volume", 1, 0, 10);
+	activityThreshold = addFloatParameter("Activity Threshold", "Threshold to consider activity from the source.\nAnalysis will compute only if volume is greater than this parameter", .1f,0,1);
+	
 	volume = valuesCC.addFloatParameter("Volume", "Volume of the audio input", 0, 0, 1);
 	volume->isControllableFeedbackOnly = true;
 
@@ -38,7 +40,8 @@ AudioModule::AudioModule(const String & name) :
 
 AudioModule::~AudioModule()
 {
-
+	am.removeAudioCallback(this);
+	am.removeChangeListener(this);
 }
 
 var AudioModule::getJSONData()
@@ -72,14 +75,14 @@ void AudioModule::audioDeviceIOCallback(const float ** inputChannelData, int num
 		buffer.copyFromWithRamp(0, 0, inputChannelData[0], numSamples,1,gain->floatValue());
 		volume->setValue(buffer.getRMSLevel(0, 0, numSamples));
 
-		if (volume->floatValue() > 0.01f*gain->floatValue())
+		if (volume->floatValue() > activityThreshold->floatValue())
 		{
 			inActivityTrigger->trigger();
-			if (pitchDetector == nullptr || pitchDetector->getBufferSize() != numSamples)
+			if (pitchDetector == nullptr || (int)pitchDetector->getBufferSize() != numSamples)
 			{
 				AudioDeviceManager::AudioDeviceSetup s;
 				am.getAudioDeviceSetup(s);
-				pitchDetector = new PitchMPM(s.sampleRate, numSamples);
+				pitchDetector = new PitchMPM((int)s.sampleRate, numSamples);
 				
 			}
 			float freq = pitchDetector->getPitch(inputChannelData[0]);
@@ -121,6 +124,6 @@ InspectableEditor * AudioModule::getEditor(bool isRoot)
 
 int AudioModule::getNoteForFrequency(float freq)
 {
-	return 69 + 12 * log2(freq / 440); //A = 440
+	return (int)(69 + 12 * log2(freq / 440)); //A = 440
 }
 

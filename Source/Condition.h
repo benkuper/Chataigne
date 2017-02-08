@@ -46,10 +46,23 @@ public:
 		virtual void conditionSourceChanged(Condition *) {}
 	};
 
-
 	ListenerList<ConditionListener> conditionListeners;
 	void addConditionListener(ConditionListener* newListener) { conditionListeners.add(newListener); }
 	void removeConditionListener(ConditionListener* listener) { conditionListeners.remove(listener); }
+
+
+	class ValidationAsyncEvent {
+	public:
+		ValidationAsyncEvent(bool _value) : value(_value) {}
+		bool value;
+	};
+	QueuedNotifier<ValidationAsyncEvent> validationAsyncNotifier;
+	typedef QueuedNotifier<ValidationAsyncEvent>::Listener AsyncListener;
+
+
+	void addAsyncValidationListener(AsyncListener* newListener) { validationAsyncNotifier.addListener(newListener); }
+	void addAsyncCoalescedValidationListener(AsyncListener* newListener) { validationAsyncNotifier.addAsyncCoalescedListener(newListener); }
+	void removeAsyncValidationListener(AsyncListener* listener) { validationAsyncNotifier.removeListener(listener); }
 
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Condition)

@@ -13,12 +13,13 @@
 
 #include "BaseItemEditor.h"
 #include "Condition.h"
-#include "TargetParameterUI.h"
+#include "ModuleInputValueChooserUI.h"
 #include "BaseComparatorUI.h"
 
 class ConditionEditor :
 	public BaseItemEditor,
-	public Condition::ConditionListener
+	public Condition::ConditionListener,
+	public Condition::AsyncListener
 {
 public:
 	ConditionEditor(Condition *, bool isRoot);
@@ -26,7 +27,7 @@ public:
 
 
 	Condition * condition;
-	ScopedPointer<TargetParameterUI> targetUI;
+	ScopedPointer<ModuleInputValueChooserUI> targetUI;
 	ScopedPointer<ControllableUI> sourceFeedbackUI;
 	ScopedPointer<BaseComparatorUI> comparatorUI;
 	
@@ -36,7 +37,9 @@ public:
 	void updateSourceUI();
 
 	void conditionSourceChanged(Condition *) override;
-	void conditionValidationChanged(Condition *) override;
+
+	//async
+	void newMessage(const Condition::ValidationAsyncEvent &e) override;
 
 	void childBoundsChanged(Component *) override;
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ConditionEditor)

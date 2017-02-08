@@ -23,6 +23,11 @@ AudioModuleEditor::AudioModuleEditor(AudioModule * module, bool isRoot) :
 	addAndMakeVisible(gainSlider);
 	gainSlider->setSize(100, 16);
 
+	thresholdSlider = audioModule->activityThreshold->getEditor(false);
+	addAndMakeVisible(thresholdSlider);
+	thresholdSlider->setSize(100, 16);
+
+
 	valuesCCEditor = audioModule->valuesCC.getEditor(false);
 	addAndMakeVisible(valuesCCEditor);
 }
@@ -36,7 +41,9 @@ void AudioModuleEditor::resizedInternalContent(Rectangle<int>& r)
 	if (gainSlider != nullptr)
 	{
 		gainSlider->setBounds(r.withHeight(gainSlider->getHeight()));
-		r.translate(0, gainSlider->getHeight() + 5);
+		r.translate(0, gainSlider->getHeight() + 2);
+		thresholdSlider->setBounds(r.withHeight(thresholdSlider->getHeight()));
+		r.translate(0, thresholdSlider->getHeight() + 2);
 	}
 
 	if (valuesCCEditor != nullptr)
