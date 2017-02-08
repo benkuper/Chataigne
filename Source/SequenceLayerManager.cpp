@@ -16,6 +16,7 @@ SequenceLayerManager::SequenceLayerManager(Sequence * _sequence) :
 	sequence(_sequence)
 {
 	skipControllableNameInAddress = true;
+	hideInEditor = true;
 }
 
 SequenceLayerManager::~SequenceLayerManager()

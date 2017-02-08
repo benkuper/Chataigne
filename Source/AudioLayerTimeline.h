@@ -11,7 +11,23 @@
 #ifndef AUDIOLAYERTIMELINE_H_INCLUDED
 #define AUDIOLAYERTIMELINE_H_INCLUDED
 
+#include "SequenceLayerTimeline.h"
+#include "AudioLayerClipManagerUI.h"
+#include "AudioLayer.h"
 
+class AudioLayerTimeline :
+	public SequenceLayerTimeline
+{
+public:
+	AudioLayerTimeline(AudioLayer * layer);
+	~AudioLayerTimeline();
+
+	AudioLayer * audioLayer;
+	ScopedPointer<AudioLayerClipManagerUI> cmMUI;
+
+	void resized() override;
+	void updateContent() override;
+};
 
 
 

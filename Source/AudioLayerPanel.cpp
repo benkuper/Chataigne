@@ -9,3 +9,14 @@
 */
 
 #include "AudioLayerPanel.h"
+
+AudioLayerPanel::AudioLayerPanel(AudioLayer * layer) :
+	SequenceLayerPanel(layer),
+	audioLayer(layer)
+{
+	bgColor = AUDIO_COLOR.withSaturation(.2f).darker(1);
+}
+
+AudioLayerPanel::~AudioLayerPanel()
+{
+}

@@ -15,7 +15,7 @@ MappingLayerPanel::MappingLayerPanel(MappingLayer * layer) :
 	mappingLayer(layer)
 {
 
-	bgColor = MAPPING_COLOR.withSaturation(.2f).darker(1);;
+	bgColor = MAPPING_COLOR.withSaturation(.2f).darker(1);
 }
 
 MappingLayerPanel::~MappingLayerPanel()

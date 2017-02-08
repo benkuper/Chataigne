@@ -35,21 +35,3 @@ void MappingLayerTimeline::resized()
 {
 	automationUI.setBounds(getLocalBounds());
 }
-/*
-void MappingLayerTimeline::controllableFeedbackUpdateInternal(Controllable * c)
-{
-	
-	SequenceLayerTimeline::controllableFeedbackUpdateInternal(c);
-	MappingLayer * ml = static_cast<MappingLayer *>(item);
-
-	if (c == ml->sequence->currentTime)
-	{
-		automationUI.setCurrentPosition(item->sequence->currentTime->floatValue());
-	}
-	else if (c == ml->curveValue)
-	{
-		automationUI.setCurrentValue(ml->curveValue->floatValue());
-	}
-	
-}
-*/

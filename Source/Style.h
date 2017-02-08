@@ -25,6 +25,7 @@
 
 #define ACTION_COLOR     Colours::cadetblue
 #define MAPPING_COLOR    Colours::pink
+#define AUDIO_COLOR		 Colours::green
 
 
 #define YELLOW_COLOR Colours::yellow

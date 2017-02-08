@@ -11,6 +11,7 @@
 #include "SequenceLayer.h"
 #include "SequenceLayerPanel.h"
 #include "SequenceLayerTimeline.h"
+#include "BaseItemEditor.h"
 
 SequenceLayer::SequenceLayer(Sequence * _sequence, const String &name) :
 	BaseItem(name),
@@ -44,5 +45,10 @@ SequenceLayerPanel * SequenceLayer::getPanel()
 SequenceLayerTimeline * SequenceLayer::getTimelineUI()
 {
 	return new SequenceLayerTimeline(this);
+}
+
+InspectableEditor * SequenceLayer::getEditor(bool isRoot)
+{
+	return new BaseItemEditor(this, isRoot);
 }
 

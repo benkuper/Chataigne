@@ -168,46 +168,6 @@ OBJECTS := \
   $(JUCE_OBJDIR)/MappingUI_56e9fc43.o \
   $(JUCE_OBJDIR)/Mapping_bdf5522f.o \
   $(JUCE_OBJDIR)/MappingManager_a2de1f08.o \
-  $(JUCE_OBJDIR)/SequenceLayerFactory_ac14d863.o \
-  $(JUCE_OBJDIR)/AudioLayerPanel_faa1fb8a.o \
-  $(JUCE_OBJDIR)/AudioLayerTimeline_7cd71005.o \
-  $(JUCE_OBJDIR)/AudioLayer_60c0cf24.o \
-  $(JUCE_OBJDIR)/MappingLayerPanel_890eab82.o \
-  $(JUCE_OBJDIR)/MappingLayerTimeline_96e8bd0d.o \
-  $(JUCE_OBJDIR)/MappingLayer_50b4042c.o \
-  $(JUCE_OBJDIR)/TimeTriggerManagerUI_db89a9f.o \
-  $(JUCE_OBJDIR)/TimeTriggerUI_9c11bde0.o \
-  $(JUCE_OBJDIR)/TriggerLayerPanel_72c06ec.o \
-  $(JUCE_OBJDIR)/TriggerLayerTimeline_b139b163.o \
-  $(JUCE_OBJDIR)/TimeTrigger_4a6ad70c.o \
-  $(JUCE_OBJDIR)/TimeTriggerManager_e14fd78b.o \
-  $(JUCE_OBJDIR)/TriggerLayer_1751ae82.o \
-  $(JUCE_OBJDIR)/SequenceLayerTimelineManagerUI_a4660719.o \
-  $(JUCE_OBJDIR)/SequenceLayerPanel_5928bd5d.o \
-  $(JUCE_OBJDIR)/SequenceLayerTimeline_a0ac9952.o \
-  $(JUCE_OBJDIR)/SequenceLayerPanelManagerUI_8a7a3f6e.o \
-  $(JUCE_OBJDIR)/SequenceLayerManager_a9ccad86.o \
-  $(JUCE_OBJDIR)/SequenceLayer_e986f571.o \
-  $(JUCE_OBJDIR)/SequenceTimelineHeader_4a3b0458.o \
-  $(JUCE_OBJDIR)/SequenceTimelineSeeker_db3332f0.o \
-  $(JUCE_OBJDIR)/SequenceEditor_f0150517.o \
-  $(JUCE_OBJDIR)/SequenceTimelineNavigationUI_8126f373.o \
-  $(JUCE_OBJDIR)/SequenceTransportUI_5072a95d.o \
-  $(JUCE_OBJDIR)/SequenceUI_6f55191e.o \
-  $(JUCE_OBJDIR)/Sequence_b8a7e9ca.o \
-  $(JUCE_OBJDIR)/SequenceManagerUI_cc91bda1.o \
-  $(JUCE_OBJDIR)/TimeMachineView_76e28760.o \
-  $(JUCE_OBJDIR)/SequenceManager_52b9d30d.o \
-  $(JUCE_OBJDIR)/StateViewUI_7695054b.o \
-  $(JUCE_OBJDIR)/StateUI_4c5e44c6.o \
-  $(JUCE_OBJDIR)/State_21d7df72.o \
-  $(JUCE_OBJDIR)/StateTransitionManagerUI_d309e1e4.o \
-  $(JUCE_OBJDIR)/StateTransitionUI_7981ea3b.o \
-  $(JUCE_OBJDIR)/StateTransition_7f205e27.o \
-  $(JUCE_OBJDIR)/StateTransitionManager_9a642c10.o \
-  $(JUCE_OBJDIR)/StateMachineView_e5001744.o \
-  $(JUCE_OBJDIR)/StateManagerUI_e1b7a4f9.o \
-  $(JUCE_OBJDIR)/StateManager_b261b065.o \
   $(JUCE_OBJDIR)/AudioModuleEditor_42dcabd0.o \
   $(JUCE_OBJDIR)/AudioModule_88fd4f43.o \
   $(JUCE_OBJDIR)/os_mac_efb3b999.o \
@@ -265,6 +225,50 @@ OBJECTS := \
   $(JUCE_OBJDIR)/ModuleManager_e189d682.o \
   $(JUCE_OBJDIR)/ModuleFactory_e3d2015f.o \
   $(JUCE_OBJDIR)/Module_f57faff5.o \
+  $(JUCE_OBJDIR)/StateViewUI_7695054b.o \
+  $(JUCE_OBJDIR)/StateUI_4c5e44c6.o \
+  $(JUCE_OBJDIR)/State_21d7df72.o \
+  $(JUCE_OBJDIR)/StateTransitionManagerUI_d309e1e4.o \
+  $(JUCE_OBJDIR)/StateTransitionUI_7981ea3b.o \
+  $(JUCE_OBJDIR)/StateTransition_7f205e27.o \
+  $(JUCE_OBJDIR)/StateTransitionManager_9a642c10.o \
+  $(JUCE_OBJDIR)/StateMachineView_e5001744.o \
+  $(JUCE_OBJDIR)/StateManagerUI_e1b7a4f9.o \
+  $(JUCE_OBJDIR)/StateManager_b261b065.o \
+  $(JUCE_OBJDIR)/SequenceLayerFactory_ac14d863.o \
+  $(JUCE_OBJDIR)/AudioLayerClipManagerUI_661b97.o \
+  $(JUCE_OBJDIR)/AudioLayerClipUI_6976e3e8.o \
+  $(JUCE_OBJDIR)/AudioLayerPanel_faa1fb8a.o \
+  $(JUCE_OBJDIR)/AudioLayerTimeline_7cd71005.o \
+  $(JUCE_OBJDIR)/AudioLayer_60c0cf24.o \
+  $(JUCE_OBJDIR)/AudioLayerClip_bd71df14.o \
+  $(JUCE_OBJDIR)/AudioLayerClipManager_90d93683.o \
+  $(JUCE_OBJDIR)/MappingLayerPanel_890eab82.o \
+  $(JUCE_OBJDIR)/MappingLayerTimeline_96e8bd0d.o \
+  $(JUCE_OBJDIR)/MappingLayer_50b4042c.o \
+  $(JUCE_OBJDIR)/TimeTriggerManagerUI_db89a9f.o \
+  $(JUCE_OBJDIR)/TimeTriggerUI_9c11bde0.o \
+  $(JUCE_OBJDIR)/TriggerLayerPanel_72c06ec.o \
+  $(JUCE_OBJDIR)/TriggerLayerTimeline_b139b163.o \
+  $(JUCE_OBJDIR)/TimeTrigger_4a6ad70c.o \
+  $(JUCE_OBJDIR)/TimeTriggerManager_e14fd78b.o \
+  $(JUCE_OBJDIR)/TriggerLayer_1751ae82.o \
+  $(JUCE_OBJDIR)/SequenceLayerTimelineManagerUI_a4660719.o \
+  $(JUCE_OBJDIR)/SequenceLayerPanel_5928bd5d.o \
+  $(JUCE_OBJDIR)/SequenceLayerTimeline_a0ac9952.o \
+  $(JUCE_OBJDIR)/SequenceLayerPanelManagerUI_8a7a3f6e.o \
+  $(JUCE_OBJDIR)/SequenceLayerManager_a9ccad86.o \
+  $(JUCE_OBJDIR)/SequenceLayer_e986f571.o \
+  $(JUCE_OBJDIR)/SequenceTimelineHeader_4a3b0458.o \
+  $(JUCE_OBJDIR)/SequenceTimelineSeeker_db3332f0.o \
+  $(JUCE_OBJDIR)/SequenceEditor_f0150517.o \
+  $(JUCE_OBJDIR)/SequenceTimelineNavigationUI_8126f373.o \
+  $(JUCE_OBJDIR)/SequenceTransportUI_5072a95d.o \
+  $(JUCE_OBJDIR)/SequenceUI_6f55191e.o \
+  $(JUCE_OBJDIR)/Sequence_b8a7e9ca.o \
+  $(JUCE_OBJDIR)/SequenceManagerUI_cc91bda1.o \
+  $(JUCE_OBJDIR)/TimeMachineView_76e28760.o \
+  $(JUCE_OBJDIR)/SequenceManager_52b9d30d.o \
   $(JUCE_OBJDIR)/InspectableSelectionManager_676e38f0.o \
   $(JUCE_OBJDIR)/InspectableContentComponent_c06df73.o \
   $(JUCE_OBJDIR)/Inspector_d6237cd8.o \
@@ -848,206 +852,6 @@ $(JUCE_OBJDIR)/MappingManager_a2de1f08.o: ../../Source/MappingManager.cpp
 	@echo "Compiling MappingManager.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
 
-$(JUCE_OBJDIR)/SequenceLayerFactory_ac14d863.o: ../../Source/SequenceLayerFactory.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling SequenceLayerFactory.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/AudioLayerPanel_faa1fb8a.o: ../../Source/AudioLayerPanel.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling AudioLayerPanel.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/AudioLayerTimeline_7cd71005.o: ../../Source/AudioLayerTimeline.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling AudioLayerTimeline.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/AudioLayer_60c0cf24.o: ../../Source/AudioLayer.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling AudioLayer.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/MappingLayerPanel_890eab82.o: ../../Source/MappingLayerPanel.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling MappingLayerPanel.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/MappingLayerTimeline_96e8bd0d.o: ../../Source/MappingLayerTimeline.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling MappingLayerTimeline.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/MappingLayer_50b4042c.o: ../../Source/MappingLayer.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling MappingLayer.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/TimeTriggerManagerUI_db89a9f.o: ../../Source/TimeTriggerManagerUI.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling TimeTriggerManagerUI.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/TimeTriggerUI_9c11bde0.o: ../../Source/TimeTriggerUI.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling TimeTriggerUI.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/TriggerLayerPanel_72c06ec.o: ../../Source/TriggerLayerPanel.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling TriggerLayerPanel.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/TriggerLayerTimeline_b139b163.o: ../../Source/TriggerLayerTimeline.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling TriggerLayerTimeline.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/TimeTrigger_4a6ad70c.o: ../../Source/TimeTrigger.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling TimeTrigger.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/TimeTriggerManager_e14fd78b.o: ../../Source/TimeTriggerManager.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling TimeTriggerManager.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/TriggerLayer_1751ae82.o: ../../Source/TriggerLayer.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling TriggerLayer.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/SequenceLayerTimelineManagerUI_a4660719.o: ../../Source/SequenceLayerTimelineManagerUI.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling SequenceLayerTimelineManagerUI.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/SequenceLayerPanel_5928bd5d.o: ../../Source/SequenceLayerPanel.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling SequenceLayerPanel.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/SequenceLayerTimeline_a0ac9952.o: ../../Source/SequenceLayerTimeline.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling SequenceLayerTimeline.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/SequenceLayerPanelManagerUI_8a7a3f6e.o: ../../Source/SequenceLayerPanelManagerUI.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling SequenceLayerPanelManagerUI.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/SequenceLayerManager_a9ccad86.o: ../../Source/SequenceLayerManager.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling SequenceLayerManager.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/SequenceLayer_e986f571.o: ../../Source/SequenceLayer.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling SequenceLayer.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/SequenceTimelineHeader_4a3b0458.o: ../../Source/SequenceTimelineHeader.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling SequenceTimelineHeader.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/SequenceTimelineSeeker_db3332f0.o: ../../Source/SequenceTimelineSeeker.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling SequenceTimelineSeeker.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/SequenceEditor_f0150517.o: ../../Source/SequenceEditor.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling SequenceEditor.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/SequenceTimelineNavigationUI_8126f373.o: ../../Source/SequenceTimelineNavigationUI.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling SequenceTimelineNavigationUI.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/SequenceTransportUI_5072a95d.o: ../../Source/SequenceTransportUI.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling SequenceTransportUI.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/SequenceUI_6f55191e.o: ../../Source/SequenceUI.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling SequenceUI.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/Sequence_b8a7e9ca.o: ../../Source/Sequence.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling Sequence.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/SequenceManagerUI_cc91bda1.o: ../../Source/SequenceManagerUI.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling SequenceManagerUI.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/TimeMachineView_76e28760.o: ../../Source/TimeMachineView.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling TimeMachineView.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/SequenceManager_52b9d30d.o: ../../Source/SequenceManager.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling SequenceManager.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/StateViewUI_7695054b.o: ../../Source/StateViewUI.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling StateViewUI.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/StateUI_4c5e44c6.o: ../../Source/StateUI.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling StateUI.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/State_21d7df72.o: ../../Source/State.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling State.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/StateTransitionManagerUI_d309e1e4.o: ../../Source/StateTransitionManagerUI.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling StateTransitionManagerUI.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/StateTransitionUI_7981ea3b.o: ../../Source/StateTransitionUI.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling StateTransitionUI.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/StateTransition_7f205e27.o: ../../Source/StateTransition.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling StateTransition.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/StateTransitionManager_9a642c10.o: ../../Source/StateTransitionManager.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling StateTransitionManager.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/StateMachineView_e5001744.o: ../../Source/StateMachineView.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling StateMachineView.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/StateManagerUI_e1b7a4f9.o: ../../Source/StateManagerUI.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling StateManagerUI.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/StateManager_b261b065.o: ../../Source/StateManager.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling StateManager.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
 $(JUCE_OBJDIR)/AudioModuleEditor_42dcabd0.o: ../../Source/AudioModuleEditor.cpp
 	-@mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling AudioModuleEditor.cpp"
@@ -1331,6 +1135,226 @@ $(JUCE_OBJDIR)/ModuleFactory_e3d2015f.o: ../../Source/ModuleFactory.cpp
 $(JUCE_OBJDIR)/Module_f57faff5.o: ../../Source/Module.cpp
 	-@mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling Module.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/StateViewUI_7695054b.o: ../../Source/StateViewUI.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling StateViewUI.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/StateUI_4c5e44c6.o: ../../Source/StateUI.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling StateUI.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/State_21d7df72.o: ../../Source/State.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling State.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/StateTransitionManagerUI_d309e1e4.o: ../../Source/StateTransitionManagerUI.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling StateTransitionManagerUI.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/StateTransitionUI_7981ea3b.o: ../../Source/StateTransitionUI.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling StateTransitionUI.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/StateTransition_7f205e27.o: ../../Source/StateTransition.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling StateTransition.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/StateTransitionManager_9a642c10.o: ../../Source/StateTransitionManager.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling StateTransitionManager.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/StateMachineView_e5001744.o: ../../Source/StateMachineView.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling StateMachineView.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/StateManagerUI_e1b7a4f9.o: ../../Source/StateManagerUI.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling StateManagerUI.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/StateManager_b261b065.o: ../../Source/StateManager.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling StateManager.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/SequenceLayerFactory_ac14d863.o: ../../Source/SequenceLayerFactory.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling SequenceLayerFactory.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/AudioLayerClipManagerUI_661b97.o: ../../Source/AudioLayerClipManagerUI.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling AudioLayerClipManagerUI.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/AudioLayerClipUI_6976e3e8.o: ../../Source/AudioLayerClipUI.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling AudioLayerClipUI.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/AudioLayerPanel_faa1fb8a.o: ../../Source/AudioLayerPanel.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling AudioLayerPanel.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/AudioLayerTimeline_7cd71005.o: ../../Source/AudioLayerTimeline.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling AudioLayerTimeline.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/AudioLayer_60c0cf24.o: ../../Source/AudioLayer.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling AudioLayer.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/AudioLayerClip_bd71df14.o: ../../Source/AudioLayerClip.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling AudioLayerClip.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/AudioLayerClipManager_90d93683.o: ../../Source/AudioLayerClipManager.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling AudioLayerClipManager.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/MappingLayerPanel_890eab82.o: ../../Source/MappingLayerPanel.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling MappingLayerPanel.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/MappingLayerTimeline_96e8bd0d.o: ../../Source/MappingLayerTimeline.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling MappingLayerTimeline.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/MappingLayer_50b4042c.o: ../../Source/MappingLayer.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling MappingLayer.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/TimeTriggerManagerUI_db89a9f.o: ../../Source/TimeTriggerManagerUI.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling TimeTriggerManagerUI.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/TimeTriggerUI_9c11bde0.o: ../../Source/TimeTriggerUI.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling TimeTriggerUI.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/TriggerLayerPanel_72c06ec.o: ../../Source/TriggerLayerPanel.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling TriggerLayerPanel.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/TriggerLayerTimeline_b139b163.o: ../../Source/TriggerLayerTimeline.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling TriggerLayerTimeline.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/TimeTrigger_4a6ad70c.o: ../../Source/TimeTrigger.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling TimeTrigger.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/TimeTriggerManager_e14fd78b.o: ../../Source/TimeTriggerManager.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling TimeTriggerManager.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/TriggerLayer_1751ae82.o: ../../Source/TriggerLayer.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling TriggerLayer.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/SequenceLayerTimelineManagerUI_a4660719.o: ../../Source/SequenceLayerTimelineManagerUI.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling SequenceLayerTimelineManagerUI.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/SequenceLayerPanel_5928bd5d.o: ../../Source/SequenceLayerPanel.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling SequenceLayerPanel.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/SequenceLayerTimeline_a0ac9952.o: ../../Source/SequenceLayerTimeline.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling SequenceLayerTimeline.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/SequenceLayerPanelManagerUI_8a7a3f6e.o: ../../Source/SequenceLayerPanelManagerUI.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling SequenceLayerPanelManagerUI.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/SequenceLayerManager_a9ccad86.o: ../../Source/SequenceLayerManager.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling SequenceLayerManager.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/SequenceLayer_e986f571.o: ../../Source/SequenceLayer.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling SequenceLayer.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/SequenceTimelineHeader_4a3b0458.o: ../../Source/SequenceTimelineHeader.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling SequenceTimelineHeader.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/SequenceTimelineSeeker_db3332f0.o: ../../Source/SequenceTimelineSeeker.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling SequenceTimelineSeeker.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/SequenceEditor_f0150517.o: ../../Source/SequenceEditor.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling SequenceEditor.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/SequenceTimelineNavigationUI_8126f373.o: ../../Source/SequenceTimelineNavigationUI.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling SequenceTimelineNavigationUI.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/SequenceTransportUI_5072a95d.o: ../../Source/SequenceTransportUI.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling SequenceTransportUI.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/SequenceUI_6f55191e.o: ../../Source/SequenceUI.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling SequenceUI.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/Sequence_b8a7e9ca.o: ../../Source/Sequence.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling Sequence.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/SequenceManagerUI_cc91bda1.o: ../../Source/SequenceManagerUI.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling SequenceManagerUI.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/TimeMachineView_76e28760.o: ../../Source/TimeMachineView.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling TimeMachineView.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/SequenceManager_52b9d30d.o: ../../Source/SequenceManager.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling SequenceManager.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/InspectableSelectionManager_676e38f0.o: ../../Source/InspectableSelectionManager.cpp

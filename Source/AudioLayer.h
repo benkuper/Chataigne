@@ -11,9 +11,8 @@
 #ifndef AUDIOLAYER_H_INCLUDED
 #define AUDIOLAYER_H_INCLUDED
 
-
-
 #include "SequenceLayer.h"
+#include "AudioLayerClipManager.h"
 
 class AudioLayer :
 	public SequenceLayer
@@ -21,8 +20,16 @@ class AudioLayer :
 public:
 	AudioLayer(Sequence * sequence);
 	~AudioLayer();
+	
+	AudioSourcePlayer player;
+	AudioLayerClipManager clipManager;
 
+	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
+
+
+	virtual SequenceLayerPanel * getPanel() override;
+	virtual SequenceLayerTimeline * getTimelineUI() override;
 
 
 	static AudioLayer * create(Sequence * sequence) { return new AudioLayer(sequence); }
