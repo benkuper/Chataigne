@@ -16,7 +16,7 @@
 
 Condition::Condition() :
 	BaseItem("Condition"),
-	validationAsyncNotifier(1000)
+	validationAsyncNotifier(10)
 {
 	isSelectable = false;
 
