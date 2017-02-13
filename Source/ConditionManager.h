@@ -34,6 +34,8 @@ public:
 	int getNumEnabledConditions();
 	int getNumValidConditions();
 
+	bool getIsValid(bool emptyIsValid);
+
 	void conditionValidationChanged(Condition *) override;
 
 	InspectableEditor * getEditor(bool isRoot) override;

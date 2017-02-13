@@ -15,10 +15,12 @@ MappingEditor::MappingEditor(Mapping * m, bool isRoot) :
 	mapping(m)
 {
 	inputEditor = mapping->input.getEditor(false);
+	cdmEditor = mapping->cdm.getEditor(false);
 	filtersEditor = mapping->fm.getEditor(false);
 	outputsEditor = mapping->om.getEditor(false);
 
 	addAndMakeVisible(inputEditor);
+	addAndMakeVisible(cdmEditor);
 	addAndMakeVisible(filtersEditor);
 	addAndMakeVisible(outputsEditor);
 }
@@ -32,9 +34,15 @@ void MappingEditor::resizedInternalContent(Rectangle<int>& r)
 	r.setHeight(inputEditor->getHeight());
 	inputEditor->setBounds(r);
 	r.translate(0,r.getHeight()+2);
+	
+	r.setHeight(cdmEditor->getHeight());
+	cdmEditor->setBounds(r);
+	r.translate(0, r.getHeight() + 2);
+
 	r.setHeight(filtersEditor->getHeight());
 	filtersEditor->setBounds(r);
 	r.translate(0,r.getHeight()+2);
+	
 	r.setHeight(outputsEditor->getHeight());
 	outputsEditor->setBounds(r);
 

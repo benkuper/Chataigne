@@ -29,6 +29,10 @@ public:
 			return new TriggerComparator(c);
 			break;
 
+		case Controllable::BOOL:
+			return new BoolComparator(c);
+			break;
+
 		case Controllable::INT:
 			return new IntComparator(c);
 			break;

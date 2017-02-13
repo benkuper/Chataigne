@@ -91,3 +91,8 @@ int ConditionManager::getNumValidConditions()
 	}
 	return result;
 }
+
+bool ConditionManager::getIsValid(bool emptyIsValid)
+{
+	return isValid->boolValue() || (emptyIsValid && items.size() == 0);
+}

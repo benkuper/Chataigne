@@ -23,6 +23,7 @@ public:
 
 	Mapping * mapping;
 	ScopedPointer<InspectableEditor> inputEditor;
+	ScopedPointer<InspectableEditor> cdmEditor;
 	ScopedPointer<InspectableEditor> filtersEditor;
 	ScopedPointer<InspectableEditor> outputsEditor;
 

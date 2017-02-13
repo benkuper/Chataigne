@@ -17,6 +17,7 @@
 #include "MappingInput.h"
 #include "MappingFilterManager.h"
 #include "MappingOutputManager.h"
+#include "ConditionManager.h"
 
 class Mapping :
 	public BaseItem,
@@ -27,6 +28,7 @@ public:
 	virtual ~Mapping();
 
 	MappingInput input;
+	ConditionManager cdm;
 	MappingFilterManager fm;
 	MappingOutputManager om;
 

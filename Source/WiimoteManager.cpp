@@ -100,12 +100,12 @@ void Wiimote::update()
 {
 	setConnected(WIIMOTE_IS_CONNECTED(device));
 	setBatteryLevel(device->battery_level);
-	DBG("Exp : " << (int)device->expansion_state);
+	//DBG("Exp : " << (int)device->expansion_state);
 
 	switch (device->event)
 	{
 	case WIIUSE_EVENT_TYPE::WIIUSE_EVENT:
-		DBG("BT " << (int)device->btns << " / Nunchuck bt : " << (int)device->exp.nunchuk.btns);
+		//DBG("BT " << (int)device->btns << " / Nunchuck bt : " << (int)device->exp.nunchuk.btns);
 		for (int i = 0; i < NUM_WIIMOTE_BUTTONS; i++) setButton(i, device->btns >> i & 1);
 		setAccel(device->gforce.x, device->gforce.y, device->gforce.z);
 		break;

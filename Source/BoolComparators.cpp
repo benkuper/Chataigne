@@ -26,5 +26,5 @@ BoolComparator::~BoolComparator()
 
 void BoolComparator::compare()
 {
-	if (currentFunctionId == equalsId) setValid(boolParam->boolValue() > boolRef->boolValue());
+	if (currentFunctionId == equalsId) setValid(boolParam->boolValue() == boolRef->boolValue());
 }
