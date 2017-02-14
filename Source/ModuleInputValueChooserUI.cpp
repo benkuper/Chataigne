@@ -15,7 +15,7 @@ ModuleInputValueChooserUI::ModuleInputValueChooserUI(TargetParameter * p, bool _
 	TargetParameterUI(p),
 	parametersOnly(_parametersOnly)
 {
-
+	updateLabel();
 }
 
 ModuleInputValueChooserUI::~ModuleInputValueChooserUI()
