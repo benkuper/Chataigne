@@ -20,8 +20,6 @@ public:
 	Consequence();
 	virtual ~Consequence();
 
-	Trigger * trigger;
-	void onContainerTriggerTriggered(Trigger *) override;
 
 	InspectableEditor * getEditor(bool isRoot) override;
 

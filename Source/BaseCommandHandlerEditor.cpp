@@ -13,6 +13,7 @@
 
 #include "BaseCommandHandlerEditor.h"
 #include "CommandFactory.h"
+#include  "TriggerButtonUI.h"
 
 BaseCommandHandlerEditor::BaseCommandHandlerEditor(BaseCommandHandler * _handler, bool isRoot) :
 	BaseItemEditor(_handler, isRoot),
@@ -24,6 +25,12 @@ BaseCommandHandlerEditor::BaseCommandHandlerEditor(BaseCommandHandler * _handler
 	addAndMakeVisible(&chooser);
 
 	handler->adCommandHandlerListener(this);
+
+	if (handler->context == CommandContext::ACTION)
+	{
+		commandTriggerUI = handler->trigger->createButtonUI();
+		addAndMakeVisible(commandTriggerUI);
+	}
 
 	updateCommandUI();
 	setSize(10, 40);
@@ -39,6 +46,12 @@ BaseCommandHandlerEditor::~BaseCommandHandlerEditor()
 void BaseCommandHandlerEditor::resizedInternalContent(Rectangle<int>& r)
 {
 	Rectangle<int> sr = r.withHeight(headerHeight);
+	if (commandTriggerUI != nullptr)
+	{
+		commandTriggerUI->setBounds(sr.removeFromRight(50));
+		sr.removeFromRight(2);
+	}
+
 	chooser.setBounds(sr);
 
 	r.translate(0, headerHeight);

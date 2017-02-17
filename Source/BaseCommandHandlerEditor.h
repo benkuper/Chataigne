@@ -28,6 +28,7 @@ public:
 	BaseCommandHandler * handler;
 
 	CommandChooserUI chooser;
+	ScopedPointer<TriggerButtonUI> commandTriggerUI;
 	ScopedPointer<InspectableEditor> commandEditor;
 
 	void resizedInternalContent(Rectangle<int> &r) override;

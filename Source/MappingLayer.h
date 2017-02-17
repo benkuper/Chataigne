@@ -32,7 +32,6 @@ public:
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
 
-
 	static MappingLayer * create(Sequence * sequence) { return new MappingLayer(sequence); }
 	virtual String getTypeString() const override { return "Mapping"; }
 
@@ -41,6 +40,8 @@ public:
 
 	virtual void sequenceTotalTimeChanged(Sequence *) override;
 	virtual void sequenceCurrentTimeChanged(Sequence *, float /*prevTime */, bool /*evaluateSkippedData */) override;
+
+	InspectableEditor * getEditor(bool isRoot) override;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MappingLayer)
 };

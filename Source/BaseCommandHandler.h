@@ -28,12 +28,17 @@ public:
 	ScopedPointer<BaseCommand> command;
 	CommandDefinition * commandDefinition;
 
+	Trigger * trigger;
+
 	void setCommand(CommandDefinition *);
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
 
 	InspectableEditor * getEditor(bool isRoot) override;
+
+
+	void onContainerTriggerTriggered(Trigger *) override;
 
 	class CommandHandlerListener
 	{

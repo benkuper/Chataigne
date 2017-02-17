@@ -243,6 +243,7 @@ OBJECTS := \
   $(JUCE_OBJDIR)/AudioLayer_60c0cf24.o \
   $(JUCE_OBJDIR)/AudioLayerClip_bd71df14.o \
   $(JUCE_OBJDIR)/AudioLayerClipManager_90d93683.o \
+  $(JUCE_OBJDIR)/MappingLayerEditor_f1484df9.o \
   $(JUCE_OBJDIR)/MappingLayerPanel_890eab82.o \
   $(JUCE_OBJDIR)/MappingLayerTimeline_96e8bd0d.o \
   $(JUCE_OBJDIR)/MappingLayer_50b4042c.o \
@@ -1225,6 +1226,11 @@ $(JUCE_OBJDIR)/AudioLayerClip_bd71df14.o: ../../Source/AudioLayerClip.cpp
 $(JUCE_OBJDIR)/AudioLayerClipManager_90d93683.o: ../../Source/AudioLayerClipManager.cpp
 	-@mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling AudioLayerClipManager.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/MappingLayerEditor_f1484df9.o: ../../Source/MappingLayerEditor.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling MappingLayerEditor.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/MappingLayerPanel_890eab82.o: ../../Source/MappingLayerPanel.cpp

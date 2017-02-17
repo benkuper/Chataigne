@@ -11,6 +11,7 @@
 #include "MappingLayer.h"
 #include "MappingLayerPanel.h"
 #include "MappingLayerTimeline.h"
+#include "MappingLayerEditor.h"
 
 MappingLayer::MappingLayer(Sequence *_sequence) :
 	SequenceLayer(_sequence, "New Mapping Layer")
@@ -65,4 +66,9 @@ void MappingLayer::sequenceCurrentTimeChanged(Sequence *, float, bool)
 {
 	automation.position->setValue(sequence->currentTime->floatValue());
 	curveValue->setValue(automation.value->floatValue());
+}
+
+InspectableEditor * MappingLayer::getEditor(bool isRoot)
+{
+	return new MappingLayerEditor(this,isRoot);
 }

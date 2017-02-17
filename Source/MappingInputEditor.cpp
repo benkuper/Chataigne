@@ -14,9 +14,13 @@ MappingInputEditor::MappingInputEditor(MappingInput * _input, bool isRoot) :
 	InspectableEditor(_input,isRoot),
 	input(_input)
 {
-	targetUI = input->inputTarget->createTargetUI();
+	if (input->inputTarget->enabled)
+	{
+		targetUI = input->inputTarget->createTargetUI();
+		addAndMakeVisible(targetUI);
+	}
+	
 	input->addMappingInputListener(this);
-	addAndMakeVisible(targetUI);
 	setSize(100, 50);
 	updateSourceUI();
 }
@@ -48,7 +52,7 @@ void MappingInputEditor::resized()
 		sourceFeedbackUI->setBounds(sr.removeFromRight(jmax<int>(sr.getWidth() / 3, 60)));
 		sr.removeFromRight(2);
 	}
-	targetUI->setBounds(sr);
+	if(targetUI != nullptr) targetUI->setBounds(sr);
 }
 
 void MappingInputEditor::inputReferenceChanged(MappingInput *)

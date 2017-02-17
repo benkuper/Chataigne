@@ -15,22 +15,13 @@ Consequence::Consequence() :
 	BaseCommandHandler("Consequence")
 {
 	isSelectable = false;
-	trigger = addTrigger("Trigger", "Trigger this consequence");
+	
 }
 
 Consequence::~Consequence()
 {
 }
 
-
-
-void Consequence::onContainerTriggerTriggered(Trigger * t)
-{
-	if (t == trigger)
-	{
-		if (command != nullptr) command->trigger();
-	}
-}
 
 InspectableEditor * Consequence::getEditor(bool isRoot)
 {

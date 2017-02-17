@@ -24,8 +24,7 @@ public:
 	Trigger(const String &niceName, const String &description, bool enabled = true);
 	~Trigger() {masterReference.clear();}
 	
-	
-	
+
 	TriggerButtonUI * createButtonUI(Trigger * target = nullptr);
 	TriggerImageUI * createImageUI(const Image &image, Trigger * target = nullptr);
 	TriggerBlinkUI * createBlinkUI(Trigger * target = nullptr);

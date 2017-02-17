@@ -30,6 +30,16 @@ void TriggerButtonUI::triggerTriggered(const Trigger *){
     repaint();
 }
 
+void TriggerButtonUI::mouseDown(const MouseEvent & e)
+{
+	if (forceFeedbackOnly) return;
+
+	if (e.mods.isLeftButtonDown())
+	{
+		trigger->trigger();
+	}
+}
+
 void TriggerButtonUI::paint (Graphics& g)
 {
     Point<int> center = getBounds().getCentre();

@@ -25,7 +25,6 @@ public:
 	ControllableContainer * container;
 	var params;
 
-
 	Parameter * targetMappingParameter;
 	void setTargetMappingParameter(Parameter * p);
 

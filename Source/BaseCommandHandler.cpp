@@ -18,6 +18,7 @@ BaseCommandHandler::BaseCommandHandler(const String & name, CommandContext _cont
 	BaseItem(name),
 	context(_context)
 {
+	trigger = addTrigger("Trigger", "Trigger this consequence");
 }
 
 BaseCommandHandler::~BaseCommandHandler()
@@ -79,7 +80,16 @@ void BaseCommandHandler::loadJSONDataInternal(var data)
 			DBG("Output not found : " << data.getProperty("commandModule", "").toString());
 		}
 	}
+}
 
+
+
+void BaseCommandHandler::onContainerTriggerTriggered(Trigger * t)
+{
+	if (t == trigger)
+	{
+		if (command != nullptr) command->trigger();
+	}
 }
 
 InspectableEditor * BaseCommandHandler::getEditor(bool isRoot)

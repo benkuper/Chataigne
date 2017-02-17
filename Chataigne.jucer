@@ -786,6 +786,10 @@
                 </GROUP>
                 <GROUP id="{FEFCE264-DD26-702C-627A-1F28E2CDAFEC}" name="mapping">
                   <GROUP id="{3AD8DA16-48A6-BBE6-F37D-01C374ADD04C}" name="ui">
+                    <FILE id="t77pzE" name="MappingLayerEditor.cpp" compile="1" resource="0"
+                          file="Source/MappingLayerEditor.cpp"/>
+                    <FILE id="DzqIiz" name="MappingLayerEditor.h" compile="0" resource="0"
+                          file="Source/MappingLayerEditor.h"/>
                     <FILE id="jH5pfw" name="MappingLayerPanel.cpp" compile="1" resource="0"
                           file="Source/MappingLayerPanel.cpp"/>
                     <FILE id="FrJ5Um" name="MappingLayerPanel.h" compile="0" resource="0"

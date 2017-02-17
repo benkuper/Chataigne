@@ -48,6 +48,7 @@ ControllableUI * Trigger::createDefaultUI(Controllable * targetControllable){
 
 void Trigger::trigger()
 {
+	DBG("trigger ! " << niceName);
 	if (enabled && !isTriggering) {
 		isTriggering = true;
 		listeners.call(&Listener::triggerTriggered, this);
