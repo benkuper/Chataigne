@@ -663,10 +663,6 @@
                         file="Source/ResolumeClipCommand.cpp"/>
                   <FILE id="zvqTkB" name="ResolumeClipCommand.h" compile="0" resource="0"
                         file="Source/ResolumeClipCommand.h"/>
-                  <FILE id="aJZkEV" name="ResolumeColumnCommand.cpp" compile="1" resource="0"
-                        file="Source/ResolumeColumnCommand.cpp"/>
-                  <FILE id="PhSf0Z" name="ResolumeColumnCommand.h" compile="0" resource="0"
-                        file="Source/ResolumeColumnCommand.h"/>
                   <FILE id="Qj5PPz" name="ResolumeFXCommand.cpp" compile="1" resource="0"
                         file="Source/ResolumeFXCommand.cpp"/>
                   <FILE id="Rrtsns" name="ResolumeFXCommand.h" compile="0" resource="0"

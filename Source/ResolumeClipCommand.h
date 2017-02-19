@@ -22,6 +22,17 @@ public:
 
 	IntParameter * connectParam;
 
+	//Multi
+	IntParameter * firstClip;
+	IntParameter * lastClip;
+	BoolParameter * loopClips;
+	BoolParameter * randomClips;
+	Random clipRand;
+
+	void onContainerParameterChanged(Parameter *) override;
+	void trigger() override;
+
+
 	static BaseCommand * create(ControllableContainer * module, CommandContext context, var params) { 
 		params.getDynamicObject()->setProperty("multiLevel", false);
 		return new ResolumeClipCommand((ResolumeModule *)module, context, params); 

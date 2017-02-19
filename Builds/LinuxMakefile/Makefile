@@ -215,7 +215,6 @@ OBJECTS := \
   $(JUCE_OBJDIR)/ResolumeBaseCommandEditor_bef083d8.o \
   $(JUCE_OBJDIR)/ResolumeBaseCommand_36b5cd4b.o \
   $(JUCE_OBJDIR)/ResolumeClipCommand_489cbb6c.o \
-  $(JUCE_OBJDIR)/ResolumeColumnCommand_9e9ac4a6.o \
   $(JUCE_OBJDIR)/ResolumeFXCommand_925c67ca.o \
   $(JUCE_OBJDIR)/ResolumeModule_fbff7545.o \
   $(JUCE_OBJDIR)/OSCModule_ae2b3a2c.o \
@@ -1088,11 +1087,6 @@ $(JUCE_OBJDIR)/ResolumeBaseCommand_36b5cd4b.o: ../../Source/ResolumeBaseCommand.
 $(JUCE_OBJDIR)/ResolumeClipCommand_489cbb6c.o: ../../Source/ResolumeClipCommand.cpp
 	-@mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling ResolumeClipCommand.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/ResolumeColumnCommand_9e9ac4a6.o: ../../Source/ResolumeColumnCommand.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling ResolumeColumnCommand.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/ResolumeFXCommand_925c67ca.o: ../../Source/ResolumeFXCommand.cpp

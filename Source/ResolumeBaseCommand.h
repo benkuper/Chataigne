@@ -21,7 +21,7 @@ public:
 	ResolumeBaseCommand(ResolumeModule * _module, CommandContext context, var params);
 	virtual ~ResolumeBaseCommand();
 
-	enum Level {COMPOSITION,LAYER,CLIP};
+	enum Level {COMPOSITION,LAYER,CLIP,COLUMN};
 
 	ResolumeModule * resolumeModule;
 	
@@ -32,9 +32,9 @@ public:
 
 	String addressSuffix;
 
-	void rebuildAddress();
+	virtual void rebuildAddress();
 
-	void onContainerParameterChanged(Parameter *) override;
+	virtual void onContainerParameterChanged(Parameter *) override;
 
 	InspectableEditor * getEditor(bool isRoot) override;
 

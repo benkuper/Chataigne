@@ -24,22 +24,22 @@ ResolumeBaseCommand::ResolumeBaseCommand(ResolumeModule * _module, CommandContex
 	levelParam->addOption("Composition", COMPOSITION);
 	levelParam->addOption("Layer", LAYER);
 	levelParam->addOption("Clip", CLIP);
-	
+	if (targetLevel == "Column") levelParam->addOption("Column", COLUMN);
+
 	levelParam->hideInEditor = !multiLevelAccess;
 
 	layerParam = addIntParameter("Layer", "The Target layer", 1, 1, 100);
-	clipParam = addIntParameter("Clip", "The Target Clip", 1, 1, 100);
+	String targetClipName = targetLevel == "Column" ? "Column" : "Clip";
+	clipParam = addIntParameter(targetClipName, "The Target "+targetClipName, 1, 1, 100);
 	
 	levelParam->setValueWithKey(targetLevel);
-
 	
+	/*
 	Level level = (Level)(int)levelParam->getValueData(); 
-	DBG("Target level : " << targetLevel << "/ " << level);
-	layerParam->hideInEditor = level == COMPOSITION;
+	layerParam->hideInEditor = level == COMPOSITION || level == COLUMN;
 	clipParam->hideInEditor = level != CLIP;
-
-
 	rebuildAddress();
+	*/
 }
 
 ResolumeBaseCommand::~ResolumeBaseCommand()
@@ -62,7 +62,11 @@ void ResolumeBaseCommand::rebuildAddress()
 	case CLIP:
 		address->setValue("/layer" + layerParam->stringValue() + "/clip" + clipParam->stringValue()+"/"+addressSuffix);
 		break;
+	case COLUMN:
+		address->setValue("/track" + clipParam->stringValue() + "/" + addressSuffix);
+		break;
 	}
+
 }
 
 void ResolumeBaseCommand::onContainerParameterChanged(Parameter * p)
@@ -71,8 +75,8 @@ void ResolumeBaseCommand::onContainerParameterChanged(Parameter * p)
 	{
 		rebuildAddress();
 		Level level = (Level)(int)levelParam->getValueData();
-		layerParam->hideInEditor = level == COMPOSITION; 
-		clipParam->hideInEditor = level != CLIP;
+		layerParam->hideInEditor = level == COMPOSITION || level == COLUMN;
+		clipParam->hideInEditor = level != CLIP && level != COLUMN;
 	}
 }
 
