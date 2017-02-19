@@ -17,10 +17,12 @@ ModuleEditor::ModuleEditor(Module * _module, bool isRoot) :
 {
 	logIncomingUI = module->logIncomingData->createToggle();
 	logOutgoingUI = module->logOutgoingData->createToggle();
+	commandTesterUI = (BaseCommandHandlerEditor *)module->commandTester.getEditor(false);
+	commandTesterUI->chooser.lockedModule = module;
 
 	addAndMakeVisible(logIncomingUI);
 	addAndMakeVisible(logOutgoingUI);
-
+	addAndMakeVisible(commandTesterUI);
 }
 
 ModuleEditor::~ModuleEditor()
@@ -33,6 +35,13 @@ void ModuleEditor::resizedInternalHeader(Rectangle<int>& r)
 	r.removeFromRight(2);
 	logIncomingUI->setBounds(r.removeFromRight(60));
 	r.reduce(5, 0);
+
+}
+
+void ModuleEditor::resizedInternalFooter(Rectangle<int>& r)
+{
+	r.setHeight(commandTesterUI->getHeight());
+	commandTesterUI->setBounds(r);
 
 }
 

@@ -23,6 +23,8 @@ public:
 
 	CommandContext context;
 
+	Module * lockedModule;
+
 	bool commandIsSet;
 	String noTargetText;
 	Label label;

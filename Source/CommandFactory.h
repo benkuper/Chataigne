@@ -13,11 +13,12 @@
 
 
 #include "CommandDefinition.h"
+class Module;
 
 class CommandFactory
 {
 public:
-	static CommandDefinition * showMenuAndGetCommand(CommandContext context);
+	static CommandDefinition * showMenuAndGetCommand(CommandContext context, Module * lockedModule = nullptr);
 };
 
 

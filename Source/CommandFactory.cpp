@@ -12,13 +12,11 @@
 #include "ModuleManager.h"
 
 
-CommandDefinition * CommandFactory::showMenuAndGetCommand(CommandContext context)
+CommandDefinition * CommandFactory::showMenuAndGetCommand(CommandContext context, Module * lockedModule)
 {
-	PopupMenu m = ModuleManager::getInstance()->getAllModulesCommandMenu(context);
+	PopupMenu m = (lockedModule == nullptr) ? ModuleManager::getInstance()->getAllModulesCommandMenu(context) : lockedModule->defManager.getCommandMenu(0, context);
 	int result = m.show();
-	if (result > 0) return ModuleManager::getInstance()->getCommandDefinitionForItemID(result);
+	if (result > 0) return ModuleManager::getInstance()->getCommandDefinitionForItemID(result,lockedModule);
 
 	return nullptr;
 }
-
- 

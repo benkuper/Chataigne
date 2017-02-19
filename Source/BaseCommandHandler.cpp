@@ -14,6 +14,8 @@
 #include "Engine.h"
 #include "BaseCommandHandlerEditor.h"
 
+
+
 BaseCommandHandler::BaseCommandHandler(const String & name, CommandContext _context) :
 	BaseItem(name),
 	context(_context)

@@ -53,8 +53,8 @@ void BaseItemEditor::paint(Graphics & g)
 
 void BaseItemEditor::resized()
 {
-	Rectangle<int> r = getLocalBounds().withHeight((int)headerHeight);
-	Rectangle<int> hr = r.reduced(2);
+	Rectangle<int> r = getLocalBounds().withHeight((int)headerHeight).reduced(2);
+	Rectangle<int> hr = Rectangle<int>(r);
 
 	if (item->canBeDisabled)
 	{
@@ -68,13 +68,15 @@ void BaseItemEditor::resized()
 	resizedInternalHeader(hr);
 	nameUI->setBounds(hr);
 
-	r.translate(0, hr.getBottom() + 5);
+	r.translate(0, r.getBottom() + 2);
 	r.setHeight(0); //if no override, ensure bottom is set
-	r.reduce(2, 0);
 	resizedInternalContent(r);
-	setBounds(getLocalBounds().withBottom(r.getBottom()+2));
 
-	
+	r.setY(r.getBottom() + 2);
+	r.setHeight(0); //if no override, ensure bottom is set
+	resizedInternalFooter(r);
+
+	setBounds(getLocalBounds().withBottom(r.getBottom()));
 }
 
 

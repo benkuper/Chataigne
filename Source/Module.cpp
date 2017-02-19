@@ -14,7 +14,8 @@
 
 Module::Module(const String &name) :
 	BaseItem(name),
-	valuesCC("Values")
+	valuesCC("Values"),
+	commandTester("Command Tester",CommandContext::ACTION)
 {
 	canInspectChildContainers = true;
 

@@ -21,7 +21,7 @@ public:
 	virtual ~Consequence();
 
 
-	InspectableEditor * getEditor(bool isRoot) override;
+	//InspectableEditor * getEditor(bool isRoot) override;
 
 	class ConsequenceListener
 	{

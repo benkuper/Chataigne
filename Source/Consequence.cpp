@@ -20,10 +20,12 @@ Consequence::Consequence() :
 
 Consequence::~Consequence()
 {
+
 }
 
-
+/*
 InspectableEditor * Consequence::getEditor(bool isRoot)
 {
 	return new ConsequenceEditor(this, isRoot);
 }
+*/

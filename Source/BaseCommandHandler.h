@@ -11,10 +11,8 @@
 #ifndef BASECOMMANDHANDLER_H_INCLUDED
 #define BASECOMMANDHANDLER_H_INCLUDED
 
-
-
 #include "BaseItem.h"
-#include "ModuleManager.h"
+#include "CommandDefinition.h"
 class BaseCommand;
 
 class BaseCommandHandler :
@@ -36,7 +34,6 @@ public:
 	void loadJSONDataInternal(var data) override;
 
 	InspectableEditor * getEditor(bool isRoot) override;
-
 
 	void onContainerTriggerTriggered(Trigger *) override;
 

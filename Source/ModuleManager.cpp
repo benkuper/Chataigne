@@ -67,10 +67,16 @@ PopupMenu ModuleManager::getAllModulesCommandMenu(CommandContext context)
 }
 
 
-CommandDefinition * ModuleManager::getCommandDefinitionForItemID(int itemID)
+CommandDefinition * ModuleManager::getCommandDefinitionForItemID(int itemID, Module * lockedModule)
 {
 	if (itemID <= 0) return nullptr;
-	int moduleIndex = (int)floor(itemID / 1000);
+	Module * m = lockedModule;
+	if (m == nullptr)
+	{
+		int moduleIndex = (int)floor(itemID / 1000);
+		m = items[moduleIndex];
+	}
+	
 	int commandIndex = itemID % 1000 - 1;
-	return items[moduleIndex]->defManager.definitions[commandIndex];
+	return m->defManager.definitions[commandIndex];
 }

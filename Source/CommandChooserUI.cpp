@@ -16,6 +16,7 @@
 CommandChooserUI::CommandChooserUI(CommandContext _context) :
 	noTargetText("[Click to select a command]"),
 	commandIsSet(false),
+	lockedModule(nullptr),
 	context(_context)
 {
 	setInterceptsMouseClicks(true, true);
@@ -68,7 +69,7 @@ void CommandChooserUI::setLabel(const String & text)
 
 void CommandChooserUI::showPopupAndGetDefinition()
 {
-	CommandDefinition * d = CommandFactory::showMenuAndGetCommand(context);
+	CommandDefinition * d = CommandFactory::showMenuAndGetCommand(context,lockedModule);
 	if (d != nullptr) chooserListeners.call(&Listener::definitionChosen, d);
 }
 

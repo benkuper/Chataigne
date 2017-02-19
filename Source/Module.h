@@ -13,6 +13,7 @@
 
 
 #include "BaseItem.h"
+#include "BaseCommandHandler.h"
 #include "CommandDefinitionManager.h"
 
 class CommandDefinition;
@@ -30,11 +31,13 @@ public:
 	Trigger * inActivityTrigger;
 	Trigger * outActivityTrigger;
 
-	ControllableContainer valuesCC;
-	Array<WeakReference<Controllable>> getValueControllables();
-
 	CommandDefinitionManager defManager;
-
+	ControllableContainer valuesCC;
+	
+	BaseCommandHandler commandTester;
+	
+	Array<WeakReference<Controllable>> getValueControllables();
+	
 	virtual var getJSONData() override;
 
 	virtual String getTypeString() const { jassert(false); return ""; } //should be overriden

@@ -9,6 +9,7 @@
 */
 
 #include "OSCModule.h"
+#include "OSCModuleBaseEditor.h"
 
 OSCModule::OSCModule(const String & name) :
 	Module(name)
@@ -121,4 +122,9 @@ void OSCModule::oscMessageReceived(const OSCMessage & message)
 {
 	if (!enabled->boolValue()) return;
 	processMessage(message);
+}
+
+InspectableEditor * OSCModule::getEditor(bool isRoot)
+{
+	return new OSCModuleBaseEditor(this,isRoot);
 }

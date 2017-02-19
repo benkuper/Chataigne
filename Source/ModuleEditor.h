@@ -14,6 +14,7 @@
 #include "BaseItemEditor.h"
 #include "Module.h"
 #include "BoolToggleUI.h"
+#include "BaseCommandHandlerEditor.h"
 
 class ModuleEditor :
 	public BaseItemEditor
@@ -26,11 +27,11 @@ public:
 
 	ScopedPointer<BoolToggleUI> logIncomingUI;
 	ScopedPointer<BoolToggleUI> logOutgoingUI;
+	ScopedPointer<BaseCommandHandlerEditor> commandTesterUI;
 
 	void resizedInternalHeader(Rectangle<int> &r) override; 
-
-	virtual void resizedInternal(Rectangle<int> &) { }
-
+	void resizedInternalFooter(Rectangle<int> &r) override;
+	
 	void controllableFeedbackAsyncUpdate(Controllable * c) override;
 	
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ModuleEditor)

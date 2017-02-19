@@ -39,6 +39,7 @@ public:
 	virtual void resized() override;
 	virtual void resizedInternalHeader(Rectangle<int> &) {}
 	virtual void resizedInternalContent(Rectangle<int> &) {}
+	virtual void resizedInternalFooter(Rectangle<int> &) {}
 
 	void newMessage(const ContainerAsyncEvent &e) override;
 	virtual void controllableFeedbackAsyncUpdate(Controllable *);

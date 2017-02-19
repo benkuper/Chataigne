@@ -31,7 +31,7 @@ public:
 		
 	//Command menu
 	PopupMenu getAllModulesCommandMenu(CommandContext context);
-	CommandDefinition * getCommandDefinitionForItemID(int itemID);
+	CommandDefinition * getCommandDefinitionForItemID(int itemID, Module * lockedModule);
 
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ModuleManager)
