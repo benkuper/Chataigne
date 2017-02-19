@@ -11,8 +11,23 @@
 #ifndef RESOLUMECLIPCOMMAND_H_INCLUDED
 #define RESOLUMECLIPCOMMAND_H_INCLUDED
 
+#include "ResolumeBaseCommand.h"
 
+class ResolumeClipCommand :
+	public ResolumeBaseCommand
+{
+public:
+	ResolumeClipCommand(ResolumeModule * _module, CommandContext context, var params);
+	~ResolumeClipCommand();
 
+	IntParameter * connectParam;
+
+	static BaseCommand * create(ControllableContainer * module, CommandContext context, var params) { 
+		params.getDynamicObject()->setProperty("multiLevel", false);
+		return new ResolumeClipCommand((ResolumeModule *)module, context, params); 
+	}
+
+};
 
 
 #endif  // RESOLUMECLIPCOMMAND_H_INCLUDED

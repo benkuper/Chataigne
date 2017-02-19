@@ -1,18 +1,18 @@
 /*
   ==============================================================================
 
-    OSCCommandEditor.h
-    Created: 26 Jan 2017 3:13:41pm
+    ResolumeFXCommand.h
+    Created: 19 Feb 2017 1:42:30pm
     Author:  Ben
 
   ==============================================================================
 */
 
-#ifndef OSCCOMMANDEDITOR_H_INCLUDED
-#define OSCCOMMANDEDITOR_H_INCLUDED
+#ifndef RESOLUMEFXCOMMAND_H_INCLUDED
+#define RESOLUMEFXCOMMAND_H_INCLUDED
 
 
 
 
 
-#endif  // OSCCOMMANDEDITOR_H_INCLUDED
+#endif  // RESOLUMEFXCOMMAND_H_INCLUDED

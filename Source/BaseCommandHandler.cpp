@@ -30,9 +30,10 @@ BaseCommandHandler::~BaseCommandHandler()
 
 void BaseCommandHandler::setCommand(CommandDefinition * commandDef)
 {
+	//var oldData = var();
 	if (command != nullptr)
 	{
-
+		//oldData = command->getJSONData();
 	}
 
 	commandDefinition = commandDef;
@@ -42,7 +43,7 @@ void BaseCommandHandler::setCommand(CommandDefinition * commandDef)
 
 	if (command != nullptr)
 	{
-
+		//command->loadJSONData(oldData); //keep as much as similar parameter possible
 	}
 
 	commandHandlerListeners.call(&CommandHandlerListener::commandChanged, this);

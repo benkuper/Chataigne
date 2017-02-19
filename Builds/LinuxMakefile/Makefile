@@ -132,6 +132,7 @@ OBJECTS := \
   $(JUCE_OBJDIR)/Consequence_78c99824.o \
   $(JUCE_OBJDIR)/ConsequenceManager_ed222b73.o \
   $(JUCE_OBJDIR)/BoolComparators_278bc7f4.o \
+  $(JUCE_OBJDIR)/EnumComparator_f40f08c0.o \
   $(JUCE_OBJDIR)/NumberComparators_7676c2b5.o \
   $(JUCE_OBJDIR)/Point2DComparators_1426d924.o \
   $(JUCE_OBJDIR)/Point3DComparators_64d0b725.o \
@@ -197,7 +198,6 @@ OBJECTS := \
   $(JUCE_OBJDIR)/ReaperTimeCommandUI_93c58e24.o \
   $(JUCE_OBJDIR)/ReaperTimeCommand_829de850.o \
   $(JUCE_OBJDIR)/ReaperModule_fdf36c24.o \
-  $(JUCE_OBJDIR)/OSCCommandEditor_ac7535e2.o \
   $(JUCE_OBJDIR)/OSCCommand_a034ed5.o \
   $(JUCE_OBJDIR)/OSCModuleBaseEditor_2fc4522a.o \
   $(JUCE_OBJDIR)/OSCModuleUI_1145d900.o \
@@ -212,9 +212,11 @@ OBJECTS := \
   $(JUCE_OBJDIR)/CustomOSCCommandEditor_54d2a3f3.o \
   $(JUCE_OBJDIR)/CustomOSCCommand_684cdda6.o \
   $(JUCE_OBJDIR)/CustomOSCModule_c9fc0d3b.o \
+  $(JUCE_OBJDIR)/ResolumeBaseCommandEditor_bef083d8.o \
+  $(JUCE_OBJDIR)/ResolumeBaseCommand_36b5cd4b.o \
   $(JUCE_OBJDIR)/ResolumeClipCommand_489cbb6c.o \
-  $(JUCE_OBJDIR)/ResolumeCompositionCommand_ea1ce09a.o \
-  $(JUCE_OBJDIR)/ResolumeLayerCommand_b8990193.o \
+  $(JUCE_OBJDIR)/ResolumeColumnCommand_9e9ac4a6.o \
+  $(JUCE_OBJDIR)/ResolumeFXCommand_925c67ca.o \
   $(JUCE_OBJDIR)/ResolumeModule_fbff7545.o \
   $(JUCE_OBJDIR)/OSCModule_ae2b3a2c.o \
   $(JUCE_OBJDIR)/ModuleCommand_8819a720.o \
@@ -673,6 +675,11 @@ $(JUCE_OBJDIR)/BoolComparators_278bc7f4.o: ../../Source/BoolComparators.cpp
 	@echo "Compiling BoolComparators.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
 
+$(JUCE_OBJDIR)/EnumComparator_f40f08c0.o: ../../Source/EnumComparator.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling EnumComparator.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
 $(JUCE_OBJDIR)/NumberComparators_7676c2b5.o: ../../Source/NumberComparators.cpp
 	-@mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling NumberComparators.cpp"
@@ -998,11 +1005,6 @@ $(JUCE_OBJDIR)/ReaperModule_fdf36c24.o: ../../Source/ReaperModule.cpp
 	@echo "Compiling ReaperModule.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
 
-$(JUCE_OBJDIR)/OSCCommandEditor_ac7535e2.o: ../../Source/OSCCommandEditor.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling OSCCommandEditor.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
 $(JUCE_OBJDIR)/OSCCommand_a034ed5.o: ../../Source/OSCCommand.cpp
 	-@mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling OSCCommand.cpp"
@@ -1073,19 +1075,29 @@ $(JUCE_OBJDIR)/CustomOSCModule_c9fc0d3b.o: ../../Source/CustomOSCModule.cpp
 	@echo "Compiling CustomOSCModule.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
 
+$(JUCE_OBJDIR)/ResolumeBaseCommandEditor_bef083d8.o: ../../Source/ResolumeBaseCommandEditor.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling ResolumeBaseCommandEditor.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/ResolumeBaseCommand_36b5cd4b.o: ../../Source/ResolumeBaseCommand.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling ResolumeBaseCommand.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
 $(JUCE_OBJDIR)/ResolumeClipCommand_489cbb6c.o: ../../Source/ResolumeClipCommand.cpp
 	-@mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling ResolumeClipCommand.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
 
-$(JUCE_OBJDIR)/ResolumeCompositionCommand_ea1ce09a.o: ../../Source/ResolumeCompositionCommand.cpp
+$(JUCE_OBJDIR)/ResolumeColumnCommand_9e9ac4a6.o: ../../Source/ResolumeColumnCommand.cpp
 	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling ResolumeCompositionCommand.cpp"
+	@echo "Compiling ResolumeColumnCommand.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
 
-$(JUCE_OBJDIR)/ResolumeLayerCommand_b8990193.o: ../../Source/ResolumeLayerCommand.cpp
+$(JUCE_OBJDIR)/ResolumeFXCommand_925c67ca.o: ../../Source/ResolumeFXCommand.cpp
 	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling ResolumeLayerCommand.cpp"
+	@echo "Compiling ResolumeFXCommand.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/ResolumeModule_fbff7545.o: ../../Source/ResolumeModule.cpp

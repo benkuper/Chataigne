@@ -157,6 +157,10 @@ void GenericControllableContainerEditor::newMessage(const ContainerAsyncEvent & 
 		//resized();
 		break;
 
+	case ContainerAsyncEvent::ControllableFeedbackUpdate:
+		controllableFeedbackUpdate(p.targetControllable);
+		break;
+
     default:
     //not handled
     break;

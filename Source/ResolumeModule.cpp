@@ -9,11 +9,12 @@
 */
 
 #include "ResolumeModule.h"
-#include "OSCCommand.h"
+#include "ResolumeClipCommand.h"
+#include "ResolumeBaseCommand.h"
 #include "CommandFactory.h"
 
 ResolumeModule::ResolumeModule() :
-	OSCModule("Resolume")
+	OSCModule("Resolume",7001,7000)
 {	
 /*
 	"Composition"
@@ -39,5 +40,8 @@ ResolumeModule::ResolumeModule() :
 		"Audio Volume"
 		"Audio Parameter"
 */
-	defManager.add(CommandDefinition::createDef(this, "Composition", "Stop Composition", &OSCCommand::create, CommandContext::ACTION)->addParam("address", "/composition/stop"));	
+	defManager.add(CommandDefinition::createDef(this, "Composition", "Stop Composition", &OSCCommand::create, CommandContext::ACTION)->addParam("level","Composition")->addParam("suffix","stop"));	
+	defManager.add(CommandDefinition::createDef(this, "Clip & Layer", "Launch Clip", &ResolumeClipCommand::create, CommandContext::ACTION)->addParam("level", "Clip")->addParam("suffix","connect"));
+	defManager.add(CommandDefinition::createDef(this, "Clip & Layer", "Stop Layer", &ResolumeClipCommand::create, CommandContext::ACTION)->addParam("level", "Layer")->addParam("suffix","clear"));
+
 }

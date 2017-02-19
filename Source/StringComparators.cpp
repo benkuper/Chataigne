@@ -15,13 +15,13 @@ StringComparator::StringComparator(Controllable * c) :
 	ParameterComparator(c),
 	stringParam((StringParameter *)c)
 {
+	stringRef = addStringParameter("Reference", "Comparison Reference to check against source value", stringParam->defaultValue);
+	reference = stringRef;
+
 	addCompareOption("=", equalsId);
 	addCompareOption("Contains", containsId);
 	addCompareOption("Starts with", startsWith);
 	addCompareOption("Ends with", endsWidth);
-
-	stringRef = addStringParameter("Reference", "Comparison Reference to check against source value", stringParam->defaultValue);
-	reference = stringRef;
 }
 
 StringComparator::~StringComparator()

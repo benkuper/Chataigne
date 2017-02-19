@@ -34,7 +34,6 @@ public:
 
 	OwnedArray<InspectableEditor> childEditors;
 
-
 	void resetAndBuild();
 
 	void paint(Graphics &g) override;
@@ -50,6 +49,8 @@ public:
 	InspectableEditor * getEditorForInspectable(Inspectable * i);
 	
 	void newMessage(const ContainerAsyncEvent & p) override;
+
+	virtual void controllableFeedbackUpdate(Controllable *) {};
 
 	void childBoundsChanged(Component *);
 };

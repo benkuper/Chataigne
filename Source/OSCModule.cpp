@@ -11,12 +11,12 @@
 #include "OSCModule.h"
 #include "OSCModuleBaseEditor.h"
 
-OSCModule::OSCModule(const String & name) :
+OSCModule::OSCModule(const String & name, int defaultLocalPort, int defaultRemotePort) :
 	Module(name)
 {
 	//Receive
 
-	localPort = addIntParameter("Local Port", "Local Port to bind to receive OSC Messages", 12000, 1024, 65535);
+	localPort = addIntParameter("Local Port", "Local Port to bind to receive OSC Messages", defaultLocalPort, 1024, 65535);
 	localPort->hideInOutliner = true;
 	localPort->isTargettable = false;
 
@@ -34,7 +34,7 @@ OSCModule::OSCModule(const String & name) :
 
 	useLocal = addBoolParameter("Local", "Send to Local IP (127.0.0.1). Allow to quickly switch between local and remote IP.", true);
 	remoteHost = addStringParameter("Remote Host", "Remote Host to send to.", "127.0.0.1");
-	remotePort = addIntParameter("Remote port", "Port on which the remote host is listening to", 9000, 1024, 65535);
+	remotePort = addIntParameter("Remote port", "Port on which the remote host is listening to", defaultRemotePort, 1024, 65535);
 
 	setupSender();
 }

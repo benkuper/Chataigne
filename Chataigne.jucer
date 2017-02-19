@@ -311,6 +311,10 @@
                         file="Source/BoolComparators.cpp"/>
                   <FILE id="PVA8zS" name="BoolComparators.h" compile="0" resource="0"
                         file="Source/BoolComparators.h"/>
+                  <FILE id="kFVlIa" name="EnumComparator.cpp" compile="1" resource="0"
+                        file="Source/EnumComparator.cpp"/>
+                  <FILE id="ATu15T" name="EnumComparator.h" compile="0" resource="0"
+                        file="Source/EnumComparator.h"/>
                   <FILE id="Bbocbf" name="NumberComparators.cpp" compile="1" resource="0"
                         file="Source/NumberComparators.cpp"/>
                   <FILE id="yqjWhs" name="NumberComparators.h" compile="0" resource="0"
@@ -571,12 +575,7 @@
                 <FILE id="R55PNW" name="ReaperModule.h" compile="0" resource="0" file="Source/ReaperModule.h"/>
               </GROUP>
               <GROUP id="{EF0BB1F4-C5D3-E71D-7AF4-34115A3BAA40}" name="commands">
-                <GROUP id="{2C9C250C-4A0D-1575-1B6D-23E70F14F239}" name="ui">
-                  <FILE id="q8DlBM" name="OSCCommandEditor.cpp" compile="1" resource="0"
-                        file="Source/OSCCommandEditor.cpp"/>
-                  <FILE id="wLAJry" name="OSCCommandEditor.h" compile="0" resource="0"
-                        file="Source/OSCCommandEditor.h"/>
-                </GROUP>
+                <GROUP id="{2C9C250C-4A0D-1575-1B6D-23E70F14F239}" name="ui"/>
                 <FILE id="cNQ6Ia" name="OSCCommand.cpp" compile="1" resource="0" file="Source/OSCCommand.cpp"/>
                 <FILE id="F1p8Ca" name="OSCCommand.h" compile="0" resource="0" file="Source/OSCCommand.h"/>
               </GROUP>
@@ -650,18 +649,28 @@
               </GROUP>
               <GROUP id="{BF093733-18A9-3232-92C5-8EF7D8E70785}" name="resolume">
                 <GROUP id="{DF8332B1-E904-037C-CFF6-826235CCF3E7}" name="commands">
+                  <GROUP id="{F03902D2-C5EC-4D94-E73B-E18E5AF2CDED}" name="ui">
+                    <FILE id="Kn9jS2" name="ResolumeBaseCommandEditor.cpp" compile="1"
+                          resource="0" file="Source/ResolumeBaseCommandEditor.cpp"/>
+                    <FILE id="lAi3Pz" name="ResolumeBaseCommandEditor.h" compile="0" resource="0"
+                          file="Source/ResolumeBaseCommandEditor.h"/>
+                  </GROUP>
+                  <FILE id="IEv8Ng" name="ResolumeBaseCommand.cpp" compile="1" resource="0"
+                        file="Source/ResolumeBaseCommand.cpp"/>
+                  <FILE id="PsmsHh" name="ResolumeBaseCommand.h" compile="0" resource="0"
+                        file="Source/ResolumeBaseCommand.h"/>
                   <FILE id="BJA4v0" name="ResolumeClipCommand.cpp" compile="1" resource="0"
                         file="Source/ResolumeClipCommand.cpp"/>
                   <FILE id="zvqTkB" name="ResolumeClipCommand.h" compile="0" resource="0"
                         file="Source/ResolumeClipCommand.h"/>
-                  <FILE id="tinSTu" name="ResolumeCompositionCommand.cpp" compile="1"
-                        resource="0" file="Source/ResolumeCompositionCommand.cpp"/>
-                  <FILE id="E4bt0a" name="ResolumeCompositionCommand.h" compile="0" resource="0"
-                        file="Source/ResolumeCompositionCommand.h"/>
-                  <FILE id="yQWzTb" name="ResolumeLayerCommand.cpp" compile="1" resource="0"
-                        file="Source/ResolumeLayerCommand.cpp"/>
-                  <FILE id="pQAfUn" name="ResolumeLayerCommand.h" compile="0" resource="0"
-                        file="Source/ResolumeLayerCommand.h"/>
+                  <FILE id="aJZkEV" name="ResolumeColumnCommand.cpp" compile="1" resource="0"
+                        file="Source/ResolumeColumnCommand.cpp"/>
+                  <FILE id="PhSf0Z" name="ResolumeColumnCommand.h" compile="0" resource="0"
+                        file="Source/ResolumeColumnCommand.h"/>
+                  <FILE id="Qj5PPz" name="ResolumeFXCommand.cpp" compile="1" resource="0"
+                        file="Source/ResolumeFXCommand.cpp"/>
+                  <FILE id="Rrtsns" name="ResolumeFXCommand.h" compile="0" resource="0"
+                        file="Source/ResolumeFXCommand.h"/>
                 </GROUP>
                 <FILE id="aQARef" name="ResolumeModule.cpp" compile="1" resource="0"
                       file="Source/ResolumeModule.cpp"/>

@@ -1,11 +1,11 @@
 /*
   ==============================================================================
 
-    ResolumeLayerCommand.cpp
-    Created: 3 Nov 2016 12:34:15pm
-    Author:  bkupe
+    ResolumeColumnCommand.cpp
+    Created: 19 Feb 2017 1:41:41pm
+    Author:  Ben
 
   ==============================================================================
 */
 
-#include "ResolumeLayerCommand.h"
+#include "ResolumeColumnCommand.h"

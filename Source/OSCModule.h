@@ -19,7 +19,7 @@ class OSCModule :
 	public OSCReceiver::Listener<OSCReceiver::RealtimeCallback>
 { 
 public:
-	OSCModule(const String &name = "OSC Module");
+	OSCModule(const String &name = "OSC Module", int defaultLocalPort = 12000, int defaultRemotePort = 9000);
 	~OSCModule() {}
 
 	//RECEIVE

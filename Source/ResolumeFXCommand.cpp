@@ -1,11 +1,11 @@
 /*
   ==============================================================================
 
-    OSCCommandEditor.cpp
-    Created: 26 Jan 2017 3:13:41pm
+    ResolumeFXCommand.cpp
+    Created: 19 Feb 2017 1:42:30pm
     Author:  Ben
 
   ==============================================================================
 */
 
-#include "OSCCommandEditor.h"
+#include "ResolumeFXCommand.h"

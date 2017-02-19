@@ -15,6 +15,7 @@
 #include "BoolComparators.h"
 #include "NumberComparators.h"
 #include "StringComparators.h"
+#include "EnumComparator.h"
 #include "Point2DComparators.h"
 #include "Point3DComparators.h"
 
@@ -43,6 +44,10 @@ public:
 
 		case Controllable::STRING:
 			return new StringComparator(c);
+			break;
+
+		case Controllable::ENUM:
+			return new EnumComparator(c);
 			break;
 
 		case Controllable::POINT2D:
