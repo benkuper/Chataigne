@@ -10,6 +10,8 @@
 
 #include "ModuleManager.h"
 #include "ModuleFactory.h"
+#include "StateManager.h"
+#include "SequenceManager.h"
 
 juce_ImplementSingleton(ModuleManager)
 
@@ -63,6 +65,8 @@ PopupMenu ModuleManager::getAllModulesCommandMenu(CommandContext context)
 {
 	PopupMenu menu;
 	for (int i = 0; i < items.size(); i++) menu.addSubMenu(items[i]->niceName, items[i]->defManager.getCommandMenu(i * 1000,context));
+	menu.addSubMenu(StateManager::getInstance()->module.niceName, StateManager::getInstance()->module.defManager.getCommandMenu(2000, context));
+	menu.addSubMenu(SequenceManager::getInstance()->module.niceName, SequenceManager::getInstance()->module.defManager.getCommandMenu(3000, context));
 	return menu;
 }
 
@@ -71,12 +75,18 @@ CommandDefinition * ModuleManager::getCommandDefinitionForItemID(int itemID, Mod
 {
 	if (itemID <= 0) return nullptr;
 	Module * m = lockedModule;
-	if (m == nullptr)
+
+	if (itemID > 3000) m = &SequenceManager::getInstance()->module;
+	else if (itemID > 2000) m = &StateManager::getInstance()->module;
+
+	else if (m == nullptr)
 	{
 		int moduleIndex = (int)floor(itemID / 1000);
 		m = items[moduleIndex];
 	}
 	
+	if (m == nullptr) return nullptr;
+
 	int commandIndex = itemID % 1000 - 1;
 	return m->defManager.definitions[commandIndex];
 }

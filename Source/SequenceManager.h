@@ -14,6 +14,9 @@
 
 #include "BaseManager.h"
 #include "Sequence.h"
+#include "SequenceModule.h"
+
+class SequenceLayer;
 
 class SequenceManager :
 	public BaseManager<Sequence>
@@ -23,6 +26,14 @@ public:
 
 	SequenceManager();
 	~SequenceManager();
+
+	SequenceModule module;
+
+
+	PopupMenu getAllSequencesMenu();
+	Sequence * getSequenceForItemID(int itemID);
+	PopupMenu getAllLayersMenu();
+	SequenceLayer * getLayerForItemID(int itemID);
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(SequenceManager)
 };

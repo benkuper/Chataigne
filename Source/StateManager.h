@@ -14,6 +14,7 @@
 #include "BaseManager.h"
 #include "State.h"
 #include "StateTransitionManager.h"
+#include "StateModule.h"
 
 class StateManager :
 	public BaseManager<State>,
@@ -25,6 +26,8 @@ public:
 	StateManager();
 	~StateManager();
 
+	StateModule module;
+
 	StateTransitionManager stm;
 
 	WeakReference<State> activeState;
@@ -35,6 +38,14 @@ public:
 	void removeItemInternal(State * s) override;
 
 	void stateActivationChanged(State * s) override;
+
+	PopupMenu getAllStatesMenu();
+	State * getStateForItemID(int itemID);
+	PopupMenu getAllActionsMenu();
+	Action * getActionForItemID(int itemID);
+	PopupMenu getAllMappingsMenu();
+	Mapping * getMappingForItemID(int itemID);
+
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;

@@ -506,12 +506,12 @@ Controllable * ControllableContainer::getControllableForAddress(StringArray addr
     //no found in direct children controllables, maybe in a skip container ?
     for (auto &cc : controllableContainers)
     {
-      if (cc->skipControllableNameInAddress)
-      {
-        Controllable * tc = cc->getControllableByName(addressSplit[0]);  //get not exposed here here ?
-
-        if (tc != nullptr) return tc;
-      }
+		if (cc.wasObjectDeleted()) continue;
+		  if (cc->skipControllableNameInAddress)
+		  {
+			Controllable * tc = cc->getControllableByName(addressSplit[0]);  //get not exposed here here
+			if (tc != nullptr) return tc;
+		  }
     }
   }
   else  //if recursive here ?

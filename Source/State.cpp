@@ -46,7 +46,7 @@ State::~State()
 }
 
 
-void State::onContainerParameterChanged(Parameter *p)
+void State::onContainerParameterChangedInternal(Parameter *p)
 {
 	if (p == active)
 	{

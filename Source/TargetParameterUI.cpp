@@ -41,7 +41,7 @@ TargetParameterUI::~TargetParameterUI()
 void TargetParameterUI::paint(Graphics & g)
 {
 	
-	Colour c = targetParameter->target != nullptr ? GREEN_COLOR : NORMAL_COLOR;
+	Colour c = targetParameter->target != nullptr || targetParameter->targetContainer != nullptr?GREEN_COLOR : NORMAL_COLOR;
 	if (isMouseOver()) c = c.brighter();
 
 	g.setGradientFill(ColourGradient(c.brighter(), (float)getLocalBounds().getCentreX(), (float)getLocalBounds().getCentreY(), c.darker(), 2.f, 2.f, true));

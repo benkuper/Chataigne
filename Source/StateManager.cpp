@@ -15,7 +15,8 @@ juce_ImplementSingleton(StateManager)
 StateManager::StateManager() :
 	BaseManager<State>("States"),
 	activeState(nullptr),
-	stm(this)
+	stm(this),
+	module(this)
 {
 	isSelectable = true;
 	addChildControllableContainer(&stm);
@@ -64,6 +65,74 @@ void StateManager::stateActivationChanged(State * s)
 {
 	if (s->permanent->boolValue()) return; //don't care of permanent in state logic.
 	if (s->active->boolValue()) setActiveState(s);
+}
+
+PopupMenu StateManager::getAllStatesMenu()
+{
+	PopupMenu menu;
+	for (int i = 0; i < items.size(); i++)
+	{
+		menu.addItem(1+i,items[i]->niceName);
+	}
+
+	return menu;
+}
+
+State * StateManager::getStateForItemID(int itemID)
+{
+	return items[itemID-1];
+}
+
+PopupMenu StateManager::getAllActionsMenu()
+{
+	PopupMenu menu;
+	for (int i = 0; i < items.size(); i++)
+	{
+		PopupMenu sMenu;
+		int numValues = items[i]->am.items.size();
+		for (int j = 0; j < numValues; j++)
+		{
+			Action * c = items[i]->am.items[j];
+			sMenu.addItem(i * 1000 + j + 1, c->niceName);
+		}
+		menu.addSubMenu(items[i]->niceName, sMenu);
+	}
+
+	return menu;
+}
+
+Action * StateManager::getActionForItemID(int itemID)
+{
+	if (itemID <= 0) return nullptr;
+	int moduleIndex = (int)floor((itemID - 1) / 1000);
+	int valueIndex = (itemID - 1) % 1000;
+	return items[moduleIndex]->am.items[valueIndex];
+}
+
+PopupMenu StateManager::getAllMappingsMenu()
+{
+	PopupMenu menu;
+	for (int i = 0; i < items.size(); i++)
+	{
+		PopupMenu sMenu;
+		int numValues = items[i]->mm.items.size();
+		for (int j = 0; j < numValues; j++)
+		{
+			Mapping * c = items[i]->mm.items[j];
+			sMenu.addItem(i * 1000 + j + 1, c->niceName);
+		}
+		menu.addSubMenu(items[i]->niceName, sMenu);
+	}
+
+	return menu;
+}
+
+Mapping * StateManager::getMappingForItemID(int itemID)
+{
+	if (itemID <= 0) return nullptr;
+	int moduleIndex = (int)floor((itemID - 1) / 1000);
+	int valueIndex = (itemID - 1) % 1000;
+	return items[moduleIndex]->mm.items[valueIndex];
 }
 
 var StateManager::getJSONData()

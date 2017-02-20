@@ -169,6 +169,14 @@ OBJECTS := \
   $(JUCE_OBJDIR)/MappingUI_56e9fc43.o \
   $(JUCE_OBJDIR)/Mapping_bdf5522f.o \
   $(JUCE_OBJDIR)/MappingManager_a2de1f08.o \
+  $(JUCE_OBJDIR)/StateChooserUI_aa930007.o \
+  $(JUCE_OBJDIR)/StateCommandEditor_9d48d90.o \
+  $(JUCE_OBJDIR)/StateCommand_58f18103.o \
+  $(JUCE_OBJDIR)/StateModule_b0b70a3e.o \
+  $(JUCE_OBJDIR)/SequenceChooserUI_956d18af.o \
+  $(JUCE_OBJDIR)/SequenceCommandEditor_53221238.o \
+  $(JUCE_OBJDIR)/SequenceCommand_f949a3ab.o \
+  $(JUCE_OBJDIR)/SequenceModule_18fbf296.o \
   $(JUCE_OBJDIR)/AudioModuleEditor_42dcabd0.o \
   $(JUCE_OBJDIR)/AudioModule_88fd4f43.o \
   $(JUCE_OBJDIR)/os_mac_efb3b999.o \
@@ -857,6 +865,46 @@ $(JUCE_OBJDIR)/Mapping_bdf5522f.o: ../../Source/Mapping.cpp
 $(JUCE_OBJDIR)/MappingManager_a2de1f08.o: ../../Source/MappingManager.cpp
 	-@mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling MappingManager.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/StateChooserUI_aa930007.o: ../../Source/StateChooserUI.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling StateChooserUI.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/StateCommandEditor_9d48d90.o: ../../Source/StateCommandEditor.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling StateCommandEditor.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/StateCommand_58f18103.o: ../../Source/StateCommand.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling StateCommand.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/StateModule_b0b70a3e.o: ../../Source/StateModule.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling StateModule.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/SequenceChooserUI_956d18af.o: ../../Source/SequenceChooserUI.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling SequenceChooserUI.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/SequenceCommandEditor_53221238.o: ../../Source/SequenceCommandEditor.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling SequenceCommandEditor.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/SequenceCommand_f949a3ab.o: ../../Source/SequenceCommand.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling SequenceCommand.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/SequenceModule_18fbf296.o: ../../Source/SequenceModule.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling SequenceModule.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/AudioModuleEditor_42dcabd0.o: ../../Source/AudioModuleEditor.cpp

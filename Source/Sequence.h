@@ -26,6 +26,7 @@ public:
 	FloatParameter * totalTime;
 	FloatParameter * currentTime;
 	FloatParameter * playSpeed;
+	BoolParameter * loopParam;
 	IntParameter * fps;
 
 	Trigger * playTrigger;

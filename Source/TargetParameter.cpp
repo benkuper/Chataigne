@@ -70,6 +70,7 @@ void TargetParameter::setValueInternal(var & newVal)
 		if (targetType == CONTAINER)
 		{
 			WeakReference<ControllableContainer> cc = rootContainer->getControllableContainerForAddress(newVal.toString());
+			DBG("Target type container : " << (int)(cc != nullptr));
 			if (cc != nullptr) setTarget(cc);
 			else setGhostValue(newVal.toString());
 		} else

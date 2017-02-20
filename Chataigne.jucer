@@ -471,6 +471,47 @@
         </GROUP>
         <GROUP id="{8FC20544-FEBB-B3BA-CF48-50962AA7C07C}" name="Module">
           <GROUP id="{766BCE2E-5C2E-5A80-EC80-7FFA2C7ABBBA}" name="modules">
+            <GROUP id="{25EC4BC8-B1D5-831B-BAF8-3638F8A43FE0}" name="state">
+              <GROUP id="{DFD8ADDE-4CF5-81E1-053C-95E4AFFB8DB6}" name="commands">
+                <GROUP id="{DA08FAED-F59A-CBF2-5E3C-7D673935E41F}" name="ui">
+                  <FILE id="EdmLIz" name="StateChooserUI.cpp" compile="1" resource="0"
+                        file="Source/StateChooserUI.cpp"/>
+                  <FILE id="ISnEGC" name="StateChooserUI.h" compile="0" resource="0"
+                        file="Source/StateChooserUI.h"/>
+                  <FILE id="W2jJA3" name="StateCommandEditor.cpp" compile="1" resource="0"
+                        file="Source/StateCommandEditor.cpp"/>
+                  <FILE id="n2g0oV" name="StateCommandEditor.h" compile="0" resource="0"
+                        file="Source/StateCommandEditor.h"/>
+                </GROUP>
+                <FILE id="JekXIb" name="StateCommand.cpp" compile="1" resource="0"
+                      file="Source/StateCommand.cpp"/>
+                <FILE id="YhD9az" name="StateCommand.h" compile="0" resource="0" file="Source/StateCommand.h"/>
+              </GROUP>
+              <FILE id="gRo1Mj" name="StateModule.cpp" compile="1" resource="0" file="Source/StateModule.cpp"/>
+              <FILE id="MtXI6E" name="StateModule.h" compile="0" resource="0" file="Source/StateModule.h"/>
+            </GROUP>
+            <GROUP id="{F003BF9D-00AD-3722-FCE7-6DDB4FD2ABEB}" name="sequence">
+              <GROUP id="{C1E271B3-AF20-F760-AA32-F92ECD02BBC6}" name="commands">
+                <GROUP id="{389AA24C-98DF-5046-1A23-5C4221266287}" name="ui">
+                  <FILE id="sYAHn6" name="SequenceChooserUI.cpp" compile="1" resource="0"
+                        file="Source/SequenceChooserUI.cpp"/>
+                  <FILE id="Y3xART" name="SequenceChooserUI.h" compile="0" resource="0"
+                        file="Source/SequenceChooserUI.h"/>
+                  <FILE id="ZbJUXz" name="SequenceCommandEditor.cpp" compile="1" resource="0"
+                        file="Source/SequenceCommandEditor.cpp"/>
+                  <FILE id="pEAWap" name="SequenceCommandEditor.h" compile="0" resource="0"
+                        file="Source/SequenceCommandEditor.h"/>
+                </GROUP>
+                <FILE id="K4lJEC" name="SequenceCommand.cpp" compile="1" resource="0"
+                      file="Source/SequenceCommand.cpp"/>
+                <FILE id="zCAIaR" name="SequenceCommand.h" compile="0" resource="0"
+                      file="Source/SequenceCommand.h"/>
+              </GROUP>
+              <FILE id="wApsCe" name="SequenceModule.cpp" compile="1" resource="0"
+                    file="Source/SequenceModule.cpp"/>
+              <FILE id="MZuIK1" name="SequenceModule.h" compile="0" resource="0"
+                    file="Source/SequenceModule.h"/>
+            </GROUP>
             <GROUP id="{5D8075B9-A82A-4F9F-D7BE-2C452ACB19CD}" name="audio">
               <GROUP id="{82F2973E-907D-8772-1FEB-87BD84D1E329}" name="libs">
                 <GROUP id="{B0B28BE4-92BF-F583-B619-DDD6371372BA}" name="pitch">

@@ -11,7 +11,6 @@
 #ifndef OSCMODULE_H_INCLUDED
 #define OSCMODULE_H_INCLUDED
 
-#include "JuceHeader.h"
 #include "Module.h"
 
 class OSCModule :

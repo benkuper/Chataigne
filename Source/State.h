@@ -41,7 +41,7 @@ public:
 	ActionManager am;
 	MappingManager mm;
 
-	void onContainerParameterChanged(Parameter *) override;
+	void onContainerParameterChangedInternal(Parameter *) override;
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
