@@ -32,7 +32,7 @@ BaseItem::BaseItem(const String &name, bool _canBeDisabled, bool _canHaveScripts
 
 	if (canHaveScripts)
 	{
-		scriptManager = new ScriptManager();
+		scriptManager = new ScriptManager(this);
 		addChildControllableContainer(scriptManager);
 	}
 	
@@ -61,6 +61,20 @@ void BaseItem::onContainerParameterChanged(Parameter * p)
 void BaseItem::onContainerNiceNameChanged()
 {
 	nameParam->setValue(niceName);
+}
+
+var BaseItem::getJSONData()
+{
+	var data = ControllableContainer::getJSONData();
+	if (canHaveScripts) data.getDynamicObject()->setProperty("scripts", scriptManager->getJSONData());
+
+	return data; 
+}
+
+void BaseItem::loadJSONDataInternal(var data)
+{
+	ControllableContainer::loadJSONDataInternal(data);
+	if (canHaveScripts) scriptManager->loadJSONData(data.getProperty("scripts",var()));
 }
 
 InspectableEditor * BaseItem::getEditor(bool isRoot)

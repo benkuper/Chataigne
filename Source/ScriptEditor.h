@@ -27,6 +27,9 @@ public:
 	ScopedPointer<ImageButton> fileBT;
 	ScopedPointer<TriggerImageUI> reloadBT;
 	ScopedPointer<ImageButton> editBT;
+	ScopedPointer<BoolToggleUI> logUI;
+
+	Rectangle<int> statusBounds;
 
 	void paint(Graphics &g) override;
 	void resizedInternalHeader(Rectangle<int> &r) override;

@@ -13,16 +13,13 @@
 
 #include "QueuedNotifier.h"
 
-
-
-class CustomLogger : public Logger {
-    public :
-
+class CustomLogger :
+	public Logger
+{
+public :
     juce_DeclareSingleton(CustomLogger, true);
 
-    CustomLogger():notifier(100){
-        addLogListener(&fileWriter);
-    }
+	CustomLogger();
 	
 	~CustomLogger() { if (Logger::getCurrentLogger() == this) Logger::setCurrentLogger(nullptr); }
 
@@ -48,6 +45,9 @@ class CustomLogger : public Logger {
 
     FileWriter fileWriter;
 
+
+	//SCRIPT
+	static var logFromScript(const var::NativeFunctionArgs &args);
 };
 
 

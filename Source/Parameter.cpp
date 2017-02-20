@@ -29,6 +29,9 @@ Parameter::Parameter(const Type &type, const String &niceName, const String &des
     defaultValue = initialValue;
 
     resetValue(true);
+
+	scriptObject.setMethod("get", Parameter::getValueFromScript);
+	scriptObject.setMethod("set", Controllable::setValueFromScript);
 }
 
   void Parameter::resetValue(bool silentSet)
@@ -134,25 +137,12 @@ void Parameter::loadJSONDataInternal(var data)
 	}
 }
 
-/*
-DynamicObject * Parameter::createDynamicObject()
+var Parameter::getValueFromScript(const juce::var::NativeFunctionArgs & a)
 {
-	DynamicObject * dObject = Controllable::createDynamicObject();
-    static const Identifier _jsGetIdentifier("get");
-	dObject->setMethod(_jsGetIdentifier, Parameter::getValue);
-
-    static const Identifier _jsSetIdentifier("set");
-    dObject->setMethod(_jsSetIdentifier, setControllableValue);
-
-	return dObject;
-}
-
-var Parameter::getValue(const juce::var::NativeFunctionArgs & a)
-{
-	Parameter * c = getObjectPtrFromJS<Parameter>(a);
+	Parameter * c = getObjectFromJS<Parameter>(a);
 	if(c == nullptr) return var();
 	return c->value;
 }
-*/
+
 
 //JS Helper

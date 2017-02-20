@@ -10,8 +10,9 @@
 
 #include "ScriptManager.h"
 
-ScriptManager::ScriptManager():
-	BaseManager("Scripts")
+ScriptManager::ScriptManager(ScriptTarget * _parentTarget):
+	BaseManager("Scripts"),
+	parentTarget(_parentTarget)
 {
 	selectItemWhenCreated = false;
 }
@@ -19,4 +20,9 @@ ScriptManager::ScriptManager():
 ScriptManager::~ScriptManager()
 {
 
+}
+
+Script * ScriptManager::createItem()
+{
+	return new Script(parentTarget);
 }

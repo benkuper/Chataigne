@@ -11,15 +11,18 @@
 #include "ScriptEditor.h"
 #include "AssetManager.h"
 #include "TriggerImageUI.h"
+#include "BoolToggleUI.h"
 
 ScriptEditor::ScriptEditor(Script * _script, bool isRoot) :
 	BaseItemEditor(_script,isRoot),
 	script(_script)
 {
-	
+	script->addAsyncScriptListener(this);
+
 	fileBT = AssetManager::getInstance()->getFileBT();
 	reloadBT = script->reload->createImageUI(AssetManager::getInstance()->getReloadImage());
 	editBT = AssetManager::getInstance()->getEditBT();
+	logUI = script->logParam->createToggle();
 
 	fileBT->addListener(this);
 	editBT->addListener(this);
@@ -27,7 +30,7 @@ ScriptEditor::ScriptEditor(Script * _script, bool isRoot) :
 	addAndMakeVisible(fileBT);
 	addAndMakeVisible(reloadBT);
 	addAndMakeVisible(editBT);
-
+	addAndMakeVisible(logUI);
 }
 
 ScriptEditor::~ScriptEditor()
@@ -51,13 +54,16 @@ void ScriptEditor::paint(Graphics & g)
 		c = BG_COLOR.brighter().withAlpha(.4f);
 		break;
 	}
+
 	g.setColour(c);
-	g.fillEllipse(editBT->getBounds().translated(editBT->getWidth() + 2, 0).toFloat());
+	g.fillEllipse(statusBounds.reduced(2).toFloat());
 }
 
 void ScriptEditor::resizedInternalHeader(Rectangle<int>& r)
 {
-	r.removeFromRight(r.getHeight());
+	statusBounds = r.removeFromRight(r.getHeight());
+	r.removeFromRight(2);
+	logUI->setBounds(r.removeFromRight(30));
 	r.removeFromRight(2);
 	editBT->setBounds(r.removeFromRight(r.getHeight()));
 	r.removeFromRight(2);

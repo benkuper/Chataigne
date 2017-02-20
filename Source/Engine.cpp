@@ -23,32 +23,32 @@
 #include "WiimoteManager.h"
 #include "InspectableSelectionManager.h"
 
+
 juce_ImplementSingleton(Engine) 
 
 const char* const filenameSuffix = ".noisette";
 const char* const filenameWildcard = "*.noisette";
 
-Engine::Engine():
-	FileBasedDocument (filenameSuffix,
-                                    filenameWildcard,
-                                    "Load a Noisette",
-                                    "Save a Noisette"),
+Engine::Engine() :
+	FileBasedDocument(filenameSuffix,
+		filenameWildcard,
+		"Load a Noisette",
+		"Save a Noisette"),
 	ControllableContainer("Root")
 {
-  
-  skipControllableNameInAddress = true;
 
-  //to move into engine
-  Logger::setCurrentLogger(CustomLogger::getInstance());
+	skipControllableNameInAddress = true;
 
-  addChildControllableContainer(ModuleManager::getInstance());
-  addChildControllableContainer(StateManager::getInstance());
-  addChildControllableContainer(SequenceManager::getInstance());
+	//to move into engine
+	Logger::setCurrentLogger(CustomLogger::getInstance());
 
-  MIDIManager::getInstance(); //Trigger MIDIManager singleton constructor
-  InspectableSelectionManager::getInstance(); //selectionManager constructor
+	addChildControllableContainer(ModuleManager::getInstance());
+	addChildControllableContainer(StateManager::getInstance());
+	addChildControllableContainer(SequenceManager::getInstance());
+
+	MIDIManager::getInstance(); //Trigger MIDIManager singleton constructor
+	InspectableSelectionManager::getInstance(); //selectionManager constructor
 }
-
 
 Engine::~Engine(){
 

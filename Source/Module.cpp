@@ -13,7 +13,7 @@
 #include "ModuleEditor.h"
 
 Module::Module(const String &name) :
-	BaseItem(name),
+	BaseItem(name,true,true),
 	valuesCC("Values"),
 	commandTester("Command Tester",CommandContext::ACTION)
 {

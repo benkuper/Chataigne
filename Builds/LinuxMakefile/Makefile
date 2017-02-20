@@ -108,6 +108,7 @@ OBJECTS := \
   $(JUCE_OBJDIR)/ScriptEditor_fb783ea1.o \
   $(JUCE_OBJDIR)/Script_f72f92d4.o \
   $(JUCE_OBJDIR)/ScriptManager_b3bdcac3.o \
+  $(JUCE_OBJDIR)/ScriptTarget_753ddcc5.o \
   $(JUCE_OBJDIR)/PluginManager_45f89b5b.o \
   $(JUCE_OBJDIR)/EasingUI_9ec4c08.o \
   $(JUCE_OBJDIR)/Easing_d662cf34.o \
@@ -563,6 +564,11 @@ $(JUCE_OBJDIR)/Script_f72f92d4.o: ../../Source/Script.cpp
 $(JUCE_OBJDIR)/ScriptManager_b3bdcac3.o: ../../Source/ScriptManager.cpp
 	-@mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling ScriptManager.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/ScriptTarget_753ddcc5.o: ../../Source/ScriptTarget.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling ScriptTarget.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/PluginManager_45f89b5b.o: ../../Source/PluginManager.cpp

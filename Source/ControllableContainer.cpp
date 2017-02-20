@@ -14,7 +14,6 @@
 #include "DebugHelpers.h"
 #include "StringUtil.h"
 #include "ControllableFactory.h"
-
 #include "TargetParameter.h"
 
 #include "GenericControllableContainerEditor.h"
@@ -23,6 +22,7 @@
 ControllableComparator ControllableContainer::comparator;
 
 ControllableContainer::ControllableContainer(const String & niceName) :
+	ScriptTarget("",this),
 	parentContainer(nullptr),
 	hasCustomShortName(false),
 	skipControllableNameInAddress(false),
@@ -226,7 +226,7 @@ void ControllableContainer::setCustomShortName(const String &_shortName){
   onContainerShortNameChanged();
   controllableContainerListeners.call(&ControllableContainerListener::childAddressChanged,this);
   queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ChildAddressChanged, this));
-
+  scriptTargetName = shortName;
 }
 
 void ControllableContainer::setAutoShortName() {
@@ -236,6 +236,7 @@ void ControllableContainer::setAutoShortName() {
   onContainerShortNameChanged();
   controllableContainerListeners.call(&ControllableContainerListener::childAddressChanged,this);
   queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ChildAddressChanged, this));
+  scriptTargetName = shortName;
 }
 
 void ControllableContainer::setCanHavePresets(bool value)
@@ -840,6 +841,26 @@ String ControllableContainer::getUniqueNameInContainer(const String & sourceName
   }
 
   return resultName;
+}
+
+DynamicObject * ControllableContainer::createScriptObject()
+{
+	DynamicObject * o = ScriptTarget::createScriptObject();
+	
+	for (auto &cc : controllableContainers)
+	{
+		o->setProperty(cc->shortName,cc->createScriptObject());
+	}
+	
+	for (auto &c : controllables)
+	{
+		o->setProperty(c->shortName, c->createScriptObject());
+	}
+
+	o->setProperty("name", shortName);
+	o->setProperty("niceName", niceName);
+
+	return o;
 }
 
 

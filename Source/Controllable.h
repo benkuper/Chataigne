@@ -14,120 +14,117 @@
 
 #include "JuceHeader.h"//keep
 #include "Inspectable.h"
+#include "ScriptTarget.h"
 
 class ControllableContainer;
 class ControllableUI;
 
 class Controllable :
-	public Inspectable
+	public Inspectable,
+	public ScriptTarget
 {
 public:
-  enum Type { //Add type here if creating new type of Controllable
-	CUSTOM,
-	TRIGGER,
-    FLOAT,
-    INT,
-    BOOL,
-    STRING,
-	ENUM,
-	POINT2D,
-	POINT3D,
-    TARGET
-  };
+	enum Type { //Add type here if creating new type of Controllable
+		CUSTOM,
+		TRIGGER,
+		FLOAT,
+		INT,
+		BOOL,
+		STRING,
+		ENUM,
+		POINT2D,
+		POINT3D,
+		TARGET
+	};
 
 
-  Controllable(const Type &type, const String &niceName, const String &description, bool enabled = true);
-  virtual ~Controllable();
+	Controllable(const Type &type, const String &niceName, const String &description, bool enabled = true);
+	virtual ~Controllable();
 
 
-  Type type;
-  String niceName;
-  String shortName;
-  String description;
-  String argumentsDescription;
+	Type type;
+	String niceName;
+	String shortName;
+	String description;
+	String argumentsDescription;
 
-  bool enabled;
-  bool hasCustomShortName;
-  bool isControllableExposed;
-  bool isControllableFeedbackOnly;
-  bool hideInEditor;
-  bool hideInOutliner;
- 
-  String controlAddress;
+	bool enabled;
+	bool hasCustomShortName;
+	bool isControllableExposed;
+	bool isControllableFeedbackOnly;
+	bool hideInEditor;
+	bool hideInOutliner;
 
-  //ControllableChooser
-  bool isTargettable;
+	String controlAddress;
 
-  //save & load
-  bool isSavable;
-  bool saveValueOnly;
+	//ControllableChooser
+	bool isTargettable;
+
+	//save & load
+	bool isSavable;
+	bool saveValueOnly;
 
 
-  //user control
-  bool isCustomizableByUser;
-  bool isRemovableByUser;
+	//user control
+	bool isCustomizableByUser;
+	bool isRemovableByUser;
 
-  bool replaceSlashesInShortName;
+	bool replaceSlashesInShortName;
 
-  ControllableContainer * parentContainer;
+	ControllableContainer * parentContainer;
 
-  void setNiceName(const String &_niceName);
-  void setCustomShortName(const String &_shortName);
-  void setAutoShortName();
+	void setNiceName(const String &_niceName);
+	void setCustomShortName(const String &_shortName);
+	void setAutoShortName();
 
-  virtual void setEnabled(bool value, bool silentSet = false, bool force = false);
+	virtual void setEnabled(bool value, bool silentSet = false, bool force = false);
 
-  void setParentContainer(ControllableContainer * container);
-  void updateControlAddress();
+	void setParentContainer(ControllableContainer * container);
+	void updateControlAddress();
 
-  void remove(); // called from external to make this object ask for remove
+	void remove(); // called from external to make this object ask for remove
 
-  virtual var getJSONData(ControllableContainer * relativeTo = nullptr);
-  virtual var getJSONDataInternal(); // to be overriden
-  virtual void loadJSONData(var data);
-  virtual void loadJSONDataInternal(var data) {} //to be overriden
+	virtual var getJSONData(ControllableContainer * relativeTo = nullptr);
+	virtual var getJSONDataInternal(); // to be overriden
+	virtual void loadJSONData(var data);
+	virtual void loadJSONDataInternal(var data) {} //to be overriden
 
-  String getControlAddress(ControllableContainer * relativeTo = nullptr);
+	String getControlAddress(ControllableContainer * relativeTo = nullptr);
 
-  // used for generating editor
-  virtual ControllableUI * createDefaultUI(Controllable * targetControllable = nullptr) = 0;
+	// used for generating editor
+	virtual ControllableUI * createDefaultUI(Controllable * targetControllable = nullptr) = 0;
 
-  //used for script variables
-  //virtual DynamicObject * createDynamicObject();
+
+	static var setValueFromScript(const juce::var::NativeFunctionArgs& a);
 
 public:
-  class  Listener
-  {
-  public:
-    /** Destructor. */
-    virtual ~Listener() {}
-    virtual void controllableStateChanged(Controllable * ) {};
-    virtual void controllableControlAddressChanged(Controllable * ) {};
-    virtual void controllableNameChanged(Controllable *) {};
-    virtual void controllableRemoved(Controllable * ) {};
-	virtual void askForRemoveControllable(Controllable *) {}
-  };
+	class  Listener
+	{
+	public:
+		/** Destructor. */
+		virtual ~Listener() {}
+		virtual void controllableStateChanged(Controllable *) {};
+		virtual void controllableControlAddressChanged(Controllable *) {};
+		virtual void controllableNameChanged(Controllable *) {};
+		virtual void controllableRemoved(Controllable *) {};
+		virtual void askForRemoveControllable(Controllable *) {}
+	};
 
-  ListenerList<Listener> listeners;
-  void addControllableListener(Listener* newListener) { listeners.add(newListener); }
-  void removeControllableListener(Listener* listener) { listeners.remove(listener); }
+	ListenerList<Listener> listeners;
+	void addControllableListener(Listener* newListener) { listeners.add(newListener); }
+	void removeControllableListener(Listener* listener) { listeners.remove(listener); }
 
+	virtual InspectableEditor * getEditor(bool /*isRootEditor*/) override;
 
-  //Script set method handling
- // static var setControllableValue(const juce::var::NativeFunctionArgs& a);
-
-
-  virtual InspectableEditor * getEditor(bool /*isRootEditor*/) override;
-
-  virtual String getTypeString() const { jassert(false); return ""; } //should be overriden
+	virtual String getTypeString() const { jassert(false); return ""; } //should be overriden
 
 private:
 
-  WeakReference<Controllable>::Master masterReference;
-  friend class WeakReference<Controllable>;
+	WeakReference<Controllable>::Master masterReference;
+	friend class WeakReference<Controllable>;
 
 
-  JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Controllable)
+	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Controllable)
 };
 
 

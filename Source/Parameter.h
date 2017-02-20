@@ -61,7 +61,8 @@ public:
 	virtual var getJSONDataInternal() override;
 	virtual void loadJSONDataInternal(var data) override;
 	
-	//virtual DynamicObject * createDynamicObject() override;
+	static var getValueFromScript(const juce::var::NativeFunctionArgs &a);
+
 
     //Listener
 	class  Listener
@@ -70,7 +71,7 @@ public:
 		/** Destructor. */
 		virtual ~Listener() {}
 		virtual void parameterValueChanged(Parameter * p) = 0;
-		virtual void parameterRangeChanged(Parameter * ){};
+		virtual void parameterRangeChanged(Parameter * ) {};
     };
 
     ListenerList<Listener> listeners;
@@ -101,9 +102,7 @@ public:
     void removeAsyncParameterListener(AsyncListener* listener) { queuedNotifier.removeListener(listener); }
 
 
-	//JS Helper
-	//static var getValue(const juce::var::NativeFunctionArgs &a);
-
+	
 private:
 
 

@@ -18,8 +18,12 @@ class ScriptManager :
 	public BaseManager<Script>
 {
 public:
-	ScriptManager();
+	ScriptManager(ScriptTarget * parentTarget);
 	~ScriptManager();
+
+	ScriptTarget * parentTarget;
+
+	Script * createItem() override;
 
 };
 

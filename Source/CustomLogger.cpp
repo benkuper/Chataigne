@@ -14,8 +14,14 @@ juce_ImplementSingleton(CustomLogger);
 
 
 
+ CustomLogger::CustomLogger() :
+	  notifier(100)
+{
+	addLogListener(&fileWriter);
+}
+
 void CustomLogger::logMessage(const String & message)
 {
 	notifier.addMessage(new String(message));
-
 }
+

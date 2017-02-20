@@ -12,28 +12,35 @@
 #define SCRIPT_H_INCLUDED
 
 #include "BaseItem.h"
+#include "ScriptTarget.h"
 
 class Script :
-	public BaseItem,
-	public JavascriptEngine
+	public BaseItem
 {
 public:
-	Script();
+	Script(ScriptTarget * parentTarget = nullptr);
 	~Script();
 
 	enum ScriptState { LOADED, ERROR, EMPTY };
 	
 	StringParameter * filePath;
-	BoolParameter * log;
+	BoolParameter * logParam;
 	Trigger * reload;
 
 	ScriptState state;
 	String fileName;
+	 
+	ScriptTarget * parentTarget;
+
+	ScopedPointer<JavascriptEngine> scriptEngine;
 	
 	void loadScript();
 
+	void buildEnvironment();
+
 	void onContainerParameterChangedInternal(Parameter *) override;
 	void onContainerTriggerTriggered(Trigger *) override;
+
 
 	class ScriptEvent
 	{
@@ -52,6 +59,9 @@ public:
 	void removeAsyncScriptListener(AsyncListener* listener) { scriptAsyncNotifier.removeListener(listener); }
 
 	InspectableEditor * getEditor(bool isRoot) override;
+
+	//Script functions
+	static var logFromScript(const var::NativeFunctionArgs &args);
 };
 
 #endif  // SCRIPT_H_INCLUDED

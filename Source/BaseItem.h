@@ -12,6 +12,8 @@
 #define BASEITEM_H_INCLUDED
 
 #include "ControllableContainer.h"
+#include "ScriptTarget.h"
+
 class ScriptManager;
 
 class BaseItem : 
@@ -36,6 +38,9 @@ public :
 	virtual void onContainerParameterChangedInternal(Parameter *) {} //child classes override this function
 
 	void onContainerNiceNameChanged() override;
+
+	var getJSONData() override;
+	void loadJSONDataInternal(var data) override;
 
 	InspectableEditor * getEditor(bool isRoot) override;
 

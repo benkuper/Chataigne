@@ -15,6 +15,7 @@
 #include "ControllableEditor.h"
 
 Controllable::Controllable(const Type &type, const String & niceName, const String &description, bool enabled) :
+	ScriptTarget("",this),
     type(type),
     description(description),
     parentContainer(nullptr),
@@ -54,6 +55,7 @@ void Controllable::setCustomShortName(const String & _shortName)
 	hasCustomShortName = true;
 	updateControlAddress();
 	listeners.call(&Listener::controllableNameChanged, this);
+	scriptTargetName = shortName;
 }
 
 void Controllable::setAutoShortName() {
@@ -61,6 +63,7 @@ void Controllable::setAutoShortName() {
 	shortName = StringUtil::toShortName(niceName, replaceSlashesInShortName);
 	updateControlAddress();
 	listeners.call(&Listener::controllableNameChanged, this);
+	scriptTargetName = shortName;
 }
 
 void Controllable::setEnabled(bool value, bool silentSet, bool force)
@@ -136,22 +139,12 @@ InspectableEditor * Controllable::getEditor(bool isRootEditor) {
 	return new ControllableEditor(this,isRootEditor); 
 }
 
-/*
-DynamicObject * Controllable::createDynamicObject()
-{
-	DynamicObject* dObject = new DynamicObject();
-	dObject->setProperty(jsPtrIdentifier, (int64)this);
-	return dObject;
-}
-*/
 
-//STATIC
+//SCRIPT
 
+var Controllable::setValueFromScript(const juce::var::NativeFunctionArgs& a) {
 
-/*
-var Controllable::setControllableValue(const juce::var::NativeFunctionArgs& a) {
-
-	Controllable * c = getObjectPtrFromJS<Controllable>(a);
+	Controllable * c = getObjectFromJS<Controllable>(a);
 	bool success = false;
 
 	if (c != nullptr)
@@ -208,8 +201,5 @@ var Controllable::setControllableValue(const juce::var::NativeFunctionArgs& a) {
 		}
 	}
 
-
 	return var();
 }
-
-*/

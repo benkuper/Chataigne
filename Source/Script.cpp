@@ -10,17 +10,23 @@
 
 #include "Script.h"
 #include "ScriptEditor.h"
+#include "CustomLogger.h"
+#include "Engine.h"
 
-Script::Script() :
+Script::Script(ScriptTarget * _parentTarget) :
 	BaseItem("Script", true,false),
+	parentTarget(_parentTarget),
 	scriptAsyncNotifier(10)
 {
 	isSelectable = false;
 
 	filePath = addStringParameter("File Path", "Path to the script file", "");
-	log = addBoolParameter("Log", "Utility parameter to easily activate/deactivate logging from the script", false);
+	logParam = addBoolParameter("Log", "Utility parameter to easily activate/deactivate logging from the script", false);
+	logParam->setCustomShortName("enableLog");
 
 	reload = addTrigger("Reload", "Reload the script");
+
+	scriptObject.setMethod("log", Script::logFromScript);
 }
 
 Script::~Script()
@@ -48,7 +54,8 @@ void Script::loadScript()
 	
 	String s = f.loadFileAsString();
 
-	Result result = execute(s);
+	buildEnvironment();
+	Result result = scriptEngine->execute(s);
 
 	if (result.getErrorMessage().isEmpty())
 	{
@@ -62,6 +69,14 @@ void Script::loadScript()
 
 }
 
+void Script::buildEnvironment()
+{
+	scriptEngine = new JavascriptEngine();
+	scriptEngine->registerNativeObject("this", createScriptObject()); //force local for this objet
+	if (Engine::getInstanceWithoutCreating() != nullptr) scriptEngine->registerNativeObject(Engine::getInstance()->scriptTargetName, Engine::getInstance()->createScriptObject());
+	if (parentTarget != nullptr) scriptEngine->registerNativeObject("parent", parentTarget->createScriptObject()); 
+}
+
 
 void Script::onContainerParameterChangedInternal(Parameter * p)
 {
@@ -72,7 +87,6 @@ void Script::onContainerTriggerTriggered(Trigger * t)
 {
 	if (t == reload)
 	{
-		DBG("LOAD !");
 		loadScript();
 	}
 }
@@ -80,4 +94,18 @@ void Script::onContainerTriggerTriggered(Trigger * t)
 InspectableEditor * Script::getEditor(bool isRoot)
 {
 	return new ScriptEditor(this,isRoot);
+}
+
+var Script::logFromScript(const var::NativeFunctionArgs & args)
+{
+	Script * s = ScriptTarget::getObjectFromJS<Script>(args);
+	if (!s->logParam->boolValue()) return var();
+
+	for (int i = 0; i < args.numArguments; i++)
+	{
+		if(i == 0) NLOG("Script : " + s->niceName, args.arguments[i].toString());
+		else NLOG("",args.arguments[i].toString());
+	}
+
+	return var();
 }

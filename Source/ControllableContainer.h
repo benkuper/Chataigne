@@ -29,6 +29,8 @@ class TargetParameter; //avoid cycle dependency
 #include "Inspectable.h"
 #include "ControllableHelpers.h"
 
+#include "ScriptTarget.h"
+
 class InspectableEditor;
 class ControllableContainer;
 
@@ -77,14 +79,14 @@ public:
 };
 
 
-
 class ControllableContainer :
 	public Parameter::Listener,
 	public Controllable::Listener,
 	public Parameter::AsyncListener,
 	public Trigger::Listener,
 	public ControllableContainerListener,
-	public Inspectable
+	public Inspectable,
+	public ScriptTarget
 
 {
 public:
@@ -209,6 +211,9 @@ public:
 
 	String getUniqueNameInContainer(const String &sourceName, int suffix = 0);
 
+	//SCRIPT
+	virtual DynamicObject * createScriptObject() override;
+
 private:
 	// internal callback that a controllableContainer can override to react to any of it's parameter change
 	//@ ben this is to avoid either:
@@ -248,9 +253,7 @@ public:
 	void removeAsyncContainerListener(ContainerAsyncListener* listener) { queuedNotifier.removeListener(listener); }
 	
 	void clear();
-	
-	
-	
+
 	virtual InspectableEditor * getEditor(bool /*isRootEditor*/) override;
 
 protected:
@@ -259,8 +262,6 @@ protected:
 
     WeakReference<ControllableContainer>::Master masterReference;
     friend class WeakReference<ControllableContainer>;
-
-
 
     friend class PresetManager;
 

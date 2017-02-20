@@ -30,7 +30,6 @@ public:
 	TriggerBlinkUI * createBlinkUI(Trigger * target = nullptr);
 	ControllableUI * createDefaultUI(Controllable * targetControllable = nullptr) override;
 	
-	//virtual DynamicObject * createDynamicObject() override;
 	virtual void trigger();
 	
 	// avoid feedback loop in listeners
