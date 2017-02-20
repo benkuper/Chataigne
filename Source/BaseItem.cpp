@@ -10,10 +10,12 @@
 
 #include "BaseItem.h"
 #include "BaseItemEditor.h"
+#include "ScriptManager.h"
 
-BaseItem::BaseItem(const String &name, bool _canBeDisabled) :
+BaseItem::BaseItem(const String &name, bool _canBeDisabled, bool _canHaveScripts) :
 	ControllableContainer(name),
-	canBeDisabled(_canBeDisabled)
+	canBeDisabled(_canBeDisabled),
+	canHaveScripts(_canHaveScripts)
 {
 	saveAndLoadName = true;
 
@@ -27,6 +29,13 @@ BaseItem::BaseItem(const String &name, bool _canBeDisabled) :
 	nameParam->hideInEditor = true;
 	nameParam->hideInOutliner = true;
 	nameParam->isTargettable = false;
+
+	if (canHaveScripts)
+	{
+		scriptManager = new ScriptManager();
+		addChildControllableContainer(scriptManager);
+	}
+	
 }
 
 BaseItem::~BaseItem()

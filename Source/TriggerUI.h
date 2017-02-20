@@ -14,7 +14,9 @@
 #include "ControllableUI.h"
 #include "Trigger.h"
 
-class TriggerUI : public ControllableUI, public Trigger::AsyncListener
+class TriggerUI : 
+	public ControllableUI, 
+	public Trigger::AsyncListener
 {
 public :
     TriggerUI(Trigger * trigger);

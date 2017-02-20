@@ -10,6 +10,7 @@
 
 #include "BaseItemEditor.h"
 #include "AssetManager.h"
+#include "ScriptManager.h"
 
  BaseItemEditor::BaseItemEditor(BaseItem * bi, bool isRoot) :
 	  InspectableEditor(bi, isRoot),
@@ -29,8 +30,14 @@
 	  if (!isRoot)
 	  {
 		  removeBT = AssetManager::getInstance()->getRemoveBT();
-		  this->addAndMakeVisible(removeBT);
+		  addAndMakeVisible(removeBT);
 		  removeBT->addListener(this);
+	  }
+
+	  if (item->canHaveScripts)
+	  {
+		  scriptManagerUI = item->scriptManager->getEditor(false);
+		  addAndMakeVisible(scriptManagerUI);
 	  }
 
 	  item->addAsyncContainerListener(this);
@@ -72,6 +79,13 @@ void BaseItemEditor::resized()
 	r.setHeight(0); //if no override, ensure bottom is set
 	resizedInternalContent(r);
 
+	if (item->canHaveScripts)
+	{
+		r.setY(r.getBottom() + 2);
+		r.setHeight(scriptManagerUI->getHeight());
+		scriptManagerUI->setBounds(r);
+	}
+	
 	r.setY(r.getBottom() + 2);
 	r.setHeight(0); //if no override, ensure bottom is set
 	resizedInternalFooter(r);

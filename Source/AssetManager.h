@@ -25,9 +25,12 @@ public:
 	ImageButton * getTargetBT();
 	ImageButton * getPowerBT();  
 	ImageButton * getAddBT();
-
+	ImageButton * getFileBT();
+	ImageButton * getEditBT();
+	
 	Image getInImage();
 	Image getOutImage();
+	Image getReloadImage();
 	
 	ImageButton * getSetupBTImage(const Image & image);
 	ImageButton * getToggleBTImage(const Image &image);

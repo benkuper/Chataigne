@@ -9,10 +9,13 @@
       <FILE id="fwyowN" name="add.png" compile="0" resource="1" file="Resources/add.png"/>
       <FILE id="F1lP95" name="cancel.png" compile="0" resource="1" file="Resources/cancel.png"/>
       <FILE id="OC2eSU" name="check.png" compile="0" resource="1" file="Resources/check.png"/>
+      <FILE id="sSw5Yt" name="edit.png" compile="0" resource="1" file="Resources/edit.png"/>
+      <FILE id="slREaT" name="file.png" compile="0" resource="1" file="Resources/file.png"/>
       <FILE id="nVz6Li" name="icon.png" compile="0" resource="1" file="Resources/icon.png"/>
       <FILE id="WlJm0v" name="in.png" compile="0" resource="1" file="Resources/in.png"/>
       <FILE id="NkuJtC" name="out.png" compile="0" resource="1" file="Resources/out.png"/>
       <FILE id="ndrCCq" name="power.png" compile="0" resource="1" file="Resources/power.png"/>
+      <FILE id="dCi7hz" name="reload.png" compile="0" resource="1" file="Resources/reload.png"/>
       <FILE id="MfpZ5J" name="settings.png" compile="0" resource="1" file="Resources/settings.png"/>
       <FILE id="jZoDQ1" name="target.png" compile="0" resource="1" file="Resources/target.png"/>
       <FILE id="q5DIE7" name="uncheck.png" compile="0" resource="1" file="Resources/uncheck.png"/>
@@ -183,6 +186,18 @@
       </GROUP>
       <GROUP id="{6A99D434-563F-6FEC-8395-5EB79B3D3075}" name="Chataigne">
         <GROUP id="{6C7DFFF7-D47E-97B5-FE74-27F24C7A349F}" name="Common">
+          <GROUP id="{1B487EA1-C305-46F0-D55D-17FDE1399960}" name="Script">
+            <GROUP id="{D0D6641B-6CDE-19D7-8BEF-E157C21B54AA}" name="ui">
+              <FILE id="Ei6juD" name="ScriptEditor.cpp" compile="1" resource="0"
+                    file="Source/ScriptEditor.cpp"/>
+              <FILE id="u8OT2M" name="ScriptEditor.h" compile="0" resource="0" file="Source/ScriptEditor.h"/>
+            </GROUP>
+            <FILE id="S5V60C" name="Script.cpp" compile="1" resource="0" file="Source/Script.cpp"/>
+            <FILE id="dnhtpd" name="Script.h" compile="0" resource="0" file="Source/Script.h"/>
+            <FILE id="kMhua1" name="ScriptManager.cpp" compile="1" resource="0"
+                  file="Source/ScriptManager.cpp"/>
+            <FILE id="zZ7A0R" name="ScriptManager.h" compile="0" resource="0" file="Source/ScriptManager.h"/>
+          </GROUP>
           <GROUP id="{70631E35-1CB6-82B1-0572-78D8D2F56250}" name="Plugin">
             <FILE id="Tj1Zxp" name="PluginManager.cpp" compile="1" resource="0"
                   file="Source/PluginManager.cpp"/>

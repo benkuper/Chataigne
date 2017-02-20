@@ -105,6 +105,9 @@ OBJECTS := \
   $(JUCE_OBJDIR)/ControllableHelpers_912c061d.o \
   $(JUCE_OBJDIR)/ControllableIndexedContainer_a91d6542.o \
   $(JUCE_OBJDIR)/Trigger_dbc00a19.o \
+  $(JUCE_OBJDIR)/ScriptEditor_fb783ea1.o \
+  $(JUCE_OBJDIR)/Script_f72f92d4.o \
+  $(JUCE_OBJDIR)/ScriptManager_b3bdcac3.o \
   $(JUCE_OBJDIR)/PluginManager_45f89b5b.o \
   $(JUCE_OBJDIR)/EasingUI_9ec4c08.o \
   $(JUCE_OBJDIR)/Easing_d662cf34.o \
@@ -545,6 +548,21 @@ $(JUCE_OBJDIR)/ControllableIndexedContainer_a91d6542.o: ../../Source/Controllabl
 $(JUCE_OBJDIR)/Trigger_dbc00a19.o: ../../Source/Trigger.cpp
 	-@mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling Trigger.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/ScriptEditor_fb783ea1.o: ../../Source/ScriptEditor.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling ScriptEditor.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/Script_f72f92d4.o: ../../Source/Script.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling Script.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/ScriptManager_b3bdcac3.o: ../../Source/ScriptManager.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling ScriptManager.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/PluginManager_45f89b5b.o: ../../Source/PluginManager.cpp

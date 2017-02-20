@@ -12,18 +12,22 @@
 #define BASEITEM_H_INCLUDED
 
 #include "ControllableContainer.h"
+class ScriptManager;
 
 class BaseItem : 
 	public ControllableContainer
 {
 public :
-	BaseItem(const String &name = "baseItem", bool canBeDisabled = true);
+	BaseItem(const String &name = "baseItem", bool canBeDisabled = true, bool canHaveScript = false);
 	virtual ~BaseItem();
 
 	BoolParameter * enabled;
-	StringParameter * nameParam;
+	StringParameter * nameParam; 
 
 	bool canBeDisabled;
+	bool canHaveScripts;
+
+	ScopedPointer<ScriptManager> scriptManager;
 
 	void remove();
 	virtual void clear() {}

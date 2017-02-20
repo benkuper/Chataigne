@@ -30,6 +30,9 @@ public:
 	void paint(Graphics &g) override;
 	void triggerTriggered(const Trigger * p) override;
 
+	void mouseDown(const MouseEvent &e) override;
+
+
 	// Inherited via Timer
 	virtual void timerCallback() override;
 };

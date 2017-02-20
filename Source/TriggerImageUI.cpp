@@ -17,7 +17,7 @@ TriggerImageUI::TriggerImageUI(Trigger * t, const Image &i) :
 	drawTriggering(false)
 {
 	offImage.desaturate();
-	offImage.multiplyAllAlphas(.5f);
+	if(trigger->isControllableFeedbackOnly) offImage.multiplyAllAlphas(.5f);
 	setRepaintsOnMouseActivity(true);
 }
 
@@ -28,7 +28,13 @@ TriggerImageUI::~TriggerImageUI()
 
 void TriggerImageUI::paint(Graphics & g)
 {
+	
 	g.drawImage(drawTriggering?onImage:offImage, getLocalBounds().toFloat());
+	if (isMouseOver() && !trigger->isControllableFeedbackOnly)
+	{
+		g.setColour(HIGHLIGHT_COLOR.withAlpha(.2f));
+		g.fillEllipse(getLocalBounds().reduced(2).toFloat());
+	}
 }
 
 void TriggerImageUI::triggerTriggered(const Trigger *)
@@ -36,6 +42,11 @@ void TriggerImageUI::triggerTriggered(const Trigger *)
 	drawTriggering = true;
 	repaint();
 	startTimer(100);
+}
+
+void TriggerImageUI::mouseDown(const MouseEvent &)
+{
+	trigger->trigger();
 }
 
 void TriggerImageUI::timerCallback()

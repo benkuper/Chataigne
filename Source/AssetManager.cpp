@@ -42,6 +42,21 @@ ImageButton * AssetManager::getAddBT()
 	return getSetupBTImage(removeImage);
 }
 
+ImageButton * AssetManager::getFileBT()
+{
+	Image fileImage = ImageCache::getFromMemory(BinaryData::file_png, BinaryData::file_pngSize);
+	return getSetupBTImage(fileImage);
+}
+
+
+ImageButton * AssetManager::getEditBT()
+{
+	Image editImage = ImageCache::getFromMemory(BinaryData::edit_png, BinaryData::edit_pngSize);
+	return getSetupBTImage(editImage);
+}
+
+
+
 Image AssetManager::getInImage()
 {
 	return ImageCache::getFromMemory(BinaryData::in_png, BinaryData::in_pngSize);
@@ -50,6 +65,11 @@ Image AssetManager::getInImage()
 Image AssetManager::getOutImage()
 {
 	return ImageCache::getFromMemory(BinaryData::out_png, BinaryData::out_pngSize);
+}
+
+Image AssetManager::getReloadImage()
+{
+	return ImageCache::getFromMemory(BinaryData::reload_png, BinaryData::reload_pngSize);
 }
 
 ImageButton * AssetManager::getSetupBTImage(const Image & image)

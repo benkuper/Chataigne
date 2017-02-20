@@ -16,6 +16,7 @@
 
 #include "BoolImageToggleUI.h"
 #include "StringParameterUI.h"
+
 class BaseItemEditor :
 	public InspectableEditor,
 	public ControllableContainer::ContainerAsyncListener,
@@ -30,6 +31,8 @@ public:
 	ScopedPointer<BoolImageToggleUI> enabledUI;
 	ScopedPointer<StringParameterUI> nameUI;
 	ScopedPointer<ImageButton> removeBT;
+
+	ScopedPointer<InspectableEditor> scriptManagerUI;
 
 	int headerHeight;
 
@@ -46,7 +49,7 @@ public:
 
 	virtual void childBoundsChanged(Component *) override;
 
-	void buttonClicked(Button *b) override;
+	virtual void buttonClicked(Button *b) override;
 
 };
 

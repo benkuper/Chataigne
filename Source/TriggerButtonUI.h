@@ -20,7 +20,8 @@
 
 #include "TriggerUI.h"
 
-class TriggerButtonUI : public TriggerUI
+class TriggerButtonUI : 
+	public TriggerUI
 {
 public:
     TriggerButtonUI(Trigger * t);
