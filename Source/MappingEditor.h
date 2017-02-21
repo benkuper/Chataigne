@@ -22,6 +22,7 @@ public:
 	~MappingEditor();
 
 	Mapping * mapping;
+	ScopedPointer<InspectableEditor> continousUI;
 	ScopedPointer<InspectableEditor> inputEditor;
 	ScopedPointer<InspectableEditor> cdmEditor;
 	ScopedPointer<InspectableEditor> filtersEditor;

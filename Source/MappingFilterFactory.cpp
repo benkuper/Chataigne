@@ -14,6 +14,7 @@
 #include "LagFilter.h"
 #include "SimpleRemapFilter.h"
 #include "SimpleSmoothFilter.h"
+#include  "ScriptFilter.h"
 
 
 juce_ImplementSingleton(MappingFilterFactory)
@@ -23,6 +24,7 @@ MappingFilterFactory::MappingFilterFactory()
 	defs.add(new MappingFilterDefinition("Remap", "Inverse", &InverseFilter::create));
 	defs.add(new MappingFilterDefinition("Remap", "Simple Remap", &SimpleRemapFilter::create));
 	defs.add(new MappingFilterDefinition("Remap", "Curve Map", &CurveMapFilter::create));
+	defs.add(new MappingFilterDefinition("", "Script", &ScriptFilter::create));
 
 	buildPopupMenu();
 }

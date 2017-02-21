@@ -30,7 +30,6 @@ public:
 	ScopedPointer<ParameterUI> filteredUI;
 
 	void updateFilteredUI();
-
 	void filteredParamChanged(MappingFilter *) override;
 };
 

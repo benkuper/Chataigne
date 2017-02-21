@@ -465,6 +465,9 @@
                 <FILE id="O0jaCt" name="InverseFilter.h" compile="0" resource="0" file="Source/InverseFilter.h"/>
                 <FILE id="Iqwwn4" name="LagFilter.cpp" compile="1" resource="0" file="Source/LagFilter.cpp"/>
                 <FILE id="U46NtO" name="LagFilter.h" compile="0" resource="0" file="Source/LagFilter.h"/>
+                <FILE id="dkB5N1" name="ScriptFilter.cpp" compile="1" resource="0"
+                      file="Source/ScriptFilter.cpp"/>
+                <FILE id="D7rCiH" name="ScriptFilter.h" compile="0" resource="0" file="Source/ScriptFilter.h"/>
                 <FILE id="OZCzh6" name="SimpleRemapFilter.cpp" compile="1" resource="0"
                       file="Source/SimpleRemapFilter.cpp"/>
                 <FILE id="sIVpEC" name="SimpleRemapFilter.h" compile="0" resource="0"

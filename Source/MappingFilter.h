@@ -23,7 +23,6 @@ public:
 
 	Parameter * sourceParam;
 	WeakReference<Parameter> filteredParameter;
-
 	ControllableContainer filterParams;
 
 	bool autoSetRange; //if true, will check at process if ranges are differents between source and filtered, and if so, will reassign

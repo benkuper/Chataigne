@@ -29,7 +29,8 @@ ScriptEditor::ScriptEditor(Script * _script, bool isRoot) :
 	editBT->addListener(this);
 
 	paramsEditor = script->scriptParamsContainer.getEditor(false);
-	addAndMakeVisible(paramsEditor);
+	addChildComponent(paramsEditor);
+	paramsEditor->setVisible(script->scriptParamsContainer.controllables.size() > 0);
 
 	addAndMakeVisible(fileBT);
 	addAndMakeVisible(reloadBT);
@@ -57,6 +58,7 @@ void ScriptEditor::paint(Graphics & g)
 	case Script::SCRIPT_EMPTY:
 		c = BG_COLOR.brighter().withAlpha(.4f);
 		break;
+
 	}
 
 	g.setColour(c);
@@ -79,7 +81,7 @@ void ScriptEditor::resizedInternalHeader(Rectangle<int>& r)
 
 void ScriptEditor::resizedInternalContent(Rectangle<int>& r)
 {
-	if (script->state != Script::SCRIPT_CLEAR && paramsEditor->isVisible())
+	if (script->state != Script::SCRIPT_CLEAR && paramsEditor->isVisible() )
 	{
 		r.setHeight(paramsEditor->getHeight());
 		paramsEditor->setBounds(r);

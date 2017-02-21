@@ -15,11 +15,13 @@ Mapping::Mapping() :
 	BaseItem("Mapping"),
 	inputIsLocked(false)
 {
-	canInspectChildContainers = true;
+	continuousProcess = addBoolParameter("Continuous", "If enabled, the mapping will process continuously rather than only when parameter value has changed",false);
+
 	addChildControllableContainer(&input);
 	addChildIndexedControllableContainer(&cdm);
 	addChildControllableContainer(&fm);
 	addChildControllableContainer(&om);
+
 
 	input.addMappingInputListener(this);
 }
@@ -77,7 +79,22 @@ void Mapping::inputParameterValueChanged(MappingInput *)
 	process();
 }
 
+void Mapping::onContainerParameterChangedInternal(Parameter * p)
+{
+	BaseItem::onContainerParameterChangedInternal(p);
+	if (p == continuousProcess)
+	{
+		if(continuousProcess->boolValue()) startTimerHz(30);
+		else stopTimer();
+	}
+}
+
 InspectableEditor * Mapping::getEditor(bool isRoot)
 {
 	return new MappingEditor(this, isRoot);
+}
+
+void Mapping::timerCallback()
+{
+	process();
 }

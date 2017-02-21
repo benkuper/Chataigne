@@ -127,6 +127,7 @@
 		C887F37849889D8A26737CF4 = {isa = PBXBuildFile; fileRef = 2C1B1095ADABEA74E28D9FC4; };
 		FDA3EBE1E513287F72645371 = {isa = PBXBuildFile; fileRef = 2CDC812BB1596F2389305672; };
 		93AE617026EC13CB21242F02 = {isa = PBXBuildFile; fileRef = 5E26252D2D85406A6E8E35BC; };
+		5771F0937950A5B529A9733B = {isa = PBXBuildFile; fileRef = B7806E64F19F7E325D032865; };
 		9138C240C3961723E92A12EE = {isa = PBXBuildFile; fileRef = FEFA21A4AC985F867AA80C7C; };
 		174248571D66D87B67F7A2A5 = {isa = PBXBuildFile; fileRef = 4022739CF0F605EF6C79DAF0; };
 		65F92A0345C81A32CFCE2BF0 = {isa = PBXBuildFile; fileRef = 08F4E7697DB92B9369C3394E; };
@@ -1049,6 +1050,7 @@
 		6A8B44888DEF9CB0C7038CE8 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MappingLayer.cpp; path = ../../Source/MappingLayer.cpp; sourceTree = "SOURCE_ROOT"; };
 		6A903180DAA56B12837B81FA = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CurveMapFilter.h; path = ../../Source/CurveMapFilter.h; sourceTree = "SOURCE_ROOT"; };
 		6AAA560158A78D4AEDF95001 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "juce_AudioDataConverters.cpp"; path = "../../JuceLibraryCode/modules/juce_audio_basics/buffers/juce_AudioDataConverters.cpp"; sourceTree = "SOURCE_ROOT"; };
+		6AD9FA423A7A2C3AE5DC04E0 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ScriptFilter.h; path = ../../Source/ScriptFilter.h; sourceTree = "SOURCE_ROOT"; };
 		6AF45CE9F7DBCBC6CD5B1348 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "juce_FillType.h"; path = "../../JuceLibraryCode/modules/juce_graphics/colour/juce_FillType.h"; sourceTree = "SOURCE_ROOT"; };
 		6AFCF1FE51C11D79A5EDB228 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "juce_LiveConstantEditor.h"; path = "../../JuceLibraryCode/modules/juce_gui_extra/misc/juce_LiveConstantEditor.h"; sourceTree = "SOURCE_ROOT"; };
 		6B35D83B59E5EB9C7F54573B = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "juce_ElementComparator.h"; path = "../../JuceLibraryCode/modules/juce_core/containers/juce_ElementComparator.h"; sourceTree = "SOURCE_ROOT"; };
@@ -1573,6 +1575,7 @@
 		B7008D711D4720751B140122 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = jfdctfst.c; path = "../../JuceLibraryCode/modules/juce_graphics/image_formats/jpglib/jfdctfst.c"; sourceTree = "SOURCE_ROOT"; };
 		B71837E3EE2D05178046C4E9 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "os_mac_find.m"; path = "../../Source/wiiuse/os_mac/os_mac_find.m"; sourceTree = "SOURCE_ROOT"; };
 		B722C707D1D4B04011CCD868 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "juce_audio_formats.cpp"; path = "../../JuceLibraryCode/modules/juce_audio_formats/juce_audio_formats.cpp"; sourceTree = "SOURCE_ROOT"; };
+		B7806E64F19F7E325D032865 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ScriptFilter.cpp; path = ../../Source/ScriptFilter.cpp; sourceTree = "SOURCE_ROOT"; };
 		B789F8CD4EB240F63B4C5755 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CustomOSCCommand.h; path = ../../Source/CustomOSCCommand.h; sourceTree = "SOURCE_ROOT"; };
 		B78EF3C5668FD7572877E105 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "juce_VSTInterface.h"; path = "../../JuceLibraryCode/modules/juce_audio_processors/format_types/juce_VSTInterface.h"; sourceTree = "SOURCE_ROOT"; };
 		B7D72A88714EC2A6E05BDB3A = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = analysis.c; path = "../../JuceLibraryCode/modules/juce_audio_formats/codecs/oggvorbis/libvorbis-1.3.2/lib/analysis.c"; sourceTree = "SOURCE_ROOT"; };
@@ -2333,6 +2336,8 @@
 					951C541E4C65F10168C7A25E,
 					5E26252D2D85406A6E8E35BC,
 					CCFB85FAF0017BEE389EB963,
+					B7806E64F19F7E325D032865,
+					6AD9FA423A7A2C3AE5DC04E0,
 					FEFA21A4AC985F867AA80C7C,
 					70736158A3009ED78977D093,
 					4022739CF0F605EF6C79DAF0,
@@ -4452,6 +4457,7 @@
 					C887F37849889D8A26737CF4,
 					FDA3EBE1E513287F72645371,
 					93AE617026EC13CB21242F02,
+					5771F0937950A5B529A9733B,
 					9138C240C3961723E92A12EE,
 					174248571D66D87B67F7A2A5,
 					65F92A0345C81A32CFCE2BF0,

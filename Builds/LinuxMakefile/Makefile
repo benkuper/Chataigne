@@ -168,6 +168,7 @@ OBJECTS := \
   $(JUCE_OBJDIR)/CurveMapFilter_84c144ce.o \
   $(JUCE_OBJDIR)/InverseFilter_66642a29.o \
   $(JUCE_OBJDIR)/LagFilter_15ce140b.o \
+  $(JUCE_OBJDIR)/ScriptFilter_fbaaeb2c.o \
   $(JUCE_OBJDIR)/SimpleRemapFilter_6a007ff0.o \
   $(JUCE_OBJDIR)/SimpleSmoothFilter_df9c3321.o \
   $(JUCE_OBJDIR)/MappingFilterEditor_1ce883d4.o \
@@ -871,6 +872,11 @@ $(JUCE_OBJDIR)/InverseFilter_66642a29.o: ../../Source/InverseFilter.cpp
 $(JUCE_OBJDIR)/LagFilter_15ce140b.o: ../../Source/LagFilter.cpp
 	-@mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling LagFilter.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/ScriptFilter_fbaaeb2c.o: ../../Source/ScriptFilter.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling ScriptFilter.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/SimpleRemapFilter_6a007ff0.o: ../../Source/SimpleRemapFilter.cpp

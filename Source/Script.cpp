@@ -94,7 +94,7 @@ void Script::buildEnvironment()
 	setState(SCRIPT_CLEAR);
 
 	scriptEngine = new JavascriptEngine();
-	while (scriptParamsContainer.controllables.size() > 0) scriptParamsContainer.removeControllable(controllables[0]);
+	while (scriptParamsContainer.controllables.size() > 0) scriptParamsContainer.removeControllable(scriptParamsContainer.controllables[0]);
 	scriptParamsContainer.clear();
 
 	scriptEngine->registerNativeObject("script", createScriptObject()); //force "script" for this objet
