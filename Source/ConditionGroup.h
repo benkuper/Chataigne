@@ -15,14 +15,22 @@
 #include "ConditionManager.h"
 
 class ConditionGroup :
-	public Condition
+	public Condition,
+	public ConditionManager::ConditionManagerListener
 {
 public:
 	ConditionGroup();
 	~ConditionGroup();
 
-	ScopedPointer<ConditionManager> manager;
+	ConditionManager manager;
 
+	void conditionManagerValidationChanged(ConditionManager *) override;
+
+
+	var getJSONData() override;
+	void loadJSONDataInternal(var data) override;
+
+	InspectableEditor * getEditor(bool isRoot) override;
 
 	String getTypeString() const { return "Group"; }
 	static ConditionGroup * create() { return new ConditionGroup(); }

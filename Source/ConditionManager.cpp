@@ -14,8 +14,9 @@
 
 juce_ImplementSingleton(ConditionManager)
 
-ConditionManager::ConditionManager() :
-	BaseManager<Condition>("Conditions")
+ConditionManager::ConditionManager(bool _operatorOnSide) :
+	BaseManager<Condition>("Conditions"),
+	operatorOnSide(_operatorOnSide)
 {
 	selectItemWhenCreated = false;
 
@@ -78,6 +79,7 @@ void ConditionManager::conditionValidationChanged(Condition *)
 	checkAllConditions();
 }
 
+
 InspectableEditor * ConditionManager::getEditor(bool isRoot)
 {
 	return new ConditionManagerEditor(this, isRoot);
@@ -85,26 +87,28 @@ InspectableEditor * ConditionManager::getEditor(bool isRoot)
 
 bool ConditionManager::areAllConditionsValid()
 {
-	bool hasAtLeastOneValid = false;
+	if (items.size() == 0) return false;
+
 	for (auto &c : items)
 	{
 		if (!c->enabled->boolValue()) continue;
 		if (!c->isValid->boolValue()) return false;
 	}
 
-	return hasAtLeastOneValid;
+	return true;
 }
 
 bool ConditionManager::isAtLeastOneConditionValid()
 {
-	bool hasAtLeastOneValid = false;
+	if (items.size() == 0) return false;
+
 	for (auto &c : items)
 	{
 		if (!c->enabled->boolValue()) continue;
-		if (c->isValid->boolValue()) hasAtLeastOneValid = true;
+		if (c->isValid->boolValue()) return true;
 	}
 
-	return hasAtLeastOneValid;
+	return false;
 }
 
 int ConditionManager::getNumEnabledConditions()

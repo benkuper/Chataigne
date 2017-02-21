@@ -21,13 +21,14 @@ class ConditionManager :
 public:
 	juce_DeclareSingleton(ConditionManager, true)
 
-	ConditionManager();
+	ConditionManager(bool operatorOnSide = false);
 	~ConditionManager();
 	
 	BoolParameter * isValid;
 
 	enum ConditionOperator { AND, OR };
 	EnumParameter * conditionOperator;
+	bool operatorOnSide;
 
 	void addItemFromData(var data) override;
 
