@@ -18,14 +18,18 @@ const Identifier scriptPtrIdentifier = "_ptr";
 class ScriptTarget
 {
 public:
-	ScriptTarget(const String &name, void * ptr);
-	~ScriptTarget();
+	ScriptTarget(const String &name, void * ptr) : scriptTargetName(name), thisPtr((int64)ptr) {}
+	~ScriptTarget() {}
 
 	int64 thisPtr;
 	String scriptTargetName;
 	DynamicObject scriptObject;
 
-	virtual DynamicObject * createScriptObject();
+	virtual DynamicObject * createScriptObject() {
+		DynamicObject * o = new DynamicObject(scriptObject);
+		o->setProperty(scriptPtrIdentifier, thisPtr);
+		return o;
+	}
 	 
 	template<class T>
 	static T* getObjectFromJS(const var::NativeFunctionArgs & a);

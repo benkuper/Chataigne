@@ -22,7 +22,7 @@
 #include "GamepadManager.h"
 #include "WiimoteManager.h"
 #include "InspectableSelectionManager.h"
-
+#include "ScriptUtil.h"
 
 juce_ImplementSingleton(Engine) 
 
@@ -48,6 +48,7 @@ Engine::Engine() :
 
 	MIDIManager::getInstance(); //Trigger MIDIManager singleton constructor
 	InspectableSelectionManager::getInstance(); //selectionManager constructor
+	ScriptUtil::getInstance(); //trigger ScriptUtil constructor
 }
 
 Engine::~Engine(){
@@ -71,6 +72,8 @@ Engine::~Engine(){
   MIDIManager::deleteInstance();
   GamepadManager::deleteInstance();
   WiimoteManager::deleteInstance();
+
+  ScriptUtil::deleteInstance();
 
 }
 

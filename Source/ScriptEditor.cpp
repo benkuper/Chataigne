@@ -15,7 +15,8 @@
 
 ScriptEditor::ScriptEditor(Script * _script, bool isRoot) :
 	BaseItemEditor(_script,isRoot),
-	script(_script)
+	script(_script),
+	editMode(false)
 {
 	script->addAsyncScriptListener(this);
 
@@ -43,14 +44,14 @@ void ScriptEditor::paint(Graphics & g)
 	Colour c = BG_COLOR;
 	switch (script->state)
 	{
-	case Script::LOADED:
+	case Script::SCRIPT_LOADED:
 		c = GREEN_COLOR;
 		break;
-	case Script::ERROR:
+	case Script::SCRIPT_ERROR:
 		c = RED_COLOR;
 		break;
 
-	case Script::EMPTY:
+	case Script::SCRIPT_EMPTY:
 		c = BG_COLOR.brighter().withAlpha(.4f);
 		break;
 	}
@@ -71,6 +72,12 @@ void ScriptEditor::resizedInternalHeader(Rectangle<int>& r)
 	r.removeFromRight(2);
 	fileBT->setBounds(r.removeFromRight(r.getHeight()));
 	r.removeFromRight(2);
+}
+
+void ScriptEditor::resizedInternalContent(Rectangle<int>& r)
+{
+	if (!editMode) return;
+	r.setHeight(100);
 }
 
 
@@ -95,6 +102,7 @@ void ScriptEditor::buttonClicked(Button * b)
 
 	} else if (b == editBT)
 	{
+		editMode = !editMode;
 		resized();
 	}
 }

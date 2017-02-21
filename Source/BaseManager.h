@@ -24,7 +24,6 @@ public :
 	virtual ~BaseManager<T>();
 
 	OwnedArray<T> items;
-	
 
 	virtual T * createItem(); //to override if special constructor to use
 	T * addItem();
@@ -49,6 +48,7 @@ public :
 	void loadJSONDataInternal(var data) override;
 
 
+	DynamicObject * createScriptObject() override;
 
 	class  Listener
 	{
@@ -104,11 +104,11 @@ inline void BaseManager<T>::addItem(T * item, var data)
 {
 	jassert(items.indexOf(item) == -1); //be sure item is no here already
 	if (item == nullptr) return;
-
+	
 	items.add(item);
 	BaseItem * bi = static_cast<BaseItem *>(item);
 	addChildControllableContainer(bi);
-	 bi->nameParam->setValue(bi->niceName);
+	bi->nameParam->setValue(bi->niceName);
 	bi->addBaseItemListener(this);
 	
 	if(!data.isVoid()) bi->loadJSONData(data);
@@ -194,6 +194,16 @@ void BaseManager<T>::loadJSONDataInternal(var data)
 	{ 
 		addItemFromData(td);
 	}
+}
+
+template<class T>
+DynamicObject * BaseManager<T>::createScriptObject()
+{
+	DynamicObject * o = ControllableContainer::createScriptObject();
+	var itemsArray = var();
+	for (auto &t : items) itemsArray.append(t->createScriptObject());
+	o->setProperty("items", itemsArray);
+	return o;
 }
 
 

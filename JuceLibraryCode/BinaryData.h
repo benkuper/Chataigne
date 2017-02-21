@@ -19,10 +19,10 @@ namespace BinaryData
     const int            check_pngSize = 15786;
 
     extern const char*   edit_png;
-    const int            edit_pngSize = 16216;
+    const int            edit_pngSize = 16204;
 
     extern const char*   file_png;
-    const int            file_pngSize = 16044;
+    const int            file_pngSize = 16030;
 
     extern const char*   icon_png;
     const int            icon_pngSize = 42153;
@@ -37,7 +37,7 @@ namespace BinaryData
     const int            power_pngSize = 15366;
 
     extern const char*   reload_png;
-    const int            reload_pngSize = 16316;
+    const int            reload_pngSize = 16303;
 
     extern const char*   settings_png;
     const int            settings_pngSize = 15919;

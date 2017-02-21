@@ -197,9 +197,9 @@
             <FILE id="kMhua1" name="ScriptManager.cpp" compile="1" resource="0"
                   file="Source/ScriptManager.cpp"/>
             <FILE id="zZ7A0R" name="ScriptManager.h" compile="0" resource="0" file="Source/ScriptManager.h"/>
-            <FILE id="V78UOu" name="ScriptTarget.cpp" compile="1" resource="0"
-                  file="Source/ScriptTarget.cpp"/>
             <FILE id="Y29DBq" name="ScriptTarget.h" compile="0" resource="0" file="Source/ScriptTarget.h"/>
+            <FILE id="vSpGDd" name="ScriptUtil.cpp" compile="1" resource="0" file="Source/ScriptUtil.cpp"/>
+            <FILE id="FCVPIw" name="ScriptUtil.h" compile="0" resource="0" file="Source/ScriptUtil.h"/>
           </GROUP>
           <GROUP id="{70631E35-1CB6-82B1-0572-78D8D2F56250}" name="Plugin">
             <FILE id="Tj1Zxp" name="PluginManager.cpp" compile="1" resource="0"

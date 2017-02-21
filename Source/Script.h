@@ -13,15 +13,18 @@
 
 #include "BaseItem.h"
 #include "ScriptTarget.h"
+#include "Engine.h"
+#include "ScriptUtil.h"
 
 class Script :
-	public BaseItem
+	public BaseItem,
+	public Timer
 {
 public:
 	Script(ScriptTarget * parentTarget = nullptr);
 	~Script();
 
-	enum ScriptState { LOADED, ERROR, EMPTY };
+	enum ScriptState { SCRIPT_LOADED, SCRIPT_ERROR, SCRIPT_EMPTY };
 	
 	StringParameter * filePath;
 	BoolParameter * logParam;
@@ -29,7 +32,14 @@ public:
 
 	ScriptState state;
 	String fileName;
-	 
+
+	
+	bool updateEnabled; //When loading the script, checks if the update function is present
+	float lastUpdateTime;
+	const Identifier updateIdentifier = "update";
+
+	ControllableContainer scriptParamsContainer;
+
 	ScriptTarget * parentTarget;
 
 	ScopedPointer<JavascriptEngine> scriptEngine;
@@ -38,9 +48,13 @@ public:
 
 	void buildEnvironment();
 
+	void setState(ScriptState newState);
+
 	void onContainerParameterChangedInternal(Parameter *) override;
 	void onContainerTriggerTriggered(Trigger *) override;
 
+	// Inherited via Timer
+	virtual void timerCallback() override;
 
 	class ScriptEvent
 	{
@@ -62,6 +76,17 @@ public:
 
 	//Script functions
 	static var logFromScript(const var::NativeFunctionArgs &args);
+
+	static var addBoolParameterFromScript(const var::NativeFunctionArgs &args);
+	static var adIntParameterFromScript(const var::NativeFunctionArgs &args);
+	static var addFloatParameterFromScript(const var::NativeFunctionArgs &args);
+	static var addStringParameterFromScript(const var::NativeFunctionArgs &args);
+	static var addEnumParameterFromScript(const var::NativeFunctionArgs &args);
+	static var addTargetParameterFromScript(const var::NativeFunctionArgs &args);
+
+
+	
+
 };
 
 #endif  // SCRIPT_H_INCLUDED

@@ -23,6 +23,7 @@ public:
 	~ScriptEditor();
 
 	Script * script;
+	bool editMode;
 
 	ScopedPointer<ImageButton> fileBT;
 	ScopedPointer<TriggerImageUI> reloadBT;
@@ -33,9 +34,9 @@ public:
 
 	void paint(Graphics &g) override;
 	void resizedInternalHeader(Rectangle<int> &r) override;
+	void resizedInternalContent(Rectangle<int> &r) override;
 
 	void newMessage(const Script::ScriptEvent &e) override;
-
 
 	void buttonClicked(Button * b) override;
 };

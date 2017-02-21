@@ -120,6 +120,9 @@ public:
 	bool saveAndLoadRecursiveData;
 	bool saveAndLoadName;
 
+	//Script
+	bool includeInScriptObject;
+
 	static ControllableComparator comparator;
 
 	Uuid uid;
