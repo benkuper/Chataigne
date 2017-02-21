@@ -28,6 +28,9 @@ ScriptEditor::ScriptEditor(Script * _script, bool isRoot) :
 	fileBT->addListener(this);
 	editBT->addListener(this);
 
+	paramsEditor = script->scriptParamsContainer.getEditor(false);
+	addAndMakeVisible(paramsEditor);
+
 	addAndMakeVisible(fileBT);
 	addAndMakeVisible(reloadBT);
 	addAndMakeVisible(editBT);
@@ -76,8 +79,16 @@ void ScriptEditor::resizedInternalHeader(Rectangle<int>& r)
 
 void ScriptEditor::resizedInternalContent(Rectangle<int>& r)
 {
+	if (script->state != Script::SCRIPT_CLEAR && paramsEditor->isVisible())
+	{
+		r.setHeight(paramsEditor->getHeight());
+		paramsEditor->setBounds(r);
+		r.setY(r.getBottom() + 2);
+		r.setHeight(0);
+	}
+	
 	if (!editMode) return;
-	r.setHeight(100);
+	//text editor here
 }
 
 
@@ -86,7 +97,13 @@ void ScriptEditor::newMessage(const Script::ScriptEvent & e)
 	switch (e.type)
 	{
 	case Script::ScriptEvent::STATE_CHANGE:
-		repaint();
+		if (script->state != Script::SCRIPT_CLEAR)
+		{
+			repaint();
+			paramsEditor->setVisible(script->scriptParamsContainer.controllables.size() > 0);
+			resized();
+		}
+
 		break;
 	}
 }

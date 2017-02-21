@@ -23,7 +23,6 @@ MappingFilterManagerEditor::~MappingFilterManagerEditor()
 
 void MappingFilterManagerEditor::showMenuAndAddItem(bool)
 {
-	DBG("HERE");
 	MappingFilter * m = MappingFilterFactory::getInstance()->showCreateMenu();
 	if (m != nullptr) manager->addItem(m);
 }

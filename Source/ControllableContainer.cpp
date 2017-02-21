@@ -66,6 +66,7 @@ ControllableContainer::~ControllableContainer()
 
 
 void ControllableContainer::clear() {
+
 	controllables.clear();
 	controllableContainers.clear();
 	queuedNotifier.cancelPendingUpdate();

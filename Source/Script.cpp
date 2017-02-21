@@ -13,8 +13,8 @@
 #include "CustomLogger.h"
 #include "TargetParameter.h"
 
-Script::Script(ScriptTarget * _parentTarget) :
-	BaseItem("Script", true,false),
+Script::Script(ScriptTarget * _parentTarget, bool canBeDisabled) :
+	BaseItem("Script", canBeDisabled, false),
 	parentTarget(_parentTarget),
 	scriptParamsContainer("params"),
 	scriptAsyncNotifier(10)
@@ -28,7 +28,14 @@ Script::Script(ScriptTarget * _parentTarget) :
 	reload = addTrigger("Reload", "Reload the script");
 
 	scriptObject.setMethod("log", Script::logFromScript);
+	scriptObject.setMethod("addBoolParameter", Script::addBoolParameterFromScript);
+	scriptObject.setMethod("addIntParameter", Script::addIntParameterFromScript);
+	scriptObject.setMethod("addFloatParameter", Script::addFloatParameterFromScript);
+	scriptObject.setMethod("addEnumParameter", Script::addEnumParameterFromScript);
+	scriptObject.setMethod("addTargetParameter", Script::addTargetParameterFromScript);
 }
+
+
 
 Script::~Script()
 {
@@ -75,7 +82,7 @@ void Script::loadScript()
 	if (updateEnabled)
 	{
 		lastUpdateTime = (float)Time::getMillisecondCounter() / 1000.f;
-		startTimerHz(50);
+		startTimerHz(30); //should be parametrable
 	}
 
 
@@ -83,9 +90,15 @@ void Script::loadScript()
 
 void Script::buildEnvironment()
 {
+	//clear phase
+	setState(SCRIPT_CLEAR);
+
 	scriptEngine = new JavascriptEngine();
-	scriptEngine->registerNativeObject("local", createScriptObject()); //force local for this objet
-	if (parentTarget != nullptr) scriptEngine->registerNativeObject("parent", parentTarget->createScriptObject()); //force parent for this object
+	while (scriptParamsContainer.controllables.size() > 0) scriptParamsContainer.removeControllable(controllables[0]);
+	scriptParamsContainer.clear();
+
+	scriptEngine->registerNativeObject("script", createScriptObject()); //force "script" for this objet
+	if (parentTarget != nullptr) scriptEngine->registerNativeObject("local", parentTarget->createScriptObject()); //force "local" for this object
 	if (Engine::getInstanceWithoutCreating() != nullptr) scriptEngine->registerNativeObject(Engine::getInstance()->scriptTargetName, Engine::getInstance()->createScriptObject());
 	if (ScriptUtil::getInstanceWithoutCreating() != nullptr) scriptEngine->registerNativeObject(ScriptUtil::getInstance()->scriptTargetName, ScriptUtil::getInstance()->createScriptObject());
 }
@@ -113,7 +126,7 @@ void Script::onContainerTriggerTriggered(Trigger * t)
 
 void Script::timerCallback()
 {
-	if (!enabled->boolValue()) return;
+	if (canBeDisabled && !enabled->boolValue()) return;
 
 	float curTime = (float)Time::getMillisecondCounter() / 1000.f;
 	float deltaTime = curTime - lastUpdateTime;
@@ -154,36 +167,53 @@ var Script::logFromScript(const var::NativeFunctionArgs & args)
 var Script::addBoolParameterFromScript(const var::NativeFunctionArgs & args)
 {
 	Script * s = getObjectFromJS<Script>(args);
+	if (!checkNumArgs(s->niceName, args, 3)) return var();
 	return s->scriptParamsContainer.addBoolParameter(args.arguments[0], args.arguments[1], (bool)args.arguments[2])->createScriptObject();
 }
 
-var Script::adIntParameterFromScript(const var::NativeFunctionArgs & args)
+var Script::addIntParameterFromScript(const var::NativeFunctionArgs & args)
 {
 	Script * s = getObjectFromJS<Script>(args);
+	if (!checkNumArgs(s->niceName, args, 5)) return var();
 	return s->scriptParamsContainer.addIntParameter(args.arguments[0], args.arguments[1], (int)args.arguments[2], (int)args.arguments[3], (int)args.arguments[4])->createScriptObject();
 }
 
 var Script::addFloatParameterFromScript(const var::NativeFunctionArgs & args)
 {
-
 	Script * s = getObjectFromJS<Script>(args);
+	if (!checkNumArgs(s->niceName, args, 5)) return var();
 	return s->scriptParamsContainer.addFloatParameter(args.arguments[0], args.arguments[1], (float)args.arguments[2], (float)args.arguments[3], (float)args.arguments[4])->createScriptObject();
 }
 
 var Script::addStringParameterFromScript(const var::NativeFunctionArgs & args)
 {
 	Script * s = getObjectFromJS<Script>(args);
+	if (!checkNumArgs(s->niceName, args, 3)) return var();
 	return s->scriptParamsContainer.addStringParameter(args.arguments[0], args.arguments[1], args.arguments[2])->createScriptObject();
 }
 
 var Script::addEnumParameterFromScript(const var::NativeFunctionArgs & args)
 {
 	Script * s = getObjectFromJS<Script>(args);
+	if (!checkNumArgs(s->niceName, args, 2)) return var();
 	return s->scriptParamsContainer.addEnumParameter(args.arguments[0], args.arguments[1])->createScriptObject();
 }
 
 var Script::addTargetParameterFromScript(const var::NativeFunctionArgs & args)
 {
 	Script * s = getObjectFromJS<Script>(args);
+	if (!checkNumArgs(s->niceName, args, 2)) return var();
 	return s->scriptParamsContainer.addTargetParameter(args.arguments[0], args.arguments[1])->createScriptObject();
+}
+
+bool Script::checkNumArgs(const String &logName, const var::NativeFunctionArgs & args, int expectedArgs)
+{
+	if (args.numArguments != expectedArgs)
+	{
+		NLOG(logName,"Error addTargetParameter takes " + String(expectedArgs) + " arguments, got " + String(args.numArguments));
+		if (args.numArguments > 0) NLOG("", "When tying to add : " + args.arguments[0].toString());
+		return false;
+	}
+
+	return true;
 }

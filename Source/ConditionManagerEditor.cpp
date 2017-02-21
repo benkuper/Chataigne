@@ -9,7 +9,7 @@
 */
 
 #include "ConditionManagerEditor.h"
-
+#include "ConditionFactory.h"
 
 ConditionManagerEditor::ConditionManagerEditor(ConditionManager * _manager, bool isRoot) :
 	GenericManagerEditor<Condition>(_manager, isRoot)
@@ -19,4 +19,11 @@ ConditionManagerEditor::ConditionManagerEditor(ConditionManager * _manager, bool
 
 ConditionManagerEditor::~ConditionManagerEditor()
 {
+}
+
+void ConditionManagerEditor::showMenuAndAddItem(bool)
+{
+	Condition *c = ConditionFactory::getInstance()->showCreateMenu();
+	if (c != nullptr) manager->addItem(c);
+	
 }

@@ -2,19 +2,18 @@
   ==============================================================================
 
     ConditionEditor.h
-    Created: 28 Oct 2016 8:07:05pm
-    Author:  bkupe
+    Created: 21 Feb 2017 11:40:21am
+    Author:  Ben
 
   ==============================================================================
 */
 
-#ifndef ConditionEditor_H_INCLUDED
-#define ConditionEditor_H_INCLUDED
+#ifndef CONDITIONEDITOR_H_INCLUDED
+#define CONDITIONEDITOR_H_INCLUDED
+
 
 #include "BaseItemEditor.h"
 #include "Condition.h"
-#include "ModuleInputValueChooserUI.h"
-#include "BaseComparatorUI.h"
 
 class ConditionEditor :
 	public BaseItemEditor,
@@ -25,16 +24,11 @@ public:
 	ConditionEditor(Condition *, bool isRoot);
 	virtual ~ConditionEditor();
 
-
 	Condition * condition;
-	ScopedPointer<ModuleInputValueChooserUI> targetUI;
-	ScopedPointer<ControllableUI> sourceFeedbackUI;
-	ScopedPointer<BaseComparatorUI> comparatorUI;
-	
-	void resizedInternalContent(Rectangle<int> &r) override;
-	
-	void paintOverChildren(Graphics &g) override;
-	void updateSourceUI();
+
+
+	virtual void paintOverChildren(Graphics &g) override;
+	virtual void updateUI() {}
 
 	void conditionSourceChanged(Condition *) override;
 
@@ -48,4 +42,5 @@ public:
 
 
 
-#endif  // ConditionEditor_H_INCLUDED
+
+#endif  // CONDITIONEDITOR_H_INCLUDED

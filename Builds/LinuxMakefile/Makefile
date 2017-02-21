@@ -144,10 +144,17 @@ OBJECTS := \
   $(JUCE_OBJDIR)/BaseComparatorUI_36712464.o \
   $(JUCE_OBJDIR)/BaseComparator_fbba0e90.o \
   $(JUCE_OBJDIR)/ComparatorFactory_14bedeb5.o \
-  $(JUCE_OBJDIR)/ConditionManagerEditor_f1a2de28.o \
   $(JUCE_OBJDIR)/ConditionEditor_7e4d6ac9.o \
+  $(JUCE_OBJDIR)/ConditionGroupEditor_8111d0ba.o \
+  $(JUCE_OBJDIR)/ConditionManagerEditor_f1a2de28.o \
+  $(JUCE_OBJDIR)/ScriptConditionEditor_356f6efe.o \
+  $(JUCE_OBJDIR)/StandardConditionEditor_c2b02ccc.o \
   $(JUCE_OBJDIR)/Condition_dbc2fcfc.o \
+  $(JUCE_OBJDIR)/ConditionFactory_8dd64e78.o \
+  $(JUCE_OBJDIR)/ConditionGroup_4b82ebad.o \
   $(JUCE_OBJDIR)/ConditionManager_8b8e239b.o \
+  $(JUCE_OBJDIR)/ScriptCondition_84f58cf1.o \
+  $(JUCE_OBJDIR)/StandardCondition_49d43d3f.o \
   $(JUCE_OBJDIR)/ActionEditor_5de4624c.o \
   $(JUCE_OBJDIR)/ActionManagerUI_82c1584c.o \
   $(JUCE_OBJDIR)/ActionUI_e36558d3.o \
@@ -746,14 +753,29 @@ $(JUCE_OBJDIR)/ComparatorFactory_14bedeb5.o: ../../Source/ComparatorFactory.cpp
 	@echo "Compiling ComparatorFactory.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
 
+$(JUCE_OBJDIR)/ConditionEditor_7e4d6ac9.o: ../../Source/ConditionEditor.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling ConditionEditor.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/ConditionGroupEditor_8111d0ba.o: ../../Source/ConditionGroupEditor.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling ConditionGroupEditor.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
 $(JUCE_OBJDIR)/ConditionManagerEditor_f1a2de28.o: ../../Source/ConditionManagerEditor.cpp
 	-@mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling ConditionManagerEditor.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
 
-$(JUCE_OBJDIR)/ConditionEditor_7e4d6ac9.o: ../../Source/ConditionEditor.cpp
+$(JUCE_OBJDIR)/ScriptConditionEditor_356f6efe.o: ../../Source/ScriptConditionEditor.cpp
 	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling ConditionEditor.cpp"
+	@echo "Compiling ScriptConditionEditor.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/StandardConditionEditor_c2b02ccc.o: ../../Source/StandardConditionEditor.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling StandardConditionEditor.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/Condition_dbc2fcfc.o: ../../Source/Condition.cpp
@@ -761,9 +783,29 @@ $(JUCE_OBJDIR)/Condition_dbc2fcfc.o: ../../Source/Condition.cpp
 	@echo "Compiling Condition.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
 
+$(JUCE_OBJDIR)/ConditionFactory_8dd64e78.o: ../../Source/ConditionFactory.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling ConditionFactory.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/ConditionGroup_4b82ebad.o: ../../Source/ConditionGroup.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling ConditionGroup.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
 $(JUCE_OBJDIR)/ConditionManager_8b8e239b.o: ../../Source/ConditionManager.cpp
 	-@mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling ConditionManager.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/ScriptCondition_84f58cf1.o: ../../Source/ScriptCondition.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling ScriptCondition.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/StandardCondition_49d43d3f.o: ../../Source/StandardCondition.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling StandardCondition.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/ActionEditor_5de4624c.o: ../../Source/ActionEditor.cpp

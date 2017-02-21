@@ -366,21 +366,49 @@
                       file="Source/ComparatorFactory.h"/>
               </GROUP>
               <GROUP id="{6E088B90-7091-75C6-4B65-2EF1286C2A6F}" name="ui">
+                <FILE id="nYsprb" name="ConditionEditor.cpp" compile="1" resource="0"
+                      file="Source/ConditionEditor.cpp"/>
+                <FILE id="AwyrOr" name="ConditionEditor.h" compile="0" resource="0"
+                      file="Source/ConditionEditor.h"/>
+                <FILE id="hpdh0U" name="ConditionGroupEditor.cpp" compile="1" resource="0"
+                      file="Source/ConditionGroupEditor.cpp"/>
+                <FILE id="wFRCqW" name="ConditionGroupEditor.h" compile="0" resource="0"
+                      file="Source/ConditionGroupEditor.h"/>
                 <FILE id="VroQQY" name="ConditionManagerEditor.cpp" compile="1" resource="0"
                       file="Source/ConditionManagerEditor.cpp"/>
                 <FILE id="xE4dGT" name="ConditionManagerEditor.h" compile="0" resource="0"
                       file="Source/ConditionManagerEditor.h"/>
-                <FILE id="aO7fuv" name="ConditionEditor.cpp" compile="1" resource="0"
-                      file="Source/ConditionEditor.cpp"/>
-                <FILE id="Yp6Abo" name="ConditionEditor.h" compile="0" resource="0"
-                      file="Source/ConditionEditor.h"/>
+                <FILE id="UXdtDa" name="ScriptConditionEditor.cpp" compile="1" resource="0"
+                      file="Source/ScriptConditionEditor.cpp"/>
+                <FILE id="HiTq6P" name="ScriptConditionEditor.h" compile="0" resource="0"
+                      file="Source/ScriptConditionEditor.h"/>
+                <FILE id="aO7fuv" name="StandardConditionEditor.cpp" compile="1" resource="0"
+                      file="Source/StandardConditionEditor.cpp"/>
+                <FILE id="Yp6Abo" name="StandardConditionEditor.h" compile="0" resource="0"
+                      file="Source/StandardConditionEditor.h"/>
               </GROUP>
               <FILE id="Kyggr9" name="Condition.cpp" compile="1" resource="0" file="Source/Condition.cpp"/>
               <FILE id="gnmFm6" name="Condition.h" compile="0" resource="0" file="Source/Condition.h"/>
+              <FILE id="qsAYjI" name="ConditionFactory.cpp" compile="1" resource="0"
+                    file="Source/ConditionFactory.cpp"/>
+              <FILE id="uRiAam" name="ConditionFactory.h" compile="0" resource="0"
+                    file="Source/ConditionFactory.h"/>
+              <FILE id="NGGpN7" name="ConditionGroup.cpp" compile="1" resource="0"
+                    file="Source/ConditionGroup.cpp"/>
+              <FILE id="wwczXx" name="ConditionGroup.h" compile="0" resource="0"
+                    file="Source/ConditionGroup.h"/>
               <FILE id="m7eN67" name="ConditionManager.cpp" compile="1" resource="0"
                     file="Source/ConditionManager.cpp"/>
               <FILE id="wbiUmU" name="ConditionManager.h" compile="0" resource="0"
                     file="Source/ConditionManager.h"/>
+              <FILE id="Bz3iRb" name="ScriptCondition.cpp" compile="1" resource="0"
+                    file="Source/ScriptCondition.cpp"/>
+              <FILE id="iBlBPS" name="ScriptCondition.h" compile="0" resource="0"
+                    file="Source/ScriptCondition.h"/>
+              <FILE id="JDKgNt" name="StandardCondition.cpp" compile="1" resource="0"
+                    file="Source/StandardCondition.cpp"/>
+              <FILE id="tsxk35" name="StandardCondition.h" compile="0" resource="0"
+                    file="Source/StandardCondition.h"/>
             </GROUP>
             <GROUP id="{0A23E296-656D-518E-2323-EACB0750AC2B}" name="ui">
               <FILE id="ztgUPf" name="ActionEditor.cpp" compile="1" resource="0"

@@ -23,14 +23,22 @@ public:
 
 	ConditionManager();
 	~ConditionManager();
+	
+	BoolParameter * isValid;
+
+	enum ConditionOperator { AND, OR };
+	EnumParameter * conditionOperator;
+
+	void addItemFromData(var data) override;
 
 	void addItemInternal(Condition *, var data) override;
 	void removeItemInternal(Condition *) override;
 
-	BoolParameter * isValid;
 	void checkAllConditions();
 
 	bool areAllConditionsValid();
+	bool isAtLeastOneConditionValid();
+
 	int getNumEnabledConditions();
 	int getNumValidConditions();
 

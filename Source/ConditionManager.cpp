@@ -10,6 +10,7 @@
 
 #include "ConditionManager.h"
 #include "ConditionManagerEditor.h"
+#include "ConditionFactory.h"
 
 juce_ImplementSingleton(ConditionManager)
 
@@ -21,10 +22,23 @@ ConditionManager::ConditionManager() :
 	isValid = addBoolParameter("Is Valid","Indicates if all the conditions are valid. If so, the consequences are triggered one time, at the moment the action becomes valid.",false);
 	isValid->isControllableFeedbackOnly = true;
 	isValid->hideInEditor = true;
+
+	conditionOperator = addEnumParameter("Operator", "Operator for this manager, will decides how the conditions are validated");
+	conditionOperator->addOption("AND", ConditionOperator::AND);
+	conditionOperator->addOption("OR", ConditionOperator::OR);
 }
 
 ConditionManager::~ConditionManager()
 {
+}
+
+void ConditionManager::addItemFromData(var data)
+{
+
+	String conditionType = data.getProperty("type", "none");
+	if (conditionType.isEmpty()) return;
+	Condition * i = ConditionFactory::getInstance()->createModule(conditionType);
+	if (i != nullptr) addItem(i, data);
 }
 
 void ConditionManager::addItemInternal(Condition * c, var data)
@@ -39,7 +53,18 @@ void ConditionManager::removeItemInternal(Condition * c)
 
 void ConditionManager::checkAllConditions()
 {
-	bool valid = areAllConditionsValid();
+	bool valid = false;
+	ConditionOperator op = (ConditionOperator)(int)conditionOperator->getValueData();
+	switch (op)
+	{
+	case ConditionOperator::AND:
+		valid = areAllConditionsValid();
+		break;
+
+	case ConditionOperator::OR:
+		valid = isAtLeastOneConditionValid();
+		break;
+	}
 	if (valid != isValid->boolValue())
 	{
 		isValid->setValue(valid);
@@ -64,8 +89,19 @@ bool ConditionManager::areAllConditionsValid()
 	for (auto &c : items)
 	{
 		if (!c->enabled->boolValue()) continue;
+		if (!c->isValid->boolValue()) return false;
+	}
+
+	return hasAtLeastOneValid;
+}
+
+bool ConditionManager::isAtLeastOneConditionValid()
+{
+	bool hasAtLeastOneValid = false;
+	for (auto &c : items)
+	{
+		if (!c->enabled->boolValue()) continue;
 		if (c->isValid->boolValue()) hasAtLeastOneValid = true;
-		else return false;
 	}
 
 	return hasAtLeastOneValid;

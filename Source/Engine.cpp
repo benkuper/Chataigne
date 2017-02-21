@@ -18,6 +18,7 @@
 #include "Outliner.h"
 #include "ControllableFactory.h"
 #include "MappingFilterFactory.h"
+#include "ConditionFactory.h"
 #include "MIDIManager.h"
 #include "GamepadManager.h"
 #include "WiimoteManager.h"
@@ -68,6 +69,7 @@ Engine::~Engine(){
 
   ControllableFactory::deleteInstance();
   MappingFilterFactory::deleteInstance();
+  ConditionFactory::deleteInstance();
   
   MIDIManager::deleteInstance();
   GamepadManager::deleteInstance();

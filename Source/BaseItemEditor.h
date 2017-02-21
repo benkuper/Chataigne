@@ -35,7 +35,7 @@ public:
 	ScopedPointer<InspectableEditor> scriptManagerUI;
 
 	int headerHeight;
-
+	bool transparentBG;
 	bool paintHeaderOnly;
 
 	virtual void paint(Graphics &g) override;

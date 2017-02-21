@@ -21,10 +21,10 @@ class Script :
 	public Timer
 {
 public:
-	Script(ScriptTarget * parentTarget = nullptr);
+	Script(ScriptTarget * parentTarget = nullptr, bool canBeDisabled = true);
 	~Script();
 
-	enum ScriptState { SCRIPT_LOADED, SCRIPT_ERROR, SCRIPT_EMPTY };
+	enum ScriptState { SCRIPT_LOADED, SCRIPT_ERROR, SCRIPT_EMPTY, SCRIPT_CLEAR };
 	
 	StringParameter * filePath;
 	BoolParameter * logParam;
@@ -32,7 +32,6 @@ public:
 
 	ScriptState state;
 	String fileName;
-
 	
 	bool updateEnabled; //When loading the script, checks if the update function is present
 	float lastUpdateTime;
@@ -78,13 +77,13 @@ public:
 	static var logFromScript(const var::NativeFunctionArgs &args);
 
 	static var addBoolParameterFromScript(const var::NativeFunctionArgs &args);
-	static var adIntParameterFromScript(const var::NativeFunctionArgs &args);
+	static var addIntParameterFromScript(const var::NativeFunctionArgs &args);
 	static var addFloatParameterFromScript(const var::NativeFunctionArgs &args);
 	static var addStringParameterFromScript(const var::NativeFunctionArgs &args);
 	static var addEnumParameterFromScript(const var::NativeFunctionArgs &args);
 	static var addTargetParameterFromScript(const var::NativeFunctionArgs &args);
 
-
+	static bool checkNumArgs(const String &logName, const var::NativeFunctionArgs &args, int expectedArgs);
 	
 
 };

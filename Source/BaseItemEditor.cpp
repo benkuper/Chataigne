@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    BaseItemEditor.cpp
-    Created: 18 Jan 2017 2:23:31pm
-    Author:  Ben
+	BaseItemEditor.cpp
+	Created: 18 Jan 2017 2:23:31pm
+	Author:  Ben
 
   ==============================================================================
 */
@@ -12,35 +12,36 @@
 #include "AssetManager.h"
 #include "ScriptManager.h"
 
- BaseItemEditor::BaseItemEditor(BaseItem * bi, bool isRoot) :
-	  InspectableEditor(bi, isRoot),
-	  headerHeight(20),
-	  item(bi),
-	  paintHeaderOnly(isRoot)
+BaseItemEditor::BaseItemEditor(BaseItem * bi, bool isRoot) :
+	InspectableEditor(bi, isRoot),
+	headerHeight(20),
+	item(bi),
+	transparentBG(false),
+	paintHeaderOnly(isRoot)
 {
-	  if (item->canBeDisabled)
-	  {
-		  enabledUI = item->enabled->createImageToggle(AssetManager::getInstance()->getPowerBT());
-		  addAndMakeVisible(enabledUI);
-	  }
+	if (item->canBeDisabled)
+	{
+		enabledUI = item->enabled->createImageToggle(AssetManager::getInstance()->getPowerBT());
+		addAndMakeVisible(enabledUI);
+	}
 
-	  nameUI = item->nameParam->createStringParameterUI();
-	  addAndMakeVisible(nameUI);
+	nameUI = item->nameParam->createStringParameterUI();
+	addAndMakeVisible(nameUI);
 
-	  if (!isRoot)
-	  {
-		  removeBT = AssetManager::getInstance()->getRemoveBT();
-		  addAndMakeVisible(removeBT);
-		  removeBT->addListener(this);
-	  }
+	if (!isRoot)
+	{
+		removeBT = AssetManager::getInstance()->getRemoveBT();
+		addAndMakeVisible(removeBT);
+		removeBT->addListener(this);
+	}
 
-	  if (item->canHaveScripts)
-	  {
-		  scriptManagerUI = item->scriptManager->getEditor(false);
-		  addAndMakeVisible(scriptManagerUI);
-	  }
+	if (item->canHaveScripts)
+	{
+		scriptManagerUI = item->scriptManager->getEditor(false);
+		addAndMakeVisible(scriptManagerUI);
+	}
 
-	  item->addAsyncContainerListener(this);
+	item->addAsyncContainerListener(this);
 }
 
 BaseItemEditor::~BaseItemEditor()
@@ -50,8 +51,9 @@ BaseItemEditor::~BaseItemEditor()
 
 void BaseItemEditor::paint(Graphics & g)
 {
+	if (transparentBG) return;
 	Rectangle<int> r = getLocalBounds();
-	if(paintHeaderOnly) r.setHeight((int)headerHeight);
+	if (paintHeaderOnly) r.setHeight((int)headerHeight);
 	Colour c = (item->canBeDisabled && item->enabled->boolValue()) ? BG_COLOR.brighter().withAlpha(.3f) : BG_COLOR.darker().withAlpha(.6f);
 	g.setColour(c);
 	g.fillRoundedRectangle(r.toFloat(), 2);
@@ -85,7 +87,7 @@ void BaseItemEditor::resized()
 		r.setHeight(scriptManagerUI->getHeight());
 		scriptManagerUI->setBounds(r);
 	}
-	
+
 	r.setY(r.getBottom() + 2);
 	r.setHeight(0); //if no override, ensure bottom is set
 	resizedInternalFooter(r);

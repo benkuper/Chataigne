@@ -23,19 +23,9 @@ public:
 	virtual ~Condition();
 
 	BoolParameter * isValid;
-	TargetParameter * sourceTarget;
-	WeakReference<Controllable> sourceControllable;
-	ScopedPointer<BaseComparator> comparator;
+	virtual void onContainerParameterChangedInternal(Parameter *) override;
 
-
-	var getJSONData() override;
-	void loadJSONDataInternal(var data) override;
-
-	void setSourceControllable(WeakReference<Controllable> c);
-	void onContainerParameterChangedInternal(Parameter *) override;
-	void comparatorValidationChanged(BaseComparator *) override;
-
-	InspectableEditor * getEditor(bool isRoot) override;
+	virtual var getJSONData() override;
 
 	class ConditionListener
 	{
@@ -64,6 +54,8 @@ public:
 	void addAsyncCoalescedValidationListener(AsyncListener* newListener) { validationAsyncNotifier.addAsyncCoalescedListener(newListener); }
 	void removeAsyncValidationListener(AsyncListener* listener) { validationAsyncNotifier.removeListener(listener); }
 
+
+	virtual String getTypeString() const { jassert(false); return "error"; }
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Condition)
 };

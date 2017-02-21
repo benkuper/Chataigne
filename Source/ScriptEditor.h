@@ -30,6 +30,8 @@ public:
 	ScopedPointer<ImageButton> editBT;
 	ScopedPointer<BoolToggleUI> logUI;
 
+	ScopedPointer<InspectableEditor> paramsEditor;
+
 	Rectangle<int> statusBounds;
 
 	void paint(Graphics &g) override;

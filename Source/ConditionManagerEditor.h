@@ -23,6 +23,8 @@ public:
 	ConditionManagerEditor(ConditionManager *_manager, bool isRoot);
 	~ConditionManagerEditor();
 
+	void showMenuAndAddItem(bool isFromAddButton) override;
+
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ConditionManagerEditor)
 };
 
