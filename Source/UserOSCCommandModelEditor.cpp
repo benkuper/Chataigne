@@ -42,6 +42,9 @@ void UserOSCCommandModelEditor::resizedInternalContent(Rectangle<int>& r)
 
 }
 
+// MANAGER
+
+
 UserOSCCommandModelArgumentManagerEditor::UserOSCCommandModelArgumentManagerEditor(OSCCommandModelArgumentManager * manager, bool isRoot) :
 	GenericManagerEditor(manager, isRoot),
 	aManager(manager)

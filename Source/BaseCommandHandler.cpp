@@ -37,7 +37,7 @@ void BaseCommandHandler::setCommand(CommandDefinition * commandDef)
 	}
 
 	commandDefinition = commandDef;
-	if (commandDef != nullptr) command = commandDef->create(CommandContext::ACTION);
+	if (commandDef != nullptr) command = commandDef->create(context);
 
 	else command = nullptr;
 

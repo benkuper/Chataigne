@@ -222,6 +222,8 @@ OBJECTS := \
   $(JUCE_OBJDIR)/OSCModuleBaseEditor_2fc4522a.o \
   $(JUCE_OBJDIR)/OSCModuleUI_1145d900.o \
   $(JUCE_OBJDIR)/CustomOSCModuleEditor_86230fc8.o \
+  $(JUCE_OBJDIR)/CustomOSCCommandArgumentManager_becd71b4.o \
+  $(JUCE_OBJDIR)/CustomOSCCommandArgument_aba6903.o \
   $(JUCE_OBJDIR)/UserOSCCommandModel_e494bd53.o \
   $(JUCE_OBJDIR)/UserOSCCommandModelManager_54caa364.o \
   $(JUCE_OBJDIR)/UserOSCCommandModelEditor_8d0d4de0.o \
@@ -229,6 +231,8 @@ OBJECTS := \
   $(JUCE_OBJDIR)/UserOSCCommandModelUI_535b2e67.o \
   $(JUCE_OBJDIR)/UserOSCCommandEditor_d66e784d.o \
   $(JUCE_OBJDIR)/UserOSCCommand_ef0d7d80.o \
+  $(JUCE_OBJDIR)/CustomOSCCommandArgumentEditor_eb4f7590.o \
+  $(JUCE_OBJDIR)/CustomOSCCommandArgumentManagerEditor_ca2b7581.o \
   $(JUCE_OBJDIR)/CustomOSCCommandEditor_54d2a3f3.o \
   $(JUCE_OBJDIR)/CustomOSCCommand_684cdda6.o \
   $(JUCE_OBJDIR)/CustomOSCModule_c9fc0d3b.o \
@@ -1144,6 +1148,16 @@ $(JUCE_OBJDIR)/CustomOSCModuleEditor_86230fc8.o: ../../Source/CustomOSCModuleEdi
 	@echo "Compiling CustomOSCModuleEditor.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
 
+$(JUCE_OBJDIR)/CustomOSCCommandArgumentManager_becd71b4.o: ../../Source/CustomOSCCommandArgumentManager.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling CustomOSCCommandArgumentManager.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/CustomOSCCommandArgument_aba6903.o: ../../Source/CustomOSCCommandArgument.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling CustomOSCCommandArgument.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
 $(JUCE_OBJDIR)/UserOSCCommandModel_e494bd53.o: ../../Source/UserOSCCommandModel.cpp
 	-@mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling UserOSCCommandModel.cpp"
@@ -1177,6 +1191,16 @@ $(JUCE_OBJDIR)/UserOSCCommandEditor_d66e784d.o: ../../Source/UserOSCCommandEdito
 $(JUCE_OBJDIR)/UserOSCCommand_ef0d7d80.o: ../../Source/UserOSCCommand.cpp
 	-@mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling UserOSCCommand.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/CustomOSCCommandArgumentEditor_eb4f7590.o: ../../Source/CustomOSCCommandArgumentEditor.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling CustomOSCCommandArgumentEditor.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/CustomOSCCommandArgumentManagerEditor_ca2b7581.o: ../../Source/CustomOSCCommandArgumentManagerEditor.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling CustomOSCCommandArgumentManagerEditor.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/CustomOSCCommandEditor_54d2a3f3.o: ../../Source/CustomOSCCommandEditor.cpp

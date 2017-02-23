@@ -13,22 +13,25 @@
 
 #include "OSCCommand.h"
 #include "CustomOSCModule.h"
-
+#include "CustomOSCCommandArgumentManager.h"
 
 class CustomOSCCommand :
-	public OSCCommand
+	public OSCCommand,
+	public CustomOSCCommandArgumentManager::ManagerListener
 {
 public:
 	CustomOSCCommand(CustomOSCModule * output, CommandContext context, var params);
 	~CustomOSCCommand();
 	
-	void addIntArgument();
-	void addFloatArgument();
-	void addStringArgument();
-	void addArgument(Parameter *);
+	CustomOSCCommandArgumentManager argManager;
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
+
+
+	void trigger() override;
+
+	void useForMappingChanged(CustomOSCCommandArgument * a) override;
 
 	InspectableEditor * getEditor(bool /*isRoot*/) override;
 	static CustomOSCCommand * create(ControllableContainer * module, CommandContext context, var params) { return new CustomOSCCommand((CustomOSCModule *)module, context, params); }

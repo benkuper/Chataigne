@@ -12,8 +12,13 @@
 #include "CustomOSCCommandEditor.h"
 
 CustomOSCCommand::CustomOSCCommand(CustomOSCModule * module, CommandContext context, var params) :
-	OSCCommand(module, context, params)
+	OSCCommand(module, context, params),
+	argManager(context == MAPPING)
 {
+	DBG("Custom OSC Command, context : " << context);
+	removeChildControllableContainer(&argumentsContainer);
+	addChildControllableContainer(&argManager);
+	argManager.addArgumentManagerListener(this);
 }
 
 CustomOSCCommand::~CustomOSCCommand()
@@ -21,46 +26,59 @@ CustomOSCCommand::~CustomOSCCommand()
 	masterReference.clear();
 }
 
-
-void CustomOSCCommand::addIntArgument()
-{
-	String id = String(argumentsContainer.controllables.size() + 1);
-	Parameter * p = new IntParameter("#" + id, "Argument #" + id + ", type int", 0, -1000, 1000);
-	addArgument(p);
-}
-
-void CustomOSCCommand::addFloatArgument()
-{
-	String id = String(argumentsContainer.controllables.size() + 1);
-	Parameter * p = new FloatParameter("#" + id, "Argument #" + id + ", type int", 0, 0, 1);
-	addArgument(p);
-}
-
-void CustomOSCCommand::addStringArgument()
-{
-	String id = String(argumentsContainer.controllables.size() + 1);
-	Parameter * p = new StringParameter("#" + id, "Argument #" + id + ", type int", "myString");
-	addArgument(p);
-}
-
-void CustomOSCCommand::addArgument(Parameter * p)
-{
-	p->saveValueOnly = false;
-	p->isRemovableByUser = true; 
-	argumentsContainer.addControllable(p);
-}
-
 var CustomOSCCommand::getJSONData()
 {
 	var data = OSCCommand::getJSONData();
-	data.getDynamicObject()->setProperty("arguments", argumentsContainer.getJSONData());
+	data.getDynamicObject()->setProperty("argManager", argManager.getJSONData());
 	return data;
 }
 
 void CustomOSCCommand::loadJSONDataInternal(var data)
 {
 	OSCCommand::loadJSONDataInternal(data);
-	argumentsContainer.loadJSONData(data.getProperty("arguments", var()), true);
+	argManager.loadJSONData(data.getProperty("argManager", var()), true);
+}
+
+void CustomOSCCommand::trigger()
+{
+	if (oscModule == nullptr) return;
+
+	OSCMessage m(address->stringValue());
+
+	for (auto &a : argManager.items)
+	{
+		Parameter * p = a->param;
+		if (p == nullptr) continue;
+		switch (p->type)
+		{
+		case Controllable::BOOL: m.addInt32(p->boolValue() ? 1 : 0); break;
+		case Controllable::INT: m.addInt32(p->intValue()); break;
+		case Controllable::FLOAT: m.addFloat32(p->floatValue()); break;
+		case Controllable::STRING: m.addString(p->stringValue()); break;
+		case Controllable::POINT2D:
+			m.addFloat32(((Point2DParameter *)a)->x);
+			m.addFloat32(((Point2DParameter *)a)->y);
+			break;
+		case Controllable::POINT3D:
+			m.addFloat32(((Point3DParameter *)a)->x);
+			m.addFloat32(((Point3DParameter *)a)->y);
+			m.addFloat32(((Point3DParameter *)a)->z);
+			break;
+
+		default:
+			//not handle
+			break;
+
+		}
+	}
+
+	oscModule->sendOSC(m);
+}
+
+void CustomOSCCommand::useForMappingChanged(CustomOSCCommandArgument * a)
+{
+	if (a->useForMapping->boolValue()) targetMappingParameter = a->param;
+	else if(targetMappingParameter == a->param) targetMappingParameter = nullptr;
 }
 
 InspectableEditor * CustomOSCCommand::getEditor(bool)

@@ -685,6 +685,14 @@
                         file="Source/CustomOSCModuleEditor.h"/>
                 </GROUP>
                 <GROUP id="{054F9429-4D5F-5398-2370-34DC34C50A1E}" name="commands">
+                  <FILE id="hZMvii" name="CustomOSCCommandArgumentManager.cpp" compile="1"
+                        resource="0" file="Source/CustomOSCCommandArgumentManager.cpp"/>
+                  <FILE id="K42wpv" name="CustomOSCCommandArgumentManager.h" compile="0"
+                        resource="0" file="Source/CustomOSCCommandArgumentManager.h"/>
+                  <FILE id="X3xJzZ" name="CustomOSCCommandArgument.cpp" compile="1" resource="0"
+                        file="Source/CustomOSCCommandArgument.cpp"/>
+                  <FILE id="hYCcM3" name="CustomOSCCommandArgument.h" compile="0" resource="0"
+                        file="Source/CustomOSCCommandArgument.h"/>
                   <GROUP id="{7006A5C5-4F64-5AC5-84CA-FF17A52209BC}" name="user">
                     <GROUP id="{AA4047DB-9521-A804-2662-257FB65454B3}" name="model">
                       <FILE id="eDhc6j" name="UserOSCCommandModel.cpp" compile="1" resource="0"
@@ -722,6 +730,14 @@
                           file="Source/UserOSCCommand.h"/>
                   </GROUP>
                   <GROUP id="{3B147154-3CFA-970E-E371-6120BD47FB29}" name="ui">
+                    <FILE id="KA0uGt" name="CustomOSCCommandArgumentEditor.cpp" compile="1"
+                          resource="0" file="Source/CustomOSCCommandArgumentEditor.cpp"/>
+                    <FILE id="w0VB3B" name="CustomOSCCommandArgumentEditor.h" compile="0"
+                          resource="0" file="Source/CustomOSCCommandArgumentEditor.h"/>
+                    <FILE id="chl4Wl" name="CustomOSCCommandArgumentManagerEditor.cpp"
+                          compile="1" resource="0" file="Source/CustomOSCCommandArgumentManagerEditor.cpp"/>
+                    <FILE id="kmZb7g" name="CustomOSCCommandArgumentManagerEditor.h" compile="0"
+                          resource="0" file="Source/CustomOSCCommandArgumentManagerEditor.h"/>
                     <FILE id="n52FX4" name="CustomOSCCommandEditor.cpp" compile="1" resource="0"
                           file="Source/CustomOSCCommandEditor.cpp"/>
                     <FILE id="KyG0PE" name="CustomOSCCommandEditor.h" compile="0" resource="0"
