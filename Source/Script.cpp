@@ -107,7 +107,6 @@ void Script::setState(ScriptState newState)
 {
 	state = newState;
 	scriptAsyncNotifier.addMessage(new ScriptEvent(ScriptEvent::STATE_CHANGE));
-	scriptAsyncNotifier.triggerAsyncUpdate();
 }
 
 

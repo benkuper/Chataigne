@@ -1111,11 +1111,11 @@
             extraDefs="" externalLibraries="Setupapi.lib&#10;hid.lib">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" winWarningLevel="4" generateManifest="1" winArchitecture="32-bit"
-                       isDebug="1" optimisation="1" targetName="Chataigne" headerPath="../../External/wiiuse&#10;$(ASIOSDK)\common"
+                       isDebug="1" optimisation="1" targetName="Chataigne" headerPath="../../External/wiiuse&#10;$(ASIOSDK)/common"
                        libraryPath=""/>
         <CONFIGURATION name="Release" winWarningLevel="4" generateManifest="1" winArchitecture="32-bit"
                        isDebug="0" optimisation="3" targetName="Chataigne" libraryPath=""
-                       headerPath="../../External/wiiuse&#10;$(ASIOSDK)\common"/>
+                       headerPath="../../External/wiiuse&#10;$(ASIOSDK)/common"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_core" path="D:/Softwares/JUCE/modules"/>

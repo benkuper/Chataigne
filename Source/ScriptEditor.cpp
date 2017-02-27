@@ -40,6 +40,7 @@ ScriptEditor::ScriptEditor(Script * _script, bool isRoot) :
 
 ScriptEditor::~ScriptEditor()
 {
+	script->removeAsyncScriptListener(this);
 }
 
 void ScriptEditor::paint(Graphics & g)

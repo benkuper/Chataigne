@@ -23,6 +23,7 @@ void ScriptFilter::processInternal()
 {
 	Array<var> args;
 	args.add(sourceParam->createScriptObject());
+	if (script.scriptEngine == nullptr) return;
 	var result = script.scriptEngine->callFunction("filter", var::NativeFunctionArgs(var::undefined(), args.begin(), 1));
 	filteredParameter->setValue(result);
 }
