@@ -15,7 +15,7 @@ CustomOSCCommand::CustomOSCCommand(CustomOSCModule * module, CommandContext cont
 	OSCCommand(module, context, params),
 	argManager(context == MAPPING)
 {
-	DBG("Custom OSC Command, context : " << context);
+	address->isEditable = true;
 	removeChildControllableContainer(&argumentsContainer);
 	addChildControllableContainer(&argManager);
 	argManager.addArgumentManagerListener(this);

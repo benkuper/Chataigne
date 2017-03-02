@@ -29,6 +29,7 @@ FloatParameterLabelUI::FloatParameterLabelUI(Parameter * p) :
 	valueLabel.addListener(this);
 
 	//valueLabel.setColour(valueLabel.textWhenEditingColourId, TEXTNAME_COLOR);
+	valueLabel.setColour(valueLabel.backgroundColourId, BG_COLOR);
 	valueLabel.setColour(valueLabel.backgroundWhenEditingColourId, Colours::white);
 	nameLabel.setTooltip(p->description);
 

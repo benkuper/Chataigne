@@ -14,10 +14,12 @@ BoolComparator::BoolComparator(Controllable * c) :
 	ParameterComparator(c),
 	boolParam((BoolParameter *)c)
 {
-	addCompareOption("=", equalsId);
-
+	
 	boolRef = addBoolParameter("Reference", "Comparison Reference to check against source value", boolParam->defaultValue);
 	reference = boolRef;
+
+	addCompareOption("=", equalsId);
+
 }
 
 BoolComparator::~BoolComparator()

@@ -17,6 +17,7 @@ OSCCommand::OSCCommand(OSCModule * _module, CommandContext context, var params) 
 	argumentsContainer("Arguments")
 {
 	address = addStringParameter("Address", "Adress of the OSC Message (e.g. /example)", params.getProperty("address","/example"));
+	address->isEditable = false;
 	addChildControllableContainer(&argumentsContainer);
 }
 

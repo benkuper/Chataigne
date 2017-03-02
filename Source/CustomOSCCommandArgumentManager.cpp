@@ -16,7 +16,6 @@ CustomOSCCommandArgumentManager::CustomOSCCommandArgumentManager(bool _mappingEn
 	BaseManager("arguments"),
 	mappingEnabled(_mappingEnabled)
 {
-	DBG("Managger mappingEnabled ? " << (int)mappingEnabled);
 	selectItemWhenCreated = false;
 }
 

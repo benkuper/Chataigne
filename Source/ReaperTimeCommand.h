@@ -23,6 +23,9 @@ public:
 
 	ReaperModule * reaperModule;
 	FloatParameter * timeParam;
+
+	static ReaperTimeCommand * create(ControllableContainer * module, CommandContext context, var params) { return new ReaperTimeCommand((ReaperModule *)module, context, params); }
+
 };
 
 

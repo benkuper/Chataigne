@@ -68,6 +68,7 @@ float TimeLabel::timeStringToValue(String str) const
 	StringArray sa;
 	if (str.endsWithChar(':')) str += "0";
 	sa.addTokens(str,":","");
+
 	float value = 0;
 	
 	value += sa.strings[sa.strings.size()-1].getFloatValue();
