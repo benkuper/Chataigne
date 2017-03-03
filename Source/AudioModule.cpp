@@ -91,7 +91,7 @@ void AudioModule::audioDeviceIOCallback(const float ** inputChannelData, int num
 			pitch->setValue(pitchNote);
 			
 			note->setValueWithKey(MIDIManager::getNoteName(pitchNote,false));
-			octave->setValue(floor<int>(pitchNote / 12));
+			octave->setValue(floor (pitchNote / 12.0) );
 
 
 		} else

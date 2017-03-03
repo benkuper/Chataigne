@@ -12,7 +12,7 @@
 #define AUDIOMODULE_H_INCLUDED
 
 #include "Module.h"
-#include "pitch\PitchMPM.h"
+#include "pitch/PitchMPM.h"
 
 class AudioModule :
 	public Module,
