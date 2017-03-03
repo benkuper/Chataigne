@@ -36,7 +36,7 @@
 #include "ir.h"                         /* for wiiuse_set_ir_mode */
 #include "wiiuse_internal.h"
 
-#include "os.h"                         /* for wiiuse_os_* */
+//#include "os.h"                         /* for wiiuse_os_* */
 
 #include <stdlib.h>                     /* for free, malloc */
 

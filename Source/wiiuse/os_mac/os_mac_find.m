@@ -37,7 +37,7 @@
 
 #import "io.h"
 #import "events.h"
-#import "os.h"
+//#import "os.h"
 
 #import <IOBluetooth/IOBluetoothUtilities.h>
 #import <IOBluetooth/objc/IOBluetoothDevice.h>

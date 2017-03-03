@@ -37,7 +37,7 @@
 
 #include "wiiuse_internal.h"
 #include "io.h"                         /* for wiiuse_handshake, etc */
-#include "os.h"							/* for wiiuse_os_* */
+//#include "os.h"							/* for wiiuse_os_* */
 
 #include <stdio.h>                      /* for printf, FILE */
 #include <stdlib.h>                     /* for malloc, free */

@@ -36,7 +36,7 @@
 
 #include "io.h"
 #include "events.h"
-#include "os.h"
+//#include "os.h"
 
 #ifdef WIIUSE_WIN32
 #include <stdlib.h>
