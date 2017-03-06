@@ -22,7 +22,10 @@ public:
 	~ReaperTimeCommand();
 
 	ReaperModule * reaperModule;
+	BoolParameter * stopTimePlay;
 	FloatParameter * timeParam;
+
+	void trigger() override;
 
 	static ReaperTimeCommand * create(ControllableContainer * module, CommandContext context, var params) { return new ReaperTimeCommand((ReaperModule *)module, context, params); }
 

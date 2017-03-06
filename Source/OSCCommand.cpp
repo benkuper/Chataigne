@@ -25,6 +25,19 @@ OSCCommand::~OSCCommand()
 {
 }
 
+var OSCCommand::getJSONData()
+{
+	var data = ModuleCommand::getJSONData();
+	data.getDynamicObject()->setProperty("arguments", argumentsContainer.getJSONData());
+	return data;
+}
+
+void OSCCommand::loadJSONDataInternal(var data)
+{
+	ModuleCommand::loadJSONDataInternal(data);
+	argumentsContainer.loadJSONData(data.getProperty("arguments", var()), true);
+}
+
 void OSCCommand::trigger()
 {
 	if (oscModule == nullptr) return;

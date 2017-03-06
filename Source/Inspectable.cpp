@@ -10,7 +10,6 @@
 
 #include "Inspectable.h"
 #include "InspectableSelectionManager.h"
-#include "ShapeShifterManager.h"
 
 Inspectable::Inspectable(const String & _inspectableType) :
 	inspectableType(_inspectableType),

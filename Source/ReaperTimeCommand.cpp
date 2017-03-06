@@ -17,8 +17,18 @@ ReaperTimeCommand::ReaperTimeCommand(ReaperModule * _module, CommandContext cont
 	timeParam = argumentsContainer.addFloatParameter("Time", "Target time on the Reaper timeline", 0,0, 100000);
 	timeParam->defaultUI = FloatParameter::TIME;
 	setTargetMappingParameter(timeParam);
+
+	stopTimePlay = addBoolParameter("Stop/Time/Play", "Sends a Stop before, then time and then play", true);
 }
 
 ReaperTimeCommand::~ReaperTimeCommand()
 {
+}
+
+void ReaperTimeCommand::trigger()
+{
+	if (stopTimePlay->boolValue()) oscModule->sendOSC(OSCMessage("/stop"));
+	OSCCommand::trigger();
+	if (stopTimePlay->boolValue()) oscModule->sendOSC(OSCMessage("/play"));
+	
 }

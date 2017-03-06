@@ -45,6 +45,7 @@ PopupMenu ModuleManager::getAllModulesInputValuesMenu(bool parametersOnly)
 		{
 			Controllable * c = items[i]->valuesCC.controllables[j];
 			if (c->type == Controllable::TRIGGER && parametersOnly) continue;
+			//DBG("Add menu item " << c->niceName << " / " << i*1000+j+1);
 			sMenu.addItem(i * 1000 + j + 1, c->niceName);
 		}
 		menu.addSubMenu(items[i]->niceName, sMenu);
@@ -58,6 +59,7 @@ Controllable * ModuleManager::getControllableForItemID(int itemID)
 	if (itemID <= 0) return nullptr;
 	int moduleIndex = (int)floor((itemID-1) / 1000);
 	int valueIndex = (itemID-1) % 1000;
+	//DBG("Get Controllable for ItemID : " << itemID << " / " <<moduleIndex << " / "<<valueIndex);
 	return items[moduleIndex]->valuesCC.controllables[valueIndex];
 }
 
@@ -65,8 +67,8 @@ PopupMenu ModuleManager::getAllModulesCommandMenu(CommandContext context)
 {
 	PopupMenu menu;
 	for (int i = 0; i < items.size(); i++) menu.addSubMenu(items[i]->niceName, items[i]->defManager.getCommandMenu(i * 1000,context));
-	menu.addSubMenu(StateManager::getInstance()->module.niceName, StateManager::getInstance()->module.defManager.getCommandMenu(2000, context));
-	menu.addSubMenu(SequenceManager::getInstance()->module.niceName, SequenceManager::getInstance()->module.defManager.getCommandMenu(3000, context));
+	menu.addSubMenu(StateManager::getInstance()->module.niceName, StateManager::getInstance()->module.defManager.getCommandMenu(-1000, context));
+	menu.addSubMenu(SequenceManager::getInstance()->module.niceName, SequenceManager::getInstance()->module.defManager.getCommandMenu(-2000, context));
 	return menu;
 }
 
@@ -76,8 +78,8 @@ CommandDefinition * ModuleManager::getCommandDefinitionForItemID(int itemID, Mod
 	if (itemID <= 0) return nullptr;
 	Module * m = lockedModule;
 
-	if (itemID > 3000) m = &SequenceManager::getInstance()->module;
-	else if (itemID > 2000) m = &StateManager::getInstance()->module;
+	if (itemID < -1000) m = &SequenceManager::getInstance()->module;
+	else if (itemID < 0) m = &StateManager::getInstance()->module;
 
 	else if (m == nullptr)
 	{

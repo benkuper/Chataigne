@@ -27,9 +27,6 @@ public:
 
 	void rebuildArgsFromModel();
 
-	var getJSONData() override;
-	void loadJSONDataInternal(var data) override;
-
 	InspectableEditor * getEditor(bool /*isRoot*/) override;
 	static UserOSCCommand * create(ControllableContainer * module, CommandContext context, var params) { return new UserOSCCommand((CustomOSCModule *)module, context, params); }
 

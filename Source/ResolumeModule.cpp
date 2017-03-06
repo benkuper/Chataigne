@@ -16,22 +16,6 @@
 ResolumeModule::ResolumeModule() :
 	OSCModule("Resolume",7001,7000)
 {	
-/*
-	"Column Transport"
-		"Launch Column"
-		"Launch MultiColumn"
-		"Stop Column"
-
-	"Video"
-		"Video Opacity"
-		"Video Parameter"
-		"Source Parameter"
-		"Dashboard Parameter"
-
-	"Audio"
-		"Audio Volume"
-		"Audio Parameter"
-*/
 	defManager.add(CommandDefinition::createDef(this, "Composition", "Stop Composition", &OSCCommand::create, CommandContext::ACTION)->addParam("level","Composition")->addParam("suffix","stop"));	
 	
 	defManager.add(CommandDefinition::createDef(this, "Launch / Stop", "Launch Clip", &ResolumeClipCommand::create, CommandContext::ACTION)->addParam("level", "Clip")->addParam("suffix","connect"));

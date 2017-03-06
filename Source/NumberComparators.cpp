@@ -49,15 +49,17 @@ IntComparator::IntComparator(Controllable * c) :
 	ParameterComparator(c),
 	intParam((IntParameter *)c)
 {
+	
+
+	intRef = addIntParameter("Reference", "Comparison Reference to check against source value", intParam->defaultValue,intParam->minimumValue,intParam->maximumValue);
+	reference = intRef;
+
 	addCompareOption("=", equalsId);
 	addCompareOption(">", greaterId);
 	addCompareOption("<", lessId);
 	addCompareOption(">=", greaterOrEqualId);
 	addCompareOption("<=", lessOrEqualId);
 	addCompareOption("~", inRangeId);
-
-	intRef = addIntParameter("Reference", "Comparison Reference to check against source value", intParam->defaultValue,intParam->minimumValue,intParam->maximumValue);
-	reference = intRef;
 }
 
 IntComparator::~IntComparator()

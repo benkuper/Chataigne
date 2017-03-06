@@ -19,10 +19,13 @@ class QueuedNotifier:
 {
 public:
 
-    QueuedNotifier(int _maxSize):fifo(_maxSize){
+    QueuedNotifier(int _maxSize, bool _dropMessageOnOverflow = true):fifo(_maxSize),dropMessageOnOverflow(_dropMessageOnOverflow)
+	{
         maxSize = _maxSize;
 
     }
+
+	bool dropMessageOnOverflow;
 
     virtual ~QueuedNotifier() {
 		listeners.clear();
@@ -59,17 +62,36 @@ public:
             
 			int start1,size1,start2,size2;
 			fifo.prepareToWrite(1, start1, size1, start2, size2);
-			if(size1>0){
-				if(messageQueue.size()<maxSize){messageQueue.add(msg);}
-				else{messageQueue.set(start1,msg);}
-			}
+			
+			/*
 			if(size2>0){
 				if(messageQueue.size()<maxSize){messageQueue.add(msg);}
 				else{messageQueue.set(start2,msg);}
 			}
+			*/
+			if (size1 == 0)
+			{
+				if (dropMessageOnOverflow)
+				{
+					delete msg;
+				}
+				else
+				{
+					while (size1 == 0)
+					{
+						fifo.prepareToWrite(1, start1, size1, start2, size2);
+						Thread::sleep(10);
+					}
+				}
+			}else {
+				if (messageQueue.size()<maxSize) { messageQueue.add(msg); }
+				else { messageQueue.set(start1, msg); }
+			}
+
+			//jassert(size2 == 0);
+
 
 			fifo.finishedWrite (size1 + size2);
-            
             triggerAsyncUpdate();
         }
 

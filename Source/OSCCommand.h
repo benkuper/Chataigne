@@ -26,6 +26,8 @@ public:
 	StringParameter * address;
 	ControllableContainer argumentsContainer;
 
+	var getJSONData() override;
+	void loadJSONDataInternal(var data) override;
 
 	void trigger() override;
 
