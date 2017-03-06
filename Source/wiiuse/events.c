@@ -46,7 +46,7 @@
 #include "motion_plus.h"                /* for motion_plus_disconnected, etc */
 #include "io.h"                         /* for wiiuse_read_data_sync, etc */
 
-#include "os.h"							/* for wiiuse_os_poll */
+//#include "os.h"							/* for wiiuse_os_poll */
 
 #include <stdio.h>                      /* for printf, perror */
 #include <stdlib.h>                     /* for free, malloc */

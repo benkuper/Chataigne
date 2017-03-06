@@ -12,7 +12,7 @@
 #define GENERICMANAGEREDITOR_H_INCLUDED
 
 #include "GenericControllableContainerEditor.h"
-#include "BaseManager.h" 
+//#include "BaseManager.h" 
 
 template<class T>
 class BaseManager;
