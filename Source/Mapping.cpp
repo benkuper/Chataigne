@@ -13,7 +13,8 @@
 
 Mapping::Mapping() :
 	BaseItem("Mapping"),
-	inputIsLocked(false)
+	inputIsLocked(false),
+	forceDisabled(false)
 {
 	continuousProcess = addBoolParameter("Continuous", "If enabled, the mapping will process continuously rather than only when parameter value has changed",false);
 
@@ -39,6 +40,7 @@ void Mapping::lockInputTo(Parameter * lockParam)
 
 void Mapping::process()
 {
+	if (!enabled->boolValue() || forceDisabled) return;
 	if (input.inputReference == nullptr) return;
 	if (!cdm.getIsValid(true)) return;
 
@@ -75,7 +77,6 @@ void Mapping::inputReferenceChanged(MappingInput *)
 
 void Mapping::inputParameterValueChanged(MappingInput *)
 {
-	if (!enabled->boolValue()) return;
 	process();
 }
 
@@ -96,5 +97,6 @@ InspectableEditor * Mapping::getEditor(bool isRoot)
 
 void Mapping::timerCallback()
 {
+	if(!enabled->boolValue() || forceDisabled) return
 	process();
 }

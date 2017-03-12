@@ -10,13 +10,25 @@
 
 #include "MappingManager.h"
 
-juce_ImplementSingleton(MappingManager)
-
 MappingManager::MappingManager() :
-	BaseManager<Mapping>("Mappings")
+	BaseManager<Mapping>("Mappings"),
+	forceDisabled(false)
 {
+	
 }
 
 MappingManager::~MappingManager()
 {
+}
+
+void MappingManager::setForceDisabled(bool value)
+{
+	if (forceDisabled == value) return;
+	forceDisabled = value;
+	for (auto &i : items) i->forceDisabled = forceDisabled;
+}
+
+void MappingManager::addItemInternal(Mapping * item, var data)
+{
+	item->forceDisabled = forceDisabled;
 }

@@ -28,6 +28,8 @@ public:
 	Mapping();
 	virtual ~Mapping();
 
+	bool forceDisabled;
+
 	MappingInput input;
 	ConditionManager cdm;
 	MappingFilterManager fm;

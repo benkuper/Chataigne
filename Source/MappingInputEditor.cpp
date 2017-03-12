@@ -16,7 +16,7 @@ MappingInputEditor::MappingInputEditor(MappingInput * _input, bool isRoot) :
 {
 	if (input->inputTarget->enabled)
 	{
-		targetUI = input->inputTarget->createTargetUI();
+		targetUI = new ModuleInputValueChooserUI(input->inputTarget, true);
 		addAndMakeVisible(targetUI);
 	}
 	

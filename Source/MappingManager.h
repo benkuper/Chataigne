@@ -19,10 +19,13 @@ class MappingManager :
 	public BaseManager<Mapping>
 {
 public:
-	juce_DeclareSingleton(MappingManager, true)
-
-		MappingManager();
+	MappingManager();
 	~MappingManager();
+
+	bool forceDisabled;
+	void setForceDisabled(bool value);
+	void addItemInternal(Mapping * item, var data) override;
+
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MappingManager)
 

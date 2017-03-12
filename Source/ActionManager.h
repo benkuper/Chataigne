@@ -24,6 +24,11 @@ public:
 	ActionManager();
 	~ActionManager();
 
+	bool forceDisabled;
+	void setForceDisabled(bool value);
+
+	void addItemInternal(Action *item, var data) override;
+
 	class Listener
 	{
 	public:

@@ -51,7 +51,8 @@ void State::onContainerParameterChangedInternal(Parameter *p)
 	if (p == active)
 	{
 		stateListeners.call(&StateListener::stateActivationChanged, this);
-
+		am.setForceDisabled(!active->boolValue());
+		mm.setForceDisabled(!active->boolValue());
 	}
 }
 

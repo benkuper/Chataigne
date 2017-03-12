@@ -13,7 +13,7 @@
 
 #include "MappingInput.h"
 #include "InspectableEditor.h"
-#include "TargetParameterUI.h"
+#include "ModuleInputValueChooserUI.h"
 
 class MappingInputEditor :
 	public InspectableEditor,
@@ -25,7 +25,7 @@ public:
 
 	MappingInput * input;
 
-	ScopedPointer<TargetParameterUI> targetUI;
+	ScopedPointer<ModuleInputValueChooserUI> targetUI;
 	ScopedPointer<ControllableUI> sourceFeedbackUI;
 
 	void updateSourceUI();

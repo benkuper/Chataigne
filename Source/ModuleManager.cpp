@@ -75,17 +75,24 @@ PopupMenu ModuleManager::getAllModulesCommandMenu(CommandContext context)
 
 CommandDefinition * ModuleManager::getCommandDefinitionForItemID(int itemID, Module * lockedModule)
 {
-	if (itemID <= 0) return nullptr;
+	if (itemID == 0) return nullptr;
 	Module * m = lockedModule;
 
-	if (itemID < -1000) m = &SequenceManager::getInstance()->module;
-	else if (itemID < 0) m = &StateManager::getInstance()->module;
-
-	else if (m == nullptr)
+	if (itemID < -1000)
+	{
+		m = &SequenceManager::getInstance()->module;
+		itemID += 2000;
+	}else if (itemID < 0)
+	{
+		m = &StateManager::getInstance()->module;
+		itemID += 1000;
+	}else if (m == nullptr)
 	{
 		int moduleIndex = (int)floor(itemID / 1000);
 		m = items[moduleIndex];
 	}
+
+	DBG("M not null ?" << (int)(m != nullptr));
 	
 	if (m == nullptr) return nullptr;
 
