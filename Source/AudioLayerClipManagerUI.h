@@ -15,15 +15,30 @@
 #include "AudioLayerClipUI.h"
 #include "BaseManagerUI.h"
 
+class AudioLayerTimeline;
 
 class AudioLayerClipManagerUI :
-	public BaseManagerUI<AudioLayerClipManager, AudioLayerClip, AudioLayerClipUI>
+	public BaseManagerUI<AudioLayerClipManager, AudioLayerClip, AudioLayerClipUI>,
+	public AudioLayerClipUI::ClipUIListener
 {
 public:
-	AudioLayerClipManagerUI(AudioLayerClipManager * manager);
+	AudioLayerClipManagerUI(AudioLayerTimeline * timeline, AudioLayerClipManager * manager);
 	~AudioLayerClipManagerUI();
 
+	AudioLayerTimeline * timeline;
+
+	void resized() override;
 	void updateContent();
+
+	void placeClipUI(AudioLayerClipUI * cui);
+	void mouseDown(const MouseEvent &e) override;
+
+	void addItemFromMenu(bool, Point<int> mouseDownPos) override;
+	void addItemUIInternal(AudioLayerClipUI * cui) override;
+	void removeItemUIInternal(AudioLayerClipUI * cui) override;
+
+	void clipUITimeChanged(AudioLayerClipUI * cui) override;
+	void clipUIDragged(AudioLayerClipUI * cui, const MouseEvent &) override;
 };
 
 

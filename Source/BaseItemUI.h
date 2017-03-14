@@ -82,6 +82,7 @@ void BaseItemUI<T>::resized()
 	//Header
 	Rectangle<int> r = this->getLocalBounds().reduced(2);
 	Rectangle<int> h = r.withHeight(headerHeight);
+
 	if(enabledBT != nullptr)
 	{
 		enabledBT->setBounds(h.removeFromLeft(h.getHeight()));

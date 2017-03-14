@@ -33,7 +33,7 @@ public:
 	void loadJSONDataInternal(var data) override;
 
 	static MappingLayer * create(Sequence * sequence) { return new MappingLayer(sequence); }
-	virtual String getTypeString() const override { return "Mapping"; }
+	virtual String getTypeString() const override { return "Automation"; }
 
 	virtual SequenceLayerPanel * getPanel() override;
 	virtual SequenceLayerTimeline * getTimelineUI() override;

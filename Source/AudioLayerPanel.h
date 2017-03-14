@@ -14,15 +14,33 @@
 
 #include "SequenceLayerPanel.h"
 #include "AudioLayer.h"
+#include "ModuleManager.h"
 
 class AudioLayerPanel :
-	public SequenceLayerPanel
+	public SequenceLayerPanel,
+	public ModuleManager::Listener,
+	public ComboBoxListener,
+	public AudioLayer::AudioLayerListener
 {
 public:
 	AudioLayerPanel(AudioLayer * layer);
 	~AudioLayerPanel();
 
+	ComboBox moduleChooser;
 	AudioLayer * audioLayer;
+
+	ScopedPointer<FloatSliderUI> enveloppeUI;
+
+	void resizedInternalHeader(Rectangle<int> &r) override;
+
+	void buildModuleBox();
+
+	void itemAdded(Module *) override;
+	void itemRemoved(Module *) override;
+		
+	void comboBoxChanged(ComboBox *) override;
+
+	void targetAudioModuleChanged(AudioLayer *) override;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(AudioLayerPanel)
 };

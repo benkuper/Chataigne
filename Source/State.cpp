@@ -48,11 +48,11 @@ State::~State()
 
 void State::onContainerParameterChangedInternal(Parameter *p)
 {
-	if (p == active)
+	if (p == active || p == enabled)
 	{
 		stateListeners.call(&StateListener::stateActivationChanged, this);
-		am.setForceDisabled(!active->boolValue());
-		mm.setForceDisabled(!active->boolValue());
+		am.setForceDisabled(!active->boolValue() || !enabled->boolValue());
+		mm.setForceDisabled(!active->boolValue() || !enabled->boolValue());
 	}
 }
 

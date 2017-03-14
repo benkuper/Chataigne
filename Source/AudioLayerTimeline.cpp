@@ -16,7 +16,7 @@ AudioLayerTimeline::AudioLayerTimeline(AudioLayer * layer) :
 {
 	bgColor = AUDIO_COLOR.withSaturation(.2f).darker(1);
 
-	cmMUI = new AudioLayerClipManagerUI(&layer->clipManager);
+	cmMUI = new AudioLayerClipManagerUI(this,&layer->clipManager);
 	addAndMakeVisible(cmMUI);
 
 	updateContent();

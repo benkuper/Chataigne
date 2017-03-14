@@ -14,7 +14,7 @@
 #include "MappingLayerEditor.h"
 
 MappingLayer::MappingLayer(Sequence *_sequence) :
-	SequenceLayer(_sequence, "New Mapping Layer")
+	SequenceLayer(_sequence, "New Automation Layer")
 {
 	canInspectChildContainers = true;
 

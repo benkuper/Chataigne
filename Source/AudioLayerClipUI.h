@@ -15,13 +15,46 @@
 #include "BaseItemUI.h"
 
 class AudioLayerClipUI :
-	public BaseItemUI<AudioLayerClip>
+	public BaseItemUI<AudioLayerClip>,
+	public AudioLayerClip::ClipListener
 {
 public:
 	AudioLayerClipUI(AudioLayerClip * clip);
 	~AudioLayerClipUI();
 
+	//interaction
+	float timeAtMouseDown;
+	int posAtMouseDown;
+
+	ScopedPointer<ImageButton> browseBT;
+	AudioThumbnailCache thumbnailCache;
+	AudioThumbnail thumbnail;
 	AudioLayerClip * clip;
+
+	void paint(Graphics &g) override;
+	void resizedInternalHeader(Rectangle<int> &r) override;
+
+	void mouseDown(const MouseEvent &e) override;
+	void mouseDrag(const MouseEvent &e) override;
+
+	void buttonClicked(Button * b) override;
+
+	void controllableFeedbackUpdateInternal(Controllable *) override;
+	void clipIsCurrentChanged(AudioLayerClip *) override;
+	void audioSourceChanged(AudioLayerClip *) override;
+
+	class ClipUIListener
+	{
+	public:
+		virtual ~ClipUIListener() {}
+		virtual void clipUITimeChanged(AudioLayerClipUI *) {}
+		virtual void clipUIDragged(AudioLayerClipUI *, const MouseEvent &) {}
+	};
+
+	ListenerList<ClipUIListener> clipUIListeners;
+	void addClipUIListener(ClipUIListener* newListener) { clipUIListeners.add(newListener); }
+	void removeClipUIListener(ClipUIListener* listener) { clipUIListeners.remove(listener); }
+
 };
 
 

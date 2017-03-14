@@ -20,6 +20,10 @@ class AudioLayerClipManager :
 public:
 	AudioLayerClipManager();
 	~AudioLayerClipManager();
+
+	void addClipAt(float time);
+
+	AudioLayerClip * getClipAtTime(float time);
 };
 
 #endif  // AUDIOLAYERCLIPMANAGER_H_INCLUDED

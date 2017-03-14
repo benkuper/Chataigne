@@ -14,9 +14,9 @@
 
 AudioModule::AudioModule(const String & name) :
 	Module(name),
-	pitchDetector(nullptr)
+	pitchDetector(nullptr),
+	uidIncrement(100)
 {
-	
 	gain = addFloatParameter("Gain", "Gain for the input volume", 1, 0, 10);
 	activityThreshold = addFloatParameter("Activity Threshold", "Threshold to consider activity from the source.\nAnalysis will compute only if volume is greater than this parameter", .1f,0,1);
 	
@@ -33,13 +33,36 @@ AudioModule::AudioModule(const String & name) :
 	for (int i = 0; i < 12; i++) note->addOption(MIDIManager::getNoteName(i,false), i);
 	octave = valuesCC.addIntParameter("Octave", "Detected octave", 0, 0, 10);
 
-	am.addAudioCallback(this);
+	//am.addAudioCallback(this);
 	am.addChangeListener(this);
 	am.initialiseWithDefaultDevices(2, 2);
+
+	am.addAudioCallback(&player);
+
+	graph.reset();
+	
+	AudioDeviceManager::AudioDeviceSetup setup;
+	am.getAudioDeviceSetup(setup);
+	currentSampleRate = setup.sampleRate;
+	currentBufferSize = setup.bufferSize;
+
+
+	graph.setPlayConfigDetails(0, 2, currentSampleRate, currentBufferSize);
+	graph.prepareToPlay(currentSampleRate, currentBufferSize);
+
+	graph.addNode(new AudioProcessorGraph::AudioGraphIOProcessor(AudioProcessorGraph::AudioGraphIOProcessor::audioInputNode), 1);
+	graph.addNode(new AudioProcessorGraph::AudioGraphIOProcessor(AudioProcessorGraph::AudioGraphIOProcessor::audioOutputNode), 2);
+	player.setProcessor(&graph);
+
 }
 
 AudioModule::~AudioModule()
 {
+	graph.clear();
+
+	am.removeAudioCallback(&player);
+	player.setProcessor(nullptr);
+
 	am.removeAudioCallback(this);
 	am.removeChangeListener(this);
 }
@@ -47,6 +70,7 @@ AudioModule::~AudioModule()
 var AudioModule::getJSONData()
 {
 	var data = Module::getJSONData();
+
 	ScopedPointer<XmlElement> xmlData = am.createStateXml();
 	if (xmlData != nullptr)
 	{
@@ -69,6 +93,7 @@ void AudioModule::loadJSONDataInternal(var data)
 
 void AudioModule::audioDeviceIOCallback(const float ** inputChannelData, int numInputChannels, float ** , int , int numSamples)
 {
+	
 	if (numInputChannels > 0)
 	{
 		if(buffer.getNumSamples() != numSamples) buffer.setSize(1, numSamples);
@@ -111,10 +136,15 @@ void AudioModule::audioDeviceStopped()
 	DBG("device stopped");
 }
 
-void AudioModule::changeListenerCallback(ChangeBroadcaster * )
+void AudioModule::changeListenerCallback(ChangeBroadcaster *)
 {
 	DBG("Change ! ");
-	
+	AudioDeviceManager::AudioDeviceSetup setup;
+	am.getAudioDeviceSetup(setup);
+	currentSampleRate = setup.sampleRate;
+	currentBufferSize = setup.bufferSize;
+	graph.setPlayConfigDetails(0, 2, currentSampleRate, currentBufferSize);
+	graph.prepareToPlay(currentSampleRate, currentBufferSize);
 }
 
 InspectableEditor * AudioModule::getEditor(bool isRoot)

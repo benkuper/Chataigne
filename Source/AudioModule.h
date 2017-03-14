@@ -14,6 +14,7 @@
 #include "Module.h"
 #include "pitch/PitchMPM.h"
 
+
 class AudioModule :
 	public Module,
 	public AudioIODeviceCallback,
@@ -24,6 +25,16 @@ public:
 	~AudioModule();
 
 	AudioDeviceManager am;
+	AudioProcessorPlayer player;
+	AudioProcessorGraph graph;
+	
+	double currentSampleRate;
+	int currentBufferSize;
+
+	//ScopedPointer<AudioProcessorGraph::AudioGraphIOProcessor> graphIn;
+	//ScopedPointer<AudioProcessorGraph::AudioGraphIOProcessor> graphOut;
+
+	int uidIncrement;
 
 	const int analysisSamples = 1024;
 	int curBufferIndex;

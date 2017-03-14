@@ -34,7 +34,6 @@ void TimeTriggerManagerUI::resized()
 
 void TimeTriggerManagerUI::updateContent()
 {
-
 	for (auto &ttui : itemsUI)
 	{
 		placeTimeTriggerUI(ttui);
@@ -47,7 +46,6 @@ void TimeTriggerManagerUI::placeTimeTriggerUI(TimeTriggerUI * ttui)
 {
 	int tx = timeline->getXForTime(ttui->tt->time->floatValue());
 	ttui->setBounds(tx, 0, ttui->getWidth(), getHeight());
-	
 }
 
 void TimeTriggerManagerUI::mouseDown(const MouseEvent & e)
