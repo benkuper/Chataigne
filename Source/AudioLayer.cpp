@@ -155,9 +155,9 @@ void AudioLayerProcessor::processBlock(AudioBuffer<float>& buffer, MidiBuffer & 
 	if (!layer->sequence->isPlaying->boolValue()) return;
 
 	AudioSampleBuffer * clipBuffer = &layer->currentClip->buffer;
-	int numClipSamples = clipBuffer->getNumSamples();
+	//int numClipSamples = clipBuffer->getNumSamples();
 
-	float position = layer->sequence->currentTime->floatValue() - layer->currentClip->time->floatValue();
+	//float position = layer->sequence->currentTime->floatValue() - layer->currentClip->time->floatValue();
 
 	int samplePosition = layer->currentClip->clipSamplePos;// *layer->currentClip->sampleRate;
 

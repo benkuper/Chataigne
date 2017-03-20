@@ -520,6 +520,12 @@
         </GROUP>
         <GROUP id="{8FC20544-FEBB-B3BA-CF48-50962AA7C07C}" name="Module">
           <GROUP id="{766BCE2E-5C2E-5A80-EC80-7FFA2C7ABBBA}" name="modules">
+            <GROUP id="{DA3ECD5E-74A1-A5C6-0D69-1C4957050985}" name="kinectv2">
+              <FILE id="l5q9Ou" name="KinectV2Module.cpp" compile="1" resource="0"
+                    file="Source/KinectV2Module.cpp"/>
+              <FILE id="D5HQ0p" name="KinectV2Module.h" compile="0" resource="0"
+                    file="Source/KinectV2Module.h"/>
+            </GROUP>
             <GROUP id="{25EC4BC8-B1D5-831B-BAF8-3638F8A43FE0}" name="state">
               <GROUP id="{DFD8ADDE-4CF5-81E1-053C-95E4AFFB8DB6}" name="commands">
                 <GROUP id="{DA08FAED-F59A-CBF2-5E3C-7D673935E41F}" name="ui">
@@ -1112,31 +1118,31 @@
   </MAINGROUP>
   <EXPORTFORMATS>
     <VS2015 targetFolder="Builds/VisualStudio2015" smallIcon="nVz6Li" bigIcon="nVz6Li"
-            extraDefs="" externalLibraries="Setupapi.lib&#10;hid.lib">
+            extraDefs="" externalLibraries="Setupapi.lib&#10;hid.lib&#10;kinect20.lib">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" winWarningLevel="4" generateManifest="1" winArchitecture="32-bit"
-                       isDebug="1" optimisation="1" targetName="Chataigne" headerPath="../../External/wiiuse&#10;$(ASIOSDK)/common"
-                       libraryPath=""/>
+                       isDebug="1" optimisation="1" targetName="Chataigne" headerPath="../../External/wiiuse&#10;$(ASIOSDK)/common&#10;$(KINECTSDK20_DIR)inc"
+                       libraryPath="$(KINECTSDK20_DIR)lib\x86"/>
         <CONFIGURATION name="Release" winWarningLevel="4" generateManifest="1" winArchitecture="32-bit"
-                       isDebug="0" optimisation="3" targetName="Chataigne" libraryPath=""
-                       headerPath="../../External/wiiuse&#10;$(ASIOSDK)/common"/>
+                       isDebug="0" optimisation="3" targetName="Chataigne" libraryPath="$(KINECTSDK20_DIR)lib\x86"
+                       headerPath="../../External/wiiuse&#10;$(ASIOSDK)/common&#10;$(KINECTSDK20_DIR)inc"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
-        <MODULEPATH id="juce_core" path="D:/Softwares/JUCE/modules"/>
-        <MODULEPATH id="juce_events" path="D:/Softwares/JUCE/modules"/>
-        <MODULEPATH id="juce_graphics" path="D:/Softwares/JUCE/modules"/>
-        <MODULEPATH id="juce_data_structures" path="D:/Softwares/JUCE/modules"/>
-        <MODULEPATH id="juce_gui_basics" path="D:/Softwares/JUCE/modules"/>
-        <MODULEPATH id="juce_gui_extra" path="D:/Softwares/JUCE/modules"/>
-        <MODULEPATH id="juce_cryptography" path="D:/Softwares/JUCE/modules"/>
-        <MODULEPATH id="juce_video" path="D:/Softwares/JUCE/modules"/>
-        <MODULEPATH id="juce_opengl" path="D:/Softwares/JUCE/modules"/>
-        <MODULEPATH id="juce_audio_basics" path="D:/Softwares/JUCE/modules"/>
-        <MODULEPATH id="juce_audio_devices" path="D:/Softwares/JUCE/modules"/>
-        <MODULEPATH id="juce_audio_formats" path="D:/Softwares/JUCE/modules"/>
-        <MODULEPATH id="juce_audio_processors" path="D:/Softwares/JUCE/modules"/>
-        <MODULEPATH id="juce_osc" path="D:/Softwares/JUCE/modules"/>
-        <MODULEPATH id="juce_audio_utils" path="D:/Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_core" path="E:/Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_events" path="E:/Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_graphics" path="E:/Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_data_structures" path="E:/Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="E:/Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="E:/Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_cryptography" path="E:/Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_video" path="E:/Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_opengl" path="E:/Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_basics" path="E:/Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_devices" path="E:/Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_formats" path="E:/Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_processors" path="E:/Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_osc" path="E:/Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_utils" path="E:/Softwares/JUCE/modules"/>
       </MODULEPATHS>
     </VS2015>
     <LINUX_MAKE targetFolder="Builds/LinuxMakefile" smallIcon="nVz6Li" bigIcon="nVz6Li"

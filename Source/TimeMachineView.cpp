@@ -13,11 +13,15 @@
 
 TimeMachineView::TimeMachineView(SequenceManager * _manager) :
 	ShapeShifterContentComponent("Time Machine"),
-	manager(_manager) 
+	manager(_manager),
+	createSequenceBT("Create a sequence")
 {
 	contentIsFlexible = true;
 	InspectableSelectionManager::getInstance()->addSelectionListener(this);
 	SequenceManager::getInstance()->addBaseManagerListener(this);
+
+	addAndMakeVisible(&createSequenceBT);
+	createSequenceBT.addListener(this);
 }
 
 TimeMachineView::~TimeMachineView()
@@ -37,6 +41,10 @@ void TimeMachineView::resized()
 	{
 		editor->setBounds(getLocalBounds());
 	}
+	else
+	{
+		createSequenceBT.setBounds(getLocalBounds().withSizeKeepingCentre(200, 100));
+	}
 }
 
 void TimeMachineView::setSequence(Sequence * sequence)
@@ -55,6 +63,8 @@ void TimeMachineView::setSequence(Sequence * sequence)
 		editor = new SequenceEditor(sequence);
 		addAndMakeVisible(editor);
 	}
+	
+	createSequenceBT.setVisible(sequence == nullptr);
 	resized();
 }
 
@@ -78,4 +88,12 @@ void TimeMachineView::currentInspectableSelectionChanged(Inspectable *, Inspecta
 void TimeMachineView::itemRemoved(Sequence *s)
 {
 	if (editor != nullptr && s == editor->sequence) setSequence(nullptr);
+}
+
+void TimeMachineView::buttonClicked(Button * b)
+{
+	if (b == &createSequenceBT)
+	{
+		SequenceManager::getInstance()->addItem();
+	}
 }
