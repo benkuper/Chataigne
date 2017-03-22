@@ -27,19 +27,21 @@ public:
 
 	BoolParameter * logIncomingData;
 	BoolParameter * logOutgoingData;
-	
+
 	Trigger * inActivityTrigger;
 	Trigger * outActivityTrigger;
 
 	CommandDefinitionManager defManager;
 	ControllableContainer valuesCC;
-	
-	BaseCommandHandler commandTester;
-	
-	Array<WeakReference<Controllable>> getValueControllables();
-	
-	virtual var getJSONData() override;
 
+	BaseCommandHandler commandTester;
+
+	Array<WeakReference<Controllable>> getValueControllables();
+
+	virtual void setupModuleFromJSONData(var data); //Used for custom modules with a module.json definition, to automatically create parameters, command and values from this file.
+	Controllable * getControllableForJSONDefinition(const String &name, var def);
+
+	virtual var getJSONData() override;
 	virtual String getTypeString() const { jassert(false); return ""; } //should be overriden
 
 	//virtual InspectableEditor * getEditor(bool isRoot) override;

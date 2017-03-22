@@ -67,12 +67,7 @@ void AudioLayerClip::updateAudioSourceFile()
 
 		clipLength->setValue(clipDuration);
 		buffer.setSize((int)reader->numChannels,(int)reader->lengthInSamples);      
-		reader->read(&buffer,                                       
-			0,                                                      
-			reader->lengthInSamples,                                
-			0,                                                      
-			true,                                                    
-			true);
+		reader->read(&buffer,0,(int)reader->lengthInSamples,0, true, true);
 	}
 
 	clipListeners.call(&ClipListener::audioSourceChanged, this);

@@ -520,6 +520,11 @@
         </GROUP>
         <GROUP id="{8FC20544-FEBB-B3BA-CF48-50962AA7C07C}" name="Module">
           <GROUP id="{766BCE2E-5C2E-5A80-EC80-7FFA2C7ABBBA}" name="modules">
+            <GROUP id="{4C2113B4-FC78-3B4F-C8B4-3081068D885F}" name="serial">
+              <FILE id="OnTR69" name="SerialModule.cpp" compile="1" resource="0"
+                    file="Source/SerialModule.cpp"/>
+              <FILE id="dG6kQX" name="SerialModule.h" compile="0" resource="0" file="Source/SerialModule.h"/>
+            </GROUP>
             <GROUP id="{DA3ECD5E-74A1-A5C6-0D69-1C4957050985}" name="kinectv2">
               <FILE id="l5q9Ou" name="KinectV2Module.cpp" compile="1" resource="0"
                     file="Source/KinectV2Module.cpp"/>
@@ -1128,21 +1133,21 @@
                        headerPath="../../External/wiiuse&#10;$(ASIOSDK)/common&#10;$(KINECTSDK20_DIR)inc"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
-        <MODULEPATH id="juce_core" path="E:/Softwares/JUCE/modules"/>
-        <MODULEPATH id="juce_events" path="E:/Softwares/JUCE/modules"/>
-        <MODULEPATH id="juce_graphics" path="E:/Softwares/JUCE/modules"/>
-        <MODULEPATH id="juce_data_structures" path="E:/Softwares/JUCE/modules"/>
-        <MODULEPATH id="juce_gui_basics" path="E:/Softwares/JUCE/modules"/>
-        <MODULEPATH id="juce_gui_extra" path="E:/Softwares/JUCE/modules"/>
-        <MODULEPATH id="juce_cryptography" path="E:/Softwares/JUCE/modules"/>
-        <MODULEPATH id="juce_video" path="E:/Softwares/JUCE/modules"/>
-        <MODULEPATH id="juce_opengl" path="E:/Softwares/JUCE/modules"/>
-        <MODULEPATH id="juce_audio_basics" path="E:/Softwares/JUCE/modules"/>
-        <MODULEPATH id="juce_audio_devices" path="E:/Softwares/JUCE/modules"/>
-        <MODULEPATH id="juce_audio_formats" path="E:/Softwares/JUCE/modules"/>
-        <MODULEPATH id="juce_audio_processors" path="E:/Softwares/JUCE/modules"/>
-        <MODULEPATH id="juce_osc" path="E:/Softwares/JUCE/modules"/>
-        <MODULEPATH id="juce_audio_utils" path="E:/Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_core" path="D:/Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_events" path="D:/Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_graphics" path="D:/Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_data_structures" path="D:/Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="D:/Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="D:/Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_cryptography" path="D:/Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_video" path="D:/Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_opengl" path="D:/Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_basics" path="D:/Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_devices" path="D:/Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_formats" path="D:/Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_processors" path="D:/Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_osc" path="D:/Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_utils" path="D:/Softwares/JUCE/modules"/>
       </MODULEPATHS>
     </VS2015>
     <LINUX_MAKE targetFolder="Builds/LinuxMakefile" smallIcon="nVz6Li" bigIcon="nVz6Li"

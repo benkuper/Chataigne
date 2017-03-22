@@ -157,7 +157,7 @@ void KinectV2Module::processBody(int nBodyCount, IBody ** ppBodies)
 	pBody->get_HandLeftState(&leftHandState);
 	pBody->get_HandRightState(&rightHandState);
 
-	HRESULT hr = pBody->GetJoints(_countof(joints), joints);
+	pBody->GetJoints(_countof(joints), joints);
 	
 	Vector3D<float> leftHandPos = Vector3D<float>(joints[JointType_HandLeft].Position.X, joints[JointType_HandLeft].Position.Y, joints[JointType_HandLeft].Position.Z);
 	Vector3D<float> rightHandPos = Vector3D<float>(joints[JointType_HandRight].Position.X, joints[JointType_HandRight].Position.Y, joints[JointType_HandRight].Position.Z);

@@ -18,12 +18,14 @@ class ModuleDefinition
 public:
 	String menuPath;
 	String moduleType;
+	var jsonData;
 	std::function<Module*()> createFunc;
 
-	ModuleDefinition(const String &menuPath, const String &type, std::function<Module*()> createFunc) :
+	ModuleDefinition(const String &menuPath, const String &type, std::function<Module*()> createFunc, var jsonData = var()) :
 		menuPath(menuPath),
 		moduleType(type),
-		createFunc(createFunc)
+		createFunc(createFunc),
+		jsonData(jsonData)
 	{}
 };
 
@@ -38,24 +40,12 @@ public:
 	ModuleFactory();
 	~ModuleFactory() {}
 
+	void addCustomModules();
+
 	void buildPopupMenu();
 
-	static Module* showCreateMenu()
-	{
-		int result = getInstance()->menu.show();
-		if (result == 0) return nullptr;
-		else
-		{
-			ModuleDefinition * d = getInstance()->moduleDefs[result - 1];//result 0 is no result
-			return d->createFunc();
-		}
-	}
-
-	static Module * createModule(const String &moduleType)
-	{
-		for (auto &d : getInstance()->moduleDefs) if (d->moduleType == moduleType) return d->createFunc();
-		return nullptr;
-	}
+	static Module* showCreateMenu();
+	static Module * createModule(const String &moduleType);
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ModuleFactory)
 };

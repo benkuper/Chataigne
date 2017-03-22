@@ -11,6 +11,8 @@
 #include "Module.h"
 #include "CommandFactory.h"
 #include "ModuleEditor.h"
+#include "ControllableFactory.h"
+#include "ScriptManager.h"
 
 Module::Module(const String &name) :
 	BaseItem(name,true,true),
@@ -44,6 +46,66 @@ Module::~Module()
 Array<WeakReference<Controllable>> Module::getValueControllables()
 {
 	return valuesCC.getAllControllables();
+}
+
+void Module::setupModuleFromJSONData(var data)
+{
+	
+	setNiceName(data.getProperty("name",""));
+
+	if (data.getDynamicObject()->hasProperty("values"))
+	{
+		var valuesData = data.getProperty("values", var());
+		NamedValueSet valueProps = valuesData.getDynamicObject()->getProperties();
+		for (auto &p : valueProps)
+		{
+			Controllable * c = getControllableForJSONDefinition(p.name.toString(), p.value);
+			if (c == nullptr) continue;
+			valuesCC.addControllable(c);
+		}
+	}
+
+	if (data.getDynamicObject()->hasProperty("parameters"))
+	{
+		var valuesData = data.getProperty("parameters", var());
+		NamedValueSet valueProps = valuesData.getDynamicObject()->getProperties();
+		for (auto &p : valueProps)
+		{
+			Controllable * c = getControllableForJSONDefinition(p.name.toString(), p.value);
+			if (c == nullptr) continue;
+			addControllable(c);
+		}
+	}
+
+	Array<var> * scriptData = data.getProperty("scripts", var()).getArray();
+	for (auto &s : *scriptData)
+	{
+		Script * script = scriptManager->addItem();
+		DBG("Set script path : " << data.getProperty("modulePath", "").toString() << "/" << s.toString());
+		script->filePath->setValue(data.getProperty("modulePath", "").toString() + "/"+s.toString());
+	}
+}
+
+Controllable * Module::getControllableForJSONDefinition(const String &name, var def)
+{
+	String valueType = def.getProperty("type", "").toString();
+	Controllable * c = ControllableFactory::createControllable(valueType);
+	if (c == nullptr) return nullptr;
+
+	c->setNiceName(name);
+	if (c->type != Controllable::TRIGGER)
+	{
+		if (def.getDynamicObject()->hasProperty("min") && def.getDynamicObject()->hasProperty("max"))
+		{
+			((Parameter *)c)->setRange(def.getProperty("min", 0), def.getProperty("max", 1));
+		}
+		if (def.getDynamicObject()->hasProperty("default"))
+		{
+			((Parameter *)c)->setValue(def.getProperty("default", 0));
+		}
+	}
+
+	return c;
 }
 
 
