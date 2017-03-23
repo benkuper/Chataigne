@@ -20,7 +20,8 @@
 class TimeMachineView :
 	public ShapeShifterContentComponent,
 	public InspectableSelectionManager::Listener,
-	public SequenceManager::Listener
+	public SequenceManager::Listener,
+	public ButtonListener
 {
 public:
 	
@@ -28,9 +29,8 @@ public:
 	~TimeMachineView();
 
 	SequenceManager * manager;
-
 	ScopedPointer<SequenceEditor> editor;
-
+	TextButton createSequenceBT;
 	
 	void paint(Graphics &g) override;
 	void resized() override;
@@ -39,6 +39,8 @@ public:
 	void currentInspectableSelectionChanged(Inspectable *, Inspectable *) override;
 
 	void itemRemoved(Sequence *) override;
+
+	void buttonClicked(Button * b) override;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(TimeMachineView)
 };
