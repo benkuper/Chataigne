@@ -20,6 +20,7 @@
 #include "MappingFilterFactory.h"
 #include "ConditionFactory.h"
 #include "MIDIManager.h"
+#include "SerialManager.h"
 #include "GamepadManager.h"
 #include "WiimoteManager.h"
 #include "InspectableSelectionManager.h"
@@ -72,6 +73,7 @@ Engine::~Engine(){
   ConditionFactory::deleteInstance();
   
   MIDIManager::deleteInstance();
+  SerialManager::deleteInstance();
   GamepadManager::deleteInstance();
   WiimoteManager::deleteInstance();
 
