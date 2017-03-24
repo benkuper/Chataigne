@@ -18,11 +18,11 @@ EnumParameter::EnumParameter(const String & niceName, const String &description,
 
 }
 
-void EnumParameter::addOption(String key, var data)
+void EnumParameter::addOption(String key, var data, bool selectIfFirstOption)
 {
 
 	enumValues.set(key, data);
-	if (enumValues.size() == 1) setValue(key, true);
+	if (enumValues.size() == 1 && selectIfFirstOption) setValue(key, true);
 	enumListeners.call(&Listener::enumOptionAdded, this, key);
 	updateArgDescription();
 }
@@ -32,6 +32,22 @@ void EnumParameter::removeOption(String key)
 	enumValues.remove(key);
 	enumListeners.call(&Listener::enumOptionRemoved, this, key);
 	updateArgDescription();
+}
+
+void EnumParameter::clearOptions()
+{
+	int index = 1;
+	HashMap<String, var>::Iterator i(enumValues);
+	StringArray keysToRemove;
+	while (i.next())
+	{
+		keysToRemove.add(i.getKey());
+	}
+
+	for (auto &k : keysToRemove)
+	{
+		removeOption(k);
+	}
 }
 
 void EnumParameter::updateArgDescription()

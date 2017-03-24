@@ -20,11 +20,15 @@ EnumParameterUI::EnumParameterUI(Parameter * parameter) :
 	cb.setTooltip(ep->description);
 	addAndMakeVisible(cb);
 
+	ep->addEnumParameterListener(this);
+
 	updateComboBox();
 }
 
 EnumParameterUI::~EnumParameterUI()
 {
+	ep->removeEnumParameterListener(this);
+
 	cb.removeListener(this);
 }
 

@@ -27,7 +27,6 @@ public:
 	OwnedArray<SerialDeviceInfo> portInfos;
 	OwnedArray<SerialDevice> openedPorts;
 
-	void init();
 	void updateDeviceList();
 
 	SerialDevice * getPort(SerialDeviceInfo *  portInfo, bool createIfNotThere = true, int openBaudRate = 9600);

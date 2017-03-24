@@ -15,9 +15,8 @@ SerialModule::SerialModule(const String &name) :
 	Module(name),
 	port(nullptr)
 {
-
-	selectedHardwareID = addStringParameter("selectedHardwareID", "Id of the selected hardware", "");
-	selectedPort = addStringParameter("selectedPort", "Name of the selected hardware", "");
+	portParam = new SerialDeviceParameter("Port", "Serial Port to connect",true);
+	addParameter(portParam);
 
 	SerialManager::getInstance()->addSerialManagerListener(this);
 }
@@ -34,7 +33,7 @@ SerialModule::~SerialModule()
 
 void SerialModule::setCurrentPort(SerialDevice * _port)
 {
-
+	DBG("Set current port " << (int)port);
 	if (port == _port) return;
 
 
@@ -49,10 +48,12 @@ void SerialModule::setCurrentPort(SerialDevice * _port)
 	if (port != nullptr)
 	{
 		port->addSerialDeviceListener(this);
+		port->open();
+		if (!port->isOpen())
+		{
+			NLOG(niceName, "Could not open port : " << port->info->port);
+		}
 		lastOpenedPortID = port->info->port;
-
-		selectedPort->setValue(port->info->port);
-		selectedHardwareID->setValue(port->info->hardwareID);
 	}
 	else
 	{
@@ -67,13 +68,10 @@ void SerialModule::setCurrentPort(SerialDevice * _port)
 void SerialModule::onContainerParameterChangedInternal(Parameter * p) {
 	Module::onContainerParameterChangedInternal(p);
 	
-	if (p == selectedHardwareID || p == selectedPort)
+	DBG("Parameter changed");
+	if (p == portParam)
 	{
-		SerialDevice * _port = SerialManager::getInstance()->getPort(selectedHardwareID->stringValue(), selectedPort->stringValue(), true);
-		if (_port != nullptr)
-		{
-			setCurrentPort(_port);
-		}
+		 setCurrentPort(portParam->getDevice());
 	}
 };
 
@@ -99,13 +97,16 @@ void SerialModule::serialDataReceived(const var & data)
 	if (logIncomingData->boolValue()) LOG("Data received :\n"<<data.toString());
 		
 	inActivityTrigger->trigger();
-	processMessage(data.toString());
+	processMessage(data.toString()); 
 }
 
 
 void SerialModule::processMessage(const String & message)
 {
-	
+	if (logIncomingData->boolValue())
+	{
+		NLOG(niceName, "Message received :\n" + message);
+	}
 }
 
 void SerialModule::portAdded(SerialDeviceInfo * info)

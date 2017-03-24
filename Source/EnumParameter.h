@@ -21,8 +21,9 @@ public:
 	EnumParameter(const String &niceName, const String &description, bool enabled = true);
 	~EnumParameter() {}
 
-	void addOption(String key, var data);
+	void addOption(String key, var data, bool selectIfFirstOption = true);
 	void removeOption(String key);
+	void clearOptions();
 
 	void updateArgDescription();
 

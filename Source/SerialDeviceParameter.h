@@ -11,15 +11,28 @@
 #ifndef SERIALDEVICEPARAMETER_H_INCLUDED
 #define SERIALDEVICEPARAMETER_H_INCLUDED
 
-#include "StringParameter.h"
+#include "EnumParameter.h"
+#include "SerialDevice.h"
+#include "SerialManager.h"
 
 class SerialDeviceParameter :
-	public StringParameter
+	public EnumParameter,
+	public SerialManager::SerialManagerListener
 {
 public:
-	SerialDeviceParameter(const String &name, const String &description, const String &initialValue, bool enabled);
+	SerialDeviceParameter(const String &name, const String &description, bool enabled);
 	~SerialDeviceParameter();
 
+	SerialDevice * currentDevice;
+	SerialDevice * getDevice();
+
+	void setValueInternal(var &value) override;
+
+	void updatePortList();
+
+	// Inherited via SerialManagerListener
+	virtual void portAdded(SerialDeviceInfo * info) override;
+	virtual void portRemoved(SerialDeviceInfo * info) override;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(SerialDeviceParameter)
 };

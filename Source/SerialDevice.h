@@ -43,9 +43,6 @@ public:
 
 	virtual void run() override;
 
-	// ASYNC
-	QueuedNotifier<var> queuedNotifier;
-	typedef QueuedNotifier<var>::Listener AsyncListener;
 
 	class SerialThreadListener {
 	public:
@@ -57,9 +54,6 @@ public:
 
 	void addSerialListener(SerialThreadListener* newListener) { serialThreadListeners.add(newListener); }
 	void removeSerialListener(SerialThreadListener* listener) { serialThreadListeners.remove(listener); }
-	void addAsyncSerialListener(AsyncListener* newListener) { queuedNotifier.addListener(newListener); }
-	void removeAsyncSerialListener(AsyncListener* listener) { queuedNotifier.removeListener(listener); }
-
 };
 
 class SerialDeviceInfo

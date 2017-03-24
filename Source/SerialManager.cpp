@@ -14,17 +14,13 @@ juce_ImplementSingleton(SerialManager)
 
 SerialManager::SerialManager()
 {
-
+	updateDeviceList();
+	startTimer(1000); 
 }
 
 SerialManager::~SerialManager()
 {
 	stopTimer();
-}
-
-void SerialManager::init()
-{
-	startTimer(1000);
 }
 
 void SerialManager::updateDeviceList()
@@ -134,10 +130,17 @@ SerialDevice * SerialManager::getPort(SerialDeviceInfo * portInfo, bool createIf
 SerialDevice * SerialManager::getPort(String hardwareID, String portName, bool createIfNotThere)
 {
 #if SERIALSUPPORT
+	DBG("Get port ");
+
 	for (auto & pi : portInfos)
 	{
-
-		if (pi->hardwareID == hardwareID & pi->port == portName) return getPort(pi, createIfNotThere);
+		
+		DBG("	" << pi->hardwareID << ":" << pi->port << " <> " << hardwareID << ":" << portName);
+		if (pi->hardwareID == hardwareID & pi->port == portName)
+		{
+			DBG("found");
+			return getPort(pi, createIfNotThere);
+		}
 	}
 #endif
 

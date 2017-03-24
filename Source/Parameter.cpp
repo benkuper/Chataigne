@@ -74,7 +74,6 @@ void Parameter::setRange(var min, var max, bool setDefaultRange) {
 
 void Parameter::setValueInternal(var & _value) //to override by child classes
 {
-
 	value = _value;
 
 #ifdef JUCE_DEBUG

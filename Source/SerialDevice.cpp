@@ -124,8 +124,7 @@ void SerialDevice::removeSerialDeviceListener(SerialDeviceListener * listener) {
 
 SerialReadThread::SerialReadThread(String name, SerialDevice * _port) :
 	Thread(name + "_thread"),
-	port(_port),
-	queuedNotifier(100)
+	port(_port)
 {
 }
 
@@ -160,7 +159,6 @@ void SerialReadThread::run()
 				if (line.size() > 0)
 				{
 					serialThreadListeners.call(&SerialThreadListener::newMessage, var(line));
-					queuedNotifier.addMessage(new var(line));
 				}
 
 			}
@@ -194,7 +192,6 @@ void SerialReadThread::run()
 						var * dataVar = new var();
 						for (auto &by : byteBuffer) dataVar->append(by);
 						serialThreadListeners.call(&SerialThreadListener::newMessage, *dataVar);
-						queuedNotifier.addMessage(dataVar);
 						byteBuffer.clear();
 					}
 					else

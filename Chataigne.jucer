@@ -550,6 +550,12 @@
         </GROUP>
         <GROUP id="{8FC20544-FEBB-B3BA-CF48-50962AA7C07C}" name="Module">
           <GROUP id="{766BCE2E-5C2E-5A80-EC80-7FFA2C7ABBBA}" name="modules">
+            <GROUP id="{4C2113B4-FC78-3B4F-C8B4-3081068D885F}" name="kinect">
+              <FILE id="EKZUCF" name="KinectV2Module.cpp" compile="1" resource="0"
+                    file="Source/KinectV2Module.cpp"/>
+              <FILE id="ocRDJ5" name="KinectV2Module.h" compile="0" resource="0"
+                    file="Source/KinectV2Module.h"/>
+            </GROUP>
             <GROUP id="{DA3ECD5E-74A1-A5C6-0D69-1C4957050985}" name="serial">
               <FILE id="XzpcKF" name="SerialModule.cpp" compile="1" resource="0"
                     file="Source/SerialModule.cpp"/>
@@ -1147,11 +1153,11 @@
   </MAINGROUP>
   <EXPORTFORMATS>
     <VS2015 targetFolder="Builds/VisualStudio2015" smallIcon="nVz6Li" bigIcon="nVz6Li"
-            extraDefs="" externalLibraries="Setupapi.lib&#10;hid.lib">
+            extraDefs="" externalLibraries="Setupapi.lib&#10;hid.lib&#10;Kinect20.lib">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" winWarningLevel="4" generateManifest="1" winArchitecture="32-bit"
-                       isDebug="1" optimisation="1" targetName="Chataigne" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;$(ASIOSDK)/common"
-                       libraryPath=""/>
+                       isDebug="1" optimisation="1" targetName="Chataigne" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;$(ASIOSDK)/common&#10;$(KINECTSDK20_DIR)inc"
+                       libraryPath="$(KINECTSDK20_DIR)Lib\x86"/>
         <CONFIGURATION name="Release" winWarningLevel="4" generateManifest="1" winArchitecture="32-bit"
                        isDebug="0" optimisation="3" targetName="Chataigne" libraryPath=""
                        headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;$(ASIOSDK)/common"/>
