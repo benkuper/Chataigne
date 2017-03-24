@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    SerialDevice.cpp
-    Created: 15 Mar 2017 10:15:01am
-    Author:  Ben-Portable
+	SerialDevice.cpp
+	Created: 15 Mar 2017 10:15:01am
+	Author:  Ben-Portable
 
   ==============================================================================
 */
@@ -136,7 +136,9 @@ SerialReadThread::~SerialReadThread()
 void SerialReadThread::run()
 {
 #if SERIALSUPPORT
-	Array<int> byteBuffer;
+	
+	std::vector<uint8_t> byteBuffer; //for cobs and data255
+
 	while (!threadShouldExit())
 	{
 		sleep(10); //100fps
@@ -147,8 +149,9 @@ void SerialReadThread::run()
 		try
 		{
 
-			int numBytes = (int)port->port->available();
+			size_t numBytes = (int)port->port->available();
 			if (numBytes == 0) continue;
+
 			switch (port->mode)
 			{
 
@@ -166,19 +169,10 @@ void SerialReadThread::run()
 
 			case SerialDevice::PortMode::RAW:
 			{
-				/*
-				var * dataVar = new var();
 				Array<int> bytes;
-				while (port->port->available())
-				{
 				std::vector<uint8_t> data;
-				port->port->read(data);
-				bytes.addArray(data);
-				for(auto &b:bytes) dataVar->append(b);
-				}
-
-				queuedNotifier.addMessage(dataVar);
-				*/
+				port->port->read(data,numBytes);
+				serialThreadListeners.call(&SerialThreadListener::newMessage, var(data.data(),numBytes));
 			}
 			break;
 
@@ -189,14 +183,12 @@ void SerialReadThread::run()
 					uint8_t b = port->port->read(1)[0];
 					if (b == 255)
 					{
-						var * dataVar = new var();
-						for (auto &by : byteBuffer) dataVar->append(by);
-						serialThreadListeners.call(&SerialThreadListener::newMessage, *dataVar);
+						serialThreadListeners.call(&SerialThreadListener::newMessage, var(byteBuffer.data(),byteBuffer.size()));
 						byteBuffer.clear();
 					}
 					else
 					{
-						byteBuffer.add(b);
+						byteBuffer.push_back(b);
 					}
 				}
 			}

@@ -27,7 +27,9 @@ public:
 	String lastOpenedPortID; //for ghosting
 
 	SerialDeviceParameter * portParam;
-	SerialDevice * port;
+	EnumParameter * modeParam;
+
+	SerialDevice * port; 
 	void setCurrentPort(SerialDevice *port);
 
 	void onContainerParameterChangedInternal(Parameter * p) override;
@@ -36,7 +38,10 @@ public:
 	String deviceID;
 
 	//LGML Serial functions
-	virtual void processMessage(const String &message);
+	virtual void processDataLine(const String &message);
+	virtual void processData255(Array<uint8> data);
+	virtual void processDataRaw(Array<uint8> data);
+	virtual void processDataCOBS(Array<uint8> data);
 
 	// Inherited via SerialDeviceListener
 	virtual void portOpened(SerialDevice *) override;

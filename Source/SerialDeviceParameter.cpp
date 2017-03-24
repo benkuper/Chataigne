@@ -19,6 +19,7 @@ SerialDeviceParameter::SerialDeviceParameter(const String & name, const String &
 
 SerialDeviceParameter::~SerialDeviceParameter()
 {
+	if(SerialManager::getInstanceWithoutCreating()) SerialManager::getInstance()->removeSerialManagerListener(this);
 }
 
 SerialDevice * SerialDeviceParameter::getDevice()

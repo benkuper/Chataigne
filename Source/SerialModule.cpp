@@ -17,7 +17,13 @@ SerialModule::SerialModule(const String &name) :
 {
 	portParam = new SerialDeviceParameter("Port", "Serial Port to connect",true);
 	addParameter(portParam);
-
+	
+	modeParam = addEnumParameter("Mode", "Protocol for treating the incoming data");
+	modeParam->addOption("Lines", SerialDevice::LINES);
+	modeParam->addOption("Raw", SerialDevice::RAW);
+	modeParam->addOption("Data255", SerialDevice::DATA255);
+	modeParam->addOption("COBS", SerialDevice::COBS);
+	
 	SerialManager::getInstance()->addSerialManagerListener(this);
 }
 
@@ -33,7 +39,6 @@ SerialModule::~SerialModule()
 
 void SerialModule::setCurrentPort(SerialDevice * _port)
 {
-	DBG("Set current port " << (int)port);
 	if (port == _port) return;
 
 
@@ -52,6 +57,10 @@ void SerialModule::setCurrentPort(SerialDevice * _port)
 		if (!port->isOpen())
 		{
 			NLOG(niceName, "Could not open port : " << port->info->port);
+		}
+		else
+		{
+			port->mode = (SerialDevice::PortMode)(int)modeParam->getValueData();
 		}
 		lastOpenedPortID = port->info->port;
 	}
@@ -72,8 +81,36 @@ void SerialModule::onContainerParameterChangedInternal(Parameter * p) {
 	if (p == portParam)
 	{
 		 setCurrentPort(portParam->getDevice());
+	}if (p == modeParam)
+	{
+		if (port != nullptr) port->mode = (SerialDevice::PortMode)(int)modeParam->getValueData();
 	}
 };
+
+
+void SerialModule::processDataLine(const String & message)
+{
+	if (logIncomingData->boolValue())
+	{
+		NLOG(niceName, "Message received :\n" + message);
+	}
+}
+
+void SerialModule::processData255(Array<uint8_t> data)
+{
+	DBG("process data 255 :" << (int)data[0]);
+}
+
+void SerialModule::processDataRaw(Array<uint8_t> data)
+{ 
+	
+	DBG("process data raw  :" << (int)data[0]);
+}
+
+void SerialModule::processDataCOBS(Array<uint8_t> data)
+{
+	DBG("process data COBS !" << (int)data[0]);
+}
 
 
 void SerialModule::portOpened(SerialDevice *)
@@ -94,19 +131,35 @@ void SerialModule::portRemoved(SerialDevice *)
 
 void SerialModule::serialDataReceived(const var & data)
 {
-	if (logIncomingData->boolValue()) LOG("Data received :\n"<<data.toString());
-		
-	inActivityTrigger->trigger();
-	processMessage(data.toString()); 
-}
-
-
-void SerialModule::processMessage(const String & message)
-{
 	if (logIncomingData->boolValue())
 	{
-		NLOG(niceName, "Message received :\n" + message);
+		LOG("Data received :\n" << data.toString());
 	}
+		
+	inActivityTrigger->trigger();
+	
+	switch (port->mode)
+	{
+	case SerialDevice::LINES:
+		processDataLine(data.toString());
+		break;
+
+	case SerialDevice::DATA255:
+	{
+		Array<uint8> bytes((const uint8_t *)data.getBinaryData()->getData(), data.getBinaryData()->getSize());
+		processData255(bytes);
+	}
+		
+		break;
+
+	case SerialDevice::RAW: 
+	{
+		Array<uint8> bytes((const uint8_t *)data.getBinaryData()->getData(), data.getBinaryData()->getSize());
+		processDataRaw(bytes);
+	}
+	break;
+	}
+	
 }
 
 void SerialModule::portAdded(SerialDeviceInfo * info)
