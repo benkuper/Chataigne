@@ -23,7 +23,6 @@ public:
 	
 	Script script;
 
-
 	//Script
 	static var setValidFromScript(const var::NativeFunctionArgs &a);
 

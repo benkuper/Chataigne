@@ -25,6 +25,8 @@ public:
 
 	Script * createItem() override;
 
+	bool callFunctionOnAllItems(const Identifier &function, var a = var());
+	bool callFunctionOnAllItems(const Identifier &function, Array<var> args);
 };
 
 

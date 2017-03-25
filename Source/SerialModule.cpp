@@ -9,7 +9,7 @@
 */
 
 #include "SerialModule.h"
-
+#include "ScriptManager.h"
 
 SerialModule::SerialModule(const String &name) :
 	Module(name),
@@ -23,7 +23,11 @@ SerialModule::SerialModule(const String &name) :
 	modeParam->addOption("Raw", SerialDevice::RAW);
 	modeParam->addOption("Data255", SerialDevice::DATA255);
 	modeParam->addOption("COBS", SerialDevice::COBS);
-	
+
+	scriptObject.setMethod(sendId, SerialModule::sendStringFromScript);
+	scriptObject.setMethod(sendLineId, SerialModule::sendStringWithNewLineFromScript);
+	scriptObject.setMethod(writeId, SerialModule::sendBytesFromScript);
+
 	SerialManager::getInstance()->addSerialManagerListener(this);
 }
 
@@ -90,26 +94,26 @@ void SerialModule::onContainerParameterChangedInternal(Parameter * p) {
 
 void SerialModule::processDataLine(const String & message)
 {
+	if (logIncomingData->boolValue()) NLOG(niceName, "Message received :\n" + message);
+	scriptManager->callFunctionOnAllItems(serialEventId,message);
+}
+
+void SerialModule::processDataBytes(Array<uint8_t> data)
+{
 	if (logIncomingData->boolValue())
 	{
-		NLOG(niceName, "Message received :\n" + message);
+		String msg = "Message received :";
+		for (auto &d : data) msg += "\n" + String(d);
+		NLOG(niceName, msg);
 	}
-}
 
-void SerialModule::processData255(Array<uint8_t> data)
-{
-	DBG("process data 255 :" << (int)data[0]);
-}
-
-void SerialModule::processDataRaw(Array<uint8_t> data)
-{ 
+	if (scriptManager->items.size() > 0)
+	{
+		Array<var> args;
+		for (auto &d : data) args.add(d);
+		scriptManager->callFunctionOnAllItems(serialEventId, args);
+	}
 	
-	DBG("process data raw  :" << (int)data[0]);
-}
-
-void SerialModule::processDataCOBS(Array<uint8_t> data)
-{
-	DBG("process data COBS !" << (int)data[0]);
 }
 
 
@@ -140,27 +144,66 @@ void SerialModule::serialDataReceived(const var & data)
 	
 	switch (port->mode)
 	{
+
 	case SerialDevice::LINES:
 		processDataLine(data.toString());
 		break;
 
 	case SerialDevice::DATA255:
-	{
+	case SerialDevice::RAW:
+	case SerialDevice::COBS:
 		Array<uint8> bytes((const uint8_t *)data.getBinaryData()->getData(), data.getBinaryData()->getSize());
-		processData255(bytes);
-	}
-		
-		break;
-
-	case SerialDevice::RAW: 
-	{
-		Array<uint8> bytes((const uint8_t *)data.getBinaryData()->getData(), data.getBinaryData()->getSize());
-		processDataRaw(bytes);
-	}
+		processDataBytes(bytes);
 	break;
+
 	}
 	
 }
+
+var SerialModule::sendStringFromScript(const var::NativeFunctionArgs & a)
+{
+	SerialModule * m = getObjectFromJS<SerialModule>(a);
+	if (!m->enabled->boolValue()) return var();
+	if (m->port == nullptr) return var();
+
+	m->port->writeString(a.arguments[0].toString(),false);
+	return var();
+}
+
+var SerialModule::sendStringWithNewLineFromScript(const var::NativeFunctionArgs & a)
+{
+	SerialModule * m = getObjectFromJS<SerialModule>(a);
+	if (!m->enabled->boolValue()) return var();
+	if (m->port == nullptr) return var();
+
+	m->port->writeString(a.arguments[0].toString(),true);
+	return var();
+}
+
+
+var SerialModule::sendBytesFromScript(const var::NativeFunctionArgs & a)
+{
+	SerialModule * m = getObjectFromJS<SerialModule>(a);
+	if (!m->enabled->boolValue()) return var();
+	if (m->port == nullptr) return var();
+	
+	Array<uint8> data;
+	for (int i = 0; i < a.numArguments; i++)
+	{
+		if (a.arguments[i].isArray())
+		{
+			Array<var> * aa = a.arguments[i].getArray();
+			for (auto &vaa : *aa) data.add((uint8)(int)vaa);
+		}
+		else if(a.arguments[i].isInt())
+		{
+			data.add((uint8)(int)a.arguments[i]);
+		}
+	}
+	m->port->writeBytes(data);
+	return var();
+}
+
 
 void SerialModule::portAdded(SerialDeviceInfo * info)
 {

@@ -44,10 +44,11 @@ public:
 	ScopedPointer<JavascriptEngine> scriptEngine;
 	
 	void loadScript();
-
 	void buildEnvironment();
 
 	void setState(ScriptState newState);
+
+	bool callFunction(const Identifier &function, const Array<var> args);
 
 	void onContainerParameterChangedInternal(Parameter *) override;
 	void onContainerTriggerTriggered(Trigger *) override;

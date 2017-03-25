@@ -35,8 +35,6 @@ Script::Script(ScriptTarget * _parentTarget, bool canBeDisabled) :
 	scriptObject.setMethod("addTargetParameter", Script::addTargetParameterFromScript);
 }
 
-
-
 Script::~Script()
 {
 
@@ -109,6 +107,22 @@ void Script::setState(ScriptState newState)
 	scriptAsyncNotifier.addMessage(new ScriptEvent(ScriptEvent::STATE_CHANGE));
 }
 
+bool Script::callFunction(const Identifier & function, const Array<var> args)
+{
+	if (canBeDisabled && !enabled->boolValue()) return false;
+
+	if (scriptEngine == nullptr) return false;
+	Result result = Result::ok();
+	scriptEngine->callFunction(function, var::NativeFunctionArgs(var::undefined(), (const var *)args.begin(), args.size()), &result);
+	if (result.getErrorMessage().isNotEmpty())
+	{
+		NLOG(niceName, "Script Error :\n" + result.getErrorMessage());
+		return false;
+	}
+
+	return true;
+}
+
 
 void Script::onContainerParameterChangedInternal(Parameter * p)
 {
@@ -125,23 +139,15 @@ void Script::onContainerTriggerTriggered(Trigger * t)
 
 void Script::timerCallback()
 {
-	if (canBeDisabled && !enabled->boolValue()) return;
-
 	float curTime = (float)Time::getMillisecondCounter() / 1000.f;
 	float deltaTime = curTime - lastUpdateTime;
 	lastUpdateTime = curTime;
+
 	Array<var> args;
 	args.add(deltaTime);
-	
-	Result result = Result::ok();
-	scriptEngine->callFunction(updateIdentifier, var::NativeFunctionArgs(var::undefined(), (const var *)args.begin(), args.size()),&result);
 
-	if (result.getErrorMessage().isNotEmpty())
-	{
-		NLOG("Script : " + niceName, "Script error : " + result.getErrorMessage());
-		stopTimer();
-	}
-
+	bool result = callFunction(updateIdentifier, args);
+	if (!result) stopTimer();
 }
 
 InspectableEditor * Script::getEditor(bool isRoot)

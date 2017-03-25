@@ -26,3 +26,17 @@ Script * ScriptManager::createItem()
 {
 	return new Script(parentTarget);
 }
+
+bool ScriptManager::callFunctionOnAllItems(const Identifier & function, var a)
+{
+	Array<var> args;
+	args.add(a);
+	return callFunctionOnAllItems(function, args);
+}
+
+bool ScriptManager::callFunctionOnAllItems(const Identifier & function, Array<var> args)
+{
+	bool result = true;
+	for (auto &i : items) result &= i->callFunction(function, args);
+	return result;
+}

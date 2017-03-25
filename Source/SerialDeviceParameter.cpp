@@ -32,18 +32,18 @@ void SerialDeviceParameter::setValueInternal(var &v)
 	EnumParameter::setValueInternal(v);
 	var data = getValueData();
 	currentDevice = SerialManager::getInstance()->getPort(data.getProperty("hardwareID","").toString(), data.getProperty("port", "").toString(),true);
-	DBG("current device from setValueInternal : " << (int)currentDevice);
+	//DBG("current device from setValueInternal : " << (int)currentDevice);
 }
 
 void SerialDeviceParameter::updatePortList()
 {
 	clearOptions();
-	DBG("num ports :" << SerialManager::getInstance()->portInfos.size());
+	//DBG("num ports :" << SerialManager::getInstance()->portInfos.size());
 
 	for (auto &p : SerialManager::getInstance()->portInfos)
 	{
 		var v(new DynamicObject());
-		DBG("Add option : " << p->port << ":" << p->hardwareID);
+		//DBG("Add option : " << p->port << ":" << p->hardwareID);
 		v.getDynamicObject()->setProperty("port", p->port);
 		v.getDynamicObject()->setProperty("hardwareID", p->hardwareID);
 		String desc = p->description;
@@ -57,12 +57,12 @@ void SerialDeviceParameter::updatePortList()
 
 void SerialDeviceParameter::portAdded(SerialDeviceInfo *)
 {
-	DBG("param : port added");
+	//DBG("param : port added");
 	updatePortList();
 }
 
 void SerialDeviceParameter::portRemoved(SerialDeviceInfo *)
 {
-	DBG("param : port removed !");
+	//DBG("param : port removed !");
 	updatePortList();
 }

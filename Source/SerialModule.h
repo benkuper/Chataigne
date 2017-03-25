@@ -30,6 +30,13 @@ public:
 	EnumParameter * modeParam;
 
 	SerialDevice * port; 
+
+	//Script Identifier
+	const Identifier serialEventId = "serialEvent";
+	const Identifier sendId = "send";
+	const Identifier sendLineId = "sendLine";
+	const Identifier writeId = "write";
+
 	void setCurrentPort(SerialDevice *port);
 
 	void onContainerParameterChangedInternal(Parameter * p) override;
@@ -37,17 +44,22 @@ public:
 	//Device info
 	String deviceID;
 
-	//LGML Serial functions
+	//Serial functions
 	virtual void processDataLine(const String &message);
-	virtual void processData255(Array<uint8> data);
-	virtual void processDataRaw(Array<uint8> data);
-	virtual void processDataCOBS(Array<uint8> data);
+	virtual void processDataBytes(Array<uint8> data);
 
 	// Inherited via SerialDeviceListener
 	virtual void portOpened(SerialDevice *) override;
 	virtual void portClosed(SerialDevice *) override;
 	virtual void portRemoved(SerialDevice *) override;
 	virtual void serialDataReceived(const var &data) override;
+
+	//Script
+	static var sendStringFromScript(const var::NativeFunctionArgs &a);
+	static var sendStringWithNewLineFromScript(const var::NativeFunctionArgs &a);
+	static var sendBytesFromScript(const var::NativeFunctionArgs &a);
+
+
 
 	class SerialModuleListener
 	{

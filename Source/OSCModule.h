@@ -32,6 +32,10 @@ public:
 	IntParameter * remotePort;
 	OSCSender sender;
 
+	//Script
+	const Identifier oscEventId = "oscEvent";
+	const Identifier sendOSCId = "send";
+
 	//RECEIVE
 	void setupReceiver();
 	float getFloatArg(OSCArgument a);
@@ -41,15 +45,22 @@ public:
 	void processMessage(const OSCMessage & msg);
 	virtual void processMessageInternal(const OSCMessage &) {}
 
-
 	//SEND
 	void setupSender();
 	void sendOSC(const OSCMessage &msg);
 
+	//Script
+	static var sendOSCFromScript(const var::NativeFunctionArgs &args);
+
+
+	static OSCArgument varToArgument(const var &v);
+	static var argumentToVar(const OSCArgument &a);
+
+
 	virtual void onContainerParameterChangedInternal(Parameter * p) override;
 	virtual void oscMessageReceived(const OSCMessage & message) override;
 
-	InspectableEditor * getEditor(bool isRoot) override;
+	InspectableEditor * getEditor(bool isRoot) override;	
 };
 
 
