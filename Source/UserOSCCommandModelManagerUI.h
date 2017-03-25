@@ -43,7 +43,7 @@ public:
 	void editModule(CustomOSCModule * module);
 	void resized() override;
 
-	void currentInspectableSelectionChanged(Inspectable *, Inspectable *) override;
+	void inspectablesSelectionChanged() override;
 	
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UserOSCCommandModelManagerWindow)
 };

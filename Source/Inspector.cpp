@@ -95,17 +95,17 @@ void Inspector::inspectableDestroyed(Inspectable * i)
 	if (currentInspectable == i) setCurrentInspectable(nullptr);
 }
 
-void Inspector::currentInspectableSelectionChanged(Inspectable * oldI, Inspectable * newI)
+void Inspector::inspectablesSelectionChanged()
 {
-	if (newI == nullptr)
+	if (InspectableSelectionManager::getInstance()->isEmpty())
 	{
-		if (oldI == currentInspectable) setCurrentInspectable(nullptr);
-	} else
-	{
-		if (!newI->showInspectorOnSelect) return;
-		if (newI->targetInspector == this) setCurrentInspectable(newI);
-		else if (newI->targetInspector == nullptr && isMainInspector) setCurrentInspectable(newI);
+		setCurrentInspectable(nullptr);
+		return;
 	}
+
+	Inspectable * newI = InspectableSelectionManager::getInstance()->currentInspectables[0];
+	if (!newI->showInspectorOnSelect) return;
+	if (newI->targetInspector == this || (newI->targetInspector == nullptr && isMainInspector)) setCurrentInspectable(newI);
 }
 
 InspectorUI::InspectorUI(bool isMainInspector) :

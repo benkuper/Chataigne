@@ -18,6 +18,7 @@
 #define FRONT_COLOR     Colour(0xffCCCCCC)
 #define LIGHTCONTOUR_COLOR Colour(0xffAAAAAA)
 #define HIGHLIGHT_COLOR Colour(0xffFF922F)
+#define PRESELECT_COLOR Colour(0xff68c3fc)
 #define CONTOUR_COLOR   Colour(0xcc303030)
 
 #define TEXT_COLOR      Colour(0xffCCCCCC)

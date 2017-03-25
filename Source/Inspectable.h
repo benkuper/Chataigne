@@ -29,8 +29,13 @@ public:
 	bool isSelectable;
 	bool showInspectorOnSelect;
 
+	//for multiSelection
+	bool isPreselected;
+
 	virtual void selectThis();
 	virtual void setSelected(bool value);
+
+	void setPreselected(bool value);
 
 	virtual void setSelectedInternal(bool value); //to be overriden
 
@@ -43,6 +48,7 @@ public:
 		/** Destructor. */
 		virtual ~InspectableListener() {}
 		virtual void inspectableSelectionChanged(Inspectable *) {};
+		virtual void inspectablePreselectionChanged(Inspectable *) {};
 		virtual void inspectableDestroyed(Inspectable *) {};
 	};
 

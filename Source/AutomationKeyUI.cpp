@@ -113,9 +113,18 @@ void AutomationKeyUI::inspectableSelectionChanged(Inspectable * i)
 {
 	BaseItemMinimalUI::inspectableSelectionChanged(i);
 	handle.highlight = item->isSelected;
+	handle.color = item->isSelected ? HIGHLIGHT_COLOR : item->isPreselected?PRESELECT_COLOR:FRONT_COLOR;
+}
+
+void AutomationKeyUI::inspectablePreselectionChanged(Inspectable * i)
+{
+	BaseItemMinimalUI::inspectablePreselectionChanged(i);
+	handle.highlight = false;
+	handle.color = item->isPreselected ? PRESELECT_COLOR : FRONT_COLOR;
 }
 
 AutomationKeyUI::Handle::Handle() : 
+	color(FRONT_COLOR),
 	highlight(false)
 {
 	setRepaintsOnMouseActivity(true);
@@ -129,9 +138,8 @@ void AutomationKeyUI::Handle::paint(Graphics & g)
 	
 	Rectangle<float> er = getLocalBounds().withSizeKeepingCentre(rad,rad).toFloat();
 	
-	Colour c = highlight ? HIGHLIGHT_COLOR : FRONT_COLOR;
-	Colour cc = isMouseOver() ? c.brighter() : c.darker(.3f);
-	g.setColour(c);
+	Colour cc = isMouseOver() ? color.brighter() : color.darker(.3f);
+	g.setColour(color);
 	g.fillEllipse(er);
 	g.setColour(cc);
 	g.drawEllipse(er, 1);

@@ -51,8 +51,11 @@ void UserOSCCommandModelManagerWindow::resized()
 	if (modelManagerUI != nullptr) modelManagerUI->setBounds(getLocalBounds().reduced(2));
 }
 
-void UserOSCCommandModelManagerWindow::currentInspectableSelectionChanged(Inspectable *, Inspectable * i)
+void UserOSCCommandModelManagerWindow::inspectablesSelectionChanged()
 {
+	if (InspectableSelectionManager::getInstance()->isEmpty()) editModule(nullptr);
+	
+	Inspectable * i = InspectableSelectionManager::getInstance()->currentInspectables[0];
 	CustomOSCModule * m = dynamic_cast<CustomOSCModule *>(i);
 	if(m != nullptr) editModule(m);
 }

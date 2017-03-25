@@ -254,6 +254,10 @@
                     file="Source/AutomationKeyUI.cpp"/>
               <FILE id="ZAM8fU" name="AutomationKeyUI.h" compile="0" resource="0"
                     file="Source/AutomationKeyUI.h"/>
+              <FILE id="Fj1Bsm" name="AutomationMultiKeyTransformer.cpp" compile="1"
+                    resource="0" file="Source/AutomationMultiKeyTransformer.cpp"/>
+              <FILE id="v8aaAT" name="AutomationMultiKeyTransformer.h" compile="0"
+                    resource="0" file="Source/AutomationMultiKeyTransformer.h"/>
               <FILE id="lgRvdf" name="AutomationUI.cpp" compile="1" resource="0"
                     file="Source/AutomationUI.cpp"/>
               <FILE id="jvzzbU" name="AutomationUI.h" compile="0" resource="0" file="Source/AutomationUI.h"/>
@@ -1063,6 +1067,10 @@
         <FILE id="redMTy" name="InspectableSelectionManager.h" compile="0"
               resource="0" file="Source/InspectableSelectionManager.h"/>
         <GROUP id="{EFA481DF-EC3F-903E-59D6-3C67CBF87D76}" name="ui">
+          <FILE id="SbQUBp" name="InspectableSelector.cpp" compile="1" resource="0"
+                file="Source/InspectableSelector.cpp"/>
+          <FILE id="DuK1oL" name="InspectableSelector.h" compile="0" resource="0"
+                file="Source/InspectableSelector.h"/>
           <FILE id="GbEV8t" name="InspectableContentComponent.cpp" compile="1"
                 resource="0" file="Source/InspectableContentComponent.cpp"/>
           <FILE id="La4Qcp" name="InspectableContentComponent.h" compile="0"

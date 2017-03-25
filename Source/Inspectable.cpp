@@ -30,7 +30,7 @@ Inspectable::~Inspectable()
 void Inspectable::selectThis()
 {
 	if (InspectableSelectionManager::getInstanceWithoutCreating() == nullptr) return;
-	InspectableSelectionManager::getInstance()->setCurrentInspectable(this);
+	InspectableSelectionManager::getInstance()->selectInspectable(this);
 }
 
 void Inspectable::setSelected(bool value)
@@ -39,10 +39,21 @@ void Inspectable::setSelected(bool value)
 	if (value == isSelected) return;
 
 	isSelected = value;
+	isPreselected = false;
 
 	setSelectedInternal(value);
 
 	listeners.call(&InspectableListener::inspectableSelectionChanged, this);
+}
+
+void Inspectable::setPreselected(bool value)
+{
+	if (!isSelectable) return;
+	if (value == isPreselected) return;
+
+	isPreselected = value;
+
+	listeners.call(&InspectableListener::inspectablePreselectionChanged, this);
 }
 
 void Inspectable::setSelectedInternal(bool)

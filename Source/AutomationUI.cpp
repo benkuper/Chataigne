@@ -9,6 +9,7 @@
 */
 
 #include "AutomationUI.h"
+#include "InspectableSelector.h"
 
 AutomationUI::AutomationUI(Automation * _automation) :
 	BaseManagerUI("Automation",_automation,false),
@@ -222,32 +223,30 @@ void AutomationUI::mouseDown(const MouseEvent & e)
 
 	if (e.eventComponent == this)
 	{
-		if (e.mods.isLeftButtonDown())
+		if (e.mods.isLeftButtonDown() && e.mods.isCtrlDown())
 		{
-			if (e.mods.isCtrlDown())
+			manager->addItem(getPosForX(e.getPosition().x), (1 - e.getPosition().y*1.f / getHeight()));
+		}else
+		{
+			Array<Component *> selectables;
+			Array<Inspectable *> inspectables;
+			for (auto &i : itemsUI) if (i->isVisible())
 			{
-				if (e.mods.isShiftDown())
-				{
-					for (int i = 0; i < 200; i++)
-					{
-						Random rn;
-						manager->addItem(rn.nextFloat()*manager->positionMax, rn.nextFloat());
-					}
-				} else
-				{
-					manager->addItem(getPosForX(e.getPosition().x), (1 - e.getPosition().y*1.f / getHeight()));
-				}
-				
+				selectables.add(&i->handle);
+				inspectables.add(i->inspectable);
 			}
+			InspectableSelector::getInstance()->startSelection(this,selectables,inspectables);
 		}
-		
 	}
 	
 }
 
 void AutomationUI::mouseDrag(const MouseEvent & e)
 {
-	if (e.originalComponent != this)
+	if (e.originalComponent == this)
+	{
+		
+	}else
 	{
 		AutomationKeyUI::Handle * h = dynamic_cast<AutomationKeyUI::Handle *>(e.eventComponent);
 

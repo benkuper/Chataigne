@@ -36,7 +36,8 @@ public:
 
 	void inspectableDestroyed(Inspectable * inspectable);
 
-	void currentInspectableSelectionChanged(Inspectable * oldI, Inspectable * newI);
+	//From InspectableSelectionManager
+	void inspectablesSelectionChanged() override;
 
 	class  InspectorListener
 	{

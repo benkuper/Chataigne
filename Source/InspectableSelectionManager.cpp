@@ -9,6 +9,7 @@
 */
 
 #include "InspectableSelectionManager.h"
+#include "InspectableSelector.h"
 
 juce_ImplementSingleton(InspectableSelectionManager)
 
@@ -18,7 +19,8 @@ InspectableSelectionManager::InspectableSelectionManager()
 
 InspectableSelectionManager::~InspectableSelectionManager()
 {
-	clearSelection();
+	clearSelection(false);
+	InspectableSelector::deleteInstance();
 }
 
 void InspectableSelectionManager::setEnabled(bool value)
@@ -27,43 +29,59 @@ void InspectableSelectionManager::setEnabled(bool value)
 	if (!enabled) clearSelection();
 }
 
-void InspectableSelectionManager::setCurrentInspectable(WeakReference<Inspectable> inspectable)
+void InspectableSelectionManager::selectInspectables(Array<Inspectable*> inspectables, bool doClearSelection)
+{
+	if (doClearSelection) clearSelection(false);
+	for (auto &i : inspectables) selectInspectable(i, false, false);
+}
+
+void InspectableSelectionManager::selectInspectable(WeakReference<Inspectable> inspectable, bool doClearSelection, bool notify)
 {
 	if (!enabled) return;
 
-	if (inspectable == currentInspectable)
+	if (currentInspectables.contains(inspectable)) return;
+	
+	if (doClearSelection) clearSelection(false);
+	
+	if (inspectable.get() != nullptr)
 	{
-		return;
+		inspectable->setSelected(true);
+		inspectable->addInspectableListener(this);
+		currentInspectables.add(inspectable);
 	}
 
-	Inspectable * oldInspectable = currentInspectable;
-
-	if (currentInspectable != nullptr)
-	{
-		if (!currentInspectable.wasObjectDeleted())
-		{
-			currentInspectable->removeInspectableListener(this);
-			currentInspectable->setSelected(false);
-		}
-	}
-
-	currentInspectable = inspectable;
-
-	if (currentInspectable.get() != nullptr)
-	{
-		currentInspectable->setSelected(true);
-		currentInspectable->addInspectableListener(this);
-	}
-
-	listeners.call(&Listener::currentInspectableSelectionChanged, oldInspectable, currentInspectable);
+	if(notify) listeners.call(&Listener::inspectablesSelectionChanged);
 }
 
-void InspectableSelectionManager::clearSelection()
+void InspectableSelectionManager::deselectInspectable(WeakReference<Inspectable> inspectable, bool notify)
 {
-	setCurrentInspectable(nullptr);
+	if (!inspectable.wasObjectDeleted())
+	{
+		inspectable->removeInspectableListener(this);
+		inspectable->setSelected(false);
+		currentInspectables.removeAllInstancesOf(inspectable.get());
+	}
+	
+	if (notify) listeners.call(&Listener::inspectablesSelectionChanged);
+}
+
+void InspectableSelectionManager::clearSelection(bool notify)
+{
+	while(currentInspectables.size() > 0)
+	{
+		deselectInspectable(currentInspectables[0],false);
+	}
+
+	currentInspectables.clear();
+	if(notify) listeners.call(&Listener::inspectablesSelectionChanged);
+}
+
+bool InspectableSelectionManager::isEmpty()
+{
+	return currentInspectables.size() == 0;
 }
 
 void InspectableSelectionManager::inspectableDestroyed(Inspectable * i)
 {
-	if (currentInspectable == i) setCurrentInspectable(nullptr);
+	deselectInspectable(i);
 }

@@ -68,9 +68,11 @@ void TimeMachineView::setSequence(Sequence * sequence)
 	resized();
 }
 
-void TimeMachineView::currentInspectableSelectionChanged(Inspectable *, Inspectable * i)
+void TimeMachineView::inspectablesSelectionChanged()
 {
-	ControllableContainer * cc = dynamic_cast<ControllableContainer *>(i);	
+	if (InspectableSelectionManager::getInstance()->isEmpty()) return;
+	
+	ControllableContainer * cc = dynamic_cast<ControllableContainer *>(InspectableSelectionManager::getInstance()->currentInspectables[0]);
 	if (cc == nullptr) return;
 
 	Sequence * s = nullptr;

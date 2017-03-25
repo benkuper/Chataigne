@@ -33,6 +33,7 @@ public:
 	public:
 		Handle();
 		bool highlight;
+		Colour color;
 		void paint(Graphics &g) override;
 	};
 
@@ -56,7 +57,7 @@ public:
 	void controllableFeedbackUpdateInternal(Controllable * c) override;
 
 	void inspectableSelectionChanged(Inspectable *) override;
-
+	void inspectablePreselectionChanged(Inspectable *) override;
 };
 
 

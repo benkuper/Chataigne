@@ -22,12 +22,17 @@ public:
 	~InspectableSelectionManager();
 
 	bool enabled;
-	WeakReference<Inspectable> currentInspectable;
+	Array<Inspectable *> currentInspectables;
 	
 	void setEnabled(bool value);
 
-	void setCurrentInspectable(WeakReference<Inspectable> inspectable);
-	void clearSelection();
+	void selectInspectables(Array<Inspectable *> inspectables, bool clearSelection = true);
+	void selectInspectable(WeakReference<Inspectable> inspectable, bool clearSelection = true, bool notify = true);
+	void deselectInspectable(WeakReference<Inspectable> inspectable, bool notify = true);
+
+	void clearSelection(bool notify = true);
+
+	bool isEmpty();
 
 	//From InspectableListener
 	void inspectableDestroyed(Inspectable * inspectable);
@@ -36,7 +41,7 @@ public:
 	{
 	public:
 		virtual ~Listener() {}
-		virtual void currentInspectableSelectionChanged(Inspectable * /*oldInspectable*/, Inspectable * /*newInspectable*/) {};
+		virtual void inspectablesSelectionChanged() {};
 	};
 
 	ListenerList<Listener> listeners;

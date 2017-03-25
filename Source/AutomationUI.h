@@ -22,7 +22,6 @@ class AutomationUI :
 public:
 	AutomationUI(Automation * _automation);
 	virtual ~AutomationUI();
-	
 
 	float viewStartPos;
 	float viewEndPos;
@@ -34,7 +33,6 @@ public:
 	float currentValue;
 	AutomationKeyUI * currentUI;
 
-
 	void setCurrentPosition(const float &pos);
 	void setCurrentValue(const float &val);
 
@@ -42,9 +40,7 @@ public:
 	void updateROI();
 
 	void paint(Graphics &g) override;
-
-
-
+	
 	void resized() override;
 	void placeKeyUI(AutomationKeyUI * kui, bool placePrevKUI = true);
 
@@ -65,8 +61,6 @@ public:
 
 	void mouseDown(const MouseEvent &e) override;
 	void mouseDrag(const MouseEvent &e) override;
-
-	
 
 	void newMessage(const ContainerAsyncEvent &e) override;
 

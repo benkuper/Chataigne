@@ -36,7 +36,7 @@ public:
 	void resized() override;
 
 	void setSequence(Sequence * sequence);
-	void currentInspectableSelectionChanged(Inspectable *, Inspectable *) override;
+	void inspectablesSelectionChanged() override;
 
 	void itemRemoved(Sequence *) override;
 

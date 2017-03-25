@@ -32,7 +32,6 @@ OSCModule::OSCModule(const String & name, int defaultLocalPort, int defaultRemot
 
 
 	//Send
-
 	useLocal = addBoolParameter("Local", "Send to Local IP (127.0.0.1). Allow to quickly switch between local and remote IP.", true);
 	remoteHost = addStringParameter("Remote Host", "Remote Host to send to.", "127.0.0.1");
 	remotePort = addIntParameter("Remote port", "Port on which the remote host is listening to", defaultRemotePort, 1024, 65535);
