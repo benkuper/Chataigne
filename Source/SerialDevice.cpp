@@ -169,7 +169,6 @@ void SerialReadThread::run()
 
 			case SerialDevice::PortMode::RAW:
 			{
-				Array<int> bytes;
 				std::vector<uint8_t> data;
 				port->port->read(data,numBytes);
 				serialThreadListeners.call(&SerialThreadListener::newMessage, var(data.data(),numBytes));
@@ -196,7 +195,18 @@ void SerialReadThread::run()
 
 			case SerialDevice::PortMode::COBS:
 			{
-				//todo : handle cobs
+				while (port->port->available())
+				{
+					uint8_t b = port->port->read(1)[0];
+					byteBuffer.push_back(b);
+					if (b == 0)
+					{
+						uint8_t decodedData[255];
+						size_t numDecoded = cobs_decode(byteBuffer.data(), byteBuffer.size(), decodedData); 
+						serialThreadListeners.call(&SerialThreadListener::newMessage, var(decodedData, numDecoded));
+						byteBuffer.clear();
+					}
+				}				
 			}
 			break;
 			}

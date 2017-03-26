@@ -31,7 +31,7 @@ void SerialDeviceParameter::setValueInternal(var &v)
 {
 	EnumParameter::setValueInternal(v);
 	var data = getValueData();
-	currentDevice = SerialManager::getInstance()->getPort(data.getProperty("hardwareID","").toString(), data.getProperty("port", "").toString(),true);
+	currentDevice = SerialManager::getInstance()->getPort(data.getProperty("hardwareID","").toString(), data.getProperty("port", "").toString(),true,115200);
 	//DBG("current device from setValueInternal : " << (int)currentDevice);
 }
 

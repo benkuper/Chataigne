@@ -28,6 +28,8 @@
 using namespace serial;
 #endif
 
+#include "cobs/cobs.h"
+
 
 class SerialDevice;
 

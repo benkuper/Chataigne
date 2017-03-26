@@ -188,6 +188,10 @@
         <GROUP id="{6C7DFFF7-D47E-97B5-FE74-27F24C7A349F}" name="Common">
           <GROUP id="{46F300BE-6F45-7C57-D999-3BCD373218D9}" name="Serial">
             <GROUP id="{5875158B-18E1-BB0F-C63F-26D3DBAFC305}" name="lib">
+              <GROUP id="{66E90C1C-C294-0C15-82BA-E70D377ABA68}" name="cobs">
+                <FILE id="l3ce3L" name="cobs.cpp" compile="1" resource="0" file="Source/cobs/cobs.cpp"/>
+                <FILE id="ddTqrO" name="cobs.h" compile="0" resource="0" file="Source/cobs/cobs.h"/>
+              </GROUP>
               <GROUP id="{92EE4ECC-23E4-581B-58DB-BC692CD6FA0B}" name="serial">
                 <GROUP id="{0318B0AF-AE76-6D35-7AEE-3BF572F0025C}" name="impl">
                   <GROUP id="{134121B2-445F-2266-2172-E41399C29940}" name="list_ports">

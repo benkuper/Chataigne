@@ -12,7 +12,6 @@
 #define BASEITEM_H_INCLUDED
 
 #include "ControllableContainer.h"
-#include "ScriptTarget.h"
 
 class ScriptManager;
 

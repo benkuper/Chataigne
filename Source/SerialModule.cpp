@@ -109,8 +109,8 @@ void SerialModule::processDataBytes(Array<uint8_t> data)
 
 	if (scriptManager->items.size() > 0)
 	{
-		Array<var> args;
-		for (auto &d : data) args.add(d);
+		var args;
+		for (auto &d : data) args.append(d);
 		scriptManager->callFunctionOnAllItems(serialEventId, args);
 	}
 	
@@ -135,11 +135,6 @@ void SerialModule::portRemoved(SerialDevice *)
 
 void SerialModule::serialDataReceived(const var & data)
 {
-	if (logIncomingData->boolValue())
-	{
-		LOG("Data received :\n" << data.toString());
-	}
-		
 	inActivityTrigger->trigger();
 	
 	switch (port->mode)

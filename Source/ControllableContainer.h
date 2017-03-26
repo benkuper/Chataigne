@@ -217,6 +217,10 @@ public:
 	//SCRIPT
 	virtual DynamicObject * createScriptObject() override;
 
+	static var getChildFromScript(const var::NativeFunctionArgs &a);
+
+
+
 private:
 	// internal callback that a controllableContainer can override to react to any of it's parameter change
 	//@ ben this is to avoid either:

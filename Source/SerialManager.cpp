@@ -127,7 +127,7 @@ SerialDevice * SerialManager::getPort(SerialDeviceInfo * portInfo, bool createIf
 	return nullptr;
 }
 
-SerialDevice * SerialManager::getPort(String hardwareID, String portName, bool createIfNotThere)
+SerialDevice * SerialManager::getPort(String hardwareID, String portName, bool createIfNotThere, int openBaudRate)
 {
 #if SERIALSUPPORT
 	DBG("Get port ");
@@ -139,7 +139,7 @@ SerialDevice * SerialManager::getPort(String hardwareID, String portName, bool c
 		if (pi->hardwareID == hardwareID & pi->port == portName)
 		{
 			DBG("found");
-			return getPort(pi, createIfNotThere);
+			return getPort(pi, createIfNotThere,openBaudRate);
 		}
 	}
 #endif

@@ -54,6 +54,9 @@ ControllableContainer::ControllableContainer(const String & niceName) :
 		savePresetTrigger->hideInEditor = true;
 		savePresetTrigger->isTargettable = false;
 	}
+
+	//script
+	scriptObject.setMethod("getChild", ControllableContainer::getChildFromScript);
 }
 
 ControllableContainer::~ControllableContainer()
@@ -857,6 +860,16 @@ DynamicObject * ControllableContainer::createScriptObject()
 	o->setProperty("niceName", niceName);
 
 	return o;
+}
+
+var ControllableContainer::getChildFromScript(const var::NativeFunctionArgs & a)
+{
+	if (a.numArguments == 0) return var();
+	ControllableContainer * m = getObjectFromJS<ControllableContainer>(a);
+	if (m == nullptr) return var();
+	Controllable * c = m->getControllableByName(a.arguments[0].toString());
+	if (c == nullptr) return  var();
+	return c->createScriptObject();
 }
 
 
