@@ -48,7 +48,7 @@ public:
 	void wiimoteNunchuckUnplugged(Wiimote *) override;
 
 	static WiimoteModule * create() { return new WiimoteModule(); }
-	virtual String getTypeString() const override { return "Wiimote"; }
+	virtual String getDefaultTypeString() const override { return "Wiimote"; }
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(WiimoteModule)
 

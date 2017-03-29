@@ -36,13 +36,18 @@ public:
 
 	BaseCommandHandler commandTester;
 
+	String customType; //for custom modules;
+
 	Array<WeakReference<Controllable>> getValueControllables();
 
 	virtual void setupModuleFromJSONData(var data); //Used for custom modules with a module.json definition, to automatically create parameters, command and values from this file.
 	Controllable * getControllableForJSONDefinition(const String &name, var def);
 
 	virtual var getJSONData() override;
-	virtual String getTypeString() const { jassert(false); return ""; } //should be overriden
+	virtual void loadJSONDataInternal(var data) override;
+
+	String getTypeString() const { if (customType.isNotEmpty()) return customType; else return getDefaultTypeString(); } //should be overriden
+	virtual String getDefaultTypeString() const { jassert(false); return ""; }
 
 	//virtual InspectableEditor * getEditor(bool isRoot) override;
 

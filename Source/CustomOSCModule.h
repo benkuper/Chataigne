@@ -33,7 +33,7 @@ public:
 	void loadJSONDataInternal(var data) override;
 
 	static CustomOSCModule * create() { return new CustomOSCModule(); }
-	virtual String getTypeString() const override { return "OSC"; }
+	virtual String getDefaultTypeString() const override { return "OSC"; }
 
 	InspectableEditor * getEditor(bool isRoot) override;
 

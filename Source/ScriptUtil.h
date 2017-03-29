@@ -24,6 +24,11 @@ public:
 	static var getTime(const var::NativeFunctionArgs &a);
 	static var getFloatFromBytes(const var::NativeFunctionArgs &a);
 	static var getInt32FromBytes(const var::NativeFunctionArgs &a);
+	
+	static var atan2FromScript(const var::NativeFunctionArgs &a);
+
+	static var toDegrees(const var::NativeFunctionArgs &a);
+	static var toRadians(const var::NativeFunctionArgs &a);
 };
 
 

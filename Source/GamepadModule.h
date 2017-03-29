@@ -59,7 +59,7 @@ public:
 
 
 	static GamepadModule * create() { return new GamepadModule(); }
-	virtual String getTypeString() const override { return "Gamepad"; }
+	virtual String getDefaultTypeString() const override { return "Gamepad"; }
 
 };
 

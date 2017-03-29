@@ -47,7 +47,7 @@ public:
 	IBodyFrameReader*       m_pBodyFrameReader;
 
 	static KinectV2Module * create() { return new KinectV2Module(); }
-	virtual String getTypeString() const override { return "KinectV2"; }
+	virtual String getDefaultTypeString() const override { return "KinectV2"; }
 
 
 	// Inherited via Timer

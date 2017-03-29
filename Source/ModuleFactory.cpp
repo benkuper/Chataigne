@@ -132,12 +132,15 @@ Module * ModuleFactory::showCreateMenu()
 
 Module * ModuleFactory::createModule(const String & moduleType)
 {
-	for (auto &d : getInstance()->moduleDefs) if (d->moduleType == moduleType)
+	for (auto &d : getInstance()->moduleDefs)
 	{
-		Module * m = d->createFunc();
-		if (!d->jsonData.isVoid()) m->setupModuleFromJSONData(d->jsonData);
-		else DBG("No Json Data for module definition");
-		return m;
+		if (d->moduleType == moduleType)
+		{
+			Module * m = d->createFunc();
+			if (!d->jsonData.isVoid()) m->setupModuleFromJSONData(d->jsonData);
+			else DBG("No Json Data for module definition");
+			return m;
+		}
 	}
 	return nullptr;
 }

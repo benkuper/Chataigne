@@ -81,7 +81,7 @@ public:
 
 
 	static SerialModule * create() { return new SerialModule(); }
-	virtual String getTypeString() const override { return "Serial"; }
+	virtual String getDefaultTypeString() const override { return "Serial"; }
 
 };
 

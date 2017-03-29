@@ -30,7 +30,7 @@ public:
 	//ScopedPointer<HID> device;
 	
 	static HIDModule * create() { return new HIDModule(); }
-	virtual String getTypeString() const override { return "HID"; }
+	virtual String getDefaultTypeString() const override { return "HID"; }
 
 
 	class HIDListener

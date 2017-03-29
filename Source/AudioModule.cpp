@@ -33,7 +33,7 @@ AudioModule::AudioModule(const String & name) :
 	for (int i = 0; i < 12; i++) note->addOption(MIDIManager::getNoteName(i,false), i);
 	octave = valuesCC.addIntParameter("Octave", "Detected octave", 0, 0, 10);
 
-	//am.addAudioCallback(this);
+	am.addAudioCallback(this);
 	am.addChangeListener(this);
 	am.initialiseWithDefaultDevices(2, 2);
 
@@ -93,12 +93,14 @@ void AudioModule::loadJSONDataInternal(var data)
 
 void AudioModule::audioDeviceIOCallback(const float ** inputChannelData, int numInputChannels, float ** , int , int numSamples)
 {
-	
+	//DBG("audio callback");
 	if (numInputChannels > 0)
 	{
 		if(buffer.getNumSamples() != numSamples) buffer.setSize(1, numSamples);
 		buffer.copyFromWithRamp(0, 0, inputChannelData[0], numSamples,1,gain->floatValue());
 		volume->setValue(buffer.getRMSLevel(0, 0, numSamples));
+
+		//DBG("here");
 
 		if (volume->floatValue() > activityThreshold->floatValue())
 		{
@@ -123,6 +125,10 @@ void AudioModule::audioDeviceIOCallback(const float ** inputChannelData, int num
 		{
 			frequency->setValue(0);
 		}
+	}
+	else
+	{
+		DBG("No input channel");
 	}
 }
 

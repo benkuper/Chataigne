@@ -47,7 +47,7 @@ public:
 	void loadJSONDataInternal(var data) override;
 
 	static MIDIModule * create() { return new MIDIModule(); }
-	virtual String getTypeString() const override { return "MIDI"; }
+	virtual String getDefaultTypeString() const override { return "MIDI"; }
 
 	InspectableEditor * getEditor(bool isRoot) override;
 };

@@ -21,7 +21,7 @@ public:
 	~ReaperModule() {}
 
 	static ReaperModule * create() { return new ReaperModule(); }
-	virtual String getTypeString() const override { return "Reaper"; }
+	virtual String getDefaultTypeString() const override { return "Reaper"; }
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ReaperModule)
 };

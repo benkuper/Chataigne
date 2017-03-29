@@ -50,8 +50,21 @@ Array<WeakReference<Controllable>> Module::getValueControllables()
 
 void Module::setupModuleFromJSONData(var data)
 {
-	
+	customType = data.getProperty("name","");
+
 	setNiceName(data.getProperty("name",""));
+
+	if (data.getDynamicObject()->hasProperty("defaults"))
+	{
+		var defaultsData = data.getProperty("defaults", var());
+		NamedValueSet valueProps = defaultsData.getDynamicObject()->getProperties();
+		for (auto &p : valueProps)
+		{
+			Parameter * c = static_cast<Parameter *>(getControllableByName(p.name.toString()));
+			if (c == nullptr) continue;
+			c->setValue(p.value);
+		}
+	}
 
 	if (data.getDynamicObject()->hasProperty("values"))
 	{
@@ -81,7 +94,7 @@ void Module::setupModuleFromJSONData(var data)
 	for (auto &s : *scriptData)
 	{
 		Script * script = scriptManager->addItem();
-		DBG("Set script path : " << data.getProperty("modulePath", "").toString() << "/" << s.toString());
+		//DBG("Set script path : " << data.getProperty("modulePath", "").toString() << "/" << s.toString());
 		script->filePath->setValue(data.getProperty("modulePath", "").toString() + "/"+s.toString());
 	}
 }
@@ -113,5 +126,28 @@ var Module::getJSONData()
 {
 	var data = BaseItem::getJSONData();
 	data.getDynamicObject()->setProperty("type", getTypeString());
+	//if (sourceDefinitionPath.isNotEmpty()) data.getDynamicObject()->setProperty("customDefinitionPath", sourceDefinitionPath);
 	return data;
+}
+
+void Module::loadJSONDataInternal(var data)
+{
+	/*
+	if (data.getDynamicObject()->hasProperty("customDefinitionPath"))
+	{
+		String path = data.getProperty("customDefinitionPath", "").toString();
+		var moduleData = JSON::parse(File(path));
+		if (moduleData == nullptr)
+		{
+			DBG("File not found : " << data.getProperty("customDefinitionPath", "").toString());
+		}
+		else
+		{
+			moduleData.getDynamicObject()->setProperty("modulePath", path);
+		}
+
+		setupModuleFromJSONData(moduleData); 
+	}
+	*/
+	BaseItem::loadJSONDataInternal(data);
 }

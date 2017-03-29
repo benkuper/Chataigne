@@ -21,7 +21,7 @@ public:
 	~ResolumeModule() {}
 
 	static ResolumeModule * create() { return new ResolumeModule(); }
-	virtual String getTypeString() const override { return "Resolume"; }
+	virtual String getDefaultTypeString() const override { return "Resolume"; }
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ResolumeModule)
 };

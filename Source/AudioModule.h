@@ -67,7 +67,7 @@ public:
 	InspectableEditor * getEditor(bool isRoot) override;
 
 	static AudioModule * create() { return new AudioModule(); }
-	virtual String getTypeString() const override { return "Audio Device"; }
+	virtual String getDefaultTypeString() const override { return "Audio Device"; }
 
 
 private:
