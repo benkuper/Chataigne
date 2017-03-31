@@ -66,7 +66,7 @@ void MIDIInputDevice::handleIncomingMidiMessage(MidiInput * source, const MidiMe
 
 	if (message.isNoteOn()) inputListeners.call(&MIDIInputListener::noteOnReceived, message.getChannel(), message.getNoteNumber(), message.getVelocity());
 	else if(message.isNoteOff()) inputListeners.call(&MIDIInputListener::noteOffReceived, message.getChannel(), message.getNoteNumber(), 0); //force note off to velocity 0
-	else if(message.isController()) inputListeners.call(&MIDIInputListener::noteOnReceived, message.getChannel(), message.getControllerNumber(), message.getControllerValue());
+	else if(message.isController()) inputListeners.call(&MIDIInputListener::controlChangeReceived, message.getChannel(), message.getControllerNumber(), message.getControllerValue());
 	else if(message.isSysEx()) inputListeners.call(&MIDIInputListener::sysExReceived, message);
 }
 
