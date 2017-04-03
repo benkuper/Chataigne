@@ -92,7 +92,25 @@ void AutomationKeyUI::mouseDown(const MouseEvent & e)
 	}
 	else if (e.eventComponent == easingUI)
 	{
-		if (e.mods.isCtrlDown())
+		if (e.mods.isRightButtonDown())
+		{
+			PopupMenu p;
+			PopupMenu ep;
+			StringArray keys = item->easingType->getAllKeys();
+			int kid = 1;
+			for (auto &i : keys)
+			{
+				ep.addItem(kid, i, true, i == item->easingType->getValueKey());
+				kid++;
+			}
+			p.addSubMenu("Easing", ep);
+
+			int result = p.show();
+			if (result >= 1 && result <= keys.size())
+			{
+				item->easingType->setValueWithKey(keys[result - 1]);
+			}
+		}else if (e.mods.isCtrlDown())
 		{
 			item->easingType->setNext();
 		}

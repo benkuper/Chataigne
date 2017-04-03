@@ -29,10 +29,11 @@ void InspectableSelectionManager::setEnabled(bool value)
 	if (!enabled) clearSelection();
 }
 
-void InspectableSelectionManager::selectInspectables(Array<Inspectable*> inspectables, bool doClearSelection)
+void InspectableSelectionManager::selectInspectables(Array<Inspectable*> inspectables, bool doClearSelection, bool notify)
 {
 	if (doClearSelection) clearSelection(false);
 	for (auto &i : inspectables) selectInspectable(i, false, false);
+	if (notify) listeners.call(&Listener::inspectablesSelectionChanged);
 }
 
 void InspectableSelectionManager::selectInspectable(WeakReference<Inspectable> inspectable, bool doClearSelection, bool notify)

@@ -16,6 +16,8 @@ AutomationUI::AutomationUI(Automation * _automation) :
 	firstROIKey(0),lastROIKey(0), currentPosition(0),
 	currentUI(nullptr)
 {
+	InspectableSelectionManager::getInstance()->addSelectionListener(this);
+
 	animateItemOnAdd = false;
 
 	transparentBG = true;
@@ -29,6 +31,8 @@ AutomationUI::AutomationUI(Automation * _automation) :
 
 AutomationUI::~AutomationUI()
 {
+	InspectableSelectionManager::getInstance()->removeSelectionListener(this);
+
 	manager->removeAsyncContainerListener(this);
 }
 
@@ -111,6 +115,8 @@ void AutomationUI::resized()
 		placeKeyUI(itemsUI[i], true);
 		itemsUI[i]->toBack(); // place each ui in front of its right
 	}
+	
+	if (transformer != nullptr) transformer->updateBoundsFromKeys();
 }
 
 void AutomationUI::placeKeyUI(AutomationKeyUI * kui, bool placePrevKUI) 
@@ -235,6 +241,12 @@ void AutomationUI::mouseDown(const MouseEvent & e)
 				selectables.add(&i->handle);
 				inspectables.add(i->inspectable);
 			}
+
+			if (transformer != nullptr)
+			{
+				removeChildComponent(transformer);
+				transformer = nullptr;
+			}
 			InspectableSelector::getInstance()->startSelection(this,selectables,inspectables);
 		}
 	}
@@ -296,5 +308,35 @@ void AutomationUI::newMessage(const ContainerAsyncEvent & e)
 		
 	}
 	
+}
+
+void AutomationUI::inspectablesSelectionChanged()
+{
+	if (transformer != nullptr)
+	{
+		removeChildComponent(transformer);
+		transformer = nullptr;
+	}
+
+	Array<AutomationKeyUI *> uiSelection;
+	if (InspectableSelectionManager::getInstance()->currentInspectables.size() >= 2)
+	{
+
+	}
+	for (auto &i : InspectableSelectionManager::getInstance()->currentInspectables)
+	{
+		AutomationKey * k = static_cast<AutomationKey *>(i);
+		if (k == nullptr) continue;
+		AutomationKeyUI * kui = getUIForItem(k);
+		if (kui == nullptr) return;
+
+		uiSelection.add(kui);	
+	}
+
+	if (uiSelection.size() >= 2)
+	{
+		transformer = new AutomationMultiKeyTransformer(this, uiSelection);
+		addAndMakeVisible(transformer);
+	}
 }
 

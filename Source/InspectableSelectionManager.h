@@ -26,7 +26,7 @@ public:
 	
 	void setEnabled(bool value);
 
-	void selectInspectables(Array<Inspectable *> inspectables, bool clearSelection = true);
+	void selectInspectables(Array<Inspectable *> inspectables, bool clearSelection = true, bool notify = true);
 	void selectInspectable(WeakReference<Inspectable> inspectable, bool clearSelection = true, bool notify = true);
 	void deselectInspectable(WeakReference<Inspectable> inspectable, bool notify = true);
 

@@ -19,7 +19,7 @@ class Easing :
 	public ControllableContainer
 {
 public:
-	enum Type { LINEAR, BEZIER, HOLD };
+	enum Type { LINEAR, BEZIER, HOLD, SINE };
 
 	Easing(Type type);
 	virtual ~Easing();
@@ -98,5 +98,16 @@ public:
 };
 
 
+class SineEasing :
+	public Easing
+{
+public:
+	SineEasing();
+	Point2DParameter * freqAmp;
+
+	virtual float getValue(const float &start, const float &end, const float &weight) override;
+
+	EasingUI * createUI() override;
+};
 
 #endif  // EASING_H_INCLUDED

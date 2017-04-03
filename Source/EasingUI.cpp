@@ -65,6 +65,25 @@ void EasingUI::generatePath()
 	repaint();
 }
 
+void EasingUI::generatePathInternal()
+{
+	autoGeneratePathWithPrecision();
+}
+
+void EasingUI::autoGeneratePathWithPrecision(int precision)
+{
+	if (getHeight() == 0) return;
+	for (int i = 1; i <= precision; i++)
+	{
+		float t = i*1.f / precision;
+		float v1 = 1 - (y1*1.f / getHeight());
+		float v2 = 1 - (y2*1.f / getHeight());
+		float v = easing->getValue(v1,v2, t);
+		drawPath.lineTo(t*getWidth(), (1-v)*getHeight());
+		
+	}
+}
+
 void EasingUI::buildHitPath()
 {
 	Array<Point<float>> hitPoints;
@@ -317,4 +336,83 @@ void EasingUI::EasingHandle::paint(Graphics & g)
 	if (isMouseOver()) c = c.brighter(.8f);
 	g.setColour(c);
 	g.fillEllipse(getLocalBounds().reduced(isMouseOver()?3:5).toFloat());
+}
+
+SineEasingUI::SineEasingUI(SineEasing * e) :
+	EasingUI(e)
+{
+	generatePath();
+
+	addChildComponent(h1);
+	h1.setVisible(easing->isSelected);
+	h1.addMouseListener(this, false);
+}
+
+bool SineEasingUI::hitTest(int tx, int ty)
+{
+	bool result = EasingUI::hitTest(tx, ty);
+
+	if (easing->isSelected)
+	{
+		if (&h1 != nullptr) result |= h1.getLocalBounds().contains(h1.getMouseXYRelative());
+	}
+
+	return result;
+}
+
+void SineEasingUI::resized()
+{
+	Point<int> p1 = Point<int>(0, y1);
+	Point<int> p2 = Point<int>(getWidth(), y2);
+
+	SineEasing * ce = static_cast<SineEasing *>(easing.get());
+
+	Point<float> a = Point<float>(jmap<float>(ce->freqAmp->getPoint().x, p1.x, p2.x), jmap<float>(ce->freqAmp->getPoint().y, p1.y, p2.y));
+
+	h1.setBounds(Rectangle<int>(0, 0, 16, 16).withCentre(a.toInt()));
+}
+
+void SineEasingUI::paintInternal(Graphics & g)
+{
+	if (!easing->isSelected) return;
+
+	Colour c = LIGHTCONTOUR_COLOR;
+	if (isMouseOver()) c = c.brighter();
+	g.setColour(c);
+
+	Point<int> hp = h1.getBounds().getCentre();
+	g.drawLine(0, y1, hp.x, y1);
+	g.drawLine(hp.x, y1, hp.x,hp.y,2);
+}
+
+void SineEasingUI::inspectableSelectionChanged(Inspectable *)
+{
+	if (easing.wasObjectDeleted()) return;
+	h1.setVisible(easing->isSelected);
+	resized();
+	repaint();
+}
+
+void SineEasingUI::easingControllableFeedbackUpdate(Controllable  * c)
+{
+	SineEasing * ce = static_cast<SineEasing *>(easing.get());
+	if (c == ce->freqAmp)
+	{
+		generatePath();
+		resized();
+	}
+}
+
+void SineEasingUI::mouseDrag(const MouseEvent & e)
+{
+	if (e.eventComponent == &h1)
+	{
+		CubicEasing * ce = static_cast<CubicEasing *>(easing.get());
+
+		Point2DParameter * targetAnchor = (e.eventComponent == &h1) ? ce->anchor1 : ce->anchor2;
+		Point<int> mp = e.getEventRelativeTo(this).getPosition();
+
+		Point<float> targetPoint = Point<float>(mp.x*1.f / getWidth(), jmap<float>(mp.y, y1, y2, 0, 1));
+		targetAnchor->setPoint(targetPoint);
+	}
 }

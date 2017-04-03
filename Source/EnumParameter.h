@@ -32,6 +32,8 @@ public:
 	var getValueData() { return enumValues[value]; };
 	String getValueKey() { return value.toString(); }
 
+	StringArray getAllKeys();
+
 	void setValueWithKey(String data);
 	void setNext(bool loop = true);
 

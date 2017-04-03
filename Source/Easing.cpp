@@ -155,3 +155,23 @@ float CubicEasing::Bezier::solveCurveX(const float & tx)
 	// Give up
 	return t2;
 }
+
+SineEasing::SineEasing() :
+	Easing(SINE)
+{
+	freqAmp = addPoint2DParameter("Anchor 1", "Anchor 1 of the quadratic curve");
+	freqAmp->setBounds(.01f, -1, 1, 2);
+	freqAmp->setPoint(.2f, .5f);
+}
+
+float SineEasing::getValue(const float & start, const float & end, const float & weight)
+{
+	//DBG(freqAmp->getPoint().toString() << " / " << sinf(weight / freqAmp->x));
+	return start + (end - start)*weight + sinf(weight*float_Pi*2/freqAmp->x)*freqAmp->y;
+}
+
+
+EasingUI * SineEasing::createUI()
+{
+	return new SineEasingUI(this);
+}

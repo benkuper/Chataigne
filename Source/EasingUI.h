@@ -37,7 +37,9 @@ public:
 	void resized() override;
 
 	void generatePath();
-	virtual void generatePathInternal() = 0;
+	virtual void generatePathInternal();
+
+	void autoGeneratePathWithPrecision(int precision = 100);
 
 	void buildHitPath();
 
@@ -95,6 +97,26 @@ public:
 	void resized() override;
 
 	void generatePathInternal() override;
+	void paintInternal(Graphics &g) override;
+
+	void inspectableSelectionChanged(Inspectable *) override;
+	void easingControllableFeedbackUpdate(Controllable *) override;
+
+	void mouseDrag(const MouseEvent &e) override;
+};
+
+class SineEasingUI :
+	public EasingUI
+{
+public:
+	SineEasingUI(SineEasing * e);
+
+	EasingHandle h1;
+
+	bool hitTest(int tx, int ty) override;
+
+	void resized() override;
+
 	void paintInternal(Graphics &g) override;
 
 	void inspectableSelectionChanged(Inspectable *) override;

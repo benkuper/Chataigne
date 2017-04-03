@@ -36,7 +36,6 @@ void EnumParameter::removeOption(String key)
 
 void EnumParameter::clearOptions()
 {
-	int index = 1;
 	HashMap<String, var>::Iterator i(enumValues);
 	StringArray keysToRemove;
 	while (i.next())
@@ -62,6 +61,14 @@ void EnumParameter::updateArgDescription()
 		index++;
 	}
 
+}
+
+StringArray EnumParameter::getAllKeys()
+{
+	StringArray result;
+	HashMap<String, var>::Iterator i(enumValues);
+	while (i.next()) result.add(i.getKey());
+	return result;
 }
 
 void EnumParameter::setValueWithKey(String key)

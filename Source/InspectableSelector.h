@@ -38,18 +38,18 @@ public:
 	void mouseDrag(const MouseEvent &e) override;
 	void mouseUp(const MouseEvent &e) override;
 
-	/*
+	
 	class  SelectorListener
 	{
 	public:
 		virtual ~SelectorListener() {}
-		virtual void selection() {};
+		virtual void selectionEnded(Array<Component *> selectedComponents) {};
 	};
 
 	ListenerList<SelectorListener> listeners;
 	void addSelectorListener(SelectorListener* newListener) { listeners.add(newListener); }
 	void removeSelectorListener(SelectorListener* listener) { listeners.remove(listener); }
-	*/
+	
 };
 
 

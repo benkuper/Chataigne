@@ -14,10 +14,13 @@
 #include "Automation.h"
 #include "BaseManagerUI.h"
 #include "AutomationKeyUI.h"
+#include "AutomationMultiKeyTransformer.h"
+#include "InspectableSelectionManager.h"
 
 class AutomationUI :
 	public BaseManagerUI<Automation,AutomationKey,AutomationKeyUI>,
-	public ControllableContainer::ContainerAsyncListener
+	public ControllableContainer::ContainerAsyncListener,
+	public InspectableSelectionManager::Listener
 {
 public:
 	AutomationUI(Automation * _automation);
@@ -32,6 +35,8 @@ public:
 	float currentPosition;
 	float currentValue;
 	AutomationKeyUI * currentUI;
+
+	ScopedPointer<AutomationMultiKeyTransformer> transformer;
 
 	void setCurrentPosition(const float &pos);
 	void setCurrentValue(const float &val);
@@ -63,6 +68,8 @@ public:
 	void mouseDrag(const MouseEvent &e) override;
 
 	void newMessage(const ContainerAsyncEvent &e) override;
+
+	void inspectablesSelectionChanged() override;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(AutomationUI)
 

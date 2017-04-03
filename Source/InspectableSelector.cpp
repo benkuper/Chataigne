@@ -60,6 +60,11 @@ void InspectableSelector::endSelection(bool confirmSelection)
 	selectablesParent->removeMouseListener(this);
 
 	Array<Inspectable *> selection;
+
+	Array<Component *> selectedComponents;
+	int numSelectables = selectables.size();
+	for (int i = 0; i < numSelectables; i++) if (inspectables[i]->isPreselected) selectedComponents.add(selectables[i]);
+
 	for (auto &s : inspectables)
 	{
 		if (confirmSelection)
@@ -73,6 +78,9 @@ void InspectableSelector::endSelection(bool confirmSelection)
 	}
 
 	if(confirmSelection) InspectableSelectionManager::getInstance()->selectInspectables(selection);
+
+	if (selectedComponents.size() > 0) listeners.call(&SelectorListener::selectionEnded, selectedComponents);
+	
 }
 
 void InspectableSelector::paint(Graphics & g)
@@ -111,7 +119,7 @@ void InspectableSelector::mouseDrag(const MouseEvent & e)
 	
 }
 
-void InspectableSelector::mouseUp(const MouseEvent & e)
+void InspectableSelector::mouseUp(const MouseEvent &)
 {
 	endSelection();
 }
