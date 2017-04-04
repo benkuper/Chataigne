@@ -1171,8 +1171,11 @@
                        isDebug="1" optimisation="1" targetName="Chataigne" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;$(ASIOSDK)/common&#10;$(KINECTSDK20_DIR)inc"
                        libraryPath="$(KINECTSDK20_DIR)Lib\x86"/>
         <CONFIGURATION name="Release" winWarningLevel="4" generateManifest="1" winArchitecture="32-bit"
-                       isDebug="0" optimisation="3" targetName="Chataigne" libraryPath=""
-                       headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;$(ASIOSDK)/common"/>
+                       isDebug="0" optimisation="3" targetName="Chataigne" libraryPath="$(KINECTSDK20_DIR)Lib\x86"
+                       headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;$(ASIOSDK)/common&#10;$(KINECTSDK20_DIR)inc"/>
+        <CONFIGURATION name="Release x64" winWarningLevel="4" generateManifest="1" winArchitecture="x64"
+                       headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;$(ASIOSDK)/common&#10;$(KINECTSDK20_DIR)inc"
+                       libraryPath="$(KINECTSDK20_DIR)Lib\x64"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_core" path="D:/Softwares/JUCE/modules"/>

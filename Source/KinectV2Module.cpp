@@ -32,14 +32,19 @@ KinectV2Module::KinectV2Module() :
 KinectV2Module::~KinectV2Module()
 {
 	stopTimer();
+
+#if JUCE_WINDOWS
 	SafeRelease(m_pBodyFrameReader);
 	SafeRelease(m_pCoordinateMapper);
 	if (m_pKinectSensor) m_pKinectSensor->Close();
 	SafeRelease(m_pKinectSensor);
+#endif
 }
 
 bool KinectV2Module::initKinect()
 {
+#if JUCE_WINDOWS
+
 	HRESULT hr;
 
 	hr = GetDefaultKinectSensor(&m_pKinectSensor);
@@ -71,10 +76,13 @@ bool KinectV2Module::initKinect()
 
 	LOG("Kinect is initialized");
 	return true;
+
+#endif
 }
 
 void KinectV2Module::updateKinect()
 {
+#if JUCE_WINDOWS
 	if (!m_pBodyFrameReader)
 	{
 		return;
@@ -108,10 +116,13 @@ void KinectV2Module::updateKinect()
 	}
 
 	SafeRelease(pBodyFrame);
+
+#endif
 }
 
 void KinectV2Module::processBody(int nBodyCount, IBody ** ppBodies)
 {
+#if JUCE_WINDOWS
 	IBody* pBody = nullptr;
 
 	if (curBodyIndex != -1)
@@ -172,6 +183,9 @@ void KinectV2Module::processBody(int nBodyCount, IBody ** ppBodies)
 	handsAngle->setValue(radiansToDegrees(left2D.getAngleToPoint(right2D)) + 180);
 	leftHandOpen->setValue(leftHandState == HandState_Open);
 	rightHandOpen->setValue(rightHandState == HandState_Open);
+
+#endif
+
 }
 
 void KinectV2Module::timerCallback()

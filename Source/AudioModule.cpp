@@ -91,9 +91,12 @@ void AudioModule::loadJSONDataInternal(var data)
 	}
 }
 
-void AudioModule::audioDeviceIOCallback(const float ** inputChannelData, int numInputChannels, float ** , int , int numSamples)
+void AudioModule::audioDeviceIOCallback(const float ** inputChannelData, int numInputChannels, float ** outputChannelData, int numOutputChannels, int numSamples)
 {
 	//DBG("audio callback");
+	
+	for (int i = 0; i < numOutputChannels; i++) FloatVectorOperations::clear(outputChannelData[i],numSamples);
+
 	if (numInputChannels > 0)
 	{
 		if(buffer.getNumSamples() != numSamples) buffer.setSize(1, numSamples);

@@ -157,17 +157,18 @@ void AudioLayerProcessor::processBlock(AudioBuffer<float>& buffer, MidiBuffer & 
 	AudioSampleBuffer * clipBuffer = &layer->currentClip->buffer;
 	//int numClipSamples = clipBuffer->getNumSamples();
 
-	//float position = layer->sequence->currentTime->floatValue() - layer->currentClip->time->floatValue();
+	float position = layer->sequence->currentTime->floatValue() - layer->currentClip->time->floatValue();
+	int samplePosition = position *layer->currentClip->sampleRate;
 
-	int samplePosition = layer->currentClip->clipSamplePos;// *layer->currentClip->sampleRate;
-
+	//int samplePosition = layer->currentClip->clipSamplePos;// *layer->currentClip->sampleRate;
+	
 	int maxSamples = jmin<int>(buffer.getNumSamples(), clipBuffer->getNumSamples() - samplePosition);
 	for (int i = 0; i < buffer.getNumChannels(); i++)
 	{
 		buffer.copyFrom(i, 0, *clipBuffer, i, samplePosition, maxSamples);
 	}
 
-	layer->currentClip->clipSamplePos += maxSamples;
+	//layer->currentClip->clipSamplePos += maxSamples;
 
 	layer->enveloppe->setValue(buffer.getRMSLevel(0, 0, buffer.getNumSamples()));
 }

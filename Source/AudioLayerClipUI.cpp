@@ -13,8 +13,8 @@
 AudioLayerClipUI::AudioLayerClipUI(AudioLayerClip * _clip) :
 	BaseItemUI(_clip),
 	clip(_clip),
-	thumbnailCache(5),
-	thumbnail(8096,_clip->formatManager,thumbnailCache)
+	thumbnailCache(100000),
+	thumbnail(50,_clip->formatManager,thumbnailCache)
 {
 	browseBT = AssetManager::getInstance()->getFileBT();
 	addAndMakeVisible(browseBT);

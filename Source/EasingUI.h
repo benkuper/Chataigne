@@ -30,6 +30,8 @@ public:
 	Path drawPath;
 	Path hitPath;
 
+	int hitPathPrecision = 10;
+
 	void setKeyPositions(const int &k1, const int &k2);
 
 	void paint(Graphics &g) override;

@@ -12,7 +12,10 @@
 #define KINECTV2MODULE_H_INCLUDED
 
 #include "Module.h"
+
+#if JUCE_WINDOWS
 #include "Kinect.h"
+#endif
 
 class KinectV2Module :
 	public Module,
@@ -40,11 +43,13 @@ public:
 
 
 	// Current Kinect
+#if JUCE_WINDOWS
 	IKinectSensor*          m_pKinectSensor;
 	ICoordinateMapper*      m_pCoordinateMapper;
 
 	// Body reader
 	IBodyFrameReader*       m_pBodyFrameReader;
+#endif
 
 	static KinectV2Module * create() { return new KinectV2Module(); }
 	virtual String getDefaultTypeString() const override { return "KinectV2"; }
@@ -64,7 +69,5 @@ public:
 	}
 
 };
-
-
 
 #endif  // KINECTV2MODULE_H_INCLUDED

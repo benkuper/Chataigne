@@ -46,6 +46,9 @@ void EasingUI::paint(Graphics &g)
 	g.setColour(c);
 	g.strokePath(drawPath, PathStrokeType(isMouseOver()?2:1));
 
+	//g.setColour(Colours::purple);
+	//g.strokePath(hitPath, PathStrokeType(2));
+
 	paintInternal(g);
 }
 
@@ -73,6 +76,9 @@ void EasingUI::generatePathInternal()
 void EasingUI::autoGeneratePathWithPrecision(int precision)
 {
 	if (getHeight() == 0) return;
+	if (precision == 0) precision = getWidth();
+	else precision = jmin(getWidth(), precision);
+
 	for (int i = 1; i <= precision; i++)
 	{
 		float t = i*1.f / precision;
@@ -87,10 +93,10 @@ void EasingUI::autoGeneratePathWithPrecision(int precision)
 void EasingUI::buildHitPath()
 {
 	Array<Point<float>> hitPoints;
-	const int numPoints = 10;
-	for (int i = 0; i <= numPoints; i++)
+	
+	for (int i = 0; i <= hitPathPrecision; i++)
 	{
-		hitPoints.add(drawPath.getPointAlongPath(drawPath.getLength()*i / (numPoints-1)));
+		hitPoints.add(drawPath.getPointAlongPath(drawPath.getLength()*i / (hitPathPrecision -1)));
 	}
 
 	const float margin = 5;
@@ -98,11 +104,11 @@ void EasingUI::buildHitPath()
 	hitPath.clear();
 	Array<Point<float>> firstPoints;
 	Array<Point<float>> secondPoints;
-	for (int i = 0; i < numPoints; i++)
+	for (int i = 0; i < hitPathPrecision; i++)
 	{
 		Point<float> tp;
 		Point<float> sp;
-		if (i == 0 || i == numPoints - 1)
+		if (i == 0 || i == hitPathPrecision - 1)
 		{
 			tp = hitPoints[i].translated(0, -margin);
 			sp = hitPoints[i].translated(0, margin);
@@ -341,6 +347,7 @@ void EasingUI::EasingHandle::paint(Graphics & g)
 SineEasingUI::SineEasingUI(SineEasing * e) :
 	EasingUI(e)
 {
+	hitPathPrecision = jmin<float>(1 / e->freqAmp->floatValue(), 100);
 	generatePath();
 
 	addChildComponent(h1);
@@ -398,6 +405,7 @@ void SineEasingUI::easingControllableFeedbackUpdate(Controllable  * c)
 	SineEasing * ce = static_cast<SineEasing *>(easing.get());
 	if (c == ce->freqAmp)
 	{
+		hitPathPrecision = jmin<float>(10 / ce->freqAmp->floatValue(),100);
 		generatePath();
 		resized();
 	}
