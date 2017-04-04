@@ -19,7 +19,7 @@ class ScriptTarget
 {
 public:
 	ScriptTarget(const String &name, void * ptr) : scriptTargetName(name), thisPtr((int64)ptr) {}
-	~ScriptTarget() {}
+	virtual ~ScriptTarget() {}
 
 	int64 thisPtr;
 	String scriptTargetName;

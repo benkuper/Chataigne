@@ -38,7 +38,11 @@ public:
 
 	bool initKinect();
 	void updateKinect();
+
+#if JUCE_WINDOWS
 	void processBody(int nBodyCount, IBody** ppBodies);
+#endif
+  
 
 
 

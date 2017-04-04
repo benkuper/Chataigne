@@ -120,9 +120,9 @@ void KinectV2Module::updateKinect()
 #endif
 }
 
+#if JUCE_WINDOWs
 void KinectV2Module::processBody(int nBodyCount, IBody ** ppBodies)
 {
-#if JUCE_WINDOWS
 	IBody* pBody = nullptr;
 
 	if (curBodyIndex != -1)
@@ -183,10 +183,8 @@ void KinectV2Module::processBody(int nBodyCount, IBody ** ppBodies)
 	handsAngle->setValue(radiansToDegrees(left2D.getAngleToPoint(right2D)) + 180);
 	leftHandOpen->setValue(leftHandState == HandState_Open);
 	rightHandOpen->setValue(rightHandState == HandState_Open);
-
-#endif
-
 }
+#endif
 
 void KinectV2Module::timerCallback()
 {
