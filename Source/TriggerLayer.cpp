@@ -14,7 +14,7 @@
 
 TriggerLayer::TriggerLayer(Sequence * _sequence) :
 	SequenceLayer(_sequence, "New Trigger Layer"),
-	ttm(_sequence)
+	ttm(this,_sequence)
 {
 	addChildControllableContainer(&ttm);
 }

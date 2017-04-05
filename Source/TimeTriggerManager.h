@@ -14,6 +14,8 @@
 #include "TimeTrigger.h"
 #include "Sequence.h"
 
+class TriggerLayer;
+
 class TimeTriggerComparator
 {
 public:
@@ -30,9 +32,10 @@ class TimeTriggerManager :
 	public Sequence::SequenceListener
 {
 public:
-	TimeTriggerManager(Sequence * sequence);
+	TimeTriggerManager(TriggerLayer * layer, Sequence * sequence);
 	~TimeTriggerManager();
-
+	
+	TriggerLayer * layer;
 	Sequence * sequence;
 
 	static TimeTriggerComparator comparator;

@@ -158,6 +158,8 @@ void AudioLayerProcessor::releaseResources()
 void AudioLayerProcessor::processBlock(AudioBuffer<float>& buffer, MidiBuffer & midiMessages)
 {
 	buffer.clear();
+	if (!layer->enabled->boolValue()) return;
+
 	WeakReference<AudioLayerClip> currentClip = layer->currentClip;
 	if (currentClip.wasObjectDeleted() || currentClip.get() == nullptr) return;
 	if (currentClip->filePath->stringValue().isEmpty()) return;

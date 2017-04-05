@@ -42,7 +42,6 @@ void AudioLayerClipManagerUI::updateContent()
 
 void AudioLayerClipManagerUI::placeClipUI(AudioLayerClipUI * cui)
 {
-	DBG("place clip ui");
 	int tx = timeline->getXForTime(cui->clip->time->floatValue());
 	int tx2 = timeline->getXForTime(cui->clip->time->floatValue() + cui->clip->clipLength->floatValue());
 	cui->setBounds(tx, 0, tx2-tx, getHeight());

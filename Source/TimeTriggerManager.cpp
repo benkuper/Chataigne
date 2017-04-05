@@ -10,11 +10,13 @@
 
 #include "TimeTriggerManager.h"
 #include "Sequence.h"
+#include "TriggerLayer.h"
 
 TimeTriggerComparator TimeTriggerManager::comparator;
 
-TimeTriggerManager::TimeTriggerManager(Sequence * _sequence) :
+TimeTriggerManager::TimeTriggerManager(TriggerLayer * _layer, Sequence * _sequence) :
 	BaseManager<TimeTrigger>("Triggers"),
+	layer(_layer),
 	sequence(_sequence)
 {
 	skipControllableNameInAddress = true;
@@ -77,6 +79,7 @@ void TimeTriggerManager::controllableFeedbackUpdate(ControllableContainer * cc, 
 
 void TimeTriggerManager::sequenceCurrentTimeChanged(Sequence * /*_sequence*/, float prevTime, bool evaluateSkippedData)
 {
+	if (!layer->enabled->boolValue()) return;
 
 	if (sequence->currentTime->floatValue() >= prevTime)
 	{ 
@@ -85,7 +88,6 @@ void TimeTriggerManager::sequenceCurrentTimeChanged(Sequence * /*_sequence*/, fl
 			Array<TimeTrigger *> spanTriggers = getTriggersInTimespan(prevTime, sequence->currentTime->floatValue());
 			for (auto &tt : spanTriggers)
 			{
-				DBG("here ! ");
 				tt->trigger->trigger();
 			}
 		}
