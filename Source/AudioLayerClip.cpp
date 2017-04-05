@@ -30,6 +30,7 @@ AudioLayerClip::AudioLayerClip(float _time) :
 
 AudioLayerClip::~AudioLayerClip()
 {
+	masterReference.clear();
 }
 
 void AudioLayerClip::setIsCurrent(bool value)

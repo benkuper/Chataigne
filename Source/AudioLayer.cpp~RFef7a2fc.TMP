@@ -16,6 +16,7 @@
 AudioLayer::AudioLayer(Sequence * _sequence) :
 	SequenceLayer(_sequence, "New Audio Layer"),
 	audioModule(nullptr),
+	currentClip(nullptr),
 	graphID(-1)
 {
 
@@ -34,11 +35,9 @@ void AudioLayer::setAudioModule(AudioModule * newModule)
 {
 	if (audioModule != nullptr)
 	{
-		DBG("Audio Layer remove Audio Module");
 		//audioModule->graph.removeConnection(1, 0, graphID, 0); //remove In Connection
 		audioModule->graph.removeConnection(graphID, 0, 2, 0); //remove Out connection
 		audioModule->graph.removeNode(graphID);
-		currentProcessor = nullptr;
 	}
 
 	audioModule = newModule;
@@ -54,14 +53,7 @@ void AudioLayer::setAudioModule(AudioModule * newModule)
 		//audioModule->graph.addConnection(1, 0, graphID, 0);
 		audioModule->graph.addConnection(graphID, 0, 2, 0);
 
-		sequence->setMasterAudioModule(audioModule);
 	}
-	else
-	{
-		sequence->setMasterAudioModule(nullptr); //todo : check if other audio layer can replace this one
-	}
-
-	
 }
 
 void AudioLayer::updateCurrentClip()
@@ -157,9 +149,13 @@ void AudioLayerProcessor::releaseResources()
 
 void AudioLayerProcessor::processBlock(AudioBuffer<float>& buffer, MidiBuffer & midiMessages)
 {
-	buffer.clear();
-	WeakReference<AudioLayerClip> currentClip = layer->currentClip;
-	if (currentClip.wasObjectDeleted() || currentClip.get() == nullptr) return;
+	
+	AudioLayerClip * currentClip = layer->currentClip;
+	if (currentClip == nullptr)
+	{
+		buffer.clear();
+		return;
+	}
 	if (currentClip->filePath->stringValue().isEmpty()) return;
 	//if (!layer->sequence->isPlaying->boolValue()) return;
 
@@ -167,20 +163,18 @@ void AudioLayerProcessor::processBlock(AudioBuffer<float>& buffer, MidiBuffer & 
 	AudioSampleBuffer * clipBuffer = &layer->currentClip->buffer;
 	//int numClipSamples = clipBuffer->getNumSamples();
 
-	float position = layer->sequence->hiResAudioTime - layer->currentClip->time->floatValue();
+	float position = layer->sequence->currentTime->floatValue() - layer->currentClip->time->floatValue();
 	
 	int curSamplePos = currentClip->clipSamplePos;
 	int targetSamplePos = position * currentClip->sampleRate;
-
-	//smoothing vynil-like when not playing
-	if(!layer->sequence->isPlaying->boolValue()) targetSamplePos = curSamplePos + (targetSamplePos - curSamplePos)*.1f;
-	
-
+	//targetSamplePos = curSamplePos + (targetSamplePos - curSamplePos)*.05f;
 	int numDiffSamples = abs(targetSamplePos - curSamplePos);
 	if (numDiffSamples == 0) return;
 
 	int numBufferSamples = buffer.getNumSamples();
- 
+
+	
+
 	//int samplePosition = layer->currentClip->clipSamplePos;// *layer->currentClip->sampleRate;
 	
 	//int maxSamples = jmin<int>(buffer.getNumSamples(), clipBuffer->getNumSamples() - samplePosition);
@@ -193,8 +187,7 @@ void AudioLayerProcessor::processBlock(AudioBuffer<float>& buffer, MidiBuffer & 
 		for (int j = 0; j < numBufferSamples; j++)
 		{
 			float val = 0;
-			int sampleInClip = jlimit<int>(0, clipBuffer->getNumSamples() - 1,curSamplePos + (targetSamplePos - curSamplePos) * j*1.f / numBufferSamples);
-
+			int sampleInClip = curSamplePos + (targetSamplePos - curSamplePos) * j*1.f / numBufferSamples;
 			if (j > 0 && sampleInClip != prevSampleInClip)
 			{
 				int step = sampleInClip > prevSampleInClip ? 1 : -1;
@@ -214,6 +207,7 @@ void AudioLayerProcessor::processBlock(AudioBuffer<float>& buffer, MidiBuffer & 
 
 		}
 		//buffer.copyFrom(targetChannel, 0, *clipBuffer, i, samplePosition, maxSamples);
+
 	}
 
 	currentClip->clipSamplePos = targetSamplePos;

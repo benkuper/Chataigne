@@ -21,9 +21,12 @@ SequenceTransportUI::~SequenceTransportUI()
 {
 }
 
-void SequenceTransportUI::paint(Graphics &)
+void SequenceTransportUI::paint(Graphics &g)
 {
-	//g.fillAll(Colours::green);
+	if (sequence->timeIsDrivenByAudio())
+	{
+		g.fillAll(Colours::green);
+	}
 }
 
 void SequenceTransportUI::resized()

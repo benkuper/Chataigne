@@ -55,6 +55,11 @@ public:
 	void addClipListener(ClipListener* newListener) { clipListeners.add(newListener); }
 	void removeClipListener(ClipListener* listener) { clipListeners.remove(listener); }
 
+
+private:
+	WeakReference<AudioLayerClip>::Master masterReference;
+	friend class WeakReference<AudioLayerClip>;
+
 };
 
 

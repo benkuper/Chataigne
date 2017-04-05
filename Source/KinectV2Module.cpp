@@ -120,7 +120,7 @@ void KinectV2Module::updateKinect()
 #endif
 }
 
-#if JUCE_WINDOWs
+#if JUCE_WINDOWS
 void KinectV2Module::processBody(int nBodyCount, IBody ** ppBodies)
 {
 	IBody* pBody = nullptr;

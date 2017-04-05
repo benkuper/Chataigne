@@ -34,7 +34,6 @@ void AudioLayerClipManagerUI::resized()
 
 void AudioLayerClipManagerUI::updateContent()
 {
-	DBG("audio update content");
 	for (auto &cui : itemsUI)
 	{
 		placeClipUI(cui);

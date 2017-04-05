@@ -145,7 +145,7 @@ void SequenceTimelineHeader::mouseDown(const MouseEvent & e)
 {
 	if (e.mods.isLeftButtonDown())
 	{
-		sequence->currentTime->setValue(getTimeForX(e.getPosition().x));
+		sequence->setCurrentTime(getTimeForX(e.getPosition().x));
 	}
 }
 
@@ -153,7 +153,7 @@ void SequenceTimelineHeader::mouseDrag(const MouseEvent & e)
 {
 	if(e.mods.isLeftButtonDown())
 	{
-		sequence->currentTime->setValue(getTimeForX(e.getPosition().x));
+		sequence->setCurrentTime(getTimeForX(e.getPosition().x));
 	}
 }
 

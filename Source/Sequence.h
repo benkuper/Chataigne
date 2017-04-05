@@ -13,11 +13,13 @@
 
 #include "BaseItem.h"
 
+class AudioModule;
 class SequenceLayerManager;
 
 class Sequence :
 	public BaseItem,
-	public HighResolutionTimer
+	public HighResolutionTimer,
+	public AudioIODeviceCallback
 {
 public:
 	Sequence();
@@ -36,6 +38,9 @@ public:
 
 	BoolParameter * isPlaying;
 
+	AudioModule * masterAudioModule;
+	double hiResAudioTime;
+
 	ScopedPointer<SequenceLayerManager> layerManager;
 
 	//Temp variables
@@ -47,6 +52,16 @@ public:
 	FloatParameter * viewStartTime;
 	FloatParameter * viewEndTime;
 
+	void setCurrentTime(float time, bool forceOverPlaying = true);
+
+	void setMasterAudioModule(AudioModule * module);
+
+	// Inherited via AudioIODeviceCallback
+	virtual void audioDeviceIOCallback(const float ** inputChannelData, int numInputChannels, float ** outputChannelData, int numOutputChannels, int numSamples) override;
+	virtual void audioDeviceAboutToStart(AudioIODevice * device) override;
+	virtual void audioDeviceStopped() override;
+
+	bool timeIsDrivenByAudio();
 	
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
@@ -74,6 +89,9 @@ public:
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Sequence)
 
 		
+
+	
+
 };
 
 

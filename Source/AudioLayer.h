@@ -28,7 +28,7 @@ public:
 	
 	AudioLayerClipManager clipManager;
 	AudioModule * audioModule;
-	AudioLayerClip * currentClip;
+	WeakReference<AudioLayerClip> currentClip;
 	AudioLayerProcessor * currentProcessor;
 
 	FloatParameter * enveloppe;

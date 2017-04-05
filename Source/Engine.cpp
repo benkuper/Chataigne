@@ -60,9 +60,9 @@ Engine::~Engine(){
   InspectableSelectionManager::deleteInstance();
   Outliner::deleteInstance();
 
-  ModuleManager::deleteInstance();
-  StateManager::deleteInstance();
   SequenceManager::deleteInstance();
+  StateManager::deleteInstance();
+  ModuleManager::deleteInstance();
 
   PresetManager::deleteInstance();
   CustomLogger::deleteInstance();

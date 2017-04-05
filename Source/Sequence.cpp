@@ -10,9 +10,13 @@
 
 #include "Sequence.h"
 #include "SequenceLayerManager.h"
+#include "AudioLayer.h"
+#include "AudioModule.h"
 
 Sequence::Sequence() :
-	BaseItem("Sequence")
+	BaseItem("Sequence"),
+	masterAudioModule(nullptr),
+	hiResAudioTime(0)
 {
 	totalTime = addFloatParameter("Total Time", "Total time of this sequence, in seconds", 30, 1, 3600); //max 1h
 	currentTime = addFloatParameter("Current Time", "Current position in time of this sequence", 0, 0,totalTime->floatValue());
@@ -36,14 +40,46 @@ Sequence::Sequence() :
 
 	layerManager = new SequenceLayerManager(this);
 	addChildControllableContainer(layerManager);
-
-	
 }
 
 Sequence::~Sequence()
 {
 	stopTimer();
 	stopTrigger->trigger();
+	setMasterAudioModule(nullptr);
+}
+
+void Sequence::setCurrentTime(float time, bool forceOverPlaying)
+{
+	if (isPlaying->boolValue() && !forceOverPlaying) return;
+	if (timeIsDrivenByAudio())
+	{
+		hiResAudioTime = time;
+		if (!isPlaying->boolValue()) currentTime->setValue(time);
+	}else currentTime->setValue(time);
+}
+
+void Sequence::setMasterAudioModule(AudioModule * module)
+{
+	
+	if (masterAudioModule == module) return;
+
+	if (masterAudioModule != nullptr)
+	{
+		masterAudioModule->am.removeAudioCallback(this);
+	}
+
+	masterAudioModule = module;
+
+	if (masterAudioModule != nullptr)
+	{
+		masterAudioModule->am.addAudioCallback(this);
+	}
+}
+
+bool Sequence::timeIsDrivenByAudio()
+{
+	return masterAudioModule != nullptr;
 }
 
 var Sequence::getJSONData()
@@ -69,6 +105,7 @@ void Sequence::onContainerParameterChangedInternal(Parameter * p)
 	{
 		sequenceListeners.call(&SequenceListener::sequenceCurrentTimeChanged, this, prevTime, isPlaying->boolValue());
 		prevTime = currentTime->floatValue();
+		if (!isPlaying->boolValue() && timeIsDrivenByAudio()) hiResAudioTime = currentTime->floatValue();
 	}
 	else if (p == totalTime)
 	{
@@ -128,15 +165,41 @@ void Sequence::hiResTimerCallback()
 {
 	jassert(isPlaying->boolValue());
 
-	uint32 millis = Time::getMillisecondCounter();
-	float deltaTime = (millis - prevMillis)/1000.f;
-
-	currentTime->setValue(currentTime->floatValue() + deltaTime * playSpeed->floatValue());
-	prevMillis = millis;
-
-	if (currentTime->floatValue() == (float)currentTime->maximumValue)
+	if (timeIsDrivenByAudio())
 	{
-		if (loopParam->boolValue()) currentTime->setValue(0);
+		currentTime->setValue(hiResAudioTime);
+	}
+	else
+	{
+		uint32 millis = Time::getMillisecondCounter();
+		float deltaTime = (millis - prevMillis) / 1000.f;
+		currentTime->setValue(currentTime->floatValue() + deltaTime * playSpeed->floatValue());
+		prevMillis = millis;
+	}
+
+	if (currentTime->floatValue() >= (float)currentTime->maximumValue)
+	{
+		if (loopParam->boolValue()) setCurrentTime(0);
 		else stopTrigger->trigger();
 	}
+}
+
+
+
+
+void Sequence::audioDeviceIOCallback(const float ** inputChannelData, int numInputChannels, float ** outputChannelData, int numOutputChannels, int numSamples)
+{
+	for(int i=0;i<numOutputChannels;i++) FloatVectorOperations::clear(outputChannelData[i], numSamples);
+
+	AudioDeviceManager::AudioDeviceSetup s;
+	masterAudioModule->am.getAudioDeviceSetup(s);
+	if (isPlaying->boolValue()) hiResAudioTime += (numSamples / s.sampleRate)*playSpeed->floatValue();
+}
+
+void Sequence::audioDeviceAboutToStart(AudioIODevice * device)
+{
+}
+
+void Sequence::audioDeviceStopped()
+{
 }
