@@ -79,6 +79,11 @@ public:
 	~AudioLayerProcessor();
 	
 	AudioLayer * layer;
+	
+	const int minEnveloppeSamples = 1024;
+	int rmsCount;
+	float tempRMS;
+	float currentEnveloppe;
 
 	void clear();
 

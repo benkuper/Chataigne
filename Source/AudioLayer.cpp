@@ -16,6 +16,7 @@
 AudioLayer::AudioLayer(Sequence * _sequence) :
 	SequenceLayer(_sequence, "New Audio Layer"),
 	audioModule(nullptr),
+	currentProcessor(nullptr),
 	graphID(-1)
 {
 	ModuleManager::getInstance()->addBaseManagerListener(this);
@@ -140,6 +141,8 @@ SequenceLayerTimeline * AudioLayer::getTimelineUI()
 
 void AudioLayer::sequenceCurrentTimeChanged(Sequence *, float, bool)
 {
+	if (currentProcessor != nullptr) enveloppe->setValue(currentProcessor->currentEnveloppe);
+	else enveloppe->setValue(0);
 	updateCurrentClip();
 }
 
@@ -152,7 +155,10 @@ void AudioLayer::sequencePlayStateChanged(Sequence *)
 //Audio Processor
 
 AudioLayerProcessor::AudioLayerProcessor(AudioLayer * _layer) :
-	layer(_layer)
+	layer(_layer),
+	currentEnveloppe(0),
+	rmsCount(0),
+	tempRMS(0)
 {
 }
 
@@ -184,13 +190,30 @@ void AudioLayerProcessor::releaseResources()
 void AudioLayerProcessor::processBlock(AudioBuffer<float>& buffer, MidiBuffer & midiMessages)
 {
 	buffer.clear();
-	if (layer == nullptr) return;
-	if (!layer->enabled->boolValue()) return;
 
-	WeakReference<AudioLayerClip> currentClip = layer->currentClip;
-	if (currentClip.wasObjectDeleted() || currentClip.get() == nullptr) return;
-	if (currentClip->filePath->stringValue().isEmpty()) return;
-	//if (!layer->sequence->isPlaying->boolValue()) return;
+	bool noProcess = false;
+	
+	WeakReference<AudioLayerClip> currentClip;
+
+	if (layer != nullptr)
+	{
+		if (!layer->enabled->boolValue()) noProcess = true;;
+		currentClip = layer->currentClip;
+		if (currentClip.wasObjectDeleted() || currentClip.get() == nullptr) noProcess = true;
+		else if (currentClip->filePath->stringValue().isEmpty()) noProcess = true; 
+	} 
+	else
+	{
+		noProcess = true;
+	}
+	
+	if (noProcess)
+	{
+		currentEnveloppe = 0;
+		rmsCount = 0;
+		tempRMS = 0;
+		return;
+	}
 
 	
 	AudioSampleBuffer * clipBuffer = &layer->currentClip->buffer;
@@ -202,7 +225,7 @@ void AudioLayerProcessor::processBlock(AudioBuffer<float>& buffer, MidiBuffer & 
 	int targetSamplePos = position * currentClip->sampleRate;
 
 	//smoothing vynil-like when not playing
-	if(!layer->sequence->isPlaying->boolValue()) targetSamplePos = curSamplePos + (targetSamplePos - curSamplePos)*.1f;
+	if (!layer->sequence->isPlaying->boolValue()) targetSamplePos = curSamplePos + (targetSamplePos - curSamplePos) *.1f;
 	
 
 	int numDiffSamples = abs(targetSamplePos - curSamplePos);
@@ -247,7 +270,17 @@ void AudioLayerProcessor::processBlock(AudioBuffer<float>& buffer, MidiBuffer & 
 
 	currentClip->clipSamplePos = targetSamplePos;
 
-	layer->enveloppe->setValue(buffer.getRMSLevel(0, 0, buffer.getNumSamples()));
+	 tempRMS += buffer.getRMSLevel(0, 0, buffer.getNumSamples());
+	 if (rmsCount*buffer.getNumSamples() > minEnveloppeSamples)
+	 {
+		 currentEnveloppe = tempRMS / rmsCount;
+		 tempRMS = 0;
+		 rmsCount = 0;
+	 }
+	 else
+	 {
+		 rmsCount++;
+	 }
 }
 
 double AudioLayerProcessor::getTailLengthSeconds() const

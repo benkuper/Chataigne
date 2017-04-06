@@ -15,7 +15,7 @@ SequenceTransportUI::SequenceTransportUI(Sequence * _sequence) :
 	sequence(_sequence),
 	timeLabel(_sequence->currentTime)
 {
-	timeLabel.maxFontHeight = 30;
+	timeLabel.maxFontHeight = 16;
 	addAndMakeVisible(&timeLabel);
 	sequence->addSequenceListener(this);
 }
@@ -29,15 +29,17 @@ void SequenceTransportUI::paint(Graphics &g)
 {
 	if (sequence->timeIsDrivenByAudio())
 	{
-		g.fillAll(Colours::green);
-		g.drawSingleLineText(sequence->masterAudioModule->niceName, 10, 40);
+		g.setColour(AUDIO_COLOR);
+		Rectangle<int> r = getLocalBounds().reduced(2).removeFromTop(timeLabel.getHeight()).withLeft(timeLabel.getRight() + 5);
+		g.setColour(AUDIO_COLOR.brighter(.7f));
+		g.drawFittedText(sequence->masterAudioModule->niceName, r.reduced(2), Justification::centred, 1);
 	}
 }
 
 void SequenceTransportUI::resized()
 {
 	Rectangle<int> r = getLocalBounds().reduced(2);
-	timeLabel.setBounds(r.removeFromTop(20));
+	timeLabel.setBounds(r.removeFromTop(20).removeFromLeft(110));
 }
 
 void SequenceTransportUI::sequenceMasterAudioModuleChanged(Sequence *)
