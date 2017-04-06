@@ -19,6 +19,8 @@ SerialDevice::SerialDevice(Serial * _port, SerialDeviceInfo  * _info, PortMode _
 	thread(_info->port, this)
 {
 	open();
+
+	
 }
 #else
 SerialDevice::SerialDevice(SerialDeviceInfo  * _info, PortMode _mode) :

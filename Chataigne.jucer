@@ -186,6 +186,27 @@
       </GROUP>
       <GROUP id="{6A99D434-563F-6FEC-8395-5EB79B3D3075}" name="Chataigne">
         <GROUP id="{6C7DFFF7-D47E-97B5-FE74-27F24C7A349F}" name="Common">
+          <GROUP id="{672CD9A6-0B3A-28B4-B3F7-2C0B1183CBBB}" name="DMX">
+            <GROUP id="{708645ED-3AA3-AFCD-7298-82FFDF295F14}" name="ui">
+              <FILE id="Lr4ZBb" name="DMXDashboard.cpp" compile="1" resource="0"
+                    file="Source/DMXDashboard.cpp"/>
+              <FILE id="oc406A" name="DMXDashboard.h" compile="0" resource="0" file="Source/DMXDashboard.h"/>
+              <FILE id="wUH7Q0" name="DMXStateManagerUI.cpp" compile="1" resource="0"
+                    file="Source/DMXStateManagerUI.cpp"/>
+              <FILE id="FyjoZ1" name="DMXStateManagerUI.h" compile="0" resource="0"
+                    file="Source/DMXStateManagerUI.h"/>
+              <FILE id="Ib65yf" name="DMXStateUI.cpp" compile="1" resource="0" file="Source/DMXStateUI.cpp"/>
+              <FILE id="hR2uWt" name="DMXStateUI.h" compile="0" resource="0" file="Source/DMXStateUI.h"/>
+            </GROUP>
+            <FILE id="ttYPTM" name="DMXManager.cpp" compile="1" resource="0" file="Source/DMXManager.cpp"/>
+            <FILE id="kTCTpg" name="DMXManager.h" compile="0" resource="0" file="Source/DMXManager.h"/>
+            <FILE id="zbB8f6" name="DMXState.cpp" compile="1" resource="0" file="Source/DMXState.cpp"/>
+            <FILE id="lKKCwI" name="DMXState.h" compile="0" resource="0" file="Source/DMXState.h"/>
+            <FILE id="Adx6OG" name="DMXStateManager.cpp" compile="1" resource="0"
+                  file="Source/DMXStateManager.cpp"/>
+            <FILE id="CYQcoM" name="DMXStateManager.h" compile="0" resource="0"
+                  file="Source/DMXStateManager.h"/>
+          </GROUP>
           <GROUP id="{46F300BE-6F45-7C57-D999-3BCD373218D9}" name="Serial">
             <GROUP id="{5875158B-18E1-BB0F-C63F-26D3DBAFC305}" name="lib">
               <GROUP id="{66E90C1C-C294-0C15-82BA-E70D377ABA68}" name="cobs">
@@ -558,6 +579,20 @@
         </GROUP>
         <GROUP id="{8FC20544-FEBB-B3BA-CF48-50962AA7C07C}" name="Module">
           <GROUP id="{766BCE2E-5C2E-5A80-EC80-7FFA2C7ABBBA}" name="modules">
+            <GROUP id="{F5171EF4-1AB0-B2AF-A6EE-A27CDDF48A65}" name="dmx">
+              <GROUP id="{A6ECC2AC-E04A-94E9-D94D-E14D9B391DD1}" name="commands">
+                <FILE id="fmclij" name="DMXCommand.cpp" compile="1" resource="0" file="Source/DMXCommand.cpp"/>
+                <FILE id="cJbvB2" name="DMXCommand.h" compile="0" resource="0" file="Source/DMXCommand.h"/>
+              </GROUP>
+              <GROUP id="{033151A1-6123-F6AD-E8FD-58032B203E63}" name="ui">
+                <FILE id="DuJsnj" name="DMXModuleEditor.cpp" compile="1" resource="0"
+                      file="Source/DMXModuleEditor.cpp"/>
+                <FILE id="X2iZPZ" name="DMXModuleEditor.h" compile="0" resource="0"
+                      file="Source/DMXModuleEditor.h"/>
+              </GROUP>
+              <FILE id="oBn8YJ" name="DMXModule.cpp" compile="1" resource="0" file="Source/DMXModule.cpp"/>
+              <FILE id="nUJne9" name="DMXModule.h" compile="0" resource="0" file="Source/DMXModule.h"/>
+            </GROUP>
             <GROUP id="{4C2113B4-FC78-3B4F-C8B4-3081068D885F}" name="kinect">
               <FILE id="EKZUCF" name="KinectV2Module.cpp" compile="1" resource="0"
                     file="Source/KinectV2Module.cpp"/>

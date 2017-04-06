@@ -37,9 +37,9 @@ public:
 	const Identifier sendLineId = "sendLine";
 	const Identifier writeId = "write";
 
-	void setCurrentPort(SerialDevice *port);
+	virtual void setCurrentPort(SerialDevice *port);
 
-	void onContainerParameterChangedInternal(Parameter * p) override;
+	virtual void onContainerParameterChangedInternal(Parameter * p) override;
 
 	//Device info
 	String deviceID;

@@ -20,15 +20,17 @@
 #include "AudioModule.h"
 #include "KinectV2Module.h"
 #include "SerialModule.h"
+#include "DMXModule.h"
 
 juce_ImplementSingleton(ModuleFactory)
 
 ModuleFactory::ModuleFactory() {
 	moduleDefs.add(new ModuleDefinition("Generic", "OSC", &CustomOSCModule::create));
 	moduleDefs.add(new ModuleDefinition("Generic", "MIDI", &MIDIModule::create));
+	moduleDefs.add(new ModuleDefinition("Generic", "DMX", &DMXModule::create));
+	moduleDefs.add(new ModuleDefinition("Generic", "Serial", &SerialModule::create));
 	moduleDefs.add(new ModuleDefinition("Generic", "HID", &HIDModule::create));
 	moduleDefs.add(new ModuleDefinition("Generic", "Gamepad", &GamepadModule::create));
-	moduleDefs.add(new ModuleDefinition("Generic", "Serial", &SerialModule::create));
 
 	moduleDefs.add(new ModuleDefinition("Controller", "Wiimote", &WiimoteModule::create));
 	moduleDefs.add(new ModuleDefinition("Controller", "KinectV2", &KinectV2Module::create));

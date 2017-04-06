@@ -9,7 +9,7 @@
 */
 
 #include "SerialManager.h"
-
+#include "DebugHelpers.h"
 juce_ImplementSingleton(SerialManager)
 
 SerialManager::SerialManager()
@@ -84,10 +84,8 @@ void SerialManager::updateDeviceList()
 
 	for (auto &p : portsToNotifyRemoved)
 	{
-		DBG("Port Removed " << p->description);
-
-
 		portInfos.removeObject(p, false);
+		NLOG("SerialManager", "Port Added : \n" + p->port);
 		listeners.call(&SerialManagerListener::portRemoved, p);
 
 		SerialDevice * port = getPort(p, false);
@@ -100,6 +98,7 @@ void SerialManager::updateDeviceList()
 
 		newInfos.removeObject(p, false);
 		portInfos.add(p);
+		NLOG("SerialManager", "Port Added : \n"+p->port+"\n"+p->description+"\n"+p->hardwareID);
 		listeners.call(&SerialManagerListener::portAdded, p);
 
 	}
@@ -130,15 +129,12 @@ SerialDevice * SerialManager::getPort(SerialDeviceInfo * portInfo, bool createIf
 SerialDevice * SerialManager::getPort(String hardwareID, String portName, bool createIfNotThere, int openBaudRate)
 {
 #if SERIALSUPPORT
-	DBG("Get port ");
 
 	for (auto & pi : portInfos)
 	{
 		
-		DBG("	" << pi->hardwareID << ":" << pi->port << " <> " << hardwareID << ":" << portName);
 		if (pi->hardwareID == hardwareID & pi->port == portName)
 		{
-			DBG("found");
 			return getPort(pi, createIfNotThere,openBaudRate);
 		}
 	}
