@@ -89,9 +89,12 @@ void StateCommand::loadJSONDataInternal(var data)
 
 void StateCommand::endLoadFile()
 {
-	Engine::getInstance()->removeEngineListener(this);
+	target->setValue("", true);
+
 	loadJSONData(dataToLoad);
 	dataToLoad = var();
+
+	Engine::getInstance()->removeEngineListener(this);
 }
 
 InspectableEditor * StateCommand::getEditor(bool isRoot)
