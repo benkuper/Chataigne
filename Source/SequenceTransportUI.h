@@ -15,7 +15,8 @@
 #include "FloatParameterLabelUI.h"
 
 class SequenceTransportUI :
-	public Component
+	public Component,
+	public Sequence::SequenceListener
 {
 public:
 	SequenceTransportUI(Sequence * _sequence);
@@ -29,6 +30,7 @@ public:
 	void paint(Graphics &g) override;
 	void resized() override;
 
+	void sequenceMasterAudioModuleChanged(Sequence *) override;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(SequenceTransportUI)
 };

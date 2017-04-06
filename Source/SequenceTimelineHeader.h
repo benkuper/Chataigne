@@ -12,6 +12,7 @@
 #define SEQUENCETIMELINEHEADER_H_INCLUDED
 
 #include "Sequence.h"
+#include "TimeCueManagerUI.h"
 
 class TimeNeedleUI :
 	public Component
@@ -34,6 +35,8 @@ public:
 	Sequence * sequence;
 
 	TimeNeedleUI needle;
+
+	TimeCueManagerUI cueManagerUI;
 
 	//interaction
 

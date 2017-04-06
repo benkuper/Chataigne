@@ -37,5 +37,5 @@ SequenceCommandEditor::~SequenceCommandEditor()
 
 void SequenceCommandEditor::resized()
 {
-	chooserUI->setBounds(getLocalBounds().reduced(2, 0));
+	chooserUI->setBounds(getLocalBounds().reduced(2, 0).removeFromTop(16));
 }

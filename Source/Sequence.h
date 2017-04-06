@@ -15,6 +15,7 @@
 
 class AudioModule;
 class SequenceLayerManager;
+class TimeCueManager;
 
 class Sequence :
 	public BaseItem,
@@ -42,6 +43,7 @@ public:
 	double hiResAudioTime;
 
 	ScopedPointer<SequenceLayerManager> layerManager;
+	ScopedPointer<TimeCueManager> cueManager;
 
 	//Temp variables
 	uint32 prevMillis; 
@@ -79,6 +81,7 @@ public:
 		virtual void sequencePlayStateChanged(Sequence *) {}
 		virtual void sequenceCurrentTimeChanged(Sequence * , float /*prevTime*/, bool /*evaluateSkippedData*/) {}
 		virtual void sequenceTotalTimeChanged(Sequence *) {}
+		virtual void sequenceMasterAudioModuleChanged(Sequence *) {}
 	};
 
 	ListenerList<SequenceListener> sequenceListeners;

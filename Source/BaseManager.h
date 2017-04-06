@@ -50,6 +50,9 @@ public :
 
 	DynamicObject * createScriptObject() override;
 
+	PopupMenu getItemsMenu(int startID);
+	T * getItemForMenuResultID(int id, int startID);
+
 	class  Listener
 	{
 	public:
@@ -204,6 +207,25 @@ DynamicObject * BaseManager<T>::createScriptObject()
 	for (auto &t : items) itemsArray.append(t->createScriptObject());
 	o->setProperty("items", itemsArray);
 	return o;
+}
+
+template<class T>
+inline PopupMenu BaseManager<T>::getItemsMenu(int startID)
+{
+	PopupMenu menu;
+	int numValues = items.size();
+	for (int j = 0; j < numValues; j++)
+	{
+		T * c = items[j];
+		menu.addItem(startID + j, c->niceName);
+	}
+	return menu;
+}
+
+template<class T>
+inline T * BaseManager<T>::getItemForMenuResultID(int id, int startID)
+{
+	return items[id - startID];
 }
 
 

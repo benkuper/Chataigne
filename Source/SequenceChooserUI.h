@@ -14,16 +14,20 @@
 #include "StateManager.h"
 #include "TargetParameterUI.h"
 
+class Sequence;
+
 class SequenceChooserUI :
 	public TargetParameterUI
 {
 public:
-	enum TargetType { SEQUENCE, LAYER };
+	enum TargetType { SEQUENCE, LAYER, CUE };
 
 	SequenceChooserUI(TargetParameter * p, TargetType type);
 	virtual ~SequenceChooserUI();
 
 	TargetType targetType;
+
+	Sequence * sequenceForCue;
 
 	void updateLabel() override;
 	void showPopupAndGetTarget();//can be overriden to get specific PopupMenu

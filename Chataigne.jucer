@@ -593,6 +593,10 @@
                 <GROUP id="{389AA24C-98DF-5046-1A23-5C4221266287}" name="ui">
                   <FILE id="sYAHn6" name="SequenceChooserUI.cpp" compile="1" resource="0"
                         file="Source/SequenceChooserUI.cpp"/>
+                  <FILE id="eesung" name="SequenceCueCommandEditor.cpp" compile="1" resource="0"
+                        file="Source/SequenceCueCommandEditor.cpp"/>
+                  <FILE id="CeiAqG" name="SequenceCueCommandEditor.h" compile="0" resource="0"
+                        file="Source/SequenceCueCommandEditor.h"/>
                   <FILE id="Y3xART" name="SequenceChooserUI.h" compile="0" resource="0"
                         file="Source/SequenceChooserUI.h"/>
                   <FILE id="ZbJUXz" name="SequenceCommandEditor.cpp" compile="1" resource="0"
@@ -604,6 +608,10 @@
                       file="Source/SequenceCommand.cpp"/>
                 <FILE id="zCAIaR" name="SequenceCommand.h" compile="0" resource="0"
                       file="Source/SequenceCommand.h"/>
+                <FILE id="saYwuW" name="SequenceCueCommand.cpp" compile="1" resource="0"
+                      file="Source/SequenceCueCommand.cpp"/>
+                <FILE id="xKq0wS" name="SequenceCueCommand.h" compile="0" resource="0"
+                      file="Source/SequenceCueCommand.h"/>
               </GROUP>
               <FILE id="wApsCe" name="SequenceModule.cpp" compile="1" resource="0"
                     file="Source/SequenceModule.cpp"/>
@@ -912,6 +920,22 @@
         </GROUP>
         <GROUP id="{13952242-1FC5-C04E-F9EB-9F54AFB0B92B}" name="TimeMachine">
           <GROUP id="{CF065BB5-FDEA-7828-22CD-69EF20EB30A1}" name="Sequence">
+            <GROUP id="{DDB48A2C-9DC6-8887-89C8-4ABF2D0E4F52}" name="Cue">
+              <GROUP id="{C0E3F018-B857-61A7-EEFC-2384DB0F5A2D}" name="ui">
+                <FILE id="DYWOK2" name="TimeCueManagerUI.cpp" compile="1" resource="0"
+                      file="Source/TimeCueManagerUI.cpp"/>
+                <FILE id="lYE9io" name="TimeCueManagerUI.h" compile="0" resource="0"
+                      file="Source/TimeCueManagerUI.h"/>
+                <FILE id="Qdg592" name="TimeCueUI.cpp" compile="1" resource="0" file="Source/TimeCueUI.cpp"/>
+                <FILE id="soSL7V" name="TimeCueUI.h" compile="0" resource="0" file="Source/TimeCueUI.h"/>
+              </GROUP>
+              <FILE id="DRViZu" name="TimeCue.cpp" compile="1" resource="0" file="Source/TimeCue.cpp"/>
+              <FILE id="EM491A" name="TimeCue.h" compile="0" resource="0" file="Source/TimeCue.h"/>
+              <FILE id="EIj4cr" name="TimeCueManager.cpp" compile="1" resource="0"
+                    file="Source/TimeCueManager.cpp"/>
+              <FILE id="rsBmjF" name="TimeCueManager.h" compile="0" resource="0"
+                    file="Source/TimeCueManager.h"/>
+            </GROUP>
             <GROUP id="{C33992D5-08C2-5AEB-B040-E6518FCCB5F1}" name="Layer">
               <FILE id="TF6qQl" name="SequenceLayerFactory.cpp" compile="1" resource="0"
                     file="Source/SequenceLayerFactory.cpp"/>

@@ -17,6 +17,7 @@
 #include "SequenceModule.h"
 
 class SequenceLayer;
+class TimeCue;
 
 class SequenceManager :
 	public BaseManager<Sequence>
@@ -32,8 +33,13 @@ public:
 
 	PopupMenu getAllSequencesMenu();
 	Sequence * getSequenceForItemID(int itemID);
+
 	PopupMenu getAllLayersMenu();
 	SequenceLayer * getLayerForItemID(int itemID);
+
+	PopupMenu getAllCuesMenu();
+	TimeCue * getCueForItemID(int itemID);
+
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(SequenceManager)
 };

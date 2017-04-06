@@ -10,6 +10,7 @@
 
 #include "Sequence.h"
 #include "SequenceLayerManager.h"
+#include "TimeCueManager.h"
 #include "AudioLayer.h"
 #include "AudioModule.h"
 
@@ -40,6 +41,9 @@ Sequence::Sequence() :
 
 	layerManager = new SequenceLayerManager(this);
 	addChildControllableContainer(layerManager);
+
+	cueManager = new TimeCueManager();
+	addChildControllableContainer(cueManager);
 }
 
 Sequence::~Sequence()
@@ -61,7 +65,6 @@ void Sequence::setCurrentTime(float time, bool forceOverPlaying)
 
 void Sequence::setMasterAudioModule(AudioModule * module)
 {
-	
 	if (masterAudioModule == module) return;
 
 	if (masterAudioModule != nullptr)
@@ -75,6 +78,9 @@ void Sequence::setMasterAudioModule(AudioModule * module)
 	{
 		masterAudioModule->am.addAudioCallback(this);
 	}
+
+	DBG("Set master audio module " << (masterAudioModule != nullptr ? masterAudioModule->niceName : "null"));
+	sequenceListeners.call(&SequenceListener::sequenceMasterAudioModuleChanged, this);
 }
 
 bool Sequence::timeIsDrivenByAudio()
@@ -86,6 +92,7 @@ var Sequence::getJSONData()
 {
 	var data = BaseItem::getJSONData();
 	data.getDynamicObject()->setProperty("layerManager", layerManager->getJSONData());
+	data.getDynamicObject()->setProperty("cueManager", cueManager->getJSONData());
 	return data;
 }
 
@@ -93,6 +100,7 @@ void Sequence::loadJSONDataInternal(var data)
 {
 	BaseItem::loadJSONDataInternal(data);
 	layerManager->loadJSONData(data.getProperty("layerManager", var()));
+	cueManager->loadJSONData(data.getProperty("cueManager", var()));
 }
 
 void Sequence::onContainerParameterChangedInternal(Parameter * p)
@@ -185,9 +193,7 @@ void Sequence::hiResTimerCallback()
 }
 
 
-
-
-void Sequence::audioDeviceIOCallback(const float ** inputChannelData, int numInputChannels, float ** outputChannelData, int numOutputChannels, int numSamples)
+void Sequence::audioDeviceIOCallback(const float ** , int , float ** outputChannelData, int numOutputChannels, int numSamples)
 {
 	for(int i=0;i<numOutputChannels;i++) FloatVectorOperations::clear(outputChannelData[i], numSamples);
 
@@ -196,7 +202,7 @@ void Sequence::audioDeviceIOCallback(const float ** inputChannelData, int numInp
 	if (isPlaying->boolValue()) hiResAudioTime += (numSamples / s.sampleRate)*playSpeed->floatValue();
 }
 
-void Sequence::audioDeviceAboutToStart(AudioIODevice * device)
+void Sequence::audioDeviceAboutToStart(AudioIODevice *)
 {
 }
 

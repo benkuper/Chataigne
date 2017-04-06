@@ -12,12 +12,15 @@
 #include "Style.h"
 
 SequenceTimelineHeader::SequenceTimelineHeader(Sequence * _sequence) :
-	sequence(_sequence)
+	sequence(_sequence),
+	cueManagerUI(this,_sequence->cueManager)
 {
 	sequence->addAsyncContainerListener(this);
+	addAndMakeVisible(&cueManagerUI);
+	
 	addAndMakeVisible(needle);
-
-	setSize(6, 20);
+	
+	setSize(100, 20);
 }
 
 SequenceTimelineHeader::~SequenceTimelineHeader()
@@ -70,7 +73,6 @@ void SequenceTimelineHeader::paint(Graphics & g)
 	int minuteStartTime = floor((start / minuteSteps) / 60)*minuteSteps;
 	int minuteEndTime = ceil((end / minuteSteps) / 60)*minuteSteps;
 
-
 	g.setFont(10);
 	float fadeAlpha = jlimit<float>(0, 1, jmap<float>(secondGap, minGap, fadeGap, 0, 1));
 
@@ -119,8 +121,6 @@ void SequenceTimelineHeader::paint(Graphics & g)
 		
 	}
 
-
-	
 	g.setColour(BG_COLOR.brighter(.7f));
 	g.fillRoundedRectangle(0, 0, 20, 12, 2);
 	g.setColour(BG_COLOR.darker());
@@ -129,11 +129,13 @@ void SequenceTimelineHeader::paint(Graphics & g)
 	g.setColour(BG_COLOR.darker(.6f));
 	g.drawRoundedRectangle(getLocalBounds().toFloat(), 2, 2);
 
+	cueManagerUI.updateContent();
 }
 
 void SequenceTimelineHeader::resized()
 {
 	Rectangle<int> r = getLocalBounds();
+	cueManagerUI.setBounds(r);
 	Rectangle<int> nr = r.withSize(7, getHeight());
 	nr.setPosition(getXForTime(sequence->currentTime->floatValue())-needle.getWidth()/2, 0);
 	needle.setBounds(nr);
@@ -145,7 +147,15 @@ void SequenceTimelineHeader::mouseDown(const MouseEvent & e)
 {
 	if (e.mods.isLeftButtonDown())
 	{
-		sequence->setCurrentTime(getTimeForX(e.getPosition().x));
+		if (e.mods.isCtrlDown())
+		{
+			cueManagerUI.addCueAtPos(e.getMouseDownX());
+		}
+		else
+		{
+			sequence->setCurrentTime(getTimeForX(e.getPosition().x));
+		}
+		
 	}
 }
 
@@ -196,6 +206,7 @@ void SequenceTimelineHeader::newMessage(const ContainerAsyncEvent & e)
 	break;
 	}
 }
+
 
 #pragma warning(push)
 #pragma warning(disable:4244)

@@ -21,8 +21,6 @@ public:
 	TimeTriggerUI(TimeTrigger * tt);
 	~TimeTriggerUI();
 	
-	TimeTrigger * tt;
-	
 	//layout
 	Rectangle<int> flagRect;
 	Rectangle<int> lineRect;

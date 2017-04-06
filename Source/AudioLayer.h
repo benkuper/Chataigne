@@ -76,8 +76,11 @@ class AudioLayerProcessor :
 {
 public:
 	AudioLayerProcessor(AudioLayer * layer);
-	~AudioLayerProcessor() {}
+	~AudioLayerProcessor();
+	
 	AudioLayer * layer;
+
+	void clear();
 
 	// Hérité via AudioProcessor
 	virtual const String getName() const override;

@@ -47,6 +47,8 @@ void AudioLayerPanel::resizedInternalHeader(Rectangle<int>& r)
 
 void AudioLayerPanel::buildModuleBox()
 {
+	DBG("Build module box");
+
 	int sIndex = -1;
 	moduleChooser.clear(dontSendNotification);
 	for (auto &m : ModuleManager::getInstance()->items)
@@ -62,11 +64,13 @@ void AudioLayerPanel::buildModuleBox()
 
 void AudioLayerPanel::itemAdded(Module *)
 {
+	DBG("Module item added !");
 	buildModuleBox();
 }
 
 void AudioLayerPanel::itemRemoved(Module *)
 {
+	DBG("Module item removed");
 	buildModuleBox();
 }
 

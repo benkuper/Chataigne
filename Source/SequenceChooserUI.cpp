@@ -11,10 +11,13 @@
 #include "SequenceChooserUI.h"
 #include "SequenceManager.h"
 #include "SequenceLayer.h"
+#include "TimeCueManager.h"
+#include "Sequence.h"
 
 SequenceChooserUI::SequenceChooserUI(TargetParameter * p, TargetType _type) :
 	TargetParameterUI(p),
-	targetType(_type)
+	targetType(_type),
+	sequenceForCue(nullptr)
 {
 	updateLabel();
 }
@@ -25,10 +28,15 @@ SequenceChooserUI::~SequenceChooserUI()
 
 void SequenceChooserUI::updateLabel()
 {
+	DBG("Update label " << (int)(targetParameter->targetContainer != nullptr));
 	if (targetParameter->targetContainer != nullptr)
 	{
 		String targetName = targetParameter->targetContainer->niceName;
-		if (targetType != SEQUENCE)
+		if (targetType == LAYER)
+		{
+			targetName = targetParameter->targetContainer->parentContainer->parentContainer->niceName + ":" + targetName;
+		}
+		else if (targetType == CUE)
 		{
 			targetName = targetParameter->targetContainer->parentContainer->parentContainer->niceName + ":" + targetName;
 		}
@@ -54,6 +62,10 @@ void SequenceChooserUI::showPopupAndGetTarget()
 	case LAYER:
 		p = SequenceManager::getInstance()->getAllLayersMenu();
 		break;
+
+	case CUE:
+		if (sequenceForCue != nullptr) p = sequenceForCue->cueManager->getItemsMenu(1);
+		break;
 	}
 
 	int result = p.show();
@@ -68,6 +80,10 @@ void SequenceChooserUI::showPopupAndGetTarget()
 
 	case LAYER:
 		c = SequenceManager::getInstance()->getLayerForItemID(result);
+		break;
+
+	case CUE:
+		if (sequenceForCue != nullptr) c = sequenceForCue->cueManager->getItemForMenuResultID(result, 1);
 		break;
 
 	}

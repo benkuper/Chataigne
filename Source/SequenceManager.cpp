@@ -11,7 +11,7 @@
 #include "SequenceManager.h"
 #include "SequenceLayerFactory.h"
 #include "SequenceLayerManager.h"
-
+#include "TimeCueManager.h"
 
 juce_ImplementSingleton(SequenceManager)
 
@@ -69,3 +69,30 @@ SequenceLayer * SequenceManager::getLayerForItemID(int itemID)
 	int valueIndex = (itemID - 1) % 1000;
 	return items[moduleIndex]->layerManager->items[valueIndex];
 }
+
+/*
+PopupMenu SequenceManager::getAllCuesMenu()
+{
+	PopupMenu menu;
+	for (int i = 0; i < items.size(); i++)
+	{
+		PopupMenu sMenu;
+		int numValues = items[i]->cueManager->items.size();
+		for (int j = 0; j < numValues; j++)
+		{
+			TimeCue * c = items[i]->cueManager->items[j];
+			sMenu.addItem(i * 1000 + j + 1, c->niceName);
+		}
+		menu.addSubMenu(items[i]->niceName, sMenu);
+	}
+	return menu;
+}
+
+TimeCue * SequenceManager::getCueForItemID(int itemID)
+{
+	if (itemID <= 0) return nullptr;
+	int moduleIndex = (int)floor((itemID - 1) / 1000);
+	int valueIndex = (itemID - 1) % 1000;
+	return items[moduleIndex]->cueManager->items[valueIndex];
+}
+*/

@@ -18,15 +18,29 @@ AudioLayer::AudioLayer(Sequence * _sequence) :
 	audioModule(nullptr),
 	graphID(-1)
 {
+	ModuleManager::getInstance()->addBaseManagerListener(this);
 
+	
 	enveloppe = addFloatParameter("Enveloppe", "Enveloppe", 0, 0, 1);
 	enveloppe->isControllableFeedbackOnly = true;
 	addChildControllableContainer(&clipManager);
+
+	//if already an audio module, assign it
+	for (auto &i : ModuleManager::getInstance()->items)
+	{
+		AudioModule * a = static_cast<AudioModule *>(i);
+		if (a != nullptr)
+		{
+			setAudioModule(a);
+			break;
+		}
+	}
 
 }
 
 AudioLayer::~AudioLayer()
 {
+	if(ModuleManager::getInstanceWithoutCreating() != nullptr) ModuleManager::getInstance()->removeBaseManagerListener(this);
 	setAudioModule(nullptr);
 }
 
@@ -34,17 +48,19 @@ void AudioLayer::setAudioModule(AudioModule * newModule)
 {
 	if (audioModule != nullptr)
 	{
-		DBG("Audio Layer remove Audio Module");
 		//audioModule->graph.removeConnection(1, 0, graphID, 0); //remove In Connection
 		audioModule->graph.removeConnection(graphID, 0, 2, 0); //remove Out connection
 		audioModule->graph.removeNode(graphID);
+		currentProcessor->clear();
 		currentProcessor = nullptr;
+			
 	}
 
 	audioModule = newModule;
 
 	if (audioModule != nullptr)
 	{
+		
 		currentProcessor = new AudioLayerProcessor(this);
 		currentProcessor->setPlayConfigDetails(0, 2, audioModule->currentSampleRate, audioModule->currentBufferSize);
 		currentProcessor->prepareToPlay(audioModule->currentSampleRate, audioModule->currentBufferSize);
@@ -53,15 +69,11 @@ void AudioLayer::setAudioModule(AudioModule * newModule)
 		audioModule->graph.addNode(currentProcessor, graphID);
 		//audioModule->graph.addConnection(1, 0, graphID, 0);
 		audioModule->graph.addConnection(graphID, 0, 2, 0);
-
-		sequence->setMasterAudioModule(audioModule);
+		//sequence->setMasterAudioModule(audioModule);		
 	}
-	else
-	{
-		sequence->setMasterAudioModule(nullptr); //todo : check if other audio layer can replace this one
-	}
-
 	
+	DBG("AudioLayer audio Module > " << (audioModule != nullptr ? audioModule->niceName : "null"));
+	audioLayerListeners.call(&AudioLayerListener::targetAudioModuleChanged, this);
 }
 
 void AudioLayer::updateCurrentClip()
@@ -94,7 +106,11 @@ void AudioLayer::itemAdded(Module * m)
 
 void AudioLayer::itemRemoved(Module * m)
 {
-	if (audioModule == m) setAudioModule(nullptr);
+	if (audioModule == m)
+	{
+		DBG("AudioLayer, module removed, set audio module null");
+		setAudioModule(nullptr);
+	}
 }
 
 var AudioLayer::getJSONData()
@@ -140,6 +156,16 @@ AudioLayerProcessor::AudioLayerProcessor(AudioLayer * _layer) :
 {
 }
 
+AudioLayerProcessor::~AudioLayerProcessor()
+{
+	layer = nullptr;
+}
+
+void AudioLayerProcessor::clear()
+{
+	layer = nullptr;
+}
+
 const String AudioLayerProcessor::getName() const
 {
 	return String();
@@ -158,6 +184,7 @@ void AudioLayerProcessor::releaseResources()
 void AudioLayerProcessor::processBlock(AudioBuffer<float>& buffer, MidiBuffer & midiMessages)
 {
 	buffer.clear();
+	if (layer == nullptr) return;
 	if (!layer->enabled->boolValue()) return;
 
 	WeakReference<AudioLayerClip> currentClip = layer->currentClip;

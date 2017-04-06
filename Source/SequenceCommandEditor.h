@@ -21,12 +21,12 @@ class SequenceCommandEditor :
 {
 public:
 	SequenceCommandEditor(SequenceCommand * sequenceCommand, bool isRoot);
-	~SequenceCommandEditor();
+	virtual ~SequenceCommandEditor();
 
 	SequenceCommand * sequenceCommand;
 	ScopedPointer<SequenceChooserUI> chooserUI;
 
-	void resized() override;
+	virtual void resized() override;
 };
 
 

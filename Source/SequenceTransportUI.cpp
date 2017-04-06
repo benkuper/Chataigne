@@ -9,16 +9,20 @@
 */
 
 #include "SequenceTransportUI.h"
+#include "AudioModule.h"
 
 SequenceTransportUI::SequenceTransportUI(Sequence * _sequence) :
 	sequence(_sequence),
 	timeLabel(_sequence->currentTime)
 {
+	timeLabel.maxFontHeight = 30;
 	addAndMakeVisible(&timeLabel);
+	sequence->addSequenceListener(this);
 }
 
 SequenceTransportUI::~SequenceTransportUI()
 {
+	sequence->removeSequenceListener(this);
 }
 
 void SequenceTransportUI::paint(Graphics &g)
@@ -26,13 +30,19 @@ void SequenceTransportUI::paint(Graphics &g)
 	if (sequence->timeIsDrivenByAudio())
 	{
 		g.fillAll(Colours::green);
+		g.drawSingleLineText(sequence->masterAudioModule->niceName, 10, 40);
 	}
 }
 
 void SequenceTransportUI::resized()
 {
-	Rectangle<int> r = getLocalBounds();
-	timeLabel.setBounds(r);
+	Rectangle<int> r = getLocalBounds().reduced(2);
+	timeLabel.setBounds(r.removeFromTop(20));
+}
+
+void SequenceTransportUI::sequenceMasterAudioModuleChanged(Sequence *)
+{
+	repaint();
 }
 
 TimeLabel::TimeLabel(Parameter * p) :

@@ -11,8 +11,7 @@
 #include "TimeTriggerUI.h"
 
 TimeTriggerUI::TimeTriggerUI(TimeTrigger * _tt) :
-	BaseItemUI<TimeTrigger>(_tt),
-	tt(_tt)
+	BaseItemUI<TimeTrigger>(_tt)
 {
 	nameUI->setAutoSize(true);
 	
@@ -84,7 +83,7 @@ void TimeTriggerUI::updateSizeFromName()
 void TimeTriggerUI::mouseDown(const MouseEvent & e)
 {
 	BaseItemUI::mouseDown(e);
-	timeAtMouseDown = tt->time->floatValue();
+	timeAtMouseDown = item->time->floatValue();
 	posAtMouseDown = getX();
 	flagYAtMouseDown = item->flagY->floatValue();
 }

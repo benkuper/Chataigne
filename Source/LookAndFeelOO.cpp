@@ -1064,7 +1064,7 @@ void LookAndFeelOO::positionComboBoxText (ComboBox& box, Label& label)
 //==============================================================================
 Font LookAndFeelOO::getLabelFont (Label& label)
 {
-    return label.getFont().withHeight(12);
+	return label.getFont();// .withHeight(12);
 }
 
 void LookAndFeelOO::drawLabel (Graphics& g, Label& label)

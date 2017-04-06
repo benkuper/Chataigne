@@ -12,18 +12,20 @@
 #include "Style.h"
 
 FloatParameterLabelUI::FloatParameterLabelUI(Parameter * p) :
-	ParameterUI(p), autoSize(false), maxFontHeight(12)
+	ParameterUI(p),
+	autoSize(false),
+	maxFontHeight(12)
 {
 
 	addChildComponent(nameLabel);
 	setNameLabelVisible(false);
 	addAndMakeVisible(valueLabel);
 
-	nameLabel.setJustificationType(Justification::topLeft);
+	nameLabel.setJustificationType(Justification::left);
 	nameLabel.setText(prefix + parameter->niceName + suffix, NotificationType::dontSendNotification);
 	nameLabel.setColour(Label::ColourIds::textColourId, TEXTNAME_COLOR);
 
-	valueLabel.setJustificationType(Justification::topLeft);
+	valueLabel.setJustificationType(Justification::centred);
 	valueLabel.setColour(Label::ColourIds::textColourId, TEXT_COLOR);
 	valueLabel.setEditable(false, parameter->isEditable);
 	valueLabel.addListener(this);
@@ -90,16 +92,16 @@ void FloatParameterLabelUI::resized()
 
 	}
 
-	valueLabel.setBounds(r);
 	valueLabel.setFont(valueLabel.getFont().withHeight(jmin<float>((float)r.getHeight(), maxFontHeight)));
-
+	valueLabel.setBounds(r);
+	
 }
 
 
 void FloatParameterLabelUI::valueChanged(const var & v)
 {
 	valueLabel.setText(prefix + v.toString() + suffix, NotificationType::dontSendNotification);
-
+	
 	if (autoSize)
 	{
 		int nameLabelWidth = nameLabel.getFont().getStringWidth(nameLabel.getText());

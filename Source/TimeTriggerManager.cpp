@@ -20,7 +20,6 @@ TimeTriggerManager::TimeTriggerManager(TriggerLayer * _layer, Sequence * _sequen
 	sequence(_sequence)
 {
 	skipControllableNameInAddress = true;
-
 	sequence->addSequenceListener(this);
 }
 
@@ -57,7 +56,7 @@ Array<TimeTrigger*> TimeTriggerManager::getTriggersInTimespan(float startTime, f
 
 void TimeTriggerManager::controllableFeedbackUpdate(ControllableContainer * cc, Controllable * c)
 {
-	TimeTrigger * t = dynamic_cast<TimeTrigger *>(cc);
+	TimeTrigger * t = static_cast<TimeTrigger *>(cc);
 	if (t != nullptr)
 	{
 		if (c == t->time)

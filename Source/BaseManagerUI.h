@@ -320,12 +320,12 @@ template<class M, class T, class U>
 U * BaseManagerUI<M, T, U>::addItemUI(T * item, bool animate)
 {
 	U * tui = createUIForItem(item);
-	itemsUI.add(tui);
-
+	
 	BaseItemMinimalUI<T> * bui = static_cast<BaseItemMinimalUI<T>*>(tui);
 
 	if(useViewport) container.addAndMakeVisible(bui);
 	else addAndMakeVisible(bui);
+	itemsUI.add(tui);
 
 	addItemUIInternal(tui);
 	
@@ -340,8 +340,6 @@ U * BaseManagerUI<M, T, U>::addItemUI(T * item, bool animate)
 		//resized();
 	}
 	
-	
-
 	managerUIListeners.call(&ManagerUIListener::itemUIAdded, tui);
 	return tui;
 }
