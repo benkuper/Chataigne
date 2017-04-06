@@ -27,7 +27,6 @@ BaseCommandHandler::~BaseCommandHandler()
 {
 }
 
-
 void BaseCommandHandler::setCommand(CommandDefinition * commandDef)
 {
 	//var oldData = var();
@@ -55,7 +54,7 @@ var BaseCommandHandler::getJSONData()
 	var data = BaseItem::getJSONData();
 	if (command != nullptr)
 	{
-		data.getDynamicObject()->setProperty("commandModule", command->container->getControlAddress());
+		data.getDynamicObject()->setProperty("commandModule", command->module->shortName);
 		data.getDynamicObject()->setProperty("commandPath", commandDefinition->menuPath);
 		data.getDynamicObject()->setProperty("commandType", commandDefinition->commandType);
 		data.getDynamicObject()->setProperty("command", command->getJSONData());
@@ -68,12 +67,13 @@ void BaseCommandHandler::loadJSONDataInternal(var data)
 	BaseItem::loadJSONDataInternal(data);
 	if (data.getDynamicObject()->hasProperty("commandModule"))
 	{
-		Module * m = (Module *)Engine::getInstance()->getControllableContainerForAddress(data.getProperty("commandModule", ""));
+		Module * m = ModuleManager::getInstance()->getModuleWithName(data.getProperty("commandModule",""));
 		if (m != nullptr)
 		{
 			String menuPath = data.getProperty("commandPath", "");
 			String commandType = data.getProperty("commandType", "");
 			setCommand(m->defManager.getCommandDefinitionFor(menuPath, commandType));
+			DBG("Command load : " << menuPath << ":" << commandType);
 			if (command != nullptr)
 			{
 				command->loadJSONData(data.getProperty("command", var()));

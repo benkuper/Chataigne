@@ -13,9 +13,11 @@
 
 #include "BaseCommand.h"
 #include "StateModule.h"
+#include "Engine.h"
 
 class StateCommand :
-	public BaseCommand
+	public BaseCommand,
+	public Engine::EngineListener
 {
 public:
 	StateCommand(StateModule * _module, CommandContext context, var params);
@@ -30,6 +32,12 @@ public:
 
 	void trigger() override;
 
+
+	//Delayed loading mechanism to ensure all content is created for right targeting
+	var dataToLoad;
+
+	void loadJSONDataInternal(var data) override;
+	void endLoadFile();
 
 	static BaseCommand * create(ControllableContainer * module, CommandContext context, var params) { return new StateCommand((StateModule *)module, context, params); }
 

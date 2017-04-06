@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    Action.cpp
-    Created: 28 Oct 2016 8:05:02pm
-    Author:  bkupe
+	Action.cpp
+	Created: 28 Oct 2016 8:05:02pm
+	Author:  bkupe
 
   ==============================================================================
 */
@@ -26,7 +26,7 @@ Action::Action(const String & name) :
 	trigger = addTrigger("Trigger", "Triggers the action");
 }
 
-  Action::~Action()
+Action::~Action()
 {
 }
 
@@ -47,7 +47,7 @@ void Action::loadJSONDataInternal(var data)
 
 void Action::onContainerParameterChangedInternal(Parameter * p)
 {
-	if (p == enabled) actionListeners.call(&Action::ActionListener::actionEnableChanged,this);
+	if (p == enabled) actionListeners.call(&Action::ActionListener::actionEnableChanged, this);
 }
 
 void Action::onContainerTriggerTriggered(Trigger * t)
@@ -70,5 +70,5 @@ void Action::conditionManagerValidationChanged(ConditionManager *)
 
 InspectableEditor * Action::getEditor(bool isRoot)
 {
-	return new ActionEditor(this,isRoot);
+	return new ActionEditor(this, isRoot);
 }

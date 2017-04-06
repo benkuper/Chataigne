@@ -34,6 +34,14 @@ void ModuleManager::addItemFromData(var data)
 	if (i != nullptr) addItem(i, data);
 }
 
+Module * ModuleManager::getModuleWithName(const String & moduleName)
+{
+	DBG("get Module with name : " << moduleName << " / " << StateManager::getInstance()->shortName);
+	if (moduleName == StateManager::getInstance()->module.shortName) return &StateManager::getInstance()->module;
+	if (moduleName == SequenceManager::getInstance()->module.shortName) return &SequenceManager::getInstance()->module;
+	else return getItemWithName(moduleName);
+}
+
 PopupMenu ModuleManager::getAllModulesInputValuesMenu(bool parametersOnly)
 {
 	PopupMenu menu;

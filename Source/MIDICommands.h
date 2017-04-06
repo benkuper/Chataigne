@@ -11,12 +11,12 @@
 #ifndef MIDICOMMANDS_H_INCLUDED
 #define MIDICOMMANDS_H_INCLUDED
 
-#include "ModuleCommand.h"
+#include "BaseCommand.h"
 
 class MIDIModule;
 
 class MIDICommand :
-	public ModuleCommand
+	public BaseCommand
 {
 public:
 	MIDICommand(MIDIModule * module, CommandContext context, var params);

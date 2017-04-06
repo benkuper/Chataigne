@@ -37,6 +37,12 @@ void SequenceCueCommand::trigger()
 	}
 }
 
+void SequenceCueCommand::endLoadFile()
+{
+	targetCue->setValue("",true);
+	SequenceCommand::endLoadFile();
+}
+
 BaseCommand * SequenceCueCommand::create(ControllableContainer * module, CommandContext context, var params)
   {
 	return new SequenceCueCommand((SequenceModule *)module, context, params);

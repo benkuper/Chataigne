@@ -77,6 +77,23 @@ void StateCommand::trigger()
 	}
 }
 
+void StateCommand::loadJSONDataInternal(var data)
+{
+	if (Engine::getInstance()->isLoadingFile)
+	{
+		Engine::getInstance()->addEngineListener(this);
+		dataToLoad = data;
+	}
+	else BaseCommand::loadJSONDataInternal(data);
+}
+
+void StateCommand::endLoadFile()
+{
+	Engine::getInstance()->removeEngineListener(this);
+	loadJSONData(dataToLoad);
+	dataToLoad = var();
+}
+
 InspectableEditor * StateCommand::getEditor(bool isRoot)
 {
 	return new StateCommandEditor(this, isRoot);

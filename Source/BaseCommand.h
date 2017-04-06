@@ -12,25 +12,29 @@
 #define BASECOMMAND_H_INCLUDED
 
 #include "ControllableContainer.h"
+
+class Module;
+
 enum CommandContext { ACTION, MAPPING, BOTH };
 
 class BaseCommand :
 	public ControllableContainer
 {
 public:
-	BaseCommand(ControllableContainer * container, CommandContext context, var params);
+	BaseCommand(Module * module, CommandContext context, var params);
 	virtual ~BaseCommand() {}
 
 	CommandContext context;
-	ControllableContainer * container;
+	Module * module;
 	var params;
+
+	
 
 	Parameter * targetMappingParameter;
 	void setTargetMappingParameter(Parameter * p);
 
 	virtual void trigger() {} //for trigger context, to override
 	virtual void setValue(var value); //for mapping context
-
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(BaseCommand)
 };

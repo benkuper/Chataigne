@@ -800,7 +800,6 @@ void ControllableContainer::loadJSONData(var data, bool createIfNotThere)
 		}
 	}
 
-
 	loadJSONDataInternal(data);
 }
 

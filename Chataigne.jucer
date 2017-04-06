@@ -840,11 +840,6 @@
               <FILE id="GwcUxE" name="OSCModule.h" compile="0" resource="0" file="Source/OSCModule.h"/>
             </GROUP>
           </GROUP>
-          <GROUP id="{147A2254-C002-1579-5057-1B4AF74DAF4A}" name="command">
-            <FILE id="TuetSN" name="ModuleCommand.cpp" compile="1" resource="0"
-                  file="Source/ModuleCommand.cpp"/>
-            <FILE id="SrCoY7" name="ModuleCommand.h" compile="0" resource="0" file="Source/ModuleCommand.h"/>
-          </GROUP>
           <GROUP id="{67BC73CD-B94B-C59C-7AE7-3A6E8643517A}" name="ui">
             <FILE id="bfJkjQ" name="ModuleChooserUI.cpp" compile="1" resource="0"
                   file="Source/ModuleChooserUI.cpp"/>

@@ -40,7 +40,7 @@ void SequenceLayerManager::addItemFromData(var data)
 
 void SequenceLayerManager::addItemInternal(SequenceLayer * item, var data)
 {
-	AudioLayer * a = static_cast<AudioLayer *>(item);
+	AudioLayer * a = dynamic_cast<AudioLayer *>(item);
 	if (a != nullptr)
 	{
 		a->addAudioLayerListener(this);
@@ -50,7 +50,7 @@ void SequenceLayerManager::addItemInternal(SequenceLayer * item, var data)
 
 void SequenceLayerManager::removeItemInternal(SequenceLayer * item)
 {
-	AudioLayer * a = static_cast<AudioLayer *>(item);
+	AudioLayer * a = dynamic_cast<AudioLayer *>(item);
 	if (a != nullptr)
 	{
 		a->removeAudioLayerListener(this);
@@ -77,7 +77,7 @@ void SequenceLayerManager::updateTargetAudioLayer(AudioLayer * excludeLayer)
 		for (auto &i : items)
 		{
 			if (i == excludeLayer) continue;
-			AudioLayer * a = static_cast<AudioLayer *>(i);
+			AudioLayer * a = dynamic_cast<AudioLayer *>(i);
 			if (a != nullptr && a->audioModule != nullptr)
 			{
 				setMasterAudioLayer(a);

@@ -36,11 +36,11 @@ void TimeCueUI::paint(Graphics & g)
 void TimeCueUI::resized()
 {
 	drawPath.clear();
-	drawPath.startNewSubPath(getWidth() / 2, getHeight());
-	drawPath.lineTo(0, getHeight() - 5);
+	drawPath.startNewSubPath(getWidth() / 2.f, (float)getHeight());
+	drawPath.lineTo(0, (float)getHeight() - 5);
 	drawPath.lineTo(0, 0);
-	drawPath.lineTo(getWidth(), 0);
-	drawPath.lineTo(getWidth(), getHeight() - 5);
+	drawPath.lineTo((float)getWidth(), 0);
+	drawPath.lineTo((float)getWidth(), (float)getHeight() - 5);
 	drawPath.closeSubPath();
 	drawPath = drawPath.createPathWithRoundedCorners(1);
 }

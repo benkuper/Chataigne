@@ -10,9 +10,9 @@
 
 #include "BaseCommand.h"
 
-BaseCommand::BaseCommand(ControllableContainer * _container, CommandContext _context, var _params) :
+BaseCommand::BaseCommand(Module * _module, CommandContext _context, var _params) :
 	ControllableContainer("Command"),
-	container(_container),
+	module(_module),
 	targetMappingParameter(nullptr),
 	params(_params),
 	context(_context)

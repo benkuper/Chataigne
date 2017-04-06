@@ -11,13 +11,14 @@
 #ifndef SEQUENCECOMMAND_H_INCLUDED
 #define SEQUENCECOMMAND_H_INCLUDED
 
-
 #include "BaseCommand.h"
 #include "TargetParameter.h"
 #include "SequenceModule.h"
+#include "Engine.h"
 
 class SequenceCommand :
-	public BaseCommand
+	public BaseCommand,
+	public Engine::EngineListener
 {
 public:
 	SequenceCommand(SequenceModule * _module, CommandContext context, var params);
@@ -31,6 +32,13 @@ public:
 	TargetParameter * target;
 
 	virtual void trigger() override;
+
+
+	var dataToLoad;
+
+	virtual void loadJSONDataInternal(var data) override;
+	virtual void endLoadFile();
+
 
 	static BaseCommand * create(ControllableContainer * module, CommandContext context, var params);
 

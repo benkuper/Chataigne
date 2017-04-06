@@ -12,7 +12,7 @@
 #include "OSCModule.h"
 
 OSCCommand::OSCCommand(OSCModule * _module, CommandContext context, var params) :
-	BaseCommand(_module,context, params),
+	ModuleCommand(_module,context, params),
 	oscModule(_module),
 	argumentsContainer("Arguments")
 {
@@ -27,14 +27,14 @@ OSCCommand::~OSCCommand()
 
 var OSCCommand::getJSONData()
 {
-	var data = BaseCommand::getJSONData();
+	var data = ModuleCommand::getJSONData();
 	data.getDynamicObject()->setProperty("arguments", argumentsContainer.getJSONData());
 	return data;
 }
 
 void OSCCommand::loadJSONDataInternal(var data)
 {
-	BaseCommand::loadJSONDataInternal(data);
+	ModuleCommand::loadJSONDataInternal(data);
 	argumentsContainer.loadJSONData(data.getProperty("arguments", var()), true);
 }
 

@@ -29,7 +29,7 @@ AudioLayer::AudioLayer(Sequence * _sequence) :
 	//if already an audio module, assign it
 	for (auto &i : ModuleManager::getInstance()->items)
 	{
-		AudioModule * a = static_cast<AudioModule *>(i);
+		AudioModule * a = dynamic_cast<AudioModule *>(i);
 		if (a != nullptr)
 		{
 			setAudioModule(a);
@@ -102,7 +102,8 @@ void AudioLayer::updateCurrentClip()
 
 void AudioLayer::itemAdded(Module * m)
 {
-	if (audioModule == nullptr && static_cast<AudioModule *>(m) != nullptr) setAudioModule(static_cast<AudioModule *>(m));
+	AudioModule * am = dynamic_cast<AudioModule *>(m);
+	if (audioModule == nullptr &&  am != nullptr) setAudioModule(am);
 }
 
 void AudioLayer::itemRemoved(Module * m)
@@ -126,7 +127,7 @@ void AudioLayer::loadJSONDataInternal(var data)
 {
 	SequenceLayer::loadJSONDataInternal(data);
 	clipManager.loadJSONData(data.getProperty("clipManager", var()));
-	if (data.getDynamicObject()->hasProperty("audioModule")) setAudioModule(static_cast<AudioModule *>(ModuleManager::getInstance()->getItemWithName(data.getProperty("audioModule", ""))));
+	if (data.getDynamicObject()->hasProperty("audioModule")) setAudioModule(dynamic_cast<AudioModule *>(ModuleManager::getInstance()->getItemWithName(data.getProperty("audioModule", ""))));
 }
 
 SequenceLayerPanel * AudioLayer::getPanel()

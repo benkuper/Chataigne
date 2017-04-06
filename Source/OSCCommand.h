@@ -11,12 +11,12 @@
 #ifndef OSCCOMMAND_H_INCLUDED
 #define OSCCOMMAND_H_INCLUDED
 
-#include "ModuleCommand.h"
+#include "BaseCommand.h"
 
 class OSCModule;
 
 class OSCCommand :
-	public ModuleCommand
+	public BaseCommand
 {
 public:
 	OSCCommand(OSCModule * _module, CommandContext context, var params);

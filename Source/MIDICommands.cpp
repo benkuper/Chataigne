@@ -12,7 +12,7 @@
 #include "MIDIModule.h"
 
 MIDICommand::MIDICommand(MIDIModule * module, CommandContext context, var params) :
-	ModuleCommand(module,context,params),
+	BaseCommand(module,context,params),
 	midiModule(module)
 {
 	
@@ -44,7 +44,7 @@ MIDINoteAndCCCommand::~MIDINoteAndCCCommand()
 
 void MIDINoteAndCCCommand::setValue(var value)
 {
-	ModuleCommand::setValue(value);
+	BaseCommand::setValue(value);
 	velocity->setValue(value, true);		
 	trigger();
 }

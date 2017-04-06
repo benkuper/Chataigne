@@ -25,6 +25,8 @@ public:
 
 	virtual void addItemFromData(var data) override;
 	
+	Module * getModuleWithName(const String &moduleName);
+
 	//Input values menu
 	PopupMenu getAllModulesInputValuesMenu(bool parametersOnly);
 	Controllable * getControllableForItemID(int itemID);
@@ -32,6 +34,7 @@ public:
 	//Command menu
 	PopupMenu getAllModulesCommandMenu(CommandContext context);
 	CommandDefinition * getCommandDefinitionForItemID(int itemID, Module * lockedModule);
+
 
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ModuleManager)

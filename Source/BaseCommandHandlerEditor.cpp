@@ -67,7 +67,7 @@ void BaseCommandHandlerEditor::updateChooserLabel()
 {
 	String text;
 	if (handler->command != nullptr)
-		text = handler->command->container->niceName + ":" + handler->commandDefinition->commandType;
+		text = handler->command->module->niceName + ":" + handler->commandDefinition->commandType;
 
 	chooser.setLabel(text);
 }

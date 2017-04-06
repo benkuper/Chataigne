@@ -24,6 +24,8 @@ public:
 
 	void trigger() override;
 
+	void endLoadFile() override;
+
 	static BaseCommand * create(ControllableContainer * module, CommandContext context, var params);
 	InspectableEditor * getEditor(bool isRoot) override;
 };

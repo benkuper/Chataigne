@@ -51,6 +51,30 @@ void SequenceCommand::trigger()
 	}
 }
 
+void SequenceCommand::loadJSONDataInternal(var data)
+{
+	if (Engine::getInstance()->isLoadingFile)
+	{
+		DBG("Engine is loading, waiting after load");
+		Engine::getInstance()->addEngineListener(this);
+		dataToLoad = data;
+	}
+	else BaseCommand::loadJSONDataInternal(data);
+}
+
+void SequenceCommand::endLoadFile()
+{
+	//reset data we want to reload
+	target->setValue("",true);
+	DBG("Engine after load, load command data");
+
+	loadJSONData(dataToLoad);
+	dataToLoad = var();
+
+	Engine::getInstance()->removeEngineListener(this);
+
+}
+
 BaseCommand * SequenceCommand::create(ControllableContainer * module, CommandContext context, var params) {
 	return new SequenceCommand((SequenceModule *)module, context, params);
 }
