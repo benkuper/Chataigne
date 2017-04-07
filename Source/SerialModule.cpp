@@ -45,10 +45,8 @@ void SerialModule::setCurrentPort(SerialDevice * _port)
 {
 	if (port == _port) return;
 
-
 	if (port != nullptr)
 	{
-
 		port->removeSerialDeviceListener(this);
 	}
 
@@ -68,12 +66,7 @@ void SerialModule::setCurrentPort(SerialDevice * _port)
 		}
 		lastOpenedPortID = port->info->port;
 	}
-	else
-	{
-		DBG("set port null");
-	}
 
-	DBG("current port changed");
 	serialModuleListeners.call(&SerialModuleListener::currentPortChanged);
 }
 
@@ -81,7 +74,6 @@ void SerialModule::setCurrentPort(SerialDevice * _port)
 void SerialModule::onContainerParameterChangedInternal(Parameter * p) {
 	Module::onContainerParameterChangedInternal(p);
 	
-	DBG("Parameter changed");
 	if (p == portParam)
 	{
 		 setCurrentPort(portParam->getDevice());

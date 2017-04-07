@@ -120,9 +120,9 @@ void Engine::clear() {
 		InspectableSelectionManager::getInstance()->setEnabled(false);
 	}
 
-	ModuleManager::getInstance()->clear();
-	StateManager::getInstance()->clear();
+	StateManager::getInstance()->clear(); 
 	SequenceManager::getInstance()->clear();
+	ModuleManager::getInstance()->clear();
 
 	PresetManager::getInstance()->clear();
 

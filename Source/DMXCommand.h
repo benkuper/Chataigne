@@ -18,12 +18,16 @@ class DMXCommand :
 	public BaseCommand
 {
 public:
+	enum DMXAction { SET_VALUE, SET_RANGE, CLEAR_ALL};
+
 	DMXCommand(DMXModule * _module, CommandContext context, var params);
 	~DMXCommand();
 
+	DMXAction dmxAction;
 	DMXModule * dmxModule;
 
 	IntParameter * channel;
+	IntParameter * channel2;
 	IntParameter * value;
 
 	void trigger() override;

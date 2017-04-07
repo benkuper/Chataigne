@@ -14,9 +14,29 @@ DMXCommand::DMXCommand(DMXModule * _module, CommandContext context, var params) 
 	BaseCommand(_module,context,params),
 	dmxModule(_module)
 {
-	channel = addIntParameter("Channel", "DMX Channel", 1, 0, 512);
-	value = addIntParameter("Value", "DMX Value", 0, 0, 255);
-	targetMappingParameter = value;
+	
+	dmxAction = (DMXAction)(int)params.getProperty("action", 0);
+	switch (dmxAction)
+	{
+	
+	case SET_VALUE:
+		channel = addIntParameter("Channel", "DMX Channel", 1, 1, 512);
+		value = addIntParameter("Value", "DMX Value", 0, 0, 255);
+		targetMappingParameter = value;
+		break;
+
+	case SET_RANGE:
+		channel = addIntParameter("Start Channel", "First DMX Channel", 1, 1, 512);
+		channel2 = addIntParameter("End Channel", "Last DMX Channel (inclusive)", 4, 1, 512);
+		value = addIntParameter("Value", "DMX Value", 0, 0, 255);
+		targetMappingParameter = value;
+		break;
+
+	case CLEAR_ALL:
+		break;
+	}
+
+	
 }
 
 DMXCommand::~DMXCommand()
@@ -26,5 +46,20 @@ DMXCommand::~DMXCommand()
 
 void DMXCommand::trigger()
 {
-	dmxModule->sendDMXValue(channel->intValue(), value->intValue());
+	switch (dmxAction)
+	{
+
+	case SET_VALUE:
+		dmxModule->sendDMXValue(channel->intValue(), value->intValue());
+		break;
+
+	case SET_RANGE:
+		for (int i =channel->intValue();i<=channel2->intValue();i++) dmxModule->sendDMXValue(i, value->intValue());
+		break;
+
+	case CLEAR_ALL:
+		for (int i = 1; i <= 512; i++) dmxModule->sendDMXValue(i, 0);
+		break;
+	}
+	
 }

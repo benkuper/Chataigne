@@ -70,8 +70,8 @@ public:
 	String port;
 	String description;
 	String hardwareID;
-
-
+	int vid;
+	int pid;
 };
 
 class SerialDevice :

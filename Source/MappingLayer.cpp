@@ -37,6 +37,7 @@ MappingLayer::~MappingLayer()
 var MappingLayer::getJSONData()
 {
 	var data = SequenceLayer::getJSONData();
+	data.getDynamicObject()->setProperty("mapping", mapping.getJSONData());
 	data.getDynamicObject()->setProperty("automation", automation.getJSONData());
 	return data;
 }
@@ -44,6 +45,7 @@ var MappingLayer::getJSONData()
 void MappingLayer::loadJSONDataInternal(var data)
 {
 	SequenceLayer::loadJSONDataInternal(data);
+	mapping.loadJSONData(data.getProperty("mapping", var()));
 	automation.loadJSONData(data.getProperty("automation", var()));
 }
 

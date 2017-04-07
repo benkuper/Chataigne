@@ -187,6 +187,18 @@
       <GROUP id="{6A99D434-563F-6FEC-8395-5EB79B3D3075}" name="Chataigne">
         <GROUP id="{6C7DFFF7-D47E-97B5-FE74-27F24C7A349F}" name="Common">
           <GROUP id="{672CD9A6-0B3A-28B4-B3F7-2C0B1183CBBB}" name="DMX">
+            <GROUP id="{E9C61B40-A648-980E-2FF5-28709FE98F53}" name="device">
+              <FILE id="LtUuy9" name="DMXDevice.cpp" compile="1" resource="0" file="Source/DMXDevice.cpp"/>
+              <FILE id="VFzSww" name="DMXDevice.h" compile="0" resource="0" file="Source/DMXDevice.h"/>
+              <FILE id="yl5IsS" name="DMXEnttecProDevice.cpp" compile="1" resource="0"
+                    file="Source/DMXEnttecProDevice.cpp"/>
+              <FILE id="CirelG" name="DMXEnttecProDevice.h" compile="0" resource="0"
+                    file="Source/DMXEnttecProDevice.h"/>
+              <FILE id="LCLIOS" name="DMXOpenUSBDevice.cpp" compile="1" resource="0"
+                    file="Source/DMXOpenUSBDevice.cpp"/>
+              <FILE id="f7dB4a" name="DMXOpenUSBDevice.h" compile="0" resource="0"
+                    file="Source/DMXOpenUSBDevice.h"/>
+            </GROUP>
             <GROUP id="{708645ED-3AA3-AFCD-7298-82FFDF295F14}" name="ui">
               <FILE id="Lr4ZBb" name="DMXDashboard.cpp" compile="1" resource="0"
                     file="Source/DMXDashboard.cpp"/>
