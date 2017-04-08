@@ -18,12 +18,12 @@
 #include "SequenceManager.h"
 #include "Outliner.h"
 
-
 /*================================
  this file implements all methods that are related to saving/loading : basicly iherited from FileBasedDocument
  */
 
 ApplicationProperties & getAppProperties();
+String getAppVersion();
 
 String Engine::getDocumentTitle() {
   if (! getFile().exists())
@@ -251,16 +251,17 @@ void Engine::loadJSONData (var data,ProgressTask * loadingTask)
 
 }
 
-bool Engine::checkFileVersion(DynamicObject * metaData)
+bool Engine::checkFileVersion(DynamicObject * metaData, bool checkForNewerVersion)
 {
   if (!metaData->hasProperty("version")) return false;
-  DBG(metaData->getProperty("version").toString() << "/ " << getMinimumRequiredFileVersion());
+  String versionToCheck = checkForNewerVersion ? getAppVersion() : getMinimumRequiredFileVersion();
+  DBG(metaData->getProperty("version").toString() << " / " << );
 
   StringArray fileVersionSplit;
   fileVersionSplit.addTokens(metaData->getProperty("version").toString(), juce::StringRef("."), juce::StringRef("\""));
 
   StringArray minVersionSplit;
-  minVersionSplit.addTokens(getMinimumRequiredFileVersion(), juce::StringRef("."), juce::StringRef("\""));
+  minVersionSplit.addTokens(versionToCheck, juce::StringRef("."), juce::StringRef("\""));
 
   int maxVersionNumbers = jmax<int>(fileVersionSplit.size(), minVersionSplit.size());
   while (fileVersionSplit.size() < maxVersionNumbers) fileVersionSplit.add("0");
@@ -270,11 +271,11 @@ bool Engine::checkFileVersion(DynamicObject * metaData)
   {
     int fV = fileVersionSplit[i].getIntValue();
     int minV = minVersionSplit[i].getIntValue();
-    if (fV > minV) return true;
-    else if (fV < minV) return false;
+	if (fV > minV) return true;
+	else if (fV < minV) return false;   
   }
 
-  return true;
+  return checkForNewerVersion ? false : true;
 }
 
 String Engine::getMinimumRequiredFileVersion()

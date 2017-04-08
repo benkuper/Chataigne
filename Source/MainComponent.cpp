@@ -35,6 +35,8 @@ MainContentComponent::MainContentComponent()
 	//setMenu (this); //done in Main.cpp as it's a method of DocumentWindow
 #endif
 
+
+
 }
 
 MainContentComponent::~MainContentComponent()

@@ -26,14 +26,20 @@
         <FILE id="oIJhug" name="Outliner.h" compile="0" resource="0" file="Source/Outliner.h"/>
       </GROUP>
       <GROUP id="{4B3FD114-4268-0636-928E-6A41D74C7361}" name="Common">
-        <FILE id="wew3ZW" name="ProgressNotifier.cpp" compile="1" resource="0"
-              file="Source/ProgressNotifier.cpp"/>
-        <FILE id="uvP9R5" name="ProgressNotifier.h" compile="0" resource="0"
-              file="Source/ProgressNotifier.h"/>
-        <FILE id="Fjcf0K" name="ProgressWindow.cpp" compile="1" resource="0"
-              file="Source/ProgressWindow.cpp"/>
-        <FILE id="ftzWtf" name="ProgressWindow.h" compile="0" resource="0"
-              file="Source/ProgressWindow.h"/>
+        <GROUP id="{6963806F-95F1-8584-8F06-0CBBF1DAED9A}" name="Updater">
+          <FILE id="J7DL7k" name="AppUpdater.cpp" compile="1" resource="0" file="Source/AppUpdater.cpp"/>
+          <FILE id="Arg78Y" name="AppUpdater.h" compile="0" resource="0" file="Source/AppUpdater.h"/>
+        </GROUP>
+        <GROUP id="{20C32E7E-E21D-45E2-3AC8-F5348CF0B9F2}" name="Progress">
+          <FILE id="wew3ZW" name="ProgressNotifier.cpp" compile="1" resource="0"
+                file="Source/ProgressNotifier.cpp"/>
+          <FILE id="uvP9R5" name="ProgressNotifier.h" compile="0" resource="0"
+                file="Source/ProgressNotifier.h"/>
+          <FILE id="Fjcf0K" name="ProgressWindow.cpp" compile="1" resource="0"
+                file="Source/ProgressWindow.cpp"/>
+          <FILE id="ftzWtf" name="ProgressWindow.h" compile="0" resource="0"
+                file="Source/ProgressWindow.h"/>
+        </GROUP>
         <GROUP id="{2784D27A-9607-423C-4CC8-2E8DAC3F863F}" name="Helpers">
           <FILE id="HANg0N" name="StringUtil.h" compile="0" resource="0" file="Source/StringUtil.h"/>
           <FILE id="H1NSOc" name="WakeOnLan.h" compile="0" resource="0" file="Source/WakeOnLan.h"/>
@@ -1241,7 +1247,7 @@
                        headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;$(ASIOSDK)/common&#10;$(KINECTSDK20_DIR)inc"/>
         <CONFIGURATION name="Release x64" winWarningLevel="4" generateManifest="1" winArchitecture="x64"
                        headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;$(ASIOSDK)/common&#10;$(KINECTSDK20_DIR)inc"
-                       libraryPath="$(KINECTSDK20_DIR)Lib\x64"/>
+                       libraryPath="$(KINECTSDK20_DIR)Lib\x64" targetName="Chataigne"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_core" path="D:/Softwares/JUCE/modules"/>

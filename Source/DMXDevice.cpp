@@ -27,7 +27,7 @@ DMXDevice::~DMXDevice()
 
 void DMXDevice::sendDMXValue(int channel, int value) //channel 1-512
 {
-	dmxDataOut[channel - 1] = value;
+	dmxDataOut[channel - 1] = (uint8)value;
 }
 
 void DMXDevice::setDMXValueIn(int channel, int value) //channel 1-512

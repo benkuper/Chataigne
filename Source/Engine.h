@@ -55,7 +55,7 @@ public:
 	var getJSONData() override;
 	void loadJSONData(var data, ProgressTask * loadingTask);
 
-	bool checkFileVersion(DynamicObject * metaData);
+	bool checkFileVersion(DynamicObject * metaData, bool checkForNewerVersion = false);
 	String getMinimumRequiredFileVersion();
 
 	int64 loadingStartTime;

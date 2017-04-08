@@ -1,4 +1,6 @@
 #include "Main.h"
+#include "AppUpdater.h"
+
 
 //==============================================================================
 
@@ -26,6 +28,10 @@ inline void ChataigneApplication::initialise(const String & commandLine)
 		engine->createNewGraph();
 		engine->setChangedFlag(false);
 	}
+
+	mainWindow->setName(getApplicationName() + " " + getApplicationVersion());
+
+	AppUpdater::checkForUpdates();
 	
 }
 
@@ -84,6 +90,8 @@ inline ChataigneApplication::MainWindow::MainWindow(String name) : DocumentWindo
 	openGLContext.attachTo(*this);
 #endif
 	mainComponent->init();
+
+	
 }
 
 inline void ChataigneApplication::MainWindow::closeButtonPressed()
@@ -108,3 +116,4 @@ inline void ChataigneApplication::MainWindow::closeButtonPressed()
 
 	JUCEApplication::getInstance()->systemRequestedQuit();
 }
+

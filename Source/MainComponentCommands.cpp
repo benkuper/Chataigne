@@ -12,6 +12,7 @@
 #include "MainComponent.h"
 #include "Engine.h"
 
+
 namespace CommandIDs
 {
   static const int open                   = 0x30000;
@@ -19,7 +20,7 @@ namespace CommandIDs
   static const int saveAs                 = 0x30002;
   static const int newFile                = 0x30003;
   static const int openLastDocument       = 0x30004;
-
+  static const int checkForUpdates		  = 0x30005;
   // range ids
   static const int lastFileStartID        =100; // 100 to 200 max
 
@@ -60,6 +61,10 @@ void MainContentComponent::getCommandInfo (CommandID commandID, ApplicationComma
       result.defaultKeypresses.add (KeyPress ('s', ModifierKeys::shiftModifier | ModifierKeys::commandModifier, 0));
 	  break;
 
+	case CommandIDs::checkForUpdates:
+		result.setInfo("Check for updates", "Check if updates are available and download latest software", category, 0);
+		break;
+
     default:
       break;
   }
@@ -73,7 +78,8 @@ void MainContentComponent::getAllCommands (Array<CommandID>& commands) {
     CommandIDs::open,
     CommandIDs::openLastDocument,
     CommandIDs::save,
-    CommandIDs::saveAs
+    CommandIDs::saveAs,
+	CommandIDs::checkForUpdates
   };
 
   commands.addArray (ids, numElementsInArray (ids));
@@ -106,6 +112,10 @@ PopupMenu MainContentComponent::getMenuForIndex (int /*topLevelMenuIndex*/, cons
   } else if (menuName == "Panels")
   {
     return ShapeShifterManager::getInstance()->getPanelsMenu();
+  }
+  else if (menuName == "Options")
+  {
+	  menu.addCommandItem(&getCommandManager(), CommandIDs::checkForUpdates);
   }
 
   return menu;
@@ -161,6 +171,9 @@ bool MainContentComponent::perform(const InvocationInfo& info) {
       Engine::getInstance()->saveAs (File::nonexistent, true, true, true);
       break;
 
+	case CommandIDs::checkForUpdates:
+		AppUpdater::checkForUpdates();
+		break;
 
     default:
       DBG("no command found");
@@ -188,6 +201,6 @@ void MainContentComponent::menuItemSelected(int menuItemID, int topLevelMenuInde
 
 
 StringArray MainContentComponent::getMenuBarNames() {
-  const char* const names[] = { "File","Panels", nullptr };
+  const char* const names[] = { "File","Panels", "Options",nullptr };
   return StringArray (names);
 }
