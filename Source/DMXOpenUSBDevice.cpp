@@ -11,131 +11,44 @@
 #include "DMXOpenUSBDevice.h"
 
 DMXOpenUSBDevice::DMXOpenUSBDevice() :
-	DMXDevice(OPENDMX),
-	Thread("openDMXRead"),
-	dmxPort(nullptr)
+	DMXSerialDevice(OPENDMX)
 {
-	startThread();
-
-	portParam = new SerialDeviceParameter("Port", "USB Port for the DMX device",true);
-	addParameter(portParam);
 }
 
 DMXOpenUSBDevice::~DMXOpenUSBDevice()
 {
-	stopThread(10000);
-	setCurrentPort(nullptr);
 }
 
-void DMXOpenUSBDevice::setCurrentPort(SerialDevice * port)
+void DMXOpenUSBDevice::setPortConfig()
 {
-	if (port == dmxPort) return;
+	dmxPort->port->setBaudrate(250000);
+	dmxPort->port->setBytesize(serial::eightbits);
+	dmxPort->port->setStopbits(serial::stopbits_two);
+	dmxPort->port->setParity(serial::parity_none);
+	dmxPort->port->setFlowcontrol(serial::flowcontrol_none);
+	dmxPort->port->setRTS(false);
+	dmxPort->port->flush();
+}
 
-	if (dmxPort != nullptr)
+void DMXOpenUSBDevice::sendDMXData()
+{
+	dmxPort->port->setBreak(true);
+	dmxPort->port->setBreak(false);
+	try
 	{
-		dmxPort->removeSerialDeviceListener(this);
+		dmxPort->port->write(startCode, 1); //start code
+		dmxPort->port->write(dmxDataOut, 512);
 	}
-
-	dmxPort = port;
-
-	if (dmxPort != nullptr)
+	catch (serial::IOException e)
 	{
-		dmxPort->addSerialDeviceListener(this);
-		dmxPort->open();
-		if (!port->isOpen())
-		{
-			NLOG(niceName, "Could not open port : " << port->info->port);
-		}
-
-		lastOpenedPortID = port->info->port;
-
-		dmxPort->port->setBaudrate(250000);
-		dmxPort->port->setBytesize(serial::eightbits);
-		dmxPort->port->setStopbits(serial::stopbits_two);
-		dmxPort->port->setParity(serial::parity_none);
-		dmxPort->port->setFlowcontrol(serial::flowcontrol_none);
-		dmxPort->port->setRTS(false);
-		dmxPort->port->flush();
-
-		dmxDeviceListeners.call(&DMXDeviceListener::dmxDeviceConnected);
+		DBG("IO Exception on OpenDMX " << e.what());
 	}
-	else
+	catch (serial::PortNotOpenedException)
 	{
-		dmxDeviceListeners.call(&DMXDeviceListener::dmxDeviceDisconnected);
+		DBG("Port Not Opend on OpenDMX");
 	}
-}
-
-
-void DMXOpenUSBDevice::run()
-{
-	uint8 startCode[1]{ 0 };
-	while (!threadShouldExit())
+	catch (serial::SerialException e)
 	{
-		if (dmxPort != nullptr && dmxPort->port->isOpen())
-		{
-			//DBG("send " << (int)dmxDataOut[0] << " / " << (int)dmxDataOut[1] << " / " << (int)dmxDataOut[2]);
-
-			dmxPort->port->setBreak(true);
-			dmxPort->port->setBreak(false);
-			try
-			{
-				dmxPort->port->write(startCode, 1); //start code
-				dmxPort->port->write(dmxDataOut, 512);
-			}
-			catch (serial::IOException e)
-			{
-				DBG("IO Exception on OpenDMX " << e.what());
-			}
-			catch (serial::PortNotOpenedException)
-			{
-				DBG("Port Not Opend on OpenDMX");
-			}
-			catch (serial::SerialException e)
-			{
-				DBG("Serial Exception : " << e.what());
-			}
-			
-		}
-
-		sleep(23);
+		DBG("Serial Exception : " << e.what());
 	}
-	DBG("Exit DMX write thread");
-}
-
-void DMXOpenUSBDevice::onContainerParameterChanged(Parameter * p)
-{
-	if (p == portParam)
-	{
-		setCurrentPort(portParam->getDevice());
-	}
-}
-
-void DMXOpenUSBDevice::portAdded(SerialDeviceInfo * info)
-{
-	if (dmxPort == nullptr && lastOpenedPortID == info->port)
-	{
-		setCurrentPort(SerialManager::getInstance()->getPort(info));
-	}
-}
-
-void DMXOpenUSBDevice::portRemoved(SerialDeviceInfo * /*info*/)
-{
-	setCurrentPort(nullptr);
-}
-
-void DMXOpenUSBDevice::portOpened(SerialDevice *)
-{
-}
-
-void DMXOpenUSBDevice::portClosed(SerialDevice *)
-{
-}
-
-void DMXOpenUSBDevice::portRemoved(SerialDevice *)
-{
-	setCurrentPort(nullptr);
-}
-
-void DMXOpenUSBDevice::serialDataReceived(const var &)
-{
 }

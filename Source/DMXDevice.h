@@ -12,12 +12,14 @@
 #define DMXDEVICE_H_INCLUDED
 
 #include "ControllableContainer.h"
+#include "DMXManager.h"
 
 class DMXDevice :
-	public ControllableContainer
+	public ControllableContainer,
+	public DMXManager::DMXManagerListener
 {
 public:
-	enum Type { OPENDMX, ENTTEC_DMXPRO, ENTTEC_MK2};
+	enum Type { OPENDMX, ENTTEC_DMXPRO, ENTTEC_MK2, ARTNET};
 	DMXDevice(Type type);
 	virtual ~DMXDevice();
 

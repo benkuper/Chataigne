@@ -19,7 +19,7 @@ void AppUpdater::checkForUpdates()
 	StringPairArray responseHeaders;
 	int statusCode = 0; 
 	ScopedPointer<InputStream> stream(updateURL.createInputStream(false, nullptr, nullptr, String(),
-		10000, // timeout in millisecs
+		200, // timeout in millisecs
 		&responseHeaders, &statusCode));
 
 	if (statusCode != 200) LOG("Failed to connect, status code = " + String(statusCode)); 

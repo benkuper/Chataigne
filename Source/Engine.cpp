@@ -25,6 +25,7 @@
 #include "WiimoteManager.h"
 #include "InspectableSelectionManager.h"
 #include "ScriptUtil.h"
+#include "DMXManager.h"
 
 juce_ImplementSingleton(Engine) 
 
@@ -48,9 +49,11 @@ Engine::Engine() :
 	addChildControllableContainer(StateManager::getInstance());
 	addChildControllableContainer(SequenceManager::getInstance());
 
-	MIDIManager::getInstance(); //Trigger MIDIManager singleton constructor
+	//MIDIManager::getInstance(); //Trigger MIDIManager singleton constructor
+	//DMXManager::getInstance(); //Trigger DMXManager singleton constructor
 	InspectableSelectionManager::getInstance(); //selectionManager constructor
 	ScriptUtil::getInstance(); //trigger ScriptUtil constructor
+
 }
 
 Engine::~Engine(){
@@ -73,6 +76,7 @@ Engine::~Engine(){
   ConditionFactory::deleteInstance();
   
   MIDIManager::deleteInstance();
+  DMXManager::deleteInstance();
   SerialManager::deleteInstance();
   GamepadManager::deleteInstance();
   WiimoteManager::deleteInstance();

@@ -31,7 +31,7 @@ inline void ChataigneApplication::initialise(const String & commandLine)
 
 	mainWindow->setName(getApplicationName() + " " + getApplicationVersion());
 
-	AppUpdater::checkForUpdates();
+	//AppUpdater::checkForUpdates();
 	
 }
 

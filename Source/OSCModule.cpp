@@ -51,7 +51,6 @@ void OSCModule::setupReceiver()
 	IPAddress::findAllAddresses(ad);
 	String s = "Local IPs:";
 	for (auto &a : ad) s += String("\n > ") + a.toString();
-	NLOG(niceName, s);
 }
 
 float OSCModule::getFloatArg(OSCArgument a)
@@ -92,10 +91,12 @@ void OSCModule::processMessage(const OSCMessage & msg)
 
 	if (scriptManager->items.size() > 0)
 	{
-		Array<var> args;
-		for (auto &a : msg) args.add(OSCModule::argumentToVar(a));
-
-		scriptManager->callFunctionOnAllItems(oscEventId, args);
+		Array<var> params;
+		params.add(msg.getAddressPattern().toString());
+		var args;
+		for (auto &a : msg) args.append(OSCModule::argumentToVar(a));
+		params.add(args);
+		scriptManager->callFunctionOnAllItems(oscEventId, params);
 	}
 
 }
@@ -108,7 +109,7 @@ void OSCModule::setupSender()
 
 void OSCModule::sendOSC(const OSCMessage & msg)
 {
-	if (enabled->boolValue()) return;
+	if (!enabled->boolValue()) return;
 
 	if (logOutgoingData->boolValue())
 	{

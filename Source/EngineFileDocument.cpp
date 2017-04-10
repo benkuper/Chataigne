@@ -255,7 +255,7 @@ bool Engine::checkFileVersion(DynamicObject * metaData, bool checkForNewerVersio
 {
   if (!metaData->hasProperty("version")) return false;
   String versionToCheck = checkForNewerVersion ? getAppVersion() : getMinimumRequiredFileVersion();
-  DBG(metaData->getProperty("version").toString() << " / " << );
+  DBG(metaData->getProperty("version").toString() << " / " << versionToCheck);
 
   StringArray fileVersionSplit;
   fileVersionSplit.addTokens(metaData->getProperty("version").toString(), juce::StringRef("."), juce::StringRef("\""));

@@ -11,43 +11,20 @@
 #ifndef DMXOPENUSBDEVICE_H_INCLUDED
 #define DMXOPENUSBDEVICE_H_INCLUDED
 
-#include "DMXDevice.h"
-#include "SerialDevice.h"
-#include "SerialDeviceParameter.h"
+#include "DMXSerialDevice.h"
 
 class DMXOpenUSBDevice :
-	public DMXDevice,
-	public Thread,
-	public SerialManager::SerialManagerListener,
-	public SerialDevice::SerialDeviceListener
+	public DMXSerialDevice
 {
 public:
 	DMXOpenUSBDevice();
 	~DMXOpenUSBDevice();
 
-	SerialDeviceParameter * portParam;
-	SerialDevice * dmxPort;
+	const uint8 startCode[1]{ 0 };
 
-	//Device info
-	String deviceID;
-	String lastOpenedPortID; //for ghosting
-
-
-	void setCurrentPort(SerialDevice * port);
-
-
-	virtual void run() override;
-
-	virtual void onContainerParameterChanged(Parameter * p) override;
+	void setPortConfig() override;
+	void sendDMXData() override;
 	
-	void portAdded(SerialDeviceInfo * info) override;
-	void portRemoved(SerialDeviceInfo * info) override;
-
-	virtual void portOpened(SerialDevice *) override;
-	virtual void portClosed(SerialDevice *) override;
-	virtual void portRemoved(SerialDevice *) override;
-	virtual void serialDataReceived(const var &data) override;
-
 };
 
 
