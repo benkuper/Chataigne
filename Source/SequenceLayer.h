@@ -14,6 +14,7 @@
 
 #include "BaseItem.h"
 #include "Sequence.h"
+#include "ColorParameter.h"
 
 class SequenceLayerPanel;
 class SequenceLayerTimeline;
@@ -30,6 +31,7 @@ public:
 
 	//UI
 	IntParameter * uiHeight;
+	ColorParameter * color;
 
 	//Save / Load
 	virtual var getJSONData() override;

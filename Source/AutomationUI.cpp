@@ -151,7 +151,6 @@ void AutomationUI::placeKeyUI(AutomationKeyUI * kui, bool placePrevKUI)
 	}
 }
 
-
 int AutomationUI::getXForPos(float time)
 {
 	if (viewStartPos == viewEndPos) return 0;

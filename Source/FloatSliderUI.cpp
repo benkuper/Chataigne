@@ -195,6 +195,10 @@ float FloatSliderUI::getParamNormalizedValue()
     return parameter->getNormalizedValue();
 }
 
+void FloatSliderUI::rangeChanged(Parameter *) {
+	repaint();
+}
+
 void FloatSliderUI::valueChanged(const var &) {
     repaint();
 };

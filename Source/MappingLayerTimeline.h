@@ -14,6 +14,7 @@
 #include "SequenceLayerTimeline.h"
 #include "MappingLayer.h"
 #include "AutomationUI.h"
+#include "TimeColorManagerUI.h"
 
 class MappingLayerTimeline :
 	public SequenceLayerTimeline
@@ -22,12 +23,18 @@ public:
 	MappingLayerTimeline(MappingLayer * layer);
 	~MappingLayerTimeline();
 
-	AutomationUI automationUI;
+	MappingLayer * mappingLayer;
+
+	OwnedArray<AutomationUI> automationsUI;
+	ScopedPointer<TimeColorManagerUI> colorManagerUI;
+
+
+	void setupUIForLayerMode();
 
 	void updateContent() override;
 	void resized();
 	
-	//void controllableFeedbackUpdateInternal(Controllable * c) override;
+	void controllableFeedbackUpdateInternal(Controllable * c) override;
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MappingLayerTimeline)
 
 };

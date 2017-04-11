@@ -34,8 +34,7 @@ Mapping::~Mapping()
 void Mapping::lockInputTo(Parameter * lockParam)
 {
 	inputIsLocked = lockParam != nullptr;
-	if (inputIsLocked) input.lockInput(lockParam);
-	
+	input.lockInput(lockParam);
 }
 
 void Mapping::process()

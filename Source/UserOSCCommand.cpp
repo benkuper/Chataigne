@@ -34,6 +34,7 @@ void UserOSCCommand::rebuildArgsFromModel()
 
 	//TODO : SlaveParameter ?
 	Parameter * p = nullptr;
+	int mappingTargetIndex = 0;
 	for (auto &a : model->arguments.items)
 	{
 		Parameter * ap = a->param;
@@ -47,7 +48,11 @@ void UserOSCCommand::rebuildArgsFromModel()
 
 		p->isEditable = a->editable->boolValue() && !a->useForMapping->boolValue();
 		argumentsContainer.addParameter(p);
-		if (a->useForMapping->boolValue()) setTargetMappingParameter(p);
+		if (a->useForMapping->boolValue())
+		{
+			setTargetMappingParameterAt(p, mappingTargetIndex);
+			mappingTargetIndex++;
+		}
 	}
 
 	argumentsContainer.hideInEditor = model->arguments.items.size() == 0;

@@ -163,6 +163,15 @@ void ShapeShifterContainer::movePanelsInContainer(ShapeShifterPanel * newPanel, 
 
 }
 
+bool ShapeShifterContainer::isFlexible()
+{
+	for (auto &p : shifters)
+	{
+		if (!p->isFlexible()) return false;
+	}
+	return true;
+}
+
 
 void ShapeShifterContainer::resized()
 {
@@ -182,6 +191,7 @@ void ShapeShifterContainer::resized()
 	int numDefaultSpace = numShifters;
 	int reservedPreferredSpace = 0;
 
+
 	for (auto &p : shifters)
 	{
 		if (!p->isFlexible())
@@ -191,6 +201,8 @@ void ShapeShifterContainer::resized()
 		}
 	}
 
+	bool allShiftersAreFlexible = reservedPreferredSpace == 0;
+	
 	int backOffsetAmount = 0; //amount to subtract from each fixed-size panel so every panel is visible
 	if (reservedPreferredSpace > totalSpace)
 	{
@@ -204,8 +216,12 @@ void ShapeShifterContainer::resized()
 	{
 		bool lastShifter = panelIndex >= grabbers.size();
 		int tp = (direction == HORIZONTAL) ? p->preferredWidth : p->preferredHeight;
-		int targetSpace = (!p->isFlexible()) ? (tp-backOffsetAmount) : defaultSpace;
-
+		
+		int targetSpace = defaultSpace;
+		if ((!p->isFlexible()) || (allShiftersAreFlexible && panelIndex == 0))
+		{
+			targetSpace = jmax(tp - backOffsetAmount, (direction == HORIZONTAL ? p->minWidth : p->minHeight));
+		}
 		if(!lastShifter)
 		{
 			Rectangle<int> tr = (direction == HORIZONTAL) ? r.removeFromLeft(targetSpace) : r.removeFromTop(targetSpace);
@@ -281,13 +297,13 @@ void ShapeShifterContainer::grabberGrabUpdate(GapGrabber * gg, int dist)
 	switch (direction)
 	{
 	case HORIZONTAL:
-			if (!firstShifter->isFlexible()) firstShifter->setPreferredWidth(firstShifter->preferredWidth + dist);
-			if (!secondShifter->isFlexible()) secondShifter->setPreferredWidth(secondShifter->preferredWidth - dist);
+			if (!secondShifter->isFlexible())  secondShifter->setPreferredWidth(secondShifter->preferredWidth - dist);
+			else firstShifter->setPreferredWidth(firstShifter->preferredWidth + dist);
 			break;
 
 	case VERTICAL:
-		if (!firstShifter->isFlexible()) firstShifter->setPreferredHeight(firstShifter->preferredHeight + dist);
-		if (!secondShifter->isFlexible()) secondShifter->setPreferredHeight(secondShifter->preferredHeight - dist);
+		if (!secondShifter->isFlexible())  secondShifter->setPreferredHeight(secondShifter->preferredHeight - dist);
+		else firstShifter->setPreferredHeight(firstShifter->preferredHeight + dist);
 		break;
 
         case NONE:

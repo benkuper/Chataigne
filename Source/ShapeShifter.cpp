@@ -14,6 +14,7 @@
 ShapeShifter::ShapeShifter(Type _type) :
 	shifterType(_type),
 	preferredWidth(300), preferredHeight(300),
+	minWidth(100), minHeight(200),
 	parentContainer(nullptr)
 {
 }

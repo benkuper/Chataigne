@@ -34,7 +34,8 @@ public:
 		ENUM,
 		POINT2D,
 		POINT3D,
-		TARGET
+		TARGET,
+		COLOR
 	};
 
 

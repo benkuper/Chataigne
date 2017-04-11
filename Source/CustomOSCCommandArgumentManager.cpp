@@ -74,10 +74,13 @@ void CustomOSCCommandArgumentManager::removeItemInternal(CustomOSCCommandArgumen
 
 void CustomOSCCommandArgumentManager::useForMappingChanged(CustomOSCCommandArgument * i)
 {
+	/*
 	if (i->useForMapping->boolValue())
 	{
 		for (auto &it : items) if (it != i) it->useForMapping->setValue(false);
 	}
+	*/
+
 	argumentManagerListeners.call(&ManagerListener::useForMappingChanged, i);
 }
 

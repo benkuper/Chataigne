@@ -27,6 +27,9 @@ public :
 
 	Type shifterType;
 
+	int minWidth;
+	int minHeight;
+
 	int preferredWidth;
 	int preferredHeight;
 	void setPreferredWidth(int newWidth);

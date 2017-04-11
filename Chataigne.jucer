@@ -49,38 +49,19 @@
         </GROUP>
         <GROUP id="{DDDDEA84-FEDC-34CF-C512-41310495E64D}" name="Controllable">
           <GROUP id="{4F9DBE99-8051-1CB6-F319-8653298B5A44}" name="Parameter">
-            <FILE id="vv9Fci" name="BoolParameter.cpp" compile="1" resource="0"
-                  file="Source/BoolParameter.cpp"/>
-            <FILE id="rSqLgF" name="BoolParameter.h" compile="0" resource="0" file="Source/BoolParameter.h"/>
-            <FILE id="NxihpA" name="EnumParameter.cpp" compile="1" resource="0"
-                  file="Source/EnumParameter.cpp"/>
-            <FILE id="jTypKi" name="EnumParameter.h" compile="0" resource="0" file="Source/EnumParameter.h"/>
-            <FILE id="zinCr7" name="FloatParameter.cpp" compile="1" resource="0"
-                  file="Source/FloatParameter.cpp"/>
-            <FILE id="PDP2vH" name="FloatParameter.h" compile="0" resource="0"
-                  file="Source/FloatParameter.h"/>
-            <FILE id="NFvnD0" name="IntParameter.cpp" compile="1" resource="0"
-                  file="Source/IntParameter.cpp"/>
-            <FILE id="ejjVUd" name="IntParameter.h" compile="0" resource="0" file="Source/IntParameter.h"/>
-            <FILE id="IiDBAV" name="Parameter.cpp" compile="1" resource="0" file="Source/Parameter.cpp"/>
-            <FILE id="YFZPew" name="Parameter.h" compile="0" resource="0" file="Source/Parameter.h"/>
-            <FILE id="JR8Vrs" name="Point2DParameter.cpp" compile="1" resource="0"
-                  file="Source/Point2DParameter.cpp"/>
-            <FILE id="a3m63t" name="Point2DParameter.h" compile="0" resource="0"
-                  file="Source/Point2DParameter.h"/>
-            <FILE id="YQre9k" name="Point3DParameter.cpp" compile="1" resource="0"
-                  file="Source/Point3DParameter.cpp"/>
-            <FILE id="qLaMDi" name="Point3DParameter.h" compile="0" resource="0"
-                  file="Source/Point3DParameter.h"/>
-            <FILE id="AKWmEX" name="StringParameter.cpp" compile="1" resource="0"
-                  file="Source/StringParameter.cpp"/>
-            <FILE id="FvDXS3" name="StringParameter.h" compile="0" resource="0"
-                  file="Source/StringParameter.h"/>
-            <FILE id="WCQ744" name="TargetParameter.cpp" compile="1" resource="0"
-                  file="Source/TargetParameter.cpp"/>
-            <FILE id="bNybgX" name="TargetParameter.h" compile="0" resource="0"
-                  file="Source/TargetParameter.h"/>
             <GROUP id="{10674D50-2EED-44A6-F080-9C3134C73692}" name="ui">
+              <FILE id="Wezrhm" name="ColorParameterUI.cpp" compile="1" resource="0"
+                    file="Source/ColorParameterUI.cpp"/>
+              <FILE id="GY7TWl" name="ColorParameterUI.h" compile="0" resource="0"
+                    file="Source/ColorParameterUI.h"/>
+              <FILE id="IeldmU" name="DoubleSliderUI.cpp" compile="1" resource="0"
+                    file="Source/DoubleSliderUI.cpp"/>
+              <FILE id="vaWKMm" name="DoubleSliderUI.h" compile="0" resource="0"
+                    file="Source/DoubleSliderUI.h"/>
+              <FILE id="z4eS7N" name="TripleSliderUI.cpp" compile="1" resource="0"
+                    file="Source/TripleSliderUI.cpp"/>
+              <FILE id="XUElF5" name="TripleSliderUI.h" compile="0" resource="0"
+                    file="Source/TripleSliderUI.h"/>
               <FILE id="aXivyi" name="BetterStepper.cpp" compile="1" resource="0"
                     file="Source/BetterStepper.cpp"/>
               <FILE id="T1kbx0" name="BetterStepper.h" compile="0" resource="0" file="Source/BetterStepper.h"/>
@@ -91,10 +72,6 @@
               <FILE id="mzp8Og" name="BoolToggleUI.cpp" compile="1" resource="0"
                     file="Source/BoolToggleUI.cpp"/>
               <FILE id="I8s1j8" name="BoolToggleUI.h" compile="0" resource="0" file="Source/BoolToggleUI.h"/>
-              <FILE id="IeldmU" name="DoubleSliderUI.cpp" compile="1" resource="0"
-                    file="Source/DoubleSliderUI.cpp"/>
-              <FILE id="vaWKMm" name="DoubleSliderUI.h" compile="0" resource="0"
-                    file="Source/DoubleSliderUI.h"/>
               <FILE id="mwHHLI" name="EnumParameterUI.cpp" compile="1" resource="0"
                     file="Source/EnumParameterUI.cpp"/>
               <FILE id="cYXo9m" name="EnumParameterUI.h" compile="0" resource="0"
@@ -125,11 +102,50 @@
                     file="Source/TargetParameterUI.cpp"/>
               <FILE id="NFhDZv" name="TargetParameterUI.h" compile="0" resource="0"
                     file="Source/TargetParameterUI.h"/>
-              <FILE id="z4eS7N" name="TripleSliderUI.cpp" compile="1" resource="0"
-                    file="Source/TripleSliderUI.cpp"/>
-              <FILE id="XUElF5" name="TripleSliderUI.h" compile="0" resource="0"
-                    file="Source/TripleSliderUI.h"/>
             </GROUP>
+            <FILE id="s8qVZ0" name="ColorParameter.cpp" compile="1" resource="0"
+                  file="Source/ColorParameter.cpp"/>
+            <FILE id="dmsXqR" name="ColorParameter.h" compile="0" resource="0"
+                  file="Source/ColorParameter.h"/>
+            <FILE id="NNt8cW" name="FloatRangeParameter.cpp" compile="1" resource="0"
+                  file="Source/FloatRangeParameter.cpp"/>
+            <FILE id="VvOC6Q" name="FloatRangeParameter.h" compile="0" resource="0"
+                  file="Source/FloatRangeParameter.h"/>
+            <FILE id="RaxBeI" name="IntRangeParameter.cpp" compile="1" resource="0"
+                  file="Source/IntRangeParameter.cpp"/>
+            <FILE id="q38TFy" name="IntRangeParameter.h" compile="0" resource="0"
+                  file="Source/IntRangeParameter.h"/>
+            <FILE id="JR8Vrs" name="Point2DParameter.cpp" compile="1" resource="0"
+                  file="Source/Point2DParameter.cpp"/>
+            <FILE id="a3m63t" name="Point2DParameter.h" compile="0" resource="0"
+                  file="Source/Point2DParameter.h"/>
+            <FILE id="YQre9k" name="Point3DParameter.cpp" compile="1" resource="0"
+                  file="Source/Point3DParameter.cpp"/>
+            <FILE id="qLaMDi" name="Point3DParameter.h" compile="0" resource="0"
+                  file="Source/Point3DParameter.h"/>
+            <FILE id="vv9Fci" name="BoolParameter.cpp" compile="1" resource="0"
+                  file="Source/BoolParameter.cpp"/>
+            <FILE id="rSqLgF" name="BoolParameter.h" compile="0" resource="0" file="Source/BoolParameter.h"/>
+            <FILE id="NxihpA" name="EnumParameter.cpp" compile="1" resource="0"
+                  file="Source/EnumParameter.cpp"/>
+            <FILE id="jTypKi" name="EnumParameter.h" compile="0" resource="0" file="Source/EnumParameter.h"/>
+            <FILE id="zinCr7" name="FloatParameter.cpp" compile="1" resource="0"
+                  file="Source/FloatParameter.cpp"/>
+            <FILE id="PDP2vH" name="FloatParameter.h" compile="0" resource="0"
+                  file="Source/FloatParameter.h"/>
+            <FILE id="NFvnD0" name="IntParameter.cpp" compile="1" resource="0"
+                  file="Source/IntParameter.cpp"/>
+            <FILE id="ejjVUd" name="IntParameter.h" compile="0" resource="0" file="Source/IntParameter.h"/>
+            <FILE id="IiDBAV" name="Parameter.cpp" compile="1" resource="0" file="Source/Parameter.cpp"/>
+            <FILE id="YFZPew" name="Parameter.h" compile="0" resource="0" file="Source/Parameter.h"/>
+            <FILE id="AKWmEX" name="StringParameter.cpp" compile="1" resource="0"
+                  file="Source/StringParameter.cpp"/>
+            <FILE id="FvDXS3" name="StringParameter.h" compile="0" resource="0"
+                  file="Source/StringParameter.h"/>
+            <FILE id="WCQ744" name="TargetParameter.cpp" compile="1" resource="0"
+                  file="Source/TargetParameter.cpp"/>
+            <FILE id="bNybgX" name="TargetParameter.h" compile="0" resource="0"
+                  file="Source/TargetParameter.h"/>
           </GROUP>
           <GROUP id="{C4D0B4DA-D6AA-0958-3AB9-A6E4D02D7FAC}" name="Preset">
             <FILE id="jHmlfl" name="PresetChooser.cpp" compile="1" resource="0"
@@ -1029,7 +1045,25 @@
                         file="Source/AudioLayerClipManager.h"/>
                 </GROUP>
                 <GROUP id="{FEFCE264-DD26-702C-627A-1F28E2CDAFEC}" name="mapping">
+                  <GROUP id="{E72AA3B1-0250-5B31-DDD5-22999695782E}" name="timecolor">
+                    <FILE id="yQJEbk" name="TimeColor.cpp" compile="1" resource="0" file="Source/TimeColor.cpp"/>
+                    <FILE id="y4NEjT" name="TimeColor.h" compile="0" resource="0" file="Source/TimeColor.h"/>
+                    <FILE id="hNVHBz" name="TimeColorManager.cpp" compile="1" resource="0"
+                          file="Source/TimeColorManager.cpp"/>
+                    <FILE id="sYLugv" name="TimeColorManager.h" compile="0" resource="0"
+                          file="Source/TimeColorManager.h"/>
+                    <FILE id="mZy7lt" name="TimeColorManagerUI.cpp" compile="1" resource="0"
+                          file="Source/TimeColorManagerUI.cpp"/>
+                    <FILE id="EKQADW" name="TimeColorManagerUI.h" compile="0" resource="0"
+                          file="Source/TimeColorManagerUI.h"/>
+                    <FILE id="qNtW6p" name="TimeColorUI.cpp" compile="1" resource="0" file="Source/TimeColorUI.cpp"/>
+                    <FILE id="n1FO6r" name="TimeColorUI.h" compile="0" resource="0" file="Source/TimeColorUI.h"/>
+                  </GROUP>
                   <GROUP id="{3AD8DA16-48A6-BBE6-F37D-01C374ADD04C}" name="ui">
+                    <FILE id="MYuB6O" name="MappingLayerColorTimeline.cpp" compile="1"
+                          resource="0" file="Source/MappingLayerColorTimeline.cpp"/>
+                    <FILE id="QXluvA" name="MappingLayerColorTimeline.h" compile="0" resource="0"
+                          file="Source/MappingLayerColorTimeline.h"/>
                     <FILE id="t77pzE" name="MappingLayerEditor.cpp" compile="1" resource="0"
                           file="Source/MappingLayerEditor.cpp"/>
                     <FILE id="DzqIiz" name="MappingLayerEditor.h" compile="0" resource="0"

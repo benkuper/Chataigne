@@ -30,8 +30,9 @@ public:
 
 	
 
-	Parameter * targetMappingParameter;
-	void setTargetMappingParameter(Parameter * p);
+	Array<Parameter *> targetMappingParameters;
+	void setTargetMappingParameterAt(Parameter * p,int index);
+	void clearTargetMappingParameters();
 
 	virtual void trigger() {} //for trigger context, to override
 	virtual void setValue(var value); //for mapping context

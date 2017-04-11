@@ -20,6 +20,7 @@
 #include "Point3DParameter.h"
 #include "EnumParameter.h"
 #include "TargetParameter.h"
+#include "ColorParameter.h"
 
 class ControllableDefinition
 {

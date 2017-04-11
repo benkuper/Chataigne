@@ -40,9 +40,12 @@ AudioLayerPanel::~AudioLayerPanel()
 
 void AudioLayerPanel::resizedInternalHeader(Rectangle<int>& r)
 {
-	moduleChooser.setBounds(r.removeFromRight(100));
-	r.removeFromRight(2);
-	enveloppeUI->setBounds(getLocalBounds().reduced(5).removeFromBottom(20));
+	SequenceLayerPanel::resizedInternalHeader(r);
+	Rectangle<int> gr = getLocalBounds().reduced(5).removeFromBottom(16);
+
+	moduleChooser.setBounds(gr.removeFromLeft(80));
+	gr.removeFromLeft(5);
+	enveloppeUI->setBounds(gr);
 }
 
 void AudioLayerPanel::buildModuleBox()
