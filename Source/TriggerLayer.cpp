@@ -12,7 +12,7 @@
 #include "TriggerLayerPanel.h"
 #include "TriggerLayerTimeline.h"
 
-TriggerLayer::TriggerLayer(Sequence * _sequence) :
+TriggerLayer::TriggerLayer(Sequence * _sequence, var params) :
 	SequenceLayer(_sequence, "New Trigger Layer"),
 	ttm(this,_sequence)
 {

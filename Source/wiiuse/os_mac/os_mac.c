@@ -29,7 +29,7 @@
  */
 
 
-
+#pragma warning(disable:4206)
 
 #if defined __APPLE__
 

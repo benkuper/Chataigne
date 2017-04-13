@@ -27,13 +27,12 @@ DMXManager::~DMXManager()
 
 void DMXManager::checkForArtNetDevices()
 {
-	DBG("Check artnet devices");
 	sendArtNetPollRequest(ARTNET_FULL_INFO);
 }
 
 void DMXManager::sendArtNetPollRequest(int type)
 {
-	const char typeData[1]{ type };
+	const char typeData[1]{ (char)type };
 	artNetUDP.write(IPAddress::broadcast().toString(), ARTNET_PORT, "ESPP", 4);
 	artNetUDP.write(IPAddress::broadcast().toString(), ARTNET_PORT, typeData, 1);
 }

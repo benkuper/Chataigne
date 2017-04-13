@@ -17,7 +17,8 @@ DMXModule::DMXModule() :
 	dmxDevice(nullptr)
 {
 	defManager.add(CommandDefinition::createDef(this, "", "Set value", &DMXCommand::create)->addParam("action", DMXCommand::SET_VALUE));
-	defManager.add(CommandDefinition::createDef(this, "", "Set range", &DMXCommand::create)->addParam("action",DMXCommand::SET_RANGE));
+	defManager.add(CommandDefinition::createDef(this, "", "Set range", &DMXCommand::create)->addParam("action", DMXCommand::SET_RANGE));
+	defManager.add(CommandDefinition::createDef(this, "", "Set Color", &DMXCommand::create)->addParam("action",DMXCommand::COLOR));
 	defManager.add(CommandDefinition::createDef(this, "", "Clear all", &DMXCommand::create)->addParam("action", DMXCommand::CLEAR_ALL));
 	dmxType = addEnumParameter("DMX Type", "Choose the type of dmx interface you want to connect");
 

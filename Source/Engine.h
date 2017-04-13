@@ -31,9 +31,9 @@ public:
 	Engine();
 	~Engine();
 
+
 	void createNewGraph();
 	void clear();
-
 
 	void parseCommandline(const String &);
 
@@ -119,6 +119,8 @@ public:
 	void handleAsyncUpdate()override;
 
 
+
+	
 };
 
 

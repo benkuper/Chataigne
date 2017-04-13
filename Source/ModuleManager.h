@@ -23,7 +23,7 @@ public:
 	ModuleManager();
 	~ModuleManager();
 
-	virtual void addItemFromData(var data) override;
+	virtual void addItemFromData(var data, bool fromUndoableAction = false) override;
 	
 	Module * getModuleWithName(const String &moduleName);
 

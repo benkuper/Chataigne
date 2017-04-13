@@ -23,7 +23,7 @@ class AudioLayer :
 	public ModuleManager::Listener
 {
 public:
-	AudioLayer(Sequence * sequence);
+	AudioLayer(Sequence * sequence, var params);
 	~AudioLayer();
 	
 	AudioLayerClipManager clipManager;
@@ -51,7 +51,7 @@ public:
 	void sequenceCurrentTimeChanged(Sequence *, float prevTime, bool evaluatedSkippedData) override;
 	void sequencePlayStateChanged(Sequence *);
 
-	static AudioLayer * create(Sequence * sequence) { return new AudioLayer(sequence); }
+	static AudioLayer * create(Sequence * sequence, var params) { return new AudioLayer(sequence, params); }
 	virtual String getTypeString() const override { return "Audio"; }
 
 	class AudioLayerListener

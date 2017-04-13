@@ -13,7 +13,7 @@
 #include "MappingLayerTimeline.h"
 #include "MappingLayerEditor.h"
 
-MappingLayer::MappingLayer(Sequence *_sequence) :
+MappingLayer::MappingLayer(Sequence *_sequence, var params) :
 	SequenceLayer(_sequence, "New Automation Layer"),
 	curveValue(nullptr)
 {
@@ -26,6 +26,8 @@ MappingLayer::MappingLayer(Sequence *_sequence) :
 	mode->addOption("2D", MODE_2D);
 	mode->addOption("3D", MODE_3D);
 	mode->addOption("Color", MODE_COLOR);
+	
+	mode->setValueWithData((Mode)(int)params.getProperty("mode", MODE_1D));
 
 	setupMappingForCurrentMode();
 }
@@ -112,17 +114,19 @@ void MappingLayer::setupMappingForCurrentMode()
 
 void MappingLayer::updateCurvesValues()
 {
-	var cv;
+	
 	if (getMappingMode() == MODE_COLOR)
 	{
 		((ColorParameter *)curveValue)->setColor(timeColorManager->currentColor->getColor());
 	}
 	else
 	{
+		var cv; 
 		for (auto &a : automations) cv.append(a->value->floatValue());
+		curveValue->setValue(cv);
 	}
 	
-	curveValue->setValue(cv);
+	
 }
 
 var MappingLayer::getJSONData()

@@ -28,7 +28,7 @@ public:
 	Parameter * processFilters();
 	
 
-	void addItemFromData(var data) override;
+	void addItemFromData(var data, bool fromUndoableAction = false) override;
 	void addItemInternal(MappingFilter * m, var data) override;
 	void removeItemInternal(MappingFilter *) override;
 	

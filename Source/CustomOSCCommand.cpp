@@ -75,7 +75,7 @@ void CustomOSCCommand::trigger()
 	oscModule->sendOSC(m);
 }
 
-void CustomOSCCommand::useForMappingChanged(CustomOSCCommandArgument * a)
+void CustomOSCCommand::useForMappingChanged(CustomOSCCommandArgument *)
 {
 	clearTargetMappingParameters();
 	int index = 0;

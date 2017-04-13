@@ -18,7 +18,7 @@ class TriggerLayer :
 	public SequenceLayer
 {
 public :
-	TriggerLayer(Sequence * _sequence);
+	TriggerLayer(Sequence * _sequence, var params = var());
 	~TriggerLayer();
 
 	TimeTriggerManager ttm;
@@ -26,7 +26,7 @@ public :
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
 
-	static TriggerLayer * create(Sequence * sequence) { return new TriggerLayer(sequence); }
+	static TriggerLayer * create(Sequence * sequence, var params) { return new TriggerLayer(sequence, params); }
 	virtual String getTypeString() const override { return "Trigger"; }
 
 

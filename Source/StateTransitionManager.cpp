@@ -22,18 +22,18 @@ StateTransitionManager::~StateTransitionManager()
 {
 }
 
-void StateTransitionManager::addItemFromData(var data)
+void StateTransitionManager::addItemFromData(var data, bool fromUndoableAction)
 {
 	State * sourceState = sm->getItemWithName(data.getProperty("sourceState", ""));
 	State * destState = sm->getItemWithName(data.getProperty("destState", ""));
 	if (sourceState == nullptr || destState == nullptr) return;
-	addItem(sourceState, destState, data);
+	addItem(sourceState, destState, data, fromUndoableAction);
 }
 
-void StateTransitionManager::addItem(State * source, State * dest, var data)
+void StateTransitionManager::addItem(State * source, State * dest, var data, bool fromUndoableAction)
 {
 	if (getItemForSourceAndDest(source, dest) != nullptr) return;
-	BaseManager::addItem(new StateTransition(source, dest), data);
+	BaseManager::addItem(new StateTransition(source, dest), data,fromUndoableAction);
 }
 
 void StateTransitionManager::removeAllLinkedTransitions(State * linkedState)

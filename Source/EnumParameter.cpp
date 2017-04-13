@@ -71,6 +71,19 @@ StringArray EnumParameter::getAllKeys()
 	return result;
 }
 
+void EnumParameter::setValueWithData(var data)
+{
+	HashMap<String, var>::Iterator i(enumValues);
+	while (i.next())
+	{
+		if (i.getValue() == data)
+		{
+			setValueWithKey(i.getKey());
+			return;
+		}
+	}
+}
+
 void EnumParameter::setValueWithKey(String key)
 {
 	setValue(key);

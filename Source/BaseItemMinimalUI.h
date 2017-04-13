@@ -30,6 +30,12 @@ public:
 	Colour bgColor;
 	bool highlightOnMouseOver;
 
+	bool removeOnCtrlDown;
+	bool removeOnDelKey;
+
+	void mouseDown(const MouseEvent &e) override;
+	bool keyPressed(const KeyPress &e) override;
+
 	void setHighlightOnMouseOver(bool highlight);
 
 	void paint(Graphics &g) override;
@@ -52,7 +58,9 @@ BaseItemMinimalUI<T>::BaseItemMinimalUI(T * _item) :
 	InspectableContentComponent(_item),
 	item(_item),
 	bgColor(BG_COLOR.brighter(.1f)),
-	highlightOnMouseOver(false)
+	highlightOnMouseOver(false),
+	removeOnCtrlDown(false),
+	removeOnDelKey(true)
 {
 	addMouseListener(this, true);
 	getBaseItem()->addAsyncContainerListener(this);
@@ -66,6 +74,25 @@ BaseItemMinimalUI<T>::~BaseItemMinimalUI()
 	getBaseItem()->removeAsyncContainerListener(this);
 }
 
+
+template<class T>
+void BaseItemMinimalUI<T>::mouseDown(const MouseEvent & e)
+{
+	InspectableContentComponent::mouseDown(e);
+	if (removeOnCtrlDown && e.mods.isLeftButtonDown() && e.mods.isCtrlDown()) getBaseItem()->remove();
+}
+
+template<class T>
+bool BaseItemMinimalUI<T>::keyPressed(const KeyPress & e)
+{
+	if (removeOnDelKey && (e.getKeyCode() == e.deleteKey || e.getKeyCode() == e.backspaceKey) && inspectable->isSelected)
+	{
+		getBaseItem()->remove();
+		return true;
+	}
+	
+	return false;
+}
 
 template<class T>
 void BaseItemMinimalUI<T>::setHighlightOnMouseOver(bool highlight)

@@ -21,13 +21,17 @@ TimeColorManager::TimeColorManager(float _maxPosition) :
 	
 	skipControllableNameInAddress = true;
 	
+	selectItemWhenCreated = false;
+
 	position = addFloatParameter("Position", "Position in the gradient",0,0,positionMax);
 	currentColor = new ColorParameter("Color", "Current color depending on time", Colours::black);
 	addParameter(currentColor);
 
-	addColorAt(0, Colours::red)->isLocked = true;
+	addColorAt(positionMax/4, Colours::red);
 	addColorAt(positionMax / 2, Colours::green);
-	addColorAt(positionMax, Colours::blue);
+	addColorAt(positionMax*3/4, Colours::blue);
+
+	rebuildGradient();
 }
 
 
@@ -48,16 +52,24 @@ void TimeColorManager::setPositionMax(float val)
 
 Colour TimeColorManager::getColorForPosition(const float & time) const
 {
+	if (items.isEmpty()) return Colours::black;
+	if (items.size() == 1) return items[0]->color->getColor();
+
 	return gradient.getColourAtPosition(time / positionMax);
 }
 
 void TimeColorManager::rebuildGradient()
 {
 	gradient.clearColours();
+	if (items.size() > 0 && items[0]->position > 0) gradient.addColour(0, items[0]->color->getColor());
+	
 	for (auto &i : items)
 	{
 		i->gradientIndex = gradient.addColour(i->position->floatValue() / positionMax, i->color->getColor());
 	}
+
+	
+	colorManagerListeners.call(&TimeColorManagerListener::gradientUpdated);
 }
 
 TimeColor * TimeColorManager::addColorAt(float time, Colour color)
@@ -70,13 +82,12 @@ TimeColor * TimeColorManager::addColorAt(float time, Colour color)
 
 void TimeColorManager::addItemInternal(TimeColor * item, var data)
 {
-	DBG("addItem Internal here");
 	item->gradientIndex = gradient.addColour(item->position->floatValue()/ positionMax, item->color->getColor());
 }
-
-void TimeColorManager::removeItemInternal(TimeColor * item)
+ 
+void TimeColorManager::removeItemInternal(TimeColor *)
 {
-	gradient.removeColour(item->gradientIndex);
+	rebuildGradient();
 }
 
 void TimeColorManager::reorderItems()
@@ -98,7 +109,6 @@ void TimeColorManager::controllableFeedbackUpdate(ControllableContainer * cc, Co
 	TimeColor * t = static_cast<TimeColor *>(cc);
 	if (t != nullptr)
 	{
-		DBG("controllable feedback update " << cc->niceName);
 		if (c == t->position)
 		{
 			int index = items.indexOf(t);
@@ -113,13 +123,15 @@ void TimeColorManager::controllableFeedbackUpdate(ControllableContainer * cc, Co
 				baseManagerListeners.call(&Listener::itemsReordered);
 			}
 
-			rebuildGradient();
+			
 		}
 		else if (c == t->color) {
 			gradient.setColour(t->gradientIndex, t->color->getColor());
+			colorManagerListeners.call(&TimeColorManagerListener::gradientUpdated);
 		}
 
 		currentColor->setColor(getColorForPosition(position->floatValue()));
+		rebuildGradient();
 	}
 }
 

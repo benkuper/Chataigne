@@ -71,6 +71,8 @@
 #ifndef WIIUSE_H_INCLUDED
 #define WIIUSE_H_INCLUDED
 
+#pragma warning(disable:4273 4013 4100)
+
 #define WIIUSE_MAJOR 0
 #define WIIUSE_MINOR 15
 #define WIIUSE_MICRO 0
@@ -631,6 +633,8 @@ typedef struct wii_board_t {
 /**
  *	@brief Generic expansion device plugged into wiimote.
  */
+#pragma warning(push)
+#pragma warning(disable:4201)
 typedef struct expansion_t {
 	int type;						/**< type of expansion attached				*/
 
@@ -643,6 +647,7 @@ typedef struct expansion_t {
 		struct wii_board_t wb;
 	};
 } expansion_t;
+#pragma warning(pop)
 
 
 /**

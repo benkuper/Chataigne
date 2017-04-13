@@ -218,6 +218,12 @@ void AutomationUI::addItemUIInternal(AutomationKeyUI * kui)
 
 void AutomationUI::removeItemUIInternal(AutomationKeyUI * kui)
 {
+	if (transformer != nullptr)
+	{
+		removeChildComponent(transformer);
+		transformer = nullptr;
+	}
+
 	kui->handle.removeMouseListener(this);
 	updateROI();
 }

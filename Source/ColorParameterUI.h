@@ -25,9 +25,13 @@ public:
 
 	ColorParameter * colorParam;
 
+	bool dispatchOnRightClickOnly;
+
 	void paint(Graphics &g) override;
 	void resized() override;
 	void mouseDown(const MouseEvent &e) override;
+
+	void showEditWindow() override;
 
 protected:
 	// Inherited via ChangeListener

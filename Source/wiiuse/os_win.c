@@ -44,6 +44,9 @@
 #include <hidsdi.h>
 #include <setupapi.h>
 
+
+#pragma warning(disable:4273 4013 4100 4706)
+
 #ifdef __MINGW32__
 /* this prototype is missing from the mingw headers so we must add it
 	or suffer linker errors. */

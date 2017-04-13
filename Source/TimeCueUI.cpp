@@ -48,6 +48,10 @@ void TimeCueUI::resized()
 void TimeCueUI::mouseDown(const MouseEvent & e)
 {
 	BaseItemMinimalUI::mouseDown(e);
+	if (e.mods.isCtrlDown())
+	{
+		item->remove();
+	}
 	//timeAtMouseDown = item->time->floatValue();
 	//posAtMouseDown = getX();
 }

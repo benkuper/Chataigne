@@ -40,10 +40,10 @@ public:
 	OSCCommandModelArgumentManager();
 	~OSCCommandModelArgumentManager() {}
 
-	void addItemWithParam(Parameter * p, var data = var());
-	void addItemFromType(Parameter::Type type, var data = var());
+	void addItemWithParam(Parameter * p, var data = var(), bool fromUndoableAction = false); 
+	void addItemFromType(Parameter::Type type, var data = var(), bool fromUndoableAction = false);
 
-	void addItemFromData(var data) override;
+	void addItemFromData(var data, bool fromUndoableAction = false) override;
 
 	void autoRenameItems();
 	void removeItemInternal(OSCCommandModelArgument * i) override;

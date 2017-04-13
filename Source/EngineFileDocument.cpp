@@ -134,6 +134,7 @@ void Engine::handleAsyncUpdate(){
   NLOG("Engine","Session loaded in " << timeForLoading/1000.0 << "s"); 
 }
 
+
 Result Engine::saveDocument (const File& file){
 
   var data = getJSONData();

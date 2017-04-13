@@ -46,7 +46,18 @@ void BaseCommand::setValue(var value)
 		int maxSize = jmin(value.size(),targetMappingParameters.size());
 		for (int i = 0; i < maxSize; i++)
 		{
-			if (targetMappingParameters[i] != nullptr) targetMappingParameters[i]->setValue(value[i]);
+			Parameter * p = targetMappingParameters[i];
+			if (p != nullptr)
+			{
+				if (p->value.isArray() && p->value.size() == value.size())
+				{
+					p->setValue(value);
+				}
+				else
+				{
+					p->setValue(i,value[i]);
+				}
+			}
 		}
 	}
 

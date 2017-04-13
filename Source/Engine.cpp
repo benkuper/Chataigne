@@ -83,6 +83,7 @@ Engine::~Engine(){
 
   ScriptUtil::deleteInstance();
 
+  //UndoMaster::deleteInstance();
 }
 
 void Engine::parseCommandline(const String & commandLine){
@@ -133,6 +134,7 @@ void Engine::clear() {
 	if (Outliner::getInstanceWithoutCreating()) Outliner::getInstanceWithoutCreating()->enabled = true;
 
 	if (InspectableSelectionManager::getInstanceWithoutCreating()) InspectableSelectionManager::getInstance()->setEnabled(true);
+
 
 	changed();    //fileDocument
 }

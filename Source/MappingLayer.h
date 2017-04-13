@@ -22,7 +22,7 @@ class MappingLayer :
 public:
 	enum Mode { MODE_1D, MODE_2D, MODE_3D, MODE_COLOR };
 
-	MappingLayer(Sequence * _sequence);
+	MappingLayer(Sequence * _sequence, var params);
 	~MappingLayer();
 
 	EnumParameter * mode;
@@ -44,7 +44,7 @@ public:
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
 
-	static MappingLayer * create(Sequence * sequence) { return new MappingLayer(sequence); }
+	static MappingLayer * create(Sequence * sequence, var params) { return new MappingLayer(sequence, params); }
 	virtual String getTypeString() const override { return "Automation"; }
 
 	virtual SequenceLayerPanel * getPanel() override;

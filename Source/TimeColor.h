@@ -21,7 +21,6 @@ public:
 	TimeColor(float time = 0, const Colour & color = Colours::black, const String &name = "Color");
 	virtual ~TimeColor();
 
-	bool isLocked;
 
 	ColorParameter * color;
 	FloatParameter * position;

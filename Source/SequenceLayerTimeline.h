@@ -22,7 +22,6 @@ public:
 	SequenceLayerTimeline(SequenceLayer *);
 	virtual ~SequenceLayerTimeline();
 
-
 	int getXForTime(float time);
 	float getTimeForX(int tx, bool offsetStart = true);
 

@@ -26,6 +26,10 @@
         <FILE id="oIJhug" name="Outliner.h" compile="0" resource="0" file="Source/Outliner.h"/>
       </GROUP>
       <GROUP id="{4B3FD114-4268-0636-928E-6A41D74C7361}" name="Common">
+        <GROUP id="{AB93B6F1-7336-405F-1F5C-BB3EB482D57D}" name="Undo">
+          <FILE id="dKVry7" name="UndoMaster.cpp" compile="1" resource="0" file="Source/UndoMaster.cpp"/>
+          <FILE id="vtL1NG" name="UndoMaster.h" compile="0" resource="0" file="Source/UndoMaster.h"/>
+        </GROUP>
         <GROUP id="{6963806F-95F1-8584-8F06-0CBBF1DAED9A}" name="Updater">
           <FILE id="J7DL7k" name="AppUpdater.cpp" compile="1" resource="0" file="Source/AppUpdater.cpp"/>
           <FILE id="Arg78Y" name="AppUpdater.h" compile="0" resource="0" file="Source/AppUpdater.h"/>
@@ -1060,10 +1064,6 @@
                     <FILE id="n1FO6r" name="TimeColorUI.h" compile="0" resource="0" file="Source/TimeColorUI.h"/>
                   </GROUP>
                   <GROUP id="{3AD8DA16-48A6-BBE6-F37D-01C374ADD04C}" name="ui">
-                    <FILE id="MYuB6O" name="MappingLayerColorTimeline.cpp" compile="1"
-                          resource="0" file="Source/MappingLayerColorTimeline.cpp"/>
-                    <FILE id="QXluvA" name="MappingLayerColorTimeline.h" compile="0" resource="0"
-                          file="Source/MappingLayerColorTimeline.h"/>
                     <FILE id="t77pzE" name="MappingLayerEditor.cpp" compile="1" resource="0"
                           file="Source/MappingLayerEditor.cpp"/>
                     <FILE id="DzqIiz" name="MappingLayerEditor.h" compile="0" resource="0"

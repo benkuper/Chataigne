@@ -30,7 +30,7 @@ public:
 	EnumParameter * conditionOperator;
 	bool operatorOnSide;
 
-	void addItemFromData(var data) override;
+	void addItemFromData(var data,bool fromUndoableAction = false) override;
 
 	void addItemInternal(Condition *, var data) override;
 	void removeItemInternal(Condition *) override;

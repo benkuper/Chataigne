@@ -58,6 +58,18 @@ public:
 	void onContainerParameterChanged(Parameter *) override;
 	void controllableFeedbackUpdate(ControllableContainer * cc, Controllable * c) override;
 
+	class TimeColorManagerListener
+	{
+	public:
+		virtual ~TimeColorManagerListener() {}
+		virtual void gradientUpdated() {}
+	};
+
+	ListenerList<TimeColorManagerListener> colorManagerListeners;
+	void addColorManagerListener(TimeColorManagerListener* newListener) { colorManagerListeners.add(newListener); }
+	void removeColorManagerListener(TimeColorManagerListener* listener) { colorManagerListeners.remove(listener); }
+
+
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(TimeColorManager)
 };
 

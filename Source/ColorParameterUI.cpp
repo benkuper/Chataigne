@@ -12,11 +12,12 @@
 
 ColorParameterUI::ColorParameterUI(ColorParameter * parameter) :
 	ParameterUI(parameter),
-	colorParam(parameter)
+	colorParam(parameter),
+	dispatchOnRightClickOnly(true)
 {
-	
 
-	
+
+
 }
 
 ColorParameterUI::~ColorParameterUI()
@@ -31,11 +32,21 @@ void ColorParameterUI::paint(Graphics & g)
 
 void ColorParameterUI::resized()
 {
-	
+
 }
 
-void ColorParameterUI::mouseDown(const MouseEvent &)
+void ColorParameterUI::mouseDown(const MouseEvent & e)
 {
+	if (e.mods.isRightButtonDown() || !dispatchOnRightClickOnly)
+	{
+		showEditWindow();
+	}
+}
+
+void ColorParameterUI::showEditWindow()
+{
+	if (!parameter->isEditable || parameter->isControllableFeedbackOnly) return;
+
 	ColourSelector * selector = new ColourSelector();
 	selector->addChangeListener(this);
 	selector->setName("Color for " + parameter->niceName);
@@ -56,6 +67,6 @@ void ColorParameterUI::changeListenerCallback(ChangeBroadcaster * source)
 	ColourSelector * s = dynamic_cast<ColourSelector *>(source);
 	if (s == nullptr) return;
 	colorParam->setColor(s->getCurrentColour());
-	
+
 }
 

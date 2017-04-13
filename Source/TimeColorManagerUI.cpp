@@ -20,26 +20,29 @@ TimeColorManagerUI::TimeColorManagerUI(TimeColorManager * manager) :
 
 	resizeOnChildBoundsChanged = false;
 
-	manager->addAsyncCoalescedContainerListener(this);
+	//manager->addAsyncCoalescedContainerListener(this);
+	manager->addColorManagerListener(this);
 	addExistingItems();
 }
 
 TimeColorManagerUI::~TimeColorManagerUI()
 {
-	manager->removeAsyncContainerListener(this);
+	manager->removeColorManagerListener(this);
+	//manager->removeAsyncContainerListener(this);
 }
 
 void TimeColorManagerUI::setViewRange(float start, float end)
 {
 	viewStartPos = start;
 	viewEndPos = end;
-	//updateROI();
 
 	resized();
 }
 
 void TimeColorManagerUI::paint(Graphics & g)
 {
+	BaseManagerUI::paint(g);
+
 	Rectangle<int> r = getLocalBounds();
 	
 	g.setColour(manager->currentColor->getColor());
@@ -47,6 +50,8 @@ void TimeColorManagerUI::paint(Graphics & g)
 
 	manager->gradient.point1.setX(getXForPos(0));
 	manager->gradient.point2.setX(getXForPos(manager->positionMax));
+
+	g.fillCheckerBoard(r, 12, 12, Colours::white, Colours::white.darker(.2f));
 	g.setGradientFill(manager->gradient);
 	g.fillRect(r);
 }
@@ -61,20 +66,31 @@ void TimeColorManagerUI::resized()
 	
 	for (auto &tui : itemsUI)
 	{
-		placeItemUI(tui);
+		tui->setVisible(isInView(tui));
+		if(tui->isVisible()) placeItemUI(tui);
 	}
 
 }
 
 void TimeColorManagerUI::addItemUIInternal(TimeColorUI * item)
 {
-	item->addMouseListener(this, false);
+	item->addMouseListener(this, true);
 	placeItemUI(item);
 }
 
 void TimeColorManagerUI::removeItemUIInternal(TimeColorUI * item)
 {
 	item->removeMouseListener(this);
+}
+
+void TimeColorManagerUI::mouseDoubleClick(const MouseEvent & e)
+{
+	if (e.originalComponent == this)
+	{
+		float pos = getPosForX(e.getMouseDownX());
+		manager->addColorAt(pos, manager->getColorForPosition(pos));
+	}
+	
 }
 
 void TimeColorManagerUI::mouseDown(const MouseEvent & e)
@@ -98,8 +114,12 @@ void TimeColorManagerUI::mouseDrag(const MouseEvent & e)
 	else
 	{
 		TimeColorUI * tui = dynamic_cast<TimeColorUI *>(e.eventComponent);
+		if (tui == nullptr)
+		{
+			tui = dynamic_cast<TimeColorUI *>(e.eventComponent->getParentComponent());
+		}
 
-		if (tui != nullptr && !tui->item->isLocked)
+		if (tui != nullptr)
 		{
 			if (e.mods.isLeftButtonDown())
 			{
@@ -116,7 +136,7 @@ void TimeColorManagerUI::mouseDrag(const MouseEvent & e)
 void TimeColorManagerUI::placeItemUI(TimeColorUI * tui)
 {
 	int tx = getXForPos(tui->item->position->floatValue());
-	tui->setBounds(tx-10,getHeight()-20,20,20);
+	tui->setBounds(tx-6,getHeight()-18,12,16);
 }
 
 int TimeColorManagerUI::getXForPos(float time)
@@ -146,4 +166,9 @@ void TimeColorManagerUI::newMessage(const ContainerAsyncEvent & e)
 			repaint();
 		}
 	}
+}
+
+void TimeColorManagerUI::gradientUpdated()
+{
+	repaint();
 }

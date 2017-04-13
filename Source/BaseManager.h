@@ -13,6 +13,8 @@
 
 #include "BaseItem.h"
 #include "GenericManagerEditor.h"
+#include "UndoMaster.h"
+#include "Engine.h"
 
 template <class T>
 class BaseManager :
@@ -26,10 +28,11 @@ public :
 	OwnedArray<T> items;
 
 	virtual T * createItem(); //to override if special constructor to use
-	T * addItem();
-	void addItem(T *, var data = var()); //if data is not empty, load data
-	virtual void addItemFromData(var data); //to be overriden for specific item creation (from data)
-	void removeItem(T *);
+	virtual void addItemFromData(var data, bool fromUndoableAction = false); //to be overriden for specific item creation (from data)
+	T* addItem(T * = nullptr, var data = var(), bool fromUndoableAction = false); //if data is not empty, load data
+	
+	void removeItem(T *, bool fromUndoableAction = false);
+
 
 	virtual void reorderItems(); //to be overriden if needed
 
@@ -46,7 +49,6 @@ public :
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
-
 
 	DynamicObject * createScriptObject() override;
 
@@ -68,6 +70,131 @@ public :
 	void removeBaseManagerListener(Listener* listener) { baseManagerListeners.remove(listener); }
 	 
 	InspectableEditor * getEditor(bool /*isRoot*/) override;
+
+
+
+	//UNDO MANAGER
+	class ManagerBaseAction :
+		public UndoableAction
+	{
+	public:
+		ManagerBaseAction(BaseManager * manager, var _data = var()) :
+			managerRef(manager),
+			managerControlAddress(manager->getControlAddress()),
+			data(_data)
+		{}
+
+		String managerControlAddress;
+		var data;
+		BaseManager * managerRef;
+
+		BaseManager<T> * getManager() { 
+			if (managerRef != nullptr) return managerRef;
+			else return nullptr;// static_cast<BaseManager<T>>(Engine::getInstance()->getControllableContainerForAddress(managerControlAddress), true);
+		}
+
+
+		
+		
+	};
+
+	class ItemBaseAction :
+		public ManagerBaseAction
+	{
+	public:
+		ItemBaseAction(BaseManager * m, T * i, var data = var()) :
+			ManagerBaseAction(m, data),
+			itemRef(i)
+		{
+			if (i != nullptr)
+			{
+				itemShortName = static_cast<BaseItem *>(itemRef)->shortName;
+				DBG("ItemBase Action :: " << static_cast<BaseItem *>(itemRef)->niceName);
+			}
+		}
+
+		T * itemRef;
+		String itemShortName;
+
+		T * getItem()
+		{
+			if (itemRef != nullptr) return itemRef;
+			else
+			{
+				BaseManager * m = getManager();
+				if (m != nullptr) return m->getItemWithName(itemShortName);
+				return nullptr;
+			}
+		}
+	};
+
+	class AddItemAction :
+		public ItemBaseAction
+	{
+	public:
+		AddItemAction(BaseManager * m, T * i, var data = var()) : ItemBaseAction(m, i, data) { 
+			DBG("new Add Item action");
+		}
+
+		bool perform() override
+		{
+			BaseManager * m = getManager();
+			if (m == nullptr)
+			{
+				DBG("Perform :: Manager is null, doing nothing");
+				return false;
+			}
+
+			T * item = getItem();
+			if (item != nullptr)
+			{
+				m->addItem(item, data, true);
+			}
+			else
+			{
+				m->addItemFromData(data,true);
+			}
+			return true;
+		}
+
+		bool undo() override
+		{
+			T * s = getItem();
+			if (s == nullptr) return false;
+			data = s->getJSONData();
+			getManager()->removeItem(s, true);
+			itemRef = nullptr;
+			return true;
+		}
+	};
+
+	class RemoveItemAction :
+		public ItemBaseAction
+	{
+	public:
+		RemoveItemAction(BaseManager * m, T * i, var data = var()) : ItemBaseAction(m, i, data) {
+			DBG("New remove Item action ");
+		}
+
+		bool perform() override
+		{
+			T * s = getItem();
+			if (s == nullptr) return false;
+			
+			data = s->getJSONData();
+			getManager()->removeItem(s, true);
+			itemRef = nullptr;
+			return true;
+		}
+
+		bool undo() override
+		{
+			BaseManager * m = getManager();
+			if (m == nullptr) return false;
+			m->addItemFromData(data, true);
+			return true;
+		}
+	};
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(BaseManager<T>)
 };
@@ -94,20 +221,25 @@ T * BaseManager<T>::createItem() {
 	return new T();
 }
 
-template<class T>
-T * BaseManager<T>::addItem()
-{
-	T * item = createItem();
-	addItem(item);
-	return item;
-}
 
 template<class T>
-inline void BaseManager<T>::addItem(T * item, var data)
+T * BaseManager<T>::addItem(T * item, var data, bool fromUndoableAction)
 {
-	jassert(items.indexOf(item) == -1); //be sure item is no here already
-	if (item == nullptr) return;
+	/*
+	if (!fromUndoableAction && !UndoMaster::getInstance()->isPerforming)
+	{
+		if (Engine::getInstanceWithoutCreating() != nullptr && !Engine::getInstance()->isLoadingFile)
+		{
+			UndoMaster::getInstance()->performAction("Add item", new AddItemAction(this, item, data));
+			return nullptr;
+		}
+	}
+	*/	
+
+	jassert(items.indexOf(item) == -1); //be sure item is no here alread
 	
+	if (item == nullptr) item = createItem();
+
 	items.add(item);
 	BaseItem * bi = static_cast<BaseItem *>(item);
 	addChildControllableContainer(bi);
@@ -121,18 +253,31 @@ inline void BaseManager<T>::addItem(T * item, var data)
 	reorderItems();
 
 	if (selectItemWhenCreated) bi->selectThis();
+
+	return item;
 }
 
 //if data is not empty, load data
 template<class T>
-void BaseManager<T>::addItemFromData(var data) 
+void BaseManager<T>::addItemFromData(var data, bool fromUndoableAction) 
 { 
-	addItem(createItem(), data);
+	addItem(createItem(), data, fromUndoableAction);
 }
 
 template<class T>
-void BaseManager<T>::removeItem(T * item)
+void BaseManager<T>::removeItem(T * item, bool fromUndoableAction)
 {
+	/*
+	if (!fromUndoableAction && !UndoMaster::getInstance()->isPerforming)
+	{
+		if (Engine::getInstanceWithoutCreating() != nullptr && !Engine::getInstance()->isLoadingFile)
+		{
+			UndoMaster::getInstance()->performAction("Remove item", new RemoveItemAction(this, item));
+			return;
+		}
+	}
+	*/
+
 	items.removeObject(item, false);
 	BaseItem * bi = static_cast<BaseItem *>(item);
 	removeChildControllableContainer(bi);

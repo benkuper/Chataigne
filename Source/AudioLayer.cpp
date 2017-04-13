@@ -13,7 +13,7 @@
 #include "AudioLayerTimeline.h"
 
 
-AudioLayer::AudioLayer(Sequence * _sequence) :
+AudioLayer::AudioLayer(Sequence * _sequence, var params) :
 	SequenceLayer(_sequence, "New Audio Layer"),
 	audioModule(nullptr),
 	currentProcessor(nullptr),

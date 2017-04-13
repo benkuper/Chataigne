@@ -17,7 +17,8 @@
 
 class TimeColorManagerUI :
 	public BaseManagerUI<TimeColorManager, TimeColor, TimeColorUI>,
-	public ControllableContainer::ContainerAsyncListener
+	public ControllableContainer::ContainerAsyncListener,
+	public TimeColorManager::TimeColorManagerListener
 
 {
 public:
@@ -36,6 +37,7 @@ public:
 	void addItemUIInternal(TimeColorUI * item);
 	void removeItemUIInternal(TimeColorUI * item);
 
+	void mouseDoubleClick(const MouseEvent &e) override;
 	void mouseDown(const MouseEvent &e) override;
 	void mouseDrag(const MouseEvent &e) override;
 
@@ -47,6 +49,8 @@ public:
 	bool isInView(TimeColorUI * tui);
 
 	void newMessage(const ContainerAsyncEvent &e);
+
+	void gradientUpdated() override;
 	
 };
 
