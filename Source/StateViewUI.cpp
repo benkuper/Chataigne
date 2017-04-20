@@ -108,7 +108,7 @@ void StateViewUI::mouseDrag(const MouseEvent & e)
 	}
 }
 
-void StateViewUI::mouseDoubleClick(const MouseEvent & e)
+void StateViewUI::mouseDoubleClick(const MouseEvent &e)
 {
 	if (e.eventComponent == &grabber) item->miniMode->setValue(!item->miniMode->boolValue());
 }

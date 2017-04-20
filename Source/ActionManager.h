@@ -14,6 +14,7 @@
 
 #include "BaseManager.h"
 #include "Action.h"
+
 class ActionManager :
 	public BaseManager<Action>,
 	public Action::ActionListener

@@ -48,7 +48,6 @@ public:
 	void paint(Graphics &g) override;
 	void resized() override;
 	
-	
 	void updateViewUIPosition(StateViewUI * se);
 
 	void addItemFromMenu(bool isFromAddButton, Point<int> mouseDownPos) override;
@@ -58,12 +57,9 @@ public:
 	Point<int> getViewPos(const Point<int> &originalPos);
 	Point<float> getEditorsCenter();
 
-
 	//Transition
 	void startCreateTransition(StateViewUI * sourceUI);
 	void finishCreateTransition(StateViewUI * destUI);
-
-
 
 	void homeView();
 	void frameView();

@@ -56,7 +56,7 @@ public:
 	ShapeShifterContent * getContentForName(PanelName contentName);
 
 	ShapeShifterPanel * checkCandidateTargetForPanel(ShapeShifterPanel * panel);
-	bool checkDropOnCandidateTarget(ShapeShifterPanel * panel);
+	bool checkDropOnCandidateTarget(WeakReference<ShapeShifterPanel> panel);
 
 	ShapeShifterWindow * getWindowForPanel(ShapeShifterPanel * panel);
 

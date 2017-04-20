@@ -21,11 +21,130 @@
       <FILE id="q5DIE7" name="uncheck.png" compile="0" resource="1" file="Resources/uncheck.png"/>
     </GROUP>
     <GROUP id="{31908E9E-F626-E2D6-1A6D-E188C9D72C25}" name="Source">
-      <GROUP id="{9130C4F6-2D12-F02B-4A47-874447AF8B3F}" name="Outliner">
-        <FILE id="xUR4bA" name="Outliner.cpp" compile="1" resource="0" file="Source/Outliner.cpp"/>
-        <FILE id="oIJhug" name="Outliner.h" compile="0" resource="0" file="Source/Outliner.h"/>
-      </GROUP>
       <GROUP id="{4B3FD114-4268-0636-928E-6A41D74C7361}" name="Common">
+        <GROUP id="{B059ADB2-3FB7-2FEE-41E6-E469E0906725}" name="Dashboard">
+          <GROUP id="{102E32E5-5EA7-1904-2017-9732B1D74903}" name="ui">
+            <FILE id="XewYqs" name="DashboardItemUI.cpp" compile="1" resource="0"
+                  file="Source/DashboardItemUI.cpp"/>
+            <FILE id="xkWC7W" name="DashboardItemUI.h" compile="0" resource="0"
+                  file="Source/DashboardItemUI.h"/>
+            <FILE id="aVwDHf" name="DashboardManagerUI.cpp" compile="1" resource="0"
+                  file="Source/DashboardManagerUI.cpp"/>
+            <FILE id="gXv3Rk" name="DashboardManagerUI.h" compile="0" resource="0"
+                  file="Source/DashboardManagerUI.h"/>
+            <FILE id="HA35Xo" name="DashboardPanel.cpp" compile="1" resource="0"
+                  file="Source/DashboardPanel.cpp"/>
+            <FILE id="geuz5T" name="DashboardPanel.h" compile="0" resource="0"
+                  file="Source/DashboardPanel.h"/>
+            <FILE id="I3Rubk" name="DashboardUI.cpp" compile="1" resource="0" file="Source/DashboardUI.cpp"/>
+            <FILE id="qx01vV" name="DashboardUI.h" compile="0" resource="0" file="Source/DashboardUI.h"/>
+            <FILE id="qyZm1e" name="DashboardView.cpp" compile="1" resource="0"
+                  file="Source/DashboardView.cpp"/>
+            <FILE id="rSrgQc" name="DashboardView.h" compile="0" resource="0" file="Source/DashboardView.h"/>
+          </GROUP>
+          <FILE id="ZasXT6" name="Dashboard.cpp" compile="1" resource="0" file="Source/Dashboard.cpp"/>
+          <FILE id="BZBiFd" name="Dashboard.h" compile="0" resource="0" file="Source/Dashboard.h"/>
+          <FILE id="f2uFCT" name="DashboardItem.cpp" compile="1" resource="0"
+                file="Source/DashboardItem.cpp"/>
+          <FILE id="seSOAz" name="DashboardItem.h" compile="0" resource="0" file="Source/DashboardItem.h"/>
+          <FILE id="DvjgyM" name="DashboardItemManager.cpp" compile="1" resource="0"
+                file="Source/DashboardItemManager.cpp"/>
+          <FILE id="k4LXyH" name="DashboardItemManager.h" compile="0" resource="0"
+                file="Source/DashboardItemManager.h"/>
+          <FILE id="GYPgA0" name="DashboardManager.cpp" compile="1" resource="0"
+                file="Source/DashboardManager.cpp"/>
+          <FILE id="G2KgFa" name="DashboardManager.h" compile="0" resource="0"
+                file="Source/DashboardManager.h"/>
+        </GROUP>
+        <GROUP id="{FA0E78EC-9F83-99D0-4BB9-C686CC8B957D}" name="UI">
+          <FILE id="HGTHhK" name="Style.h" compile="0" resource="0" file="Source/Style.h"/>
+          <FILE id="f2HEPq" name="LookAndFeelOO.cpp" compile="1" resource="0"
+                file="Source/LookAndFeelOO.cpp"/>
+          <FILE id="vJZEyF" name="LookAndFeelOO.h" compile="0" resource="0" file="Source/LookAndFeelOO.h"/>
+          <FILE id="iuBdcn" name="AssetManager.cpp" compile="1" resource="0"
+                file="Source/AssetManager.cpp"/>
+          <FILE id="HboC1m" name="AssetManager.h" compile="0" resource="0" file="Source/AssetManager.h"/>
+          <GROUP id="{1D467CA6-83C2-2F03-151F-B366D529ECC2}" name="ShapeShifter">
+            <FILE id="Eot3Kd" name="ShapeShifter.cpp" compile="1" resource="0"
+                  file="Source/ShapeShifter.cpp"/>
+            <FILE id="HcvRjb" name="ShapeShifter.h" compile="0" resource="0" file="Source/ShapeShifter.h"/>
+            <FILE id="FMttH3" name="ShapeShifterContainer.cpp" compile="1" resource="0"
+                  file="Source/ShapeShifterContainer.cpp"/>
+            <FILE id="tkAYqH" name="ShapeShifterContainer.h" compile="0" resource="0"
+                  file="Source/ShapeShifterContainer.h"/>
+            <FILE id="NoS8RY" name="ShapeShifterContent.cpp" compile="1" resource="0"
+                  file="Source/ShapeShifterContent.cpp"/>
+            <FILE id="Ms22GG" name="ShapeShifterContent.h" compile="0" resource="0"
+                  file="Source/ShapeShifterContent.h"/>
+            <FILE id="hkVVrn" name="ShapeShifterFactory.cpp" compile="1" resource="0"
+                  file="Source/ShapeShifterFactory.cpp"/>
+            <FILE id="NITgZd" name="ShapeShifterFactory.h" compile="0" resource="0"
+                  file="Source/ShapeShifterFactory.h"/>
+            <FILE id="ZPSKwv" name="ShapeShifterManager.cpp" compile="1" resource="0"
+                  file="Source/ShapeShifterManager.cpp"/>
+            <FILE id="Ch6Jli" name="ShapeShifterManager.h" compile="0" resource="0"
+                  file="Source/ShapeShifterManager.h"/>
+            <FILE id="oLS2QP" name="ShapeShifterPanel.cpp" compile="1" resource="0"
+                  file="Source/ShapeShifterPanel.cpp"/>
+            <FILE id="rk0OiB" name="ShapeShifterPanel.h" compile="0" resource="0"
+                  file="Source/ShapeShifterPanel.h"/>
+            <FILE id="jND8TB" name="ShapeShifterPanelHeader.cpp" compile="1" resource="0"
+                  file="Source/ShapeShifterPanelHeader.cpp"/>
+            <FILE id="SAthiM" name="ShapeShifterPanelHeader.h" compile="0" resource="0"
+                  file="Source/ShapeShifterPanelHeader.h"/>
+            <FILE id="zqjw6m" name="ShapeShifterPanelTab.cpp" compile="1" resource="0"
+                  file="Source/ShapeShifterPanelTab.cpp"/>
+            <FILE id="Q5eUFC" name="ShapeShifterPanelTab.h" compile="0" resource="0"
+                  file="Source/ShapeShifterPanelTab.h"/>
+            <FILE id="NvdKqP" name="ShapeShifterWindow.cpp" compile="1" resource="0"
+                  file="Source/ShapeShifterWindow.cpp"/>
+            <FILE id="b94q5I" name="ShapeShifterWindow.h" compile="0" resource="0"
+                  file="Source/ShapeShifterWindow.h"/>
+            <FILE id="hqTq5S" name="GapGrabber.cpp" compile="1" resource="0" file="Source/GapGrabber.cpp"/>
+            <FILE id="xYsD3C" name="GapGrabber.h" compile="0" resource="0" file="Source/GapGrabber.h"/>
+          </GROUP>
+        </GROUP>
+        <GROUP id="{2DF4D64E-836D-4E93-62F8-4821230FE70D}" name="Inspectable">
+          <FILE id="iHpgy4" name="InspectableSelectionManager.cpp" compile="1"
+                resource="0" file="Source/InspectableSelectionManager.cpp"/>
+          <FILE id="redMTy" name="InspectableSelectionManager.h" compile="0"
+                resource="0" file="Source/InspectableSelectionManager.h"/>
+          <GROUP id="{EFA481DF-EC3F-903E-59D6-3C67CBF87D76}" name="ui">
+            <FILE id="SbQUBp" name="InspectableSelector.cpp" compile="1" resource="0"
+                  file="Source/InspectableSelector.cpp"/>
+            <FILE id="DuK1oL" name="InspectableSelector.h" compile="0" resource="0"
+                  file="Source/InspectableSelector.h"/>
+            <FILE id="GbEV8t" name="InspectableContentComponent.cpp" compile="1"
+                  resource="0" file="Source/InspectableContentComponent.cpp"/>
+            <FILE id="La4Qcp" name="InspectableContentComponent.h" compile="0"
+                  resource="0" file="Source/InspectableContentComponent.h"/>
+            <FILE id="jYwqk3" name="Inspector.cpp" compile="1" resource="0" file="Source/Inspector.cpp"/>
+            <FILE id="A1OMYJ" name="Inspector.h" compile="0" resource="0" file="Source/Inspector.h"/>
+            <FILE id="ObKCyn" name="InspectableEditor.cpp" compile="1" resource="0"
+                  file="Source/InspectableEditor.cpp"/>
+            <FILE id="sPOFRY" name="InspectableEditor.h" compile="0" resource="0"
+                  file="Source/InspectableEditor.h"/>
+          </GROUP>
+          <FILE id="x8ry75" name="InspectableContent.cpp" compile="1" resource="0"
+                file="Source/InspectableContent.cpp"/>
+          <FILE id="vsAh9m" name="InspectableContent.h" compile="0" resource="0"
+                file="Source/InspectableContent.h"/>
+          <FILE id="dxb7YU" name="Inspectable.cpp" compile="1" resource="0" file="Source/Inspectable.cpp"/>
+          <FILE id="FKw1d1" name="Inspectable.h" compile="0" resource="0" file="Source/Inspectable.h"/>
+        </GROUP>
+        <GROUP id="{9130C4F6-2D12-F02B-4A47-874447AF8B3F}" name="Outliner">
+          <FILE id="xUR4bA" name="Outliner.cpp" compile="1" resource="0" file="Source/Outliner.cpp"/>
+          <FILE id="oIJhug" name="Outliner.h" compile="0" resource="0" file="Source/Outliner.h"/>
+        </GROUP>
+        <GROUP id="{070E9CF8-5A7F-C6FC-2E30-5BC3BB47385D}" name="Logger">
+          <FILE id="ZM2OHT" name="CustomLogger.cpp" compile="1" resource="0"
+                file="Source/CustomLogger.cpp"/>
+          <FILE id="WX2BSB" name="CustomLogger.h" compile="0" resource="0" file="Source/CustomLogger.h"/>
+          <FILE id="lEWfqO" name="CustomLoggerUI.cpp" compile="1" resource="0"
+                file="Source/CustomLoggerUI.cpp"/>
+          <FILE id="rad1zB" name="CustomLoggerUI.h" compile="0" resource="0"
+                file="Source/CustomLoggerUI.h"/>
+        </GROUP>
         <GROUP id="{AB93B6F1-7336-405F-1F5C-BB3EB482D57D}" name="Undo">
           <FILE id="dKVry7" name="UndoMaster.cpp" compile="1" resource="0" file="Source/UndoMaster.cpp"/>
           <FILE id="vtL1NG" name="UndoMaster.h" compile="0" resource="0" file="Source/UndoMaster.h"/>
@@ -785,6 +904,33 @@
               <FILE id="zwyCZl" name="MIDIModule.h" compile="0" resource="0" file="Source/MIDIModule.h"/>
             </GROUP>
             <GROUP id="{F3EE9907-02E8-26FF-4F80-AB785727E37C}" name="osc">
+              <GROUP id="{EF646370-510B-7906-5FD2-CCDE2B41DBD3}" name="live">
+                <GROUP id="{7C3ABF3F-2BBD-5267-C99A-94DA68354DCB}" name="commands">
+                  <FILE id="jWqWib" name="LiveOSCCommandBase.cpp" compile="1" resource="0"
+                        file="Source/LiveOSCCommandBase.cpp"/>
+                  <FILE id="BNIfH3" name="LiveOSCCommandBase.h" compile="0" resource="0"
+                        file="Source/LiveOSCCommandBase.h"/>
+                  <FILE id="Fe8PWj" name="LiveOSCDeviceCommand.cpp" compile="1" resource="0"
+                        file="Source/LiveOSCDeviceCommand.cpp"/>
+                  <FILE id="GAuxXY" name="LiveOSCDeviceCommand.h" compile="0" resource="0"
+                        file="Source/LiveOSCDeviceCommand.h"/>
+                  <FILE id="H9vYcE" name="LiveOSCSceneCommand.cpp" compile="1" resource="0"
+                        file="Source/LiveOSCSceneCommand.cpp"/>
+                  <FILE id="sqwXdC" name="LiveOSCSceneCommand.h" compile="0" resource="0"
+                        file="Source/LiveOSCSceneCommand.h"/>
+                  <FILE id="fI2wLI" name="LiveOSCTrackCommand.cpp" compile="1" resource="0"
+                        file="Source/LiveOSCTrackCommand.cpp"/>
+                  <FILE id="aOeCaw" name="LiveOSCTrackCommand.h" compile="0" resource="0"
+                        file="Source/LiveOSCTrackCommand.h"/>
+                  <FILE id="IpEOs2" name="LiveOSCVolumeCommand.cpp" compile="1" resource="0"
+                        file="Source/LiveOSCVolumeCommand.cpp"/>
+                  <FILE id="kGq9EU" name="LiveOSCVolumeCommand.h" compile="0" resource="0"
+                        file="Source/LiveOSCVolumeCommand.h"/>
+                </GROUP>
+                <FILE id="ALQEbe" name="LiveOSCModule.cpp" compile="1" resource="0"
+                      file="Source/LiveOSCModule.cpp"/>
+                <FILE id="KTmonC" name="LiveOSCModule.h" compile="0" resource="0" file="Source/LiveOSCModule.h"/>
+              </GROUP>
               <GROUP id="{5EE41BB6-946E-F03C-ABC0-C5DA4D692EB1}" name="reaper">
                 <GROUP id="{2FFF729B-7424-DBFF-23C6-324194AD31C1}" name="commands">
                   <GROUP id="{DC649BB3-B664-A599-328B-66C03AA95C89}" name="ui">
@@ -1177,91 +1323,6 @@
                 file="Source/SequenceManager.cpp"/>
           <FILE id="IUsIVe" name="SequenceManager.h" compile="0" resource="0"
                 file="Source/SequenceManager.h"/>
-        </GROUP>
-      </GROUP>
-      <GROUP id="{2DF4D64E-836D-4E93-62F8-4821230FE70D}" name="Inspectable">
-        <FILE id="iHpgy4" name="InspectableSelectionManager.cpp" compile="1"
-              resource="0" file="Source/InspectableSelectionManager.cpp"/>
-        <FILE id="redMTy" name="InspectableSelectionManager.h" compile="0"
-              resource="0" file="Source/InspectableSelectionManager.h"/>
-        <GROUP id="{EFA481DF-EC3F-903E-59D6-3C67CBF87D76}" name="ui">
-          <FILE id="SbQUBp" name="InspectableSelector.cpp" compile="1" resource="0"
-                file="Source/InspectableSelector.cpp"/>
-          <FILE id="DuK1oL" name="InspectableSelector.h" compile="0" resource="0"
-                file="Source/InspectableSelector.h"/>
-          <FILE id="GbEV8t" name="InspectableContentComponent.cpp" compile="1"
-                resource="0" file="Source/InspectableContentComponent.cpp"/>
-          <FILE id="La4Qcp" name="InspectableContentComponent.h" compile="0"
-                resource="0" file="Source/InspectableContentComponent.h"/>
-          <FILE id="jYwqk3" name="Inspector.cpp" compile="1" resource="0" file="Source/Inspector.cpp"/>
-          <FILE id="A1OMYJ" name="Inspector.h" compile="0" resource="0" file="Source/Inspector.h"/>
-          <FILE id="ObKCyn" name="InspectableEditor.cpp" compile="1" resource="0"
-                file="Source/InspectableEditor.cpp"/>
-          <FILE id="sPOFRY" name="InspectableEditor.h" compile="0" resource="0"
-                file="Source/InspectableEditor.h"/>
-        </GROUP>
-        <FILE id="x8ry75" name="InspectableContent.cpp" compile="1" resource="0"
-              file="Source/InspectableContent.cpp"/>
-        <FILE id="vsAh9m" name="InspectableContent.h" compile="0" resource="0"
-              file="Source/InspectableContent.h"/>
-        <FILE id="dxb7YU" name="Inspectable.cpp" compile="1" resource="0" file="Source/Inspectable.cpp"/>
-        <FILE id="FKw1d1" name="Inspectable.h" compile="0" resource="0" file="Source/Inspectable.h"/>
-      </GROUP>
-      <GROUP id="{070E9CF8-5A7F-C6FC-2E30-5BC3BB47385D}" name="Logger">
-        <FILE id="ZM2OHT" name="CustomLogger.cpp" compile="1" resource="0"
-              file="Source/CustomLogger.cpp"/>
-        <FILE id="WX2BSB" name="CustomLogger.h" compile="0" resource="0" file="Source/CustomLogger.h"/>
-        <FILE id="lEWfqO" name="CustomLoggerUI.cpp" compile="1" resource="0"
-              file="Source/CustomLoggerUI.cpp"/>
-        <FILE id="rad1zB" name="CustomLoggerUI.h" compile="0" resource="0"
-              file="Source/CustomLoggerUI.h"/>
-      </GROUP>
-      <GROUP id="{FA0E78EC-9F83-99D0-4BB9-C686CC8B957D}" name="UI">
-        <FILE id="HGTHhK" name="Style.h" compile="0" resource="0" file="Source/Style.h"/>
-        <FILE id="f2HEPq" name="LookAndFeelOO.cpp" compile="1" resource="0"
-              file="Source/LookAndFeelOO.cpp"/>
-        <FILE id="vJZEyF" name="LookAndFeelOO.h" compile="0" resource="0" file="Source/LookAndFeelOO.h"/>
-        <FILE id="iuBdcn" name="AssetManager.cpp" compile="1" resource="0"
-              file="Source/AssetManager.cpp"/>
-        <FILE id="HboC1m" name="AssetManager.h" compile="0" resource="0" file="Source/AssetManager.h"/>
-        <GROUP id="{1D467CA6-83C2-2F03-151F-B366D529ECC2}" name="ShapeShifter">
-          <FILE id="Eot3Kd" name="ShapeShifter.cpp" compile="1" resource="0"
-                file="Source/ShapeShifter.cpp"/>
-          <FILE id="HcvRjb" name="ShapeShifter.h" compile="0" resource="0" file="Source/ShapeShifter.h"/>
-          <FILE id="FMttH3" name="ShapeShifterContainer.cpp" compile="1" resource="0"
-                file="Source/ShapeShifterContainer.cpp"/>
-          <FILE id="tkAYqH" name="ShapeShifterContainer.h" compile="0" resource="0"
-                file="Source/ShapeShifterContainer.h"/>
-          <FILE id="NoS8RY" name="ShapeShifterContent.cpp" compile="1" resource="0"
-                file="Source/ShapeShifterContent.cpp"/>
-          <FILE id="Ms22GG" name="ShapeShifterContent.h" compile="0" resource="0"
-                file="Source/ShapeShifterContent.h"/>
-          <FILE id="hkVVrn" name="ShapeShifterFactory.cpp" compile="1" resource="0"
-                file="Source/ShapeShifterFactory.cpp"/>
-          <FILE id="NITgZd" name="ShapeShifterFactory.h" compile="0" resource="0"
-                file="Source/ShapeShifterFactory.h"/>
-          <FILE id="ZPSKwv" name="ShapeShifterManager.cpp" compile="1" resource="0"
-                file="Source/ShapeShifterManager.cpp"/>
-          <FILE id="Ch6Jli" name="ShapeShifterManager.h" compile="0" resource="0"
-                file="Source/ShapeShifterManager.h"/>
-          <FILE id="oLS2QP" name="ShapeShifterPanel.cpp" compile="1" resource="0"
-                file="Source/ShapeShifterPanel.cpp"/>
-          <FILE id="rk0OiB" name="ShapeShifterPanel.h" compile="0" resource="0"
-                file="Source/ShapeShifterPanel.h"/>
-          <FILE id="jND8TB" name="ShapeShifterPanelHeader.cpp" compile="1" resource="0"
-                file="Source/ShapeShifterPanelHeader.cpp"/>
-          <FILE id="SAthiM" name="ShapeShifterPanelHeader.h" compile="0" resource="0"
-                file="Source/ShapeShifterPanelHeader.h"/>
-          <FILE id="zqjw6m" name="ShapeShifterPanelTab.cpp" compile="1" resource="0"
-                file="Source/ShapeShifterPanelTab.cpp"/>
-          <FILE id="Q5eUFC" name="ShapeShifterPanelTab.h" compile="0" resource="0"
-                file="Source/ShapeShifterPanelTab.h"/>
-          <FILE id="NvdKqP" name="ShapeShifterWindow.cpp" compile="1" resource="0"
-                file="Source/ShapeShifterWindow.cpp"/>
-          <FILE id="b94q5I" name="ShapeShifterWindow.h" compile="0" resource="0"
-                file="Source/ShapeShifterWindow.h"/>
-          <FILE id="hqTq5S" name="GapGrabber.cpp" compile="1" resource="0" file="Source/GapGrabber.cpp"/>
-          <FILE id="xYsD3C" name="GapGrabber.h" compile="0" resource="0" file="Source/GapGrabber.h"/>
         </GROUP>
       </GROUP>
       <FILE id="miMqpn" name="Engine.cpp" compile="1" resource="0" file="Source/Engine.cpp"/>

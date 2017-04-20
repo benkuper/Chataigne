@@ -16,6 +16,7 @@
 #include "ModuleManager.h"
 #include "StateManager.h"
 #include "SequenceManager.h"
+#include "DashboardManager.h"
 #include "Outliner.h"
 
 /*================================
@@ -188,7 +189,7 @@ var Engine::getJSONData()
   data.getDynamicObject()->setProperty("moduleManager", ModuleManager::getInstance()->getJSONData());
   data.getDynamicObject()->setProperty("stateManager", StateManager::getInstance()->getJSONData());
   data.getDynamicObject()->setProperty("sequenceManager", SequenceManager::getInstance()->getJSONData());
-
+  data.getDynamicObject()->setProperty("dashboardManager", DashboardManager::getInstance()->getJSONData());
 
   return data;
 }
@@ -246,6 +247,10 @@ void Engine::loadJSONData (var data,ProgressTask * loadingTask)
 	// sequenceTask->start();
 	if (d->hasProperty("sequenceManager")) SequenceManager::getInstance()->loadJSONData(d->getProperty("sequenceManager"));
 	// sequenceTask->end();
+
+	if (d->hasProperty("dashboardManager")) DashboardManager::getInstance()->loadJSONData(d->getProperty("dashboardManager"));
+
+
 
 	if (InspectableSelectionManager::getInstanceWithoutCreating() != nullptr) InspectableSelectionManager::getInstance()->setEnabled(true); //Re enable editor
 	if (Outliner::getInstanceWithoutCreating() != nullptr) Outliner::getInstance()->setEnabled(true);
