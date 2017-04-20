@@ -13,15 +13,19 @@
 
 #include "BaseItem.h"
 
+class DashboardItemUI;
+
 class DashboardItem :
 	public BaseItem
 {
 public:
-	DashboardItem();
+	DashboardItem(bool canHaveScripts = false);
 	~DashboardItem();
 
 	Point2DParameter * viewUIPosition;
 	Point2DParameter * viewUISize;
+
+	virtual DashboardItemUI * getItemUI();
 };
 
 

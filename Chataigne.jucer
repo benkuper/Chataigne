@@ -36,6 +36,10 @@
                   file="Source/DashboardPanel.cpp"/>
             <FILE id="geuz5T" name="DashboardPanel.h" compile="0" resource="0"
                   file="Source/DashboardPanel.h"/>
+            <FILE id="vSZSzS" name="DashboardTargetItemUI.cpp" compile="1" resource="0"
+                  file="Source/DashboardTargetItemUI.cpp"/>
+            <FILE id="m6GrFk" name="DashboardTargetItemUI.h" compile="0" resource="0"
+                  file="Source/DashboardTargetItemUI.h"/>
             <FILE id="I3Rubk" name="DashboardUI.cpp" compile="1" resource="0" file="Source/DashboardUI.cpp"/>
             <FILE id="qx01vV" name="DashboardUI.h" compile="0" resource="0" file="Source/DashboardUI.h"/>
             <FILE id="qyZm1e" name="DashboardView.cpp" compile="1" resource="0"
@@ -55,6 +59,10 @@
                 file="Source/DashboardManager.cpp"/>
           <FILE id="G2KgFa" name="DashboardManager.h" compile="0" resource="0"
                 file="Source/DashboardManager.h"/>
+          <FILE id="sTKPEV" name="DashboardTargetItem.cpp" compile="1" resource="0"
+                file="Source/DashboardTargetItem.cpp"/>
+          <FILE id="dllcxq" name="DashboardTargetItem.h" compile="0" resource="0"
+                file="Source/DashboardTargetItem.h"/>
         </GROUP>
         <GROUP id="{FA0E78EC-9F83-99D0-4BB9-C686CC8B957D}" name="UI">
           <FILE id="HGTHhK" name="Style.h" compile="0" resource="0" file="Source/Style.h"/>

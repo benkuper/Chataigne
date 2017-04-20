@@ -28,7 +28,6 @@ public:
 	//interaction
 	Point<int> initViewOffset;
 
-
 	void resized() override;
 	void paint(Graphics &g) override;
 
@@ -50,6 +49,8 @@ public:
 	void mouseUp(const MouseEvent &e) override;
 	bool keyPressed(const KeyPress &e) override;
 
+
+	DashboardItemUI * createUIForItem(DashboardItem * i) override;
 	void addItemUIInternal(DashboardItemUI * se) override;
 	void removeItemUIInternal(DashboardItemUI * se) override;
 

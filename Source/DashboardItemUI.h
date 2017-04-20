@@ -11,11 +11,11 @@
 #ifndef DASHBOARDITEMUI_H_INCLUDED
 #define DASHBOARDITEMUI_H_INCLUDED
 
-#include "BaseItemMinimalUI.h"
-#include "DashboardItem.h"
+#include "BaseItemUI.h"
+#include "DashboardTargetItem.h"
 
 class DashboardItemUI :
-	public BaseItemMinimalUI<DashboardItem>
+	public BaseItemUI<DashboardItem>
 {
 public:
 	DashboardItemUI(DashboardItem * item);
@@ -28,6 +28,7 @@ public:
 	Point<float> posAtMouseDown;
 
 	void resized() override;
+	virtual void resizedInternalTarget(Rectangle<int> &) {};
 
 	void mouseDown(const MouseEvent &e) override;
 	void mouseDrag(const MouseEvent &e) override;

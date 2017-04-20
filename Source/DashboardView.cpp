@@ -158,7 +158,10 @@ bool DashboardView::keyPressed(const KeyPress & e)
 	return false;
 }
 
-
+DashboardItemUI * DashboardView::createUIForItem(DashboardItem * i)
+{
+	return i->getItemUI();
+}
 
 void DashboardView::addItemUIInternal(DashboardItemUI * se)
 {

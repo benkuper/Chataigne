@@ -11,7 +11,7 @@
 #include "DashboardItemUI.h"
 
 DashboardItemUI::DashboardItemUI(DashboardItem * item) :
-	BaseItemMinimalUI(item),
+	BaseItemUI(item),
 	resizer(this,nullptr)
 {
 	addAndMakeVisible(&resizer);
@@ -34,7 +34,21 @@ void DashboardItemUI::resized()
 
 	resizer.setBounds(r.removeFromBottom(10).withLeft(getWidth() - 10));
 
+	Rectangle<int> h = r.removeFromTop(headerHeight);
+	r.removeFromTop(headerGap);
+
+	//enabledBT->setBounds(h.removeFromLeft(h.getHeight()));
+	//h.removeFromLeft(2);
+	removeBT->setBounds(h.removeFromRight(h.getHeight()));
+	h.removeFromRight(2);
+	nameUI->setBounds(h);
+
+	r.removeFromTop(2);
+
+	resizedInternalContent(r);
+
 	item->viewUISize->setPoint((float)getWidth(), (float)getHeight() + 12); //should look into that +12, if not there, size shrinks between saves
+
 
 }
 

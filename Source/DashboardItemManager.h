@@ -21,6 +21,9 @@ public:
 	DashboardItemManager();
 	~DashboardItemManager();
 
+	//tmp
+	DashboardItem * createItem() override;
+
 	DashboardItem * addItem(const Point<float> &initialPosition);
 
 };

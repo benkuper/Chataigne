@@ -9,9 +9,10 @@
 */
 
 #include "DashboardItem.h"
+#include "DashboardItemUI.h"
 
-DashboardItem::DashboardItem() :
-	BaseItem("Dashboard Item",false,true)
+DashboardItem::DashboardItem(bool canHaveScripts) :
+	BaseItem("Dashboard Item",false,canHaveScripts)
 {
 
 	viewUIPosition = addPoint2DParameter("Position", "Position in State Machine view");
@@ -30,4 +31,9 @@ DashboardItem::DashboardItem() :
 
 DashboardItem::~DashboardItem()
 {
+}
+
+DashboardItemUI * DashboardItem::getItemUI()
+{
+	return new DashboardItemUI(this);
 }
