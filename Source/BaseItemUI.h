@@ -18,7 +18,7 @@
 #include "StringParameterUI.h"
 
 template<class T>
-class BaseItemUI : 
+class BaseItemUI :
 	public BaseItemMinimalUI<T>,
 	public ButtonListener
 {
@@ -37,7 +37,7 @@ public:
 
 	virtual void resized() override;
 	virtual void resizedInternalHeader(Rectangle<int> &) {}
-
+	virtual void resizedInternalContent(Rectangle<int> &) {}
 	void buttonClicked(Button *b) override;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(BaseItemUI<T>)
@@ -81,7 +81,7 @@ void BaseItemUI<T>::resized()
 {
 	//Header
 	Rectangle<int> r = this->getLocalBounds().reduced(2);
-	Rectangle<int> h = r.withHeight(headerHeight);
+	Rectangle<int> h = r.removeFromTop(headerHeight);
 
 	if(enabledBT != nullptr)
 	{
@@ -94,6 +94,9 @@ void BaseItemUI<T>::resized()
 
 	resizedInternalHeader(h);
 	nameUI->setBounds(h);
+
+	r.removeFromTop(2);
+	resizedInternalContent(r);
 }
 
 template<class T>

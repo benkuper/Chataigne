@@ -65,16 +65,16 @@ void UserOSCCommandModelArgumentManagerEditor::showMenuAndAddItem(bool)
 	switch (result)
 	{
 	case 1:
-		aManager->addItemFromType(Parameter::INT);
+		aManager->addItemFromType(Parameter::INT,var(),false);
 		break;
 	case 2:
-		aManager->addItemFromType(Parameter::FLOAT);
+		aManager->addItemFromType(Parameter::FLOAT, var(), false);
 		break;
 	case 3:
-		aManager->addItemFromType(Parameter::STRING);
+		aManager->addItemFromType(Parameter::STRING, var(), false);
 		break;
 	case 4:
-		aManager->addItemFromType(Parameter::BOOL);
+		aManager->addItemFromType(Parameter::BOOL, var(), false);
 		break;
 	}
 }

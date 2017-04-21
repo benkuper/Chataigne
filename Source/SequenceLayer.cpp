@@ -20,6 +20,9 @@ SequenceLayer::SequenceLayer(Sequence * _sequence, const String &name) :
 	jassert(sequence != nullptr);
 
 	uiHeight = addIntParameter("UI Height", "Height of the layer in the editor", 60, 20, 300);
+	color = new ColorParameter("Layer Color", "Color of the layer", Colours::grey);
+	addParameter(color);
+
 	sequence = _sequence;
 	sequence->addSequenceListener(this);
 

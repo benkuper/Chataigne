@@ -9,6 +9,7 @@
 */
 
 #include "MappingLayerPanel.h"
+#include "EnumParameterUI.h"
 
 MappingLayerPanel::MappingLayerPanel(MappingLayer * layer) :
 	SequenceLayerPanel(layer),
@@ -16,8 +17,17 @@ MappingLayerPanel::MappingLayerPanel(MappingLayer * layer) :
 {
 
 	bgColor = MAPPING_COLOR.withSaturation(.2f).darker(1);
+	modeUI = mappingLayer->mode->createUI();
+	addAndMakeVisible(modeUI);
 }
 
 MappingLayerPanel::~MappingLayerPanel()
 {
+}
+
+void MappingLayerPanel::resizedInternalHeader(Rectangle<int>& r)
+{
+	SequenceLayerPanel::resizedInternalHeader(r);
+	
+	modeUI->setBounds(getLocalBounds().reduced(5).removeFromBottom(20));
 }

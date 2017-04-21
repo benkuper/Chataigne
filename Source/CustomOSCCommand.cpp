@@ -75,10 +75,18 @@ void CustomOSCCommand::trigger()
 	oscModule->sendOSC(m);
 }
 
-void CustomOSCCommand::useForMappingChanged(CustomOSCCommandArgument * a)
+void CustomOSCCommand::useForMappingChanged(CustomOSCCommandArgument *)
 {
-	if (a->useForMapping->boolValue()) targetMappingParameter = a->param;
-	else if(targetMappingParameter == a->param) targetMappingParameter = nullptr;
+	clearTargetMappingParameters();
+	int index = 0;
+	for (auto &a : argManager.items)
+	{
+		if (a->useForMapping->boolValue())
+		{
+			setTargetMappingParameterAt(a->param, index);
+			index++;
+		}
+	}
 }
 
 InspectableEditor * CustomOSCCommand::getEditor(bool)

@@ -25,9 +25,9 @@ public:
 
 	StateManager *sm;
 
-	void addItemFromData(var data) override;
+	void addItemFromData(var data, bool fromUndoableAction = false) override;
 
-	void addItem(State * source, State * dest, var data = var());
+	void addItem(State * source, State * dest, var data = var(), bool fromUndoableAction = false);
 
 	void removeAllLinkedTransitions(State * linkedState);
 

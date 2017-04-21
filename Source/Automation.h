@@ -50,6 +50,8 @@ public:
 	void addItem(const float position, const float value);
 	void reorderItems() override;
 
+	void removeAllSelectedKeys();
+
 	AutomationKey * getClosestKeyForPos(float pos, int start = -1, int end = -1);
 
 	void controllableFeedbackUpdate(ControllableContainer * cc, Controllable *c) override;

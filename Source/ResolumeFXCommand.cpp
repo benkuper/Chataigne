@@ -49,8 +49,7 @@ ResolumeFXCommand::ResolumeFXCommand(ResolumeModule * _module, CommandContext co
 	}
 
 	valueParam = argumentsContainer.addFloatParameter("Value", "Target parameter value",0, 0, 1);
-	targetMappingParameter = valueParam;
-
+	setTargetMappingParameterAt(valueParam, 0);
 	rebuildAddress();
 }
 

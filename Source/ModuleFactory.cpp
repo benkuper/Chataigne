@@ -21,6 +21,7 @@
 #include "KinectV2Module.h"
 #include "SerialModule.h"
 #include "DMXModule.h"
+#include "LiveOSCModule.h"
 
 juce_ImplementSingleton(ModuleFactory)
 
@@ -36,6 +37,7 @@ ModuleFactory::ModuleFactory() {
 	moduleDefs.add(new ModuleDefinition("Controller", "KinectV2", &KinectV2Module::create));
 	
 	moduleDefs.add(new ModuleDefinition("Audio", "Audio Device", &AudioModule::create));
+	moduleDefs.add(new ModuleDefinition("Audio", "LiveOSC", &LiveOSCModule::create));
 	moduleDefs.add(new ModuleDefinition("Audio", "Reaper", &ReaperModule::create));
 
 	moduleDefs.add(new ModuleDefinition("Video", "Resolume", &ResolumeModule::create));

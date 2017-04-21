@@ -103,8 +103,9 @@ public:
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ShapeShifterPanel)
 
 
-
-
+private:
+	WeakReference<ShapeShifterPanel>::Master masterReference;
+	friend class WeakReference<ShapeShifterPanel>;
 
 };
 

@@ -13,12 +13,13 @@
 
 #include "BaseCommand.h"
 #include "DMXModule.h"
+#include "ColorParameter.h"
 
 class DMXCommand :
 	public BaseCommand
 {
 public:
-	enum DMXAction { SET_VALUE, SET_RANGE, CLEAR_ALL};
+	enum DMXAction { SET_VALUE, SET_RANGE, COLOR, CLEAR_ALL};
 
 	DMXCommand(DMXModule * _module, CommandContext context, var params);
 	~DMXCommand();
@@ -29,6 +30,7 @@ public:
 	IntParameter * channel;
 	IntParameter * channel2;
 	IntParameter * value;
+	ColorParameter * colorParam;
 
 	void trigger() override;
 

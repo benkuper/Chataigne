@@ -31,6 +31,8 @@
  *	@brief Handles IR data.
  */
 
+#pragma warning(disable:4273 4013 4100 4244 4189)
+
 #include "ir.h"
 
 #include <math.h>                       /* for atanf, cos, sin, sqrt */

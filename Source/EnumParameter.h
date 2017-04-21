@@ -34,6 +34,7 @@ public:
 
 	StringArray getAllKeys();
 
+	void setValueWithData(var data);
 	void setValueWithKey(String data);
 	void setNext(bool loop = true);
 

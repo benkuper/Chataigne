@@ -179,8 +179,10 @@ ShapeShifterPanel * ShapeShifterManager::checkCandidateTargetForPanel(ShapeShift
 	return candidate;
 }
 
-bool ShapeShifterManager::checkDropOnCandidateTarget(ShapeShifterPanel * panel)
+bool ShapeShifterManager::checkDropOnCandidateTarget(WeakReference<ShapeShifterPanel> panel)
 {
+	if (panel.wasObjectDeleted()) return false;
+
 	if (currentCandidatePanel == nullptr) return false;
 
 	bool result = currentCandidatePanel->attachPanel(panel);

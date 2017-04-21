@@ -20,16 +20,23 @@ DMXCommand::DMXCommand(DMXModule * _module, CommandContext context, var params) 
 	{
 	
 	case SET_VALUE:
-		channel = addIntParameter("Channel", "DMX Channel", 1, 1, 512);
+		channel = addIntParameter("Channel", "DMX Channel", 0,0,511);
 		value = addIntParameter("Value", "DMX Value", 0, 0, 255);
-		targetMappingParameter = value;
+		setTargetMappingParameterAt(value,0);
 		break;
 
 	case SET_RANGE:
-		channel = addIntParameter("Start Channel", "First DMX Channel", 1, 1, 512);
-		channel2 = addIntParameter("End Channel", "Last DMX Channel (inclusive)", 4, 1, 512);
+		channel = addIntParameter("Start Channel", "First DMX Channel", 0, 0,511);
+		channel2 = addIntParameter("End Channel", "Last DMX Channel (inclusive)", 4, 0,511);
 		value = addIntParameter("Value", "DMX Value", 0, 0, 255);
-		targetMappingParameter = value;
+		setTargetMappingParameterAt(value,0);
+		break;
+
+	case COLOR:
+		channel = addIntParameter("Start Channel", "DMX Channel", 0, 0, 511);
+		colorParam = new ColorParameter("Color", "DMX Color");
+		addParameter(colorParam);
+		setTargetMappingParameterAt(colorParam, 0);
 		break;
 
 	case CLEAR_ALL:
@@ -46,7 +53,7 @@ DMXCommand::~DMXCommand()
 
 void DMXCommand::trigger()
 {
-	switch (dmxAction)
+	switch (dmxAction) 
 	{
 
 	case SET_VALUE:
@@ -55,6 +62,10 @@ void DMXCommand::trigger()
 
 	case SET_RANGE:
 		for (int i =channel->intValue();i<=channel2->intValue();i++) dmxModule->sendDMXValue(i, value->intValue());
+		break;
+
+	case COLOR:
+		for (int i = 0; i < 3; i++) dmxModule->sendDMXValue(channel->intValue()+i, (int)((float)colorParam->value[i]*255));
 		break;
 
 	case CLEAR_ALL:

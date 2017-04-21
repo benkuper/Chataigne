@@ -41,10 +41,11 @@ ShapeShifterPanel::ShapeShifterPanel(ShapeShifterContent *_content, ShapeShifter
 
 ShapeShifterPanel::~ShapeShifterPanel()
 {
-	for (auto &c : contents) c->contentIsShown = false;
 
+	for (auto &c : contents) c->contentIsShown = false;
 	header.removeHeaderListener(this);
 	listeners.call(&Listener::panelDestroyed, this);
+	masterReference.clear();
 }
 
 

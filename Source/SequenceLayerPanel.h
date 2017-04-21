@@ -14,6 +14,7 @@
 
 #include "BaseItemUI.h"
 #include "SequenceLayer.h"
+#include "ColorParameterUI.h"
 
 class SequenceLayerPanel :
 	public BaseItemUI<SequenceLayer>
@@ -22,10 +23,12 @@ public:
 	SequenceLayerPanel(SequenceLayer *);
 	virtual ~SequenceLayerPanel();
 
+	ScopedPointer<ColorParameterUI> colorUI;
+	void paintOverChildren(Graphics &g) override;
 	void resized() override;
-
+	void resizedInternalHeader(Rectangle<int> &r) override;
 	ResizableBorderComponent resizer;
-
+	
 	void controllableFeedbackUpdateInternal(Controllable *) override;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(SequenceLayerPanel)

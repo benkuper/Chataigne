@@ -151,7 +151,6 @@ void AutomationUI::placeKeyUI(AutomationKeyUI * kui, bool placePrevKUI)
 	}
 }
 
-
 int AutomationUI::getXForPos(float time)
 {
 	if (viewStartPos == viewEndPos) return 0;
@@ -219,6 +218,12 @@ void AutomationUI::addItemUIInternal(AutomationKeyUI * kui)
 
 void AutomationUI::removeItemUIInternal(AutomationKeyUI * kui)
 {
+	if (transformer != nullptr)
+	{
+		removeChildComponent(transformer);
+		transformer = nullptr;
+	}
+
 	kui->handle.removeMouseListener(this);
 	updateROI();
 }

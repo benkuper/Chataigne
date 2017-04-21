@@ -19,14 +19,14 @@ CustomOSCCommandArgumentManager::CustomOSCCommandArgumentManager(bool _mappingEn
 	selectItemWhenCreated = false;
 }
 
-void CustomOSCCommandArgumentManager::addItemWithParam(Parameter * p, var data)
+void CustomOSCCommandArgumentManager::addItemWithParam(Parameter * p, var data, bool fromUndoableAction)
 {
 	CustomOSCCommandArgument * a = new CustomOSCCommandArgument("#" + String(items.size() + 1), p,mappingEnabled);
 	a->addArgumentListener(this);
-	addItem(a, data);
+	addItem(a, data, fromUndoableAction);
 }
 
-void CustomOSCCommandArgumentManager::addItemFromType(Parameter::Type type, var data)
+void CustomOSCCommandArgumentManager::addItemFromType(Parameter::Type type, var data, bool fromUndoableAction)
 {
 	Parameter * p = nullptr;
 	String id = String(items.size() + 1);
@@ -48,15 +48,15 @@ void CustomOSCCommandArgumentManager::addItemFromType(Parameter::Type type, var 
 	}
 
 	jassert(p != nullptr);
-	addItemWithParam(p, data);
+	addItemWithParam(p, data, fromUndoableAction);
 }
 
-void CustomOSCCommandArgumentManager::addItemFromData(var data)
+void CustomOSCCommandArgumentManager::addItemFromData(var data, bool fromUndoableAction)
 {
 	String s = data.getProperty("type", "");
 	DBG("add item from data : " << s);
 	if (s.isEmpty()) return;
-	addItemWithParam((Parameter *)ControllableFactory::createControllable(s), data);
+	addItemWithParam((Parameter *)ControllableFactory::createControllable(s), data, fromUndoableAction);
 }
 
 void CustomOSCCommandArgumentManager::autoRenameItems()
@@ -74,10 +74,13 @@ void CustomOSCCommandArgumentManager::removeItemInternal(CustomOSCCommandArgumen
 
 void CustomOSCCommandArgumentManager::useForMappingChanged(CustomOSCCommandArgument * i)
 {
+	/*
 	if (i->useForMapping->boolValue())
 	{
 		for (auto &it : items) if (it != i) it->useForMapping->setValue(false);
 	}
+	*/
+
 	argumentManagerListeners.call(&ManagerListener::useForMappingChanged, i);
 }
 

@@ -28,7 +28,7 @@ MappingInput::~MappingInput()
 void MappingInput::lockInput(Parameter * input)
 {
 	setInput(input);
-	inputTarget->setEnabled(false);
+	if(input != nullptr) inputTarget->setEnabled(false);
 }
 
 void MappingInput::setInput(Parameter * _input)

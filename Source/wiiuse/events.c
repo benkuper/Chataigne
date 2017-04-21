@@ -52,6 +52,9 @@
 #include <stdlib.h>                     /* for free, malloc */
 #include <string.h>                     /* for memcpy, memset */
 
+#pragma warning(disable:4273 4013 4100 4701 4244 4703)
+
+
 static void event_data_read(struct wiimote_t* wm, byte* msg);
 static void event_data_write(struct wiimote_t *wm, byte *msg);
 static void event_status(struct wiimote_t* wm, byte* msg);
@@ -641,7 +644,7 @@ static void handle_expansion(struct wiimote_t* wm, byte* msg) {
  */
 void handshake_expansion(struct wiimote_t* wm, byte* data, uint16_t len) {
     uint32_t id;
-    byte val = 0;
+    //byte val = 0;
     byte buf = 0x00;
     byte* handshake_buf;
     int gotIt = 0;

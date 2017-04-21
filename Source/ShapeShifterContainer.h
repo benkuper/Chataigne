@@ -73,6 +73,7 @@ public:
 
 	void movePanelsInContainer(ShapeShifterPanel * containedPanel, ShapeShifterPanel * newPanel, Direction _newDir, bool secondBeforeFirst);
 
+	bool isFlexible() override;
 
 	void clear();
 

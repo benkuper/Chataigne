@@ -16,14 +16,15 @@
 #include "ModuleManager.h"
 #include "StateManager.h"
 #include "SequenceManager.h"
+#include "DashboardManager.h"
 #include "Outliner.h"
-
 
 /*================================
  this file implements all methods that are related to saving/loading : basicly iherited from FileBasedDocument
  */
 
 ApplicationProperties & getAppProperties();
+String getAppVersion();
 
 String Engine::getDocumentTitle() {
   if (! getFile().exists())
@@ -134,6 +135,7 @@ void Engine::handleAsyncUpdate(){
   NLOG("Engine","Session loaded in " << timeForLoading/1000.0 << "s"); 
 }
 
+
 Result Engine::saveDocument (const File& file){
 
   var data = getJSONData();
@@ -187,7 +189,7 @@ var Engine::getJSONData()
   data.getDynamicObject()->setProperty("moduleManager", ModuleManager::getInstance()->getJSONData());
   data.getDynamicObject()->setProperty("stateManager", StateManager::getInstance()->getJSONData());
   data.getDynamicObject()->setProperty("sequenceManager", SequenceManager::getInstance()->getJSONData());
-
+  data.getDynamicObject()->setProperty("dashboardManager", DashboardManager::getInstance()->getJSONData());
 
   return data;
 }
@@ -246,21 +248,26 @@ void Engine::loadJSONData (var data,ProgressTask * loadingTask)
 	if (d->hasProperty("sequenceManager")) SequenceManager::getInstance()->loadJSONData(d->getProperty("sequenceManager"));
 	// sequenceTask->end();
 
+	if (d->hasProperty("dashboardManager")) DashboardManager::getInstance()->loadJSONData(d->getProperty("dashboardManager"));
+
+
+
 	if (InspectableSelectionManager::getInstanceWithoutCreating() != nullptr) InspectableSelectionManager::getInstance()->setEnabled(true); //Re enable editor
 	if (Outliner::getInstanceWithoutCreating() != nullptr) Outliner::getInstance()->setEnabled(true);
 
 }
 
-bool Engine::checkFileVersion(DynamicObject * metaData)
+bool Engine::checkFileVersion(DynamicObject * metaData, bool checkForNewerVersion)
 {
   if (!metaData->hasProperty("version")) return false;
-  DBG(metaData->getProperty("version").toString() << "/ " << getMinimumRequiredFileVersion());
+  String versionToCheck = checkForNewerVersion ? getAppVersion() : getMinimumRequiredFileVersion();
+  DBG(metaData->getProperty("version").toString() << " / " << versionToCheck);
 
   StringArray fileVersionSplit;
   fileVersionSplit.addTokens(metaData->getProperty("version").toString(), juce::StringRef("."), juce::StringRef("\""));
 
   StringArray minVersionSplit;
-  minVersionSplit.addTokens(getMinimumRequiredFileVersion(), juce::StringRef("."), juce::StringRef("\""));
+  minVersionSplit.addTokens(versionToCheck, juce::StringRef("."), juce::StringRef("\""));
 
   int maxVersionNumbers = jmax<int>(fileVersionSplit.size(), minVersionSplit.size());
   while (fileVersionSplit.size() < maxVersionNumbers) fileVersionSplit.add("0");
@@ -270,11 +277,11 @@ bool Engine::checkFileVersion(DynamicObject * metaData)
   {
     int fV = fileVersionSplit[i].getIntValue();
     int minV = minVersionSplit[i].getIntValue();
-    if (fV > minV) return true;
-    else if (fV < minV) return false;
+	if (fV > minV) return true;
+	else if (fV < minV) return false;   
   }
 
-  return true;
+  return checkForNewerVersion ? false : true;
 }
 
 String Engine::getMinimumRequiredFileVersion()

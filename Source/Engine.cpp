@@ -25,6 +25,8 @@
 #include "WiimoteManager.h"
 #include "InspectableSelectionManager.h"
 #include "ScriptUtil.h"
+#include "DMXManager.h"
+#include "DashboardManager.h"
 
 juce_ImplementSingleton(Engine) 
 
@@ -47,17 +49,21 @@ Engine::Engine() :
 	addChildControllableContainer(ModuleManager::getInstance());
 	addChildControllableContainer(StateManager::getInstance());
 	addChildControllableContainer(SequenceManager::getInstance());
+	addChildControllableContainer(DashboardManager::getInstance());
 
-	MIDIManager::getInstance(); //Trigger MIDIManager singleton constructor
+	//MIDIManager::getInstance(); //Trigger MIDIManager singleton constructor
+	//DMXManager::getInstance(); //Trigger DMXManager singleton constructor
 	InspectableSelectionManager::getInstance(); //selectionManager constructor
-	ScriptUtil::getInstance(); //trigger ScriptUtil constructor
+	ScriptUtil::getInstance(); //trigger ScriptUtil constructorx
 }
 
 Engine::~Engine(){
 
 //delete managers
-	
+
   InspectableSelectionManager::deleteInstance();
+ 
+  DashboardManager::deleteInstance();
   Outliner::deleteInstance();
 
   SequenceManager::deleteInstance();
@@ -73,12 +79,14 @@ Engine::~Engine(){
   ConditionFactory::deleteInstance();
   
   MIDIManager::deleteInstance();
+  DMXManager::deleteInstance();
   SerialManager::deleteInstance();
   GamepadManager::deleteInstance();
   WiimoteManager::deleteInstance();
 
   ScriptUtil::deleteInstance();
 
+  //UndoMaster::deleteInstance();
 }
 
 void Engine::parseCommandline(const String & commandLine){
@@ -120,15 +128,18 @@ void Engine::clear() {
 		InspectableSelectionManager::getInstance()->setEnabled(false);
 	}
 
+	DashboardManager::getInstance()->clear();
 	StateManager::getInstance()->clear(); 
 	SequenceManager::getInstance()->clear();
 	ModuleManager::getInstance()->clear();
 
 	PresetManager::getInstance()->clear();
+	
 
 	if (Outliner::getInstanceWithoutCreating()) Outliner::getInstanceWithoutCreating()->enabled = true;
 
 	if (InspectableSelectionManager::getInstanceWithoutCreating()) InspectableSelectionManager::getInstance()->setEnabled(true);
+
 
 	changed();    //fileDocument
 }

@@ -17,10 +17,10 @@
 #include "ShapeShifterManager.h"//keep
 #include "DebugHelpers.h"//keep
 #include "Engine.h"
+#include "AppUpdater.h"
 
 ApplicationProperties& getAppProperties();
 ApplicationCommandManager& getCommandManager();
-
 
 //==============================================================================
 /*

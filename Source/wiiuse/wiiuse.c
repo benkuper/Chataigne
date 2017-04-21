@@ -837,7 +837,7 @@ void wiiuse_wiiboard_use_alternate_report(struct wiimote_t *wm, int enabled)
 {
     if(wm->exp.type == EXP_WII_BOARD)
     {
-        wm->exp.wb.use_alternate_report = enabled;
+        wm->exp.wb.use_alternate_report = (uint8_t)enabled;
         wiiuse_set_report_type(wm);
     }
     else

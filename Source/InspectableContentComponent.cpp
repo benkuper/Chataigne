@@ -28,6 +28,12 @@ InspectableContentComponent::~InspectableContentComponent()
 
 void InspectableContentComponent::mouseDown(const MouseEvent & e)
 {
+	if (inspectable.wasObjectDeleted())
+	{
+		DBG("Object deleted on inspectable content, should never be there !");
+		return;
+	}
+
 	if (!inspectable->isSelectable) return;
 
 	if (autoSelectWithChildRespect)

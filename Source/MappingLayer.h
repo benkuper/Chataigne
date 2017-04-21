@@ -14,29 +14,43 @@
 #include "SequenceLayer.h"
 #include "Automation.h"
 #include "Mapping.h"
+#include "TimeColorManager.h"
 
 class MappingLayer :
 	public SequenceLayer
 {
 public:
-	MappingLayer(Sequence * _sequence);
+	enum Mode { MODE_1D, MODE_2D, MODE_3D, MODE_COLOR };
+
+	MappingLayer(Sequence * _sequence, var params);
 	~MappingLayer();
 
-	FloatParameter * curveValue; //later : float / point2d / point3d / color (4d) for multi curve layer
-	FloatParameter * mappedValue; //later : polymorph out from mapping, depending on filters
+	EnumParameter * mode;
 
-	Automation automation; //later: automation Manager to allow for multi curve layer
+	Parameter * curveValue; //later : float / point2d / point3d / color (4d) for multi curve layer
+	//Parameter * mappedValue; //later : polymorph out from mapping, depending on filters
+
+	OwnedArray<Automation> automations; //later: automation Manager to allow for multi curve layer
+	ScopedPointer<TimeColorManager> timeColorManager;
+
 	Mapping mapping;
 
+	Mode getMappingMode();
+
+	void setupMappingForCurrentMode();
+
+	void updateCurvesValues();
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
 
-	static MappingLayer * create(Sequence * sequence) { return new MappingLayer(sequence); }
+	static MappingLayer * create(Sequence * sequence, var params) { return new MappingLayer(sequence, params); }
 	virtual String getTypeString() const override { return "Automation"; }
 
 	virtual SequenceLayerPanel * getPanel() override;
 	virtual SequenceLayerTimeline * getTimelineUI() override;
+
+	virtual void onContainerParameterChangedInternal(Parameter * p) override;
 
 	virtual void sequenceTotalTimeChanged(Sequence *) override;
 	virtual void sequenceCurrentTimeChanged(Sequence *, float /*prevTime */, bool /*evaluateSkippedData */) override;

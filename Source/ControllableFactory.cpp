@@ -23,7 +23,7 @@ ControllableFactory::ControllableFactory() {
 	controllableDefs.add(new ControllableDefinition("Point2D", &Point2DParameter::create));
 	controllableDefs.add(new ControllableDefinition("Point3D", &Point3DParameter::create));
 	controllableDefs.add(new ControllableDefinition("Target", &TargetParameter::create));
-
+	controllableDefs.add(new ControllableDefinition("Color", &ColorParameter::create));
 	buildPopupMenu();
 }
 

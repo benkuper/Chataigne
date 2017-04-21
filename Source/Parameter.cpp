@@ -19,7 +19,6 @@ Parameter::Parameter(const Type &type, const String &niceName, const String &des
 	isOverriden(false),
 	queuedNotifier(100),
 	autoAdaptRange(false)
-
 {
 	minimumValue = minValue;
 	maximumValue = maxValue;
@@ -33,6 +32,8 @@ Parameter::Parameter(const Type &type, const String &niceName, const String &des
 	scriptObject.setMethod("get", Parameter::getValueFromScript);
 	scriptObject.setMethod("set", Controllable::setValueFromScript);
 }
+
+inline Parameter::~Parameter() { Parameter::masterReference.clear(); }
 
 void Parameter::resetValue(bool silentSet)
 {
@@ -50,6 +51,23 @@ void Parameter::setValue(var _value, bool silentSet, bool force)
 	if (_value != defaultValue) isOverriden = true;
 
 	if (!silentSet) notifyValueChanged();
+}
+
+
+bool Parameter::isComplex()
+{
+	return value.isArray();
+}
+
+StringArray Parameter::getValuesNames()
+{
+	StringArray result;
+	if (!isComplex()) result.add("Value");
+	else
+	{
+		for (int i = 0; i < value.size(); i++) result.add("Value " + String(i));
+	}
+	return result;
 }
 
 void Parameter::setRange(var min, var max, bool setDefaultRange) {
@@ -83,6 +101,14 @@ void Parameter::setValueInternal(var & _value) //to override by child classes
 
 bool Parameter::checkValueIsTheSame(var newValue, var oldValue)
 {
+	if (oldValue.isArray())
+	{
+		if (!newValue.isArray()) return false;
+		if (newValue.size() != oldValue.size()) return false;
+		for (int i = 0; i < oldValue.size(); i++) if (oldValue[i] != newValue[i]) return false;
+		return true;
+	}
+
 	return newValue == oldValue;
 }
 

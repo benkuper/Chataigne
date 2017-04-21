@@ -33,13 +33,13 @@ ConditionManager::~ConditionManager()
 {
 }
 
-void ConditionManager::addItemFromData(var data)
+void ConditionManager::addItemFromData(var data, bool fromUndoableAction)
 {
 
 	String conditionType = data.getProperty("type", "none");
 	if (conditionType.isEmpty()) return;
 	Condition * i = ConditionFactory::getInstance()->createModule(conditionType);
-	if (i != nullptr) addItem(i, data);
+	if (i != nullptr) addItem(i, data, fromUndoableAction);
 }
 
 void ConditionManager::addItemInternal(Condition * c, var data)

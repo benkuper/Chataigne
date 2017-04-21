@@ -38,6 +38,9 @@
 #include <stdio.h>                      /* for printf */
 #include <string.h>                     /* for memset */
 
+#pragma warning(disable:4273 4013 4100)
+
+
 /**
  *	@brief Handle the handshake data from the wiiboard.
  *

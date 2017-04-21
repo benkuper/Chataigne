@@ -102,6 +102,7 @@ static ChataigneApplication& getApp() { return *dynamic_cast<ChataigneApplicatio
 OpenGLContext * getOpenGLContext() { return &getApp().mainWindow->openGLContext; }
 ApplicationProperties& getAppProperties() { return *getApp().appProperties; }
 ApplicationCommandManager& getCommandManager() { return getApp().commandManager; }
+String getAppVersion() { return getApp().getApplicationVersion(); }
 ChataigneApplication::MainWindow * getMainWindow() { return getApp().mainWindow; }
 //==============================================================================
 // This macro generates the main() routine that launches the app.

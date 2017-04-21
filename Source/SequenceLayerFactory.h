@@ -18,12 +18,18 @@ class SequenceLayerDefinition
 {
 public:
 	String type;
-	std::function<SequenceLayer*(Sequence *)> createFunc;
+	std::function<SequenceLayer*(Sequence *, var)> createFunc;
+	var params;
 
-	SequenceLayerDefinition(const String &_type, std::function<SequenceLayer*(Sequence *)> createFunc) :
+	SequenceLayerDefinition(const String &_type, std::function<SequenceLayer*(Sequence *, var)> createFunc) :
 		type(_type),
 		createFunc(createFunc)
-	{}
+	{
+		params = var(new DynamicObject());
+	}
+
+	static SequenceLayerDefinition * createDef(const String &_type, std::function<SequenceLayer*(Sequence *, var)> createFunc);
+	SequenceLayerDefinition * addParam(const String &paramName, var value);
 };
 
 class SequenceLayerFactory
@@ -46,13 +52,13 @@ public:
 		else
 		{
 			SequenceLayerDefinition * d = getInstance()->layerDefs[result - 1];//result 0 is no result
-			return d->createFunc(sequence);
+			return d->createFunc(sequence,d->params);
 		}
 	}
 
 	static SequenceLayer * createSequenceLayer(Sequence * sequence, const String &inputType)
 	{
-		for (auto &d : getInstance()->layerDefs) if (d->type == inputType) return d->createFunc(sequence);
+		for (auto &d : getInstance()->layerDefs) if (d->type == inputType) return d->createFunc(sequence,d->params);
 		return nullptr;
 	}
 

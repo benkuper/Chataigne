@@ -34,6 +34,13 @@ void Automation::reorderItems()
 	BaseManager::reorderItems();
 }
 
+void Automation::removeAllSelectedKeys()
+{
+	Array<AutomationKey *> keysToRemove;
+	for (auto &k : items) if (k->isSelected) keysToRemove.add(k);
+	for (auto &k : keysToRemove) removeItem(k);
+}
+
 AutomationKey * Automation::getClosestKeyForPos(float pos, int start, int end)
 {
 	if (items.size() == 0) return nullptr;

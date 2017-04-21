@@ -17,13 +17,15 @@ DMXModule::DMXModule() :
 	dmxDevice(nullptr)
 {
 	defManager.add(CommandDefinition::createDef(this, "", "Set value", &DMXCommand::create)->addParam("action", DMXCommand::SET_VALUE));
-	defManager.add(CommandDefinition::createDef(this, "", "Set range", &DMXCommand::create)->addParam("action",DMXCommand::SET_RANGE));
-	defManager.add(CommandDefinition::createDef(this, "", "Clear all", &DMXCommand::create)->addParam("type", DMXCommand::CLEAR_ALL));
+	defManager.add(CommandDefinition::createDef(this, "", "Set range", &DMXCommand::create)->addParam("action", DMXCommand::SET_RANGE));
+	defManager.add(CommandDefinition::createDef(this, "", "Set Color", &DMXCommand::create)->addParam("action",DMXCommand::COLOR));
+	defManager.add(CommandDefinition::createDef(this, "", "Clear all", &DMXCommand::create)->addParam("action", DMXCommand::CLEAR_ALL));
 	dmxType = addEnumParameter("DMX Type", "Choose the type of dmx interface you want to connect");
 
 	dmxType->addOption("Open DMX", DMXDevice::OPENDMX);
 	dmxType->addOption("Enttec DMX Pro", DMXDevice::ENTTEC_DMXPRO);
 	dmxType->addOption("Enttec DMX MkII", DMXDevice::ENTTEC_MK2);
+	dmxType->addOption("Art-Net", DMXDevice::ARTNET);
 
 	dmxType->setValueWithKey("Open DMX");
 

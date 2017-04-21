@@ -116,6 +116,10 @@ void CustomOSCModule::processMessageInternal(const OSCMessage & msg)
 			else if (msg[0].isString()) c = valuesCC.addStringParameter(cNiceName, "", getStringArg(msg[0]));
 			((Parameter *)c)->autoAdaptRange = true;
 			break;
+
+		default:
+			//DBG("Message " + cNiceName + "num arguments not handled : " + numArgs);
+			return;
 		}
 
 		c->setCustomShortName(cShortName); //force safeName for search

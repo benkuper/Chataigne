@@ -18,7 +18,7 @@ class Parameter : public Controllable
 {
 public:
     Parameter(const Type &type, const String & niceName, const String &description, var initialValue, var minValue, var maxValue, bool enabled = true);
-    virtual ~Parameter() {Parameter::masterReference.clear();}
+	virtual ~Parameter();
 
 
     var defaultValue;
@@ -30,8 +30,10 @@ public:
 	var defaultMinValue;//for autoAdaptRange
 	var defaultMaxValue;
    
-	void setRange(var,var, bool setDefaultRange = true);
+	bool isComplex();
+	virtual StringArray getValuesNames();
 
+	void setRange(var,var, bool setDefaultRange = true);
 
 	bool isEditable; 
 	bool isPresettable;

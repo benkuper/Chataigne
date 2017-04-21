@@ -13,22 +13,61 @@
 BaseCommand::BaseCommand(Module * _module, CommandContext _context, var _params) :
 	ControllableContainer("Command"),
 	module(_module),
-	targetMappingParameter(nullptr),
 	params(_params),
 	context(_context)
 {
 }
 
-void BaseCommand::setTargetMappingParameter(Parameter * p)
+void BaseCommand::setTargetMappingParameterAt(Parameter * p, int index)
 {
-	if (targetMappingParameter != nullptr) targetMappingParameter->isControllableFeedbackOnly = false;
-	targetMappingParameter = p;
-	if (targetMappingParameter != nullptr) targetMappingParameter->isControllableFeedbackOnly = true;
+	if (index < 0) return;
+	if (index >= targetMappingParameters.size()) targetMappingParameters.resize(index + 1);
+	Parameter * oldP = targetMappingParameters[index];
+
+	if (oldP != nullptr)
+	{
+		if (context == CommandContext::MAPPING) oldP->isControllableFeedbackOnly = false;
+	}
+
+	targetMappingParameters.set(index,p);
+
+	if (p != nullptr)
+	{
+		if (context == CommandContext::MAPPING) p->isControllableFeedbackOnly = true;
+	}
+}
+
+void BaseCommand::clearTargetMappingParameters()
+{
+	for (int i = 0; i < targetMappingParameters.size(); i++) setTargetMappingParameterAt(nullptr, i);
+	targetMappingParameters.clear();
 }
 
 void BaseCommand::setValue(var value)
 {
-	if (targetMappingParameter == nullptr) return;
-	targetMappingParameter->setValue(value);
+	if (!value.isArray())
+	{
+		if (targetMappingParameters.size() > 0 && targetMappingParameters[0] != nullptr) targetMappingParameters[0]->setValue(value);
+	}
+	else
+	{
+		int maxSize = jmin(value.size(),targetMappingParameters.size());
+		for (int i = 0; i < maxSize; i++)
+		{
+			Parameter * p = targetMappingParameters[i];
+			if (p != nullptr)
+			{
+				if (p->value.isArray() && p->value.size() == value.size())
+				{
+					p->setValue(value);
+				}
+				else
+				{
+					p->setValue(i,value[i]);
+				}
+			}
+		}
+	}
+
 	trigger();
 }

@@ -125,14 +125,14 @@ OSCCommandModelArgumentManager::OSCCommandModelArgumentManager() :
 	selectItemWhenCreated = false;
 }
 
-void OSCCommandModelArgumentManager::addItemWithParam(Parameter * p, var data)
+void OSCCommandModelArgumentManager::addItemWithParam(Parameter * p, var data, bool fromUndoableAction)
 {
 	OSCCommandModelArgument * a = new OSCCommandModelArgument("#"+String(items.size()+1),p);
-	addItem(a,data);
+	addItem(a,data, fromUndoableAction);
 }
 
-void OSCCommandModelArgumentManager::addItemFromType(Parameter::Type type, var data)
-{
+void OSCCommandModelArgumentManager::addItemFromType(Parameter::Type type, var data, bool fromUndoableAction)
+{ 
 	Parameter * p = nullptr;
 	String id = String(items.size()+1);
 	
@@ -153,15 +153,15 @@ void OSCCommandModelArgumentManager::addItemFromType(Parameter::Type type, var d
 	}
 	
 	jassert(p != nullptr);
-	addItemWithParam(p,data);
+	addItemWithParam(p,data, fromUndoableAction);
 }
 
-void OSCCommandModelArgumentManager::addItemFromData(var data)
+void OSCCommandModelArgumentManager::addItemFromData(var data, bool fromUndoableAction)
 {
 	String s = data.getProperty("type", "");
 	DBG("add item from data : " << s);
 	if (s.isEmpty()) return;
-	addItemWithParam((Parameter *)ControllableFactory::createControllable(s), data);
+	addItemWithParam((Parameter *)ControllableFactory::createControllable(s), data, fromUndoableAction);
 }
 
 void OSCCommandModelArgumentManager::autoRenameItems()

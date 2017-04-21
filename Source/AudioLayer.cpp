@@ -13,7 +13,7 @@
 #include "AudioLayerTimeline.h"
 
 
-AudioLayer::AudioLayer(Sequence * _sequence) :
+AudioLayer::AudioLayer(Sequence * _sequence, var params) :
 	SequenceLayer(_sequence, "New Audio Layer"),
 	audioModule(nullptr),
 	currentProcessor(nullptr),
@@ -235,8 +235,8 @@ void AudioLayerProcessor::processBlock(AudioBuffer<float>& buffer, MidiBuffer & 
 	int numBufferSamples = buffer.getNumSamples();
  
 	//int samplePosition = layer->currentClip->clipSamplePos;// *layer->currentClip->sampleRate;
-	
 	//int maxSamples = jmin<int>(buffer.getNumSamples(), clipBuffer->getNumSamples() - samplePosition);
+
 	for (int i = 0; i < buffer.getNumChannels(); i++)
 	{
 		int targetChannel = i%clipBuffer->getNumChannels();
