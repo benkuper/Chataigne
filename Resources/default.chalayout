@@ -1,0 +1,104 @@
+{
+  "mainLayout": {
+    "type": 1,
+    "width": 300,
+    "height": 300,
+    "direction": 2,
+    "shifters": [
+      {
+        "type": 1,
+        "width": 300,
+        "height": 300,
+        "direction": 1,
+        "shifters": [
+          {
+            "type": 1,
+            "width": 318,
+            "height": 300,
+            "direction": 2,
+            "shifters": [
+              {
+                "type": 0,
+                "width": 237,
+                "height": 578,
+                "currentContent": "Modules",
+                "tabs": [
+                  {
+                    "name": "Modules"
+                  }
+                ]
+              },
+              {
+                "type": 0,
+                "width": 302,
+                "height": 549,
+                "currentContent": "Sequences",
+                "tabs": [
+                  {
+                    "name": "Sequences"
+                  }
+                ]
+              },
+              {
+                "type": 0,
+                "width": 302,
+                "height": 576,
+                "currentContent": "Logger",
+                "tabs": [
+                  {
+                    "name": "Logger"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": 0,
+            "width": 953,
+            "height": 699,
+            "currentContent": "State Machine",
+            "tabs": [
+              {
+                "name": "State Machine"
+              },
+              {
+                "name": "Time Machine"
+              }
+            ]
+          },
+          {
+            "type": 1,
+            "width": 300,
+            "height": 300,
+            "direction": 2,
+            "shifters": [
+              {
+                "type": 0,
+                "width": 341,
+                "height": 428,
+                "currentContent": "Inspector",
+                "tabs": [
+                  {
+                    "name": "Inspector"
+                  }
+                ]
+              },
+              {
+                "type": 0,
+                "width": 320,
+                "height": 21,
+                "currentContent": "OSC Models",
+                "tabs": [
+                  {
+                    "name": "OSC Models"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "windows": null
+}
