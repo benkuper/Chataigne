@@ -33,7 +33,7 @@ public:
 	
 	
 	void resized() override;
-	void buttonClicked(Button * b);
+    void buttonClicked(Button * b) override;
 };
 
 

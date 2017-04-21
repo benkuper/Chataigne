@@ -52,7 +52,7 @@ public:
 
 	virtual void controllableFeedbackUpdate(Controllable *) {};
 
-	void childBoundsChanged(Component *);
+	void childBoundsChanged(Component *) override;
 };
 
 

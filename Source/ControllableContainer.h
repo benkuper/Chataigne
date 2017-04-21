@@ -67,7 +67,10 @@ public:
 	};
 
 	ContainerAsyncEvent(EventType _type, ControllableContainer* _source) : type(_type), source(_source), targetContainer(nullptr), targetControllable(nullptr) {}
-	ContainerAsyncEvent(EventType _type, ControllableContainer* _source, Controllable *_target) : type(_type), source(_source),targetControllable(_target),targetContainer(nullptr) {}
+	ContainerAsyncEvent(EventType _type, ControllableContainer* _source, Controllable *_target) :
+    type(_type), source(_source),
+    targetContainer(nullptr),
+    targetControllable(_target){}
 	ContainerAsyncEvent(EventType _type, ControllableContainer* _source, ControllableContainer *_target) : type(_type), source(_source),targetContainer(_target),targetControllable(nullptr) {}
 
 	EventType type;

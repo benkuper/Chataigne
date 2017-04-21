@@ -12,8 +12,8 @@
 #include "Style.h"
 
 ProgressWindow::ProgressWindow(const String &_title,ProgressNotifier * notifier) :
-	progressParam("Progress", "Progression", 0, 0, 1),
 	titleLabel("title",""),
+    progressParam("Progress", "Progression", 0, 0, 1),
 ProgressListener(notifier)
 {
 	DBG("progressParam " << progressParam.floatValue());

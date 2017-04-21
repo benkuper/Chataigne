@@ -96,6 +96,8 @@ void ShapeShifterContainer::removeShifter(ShapeShifter * shifter, bool deleteShi
 ShapeShifterPanel * ShapeShifterContainer::insertPanelAt(ShapeShifterPanel * panel, int index)
 {
 	insertShifterAt(panel, index);
+    
+    DBG("container add panel listener " << panel->header.tabs[0]->content->contentName);
 	panel->addShapeShifterPanelListener(this);
 	return panel;
 }
@@ -310,6 +312,7 @@ void ShapeShifterContainer::panelDetach(ShapeShifterPanel * panel)
 
 void ShapeShifterContainer::panelEmptied(ShapeShifterPanel * panel)
 {
+    DBG("container, panelEmptied ");
 	removeShifter(panel, true, false);
 }
 

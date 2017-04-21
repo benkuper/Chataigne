@@ -170,13 +170,10 @@ void ShapeShifterPanel::detachTab(ShapeShifterPanelTab * tab, bool createNewPane
 			setCurrentContent(contents[juce::jlimit<int>(0,contents.size()-1, contents.indexOf(content))]);
 		}else
 		{
+            DBG("panel emtied, num listeners " << listeners.size());
 			listeners.call(&Listener::panelEmptied, this);
 		}
 	}
-
-
-
-
 
 }
 

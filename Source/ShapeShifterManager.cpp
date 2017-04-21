@@ -76,6 +76,7 @@ ShapeShifterPanel * ShapeShifterManager::createPanel(ShapeShifterContent * conte
 
 	//if(content != nullptr) panel->setSize(content->getWidth(), content->getHeight());
 
+    DBG("Add shape shifter panel listener from manager");
 	panel->addShapeShifterPanelListener(this);
 	openedPanels.add(panel);
 	return panel;
@@ -286,9 +287,11 @@ void ShapeShifterManager::loadDefaultLayoutFile()
 		loadLayoutFromFile(defaultFile);
 	} else
 	{
-		//String defaultLayoutFileData = String::fromUTF8(BinaryData::default_flaplayout);
-		//loadLayout(JSON::parse(defaultLayoutFileData));
-	}
+		String defaultLayoutFileData = String::fromUTF8(BinaryData::default_chalayout);
+		loadLayout(JSON::parse(defaultLayoutFileData));
+        File layoutFolder = File::getSpecialLocation(File::SpecialLocationType::userDocumentsDirectory).getChildFile(appSubFolder);
+        saveCurrentLayoutToFile(layoutFolder.getChildFile("default.chalayout"));
+    }
 }
 
 void ShapeShifterManager::saveCurrentLayout()

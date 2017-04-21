@@ -93,7 +93,10 @@ public:
 	};
 
 	ListenerList<Listener> listeners;
-	void addShapeShifterPanelListener(Listener* newListener) { listeners.add(newListener); }
+    void addShapeShifterPanelListener(Listener* newListener) {
+        if(header.tabs.size() > 0) DBG("Panel, addListener (" << header.tabs[0]->content->contentName<< ")");
+        listeners.add(newListener);
+    }
 	void removeShapeShifterPanelListener(Listener* listener) { listeners.remove(listener); }
 
 

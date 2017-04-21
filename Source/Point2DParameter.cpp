@@ -13,8 +13,7 @@
 
 Point2DParameter::Point2DParameter(const String & niceName, const String & description, bool enabled) :
 	Parameter(POINT2D, niceName, description, 0, 0, 1, enabled),
-	x(0), y(0),
-	minX(0),maxX(1),minY(0),maxY(1)
+	minX(0),minY(0),maxX(1),maxY(1),x(0), y(0)
 {
 
 	value = var();

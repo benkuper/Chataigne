@@ -18,6 +18,9 @@ namespace BinaryData
     extern const char*   check_png;
     const int            check_pngSize = 15786;
 
+    extern const char*   default_chalayout;
+    const int            default_chalayoutSize = 2493;
+
     extern const char*   edit_png;
     const int            edit_pngSize = 16204;
 
@@ -52,7 +55,7 @@ namespace BinaryData
     extern const char* namedResourceList[];
 
     // Number of elements in the namedResourceList array.
-    const int namedResourceListSize = 13;
+    const int namedResourceListSize = 14;
 
     // If you provide the name of one of the binary resource variables above, this function will
     // return the corresponding data and its size (or a null pointer if the name isn't found).

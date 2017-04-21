@@ -124,7 +124,9 @@ void Outliner::childStructureChanged(ControllableContainer *)
 OutlinerItem::OutlinerItem(WeakReference<ControllableContainer> _container) :
 	InspectableContent(_container),
 	itemName(_container->niceName),
-	container(_container), controllable(nullptr), isContainer(true)
+	isContainer(true),
+    container(_container),
+    controllable(nullptr)
 {
 	container->addControllableContainerListener(this);
 }
@@ -132,7 +134,9 @@ OutlinerItem::OutlinerItem(WeakReference<ControllableContainer> _container) :
 OutlinerItem::OutlinerItem(WeakReference<Controllable> _controllable) :
 	InspectableContent(_controllable),
 	itemName(_controllable->niceName),
-	container(nullptr), controllable(_controllable), isContainer(false)
+	isContainer(false),
+    container(nullptr),
+    controllable(_controllable)
 {
 }
 

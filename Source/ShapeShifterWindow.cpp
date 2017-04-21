@@ -13,16 +13,18 @@
 #include "Style.h"
 
 ShapeShifterWindow::ShapeShifterWindow(ShapeShifterPanel * _panel, Rectangle<int> bounds) :
-	panel(_panel),
 	ResizableWindow(_panel->currentContent->contentName, true),
-	dragMode(PANEL)
+	dragMode(PANEL),
+    panel(_panel),
+    checking(false)
 {
 	setTopLeftPosition(bounds.getTopLeft());
 	_panel->setBounds(bounds);
 
 	panel->setPreferredWidth(getWidth());
 	panel->setPreferredHeight(getHeight());
-
+    
+    DBG("window -> addShapeShifterListener " << panel->header.tabs[0]->content->contentName);
 	panel->addShapeShifterPanelListener(this); //is it necessary ?
 
 	setContentNonOwned(_panel,true);
@@ -43,7 +45,7 @@ ShapeShifterWindow::ShapeShifterWindow(ShapeShifterPanel * _panel, Rectangle<int
 ShapeShifterWindow::~ShapeShifterWindow()
 {
 	removeMouseListener(this);
-	panel->removeShapeShifterPanelListener(this);
+	//panel->removeShapeShifterPanelListener(this);
 
 }
 
@@ -87,7 +89,16 @@ void ShapeShifterWindow::mouseDrag(const MouseEvent & e)
 void ShapeShifterWindow::mouseUp(const MouseEvent &)
 {
 	panel->setTransparentBackground(false);
-	ShapeShifterManager::getInstance()->checkDropOnCandidateTarget(panel);
+    
+    checking = true;
+	bool found = ShapeShifterManager::getInstance()->checkDropOnCandidateTarget(panel);
+    checking = false;
+    if(found)
+    {
+        panel->removeShapeShifterPanelListener(this);
+        ShapeShifterManager::getInstance()->closePanelWindow(this, false);
+        
+    }
 }
 
 
@@ -109,5 +120,5 @@ var ShapeShifterWindow::getCurrentLayout()
 
 void ShapeShifterWindow::panelEmptied(ShapeShifterPanel *)
 {
-	ShapeShifterManager::getInstance()->closePanelWindow(this, true);
+	if(!checking) ShapeShifterManager::getInstance()->closePanelWindow(this, true);
 }

@@ -18,7 +18,7 @@ const Identifier scriptPtrIdentifier = "_ptr";
 class ScriptTarget
 {
 public:
-	ScriptTarget(const String &name, void * ptr) : scriptTargetName(name), thisPtr((int64)ptr) {}
+	ScriptTarget(const String &name, void * ptr) : thisPtr((int64)ptr),scriptTargetName(name){}
 	virtual ~ScriptTarget() {}
 
 	int64 thisPtr;

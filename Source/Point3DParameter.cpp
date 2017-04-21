@@ -13,8 +13,9 @@ Author:  bkupe
 
 Point3DParameter::Point3DParameter(const String & niceName, const String & description, bool enabled) :
 	Parameter(POINT3D, niceName, description, 0, 0, 1, enabled),
-	x(0), y(0),z(0),
-	minX(0), maxX(1), minY(0), maxY(1), minZ(0),maxZ(1)
+	minX(0), minY(0), minZ(0),
+    maxX(1), maxY(1), maxZ(1),
+    x(0), y(0),z(0)
 {
 
 	value = var();
