@@ -31,7 +31,7 @@
               {
                 "type": 0,
                 "width": 302,
-                "height": 549,
+                "height": 1235,
                 "currentContent": "Sequences",
                 "tabs": [
                   {
@@ -42,7 +42,7 @@
               {
                 "type": 0,
                 "width": 302,
-                "height": 576,
+                "height": 85,
                 "currentContent": "Logger",
                 "tabs": [
                   {
@@ -53,22 +53,41 @@
             ]
           },
           {
-            "type": 0,
-            "width": 953,
-            "height": 699,
-            "currentContent": "State Machine",
-            "tabs": [
+            "type": 1,
+            "width": 300,
+            "height": 300,
+            "direction": 2,
+            "shifters": [
               {
-                "name": "State Machine"
+                "type": 0,
+                "width": 300,
+                "height": 499,
+                "currentContent": "State Machine",
+                "tabs": [
+                  {
+                    "name": "State Machine"
+                  },
+                  {
+                    "name": "Dashboard"
+                  }
+                ]
               },
               {
-                "name": "Time Machine"
+                "type": 0,
+                "width": 883,
+                "height": 939,
+                "currentContent": "Time Machine",
+                "tabs": [
+                  {
+                    "name": "Time Machine"
+                  }
+                ]
               }
             ]
           },
           {
             "type": 1,
-            "width": 300,
+            "width": 391,
             "height": 300,
             "direction": 2,
             "shifters": [
