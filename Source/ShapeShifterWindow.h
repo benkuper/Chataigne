@@ -37,6 +37,8 @@ public:
 
 	DragMode dragMode;
 
+	void clear();
+
 	void userTriedToCloseWindow() override;
 
 	virtual var getCurrentLayout();

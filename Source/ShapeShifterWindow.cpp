@@ -24,7 +24,7 @@ ShapeShifterWindow::ShapeShifterWindow(ShapeShifterPanel * _panel, Rectangle<int
 	panel->setPreferredWidth(getWidth());
 	panel->setPreferredHeight(getHeight());
     
-    DBG("window -> addShapeShifterListener " << panel->header.tabs[0]->content->contentName);
+    //DBG("window -> addShapeShifterListener " << panel->header.tabs[0]->content->contentName);
 	panel->addShapeShifterPanelListener(this); //is it necessary ?
 
 	setContentNonOwned(_panel,true);
@@ -45,7 +45,7 @@ ShapeShifterWindow::ShapeShifterWindow(ShapeShifterPanel * _panel, Rectangle<int
 ShapeShifterWindow::~ShapeShifterWindow()
 {
 	removeMouseListener(this);
-	//panel->removeShapeShifterPanelListener(this);
+	clear();
 
 }
 
@@ -93,14 +93,23 @@ void ShapeShifterWindow::mouseUp(const MouseEvent &)
     checking = true;
 	bool found = ShapeShifterManager::getInstance()->checkDropOnCandidateTarget(panel);
     checking = false;
+
     if(found)
     {
-        panel->removeShapeShifterPanelListener(this);
-        ShapeShifterManager::getInstance()->closePanelWindow(this, false);
-        
+		clear();
+        ShapeShifterManager::getInstance()->closePanelWindow(this, false);   
     }
 }
 
+
+void ShapeShifterWindow::clear()
+{
+	if (panel != nullptr)
+	{
+		panel->removeShapeShifterPanelListener(this);
+		panel = nullptr;
+	}
+}
 
 void ShapeShifterWindow::userTriedToCloseWindow()
 {

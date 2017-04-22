@@ -140,6 +140,7 @@ void ShapeShifterManager::closePanelWindow(ShapeShifterWindow * window, bool doR
 {
 	if (window == nullptr) return;
 	ShapeShifterPanel * p = window->panel;
+	window->clear();
 	window->removeFromDesktop();
 	if (doRemovePanel) removePanel(p);
 	openedWindows.removeObject(window, true);
@@ -186,10 +187,9 @@ bool ShapeShifterManager::checkDropOnCandidateTarget(WeakReference<ShapeShifterP
 	if (currentCandidatePanel == nullptr) return false;
 
 	bool result = currentCandidatePanel->attachPanel(panel);
-	if (result) closePanelWindow(getWindowForPanel(panel),false);
-
+	//if (result) closePanelWindow(getWindowForPanel(panel),false);
 	setCurrentCandidatePanel(nullptr);
-	return true;
+	return result;
 }
 
 ShapeShifterWindow * ShapeShifterManager::getWindowForPanel(ShapeShifterPanel * panel)

@@ -1,11 +1,11 @@
 /*
-  ==============================================================================
+==============================================================================
 
-	ShapeShifterContainer.cpp
-	Created: 2 May 2016 3:11:25pm
-	Author:  bkupe
+ShapeShifterContainer.cpp
+Created: 2 May 2016 3:11:25pm
+Author:  bkupe
 
-  ==============================================================================
+==============================================================================
 */
 
 #include "ShapeShifterContainer.h"
@@ -94,8 +94,8 @@ void ShapeShifterContainer::removeShifter(ShapeShifter * shifter, bool deleteShi
 ShapeShifterPanel * ShapeShifterContainer::insertPanelAt(ShapeShifterPanel * panel, int index)
 {
 	insertShifterAt(panel, index);
-    
-    DBG("container add panel listener " << panel->header.tabs[0]->content->contentName);
+
+	DBG("container add panel listener " << panel->header.tabs[0]->content->contentName);
 	panel->addShapeShifterPanelListener(this);
 	return panel;
 }
@@ -213,14 +213,14 @@ void ShapeShifterContainer::resized()
 
 	int defaultSpace = 0;
 
-	if (noShiftersAreFlexible && numShifters >= 2) //auto set middle to flexible
+	if (noShiftersAreFlexible && numShifters >= 2)
 	{
 		numDefaultSpace = jmax(1, numShifters - 2);
 		reservedPreferredSpace = (direction == HORIZONTAL) ? shifters[0]->preferredWidth : shifters[0]->preferredHeight;
-		if (numShifters >= 3) reservedPreferredSpace += (direction == HORIZONTAL) ? shifters[numShifters-1]->preferredWidth : shifters[numShifters-1]->preferredHeight;
+		if (numShifters >= 3) reservedPreferredSpace += (direction == HORIZONTAL) ? shifters[numShifters - 1]->preferredWidth : shifters[numShifters - 1]->preferredHeight;
 	}
 
-	if(numDefaultSpace > 0) defaultSpace = (totalSpace - reservedPreferredSpace) / numDefaultSpace - gap*(numShifters - 1);
+	if (numDefaultSpace > 0) defaultSpace = (totalSpace - reservedPreferredSpace) / numDefaultSpace - gap*(numShifters - 1);
 
 	int panelIndex = 0;
 	for (auto &p : shifters)
@@ -230,7 +230,7 @@ void ShapeShifterContainer::resized()
 
 		int targetSpace = defaultSpace;
 		bool targetSpaceFromPreferred = false;
-		
+
 		if (noShiftersAreFlexible)
 		{
 			targetSpaceFromPreferred = panelIndex == 0 || (panelIndex == numShifters - 1 && numShifters >= 3);
@@ -241,7 +241,7 @@ void ShapeShifterContainer::resized()
 		{
 			targetSpaceFromPreferred = !p->isFlexible();
 		}
-		
+
 		if (targetSpaceFromPreferred)
 		{
 			targetSpace = jmax(tp - backOffsetAmount, (direction == HORIZONTAL ? p->minWidth : p->minHeight));
@@ -322,13 +322,13 @@ void ShapeShifterContainer::grabberGrabUpdate(GapGrabber * gg, int dist)
 	switch (direction)
 	{
 	case HORIZONTAL:
-		if (!secondShifter->isFlexible())  secondShifter->setPreferredWidth(secondShifter->preferredWidth - dist);
-		else firstShifter->setPreferredWidth(firstShifter->preferredWidth + dist);
+		if (!firstShifter->isFlexible()) firstShifter->setPreferredWidth(firstShifter->preferredWidth + dist);
+		else  secondShifter->setPreferredWidth(secondShifter->preferredWidth - dist);
 		break;
 
 	case VERTICAL:
-		if (!secondShifter->isFlexible())  secondShifter->setPreferredHeight(secondShifter->preferredHeight - dist);
-		else firstShifter->setPreferredHeight(firstShifter->preferredHeight + dist);
+		if (!firstShifter->isFlexible()) firstShifter->setPreferredHeight(firstShifter->preferredHeight + dist);
+		else secondShifter->setPreferredHeight(secondShifter->preferredHeight - dist);
 		break;
 
 	case NONE:
@@ -337,6 +337,8 @@ void ShapeShifterContainer::grabberGrabUpdate(GapGrabber * gg, int dist)
 		jassertfalse;
 		break;
 	}
+
+
 
 	resized();
 }
@@ -351,7 +353,7 @@ void ShapeShifterContainer::panelDetach(ShapeShifterPanel * panel)
 
 void ShapeShifterContainer::panelEmptied(ShapeShifterPanel * panel)
 {
-    DBG("container, panelEmptied ");
+	DBG("container, panelEmptied ");
 	removeShifter(panel, true, false);
 }
 
