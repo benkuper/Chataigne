@@ -12,6 +12,7 @@
 #define INSPECTABLESELECTOR_H_INCLUDED
 
 #include "Inspectable.h"
+#include "InspectableSelectionManager.h"
 
 class InspectableSelector : 
 	public Component
@@ -22,15 +23,18 @@ public:
 	~InspectableSelector();
 
 	Component * selectablesParent;
-	Inspector * targetInspector;
 
 	Array<Component *> selectables;
 	Array<Inspectable * > inspectables;
 
 	Rectangle<int> selectionBounds;
 
-	void startSelection(Component * parent, Array<Component *> selectables, bool clearSelection = true);
-	void startSelection(Component * parent, Array<Component *> selectables, Array<Inspectable *> relatedInspectables, bool clearSelection = true); //If custom UI needed, use that function to provide different set of ui and inspectables (must be the same size !!)
+	//memory of current Selection
+	InspectableSelectionManager * currentSelectionManager;
+	bool clearSelectionAtEnd;
+
+	void startSelection(Component * parent, Array<Component *> selectables, InspectableSelectionManager * manager = nullptr, bool clearSelection = true);
+	void startSelection(Component * parent, Array<Component *> selectables, Array<Inspectable *> relatedInspectables, InspectableSelectionManager * manager = nullptr, bool clearSelection = true); //If custom UI needed, use that function to provide different set of ui and inspectables (must be the same size !!)
 	void endSelection(bool confirmSelection = true);
 
 	void paint(Graphics &g) override;

@@ -105,7 +105,7 @@ void Inspector::inspectablesSelectionChanged()
 
 	Inspectable * newI = InspectableSelectionManager::getInstance()->currentInspectables[0];
 	if (!newI->showInspectorOnSelect) return;
-	if (newI->targetInspector == this || (newI->targetInspector == nullptr && isMainInspector)) setCurrentInspectable(newI);
+	setCurrentInspectable(newI);
 }
 
 InspectorUI::InspectorUI(bool isMainInspector) :

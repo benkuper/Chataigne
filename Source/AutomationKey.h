@@ -13,6 +13,7 @@
 
 #include "BaseItem.h"
 #include "Easing.h"
+#include "InspectableSelectionManager.h"
 
 class AutomationKey :
 	public BaseItem
@@ -31,7 +32,11 @@ public:
 	void setEasing(Easing::Type t);
 
 	float getValue(AutomationKey * nextKey, const float &position);
+
+	void setSelectionManager(InspectableSelectionManager * ism) override;
+
 	void onContainerParameterChangedInternal(Parameter *) override;
+
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;

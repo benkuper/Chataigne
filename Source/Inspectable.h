@@ -14,16 +14,15 @@
 #include "JuceHeader.h"
 
 class InspectableEditor;
-class Inspector;
+class InspectableSelectionManager;
 
 class Inspectable
 {
 public:
-	Inspectable(const String &_inspectableType = "none");
+	Inspectable();
 	virtual ~Inspectable();
 
-	Inspector * targetInspector;
-	const String inspectableType;
+	InspectableSelectionManager * selectionManager;
 
 	bool isSelected;
 	bool isSelectable;
@@ -34,6 +33,9 @@ public:
 
 	virtual void selectThis();
 	virtual void setSelected(bool value);
+
+
+	virtual void setSelectionManager(InspectableSelectionManager * selectionManager);
 
 	void setPreselected(bool value);
 

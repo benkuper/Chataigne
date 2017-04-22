@@ -10,6 +10,7 @@
 
 #include "Automation.h"
 #include "AutomationEditor.h"
+#include "InspectableSelectionManager.h"
 
 AutomationKeyComparator Automation::comparator;
 
@@ -21,6 +22,10 @@ Automation::Automation() :
 	position = addFloatParameter("Position", "The current position in the automation. Used for automatic retrieve value and feedback.", 0, 0, positionMax);
 	value = addFloatParameter("Value", "The current value, depending on the position", 0, 0, 1);
 	value->isControllableFeedbackOnly = true;
+
+	selectItemWhenCreated = false;
+
+	selectionManager = new InspectableSelectionManager();
 }
 
 Automation::~Automation()
@@ -91,6 +96,7 @@ float Automation::getValueForPosition(float pos)
 AutomationKey * Automation::createItem()
 {
 	AutomationKey * k = new AutomationKey();
+	k->setSelectionManager(selectionManager);
 	k->position->setRange(0, positionMax);
 	return k;
 }
@@ -108,6 +114,8 @@ void Automation::controllableFeedbackUpdate(ControllableContainer * cc, Controll
 	AutomationKey * t = dynamic_cast<AutomationKey *>(cc);
 	if (t != nullptr)
 	{
+		value->setValue(getValueForPosition(position->floatValue()));
+
 		if (c == t->position)
 		{
 			int index = items.indexOf(t);

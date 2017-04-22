@@ -10,8 +10,10 @@
 
 #include "AutomationKey.h"
 
+
 AutomationKey::AutomationKey()
 {
+
 	showInspectorOnSelect = false;
 
 	position = addFloatParameter("Position", "Position of the key", 0, 0, 5);
@@ -29,6 +31,7 @@ AutomationKey::AutomationKey()
 	setEasing(Easing::LINEAR);
 }
 
+
 AutomationKey::~AutomationKey()
 {
 }
@@ -39,7 +42,6 @@ void AutomationKey::setEasing(Easing::Type t)
 	if (easing != nullptr)
 	{
 		if (easing->type == t) return;
-
 		removeChildControllableContainer(easing);
 	}
 
@@ -64,6 +66,7 @@ void AutomationKey::setEasing(Easing::Type t)
 
 	if (easing != nullptr)
 	{
+		easing->selectionManager = selectionManager;
 		addChildControllableContainer(easing);
 	}
 }
@@ -75,6 +78,12 @@ float AutomationKey::getValue(AutomationKey * nextKey, const float & _pos)
 	jassert(relPos >= 0 && relPos <= 1);
 
 	return easing->getValue(value->floatValue(), nextKey->value->floatValue(), relPos);
+}
+
+void AutomationKey::setSelectionManager(InspectableSelectionManager * ism)
+{
+	BaseItem::setSelectionManager(ism);
+	if (easing != nullptr) easing->setSelectionManager(ism);
 }
 
 void AutomationKey::onContainerParameterChangedInternal(Parameter * p)

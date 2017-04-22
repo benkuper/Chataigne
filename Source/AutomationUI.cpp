@@ -14,9 +14,10 @@
 AutomationUI::AutomationUI(Automation * _automation) :
 	BaseManagerUI("Automation",_automation,false),
 	firstROIKey(0),lastROIKey(0), currentPosition(0),
-	currentUI(nullptr)
+	currentUI(nullptr),
+	valueBGColor(Colours::white.withAlpha(.1f))
 {
-	InspectableSelectionManager::getInstance()->addSelectionListener(this);
+	manager->selectionManager->addSelectionListener(this);
 
 	animateItemOnAdd = false;
 
@@ -31,7 +32,7 @@ AutomationUI::AutomationUI(Automation * _automation) :
 
 AutomationUI::~AutomationUI()
 {
-	InspectableSelectionManager::getInstance()->removeSelectionListener(this);
+	manager->selectionManager->removeSelectionListener(this);
 
 	manager->removeAsyncContainerListener(this);
 }
@@ -97,7 +98,7 @@ void AutomationUI::paint(Graphics & g)
 	//int count = 0;
 	int ty = (1 - currentValue) * getHeight();
 	Rectangle<int> vr = getLocalBounds().withTop(ty);
-	g.setColour(Colours::purple.withAlpha(.1f));
+	g.setColour(valueBGColor);
 	g.fillRect(vr);
 	g.setColour(Colours::orange);
 	g.drawEllipse(Rectangle<int>(0, 0, 3,3).withCentre(Point<int>(getXForPos(currentPosition), ty)).toFloat(), 1);
@@ -252,7 +253,8 @@ void AutomationUI::mouseDown(const MouseEvent & e)
 				removeChildComponent(transformer);
 				transformer = nullptr;
 			}
-			InspectableSelector::getInstance()->startSelection(this,selectables,inspectables);
+
+			InspectableSelector::getInstance()->startSelection(this, selectables, inspectables,manager->selectionManager);
 		}
 	}
 	
@@ -324,11 +326,11 @@ void AutomationUI::inspectablesSelectionChanged()
 	}
 
 	Array<AutomationKeyUI *> uiSelection;
-	if (InspectableSelectionManager::getInstance()->currentInspectables.size() >= 2)
+	if (manager->selectionManager->currentInspectables.size() >= 2)
 	{
 
 	}
-	for (auto &i : InspectableSelectionManager::getInstance()->currentInspectables)
+	for (auto &i : manager->selectionManager->currentInspectables)
 	{
 		AutomationKey * k = static_cast<AutomationKey *>(i);
 		if (k == nullptr) continue;

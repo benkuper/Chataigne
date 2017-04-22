@@ -34,6 +34,9 @@ public:
 
 	float currentPosition;
 	float currentValue;
+
+	Colour valueBGColor;
+
 	AutomationKeyUI * currentUI;
 
 	ScopedPointer<AutomationMultiKeyTransformer> transformer;

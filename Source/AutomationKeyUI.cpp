@@ -35,6 +35,7 @@ void AutomationKeyUI::setEasingUI(EasingUI * eui)
 	{
 		removeChildComponent(easingUI);
 	}
+
 	easingUI = eui;
 
 	if (easingUI != nullptr)

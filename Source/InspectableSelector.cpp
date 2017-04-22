@@ -17,7 +17,8 @@ juce_ImplementSingleton(InspectableSelector)
 
 InspectableSelector::InspectableSelector() :
 	selectablesParent(nullptr),
-	targetInspector(nullptr)
+	clearSelectionAtEnd(false),
+	currentSelectionManager(nullptr)
 {
 	setRepaintsOnMouseActivity(true);
 }
@@ -27,7 +28,7 @@ InspectableSelector::~InspectableSelector()
 
 }
 
-void InspectableSelector::startSelection(Component * parent, Array<Component *> _selectables, bool clearSelection)
+void InspectableSelector::startSelection(Component * parent, Array<Component *> _selectables, InspectableSelectionManager * manager, bool clearSelection)
 {
 	Array<Inspectable *> arr;
 	for (auto &s : selectables)
@@ -36,10 +37,10 @@ void InspectableSelector::startSelection(Component * parent, Array<Component *> 
 		arr.add(ic->inspectable);
 	}
 
-	startSelection(parent, _selectables, arr, clearSelection);
+	startSelection(parent, _selectables, arr, manager, clearSelection);
 }
 
-void InspectableSelector::startSelection(Component * parent, Array<Component*> _selectables, Array<Inspectable*> relatedInspectables, bool clearSelection)
+void InspectableSelector::startSelection(Component * parent, Array<Component*> _selectables, Array<Inspectable*> relatedInspectables, InspectableSelectionManager * manager, bool clearSelection)
 {
 	jassert(_selectables.size() == relatedInspectables.size());
 
@@ -47,7 +48,11 @@ void InspectableSelector::startSelection(Component * parent, Array<Component*> _
 	selectables = _selectables;
 	inspectables = relatedInspectables;
 
-	if (clearSelection) InspectableSelectionManager::getInstance()->clearSelection();
+	clearSelectionAtEnd = clearSelection;
+	currentSelectionManager = manager != nullptr ? manager : InspectableSelectionManager::getInstance();
+
+	if (clearSelection) currentSelectionManager->clearSelection();
+
 	selectablesParent->addAndMakeVisible(this);
 	selectablesParent->addMouseListener(this, false);
 	setBounds(selectablesParent->getLocalBounds());
@@ -76,8 +81,8 @@ void InspectableSelector::endSelection(bool confirmSelection)
 			s->setPreselected(false);
 		}
 	}
-
-	if(confirmSelection) InspectableSelectionManager::getInstance()->selectInspectables(selection);
+	
+	if(confirmSelection) currentSelectionManager->selectInspectables(selection,clearSelectionAtEnd);
 
 	if (selectedComponents.size() > 0) listeners.call(&SelectorListener::selectionEnded, selectedComponents);
 	

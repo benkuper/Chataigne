@@ -14,6 +14,8 @@
 #include "AutomationKey.h"
 #include "BaseManager.h"
 
+class InspectableSelectionManager;
+
 class AutomationKeyComparator
 {
 public:
@@ -41,6 +43,8 @@ public:
 	//Current position
 	FloatParameter * position;
 	FloatParameter * value;
+
+	ScopedPointer<InspectableSelectionManager> selectionManager;
 
 	float getValueForPosition(float pos);
 

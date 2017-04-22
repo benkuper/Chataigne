@@ -1,3 +1,4 @@
+
 /*
   ==============================================================================
 
@@ -22,10 +23,10 @@ MappingLayer::MappingLayer(Sequence *_sequence, var params) :
 
 	mode = addEnumParameter("Mode", "Automation Mode, 1D, 2D, 3D or Color");
 	
-	mode->addOption("1D", MODE_1D);
-	mode->addOption("2D", MODE_2D);
-	mode->addOption("3D", MODE_3D);
-	mode->addOption("Color", MODE_COLOR);
+	mode->addOption("Single Value", MODE_1D);
+	mode->addOption("Point 2D (XY)", MODE_2D);
+	mode->addOption("Point 3D (XYZ)", MODE_3D);
+	mode->addOption("Color (RGBA)", MODE_COLOR);
 	
 	mode->setValueWithData((Mode)(int)params.getProperty("mode", MODE_1D));
 
@@ -115,17 +116,24 @@ void MappingLayer::setupMappingForCurrentMode()
 void MappingLayer::updateCurvesValues()
 {
 	
-	if (getMappingMode() == MODE_COLOR)
+	Mode mappingMode = getMappingMode();
+	switch (mappingMode)
 	{
+	case MODE_COLOR:
 		((ColorParameter *)curveValue)->setColor(timeColorManager->currentColor->getColor());
-	}
-	else
-	{
-		var cv; 
+		break;
+
+	case MODE_1D:
+		curveValue->setValue(automations[0]->value->floatValue());
+		break;
+
+	case MODE_2D:
+	case MODE_3D:
+		var cv;
 		for (auto &a : automations) cv.append(a->value->floatValue());
 		curveValue->setValue(cv);
+		break;
 	}
-	
 	
 }
 
@@ -176,6 +184,18 @@ void MappingLayer::onContainerParameterChangedInternal(Parameter * p)
 	}
 }
 
+void MappingLayer::controllableFeedbackUpdate(ControllableContainer * cc, Controllable * c)
+{
+	bool doUpdate = false;
+	for (auto &a : automations) if (a->value == c)
+	{
+		doUpdate = true;
+		break;
+	}
+
+	if(doUpdate) updateCurvesValues();
+}
+
 void MappingLayer::sequenceTotalTimeChanged(Sequence *)
 {
 	if (getMappingMode() == MODE_COLOR)
@@ -199,7 +219,7 @@ void MappingLayer::sequenceCurrentTimeChanged(Sequence *, float, bool)
 
 	for(auto &a : automations) a->position->setValue(sequence->currentTime->floatValue());
 	
-	updateCurvesValues();
+	//updateCurvesValues();
 }
 
 InspectableEditor * MappingLayer::getEditor(bool isRoot)
