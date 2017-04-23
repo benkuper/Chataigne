@@ -33,7 +33,6 @@ public:
 	WeakReference<State> activeState;
 	void setActiveState(State * s);
 
-	State * addItem(const Point<float> &initialPosition);
 	void addItemInternal(State * s, var data) override;
 	void removeItemInternal(State * s) override;
 

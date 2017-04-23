@@ -17,7 +17,8 @@
 
 class StateTransitionUI :
 	public BaseItemMinimalUI<StateTransition>,
-	public StateViewUI::Listener
+	public StateViewUI::Listener,
+	public StateViewUI::ItemUIListener
 {
 public:
 	StateTransitionUI(StateTransition * st, StateViewUI * sourceSUI = nullptr, StateViewUI * destSUI = nullptr);
@@ -38,8 +39,8 @@ public:
 
 	bool hitTest(int x, int y) override;
 
-	void editorGrabbed(StateViewUI *) override;
-	void editorMiniModeChanged(StateViewUI *) override;
+	void itemUIGrabbed(BaseItemUI<State> * ui) override;
+	void itemUIMiniModeChanged(BaseItemUI<State>  *) override;
 	void editorSelectionChanged(StateViewUI *) override;
 };
 

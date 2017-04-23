@@ -18,26 +18,10 @@ State::State() :
 	active = addBoolParameter("Active", "If active, the state's actions and mappings will be effective, otherwise this state won't do anything.", false);
 	permanent = addBoolParameter("Permanent", "If permanent, the state won't be affected by the state machine logic, i.e. deactivating when another state is activated.",false);
 
-	viewUIPosition = addPoint2DParameter("Position", "Position in State Machine view");
-	viewUIPosition->setBounds(-100, -100,100,100);
-	viewUIPosition->hideInEditor = true;
-	viewUIPosition->hideInOutliner = true;
-	viewUIPosition->isTargettable = false;
-
-	viewUISize = addPoint2DParameter("Size", "Size in State Machine view");
-	viewUISize->setBounds(30,60,500,500);
-	viewUISize->setPoint(200, 250);
-	viewUISize->hideInEditor = true;
-	viewUISize->hideInOutliner = true;
-	viewUISize->isTargettable = false;
-
-	miniMode = addBoolParameter("Mini Mode", "Set the mini mode",false);
-	miniMode->hideInOutliner = true;
-	miniMode->hideInEditor = true;
-	miniMode->isTargettable = false;
-
 	addChildControllableContainer(&am);
 	addChildControllableContainer(&mm);
+
+	viewUISize->setPoint(200, 300);
 }
 
 State::~State()

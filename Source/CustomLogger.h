@@ -36,7 +36,7 @@ public :
 
     class FileWriter : public Listener{
     public:
-        FileWriter(){fileLog = FileLogger::createDefaultAppLogger("F.L.A.P.", "log", "");}
+        FileWriter(){fileLog = FileLogger::createDefaultAppLogger("Chataigne", "log", "");}
 
         void newMessage(const String& s) override{if (fileLog) {fileLog->logMessage(s);}}
         String getFilePath(){return fileLog->getLogFile().getFullPathName();}

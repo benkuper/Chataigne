@@ -12,7 +12,7 @@
 #define DASHBOARD_H_INCLUDED
 
 #include "BaseItem.h"
-#include "DashboardItemManager.h"
+#include "DashboardPanelManager.h"
 
 class Dashboard :
 	public BaseItem
@@ -21,7 +21,7 @@ public:
 	Dashboard();
 	~Dashboard();
 
-	DashboardItemManager itemManager;
+	DashboardPanelManager panelManager;
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;

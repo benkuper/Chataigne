@@ -25,7 +25,7 @@ public:
 
 	Action * action;
 
-	void resized() override;
+	void resizedInternalHeader(Rectangle<int> &r) override;
 
 	ScopedPointer<BoolToggleUI> validUI;
 

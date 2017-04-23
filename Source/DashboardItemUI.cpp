@@ -12,80 +12,55 @@
 
 DashboardItemUI::DashboardItemUI(DashboardItem * item) :
 	BaseItemUI(item),
-	resizer(this,nullptr)
+	currentControllable(nullptr)
 {
-	addAndMakeVisible(&resizer);
-	addAndMakeVisible(&grabber);
-
-	setSize((int)item->viewUISize->getPoint().x, (int)item->viewUISize->getPoint().y);
+	setControllableUI(item->target->target);
+	setSize(100, 100);
 }
 
 DashboardItemUI::~DashboardItemUI()
 {
+	setControllableUI(nullptr);
 }
 
-void DashboardItemUI::resized()
+void DashboardItemUI::setControllableUI(Controllable * c)
 {
-	Rectangle<int> r = getLocalBounds();
+	if (c == currentControllable) return;
 
-	//Grabber
-	grabber.setBounds(r.removeFromTop(grabberHeight));
-	grabber.repaint();
-
-	resizer.setBounds(r.removeFromBottom(10).withLeft(getWidth() - 10));
-
-	Rectangle<int> h = r.removeFromTop(headerHeight);
-	r.removeFromTop(headerGap);
-
-	//enabledBT->setBounds(h.removeFromLeft(h.getHeight()));
-	//h.removeFromLeft(2);
-	removeBT->setBounds(h.removeFromRight(h.getHeight()));
-	h.removeFromRight(2);
-	nameUI->setBounds(h);
-
-	r.removeFromTop(2);
-
-	resizedInternalContent(r);
-
-	item->viewUISize->setPoint((float)getWidth(), (float)getHeight() + 12); //should look into that +12, if not there, size shrinks between saves
-
-
-}
-
-void DashboardItemUI::mouseDown(const MouseEvent & e)
-{
-	BaseItemMinimalUI::mouseDown(e);
-	if (e.mods.isLeftButtonDown())
+	if (currentControllable != nullptr)
 	{
-		if (e.eventComponent == &grabber) posAtMouseDown = item->viewUIPosition->getPoint();
-	}
-}
-
-void DashboardItemUI::mouseDrag(const MouseEvent & e)
-{
-	BaseItemMinimalUI::mouseDrag(e);
-	if (e.mods.isLeftButtonDown() && e.eventComponent == &grabber)
-	{
-		Point<float> targetPos = posAtMouseDown + e.getOffsetFromDragStart().toFloat() / Point<float>((float)getParentComponent()->getWidth(), (float)getParentComponent()->getHeight());
-		item->viewUIPosition->setPoint(targetPos);
+		currentControllable->removeInspectableListener(this);
+		removeChildComponent(targetUI);
+		targetUI = nullptr;
 	}
 
+	currentControllable = c;
+
+	if (currentControllable != nullptr)
+	{
+		currentControllable->addInspectableListener(this);
+		targetUI = currentControllable->createDefaultUI();
+		addAndMakeVisible(targetUI);
+	}
+	resized();
+}
+
+void DashboardItemUI::resizedInternalContent(Rectangle<int>& r)
+{
+	if (targetUI != nullptr) targetUI->setBounds(r);
+}
+
+void DashboardItemUI::inspectableDestroyed(Inspectable * i)
+{
+	BaseItemUI::inspectableDestroyed(i);
+	if (i == currentControllable) setControllableUI(nullptr);
 }
 
 void DashboardItemUI::controllableFeedbackUpdateInternal(Controllable * c)
 {
-	if (c == item->viewUIPosition) itemUIListeners.call(&ItemUIListener::itemUIGrabbed, this);
-}
-
-
-void DashboardItemUI::Grabber::paint(Graphics & g)
-{
-	Rectangle<int> r = getLocalBounds();
-	g.setColour(BG_COLOR.brighter(.3f));
-	const int numLines = 3;
-	for (int i = 0; i < numLines; i++)
+	BaseItemUI::controllableFeedbackUpdateInternal(c);
+	if (c == item->target)
 	{
-		float th = (i + 1)*(float)getHeight() / ((float)numLines + 1);
-		g.drawLine(0, th, (float)getWidth(), th, 1);
+		setControllableUI(item->target->target);
 	}
 }

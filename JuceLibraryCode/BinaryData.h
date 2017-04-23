@@ -19,7 +19,7 @@ namespace BinaryData
     const int            check_pngSize = 15786;
 
     extern const char*   default_chalayout;
-    const int            default_chalayoutSize = 2493;
+    const int            default_chalayoutSize = 3031;
 
     extern const char*   edit_png;
     const int            edit_pngSize = 16204;

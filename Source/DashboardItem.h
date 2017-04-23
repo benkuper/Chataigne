@@ -12,6 +12,7 @@
 #define DASHBOARDITEM_H_INCLUDED
 
 #include "BaseItem.h"
+#include "TargetParameter.h"
 
 class DashboardItemUI;
 
@@ -22,10 +23,9 @@ public:
 	DashboardItem(bool canHaveScripts = false);
 	~DashboardItem();
 
-	Point2DParameter * viewUIPosition;
-	Point2DParameter * viewUISize;
+	TargetParameter * target;
 
-	virtual DashboardItemUI * getItemUI();
+	void onContainerParameterChangedInternal(Parameter * p) override;
 };
 
 

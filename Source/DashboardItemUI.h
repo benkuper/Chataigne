@@ -12,7 +12,7 @@
 #define DASHBOARDITEMUI_H_INCLUDED
 
 #include "BaseItemUI.h"
-#include "DashboardTargetItem.h"
+#include "DashboardItem.h"
 
 class DashboardItemUI :
 	public BaseItemUI<DashboardItem>
@@ -21,42 +21,15 @@ public:
 	DashboardItemUI(DashboardItem * item);
 	~DashboardItemUI();
 
-	ResizableCornerComponent resizer;
-	const int grabberHeight = 10;
+	ScopedPointer<ControllableUI> targetUI;
 
-	//interaction
-	Point<float> posAtMouseDown;
+	Controllable * currentControllable;
+	void setControllableUI(Controllable * c);
 
-	void resized() override;
-	virtual void resizedInternalTarget(Rectangle<int> &) {};
+	void resizedInternalContent(Rectangle<int> &r) override;
 
-	void mouseDown(const MouseEvent &e) override;
-	void mouseDrag(const MouseEvent &e) override;
-	
-	void controllableFeedbackUpdateInternal(Controllable *) override;
-
-	class Grabber : public Component
-	{
-	public:
-		Grabber() {}
-		~Grabber() {}
-		void paint(Graphics &g) override;
-
-		JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Grabber)
-	};
-	Grabber grabber;
-
-	class ItemUIListener
-	{
-	public:
-		virtual ~ItemUIListener() {}
-		virtual void itemUIGrabbed(DashboardItemUI *) {}
-	};
-
-	ListenerList<ItemUIListener> itemUIListeners;
-	void addItemUIListener(ItemUIListener* newListener) { itemUIListeners.add(newListener); }
-	void removeItemUIListener(ItemUIListener* listener) { itemUIListeners.remove(listener); }
-
+	void inspectableDestroyed(Inspectable * i) override;
+	void controllableFeedbackUpdateInternal(Controllable * c) override;
 };
 
 

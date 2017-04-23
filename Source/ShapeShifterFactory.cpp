@@ -20,7 +20,7 @@
 #include "TimeMachineView.h"
 #include "Outliner.h"
 #include "UserOSCCommandModelManagerUI.h"
-#include "DashboardPanel.h"
+#include "DashboardManagerView.h"
 
 ShapeShifterContent * ShapeShifterFactory::createContentForIndex(PanelName pn)
 {
@@ -64,8 +64,8 @@ ShapeShifterContent * ShapeShifterFactory::createContentForIndex(PanelName pn)
 		return new UserOSCCommandModelManagerWindow(contentName);
 		break;
 
-	case DashboardPanelPane:
-		return new DashboardPanel(contentName);
+	case DashboardManagerPanel:
+		return new DashboardManagerView(contentName);
 		break;
 
 	default:

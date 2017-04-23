@@ -11,15 +11,14 @@
 #include "StateViewUI.h"
 
 StateViewUI::StateViewUI(State * state) :
-	BaseItemUI<State>(state),
 	amui(&state->am),
 	mmui(&state->mm),
-	resizer(this,nullptr),
+	BaseItemUI<State>(state, ResizeMode::ALL, true),
 	transitionReceptionMode(false)
 {
 	activeUI = state->active->createToggle();
 	permanentUI = state->permanent->createToggle();
-	
+
 	addAndMakeVisible(activeUI);
 	addAndMakeVisible(permanentUI);
 
@@ -30,18 +29,15 @@ StateViewUI::StateViewUI(State * state) :
 	amui.addManagerUIListener(this);
 	mmui.addManagerUIListener(this);
 
-	addAndMakeVisible(&grabber);
+	if (!item->miniMode->boolValue())
+	{
+		addAndMakeVisible(&amui);
+		addAndMakeVisible(&mmui);
+	}
 
-	contentContainer.addAndMakeVisible(&amui);
-	contentContainer.addAndMakeVisible(&mmui);
-
-	//force color here
 	bgColor = item->active->boolValue() ? (item->permanent->boolValue() ? GREEN_COLOR : FEEDBACK_COLOR).darker(.5f) : BG_COLOR.brighter(.1f);
-
-	setSize(item->viewUISize->getPoint().x,item->viewUISize->getPoint().y);
-	updateMiniModeUI();
-	
 }
+	
 
 StateViewUI::~StateViewUI()
 {
@@ -52,24 +48,23 @@ void StateViewUI::setTransitionReceptionMode(bool value)
 	transitionReceptionMode = value;
 	amui.setEnabled(!transitionReceptionMode);
 	mmui.setEnabled(!transitionReceptionMode);
-	grabber.setEnabled(!transitionReceptionMode);
+	grabber->setEnabled(!transitionReceptionMode);
 }
 
 void StateViewUI::updateMiniModeUI()
 {
+	BaseItemUI::updateMiniModeUI();
+
 	if (item->miniMode->boolValue())
 	{
-		removeChildComponent(&contentContainer);
-		removeChildComponent(&resizer);
-		setSize(getWidth(), grabberHeight + headerHeight + 10);
+		removeChildComponent(&amui);
+		removeChildComponent(&mmui);
 	} else
 	{
-		addAndMakeVisible(&contentContainer);
-		addAndMakeVisible(&resizer);
-		setSize(getWidth(), contentContainer.getBottom());
+		addAndMakeVisible(&amui);
+		addAndMakeVisible(&mmui);
 	}
-	
-	stateEditorListeners.call(&Listener::editorMiniModeChanged, this);
+
 }
 
 void StateViewUI::mouseDown(const MouseEvent & e)
@@ -81,10 +76,7 @@ void StateViewUI::mouseDown(const MouseEvent & e)
 		stateEditorListeners.call(&Listener::askFinishTransitionFromUI, this);
 	} else
 	{
-		if (e.mods.isLeftButtonDown())
-		{
-			if (e.eventComponent == &grabber) posAtMouseDown = item->viewUIPosition->getPoint();
-		} else if (e.mods.isRightButtonDown())
+		 if (e.mods.isRightButtonDown() && e.originalComponent != &amui && e.originalComponent != &mmui)
 		{
 			PopupMenu p;
 			p.addItem(1, "Create Transition");
@@ -99,19 +91,6 @@ void StateViewUI::mouseDown(const MouseEvent & e)
 	}	
 }
 
-void StateViewUI::mouseDrag(const MouseEvent & e)
-{
-	if (e.mods.isLeftButtonDown() && e.eventComponent == &grabber)
-	{
-		Point<float> targetPos = posAtMouseDown + e.getOffsetFromDragStart().toFloat() / Point<float>((float)getParentComponent()->getWidth(), (float)getParentComponent()->getHeight());
-		item->viewUIPosition->setPoint(targetPos);
-	}
-}
-
-void StateViewUI::mouseDoubleClick(const MouseEvent &e)
-{
-	if (e.eventComponent == &grabber) item->miniMode->setValue(!item->miniMode->boolValue());
-}
 
 void StateViewUI::paintOverChildren(Graphics & g)
 {
@@ -123,77 +102,54 @@ void StateViewUI::paintOverChildren(Graphics & g)
 	}
 }
 
-void StateViewUI::resized()
+
+void StateViewUI::resizedInternalHeader(Rectangle<int>& r)
 {
-	Rectangle<int> r = getLocalBounds().reduced(2);
-
-	//Grabber
-	grabber.setBounds(r.removeFromTop(grabberHeight));
-	grabber.repaint(); 
-
-	//Resizer
-	if (!item->miniMode->boolValue())
-	{
-		resizer.setBounds(r.removeFromBottom(10).withLeft(getWidth() - 10));
-	}
-
-	//Header
-	Rectangle<int> h = r.removeFromTop(headerHeight);
-	r.removeFromTop(headerGap);
-
-	enabledBT->setBounds(h.removeFromLeft(h.getHeight()));
-	h.removeFromLeft(2);
-	removeBT->setBounds(h.removeFromRight(h.getHeight()));
-	h.removeFromRight(2);
-	permanentUI->setBounds(h.removeFromRight(50));
-	h.removeFromRight(2);
-	activeUI->setBounds(h.removeFromRight(50));
-	h.removeFromRight(2);
-	nameUI->setBounds(h);
-
-	
-	if (!item->miniMode->boolValue())
-	{
-		contentContainer.setBounds(r);
-		Rectangle<int> cr = contentContainer.getLocalBounds();
-		int gap = 4;
-		int amHeight = jmax<int>(amui.getContentHeight(), 30);
-		int mmHeight = jmax<int>(mmui.getContentHeight(), 30);
-
-		item->viewUISize->setPoint(getWidth(), getHeight()+12); //should look into that +12, if not there, size shrinks between saves
-
-		if ((amHeight > cr.getHeight()/2 || mmHeight > cr.getHeight() /2) && amHeight + mmHeight + gap <= cr.getHeight())
-		{
-			if (amHeight > mmHeight)
-			{
-				amui.setBounds(cr.removeFromTop(amHeight));
-				cr.removeFromTop(gap);
-				mmui.setBounds(cr);
-			} else
-			{
-				mmui.setBounds(cr.removeFromBottom(mmHeight));
-				cr.removeFromBottom(gap);
-				amui.setBounds(cr);
-			}
-		} else
-		{
-			amui.setBounds(cr.removeFromTop((cr.getHeight() - gap) / 2));
-			cr.removeFromTop(gap);
-			mmui.setBounds(cr);
-		}
-	} 
+	permanentUI->setBounds(r.removeFromRight(50));
+	r.removeFromRight(2);
+	activeUI->setBounds(r.removeFromRight(50));
+	r.removeFromRight(2);
 }
 
-void StateViewUI::childBoundsChanged(Component *)
+void StateViewUI::resizedInternalContent(Rectangle<int>& r)
 {
+	int gap = 4;
+	int amHeight = jmax<int>(amui.getContentHeight(), 30);
+	int mmHeight = jmax<int>(mmui.getContentHeight(), 30);
+
+
+	if ((amHeight > r.getHeight() / 2 || mmHeight > r.getHeight() / 2) && amHeight + mmHeight + gap <= r.getHeight())
+	{
+		if (amHeight > mmHeight)
+		{
+			amui.setBounds(r.removeFromTop(amHeight));
+			r.removeFromTop(gap);
+			mmui.setBounds(r);
+		} else
+		{
+			mmui.setBounds(r.removeFromBottom(mmHeight));
+			r.removeFromBottom(gap);
+			amui.setBounds(r);
+		}
+	} else
+	{
+		amui.setBounds(r.removeFromTop((r.getHeight() - gap) / 2));
+		r.removeFromTop(gap);
+		mmui.setBounds(r);
+	}
+}
+
+void StateViewUI::childBoundsChanged(Component * c)
+{
+	BaseItemUI::childBoundsChanged(c);
 	resized();
 }
 
 void StateViewUI::controllableFeedbackUpdateInternal(Controllable * c)
 {
-	if (c == item->viewUIPosition) stateEditorListeners.call(&StateViewUI::Listener::editorGrabbed, this);
-	else if (c == item->miniMode) updateMiniModeUI();
-	else if (c == item->active || c == item->permanent)
+	BaseItemUI::controllableFeedbackUpdateInternal(c);
+
+	if (c == item->active || c == item->permanent)
 	{
 		bgColor = item->active->boolValue() ? (item->permanent->boolValue() ? GREEN_COLOR : FEEDBACK_COLOR) : BG_COLOR.brighter(.1f);
 		repaint();
@@ -204,18 +160,4 @@ void StateViewUI::inspectableSelectionChanged(Inspectable * i)
 {
 	BaseItemUI::inspectableSelectionChanged(i);
 	stateEditorListeners.call(&Listener::editorSelectionChanged, this);
-}
-
-//GRABBER
-
-void StateViewUI::Grabber::paint(Graphics & g)
-{
-	Rectangle<int> r = getLocalBounds();
-	g.setColour(BG_COLOR.brighter(.3f));
-	const int numLines = 3;
-	for (int i = 0; i < numLines; i++)
-	{
-		float th = (i + 1)*(float)getHeight() / ((float)numLines + 1);
-		g.drawLine(0, th, (float)getWidth(), th, 1);
-	}
 }

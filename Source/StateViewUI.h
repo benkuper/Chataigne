@@ -32,51 +32,28 @@ public:
 	ActionManagerUI amui;
 	MappingManagerUI mmui;
 
-	ResizableCornerComponent resizer;
-	const int grabberHeight = 10;
-
-	//layout
-	Component contentContainer;
-
-	//interaction
-	Point<float> posAtMouseDown;
-
 	//transition
 	bool transitionReceptionMode;
 	void setTransitionReceptionMode(bool value);
 
-	void updateMiniModeUI();
+	void updateMiniModeUI() override;
 
 	void mouseDown(const MouseEvent &e) override;
-	void mouseDrag(const MouseEvent &e) override;
-	void mouseDoubleClick(const MouseEvent &e) override;
 
 	void paintOverChildren(Graphics &g) override;
 
-	void resized() override;
+	void resizedInternalHeader(Rectangle<int> &r) override;
+	void resizedInternalContent(Rectangle<int> &r) override;
+
 	void childBoundsChanged(Component *) override;
 	void controllableFeedbackUpdateInternal(Controllable *) override;
 
 	void inspectableSelectionChanged(Inspectable *) override;
-
-	class Grabber : public Component
-	{
-	public:
-		Grabber() {}
-		~Grabber() {}
-		void paint(Graphics &g) override;
-		
-		JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Grabber)
-	};
-	Grabber grabber;
-
 	
 	class Listener
 	{
 	public:
 		virtual ~Listener() {}
-		virtual void editorGrabbed(StateViewUI *) {}
-		virtual void editorMiniModeChanged(StateViewUI *) {}
 		virtual void editorSelectionChanged(StateViewUI *) {}
 		virtual void askCreateTransitionFromUI(StateViewUI *) {}
 		virtual void askFinishTransitionFromUI(StateViewUI *) {}

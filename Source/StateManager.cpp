@@ -39,14 +39,6 @@ void StateManager::setActiveState(State * s)
 }
 
 
-
-State * StateManager::addItem(const Point<float>& initialPosition)
-{
-	State * s = BaseManager::addItem();
-	s->viewUIPosition->setPoint(initialPosition);
-	return s;
-}
-
 void StateManager::addItemInternal(State * s, var data)
 {
 	s->addStateListener(this);

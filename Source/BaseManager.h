@@ -30,7 +30,8 @@ public :
 	virtual T * createItem(); //to override if special constructor to use
 	virtual void addItemFromData(var data, bool fromUndoableAction = false); //to be overriden for specific item creation (from data)
 	T* addItem(T * = nullptr, var data = var(), bool fromUndoableAction = false); //if data is not empty, load data
-	
+	T* addItem(const Point<float> initialPosition);
+
 	void removeItem(T *, bool fromUndoableAction = false);
 
 
@@ -257,6 +258,14 @@ T * BaseManager<T>::addItem(T * item, var data, bool fromUndoableAction)
 	if (selectItemWhenCreated) bi->selectThis();
 
 	return item;
+}
+
+template<class T>
+T * BaseManager<T>::addItem(const Point<float> initialPosition)
+{
+	T * i = addItem();
+	i->viewUIPosition->setPoint(initialPosition);
+	return i;
 }
 
 //if data is not empty, load data

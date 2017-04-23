@@ -25,10 +25,7 @@ ActionUI::~ActionUI()
 
 }
 
-void ActionUI::resized()
+void ActionUI::resizedInternalHeader(Rectangle<int>& r)
 {
-	BaseItemUI::resized();
-	Rectangle<int> r = getLocalBounds().withRight(removeBT->getX() - 2).reduced(2);
 	validUI->setBounds(r.removeFromRight(headerHeight));
-	nameUI->setBounds(nameUI->getBounds().withRight(r.getRight()-5));
 }

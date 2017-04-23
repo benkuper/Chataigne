@@ -28,11 +28,6 @@ public:
 	BoolParameter * active;
 	BoolParameter * permanent;
 
-	//UI
-	Point2DParameter * viewUIPosition;
-	Point2DParameter * viewUISize;
-
-	BoolParameter * miniMode;
 
 	//Transition
 	Array<StateTransition *> inTransitions;

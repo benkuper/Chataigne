@@ -1,74 +1,34 @@
 /*
   ==============================================================================
 
-    DashboardPanel.cpp
-    Created: 19 Apr 2017 10:58:11pm
-    Author:  Ben
+	DashboardPanel.cpp
+	Created: 23 Apr 2017 12:20:05pm
+	Author:  Ben
 
   ==============================================================================
 */
 
 #include "DashboardPanel.h"
 
-DashboardPanel::DashboardPanel(const String &contentName) :
-	ShapeShifterContentComponent(contentName),
-	managerUI(DashboardManager::getInstance()),
-	currentDashboard(nullptr)
+DashboardPanel::DashboardPanel() :
+	BaseItem("Panel",true,true)
 {
-	contentIsFlexible = true; 
-	
-	addAndMakeVisible(&managerUI);
-	InspectableSelectionManager::getInstance()->addSelectionListener(this);
-	DashboardManager::getInstance()->addBaseManagerListener(this);
-	
+	viewUISize->setPoint(200, 200);
 }
 
 DashboardPanel::~DashboardPanel()
 {
-	if(DashboardManager::getInstanceWithoutCreating() != nullptr) DashboardManager::getInstance()->removeBaseManagerListener(this);
-	if (InspectableSelectionManager::getInstanceWithoutCreating() != nullptr) InspectableSelectionManager::getInstance()->removeSelectionListener(this);
 }
 
-void DashboardPanel::setCurrentDashboard(Dashboard * d)
+var DashboardPanel::getJSONData()
 {
-	if (currentDashboard == d) return;
-
-	if (view != nullptr)
-	{
-		removeChildComponent(view);
-		view = nullptr;
-	}
-
-	currentDashboard = d;
-
-	if (currentDashboard != nullptr)
-	{
-		view = new DashboardView(&currentDashboard->itemManager);
-		addAndMakeVisible(view);
-	}
-
-	resized();
+	var data = BaseItem::getJSONData();
+	data.getDynamicObject()->setProperty("itemManager", itemManager.getJSONData());
+	return data;
 }
 
-void DashboardPanel::resized()
+void DashboardPanel::loadJSONDataInternal(var data)
 {
-	Rectangle<int> r = getLocalBounds();
-	managerUI.setBounds(r.removeFromLeft(100));
-	if (view != nullptr)
-	{
-		view->setBounds(r);
-	}
-}
-
-void DashboardPanel::inspectablesSelectionChanged()
-{
-	if (InspectableSelectionManager::getInstance()->isEmpty()) return;
-	Dashboard * cc = dynamic_cast<Dashboard *>(InspectableSelectionManager::getInstance()->currentInspectables[0]);
-	if (cc == nullptr) return;
-	setCurrentDashboard(cc);
-}
-
-void DashboardPanel::itemRemoved(Dashboard * d)
-{
-	if (currentDashboard != nullptr && currentDashboard == d) setCurrentDashboard(nullptr);
+	BaseItem::loadJSONDataInternal(data);
+	itemManager.loadJSONData(data.getProperty("itemManager", var()));
 }

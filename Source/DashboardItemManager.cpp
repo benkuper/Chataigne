@@ -9,7 +9,6 @@
 */
 
 #include "DashboardItemManager.h"
-#include "DashboardTargetItem.h"
 
 DashboardItemManager::DashboardItemManager() :
 	BaseManager("Dashboard")
@@ -18,16 +17,4 @@ DashboardItemManager::DashboardItemManager() :
 
 DashboardItemManager::~DashboardItemManager()
 {
-}
-
-DashboardItem * DashboardItemManager::createItem()
-{
-	return new DashboardTargetItem();
-}
-
-DashboardItem * DashboardItemManager::addItem(const Point<float>& initialPosition)
-{
-	DashboardItem * s = BaseManager::addItem();
-	s->viewUIPosition->setPoint(initialPosition);
-	return s;
 }

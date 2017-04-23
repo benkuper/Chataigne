@@ -19,8 +19,9 @@ StateTransitionUI::StateTransitionUI(StateTransition * st, StateViewUI * _source
 	jassert(sourceSUI != nullptr && destSUI != nullptr);
 
 	sourceSUI->addStateViewUIListener(this);
+	sourceSUI->addItemUIListener(this);
 	destSUI->addStateViewUIListener(this);
-
+	destSUI->addItemUIListener(this);
 	setRepaintsOnMouseActivity(true);
 	updateBounds();
 }
@@ -28,7 +29,9 @@ StateTransitionUI::StateTransitionUI(StateTransition * st, StateViewUI * _source
 StateTransitionUI::~StateTransitionUI()
 {
 	sourceSUI->removeStateViewUIListener(this);
+	sourceSUI->removeItemUIListener(this);
 	destSUI->removeStateViewUIListener(this);
+	destSUI->removeItemUIListener(this);
 }
 
 void StateTransitionUI::updateBounds()
@@ -141,13 +144,14 @@ bool StateTransitionUI::hitTest(int x, int y)
 }
 
 
-void StateTransitionUI::editorGrabbed(StateViewUI *)
+
+void StateTransitionUI::itemUIGrabbed(BaseItemUI<State> *)
 {
 	updateBounds();
 	
 }
 
-void StateTransitionUI::editorMiniModeChanged(StateViewUI *)
+void StateTransitionUI::itemUIMiniModeChanged(BaseItemUI<State> *)
 {
 	updateBounds();
 }
@@ -156,3 +160,4 @@ void StateTransitionUI::editorSelectionChanged(StateViewUI *)
 {
 	repaint();
 }
+

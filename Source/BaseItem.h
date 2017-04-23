@@ -25,6 +25,14 @@ public :
 	BoolParameter * enabled;
 	StringParameter * nameParam; 
 
+
+
+	//UI - should move outside data class ? how to save/load if not there 
+	BoolParameter * miniMode;
+	FloatParameter * listUISize; //width or height in a list
+	Point2DParameter * viewUIPosition; //position in a view
+	Point2DParameter * viewUISize; //size in a view
+
 	bool canBeDisabled;
 	bool canHaveScripts;
 

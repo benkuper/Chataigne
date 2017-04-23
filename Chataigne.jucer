@@ -24,8 +24,41 @@
     </GROUP>
     <GROUP id="{31908E9E-F626-E2D6-1A6D-E188C9D72C25}" name="Source">
       <GROUP id="{4B3FD114-4268-0636-928E-6A41D74C7361}" name="Common">
+        <GROUP id="{9CFD8ABC-B151-C9B1-3170-F337A2876DE7}" name="Manager">
+          <GROUP id="{04523331-54D0-EF5C-9ECA-C42754582F66}" name="ui">
+            <FILE id="ttfrRg" name="BaseManagerViewUI.h" compile="0" resource="0"
+                  file="Source/BaseManagerViewUI.h"/>
+            <FILE id="Of2V96" name="BaseItemEditor.cpp" compile="1" resource="0"
+                  file="Source/BaseItemEditor.cpp"/>
+            <FILE id="Y0j3Ph" name="BaseItemEditor.h" compile="0" resource="0"
+                  file="Source/BaseItemEditor.h"/>
+            <FILE id="vXgimL" name="BaseItemMinimalUI.h" compile="0" resource="0"
+                  file="Source/BaseItemMinimalUI.h"/>
+            <FILE id="jCyMQj" name="BaseItemUI.h" compile="0" resource="0" file="Source/BaseItemUI.h"/>
+            <FILE id="NwOzf7" name="GenericManagerEditor.h" compile="0" resource="0"
+                  file="Source/GenericManagerEditor.h"/>
+            <FILE id="nHZFTl" name="BaseManagerShapeShifterUI.h" compile="0" resource="0"
+                  file="Source/BaseManagerShapeShifterUI.h"/>
+            <FILE id="xKEcR5" name="BaseManagerUI.h" compile="0" resource="0" file="Source/BaseManagerUI.h"/>
+          </GROUP>
+          <FILE id="pNWqED" name="BaseManager.h" compile="0" resource="0" file="Source/BaseManager.h"/>
+          <FILE id="NMcRLU" name="BaseItem.cpp" compile="1" resource="0" file="Source/BaseItem.cpp"/>
+          <FILE id="tY0NQO" name="BaseItem.h" compile="0" resource="0" file="Source/BaseItem.h"/>
+        </GROUP>
         <GROUP id="{B059ADB2-3FB7-2FEE-41E6-E469E0906725}" name="Dashboard">
           <GROUP id="{102E32E5-5EA7-1904-2017-9732B1D74903}" name="ui">
+            <FILE id="DQE9Xt" name="DashboardScriptItemUI.cpp" compile="1" resource="0"
+                  file="Source/DashboardScriptItemUI.cpp"/>
+            <FILE id="KT8iIu" name="DashboardScriptItemUI.h" compile="0" resource="0"
+                  file="Source/DashboardScriptItemUI.h"/>
+            <FILE id="p9HNuN" name="DashboardItemManagerUI.cpp" compile="1" resource="0"
+                  file="Source/DashboardItemManagerUI.cpp"/>
+            <FILE id="VyDPRM" name="DashboardItemManagerUI.h" compile="0" resource="0"
+                  file="Source/DashboardItemManagerUI.h"/>
+            <FILE id="jXkQdq" name="DashboardPanelUI.cpp" compile="1" resource="0"
+                  file="Source/DashboardPanelUI.cpp"/>
+            <FILE id="yckVLp" name="DashboardPanelUI.h" compile="0" resource="0"
+                  file="Source/DashboardPanelUI.h"/>
             <FILE id="XewYqs" name="DashboardItemUI.cpp" compile="1" resource="0"
                   file="Source/DashboardItemUI.cpp"/>
             <FILE id="xkWC7W" name="DashboardItemUI.h" compile="0" resource="0"
@@ -34,20 +67,28 @@
                   file="Source/DashboardManagerUI.cpp"/>
             <FILE id="gXv3Rk" name="DashboardManagerUI.h" compile="0" resource="0"
                   file="Source/DashboardManagerUI.h"/>
-            <FILE id="HA35Xo" name="DashboardPanel.cpp" compile="1" resource="0"
-                  file="Source/DashboardPanel.cpp"/>
-            <FILE id="geuz5T" name="DashboardPanel.h" compile="0" resource="0"
-                  file="Source/DashboardPanel.h"/>
-            <FILE id="vSZSzS" name="DashboardTargetItemUI.cpp" compile="1" resource="0"
-                  file="Source/DashboardTargetItemUI.cpp"/>
-            <FILE id="m6GrFk" name="DashboardTargetItemUI.h" compile="0" resource="0"
-                  file="Source/DashboardTargetItemUI.h"/>
+            <FILE id="HA35Xo" name="DashboardView.cpp" compile="1" resource="0"
+                  file="Source/DashboardView.cpp"/>
+            <FILE id="geuz5T" name="DashboardView.h" compile="0" resource="0" file="Source/DashboardView.h"/>
             <FILE id="I3Rubk" name="DashboardUI.cpp" compile="1" resource="0" file="Source/DashboardUI.cpp"/>
             <FILE id="qx01vV" name="DashboardUI.h" compile="0" resource="0" file="Source/DashboardUI.h"/>
-            <FILE id="qyZm1e" name="DashboardView.cpp" compile="1" resource="0"
-                  file="Source/DashboardView.cpp"/>
-            <FILE id="rSrgQc" name="DashboardView.h" compile="0" resource="0" file="Source/DashboardView.h"/>
+            <FILE id="qyZm1e" name="DashboardManagerView.cpp" compile="1" resource="0"
+                  file="Source/DashboardManagerView.cpp"/>
+            <FILE id="rSrgQc" name="DashboardManagerView.h" compile="0" resource="0"
+                  file="Source/DashboardManagerView.h"/>
           </GROUP>
+          <FILE id="YLSLUT" name="DashboardScriptItem.cpp" compile="1" resource="0"
+                file="Source/DashboardScriptItem.cpp"/>
+          <FILE id="IAG1SX" name="DashboardScriptItem.h" compile="0" resource="0"
+                file="Source/DashboardScriptItem.h"/>
+          <FILE id="VqFVPi" name="DashboardPanelManager.cpp" compile="1" resource="0"
+                file="Source/DashboardPanelManager.cpp"/>
+          <FILE id="MHSioL" name="DashboardPanelManager.h" compile="0" resource="0"
+                file="Source/DashboardPanelManager.h"/>
+          <FILE id="cu8uSZ" name="DashboardPanel.cpp" compile="1" resource="0"
+                file="Source/DashboardPanel.cpp"/>
+          <FILE id="dJOd5a" name="DashboardPanel.h" compile="0" resource="0"
+                file="Source/DashboardPanel.h"/>
           <FILE id="ZasXT6" name="Dashboard.cpp" compile="1" resource="0" file="Source/Dashboard.cpp"/>
           <FILE id="BZBiFd" name="Dashboard.h" compile="0" resource="0" file="Source/Dashboard.h"/>
           <FILE id="f2uFCT" name="DashboardItem.cpp" compile="1" resource="0"
@@ -61,10 +102,6 @@
                 file="Source/DashboardManager.cpp"/>
           <FILE id="G2KgFa" name="DashboardManager.h" compile="0" resource="0"
                 file="Source/DashboardManager.h"/>
-          <FILE id="sTKPEV" name="DashboardTargetItem.cpp" compile="1" resource="0"
-                file="Source/DashboardTargetItem.cpp"/>
-          <FILE id="dllcxq" name="DashboardTargetItem.h" compile="0" resource="0"
-                file="Source/DashboardTargetItem.h"/>
         </GROUP>
         <GROUP id="{FA0E78EC-9F83-99D0-4BB9-C686CC8B957D}" name="UI">
           <FILE id="HGTHhK" name="Style.h" compile="0" resource="0" file="Source/Style.h"/>
@@ -517,25 +554,6 @@
                   file="Source/MIDIDeviceParameter.h"/>
             <FILE id="Srx4vB" name="MIDIManager.cpp" compile="1" resource="0" file="Source/MIDIManager.cpp"/>
             <FILE id="TSICfD" name="MIDIManager.h" compile="0" resource="0" file="Source/MIDIManager.h"/>
-          </GROUP>
-          <GROUP id="{9CFD8ABC-B151-C9B1-3170-F337A2876DE7}" name="Manager">
-            <GROUP id="{04523331-54D0-EF5C-9ECA-C42754582F66}" name="ui">
-              <FILE id="Of2V96" name="BaseItemEditor.cpp" compile="1" resource="0"
-                    file="Source/BaseItemEditor.cpp"/>
-              <FILE id="Y0j3Ph" name="BaseItemEditor.h" compile="0" resource="0"
-                    file="Source/BaseItemEditor.h"/>
-              <FILE id="vXgimL" name="BaseItemMinimalUI.h" compile="0" resource="0"
-                    file="Source/BaseItemMinimalUI.h"/>
-              <FILE id="jCyMQj" name="BaseItemUI.h" compile="0" resource="0" file="Source/BaseItemUI.h"/>
-              <FILE id="NwOzf7" name="GenericManagerEditor.h" compile="0" resource="0"
-                    file="Source/GenericManagerEditor.h"/>
-              <FILE id="nHZFTl" name="BaseManagerShapeShifterUI.h" compile="0" resource="0"
-                    file="Source/BaseManagerShapeShifterUI.h"/>
-              <FILE id="xKEcR5" name="BaseManagerUI.h" compile="0" resource="0" file="Source/BaseManagerUI.h"/>
-            </GROUP>
-            <FILE id="pNWqED" name="BaseManager.h" compile="0" resource="0" file="Source/BaseManager.h"/>
-            <FILE id="NMcRLU" name="BaseItem.cpp" compile="1" resource="0" file="Source/BaseItem.cpp"/>
-            <FILE id="tY0NQO" name="BaseItem.h" compile="0" resource="0" file="Source/BaseItem.h"/>
           </GROUP>
           <GROUP id="{797800DA-0DCB-1B89-AF24-83A7716BB83C}" name="Action">
             <GROUP id="{E5695483-8CF1-233B-B7FA-0DB866638800}" name="Consequence">

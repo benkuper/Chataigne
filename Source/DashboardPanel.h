@@ -2,7 +2,7 @@
   ==============================================================================
 
     DashboardPanel.h
-    Created: 19 Apr 2017 10:58:11pm
+    Created: 23 Apr 2017 12:20:05pm
     Author:  Ben
 
   ==============================================================================
@@ -11,32 +11,23 @@
 #ifndef DASHBOARDPANEL_H_INCLUDED
 #define DASHBOARDPANEL_H_INCLUDED
 
-#include "DashboardManagerUI.h"
-#include "DashboardView.h"
-#include "ShapeShifterContent.h"
-#include "InspectableSelectionManager.h"
+#include "DashboardItemManager.h"
+#include "BaseItem.h"
 
 class DashboardPanel :
-	public ShapeShifterContentComponent,
-	public InspectableSelectionManager::Listener,
-	public DashboardManager::Listener
+	public BaseItem
 {
 public:
-	DashboardPanel(const String &contentName);
+	DashboardPanel();
 	~DashboardPanel();
+	
 
-	DashboardManagerUI managerUI;
-	ScopedPointer<DashboardView> view;
+	DashboardItemManager itemManager;
 
-	Dashboard * currentDashboard;
-	void setCurrentDashboard(Dashboard *);
-
-	void resized();
-
-	void inspectablesSelectionChanged();
-
-	void itemRemoved(Dashboard *) override;
+	var getJSONData() override;
+	void loadJSONDataInternal(var data) override;
 };
+
 
 
 #endif  // DASHBOARDPANEL_H_INCLUDED
