@@ -19,6 +19,7 @@ Module::Module(const String &name) :
 	valuesCC("Values"),
 	commandTester("Command Tester",CommandContext::ACTION)
 {
+	commandTester.canBeDisabled = false;
 	canInspectChildContainers = true;
 
 	addChildControllableContainer(&valuesCC);

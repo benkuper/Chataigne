@@ -25,7 +25,7 @@ class Mapping :
 	public Timer
 {
 public:
-	Mapping();
+	Mapping(bool canBeDisabled = true);
 	virtual ~Mapping();
 
 	bool forceDisabled;

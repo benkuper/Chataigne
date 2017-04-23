@@ -9,16 +9,27 @@
       <FILE id="fwyowN" name="add.png" compile="0" resource="1" file="Resources/add.png"/>
       <FILE id="F1lP95" name="cancel.png" compile="0" resource="1" file="Resources/cancel.png"/>
       <FILE id="OC2eSU" name="check.png" compile="0" resource="1" file="Resources/check.png"/>
+      <FILE id="wscVW6" name="checkbox_off.png" compile="0" resource="1"
+            file="Resources/checkbox_off.png"/>
+      <FILE id="roof8H" name="checkbox_off_readonly.png" compile="0" resource="1"
+            file="Resources/checkbox_off_readonly.png"/>
+      <FILE id="ovNASs" name="checkbox_on.png" compile="0" resource="1" file="Resources/checkbox_on.png"/>
+      <FILE id="v1ttDy" name="checkbox_on_readonly.png" compile="0" resource="1"
+            file="Resources/checkbox_on_readonly.png"/>
       <FILE id="vsuOJZ" name="default.chalayout" compile="0" resource="1"
             file="Resources/default.chalayout"/>
       <FILE id="sSw5Yt" name="edit.png" compile="0" resource="1" file="Resources/edit.png"/>
       <FILE id="slREaT" name="file.png" compile="0" resource="1" file="Resources/file.png"/>
       <FILE id="nVz6Li" name="icon.png" compile="0" resource="1" file="Resources/icon.png"/>
       <FILE id="WlJm0v" name="in.png" compile="0" resource="1" file="Resources/in.png"/>
+      <FILE id="A952C8" name="nextcue.png" compile="0" resource="1" file="Resources/nextcue.png"/>
       <FILE id="NkuJtC" name="out.png" compile="0" resource="1" file="Resources/out.png"/>
+      <FILE id="otwIvC" name="playpause.png" compile="0" resource="1" file="Resources/playpause.png"/>
       <FILE id="ndrCCq" name="power.png" compile="0" resource="1" file="Resources/power.png"/>
+      <FILE id="S9TDqN" name="prevcue.png" compile="0" resource="1" file="Resources/prevcue.png"/>
       <FILE id="dCi7hz" name="reload.png" compile="0" resource="1" file="Resources/reload.png"/>
       <FILE id="MfpZ5J" name="settings.png" compile="0" resource="1" file="Resources/settings.png"/>
+      <FILE id="Umk8sJ" name="stop.png" compile="0" resource="1" file="Resources/stop.png"/>
       <FILE id="jZoDQ1" name="target.png" compile="0" resource="1" file="Resources/target.png"/>
       <FILE id="q5DIE7" name="uncheck.png" compile="0" resource="1" file="Resources/uncheck.png"/>
     </GROUP>

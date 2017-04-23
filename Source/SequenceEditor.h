@@ -30,10 +30,10 @@ public:
 	Component panelContainer;
 	Component timelineContainer;
 
-	SequenceTransportUI transportUI;
 	SequenceTimelineNavigationUI navigationUI;
 	SequenceLayerPanelManagerUI panelManagerUI;
 	SequenceLayerTimelineManagerUI timelineManagerUI;
+	ScopedPointer<SequenceTransportUI> transportUI;
 
 	//layout
 	const float headerHeight = 50;

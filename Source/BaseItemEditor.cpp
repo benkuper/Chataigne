@@ -54,7 +54,7 @@ void BaseItemEditor::paint(Graphics & g)
 	if (transparentBG) return;
 	Rectangle<int> r = getLocalBounds();
 	if (paintHeaderOnly) r.setHeight((int)headerHeight);
-	Colour c = (item->canBeDisabled && item->enabled->boolValue()) ? BG_COLOR.brighter().withAlpha(.3f) : BG_COLOR.darker().withAlpha(.6f);
+	Colour c = (item->canBeDisabled && !item->enabled->boolValue()) ? BG_COLOR.darker().withAlpha(.6f): BG_COLOR.brighter().withAlpha(.3f);
 	g.setColour(c);
 	g.fillRoundedRectangle(r.toFloat(), 2);
 

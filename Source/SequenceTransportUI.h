@@ -13,6 +13,7 @@
 
 #include "Sequence.h"
 #include "FloatParameterLabelUI.h"
+#include "FloatSliderUI.h"
 
 class SequenceTransportUI :
 	public Component,
@@ -24,9 +25,12 @@ public:
 
 	Sequence * sequence;
 	TimeLabel timeLabel;
-
-
-
+	
+	ScopedPointer<TriggerImageUI> togglePlayUI;
+	ScopedPointer<TriggerImageUI> stopUI;
+	ScopedPointer<TriggerImageUI> prevCueUI;
+	ScopedPointer<TriggerImageUI> nextCueUI;
+	
 	void paint(Graphics &g) override;
 	void resized() override;
 

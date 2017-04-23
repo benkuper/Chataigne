@@ -18,6 +18,7 @@ StateTransitionUI::StateTransitionUI(StateTransition * st, StateViewUI * _source
 {
 	jassert(sourceSUI != nullptr && destSUI != nullptr);
 
+
 	sourceSUI->addStateViewUIListener(this);
 	sourceSUI->addItemUIListener(this);
 	destSUI->addStateViewUIListener(this);

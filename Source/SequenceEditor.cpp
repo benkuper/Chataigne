@@ -14,14 +14,14 @@ SequenceEditor::SequenceEditor(Sequence * _sequence) :
 	sequence(_sequence),
 	panelManagerUI(_sequence->layerManager),
 	timelineManagerUI(_sequence->layerManager),
-	transportUI(_sequence),
+	transportUI(new SequenceTransportUI(_sequence)),
 	navigationUI(_sequence),
 	panelWidth(200)
 {
 	addAndMakeVisible(panelContainer);
 	addAndMakeVisible(timelineContainer);
 	
-	panelContainer.addAndMakeVisible(&transportUI);
+	panelContainer.addAndMakeVisible(transportUI);
 	panelContainer.addAndMakeVisible(&panelManagerUI);
 	
 	timelineContainer.addAndMakeVisible(&navigationUI);
@@ -58,7 +58,7 @@ void SequenceEditor::resized()
 	Rectangle<int> panelR = panelContainer.getLocalBounds();
 	Rectangle<int> timelineR = timelineContainer.getLocalBounds();
 
-	transportUI.setBounds(panelR.removeFromTop(headerHeight));
+	transportUI->setBounds(panelR.removeFromTop(headerHeight));
 	navigationUI.setBounds(timelineR.removeFromTop(headerHeight));
 
 	panelManagerUI.setBounds(panelR);

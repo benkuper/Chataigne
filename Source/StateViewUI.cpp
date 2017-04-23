@@ -107,9 +107,9 @@ void StateViewUI::paintOverChildren(Graphics & g)
 
 void StateViewUI::resizedInternalHeader(Rectangle<int>& r)
 {
-	permanentUI->setBounds(r.removeFromRight(50));
+	permanentUI->setBounds(r.removeFromRight(80).reduced(0,2));
 	r.removeFromRight(2);
-	activeUI->setBounds(r.removeFromRight(50));
+	activeUI->setBounds(r.removeFromRight(50).reduced(0,2));
 	r.removeFromRight(2);
 }
 

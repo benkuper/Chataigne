@@ -54,16 +54,42 @@ float TimeCueManager::getNearestCueForTime(float time)
 	result = items[0]->time->floatValue();
 	int numItems = items.size();
 
-	DBG(result);
 	for (int i = 1; i < numItems; i++)
 	{
 		float newTime = items[i]->time->floatValue();
-		DBG(newTime);
 		float newDiff = abs(time - newTime);
 		if (newDiff > diffTime) break;
 		diffTime = newDiff;
 		result = newTime;
 	}
+	return result;
+}
+
+float TimeCueManager::getNextCueForTime(float time)
+{
+	int numItems = items.size();
+	float result = time;
+	for (int i = numItems - 1; i >= 0; i--)
+	{
+		float t = items[i]->time->floatValue();
+		if (t <= time) break;
+		result = t;
+	}
+
+	return result;
+}
+
+float TimeCueManager::getPrevCueForTime(float time, float goToPreviousThreshold)
+{
+	int numItems = items.size();
+	float result = time;
+	for (int i = 0; i < numItems; i++)
+	{
+		float t = items[i]->time->floatValue();
+		if (t > time-goToPreviousThreshold) break;
+		result = t;
+	}
+
 	return result;
 }
 

@@ -36,6 +36,8 @@ public:
 	Trigger * pauseTrigger;
 	Trigger * stopTrigger;
 	Trigger * togglePlayTrigger;
+	Trigger * prevCue;
+	Trigger*  nextCue;
 
 	BoolParameter * isPlaying;
 

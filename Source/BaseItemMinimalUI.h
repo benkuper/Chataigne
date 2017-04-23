@@ -62,6 +62,9 @@ BaseItemMinimalUI<T>::BaseItemMinimalUI(T * _item) :
 	removeOnCtrlDown(false),
 	removeOnDelKey(true)
 {
+
+	setWantsKeyboardFocus(true);
+
 	addMouseListener(this, true);
 	getBaseItem()->addAsyncContainerListener(this);
 
@@ -85,6 +88,8 @@ void BaseItemMinimalUI<T>::mouseDown(const MouseEvent & e)
 template<class T>
 bool BaseItemMinimalUI<T>::keyPressed(const KeyPress & e)
 {
+	DBG("Key pressed here ! " << getBaseItem()->niceName);
+
 	if (removeOnDelKey && (e.getKeyCode() == e.deleteKey || e.getKeyCode() == e.backspaceKey) && inspectable->isSelected)
 	{
 		getBaseItem()->remove();

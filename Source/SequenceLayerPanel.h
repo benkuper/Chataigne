@@ -27,7 +27,6 @@ public:
 	void paintOverChildren(Graphics &g) override;
 	void resized() override;
 	void resizedInternalHeader(Rectangle<int> &r) override;
-	ResizableBorderComponent resizer;
 	
 	void controllableFeedbackUpdateInternal(Controllable *) override;
 

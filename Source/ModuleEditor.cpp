@@ -31,9 +31,9 @@ ModuleEditor::~ModuleEditor()
 
 void ModuleEditor::resizedInternalHeader(Rectangle<int>& r)
 {
-	logOutgoingUI->setBounds(r.removeFromRight(60));
+	logOutgoingUI->setBounds(r.removeFromRight(90).reduced(2));
 	r.removeFromRight(2);
-	logIncomingUI->setBounds(r.removeFromRight(60));
+	logIncomingUI->setBounds(r.removeFromRight(90).reduced(2));
 	r.reduce(5, 0);
 
 }

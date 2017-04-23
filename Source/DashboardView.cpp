@@ -14,7 +14,6 @@ DashboardView::DashboardView(DashboardPanelManager * manager) :
 	BaseManagerViewUI("Dashboard",manager)
 {
 	addItemText = "Add Item";
-	setWantsKeyboardFocus(true);
 
 	addExistingItems(true);
 }

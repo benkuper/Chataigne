@@ -14,13 +14,19 @@
 #include "ParameterUI.h"
 
 
-class BoolToggleUI : public ParameterUI
+class BoolToggleUI :
+	public ParameterUI
 {
 public:
     BoolToggleUI(Parameter * parameter);
     virtual ~BoolToggleUI();
 
+	Image offImage;
+	Image onImage;
+
     bool invertVisuals;
+
+	void setImages(Image onImage, Image offImage);
 
     void paint(Graphics &g) override;
     void mouseDown(const MouseEvent &e) override;

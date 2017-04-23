@@ -27,11 +27,15 @@ public:
 	ImageButton * getAddBT();
 	ImageButton * getFileBT();
 	ImageButton * getEditBT();
-	
+
 	Image getInImage();
 	Image getOutImage();
 	Image getReloadImage();
-	
+	Image getPlayImage();
+	Image getStopImage();
+	Image getPrevCueImage();
+	Image getNextCueImage();
+
 	ImageButton * getSetupBTImage(const Image & image);
 	ImageButton * getToggleBTImage(const Image &image);
 };

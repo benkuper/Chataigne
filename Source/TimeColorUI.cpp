@@ -19,7 +19,6 @@ TimeColorUI::TimeColorUI(TimeColor * item) :
 	colorUI = item->color->createColorParamUI();
 	addAndMakeVisible(colorUI);
 	colorUI->addMouseListener(this, false);
-	colorUI->addKeyListener(this);
 }
 
 TimeColorUI::~TimeColorUI()
@@ -52,24 +51,5 @@ void TimeColorUI::resized()
 void TimeColorUI::mouseDown(const MouseEvent & e)
 {
 	BaseItemMinimalUI::mouseDown(e);
-	setWantsKeyboardFocus(true);
-	grabKeyboardFocus();
-	setWantsKeyboardFocus(false);
 	
-}
-
-
-void TimeColorUI::controllableFeedbackUpdateInternal(Controllable * c)
-{
-	if (c == item->color)
-	{
-		//bgColor = item->color->getColor();
-		//repaint();
-	}
-}
-
-bool TimeColorUI::keyPressed(const KeyPress & key, Component *)
-{
-	DBG("here !");
-	return BaseItemMinimalUI::keyPressed(key);
 }

@@ -38,26 +38,26 @@ BaseItem::BaseItem(const String &name, bool _canBeDisabled, bool _canHaveScripts
 
 	//For UI
 	miniMode = addBoolParameter("Mini Mode", "Set the mini mode", false);
-	//miniMode->hideInOutliner = true;
-	//miniMode->hideInEditor = true;
+	miniMode->hideInOutliner = true;
+	miniMode->hideInEditor = true;
 	miniMode->isTargettable = false;
 
 	listUISize = addFloatParameter("List Size", "Size in list", 0, 0, 500);
-	//listUISize->hideInEditor = true;
-	//listUISize->hideInOutliner = true;
+	listUISize->hideInEditor = true;
+	listUISize->hideInOutliner = true;
 	listUISize->isTargettable = false;
 
 	viewUIPosition = addPoint2DParameter("Position", "Position the view");
 	viewUIPosition->setBounds(-100, -100, 100, 100);
-	//viewUIPosition->hideInEditor = true;
-	//viewUIPosition->hideInOutliner = true;
+	viewUIPosition->hideInEditor = true;
+	viewUIPosition->hideInOutliner = true;
 	viewUIPosition->isTargettable = false;
 
 	viewUISize = addPoint2DParameter("Size", "Size in the view");
 	viewUISize->setBounds(30, 60, 500, 500);
 	viewUISize->setPoint(200, 300);
-	//viewUISize->hideInEditor = true;
-	//viewUISize->hideInOutliner = true;
+	viewUISize->hideInEditor = true;
+	viewUISize->hideInOutliner = true;
 	viewUISize->isTargettable = false;
 }
 

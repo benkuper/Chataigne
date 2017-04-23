@@ -162,6 +162,9 @@ BaseManagerUI<M, T, U>::BaseManagerUI(const String & contentName, M * _manager, 
 	managerComparator(_manager),
 	animateItemOnAdd(true)
 {
+	
+	setWantsKeyboardFocus(true);
+
 	highlightColor = LIGHTCONTOUR_COLOR;
 	addItemText = "Add Item";
 

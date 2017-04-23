@@ -19,25 +19,37 @@ Sequence::Sequence() :
 	masterAudioModule(nullptr),
 	hiResAudioTime(0)
 {
-	totalTime = addFloatParameter("Total Time", "Total time of this sequence, in seconds", 30, 1, 3600); //max 1h
-	currentTime = addFloatParameter("Current Time", "Current position in time of this sequence", 0, 0,totalTime->floatValue());
-	playSpeed = addFloatParameter("Play Speed", "Playing speed factor, 1 is normal speed, 2 is double speed and 0.5 is half speed",1,0,10);
-	loopParam = addBoolParameter("Loop", "Whether the sequence plays again from the start when reached the end while playing", false);
-	fps = addIntParameter("FPS", "Frame Per Second.\nDefines the number of times per seconds the sequence is evaluated, the higher the value is, the more previse the calculation will be.\n \
-									This setting also sets how many messages per seconds are sent from layer with automations.", 50, 1, 100);
+	isPlaying = addBoolParameter("Is Playing", "Is the sequence playing ?", false);
+	isPlaying->isControllableFeedbackOnly = true;
+	isPlaying->isEditable = false; 
 	
 	playTrigger = addTrigger("Play", "Play the sequence");
 	stopTrigger = addTrigger("Stop", "Stops the sequence and set the current time at 0.");
 	pauseTrigger = addTrigger("Pause", "Pause the sequence and keep the current time as is.");
 	togglePlayTrigger = addTrigger("TogglePlay", "Toggle between play/pause or play/stop depending on sequence settings");
+	
+	float initTotalTime = 30; //default to 30 seconds, may be in general preferences later
 
+	currentTime = addFloatParameter("Current Time", "Current position in time of this sequence", 0, 0, initTotalTime);
+	currentTime->defaultUI = FloatParameter::TIME;
 
-	viewStartTime = addFloatParameter("View start time", "Start time of the view", 0, 0, totalTime->floatValue() - minViewTime);
-	viewEndTime = addFloatParameter("View end time", "End time of the view", totalTime->floatValue(), minViewTime, totalTime->floatValue());
+	totalTime = addFloatParameter("Total Time", "Total time of this sequence, in seconds", initTotalTime, 1, 3600); //max 1h
+	totalTime->defaultUI = FloatParameter::TIME;
 
-	isPlaying = addBoolParameter("Is Playing", "Is the sequence playing ?", false);
-	isPlaying->isControllableFeedbackOnly = true;
-	isPlaying->isEditable = false;
+	loopParam = addBoolParameter("Loop", "Whether the sequence plays again from the start when reached the end while playing", false);
+	playSpeed = addFloatParameter("Play Speed", "Playing speed factor, 1 is normal speed, 2 is double speed and 0.5 is half speed",1,0,10);
+	fps = addIntParameter("FPS", "Frame Per Second.\nDefines the number of times per seconds the sequence is evaluated, the higher the value is, the more previse the calculation will be.\n \
+									This setting also sets how many messages per seconds are sent from layer with automations.", 50, 1, 100);
+	
+	
+	prevCue = addTrigger("Prev Cue", "Jump to previous cue, if previous cue is less than 1 sec before, jump to the one before that.");
+	nextCue = addTrigger("Next Cue", "Jump to the next cue");
+
+	viewStartTime = addFloatParameter("View start time", "Start time of the view", 0, 0, initTotalTime - minViewTime);
+	viewStartTime->hideInEditor = true;
+
+	viewEndTime = addFloatParameter("View end time", "End time of the view", initTotalTime, minViewTime, initTotalTime);
+	viewEndTime->hideInEditor = true;
 
 	layerManager = new SequenceLayerManager(this);
 	addChildControllableContainer(layerManager);
@@ -168,6 +180,12 @@ void Sequence::onContainerTriggerTriggered(Trigger * t)
 	}else if (t == togglePlayTrigger)
 	{
 		isPlaying->setValue(!isPlaying->boolValue());
+	} else if (t == prevCue)
+	{
+		setCurrentTime(cueManager->getPrevCueForTime(currentTime->floatValue(), 1));
+	} else if (t == nextCue)
+	{
+		setCurrentTime(cueManager->getNextCueForTime(currentTime->floatValue()));
 	}
 }
 

@@ -19,7 +19,6 @@ StateMachineView::StateMachineView(StateManager * _manager) :
 {
 	contentIsFlexible = true;
 	addItemText = "Add State";
-	setWantsKeyboardFocus(true);
 	
 	
 	stmUI = new StateTransitionManagerUI(this, &manager->stm);

@@ -16,8 +16,7 @@
 #include "ColorParameterUI.h"
 
 class TimeColorUI :
-	public BaseItemMinimalUI<TimeColor>,
-	public KeyListener
+	public BaseItemMinimalUI<TimeColor>
 {
 public:
 	TimeColorUI(TimeColor * item);
@@ -30,11 +29,6 @@ public:
 	void resized() override;
 
 	void mouseDown(const MouseEvent &e) override;
-
-	void controllableFeedbackUpdateInternal(Controllable *c) override;
-
-	// Inherited via KeyListener
-	virtual bool keyPressed(const KeyPress & key, Component * originatingComponent) override;
 };
 
 

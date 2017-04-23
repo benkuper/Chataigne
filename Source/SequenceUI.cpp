@@ -13,6 +13,7 @@
 SequenceUI::SequenceUI(Sequence * sequence) :
 	BaseItemUI<Sequence>(sequence,ResizeMode::VERTICAL)
 {
+	minContentHeight = 5;
 
 	timeUI = item->currentTime->createSlider();
 	timeUI->setForceFeedbackOnly(true);

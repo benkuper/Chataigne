@@ -39,6 +39,9 @@ public:
 
 	Array<float> getAllCueTimes(float minTime = 0, float maxTime = 0);
 	float getNearestCueForTime(float time);
+	
+	float getNextCueForTime(float time);
+	float getPrevCueForTime(float time, float goToPreviousThreshold);
 
 	void controllableFeedbackUpdate(ControllableContainer * cc, Controllable * c);
 };

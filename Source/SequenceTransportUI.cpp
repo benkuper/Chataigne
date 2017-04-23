@@ -10,6 +10,7 @@
 
 #include "SequenceTransportUI.h"
 #include "AudioModule.h"
+#include "TriggerImageUI.h"
 
 SequenceTransportUI::SequenceTransportUI(Sequence * _sequence) :
 	sequence(_sequence),
@@ -18,10 +19,28 @@ SequenceTransportUI::SequenceTransportUI(Sequence * _sequence) :
 	timeLabel.maxFontHeight = 16;
 	addAndMakeVisible(&timeLabel);
 	sequence->addSequenceListener(this);
+	 
+	
+	togglePlayUI = sequence->togglePlayTrigger->createImageUI(AssetManager::getInstance()->getPlayImage());
+	stopUI = sequence->stopTrigger->createImageUI(AssetManager::getInstance()->getStopImage());
+	nextCueUI = sequence->nextCue->createImageUI(AssetManager::getInstance()->getNextCueImage());
+	prevCueUI = sequence->prevCue->createImageUI(AssetManager::getInstance()->getPrevCueImage());
+	
+	addAndMakeVisible(togglePlayUI);
+	addAndMakeVisible(stopUI);
+	addAndMakeVisible(nextCueUI);
+	addAndMakeVisible(prevCueUI);
+	
+	
 }
 
 SequenceTransportUI::~SequenceTransportUI()
 {
+	togglePlayUI = nullptr;
+	stopUI = nullptr;
+	nextCueUI = nullptr;
+	prevCueUI = nullptr;
+
 	sequence->removeSequenceListener(this);
 }
 
@@ -40,6 +59,16 @@ void SequenceTransportUI::resized()
 {
 	Rectangle<int> r = getLocalBounds().reduced(2);
 	timeLabel.setBounds(r.removeFromTop(20).removeFromLeft(110));
+	r.removeFromTop(2);
+	
+	
+	Rectangle<int> pr = r.removeFromTop(24);
+	togglePlayUI->setBounds(pr.removeFromLeft(pr.getHeight()));
+	stopUI->setBounds(pr.removeFromLeft(pr.getHeight()));
+	prevCueUI->setBounds(pr.removeFromLeft(pr.getHeight()));
+	nextCueUI->setBounds(pr.removeFromLeft(pr.getHeight()));
+	
+
 }
 
 void SequenceTransportUI::sequenceMasterAudioModuleChanged(Sequence *)

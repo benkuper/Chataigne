@@ -16,8 +16,10 @@
 
 MappingLayer::MappingLayer(Sequence *_sequence, var params) :
 	SequenceLayer(_sequence, "New Automation Layer"),
-	curveValue(nullptr)
+	curveValue(nullptr),
+	mapping(false)
 {
+
 	canInspectChildContainers = true;
 	addChildControllableContainer(&mapping);
 

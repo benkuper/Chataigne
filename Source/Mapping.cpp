@@ -11,8 +11,8 @@
 #include "Mapping.h"
 #include "MappingEditor.h"
 
-Mapping::Mapping() :
-	BaseItem("Mapping"),
+Mapping::Mapping(bool canBeDisabled) :
+	BaseItem("Mapping", canBeDisabled),
 	inputIsLocked(false),
 	forceDisabled(false)
 {
@@ -27,7 +27,7 @@ Mapping::Mapping() :
 	input.addMappingInputListener(this);
 }
 
-Mapping::~Mapping()
+  Mapping::~Mapping()
 {
 }
 
