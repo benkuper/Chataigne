@@ -36,7 +36,8 @@ public:
 	Component * resizer;
 
 	//LAYOUT
-
+	const int margin = 2;
+	int resizerSize;
 	//grabber
 	const int grabberHeight = 10;
 	Point<float> posAtMouseDown;
@@ -104,7 +105,9 @@ BaseItemUI<T>::BaseItemUI(T * _item, ResizeMode _resizeMode, bool _canBeDragged)
 	resizeMode(_resizeMode),
 	canBeDragged(_canBeDragged),
 	resizer(nullptr),
-	headerHeight(16), headerGap(5)
+	headerHeight(16), 
+	headerGap(2),
+	resizerSize(0)
 {
 	
 	nameUI = this->getBaseItem()->nameParam->createStringParameterUI();
@@ -134,10 +137,12 @@ BaseItemUI<T>::BaseItemUI(T * _item, ResizeMode _resizeMode, bool _canBeDragged)
 	{
 	case NONE:
 		break;
+
 	case VERTICAL:
 		edgeResizer = new ResizableEdgeComponent(this, nullptr, ResizableEdgeComponent::bottomEdge);
 		edgeResizer->setAlwaysOnTop(true);
 		addAndMakeVisible(edgeResizer);
+		resizerSize = 4;
 		//resizer = edgeResizer;
 		//setContentSize(getWidth(),(int)item->listUISize->floatValue());
 		break;
@@ -146,6 +151,7 @@ BaseItemUI<T>::BaseItemUI(T * _item, ResizeMode _resizeMode, bool _canBeDragged)
 		edgeResizer = new ResizableEdgeComponent(this, nullptr, ResizableEdgeComponent::rightEdge);
 		edgeResizer->setAlwaysOnTop(true);
 		addAndMakeVisible(edgeResizer);
+		resizerSize = 4;
 		//resizer = edgeResizer;
 		//setContentSize((int)item->listUISize->floatValue(),getHeight());
 		break;
@@ -154,6 +160,7 @@ BaseItemUI<T>::BaseItemUI(T * _item, ResizeMode _resizeMode, bool _canBeDragged)
 		cornerResizer = new ResizableCornerComponent(this, nullptr);
 		cornerResizer->setAlwaysOnTop(true);
 		addAndMakeVisible(cornerResizer);
+		resizerSize = 10;
 		//resizer = cornerResizer;
 		//setContentSize((int)item->viewUISize->getPoint().x, (int)item->viewUISize->getPoint().y);
 		break;
@@ -171,12 +178,13 @@ BaseItemUI<T>::~BaseItemUI()
 template<class T>
 void BaseItemUI<T>::setContentSize(int contentWidth, int contentHeight)
 {
-	int targetHeight = headerHeight + headerGap + contentHeight;
-	int targetWidth = contentWidth;
-	if (resizer != nullptr)
-	{
-		targetHeight += resizer->getHeight();
-	}
+	int targetHeight = headerHeight + headerGap + contentHeight+ margin*2;
+	if (canBeDragged) targetHeight += grabberHeight;
+
+	int targetWidth = contentWidth+margin*2;
+
+	if (resizeMode == VERTICAL || resizeMode == ALL) targetHeight += resizerSize;
+	else if (resizeMode == HORIZONTAL) targetWidth += resizerSize;
 
 	setSize(targetWidth, targetHeight);
 }
@@ -187,7 +195,10 @@ void BaseItemUI<T>::updateMiniModeUI()
 	if (item->miniMode->boolValue())
 	{
 		if(resizer != nullptr) removeChildComponent(resizer);
-		setSize(getWidth(), grabberHeight + headerHeight + 10);
+		int targetHeight = headerHeight + margin * 2;
+		if (canBeDragged) targetHeight += grabberHeight;
+
+		setSize(getWidth(), targetHeight);
 	} else
 	{
 		if(resizer != nullptr) addAndMakeVisible(resizer);
@@ -213,7 +224,7 @@ void BaseItemUI<T>::resized()
 {
 
 	//Header
-	Rectangle<int> r = this->getLocalBounds().reduced(2);
+	Rectangle<int> r = this->getLocalBounds().reduced(margin);
 	
 	//Grabber
 	if (canBeDragged)
@@ -237,7 +248,7 @@ void BaseItemUI<T>::resized()
 	resizedInternalHeader(h);
 	nameUI->setBounds(h);
 
-	r.removeFromTop(2);
+	r.removeFromTop(headerGap);
 
 	if (!item->miniMode->boolValue())
 	{
@@ -247,17 +258,17 @@ void BaseItemUI<T>::resized()
 			break;
 
 		case VERTICAL:
-			edgeResizer->setBounds(r.removeFromBottom(10));
+			edgeResizer->setBounds(r.removeFromBottom(resizerSize));
 			item->listUISize->setValue((float)r.getHeight());
 			break;
 
 		case HORIZONTAL:
-			edgeResizer->setBounds(r.removeFromRight(10));
+			edgeResizer->setBounds(r.removeFromRight(resizerSize));
 			item->listUISize->setValue((float)r.getWidth());
 			break;
 
 		case ALL:
-			cornerResizer->setBounds(r.removeFromBottom(10).withLeft(getWidth() - 10));
+			cornerResizer->setBounds(r.removeFromBottom(resizerSize).withLeft(getWidth() - resizerSize));
 			item->viewUISize->setPoint((float)r.getWidth(), (float)r.getHeight());
 			break;
 

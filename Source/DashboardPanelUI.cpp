@@ -15,6 +15,8 @@ DashboardPanelUI::DashboardPanelUI(DashboardPanel * item) :
 	managerUI(&item->itemManager)
 {
 	addAndMakeVisible(&managerUI);
+
+	resized();
 }
 
 DashboardPanelUI::~DashboardPanelUI()

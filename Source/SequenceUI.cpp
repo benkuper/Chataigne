@@ -11,16 +11,15 @@
 #include "SequenceUI.h"
 
 SequenceUI::SequenceUI(Sequence * sequence) :
-	BaseItemUI<Sequence>(sequence)
+	BaseItemUI<Sequence>(sequence,ResizeMode::VERTICAL)
 {
-	
+
 	timeUI = item->currentTime->createSlider();
 	timeUI->setForceFeedbackOnly(true);
 	timeUI->showLabel = false;
 	timeUI->showValue = false;
 	timeUI->bgColor = BG_COLOR.darker(.1f);
 	addAndMakeVisible(timeUI);
-	setSize(100, 30);
 
 	item->addAsyncContainerListener(this);
 }
@@ -30,12 +29,8 @@ SequenceUI::~SequenceUI()
 	item->removeAsyncContainerListener(this);
 }
 
-void SequenceUI::resized()
+void SequenceUI::resizedInternalContent(Rectangle<int>& r)
 {
-	BaseItemUI::resized();
-	Rectangle<int> r = getLocalBounds();
-	r.removeFromTop(headerHeight + headerGap);
-	r.reduce(2, 2);
 	timeUI->setBounds(r);
 }
 

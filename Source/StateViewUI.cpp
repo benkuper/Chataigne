@@ -36,6 +36,8 @@ StateViewUI::StateViewUI(State * state) :
 	}
 
 	bgColor = item->active->boolValue() ? (item->permanent->boolValue() ? GREEN_COLOR : FEEDBACK_COLOR).darker(.5f) : BG_COLOR.brighter(.1f);
+
+	resized();
 }
 	
 

@@ -25,7 +25,7 @@ public:
 
 	ScopedPointer<FloatSliderUI> timeUI;
 
-	void resized() override;
+	void resizedInternalContent(Rectangle<int> &r) override;
 
 	void controllableFeedbackUpdateInternal(Controllable *) override;
 

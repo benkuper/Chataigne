@@ -44,6 +44,8 @@ Sequence::Sequence() :
 
 	cueManager = new TimeCueManager();
 	addChildControllableContainer(cueManager);
+
+	listUISize->setValue(5);
 }
 
 Sequence::~Sequence()
