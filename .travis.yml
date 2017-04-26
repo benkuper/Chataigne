@@ -1,47 +1,78 @@
-language: cpp
-dist: trusty
-sudo: required
+language: c++
+compiler: gcc
+sudo: true
+matrix:
+  include:
+  # fully specify builds, include can't dynamically expand matrix entries
+  # relative order of sudo and env is important so that addons: is recognized
 
-notifications:
-  email: false
+  - os: linux
+    dist: trusty
+    sudo: required
+    env: TARGET="linux"
+    cache:
+      directories:
+        - ~/Dev
+        - ~/SDKs
+        
+  #   addons:
+  #     apt:
+  #       sources:
+  #         - ubuntu-toolchain-r-test
+  #       packages:
+  #         - gcc-4.9
+  #         - g++-4.9
+  #         - gdb
 
-branches:
-  only:
-    - master
 
-os: linux
-dist: trusty
-compiler: g++
-sudo: required
-compiler: clang
+  # - os: linux
+  #   sudo: required
+  #   dist: trusty
+  #   env: TARGET="linuxarmv6"
 
-before_install:
-    - sudo apt-get update --fix-missing
-    - sudo apt-get install -qq
-        clang
-        libfreetype6-dev
-        libx11-dev
-        libxinerama-dev
-        libxrandr-dev
-        libxcursor-dev
-        libxcomposite-dev
-        mesa-common-dev
-        libasound2-dev
-        freeglut3-dev
-        libcurl4-gnutls-dev+
-        libasound2-dev
-        libjack-dev
-        realpath
-        libbluetooth-dev
-    - sudo apt-get update --fix-missing
-    - sudo apt-get update -qq
-    - pwd
-    - ls -d */
-    - cd ..
-    - pwd
-    - git clone --depth=1 --branch=master https://github.com/julianstorer/juce.git JUCE
-    - pwd
-    - ls -d */
-    
+
+  # - os: linux
+  #   sudo: false
+  #   env: TARGET="linuxarmv7"
+  #   cache:
+  #     directories:
+  #       - ~/rpi2_toolchain
+
+
+  - os: osx
+    osx_image: xcode8
+    compiler: clang
+    env: TARGET="osx"
+    cache:
+      directories:
+        - ~/Dev
+        - ~/SDKs
+
+
+
+  # Exclude the default build that would otherwise be generated
+  # see https://github.com/travis-ci/travis-ci/issues/1228
+  exclude:
+    - compiler: gcc
+
+install:
+  - if [ "$TARGET" == "linux" ]|| [ "$TARGET" == "linuxarmv6" ] || [ "$TARGET" == "linuxarmv7" ]; then
+        sh src/LGML/Scripts/linux/installDeps.sh;
+    elif [ "$TARGET" == "osx" ] ; then
+        sh src/LGML/Scripts/osx/installDeps.sh;
+    fi
+
+
 script:
-    - make -C "Chataigne/Builds/LinuxMakefile"
+    - python CI/buildScript.py --build --beta --os=$TARGET;
+
+after_success:
+  - if [ "$TARGET" == "linux" ]|| [ "$TARGET" == "linuxarmv6" ] || [ "$TARGET" == "linuxarmv7" ]; then
+        sh src/LGML/Scripts/linux/installExportDeps.sh 
+    elif [ "$TARGET" == "osx" ] ; then
+        sh src/LGML/Scripts/osx/installExportDeps.sh 
+    fi
+  - python CI/buildScript.py --export --os=$TARGET;
+
+git:
+  depth: 1

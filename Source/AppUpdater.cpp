@@ -11,6 +11,9 @@
 #include "AppUpdater.h"
 #include "DebugHelpers.h"
 #include "Engine.h"
+
+juce_ImplementSingleton(AppUpdater)
+
 void AppUpdater::checkForUpdates()
 {
 	URL updateURL("http://benjamin.kuperberg.fr/chataigne/releases/update.json");

@@ -16,7 +16,9 @@
 class AppUpdater
 {
 public:
-	static void checkForUpdates();
+	juce_DeclareSingleton(AppUpdater, true);
+
+	void checkForUpdates();
 };
 
 

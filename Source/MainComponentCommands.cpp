@@ -197,7 +197,7 @@ bool MainContentComponent::perform(const InvocationInfo& info) {
       break;
 
 	case CommandIDs::checkForUpdates:
-		AppUpdater::checkForUpdates();
+		AppUpdater::getInstance()->checkForUpdates();
 		break;
 
 	case CommandIDs::undo:

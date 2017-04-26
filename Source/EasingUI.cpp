@@ -141,16 +141,16 @@ void EasingUI::buildHitPath()
 		secondPoints.insert(0, sp);
 	}
 
-	if (firstPoints.size() > 1 && !isnan(firstPoints[0].x))
+	if (firstPoints.size() > 1 && !std::isnan(firstPoints[0].x))
 	{
 		hitPath.startNewSubPath(firstPoints[0]);
 		for (int i = 1; i < firstPoints.size(); i++)
 		{
-			if (!isnan(firstPoints[i].x)) hitPath.lineTo(firstPoints[i]);
+			if (!std::isnan(firstPoints[i].x)) hitPath.lineTo(firstPoints[i]);
 		}
 		for (int i = 0; i < secondPoints.size(); i++)
 		{
-			if (!isnan(firstPoints[i].x)) hitPath.lineTo(secondPoints[i]);
+			if (!std::isnan(firstPoints[i].x)) hitPath.lineTo(secondPoints[i]);
 		}
 		hitPath.closeSubPath();
 	}

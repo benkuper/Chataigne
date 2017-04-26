@@ -31,7 +31,7 @@ inline void ChataigneApplication::initialise(const String & commandLine)
 
 	mainWindow->setName(getApplicationName() + " " + getApplicationVersion());
 
-	//AppUpdater::checkForUpdates();
+	AppUpdater::getInstance()->checkForUpdates();
 	
 }
 
@@ -40,6 +40,7 @@ inline void ChataigneApplication::shutdown()
 	// Add your application's shutdown code here..
 	mainWindow = nullptr; // (deletes our window)
 	
+	AppUpdater::deleteInstance();
 	Engine::deleteInstance();
 }
 
