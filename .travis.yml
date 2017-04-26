@@ -6,6 +6,9 @@ language: cpp
 git:
     depth: 1
 
+notifications:
+  email: false
+
 before_install:
     - export DEBIAN_FRONTEND=noninteractive
     - sudo apt-get update --fix-missing
