@@ -25,16 +25,16 @@ def getProjucerIfNeeded(tmpFolder,credentials,osType):
 		proJucerPath = os.path.join(tmpFolder,'Projucer')
 		print 'copying projucer in :' + proJucerPath 
 		
-		#ownCloudOSFolder = {'osx':'osx/','linux':'linux/'}[osType]
-		#ownCloudProjucerName = {'osx':'Projucer.zip','linux':'Projucer.tar.gz'}[osType]
-		#compressedPath = os.path.join(tmpFolder,ownCloudProjucerName)
-		#if not hasValidProjucerPath():
-	    #	sh("curl -k \"https://163.172.42.66/owncloud/remote.php/webdav/Tools/LGML/Projucer/"+ownCloudOSFolder+ownCloudProjucerName+"\" -u "+credentials+" > "+compressedPath,printIt=False)
-		#	sh('tar -xzf '+compressedPath+' -C '+tmpFolder)
-		#	if not hasValidProjucerPath():
-		#		print 'projucer download failed'
-		#else:
-		#	print 'using cached projucer : '+proJucerPath
+		ownCloudOSFolder = {'osx':'osx/','linux':'linux/'}[osType]
+		ownCloudProjucerName = {'osx':'Projucer.zip','linux':'Projucer.tar.gz'}[osType]
+		compressedPath = os.path.join(tmpFolder,ownCloudProjucerName)
+		if not hasValidProjucerPath():
+			sh("curl -k \"https://163.172.42.66/owncloud/remote.php/webdav/Tools/LGML/Projucer/"+ownCloudOSFolder+ownCloudProjucerName+"\" -u "+credentials+" > "+compressedPath,printIt=False)
+			sh('tar -xzf '+compressedPath+' -C '+tmpFolder)
+			if not hasValidProjucerPath():
+				print 'projucer download failed'
+		else:
+			print 'using cached projucer : '+proJucerPath
 
 	
 	# update command
