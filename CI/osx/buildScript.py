@@ -31,7 +31,7 @@ localExportPath = os.path.join(rootPath,'Builds/MacOSX/build/')
 localExportPath = os.path.abspath(localExportPath)+"/"
 
 xcodeProjPath = os.path.join(rootPath,"Builds/MacOSX/")
-executable_name = "LGML"
+executable_name = "Chataigne"
 appPath = os.path.join(xcodeProjPath,"build",configuration,executable_name+".app")
 
 isBeta = False
