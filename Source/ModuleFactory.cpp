@@ -34,8 +34,11 @@ ModuleFactory::ModuleFactory() {
 	moduleDefs.add(new ModuleDefinition("Generic", "Gamepad", &GamepadModule::create));
 
 	moduleDefs.add(new ModuleDefinition("Controller", "Wiimote", &WiimoteModule::create));
+    
+#if JUCE_WIN
 	moduleDefs.add(new ModuleDefinition("Controller", "KinectV2", &KinectV2Module::create));
-	
+#endif
+    
 	moduleDefs.add(new ModuleDefinition("Audio", "Audio Device", &AudioModule::create));
 	moduleDefs.add(new ModuleDefinition("Audio", "LiveOSC", &LiveOSCModule::create));
 	moduleDefs.add(new ModuleDefinition("Audio", "Reaper", &ReaperModule::create));
