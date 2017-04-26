@@ -57,9 +57,9 @@ matrix:
 
 install:
   - if [ "$TARGET" == "linux" ]|| [ "$TARGET" == "linuxarmv6" ] || [ "$TARGET" == "linuxarmv7" ]; then
-        sh CI/installDeps.sh;
+        sh CI/linux/installDeps.sh;
     elif [ "$TARGET" == "osx" ] ; then
-        sh CI/installDeps.sh;
+        sh CI/osx/installDeps.sh;
     fi
 
 
@@ -68,7 +68,7 @@ script:
 
 after_success:
   - if [ "$TARGET" == "linux" ]|| [ "$TARGET" == "linuxarmv6" ] || [ "$TARGET" == "linuxarmv7" ]; then
-        sh CI/installExportDeps.sh 
+        sh CI/linux/installExportDeps.sh 
     elif [ "$TARGET" == "osx" ] ; then
         sh CI/osx/installExportDeps.sh 
     fi
