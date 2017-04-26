@@ -41,5 +41,5 @@ branches:
         - master
 
 script:
-    - ls
+    - export JUCE_MODULES_PATH=/home/travis/build/benkuper/JUCE/modules
     - make -C "Chataigne/Builds/LinuxMakefile/" 
