@@ -42,4 +42,4 @@ branches:
 
 script:
     - ls
-    - make -C "benkuper/Chataigne/Builds/Linux/" 
+    - make -C "Chataigne/Builds/LinuxMakefile/" 
