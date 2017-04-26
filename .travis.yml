@@ -57,9 +57,9 @@ matrix:
 
 install:
   - if [ "$TARGET" == "linux" ]|| [ "$TARGET" == "linuxarmv6" ] || [ "$TARGET" == "linuxarmv7" ]; then
-        sh src/LGML/Scripts/linux/installDeps.sh;
+        sh sCI/installDeps.sh;
     elif [ "$TARGET" == "osx" ] ; then
-        sh src/LGML/Scripts/osx/installDeps.sh;
+        sh CI/installDeps.sh;
     fi
 
 
@@ -68,9 +68,9 @@ script:
 
 after_success:
   - if [ "$TARGET" == "linux" ]|| [ "$TARGET" == "linuxarmv6" ] || [ "$TARGET" == "linuxarmv7" ]; then
-        sh src/LGML/Scripts/linux/installExportDeps.sh 
+        sh CI/installExportDeps.sh 
     elif [ "$TARGET" == "osx" ] ; then
-        sh src/LGML/Scripts/osx/installExportDeps.sh 
+        sh CI/osx/installExportDeps.sh 
     fi
   - python CI/buildScript.py --export --os=$TARGET;
 
