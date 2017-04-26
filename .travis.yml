@@ -57,7 +57,7 @@ matrix:
 
 install:
   - if [ "$TARGET" == "linux" ]|| [ "$TARGET" == "linuxarmv6" ] || [ "$TARGET" == "linuxarmv7" ]; then
-        sh sCI/installDeps.sh;
+        sh CI/installDeps.sh;
     elif [ "$TARGET" == "osx" ] ; then
         sh CI/installDeps.sh;
     fi
