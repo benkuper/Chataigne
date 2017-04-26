@@ -538,7 +538,7 @@ Serial::SerialImpl::read (uint8_t *buf, size_t size)
   // Calculate total timeout in milliseconds t_c + (t_m * N)
   long total_timeout_ms = timeout_.read_timeout_constant;
   total_timeout_ms += timeout_.read_timeout_multiplier * static_cast<long> (size);
-  MillisecondTimer total_timeout((uint32)total_timeout_ms);
+  MillisecondTimer total_timeout(total_timeout_ms);
 
   // Pre-fill buffer with available bytes
   {
