@@ -33,7 +33,9 @@ queuedNotifier(100)
 	scriptObject.setMethod("set", Controllable::setValueFromScript);
 }
 
-inline Parameter::~Parameter() { Parameter::masterReference.clear(); }
+Parameter::~Parameter() { 
+	Parameter::masterReference.clear(); 
+}
 
 void Parameter::resetValue(bool silentSet)
 {
