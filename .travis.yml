@@ -26,6 +26,7 @@ before_install:
         libcurl4-gnutls-dev+
         libasound2-dev
         libjack-dev
+		libbluetooth-dev
     - sudo apt-get update --fix-missing
     - sudo apt-get update -qq
     - pwd
