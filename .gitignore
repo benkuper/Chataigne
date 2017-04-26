@@ -59,4 +59,3 @@ Builds/VisualStudio2015/resources.rc
 Builds/VisualStudio2015/Flap.sln
 Builds/VisualStudio2015/
 Builds/MacOSX/*
-Builds/LinuxMakefile/*
