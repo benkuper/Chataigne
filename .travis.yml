@@ -1,78 +1,45 @@
-language: c++
-compiler: gcc
-sudo: true
-matrix:
-  include:
-  # fully specify builds, include can't dynamically expand matrix entries
-  # relative order of sudo and env is important so that addons: is recognized
+sudo: required
+dist: trusty
 
-  - os: linux
-    dist: trusty
-    sudo: required
-    env: TARGET="linux"
-    cache:
-      directories:
-        - ~/Dev
-        - ~/SDKs
-        
-  #   addons:
-  #     apt:
-  #       sources:
-  #         - ubuntu-toolchain-r-test
-  #       packages:
-  #         - gcc-4.9
-  #         - g++-4.9
-  #         - gdb
-
-
-  # - os: linux
-  #   sudo: required
-  #   dist: trusty
-  #   env: TARGET="linuxarmv6"
-
-
-  # - os: linux
-  #   sudo: false
-  #   env: TARGET="linuxarmv7"
-  #   cache:
-  #     directories:
-  #       - ~/rpi2_toolchain
-
-
-  - os: osx
-    osx_image: xcode8
-    compiler: clang
-    env: TARGET="osx"
-    cache:
-      directories:
-        - ~/Dev
-        - ~/SDKs
-
-
-
-  # Exclude the default build that would otherwise be generated
-  # see https://github.com/travis-ci/travis-ci/issues/1228
-  exclude:
-    - compiler: gcc
-
-install:
-  - if [ "$TARGET" == "linux" ]|| [ "$TARGET" == "linuxarmv6" ] || [ "$TARGET" == "linuxarmv7" ]; then
-        sh CI/linux/installDeps.sh;
-    elif [ "$TARGET" == "osx" ] ; then
-        sh CI/osx/installDeps.sh;
-    fi
-
-
-script:
-    - python CI/buildScript.py --build --beta --os=$TARGET;
-
-after_success:
-  - if [ "$TARGET" == "linux" ]|| [ "$TARGET" == "linuxarmv6" ] || [ "$TARGET" == "linuxarmv7" ]; then
-        sh CI/linux/installExportDeps.sh 
-    elif [ "$TARGET" == "osx" ] ; then
-        sh CI/osx/installExportDeps.sh 
-    fi
-  - python CI/buildScript.py --export --os=$TARGET;
+language: cpp
 
 git:
-  depth: 1
+    depth: 1
+
+before_install:
+    - export DEBIAN_FRONTEND=noninteractive
+    - sudo apt-get update --fix-missing
+    - sudo apt-get install -qq
+        clang
+        libfreetype6-dev
+        libx11-dev
+        libxinerama-dev
+        libxrandr-dev
+        libxcursor-dev
+        libxcomposite-dev
+        mesa-common-dev
+        libasound2-dev
+        freeglut3-dev
+        libcurl4-gnutls-dev+
+        libasound2-dev
+        libjack-dev
+    - sudo apt-get update --fix-missing
+    - sudo apt-get update -qq
+    - pwd
+    - ls -d */
+    - cd ..
+    - pwd
+    - git clone --depth=1 --branch=master https://github.com/julianstorer/juce.git JUCE
+    - pwd
+    - ls -d */
+
+compiler:
+    - clang
+
+branches:
+    only:
+        - master
+
+script:
+    - ls
+    - make -C "benkuper/Chataigne/Builds/Linux/" 
