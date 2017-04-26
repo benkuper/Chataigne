@@ -24,6 +24,11 @@ SequenceCommandEditor::SequenceCommandEditor(SequenceCommand * _sequenceCommand,
 	case SequenceCommand::TOGGLE_SEQUENCE:
 		targetType = SequenceChooserUI::SEQUENCE;
 		break;
+            
+        case SequenceCommand::ENABLE_LAYER:
+        case SequenceCommand::DISABLE_LAYER:
+            targetType = SequenceChooserUI::LAYER;
+            break;
 	}
 
 	chooserUI = new SequenceChooserUI(sequenceCommand->target, targetType);

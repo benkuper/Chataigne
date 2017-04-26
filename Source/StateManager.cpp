@@ -13,10 +13,10 @@
 juce_ImplementSingleton(StateManager)
 
 StateManager::StateManager() :
-	BaseManager<State>("States"),
-	activeState(nullptr),
-	stm(this),
-	module(this)
+BaseManager<State>("States"),
+module(this),
+stm(this),
+activeState(nullptr)
 {
 	isSelectable = true;
 	addChildControllableContainer(&stm);

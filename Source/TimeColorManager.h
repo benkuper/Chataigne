@@ -50,8 +50,8 @@ public:
 	void rebuildGradient();
 	
 	TimeColor * addColorAt(float time, Colour color);
-	void addItemInternal(TimeColor * item, var data);
-	void removeItemInternal(TimeColor * item);
+    void addItemInternal(TimeColor * item, var data) override;
+	void removeItemInternal(TimeColor * item) override;
 	
 	void reorderItems() override;
 

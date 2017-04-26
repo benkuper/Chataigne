@@ -43,7 +43,7 @@ public:
 	float getNextCueForTime(float time);
 	float getPrevCueForTime(float time, float goToPreviousThreshold);
 
-	void controllableFeedbackUpdate(ControllableContainer * cc, Controllable * c);
+    void controllableFeedbackUpdate(ControllableContainer * cc, Controllable * c) override;
 };
 
 

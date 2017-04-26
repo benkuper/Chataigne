@@ -12,10 +12,10 @@
 
 SequenceEditor::SequenceEditor(Sequence * _sequence) :
 	sequence(_sequence),
-	panelManagerUI(_sequence->layerManager),
+navigationUI(_sequence),
+panelManagerUI(_sequence->layerManager),
 	timelineManagerUI(_sequence->layerManager),
 	transportUI(new SequenceTransportUI(_sequence)),
-	navigationUI(_sequence),
 	panelWidth(200)
 {
 	addAndMakeVisible(panelContainer);

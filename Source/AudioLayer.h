@@ -49,7 +49,7 @@ public:
 
 	
 	void sequenceCurrentTimeChanged(Sequence *, float prevTime, bool evaluatedSkippedData) override;
-	void sequencePlayStateChanged(Sequence *);
+	void sequencePlayStateChanged(Sequence *) override;
 
 	static AudioLayer * create(Sequence * sequence, var params) { return new AudioLayer(sequence, params); }
 	virtual String getTypeString() const override { return "Audio"; }

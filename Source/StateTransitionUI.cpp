@@ -43,6 +43,11 @@ void StateTransitionUI::updateBounds()
 	setBounds(tr);
 }
 
+void StateTransitionUI::mouseMove(const MouseEvent &e) {
+    repaint();
+}
+
+
 void StateTransitionUI::paint(Graphics & g)
 {
 	if (item->sourceState.wasObjectDeleted() || item->destState.wasObjectDeleted()) return;

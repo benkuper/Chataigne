@@ -33,7 +33,7 @@ public:
 	MIDIInputDevice * currentInputDevice;
 	MIDIOutputDevice * currentOutputDevice;
 
-	void resized();
+	void resized() override;
 
 	void setGhostValues(const String &inValue, const String &outValue);
 

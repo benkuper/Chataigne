@@ -157,9 +157,9 @@ void AudioLayer::sequencePlayStateChanged(Sequence *)
 
 AudioLayerProcessor::AudioLayerProcessor(AudioLayer * _layer) :
 	layer(_layer),
-	currentEnveloppe(0),
 	rmsCount(0),
-	tempRMS(0)
+tempRMS(0),
+currentEnveloppe(0)
 {
 }
 

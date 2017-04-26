@@ -25,7 +25,8 @@ public:
 	virtual ~BaseItemMinimalUI<T>();
 
 	T * item;
-	
+    BaseItem * baseItem;
+    
 	//ui
 	Colour bgColor;
 	bool highlightOnMouseOver;
@@ -45,8 +46,6 @@ public:
 	virtual void controllableFeedbackUpdateInternal(Controllable *) {} //override this in child classes
 	
 
-protected:
-	BaseItem * getBaseItem() { return static_cast<BaseItem *>(item); }
 };
 
 
@@ -63,10 +62,12 @@ BaseItemMinimalUI<T>::BaseItemMinimalUI(T * _item) :
 	removeOnDelKey(true)
 {
 
+    baseItem = static_cast<BaseItem *>(item);
+    
 	setWantsKeyboardFocus(true);
 
 	addMouseListener(this, true);
-	getBaseItem()->addAsyncContainerListener(this);
+	baseItem->addAsyncContainerListener(this);
 
 	setSize(100, 20);
 }
@@ -74,7 +75,7 @@ BaseItemMinimalUI<T>::BaseItemMinimalUI(T * _item) :
 template<class T>
 BaseItemMinimalUI<T>::~BaseItemMinimalUI()
 {
-	getBaseItem()->removeAsyncContainerListener(this);
+	baseItem->removeAsyncContainerListener(this);
 }
 
 
@@ -82,17 +83,17 @@ template<class T>
 void BaseItemMinimalUI<T>::mouseDown(const MouseEvent & e)
 {
 	InspectableContentComponent::mouseDown(e);
-	if (removeOnCtrlDown && e.mods.isLeftButtonDown() && e.mods.isCtrlDown()) getBaseItem()->remove();
+	if (removeOnCtrlDown && e.mods.isLeftButtonDown() && e.mods.isCtrlDown()) baseItem->remove();
 }
 
 template<class T>
 bool BaseItemMinimalUI<T>::keyPressed(const KeyPress & e)
 {
-	DBG("Key pressed here ! " << getBaseItem()->niceName);
+	DBG("Key pressed here ! " << baseItem->niceName);
 
 	if (removeOnDelKey && (e.getKeyCode() == e.deleteKey || e.getKeyCode() == e.backspaceKey) && inspectable->isSelected)
 	{
-		getBaseItem()->remove();
+		baseItem->remove();
 		return true;
 	}
 	
@@ -110,7 +111,7 @@ template<class T>
 void BaseItemMinimalUI<T>::paint(Graphics &g)
 {
 	Rectangle<float> r = getLocalBounds().toFloat();
-	bool isItemEnabled = getBaseItem()->canBeDisabled ? getBaseItem()->enabled->boolValue() : true;
+	bool isItemEnabled = baseItem->canBeDisabled ? baseItem->enabled->boolValue() : true;
 
 	Colour c = isItemEnabled ? bgColor : bgColor.darker(.3f);
 	if (highlightOnMouseOver && isMouseOver(true)) c = c.brighter(.03f);
@@ -123,7 +124,7 @@ void BaseItemMinimalUI<T>::newMessage(const ContainerAsyncEvent & e)
 {
 	if (e.type == ContainerAsyncEvent::ControllableFeedbackUpdate)
 	{
-		if (e.targetControllable == getBaseItem()->enabled) repaint();
+		if (e.targetControllable == baseItem->enabled) repaint();
 		controllableFeedbackUpdateInternal(e.targetControllable);
 	}
 }

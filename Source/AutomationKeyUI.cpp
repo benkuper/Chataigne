@@ -143,8 +143,8 @@ void AutomationKeyUI::inspectablePreselectionChanged(Inspectable * i)
 }
 
 AutomationKeyUI::Handle::Handle() : 
-	color(FRONT_COLOR),
-	highlight(false)
+highlight(false),
+color(FRONT_COLOR)
 {
 	setRepaintsOnMouseActivity(true);
 }

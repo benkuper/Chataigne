@@ -11,9 +11,9 @@
 #include "Inspector.h"
 
 Inspector::Inspector(bool isMain) :
-	currentInspectable(nullptr),
-	currentEditor(nullptr),
-	isMainInspector(isMain)
+isMainInspector(isMain),
+currentInspectable(nullptr),
+	currentEditor(nullptr)
 {
 	
 	if (InspectableSelectionManager::getInstanceWithoutCreating() != nullptr) InspectableSelectionManager::getInstance()->addSelectionListener(this);

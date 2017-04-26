@@ -34,7 +34,7 @@ public:
 	ScopedPointer<IntStepperUI> remotePortUI;
 	ScopedPointer<BoolToggleUI> useLocalUI;
 
-	virtual void resizedInternalContent(Rectangle<int> &r);
+	virtual void resizedInternalContent(Rectangle<int> &r) override;
 	virtual void resizedOSCInternalContent(Rectangle<int> &) {} //to be overriden by child classes
 
 	virtual void controllableFeedbackAsyncUpdate(Controllable * c) override;

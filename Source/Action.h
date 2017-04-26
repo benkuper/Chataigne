@@ -38,7 +38,7 @@ public:
 	void loadJSONDataInternal(var data) override;
 
 	void onContainerParameterChangedInternal(Parameter * p) override;
-	void onContainerTriggerTriggered(Trigger *);
+    void onContainerTriggerTriggered(Trigger *) override;
 	void conditionManagerValidationChanged(ConditionManager *) override;
 
 	InspectableEditor * getEditor(bool isRoot) override;

@@ -93,7 +93,7 @@ public:
 
 	//layout
 	bool fixedItemHeight;
-	int gap = 2;
+	int gap;
 
 	void addExistingItems(bool resizeAfter = true);
 
@@ -150,17 +150,18 @@ public:
 template<class M, class T, class U>
 BaseManagerUI<M, T, U>::BaseManagerUI(const String & contentName, M * _manager, bool _useViewport) :
 	InspectableContentComponent(_manager),
-	manager(_manager),
-	container(this),
+manager(_manager),
+managerComparator(_manager),
+useViewport(_useViewport),
+container(this),
+bgColor(BG_COLOR),
+managerUIName(contentName),
 	drawContour(false),
-	bgColor(BG_COLOR),
-	transparentBG(false),
-	managerUIName(contentName),
-	fixedItemHeight(true),
-	useViewport(_useViewport),
-	resizeOnChildBoundsChanged(true),
-	managerComparator(_manager),
-	animateItemOnAdd(true)
+transparentBG(false),
+resizeOnChildBoundsChanged(true),
+animateItemOnAdd(true),
+fixedItemHeight(true),
+gap(2)
 {
 	
 	setWantsKeyboardFocus(true);

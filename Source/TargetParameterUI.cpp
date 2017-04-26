@@ -14,8 +14,8 @@
 
 TargetParameterUI::TargetParameterUI(TargetParameter * parameter, const String &_noTargetText) :
 	ParameterUI(parameter),
-	targetParameter(parameter),
-	noTargetText(_noTargetText)
+noTargetText(_noTargetText),
+	targetParameter(parameter)
 {
 	setInterceptsMouseClicks(true, true);
 

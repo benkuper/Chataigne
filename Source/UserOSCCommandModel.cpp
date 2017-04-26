@@ -150,6 +150,8 @@ void OSCCommandModelArgumentManager::addItemFromType(Parameter::Type type, var d
 	case Parameter::BOOL:
 		p = new BoolParameter("#" + id, "Argument #" + id + ", type bool", false);
 		break;
+        default:
+            break;
 	}
 	
 	jassert(p != nullptr);

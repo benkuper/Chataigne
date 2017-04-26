@@ -15,9 +15,9 @@
 AutomationKeyComparator Automation::comparator;
 
 Automation::Automation() :
-	BaseManager("Automation"),
-	positionMax(1),
-	showUIInEditor(false)
+BaseManager("Automation"),
+showUIInEditor(false),
+	positionMax(1)
 {
 	position = addFloatParameter("Position", "The current position in the automation. Used for automatic retrieve value and feedback.", 0, 0, positionMax);
 	value = addFloatParameter("Value", "The current value, depending on the position", 0, 0, 1);

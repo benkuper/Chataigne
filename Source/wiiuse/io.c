@@ -62,6 +62,12 @@
  *
  *  This function is declared in wiiuse.h
  */
+
+
+int wiiuse_os_find(struct wiimote_t** wm, int max_wiimotes, int timeout);
+
+
+
 int wiiuse_find(struct wiimote_t** wm, int max_wiimotes, int timeout) {
 	return wiiuse_os_find(wm, max_wiimotes, timeout);
 }
@@ -87,6 +93,8 @@ int wiiuse_find(struct wiimote_t** wm, int max_wiimotes, int timeout) {
  *
  *  This function is declared in wiiuse.h
  */
+int wiiuse_os_connect(struct wiimote_t** wm, int wiimotes);
+
 int wiiuse_connect(struct wiimote_t** wm, int wiimotes) {
 	return wiiuse_os_connect(wm, wiimotes);
 }
@@ -106,6 +114,9 @@ int wiiuse_connect(struct wiimote_t** wm, int wiimotes) {
  *
  *  This function is declared in wiiuse.h
  */
+
+void wiiuse_os_disconnect(struct wiimote_t* wm);
+
 void wiiuse_disconnect(struct wiimote_t* wm) {
 	wiiuse_os_disconnect(wm);
 }
@@ -124,6 +135,9 @@ void wiiuse_disconnect(struct wiimote_t* wm) {
 *    Returns 1 on success, -1 on failure.
 *
 */
+unsigned long wiiuse_os_ticks();
+int wiiuse_os_read(struct wiimote_t *wm, byte *buffer, int bufferLength);
+
 int wiiuse_wait_report(struct wiimote_t *wm, int report, byte *buffer, int bufferLength, unsigned long timeout_ms) {
     
     int result            = 1;

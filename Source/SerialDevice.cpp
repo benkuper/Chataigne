@@ -13,10 +13,10 @@
 
 #if SERIALSUPPORT
 SerialDevice::SerialDevice(Serial * _port, SerialDeviceInfo  * _info, PortMode _mode) :
-	info(_info),
-	port(_port),
-	mode(_mode),
-	thread(_info->port, this)
+thread(_info->port, this),
+port(_port),
+info(_info),
+mode(_mode)
 {
 	open();
 

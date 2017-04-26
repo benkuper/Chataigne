@@ -17,19 +17,19 @@
 Controllable::Controllable(const Type &type, const String & niceName, const String &description, bool enabled) :
 	ScriptTarget("",this),
     type(type),
-    description(description),
-    parentContainer(nullptr),
-    hasCustomShortName(false),
+description(description),
+hasCustomShortName(false),
     isControllableExposed(true),
     isControllableFeedbackOnly(false),
     hideInEditor(false),
 	hideInOutliner(false),
-	replaceSlashesInShortName(true),
+isTargettable(true),
 	isSavable(true),
 	saveValueOnly(true),
-	isTargettable(true),
 	isCustomizableByUser(false),
-	isRemovableByUser(false)
+isRemovableByUser(false),
+replaceSlashesInShortName(true),
+parentContainer(nullptr)
 {
 
     setEnabled(enabled);

@@ -11,9 +11,9 @@
 #include "StateViewUI.h"
 
 StateViewUI::StateViewUI(State * state) :
+BaseItemUI<State>(state, ResizeMode::ALL, true),
 	amui(&state->am),
 	mmui(&state->mm),
-	BaseItemUI<State>(state, ResizeMode::ALL, true),
 	transitionReceptionMode(false)
 {
 	activeUI = state->active->createToggle();

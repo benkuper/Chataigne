@@ -50,14 +50,14 @@ float TimeCueManager::getNearestCueForTime(float time)
 {
 	float result = time;
 	if (items.size() == 0) return result;
-	float diffTime = abs(time - items[0]->time->floatValue());
+    float diffTime = std::abs(time - items[0]->time->floatValue());
 	result = items[0]->time->floatValue();
 	int numItems = items.size();
 
 	for (int i = 1; i < numItems; i++)
 	{
 		float newTime = items[i]->time->floatValue();
-		float newDiff = abs(time - newTime);
+		float newDiff = std::abs(time - newTime);
 		if (newDiff > diffTime) break;
 		diffTime = newDiff;
 		result = newTime;

@@ -32,7 +32,7 @@ public:
 	void setupUIForLayerMode();
 
 	void updateContent() override;
-	void resized();
+	void resized() override;
 
 	bool keyPressed(const KeyPress &e) override;
 	

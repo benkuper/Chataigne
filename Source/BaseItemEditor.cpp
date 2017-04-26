@@ -14,9 +14,9 @@
 
 BaseItemEditor::BaseItemEditor(BaseItem * bi, bool isRoot) :
 	InspectableEditor(bi, isRoot),
-	headerHeight(20),
 	item(bi),
-	transparentBG(false),
+    headerHeight(20),
+    transparentBG(false),   
 	paintHeaderOnly(isRoot)
 {
 	if (item->canBeDisabled)
@@ -103,6 +103,9 @@ void BaseItemEditor::newMessage(const ContainerAsyncEvent & e)
 	case ContainerAsyncEvent::ControllableFeedbackUpdate:
 		controllableFeedbackAsyncUpdate(e.targetControllable);
 		break;
+            
+        default:
+            break;
 	}
 }
 

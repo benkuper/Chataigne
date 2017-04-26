@@ -12,8 +12,8 @@
 
 //==============================================================================
 ParameterUI::ParameterUI(Parameter * parameter) :
-parameter(parameter),
 ControllableUI(parameter),
+parameter(parameter),
 showValue(true)
 {
     parameter->addAsyncCoalescedListener(this);

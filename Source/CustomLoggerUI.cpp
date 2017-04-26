@@ -14,9 +14,9 @@
 //#include "GitSha.h"
 
 CustomLoggerUI::CustomLoggerUI(const String &contentName, CustomLogger * l) :
-	logger(l),
 	ShapeShifterContentComponent(contentName),
-	logList(this),
+logger(l),
+logList(this),
 	maxNumElement(500),
 	totalLogRow(0)
 {

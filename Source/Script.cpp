@@ -15,9 +15,9 @@
 
 Script::Script(ScriptTarget * _parentTarget, bool canBeDisabled) :
 	BaseItem("Script", canBeDisabled, false),
-	parentTarget(_parentTarget),
-	scriptParamsContainer("params"),
-	scriptAsyncNotifier(10)
+    scriptParamsContainer("params"),
+parentTarget(_parentTarget),
+scriptAsyncNotifier(10)
 {
 	isSelectable = false;
 

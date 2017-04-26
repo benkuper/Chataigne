@@ -13,9 +13,9 @@
 
 CustomOSCCommandArgument::CustomOSCCommandArgument(const String &name, Parameter * _p, bool _mappingEnabled) :
 	BaseItem(name, false),
-	param(_p),
-	mappingEnabled(_mappingEnabled),
-	useForMapping(nullptr)
+param(_p),
+useForMapping(nullptr),
+	mappingEnabled(_mappingEnabled)
 {
 	isSelectable = false;
 	param->isCustomizableByUser = true;

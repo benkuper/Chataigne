@@ -12,10 +12,10 @@
 
 DoubleSliderUI::DoubleSliderUI(Point2DParameter * parameter) :
 	ParameterUI(parameter),
+p2d(parameter),
 	xParam("X","xParam",parameter->x, parameter->minX,parameter->maxX),
 	yParam("Y", "yParam", parameter->y,parameter->minY,parameter->maxY),
-	xSlider(&xParam), ySlider(&yParam),
-	p2d(parameter)
+	xSlider(&xParam), ySlider(&yParam)
 {
 	xParam.defaultValue = 0;
 	yParam.defaultValue = 0;

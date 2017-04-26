@@ -221,8 +221,8 @@ bool CubicEasingUI::hitTest(int tx, int ty)
 
 	if(easing->isSelected)
 	{
-		if (&h1 != nullptr) result |= h1.getLocalBounds().contains(h1.getMouseXYRelative());
-		if(&h2 != nullptr) result |= h2.getLocalBounds().contains(h2.getMouseXYRelative());
+		result |= h1.getLocalBounds().contains(h1.getMouseXYRelative());
+		result |= h2.getLocalBounds().contains(h2.getMouseXYRelative());
 	}
 
 	return result;
@@ -367,7 +367,7 @@ bool SineEasingUI::hitTest(int tx, int ty)
 
 	if (easing->isSelected)
 	{
-		if (&h1 != nullptr) result |= h1.getLocalBounds().contains(h1.getMouseXYRelative());
+		result |= h1.getLocalBounds().contains(h1.getMouseXYRelative());
 	}
 
 	return result;

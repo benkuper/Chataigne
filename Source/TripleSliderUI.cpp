@@ -13,11 +13,11 @@
 
 TripleSliderUI::TripleSliderUI(Point3DParameter * parameter) :
 	ParameterUI(parameter),
+p3d(parameter),
 	xParam("X", "xParam", parameter->x, parameter->minX, parameter->maxX),
 	yParam("Y", "yParam", parameter->y, parameter->minY, parameter->maxY),
 	zParam("Z", "zParam", parameter->z, parameter->minZ, parameter->maxZ),
-	xSlider(&xParam), ySlider(&yParam), zSlider(&zParam),
-	p3d(parameter)
+	xSlider(&xParam), ySlider(&yParam), zSlider(&zParam)
 {
 	xParam.defaultValue = 0;
 	yParam.defaultValue = 0;

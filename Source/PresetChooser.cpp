@@ -12,8 +12,8 @@
 #include "DebugHelpers.h"
 
 PresetChooser::PresetChooser(ControllableContainer * _container) :
-	container(_container),
-	ComboBox("Preset")
+ComboBox("Preset"),
+container(_container)
 {
 	updatePresetComboBox();
 	addListener(this);

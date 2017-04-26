@@ -11,12 +11,10 @@
 #include "MIDIDeviceChooser.h"
 
 MIDIDeviceChooser::MIDIDeviceChooser(bool _showInputs, bool _showOutputs) :
-	currentInputDevice(nullptr),
-	currentOutputDevice(nullptr),
-	showInputs(_showInputs),
-	showOutputs(_showOutputs)
-	//inputLabel("MIDI In"),
-	//outputLabel("MIDI Out")
+showInputs(_showInputs),
+showOutputs(_showOutputs),
+currentInputDevice(nullptr),
+	currentOutputDevice(nullptr)
 {
 	if (showInputs)
 	{

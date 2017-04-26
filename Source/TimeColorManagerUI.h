@@ -34,8 +34,8 @@ public:
 
 	void resized() override;
 
-	void addItemUIInternal(TimeColorUI * item);
-	void removeItemUIInternal(TimeColorUI * item);
+    void addItemUIInternal(TimeColorUI * item) override;
+    void removeItemUIInternal(TimeColorUI * item) override;
 
 	void mouseDoubleClick(const MouseEvent &e) override;
 	void mouseDown(const MouseEvent &e) override;
@@ -48,7 +48,7 @@ public:
 
 	bool isInView(TimeColorUI * tui);
 
-	void newMessage(const ContainerAsyncEvent &e);
+	void newMessage(const ContainerAsyncEvent &e) override;
 
 	void gradientUpdated() override;
 	

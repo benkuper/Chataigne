@@ -12,9 +12,9 @@
 #include "Style.h"
 
 FloatParameterLabelUI::FloatParameterLabelUI(Parameter * p) :
-	ParameterUI(p),
-	autoSize(false),
-	maxFontHeight(12)
+ParameterUI(p),
+maxFontHeight(12),
+	autoSize(false)
 {
 
 	addChildComponent(nameLabel);

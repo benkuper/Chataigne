@@ -13,9 +13,9 @@
 #include "MIDIManager.h"
 
 AudioModule::AudioModule(const String & name) :
-	Module(name),
-	pitchDetector(nullptr),
-	uidIncrement(100)
+Module(name),
+uidIncrement(100),
+	pitchDetector(nullptr)
 {
 	gain = addFloatParameter("Gain", "Gain for the input volume", 1, 0, 10);
 	activityThreshold = addFloatParameter("Activity Threshold", "Threshold to consider activity from the source.\nAnalysis will compute only if volume is greater than this parameter", .1f,0,1);

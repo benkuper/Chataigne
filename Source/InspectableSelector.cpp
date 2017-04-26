@@ -17,8 +17,8 @@ juce_ImplementSingleton(InspectableSelector)
 
 InspectableSelector::InspectableSelector() :
 	selectablesParent(nullptr),
-	clearSelectionAtEnd(false),
-	currentSelectionManager(nullptr)
+currentSelectionManager(nullptr),
+clearSelectionAtEnd(false)
 {
 	setRepaintsOnMouseActivity(true);
 }

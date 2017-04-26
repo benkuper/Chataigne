@@ -78,6 +78,7 @@ bool KinectV2Module::initKinect()
 	return true;
 
 #endif
+    return false;
 }
 
 void KinectV2Module::updateKinect()

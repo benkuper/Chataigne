@@ -23,9 +23,9 @@ public:
 
 	ModuleDefinition(const String &menuPath, const String &type, std::function<Module*()> createFunc, var jsonData = var()) :
 		menuPath(menuPath),
-		moduleType(type),
-		createFunc(createFunc),
-		jsonData(jsonData)
+    moduleType(type),
+    jsonData(jsonData),
+		createFunc(createFunc)
 	{}
 };
 

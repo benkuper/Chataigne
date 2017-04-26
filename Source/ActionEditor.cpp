@@ -12,9 +12,9 @@
 
 ActionEditor::ActionEditor(Action * a, bool isRoot) :
 	BaseItemEditor(a, isRoot),
+action(a),
 	cdme(&a->cdm,false),
-	csme(&a->csm,false),
-	action(a)
+	csme(&a->csm,false)
 {
 	addAndMakeVisible(&cdme);
 	addAndMakeVisible(&csme);

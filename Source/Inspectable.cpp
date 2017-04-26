@@ -12,10 +12,10 @@
 #include "InspectableSelectionManager.h"
 
 Inspectable::Inspectable() :
+selectionManager(nullptr), //default nullptr will target main selectionManager
 	isSelected(false),
-	isSelectable(true),
-	showInspectorOnSelect(true),
-	selectionManager(nullptr) //default nullptr will target main inspector
+isSelectable(true),
+	showInspectorOnSelect(true)
 {
 	setSelectionManager(nullptr);
 }

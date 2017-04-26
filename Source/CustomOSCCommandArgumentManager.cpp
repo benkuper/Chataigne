@@ -45,6 +45,8 @@ void CustomOSCCommandArgumentManager::addItemFromType(Parameter::Type type, var 
 	case Parameter::BOOL:
 		p = new BoolParameter("#" + id, "Argument #" + id + ", type bool", false);
 		break;
+        default:
+            break;
 	}
 
 	jassert(p != nullptr);

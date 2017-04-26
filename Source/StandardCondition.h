@@ -35,7 +35,7 @@ public:
 	InspectableEditor * getEditor(bool isRoot) override;
 
 
-	String getTypeString() const { return "Standard"; }
+	String getTypeString() const override { return "Standard"; }
 	static StandardCondition * create() { return new StandardCondition(); }
 
 };

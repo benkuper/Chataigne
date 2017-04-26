@@ -10,6 +10,7 @@
 
 #include "SequenceCommand.h"
 #include "Sequence.h"
+#include "SequenceLayer.h"
 #include "SequenceCommandEditor.h"
 
 SequenceCommand::SequenceCommand(SequenceModule * _module, CommandContext context, var params) :
@@ -48,6 +49,15 @@ void SequenceCommand::trigger()
 	case TOGGLE_SEQUENCE:
 		((Sequence *)target->targetContainer.get())->togglePlayTrigger->trigger();
 		break;
+            
+        case ENABLE_LAYER:
+            ((SequenceLayer *)target->targetContainer.get())->enabled->setValue(true);
+            break;
+            
+        case DISABLE_LAYER:
+            ((SequenceLayer *)target->targetContainer.get())->enabled->setValue(false);
+            break;
+            
 	}
 }
 

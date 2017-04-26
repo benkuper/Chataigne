@@ -34,7 +34,7 @@ public:
 	void setCurrentInspectable(WeakReference<Inspectable> inspectable);
 	void clear();
 
-	void inspectableDestroyed(Inspectable * inspectable);
+    void inspectableDestroyed(Inspectable * inspectable) override;
 
 	//From InspectableSelectionManager
 	void inspectablesSelectionChanged() override;

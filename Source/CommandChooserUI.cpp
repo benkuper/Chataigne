@@ -14,10 +14,10 @@
 #include "CommandFactory.h"
 
 CommandChooserUI::CommandChooserUI(CommandContext _context) :
-	noTargetText("[Click to select a command]"),
-	commandIsSet(false),
-	lockedModule(nullptr),
-	context(_context)
+context(_context),
+lockedModule(nullptr),
+commandIsSet(false),
+noTargetText("[Click to select a command]")
 {
 	setInterceptsMouseClicks(true, true);
 

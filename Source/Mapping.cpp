@@ -12,9 +12,9 @@
 #include "MappingEditor.h"
 
 Mapping::Mapping(bool canBeDisabled) :
-	BaseItem("Mapping", canBeDisabled),
-	inputIsLocked(false),
-	forceDisabled(false)
+BaseItem("Mapping", canBeDisabled),
+forceDisabled(false),
+	inputIsLocked(false)
 {
 	continuousProcess = addBoolParameter("Continuous", "If enabled, the mapping will process continuously rather than only when parameter value has changed",false);
 

@@ -133,6 +133,8 @@ void Wiimote::update()
 
 	case WIIUSE_EVENT_TYPE::WIIUSE_CLASSIC_CTRL_REMOVED:
 		break;
+        default:
+            break;
 	}
 }
 

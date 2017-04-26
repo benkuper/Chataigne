@@ -32,7 +32,7 @@ public:
 
 	InspectableEditor * getEditor(bool isRoot) override;
 
-	String getTypeString() const { return "Group"; }
+	String getTypeString()  const override { return "Group"; }
 	static ConditionGroup * create() { return new ConditionGroup(); }
 };
 

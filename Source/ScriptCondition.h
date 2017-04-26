@@ -28,7 +28,7 @@ public:
 
 	InspectableEditor * getEditor(bool isRoot) override;
 
-	String getTypeString() const { return "Script"; }
+	String getTypeString() const override { return "Script"; }
 	static ScriptCondition * create() { return new ScriptCondition(); }
 
 };

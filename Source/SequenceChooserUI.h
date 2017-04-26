@@ -30,7 +30,7 @@ public:
 	Sequence * sequenceForCue;
 
 	void updateLabel() override;
-	void showPopupAndGetTarget();//can be overriden to get specific PopupMenu
+    void showPopupAndGetTarget() override;//can be overriden to get specific PopupMenu
 
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(SequenceChooserUI)

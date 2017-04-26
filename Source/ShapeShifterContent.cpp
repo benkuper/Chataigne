@@ -11,10 +11,10 @@
 #include "ShapeShifterContent.h"
 
 ShapeShifterContent::ShapeShifterContent(Component * _contentComponent, const String & _contentName) :
-	contentIsFlexible(false),
-	contentName(_contentName),
-	contentIsShown(false),
-	contentComponent(_contentComponent)
+contentComponent(_contentComponent),
+contentName(_contentName),
+contentIsFlexible(false),
+	contentIsShown(false)
   {
   }
 

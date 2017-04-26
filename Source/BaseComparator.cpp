@@ -12,9 +12,9 @@
 #include "BaseComparatorUI.h"
 
 BaseComparator::BaseComparator(Controllable * _source) :
-	ControllableContainer("Comparator"),
-	source(_source),
-	isValid(false)
+ControllableContainer("Comparator"),
+isValid(false),
+	source(_source)
 {
 	isTargettable = false;
 	compareFunction = addEnumParameter("Comparison Function", "Decides what function checks the activeness of the condition");

@@ -13,9 +13,9 @@
 
 AutomationUI::AutomationUI(Automation * _automation) :
 	BaseManagerUI("Automation",_automation,false),
-	firstROIKey(0),lastROIKey(0), currentPosition(0),
-	currentUI(nullptr),
-	valueBGColor(Colours::white.withAlpha(.1f))
+firstROIKey(0),lastROIKey(0), currentPosition(0),
+valueBGColor(Colours::white.withAlpha(.1f)),
+	currentUI(nullptr)
 {
 	manager->selectionManager->addSelectionListener(this);
 

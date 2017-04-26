@@ -15,8 +15,8 @@ TimeColorComparator TimeColorManager::comparator;
 
 TimeColorManager::TimeColorManager(float _maxPosition) :
 	BaseManager("Colors"),
-	positionMax(_maxPosition),
-	gradient(Colours::red,0,0,Colours::blue,_maxPosition,0,false)
+gradient(Colours::red,0,0,Colours::blue,_maxPosition,0,false),
+positionMax(_maxPosition)
 {
 	
 	skipControllableNameInAddress = true;

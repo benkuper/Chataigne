@@ -13,8 +13,16 @@
 
 
 
-ProgressTask::ProgressTask(String _taskName,ProgressTask * _parentTask ):parentTask(_parentTask),taskName(_taskName),progress(0){}
-ProgressTask::~ProgressTask(){masterReference.clear();}
+ProgressTask::ProgressTask(String _taskName,ProgressTask * _parentTask ):
+progress(0),
+taskName(_taskName),
+parentTask(_parentTask)
+{
+}
+
+ProgressTask::~ProgressTask(){
+    masterReference.clear();
+}
 
 int ProgressTask::getTaskPositionInParent(){
   if(parentTask){
@@ -151,7 +159,7 @@ public:
 
 class ProgressCallbackMessage : public CallbackMessage{
 public:
-  ProgressCallbackMessage(ListenerList<ProgressNotifier::ProgressListener> * _n,ProgressTask * t,float p):n(_n),progress(p),task(t){}
+  ProgressCallbackMessage(ListenerList<ProgressNotifier::ProgressListener> * _n,ProgressTask * t,float p):n(_n),task(t),progress(p){}
   void messageCallback() override{if(task.get())n->call(&ProgressNotifier::ProgressListener::newProgress,task,progress);}
   ListenerList<ProgressNotifier::ProgressListener>* n;
   WeakReference<ProgressTask> task;
@@ -178,10 +186,14 @@ class FakeProgress : Timer{
 };
 
 
-ProgressNotifier::ProgressNotifier():currentTask(nullptr),ProgressTask("mainTask"){
+ProgressNotifier::ProgressNotifier():
+ProgressTask("mainTask"),
+currentTask(nullptr)
+{
   addTaskListener(this);
 };
- ProgressNotifier::~ProgressNotifier(){
+
+ProgressNotifier::~ProgressNotifier(){
 
 }
 

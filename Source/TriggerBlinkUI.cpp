@@ -14,12 +14,12 @@ Author:  bkupe
 //==============================================================================
 TriggerBlinkUI::TriggerBlinkUI(Trigger *t) :
 	TriggerUI(t),
-	blinkTime(100),
-	refreshPeriod(50),
 	intensity(0),
 	animateIntensity(true),
+blinkTime(100),
 	offColor(NORMAL_COLOR),
-	onColor(FEEDBACK_COLOR)
+onColor(FEEDBACK_COLOR),
+refreshPeriod(50)
 {
     setSize(30, 20);
 

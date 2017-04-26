@@ -13,8 +13,8 @@
 
 Action::Action(const String & name) :
 	BaseItem(name),
-	autoTriggerWhenAllConditionAreActives(true),
-	forceDisabled(false)
+forceDisabled(false),
+	autoTriggerWhenAllConditionAreActives(true)
 {
 	addChildControllableContainer(&cdm);
 	addChildControllableContainer(&csm);

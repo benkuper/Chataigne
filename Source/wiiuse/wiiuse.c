@@ -71,6 +71,9 @@ void wiiuse_set_output(enum wiiuse_loglevel loglevel, FILE *logfile) {
 	logtarget[(int)loglevel] = logfile;
 }
 
+
+int wiiuse_cleanup_platform_fields(struct wiimote_t* wm);
+
 /**
  *	@brief Clean up wiimote_t array created by wiiuse_init()
  */
@@ -94,6 +97,7 @@ void wiiuse_cleanup(struct wiimote_t** wm, int wiimotes) {
 	return;
 }
 
+int wiiuse_init_platform_fields(struct wiimote_t* wm);
 
 /**
  *	@brief Initialize an array of wiimote structures.
@@ -671,6 +675,9 @@ void wiiuse_send_next_pending_write_request(struct wiimote_t* wm) {
 	return;
 }
 
+
+int wiiuse_os_write(struct wiimote_t* wm, byte report_type, byte* msg, int len);
+    
 /**
  *	@brief	Send a packet to the wiimote.
  *

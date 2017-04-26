@@ -37,7 +37,7 @@ public:
 	var dataToLoad;
 
 	void loadJSONDataInternal(var data) override;
-	void endLoadFile();
+	void endLoadFile() override;
 
 	static BaseCommand * create(ControllableContainer * module, CommandContext context, var params) { return new StateCommand((StateModule *)module, context, params); }
 

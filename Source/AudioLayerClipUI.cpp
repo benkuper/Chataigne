@@ -11,10 +11,10 @@
 #include "AudioLayerClipUI.h"
 
 AudioLayerClipUI::AudioLayerClipUI(AudioLayerClip * _clip) :
-	BaseItemUI(_clip),
-	clip(_clip),
-	thumbnailCache(100000),
-	thumbnail(50,_clip->formatManager,thumbnailCache)
+BaseItemUI(_clip),
+thumbnailCache(100000),
+thumbnail(50,_clip->formatManager,thumbnailCache),
+clip(_clip)
 {
 	browseBT = AssetManager::getInstance()->getFileBT();
 	addAndMakeVisible(browseBT);

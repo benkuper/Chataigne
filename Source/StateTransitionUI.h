@@ -31,8 +31,7 @@ public:
 
 	void updateBounds();
 
-	void mouseMove(const MouseEvent &e) { repaint(); }
-
+    void mouseMove(const MouseEvent &e) override;
 	void paint(Graphics &g) override;
 	void paintOverChildren(Graphics &g) override;
 	void resized() override;

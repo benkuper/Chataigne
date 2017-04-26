@@ -17,8 +17,8 @@
 GenericControllableContainerEditor::GenericControllableContainerEditor(WeakReference<Inspectable> inspectable, bool isRoot) :
 	InspectableEditor(inspectable, isRoot),
 	headerHeight(12),
-	container(dynamic_cast<ControllableContainer *>(inspectable.get())),
-	containerLabel("containerLabel", dynamic_cast<ControllableContainer *>(inspectable.get())->niceName)
+	containerLabel("containerLabel", dynamic_cast<ControllableContainer *>(inspectable.get())->niceName),
+container(dynamic_cast<ControllableContainer *>(inspectable.get()))
 {
 	container->addAsyncContainerListener(this);
 

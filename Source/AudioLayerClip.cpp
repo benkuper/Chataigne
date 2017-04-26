@@ -12,8 +12,8 @@
 
 AudioLayerClip::AudioLayerClip(float _time) :
 	BaseItem("Clip"),
-	sampleRate(0),
-	clipDuration(0),
+clipDuration(0),
+sampleRate(0),
 	clipSamplePos(0)
 {
 	filePath = addStringParameter("File Path", "File Path", "");

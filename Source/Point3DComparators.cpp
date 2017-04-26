@@ -34,13 +34,15 @@ Point3DComparator::~Point3DComparator()
 
 void Point3DComparator::compare()
 {
+    /*
 	Vector3D<float> p = p3dParam->getVector();
 	Vector3D<float> r = p3dRef->getVector();
-	/*
+	
 	if (currentFunctionId == equalsId)				setValid(p.);
 	else if (currentFunctionId == distGreaterId)	setValid(p.getDistanceFrom(r) > valParam->floatValue());
 	else if (currentFunctionId == distLessId)		setValid(p.getDistanceFrom(r) > valParam->floatValue());
 	else if (currentFunctionId == magnGreaterId)	setValid(p.getDistanceFromOrigin() >valParam->floatValue());
 	else if (currentFunctionId == magnLessId)		setValid(p.getDistanceFromOrigin() < valParam->floatValue());
-	*/
+     */
+	
 }

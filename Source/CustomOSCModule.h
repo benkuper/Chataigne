@@ -40,8 +40,8 @@ public:
 	
 
 	//ModelManager callbacks
-	void itemAdded(UserOSCCommandModel * model);
-	void itemRemoved(UserOSCCommandModel * model);
+	void itemAdded(UserOSCCommandModel * model) override;
+	void itemRemoved(UserOSCCommandModel * model) override;
 
 	CommandDefinition * getDefinitionForModel(UserOSCCommandModel * model);
 	UserOSCCommandModel * getModelForName(const String &modelName);

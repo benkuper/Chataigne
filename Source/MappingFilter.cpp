@@ -14,10 +14,10 @@
 
 MappingFilter::MappingFilter(const String &name) :
 	BaseItem(name),
-	filteredParameter(nullptr),
-	sourceParam(nullptr),
-	autoSetRange(true),
-	filterParams("filterParams")
+sourceParam(nullptr),
+filteredParameter(nullptr),
+filterParams("filterParams"),
+autoSetRange(true)
 {
 	isSelectable = false;
 

@@ -31,9 +31,9 @@ public:
 	Dashboard * currentDashboard;
 	void setCurrentDashboard(Dashboard *);
 
-	void resized();
+    void resized() override;
 
-	void inspectablesSelectionChanged();
+	void inspectablesSelectionChanged() override;
 
 	void itemRemoved(Dashboard *) override;
 };

@@ -44,6 +44,8 @@ void UserOSCCommand::rebuildArgsFromModel()
 		case Controllable::INT: p = new IntParameter(a->niceName, ap->description, ap->value, ap->minimumValue, ap->maximumValue); break;
 		case Controllable::FLOAT: p = new FloatParameter(a->niceName, ap->description, ap->value, ap->minimumValue, ap->maximumValue); break;
 		case Controllable::STRING: p = new StringParameter(a->niceName, ap->description, ap->value); break;
+            default:
+                break;
 		}
 
 		p->isEditable = a->editable->boolValue() && !a->useForMapping->boolValue();

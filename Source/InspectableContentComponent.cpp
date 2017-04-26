@@ -13,12 +13,12 @@
 
 InspectableContentComponent::InspectableContentComponent(Inspectable * inspectable) :
 	InspectableContent(inspectable),
-	repaintOnSelectionChanged(true),
-	bringToFrontOnSelect(true),
+repaintOnSelectionChanged(true),
+rounderCornerSize(4),
 	autoDrawHighlightWhenSelected(true),
-	rounderCornerSize(4),
 	highlightColor(HIGHLIGHT_COLOR),
-	autoSelectWithChildRespect(true)
+autoSelectWithChildRespect(true),
+bringToFrontOnSelect(true)
 {
 }
 

@@ -19,8 +19,10 @@ class QueuedNotifier:
 {
 public:
 
-    QueuedNotifier(int _maxSize, bool _dropMessageOnOverflow = true):fifo(_maxSize),dropMessageOnOverflow(_dropMessageOnOverflow)
-	{
+    QueuedNotifier(int _maxSize, bool _dropMessageOnOverflow = true) :
+    dropMessageOnOverflow(_dropMessageOnOverflow),
+    fifo(_maxSize)
+    {
         maxSize = _maxSize;
 
     }

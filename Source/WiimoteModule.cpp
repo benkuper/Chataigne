@@ -106,7 +106,7 @@ void WiimoteModule::wiimoteOrientationUpdated(Wiimote * w)
 	
 	if (!std::isnan(r))
 	{
-		if (abs(r - roll->floatValue() > .5f)) roll->setValue(r);
+		if (std::abs(r - roll->floatValue()) > .5f) roll->setValue(r);
 		else roll->setValue(roll->floatValue() + (r - roll->floatValue())*.5f);
 	}
 }

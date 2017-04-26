@@ -75,6 +75,10 @@ static int state_changed(struct wiimote_t* wm);
  *	that occur.  If an event occurs on a particular wiimote,
  *	the event variable will be set.
  */
+
+
+int wiiuse_os_poll(struct wiimote_t** wm, int wiimotes);
+
 int wiiuse_poll(struct wiimote_t** wm, int wiimotes) {
 	return wiiuse_os_poll(wm, wiimotes);
 }

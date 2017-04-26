@@ -12,9 +12,10 @@
 #include "ShapeShifterContainer.h"
 
 ShapeShifter::ShapeShifter(Type _type) :
-	shifterType(_type),
-	preferredWidth(300), preferredHeight(300),
-	parentContainer(nullptr)
+parentContainer(nullptr),
+shifterType(_type),
+	preferredWidth(300),
+    preferredHeight(300)
 {
 }
 

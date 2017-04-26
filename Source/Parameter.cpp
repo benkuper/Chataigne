@@ -17,8 +17,8 @@ Parameter::Parameter(const Type &type, const String &niceName, const String &des
 	isEditable(true),
 	isPresettable(true),
 	isOverriden(false),
-	queuedNotifier(100),
-	autoAdaptRange(false)
+autoAdaptRange(false),
+queuedNotifier(100) 
 {
 	minimumValue = minValue;
 	maximumValue = maxValue;

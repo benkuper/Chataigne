@@ -64,6 +64,9 @@
  *
  *	@return 1 on success, 0 on failure
  */
+
+int wiiuse_os_read(struct wiimote_t* wm, byte* buf, int len);
+
 static short wiiuse_os_connect_single(struct wiimote_t* wm) {
 	// Skip if already connected or device not found
 	if(!wm) {
