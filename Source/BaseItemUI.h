@@ -115,7 +115,8 @@ public:
 
 template<class T>
 BaseItemUI<T>::BaseItemUI(T * _item, ResizeMode _resizeMode, bool _canBeDragged) :
-	BaseItemMinimalUI<T>(_item),
+BaseItemMinimalUI<T>(_item),
+minContentHeight(2),
 grabberHeight(0),
 canBeDragged(_canBeDragged),
 headerHeight(16),
