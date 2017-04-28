@@ -16,7 +16,7 @@ Point2DComparator::Point2DComparator(Controllable * c) :
 	p2dParam((Point2DParameter *)c)
 {
 	p2dRef = addPoint2DParameter("Reference", "Comparison Reference to check against source value", p2dParam->defaultValue);
-	p2dRef->setBounds(p2dParam->minX, p2dParam->minY, p2dParam->maxX, p2dParam->maxY);
+	p2dRef->setRange(p2dParam->minimumValue, p2dParam->maximumValue, true);
 	reference = p2dRef;
 
 	valParam = addFloatParameter("Reference 2", "Depending on the comparison function, will act as reference for distance, magniture or other value reference to check against.", 0);

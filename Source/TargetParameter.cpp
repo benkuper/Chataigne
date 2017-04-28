@@ -13,9 +13,11 @@
 #include "TargetParameterUI.h"
 
 TargetParameter::TargetParameter(const String & niceName, const String & description, const String & initialValue, WeakReference<ControllableContainer> rootReference, bool enabled) :
-	StringParameter(niceName,description,initialValue,enabled),
-targetType(CONTROLLABLE),
-    useGhosting(true),
+	StringParameter(niceName, description, initialValue, enabled),
+	targetType(CONTROLLABLE),
+	useGhosting(true),
+	showParameters(true),
+	showTriggers(true),
 	rootContainer(rootReference),
 	target(nullptr)
 {

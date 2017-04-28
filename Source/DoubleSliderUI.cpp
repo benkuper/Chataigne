@@ -13,8 +13,8 @@
 DoubleSliderUI::DoubleSliderUI(Point2DParameter * parameter) :
 	ParameterUI(parameter),
 p2d(parameter),
-	xParam("X","xParam",parameter->x, parameter->minX,parameter->maxX),
-	yParam("Y", "yParam", parameter->y,parameter->minY,parameter->maxY),
+	xParam("X","xParam",parameter->x, parameter->minimumValue[0],parameter->maximumValue[0]),
+	yParam("Y", "yParam", parameter->y,parameter->minimumValue[0],parameter->maximumValue[0]),
 	xSlider(&xParam), ySlider(&yParam)
 {
 	xParam.defaultValue = 0;
@@ -64,7 +64,7 @@ void DoubleSliderUI::newMessage(const Parameter::ParamWithValue & p)
 		if (yParam.floatValue() != p2d->y) p2d->setPoint(xParam.floatValue(), yParam.floatValue());
 	} else if (p.isRange())
 	{
-		xParam.setRange(p.value[0], p.value[1]);
-		yParam.setRange(p.value[2], p.value[3]);
+		xParam.setRange(p.parameter->minimumValue[0], p.parameter->maximumValue[0]);
+		yParam.setRange(p.parameter->minimumValue[1], p.parameter->maximumValue[1]);
 	}
 }

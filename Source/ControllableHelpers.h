@@ -21,8 +21,11 @@ class ControllableChooserPopupMenu :
 	public PopupMenu
 {
 public:
-	ControllableChooserPopupMenu(ControllableContainer * rootContainer);
+	ControllableChooserPopupMenu(ControllableContainer * rootContainer, bool showParameters = true, bool showTriggers = true);
 	virtual ~ControllableChooserPopupMenu();
+
+	bool showParameters;
+	bool showTriggers;
 
 	Array<Controllable *> controllableList;
 	void populateMenu(PopupMenu *subMenu, ControllableContainer * container, int &currentId);

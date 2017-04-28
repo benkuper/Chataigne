@@ -783,6 +783,24 @@
         </GROUP>
         <GROUP id="{8FC20544-FEBB-B3BA-CF48-50962AA7C07C}" name="Module">
           <GROUP id="{766BCE2E-5C2E-5A80-EC80-7FFA2C7ABBBA}" name="modules">
+            <GROUP id="{59F1EF8C-5880-1E61-23C7-906E6FD546C2}" name="generic">
+              <GROUP id="{9C478D37-AA46-AFA2-7D78-2116F6962ADB}" name="commands">
+                <GROUP id="{967BAB81-51E8-E01E-B9FF-0F23EF2D7CDB}" name="ui">
+                  <FILE id="BQzoXe" name="GenericSetParameterCommandEditor.cpp" compile="1"
+                        resource="0" file="Source/GenericSetParameterCommandEditor.cpp"/>
+                  <FILE id="Zd9iUr" name="GenericSetParameterCommandEditor.h" compile="0"
+                        resource="0" file="Source/GenericSetParameterCommandEditor.h"/>
+                </GROUP>
+                <FILE id="xFMX67" name="GenericSetParameterCommand.cpp" compile="1"
+                      resource="0" file="Source/GenericSetParameterCommand.cpp"/>
+                <FILE id="UExDaG" name="GenericSetParameterCommand.h" compile="0" resource="0"
+                      file="Source/GenericSetParameterCommand.h"/>
+              </GROUP>
+              <FILE id="vrTY0m" name="ChataigneGenericModule.cpp" compile="1" resource="0"
+                    file="Source/ChataigneGenericModule.cpp"/>
+              <FILE id="fjalKr" name="ChataigneGenericModule.h" compile="0" resource="0"
+                    file="Source/ChataigneGenericModule.h"/>
+            </GROUP>
             <GROUP id="{F5171EF4-1AB0-B2AF-A6EE-A27CDDF48A65}" name="dmx">
               <GROUP id="{A6ECC2AC-E04A-94E9-D94D-E14D9B391DD1}" name="commands">
                 <FILE id="fmclij" name="DMXCommand.cpp" compile="1" resource="0" file="Source/DMXCommand.cpp"/>

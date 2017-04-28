@@ -19,7 +19,6 @@ public:
 	Point3DParameter(const String &niceName, const String &description, bool enabled = true);
 	~Point3DParameter() {}
 
-	float minX, maxX,minY,maxY, minZ, maxZ;
 	float x, y, z;
 	void setVector(Vector3D<float> value);
 	void setVector(float x, float y, float z);

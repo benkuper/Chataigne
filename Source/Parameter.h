@@ -33,7 +33,7 @@ public:
 	bool isComplex();
 	virtual StringArray getValuesNames();
 
-	void setRange(var,var, bool setDefaultRange = true);
+	virtual void setRange(var,var, bool setDefaultRange = true);
 
 	bool isEditable; 
 	bool isPresettable;

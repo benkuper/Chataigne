@@ -23,7 +23,7 @@ class BaseItemUI :
 public:
 	enum ResizeMode { NONE, VERTICAL, HORIZONTAL, ALL };
 
-	BaseItemUI<T>(T * _item, ResizeMode resizeMode = VERTICAL, bool canBeDragged = false);
+	BaseItemUI<T>(T * _item, ResizeMode resizeMode = NONE, bool canBeDragged = false);
 	virtual ~BaseItemUI<T>();
 
 	

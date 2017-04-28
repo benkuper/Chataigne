@@ -14,7 +14,6 @@
 #include "BaseItem.h"
 #include "GenericManagerEditor.h"
 #include "UndoMaster.h"
-#include "Engine.h"
 
 template <class T>
 class BaseManager :
@@ -226,7 +225,7 @@ T * BaseManager<T>::createItem() {
 
 
 template<class T>
-T * BaseManager<T>::addItem(T * item, var data, bool fromUndoableAction)
+T * BaseManager<T>::addItem(T * item, var data, bool /*fromUndoableAction*/)
 {
 	/*
 	if (!fromUndoableAction && !UndoMaster::getInstance()->isPerforming)
@@ -276,7 +275,7 @@ void BaseManager<T>::addItemFromData(var data, bool fromUndoableAction)
 }
 
 template<class T>
-void BaseManager<T>::removeItem(T * item, bool fromUndoableAction)
+void BaseManager<T>::removeItem(T * item, bool /*fromUndoableAction*/)
 {
 	/*
 	if (!fromUndoableAction && !UndoMaster::getInstance()->isPerforming)

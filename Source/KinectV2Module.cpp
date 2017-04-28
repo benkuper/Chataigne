@@ -77,8 +77,10 @@ bool KinectV2Module::initKinect()
 	LOG("Kinect is initialized");
 	return true;
 
-#endif
+#else
     return false;
+#endif
+
 }
 
 void KinectV2Module::updateKinect()

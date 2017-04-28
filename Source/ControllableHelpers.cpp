@@ -14,7 +14,9 @@
 #include "ControllableContainer.h"
 #include "InspectableEditor.h"
 
-ControllableChooserPopupMenu::ControllableChooserPopupMenu(ControllableContainer * rootContainer)
+ControllableChooserPopupMenu::ControllableChooserPopupMenu(ControllableContainer * rootContainer, bool _showParameters, bool _showTriggers) :
+	showParameters(_showParameters),
+	showTriggers(_showTriggers)
 {
 	int id = 1;
 	//if (rootContainer == nullptr) rootContainer = NodeManager::getInstance(); //to replace with global app container containing nodes, controllers, rules, etc...
@@ -43,6 +45,14 @@ void ControllableChooserPopupMenu::populateMenu(PopupMenu * subMenu, Controllabl
 		{
 			if (!c->isTargettable || !c->isControllableExposed) continue;
 
+			if (c->type == Controllable::TRIGGER)
+			{
+				if (!showTriggers) continue;
+			} else
+			{
+				if (!showParameters) continue;
+			}
+			
 			subMenu->addItem(currentId, c->niceName);
 			controllableList.add(c);
 			currentId++;

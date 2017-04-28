@@ -32,6 +32,9 @@ public:
 	bool useGhosting;
 	String ghostValue;
 
+	bool showParameters;
+	bool showTriggers;
+
 	WeakReference<ControllableContainer> rootContainer;
 	
 	WeakReference<Controllable> target;

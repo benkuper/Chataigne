@@ -11,7 +11,7 @@
 #include "SequenceLayerPanel.h"
 
 SequenceLayerPanel::SequenceLayerPanel(SequenceLayer * layer) :
-	BaseItemUI<SequenceLayer>(layer)
+	BaseItemUI<SequenceLayer>(layer,ResizeMode::VERTICAL)
 {
 	colorUI = item->color->createColorParamUI();
 

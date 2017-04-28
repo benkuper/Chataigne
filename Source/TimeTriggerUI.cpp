@@ -13,6 +13,7 @@
 TimeTriggerUI::TimeTriggerUI(TimeTrigger * _tt) :
 	BaseItemUI<TimeTrigger>(_tt)
 {
+
 	nameUI->setAutoSize(true);
 	
 	autoDrawHighlightWhenSelected = false;

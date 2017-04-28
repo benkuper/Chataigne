@@ -12,6 +12,7 @@
 #include "ModuleFactory.h"
 #include "StateManager.h"
 #include "SequenceManager.h"
+#include "Engine.h"
 
 juce_ImplementSingleton(ModuleManager)
 
@@ -39,6 +40,7 @@ Module * ModuleManager::getModuleWithName(const String & moduleName)
 	DBG("get Module with name : " << moduleName << " / " << StateManager::getInstance()->shortName);
 	if (moduleName == StateManager::getInstance()->module.shortName) return &StateManager::getInstance()->module;
 	if (moduleName == SequenceManager::getInstance()->module.shortName) return &SequenceManager::getInstance()->module;
+	if (moduleName == Engine::getInstance()->module.shortName) return &Engine::getInstance()->module;
 	else return getItemWithName(moduleName);
 }
 
@@ -77,6 +79,7 @@ PopupMenu ModuleManager::getAllModulesCommandMenu(CommandContext context)
 	for (int i = 0; i < items.size(); i++) menu.addSubMenu(items[i]->niceName, items[i]->defManager.getCommandMenu(i * 1000,context));
 	menu.addSubMenu(StateManager::getInstance()->module.niceName, StateManager::getInstance()->module.defManager.getCommandMenu(-1000, context));
 	menu.addSubMenu(SequenceManager::getInstance()->module.niceName, SequenceManager::getInstance()->module.defManager.getCommandMenu(-2000, context));
+	menu.addSubMenu(Engine::getInstance()->module.niceName, Engine::getInstance()->module.defManager.getCommandMenu(-3000, context));
 	return menu;
 }
 
@@ -84,9 +87,15 @@ PopupMenu ModuleManager::getAllModulesCommandMenu(CommandContext context)
 CommandDefinition * ModuleManager::getCommandDefinitionForItemID(int itemID, Module * lockedModule)
 {
 	if (itemID == 0) return nullptr;
+	DBG("Item id = " + String(itemID));
+
 	Module * m = lockedModule;
 
-	if (itemID < -1000)
+	if (itemID < -2000)
+	{
+		m = &Engine::getInstance()->module;
+		itemID += 3000;
+	}else if (itemID < -1000)
 	{
 		m = &SequenceManager::getInstance()->module;
 		itemID += 2000;

@@ -11,7 +11,7 @@
 #include "SequenceUI.h"
 
 SequenceUI::SequenceUI(Sequence * sequence) :
-	BaseItemUI<Sequence>(sequence,ResizeMode::VERTICAL)
+	BaseItemUI<Sequence>(sequence)
 {
 	minContentHeight = 5;
 

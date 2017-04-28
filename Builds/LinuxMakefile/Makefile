@@ -245,6 +245,9 @@ OBJECTS := \
   $(JUCE_OBJDIR)/MappingUI_56e9fc43.o \
   $(JUCE_OBJDIR)/Mapping_bdf5522f.o \
   $(JUCE_OBJDIR)/MappingManager_a2de1f08.o \
+  $(JUCE_OBJDIR)/GenericSetParameterCommandEditor_dcc319e3.o \
+  $(JUCE_OBJDIR)/GenericSetParameterCommand_f3888796.o \
+  $(JUCE_OBJDIR)/ChataigneGenericModule_de326dee.o \
   $(JUCE_OBJDIR)/DMXCommand_5ffc0ec5.o \
   $(JUCE_OBJDIR)/DMXModuleEditor_d630ba09.o \
   $(JUCE_OBJDIR)/DMXModule_7722bc3c.o \
@@ -1326,6 +1329,21 @@ $(JUCE_OBJDIR)/Mapping_bdf5522f.o: ../../Source/Mapping.cpp
 $(JUCE_OBJDIR)/MappingManager_a2de1f08.o: ../../Source/MappingManager.cpp
 	-@mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling MappingManager.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/GenericSetParameterCommandEditor_dcc319e3.o: ../../Source/GenericSetParameterCommandEditor.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling GenericSetParameterCommandEditor.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/GenericSetParameterCommand_f3888796.o: ../../Source/GenericSetParameterCommand.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling GenericSetParameterCommand.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/ChataigneGenericModule_de326dee.o: ../../Source/ChataigneGenericModule.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling ChataigneGenericModule.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/DMXCommand_5ffc0ec5.o: ../../Source/DMXCommand.cpp

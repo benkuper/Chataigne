@@ -13,12 +13,20 @@
 
 Point2DParameter::Point2DParameter(const String & niceName, const String & description, bool enabled) :
 	Parameter(POINT2D, niceName, description, 0, 0, 1, enabled),
-	minX(0),minY(0),maxX(1),maxY(1),x(0), y(0)
+	x(0), y(0)
 {
 
 	value = var();
 	value.append(0);
 	value.append(0);
+
+	minimumValue = var();
+	minimumValue.append(0);
+	minimumValue.append(0);
+
+	maximumValue = var();
+	maximumValue.append(1);
+	maximumValue.append(1);
 
 	//hideInEditor = true;
 	argumentsDescription = "float, float";
@@ -32,8 +40,8 @@ void Point2DParameter::setPoint(Point<float> _value)
 void Point2DParameter::setPoint(float _x, float _y)
 {
 	var d;
-	d.append(jlimit<float>(minX,maxX,_x));
-	d.append(jlimit<float>(minY, maxY, _y));
+	d.append(jlimit<float>(minimumValue[0],maximumValue[0],_x));
+	d.append(jlimit<float>(minimumValue[1],maximumValue[1], _y));
 
 	if (d[0] == value[0] && d[1] == value[1]) return;
 	setValue(d);
@@ -46,34 +54,23 @@ void Point2DParameter::setValueInternal(var & _value)
 	if (autoAdaptRange)
 	{
 		bool hasChanged = false;
-		if ((float)_value[0] < (float)minX) {
-			minX = _value[0];
-			hasChanged = true;
-		} else if ((float)_value[0] >(float)maxX)
+		for (int i = 0; i < 3; i++)
 		{
-			maxX = _value[0];
-			hasChanged = true;
+			if ((float)_value[i] < (float)minimumValue[i]) {
+				minimumValue[i] = _value[i];
+				hasChanged = true;
+			} else if ((float)_value[i] > (float)maximumValue[i])
+			{
+				maximumValue[i] = _value[i];
+				hasChanged = true;
+			}
 		}
 
-		if ((float)_value[1] < (float)minY) {
-			minY = _value[1];
-			hasChanged = true;
-		} else if ((float)_value[1] >(float)maxY)
-		{
-			maxY = _value[1];
-			hasChanged = true;
-		}
-		if (hasChanged)
-		{
-			listeners.call(&Listener::parameterRangeChanged, this);
-			var arr;
-			arr.append(minX); arr.append(maxX); arr.append(minY); arr.append(maxY);
-			queuedNotifier.addMessage(new ParamWithValue(this, arr,ParamWithValue::RANGE));
-		}
+		if(hasChanged) setRange(minimumValue, maximumValue);
 	}
 
-	x = jlimit<float>(minX, maxX, _value[0]);
-	y = jlimit<float>(minY, maxY,_value[1]);
+	x = jlimit<float>(minimumValue[0], maximumValue[0], _value[0]);
+	y = jlimit<float>(minimumValue[1], maximumValue[1],_value[1]);
 
 	value = var();
 	value.append(x);
@@ -82,14 +79,13 @@ void Point2DParameter::setValueInternal(var & _value)
 
 void Point2DParameter::setBounds(float _minX, float _minY, float _maxX, float _maxY)
 {
-	minX = _minX;
-	minY = _minY;
-	maxX = _maxX;
-	maxY = _maxY;
-	listeners.call(&Listener::parameterRangeChanged, this);
-	var arr;
-	arr.append(minX); arr.append(maxX); arr.append(minY); arr.append(maxY);
-	queuedNotifier.addMessage(new ParamWithValue(this, arr,ParamWithValue::RANGE));
+	var minRange;
+	var maxRange;
+	minRange.append(_minX);
+	minRange.append(_minY);
+	maxRange.append(_maxX);
+	maxRange.append(_maxY);
+	setRange(minRange, maxRange, true);
 }
 
 Point<float> Point2DParameter::getPoint() {

@@ -14,9 +14,9 @@
 TripleSliderUI::TripleSliderUI(Point3DParameter * parameter) :
 	ParameterUI(parameter),
 p3d(parameter),
-	xParam("X", "xParam", parameter->x, parameter->minX, parameter->maxX),
-	yParam("Y", "yParam", parameter->y, parameter->minY, parameter->maxY),
-	zParam("Z", "zParam", parameter->z, parameter->minZ, parameter->maxZ),
+	xParam("X", "xParam", parameter->x, parameter->minimumValue[0], parameter->maximumValue[0]),
+	yParam("Y", "yParam", parameter->y, parameter->minimumValue[1], parameter->maximumValue[1]),
+	zParam("Z", "zParam", parameter->z, parameter->minimumValue[2], parameter->maximumValue[2]),
 	xSlider(&xParam), ySlider(&yParam), zSlider(&zParam)
 {
 	xParam.defaultValue = 0;
@@ -73,8 +73,8 @@ void TripleSliderUI::newMessage(const Parameter::ParamWithValue & p)
 		if (zParam.floatValue() != p3d->z) p3d->setVector(xParam.floatValue(), yParam.floatValue(), zParam.floatValue());
 	} else if (p.isRange())
 	{
-		xParam.setRange(p.value[0], p.value[1]);
-		yParam.setRange(p.value[2], p.value[3]);
-		zParam.setRange(p.value[4], p.value[5]);
+		xParam.setRange(p.parameter->minimumValue[0], p.parameter->maximumValue[0]);
+		yParam.setRange(p.parameter->minimumValue[1], p.parameter->maximumValue[1]);
+		zParam.setRange(p.parameter->minimumValue[2], p.parameter->maximumValue[2]);
 	}
 }

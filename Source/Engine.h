@@ -18,6 +18,7 @@
 #include "DebugHelpers.h"
 #include "ProgressNotifier.h"
 #include "ControllableContainer.h"
+#include "ChataigneGenericModule.h"
 
 class Engine :
 	public ControllableContainer,
@@ -31,6 +32,7 @@ public:
 	Engine();
 	~Engine();
 
+	ChataigneGenericModule module;
 
 	void createNewGraph();
 	void clear();
