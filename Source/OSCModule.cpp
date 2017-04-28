@@ -47,10 +47,20 @@ void OSCModule::setupReceiver()
 	bool result = receiver.connect(localPort->intValue());
 	isConnected->setValue(result);
 
+	if (result)
+	{
+		NLOG(niceName, "Now receiving on port : " + localPort->stringValue());
+	} else
+	{
+		NLOG(niceName, "Error binding port " + localPort->stringValue());
+	}
+	
 	Array<IPAddress> ad;
 	IPAddress::findAllAddresses(ad);
+
 	String s = "Local IPs:";
 	for (auto &a : ad) s += String("\n > ") + a.toString();
+	NLOG(niceName, s);
 }
 
 float OSCModule::getFloatArg(OSCArgument a)
@@ -183,6 +193,15 @@ void OSCModule::oscMessageReceived(const OSCMessage & message)
 {
 	if (!enabled->boolValue()) return;
 	processMessage(message);
+}
+
+void OSCModule::oscBundleReceived(const OSCBundle & bundle)
+{
+	if (!enabled->boolValue()) return;
+	for (auto &m : bundle)
+	{
+		processMessage(m.getMessage());
+	}
 }
 
 InspectableEditor * OSCModule::getEditor(bool isRoot)

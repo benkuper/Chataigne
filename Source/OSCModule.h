@@ -59,6 +59,7 @@ public:
 
 	virtual void onContainerParameterChangedInternal(Parameter * p) override;
 	virtual void oscMessageReceived(const OSCMessage & message) override;
+	virtual void oscBundleReceived(const OSCBundle & bundle) override;
 
 	InspectableEditor * getEditor(bool isRoot) override;	
 };
