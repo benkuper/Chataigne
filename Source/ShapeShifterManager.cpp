@@ -291,8 +291,8 @@ void ShapeShifterManager::loadDefaultLayoutFile()
 	{
 		String defaultLayoutFileData = String::fromUTF8(BinaryData::default_chalayout);
 		loadLayout(JSON::parse(defaultLayoutFileData));
-        File layoutFolder = File::getSpecialLocation(File::SpecialLocationType::userDocumentsDirectory).getChildFile(appSubFolder);
-        saveCurrentLayoutToFile(layoutFolder.getChildFile("default.chalayout"));
+        //File layoutFolder = File::getSpecialLocation(File::SpecialLocationType::userDocumentsDirectory).getChildFile(appSubFolder);
+        //saveCurrentLayoutToFile(layoutFolder.getChildFile("default.chalayout"));
     }
 }
 
