@@ -66,7 +66,7 @@ void AutomationKey::setEasing(Easing::Type t)
 
 	if (easing != nullptr)
 	{
-		easing->selectionManager = selectionManager;
+        easing->setSelectionManager(selectionManager);
 		addChildControllableContainer(easing);
 	}
 }

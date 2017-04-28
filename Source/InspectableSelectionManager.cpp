@@ -15,6 +15,7 @@ juce_ImplementSingleton(InspectableSelectionManager)
 
 InspectableSelectionManager::InspectableSelectionManager()
 {
+    setEnabled(true);
 }
 
 InspectableSelectionManager::~InspectableSelectionManager()
