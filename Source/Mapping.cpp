@@ -39,7 +39,7 @@ void Mapping::lockInputTo(Parameter * lockParam)
 
 void Mapping::process()
 {
-	if (!enabled->boolValue() || forceDisabled) return;
+	if (canBeDisabled && !enabled->boolValue() || forceDisabled) return;
 	if (input.inputReference == nullptr) return;
 	if (!cdm.getIsValid(true)) return;
 
@@ -96,6 +96,6 @@ InspectableEditor * Mapping::getEditor(bool isRoot)
 
 void Mapping::timerCallback()
 {
-	if(!enabled->boolValue() || forceDisabled) return
+	if(canBeDisabled && !enabled->boolValue() || forceDisabled) return
 	process();
 }
