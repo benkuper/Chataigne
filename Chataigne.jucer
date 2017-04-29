@@ -782,6 +782,25 @@
           </GROUP>
         </GROUP>
         <GROUP id="{8FC20544-FEBB-B3BA-CF48-50962AA7C07C}" name="Module">
+          <GROUP id="{6A66F332-572D-8365-6F5B-D62551F7996B}" name="Routing">
+            <GROUP id="{B565F624-019C-0A8D-4F0B-4CBC692147B2}" name="ui">
+              <FILE id="ugWs7c" name="ModuleRouterPanelView.cpp" compile="1" resource="0"
+                    file="Source/ModuleRouterPanelView.cpp"/>
+              <FILE id="aJjTvD" name="ModuleRouterPanelView.h" compile="0" resource="0"
+                    file="Source/ModuleRouterPanelView.h"/>
+              <FILE id="rky6VU" name="ModuleRouterView.cpp" compile="1" resource="0"
+                    file="Source/ModuleRouterView.cpp"/>
+              <FILE id="BPLwuL" name="ModuleRouterView.h" compile="0" resource="0"
+                    file="Source/ModuleRouterView.h"/>
+            </GROUP>
+            <FILE id="em2Vzj" name="ModuleRouter.cpp" compile="1" resource="0"
+                  file="Source/ModuleRouter.cpp"/>
+            <FILE id="PPygSe" name="ModuleRouter.h" compile="0" resource="0" file="Source/ModuleRouter.h"/>
+            <FILE id="DzPQw4" name="ModuleRouterManager.cpp" compile="1" resource="0"
+                  file="Source/ModuleRouterManager.cpp"/>
+            <FILE id="WHdEkG" name="ModuleRouterManager.h" compile="0" resource="0"
+                  file="Source/ModuleRouterManager.h"/>
+          </GROUP>
           <GROUP id="{766BCE2E-5C2E-5A80-EC80-7FFA2C7ABBBA}" name="modules">
             <GROUP id="{59F1EF8C-5880-1E61-23C7-906E6FD546C2}" name="generic">
               <GROUP id="{9C478D37-AA46-AFA2-7D78-2116F6962ADB}" name="commands">

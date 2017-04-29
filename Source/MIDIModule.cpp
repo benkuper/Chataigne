@@ -17,7 +17,8 @@ MIDIModule::MIDIModule(const String & name) :
 	inputDevice(nullptr),
 	outputDevice(nullptr)
 {
-	
+	canHandleRouteValues = true;
+
 	midiParam = new MIDIDeviceParameter("Devices");
 	addParameter(midiParam);
 

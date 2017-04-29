@@ -16,8 +16,8 @@
 class ShapeShifterContent;
 
 
-const static StringArray globalPanelNames = { "Modules","State Machine","Time Machine","States","Sequences","Inspector","Logger","Outliner","OSC Models","Dashboard"};
-enum PanelName {ModulesPanel, StateMachinePanel, TimeMachinePanel, StatesPanel, SequencesPanel, InspectorPanel, LoggerPanel, OutlinerPanel, OSCCommandModelPanel,DashboardManagerPanel};
+const static StringArray globalPanelNames = { "Modules","State Machine","Time Machine","States","Sequences","Inspector","Logger","Outliner","OSC Models","Dashboard","Module Router"};
+enum PanelName {ModulesPanel, StateMachinePanel, TimeMachinePanel, StatesPanel, SequencesPanel, InspectorPanel, LoggerPanel, OutlinerPanel, OSCCommandModelPanel,DashboardManagerPanel,ModuleRouterPanel};
 
 class ShapeShifterFactory
 {

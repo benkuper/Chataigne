@@ -25,6 +25,8 @@ public:
 	Module(const String &name = "Module");
 	virtual ~Module();
 
+	bool canHandleRouteValues;
+
 	BoolParameter * logIncomingData;
 	BoolParameter * logOutgoingData;
 
@@ -39,6 +41,8 @@ public:
 	String customType; //for custom modules;
 
 	Array<WeakReference<Controllable>> getValueControllables();
+
+	virtual void handleRoutedModuleValue(Controllable * /*value*/, int /*valueIndex*/, bool /*useNormalizedValue*/ = false) {} //used for routing
 
 	virtual void setupModuleFromJSONData(var data); //Used for custom modules with a module.json definition, to automatically create parameters, command and values from this file.
 	Controllable * getControllableForJSONDefinition(const String &name, var def);

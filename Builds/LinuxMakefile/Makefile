@@ -245,6 +245,10 @@ OBJECTS := \
   $(JUCE_OBJDIR)/MappingUI_56e9fc43.o \
   $(JUCE_OBJDIR)/Mapping_bdf5522f.o \
   $(JUCE_OBJDIR)/MappingManager_a2de1f08.o \
+  $(JUCE_OBJDIR)/ModuleRouterPanelView_ff0ec6d5.o \
+  $(JUCE_OBJDIR)/ModuleRouterView_55b2eea3.o \
+  $(JUCE_OBJDIR)/ModuleRouter_785566de.o \
+  $(JUCE_OBJDIR)/ModuleRouterManager_16ed3779.o \
   $(JUCE_OBJDIR)/GenericSetParameterCommandEditor_dcc319e3.o \
   $(JUCE_OBJDIR)/GenericSetParameterCommand_f3888796.o \
   $(JUCE_OBJDIR)/ChataigneGenericModule_de326dee.o \
@@ -1329,6 +1333,26 @@ $(JUCE_OBJDIR)/Mapping_bdf5522f.o: ../../Source/Mapping.cpp
 $(JUCE_OBJDIR)/MappingManager_a2de1f08.o: ../../Source/MappingManager.cpp
 	-@mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling MappingManager.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/ModuleRouterPanelView_ff0ec6d5.o: ../../Source/ModuleRouterPanelView.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling ModuleRouterPanelView.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/ModuleRouterView_55b2eea3.o: ../../Source/ModuleRouterView.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling ModuleRouterView.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/ModuleRouter_785566de.o: ../../Source/ModuleRouter.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling ModuleRouter.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/ModuleRouterManager_16ed3779.o: ../../Source/ModuleRouterManager.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling ModuleRouterManager.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/GenericSetParameterCommandEditor_dcc319e3.o: ../../Source/GenericSetParameterCommandEditor.cpp

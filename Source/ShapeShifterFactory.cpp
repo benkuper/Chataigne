@@ -21,6 +21,7 @@
 #include "Outliner.h"
 #include "UserOSCCommandModelManagerUI.h"
 #include "DashboardManagerView.h"
+#include "ModuleRouterPanelView.h"
 
 ShapeShifterContent * ShapeShifterFactory::createContentForIndex(PanelName pn)
 {
@@ -66,6 +67,10 @@ ShapeShifterContent * ShapeShifterFactory::createContentForIndex(PanelName pn)
 
 	case DashboardManagerPanel:
 		return new DashboardManagerView(contentName);
+		break;
+
+	case ModuleRouterPanel:
+		return new ModuleRouterPanelView(contentName);
 		break;
 
 	default:

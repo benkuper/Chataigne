@@ -16,6 +16,7 @@
 
 Module::Module(const String &name) :
 	BaseItem(name,true,true),
+	canHandleRouteValues(false),
 	valuesCC("Values"),
 	commandTester("Command Tester",CommandContext::ACTION)
 {

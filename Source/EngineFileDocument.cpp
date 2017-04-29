@@ -18,6 +18,7 @@
 #include "SequenceManager.h"
 #include "DashboardManager.h"
 #include "Outliner.h"
+#include "ModuleRouterManager.h"
 
 /*================================
  this file implements all methods that are related to saving/loading : basicly iherited from FileBasedDocument
@@ -190,6 +191,7 @@ var Engine::getJSONData()
   data.getDynamicObject()->setProperty("stateManager", StateManager::getInstance()->getJSONData());
   data.getDynamicObject()->setProperty("sequenceManager", SequenceManager::getInstance()->getJSONData());
   data.getDynamicObject()->setProperty("dashboardManager", DashboardManager::getInstance()->getJSONData());
+  data.getDynamicObject()->setProperty("routerManager", ModuleRouterManager::getInstance()->getJSONData());
 
   return data;
 }
@@ -250,6 +252,7 @@ void Engine::loadJSONData (var data,ProgressTask * loadingTask)
 
 	if (d->hasProperty("dashboardManager")) DashboardManager::getInstance()->loadJSONData(d->getProperty("dashboardManager"));
 
+	if (d->hasProperty("routerManager")) ModuleRouterManager::getInstance()->loadJSONData(d->getProperty("routerManager"));
 
 
 	if (InspectableSelectionManager::getInstanceWithoutCreating() != nullptr) InspectableSelectionManager::getInstance()->setEnabled(true); //Re enable editor

@@ -27,6 +27,7 @@
 #include "ScriptUtil.h"
 #include "DMXManager.h"
 #include "DashboardManager.h"
+#include "ModuleRouterManager.h"
 
 juce_ImplementSingleton(Engine) 
 
@@ -55,6 +56,7 @@ ControllableContainer("Root"),
 	//DMXManager::getInstance(); //Trigger DMXManager singleton constructor
 	InspectableSelectionManager::getInstance(); //selectionManager constructor
 	ScriptUtil::getInstance(); //trigger ScriptUtil constructorx
+	ModuleRouterManager::getInstance();
 }
 
 Engine::~Engine(){
@@ -65,6 +67,8 @@ Engine::~Engine(){
  
   DashboardManager::deleteInstance();
   Outliner::deleteInstance();
+
+  ModuleRouterManager::deleteInstance();
 
   SequenceManager::deleteInstance();
   StateManager::deleteInstance();
@@ -85,6 +89,8 @@ Engine::~Engine(){
   WiimoteManager::deleteInstance();
 
   ScriptUtil::deleteInstance();
+
+  
 
   //UndoMaster::deleteInstance();
 }
@@ -131,6 +137,8 @@ void Engine::clear() {
 	DashboardManager::getInstance()->clear();
 	StateManager::getInstance()->clear(); 
 	SequenceManager::getInstance()->clear();
+
+	ModuleRouterManager::getInstance()->clear();
 	ModuleManager::getInstance()->clear();
 
 	PresetManager::getInstance()->clear();
