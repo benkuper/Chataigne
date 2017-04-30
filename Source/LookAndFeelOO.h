@@ -548,8 +548,9 @@ private:
     class SliderLabelComp;
 
 	// Inherited via LookAndFeel
+#if JUCE_MAJOR_VERSION >= 5
 	virtual bool isProgressBarOpaque(ProgressBar &) override;
-
+#endif
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (LookAndFeelOO)
 
 

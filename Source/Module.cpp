@@ -16,9 +16,9 @@
 
 Module::Module(const String &name) :
 	BaseItem(name,true,true),
-	canHandleRouteValues(false),
 	valuesCC("Values"),
-	commandTester("Command Tester",CommandContext::ACTION)
+	commandTester("Command Tester",CommandContext::ACTION),
+	canHandleRouteValues(false)
 {
 	commandTester.canBeDisabled = false;
 	canInspectChildContainers = true;

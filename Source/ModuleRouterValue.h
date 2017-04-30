@@ -11,28 +11,32 @@
 #pragma once
 
 #include "BaseItem.h"
+#include "Module.h"
+
+
 
 class ModuleRouterValue :
 	public BaseItem,
 	public Inspectable::InspectableListener
 {
 public:
-	ModuleRouterValue();
+	ModuleRouterValue(Controllable * sourceValue = nullptr, Module * outModule = nullptr);
 	~ModuleRouterValue();
 
-	TargetParameter * sourceValue;
+	Module * outModule;
+
+	TargetParameter * sourceTarget;
 	BoolParameter * doRoute;
-	
-	RouteParams routeParams;
+
+	Controllable * currentSourceValue;
+
+	ScopedPointer<Module::RouteParams> routeParams;
+
+	void setSourceValue(Controllable * c);
+	void setOutModule(Module * outModule);
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
 
 	void inspectableDestroyed(Inspectable * i) override;
-};
-
-class RouteParams :
-	public ControllableContainer
-{
-	StringParameter * outputName;
 };

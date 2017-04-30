@@ -2,7 +2,7 @@
 
 <JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.0.0"
               bundleIdentifier="benkuper.Chataigne" includeBinaryInAppConfig="1"
-              jucerVersion="5.0.0" companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
+              jucerVersion="4.3.1" companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
               companyEmail="benjamin@kuperberg.fr" defines="" displaySplashScreen="1"
               reportAppUsage="1" splashScreenColour="Dark">
   <MAINGROUP id="EDDVhd" name="Chataigne">
@@ -789,11 +789,19 @@
                     file="Source/ModuleRouterPanelView.cpp"/>
               <FILE id="aJjTvD" name="ModuleRouterPanelView.h" compile="0" resource="0"
                     file="Source/ModuleRouterPanelView.h"/>
+              <FILE id="YuPbcP" name="ModuleRouterValueEditor.cpp" compile="1" resource="0"
+                    file="Source/ModuleRouterValueEditor.cpp"/>
+              <FILE id="U20Yte" name="ModuleRouterValueEditor.h" compile="0" resource="0"
+                    file="Source/ModuleRouterValueEditor.h"/>
               <FILE id="rky6VU" name="ModuleRouterView.cpp" compile="1" resource="0"
                     file="Source/ModuleRouterView.cpp"/>
               <FILE id="BPLwuL" name="ModuleRouterView.h" compile="0" resource="0"
                     file="Source/ModuleRouterView.h"/>
             </GROUP>
+            <FILE id="KwPgzL" name="ModuleRouterValue.cpp" compile="1" resource="0"
+                  file="Source/ModuleRouterValue.cpp"/>
+            <FILE id="mjP4VL" name="ModuleRouterValue.h" compile="0" resource="0"
+                  file="Source/ModuleRouterValue.h"/>
             <FILE id="em2Vzj" name="ModuleRouter.cpp" compile="1" resource="0"
                   file="Source/ModuleRouter.cpp"/>
             <FILE id="PPygSe" name="ModuleRouter.h" compile="0" resource="0" file="Source/ModuleRouter.h"/>
@@ -1497,6 +1505,33 @@
         <MODULEPATH id="juce_gui_extra" path="/Applications/JUCE/modules"/>
       </MODULEPATHS>
     </XCODE_MAC>
+    <VS2015 targetFolder="Builds/VisualStudio2015" externalLibraries="Kinect20.lib&#10;">
+      <CONFIGURATIONS>
+        <CONFIGURATION name="Release" winWarningLevel="4" generateManifest="1" winArchitecture="x64"
+                       isDebug="0" optimisation="3" targetName="Chataigne" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;$(ASIOSDK)/common&#10;$(KINECTSDK20_DIR)inc&#10;"
+                       libraryPath="$(KINECTSDK20_DIR)Lib\x64"/>
+        <CONFIGURATION name="Debug" winWarningLevel="4" generateManifest="1" winArchitecture="x64"
+                       isDebug="1" optimisation="1" targetName="Chataigne" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;$(ASIOSDK)/common&#10;$(KINECTSDK20_DIR)inc&#10;"
+                       libraryPath="$(KINECTSDK20_DIR)Lib\x64"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_video" path="D:/Softwares\JUCE\modules"/>
+        <MODULEPATH id="juce_osc" path="D:/Softwares\JUCE\modules"/>
+        <MODULEPATH id="juce_opengl" path="D:/Softwares\JUCE\modules"/>
+        <MODULEPATH id="juce_gui_extra" path="D:/Softwares\JUCE\modules"/>
+        <MODULEPATH id="juce_gui_basics" path="D:/Softwares\JUCE\modules"/>
+        <MODULEPATH id="juce_graphics" path="D:/Softwares\JUCE\modules"/>
+        <MODULEPATH id="juce_events" path="D:/Softwares\JUCE\modules"/>
+        <MODULEPATH id="juce_data_structures" path="D:/Softwares\JUCE\modules"/>
+        <MODULEPATH id="juce_cryptography" path="D:/Softwares\JUCE\modules"/>
+        <MODULEPATH id="juce_core" path="D:/Softwares\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_utils" path="D:/Softwares\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_processors" path="D:/Softwares\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_formats" path="D:/Softwares\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_devices" path="D:/Softwares\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_basics" path="D:/Softwares\JUCE\modules"/>
+      </MODULEPATHS>
+    </VS2015>
   </EXPORTFORMATS>
   <MODULES>
     <MODULE id="juce_audio_basics" showAllCode="1" useLocalCopy="0"/>

@@ -25,7 +25,7 @@ public:
 	Module(const String &name = "Module");
 	virtual ~Module();
 
-	bool canHandleRouteValues;
+	
 
 	BoolParameter * logIncomingData;
 	BoolParameter * logOutgoingData;
@@ -40,9 +40,25 @@ public:
 
 	String customType; //for custom modules;
 
+
+	//ROUTING
+	bool canHandleRouteValues;
+
 	Array<WeakReference<Controllable>> getValueControllables();
 
+
+	class RouteParams :
+		public ControllableContainer
+	{
+	public:
+		RouteParams() : ControllableContainer("Route Params") {}
+		~RouteParams() {}
+	};
+
+	virtual RouteParams * createRouteParamsForSourceValue(Controllable * sourceValue) { jassert(false); return nullptr; }
 	virtual void handleRoutedModuleValue(Controllable * /*value*/, int /*valueIndex*/, bool /*useNormalizedValue*/ = false) {} //used for routing
+
+
 
 	virtual void setupModuleFromJSONData(var data); //Used for custom modules with a module.json definition, to automatically create parameters, command and values from this file.
 	Controllable * getControllableForJSONDefinition(const String &name, var def);
@@ -54,6 +70,10 @@ public:
 	virtual String getDefaultTypeString() const { jassert(false); return ""; }
 
 	//virtual InspectableEditor * getEditor(bool isRoot) override;
+
+
+
+
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Module)
 };

@@ -57,6 +57,21 @@ public:
 	static var argumentToVar(const OSCArgument &a);
 
 
+	//Routing
+	class OSCRouteParams :
+		public RouteParams
+	{
+	public:
+		OSCRouteParams(Controllable * c) {
+			String tAddress = "/"+c->parentContainer->parentContainer->shortName+(c->shortName.startsWithChar('/')?"":"/")+c->shortName;
+			address = addStringParameter("Address", "Route Address", tAddress);
+		}
+		~OSCRouteParams() {}
+		StringParameter * address;
+	};
+
+	virtual RouteParams * createRouteParamsForSourceValue(Controllable * c) override { return new OSCRouteParams(c); }
+
 	virtual void onContainerParameterChangedInternal(Parameter * p) override;
 	virtual void oscMessageReceived(const OSCMessage & message) override;
 	virtual void oscBundleReceived(const OSCBundle & bundle) override;

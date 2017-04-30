@@ -10,7 +10,8 @@
 
 */
 
-#pragma once
+#ifndef __APPHEADERFILE_QZW0VV__
+#define __APPHEADERFILE_QZW0VV__
 
 #include "AppConfig.h"
 
@@ -46,3 +47,5 @@ namespace ProjectInfo
     const int          versionNumber  = 0x10000;
 }
 #endif
+
+#endif   // __APPHEADERFILE_QZW0VV__

@@ -2675,10 +2675,12 @@ void LookAndFeelOO::drawShinyButtonShape (Graphics& g,
     g.strokePath (outline, PathStrokeType (strokeWidth));
 }
 
+#if JUCE_MAJOR_VERSION >= 5
 bool LookAndFeelOO::isProgressBarOpaque(ProgressBar &)
 {
 	return true;
 }
+#endif
 
 //==============================================================================
 void LookAndFeelOO::drawGlassSphere (Graphics& g, const float x, const float y,

@@ -13,7 +13,8 @@
 ModuleRouter::ModuleRouter() :
 	BaseItem("Router"),
 	sourceModule(nullptr),
-	destModule(nullptr)
+	destModule(nullptr),
+	sourceValues("Source Values")
 {
     
 }
@@ -61,6 +62,7 @@ void ModuleRouter::setDestModule(Module * m)
 
 void ModuleRouter::setSourceValueSelected(Controllable * sourceValue, bool selected)
 {
+	/*
 	int index = sourceFilteredValues.indexOf(sourceValue);
 	bool found = index != -1;
 	if (selected == found) return;
@@ -78,14 +80,17 @@ void ModuleRouter::setSourceValueSelected(Controllable * sourceValue, bool selec
 		if (sourceValue->type == Controllable::TRIGGER) ((Trigger *)sourceValue)->removeTriggerListener(this);
 		else ((Parameter *)sourceValue)->removeParameterListener(this);
 	}
+	*/
 }
 
 void ModuleRouter::clearSourceValues()
 {
+	/*
 	while (sourceFilteredValues.size() > 0)
 	{
 		setSourceValueSelected(sourceFilteredValues[0], false);
 	}
+	*/
 }
 
 void ModuleRouter::inspectableDestroyed(Inspectable * i)
@@ -94,6 +99,7 @@ void ModuleRouter::inspectableDestroyed(Inspectable * i)
 	else if (i == destModule) setDestModule(nullptr);
 	else
 	{
+		/*
 		Controllable * c = dynamic_cast<Controllable *>(i);
 		if (c != nullptr)
 		{
@@ -102,17 +108,18 @@ void ModuleRouter::inspectableDestroyed(Inspectable * i)
 				setSourceValueSelected(c, false);
 			}
 		}
+		*/
 	}
 }
 
 void ModuleRouter::onExternalParameterChanged(Parameter * p)
 {
 	if (destModule == nullptr) return;
-	destModule->handleRoutedModuleValue(p, sourceFilteredValueIndices[p]);
+	//destModule->handleRoutedModuleValue(p, sourceFilteredValueIndices[p]);
 }
 
 void ModuleRouter::onExternalTriggerTriggered(Trigger * t)
 {
 	if (destModule == nullptr) return;
-	destModule->handleRoutedModuleValue(t, sourceFilteredValueIndices[t]);
+	//destModule->handleRoutedModuleValue(t, sourceFilteredValueIndices[t]);
 }

@@ -13,20 +13,15 @@
 #ifndef MODULEROUTERVALUEDITOR_H_INCLUDED
 #define MODULEROUTERVALUEDITOR_H_INCLUDED
 
-#include "JuceHeader.h"
-#include "Module.h"
+#include "BaseItemUI.h"
+#include "ModuleRouterValue.h"
 
 class ModuleRouterValueEditor : 
-	public Component
+	public BaseItemUI<ModuleRouterValue>
 {
 public:
-	ModuleRouterValueEditor(Module * sourceModule, Controllable * sourceValue, Module * outputModule);
+	ModuleRouterValueEditor(ModuleRouterValue * mrv);
 	~ModuleRouterValueEditor();
-
-	ScopedPointer<InspectableEditor> valueEditor;
-	ScopedPointer<BoolToggleUI> valueIsUsed;
-
-	ScopedPointer<RouterOutput> output;
 };
 
 #endif
