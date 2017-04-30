@@ -203,7 +203,8 @@ namespace LookAndFeelHelpers {
 
 
 class LookAndFeelOO:
-	public LookAndFeel{
+	public LookAndFeel
+{
 public:
 //  juce_DeclareSingleton(LookAndFeelOO, true);
     LookAndFeelOO();
@@ -546,7 +547,13 @@ private:
     class GlassWindowButton;
     class SliderLabelComp;
 
+	// Inherited via LookAndFeel
+	virtual bool isProgressBarOpaque(ProgressBar &) override;
+
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (LookAndFeelOO)
+
+
+		
 
 };
 
