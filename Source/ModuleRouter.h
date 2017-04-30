@@ -13,6 +13,7 @@
 
 #include "BaseItem.h"
 #include "Module.h"
+#include "ModuleRouterValue.h"
 
 class ModuleRouter :
 	public BaseItem,
@@ -25,9 +26,7 @@ public:
 	Module * sourceModule;
 	Module * destModule;
 
-	Array<Controllable *> sourceFilteredValues;
-	HashMap<Controllable *, int> sourceFilteredValueIndices;
-
+	BaseManager<ModuleRouterValue> sourceValues;
 
 	void setSourceModule(Module * m);
 	void setDestModule(Module * m);
@@ -35,9 +34,9 @@ public:
 	void setSourceValueSelected(Controllable * sourceValue, bool selected);
 	void clearSourceValues();
 
-	void inspectableDestroyed(Inspectable * m);
-	void onExternalParameterChanged(Parameter * p);
-	void onExternalTriggerTriggered(Trigger * t);
+	void inspectableDestroyed(Inspectable * m) override;
+	void onExternalParameterChanged(Parameter * p) override;
+	void onExternalTriggerTriggered(Trigger * t) override;
 
 	class RouterListener
 	{
