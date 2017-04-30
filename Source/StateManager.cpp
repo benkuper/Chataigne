@@ -32,7 +32,7 @@ void StateManager::setActiveState(State * s)
 
 	if (!activeState.wasObjectDeleted() && activeState != nullptr)
 	{
-		activeState->active->setValue(false);
+		if(!activeState->permanent->boolValue()) activeState->active->setValue(false);
 	}
 
 	activeState = s;
@@ -48,7 +48,7 @@ void StateManager::addItemInternal(State * s, var data)
 
 void StateManager::removeItemInternal(State * s)
 {
-	DBG("StateManager removeItemInternal");
+	//DBG("StateManager removeItemInternal");
 	s->removeStateListener(this);
 	stm.removeAllLinkedTransitions(s);
 }
