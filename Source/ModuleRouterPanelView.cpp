@@ -14,6 +14,8 @@ ModuleRouterPanelView::ModuleRouterPanelView(const String & contentName) :
 	ShapeShifterContentComponent(contentName),
 	mui("Routers",ModuleRouterManager::getInstance())
 {
+    contentIsFlexible = true;
+    
 	mui.bgColor = BG_COLOR.brighter();
 	mui.animateItemOnAdd = true;
 

@@ -218,8 +218,12 @@ bool MainContentComponent::perform(const InvocationInfo& info) {
 
 void MainContentComponent::menuItemSelected(int menuItemID, int topLevelMenuIndex)
 {
+#if JUCE_MAC
+    topLevelMenuIndex--; //On mac, first menu index is 1 (because of the App menu);
+#endif
+    
+      String menuName = getMenuBarNames()[topLevelMenuIndex];
 
-  String menuName = getMenuBarNames()[topLevelMenuIndex];
   if (menuName == "Panels")
   {
     ShapeShifterManager::getInstance()->handleMenuPanelCommand(menuItemID);

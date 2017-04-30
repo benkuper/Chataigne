@@ -110,6 +110,7 @@ ShapeShifterWindow * ShapeShifterManager::showPanelWindowForContent(PanelName pa
 
 void ShapeShifterManager::showContent(String contentName)
 {
+    DBG("Show content " << contentName);
 	ShapeShifterPanel * p = getPanelForContentName(contentName);
 	
 	if (p != nullptr)
@@ -383,6 +384,8 @@ PopupMenu ShapeShifterManager::getPanelsMenu()
 
 void ShapeShifterManager::handleMenuPanelCommand(int commandID)
 {
+    DBG("Handle command " << commandID);
+    
 	bool isSpecial = ((commandID & 0xff000) == 0x32000);
 
 	if (isSpecial)

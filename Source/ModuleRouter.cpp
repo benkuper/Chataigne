@@ -15,6 +15,7 @@ ModuleRouter::ModuleRouter() :
 	sourceModule(nullptr),
 	destModule(nullptr)
 {
+    
 }
 
 ModuleRouter::~ModuleRouter()

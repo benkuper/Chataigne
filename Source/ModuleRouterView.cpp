@@ -12,8 +12,9 @@
 #include "ModuleRouterManager.h"
 
 ModuleRouterView::ModuleRouterView() :
-	currentRouter(nullptr),
-	addBT("Add a module router")
+    addBT("Add a module router"),
+	currentRouter(nullptr)
+
 {
 
 	InspectableSelectionManager::getInstance()->addSelectionListener(this);
