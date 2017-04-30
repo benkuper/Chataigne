@@ -1430,7 +1430,6 @@
         <MODULEPATH id="juce_video" path="D:/Softwares/JUCE/modules"/>
         <MODULEPATH id="juce_osc" path="D:/Softwares/JUCE/modules"/>
         <MODULEPATH id="juce_opengl" path="D:/Softwares/JUCE/modules"/>
-        <MODULEPATH id="juce_gui_extra" path="D:/Softwares/JUCE/modules"/>
         <MODULEPATH id="juce_gui_basics" path="D:/Softwares/JUCE/modules"/>
         <MODULEPATH id="juce_graphics" path="D:/Softwares/JUCE/modules"/>
         <MODULEPATH id="juce_events" path="D:/Softwares/JUCE/modules"/>
@@ -1442,6 +1441,7 @@
         <MODULEPATH id="juce_audio_formats" path="D:/Softwares/JUCE/modules"/>
         <MODULEPATH id="juce_audio_devices" path="D:/Softwares/JUCE/modules"/>
         <MODULEPATH id="juce_audio_basics" path="D:/Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="D:/Softwares/JUCE/modules"/>
       </MODULEPATHS>
     </VS2017>
     <LINUX_MAKE targetFolder="Builds/LinuxMakefile" smallIcon="nVz6Li" bigIcon="nVz6Li"
@@ -1456,7 +1456,6 @@
         <MODULEPATH id="juce_video" path="../JUCE/modules"/>
         <MODULEPATH id="juce_osc" path="../JUCE/modules"/>
         <MODULEPATH id="juce_opengl" path="../JUCE/modules"/>
-        <MODULEPATH id="juce_gui_extra" path="../JUCE/modules"/>
         <MODULEPATH id="juce_gui_basics" path="../JUCE/modules"/>
         <MODULEPATH id="juce_graphics" path="../JUCE/modules"/>
         <MODULEPATH id="juce_events" path="../JUCE/modules"/>
@@ -1468,6 +1467,7 @@
         <MODULEPATH id="juce_audio_devices" path="../JUCE/modules"/>
         <MODULEPATH id="juce_audio_basics" path="../JUCE/modules"/>
         <MODULEPATH id="juce_audio_utils" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="../JUCE/modules"/>
       </MODULEPATHS>
     </LINUX_MAKE>
     <XCODE_MAC targetFolder="Builds/MacOSX" smallIcon="nVz6Li" bigIcon="nVz6Li"
@@ -1483,7 +1483,6 @@
         <MODULEPATH id="juce_video" path="/Applications/JUCE/modules"/>
         <MODULEPATH id="juce_osc" path="/Applications/JUCE/modules"/>
         <MODULEPATH id="juce_opengl" path="/Applications/JUCE/modules"/>
-        <MODULEPATH id="juce_gui_extra" path="/Applications/JUCE/modules"/>
         <MODULEPATH id="juce_gui_basics" path="/Applications/JUCE/modules"/>
         <MODULEPATH id="juce_graphics" path="/Applications/JUCE/modules"/>
         <MODULEPATH id="juce_events" path="/Applications/JUCE/modules"/>
@@ -1495,6 +1494,7 @@
         <MODULEPATH id="juce_audio_devices" path="/Applications/JUCE/modules"/>
         <MODULEPATH id="juce_audio_basics" path="/Applications/JUCE/modules"/>
         <MODULEPATH id="juce_audio_utils" path="/Applications/JUCE/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="/Applications/JUCE/modules"/>
       </MODULEPATHS>
     </XCODE_MAC>
   </EXPORTFORMATS>
@@ -1515,7 +1515,9 @@
     <MODULE id="juce_osc" showAllCode="1" useLocalCopy="0"/>
     <MODULE id="juce_video" showAllCode="1" useLocalCopy="0"/>
   </MODULES>
-  <JUCEOPTIONS JUCE_ASIO="enabled" JUCE_WASAPI="enabled"/>
+  <JUCEOPTIONS JUCE_ASIO="enabled" JUCE_WASAPI="enabled" JUCE_WEB_BROWSER="disabled"
+               JUCE_ENABLE_LIVE_CONSTANT_EDITOR="disabled" JUCE_USE_CDREADER="disabled"
+               JUCE_USE_CDBURNER="disabled"/>
   <LIVE_SETTINGS>
     <WINDOWS/>
   </LIVE_SETTINGS>

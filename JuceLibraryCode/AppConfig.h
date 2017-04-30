@@ -147,11 +147,11 @@
 // juce_audio_utils flags:
 
 #ifndef    JUCE_USE_CDREADER
- //#define JUCE_USE_CDREADER
+ #define   JUCE_USE_CDREADER 0
 #endif
 
 #ifndef    JUCE_USE_CDBURNER
- //#define JUCE_USE_CDBURNER
+ #define   JUCE_USE_CDBURNER 0
 #endif
 
 //==============================================================================
@@ -230,11 +230,11 @@
 // juce_gui_extra flags:
 
 #ifndef    JUCE_WEB_BROWSER
- //#define JUCE_WEB_BROWSER
+ #define   JUCE_WEB_BROWSER 0
 #endif
 
 #ifndef    JUCE_ENABLE_LIVE_CONSTANT_EDITOR
- //#define JUCE_ENABLE_LIVE_CONSTANT_EDITOR
+ #define   JUCE_ENABLE_LIVE_CONSTANT_EDITOR 0
 #endif
 
 //==============================================================================
