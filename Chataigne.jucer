@@ -1515,9 +1515,8 @@
     <MODULE id="juce_osc" showAllCode="1" useLocalCopy="0"/>
     <MODULE id="juce_video" showAllCode="1" useLocalCopy="0"/>
   </MODULES>
-  <JUCEOPTIONS JUCE_ASIO="enabled" JUCE_WASAPI="enabled" JUCE_WEB_BROWSER="disabled"
-               JUCE_ENABLE_LIVE_CONSTANT_EDITOR="disabled" JUCE_USE_CDREADER="disabled"
-               JUCE_USE_CDBURNER="disabled"/>
+  <JUCEOPTIONS JUCE_ASIO="enabled" JUCE_WASAPI="enabled" JUCE_ENABLE_LIVE_CONSTANT_EDITOR="disabled"
+               JUCE_USE_CDREADER="disabled" JUCE_USE_CDBURNER="disabled"/>
   <LIVE_SETTINGS>
     <WINDOWS/>
   </LIVE_SETTINGS>
