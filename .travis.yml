@@ -11,7 +11,7 @@ notifications:
 
 before_install:
     - export DEBIAN_FRONTEND=noninteractive
-    - sudo add-apt-repository ppa:webkit-team/ppa
+    - sudo add-apt-repository ppa:webkit-team/ppa -y
     - sudo apt-get update --fix-missing
     - sudo apt-get install -qq
         clang
