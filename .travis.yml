@@ -27,6 +27,8 @@ before_install:
         libasound2-dev
         libjack-dev
         libbluetooth-dev
+        webkit2gtk-4.0
+        gtk+-x11-3.0
     - sudo apt-get update --fix-missing
     - sudo apt-get update -qq
     - pwd
