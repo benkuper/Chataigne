@@ -32,8 +32,13 @@ public:
 	//Value params
 	BoolParameter * connected;
 	BoolParameter * nunchuckConnected;
+	BoolParameter * motionPlusConnected;
 	FloatParameter * pitch;
 	FloatParameter * roll;
+	FloatParameter * yaw;
+	Point2DParameter * nunchuckXYAxis;
+	Point3DParameter * accelParam;
+
 	Array<BoolParameter *> buttons;
 	Wiimote * device;
 
@@ -43,9 +48,13 @@ public:
 	void wiimoteButtonPressed(Wiimote *, Wiimote::WiimoteButton b) override;
 	void wiimoteButtonReleased(Wiimote *, Wiimote::WiimoteButton b) override;
 	void wiimoteOrientationUpdated(Wiimote *) override;
+	void wiimoteAccelUpdated(Wiimote *) override;
+	void wiimoteJoystickUpdated(Wiimote *) override;
 	void wiimoteBatteryLevelChanged(Wiimote *) override;
 	void wiimoteNunchuckPlugged(Wiimote *) override;
 	void wiimoteNunchuckUnplugged(Wiimote *) override;
+	void wiimoteMotionPlusPlugged(Wiimote *) override;
+	void wiimoteMotionPlusUnplugged(Wiimote *) override;
 
 	static WiimoteModule * create() { return new WiimoteModule(); }
 	virtual String getDefaultTypeString() const override { return "Wiimote"; }

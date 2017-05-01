@@ -21,12 +21,24 @@ WiimoteModule::WiimoteModule(const String & name) :
 	connected->isControllableFeedbackOnly = true;
 	nunchuckConnected = valuesCC.addBoolParameter("Nunchuck", "Nunchuck is connected ? ", false);
 	nunchuckConnected->isControllableFeedbackOnly = true;
+	motionPlusConnected = valuesCC.addBoolParameter("MotionPlus", "MotionPlus is connected ? ", false);
+	motionPlusConnected->isControllableFeedbackOnly = true;
 	batteryLevel = valuesCC.addFloatParameter("Battery", "Battery level of the wiimote", 0,0,1);
 	batteryLevel->isControllableFeedbackOnly = true;
 	pitch = valuesCC.addFloatParameter("Pitch", "Pitch of the wiimote", 0, -1, 1);
 	pitch->isControllableFeedbackOnly = true;
 	roll = valuesCC.addFloatParameter("Roll", "Roll of the wiimote", 0, -1, 1);
 	roll->isControllableFeedbackOnly = true;
+	yaw = valuesCC.addFloatParameter("Yaw", "Yaw of the wiimote.\nMotion Plus must be connected !", 0, -1, 1);
+	yaw->isControllableFeedbackOnly = true;
+
+	nunchuckXYAxis = valuesCC.addPoint2DParameter("Nunchuck XY", "X and Y axis of the nunchuck if plugged");
+	nunchuckXYAxis->setBounds(-1, -1, 1, 1);
+	nunchuckXYAxis->isControllableFeedbackOnly = true;
+
+	accelParam = valuesCC.addPoint3DParameter("Raw Accel", "Raw values of accelerometer");
+	accelParam->isControllableFeedbackOnly = true;
+
 
 	buttons.add(valuesCC.addBoolParameter("Button 2", "Button 2", false));
 	buttons.add(valuesCC.addBoolParameter("Button 1", "Button 2", false));
@@ -95,20 +107,34 @@ void WiimoteModule::wiimoteButtonReleased(Wiimote * w, Wiimote::WiimoteButton b)
 void WiimoteModule::wiimoteOrientationUpdated(Wiimote * w)
 {
 	if (w != device) return;
-	float targetPitch = -device->gforceY;
+	float targetPitch = -device->pitch;
 	pitch->setValue(pitch->floatValue()+(targetPitch - pitch->floatValue())*.5f);
 
-	float r = -acosf(device->gforceX);
-	if (device->gforceZ < 0) r = -r;
+	float r = -acosf(device->roll);
+	if (device->yaw < 0) r = -r;
 	r += float_Pi / 2;
 	r /= float_Pi;
 	if (r > 1) r -= 2;
-	
+
 	if (!std::isnan(r))
 	{
 		if (std::abs(r - roll->floatValue()) > .5f) roll->setValue(r);
 		else roll->setValue(roll->floatValue() + (r - roll->floatValue())*.5f);
 	}
+
+	yaw->setValue(device->yaw/float_Pi);
+}
+
+void WiimoteModule::wiimoteAccelUpdated(Wiimote * w)
+{
+	if (w != device) return;
+	accelParam->setVector(device->accelX, device->accelY, device->accelZ);
+}
+
+void WiimoteModule::wiimoteJoystickUpdated(Wiimote * w)
+{
+	if (w != device) return;
+	nunchuckXYAxis->setPoint(device->joystickX, device->joystickY);
 }
 
 void WiimoteModule::wiimoteBatteryLevelChanged(Wiimote *)
@@ -124,4 +150,14 @@ void WiimoteModule::wiimoteNunchuckPlugged(Wiimote *)
 void WiimoteModule::wiimoteNunchuckUnplugged(Wiimote *)
 {
 	nunchuckConnected->setValue(false);
+}
+
+void WiimoteModule::wiimoteMotionPlusPlugged(Wiimote *)
+{
+	motionPlusConnected->setValue(true);
+}
+
+void WiimoteModule::wiimoteMotionPlusUnplugged(Wiimote *)
+{
+	motionPlusConnected->setValue(false);
 }

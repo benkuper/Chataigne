@@ -33,9 +33,12 @@ public:
 	float batteryLevel;
 
 	bool buttons[NUM_WIIMOTE_BUTTONS]; //11 one wiimote, 2 on nunchuck
-	float gforceX;
-	float gforceY;
-	float gforceZ;
+	float yaw;
+	float pitch;
+	float roll;
+	float accelX;
+	float accelY;
+	float accelZ;
 
 	//Nunchuck
 	float nunchuckAccelX;
@@ -54,9 +57,13 @@ public:
 		virtual void wiimoteDisconnected(Wiimote *) {}
 		virtual void wiimoteButtonPressed(Wiimote *,WiimoteButton) {}
 		virtual void wiimoteButtonReleased(Wiimote *,WiimoteButton) {}
+		virtual void wiimoteAccelUpdated(Wiimote *) {}
 		virtual void wiimoteOrientationUpdated(Wiimote *) {}
+		virtual void wiimoteJoystickUpdated(Wiimote *) {}
 		virtual void wiimoteNunchuckPlugged(Wiimote *) {}
 		virtual void wiimoteNunchuckUnplugged(Wiimote *) {}
+		virtual void wiimoteMotionPlusPlugged(Wiimote *) {}
+		virtual void wiimoteMotionPlusUnplugged(Wiimote *) {}
 		virtual void wiimoteBatteryLevelChanged(Wiimote *) {}
 	};
 
@@ -68,6 +75,8 @@ public:
 private :
 	void setButton(int index, bool value);
 	void setAccel(float x, float y, float z);
+	void setYPR(float yaw, float pitch, float roll);
+	void setNunchuckXY(float x, float y);
 	void setConnected(bool value);
 	void setBatteryLevel(float value);
 

@@ -107,7 +107,10 @@ void Wiimote::update()
 	case WIIUSE_EVENT_TYPE::WIIUSE_EVENT:
 		//DBG("BT " << (int)device->btns << " / Nunchuck bt : " << (int)device->exp.nunchuk.btns);
 		for (int i = 0; i < NUM_WIIMOTE_BUTTONS; i++) setButton(i, device->btns >> i & 1);
-		setAccel(device->gforce.x, device->gforce.y, device->gforce.z);
+
+		setAccel(device->accel.x, device->accel.y, device->accel.z);
+		setYPR(device->gforce.x, device->gforce.y, device->gforce.z);
+		setNunchuckXY(device->exp.nunchuk.js.x, device->exp.nunchuk.js.y);
 		break;
 
 	case WIIUSE_EVENT_TYPE::WIIUSE_CONNECT:
@@ -127,6 +130,15 @@ void Wiimote::update()
 		listeners.call(&Listener::wiimoteNunchuckUnplugged, this);
 		break;
 		
+	case WIIUSE_EVENT_TYPE::WIIUSE_MOTION_PLUS_ACTIVATED:
+		DBG("Motion Plus ON");
+		listeners.call(&Listener::wiimoteMotionPlusPlugged, this);
+		break;
+
+	case WIIUSE_EVENT_TYPE::WIIUSE_MOTION_PLUS_REMOVED:
+		DBG("Motion Plus OFF");
+		listeners.call(&Listener::wiimoteMotionPlusUnplugged, this);
+		break;
 
 	case WIIUSE_EVENT_TYPE::WIIUSE_CLASSIC_CTRL_INSERTED:
 		break;
@@ -149,11 +161,31 @@ void Wiimote::setButton(int index, bool value)
 
 void Wiimote::setAccel(float x, float y, float z)
 {
-	if (x == gforceX && y == gforceY && z == gforceZ) return;
-	gforceX = x;
-	gforceY = y;
-	gforceZ = z;
+	if (accelX == x && accelY == y && accelZ == z) return;
+	accelX = x;
+	accelY = y;
+	accelZ = z;
+	listeners.call(&Listener::wiimoteAccelUpdated, this);
+}
+
+void Wiimote::setYPR(float _yaw, float _pitch, float _roll)
+{
+	if (yaw == _yaw && pitch == _pitch && roll == _roll) return;
+
+	yaw = _yaw;
+	pitch = _pitch;
+	roll = _roll;
 	listeners.call(&Listener::wiimoteOrientationUpdated, this);
+}
+
+void Wiimote::setNunchuckXY(float x, float y)
+{
+	if (joystickX == x && joystickY == y) return;
+
+	joystickX = x;
+	joystickY = y;
+
+	listeners.call(&Listener::wiimoteJoystickUpdated, this);
 }
 
 void Wiimote::setConnected(bool value)
