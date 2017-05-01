@@ -15,7 +15,7 @@ DashboardItemManagerUI::DashboardItemManagerUI(DashboardItemManager * manager) :
 {
 	//bgColor = Colours::purple;
 	addItemText = "Add Item";
-	setWantsKeyboardFocus(true);
+	//setWantsKeyboardFocus(true);
 
 	addExistingItems(false);
 	

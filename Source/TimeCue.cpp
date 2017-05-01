@@ -13,6 +13,8 @@
 TimeCue::TimeCue(const float & _time) :
 	BaseItem("Cue")
 {
+	nameParam->hideInEditor = false;
+
 	time = addFloatParameter("Time", "Cue Time", _time, 0, 3600);
 	time->defaultUI = FloatParameter::TIME;
 }

@@ -28,7 +28,7 @@ BaseItemEditor::BaseItemEditor(BaseItem * bi, bool isRoot) :
 	nameUI = item->nameParam->createStringParameterUI();
 	addAndMakeVisible(nameUI);
 
-	if (!isRoot)
+	if (!isRoot && item->userCanRemove)
 	{
 		removeBT = AssetManager::getInstance()->getRemoveBT();
 		addAndMakeVisible(removeBT);
@@ -69,7 +69,7 @@ void BaseItemEditor::resized()
 	{
 		enabledUI->setBounds(hr.removeFromLeft(hr.getHeight()));
 	}
-	if (!isRoot)
+	if (!isRoot && item->userCanRemove)
 	{
 		removeBT->setBounds(hr.removeFromRight(hr.getHeight()));
 		hr.removeFromRight(2);

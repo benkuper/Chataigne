@@ -166,7 +166,7 @@ BaseManagerUI<M, T, U>::BaseManagerUI(const String & contentName, M * _manager, 
 	gap(2)
 {
 
-	setWantsKeyboardFocus(true);
+	//setWantsKeyboardFocus(true);
 
 	highlightColor = LIGHTCONTOUR_COLOR;
 	addItemText = "Add Item";

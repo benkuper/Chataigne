@@ -12,7 +12,7 @@
 
 ActionEditor::ActionEditor(Action * a, bool isRoot) :
 	BaseItemEditor(a, isRoot),
-action(a),
+	action(a),
 	cdme(&a->cdm,false),
 	csme(&a->csm,false)
 {

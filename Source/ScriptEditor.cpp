@@ -71,7 +71,7 @@ void ScriptEditor::resizedInternalHeader(Rectangle<int>& r)
 {
 	statusBounds = r.removeFromRight(r.getHeight());
 	r.removeFromRight(2);
-	logUI->setBounds(r.removeFromRight(30));
+	logUI->setBounds(r.removeFromRight(40));
 	r.removeFromRight(2);
 	editBT->setBounds(r.removeFromRight(r.getHeight()));
 	r.removeFromRight(2);

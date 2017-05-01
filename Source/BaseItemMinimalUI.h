@@ -65,7 +65,7 @@ BaseItemMinimalUI<T>::BaseItemMinimalUI(T * _item) :
 
     baseItem = static_cast<BaseItem *>(item);
     
-	setWantsKeyboardFocus(true);
+	//setWantsKeyboardFocus(true);
 
 	addMouseListener(this, true);
 	baseItem->addAsyncContainerListener(this);
