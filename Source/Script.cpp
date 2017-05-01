@@ -96,7 +96,7 @@ void Script::buildEnvironment()
 	scriptParamsContainer.clear();
 
 	scriptEngine->registerNativeObject("script", createScriptObject()); //force "script" for this objet
-	if (parentTarget != nullptr) scriptEngine->registerNativeObject("local", parentTarget->createScriptObject()); //force "local" for this object
+	if (parentTarget != nullptr) scriptEngine->registerNativeObject("local", parentTarget->createScriptObject()); //force "local" for the related object
 	if (Engine::getInstanceWithoutCreating() != nullptr) scriptEngine->registerNativeObject(Engine::getInstance()->scriptTargetName, Engine::getInstance()->createScriptObject());
 	if (ScriptUtil::getInstanceWithoutCreating() != nullptr) scriptEngine->registerNativeObject(ScriptUtil::getInstance()->scriptTargetName, ScriptUtil::getInstance()->createScriptObject());
 }

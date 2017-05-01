@@ -22,22 +22,22 @@
 ControllableComparator ControllableContainer::comparator;
 
 ControllableContainer::ControllableContainer(const String & niceName) :
-ScriptTarget("", this),
-hasCustomShortName(false),
-canHavePresets(false),
-currentPreset(nullptr),
-skipControllableNameInAddress(false),
+	ScriptTarget("", this),
+	hasCustomShortName(false),
+	canHavePresets(false),
+	currentPreset(nullptr),
+	skipControllableNameInAddress(false),
 	nameCanBeChangedByUser(true),
 	isTargettable(true),
 	hideInEditor(false),
-canInspectChildContainers(true),
-presetSavingIsRecursive(false),
-saveAndLoadRecursiveData(false),
-saveAndLoadName(false),
-includeInScriptObject(true),
-parentContainer(nullptr),
-numContainerIndexed(0),
-localIndexedPosition(-1),
+	canInspectChildContainers(true),
+	presetSavingIsRecursive(false),
+	saveAndLoadRecursiveData(false),
+	saveAndLoadName(false),
+	includeInScriptObject(true),
+	parentContainer(nullptr),
+	numContainerIndexed(0),
+	localIndexedPosition(-1),
 	queuedNotifier(500) //what to put in max size ??
 						//500 seems ok on my computer, but if too low, generates leaks when closing app while heavy use of async (like  parameter update from audio signal)
 {

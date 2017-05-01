@@ -35,7 +35,7 @@ const char* const filenameSuffix = ".noisette";
 const char* const filenameWildcard = "*.noisette";
 
 Engine::Engine() :
-ControllableContainer("Root"),
+	ControllableContainer("Root"),
 	FileBasedDocument(filenameSuffix,
 		filenameWildcard,
 		"Load a Noisette",

@@ -123,8 +123,21 @@ void ScriptEditor::buttonClicked(Button * b)
 
 	} else if (b == editBT)
 	{
-		editMode = !editMode;
-		resized();
+		if (script->filePath->stringValue().isEmpty())
+		{
+			FileChooser chooser("Create a new cacahuete",File(),"*.js");
+			bool result = chooser.browseForFileToSave(true);
+			if (result)
+			{
+				chooser.getResult().create();
+				script->filePath->setValue(chooser.getResult().getFullPathName());
+			}
+		} 
+
+		File f(script->filePath->stringValue());
+		f.startAsProcess();
+		//editMode = !editMode;
+		//resized();
 	}
 }
 
