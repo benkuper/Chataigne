@@ -35,24 +35,24 @@ WiimoteModule::WiimoteModule(const String & name) :
 	nunchuckXYAxis = valuesCC.addPoint2DParameter("Nunchuck XY", "X and Y axis of the nunchuck if plugged");
 	nunchuckXYAxis->setBounds(-1, -1, 1, 1);
 	nunchuckXYAxis->isControllableFeedbackOnly = true;
+	nunchuckXYAxis->isEditable = false;
 
 	accelParam = valuesCC.addPoint3DParameter("Raw Accel", "Raw values of accelerometer");
 	accelParam->isControllableFeedbackOnly = true;
 
-
+	buttons.add(valuesCC.addBoolParameter("Button A", "Button A", false));
+	buttons.add(valuesCC.addBoolParameter("Button B", "Button B", false));
+	buttons.add(valuesCC.addBoolParameter("Button C", "Button C", false));
+	buttons.add(valuesCC.addBoolParameter("Button Z", "Button Z", false));
+	buttons.add(valuesCC.addBoolParameter("Button 1", "Button 1", false));
 	buttons.add(valuesCC.addBoolParameter("Button 2", "Button 2", false));
-	buttons.add(valuesCC.addBoolParameter("Button 1", "Button 2", false));
-	buttons.add(valuesCC.addBoolParameter("Button B", "Button 2", false));
-	buttons.add(valuesCC.addBoolParameter("Button A", "Button 2", false));
-	buttons.add(valuesCC.addBoolParameter("Button -", "Button 2", false));
-	buttons.add(valuesCC.addBoolParameter("Button C", "Button 2", false));
-	buttons.add(valuesCC.addBoolParameter("Button Z", "Button 2", false));
-	buttons.add(valuesCC.addBoolParameter("Button Home", "Button 2", false));
-	buttons.add(valuesCC.addBoolParameter("Button Left", "Button 2", false));
-	buttons.add(valuesCC.addBoolParameter("Button Right", "Button 2", false));
-	buttons.add(valuesCC.addBoolParameter("Button Down", "Button 2", false));
-	buttons.add(valuesCC.addBoolParameter("Button Up", "Button 2", false));
-	buttons.add(valuesCC.addBoolParameter("Button Plus", "Button 2", false));
+	buttons.add(valuesCC.addBoolParameter("Button Home", "Button Home", false));
+	buttons.add(valuesCC.addBoolParameter("Button -", "Button -", false));
+	buttons.add(valuesCC.addBoolParameter("Button +", "Button +", false));
+	buttons.add(valuesCC.addBoolParameter("Button Up", "Button Up", false));
+	buttons.add(valuesCC.addBoolParameter("Button Down", "Button Down", false));
+	buttons.add(valuesCC.addBoolParameter("Button Left", "Button Left", false));
+	buttons.add(valuesCC.addBoolParameter("Button Right", "Button Right", false));
 
 	for (auto &p : buttons) p->isControllableFeedbackOnly = true;
 	

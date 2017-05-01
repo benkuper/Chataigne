@@ -25,6 +25,9 @@ p2d(parameter),
 
 	addAndMakeVisible(&xSlider);
 	addAndMakeVisible(&ySlider);
+
+	setForceFeedbackOnlyInternal(); //force update
+
 }
 
 DoubleSliderUI::~DoubleSliderUI()
@@ -44,9 +47,9 @@ void DoubleSliderUI::resized()
 
 void DoubleSliderUI::setForceFeedbackOnlyInternal()
 {
-	xSlider.setForceFeedbackOnly(!parameter->isEditable || forceFeedbackOnly);
-	ySlider.setForceFeedbackOnly(!parameter->isEditable || forceFeedbackOnly);
-
+	bool val = parameter->isControllableFeedbackOnly || !parameter->isEditable || forceFeedbackOnly;
+	xSlider.setForceFeedbackOnly(val);
+	ySlider.setForceFeedbackOnly(val);
 }
 
 void DoubleSliderUI::newMessage(const Parameter::ParamWithValue & p)

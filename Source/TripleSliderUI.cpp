@@ -19,6 +19,7 @@ p3d(parameter),
 	zParam("Z", "zParam", parameter->z, parameter->minimumValue[2], parameter->maximumValue[2]),
 	xSlider(&xParam), ySlider(&yParam), zSlider(&zParam)
 {
+
 	xParam.defaultValue = 0;
 	yParam.defaultValue = 0;
 	xParam.addAsyncCoalescedListener(this);
@@ -27,6 +28,8 @@ p3d(parameter),
 	addAndMakeVisible(&xSlider);
 	addAndMakeVisible(&ySlider);
 	addAndMakeVisible(&zSlider);
+
+	setForceFeedbackOnlyInternal(); //force update
 }
 
 TripleSliderUI::~TripleSliderUI()
@@ -39,9 +42,10 @@ TripleSliderUI::~TripleSliderUI()
 
 void TripleSliderUI::setForceFeedbackOnlyInternal()
 {
-	xSlider.setForceFeedbackOnly(!parameter->isEditable || forceFeedbackOnly);
-	ySlider.setForceFeedbackOnly(!parameter->isEditable || forceFeedbackOnly);
-	zSlider.setForceFeedbackOnly(!parameter->isEditable || forceFeedbackOnly);
+	bool val = parameter->isControllableFeedbackOnly || !parameter->isEditable || forceFeedbackOnly;
+	xSlider.setForceFeedbackOnly(val);
+	ySlider.setForceFeedbackOnly(val);
+	zSlider.setForceFeedbackOnly(val);
 
 }
 
