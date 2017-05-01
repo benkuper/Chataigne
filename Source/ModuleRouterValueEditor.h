@@ -15,6 +15,7 @@
 
 #include "BaseItemUI.h"
 #include "ModuleRouterValue.h"
+#include "ControllableEditor.h"
 
 class ModuleRouterValueEditor : 
 	public BaseItemUI<ModuleRouterValue>,
@@ -26,7 +27,7 @@ public:
 
 	ScopedPointer<BoolToggleUI> doRouteUI;
 	ScopedPointer<ControllableUI> valueUI;
-	OwnedArray<ControllableUI> routeParamsUI;
+	OwnedArray<ControllableEditor> routeParamsUI;
 
 	void buildRouteParamsUI();
 

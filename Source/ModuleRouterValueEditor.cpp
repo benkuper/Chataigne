@@ -18,7 +18,8 @@ ModuleRouterValueEditor::ModuleRouterValueEditor(ModuleRouterValue * mrv) :
 
 	doRouteUI = item->doRoute->createToggle();
 	valueUI = item->sourceValue->createDefaultUI();
-
+	doRouteUI->showLabel = false;
+	valueUI->showLabel = false;
 	addAndMakeVisible(valueUI);
 	addAndMakeVisible(doRouteUI);
 
@@ -43,7 +44,7 @@ void ModuleRouterValueEditor::buildRouteParamsUI()
 		Array<WeakReference<Controllable>> rp = item->routeParams->getAllControllables();
 		for (auto &c : rp)
 		{
-			ControllableUI * cui = c->createDefaultUI();
+			ControllableEditor * cui = (ControllableEditor *)(c->getEditor(false));
 			routeParamsUI.add(cui);
 			addAndMakeVisible(cui);
 		}
@@ -51,22 +52,22 @@ void ModuleRouterValueEditor::buildRouteParamsUI()
 	resized();
 }
 
+
 void ModuleRouterValueEditor::resizedInternalHeader(Rectangle<int>& r)
 {
 
 	Rectangle<int> rr = r.removeFromRight(r.getWidth() / 2);
-
 	Rectangle<int> tr = r.removeFromRight(r.getWidth() - 100);
 	tr.removeFromLeft(2);
 
 
 	valueUI->setBounds(tr.removeFromLeft(100));
-	tr.removeFromLeft(5);
+	tr.removeFromLeft(20);
 	doRouteUI->setBounds(tr.removeFromLeft(50));
 	
 	for (auto & u : routeParamsUI)
 	{
-		u->setBounds(rr.removeFromLeft(u->getWidth()));
+		u->setBounds(rr.removeFromLeft(jmax<int>(u->getWidth(),200)));
 		rr.removeFromLeft(2);
 	}
 

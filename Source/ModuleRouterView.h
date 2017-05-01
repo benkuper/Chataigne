@@ -34,10 +34,17 @@ public:
 
 	ModuleChooserUI sourceChooser;
 	ModuleChooserUI destChooser;
+	Label sourceLabel;
+	Label destLabel;
+	Label sourceValueLabel;
+	Label feedbackLabel;
+	Label routeLabel;
+	Label outParamsLabel;
+
 	ScopedPointer<BaseManagerUI<BaseManager<ModuleRouterValue>, ModuleRouterValue, ModuleRouterValueEditor>> managerUI;
 
-	void resized() override;
 
+	void resized() override;
 	void setRouter(ModuleRouter * router);
 	
 	void buildValueManagerUI();

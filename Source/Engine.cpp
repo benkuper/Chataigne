@@ -51,12 +51,12 @@ ControllableContainer("Root"),
 	addChildControllableContainer(StateManager::getInstance());
 	addChildControllableContainer(SequenceManager::getInstance());
 	addChildControllableContainer(DashboardManager::getInstance());
+	addChildControllableContainer(ModuleRouterManager::getInstance());
 
 	//MIDIManager::getInstance(); //Trigger MIDIManager singleton constructor
 	//DMXManager::getInstance(); //Trigger DMXManager singleton constructor
 	InspectableSelectionManager::getInstance(); //selectionManager constructor
 	ScriptUtil::getInstance(); //trigger ScriptUtil constructorx
-	ModuleRouterManager::getInstance();
 }
 
 Engine::~Engine(){

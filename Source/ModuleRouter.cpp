@@ -32,6 +32,7 @@ void ModuleRouter::setSourceModule(Module * m)
 	if (sourceModule != nullptr)
 	{
 		sourceModule->removeInspectableListener(this);
+		DBG("clear here !");
 		sourceValues.clear();
 	}
 	
@@ -92,7 +93,7 @@ void ModuleRouter::loadJSONDataInternal(var data)
 	BaseItem::loadJSONDataInternal(data);
 	setSourceModule(ModuleManager::getInstance()->getItemWithName(data.getProperty("sourceModule", "")));
 	setDestModule(ModuleManager::getInstance()->getItemWithName(data.getProperty("destModule", "")));
-	//sourceValues.loadJSONData(data.getProperty("sourceValues", var()));
+	if (data.getDynamicObject()->hasProperty("sourceValues")) sourceValues.loadItemsData(data.getProperty("sourceValues", var()));
 }
 
 void ModuleRouter::inspectableDestroyed(Inspectable * i)

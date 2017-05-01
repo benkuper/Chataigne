@@ -28,6 +28,8 @@ public :
 
 	virtual T * createItem(); //to override if special constructor to use
 	virtual void addItemFromData(var data, bool fromUndoableAction = false); //to be overriden for specific item creation (from data)
+	virtual void loadItemsData(var data);
+
 	T* addItem(T * = nullptr, var data = var(), bool fromUndoableAction = false); //if data is not empty, load data
 	T* addItem(const Point<float> initialPosition);
 
@@ -42,7 +44,7 @@ public :
 
 	bool selectItemWhenCreated;
 
-	T * getItemWithName(const String &itemShortName);
+	T * getItemWithName(const String &itemShortName, bool searchNiceNameToo = false);
 
 	void clear();
 	void askForRemoveBaseItem(BaseItem * item) override;
@@ -248,7 +250,12 @@ T * BaseManager<T>::addItem(T * item, var data, bool /*fromUndoableAction*/)
 	bi->nameParam->setValue(bi->niceName);
 	bi->addBaseItemListener(this);
 	
-	if(!data.isVoid()) bi->loadJSONData(data);
+	if (!data.isVoid())
+	{
+		DBG("data non void, loading data"); 
+		bi->loadJSONData(data);
+	}
+
 	addItemInternal(item, data);
 	
 	baseManagerListeners.call(&BaseManager::Listener::itemAdded, item);
@@ -272,6 +279,21 @@ template<class T>
 void BaseManager<T>::addItemFromData(var data, bool fromUndoableAction) 
 { 
 	addItem(createItem(), data, fromUndoableAction);
+}
+
+template<class T>
+void BaseManager<T>::loadItemsData(var data)
+{
+	if (data == var::null) return;
+	Array<var> * itemsData = data.getProperty("items", var()).getArray();
+	if (itemsData == nullptr) return;
+
+	for (auto &td : *itemsData)
+	{
+		String n = td.getProperty("niceName", "");
+		BaseItem * i = getItemWithName(n, true);
+		if (i != nullptr) i->loadJSONData(td);
+	}
 }
 
 template<class T>
@@ -306,11 +328,12 @@ void BaseManager<T>::reorderItems()
 }
 
 template<class T>
-inline T * BaseManager<T>::getItemWithName(const String & itemShortName)
+inline T * BaseManager<T>::getItemWithName(const String & itemShortName, bool searchItemWithNiceNameToo)
 {
 	for (auto &t : items)
 	{
 		if (((BaseItem *)t)->shortName == itemShortName) return t;
+		else if (searchItemWithNiceNameToo && ((BaseItem *)t)->niceName == itemShortName) return t;
 	}
 
 	return nullptr;

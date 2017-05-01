@@ -13,12 +13,19 @@
 
 ModuleRouterView::ModuleRouterView() :
     addBT("Add a module router"),
-	currentRouter(nullptr)
+	currentRouter(nullptr),
+	sourceLabel("SourceModule","Source Module"),
+	destLabel("OutModule","Out Module"),
+	sourceValueLabel("SourceValue","Source Value"),
+	feedbackLabel("Feedback","Value Feedback"),
+	routeLabel("Route","Route"),
+	outParamsLabel("OutParams","Out Parameters")
 {
 	InspectableSelectionManager::getInstance()->addSelectionListener(this);
 
 	addAndMakeVisible(&addBT);
 	addBT.addListener(this);
+
 
 	sourceChooser.setTextWhenNoChoicesAvailable("No Module");
 	sourceChooser.setTextWhenNothingSelected("[Source Module]");
@@ -30,6 +37,31 @@ ModuleRouterView::ModuleRouterView() :
 	destChooser.addChooserListener(this);
 	destChooser.filterModuleFunc = &ModuleRouterView::isModuleRoutable;
 	addAndMakeVisible(&destChooser);
+
+	
+	sourceLabel.setColour(Label::textColourId, Colours::grey);
+	destLabel.setColour(Label::textColourId, Colours::grey);
+	sourceValueLabel.setColour(Label::textColourId, Colours::grey);
+	feedbackLabel.setColour(Label::textColourId, Colours::grey);
+	routeLabel.setColour(Label::textColourId, Colours::grey);
+	outParamsLabel.setColour(Label::textColourId, Colours::grey);
+	
+	sourceLabel.setFont(12);
+	destLabel.setFont(12);
+	sourceValueLabel.setFont(12);
+	feedbackLabel.setFont(12);
+	routeLabel.setFont(12);
+	outParamsLabel.setFont(12);
+
+
+	addAndMakeVisible(&sourceLabel);
+	addAndMakeVisible(&destLabel);
+	
+	addAndMakeVisible(&sourceValueLabel);
+	addAndMakeVisible(&feedbackLabel);
+	addAndMakeVisible(&routeLabel);
+	addAndMakeVisible(&outParamsLabel);
+
 }
 
 ModuleRouterView::~ModuleRouterView()
@@ -49,15 +81,33 @@ void ModuleRouterView::resized()
 	Rectangle<int> r = getLocalBounds();
 	Rectangle<int> h = r.removeFromTop(20).reduced(2);
 
-	sourceChooser.setBounds(h.withWidth(100));
-	destChooser.setBounds(h.translated(h.getCentreX(), 0).withWidth(100));
+	sourceLabel.setBounds(h.removeFromLeft(100));
+	h.removeFromLeft(2);
+	sourceChooser.setBounds(h.removeFromLeft(100));
+	h.removeFromLeft(20);
+	destLabel.setBounds(h.removeFromLeft(100));
+	h.removeFromLeft(2);
+	destChooser.setBounds(h.removeFromLeft(100));
+
+	r.removeFromTop(10);
+	 
+	Rectangle<int> mr = r.removeFromTop(10);
+	Rectangle<int> outr = mr.removeFromRight(r.getWidth() / 2);
+	outParamsLabel.setBounds(outr);
+	
+	sourceValueLabel.setBounds(mr.removeFromLeft(100));
+	feedbackLabel.setBounds(mr.removeFromLeft(100));
+	mr.removeFromLeft(20);
+	routeLabel.setBounds(mr.removeFromLeft(50));
 
 	r.removeFromTop(2);
-
+	 
 	if (managerUI != nullptr)
 	{
 		managerUI->setBounds(r);
 	}
+	
+	
 }
 
 void ModuleRouterView::setRouter(ModuleRouter * router)
@@ -70,6 +120,11 @@ void ModuleRouterView::setRouter(ModuleRouter * router)
 		addAndMakeVisible(&addBT);
 		removeChildComponent(&sourceChooser);
 		removeChildComponent(&destChooser);
+
+		removeChildComponent(&sourceValueLabel);
+		removeChildComponent(&feedbackLabel);
+		removeChildComponent(&routeLabel);
+		removeChildComponent(&outParamsLabel);
 	}
 
 	currentRouter = router;
@@ -79,8 +134,13 @@ void ModuleRouterView::setRouter(ModuleRouter * router)
 		currentRouter->addRouterListener(this);
 		currentRouter->addInspectableListener(this);
 		removeChildComponent(&addBT);
+
 		addAndMakeVisible(&sourceChooser);
 		addAndMakeVisible(&destChooser);
+		addAndMakeVisible(&sourceValueLabel);
+		addAndMakeVisible(&feedbackLabel);
+		addAndMakeVisible(&routeLabel);
+		addAndMakeVisible(&outParamsLabel);
 		sourceChooser.setModuleSelected(currentRouter->sourceModule,true);
 		destChooser.setModuleSelected(currentRouter->destModule,true);
 	}

@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    BaseManagerUI.h
-    Created: 28 Oct 2016 8:03:45pm
-    Author:  bkupe
+	BaseManagerUI.h
+	Created: 28 Oct 2016 8:03:45pm
+	Author:  bkupe
 
   ==============================================================================
 */
@@ -25,7 +25,7 @@ class BaseManagerItemComparator
 {
 public:
 	BaseManagerItemComparator(BaseManager<IT> * _manager) :manager(_manager) {}
-	
+
 	BaseManager<IT> * manager;
 
 	int compareElements(BaseItemMinimalUI<IT> * u1, BaseItemMinimalUI<IT> * u2)
@@ -43,10 +43,10 @@ class ManagerUIItemContainer :
 	public Component
 {
 public:
-	ManagerUIItemContainer<M,T,U>(BaseManagerUI<M,T,U> * _mui) : mui(_mui){};
+	ManagerUIItemContainer<M, T, U>(BaseManagerUI<M, T, U> * _mui) : mui(_mui) {};
 	~ManagerUIItemContainer() {}
 
-	BaseManagerUI<M,T,U> * mui;
+	BaseManagerUI<M, T, U> * mui;
 
 	void childBoundsChanged(Component * c) { mui->childBoundsChanged(c); }
 };
@@ -70,10 +70,10 @@ public:
 
 	//ui
 	bool useViewport; //TODO, create a BaseManagerViewportUI
-	
+
 	ManagerUIItemContainer<M, T, U> container;
 	Viewport viewport;
-	
+
 	Colour bgColor;
 	int labelHeight = 10;
 	String managerUIName;
@@ -152,20 +152,20 @@ public:
 template<class M, class T, class U>
 BaseManagerUI<M, T, U>::BaseManagerUI(const String & contentName, M * _manager, bool _useViewport) :
 	InspectableContentComponent(_manager),
-manager(_manager),
-managerComparator(_manager),
-useViewport(_useViewport),
-container(this),
-bgColor(BG_COLOR),
-managerUIName(contentName),
+	manager(_manager),
+	managerComparator(_manager),
+	useViewport(_useViewport),
+	container(this),
+	bgColor(BG_COLOR),
+	managerUIName(contentName),
 	drawContour(false),
-transparentBG(false),
-resizeOnChildBoundsChanged(true),
-animateItemOnAdd(true),
-fixedItemHeight(true),
-gap(2)
+	transparentBG(false),
+	resizeOnChildBoundsChanged(true),
+	animateItemOnAdd(true),
+	fixedItemHeight(true),
+	gap(2)
 {
-	
+
 	setWantsKeyboardFocus(true);
 
 	highlightColor = LIGHTCONTOUR_COLOR;
@@ -178,7 +178,7 @@ gap(2)
 		viewport.setScrollOnDragEnabled(false);
 		viewport.setScrollBarThickness(10);
 		this->addAndMakeVisible(viewport);
-	} 
+	}
 
 	BaseManager<T>* baseM = static_cast<BaseManager<T>*>(manager);
 	baseM->addBaseManagerListener(this);
@@ -196,7 +196,7 @@ gap(2)
 template<class M, class T, class U>
 BaseManagerUI<M, T, U>::~BaseManagerUI()
 {
-	if(!inspectable.wasObjectDeleted()) static_cast<BaseManager<T>*>(manager)->removeBaseManagerListener(this);
+	if (!inspectable.wasObjectDeleted()) static_cast<BaseManager<T>*>(manager)->removeBaseManagerListener(this);
 	if (Engine::getInstanceWithoutCreating()) Engine::getInstance()->removeEngineListener(this);
 }
 
@@ -205,14 +205,23 @@ void BaseManagerUI<M, T, U>::addExistingItems(bool resizeAfter)
 {
 
 	//add existing items
-	for (auto &t : manager->items) addItemUI(t,false);
-	if(resizeAfter) resized();
+	for (auto &t : manager->items) addItemUI(t, false);
+	if (resizeAfter) resized();
 }
 
 template<class M, class T, class U>
-inline void BaseManagerUI<M, T, U>::setCanAddItemsManually(bool value)
+void BaseManagerUI<M, T, U>::setCanAddItemsManually(bool value)
 {
-	if (addItemBT != nullptr) removeChildComponent(addItemBT);
+	addItemBT->setVisible(value);
+
+	if (value)
+	{
+		addAndMakeVisible(addItemBT);
+	} else
+	{
+		removeChildComponent(addItemBT);
+	}
+
 }
 
 template<class M, class T, class U>
@@ -225,38 +234,38 @@ void BaseManagerUI<M, T, U>::mouseDown(const MouseEvent & e)
 	} else if (e.mods.isRightButtonDown())
 	{
 		showMenuAndAddItem(false, e.getEventRelativeTo(this).getMouseDownPosition());
-	} 
+	}
 }
 
 template<class M, class T, class U>
 void BaseManagerUI<M, T, U>::paint(Graphics & g)
 {
 	Rectangle<int> r = getLocalBounds();
-	
+
 	if (!transparentBG)
 	{
 		g.setColour(bgColor);
 		g.fillRoundedRectangle(r.toFloat(), 4);
 	}
-	
+
 	if (drawContour)
 	{
-		
+
 		Colour contourColor = bgColor.brighter(.2f);
 		g.setColour(contourColor);
 		g.drawRoundedRectangle(r.toFloat(), 4, 2);
-		
+
 		g.setFont(g.getCurrentFont().withHeight(labelHeight));
 		float textWidth = g.getCurrentFont().getStringWidth(managerUIName);
-		Rectangle<int> tr = r.removeFromTop(labelHeight+2).reduced((r.getWidth() - textWidth) / 2, 0).expanded(4,0);
+		Rectangle<int> tr = r.removeFromTop(labelHeight + 2).reduced((r.getWidth() - textWidth) / 2, 0).expanded(4, 0);
 		g.fillRect(tr);
 		Colour textColor = contourColor.withBrightness(contourColor.getBrightness() > .5f ? .1f : .9f).withAlpha(1.f);
 		g.setColour(textColor);
 
 		g.drawText(managerUIName, tr, Justification::centred, 1);
-	}else
+	} else
 	{
-		if(!transparentBG)	g.fillAll(bgColor);
+		if (!transparentBG)	g.fillAll(bgColor);
 	}
 }
 
@@ -266,22 +275,21 @@ void BaseManagerUI<M, T, U>::resized()
 	if (getWidth() == 0 || getHeight() == 0) return;
 
 	Rectangle<int> r = getLocalBounds().reduced(2);
-	
-	if (addItemBT != nullptr && addItemBT->isVisible())
+
+	if (addItemBT != nullptr && addItemBT->isVisible() && addItemBT->getParentComponent() == this)
 	{
 		addItemBT->setBounds(r.withSize(24, 24).withX(r.getWidth() - 24));
+		r.removeFromTop(24);
 	}
 
-	r.removeFromTop(24);
-		
 
 	if (useViewport)
 	{
 		viewport.setBounds(r);
-		r.removeFromRight(drawContour?14:10);
+		r.removeFromRight(drawContour ? 14 : 10);
 		r.setTop(0);
 	}
-	
+
 	for (auto &ui : itemsUI)
 	{
 		BaseItemMinimalUI<T> * bui = static_cast<BaseItemMinimalUI<T>*>(ui);
@@ -290,7 +298,7 @@ void BaseManagerUI<M, T, U>::resized()
 		r.translate(0, tr.getHeight() + gap);
 	}
 
-	if (useViewport) 
+	if (useViewport)
 	{
 		float th = 0;
 		if (itemsUI.size() > 0) th = static_cast<BaseItemMinimalUI<T>*>(itemsUI[itemsUI.size() - 1])->getBottom();
@@ -301,7 +309,7 @@ void BaseManagerUI<M, T, U>::resized()
 template<class M, class T, class U>
 void BaseManagerUI<M, T, U>::childBoundsChanged(Component *)
 {
-	if(resizeOnChildBoundsChanged) resized();
+	if (resizeOnChildBoundsChanged) resized();
 }
 
 template<class M, class T, class U>
@@ -316,14 +324,14 @@ void BaseManagerUI<M, T, U>::showMenuAndAddItem(bool isFromAddButton, Point<int>
 	PopupMenu p;
 	p.addItem(1, addItemText);
 
-	int result = p.show(); 
+	int result = p.show();
 	switch (result)
 	{
 	case 1:
-		addItemFromMenu(isFromAddButton,mouseDownPos);
+		addItemFromMenu(isFromAddButton, mouseDownPos);
 		break;
 	}
-	
+
 }
 
 template<class M, class T, class U>
@@ -336,15 +344,15 @@ template<class M, class T, class U>
 U * BaseManagerUI<M, T, U>::addItemUI(T * item, bool animate)
 {
 	U * tui = createUIForItem(item);
-	
+
 	BaseItemMinimalUI<T> * bui = static_cast<BaseItemMinimalUI<T>*>(tui);
 
-	if(useViewport) container.addAndMakeVisible(bui);
+	if (useViewport) container.addAndMakeVisible(bui);
 	else addAndMakeVisible(bui);
 	itemsUI.add(tui);
 
 	addItemUIInternal(tui);
-	
+
 	if (animate)
 	{
 		Rectangle<int> tb = bui->getBounds();
@@ -355,7 +363,7 @@ U * BaseManagerUI<M, T, U>::addItemUI(T * item, bool animate)
 		//DBG("resized");  
 		//resized();
 	}
-	
+
 	managerUIListeners.call(&ManagerUIListener::itemUIAdded, tui);
 	return tui;
 }
@@ -369,13 +377,13 @@ inline U * BaseManagerUI<M, T, U>::createUIForItem(T * item)
 template<class M, class T, class U>
 void BaseManagerUI<M, T, U>::removeItemUI(T * item)
 {
-	U * tui = getUIForItem(item,false);
+	U * tui = getUIForItem(item, false);
 	if (tui == nullptr) return;
 
-	if(useViewport) container.removeChildComponent(static_cast<BaseItemMinimalUI<T>*>(tui));
+	if (useViewport) container.removeChildComponent(static_cast<BaseItemMinimalUI<T>*>(tui));
 	else removeChildComponent(static_cast<BaseItemMinimalUI<T>*>(tui));
-	
-	itemsUI.removeObject(tui,false);
+
+	itemsUI.removeObject(tui, false);
 	removeItemUIInternal(tui);
 
 	managerUIListeners.call(&ManagerUIListener::itemUIRemoved, tui);
@@ -388,8 +396,8 @@ void BaseManagerUI<M, T, U>::removeItemUI(T * item)
 template<class M, class T, class U>
 U * BaseManagerUI<M, T, U>::getUIForItem(T * item, bool directIndexAccess)
 {
-	if(directIndexAccess) return itemsUI[static_cast<BaseManager<T>*>(manager)->items.indexOf(item)];
-	
+	if (directIndexAccess) return itemsUI[static_cast<BaseManager<T>*>(manager)->items.indexOf(item)];
+
 	for (auto &ui : itemsUI) if (static_cast<BaseItemMinimalUI<T>*>(ui)->item == item) return ui; //brute search, not needed if ui/items are synchronized
 	return nullptr;
 }
@@ -403,7 +411,7 @@ int BaseManagerUI<M, T, U>::getContentHeight()
 template<class M, class T, class U>
 void BaseManagerUI<M, T, U>::itemAdded(T * item)
 {
-	addItemUI(item,animateItemOnAdd);
+	addItemUI(item, animateItemOnAdd);
 }
 
 template<class M, class T, class U>
@@ -423,14 +431,14 @@ void BaseManagerUI<M, T, U>::buttonClicked(Button  * b)
 {
 	if (b == addItemBT)
 	{
-		showMenuAndAddItem(true,Point<int>());
+		showMenuAndAddItem(true, Point<int>());
 	}
 }
 
 template<class M, class T, class U>
 void BaseManagerUI<M, T, U>::inspectableDestroyed(Inspectable *)
 {
-	if(manager != nullptr) static_cast<BaseManager<T>*>(manager)->removeBaseManagerListener(this);
+	if (manager != nullptr) static_cast<BaseManager<T>*>(manager)->removeBaseManagerListener(this);
 }
 
 template<class M, class T, class U>

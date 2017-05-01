@@ -25,7 +25,6 @@ public:
 
 	Module * sourceModule;
 	Module * destModule;
-
 	BaseManager<ModuleRouterValue> sourceValues;
 
 	void setSourceModule(Module * m);

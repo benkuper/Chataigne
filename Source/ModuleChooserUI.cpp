@@ -30,16 +30,13 @@ void ModuleChooserUI::buildModuleBox()
 	clear(dontSendNotification);
 	for (auto &m : ModuleManager::getInstance()->items)
 	{
-		DBG("check module ");
 		if (filterModuleFunc != nullptr)
 		{
 			if (!filterModuleFunc(m)) continue;
 		}
-		DBG("> ok !");
 
 		int id = ModuleManager::getInstance()->items.indexOf(m) + 1;
 		addItem(m->niceName, id);
-		DBG("Add item " << m->niceName);
 	}
 	
 	chooserListeners.call(&ChooserListener::moduleListChanged, this);

@@ -16,7 +16,7 @@ DMXModule::DMXModule() :
 	Module("DMX"),
 	dmxDevice(nullptr)
 {
-	canHandleRouteValues = true;
+	//canHandleRouteValues = true;
 
 	defManager.add(CommandDefinition::createDef(this, "", "Set value", &DMXCommand::create)->addParam("action", DMXCommand::SET_VALUE));
 	defManager.add(CommandDefinition::createDef(this, "", "Set range", &DMXCommand::create)->addParam("action", DMXCommand::SET_RANGE));

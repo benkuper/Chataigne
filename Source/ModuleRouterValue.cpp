@@ -42,7 +42,11 @@ void ModuleRouterValue::setOutModule(Module * m)
 
 	if (outModule != nullptr)
 	{
-		if (routeParams != nullptr) prevData = routeParams->getJSONData();
+		if (routeParams != nullptr)
+		{
+			removeChildControllableContainer(routeParams);
+			prevData = routeParams->getJSONData();
+		}
 		routeParams = nullptr;
 	}
 
@@ -52,6 +56,7 @@ void ModuleRouterValue::setOutModule(Module * m)
 	{
 		routeParams = outModule->createRouteParamsForSourceValue(sourceValue,valueIndex);
 		routeParams->loadJSONData(prevData);
+		addChildControllableContainer(routeParams);
 	}
 
 	valueListeners.call(&ValueListener::routeParamsChanged, this);
