@@ -97,6 +97,8 @@ public:
 
 	void addExistingItems(bool resizeAfter = true);
 
+	void setCanAddItemsManually(bool value);
+
 	virtual void mouseDown(const MouseEvent &e) override;
 	virtual void paint(Graphics &g) override;
 
@@ -208,6 +210,12 @@ void BaseManagerUI<M, T, U>::addExistingItems(bool resizeAfter)
 }
 
 template<class M, class T, class U>
+inline void BaseManagerUI<M, T, U>::setCanAddItemsManually(bool value)
+{
+	if (addItemBT != nullptr) removeChildComponent(addItemBT);
+}
+
+template<class M, class T, class U>
 void BaseManagerUI<M, T, U>::mouseDown(const MouseEvent & e)
 {
 	InspectableContentComponent::mouseDown(e);
@@ -259,7 +267,11 @@ void BaseManagerUI<M, T, U>::resized()
 
 	Rectangle<int> r = getLocalBounds().reduced(2);
 	
-	addItemBT->setBounds(r.withSize(24, 24).withX(r.getWidth() - 24));
+	if (addItemBT != nullptr && addItemBT->isVisible())
+	{
+		addItemBT->setBounds(r.withSize(24, 24).withX(r.getWidth() - 24));
+	}
+
 	r.removeFromTop(24);
 		
 

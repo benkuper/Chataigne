@@ -182,6 +182,14 @@ var OSCModule::argumentToVar(const OSCArgument & a)
 	return var("error");
 }
 
+void OSCModule::handleRoutedModuleValue(Controllable * c, RouteParams * p)
+{
+	OSCRouteParams * op = static_cast<OSCRouteParams *>(p);
+	OSCMessage m(op->address->stringValue());
+	if (c->type != Controllable::TRIGGER) m.addArgument(varToArgument(((Parameter *)c)->value));
+	sendOSC(m);
+}
+
 void OSCModule::onContainerParameterChangedInternal(Parameter * p)
 {
 	Module::onContainerParameterChangedInternal(p);

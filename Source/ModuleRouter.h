@@ -31,12 +31,10 @@ public:
 	void setSourceModule(Module * m);
 	void setDestModule(Module * m);
 
-	void setSourceValueSelected(Controllable * sourceValue, bool selected);
-	void clearSourceValues();
+	var getJSONData() override;
+	void loadJSONDataInternal(var data) override;
 
 	void inspectableDestroyed(Inspectable * m) override;
-	void onExternalParameterChanged(Parameter * p) override;
-	void onExternalTriggerTriggered(Trigger * t) override;
 
 	class RouterListener
 	{

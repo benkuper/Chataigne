@@ -16,11 +16,13 @@ AudioLayerPanel::AudioLayerPanel(AudioLayer * layer) :
 	audioLayer(layer)
 {
 	bgColor = AUDIO_COLOR.withSaturation(.2f).darker(1);
-	ModuleManager::getInstance()->addBaseManagerListener(this);
-
-	moduleChooser.setTextWhenNoChoicesAvailable("Create an audio module first");
+	
+	moduleChooser.setTextWhenNoChoicesAvailable("No audio module");
 	moduleChooser.setTextWhenNothingSelected("Choose an audio module");
-	moduleChooser.addListener(this);
+	moduleChooser.filterModuleFunc = &AudioLayerPanel::isAudioModule;
+	moduleChooser.addChooserListener(this);
+	moduleChooser.setModuleSelected(audioLayer->audioModule,true);
+
 	addAndMakeVisible(&moduleChooser);
 
 	audioLayer->addAudioLayerListener(this);
@@ -28,12 +30,10 @@ AudioLayerPanel::AudioLayerPanel(AudioLayer * layer) :
 	enveloppeUI = audioLayer->enveloppe->createSlider();
 	addAndMakeVisible(enveloppeUI);
 
-	buildModuleBox();
 }
 
 AudioLayerPanel::~AudioLayerPanel()
 {
-	ModuleManager::getInstance()->removeBaseManagerListener(this);
 	if (!inspectable.wasObjectDeleted()) audioLayer->removeAudioLayerListener(this);
 }
 
@@ -48,42 +48,18 @@ void AudioLayerPanel::resizedInternalHeader(Rectangle<int>& r)
 	enveloppeUI->setBounds(gr);
 }
 
-void AudioLayerPanel::buildModuleBox()
-{
-	DBG("Build module box");
-
-	int sIndex = -1;
-	moduleChooser.clear(dontSendNotification);
-	for (auto &m : ModuleManager::getInstance()->items)
-	{
-		if (static_cast<AudioModule *>(m) == nullptr) continue;
-		int id = ModuleManager::getInstance()->items.indexOf(m)+1;
-		moduleChooser.addItem(m->niceName, id);
-		if (audioLayer->audioModule == m) sIndex = id;
-	}
-	
-	moduleChooser.setSelectedId(sIndex, dontSendNotification);
-}
-
-void AudioLayerPanel::itemAdded(Module *)
-{
-	DBG("Module item added !");
-	buildModuleBox();
-}
-
-void AudioLayerPanel::itemRemoved(Module *)
-{
-	DBG("Module item removed");
-	buildModuleBox();
-}
-
-void AudioLayerPanel::comboBoxChanged(ComboBox *)
-{
-	if (moduleChooser.getSelectedId() == -1) audioLayer->setAudioModule(nullptr);
-	else audioLayer->setAudioModule(static_cast<AudioModule *>(ModuleManager::getInstance()->items[moduleChooser.getSelectedId()-1]));
-}
-
 void AudioLayerPanel::targetAudioModuleChanged(AudioLayer *)
 {
-	buildModuleBox();
+	moduleChooser.setModuleSelected(audioLayer->audioModule,true);
+}
+
+void AudioLayerPanel::selectedModuleChanged(ModuleChooserUI *, Module * m)
+{
+	audioLayer->setAudioModule(dynamic_cast<AudioModule *>(m));
+}
+
+void AudioLayerPanel::moduleListChanged(ModuleChooserUI *)
+{
+	moduleChooser.setModuleSelected(audioLayer->audioModule, true);
+
 }

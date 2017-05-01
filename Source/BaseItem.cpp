@@ -15,7 +15,8 @@
 BaseItem::BaseItem(const String &name, bool _canBeDisabled, bool _canHaveScripts) :
 	ControllableContainer(name),
 	canBeDisabled(_canBeDisabled),
-	canHaveScripts(_canHaveScripts)
+	canHaveScripts(_canHaveScripts),
+	userCanRemove(true)
 {
 	saveAndLoadName = true;
 

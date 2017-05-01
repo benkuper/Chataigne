@@ -31,9 +31,6 @@ public:
     const int margin = 2;
     int minContentHeight;
     
-    
-
-
 	//grabber
 	int grabberHeight;
 	Point<float> posAtMouseDown;
@@ -51,8 +48,6 @@ public:
     ScopedPointer<ResizableCornerComponent> cornerResizer;
     ScopedPointer<ResizableEdgeComponent> edgeResizer;
     Component * resizer;
-    
-    
 
 	ScopedPointer<StringParameterUI> nameUI;
 	ScopedPointer<BoolImageToggleUI> enabledBT;
@@ -115,16 +110,16 @@ public:
 
 template<class T>
 BaseItemUI<T>::BaseItemUI(T * _item, ResizeMode _resizeMode, bool _canBeDragged) :
-BaseItemMinimalUI<T>(_item),
-minContentHeight(2),
-grabberHeight(0),
-canBeDragged(_canBeDragged),
-headerHeight(16),
-headerGap(2),
-resizeMode(_resizeMode),
-resizerWidth(0),
-resizerHeight(0),
-resizer(nullptr)
+	BaseItemMinimalUI<T>(_item),
+	minContentHeight(2),
+	grabberHeight(0),
+	canBeDragged(_canBeDragged),
+	headerHeight(16),
+	headerGap(2),
+	resizeMode(_resizeMode),
+	resizerWidth(0),
+	resizerHeight(0),
+	resizer(nullptr)
 {
     
 	nameUI = this->baseItem->nameParam->createStringParameterUI();
@@ -136,9 +131,12 @@ resizer(nullptr)
 		this->addAndMakeVisible(enabledBT);
 	}
 
-	removeBT = AssetManager::getInstance()->getRemoveBT();
-	this->addAndMakeVisible(removeBT);
-	removeBT->addListener(this);
+	if (this->baseItem->userCanRemove)
+	{
+		removeBT = AssetManager::getInstance()->getRemoveBT();
+		this->addAndMakeVisible(removeBT);
+		removeBT->addListener(this);
+	}
 
 	this->setHighlightOnMouseOver(true);
 
@@ -190,7 +188,7 @@ resizer(nullptr)
 template<class T>
 BaseItemUI<T>::~BaseItemUI()
 {
-	removeBT->removeListener(this);
+	if(removeBT != nullptr) removeBT->removeListener(this);
 }
 
 template<class T>
@@ -275,7 +273,7 @@ void BaseItemUI<T>::resized()
 		h.removeFromLeft(2);
 	}
 
-	removeBT->setBounds(h.removeFromRight(h.getHeight()));
+	if(removeBT != nullptr) removeBT->setBounds(h.removeFromRight(h.getHeight()));
 	h.removeFromRight(2);
 
 	resizedInternalHeader(h);

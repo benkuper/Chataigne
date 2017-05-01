@@ -55,8 +55,8 @@ public:
 		~RouteParams() {}
 	};
 
-	virtual RouteParams * createRouteParamsForSourceValue(Controllable * sourceValue) { jassert(false); return nullptr; }
-	virtual void handleRoutedModuleValue(Controllable * /*value*/, int /*valueIndex*/, bool /*useNormalizedValue*/ = false) {} //used for routing
+	virtual RouteParams * createRouteParamsForSourceValue(Controllable * /*c*/, int /*index*/) { jassert(false); return nullptr; }
+	virtual void handleRoutedModuleValue(Controllable * /*c*/, RouteParams * /*params*/) {} //used for routing, child classes that support routing must override
 
 
 

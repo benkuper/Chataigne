@@ -10,60 +10,58 @@
 
 #include "ModuleRouterValue.h"
 #include "TargetParameter.h"
+#include "Module.h"
 
-ModuleRouterValue::ModuleRouterValue(Controllable * _sourceValue, Module * _outModule) :
-	BaseItem("Router Value"),
-	outModule(_outModule)
+ModuleRouterValue::ModuleRouterValue(Controllable * _sourceValue, int _index) :
+	BaseItem(_sourceValue->niceName,false),
+	valueIndex(_index),
+	sourceValue(_sourceValue),
+	outModule(nullptr)
 {
-	jassert(_sourceValue != nullptr);
+	jassert(sourceValue != nullptr);
+	nameParam->isEditable = false;
 
-	sourceTarget = addTargetParameter("Source Value", "Source Value");
-	sourceTarget->setTarget(_sourceValue);
-
+	userCanRemove = false;
 	doRoute = addBoolParameter("Route", "Activate the routing for this value", true);
+
+	if (sourceValue->type == Controllable::TRIGGER) ((Trigger *)sourceValue)->addTriggerListener(this);
+	else ((Parameter *)sourceValue)->addParameterListener(this);
 }
 
 ModuleRouterValue::~ModuleRouterValue()
 {
-}
-
-void ModuleRouterValue::setSourceValue(Controllable * c)
-{
-	if (c == currentSourceValue) return;
-	if (currentSourceValue != nullptr)
-	{
-		currentSourceValue->removeInspectableListener(this);
-	}
-
-	currentSourceValue = c;
-
-	if (currentSourceValue != nullptr)
-	{
-		currentSourceValue->addInspectableListener(this);
-	}
+	if (sourceValue->type == Controllable::TRIGGER) ((Trigger *)sourceValue)->removeTriggerListener(this);
+	else ((Parameter *)sourceValue)->removeParameterListener(this);
 }
 
 void ModuleRouterValue::setOutModule(Module * m)
 {
 	if (outModule == m) return;
+
+	var prevData = var();
+
 	if (outModule != nullptr)
 	{
-
+		if (routeParams != nullptr) prevData = routeParams->getJSONData();
+		routeParams = nullptr;
 	}
 
 	outModule = m;
 
 	if (outModule != nullptr)
 	{
-		routeParams = outModule->createRouteParamsForSourceValue(currentSourceValue);
+		routeParams = outModule->createRouteParamsForSourceValue(sourceValue,valueIndex);
+		routeParams->loadJSONData(prevData);
 	}
+
+	valueListeners.call(&ValueListener::routeParamsChanged, this);
 }
 
 var ModuleRouterValue::getJSONData()
 {
 	var data = BaseItem::getJSONData();
 	if (routeParams != nullptr) data.getDynamicObject()->setProperty("routeParams", routeParams->getJSONData());
-	return var();
+	return data;
 }
 
 void ModuleRouterValue::loadJSONDataInternal(var data)
@@ -72,7 +70,30 @@ void ModuleRouterValue::loadJSONDataInternal(var data)
 	if (routeParams != nullptr) routeParams->loadJSONData(data.getProperty("routeParams", var()));
 }
 
-void ModuleRouterValue::inspectableDestroyed(Inspectable * i)
+void ModuleRouterValue::onContainerParameterChangedInternal(Parameter * p)
 {
-	setSourceValue(nullptr);
+	if (p == doRoute)
+	{
+		if (doRoute->boolValue())
+		{
+			if (sourceValue->type == Controllable::TRIGGER) ((Trigger *)sourceValue)->addTriggerListener(this);
+			else ((Parameter *)sourceValue)->addParameterListener(this);
+		} else
+		{
+			if (sourceValue->type == Controllable::TRIGGER) ((Trigger *)sourceValue)->removeTriggerListener(this);
+			else ((Parameter *)sourceValue)->removeParameterListener(this);
+		}
+	}
+}
+
+void ModuleRouterValue::onExternalParameterChanged(Parameter * p)
+{
+	if (outModule == nullptr) return;
+	if(p == sourceValue) outModule->handleRoutedModuleValue(sourceValue, routeParams);
+}
+
+void ModuleRouterValue::onExternalTriggerTriggered(Trigger * t)
+{
+	if (outModule == nullptr) return;
+	if(t == sourceValue) outModule->handleRoutedModuleValue(sourceValue, routeParams);
 }

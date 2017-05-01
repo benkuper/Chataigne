@@ -70,7 +70,8 @@ public:
 		StringParameter * address;
 	};
 
-	virtual RouteParams * createRouteParamsForSourceValue(Controllable * c) override { return new OSCRouteParams(c); }
+	virtual RouteParams * createRouteParamsForSourceValue(Controllable * c, int /*index*/) override { return new OSCRouteParams(c); }
+	virtual void handleRoutedModuleValue(Controllable * c, RouteParams * p) override;
 
 	virtual void onContainerParameterChangedInternal(Parameter * p) override;
 	virtual void oscMessageReceived(const OSCMessage & message) override;

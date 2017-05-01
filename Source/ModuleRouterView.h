@@ -13,13 +13,17 @@
 
 #include "ModuleRouter.h"
 #include "InspectableSelectionManager.h"
+#include "ModuleChooserUI.h"
+#include "ModuleRouterValueEditor.h"
 
 class ModuleRouterView :
 	public Component,
 	public ModuleRouter::RouterListener,
 	public ButtonListener,
 	public InspectableSelectionManager::Listener,
-	public Inspectable::InspectableListener
+	public Inspectable::InspectableListener,
+	public ModuleChooserUI::ChooserListener
+
 {
 public:
 	ModuleRouterView();
@@ -27,10 +31,16 @@ public:
 
 	TextButton addBT;
 	ModuleRouter * currentRouter;
-	
+
+	ModuleChooserUI sourceChooser;
+	ModuleChooserUI destChooser;
+	ScopedPointer<BaseManagerUI<BaseManager<ModuleRouterValue>, ModuleRouterValue, ModuleRouterValueEditor>> managerUI;
+
 	void resized() override;
 
 	void setRouter(ModuleRouter * router);
+	
+	void buildValueManagerUI();
 
 	void sourceModuleChanged(ModuleRouter *) override;
 	void destModuleChanged(ModuleRouter *) override;
@@ -39,6 +49,11 @@ public:
 
 	void inspectablesSelectionChanged() override;
 	void inspectableDestroyed(Inspectable * i) override;
+
+	void moduleListChanged(ModuleChooserUI * c) override;
+	void selectedModuleChanged(ModuleChooserUI * c, Module * m) override;
+
+	static bool isModuleRoutable(Module * m) { return m->canHandleRouteValues; }
 };
 
 #endif  // MODULEROUTERVIEW_H_INCLUDED

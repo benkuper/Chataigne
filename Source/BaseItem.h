@@ -25,8 +25,6 @@ public :
 	BoolParameter * enabled;
 	StringParameter * nameParam; 
 
-
-
 	//UI - should move outside data class ? how to save/load if not there 
 	BoolParameter * miniMode;
 	FloatParameter * listUISize; //width or height in a list
@@ -35,6 +33,7 @@ public :
 
 	bool canBeDisabled;
 	bool canHaveScripts;
+	bool userCanRemove;
 
 	ScopedPointer<ScriptManager> scriptManager;
 

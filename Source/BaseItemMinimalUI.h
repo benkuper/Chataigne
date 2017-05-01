@@ -35,6 +35,7 @@ public:
 	bool removeOnDelKey;
 
 	void mouseDown(const MouseEvent &e) override;
+	void mouseExit(const MouseEvent &e) override;
 	bool keyPressed(const KeyPress &e) override;
 
 	void setHighlightOnMouseOver(bool highlight);
@@ -84,6 +85,13 @@ void BaseItemMinimalUI<T>::mouseDown(const MouseEvent & e)
 {
 	InspectableContentComponent::mouseDown(e);
 	if (removeOnCtrlDown && e.mods.isLeftButtonDown() && e.mods.isCtrlDown()) baseItem->remove();
+}
+
+template<class T>
+void BaseItemMinimalUI<T>::mouseExit(const MouseEvent &e)
+{
+	InspectableContentComponent::mouseExit(e);
+	repaint();
 }
 
 template<class T>
