@@ -99,10 +99,12 @@ public:
 
 
 static ChataigneApplication& getApp() { return *dynamic_cast<ChataigneApplication*>(JUCEApplication::getInstance()); }
-OpenGLContext * getOpenGLContext() { return &getApp().mainWindow->openGLContext; }
-ApplicationProperties& getAppProperties() { return *getApp().appProperties; }
-ApplicationCommandManager& getCommandManager() { return getApp().commandManager; }
 String getAppVersion() { return getApp().getApplicationVersion(); }
+ApplicationProperties& getAppProperties() { return *getApp().appProperties; }
+
+OpenGLContext * getOpenGLContext() { return &getApp().mainWindow->openGLContext; }
+
+ApplicationCommandManager& getCommandManager() { return getApp().commandManager; }
 ChataigneApplication::MainWindow * getMainWindow() { return getApp().mainWindow; }
 //==============================================================================
 // This macro generates the main() routine that launches the app.
