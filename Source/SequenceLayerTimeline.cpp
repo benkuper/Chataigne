@@ -51,6 +51,8 @@ void SequenceLayerTimeline::paintOverChildren(Graphics & g)
 
 void SequenceLayerTimeline::controllableFeedbackUpdateInternal(Controllable * c)
 {
+	BaseItemMinimalUI::controllableFeedbackUpdateInternal(c);
+
 	if (c == item->uiHeight)
 	{
 		setSize(getWidth(), item->uiHeight->intValue());

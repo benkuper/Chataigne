@@ -42,6 +42,8 @@ BaseItemEditor::BaseItemEditor(BaseItem * bi, bool isRoot) :
 	}
 
 	item->addAsyncContainerListener(this);
+
+	if(item->canBeDisabled) setAlpha(item->enabled->boolValue() ? 1 : .6f);
 }
 
 BaseItemEditor::~BaseItemEditor()
@@ -111,7 +113,11 @@ void BaseItemEditor::newMessage(const ContainerAsyncEvent & e)
 
 void BaseItemEditor::controllableFeedbackAsyncUpdate(Controllable * c)
 {
-	if (c == item->enabled) repaint();
+	if (item->canBeDisabled && c == item->enabled)
+	{
+		setAlpha(item->enabled->boolValue() ? 1 : .6f);
+		repaint();
+	}
 }
 
 void BaseItemEditor::childBoundsChanged(Component *)

@@ -49,10 +49,12 @@ void Engine::createNewGraph(){
 
 Result Engine::loadDocument (const File& file){
   
+	LOG("Load document : " << file.getFileName());
+
 	if(isLoadingFile){
-    // TODO handle quick reloading of file
-    return Result::fail("engine already loading");
-  }
+		// TODO handle quick reloading of file
+		return Result::fail("engine already loading");
+	  }
 
   isLoadingFile = true;
   engineListeners.call(&EngineListener::startLoadFile);

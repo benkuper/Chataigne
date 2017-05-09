@@ -46,6 +46,8 @@ void SequenceLayerPanel::resizedInternalHeader(Rectangle<int>& r)
 
 void SequenceLayerPanel::controllableFeedbackUpdateInternal(Controllable * c)
 {
+	BaseItemMinimalUI::controllableFeedbackUpdateInternal(c);
+
 	if (c == item->uiHeight)
 	{
 		setSize(getWidth(), item->uiHeight->intValue());

@@ -23,7 +23,6 @@ inline void ChataigneApplication::initialise(const String & commandLine)
 	Engine * engine = Engine::getInstance();
 	
 	engine->parseCommandline(commandLine);
-	
 	if (!engine->getFile().existsAsFile()) {
 		engine->createNewGraph();
 		engine->setChangedFlag(false);
@@ -58,8 +57,9 @@ inline void ChataigneApplication::anotherInstanceStarted(const String & commandL
 	// When another instance of the app is launched while this one is running,
 	// this method is invoked, and the commandLine parameter tells you what
 	// the other instance's command-line arguments were.
-
+	
 	Engine::getInstance()->parseCommandline(commandLine);
+	LOG("Instance started here !");
 }
 
 inline ChataigneApplication::MainWindow::MainWindow(String name) : DocumentWindow(name,

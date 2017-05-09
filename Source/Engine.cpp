@@ -39,7 +39,8 @@ Engine::Engine() :
 	FileBasedDocument(filenameSuffix,
 		filenameWildcard,
 		"Load a Noisette",
-		"Save a Noisette")
+		"Save a Noisette"),
+	isLoadingFile(false)
 {
 
 	skipControllableNameInAddress = true;
@@ -100,8 +101,8 @@ void Engine::parseCommandline(const String & commandLine){
   for (auto & c:StringUtil::parseCommandLine(commandLine)){
 
     if(c.command== "f"|| c.command==""){
+
       if(c.args.size()==0){
-        LOG("no file provided for command : "+c.command);
         jassertfalse;
         continue;
       }

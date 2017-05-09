@@ -44,7 +44,7 @@ public:
 	void newMessage(const ContainerAsyncEvent &e) override;
 
 	//void controllableFeedbackUpdate(ControllableContainer *, Controllable *) override;
-	virtual void controllableFeedbackUpdateInternal(Controllable *) {} //override this in child classes
+	virtual void controllableFeedbackUpdateInternal(Controllable *); //override this in child classes
 	
 
 };
@@ -69,6 +69,9 @@ BaseItemMinimalUI<T>::BaseItemMinimalUI(T * _item) :
 
 	addMouseListener(this, true);
 	baseItem->addAsyncContainerListener(this);
+
+	if (baseItem->canBeDisabled) setAlpha(baseItem->enabled->boolValue() ? 1 : .6f);
+
 
 	setSize(100, 20);
 }
@@ -135,6 +138,12 @@ void BaseItemMinimalUI<T>::newMessage(const ContainerAsyncEvent & e)
 		if (e.targetControllable == baseItem->enabled) repaint();
 		controllableFeedbackUpdateInternal(e.targetControllable);
 	}
+}
+
+template<class T>
+void BaseItemMinimalUI<T>::controllableFeedbackUpdateInternal(Controllable * c)
+{
+	if (baseItem->canBeDisabled && c == baseItem->enabled) setAlpha(baseItem->enabled->boolValue() ? 1 : .6f);
 }
 
 

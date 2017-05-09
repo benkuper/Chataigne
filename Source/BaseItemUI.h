@@ -355,6 +355,7 @@ void BaseItemUI<T>::mouseDoubleClick(const MouseEvent & e)
 template<class T>
 void BaseItemUI<T>::controllableFeedbackUpdateInternal(Controllable * c)
 {
+	BaseItemMinimalUI::controllableFeedbackUpdateInternal(c);
 	if (c == this->baseItem->miniMode) updateMiniModeUI();
 	else if (canBeDragged && c == this->baseItem->viewUIPosition) itemUIListeners.call(&ItemUIListener::itemUIGrabbed, this);
 }
