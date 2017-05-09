@@ -90,7 +90,11 @@ public:
 	WiimoteManager();
 	~WiimoteManager();
 
+
+	wiimote ** devices;
 	OwnedArray<Wiimote> wiimotes;
+
+	bool reloadWiimotes;
 
 	void addWiimote(wiimote_t * device);
 	void removeWiimote(Wiimote * wiimote);

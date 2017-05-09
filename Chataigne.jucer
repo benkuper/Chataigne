@@ -1479,7 +1479,8 @@
       </MODULEPATHS>
     </LINUX_MAKE>
     <XCODE_MAC targetFolder="Builds/MacOSX" smallIcon="nVz6Li" bigIcon="nVz6Li"
-               externalLibraries="" extraFrameworks="IOBluetooth" extraCompilerFlags="">
+               externalLibraries="" extraFrameworks="IOBluetooth" extraCompilerFlags=""
+               documentExtensions="noisette">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" isDebug="1" optimisation="1" targetName="Chataigne"
                        headerPath="../../External/wiiuse&#10;../../External/serial/include"

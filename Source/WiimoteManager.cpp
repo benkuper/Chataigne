@@ -15,7 +15,8 @@
 juce_ImplementSingleton(WiimoteManager)
 
 WiimoteManager::WiimoteManager() :
-	Thread("wiimoteManager")
+	Thread("wiimoteManager"),
+	reloadWiimotes(false)
 {
 	startThread();
 }
@@ -23,6 +24,8 @@ WiimoteManager::WiimoteManager() :
 WiimoteManager::~WiimoteManager()
 {
 	stopThread(100);
+	wiiuse_cleanup(devices, MAX_WIIMOTES);
+
 }
 
 void WiimoteManager::addWiimote(wiimote_t * device)
@@ -41,15 +44,17 @@ void WiimoteManager::removeWiimote(Wiimote * w)
 
 void WiimoteManager::run()
 {
-	wiimote** devices = wiiuse_init(MAX_WIIMOTES);
+	devices = wiiuse_init(MAX_WIIMOTES);
 	int numFound = wiiuse_find(devices, MAX_WIIMOTES, 1);
 	int numConnected = wiiuse_connect(devices, MAX_WIIMOTES);
 	
+	/*
 	if (!numConnected)
 	{
 		NLOG("Wiimote", "Failed to connect to any wiimote.\n");
 		return;
 	}
+	*/
 
 	NLOG("Wiimote", "Connected to " << numConnected << " wiimotes (of " << numFound << " found)");
 
@@ -58,9 +63,16 @@ void WiimoteManager::run()
 		addWiimote(devices[i]);
 	}
 	
+	reloadWiimotes = true;
 
 	while (!threadShouldExit())
 	{
+		if (reloadWiimotes)
+		{
+			wiiuse_connect(devices, MAX_WIIMOTES);
+			reloadWiimotes = false;
+		}
+		
 		if (wiiuse_poll(devices, MAX_WIIMOTES)) {
 			for (auto &w : wiimotes)
 			{
@@ -114,37 +126,44 @@ void Wiimote::update()
 		break;
 
 	case WIIUSE_EVENT_TYPE::WIIUSE_CONNECT:
+		NLOG("Wiimote", "Wiimote disconnected");
 		break;
 
 	case WIIUSE_EVENT_TYPE::WIIUSE_DISCONNECT:
+	case WIIUSE_EVENT_TYPE::WIIUSE_UNEXPECTED_DISCONNECT:
+		NLOG("Wiimote","Wiimote disconnected");
+		WiimoteManager::getInstance()->reloadWiimotes = true;
 		break;
 
 	case WIIUSE_EVENT_TYPE::WIIUSE_NUNCHUK_INSERTED:
-		DBG("Nunchuk ON");
+		NLOG("Wiimote", "Nunchuck plugged");
 		listeners.call(&Listener::wiimoteNunchuckPlugged,this);
 		break;
 
 		
 	case WIIUSE_EVENT_TYPE::WIIUSE_NUNCHUK_REMOVED:
-		DBG("Nunchuk OFF");
+		NLOG("Wiimote", "Nunchuck unplugged");
 		listeners.call(&Listener::wiimoteNunchuckUnplugged, this);
 		break;
 		
 	case WIIUSE_EVENT_TYPE::WIIUSE_MOTION_PLUS_ACTIVATED:
-		DBG("Motion Plus ON");
+		NLOG("Wiimote", "Motionplus plugged");
 		listeners.call(&Listener::wiimoteMotionPlusPlugged, this);
 		break;
 
 	case WIIUSE_EVENT_TYPE::WIIUSE_MOTION_PLUS_REMOVED:
-		DBG("Motion Plus OFF");
+		NLOG("Wiimote", "Motionplus unplugged");
 		listeners.call(&Listener::wiimoteMotionPlusUnplugged, this);
 		break;
 
 	case WIIUSE_EVENT_TYPE::WIIUSE_CLASSIC_CTRL_INSERTED:
+		NLOG("Wiimote", "Classic plugged");
 		break;
 
 	case WIIUSE_EVENT_TYPE::WIIUSE_CLASSIC_CTRL_REMOVED:
+		NLOG("Wiimote", "Classic unplugged");
 		break;
+
         default:
             break;
 	}

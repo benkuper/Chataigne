@@ -9,7 +9,6 @@
 */
 
 #include "GenericControllableContainerEditor.h"
-#include "InspectableComponent.h"
 #include "ControllableUI.h"
 
 //ControllableUIComparator CCInnerContainer::comparator;

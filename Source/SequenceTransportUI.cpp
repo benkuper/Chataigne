@@ -75,7 +75,3 @@ void SequenceTransportUI::sequenceMasterAudioModuleChanged(Sequence *)
 {
 	repaint();
 }
-
-
-#pragma warning (pop)
-

@@ -39,6 +39,9 @@ void ModuleChooserUI::buildModuleBox()
 		addItem(m->niceName, id);
 	}
 	
+	setInterceptsMouseClicks(getNumItems() > 0, false);
+	//repaint();
+
 	chooserListeners.call(&ChooserListener::moduleListChanged, this);
 }
 
