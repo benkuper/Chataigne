@@ -12,6 +12,10 @@
 #define WIIMOTEPAIRUTIL_H_INCLUDED
 
 
+#include "JuceHeader.h"
+
+#if JUCE_WINDOWS
+
 #include <windows.h>
 #include <bthsdpdef.h>
 #include <bthdef.h>
@@ -20,20 +24,27 @@
 
 #pragma comment(lib, "Bthprops.lib")
 
-#include "JuceHeader.h"
+#elif JUCE_MAC
+
+#endif
+
 
 class WiiPairUtil
 {
 public:
 	WiiPairUtil();
 	~WiiPairUtil();
-
-
+    
+    static int pair(bool forceRepairing = false);
+    
+#if JUCE_WINDOWS
 	static DWORD ShowErrorCode(LPTSTR msg, DWORD dw);
-
-	static String FormatBTAddress(BLUETOOTH_ADDRESS address);
-
-	static int pair(bool forceRepairing = false);
+    static String FormatBTAddress(BLUETOOTH_ADDRESS address);
+    static int pairWin(bool forceRepairing = false);
+#elif JUCE_MAC
+    
+    static int pairMac(bool forceRepairing = false);
+#endif
 };
 
 

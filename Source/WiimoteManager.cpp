@@ -19,8 +19,8 @@ juce_ImplementSingleton(WiimoteManager)
 
 WiimoteManager::WiimoteManager() :
 	Thread("wiimoteManager"),
-	reinitWiimotes(false),
-	wiiuseIsInit(false)
+    wiiuseIsInit(false),
+    reinitWiimotes(false)
 {
 	startThread();
 }

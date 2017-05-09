@@ -18,6 +18,16 @@ WiiPairUtil::~WiiPairUtil()
 {
 }
 
+int WiiPairUtil::pair(bool forceRepairing)
+{
+#if JUCE_WINDOWS
+    return pairWin(forceRepairing);
+#elif JUCE_MAC
+    return pairMac(forceRepairing);
+#endif
+}
+
+#if JUCE_WINDOWS
 DWORD WiiPairUtil::ShowErrorCode(LPTSTR msg, DWORD dw)
 {
 	// Retrieve the system error message for the last-error code
@@ -220,3 +230,17 @@ int WiiPairUtil::pair(bool forceRepairing)
 
 	return nPaired;
 }
+
+#endif
+
+
+
+#if JUCE_MAC
+
+
+
+int WiiPairUtil::pairMac(bool forceRepairing)
+{
+    return 0;
+}
+#endif
