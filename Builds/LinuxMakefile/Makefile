@@ -287,6 +287,7 @@ OBJECTS := \
   $(JUCE_OBJDIR)/wiiuse_4beaa4f0.o \
   $(JUCE_OBJDIR)/WiimoteManager_70322a6c.o \
   $(JUCE_OBJDIR)/WiimoteModule_4b7bb357.o \
+  $(JUCE_OBJDIR)/WiimotePairUtil_7fe25967.o \
   $(JUCE_OBJDIR)/GamepadManager_7fa3e695.o \
   $(JUCE_OBJDIR)/GamepadModule_543d4e0e.o \
   $(JUCE_OBJDIR)/HIDModuleEditor_ad4d607d.o \
@@ -1545,6 +1546,11 @@ $(JUCE_OBJDIR)/WiimoteManager_70322a6c.o: ../../Source/WiimoteManager.cpp
 $(JUCE_OBJDIR)/WiimoteModule_4b7bb357.o: ../../Source/WiimoteModule.cpp
 	-@mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling WiimoteModule.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/WiimotePairUtil_7fe25967.o: ../../Source/WiimotePairUtil.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling WiimotePairUtil.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/GamepadManager_7fa3e695.o: ../../Source/GamepadManager.cpp

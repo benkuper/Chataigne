@@ -32,6 +32,7 @@ public:
 	bool isConnected;
 	float batteryLevel;
 
+	float smoothing;
 	bool buttons[NUM_WIIMOTE_BUTTONS]; //11 one wiimote, 2 on nunchuck
 	float yaw;
 	float pitch;
@@ -46,6 +47,10 @@ public:
 	float nunchuckAccelZ;
 	float joystickX;
 	float joystickY;
+
+
+	void setDevice(wiimote_t * _device);
+	void setSmoothing(float value);
 
 	bool isButtonDown(WiimoteButton);
 	void update();
@@ -90,14 +95,16 @@ public:
 	WiimoteManager();
 	~WiimoteManager();
 
-
 	wiimote ** devices;
 	OwnedArray<Wiimote> wiimotes;
 
-	bool reloadWiimotes;
+	bool wiiuseIsInit;
+	bool reinitWiimotes;
 
 	void addWiimote(wiimote_t * device);
 	void removeWiimote(Wiimote * wiimote);
+
+	void reconnect();
 
 	// Inherited via Thread
 	virtual void run() override;

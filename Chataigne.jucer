@@ -951,6 +951,10 @@
               <FILE id="lI21xf" name="WiimoteModule.cpp" compile="1" resource="0"
                     file="Source/WiimoteModule.cpp"/>
               <FILE id="ngOz3J" name="WiimoteModule.h" compile="0" resource="0" file="Source/WiimoteModule.h"/>
+              <FILE id="UCokeK" name="WiimotePairUtil.cpp" compile="1" resource="0"
+                    file="Source/WiimotePairUtil.cpp"/>
+              <FILE id="qKPnFF" name="WiimotePairUtil.h" compile="0" resource="0"
+                    file="Source/WiimotePairUtil.h"/>
             </GROUP>
             <GROUP id="{8C1F4F42-D147-0C87-C287-A37FFCD87532}" name="gamepad">
               <FILE id="R3pTTu" name="GamepadManager.cpp" compile="1" resource="0"
@@ -1515,6 +1519,9 @@
         <CONFIGURATION name="Debug" winWarningLevel="4" generateManifest="1" winArchitecture="x64"
                        isDebug="1" optimisation="1" targetName="Chataigne" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;$(ASIOSDK)/common&#10;$(KINECTSDK20_DIR)inc&#10;"
                        libraryPath="$(KINECTSDK20_DIR)Lib\x64"/>
+        <CONFIGURATION name="Debug x86" winWarningLevel="4" generateManifest="1" winArchitecture="32-bit"
+                       isDebug="1" optimisation="1" targetName="Chataigne" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;$(ASIOSDK)/common&#10;$(KINECTSDK20_DIR)inc&#10;"
+                       libraryPath="$(KINECTSDK20_DIR)Lib\x86"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_video" path="D:/Softwares\JUCE\modules"/>

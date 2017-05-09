@@ -12,11 +12,15 @@
 #include "WiimoteManager.h"
 #include "DebugHelpers.h"
 
+#include "WiimotePairUtil.h"
+
+
 juce_ImplementSingleton(WiimoteManager)
 
 WiimoteManager::WiimoteManager() :
 	Thread("wiimoteManager"),
-	reloadWiimotes(false)
+	reinitWiimotes(false),
+	wiiuseIsInit(false)
 {
 	startThread();
 }
@@ -42,54 +46,96 @@ void WiimoteManager::removeWiimote(Wiimote * w)
 	delete w;
 }
 
-void WiimoteManager::run()
+void WiimoteManager::reconnect()
 {
-	devices = wiiuse_init(MAX_WIIMOTES);
-	int numFound = wiiuse_find(devices, MAX_WIIMOTES, 1);
-	int numConnected = wiiuse_connect(devices, MAX_WIIMOTES);
-	
-	/*
-	if (!numConnected)
+	if (wiiuseIsInit)
 	{
-		NLOG("Wiimote", "Failed to connect to any wiimote.\n");
-		return;
+		wiiuse_cleanup(devices, MAX_WIIMOTES);
 	}
-	*/
 
-	NLOG("Wiimote", "Connected to " << numConnected << " wiimotes (of " << numFound << " found)");
+	while (wiimotes.size() > 0) removeWiimote(wiimotes[0]);
 
-	
-	for (int i = 0; i < MAX_WIIMOTES; ++i) {
+	int numFound = wiiuse_find(devices, MAX_WIIMOTES, 1);
+	NLOG("Wiimote", "Found " << numFound << " wiimotes");
+
+	int numConnected = wiiuse_connect(devices, MAX_WIIMOTES);
+	NLOG("Wiimote", "Connected to " << numConnected << " wiimotes");
+
+	for (int i = 0; i < numConnected; i++)
+	{
 		addWiimote(devices[i]);
 	}
-	
-	reloadWiimotes = true;
 
+	reinitWiimotes = false;
+}
+
+void WiimoteManager::run()
+{
+	
+
+	devices = wiiuse_init(MAX_WIIMOTES);
+	
+	reconnect();
+
+	if (wiimotes.size() == 0)
+	{
+		NLOG("Wiimote", "No wiimote found, trying auto-pairing..");
+		int  pairResult = WiiPairUtil::pair();
+		NLOG("Wiimote", pairResult << " devices paired.");
+		reconnect();
+
+	}
+
+	int i = 0;
 	while (!threadShouldExit())
 	{
-		if (reloadWiimotes)
-		{
-			wiiuse_connect(devices, MAX_WIIMOTES);
-			reloadWiimotes = false;
-		}
 		
+		if (reinitWiimotes)
+		{
+			reconnect();
+		}
+
 		if (wiiuse_poll(devices, MAX_WIIMOTES)) {
 			for (auto &w : wiimotes)
 			{
 				w->update();
 			}
+			i = 0;
+		} else
+		{
+			i++;
 		}
 
-		sleep(5);
+		if (i > 200) //every 5s
+		{
+			reinitWiimotes = true;
+			i = 0;
+		}
+		sleep(10);
 	}
 }
 
 Wiimote::Wiimote(int _id, wiimote_t * _device) :
 	id(_id),
-	device(_device)
+	smoothing(.5f)
 {
+	setDevice(_device);
+}
+
+Wiimote::~Wiimote()
+{
+}
+
+
+
+void Wiimote::setDevice(wiimote_t * _device)
+{
+	device = _device;
+	
 	wiiuse_motion_sensing(device, 1);
 	wiiuse_set_flags(device, WIIUSE_SMOOTHING, 0);
+	wiiuse_set_smooth_alpha(device, smoothing);
+
 	switch (id)
 	{
 	case 0: wiiuse_set_leds(device, WIIMOTE_LED_1); break;
@@ -99,8 +145,11 @@ Wiimote::Wiimote(int _id, wiimote_t * _device) :
 	}
 }
 
-Wiimote::~Wiimote()
+void Wiimote::setSmoothing(float value)
 {
+	smoothing = value;
+	wiiuse_set_smooth_alpha(device, smoothing);
+
 }
 
 bool Wiimote::isButtonDown(WiimoteButton b)
@@ -117,11 +166,10 @@ void Wiimote::update()
 	switch (device->event)
 	{
 	case WIIUSE_EVENT_TYPE::WIIUSE_EVENT:
-		//DBG("BT " << (int)device->btns << " / Nunchuck bt : " << (int)device->exp.nunchuk.btns);
 		for (int i = 0; i < NUM_WIIMOTE_BUTTONS; i++) setButton(i, device->btns >> i & 1);
 
 		setAccel(device->accel.x, device->accel.y, device->accel.z);
-		setYPR(device->gforce.x, device->gforce.y, device->gforce.z);
+		setYPR(device->orient.yaw/180, -device->orient.pitch/90, device->orient.roll/180);
 		setNunchuckXY(device->exp.nunchuk.js.x, device->exp.nunchuk.js.y);
 		break;
 
@@ -132,7 +180,7 @@ void Wiimote::update()
 	case WIIUSE_EVENT_TYPE::WIIUSE_DISCONNECT:
 	case WIIUSE_EVENT_TYPE::WIIUSE_UNEXPECTED_DISCONNECT:
 		NLOG("Wiimote","Wiimote disconnected");
-		WiimoteManager::getInstance()->reloadWiimotes = true;
+		//WiimoteManager::getInstance()->reloadWiimotes = true;
 		break;
 
 	case WIIUSE_EVENT_TYPE::WIIUSE_NUNCHUK_INSERTED:
@@ -171,6 +219,7 @@ void Wiimote::update()
 
 void Wiimote::setButton(int index, bool value)
 {
+	if(value) DBG("Push button " << index);
 	if (buttons[index] == value) return;
 
 	buttons[index] = value;
