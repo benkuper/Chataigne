@@ -2,7 +2,7 @@
 
 <JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.0.0"
               bundleIdentifier="benkuper.Chataigne" includeBinaryInAppConfig="1"
-              jucerVersion="4.3.1" companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
+              jucerVersion="5.0.1" companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
               companyEmail="benjamin@kuperberg.fr" defines="" displaySplashScreen="1"
               reportAppUsage="1" splashScreenColour="Dark">
   <MAINGROUP id="EDDVhd" name="Chataigne">
@@ -1457,12 +1457,16 @@
       </MODULEPATHS>
     </VS2017>
     <LINUX_MAKE targetFolder="Builds/LinuxMakefile" smallIcon="nVz6Li" bigIcon="nVz6Li"
-                externalLibraries="bluetooth" extraLinkerFlags="">
+                externalLibraries="bluetooth" extraLinkerFlags="" extraDefs=""
+                extraCompilerFlags="">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" isDebug="1" optimisation="1" targetName="Chataigne"
                        headerPath="../../External/wiiuse&#10;../../External/serial/include"/>
         <CONFIGURATION name="Release" isDebug="0" optimisation="3" targetName="Chataigne"
                        headerPath="../../External/wiiuse&#10;../../External/serial/include"/>
+        <CONFIGURATION name="x86" isDebug="0" optimisation="3" targetName="Chataigne"
+                       headerPath="../../External/wiiuse&#10;../../External/serial/include"
+                       linuxArchitecture="-m32" binaryPath="x86"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_video" path="../JUCE/modules"/>
