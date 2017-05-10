@@ -219,7 +219,6 @@ void Wiimote::update()
 
 void Wiimote::setButton(int index, bool value)
 {
-	if(value) DBG("Push button " << index);
 	if (buttons[index] == value) return;
 
 	buttons[index] = value;

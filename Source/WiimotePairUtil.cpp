@@ -10,6 +10,8 @@
 
 #include "WiimotePairUtil.h"
 
+#pragma warning(disable:4995)
+
 WiiPairUtil::WiiPairUtil()
 {
 }
@@ -28,7 +30,7 @@ int WiiPairUtil::pair(bool forceRepairing)
 }
 
 #if JUCE_WINDOWS
-DWORD WiiPairUtil::ShowErrorCode(LPTSTR msg, DWORD dw)
+DWORD WiiPairUtil::ShowErrorCode(LPTSTR /*msg*/, DWORD dw)
 {
 	// Retrieve the system error message for the last-error code
 
@@ -44,7 +46,7 @@ DWORD WiiPairUtil::ShowErrorCode(LPTSTR msg, DWORD dw)
 		NULL
 	);
 
-	DBG(String(msg) << " : "<< String((LPSTR)lpMsgBuf));
+	//DBG(String(msg) << " : "<< String((LPSTR)lpMsgBuf));
 
 	LocalFree(lpMsgBuf);
 
@@ -63,7 +65,7 @@ String WiiPairUtil::FormatBTAddress(BLUETOOTH_ADDRESS address)
 	return s;
 }
 
-int WiiPairUtil::pair(bool forceRepairing)
+int WiiPairUtil::pairWin(bool forceRepairing)
 {
 	HANDLE hRadios[256];
 	int nRadios;
@@ -182,6 +184,7 @@ int WiiPairUtil::pair(bool forceRepairing)
 							if (!error)
 							{
 								// Pair with Wii device
+
 								if (ShowErrorCode(("BluetoothAuthenticateDevice"), BluetoothAuthenticateDevice(NULL, hRadios[radio], &btdi, pass, 6)) != ERROR_SUCCESS)
 									error = TRUE;
 							}
