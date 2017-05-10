@@ -811,6 +811,14 @@
                   file="Source/ModuleRouterManager.h"/>
           </GROUP>
           <GROUP id="{766BCE2E-5C2E-5A80-EC80-7FFA2C7ABBBA}" name="modules">
+            <GROUP id="{35421CCB-191E-EB2F-8C3D-2EE58B569B35}" name="myo">
+              <FILE id="R097Eg" name="Myo.cpp" compile="1" resource="0" file="Source/Myo.cpp"/>
+              <FILE id="E7qycF" name="Myo.h" compile="0" resource="0" file="Source/Myo.h"/>
+              <FILE id="odt8OQ" name="MyoManager.cpp" compile="1" resource="0" file="Source/MyoManager.cpp"/>
+              <FILE id="GgDfOa" name="MyoManager.h" compile="0" resource="0" file="Source/MyoManager.h"/>
+              <FILE id="fN72hY" name="MyoModule.cpp" compile="1" resource="0" file="Source/MyoModule.cpp"/>
+              <FILE id="nSKj3Z" name="MyoModule.h" compile="0" resource="0" file="Source/MyoModule.h"/>
+            </GROUP>
             <GROUP id="{59F1EF8C-5880-1E61-23C7-906E6FD546C2}" name="generic">
               <GROUP id="{9C478D37-AA46-AFA2-7D78-2116F6962ADB}" name="commands">
                 <GROUP id="{967BAB81-51E8-E01E-B9FF-0F23EF2D7CDB}" name="ui">
@@ -1510,18 +1518,18 @@
         <MODULEPATH id="juce_gui_extra" path="/Applications/JUCE/modules"/>
       </MODULEPATHS>
     </XCODE_MAC>
-    <VS2015 targetFolder="Builds/VisualStudio2015" externalLibraries="Setupapi.lib&#10;hid.lib&#10;Kinect20.lib"
+    <VS2015 targetFolder="Builds/VisualStudio2015" externalLibraries="Setupapi.lib&#10;hid.lib&#10;Kinect20.lib&#10;myo.lib"
             smallIcon="nVz6Li" bigIcon="nVz6Li">
       <CONFIGURATIONS>
         <CONFIGURATION name="Release" winWarningLevel="4" generateManifest="1" winArchitecture="x64"
                        isDebug="0" optimisation="3" targetName="Chataigne" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;$(ASIOSDK)/common&#10;$(KINECTSDK20_DIR)inc&#10;"
-                       libraryPath="$(KINECTSDK20_DIR)Lib\x64"/>
+                       libraryPath="$(KINECTSDK20_DIR)Lib\x64&#10;$(MYOSDK)\lib\x64"/>
         <CONFIGURATION name="Debug" winWarningLevel="4" generateManifest="1" winArchitecture="x64"
                        isDebug="1" optimisation="1" targetName="Chataigne" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;$(ASIOSDK)/common&#10;$(KINECTSDK20_DIR)inc&#10;"
-                       libraryPath="$(KINECTSDK20_DIR)Lib\x64"/>
+                       libraryPath="$(KINECTSDK20_DIR)Lib\x64&#10;$(MYOSDK)\lib\x64"/>
         <CONFIGURATION name="Debug x86" winWarningLevel="4" generateManifest="1" winArchitecture="32-bit"
                        isDebug="1" optimisation="1" targetName="Chataigne" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;$(ASIOSDK)/common&#10;$(KINECTSDK20_DIR)inc&#10;"
-                       libraryPath="$(KINECTSDK20_DIR)Lib\x86"/>
+                       libraryPath="$(KINECTSDK20_DIR)Lib\x86&#10;$(MYOSDK)\lib\x86"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_video" path="D:/Softwares\JUCE\modules"/>
