@@ -84,6 +84,6 @@ void TriggerBlinkUI::timerCallback(){
 
 
 
-void TriggerBlinkUI::mouseDown(const MouseEvent&) {
+void TriggerBlinkUI::mouseDownInternal(const MouseEvent&) {
     if(!forceFeedbackOnly) trigger->trigger();
 }

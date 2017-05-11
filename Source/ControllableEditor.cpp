@@ -27,7 +27,7 @@ ControllableEditor::ControllableEditor(Controllable * _controllable, bool isRoot
 	label.setJustificationType(Justification::left);
 	label.setFont(label.getFont().withHeight(12));
 	label.setText(controllable->niceName, dontSendNotification);
-	
+	label.addMouseListener(this, true);
 	
 	if (controllable->isRemovableByUser)
 	{
@@ -96,4 +96,9 @@ void ControllableEditor::buttonClicked(Button * b)
 	{
 		ui->showEditWindow();
 	}
+}
+
+void ControllableEditor::mouseDown(const MouseEvent & e)
+{
+	if (e.eventComponent == &label) ui->mouseDown(e);
 }

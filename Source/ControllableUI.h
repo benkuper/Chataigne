@@ -16,21 +16,31 @@
 #include "Style.h"//keep 
 
 class ControllableUI :
-	public Component, 
-	public SettableTooltipClient, 
+	public Component,
+	public SettableTooltipClient,
 	public Controllable::Listener
 {
 public:
-    ControllableUI(Controllable * controllable);
-    virtual ~ControllableUI();
+	ControllableUI(Controllable * controllable);
+	virtual ~ControllableUI();
 
 	String tooltip;
-    WeakReference<Controllable>  controllable;
+	WeakReference<Controllable>  controllable;
 
 	bool showLabel;
 	bool opaqueBackground;
 
 	void mouseDoubleClick(const MouseEvent &e) override;
+
+	void mouseDown(const MouseEvent &e) override;
+	void mouseUp(const MouseEvent &e) override;
+
+	virtual void mouseDownInternal(const MouseEvent &) {} //avoid right click check in each child class
+	virtual void mouseUpInternal(const MouseEvent &) {} //
+	
+	//PopupMenu11
+	virtual void addPopupMenuItems(PopupMenu *) {} //for child classes
+	virtual void handleMenuSelectedID(int ) {} // to override
 
 	virtual void setOpaqueBackground(bool value);
 

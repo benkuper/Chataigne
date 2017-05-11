@@ -8,4 +8,12 @@
   ==============================================================================
 */
 
-#include "Myo.h"
+#include "MyoDevice.h"
+
+MyoDevice::MyoDevice()
+{
+}
+
+MyoDevice::~MyoDevice()
+{
+ }

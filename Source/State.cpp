@@ -21,7 +21,7 @@ State::State() :
 	addChildControllableContainer(&am);
 	addChildControllableContainer(&mm);
 
-	viewUISize->setPoint(200, 300);
+	//viewUISize->setPoint(200, 300);
 }
 
 State::~State()

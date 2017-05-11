@@ -28,6 +28,7 @@
 #include "DMXManager.h"
 #include "DashboardManager.h"
 #include "ModuleRouterManager.h"
+#include "MyoManager.h"
 
 juce_ImplementSingleton(Engine) 
 
@@ -88,6 +89,7 @@ Engine::~Engine(){
   SerialManager::deleteInstance();
   GamepadManager::deleteInstance();
   WiimoteManager::deleteInstance();
+  MyoManager::deleteInstance();
 
   ScriptUtil::deleteInstance();
 

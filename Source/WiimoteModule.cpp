@@ -21,29 +21,27 @@ WiimoteModule::WiimoteModule(const String & name) :
 	smoothing = addFloatParameter("Smoothing", "Set the orientation smoothing for the wiimote orientation algorithm", .5f, 0, 1);
 
 	connected = valuesCC.addBoolParameter("Connected", "Wiimote is connected ?", false);
-	connected->isControllableFeedbackOnly = true;
 
 	nunchuckConnected = valuesCC.addBoolParameter("Nunchuck", "Nunchuck is connected ? ", false);
-	nunchuckConnected->isControllableFeedbackOnly = true;
 	motionPlusConnected = valuesCC.addBoolParameter("MotionPlus", "MotionPlus is connected ? ", false);
-	motionPlusConnected->isControllableFeedbackOnly = true;
 	batteryLevel = valuesCC.addFloatParameter("Battery", "Battery level of the wiimote", 0, 0, 1);
-	batteryLevel->isControllableFeedbackOnly = true;
 	pitch = valuesCC.addFloatParameter("Pitch", "Pitch of the wiimote", 0, -1, 1);
-	pitch->isControllableFeedbackOnly = true;
 	roll = valuesCC.addFloatParameter("Roll", "Roll of the wiimote", 0, -1, 1);
-	roll->isControllableFeedbackOnly = true;
 	yaw = valuesCC.addFloatParameter("Yaw", "Yaw of the wiimote.\nMotion Plus must be connected !", 0, -1, 1);
-	yaw->isControllableFeedbackOnly = true;
 
-	nunchuckXYAxis = valuesCC.addPoint2DParameter("Nunchuck XY", "X and Y axis of the nunchuck if plugged");
-	nunchuckXYAxis->setBounds(-1, -1, 1, 1);
-	nunchuckXYAxis->isControllableFeedbackOnly = true;
-	nunchuckXYAxis->isEditable = false;
+	nunchuckX = valuesCC.addFloatParameter("Nunchuck X", "X axis of the nunchuck if plugged",0,-1,1);
+	nunchuckY = valuesCC.addFloatParameter("Nunchuck Y", "Y axis of the nunchuck if plugged",0,-1,1);
 
-	accelParam = valuesCC.addPoint3DParameter("Raw Accel", "Raw values of accelerometer");
-	accelParam->isControllableFeedbackOnly = true;
+	accelX = valuesCC.addFloatParameter("Accel X", "Raw values of accelerometer",0,-1,1);
+	accelY = valuesCC.addFloatParameter("Accel Y", "Raw values of accelerometer", 0, -1, 1);
+	accelZ = valuesCC.addFloatParameter("Accel Z", "Raw values of accelerometer", 0, -1, 1);
+	rawAccelX = valuesCC.addFloatParameter("Raw Accel X", "Raw values of accelerometer", 0, 0,300);
+	rawAccelY = valuesCC.addFloatParameter("Raw Accel Y", "Raw values of accelerometer", 0, 0,300);
+	rawAccelZ = valuesCC.addFloatParameter("Raw Accel Z", "Raw values of accelerometer", 0, 0,300);
 
+	
+
+	
 	BoolParameter * bt_a = valuesCC.addBoolParameter("Button A", "Button A", false);
 	BoolParameter * bt_b = valuesCC.addBoolParameter("Button B", "Button B", false);
 	BoolParameter * bt_c = valuesCC.addBoolParameter("Button C", "Button C", false);
@@ -61,7 +59,7 @@ WiimoteModule::WiimoteModule(const String & name) :
 
 	buttons.addArray({ bt_2,bt_1,bt_b,bt_a,bt_mi,bt_c,bt_z,bt_h,bt_le,bt_ri,bt_do,bt_up,bt_pl });
 
-	for (auto &p : buttons) p->isControllableFeedbackOnly = true;
+	for (auto &c : valuesCC.controllables) c->isControllableFeedbackOnly = true;
 
 
 	WiimoteManager::getInstance()->addListener(this);
@@ -124,13 +122,19 @@ void WiimoteModule::wiimoteOrientationUpdated(Wiimote * w)
 void WiimoteModule::wiimoteAccelUpdated(Wiimote * w)
 {
 	if (w != device) return;
-	accelParam->setVector(device->accelX, device->accelY, device->accelZ);
+	accelX->setValue(device->accelX);
+	accelY->setValue(device->accelY);
+	accelZ->setValue(device->accelZ);
+	rawAccelX->setValue(device->rawAccelX);
+	rawAccelY->setValue(device->rawAccelY);
+	rawAccelZ->setValue(device->rawAccelZ);
 }
 
 void WiimoteModule::wiimoteJoystickUpdated(Wiimote * w)
 {
 	if (w != device) return;
-	nunchuckXYAxis->setPoint(device->joystickX, device->joystickY);
+	nunchuckX->setValue(device->joystickX);
+	nunchuckY->setValue(device->joystickY);
 }
 
 void WiimoteModule::wiimoteBatteryLevelChanged(Wiimote *)

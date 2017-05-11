@@ -812,8 +812,8 @@
           </GROUP>
           <GROUP id="{766BCE2E-5C2E-5A80-EC80-7FFA2C7ABBBA}" name="modules">
             <GROUP id="{35421CCB-191E-EB2F-8C3D-2EE58B569B35}" name="myo">
-              <FILE id="R097Eg" name="Myo.cpp" compile="1" resource="0" file="Source/Myo.cpp"/>
-              <FILE id="E7qycF" name="Myo.h" compile="0" resource="0" file="Source/Myo.h"/>
+              <FILE id="R097Eg" name="MyoDevice.cpp" compile="1" resource="0" file="Source/MyoDevice.cpp"/>
+              <FILE id="E7qycF" name="MyoDevice.h" compile="0" resource="0" file="Source/MyoDevice.h"/>
               <FILE id="odt8OQ" name="MyoManager.cpp" compile="1" resource="0" file="Source/MyoManager.cpp"/>
               <FILE id="GgDfOa" name="MyoManager.h" compile="0" resource="0" file="Source/MyoManager.h"/>
               <FILE id="fN72hY" name="MyoModule.cpp" compile="1" resource="0" file="Source/MyoModule.cpp"/>
@@ -1522,13 +1522,13 @@
             smallIcon="nVz6Li" bigIcon="nVz6Li">
       <CONFIGURATIONS>
         <CONFIGURATION name="Release" winWarningLevel="4" generateManifest="1" winArchitecture="x64"
-                       isDebug="0" optimisation="3" targetName="Chataigne" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;$(ASIOSDK)/common&#10;$(KINECTSDK20_DIR)inc&#10;"
+                       isDebug="0" optimisation="3" targetName="Chataigne" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;$(ASIOSDK)/common&#10;$(KINECTSDK20_DIR)inc&#10;$(MYOSDK)\include"
                        libraryPath="$(KINECTSDK20_DIR)Lib\x64&#10;$(MYOSDK)\lib\x64"/>
         <CONFIGURATION name="Debug" winWarningLevel="4" generateManifest="1" winArchitecture="x64"
-                       isDebug="1" optimisation="1" targetName="Chataigne" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;$(ASIOSDK)/common&#10;$(KINECTSDK20_DIR)inc&#10;"
+                       isDebug="1" optimisation="1" targetName="Chataigne" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;$(ASIOSDK)/common&#10;$(KINECTSDK20_DIR)inc&#10;$(MYOSDK)\include"
                        libraryPath="$(KINECTSDK20_DIR)Lib\x64&#10;$(MYOSDK)\lib\x64"/>
         <CONFIGURATION name="Debug x86" winWarningLevel="4" generateManifest="1" winArchitecture="32-bit"
-                       isDebug="1" optimisation="1" targetName="Chataigne" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;$(ASIOSDK)/common&#10;$(KINECTSDK20_DIR)inc&#10;"
+                       isDebug="1" optimisation="1" targetName="Chataigne" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;$(ASIOSDK)/common&#10;$(KINECTSDK20_DIR)inc&#10;$(MYOSDK)\include"
                        libraryPath="$(KINECTSDK20_DIR)Lib\x86&#10;$(MYOSDK)\lib\x86"/>
       </CONFIGURATIONS>
       <MODULEPATHS>

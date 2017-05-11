@@ -107,16 +107,13 @@ void FloatSliderUI::paint(Graphics & g)
 
 }
 
-void FloatSliderUI::mouseDown(const MouseEvent & e)
+void FloatSliderUI::mouseDownInternal(const MouseEvent & e)
 {
 	if (!parameter->isEditable || forceFeedbackOnly) return;
 
     initValue = getParamNormalizedValue();
     setMouseCursor(MouseCursor::NoCursor);
 
-	if (e.mods.isRightButtonDown()) {
-		parameter->resetValue();
-	}
 
     if (e.mods.isLeftButtonDown() && assignOnMousePosDirect)
     {

@@ -22,6 +22,7 @@
 #include "SerialModule.h"
 #include "DMXModule.h"
 #include "LiveOSCModule.h"
+#include "MyoModule.h"
 
 juce_ImplementSingleton(ModuleFactory)
 
@@ -34,7 +35,8 @@ ModuleFactory::ModuleFactory() {
 	moduleDefs.add(new ModuleDefinition("Generic", "Gamepad", &GamepadModule::create));
 
 	moduleDefs.add(new ModuleDefinition("Controller", "Wiimote", &WiimoteModule::create));
-    
+	moduleDefs.add(new ModuleDefinition("Controller", "Myo", &MyoModule::create));
+
 #if JUCE_WIN
 	moduleDefs.add(new ModuleDefinition("Controller", "KinectV2", &KinectV2Module::create));
 #endif

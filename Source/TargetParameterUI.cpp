@@ -93,7 +93,7 @@ void TargetParameterUI::showPopupAndGetTarget()
 	}
 }
 
-void TargetParameterUI::mouseDown(const MouseEvent &)
+void TargetParameterUI::mouseDownInternal(const MouseEvent &)
 {
 	if (!targetParameter->isEditable || forceFeedbackOnly) return;
 

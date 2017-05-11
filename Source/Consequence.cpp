@@ -23,6 +23,12 @@ Consequence::~Consequence()
 
 }
 
+void Consequence::triggerCommand()
+{
+	if (!enabled->boolValue()) return;
+	BaseCommandHandler::triggerCommand();
+}
+
 /*
 InspectableEditor * Consequence::getEditor(bool isRoot)
 {

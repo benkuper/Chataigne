@@ -40,6 +40,9 @@ public:
 	float accelX;
 	float accelY;
 	float accelZ;
+	float rawAccelX;
+	float rawAccelY;
+	float rawAccelZ;
 
 	//Nunchuck
 	float nunchuckAccelX;
@@ -79,7 +82,7 @@ public:
 
 private :
 	void setButton(int index, bool value);
-	void setAccel(float x, float y, float z);
+	void setAccel(float x, float y, float z, float rx, float ry, float rz);
 	void setYPR(float yaw, float pitch, float roll);
 	void setNunchuckXY(float x, float y);
 	void setConnected(bool value);

@@ -27,6 +27,11 @@ BaseCommandHandler::~BaseCommandHandler()
 {
 }
 
+void BaseCommandHandler::triggerCommand()
+{
+	if (command != nullptr) command->trigger();
+}
+
 void BaseCommandHandler::setCommand(CommandDefinition * commandDef)
 {
 	//var oldData = var();
@@ -91,7 +96,7 @@ void BaseCommandHandler::onContainerTriggerTriggered(Trigger * t)
 {
 	if (t == trigger)
 	{
-		if (command != nullptr) command->trigger();
+		triggerCommand();
 	}
 }
 

@@ -27,7 +27,7 @@ public:
     virtual ~TriggerBlinkUI();
 
     void paint(Graphics&)override;
-    void mouseDown(const MouseEvent& event)override;
+    void mouseDownInternal(const MouseEvent& event)override;
     void triggerTriggered(const Trigger * p) override;
     void startBlink();
     void timerCallback()override;

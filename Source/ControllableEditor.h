@@ -34,6 +34,8 @@ public:
 	
 	void resized() override;
     void buttonClicked(Button * b) override;
+
+	void mouseDown(const MouseEvent &e) override;
 };
 
 

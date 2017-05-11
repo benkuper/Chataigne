@@ -11,7 +11,38 @@
 #ifndef MYOMODULE_H_INCLUDED
 #define MYOMODULE_H_INCLUDED
 
+#include "Module.h"
+#include "MyoManager.h"
 
+class MyoModule :
+	public Module,
+	public MyoManager::Listener,
+	public MyoDevice::Listener
+{
+public:
+	MyoModule();
+	~MyoModule();
+
+	MyoDevice * device;
+	
+	FloatParameter * yaw;
+	FloatParameter * pitch;
+	FloatParameter * roll;
+	EnumParameter * pose;
+
+	void setCurrentDevice(MyoDevice * d);
+	
+	void myoAdded(MyoDevice * d) override;
+	void myoRemoved(MyoDevice * d) override;
+
+	void myoOrientationUpdate(MyoDevice *d) override;
+	void myoPoseUpdate(MyoDevice * d) override;
+	void myoEMGUpdate(MyoDevice * d) override;
+
+	String getDefaultTypeString() const override { return "Myo"; }
+
+	static MyoModule * create() { return new MyoModule(); }
+};
 
 
 

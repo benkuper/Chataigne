@@ -38,8 +38,14 @@ public:
 	FloatParameter * pitch;
 	FloatParameter * roll;
 	FloatParameter * yaw;
-	Point2DParameter * nunchuckXYAxis;
-	Point3DParameter * accelParam;
+	FloatParameter * nunchuckX;
+	FloatParameter * nunchuckY;
+	FloatParameter * accelX;
+	FloatParameter * accelY;
+	FloatParameter * accelZ;
+	FloatParameter * rawAccelX;
+	FloatParameter * rawAccelY;
+	FloatParameter * rawAccelZ;
 	FloatParameter * batteryLevel;
 
 	Array<BoolParameter *> buttons;

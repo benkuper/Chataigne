@@ -30,7 +30,7 @@ void TriggerButtonUI::triggerTriggered(const Trigger *){
     repaint();
 }
 
-void TriggerButtonUI::mouseDown(const MouseEvent & e)
+void TriggerButtonUI::mouseDownInternal(const MouseEvent & e)
 {
 	if (forceFeedbackOnly) return;
 

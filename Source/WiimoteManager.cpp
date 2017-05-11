@@ -168,7 +168,7 @@ void Wiimote::update()
 	case WIIUSE_EVENT_TYPE::WIIUSE_EVENT:
 		for (int i = 0; i < NUM_WIIMOTE_BUTTONS; i++) setButton(i, device->btns >> i & 1);
 
-		setAccel(device->accel.x, device->accel.y, device->accel.z);
+		setAccel(device->gforce.x,device->gforce.y,device->gforce.z,device->accel.x, device->accel.y, device->accel.z);
 		setYPR(device->orient.yaw/180, -device->orient.pitch/90, device->orient.roll/180);
 		setNunchuckXY(device->exp.nunchuk.js.x, device->exp.nunchuk.js.y);
 		break;
@@ -227,12 +227,15 @@ void Wiimote::setButton(int index, bool value)
 	listeners.call(value ? &Listener::wiimoteButtonPressed : &Listener::wiimoteButtonReleased, this, (WiimoteButton)index);
 }
 
-void Wiimote::setAccel(float x, float y, float z)
+void Wiimote::setAccel(float x, float y, float z, float rx, float ry, float rz)
 {
 	if (accelX == x && accelY == y && accelZ == z) return;
 	accelX = x;
 	accelY = y;
 	accelZ = z;
+	rawAccelX = rx;
+	rawAccelY = ry;
+	rawAccelZ = rz;
 	listeners.call(&Listener::wiimoteAccelUpdated, this);
 }
 

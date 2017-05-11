@@ -29,8 +29,8 @@ public:
 	void setImages(Image onImage, Image offImage);
 
     void paint(Graphics &g) override;
-    void mouseDown(const MouseEvent &e) override;
-    void mouseUp(const MouseEvent &e) override;
+    void mouseDownInternal(const MouseEvent &e) override;
+    void mouseUpInternal(const MouseEvent &e) override;
 	void mouseDoubleClick(const MouseEvent &) override {} //disable double click on toggle
 protected:
     void valueChanged(const var & ) override;

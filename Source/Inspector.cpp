@@ -42,7 +42,7 @@ void Inspector::resized()
 	if (currentEditor != nullptr)
 	{
 		if (!currentEditor->fitToContent) r.setHeight(currentEditor->getHeight());
-		currentEditor->setBounds(r);
+		currentEditor->setSize(r.getWidth(), r.getHeight());
 	}
 }
 

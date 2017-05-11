@@ -9,6 +9,7 @@
 */
 
 #include "WiimotePairUtil.h"
+#pragma warning(disable:4995)
 
 WiiPairUtil::WiiPairUtil()
 {
@@ -63,7 +64,7 @@ String WiiPairUtil::FormatBTAddress(BLUETOOTH_ADDRESS address)
 	return s;
 }
 
-int WiiPairUtil::pair(bool forceRepairing)
+int WiiPairUtil::pairWin(bool forceRepairing)
 {
 	HANDLE hRadios[256];
 	int nRadios;

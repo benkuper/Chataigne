@@ -28,6 +28,9 @@ public:
 
 	Trigger * trigger;
 
+
+	virtual void triggerCommand(); //to override and call back for checking (e.g. enable in Consequence)
+
 	void setCommand(CommandDefinition *);
 
 	var getJSONData() override;

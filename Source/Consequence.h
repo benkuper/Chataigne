@@ -21,6 +21,8 @@ public:
 	virtual ~Consequence();
 
 
+	virtual void triggerCommand() override;
+
 	//InspectableEditor * getEditor(bool isRoot) override;
 
 	class ConsequenceListener

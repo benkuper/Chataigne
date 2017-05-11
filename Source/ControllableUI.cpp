@@ -38,6 +38,40 @@ void ControllableUI::mouseDoubleClick(const MouseEvent &)
 	showEditWindow();
 }
 
+void ControllableUI::mouseDown(const MouseEvent & e)
+{
+	if (e.mods.isRightButtonDown())
+	{
+		ScopedPointer<PopupMenu> p = new PopupMenu();
+		addPopupMenuItems(p);
+		p->addSeparator();
+		p->addItem(-1, "Copy OSC Control Address");
+		p->addItem(-2, "Copy Script Control Address");
+
+		int result = p->show();
+		if (result > 0)
+		{
+			handleMenuSelectedID(result);
+		} else if(result == -1)
+		{
+			SystemClipboard::copyTextToClipboard(controllable->controlAddress);
+		} else if (result == -2)
+		{
+			SystemClipboard::copyTextToClipboard("root"+controllable->controlAddress.replaceCharacter('/','.'));
+		}
+		
+	} else
+	{
+		mouseDownInternal(e);
+	}
+}
+
+void ControllableUI::mouseUp(const MouseEvent & e)
+{
+	if (e.mods.isRightButtonDown()) return;
+	mouseUpInternal(e);
+}
+
 void ControllableUI::setOpaqueBackground(bool value)
 {
 	opaqueBackground = value;

@@ -35,7 +35,7 @@ void ColorParameterUI::resized()
 
 }
 
-void ColorParameterUI::mouseDown(const MouseEvent & e)
+void ColorParameterUI::mouseDownInternal(const MouseEvent & e)
 {
 	if (e.mods.isRightButtonDown() || !dispatchOnRightClickOnly)
 	{
