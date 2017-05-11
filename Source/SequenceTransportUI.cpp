@@ -20,18 +20,17 @@ SequenceTransportUI::SequenceTransportUI(Sequence * _sequence) :
 	addAndMakeVisible(&timeLabel);
 	sequence->addSequenceListener(this);
 	 
-	/*
+	
 	togglePlayUI = sequence->togglePlayTrigger->createImageUI(AssetManager::getInstance()->getPlayImage());
 	stopUI = sequence->stopTrigger->createImageUI(AssetManager::getInstance()->getStopImage());
 	nextCueUI = sequence->nextCue->createImageUI(AssetManager::getInstance()->getNextCueImage());
 	prevCueUI = sequence->prevCue->createImageUI(AssetManager::getInstance()->getPrevCueImage());
-	*/
-	/*
+	
 	addAndMakeVisible(togglePlayUI);
 	addAndMakeVisible(stopUI);
 	addAndMakeVisible(nextCueUI);
 	addAndMakeVisible(prevCueUI);
-	*/
+	
 	
 }
 
@@ -64,12 +63,12 @@ void SequenceTransportUI::resized()
 	
 	
 	Rectangle<int> pr = r.removeFromTop(24);
-	/*
 	togglePlayUI->setBounds(pr.removeFromLeft(pr.getHeight()));
 	stopUI->setBounds(pr.removeFromLeft(pr.getHeight()));
 	prevCueUI->setBounds(pr.removeFromLeft(pr.getHeight()));
 	nextCueUI->setBounds(pr.removeFromLeft(pr.getHeight()));
-	*/
+	
+
 }
 
 void SequenceTransportUI::sequenceMasterAudioModuleChanged(Sequence *)

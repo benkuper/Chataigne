@@ -45,6 +45,10 @@ public:
     int resizerWidth;
     int resizerHeight;
     
+	//list pos
+	Point<int> posAtDown;
+	Point<int> dragOffset; //for list grabbing
+
     ScopedPointer<ResizableCornerComponent> cornerResizer;
     ScopedPointer<ResizableEdgeComponent> edgeResizer;
     Component * resizer;
@@ -68,6 +72,7 @@ public:
 
 	void mouseDown(const MouseEvent &e) override;
 	void mouseDrag(const MouseEvent &e) override;
+	void mouseUp(const MouseEvent &e) override;
 	void mouseDoubleClick(const MouseEvent &e) override;
 
 	void controllableFeedbackUpdateInternal(Controllable *) override;
@@ -94,6 +99,7 @@ public:
 		virtual ~ItemUIListener() {}
 		virtual void itemUIGrabStart(BaseItemUI<T> *) {}
 		virtual void itemUIGrabbed(BaseItemUI<T> *) {}
+		virtual void itemUIGrabEnd(BaseItemUI<T> *) {}
 		virtual void itemUIMiniModeChanged(BaseItemUI<T> *) {}
 	};
 
@@ -340,10 +346,19 @@ void BaseItemUI<T>::mouseDown(const MouseEvent & e)
 	{
 		if (canBeDragged && e.eventComponent == grabber)
 		{
-			posAtMouseDown = this->baseItem->viewUIPosition->getPoint();
-			itemUIListeners.call(&ItemUIListener::itemUIGrabStart, this);
+			if (resizeMode == ALL)
+			{
+				posAtMouseDown = this->baseItem->viewUIPosition->getPoint();
+			} else
+			{
+				posAtDown = getBounds().getPosition();
+				dragOffset = Point<int>();
+				itemUIListeners.call(&ItemUIListener::itemUIGrabStart, this);
+			}
 		}
 	}
+
+	
 }
 
 
@@ -354,10 +369,24 @@ void BaseItemUI<T>::mouseDrag(const MouseEvent & e)
 
 	if (canBeDragged && e.mods.isLeftButtonDown() && e.eventComponent == grabber)
 	{
-		Point<float> targetPos = posAtMouseDown + e.getOffsetFromDragStart().toFloat() / Point<float>((float)this->getParentComponent()->getWidth(), (float)this->getParentComponent()->getHeight());
-		this->baseItem->viewUIPosition->setPoint(targetPos);
+		
+		if (resizeMode == ALL)
+		{
+			Point<float> targetPos = posAtMouseDown + e.getOffsetFromDragStart().toFloat() / Point<float>((float)this->getParentComponent()->getWidth(), (float)this->getParentComponent()->getHeight());
+			this->baseItem->viewUIPosition->setPoint(targetPos);
+		} else
+		{
+			dragOffset = e.getOffsetFromDragStart();
+			itemUIListeners.call(&ItemUIListener::itemUIGrabbed, this);
+		}
 	}
 
+}
+
+template<class T>
+void BaseItemUI<T>::mouseUp(const MouseEvent & )
+{
+	if (canBeDragged && resizeMode != ALL) itemUIListeners.call(&ItemUIListener::itemUIGrabEnd, this);
 }
 
 template<class T>

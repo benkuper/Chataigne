@@ -87,7 +87,7 @@ void WiimoteManager::run()
 #endif
 
 	int i = 0;
-	int numReconnectTries = 0;
+	numReconnectTries = 0;
 	while (!threadShouldExit())
 	{
 		

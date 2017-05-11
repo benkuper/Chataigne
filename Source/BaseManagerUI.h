@@ -95,7 +95,7 @@ public:
 	//interaction
 	BaseItemUI<T> * grabbingItem;
 	int grabbingItemDropIndex;
-	int mouseY;
+	Rectangle<int> grabSpaceRect;
 
 	//layout
 	bool fixedItemHeight;
@@ -106,8 +106,6 @@ public:
 	void setCanAddItemsManually(bool value);
 
 	virtual void mouseDown(const MouseEvent &e) override;
-	virtual void mouseUp(const MouseEvent &e) override;
-	virtual void mouseMove(const MouseEvent &e) override;
 
 	virtual void paint(Graphics &g) override;
 
@@ -135,10 +133,9 @@ public:
 
 	virtual void itemUIGrabStart(BaseItemUI<T> * se) override;
 	virtual void itemUIGrabbed(BaseItemUI<T> * se) override;
+	virtual void itemUIGrabEnd(BaseItemUI<T> * se) override;
 
 	void buttonClicked(Button *) override;
-
-
 
 	void inspectableDestroyed(Inspectable *) override;
 
@@ -252,22 +249,6 @@ void BaseManagerUI<M, T, U>::mouseDown(const MouseEvent & e)
 	}
 }
 
-template<class M, class T, class U>
-void BaseManagerUI<M, T, U>::mouseUp(const MouseEvent & e)
-{
-	if (grabbingItem != nullptr)
-	{
-		itemsUI.add((U*)grabbingItem);
-		grabbingItem = nullptr;
-	}
-}
-
-template<class M, class T, class U>
-void BaseManagerUI<M, T, U>::mouseMove(const MouseEvent & e)
-{
-	if (grabbingItem != nullptr) mouseY = e.getEventRelativeTo(&container).getPosition().y;
-}
-
 
 template<class M, class T, class U>
 void BaseManagerUI<M, T, U>::paint(Graphics & g)
@@ -302,8 +283,8 @@ void BaseManagerUI<M, T, U>::paint(Graphics & g)
 
 	if (grabbingItem != nullptr)
 	{
-		g.setColour(HIGHLIGHT_COLOR);
-		//g.drawLine()
+		g.setColour(HIGHLIGHT_COLOR.withAlpha(.6f));
+		g.fillRoundedRectangle(grabSpaceRect.translated(0,viewport.getY()).reduced(4).toFloat(), 2);
 	}
 }
 
@@ -314,6 +295,7 @@ void BaseManagerUI<M, T, U>::resized()
 
 	Rectangle<int> r = getLocalBounds().reduced(2);
 
+	
 	if (addItemBT != nullptr && addItemBT->isVisible() && addItemBT->getParentComponent() == this)
 	{
 		addItemBT->setBounds(r.withSize(24, 24).withX(r.getWidth() - 24));
@@ -327,23 +309,55 @@ void BaseManagerUI<M, T, U>::resized()
 		r.setTop(0);
 	}
 
+	if (grabbingItem != nullptr)
+	{
+		int relY = grabbingItem->getBottom()-viewport.getY();
+		int ti = 0;
+		for (auto &ui : itemsUI)
+		{
+			if (ui->getY() > relY)
+			{
+				grabbingItemDropIndex = ti;
+				break;
+			}
+			ti++;
+		}
+		if (ti == itemsUI.size()) grabbingItemDropIndex = ti;
+	}
+	int i = 0;
 	for (auto &ui : itemsUI)
 	{
+		if (grabbingItem != nullptr && i == grabbingItemDropIndex)
+		{
+			grabSpaceRect.setY(r.getY());
+			r.translate(0, grabSpaceRect.getHeight() + gap);
+		}
+
 		BaseItemMinimalUI<T> * bui = static_cast<BaseItemMinimalUI<T>*>(ui);
 		Rectangle<int> tr = r.withHeight(bui->getHeight());
 		bui->setBounds(tr);
 		r.translate(0, tr.getHeight() + gap);
+		i++;
+	}
+
+
+	if (grabbingItemDropIndex >= itemsUI.size())
+	{
+		grabSpaceRect.setY(r.getY());
+		r.translate(0, grabSpaceRect.getHeight() + gap);
 	}
 
 	if (grabbingItem != nullptr)
 	{
-		grabbingItem->setBounds(grabbingItem->getBounds().withY(mouseY));
+		grabbingItem->setBounds(grabbingItem->getBounds().withY(grabbingItem->posAtDown.y+grabbingItem->dragOffset.y));
 	}
 
 	if (useViewport)
 	{
 		float th = 0;
 		if (itemsUI.size() > 0) th = static_cast<BaseItemMinimalUI<T>*>(itemsUI[itemsUI.size() - 1])->getBottom();
+		if (grabbingItem != nullptr) th = jmax<int>(th, viewport.getHeight());
+
 		container.setBounds(getLocalBounds().withHeight(th));
 	}
 }
@@ -478,9 +492,11 @@ void BaseManagerUI<M, T, U>::itemsReordered()
 template<class M, class T, class U>
 void BaseManagerUI<M, T, U>::itemUIGrabStart(BaseItemUI<T>* se)
 {
-	mouseY = 0;
-	grabbingItemDropIndex = 0;
+
 	grabbingItem = se;
+
+	grabbingItemDropIndex = itemsUI.indexOf((U*)grabbingItem);
+	grabSpaceRect = (( U *)grabbingItem)->getBounds();
 	itemsUI.removeObject((U *)grabbingItem,false);
 	grabbingItem->toFront(false);
 }
@@ -488,7 +504,24 @@ void BaseManagerUI<M, T, U>::itemUIGrabStart(BaseItemUI<T>* se)
 template<class M, class T, class U>
 void BaseManagerUI<M, T, U>::itemUIGrabbed(BaseItemUI<T>* se)
 {
-	resized();
+	if(grabbingItem != nullptr) resized();
+}
+
+template<class M, class T, class U>
+void BaseManagerUI<M, T, U>::itemUIGrabEnd(BaseItemUI<T>* se)
+{
+	if (grabbingItem != nullptr)
+	{
+		itemsUI.add((U *)grabbingItem);
+		
+		int originalIndex = manager->items.indexOf(grabbingItem->item);
+		manager->items.move(originalIndex, jlimit(0, manager->items.size() - 1, grabbingItemDropIndex));
+		manager->reorderItems();
+
+		grabbingItem = nullptr;
+		grabbingItemDropIndex = -1;
+		resized();
+	}
 }
 
 template<class M, class T, class U>

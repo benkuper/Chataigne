@@ -28,6 +28,7 @@ ModuleChooserUI::~ModuleChooserUI()
 void ModuleChooserUI::buildModuleBox()
 {
 	clear(dontSendNotification);
+	if (ModuleManager::getInstanceWithoutCreating() == nullptr) return; 
 	for (auto &m : ModuleManager::getInstance()->items)
 	{
 		if (filterModuleFunc != nullptr)
