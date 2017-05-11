@@ -174,6 +174,7 @@ void WiimoteModule::onContainerTriggerTriggered(Trigger * t)
 {
 	if (t == connectTrigger)
 	{
+		WiimoteManager::getInstance()->numReconnectTries = 0;
 		WiimoteManager::getInstance()->reinitWiimotes = true;
 	}
 }

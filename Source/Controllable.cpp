@@ -86,6 +86,15 @@ void Controllable::updateControlAddress()
 	listeners.call(&Listener::controllableControlAddressChanged, this); 
 }
 
+DynamicObject * Controllable::createScriptObject()
+{
+	DynamicObject * o = ScriptTarget::createScriptObject();
+	o->setProperty("name", shortName);
+	o->setProperty("niceName", niceName);
+
+	return o;
+}
+
 void Controllable::remove()
 {
 	listeners.call(&Controllable::Listener::askForRemoveControllable, this);

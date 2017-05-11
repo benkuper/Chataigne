@@ -13,7 +13,7 @@ Ajouter des parametres :
  - script.addIntParameter(name,description, initialValue, minValue, maxValue)		ajouter un parameter int au script
  - script.addFloatParameter	(name,description, initialValue, minValue, maxValue)	ajouter un parameter float au script
  - script.addEnumParameter(name,description)		ajouter un parameter enum au script, pas encore fonctional car on ne peut pas rajouter d'options
-  
+ - script.addTrigger(name,description)			ajouter un trigger (bouton)
 > Exemple :
 
 var monBoolParam = script.addBoolParameter("Mon nom","Ma description", false);  // ajoute un parametre qui est décoché par defaut
@@ -33,6 +33,11 @@ monParam.set(maValeur);  // pour modifier la valeur
 
 Dans les cas des trigger :
 monTrigger.trigger(); // pour déclencher le trigger
+
+Il est également possible de récupérer des évenements sur ces parametres et triggers avec les fonctions suivantes : 
+> scriptParamChanged(value) {} //quand la valeur d'un parametre créé par ce script a changé
+> scriptValueTriggered(value) {} //quand un trigger créé par ce script a été déclenché
+
 
 Fonctions utiles :
 Des fonctions d'utilités sont accessibles via la variable "util"
@@ -67,7 +72,6 @@ Un objet est accessible à la fois en "absolu" (depuis root.*) et en relatif (dep
 On peut donc préferer accéder à une variable en relatif dans certains cas ou le script est amené à etre réutilisé à d'autres endroits.
 
 
-
 Fonctions spéciales :
 
 Chaque objet possède un ensemble de fonction spécifiques. Ces fonctions sont accessible depuis root.* ou local.*
@@ -86,6 +90,9 @@ Chaque objet possède un ensemble de fonction spécifiques. Ces fonctions sont acc
 
 Suivant l'emplacement du script (dans un module, dans un filtre, dans une condition...), des fonctions spéciales peuvent également être appelées :
 
+ - Dans tous les modules :
+		> moduleParamChanged(value) {} //quand une valeur de module a changé (Wiimote>Pitch, ou Audio>Volume par exemple)
+		> moduleValueTriggered(value) {} //quand une valeur de type "Trigger" a été activé (dans les modules OSC par exemple)
  - Dans un Module OSC :
 		> oscEvent(address, args[]) {} //quand un message osc est recu par le module. les arguments s'accèdent via le tableau args[] (args[0], args[1],...)
 
@@ -103,8 +110,3 @@ Un Manager est un objet special qui contient une liste d'autres objets. Dans l'i
 
 Ces managers possèdent toutes les fonctionnalité d'un objet container, mais il est également possible d'accéder aux élements de ce manager via un tableau.
 Par exemple, si je souhaite accéder au 3eme module de ma liste, je peux accéder via root.modules.items[2]; //l'index 0 est le 1er élement du tableau, donc le 1er module
-
-
-
-//// CE QU'IL MANQUE
-Ajouter des listeners sur les parametres

@@ -16,7 +16,8 @@
 class BaseCommand;
 
 class BaseCommandHandler :
-	public BaseItem
+	public BaseItem,
+	public Inspectable::InspectableListener
 {
 public:
 	BaseCommandHandler(const String &name = "BaseCommandHandler", CommandContext context = CommandContext::ACTION);
@@ -39,6 +40,8 @@ public:
 	InspectableEditor * getEditor(bool isRoot) override;
 
 	void onContainerTriggerTriggered(Trigger *) override;
+
+	virtual void inspectableDestroyed(Inspectable *) override;
 
 	class CommandHandlerListener
 	{

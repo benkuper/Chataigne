@@ -83,6 +83,8 @@ public:
 	void setParentContainer(ControllableContainer * container);
 	void updateControlAddress();
 
+	virtual DynamicObject * createScriptObject() override;
+
 	void remove(); // called from external to make this object ask for remove
 
 	virtual var getJSONData(ControllableContainer * relativeTo = nullptr);
@@ -94,7 +96,6 @@ public:
 
 	// used for generating editor
 	virtual ControllableUI * createDefaultUI(Controllable * targetControllable = nullptr) = 0;
-
 
 	static var setValueFromScript(const juce::var::NativeFunctionArgs& a);
 

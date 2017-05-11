@@ -25,6 +25,7 @@ BaseCommandHandler::BaseCommandHandler(const String & name, CommandContext _cont
 
 BaseCommandHandler::~BaseCommandHandler()
 {
+	setCommand(nullptr);
 }
 
 void BaseCommandHandler::triggerCommand()
@@ -37,6 +38,7 @@ void BaseCommandHandler::setCommand(CommandDefinition * commandDef)
 	//var oldData = var();
 	if (command != nullptr)
 	{
+		command->module->removeInspectableListener(this);
 		//oldData = command->getJSONData();
 	}
 
@@ -47,6 +49,7 @@ void BaseCommandHandler::setCommand(CommandDefinition * commandDef)
 
 	if (command != nullptr)
 	{
+		command->module->addInspectableListener(this);
 		//command->loadJSONData(oldData); //keep as much as similar parameter possible
 	}
 
@@ -59,7 +62,7 @@ var BaseCommandHandler::getJSONData()
 	var data = BaseItem::getJSONData();
 	if (command != nullptr)
 	{
-		data.getDynamicObject()->setProperty("commandModule", command->module->shortName);
+		if(command->module != nullptr) data.getDynamicObject()->setProperty("commandModule", command->module->shortName);
 		data.getDynamicObject()->setProperty("commandPath", commandDefinition->menuPath);
 		data.getDynamicObject()->setProperty("commandType", commandDefinition->commandType);
 		data.getDynamicObject()->setProperty("command", command->getJSONData());
@@ -98,6 +101,12 @@ void BaseCommandHandler::onContainerTriggerTriggered(Trigger * t)
 	{
 		triggerCommand();
 	}
+}
+
+void BaseCommandHandler::inspectableDestroyed(Inspectable *)
+{
+	DBG("Inspectable destroyed");
+	setCommand(nullptr);
 }
 
 InspectableEditor * BaseCommandHandler::getEditor(bool isRoot)

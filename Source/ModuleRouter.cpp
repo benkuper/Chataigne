@@ -82,9 +82,13 @@ void ModuleRouter::setDestModule(Module * m)
 var ModuleRouter::getJSONData()
 {
 	var data = BaseItem::getJSONData();
-	data.getDynamicObject()->setProperty("sourceModule", sourceModule->shortName);
-	data.getDynamicObject()->setProperty("destModule", destModule->shortName);
-	data.getDynamicObject()->setProperty("sourceValues", sourceValues.getJSONData());
+	if (sourceModule != nullptr)
+	{
+		data.getDynamicObject()->setProperty("sourceModule", sourceModule->shortName);
+		data.getDynamicObject()->setProperty("sourceValues", sourceValues.getJSONData());
+	}
+	if(destModule != nullptr) data.getDynamicObject()->setProperty("destModule", destModule->shortName);
+
 	return data;
 }
 

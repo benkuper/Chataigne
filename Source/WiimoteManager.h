@@ -18,6 +18,7 @@
 #define MAX_WIIMOTES 2
 #define NUM_WIIMOTE_BUTTONS 13
 
+
 class Wiimote
 {
 public:
@@ -103,6 +104,8 @@ public:
 
 	bool wiiuseIsInit;
 	bool reinitWiimotes;
+
+	int numReconnectTries;
 
 	void addWiimote(wiimote_t * device);
 	void removeWiimote(Wiimote * wiimote);

@@ -53,6 +53,8 @@ public:
 	void onContainerParameterChangedInternal(Parameter *) override;
 	void onContainerTriggerTriggered(Trigger *) override;
 
+	void controllableFeedbackUpdate(ControllableContainer * cc, Controllable * c) override;
+
 	// Inherited via Timer
 	virtual void timerCallback() override;
 
@@ -83,6 +85,7 @@ public:
 	static var addStringParameterFromScript(const var::NativeFunctionArgs &args);
 	static var addEnumParameterFromScript(const var::NativeFunctionArgs &args);
 	static var addTargetParameterFromScript(const var::NativeFunctionArgs &args);
+	static var addTriggerFromScript(const var::NativeFunctionArgs &args);
 
 	static bool checkNumArgs(const String &logName, const var::NativeFunctionArgs &args, int expectedArgs);
 	

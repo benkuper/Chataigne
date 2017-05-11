@@ -50,10 +50,17 @@ Array<WeakReference<Controllable>> Module::getValueControllables()
 	return valuesCC.getAllControllables();
 }
 
+void Module::controllableFeedbackUpdate(ControllableContainer * cc, Controllable * c)
+{
+	Array<var> args;
+	args.add(c->createScriptObject());
+	if(c->type == Controllable::TRIGGER) scriptManager->callFunctionOnAllItems("moduleValueTriggered", args);
+	else scriptManager->callFunctionOnAllItems("moduleParamChanged", args);
+}
+
 void Module::setupModuleFromJSONData(var data)
 {
 	customType = data.getProperty("name","");
-
 	setNiceName(data.getProperty("name",""));
 
 	if (data.getDynamicObject()->hasProperty("defaults"))

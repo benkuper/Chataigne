@@ -71,22 +71,23 @@ void WiimoteManager::reconnect()
 
 void WiimoteManager::run()
 {
-	
-
 	devices = wiiuse_init(MAX_WIIMOTES);
 	
 	reconnect();
 
+//only support for windows for now
+#if JUCE_WINDOWS
 	if (wiimotes.size() == 0)
 	{
 		NLOG("Wiimote", "No wiimote found, trying auto-pairing..");
 		int  pairResult = WiiPairUtil::pair();
 		NLOG("Wiimote", pairResult << " devices paired.");
 		reconnect();
-
 	}
+#endif
 
 	int i = 0;
+	int numReconnectTries = 0;
 	while (!threadShouldExit())
 	{
 		
@@ -100,14 +101,16 @@ void WiimoteManager::run()
 			{
 				w->update();
 			}
+
 			i = 0;
 		} else
 		{
 			i++;
 		}
 
-		if (i > 200) //every 5s
+		if (i > 200 && numReconnectTries < 3) //every 5s
 		{
+			numReconnectTries++;
 			reinitWiimotes = true;
 			i = 0;
 		}
@@ -219,7 +222,7 @@ void Wiimote::update()
 
 void Wiimote::setButton(int index, bool value)
 {
-	if(value) DBG("Push button " << index);
+//	if(value) DBG("Push button " << index);
 	if (buttons[index] == value) return;
 
 	buttons[index] = value;

@@ -84,14 +84,14 @@ int WiiPairUtil::pairWin(bool forceRepairing)
 		hFindRadio = BluetoothFindFirstRadio(&radioParam, &hRadios[nRadios++]);
 		if (hFindRadio)
 		{
-			while (BluetoothFindNextRadio(&radioParam, &hRadios[nRadios++]));
+			//while (BluetoothFindNextRadio(&radioParam, &hRadios[nRadios++]));
 			BluetoothFindRadioClose(hFindRadio);
 		} else
 		{
 			DBG("Error enumerating radios : " << String(GetLastError()));
 			return 0;
 		}
-		nRadios--;
+		//nRadios--;
 		DBG("Found " << nRadios << " radios");
 	}
 

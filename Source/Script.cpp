@@ -33,6 +33,10 @@ scriptAsyncNotifier(10)
 	scriptObject.setMethod("addFloatParameter", Script::addFloatParameterFromScript);
 	scriptObject.setMethod("addEnumParameter", Script::addEnumParameterFromScript);
 	scriptObject.setMethod("addTargetParameter", Script::addTargetParameterFromScript);
+	scriptObject.setMethod("addTrigger", Script::addTriggerFromScript); 
+
+	scriptParamsContainer.skipControllableNameInAddress = true;
+	addChildControllableContainer(&scriptParamsContainer);
 }
 
 Script::~Script()
@@ -137,6 +141,17 @@ void Script::onContainerTriggerTriggered(Trigger * t)
 	}
 }
 
+void Script::controllableFeedbackUpdate(ControllableContainer * cc, Controllable * c)
+{
+	if (cc == &scriptParamsContainer)
+	{
+		Array<var> args;
+		args.add(c->createScriptObject());
+		if (c->type == Controllable::TRIGGER) callFunction("scriptValueTriggered", args);
+		else callFunction("scriptParamChanged", args);
+	}
+}
+
 void Script::timerCallback()
 {
 	float curTime = (float)Time::getMillisecondCounter() / 1000.f;
@@ -209,6 +224,13 @@ var Script::addTargetParameterFromScript(const var::NativeFunctionArgs & args)
 	Script * s = getObjectFromJS<Script>(args);
 	if (!checkNumArgs(s->niceName, args, 2)) return var();
 	return s->scriptParamsContainer.addTargetParameter(args.arguments[0], args.arguments[1])->createScriptObject();
+}
+
+var Script::addTriggerFromScript(const var::NativeFunctionArgs & args)
+{
+	Script * s = getObjectFromJS<Script>(args);
+	if (!checkNumArgs(s->niceName, args, 2)) return var();
+	return s->scriptParamsContainer.addTrigger(args.arguments[0], args.arguments[1])->createScriptObject();
 }
 
 bool Script::checkNumArgs(const String &logName, const var::NativeFunctionArgs & args, int expectedArgs)

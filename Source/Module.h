@@ -58,8 +58,8 @@ public:
 	virtual RouteParams * createRouteParamsForSourceValue(Controllable * /*c*/, int /*index*/) { jassert(false); return nullptr; }
 	virtual void handleRoutedModuleValue(Controllable * /*c*/, RouteParams * /*params*/) {} //used for routing, child classes that support routing must override
 
-
-
+	virtual void controllableFeedbackUpdate(ControllableContainer * cc, Controllable * c) override;
+	
 	virtual void setupModuleFromJSONData(var data); //Used for custom modules with a module.json definition, to automatically create parameters, command and values from this file.
 	Controllable * getControllableForJSONDefinition(const String &name, var def);
 
