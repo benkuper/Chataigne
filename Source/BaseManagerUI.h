@@ -15,7 +15,7 @@
 
 #include "InspectableContentComponent.h"
 #include "BaseManager.h"
-#include "BaseItemMinimalUI.h"
+#include "BaseItemUI.h"
 #include "Style.h"
 #include "AssetManager.h"
 #include "Engine.h"
@@ -58,7 +58,8 @@ class BaseManagerUI :
 	public InspectableContentComponent,
 	public BaseManager<T>::Listener,
 	public ButtonListener,
-	public Engine::EngineListener
+	public Engine::EngineListener,
+	public BaseItemUI<T>::ItemUIListener
 {
 public:
 	BaseManagerUI<M, T, U>(const String &contentName, M * _manager, bool _useViewport = true);
@@ -91,6 +92,11 @@ public:
 	bool animateItemOnAdd;
 	ComponentAnimator itemAnimator;
 
+	//interaction
+	BaseItemUI<T> * grabbingItem;
+	int grabbingItemDropIndex;
+	int mouseY;
+
 	//layout
 	bool fixedItemHeight;
 	int gap;
@@ -100,6 +106,9 @@ public:
 	void setCanAddItemsManually(bool value);
 
 	virtual void mouseDown(const MouseEvent &e) override;
+	virtual void mouseUp(const MouseEvent &e) override;
+	virtual void mouseMove(const MouseEvent &e) override;
+
 	virtual void paint(Graphics &g) override;
 
 	virtual void resized() override;
@@ -124,7 +133,12 @@ public:
 	void itemRemoved(T * item) override;
 	void itemsReordered() override;
 
+	virtual void itemUIGrabStart(BaseItemUI<T> * se) override;
+	virtual void itemUIGrabbed(BaseItemUI<T> * se) override;
+
 	void buttonClicked(Button *) override;
+
+
 
 	void inspectableDestroyed(Inspectable *) override;
 
@@ -162,6 +176,7 @@ BaseManagerUI<M, T, U>::BaseManagerUI(const String & contentName, M * _manager, 
 	transparentBG(false),
 	resizeOnChildBoundsChanged(true),
 	animateItemOnAdd(true),
+	grabbingItem(nullptr),
 	fixedItemHeight(true),
 	gap(2)
 {
@@ -238,6 +253,23 @@ void BaseManagerUI<M, T, U>::mouseDown(const MouseEvent & e)
 }
 
 template<class M, class T, class U>
+void BaseManagerUI<M, T, U>::mouseUp(const MouseEvent & e)
+{
+	if (grabbingItem != nullptr)
+	{
+		itemsUI.add((U*)grabbingItem);
+		grabbingItem = nullptr;
+	}
+}
+
+template<class M, class T, class U>
+void BaseManagerUI<M, T, U>::mouseMove(const MouseEvent & e)
+{
+	if (grabbingItem != nullptr) mouseY = e.getEventRelativeTo(&container).getPosition().y;
+}
+
+
+template<class M, class T, class U>
 void BaseManagerUI<M, T, U>::paint(Graphics & g)
 {
 	Rectangle<int> r = getLocalBounds();
@@ -267,6 +299,12 @@ void BaseManagerUI<M, T, U>::paint(Graphics & g)
 	{
 		if (!transparentBG)	g.fillAll(bgColor);
 	}
+
+	if (grabbingItem != nullptr)
+	{
+		g.setColour(HIGHLIGHT_COLOR);
+		//g.drawLine()
+	}
 }
 
 template<class M, class T, class U>
@@ -282,7 +320,6 @@ void BaseManagerUI<M, T, U>::resized()
 		r.removeFromTop(24);
 	}
 
-
 	if (useViewport)
 	{
 		viewport.setBounds(r);
@@ -296,6 +333,11 @@ void BaseManagerUI<M, T, U>::resized()
 		Rectangle<int> tr = r.withHeight(bui->getHeight());
 		bui->setBounds(tr);
 		r.translate(0, tr.getHeight() + gap);
+	}
+
+	if (grabbingItem != nullptr)
+	{
+		grabbingItem->setBounds(grabbingItem->getBounds().withY(mouseY));
 	}
 
 	if (useViewport)
@@ -351,6 +393,9 @@ U * BaseManagerUI<M, T, U>::addItemUI(T * item, bool animate)
 	else addAndMakeVisible(bui);
 	itemsUI.add(tui);
 
+	BaseItemUI<T> * biui = dynamic_cast<BaseItemUI<T> *>(tui);
+	if (biui != nullptr) biui->addItemUIListener(this);
+
 	addItemUIInternal(tui);
 
 	if (animate)
@@ -384,6 +429,10 @@ void BaseManagerUI<M, T, U>::removeItemUI(T * item)
 	else removeChildComponent(static_cast<BaseItemMinimalUI<T>*>(tui));
 
 	itemsUI.removeObject(tui, false);
+
+	BaseItemUI<T> * biui = dynamic_cast<BaseItemUI<T> *>(tui);
+	if(biui != nullptr) biui->removeItemUIListener(this);
+
 	removeItemUIInternal(tui);
 
 	managerUIListeners.call(&ManagerUIListener::itemUIRemoved, tui);
@@ -424,6 +473,22 @@ template<class M, class T, class U>
 void BaseManagerUI<M, T, U>::itemsReordered()
 {
 	itemsUI.sort(managerComparator);
+}
+
+template<class M, class T, class U>
+void BaseManagerUI<M, T, U>::itemUIGrabStart(BaseItemUI<T>* se)
+{
+	mouseY = 0;
+	grabbingItemDropIndex = 0;
+	grabbingItem = se;
+	itemsUI.removeObject((U *)grabbingItem,false);
+	grabbingItem->toFront(false);
+}
+
+template<class M, class T, class U>
+void BaseManagerUI<M, T, U>::itemUIGrabbed(BaseItemUI<T>* se)
+{
+	resized();
 }
 
 template<class M, class T, class U>

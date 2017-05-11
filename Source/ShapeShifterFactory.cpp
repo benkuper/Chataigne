@@ -26,7 +26,6 @@
 ShapeShifterContent * ShapeShifterFactory::createContentForIndex(PanelName pn)
 {
 	String contentName = globalPanelNames[(int)pn];
-
 	switch (pn)
 	{
 	case ModulesPanel:

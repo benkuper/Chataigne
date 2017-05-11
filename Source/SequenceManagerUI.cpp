@@ -14,6 +14,7 @@ SequenceManagerUI::SequenceManagerUI(SequenceManager * _manager) :
 	BaseManagerShapeShifterUI<SequenceManager, Sequence, SequenceUI>("Sequences", _manager)
 {
 	addItemText = "Add Sequence";
+	addExistingItems();
 }
 
 SequenceManagerUI::~SequenceManagerUI()

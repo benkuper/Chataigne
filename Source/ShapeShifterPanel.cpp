@@ -342,7 +342,7 @@ void ShapeShifterPanel::loadLayoutInternal(var layout)
 		{
 			String t = tData.getDynamicObject()->getProperty("name").toString();
 			ShapeShifterContent * c = ShapeShifterFactory::createContentForName(tData.getDynamicObject()->getProperty("name"));
-			addContent(c);
+			if(c != nullptr) addContent(c);
 		}
 	}
 	if (layout.getDynamicObject()->hasProperty("currentContent"))

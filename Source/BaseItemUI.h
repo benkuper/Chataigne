@@ -23,7 +23,7 @@ class BaseItemUI :
 public:
 	enum ResizeMode { NONE, VERTICAL, HORIZONTAL, ALL };
 
-	BaseItemUI<T>(T * _item, ResizeMode resizeMode = NONE, bool canBeDragged = false);
+	BaseItemUI<T>(T * _item, ResizeMode resizeMode = NONE, bool canBeDragged = true);
 	virtual ~BaseItemUI<T>();
 
 	
@@ -75,8 +75,12 @@ public:
 	class Grabber : public Component
 	{
 	public:
-		Grabber() {}
+		enum Direction { VERTICAL, HORIZONTAL };
+		Grabber(Direction d = HORIZONTAL) : dir(d) {}
 		~Grabber() {}
+
+		Direction dir;
+		
 		void paint(Graphics &g) override;
 
 		JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Grabber)
@@ -88,6 +92,7 @@ public:
 	{
 	public:
 		virtual ~ItemUIListener() {}
+		virtual void itemUIGrabStart(BaseItemUI<T> *) {}
 		virtual void itemUIGrabbed(BaseItemUI<T> *) {}
 		virtual void itemUIMiniModeChanged(BaseItemUI<T> *) {}
 	};
@@ -143,10 +148,10 @@ BaseItemUI<T>::BaseItemUI(T * _item, ResizeMode _resizeMode, bool _canBeDragged)
 
 	if (canBeDragged)
 	{
-		grabber = new Grabber();
+		grabber = new Grabber(_resizeMode == ALL? Grabber::HORIZONTAL : Grabber::VERTICAL);
 		grabber->setAlwaysOnTop(true);
 		this->addAndMakeVisible(grabber);
-		grabberHeight = 10;
+		if(resizeMode == ALL) grabberHeight = 10;
 	}
 
 	switch (resizeMode)
@@ -258,7 +263,7 @@ void BaseItemUI<T>::resized()
 	Rectangle<int> r = this->getLocalBounds().reduced(margin);
 
 	//Grabber
-	if (canBeDragged)
+	if (canBeDragged && resizeMode == ALL)
 	{
 		//Grabber
 		grabber->setBounds(r.removeFromTop(grabberHeight));
@@ -266,6 +271,12 @@ void BaseItemUI<T>::resized()
 	}
 
 	Rectangle<int> h = r.removeFromTop(headerHeight);
+
+	if (canBeDragged && resizeMode != ALL)
+	{
+		grabber->setBounds(h.removeFromLeft(10));
+		grabber->repaint();
+	}
 
 	if (enabledBT != nullptr)
 	{
@@ -327,7 +338,11 @@ void BaseItemUI<T>::mouseDown(const MouseEvent & e)
 
 	if (e.mods.isLeftButtonDown())
 	{
-		if (canBeDragged && e.eventComponent == grabber) posAtMouseDown = this->baseItem->viewUIPosition->getPoint();
+		if (canBeDragged && e.eventComponent == grabber)
+		{
+			posAtMouseDown = this->baseItem->viewUIPosition->getPoint();
+			itemUIListeners.call(&ItemUIListener::itemUIGrabStart, this);
+		}
 	}
 }
 
@@ -369,8 +384,16 @@ void BaseItemUI<T>::Grabber::paint(Graphics & g)
 	const int numLines = 3;
 	for (int i = 0; i < numLines; i++)
 	{
-		float th = (i + 1)*(float)getHeight() / ((float)numLines + 1);
-		g.drawLine(0, th, (float)getWidth(), th, 1);
+		if (dir == HORIZONTAL)
+		{
+			float th = (i + 1)*(float)getHeight() / ((float)numLines + 1);
+			g.drawLine(0, th, (float)getWidth(), th, 1);
+		} else
+		{
+			float tw = (i + 1)*(float)getWidth() / ((float)numLines + 1);
+			g.drawLine(tw, 0, tw, (float)getHeight(), 1);
+		}
+		
 	}
 }
 
