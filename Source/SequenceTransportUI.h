@@ -12,8 +12,6 @@
 #define SEQUENCETRANSPORTUI_H_INCLUDED
 
 #include "Sequence.h"
-#include "FloatParameterLabelUI.h"
-#include "FloatSliderUI.h"
 
 class SequenceTransportUI :
 	public Component,

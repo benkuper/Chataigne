@@ -11,7 +11,7 @@
 #ifndef CONDITION_H_INCLUDED
 #define CONDITION_H_INCLUDED
 
-#include "BaseItem.h"
+#include "JuceHeader.h"
 #include "BaseComparator.h"
 
 class Condition :

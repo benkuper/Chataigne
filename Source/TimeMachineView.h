@@ -12,10 +12,7 @@
 #define TIMEMACHINEVIEW_H_INCLUDED
 
 #include "SequenceManager.h"
-#include "ShapeShifterContent.h"
-#include "Style.h"
 #include "SequenceEditor.h"
-#include "InspectableSelectionManager.h"
 
 class TimeMachineView :
 	public ShapeShifterContentComponent,
@@ -25,7 +22,7 @@ class TimeMachineView :
 {
 public:
 	
-	TimeMachineView(SequenceManager * _manager = nullptr);
+	TimeMachineView(const String &contentName, SequenceManager * _manager = nullptr);
 	~TimeMachineView();
 
 	SequenceManager * manager;
@@ -41,6 +38,9 @@ public:
 	void itemRemoved(Sequence *) override;
 
 	void buttonClicked(Button * b) override;
+
+	static TimeMachineView * create(const String &contentName) { return new TimeMachineView(contentName, SequenceManager::getInstance()); }
+
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(TimeMachineView)
 };

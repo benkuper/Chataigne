@@ -9,7 +9,7 @@
 */
 
 #include "StateCommand.h"
-#include "TargetParameter.h"
+
 #include "Action.h"
 #include "State.h"
 #include "StateCommandEditor.h"
@@ -79,9 +79,9 @@ void StateCommand::trigger()
 
 void StateCommand::loadJSONDataInternal(var data)
 {
-	if (Engine::getInstance()->isLoadingFile)
+	if (Engine::mainEngine->isLoadingFile)
 	{
-		Engine::getInstance()->addEngineListener(this);
+		Engine::mainEngine->addEngineListener(this);
 		dataToLoad = data;
 	}
 	else BaseCommand::loadJSONDataInternal(data);
@@ -94,7 +94,7 @@ void StateCommand::endLoadFile()
 	loadJSONData(dataToLoad);
 	dataToLoad = var();
 
-	Engine::getInstance()->removeEngineListener(this);
+	Engine::mainEngine->removeEngineListener(this);
 }
 
 InspectableEditor * StateCommand::getEditor(bool isRoot)

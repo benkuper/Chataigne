@@ -12,8 +12,6 @@
 #define TIMECOLORUI_H_INCLUDED
 
 #include "TimeColor.h"
-#include "BaseItemMinimalUI.h"
-#include "ColorParameterUI.h"
 
 class TimeColorUI :
 	public BaseItemMinimalUI<TimeColor>

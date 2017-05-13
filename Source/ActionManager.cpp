@@ -27,7 +27,7 @@ void ActionManager::setForceDisabled(bool value)
 {
 	if (forceDisabled == value) return;
 	forceDisabled = value;
-	for (auto &i : items) i->forceDisabled = forceDisabled;
+	for (auto &i : items) i->setForceDisabled(forceDisabled);
 }
 
 void ActionManager::addItemInternal(Action * item, var data)

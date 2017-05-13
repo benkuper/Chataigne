@@ -13,7 +13,7 @@
 
 #include "TimeCueUI.h"
 #include "TimeCueManager.h"
-#include "BaseManagerUI.h"
+
 
 class SequenceTimelineHeader;
 

@@ -12,7 +12,6 @@
 #define MODULEROUTERVIEW_H_INCLUDED
 
 #include "ModuleRouter.h"
-#include "InspectableSelectionManager.h"
 #include "ModuleChooserUI.h"
 #include "ModuleRouterValueEditor.h"
 

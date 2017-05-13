@@ -11,7 +11,6 @@
 #ifndef STATETRANSITIONUI_H_INCLUDED
 #define STATETRANSITIONUI_H_INCLUDED
 
-#include "BaseItemMinimalUI.h"
 #include "StateTransition.h"
 #include "StateViewUI.h"
 

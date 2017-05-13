@@ -28,7 +28,7 @@ It contains the basic startup code for a Juce application.
 #pragma warning(disable:4244 4100 4305)
 
 #include "MainComponent.h"
-#include "Engine.h"
+#include "ChataigneEngine.h"
 
 //==============================================================================
 class ChataigneApplication : public JUCEApplication
@@ -39,6 +39,7 @@ public:
 
 	ApplicationCommandManager commandManager;
 	ScopedPointer<ApplicationProperties> appProperties;
+	ScopedPointer<ChataigneEngine> engine;
 
 	
 	const String getApplicationName() override { return ProjectInfo::projectName; }

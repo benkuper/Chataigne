@@ -11,7 +11,6 @@
 #ifndef CUSTOMOSCCOMMANDARGUMENTMANAGEREDITOR_H_INCLUDED
 #define CUSTOMOSCCOMMANDARGUMENTMANAGEREDITOR_H_INCLUDED
 
-#include "GenericManagerEditor.h"
 #include "CustomOSCCommandArgumentManager.h"
 
 class CustomOSCCommandArgumentManagerEditor :

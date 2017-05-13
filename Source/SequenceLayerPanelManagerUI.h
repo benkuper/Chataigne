@@ -12,7 +12,7 @@
 #define SEQUENCELAYERPANELMANAGERUI_H_INCLUDED
 
 
-#include "BaseManagerUI.h"
+
 #include "SequenceLayerPanel.h"
 #include "SequenceLayerManager.h"
 

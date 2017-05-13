@@ -12,7 +12,6 @@
 #define AUTOMATIONKEYUI_H_INCLUDED
 
 #include "AutomationKey.h"
-#include "BaseItemMinimalUI.h"
 #include "EasingUI.h"
 
 class AutomationKeyUI :

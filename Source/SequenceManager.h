@@ -12,7 +12,7 @@
 #define SEQUENCEMANAGER_H_INCLUDED
 
 
-#include "BaseManager.h"
+
 #include "Sequence.h"
 #include "SequenceModule.h"
 

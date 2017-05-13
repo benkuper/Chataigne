@@ -11,9 +11,6 @@
 #ifndef MAPPINGMANAGERUI_H_INCLUDED
 #define MAPPINGMANAGERUI_H_INCLUDED
 
-
-
-#include "BaseManagerUI.h"
 #include "MappingUI.h"
 #include "MappingManager.h"
 

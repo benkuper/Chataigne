@@ -11,7 +11,6 @@
 #ifndef MIDIDEVICEPARAMETER_H_INCLUDED
 #define MIDIDEVICEPARAMETER_H_INCLUDED
 
-#include "StringParameter.h"
 #include "MIDIManager.h"
 
 class MIDIDeviceParameterUI;

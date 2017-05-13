@@ -9,7 +9,7 @@
 */
 
 #include "GenericControllableCommand.h"
-#include "ControllableFactory.h"
+
 
 GenericControllableCommand::GenericControllableCommand(ChataigneGenericModule * _module, CommandContext context, var params) :
 	BaseCommand(_module, context, params),
@@ -95,10 +95,10 @@ void GenericControllableCommand::onContainerParameterChanged(Parameter * p)
 
 void GenericControllableCommand::loadJSONDataInternal(var data)
 {
-	if (Engine::getInstance()->isLoadingFile)
+	if (Engine::mainEngine->isLoadingFile)
 	{
 		//DBG("Engine is loading, waiting after load");
-		Engine::getInstance()->addEngineListener(this);
+		Engine::mainEngine->addEngineListener(this);
 		dataToLoad = data;
 	} else BaseCommand::loadJSONDataInternal(data);
 }
@@ -112,7 +112,7 @@ void GenericControllableCommand::endLoadFile()
 	loadJSONData(dataToLoad);
 	dataToLoad = var();
 
-	Engine::getInstance()->removeEngineListener(this);
+	Engine::mainEngine->removeEngineListener(this);
 }
 
 BaseCommand * GenericControllableCommand::create(ControllableContainer * module, CommandContext context, var params)

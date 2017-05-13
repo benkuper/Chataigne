@@ -11,10 +11,10 @@
 #ifndef USEROSCCOMMANDMODELEDITOR_H_INCLUDED
 #define USEROSCCOMMANDMODELEDITOR_H_INCLUDED
 
-#include "BaseItemEditor.h"
-#include "GenericManagerEditor.h"
+
+
 #include "UserOSCCommandModel.h"
-#include "ControllableEditor.h"
+
 
 class OSCCommandModelArgumentEditor :
 	public BaseItemEditor

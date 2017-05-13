@@ -11,7 +11,6 @@
 #ifndef AUTOMATIONEDITOR_H_INCLUDED
 #define AUTOMATIONEDITOR_H_INCLUDED
 
-#include "InspectableEditor.h"
 #include "AutomationUI.h"
 
 class AutomationEditor :

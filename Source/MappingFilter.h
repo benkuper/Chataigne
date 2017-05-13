@@ -12,7 +12,7 @@
 #define MAPPINGFILTER_H_INCLUDED
 
 
-#include "BaseItem.h"
+#include "JuceHeader.h"
 
 class MappingFilter :
 	public BaseItem

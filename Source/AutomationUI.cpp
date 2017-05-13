@@ -9,7 +9,6 @@
 */
 
 #include "AutomationUI.h"
-#include "InspectableSelector.h"
 
 AutomationUI::AutomationUI(Automation * _automation) :
 	BaseManagerUI("Automation",_automation,false),

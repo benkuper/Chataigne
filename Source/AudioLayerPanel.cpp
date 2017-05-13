@@ -9,7 +9,6 @@
 */
 
 #include "AudioLayerPanel.h"
-#include "FloatSliderUI.h"
 
 AudioLayerPanel::AudioLayerPanel(AudioLayer * layer) :
 	SequenceLayerPanel(layer),

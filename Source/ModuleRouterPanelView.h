@@ -11,21 +11,20 @@
 #ifndef MODULEROUTERPANELVIEW_H_INCLUDED
 #define MODULEROUTERPANELVIEW_H_INCLUDED
 
-#include "ShapeShifterContent.h"
 #include "ModuleRouterManager.h"
 #include "ModuleRouterView.h"
-#include "BaseManagerUI.h"
-#include "BaseItemUI.h"
 
 class ModuleRouterPanelView :
 	public ShapeShifterContentComponent
 {
 public:
-	ModuleRouterPanelView(const String &contentName);
+	ModuleRouterPanelView(const String &contentName, ModuleRouterManager * manager);
 	~ModuleRouterPanelView();
 
 	BaseManagerUI<ModuleRouterManager, ModuleRouter, BaseItemUI<ModuleRouter>> mui;
 	ModuleRouterView view;
+
+	static ModuleRouterPanelView * create(const String & contentName) { return new ModuleRouterPanelView(contentName, ModuleRouterManager::getInstance()); }
 
 	void resized() override;
 };

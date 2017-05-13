@@ -10,8 +10,8 @@
 
 #include "StateManagerUI.h"
 
-StateManagerUI::StateManagerUI(StateManager * _manager) :
-	BaseManagerShapeShifterUI<StateManager, State, StateUI>("States", _manager)
+StateManagerUI::StateManagerUI(const String &contentName, StateManager * _manager) :
+	BaseManagerShapeShifterUI<StateManager, State, StateUI>(contentName, _manager)
 {
 	addItemText = "Add State";
 }

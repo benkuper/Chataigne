@@ -11,8 +11,7 @@
 #ifndef MAPPINGINPUT_H_INCLUDED
 #define MAPPINGINPUT_H_INCLUDED
 
-#include "ControllableContainer.h"
-#include "TargetParameter.h"
+#include "JuceHeader.h"
 
 class MappingInput :
 	public ControllableContainer

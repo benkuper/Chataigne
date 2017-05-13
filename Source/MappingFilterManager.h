@@ -11,7 +11,7 @@
 #ifndef MAPPINGFILTERMANAGER_H_INCLUDED
 #define MAPPINGFILTERMANAGER_H_INCLUDED
 
-#include "BaseManager.h"
+
 #include "MappingFilter.h"
 
 class MappingFilterManager :

@@ -11,7 +11,7 @@
 #ifndef MODULEROUTER_H_INCLUDED
 #define MODULEROUTER_H_INCLUDED
 
-#include "BaseItem.h"
+
 #include "Module.h"
 #include "ModuleRouterValue.h"
 

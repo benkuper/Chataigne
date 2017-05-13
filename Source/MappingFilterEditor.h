@@ -11,9 +11,8 @@
 #ifndef MAPPINGFILTEREDITOR_H_INCLUDED
 #define MAPPINGFILTEREDITOR_H_INCLUDED
 
-#include "BaseItemEditor.h"
+
 #include "MappingFilter.h"
-#include "GenericControllableContainerEditor.h"
 
 class MappingFilterEditor :
 	public BaseItemEditor,

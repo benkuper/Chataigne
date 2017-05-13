@@ -9,7 +9,7 @@
 */
 
 #include "SerialModule.h"
-#include "ScriptManager.h"
+
 
 SerialModule::SerialModule(const String &name) :
 	Module(name),

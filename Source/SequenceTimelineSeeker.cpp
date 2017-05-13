@@ -9,7 +9,7 @@
 */
 
 #include "SequenceTimelineSeeker.h"
-#include "Style.h"
+
 
 SequenceTimelineSeeker::SequenceTimelineSeeker(Sequence * _sequence) :
 	sequence(_sequence)

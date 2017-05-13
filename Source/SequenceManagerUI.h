@@ -13,15 +13,18 @@
 
 
 #include "SequenceManager.h"
-#include "BaseManagerShapeShifterUI.h"
+
 #include "SequenceUI.h"
 
 class SequenceManagerUI :
 	public BaseManagerShapeShifterUI<SequenceManager, Sequence, SequenceUI>
 {
 public:
-	SequenceManagerUI(SequenceManager *_manager);
+	SequenceManagerUI(const String &contentName, SequenceManager *_manager);
 	~SequenceManagerUI();
+
+	static SequenceManagerUI * create(const String &contentName) { return new SequenceManagerUI(contentName, SequenceManager::getInstance()); }
+
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(SequenceManagerUI)
 };

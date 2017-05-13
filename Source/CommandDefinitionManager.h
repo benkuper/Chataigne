@@ -12,7 +12,6 @@
 #define COMMANDDEFINITIONMANAGER_H_INCLUDED
 
 #include "CommandDefinition.h"
-#include "BaseManager.h"
 
 class CommandDefinitionManager
 {

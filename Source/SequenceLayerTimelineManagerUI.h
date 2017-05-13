@@ -11,7 +11,7 @@
 #ifndef SEQUENCELAYERTIMELINEMANAGERUI_H_INCLUDED
 #define SEQUENCELAYERTIMELINEMANAGERUI_H_INCLUDED
 
-#include "BaseManagerUI.h"
+
 #include "SequenceLayerTimeline.h"
 #include "SequenceLayerManager.h"
 

@@ -11,7 +11,6 @@
 #ifndef ACTIONEDITOR_H_INCLUDED
 #define ACTIONEDITOR_H_INCLUDED
 
-#include "BaseItemEditor.h"
 #include "ConditionManagerEditor.h"
 #include "ConsequenceManagerEditor.h"
 #include "Action.h"

@@ -11,7 +11,6 @@
 #ifndef MAPPINGEDITOR_H_INCLUDED
 #define MAPPINGEDITOR_H_INCLUDED
 
-#include "BaseItemEditor.h"
 #include "Mapping.h"
 
 class MappingEditor :

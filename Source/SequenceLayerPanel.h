@@ -11,10 +11,7 @@
 #ifndef SEQUENCELAYERPANEL_H_INCLUDED
 #define SEQUENCELAYERPANEL_H_INCLUDED
 
-
-#include "BaseItemUI.h"
 #include "SequenceLayer.h"
-#include "ColorParameterUI.h"
 
 class SequenceLayerPanel :
 	public BaseItemUI<SequenceLayer>

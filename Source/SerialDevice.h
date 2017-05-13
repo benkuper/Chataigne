@@ -12,10 +12,7 @@
 #define SERIALDEVICE_H_INCLUDED
 
 
-
 #define SYNCHRONOUS_SERIAL_LISTENERS
-
-#include "QueuedNotifier.h"
 
 #if !defined __arm__
 #define SERIALSUPPORT 1
@@ -30,6 +27,7 @@ using namespace serial;
 
 #include "cobs/cobs.h"
 
+#include "JuceHeader.h"
 
 class SerialDevice;
 

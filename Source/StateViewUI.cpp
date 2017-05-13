@@ -17,10 +17,8 @@ BaseItemUI<State>(state, ResizeMode::ALL, true),
 	transitionReceptionMode(false)
 {
 	activeUI = state->active->createToggle();
-	permanentUI = state->permanent->createToggle();
 
 	addAndMakeVisible(activeUI);
-	addAndMakeVisible(permanentUI);
 
 	amui.drawContour = true;
 	mmui.drawContour = true;
@@ -109,8 +107,6 @@ void StateViewUI::paintOverChildren(Graphics & g)
 
 void StateViewUI::resizedInternalHeader(Rectangle<int>& r)
 {
-	permanentUI->setBounds(r.removeFromRight(80).reduced(0,2));
-	r.removeFromRight(2);
 	activeUI->setBounds(r.removeFromRight(50).reduced(0,2));
 	r.removeFromRight(2);
 }

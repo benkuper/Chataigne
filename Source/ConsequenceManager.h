@@ -12,8 +12,8 @@
 #define CONSEQUENCEMANAGER_H_INCLUDED
 
 
-#include "BaseManager.h"
 #include "Consequence.h"
+
 class ConsequenceManager :
 	public BaseManager<Consequence>,
 	public Consequence::ConsequenceListener
@@ -23,10 +23,16 @@ public:
 
 	ConsequenceManager();
 	~ConsequenceManager();
+	
+
+	bool forceDisabled;
+	
+	void setForceDisabled(bool value);
 
 	Trigger * triggerAll;
 
 	void onContainerTriggerTriggered(Trigger *) override;
+	void addItemInternal(Consequence *, var data) override;
 
 	InspectableEditor * getEditor(bool isRoot) override;
 

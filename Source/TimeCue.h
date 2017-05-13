@@ -11,7 +11,7 @@
 #ifndef TIMECUE_H_INCLUDED
 #define TIMECUE_H_INCLUDED
 
-#include "BaseItem.h"
+#include "JuceHeader.h"
 
 class TimeCue :
 	public BaseItem

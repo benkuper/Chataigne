@@ -12,10 +12,8 @@
 #define AUTOMATIONUI_H_INCLUDED
 
 #include "Automation.h"
-#include "BaseManagerUI.h"
 #include "AutomationKeyUI.h"
 #include "AutomationMultiKeyTransformer.h"
-#include "InspectableSelectionManager.h"
 
 class AutomationUI :
 	public BaseManagerUI<Automation,AutomationKey,AutomationKeyUI>,

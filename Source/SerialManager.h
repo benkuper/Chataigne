@@ -12,7 +12,6 @@
 #define SERIALMANAGER_H_INCLUDED
 
 
-#include "JuceHeader.h"
 #include "SerialDevice.h"
 
 class SerialManager :

@@ -13,7 +13,6 @@
 
 
 #include "ActionUI.h"
-#include "BaseManagerUI.h"
 #include "ActionManager.h"
 
 class ActionManagerUI :

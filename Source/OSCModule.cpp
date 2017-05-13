@@ -10,7 +10,7 @@
 
 #include "OSCModule.h"
 #include "OSCModuleBaseEditor.h"
-#include "ScriptManager.h"
+
 
 OSCModule::OSCModule(const String & name, int defaultLocalPort, int defaultRemotePort) :
 	Module(name)

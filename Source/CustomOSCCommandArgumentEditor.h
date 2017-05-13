@@ -11,9 +11,9 @@
 #ifndef CUSTOMOSCCOMMANDARGUMENTEDITOR_H_INCLUDED
 #define CUSTOMOSCCOMMANDARGUMENTEDITOR_H_INCLUDED
 
-#include "BaseItemEditor.h"
+
 #include "CustomOSCCommandArgument.h"
-#include "ControllableEditor.h"
+
 
 
 class CustomOSCCommandArgumentEditor :

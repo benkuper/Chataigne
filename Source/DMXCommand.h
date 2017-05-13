@@ -13,7 +13,6 @@
 
 #include "BaseCommand.h"
 #include "DMXModule.h"
-#include "ColorParameter.h"
 
 class DMXCommand :
 	public BaseCommand

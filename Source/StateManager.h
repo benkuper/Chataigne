@@ -11,7 +11,7 @@
 #ifndef STATEMANAGER_H_INCLUDED
 #define STATEMANAGER_H_INCLUDED
 
-#include "BaseManager.h"
+
 #include "State.h"
 #include "StateTransitionManager.h"
 #include "StateModule.h"

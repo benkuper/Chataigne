@@ -12,7 +12,7 @@
 #define CUSTOMOSCCOMMANDARGUMENTMANAGER_H_INCLUDED
 
 #include "CustomOSCCommandArgument.h"
-#include "BaseManager.h"
+
 
 class CustomOSCCommandArgumentManager :
 	public BaseManager<CustomOSCCommandArgument>,

@@ -12,7 +12,7 @@
 #define SEQUENCECOMMANDEDITOR_H_INCLUDED
 
 
-#include "InspectableEditor.h"
+
 #include "SequenceCommand.h"
 #include "SequenceChooserUI.h"
 

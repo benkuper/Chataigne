@@ -12,7 +12,6 @@
 #define BASECOMMANDHANDLEREDITOR_H_INCLUDED
 
 
-#include "BaseItemEditor.h"
 #include "Consequence.h"
 #include "CommandChooserUI.h"
 

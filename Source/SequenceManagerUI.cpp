@@ -10,8 +10,8 @@
 
 #include "SequenceManagerUI.h"
 
-SequenceManagerUI::SequenceManagerUI(SequenceManager * _manager) :
-	BaseManagerShapeShifterUI<SequenceManager, Sequence, SequenceUI>("Sequences", _manager)
+SequenceManagerUI::SequenceManagerUI(const String &contentName, SequenceManager * _manager) :
+	BaseManagerShapeShifterUI<SequenceManager, Sequence, SequenceUI>(contentName, _manager)
 {
 	addItemText = "Add Sequence";
 	addExistingItems();

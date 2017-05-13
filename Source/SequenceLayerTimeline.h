@@ -12,7 +12,7 @@
 #define SEQUENCELAYERTIMELINE_H_INCLUDED
 
 
-#include "BaseItemUI.h"
+
 #include "SequenceLayer.h"
 
 class SequenceLayerTimeline :

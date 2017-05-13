@@ -9,7 +9,6 @@
 */
 
 #include "MIDIManager.h"
-#include "DebugHelpers.h"
 
 juce_ImplementSingleton(MIDIManager)
 

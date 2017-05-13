@@ -11,7 +11,6 @@
 #ifndef SERIALDEVICEPARAMETER_H_INCLUDED
 #define SERIALDEVICEPARAMETER_H_INCLUDED
 
-#include "EnumParameter.h"
 #include "SerialDevice.h"
 #include "SerialManager.h"
 

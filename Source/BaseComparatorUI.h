@@ -12,9 +12,6 @@
 #define BASECOMPARATORUI_H_INCLUDED
 
 #include "BaseComparator.h"
-#include "EnumParameterUI.h"
-#include "BoolToggleUI.h"
-#include "ControllableEditor.h"
 
 class BaseComparatorUI :
 	public Component

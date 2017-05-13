@@ -12,7 +12,7 @@
 #define STATE_H_INCLUDED
 
 
-#include "BaseItem.h"
+
 #include "ActionManager.h"
 #include "MappingManager.h"
 #include "StateTransition.h"

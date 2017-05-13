@@ -12,7 +12,6 @@
 #define COMMANDDEFINITION_H_INCLUDED
 
 #include "BaseCommand.h"
-class ControllableContainer;
 
 typedef std::function<BaseCommand*(ControllableContainer *, CommandContext, var params)> CreateCommandFunc;
 

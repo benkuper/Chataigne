@@ -9,15 +9,7 @@
 #ifndef MAINCOMPONENT_H_INCLUDED
 #define MAINCOMPONENT_H_INCLUDED
 
-#include "../JuceLibraryCode/JuceHeader.h"
-
-#include "Style.h"
-#include "LookAndFeelOO.h"
-
-#include "ShapeShifterManager.h"//keep
-#include "DebugHelpers.h"//keep
-#include "Engine.h"
-#include "AppUpdater.h"
+#include "juceHeader.h"
 
 ApplicationProperties& getAppProperties();
 ApplicationCommandManager& getCommandManager();
@@ -45,9 +37,6 @@ public:
 
     void paint (Graphics&) override;
     void resized() override;
-
-	
-	
 
 	// inherited from MenuBarModel , ApplicationCommandTarget
 	ApplicationCommandTarget* getNextCommandTarget() override { return findFirstTargetParentComponent(); }

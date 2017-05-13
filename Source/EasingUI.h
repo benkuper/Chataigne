@@ -12,7 +12,6 @@
 #define EASINGUI_H_INCLUDED
 
 #include "Easing.h"
-#include "InspectableContentComponent.h"
 
 class EasingUI :
 	public InspectableContentComponent,

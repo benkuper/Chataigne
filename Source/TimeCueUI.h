@@ -11,7 +11,6 @@
 #ifndef TIMECUEUI_H_INCLUDED
 #define TIMECUEUI_H_INCLUDED
 
-#include "BaseItemMinimalUI.h"
 #include "TimeCue.h"
 
 class TimeCueUI :

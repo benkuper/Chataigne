@@ -13,7 +13,7 @@
 
 #include "AudioLayerClipManager.h"
 #include "AudioLayerClipUI.h"
-#include "BaseManagerUI.h"
+
 
 class AudioLayerTimeline;
 

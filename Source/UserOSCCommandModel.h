@@ -11,7 +11,7 @@
 #ifndef USEROSCCOMMANDMODEL_H_INCLUDED
 #define USEROSCCOMMANDMODEL_H_INCLUDED
 
-#include "BaseManager.h"
+
 #include "CommandDefinition.h"
 
 class UserOSCCommandDefinition;

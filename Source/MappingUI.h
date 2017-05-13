@@ -11,8 +11,6 @@
 #ifndef MAPPINGUI_H_INCLUDED
 #define MAPPINGUI_H_INCLUDED
 
-
-#include "BaseItemUI.h"
 #include "Mapping.h"
 
 class MappingUI :

@@ -11,8 +11,6 @@
 #ifndef CONDITIONEDITOR_H_INCLUDED
 #define CONDITIONEDITOR_H_INCLUDED
 
-
-#include "BaseItemEditor.h"
 #include "Condition.h"
 
 class ConditionEditor :

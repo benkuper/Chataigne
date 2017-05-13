@@ -11,7 +11,7 @@
 #ifndef AUDIOLAYERCLIPMANAGER_H_INCLUDED
 #define AUDIOLAYERCLIPMANAGER_H_INCLUDED
 
-#include "BaseManager.h"
+
 #include "AudioLayerClip.h"
 
 class AudioLayerClipManager :

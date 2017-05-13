@@ -11,7 +11,7 @@
 #ifndef STATEVIEWUI_H_INCLUDED
 #define STATEVIEWUI_H_INCLUDED
 
-#include "BaseItemUI.h"
+
 #include "State.h"
 #include "ActionManagerUI.h"
 #include "MappingManagerUI.h"
@@ -27,7 +27,6 @@ public:
 	~StateViewUI();
 
 	ScopedPointer<BoolToggleUI> activeUI;
-	ScopedPointer<BoolToggleUI> permanentUI;
 
 	ActionManagerUI amui;
 	MappingManagerUI mmui;

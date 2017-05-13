@@ -12,7 +12,7 @@
 #define SEQUENCELAYERMANAGER_H_INCLUDED
 
 
-#include "BaseManager.h"
+
 #include "SequenceLayer.h"
 #include "AudioLayer.h"
 

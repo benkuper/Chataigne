@@ -11,7 +11,6 @@
 #ifndef DMXDEVICE_H_INCLUDED
 #define DMXDEVICE_H_INCLUDED
 
-#include "ControllableContainer.h"
 #include "DMXManager.h"
 
 class DMXDevice :

@@ -14,8 +14,8 @@
 
 #include "BaseCommand.h"
 #include "ChataigneGenericModule.h"
-#include "TargetParameter.h"
-#include "Engine.h"
+
+
 
 class GenericControllableCommand :
 	public BaseCommand,

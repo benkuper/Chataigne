@@ -11,7 +11,7 @@
 #ifndef STATECOMMANDEDITOR_H_INCLUDED
 #define STATECOMMANDEDITOR_H_INCLUDED
 
-#include "InspectableEditor.h"
+
 #include "StateCommand.h"
 #include "StateChooserUI.h"
 

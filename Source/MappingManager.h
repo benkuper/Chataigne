@@ -11,8 +11,6 @@
 #ifndef MAPPINGMANAGER_H_INCLUDED
 #define MAPPINGMANAGER_H_INCLUDED
 
-
-#include "BaseManager.h"
 #include "Mapping.h"
 
 class MappingManager :

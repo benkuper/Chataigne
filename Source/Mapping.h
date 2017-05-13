@@ -11,9 +11,6 @@
 #ifndef MAPPING_H_INCLUDED
 #define MAPPING_H_INCLUDED
 
-
-#include "BaseItem.h"
-
 #include "MappingInput.h"
 #include "MappingFilterManager.h"
 #include "MappingOutputManager.h"

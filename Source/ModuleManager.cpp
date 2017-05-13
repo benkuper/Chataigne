@@ -12,7 +12,7 @@
 #include "ModuleFactory.h"
 #include "StateManager.h"
 #include "SequenceManager.h"
-#include "Engine.h"
+#include "ChataigneEngine.h"
 
 juce_ImplementSingleton(ModuleManager)
 
@@ -37,10 +37,10 @@ void ModuleManager::addItemFromData(var data, bool fromUndoableAction)
 
 Module * ModuleManager::getModuleWithName(const String & moduleName)
 {
-	DBG("get Module with name : " << moduleName << " / " << StateManager::getInstance()->shortName);
+	//DBG("get Module with name : " << moduleName << " / " << StateManager::getInstance()->shortName);
 	if (moduleName == StateManager::getInstance()->module.shortName) return &StateManager::getInstance()->module;
 	if (moduleName == SequenceManager::getInstance()->module.shortName) return &SequenceManager::getInstance()->module;
-	if (moduleName == Engine::getInstance()->module.shortName) return &Engine::getInstance()->module;
+	if (moduleName == static_cast<ChataigneEngine *>(Engine::mainEngine)->module.shortName) return &static_cast<ChataigneEngine *>(Engine::mainEngine)->module;
 	else return getItemWithName(moduleName);
 }
 
@@ -79,7 +79,7 @@ PopupMenu ModuleManager::getAllModulesCommandMenu(CommandContext context)
 	for (int i = 0; i < items.size(); i++) menu.addSubMenu(items[i]->niceName, items[i]->defManager.getCommandMenu(i * 1000,context));
 	menu.addSubMenu(StateManager::getInstance()->module.niceName, StateManager::getInstance()->module.defManager.getCommandMenu(-1000, context));
 	menu.addSubMenu(SequenceManager::getInstance()->module.niceName, SequenceManager::getInstance()->module.defManager.getCommandMenu(-2000, context));
-	menu.addSubMenu(Engine::getInstance()->module.niceName, Engine::getInstance()->module.defManager.getCommandMenu(-3000, context));
+	menu.addSubMenu(static_cast<ChataigneEngine *>(Engine::mainEngine)->module.niceName, static_cast<ChataigneEngine *>(Engine::mainEngine)->module.defManager.getCommandMenu(-3000, context));
 	return menu;
 }
 
@@ -93,7 +93,7 @@ CommandDefinition * ModuleManager::getCommandDefinitionForItemID(int itemID, Mod
 
 	if (itemID < -2000)
 	{
-		m = &Engine::getInstance()->module;
+		m = &static_cast<ChataigneEngine *>(Engine::mainEngine)->module;
 		itemID += 3000;
 	}else if (itemID < -1000)
 	{

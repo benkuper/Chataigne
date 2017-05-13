@@ -11,7 +11,6 @@
 #include "CommandFactory.h"
 #include "ModuleManager.h"
 
-
 CommandDefinition * CommandFactory::showMenuAndGetCommand(CommandContext context, Module * lockedModule)
 {
 	PopupMenu m = (lockedModule == nullptr) ? ModuleManager::getInstance()->getAllModulesCommandMenu(context) : lockedModule->defManager.getCommandMenu(0, context);

@@ -12,7 +12,7 @@
 #define STATETRANSITIONMANAGERUI_H_INCLUDED
 
 
-#include "BaseManagerUI.h"
+
 #include "StateTransitionManager.h"
 #include "StateTransitionUI.h"
 

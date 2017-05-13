@@ -11,7 +11,7 @@
 #ifndef BASECOMPARATOR_H_INCLUDED
 #define BASECOMPARATOR_H_INCLUDED
 
-#include "ControllableContainer.h"
+#include "JuceHeader.h"
 
 class BaseComparatorUI;
 

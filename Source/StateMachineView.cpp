@@ -9,10 +9,9 @@
 */
 
 #include "StateMachineView.h"
-#include "AssetManager.h"
 
-StateMachineView::StateMachineView(StateManager * _manager) :
-	BaseManagerShapeShifterViewUI("State Machine", _manager),
+StateMachineView::StateMachineView(const String &contentName, StateManager * _manager) :
+	BaseManagerShapeShifterViewUI(contentName, _manager),
 	manager(_manager),
 	transitionCreationMode(false),
 	transitionCreationSourceUI(nullptr)

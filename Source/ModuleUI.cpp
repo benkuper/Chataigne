@@ -9,16 +9,16 @@
 */
 
 #include "ModuleUI.h"
-#include "TriggerImageUI.h"
+#include "ChataigneAssetManager.h"
 
 ModuleUI::ModuleUI(Module * input) :
 	BaseItemUI<Module>(input)
 {
-	inActivityUI = input->inActivityTrigger->createImageUI(AssetManager::getInstance()->getInImage());
+	inActivityUI = input->inActivityTrigger->createImageUI(ChataigneAssetManager::getInstance()->getInImage());
 	inActivityUI->showLabel = false;
 	addAndMakeVisible(inActivityUI);
 
-	outActivityUI = input->outActivityTrigger->createImageUI(AssetManager::getInstance()->getOutImage());
+	outActivityUI = input->outActivityTrigger->createImageUI(ChataigneAssetManager::getInstance()->getOutImage());
 	outActivityUI->showLabel = false;
 	addAndMakeVisible(outActivityUI);
 }

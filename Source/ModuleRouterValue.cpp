@@ -9,7 +9,7 @@
 */
 
 #include "ModuleRouterValue.h"
-#include "TargetParameter.h"
+
 #include "Module.h"
 
 ModuleRouterValue::ModuleRouterValue(Controllable * _sourceValue, int _index) :

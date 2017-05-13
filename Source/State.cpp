@@ -11,7 +11,7 @@
 #include "State.h"
 
 State::State() :
-	BaseItem("State")
+	BaseItem("State",true,true,true)
 {
 	canInspectChildContainers = false;
 

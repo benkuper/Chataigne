@@ -12,7 +12,6 @@
 #define AUTOMATION_H_INCLUDED
 
 #include "AutomationKey.h"
-#include "BaseManager.h"
 
 class InspectableSelectionManager;
 

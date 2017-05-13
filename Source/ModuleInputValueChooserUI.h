@@ -12,7 +12,7 @@
 #define MODULEINPUTVALUECHOOSERUI_H_INCLUDED
 
 #include "ModuleManagerUI.h"
-#include "TargetParameterUI.h"
+
 
 class ModuleInputValueChooserUI :
 	public TargetParameterUI

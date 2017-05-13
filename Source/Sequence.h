@@ -11,7 +11,7 @@
 #ifndef SEQUENCE_H_INCLUDED
 #define SEQUENCE_H_INCLUDED
 
-#include "BaseItem.h"
+#include "JuceHeader.h"
 
 class AudioModule;
 class SequenceLayerManager;
