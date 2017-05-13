@@ -11,8 +11,9 @@
 #ifndef MYOMODULE_H_INCLUDED
 #define MYOMODULE_H_INCLUDED
 
-#if JUCE_WINDOWS
+#include "JuceHeader.h"
 
+#if JUCE_WINDOWS
 
 #include "Module.h"
 #include "MyoManager.h"

@@ -8,8 +8,9 @@
   ==============================================================================
 */
 
-#if JUCE_WINDOWS
 #include "MyoManager.h"
+
+#if JUCE_WINDOWS
 using namespace myo;
 
 

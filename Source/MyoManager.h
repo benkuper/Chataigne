@@ -11,9 +11,9 @@
 #ifndef MYOMANAGER_H_INCLUDED
 #define MYOMANAGER_H_INCLUDED
 
+#include "JuceHeader.h"
+
 #if JUCE_WINDOWS
-
-
 #include "MyoDevice.h"
 using namespace myo;
 

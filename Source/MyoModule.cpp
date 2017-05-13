@@ -8,10 +8,10 @@
   ==============================================================================
 */
 
-#if JUCE_WINDOWS
-
 
 #include "MyoModule.h"
+
+#if JUCE_WINDOWS
 
 MyoModule::MyoModule() :
 	Module("Myo"),
