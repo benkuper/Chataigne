@@ -38,7 +38,7 @@ public:
 	virtual void mouseDownInternal(const MouseEvent &) {} //avoid right click check in each child class
 	virtual void mouseUpInternal(const MouseEvent &) {} //
 	
-	//PopupMenu11
+	//PopupMenu
 	virtual void addPopupMenuItems(PopupMenu *) {} //for child classes
 	virtual void handleMenuSelectedID(int ) {} // to override
 

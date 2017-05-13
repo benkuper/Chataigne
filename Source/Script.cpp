@@ -35,7 +35,6 @@ scriptAsyncNotifier(10)
 	scriptObject.setMethod("addTargetParameter", Script::addTargetParameterFromScript);
 	scriptObject.setMethod("addTrigger", Script::addTriggerFromScript); 
 
-	scriptParamsContainer.skipControllableNameInAddress = true;
 	addChildControllableContainer(&scriptParamsContainer);
 }
 
@@ -46,13 +45,27 @@ Script::~Script()
 
 void Script::loadScript()
 {
-	if (filePath->stringValue().isEmpty())
+	String path = filePath->stringValue();
+	if (path.isEmpty())
 	{
 		return;
 	}
-	File f = File(filePath->stringValue());
+
+#if JUCE_WINDOWS
+	if (path.startsWithChar('/')) //avoid jassertfalse
+	{
+		NLOG(niceName,"Path " + path + " is not a valid Windows-style path.");
+		setState(SCRIPT_ERROR);
+		return; //OSX / Linux file
+	}
+#endif
+
+	
+	File f = Engine::getInstance()->getFile().getParentDirectory().getChildFile(path);
+
 	if (!f.exists())
 	{
+		//check local director
 		NLOG("Script", "File not found : " + f.getFileName());
 		setState(SCRIPT_EMPTY);
 		return;

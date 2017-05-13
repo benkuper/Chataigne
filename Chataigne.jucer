@@ -821,16 +821,10 @@
             </GROUP>
             <GROUP id="{59F1EF8C-5880-1E61-23C7-906E6FD546C2}" name="generic">
               <GROUP id="{9C478D37-AA46-AFA2-7D78-2116F6962ADB}" name="commands">
-                <GROUP id="{967BAB81-51E8-E01E-B9FF-0F23EF2D7CDB}" name="ui">
-                  <FILE id="BQzoXe" name="GenericSetParameterCommandEditor.cpp" compile="1"
-                        resource="0" file="Source/GenericSetParameterCommandEditor.cpp"/>
-                  <FILE id="Zd9iUr" name="GenericSetParameterCommandEditor.h" compile="0"
-                        resource="0" file="Source/GenericSetParameterCommandEditor.h"/>
-                </GROUP>
-                <FILE id="xFMX67" name="GenericSetParameterCommand.cpp" compile="1"
-                      resource="0" file="Source/GenericSetParameterCommand.cpp"/>
-                <FILE id="UExDaG" name="GenericSetParameterCommand.h" compile="0" resource="0"
-                      file="Source/GenericSetParameterCommand.h"/>
+                <FILE id="xFMX67" name="GenericControllableCommand.cpp" compile="1"
+                      resource="0" file="Source/GenericControllableCommand.cpp"/>
+                <FILE id="UExDaG" name="GenericControllableCommand.h" compile="0" resource="0"
+                      file="Source/GenericControllableCommand.h"/>
               </GROUP>
               <FILE id="vrTY0m" name="ChataigneGenericModule.cpp" compile="1" resource="0"
                     file="Source/ChataigneGenericModule.cpp"/>

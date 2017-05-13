@@ -9,11 +9,13 @@
 */
 
 #include "ChataigneGenericModule.h"
-#include "GenericSetParameterCommand.h"
+#include "GenericControllableCommand.h"
+
 ChataigneGenericModule::ChataigneGenericModule() :
 	Module("Generic")
 {
-	defManager.add(CommandDefinition::createDef(this, "", "Set Parameter Value", &GenericSetParameterCommand::create));
+	defManager.add(CommandDefinition::createDef(this, "", "Set Parameter Value", &GenericControllableCommand::create)->addParam("action",GenericControllableCommand::SET_VALUE));
+	defManager.add(CommandDefinition::createDef(this, "", "Trigger a Control", &GenericControllableCommand::create)->addParam("action",GenericControllableCommand::TRIGGER));
 }
 
 ChataigneGenericModule::~ChataigneGenericModule()

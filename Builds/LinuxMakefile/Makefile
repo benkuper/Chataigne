@@ -254,8 +254,7 @@ OBJECTS := \
   $(JUCE_OBJDIR)/MyoDevice_ef3fe55a.o \
   $(JUCE_OBJDIR)/MyoManager_59b34e73.o \
   $(JUCE_OBJDIR)/MyoModule_8cd27270.o \
-  $(JUCE_OBJDIR)/GenericSetParameterCommandEditor_dcc319e3.o \
-  $(JUCE_OBJDIR)/GenericSetParameterCommand_f3888796.o \
+  $(JUCE_OBJDIR)/GenericControllableCommand_a1b41734.o \
   $(JUCE_OBJDIR)/ChataigneGenericModule_de326dee.o \
   $(JUCE_OBJDIR)/DMXCommand_5ffc0ec5.o \
   $(JUCE_OBJDIR)/DMXModuleEditor_d630ba09.o \
@@ -1386,14 +1385,9 @@ $(JUCE_OBJDIR)/MyoModule_8cd27270.o: ../../Source/MyoModule.cpp
 	@echo "Compiling MyoModule.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
 
-$(JUCE_OBJDIR)/GenericSetParameterCommandEditor_dcc319e3.o: ../../Source/GenericSetParameterCommandEditor.cpp
+$(JUCE_OBJDIR)/GenericControllableCommand_a1b41734.o: ../../Source/GenericControllableCommand.cpp
 	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling GenericSetParameterCommandEditor.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/GenericSetParameterCommand_f3888796.o: ../../Source/GenericSetParameterCommand.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling GenericSetParameterCommand.cpp"
+	@echo "Compiling GenericControllableCommand.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/ChataigneGenericModule_de326dee.o: ../../Source/ChataigneGenericModule.cpp

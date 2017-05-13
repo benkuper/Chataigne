@@ -144,11 +144,16 @@ Result Engine::saveDocument (const File& file){
   var data = getJSONData();
 
   if (file.exists()) file.deleteFile();
+  file.create();
   ScopedPointer<OutputStream> os( file.createOutputStream());
+  if (os == nullptr)
+  {
+	  return Result::fail("Error saving file !!!\nMaybe it is set as read - only ? ");
+  }
   JSON::writeToStream(*os, data);
   os->flush();
-
   setLastDocumentOpened(file);
+  LOG("File saved to " + file.getFullPathName());
   return Result::ok();
 }
 

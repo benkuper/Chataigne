@@ -97,6 +97,7 @@ public:
 	// used for generating editor
 	virtual ControllableUI * createDefaultUI(Controllable * targetControllable = nullptr) = 0;
 
+
 	static var setValueFromScript(const juce::var::NativeFunctionArgs& a);
 
 public:

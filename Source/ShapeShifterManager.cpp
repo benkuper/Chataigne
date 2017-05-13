@@ -319,6 +319,12 @@ void ShapeShifterManager::saveCurrentLayoutToFile(const File &toFile)
 	}
 
 	ScopedPointer<OutputStream> os(toFile.createOutputStream());
+	if (os == nullptr)
+	{
+		NLOG("Shape Shifter", "Error saving the layout file " + toFile.getFullPathName() + "\nMaybe it is read-only ?");
+		return;
+	}
+
 	JSON::writeToStream(*os, getCurrentLayout());
 	os->flush();
 }

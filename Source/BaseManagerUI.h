@@ -442,11 +442,10 @@ void BaseManagerUI<M, T, U>::removeItemUI(T * item)
 	if (useViewport) container.removeChildComponent(static_cast<BaseItemMinimalUI<T>*>(tui));
 	else removeChildComponent(static_cast<BaseItemMinimalUI<T>*>(tui));
 
-	itemsUI.removeObject(tui, false);
-
 	BaseItemUI<T> * biui = dynamic_cast<BaseItemUI<T> *>(tui);
-	if(biui != nullptr) biui->removeItemUIListener(this);
-
+	if (biui != nullptr) biui->removeItemUIListener(this);
+	
+	itemsUI.removeObject(tui, false);
 	removeItemUIInternal(tui);
 
 	managerUIListeners.call(&ManagerUIListener::itemUIRemoved, tui);

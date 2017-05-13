@@ -1,15 +1,15 @@
 /*
   ==============================================================================
 
-    GenericSetParameterCommand.h
+    GenericControllableCommand.h
     Created: 28 Apr 2017 5:51:16pm
     Author:  Ben
 
   ==============================================================================
 */
 
-#ifndef GENERICSETPARAMETERCOMMAND_H_INCLUDED
-#define GENERICSETPARAMETERCOMMAND_H_INCLUDED
+#ifndef GENERICCONTROLLABLECOMMAND_H_INCLUDED
+#define GENERICCONTROLLABLECOMMAND_H_INCLUDED
 
 
 #include "BaseCommand.h"
@@ -17,16 +17,20 @@
 #include "TargetParameter.h"
 #include "Engine.h"
 
-class GenericSetParameterCommand :
+class GenericControllableCommand :
 	public BaseCommand,
 	public Engine::EngineListener
 {
 public:
-	GenericSetParameterCommand(ChataigneGenericModule * _module, CommandContext context, var params);
-	virtual ~GenericSetParameterCommand();
+
+	enum Action { SET_VALUE, TRIGGER};
+	
+	GenericControllableCommand(ChataigneGenericModule * _module, CommandContext context, var params);
+	virtual ~GenericControllableCommand();
 	
 	ChataigneGenericModule * sequenceModule;
 
+	Action action;
 	TargetParameter * target;
 	Parameter * value;
 
@@ -50,4 +54,4 @@ public:
 
 
 
-#endif  // GENERICSETPARAMETERCOMMAND_H_INCLUDED
+#endif  // GENERICCONTROLLABLECOMMAND_H_INCLUDED

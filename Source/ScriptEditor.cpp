@@ -119,7 +119,20 @@ void ScriptEditor::buttonClicked(Button * b)
 	{
 		FileChooser chooser("Load a cacahuete");
 		bool result = chooser.browseForFileToOpen();
-		if (result) script->filePath->setValue(chooser.getResult().getFullPathName());
+		if (result)
+		{
+			File f(chooser.getResult());
+
+			File projectFile = Engine::getInstance()->getFile();
+			bool fileIsChildRelative = !f.getRelativePathFrom(f).startsWith("..");
+
+			String targetPath;
+
+			if (fileIsChildRelative) targetPath = f.getRelativePathFrom(f);
+			else targetPath = f.getFullPathName();
+
+			script->filePath->setValue(targetPath);
+		}
 
 	} else if (b == editBT)
 	{
@@ -134,7 +147,7 @@ void ScriptEditor::buttonClicked(Button * b)
 			}
 		} 
 
-		File f(script->filePath->stringValue());
+		File f(Engine::getInstance()->getFile().getParentDirectory().getChildFile(script->filePath->stringValue()));
 		f.startAsProcess();
 		//editMode = !editMode;
 		//resized();
