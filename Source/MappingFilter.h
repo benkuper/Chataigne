@@ -53,7 +53,7 @@ public:
 	void addMappingFilterListener(FilterListener* newListener) { mappingFilterListeners.add(newListener); }
 	void removeMappingFilterListener(FilterListener* listener) { mappingFilterListeners.remove(listener); }
 
-	virtual String getTypeString() const { jassert(false); return "[ERROR]"; }
+	virtual String getTypeString() const override { jassert(false); return "[ERROR]"; }
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MappingFilter)
 };

@@ -20,7 +20,10 @@
 #include "WiimoteManager.h"
 #include "DMXManager.h"
 #include "ModuleRouterManager.h"
+
+#if JUCE_WINDOWS
 #include "MyoManager.h"
+#endif
 
 ChataigneEngine::ChataigneEngine(ApplicationProperties * appProperties, const String &appVersion) :
 	Engine("Chataigne", ".noisette", appProperties, appVersion)
@@ -54,8 +57,10 @@ ChataigneEngine::~ChataigneEngine()
 	SerialManager::deleteInstance();
 	GamepadManager::deleteInstance();
 	WiimoteManager::deleteInstance();
+    
+#if JUCE_WINDOWS
 	MyoManager::deleteInstance();
-
+#endif
 }
 
 void ChataigneEngine::clearInternal()
@@ -66,6 +71,7 @@ void ChataigneEngine::clearInternal()
 
 	ModuleRouterManager::getInstance()->clear();
 	ModuleManager::getInstance()->clear();
+    
 }
 
 var ChataigneEngine::getJSONData()

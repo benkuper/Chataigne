@@ -55,7 +55,7 @@ public:
 	void removeAsyncValidationListener(AsyncListener* listener) { validationAsyncNotifier.removeListener(listener); }
 
 
-	virtual String getTypeString() const { jassert(false); return "error"; }
+	virtual String getTypeString() const override { jassert(false); return "error"; }
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Condition)
 };

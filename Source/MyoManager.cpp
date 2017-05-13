@@ -9,9 +9,6 @@
 */
 
 #if JUCE_WINDOWS
-
-
-#include "DebugHelpers.h"
 #include "MyoManager.h"
 using namespace myo;
 

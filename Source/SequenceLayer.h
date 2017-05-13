@@ -38,7 +38,7 @@ public:
 	//Handlers
 
 	//Factory
-	virtual String getTypeString() const { jassert(false); return ""; } //should be overriden
+	virtual String getTypeString() const override { jassert(false); return ""; } //should be overriden
 
 	//UI
 	virtual SequenceLayerPanel * getPanel();

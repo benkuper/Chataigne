@@ -23,7 +23,7 @@ It contains the basic startup code for a Juce application.
 */
 
 
-#include "../JuceLibraryCode/JuceHeader.h"
+#include "JuceHeader.h"
 
 #pragma warning(disable:4244 4100 4305)
 

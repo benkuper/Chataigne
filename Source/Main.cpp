@@ -85,7 +85,8 @@ inline ChataigneApplication::MainWindow::MainWindow(String name) : DocumentWindo
 
 	setVisible(true);
 
-#if JUCE_OPENGL
+    
+#if JUCE_OPENGL && JUCE_WINDOWS
 	openGLContext.setComponentPaintingEnabled(true);
 	openGLContext.attachTo(*this);
 #endif
@@ -110,7 +111,7 @@ inline void ChataigneApplication::MainWindow::closeButtonPressed()
 	getAppProperties().getCommonSettings(true)->setValue("fullscreen", isFullScreen());
 	getAppProperties().getCommonSettings(true)->saveIfNeeded();
 
-#if JUCE_OPENGL
+#if JUCE_OPENGL && JUCE_WINDOWS
 	openGLContext.detach();
 #endif
 

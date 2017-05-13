@@ -65,7 +65,7 @@ public:
 	virtual var getJSONData() override;
 	virtual void loadJSONDataInternal(var data) override;
 
-	String getTypeString() const { if (customType.isNotEmpty()) return customType; else return getDefaultTypeString(); } //should be overriden
+	String getTypeString() const override { if (customType.isNotEmpty()) return customType; else return getDefaultTypeString(); } //should be overriden
 	virtual String getDefaultTypeString() const { jassert(false); return ""; }
 
 	//virtual InspectableEditor * getEditor(bool isRoot) override;
