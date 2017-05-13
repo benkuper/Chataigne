@@ -11,6 +11,8 @@
 #ifndef MYODEVICE_H_INCLUDED
 #define MYODEVICE_H_INCLUDED
 
+#if JUCE_WINDOWS
+
 #include "JuceHeader.h"
 #include "myo/myo.hpp"
 
@@ -45,5 +47,6 @@ public:
 };
 
 
+#endif //JUCE_WINDOWS
 
 #endif  // MYO_H_INCLUDED

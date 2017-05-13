@@ -11,6 +11,9 @@
 #ifndef MYOMODULE_H_INCLUDED
 #define MYOMODULE_H_INCLUDED
 
+#if JUCE_WINDOWS
+
+
 #include "Module.h"
 #include "MyoManager.h"
 
@@ -44,6 +47,6 @@ public:
 	static MyoModule * create() { return new MyoModule(); }
 };
 
-
+#endif
 
 #endif  // MYOMODULE_H_INCLUDED

@@ -8,6 +8,9 @@
   ==============================================================================
 */
 
+#if JUCE_WINDOWS
+
+
 #include "MyoModule.h"
 
 MyoModule::MyoModule() :
@@ -57,3 +60,5 @@ void MyoModule::myoPoseUpdate(MyoDevice * d)
 void MyoModule::myoEMGUpdate(MyoDevice * d)
 {
 }
+
+#endif

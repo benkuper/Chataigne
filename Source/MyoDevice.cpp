@@ -8,6 +8,10 @@
   ==============================================================================
 */
 
+
+#if JUCE_WINDOWS
+
+
 #include "MyoDevice.h"
 
 MyoDevice::MyoDevice()
@@ -17,3 +21,6 @@ MyoDevice::MyoDevice()
 MyoDevice::~MyoDevice()
 {
  }
+
+
+#endif

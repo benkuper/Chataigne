@@ -11,6 +11,9 @@
 #ifndef MYOMANAGER_H_INCLUDED
 #define MYOMANAGER_H_INCLUDED
 
+#if JUCE_WINDOWS
+
+
 #include "MyoDevice.h"
 using namespace myo;
 
@@ -60,6 +63,6 @@ public:
 	void removeListener(Listener* listener) { listeners.remove(listener); }
 };
 
-
+#endif
 
 #endif  // MYOMANAGER_H_INCLUDED
