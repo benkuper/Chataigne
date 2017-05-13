@@ -1,6 +1,4 @@
 #include "Main.h"
-#include "AppUpdater.h"
-
 
 //==============================================================================
 
@@ -17,11 +15,11 @@ inline void ChataigneApplication::initialise(const String & commandLine)
 	appProperties = new ApplicationProperties();
 	appProperties->setStorageParameters(options);
 
-	
+
+	engine = new ChataigneEngine(appProperties, getAppVersion());
+
 	mainWindow = new MainWindow(getApplicationName());
-	
-	Engine * engine = Engine::getInstance();
-	
+
 	engine->parseCommandline(commandLine);
 	if (!engine->getFile().existsAsFile()) {
 		engine->createNewGraph();
@@ -40,7 +38,6 @@ inline void ChataigneApplication::shutdown()
 	mainWindow = nullptr; // (deletes our window)
 	
 	AppUpdater::deleteInstance();
-	Engine::deleteInstance();
 }
 
 //==============================================================================
@@ -58,7 +55,7 @@ inline void ChataigneApplication::anotherInstanceStarted(const String & commandL
 	// this method is invoked, and the commandLine parameter tells you what
 	// the other instance's command-line arguments were.
 	
-	Engine::getInstance()->parseCommandline(commandLine);
+	engine->parseCommandline(commandLine);
 	LOG("Instance started here !");
 }
 

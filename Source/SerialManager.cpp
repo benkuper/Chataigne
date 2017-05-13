@@ -9,7 +9,6 @@
 */
 
 #include "SerialManager.h"
-#include "DebugHelpers.h"
 juce_ImplementSingleton(SerialManager)
 
 SerialManager::SerialManager()

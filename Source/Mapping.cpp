@@ -19,7 +19,7 @@ forceDisabled(false),
 	continuousProcess = addBoolParameter("Continuous", "If enabled, the mapping will process continuously rather than only when parameter value has changed",false);
 
 	addChildControllableContainer(&input);
-	addChildIndexedControllableContainer(&cdm);
+	addChildControllableContainer(&cdm);
 	addChildControllableContainer(&fm);
 	addChildControllableContainer(&om);
 

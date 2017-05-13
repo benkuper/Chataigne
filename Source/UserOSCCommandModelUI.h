@@ -11,7 +11,7 @@
 #ifndef USEROSCCOMMANDMODELUI_H_INCLUDED
 #define USEROSCCOMMANDMODELUI_H_INCLUDED
 
-#include "BaseItemUI.h"
+
 #include "UserOSCCommandModel.h"
 
 class UserOSCCommandModelUI :

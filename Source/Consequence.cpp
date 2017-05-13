@@ -12,7 +12,8 @@
 #include "ConsequenceEditor.h"
 
 Consequence::Consequence() :
-	BaseCommandHandler("Consequence")
+	BaseCommandHandler("Consequence"),
+	forceDisabled(false)
 {
 	isSelectable = false;
 	
@@ -25,7 +26,7 @@ Consequence::~Consequence()
 
 void Consequence::triggerCommand()
 {
-	if (!enabled->boolValue()) return;
+	if (!enabled->boolValue() || forceDisabled) return;
 	BaseCommandHandler::triggerCommand();
 }
 

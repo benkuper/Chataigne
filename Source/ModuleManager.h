@@ -12,7 +12,7 @@
 #define MODULEMANAGER_H_INCLUDED
 
 #include "Module.h"
-#include "BaseManager.h"
+
 
 class ModuleManager :
 	public BaseManager<Module>

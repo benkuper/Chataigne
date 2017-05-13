@@ -12,9 +12,8 @@
 #define SEQUENCECOMMAND_H_INCLUDED
 
 #include "BaseCommand.h"
-#include "TargetParameter.h"
 #include "SequenceModule.h"
-#include "Engine.h"
+
 
 class SequenceCommand :
 	public BaseCommand,

@@ -12,7 +12,7 @@
 #include "UserOSCCommandModel.h"
 #include "UserOSCCommandModelEditor.h"
 #include "UserOSCCommand.h"
-#include "ControllableFactory.h"
+
 
 UserOSCCommandModel::UserOSCCommandModel() :
 	BaseItem("New Model",false)

@@ -12,7 +12,6 @@
 #define ConditionManagerEditor_H_INCLUDED
 
 
-
 #include "ConditionEditor.h"
 #include "ConditionManager.h"
 
@@ -24,6 +23,8 @@ public:
 	~ConditionManagerEditor();
 
 	void showMenuAndAddItem(bool isFromAddButton) override;
+
+	
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ConditionManagerEditor)
 };

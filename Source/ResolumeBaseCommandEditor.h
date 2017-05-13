@@ -12,7 +12,6 @@
 #define RESOLUMEBASECOMMANDEDITOR_H_INCLUDED
 
 #include "ResolumeBaseCommand.h"
-#include "GenericControllableContainerEditor.h"
 
 class ResolumeBaseCommandEditor :
 	public GenericControllableContainerEditor

@@ -110,7 +110,7 @@ public:
 	void addWiimote(wiimote_t * device);
 	void removeWiimote(Wiimote * wiimote);
 
-	void reconnect();
+	void reconnect(bool autoPairIfNotFound);
 
 	// Inherited via Thread
 	virtual void run() override;

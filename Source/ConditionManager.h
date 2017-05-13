@@ -11,7 +11,6 @@
 #ifndef CONDITIONMANAGER_H_INCLUDED
 #define CONDITIONMANAGER_H_INCLUDED
 
-#include "BaseManager.h"
 #include "Condition.h"
 
 class ConditionManager :

@@ -9,7 +9,6 @@
 */
 
 #include "ModuleEditor.h"
-#include "AssetManager.h"
 
 ModuleEditor::ModuleEditor(Module * _module, bool isRoot) :
 	BaseItemEditor(_module,isRoot),

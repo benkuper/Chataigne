@@ -12,7 +12,7 @@
 #define TIMECOLORMANAGERUI_H_INCLUDED
 
 #include "TimeColorManager.h"
-#include "BaseManagerUI.h"
+
 #include "TimeColorUI.h"
 
 class TimeColorManagerUI :

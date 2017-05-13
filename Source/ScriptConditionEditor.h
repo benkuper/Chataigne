@@ -13,7 +13,6 @@
 
 #include "ConditionEditor.h"
 #include "ScriptCondition.h"
-#include "ScriptEditor.h"
 
 class ScriptConditionEditor :
 	public ConditionEditor

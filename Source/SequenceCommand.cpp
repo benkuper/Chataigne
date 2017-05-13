@@ -63,10 +63,10 @@ void SequenceCommand::trigger()
 
 void SequenceCommand::loadJSONDataInternal(var data)
 {
-	if (Engine::getInstance()->isLoadingFile)
+	if (Engine::mainEngine->isLoadingFile)
 	{
 		DBG("Engine is loading, waiting after load");
-		Engine::getInstance()->addEngineListener(this);
+		Engine::mainEngine->addEngineListener(this);
 		dataToLoad = data;
 	}
 	else BaseCommand::loadJSONDataInternal(data);
@@ -81,7 +81,7 @@ void SequenceCommand::endLoadFile()
 	loadJSONData(dataToLoad);
 	dataToLoad = var();
 
-	Engine::getInstance()->removeEngineListener(this);
+	Engine::mainEngine->removeEngineListener(this);
 
 }
 

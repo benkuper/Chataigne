@@ -11,8 +11,7 @@
 #ifndef MODULE_H_INCLUDED
 #define MODULE_H_INCLUDED
 
-
-#include "BaseItem.h"
+#include "JuceHeader.h"
 #include "BaseCommandHandler.h"
 #include "CommandDefinitionManager.h"
 

@@ -12,7 +12,7 @@
 #define AUDIOLAYERCLIPUI_H_INCLUDED
 
 #include "AudioLayerClip.h"
-#include "BaseItemUI.h"
+
 
 class AudioLayerClipUI :
 	public BaseItemUI<AudioLayerClip>,

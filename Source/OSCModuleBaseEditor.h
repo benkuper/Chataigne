@@ -13,7 +13,6 @@
 
 #include "ModuleEditor.h"
 #include "OSCModule.h"
-#include "IntStepperUI.h"
 
 
 class OSCModuleBaseEditor :

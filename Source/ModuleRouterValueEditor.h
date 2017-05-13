@@ -13,9 +13,8 @@
 #ifndef MODULEROUTERVALUEDITOR_H_INCLUDED
 #define MODULEROUTERVALUEDITOR_H_INCLUDED
 
-#include "BaseItemUI.h"
+
 #include "ModuleRouterValue.h"
-#include "ControllableEditor.h"
 
 class ModuleRouterValueEditor : 
 	public BaseItemUI<ModuleRouterValue>,

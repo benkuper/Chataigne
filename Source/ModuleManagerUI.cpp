@@ -11,8 +11,8 @@
 #include "ModuleManagerUI.h"
 #include "ModuleFactory.h"
 
-ModuleManagerUI::ModuleManagerUI(ModuleManager * _manager) :
-	BaseManagerShapeShifterUI<ModuleManager, Module, ModuleUI>("Modules", _manager)
+ModuleManagerUI::ModuleManagerUI(const String &contentName, ModuleManager * _manager) :
+	BaseManagerShapeShifterUI<ModuleManager, Module, ModuleUI>(contentName, _manager)
 {
 	addExistingItems();
 }

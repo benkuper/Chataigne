@@ -10,7 +10,7 @@
 
 
 #include "WiimoteManager.h"
-#include "DebugHelpers.h"
+
 
 #include "WiimotePairUtil.h"
 
@@ -46,7 +46,7 @@ void WiimoteManager::removeWiimote(Wiimote * w)
 	delete w;
 }
 
-void WiimoteManager::reconnect()
+void WiimoteManager::reconnect(bool autoPairIfNotFound)
 {
 	if (wiiuseIsInit)
 	{
@@ -61,10 +61,24 @@ void WiimoteManager::reconnect()
 	int numConnected = wiiuse_connect(devices, MAX_WIIMOTES);
 	NLOG("Wiimote", "Connected to " << numConnected << " wiimotes");
 
+
+	//only support for windows for now
+#if JUCE_WINDOWS
+	if (wiimotes.size() == 0 && autoPairIfNotFound)
+	{
+		NLOG("Wiimote", "No wiimote found, trying auto-pairing..");
+		int  pairResult = WiiPairUtil::pair();
+		NLOG("Wiimote", pairResult << " devices paired.");
+		reconnect(false);
+		return;
+	}
+#endif
+
 	for (int i = 0; i < numConnected; i++)
 	{
 		addWiimote(devices[i]);
 	}
+
 
 	reinitWiimotes = false;
 }
@@ -73,18 +87,8 @@ void WiimoteManager::run()
 {
 	devices = wiiuse_init(MAX_WIIMOTES);
 	
-	reconnect();
+	reconnect(true);
 
-//only support for windows for now
-#if JUCE_WINDOWS
-	if (wiimotes.size() == 0)
-	{
-		NLOG("Wiimote", "No wiimote found, trying auto-pairing..");
-		int  pairResult = WiiPairUtil::pair();
-		NLOG("Wiimote", pairResult << " devices paired.");
-		reconnect();
-	}
-#endif
 
 	int i = 0;
 	numReconnectTries = 0;
@@ -93,7 +97,7 @@ void WiimoteManager::run()
 		
 		if (reinitWiimotes)
 		{
-			reconnect();
+			reconnect(true);
 		}
 
 		if (wiiuse_poll(devices, MAX_WIIMOTES)) {

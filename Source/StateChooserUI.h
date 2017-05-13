@@ -12,7 +12,7 @@
 #define STATECHOOSERUI_H_INCLUDED
 
 #include "StateManager.h"
-#include "TargetParameterUI.h"
+
 
 class StateChooserUI :
 	public TargetParameterUI

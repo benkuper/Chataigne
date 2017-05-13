@@ -33,7 +33,7 @@ ifeq ($(CONFIG),Debug)
     TARGET_ARCH := -march=native
   endif
 
-  JUCE_CPPFLAGS := $(DEPFLAGS) -DLINUX=1 -DDEBUG=1 -D_DEBUG=1 -DJUCER_LINUX_MAKE_6D53C8B4=1 -DJUCE_APP_VERSION=1.0.0 -DJUCE_APP_VERSION_HEX=0x10000 $(shell pkg-config --cflags alsa freetype2 libcurl x11 xext xinerama) -pthread -I../../JuceLibraryCode -I../../../JUCE/modules -I../../External/wiiuse -I../../External/serial/include $(CPPFLAGS)
+  JUCE_CPPFLAGS := $(DEPFLAGS) -DLINUX=1 -DDEBUG=1 -D_DEBUG=1 -DJUCER_LINUX_MAKE_6D53C8B4=1 -DJUCE_APP_VERSION=1.0.0 -DJUCE_APP_VERSION_HEX=0x10000 $(shell pkg-config --cflags alsa freetype2 libcurl x11 xext xinerama) -pthread -I../../JuceLibraryCode -I../../../JUCE/modules -I../../../JUCE\ Modules -I../../External/wiiuse -I../../External/serial/include $(CPPFLAGS)
   JUCE_CFLAGS += $(JUCE_CPPFLAGS) $(TARGET_ARCH) -g -ggdb -O0 $(CFLAGS)
   JUCE_CXXFLAGS += $(JUCE_CFLAGS) -std=c++11 $(CXXFLAGS)
   JUCE_LDFLAGS += $(TARGET_ARCH) -L$(JUCE_BINDIR) -L$(JUCE_LIBDIR) $(shell pkg-config --libs alsa freetype2 libcurl x11 xext xinerama) -lGL -ldl -lpthread -lrt -lbluetooth  $(LDFLAGS)
@@ -53,7 +53,7 @@ ifeq ($(CONFIG),Release)
     TARGET_ARCH := -march=native
   endif
 
-  JUCE_CPPFLAGS := $(DEPFLAGS) -DLINUX=1 -DNDEBUG=1 -DJUCER_LINUX_MAKE_6D53C8B4=1 -DJUCE_APP_VERSION=1.0.0 -DJUCE_APP_VERSION_HEX=0x10000 $(shell pkg-config --cflags alsa freetype2 libcurl x11 xext xinerama) -pthread -I../../JuceLibraryCode -I../../../JUCE/modules -I../../External/wiiuse -I../../External/serial/include $(CPPFLAGS)
+  JUCE_CPPFLAGS := $(DEPFLAGS) -DLINUX=1 -DNDEBUG=1 -DJUCER_LINUX_MAKE_6D53C8B4=1 -DJUCE_APP_VERSION=1.0.0 -DJUCE_APP_VERSION_HEX=0x10000 $(shell pkg-config --cflags alsa freetype2 libcurl x11 xext xinerama) -pthread -I../../JuceLibraryCode -I../../../JUCE/modules -I../../../JUCE\ Modules -I../../External/wiiuse -I../../External/serial/include $(CPPFLAGS)
   JUCE_CFLAGS += $(JUCE_CPPFLAGS) $(TARGET_ARCH) -O3 $(CFLAGS)
   JUCE_CXXFLAGS += $(JUCE_CFLAGS) -std=c++11 $(CXXFLAGS)
   JUCE_LDFLAGS += $(TARGET_ARCH) -L$(JUCE_BINDIR) -L$(JUCE_LIBDIR) -fvisibility=hidden $(shell pkg-config --libs alsa freetype2 libcurl x11 xext xinerama) -lGL -ldl -lpthread -lrt -lbluetooth  $(LDFLAGS)
@@ -64,91 +64,7 @@ ifeq ($(CONFIG),Release)
 endif
 
 OBJECTS := \
-  $(JUCE_OBJDIR)/BaseItemEditor_5e839b1a.o \
-  $(JUCE_OBJDIR)/BaseItem_6b33fe0d.o \
-  $(JUCE_OBJDIR)/DashboardScriptItemUI_cd4226a7.o \
-  $(JUCE_OBJDIR)/DashboardItemManagerUI_d9564d83.o \
-  $(JUCE_OBJDIR)/DashboardPanelUI_19e656ed.o \
-  $(JUCE_OBJDIR)/DashboardItemUI_6e4bc37c.o \
-  $(JUCE_OBJDIR)/DashboardManagerUI_ef9a11d6.o \
-  $(JUCE_OBJDIR)/DashboardView_80793a3a.o \
-  $(JUCE_OBJDIR)/DashboardUI_abd9e689.o \
-  $(JUCE_OBJDIR)/DashboardManagerView_d4dbc647.o \
-  $(JUCE_OBJDIR)/DashboardScriptItem_305cc593.o \
-  $(JUCE_OBJDIR)/DashboardPanelManager_13a1de9e.o \
-  $(JUCE_OBJDIR)/DashboardPanel_96bc4f59.o \
-  $(JUCE_OBJDIR)/Dashboard_604715f5.o \
-  $(JUCE_OBJDIR)/DashboardItem_7f6193a8.o \
-  $(JUCE_OBJDIR)/DashboardItemManager_f5c4f36f.o \
-  $(JUCE_OBJDIR)/DashboardManager_d0c3b082.o \
-  $(JUCE_OBJDIR)/LookAndFeelOO_b6d1a33f.o \
-  $(JUCE_OBJDIR)/AssetManager_d79828a6.o \
-  $(JUCE_OBJDIR)/ShapeShifter_bf2b9b57.o \
-  $(JUCE_OBJDIR)/ShapeShifterContainer_69052434.o \
-  $(JUCE_OBJDIR)/ShapeShifterContent_505997ac.o \
-  $(JUCE_OBJDIR)/ShapeShifterFactory_6c2ae3bd.o \
-  $(JUCE_OBJDIR)/ShapeShifterManager_69e2b8e0.o \
-  $(JUCE_OBJDIR)/ShapeShifterPanel_821dd737.o \
-  $(JUCE_OBJDIR)/ShapeShifterPanelHeader_8b4f9de4.o \
-  $(JUCE_OBJDIR)/ShapeShifterPanelTab_a4791be8.o \
-  $(JUCE_OBJDIR)/ShapeShifterWindow_e5e759e7.o \
-  $(JUCE_OBJDIR)/GapGrabber_4d565216.o \
-  $(JUCE_OBJDIR)/InspectableSelectionManager_676e38f0.o \
-  $(JUCE_OBJDIR)/InspectableSelector_fc31874e.o \
-  $(JUCE_OBJDIR)/InspectableContentComponent_c06df73.o \
-  $(JUCE_OBJDIR)/Inspector_d6237cd8.o \
-  $(JUCE_OBJDIR)/InspectableEditor_630d045c.o \
-  $(JUCE_OBJDIR)/InspectableContent_25389b34.o \
-  $(JUCE_OBJDIR)/Inspectable_484e00cf.o \
-  $(JUCE_OBJDIR)/Outliner_324682f9.o \
-  $(JUCE_OBJDIR)/CustomLogger_b7c36c6a.o \
-  $(JUCE_OBJDIR)/CustomLoggerUI_159a73be.o \
-  $(JUCE_OBJDIR)/UndoMaster_fb0da6ef.o \
-  $(JUCE_OBJDIR)/AppUpdater_44dc28f1.o \
-  $(JUCE_OBJDIR)/ProgressNotifier_22cad7fc.o \
-  $(JUCE_OBJDIR)/ProgressWindow_8ee8f986.o \
-  $(JUCE_OBJDIR)/ColorParameterUI_ccc2ce23.o \
-  $(JUCE_OBJDIR)/DoubleSliderUI_f128d6af.o \
-  $(JUCE_OBJDIR)/TripleSliderUI_836dfbbc.o \
-  $(JUCE_OBJDIR)/BetterStepper_8f8519a2.o \
-  $(JUCE_OBJDIR)/BoolImageToggleUI_487c797a.o \
-  $(JUCE_OBJDIR)/BoolToggleUI_bb303d7b.o \
-  $(JUCE_OBJDIR)/EnumParameterUI_e576769d.o \
-  $(JUCE_OBJDIR)/FloatParameterLabelUI_6e7adcfc.o \
-  $(JUCE_OBJDIR)/FloatSliderUI_d00e5892.o \
-  $(JUCE_OBJDIR)/FloatStepperUI_bb9cf532.o \
-  $(JUCE_OBJDIR)/IntSliderUI_a48244a5.o \
-  $(JUCE_OBJDIR)/IntStepperUI_75a68b7f.o \
-  $(JUCE_OBJDIR)/ParameterUI_37f5cbde.o \
-  $(JUCE_OBJDIR)/StringParameterUI_aac76e8d.o \
-  $(JUCE_OBJDIR)/TargetParameterUI_9ba92d0d.o \
-  $(JUCE_OBJDIR)/ColorParameter_8d991c0f.o \
-  $(JUCE_OBJDIR)/FloatRangeParameter_a34506c9.o \
-  $(JUCE_OBJDIR)/IntRangeParameter_412e589c.o \
-  $(JUCE_OBJDIR)/Point2DParameter_7a5034f0.o \
-  $(JUCE_OBJDIR)/Point3DParameter_d42b9f31.o \
-  $(JUCE_OBJDIR)/BoolParameter_60c297c0.o \
-  $(JUCE_OBJDIR)/EnumParameter_6e309b09.o \
-  $(JUCE_OBJDIR)/FloatParameter_67c285b6.o \
-  $(JUCE_OBJDIR)/IntParameter_21cc1c03.o \
-  $(JUCE_OBJDIR)/Parameter_73564c8a.o \
-  $(JUCE_OBJDIR)/StringParameter_fe3ecef9.o \
-  $(JUCE_OBJDIR)/TargetParameter_c17e2d79.o \
-  $(JUCE_OBJDIR)/PresetChooser_96a32abd.o \
-  $(JUCE_OBJDIR)/PresetManager_fc30642f.o \
-  $(JUCE_OBJDIR)/TriggerImageUI_b90ab460.o \
-  $(JUCE_OBJDIR)/GenericControllableContainerEditor_117ebfb7.o \
-  $(JUCE_OBJDIR)/ControllableEditor_dd5c95df.o \
-  $(JUCE_OBJDIR)/ControllableUI_c544de6.o \
-  $(JUCE_OBJDIR)/TriggerBlinkUI_693175a1.o \
-  $(JUCE_OBJDIR)/TriggerButtonUI_d1a8d47f.o \
-  $(JUCE_OBJDIR)/TriggerUI_2ce661ad.o \
-  $(JUCE_OBJDIR)/Controllable_d3fdb092.o \
-  $(JUCE_OBJDIR)/ControllableContainer_f3a7c159.o \
-  $(JUCE_OBJDIR)/ControllableFactory_10ac8622.o \
-  $(JUCE_OBJDIR)/ControllableHelpers_912c061d.o \
-  $(JUCE_OBJDIR)/ControllableIndexedContainer_a91d6542.o \
-  $(JUCE_OBJDIR)/Trigger_dbc00a19.o \
+  $(JUCE_OBJDIR)/ChataigneAssetManager_e104aa7c.o \
   $(JUCE_OBJDIR)/DMXArtNetDevice_27b282c0.o \
   $(JUCE_OBJDIR)/DMXDevice_d9902f26.o \
   $(JUCE_OBJDIR)/DMXEnttecProDevice_aeec85d6.o \
@@ -170,10 +86,6 @@ OBJECTS := \
   $(JUCE_OBJDIR)/SerialDevice_1ff52cf3.o \
   $(JUCE_OBJDIR)/SerialDeviceParameter_c4553540.o \
   $(JUCE_OBJDIR)/SerialManager_3fa6f9fa.o \
-  $(JUCE_OBJDIR)/ScriptEditor_fb783ea1.o \
-  $(JUCE_OBJDIR)/Script_f72f92d4.o \
-  $(JUCE_OBJDIR)/ScriptManager_b3bdcac3.o \
-  $(JUCE_OBJDIR)/ScriptUtil_2745ee76.o \
   $(JUCE_OBJDIR)/PluginManager_45f89b5b.o \
   $(JUCE_OBJDIR)/EasingUI_9ec4c08.o \
   $(JUCE_OBJDIR)/Easing_d662cf34.o \
@@ -254,8 +166,7 @@ OBJECTS := \
   $(JUCE_OBJDIR)/MyoDevice_ef3fe55a.o \
   $(JUCE_OBJDIR)/MyoManager_59b34e73.o \
   $(JUCE_OBJDIR)/MyoModule_8cd27270.o \
-  $(JUCE_OBJDIR)/GenericSetParameterCommandEditor_dcc319e3.o \
-  $(JUCE_OBJDIR)/GenericSetParameterCommand_f3888796.o \
+  $(JUCE_OBJDIR)/GenericControllableCommand_a1b41734.o \
   $(JUCE_OBJDIR)/ChataigneGenericModule_de326dee.o \
   $(JUCE_OBJDIR)/DMXCommand_5ffc0ec5.o \
   $(JUCE_OBJDIR)/DMXModuleEditor_d630ba09.o \
@@ -393,8 +304,7 @@ OBJECTS := \
   $(JUCE_OBJDIR)/SequenceManagerUI_cc91bda1.o \
   $(JUCE_OBJDIR)/TimeMachineView_76e28760.o \
   $(JUCE_OBJDIR)/SequenceManager_52b9d30d.o \
-  $(JUCE_OBJDIR)/Engine_7f3228cb.o \
-  $(JUCE_OBJDIR)/EngineFileDocument_abfb722.o \
+  $(JUCE_OBJDIR)/ChataigneEngine_2d424321.o \
   $(JUCE_OBJDIR)/Main_90ebc5c2.o \
   $(JUCE_OBJDIR)/MainComponent_a6ffb4a5.o \
   $(JUCE_OBJDIR)/MainComponentCommands_b1179f4d.o \
@@ -412,6 +322,7 @@ OBJECTS := \
   $(JUCE_OBJDIR)/juce_gui_basics_8a6da59c.o \
   $(JUCE_OBJDIR)/juce_gui_extra_4a026f23.o \
   $(JUCE_OBJDIR)/juce_opengl_cd70b4c2.o \
+  $(JUCE_OBJDIR)/juce_organicui_84acc56.o \
   $(JUCE_OBJDIR)/juce_osc_be4cee16.o \
   $(JUCE_OBJDIR)/juce_video_f128c512.o \
 
@@ -436,429 +347,9 @@ strip:
 	@echo Stripping Chataigne
 	-@$(STRIP) --strip-unneeded $(JUCE_OUTDIR)/$(TARGET)
 
-$(JUCE_OBJDIR)/BaseItemEditor_5e839b1a.o: ../../Source/BaseItemEditor.cpp
+$(JUCE_OBJDIR)/ChataigneAssetManager_e104aa7c.o: ../../Source/ChataigneAssetManager.cpp
 	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling BaseItemEditor.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/BaseItem_6b33fe0d.o: ../../Source/BaseItem.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling BaseItem.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/DashboardScriptItemUI_cd4226a7.o: ../../Source/DashboardScriptItemUI.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling DashboardScriptItemUI.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/DashboardItemManagerUI_d9564d83.o: ../../Source/DashboardItemManagerUI.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling DashboardItemManagerUI.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/DashboardPanelUI_19e656ed.o: ../../Source/DashboardPanelUI.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling DashboardPanelUI.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/DashboardItemUI_6e4bc37c.o: ../../Source/DashboardItemUI.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling DashboardItemUI.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/DashboardManagerUI_ef9a11d6.o: ../../Source/DashboardManagerUI.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling DashboardManagerUI.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/DashboardView_80793a3a.o: ../../Source/DashboardView.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling DashboardView.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/DashboardUI_abd9e689.o: ../../Source/DashboardUI.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling DashboardUI.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/DashboardManagerView_d4dbc647.o: ../../Source/DashboardManagerView.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling DashboardManagerView.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/DashboardScriptItem_305cc593.o: ../../Source/DashboardScriptItem.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling DashboardScriptItem.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/DashboardPanelManager_13a1de9e.o: ../../Source/DashboardPanelManager.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling DashboardPanelManager.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/DashboardPanel_96bc4f59.o: ../../Source/DashboardPanel.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling DashboardPanel.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/Dashboard_604715f5.o: ../../Source/Dashboard.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling Dashboard.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/DashboardItem_7f6193a8.o: ../../Source/DashboardItem.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling DashboardItem.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/DashboardItemManager_f5c4f36f.o: ../../Source/DashboardItemManager.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling DashboardItemManager.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/DashboardManager_d0c3b082.o: ../../Source/DashboardManager.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling DashboardManager.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/LookAndFeelOO_b6d1a33f.o: ../../Source/LookAndFeelOO.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling LookAndFeelOO.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/AssetManager_d79828a6.o: ../../Source/AssetManager.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling AssetManager.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/ShapeShifter_bf2b9b57.o: ../../Source/ShapeShifter.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling ShapeShifter.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/ShapeShifterContainer_69052434.o: ../../Source/ShapeShifterContainer.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling ShapeShifterContainer.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/ShapeShifterContent_505997ac.o: ../../Source/ShapeShifterContent.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling ShapeShifterContent.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/ShapeShifterFactory_6c2ae3bd.o: ../../Source/ShapeShifterFactory.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling ShapeShifterFactory.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/ShapeShifterManager_69e2b8e0.o: ../../Source/ShapeShifterManager.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling ShapeShifterManager.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/ShapeShifterPanel_821dd737.o: ../../Source/ShapeShifterPanel.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling ShapeShifterPanel.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/ShapeShifterPanelHeader_8b4f9de4.o: ../../Source/ShapeShifterPanelHeader.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling ShapeShifterPanelHeader.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/ShapeShifterPanelTab_a4791be8.o: ../../Source/ShapeShifterPanelTab.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling ShapeShifterPanelTab.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/ShapeShifterWindow_e5e759e7.o: ../../Source/ShapeShifterWindow.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling ShapeShifterWindow.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/GapGrabber_4d565216.o: ../../Source/GapGrabber.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling GapGrabber.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/InspectableSelectionManager_676e38f0.o: ../../Source/InspectableSelectionManager.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling InspectableSelectionManager.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/InspectableSelector_fc31874e.o: ../../Source/InspectableSelector.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling InspectableSelector.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/InspectableContentComponent_c06df73.o: ../../Source/InspectableContentComponent.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling InspectableContentComponent.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/Inspector_d6237cd8.o: ../../Source/Inspector.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling Inspector.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/InspectableEditor_630d045c.o: ../../Source/InspectableEditor.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling InspectableEditor.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/InspectableContent_25389b34.o: ../../Source/InspectableContent.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling InspectableContent.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/Inspectable_484e00cf.o: ../../Source/Inspectable.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling Inspectable.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/Outliner_324682f9.o: ../../Source/Outliner.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling Outliner.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/CustomLogger_b7c36c6a.o: ../../Source/CustomLogger.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling CustomLogger.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/CustomLoggerUI_159a73be.o: ../../Source/CustomLoggerUI.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling CustomLoggerUI.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/UndoMaster_fb0da6ef.o: ../../Source/UndoMaster.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling UndoMaster.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/AppUpdater_44dc28f1.o: ../../Source/AppUpdater.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling AppUpdater.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/ProgressNotifier_22cad7fc.o: ../../Source/ProgressNotifier.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling ProgressNotifier.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/ProgressWindow_8ee8f986.o: ../../Source/ProgressWindow.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling ProgressWindow.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/ColorParameterUI_ccc2ce23.o: ../../Source/ColorParameterUI.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling ColorParameterUI.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/DoubleSliderUI_f128d6af.o: ../../Source/DoubleSliderUI.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling DoubleSliderUI.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/TripleSliderUI_836dfbbc.o: ../../Source/TripleSliderUI.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling TripleSliderUI.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/BetterStepper_8f8519a2.o: ../../Source/BetterStepper.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling BetterStepper.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/BoolImageToggleUI_487c797a.o: ../../Source/BoolImageToggleUI.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling BoolImageToggleUI.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/BoolToggleUI_bb303d7b.o: ../../Source/BoolToggleUI.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling BoolToggleUI.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/EnumParameterUI_e576769d.o: ../../Source/EnumParameterUI.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling EnumParameterUI.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/FloatParameterLabelUI_6e7adcfc.o: ../../Source/FloatParameterLabelUI.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling FloatParameterLabelUI.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/FloatSliderUI_d00e5892.o: ../../Source/FloatSliderUI.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling FloatSliderUI.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/FloatStepperUI_bb9cf532.o: ../../Source/FloatStepperUI.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling FloatStepperUI.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/IntSliderUI_a48244a5.o: ../../Source/IntSliderUI.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling IntSliderUI.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/IntStepperUI_75a68b7f.o: ../../Source/IntStepperUI.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling IntStepperUI.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/ParameterUI_37f5cbde.o: ../../Source/ParameterUI.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling ParameterUI.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/StringParameterUI_aac76e8d.o: ../../Source/StringParameterUI.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling StringParameterUI.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/TargetParameterUI_9ba92d0d.o: ../../Source/TargetParameterUI.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling TargetParameterUI.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/ColorParameter_8d991c0f.o: ../../Source/ColorParameter.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling ColorParameter.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/FloatRangeParameter_a34506c9.o: ../../Source/FloatRangeParameter.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling FloatRangeParameter.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/IntRangeParameter_412e589c.o: ../../Source/IntRangeParameter.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling IntRangeParameter.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/Point2DParameter_7a5034f0.o: ../../Source/Point2DParameter.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling Point2DParameter.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/Point3DParameter_d42b9f31.o: ../../Source/Point3DParameter.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling Point3DParameter.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/BoolParameter_60c297c0.o: ../../Source/BoolParameter.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling BoolParameter.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/EnumParameter_6e309b09.o: ../../Source/EnumParameter.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling EnumParameter.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/FloatParameter_67c285b6.o: ../../Source/FloatParameter.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling FloatParameter.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/IntParameter_21cc1c03.o: ../../Source/IntParameter.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling IntParameter.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/Parameter_73564c8a.o: ../../Source/Parameter.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling Parameter.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/StringParameter_fe3ecef9.o: ../../Source/StringParameter.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling StringParameter.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/TargetParameter_c17e2d79.o: ../../Source/TargetParameter.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling TargetParameter.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/PresetChooser_96a32abd.o: ../../Source/PresetChooser.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling PresetChooser.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/PresetManager_fc30642f.o: ../../Source/PresetManager.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling PresetManager.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/TriggerImageUI_b90ab460.o: ../../Source/TriggerImageUI.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling TriggerImageUI.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/GenericControllableContainerEditor_117ebfb7.o: ../../Source/GenericControllableContainerEditor.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling GenericControllableContainerEditor.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/ControllableEditor_dd5c95df.o: ../../Source/ControllableEditor.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling ControllableEditor.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/ControllableUI_c544de6.o: ../../Source/ControllableUI.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling ControllableUI.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/TriggerBlinkUI_693175a1.o: ../../Source/TriggerBlinkUI.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling TriggerBlinkUI.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/TriggerButtonUI_d1a8d47f.o: ../../Source/TriggerButtonUI.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling TriggerButtonUI.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/TriggerUI_2ce661ad.o: ../../Source/TriggerUI.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling TriggerUI.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/Controllable_d3fdb092.o: ../../Source/Controllable.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling Controllable.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/ControllableContainer_f3a7c159.o: ../../Source/ControllableContainer.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling ControllableContainer.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/ControllableFactory_10ac8622.o: ../../Source/ControllableFactory.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling ControllableFactory.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/ControllableHelpers_912c061d.o: ../../Source/ControllableHelpers.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling ControllableHelpers.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/ControllableIndexedContainer_a91d6542.o: ../../Source/ControllableIndexedContainer.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling ControllableIndexedContainer.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/Trigger_dbc00a19.o: ../../Source/Trigger.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling Trigger.cpp"
+	@echo "Compiling ChataigneAssetManager.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/DMXArtNetDevice_27b282c0.o: ../../Source/DMXArtNetDevice.cpp
@@ -964,26 +455,6 @@ $(JUCE_OBJDIR)/SerialDeviceParameter_c4553540.o: ../../Source/SerialDeviceParame
 $(JUCE_OBJDIR)/SerialManager_3fa6f9fa.o: ../../Source/SerialManager.cpp
 	-@mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling SerialManager.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/ScriptEditor_fb783ea1.o: ../../Source/ScriptEditor.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling ScriptEditor.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/Script_f72f92d4.o: ../../Source/Script.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling Script.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/ScriptManager_b3bdcac3.o: ../../Source/ScriptManager.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling ScriptManager.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/ScriptUtil_2745ee76.o: ../../Source/ScriptUtil.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling ScriptUtil.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/PluginManager_45f89b5b.o: ../../Source/PluginManager.cpp
@@ -1386,14 +857,9 @@ $(JUCE_OBJDIR)/MyoModule_8cd27270.o: ../../Source/MyoModule.cpp
 	@echo "Compiling MyoModule.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
 
-$(JUCE_OBJDIR)/GenericSetParameterCommandEditor_dcc319e3.o: ../../Source/GenericSetParameterCommandEditor.cpp
+$(JUCE_OBJDIR)/GenericControllableCommand_a1b41734.o: ../../Source/GenericControllableCommand.cpp
 	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling GenericSetParameterCommandEditor.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/GenericSetParameterCommand_f3888796.o: ../../Source/GenericSetParameterCommand.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling GenericSetParameterCommand.cpp"
+	@echo "Compiling GenericControllableCommand.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/ChataigneGenericModule_de326dee.o: ../../Source/ChataigneGenericModule.cpp
@@ -2081,14 +1547,9 @@ $(JUCE_OBJDIR)/SequenceManager_52b9d30d.o: ../../Source/SequenceManager.cpp
 	@echo "Compiling SequenceManager.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
 
-$(JUCE_OBJDIR)/Engine_7f3228cb.o: ../../Source/Engine.cpp
+$(JUCE_OBJDIR)/ChataigneEngine_2d424321.o: ../../Source/ChataigneEngine.cpp
 	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling Engine.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/EngineFileDocument_abfb722.o: ../../Source/EngineFileDocument.cpp
-	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling EngineFileDocument.cpp"
+	@echo "Compiling ChataigneEngine.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/Main_90ebc5c2.o: ../../Source/Main.cpp
@@ -2174,6 +1635,11 @@ $(JUCE_OBJDIR)/juce_gui_extra_4a026f23.o: ../../JuceLibraryCode/juce_gui_extra.c
 $(JUCE_OBJDIR)/juce_opengl_cd70b4c2.o: ../../JuceLibraryCode/juce_opengl.cpp
 	-@mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling juce_opengl.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/juce_organicui_84acc56.o: ../../JuceLibraryCode/juce_organicui.cpp
+	-@mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling juce_organicui.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/juce_osc_be4cee16.o: ../../JuceLibraryCode/juce_osc.cpp

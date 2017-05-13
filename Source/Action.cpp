@@ -13,7 +13,7 @@
 
 Action::Action(const String & name) :
 	BaseItem(name),
-forceDisabled(false),
+	forceDisabled(false),
 	autoTriggerWhenAllConditionAreActives(true)
 {
 	addChildControllableContainer(&cdm);
@@ -28,6 +28,15 @@ forceDisabled(false),
 
 Action::~Action()
 {
+}
+
+void Action::setForceDisabled(bool value)
+{
+	if (forceDisabled == value) return;
+	forceDisabled = value;
+	csm.setForceDisabled(value);
+
+	//todo disabled conditions for better performance (no computation) when disabled
 }
 
 var Action::getJSONData()

@@ -13,7 +13,6 @@
 
 #include "BaseCommandHandlerEditor.h"
 #include "CommandFactory.h"
-#include  "TriggerButtonUI.h"
 
 BaseCommandHandlerEditor::BaseCommandHandlerEditor(BaseCommandHandler * _handler, bool isRoot) :
 	BaseItemEditor(_handler, isRoot),

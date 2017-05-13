@@ -11,11 +11,11 @@
 #include "Module.h"
 #include "CommandFactory.h"
 #include "ModuleEditor.h"
-#include "ControllableFactory.h"
-#include "ScriptManager.h"
+
+
 
 Module::Module(const String &name) :
-	BaseItem(name,true,true),
+	BaseItem(name,true,true,true),
 	valuesCC("Values"),
 	commandTester("Command Tester",CommandContext::ACTION),
 	canHandleRouteValues(false)
@@ -54,8 +54,7 @@ void Module::controllableFeedbackUpdate(ControllableContainer * cc, Controllable
 {
 	Array<var> args;
 	args.add(c->createScriptObject());
-	if(c->type == Controllable::TRIGGER) scriptManager->callFunctionOnAllItems("moduleValueTriggered", args);
-	else scriptManager->callFunctionOnAllItems("moduleParamChanged", args);
+	scriptManager->callFunctionOnAllItems("moduleParamChanged", args);
 }
 
 void Module::setupModuleFromJSONData(var data)

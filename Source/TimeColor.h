@@ -11,8 +11,7 @@
 #ifndef TIMECOLOR_H_INCLUDED
 #define TIMECOLOR_H_INCLUDED
 
-#include "ColorParameter.h"
-#include "BaseItem.h"
+#include "JuceHeader.h"
 
 class TimeColor :
 	public BaseItem

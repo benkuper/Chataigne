@@ -11,9 +11,8 @@
 #ifndef MODULEEDITOR_H_INCLUDED
 #define MODULEEDITOR_H_INCLUDED
 
-#include "BaseItemEditor.h"
 #include "Module.h"
-#include "BoolToggleUI.h"
+
 #include "BaseCommandHandlerEditor.h"
 
 class ModuleEditor :

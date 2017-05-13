@@ -15,8 +15,8 @@
 
 #include "StateManager.h"
 #include "StateViewUI.h"
-#include "BaseManagerShapeShifterUI.h"
-#include "Style.h"
+
+
 #include "StateTransitionManagerUI.h"
 
 class StateMachineView :
@@ -24,7 +24,7 @@ class StateMachineView :
 	public StateViewUI::Listener
 {
 public:
-	StateMachineView(StateManager * _manager);
+	StateMachineView(const String &contentName, StateManager * _manager);
 	~StateMachineView();
 	
 	StateManager * manager;
@@ -50,6 +50,10 @@ public:
 	//From StateViewUI listener
 	void askCreateTransitionFromUI(StateViewUI * se) override;
 	void askFinishTransitionFromUI(StateViewUI * se) override;
+
+
+	static StateMachineView * create(const String &contentName) { return new StateMachineView(contentName, StateManager::getInstance()); }
+
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(StateMachineView)
 };

@@ -10,7 +10,7 @@
 
 #include "MappingOutput.h"
 #include "BaseCommand.h"
-#include "Engine.h" 
+ 
 
 MappingOutput::MappingOutput() :
 	BaseCommandHandler("MappingOutput",CommandContext::MAPPING)

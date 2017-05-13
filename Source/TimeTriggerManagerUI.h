@@ -12,7 +12,7 @@
 #define TIMETRIGGERMANAGERUI_H_INCLUDED
 
 #include "TimeTriggerManager.h"
-#include "BaseManagerUI.h"
+
 #include "TimeTriggerUI.h"
 
 class TriggerLayerTimeline;

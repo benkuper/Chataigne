@@ -11,7 +11,6 @@
 #ifndef ACTION_H_INCLUDED
 #define ACTION_H_INCLUDED
 
-#include "BaseItem.h"
 #include "ConditionManager.h"
 #include "ConsequenceManager.h"
 
@@ -33,6 +32,8 @@ public:
 	BoolParameter * isActive;
 	BoolParameter * isValid; //whether the action can process or not
 	Trigger * trigger;
+
+	void setForceDisabled(bool value);
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;

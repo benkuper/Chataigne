@@ -11,7 +11,6 @@
 #ifndef CUSTOMOSCCOMMANDEDITOR_H_INCLUDED
 #define CUSTOMOSCCOMMANDEDITOR_H_INCLUDED
 
-#include "GenericControllableContainerEditor.h"
 #include "CustomOSCCommand.h"
 
 class CustomOSCCommandEditor :

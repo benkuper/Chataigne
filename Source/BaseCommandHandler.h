@@ -11,8 +11,8 @@
 #ifndef BASECOMMANDHANDLER_H_INCLUDED
 #define BASECOMMANDHANDLER_H_INCLUDED
 
-#include "BaseItem.h"
 #include "CommandDefinition.h"
+
 class BaseCommand;
 
 class BaseCommandHandler :

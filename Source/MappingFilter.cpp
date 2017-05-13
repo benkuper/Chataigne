@@ -9,7 +9,6 @@
 */
 
 #include "MappingFilter.h"
-#include "ControllableFactory.h"
 #include "MappingFilterEditor.h"
 
 MappingFilter::MappingFilter(const String &name) :

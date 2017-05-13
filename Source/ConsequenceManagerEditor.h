@@ -11,7 +11,7 @@
 #ifndef CONSEQUENCEMANAGEREDITOR_H_INCLUDED
 #define CONSEQUENCEMANAGEREDITOR_H_INCLUDED
 
-#include "GenericManagerEditor.h"
+#include "JuceHeader.h"
 #include "ConsequenceManager.h"
 
 class ConsequenceManagerEditor :

@@ -11,7 +11,7 @@
 #ifndef MAPPINGLAYEREDITOR_H_INCLUDED
 #define MAPPINGLAYEREDITOR_H_INCLUDED
 
-#include "InspectableEditor.h"
+
 #include "MappingLayer.h"
 #include "MappingEditor.h"
 

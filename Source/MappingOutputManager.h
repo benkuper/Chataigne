@@ -12,7 +12,6 @@
 #define MAPPINGOUTPUTMANAGER_H_INCLUDED
 
 
-#include "BaseManager.h"
 #include "MappingOutput.h"
 
 class MappingOutputManager :

@@ -11,7 +11,6 @@
 #ifndef USEROSCCOMMANDEDITOR_H_INCLUDED
 #define USEROSCCOMMANDEDITOR_H_INCLUDED
 
-#include "GenericControllableContainerEditor.h"
 #include "UserOSCCommand.h"
 
 class UserOSCCommandEditor :

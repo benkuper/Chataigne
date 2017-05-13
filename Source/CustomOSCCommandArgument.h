@@ -11,7 +11,7 @@
 #ifndef CUSTOMOSCCOMMANDARGUMENT_H_INCLUDED
 #define CUSTOMOSCCOMMANDARGUMENT_H_INCLUDED
 
-#include "BaseItem.h"
+#include "JuceHeader.h"
 
 class CustomOSCCommandArgument :
 	public BaseItem

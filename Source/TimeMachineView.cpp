@@ -11,8 +11,8 @@
 #include "TimeMachineView.h"
 
 
-TimeMachineView::TimeMachineView(SequenceManager * _manager) :
-	ShapeShifterContentComponent("Time Machine"),
+TimeMachineView::TimeMachineView(const String &contentName, SequenceManager * _manager) :
+	ShapeShifterContentComponent(contentName),
 	manager(_manager),
 	createSequenceBT("Create a sequence")
 {

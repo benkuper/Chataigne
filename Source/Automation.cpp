@@ -10,7 +10,6 @@
 
 #include "Automation.h"
 #include "AutomationEditor.h"
-#include "InspectableSelectionManager.h"
 
 AutomationKeyComparator Automation::comparator;
 

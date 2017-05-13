@@ -9,7 +9,6 @@
 */
 
 #include "AudioModuleEditor.h"
-#include "FloatSliderUI.h"
 
 AudioModuleEditor::AudioModuleEditor(AudioModule * module, bool isRoot) :
 	ModuleEditor(module, isRoot),

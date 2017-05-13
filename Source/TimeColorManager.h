@@ -12,7 +12,7 @@
 #define TIMECOLORMANAGER_H_INCLUDED
 
 #include "TimeColor.h"
-#include "BaseManager.h"
+
 #include "Sequence.h"
 
 class MappingLayer;

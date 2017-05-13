@@ -12,7 +12,7 @@
 #define TIMETRIGGERUI_H_INCLUDED
 
 #include "TimeTrigger.h"
-#include "BaseItemUI.h"
+
 
 class TimeTriggerUI :
 	public BaseItemUI<TimeTrigger>

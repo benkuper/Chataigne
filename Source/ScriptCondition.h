@@ -12,7 +12,7 @@
 #define SCRIPTCONDITION_H_INCLUDED
 
 #include "Condition.h"
-#include "Script.h"
+
 
 class ScriptCondition :
 	public Condition

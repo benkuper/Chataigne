@@ -9,7 +9,7 @@
 */
 
 #include "UserOSCCommandModelEditor.h"
-#include "BoolToggleUI.h"
+
 
 UserOSCCommandModelEditor::UserOSCCommandModelEditor(UserOSCCommandModel * _model, bool isRoot) :
 	BaseItemEditor(_model, isRoot),

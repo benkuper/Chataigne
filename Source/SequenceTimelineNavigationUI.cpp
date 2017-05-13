@@ -9,7 +9,7 @@
 */
 
 #include "SequenceTimelineNavigationUI.h"
-#include "Style.h"
+
 
 SequenceTimelineNavigationUI::SequenceTimelineNavigationUI(Sequence * _sequence) :
 	sequence(_sequence),

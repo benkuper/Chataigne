@@ -12,7 +12,7 @@
 #define STATEUI_H_INCLUDED
 
 
-#include "BaseItemUI.h"
+
 #include "State.h"
 
 class StateUI :

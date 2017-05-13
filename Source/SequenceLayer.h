@@ -12,9 +12,8 @@
 #define SEQUENCELAYER_H_INCLUDED
 
 
-#include "BaseItem.h"
+
 #include "Sequence.h"
-#include "ColorParameter.h"
 
 class SequenceLayerPanel;
 class SequenceLayerTimeline;

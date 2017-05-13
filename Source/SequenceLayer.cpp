@@ -11,10 +11,10 @@
 #include "SequenceLayer.h"
 #include "SequenceLayerPanel.h"
 #include "SequenceLayerTimeline.h"
-#include "BaseItemEditor.h"
+
 
 SequenceLayer::SequenceLayer(Sequence * _sequence, const String &name) :
-	BaseItem(name),
+	BaseItem(name,true,true,true),
 	sequence(_sequence)
 {
 	jassert(sequence != nullptr);

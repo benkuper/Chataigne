@@ -11,7 +11,7 @@
 #ifndef AUDIOLAYERCLIP_H_INCLUDED
 #define AUDIOLAYERCLIP_H_INCLUDED
 
-#include "BaseItem.h"
+#include "JuceHeader.h"
 
 class AudioLayerClip :
 	public BaseItem

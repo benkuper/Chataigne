@@ -11,7 +11,6 @@
 #ifndef MODULEMANAGERUI_H_INCLUDED
 #define MODULEMANAGERUI_H_INCLUDED
 
-#include "BaseManagerShapeShifterUI.h"
 #include "ModuleUI.h"
 #include "ModuleManager.h"
 
@@ -20,10 +19,12 @@ class ModuleManagerUI :
 {
 public:
 
-	ModuleManagerUI(ModuleManager *_manager);
+	ModuleManagerUI(const String &contentName, ModuleManager *_manager);
 	~ModuleManagerUI();
 
 	void showMenuAndAddItem(bool ,Point<int>) override;
+
+	static ModuleManagerUI * create(const String &contentName) { return new ModuleManagerUI(contentName, ModuleManager::getInstance()); }
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ModuleManagerUI)
 };

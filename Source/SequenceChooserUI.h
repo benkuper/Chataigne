@@ -12,7 +12,7 @@
 #define SEQUENCECHOOSERUI_H_INCLUDED
 
 #include "StateManager.h"
-#include "TargetParameterUI.h"
+
 
 class Sequence;
 

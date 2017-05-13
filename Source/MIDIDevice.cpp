@@ -9,7 +9,6 @@
 */
 
 #include "MIDIDevice.h"
-#include "DebugHelpers.h"
 
  MIDIDevice::MIDIDevice(const String & deviceName, Type t) :
 	name(deviceName),

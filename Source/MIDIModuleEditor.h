@@ -16,7 +16,7 @@
 #include "MIDIDeviceChooser.h"
 
 #include "MIDIDeviceParameterUI.h"
-#include "BoolToggleUI.h"
+
 
 class MIDIModuleEditor :
 	public ModuleEditor

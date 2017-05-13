@@ -11,10 +11,8 @@
 #ifndef MIDIDEVICEPARAMETERUI_H_INCLUDED
 #define MIDIDEVICEPARAMETERUI_H_INCLUDED
 
-#include "ParameterUI.h"
 #include "MIDIDeviceParameter.h"
 #include "MIDIDeviceChooser.h"
-#include "ControllableEditor.h"
 
 class MIDIDeviceParameterUI :
 	public ParameterUI,

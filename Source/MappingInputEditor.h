@@ -12,7 +12,6 @@
 #define MAPPINGINPUTUI_H_INCLUDED
 
 #include "MappingInput.h"
-#include "InspectableEditor.h"
 #include "ModuleInputValueChooserUI.h"
 
 class MappingInputEditor :

@@ -11,7 +11,7 @@
 #ifndef BASECOMMAND_H_INCLUDED
 #define BASECOMMAND_H_INCLUDED
 
-#include "ControllableContainer.h"
+#include "JuceHeader.h"
 
 class Module;
 

@@ -11,7 +11,7 @@
 #ifndef MODULEROUTERMANAGER_H_INCLUDED
 #define MODULEROUTERMANAGER_H_INCLUDED
 
-#include "BaseManager.h"
+
 #include "ModuleRouter.h"
 
 class ModuleRouterManager :

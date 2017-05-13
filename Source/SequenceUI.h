@@ -11,9 +11,8 @@
 #ifndef SEQUENCEUI_H_INCLUDED
 #define SEQUENCEUI_H_INCLUDED
 
-#include "BaseItemUI.h"
+
 #include "Sequence.h"
-#include "FloatSliderUI.h"
 
 class SequenceUI :
 	public BaseItemUI<Sequence>,

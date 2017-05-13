@@ -10,7 +10,7 @@
 
 #include "MappingLayerTimeline.h"
 
-#include "Style.h"
+
 
 MappingLayerTimeline::MappingLayerTimeline(MappingLayer * layer) :
 	SequenceLayerTimeline(layer),

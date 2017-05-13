@@ -10,7 +10,6 @@
 
 #include "MIDIDeviceParameter.h"
 #include "MIDIDeviceParameterUI.h"
-#include "ControllableEditor.h"
 
 MIDIDeviceParameter::MIDIDeviceParameter(const String & name) :
 	Parameter(CUSTOM, name, "MIDI Devices",var(), var(),var()),

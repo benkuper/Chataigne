@@ -11,7 +11,7 @@
 #ifndef TIMECUEMANAGER_H_INCLUDED
 #define TIMECUEMANAGER_H_INCLUDED
 
-#include "BaseManager.h"
+
 #include "TimeCue.h"
 
 class TimeCueComparator

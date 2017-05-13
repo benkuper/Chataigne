@@ -12,7 +12,7 @@
 #define MAPPINGFILTERMANAGEREDITOR_H_INCLUDED
 
 #include "MappingFilterManager.h"
-#include "GenericManagerEditor.h"
+
 
 class MappingFilterManagerEditor :
 	public GenericManagerEditor<MappingFilter>

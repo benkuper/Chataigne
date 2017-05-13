@@ -12,7 +12,6 @@
 #define ACTIONMANAGER_H_INCLUDED
 
 
-#include "BaseManager.h"
 #include "Action.h"
 
 class ActionManager :

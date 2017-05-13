@@ -11,7 +11,6 @@
 #ifndef MODULEUI_H_INCLUDED
 #define MODULEUI_H_INCLUDED
 
-#include "BaseItemUI.h"
 #include "Module.h"
 
 class ModuleUI :

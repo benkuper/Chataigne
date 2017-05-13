@@ -14,9 +14,6 @@
 #include "UserOSCCommandModelManager.h"
 #include "UserOSCCommandModelUI.h"
 #include "CustomOSCModule.h"
-#include "BaseManagerUI.h"
-#include "ShapeShifterPanel.h"
-#include "InspectableSelectionManager.h"
 
 class UserOSCCommandModelManagerUI :
 	public BaseManagerUI<UserOSCCommandModelManager, UserOSCCommandModel, UserOSCCommandModelUI>
@@ -45,6 +42,9 @@ public:
 
 	void inspectablesSelectionChanged() override;
 	
+
+	static UserOSCCommandModelManagerWindow * create(const String &contentName) { return new UserOSCCommandModelManagerWindow(contentName); }
+
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UserOSCCommandModelManagerWindow)
 };
 

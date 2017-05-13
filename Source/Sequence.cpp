@@ -15,7 +15,7 @@
 #include "AudioModule.h"
 
 Sequence::Sequence() :
-	BaseItem("Sequence"),
+	BaseItem("Sequence",true,true,true),
 	masterAudioModule(nullptr),
 	hiResAudioTime(0)
 {

@@ -9,7 +9,6 @@
 */
 
 #include "MappingLayerPanel.h"
-#include "EnumParameterUI.h"
 
 MappingLayerPanel::MappingLayerPanel(MappingLayer * layer) :
 	SequenceLayerPanel(layer),

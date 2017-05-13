@@ -8,9 +8,11 @@
   ==============================================================================
 */
 
+
 #include "SequenceTransportUI.h"
+#include "ChataigneAssetManager.h"
 #include "AudioModule.h"
-#include "TriggerImageUI.h"
+
 
 SequenceTransportUI::SequenceTransportUI(Sequence * _sequence) :
 	sequence(_sequence),
@@ -21,10 +23,10 @@ SequenceTransportUI::SequenceTransportUI(Sequence * _sequence) :
 	sequence->addSequenceListener(this);
 	 
 	
-	togglePlayUI = sequence->togglePlayTrigger->createImageUI(AssetManager::getInstance()->getPlayImage());
-	stopUI = sequence->stopTrigger->createImageUI(AssetManager::getInstance()->getStopImage());
-	nextCueUI = sequence->nextCue->createImageUI(AssetManager::getInstance()->getNextCueImage());
-	prevCueUI = sequence->prevCue->createImageUI(AssetManager::getInstance()->getPrevCueImage());
+	togglePlayUI = sequence->togglePlayTrigger->createImageUI(ChataigneAssetManager::getInstance()->getPlayImage());
+	stopUI = sequence->stopTrigger->createImageUI(ChataigneAssetManager::getInstance()->getStopImage());
+	nextCueUI = sequence->nextCue->createImageUI(ChataigneAssetManager::getInstance()->getNextCueImage());
+	prevCueUI = sequence->prevCue->createImageUI(ChataigneAssetManager::getInstance()->getPrevCueImage());
 	
 	addAndMakeVisible(togglePlayUI);
 	addAndMakeVisible(stopUI);

@@ -20,7 +20,8 @@ public:
 	Consequence();
 	virtual ~Consequence();
 
-
+	bool forceDisabled;
+	
 	virtual void triggerCommand() override;
 
 	//InspectableEditor * getEditor(bool isRoot) override;

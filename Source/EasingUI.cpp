@@ -9,7 +9,6 @@
 */
 
 #include "EasingUI.h"
-#include "Style.h"
 
 #pragma warning(disable:4244)
 

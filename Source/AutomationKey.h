@@ -11,9 +11,7 @@
 #ifndef AUTOMATIONKEY_H_INCLUDED
 #define AUTOMATIONKEY_H_INCLUDED
 
-#include "BaseItem.h"
 #include "Easing.h"
-#include "InspectableSelectionManager.h"
 
 class AutomationKey :
 	public BaseItem

@@ -12,7 +12,6 @@
 #define SCRIPTFILTER_H_INCLUDED
 
 #include "MappingFilter.h"
-#include "Script.h"
 
 class ScriptFilter :
 	public MappingFilter

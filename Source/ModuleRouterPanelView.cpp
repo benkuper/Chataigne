@@ -10,9 +10,9 @@
 
 #include "ModuleRouterPanelView.h"
 
-ModuleRouterPanelView::ModuleRouterPanelView(const String & contentName) :
+ModuleRouterPanelView::ModuleRouterPanelView(const String & contentName,ModuleRouterManager * manager) :
 	ShapeShifterContentComponent(contentName),
-	mui("Routers",ModuleRouterManager::getInstance())
+	mui("Routers",manager)
 {
     contentIsFlexible = true;
     

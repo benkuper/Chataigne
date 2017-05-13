@@ -11,7 +11,6 @@
 #ifndef MIDIMANAGER_H_INCLUDED
 #define MIDIMANAGER_H_INCLUDED
 
-#include "JuceHeader.h"
 #include "MIDIDevice.h"
 
 class MIDIManager :
