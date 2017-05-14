@@ -29,8 +29,11 @@ public:
 	Path hitPath;
 
 	void updateBounds();
-
+	
+	void mouseDown(const MouseEvent &e) override;
     void mouseMove(const MouseEvent &e) override;
+	bool keyPressed(const KeyPress &e) override;
+
 	void paint(Graphics &g) override;
 	void paintOverChildren(Graphics &g) override;
 	void resized() override;

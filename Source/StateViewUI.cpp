@@ -33,7 +33,7 @@ BaseItemUI<State>(state, ResizeMode::ALL, true),
 		addAndMakeVisible(&mmui);
 	}
 
-	bgColor = item->active->boolValue() ? (item->permanent->boolValue() ? GREEN_COLOR : FEEDBACK_COLOR).darker(.5f) : BG_COLOR.brighter(.1f);
+	//bgColor = item->active->boolValue() ? (item->permanent->boolValue() ? GREEN_COLOR : FEEDBACK_COLOR) : BG_COLOR.brighter(.1f);
 
 	//setSize(250, 250);
 
@@ -96,7 +96,15 @@ void StateViewUI::mouseDown(const MouseEvent & e)
 
 void StateViewUI::paintOverChildren(Graphics & g)
 {
+	if (item->active->boolValue())
+	{
+		Colour c = item->permanent->boolValue() ? GREEN_COLOR : FEEDBACK_COLOR;
+		g.setColour(c);
+		g.drawRoundedRectangle(getLocalBounds().reduced(2).toFloat(), 2, 2);
+	}
+
 	BaseItemUI::paintOverChildren(g);
+
 
 	if (transitionReceptionMode && isMouseOver(true))
 	{
@@ -151,7 +159,7 @@ void StateViewUI::controllableFeedbackUpdateInternal(Controllable * c)
 
 	if (c == item->active || c == item->permanent)
 	{
-		bgColor = item->active->boolValue() ? (item->permanent->boolValue() ? GREEN_COLOR : FEEDBACK_COLOR) : BG_COLOR.brighter(.1f);
+		//bgColor = item->active->boolValue() ? (item->permanent->boolValue() ? GREEN_COLOR : FEEDBACK_COLOR) : BG_COLOR.brighter(.1f);
 		repaint();
 	}
 }

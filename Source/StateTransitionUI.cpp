@@ -18,6 +18,7 @@ StateTransitionUI::StateTransitionUI(StateTransition * st, StateViewUI * _source
 {
 	jassert(sourceSUI != nullptr && destSUI != nullptr);
 
+	setWantsKeyboardFocus(true);
 
 	sourceSUI->addStateViewUIListener(this);
 	sourceSUI->addItemUIListener(this);
@@ -43,8 +44,42 @@ void StateTransitionUI::updateBounds()
 	setBounds(tr);
 }
 
-void StateTransitionUI::mouseMove(const MouseEvent &e) {
+void StateTransitionUI::mouseDown(const MouseEvent & e)
+{
+	BaseItemMinimalUI::mouseDown(e);
+
+	if (e.mods.isRightButtonDown())
+	{
+		PopupMenu p;
+		p.addItem(1, "Remove");
+		int result = p.show();
+		switch (result)
+		{
+		case 1:
+			item->remove();
+			break;
+		}
+	}
+}
+
+void StateTransitionUI::mouseMove(const MouseEvent &e) 
+{
+	
     repaint();
+}
+
+bool StateTransitionUI::keyPressed(const KeyPress & e)
+{
+	if (item->isSelected)
+	{
+		if (e.getKeyCode() == e.backspaceKey || e.getKeyCode() == e.deleteKey)
+		{
+			item->remove();
+			return true;
+		}
+	}
+	
+	return BaseItemMinimalUI::keyPressed(e);
 }
 
 

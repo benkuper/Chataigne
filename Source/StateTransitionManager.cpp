@@ -36,6 +36,14 @@ void StateTransitionManager::addItem(State * source, State * dest, var data, boo
 	BaseManager::addItem(new StateTransition(source, dest), data,fromUndoableAction);
 }
 
+Array<State*> StateTransitionManager::getAllStatesLinkedTo(State * state)
+{
+	Array<State*> result;
+	for (auto &t : state->inTransitions) result.add(t->sourceState);
+	for (auto &t : state->outTransitions) result.add(t->destState);
+	return result;
+}
+
 void StateTransitionManager::removeAllLinkedTransitions(State * linkedState)
 {
 	Array<StateTransition *> transitionsToRemove;

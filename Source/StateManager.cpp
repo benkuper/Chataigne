@@ -15,35 +15,44 @@ juce_ImplementSingleton(StateManager)
 StateManager::StateManager() :
 BaseManager<State>("States"),
 module(this),
-stm(this),
-activeState(nullptr)
+stm(this)
 {
 	isSelectable = true;
 	addChildControllableContainer(&stm);
+	stm.hideInEditor = true;
+	stm.addBaseManagerListener(this);
+
+	onlyOneActiveState = addBoolParameter("One Active State", "If checked, when activating a state, all other non-permanent states will be automatically deactivated.", false);
 }
 
 StateManager::~StateManager()
 {
 }
 
-void StateManager::setActiveState(State * s)
+
+void StateManager::setStateActive(State * s)
 {
-	if (s == activeState) return;
-
-	if (!activeState.wasObjectDeleted() && activeState != nullptr)
+	if (onlyOneActiveState->boolValue())
 	{
-		if(!activeState->permanent->boolValue()) activeState->active->setValue(false);
+		for (auto &ss : items)
+		{
+			if (ss->permanent->boolValue() || ss == s) continue;
+			ss->active->setValue(false);
+		}
+	} else
+	{
+		Array<State *> linkedStates = getLinkedStates(s);
+		for (auto &ss : linkedStates)
+		{
+			ss->active->setValue(false);
+		}
 	}
-
-	activeState = s;
 }
-
 
 void StateManager::addItemInternal(State * s, var data)
 {
 	s->addStateListener(this);
-	if (s->active->boolValue()) setActiveState(s);
-	else if (activeState == nullptr) s->active->setValue(true);
+	if (!Engine::mainEngine->isLoadingFile) s->active->setValue(true);	
 }
 
 void StateManager::removeItemInternal(State * s)
@@ -56,7 +65,15 @@ void StateManager::removeItemInternal(State * s)
 void StateManager::stateActivationChanged(State * s)
 {
 	if (s->permanent->boolValue()) return; //don't care of permanent in state logic.
-	if (s->active->boolValue()) setActiveState(s);
+	if (s->active->boolValue())
+	{
+		setStateActive(s);
+	}
+}
+
+void StateManager::itemAdded(StateTransition * s)
+{
+	if (!Engine::mainEngine->isLoadingFile) setStateActive(s->sourceState);
 }
 
 PopupMenu StateManager::getAllStatesMenu()
@@ -127,6 +144,32 @@ Mapping * StateManager::getMappingForItemID(int itemID)
 	return items[moduleIndex]->mm.items[valueIndex];
 }
 
+Array<State *> StateManager::getLinkedStates(State * s, Array<State *> * statesToAvoid)
+{
+	Array<State *> sAvoid;
+	if (statesToAvoid == nullptr)
+	{
+		statesToAvoid = &sAvoid;
+	}
+
+	statesToAvoid->add(s);
+
+	Array<State *> result;
+
+	Array<State *> linkStates = stm.getAllStatesLinkedTo(s);
+	for (auto &ss : linkStates)
+	{
+		if (statesToAvoid->contains(ss)) continue;
+		result.add(ss);
+		statesToAvoid->add(ss);
+		Array<State *> linkedSS = getLinkedStates(ss, statesToAvoid);
+		result.addArray(linkedSS);
+	}
+
+	return result;
+}
+
+
 var StateManager::getJSONData()
 {
 	var data = BaseManager::getJSONData();
@@ -138,9 +181,4 @@ void StateManager::loadJSONDataInternal(var data)
 {
 	BaseManager::loadJSONDataInternal(data);
 	stm.loadJSONData(data.getProperty("transitions", var()));
-}
-
-InspectableEditor * StateManager::getEditor(bool /*isRoot*/)
-{
-	return nullptr;
 }

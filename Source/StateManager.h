@@ -18,7 +18,8 @@
 
 class StateManager :
 	public BaseManager<State>,
-	public State::StateListener
+	public State::StateListener,
+	public StateTransitionManager::Listener
 {
 public:
 	juce_DeclareSingleton(StateManager, false)
@@ -30,13 +31,15 @@ public:
 
 	StateTransitionManager stm;
 
-	WeakReference<State> activeState;
-	void setActiveState(State * s);
+	BoolParameter * onlyOneActiveState; //whether activating a state automatically deactivates all other non-permanent states
+
+	void setStateActive(State * s);
 
 	void addItemInternal(State * s, var data) override;
 	void removeItemInternal(State * s) override;
 
 	void stateActivationChanged(State * s) override;
+	void itemAdded(StateTransition * s) override;
 
 	PopupMenu getAllStatesMenu();
 	State * getStateForItemID(int itemID);
@@ -46,10 +49,11 @@ public:
 	Mapping * getMappingForItemID(int itemID);
 
 
+	Array<State *> getLinkedStates(State * s, Array<State *> * statesToAvoid = nullptr);
+
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
 
-	InspectableEditor * getEditor(bool isRoot) override;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(StateManager)
 };

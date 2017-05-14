@@ -29,6 +29,7 @@ public:
 
 	void addItem(State * source, State * dest, var data = var(), bool fromUndoableAction = false);
 
+	Array<State *> getAllStatesLinkedTo(State * state);
 	void removeAllLinkedTransitions(State * linkedState);
 
 	StateTransition * getItemForSourceAndDest(State * source, State * dest);

@@ -41,5 +41,6 @@ void StateTransition::onContainerTriggerTriggered(Trigger * t)
 	if (t == trigger)
 	{
 		destState->active->setValue(true);
+		sourceState->active->setValue(false);
 	}
 }
