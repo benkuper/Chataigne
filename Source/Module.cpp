@@ -52,9 +52,12 @@ Array<WeakReference<Controllable>> Module::getValueControllables()
 
 void Module::controllableFeedbackUpdate(ControllableContainer * cc, Controllable * c)
 {
-	Array<var> args;
-	args.add(c->createScriptObject());
-	scriptManager->callFunctionOnAllItems("moduleParamChanged", args);
+	if (cc == &valuesCC)
+	{
+		Array<var> args;
+		args.add(c->createScriptObject());
+		scriptManager->callFunctionOnAllItems("moduleValueParamChanged", args);
+	}
 }
 
 void Module::setupModuleFromJSONData(var data)
@@ -158,4 +161,9 @@ void Module::loadJSONDataInternal(var data)
 	}
 	*/
 	BaseItem::loadJSONDataInternal(data);
+}
+
+InspectableEditor * Module::getEditor(bool isRoot)
+{
+	return BaseItem::getEditor(isRoot); //temp, should have a proper base module editor
 }

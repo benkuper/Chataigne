@@ -25,10 +25,12 @@ public:
 
 	CustomOSCCommandArgument * arg;
 
-	ScopedPointer<ControllableEditor> paramUI;
+	ScopedPointer<ParameterEditor> paramUI;
 	ScopedPointer<BoolToggleUI> useInMappingUI;
 
 	void resizedInternalHeader(Rectangle<int> &r) override;
+	void resizedInternalContent(Rectangle<int> &r) override;
+	void childBoundsChanged(Component *) override;
 };
 
 

@@ -40,10 +40,10 @@ void UserOSCCommand::rebuildArgsFromModel()
 		Parameter * ap = a->param;
 		switch (ap->type)
 		{
-		case Controllable::BOOL: p = new BoolParameter(a->niceName, ap->description, ap->value); break;
-		case Controllable::INT: p = new IntParameter(a->niceName, ap->description, ap->value, ap->minimumValue, ap->maximumValue); break;
-		case Controllable::FLOAT: p = new FloatParameter(a->niceName, ap->description, ap->value, ap->minimumValue, ap->maximumValue); break;
-		case Controllable::STRING: p = new StringParameter(a->niceName, ap->description, ap->value); break;
+		case Controllable::BOOL: p = new BoolParameter(a->niceName, ap->description, ap->getValue()); break;
+		case Controllable::INT: p = new IntParameter(a->niceName, ap->description, ap->getValue(), ap->minimumValue, ap->maximumValue); break;
+		case Controllable::FLOAT: p = new FloatParameter(a->niceName, ap->description, ap->getValue(), ap->minimumValue, ap->maximumValue); break;
+		case Controllable::STRING: p = new StringParameter(a->niceName, ap->description, ap->getValue()); break;
             default:
                 break;
 		}

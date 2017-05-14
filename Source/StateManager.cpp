@@ -36,7 +36,6 @@ void StateManager::setStateActive(State * s)
 	{
 		for (auto &ss : items)
 		{
-			if (ss->permanent->boolValue() || ss == s) continue;
 			ss->active->setValue(false);
 		}
 	} else
@@ -64,7 +63,6 @@ void StateManager::removeItemInternal(State * s)
 
 void StateManager::stateActivationChanged(State * s)
 {
-	if (s->permanent->boolValue()) return; //don't care of permanent in state logic.
 	if (s->active->boolValue())
 	{
 		setStateActive(s);

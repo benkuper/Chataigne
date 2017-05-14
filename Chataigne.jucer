@@ -1163,7 +1163,7 @@
         <MODULEPATH id="juce_audio_formats" path="D:/Softwares\JUCE\modules"/>
         <MODULEPATH id="juce_audio_devices" path="D:/Softwares\JUCE\modules"/>
         <MODULEPATH id="juce_audio_basics" path="D:/Softwares\JUCE\modules"/>
-        <MODULEPATH id="juce_organicui" path="D:/Softwares\JUCE\modules"/>
+        <MODULEPATH id="juce_organicui" path="../JUCE Modules"/>
       </MODULEPATHS>
     </VS2015>
   </EXPORTFORMATS>

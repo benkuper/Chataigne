@@ -16,7 +16,7 @@ CustomOSCCommandArgumentEditor::CustomOSCCommandArgumentEditor(CustomOSCCommandA
 	BaseItemEditor(a, isRoot),
 	arg(a)
 {
-	paramUI = static_cast<ControllableEditor *>(arg->param->getEditor(false));
+	paramUI = static_cast<ParameterEditor *>(arg->param->getEditor(false));
 	paramUI->setShowLabel(false);
 
 	if(arg->mappingEnabled) useInMappingUI = arg->useForMapping->createToggle();
@@ -35,7 +35,16 @@ void CustomOSCCommandArgumentEditor::resizedInternalHeader(Rectangle<int>& r)
 	{
 		useInMappingUI->setBounds(r.removeFromRight(80));
 		r.removeFromRight(2);
-	}
-	paramUI->setBounds(r.removeFromLeft(r.getWidth()-20));
+	}}
+
+void CustomOSCCommandArgumentEditor::resizedInternalContent(Rectangle<int>& r)
+{
+	r.setHeight(paramUI->getHeight());
+	paramUI->setBounds(r);
+}
+
+void CustomOSCCommandArgumentEditor::childBoundsChanged(Component * child)
+{
+	if (child == paramUI) resized();
 }
 

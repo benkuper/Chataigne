@@ -26,7 +26,6 @@ public:
 
 	//
 	BoolParameter * active;
-	BoolParameter * permanent;
 
 
 	//Transition

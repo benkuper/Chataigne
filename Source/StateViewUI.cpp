@@ -98,8 +98,7 @@ void StateViewUI::paintOverChildren(Graphics & g)
 {
 	if (item->active->boolValue())
 	{
-		Colour c = item->permanent->boolValue() ? GREEN_COLOR : FEEDBACK_COLOR;
-		g.setColour(c);
+		g.setColour(FEEDBACK_COLOR);
 		g.drawRoundedRectangle(getLocalBounds().reduced(2).toFloat(), 2, 2);
 	}
 
@@ -157,7 +156,7 @@ void StateViewUI::controllableFeedbackUpdateInternal(Controllable * c)
 {
 	BaseItemUI::controllableFeedbackUpdateInternal(c);
 
-	if (c == item->active || c == item->permanent)
+	if (c == item->active)
 	{
 		//bgColor = item->active->boolValue() ? (item->permanent->boolValue() ? GREEN_COLOR : FEEDBACK_COLOR) : BG_COLOR.brighter(.1f);
 		repaint();

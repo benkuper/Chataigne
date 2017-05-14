@@ -16,7 +16,6 @@ State::State() :
 	canInspectChildContainers = false;
 
 	active = addBoolParameter("Active", "If active, the state's actions and mappings will be effective, otherwise this state won't do anything.", false);
-	permanent = addBoolParameter("Permanent", "If permanent, the state won't be affected by the state machine logic, i.e. deactivating when another state is activated.",false);
 
 	addChildControllableContainer(&am);
 	addChildControllableContainer(&mm);

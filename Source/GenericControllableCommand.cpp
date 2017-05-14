@@ -59,7 +59,7 @@ void GenericControllableCommand::trigger()
 	{
 		if (value == nullptr) return;
 		Parameter * p = static_cast<Parameter *>(target->target.get());
-		p->setValue(value->value);
+		p->setValue(value->getValue());
 	} else if (action == TRIGGER)
 	{
 		Trigger * t = static_cast<Trigger *>(target->target.get());

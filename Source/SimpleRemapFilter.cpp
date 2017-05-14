@@ -30,7 +30,7 @@ void SimpleRemapFilter::processInternal()
 Parameter * SimpleRemapFilter::setupParameterInternal(Parameter * source)
 {
 	Parameter * p = MappingFilter::setupParameterInternal(source);
-	p->setRange(targetMin->value, targetMax->value);
+	p->setRange(targetMin->floatValue(), targetMax->floatValue());
 	return p;
 }
 
@@ -39,7 +39,7 @@ void SimpleRemapFilter::filterParamChanged(Parameter * p)
 	if (p == targetMin || p == targetMax)
 	{
 
-		if(filteredParameter != nullptr) filteredParameter->setRange(targetMin->value, jmax<float>(targetMax->value,targetMin->value));
+		if(filteredParameter != nullptr) filteredParameter->setRange(targetMin->floatValue(), jmax<float>(targetMax->floatValue(),targetMin->floatValue()));
 	}
 }
 

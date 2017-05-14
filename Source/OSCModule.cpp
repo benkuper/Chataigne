@@ -186,7 +186,7 @@ void OSCModule::handleRoutedModuleValue(Controllable * c, RouteParams * p)
 {
 	OSCRouteParams * op = static_cast<OSCRouteParams *>(p);
 	OSCMessage m(op->address->stringValue());
-	if (c->type != Controllable::TRIGGER) m.addArgument(varToArgument(((Parameter *)c)->value));
+	if (c->type != Controllable::TRIGGER) m.addArgument(varToArgument(((Parameter *)c)->getValue()));
 	sendOSC(m);
 }
 

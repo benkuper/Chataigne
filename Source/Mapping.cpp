@@ -45,7 +45,7 @@ void Mapping::process()
 
 	Parameter * filteredParam = fm.processFilters();
 	if (filteredParam == nullptr) return;
-	om.setValue(filteredParam->value);
+	om.setValue(filteredParam->getValue());
 }
 
 var Mapping::getJSONData()

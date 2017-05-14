@@ -55,7 +55,7 @@ Parameter * MappingFilter::setupParameterInternal(Parameter * source)
 	if (source == nullptr) return nullptr;
 	Parameter * p = (Parameter *) ControllableFactory::createControllable(source->getTypeString());
 	p->setNiceName("Out");
-	p->setValue(source->value);
+	p->setValue(source->getValue());
 	p->setRange(source->minimumValue, source->maximumValue);
 	return p;
 }
