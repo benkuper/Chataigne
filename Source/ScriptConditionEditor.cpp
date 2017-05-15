@@ -14,9 +14,8 @@ ScriptConditionEditor::ScriptConditionEditor(ScriptCondition * s, bool isRoot) :
 	ConditionEditor(s, isRoot),
 	scriptCondition(s)
 {
-	scriptEditor = static_cast<ScriptEditor *>(scriptCondition->script.getEditor(false));
-	addAndMakeVisible(scriptEditor);
-	scriptEditor->transparentBG = true;
+	scriptUI = new ScriptUI(&scriptCondition->script);
+	addAndMakeVisible(scriptUI);
 }
 
 ScriptConditionEditor::~ScriptConditionEditor()
@@ -25,7 +24,7 @@ ScriptConditionEditor::~ScriptConditionEditor()
 
 void ScriptConditionEditor::resizedInternalContent(Rectangle<int>& r)
 {
-	r.setHeight(scriptEditor->getHeight());
-	scriptEditor->setBounds(r);
+	r.setHeight(scriptUI->getHeight());
+	scriptUI->setBounds(r);
 }
 

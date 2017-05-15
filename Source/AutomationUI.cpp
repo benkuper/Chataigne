@@ -18,6 +18,7 @@ valueBGColor(Colours::white.withAlpha(.1f)),
 {
 	manager->selectionManager->addSelectionListener(this);
 
+	setShowAddButton(false);
 	animateItemOnAdd = false;
 
 	transparentBG = true;

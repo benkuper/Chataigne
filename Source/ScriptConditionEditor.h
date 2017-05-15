@@ -22,7 +22,7 @@ public:
 	~ScriptConditionEditor();
 
 	ScriptCondition * scriptCondition;
-	ScopedPointer<ScriptEditor> scriptEditor;
+	ScopedPointer<ScriptUI> scriptUI;
 
 	void resizedInternalContent(Rectangle<int> &r) override;
 };

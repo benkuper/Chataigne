@@ -13,6 +13,7 @@
 TimeColorManagerUI::TimeColorManagerUI(TimeColorManager * manager) :
 	BaseManagerUI(manager->niceName,manager,false)
 {
+	setShowAddButton(false);
 	animateItemOnAdd = false;
 
 	transparentBG = true;

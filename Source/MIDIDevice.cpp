@@ -99,7 +99,7 @@ void MIDIOutputDevice::open()
 		}
 		else
 		{
-			LOG("MIDI Out " << device->getName() << " open error");
+			LOG("MIDI Out " << name << " open error");
 		}
 	}
 }

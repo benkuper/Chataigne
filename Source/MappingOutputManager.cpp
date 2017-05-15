@@ -27,3 +27,8 @@ void MappingOutputManager::setValue(var value)
 		o->setValue(value);
 	}
 }
+
+InspectableEditor * MappingOutputManager::getEditor(bool isRoot)
+{
+	return new GenericManagerEditor<MappingOutput>(this, isRoot);
+}

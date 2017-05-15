@@ -156,7 +156,7 @@ void ModuleRouterView::buildValueManagerUI()
 
 	managerUI = nullptr;
 	managerUI = new BaseManagerUI<BaseManager<ModuleRouterValue>, ModuleRouterValue, ModuleRouterValueEditor>("Values", &currentRouter->sourceValues);
-	managerUI->setCanAddItemsManually(false);
+	managerUI->setShowAddButton(false);
 	managerUI->addExistingItems(); //force adding, normally we do it in a child classes but as we use the basic ui, we have to do it here
 	addAndMakeVisible(managerUI);
 }

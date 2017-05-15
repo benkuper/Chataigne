@@ -42,6 +42,7 @@ public:
 	IntParameter * channel;
 	EnumParameter * noteEnum;
 	IntParameter * octave;
+	IntParameter * number; //for CC
 	IntParameter * velocity;
 
 	void setValue(var value) override;

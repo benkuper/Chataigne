@@ -326,10 +326,10 @@
           </GROUP>
           <GROUP id="{18518876-74C1-2B25-1A4A-02F7AB24FFB8}" name="Output">
             <GROUP id="{5C583B99-90CB-DA96-EC0A-625FC344B9E5}" name="ui">
-              <FILE id="v8IwLE" name="MappingOutputEditor.cpp" compile="1" resource="0"
-                    file="Source/MappingOutputEditor.cpp"/>
-              <FILE id="SHTIiV" name="MappingOutputEditor.h" compile="0" resource="0"
-                    file="Source/MappingOutputEditor.h"/>
+              <FILE id="v8IwLE" name="MappingOutputUI.cpp" compile="1" resource="0"
+                    file="Source/MappingOutputUI.cpp"/>
+              <FILE id="SHTIiV" name="MappingOutputUI.h" compile="0" resource="0"
+                    file="Source/MappingOutputUI.h"/>
             </GROUP>
             <FILE id="oukCyf" name="MappingOutput.cpp" compile="1" resource="0"
                   file="Source/MappingOutput.cpp"/>

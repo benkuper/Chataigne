@@ -113,11 +113,12 @@ void MappingLayer::setupMappingForCurrentMode()
 
 	curveValue->isControllableFeedbackOnly = true;
 	mapping.lockInputTo(curveValue);
+
+	updateCurvesValues();
 }
 
 void MappingLayer::updateCurvesValues()
 {
-	
 	Mode mappingMode = getMappingMode();
 	switch (mappingMode)
 	{
@@ -136,6 +137,8 @@ void MappingLayer::updateCurvesValues()
 		curveValue->setValue(cv);
 		break;
 	}
+
+	
 	
 }
 
@@ -189,10 +192,19 @@ void MappingLayer::onContainerParameterChangedInternal(Parameter * p)
 void MappingLayer::controllableFeedbackUpdate(ControllableContainer * cc, Controllable * c)
 {
 	bool doUpdate = false;
-	for (auto &a : automations) if (a->value == c)
+	if (getMappingMode() == MODE_COLOR)
 	{
-		doUpdate = true;
-		break;
+		doUpdate = c == timeColorManager->currentColor;
+	} else
+	{
+		for (auto &a : automations)
+		{
+			if (a->value == c)
+			{
+				doUpdate = true;
+				break;
+			}
+		}
 	}
 
 	if(doUpdate) updateCurvesValues();

@@ -138,7 +138,7 @@ OBJECTS := \
   $(JUCE_OBJDIR)/ActionManager_9ed61c78.o \
   $(JUCE_OBJDIR)/MappingInputEditor_9e41cd32.o \
   $(JUCE_OBJDIR)/MappingInput_19a7a225.o \
-  $(JUCE_OBJDIR)/MappingOutputEditor_3b183a1d.o \
+  $(JUCE_OBJDIR)/MappingOutputUI_6b97c124.o \
   $(JUCE_OBJDIR)/MappingOutput_7f60db50.o \
   $(JUCE_OBJDIR)/MappingOutputManager_681d3ec7.o \
   $(JUCE_OBJDIR)/CurveMapFilter_84c144ce.o \
@@ -717,9 +717,9 @@ $(JUCE_OBJDIR)/MappingInput_19a7a225.o: ../../Source/MappingInput.cpp
 	@echo "Compiling MappingInput.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
 
-$(JUCE_OBJDIR)/MappingOutputEditor_3b183a1d.o: ../../Source/MappingOutputEditor.cpp
+$(JUCE_OBJDIR)/MappingOutputUI_6b97c124.o: ../../Source/MappingOutputUI.cpp
 	-@mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling MappingOutputEditor.cpp"
+	@echo "Compiling MappingOutputUI.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/MappingOutput_7f60db50.o: ../../Source/MappingOutput.cpp

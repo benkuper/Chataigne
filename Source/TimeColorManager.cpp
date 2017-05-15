@@ -32,6 +32,8 @@ positionMax(_maxPosition)
 	addColorAt(positionMax*3/4, Colours::blue);
 
 	rebuildGradient();
+
+	currentColor->setColor(getColorForPosition(position->floatValue()));
 }
 
 
