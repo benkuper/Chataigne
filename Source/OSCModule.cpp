@@ -115,7 +115,8 @@ void OSCModule::processMessage(const OSCMessage & msg)
 
 void OSCModule::setupSender()
 {
-	sender.connect(remoteHost->stringValue(), remotePort->intValue());
+	String targetHost = useLocal->boolValue() ? "127.0.0.1" : remoteHost->stringValue();
+	sender.connect(targetHost, remotePort->intValue());
 }
 
 void OSCModule::sendOSC(const OSCMessage & msg)
@@ -194,7 +195,7 @@ void OSCModule::onContainerParameterChangedInternal(Parameter * p)
 {
 	Module::onContainerParameterChangedInternal(p);
 	if (p == localPort) setupReceiver();
-	else if (p == remoteHost || p == remotePort) setupSender();
+	else if (p == remoteHost || p == remotePort || p == useLocal) setupSender();
 }
 
 
