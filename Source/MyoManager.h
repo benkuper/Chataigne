@@ -26,7 +26,8 @@ public:
 	MyoManager();
 	~MyoManager();
 
-	myo::Hub hub;
+	
+	void initHub();
 
 	virtual void onPair(Myo* myo, uint64_t timestamp, FirmwareVersion firmwareVersion);
 	virtual void onUnpair(Myo* myo, uint64_t timestamp);

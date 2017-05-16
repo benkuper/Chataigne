@@ -56,9 +56,12 @@ void WiimoteManager::reconnect(bool autoPairIfNotFound)
 	int numFound = wiiuse_find(devices, MAX_WIIMOTES, 1);
 	NLOG("Wiimote", "Found " << numFound << " wiimotes");
 
+	if (threadShouldExit()) return;
+
 	int numConnected = wiiuse_connect(devices, MAX_WIIMOTES);
 	NLOG("Wiimote", "Connected to " << numConnected << " wiimotes");
 
+	if (threadShouldExit()) return;
 
 	//only support for windows for now
 #if JUCE_WINDOWS
@@ -67,6 +70,9 @@ void WiimoteManager::reconnect(bool autoPairIfNotFound)
 		NLOG("Wiimote", "No wiimote found, trying auto-pairing..");
 		int  pairResult = WiiPairUtil::pair();
 		NLOG("Wiimote", pairResult << " devices paired.");
+
+		if (threadShouldExit()) return;
+
 		reconnect(false);
 		return;
 	}

@@ -19,6 +19,8 @@ MyoModule::MyoModule() :
 {
 	MyoManager::getInstance()->addListener(this);
 
+	initTrigger = addTrigger("Reinit", "If Myo had problems at init, try to reinit");
+
 	yaw = valuesCC.addFloatParameter("Yaw", "Armband's yaw", 0, 0, 1);
 	pitch = valuesCC.addFloatParameter("Pitch", "Armband's pitch", 0, -1, 1);
 	roll = valuesCC.addFloatParameter("Roll", "Armband's roll", 0, -1, 1);
@@ -59,6 +61,11 @@ void MyoModule::myoPoseUpdate(MyoDevice * d)
 
 void MyoModule::myoEMGUpdate(MyoDevice * d)
 {
+}
+
+void MyoModule::onContainerTriggerTriggered(Trigger * t)
+{
+	if (t == initTrigger) MyoManager::getInstance()->initHub();
 }
 
 #endif

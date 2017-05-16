@@ -29,6 +29,8 @@ public:
 
 	MyoDevice * device;
 	
+	Trigger * initTrigger;
+
 	FloatParameter * yaw;
 	FloatParameter * pitch;
 	FloatParameter * roll;
@@ -42,6 +44,8 @@ public:
 	void myoOrientationUpdate(MyoDevice *d) override;
 	void myoPoseUpdate(MyoDevice * d) override;
 	void myoEMGUpdate(MyoDevice * d) override;
+
+	void onContainerTriggerTriggered(Trigger * t) override;
 
 	String getDefaultTypeString() const override { return "Myo"; }
 
