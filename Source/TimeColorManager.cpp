@@ -15,21 +15,21 @@ TimeColorComparator TimeColorManager::comparator;
 
 TimeColorManager::TimeColorManager(float _maxPosition) :
 	BaseManager("Colors"),
-gradient(Colours::red,0,0,Colours::blue,_maxPosition,0,false),
-positionMax(_maxPosition)
+	gradient(Colours::red, 0, 0, Colours::blue, _maxPosition, 0, false),
+	positionMax(_maxPosition)
 {
-	
+
 	skipControllableNameInAddress = true;
-	
+
 	selectItemWhenCreated = false;
 
-	position = addFloatParameter("Position", "Position in the gradient",0,0,positionMax);
+	position = addFloatParameter("Position", "Position in the gradient", 0, 0, positionMax);
 	currentColor = new ColorParameter("Color", "Current color depending on time", Colours::black);
 	addParameter(currentColor);
 
-	addColorAt(positionMax/4, Colours::red);
+	addColorAt(positionMax / 4, Colours::red);
 	addColorAt(positionMax / 2, Colours::green);
-	addColorAt(positionMax*3/4, Colours::blue);
+	addColorAt(positionMax * 3 / 4, Colours::blue);
 
 	rebuildGradient();
 
@@ -64,13 +64,13 @@ void TimeColorManager::rebuildGradient()
 {
 	gradient.clearColours();
 	if (items.size() > 0 && items[0]->position > 0) gradient.addColour(0, items[0]->color->getColor());
-	
+
 	for (auto &i : items)
 	{
 		i->gradientIndex = gradient.addColour(i->position->floatValue() / positionMax, i->color->getColor());
 	}
 
-	
+
 	colorManagerListeners.call(&TimeColorManagerListener::gradientUpdated);
 }
 
@@ -84,9 +84,9 @@ TimeColor * TimeColorManager::addColorAt(float time, Colour color)
 
 void TimeColorManager::addItemInternal(TimeColor * item, var data)
 {
-	item->gradientIndex = gradient.addColour(item->position->floatValue()/ positionMax, item->color->getColor());
+	item->gradientIndex = gradient.addColour(item->position->floatValue() / positionMax, item->color->getColor());
 }
- 
+
 void TimeColorManager::removeItemInternal(TimeColor *)
 {
 	rebuildGradient();
@@ -118,16 +118,14 @@ void TimeColorManager::controllableFeedbackUpdate(ControllableContainer * cc, Co
 			{
 				items.swap(index, index - 1);
 				baseManagerListeners.call(&Listener::itemsReordered);
-			}
-			else if (index < items.size() - 1 && t->position->floatValue() > items[index + 1]->position->floatValue())
+			} else if (index < items.size() - 1 && t->position->floatValue() > items[index + 1]->position->floatValue())
 			{
 				items.swap(index, index + 1);
 				baseManagerListeners.call(&Listener::itemsReordered);
 			}
 
-			
-		}
-		else if (c == t->color) {
+
+		} else if (c == t->color) {
 			gradient.setColour(t->gradientIndex, t->color->getColor());
 			colorManagerListeners.call(&TimeColorManagerListener::gradientUpdated);
 		}

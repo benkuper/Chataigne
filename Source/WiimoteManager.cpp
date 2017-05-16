@@ -112,7 +112,7 @@ void WiimoteManager::run()
 			i++;
 		}
 
-		if (i > 200 && numReconnectTries < 3) //every 5s
+		if (i > 200 && numReconnectTries < 10) //every 5s
 		{
 			numReconnectTries++;
 			reinitWiimotes = true;
