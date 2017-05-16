@@ -29,8 +29,11 @@ public:
 	InspectableEditor * getEditor(bool isRoot) override;
 	
 	var getJSONData() override;
-
+	
 	void onContainerNiceNameChanged() override;
+
+	virtual String getTypeString() const override { return param->getTypeString(); }
+
 };
 
 class OSCCommandModelArgumentManager :

@@ -10,8 +10,6 @@
 
 
 #include "WiimoteManager.h"
-
-
 #include "WiimotePairUtil.h"
 
 

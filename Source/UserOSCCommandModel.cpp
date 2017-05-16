@@ -162,7 +162,13 @@ void OSCCommandModelArgumentManager::addItemFromData(var data, bool fromUndoable
 	String s = data.getProperty("type", "");
 	DBG("add item from data : " << s);
 	if (s.isEmpty()) return;
-	addItemWithParam((Parameter *)ControllableFactory::createControllable(s), data, fromUndoableAction);
+	Parameter * p = (Parameter *)ControllableFactory::createControllable(s);
+	if (p == nullptr)
+	{
+		LOG("Problem loading OSC Command model argument");
+		return;
+	}
+	addItemWithParam(p, data, fromUndoableAction);
 }
 
 void OSCCommandModelArgumentManager::autoRenameItems()
