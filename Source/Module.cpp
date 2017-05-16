@@ -133,35 +133,7 @@ Controllable * Module::getControllableForJSONDefinition(const String &name, var 
 }
 
 
-var Module::getJSONData()
-{
-	var data = BaseItem::getJSONData();
-	data.getDynamicObject()->setProperty("type", getTypeString());
-	//if (sourceDefinitionPath.isNotEmpty()) data.getDynamicObject()->setProperty("customDefinitionPath", sourceDefinitionPath);
-	return data;
-}
 
-void Module::loadJSONDataInternal(var data)
-{
-	/*
-	if (data.getDynamicObject()->hasProperty("customDefinitionPath"))
-	{
-		String path = data.getProperty("customDefinitionPath", "").toString();
-		var moduleData = JSON::parse(File(path));
-		if (moduleData == nullptr)
-		{
-			DBG("File not found : " << data.getProperty("customDefinitionPath", "").toString());
-		}
-		else
-		{
-			moduleData.getDynamicObject()->setProperty("modulePath", path);
-		}
-
-		setupModuleFromJSONData(moduleData); 
-	}
-	*/
-	BaseItem::loadJSONDataInternal(data);
-}
 
 InspectableEditor * Module::getEditor(bool isRoot)
 {

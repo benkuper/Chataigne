@@ -72,7 +72,6 @@ InspectableEditor * OSCCommandModelArgument::getEditor(bool isRoot)
 var OSCCommandModelArgument::getJSONData()
 {
 	var data = BaseItem::getJSONData();
-	data.getDynamicObject()->setProperty("type", param->getTypeString());
 	data.getDynamicObject()->setProperty("param", param->getJSONData());
 	return data;
 }

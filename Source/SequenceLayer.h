@@ -32,8 +32,6 @@ public:
 	IntParameter * uiHeight;
 	ColorParameter * color;
 
-	//Save / Load
-	virtual var getJSONData() override;
 
 	//Handlers
 

@@ -39,12 +39,3 @@ void Condition::onContainerParameterChangedInternal(Parameter * p)
 		isValid->setValue(false);
 	}
 }
-
-var Condition::getJSONData()
-{
-	var data = BaseItem::getJSONData();
-	data.getDynamicObject()->setProperty("type", getTypeString());
-	return data;
-}
-
-

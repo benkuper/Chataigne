@@ -25,8 +25,6 @@ public:
 	BoolParameter * isValid;
 	virtual void onContainerParameterChangedInternal(Parameter *) override;
 
-	virtual var getJSONData() override;
-
 	class ConditionListener
 	{
 	public:

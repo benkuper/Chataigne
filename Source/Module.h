@@ -62,8 +62,6 @@ public:
 	virtual void setupModuleFromJSONData(var data); //Used for custom modules with a module.json definition, to automatically create parameters, command and values from this file.
 	Controllable * getControllableForJSONDefinition(const String &name, var def);
 
-	virtual var getJSONData() override;
-	virtual void loadJSONDataInternal(var data) override;
 
 	String getTypeString() const override { if (customType.isNotEmpty()) return customType; else return getDefaultTypeString(); } //should be overriden
 	virtual String getDefaultTypeString() const { jassert(false); return ""; }

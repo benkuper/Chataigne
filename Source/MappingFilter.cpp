@@ -83,7 +83,6 @@ Parameter * MappingFilter::process(Parameter * source)
 var MappingFilter::getJSONData()
 {
 	var data = BaseItem::getJSONData();
-	data.getDynamicObject()->setProperty("type", getTypeString());
 	data.getDynamicObject()->setProperty("filterParams", filterParams.getJSONData());
 	return data;
 }

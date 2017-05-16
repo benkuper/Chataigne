@@ -33,13 +33,6 @@ SequenceLayer::~SequenceLayer()
 	sequence->removeSequenceListener(this);
 }
 
-var SequenceLayer::getJSONData()
-{
-	var data = BaseItem::getJSONData();
-	data.getDynamicObject()->setProperty("type", getTypeString());
-	return data;
-}
-
 SequenceLayerPanel * SequenceLayer::getPanel()
 {
 	return new SequenceLayerPanel(this);
