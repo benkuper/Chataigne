@@ -27,6 +27,8 @@ public:
 
 	void onContainerParameterChangedInternal(Parameter * p) override;
 
+	virtual String getTypeString() const override;
+
 	class  ArgumentListener
 	{
 	public:

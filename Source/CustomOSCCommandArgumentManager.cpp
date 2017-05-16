@@ -58,7 +58,14 @@ void CustomOSCCommandArgumentManager::addItemFromData(var data, bool fromUndoabl
 	String s = data.getProperty("type", "");
 	DBG("add item from data : " << s);
 	if (s.isEmpty()) return;
-	addItemWithParam((Parameter *)ControllableFactory::createControllable(s), data, fromUndoableAction);
+	Parameter * p = (Parameter *)ControllableFactory::createControllable(s);
+	if (p == nullptr)
+	{
+		LOG("Error loading custom argument !");
+		return;
+	}
+
+ 	addItemWithParam(p, data, fromUndoableAction);
 }
 
 void CustomOSCCommandArgumentManager::autoRenameItems()

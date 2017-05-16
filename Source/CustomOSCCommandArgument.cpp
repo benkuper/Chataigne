@@ -45,6 +45,11 @@ void CustomOSCCommandArgument::onContainerParameterChangedInternal(Parameter * p
 	}
 }
 
+String CustomOSCCommandArgument::getTypeString() const
+{
+	return param->getTypeString();
+}
+
 
 
 InspectableEditor * CustomOSCCommandArgument::getEditor(bool isRoot)
