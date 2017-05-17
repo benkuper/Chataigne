@@ -17,12 +17,12 @@ ResolumeBaseCommand::ResolumeBaseCommand(ResolumeModule * _module, CommandContex
 	resolumeModule(_module)
 {
 	multiLevelAccess = params.getProperty("multiLevel", true);
-	String targetLevel = params.getProperty("level", "Composition");
+	String targetLevel = params.getProperty("level", "Clip");
 	addressSuffix = params.getProperty("suffix", "");
 
 	levelParam = addEnumParameter("Level", "Whether the command will target the whole composition, a specific layer or a clip");
-	levelParam->addOption("Composition", COMPOSITION);
 	levelParam->addOption("Layer", LAYER);
+	levelParam->addOption("Composition", COMPOSITION);
 	levelParam->addOption("Clip", CLIP);
 	if (targetLevel == "Column") levelParam->addOption("Column", COLUMN);
 

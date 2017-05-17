@@ -4,8 +4,7 @@
 
 */
 
-#ifndef BINARYDATA_H_123017474_INCLUDED
-#define BINARYDATA_H_123017474_INCLUDED
+#pragma once
 
 namespace BinaryData
 {
@@ -13,7 +12,7 @@ namespace BinaryData
     const int            add_pngSize = 16103;
 
     extern const char*   default_chalayout;
-    const int            default_chalayoutSize = 2883;
+    const int            default_chalayoutSize = 2248;
 
     extern const char*   icon_png;
     const int            icon_pngSize = 42153;
@@ -46,5 +45,3 @@ namespace BinaryData
     // return the corresponding data and its size (or a null pointer if the name isn't found).
     const char* getNamedResource (const char* resourceNameUTF8, int& dataSizeInBytes) throw();
 }
-
-#endif

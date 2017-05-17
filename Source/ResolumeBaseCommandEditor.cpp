@@ -27,5 +27,6 @@ void ResolumeBaseCommandEditor::controllableFeedbackUpdate(Controllable * c)
 	if (c == resolumeCommand->levelParam)
 	{
 		resetAndBuild();
+		resized();
 	}
 }

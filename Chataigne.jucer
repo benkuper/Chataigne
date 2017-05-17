@@ -2,7 +2,7 @@
 
 <JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.0.0"
               bundleIdentifier="benkuper.Chataigne" includeBinaryInAppConfig="1"
-              jucerVersion="4.3.1" companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
+              jucerVersion="5.0.1" companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
               companyEmail="benjamin@kuperberg.fr" defines="" displaySplashScreen="1"
               reportAppUsage="1" splashScreenColour="Dark">
   <MAINGROUP id="EDDVhd" name="Chataigne">
@@ -1050,34 +1050,40 @@
     </GROUP>
   </MAINGROUP>
   <EXPORTFORMATS>
-    <VS2017 targetFolder="Builds/VisualStudio2017" externalLibraries="Setupapi.lib&#10;hid.lib&#10;Kinect20.lib"
+    <VS2015 targetFolder="Builds/VisualStudio2015" externalLibraries="Setupapi.lib&#10;hid.lib&#10;Kinect20.lib"
             smallIcon="nVz6Li" bigIcon="nVz6Li">
       <CONFIGURATIONS>
-        <CONFIGURATION name="Debug" winWarningLevel="4" generateManifest="1" winArchitecture="x64"
-                       isDebug="1" optimisation="1" targetName="Chataigne" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;$(ASIOSDK)/common&#10;$(KINECTSDK20_DIR)inc"
-                       libraryPath="$(KINECTSDK20_DIR)Lib\x64"/>
         <CONFIGURATION name="Release" winWarningLevel="4" generateManifest="1" winArchitecture="x64"
-                       isDebug="0" optimisation="3" targetName="Chataigne" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;$(ASIOSDK)/common&#10;$(KINECTSDK20_DIR)inc"
-                       libraryPath="$(KINECTSDK20_DIR)Lib\x64"/>
+                       isDebug="0" optimisation="3" targetName="Chataigne-x64" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;$(ASIOSDK)/common&#10;$(KINECTSDK20_DIR)inc&#10;"
+                       libraryPath="$(KINECTSDK20_DIR)Lib\x64&#10;" binaryPath="Binaries"/>
+        <CONFIGURATION name="Debug" winWarningLevel="4" generateManifest="1" winArchitecture="x64"
+                       isDebug="1" optimisation="1" targetName="Chataigne-x64_Debug"
+                       headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;$(ASIOSDK)/common&#10;$(KINECTSDK20_DIR)inc&#10;"
+                       libraryPath="$(KINECTSDK20_DIR)Lib\x64&#10;" binaryPath="Binaries"/>
+        <CONFIGURATION name="Debug x86" winWarningLevel="4" generateManifest="1" winArchitecture="32-bit"
+                       isDebug="1" optimisation="1" targetName="Chataigne-x86_Debug"
+                       headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;$(ASIOSDK)/common&#10;$(KINECTSDK20_DIR)inc"
+                       libraryPath="$(KINECTSDK20_DIR)Lib\x86&#10;" binaryPath="Binaries"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
-        <MODULEPATH id="juce_video" path="D:/Softwares/JUCE/modules"/>
-        <MODULEPATH id="juce_osc" path="D:/Softwares/JUCE/modules"/>
-        <MODULEPATH id="juce_opengl" path="D:/Softwares/JUCE/modules"/>
-        <MODULEPATH id="juce_gui_basics" path="D:/Softwares/JUCE/modules"/>
-        <MODULEPATH id="juce_graphics" path="D:/Softwares/JUCE/modules"/>
-        <MODULEPATH id="juce_events" path="D:/Softwares/JUCE/modules"/>
-        <MODULEPATH id="juce_data_structures" path="D:/Softwares/JUCE/modules"/>
-        <MODULEPATH id="juce_cryptography" path="D:/Softwares/JUCE/modules"/>
-        <MODULEPATH id="juce_core" path="D:/Softwares/JUCE/modules"/>
-        <MODULEPATH id="juce_audio_utils" path="D:/Softwares/JUCE/modules"/>
-        <MODULEPATH id="juce_audio_processors" path="D:/Softwares/JUCE/modules"/>
-        <MODULEPATH id="juce_audio_formats" path="D:/Softwares/JUCE/modules"/>
-        <MODULEPATH id="juce_audio_devices" path="D:/Softwares/JUCE/modules"/>
-        <MODULEPATH id="juce_audio_basics" path="D:/Softwares/JUCE/modules"/>
-        <MODULEPATH id="juce_gui_extra" path="D:/Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_video" path="D:/Softwares\JUCE\modules"/>
+        <MODULEPATH id="juce_osc" path="D:/Softwares\JUCE\modules"/>
+        <MODULEPATH id="juce_opengl" path="D:/Softwares\JUCE\modules"/>
+        <MODULEPATH id="juce_gui_extra" path="D:/Softwares\JUCE\modules"/>
+        <MODULEPATH id="juce_gui_basics" path="D:/Softwares\JUCE\modules"/>
+        <MODULEPATH id="juce_graphics" path="D:/Softwares\JUCE\modules"/>
+        <MODULEPATH id="juce_events" path="D:/Softwares\JUCE\modules"/>
+        <MODULEPATH id="juce_data_structures" path="D:/Softwares\JUCE\modules"/>
+        <MODULEPATH id="juce_cryptography" path="D:/Softwares\JUCE\modules"/>
+        <MODULEPATH id="juce_core" path="D:/Softwares\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_utils" path="D:/Softwares\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_processors" path="D:/Softwares\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_formats" path="D:/Softwares\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_devices" path="D:/Softwares\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_basics" path="D:/Softwares\JUCE\modules"/>
+        <MODULEPATH id="juce_organicui" path="../JUCE Modules"/>
       </MODULEPATHS>
-    </VS2017>
+    </VS2015>
     <LINUX_MAKE targetFolder="Builds/LinuxMakefile" smallIcon="nVz6Li" bigIcon="nVz6Li"
                 externalLibraries="bluetooth" extraLinkerFlags="">
       <CONFIGURATIONS>
@@ -1134,38 +1140,6 @@
         <MODULEPATH id="juce_organicui" path="../JUCE Modules"/>
       </MODULEPATHS>
     </XCODE_MAC>
-    <VS2015 targetFolder="Builds/VisualStudio2015" externalLibraries="Setupapi.lib&#10;hid.lib&#10;Kinect20.lib"
-            smallIcon="nVz6Li" bigIcon="nVz6Li">
-      <CONFIGURATIONS>
-        <CONFIGURATION name="Release" winWarningLevel="4" generateManifest="1" winArchitecture="x64"
-                       isDebug="0" optimisation="3" targetName="Chataigne" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;$(ASIOSDK)/common&#10;$(KINECTSDK20_DIR)inc&#10;"
-                       libraryPath="$(KINECTSDK20_DIR)Lib\x64&#10;"/>
-        <CONFIGURATION name="Debug" winWarningLevel="4" generateManifest="1" winArchitecture="x64"
-                       isDebug="1" optimisation="1" targetName="Chataigne" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;$(ASIOSDK)/common&#10;$(KINECTSDK20_DIR)inc&#10;"
-                       libraryPath="$(KINECTSDK20_DIR)Lib\x64&#10;"/>
-        <CONFIGURATION name="Debug x86" winWarningLevel="4" generateManifest="1" winArchitecture="32-bit"
-                       isDebug="1" optimisation="1" targetName="Chataigne" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;$(ASIOSDK)/common&#10;$(KINECTSDK20_DIR)inc"
-                       libraryPath="$(KINECTSDK20_DIR)Lib\x86&#10;"/>
-      </CONFIGURATIONS>
-      <MODULEPATHS>
-        <MODULEPATH id="juce_video" path="D:/Softwares\JUCE\modules"/>
-        <MODULEPATH id="juce_osc" path="D:/Softwares\JUCE\modules"/>
-        <MODULEPATH id="juce_opengl" path="D:/Softwares\JUCE\modules"/>
-        <MODULEPATH id="juce_gui_extra" path="D:/Softwares\JUCE\modules"/>
-        <MODULEPATH id="juce_gui_basics" path="D:/Softwares\JUCE\modules"/>
-        <MODULEPATH id="juce_graphics" path="D:/Softwares\JUCE\modules"/>
-        <MODULEPATH id="juce_events" path="D:/Softwares\JUCE\modules"/>
-        <MODULEPATH id="juce_data_structures" path="D:/Softwares\JUCE\modules"/>
-        <MODULEPATH id="juce_cryptography" path="D:/Softwares\JUCE\modules"/>
-        <MODULEPATH id="juce_core" path="D:/Softwares\JUCE\modules"/>
-        <MODULEPATH id="juce_audio_utils" path="D:/Softwares\JUCE\modules"/>
-        <MODULEPATH id="juce_audio_processors" path="D:/Softwares\JUCE\modules"/>
-        <MODULEPATH id="juce_audio_formats" path="D:/Softwares\JUCE\modules"/>
-        <MODULEPATH id="juce_audio_devices" path="D:/Softwares\JUCE\modules"/>
-        <MODULEPATH id="juce_audio_basics" path="D:/Softwares\JUCE\modules"/>
-        <MODULEPATH id="juce_organicui" path="../JUCE Modules"/>
-      </MODULEPATHS>
-    </VS2015>
   </EXPORTFORMATS>
   <MODULES>
     <MODULE id="juce_audio_basics" showAllCode="1" useLocalCopy="0"/>

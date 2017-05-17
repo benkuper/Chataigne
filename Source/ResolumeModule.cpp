@@ -16,7 +16,7 @@
 ResolumeModule::ResolumeModule() :
 	OSCModule("Resolume",7001,7000)
 {	
-	defManager.add(CommandDefinition::createDef(this, "Composition", "Stop Composition", &OSCCommand::create, CommandContext::ACTION)->addParam("level","Composition")->addParam("suffix","stop"));	
+	defManager.add(CommandDefinition::createDef(this, "Composition", "Stop Composition", &OSCCommand::create, CommandContext::ACTION)->addParam("level","Composition")->addParam("address","/composition/disconnectall"));	
 	
 	defManager.add(CommandDefinition::createDef(this, "Launch / Stop", "Launch Clip", &ResolumeClipCommand::create, CommandContext::ACTION)->addParam("level", "Clip")->addParam("suffix","connect"));
 	defManager.add(CommandDefinition::createDef(this, "Launch / Stop", "Stop Layer", &ResolumeClipCommand::create, CommandContext::ACTION)->addParam("level", "Layer")->addParam("suffix","clear"));

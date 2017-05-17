@@ -60,3 +60,5 @@ Builds/VisualStudio2015/Flap.sln
 Builds/VisualStudio2015/
 Builds/MacOSX/*
 Builds/VisualStudio2017/
+Binaries/App/Chataigne-x64_Debug.exe
+Binaries/
