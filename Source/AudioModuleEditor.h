@@ -26,6 +26,7 @@ public:
 
 	ScopedPointer<InspectableEditor> gainSlider;
 	ScopedPointer<InspectableEditor> thresholdSlider;
+	ScopedPointer<InspectableEditor> keepToggle;
 	
 	ScopedPointer<InspectableEditor> valuesCCEditor;
 

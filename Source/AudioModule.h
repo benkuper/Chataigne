@@ -31,6 +31,8 @@ public:
 	double currentSampleRate;
 	int currentBufferSize;
 
+	BoolParameter * keepLastDetectedValues;
+
 	//ScopedPointer<AudioProcessorGraph::AudioGraphIOProcessor> graphIn;
 	//ScopedPointer<AudioProcessorGraph::AudioGraphIOProcessor> graphOut;
 

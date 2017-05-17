@@ -42,37 +42,44 @@ void CustomOSCCommand::loadJSONDataInternal(var data)
 void CustomOSCCommand::trigger()
 {
 	if (oscModule == nullptr) return;
-
-	OSCMessage m(address->stringValue());
-
-	for (auto &a : argManager.items)
+	String addString = address->stringValue();
+	
+	try
 	{
-		Parameter * p = a->param;
-		if (p == nullptr) continue;
-		switch (p->type)
+		OSCMessage m(address->stringValue());
+
+		for (auto &a : argManager.items)
 		{
-		case Controllable::BOOL: m.addInt32(p->boolValue() ? 1 : 0); break;
-		case Controllable::INT: m.addInt32(p->intValue()); break;
-		case Controllable::FLOAT: m.addFloat32(p->floatValue()); break;
-		case Controllable::STRING: m.addString(p->stringValue()); break;
-		case Controllable::POINT2D:
-			m.addFloat32(((Point2DParameter *)a)->x);
-			m.addFloat32(((Point2DParameter *)a)->y);
-			break;
-		case Controllable::POINT3D:
-			m.addFloat32(((Point3DParameter *)a)->x);
-			m.addFloat32(((Point3DParameter *)a)->y);
-			m.addFloat32(((Point3DParameter *)a)->z);
-			break;
+			Parameter * p = a->param;
+			if (p == nullptr) continue;
+			switch (p->type)
+			{
+			case Controllable::BOOL: m.addInt32(p->boolValue() ? 1 : 0); break;
+			case Controllable::INT: m.addInt32(p->intValue()); break;
+			case Controllable::FLOAT: m.addFloat32(p->floatValue()); break;
+			case Controllable::STRING: m.addString(p->stringValue()); break;
+			case Controllable::POINT2D:
+				m.addFloat32(((Point2DParameter *)a)->x);
+				m.addFloat32(((Point2DParameter *)a)->y);
+				break;
+			case Controllable::POINT3D:
+				m.addFloat32(((Point3DParameter *)a)->x);
+				m.addFloat32(((Point3DParameter *)a)->y);
+				m.addFloat32(((Point3DParameter *)a)->z);
+				break;
 
-		default:
-			//not handle
-			break;
+			default:
+				//not handle
+				break;
 
+			}
 		}
+		oscModule->sendOSC(m);
+	}catch (const OSCFormatError &)
+	{
+		NLOG("OSC", "Address is invalid :\n" << address->stringValue());
+		return;
 	}
-
-	oscModule->sendOSC(m);
 }
 
 void CustomOSCCommand::useForMappingChanged(CustomOSCCommandArgument *)

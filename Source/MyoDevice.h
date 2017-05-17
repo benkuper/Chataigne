@@ -14,7 +14,7 @@
 #if JUCE_WINDOWS
 
 #include "JuceHeader.h"
-#include "myo/myo.hpp"
+//#include "myo/myo.hpp"
 
 class MyoDevice
 {

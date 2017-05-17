@@ -26,6 +26,10 @@ AudioModuleEditor::AudioModuleEditor(AudioModule * module, bool isRoot) :
 	addAndMakeVisible(thresholdSlider);
 	thresholdSlider->setSize(100, 16);
 
+	keepToggle = audioModule->keepLastDetectedValues->getEditor(false);
+	addAndMakeVisible(keepToggle);
+	keepToggle->setSize(100, 16);
+
 
 	valuesCCEditor = audioModule->valuesCC.getEditor(false);
 	addAndMakeVisible(valuesCCEditor);
@@ -43,6 +47,8 @@ void AudioModuleEditor::resizedInternalContent(Rectangle<int>& r)
 		r.translate(0, gainSlider->getHeight() + 2);
 		thresholdSlider->setBounds(r.withHeight(thresholdSlider->getHeight()));
 		r.translate(0, thresholdSlider->getHeight() + 2);
+		keepToggle->setBounds(r.withHeight(keepToggle->getHeight()));
+		r.translate(0, keepToggle->getHeight() + 2);
 	}
 
 	if (valuesCCEditor != nullptr)

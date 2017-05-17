@@ -37,7 +37,7 @@ ModuleFactory::ModuleFactory() {
 	moduleDefs.add(new ModuleDefinition("Controller", "Wiimote", &WiimoteModule::create));
 	
 #if JUCE_WINDOWS
-	moduleDefs.add(new ModuleDefinition("Controller", "Myo", &MyoModule::create));
+	//moduleDefs.add(new ModuleDefinition("Controller", "Myo", &MyoModule::create));
     moduleDefs.add(new ModuleDefinition("Controller", "KinectV2", &KinectV2Module::create));
 #endif
     

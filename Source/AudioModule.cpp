@@ -19,7 +19,8 @@ uidIncrement(100),
 {
 	gain = addFloatParameter("Gain", "Gain for the input volume", 1, 0, 10);
 	activityThreshold = addFloatParameter("Activity Threshold", "Threshold to consider activity from the source.\nAnalysis will compute only if volume is greater than this parameter", .1f,0,1);
-	
+	keepLastDetectedValues = addBoolParameter("Keep Values", "Keep last detected values when no activity detected.", false);
+
 	volume = valuesCC.addFloatParameter("Volume", "Volume of the audio input", 0, 0, 1);
 	volume->isControllableFeedbackOnly = true;
 
@@ -30,6 +31,7 @@ uidIncrement(100),
 	pitch->isControllableFeedbackOnly = true;
 
 	note = valuesCC.addEnumParameter("Note", "Detected note");
+	note->addOption("-", -1);
 	for (int i = 0; i < 12; i++) note->addOption(MIDIManager::getNoteName(i,false), i);
 	octave = valuesCC.addIntParameter("Octave", "Detected octave", 0, 0, 10);
 
@@ -126,7 +128,12 @@ void AudioModule::audioDeviceIOCallback(const float ** inputChannelData, int num
 
 		} else
 		{
-			frequency->setValue(0);
+			if(!keepLastDetectedValues->boolValue())
+			{
+				frequency->setValue(0);
+				pitch->setValue(0);
+				note->setValueWithKey("-");
+			}
 		}
 	}
 	else

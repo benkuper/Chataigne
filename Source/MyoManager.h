@@ -15,11 +15,12 @@
 
 #if JUCE_WINDOWS
 #include "MyoDevice.h"
-using namespace myo;
+
+//using namespace myo;
 
 class MyoManager :
-	public Thread,
-	public myo::DeviceListener
+	public Thread
+	//, public myo::DeviceListener
 {
 public:
 	juce_DeclareSingleton(MyoManager, true);
@@ -29,6 +30,7 @@ public:
 	
 	void initHub();
 
+	/*
 	virtual void onPair(Myo* myo, uint64_t timestamp, FirmwareVersion firmwareVersion);
 	virtual void onUnpair(Myo* myo, uint64_t timestamp);
 	virtual void onConnect(Myo* myo, uint64_t timestamp, FirmwareVersion firmwareVersion);
@@ -46,7 +48,7 @@ public:
 	virtual void onBatteryLevelReceived(myo::Myo* myo, uint64_t timestamp, uint8_t level);
 	virtual void onEmgData(myo::Myo* myo, uint64_t timestamp, const int8_t* emg);
 	virtual void onWarmupCompleted(myo::Myo* myo, uint64_t timestamp, WarmupResult warmupResult);
-
+	*/
 
 	// Inherited via Thread
 	virtual void run() override;

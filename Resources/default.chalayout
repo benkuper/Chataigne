@@ -1,112 +1,84 @@
 {
   "mainLayout": {
     "type": 1,
-    "width": 300,
-    "height": 300,
+    "width": 1313,
+    "height": 775,
     "direction": 2,
     "shifters": [
       {
         "type": 1,
         "width": 300,
-        "height": 300,
-        "direction": 1,
+        "height": 540,
+        "direction": 2,
         "shifters": [
           {
             "type": 1,
-            "width": 318,
-            "height": 300,
-            "direction": 2,
+            "width": 637,
+            "height": 533,
+            "direction": 1,
             "shifters": [
               {
-                "type": 0,
-                "width": 237,
-                "height": 293,
-                "currentContent": "Modules",
-                "tabs": [
+                "type": 1,
+                "width": 233,
+                "height": 777,
+                "direction": 2,
+                "shifters": [
                   {
-                    "name": "Modules"
+                    "type": 0,
+                    "width": 192,
+                    "height": 295,
+                    "currentContent": "Modules",
+                    "tabs": [
+                      {
+                        "name": "Modules"
+                      }
+                    ]
+                  },
+                  {
+                    "type": 0,
+                    "width": 302,
+                    "height": 232,
+                    "currentContent": "Sequences",
+                    "tabs": [
+                      {
+                        "name": "Sequences"
+                      }
+                    ]
                   }
                 ]
               },
               {
                 "type": 0,
-                "width": 302,
-                "height": 250,
-                "currentContent": "Sequences",
-                "tabs": [
-                  {
-                    "name": "Sequences"
-                  }
-                ]
-              },
-              {
-                "type": 0,
-                "width": 302,
-                "height": 326,
-                "currentContent": "Logger",
-                "tabs": [
-                  {
-                    "name": "Logger"
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "type": 1,
-            "width": 695,
-            "height": 300,
-            "direction": 2,
-            "shifters": [
-              {
-                "type": 0,
-                "width": 300,
-                "height": 354,
+                "width": 806,
+                "height": 385,
                 "currentContent": "State Machine",
                 "tabs": [
                   {
                     "name": "State Machine"
-                  },
-                  {
-                    "name": "Dashboard"
                   }
                 ]
               },
               {
                 "type": 0,
-                "width": 883,
-                "height": 521,
-                "currentContent": "Time Machine",
-                "tabs": [
-                  {
-                    "name": "Time Machine"
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "type": 1,
-            "width": 391,
-            "height": 300,
-            "direction": 2,
-            "shifters": [
-              {
-                "type": 0,
-                "width": 341,
-                "height": 506,
+                "width": 262,
+                "height": 777,
                 "currentContent": "Inspector",
                 "tabs": [
                   {
                     "name": "Inspector"
                   }
                 ]
-              },
+              }
+            ]
+          },
+          {
+            "type": 0,
+            "width": 1164,
+            "height": 236,
+            "currentContent": "Time Machine",
+            "tabs": [
               {
-                "type": 0,
-                "width": 320,
-                "height": 370,
-                "tabs": null
+                "name": "Time Machine"
               }
             ]
           }
