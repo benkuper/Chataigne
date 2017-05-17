@@ -212,6 +212,9 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/MIDICommands_bb9338b2.o \
   $(JUCE_OBJDIR)/MIDIModuleEditor_725ffe23.o \
   $(JUCE_OBJDIR)/MIDIModule_a8b59bd6.o \
+  $(JUCE_OBJDIR)/MilluminModule_c935c8ae.o \
+  $(JUCE_OBJDIR)/LGMLParameterCommand_ad119e45.o \
+  $(JUCE_OBJDIR)/LGMLModule_edbeadcf.o \
   $(JUCE_OBJDIR)/LiveOSCCommandBase_f8e2d952.o \
   $(JUCE_OBJDIR)/LiveOSCDeviceCommand_e278ffeb.o \
   $(JUCE_OBJDIR)/LiveOSCSceneCommand_a17f3893.o \
@@ -1065,6 +1068,21 @@ $(JUCE_OBJDIR)/MIDIModuleEditor_725ffe23.o: ../../Source/MIDIModuleEditor.cpp
 $(JUCE_OBJDIR)/MIDIModule_a8b59bd6.o: ../../Source/MIDIModule.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling MIDIModule.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/MilluminModule_c935c8ae.o: ../../Source/MilluminModule.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling MilluminModule.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/LGMLParameterCommand_ad119e45.o: ../../Source/LGMLParameterCommand.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling LGMLParameterCommand.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/LGMLModule_edbeadcf.o: ../../Source/LGMLModule.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling LGMLModule.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/LiveOSCCommandBase_f8e2d952.o: ../../Source/LiveOSCCommandBase.cpp

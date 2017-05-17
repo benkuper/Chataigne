@@ -616,6 +616,23 @@
             <FILE id="zwyCZl" name="MIDIModule.h" compile="0" resource="0" file="Source/MIDIModule.h"/>
           </GROUP>
           <GROUP id="{F3EE9907-02E8-26FF-4F80-AB785727E37C}" name="osc">
+            <GROUP id="{AE7C4819-D360-5DA3-520B-E536BF8503A7}" name="millumin">
+              <GROUP id="{A9BFF746-87AE-5390-EA2C-F2B706DA6D22}" name="commands"/>
+              <FILE id="VhhgdB" name="MilluminModule.cpp" compile="1" resource="0"
+                    file="Source/MilluminModule.cpp"/>
+              <FILE id="Wb71WH" name="MilluminModule.h" compile="0" resource="0"
+                    file="Source/MilluminModule.h"/>
+            </GROUP>
+            <GROUP id="{10647C33-9219-7FA9-BE90-B7D677AE14D5}" name="lgml">
+              <GROUP id="{26C9DC67-9EB7-B8E6-347D-156C82FB72C8}" name="commands">
+                <FILE id="VRsVNg" name="LGMLParameterCommand.cpp" compile="1" resource="0"
+                      file="Source/LGMLParameterCommand.cpp"/>
+                <FILE id="EUIjh8" name="LGMLParameterCommand.h" compile="0" resource="0"
+                      file="Source/LGMLParameterCommand.h"/>
+              </GROUP>
+              <FILE id="O2qScv" name="LGMLModule.cpp" compile="1" resource="0" file="Source/LGMLModule.cpp"/>
+              <FILE id="q7ykUO" name="LGMLModule.h" compile="0" resource="0" file="Source/LGMLModule.h"/>
+            </GROUP>
             <GROUP id="{EF646370-510B-7906-5FD2-CCDE2B41DBD3}" name="live">
               <GROUP id="{7C3ABF3F-2BBD-5267-C99A-94DA68354DCB}" name="commands">
                 <FILE id="jWqWib" name="LiveOSCCommandBase.cpp" compile="1" resource="0"
