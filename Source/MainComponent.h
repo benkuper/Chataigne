@@ -9,7 +9,7 @@
 #ifndef MAINCOMPONENT_H_INCLUDED
 #define MAINCOMPONENT_H_INCLUDED
 
-#include "juceHeader.h"
+#include "JuceHeader.h"
 
 ApplicationProperties& getAppProperties();
 ApplicationCommandManager& getCommandManager();
