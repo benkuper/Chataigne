@@ -23,6 +23,7 @@ public:
 	virtual ~FloatComparator();
 
 	const Identifier equalsId = "=";
+	const Identifier differentId = "!=";
 	const Identifier greaterId = ">";
 	const Identifier lessId = "<";
 	const Identifier greaterOrEqualId = ">=";
@@ -47,6 +48,7 @@ public:
 	virtual ~IntComparator();
 
 	const Identifier equalsId = "=";
+	const Identifier differentId = "!=";
 	const Identifier greaterId = ">";
 	const Identifier lessId = "<";
 	const Identifier greaterOrEqualId = ">=";

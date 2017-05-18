@@ -22,6 +22,7 @@ EnumComparator::EnumComparator(Controllable * c) :
 	while (i.next()) enumRef->addOption(i.getKey(), i.getValue());
 
 	addCompareOption("=", equalsId);
+	addCompareOption("!=", equalsId);
 
 	reference = enumRef;
 
@@ -34,4 +35,5 @@ EnumComparator::~EnumComparator()
 void EnumComparator::compare()
 {
 	if (currentFunctionId == equalsId) setValid(enumParam->getValueData() == enumRef->getValueData());
+	if (currentFunctionId == differentId) setValid(enumParam->getValueData() != enumRef->getValueData());
 }

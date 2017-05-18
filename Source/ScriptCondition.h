@@ -28,6 +28,9 @@ public:
 
 	InspectableEditor * getEditor(bool isRoot) override;
 
+	var getJSONData() override;
+	void loadJSONDataInternal(var data) override;
+
 	String getTypeString() const override { return "Script"; }
 	static ScriptCondition * create() { return new ScriptCondition(); }
 

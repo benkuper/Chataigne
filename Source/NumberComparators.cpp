@@ -18,6 +18,7 @@ FloatComparator::FloatComparator(Controllable * c) :
 	reference = floatRef;
 
 	addCompareOption("=", equalsId);
+	addCompareOption("!=", equalsId);
 	addCompareOption(">", greaterId);
 	addCompareOption("<", lessId);
 	addCompareOption(">=", greaterOrEqualId);
@@ -37,6 +38,7 @@ void FloatComparator::compare()
 	if (reference == nullptr) return;
 
 	if (currentFunctionId == equalsId)				setValid(floatParam->floatValue() == floatRef->floatValue());
+	else if (currentFunctionId == differentId)		setValid(floatParam->floatValue() != floatRef->floatValue());
 	else if (currentFunctionId == greaterId)		setValid(floatParam->floatValue() > floatRef->floatValue());
 	else if (currentFunctionId == lessId)			setValid(floatParam->floatValue() < floatRef->floatValue());
 	else if (currentFunctionId == greaterOrEqualId)	setValid(floatParam->floatValue() >= floatRef->floatValue());
@@ -55,6 +57,7 @@ IntComparator::IntComparator(Controllable * c) :
 	reference = intRef;
 
 	addCompareOption("=", equalsId);
+	addCompareOption("!=", differentId);
 	addCompareOption(">", greaterId);
 	addCompareOption("<", lessId);
 	addCompareOption(">=", greaterOrEqualId);
@@ -69,7 +72,8 @@ IntComparator::~IntComparator()
 void IntComparator::compare()
 {
 	if (currentFunctionId == equalsId)				setValid(intParam->floatValue() == intRef->floatValue());
-	else if (currentFunctionId == greaterId)				setValid(intParam->floatValue() > intRef->floatValue());
+	if (currentFunctionId == differentId)			setValid(intParam->floatValue() != intRef->floatValue());
+	else if (currentFunctionId == greaterId)		setValid(intParam->floatValue() > intRef->floatValue());
 	else if (currentFunctionId == lessId)			setValid(intParam->floatValue() < intRef->floatValue());
 	else if (currentFunctionId == greaterOrEqualId)	setValid(intParam->floatValue() >= intRef->floatValue());
 	else if (currentFunctionId == lessOrEqualId)	setValid(intParam->floatValue() <= intRef->floatValue());

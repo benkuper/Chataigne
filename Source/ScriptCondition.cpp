@@ -38,3 +38,16 @@ InspectableEditor * ScriptCondition::getEditor(bool isRoot)
 {
 	return new ScriptConditionEditor(this,isRoot);
 }
+
+var ScriptCondition::getJSONData()
+{
+	var data = Condition::getJSONData();
+	data.getDynamicObject()->setProperty("script",script.getJSONData());
+	return data;
+}
+
+void ScriptCondition::loadJSONDataInternal(var data)
+{
+	Condition::loadJSONDataInternal(data);
+	script.loadJSONData(data.getProperty("script", var()));
+}

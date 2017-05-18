@@ -21,6 +21,7 @@ public:
 	virtual ~StringComparator();
 
 	const Identifier equalsId = "=";
+	const Identifier differentId = "!=";
 	const Identifier containsId = "contains";
 	const Identifier startsWith = "startsWith";
 	const Identifier endsWidth = "endsWidth";

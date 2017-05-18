@@ -22,6 +22,7 @@ public:
 	virtual ~EnumComparator();
 
 	const Identifier equalsId = "=";
+	const Identifier differentId = "!=";
 
 	EnumParameter * enumParam;
 	EnumParameter * enumRef;
