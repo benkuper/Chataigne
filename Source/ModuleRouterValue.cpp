@@ -24,8 +24,6 @@ ModuleRouterValue::ModuleRouterValue(Controllable * _sourceValue, int _index) :
 	userCanRemove = false;
 	doRoute = addBoolParameter("Route", "Activate the routing for this value", false);
 
-	if (sourceValue->type == Controllable::TRIGGER) ((Trigger *)sourceValue)->addTriggerListener(this);
-	else ((Parameter *)sourceValue)->addParameterListener(this);
 }
 
 ModuleRouterValue::~ModuleRouterValue()
