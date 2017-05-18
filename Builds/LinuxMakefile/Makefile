@@ -1672,4 +1672,4 @@ strip:
 	@echo Stripping Chataigne
 	-$(V_AT)$(STRIP) --strip-unneeded $(JUCE_OUTDIR)/$(TARGET)
 
--include $(OBJECTS_APP:%.o=%.d)
+-include $(OBJECTS:%.o=%.d)
