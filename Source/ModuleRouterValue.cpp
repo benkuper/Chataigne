@@ -22,7 +22,7 @@ ModuleRouterValue::ModuleRouterValue(Controllable * _sourceValue, int _index) :
 	nameParam->isEditable = false;
 
 	userCanRemove = false;
-	doRoute = addBoolParameter("Route", "Activate the routing for this value", true);
+	doRoute = addBoolParameter("Route", "Activate the routing for this value", false);
 
 	if (sourceValue->type == Controllable::TRIGGER) ((Trigger *)sourceValue)->addTriggerListener(this);
 	else ((Parameter *)sourceValue)->addParameterListener(this);
@@ -34,7 +34,7 @@ ModuleRouterValue::~ModuleRouterValue()
 	else ((Parameter *)sourceValue)->removeParameterListener(this);
 }
 
-void ModuleRouterValue::setOutModule(Module * m)
+void ModuleRouterValue::setSourceAndOutModule(Module * s, Module * m)
 {
 	if (outModule == m) return;
 
@@ -54,7 +54,7 @@ void ModuleRouterValue::setOutModule(Module * m)
 
 	if (outModule != nullptr)
 	{
-		routeParams = outModule->createRouteParamsForSourceValue(sourceValue,valueIndex);
+		routeParams = outModule->createRouteParamsForSourceValue(s, sourceValue,valueIndex);
 		routeParams->loadJSONData(prevData);
 		addChildControllableContainer(routeParams);
 	}

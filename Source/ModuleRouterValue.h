@@ -28,7 +28,7 @@ public:
 
 	ScopedPointer<Module::RouteParams> routeParams;
 
-	void setOutModule(Module * outModule);
+	void setSourceAndOutModule(Module * sourceModule, Module * outModule);
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
@@ -37,7 +37,7 @@ public:
 	void onExternalParameterChanged(Parameter * p) override;
 	void onExternalTriggerTriggered(Trigger * t) override;
 	
-
+	
 	class ValueListener
 	{
 	public:

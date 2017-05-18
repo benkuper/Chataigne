@@ -24,8 +24,6 @@ public:
 	Module(const String &name = "Module");
 	virtual ~Module();
 
-	
-
 	BoolParameter * logIncomingData;
 	BoolParameter * logOutgoingData;
 
@@ -54,7 +52,7 @@ public:
 		~RouteParams() {}
 	};
 
-	virtual RouteParams * createRouteParamsForSourceValue(Controllable * /*c*/, int /*index*/) { jassert(false); return nullptr; }
+	virtual RouteParams * createRouteParamsForSourceValue(Module * /*sourceModule*/, Controllable * /*c*/, int /*index*/) { jassert(false); return nullptr; }
 	virtual void handleRoutedModuleValue(Controllable * /*c*/, RouteParams * /*params*/) {} //used for routing, child classes that support routing must override
 
 	virtual void controllableFeedbackUpdate(ControllableContainer * cc, Controllable * c) override;

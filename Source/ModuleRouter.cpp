@@ -31,8 +31,8 @@ void ModuleRouter::setSourceModule(Module * m)
 	if (m == sourceModule) return;
 	if (sourceModule != nullptr)
 	{
+		sourceModule->valuesCC.removeAsyncContainerListener(this);
 		sourceModule->removeInspectableListener(this);
-		DBG("clear here !");
 		sourceValues.clear();
 	}
 	
@@ -40,6 +40,7 @@ void ModuleRouter::setSourceModule(Module * m)
 
 	if (sourceModule != nullptr)
 	{
+		sourceModule->valuesCC.addAsyncContainerListener(this);
 		sourceModule->addInspectableListener(this);
 
 		Array<WeakReference<Controllable>> values = sourceModule->valuesCC.getAllControllables();
@@ -48,7 +49,7 @@ void ModuleRouter::setSourceModule(Module * m)
 		{
 			ModuleRouterValue * mrv = new ModuleRouterValue(c, index++);
 			sourceValues.addItem(mrv);
-			mrv->setOutModule(destModule);
+			mrv->setSourceAndOutModule(sourceModule,destModule);
 		}
 	}
 
@@ -72,7 +73,7 @@ void ModuleRouter::setDestModule(Module * m)
 
 	for (auto &mrv : sourceValues.items)
 	{
-		mrv->setOutModule(destModule);
+		mrv->setSourceAndOutModule(sourceModule, destModule);
 	}
 
 	routerListeners.call(&RouterListener::destModuleChanged, this);
@@ -98,6 +99,37 @@ void ModuleRouter::loadJSONDataInternal(var data)
 	setSourceModule(ModuleManager::getInstance()->getItemWithName(data.getProperty("sourceModule", "")));
 	setDestModule(ModuleManager::getInstance()->getItemWithName(data.getProperty("destModule", "")));
 	if (data.getDynamicObject()->hasProperty("sourceValues")) sourceValues.loadItemsData(data.getProperty("sourceValues", var()));
+}
+
+void ModuleRouter::newMessage(const ContainerAsyncEvent & e)
+{
+	if (e.type == ContainerAsyncEvent::ControllableAdded)
+	{
+		if (e.targetControllable->parentContainer->parentContainer == sourceModule)
+		{
+			ModuleRouterValue * mrv = new ModuleRouterValue(e.targetControllable, sourceValues.items.size());
+			sourceValues.addItem(mrv);
+			mrv->setSourceAndOutModule(sourceModule, destModule);
+		}
+	} else if (e.type == ContainerAsyncEvent::ControllableContainerRemoved)
+	{
+		if (e.targetControllable->parentContainer->parentContainer == sourceModule)
+		{
+			ModuleRouterValue * v = getRouterValueForControllable(e.targetControllable);
+			if (v == nullptr) return;
+			sourceValues.removeItem(v);
+		}
+	}
+}
+
+ModuleRouterValue * ModuleRouter::getRouterValueForControllable(Controllable * c)
+{
+	for (auto &v : sourceValues.items)
+	{
+		if (v->sourceValue == c) return v;
+	}
+
+	return nullptr;
 }
 
 void ModuleRouter::inspectableDestroyed(Inspectable * i)

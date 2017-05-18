@@ -17,7 +17,8 @@
 
 class ModuleRouter :
 	public BaseItem,
-	public Inspectable::InspectableListener
+	public Inspectable::InspectableListener,
+	public ControllableContainer::ContainerAsyncListener
 {
 public:
 	ModuleRouter();
@@ -32,6 +33,10 @@ public:
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
+
+	void newMessage(const ContainerAsyncEvent &e) override;
+
+	ModuleRouterValue * getRouterValueForControllable(Controllable * c);
 
 	void inspectableDestroyed(Inspectable * m) override;
 

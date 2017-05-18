@@ -21,6 +21,7 @@ public:
 	virtual ~BoolComparator();
 
 	const Identifier equalsId = "=";
+	const Identifier differentId = "!=";
 
 	BoolParameter * boolParam;
 	BoolParameter * boolRef;

@@ -143,6 +143,10 @@ void ModuleRouterView::setRouter(ModuleRouter * router)
 		addAndMakeVisible(&outParamsLabel);
 		sourceChooser.setModuleSelected(currentRouter->sourceModule,true);
 		destChooser.setModuleSelected(currentRouter->destModule,true);
+	} else
+	{
+		sourceChooser.setModuleSelected(nullptr,true);
+		destChooser.setModuleSelected(nullptr,true);
 	}
 
 	buildValueManagerUI();

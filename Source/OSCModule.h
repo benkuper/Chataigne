@@ -62,15 +62,21 @@ public:
 		public RouteParams
 	{
 	public:
-		OSCRouteParams(Controllable * c) {
-			String tAddress = "/"+c->parentContainer->parentContainer->shortName+(c->shortName.startsWithChar('/')?"":"/")+c->shortName;
+		OSCRouteParams(Module * sourceModule, Controllable * c) {
+			bool sourceIsGenericOSC = sourceModule->getTypeString() == "OSC";
+			
+			DBG("OSC Route Params, isSourceGeneric OSC ? " << (int)sourceIsGenericOSC);
+
+			String tAddress;
+			if (sourceIsGenericOSC) tAddress = c->niceName;
+			else tAddress = "/" + c->parentContainer->parentContainer->shortName + (c->shortName.startsWithChar('/') ? "" : "/") + c->shortName;
 			address = addStringParameter("Address", "Route Address", tAddress);
 		}
 		~OSCRouteParams() {}
 		StringParameter * address;
 	};
 
-	virtual RouteParams * createRouteParamsForSourceValue(Controllable * c, int /*index*/) override { return new OSCRouteParams(c); }
+	virtual RouteParams * createRouteParamsForSourceValue(Module * sourceModule, Controllable * c, int /*index*/) override { return new OSCRouteParams(sourceModule, c); }
 	virtual void handleRoutedModuleValue(Controllable * c, RouteParams * p) override;
 
 	virtual void onContainerParameterChangedInternal(Parameter * p) override;
