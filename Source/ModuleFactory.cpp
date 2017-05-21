@@ -12,6 +12,7 @@
 
 #include "CustomOSCModule.h"
 #include "ResolumeModule.h"
+#include "MilluminModule.h"
 #include "MIDIModule.h"
 #include "HIDModule.h"
 #include "GamepadModule.h"
@@ -46,6 +47,7 @@ ModuleFactory::ModuleFactory() {
 	moduleDefs.add(new ModuleDefinition("Audio", "Reaper", &ReaperModule::create));
 
 	moduleDefs.add(new ModuleDefinition("Video", "Resolume", &ResolumeModule::create));
+	moduleDefs.add(new ModuleDefinition("Video", "Millumin", &MilluminModule::create));
 
 	addCustomModules();
 	buildPopupMenu();

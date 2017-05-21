@@ -14,9 +14,12 @@
 #include "ResolumeFXCommand.h"
 
 ResolumeModule::ResolumeModule() :
-	OSCModule("Resolume",7001,7000)
+	OSCModule(getDefaultTypeString(),7001,7000)
 {	
-	defManager.add(CommandDefinition::createDef(this, "Composition", "Stop Composition", &OSCCommand::create, CommandContext::ACTION)->addParam("level","Composition")->addParam("address","/composition/disconnectall"));	
+	var stopArgs = var();
+	stopArgs.append(ControllableUtil::createDataForParam(IntParameter::getTypeStringStatic(),"Value","Resolume needs this arg to trigger",1,0,1,false,true));
+
+	defManager.add(CommandDefinition::createDef(this, "Composition", "Stop Composition", &OSCCommand::create, CommandContext::ACTION)->addParam("address","/composition/disconnectall")->addParam("args",stopArgs));	
 	
 	defManager.add(CommandDefinition::createDef(this, "Launch / Stop", "Launch Clip", &ResolumeClipCommand::create, CommandContext::ACTION)->addParam("level", "Clip")->addParam("suffix","connect"));
 	defManager.add(CommandDefinition::createDef(this, "Launch / Stop", "Stop Layer", &ResolumeClipCommand::create, CommandContext::ACTION)->addParam("level", "Layer")->addParam("suffix","clear"));

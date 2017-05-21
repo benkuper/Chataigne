@@ -93,6 +93,21 @@ void AutomationUI::updateROI()
 void AutomationUI::paint(Graphics & g)
 {
 	BaseManagerUI::paint(g);
+
+	if (itemsUI.size() == 0)
+	{
+		g.setColour(Colours::white.withAlpha(.4f));
+		
+#if JUCE_MAC
+		String text = "Command + Clic to add keys";
+#else 
+		String text = "Ctrl + Clic to add keys";
+#endif
+		g.setFont(20);
+		g.drawText(text, getLocalBounds().withSizeKeepingCentre(200, 40).toFloat(), Justification::centred);
+		return; 
+	}
+
 	if (itemsUI.size() < 2) return;
 
 	//int count = 0;
@@ -254,7 +269,7 @@ void AutomationUI::mouseDown(const MouseEvent & e)
 				transformer = nullptr;
 			}
 
-			InspectableSelector::getInstance()->startSelection(this, selectables, inspectables,manager->selectionManager);
+			if(InspectableSelector::getInstance()) InspectableSelector::getInstance()->startSelection(this, selectables, inspectables,manager->selectionManager);
 		}
 	}
 	

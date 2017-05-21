@@ -96,13 +96,14 @@ void CustomOSCModule::processMessageInternal(const OSCMessage & msg)
 
 		case 2:
 			//duplicate because may have other mechanism
-			if (msg[0].isInt32()) c = valuesCC.addIntParameter(cNiceName, "", getIntArg(msg[0]),getIntArg(msg[1]),getIntArg(msg[2]));
+			if (msg[0].isInt32()) c = valuesCC.addIntParameter(cNiceName, "", getIntArg(msg[0]),getIntArg(msg[1]),getIntArg(msg[1])+1);
 			else if (msg[0].isFloat32())
 			{
 				c = valuesCC.addPoint2DParameter(cNiceName, "");
 				((Point2DParameter *)c)->setPoint(getFloatArg(msg[0]),getFloatArg(msg[1]));
 			}
 			else if (msg[0].isString()) c = valuesCC.addStringParameter(cNiceName, "", getStringArg(msg[0]));
+
 			((Parameter *)c)->autoAdaptRange = true;
 			break;
 

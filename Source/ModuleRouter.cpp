@@ -17,7 +17,8 @@ ModuleRouter::ModuleRouter() :
 	destModule(nullptr),
 	sourceValues("Source Values")
 {
-    
+	selectAllValues = addTrigger("Select All", "Select all values for routing");
+	deselectAllValues = addTrigger("Deselect All", "Deselect all values");
 }
 
 ModuleRouter::~ModuleRouter()
@@ -130,6 +131,17 @@ ModuleRouterValue * ModuleRouter::getRouterValueForControllable(Controllable * c
 	}
 
 	return nullptr;
+}
+
+void ModuleRouter::onContainerTriggerTriggered(Trigger * t)
+{
+	if (t == selectAllValues || t == deselectAllValues)
+	{
+		for (auto &sv : sourceValues.items)
+		{
+			sv->doRoute->setValue(t == selectAllValues);
+		}
+	}
 }
 
 void ModuleRouter::inspectableDestroyed(Inspectable * i)

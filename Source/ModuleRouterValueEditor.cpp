@@ -64,13 +64,18 @@ void ModuleRouterValueEditor::resizedInternalHeader(Rectangle<int>& r)
 	valueUI->setBounds(tr.removeFromLeft(100));
 	tr.removeFromLeft(20);
 	doRouteUI->setBounds(tr.removeFromLeft(50));
-	
-	for (auto & u : routeParamsUI)
-	{
-		u->setBounds(rr.removeFromLeft(jmax<int>(u->getWidth(),200)));
-		rr.removeFromLeft(2);
-	}
 
+	if (routeParamsUI.size() == 1)
+	{
+		routeParamsUI[0]->setBounds(rr);
+	} else
+	{
+		for (auto & u : routeParamsUI)
+		{
+			u->setBounds(rr.removeFromLeft(jmax<int>(u->getWidth(), 200)));
+			rr.removeFromLeft(2);
+		}
+	}
 }
 
 void ModuleRouterValueEditor::routeParamsChanged(ModuleRouterValue *)

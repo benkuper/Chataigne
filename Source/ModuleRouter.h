@@ -28,6 +28,9 @@ public:
 	Module * destModule;
 	BaseManager<ModuleRouterValue> sourceValues;
 
+	Trigger * selectAllValues;
+	Trigger * deselectAllValues;
+
 	void setSourceModule(Module * m);
 	void setDestModule(Module * m);
 
@@ -37,6 +40,8 @@ public:
 	void newMessage(const ContainerAsyncEvent &e) override;
 
 	ModuleRouterValue * getRouterValueForControllable(Controllable * c);
+
+	void onContainerTriggerTriggered(Trigger *) override;
 
 	void inspectableDestroyed(Inspectable * m) override;
 

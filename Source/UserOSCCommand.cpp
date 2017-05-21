@@ -48,13 +48,20 @@ void UserOSCCommand::rebuildArgsFromModel()
                 break;
 		}
 
-		p->isEditable = a->editable->boolValue() && !a->useForMapping->boolValue();
 		argumentsContainer.addParameter(p);
-		if (a->useForMapping->boolValue())
+		p->isEditable = a->editable->boolValue();
+
+		if (context == MAPPING)
 		{
-			setTargetMappingParameterAt(p, mappingTargetIndex);
-			mappingTargetIndex++;
+			//p->isEditable = a->editable->boolValue() && !a->useForMapping->boolValue();
+
+			if (a->useForMapping->boolValue())
+			{
+				setTargetMappingParameterAt(p, mappingTargetIndex);
+				mappingTargetIndex++;
+			}
 		}
+		
 	}
 
 	argumentsContainer.hideInEditor = model->arguments.items.size() == 0;

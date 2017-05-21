@@ -31,6 +31,10 @@ public:
 	TextButton addBT;
 	ModuleRouter * currentRouter;
 
+	ScopedPointer<TriggerButtonUI> selectAllTrigger;
+	ScopedPointer<TriggerButtonUI> deselectAllTrigger;
+
+
 	ModuleChooserUI sourceChooser;
 	ModuleChooserUI destChooser;
 	Label sourceLabel;

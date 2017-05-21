@@ -61,7 +61,6 @@ ModuleRouterView::ModuleRouterView() :
 	addAndMakeVisible(&feedbackLabel);
 	addAndMakeVisible(&routeLabel);
 	addAndMakeVisible(&outParamsLabel);
-
 }
 
 ModuleRouterView::~ModuleRouterView()
@@ -93,14 +92,20 @@ void ModuleRouterView::resized()
 	 
 	Rectangle<int> mr = r.removeFromTop(10);
 	Rectangle<int> outr = mr.removeFromRight(r.getWidth() / 2);
-	outParamsLabel.setBounds(outr);
 	
 	sourceValueLabel.setBounds(mr.removeFromLeft(100));
 	feedbackLabel.setBounds(mr.removeFromLeft(100));
 	mr.removeFromLeft(20);
 	routeLabel.setBounds(mr.removeFromLeft(50));
 
-	r.removeFromTop(2);
+	Rectangle<int> sr = routeLabel.getBounds().translated(0, 15).withSizeKeepingCentre(120, 16);
+	selectAllTrigger->setBounds(sr.removeFromLeft(50));
+	deselectAllTrigger->setBounds(sr);
+
+	outParamsLabel.setBounds(outr);
+
+
+	r.removeFromTop(20);
 	 
 	if (managerUI != nullptr)
 	{
@@ -117,6 +122,12 @@ void ModuleRouterView::setRouter(ModuleRouter * router)
 	{
 		currentRouter->removeRouterListener(this);
 		currentRouter->removeInspectableListener(this);
+
+		removeChildComponent(selectAllTrigger);
+		selectAllTrigger = nullptr;
+		removeChildComponent(deselectAllTrigger);
+		deselectAllTrigger = nullptr;
+
 		addAndMakeVisible(&addBT);
 		removeChildComponent(&sourceChooser);
 		removeChildComponent(&destChooser);
@@ -143,6 +154,12 @@ void ModuleRouterView::setRouter(ModuleRouter * router)
 		addAndMakeVisible(&outParamsLabel);
 		sourceChooser.setModuleSelected(currentRouter->sourceModule,true);
 		destChooser.setModuleSelected(currentRouter->destModule,true);
+
+		selectAllTrigger = currentRouter->selectAllValues->createButtonUI();
+		deselectAllTrigger = currentRouter->deselectAllValues->createButtonUI();
+		addAndMakeVisible(selectAllTrigger);
+		addAndMakeVisible(deselectAllTrigger);
+
 	} else
 	{
 		sourceChooser.setModuleSelected(nullptr,true);

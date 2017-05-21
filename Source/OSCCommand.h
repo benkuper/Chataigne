@@ -26,8 +26,17 @@ public:
 	StringParameter * address;
 	ControllableContainer argumentsContainer;
 
+	String addressModel;
+	bool rebuildAddressOnParamChanged;
+
+	void rebuildAddress();
+	void buildArgsAndParamsFromData(var data);
+
+
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
+
+	void onContainerParameterChanged(Parameter * p) override;
 
 	void trigger() override;
 
