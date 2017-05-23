@@ -7,7 +7,7 @@ env:
 after_success:
 - cd /home/travis/build/benkuper/Chataigne/Builds/LinuxMakefile/build
 - zip Chataigne-linux-x64-bleedingedge.zip Chataigne
-- curl --ftp-create-dirs -T Chataigne-linux-x64-bleedingedge.zip -u $u67889354-benjamin:$FTP_PASSWORD ftp://ftp.kuperberg.fr/chataigne/user/data/
+- curl --ftp-create-dirs -T Chataigne-linux-x64-bleedingedge.zip -u $FTP_USER:$FTP_PASSWORD ftp://ftp.kuperberg.fr/chataigne/user/data/
 language: cpp
 git:
   depth: 1
