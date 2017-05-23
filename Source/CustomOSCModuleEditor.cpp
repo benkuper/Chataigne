@@ -37,8 +37,8 @@ void CustomOSCModuleEditor::resizedOSCInternalContent(Rectangle<int> &r)
 	Rectangle<int> br = r.withHeight(14);
 	br.removeFromLeft(5);
 	autoAddUI->setBounds(br.removeFromLeft(60)); 
-	r.removeFromLeft(2);
-	autoAddUI->setBounds(br.removeFromLeft(60));
+	br.removeFromLeft(10);
+	autoRangeUI->setBounds(br.removeFromLeft(80));
 	br.removeFromLeft(5);
 
 
