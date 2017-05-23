@@ -4,11 +4,12 @@ dist: trusty
 env:
   global:
     - "FTP_USER=u67889354-benjamin"
-    - "FTP_PASSWORD=password"
+    - "FTP_PASSWORD=benjamin"
+    - "VERSION=1.0.2"
 after_success:
-    cd Chataigne/Builds/LinuxMakefile
-    zip Chataigne
-    "curl --ftp-create-dirs -T Chataigne.zip -u $FTP_USER:$FTP_PASSWORD ftp://ftp.kuperberg.fr/chataigne/user/data/Chataigne-linux-x64-beta.zip"
+    - cd /home/travis/build/benkuper/Chataigne/Builds/LinuxMakefile/build
+    - zip Chataigne
+    - "curl --ftp-create-dirs -T Chataigne.zip -u $FTP_USER:$FTP_PASSWORD ftp://ftp.kuperberg.fr/chataigne/user/data/Chataigne-linux-x64-$VERSION-beta.zip"
 
 language: cpp
 
