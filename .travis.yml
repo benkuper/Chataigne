@@ -1,5 +1,5 @@
 sudo: required
-dist: yakkety
+dist: trusty
 
 language: cpp
 
@@ -29,8 +29,8 @@ before_install:
         libasound2-dev
         libjack-dev
         libbluetooth-dev
-        libwebkit2gtk-4.0-dev
         libgtk-3-dev
+        libwebkit2gtk-4.0-dev
     - pwd
     - ls -d */
     - cd ..
@@ -45,6 +45,7 @@ before_install:
 
 compiler:
     - clang
+
 
 branches:
     only:
