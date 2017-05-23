@@ -1,6 +1,15 @@
 sudo: required
 dist: trusty
 
+env:
+  global:
+    - "FTP_USER=u67889354-benjamin"
+    - "FTP_PASSWORD=password"
+after_success:
+    cd Chataigne/Builds/LinuxMakefile
+    zip Chataigne
+    "curl --ftp-create-dirs -T Chataigne.zip -u $FTP_USER:$FTP_PASSWORD ftp://ftp.kuperberg.fr/chataigne/user/data/Chataigne-linux-x64-beta.zip"
+
 language: cpp
 
 git:
