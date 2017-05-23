@@ -22,6 +22,10 @@ CustomOSCModule::CustomOSCModule() :
 	autoAdd = addBoolParameter("Auto Add", "Add automatically any message that is received\nand try to create the corresponding value depending on the message content.", true);
 	autoAdd->isTargettable = false;
 
+	autoRange = addBoolParameter("Auto Range", "If checked, will change range of already existing values if more than one argument is provided in the incoming OSC message", false);
+	autoRange->isTargettable = false;
+
+
 	defManager.add(CommandDefinition::createDef(this, "", "Custom Message", &CustomOSCCommand::create));
 	addChildControllableContainer(&umm);
 	umm.addBaseManagerListener(this);
@@ -46,7 +50,7 @@ void CustomOSCModule::processMessageInternal(const OSCMessage & msg)
 			if (msg.size() >= 1)
 			{
 				FloatParameter *f = (FloatParameter *)c;
-				if (msg.size() >= 3) f->setRange(getFloatArg(msg[1]), getFloatArg(msg[2]));
+				if (msg.size() >= 3 && autoRange->boolValue()) f->setRange(getFloatArg(msg[1]), getFloatArg(msg[2]));
 				f->setValue(getFloatArg(msg[0]));
 			}
 			break;
@@ -55,7 +59,7 @@ void CustomOSCModule::processMessageInternal(const OSCMessage & msg)
 			if (msg.size() >= 1)
 			{
 				IntParameter *i = (IntParameter *)c;
-				if (msg.size() >= 3) i->setRange(getIntArg(msg[1]), getIntArg(msg[2]));
+				if (msg.size() >= 3 && autoRange->boolValue()) i->setRange(getIntArg(msg[1]), getIntArg(msg[2]));
 
 				i->setValue(getIntArg(msg[0]));
 			}

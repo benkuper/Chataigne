@@ -19,7 +19,7 @@
 
 class GenericControllableCommand :
 	public BaseCommand,
-	public Engine::EngineListener
+	public EngineListener
 {
 public:
 

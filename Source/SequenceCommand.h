@@ -17,7 +17,7 @@
 
 class SequenceCommand :
 	public BaseCommand,
-	public Engine::EngineListener
+	public EngineListener
 {
 public:
 	SequenceCommand(SequenceModule * _module, CommandContext context, var params);

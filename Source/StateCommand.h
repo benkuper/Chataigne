@@ -17,7 +17,7 @@
 
 class StateCommand :
 	public BaseCommand,
-	public Engine::EngineListener
+	public EngineListener
 {
 public:
 	StateCommand(StateModule * _module, CommandContext context, var params);
