@@ -14,8 +14,6 @@ git:
 notifications:
   email: false
 before_install:
-- openssl aes-256-cbc -K $encrypted_20a3ce80c34d_key -iv $encrypted_20a3ce80c34d_iv
-  -in travis_enc.txt.enc -out travis_enc.txt -d
 - export DEBIAN_FRONTEND=noninteractive
 - sudo add-apt-repository ppa:webkit-team/ppa -y
 - sudo apt-get update --fix-missing
