@@ -21,7 +21,6 @@ MappingInput::MappingInput() :
 
 MappingInput::~MappingInput()
 {
-	DBG("destructor");
 	setInput(nullptr);
 }
 
@@ -35,7 +34,6 @@ void MappingInput::setInput(Parameter * _input)
 {
 	if (inputReference != nullptr)
 	{
-		DBG("Remove listener !");
 		inputReference->removeParameterListener(this);
 	}
 	

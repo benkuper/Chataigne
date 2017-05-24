@@ -89,30 +89,33 @@ var ChataigneEngine::getJSONData()
 }
 
 void ChataigneEngine::loadJSONDataInternalEngine(var data, ProgressTask * loadingTask)
-{
-
-	/*
-	ProgressTask * presetTask = loadingTask->addTask("presetManager");
-	ProgressTask * moduleManagerTask = loadingTask->addTask("moduleManager");
-	ProgressTask * stateTask = loadingTask->addTask("stateManager");
-	ProgressTask * sequenceTask = loadingTask->addTask("sequenceManager");
-	*/
+{	
+	ProgressTask * moduleTask = loadingTask->addTask("Modules");
+	ProgressTask * stateTask = loadingTask->addTask("States");
+	ProgressTask * sequenceTask = loadingTask->addTask("Sequences");
+	ProgressTask * routerTask = loadingTask->addTask("Router");
+	
 
 	//load here
+	moduleTask->start();
 	ModuleManager::getInstance()->loadJSONData(data.getProperty("moduleManager",var()));
-	//moduleManagerTask->end();
+	moduleTask->setProgress(1);
+	moduleTask->end();
 
-	//stateTask->start();
+	stateTask->start();
 	StateManager::getInstance()->loadJSONData(data.getProperty("stateManager",var()));
-	// stateTask->end();
+	stateTask->setProgress(1);
+	stateTask->end();
 
-	// sequenceTask->start();
+	sequenceTask->start();
 	SequenceManager::getInstance()->loadJSONData(data.getProperty("sequenceManager",var()));
-	// sequenceTask->end();
-
-	DashboardManager::getInstance()->loadJSONData(data.getProperty("dashboardManager",var()));
-
+	sequenceTask->setProgress(1);
+	sequenceTask->end();
+	
+	routerTask->start();
 	ModuleRouterManager::getInstance()->loadJSONData(data.getProperty("routerManager",var()));
+	routerTask->setProgress(1);
+	routerTask->end();
 
-
+	
 }

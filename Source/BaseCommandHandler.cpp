@@ -78,7 +78,6 @@ void BaseCommandHandler::loadJSONDataInternal(var data)
 			String menuPath = data.getProperty("commandPath", "");
 			String commandType = data.getProperty("commandType", "");
 			setCommand(m->defManager.getCommandDefinitionFor(menuPath, commandType));
-			DBG("Command load : " << menuPath << ":" << commandType);
 			if (command != nullptr)
 			{
 				command->loadJSONData(data.getProperty("command", var()));

@@ -33,10 +33,17 @@ public:
 								 // there to do its work..
 
 	ScopedPointer<LookAndFeelOO> lookAndFeelOO;
+	ScopedPointer<ProgressWindow> fileProgressWindow;
 
 
     void paint (Graphics&) override;
     void resized() override;
+
+
+	//engine
+	void startLoadFile() override;
+	void fileProgress(float percent, int state) override;
+	void endLoadFile() override;
 
 	// inherited from MenuBarModel , ApplicationCommandTarget
 	ApplicationCommandTarget* getNextCommandTarget() override { return findFirstTargetParentComponent(); }

@@ -65,8 +65,6 @@ public:
 		OSCRouteParams(Module * sourceModule, Controllable * c) {
 			bool sourceIsGenericOSC = sourceModule->getTypeString() == "OSC";
 			
-			DBG("OSC Route Params, isSourceGeneric OSC ? " << (int)sourceIsGenericOSC);
-
 			String tAddress;
 			if (sourceIsGenericOSC) tAddress = c->niceName;
 			else tAddress = "/" + c->parentContainer->parentContainer->shortName + (c->shortName.startsWithChar('/') ? "" : "/") + c->shortName;

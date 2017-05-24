@@ -53,9 +53,45 @@ MainContentComponent::MainContentComponent()
 	//setMenu (this); //done in Main.cpp as it's a method of DocumentWindow
 #endif
 
-
-
 }
+
+
+
+void MainContentComponent::startLoadFile()
+{
+
+	if (fileProgressWindow != nullptr)
+	{
+		removeChildComponent(fileProgressWindow);
+		fileProgressWindow = nullptr;
+	}
+
+	fileProgressWindow = new ProgressWindow("Loading File...", Engine::mainEngine);
+	addAndMakeVisible(fileProgressWindow);
+	fileProgressWindow->setSize(getWidth(), getHeight());
+}
+
+void MainContentComponent::fileProgress(float percent, int state)
+{
+	if (fileProgressWindow != nullptr)
+	{
+		fileProgressWindow->setProgress(percent);
+	} else
+	{
+		DBG("Window is null but still got progress");
+	}
+}
+
+void MainContentComponent::endLoadFile()
+{
+	if (fileProgressWindow != nullptr)
+	{
+		removeChildComponent(fileProgressWindow);
+		fileProgressWindow = nullptr;
+	}
+}
+
+
 
 MainContentComponent::~MainContentComponent()
 {

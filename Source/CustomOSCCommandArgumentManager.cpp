@@ -56,7 +56,6 @@ void CustomOSCCommandArgumentManager::addItemFromType(Parameter::Type type, var 
 void CustomOSCCommandArgumentManager::addItemFromData(var data, bool fromUndoableAction)
 {
 	String s = data.getProperty("type", "");
-	DBG("add item from data : " << s);
 	if (s.isEmpty()) return;
 	Parameter * p = (Parameter *)ControllableFactory::createControllable(s);
 	if (p == nullptr)
