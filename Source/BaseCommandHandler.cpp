@@ -101,7 +101,6 @@ void BaseCommandHandler::onContainerTriggerTriggered(Trigger * t)
 
 void BaseCommandHandler::inspectableDestroyed(Inspectable *)
 {
-	DBG("Inspectable destroyed");
 	setCommand(nullptr);
 }
 

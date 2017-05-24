@@ -21,7 +21,7 @@ public:
 	~ModuleRouterValue();
 
 	int valueIndex;
-	Controllable * sourceValue;
+	WeakReference<Controllable> sourceValue;
 	Module * outModule;
 
 	BoolParameter * doRoute;

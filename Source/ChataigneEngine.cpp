@@ -34,13 +34,11 @@ ChataigneEngine::ChataigneEngine(ApplicationProperties * appProperties, const St
 	addChildControllableContainer(ModuleManager::getInstance());
 	addChildControllableContainer(StateManager::getInstance());
 	addChildControllableContainer(SequenceManager::getInstance());
-	addChildControllableContainer(DashboardManager::getInstance());
 	addChildControllableContainer(ModuleRouterManager::getInstance());
 }
 
 ChataigneEngine::~ChataigneEngine()
 {
-	Engine::mainEngine = nullptr;
 
 	//delete singletons here
 	ModuleRouterManager::deleteInstance();
@@ -61,6 +59,7 @@ ChataigneEngine::~ChataigneEngine()
 #if JUCE_WINDOWS
 	MyoManager::deleteInstance();
 #endif
+
 }
 
 void ChataigneEngine::clearInternal()

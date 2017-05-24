@@ -55,7 +55,7 @@ void Module::controllableFeedbackUpdate(ControllableContainer * cc, Controllable
 	if (cc == &valuesCC)
 	{
 		Array<var> args;
-		args.add(c->createScriptObject());
+		args.add(c->getScriptObject());
 		scriptManager->callFunctionOnAllItems("moduleValueParamChanged", args);
 	}
 }

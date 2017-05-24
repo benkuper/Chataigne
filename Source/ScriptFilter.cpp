@@ -22,7 +22,7 @@ ScriptFilter::~ScriptFilter()
 void ScriptFilter::processInternal()
 {
 	Array<var> args;
-	args.add(sourceParam->createScriptObject());
+	args.add(sourceParam->getScriptObject());
 	if (script.scriptEngine == nullptr) return;
 	var result = script.callFunction("filter", args);
 	filteredParameter->setValue(result);

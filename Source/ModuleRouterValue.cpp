@@ -28,8 +28,10 @@ ModuleRouterValue::ModuleRouterValue(Controllable * _sourceValue, int _index) :
 
 ModuleRouterValue::~ModuleRouterValue()
 {
-	if (sourceValue->type == Controllable::TRIGGER) ((Trigger *)sourceValue)->removeTriggerListener(this);
-	else ((Parameter *)sourceValue)->removeParameterListener(this);
+	if (sourceValue == nullptr || sourceValue.wasObjectDeleted()) return;
+
+	if (sourceValue->type == Controllable::TRIGGER) ((Trigger *)sourceValue.get())->removeTriggerListener(this);
+	else ((Parameter *)sourceValue.get())->removeParameterListener(this);
 }
 
 void ModuleRouterValue::setSourceAndOutModule(Module * s, Module * m)
@@ -75,16 +77,18 @@ void ModuleRouterValue::loadJSONDataInternal(var data)
 
 void ModuleRouterValue::onContainerParameterChangedInternal(Parameter * p)
 {
+	if (sourceValue == nullptr || sourceValue.wasObjectDeleted()) return;
+
 	if (p == doRoute)
 	{
 		if (doRoute->boolValue())
 		{
-			if (sourceValue->type == Controllable::TRIGGER) ((Trigger *)sourceValue)->addTriggerListener(this);
-			else ((Parameter *)sourceValue)->addParameterListener(this);
+			if (sourceValue->type == Controllable::TRIGGER) ((Trigger *)sourceValue.get())->addTriggerListener(this);
+			else ((Parameter *)sourceValue.get())->addParameterListener(this);
 		} else
 		{
-			if (sourceValue->type == Controllable::TRIGGER) ((Trigger *)sourceValue)->removeTriggerListener(this);
-			else ((Parameter *)sourceValue)->removeParameterListener(this);
+			if (sourceValue->type == Controllable::TRIGGER) ((Trigger *)sourceValue.get())->removeTriggerListener(this);
+			else ((Parameter *)sourceValue.get())->removeParameterListener(this);
 		}
 	}
 }
