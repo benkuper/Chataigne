@@ -136,6 +136,9 @@ void ModuleRouterView::setRouter(ModuleRouter * router)
 		removeChildComponent(&feedbackLabel);
 		removeChildComponent(&routeLabel);
 		removeChildComponent(&outParamsLabel);
+
+		sourceChooser.setSelectedItemIndex(-1, dontSendNotification);
+		destChooser.setSelectedItemIndex(-1, dontSendNotification);
 	}
 
 	currentRouter = router;
