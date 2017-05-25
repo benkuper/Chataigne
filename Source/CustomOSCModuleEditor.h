@@ -25,6 +25,7 @@ public:
 
 	ScopedPointer<BoolToggleUI> autoAddUI;
 	ScopedPointer<BoolToggleUI> autoRangeUI;
+	ScopedPointer<BoolToggleUI> splitArgsUI;
 	ScopedPointer<InspectableEditor> valuesEditor;
 
 	void resizedOSCInternalContent(Rectangle<int> &r) override;

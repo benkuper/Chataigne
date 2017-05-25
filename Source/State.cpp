@@ -20,7 +20,12 @@ State::State() :
 	addChildControllableContainer(&am);
 	addChildControllableContainer(&mm);
 
+	am.setForceDisabled(true);
+	mm.setForceDisabled(true); 
+
 	//viewUISize->setPoint(200, 300);
+
+	
 }
 
 State::~State()

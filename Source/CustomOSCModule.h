@@ -24,11 +24,11 @@ public:
 
 	BoolParameter * autoAdd;
 	BoolParameter * autoRange;
+	BoolParameter * splitArgs;
 
 	UserOSCCommandModelManager umm;
 
 	void processMessageInternal(const OSCMessage &msg) override;
-
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;

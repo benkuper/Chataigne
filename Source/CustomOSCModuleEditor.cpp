@@ -21,6 +21,8 @@ CustomOSCModuleEditor::CustomOSCModuleEditor(CustomOSCModule * _cModule, bool is
 	autoRangeUI = cModule->autoRange->createToggle();
 	addAndMakeVisible(autoRangeUI);
 
+	splitArgsUI = cModule->splitArgs->createToggle();
+	addAndMakeVisible(splitArgsUI); 
 
 	valuesEditor = cModule->valuesCC.getEditor(false);
 	addAndMakeVisible(valuesEditor);
@@ -39,6 +41,8 @@ void CustomOSCModuleEditor::resizedOSCInternalContent(Rectangle<int> &r)
 	autoAddUI->setBounds(br.removeFromLeft(60)); 
 	br.removeFromLeft(10);
 	autoRangeUI->setBounds(br.removeFromLeft(80));
+	br.removeFromLeft(5);
+	splitArgsUI->setBounds(br.removeFromLeft(100));
 	br.removeFromLeft(5);
 
 
