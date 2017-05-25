@@ -25,6 +25,8 @@ int WiiPairUtil::pair(bool forceRepairing)
     return pairWin(forceRepairing);
 #elif JUCE_MAC
     return pairMac(forceRepairing);
+#else
+    return 0;
 #endif
 }
 

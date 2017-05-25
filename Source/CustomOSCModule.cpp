@@ -57,6 +57,8 @@ void CustomOSCModule::processMessageInternal(const OSCMessage & msg)
 				case Controllable::FLOAT: p->setValue(getFloatArg(msg[i]));break;
 				case Controllable::INT: p->setValue(getIntArg(msg[i])); break;
 				case Controllable::STRING: p->setValue(getStringArg(msg[i])); break;
+                    default:
+                        break;
 				}
 			} else
 			{
