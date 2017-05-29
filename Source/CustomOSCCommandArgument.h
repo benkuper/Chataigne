@@ -23,11 +23,15 @@ public:
 	BoolParameter * useForMapping;
 
 	bool mappingEnabled;
-	var getJSONData() override;
-
+	
 	void onContainerParameterChangedInternal(Parameter * p) override;
 
+	var getJSONData() override;
+	void loadJSONDataInternal(var data) override;
+
 	virtual String getTypeString() const override;
+
+	
 
 	class  ArgumentListener
 	{

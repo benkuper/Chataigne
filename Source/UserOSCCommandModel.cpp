@@ -76,6 +76,12 @@ var OSCCommandModelArgument::getJSONData()
 	return data;
 }
 
+void OSCCommandModelArgument::loadJSONDataInternal(var data)
+{
+	BaseItem::loadJSONDataInternal(data);
+	param->loadJSONData(data.getProperty("param", var()));
+}
+
 void OSCCommandModelArgument::onContainerNiceNameChanged()
 {
 	BaseItem::onContainerNiceNameChanged();

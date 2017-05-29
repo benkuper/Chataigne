@@ -37,6 +37,12 @@ var CustomOSCCommandArgument::getJSONData()
 	return data;
 }
 
+void CustomOSCCommandArgument::loadJSONDataInternal(var data)
+{
+	BaseItem::loadJSONDataInternal(data);
+	param->loadJSONData(data.getProperty("param", var()));
+}
+
 void CustomOSCCommandArgument::onContainerParameterChangedInternal(Parameter * p)
 {
 	if (p == useForMapping)
