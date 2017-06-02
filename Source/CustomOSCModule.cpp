@@ -62,14 +62,11 @@ void CustomOSCModule::processMessageInternal(const OSCMessage & msg)
 				}
 			} else
 			{
-				for (int i = 0; i < msg.size(); i++)
-				{
-					String argIAddress = cNiceName + "_" + String(i);
-					if (msg[i].isInt32()) c = valuesCC.addIntParameter(argIAddress, "", msg[i].getInt32(), msg[i].getInt32(), msg[i].getInt32());
-					else if (msg[i].isFloat32()) c = valuesCC.addFloatParameter(argIAddress, "", msg[i].getFloat32());
-					else if (msg[i].isString()) c = valuesCC.addStringParameter(argIAddress, "", msg[i].getString());
-					((Parameter *)c)->autoAdaptRange = true;
-				}
+				String argIAddress = cNiceName + "_" + String(i);
+				if (msg[i].isInt32()) c = valuesCC.addIntParameter(argIAddress, "", msg[i].getInt32(), msg[i].getInt32(), msg[i].getInt32());
+				else if (msg[i].isFloat32()) c = valuesCC.addFloatParameter(argIAddress, "", msg[i].getFloat32());
+				else if (msg[i].isString()) c = valuesCC.addStringParameter(argIAddress, "", msg[i].getString());
+				((Parameter *)c)->autoAdaptRange = true;
 			}
 		}
 	} else

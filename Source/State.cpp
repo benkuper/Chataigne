@@ -13,7 +13,7 @@
 State::State() :
 	BaseItem("State",true,true,true)
 {
-	canInspectChildContainers = false;
+	//canInspectChildContainers = false;
 
 	active = addBoolParameter("Active", "If active, the state's actions and mappings will be effective, otherwise this state won't do anything.", false);
 
@@ -22,6 +22,9 @@ State::State() :
 
 	am.setForceDisabled(true);
 	mm.setForceDisabled(true); 
+
+	am.hideInEditor = true;
+	mm.hideInEditor = true;
 
 	//viewUISize->setPoint(200, 300);
 

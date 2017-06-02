@@ -36,8 +36,6 @@ void ModuleInputValueChooserUI::updateLabel()
 
 void ModuleInputValueChooserUI::showPopupAndGetTarget()
 {
-	PopupMenu p = ModuleManager::getInstance()->getAllModulesInputValuesMenu(parametersOnly);
-	int result = p.show();
-	Controllable * c = ModuleManager::getInstance()->getControllableForItemID(result);
+	Controllable * c = ModuleManager::getInstance()->showAllValuesAndGetControllable(parametersOnly);
 	if (c != nullptr) ((TargetParameter *)parameter.get())->setValueFromTarget(c);
 }

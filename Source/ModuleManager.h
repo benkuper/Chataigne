@@ -28,8 +28,7 @@ public:
 	Module * getModuleWithName(const String &moduleName);
 
 	//Input values menu
-	PopupMenu getAllModulesInputValuesMenu(bool parametersOnly);
-	Controllable * getControllableForItemID(int itemID);
+	Controllable * showAllValuesAndGetControllable(bool parametersOnly);
 		
 	//Command menu
 	PopupMenu getAllModulesCommandMenu(CommandContext context);
