@@ -20,20 +20,22 @@ context(_context),
 
 void BaseCommand::setTargetMappingParameterAt(Parameter * p, int index)
 {
+	if (context != CommandContext::MAPPING) return;
+
 	if (index < 0) return;
 	if (index >= targetMappingParameters.size()) targetMappingParameters.resize(index + 1);
 	Parameter * oldP = targetMappingParameters[index];
 
 	if (oldP != nullptr)
 	{
-		if (context == CommandContext::MAPPING) oldP->isControllableFeedbackOnly = false;
+		oldP->isControllableFeedbackOnly = false;
 	}
 
 	targetMappingParameters.set(index,p);
 
 	if (p != nullptr)
 	{
-		if (context == CommandContext::MAPPING) p->isControllableFeedbackOnly = true;
+		p->isControllableFeedbackOnly = true;
 	}
 }
 

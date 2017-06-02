@@ -20,9 +20,9 @@ LiveOSCCommandBase::LiveOSCCommandBase(LiveOSCModule * _module, CommandContext c
 	value = argumentsContainer.addFloatParameter("Value", "Value", 0, 0, 1);
 	toggle = addBoolParameter("Toggle", "Toggle", false);
 	autoNext = addBoolParameter("AutoNext", "autonext", false);
-	muteAllTracks = addTrigger("Mute All0","Mute All");
+	muteAllTracks = addTrigger("Mute All","Mute All");
 
-	setTargetMappingParameterAt(value, 0);
+	setTargetMappingParameterAt(value, 1);
 }
 
 LiveOSCCommandBase::~LiveOSCCommandBase()

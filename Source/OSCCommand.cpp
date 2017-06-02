@@ -12,23 +12,21 @@
 #include "OSCModule.h"
 
 OSCCommand::OSCCommand(OSCModule * _module, CommandContext context, var params) :
-	BaseCommand(_module,context, params),
+	BaseCommand(_module, context, params),
 	oscModule(_module),
 	argumentsContainer("Arguments")
 {
-	address = addStringParameter("Address", "Adress of the OSC Message (e.g. /example)", params.getProperty("address","/example"));
+	address = addStringParameter("Address", "Adress of the OSC Message (e.g. /example)", params.getProperty("address", "/example"));
 	address->isEditable = false;
 	addChildControllableContainer(&argumentsContainer);
-	
+
 	addressModel = address->stringValue();
 	rebuildAddressOnParamChanged = address->stringValue().containsChar('[');
 
 	buildArgsAndParamsFromData(params);
-	
-	if(rebuildAddressOnParamChanged) rebuildAddress();
 
-	argumentsContainer.hideInEditor = argumentsContainer.controllables.size() == 0;
-	
+	if (rebuildAddressOnParamChanged) rebuildAddress();
+
 }
 
 OSCCommand::~OSCCommand()
@@ -58,19 +56,24 @@ void OSCCommand::rebuildAddress()
 
 void OSCCommand::buildArgsAndParamsFromData(var data)
 {
-	if (data.getDynamicObject()->hasProperty("args") && data.getProperty("args",var()).isArray())
+	if (data.getDynamicObject()->hasProperty("args"))
 	{
-		Array<var>* argsArray = data.getProperty("args", var()).getArray();
-		for (auto & a : *argsArray)
+		if (data.getProperty("args", var()).isArray())
 		{
-			Parameter * p = static_cast<Parameter *>(ControllableFactory::createControllable(a.getProperty("type", "")));
-			if (p == nullptr) continue;
-			p->saveValueOnly = false;
-			p->loadJSONData(a);
-			argumentsContainer.addParameter(p);
-			if (a.getDynamicObject()->hasProperty("mappingIndex")) setTargetMappingParameterAt(p, a.getProperty("mappingIndex", 0));
+			Array<var>* argsArray = data.getProperty("args", var()).getArray();
+			for (auto & a : *argsArray)
+			{
+				Parameter * p = static_cast<Parameter *>(ControllableFactory::createControllable(a.getProperty("type", "")));
+				if (p == nullptr) continue;
+				p->saveValueOnly = false;
+				p->loadJSONData(a);
+				argumentsContainer.addParameter(p);
+				if (a.getDynamicObject()->hasProperty("mappingIndex")) setTargetMappingParameterAt(p, a.getProperty("mappingIndex", 0));
 
+			}
 		}
+
+		argumentsContainer.hideInEditor = argumentsContainer.controllables.size() == 0;
 	}
 
 	if (data.getDynamicObject()->hasProperty("params") && data.getProperty("params",var()).isArray())
