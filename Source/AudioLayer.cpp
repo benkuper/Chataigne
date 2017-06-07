@@ -21,7 +21,7 @@ AudioLayer::AudioLayer(Sequence * _sequence, var params) :
 {
 	ModuleManager::getInstance()->addBaseManagerListener(this);
 
-	
+
 	enveloppe = addFloatParameter("Enveloppe", "Enveloppe", 0, 0, 1);
 	enveloppe->isControllableFeedbackOnly = true;
 	addChildControllableContainer(&clipManager);
@@ -41,7 +41,7 @@ AudioLayer::AudioLayer(Sequence * _sequence, var params) :
 
 AudioLayer::~AudioLayer()
 {
-	if(ModuleManager::getInstanceWithoutCreating() != nullptr) ModuleManager::getInstance()->removeBaseManagerListener(this);
+	if (ModuleManager::getInstanceWithoutCreating() != nullptr) ModuleManager::getInstance()->removeBaseManagerListener(this);
 	setAudioModule(nullptr);
 }
 
@@ -54,14 +54,14 @@ void AudioLayer::setAudioModule(AudioModule * newModule)
 		audioModule->graph.removeNode(graphID);
 		currentProcessor->clear();
 		currentProcessor = nullptr;
-			
+
 	}
 
 	audioModule = newModule;
 
 	if (audioModule != nullptr)
 	{
-		
+
 		currentProcessor = new AudioLayerProcessor(this);
 		currentProcessor->setPlayConfigDetails(0, 2, audioModule->currentSampleRate, audioModule->currentBufferSize);
 		currentProcessor->prepareToPlay(audioModule->currentSampleRate, audioModule->currentBufferSize);
@@ -72,7 +72,7 @@ void AudioLayer::setAudioModule(AudioModule * newModule)
 		audioModule->graph.addConnection(graphID, 0, 2, 0);
 		//sequence->setMasterAudioModule(audioModule);		
 	}
-	
+
 	DBG("AudioLayer audio Module > " << (audioModule != nullptr ? audioModule->niceName : "null"));
 	audioLayerListeners.call(&AudioLayerListener::targetAudioModuleChanged, this);
 }
@@ -158,8 +158,8 @@ void AudioLayer::sequencePlayStateChanged(Sequence *)
 AudioLayerProcessor::AudioLayerProcessor(AudioLayer * _layer) :
 	layer(_layer),
 	rmsCount(0),
-tempRMS(0),
-currentEnveloppe(0)
+	tempRMS(0),
+	currentEnveloppe(0)
 {
 }
 
@@ -193,7 +193,7 @@ void AudioLayerProcessor::processBlock(AudioBuffer<float>& buffer, MidiBuffer & 
 	buffer.clear();
 
 	bool noProcess = false;
-	
+
 	WeakReference<AudioLayerClip> currentClip;
 
 	if (layer != nullptr)
@@ -201,13 +201,12 @@ void AudioLayerProcessor::processBlock(AudioBuffer<float>& buffer, MidiBuffer & 
 		if (!layer->enabled->boolValue()) noProcess = true;;
 		currentClip = layer->currentClip;
 		if (currentClip.wasObjectDeleted() || currentClip.get() == nullptr) noProcess = true;
-		else if (currentClip->filePath->stringValue().isEmpty()) noProcess = true; 
-	} 
-	else
+		else if (currentClip->filePath->stringValue().isEmpty()) noProcess = true;
+	} else
 	{
 		noProcess = true;
 	}
-	
+
 	if (noProcess)
 	{
 		currentEnveloppe = 0;
@@ -216,24 +215,26 @@ void AudioLayerProcessor::processBlock(AudioBuffer<float>& buffer, MidiBuffer & 
 		return;
 	}
 
-	
+
 	AudioSampleBuffer * clipBuffer = &layer->currentClip->buffer;
 	//int numClipSamples = clipBuffer->getNumSamples();
 
 	float position = layer->sequence->hiResAudioTime - layer->currentClip->time->floatValue();
-	
+
 	int curSamplePos = currentClip->clipSamplePos;
 	int targetSamplePos = position * currentClip->sampleRate;
 
 	//smoothing vynil-like when not playing
-	if (!layer->sequence->isPlaying->boolValue()) targetSamplePos = curSamplePos + (targetSamplePos - curSamplePos) *.1f;
-	
+	if (!layer->sequence->isPlaying->boolValue() && currentClip->scratch->boolValue()) targetSamplePos = curSamplePos + (targetSamplePos - curSamplePos) *.1f;
+
 
 	int numDiffSamples = abs(targetSamplePos - curSamplePos);
 	if (numDiffSamples == 0) return;
 
 	int numBufferSamples = buffer.getNumSamples();
- 
+
+	float volumeFactor = currentClip->volume->floatValue();
+
 	//int samplePosition = layer->currentClip->clipSamplePos;// *layer->currentClip->sampleRate;
 	//int maxSamples = jmin<int>(buffer.getNumSamples(), clipBuffer->getNumSamples() - samplePosition);
 
@@ -242,27 +243,27 @@ void AudioLayerProcessor::processBlock(AudioBuffer<float>& buffer, MidiBuffer & 
 		int targetChannel = i%clipBuffer->getNumChannels();
 
 		int prevSampleInClip = 0;
-		
+
 		for (int j = 0; j < numBufferSamples; j++)
 		{
 			float val = 0;
-			int sampleInClip = jlimit<int>(0, clipBuffer->getNumSamples() - 1,curSamplePos + (targetSamplePos - curSamplePos) * j*1.f / numBufferSamples);
+			int sampleInClip = jlimit<int>(0, clipBuffer->getNumSamples() - 1, curSamplePos + (targetSamplePos - curSamplePos) * j*1.f / numBufferSamples);
 
 			if (j > 0 && sampleInClip != prevSampleInClip)
 			{
 				int step = sampleInClip > prevSampleInClip ? 1 : -1;
-				for (int k = prevSampleInClip; k != sampleInClip; k+=step)
+				for (int k = prevSampleInClip; k != sampleInClip; k += step)
 				{
 					val += clipBuffer->getSample(targetChannel, k);
 				}
 				val /= abs(sampleInClip - prevSampleInClip);
-			}else
+			} else
 			{
 				val = clipBuffer->getSample(targetChannel, sampleInClip);
 			}
 
-			buffer.addSample(i, j, val);
-			
+			buffer.addSample(i, j, val * volumeFactor);
+
 			prevSampleInClip = sampleInClip;
 
 		}
@@ -271,17 +272,16 @@ void AudioLayerProcessor::processBlock(AudioBuffer<float>& buffer, MidiBuffer & 
 
 	currentClip->clipSamplePos = targetSamplePos;
 
-	 tempRMS += buffer.getRMSLevel(0, 0, buffer.getNumSamples());
-	 if (rmsCount*buffer.getNumSamples() > minEnveloppeSamples)
-	 {
-		 currentEnveloppe = tempRMS / rmsCount;
-		 tempRMS = 0;
-		 rmsCount = 0;
-	 }
-	 else
-	 {
-		 rmsCount++;
-	 }
+	tempRMS += buffer.getRMSLevel(0, 0, buffer.getNumSamples());
+	if (rmsCount*buffer.getNumSamples() > minEnveloppeSamples)
+	{
+		currentEnveloppe = tempRMS / rmsCount;
+		tempRMS = 0;
+		rmsCount = 0;
+	} else
+	{
+		rmsCount++;
+	}
 }
 
 double AudioLayerProcessor::getTailLengthSeconds() const

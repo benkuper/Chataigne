@@ -33,6 +33,7 @@ public:
 
 	FloatParameter * enveloppe;
 
+
 	int graphID;
 
 	void setAudioModule(AudioModule * newModule);

@@ -36,7 +36,7 @@ void AudioLayerClipUI::paint(Graphics & g)
 
 	if (clip->filePath->stringValue().isEmpty()) return;
 	g.setColour(Colours::white.withAlpha(.5f));
-	thumbnail.drawChannels(g, getLocalBounds(), 0, clip->clipDuration, 1);
+	thumbnail.drawChannels(g, getLocalBounds(), 0, item->clipDuration, item->volume->floatValue());
 }
 
 void AudioLayerClipUI::resizedInternalHeader(Rectangle<int>& r)
@@ -74,6 +74,9 @@ void AudioLayerClipUI::controllableFeedbackUpdateInternal(Controllable * c)
 	if (c == item->time || c == item->clipLength)
 	{
 		clipUIListeners.call(&ClipUIListener::clipUITimeChanged, this);
+	} else if (c == item->volume)
+	{
+		repaint();
 	}
 }
 

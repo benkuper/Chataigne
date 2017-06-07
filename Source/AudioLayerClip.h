@@ -27,7 +27,10 @@ public:
 
 	FloatParameter * time; 
 	FloatParameter * clipLength;
-	
+
+	FloatParameter * volume;
+	BoolParameter * scratch;
+
 	double clipDuration;
 	double sampleRate;
 	int clipSamplePos;

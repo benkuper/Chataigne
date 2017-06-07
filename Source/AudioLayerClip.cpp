@@ -24,6 +24,9 @@ sampleRate(0),
 	clipLength = addFloatParameter("Length", "Length of the clip (in seconds)", 10, .1f, 3600);
 	clipLength->defaultUI = FloatParameter::TIME;
 
+	volume = addFloatParameter("Volume", "Volume multiplier", 1, 0, 50);
+	scratch = addBoolParameter("Scratch", "Scratch when seeking", false);
+
 	formatManager.registerBasicFormats();
 
 }

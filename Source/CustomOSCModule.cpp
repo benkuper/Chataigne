@@ -43,7 +43,7 @@ void CustomOSCModule::processMessageInternal(const OSCMessage & msg)
 	const String cShortName = cNiceName.replaceCharacters("/", "_");
 	Controllable * c = nullptr;
 
-	if(msg.size() > 0 && splitArgs->boolValue())
+	if(msg.size() > 1 && splitArgs->boolValue())
 	{
 		for (int i = 0; i < msg.size(); i++)
 		{
@@ -133,36 +133,38 @@ void CustomOSCModule::processMessageInternal(const OSCMessage & msg)
 		switch (numArgs)
 		{
 		case 0:
-			c = valuesCC.addTrigger(cNiceName, "");
+			c = new Trigger(cNiceName, "");
 			break;
 
 		case 1:
-			if (msg[0].isInt32()) c = valuesCC.addIntParameter(cNiceName, "", msg[0].getInt32(), msg[0].getInt32(), msg[0].getInt32());
-			else if (msg[0].isFloat32()) c = valuesCC.addFloatParameter(cNiceName, "", msg[0].getFloat32());
-			else if (msg[0].isString()) c = valuesCC.addStringParameter(cNiceName, "", msg[0].getString());
-			((Parameter *)c)->autoAdaptRange = true;
+			if (msg[0].isInt32()) c = new IntParameter(cNiceName, "", msg[0].getInt32(), msg[0].getInt32(), msg[0].getInt32());
+			else if (msg[0].isFloat32()) c = new FloatParameter(cNiceName, "", msg[0].getFloat32());
+			else if (msg[0].isString()) c = new StringParameter(cNiceName, "", msg[0].getString());
 			break;
 
 		case 2:
 			//duplicate because may have other mechanism
-			if (msg[0].isInt32()) c = valuesCC.addIntParameter(cNiceName, "", getIntArg(msg[0]), getIntArg(msg[1]), getIntArg(msg[1]) + 1);
+			if (msg[0].isInt32()) c = new IntParameter(cNiceName, "", getIntArg(msg[0]), getIntArg(msg[1]), getIntArg(msg[1]) + 1);
 			else if (msg[0].isFloat32())
 			{
-				c = valuesCC.addPoint2DParameter(cNiceName, "");
+				c = new Point2DParameter(cNiceName, "");
 				((Point2DParameter *)c)->setPoint(getFloatArg(msg[0]), getFloatArg(msg[1]));
-			} else if (msg[0].isString()) c = valuesCC.addStringParameter(cNiceName, "", getStringArg(msg[0]));
-
-			((Parameter *)c)->autoAdaptRange = true;
+			} else if (msg[0].isString()) 
+			{
+				c = new StringParameter(cNiceName, "", getStringArg(msg[0]));
+			}
 			break;
 
 		case 3:
-			if (msg[0].isInt32()) c = valuesCC.addIntParameter(cNiceName, "", getIntArg(msg[0]), getIntArg(msg[1]), getIntArg(msg[2]));
+			if (msg[0].isInt32()) c = new IntParameter(cNiceName, "", getIntArg(msg[0]), getIntArg(msg[1]), getIntArg(msg[2]));
 			else if (msg[0].isFloat32())
 			{
-				c = valuesCC.addPoint3DParameter(cNiceName, "");
+				c = new Point3DParameter(cNiceName, "");
 				((Point3DParameter *)c)->setVector(getFloatArg(msg[0]), getFloatArg(msg[1]), getFloatArg(msg[2]));
-			} else if (msg[0].isString()) c = valuesCC.addStringParameter(cNiceName, "", getStringArg(msg[0]));
-			((Parameter *)c)->autoAdaptRange = true;
+			} else if (msg[0].isString())
+			{
+				c = new StringParameter(cNiceName, "", getStringArg(msg[0]));
+			}
 			break;
 
 		default:
@@ -170,10 +172,14 @@ void CustomOSCModule::processMessageInternal(const OSCMessage & msg)
 			return;
 		}
 
+		
 		c->setCustomShortName(cShortName); //force safeName for search
 		c->isCustomizableByUser = true;
 		c->isRemovableByUser = true;
 		c->saveValueOnly = false;
+		if(c->type != Controllable::TRIGGER) ((Parameter *)c)->autoAdaptRange = true;
+
+		valuesCC.addControllable(c);
 		valuesCC.orderControllablesAlphabetically();
 	}
 }
