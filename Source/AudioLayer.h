@@ -31,8 +31,12 @@ public:
 	WeakReference<AudioLayerClip> currentClip;
 	AudioLayerProcessor * currentProcessor;
 
+	Array<BoolParameter *> outChannels;
+	Array<int> selectedOutChannels;
+
 	FloatParameter * enveloppe;
 
+	int numActiveOutputs;
 
 	int graphID;
 
@@ -41,6 +45,10 @@ public:
 
 	void itemAdded(Module * m) override;
 	void itemRemoved(Module * m) override;
+
+	void updateSelectedOutChannels();
+
+	void onContainerParameterChangedInternal(Parameter * p) override;
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;

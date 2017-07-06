@@ -50,7 +50,7 @@ Array<WeakReference<Controllable>> Module::getValueControllables()
 	return valuesCC.getAllControllables();
 }
 
-void Module::controllableFeedbackUpdate(ControllableContainer * cc, Controllable * c)
+void Module::onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c)
 {
 	if (cc == &valuesCC)
 	{

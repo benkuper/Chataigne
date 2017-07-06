@@ -16,6 +16,8 @@ CustomOSCCommand::CustomOSCCommand(CustomOSCModule * module, CommandContext cont
 	argManager(context == MAPPING)
 {
 	address->isEditable = true;
+	address->isSavable = true;
+
 	removeChildControllableContainer(&argumentsContainer);
 	addChildControllableContainer(&argManager);
 	argManager.addArgumentManagerListener(this);

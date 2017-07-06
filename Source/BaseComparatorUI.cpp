@@ -19,9 +19,12 @@ BaseComparatorUI::BaseComparatorUI(BaseComparator * _comparator) :
 	addAndMakeVisible(compareFuncUI);
 	//addAndMakeVisible(alwaysDispatchUI);
 
-	refEditor = (ControllableEditor *)comparator->reference->getEditor(false);
-	refEditor->setShowLabel(false);
-	addAndMakeVisible(refEditor);
+	if (comparator->reference != nullptr) //null if comparator is trigger
+	{
+		refEditor = (ControllableEditor *)comparator->reference->getEditor(false);
+		refEditor->setShowLabel(false);
+		addAndMakeVisible(refEditor);
+	}
 
 	setSize(100, 18); //init size
 }
@@ -32,8 +35,12 @@ BaseComparatorUI::~BaseComparatorUI()
 
 void BaseComparatorUI::resized()
 {
-	Rectangle<int> r = getLocalBounds().reduced(2,0);
-	compareFuncUI->setBounds(r.removeFromLeft(80));
-	r.removeFromLeft(2);
-	refEditor->setBounds(r);
+	if (refEditor != nullptr)
+	{
+		Rectangle<int> r = getLocalBounds().reduced(2, 0);
+		compareFuncUI->setBounds(r.removeFromLeft(80));
+		r.removeFromLeft(2);
+		refEditor->setBounds(r);
+	}
+	
 }

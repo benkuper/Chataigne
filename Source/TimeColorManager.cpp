@@ -106,7 +106,7 @@ void TimeColorManager::onContainerParameterChanged(Parameter * p)
 	}
 }
 
-void TimeColorManager::controllableFeedbackUpdate(ControllableContainer * cc, Controllable * c)
+void TimeColorManager::onControllableFeedbackUpdate(ControllableContainer * cc, Controllable * c)
 {
 	TimeColor * t = static_cast<TimeColor *>(cc);
 	if (t != nullptr)

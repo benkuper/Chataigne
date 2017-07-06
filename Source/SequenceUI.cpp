@@ -13,7 +13,7 @@
 SequenceUI::SequenceUI(Sequence * sequence) :
 	BaseItemUI<Sequence>(sequence)
 {
-	minContentHeight = 5;
+	minContentHeight = 20; //To fix : need to pass in constructor of BaseItemUI
 
 	timeUI = item->currentTime->createSlider();
 	timeUI->setForceFeedbackOnly(true);
@@ -32,6 +32,7 @@ SequenceUI::~SequenceUI()
 
 void SequenceUI::resizedInternalContent(Rectangle<int>& r)
 {
+	r.setHeight(4);
 	timeUI->setBounds(r);
 }
 

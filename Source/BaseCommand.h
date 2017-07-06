@@ -28,8 +28,6 @@ public:
 	Module * module;
 	var params;
 
-	
-
 	Array<Parameter *> targetMappingParameters;
 	void setTargetMappingParameterAt(Parameter * p,int index);
 	void clearTargetMappingParameters();

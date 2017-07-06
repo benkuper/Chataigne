@@ -93,7 +93,7 @@ float TimeCueManager::getPrevCueForTime(float time, float goToPreviousThreshold)
 	return result;
 }
 
-void TimeCueManager::controllableFeedbackUpdate(ControllableContainer * cc, Controllable * c)
+void TimeCueManager::onControllableFeedbackUpdate(ControllableContainer * cc, Controllable * c)
 {
 	TimeCue * t = static_cast<TimeCue *>(cc);
 	if (t != nullptr)

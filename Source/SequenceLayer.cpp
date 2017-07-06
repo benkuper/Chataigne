@@ -43,8 +43,8 @@ SequenceLayerTimeline * SequenceLayer::getTimelineUI()
 	return new SequenceLayerTimeline(this);
 }
 
-InspectableEditor * SequenceLayer::getEditor(bool isRoot)
-{
-	return new BaseItemEditor(this, isRoot);
-}
+//InspectableEditor * SequenceLayer::getEditor(bool isRoot)
+//{
+//	return new BaseItemEditor(this, isRoot);
+//}
 

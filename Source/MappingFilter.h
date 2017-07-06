@@ -30,7 +30,7 @@ public:
 	void setupSource(Parameter * source);
 	virtual Parameter * setupParameterInternal(Parameter * source);
 
-	void controllableFeedbackUpdate(ControllableContainer *, Controllable * p) override;
+	void onControllableFeedbackUpdateInternal(ControllableContainer *, Controllable * p) override;
 	virtual void filterParamChanged(Parameter * ) {};
 
 	Parameter * process(Parameter * source);

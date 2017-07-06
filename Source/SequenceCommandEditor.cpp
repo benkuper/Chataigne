@@ -16,13 +16,17 @@ SequenceCommandEditor::SequenceCommandEditor(SequenceCommand * _sequenceCommand,
 {
 	SequenceChooserUI::TargetType targetType = SequenceChooserUI::SEQUENCE;
 
+
 	switch (sequenceCommand->actionType)
 	{
 	case SequenceCommand::PLAY_SEQUENCE:
+	case SequenceCommand::TOGGLE_SEQUENCE:
+		playFromStartUI = sequenceCommand->playFromStart->createToggle();
+		addAndMakeVisible(playFromStartUI);
 	case SequenceCommand::PAUSE_SEQUENCE:
 	case SequenceCommand::STOP_SEQUENCE:
-	case SequenceCommand::TOGGLE_SEQUENCE:
 		targetType = SequenceChooserUI::SEQUENCE;
+
 		break;
             
         case SequenceCommand::ENABLE_LAYER:
@@ -33,7 +37,8 @@ SequenceCommandEditor::SequenceCommandEditor(SequenceCommand * _sequenceCommand,
 
 	chooserUI = new SequenceChooserUI(sequenceCommand->target, targetType);
 	addAndMakeVisible(chooserUI);
-	setSize(10, 16);
+	
+	setSize(10, (playFromStartUI != nullptr)?40:16);
 }
 
 SequenceCommandEditor::~SequenceCommandEditor()
@@ -42,5 +47,12 @@ SequenceCommandEditor::~SequenceCommandEditor()
 
 void SequenceCommandEditor::resized()
 {
-	chooserUI->setBounds(getLocalBounds().reduced(2, 0).removeFromTop(16));
+	Rectangle<int> r = getLocalBounds().reduced(2, 0);
+	chooserUI->setBounds(r.removeFromTop(16));
+	
+	if (playFromStartUI != nullptr)
+	{
+		r.removeFromTop(2);
+		playFromStartUI->setBounds(r);
+	}
 }

@@ -15,7 +15,7 @@
 #include "AudioModule.h"
 
 Sequence::Sequence() :
-	BaseItem("Sequence",true,true,true),
+	BaseItem("Sequence",true),
 	masterAudioModule(nullptr),
 	hiResAudioTime(0)
 {
@@ -25,6 +25,8 @@ Sequence::Sequence() :
 	
 	playTrigger = addTrigger("Play", "Play the sequence");
 	stopTrigger = addTrigger("Stop", "Stops the sequence and set the current time at 0.");
+	finishTrigger = addTrigger("Finish", "When the sequence reached naturally its end, and there is no loop");
+	finishTrigger->hideInEditor = true;
 	pauseTrigger = addTrigger("Pause", "Pause the sequence and keep the current time as is.");
 	togglePlayTrigger = addTrigger("TogglePlay", "Toggle between play/pause or play/stop depending on sequence settings");
 	
@@ -169,6 +171,7 @@ void Sequence::onContainerTriggerTriggered(Trigger * t)
 {
 	if (t == playTrigger)
 	{
+		if (currentTime->floatValue() >= totalTime->floatValue()) currentTime->setValue(0); //if reached the end when hit play, go to 0
 		isPlaying->setValue(true);
 	} else if(t == stopTrigger)
 	{
@@ -177,9 +180,14 @@ void Sequence::onContainerTriggerTriggered(Trigger * t)
 	} else if (t == pauseTrigger)
 	{
 		isPlaying->setValue(false);
-	}else if (t == togglePlayTrigger)
+	} else if (t == finishTrigger)
 	{
-		isPlaying->setValue(!isPlaying->boolValue());
+		isPlaying->setValue(false);
+	} else if (t == togglePlayTrigger)
+	{
+		if (isPlaying->boolValue()) pauseTrigger->trigger();
+		else playTrigger->trigger();
+
 	} else if (t == prevCue)
 	{
 		setCurrentTime(cueManager->getPrevCueForTime(currentTime->floatValue(), 1));
@@ -208,7 +216,7 @@ void Sequence::hiResTimerCallback()
 	if (currentTime->floatValue() >= (float)currentTime->maximumValue)
 	{
 		if (loopParam->boolValue()) setCurrentTime(0);
-		else stopTrigger->trigger();
+		else finishTrigger->trigger();
 	}
 }
 

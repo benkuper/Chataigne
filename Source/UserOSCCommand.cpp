@@ -20,6 +20,8 @@ UserOSCCommand::UserOSCCommand(CustomOSCModule * _module, CommandContext context
 
 	address->setValue(model->addressParam->stringValue());
 	address->isEditable = model->addressIsEditable->boolValue();
+	address->isSavable = address->isEditable;
+
 	rebuildArgsFromModel();
 
 }

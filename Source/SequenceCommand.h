@@ -28,6 +28,8 @@ public:
 	ActionType actionType;
 	SequenceModule * sequenceModule;
 
+	BoolParameter * playFromStart;
+
 	TargetParameter * target;
 
 	virtual void trigger() override;

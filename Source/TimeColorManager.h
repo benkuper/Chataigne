@@ -56,7 +56,7 @@ public:
 	void reorderItems() override;
 
 	void onContainerParameterChanged(Parameter *) override;
-	void controllableFeedbackUpdate(ControllableContainer * cc, Controllable * c) override;
+	void onControllableFeedbackUpdate(ControllableContainer * cc, Controllable * c) override;
 
 	class TimeColorManagerListener
 	{

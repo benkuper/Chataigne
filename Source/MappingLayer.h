@@ -52,7 +52,7 @@ public:
 
 	virtual void onContainerParameterChangedInternal(Parameter * p) override;
 
-	void controllableFeedbackUpdate(ControllableContainer * cc, Controllable * c) override;
+	void onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c) override;
 
 	virtual void sequenceTotalTimeChanged(Sequence *) override;
 	virtual void sequenceCurrentTimeChanged(Sequence *, float /*prevTime */, bool /*evaluateSkippedData */) override;

@@ -108,7 +108,7 @@ void Automation::addItem(const float _position, const float _value)
 	BaseManager::addItem(k);
 }
 
-void Automation::controllableFeedbackUpdate(ControllableContainer * cc, Controllable * c)
+void Automation::onControllableFeedbackUpdate(ControllableContainer * cc, Controllable * c)
 {
 	AutomationKey * t = dynamic_cast<AutomationKey *>(cc);
 	if (t != nullptr)

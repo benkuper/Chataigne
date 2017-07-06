@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    AudioModule.cpp
-    Created: 6 Feb 2017 8:46:11pm
-    Author:  Ben
+	AudioModule.cpp
+	Created: 6 Feb 2017 8:46:11pm
+	Author:  Ben
 
   ==============================================================================
 */
@@ -13,12 +13,12 @@
 #include "MIDIManager.h"
 
 AudioModule::AudioModule(const String & name) :
-Module(name),
-uidIncrement(100),
+	Module(name),
+	uidIncrement(100),
 	pitchDetector(nullptr)
 {
 	gain = addFloatParameter("Gain", "Gain for the input volume", 1, 0, 10);
-	activityThreshold = addFloatParameter("Activity Threshold", "Threshold to consider activity from the source.\nAnalysis will compute only if volume is greater than this parameter", .1f,0,1);
+	activityThreshold = addFloatParameter("Activity Threshold", "Threshold to consider activity from the source.\nAnalysis will compute only if volume is greater than this parameter", .1f, 0, 1);
 	keepLastDetectedValues = addBoolParameter("Keep Values", "Keep last detected values when no activity detected.", false);
 
 	volume = valuesCC.addFloatParameter("Volume", "Volume of the audio input", 0, 0, 1);
@@ -32,7 +32,7 @@ uidIncrement(100),
 
 	note = valuesCC.addEnumParameter("Note", "Detected note");
 	note->addOption("-", -1);
-	for (int i = 0; i < 12; i++) note->addOption(MIDIManager::getNoteName(i,false), i);
+	for (int i = 0; i < 12; i++) note->addOption(MIDIManager::getNoteName(i, false), i);
 	octave = valuesCC.addIntParameter("Octave", "Detected octave", 0, 0, 10);
 
 	am.addAudioCallback(this);
@@ -42,7 +42,7 @@ uidIncrement(100),
 	am.addAudioCallback(&player);
 
 	graph.reset();
-	
+
 	AudioDeviceManager::AudioDeviceSetup setup;
 	am.getAudioDeviceSetup(setup);
 	currentSampleRate = setup.sampleRate;
@@ -76,7 +76,7 @@ var AudioModule::getJSONData()
 	ScopedPointer<XmlElement> xmlData = am.createStateXml();
 	if (xmlData != nullptr)
 	{
-		data.getDynamicObject()->setProperty("audioSettings", xmlData->createDocument("",true,false));
+		data.getDynamicObject()->setProperty("audioSettings", xmlData->createDocument("", true, false));
 	}
 
 	return data;
@@ -87,8 +87,8 @@ void AudioModule::loadJSONDataInternal(var data)
 	Module::loadJSONDataInternal(data);
 	if (data.getDynamicObject()->hasProperty("audioSettings"))
 	{
-		
-		ScopedPointer<XmlElement> elem = XmlDocument::parse(data.getProperty("audioSettings",""));
+
+		ScopedPointer<XmlElement> elem = XmlDocument::parse(data.getProperty("audioSettings", ""));
 		am.initialise(2, 2, elem, true);
 	}
 }
@@ -96,13 +96,13 @@ void AudioModule::loadJSONDataInternal(var data)
 void AudioModule::audioDeviceIOCallback(const float ** inputChannelData, int numInputChannels, float ** outputChannelData, int numOutputChannels, int numSamples)
 {
 	//DBG("audio callback");
-	
-	for (int i = 0; i < numOutputChannels; i++) FloatVectorOperations::clear(outputChannelData[i],numSamples);
+
+	for (int i = 0; i < numOutputChannels; i++) FloatVectorOperations::clear(outputChannelData[i], numSamples);
 
 	if (numInputChannels > 0)
 	{
-		if(buffer.getNumSamples() != numSamples) buffer.setSize(1, numSamples);
-		buffer.copyFromWithRamp(0, 0, inputChannelData[0], numSamples,1,gain->floatValue());
+		if (buffer.getNumSamples() != numSamples) buffer.setSize(1, numSamples);
+		buffer.copyFromWithRamp(0, 0, inputChannelData[0], numSamples, 1, gain->floatValue());
 		volume->setValue(buffer.getRMSLevel(0, 0, numSamples));
 
 		//DBG("here");
@@ -115,34 +115,33 @@ void AudioModule::audioDeviceIOCallback(const float ** inputChannelData, int num
 				AudioDeviceManager::AudioDeviceSetup s;
 				am.getAudioDeviceSetup(s);
 				pitchDetector = new PitchMPM((int)s.sampleRate, numSamples);
-				
+
 			}
 			float freq = pitchDetector->getPitch(inputChannelData[0]);
 			frequency->setValue(freq);
 			int pitchNote = getNoteForFrequency(freq);
 			pitch->setValue(pitchNote);
-			
-			note->setValueWithKey(MIDIManager::getNoteName(pitchNote,false));
-			octave->setValue(floor (pitchNote / 12.0) );
+
+			note->setValueWithKey(MIDIManager::getNoteName(pitchNote, false));
+			octave->setValue(floor(pitchNote / 12.0));
 
 
 		} else
 		{
-			if(!keepLastDetectedValues->boolValue())
+			if (!keepLastDetectedValues->boolValue())
 			{
 				frequency->setValue(0);
 				pitch->setValue(0);
 				note->setValueWithKey("-");
 			}
 		}
-	}
-	else
+	} else
 	{
 		DBG("No input channel");
 	}
 }
 
-void AudioModule::audioDeviceAboutToStart(AudioIODevice * )
+void AudioModule::audioDeviceAboutToStart(AudioIODevice *)
 {
 	DBG("device about to start");
 }

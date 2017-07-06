@@ -45,7 +45,7 @@ public:
 
 	Array<TimeTrigger *> getTriggersInTimespan(float startTime, float endTime, bool includeAlreadyTriggered = false);
 
-	void controllableFeedbackUpdate(ControllableContainer * cc, Controllable * c) override; 
+	void onControllableFeedbackUpdate(ControllableContainer * cc, Controllable * c) override;
 
 	void sequenceCurrentTimeChanged(Sequence * _sequence, float prevTime, bool evaluateSkippedData) override;
 

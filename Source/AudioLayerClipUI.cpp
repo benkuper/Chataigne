@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    AudioLayerClipUI.cpp
-    Created: 8 Feb 2017 12:20:09pm
-    Author:  Ben
+	AudioLayerClipUI.cpp
+	Created: 8 Feb 2017 12:20:09pm
+	Author:  Ben
 
   ==============================================================================
 */
@@ -11,18 +11,19 @@
 #include "AudioLayerClipUI.h"
 
 AudioLayerClipUI::AudioLayerClipUI(AudioLayerClip * _clip) :
-BaseItemUI(_clip),
-thumbnailCache(100000),
-thumbnail(50,_clip->formatManager,thumbnailCache),
-clip(_clip)
+	BaseItemUI(_clip),
+	thumbnailCache(100000),
+	thumbnail(50, _clip->formatManager, thumbnailCache),
+	clip(_clip)
 {
 	browseBT = AssetManager::getInstance()->getFileBT();
 	addAndMakeVisible(browseBT);
 	browseBT->addListener(this);
 	clip->addClipListener(this);
-	
+
 	thumbnail.setSource(new FileInputSource(File(clip->filePath->stringValue())));
 
+	bgColor = clip->isCurrent ? AUDIO_COLOR.brighter() : BG_COLOR.brighter(.1f);
 }
 
 AudioLayerClipUI::~AudioLayerClipUI()

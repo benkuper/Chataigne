@@ -57,7 +57,7 @@ public:
 
 	AutomationKey * getClosestKeyForPos(float pos, int start = -1, int end = -1);
 
-	void controllableFeedbackUpdate(ControllableContainer * cc, Controllable *c) override;
+	void onControllableFeedbackUpdate(ControllableContainer * cc, Controllable *c) override;
 	void onContainerParameterChanged(Parameter *) override;
 
 	InspectableEditor * getEditor(bool isRoot) override;

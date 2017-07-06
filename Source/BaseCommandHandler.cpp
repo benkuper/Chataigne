@@ -32,11 +32,11 @@ void BaseCommandHandler::triggerCommand()
 
 void BaseCommandHandler::setCommand(CommandDefinition * commandDef)
 {
-	//var oldData = var();
+	var oldData = var();
 	if (command != nullptr)
 	{
 		command->module->removeInspectableListener(this);
-		//oldData = command->getJSONData();
+		oldData = command->getJSONData();
 	}
 
 	commandDefinition = commandDef;
@@ -47,7 +47,7 @@ void BaseCommandHandler::setCommand(CommandDefinition * commandDef)
 	if (command != nullptr)
 	{
 		command->module->addInspectableListener(this);
-		//command->loadJSONData(oldData); //keep as much as similar parameter possible
+		command->loadJSONData(oldData); //keep as much as similar parameter possible
 	}
 
 	commandHandlerListeners.call(&CommandHandlerListener::commandChanged, this);

@@ -21,6 +21,17 @@ SequenceCommand::SequenceCommand(SequenceModule * _module, CommandContext contex
 	target->targetType = TargetParameter::CONTAINER;
 
 	actionType = (ActionType)(int)params.getProperty("type", PLAY_SEQUENCE);
+
+	switch (actionType)
+	{
+	case PLAY_SEQUENCE:
+	case TOGGLE_SEQUENCE:
+		playFromStart = addBoolParameter("Play From Start", "If enabled, when the command is triggered, will position the time at 0 before playing", false);
+		break;
+
+	default:
+		break;
+	}
 }
 
 SequenceCommand::~SequenceCommand()
@@ -35,6 +46,7 @@ void SequenceCommand::trigger()
 	switch (actionType)
 	{
 	case PLAY_SEQUENCE:
+		if (playFromStart->boolValue()) ((Sequence *)target->targetContainer.get())->currentTime->setValue(0);
 		((Sequence *)target->targetContainer.get())->playTrigger->trigger();
 		break;
 
@@ -47,16 +59,17 @@ void SequenceCommand::trigger()
 		break;
 
 	case TOGGLE_SEQUENCE:
+		if (playFromStart->boolValue() && !((Sequence *)target->targetContainer.get())->isPlaying->boolValue()) ((Sequence *)target->targetContainer.get())->currentTime->setValue(0);
 		((Sequence *)target->targetContainer.get())->togglePlayTrigger->trigger();
 		break;
             
-        case ENABLE_LAYER:
-            ((SequenceLayer *)target->targetContainer.get())->enabled->setValue(true);
-            break;
+    case ENABLE_LAYER:
+        ((SequenceLayer *)target->targetContainer.get())->enabled->setValue(true);
+        break;
             
-        case DISABLE_LAYER:
-            ((SequenceLayer *)target->targetContainer.get())->enabled->setValue(false);
-            break;
+    case DISABLE_LAYER:
+        ((SequenceLayer *)target->targetContainer.get())->enabled->setValue(false);
+        break;
             
 	}
 }

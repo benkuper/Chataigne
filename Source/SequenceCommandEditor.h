@@ -25,6 +25,7 @@ public:
 
 	SequenceCommand * sequenceCommand;
 	ScopedPointer<SequenceChooserUI> chooserUI;
+	ScopedPointer<BoolToggleUI> playFromStartUI;
 
 	virtual void resized() override;
 };

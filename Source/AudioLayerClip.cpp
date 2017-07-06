@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    AudioLayerClip.cpp
-    Created: 8 Feb 2017 12:20:02pm
-    Author:  Ben
+	AudioLayerClip.cpp
+	Created: 8 Feb 2017 12:20:02pm
+	Author:  Ben
 
   ==============================================================================
 */
@@ -12,9 +12,10 @@
 
 AudioLayerClip::AudioLayerClip(float _time) :
 	BaseItem("Clip"),
-clipDuration(0),
-sampleRate(0),
-	clipSamplePos(0)
+	clipDuration(0),
+	sampleRate(0),
+	clipSamplePos(0),
+	isCurrent(false)
 {
 	filePath = addStringParameter("File Path", "File Path", "");
 
@@ -40,12 +41,11 @@ void AudioLayerClip::setIsCurrent(bool value)
 {
 	if (isCurrent == value) return;
 	isCurrent = value;
-	
+
 	if (isCurrent)
 	{
 		clipSamplePos = 0;
-	}
-	else
+	} else
 	{
 		clipSamplePos = -1;
 	}
@@ -61,18 +61,20 @@ bool AudioLayerClip::isInRange(float _time)
 void AudioLayerClip::updateAudioSourceFile()
 {
 	if (filePath->stringValue().isEmpty()) return;
-	
+
 	ScopedPointer<AudioFormatReader>  reader(formatManager.createReaderFor(filePath->stringValue()));
 
 	if (reader != nullptr)
-	{ 
+	{
 		sampleRate = reader->sampleRate;
 		clipDuration = reader->lengthInSamples / sampleRate;
 
 		clipLength->setValue(clipDuration);
-		buffer.setSize((int)reader->numChannels,(int)reader->lengthInSamples);      
-		reader->read(&buffer,0,(int)reader->lengthInSamples,0, true, true);
+		buffer.setSize((int)reader->numChannels, (int)reader->lengthInSamples);
+		reader->read(&buffer, 0, (int)reader->lengthInSamples, 0, true, true);
 	}
+
+	DBG("Update audio source file, num channels : " << String(reader->numChannels) << "/" << buffer.getNumChannels());
 
 	clipListeners.call(&ClipListener::audioSourceChanged, this);
 }

@@ -60,7 +60,7 @@ Parameter * MappingFilter::setupParameterInternal(Parameter * source)
 	return p;
 }
 
-void MappingFilter::controllableFeedbackUpdate(ControllableContainer * cc, Controllable * p)
+void MappingFilter::onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * p)
 {
 	if (cc == &filterParams) filterParamChanged((Parameter *)p);
 }

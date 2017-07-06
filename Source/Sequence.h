@@ -17,6 +17,9 @@ class AudioModule;
 class SequenceLayerManager;
 class TimeCueManager;
 
+#define AUDIO_INPUT_GRAPH_ID 1
+#define AUDIO_OUTPUT_GRAPH_ID 2
+
 class Sequence :
 	public BaseItem,
 	public HighResolutionTimer,
@@ -35,6 +38,7 @@ public:
 	Trigger * playTrigger;
 	Trigger * pauseTrigger;
 	Trigger * stopTrigger;
+	Trigger * finishTrigger;
 	Trigger * togglePlayTrigger;
 	Trigger * prevCue;
 	Trigger*  nextCue;
