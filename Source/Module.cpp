@@ -20,6 +20,7 @@ Module::Module(const String &name) :
 	commandTester("Command Tester",CommandContext::ACTION),
 	canHandleRouteValues(false)
 {
+
 	commandTester.canBeDisabled = false;
 	canInspectChildContainers = true;
 
@@ -38,6 +39,8 @@ Module::Module(const String &name) :
 
 	outActivityTrigger = addTrigger("OUT Activity", "Outgoing Activity Signal");
 	outActivityTrigger->hideInEditor = true;
+
+	valuesCC.includeTriggersInSaveLoad = true;
 }
 
 Module::~Module()
