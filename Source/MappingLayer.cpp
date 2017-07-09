@@ -191,8 +191,6 @@ void MappingLayer::onContainerParameterChangedInternal(Parameter * p)
 
 void MappingLayer::onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c)
 {
-	ControllableContainer::controllableFeedbackUpdate(cc, c);
-
 	bool doUpdate = false;
 	if (getMappingMode() == MODE_COLOR)
 	{

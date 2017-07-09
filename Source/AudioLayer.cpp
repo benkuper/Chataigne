@@ -70,7 +70,7 @@ void AudioLayer::setAudioModule(AudioModule * newModule)
 
 		for (int i = 0; i < audioModule->graph.getTotalNumOutputChannels(); i++)
 		{
-			BoolParameter * b = addBoolParameter(audioModule->graph.getOutputChannelName(i), "If enabled, sends audio from this layer to this channel", i < 2);
+			BoolParameter * b = addBoolParameter("Channel Out : "+audioModule->graph.getOutputChannelName(i), "If enabled, sends audio from this layer to this channel", i < 2);
 			outChannels.add(b);
 		}
 
@@ -78,14 +78,19 @@ void AudioLayer::setAudioModule(AudioModule * newModule)
 
 	updateSelectedOutChannels();
 
-	DBG("AudioLayer audio Module > " << (audioModule != nullptr ? audioModule->niceName : "null"));
+	//DBG("AudioLayer audio Module > " << (audioModule != nullptr ? audioModule->niceName : "null"));
 	audioLayerListeners.call(&AudioLayerListener::targetAudioModuleChanged, this);
 }
 
 void AudioLayer::updateCurrentClip()
 {
-	if (currentClip != nullptr && currentClip->isInRange(sequence->currentTime->floatValue())) return;
-	AudioLayerClip * target = clipManager.getClipAtTime(sequence->currentTime->floatValue());
+	AudioLayerClip * target = nullptr;
+	
+	if (sequence->currentTime->floatValue() > 0 || sequence->isPlaying->boolValue()) // only find a clip if sequence not at 0 or is playing
+	{
+		if (currentClip != nullptr && currentClip->isInRange(sequence->currentTime->floatValue())) return;
+		target = clipManager.getClipAtTime(sequence->currentTime->floatValue());
+	}
 
 	if (target == currentClip) return;
 

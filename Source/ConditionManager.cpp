@@ -16,7 +16,8 @@ juce_ImplementSingleton(ConditionManager)
 
 ConditionManager::ConditionManager(bool _operatorOnSide) :
 	BaseManager<Condition>("Conditions"),
-	operatorOnSide(_operatorOnSide)
+	operatorOnSide(_operatorOnSide),
+	validationProgress(nullptr)
 {
 	selectItemWhenCreated = false;
 
@@ -27,6 +28,9 @@ ConditionManager::ConditionManager(bool _operatorOnSide) :
 	conditionOperator = addEnumParameter("Operator", "Operator for this manager, will decides how the conditions are validated");
 	conditionOperator->addOption("AND", ConditionOperator::AND);
 	conditionOperator->addOption("OR", ConditionOperator::OR);
+
+	validationTime = addFloatParameter("Validation Time", "If greater than 0, the conditions will be validated only if they remain valid for this amount of time", 0, 0, 10);
+	
 	//conditionOperator->hideInEditor = items.size() <= 1;
 }
 
@@ -69,10 +73,35 @@ void ConditionManager::checkAllConditions()
 		valid = isAtLeastOneConditionValid();
 		break;
 	}
-	if (valid != isValid->boolValue())
+
+
+	
+	DBG("Check all conditions ");
+
+	if (validationTime->floatValue() == 0)
 	{
-		isValid->setValue(valid);
-		conditionManagerListeners.call(&ConditionManagerListener::conditionManagerValidationChanged, this);
+		if (valid != isValid->boolValue())
+		{
+			isValid->setValue(valid);
+			dispatchConditionValidationChanged();
+		}
+	}else if (valid != validationWaiting)
+	{
+		validationWaiting = valid;
+
+		validationProgress->setValue(0);
+		isValid->setValue(false);
+
+		if(!valid)
+		{
+			stopTimer();
+			dispatchConditionValidationChanged();
+		} else
+		{
+
+			prevTimerTime = Time::getMillisecondCounter() / 1000.0f;
+			startTimer(20);
+		}
 	}
 }
 
@@ -82,10 +111,61 @@ void ConditionManager::conditionValidationChanged(Condition *)
 	checkAllConditions();
 }
 
+void ConditionManager::onContainerParameterChanged(Parameter * p)
+{
+	if (p == validationTime)
+	{
+		if (validationTime->floatValue() > 0)
+		{
+			if (validationProgress == nullptr)
+			{
+				validationProgress = addFloatParameter("Progress", "Validation time progress", 0, 0, validationTime->floatValue());
+				validationProgress->isControllableFeedbackOnly = true;
+				validationProgress->isEditable = false;
+
+			}
+			else validationProgress->setRange(0, validationTime->floatValue());
+		} else
+		{
+			if (validationProgress != nullptr)
+			{
+				removeControllable(validationProgress);
+				validationProgress = nullptr;
+			}
+		}
+	} else if (p == conditionOperator)
+	{
+		checkAllConditions();
+	}
+}
+
 
 InspectableEditor * ConditionManager::getEditor(bool isRoot)
 {
 	return new ConditionManagerEditor(this, isRoot);
+}
+
+void ConditionManager::timerCallback()
+{
+	if (validationProgress == nullptr)
+	{
+		isValid->setValue(true);
+		dispatchConditionValidationChanged();
+		stopTimer();
+		return;
+	}
+
+	double curTime = Time::getMillisecondCounter() / 1000.0f;
+	validationProgress->setValue(validationProgress->floatValue() + (curTime - prevTimerTime));
+	prevTimerTime = curTime;
+
+
+	if (validationProgress->floatValue() >= validationTime->floatValue())
+	{
+		isValid->setValue(true);
+		dispatchConditionValidationChanged();
+		stopTimer();
+	}
 }
 
 bool ConditionManager::areAllConditionsValid()
@@ -138,4 +218,9 @@ int ConditionManager::getNumValidConditions()
 bool ConditionManager::getIsValid(bool emptyIsValid)
 {
 	return isValid->boolValue() || (emptyIsValid && items.size() == 0);
+}
+
+void ConditionManager::dispatchConditionValidationChanged()
+{
+	conditionManagerListeners.call(&ConditionManagerListener::conditionManagerValidationChanged, this);
 }

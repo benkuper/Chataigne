@@ -17,8 +17,6 @@ class AudioModule;
 class SequenceLayerManager;
 class TimeCueManager;
 
-#define AUDIO_INPUT_GRAPH_ID 1
-#define AUDIO_OUTPUT_GRAPH_ID 2
 
 class Sequence :
 	public BaseItem,

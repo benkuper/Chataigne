@@ -15,7 +15,8 @@
 #include "AudioModule.h"
 
 class AudioModuleEditor :
-	public ModuleEditor
+	public ModuleEditor,
+	public AudioModule::AudioModuleListener
 {
 public:
 	AudioModuleEditor(AudioModule * module, bool isRoot);
@@ -27,8 +28,15 @@ public:
 	ScopedPointer<InspectableEditor> gainSlider;
 	ScopedPointer<InspectableEditor> thresholdSlider;
 	ScopedPointer<InspectableEditor> keepToggle;
+	ScopedPointer<InspectableEditor> monitorVolumeSlider;
+	OwnedArray<InspectableEditor> monitorOutChannels;
 	
 	ScopedPointer<InspectableEditor> valuesCCEditor;
+
+
+	void updateMonitorSetup();
+
+	void monitorSetupChanged() override;
 
 	void resizedInternalContent(Rectangle<int> &r) override;
 

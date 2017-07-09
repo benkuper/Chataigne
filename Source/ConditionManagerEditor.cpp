@@ -12,7 +12,8 @@
 #include "ConditionFactory.h"
 
 ConditionManagerEditor::ConditionManagerEditor(ConditionManager * _manager, bool isRoot) :
-	GenericManagerEditor<Condition>(_manager, isRoot)
+	GenericManagerEditor<Condition>(_manager, isRoot),
+	conditionManager(_manager)
 {
 	addItemText = "Add Condition";
 }
@@ -26,4 +27,13 @@ void ConditionManagerEditor::showMenuAndAddItem(bool)
 	Condition *c = ConditionFactory::getInstance()->showCreateMenu();
 	if (c != nullptr) manager->addItem(c);
 	
+}
+
+void ConditionManagerEditor::controllableFeedbackUpdate(Controllable * c)
+{
+	if (c == conditionManager->isValid)
+	{
+		contourColor = conditionManager->isValid->boolValue() ? GREEN_COLOR : BG_COLOR.brighter(.3f);
+		repaint();
+	}
 }

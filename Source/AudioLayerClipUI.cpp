@@ -21,9 +21,14 @@ AudioLayerClipUI::AudioLayerClipUI(AudioLayerClip * _clip) :
 	browseBT->addListener(this);
 	clip->addClipListener(this);
 
-	thumbnail.setSource(new FileInputSource(File(clip->filePath->stringValue())));
 
 	bgColor = clip->isCurrent ? AUDIO_COLOR.brighter() : BG_COLOR.brighter(.1f);
+
+#if JUCE_WINDOWS
+	if (clip->filePath->stringValue().startsWithChar('/')) return;
+#endif
+	thumbnail.setSource(new FileInputSource(File(clip->filePath->stringValue())));
+
 }
 
 AudioLayerClipUI::~AudioLayerClipUI()
@@ -75,6 +80,7 @@ void AudioLayerClipUI::controllableFeedbackUpdateInternal(Controllable * c)
 	if (c == item->time || c == item->clipLength)
 	{
 		clipUIListeners.call(&ClipUIListener::clipUITimeChanged, this);
+		repaint();
 	} else if (c == item->volume)
 	{
 		repaint();

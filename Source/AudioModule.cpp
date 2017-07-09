@@ -15,12 +15,16 @@
 AudioModule::AudioModule(const String & name) :
 	Module(name),
 	uidIncrement(100),
+	numActiveMonitorOutputs(0),
 	pitchDetector(nullptr)
 {
-	gain = addFloatParameter("Gain", "Gain for the input volume", 1, 0, 10);
+	inputGain = addFloatParameter("Input Gain", "Gain for the input volume", 1, 0, 10);
 	activityThreshold = addFloatParameter("Activity Threshold", "Threshold to consider activity from the source.\nAnalysis will compute only if volume is greater than this parameter", .1f, 0, 1);
 	keepLastDetectedValues = addBoolParameter("Keep Values", "Keep last detected values when no activity detected.", false);
 
+	monitorVolume = addFloatParameter("Monitor Volume", "Volume multiplier for the monitor output. This will affect all the input channels and all the selected output channels", 1, 0, 10);
+
+	//Values
 	volume = valuesCC.addFloatParameter("Volume", "Volume of the audio input", 0, 0, 1);
 	volume->isControllableFeedbackOnly = true;
 
@@ -69,6 +73,34 @@ AudioModule::~AudioModule()
 	am.removeChangeListener(this);
 }
 
+void AudioModule::updateSelectedMonitorChannels()
+{
+
+	selectedMonitorOutChannels.clear();
+	for (int i = 0; i < monitorOutChannels.size(); i++)
+	{
+		if (monitorOutChannels[i]->boolValue())
+		{
+			selectedMonitorOutChannels.add(i);
+			DBG("Send monitor out to channel : " << monitorOutChannels[i]->niceName);
+		}
+	}
+
+	
+	numActiveMonitorOutputs = selectedMonitorOutChannels.size();
+	DBG("Num Active monitor outputs : " << numActiveMonitorOutputs);
+}
+
+void AudioModule::onContainerParameterChangedInternal(Parameter * p)
+{
+	Module::onContainerParameterChangedInternal(p);
+
+	if (p->type == Controllable::BOOL && monitorOutChannels.indexOf((BoolParameter *)p) > -1)
+	{
+		updateSelectedMonitorChannels();
+	}
+}
+
 var AudioModule::getJSONData()
 {
 	var data = Module::getJSONData();
@@ -99,45 +131,53 @@ void AudioModule::audioDeviceIOCallback(const float ** inputChannelData, int num
 
 	for (int i = 0; i < numOutputChannels; i++) FloatVectorOperations::clear(outputChannelData[i], numSamples);
 
-	if (numInputChannels > 0)
+	for (int i = 0; i < numInputChannels; i++)
 	{
-		if (buffer.getNumSamples() != numSamples) buffer.setSize(1, numSamples);
-		buffer.copyFromWithRamp(0, 0, inputChannelData[0], numSamples, 1, gain->floatValue());
-		volume->setValue(buffer.getRMSLevel(0, 0, numSamples));
-
-		//DBG("here");
-
-		if (volume->floatValue() > activityThreshold->floatValue())
+		if (i == 0) //take only the first channel for analysis (later, should be able to select which channel is used for analysis)
 		{
-			inActivityTrigger->trigger();
-			if (pitchDetector == nullptr || (int)pitchDetector->getBufferSize() != numSamples)
+			if (buffer.getNumSamples() != numSamples) buffer.setSize(1, numSamples);
+			buffer.copyFromWithRamp(0, 0, inputChannelData[0], numSamples, 1, inputGain->floatValue());
+			volume->setValue(buffer.getRMSLevel(0, 0, numSamples));
+
+			//DBG("here");
+
+			if (volume->floatValue() > activityThreshold->floatValue())
 			{
-				AudioDeviceManager::AudioDeviceSetup s;
-				am.getAudioDeviceSetup(s);
-				pitchDetector = new PitchMPM((int)s.sampleRate, numSamples);
+				inActivityTrigger->trigger();
+				if (pitchDetector == nullptr || (int)pitchDetector->getBufferSize() != numSamples)
+				{
+					AudioDeviceManager::AudioDeviceSetup s;
+					am.getAudioDeviceSetup(s);
+					pitchDetector = new PitchMPM((int)s.sampleRate, numSamples);
 
-			}
-			float freq = pitchDetector->getPitch(inputChannelData[0]);
-			frequency->setValue(freq);
-			int pitchNote = getNoteForFrequency(freq);
-			pitch->setValue(pitchNote);
+				}
+				float freq = pitchDetector->getPitch(inputChannelData[0]);
+				frequency->setValue(freq);
+				int pitchNote = getNoteForFrequency(freq);
+				pitch->setValue(pitchNote);
 
-			note->setValueWithKey(MIDIManager::getNoteName(pitchNote, false));
-			octave->setValue(floor(pitchNote / 12.0));
+				note->setValueWithKey(MIDIManager::getNoteName(pitchNote, false));
+				octave->setValue(floor(pitchNote / 12.0));
 
 
-		} else
-		{
-			if (!keepLastDetectedValues->boolValue())
+			} else
 			{
-				frequency->setValue(0);
-				pitch->setValue(0);
-				note->setValueWithKey("-");
+				if (!keepLastDetectedValues->boolValue())
+				{
+					frequency->setValue(0);
+					pitch->setValue(0);
+					note->setValueWithKey("-");
+				}
 			}
 		}
-	} else
-	{
-		DBG("No input channel");
+		
+		//Monitor
+		for (int j = 0; j < numActiveMonitorOutputs; j++)
+		{
+			int outputIndex = selectedMonitorOutChannels[j];
+			if (outputIndex >= numOutputChannels) continue;
+			FloatVectorOperations::addWithMultiply(outputChannelData[outputIndex], inputChannelData[i], monitorVolume->floatValue(), numSamples);
+		}
 	}
 }
 
@@ -158,8 +198,23 @@ void AudioModule::changeListenerCallback(ChangeBroadcaster *)
 	am.getAudioDeviceSetup(setup);
 	currentSampleRate = setup.sampleRate;
 	currentBufferSize = setup.bufferSize;
-	graph.setPlayConfigDetails(0, 2, currentSampleRate, currentBufferSize);
+
+	int numSelectedOutputChannelsInSetup = setup.outputChannels.countNumberOfSetBits();
+
+	graph.setPlayConfigDetails(0, numSelectedOutputChannelsInSetup, currentSampleRate, currentBufferSize);
 	graph.prepareToPlay(currentSampleRate, currentBufferSize);
+
+	DBG("total output : " << graph.getTotalNumOutputChannels());
+	for (auto &c : monitorOutChannels) removeControllable(c);
+	monitorOutChannels.clear();
+	for (int i = 0; i < graph.getTotalNumOutputChannels(); i++)
+	{
+		BoolParameter * b = addBoolParameter("Monitor Out : "+graph.getOutputChannelName(i), "If enabled, sends audio from this layer to this channel", i < selectedMonitorOutChannels.size());
+		monitorOutChannels.add(b);
+	}
+	updateSelectedMonitorChannels();
+
+	audioModuleListeners.call(&AudioModuleListener::monitorSetupChanged);
 }
 
 InspectableEditor * AudioModule::getEditor(bool isRoot)

@@ -32,5 +32,6 @@ void ActionManager::setForceDisabled(bool value)
 
 void ActionManager::addItemInternal(Action * item, var data)
 {
+	DBG("Add item internal action manager");
 	item->forceDisabled = forceDisabled;
 }

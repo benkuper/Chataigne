@@ -62,6 +62,10 @@ void AudioLayerClip::updateAudioSourceFile()
 {
 	if (filePath->stringValue().isEmpty()) return;
 
+#if JUCE_WINDOWS
+	if (filePath->stringValue().startsWithChar('/')) return;
+#endif
+
 	ScopedPointer<AudioFormatReader>  reader(formatManager.createReaderFor(filePath->stringValue()));
 
 	if (reader != nullptr)

@@ -14,6 +14,8 @@
 #include "Module.h"
 #include "pitch/PitchMPM.h"
 
+#define AUDIO_INPUT_GRAPH_ID 1
+#define AUDIO_OUTPUT_GRAPH_ID 2
 
 class AudioModule :
 	public Module,
@@ -33,18 +35,24 @@ public:
 
 	BoolParameter * keepLastDetectedValues;
 
-	//ScopedPointer<AudioProcessorGraph::AudioGraphIOProcessor> graphIn;
-	//ScopedPointer<AudioProcessorGraph::AudioGraphIOProcessor> graphOut;
-
+	
 	int uidIncrement;
 
 	const int analysisSamples = 1024;
 	int curBufferIndex;
 	AudioBuffer<float> buffer;
 
-	FloatParameter * gain;
+	//Parameters
+	FloatParameter * inputGain;
 	FloatParameter * activityThreshold;
 
+	FloatParameter * monitorVolume;
+	Array<BoolParameter *> monitorOutChannels;
+	Array<int> selectedMonitorOutChannels;
+	int numActiveMonitorOutputs;
+
+
+	//Values
 	FloatParameter * volume;
 	FloatParameter * frequency;
 	IntParameter * pitch;
@@ -53,6 +61,10 @@ public:
 	IntParameter * octave;
 
 	ScopedPointer<PitchMPM> pitchDetector;
+
+	void updateSelectedMonitorChannels();
+
+	void onContainerParameterChangedInternal(Parameter * p) override;
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
@@ -70,6 +82,19 @@ public:
 
 	static AudioModule * create() { return new AudioModule(); }
 	virtual String getDefaultTypeString() const override { return "Audio Device"; }
+
+	class AudioModuleListener
+	{
+	public:
+		virtual ~AudioModuleListener() {}
+		virtual void monitorSetupChanged() {}
+	};
+
+	ListenerList<AudioModuleListener> audioModuleListeners;
+	void addAudioModuleListener(AudioModuleListener* newListener) { audioModuleListeners.add(newListener); }
+	void removeAudioModuleListener(AudioModuleListener* listener) { audioModuleListeners.remove(listener); }
+
+
 
 
 private:

@@ -15,7 +15,8 @@
 
 class ConditionManager :
 	public BaseManager<Condition>,
-	public Condition::ConditionListener
+	public Condition::ConditionListener,
+	public Timer
 {
 public:
 	juce_DeclareSingleton(ConditionManager, true)
@@ -28,6 +29,12 @@ public:
 	enum ConditionOperator { AND, OR };
 	EnumParameter * conditionOperator;
 	bool operatorOnSide;
+
+	FloatParameter * validationTime;
+	FloatParameter * validationProgress;
+
+	bool validationWaiting;
+	float prevTimerTime;
 
 	void addItemFromData(var data,bool fromUndoableAction = false) override;
 
@@ -44,7 +51,11 @@ public:
 
 	bool getIsValid(bool emptyIsValid);
 
+	void dispatchConditionValidationChanged();
+
 	void conditionValidationChanged(Condition *) override;
+
+	void onContainerParameterChanged(Parameter *) override;
 
 	InspectableEditor * getEditor(bool isRoot) override;
 
@@ -61,6 +72,10 @@ public:
 	void removeConditionManagerListener(ConditionManagerListener* listener) { conditionManagerListeners.remove(listener); }
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ConditionManager)
+
+
+		// Inherited via Timer
+		virtual void timerCallback() override;
 
 };
 
