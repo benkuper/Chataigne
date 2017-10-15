@@ -28,6 +28,7 @@ ConditionManager::ConditionManager(bool _operatorOnSide) :
 	conditionOperator = addEnumParameter("Operator", "Operator for this manager, will decides how the conditions are validated");
 	conditionOperator->addOption("AND", ConditionOperator::AND);
 	conditionOperator->addOption("OR", ConditionOperator::OR);
+	conditionOperator->hideInEditor = true;
 
 	validationTime = addFloatParameter("Validation Time", "If greater than 0, the conditions will be validated only if they remain valid for this amount of time", 0, 0, 10);
 	
@@ -50,13 +51,13 @@ void ConditionManager::addItemFromData(var data, bool fromUndoableAction)
 void ConditionManager::addItemInternal(Condition * c, var data)
 {
 	c->addConditionListener(this);
-	//conditionOperator->hideInEditor = items.size() <= 1;
+	conditionOperator->hideInEditor = items.size() <= 1;
 }
 
 void ConditionManager::removeItemInternal(Condition * c)
 {
 	c->removeConditionListener(this);
-	//conditionOperator->hideInEditor = items.size() <= 1;
+	conditionOperator->hideInEditor = items.size() <= 1;
 }
 
 void ConditionManager::checkAllConditions()

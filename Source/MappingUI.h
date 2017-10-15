@@ -12,9 +12,10 @@
 #define MAPPINGUI_H_INCLUDED
 
 #include "Mapping.h"
+#include "ProcessorUI.h"
 
 class MappingUI :
-	public BaseItemUI<Mapping>
+	public ProcessorUI
 {
 public:
 	MappingUI(Mapping *);

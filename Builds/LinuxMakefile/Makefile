@@ -33,7 +33,7 @@ ifeq ($(CONFIG),Debug)
     TARGET_ARCH := -march=native
   endif
 
-  JUCE_CPPFLAGS := $(DEPFLAGS) -DLINUX=1 -DDEBUG=1 -D_DEBUG=1 -DJUCER_LINUX_MAKE_6D53C8B4=1 -DJUCE_APP_VERSION=1.0.12 -DJUCE_APP_VERSION_HEX=0x1000c $(shell pkg-config --cflags alsa freetype2 libcurl x11 xext xinerama) -pthread -I../../JuceLibraryCode -I../../../JUCE/modules -I../../../JUCE\ Modules -I../../External/wiiuse -I../../External/serial/include $(CPPFLAGS)
+  JUCE_CPPFLAGS := $(DEPFLAGS) -DLINUX=1 -DDEBUG=1 -D_DEBUG=1 -DJUCER_LINUX_MAKE_6D53C8B4=1 -DJUCE_APP_VERSION=1.1.0 -DJUCE_APP_VERSION_HEX=0x10100 $(shell pkg-config --cflags alsa freetype2 libcurl x11 xext xinerama) -pthread -I../../JuceLibraryCode -I../../../JUCE/modules -I../../../JUCE\ Modules -I../../External/wiiuse -I../../External/serial/include $(CPPFLAGS)
   JUCE_CPPFLAGS_APP := -DJucePlugin_Build_VST=0 -DJucePlugin_Build_VST3=0 -DJucePlugin_Build_AU=0 -DJucePlugin_Build_AUv3=0 -DJucePlugin_Build_RTAS=0 -DJucePlugin_Build_AAX=0 -DJucePlugin_Build_Standalone=0
   JUCE_TARGET_APP := Chataigne
 
@@ -54,7 +54,7 @@ ifeq ($(CONFIG),Release)
     TARGET_ARCH := -march=native
   endif
 
-  JUCE_CPPFLAGS := $(DEPFLAGS) -DLINUX=1 -DNDEBUG=1 -DJUCER_LINUX_MAKE_6D53C8B4=1 -DJUCE_APP_VERSION=1.0.12 -DJUCE_APP_VERSION_HEX=0x1000c $(shell pkg-config --cflags alsa freetype2 libcurl x11 xext xinerama) -pthread -I../../JuceLibraryCode -I../../../JUCE/modules -I../../../JUCE\ Modules -I../../External/wiiuse -I../../External/serial/include $(CPPFLAGS)
+  JUCE_CPPFLAGS := $(DEPFLAGS) -DLINUX=1 -DNDEBUG=1 -DJUCER_LINUX_MAKE_6D53C8B4=1 -DJUCE_APP_VERSION=1.1.0 -DJUCE_APP_VERSION_HEX=0x10100 $(shell pkg-config --cflags alsa freetype2 libcurl x11 xext xinerama) -pthread -I../../JuceLibraryCode -I../../../JUCE/modules -I../../../JUCE\ Modules -I../../External/wiiuse -I../../External/serial/include $(CPPFLAGS)
   JUCE_CPPFLAGS_APP := -DJucePlugin_Build_VST=0 -DJucePlugin_Build_VST3=0 -DJucePlugin_Build_AU=0 -DJucePlugin_Build_AUv3=0 -DJucePlugin_Build_RTAS=0 -DJucePlugin_Build_AAX=0 -DJucePlugin_Build_Standalone=0
   JUCE_TARGET_APP := Chataigne
 
@@ -67,6 +67,57 @@ endif
 
 OBJECTS_APP := \
   $(JUCE_OBJDIR)/ChataigneAssetManager_e104aa7c.o \
+  $(JUCE_OBJDIR)/ProcessorEditor_827a180.o \
+  $(JUCE_OBJDIR)/ProcessorManagerUI_2a595c98.o \
+  $(JUCE_OBJDIR)/ProcessorUI_aaf05207.o \
+  $(JUCE_OBJDIR)/MappingInputEditor_9e41cd32.o \
+  $(JUCE_OBJDIR)/MappingInput_19a7a225.o \
+  $(JUCE_OBJDIR)/MappingOutputUI_6b97c124.o \
+  $(JUCE_OBJDIR)/MappingOutput_7f60db50.o \
+  $(JUCE_OBJDIR)/MappingOutputManager_681d3ec7.o \
+  $(JUCE_OBJDIR)/CurveMapFilter_84c144ce.o \
+  $(JUCE_OBJDIR)/InverseFilter_66642a29.o \
+  $(JUCE_OBJDIR)/LagFilter_15ce140b.o \
+  $(JUCE_OBJDIR)/ScriptFilter_fbaaeb2c.o \
+  $(JUCE_OBJDIR)/SimpleRemapFilter_6a007ff0.o \
+  $(JUCE_OBJDIR)/SimpleSmoothFilter_df9c3321.o \
+  $(JUCE_OBJDIR)/MappingFilterEditor_1ce883d4.o \
+  $(JUCE_OBJDIR)/MappingFilterManagerEditor_32b692bd.o \
+  $(JUCE_OBJDIR)/MappingFilter_6ebc7a47.o \
+  $(JUCE_OBJDIR)/MappingFilterFactory_c29e56cd.o \
+  $(JUCE_OBJDIR)/MappingFilterManager_c0562bf0.o \
+  $(JUCE_OBJDIR)/MappingEditor_6e89cdbc.o \
+  $(JUCE_OBJDIR)/MappingUI_56e9fc43.o \
+  $(JUCE_OBJDIR)/Mapping_bdf5522f.o \
+  $(JUCE_OBJDIR)/ConsequenceEditor_68ad07f1.o \
+  $(JUCE_OBJDIR)/ConsequenceManagerEditor_c217a400.o \
+  $(JUCE_OBJDIR)/Consequence_78c99824.o \
+  $(JUCE_OBJDIR)/ConsequenceManager_ed222b73.o \
+  $(JUCE_OBJDIR)/BoolComparators_278bc7f4.o \
+  $(JUCE_OBJDIR)/EnumComparator_f40f08c0.o \
+  $(JUCE_OBJDIR)/NumberComparators_7676c2b5.o \
+  $(JUCE_OBJDIR)/Point2DComparators_1426d924.o \
+  $(JUCE_OBJDIR)/Point3DComparators_64d0b725.o \
+  $(JUCE_OBJDIR)/StringComparators_56d714ed.o \
+  $(JUCE_OBJDIR)/BaseComparatorUI_36712464.o \
+  $(JUCE_OBJDIR)/BaseComparator_fbba0e90.o \
+  $(JUCE_OBJDIR)/ComparatorFactory_14bedeb5.o \
+  $(JUCE_OBJDIR)/ConditionEditor_7e4d6ac9.o \
+  $(JUCE_OBJDIR)/ConditionGroupEditor_8111d0ba.o \
+  $(JUCE_OBJDIR)/ConditionManagerEditor_f1a2de28.o \
+  $(JUCE_OBJDIR)/ScriptConditionEditor_356f6efe.o \
+  $(JUCE_OBJDIR)/StandardConditionEditor_c2b02ccc.o \
+  $(JUCE_OBJDIR)/Condition_dbc2fcfc.o \
+  $(JUCE_OBJDIR)/ConditionFactory_8dd64e78.o \
+  $(JUCE_OBJDIR)/ConditionGroup_4b82ebad.o \
+  $(JUCE_OBJDIR)/ConditionManager_8b8e239b.o \
+  $(JUCE_OBJDIR)/ScriptCondition_84f58cf1.o \
+  $(JUCE_OBJDIR)/StandardCondition_49d43d3f.o \
+  $(JUCE_OBJDIR)/ActionEditor_5de4624c.o \
+  $(JUCE_OBJDIR)/ActionUI_e36558d3.o \
+  $(JUCE_OBJDIR)/Action_97be92bf.o \
+  $(JUCE_OBJDIR)/Processor_85e48f3.o \
+  $(JUCE_OBJDIR)/ProcessorManager_3cfac3c4.o \
   $(JUCE_OBJDIR)/DMXArtNetDevice_27b282c0.o \
   $(JUCE_OBJDIR)/DMXDevice_d9902f26.o \
   $(JUCE_OBJDIR)/DMXEnttecProDevice_aeec85d6.o \
@@ -109,56 +160,6 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/MIDIDevice_b230ec0.o \
   $(JUCE_OBJDIR)/MIDIDeviceParameter_47040a13.o \
   $(JUCE_OBJDIR)/MIDIManager_ba3551cd.o \
-  $(JUCE_OBJDIR)/ConsequenceEditor_68ad07f1.o \
-  $(JUCE_OBJDIR)/ConsequenceManagerEditor_c217a400.o \
-  $(JUCE_OBJDIR)/Consequence_78c99824.o \
-  $(JUCE_OBJDIR)/ConsequenceManager_ed222b73.o \
-  $(JUCE_OBJDIR)/BoolComparators_278bc7f4.o \
-  $(JUCE_OBJDIR)/EnumComparator_f40f08c0.o \
-  $(JUCE_OBJDIR)/NumberComparators_7676c2b5.o \
-  $(JUCE_OBJDIR)/Point2DComparators_1426d924.o \
-  $(JUCE_OBJDIR)/Point3DComparators_64d0b725.o \
-  $(JUCE_OBJDIR)/StringComparators_56d714ed.o \
-  $(JUCE_OBJDIR)/BaseComparatorUI_36712464.o \
-  $(JUCE_OBJDIR)/BaseComparator_fbba0e90.o \
-  $(JUCE_OBJDIR)/ComparatorFactory_14bedeb5.o \
-  $(JUCE_OBJDIR)/ConditionEditor_7e4d6ac9.o \
-  $(JUCE_OBJDIR)/ConditionGroupEditor_8111d0ba.o \
-  $(JUCE_OBJDIR)/ConditionManagerEditor_f1a2de28.o \
-  $(JUCE_OBJDIR)/ScriptConditionEditor_356f6efe.o \
-  $(JUCE_OBJDIR)/StandardConditionEditor_c2b02ccc.o \
-  $(JUCE_OBJDIR)/Condition_dbc2fcfc.o \
-  $(JUCE_OBJDIR)/ConditionFactory_8dd64e78.o \
-  $(JUCE_OBJDIR)/ConditionGroup_4b82ebad.o \
-  $(JUCE_OBJDIR)/ConditionManager_8b8e239b.o \
-  $(JUCE_OBJDIR)/ScriptCondition_84f58cf1.o \
-  $(JUCE_OBJDIR)/StandardCondition_49d43d3f.o \
-  $(JUCE_OBJDIR)/ActionEditor_5de4624c.o \
-  $(JUCE_OBJDIR)/ActionManagerUI_82c1584c.o \
-  $(JUCE_OBJDIR)/ActionUI_e36558d3.o \
-  $(JUCE_OBJDIR)/Action_97be92bf.o \
-  $(JUCE_OBJDIR)/ActionManager_9ed61c78.o \
-  $(JUCE_OBJDIR)/MappingInputEditor_9e41cd32.o \
-  $(JUCE_OBJDIR)/MappingInput_19a7a225.o \
-  $(JUCE_OBJDIR)/MappingOutputUI_6b97c124.o \
-  $(JUCE_OBJDIR)/MappingOutput_7f60db50.o \
-  $(JUCE_OBJDIR)/MappingOutputManager_681d3ec7.o \
-  $(JUCE_OBJDIR)/CurveMapFilter_84c144ce.o \
-  $(JUCE_OBJDIR)/InverseFilter_66642a29.o \
-  $(JUCE_OBJDIR)/LagFilter_15ce140b.o \
-  $(JUCE_OBJDIR)/ScriptFilter_fbaaeb2c.o \
-  $(JUCE_OBJDIR)/SimpleRemapFilter_6a007ff0.o \
-  $(JUCE_OBJDIR)/SimpleSmoothFilter_df9c3321.o \
-  $(JUCE_OBJDIR)/MappingFilterEditor_1ce883d4.o \
-  $(JUCE_OBJDIR)/MappingFilterManagerEditor_32b692bd.o \
-  $(JUCE_OBJDIR)/MappingFilter_6ebc7a47.o \
-  $(JUCE_OBJDIR)/MappingFilterFactory_c29e56cd.o \
-  $(JUCE_OBJDIR)/MappingFilterManager_c0562bf0.o \
-  $(JUCE_OBJDIR)/MappingEditor_6e89cdbc.o \
-  $(JUCE_OBJDIR)/MappingManagerUI_a4d2f6dc.o \
-  $(JUCE_OBJDIR)/MappingUI_56e9fc43.o \
-  $(JUCE_OBJDIR)/Mapping_bdf5522f.o \
-  $(JUCE_OBJDIR)/MappingManager_a2de1f08.o \
   $(JUCE_OBJDIR)/ModuleRouterPanelView_ff0ec6d5.o \
   $(JUCE_OBJDIR)/ModuleRouterValueEditor_6fabda0a.o \
   $(JUCE_OBJDIR)/ModuleRouterView_55b2eea3.o \
@@ -209,6 +210,7 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/HIDModuleEditor_ad4d607d.o \
   $(JUCE_OBJDIR)/HIDModuleUI_b81f1784.o \
   $(JUCE_OBJDIR)/HIDModule_708a49b0.o \
+  $(JUCE_OBJDIR)/LaunchpadModule_bdf45ced.o \
   $(JUCE_OBJDIR)/MIDICommands_bb9338b2.o \
   $(JUCE_OBJDIR)/MIDIModuleEditor_725ffe23.o \
   $(JUCE_OBJDIR)/MIDIModule_a8b59bd6.o \
@@ -286,6 +288,7 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/MappingLayerPanel_890eab82.o \
   $(JUCE_OBJDIR)/MappingLayerTimeline_96e8bd0d.o \
   $(JUCE_OBJDIR)/MappingLayer_50b4042c.o \
+  $(JUCE_OBJDIR)/TimeTriggerEditor_708d78d9.o \
   $(JUCE_OBJDIR)/TimeTriggerManagerUI_db89a9f.o \
   $(JUCE_OBJDIR)/TimeTriggerUI_9c11bde0.o \
   $(JUCE_OBJDIR)/TriggerLayerPanel_72c06ec.o \
@@ -333,6 +336,8 @@ OBJECTS_APP := \
 
 .PHONY: clean all
 
+all : $(JUCE_OUTDIR)/$(JUCE_TARGET_APP)
+
 $(JUCE_OUTDIR)/$(JUCE_TARGET_APP) : check-pkg-config $(OBJECTS_APP) $(RESOURCES)
 	@echo Linking "Chataigne - App"
 	-$(V_AT)mkdir -p $(JUCE_BINDIR)
@@ -343,6 +348,261 @@ $(JUCE_OUTDIR)/$(JUCE_TARGET_APP) : check-pkg-config $(OBJECTS_APP) $(RESOURCES)
 $(JUCE_OBJDIR)/ChataigneAssetManager_e104aa7c.o: ../../Source/ChataigneAssetManager.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling ChataigneAssetManager.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/ProcessorEditor_827a180.o: ../../Source/ProcessorEditor.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling ProcessorEditor.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/ProcessorManagerUI_2a595c98.o: ../../Source/ProcessorManagerUI.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling ProcessorManagerUI.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/ProcessorUI_aaf05207.o: ../../Source/ProcessorUI.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling ProcessorUI.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/MappingInputEditor_9e41cd32.o: ../../Source/MappingInputEditor.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling MappingInputEditor.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/MappingInput_19a7a225.o: ../../Source/MappingInput.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling MappingInput.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/MappingOutputUI_6b97c124.o: ../../Source/MappingOutputUI.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling MappingOutputUI.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/MappingOutput_7f60db50.o: ../../Source/MappingOutput.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling MappingOutput.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/MappingOutputManager_681d3ec7.o: ../../Source/MappingOutputManager.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling MappingOutputManager.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/CurveMapFilter_84c144ce.o: ../../Source/CurveMapFilter.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling CurveMapFilter.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/InverseFilter_66642a29.o: ../../Source/InverseFilter.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling InverseFilter.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/LagFilter_15ce140b.o: ../../Source/LagFilter.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling LagFilter.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/ScriptFilter_fbaaeb2c.o: ../../Source/ScriptFilter.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling ScriptFilter.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/SimpleRemapFilter_6a007ff0.o: ../../Source/SimpleRemapFilter.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling SimpleRemapFilter.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/SimpleSmoothFilter_df9c3321.o: ../../Source/SimpleSmoothFilter.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling SimpleSmoothFilter.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/MappingFilterEditor_1ce883d4.o: ../../Source/MappingFilterEditor.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling MappingFilterEditor.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/MappingFilterManagerEditor_32b692bd.o: ../../Source/MappingFilterManagerEditor.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling MappingFilterManagerEditor.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/MappingFilter_6ebc7a47.o: ../../Source/MappingFilter.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling MappingFilter.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/MappingFilterFactory_c29e56cd.o: ../../Source/MappingFilterFactory.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling MappingFilterFactory.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/MappingFilterManager_c0562bf0.o: ../../Source/MappingFilterManager.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling MappingFilterManager.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/MappingEditor_6e89cdbc.o: ../../Source/MappingEditor.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling MappingEditor.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/MappingUI_56e9fc43.o: ../../Source/MappingUI.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling MappingUI.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/Mapping_bdf5522f.o: ../../Source/Mapping.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling Mapping.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/ConsequenceEditor_68ad07f1.o: ../../Source/ConsequenceEditor.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling ConsequenceEditor.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/ConsequenceManagerEditor_c217a400.o: ../../Source/ConsequenceManagerEditor.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling ConsequenceManagerEditor.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/Consequence_78c99824.o: ../../Source/Consequence.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling Consequence.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/ConsequenceManager_ed222b73.o: ../../Source/ConsequenceManager.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling ConsequenceManager.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/BoolComparators_278bc7f4.o: ../../Source/BoolComparators.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling BoolComparators.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/EnumComparator_f40f08c0.o: ../../Source/EnumComparator.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling EnumComparator.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/NumberComparators_7676c2b5.o: ../../Source/NumberComparators.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling NumberComparators.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/Point2DComparators_1426d924.o: ../../Source/Point2DComparators.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling Point2DComparators.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/Point3DComparators_64d0b725.o: ../../Source/Point3DComparators.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling Point3DComparators.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/StringComparators_56d714ed.o: ../../Source/StringComparators.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling StringComparators.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/BaseComparatorUI_36712464.o: ../../Source/BaseComparatorUI.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling BaseComparatorUI.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/BaseComparator_fbba0e90.o: ../../Source/BaseComparator.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling BaseComparator.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/ComparatorFactory_14bedeb5.o: ../../Source/ComparatorFactory.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling ComparatorFactory.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/ConditionEditor_7e4d6ac9.o: ../../Source/ConditionEditor.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling ConditionEditor.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/ConditionGroupEditor_8111d0ba.o: ../../Source/ConditionGroupEditor.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling ConditionGroupEditor.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/ConditionManagerEditor_f1a2de28.o: ../../Source/ConditionManagerEditor.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling ConditionManagerEditor.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/ScriptConditionEditor_356f6efe.o: ../../Source/ScriptConditionEditor.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling ScriptConditionEditor.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/StandardConditionEditor_c2b02ccc.o: ../../Source/StandardConditionEditor.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling StandardConditionEditor.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/Condition_dbc2fcfc.o: ../../Source/Condition.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling Condition.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/ConditionFactory_8dd64e78.o: ../../Source/ConditionFactory.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling ConditionFactory.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/ConditionGroup_4b82ebad.o: ../../Source/ConditionGroup.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling ConditionGroup.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/ConditionManager_8b8e239b.o: ../../Source/ConditionManager.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling ConditionManager.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/ScriptCondition_84f58cf1.o: ../../Source/ScriptCondition.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling ScriptCondition.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/StandardCondition_49d43d3f.o: ../../Source/StandardCondition.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling StandardCondition.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/ActionEditor_5de4624c.o: ../../Source/ActionEditor.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling ActionEditor.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/ActionUI_e36558d3.o: ../../Source/ActionUI.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling ActionUI.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/Action_97be92bf.o: ../../Source/Action.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling Action.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/Processor_85e48f3.o: ../../Source/Processor.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling Processor.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/ProcessorManager_3cfac3c4.o: ../../Source/ProcessorManager.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling ProcessorManager.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/DMXArtNetDevice_27b282c0.o: ../../Source/DMXArtNetDevice.cpp
@@ -553,256 +813,6 @@ $(JUCE_OBJDIR)/MIDIDeviceParameter_47040a13.o: ../../Source/MIDIDeviceParameter.
 $(JUCE_OBJDIR)/MIDIManager_ba3551cd.o: ../../Source/MIDIManager.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling MIDIManager.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/ConsequenceEditor_68ad07f1.o: ../../Source/ConsequenceEditor.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling ConsequenceEditor.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/ConsequenceManagerEditor_c217a400.o: ../../Source/ConsequenceManagerEditor.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling ConsequenceManagerEditor.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/Consequence_78c99824.o: ../../Source/Consequence.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling Consequence.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/ConsequenceManager_ed222b73.o: ../../Source/ConsequenceManager.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling ConsequenceManager.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/BoolComparators_278bc7f4.o: ../../Source/BoolComparators.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling BoolComparators.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/EnumComparator_f40f08c0.o: ../../Source/EnumComparator.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling EnumComparator.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/NumberComparators_7676c2b5.o: ../../Source/NumberComparators.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling NumberComparators.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/Point2DComparators_1426d924.o: ../../Source/Point2DComparators.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling Point2DComparators.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/Point3DComparators_64d0b725.o: ../../Source/Point3DComparators.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling Point3DComparators.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/StringComparators_56d714ed.o: ../../Source/StringComparators.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling StringComparators.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/BaseComparatorUI_36712464.o: ../../Source/BaseComparatorUI.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling BaseComparatorUI.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/BaseComparator_fbba0e90.o: ../../Source/BaseComparator.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling BaseComparator.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/ComparatorFactory_14bedeb5.o: ../../Source/ComparatorFactory.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling ComparatorFactory.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/ConditionEditor_7e4d6ac9.o: ../../Source/ConditionEditor.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling ConditionEditor.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/ConditionGroupEditor_8111d0ba.o: ../../Source/ConditionGroupEditor.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling ConditionGroupEditor.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/ConditionManagerEditor_f1a2de28.o: ../../Source/ConditionManagerEditor.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling ConditionManagerEditor.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/ScriptConditionEditor_356f6efe.o: ../../Source/ScriptConditionEditor.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling ScriptConditionEditor.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/StandardConditionEditor_c2b02ccc.o: ../../Source/StandardConditionEditor.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling StandardConditionEditor.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/Condition_dbc2fcfc.o: ../../Source/Condition.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling Condition.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/ConditionFactory_8dd64e78.o: ../../Source/ConditionFactory.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling ConditionFactory.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/ConditionGroup_4b82ebad.o: ../../Source/ConditionGroup.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling ConditionGroup.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/ConditionManager_8b8e239b.o: ../../Source/ConditionManager.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling ConditionManager.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/ScriptCondition_84f58cf1.o: ../../Source/ScriptCondition.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling ScriptCondition.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/StandardCondition_49d43d3f.o: ../../Source/StandardCondition.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling StandardCondition.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/ActionEditor_5de4624c.o: ../../Source/ActionEditor.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling ActionEditor.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/ActionManagerUI_82c1584c.o: ../../Source/ActionManagerUI.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling ActionManagerUI.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/ActionUI_e36558d3.o: ../../Source/ActionUI.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling ActionUI.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/Action_97be92bf.o: ../../Source/Action.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling Action.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/ActionManager_9ed61c78.o: ../../Source/ActionManager.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling ActionManager.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/MappingInputEditor_9e41cd32.o: ../../Source/MappingInputEditor.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling MappingInputEditor.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/MappingInput_19a7a225.o: ../../Source/MappingInput.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling MappingInput.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/MappingOutputUI_6b97c124.o: ../../Source/MappingOutputUI.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling MappingOutputUI.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/MappingOutput_7f60db50.o: ../../Source/MappingOutput.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling MappingOutput.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/MappingOutputManager_681d3ec7.o: ../../Source/MappingOutputManager.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling MappingOutputManager.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/CurveMapFilter_84c144ce.o: ../../Source/CurveMapFilter.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling CurveMapFilter.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/InverseFilter_66642a29.o: ../../Source/InverseFilter.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling InverseFilter.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/LagFilter_15ce140b.o: ../../Source/LagFilter.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling LagFilter.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/ScriptFilter_fbaaeb2c.o: ../../Source/ScriptFilter.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling ScriptFilter.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/SimpleRemapFilter_6a007ff0.o: ../../Source/SimpleRemapFilter.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling SimpleRemapFilter.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/SimpleSmoothFilter_df9c3321.o: ../../Source/SimpleSmoothFilter.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling SimpleSmoothFilter.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/MappingFilterEditor_1ce883d4.o: ../../Source/MappingFilterEditor.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling MappingFilterEditor.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/MappingFilterManagerEditor_32b692bd.o: ../../Source/MappingFilterManagerEditor.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling MappingFilterManagerEditor.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/MappingFilter_6ebc7a47.o: ../../Source/MappingFilter.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling MappingFilter.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/MappingFilterFactory_c29e56cd.o: ../../Source/MappingFilterFactory.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling MappingFilterFactory.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/MappingFilterManager_c0562bf0.o: ../../Source/MappingFilterManager.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling MappingFilterManager.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/MappingEditor_6e89cdbc.o: ../../Source/MappingEditor.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling MappingEditor.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/MappingManagerUI_a4d2f6dc.o: ../../Source/MappingManagerUI.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling MappingManagerUI.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/MappingUI_56e9fc43.o: ../../Source/MappingUI.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling MappingUI.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/Mapping_bdf5522f.o: ../../Source/Mapping.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling Mapping.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/MappingManager_a2de1f08.o: ../../Source/MappingManager.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling MappingManager.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/ModuleRouterPanelView_ff0ec6d5.o: ../../Source/ModuleRouterPanelView.cpp
@@ -1053,6 +1063,11 @@ $(JUCE_OBJDIR)/HIDModuleUI_b81f1784.o: ../../Source/HIDModuleUI.cpp
 $(JUCE_OBJDIR)/HIDModule_708a49b0.o: ../../Source/HIDModule.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling HIDModule.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/LaunchpadModule_bdf45ced.o: ../../Source/LaunchpadModule.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling LaunchpadModule.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/MIDICommands_bb9338b2.o: ../../Source/MIDICommands.cpp
@@ -1438,6 +1453,11 @@ $(JUCE_OBJDIR)/MappingLayerTimeline_96e8bd0d.o: ../../Source/MappingLayerTimelin
 $(JUCE_OBJDIR)/MappingLayer_50b4042c.o: ../../Source/MappingLayer.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling MappingLayer.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/TimeTriggerEditor_708d78d9.o: ../../Source/TimeTriggerEditor.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling TimeTriggerEditor.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/TimeTriggerManagerUI_db89a9f.o: ../../Source/TimeTriggerManagerUI.cpp

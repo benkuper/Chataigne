@@ -15,6 +15,7 @@
 #include "State.h"
 #include "StateTransitionManager.h"
 #include "StateModule.h"
+#include "Mapping.h"
 
 class StateManager :
 	public BaseManager<State>,

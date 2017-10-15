@@ -20,7 +20,7 @@ class MIDIModule :
 	public MIDIInputDevice::MIDIInputListener
 {
 public:
-	MIDIModule(const String &name = "MIDI");
+	MIDIModule(const String &name = "MIDI", bool useGenericControls = true);
 	virtual ~MIDIModule();
 
 	MIDIDeviceParameter * midiParam;
@@ -29,17 +29,18 @@ public:
 	MIDIInputDevice * inputDevice;
 	MIDIOutputDevice * outputDevice;
 	
+	bool useGenericControls;
 
-	void sendNoteOn(int pitch, int velocity, int channel = 0);
-	void sendNoteOff(int pitch, int channel = 0);
-	void sendControlChange(int number, int value, int channel = 0);
+	virtual void sendNoteOn(int pitch, int velocity, int channel = 0);
+	virtual void sendNoteOff(int pitch, int channel = 0);
+	virtual void sendControlChange(int number, int value, int channel = 0);
 
 	void onContainerParameterChangedInternal(Parameter *) override;
 	void updateMIDIDevices();
 
-	void noteOnReceived(const int &channel, const int &pitch, const int &velocity) override;
-	void noteOffReceived(const int &channel, const int &pitch, const int &velocity) override;
-	void controlChangeReceived(const int &channel, const int &number, const int &value) override;
+	virtual void noteOnReceived(const int &channel, const int &pitch, const int &velocity) override;
+	virtual void noteOffReceived(const int &channel, const int &pitch, const int &velocity) override;
+	virtual void controlChangeReceived(const int &channel, const int &number, const int &value) override;
 
 	void updateValue(const String &n, const int &val);
 

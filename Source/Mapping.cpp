@@ -1,33 +1,34 @@
 /*
   ==============================================================================
 
-    Mapping.cpp
-    Created: 28 Oct 2016 8:06:13pm
-    Author:  bkupe
+	Mapping.cpp
+	Created: 28 Oct 2016 8:06:13pm
+	Author:  bkupe
 
   ==============================================================================
 */
 
 #include "Mapping.h"
 #include "MappingEditor.h"
+#include "MappingUI.h"
 
 Mapping::Mapping(bool canBeDisabled) :
-BaseItem("Mapping", canBeDisabled),
-forceDisabled(false),
+	Processor("Mapping", canBeDisabled),
 	inputIsLocked(false)
 {
-	continuousProcess = addBoolParameter("Continuous", "If enabled, the mapping will process continuously rather than only when parameter value has changed",false);
+	type = MAPPING;
+
+	continuousProcess = addBoolParameter("Continuous", "If enabled, the mapping will process continuously rather than only when parameter value has changed", false);
 
 	addChildControllableContainer(&input);
 	addChildControllableContainer(&cdm);
 	addChildControllableContainer(&fm);
 	addChildControllableContainer(&om);
 
-
 	input.addMappingInputListener(this);
 }
 
-  Mapping::~Mapping()
+Mapping::~Mapping()
 {
 }
 
@@ -84,7 +85,7 @@ void Mapping::onContainerParameterChangedInternal(Parameter * p)
 	BaseItem::onContainerParameterChangedInternal(p);
 	if (p == continuousProcess)
 	{
-		if(continuousProcess->boolValue()) startTimerHz(30);
+		if (continuousProcess->boolValue()) startTimerHz(30);
 		else stopTimer();
 	}
 }
@@ -94,8 +95,13 @@ InspectableEditor * Mapping::getEditor(bool isRoot)
 	return new MappingEditor(this, isRoot);
 }
 
+ProcessorUI * Mapping::getUI()
+{
+	return new MappingUI(this);
+}
+
 void Mapping::timerCallback()
 {
-	if((canBeDisabled && !enabled->boolValue()) || forceDisabled) return
-	process();
+	if ((canBeDisabled && !enabled->boolValue()) || forceDisabled) return
+		process();
 }

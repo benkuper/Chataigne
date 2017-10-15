@@ -13,14 +13,12 @@
 
 
 #include "State.h"
-#include "ActionManagerUI.h"
-#include "MappingManagerUI.h"
+#include "ProcessorManagerUI.h"
 
 
 class StateViewUI :
 	public BaseItemUI<State>,
-	public ActionManagerUI::ManagerUIListener,
-	public MappingManagerUI::ManagerUIListener
+	public ProcessorManagerUI::ManagerUIListener
 {
 public:
 	StateViewUI(State * state);
@@ -28,8 +26,7 @@ public:
 
 	ScopedPointer<BoolToggleUI> activeUI;
 
-	ActionManagerUI amui;
-	MappingManagerUI mmui;
+	ProcessorManagerUI pmui;
 
 	//transition
 	bool transitionReceptionMode;

@@ -39,6 +39,7 @@ ChataigneEngine::ChataigneEngine(ApplicationProperties * appProperties, const St
 
 ChataigneEngine::~ChataigneEngine()
 {
+	//Application-end cleanup, nothing should be recreated after this
 
 	//delete singletons here
 	ModuleRouterManager::deleteInstance();
@@ -49,6 +50,7 @@ ChataigneEngine::~ChataigneEngine()
 
 	MappingFilterFactory::deleteInstance();
 	ConditionFactory::deleteInstance();
+	ProcessorFactory::deleteInstance();
 
 	MIDIManager::deleteInstance();
 	DMXManager::deleteInstance();
@@ -117,4 +119,9 @@ void ChataigneEngine::loadJSONDataInternalEngine(var data, ProgressTask * loadin
 	routerTask->end();
 
 	
+}
+
+String ChataigneEngine::getMinimumRequiredFileVersion()
+{
+	return "1.1.0";
 }

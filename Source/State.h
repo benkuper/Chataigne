@@ -13,8 +13,7 @@
 
 
 
-#include "ActionManager.h"
-#include "MappingManager.h"
+#include "ProcessorManager.h"
 #include "StateTransition.h"
 
 class State :
@@ -32,8 +31,7 @@ public:
 	Array<StateTransition *> inTransitions;
 	Array<StateTransition *> outTransitions;
 
-	ActionManager am;
-	MappingManager mm;
+	ProcessorManager pm;
 
 	void onContainerParameterChangedInternal(Parameter *) override;
 

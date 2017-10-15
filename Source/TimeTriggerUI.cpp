@@ -91,8 +91,14 @@ void TimeTriggerUI::mouseDown(const MouseEvent & e)
 
 void TimeTriggerUI::mouseDrag(const MouseEvent & e)
 {
+	if (nameUI->isEditing()) return;
+
 	BaseItemUI::mouseDrag(e);
-	triggerUIListeners.call(&TimeTriggerUIListener::timeTriggerDragged, this, e);
+
+	if (!e.mods.isShiftDown())
+	{
+		triggerUIListeners.call(&TimeTriggerUIListener::timeTriggerDragged, this, e);
+	}
 
 	if (!e.mods.isCommandDown())
 	{
@@ -112,6 +118,7 @@ void TimeTriggerUI::controllableFeedbackUpdateInternal(Controllable * c)
 		updateSizeFromName();
 	} else if (c == item->flagY)
 	{
+		repaint();
 		resized();
 	} else if (c == item->isTriggered)
 	{

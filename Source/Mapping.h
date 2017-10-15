@@ -11,21 +11,20 @@
 #ifndef MAPPING_H_INCLUDED
 #define MAPPING_H_INCLUDED
 
+#include "Processor.h"
 #include "MappingInput.h"
 #include "MappingFilterManager.h"
 #include "MappingOutputManager.h"
 #include "ConditionManager.h"
 
 class Mapping :
-	public BaseItem,
+	public Processor,
 	public MappingInput::Listener,
 	public Timer
 {
 public:
 	Mapping(bool canBeDisabled = true);
 	virtual ~Mapping();
-
-	bool forceDisabled;
 
 	MappingInput input;
 	ConditionManager cdm;
@@ -51,6 +50,10 @@ public:
 	virtual void timerCallback() override;
 
 	InspectableEditor * getEditor(bool isRoot) override;
+	ProcessorUI * getUI() override;
+
+	static Mapping * create(var) { return new Mapping(); }
+	String getTypeString() const override { return "Mapping"; };
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Mapping)
 

@@ -12,8 +12,9 @@
 
 
 MappingUI::MappingUI(Mapping * mapping) :
-	BaseItemUI<Mapping>(mapping)
+	ProcessorUI(mapping)
 {
+	bgColor = MAPPING_COLOR.withSaturation(.2f).darker(1);
 
 }
 

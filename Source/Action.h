@@ -11,18 +11,17 @@
 #ifndef ACTION_H_INCLUDED
 #define ACTION_H_INCLUDED
 
+#include "Processor.h"
 #include "ConditionManager.h"
 #include "ConsequenceManager.h"
 
 class Action :
-	public BaseItem,
+	public Processor,
 	public ConditionManager::ConditionManagerListener
 {
 public:
 	Action(const String &name = "Action");
 	virtual ~Action();
-
-	bool forceDisabled; //to disable from parent, ex. an ActionManager
 
 	bool autoTriggerWhenAllConditionAreActives; //default true, but if false, let use Actions as user check tool without auto behavior (like TimeTriggers)
 
@@ -33,7 +32,7 @@ public:
 	BoolParameter * isValid; //whether the action can process or not
 	Trigger * trigger;
 
-	void setForceDisabled(bool value);
+	virtual void setForceDisabled(bool value) override;
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
@@ -43,6 +42,7 @@ public:
 	void conditionManagerValidationChanged(ConditionManager *) override;
 
 	InspectableEditor * getEditor(bool isRoot) override;
+	ProcessorUI * getUI() override;
 
 	class ActionListener
 	{
@@ -57,6 +57,9 @@ public:
 	void addActionListener(ActionListener* newListener) { actionListeners.add(newListener); }
 	void removeActionListener(ActionListener* listener) { actionListeners.remove(listener); }
 
+
+	static Action * create(var) { return new Action(); }
+	String getTypeString() const override { return "Action"; };
 
 	//InspectableEditor * getEditor(bool /*isRoot*/) override;
 

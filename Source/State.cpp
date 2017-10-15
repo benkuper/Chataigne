@@ -11,20 +11,16 @@
 #include "State.h"
 
 State::State() :
-	BaseItem("State",true,true,true)
+	BaseItem("State",true,true,true),
+	pm("Processors")
 {
 	//canInspectChildContainers = false;
 
 	active = addBoolParameter("Active", "If active, the state's actions and mappings will be effective, otherwise this state won't do anything.", false);
 
-	addChildControllableContainer(&am);
-	addChildControllableContainer(&mm);
+	addChildControllableContainer(&pm);
 
-	am.setForceDisabled(true);
-	mm.setForceDisabled(true); 
-
-	am.hideInEditor = true;
-	mm.hideInEditor = true;
+	pm.setForceDisabled(true);
 
 	//viewUISize->setPoint(200, 300);
 
@@ -42,22 +38,19 @@ void State::onContainerParameterChangedInternal(Parameter *p)
 	if (p == active || p == enabled)
 	{
 		stateListeners.call(&StateListener::stateActivationChanged, this);
-		am.setForceDisabled(!active->boolValue() || !enabled->boolValue());
-		mm.setForceDisabled(!active->boolValue() || !enabled->boolValue());
+		pm.setForceDisabled(!active->boolValue() || !enabled->boolValue());
 	}
 }
 
 var State::getJSONData()
 {
 	var data = BaseItem::getJSONData();
-	data.getDynamicObject()->setProperty("actions", am.getJSONData());
-	data.getDynamicObject()->setProperty("mappings", mm.getJSONData());
+	data.getDynamicObject()->setProperty("processors", pm.getJSONData());
 	return data;
 }
 
 void State::loadJSONDataInternal(var data)
 {
-	BaseItem::loadJSONDataInternal(data);
-	am.loadJSONData(data.getProperty("actions", var()));
-	mm.loadJSONData(data.getProperty("mappings", var()));
+	BaseItem::loadJSONDataInternal(data);	
+	pm.loadJSONData(data.getProperty("processors", var()));
 }

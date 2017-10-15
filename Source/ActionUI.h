@@ -13,25 +13,22 @@
 
 
 #include "Action.h"
+#include "ProcessorUI.h"
 
 class ActionUI :
-	public BaseItemUI<Action>
+	public ProcessorUI
 {
 public:
 	ActionUI(Action *);
 	virtual ~ActionUI();
 
 	Action * action;
-
 	void resizedInternalHeader(Rectangle<int> &r) override;
 
 	ScopedPointer<BoolToggleUI> validUI;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ActionUI)
 };
-
-
-
 
 
 #endif  // ACTIONUI_H_INCLUDED

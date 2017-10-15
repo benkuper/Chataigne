@@ -17,7 +17,7 @@
 juce_ImplementSingleton(ConditionFactory)
 
 ConditionFactory::ConditionFactory() {
-	conditionDefs.add(new ConditionDefinition("", "Standard", &StandardCondition::create));
+	conditionDefs.add(new ConditionDefinition("", "From Input Value", &StandardCondition::create));
 	conditionDefs.add(new ConditionDefinition("", "Group", &ConditionGroup::create));
 	conditionDefs.add(new ConditionDefinition("", "Script", &ScriptCondition::create));
 

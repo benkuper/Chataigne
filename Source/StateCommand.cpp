@@ -13,6 +13,7 @@
 #include "Action.h"
 #include "State.h"
 #include "StateCommandEditor.h"
+#include "Mapping.h"
 
 StateCommand::StateCommand(StateModule * _module, CommandContext context, var params) :
 	BaseCommand(_module,context,params),

@@ -24,6 +24,7 @@
 #include "DMXModule.h"
 #include "LiveOSCModule.h"
 #include "MyoModule.h"
+#include "LaunchpadModule.h"
 
 juce_ImplementSingleton(ModuleFactory)
 
@@ -36,10 +37,11 @@ ModuleFactory::ModuleFactory() {
 	moduleDefs.add(new ModuleDefinition("Generic", "Gamepad", &GamepadModule::create));
 
 	moduleDefs.add(new ModuleDefinition("Controller", "Wiimote", &WiimoteModule::create));
-	
+	moduleDefs.add(new ModuleDefinition("Controller", "Launchpad", &LaunchpadModule::create));
+
 #if JUCE_WINDOWS
 	//moduleDefs.add(new ModuleDefinition("Controller", "Myo", &MyoModule::create));
-    moduleDefs.add(new ModuleDefinition("Controller", "KinectV2", &KinectV2Module::create));
+	moduleDefs.add(new ModuleDefinition("Controller", "KinectV2", &KinectV2Module::create));
 #endif
     
 	moduleDefs.add(new ModuleDefinition("Audio", "Audio Device", &AudioModule::create));

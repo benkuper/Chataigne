@@ -12,21 +12,26 @@
 #include "MIDICommands.h"
 #include "MIDIModuleEditor.h"
 
-MIDIModule::MIDIModule(const String & name) :
+MIDIModule::MIDIModule(const String & name, bool _useGenericControls) :
 	Module(name),
 	inputDevice(nullptr),
-	outputDevice(nullptr)
+	outputDevice(nullptr),
+	useGenericControls(_useGenericControls)
 {
 	//canHandleRouteValues = true;
 
 	midiParam = new MIDIDeviceParameter("Devices");
 	addParameter(midiParam);
 
-	autoAdd = addBoolParameter("Auto Add", "Auto Add MIDI values that are received but not in the list", false);
-
-	defManager.add(CommandDefinition::createDef(this, "", "Note On", &MIDINoteAndCCCommand::create)->addParam("type", (int)MIDINoteAndCCCommand::NOTE_ON));
-	defManager.add(CommandDefinition::createDef(this, "", "Note Off", &MIDINoteAndCCCommand::create)->addParam("type", (int)MIDINoteAndCCCommand::NOTE_OFF));
-	defManager.add(CommandDefinition::createDef(this, "", "Controller Change", &MIDINoteAndCCCommand::create)->addParam("type", (int)MIDINoteAndCCCommand::CONTROLCHANGE));
+	
+	if (useGenericControls)
+	{
+		autoAdd = addBoolParameter("Auto Add", "Auto Add MIDI values that are received but not in the list", false);
+		defManager.add(CommandDefinition::createDef(this, "", "Note On", &MIDINoteAndCCCommand::create)->addParam("type", (int)MIDINoteAndCCCommand::NOTE_ON));
+		defManager.add(CommandDefinition::createDef(this, "", "Note Off", &MIDINoteAndCCCommand::create)->addParam("type", (int)MIDINoteAndCCCommand::NOTE_OFF));
+		defManager.add(CommandDefinition::createDef(this, "", "Controller Change", &MIDINoteAndCCCommand::create)->addParam("type", (int)MIDINoteAndCCCommand::CONTROLCHANGE));
+	}
+	
 }
 
 MIDIModule::~MIDIModule()
@@ -99,7 +104,7 @@ void MIDIModule::noteOnReceived(const int & channel, const int & pitch, const in
 	inActivityTrigger->trigger();
 	if (logIncomingData->boolValue())  NLOG(niceName, "Note On : " << channel << ", " << MIDIManager::getNoteName(pitch) << ", " << velocity);
 
-	updateValue(MIDIManager::getNoteName(pitch), velocity);
+	if (useGenericControls) updateValue(MIDIManager::getNoteName(pitch), velocity);
 }
 
 void MIDIModule::noteOffReceived(const int & channel, const int & pitch, const int & velocity)
@@ -107,7 +112,7 @@ void MIDIModule::noteOffReceived(const int & channel, const int & pitch, const i
 	inActivityTrigger->trigger();
 	if (logIncomingData->boolValue()) NLOG(niceName, "Note Off : " << channel << ", " << MIDIManager::getNoteName(pitch) << ", " << velocity);
 
-	updateValue(MIDIManager::getNoteName(pitch), velocity);
+	if (useGenericControls) updateValue(MIDIManager::getNoteName(pitch), velocity);
 	
 }
 
@@ -116,13 +121,13 @@ void MIDIModule::controlChangeReceived(const int & channel, const int & number, 
 	inActivityTrigger->trigger();
 	if (logIncomingData->boolValue()) NLOG(niceName, "Control Change : " << channel << ", " << number << ", " << value);
 
-	updateValue("CC"+String(number), value);
+	if (useGenericControls) updateValue("CC"+String(number), value);
 
 }
 
 void MIDIModule::updateValue(const String & n, const int & val)
 {
-
+	
 	Parameter * p = dynamic_cast<Parameter *>(valuesCC.getControllableByName(n,true));
 	if (p == nullptr)
 	{

@@ -96,11 +96,14 @@ PopupMenu StateManager::getAllActionsMenu()
 	for (int i = 0; i < items.size(); i++)
 	{
 		PopupMenu sMenu;
-		int numValues = items[i]->am.items.size();
+		int numValues = items[i]->pm.items.size();
 		for (int j = 0; j < numValues; j++)
 		{
-			Action * c = items[i]->am.items[j];
-			sMenu.addItem(i * 1000 + j + 1, c->niceName);
+			if (items[i]->pm.items[j]->type == Processor::ACTION)
+			{
+				Action * c = (Action *)(items[i]->pm.items[j]);
+				sMenu.addItem(i * 1000 + j + 1, c->niceName);
+			}
 		}
 		menu.addSubMenu(items[i]->niceName, sMenu);
 	}
@@ -113,7 +116,7 @@ Action * StateManager::getActionForItemID(int itemID)
 	if (itemID <= 0) return nullptr;
 	int moduleIndex = (int)floor((itemID - 1) / 1000);
 	int valueIndex = (itemID - 1) % 1000;
-	return items[moduleIndex]->am.items[valueIndex];
+	return (Action *)(items[moduleIndex]->pm.items[valueIndex]);
 }
 
 PopupMenu StateManager::getAllMappingsMenu()
@@ -122,11 +125,15 @@ PopupMenu StateManager::getAllMappingsMenu()
 	for (int i = 0; i < items.size(); i++)
 	{
 		PopupMenu sMenu;
-		int numValues = items[i]->mm.items.size();
+		int numValues = items[i]->pm.items.size();
 		for (int j = 0; j < numValues; j++)
 		{
-			Mapping * c = items[i]->mm.items[j];
-			sMenu.addItem(i * 1000 + j + 1, c->niceName);
+			if (items[i]->pm.items[j]->type == Processor::MAPPING)
+			{
+				Mapping * c = (Mapping *)(items[i]->pm.items[j]);
+				sMenu.addItem(i * 1000 + j + 1, c->niceName);
+			}
+			
 		}
 		menu.addSubMenu(items[i]->niceName, sMenu);
 	}
@@ -139,7 +146,7 @@ Mapping * StateManager::getMappingForItemID(int itemID)
 	if (itemID <= 0) return nullptr;
 	int moduleIndex = (int)floor((itemID - 1) / 1000);
 	int valueIndex = (itemID - 1) % 1000;
-	return items[moduleIndex]->mm.items[valueIndex];
+	return (Mapping *)(items[moduleIndex]->pm.items[valueIndex]);
 }
 
 Array<State *> StateManager::getLinkedStates(State * s, Array<State *> * statesToAvoid)

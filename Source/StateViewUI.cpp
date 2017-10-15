@@ -12,25 +12,19 @@
 
 StateViewUI::StateViewUI(State * state) :
 BaseItemUI<State>(state, ResizeMode::ALL, true),
-	amui(&state->am),
-	mmui(&state->mm),
+	pmui(&state->pm),
 	transitionReceptionMode(false)
 {
 	activeUI = state->active->createToggle();
 
 	addAndMakeVisible(activeUI);
 
-	amui.drawContour = true;
-	mmui.drawContour = true;
-	amui.bgColor = ACTION_COLOR.withSaturation(.2f).darker(1);
-	mmui.bgColor = MAPPING_COLOR.withSaturation(.2f).darker(1);
-	amui.addManagerUIListener(this);
-	mmui.addManagerUIListener(this);
+	pmui.drawContour = true;
+	pmui.addManagerUIListener(this);
 
 	if (!item->miniMode->boolValue())
 	{
-		addAndMakeVisible(&amui);
-		addAndMakeVisible(&mmui);
+		addAndMakeVisible(&pmui);
 	}
 
 	//bgColor = item->active->boolValue() ? (item->permanent->boolValue() ? GREEN_COLOR : FEEDBACK_COLOR) : BG_COLOR.brighter(.1f);
@@ -48,8 +42,7 @@ StateViewUI::~StateViewUI()
 void StateViewUI::setTransitionReceptionMode(bool value)
 {
 	transitionReceptionMode = value;
-	amui.setEnabled(!transitionReceptionMode);
-	mmui.setEnabled(!transitionReceptionMode);
+	pmui.setEnabled(!transitionReceptionMode);
 	grabber->setEnabled(!transitionReceptionMode);
 }
 
@@ -59,12 +52,10 @@ void StateViewUI::updateMiniModeUI()
 
 	if (item->miniMode->boolValue())
 	{
-		removeChildComponent(&amui);
-		removeChildComponent(&mmui);
+		removeChildComponent(&pmui);
 	} else
 	{
-		addAndMakeVisible(&amui);
-		addAndMakeVisible(&mmui);
+		addAndMakeVisible(&pmui);
 	}
 
 }
@@ -78,7 +69,7 @@ void StateViewUI::mouseDown(const MouseEvent & e)
 		stateEditorListeners.call(&Listener::askFinishTransitionFromUI, this);
 	} else
 	{
-		 if (e.mods.isRightButtonDown() && e.originalComponent != &amui && e.originalComponent != &mmui)
+		 if (e.mods.isRightButtonDown() && e.originalComponent != &pmui)
 		{
 			PopupMenu p;
 			p.addItem(1, "Create Transition");
@@ -120,30 +111,7 @@ void StateViewUI::resizedInternalHeader(Rectangle<int>& r)
 
 void StateViewUI::resizedInternalContent(Rectangle<int>& r)
 {
-	int gap = 4;
-	int amHeight = jmax<int>(amui.getContentHeight(), 30);
-	int mmHeight = jmax<int>(mmui.getContentHeight(), 30);
-
-
-	if ((amHeight > r.getHeight() / 2 || mmHeight > r.getHeight() / 2) && amHeight + mmHeight + gap <= r.getHeight())
-	{
-		if (amHeight > mmHeight)
-		{
-			amui.setBounds(r.removeFromTop(amHeight));
-			r.removeFromTop(gap);
-			mmui.setBounds(r);
-		} else
-		{
-			mmui.setBounds(r.removeFromBottom(mmHeight));
-			r.removeFromBottom(gap);
-			amui.setBounds(r);
-		}
-	} else
-	{
-		amui.setBounds(r.removeFromTop((r.getHeight() - gap) / 2));
-		r.removeFromTop(gap);
-		mmui.setBounds(r);
-	}
+	pmui.setBounds(r);
 }
 
 void StateViewUI::childBoundsChanged(Component * c)

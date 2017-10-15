@@ -10,12 +10,14 @@
 
 #include "Action.h"
 #include "ActionEditor.h"
+#include "ActionUI.h"
 
 Action::Action(const String & name) :
-	BaseItem(name),
-	forceDisabled(false),
+	Processor(name),
 	autoTriggerWhenAllConditionAreActives(true)
 {
+	type = ACTION;
+
 	addChildControllableContainer(&cdm);
 	addChildControllableContainer(&csm);
 
@@ -32,16 +34,13 @@ Action::~Action()
 
 void Action::setForceDisabled(bool value)
 {
-	if (forceDisabled == value) return;
-	forceDisabled = value;
+	Processor::setForceDisabled(value);
 	csm.setForceDisabled(value);
-
-	//todo disabled conditions for better performance (no computation) when disabled
 }
 
 var Action::getJSONData()
 {
-	var data = BaseItem::getJSONData();
+	var data = Processor::getJSONData();
 	data.getDynamicObject()->setProperty("conditions", cdm.getJSONData());
 	data.getDynamicObject()->setProperty("consequences", csm.getJSONData());
 	return data;
@@ -49,7 +48,7 @@ var Action::getJSONData()
 
 void Action::loadJSONDataInternal(var data)
 {
-	BaseItem::loadJSONDataInternal(data);
+	Processor::loadJSONDataInternal(data);
 	cdm.loadJSONData(data.getProperty("conditions", var()));
 	csm.loadJSONData(data.getProperty("consequences", var()));
 }
@@ -80,4 +79,9 @@ void Action::conditionManagerValidationChanged(ConditionManager *)
 InspectableEditor * Action::getEditor(bool isRoot)
 {
 	return new ActionEditor(this, isRoot);
+}
+
+ProcessorUI * Action::getUI()
+{
+	return new ActionUI(this);
 }

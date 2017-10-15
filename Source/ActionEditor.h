@@ -26,7 +26,7 @@ public:
 	ConditionManagerEditor cdme;
 	ConsequenceManagerEditor csme;
 
-	void resizedInternalContent(Rectangle<int> &r) override;
+	virtual void resizedInternalContent(Rectangle<int> &r) override;
 };
 
 

@@ -11,9 +11,11 @@
 #include "ActionUI.h"
 
 ActionUI::ActionUI(Action * _action) :
-	BaseItemUI<Action>(_action),
+	ProcessorUI(_action),
 	action(_action)
 {
+	bgColor = ACTION_COLOR.withSaturation(.2f).darker(1);
+
 	validUI = action->cdm.isValid->createToggle();
 	validUI->showLabel = false;
 	validUI->showValue = false;
