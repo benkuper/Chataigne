@@ -26,6 +26,9 @@ public:
 
 	void showMenuAndAddItem(bool isFromAddButton) override;
 
+	void itemAdded(Condition *) override;
+	void itemRemoved(Condition *) override;
+
 
 	void controllableFeedbackUpdate(Controllable * c) override;
 	

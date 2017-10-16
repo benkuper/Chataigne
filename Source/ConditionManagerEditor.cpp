@@ -29,6 +29,16 @@ void ConditionManagerEditor::showMenuAndAddItem(bool)
 	
 }
 
+void ConditionManagerEditor::itemAdded(Condition *)
+{
+	if (manager->items.size() > 1) resetAndBuild();
+}
+
+void ConditionManagerEditor::itemRemoved(Condition *)
+{
+	if (manager->items.size() <= 1) resetAndBuild();
+}
+
 void ConditionManagerEditor::controllableFeedbackUpdate(Controllable * c)
 {
 	if (c == conditionManager->isValid)
