@@ -26,6 +26,8 @@
 #include "MyoModule.h"
 #include "LaunchpadModule.h"
 #include "DLightModule.h"
+#include "TCPModule.h"
+#include "VLCModule.h"
 
 juce_ImplementSingleton(ModuleFactory)
 
@@ -34,9 +36,10 @@ ModuleFactory::ModuleFactory() {
 	moduleDefs.add(new ModuleDefinition("Generic", "MIDI", &MIDIModule::create));
 	moduleDefs.add(new ModuleDefinition("Generic", "DMX", &DMXModule::create));
 	moduleDefs.add(new ModuleDefinition("Generic", "Serial", &SerialModule::create));
+	moduleDefs.add(new ModuleDefinition("Generic", "TCP", &TCPModule::create));
 	moduleDefs.add(new ModuleDefinition("Generic", "HID", &HIDModule::create));
 	moduleDefs.add(new ModuleDefinition("Generic", "Gamepad", &GamepadModule::create));
-
+	
 	moduleDefs.add(new ModuleDefinition("Controller", "Wiimote", &WiimoteModule::create));
 	moduleDefs.add(new ModuleDefinition("Controller", "Launchpad", &LaunchpadModule::create));
 
@@ -53,7 +56,9 @@ ModuleFactory::ModuleFactory() {
 
 	moduleDefs.add(new ModuleDefinition("Video", "Resolume", &ResolumeModule::create));
 	moduleDefs.add(new ModuleDefinition("Video", "Millumin", &MilluminModule::create));
+	moduleDefs.add(new ModuleDefinition("Video", "VLC", &VLCModule::create));
 
+	
 	addCustomModules();
 	buildPopupMenu();
 }

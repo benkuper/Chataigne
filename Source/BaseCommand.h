@@ -35,6 +35,11 @@ public:
 	virtual void trigger() {} //for trigger context, to override
 	virtual void setValue(var value); //for mapping context
 
+	virtual void loadPreviousCommandData(var data)
+	{
+		//default behavior is loading doing  nothing, can override that to trying hot swap of commands
+	}
+
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(BaseCommand)
 };
 

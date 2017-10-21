@@ -47,7 +47,7 @@ void BaseCommandHandler::setCommand(CommandDefinition * commandDef)
 	if (command != nullptr)
 	{
 		command->module->addInspectableListener(this);
-		command->loadJSONData(oldData); //keep as much as similar parameter possible
+		command->loadPreviousCommandData(oldData); //keep as much as similar parameter possible
 	}
 
 	commandHandlerListeners.call(&CommandHandlerListener::commandChanged, this);

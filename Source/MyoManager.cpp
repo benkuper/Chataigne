@@ -23,14 +23,15 @@ MyoManager::MyoManager() :
 
 MyoManager::~MyoManager()
 {
-	stopThread(100);
+	signalThreadShouldExit();
+	while (isThreadRunning());
 }
 
 void MyoManager::initHub()
 {
 	if (isThreadRunning())
 	{
-		stopThread(100);
+		signalThreadShouldExit();
 	}
 
 	startThread();

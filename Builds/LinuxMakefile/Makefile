@@ -166,6 +166,11 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/ModuleRouterValue_937230fd.o \
   $(JUCE_OBJDIR)/ModuleRouter_785566de.o \
   $(JUCE_OBJDIR)/ModuleRouterManager_16ed3779.o \
+  $(JUCE_OBJDIR)/TCPModuleEditor_7dd510db.o \
+  $(JUCE_OBJDIR)/SendTCPCommand_e5ea805b.o \
+  $(JUCE_OBJDIR)/SendTCPStringCommand_dcf9334a.o \
+  $(JUCE_OBJDIR)/VLCModule_fde4e21a.o \
+  $(JUCE_OBJDIR)/TCPModule_6b3d188e.o \
   $(JUCE_OBJDIR)/MyoDevice_ef3fe55a.o \
   $(JUCE_OBJDIR)/MyoManager_59b34e73.o \
   $(JUCE_OBJDIR)/MyoModule_8cd27270.o \
@@ -844,6 +849,31 @@ $(JUCE_OBJDIR)/ModuleRouter_785566de.o: ../../Source/ModuleRouter.cpp
 $(JUCE_OBJDIR)/ModuleRouterManager_16ed3779.o: ../../Source/ModuleRouterManager.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling ModuleRouterManager.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/TCPModuleEditor_7dd510db.o: ../../Source/TCPModuleEditor.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling TCPModuleEditor.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/SendTCPCommand_e5ea805b.o: ../../Source/SendTCPCommand.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling SendTCPCommand.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/SendTCPStringCommand_dcf9334a.o: ../../Source/SendTCPStringCommand.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling SendTCPStringCommand.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/VLCModule_fde4e21a.o: ../../Source/VLCModule.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling VLCModule.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/TCPModule_6b3d188e.o: ../../Source/TCPModule.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling TCPModule.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/MyoDevice_ef3fe55a.o: ../../Source/MyoDevice.cpp

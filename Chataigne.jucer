@@ -437,6 +437,30 @@
                 file="Source/ModuleRouterManager.h"/>
         </GROUP>
         <GROUP id="{766BCE2E-5C2E-5A80-EC80-7FFA2C7ABBBA}" name="modules">
+          <GROUP id="{31751EEF-7631-994D-CF00-3D84A9A143E5}" name="tcp">
+            <GROUP id="{3D10C1A4-BC90-A557-F29D-C7DF68111C8B}" name="ui">
+              <FILE id="eWmaKp" name="TCPModuleEditor.cpp" compile="1" resource="0"
+                    file="Source/TCPModuleEditor.cpp"/>
+              <FILE id="MTVgoC" name="TCPModuleEditor.h" compile="0" resource="0"
+                    file="Source/TCPModuleEditor.h"/>
+            </GROUP>
+            <GROUP id="{A88C254E-3AEA-5262-B78F-8BE0F0707AE5}" name="commands">
+              <FILE id="k7hs2Y" name="SendTCPCommand.cpp" compile="1" resource="0"
+                    file="Source/SendTCPCommand.cpp"/>
+              <FILE id="Lmq4R1" name="SendTCPCommand.h" compile="0" resource="0"
+                    file="Source/SendTCPCommand.h"/>
+              <FILE id="hD1JXW" name="SendTCPStringCommand.cpp" compile="1" resource="0"
+                    file="Source/SendTCPStringCommand.cpp"/>
+              <FILE id="cHihST" name="SendTCPStringCommand.h" compile="0" resource="0"
+                    file="Source/SendTCPStringCommand.h"/>
+            </GROUP>
+            <GROUP id="{A0F2C351-0E0D-3410-A453-A4F060F8B2E4}" name="vlc">
+              <FILE id="nT9pwL" name="VLCModule.cpp" compile="1" resource="0" file="Source/VLCModule.cpp"/>
+              <FILE id="MDd0L9" name="VLCModule.h" compile="0" resource="0" file="Source/VLCModule.h"/>
+            </GROUP>
+            <FILE id="cTaIH9" name="TCPModule.cpp" compile="1" resource="0" file="Source/TCPModule.cpp"/>
+            <FILE id="yothfD" name="TCPModule.h" compile="0" resource="0" file="Source/TCPModule.h"/>
+          </GROUP>
           <GROUP id="{3AAC0EE2-7222-71DA-41E1-DB4E88C812CE}" name="controller">
             <GROUP id="{35421CCB-191E-EB2F-8C3D-2EE58B569B35}" name="myo">
               <FILE id="R097Eg" name="MyoDevice.cpp" compile="1" resource="0" file="Source/MyoDevice.cpp"/>

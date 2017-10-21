@@ -33,7 +33,8 @@ GamepadManager::GamepadManager() :
 
 GamepadManager::~GamepadManager()
 {
-	stopThread(100);
+	signalThreadShouldExit(); 
+	while (isThreadRunning());
 }
 
 void GamepadManager::run()

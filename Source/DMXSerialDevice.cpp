@@ -24,8 +24,10 @@ DMXSerialDevice::DMXSerialDevice(Type type) :
 
 DMXSerialDevice::~DMXSerialDevice()
 {
-	stopThread(10000);
+	signalThreadShouldExit(); 
+	while (isThreadRunning());
 	setCurrentPort(nullptr);
+	
 }
 
 void DMXSerialDevice::setCurrentPort(SerialDevice * port)

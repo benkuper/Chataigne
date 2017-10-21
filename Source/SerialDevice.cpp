@@ -74,9 +74,12 @@ void SerialDevice::close()
 		thread.removeAsyncSerialListener(this);
 #endif
 
-		thread.stopThread(10000);
+		thread.signalThreadShouldExit();
+		while (thread.isThreadRunning());
+
 		port->close();
 		listeners.call(&SerialDeviceListener::portClosed, this);
+
 	}
 #endif
 }
@@ -132,7 +135,8 @@ SerialReadThread::SerialReadThread(String name, SerialDevice * _port) :
 
 SerialReadThread::~SerialReadThread()
 {
-	stopThread(100);
+	signalThreadShouldExit();
+	while (isThreadRunning());
 }
 
 void SerialReadThread::run()
