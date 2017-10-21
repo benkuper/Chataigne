@@ -51,6 +51,6 @@ var State::getJSONData()
 
 void State::loadJSONDataInternal(var data)
 {
-	BaseItem::loadJSONDataInternal(data);	
+	BaseItem::loadJSONDataInternal(data);
 	pm.loadJSONData(data.getProperty("processors", var()));
 }

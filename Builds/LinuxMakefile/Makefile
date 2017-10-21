@@ -169,25 +169,7 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/MyoDevice_ef3fe55a.o \
   $(JUCE_OBJDIR)/MyoManager_59b34e73.o \
   $(JUCE_OBJDIR)/MyoModule_8cd27270.o \
-  $(JUCE_OBJDIR)/GenericControllableCommand_a1b41734.o \
-  $(JUCE_OBJDIR)/ChataigneGenericModule_de326dee.o \
-  $(JUCE_OBJDIR)/DMXCommand_5ffc0ec5.o \
-  $(JUCE_OBJDIR)/DMXModuleEditor_d630ba09.o \
-  $(JUCE_OBJDIR)/DMXModule_7722bc3c.o \
   $(JUCE_OBJDIR)/KinectV2Module_ba69ad77.o \
-  $(JUCE_OBJDIR)/SerialModule_bd87ba09.o \
-  $(JUCE_OBJDIR)/StateChooserUI_aa930007.o \
-  $(JUCE_OBJDIR)/StateCommandEditor_9d48d90.o \
-  $(JUCE_OBJDIR)/StateCommand_58f18103.o \
-  $(JUCE_OBJDIR)/StateModule_b0b70a3e.o \
-  $(JUCE_OBJDIR)/SequenceChooserUI_956d18af.o \
-  $(JUCE_OBJDIR)/SequenceCueCommandEditor_cf465a8f.o \
-  $(JUCE_OBJDIR)/SequenceCommandEditor_53221238.o \
-  $(JUCE_OBJDIR)/SequenceCommand_f949a3ab.o \
-  $(JUCE_OBJDIR)/SequenceCueCommand_d704b942.o \
-  $(JUCE_OBJDIR)/SequenceModule_18fbf296.o \
-  $(JUCE_OBJDIR)/AudioModuleEditor_42dcabd0.o \
-  $(JUCE_OBJDIR)/AudioModule_88fd4f43.o \
   $(JUCE_OBJDIR)/os_mac_efb3b999.o \
   $(JUCE_OBJDIR)/classic_291bdabc.o \
   $(JUCE_OBJDIR)/dynamics_fa2596f4.o \
@@ -205,6 +187,24 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/WiimoteManager_70322a6c.o \
   $(JUCE_OBJDIR)/WiimoteModule_4b7bb357.o \
   $(JUCE_OBJDIR)/WiimotePairUtil_7fe25967.o \
+  $(JUCE_OBJDIR)/GenericControllableCommand_a1b41734.o \
+  $(JUCE_OBJDIR)/ChataigneGenericModule_de326dee.o \
+  $(JUCE_OBJDIR)/DMXCommand_5ffc0ec5.o \
+  $(JUCE_OBJDIR)/DMXModuleEditor_d630ba09.o \
+  $(JUCE_OBJDIR)/DMXModule_7722bc3c.o \
+  $(JUCE_OBJDIR)/SerialModule_bd87ba09.o \
+  $(JUCE_OBJDIR)/StateChooserUI_aa930007.o \
+  $(JUCE_OBJDIR)/StateCommandEditor_9d48d90.o \
+  $(JUCE_OBJDIR)/StateCommand_58f18103.o \
+  $(JUCE_OBJDIR)/StateModule_b0b70a3e.o \
+  $(JUCE_OBJDIR)/SequenceChooserUI_956d18af.o \
+  $(JUCE_OBJDIR)/SequenceCueCommandEditor_cf465a8f.o \
+  $(JUCE_OBJDIR)/SequenceCommandEditor_53221238.o \
+  $(JUCE_OBJDIR)/SequenceCommand_f949a3ab.o \
+  $(JUCE_OBJDIR)/SequenceCueCommand_d704b942.o \
+  $(JUCE_OBJDIR)/SequenceModule_18fbf296.o \
+  $(JUCE_OBJDIR)/AudioModuleEditor_42dcabd0.o \
+  $(JUCE_OBJDIR)/AudioModule_88fd4f43.o \
   $(JUCE_OBJDIR)/GamepadManager_7fa3e695.o \
   $(JUCE_OBJDIR)/GamepadModule_543d4e0e.o \
   $(JUCE_OBJDIR)/HIDModuleEditor_ad4d607d.o \
@@ -214,6 +214,7 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/MIDICommands_bb9338b2.o \
   $(JUCE_OBJDIR)/MIDIModuleEditor_725ffe23.o \
   $(JUCE_OBJDIR)/MIDIModule_a8b59bd6.o \
+  $(JUCE_OBJDIR)/DLightModule_cebd51a7.o \
   $(JUCE_OBJDIR)/MilluminModule_c935c8ae.o \
   $(JUCE_OBJDIR)/LGMLParameterCommand_ad119e45.o \
   $(JUCE_OBJDIR)/LGMLModule_edbeadcf.o \
@@ -860,6 +861,96 @@ $(JUCE_OBJDIR)/MyoModule_8cd27270.o: ../../Source/MyoModule.cpp
 	@echo "Compiling MyoModule.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
+$(JUCE_OBJDIR)/KinectV2Module_ba69ad77.o: ../../Source/KinectV2Module.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling KinectV2Module.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/os_mac_efb3b999.o: ../../Source/wiiuse/os_mac/os_mac.c
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling os_mac.c"
+	$(V_AT)$(CC) $(JUCE_CFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/classic_291bdabc.o: ../../Source/wiiuse/classic.c
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling classic.c"
+	$(V_AT)$(CC) $(JUCE_CFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/dynamics_fa2596f4.o: ../../Source/wiiuse/dynamics.c
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling dynamics.c"
+	$(V_AT)$(CC) $(JUCE_CFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/events_a6912179.o: ../../Source/wiiuse/events.c
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling events.c"
+	$(V_AT)$(CC) $(JUCE_CFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/guitar_hero_3_ed7760ad.o: ../../Source/wiiuse/guitar_hero_3.c
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling guitar_hero_3.c"
+	$(V_AT)$(CC) $(JUCE_CFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/io_c5f58bc6.o: ../../Source/wiiuse/io.c
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling io.c"
+	$(V_AT)$(CC) $(JUCE_CFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/ir_c5f59709.o: ../../Source/wiiuse/ir.c
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling ir.c"
+	$(V_AT)$(CC) $(JUCE_CFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/motion_plus_6c56efed.o: ../../Source/wiiuse/motion_plus.c
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling motion_plus.c"
+	$(V_AT)$(CC) $(JUCE_CFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/nunchuk_c2c53bec.o: ../../Source/wiiuse/nunchuk.c
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling nunchuk.c"
+	$(V_AT)$(CC) $(JUCE_CFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/os_nix_c682f62.o: ../../Source/wiiuse/os_nix.c
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling os_nix.c"
+	$(V_AT)$(CC) $(JUCE_CFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/os_win_ce6dd61.o: ../../Source/wiiuse/os_win.c
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling os_win.c"
+	$(V_AT)$(CC) $(JUCE_CFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/util_339d48e2.o: ../../Source/wiiuse/util.c
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling util.c"
+	$(V_AT)$(CC) $(JUCE_CFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/wiiboard_7d1f58f.o: ../../Source/wiiuse/wiiboard.c
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling wiiboard.c"
+	$(V_AT)$(CC) $(JUCE_CFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/wiiuse_4beaa4f0.o: ../../Source/wiiuse/wiiuse.c
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling wiiuse.c"
+	$(V_AT)$(CC) $(JUCE_CFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/WiimoteManager_70322a6c.o: ../../Source/WiimoteManager.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling WiimoteManager.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/WiimoteModule_4b7bb357.o: ../../Source/WiimoteModule.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling WiimoteModule.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/WiimotePairUtil_7fe25967.o: ../../Source/WiimotePairUtil.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling WiimotePairUtil.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
 $(JUCE_OBJDIR)/GenericControllableCommand_a1b41734.o: ../../Source/GenericControllableCommand.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling GenericControllableCommand.cpp"
@@ -883,11 +974,6 @@ $(JUCE_OBJDIR)/DMXModuleEditor_d630ba09.o: ../../Source/DMXModuleEditor.cpp
 $(JUCE_OBJDIR)/DMXModule_7722bc3c.o: ../../Source/DMXModule.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling DMXModule.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/KinectV2Module_ba69ad77.o: ../../Source/KinectV2Module.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling KinectV2Module.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/SerialModule_bd87ba09.o: ../../Source/SerialModule.cpp
@@ -955,91 +1041,6 @@ $(JUCE_OBJDIR)/AudioModule_88fd4f43.o: ../../Source/AudioModule.cpp
 	@echo "Compiling AudioModule.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
-$(JUCE_OBJDIR)/os_mac_efb3b999.o: ../../Source/wiiuse/os_mac/os_mac.c
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling os_mac.c"
-	$(V_AT)$(CC) $(JUCE_CFLAGS)$(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/classic_291bdabc.o: ../../Source/wiiuse/classic.c
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling classic.c"
-	$(V_AT)$(CC) $(JUCE_CFLAGS)$(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/dynamics_fa2596f4.o: ../../Source/wiiuse/dynamics.c
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling dynamics.c"
-	$(V_AT)$(CC) $(JUCE_CFLAGS)$(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/events_a6912179.o: ../../Source/wiiuse/events.c
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling events.c"
-	$(V_AT)$(CC) $(JUCE_CFLAGS)$(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/guitar_hero_3_ed7760ad.o: ../../Source/wiiuse/guitar_hero_3.c
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling guitar_hero_3.c"
-	$(V_AT)$(CC) $(JUCE_CFLAGS)$(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/io_c5f58bc6.o: ../../Source/wiiuse/io.c
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling io.c"
-	$(V_AT)$(CC) $(JUCE_CFLAGS)$(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/ir_c5f59709.o: ../../Source/wiiuse/ir.c
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling ir.c"
-	$(V_AT)$(CC) $(JUCE_CFLAGS)$(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/motion_plus_6c56efed.o: ../../Source/wiiuse/motion_plus.c
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling motion_plus.c"
-	$(V_AT)$(CC) $(JUCE_CFLAGS)$(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/nunchuk_c2c53bec.o: ../../Source/wiiuse/nunchuk.c
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling nunchuk.c"
-	$(V_AT)$(CC) $(JUCE_CFLAGS)$(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/os_nix_c682f62.o: ../../Source/wiiuse/os_nix.c
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling os_nix.c"
-	$(V_AT)$(CC) $(JUCE_CFLAGS)$(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/os_win_ce6dd61.o: ../../Source/wiiuse/os_win.c
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling os_win.c"
-	$(V_AT)$(CC) $(JUCE_CFLAGS)$(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/util_339d48e2.o: ../../Source/wiiuse/util.c
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling util.c"
-	$(V_AT)$(CC) $(JUCE_CFLAGS)$(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/wiiboard_7d1f58f.o: ../../Source/wiiuse/wiiboard.c
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling wiiboard.c"
-	$(V_AT)$(CC) $(JUCE_CFLAGS)$(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/wiiuse_4beaa4f0.o: ../../Source/wiiuse/wiiuse.c
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling wiiuse.c"
-	$(V_AT)$(CC) $(JUCE_CFLAGS)$(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/WiimoteManager_70322a6c.o: ../../Source/WiimoteManager.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling WiimoteManager.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/WiimoteModule_4b7bb357.o: ../../Source/WiimoteModule.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling WiimoteModule.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/WiimotePairUtil_7fe25967.o: ../../Source/WiimotePairUtil.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling WiimotePairUtil.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
 $(JUCE_OBJDIR)/GamepadManager_7fa3e695.o: ../../Source/GamepadManager.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling GamepadManager.cpp"
@@ -1083,6 +1084,11 @@ $(JUCE_OBJDIR)/MIDIModuleEditor_725ffe23.o: ../../Source/MIDIModuleEditor.cpp
 $(JUCE_OBJDIR)/MIDIModule_a8b59bd6.o: ../../Source/MIDIModule.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling MIDIModule.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/DLightModule_cebd51a7.o: ../../Source/DLightModule.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling DLightModule.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/MilluminModule_c935c8ae.o: ../../Source/MilluminModule.cpp

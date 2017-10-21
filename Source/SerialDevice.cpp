@@ -95,7 +95,7 @@ int SerialDevice::writeString(String message, bool endLine)
 #if SERIALSUPPORT
 	if (!port->isOpen()) return 0;
 
-	DBG("Write string : " << message << " -- endline ? " << String(endLine));
+	//DBG("Write string : " << message << " -- endline ? " << String(endLine));
 	String m = message;
 	if (endLine) m += "\n";
 	return (int)port->write(m.toStdString());

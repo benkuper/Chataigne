@@ -26,7 +26,6 @@ public:
 	//
 	BoolParameter * active;
 
-
 	//Transition
 	Array<StateTransition *> inTransitions;
 	Array<StateTransition *> outTransitions;

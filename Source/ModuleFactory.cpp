@@ -25,6 +25,7 @@
 #include "LiveOSCModule.h"
 #include "MyoModule.h"
 #include "LaunchpadModule.h"
+#include "DLightModule.h"
 
 juce_ImplementSingleton(ModuleFactory)
 
@@ -47,6 +48,8 @@ ModuleFactory::ModuleFactory() {
 	moduleDefs.add(new ModuleDefinition("Audio", "Audio Device", &AudioModule::create));
 	moduleDefs.add(new ModuleDefinition("Audio", "LiveOSC", &LiveOSCModule::create));
 	moduleDefs.add(new ModuleDefinition("Audio", "Reaper", &ReaperModule::create));
+	
+	moduleDefs.add(new ModuleDefinition("Light", "DLight", &DLightModule::create));
 
 	moduleDefs.add(new ModuleDefinition("Video", "Resolume", &ResolumeModule::create));
 	moduleDefs.add(new ModuleDefinition("Video", "Millumin", &MilluminModule::create));
