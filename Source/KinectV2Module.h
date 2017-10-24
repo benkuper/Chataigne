@@ -13,7 +13,13 @@
 
 #include "Module.h"
 
-#if JUCE_WINDOWS
+#if JUCE_WINDOWS && WINVER!=0x0701
+#define USE_KINECT 1
+#else
+#define USE_KINECT 0
+#endif
+
+#if USE_KINECT
 #include "Kinect.h"
 #endif
 
@@ -39,7 +45,7 @@ public:
 	bool initKinect();
 	void updateKinect();
 
-#if JUCE_WINDOWS
+#if USE_KINECT
 	void processBody(int nBodyCount, IBody** ppBodies);
 #endif
   
@@ -47,7 +53,7 @@ public:
 
 
 	// Current Kinect
-#if JUCE_WINDOWS
+#if USE_KINECT
 	IKinectSensor*          m_pKinectSensor;
 	ICoordinateMapper*      m_pCoordinateMapper;
 

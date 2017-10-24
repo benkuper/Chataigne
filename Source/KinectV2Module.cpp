@@ -33,7 +33,7 @@ KinectV2Module::~KinectV2Module()
 {
 	stopTimer();
 
-#if JUCE_WINDOWS
+#if USE_KINECT
 	SafeRelease(m_pBodyFrameReader);
 	SafeRelease(m_pCoordinateMapper);
 	if (m_pKinectSensor) m_pKinectSensor->Close();
@@ -43,7 +43,7 @@ KinectV2Module::~KinectV2Module()
 
 bool KinectV2Module::initKinect()
 {
-#if JUCE_WINDOWS
+#if USE_KINECT
 
 	HRESULT hr;
 
@@ -85,7 +85,7 @@ bool KinectV2Module::initKinect()
 
 void KinectV2Module::updateKinect()
 {
-#if JUCE_WINDOWS
+#if USE_KINECT
 	if (!m_pBodyFrameReader)
 	{
 		return;
@@ -123,7 +123,7 @@ void KinectV2Module::updateKinect()
 #endif
 }
 
-#if JUCE_WINDOWS
+#if USE_KINECT
 void KinectV2Module::processBody(int nBodyCount, IBody ** ppBodies)
 {
 	IBody* pBody = nullptr;
