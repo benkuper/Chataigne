@@ -27,6 +27,7 @@ DMXModuleEditor::DMXModuleEditor(DMXModule * module, bool isRoot) :
 
 DMXModuleEditor::~DMXModuleEditor()
 {
+	dmxModule->removeDMXModuleListener(this);
 }
 
 void DMXModuleEditor::resizedInternalContent(Rectangle<int>& r)

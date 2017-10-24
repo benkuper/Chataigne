@@ -78,7 +78,7 @@ void TimeTriggerManager::onControllableFeedbackUpdate(ControllableContainer * cc
 
 void TimeTriggerManager::sequenceCurrentTimeChanged(Sequence * /*_sequence*/, float prevTime, bool evaluateSkippedData)
 {
-	if (!layer->enabled->boolValue()) return;
+	if (!layer->enabled->boolValue() || !sequence->enabled->boolValue()) return;
 
 	if (sequence->currentTime->floatValue() >= prevTime)
 	{ 

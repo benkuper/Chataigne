@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.1.0"
+<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.1.1"
               bundleIdentifier="benkuper.Chataigne" includeBinaryInAppConfig="1"
               jucerVersion="5.1.2" companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
               companyEmail="benjamin@kuperberg.fr" defines="" displaySplashScreen="1"
@@ -1143,7 +1143,7 @@
       </MODULEPATHS>
     </XCODE_MAC>
     <VS2017 targetFolder="Builds/VisualStudio2017" externalLibraries="Setupapi.lib&#10;hid.lib&#10;Kinect20.lib"
-            smallIcon="nVz6Li" bigIcon="nVz6Li">
+            smallIcon="nVz6Li" bigIcon="nVz6Li" windowsTargetPlatformVersion="8.1">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" winWarningLevel="4" generateManifest="1" winArchitecture="x64"
                        isDebug="1" optimisation="1" targetName="Chataigne-x64_Debug"

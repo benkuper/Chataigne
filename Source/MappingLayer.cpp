@@ -224,7 +224,7 @@ void MappingLayer::sequenceTotalTimeChanged(Sequence *)
 
 void MappingLayer::sequenceCurrentTimeChanged(Sequence *, float, bool)
 {
-	if (!enabled->boolValue()) return;
+	if (!enabled->boolValue() || !sequence->enabled->boolValue()) return;
 	
 	if (getMappingMode() == MODE_COLOR)
 	{
