@@ -14,6 +14,7 @@
 
 #include "AppConfig.h"
 
+#include <juce_analytics/juce_analytics.h>
 #include <juce_audio_basics/juce_audio_basics.h>
 #include <juce_audio_devices/juce_audio_devices.h>
 #include <juce_audio_formats/juce_audio_formats.h>
@@ -43,7 +44,7 @@
 namespace ProjectInfo
 {
     const char* const  projectName    = "Chataigne";
-    const char* const  versionString  = "1.1.1";
-    const int          versionNumber  = 0x10101;
+    const char* const  versionString  = "1.1.2";
+    const int          versionNumber  = 0x10102;
 }
 #endif

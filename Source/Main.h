@@ -30,6 +30,8 @@ It contains the basic startup code for a Juce application.
 #include "MainComponent.h"
 #include "ChataigneEngine.h"
 
+#include "GoogleAnalyticsDestination.h"
+
 //==============================================================================
 class ChataigneApplication : public JUCEApplication
 {
@@ -51,6 +53,7 @@ public:
 	void initialise(const String& /*commandLine*/) override;
 
 	void shutdown() override;
+
 
 	//==============================================================================
 	void systemRequestedQuit() override;
@@ -97,7 +100,10 @@ public:
 	ScopedPointer<MainWindow> mainWindow;
 };
 
-
+#if JUCE_WINDOWS
+#include <windows.h>
+LONG WINAPI createMiniDump(LPEXCEPTION_POINTERS exceptionPointers);
+#endif
 
 static ChataigneApplication& getApp() { return *dynamic_cast<ChataigneApplication*>(JUCEApplication::getInstance()); }
 String getAppVersion() { return getApp().getApplicationVersion(); }

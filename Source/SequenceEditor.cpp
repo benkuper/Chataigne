@@ -27,8 +27,8 @@ panelManagerUI(_sequence->layerManager),
 	timelineContainer.addAndMakeVisible(&navigationUI);
 	timelineContainer.addAndMakeVisible(&timelineManagerUI);
 
-	panelManagerUI.viewport.getVerticalScrollBar()->addListener(this);
-	timelineManagerUI.viewport.getVerticalScrollBar()->addListener(this);
+	panelManagerUI.viewport.getVerticalScrollBar().addListener(this);
+	timelineManagerUI.viewport.getVerticalScrollBar().addListener(this);
 
 	panelManagerUI.viewport.addMouseListener(this, false);
 	timelineManagerUI.viewport.addMouseListener(this, false);
@@ -69,7 +69,7 @@ void SequenceEditor::resized()
 
 void SequenceEditor::scrollBarMoved(ScrollBar * scrollBarThatHasMoved, double /*newRangeStart*/)
 {
-	if (scrollBarThatHasMoved == panelManagerUI.viewport.getVerticalScrollBar())
+	if (scrollBarThatHasMoved == &panelManagerUI.viewport.getVerticalScrollBar())
 	{
 		timelineManagerUI.viewport.setViewPosition(panelManagerUI.viewport.getViewPosition());
 	}

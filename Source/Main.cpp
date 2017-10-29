@@ -30,16 +30,40 @@ inline void ChataigneApplication::initialise(const String & commandLine)
 
 	AppUpdater::getInstance()->setURLs(URL("http://benjamin.kuperberg.fr/chataigne/releases/update.json"), URL("http://benjamin.kuperberg.fr/chataigne/#download"));
 	AppUpdater::getInstance()->checkForUpdates();
-	
+
+
+	//ANALYTICS
+	Analytics::getInstance()->setUserId(SystemStats::getFullUserName());
+
+	// Add any other constant user information.
+	DBG("version " << getAppVersion() << ", " << SystemStats::getOperatingSystemName());
+	/*
+	StringPairArray userData;
+	userData.set("app-version", getAppVersion());
+	userData.set("Operating System", SystemStats::getOperatingSystemName());
+	Analytics::getInstance()->setUserProperties(userData);
+	*/
+
+	// Add any analytics destinations we want to use to the Analytics singleton.
+	Analytics::getInstance()->addDestination(new GoogleAnalyticsDestination());
+	Analytics::getInstance()->logEvent("startup", {});
+
+
+	//Crash handler
+	SystemStats::setApplicationCrashHandler((SystemStats::CrashHandlerFunction)createMiniDump);
 }
+
 
 inline void ChataigneApplication::shutdown()
 {
 	// Add your application's shutdown code here..
 	mainWindow = nullptr; // (deletes our window)
+
+	Analytics::getInstance()->logEvent("shutdown", {});	
 	
 	AppUpdater::deleteInstance();
 }
+
 
 //==============================================================================
 
@@ -92,11 +116,10 @@ inline ChataigneApplication::MainWindow::MainWindow(String name) : DocumentWindo
 	openGLContext.attachTo(*this);
 #endif
 	mainComponent->init();
-
 	
 }
 
-inline void ChataigneApplication::MainWindow::closeButtonPressed()
+inline void ChataigneApplication::MainWindow::closeButtonPressed() 
 {
 	// This is called when the user tries to close this window. Here, we'll just
 	// ask the app to quit when this happens, but you can change this to do
@@ -118,4 +141,3 @@ inline void ChataigneApplication::MainWindow::closeButtonPressed()
 
 	JUCEApplication::getInstance()->systemRequestedQuit();
 }
-

@@ -103,7 +103,7 @@ void TCPModule::sendStringPacket(const String &s)
 	 }
 
 	sender.write(s.getCharPointer(), s.length());
-	sender.close();
+	//sender.close();
 }
 
 void TCPModule::onContainerParameterChangedInternal(Parameter * p)

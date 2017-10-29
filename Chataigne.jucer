@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.1.1"
+<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.1.2"
               bundleIdentifier="benkuper.Chataigne" includeBinaryInAppConfig="1"
-              jucerVersion="5.1.2" companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
+              jucerVersion="5.2.0" companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
               companyEmail="benjamin@kuperberg.fr" defines="" displaySplashScreen="1"
-              reportAppUsage="1" splashScreenColour="Dark" cppLanguageStandard="11">
+              reportAppUsage="1" splashScreenColour="Dark" cppLanguageStandard="11"
+              companyCopyright="Ben Kuper">
   <MAINGROUP id="EDDVhd" name="Chataigne">
     <GROUP id="{E61F6705-4C4B-3F04-F742-20CC91F590E4}" name="Resources">
       <FILE id="fwyowN" name="add.png" compile="0" resource="1" file="Resources/add.png"/>
@@ -19,6 +20,10 @@
       <FILE id="Umk8sJ" name="stop.png" compile="0" resource="1" file="Resources/stop.png"/>
     </GROUP>
     <GROUP id="{31908E9E-F626-E2D6-1A6D-E188C9D72C25}" name="Source">
+      <GROUP id="{C6C9402E-3E5F-DA24-8E22-DE4CD0AB4FD4}" name="Analytics">
+        <FILE id="rqVuQx" name="GoogleAnalyticsDestination.h" compile="0" resource="0"
+              file="Source/GoogleAnalyticsDestination.h"/>
+      </GROUP>
       <GROUP id="{FA0E78EC-9F83-99D0-4BB9-C686CC8B957D}" name="UI">
         <FILE id="iuBdcn" name="ChataigneAssetManager.cpp" compile="1" resource="0"
               file="Source/ChataigneAssetManager.cpp"/>
@@ -1110,6 +1115,8 @@
             file="Source/MainComponent.cpp"/>
       <FILE id="ue12z5" name="MainComponentCommands.cpp" compile="1" resource="0"
             file="Source/MainComponentCommands.cpp"/>
+      <FILE id="FIKyBS" name="CrashHandler.cpp" compile="1" resource="0"
+            file="Source/CrashHandler.cpp"/>
     </GROUP>
   </MAINGROUP>
   <EXPORTFORMATS>
@@ -1119,9 +1126,10 @@
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" isDebug="1" optimisation="1" targetName="Chataigne"
                        headerPath="../../External/wiiuse&#10;../../External/serial/include"
-                       cppLanguageStandard="c++11" cppLibType="libc++"/>
+                       cppLanguageStandard="c++11" cppLibType="libc++" enablePluginBinaryCopyStep="1"/>
         <CONFIGURATION name="Release" isDebug="0" optimisation="3" targetName="Chataigne"
-                       headerPath="../../External/wiiuse&#10;../../External/serial/include"/>
+                       headerPath="../../External/wiiuse&#10;../../External/serial/include"
+                       enablePluginBinaryCopyStep="1"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_video" path="/Applications/JUCE/modules"/>
@@ -1140,6 +1148,7 @@
         <MODULEPATH id="juce_audio_utils" path="/Applications/JUCE/modules"/>
         <MODULEPATH id="juce_gui_extra" path="/Applications/JUCE/modules"/>
         <MODULEPATH id="juce_organicui" path="../JUCE Modules"/>
+        <MODULEPATH id="juce_analytics" path="../../../../Softwares/JUCE/modules"/>
       </MODULEPATHS>
     </XCODE_MAC>
     <VS2017 targetFolder="Builds/VisualStudio2017" externalLibraries="Setupapi.lib&#10;hid.lib&#10;Kinect20.lib"
@@ -1148,10 +1157,13 @@
         <CONFIGURATION name="Debug" winWarningLevel="4" generateManifest="1" winArchitecture="x64"
                        isDebug="1" optimisation="1" targetName="Chataigne-x64_Debug"
                        headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;$(ASIOSDK)/common&#10;$(KINECTSDK20_DIR)inc&#10;"
-                       libraryPath="$(KINECTSDK20_DIR)Lib\x64&#10;" binaryPath="Binaries"/>
+                       libraryPath="$(KINECTSDK20_DIR)Lib\x64&#10;" binaryPath="Binaries"
+                       debugInformationFormat="ProgramDatabase" enablePluginBinaryCopyStep="0"/>
         <CONFIGURATION name="Release" winWarningLevel="4" generateManifest="1" winArchitecture="x64"
                        isDebug="0" optimisation="3" targetName="Chataigne-x64" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;$(ASIOSDK)/common&#10;$(KINECTSDK20_DIR)inc&#10;"
-                       libraryPath="$(KINECTSDK20_DIR)Lib\x64&#10;" binaryPath="Binaries"/>
+                       libraryPath="$(KINECTSDK20_DIR)Lib\x64&#10;" binaryPath="Binaries"
+                       debugInformationFormat="ProgramDatabase" enablePluginBinaryCopyStep="0"
+                       linkTimeOptimisation="1"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_video" path="D:/Softwares\JUCE\modules"/>
@@ -1170,6 +1182,7 @@
         <MODULEPATH id="juce_audio_formats" path="D:/Softwares\JUCE\modules"/>
         <MODULEPATH id="juce_audio_devices" path="D:/Softwares\JUCE\modules"/>
         <MODULEPATH id="juce_audio_basics" path="D:/Softwares\JUCE\modules"/>
+        <MODULEPATH id="juce_analytics" path="../../../../Softwares/JUCE/modules"/>
       </MODULEPATHS>
     </VS2017>
     <LINUX_MAKE targetFolder="Builds/LinuxMakefile" externalLibraries="bluetooth">
@@ -1196,10 +1209,12 @@
         <MODULEPATH id="juce_audio_formats" path="../JUCE/modules"/>
         <MODULEPATH id="juce_audio_devices" path="../JUCE/modules"/>
         <MODULEPATH id="juce_audio_basics" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_analytics" path="../../../../Softwares/JUCE/modules"/>
       </MODULEPATHS>
     </LINUX_MAKE>
   </EXPORTFORMATS>
   <MODULES>
+    <MODULE id="juce_analytics" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_audio_basics" showAllCode="1" useLocalCopy="0"/>
     <MODULE id="juce_audio_devices" showAllCode="1" useLocalCopy="0"/>
     <MODULE id="juce_audio_formats" showAllCode="1" useLocalCopy="0"/>
