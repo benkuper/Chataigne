@@ -50,7 +50,9 @@ inline void ChataigneApplication::initialise(const String & commandLine)
 
 
 	//Crash handler
+#if JUCE_WINDOWS || JUCE_MAC
 	SystemStats::setApplicationCrashHandler((SystemStats::CrashHandlerFunction)createMiniDump);
+#endif
 }
 
 
