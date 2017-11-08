@@ -1152,7 +1152,8 @@
       </MODULEPATHS>
     </XCODE_MAC>
     <VS2017 targetFolder="Builds/VisualStudio2017" externalLibraries="Setupapi.lib&#10;hid.lib&#10;Kinect20.lib"
-            smallIcon="nVz6Li" bigIcon="nVz6Li" windowsTargetPlatformVersion="8.1">
+            smallIcon="nVz6Li" bigIcon="nVz6Li" windowsTargetPlatformVersion="10.0.16299.0"
+            vst3Folder="">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" winWarningLevel="4" generateManifest="1" winArchitecture="x64"
                        isDebug="1" optimisation="1" targetName="Chataigne-x64_Debug"

@@ -25,7 +25,7 @@ CustomOSCModule::CustomOSCModule() :
 	autoRange = addBoolParameter("Auto Range", "If checked, will change range of already existing values if more than one argument is provided in the incoming OSC message", false);
 	autoRange->isTargettable = false;
 
-	splitArgs = addBoolParameter("Split Arguments", "If checked, a message with multiple arguments will be exploded in multliple values", true);
+	splitArgs = addBoolParameter("Split Arguments", "If checked, a message with multiple arguments will be exploded in multliple values", false);
 	splitArgs->isTargettable = false;
 
 
