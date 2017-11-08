@@ -7,3 +7,5 @@ This page will be updated once it comes to a stable version.
 You can find all the informations here : http://benjamin.kuperberg.fr/chataigne
 
 Linux : [![Build Status](https://travis-ci.org/benkuper/Chataigne.svg?branch=master)](https://travis-ci.org/benkuper/Chataigne)
+
+[![forthebadge](http://forthebadge.com/images/badges/gluten-free.svg)](http://forthebadge.com)
