@@ -49,7 +49,7 @@ void MIDIInputDevice::removeMIDIInputListener(MIDIInputListener * listener) {
 	inputListeners.remove(listener);
 	if (inputListeners.size() == 0)
 	{
-		device->stop();
+		if(device != nullptr) device->stop();
 		device = nullptr;
 		LOG("MIDI In " << name << " closed");
 	}

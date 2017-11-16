@@ -100,7 +100,7 @@
 #endif
 
 #ifndef    JUCE_USE_WINRT_MIDI
- //#define JUCE_USE_WINRT_MIDI 1
+ #define   JUCE_USE_WINRT_MIDI 1
 #endif
 
 //==============================================================================

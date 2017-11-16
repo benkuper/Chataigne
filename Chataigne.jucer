@@ -1157,7 +1157,7 @@
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" winWarningLevel="4" generateManifest="1" winArchitecture="x64"
                        isDebug="1" optimisation="1" targetName="Chataigne-x64_Debug"
-                       headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;$(ASIOSDK)/common&#10;$(KINECTSDK20_DIR)inc&#10;"
+                       headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;$(ASIOSDK)/common&#10;$(KINECTSDK20_DIR)inc"
                        libraryPath="$(KINECTSDK20_DIR)Lib\x64&#10;" binaryPath="Binaries"
                        debugInformationFormat="ProgramDatabase" enablePluginBinaryCopyStep="0"/>
         <CONFIGURATION name="Release" winWarningLevel="4" generateManifest="1" winArchitecture="x64"
@@ -1234,7 +1234,8 @@
     <MODULE id="juce_video" showAllCode="1" useLocalCopy="0"/>
   </MODULES>
   <JUCEOPTIONS JUCE_ASIO="enabled" JUCE_WASAPI="enabled" JUCE_ENABLE_LIVE_CONSTANT_EDITOR="disabled"
-               JUCE_USE_CDREADER="disabled" JUCE_USE_CDBURNER="disabled" JUCE_WEB_BROWSER="disabled"/>
+               JUCE_USE_CDREADER="disabled" JUCE_USE_CDBURNER="disabled" JUCE_WEB_BROWSER="disabled"
+               JUCE_USE_WINRT_MIDI="enabled"/>
   <LIVE_SETTINGS>
     <WINDOWS/>
   </LIVE_SETTINGS>
