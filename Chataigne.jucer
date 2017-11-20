@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.1.2"
+<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.1.3"
               bundleIdentifier="benkuper.Chataigne" includeBinaryInAppConfig="1"
               jucerVersion="5.2.0" companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
               companyEmail="benjamin@kuperberg.fr" defines="" displaySplashScreen="1"
@@ -17,6 +17,7 @@
       <FILE id="NkuJtC" name="out.png" compile="0" resource="1" file="Resources/out.png"/>
       <FILE id="otwIvC" name="playpause.png" compile="0" resource="1" file="Resources/playpause.png"/>
       <FILE id="S9TDqN" name="prevcue.png" compile="0" resource="1" file="Resources/prevcue.png"/>
+      <FILE id="kly3dv" name="snap.png" compile="0" resource="1" file="Resources/snap.png"/>
       <FILE id="Umk8sJ" name="stop.png" compile="0" resource="1" file="Resources/stop.png"/>
     </GROUP>
     <GROUP id="{31908E9E-F626-E2D6-1A6D-E188C9D72C25}" name="Source">
@@ -146,6 +147,56 @@
                     file="Source/ConsequenceManager.h"/>
             </GROUP>
             <GROUP id="{769E1555-7F3A-B046-7FF9-5B14A6197BBD}" name="Condition">
+              <GROUP id="{D6ADE71C-FE26-85F8-193D-108C1D0EF059}" name="conditions">
+                <GROUP id="{42D35307-D62F-0CDA-D315-E549DE0408B4}" name="MetronomeCondition">
+                  <GROUP id="{B39504EB-EA3D-F052-76AC-B04BDB82E9C8}" name="ui">
+                    <FILE id="LlvWlc" name="MetronomeConditionEditor.cpp" compile="1" resource="0"
+                          file="Source/MetronomeConditionEditor.cpp"/>
+                    <FILE id="mPOEMR" name="MetronomeConditionEditor.h" compile="0" resource="0"
+                          file="Source/MetronomeConditionEditor.h"/>
+                  </GROUP>
+                  <FILE id="iy3unS" name="MetronomeCondition.cpp" compile="1" resource="0"
+                        file="Source/MetronomeCondition.cpp"/>
+                  <FILE id="S0Qv8p" name="MetronomeCondition.h" compile="0" resource="0"
+                        file="Source/MetronomeCondition.h"/>
+                </GROUP>
+                <GROUP id="{4E3CE793-8D65-93CF-8AFA-F33A32BF6F35}" name="ConditionGroup">
+                  <GROUP id="{ECA9CF9E-1C8E-195B-70A9-6453F657995A}" name="ui">
+                    <FILE id="hpdh0U" name="ConditionGroupEditor.cpp" compile="1" resource="0"
+                          file="Source/ConditionGroupEditor.cpp"/>
+                    <FILE id="wFRCqW" name="ConditionGroupEditor.h" compile="0" resource="0"
+                          file="Source/ConditionGroupEditor.h"/>
+                  </GROUP>
+                  <FILE id="NGGpN7" name="ConditionGroup.cpp" compile="1" resource="0"
+                        file="Source/ConditionGroup.cpp"/>
+                  <FILE id="wwczXx" name="ConditionGroup.h" compile="0" resource="0"
+                        file="Source/ConditionGroup.h"/>
+                </GROUP>
+                <GROUP id="{66C7CAB4-ECBE-9B4A-BDC2-588579156B34}" name="StandardCondition">
+                  <GROUP id="{DC79D7C6-CCCD-5C7E-3154-0F96DD36AA58}" name="ui">
+                    <FILE id="aO7fuv" name="StandardConditionEditor.cpp" compile="1" resource="0"
+                          file="Source/StandardConditionEditor.cpp"/>
+                    <FILE id="Yp6Abo" name="StandardConditionEditor.h" compile="0" resource="0"
+                          file="Source/StandardConditionEditor.h"/>
+                  </GROUP>
+                  <FILE id="JDKgNt" name="StandardCondition.cpp" compile="1" resource="0"
+                        file="Source/StandardCondition.cpp"/>
+                  <FILE id="tsxk35" name="StandardCondition.h" compile="0" resource="0"
+                        file="Source/StandardCondition.h"/>
+                </GROUP>
+                <GROUP id="{EF2C888A-D4C9-2356-FE5E-C1B1D12C8DC5}" name="ScriptCondition">
+                  <GROUP id="{95DAFD60-D945-AB1E-656A-54029A7FB58C}" name="ui">
+                    <FILE id="UXdtDa" name="ScriptConditionEditor.cpp" compile="1" resource="0"
+                          file="Source/ScriptConditionEditor.cpp"/>
+                    <FILE id="HiTq6P" name="ScriptConditionEditor.h" compile="0" resource="0"
+                          file="Source/ScriptConditionEditor.h"/>
+                  </GROUP>
+                  <FILE id="Bz3iRb" name="ScriptCondition.cpp" compile="1" resource="0"
+                        file="Source/ScriptCondition.cpp"/>
+                  <FILE id="iBlBPS" name="ScriptCondition.h" compile="0" resource="0"
+                        file="Source/ScriptCondition.h"/>
+                </GROUP>
+              </GROUP>
               <GROUP id="{B168FE5B-E463-8457-D620-EA993DA00F90}" name="Comparator">
                 <GROUP id="{E0F1A125-84A7-ED5C-8D6A-735A660A6079}" name="comparators">
                   <FILE id="jssh1a" name="BoolComparators.cpp" compile="1" resource="0"
@@ -193,22 +244,10 @@
                       file="Source/ConditionEditor.cpp"/>
                 <FILE id="AwyrOr" name="ConditionEditor.h" compile="0" resource="0"
                       file="Source/ConditionEditor.h"/>
-                <FILE id="hpdh0U" name="ConditionGroupEditor.cpp" compile="1" resource="0"
-                      file="Source/ConditionGroupEditor.cpp"/>
-                <FILE id="wFRCqW" name="ConditionGroupEditor.h" compile="0" resource="0"
-                      file="Source/ConditionGroupEditor.h"/>
                 <FILE id="VroQQY" name="ConditionManagerEditor.cpp" compile="1" resource="0"
                       file="Source/ConditionManagerEditor.cpp"/>
                 <FILE id="xE4dGT" name="ConditionManagerEditor.h" compile="0" resource="0"
                       file="Source/ConditionManagerEditor.h"/>
-                <FILE id="UXdtDa" name="ScriptConditionEditor.cpp" compile="1" resource="0"
-                      file="Source/ScriptConditionEditor.cpp"/>
-                <FILE id="HiTq6P" name="ScriptConditionEditor.h" compile="0" resource="0"
-                      file="Source/ScriptConditionEditor.h"/>
-                <FILE id="aO7fuv" name="StandardConditionEditor.cpp" compile="1" resource="0"
-                      file="Source/StandardConditionEditor.cpp"/>
-                <FILE id="Yp6Abo" name="StandardConditionEditor.h" compile="0" resource="0"
-                      file="Source/StandardConditionEditor.h"/>
               </GROUP>
               <FILE id="Kyggr9" name="Condition.cpp" compile="1" resource="0" file="Source/Condition.cpp"/>
               <FILE id="gnmFm6" name="Condition.h" compile="0" resource="0" file="Source/Condition.h"/>
@@ -216,22 +255,10 @@
                     file="Source/ConditionFactory.cpp"/>
               <FILE id="uRiAam" name="ConditionFactory.h" compile="0" resource="0"
                     file="Source/ConditionFactory.h"/>
-              <FILE id="NGGpN7" name="ConditionGroup.cpp" compile="1" resource="0"
-                    file="Source/ConditionGroup.cpp"/>
-              <FILE id="wwczXx" name="ConditionGroup.h" compile="0" resource="0"
-                    file="Source/ConditionGroup.h"/>
               <FILE id="m7eN67" name="ConditionManager.cpp" compile="1" resource="0"
                     file="Source/ConditionManager.cpp"/>
               <FILE id="wbiUmU" name="ConditionManager.h" compile="0" resource="0"
                     file="Source/ConditionManager.h"/>
-              <FILE id="Bz3iRb" name="ScriptCondition.cpp" compile="1" resource="0"
-                    file="Source/ScriptCondition.cpp"/>
-              <FILE id="iBlBPS" name="ScriptCondition.h" compile="0" resource="0"
-                    file="Source/ScriptCondition.h"/>
-              <FILE id="JDKgNt" name="StandardCondition.cpp" compile="1" resource="0"
-                    file="Source/StandardCondition.cpp"/>
-              <FILE id="tsxk35" name="StandardCondition.h" compile="0" resource="0"
-                    file="Source/StandardCondition.h"/>
             </GROUP>
             <GROUP id="{0A23E296-656D-518E-2323-EACB0750AC2B}" name="ui">
               <FILE id="ztgUPf" name="ActionEditor.cpp" compile="1" resource="0"
@@ -381,14 +408,14 @@
                 file="Source/CommandDefinition.cpp"/>
           <FILE id="fpS2bd" name="CommandDefinition.h" compile="0" resource="0"
                 file="Source/CommandDefinition.h"/>
+          <FILE id="udVfFR" name="CommandFactory.cpp" compile="1" resource="0"
+                file="Source/CommandFactory.cpp"/>
           <FILE id="DP7DYb" name="CommandDefinitionManager.cpp" compile="1" resource="0"
                 file="Source/CommandDefinitionManager.cpp"/>
           <FILE id="yXGZfp" name="CommandDefinitionManager.h" compile="0" resource="0"
                 file="Source/CommandDefinitionManager.h"/>
           <FILE id="m7AMBt" name="BaseCommand.cpp" compile="1" resource="0" file="Source/BaseCommand.cpp"/>
           <FILE id="ermHIT" name="BaseCommand.h" compile="0" resource="0" file="Source/BaseCommand.h"/>
-          <FILE id="udVfFR" name="CommandFactory.cpp" compile="1" resource="0"
-                file="Source/CommandFactory.cpp"/>
           <FILE id="UD0p9m" name="CommandFactory.h" compile="0" resource="0"
                 file="Source/CommandFactory.h"/>
         </GROUP>
@@ -814,6 +841,12 @@
                     file="Source/CustomOSCModule.h"/>
             </GROUP>
             <GROUP id="{BF093733-18A9-3232-92C5-8EF7D8E70785}" name="resolume">
+              <GROUP id="{9333C5FD-BF0D-C988-34A4-D4292DB7F787}" name="ui">
+                <FILE id="uY2Y7A" name="ResolumeModuleEditor.cpp" compile="1" resource="0"
+                      file="Source/ResolumeModuleEditor.cpp"/>
+                <FILE id="BzO1GX" name="ResolumeModuleEditor.h" compile="0" resource="0"
+                      file="Source/ResolumeModuleEditor.h"/>
+              </GROUP>
               <GROUP id="{DF8332B1-E904-037C-CFF6-826235CCF3E7}" name="commands">
                 <GROUP id="{F03902D2-C5EC-4D94-E73B-E18E5AF2CDED}" name="ui">
                   <FILE id="Kn9jS2" name="ResolumeBaseCommandEditor.cpp" compile="1"

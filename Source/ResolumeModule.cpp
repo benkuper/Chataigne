@@ -12,10 +12,14 @@
 #include "CommandFactory.h"
 #include "ResolumeClipCommand.h"
 #include "ResolumeFXCommand.h"
+#include "ResolumeModuleEditor.h"
 
 ResolumeModule::ResolumeModule() :
 	OSCModule(getDefaultTypeString(),7001,7000)
 {	
+	version = addEnumParameter("Resolume Version", "Version of Resolume");
+	version->addOption("Resolume 5", 5)->addOption("Resolume 6", 6);
+
 	var stopArgs = var();
 	stopArgs.append(ControllableUtil::createDataForParam(IntParameter::getTypeStringStatic(),"Value","Resolume needs this arg to trigger",1,0,1,false,true));
 
@@ -33,4 +37,9 @@ ResolumeModule::ResolumeModule() :
 	defManager.add(CommandDefinition::createDef(this, "Effects", "Audio FX", &ResolumeFXCommand::create, CommandContext::BOTH)->addParam("fxType", "vst"));
 	defManager.add(CommandDefinition::createDef(this, "Effects", "Source Parameter", &ResolumeFXCommand::create, CommandContext::BOTH)->addParam("fxType", "source"));
 
+}
+
+InspectableEditor * ResolumeModule::getEditor(bool isRoot)
+{
+	return new ResolumeModuleEditor(this,isRoot);
 }

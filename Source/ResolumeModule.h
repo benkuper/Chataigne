@@ -19,6 +19,10 @@ class ResolumeModule :
 public:
 	ResolumeModule();
 	~ResolumeModule() {}
+	
+	EnumParameter * version;
+
+	InspectableEditor * getEditor(bool isRoot) override;
 
 	static ResolumeModule * create() { return new ResolumeModule(); }
 	virtual String getDefaultTypeString() const override { return "Resolume"; }

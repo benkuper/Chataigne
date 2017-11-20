@@ -105,8 +105,9 @@ MainContentComponent::~MainContentComponent()
 }
 
 void MainContentComponent::init()
-{
+{	
 	addAndMakeVisible(&ShapeShifterManager::getInstance()->mainContainer);
+	grabKeyboardFocus();
 }
 
 void MainContentComponent::paint (Graphics& g)

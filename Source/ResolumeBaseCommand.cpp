@@ -51,19 +51,24 @@ void ResolumeBaseCommand::rebuildAddress()
 {
 	Level level = (Level)(int)levelParam->getValueData();
 
+	int resolumeVersion = (int)resolumeModule->version->getValueData();
+
 	switch (level)
 	{
 	case COMPOSITION:
 		address->setValue("/composition/"+addressSuffix);
 		break;
 	case LAYER:
-		address->setValue("/layer" + layerParam->stringValue()+"/"+addressSuffix);
+		if (resolumeVersion >= 6) address->setValue("/composition/layers/" + layerParam->stringValue() + "/" + addressSuffix);
+		else address->setValue("/layer" + layerParam->stringValue()+"/"+addressSuffix);
 		break;
 	case CLIP:
-		address->setValue("/layer" + layerParam->stringValue() + "/clip" + clipParam->stringValue()+"/"+addressSuffix);
+		if (resolumeVersion >= 6) address->setValue("/composition/layers/" + layerParam->stringValue() + "/clips/"+clipParam->stringValue()+"/"+ addressSuffix);
+		else address->setValue("/layer" + layerParam->stringValue() + "/clip" + clipParam->stringValue()+"/"+addressSuffix);
 		break;
 	case COLUMN:
-		address->setValue("/track" + clipParam->stringValue() + "/" + addressSuffix);
+		if (resolumeVersion >= 6) address->setValue("/composition/columns/" + clipParam->stringValue() + "/" + addressSuffix);
+		else address->setValue("/track" + clipParam->stringValue() + "/" + addressSuffix);
 		break;
 	}
 

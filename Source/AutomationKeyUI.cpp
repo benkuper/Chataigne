@@ -61,6 +61,27 @@ void AutomationKeyUI::setKeyPositions(const int &k1, const int &k2)
 	handle.setBounds(hr);
 }
 
+void AutomationKeyUI::showKeyEditorWindow()
+{
+	AlertWindow keyEditorWindow("Set key position and value", "Fine tune this key's position and value", AlertWindow::AlertIconType::NoIcon, this);
+	keyEditorWindow.addTextEditor("pos", item->position->stringValue(), "Position");
+	keyEditorWindow.addTextEditor("val", item->value->stringValue(), "Value");
+	
+
+	keyEditorWindow.addButton("OK", 1, KeyPress(KeyPress::returnKey));
+	keyEditorWindow.addButton("Cancel", 0, KeyPress(KeyPress::escapeKey));
+
+	int result = keyEditorWindow.runModalLoop();
+
+	if (result)
+	{
+		float newPos = keyEditorWindow.getTextEditorContents("pos").getFloatValue();
+		float newValue = keyEditorWindow.getTextEditorContents("val").getFloatValue();
+		item->position->setValue(newPos);
+		item->value->setValue(newValue);
+	}
+}
+
 void AutomationKeyUI::resized()
 {
 
@@ -118,6 +139,11 @@ void AutomationKeyUI::mouseDown(const MouseEvent & e)
 	}
 
 	
+}
+
+void AutomationKeyUI::mouseDoubleClick(const MouseEvent & e)
+{
+	showKeyEditorWindow();
 }
 
 void AutomationKeyUI::controllableFeedbackUpdateInternal(Controllable * c)

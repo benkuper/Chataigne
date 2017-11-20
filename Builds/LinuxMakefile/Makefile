@@ -33,7 +33,7 @@ ifeq ($(CONFIG),Debug)
     TARGET_ARCH := -march=native
   endif
 
-  JUCE_CPPFLAGS := $(DEPFLAGS) -DLINUX=1 -DDEBUG=1 -D_DEBUG=1 -DJUCER_LINUX_MAKE_6D53C8B4=1 -DJUCE_APP_VERSION=1.1.2 -DJUCE_APP_VERSION_HEX=0x10102 $(shell pkg-config --cflags alsa freetype2 libcurl x11 xext xinerama) -pthread -I../../JuceLibraryCode -I../../../../../../Softwares/JUCE/modules -I../../../JUCE/modules -I../../../JUCE\ Modules -I../../External/wiiuse -I../../External/serial/include $(CPPFLAGS)
+  JUCE_CPPFLAGS := $(DEPFLAGS) -DLINUX=1 -DDEBUG=1 -D_DEBUG=1 -DJUCER_LINUX_MAKE_6D53C8B4=1 -DJUCE_APP_VERSION=1.1.3 -DJUCE_APP_VERSION_HEX=0x10103 $(shell pkg-config --cflags alsa freetype2 libcurl x11 xext xinerama) -pthread -I../../JuceLibraryCode -I../../../../../../Softwares/JUCE/modules -I../../../JUCE/modules -I../../../JUCE\ Modules -I../../External/wiiuse -I../../External/serial/include $(CPPFLAGS)
   JUCE_CPPFLAGS_APP := -DJucePlugin_Build_VST=0 -DJucePlugin_Build_VST3=0 -DJucePlugin_Build_AU=0 -DJucePlugin_Build_AUv3=0 -DJucePlugin_Build_RTAS=0 -DJucePlugin_Build_AAX=0 -DJucePlugin_Build_Standalone=0
   JUCE_TARGET_APP := Chataigne
 
@@ -54,7 +54,7 @@ ifeq ($(CONFIG),Release)
     TARGET_ARCH := -march=native
   endif
 
-  JUCE_CPPFLAGS := $(DEPFLAGS) -DLINUX=1 -DNDEBUG=1 -DJUCER_LINUX_MAKE_6D53C8B4=1 -DJUCE_APP_VERSION=1.1.2 -DJUCE_APP_VERSION_HEX=0x10102 $(shell pkg-config --cflags alsa freetype2 libcurl x11 xext xinerama) -pthread -I../../JuceLibraryCode -I../../../../../../Softwares/JUCE/modules -I../../../JUCE/modules -I../../../JUCE\ Modules -I../../External/wiiuse -I../../External/serial/include $(CPPFLAGS)
+  JUCE_CPPFLAGS := $(DEPFLAGS) -DLINUX=1 -DNDEBUG=1 -DJUCER_LINUX_MAKE_6D53C8B4=1 -DJUCE_APP_VERSION=1.1.3 -DJUCE_APP_VERSION_HEX=0x10103 $(shell pkg-config --cflags alsa freetype2 libcurl x11 xext xinerama) -pthread -I../../JuceLibraryCode -I../../../../../../Softwares/JUCE/modules -I../../../JUCE/modules -I../../../JUCE\ Modules -I../../External/wiiuse -I../../External/serial/include $(CPPFLAGS)
   JUCE_CPPFLAGS_APP := -DJucePlugin_Build_VST=0 -DJucePlugin_Build_VST3=0 -DJucePlugin_Build_AU=0 -DJucePlugin_Build_AUv3=0 -DJucePlugin_Build_RTAS=0 -DJucePlugin_Build_AAX=0 -DJucePlugin_Build_Standalone=0
   JUCE_TARGET_APP := Chataigne
 
@@ -93,6 +93,14 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/ConsequenceManagerEditor_c217a400.o \
   $(JUCE_OBJDIR)/Consequence_78c99824.o \
   $(JUCE_OBJDIR)/ConsequenceManager_ed222b73.o \
+  $(JUCE_OBJDIR)/MetronomeConditionEditor_6200e7df.o \
+  $(JUCE_OBJDIR)/MetronomeCondition_76c78292.o \
+  $(JUCE_OBJDIR)/ConditionGroupEditor_8111d0ba.o \
+  $(JUCE_OBJDIR)/ConditionGroup_4b82ebad.o \
+  $(JUCE_OBJDIR)/StandardConditionEditor_c2b02ccc.o \
+  $(JUCE_OBJDIR)/StandardCondition_49d43d3f.o \
+  $(JUCE_OBJDIR)/ScriptConditionEditor_356f6efe.o \
+  $(JUCE_OBJDIR)/ScriptCondition_84f58cf1.o \
   $(JUCE_OBJDIR)/BoolComparators_278bc7f4.o \
   $(JUCE_OBJDIR)/EnumComparator_f40f08c0.o \
   $(JUCE_OBJDIR)/NumberComparators_7676c2b5.o \
@@ -103,16 +111,10 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/BaseComparator_fbba0e90.o \
   $(JUCE_OBJDIR)/ComparatorFactory_14bedeb5.o \
   $(JUCE_OBJDIR)/ConditionEditor_7e4d6ac9.o \
-  $(JUCE_OBJDIR)/ConditionGroupEditor_8111d0ba.o \
   $(JUCE_OBJDIR)/ConditionManagerEditor_f1a2de28.o \
-  $(JUCE_OBJDIR)/ScriptConditionEditor_356f6efe.o \
-  $(JUCE_OBJDIR)/StandardConditionEditor_c2b02ccc.o \
   $(JUCE_OBJDIR)/Condition_dbc2fcfc.o \
   $(JUCE_OBJDIR)/ConditionFactory_8dd64e78.o \
-  $(JUCE_OBJDIR)/ConditionGroup_4b82ebad.o \
   $(JUCE_OBJDIR)/ConditionManager_8b8e239b.o \
-  $(JUCE_OBJDIR)/ScriptCondition_84f58cf1.o \
-  $(JUCE_OBJDIR)/StandardCondition_49d43d3f.o \
   $(JUCE_OBJDIR)/ActionEditor_5de4624c.o \
   $(JUCE_OBJDIR)/ActionUI_e36558d3.o \
   $(JUCE_OBJDIR)/Action_97be92bf.o \
@@ -152,9 +154,9 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/CommandChooserUI_aed1be8d.o \
   $(JUCE_OBJDIR)/BaseCommandHandler_1a071039.o \
   $(JUCE_OBJDIR)/CommandDefinition_40c7095f.o \
+  $(JUCE_OBJDIR)/CommandFactory_88728348.o \
   $(JUCE_OBJDIR)/CommandDefinitionManager_f438f1d8.o \
   $(JUCE_OBJDIR)/BaseCommand_529ec09b.o \
-  $(JUCE_OBJDIR)/CommandFactory_88728348.o \
   $(JUCE_OBJDIR)/MIDIDeviceChooser_670213e5.o \
   $(JUCE_OBJDIR)/MIDIDeviceParameterUI_d72a4b27.o \
   $(JUCE_OBJDIR)/MIDIDevice_b230ec0.o \
@@ -250,6 +252,7 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/CustomOSCCommandEditor_54d2a3f3.o \
   $(JUCE_OBJDIR)/CustomOSCCommand_684cdda6.o \
   $(JUCE_OBJDIR)/CustomOSCModule_c9fc0d3b.o \
+  $(JUCE_OBJDIR)/ResolumeModuleEditor_82f6c852.o \
   $(JUCE_OBJDIR)/ResolumeBaseCommandEditor_bef083d8.o \
   $(JUCE_OBJDIR)/ResolumeBaseCommand_36b5cd4b.o \
   $(JUCE_OBJDIR)/ResolumeClipCommand_489cbb6c.o \
@@ -488,6 +491,46 @@ $(JUCE_OBJDIR)/ConsequenceManager_ed222b73.o: ../../Source/ConsequenceManager.cp
 	@echo "Compiling ConsequenceManager.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
+$(JUCE_OBJDIR)/MetronomeConditionEditor_6200e7df.o: ../../Source/MetronomeConditionEditor.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling MetronomeConditionEditor.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/MetronomeCondition_76c78292.o: ../../Source/MetronomeCondition.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling MetronomeCondition.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/ConditionGroupEditor_8111d0ba.o: ../../Source/ConditionGroupEditor.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling ConditionGroupEditor.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/ConditionGroup_4b82ebad.o: ../../Source/ConditionGroup.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling ConditionGroup.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/StandardConditionEditor_c2b02ccc.o: ../../Source/StandardConditionEditor.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling StandardConditionEditor.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/StandardCondition_49d43d3f.o: ../../Source/StandardCondition.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling StandardCondition.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/ScriptConditionEditor_356f6efe.o: ../../Source/ScriptConditionEditor.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling ScriptConditionEditor.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/ScriptCondition_84f58cf1.o: ../../Source/ScriptCondition.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling ScriptCondition.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
 $(JUCE_OBJDIR)/BoolComparators_278bc7f4.o: ../../Source/BoolComparators.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling BoolComparators.cpp"
@@ -538,24 +581,9 @@ $(JUCE_OBJDIR)/ConditionEditor_7e4d6ac9.o: ../../Source/ConditionEditor.cpp
 	@echo "Compiling ConditionEditor.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
-$(JUCE_OBJDIR)/ConditionGroupEditor_8111d0ba.o: ../../Source/ConditionGroupEditor.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling ConditionGroupEditor.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
 $(JUCE_OBJDIR)/ConditionManagerEditor_f1a2de28.o: ../../Source/ConditionManagerEditor.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling ConditionManagerEditor.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/ScriptConditionEditor_356f6efe.o: ../../Source/ScriptConditionEditor.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling ScriptConditionEditor.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/StandardConditionEditor_c2b02ccc.o: ../../Source/StandardConditionEditor.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling StandardConditionEditor.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/Condition_dbc2fcfc.o: ../../Source/Condition.cpp
@@ -568,24 +596,9 @@ $(JUCE_OBJDIR)/ConditionFactory_8dd64e78.o: ../../Source/ConditionFactory.cpp
 	@echo "Compiling ConditionFactory.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
-$(JUCE_OBJDIR)/ConditionGroup_4b82ebad.o: ../../Source/ConditionGroup.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling ConditionGroup.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
 $(JUCE_OBJDIR)/ConditionManager_8b8e239b.o: ../../Source/ConditionManager.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling ConditionManager.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/ScriptCondition_84f58cf1.o: ../../Source/ScriptCondition.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling ScriptCondition.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/StandardCondition_49d43d3f.o: ../../Source/StandardCondition.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling StandardCondition.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/ActionEditor_5de4624c.o: ../../Source/ActionEditor.cpp
@@ -783,6 +796,11 @@ $(JUCE_OBJDIR)/CommandDefinition_40c7095f.o: ../../Source/CommandDefinition.cpp
 	@echo "Compiling CommandDefinition.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
+$(JUCE_OBJDIR)/CommandFactory_88728348.o: ../../Source/CommandFactory.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling CommandFactory.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
 $(JUCE_OBJDIR)/CommandDefinitionManager_f438f1d8.o: ../../Source/CommandDefinitionManager.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling CommandDefinitionManager.cpp"
@@ -791,11 +809,6 @@ $(JUCE_OBJDIR)/CommandDefinitionManager_f438f1d8.o: ../../Source/CommandDefiniti
 $(JUCE_OBJDIR)/BaseCommand_529ec09b.o: ../../Source/BaseCommand.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling BaseCommand.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/CommandFactory_88728348.o: ../../Source/CommandFactory.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling CommandFactory.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/MIDIDeviceChooser_670213e5.o: ../../Source/MIDIDeviceChooser.cpp
@@ -1271,6 +1284,11 @@ $(JUCE_OBJDIR)/CustomOSCCommand_684cdda6.o: ../../Source/CustomOSCCommand.cpp
 $(JUCE_OBJDIR)/CustomOSCModule_c9fc0d3b.o: ../../Source/CustomOSCModule.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling CustomOSCModule.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/ResolumeModuleEditor_82f6c852.o: ../../Source/ResolumeModuleEditor.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling ResolumeModuleEditor.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/ResolumeBaseCommandEditor_bef083d8.o: ../../Source/ResolumeBaseCommandEditor.cpp

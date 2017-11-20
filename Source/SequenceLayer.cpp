@@ -14,7 +14,7 @@
 
 
 SequenceLayer::SequenceLayer(Sequence * _sequence, const String &name) :
-	BaseItem(name,true,true,true),
+	BaseItem(name,true),
 	sequence(_sequence)
 {
 	jassert(sequence != nullptr);

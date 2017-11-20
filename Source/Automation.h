@@ -37,11 +37,18 @@ public:
 	bool showUIInEditor;
 
 	float positionMax;
-	void setPositionMax(float val);
+	void setPositionMax(float val);	
+
+	
 
 	//Current position
 	FloatParameter * position;
 	FloatParameter * value;
+
+	//snapping
+	Array<float> snapPositions;
+	BoolParameter * enableSnap;
+	FloatParameter * snapSensitivity;
 
 	ScopedPointer<InspectableSelectionManager> selectionManager;
 
@@ -54,6 +61,10 @@ public:
 	void reorderItems() override;
 
 	void removeAllSelectedKeys();
+
+	void setSnapPositions(Array<float> positions);
+
+	float getClosestSnapForPos(float pos, int start = -1, int end = -1);
 
 	AutomationKey * getClosestKeyForPos(float pos, int start = -1, int end = -1);
 

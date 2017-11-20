@@ -42,6 +42,11 @@ Image ChataigneAssetManager::getNextCueImage()
 	return ImageCache::getFromMemory(BinaryData::nextcue_png, BinaryData::nextcue_pngSize);
 }
 
+Image ChataigneAssetManager::getSnapImage()
+{
+	return ImageCache::getFromMemory(BinaryData::snap_png, BinaryData::snap_pngSize);
+}
+
 ImageButton * ChataigneAssetManager::getSetupBTImage(const Image & image)
 {
 	ImageButton * bt = new ImageButton();

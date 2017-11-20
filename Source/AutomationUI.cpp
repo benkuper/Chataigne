@@ -26,7 +26,6 @@ valueBGColor(Colours::white.withAlpha(.1f)),
 	manager->addAsyncContainerListener(this);
 
 	resizeOnChildBoundsChanged = false;
-
 	addExistingItems();
 }
 

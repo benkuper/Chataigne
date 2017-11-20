@@ -91,12 +91,13 @@ inline ChataigneApplication::MainWindow::MainWindow(String name) : DocumentWindo
 	DocumentWindow::allButtons)
 	//,sender("SpoutMainAugmenta")
 {
+	setResizable(true, true);
 	setUsingNativeTitleBar(true);
 	mainComponent = new MainContentComponent();
 	setContentOwned(mainComponent, true);
-	setResizable(true, true);
 	setOpaque(true);
 
+	
 	int tx = getAppProperties().getCommonSettings(true)->getIntValue("windowX");
 	int ty = getAppProperties().getCommonSettings(true)->getIntValue("windowY");
 	int tw = getAppProperties().getCommonSettings(true)->getIntValue("windowWidth");

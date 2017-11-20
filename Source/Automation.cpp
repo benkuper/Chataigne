@@ -22,8 +22,11 @@ showUIInEditor(false),
 	value = addFloatParameter("Value", "The current value, depending on the position", 0, 0, 1);
 	value->isControllableFeedbackOnly = true;
 
-	selectItemWhenCreated = false;
+	enableSnap = addBoolParameter("Enable Snap", "If enabled, moving keys will be automatically adjusted to interesting positions such as automation position",true);
+	snapSensitivity = addFloatParameter("Snap Sensitivity", "Controls the sensitivity of the snapping, if enabled.\nThe greater the value, the more likely a position will be snapped.", .5f, 0, 3);
 
+
+	selectItemWhenCreated = false;
 	selectionManager = new InspectableSelectionManager();
 }
 
@@ -45,6 +48,38 @@ void Automation::removeAllSelectedKeys()
 	for (auto &k : keysToRemove) removeItem(k);
 }
 
+void Automation::setSnapPositions(Array<float> positions)
+{
+	snapPositions = positions;
+}
+
+float Automation::getClosestSnapForPos(float pos, int start, int end)
+{
+	if (snapPositions.size() == 0) return pos;
+
+	if (start == -1) start = 0;
+	if (end == -1) end = snapPositions.size() - 1;
+
+	if (pos < snapPositions[0]) return snapPositions[0];
+	if (pos > snapPositions[snapPositions.size()-1]) return snapPositions[snapPositions.size()-1];
+
+	if (end - start <= 1) return snapPositions[start];
+
+	int midIndex = (int)floor((start + end) / 2);
+	float medPos = snapPositions[midIndex];
+
+	if (pos == medPos) return snapPositions[midIndex];
+
+	else if (pos > medPos)
+	{
+		return getClosestSnapForPos(pos, midIndex, end);
+	}
+	else
+	{
+		return getClosestSnapForPos(pos, start, midIndex);
+	}
+}
+
 AutomationKey * Automation::getClosestKeyForPos(float pos, int start, int end)
 {
 	if (items.size() == 0) return nullptr;
@@ -52,10 +87,8 @@ AutomationKey * Automation::getClosestKeyForPos(float pos, int start, int end)
 	if (start == -1) start = 0;
 	if (end == -1) end = items.size() - 1;
 
-
 	if (pos < items[0]->position->floatValue()) return items[0];
 	if (pos > items[items.size() - 1]->position->floatValue()) return items[items.size() - 1];
-
 
 	if (end - start <= 1) return items[start];
 
@@ -111,6 +144,27 @@ void Automation::addItem(const float _position, const float _value)
 void Automation::onControllableFeedbackUpdate(ControllableContainer * cc, Controllable * c)
 {
 	AutomationKey * t = dynamic_cast<AutomationKey *>(cc);
+
+	if (enableSnap->boolValue() && c == t->position)
+	{
+		float curPos = position->floatValue();
+		float tPos = t->position->floatValue();
+		if (fabsf(curPos - tPos) < snapSensitivity->floatValue())
+		{
+			t->position->setValue(curPos);
+			return;
+		}
+		else
+		{
+			float newPos = getClosestSnapForPos(tPos);
+			if (newPos != tPos && fabsf(newPos-tPos) < snapSensitivity->floatValue())
+			{
+				t->position->setValue(newPos);
+				return;
+			}
+		}
+	}
+
 	if (t != nullptr)
 	{
 		value->setValue(getValueForPosition(position->floatValue()));
@@ -130,6 +184,7 @@ void Automation::onControllableFeedbackUpdate(ControllableContainer * cc, Contro
 			}
 		}
 
+		
 	}
 }
 
@@ -138,6 +193,10 @@ void Automation::onContainerParameterChanged(Parameter * p)
 	if (p == position)
 	{
 		value->setValue(getValueForPosition(position->floatValue()));
+	}
+	else if (p == enableSnap)
+	{
+		snapSensitivity->setEnabled(enableSnap->boolValue());
 	}
 }
 

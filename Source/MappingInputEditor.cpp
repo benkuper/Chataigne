@@ -21,7 +21,7 @@ MappingInputEditor::MappingInputEditor(MappingInput * _input, bool isRoot) :
 	}
 	
 	input->addMappingInputListener(this);
-	setSize(100, 50);
+	setSize(100, 16);
 	updateSourceUI();
 }
 
@@ -46,12 +46,20 @@ void MappingInputEditor::updateSourceUI()
 void MappingInputEditor::resized()
 {
 	Rectangle<int> r = getLocalBounds();
-	Rectangle<int> sr = r.withHeight(16).reduced(2, 0);
+	Rectangle<int> sr = r.reduced(2, 0);
 	if (sourceFeedbackUI != nullptr)
 	{
-		sourceFeedbackUI->setBounds(sr.removeFromRight(jmax<int>(sr.getWidth() / 3, 60)));
-		sr.removeFromRight(2);
+		if (targetUI != nullptr)
+		{
+			sourceFeedbackUI->setBounds(sr.removeFromRight(jmax<int>(sr.getWidth() / 3, 100)));
+			sr.removeFromRight(2);
+		}
+		else
+		{
+			sourceFeedbackUI->setBounds(sr);
+		}
 	}
+
 	if(targetUI != nullptr) targetUI->setBounds(sr);
 }
 

@@ -14,6 +14,7 @@ StateManagerUI::StateManagerUI(const String &contentName, StateManager * _manage
 	BaseManagerShapeShifterUI<StateManager, State, StateUI>(contentName, _manager)
 {
 	addItemText = "Add State";
+	addExistingItems();
 }
 
 StateManagerUI::~StateManagerUI()

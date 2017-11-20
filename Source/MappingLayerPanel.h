@@ -25,7 +25,11 @@ public:
 	MappingLayer * mappingLayer;
 	ScopedPointer<EnumParameterUI> modeUI;
 
+	ScopedPointer<BoolImageToggleUI> snapUI;
+	ScopedPointer<FloatSliderUI> snapSensitivityUI;
+
 	void resizedInternalHeader(Rectangle<int> &r) override;
+	void resizedInternalContent(Rectangle<int> &r) override;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MappingLayerPanel)
 };
