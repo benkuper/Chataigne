@@ -105,11 +105,18 @@ bool AutomationKeyUI::hitTest(int tx, int ty)
 void AutomationKeyUI::mouseDown(const MouseEvent & e)
 {
 	BaseItemMinimalUI::mouseDown(e);
+	setMouseCursor(e.mods.isShiftDown() ? MouseCursor::LeftRightResizeCursor : MouseCursor::NormalCursor);
 	if (e.eventComponent == &handle)
 	{
 		if (e.mods.isLeftButtonDown())
 		{
 			if (e.mods.isCtrlDown()) item->remove();
+			else
+			{
+				posAtMouseDown = item->position->floatValue();
+				valueAtMouseDown = item->value->floatValue();
+			}
+
 		}
 	}
 	else if (e.eventComponent == easingUI)
@@ -145,6 +152,12 @@ void AutomationKeyUI::mouseDoubleClick(const MouseEvent & e)
 {
 	showKeyEditorWindow();
 }
+
+void AutomationKeyUI::mouseUp(const MouseEvent & e)
+{
+	handle.setMouseCursor(MouseCursor::NormalCursor);
+}
+
 
 void AutomationKeyUI::controllableFeedbackUpdateInternal(Controllable * c)
 {

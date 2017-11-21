@@ -33,6 +33,8 @@ public:
 	float currentPosition;
 	float currentValue;
 
+	bool fixedPosOrValueEnabled; //When using shift key and moving handles, keep either position or value
+
 	Colour valueBGColor;
 
 	AutomationKeyUI * currentUI;
@@ -53,6 +55,10 @@ public:
 	int getXForPos(float time);
 	float getPosForX(int tx, bool offsetStart = true);
 
+	int getYForValue(float value);
+	float getValueForY(int ty);
+
+
 	bool isInView(AutomationKeyUI * kui);
 
 	AutomationKeyUI * getClosestKeyUIForPos(float pos, int start = - 1, int end = -1);
@@ -67,6 +73,7 @@ public:
 
 	void mouseDown(const MouseEvent &e) override;
 	void mouseDrag(const MouseEvent &e) override;
+	void mouseUp(const MouseEvent &e) override;
 
 	void newMessage(const ContainerAsyncEvent &e) override;
 

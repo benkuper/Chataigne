@@ -26,6 +26,11 @@ public:
 	const static int handleSize = 6;
 	const static int handleClickZone = 10;
 
+
+	float posAtMouseDown;
+	float valueAtMouseDown;
+
+
 	class Handle :
 		public Component
 	{
@@ -55,6 +60,7 @@ public:
 
 	void mouseDown(const MouseEvent &e) override;
 	void mouseDoubleClick(const MouseEvent &e) override;
+	void mouseUp(const MouseEvent &e) override;
 
 	void controllableFeedbackUpdateInternal(Controllable * c) override;
 

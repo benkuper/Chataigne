@@ -27,6 +27,8 @@ valueBGColor(Colours::white.withAlpha(.1f)),
 
 	resizeOnChildBoundsChanged = false;
 	addExistingItems();
+
+
 }
 
 AutomationUI::~AutomationUI()
@@ -110,7 +112,7 @@ void AutomationUI::paint(Graphics & g)
 	if (itemsUI.size() < 2) return;
 
 	//int count = 0;
-	int ty = (1 - currentValue) * getHeight();
+	int ty = getYForValue(currentValue);
 	Rectangle<int> vr = getLocalBounds().withTop(ty);
 	g.setColour(valueBGColor);
 	g.fillRect(vr);
@@ -140,14 +142,15 @@ void AutomationUI::placeKeyUI(AutomationKeyUI * kui, bool placePrevKUI)
 	if (kui == nullptr) return;
 
 	int tx = getXForPos(kui->item->position->floatValue());
-	int ty = (1 - kui->item->value->floatValue())*getHeight();
+	int ty = getYForValue(kui->item->value->floatValue());
 	Rectangle<int> kr;
 	
 	if (index < itemsUI.size()-1)
 	{
 		AutomationKeyUI * nextKey = itemsUI[index + 1];
 		int tx2 = getXForPos(nextKey->item->position->floatValue());
-		int ty2 = (1 - nextKey->item->value->floatValue())*getHeight();
+		int ty2 = getYForValue(nextKey->item->value->floatValue());
+
 		//Rectangle<int> kr2 = Rectangle<int>(0, 0, AutomationKeyUI::handleClickZone, AutomationKeyUI::handleClickZone).withCentre(Point<int>(tx2, ty2));
 		kr = Rectangle<int>(tx, 0, tx2-tx, getHeight()).expanded(AutomationKeyUI::handleClickZone / 2, 0);
 		kui->setKeyPositions(ty, ty2);
@@ -177,6 +180,16 @@ float AutomationUI::getPosForX(int tx, bool offsetStart)
 	float viewRange = viewEndPos - viewStartPos;
 	float mapStart = offsetStart ? viewStartPos: 0;
 	return jmap<float>((float)tx, 0, (float)getWidth(), mapStart, mapStart + viewRange);
+}
+
+int AutomationUI::getYForValue(float value)
+{
+	return (int)((1 - value)*getHeight());
+}
+
+float AutomationUI::getValueForY(int ty)
+{
+	return (1 - ty*1.f / getHeight());
 }
 
 bool AutomationUI::isInView(AutomationKeyUI * kui)
@@ -247,11 +260,12 @@ void AutomationUI::mouseDown(const MouseEvent & e)
 {
 	BaseManagerUI::mouseDown(e);
 
+
 	if (e.eventComponent == this)
 	{
 		if (e.mods.isLeftButtonDown() && e.mods.isCtrlDown())
 		{
-			manager->addItem(getPosForX(e.getPosition().x), (1 - e.getPosition().y*1.f / getHeight()));
+			manager->addItem(getPosForX(e.getPosition().x), getValueForY(e.getPosition().y));
 		}else
 		{
 			Array<Component *> selectables;
@@ -290,12 +304,41 @@ void AutomationUI::mouseDrag(const MouseEvent & e)
 			{
 				Point<int> mp = e.getEventRelativeTo(this).getPosition();
 				float pos = getPosForX(mp.x);
-				float val = (1 - mp.y*1.f / getHeight());
+				float val = getValueForY(mp.y);
+
+				MouseInputSource source = Desktop::getInstance().getMainMouseSource();
+
+				if (e.mods.isShiftDown())
+				{
+					float initX = getXForPos(kui->posAtMouseDown);
+					float initY = getYForValue(kui->valueAtMouseDown);
+					
+					if (fabsf(mp.x - initX) > fabsf(mp.y - initY))
+					{
+						kui->handle.setMouseCursor(MouseCursor::LeftRightResizeCursor);
+						val = kui->valueAtMouseDown; 
+					}
+					else
+					{
+						kui->handle.setMouseCursor(MouseCursor::UpDownResizeCursor); 
+						pos = kui->posAtMouseDown;
+					}
+				}
+				else
+				{
+					kui->handle.setMouseCursor(MouseCursor::NormalCursor);
+				}
+
 				kui->item->position->setValue(pos);
 				kui->item->value->setValue(val);
+				
 			}
 		}
 	}
+}
+
+void AutomationUI::mouseUp(const MouseEvent & e)
+{
 }
 
 void AutomationUI::newMessage(const ContainerAsyncEvent & e)
