@@ -58,6 +58,7 @@ Sequence::Sequence() :
 
 	cueManager = new TimeCueManager();
 	addChildControllableContainer(cueManager);
+	cueManager->hideInEditor = true;
 
 	listUISize->setValue(5);
 }
