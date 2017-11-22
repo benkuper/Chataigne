@@ -26,6 +26,8 @@ Mapping::Mapping(bool canBeDisabled) :
 	addChildControllableContainer(&om);
 
 	input.addMappingInputListener(this);
+
+	helpID = "Mapping";
 }
 
 Mapping::~Mapping()

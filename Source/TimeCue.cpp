@@ -17,6 +17,8 @@ TimeCue::TimeCue(const float & _time) :
 
 	time = addFloatParameter("Time", "Cue Time", _time, 0, 3600);
 	time->defaultUI = FloatParameter::TIME;
+
+	helpID = "TimeCue";
 }
 
 TimeCue::~TimeCue()

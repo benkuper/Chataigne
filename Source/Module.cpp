@@ -41,11 +41,17 @@ Module::Module(const String &name) :
 	outActivityTrigger->hideInEditor = true;
 
 	valuesCC.includeTriggersInSaveLoad = true;
+	
 }
 
 Module::~Module()
 {
 
+}
+
+String Module::getHelpID()
+{
+	return getTypeString();
 }
 
 Array<WeakReference<Controllable>> Module::getValueControllables()

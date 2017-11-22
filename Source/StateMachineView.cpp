@@ -24,12 +24,14 @@ StateMachineView::StateMachineView(const String &contentName, StateManager * _ma
 	addAndMakeVisible(stmUI, 0);
 
 	addExistingItems(true);
+
 }
 
 StateMachineView::~StateMachineView()
 {
 	
 }
+
 
 void StateMachineView::mouseMove(const MouseEvent & e)
 {

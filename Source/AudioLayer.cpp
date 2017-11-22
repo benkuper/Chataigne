@@ -38,6 +38,8 @@ AudioLayer::AudioLayer(Sequence * _sequence, var params) :
 		}
 	}
 
+	helpID = "AudioLayer";
+
 }
 
 AudioLayer::~AudioLayer()

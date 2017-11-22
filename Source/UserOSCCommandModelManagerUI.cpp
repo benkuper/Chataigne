@@ -16,7 +16,7 @@ UserOSCCommandModelManagerWindow::UserOSCCommandModelManagerWindow(const String 
 	ShapeShifterContentComponent(_name)
 {
 	InspectableSelectionManager::mainSelectionManager->addSelectionListener(this);
-	
+	helpID = "OSCCommandModel";
 }
 
 UserOSCCommandModelManagerWindow::~UserOSCCommandModelManagerWindow()

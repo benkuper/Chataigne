@@ -26,6 +26,8 @@ Action::Action(const String & name) :
 	isValid = addBoolParameter("Is Valid", "Are all condition valids ?", false);
 	isValid->hideInEditor = true;
 	trigger = addTrigger("Trigger", "Triggers the action");
+
+	helpID = "Action";
 }
 
 Action::~Action()

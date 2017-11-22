@@ -17,6 +17,9 @@ TriggerLayer::TriggerLayer(Sequence * _sequence, var params) :
 	ttm(this,_sequence)
 {
 	addChildControllableContainer(&ttm);
+
+	helpID = "TriggerLayer";
+
 }
 
 TriggerLayer::~TriggerLayer()

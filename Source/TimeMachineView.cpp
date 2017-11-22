@@ -22,6 +22,9 @@ TimeMachineView::TimeMachineView(const String &contentName, SequenceManager * _m
 
 	addAndMakeVisible(&createSequenceBT);
 	createSequenceBT.addListener(this);
+
+	helpID = "TimeMachine";
+
 }
 
 TimeMachineView::~TimeMachineView()

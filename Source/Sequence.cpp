@@ -65,6 +65,8 @@ Sequence::Sequence() :
 	cueManager->hideInEditor = true;
 
 	listUISize->setValue(5);
+
+	helpID = "Sequence";
 }
 
 Sequence::~Sequence()

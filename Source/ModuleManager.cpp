@@ -19,7 +19,7 @@ juce_ImplementSingleton(ModuleManager)
 ModuleManager::ModuleManager() :
 	BaseManager<Module>("Modules")
 {
-
+	helpID = "Modules";
 }
 
 ModuleManager::~ModuleManager()

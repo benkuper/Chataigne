@@ -33,6 +33,7 @@ public:
 	ScopedPointer<StateTransitionManagerUI> stmUI;
 	bool transitionCreationMode;
 	StateViewUI * transitionCreationSourceUI;
+	
 
 	void mouseMove(const MouseEvent &e) override;
 	bool keyPressed(const KeyPress &e) override;

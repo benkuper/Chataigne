@@ -27,6 +27,8 @@ showUIInEditor(false),
 
 	//selectItemWhenCreated = false;
 	selectionManager = new InspectableSelectionManager(false);
+
+	helpID = "Automation";
 }
 
 Automation::~Automation()

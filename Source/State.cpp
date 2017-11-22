@@ -25,6 +25,7 @@ State::State() :
 
 	//viewUISize->setPoint(200, 300);
 
+	helpID = "State";
 	
 }
 

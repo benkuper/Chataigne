@@ -33,6 +33,8 @@ AutomationKey::AutomationKey() :
 	canInspectChildContainers = false;
 
 	setEasing(Easing::LINEAR);
+
+	helpID = "AutomationKey";
 }
 
 

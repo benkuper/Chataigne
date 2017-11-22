@@ -17,6 +17,8 @@ BaseManager<State>("States"),
 module(this),
 stm(this)
 {
+	helpID = "StateMachine";
+
 	isSelectable = true;
 	addChildControllableContainer(&stm);
 	stm.hideInEditor = true;

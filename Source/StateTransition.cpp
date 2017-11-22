@@ -19,6 +19,7 @@ StateTransition::StateTransition(State * source, State * dest) :
 	sourceState->outTransitions.add(this);
 	destState->inTransitions.add(this);
 
+	helpID = "StateTransition";
  }
 
 StateTransition::~StateTransition()

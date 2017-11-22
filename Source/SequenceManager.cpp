@@ -19,7 +19,7 @@ SequenceManager::SequenceManager() :
 	BaseManager("Sequences"),
 	module(this)
 {
-	
+	helpID = "TimeMachine";
 }
 
 SequenceManager::~SequenceManager()

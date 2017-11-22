@@ -16,6 +16,8 @@ ControllableContainer("ease"),
 type(_type)
 {
 	//showInspectorOnSelect = false;
+
+	helpID = "Easing";
 }
 
 Easing::~Easing()

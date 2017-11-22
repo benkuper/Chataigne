@@ -37,9 +37,12 @@ public:
 
 	String customType; //for custom modules;
 
-
 	//ROUTING
 	bool canHandleRouteValues;
+
+	//help
+	virtual String getHelpID();
+
 
 	Array<WeakReference<Controllable>> getValueControllables();
 

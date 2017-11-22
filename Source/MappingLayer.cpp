@@ -34,6 +34,9 @@ MappingLayer::MappingLayer(Sequence *_sequence, var params) :
 
 	setupMappingForCurrentMode();
 	uiHeight->setValue(115);
+
+
+	helpID = "MappingLayer";
 }
 
 MappingLayer::~MappingLayer()

@@ -22,6 +22,8 @@ ModuleRouterPanelView::ModuleRouterPanelView(const String & contentName,ModuleRo
 
 	addAndMakeVisible(&mui);
 	addAndMakeVisible(&view);
+
+	helpID = "ModuleRouter";
 }
 
 ModuleRouterPanelView::~ModuleRouterPanelView()
