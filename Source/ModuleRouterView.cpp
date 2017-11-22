@@ -21,7 +21,7 @@ ModuleRouterView::ModuleRouterView() :
 	routeLabel("Route","Route"),
 	outParamsLabel("OutParams","Out Parameters")
 {
-	InspectableSelectionManager::getInstance()->addSelectionListener(this);
+	InspectableSelectionManager::mainSelectionManager->addSelectionListener(this);
 
 	addAndMakeVisible(&addBT);
 	addBT.addListener(this);
@@ -65,7 +65,7 @@ ModuleRouterView::ModuleRouterView() :
 
 ModuleRouterView::~ModuleRouterView()
 {
-	InspectableSelectionManager::getInstance()->removeSelectionListener(this);
+	InspectableSelectionManager::mainSelectionManager->removeSelectionListener(this);
 	setRouter(nullptr);
 }
 
@@ -203,9 +203,9 @@ void ModuleRouterView::buttonClicked(Button * b)
 
 void ModuleRouterView::inspectablesSelectionChanged()
 {
-	if (InspectableSelectionManager::getInstance()->currentInspectables.size() > 0)
+	if (InspectableSelectionManager::mainSelectionManager->currentInspectables.size() > 0)
 	{
-		ModuleRouter * m = dynamic_cast<ModuleRouter *>(InspectableSelectionManager::getInstance()->currentInspectables[0]);
+		ModuleRouter * m = dynamic_cast<ModuleRouter *>(InspectableSelectionManager::mainSelectionManager->currentInspectables[0]);
 		if(m != nullptr) setRouter(m);
 	}
 }

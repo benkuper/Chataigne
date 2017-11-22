@@ -15,13 +15,13 @@
 UserOSCCommandModelManagerWindow::UserOSCCommandModelManagerWindow(const String &_name) :
 	ShapeShifterContentComponent(_name)
 {
-	InspectableSelectionManager::getInstance()->addSelectionListener(this);
+	InspectableSelectionManager::mainSelectionManager->addSelectionListener(this);
 	
 }
 
 UserOSCCommandModelManagerWindow::~UserOSCCommandModelManagerWindow()
 {
-	if(InspectableSelectionManager::getInstanceWithoutCreating() != nullptr) InspectableSelectionManager::getInstance()->removeSelectionListener(this);
+	if(InspectableSelectionManager::mainSelectionManager != nullptr) InspectableSelectionManager::mainSelectionManager->removeSelectionListener(this);
 }
 
 
@@ -53,9 +53,9 @@ void UserOSCCommandModelManagerWindow::resized()
 
 void UserOSCCommandModelManagerWindow::inspectablesSelectionChanged()
 {
-	if (InspectableSelectionManager::getInstance()->isEmpty()) editModule(nullptr);
+	if (InspectableSelectionManager::mainSelectionManager->isEmpty()) editModule(nullptr);
 	
-	Inspectable * i = InspectableSelectionManager::getInstance()->currentInspectables[0];
+	Inspectable * i = InspectableSelectionManager::mainSelectionManager->currentInspectables[0];
 	CustomOSCModule * m = dynamic_cast<CustomOSCModule *>(i);
 	if(m != nullptr) editModule(m);
 }

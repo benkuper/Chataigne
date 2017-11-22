@@ -25,9 +25,8 @@ showUIInEditor(false),
 	enableSnap = addBoolParameter("Enable Snap", "If enabled, moving keys will be automatically adjusted to interesting positions such as automation position",true);
 	snapSensitivity = addFloatParameter("Snap Sensitivity", "Controls the sensitivity of the snapping, if enabled.\nThe greater the value, the more likely a position will be snapped.", .5f, 0, 3);
 
-
-	selectItemWhenCreated = false;
-	selectionManager = new InspectableSelectionManager();
+	//selectItemWhenCreated = false;
+	selectionManager = new InspectableSelectionManager(false);
 }
 
 Automation::~Automation()

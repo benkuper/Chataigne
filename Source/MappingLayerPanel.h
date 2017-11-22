@@ -28,6 +28,8 @@ public:
 	ScopedPointer<BoolImageToggleUI> snapUI;
 	ScopedPointer<FloatSliderUI> snapSensitivityUI;
 
+	ScopedPointer<Inspector> automationInspector;
+
 	void resizedInternalHeader(Rectangle<int> &r) override;
 	void resizedInternalContent(Rectangle<int> &r) override;
 

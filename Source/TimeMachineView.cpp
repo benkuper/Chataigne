@@ -17,7 +17,7 @@ TimeMachineView::TimeMachineView(const String &contentName, SequenceManager * _m
 	createSequenceBT("Create a sequence")
 {
 	contentIsFlexible = true;
-	InspectableSelectionManager::getInstance()->addSelectionListener(this);
+	InspectableSelectionManager::mainSelectionManager->addSelectionListener(this);
 	SequenceManager::getInstance()->addBaseManagerListener(this);
 
 	addAndMakeVisible(&createSequenceBT);
@@ -27,7 +27,7 @@ TimeMachineView::TimeMachineView(const String &contentName, SequenceManager * _m
 TimeMachineView::~TimeMachineView()
 {
 	SequenceManager::getInstance()->removeBaseManagerListener(this);
-	if(InspectableSelectionManager::getInstanceWithoutCreating()) InspectableSelectionManager::getInstance()->removeSelectionListener(this);
+	if(InspectableSelectionManager::mainSelectionManager) InspectableSelectionManager::mainSelectionManager->removeSelectionListener(this);
 }
 
 void TimeMachineView::paint(Graphics & g)
@@ -70,9 +70,9 @@ void TimeMachineView::setSequence(Sequence * sequence)
 
 void TimeMachineView::inspectablesSelectionChanged()
 {
-	if (InspectableSelectionManager::getInstance()->isEmpty()) return;
+	if (InspectableSelectionManager::mainSelectionManager->isEmpty()) return;
 	
-	ControllableContainer * cc = dynamic_cast<ControllableContainer *>(InspectableSelectionManager::getInstance()->currentInspectables[0]);
+	ControllableContainer * cc = dynamic_cast<ControllableContainer *>(InspectableSelectionManager::mainSelectionManager->currentInspectables[0]);
 	if (cc == nullptr) return;
 
 	Sequence * s = nullptr;

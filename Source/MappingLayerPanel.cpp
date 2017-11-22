@@ -27,7 +27,11 @@ MappingLayerPanel::MappingLayerPanel(MappingLayer * layer) :
 
 		snapSensitivityUI = mappingLayer->automations[0]->snapSensitivity->createSlider();
 		addAndMakeVisible(snapSensitivityUI);
+
+		automationInspector = new Inspector(mappingLayer->automations[0]->selectionManager);
+		addAndMakeVisible(automationInspector);
 	}
+	
 	
 }
 
@@ -45,12 +49,17 @@ void MappingLayerPanel::resizedInternalContent(Rectangle<int>& r)
 {
 	if (snapUI != nullptr)
 	{
-		r.setHeight(20);
+		//r.setHeight(r.getHeight);
 		Rectangle<int> cr = r.reduced(2, 0);
-		snapUI->setBounds(cr.removeFromLeft(cr.getHeight()));
-		cr.reduce(0, 2);
-		cr.removeFromLeft(10);
-		snapSensitivityUI->setBounds(cr);
+		Rectangle<int> scr = cr.removeFromTop(20);
+		snapUI->setBounds(scr.removeFromLeft(scr.getHeight()));
+		scr.reduce(0, 2);
+		scr.removeFromLeft(10);
+		snapSensitivityUI->setBounds(scr);
+
+		cr.removeFromTop(2);
+		automationInspector->setBounds(cr);
+		
 	}
 	
 		//modeUI->setBounds(getLocalBounds().reduced(5).removeFromBottom(20));

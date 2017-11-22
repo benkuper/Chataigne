@@ -19,7 +19,8 @@ SequenceTimelineHeader::SequenceTimelineHeader(Sequence * _sequence) :
 	addAndMakeVisible(&cueManagerUI);
 	
 	addAndMakeVisible(needle);
-	
+	needle.setInterceptsMouseClicks(false, false);
+
 	setSize(100, 20);
 }
 

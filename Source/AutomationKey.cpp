@@ -11,12 +11,13 @@
 #include "AutomationKey.h"
 
 
-AutomationKey::AutomationKey()
+AutomationKey::AutomationKey() :
+	BaseItem("Key",false)
 {
-
-	showInspectorOnSelect = false;
+	//showInspectorOnSelect = false;
 
 	position = addFloatParameter("Position", "Position of the key", 0, 0, 5);
+	position->defaultUI = FloatParameter::TIME;
 	value = addFloatParameter("Value", "Value of the key", 0, 0, 1);
 
 	easingType = addEnumParameter("EasingType", "Type of transition to the next key");
