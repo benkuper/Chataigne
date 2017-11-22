@@ -27,6 +27,7 @@ public:
 	Sequence();
 	virtual ~Sequence();
 
+	BoolParameter * startAtLoad;
 	FloatParameter * totalTime;
 	FloatParameter * currentTime;
 	FloatParameter * playSpeed;

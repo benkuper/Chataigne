@@ -34,6 +34,8 @@ public:
 	void onContainerTriggerTriggered(Trigger *) override;
 	void addItemInternal(Consequence *, var data) override;
 
+	void loadJSONDataInternal(var data) override { BaseManager::loadJSONDataInternal(data); DBG("Trigger all > " << (int)(triggerAll != nullptr)); }
+
 	InspectableEditor * getEditor(bool isRoot) override;
 
 	class ConsequenceManagerListener

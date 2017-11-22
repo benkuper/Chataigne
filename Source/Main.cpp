@@ -31,6 +31,7 @@ inline void ChataigneApplication::initialise(const String & commandLine)
 	AppUpdater::getInstance()->setURLs(URL("http://benjamin.kuperberg.fr/chataigne/releases/update.json"), URL("http://benjamin.kuperberg.fr/chataigne/#download"));
 	AppUpdater::getInstance()->checkForUpdates();
 
+	HelpBox::getInstance()->loadHelp(URL("http://benjamin.kuperberg.fr/chataigne/help/help.json"));
 
 	//ANALYTICS
 	Analytics::getInstance()->setUserId(SystemStats::getFullUserName());

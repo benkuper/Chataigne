@@ -28,6 +28,9 @@ AutomationKey::AutomationKey() :
 	easingType->addOption("Sine", Easing::SINE);
 
 	easingType->setValueWithKey("Linear");
+	easingType->hideInEditor = true;
+
+	canInspectChildContainers = false;
 
 	setEasing(Easing::LINEAR);
 }

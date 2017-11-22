@@ -11,7 +11,7 @@
 #include "State.h"
 
 State::State() :
-	BaseItem("State",true,true,true),
+	BaseItem("State",true),
 	pm("Processors")
 {
 	//canInspectChildContainers = false;
@@ -21,6 +21,7 @@ State::State() :
 	addChildControllableContainer(&pm);
 
 	pm.setForceDisabled(true);
+	pm.hideInEditor = true;
 
 	//viewUISize->setPoint(200, 300);
 

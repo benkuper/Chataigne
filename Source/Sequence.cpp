@@ -22,6 +22,7 @@ Sequence::Sequence() :
 	isPlaying = addBoolParameter("Is Playing", "Is the sequence playing ?", false);
 	isPlaying->isControllableFeedbackOnly = true;
 	isPlaying->isEditable = false; 
+	isPlaying->isSavable = false;
 	
 	playTrigger = addTrigger("Play", "Play the sequence");
 	stopTrigger = addTrigger("Stop", "Stops the sequence and set the current time at 0.");
@@ -32,8 +33,11 @@ Sequence::Sequence() :
 	
 	float initTotalTime = 30; //default to 30 seconds, may be in general preferences later
 
+	startAtLoad = addBoolParameter("Start at load", "If selected, the sequence will start just after loading it's data", false);
+
 	currentTime = addFloatParameter("Current Time", "Current position in time of this sequence", 0, 0, initTotalTime);
 	currentTime->defaultUI = FloatParameter::TIME;
+	currentTime->isSavable = false;
 
 	totalTime = addFloatParameter("Total Time", "Total time of this sequence, in seconds", initTotalTime, 1, 3600); //max 1h
 	totalTime->defaultUI = FloatParameter::TIME;
@@ -118,6 +122,11 @@ void Sequence::loadJSONDataInternal(var data)
 	BaseItem::loadJSONDataInternal(data);
 	layerManager->loadJSONData(data.getProperty("layerManager", var()));
 	cueManager->loadJSONData(data.getProperty("cueManager", var()));
+
+	if (startAtLoad->boolValue())
+	{
+		playTrigger->trigger();
+	}
 }
 
 void Sequence::onContainerParameterChangedInternal(Parameter * p)

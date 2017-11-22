@@ -90,7 +90,9 @@ void AudioLayerClipUI::controllableFeedbackUpdateInternal(Controllable * c)
 void AudioLayerClipUI::clipIsCurrentChanged(AudioLayerClip *)
 {
 	bgColor = clip->isCurrent ? AUDIO_COLOR.brighter() : BG_COLOR.brighter(.1f);
-	repaint();
+
+	MessageManagerLock mmLock;
+	if(mmLock.lockWasGained()) repaint();
 }
 
 void AudioLayerClipUI::audioSourceChanged(AudioLayerClip *)

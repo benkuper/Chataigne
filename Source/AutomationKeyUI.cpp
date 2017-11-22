@@ -46,7 +46,6 @@ void AutomationKeyUI::setEasingUI(EasingUI * eui)
 		resized();
 		easingUI->setKeyPositions(keyYPos1, keyYPos2);
 	}
-	
 }
 
 void AutomationKeyUI::setKeyPositions(const int &k1, const int &k2)
@@ -116,7 +115,6 @@ void AutomationKeyUI::mouseDown(const MouseEvent & e)
 				posAtMouseDown = item->position->floatValue();
 				valueAtMouseDown = item->value->floatValue();
 			}
-
 		}
 	}
 	else if (e.eventComponent == easingUI)
@@ -138,19 +136,19 @@ void AutomationKeyUI::mouseDown(const MouseEvent & e)
 			if (result >= 1 && result <= keys.size())
 			{
 				item->easingType->setValueWithKey(keys[result - 1]);
+				item->easing->selectThis(); //reselect after changing easing
 			}
 		}else if (e.mods.isCtrlDown())
 		{
 			item->easingType->setNext();
+			item->easing->selectThis(); //reselect after changing easing
 		}
 	}
-
-	
 }
 
 void AutomationKeyUI::mouseDoubleClick(const MouseEvent & e)
 {
-	showKeyEditorWindow();
+	if (e.eventComponent == &handle) showKeyEditorWindow();
 }
 
 void AutomationKeyUI::mouseUp(const MouseEvent & e)

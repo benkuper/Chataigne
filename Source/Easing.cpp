@@ -15,7 +15,7 @@ Easing::Easing(Type _type) :
 ControllableContainer("ease"),
 type(_type)
 {
-	showInspectorOnSelect = false;
+	//showInspectorOnSelect = false;
 }
 
 Easing::~Easing()

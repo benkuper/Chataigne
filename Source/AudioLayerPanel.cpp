@@ -37,10 +37,10 @@ AudioLayerPanel::~AudioLayerPanel()
 }
 
 
-void AudioLayerPanel::resizedInternalHeader(Rectangle<int>& r)
+void AudioLayerPanel::resizedInternalContent(Rectangle<int>& r)
 {
-	SequenceLayerPanel::resizedInternalHeader(r);
-	Rectangle<int> gr = getLocalBounds().reduced(5).removeFromBottom(16);
+	SequenceLayerPanel::resizedInternalContent(r);  
+	Rectangle<int> gr = r.reduced(2).removeFromTop(16);
 
 	moduleChooser.setBounds(gr.removeFromLeft(80));
 	gr.removeFromLeft(5);

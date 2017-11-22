@@ -20,6 +20,7 @@ ConsequenceManager::ConsequenceManager() :
 {
 	selectItemWhenCreated = false;
 	triggerAll = addTrigger("Trigger All", "Trigger all the consequences in the manager");
+	DBG("Trigger all > " << (int)(triggerAll != nullptr));
 }
 
 ConsequenceManager::~ConsequenceManager()

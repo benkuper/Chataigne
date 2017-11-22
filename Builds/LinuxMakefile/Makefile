@@ -66,6 +66,8 @@ ifeq ($(CONFIG),Release)
 endif
 
 OBJECTS_APP := \
+  $(JUCE_OBJDIR)/ProjectSettings_6f8498bd.o \
+  $(JUCE_OBJDIR)/GlobalPreferences_21f26636.o \
   $(JUCE_OBJDIR)/ChataigneAssetManager_e104aa7c.o \
   $(JUCE_OBJDIR)/ProcessorEditor_827a180.o \
   $(JUCE_OBJDIR)/ProcessorManagerUI_2a595c98.o \
@@ -355,6 +357,16 @@ $(JUCE_OUTDIR)/$(JUCE_TARGET_APP) : check-pkg-config $(OBJECTS_APP) $(RESOURCES)
 	-$(V_AT)mkdir -p $(JUCE_LIBDIR)
 	-$(V_AT)mkdir -p $(JUCE_OUTDIR)
 	$(V_AT)$(CXX) -o $(JUCE_OUTDIR)/$(JUCE_TARGET_APP) $(OBJECTS_APP) $(JUCE_LDFLAGS) $(RESOURCES) $(TARGET_ARCH)
+
+$(JUCE_OBJDIR)/ProjectSettings_6f8498bd.o: ../../Source/ProjectSettings.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling ProjectSettings.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/GlobalPreferences_21f26636.o: ../../Source/GlobalPreferences.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling GlobalPreferences.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/ChataigneAssetManager_e104aa7c.o: ../../Source/ChataigneAssetManager.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)

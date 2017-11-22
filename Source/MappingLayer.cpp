@@ -32,9 +32,8 @@ MappingLayer::MappingLayer(Sequence *_sequence, var params) :
 	
 	mode->setValueWithData((Mode)(int)params.getProperty("mode", MODE_1D));
 
-	uiHeight->setRange(50, uiHeight->maximumValue);
-
 	setupMappingForCurrentMode();
+	uiHeight->setValue(115);
 }
 
 MappingLayer::~MappingLayer()

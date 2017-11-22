@@ -32,7 +32,7 @@ public:
 
 	ScopedPointer<FloatSliderUI> enveloppeUI;
 
-	void resizedInternalHeader(Rectangle<int> &r) override;
+	void resizedInternalContent(Rectangle<int> &r) override;
 
 	void targetAudioModuleChanged(AudioLayer *) override;
 	
