@@ -43,7 +43,7 @@ void MappingLayerTimeline::setupUIForLayerMode()
 		automationsUI.add(aui);
 	}
 
-	if (mappingLayer->getMappingMode() == MappingLayer::MODE_COLOR)
+	if (mappingLayer->mode->getValueDataAsEnum<MappingLayer::Mode>() == MappingLayer::MODE_COLOR)
 	{
 		DBG("Here");
 		colorManagerUI = new TimeColorManagerUI(mappingLayer->timeColorManager);

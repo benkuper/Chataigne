@@ -27,12 +27,7 @@
         <FILE id="HAMWie" name="ProjectSettings.h" compile="0" resource="0"
               file="Source/ProjectSettings.h"/>
       </GROUP>
-      <GROUP id="{B7AE4CF6-C109-933F-DE7E-494B9C9E3C1A}" name="Preferences">
-        <FILE id="KTizU7" name="GlobalPreferences.cpp" compile="1" resource="0"
-              file="Source/GlobalPreferences.cpp"/>
-        <FILE id="ngm4zr" name="GlobalPreferences.h" compile="0" resource="0"
-              file="Source/GlobalPreferences.h"/>
-      </GROUP>
+      <GROUP id="{B7AE4CF6-C109-933F-DE7E-494B9C9E3C1A}" name="Preferences"/>
       <GROUP id="{C6C9402E-3E5F-DA24-8E22-DE4CD0AB4FD4}" name="Analytics">
         <FILE id="rqVuQx" name="GoogleAnalyticsDestination.h" compile="0" resource="0"
               file="Source/GoogleAnalyticsDestination.h"/>

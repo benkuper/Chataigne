@@ -35,8 +35,6 @@ public:
 
 	Mapping mapping;
 
-	Mode getMappingMode();
-
 	void setupMappingForCurrentMode();
 
 	void updateCurvesValues();

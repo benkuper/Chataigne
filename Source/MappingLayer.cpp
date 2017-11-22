@@ -30,7 +30,7 @@ MappingLayer::MappingLayer(Sequence *_sequence, var params) :
 	mode->addOption("Point 3D (XYZ)", MODE_3D);
 	mode->addOption("Color (RGBA)", MODE_COLOR);
 	
-	mode->setValueWithData((Mode)(int)params.getProperty("mode", MODE_1D));
+	//mode->setValueWithData((Mode)(int)params.getProperty("mode", MODE_1D));
 
 	setupMappingForCurrentMode();
 	uiHeight->setValue(115);
@@ -40,14 +40,9 @@ MappingLayer::~MappingLayer()
 {
 }
 
-MappingLayer::Mode MappingLayer::getMappingMode()
-{
-	return (Mode)(int)mode->getValueData();
-}
-
 void MappingLayer::setupMappingForCurrentMode()
 {
-	Mode m = getMappingMode();
+	Mode m = mode->getValueDataAsEnum<Mode>();
 	int numAutomations = 0;
 
 	if (curveValue != nullptr)
@@ -120,7 +115,7 @@ void MappingLayer::setupMappingForCurrentMode()
 
 void MappingLayer::updateCurvesValues()
 {
-	Mode mappingMode = getMappingMode();
+	Mode mappingMode = mode->getValueDataAsEnum<Mode>();
 	switch (mappingMode)
 	{
 	case MODE_COLOR:
@@ -193,7 +188,7 @@ void MappingLayer::onContainerParameterChangedInternal(Parameter * p)
 void MappingLayer::onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c)
 {
 	bool doUpdate = false;
-	if (getMappingMode() == MODE_COLOR)
+	if (mode->getValueDataAsEnum<Mode>() == MODE_COLOR)
 	{
 		doUpdate = c == timeColorManager->currentColor;
 	} else
@@ -213,7 +208,7 @@ void MappingLayer::onControllableFeedbackUpdateInternal(ControllableContainer * 
 
 void MappingLayer::sequenceTotalTimeChanged(Sequence *)
 {
-	if (getMappingMode() == MODE_COLOR)
+	if (mode->getValueDataAsEnum<Mode>() == MODE_COLOR)
 	{
 		timeColorManager->setPositionMax(sequence->totalTime->floatValue());
 	}
@@ -227,7 +222,7 @@ void MappingLayer::sequenceCurrentTimeChanged(Sequence *, float, bool)
 {
 	if (!enabled->boolValue() || !sequence->enabled->boolValue()) return;
 	
-	if (getMappingMode() == MODE_COLOR)
+	if (mode->getValueDataAsEnum<Mode>() == MODE_COLOR)
 	{
 		timeColorManager->position->setValue(sequence->currentTime->floatValue());
 	}
