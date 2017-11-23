@@ -41,7 +41,7 @@ public:
 	bool canHandleRouteValues;
 
 	//help
-	virtual String getHelpID();
+    virtual String getHelpID() override;
 
 
 	Array<WeakReference<Controllable>> getValueControllables();
