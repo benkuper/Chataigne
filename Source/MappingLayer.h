@@ -39,6 +39,8 @@ public:
 
 	void updateCurvesValues();
 
+	String getHelpID() override;
+
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
 

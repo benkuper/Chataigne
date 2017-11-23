@@ -34,9 +34,6 @@ MappingLayer::MappingLayer(Sequence *_sequence, var params) :
 
 	setupMappingForCurrentMode();
 	uiHeight->setValue(115);
-
-
-	helpID = "MappingLayer";
 }
 
 MappingLayer::~MappingLayer()
@@ -139,6 +136,21 @@ void MappingLayer::updateCurvesValues()
 
 	
 	
+}
+
+String MappingLayer::getHelpID()
+{
+	Mode mappingMode = mode->getValueDataAsEnum<Mode>(); 
+	switch (mode)
+	{
+	case MODE_COLOR: return "ColorLayer";  break;
+
+	case MODE_1D:
+	case MODE_2D:
+	case MODE_3D:
+		return "AutomationLayer";
+		break;
+	}
 }
 
 var MappingLayer::getJSONData()
