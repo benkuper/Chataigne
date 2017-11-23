@@ -141,7 +141,7 @@ void MappingLayer::updateCurvesValues()
 String MappingLayer::getHelpID()
 {
 	Mode mappingMode = mode->getValueDataAsEnum<Mode>(); 
-	switch (mode)
+	switch (mappingMode)
 	{
 	case MODE_COLOR: return "ColorLayer";  break;
 
@@ -151,6 +151,8 @@ String MappingLayer::getHelpID()
 		return "AutomationLayer";
 		break;
 	}
+
+	return "UnknownLayer";
 }
 
 var MappingLayer::getJSONData()

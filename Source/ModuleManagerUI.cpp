@@ -15,6 +15,8 @@ ModuleManagerUI::ModuleManagerUI(const String &contentName, ModuleManager * _man
 	BaseManagerShapeShifterUI<ModuleManager, Module, ModuleUI>(contentName, _manager)
 {
 	addExistingItems();
+
+	noItemText = "Start here by adding a module to connect to another software or a physical device.";
 }
 
 ModuleManagerUI::~ModuleManagerUI()

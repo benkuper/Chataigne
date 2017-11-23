@@ -51,13 +51,25 @@ void UserOSCCommandModelManagerWindow::resized()
 	if (modelManagerUI != nullptr) modelManagerUI->setBounds(getLocalBounds().reduced(2));
 }
 
+void UserOSCCommandModelManagerWindow::paint(Graphics & g)
+{
+	ShapeShifterContentComponent::paint(g);
+	
+	if (module == nullptr)
+	{
+		g.setColour(Colours::white.withAlpha(.4f));
+		g.setFont(16);
+		g.drawFittedText("Select a Generic OSC Module to edit its command models", getLocalBounds(), Justification::centred, 6);
+	}
+}
+
 void UserOSCCommandModelManagerWindow::inspectablesSelectionChanged()
 {
 	if (InspectableSelectionManager::mainSelectionManager->isEmpty()) editModule(nullptr);
 	
 	Inspectable * i = InspectableSelectionManager::mainSelectionManager->currentInspectables[0];
 	CustomOSCModule * m = dynamic_cast<CustomOSCModule *>(i);
-	if(m != nullptr) editModule(m);
+	editModule(m);
 }
 
 //ManagerUI
@@ -66,6 +78,9 @@ UserOSCCommandModelManagerUI::UserOSCCommandModelManagerUI(UserOSCCommandModelMa
 	BaseManagerUI("Command Models for " + moduleName,manager)
 {
 	drawContour = true;
+
+	noItemText = "Here you can add your own commands for the module " + moduleName;
+
 	addExistingItems();
 }
 

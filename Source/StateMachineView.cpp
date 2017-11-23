@@ -25,6 +25,8 @@ StateMachineView::StateMachineView(const String &contentName, StateManager * _ma
 
 	addExistingItems(true);
 
+	noItemText = "Add interaction by creating a State";
+
 }
 
 StateMachineView::~StateMachineView()

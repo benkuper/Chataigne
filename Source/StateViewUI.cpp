@@ -27,10 +27,6 @@ BaseItemUI<State>(state, ResizeMode::ALL, true),
 		addAndMakeVisible(&pmui);
 	}
 
-	//bgColor = item->active->boolValue() ? (item->permanent->boolValue() ? GREEN_COLOR : FEEDBACK_COLOR) : BG_COLOR.brighter(.1f);
-
-	//setSize(250, 250);
-
 	resized();
 }
 	

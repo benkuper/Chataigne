@@ -14,6 +14,8 @@ ProcessorManagerUI::ProcessorManagerUI(ProcessorManager * _manager) :
 	BaseManagerUI("Processors", _manager)
 {
 	addExistingItems();
+
+	noItemText = "Add trigger interaction with an Action, or continuous interaction with a Mapping";
 }
 
 ProcessorManagerUI::~ProcessorManagerUI()

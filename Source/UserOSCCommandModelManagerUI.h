@@ -40,6 +40,8 @@ public:
 	void editModule(CustomOSCModule * module);
 	void resized() override;
 
+	void paint(Graphics &g) override;
+
 	void inspectablesSelectionChanged() override;
 	
 

@@ -204,12 +204,17 @@ void AudioModule::changeListenerCallback(ChangeBroadcaster *)
 	graph.setPlayConfigDetails(0, numSelectedOutputChannelsInSetup, currentSampleRate, currentBufferSize);
 	graph.prepareToPlay(currentSampleRate, currentBufferSize);
 
-	DBG("total output : " << graph.getTotalNumOutputChannels());
+	DBG("total output : " << graph.getBusCount(false) << "/" << graph.getBus(false, 0)->getNumberOfChannels());
+
 	for (auto &c : monitorOutChannels) removeControllable(c);
 	monitorOutChannels.clear();
-	for (int i = 0; i < graph.getTotalNumOutputChannels(); i++)
+
+	int numChannels = graph.getMainBusNumOutputChannels();
+	AudioChannelSet channelSet = graph.getChannelLayoutOfBus(false, 0);
+	for (int i = 0; i < numChannels; i++)
 	{
-		BoolParameter * b = addBoolParameter("Monitor Out : "+graph.getOutputChannelName(i), "If enabled, sends audio from this layer to this channel", i < selectedMonitorOutChannels.size());
+		String channelName = AudioChannelSet::getChannelTypeName(channelSet.getTypeOfChannel(i));
+		BoolParameter * b = addBoolParameter("Monitor Out : "+channelName, "If enabled, sends audio from this layer to this channel", i < selectedMonitorOutChannels.size());
 		monitorOutChannels.add(b);
 	}
 	updateSelectedMonitorChannels();

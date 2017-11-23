@@ -28,6 +28,11 @@ valueBGColor(Colours::white.withAlpha(.1f)),
 	resizeOnChildBoundsChanged = false;
 	addExistingItems();
 
+#if JUCE_MAC
+	noItemText = "Add keys using Command + Left Click";
+#else 
+	noItemText = "Add keys using Ctrl + Left Click";
+#endif
 
 }
 
@@ -95,20 +100,7 @@ void AutomationUI::paint(Graphics & g)
 {
 	BaseManagerUI::paint(g);
 
-	if (itemsUI.size() == 0)
-	{
-		g.setColour(Colours::white.withAlpha(.4f));
-		
-#if JUCE_MAC
-		String text = "Command + Clic to add keys";
-#else 
-		String text = "Ctrl + Clic to add keys";
-#endif
-		g.setFont(20);
-		g.drawText(text, getLocalBounds().withSizeKeepingCentre(200, 40).toFloat(), Justification::centred);
-		return; 
-	}
-
+	
 	if (itemsUI.size() < 2) return;
 
 	//int count = 0;

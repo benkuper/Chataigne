@@ -69,12 +69,16 @@ void AudioLayer::setAudioModule(AudioModule * newModule)
 		
 		graphID = audioModule->uidIncrement++;
 		audioModule->graph.addNode(currentProcessor, graphID);
-
-		for (int i = 0; i < audioModule->graph.getTotalNumOutputChannels(); i++)
+		
+		int numChannels = audioModule->graph.getMainBusNumOutputChannels();
+		AudioChannelSet channelSet = audioModule->graph.getChannelLayoutOfBus(false, 0);
+		for (int i = 0; i < numChannels; i++)
 		{
-			BoolParameter * b = addBoolParameter("Channel Out : "+audioModule->graph.getOutputChannelName(i), "If enabled, sends audio from this layer to this channel", i < 2);
+			String channelName = AudioChannelSet::getChannelTypeName(channelSet.getTypeOfChannel(i));
+			BoolParameter * b = addBoolParameter("Channel Out : " + channelName, "If enabled, sends audio from this layer to this channel", i < 2);
 			outChannels.add(b);
 		}
+		
 
 	}
 
