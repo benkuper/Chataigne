@@ -11,8 +11,11 @@
 #include "WiimotePairUtil.h"
 #pragma warning(disable:4995)
 
+bool WiiPairUtil::shouldStop = false;
+
 WiiPairUtil::WiiPairUtil()
 {
+
 }
 
 WiiPairUtil::~WiiPairUtil()
@@ -101,7 +104,7 @@ int WiiPairUtil::pairWin(bool forceRepairing)
 	// Keep looping until we pair with a Wii device
 	///////////////////////////////////////////////////////////////////////
 
-	while (nPaired == 0)
+	while (nPaired == 0 && !shouldStop)
 	{
 		int radio;
 
@@ -213,6 +216,8 @@ int WiiPairUtil::pairWin(bool forceRepairing)
 			} // if (hFind == NULL)
 		} // for (radio = 0; radio < nRadios; radio++)
 
+
+		if (shouldStop) return false;
 		Sleep(1000);
 	}
 

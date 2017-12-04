@@ -34,6 +34,8 @@ class WiiPairUtil
 public:
 	WiiPairUtil();
 	~WiiPairUtil();
+
+	static bool shouldStop; //safe stop for wiimote thread stop
     
     static int pair(bool forceRepairing = false);
     

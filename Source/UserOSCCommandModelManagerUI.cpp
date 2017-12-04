@@ -68,8 +68,12 @@ void UserOSCCommandModelManagerWindow::inspectablesSelectionChanged()
 	if (InspectableSelectionManager::mainSelectionManager->isEmpty()) editModule(nullptr);
 	
 	Inspectable * i = InspectableSelectionManager::mainSelectionManager->currentInspectables[0];
-	CustomOSCModule * m = dynamic_cast<CustomOSCModule *>(i);
-	editModule(m);
+	Module * m = dynamic_cast<Module *>(i);
+	if (m != nullptr)
+	{
+		CustomOSCModule * om = dynamic_cast<CustomOSCModule *>(i);
+		editModule(om);
+	}
 }
 
 //ManagerUI
