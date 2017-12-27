@@ -145,3 +145,8 @@ inline void ChataigneApplication::MainWindow::closeButtonPressed()
 
 	JUCEApplication::getInstance()->systemRequestedQuit();
 }
+
+void ChataigneApplication::MainWindow::visibilityChanged()
+{
+	if(isShowing()) grabKeyboardFocus();
+}

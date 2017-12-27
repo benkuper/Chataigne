@@ -25,6 +25,12 @@
 #include "MyoManager.h"
 #endif
 
+
+
+using namespace ossia;
+using namespace ossia::oscquery;
+using namespace ossia::net;
+
 ChataigneEngine::ChataigneEngine(ApplicationProperties * appProperties, const String &appVersion) :
 	Engine("Chataigne", ".noisette", appProperties, appVersion)
 {
@@ -35,12 +41,14 @@ ChataigneEngine::ChataigneEngine(ApplicationProperties * appProperties, const St
 	addChildControllableContainer(StateManager::getInstance());
 	addChildControllableContainer(SequenceManager::getInstance());
 	addChildControllableContainer(ModuleRouterManager::getInstance());
+
+	ossiaNode = new generic_device(std::make_unique<oscquery_server_protocol>((uint16_t)1234, (uint16_t)5678), "Chataigne");
+	updateOssiaNodes();
 }
 
 ChataigneEngine::~ChataigneEngine()
 {
 	//Application-end cleanup, nothing should be recreated after this
-
 	//delete singletons here
 	ModuleRouterManager::deleteInstance();
 
@@ -64,6 +72,39 @@ ChataigneEngine::~ChataigneEngine()
 
 }
 
+void ChataigneEngine::updateOssiaNodes()
+{
+	ossiaNode->clear_children();
+	declareOssiaNodesForContainer(this);
+}
+
+void ChataigneEngine::declareOssiaNodesForContainer(ControllableContainer * cc)
+{
+	if(cc != this) create_node(*ossiaNode, string_view(cc->getControlAddress().getCharPointer()));
+
+	Array<WeakReference<Controllable>> cList = cc->getAllControllables(true);
+	//for (auto &childCC : cc->controllableContainers) declareOssiaNodesForContainer(childCC);
+	for (auto &childC : cList) declareOssiaControllable(childC);
+}
+
+void ChataigneEngine::declareOssiaControllable(Controllable * c)
+{
+	auto &n = create_node(*ossiaNode, string_view(c->getControlAddress().getCharPointer()));
+	val_type t = val_type::IMPULSE;
+	switch (c->type)
+	{
+	case Controllable::TRIGGER: t = val_type::IMPULSE; break;
+	case Controllable::FLOAT: t = val_type::FLOAT; break;
+	case Controllable::INT: t = val_type::INT; break;
+	case Controllable::BOOL: t = val_type::BOOL; break;
+	case Controllable::STRING: t = val_type::STRING; break;
+	case Controllable::COLOR: t = val_type::VEC4F; break;
+	case Controllable::POINT2D: t = val_type::VEC2F; break;
+	case Controllable::POINT3D: t = val_type::VEC3F; break;
+	}
+	n.create_parameter(t);
+}
+
 void ChataigneEngine::clearInternal()
 {
 	//clear
@@ -72,7 +113,8 @@ void ChataigneEngine::clearInternal()
 
 	ModuleRouterManager::getInstance()->clear();
 	ModuleManager::getInstance()->clear();
-    
+ 
+	ossiaNode->clear_children();
 }
 
 var ChataigneEngine::getJSONData()
@@ -118,7 +160,13 @@ void ChataigneEngine::loadJSONDataInternalEngine(var data, ProgressTask * loadin
 	routerTask->setProgress(1);
 	routerTask->end();
 
-	
+	updateOssiaNodes();
+}
+
+void ChataigneEngine::childStructureChanged(ControllableContainer * cc)
+{
+	// child structure changed
+	if(!isLoadingFile && !isClearing) updateOssiaNodes();
 }
 
 String ChataigneEngine::getMinimumRequiredFileVersion()

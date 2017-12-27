@@ -85,6 +85,7 @@ public:
 		you really have to override any DocumentWindow methods, make sure your
 		subclass also calls the superclass's method.
 		*/
+		void visibilityChanged() override;
 
 #if JUCE_OPENGL
 		OpenGLContext openGLContext;

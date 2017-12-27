@@ -16,6 +16,7 @@ CurveMapFilter::CurveMapFilter() :
 	curve.setPositionMax(1);
 	curve.addItem(0, 0);
 	curve.addItem(1, 1);
+	curve.enableSnap->setValue(false);
 	curve.showUIInEditor = true;
 	curve.selectItemWhenCreated = false;
 	filterParams.addChildControllableContainer(&curve);
@@ -42,6 +43,11 @@ void CurveMapFilter::loadJSONDataInternal(var data)
 {
 	MappingFilter::loadJSONDataInternal(data);
 	curve.loadJSONData(data.getProperty("curve", var()), true);
+}
+
+Parameter * CurveMapFilter::setupParameterInternal(Parameter * source, const String & forceType)
+{
+	return MappingFilter::setupParameterInternal(source, FloatParameter::getTypeStringStatic());
 }
 
 

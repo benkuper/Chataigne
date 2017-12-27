@@ -50,10 +50,10 @@ void MappingFilter::setupSource(Parameter * source)
 	mappingFilterListeners.call(&FilterListener::filteredParamChanged, this);
 }
 
-Parameter * MappingFilter::setupParameterInternal(Parameter * source)
+Parameter * MappingFilter::setupParameterInternal(Parameter * source, const String &forceType)
 {
 	if (source == nullptr) return nullptr;
-	Parameter * p = (Parameter *) ControllableFactory::createControllable(source->getTypeString());
+	Parameter * p = (Parameter *) ControllableFactory::createControllable(forceType.isNotEmpty()?forceType:source->getTypeString());
 	p->setNiceName("Out");
 	p->setValue(source->getValue());
 	p->setRange(source->minimumValue, source->maximumValue);

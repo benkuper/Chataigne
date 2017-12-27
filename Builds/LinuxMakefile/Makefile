@@ -38,7 +38,7 @@ ifeq ($(CONFIG),Debug)
   JUCE_TARGET_APP := Chataigne
 
   JUCE_CFLAGS += $(JUCE_CPPFLAGS) $(TARGET_ARCH) -g -ggdb -O0 $(CFLAGS)
-  JUCE_CXXFLAGS += $(JUCE_CFLAGS) -std=c++11 $(CXXFLAGS)
+  JUCE_CXXFLAGS += $(JUCE_CFLAGS) -std=c++14 $(CXXFLAGS)
   JUCE_LDFLAGS += $(TARGET_ARCH) -L$(JUCE_BINDIR) -L$(JUCE_LIBDIR) $(shell pkg-config --libs alsa freetype2 libcurl x11 xext xinerama) -lGL -ldl -lpthread -lrt -lbluetooth $(LDFLAGS)
 
   CLEANCMD = rm -rf $(JUCE_OUTDIR)/$(TARGET) $(JUCE_OBJDIR)
@@ -59,7 +59,7 @@ ifeq ($(CONFIG),Release)
   JUCE_TARGET_APP := Chataigne
 
   JUCE_CFLAGS += $(JUCE_CPPFLAGS) $(TARGET_ARCH) -O3 $(CFLAGS)
-  JUCE_CXXFLAGS += $(JUCE_CFLAGS) -std=c++11 $(CXXFLAGS)
+  JUCE_CXXFLAGS += $(JUCE_CFLAGS) -std=c++14 $(CXXFLAGS)
   JUCE_LDFLAGS += $(TARGET_ARCH) -L$(JUCE_BINDIR) -L$(JUCE_LIBDIR) $(shell pkg-config --libs alsa freetype2 libcurl x11 xext xinerama) -fvisibility=hidden -lGL -ldl -lpthread -lrt -lbluetooth $(LDFLAGS)
 
   CLEANCMD = rm -rf $(JUCE_OUTDIR)/$(TARGET) $(JUCE_OBJDIR)
@@ -222,6 +222,7 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/MIDICommands_bb9338b2.o \
   $(JUCE_OBJDIR)/MIDIModuleEditor_725ffe23.o \
   $(JUCE_OBJDIR)/MIDIModule_a8b59bd6.o \
+  $(JUCE_OBJDIR)/MadMapperModule_bb093b5e.o \
   $(JUCE_OBJDIR)/DLightModule_cebd51a7.o \
   $(JUCE_OBJDIR)/MilluminModule_c935c8ae.o \
   $(JUCE_OBJDIR)/LGMLParameterCommand_ad119e45.o \
@@ -1135,6 +1136,11 @@ $(JUCE_OBJDIR)/MIDIModuleEditor_725ffe23.o: ../../Source/MIDIModuleEditor.cpp
 $(JUCE_OBJDIR)/MIDIModule_a8b59bd6.o: ../../Source/MIDIModule.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling MIDIModule.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/MadMapperModule_bb093b5e.o: ../../Source/MadMapperModule.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling MadMapperModule.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/DLightModule_cebd51a7.o: ../../Source/DLightModule.cpp

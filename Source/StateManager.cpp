@@ -38,7 +38,7 @@ void StateManager::setStateActive(State * s)
 	{
 		for (auto &ss : items)
 		{
-			ss->active->setValue(false);
+			if(ss != s) ss->active->setValue(false);
 		}
 	} else
 	{

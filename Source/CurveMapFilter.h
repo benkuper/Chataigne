@@ -28,6 +28,8 @@ public:
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
 
+	Parameter * setupParameterInternal(Parameter *, const String &forceType) override;
+
 	//InspectableEditor * getEditor(bool isRoot) override;
 
 	static CurveMapFilter * create() { return new CurveMapFilter(); }

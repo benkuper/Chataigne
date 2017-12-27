@@ -28,7 +28,7 @@ public:
 	bool autoSetRange; //if true, will check at process if ranges are differents between source and filtered, and if so, will reassign
 
 	void setupSource(Parameter * source);
-	virtual Parameter * setupParameterInternal(Parameter * source);
+	virtual Parameter * setupParameterInternal(Parameter * source, const String &forceType = String::empty);
 
 	void onControllableFeedbackUpdateInternal(ControllableContainer *, Controllable * p) override;
 	virtual void filterParamChanged(Parameter * ) {};

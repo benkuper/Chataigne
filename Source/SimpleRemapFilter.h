@@ -25,7 +25,7 @@ public:
 
 	void processInternal() override;
 
-	Parameter * setupParameterInternal(Parameter *) override;
+	Parameter * setupParameterInternal(Parameter *, const String &forceType) override;
 	void filterParamChanged(Parameter *) override;
 
 	static SimpleRemapFilter * create() { return new SimpleRemapFilter(); }

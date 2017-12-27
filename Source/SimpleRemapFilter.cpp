@@ -27,9 +27,9 @@ void SimpleRemapFilter::processInternal()
 	filteredParameter->setNormalizedValue(sourceParam->getNormalizedValue());
 }
 
-Parameter * SimpleRemapFilter::setupParameterInternal(Parameter * source)
+Parameter * SimpleRemapFilter::setupParameterInternal(Parameter * source, const String &forceType)
 {
-	Parameter * p = MappingFilter::setupParameterInternal(source);
+	Parameter * p = MappingFilter::setupParameterInternal(source,FloatParameter::getTypeStringStatic());
 	p->setRange(targetMin->floatValue(), targetMax->floatValue());
 	return p;
 }
