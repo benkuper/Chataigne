@@ -14,6 +14,7 @@ SequenceManagerUI::SequenceManagerUI(const String &contentName, SequenceManager 
 	BaseManagerShapeShifterUI<SequenceManager, Sequence, SequenceUI>(contentName, _manager)
 {
 	addItemText = "Add Sequence";
+	noItemText = "Add timed animation and control by creating a sequence";
 	addExistingItems();
 }
 

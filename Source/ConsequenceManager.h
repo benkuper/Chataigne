@@ -33,6 +33,7 @@ public:
 
 	void onContainerTriggerTriggered(Trigger *) override;
 	void addItemInternal(Consequence *, var data) override;
+	void removeItemInternal(Consequence *) override;
 
 	InspectableEditor * getEditor(bool isRoot) override;
 

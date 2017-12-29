@@ -37,7 +37,7 @@ public:
 	const Identifier sendOSCId = "send";
 
 	//RECEIVE
-	void setupReceiver();
+	virtual void setupReceiver();
 	float getFloatArg(OSCArgument a);
 	int getIntArg(OSCArgument a);
 	String getStringArg(OSCArgument a);
@@ -46,7 +46,7 @@ public:
 	virtual void processMessageInternal(const OSCMessage &) {}
 
 	//SEND
-	void setupSender();
+	virtual void setupSender();
 	void sendOSC(const OSCMessage &msg);
 
 	//Script

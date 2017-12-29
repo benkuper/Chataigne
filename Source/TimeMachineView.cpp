@@ -13,17 +13,14 @@
 
 TimeMachineView::TimeMachineView(const String &contentName, SequenceManager * _manager) :
 	ShapeShifterContentComponent(contentName),
-	manager(_manager),
-	createSequenceBT("Create a sequence")
+	manager(_manager)
 {
 	contentIsFlexible = true;
 	InspectableSelectionManager::mainSelectionManager->addSelectionListener(this);
 	SequenceManager::getInstance()->addBaseManagerListener(this);
 
-	addAndMakeVisible(&createSequenceBT);
-	createSequenceBT.addListener(this);
 
-	helpID = "TimeMachine";
+	helpID = "SequenceEditor";
 
 }
 
@@ -36,6 +33,12 @@ TimeMachineView::~TimeMachineView()
 void TimeMachineView::paint(Graphics & g)
 {
 	g.fillAll(BG_COLOR.darker(.3f));
+	if (editor == nullptr)
+	{
+		g.setFont(20);
+		g.setColour(BG_COLOR.brighter(.1f));
+		g.drawFittedText("Create a sequence from the Sequences Panel to edit this sequence here.", getLocalBounds(), Justification::centred, 3);
+	}
 }
 
 void TimeMachineView::resized()
@@ -43,10 +46,6 @@ void TimeMachineView::resized()
 	if (editor != nullptr)
 	{
 		editor->setBounds(getLocalBounds());
-	}
-	else
-	{
-		createSequenceBT.setBounds(getLocalBounds().withSizeKeepingCentre(200, 100));
 	}
 }
 
@@ -67,7 +66,6 @@ void TimeMachineView::setSequence(Sequence * sequence)
 		addAndMakeVisible(editor);
 	}
 	
-	createSequenceBT.setVisible(sequence == nullptr);
 	resized();
 }
 
@@ -93,12 +91,4 @@ void TimeMachineView::inspectablesSelectionChanged()
 void TimeMachineView::itemRemoved(Sequence *s)
 {
 	if (editor != nullptr && s == editor->sequence) setSequence(nullptr);
-}
-
-void TimeMachineView::buttonClicked(Button * b)
-{
-	if (b == &createSequenceBT)
-	{
-		SequenceManager::getInstance()->addItem();
-	}
 }

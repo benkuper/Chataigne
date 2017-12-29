@@ -19,6 +19,7 @@ ConditionManager::ConditionManager(bool _operatorOnSide) :
 	operatorOnSide(_operatorOnSide),
 	validationProgress(nullptr)
 {
+
 	selectItemWhenCreated = false;
 
 	isValid = addBoolParameter("Is Valid","Indicates if all the conditions are valid. If so, the consequences are triggered one time, at the moment the action becomes valid.",false);
@@ -31,8 +32,8 @@ ConditionManager::ConditionManager(bool _operatorOnSide) :
 	conditionOperator->hideInEditor = true;
 
 	validationTime = addFloatParameter("Validation Time", "If greater than 0, the conditions will be validated only if they remain valid for this amount of time", 0, 0, 10);
-	
-	//conditionOperator->hideInEditor = items.size() <= 1;
+	validationTime->hideInEditor = true;
+
 }
 
 ConditionManager::~ConditionManager()
@@ -52,12 +53,14 @@ void ConditionManager::addItemInternal(Condition * c, var data)
 {
 	c->addConditionListener(this);
 	conditionOperator->hideInEditor = items.size() <= 1;
+	validationTime->hideInEditor = items.size() == 0;
 }
 
 void ConditionManager::removeItemInternal(Condition * c)
 {
 	c->removeConditionListener(this);
 	conditionOperator->hideInEditor = items.size() <= 1;
+	validationTime->hideInEditor = items.size() == 0;
 }
 
 void ConditionManager::checkAllConditions()
@@ -74,10 +77,6 @@ void ConditionManager::checkAllConditions()
 		valid = isAtLeastOneConditionValid();
 		break;
 	}
-
-
-	
-	DBG("Check all conditions ");
 
 	if (validationTime->floatValue() == 0)
 	{

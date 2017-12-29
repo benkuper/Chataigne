@@ -30,7 +30,7 @@ MainContentComponent::MainContentComponent()
 
 	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Modules", &ModuleManagerUI::create));
 	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("State Machine", &StateMachineView::create));
-	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Time Machine", &TimeMachineView::create));
+	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Sequence Editor", &TimeMachineView::create));
 	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Help", &HelpPanel::create));
 	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("States", &StateManagerUI::create));
 	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("OSC Command Models", &UserOSCCommandModelManagerWindow::create));

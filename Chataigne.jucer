@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.1.5"
+<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.1.6"
               bundleIdentifier="benkuper.Chataigne" includeBinaryInAppConfig="1"
               jucerVersion="5.2.0" companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
               companyEmail="benjamin@kuperberg.fr" defines="" displaySplashScreen="1"
@@ -1205,15 +1205,14 @@
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" winWarningLevel="4" generateManifest="1" winArchitecture="x64"
                        isDebug="1" optimisation="1" targetName="Chataigne-x64_Debug"
-                       headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/ossia/include&#10;$(BOOST_PATH)&#10;$(ASIOSDK)/common&#10;$(KINECTSDK20_DIR)inc&#10;"
-                       libraryPath="$(KINECTSDK20_DIR)Lib\x64&#10;../../External/ossia/lib"
-                       binaryPath="Binaries" debugInformationFormat="ProgramDatabase"
-                       enablePluginBinaryCopyStep="0"/>
+                       headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;$(ASIOSDK)/common&#10;$(KINECTSDK20_DIR)inc&#10;"
+                       libraryPath="$(KINECTSDK20_DIR)Lib\x64" binaryPath="Binaries"
+                       debugInformationFormat="ProgramDatabase" enablePluginBinaryCopyStep="0"/>
         <CONFIGURATION name="Release" winWarningLevel="4" generateManifest="1" winArchitecture="x64"
-                       isDebug="0" optimisation="3" targetName="Chataigne-x64" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/ossia/include&#10;$(BOOST_PATH)&#10;$(ASIOSDK)/common&#10;$(KINECTSDK20_DIR)inc&#10;"
-                       libraryPath="$(KINECTSDK20_DIR)Lib\x64&#10;../../External/ossia/lib"
-                       binaryPath="Binaries" debugInformationFormat="ProgramDatabase"
-                       enablePluginBinaryCopyStep="0" linkTimeOptimisation="1"/>
+                       isDebug="0" optimisation="3" targetName="Chataigne-x64" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;$(ASIOSDK)/common&#10;$(KINECTSDK20_DIR)inc&#10;"
+                       libraryPath="$(KINECTSDK20_DIR)Lib\x64" binaryPath="Binaries"
+                       debugInformationFormat="ProgramDatabase" enablePluginBinaryCopyStep="0"
+                       linkTimeOptimisation="1"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_video" path="D:/Softwares\JUCE\modules"/>

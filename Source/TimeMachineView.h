@@ -17,8 +17,7 @@
 class TimeMachineView :
 	public ShapeShifterContentComponent,
 	public InspectableSelectionManager::Listener,
-	public SequenceManager::Listener,
-	public ButtonListener
+	public SequenceManager::Listener
 {
 public:
 	
@@ -27,7 +26,6 @@ public:
 
 	SequenceManager * manager;
 	ScopedPointer<SequenceEditor> editor;
-	TextButton createSequenceBT;
 	
 	void paint(Graphics &g) override;
 	void resized() override;
@@ -36,8 +34,6 @@ public:
 	void inspectablesSelectionChanged() override;
 
 	void itemRemoved(Sequence *) override;
-
-	void buttonClicked(Button * b) override;
 
 	static TimeMachineView * create(const String &contentName) { return new TimeMachineView(contentName, SequenceManager::getInstance()); }
 

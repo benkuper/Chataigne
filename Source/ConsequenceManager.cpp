@@ -20,6 +20,7 @@ ConsequenceManager::ConsequenceManager() :
 {
 	selectItemWhenCreated = false;
 	triggerAll = addTrigger("Trigger All", "Trigger all the consequences in the manager");
+	triggerAll->hideInEditor = true;
 }
 
 ConsequenceManager::~ConsequenceManager()
@@ -46,6 +47,12 @@ void ConsequenceManager::onContainerTriggerTriggered(Trigger * t)
 void ConsequenceManager::addItemInternal(Consequence * c, var data)
 {
 	c->forceDisabled = forceDisabled;
+	triggerAll->hideInEditor = items.size() == 0;
+}
+
+void ConsequenceManager::removeItemInternal(Consequence *)
+{
+	triggerAll->hideInEditor = items.size() == 0;
 }
 
 InspectableEditor * ConsequenceManager::getEditor(bool isRoot)

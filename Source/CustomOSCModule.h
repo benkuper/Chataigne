@@ -14,6 +14,7 @@
 #include "OSCModule.h"
 #include "UserOSCCommandModelManager.h"
 
+
 class CustomOSCModule :
 	public OSCModule,
 	public UserOSCCommandModelManager::Listener
@@ -28,7 +29,12 @@ public:
 
 	UserOSCCommandModelManager umm;
 
+
 	void processMessageInternal(const OSCMessage &msg) override;
+
+	void setupReceiver() override;
+	void setupSender() override;
+
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;

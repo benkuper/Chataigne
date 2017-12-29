@@ -32,31 +32,32 @@
 juce_ImplementSingleton(ModuleFactory)
 
 ModuleFactory::ModuleFactory() {
-	moduleDefs.add(new ModuleDefinition("Generic", "OSC", &CustomOSCModule::create));
-	moduleDefs.add(new ModuleDefinition("Generic", "MIDI", &MIDIModule::create));
-	moduleDefs.add(new ModuleDefinition("Generic", "DMX", &DMXModule::create));
-	moduleDefs.add(new ModuleDefinition("Generic", "Serial", &SerialModule::create));
-	moduleDefs.add(new ModuleDefinition("Generic", "TCP", &TCPModule::create));
-	moduleDefs.add(new ModuleDefinition("Generic", "HID", &HIDModule::create));
-	moduleDefs.add(new ModuleDefinition("Generic", "Gamepad", &GamepadModule::create));
-	
-	moduleDefs.add(new ModuleDefinition("Controller", "Wiimote", &WiimoteModule::create));
-	moduleDefs.add(new ModuleDefinition("Controller", "Launchpad", &LaunchpadModule::create));
+	moduleDefs.add(new ModuleDefinition("Protocol", "OSC", &CustomOSCModule::create));
+	moduleDefs.add(new ModuleDefinition("Protocol", "MIDI", &MIDIModule::create));
+	moduleDefs.add(new ModuleDefinition("Protocol", "DMX", &DMXModule::create));
+	moduleDefs.add(new ModuleDefinition("Protocol", "Serial", &SerialModule::create));
+	moduleDefs.add(new ModuleDefinition("Protocol", "TCP", &TCPModule::create));
+	/*
+	moduleDefs.add(new ModuleDefinition("Protocol", "HID", &HIDModule::create));
+	moduleDefs.add(new ModuleDefinition("Protocol", "Gamepad", &GamepadModule::create));
+	*/
 
+	moduleDefs.add(new ModuleDefinition("Hardware", "Sound Card", &AudioModule::create));
 #if JUCE_WINDOWS
 	//moduleDefs.add(new ModuleDefinition("Controller", "Myo", &MyoModule::create));
-	moduleDefs.add(new ModuleDefinition("Controller", "KinectV2", &KinectV2Module::create));
+	moduleDefs.add(new ModuleDefinition("Hardware", "KinectV2", &KinectV2Module::create));
 #endif
-    
-	moduleDefs.add(new ModuleDefinition("Audio", "Audio Device", &AudioModule::create));
-	moduleDefs.add(new ModuleDefinition("Audio", "LiveOSC", &LiveOSCModule::create));
-	moduleDefs.add(new ModuleDefinition("Audio", "Reaper", &ReaperModule::create));
-	
-	moduleDefs.add(new ModuleDefinition("Light", "DLight", &DLightModule::create));
+	moduleDefs.add(new ModuleDefinition("Hardware", "Wiimote", &WiimoteModule::create));
+	moduleDefs.add(new ModuleDefinition("Hardware", "Launchpad", &LaunchpadModule::create));
 
-	moduleDefs.add(new ModuleDefinition("Video", "Resolume", &ResolumeModule::create));
-	moduleDefs.add(new ModuleDefinition("Video", "Millumin", &MilluminModule::create));
-	moduleDefs.add(new ModuleDefinition("Video", "VLC", &VLCModule::create));
+	moduleDefs.add(new ModuleDefinition("Software", "LiveOSC", &LiveOSCModule::create));
+	moduleDefs.add(new ModuleDefinition("Software", "Reaper", &ReaperModule::create));
+	
+	moduleDefs.add(new ModuleDefinition("Software", "DLight", &DLightModule::create));
+
+	moduleDefs.add(new ModuleDefinition("Software", "Resolume", &ResolumeModule::create));
+	moduleDefs.add(new ModuleDefinition("Software", "Millumin", &MilluminModule::create));
+	moduleDefs.add(new ModuleDefinition("Software", "VLC", &VLCModule::create));
 
 	
 	addCustomModules();

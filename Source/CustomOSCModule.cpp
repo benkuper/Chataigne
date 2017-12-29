@@ -28,10 +28,14 @@ CustomOSCModule::CustomOSCModule() :
 	splitArgs = addBoolParameter("Split Arguments", "If checked, a message with multiple arguments will be exploded in multliple values", false);
 	splitArgs->isTargettable = false;
 
-
 	defManager.add(CommandDefinition::createDef(this, "", "Custom Message", &CustomOSCCommand::create));
 	addChildControllableContainer(&umm);
 	umm.addBaseManagerListener(this);
+
+#if defined OSSIA_DNSSD
+	LOG("OSSIA DNSSD");
+	updateOssia();
+#endif
 }
 
 void CustomOSCModule::processMessageInternal(const OSCMessage & msg)
@@ -184,6 +188,16 @@ void CustomOSCModule::processMessageInternal(const OSCMessage & msg)
 	}
 }
 
+
+void CustomOSCModule::setupReceiver()
+{
+	OSCModule::setupReceiver();
+}
+
+void CustomOSCModule::setupSender()
+{
+	OSCModule::setupSender();
+}
 
 var CustomOSCModule::getJSONData()
 {

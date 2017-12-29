@@ -13,6 +13,7 @@
 ConsequenceManagerEditor::ConsequenceManagerEditor(ConsequenceManager * c, bool isRoot) :
 	GenericManagerEditor(c,isRoot)
 {
+	noItemText = "Add output commands here";
 }
 
 ConsequenceManagerEditor::~ConsequenceManagerEditor()
