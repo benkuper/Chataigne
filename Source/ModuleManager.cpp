@@ -46,7 +46,6 @@ Module * ModuleManager::getModuleWithName(const String & moduleName)
 
 Controllable * ModuleManager::showAllValuesAndGetControllable(bool parametersOnly)
 {
-
 	PopupMenu menu;
 	for (int i = 0; i < items.size(); i++)
 	{
@@ -65,8 +64,8 @@ Controllable * ModuleManager::showAllValuesAndGetControllable(bool parametersOnl
 	//TODO : move from here the handling of other values than modules
 	ControllableChooserPopupMenu engineMenu(Engine::mainEngine, true, !parametersOnly, items.size() * 1000);
 	menu.addSubMenu("Generic", engineMenu);
-
 	int itemID = menu.show();
+
 
 	if (itemID <= 0) return nullptr;
 
@@ -96,8 +95,8 @@ PopupMenu ModuleManager::getAllModulesCommandMenu(CommandContext context)
 
 CommandDefinition * ModuleManager::getCommandDefinitionForItemID(int itemID, Module * lockedModule)
 {
+
 	if (itemID == 0) return nullptr;
-	DBG("Item id = " + String(itemID));
 
 	Module * m = lockedModule;
 
@@ -119,7 +118,6 @@ CommandDefinition * ModuleManager::getCommandDefinitionForItemID(int itemID, Mod
 		m = items[moduleIndex];
 	}
 
-	DBG("M not null ?" << (int)(m != nullptr));
 	
 	if (m == nullptr) return nullptr;
 
