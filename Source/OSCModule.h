@@ -70,6 +70,10 @@ public:
 	static var argumentToVar(const OSCArgument &a);
 
 
+	//save / load
+	virtual var getJSONData() override;
+	virtual void loadJSONDataInternal(var data) override;
+
 	//Routing
 	class OSCRouteParams :
 		public RouteParams

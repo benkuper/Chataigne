@@ -24,6 +24,7 @@ OSCModule::OSCModule(const String & name, int defaultLocalPort, int defaultRemot
 	{
 		receiveCC = new OSCIOContainer("OSC Input");
 		addChildControllableContainer(receiveCC);
+
 		localPort = receiveCC->addIntParameter("Local Port", "Local Port to bind to receive OSC Messages", defaultLocalPort, 1024, 65535);
 		localPort->hideInOutliner = true;
 		localPort->isTargettable = false;
@@ -202,6 +203,22 @@ var OSCModule::argumentToVar(const OSCArgument & a)
 	return var("error");
 }
 
+var OSCModule::getJSONData()
+{
+	var data = Module::getJSONData();
+	if (receiveCC != nullptr) data.getDynamicObject()->setProperty("input", receiveCC->getJSONData());
+	if (sendCC != nullptr) data.getDynamicObject()->setProperty("output", sendCC->getJSONData());
+	return data;
+}
+
+void OSCModule::loadJSONDataInternal(var data)
+{
+	Module::loadJSONDataInternal(data);
+	if (receiveCC != nullptr) receiveCC->loadJSONData(data.getProperty("input", var()));
+	if (sendCC != nullptr) sendCC->loadJSONData(data.getProperty("output", var()));
+}
+
+
 void OSCModule::handleRoutedModuleValue(Controllable * c, RouteParams * p)
 {
 	OSCRouteParams * op = static_cast<OSCRouteParams *>(p);
@@ -237,6 +254,7 @@ void OSCModule::controllableFeedbackUpdate(ControllableContainer * cc, Controlla
 		remoteHost->setEnabled(sv);
 		remotePort->setEnabled(sv);
 		useLocal->setEnabled(sv);
+		setupSender();
 
 	} else if (c == localPort) setupReceiver();
 	else if (c == remoteHost || c == remotePort || c == useLocal)
