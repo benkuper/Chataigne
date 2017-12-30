@@ -16,6 +16,8 @@ DMXModule::DMXModule() :
 	Module("DMX"),
 	dmxDevice(nullptr)
 {
+	setupIOConfiguration(true, true);
+
 	//canHandleRouteValues = true;
 
 	defManager.add(CommandDefinition::createDef(this, "", "Set value", &DMXCommand::create)->addParam("action", DMXCommand::SET_VALUE));

@@ -14,16 +14,19 @@
 #include "Module.h"
 
 class ModuleUI :
-	public BaseItemUI<Module>
+	public BaseItemUI<Module>,
+	public Module::ModuleListener
 {
 public:
-	ModuleUI(Module *);
+	ModuleUI(Module * module);
 	virtual ~ModuleUI();
 
 	void resizedInternalHeader(Rectangle<int> &r) override;
 
 	ScopedPointer<TriggerImageUI> inActivityUI;
 	ScopedPointer<TriggerImageUI> outActivityUI;
+
+	void moduleIOConfigurationChanged() override;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ModuleUI)
 };

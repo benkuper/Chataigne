@@ -15,8 +15,10 @@
 #include "ResolumeModuleEditor.h"
 
 ResolumeModule::ResolumeModule() :
-	OSCModule(getDefaultTypeString(),7001,7000)
+	OSCModule(getDefaultTypeString(),7001,7000,false,true)
 {	
+
+
 	version = addEnumParameter("Resolume Version", "Version of Resolume");
 	version->addOption("Resolume 5", 5)->addOption("Resolume 6", 6);
 

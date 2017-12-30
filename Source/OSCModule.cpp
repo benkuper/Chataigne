@@ -10,34 +10,41 @@
 
 #include "OSCModule.h"
 #include "OSCModuleBaseEditor.h"
+#include "OSCModuleIOEditor.h"
 
-
-OSCModule::OSCModule(const String & name, int defaultLocalPort, int defaultRemotePort) :
+OSCModule::OSCModule(const String & name, int defaultLocalPort, int defaultRemotePort, bool canHaveInput, bool canHaveOutput) :
 	Module(name)
 {
-	canHandleRouteValues = true;
+	
+	setupIOConfiguration(canHaveInput, canHaveOutput);
+	canHandleRouteValues = canHaveOutput;
 
 	//Receive
-	localPort = addIntParameter("Local Port", "Local Port to bind to receive OSC Messages", defaultLocalPort, 1024, 65535);
-	localPort->hideInOutliner = true;
-	localPort->isTargettable = false;
+	if (canHaveInput)
+	{
+		receiveCC = new OSCIOContainer("OSC Input");
+		addChildControllableContainer(receiveCC);
+		localPort = receiveCC->addIntParameter("Local Port", "Local Port to bind to receive OSC Messages", defaultLocalPort, 1024, 65535);
+		localPort->hideInOutliner = true;
+		localPort->isTargettable = false;
 
-	isConnected = addBoolParameter("Is Connected", "Is the receiver bound the the local port", false);
-	isConnected->isEditable = false;
-	isConnected->hideInOutliner = true;
-	isConnected->isTargettable = false;
-	isConnected->isSavable = false;
-
-	receiver.addListener(this);
-	setupReceiver();
-
+		receiver.addListener(this);
+		setupReceiver();
+	}
 
 	//Send
-	useLocal = addBoolParameter("Local", "Send to Local IP (127.0.0.1). Allow to quickly switch between local and remote IP.", true);
-	remoteHost = addStringParameter("Remote Host", "Remote Host to send to.", "127.0.0.1");
-	remotePort = addIntParameter("Remote port", "Port on which the remote host is listening to", defaultRemotePort, 1024, 65535);
+	if (canHaveOutput)
+	{
+		sendCC = new OSCIOContainer("OSC Output");
+		addChildControllableContainer(sendCC);
+		
+		useLocal = sendCC->addBoolParameter("Local", "Send to Local IP (127.0.0.1). Allow to quickly switch between local and remote IP.", true);
+		remoteHost = sendCC->addStringParameter("Remote Host", "Remote Host to send to.", "127.0.0.1");
+		remoteHost->setEnabled(!useLocal->boolValue());
+		remotePort = sendCC->addIntParameter("Remote port", "Port on which the remote host is listening to", defaultRemotePort, 1024, 65535);
 
-	setupSender();
+		setupSender();
+	}
 
 	//Script
 	scriptObject.setMethod(sendOSCId, OSCModule::sendOSCFromScript);
@@ -45,8 +52,12 @@ OSCModule::OSCModule(const String & name, int defaultLocalPort, int defaultRemot
 
 void OSCModule::setupReceiver()
 {
+	if (receiveCC == nullptr) return;
+
+	receiver.disconnect();
+
+	if (!receiveCC->enabled->boolValue()) return;
 	bool result = receiver.connect(localPort->intValue());
-	isConnected->setValue(result);
 
 	if (result)
 	{
@@ -115,6 +126,11 @@ void OSCModule::processMessage(const OSCMessage & msg)
 
 void OSCModule::setupSender()
 {
+	if (sendCC == nullptr) return;
+
+	sender.disconnect();
+	if (!sendCC->enabled->boolValue()) return;
+
 	String targetHost = useLocal->boolValue() ? "127.0.0.1" : remoteHost->stringValue();
 	sender.connect(targetHost, remotePort->intValue());
 }
@@ -122,6 +138,9 @@ void OSCModule::setupSender()
 void OSCModule::sendOSC(const OSCMessage & msg)
 {
 	if (!enabled->boolValue()) return;
+	if (sendCC == nullptr) return;
+
+	if (!sendCC->enabled->boolValue()) return;
 
 	if (logOutgoingData->boolValue())
 	{
@@ -194,9 +213,39 @@ void OSCModule::handleRoutedModuleValue(Controllable * c, RouteParams * p)
 void OSCModule::onContainerParameterChangedInternal(Parameter * p)
 {
 	Module::onContainerParameterChangedInternal(p);
-	if (p == localPort) setupReceiver();
-	else if (p == remoteHost || p == remotePort || p == useLocal) setupSender();
+
+	
 }
+
+void OSCModule::controllableFeedbackUpdate(ControllableContainer * cc, Controllable * c)
+{
+	Module::controllableFeedbackUpdate(cc, c);
+
+	if (receiveCC != nullptr && c == receiveCC->enabled)
+	{
+		bool rv = receiveCC->enabled->boolValue();
+		bool sv = sendCC->enabled->boolValue();
+		setupIOConfiguration(rv,sv);
+		localPort->setEnabled(rv);
+		setupReceiver();
+
+	} else if (sendCC != nullptr && c == sendCC->enabled)
+	{
+		bool rv = receiveCC->enabled->boolValue();
+		bool sv = sendCC->enabled->boolValue();
+		setupIOConfiguration(rv, sv);
+		remoteHost->setEnabled(sv);
+		remotePort->setEnabled(sv);
+		useLocal->setEnabled(sv);
+
+	} else if (c == localPort) setupReceiver();
+	else if (c == remoteHost || c == remotePort || c == useLocal)
+	{
+		setupSender();
+		if (c == useLocal) remoteHost->setEnabled(!useLocal->boolValue());
+	}
+}
+
 
 
 void OSCModule::oscMessageReceived(const OSCMessage & message)
@@ -217,4 +266,17 @@ void OSCModule::oscBundleReceived(const OSCBundle & bundle)
 InspectableEditor * OSCModule::getEditor(bool isRoot)
 {
 	return new OSCModuleBaseEditor(this, isRoot);
+}
+
+
+OSCIOContainer::OSCIOContainer(const String & n) :
+	ControllableContainer(n)
+{
+	enabled = addBoolParameter("Enabled", "Activate OSC Input for this module", true);
+	enabled->hideInEditor = true;
+}
+
+InspectableEditor * OSCIOContainer::getEditor(bool isRoot)
+{
+	return new OSCIOEditor(this, isRoot);
 }

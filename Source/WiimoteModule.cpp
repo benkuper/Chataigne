@@ -15,6 +15,7 @@ WiimoteModule::WiimoteModule(const String & name) :
 	Module(name),
 	device(nullptr)
 {
+	setupIOConfiguration(true, false);
 
 	deviceID = addIntParameter("Device Select", "Select the ID of the device, depending on how many wiimotes are connected (max 4)", 1, 1, 4);
 	connectTrigger = addTrigger("Refresh Wiimotes", "Try to reconnect the wiimotes");

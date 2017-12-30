@@ -23,7 +23,7 @@ public:
 	MetronomeCondition * metronomeCondition;
 	ScopedPointer<FloatSliderUI> frequencyUI;
 	ScopedPointer<FloatSliderUI> onTimeUI;;
-	ScopedPointer<BoolToggleUI> runningUI;
+	//ScopedPointer<BoolToggleUI> runningUI;
 
 	void resizedInternalContent(Rectangle<int> &r) override;
 

@@ -13,12 +13,22 @@
 
 #include "Module.h"
 
+class OSCIOContainer :
+	public ControllableContainer
+{
+public:
+	OSCIOContainer(const String &n);
+	BoolParameter * enabled;
+	
+	InspectableEditor * getEditor(bool isRoot) override;
+};
+
 class OSCModule :
 	public Module,
 	public OSCReceiver::Listener<OSCReceiver::RealtimeCallback>
 { 
 public:
-	OSCModule(const String &name = "OSC Module", int defaultLocalPort = 12000, int defaultRemotePort = 9000);
+	OSCModule(const String &name = "OSC Module", int defaultLocalPort = 12000, int defaultRemotePort = 9000, bool canHaveInput = true, bool canHaveOutput = true);
 	~OSCModule() {}
 
 	//RECEIVE
@@ -31,6 +41,9 @@ public:
 	StringParameter * remoteHost;
 	IntParameter * remotePort;
 	OSCSender sender;
+
+	ScopedPointer<OSCIOContainer> receiveCC;
+	ScopedPointer<OSCIOContainer> sendCC;
 
 	//Script
 	const Identifier oscEventId = "oscEvent";
@@ -78,6 +91,7 @@ public:
 	virtual void handleRoutedModuleValue(Controllable * c, RouteParams * p) override;
 
 	virtual void onContainerParameterChangedInternal(Parameter * p) override;
+	virtual void controllableFeedbackUpdate(ControllableContainer * cc, Controllable * c) override;
 	virtual void oscMessageReceived(const OSCMessage & message) override;
 	virtual void oscBundleReceived(const OSCBundle & bundle) override;
 

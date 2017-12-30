@@ -20,6 +20,9 @@ ActionUI::ActionUI(Action * _action) :
 	validUI->showLabel = false;
 	validUI->showValue = false;
 	addAndMakeVisible(validUI);
+
+	triggerAllUI = action->csm.triggerAll->createButtonUI();
+	addAndMakeVisible(triggerAllUI);
 }
 
 ActionUI::~ActionUI()
@@ -30,4 +33,6 @@ ActionUI::~ActionUI()
 void ActionUI::resizedInternalHeader(Rectangle<int>& r)
 {
 	validUI->setBounds(r.removeFromRight(headerHeight));
+	r.removeFromRight(2);
+	triggerAllUI->setBounds(r.removeFromRight(40));
 }

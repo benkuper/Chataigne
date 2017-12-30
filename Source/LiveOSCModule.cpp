@@ -16,8 +16,9 @@
 #include "LiveOSCCommandBase.h"
 
 LiveOSCModule::LiveOSCModule() :
-	OSCModule("LiveOSC", 9001, 9000)
+	OSCModule("LiveOSC", 9001, 9000,false,true)
 {
+
 	//currentScene = addIntParameter("Current Scene", "Current Scene", 0,0, 1000);
 
 	defManager.add(CommandDefinition::createDef(this, "General", "Play", &OSCCommand::create, CommandContext::ACTION)->addParam("address", "/live/play"));

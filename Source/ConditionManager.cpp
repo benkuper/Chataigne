@@ -19,6 +19,7 @@ ConditionManager::ConditionManager(bool _operatorOnSide) :
 	operatorOnSide(_operatorOnSide),
 	validationProgress(nullptr)
 {
+	editorIsCollapsed = false;
 
 	selectItemWhenCreated = false;
 

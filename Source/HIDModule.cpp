@@ -13,6 +13,8 @@
 HIDModule::HIDModule(const String & name) :
 	Module(name)
 {
+	setupIOConfiguration(true, false);
+
 	//startTimerHz(1000);
 
 	

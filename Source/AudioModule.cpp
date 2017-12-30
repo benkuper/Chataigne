@@ -18,6 +18,8 @@ AudioModule::AudioModule(const String & name) :
 	numActiveMonitorOutputs(0),
 	pitchDetector(nullptr)
 {
+	setupIOConfiguration(true, true);
+
 	inputGain = addFloatParameter("Input Gain", "Gain for the input volume", 1, 0, 10);
 	activityThreshold = addFloatParameter("Activity Threshold", "Threshold to consider activity from the source.\nAnalysis will compute only if volume is greater than this parameter", .1f, 0, 1);
 	keepLastDetectedValues = addBoolParameter("Keep Values", "Keep last detected values when no activity detected.", false);

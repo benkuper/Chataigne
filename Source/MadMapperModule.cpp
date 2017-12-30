@@ -12,7 +12,6 @@
 #include "OSCCommand.h"
 
 MadMapperModule::MadMapperModule() :
-	OSCModule(getDefaultTypeString())
+	OSCModule(getDefaultTypeString(),13000,13001,false,true)
 {
-
 }

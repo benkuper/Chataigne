@@ -16,10 +16,9 @@ MetronomeConditionEditor::MetronomeConditionEditor(MetronomeCondition * _metrono
 {
 	frequencyUI = metronomeCondition->frequency->createSlider();
 	onTimeUI = metronomeCondition->onTime->createSlider();
-	runningUI = metronomeCondition->running->createToggle();
+	//runningUI = metronomeCondition->running->createToggle();
 	addAndMakeVisible(frequencyUI);
 	addAndMakeVisible(onTimeUI);
-	addAndMakeVisible(runningUI);
 }
 
 MetronomeConditionEditor::~MetronomeConditionEditor()
@@ -32,8 +31,6 @@ void MetronomeConditionEditor::resizedInternalContent(Rectangle<int>& r)
 	r.translate(0, frequencyUI->getHeight() + 2);
 	onTimeUI->setBounds(r.withHeight(16));
 	r.translate(0, onTimeUI->getHeight() + 2);
-	runningUI->setBounds(r.withHeight(16));
-	r.translate(0, runningUI->getHeight() + 2);
-	r.setBottom(runningUI->getBottom() + 2);
+	r.setBottom(onTimeUI->getBottom() + 2);
 
 }

@@ -11,7 +11,6 @@
 #include "LGMLModule.h"
 
 LGMLModule::LGMLModule() :
-	OSCModule(getTypeString())
+	OSCModule(getTypeString(),11000,11001,true,true)
 {
-
 }

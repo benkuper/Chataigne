@@ -24,6 +24,9 @@ public:
 	Module(const String &name = "Module");
 	virtual ~Module();
 
+	bool hasInput;
+	bool hasOutput;
+
 	BoolParameter * logIncomingData;
 	BoolParameter * logOutgoingData;
 
@@ -36,6 +39,8 @@ public:
 	BaseCommandHandler commandTester;
 
 	String customType; //for custom modules;
+
+	void setupIOConfiguration(bool _hasInput, bool _hasOutput);
 
 	//ROUTING
 	bool canHandleRouteValues;
@@ -63,13 +68,22 @@ public:
 	virtual void setupModuleFromJSONData(var data); //Used for custom modules with a module.json definition, to automatically create parameters, command and values from this file.
 	Controllable * getControllableForJSONDefinition(const String &name, var def);
 
-
 	String getTypeString() const override { if (customType.isNotEmpty()) return customType; else return getDefaultTypeString(); } //should be overriden
 	virtual String getDefaultTypeString() const { jassert(false); return ""; }
 
 	virtual InspectableEditor * getEditor(bool isRoot) override;
 
 
+	class ModuleListener
+	{
+	public:
+		virtual ~ModuleListener() {}
+		virtual void moduleIOConfigurationChanged() {}
+	};
+
+	ListenerList<ModuleListener> moduleListeners;
+	void addModuleListener(ModuleListener* newListener) { moduleListeners.add(newListener); }
+	void removeModuleListener(ModuleListener* listener) { moduleListeners.remove(listener); }
 
 
 

@@ -16,6 +16,8 @@ TCPModule::TCPModule(const String & name, int defaultLocalPort, int defaultRemot
 	Module(name),
 	Thread(name)
 {
+	setupIOConfiguration(true, true);
+
 	canHandleRouteValues = true;
 
 	//Receive

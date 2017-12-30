@@ -238,7 +238,7 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/ReaperModule_fdf36c24.o \
   $(JUCE_OBJDIR)/OSCCommand_a034ed5.o \
   $(JUCE_OBJDIR)/OSCModuleBaseEditor_2fc4522a.o \
-  $(JUCE_OBJDIR)/OSCModuleUI_1145d900.o \
+  $(JUCE_OBJDIR)/OSCModuleIOEditor_d9dca3df.o \
   $(JUCE_OBJDIR)/CustomOSCModuleEditor_86230fc8.o \
   $(JUCE_OBJDIR)/CustomOSCCommandArgumentManager_becd71b4.o \
   $(JUCE_OBJDIR)/CustomOSCCommandArgument_aba6903.o \
@@ -1218,9 +1218,9 @@ $(JUCE_OBJDIR)/OSCModuleBaseEditor_2fc4522a.o: ../../Source/OSCModuleBaseEditor.
 	@echo "Compiling OSCModuleBaseEditor.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
-$(JUCE_OBJDIR)/OSCModuleUI_1145d900.o: ../../Source/OSCModuleUI.cpp
+$(JUCE_OBJDIR)/OSCModuleIOEditor_d9dca3df.o: ../../Source/OSCModuleIOEditor.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling OSCModuleUI.cpp"
+	@echo "Compiling OSCModuleIOEditor.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/CustomOSCModuleEditor_86230fc8.o: ../../Source/CustomOSCModuleEditor.cpp

@@ -15,6 +15,8 @@ SerialModule::SerialModule(const String &name) :
 	Module(name),
 	port(nullptr)
 {
+	setupIOConfiguration(true, true);
+
 	portParam = new SerialDeviceParameter("Port", "Serial Port to connect",true);
 	addParameter(portParam);
 	

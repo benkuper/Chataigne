@@ -24,8 +24,6 @@ public:
 	FloatParameter * frequency;
 	FloatParameter * onTime;
 
-	BoolParameter * running;
-
 	//Script
 	InspectableEditor * getEditor(bool isRoot) override;
 

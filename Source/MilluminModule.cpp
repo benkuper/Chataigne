@@ -12,8 +12,9 @@
 #include "OSCCommand.h"
 
 MilluminModule::MilluminModule() :
-	OSCModule(getDefaultTypeString())
+	OSCModule(getDefaultTypeString(),false,true)
 {
+
 	//COLUMN
 	var columnIndexArgs = var();
 	columnIndexArgs.append(ControllableUtil::createDataForParam(IntParameter::getTypeStringStatic(), "Column Index", "Index of the Column", 0, 0, 10000));

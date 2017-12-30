@@ -63,7 +63,7 @@ Colour TimeColorManager::getColorForPosition(const float & time) const
 void TimeColorManager::rebuildGradient()
 {
 	gradient.clearColours();
-	if (items.size() > 0 && items[0]->position > 0) gradient.addColour(0, items[0]->color->getColor());
+	if (items.size() > 0 && items[0]->position->floatValue() > 0) gradient.addColour(0, items[0]->color->getColor());
 
 	for (auto &i : items)
 	{

@@ -26,6 +26,7 @@ public:
 	void resizedInternalHeader(Rectangle<int> &r) override;
 
 	ScopedPointer<BoolToggleUI> validUI;
+	ScopedPointer<TriggerButtonUI> triggerAllUI;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ActionUI)
 };

@@ -12,10 +12,9 @@
 
 OSCModuleBaseEditor::OSCModuleBaseEditor(OSCModule * _oscModule, bool isRoot) :
 	ModuleEditor(_oscModule, isRoot),
-	oscModule(_oscModule),
-	receiveLabel("Receive","Receive"),
-	sendLabel("Send","Send")
+	oscModule(_oscModule)
 {
+	/*
 	localPortUI = oscModule->localPort->createStepper();
 	isConnectedUI = oscModule->isConnected->createToggle();
 
@@ -34,9 +33,22 @@ OSCModuleBaseEditor::OSCModuleBaseEditor(OSCModule * _oscModule, bool isRoot) :
 	addAndMakeVisible(useLocalUI);
 	addAndMakeVisible(&receiveLabel);
 	addAndMakeVisible(&sendLabel);
-
+	
 	remoteHostUI->setEnabled(!oscModule->useLocal->boolValue());
+	*/
 
+	if (oscModule->receiveCC != nullptr)
+	{
+		receiveCCEditor = oscModule->receiveCC->getEditor(false);
+		addAndMakeVisible(receiveCCEditor);
+
+	}
+	if (oscModule->sendCC != nullptr)
+	{
+		sendCCEditor = oscModule->sendCC->getEditor(false);
+		addAndMakeVisible(sendCCEditor);
+	}
+	
 }
 
 OSCModuleBaseEditor::~OSCModuleBaseEditor()
@@ -46,10 +58,12 @@ OSCModuleBaseEditor::~OSCModuleBaseEditor()
 
 void OSCModuleBaseEditor::resizedInternalContent(Rectangle<int> &r)
 {
+	/*
 	Rectangle<int> localR = r.withHeight(14);
 	
 	Rectangle<int> remoteR = localR.withY(localR.getBottom() + 5);
 
+	
 	receiveLabel.setBounds(localR.removeFromLeft(60));
 
 	isConnectedUI->setBounds(localR.removeFromRight(100));
@@ -62,16 +76,28 @@ void OSCModuleBaseEditor::resizedInternalContent(Rectangle<int> &r)
 	remoteHostUI->setBounds(remoteR.reduced(2, 0));
 
 	r.setY(remoteR.getBottom()+5);
+	*/
+	
+	if (receiveCCEditor != nullptr)
+	{
+		receiveCCEditor->setBounds(r.withHeight(receiveCCEditor->getHeight()));
+		r.translate(0, receiveCCEditor->getHeight() + 2);
+
+	}
+	
+	if (sendCCEditor != nullptr)
+	{
+		sendCCEditor->setBounds(r.withHeight(sendCCEditor->getHeight()));
+		r.translate(0, sendCCEditor->getHeight() + 2);
+
+	}
+	
+	r.translate(0, 10);
+
 	resizedOSCInternalContent(r);
 }
 
 void OSCModuleBaseEditor::controllableFeedbackAsyncUpdate(Controllable * c)
 {
 	ModuleEditor::controllableFeedbackAsyncUpdate(c);
-
-	if (c == oscModule->useLocal)
-	{
-		remoteHostUI->setEnabled(!oscModule->useLocal->boolValue());
-		resized();
-	}
 }

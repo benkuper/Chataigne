@@ -23,7 +23,7 @@ class AudioModule :
 	public ChangeListener
 {
 public:
-	AudioModule(const String &name = "Audio Device");
+	AudioModule(const String &name = "Sound Card");
 	~AudioModule();
 
 	AudioDeviceManager am;
@@ -81,7 +81,7 @@ public:
 	InspectableEditor * getEditor(bool isRoot) override;
 
 	static AudioModule * create() { return new AudioModule(); }
-	virtual String getDefaultTypeString() const override { return "Audio Device"; }
+	virtual String getDefaultTypeString() const override { return "Sound Card"; }
 
 	class AudioModuleListener
 	{

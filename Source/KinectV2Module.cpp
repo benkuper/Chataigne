@@ -14,6 +14,8 @@ KinectV2Module::KinectV2Module() :
 	Module("Kinect V2"),
 	curBodyIndex(-1)
 {
+	setupIOConfiguration(true, false);
+
 	bool initResult = initKinect();
 	if (!initResult) return;
 

@@ -13,7 +13,8 @@
 GamepadModule::GamepadModule(const String & name) :
 	Module(name)
 {
-	
+	setupIOConfiguration(true, false);
+
 	GamepadManager::getInstance();
 
 

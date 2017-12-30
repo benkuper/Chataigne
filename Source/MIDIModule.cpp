@@ -18,6 +18,8 @@ MIDIModule::MIDIModule(const String & name, bool _useGenericControls) :
 	outputDevice(nullptr),
 	useGenericControls(_useGenericControls)
 {
+	setupIOConfiguration(true, true);
+
 	//canHandleRouteValues = true;
 
 	midiParam = new MIDIDeviceParameter("Devices");

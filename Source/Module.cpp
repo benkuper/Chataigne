@@ -15,7 +15,9 @@
 
 
 Module::Module(const String &name) :
-	BaseItem(name,true,true,true),
+	BaseItem(name, true, true),
+	hasInput(true),
+	hasOutput(true),
 	valuesCC("Values"),
 	commandTester("Command Tester",CommandContext::ACTION),
 	canHandleRouteValues(false)
@@ -23,8 +25,6 @@ Module::Module(const String &name) :
 
 	commandTester.canBeDisabled = false;
 	canInspectChildContainers = true;
-
-	addChildControllableContainer(&valuesCC);
 
 	logIncomingData = addBoolParameter("Log Incoming", "Enable / Disable logging of incoming data for this module", false);
 	logIncomingData->hideInOutliner = true;
@@ -36,17 +36,28 @@ Module::Module(const String &name) :
 
 	inActivityTrigger = addTrigger("IN Activity", "Incoming Activity Signal");
 	inActivityTrigger->hideInEditor = true;
+	inActivityTrigger->isControllableFeedbackOnly = true;
 
 	outActivityTrigger = addTrigger("OUT Activity", "Outgoing Activity Signal");
 	outActivityTrigger->hideInEditor = true;
+	outActivityTrigger->isControllableFeedbackOnly = true;
 
+	addChildControllableContainer(&valuesCC);
 	valuesCC.includeTriggersInSaveLoad = true;
-	
+	valuesCC.editorIsCollapsed = false;
 }
 
 Module::~Module()
 {
 
+}
+
+void Module::setupIOConfiguration(bool _hasInput, bool _hasOutput)
+{
+	if (_hasInput != hasInput) hasInput = _hasInput;
+	if (_hasOutput != hasOutput) hasOutput = _hasOutput;
+	
+	moduleListeners.call(&ModuleListener::moduleIOConfigurationChanged);
 }
 
 String Module::getHelpID()

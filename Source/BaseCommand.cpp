@@ -16,6 +16,7 @@ context(_context),
 	module(_module),
 	params(_params)
 {
+	editorIsCollapsed = false;
 }
 
 void BaseCommand::setTargetMappingParameterAt(Parameter * p, int index)

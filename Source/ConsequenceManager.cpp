@@ -18,6 +18,8 @@ ConsequenceManager::ConsequenceManager() :
 	BaseManager<Consequence>("Consequences"),
 	forceDisabled(false)
 {
+	editorIsCollapsed = false;
+
 	selectItemWhenCreated = false;
 	triggerAll = addTrigger("Trigger All", "Trigger all the consequences in the manager");
 	triggerAll->hideInEditor = true;

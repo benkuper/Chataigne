@@ -16,7 +16,8 @@
 #include "BaseCommandHandlerEditor.h"
 
 class ModuleEditor :
-	public BaseItemEditor
+	public BaseItemEditor,
+	public Module::ModuleListener
 {
 public:
 	ModuleEditor(Module * module, bool isRoot);
@@ -33,6 +34,8 @@ public:
 	
 	void controllableFeedbackAsyncUpdate(Controllable * c) override;
 	
+	virtual void moduleIOConfigurationChanged() override;
+
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ModuleEditor)
 };
 

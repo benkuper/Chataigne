@@ -24,14 +24,20 @@ public:
 
 	OSCModule * oscModule;
 
+	ScopedPointer<InspectableEditor> receiveCCEditor;
+	/*
 	Label receiveLabel;
 	ScopedPointer<IntStepperUI> localPortUI;
 	ScopedPointer<BoolToggleUI> isConnectedUI;
+	*/
 
+	ScopedPointer<InspectableEditor> sendCCEditor;
+	/*
 	Label sendLabel;
 	ScopedPointer<StringParameterUI> remoteHostUI;
 	ScopedPointer<IntStepperUI> remotePortUI;
 	ScopedPointer<BoolToggleUI> useLocalUI;
+	*/
 
 	virtual void resizedInternalContent(Rectangle<int> &r) override;
 	virtual void resizedOSCInternalContent(Rectangle<int> &) {} //to be overriden by child classes

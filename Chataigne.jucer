@@ -775,8 +775,10 @@
                     file="Source/OSCModuleBaseEditor.cpp"/>
               <FILE id="oNtnFs" name="OSCModuleBaseEditor.h" compile="0" resource="0"
                     file="Source/OSCModuleBaseEditor.h"/>
-              <FILE id="dmVUue" name="OSCModuleUI.cpp" compile="1" resource="0" file="Source/OSCModuleUI.cpp"/>
-              <FILE id="o0okCg" name="OSCModuleUI.h" compile="0" resource="0" file="Source/OSCModuleUI.h"/>
+              <FILE id="nkFjUR" name="OSCModuleIOEditor.cpp" compile="1" resource="0"
+                    file="Source/OSCModuleIOEditor.cpp"/>
+              <FILE id="BRzLa2" name="OSCModuleIOEditor.h" compile="0" resource="0"
+                    file="Source/OSCModuleIOEditor.h"/>
             </GROUP>
             <GROUP id="{725F299B-4972-D857-5400-57EB8633E4A9}" name="custom">
               <GROUP id="{609C3BCD-D82F-A0F9-92AC-FCCC9018DA82}" name="ui">
@@ -1199,7 +1201,7 @@
         <MODULEPATH id="juce_analytics" path="../../../../Softwares/JUCE/modules"/>
       </MODULEPATHS>
     </XCODE_MAC>
-    <VS2017 targetFolder="Builds/VisualStudio2017" externalLibraries="Setupapi.lib&#10;hid.lib&#10;Kinect20.lib&#10;ossia.lib"
+    <VS2017 targetFolder="Builds/VisualStudio2017" externalLibraries="Setupapi.lib&#10;hid.lib&#10;Kinect20.lib"
             smallIcon="nVz6Li" bigIcon="nVz6Li" windowsTargetPlatformVersion="10.0.16299.0"
             vst3Folder="">
       <CONFIGURATIONS>

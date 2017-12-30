@@ -17,6 +17,8 @@ MyoModule::MyoModule() :
 	Module("Myo"),
 	device(nullptr)
 {
+	setupIOConfiguration(true, false);
+
 	MyoManager::getInstance()->addListener(this);
 
 	initTrigger = addTrigger("Reinit", "If Myo had problems at init, try to reinit");

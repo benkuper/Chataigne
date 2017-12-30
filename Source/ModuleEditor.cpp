@@ -55,3 +55,9 @@ void ModuleEditor::controllableFeedbackAsyncUpdate(Controllable * c)
 
 	}
 }
+
+void ModuleEditor::moduleIOConfigurationChanged()
+{
+	logIncomingUI->setVisible(module->hasInput);
+	logIncomingUI->setVisible(module->hasOutput);
+}
