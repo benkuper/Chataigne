@@ -28,6 +28,8 @@
 #include "DLightModule.h"
 #include "TCPModule.h"
 #include "VLCModule.h"
+#include "MetronomeModule.h"
+#include "SignalModule.h"
 
 juce_ImplementSingleton(ModuleFactory)
 
@@ -59,6 +61,8 @@ ModuleFactory::ModuleFactory() {
 	moduleDefs.add(new ModuleDefinition("Software", "Millumin", &MilluminModule::create));
 	moduleDefs.add(new ModuleDefinition("Software", "VLC", &VLCModule::create));
 
+	moduleDefs.add(new ModuleDefinition("Generator", "Metronome", &MetronomeModule::create));
+	moduleDefs.add(new ModuleDefinition("Generator", "Signal", &SignalModule::create));
 	
 	addCustomModules();
 	buildPopupMenu();

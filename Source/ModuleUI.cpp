@@ -19,10 +19,12 @@ ModuleUI::ModuleUI(Module * module) :
 	inActivityUI = module->inActivityTrigger->createImageUI(ChataigneAssetManager::getInstance()->getInImage());
 	inActivityUI->showLabel = false;
 	addAndMakeVisible(inActivityUI);
+	inActivityUI->setVisible(module->hasInput);
 
 	outActivityUI = module->outActivityTrigger->createImageUI(ChataigneAssetManager::getInstance()->getOutImage());
 	outActivityUI->showLabel = false;
 	addAndMakeVisible(outActivityUI);
+	outActivityUI->setVisible(module->hasOutput);
 }
 
 ModuleUI::~ModuleUI()

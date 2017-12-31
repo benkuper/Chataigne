@@ -13,7 +13,6 @@
 #include "StandardCondition.h"
 #include "ConditionGroup.h"
 #include "ScriptCondition.h"
-#include "MetronomeCondition.h"
 
 juce_ImplementSingleton(ConditionFactory)
 
@@ -21,7 +20,6 @@ ConditionFactory::ConditionFactory() {
 	conditionDefs.add(new ConditionDefinition("", "From Value", &StandardCondition::create));
 	conditionDefs.add(new ConditionDefinition("", "Group", &ConditionGroup::create));
 	conditionDefs.add(new ConditionDefinition("", "Script", &ScriptCondition::create));
-	conditionDefs.add(new ConditionDefinition("", "Metronome", &MetronomeCondition::create));
 
 	buildPopupMenu();
 }

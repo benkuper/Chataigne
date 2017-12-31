@@ -27,10 +27,12 @@ Module::Module(const String &name) :
 	canInspectChildContainers = true;
 
 	logIncomingData = addBoolParameter("Log Incoming", "Enable / Disable logging of incoming data for this module", false);
+	logIncomingData->hideInEditor = true;
 	logIncomingData->hideInOutliner = true;
 	logIncomingData->isTargettable = false;
 
 	logOutgoingData = addBoolParameter("Log Outgoing", "Enable / Disable logging of outgoing data for this module", false);
+	logOutgoingData->hideInEditor = true;
 	logOutgoingData->hideInOutliner = true;
 	logOutgoingData->isTargettable = false;
 
@@ -152,10 +154,7 @@ Controllable * Module::getControllableForJSONDefinition(const String &name, var 
 	return c;
 }
 
-
-
-
 InspectableEditor * Module::getEditor(bool isRoot)
 {
-	return BaseItem::getEditor(isRoot); //temp, should have a proper base module editor
+	return BaseItem::getEditor(isRoot);// new ModuleEditor(this, isRoot); //temp, should have a proper base module editor
 }

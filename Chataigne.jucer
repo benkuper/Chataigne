@@ -156,18 +156,6 @@
             </GROUP>
             <GROUP id="{769E1555-7F3A-B046-7FF9-5B14A6197BBD}" name="Condition">
               <GROUP id="{D6ADE71C-FE26-85F8-193D-108C1D0EF059}" name="conditions">
-                <GROUP id="{42D35307-D62F-0CDA-D315-E549DE0408B4}" name="MetronomeCondition">
-                  <GROUP id="{B39504EB-EA3D-F052-76AC-B04BDB82E9C8}" name="ui">
-                    <FILE id="LlvWlc" name="MetronomeConditionEditor.cpp" compile="1" resource="0"
-                          file="Source/MetronomeConditionEditor.cpp"/>
-                    <FILE id="mPOEMR" name="MetronomeConditionEditor.h" compile="0" resource="0"
-                          file="Source/MetronomeConditionEditor.h"/>
-                  </GROUP>
-                  <FILE id="iy3unS" name="MetronomeCondition.cpp" compile="1" resource="0"
-                        file="Source/MetronomeCondition.cpp"/>
-                  <FILE id="S0Qv8p" name="MetronomeCondition.h" compile="0" resource="0"
-                        file="Source/MetronomeCondition.h"/>
-                </GROUP>
                 <GROUP id="{4E3CE793-8D65-93CF-8AFA-F33A32BF6F35}" name="ConditionGroup">
                   <GROUP id="{ECA9CF9E-1C8E-195B-70A9-6453F657995A}" name="ui">
                     <FILE id="hpdh0U" name="ConditionGroupEditor.cpp" compile="1" resource="0"
@@ -477,6 +465,20 @@
                 file="Source/ModuleRouterManager.h"/>
         </GROUP>
         <GROUP id="{766BCE2E-5C2E-5A80-EC80-7FFA2C7ABBBA}" name="modules">
+          <GROUP id="{0A2584D7-8A0B-24BA-5B04-76DCADFFF3B4}" name="generators">
+            <GROUP id="{3DC1862D-5C1F-A35A-7638-AD4598DF8124}" name="signal">
+              <FILE id="EUcPtb" name="PerlinNoise.hpp" compile="0" resource="0" file="Source/PerlinNoise.hpp"/>
+              <FILE id="TfXHqd" name="SignalModule.cpp" compile="1" resource="0"
+                    file="Source/SignalModule.cpp"/>
+              <FILE id="GNyVtv" name="SignalModule.h" compile="0" resource="0" file="Source/SignalModule.h"/>
+            </GROUP>
+            <GROUP id="{0CAA2967-26F9-ADB4-97C9-673AFD7E91CB}" name="metronome">
+              <FILE id="QD1syr" name="MetronomeModule.cpp" compile="1" resource="0"
+                    file="Source/MetronomeModule.cpp"/>
+              <FILE id="TUEDVy" name="MetronomeModule.h" compile="0" resource="0"
+                    file="Source/MetronomeModule.h"/>
+            </GROUP>
+          </GROUP>
           <GROUP id="{31751EEF-7631-994D-CF00-3D84A9A143E5}" name="tcp">
             <GROUP id="{3D10C1A4-BC90-A557-F29D-C7DF68111C8B}" name="ui">
               <FILE id="eWmaKp" name="TCPModuleEditor.cpp" compile="1" resource="0"

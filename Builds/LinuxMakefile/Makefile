@@ -94,8 +94,6 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/ConsequenceManagerEditor_c217a400.o \
   $(JUCE_OBJDIR)/Consequence_78c99824.o \
   $(JUCE_OBJDIR)/ConsequenceManager_ed222b73.o \
-  $(JUCE_OBJDIR)/MetronomeConditionEditor_6200e7df.o \
-  $(JUCE_OBJDIR)/MetronomeCondition_76c78292.o \
   $(JUCE_OBJDIR)/ConditionGroupEditor_8111d0ba.o \
   $(JUCE_OBJDIR)/ConditionGroup_4b82ebad.o \
   $(JUCE_OBJDIR)/StandardConditionEditor_c2b02ccc.o \
@@ -169,6 +167,8 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/ModuleRouterValue_937230fd.o \
   $(JUCE_OBJDIR)/ModuleRouter_785566de.o \
   $(JUCE_OBJDIR)/ModuleRouterManager_16ed3779.o \
+  $(JUCE_OBJDIR)/SignalModule_18fcd9bd.o \
+  $(JUCE_OBJDIR)/MetronomeModule_57b5021f.o \
   $(JUCE_OBJDIR)/TCPModuleEditor_7dd510db.o \
   $(JUCE_OBJDIR)/SendTCPCommand_e5ea805b.o \
   $(JUCE_OBJDIR)/SendTCPStringCommand_dcf9334a.o \
@@ -496,16 +496,6 @@ $(JUCE_OBJDIR)/Consequence_78c99824.o: ../../Source/Consequence.cpp
 $(JUCE_OBJDIR)/ConsequenceManager_ed222b73.o: ../../Source/ConsequenceManager.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling ConsequenceManager.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/MetronomeConditionEditor_6200e7df.o: ../../Source/MetronomeConditionEditor.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling MetronomeConditionEditor.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/MetronomeCondition_76c78292.o: ../../Source/MetronomeCondition.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling MetronomeCondition.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/ConditionGroupEditor_8111d0ba.o: ../../Source/ConditionGroupEditor.cpp
@@ -871,6 +861,16 @@ $(JUCE_OBJDIR)/ModuleRouter_785566de.o: ../../Source/ModuleRouter.cpp
 $(JUCE_OBJDIR)/ModuleRouterManager_16ed3779.o: ../../Source/ModuleRouterManager.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling ModuleRouterManager.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/SignalModule_18fcd9bd.o: ../../Source/SignalModule.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling SignalModule.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/MetronomeModule_57b5021f.o: ../../Source/MetronomeModule.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling MetronomeModule.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/TCPModuleEditor_7dd510db.o: ../../Source/TCPModuleEditor.cpp

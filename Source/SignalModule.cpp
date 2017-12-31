@@ -1,0 +1,78 @@
+/*
+  ==============================================================================
+
+    SignalModule.cpp
+    Created: 30 Dec 2017 10:09:43pm
+    Author:  Ben
+
+  ==============================================================================
+*/
+
+#include "SignalModule.h"
+
+SignalModule::SignalModule() :
+	Module(getTypeString()),
+	progression(0)
+{
+	setupIOConfiguration(false, false);
+
+	type = addEnumParameter("Type", "Signal type");
+	type->addOption("Sine", SINE)->addOption("Saw",SAW)->addOption("Triangle",TRIANGLE)->addOption("Perlin", PERLIN);
+	refreshRate = addFloatParameter("Refresh Rate", "Time interval between value updates, in Hz", 50, 1, 100);
+	
+	frequency = addFloatParameter("Frequency", "Frequency of the signal", 1, 0.0001f, 5);
+	octaves = addIntParameter("Octaves", "Octave parameter for perlin noise", 3, 1, 100, false);
+
+	value = valuesCC.addFloatParameter("Value", "The signal value", 0, 0, 1);
+
+	startTimer(0,1000.0f/refreshRate->floatValue());
+}
+
+SignalModule::~SignalModule()
+{
+}
+
+void SignalModule::onContainerParameterChangedInternal(Parameter * p)
+{
+	if (p == refreshRate)
+	{
+		startTimer(0, 1000.0f / refreshRate->floatValue());
+	}else if(p == type)	
+	{
+		octaves->setEnabled(type->getValueDataAsEnum<SignalType>() == PERLIN);
+	}
+}
+
+void SignalModule::timerCallback(int timerID)
+{
+	if (timerID == 0)
+	{
+		SignalType t = type->getValueDataAsEnum<SignalType>();
+
+		float val = 0;
+		progression = progression + getTimerInterval(0)*frequency->floatValue() / 1000.0f;
+
+		switch (t)
+		{
+		case SINE:
+			val = sinf(progression*MathConstants<float>::pi*2)*.5f + .5f;
+			break;
+
+		case TRIANGLE:
+			val = fabsf(fmodf(progression, 2) - 1);
+			break;
+
+		case SAW:
+			val = fmodf(progression,1);
+			break;
+
+		case PERLIN:
+			val = perlin.octaveNoise0_1(progression, octaves->intValue());
+			break;
+		}
+
+		value->setValue(val);
+	}
+
+	
+}
