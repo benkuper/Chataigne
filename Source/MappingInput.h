@@ -30,7 +30,7 @@ public:
 	void onExternalParameterChanged(Parameter *p) override;
 
 
-	InspectableEditor * getEditor(bool isRoot) override;
+	//InspectableEditor * getEditor(bool isRoot) override;
 
 	class  Listener
 	{

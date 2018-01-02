@@ -20,6 +20,10 @@ autoSetRange(true)
 {
 	isSelectable = false;
 
+	editorIsCollapsed = false;
+	filterParams.editorIsCollapsed = false;
+	filterParams.editorCanBeCollapsed = false;
+
 	filterParams.skipControllableNameInAddress = true;
 	addChildControllableContainer(&filterParams);
 	filterParams.addControllableContainerListener(this);
@@ -92,8 +96,9 @@ void MappingFilter::loadJSONDataInternal(var data)
 	BaseItem::loadJSONDataInternal(data);
 	filterParams.loadJSONData(data.getProperty("filterParams", var()));
 }
-
+/*
 InspectableEditor * MappingFilter::getEditor(bool isRoot)
 {
 	return new GenericMappingFilterEditor(this,isRoot);
 }
+*/

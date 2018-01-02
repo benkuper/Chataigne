@@ -39,7 +39,7 @@ public:
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
 
-	InspectableEditor * getEditor(bool isRoot) override;
+	//InspectableEditor * getEditor(bool isRoot) override;
 
 	class  FilterListener
 	{

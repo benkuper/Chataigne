@@ -30,9 +30,8 @@ void MappingFilterEditor::resizedInternalContent(Rectangle<int>& r)
 	
 	if (filteredUI != nullptr)
 	{
-		r.setY(r.getBottom() + 5);
-		r.setHeight(14);
-		filteredUI->setBounds(r);
+		filteredUI->setBounds(r.withHeight(filteredUI->getHeight()+5));
+		r.translate(0,filteredUI->getHeight());
 	}
 }
 
