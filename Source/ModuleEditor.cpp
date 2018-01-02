@@ -18,6 +18,16 @@ ModuleEditor::ModuleEditor(Module * _module, bool isRoot) :
 	logOutgoingUI = module->logOutgoingData->createToggle();
 	commandTesterUI = (BaseCommandHandlerEditor *)module->commandTester.getEditor(false);
 	commandTesterUI->chooser.lockedModule = module;
+	 
+	if (!module->moduleParams.hideInEditor)
+	{
+		moduleParamsUI = module->moduleParams.getEditor(false);
+		addAndMakeVisible(moduleParamsUI);
+	}
+	
+
+	moduleValuesUI = module->valuesCC.getEditor(false);
+	addAndMakeVisible(moduleValuesUI);
 
 	addAndMakeVisible(logIncomingUI);
 	addAndMakeVisible(logOutgoingUI);
@@ -35,6 +45,18 @@ void ModuleEditor::resizedInternalHeader(Rectangle<int>& r)
 	logIncomingUI->setBounds(r.removeFromRight(90).reduced(2));
 	r.reduce(5, 0);
 
+}
+
+void ModuleEditor::resizedInternalContent(Rectangle<int>& r)
+{
+	if (!module->moduleParams.hideInEditor)
+	{
+		moduleParamsUI->setBounds(r.withHeight(moduleParamsUI->getHeight()));
+		r.translate(0, moduleParamsUI->getHeight() + 2);
+	}
+
+	moduleValuesUI->setBounds(r.withHeight(moduleValuesUI->getHeight()));
+	r.translate(0, moduleValuesUI->getHeight() + 2);
 }
 
 void ModuleEditor::resizedInternalFooter(Rectangle<int>& r)

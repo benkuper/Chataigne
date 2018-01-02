@@ -17,17 +17,13 @@ class TCPModule :
 	public Thread
 {
 public:
-	TCPModule(const String &name = "TCP Module", int defaultLocalPort = 40000, int defaultRemotePort = 50000);
+	TCPModule(const String &name = "TCP", int defaultRemotePort = 50000);
 	~TCPModule();
 
-	
+	enum Mode { LINES, DATA255, RAW, COBS };
+	EnumParameter * modeParam;
 
-	//RECEIVE
-	IntParameter * localPort;
-	BoolParameter * isBound;
-	StreamingSocket receiver;
-
-	//SEND
+	//CLIENT
 	BoolParameter * useLocal;
 	StringParameter * remoteHost;
 	IntParameter * remotePort;
@@ -36,16 +32,19 @@ public:
 
 	Trigger * reconnectRemote;
 
-	//RECEIVE
-	void setupReceiver();
+	//Script
+	const Identifier tcpEventId = "tcpEvent";
+	const Identifier sendTCPId = "send";
 
 	//SEND
 	void setupSender();
 	void sendStringPacket(const String &s);
 
+	void processMessage(const String & msg);
+	virtual void processMessageInternal(const String &) {}
+
 	virtual void onContainerParameterChangedInternal(Parameter * p) override;
 	virtual void onContainerTriggerTriggered(Trigger * t) override;
-
 
 	static TCPModule * create() { return new TCPModule(); }
 	virtual String getDefaultTypeString() const override { return "TCP"; }
@@ -53,16 +52,8 @@ public:
 	InspectableEditor * getEditor(bool isRoot) override;
 
 	//Script
-	/*
-	static var sendPacketFromScript(const var::NativeFunctionArgs &args);
-
-
-	static OSCArgument varToPacket(const var &v);
-	static var packetToVar(const OSCArgument &a);
-	*/
-
-
+	static var sendMessageFromScript(const var::NativeFunctionArgs &args);
+	 
 	// Inherited via Thread
 	virtual void run() override;
-
 };

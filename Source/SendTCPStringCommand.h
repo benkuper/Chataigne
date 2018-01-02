@@ -21,6 +21,10 @@ public:
 	~SendTCPStringCommand();
 
 	TCPModule * tcpModule;
+
+	BoolParameter * appendCR;
+	BoolParameter * appendNL;
+
 	StringParameter * valueParam;
 
 	void trigger() override;

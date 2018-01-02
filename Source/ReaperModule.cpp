@@ -14,6 +14,7 @@
 ReaperModule::ReaperModule() :
 	OSCModule("Reaper",9000,8000,false,true)
 {
+	sendCC->editorIsCollapsed = false;
 
 	defManager.add(CommandDefinition::createDef(this, "", "Play", &OSCCommand::create, CommandContext::ACTION)->addParam("address", "/play"));
 	defManager.add(CommandDefinition::createDef(this, "", "Pause", &OSCCommand::create, CommandContext::ACTION)->addParam("address", "/pause"));

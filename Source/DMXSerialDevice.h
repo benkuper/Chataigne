@@ -23,7 +23,7 @@ class DMXSerialDevice :
 {
 
 public:
-	DMXSerialDevice(Type type);
+	DMXSerialDevice(const String &name, Type type);
 	virtual ~DMXSerialDevice();
 
 	SerialDeviceParameter * portParam;

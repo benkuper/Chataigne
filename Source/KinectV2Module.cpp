@@ -19,6 +19,8 @@ KinectV2Module::KinectV2Module() :
 	bool initResult = initKinect();
 	if (!initResult) return;
 
+	moduleParams.hideInEditor = true;
+
 	startTimer(20); //50 fps
 
 	leftHandX = valuesCC.addFloatParameter("Left Hand X", "Left hand X", 0, -2, 2);

@@ -20,8 +20,6 @@ public:
 	LiveOSCModule();
 	~LiveOSCModule() {}
 
-	IntParameter * currentScene;
-
 	static LiveOSCModule * create() { return new LiveOSCModule(); }
 	virtual String getDefaultTypeString() const override { return "LiveOSC"; }
 

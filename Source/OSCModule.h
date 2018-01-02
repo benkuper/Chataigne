@@ -13,22 +13,12 @@
 
 #include "Module.h"
 
-class OSCIOContainer :
-	public ControllableContainer
-{
-public:
-	OSCIOContainer(const String &n);
-	BoolParameter * enabled;
-	
-	InspectableEditor * getEditor(bool isRoot) override;
-};
-
 class OSCModule :
 	public Module,
 	public OSCReceiver::Listener<OSCReceiver::RealtimeCallback>
 { 
 public:
-	OSCModule(const String &name = "OSC Module", int defaultLocalPort = 12000, int defaultRemotePort = 9000, bool canHaveInput = true, bool canHaveOutput = true);
+	OSCModule(const String &name = "OSC", int defaultLocalPort = 12000, int defaultRemotePort = 9000, bool canHaveInput = true, bool canHaveOutput = true);
 	~OSCModule() {}
 
 	//RECEIVE
@@ -42,8 +32,8 @@ public:
 	IntParameter * remotePort;
 	OSCSender sender;
 
-	ScopedPointer<OSCIOContainer> receiveCC;
-	ScopedPointer<OSCIOContainer> sendCC;
+	ScopedPointer<EnablingControllableContainer> receiveCC;
+	ScopedPointer<EnablingControllableContainer> sendCC;
 
 	//Script
 	const Identifier oscEventId = "oscEvent";
@@ -99,9 +89,8 @@ public:
 	virtual void oscMessageReceived(const OSCMessage & message) override;
 	virtual void oscBundleReceived(const OSCBundle & bundle) override;
 
-	InspectableEditor * getEditor(bool isRoot) override;	
+	//InspectableEditor * getEditor(bool isRoot) override;	
 };
-
 
 
 #endif  // OSCMODULE_H_INCLUDED

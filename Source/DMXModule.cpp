@@ -10,7 +10,6 @@
 
 #include "DMXModule.h"
 #include "DMXCommand.h"
-#include "DMXModuleEditor.h"
 
 DMXModule::DMXModule() :
 	Module("DMX"),
@@ -18,19 +17,21 @@ DMXModule::DMXModule() :
 {
 	setupIOConfiguration(true, true);
 
+	valuesCC.editorIsCollapsed = true;
+
 	//canHandleRouteValues = true;
 
 	defManager.add(CommandDefinition::createDef(this, "", "Set value", &DMXCommand::create)->addParam("action", DMXCommand::SET_VALUE));
 	defManager.add(CommandDefinition::createDef(this, "", "Set range", &DMXCommand::create)->addParam("action", DMXCommand::SET_RANGE));
 	defManager.add(CommandDefinition::createDef(this, "", "Set Color", &DMXCommand::create)->addParam("action",DMXCommand::COLOR));
 	defManager.add(CommandDefinition::createDef(this, "", "Clear all", &DMXCommand::create)->addParam("action", DMXCommand::CLEAR_ALL));
-	dmxType = addEnumParameter("DMX Type", "Choose the type of dmx interface you want to connect");
+	dmxType = moduleParams.addEnumParameter("DMX Type", "Choose the type of dmx interface you want to connect");
 
 	dmxType->addOption("Open DMX", DMXDevice::OPENDMX)->addOption("Enttec DMX Pro", DMXDevice::ENTTEC_DMXPRO)->addOption("Enttec DMX MkII", DMXDevice::ENTTEC_MK2)->addOption("Art-Net", DMXDevice::ARTNET);
-
 	dmxType->setValueWithKey("Open DMX");
 
-	dmxConnected = addBoolParameter("Connected", "DMX is connected ?", false);
+	dmxConnected = moduleParams.addBoolParameter("Connected", "DMX is connected ?", false);
+	dmxConnected->isControllableFeedbackOnly = true;
 
 	for (int i = 1; i <= 512; i++)
 	{
@@ -51,7 +52,7 @@ void DMXModule::setCurrentDMXDevice(DMXDevice * d)
 	if (dmxDevice != nullptr)
 	{
 		dmxDevice->removeDMXDeviceListener(this);
-		removeChildControllableContainer(dmxDevice);
+		moduleParams.removeChildControllableContainer(dmxDevice);
 	}
 
 	dmxDevice = d;
@@ -59,7 +60,7 @@ void DMXModule::setCurrentDMXDevice(DMXDevice * d)
 	if (dmxDevice != nullptr)
 	{
 		dmxDevice->addDMXDeviceListener(this);
-		addChildControllableContainer(dmxDevice);
+		moduleParams.addChildControllableContainer(dmxDevice);
 	}
 
 	dmxModuleListeners.call(&DMXModuleListener::dmxDeviceChanged);
@@ -86,14 +87,10 @@ void DMXModule::loadJSONDataInternal(var data)
 	if (dmxDevice != nullptr && data.getDynamicObject()->hasProperty("device")) dmxDevice->loadJSONData(data.getProperty("device", ""));
 }
 
-void DMXModule::onContainerParameterChangedInternal(Parameter * p)
+void DMXModule::controllableFeedbackUpdate(ControllableContainer * cc, Controllable * c)
 {
-	Module::onContainerParameterChangedInternal(p);
-
-	if (p == dmxType)
-	{
-		setCurrentDMXDevice(DMXDevice::create((DMXDevice::Type)(int)dmxType->getValueData()));
-	}
+	Module::controllableFeedbackUpdate(cc, c);
+	if (c == dmxType) setCurrentDMXDevice(DMXDevice::create((DMXDevice::Type)(int)dmxType->getValueData()));
 }
 
 void DMXModule::dmxDeviceConnected()
@@ -112,10 +109,5 @@ void DMXModule::dmxDataInChanged(int channel, int value)
 	inActivityTrigger->trigger();
 
 	dmxInValues[channel - 1]->setValue(value);
-}
-
-InspectableEditor * DMXModule::getEditor(bool isRoot)
-{
-	return new DMXModuleEditor(this,isRoot);
 }
 

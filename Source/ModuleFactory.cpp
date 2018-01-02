@@ -30,6 +30,8 @@
 #include "VLCModule.h"
 #include "MetronomeModule.h"
 #include "SignalModule.h"
+#include "UDPModule.h"
+#include "WatchoutModule.h"
 
 juce_ImplementSingleton(ModuleFactory)
 
@@ -39,27 +41,29 @@ ModuleFactory::ModuleFactory() {
 	moduleDefs.add(new ModuleDefinition("Protocol", "DMX", &DMXModule::create));
 	moduleDefs.add(new ModuleDefinition("Protocol", "Serial", &SerialModule::create));
 	moduleDefs.add(new ModuleDefinition("Protocol", "TCP", &TCPModule::create));
-	/*
-	moduleDefs.add(new ModuleDefinition("Protocol", "HID", &HIDModule::create));
-	moduleDefs.add(new ModuleDefinition("Protocol", "Gamepad", &GamepadModule::create));
-	*/
-
-	moduleDefs.add(new ModuleDefinition("Hardware", "Sound Card", &AudioModule::create));
+	moduleDefs.add(new ModuleDefinition("Protocol", "UDP", &UDPModule::create));  
+	
 #if JUCE_WINDOWS
 	//moduleDefs.add(new ModuleDefinition("Controller", "Myo", &MyoModule::create));
 	moduleDefs.add(new ModuleDefinition("Hardware", "KinectV2", &KinectV2Module::create));
 #endif
-	moduleDefs.add(new ModuleDefinition("Hardware", "Wiimote", &WiimoteModule::create));
+
 	moduleDefs.add(new ModuleDefinition("Hardware", "Launchpad", &LaunchpadModule::create));
+	moduleDefs.add(new ModuleDefinition("Hardware", "Sound Card", &AudioModule::create));
+	moduleDefs.add(new ModuleDefinition("Hardware", "Wiimote", &WiimoteModule::create));
 
-	moduleDefs.add(new ModuleDefinition("Software", "LiveOSC", &LiveOSCModule::create));
-	moduleDefs.add(new ModuleDefinition("Software", "Reaper", &ReaperModule::create));
-	
+	/*
+	moduleDefs.add(new ModuleDefinition("Hardware", "HID", &HIDModule::create));
+	moduleDefs.add(new ModuleDefinition("Hardware", "Gamepad", &GamepadModule::create));
+	*/
+
 	moduleDefs.add(new ModuleDefinition("Software", "DLight", &DLightModule::create));
-
-	moduleDefs.add(new ModuleDefinition("Software", "Resolume", &ResolumeModule::create));
+	moduleDefs.add(new ModuleDefinition("Software", "LiveOSC", &LiveOSCModule::create));
 	moduleDefs.add(new ModuleDefinition("Software", "Millumin", &MilluminModule::create));
+	moduleDefs.add(new ModuleDefinition("Software", "Reaper", &ReaperModule::create));
+	moduleDefs.add(new ModuleDefinition("Software", "Resolume", &ResolumeModule::create));
 	moduleDefs.add(new ModuleDefinition("Software", "VLC", &VLCModule::create));
+	moduleDefs.add(new ModuleDefinition("Software", "Watchout", &WatchoutModule::create));
 
 	moduleDefs.add(new ModuleDefinition("Generator", "Metronome", &MetronomeModule::create));
 	moduleDefs.add(new ModuleDefinition("Generator", "Signal", &SignalModule::create));
@@ -92,6 +96,7 @@ void ModuleFactory::addCustomModules()
 			if (moduleType == "Serial") createFunc = &SerialModule::create;
 			else if (moduleType == "OSC") createFunc = &CustomOSCModule::create;
 			else if (moduleType == "MIDI") createFunc = &MIDIModule::create;
+			else if (moduleType == "UDP") createFunc = &UDPModule::create;
 			else continue;
 
 			LOG("Found custom module : " << moduleMenuPath << ":" << moduleName);

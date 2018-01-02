@@ -14,7 +14,7 @@
 #include "SequenceCueCommand.h"
 
 SequenceModule::SequenceModule(SequenceManager * _manager) :
-	Module("Sequence Manager"),
+	Module("Sequences"),
 	manager(_manager)
 {
 	defManager.add(CommandDefinition::createDef(this, "Sequence", "Play Sequence", &SequenceCommand::create, CommandContext::ACTION)->addParam("type", SequenceCommand::PLAY_SEQUENCE));
@@ -22,7 +22,6 @@ SequenceModule::SequenceModule(SequenceManager * _manager) :
 	defManager.add(CommandDefinition::createDef(this, "Sequence", "Stop Sequence", &SequenceCommand::create, CommandContext::ACTION)->addParam("type", SequenceCommand::STOP_SEQUENCE));
 	defManager.add(CommandDefinition::createDef(this, "Sequence", "Toggle Sequence", &SequenceCommand::create, CommandContext::ACTION)->addParam("type", SequenceCommand::TOGGLE_SEQUENCE));
 	defManager.add(CommandDefinition::createDef(this, "Sequence", "Go to cue", &SequenceCueCommand::create, CommandContext::ACTION));
-
 }
 
 SequenceModule::~SequenceModule()

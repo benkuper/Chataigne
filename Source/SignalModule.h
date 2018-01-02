@@ -38,7 +38,7 @@ public:
 	IntParameter * octaves;
 	PerlinNoise perlin;
 
-	void onContainerParameterChangedInternal(Parameter *) override;
+	void onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c) override;
 
 	String getTypeString() const override { return "Signal"; }
 	static SignalModule * create() { return new SignalModule(); }

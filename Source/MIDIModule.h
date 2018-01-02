@@ -35,7 +35,7 @@ public:
 	virtual void sendNoteOff(int pitch, int channel = 0);
 	virtual void sendControlChange(int number, int value, int channel = 0);
 
-	void onContainerParameterChangedInternal(Parameter *) override;
+	void onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c) override;
 	void updateMIDIDevices();
 
 	virtual void noteOnReceived(const int &channel, const int &pitch, const int &velocity) override;
@@ -50,7 +50,7 @@ public:
 	static MIDIModule * create() { return new MIDIModule(); }
 	virtual String getDefaultTypeString() const override { return "MIDI"; }
 
-	InspectableEditor * getEditor(bool isRoot) override;
+	//InspectableEditor * getEditor(bool isRoot) override;
 };
 
 

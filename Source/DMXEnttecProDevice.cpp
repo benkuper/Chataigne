@@ -11,7 +11,7 @@
 #include "DMXEnttecProDevice.h"
 
 DMXEnttecProDevice::DMXEnttecProDevice() :
-	DMXSerialDevice(ENTTEC_DMXPRO)
+	DMXSerialDevice("DMX Pro",ENTTEC_DMXPRO)
 {
 }
 

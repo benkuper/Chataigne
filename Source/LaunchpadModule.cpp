@@ -43,7 +43,6 @@ LaunchpadModule::~LaunchpadModule()
 
 void LaunchpadModule::noteOnReceived(const int & channel, const int & pitch, const int & velocity)
 {
-	DBG("Note ON " << channel << " / " << pitch << " / " << velocity);
 	int column = pitch % 16;
 	int row = floor(pitch / 16);
 	if (column < 8)
@@ -71,7 +70,6 @@ void LaunchpadModule::noteOffReceived(const int & channel, const int & pitch, co
 
 void LaunchpadModule::controlChangeReceived(const int & channel, const int & number, const int & value)
 {
-	DBG("CC " << channel << " / " << number << " / " << value);
 	if (number >= 104 && number <= 111)
 	{
 		specials[number - 104]->setValue(value > 0);

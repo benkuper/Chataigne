@@ -27,7 +27,6 @@ public:
 	void noteOffReceived(const int &channel, const int &pitch, const int &velocity) override;
 	void controlChangeReceived(const int &channel, const int &number, const int &value) override;
 
-
 	static LaunchpadModule * create() { return new LaunchpadModule(); }
 	virtual String getDefaultTypeString() const override { return "Launchpad"; }
 

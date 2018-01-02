@@ -9,8 +9,6 @@
 */
 
 #include "OSCModule.h"
-#include "OSCModuleBaseEditor.h"
-#include "OSCModuleIOEditor.h"
 
 OSCModule::OSCModule(const String & name, int defaultLocalPort, int defaultRemotePort, bool canHaveInput, bool canHaveOutput) :
 	Module(name)
@@ -22,8 +20,8 @@ OSCModule::OSCModule(const String & name, int defaultLocalPort, int defaultRemot
 	//Receive
 	if (canHaveInput)
 	{
-		receiveCC = new OSCIOContainer("OSC Input");
-		addChildControllableContainer(receiveCC);
+		receiveCC = new EnablingControllableContainer("OSC Input");
+		moduleParams.addChildControllableContainer(receiveCC);
 
 		localPort = receiveCC->addIntParameter("Local Port", "Local Port to bind to receive OSC Messages", defaultLocalPort, 1024, 65535);
 		localPort->hideInOutliner = true;
@@ -36,8 +34,8 @@ OSCModule::OSCModule(const String & name, int defaultLocalPort, int defaultRemot
 	//Send
 	if (canHaveOutput)
 	{
-		sendCC = new OSCIOContainer("OSC Output");
-		addChildControllableContainer(sendCC);
+		sendCC = new EnablingControllableContainer("OSC Output");
+		moduleParams.addChildControllableContainer(sendCC);
 		
 		useLocal = sendCC->addBoolParameter("Local", "Send to Local IP (127.0.0.1). Allow to quickly switch between local and remote IP.", true);
 		remoteHost = sendCC->addStringParameter("Remote Host", "Remote Host to send to.", "127.0.0.1");
@@ -281,20 +279,9 @@ void OSCModule::oscBundleReceived(const OSCBundle & bundle)
 	}
 }
 
+/*
 InspectableEditor * OSCModule::getEditor(bool isRoot)
 {
-	return new OSCModuleBaseEditor(this, isRoot);
+	return new ModuleEditor(this, isRoot);
 }
-
-
-OSCIOContainer::OSCIOContainer(const String & n) :
-	ControllableContainer(n)
-{
-	enabled = addBoolParameter("Enabled", "Activate OSC Input for this module", true);
-	enabled->hideInEditor = true;
-}
-
-InspectableEditor * OSCIOContainer::getEditor(bool isRoot)
-{
-	return new OSCIOEditor(this, isRoot);
-}
+*/

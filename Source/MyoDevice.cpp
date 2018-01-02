@@ -8,11 +8,9 @@
   ==============================================================================
 */
 
+#include "MyoDevice.h"
 
 #if JUCE_WINDOWS
-
-
-#include "MyoDevice.h"
 
 MyoDevice::MyoDevice()
 {

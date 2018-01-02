@@ -14,7 +14,7 @@
 #include "StateCommand.h"
 
 StateModule::StateModule(StateManager * _manager) :
-	Module("State Manager"),
+	Module("State Machine"),
 	manager(_manager)
 {
 	defManager.add(CommandDefinition::createDef(this, "State", "Activate State", &StateCommand::create, CommandContext::ACTION)->addParam("type", StateCommand::ACTIVATE_STATE));

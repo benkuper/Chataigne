@@ -17,9 +17,9 @@ WiimoteModule::WiimoteModule(const String & name) :
 {
 	setupIOConfiguration(true, false);
 
-	deviceID = addIntParameter("Device Select", "Select the ID of the device, depending on how many wiimotes are connected (max 4)", 1, 1, 4);
-	connectTrigger = addTrigger("Refresh Wiimotes", "Try to reconnect the wiimotes");
-	smoothing = addFloatParameter("Smoothing", "Set the orientation smoothing for the wiimote orientation algorithm", .5f, 0, 1);
+	deviceID = moduleParams.addIntParameter("Device Select", "Select the ID of the device, depending on how many wiimotes are connected (max 4)", 1, 1, 4);
+	connectTrigger = moduleParams.addTrigger("Refresh Wiimotes", "Try to reconnect the wiimotes");
+	smoothing = moduleParams.addFloatParameter("Smoothing", "Set the orientation smoothing for the wiimote orientation algorithm", .5f, 0, 1);
 
 	connected = valuesCC.addBoolParameter("Connected", "Wiimote is connected ?", false);
 
@@ -163,17 +163,14 @@ void WiimoteModule::wiimoteMotionPlusUnplugged(Wiimote *)
 	motionPlusConnected->setValue(false);
 }
 
-void WiimoteModule::onContainerParameterChangedInternal(Parameter * p)
+void WiimoteModule::onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c)
 {
-	if (p == smoothing)
+	Module::onControllableFeedbackUpdateInternal(cc, c);
+
+	if (c == smoothing)
 	{
 		if (device != nullptr) device->setSmoothing(1 - (smoothing->floatValue()*.9f) + .1f); //force minimum .1f
-	}
-}
-
-void WiimoteModule::onContainerTriggerTriggered(Trigger * t)
-{
-	if (t == connectTrigger)
+	}else if (c == connectTrigger)
 	{
 		WiimoteManager::getInstance()->numReconnectTries = 0;
 		WiimoteManager::getInstance()->reinitWiimotes = true;

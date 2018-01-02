@@ -19,6 +19,7 @@ ModuleRouterPanelView::ModuleRouterPanelView(const String & contentName,ModuleRo
 	mui.bgColor = BG_COLOR.brighter();
 	mui.animateItemOnAdd = true;
 	mui.addExistingItems(); //we have to do it here since we don't have a custom child class for managerUI
+	mui.addItemText = "Add Router";
 
 	addAndMakeVisible(&mui);
 	addAndMakeVisible(&view);

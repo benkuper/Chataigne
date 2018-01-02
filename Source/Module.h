@@ -27,6 +27,8 @@ public:
 	bool hasInput;
 	bool hasOutput;
 
+	ControllableContainer moduleParams;
+
 	BoolParameter * logIncomingData;
 	BoolParameter * logOutgoingData;
 

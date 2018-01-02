@@ -11,8 +11,8 @@
 #include "DMXSerialDevice.h"
 
 
-DMXSerialDevice::DMXSerialDevice(Type type) :
-	DMXDevice(type),
+DMXSerialDevice::DMXSerialDevice(const String &name, Type type) :
+	DMXDevice(name, type),
 	Thread("dmxRead"),
 	dmxPort(nullptr)
 {

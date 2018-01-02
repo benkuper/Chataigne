@@ -14,11 +14,12 @@
 #include "DMXEnttecProDevice.h"
 #include "DMXArtNetDevice.h"
 
-DMXDevice::DMXDevice(Type _type) :
-	ControllableContainer("Device"),
+DMXDevice::DMXDevice(const String &name, Type _type) :
+	ControllableContainer(name),
 	type(_type)
 {
 	DMXManager::getInstance()->addDMXManagerListener(this);
+	editorIsCollapsed = false;
 
 	memset(dmxDataOut, 0, 512 * sizeof(uint8));
 	memset(dmxDataIn, 0, 512 * sizeof(uint8));

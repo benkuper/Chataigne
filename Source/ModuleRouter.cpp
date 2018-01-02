@@ -17,6 +17,7 @@ ModuleRouter::ModuleRouter() :
 	destModule(nullptr),
 	sourceValues("Source Values")
 {
+	sourceValues.userCanAddItemsManually = false;
 	selectAllValues = addTrigger("Select All", "Select all values for routing");
 	deselectAllValues = addTrigger("Deselect All", "Deselect all values");
 }

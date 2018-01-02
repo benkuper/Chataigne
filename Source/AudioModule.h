@@ -34,7 +34,6 @@ public:
 	int currentBufferSize;
 
 	BoolParameter * keepLastDetectedValues;
-
 	
 	int uidIncrement;
 
@@ -46,6 +45,7 @@ public:
 	FloatParameter * inputGain;
 	FloatParameter * activityThreshold;
 
+	ControllableContainer monitorParams;
 	FloatParameter * monitorVolume;
 	Array<BoolParameter *> monitorOutChannels;
 	Array<int> selectedMonitorOutChannels;
@@ -64,7 +64,7 @@ public:
 
 	void updateSelectedMonitorChannels();
 
-	void onContainerParameterChangedInternal(Parameter * p) override;
+	void onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c) override;
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
@@ -78,7 +78,6 @@ public:
 	virtual void changeListenerCallback(ChangeBroadcaster * source) override;
 
 
-	InspectableEditor * getEditor(bool isRoot) override;
 
 	static AudioModule * create() { return new AudioModule(); }
 	virtual String getDefaultTypeString() const override { return "Sound Card"; }

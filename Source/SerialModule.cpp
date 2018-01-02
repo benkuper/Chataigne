@@ -18,13 +18,10 @@ SerialModule::SerialModule(const String &name) :
 	setupIOConfiguration(true, true);
 
 	portParam = new SerialDeviceParameter("Port", "Serial Port to connect",true);
-	addParameter(portParam);
+	moduleParams.addParameter(portParam);
 	
-	modeParam = addEnumParameter("Mode", "Protocol for treating the incoming data");
-	modeParam->addOption("Lines", SerialDevice::LINES);
-	modeParam->addOption("Raw", SerialDevice::RAW);
-	modeParam->addOption("Data255", SerialDevice::DATA255);
-	modeParam->addOption("COBS", SerialDevice::COBS);
+	modeParam = moduleParams.addEnumParameter("Mode", "Protocol for treating the incoming data"); 
+	modeParam->addOption("Lines", SerialDevice::LINES)->addOption("Raw", SerialDevice::RAW) ->addOption("Data255", SerialDevice::DATA255) ->addOption("COBS", SerialDevice::COBS);
 
 	scriptObject.setMethod(sendId, SerialModule::sendStringFromScript);
 	scriptObject.setMethod(sendLineId, SerialModule::sendStringWithNewLineFromScript);

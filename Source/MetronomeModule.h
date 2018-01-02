@@ -23,7 +23,7 @@ public:
 	FloatParameter * frequency;
 	FloatParameter * onTime;
 
-	void onContainerParameterChangedInternal(Parameter *) override;
+	void onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c) override;
 
 	String getTypeString() const override { return "Metronome"; }
 	static MetronomeModule * create() { return new MetronomeModule(); }

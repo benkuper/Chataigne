@@ -10,7 +10,6 @@
 
 #include "MIDIModule.h"
 #include "MIDICommands.h"
-#include "MIDIModuleEditor.h"
 
 MIDIModule::MIDIModule(const String & name, bool _useGenericControls) :
 	Module(name),
@@ -23,12 +22,11 @@ MIDIModule::MIDIModule(const String & name, bool _useGenericControls) :
 	//canHandleRouteValues = true;
 
 	midiParam = new MIDIDeviceParameter("Devices");
-	addParameter(midiParam);
+	moduleParams.addParameter(midiParam);
 
-	
 	if (useGenericControls)
 	{
-		autoAdd = addBoolParameter("Auto Add", "Auto Add MIDI values that are received but not in the list", false);
+		autoAdd = moduleParams.addBoolParameter("Auto Add", "Auto Add MIDI values that are received but not in the list", false);
 		defManager.add(CommandDefinition::createDef(this, "", "Note On", &MIDINoteAndCCCommand::create)->addParam("type", (int)MIDINoteAndCCCommand::NOTE_ON));
 		defManager.add(CommandDefinition::createDef(this, "", "Note Off", &MIDINoteAndCCCommand::create)->addParam("type", (int)MIDINoteAndCCCommand::NOTE_OFF));
 		defManager.add(CommandDefinition::createDef(this, "", "Controller Change", &MIDINoteAndCCCommand::create)->addParam("type", (int)MIDINoteAndCCCommand::CONTROLCHANGE));
@@ -67,14 +65,16 @@ void MIDIModule::sendControlChange(int number, int value, int channel)
 	outputDevice->sendControlChange(number,value,channel);
 }
 
-void MIDIModule::onContainerParameterChangedInternal(Parameter * p)
+void MIDIModule::onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c)
 {
-	Module::onContainerParameterChangedInternal(p);
-	if (p == midiParam)
+	Module::onControllableFeedbackUpdateInternal(cc, c);
+
+	if (c == midiParam)
 	{
 		updateMIDIDevices();
 	}
 }
+
 
 void MIDIModule::updateMIDIDevices()
 {
@@ -163,7 +163,9 @@ void MIDIModule::loadJSONDataInternal(var data)
 	valuesCC.orderControllablesAlphabetically();
 }
 
+/*
 InspectableEditor * MIDIModule::getEditor(bool isRoot)
 {
 	return new MIDIModuleEditor(this,isRoot);
 }
+*/

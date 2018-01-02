@@ -20,6 +20,20 @@ SendTCPStringCommand::SendTCPStringCommand(TCPModule * _module, CommandContext c
 		valueParam->isEditable = false;
 		valueParam->setValue(params.getProperty("fixedValue", ""));
 	}
+	
+	appendCR = addBoolParameter("Append CR", "Append \\r at the end of the message", true);
+	if (params.hasProperty("forceCR"))
+	{
+		appendCR->setValue(params.getProperty("forceCR", true));
+		appendCR->hideInEditor = true;
+	}
+
+	appendNL = addBoolParameter("Append NL", "Append \\n at the end of the message", true);
+	if (params.hasProperty("forceNL"))
+	{
+		appendCR->setValue(params.getProperty("forceNL", true)); 
+		appendCR->hideInEditor = true;
+	}
 }
 
 SendTCPStringCommand::~SendTCPStringCommand()
@@ -28,5 +42,5 @@ SendTCPStringCommand::~SendTCPStringCommand()
 
 void SendTCPStringCommand::trigger()
 {
-	tcpModule->sendStringPacket(valueParam->stringValue());
+	tcpModule->sendStringPacket(valueParam->stringValue()+(appendCR->boolValue()?"\r":"")+(appendNL->boolValue()?"\n":""));
 }

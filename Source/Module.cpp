@@ -18,8 +18,9 @@ Module::Module(const String &name) :
 	BaseItem(name, true, true),
 	hasInput(true),
 	hasOutput(true),
+	moduleParams("Parameters"),
 	valuesCC("Values"),
-	commandTester("Command Tester",CommandContext::ACTION),
+	commandTester("Command Tester", CommandContext::ACTION),
 	canHandleRouteValues(false)
 {
 
@@ -44,6 +45,10 @@ Module::Module(const String &name) :
 	outActivityTrigger->hideInEditor = true;
 	outActivityTrigger->isControllableFeedbackOnly = true;
 
+	
+	moduleParams.editorIsCollapsed = false; 
+	addChildControllableContainer(&moduleParams);
+	
 	addChildControllableContainer(&valuesCC);
 	valuesCC.includeTriggersInSaveLoad = true;
 	valuesCC.editorIsCollapsed = false;
@@ -156,5 +161,5 @@ Controllable * Module::getControllableForJSONDefinition(const String &name, var 
 
 InspectableEditor * Module::getEditor(bool isRoot)
 {
-	return BaseItem::getEditor(isRoot);// new ModuleEditor(this, isRoot); //temp, should have a proper base module editor
+	return new ModuleEditor(this, isRoot); //temp, should have a proper base module editor
 }

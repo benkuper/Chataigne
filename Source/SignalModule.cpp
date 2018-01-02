@@ -16,12 +16,12 @@ SignalModule::SignalModule() :
 {
 	setupIOConfiguration(false, false);
 
-	type = addEnumParameter("Type", "Signal type");
+	type = moduleParams.addEnumParameter("Type", "Signal type");
 	type->addOption("Sine", SINE)->addOption("Saw",SAW)->addOption("Triangle",TRIANGLE)->addOption("Perlin", PERLIN);
-	refreshRate = addFloatParameter("Refresh Rate", "Time interval between value updates, in Hz", 50, 1, 100);
+	refreshRate = moduleParams.addFloatParameter("Refresh Rate", "Time interval between value updates, in Hz", 50, 1, 100);
 	
-	frequency = addFloatParameter("Frequency", "Frequency of the signal", 1, 0.0001f, 5);
-	octaves = addIntParameter("Octaves", "Octave parameter for perlin noise", 3, 1, 100, false);
+	frequency = moduleParams.addFloatParameter("Frequency", "Frequency of the signal", 1, 0.0001f, 5);
+	octaves = moduleParams.addIntParameter("Octaves", "Octave parameter for perlin noise", 3, 1, 100, false);
 
 	value = valuesCC.addFloatParameter("Value", "The signal value", 0, 0, 1);
 
@@ -32,12 +32,14 @@ SignalModule::~SignalModule()
 {
 }
 
-void SignalModule::onContainerParameterChangedInternal(Parameter * p)
+void SignalModule::onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c)
 {
-	if (p == refreshRate)
+	Module::onControllableFeedbackUpdateInternal(cc, c);
+
+	if (c == refreshRate)
 	{
 		startTimer(0, 1000.0f / refreshRate->floatValue());
-	}else if(p == type)	
+	}else if(c == type)	
 	{
 		octaves->setEnabled(type->getValueDataAsEnum<SignalType>() == PERLIN);
 	}

@@ -465,6 +465,16 @@
                 file="Source/ModuleRouterManager.h"/>
         </GROUP>
         <GROUP id="{766BCE2E-5C2E-5A80-EC80-7FFA2C7ABBBA}" name="modules">
+          <GROUP id="{D82DB122-A65D-E344-54C5-043A4960C873}" name="udp">
+            <GROUP id="{81640B5A-35F1-039D-00AD-598C60CF54BC}" name="commands">
+              <FILE id="sSC51W" name="SendUDPStringCommand.cpp" compile="1" resource="0"
+                    file="Source/SendUDPStringCommand.cpp"/>
+              <FILE id="iZ8Le1" name="SendUDPStringCommand.h" compile="0" resource="0"
+                    file="Source/SendUDPStringCommand.h"/>
+            </GROUP>
+            <FILE id="GhQSXM" name="UDPModule.cpp" compile="1" resource="0" file="Source/UDPModule.cpp"/>
+            <FILE id="flXK6U" name="UDPModule.h" compile="0" resource="0" file="Source/UDPModule.h"/>
+          </GROUP>
           <GROUP id="{0A2584D7-8A0B-24BA-5B04-76DCADFFF3B4}" name="generators">
             <GROUP id="{3DC1862D-5C1F-A35A-7638-AD4598DF8124}" name="signal">
               <FILE id="EUcPtb" name="PerlinNoise.hpp" compile="0" resource="0" file="Source/PerlinNoise.hpp"/>
@@ -480,11 +490,17 @@
             </GROUP>
           </GROUP>
           <GROUP id="{31751EEF-7631-994D-CF00-3D84A9A143E5}" name="tcp">
-            <GROUP id="{3D10C1A4-BC90-A557-F29D-C7DF68111C8B}" name="ui">
-              <FILE id="eWmaKp" name="TCPModuleEditor.cpp" compile="1" resource="0"
-                    file="Source/TCPModuleEditor.cpp"/>
-              <FILE id="MTVgoC" name="TCPModuleEditor.h" compile="0" resource="0"
-                    file="Source/TCPModuleEditor.h"/>
+            <GROUP id="{A877B928-40D1-A998-0E6E-332B897A536A}" name="watchout">
+              <GROUP id="{EFE7EEA8-82CF-809F-5B90-F2D2063FE681}" name="commands">
+                <FILE id="r75ahE" name="WatchoutCommand.cpp" compile="1" resource="0"
+                      file="Source/WatchoutCommand.cpp"/>
+                <FILE id="V60ndd" name="WatchoutCommand.h" compile="0" resource="0"
+                      file="Source/WatchoutCommand.h"/>
+              </GROUP>
+              <FILE id="zYenQp" name="WatchoutModule.cpp" compile="1" resource="0"
+                    file="Source/WatchoutModule.cpp"/>
+              <FILE id="Wy4OyC" name="WatchoutModule.h" compile="0" resource="0"
+                    file="Source/WatchoutModule.h"/>
             </GROUP>
             <GROUP id="{A88C254E-3AEA-5262-B78F-8BE0F0707AE5}" name="commands">
               <FILE id="k7hs2Y" name="SendTCPCommand.cpp" compile="1" resource="0"
@@ -573,12 +589,6 @@
               <FILE id="fmclij" name="DMXCommand.cpp" compile="1" resource="0" file="Source/DMXCommand.cpp"/>
               <FILE id="cJbvB2" name="DMXCommand.h" compile="0" resource="0" file="Source/DMXCommand.h"/>
             </GROUP>
-            <GROUP id="{033151A1-6123-F6AD-E8FD-58032B203E63}" name="ui">
-              <FILE id="DuJsnj" name="DMXModuleEditor.cpp" compile="1" resource="0"
-                    file="Source/DMXModuleEditor.cpp"/>
-              <FILE id="X2iZPZ" name="DMXModuleEditor.h" compile="0" resource="0"
-                    file="Source/DMXModuleEditor.h"/>
-            </GROUP>
             <FILE id="oBn8YJ" name="DMXModule.cpp" compile="1" resource="0" file="Source/DMXModule.cpp"/>
             <FILE id="nUJne9" name="DMXModule.h" compile="0" resource="0" file="Source/DMXModule.h"/>
           </GROUP>
@@ -643,12 +653,6 @@
                 <FILE id="AKXR5u" name="PitchYIN.h" compile="0" resource="0" file="Source/pitch/PitchYIN.h"/>
               </GROUP>
             </GROUP>
-            <GROUP id="{19C7B7B8-482F-28DC-1F70-E8653620C2C5}" name="ui">
-              <FILE id="cAc8A6" name="AudioModuleEditor.cpp" compile="1" resource="0"
-                    file="Source/AudioModuleEditor.cpp"/>
-              <FILE id="sa1W6f" name="AudioModuleEditor.h" compile="0" resource="0"
-                    file="Source/AudioModuleEditor.h"/>
-            </GROUP>
             <FILE id="t9WkH6" name="AudioModule.cpp" compile="1" resource="0" file="Source/AudioModule.cpp"/>
             <FILE id="vreQm4" name="AudioModule.h" compile="0" resource="0" file="Source/AudioModule.h"/>
           </GROUP>
@@ -662,14 +666,6 @@
             <FILE id="F2pT1U" name="GamepadModule.h" compile="0" resource="0" file="Source/GamepadModule.h"/>
           </GROUP>
           <GROUP id="{6EE36E9C-C9D7-2799-B1A9-208E57828C02}" name="hid">
-            <GROUP id="{C6B4F0EF-E160-42C3-E2A8-E3F593B999EC}" name="ui">
-              <FILE id="zhCivn" name="HIDModuleEditor.cpp" compile="1" resource="0"
-                    file="Source/HIDModuleEditor.cpp"/>
-              <FILE id="FemZA5" name="HIDModuleEditor.h" compile="0" resource="0"
-                    file="Source/HIDModuleEditor.h"/>
-              <FILE id="Tk2Yzf" name="HIDModuleUI.cpp" compile="1" resource="0" file="Source/HIDModuleUI.cpp"/>
-              <FILE id="FnD3gx" name="HIDModuleUI.h" compile="0" resource="0" file="Source/HIDModuleUI.h"/>
-            </GROUP>
             <FILE id="uhZZzG" name="HIDModule.cpp" compile="1" resource="0" file="Source/HIDModule.cpp"/>
             <FILE id="PIsgiY" name="HIDModule.h" compile="0" resource="0" file="Source/HIDModule.h"/>
           </GROUP>
@@ -684,12 +680,6 @@
               <FILE id="m4XAdQ" name="MIDICommands.cpp" compile="1" resource="0"
                     file="Source/MIDICommands.cpp"/>
               <FILE id="R3DyrG" name="MIDICommands.h" compile="0" resource="0" file="Source/MIDICommands.h"/>
-            </GROUP>
-            <GROUP id="{5E084893-BD83-3991-D955-7B19D9169311}" name="ui">
-              <FILE id="v00SBr" name="MIDIModuleEditor.cpp" compile="1" resource="0"
-                    file="Source/MIDIModuleEditor.cpp"/>
-              <FILE id="PQ7r7M" name="MIDIModuleEditor.h" compile="0" resource="0"
-                    file="Source/MIDIModuleEditor.h"/>
             </GROUP>
             <FILE id="z9jJC7" name="MIDIModule.cpp" compile="1" resource="0" file="Source/MIDIModule.cpp"/>
             <FILE id="zwyCZl" name="MIDIModule.h" compile="0" resource="0" file="Source/MIDIModule.h"/>
@@ -712,16 +702,6 @@
                     file="Source/MilluminModule.cpp"/>
               <FILE id="JU1Sed" name="MilluminModule.h" compile="0" resource="0"
                     file="Source/MilluminModule.h"/>
-            </GROUP>
-            <GROUP id="{10647C33-9219-7FA9-BE90-B7D677AE14D5}" name="lgml">
-              <GROUP id="{26C9DC67-9EB7-B8E6-347D-156C82FB72C8}" name="commands">
-                <FILE id="SlpUHI" name="LGMLParameterCommand.cpp" compile="1" resource="0"
-                      file="Source/LGMLParameterCommand.cpp"/>
-                <FILE id="G9Tcwm" name="LGMLParameterCommand.h" compile="0" resource="0"
-                      file="Source/LGMLParameterCommand.h"/>
-              </GROUP>
-              <FILE id="KGMnLC" name="LGMLModule.cpp" compile="1" resource="0" file="Source/LGMLModule.cpp"/>
-              <FILE id="krvWbR" name="LGMLModule.h" compile="0" resource="0" file="Source/LGMLModule.h"/>
             </GROUP>
             <GROUP id="{EF646370-510B-7906-5FD2-CCDE2B41DBD3}" name="live">
               <GROUP id="{7C3ABF3F-2BBD-5267-C99A-94DA68354DCB}" name="commands">
@@ -772,23 +752,7 @@
               <FILE id="cNQ6Ia" name="OSCCommand.cpp" compile="1" resource="0" file="Source/OSCCommand.cpp"/>
               <FILE id="F1p8Ca" name="OSCCommand.h" compile="0" resource="0" file="Source/OSCCommand.h"/>
             </GROUP>
-            <GROUP id="{D3A9FFCD-4063-1D0F-3F47-D2AA576163B9}" name="ui">
-              <FILE id="wmKYPg" name="OSCModuleBaseEditor.cpp" compile="1" resource="0"
-                    file="Source/OSCModuleBaseEditor.cpp"/>
-              <FILE id="oNtnFs" name="OSCModuleBaseEditor.h" compile="0" resource="0"
-                    file="Source/OSCModuleBaseEditor.h"/>
-              <FILE id="nkFjUR" name="OSCModuleIOEditor.cpp" compile="1" resource="0"
-                    file="Source/OSCModuleIOEditor.cpp"/>
-              <FILE id="BRzLa2" name="OSCModuleIOEditor.h" compile="0" resource="0"
-                    file="Source/OSCModuleIOEditor.h"/>
-            </GROUP>
             <GROUP id="{725F299B-4972-D857-5400-57EB8633E4A9}" name="custom">
-              <GROUP id="{609C3BCD-D82F-A0F9-92AC-FCCC9018DA82}" name="ui">
-                <FILE id="giYU8X" name="CustomOSCModuleEditor.cpp" compile="1" resource="0"
-                      file="Source/CustomOSCModuleEditor.cpp"/>
-                <FILE id="ykdqMh" name="CustomOSCModuleEditor.h" compile="0" resource="0"
-                      file="Source/CustomOSCModuleEditor.h"/>
-              </GROUP>
               <GROUP id="{054F9429-4D5F-5398-2370-34DC34C50A1E}" name="commands">
                 <FILE id="hZMvii" name="CustomOSCCommandArgumentManager.cpp" compile="1"
                       resource="0" file="Source/CustomOSCCommandArgumentManager.cpp"/>
@@ -859,12 +823,6 @@
                     file="Source/CustomOSCModule.h"/>
             </GROUP>
             <GROUP id="{BF093733-18A9-3232-92C5-8EF7D8E70785}" name="resolume">
-              <GROUP id="{9333C5FD-BF0D-C988-34A4-D4292DB7F787}" name="ui">
-                <FILE id="uY2Y7A" name="ResolumeModuleEditor.cpp" compile="1" resource="0"
-                      file="Source/ResolumeModuleEditor.cpp"/>
-                <FILE id="BzO1GX" name="ResolumeModuleEditor.h" compile="0" resource="0"
-                      file="Source/ResolumeModuleEditor.h"/>
-              </GROUP>
               <GROUP id="{DF8332B1-E904-037C-CFF6-826235CCF3E7}" name="commands">
                 <GROUP id="{F03902D2-C5EC-4D94-E73B-E18E5AF2CDED}" name="ui">
                   <FILE id="Kn9jS2" name="ResolumeBaseCommandEditor.cpp" compile="1"

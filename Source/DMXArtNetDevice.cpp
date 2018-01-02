@@ -12,7 +12,7 @@
 
 
 DMXArtNetDevice::DMXArtNetDevice() :
-	DMXDevice(ARTNET),
+	DMXDevice("ArtNet",ARTNET),
 	sequence(0)
 {
 	nodeIP = addStringParameter("Node IP", "IP of the ArtNet Device", "192.168.1.255");

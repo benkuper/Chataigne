@@ -35,7 +35,7 @@ public:
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
 
-	void onContainerParameterChangedInternal(Parameter * p) override;
+	void controllableFeedbackUpdate(ControllableContainer * cc, Controllable * c) override;
 
 	void dmxDeviceConnected() override;
 	void dmxDeviceDisconnected() override;
@@ -45,7 +45,6 @@ public:
 	static DMXModule * create() { return new DMXModule(); }
 	virtual String getDefaultTypeString() const override { return "DMX"; }
 
-	InspectableEditor * getEditor(bool isRoot) override;
 
 	class DMXModuleListener
 	{

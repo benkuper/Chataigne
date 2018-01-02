@@ -19,7 +19,7 @@ class DMXDevice :
 {
 public:
 	enum Type { OPENDMX, ENTTEC_DMXPRO, ENTTEC_MK2, ARTNET};
-	DMXDevice(Type type);
+	DMXDevice(const String &name, Type type);
 	virtual ~DMXDevice();
 
 	Type type;

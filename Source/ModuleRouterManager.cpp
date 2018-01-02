@@ -15,6 +15,7 @@ juce_ImplementSingleton(ModuleRouterManager)
 ModuleRouterManager::ModuleRouterManager() :
 	BaseManager("Routers")
 {
+	
 	selectItemWhenCreated = true;
 }
 

@@ -9,22 +9,23 @@
 */
 
 #include "AudioModule.h"
-#include "AudioModuleEditor.h"
 #include "MIDIManager.h"
 
 AudioModule::AudioModule(const String & name) :
 	Module(name),
 	uidIncrement(100),
 	numActiveMonitorOutputs(0),
-	pitchDetector(nullptr)
+	pitchDetector(nullptr),
+	monitorParams("Monitor")
 {
 	setupIOConfiguration(true, true);
 
-	inputGain = addFloatParameter("Input Gain", "Gain for the input volume", 1, 0, 10);
-	activityThreshold = addFloatParameter("Activity Threshold", "Threshold to consider activity from the source.\nAnalysis will compute only if volume is greater than this parameter", .1f, 0, 1);
-	keepLastDetectedValues = addBoolParameter("Keep Values", "Keep last detected values when no activity detected.", false);
+	inputGain = moduleParams.addFloatParameter("Input Gain", "Gain for the input volume", 1, 0, 10);
+	activityThreshold = moduleParams.addFloatParameter("Activity Threshold", "Threshold to consider activity from the source.\nAnalysis will compute only if volume is greater than this parameter", .1f, 0, 1);
+	keepLastDetectedValues = moduleParams.addBoolParameter("Keep Values", "Keep last detected values when no activity detected.", false);
 
-	monitorVolume = addFloatParameter("Monitor Volume", "Volume multiplier for the monitor output. This will affect all the input channels and all the selected output channels", 1, 0, 10);
+	moduleParams.addChildControllableContainer(&monitorParams);
+	monitorVolume = monitorParams.addFloatParameter("Monitor Volume", "Volume multiplier for the monitor output. This will affect all the input channels and all the selected output channels", 1, 0, 10);
 
 	//Values
 	volume = valuesCC.addFloatParameter("Volume", "Volume of the audio input", 0, 0, 1);
@@ -61,7 +62,6 @@ AudioModule::AudioModule(const String & name) :
 	graph.addNode(new AudioProcessorGraph::AudioGraphIOProcessor(AudioProcessorGraph::AudioGraphIOProcessor::audioInputNode), 1);
 	graph.addNode(new AudioProcessorGraph::AudioGraphIOProcessor(AudioProcessorGraph::AudioGraphIOProcessor::audioOutputNode), 2);
 	player.setProcessor(&graph);
-
 }
 
 AudioModule::~AudioModule()
@@ -77,7 +77,6 @@ AudioModule::~AudioModule()
 
 void AudioModule::updateSelectedMonitorChannels()
 {
-
 	selectedMonitorOutChannels.clear();
 	for (int i = 0; i < monitorOutChannels.size(); i++)
 	{
@@ -93,11 +92,11 @@ void AudioModule::updateSelectedMonitorChannels()
 	DBG("Num Active monitor outputs : " << numActiveMonitorOutputs);
 }
 
-void AudioModule::onContainerParameterChangedInternal(Parameter * p)
+void AudioModule::onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c)
 {
-	Module::onContainerParameterChangedInternal(p);
+	Module::onControllableFeedbackUpdateInternal(cc, c);
 
-	if (p->type == Controllable::BOOL && monitorOutChannels.indexOf((BoolParameter *)p) > -1)
+	if (c->type == Controllable::BOOL && monitorOutChannels.indexOf((BoolParameter *)c) > -1)
 	{
 		updateSelectedMonitorChannels();
 	}
@@ -208,7 +207,7 @@ void AudioModule::changeListenerCallback(ChangeBroadcaster *)
 
 	DBG("total output : " << graph.getBusCount(false) << "/" << graph.getBus(false, 0)->getNumberOfChannels());
 
-	for (auto &c : monitorOutChannels) removeControllable(c);
+	for (auto &c : monitorOutChannels) monitorParams.removeControllable(c);
 	monitorOutChannels.clear();
 
 	int numChannels = graph.getMainBusNumOutputChannels();
@@ -216,7 +215,7 @@ void AudioModule::changeListenerCallback(ChangeBroadcaster *)
 	for (int i = 0; i < numChannels; i++)
 	{
 		String channelName = AudioChannelSet::getChannelTypeName(channelSet.getTypeOfChannel(i));
-		BoolParameter * b = addBoolParameter("Monitor Out : "+channelName, "If enabled, sends audio from this layer to this channel", i < selectedMonitorOutChannels.size());
+		BoolParameter * b = monitorParams.addBoolParameter("Monitor Out : "+channelName, "If enabled, sends audio from this layer to this channel", i < selectedMonitorOutChannels.size());
 		monitorOutChannels.add(b);
 	}
 	updateSelectedMonitorChannels();
@@ -224,10 +223,6 @@ void AudioModule::changeListenerCallback(ChangeBroadcaster *)
 	audioModuleListeners.call(&AudioModuleListener::monitorSetupChanged);
 }
 
-InspectableEditor * AudioModule::getEditor(bool isRoot)
-{
-	return new AudioModuleEditor(this, isRoot);
-}
 
 int AudioModule::getNoteForFrequency(float freq)
 {

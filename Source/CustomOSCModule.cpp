@@ -12,7 +12,6 @@
 #include "CommandFactory.h"
 #include "CustomOSCCommand.h"
 #include "UserOSCCommand.h"
-#include "CustomOSCModuleEditor.h"
 
 
 CustomOSCModule::CustomOSCModule() :
@@ -20,23 +19,20 @@ CustomOSCModule::CustomOSCModule() :
 	autoAdd(nullptr)
 {
 
-	autoAdd = addBoolParameter("Auto Add", "Add automatically any message that is received\nand try to create the corresponding value depending on the message content.", true);
+	autoAdd = moduleParams.addBoolParameter("Auto Add", "Add automatically any message that is received\nand try to create the corresponding value depending on the message content.", true);
 	autoAdd->isTargettable = false;
 
-	autoRange = addBoolParameter("Auto Range", "If checked, will change range of already existing values if more than one argument is provided in the incoming OSC message", false);
+	autoRange = moduleParams.addBoolParameter("Auto Range", "If checked, will change range of already existing values if more than one argument is provided in the incoming OSC message", false);
 	autoRange->isTargettable = false;
 
-	splitArgs = addBoolParameter("Split Arguments", "If checked, a message with multiple arguments will be exploded in multliple values", false);
+	splitArgs = moduleParams.addBoolParameter("Split Arguments", "If checked, a message with multiple arguments will be exploded in multliple values", false);
 	splitArgs->isTargettable = false;
 
 	defManager.add(CommandDefinition::createDef(this, "", "Custom Message", &CustomOSCCommand::create));
+	
 	addChildControllableContainer(&umm);
 	umm.addBaseManagerListener(this);
 
-#if defined OSSIA_DNSSD
-	LOG("OSSIA DNSSD");
-	updateOssia();
-#endif
 }
 
 void CustomOSCModule::processMessageInternal(const OSCMessage & msg)
@@ -216,11 +212,12 @@ void CustomOSCModule::loadJSONDataInternal(var data)
 	umm.loadJSONData(data.getProperty("models", var()),true);
 
 }
-
+/*
 InspectableEditor * CustomOSCModule::getEditor(bool isRoot)
 {
-	return new CustomOSCModuleEditor(this,isRoot);
+	return new ModuleEditor(this,isRoot);
 }
+*/
 
 void CustomOSCModule::itemAdded(UserOSCCommandModel * model)
 {

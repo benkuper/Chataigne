@@ -65,8 +65,7 @@ public:
 	void wiimoteMotionPlusPlugged(Wiimote *) override;
 	void wiimoteMotionPlusUnplugged(Wiimote *) override;
 
-	void onContainerParameterChangedInternal(Parameter *) override;
-	void onContainerTriggerTriggered(Trigger * t) override;
+	void onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c) override;
 
 	static WiimoteModule * create() { return new WiimoteModule(); }
 	virtual String getDefaultTypeString() const override { return "Wiimote"; }

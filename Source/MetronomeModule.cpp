@@ -15,8 +15,8 @@ MetronomeModule::MetronomeModule() :
 {
 	setupIOConfiguration(false, false);
 
-	frequency = addFloatParameter("Frequency", "Frequency of the timer, in Hz (the greater the value, the faster the tempo)", 1, 0.0001f, 100);
-	onTime = addFloatParameter("ON Time", "Amount of time the metronome stays valid when triggered", .1f, 0, 1);
+	frequency = moduleParams.addFloatParameter("Frequency", "Frequency of the timer, in Hz (the greater the value, the faster the tempo)", 1, 0.0001f, 100);
+	onTime = moduleParams.addFloatParameter("ON Time", "Amount of time the metronome stays valid when triggered", .1f, 0, 1);
 
 	tick = valuesCC.addBoolParameter("Tick", "When the metronome is ticking", false);
 	startTimer(0, 1000.0f / frequency->floatValue());
@@ -26,9 +26,11 @@ MetronomeModule::~MetronomeModule()
 {
 }
 
-void MetronomeModule::onContainerParameterChangedInternal(Parameter * p)
+void MetronomeModule::onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c)
 {
-	if (p == frequency)
+	Module::onControllableFeedbackUpdateInternal(cc, c);
+
+	if (c == frequency)
 	{
 		if (isTimerRunning(0)) stopTimer(0);
 		startTimer(0, 1000.0f / frequency->floatValue());
