@@ -13,11 +13,13 @@
 #include "CommandFactory.h"
 #include "BaseCommandHandlerEditor.h"
 
-BaseCommandHandler::BaseCommandHandler(const String & name, CommandContext _context) :
+BaseCommandHandler::BaseCommandHandler(const String & name, CommandContext _context, Module * _lockedModule) :
 	BaseItem(name),
-	context(_context)
+	context(_context),
+	lockedModule(_lockedModule)
 {
 	trigger = addTrigger("Trigger", "Trigger this consequence");
+	trigger->hideInEditor = true;
 }
 
 BaseCommandHandler::~BaseCommandHandler()
@@ -35,6 +37,7 @@ void BaseCommandHandler::setCommand(CommandDefinition * commandDef)
 	var oldData = var();
 	if (command != nullptr)
 	{
+		removeChildControllableContainer(command);
 		command->module->removeInspectableListener(this);
 		oldData = command->getJSONData();
 	}
@@ -46,6 +49,7 @@ void BaseCommandHandler::setCommand(CommandDefinition * commandDef)
 
 	if (command != nullptr)
 	{
+		addChildControllableContainer(command);
 		command->module->addInspectableListener(this);
 		command->loadPreviousCommandData(oldData); //keep as much as similar parameter possible
 	}

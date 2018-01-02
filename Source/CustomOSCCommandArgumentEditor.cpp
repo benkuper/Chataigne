@@ -16,31 +16,35 @@ CustomOSCCommandArgumentEditor::CustomOSCCommandArgumentEditor(CustomOSCCommandA
 	BaseItemEditor(a, isRoot),
 	arg(a)
 {
+
+	if (arg->mappingEnabled)
+	{
+		useInMappingUI = arg->useForMapping->createToggle();
+		addAndMakeVisible(useInMappingUI);
+	}
+
 	paramUI = static_cast<ParameterEditor *>(arg->param->getEditor(false));
+	addAndMakeVisible(paramUI);
 	paramUI->setShowLabel(false);
 
-	if(arg->mappingEnabled) useInMappingUI = arg->useForMapping->createToggle();
+	headerHeight = 20;
 
-	addAndMakeVisible(paramUI);
-	addAndMakeVisible(useInMappingUI);
+	resetAndBuild();
 }
 
 CustomOSCCommandArgumentEditor::~CustomOSCCommandArgumentEditor()
 {
 }
 
-void CustomOSCCommandArgumentEditor::resizedInternalHeader(Rectangle<int>& r)
-{
-	if (arg->mappingEnabled) 
-	{
-		useInMappingUI->setBounds(r.removeFromRight(80));
-		r.removeFromRight(2);
-	}}
 
-void CustomOSCCommandArgumentEditor::resizedInternalContent(Rectangle<int>& r)
+void CustomOSCCommandArgumentEditor::resizedInternalHeaderItemInternal(Rectangle<int>& r)
 {
-	r.setHeight(paramUI->getHeight());
-	paramUI->setBounds(r);
+	if (arg->mappingEnabled)
+	{
+		useInMappingUI->setBounds(r.removeFromRight(100));
+		r.removeFromRight(2);
+	}
+	if(paramUI != nullptr) paramUI->setBounds(r.removeFromRight(r.getWidth() - 70).reduced(2));
 }
 
 void CustomOSCCommandArgumentEditor::childBoundsChanged(Component * child)

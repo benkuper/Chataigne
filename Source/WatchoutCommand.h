@@ -20,7 +20,7 @@ public:
 	WatchoutCommand(WatchoutModule * _module, CommandContext context, var params);
 	~WatchoutCommand();
 
-	WatchoutModule * tcpModule;
+	WatchoutModule * wModule;
 
 	ScopedPointer<ControllableContainer> paramContainer;
 

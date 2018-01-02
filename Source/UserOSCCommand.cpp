@@ -22,6 +22,7 @@ UserOSCCommand::UserOSCCommand(CustomOSCModule * _module, CommandContext context
 	address->isEditable = model->addressIsEditable->boolValue();
 	address->isSavable = address->isEditable;
 
+	argumentsContainer.editorIsCollapsed = false;
 	rebuildArgsFromModel();
 
 }
@@ -67,11 +68,4 @@ void UserOSCCommand::rebuildArgsFromModel()
 	}
 
 	argumentsContainer.hideInEditor = model->arguments.items.size() == 0;
-}
-
-
-
-InspectableEditor * UserOSCCommand::getEditor(bool isRoot)
-{
-	return new UserOSCCommandEditor(this, isRoot);
 }

@@ -25,12 +25,11 @@ public:
 
 	OSCCommandModelArgument * arg;
 
-	ScopedPointer<ControllableEditor> paramUI;
 	ScopedPointer<BoolToggleUI> useInMappingUI;
 	ScopedPointer<BoolToggleUI> editableUI;
 
-	void resizedInternalHeader(Rectangle<int> &r) override;
-	void resizedInternalContent(Rectangle<int> &r) override;
+	void resetAndBuild() override;
+	void resizedInternalHeaderItemInternal(Rectangle<int> &r) override;
 
 };
 

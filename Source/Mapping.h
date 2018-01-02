@@ -49,7 +49,6 @@ public:
 	// Inherited via Timer
 	virtual void timerCallback() override;
 
-	InspectableEditor * getEditor(bool isRoot) override;
 	ProcessorUI * getUI() override;
 
 	static Mapping * create(var) { return new Mapping(); }

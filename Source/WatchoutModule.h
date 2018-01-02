@@ -19,6 +19,8 @@ public:
 	WatchoutModule();
 	~WatchoutModule();
 
+	CommandDefinition * getBaseWCommand(const String &menu, const String &commandName, const String &command, const String &params = "", CommandContext context = CommandContext::ACTION);
+
 	static WatchoutModule * create() { return new WatchoutModule(); }
 	virtual String getDefaultTypeString() const override { return "Watchout"; }
 

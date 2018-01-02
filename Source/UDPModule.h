@@ -58,7 +58,7 @@ public:
 	virtual var getJSONData() override;
 	virtual void loadJSONDataInternal(var data) override;
 
-	virtual void controllableFeedbackUpdate(ControllableContainer * cc, Controllable * c) override;
+	virtual void onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c) override;
 
 	static UDPModule * create() { return new UDPModule(); }
 	virtual String getDefaultTypeString() const override { return "UDP"; }

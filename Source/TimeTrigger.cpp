@@ -9,7 +9,6 @@
 */
 
 #include "TimeTrigger.h"
-#include "TimeTriggerEditor.h"
 
 
 TimeTrigger::TimeTrigger(float _time, float flagYPos, const String &name) :
@@ -28,10 +27,6 @@ TimeTrigger::~TimeTrigger()
 
 }
 
-InspectableEditor * TimeTrigger::getEditor(bool isRoot)
-{
-	return new TimeTriggerEditor(this,isRoot);
-}
 
 void TimeTrigger::onContainerTriggerTriggered(Trigger * t)
 {

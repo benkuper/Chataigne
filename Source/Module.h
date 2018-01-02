@@ -67,6 +67,9 @@ public:
 
 	virtual void onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c) override;
 	
+	var getJSONData() override;
+	void loadJSONDataInternal(var data) override;
+
 	virtual void setupModuleFromJSONData(var data); //Used for custom modules with a module.json definition, to automatically create parameters, command and values from this file.
 	Controllable * getControllableForJSONDefinition(const String &name, var def);
 

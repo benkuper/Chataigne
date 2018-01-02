@@ -33,8 +33,11 @@ ConditionManager::ConditionManager(bool _operatorOnSide) :
 	conditionOperator->hideInEditor = true;
 
 	validationTime = addFloatParameter("Validation Time", "If greater than 0, the conditions will be validated only if they remain valid for this amount of time", 0, 0, 10);
-	validationTime->hideInEditor = true;
-
+	
+	validationProgress = addFloatParameter("Progress", "Validation time progress", 0, 0, validationTime->floatValue());
+	validationProgress->isControllableFeedbackOnly = true;
+	validationProgress->isEditable = false;
+	validationProgress->setEnabled(false);
 }
 
 ConditionManager::~ConditionManager()
@@ -116,24 +119,8 @@ void ConditionManager::onContainerParameterChanged(Parameter * p)
 {
 	if (p == validationTime)
 	{
-		if (validationTime->floatValue() > 0)
-		{
-			if (validationProgress == nullptr)
-			{
-				validationProgress = addFloatParameter("Progress", "Validation time progress", 0, 0, validationTime->floatValue());
-				validationProgress->isControllableFeedbackOnly = true;
-				validationProgress->isEditable = false;
-
-			}
-			else validationProgress->setRange(0, validationTime->floatValue());
-		} else
-		{
-			if (validationProgress != nullptr)
-			{
-				removeControllable(validationProgress);
-				validationProgress = nullptr;
-			}
-		}
+		validationProgress->setEnabled(validationTime->floatValue() > 0);
+		validationProgress->setRange(0, validationTime->floatValue());
 	} else if (p == conditionOperator)
 	{
 		checkAllConditions();
@@ -148,7 +135,7 @@ InspectableEditor * ConditionManager::getEditor(bool isRoot)
 
 void ConditionManager::timerCallback()
 {
-	if (validationProgress == nullptr)
+	if (validationTime->floatValue() == 0)
 	{
 		isValid->setValue(true);
 		dispatchConditionValidationChanged();

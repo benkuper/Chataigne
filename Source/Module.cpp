@@ -23,8 +23,6 @@ Module::Module(const String &name) :
 	commandTester("Command Tester", CommandContext::ACTION),
 	canHandleRouteValues(false)
 {
-
-	commandTester.canBeDisabled = false;
 	canInspectChildContainers = true;
 
 	logIncomingData = addBoolParameter("Log Incoming", "Enable / Disable logging of incoming data for this module", false);
@@ -46,12 +44,20 @@ Module::Module(const String &name) :
 	outActivityTrigger->isControllableFeedbackOnly = true;
 
 	
+	moduleParams.saveAndLoadRecursiveData = true;
 	moduleParams.editorIsCollapsed = false; 
 	addChildControllableContainer(&moduleParams);
 	
 	addChildControllableContainer(&valuesCC);
 	valuesCC.includeTriggersInSaveLoad = true;
 	valuesCC.editorIsCollapsed = false;
+
+
+	commandTester.canBeDisabled = false;
+	commandTester.lockedModule = this;
+	commandTester.editorIsCollapsed = false;
+
+	addChildControllableContainer(&commandTester);
 }
 
 Module::~Module()
@@ -85,6 +91,19 @@ void Module::onControllableFeedbackUpdateInternal(ControllableContainer * cc, Co
 		args.add(c->getScriptObject());
 		scriptManager->callFunctionOnAllItems("moduleValueParamChanged", args);
 	}
+}
+
+var Module::getJSONData()
+{
+	var data = BaseItem::getJSONData();
+	data.getDynamicObject()->setProperty("params", moduleParams.getJSONData());
+	return data;
+}
+
+void Module::loadJSONDataInternal(var data)
+{
+	BaseItem::loadJSONDataInternal(data);
+	moduleParams.loadJSONData(data.getProperty("params", var()));
 }
 
 void Module::setupModuleFromJSONData(var data)

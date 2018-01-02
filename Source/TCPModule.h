@@ -43,8 +43,7 @@ public:
 	void processMessage(const String & msg);
 	virtual void processMessageInternal(const String &) {}
 
-	virtual void onContainerParameterChangedInternal(Parameter * p) override;
-	virtual void onContainerTriggerTriggered(Trigger * t) override;
+	virtual void onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c) override;
 
 	static TCPModule * create() { return new TCPModule(); }
 	virtual String getDefaultTypeString() const override { return "TCP"; }

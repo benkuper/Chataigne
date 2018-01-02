@@ -9,6 +9,7 @@
 */
 
 #include "MappingOutputManager.h"
+#include "BaseCommandHandlerManagerEditor.h"
 
 MappingOutputManager::MappingOutputManager() :
 	BaseManager<MappingOutput>("Outputs")
@@ -30,5 +31,5 @@ void MappingOutputManager::setValue(var value)
 
 InspectableEditor * MappingOutputManager::getEditor(bool isRoot)
 {
-	return new GenericManagerEditor<MappingOutput>(this, isRoot);
+	return new BaseCommandHandlerManagerEditor<MappingOutput>(this, CommandContext::MAPPING, isRoot);
 }

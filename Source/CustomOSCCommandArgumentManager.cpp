@@ -17,6 +17,8 @@ CustomOSCCommandArgumentManager::CustomOSCCommandArgumentManager(bool _mappingEn
 	mappingEnabled(_mappingEnabled)
 {
 	selectItemWhenCreated = false;
+	editorCanBeCollapsed = false;
+	editorIsCollapsed = false;
 }
 
 void CustomOSCCommandArgumentManager::addItemWithParam(Parameter * p, var data, bool fromUndoableAction)
@@ -34,7 +36,7 @@ void CustomOSCCommandArgumentManager::addItemFromType(Parameter::Type type, var 
 	switch (type)
 	{
 	case Parameter::STRING:
-		p = new StringParameter("#" + id, "Argument #" + id + ", type int", "myString");
+		p = new StringParameter("#" + id, "Argument #" + id + ", type int", "example");
 		break;
 	case Parameter::FLOAT:
 		p = new FloatParameter("#" + id, "Argument #" + id + ", type foat", 0, 0, 1);

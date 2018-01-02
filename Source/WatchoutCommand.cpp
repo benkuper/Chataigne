@@ -11,12 +11,14 @@
 #include "WatchoutCommand.h"
 
 WatchoutCommand::WatchoutCommand(WatchoutModule * _module, CommandContext context, var params) :
-	SendTCPStringCommand(_module,context,params)
+	SendTCPStringCommand(_module,context,params),
+	wModule(_module)
 {
 	String argsP = params.getProperty("args", "").toString();
 	if (argsP.isNotEmpty())
 	{
 		paramContainer = new ControllableContainer("Parameters");
+		paramContainer->editorIsCollapsed = false;
 		addChildControllableContainer(paramContainer);
 	}
 
@@ -30,7 +32,7 @@ WatchoutCommand::WatchoutCommand(WatchoutModule * _module, CommandContext contex
 		{
 			if (sp[0] == "b") paramContainer->addBoolParameter(sp[1], sp[1], false);
 			else if (sp[0] == "f") paramContainer->addFloatParameter(sp[1], sp[1], 0, 0, 1);
-			else if (sp[0] == "i") paramContainer->addIntParameter(sp[1], sp[1], 0, 0, 100000);
+			else if (sp[0] == "i") paramContainer->addIntParameter(sp[1], sp[1], 0, 0, 1000000);
 			else if (sp[0] == "s") paramContainer->addStringParameter(sp[1], sp[1], "");
 		}
 	}
@@ -42,4 +44,35 @@ WatchoutCommand::~WatchoutCommand()
 
 void WatchoutCommand::trigger()
 {
+	String s = valueParam->stringValue();
+	if (paramContainer != nullptr)
+	{
+		Array<WeakReference<Parameter>> pList = paramContainer->getAllParameters();
+		for (auto &p : pList)
+		{
+			s += " ";
+			switch (p->type)
+			{
+			case Controllable::BOOL:
+				s += p->boolValue() ? "true" : "false";
+				break;
+
+			case Controllable::STRING:
+				s += "\"" + p->stringValue() + "\"";
+				break;
+
+			case Controllable::INT:
+				s += String(p->intValue());
+				break;
+
+			case Controllable::FLOAT:
+				s += String(p->floatValue());
+				break;
+			}
+		}
+	}
+
+	s += "\r\n";
+
+	wModule->sendStringPacket(s);
 }

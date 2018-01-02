@@ -13,10 +13,12 @@
 
 CustomOSCCommandArgument::CustomOSCCommandArgument(const String &name, Parameter * _p, bool _mappingEnabled) :
 	BaseItem(name, false),
-param(_p),
-useForMapping(nullptr),
+	param(_p),
+	useForMapping(nullptr),
 	mappingEnabled(_mappingEnabled)
 {
+	editorCanBeCollapsed = false;
+
 	isSelectable = false;
 	param->isCustomizableByUser = true;
 	param->saveValueOnly = false;
@@ -25,7 +27,13 @@ useForMapping(nullptr),
 	addControllable(param);
 
 	//argumentName = addStringParameter("Argument name", "Name for the argument", "Arg");
-	if(mappingEnabled) useForMapping = addBoolParameter("Use for mapping", "Check this to automatically set its value when used in a mapping flow.", false);
+	if (mappingEnabled)
+	{
+		useForMapping = addBoolParameter("Use for mapping", "Check this to automatically set its value when used in a mapping flow.", false);
+		useForMapping->hideInEditor = true;
+	}
+
+	param->hideInEditor = true;
 }
 
 

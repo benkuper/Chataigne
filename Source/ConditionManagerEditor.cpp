@@ -16,8 +16,7 @@ ConditionManagerEditor::ConditionManagerEditor(ConditionManager * _manager, bool
 	conditionManager(_manager)
 {
 	addItemText = "Add Condition";
-	noItemText = "Add a triggering condition here";
-	
+	//noItemText = "Add a triggering condition here";
 }
 
 ConditionManagerEditor::~ConditionManagerEditor()

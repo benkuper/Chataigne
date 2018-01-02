@@ -20,13 +20,14 @@ class BaseCommandHandler :
 	public Inspectable::InspectableListener
 {
 public:
-	BaseCommandHandler(const String &name = "BaseCommandHandler", CommandContext context = CommandContext::ACTION);
+	BaseCommandHandler(const String &name = "BaseCommandHandler", CommandContext context = CommandContext::ACTION, Module * lockedModule = nullptr);
 	virtual ~BaseCommandHandler();
 
 	CommandContext context;
 	ScopedPointer<BaseCommand> command;
 	CommandDefinition * commandDefinition;
 
+	Module * lockedModule;
 	Trigger * trigger;
 
 

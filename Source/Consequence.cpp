@@ -9,14 +9,13 @@
 */
 
 #include "Consequence.h"
-#include "ConsequenceEditor.h"
 
 Consequence::Consequence() :
 	BaseCommandHandler("Consequence"),
 	forceDisabled(false)
 {
+	editorIsCollapsed = false;
 	isSelectable = false;
-	
 }
 
 Consequence::~Consequence()
@@ -29,10 +28,3 @@ void Consequence::triggerCommand()
 	if (!enabled->boolValue() || forceDisabled) return;
 	BaseCommandHandler::triggerCommand();
 }
-
-/*
-InspectableEditor * Consequence::getEditor(bool isRoot)
-{
-	return new ConsequenceEditor(this, isRoot);
-}
-*/

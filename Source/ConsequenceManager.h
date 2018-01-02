@@ -35,7 +35,7 @@ public:
 	void addItemInternal(Consequence *, var data) override;
 	void removeItemInternal(Consequence *) override;
 
-	InspectableEditor * getEditor(bool isRoot) override;
+	InspectableEditor * getEditor(bool isRoot) override; 
 
 	class ConsequenceManagerListener
 	{

@@ -68,7 +68,6 @@ endif
 OBJECTS_APP := \
   $(JUCE_OBJDIR)/ProjectSettings_6f8498bd.o \
   $(JUCE_OBJDIR)/ChataigneAssetManager_e104aa7c.o \
-  $(JUCE_OBJDIR)/ProcessorEditor_827a180.o \
   $(JUCE_OBJDIR)/ProcessorManagerUI_2a595c98.o \
   $(JUCE_OBJDIR)/ProcessorUI_aaf05207.o \
   $(JUCE_OBJDIR)/MappingInputEditor_9e41cd32.o \
@@ -87,11 +86,8 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/MappingFilter_6ebc7a47.o \
   $(JUCE_OBJDIR)/MappingFilterFactory_c29e56cd.o \
   $(JUCE_OBJDIR)/MappingFilterManager_c0562bf0.o \
-  $(JUCE_OBJDIR)/MappingEditor_6e89cdbc.o \
   $(JUCE_OBJDIR)/MappingUI_56e9fc43.o \
   $(JUCE_OBJDIR)/Mapping_bdf5522f.o \
-  $(JUCE_OBJDIR)/ConsequenceEditor_68ad07f1.o \
-  $(JUCE_OBJDIR)/ConsequenceManagerEditor_c217a400.o \
   $(JUCE_OBJDIR)/Consequence_78c99824.o \
   $(JUCE_OBJDIR)/ConsequenceManager_ed222b73.o \
   $(JUCE_OBJDIR)/ConditionGroupEditor_8111d0ba.o \
@@ -114,7 +110,6 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/Condition_dbc2fcfc.o \
   $(JUCE_OBJDIR)/ConditionFactory_8dd64e78.o \
   $(JUCE_OBJDIR)/ConditionManager_8b8e239b.o \
-  $(JUCE_OBJDIR)/ActionEditor_5de4624c.o \
   $(JUCE_OBJDIR)/ActionUI_e36558d3.o \
   $(JUCE_OBJDIR)/Action_97be92bf.o \
   $(JUCE_OBJDIR)/Processor_85e48f3.o \
@@ -244,7 +239,6 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/UserOSCCommand_ef0d7d80.o \
   $(JUCE_OBJDIR)/CustomOSCCommandArgumentEditor_eb4f7590.o \
   $(JUCE_OBJDIR)/CustomOSCCommandArgumentManagerEditor_ca2b7581.o \
-  $(JUCE_OBJDIR)/CustomOSCCommandEditor_54d2a3f3.o \
   $(JUCE_OBJDIR)/CustomOSCCommand_684cdda6.o \
   $(JUCE_OBJDIR)/CustomOSCModule_c9fc0d3b.o \
   $(JUCE_OBJDIR)/ResolumeBaseCommandEditor_bef083d8.o \
@@ -291,7 +285,6 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/MappingLayerPanel_890eab82.o \
   $(JUCE_OBJDIR)/MappingLayerTimeline_96e8bd0d.o \
   $(JUCE_OBJDIR)/MappingLayer_50b4042c.o \
-  $(JUCE_OBJDIR)/TimeTriggerEditor_708d78d9.o \
   $(JUCE_OBJDIR)/TimeTriggerManagerUI_db89a9f.o \
   $(JUCE_OBJDIR)/TimeTriggerUI_9c11bde0.o \
   $(JUCE_OBJDIR)/TriggerLayerPanel_72c06ec.o \
@@ -358,11 +351,6 @@ $(JUCE_OBJDIR)/ProjectSettings_6f8498bd.o: ../../Source/ProjectSettings.cpp
 $(JUCE_OBJDIR)/ChataigneAssetManager_e104aa7c.o: ../../Source/ChataigneAssetManager.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling ChataigneAssetManager.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/ProcessorEditor_827a180.o: ../../Source/ProcessorEditor.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling ProcessorEditor.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/ProcessorManagerUI_2a595c98.o: ../../Source/ProcessorManagerUI.cpp
@@ -455,11 +443,6 @@ $(JUCE_OBJDIR)/MappingFilterManager_c0562bf0.o: ../../Source/MappingFilterManage
 	@echo "Compiling MappingFilterManager.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
-$(JUCE_OBJDIR)/MappingEditor_6e89cdbc.o: ../../Source/MappingEditor.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling MappingEditor.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
 $(JUCE_OBJDIR)/MappingUI_56e9fc43.o: ../../Source/MappingUI.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling MappingUI.cpp"
@@ -468,16 +451,6 @@ $(JUCE_OBJDIR)/MappingUI_56e9fc43.o: ../../Source/MappingUI.cpp
 $(JUCE_OBJDIR)/Mapping_bdf5522f.o: ../../Source/Mapping.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling Mapping.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/ConsequenceEditor_68ad07f1.o: ../../Source/ConsequenceEditor.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling ConsequenceEditor.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/ConsequenceManagerEditor_c217a400.o: ../../Source/ConsequenceManagerEditor.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling ConsequenceManagerEditor.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/Consequence_78c99824.o: ../../Source/Consequence.cpp
@@ -588,11 +561,6 @@ $(JUCE_OBJDIR)/ConditionFactory_8dd64e78.o: ../../Source/ConditionFactory.cpp
 $(JUCE_OBJDIR)/ConditionManager_8b8e239b.o: ../../Source/ConditionManager.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling ConditionManager.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/ActionEditor_5de4624c.o: ../../Source/ActionEditor.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling ActionEditor.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/ActionUI_e36558d3.o: ../../Source/ActionUI.cpp
@@ -1240,11 +1208,6 @@ $(JUCE_OBJDIR)/CustomOSCCommandArgumentManagerEditor_ca2b7581.o: ../../Source/Cu
 	@echo "Compiling CustomOSCCommandArgumentManagerEditor.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
-$(JUCE_OBJDIR)/CustomOSCCommandEditor_54d2a3f3.o: ../../Source/CustomOSCCommandEditor.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling CustomOSCCommandEditor.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
 $(JUCE_OBJDIR)/CustomOSCCommand_684cdda6.o: ../../Source/CustomOSCCommand.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling CustomOSCCommand.cpp"
@@ -1473,11 +1436,6 @@ $(JUCE_OBJDIR)/MappingLayerTimeline_96e8bd0d.o: ../../Source/MappingLayerTimelin
 $(JUCE_OBJDIR)/MappingLayer_50b4042c.o: ../../Source/MappingLayer.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling MappingLayer.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/TimeTriggerEditor_708d78d9.o: ../../Source/TimeTriggerEditor.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling TimeTriggerEditor.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/TimeTriggerManagerUI_db89a9f.o: ../../Source/TimeTriggerManagerUI.cpp

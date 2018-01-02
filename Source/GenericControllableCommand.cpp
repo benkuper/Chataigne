@@ -83,6 +83,7 @@ void GenericControllableCommand::onContainerParameterChanged(Parameter * p)
 				else
 				{
 					Controllable * c = ControllableFactory::createControllable(target->target->getTypeString());
+					c->setNiceName("Value");
 					Parameter * tp = dynamic_cast<Parameter *>(c);
 					setValueParameter(tp);
 				}

@@ -9,7 +9,6 @@
 */
 
 #include "CustomOSCCommand.h"
-#include "CustomOSCCommandEditor.h"
 
 CustomOSCCommand::CustomOSCCommand(CustomOSCModule * module, CommandContext context, var params) :
 	OSCCommand(module, context, params),
@@ -96,9 +95,4 @@ void CustomOSCCommand::useForMappingChanged(CustomOSCCommandArgument *)
 			index++;
 		}
 	}
-}
-
-InspectableEditor * CustomOSCCommand::getEditor(bool)
-{
-	return new CustomOSCCommandEditor(this, false);
 }

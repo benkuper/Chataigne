@@ -9,7 +9,6 @@
 */
 
 #include "Mapping.h"
-#include "MappingEditor.h"
 #include "MappingUI.h"
 
 Mapping::Mapping(bool canBeDisabled) :
@@ -92,10 +91,6 @@ void Mapping::onContainerParameterChangedInternal(Parameter * p)
 	}
 }
 
-InspectableEditor * Mapping::getEditor(bool isRoot)
-{
-	return new MappingEditor(this, isRoot);
-}
 
 ProcessorUI * Mapping::getUI()
 {

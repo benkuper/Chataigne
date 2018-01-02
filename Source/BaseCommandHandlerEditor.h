@@ -27,16 +27,13 @@ public:
 	BaseCommandHandler * handler;
 
 	CommandChooserUI chooser;
-	ScopedPointer<TriggerButtonUI> commandTriggerUI;
-	ScopedPointer<InspectableEditor> commandEditor;
+	ScopedPointer<TriggerButtonUI> triggerBT;
 
-	void resizedInternalContent(Rectangle<int> &r) override;
+	void resizedInternalHeaderItemInternal(Rectangle<int> &r) override;
 
 	void updateChooserLabel();
 
-	void updateCommandUI();
 	void definitionChosen(CommandDefinition * d) override;
-
 	void commandChanged(BaseCommandHandler*) override;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(BaseCommandHandlerEditor)

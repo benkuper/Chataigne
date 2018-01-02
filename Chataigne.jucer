@@ -42,10 +42,6 @@
       <GROUP id="{6C7DFFF7-D47E-97B5-FE74-27F24C7A349F}" name="Common">
         <GROUP id="{54EAB5D0-4FF9-8475-F580-32A4B6B32B16}" name="Processor">
           <GROUP id="{B34D98CD-7C22-FD41-B7C0-EDB8332AB5ED}" name="ui">
-            <FILE id="Bj5jko" name="ProcessorEditor.cpp" compile="1" resource="0"
-                  file="Source/ProcessorEditor.cpp"/>
-            <FILE id="fA344a" name="ProcessorEditor.h" compile="0" resource="0"
-                  file="Source/ProcessorEditor.h"/>
             <FILE id="YAkBcJ" name="ProcessorManagerUI.cpp" compile="1" resource="0"
                   file="Source/ProcessorManagerUI.cpp"/>
             <FILE id="l61kIy" name="ProcessorManagerUI.h" compile="0" resource="0"
@@ -126,9 +122,6 @@
                     file="Source/MappingFilterManager.h"/>
             </GROUP>
             <GROUP id="{A2BC90CF-AB5A-6E79-661D-52E7E0AA4F6B}" name="ui">
-              <FILE id="usLYhw" name="MappingEditor.cpp" compile="1" resource="0"
-                    file="Source/MappingEditor.cpp"/>
-              <FILE id="J5spEi" name="MappingEditor.h" compile="0" resource="0" file="Source/MappingEditor.h"/>
               <FILE id="mz7R1D" name="MappingUI.cpp" compile="1" resource="0" file="Source/MappingUI.cpp"/>
               <FILE id="INOV7b" name="MappingUI.h" compile="0" resource="0" file="Source/MappingUI.h"/>
             </GROUP>
@@ -137,16 +130,6 @@
           </GROUP>
           <GROUP id="{797800DA-0DCB-1B89-AF24-83A7716BB83C}" name="Action">
             <GROUP id="{E5695483-8CF1-233B-B7FA-0DB866638800}" name="Consequence">
-              <GROUP id="{9FB564A9-C7BD-8893-5458-027460564BC3}" name="ui">
-                <FILE id="hcGZzI" name="ConsequenceEditor.cpp" compile="1" resource="0"
-                      file="Source/ConsequenceEditor.cpp"/>
-                <FILE id="Ldhpv6" name="ConsequenceEditor.h" compile="0" resource="0"
-                      file="Source/ConsequenceEditor.h"/>
-                <FILE id="xjyKeE" name="ConsequenceManagerEditor.cpp" compile="1" resource="0"
-                      file="Source/ConsequenceManagerEditor.cpp"/>
-                <FILE id="wu12UK" name="ConsequenceManagerEditor.h" compile="0" resource="0"
-                      file="Source/ConsequenceManagerEditor.h"/>
-              </GROUP>
               <FILE id="wuf520" name="Consequence.cpp" compile="1" resource="0" file="Source/Consequence.cpp"/>
               <FILE id="X3tD6S" name="Consequence.h" compile="0" resource="0" file="Source/Consequence.h"/>
               <FILE id="Mud4rA" name="ConsequenceManager.cpp" compile="1" resource="0"
@@ -257,9 +240,6 @@
                     file="Source/ConditionManager.h"/>
             </GROUP>
             <GROUP id="{0A23E296-656D-518E-2323-EACB0750AC2B}" name="ui">
-              <FILE id="ztgUPf" name="ActionEditor.cpp" compile="1" resource="0"
-                    file="Source/ActionEditor.cpp"/>
-              <FILE id="zy6k0u" name="ActionEditor.h" compile="0" resource="0" file="Source/ActionEditor.h"/>
               <FILE id="adq2Ab" name="ActionUI.cpp" compile="1" resource="0" file="Source/ActionUI.cpp"/>
               <FILE id="l3izCB" name="ActionUI.h" compile="0" resource="0" file="Source/ActionUI.h"/>
             </GROUP>
@@ -387,6 +367,8 @@
         </GROUP>
         <GROUP id="{E7C8AAFC-E2FA-90D0-859B-423BC528A52F}" name="Command">
           <GROUP id="{D2DBE4AC-35AB-8D3A-FE4E-BF5B8540D68E}" name="ui">
+            <FILE id="goI4Au" name="BaseCommandHandlerManagerEditor.h" compile="0"
+                  resource="0" file="Source/BaseCommandHandlerManagerEditor.h"/>
             <FILE id="As2rOa" name="BaseCommandHandlerEditor.cpp" compile="1" resource="0"
                   file="Source/BaseCommandHandlerEditor.cpp"/>
             <FILE id="mRa65V" name="CommandChooserUI.cpp" compile="1" resource="0"
@@ -807,10 +789,6 @@
                         compile="1" resource="0" file="Source/CustomOSCCommandArgumentManagerEditor.cpp"/>
                   <FILE id="kmZb7g" name="CustomOSCCommandArgumentManagerEditor.h" compile="0"
                         resource="0" file="Source/CustomOSCCommandArgumentManagerEditor.h"/>
-                  <FILE id="n52FX4" name="CustomOSCCommandEditor.cpp" compile="1" resource="0"
-                        file="Source/CustomOSCCommandEditor.cpp"/>
-                  <FILE id="KyG0PE" name="CustomOSCCommandEditor.h" compile="0" resource="0"
-                        file="Source/CustomOSCCommandEditor.h"/>
                 </GROUP>
                 <FILE id="lv7MmC" name="CustomOSCCommand.cpp" compile="1" resource="0"
                       file="Source/CustomOSCCommand.cpp"/>
@@ -1014,10 +992,6 @@
               </GROUP>
               <GROUP id="{10117456-5D27-D282-8629-DC52343DD5E4}" name="trigger">
                 <GROUP id="{929A0600-5102-D2CC-B67C-2431328CEC67}" name="ui">
-                  <FILE id="QPU4oR" name="TimeTriggerEditor.cpp" compile="1" resource="0"
-                        file="Source/TimeTriggerEditor.cpp"/>
-                  <FILE id="n9uw3i" name="TimeTriggerEditor.h" compile="0" resource="0"
-                        file="Source/TimeTriggerEditor.h"/>
                   <FILE id="pDF6eT" name="TimeTriggerManagerUI.cpp" compile="1" resource="0"
                         file="Source/TimeTriggerManagerUI.cpp"/>
                   <FILE id="bl7PO5" name="TimeTriggerManagerUI.h" compile="0" resource="0"

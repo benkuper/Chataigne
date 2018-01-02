@@ -28,8 +28,7 @@ StandardConditionEditor::~StandardConditionEditor()
 void StandardConditionEditor::resizedInternalContent(Rectangle<int>& r)
 {
 	ConditionEditor::resizedInternalContent(r);
-	r.setY(r.getBottom());
-
+	
 	Rectangle<int> sr = r.withHeight(16).reduced(2,0);
 	if (sourceFeedbackUI != nullptr)
 	{
@@ -42,11 +41,13 @@ void StandardConditionEditor::resizedInternalContent(Rectangle<int>& r)
 
 	if (comparatorUI != nullptr)
 	{
-		r.setHeight(comparatorUI->getHeight());
-		comparatorUI->setBounds(r);
+		comparatorUI->setBounds(r.withHeight(comparatorUI->getHeight()));
+		r.translate(0, comparatorUI->getHeight());
+		
 	} 
+
 	r.translate(0, 2);
-	
+	r.setHeight(0);
 }
 
 void StandardConditionEditor::updateUI()

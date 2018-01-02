@@ -13,7 +13,6 @@
 
 
 #include "MappingLayer.h"
-#include "MappingEditor.h"
 
 class MappingLayerEditor :
 	public BaseItemEditor

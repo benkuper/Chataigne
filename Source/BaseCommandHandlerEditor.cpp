@@ -18,22 +18,17 @@ BaseCommandHandlerEditor::BaseCommandHandlerEditor(BaseCommandHandler * _handler
 	BaseItemEditor(_handler, isRoot),
 	handler(_handler),
 	chooser(_handler->context)
-{
-	
+{	
 	chooser.addChooserListener(this);
+	chooser.lockedModule = handler->lockedModule;
+
 	addAndMakeVisible(&chooser);
-
 	handler->adCommandHandlerListener(this);
-
-	if (handler->context == CommandContext::ACTION)
-	{
-		commandTriggerUI = handler->trigger->createButtonUI();
-		addAndMakeVisible(commandTriggerUI);
-	}
-
-	updateCommandUI();
+	triggerBT = handler->trigger->createButtonUI();
+	addAndMakeVisible(triggerBT);
 	setSize(10, 40);
-
+	
+	updateChooserLabel();
 }
 
 BaseCommandHandlerEditor::~BaseCommandHandlerEditor()
@@ -42,24 +37,10 @@ BaseCommandHandlerEditor::~BaseCommandHandlerEditor()
 }
 
 
-void BaseCommandHandlerEditor::resizedInternalContent(Rectangle<int>& r)
+void BaseCommandHandlerEditor::resizedInternalHeaderItemInternal(Rectangle<int>& r)
 {
-	Rectangle<int> sr = r.withHeight(headerHeight);
-	if (commandTriggerUI != nullptr)
-	{
-		commandTriggerUI->setBounds(sr.removeFromRight(50));
-		sr.removeFromRight(2);
-	}
-
-	chooser.setBounds(sr);
-
-	r.translate(0, headerHeight);
-
-	if (commandEditor != nullptr)
-	{
-		r.setHeight(commandEditor->getHeight());
-		commandEditor->setBounds(r);
-	}
+	triggerBT->setBounds(r.removeFromRight(100));
+	chooser.setBounds(r.removeFromRight(250));
 }
 
 void BaseCommandHandlerEditor::updateChooserLabel()
@@ -69,22 +50,7 @@ void BaseCommandHandlerEditor::updateChooserLabel()
 		text = handler->command->module->niceName + ":" + handler->commandDefinition->commandType;
 
 	chooser.setLabel(text);
-}
-
-void BaseCommandHandlerEditor::updateCommandUI()
-{
-	if (commandEditor != nullptr) removeChildComponent(commandEditor);
-	if (handler->command != nullptr)
-	{
-		commandEditor = handler->command->getEditor(false);
-		addAndMakeVisible(commandEditor);
-	} else
-	{
-		commandEditor = nullptr;
-	}
-	updateChooserLabel();
-
-	resized();
+	chooser.repaint();
 }
 
 void BaseCommandHandlerEditor::definitionChosen(CommandDefinition * d)
@@ -94,6 +60,5 @@ void BaseCommandHandlerEditor::definitionChosen(CommandDefinition * d)
 
 void BaseCommandHandlerEditor::commandChanged(BaseCommandHandler *)
 {
-	updateCommandUI();
-
+	updateChooserLabel();
 }

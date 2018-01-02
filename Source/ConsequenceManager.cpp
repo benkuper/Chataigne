@@ -9,7 +9,7 @@
 */
 
 #include "ConsequenceManager.h"
-#include "ConsequenceManagerEditor.h"
+#include "BaseCommandHandlerManagerEditor.h"
 
 
 juce_ImplementSingleton(ConsequenceManager)
@@ -59,5 +59,5 @@ void ConsequenceManager::removeItemInternal(Consequence *)
 
 InspectableEditor * ConsequenceManager::getEditor(bool isRoot)
 {
-	return new ConsequenceManagerEditor(this, isRoot);
+	return new BaseCommandHandlerManagerEditor<Consequence>(this, CommandContext::ACTION, isRoot);
 }

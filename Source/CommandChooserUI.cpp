@@ -63,6 +63,7 @@ void CommandChooserUI::setLabel(const String & text)
 {
 	label.setText(text.isNotEmpty()?text:noTargetText, dontSendNotification);
 	commandIsSet = text.isNotEmpty();
+	repaint();
 }
 
 void CommandChooserUI::showPopupAndGetDefinition()

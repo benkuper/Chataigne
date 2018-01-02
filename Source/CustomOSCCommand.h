@@ -33,7 +33,6 @@ public:
 
 	void useForMappingChanged(CustomOSCCommandArgument * a) override;
 
-	InspectableEditor * getEditor(bool /*isRoot*/) override;
 	static CustomOSCCommand * create(ControllableContainer * module, CommandContext context, var params) { return new CustomOSCCommand((CustomOSCModule *)module, context, params); }
 
 private:

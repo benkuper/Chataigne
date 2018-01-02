@@ -26,8 +26,6 @@ public:
 	//ui
 	FloatParameter * flagY;
 
-	InspectableEditor * getEditor(bool isRoot) override;
-
 	void onContainerTriggerTriggered(Trigger * t) override;
 };
 

@@ -87,32 +87,35 @@ OSCCommandModelArgumentEditor::OSCCommandModelArgumentEditor(OSCCommandModelArgu
 	BaseItemEditor(a,isRoot),
 	arg(a)
 {
-	paramUI = static_cast<ControllableEditor *>(arg->param->getEditor(false));
-	paramUI->setShowLabel(false);
-	
 	editableUI = arg->editable->createToggle();
 	useInMappingUI = arg->useForMapping->createToggle();
 
-	addAndMakeVisible(paramUI);
 	addAndMakeVisible(editableUI);
 	addAndMakeVisible(useInMappingUI);
+
+	resetAndBuild();
 }
 
 OSCCommandModelArgumentEditor::~OSCCommandModelArgumentEditor()
 {
 }
 
-void OSCCommandModelArgumentEditor::resizedInternalHeader(Rectangle<int>& r)
+void OSCCommandModelArgumentEditor::resetAndBuild()
 {
-	useInMappingUI->setBounds(r.removeFromRight(80));
-	r.removeFromRight(2);
-	editableUI->setBounds(r.removeFromRight(50));
-	r.removeFromRight(2);
-
+	BaseItemEditor::resetAndBuild();
+	for (auto &cui : childEditors)
+	{
+		ControllableEditor * ce = dynamic_cast<ControllableEditor *>(cui);
+		if (ce != nullptr) ce->setShowLabel(false);
+	}
 }
 
-void OSCCommandModelArgumentEditor::resizedInternalContent(Rectangle<int>& r)
+
+void OSCCommandModelArgumentEditor::resizedInternalHeaderItemInternal(Rectangle<int>& r)
 {
-	r.setHeight(16);
-	paramUI->setBounds(r);
+	useInMappingUI->setBounds(r.removeFromRight(80).reduced(2));
+	r.removeFromRight(2);
+	editableUI->setBounds(r.removeFromRight(50).reduced(2));
+	r.removeFromRight(2);
+
 }

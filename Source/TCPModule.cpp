@@ -19,7 +19,6 @@ TCPModule::TCPModule(const String & name, int defaultRemotePort) :
 
 	canHandleRouteValues = true;
 
-
 	//Send
 	useLocal = moduleParams.addBoolParameter("Local", "Connect to Local IP (127.0.0.1). Allow to quickly switch between local and remote IP.", true);
 	remoteHost = moduleParams.addStringParameter("Remote Host", "Remote Host to send to.", "127.0.0.1");
@@ -96,19 +95,12 @@ void TCPModule::processMessage(const String & msg)
 	scriptManager->callFunctionOnAllItems(tcpEventId, msg);
 }
 
-
-
-void TCPModule::onContainerParameterChangedInternal(Parameter * p)
+void TCPModule::onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c)
 {
-	Module::onContainerParameterChangedInternal(p);
-	if (p == remoteHost || p == remotePort || p == useLocal) setupSender();
-	if (p == useLocal) remoteHost->setEnabled(useLocal->boolValue());
-}
-
-void TCPModule::onContainerTriggerTriggered(Trigger * t)
-{
-	Module::onContainerTriggerTriggered(t);
-	if (t == reconnectRemote) setupSender();
+	Module::onControllableFeedbackUpdateInternal(cc, c);
+	if (c== remoteHost || c == remotePort || c == useLocal) setupSender();
+	if (c == useLocal) remoteHost->setEnabled(!useLocal->boolValue());
+	if (c == reconnectRemote) setupSender();
 }
 
 

@@ -40,11 +40,6 @@ void UserOSCCommandModel::loadJSONDataInternal(var data)
 	arguments.loadJSONData(data.getProperty("arguments", var()));
 }
 
-InspectableEditor * UserOSCCommandModel::getEditor(bool isRoot)
-{
-	return new UserOSCCommandModelEditor(this, isRoot);
-}
-
 
 
 //MODEL ARGUMENT
@@ -53,6 +48,9 @@ OSCCommandModelArgument::OSCCommandModelArgument(const String &name, Parameter *
 	BaseItem(name,false),
 	param(_p)
 {
+	editorCanBeCollapsed = false;
+	editorIsCollapsed = false;
+
 	isSelectable = false;
 	param->isCustomizableByUser = true;
 	param->saveValueOnly = false;
@@ -62,7 +60,9 @@ OSCCommandModelArgument::OSCCommandModelArgument(const String &name, Parameter *
 
 	//argumentName = addStringParameter("Argument name", "Name for the argument", "Arg");
 	useForMapping = addBoolParameter("Use for mapping", "Check this to automatically set its value when used in a mapping flow.", false);
+	useForMapping->hideInEditor = true;
 	editable = addBoolParameter("Editable", "If uncheck, argument will always be used at its default value, and not visible in the command editor", true);
+	editable->hideInEditor = true;
 }
 
 InspectableEditor * OSCCommandModelArgument::getEditor(bool isRoot)

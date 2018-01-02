@@ -33,7 +33,6 @@ public:
 	//async
 	void newMessage(const Condition::ValidationAsyncEvent &e) override;
 
-	void childBoundsChanged(Component *) override;
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ConditionEditor)
 };
 

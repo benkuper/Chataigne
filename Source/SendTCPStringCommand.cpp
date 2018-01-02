@@ -31,8 +31,8 @@ SendTCPStringCommand::SendTCPStringCommand(TCPModule * _module, CommandContext c
 	appendNL = addBoolParameter("Append NL", "Append \\n at the end of the message", true);
 	if (params.hasProperty("forceNL"))
 	{
-		appendCR->setValue(params.getProperty("forceNL", true)); 
-		appendCR->hideInEditor = true;
+		appendNL->setValue(params.getProperty("forceNL", true)); 
+		appendNL->hideInEditor = true;
 	}
 }
 

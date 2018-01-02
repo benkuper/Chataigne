@@ -33,6 +33,7 @@ CustomOSCModule::CustomOSCModule() :
 	addChildControllableContainer(&umm);
 	umm.addBaseManagerListener(this);
 
+	umm.hideInEditor = true;
 }
 
 void CustomOSCModule::processMessageInternal(const OSCMessage & msg)

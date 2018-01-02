@@ -16,11 +16,13 @@ Condition::Condition() :
 	BaseItem("Condition"),
 	validationAsyncNotifier(10)
 {
+	editorIsCollapsed = false;
 	isSelectable = false;
 
 	isValid = addBoolParameter("Is Valid", "Where the condition passed the test or not.", false);
 	isValid->isEditable = false;
 	isValid->isSavable = false;
+	isValid->hideInEditor = true;
 }
 
 Condition::~Condition()

@@ -15,6 +15,7 @@
 StandardCondition::StandardCondition()
 {
 	sourceTarget = addTargetParameter("Source", "Element that will be the source to check if condition is active or not"); 
+	sourceTarget->hideInEditor = true;
 }
 
 StandardCondition::~StandardCondition()

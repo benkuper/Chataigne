@@ -9,7 +9,6 @@
 */
 
 #include "Action.h"
-#include "ActionEditor.h"
 #include "ActionUI.h"
 
 Action::Action(const String & name) :
@@ -26,6 +25,7 @@ Action::Action(const String & name) :
 	isValid = addBoolParameter("Is Valid", "Are all condition valids ?", false);
 	isValid->hideInEditor = true;
 	trigger = addTrigger("Trigger", "Triggers the action");
+	trigger->hideInEditor = true;
 
 	helpID = "Action";
 }
@@ -78,10 +78,6 @@ void Action::conditionManagerValidationChanged(ConditionManager *)
 	}
 }
 
-InspectableEditor * Action::getEditor(bool isRoot)
-{
-	return new ActionEditor(this, isRoot);
-}
 
 ProcessorUI * Action::getUI()
 {

@@ -45,8 +45,3 @@ void ConditionEditor::newMessage(const Condition::ValidationAsyncEvent &)
 {
 	repaint();
 }
-
-void ConditionEditor::childBoundsChanged(Component *)
-{
-	resized();
-}

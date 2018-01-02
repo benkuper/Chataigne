@@ -41,7 +41,6 @@ public:
     void onContainerTriggerTriggered(Trigger *) override;
 	void conditionManagerValidationChanged(ConditionManager *) override;
 
-	InspectableEditor * getEditor(bool isRoot) override;
 	ProcessorUI * getUI() override;
 
 	class ActionListener

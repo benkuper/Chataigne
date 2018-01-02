@@ -24,19 +24,10 @@ public:
 	virtual ~ModuleEditor();
 
 	Module * module;
-
-	ScopedPointer<InspectableEditor> moduleParamsUI;
-	ScopedPointer<InspectableEditor> moduleValuesUI;
-
 	ScopedPointer<BoolToggleUI> logIncomingUI;
 	ScopedPointer<BoolToggleUI> logOutgoingUI;
-	ScopedPointer<BaseCommandHandlerEditor> commandTesterUI;
 
-	void resizedInternalHeader(Rectangle<int> &r) override; 
-	void resizedInternalContent(Rectangle<int> &r) override;
-	void resizedInternalFooter(Rectangle<int> &r) override;
-	
-	void controllableFeedbackAsyncUpdate(Controllable * c) override;
+	virtual void resizedInternalHeaderItemInternal(Rectangle<int> &r) override; 
 	
 	virtual void moduleIOConfigurationChanged() override;
 

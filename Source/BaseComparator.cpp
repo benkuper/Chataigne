@@ -49,8 +49,11 @@ void BaseComparator::onContainerParameterChanged(Parameter * p)
 {
 	if (p == compareFunction)
 	{
-		currentFunctionId = compareFunction->getValueData().toString();
-		compare();
+		if (compareFunction->getValueData().toString().isNotEmpty())
+		{
+			currentFunctionId = compareFunction->getValueData().toString();
+			compare();
+		}
 	} else if (p == reference)
 	{
 		compare();

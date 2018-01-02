@@ -166,9 +166,9 @@ void UDPModule::loadJSONDataInternal(var data)
 
 
 
-void UDPModule::controllableFeedbackUpdate(ControllableContainer * cc, Controllable * c)
+void UDPModule::onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c)
 {
-	Module::controllableFeedbackUpdate(cc, c);
+	Module::onControllableFeedbackUpdateInternal(cc, c);
 
 	if (receiveCC != nullptr && c == receiveCC->enabled)
 	{
