@@ -33,7 +33,7 @@ MappingLayer::MappingLayer(Sequence *_sequence, var params) :
 	//mode->setValueWithData((Mode)(int)params.getProperty("mode", MODE_1D));
 
 	setupMappingForCurrentMode();
-	uiHeight->setValue(115);
+	uiHeight->setValue(100);
 }
 
 MappingLayer::~MappingLayer()
@@ -247,9 +247,4 @@ void MappingLayer::sequenceCurrentTimeChanged(Sequence *, float, bool)
 	for(auto &a : automations) a->position->setValue(sequence->currentTime->floatValue());
 	
 	//updateCurvesValues();
-}
-
-InspectableEditor * MappingLayer::getEditor(bool isRoot)
-{
-	return new MappingLayerEditor(this,isRoot);
 }

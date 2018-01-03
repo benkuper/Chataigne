@@ -20,7 +20,6 @@ UserOSCCommandModel::UserOSCCommandModel() :
 	addressParam = addStringParameter("OSC Address", "OSC Adress that will sent", "/example");
 	addressIsEditable = addBoolParameter("Editable", "If check, the address will be editable in each command created", false);
 	addChildControllableContainer(&arguments);
-	arguments.editorIsCollapsed = false;
 }
 
 UserOSCCommandModel::~UserOSCCommandModel()
@@ -49,7 +48,7 @@ OSCCommandModelArgument::OSCCommandModelArgument(const String &name, Parameter *
 	param(_p)
 {
 	editorCanBeCollapsed = false;
-	editorIsCollapsed = false;
+	
 
 	isSelectable = false;
 	param->isCustomizableByUser = true;

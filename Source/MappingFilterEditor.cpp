@@ -24,15 +24,9 @@ MappingFilterEditor::~MappingFilterEditor()
 	if (!inspectable.wasObjectDeleted()) filter->removeMappingFilterListener(this);
 }
 
-void MappingFilterEditor::resizedInternalContent(Rectangle<int>& r)
+void MappingFilterEditor::resizedInternalHeaderItemInternal(Rectangle<int>& r)
 {
-	resizedInternalFilter(r);
-	
-	if (filteredUI != nullptr)
-	{
-		filteredUI->setBounds(r.withHeight(filteredUI->getHeight()+5));
-		r.translate(0,filteredUI->getHeight());
-	}
+	if (filteredUI != nullptr) filteredUI->setBounds(r.removeFromRight(100).reduced(2));
 }
 
 
@@ -57,22 +51,4 @@ void MappingFilterEditor::updateFilteredUI()
 void MappingFilterEditor::filteredParamChanged(MappingFilter *)
 {
 	updateFilteredUI();
-}
-
-GenericMappingFilterEditor::GenericMappingFilterEditor(MappingFilter * m, bool isRoot) :
-	MappingFilterEditor(m, isRoot),
-	paramContainer(&m->filterParams,false)
-{
-	if(filter->filterParams.controllables.size() || filter->filterParams.controllableContainers.size() > 0) addAndMakeVisible(&paramContainer);
-}
-
-GenericMappingFilterEditor::~GenericMappingFilterEditor()
-{
-}
-
-void GenericMappingFilterEditor::resizedInternalFilter(Rectangle<int>& r)
-{
-	if (filter->filterParams.controllables.size() == 0 && filter->filterParams.controllableContainers.size() == 0) return;
-	r.setHeight(paramContainer.getHeight());
-	paramContainer.setBounds(r);
 }

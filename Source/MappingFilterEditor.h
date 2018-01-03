@@ -23,26 +23,12 @@ public:
 	~MappingFilterEditor();
 
 	MappingFilter * filter;
-
-	void resizedInternalContent(Rectangle<int> &r) override;
-	virtual void resizedInternalFilter(Rectangle<int> &) {}
 	ScopedPointer<ParameterUI> filteredUI;
+
+	void resizedInternalHeaderItemInternal(Rectangle<int> &r) override;
 
 	void updateFilteredUI();
 	void filteredParamChanged(MappingFilter *) override;
 };
-
-class GenericMappingFilterEditor :
-	public MappingFilterEditor
-{
-public:
-	GenericMappingFilterEditor(MappingFilter * m, bool isRoot);
-	~GenericMappingFilterEditor();
-
-	GenericControllableContainerEditor paramContainer;
-
-	void resizedInternalFilter(Rectangle<int> &r);
-};
-
 
 #endif  // MAPPINGFILTEREDITOR_H_INCLUDED

@@ -18,7 +18,7 @@ class ScriptCondition :
 	public Condition
 {
 public:
-	ScriptCondition();
+	ScriptCondition(var params);
 	~ScriptCondition();
 	
 	Script script;
@@ -26,16 +26,12 @@ public:
 	//Script
 	static var setValidFromScript(const var::NativeFunctionArgs &a);
 
-	InspectableEditor * getEditor(bool isRoot) override;
-
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
 
 	String getTypeString() const override { return "Script"; }
-	static ScriptCondition * create() { return new ScriptCondition(); }
+	static ScriptCondition * create(var params) { return new ScriptCondition(params); }
 
 };
-
-
 
 #endif  // SCRIPTCONDITION_H_INCLUDED

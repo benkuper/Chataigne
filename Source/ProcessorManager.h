@@ -15,15 +15,6 @@
 
 #include "Processor.h"
 
-class ProcessorFactory :
-	public Factory<Processor>
-{
-public:
-	juce_DeclareSingleton(ProcessorFactory,true)
-	ProcessorFactory();
-};
-
-
 class ProcessorManager :
 	public BaseManager<Processor>
 {
@@ -35,7 +26,7 @@ public:
 	void setForceDisabled(bool value);
 	void addItemInternal(Processor * item, var data) override;
 
-	static ProcessorFactory * pFactory;
+	Factory<Processor> factory;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ProcessorManager)
 

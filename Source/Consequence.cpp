@@ -14,7 +14,7 @@ Consequence::Consequence() :
 	BaseCommandHandler("Consequence"),
 	forceDisabled(false)
 {
-	editorIsCollapsed = false;
+	
 	isSelectable = false;
 }
 

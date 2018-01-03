@@ -14,9 +14,9 @@ StandardConditionEditor::StandardConditionEditor(StandardCondition * _condition,
 	ConditionEditor(_condition, isRoot),
 	standardCondition(_condition)
 {
-	targetUI = new ModuleInputValueChooserUI(standardCondition->sourceTarget, false);
-
+	targetUI = standardCondition->sourceTarget->createTargetUI();
 	addAndMakeVisible(targetUI);
+
 	setSize(100, 50);
 	updateUI();
 }
@@ -25,25 +25,28 @@ StandardConditionEditor::~StandardConditionEditor()
 {
 }
 
+void StandardConditionEditor::resizedInternalHeaderItemInternal(Rectangle<int>& r)
+{
+	if (sourceFeedbackUI != nullptr)
+	{
+		sourceFeedbackUI->setBounds(r.removeFromRight(100).reduced(2));
+		r.removeFromRight(2);
+	}
+	BaseItemEditor::resizedInternalHeaderItemInternal(r);
+}
+
 void StandardConditionEditor::resizedInternalContent(Rectangle<int>& r)
 {
 	ConditionEditor::resizedInternalContent(r);
 	
 	Rectangle<int> sr = r.withHeight(16).reduced(2,0);
-	if (sourceFeedbackUI != nullptr)
-	{
-		sourceFeedbackUI->setBounds(sr.removeFromRight(jmax<int>(sr.getWidth() / 3, 60)));
-		sr.removeFromRight(2);
-	}
 	targetUI->setBounds(sr);
-
 	r.translate(0, 18);
 
 	if (comparatorUI != nullptr)
 	{
 		comparatorUI->setBounds(r.withHeight(comparatorUI->getHeight()));
 		r.translate(0, comparatorUI->getHeight());
-		
 	} 
 
 	r.translate(0, 2);

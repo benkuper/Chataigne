@@ -14,13 +14,13 @@
 #include "Action.h"
 #include "Mapping.h"
 
-juce_ImplementSingleton(ProcessorFactory)
-
 ProcessorManager::ProcessorManager(const String &name) :
 	BaseManager<Processor>(name),
 	forceDisabled(false)
 {
-	managerFactory = ProcessorFactory::getInstance();
+	managerFactory = &factory;
+	factory.defs.add(Factory<Processor>::Definition::createDef("", "Action", &Action::create));
+	factory.defs.add(Factory<Processor>::Definition::createDef("", "Mapping", &Mapping::create));
 }
 
 ProcessorManager::~ProcessorManager()
@@ -39,9 +39,3 @@ void ProcessorManager::addItemInternal(Processor * item, var data)
 	item->forceDisabled = forceDisabled;
 }
 
-
-ProcessorFactory::ProcessorFactory()
-{
-	defs.add(Definition::createDef("", "Action", &Action::create));
-	defs.add(Definition::createDef("", "Mapping", &Mapping::create));
-}

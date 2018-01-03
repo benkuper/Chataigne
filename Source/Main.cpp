@@ -1,12 +1,10 @@
 #include "Main.h"
+#include "GlobalSettings.h"
 
 //==============================================================================
 
-inline void ChataigneApplication::initialise(const String & commandLine)
+void ChataigneApplication::initialise(const String & commandLine)
 {
-	// This method is where you should put your application's initialisation code..
-
-	
 	PropertiesFile::Options options;
 	options.applicationName = "Chataigne";
 	options.filenameSuffix = "settings";
@@ -15,8 +13,12 @@ inline void ChataigneApplication::initialise(const String & commandLine)
 	appProperties = new ApplicationProperties();
 	appProperties->setStorageParameters(options);
 
+	var gs = JSON::fromString(getAppProperties().getUserSettings()->getValue("globalSettings", ""));
+	GlobalSettings::getInstance()->loadJSONData(gs);
 
 	engine = new ChataigneEngine(appProperties, getAppVersion());
+
+	GlobalSettings::getInstance()->selectionManager = InspectableSelectionManager::mainSelectionManager;
 
 	mainWindow = new MainWindow(getApplicationName());
 
@@ -29,9 +31,11 @@ inline void ChataigneApplication::initialise(const String & commandLine)
 	mainWindow->setName(getApplicationName() + " " + getApplicationVersion());
 
 	AppUpdater::getInstance()->setURLs(URL("http://benjamin.kuperberg.fr/chataigne/releases/update.json"), URL("http://benjamin.kuperberg.fr/chataigne/#download"));
-	AppUpdater::getInstance()->checkForUpdates();
-
-	HelpBox::getInstance()->loadHelp(URL("http://benjamin.kuperberg.fr/chataigne/help/help.json"));
+	
+	AppUpdater::getInstance()->checkForBetas = GlobalSettings::getInstance()->checkBetaUpdates->boolValue();
+	if (GlobalSettings::getInstance()->checkUpdatesOnStartup->boolValue()) AppUpdater::getInstance()->checkForUpdates();
+	if (GlobalSettings::getInstance()->updateHelpOnStartup->boolValue()) HelpBox::getInstance()->loadHelp(URL("http://benjamin.kuperberg.fr/chataigne/help/help.json"));
+	else HelpBox::getInstance()->loadLocalHelp();
 
 	//ANALYTICS
 	Analytics::getInstance()->setUserId(SystemStats::getFullUserName());
@@ -54,17 +58,34 @@ inline void ChataigneApplication::initialise(const String & commandLine)
 #if JUCE_WINDOWS
 	SystemStats::setApplicationCrashHandler((SystemStats::CrashHandlerFunction)createMiniDump);
 #endif
+
+
+	if(GlobalSettings::getInstance()->openLastDocumentOnStartup->boolValue())  Engine::mainEngine->loadFrom(Engine::mainEngine->getLastDocumentOpened(), true);
 }
 
 
 inline void ChataigneApplication::shutdown()
 {
+	var boundsVar = var(new DynamicObject());
+	juce::Rectangle<int> r = mainWindow->getScreenBounds();
+
+	getAppProperties().getCommonSettings(true)->setValue("windowX", r.getPosition().x);
+	getAppProperties().getCommonSettings(true)->setValue("windowY", r.getPosition().y);
+	getAppProperties().getCommonSettings(true)->setValue("windowWidth", r.getWidth());
+	getAppProperties().getCommonSettings(true)->setValue("windowHeight", r.getHeight());
+	getAppProperties().getCommonSettings(true)->setValue("fullscreen", mainWindow->isFullScreen());
+	getAppProperties().getCommonSettings(true)->saveIfNeeded();
+
+	getAppProperties().getUserSettings()->setValue("globalSettings", JSON::toString(GlobalSettings::getInstance()->getJSONData()));
+	getAppProperties().getUserSettings()->saveIfNeeded();
+
 	// Add your application's shutdown code here..
 	mainWindow = nullptr; // (deletes our window)
 
 	Analytics::getInstance()->logEvent("shutdown", {});	
 	
 	AppUpdater::deleteInstance();
+	GlobalSettings::deleteInstance();
 }
 
 
@@ -104,7 +125,7 @@ inline ChataigneApplication::MainWindow::MainWindow(String name) : DocumentWindo
 	int tw = getAppProperties().getCommonSettings(true)->getIntValue("windowWidth");
 	int th = getAppProperties().getCommonSettings(true)->getIntValue("windowHeight");
 	bool fs = getAppProperties().getCommonSettings(true)->getBoolValue("fullscreen", true);
-
+	
 	setBounds(jmax<int>(tx, 20), jmax<int>(ty, 20), jmax<int>(tw, 100), jmax<int>(th, 100));
 	setFullScreen(fs);
 
@@ -129,16 +150,7 @@ inline void ChataigneApplication::MainWindow::closeButtonPressed()
 	// ask the app to quit when this happens, but you can change this to do
 	// whatever you need.
 
-	var boundsVar = var(new DynamicObject());
-	juce::Rectangle<int> r = getScreenBounds();
-
-	getAppProperties().getCommonSettings(true)->setValue("windowX", r.getPosition().x);
-	getAppProperties().getCommonSettings(true)->setValue("windowY", r.getPosition().y);
-	getAppProperties().getCommonSettings(true)->setValue("windowWidth", r.getWidth());
-	getAppProperties().getCommonSettings(true)->setValue("windowHeight", r.getHeight());
-	getAppProperties().getCommonSettings(true)->setValue("fullscreen", isFullScreen());
-	getAppProperties().getCommonSettings(true)->saveIfNeeded();
-
+	
 #if JUCE_OPENGL && JUCE_WINDOWS
 	openGLContext.detach();
 #endif

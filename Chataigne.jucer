@@ -28,7 +28,12 @@
         <FILE id="HAMWie" name="ProjectSettings.h" compile="0" resource="0"
               file="Source/ProjectSettings.h"/>
       </GROUP>
-      <GROUP id="{B7AE4CF6-C109-933F-DE7E-494B9C9E3C1A}" name="Preferences"/>
+      <GROUP id="{B7AE4CF6-C109-933F-DE7E-494B9C9E3C1A}" name="Preferences">
+        <FILE id="kw3z7v" name="GlobalSettings.cpp" compile="1" resource="0"
+              file="Source/GlobalSettings.cpp"/>
+        <FILE id="jKB7vV" name="GlobalSettings.h" compile="0" resource="0"
+              file="Source/GlobalSettings.h"/>
+      </GROUP>
       <GROUP id="{C6C9402E-3E5F-DA24-8E22-DE4CD0AB4FD4}" name="Analytics">
         <FILE id="rqVuQx" name="GoogleAnalyticsDestination.h" compile="0" resource="0"
               file="Source/GoogleAnalyticsDestination.h"/>
@@ -52,9 +57,9 @@
           <GROUP id="{0AD6B590-641F-8AAB-B140-AB14DC6905D8}" name="Mapping">
             <GROUP id="{207D2841-DB7C-D3BB-0E72-1B1487D28404}" name="Input">
               <GROUP id="{FAC1239C-CEF0-A69C-07B2-A906322559A0}" name="ui">
-                <FILE id="L6M6Hz" name="MappingInputEditor.cpp" compile="1" resource="0"
+                <FILE id="kZooMF" name="MappingInputEditor.cpp" compile="1" resource="0"
                       file="Source/MappingInputEditor.cpp"/>
-                <FILE id="yMyPsX" name="MappingInputEditor.h" compile="0" resource="0"
+                <FILE id="ZFAAVq" name="MappingInputEditor.h" compile="0" resource="0"
                       file="Source/MappingInputEditor.h"/>
               </GROUP>
               <FILE id="tyyq0u" name="MappingInput.cpp" compile="1" resource="0"
@@ -62,12 +67,6 @@
               <FILE id="B1bYRH" name="MappingInput.h" compile="0" resource="0" file="Source/MappingInput.h"/>
             </GROUP>
             <GROUP id="{18518876-74C1-2B25-1A4A-02F7AB24FFB8}" name="Output">
-              <GROUP id="{5C583B99-90CB-DA96-EC0A-625FC344B9E5}" name="ui">
-                <FILE id="v8IwLE" name="MappingOutputUI.cpp" compile="1" resource="0"
-                      file="Source/MappingOutputUI.cpp"/>
-                <FILE id="SHTIiV" name="MappingOutputUI.h" compile="0" resource="0"
-                      file="Source/MappingOutputUI.h"/>
-              </GROUP>
               <FILE id="oukCyf" name="MappingOutput.cpp" compile="1" resource="0"
                     file="Source/MappingOutput.cpp"/>
               <FILE id="ftf39y" name="MappingOutput.h" compile="0" resource="0" file="Source/MappingOutput.h"/>
@@ -77,6 +76,12 @@
                     file="Source/MappingOutputManager.h"/>
             </GROUP>
             <GROUP id="{2AC385C9-84A1-53E7-151F-36CA39F36FE7}" name="Filter">
+              <GROUP id="{61667BD1-2206-FBB8-BC0F-A7F649D1F5A2}" name="ui">
+                <FILE id="VUYcRx" name="MappingFilterEditor.cpp" compile="1" resource="0"
+                      file="Source/MappingFilterEditor.cpp"/>
+                <FILE id="DaSbGY" name="MappingFilterEditor.h" compile="0" resource="0"
+                      file="Source/MappingFilterEditor.h"/>
+              </GROUP>
               <GROUP id="{B0B4810E-8573-A36C-4561-1CE52F06C6BA}" name="filters">
                 <FILE id="Zy0njO" name="CurveMapFilter.cpp" compile="1" resource="0"
                       file="Source/CurveMapFilter.cpp"/>
@@ -99,23 +104,9 @@
                 <FILE id="RhnAaD" name="SimpleSmoothFilter.h" compile="0" resource="0"
                       file="Source/SimpleSmoothFilter.h"/>
               </GROUP>
-              <GROUP id="{5620881D-EA20-B1A7-A928-DC6D4E6B9305}" name="ui">
-                <FILE id="ECWTiK" name="MappingFilterEditor.cpp" compile="1" resource="0"
-                      file="Source/MappingFilterEditor.cpp"/>
-                <FILE id="RVaSQb" name="MappingFilterEditor.h" compile="0" resource="0"
-                      file="Source/MappingFilterEditor.h"/>
-                <FILE id="nUIZg7" name="MappingFilterManagerEditor.cpp" compile="1"
-                      resource="0" file="Source/MappingFilterManagerEditor.cpp"/>
-                <FILE id="FCnqzD" name="MappingFilterManagerEditor.h" compile="0" resource="0"
-                      file="Source/MappingFilterManagerEditor.h"/>
-              </GROUP>
               <FILE id="l81ugg" name="MappingFilter.cpp" compile="1" resource="0"
                     file="Source/MappingFilter.cpp"/>
               <FILE id="c77Lug" name="MappingFilter.h" compile="0" resource="0" file="Source/MappingFilter.h"/>
-              <FILE id="ohZsDt" name="MappingFilterFactory.cpp" compile="1" resource="0"
-                    file="Source/MappingFilterFactory.cpp"/>
-              <FILE id="gR8X8j" name="MappingFilterFactory.h" compile="0" resource="0"
-                    file="Source/MappingFilterFactory.h"/>
               <FILE id="AAXygr" name="MappingFilterManager.cpp" compile="1" resource="0"
                     file="Source/MappingFilterManager.cpp"/>
               <FILE id="fnnp6H" name="MappingFilterManager.h" compile="0" resource="0"
@@ -140,12 +131,6 @@
             <GROUP id="{769E1555-7F3A-B046-7FF9-5B14A6197BBD}" name="Condition">
               <GROUP id="{D6ADE71C-FE26-85F8-193D-108C1D0EF059}" name="conditions">
                 <GROUP id="{4E3CE793-8D65-93CF-8AFA-F33A32BF6F35}" name="ConditionGroup">
-                  <GROUP id="{ECA9CF9E-1C8E-195B-70A9-6453F657995A}" name="ui">
-                    <FILE id="hpdh0U" name="ConditionGroupEditor.cpp" compile="1" resource="0"
-                          file="Source/ConditionGroupEditor.cpp"/>
-                    <FILE id="wFRCqW" name="ConditionGroupEditor.h" compile="0" resource="0"
-                          file="Source/ConditionGroupEditor.h"/>
-                  </GROUP>
                   <FILE id="NGGpN7" name="ConditionGroup.cpp" compile="1" resource="0"
                         file="Source/ConditionGroup.cpp"/>
                   <FILE id="wwczXx" name="ConditionGroup.h" compile="0" resource="0"
@@ -153,9 +138,9 @@
                 </GROUP>
                 <GROUP id="{66C7CAB4-ECBE-9B4A-BDC2-588579156B34}" name="StandardCondition">
                   <GROUP id="{DC79D7C6-CCCD-5C7E-3154-0F96DD36AA58}" name="ui">
-                    <FILE id="aO7fuv" name="StandardConditionEditor.cpp" compile="1" resource="0"
+                    <FILE id="xKdS4h" name="StandardConditionEditor.cpp" compile="1" resource="0"
                           file="Source/StandardConditionEditor.cpp"/>
-                    <FILE id="Yp6Abo" name="StandardConditionEditor.h" compile="0" resource="0"
+                    <FILE id="siQ0rt" name="StandardConditionEditor.h" compile="0" resource="0"
                           file="Source/StandardConditionEditor.h"/>
                   </GROUP>
                   <FILE id="JDKgNt" name="StandardCondition.cpp" compile="1" resource="0"
@@ -164,12 +149,6 @@
                         file="Source/StandardCondition.h"/>
                 </GROUP>
                 <GROUP id="{EF2C888A-D4C9-2356-FE5E-C1B1D12C8DC5}" name="ScriptCondition">
-                  <GROUP id="{95DAFD60-D945-AB1E-656A-54029A7FB58C}" name="ui">
-                    <FILE id="UXdtDa" name="ScriptConditionEditor.cpp" compile="1" resource="0"
-                          file="Source/ScriptConditionEditor.cpp"/>
-                    <FILE id="HiTq6P" name="ScriptConditionEditor.h" compile="0" resource="0"
-                          file="Source/ScriptConditionEditor.h"/>
-                  </GROUP>
                   <FILE id="Bz3iRb" name="ScriptCondition.cpp" compile="1" resource="0"
                         file="Source/ScriptCondition.cpp"/>
                   <FILE id="iBlBPS" name="ScriptCondition.h" compile="0" resource="0"
@@ -213,8 +192,6 @@
                       file="Source/BaseComparator.cpp"/>
                 <FILE id="Q8Ngh5" name="BaseComparator.h" compile="0" resource="0"
                       file="Source/BaseComparator.h"/>
-                <FILE id="G8ZPTQ" name="ComparatorFactory.cpp" compile="1" resource="0"
-                      file="Source/ComparatorFactory.cpp"/>
                 <FILE id="wHv2NZ" name="ComparatorFactory.h" compile="0" resource="0"
                       file="Source/ComparatorFactory.h"/>
               </GROUP>
@@ -230,10 +207,6 @@
               </GROUP>
               <FILE id="Kyggr9" name="Condition.cpp" compile="1" resource="0" file="Source/Condition.cpp"/>
               <FILE id="gnmFm6" name="Condition.h" compile="0" resource="0" file="Source/Condition.h"/>
-              <FILE id="qsAYjI" name="ConditionFactory.cpp" compile="1" resource="0"
-                    file="Source/ConditionFactory.cpp"/>
-              <FILE id="uRiAam" name="ConditionFactory.h" compile="0" resource="0"
-                    file="Source/ConditionFactory.h"/>
               <FILE id="m7eN67" name="ConditionManager.cpp" compile="1" resource="0"
                     file="Source/ConditionManager.cpp"/>
               <FILE id="wbiUmU" name="ConditionManager.h" compile="0" resource="0"
@@ -831,17 +804,13 @@
           </GROUP>
         </GROUP>
         <GROUP id="{67BC73CD-B94B-C59C-7AE7-3A6E8643517A}" name="ui">
-          <FILE id="bfJkjQ" name="ModuleChooserUI.cpp" compile="1" resource="0"
+          <FILE id="IAzA3M" name="ModuleChooserUI.cpp" compile="1" resource="0"
                 file="Source/ModuleChooserUI.cpp"/>
-          <FILE id="sxoGxh" name="ModuleChooserUI.h" compile="0" resource="0"
+          <FILE id="j1tLBY" name="ModuleChooserUI.h" compile="0" resource="0"
                 file="Source/ModuleChooserUI.h"/>
           <FILE id="cAALpT" name="ModuleEditor.cpp" compile="1" resource="0"
                 file="Source/ModuleEditor.cpp"/>
           <FILE id="xZERFs" name="ModuleEditor.h" compile="0" resource="0" file="Source/ModuleEditor.h"/>
-          <FILE id="gUSScE" name="ModuleInputValueChooserUI.cpp" compile="1"
-                resource="0" file="Source/ModuleInputValueChooserUI.cpp"/>
-          <FILE id="G1Lvti" name="ModuleInputValueChooserUI.h" compile="0" resource="0"
-                file="Source/ModuleInputValueChooserUI.h"/>
           <FILE id="lbKfus" name="ModuleManagerUI.cpp" compile="1" resource="0"
                 file="Source/ModuleManagerUI.cpp"/>
           <FILE id="PLqo2M" name="ModuleManagerUI.h" compile="0" resource="0"

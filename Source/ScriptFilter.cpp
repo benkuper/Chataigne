@@ -10,7 +10,8 @@
 
 #include "ScriptFilter.h"
 
-ScriptFilter::ScriptFilter()
+ScriptFilter::ScriptFilter(var params) :
+	MappingFilter(getTypeString(),params)
 {
 	filterParams.addChildControllableContainer(&script);
 }

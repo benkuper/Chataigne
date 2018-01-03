@@ -44,25 +44,28 @@ Module * ModuleManager::getModuleWithName(const String & moduleName)
 	else return getItemWithName(moduleName);
 }
 
-Controllable * ModuleManager::showAllValuesAndGetControllable(bool parametersOnly)
+Controllable * ModuleManager::showAllValuesAndGetControllable(bool showTriggers, bool showParameters)
 {
 	PopupMenu menu;
-	for (int i = 0; i < items.size(); i++)
+	int numItems = ModuleManager::getInstance()->items.size();
+	for (int i = 0; i < numItems; i++)
 	{
+		Module * m = ModuleManager::getInstance()->items[i];
 		PopupMenu sMenu;
-		int numValues = items[i]->valuesCC.controllables.size();
+		int numValues =  m->valuesCC.controllables.size();
 		for (int j = 0; j < numValues; j++)
 		{
-			Controllable * c = items[i]->valuesCC.controllables[j];
-			if (c->type == Controllable::TRIGGER && parametersOnly) continue;
-			//DBG("Add menu item " << c->niceName << " / " << i*1000+j+1);
+			Controllable * c = m->valuesCC.controllables[j];
+			if (c->type == Controllable::TRIGGER) if(!showTriggers) continue;
+			else if (!showParameters) continue;
+
 			sMenu.addItem(i * 1000 + j + 1, c->niceName);
 		}
-		menu.addSubMenu(items[i]->niceName, sMenu);
+		menu.addSubMenu(m->niceName, sMenu);
 	}
 
 	//TODO : move from here the handling of other values than modules
-	ControllableChooserPopupMenu engineMenu(Engine::mainEngine, true, !parametersOnly, items.size() * 1000);
+	ControllableChooserPopupMenu engineMenu(Engine::mainEngine, showParameters,showTriggers, numItems * 1000);
 	menu.addSubMenu("Generic", engineMenu);
 	int itemID = menu.show();
 
@@ -72,12 +75,12 @@ Controllable * ModuleManager::showAllValuesAndGetControllable(bool parametersOnl
 	int moduleIndex = (int)floor((itemID-1) / 1000);
 	int valueIndex = (itemID-1) % 1000;
 
-	if (moduleIndex >= items.size())
+	if (moduleIndex >= numItems)
 	{
 		return engineMenu.getControllableForResult(itemID);
 	} else
 	{
-		return items[moduleIndex]->valuesCC.controllables[valueIndex];
+		return ModuleManager::getInstance()->items[moduleIndex]->valuesCC.controllables[valueIndex];
 	}
 
 }

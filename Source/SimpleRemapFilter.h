@@ -17,7 +17,7 @@ class SimpleRemapFilter :
 	public MappingFilter
 {
 public:
-	SimpleRemapFilter();
+	SimpleRemapFilter(var params);
 	~SimpleRemapFilter();
 
 	Parameter * targetMin;
@@ -28,7 +28,7 @@ public:
 	Parameter * setupParameterInternal(Parameter *, const String &forceType) override;
 	void filterParamChanged(Parameter *) override;
 
-	static SimpleRemapFilter * create() { return new SimpleRemapFilter(); }
+	static SimpleRemapFilter * create(var params) { return new SimpleRemapFilter(params); }
 	String getTypeString() const override { return "Simple Remap"; }
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(SimpleRemapFilter)

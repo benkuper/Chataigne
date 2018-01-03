@@ -45,17 +45,17 @@ Module::Module(const String &name) :
 
 	
 	moduleParams.saveAndLoadRecursiveData = true;
-	moduleParams.editorIsCollapsed = false; 
 	addChildControllableContainer(&moduleParams);
 	
 	addChildControllableContainer(&valuesCC);
 	valuesCC.includeTriggersInSaveLoad = true;
-	valuesCC.editorIsCollapsed = false;
 
 
+	commandTester.userCanRemove = false;
 	commandTester.canBeDisabled = false;
 	commandTester.lockedModule = this;
-	commandTester.editorIsCollapsed = false;
+
+	controllableContainers.move(controllableContainers.indexOf(scriptManager.get()), controllableContainers.size() - 1);
 
 	addChildControllableContainer(&commandTester);
 }
@@ -70,6 +70,7 @@ void Module::setupIOConfiguration(bool _hasInput, bool _hasOutput)
 	if (_hasInput != hasInput) hasInput = _hasInput;
 	if (_hasOutput != hasOutput) hasOutput = _hasOutput;
 	
+	commandTester.hideInEditor = !hasOutput;
 	moduleListeners.call(&ModuleListener::moduleIOConfigurationChanged);
 }
 

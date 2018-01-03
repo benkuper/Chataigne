@@ -10,7 +10,9 @@
 
 #include "ConditionManager.h"
 #include "ConditionManagerEditor.h"
-#include "ConditionFactory.h"
+#include "StandardCondition.h"
+#include "ConditionGroup.h"
+#include "ScriptCondition.h"
 
 juce_ImplementSingleton(ConditionManager)
 
@@ -19,7 +21,11 @@ ConditionManager::ConditionManager(bool _operatorOnSide) :
 	operatorOnSide(_operatorOnSide),
 	validationProgress(nullptr)
 {
-	editorIsCollapsed = false;
+	
+	managerFactory = &factory;
+	factory.defs.add(Factory<Condition>::Definition::createDef("", "From Value", &StandardCondition::create));
+	factory.defs.add(Factory<Condition>::Definition::createDef("", "Group", &ConditionGroup::create));
+	factory.defs.add(Factory<Condition>::Definition::createDef("", "Script", &ScriptCondition::create));
 
 	selectItemWhenCreated = false;
 
@@ -44,14 +50,6 @@ ConditionManager::~ConditionManager()
 {
 }
 
-void ConditionManager::addItemFromData(var data, bool fromUndoableAction)
-{
-
-	String conditionType = data.getProperty("type", "none");
-	if (conditionType.isEmpty()) return;
-	Condition * i = ConditionFactory::getInstance()->createModule(conditionType);
-	if (i != nullptr) addItem(i, data, fromUndoableAction);
-}
 
 void ConditionManager::addItemInternal(Condition * c, var data)
 {

@@ -21,9 +21,6 @@ State::State() :
 	addChildControllableContainer(&pm);
 
 	pm.setForceDisabled(true);
-	pm.hideInEditor = true;
-
-	//viewUISize->setPoint(200, 300);
 
 	helpID = "State";
 	

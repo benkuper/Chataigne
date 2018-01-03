@@ -24,11 +24,16 @@ BaseCommandHandlerEditor::BaseCommandHandlerEditor(BaseCommandHandler * _handler
 
 	addAndMakeVisible(&chooser);
 	handler->adCommandHandlerListener(this);
+
 	triggerBT = handler->trigger->createButtonUI();
 	addAndMakeVisible(triggerBT);
 	setSize(10, 40);
 	
 	updateChooserLabel();
+
+	resetAndBuild();
+	resized();
+
 }
 
 BaseCommandHandlerEditor::~BaseCommandHandlerEditor()
@@ -39,8 +44,8 @@ BaseCommandHandlerEditor::~BaseCommandHandlerEditor()
 
 void BaseCommandHandlerEditor::resizedInternalHeaderItemInternal(Rectangle<int>& r)
 {
-	triggerBT->setBounds(r.removeFromRight(100));
-	chooser.setBounds(r.removeFromRight(250));
+	triggerBT->setBounds(r.removeFromRight(60).reduced(2));
+	chooser.setBounds(r.removeFromRight(200));
 }
 
 void BaseCommandHandlerEditor::updateChooserLabel()
@@ -61,4 +66,5 @@ void BaseCommandHandlerEditor::definitionChosen(CommandDefinition * d)
 void BaseCommandHandlerEditor::commandChanged(BaseCommandHandler *)
 {
 	updateChooserLabel();
+	resized();
 }

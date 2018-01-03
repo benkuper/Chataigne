@@ -36,6 +36,7 @@ public:
 
 	void mouseDown(const MouseEvent &e) override;
 
+	void paint(Graphics &g) override;
 	void paintOverChildren(Graphics &g) override;
 
 	void resizedInternalHeader(Rectangle<int> &r) override;

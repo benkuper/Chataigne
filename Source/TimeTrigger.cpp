@@ -18,6 +18,8 @@ TimeTrigger::TimeTrigger(float _time, float flagYPos, const String &name) :
 	time->defaultUI = FloatParameter::TIME;
 	flagY = addFloatParameter("Flag Y", "Position of the trigger's flag", flagYPos);
 	isTriggered = addBoolParameter("Is Triggered", "Is this Time Trigger already triggered during this playing ?", false);
+	
+	isTriggered->hideInEditor = true;
 
 	autoTriggerWhenAllConditionAreActives = false;
 }

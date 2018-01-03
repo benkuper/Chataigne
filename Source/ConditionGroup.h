@@ -19,7 +19,7 @@ class ConditionGroup :
 	public ConditionManager::ConditionManagerListener
 {
 public:
-	ConditionGroup();
+	ConditionGroup(var params);
 	~ConditionGroup();
 
 	ConditionManager manager;
@@ -30,10 +30,9 @@ public:
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
 
-	InspectableEditor * getEditor(bool isRoot) override;
 
 	String getTypeString()  const override { return "Group"; }
-	static ConditionGroup * create() { return new ConditionGroup(); }
+	static ConditionGroup * create(var params) { return new ConditionGroup(params); }
 };
 
 

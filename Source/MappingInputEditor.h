@@ -12,10 +12,9 @@
 #define MAPPINGINPUTUI_H_INCLUDED
 
 #include "MappingInput.h"
-#include "ModuleInputValueChooserUI.h"
 
 class MappingInputEditor :
-	public InspectableEditor,
+	public GenericControllableContainerEditor,
 	public MappingInput::Listener
 {
 public:
@@ -24,11 +23,10 @@ public:
 
 	MappingInput * input;
 
-	ScopedPointer<ModuleInputValueChooserUI> targetUI;
 	ScopedPointer<ControllableUI> sourceFeedbackUI;
 
 	void updateSourceUI();
-	void resized() override;
+	void resizedInternalHeader(Rectangle<int> &r) override;
 
 	void inputReferenceChanged(MappingInput *) override;
 

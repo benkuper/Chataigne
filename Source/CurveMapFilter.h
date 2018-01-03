@@ -18,7 +18,7 @@ class CurveMapFilter :
 	public MappingFilter
 {
 public:
-	CurveMapFilter();
+	CurveMapFilter(var params);
 	~CurveMapFilter();
 
 	Automation curve;
@@ -32,7 +32,7 @@ public:
 
 	//InspectableEditor * getEditor(bool isRoot) override;
 
-	static CurveMapFilter * create() { return new CurveMapFilter(); }
+	static CurveMapFilter * create(var params) { return new CurveMapFilter(params); }
 	String getTypeString() const override { return "Curve Map"; }
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(CurveMapFilter)

@@ -18,7 +18,6 @@ WatchoutCommand::WatchoutCommand(WatchoutModule * _module, CommandContext contex
 	if (argsP.isNotEmpty())
 	{
 		paramContainer = new ControllableContainer("Parameters");
-		paramContainer->editorIsCollapsed = false;
 		addChildControllableContainer(paramContainer);
 	}
 

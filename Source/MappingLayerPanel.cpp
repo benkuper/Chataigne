@@ -30,6 +30,7 @@ MappingLayerPanel::MappingLayerPanel(MappingLayer * layer) :
 
 		automationInspector = new Inspector(mappingLayer->automations[0]->selectionManager);
 		addAndMakeVisible(automationInspector);
+
 	}
 	
 	
@@ -61,6 +62,4 @@ void MappingLayerPanel::resizedInternalContent(Rectangle<int>& r)
 		automationInspector->setBounds(cr);
 		
 	}
-	
-		//modeUI->setBounds(getLocalBounds().reduced(5).removeFromBottom(20));
 }

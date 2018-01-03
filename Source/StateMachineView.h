@@ -36,7 +36,6 @@ public:
 	
 
 	void mouseMove(const MouseEvent &e) override;
-	bool keyPressed(const KeyPress &e) override;
 
 	void paint(Graphics &g) override;
 	void resized() override;

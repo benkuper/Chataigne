@@ -17,6 +17,7 @@ MetronomeModule::MetronomeModule() :
 
 	frequency = moduleParams.addFloatParameter("Frequency", "Frequency of the timer, in Hz (the greater the value, the faster the tempo)", 1, 0.0001f, 100);
 	onTime = moduleParams.addFloatParameter("ON Time", "Amount of time the metronome stays valid when triggered", .5f, 0, 1);
+	random = moduleParams.addFloatParameter("Randomness", "Amount of randomness in each call", 0, 0, 1);
 
 	tick = valuesCC.addBoolParameter("Tick", "When the metronome is ticking", false);
 	startTimer(0, 1000.0f / frequency->floatValue());
@@ -44,7 +45,15 @@ void MetronomeModule::timerCallback(int timerID)
 	if (timerID == 0)
 	{
 		tick->setValue(true);
-		startTimer(1, onTime->floatValue() * 1000 / frequency->floatValue());
+		float nextTime = 1000 / frequency->floatValue();
+		
+		if (random->floatValue() > 0)
+		{
+			nextTime = (1 - rnd.nextFloat()*random->floatValue())*nextTime;
+			startTimer(0, nextTime);
+		}
+
+		startTimer(1, onTime->floatValue() * nextTime);
 	} else if (timerID == 1)
 	{
 		tick->setValue(false);

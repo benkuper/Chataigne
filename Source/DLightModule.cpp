@@ -14,7 +14,6 @@
 DLightModule::DLightModule() :
 	OSCModule(getDefaultTypeString(),8000,8001,false,true)
 {
-	sendCC->editorIsCollapsed = false;
 
 	var floatValParam = var();
 	var valParam = ControllableUtil::createDataForParam(FloatParameter::getTypeStringStatic(), "Value", "Value", 1, 0, 255);

@@ -13,7 +13,6 @@
 
 #include "ConditionEditor.h"
 #include "StandardCondition.h"
-#include "ModuleInputValueChooserUI.h"
 #include "BaseComparatorUI.h"
 
 class StandardConditionEditor :
@@ -24,10 +23,11 @@ public:
 	virtual ~StandardConditionEditor();
 
 	StandardCondition * standardCondition;
-	ScopedPointer<ModuleInputValueChooserUI> targetUI;
+	ScopedPointer<TargetParameterUI> targetUI;
 	ScopedPointer<ControllableUI> sourceFeedbackUI;
 	ScopedPointer<BaseComparatorUI> comparatorUI;
 	
+	void resizedInternalHeaderItemInternal(Rectangle<int> &r) override;
 	void resizedInternalContent(Rectangle<int> &r) override;
 	void updateUI() override;
 

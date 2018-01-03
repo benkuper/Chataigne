@@ -25,6 +25,7 @@ AudioLayer::AudioLayer(Sequence * _sequence, var params) :
 
 	enveloppe = addFloatParameter("Enveloppe", "Enveloppe", 0, 0, 1);
 	enveloppe->isControllableFeedbackOnly = true;
+
 	addChildControllableContainer(&clipManager);
 
 	//if already an audio module, assign it

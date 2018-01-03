@@ -18,7 +18,7 @@ CustomOSCCommandArgumentManager::CustomOSCCommandArgumentManager(bool _mappingEn
 {
 	selectItemWhenCreated = false;
 	editorCanBeCollapsed = false;
-	editorIsCollapsed = false;
+	
 }
 
 void CustomOSCCommandArgumentManager::addItemWithParam(Parameter * p, var data, bool fromUndoableAction)

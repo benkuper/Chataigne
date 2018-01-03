@@ -33,7 +33,7 @@ Sequence::Sequence() :
 	
 	float initTotalTime = 30; //default to 30 seconds, may be in general preferences later
 
-	startAtLoad = addBoolParameter("Start at load", "If selected, the sequence will start just after loading it's data", false);
+	startAtLoad = addBoolParameter("Play at Load", "If selected, the sequence will start playing just after loading the file", false);
 
 	currentTime = addFloatParameter("Current Time", "Current position in time of this sequence", 0, 0, initTotalTime);
 	currentTime->defaultUI = FloatParameter::TIME;

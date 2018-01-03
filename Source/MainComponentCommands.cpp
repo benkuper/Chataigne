@@ -10,6 +10,8 @@
 
 
 #include "MainComponent.h"
+#include "ProjectSettings.h"
+#include "GlobalSettings.h"
 
 namespace CommandIDs
 {
@@ -19,6 +21,10 @@ namespace CommandIDs
   static const int newFile                = 0x30003;
   static const int openLastDocument       = 0x30004;
   static const int checkForUpdates		  = 0x30005;
+
+
+  static const int editProjectSettings = 0x50001;
+  static const int editGlobalSettings = 0x50002;
 
   //undo
   static const int undo = 0x40001;
@@ -70,6 +76,14 @@ void MainContentComponent::getCommandInfo (CommandID commandID, ApplicationComma
 		result.setInfo("Check for updates", "Check if updates are available and download latest software", category, 0);
 		break;
 
+	case CommandIDs::editProjectSettings:
+		result.setInfo("Project Settings...", "Edit the settings related to this project", category, 0);
+		break;
+
+	case CommandIDs::editGlobalSettings:
+		result.setInfo("Global Settings...", "Edit the general settings related to this application", category, 0);
+		break;
+
 	case CommandIDs::undo:
 		//result.setInfo("Undo " + UndoMaster::getInstance()->getUndoDescription(),"Undo the last action", category, 0);
 		//result.defaultKeypresses.add(KeyPress('z', ModifierKeys::ctrlModifier, 0));
@@ -95,7 +109,9 @@ void MainContentComponent::getAllCommands (Array<CommandID>& commands) {
     CommandIDs::openLastDocument,
     CommandIDs::save,
     CommandIDs::saveAs,
-	CommandIDs::checkForUpdates
+	CommandIDs::checkForUpdates,
+	CommandIDs::editGlobalSettings,
+	CommandIDs::editProjectSettings
 	//CommandIDs::undo,
 	//CommandIDs::redo
   };
@@ -128,6 +144,7 @@ PopupMenu MainContentComponent::getMenuForIndex (int /*topLevelMenuIndex*/, cons
 	  menu.addCommandItem(&getCommandManager(), StandardApplicationCommandIDs::quit);
   }else if(menuName =="Edit")
   {
+	  menu.addCommandItem(&getCommandManager(), CommandIDs::editProjectSettings);
 	  menu.addCommandItem(&getCommandManager(), CommandIDs::undo);
 	  menu.addCommandItem(&getCommandManager(), CommandIDs::redo);
 
@@ -138,6 +155,7 @@ PopupMenu MainContentComponent::getMenuForIndex (int /*topLevelMenuIndex*/, cons
   else if (menuName == "Options")
   {
 	  menu.addCommandItem(&getCommandManager(), CommandIDs::checkForUpdates);
+	  menu.addCommandItem(&getCommandManager(), CommandIDs::editGlobalSettings);
   }
 
   return menu;
@@ -203,6 +221,15 @@ bool MainContentComponent::perform(const InvocationInfo& info) {
 
 	case CommandIDs::redo:
 		//UndoMaster::getInstance()->redo();
+		break;
+
+	case CommandIDs::editProjectSettings:
+		ProjectSettings::getInstance()->selectThis();
+		break;
+
+	case CommandIDs::editGlobalSettings:
+		DBG("Here");
+		GlobalSettings::getInstance()->selectThis();
 		break;
 
     default:

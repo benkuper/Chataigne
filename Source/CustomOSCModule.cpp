@@ -70,6 +70,15 @@ void CustomOSCModule::processMessageInternal(const OSCMessage & msg)
 				else if (msg[i].isString()) c = valuesCC.addStringParameter(argIAddress, "", msg[i].getString());
 				((Parameter *)c)->autoAdaptRange = true;
 			}
+
+			if (c != nullptr)
+			{
+				c->setCustomShortName(cShortName); //force safeName for search
+				c->isCustomizableByUser = true;
+				c->isRemovableByUser = true;
+				c->saveValueOnly = false;
+				if (c->type != Controllable::TRIGGER) ((Parameter *)c)->autoAdaptRange = true;
+			}
 		}
 	} else
 	{

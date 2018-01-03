@@ -9,13 +9,22 @@
 */
 
 #include "MappingFilterManager.h"
-#include "MappingFilterManagerEditor.h"
-#include "MappingFilterFactory.h"
+#include "SimpleRemapFilter.h"
+#include "CurveMapFilter.h"
+#include "ScriptFilter.h"
+#include "InverseFilter.h"
+#include "SimpleSmoothFilter.h"
 
 MappingFilterManager::MappingFilterManager() :
 	BaseManager<MappingFilter>("Filters"),
 	inputSourceParam(nullptr)
 {
+	managerFactory = &factory;
+	factory.defs.add(Factory<MappingFilter>::Definition::createDef("Remap", "Inverse", &InverseFilter::create));
+	factory.defs.add(Factory<MappingFilter>::Definition::createDef("Remap", "Simple Remap", &SimpleRemapFilter::create));
+	factory.defs.add(Factory<MappingFilter>::Definition::createDef("Remap", "Curve Map", &CurveMapFilter::create));
+	factory.defs.add(Factory<MappingFilter>::Definition::createDef("", "Script", &ScriptFilter::create));
+
 	selectItemWhenCreated = false;
 }
 
@@ -50,15 +59,6 @@ void MappingFilterManager::rebuildFilterChain()
 		fp = f->filteredParameter;
 	}
 }
-
-void MappingFilterManager::addItemFromData(var data, bool fromUndoableAction)
-{
-	String moduleType = data.getProperty("type", "none");
-	if (moduleType.isEmpty()) return;
-	MappingFilter * i = MappingFilterFactory::getInstance()->createModule(moduleType);
-	if (i != nullptr) addItem(i, data, fromUndoableAction);
-}
-
 void MappingFilterManager::addItemInternal(MappingFilter * , var)
 {
 	rebuildFilterChain();
@@ -69,7 +69,3 @@ void MappingFilterManager::removeItemInternal(MappingFilter *)
 	rebuildFilterChain();
 }
 
-InspectableEditor * MappingFilterManager::getEditor(bool isRoot)
-{
-	return new MappingFilterManagerEditor(this,isRoot);
-}

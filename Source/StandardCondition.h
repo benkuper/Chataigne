@@ -17,7 +17,7 @@ class StandardCondition :
 	public Condition
 {
 public:
-	StandardCondition();
+	StandardCondition(var params);
 	~StandardCondition();
 
 	TargetParameter * sourceTarget;
@@ -34,9 +34,8 @@ public:
 
 	InspectableEditor * getEditor(bool isRoot) override;
 
-
 	String getTypeString() const override { return "From Input Value"; }
-	static StandardCondition * create() { return new StandardCondition(); }
+	static StandardCondition * create(var params) { return new StandardCondition(params); }
 
 };
 

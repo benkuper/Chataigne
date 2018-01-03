@@ -15,6 +15,7 @@ Processor::Processor(const String & name, bool canBeDisabled) :
 	BaseItem(name, canBeDisabled),
 	forceDisabled(false)
 {
+	editorIsCollapsed = true;
 }
 
 Processor::~Processor()

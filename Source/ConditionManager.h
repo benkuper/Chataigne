@@ -24,6 +24,8 @@ public:
 	ConditionManager(bool operatorOnSide = false);
 	~ConditionManager();
 	
+	Factory<Condition> factory;
+
 	BoolParameter * isValid;
 
 	enum ConditionOperator { AND, OR };
@@ -36,7 +38,6 @@ public:
 	bool validationWaiting;
 	float prevTimerTime;
 
-	void addItemFromData(var data,bool fromUndoableAction = false) override;
 
 	void addItemInternal(Condition *, var data) override;
 	void removeItemInternal(Condition *) override;

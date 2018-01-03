@@ -9,3 +9,15 @@
 */
 
 #include "ProjectSettings.h"
+
+juce_ImplementSingleton(ProjectSettings)
+
+ProjectSettings::ProjectSettings() :
+	ControllableContainer("Project Settings")
+{
+	saveAndLoadRecursiveData = true;
+}
+
+ProjectSettings::~ProjectSettings()
+{
+}

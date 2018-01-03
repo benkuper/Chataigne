@@ -22,7 +22,6 @@ UserOSCCommand::UserOSCCommand(CustomOSCModule * _module, CommandContext context
 	address->isEditable = model->addressIsEditable->boolValue();
 	address->isSavable = address->isEditable;
 
-	argumentsContainer.editorIsCollapsed = false;
 	rebuildArgsFromModel();
 
 }

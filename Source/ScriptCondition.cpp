@@ -9,9 +9,9 @@
 */
 
 #include "ScriptCondition.h"
-#include "ScriptConditionEditor.h"
 
-ScriptCondition::ScriptCondition() :
+ScriptCondition::ScriptCondition(var params) :
+	Condition(getTypeString(), params),
 	script(this,false)
 {
 	scriptObject.setMethod("setValid", ScriptCondition::setValidFromScript);
@@ -32,11 +32,6 @@ var ScriptCondition::setValidFromScript(const var::NativeFunctionArgs & a)
 
 	s->isValid->setValue((bool)a.arguments[0]);
 	return var();
-}
-
-InspectableEditor * ScriptCondition::getEditor(bool isRoot)
-{
-	return new ScriptConditionEditor(this,isRoot);
 }
 
 var ScriptCondition::getJSONData()

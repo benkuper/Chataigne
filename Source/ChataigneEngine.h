@@ -24,7 +24,6 @@ public:
 
 	ChataigneGenericModule module;
 
-
 	void clearInternal() override;
 	
 	var getJSONData() override;

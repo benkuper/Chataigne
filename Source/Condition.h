@@ -19,7 +19,7 @@ class Condition :
 	public BaseComparator::ComparatorListener
 {
 public:
-	Condition();
+	Condition(const String &name = "Condition", var params = var());
 	virtual ~Condition();
 
 	BoolParameter * isValid;

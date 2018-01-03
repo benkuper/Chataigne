@@ -28,7 +28,7 @@ public:
 	Module * getModuleWithName(const String &moduleName);
 
 	//Input values menu
-	Controllable * showAllValuesAndGetControllable(bool parametersOnly);
+	static Controllable * showAllValuesAndGetControllable(bool showTriggers, bool showParameters);
 		
 	//Command menu
 	PopupMenu getAllModulesCommandMenu(CommandContext context);

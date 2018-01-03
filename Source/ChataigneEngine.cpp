@@ -9,11 +9,10 @@
  */
 #include "ChataigneEngine.h"
 
+#include "ProjectSettings.h"
 #include "ModuleManager.h"
 #include "StateManager.h"
 #include "SequenceManager.h"
-#include "MappingFilterFactory.h"
-#include "ConditionFactory.h"
 #include "MIDIManager.h"
 #include "SerialManager.h"
 #include "GamepadManager.h"
@@ -32,6 +31,7 @@ ChataigneEngine::ChataigneEngine(ApplicationProperties * appProperties, const St
 	//init here
 	Engine::mainEngine = this;
 
+	addChildControllableContainer(ProjectSettings::getInstance());
 	addChildControllableContainer(ModuleManager::getInstance());
 	addChildControllableContainer(StateManager::getInstance());
 	addChildControllableContainer(SequenceManager::getInstance());
@@ -49,10 +49,6 @@ ChataigneEngine::~ChataigneEngine()
 	StateManager::deleteInstance();
 	ModuleManager::deleteInstance();
 
-	MappingFilterFactory::deleteInstance();
-	ConditionFactory::deleteInstance();
-	ProcessorFactory::deleteInstance();
-
 	MIDIManager::deleteInstance();
 	DMXManager::deleteInstance();
 	SerialManager::deleteInstance();
@@ -63,6 +59,7 @@ ChataigneEngine::~ChataigneEngine()
 	MyoManager::deleteInstance();
 #endif
 
+	ProjectSettings::deleteInstance();
 }
 
 
@@ -82,6 +79,7 @@ var ChataigneEngine::getJSONData()
 	var data = Engine::getJSONData();
 
 	//save here
+	data.getDynamicObject()->setProperty("projectSettings", ProjectSettings::getInstance()->getJSONData());
 	data.getDynamicObject()->setProperty("moduleManager", ModuleManager::getInstance()->getJSONData());
 	data.getDynamicObject()->setProperty("stateManager", StateManager::getInstance()->getJSONData());
 	data.getDynamicObject()->setProperty("sequenceManager", SequenceManager::getInstance()->getJSONData());
@@ -93,13 +91,19 @@ var ChataigneEngine::getJSONData()
 
 void ChataigneEngine::loadJSONDataInternalEngine(var data, ProgressTask * loadingTask)
 {	
+	ProgressTask * projectTask = loadingTask->addTask("Project");
 	ProgressTask * moduleTask = loadingTask->addTask("Modules");
 	ProgressTask * stateTask = loadingTask->addTask("States");
 	ProgressTask * sequenceTask = loadingTask->addTask("Sequences");
 	ProgressTask * routerTask = loadingTask->addTask("Router");
-	
+
 
 	//load here
+	projectTask->start();
+	ProjectSettings::getInstance()->loadJSONData(data.getProperty("projectSettings", var()));
+	projectTask->setProgress(1);
+	projectTask->end();
+
 	moduleTask->start();
 	ModuleManager::getInstance()->loadJSONData(data.getProperty("moduleManager",var()));
 	moduleTask->setProgress(1);

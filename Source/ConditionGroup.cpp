@@ -11,7 +11,8 @@
 #include "ConditionGroup.h"
 #include "ConditionGroupEditor.h"
 
-ConditionGroup::ConditionGroup()
+ConditionGroup::ConditionGroup(var params) :
+	Condition(getTypeString(), params)
 {
 	addChildControllableContainer(&manager);
 	manager.addConditionManagerListener(this);
@@ -37,9 +38,4 @@ void ConditionGroup::loadJSONDataInternal(var data)
 {
 	Condition::loadJSONDataInternal(data);
 	manager.loadJSONData(data.getProperty("manager", var()));
-}
-
-InspectableEditor * ConditionGroup::getEditor(bool isRoot)
-{
-	return new ConditionGroupEditor(this, isRoot);
 }

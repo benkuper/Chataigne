@@ -9,15 +9,18 @@
 */
 
 #include "MappingInput.h"
+#include "ModuleManager.h"
 #include "MappingInputEditor.h"
 
 MappingInput::MappingInput() :
 	ControllableContainer("Input"),
 	inputReference(nullptr)
 {
-	editorIsCollapsed = false;
+	
 	nameCanBeChangedByUser = false;
 	inputTarget = addTargetParameter("Input", "Parameter to be the input");
+	inputTarget->showTriggers = false;
+	inputTarget->customGetTargetFunc = &ModuleManager::getInstance()->showAllValuesAndGetControllable;
 }
 
 MappingInput::~MappingInput()
@@ -62,4 +65,9 @@ void MappingInput::onExternalParameterChanged(Parameter * p)
 	{
 		mappinginputListeners.call(&MappingInput::Listener::inputParameterValueChanged, this);
 	}
+}
+
+InspectableEditor * MappingInput::getEditor(bool isRoot)
+{
+	return new MappingInputEditor(this, isRoot);
 }

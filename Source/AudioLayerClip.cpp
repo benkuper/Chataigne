@@ -18,6 +18,7 @@ AudioLayerClip::AudioLayerClip(float _time) :
 	isCurrent(false)
 {
 	filePath = addStringParameter("File Path", "File Path", "");
+	filePath->defaultUI = StringParameter::FILE;
 
 	time = addFloatParameter("Start Time", "Time of the start of the clip", _time, 0, 3600);
 	time->defaultUI = FloatParameter::TIME;

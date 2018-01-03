@@ -12,11 +12,11 @@
 #include  "ComparatorFactory.h"
 #include "ModuleManager.h"
 
-Condition::Condition() :
-	BaseItem("Condition"),
+Condition::Condition(const String &n, var /*params*/) :
+	BaseItem(n),
 	validationAsyncNotifier(10)
 {
-	editorIsCollapsed = false;
+	
 	isSelectable = false;
 
 	isValid = addBoolParameter("Is Valid", "Where the condition passed the test or not.", false);

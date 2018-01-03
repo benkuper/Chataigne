@@ -9,3 +9,13 @@
 */
 
 #pragma once
+#include "JuceHeader.h"
+
+class ProjectSettings :
+	public ControllableContainer
+{
+public:
+	juce_DeclareSingleton(ProjectSettings, true);
+	ProjectSettings();
+	~ProjectSettings();
+};

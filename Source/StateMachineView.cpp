@@ -41,24 +41,6 @@ void StateMachineView::mouseMove(const MouseEvent & e)
 	if(transitionCreationMode) repaint();
 }
 
-
-bool StateMachineView::keyPressed(const KeyPress & e)
-{
-	if (BaseManagerViewUI::keyPressed(e)) return true;
-
-	if (e.getKeyCode() == KeyPress::createFromDescription("a").getKeyCode())
-	{
-		if (itemsUI.size() >= 2)
-		{
-			manager->stm.addItem(itemsUI[0]->item, itemsUI[1]->item);
-		}
-
-		return true;
-	}
-
-	return false;
-}
-
 void StateMachineView::paint(Graphics & g)
 {
 	BaseManagerViewUI::paint(g);

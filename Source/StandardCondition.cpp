@@ -9,12 +9,15 @@
 */
 
 #include "StandardCondition.h"
-#include "StandardConditionEditor.h"
 #include "ComparatorFactory.h"
+#include "StandardConditionEditor.h"
+#include "ModuleManager.h"
 
-StandardCondition::StandardCondition()
+StandardCondition::StandardCondition(var params) :
+	Condition(getTypeString(),params)
 {
 	sourceTarget = addTargetParameter("Source", "Element that will be the source to check if condition is active or not"); 
+	sourceTarget->customGetTargetFunc = &ModuleManager::showAllValuesAndGetControllable;
 	sourceTarget->hideInEditor = true;
 }
 
@@ -86,6 +89,11 @@ void StandardCondition::onContainerParameterChangedInternal(Parameter * p)
 	}
 }
 
+InspectableEditor * StandardCondition::getEditor(bool isRoot)
+{
+	return new StandardConditionEditor(this, isRoot);
+}
+
 
 void StandardCondition::comparatorValidationChanged(BaseComparator *)
 {
@@ -93,8 +101,3 @@ void StandardCondition::comparatorValidationChanged(BaseComparator *)
 
 }
 
-
-InspectableEditor * StandardCondition::getEditor(bool isRoot)
-{
-	return new StandardConditionEditor(this, isRoot);
-}

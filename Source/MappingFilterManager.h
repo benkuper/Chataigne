@@ -26,17 +26,12 @@ public:
 	void rebuildFilterChain();
 	
 	Parameter * processFilters();
-	
+	Factory<MappingFilter> factory;
 
-	void addItemFromData(var data, bool fromUndoableAction = false) override;
 	void addItemInternal(MappingFilter * m, var data) override;
 	void removeItemInternal(MappingFilter *) override;
 	
-
-	InspectableEditor * getEditor(bool isRoot) override;
-
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MappingFilterManager)
-
 };
 
 

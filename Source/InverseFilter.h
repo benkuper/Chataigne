@@ -17,12 +17,12 @@ class InverseFilter :
 	public MappingFilter
 {
 public:
-	InverseFilter();
-	~InverseFilter();
+	InverseFilter(var params);
+	~InverseFilter(); 
 
 	void processInternal() override;
 	
-	static InverseFilter * create() { return new InverseFilter(); }
+	static InverseFilter * create(var params) { return new InverseFilter(params); }
 	virtual String getTypeString() const override { return "Inverse"; }
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(InverseFilter)

@@ -10,8 +10,8 @@
 
 #include "InverseFilter.h"
 
-InverseFilter::InverseFilter() :
-	MappingFilter(getTypeString())
+InverseFilter::InverseFilter(var params) :
+	MappingFilter(getTypeString(), params)
 {
 }
 

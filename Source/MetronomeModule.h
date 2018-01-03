@@ -22,6 +22,8 @@ public:
 	BoolParameter * tick;
 	FloatParameter * frequency;
 	FloatParameter * onTime;
+	FloatParameter * random;
+	Random rnd;
 
 	void onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c) override;
 

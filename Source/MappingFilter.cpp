@@ -11,19 +11,16 @@
 #include "MappingFilter.h"
 #include "MappingFilterEditor.h"
 
-MappingFilter::MappingFilter(const String &name) :
+MappingFilter::MappingFilter(const String &name, var /*params*/) :
 	BaseItem(name),
-sourceParam(nullptr),
-filteredParameter(nullptr),
-filterParams("filterParams"),
-autoSetRange(true)
+	sourceParam(nullptr),
+	filteredParameter(nullptr),
+	filterParams("filterParams"),
+	autoSetRange(true)
 {
 	isSelectable = false;
 
-	editorIsCollapsed = false;
-	filterParams.editorIsCollapsed = false;
-	filterParams.editorCanBeCollapsed = false;
-
+	filterParams.hideEditorHeader = true;
 	filterParams.skipControllableNameInAddress = true;
 	addChildControllableContainer(&filterParams);
 	filterParams.addControllableContainerListener(this);
@@ -61,6 +58,7 @@ Parameter * MappingFilter::setupParameterInternal(Parameter * source, const Stri
 	p->setNiceName("Out");
 	p->setValue(source->getValue());
 	p->setRange(source->minimumValue, source->maximumValue);
+	p->hideInEditor = true;
 	return p;
 }
 
@@ -96,9 +94,7 @@ void MappingFilter::loadJSONDataInternal(var data)
 	BaseItem::loadJSONDataInternal(data);
 	filterParams.loadJSONData(data.getProperty("filterParams", var()));
 }
-/*
 InspectableEditor * MappingFilter::getEditor(bool isRoot)
 {
-	return new GenericMappingFilterEditor(this,isRoot);
+	return new MappingFilterEditor(this, isRoot);
 }
-*/

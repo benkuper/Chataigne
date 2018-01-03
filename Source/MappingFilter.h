@@ -18,7 +18,7 @@ class MappingFilter :
 	public BaseItem
 {
 public:
-	MappingFilter(const String &name = "MappingFilter");
+	MappingFilter(const String &name = "MappingFilter", var params = var());
 	virtual ~MappingFilter();
 
 	Parameter * sourceParam;
@@ -39,7 +39,7 @@ public:
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
 
-	//InspectableEditor * getEditor(bool isRoot) override;
+	InspectableEditor * getEditor(bool isRoot) override;
 
 	class  FilterListener
 	{

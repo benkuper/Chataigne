@@ -10,11 +10,16 @@
 
 #include "SimpleRemapFilter.h"
 
-SimpleRemapFilter::SimpleRemapFilter() :
-	MappingFilter("Remap")
+SimpleRemapFilter::SimpleRemapFilter(var params) :
+	MappingFilter(getTypeString(),params)
 {
-	targetMin = filterParams.addFloatParameter("Target Min", "New minimum for output", 0, -1000, 1000);
-	targetMax = filterParams.addFloatParameter("Target Max", "New maximum for output", 1, -1000, 1000);
+	targetMin = filterParams.addFloatParameter("Target Min", "New minimum for output", 0, 0, 1);
+	targetMin->isCustomizableByUser = true;
+	targetMin->saveValueOnly = false;
+	targetMax = filterParams.addFloatParameter("Target Max", "New maximum for output", 1, 0, 1);
+	targetMax->isCustomizableByUser = true;
+	targetMax->saveValueOnly = false;
+	
 	autoSetRange = false;
 }
 

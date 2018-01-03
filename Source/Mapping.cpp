@@ -19,6 +19,8 @@ Mapping::Mapping(bool canBeDisabled) :
 
 	continuousProcess = addBoolParameter("Continuous", "If enabled, the mapping will process continuously rather than only when parameter value has changed", false);
 
+	cdm.editorIsCollapsed = true;
+
 	addChildControllableContainer(&input);
 	addChildControllableContainer(&cdm);
 	addChildControllableContainer(&fm);
@@ -37,6 +39,7 @@ void Mapping::lockInputTo(Parameter * lockParam)
 {
 	inputIsLocked = lockParam != nullptr;
 	input.lockInput(lockParam);
+	input.hideInEditor = inputIsLocked;
 }
 
 void Mapping::process()

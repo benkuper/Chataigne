@@ -19,7 +19,7 @@ DMXDevice::DMXDevice(const String &name, Type _type) :
 	type(_type)
 {
 	DMXManager::getInstance()->addDMXManagerListener(this);
-	editorIsCollapsed = false;
+	
 
 	memset(dmxDataOut, 0, 512 * sizeof(uint8));
 	memset(dmxDataIn, 0, 512 * sizeof(uint8));

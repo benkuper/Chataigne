@@ -27,7 +27,8 @@ BaseItemUI<State>(state, ResizeMode::ALL, true),
 		addAndMakeVisible(&pmui);
 	}
 
-	resized();
+	setSize(200,200);
+	//resized();
 }
 	
 
@@ -60,35 +61,48 @@ void StateViewUI::mouseDown(const MouseEvent & e)
 {
 	BaseItemUI<State>::mouseDown(e);
 
+
 	if (transitionReceptionMode)
 	{
 		stateEditorListeners.call(&Listener::askFinishTransitionFromUI, this);
 	} else
 	{
-		 if (e.mods.isRightButtonDown() && e.originalComponent != &pmui)
+		if (e.mods.isLeftButtonDown())
 		{
-			PopupMenu p;
-			p.addItem(1, "Create Transition");
-			int result = p.show();
-			switch (result)
+			if (e.originalComponent == &pmui) item->selectThis();
+		}else if (e.mods.isRightButtonDown())
+		{
+			if (e.originalComponent != &pmui)
 			{
-			case 1:
-				stateEditorListeners.call(&Listener::askCreateTransitionFromUI, this);
-				break;
+				PopupMenu p;
+				p.addItem(1, "Create Transition");
+				int result = p.show();
+				switch (result)
+				{
+				case 1:
+					stateEditorListeners.call(&Listener::askCreateTransitionFromUI, this);
+					break;
+				}
 			}
 		}
+
 	}	
 }
 
 
-void StateViewUI::paintOverChildren(Graphics & g)
+void StateViewUI::paint(Graphics & g)
 {
+	BaseItemUI::paint(g);
 	if (item->active->boolValue())
 	{
 		g.setColour(FEEDBACK_COLOR);
-		g.drawRoundedRectangle(getLocalBounds().reduced(2).toFloat(), 2, 2);
+		g.drawRoundedRectangle(getLocalBounds().reduced(1).toFloat(), 2 ,1);
 	}
 
+}
+
+void StateViewUI::paintOverChildren(Graphics & g)
+{
 	BaseItemUI::paintOverChildren(g);
 
 

@@ -49,6 +49,7 @@ void BaseCommandHandler::setCommand(CommandDefinition * commandDef)
 
 	if (command != nullptr)
 	{
+		command->hideEditorHeader = true;
 		addChildControllableContainer(command);
 		command->module->addInspectableListener(this);
 		command->loadPreviousCommandData(oldData); //keep as much as similar parameter possible

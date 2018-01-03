@@ -10,8 +10,8 @@
 
 #include "CurveMapFilter.h"
 
-CurveMapFilter::CurveMapFilter() :
-	MappingFilter(getTypeString())
+CurveMapFilter::CurveMapFilter(var params) :
+	MappingFilter(getTypeString(), params)
 {
 	curve.setPositionMax(1);
 	curve.addItem(0, 0);
