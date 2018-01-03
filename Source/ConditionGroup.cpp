@@ -9,7 +9,6 @@
 */
 
 #include "ConditionGroup.h"
-#include "ConditionGroupEditor.h"
 
 ConditionGroup::ConditionGroup(var params) :
 	Condition(getTypeString(), params)
