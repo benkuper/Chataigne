@@ -17,21 +17,27 @@ StateModule::StateModule(StateManager * _manager) :
 	Module("State Machine"),
 	manager(_manager)
 {
-	defManager.add(CommandDefinition::createDef(this, "State", "Activate State", &StateCommand::create, CommandContext::ACTION)->addParam("type", StateCommand::ACTIVATE_STATE));
-	defManager.add(CommandDefinition::createDef(this, "State", "Deactivate State", &StateCommand::create, CommandContext::ACTION)->addParam("type", StateCommand::DEACTIVATE_STATE));
-	defManager.add(CommandDefinition::createDef(this, "State", "Toggle State", &StateCommand::create, CommandContext::ACTION)->addParam("type", StateCommand::TOGGLE_STATE));
+	defManager.add(getBaseStateCommand("State", "Activate State", CommandContext::ACTION, StateCommand::ACTIVATE_STATE));
+	defManager.add(getBaseStateCommand("State", "Deactivate State", CommandContext::ACTION, StateCommand::DEACTIVATE_STATE));
+	defManager.add(getBaseStateCommand("State", "Toggle State", CommandContext::ACTION, StateCommand::TOGGLE_STATE));
 
-	defManager.add(CommandDefinition::createDef(this, "Action", "Trigger Action", &StateCommand::create, CommandContext::ACTION)->addParam("type", StateCommand::TRIGGER_ACTION));
-	defManager.add(CommandDefinition::createDef(this, "Action", "Enable Action", &StateCommand::create, CommandContext::ACTION)->addParam("type", StateCommand::ENABLE_ACTION));
-	defManager.add(CommandDefinition::createDef(this, "Action", "Disable Action", &StateCommand::create, CommandContext::ACTION)->addParam("type", StateCommand::DISABLE_ACTION));
-	defManager.add(CommandDefinition::createDef(this, "Action", "Toggle Action", &StateCommand::create, CommandContext::ACTION)->addParam("type", StateCommand::TOGGLE_ACTION));
+	defManager.add(getBaseStateCommand("Action", "Trigger Action", CommandContext::ACTION, StateCommand::TRIGGER_ACTION));
+	defManager.add(getBaseStateCommand("Action", "Enable Action", CommandContext::ACTION, StateCommand::ENABLE_ACTION));
+	defManager.add(getBaseStateCommand("Action", "Disable Action", CommandContext::ACTION, StateCommand::DISABLE_ACTION));
+	defManager.add(getBaseStateCommand("Action", "Toggle Action", CommandContext::ACTION, StateCommand::TOGGLE_ACTION));
 
-	defManager.add(CommandDefinition::createDef(this, "Mapping", "Enable Mapping", &StateCommand::create, CommandContext::ACTION)->addParam("type", StateCommand::ENABLE_MAPPING));
-	defManager.add(CommandDefinition::createDef(this, "Mapping", "Disable Mapping", &StateCommand::create, CommandContext::ACTION)->addParam("type", StateCommand::DISABLE_MAPPING));
-	defManager.add(CommandDefinition::createDef(this, "Mapping", "Toggle Mapping", &StateCommand::create, CommandContext::ACTION)->addParam("type", StateCommand::TOGGLE_MAPPING));
+	defManager.add(getBaseStateCommand("Mapping", "Enable Mapping", CommandContext::ACTION, StateCommand::ENABLE_MAPPING));
+	defManager.add(getBaseStateCommand("Mapping", "Disable Mapping", CommandContext::ACTION, StateCommand::DISABLE_MAPPING));
+	defManager.add(getBaseStateCommand("Mapping", "Toggle Mapping", CommandContext::ACTION, StateCommand::TOGGLE_MAPPING));
 }
 
 StateModule::~StateModule()
 {
+}
+
+CommandDefinition * StateModule::getBaseStateCommand(const String & menu, const String & commandName, CommandContext context, StateCommand::ActionType actionType)
+{
+	return CommandDefinition::createDef(this, menu,commandName, &StateCommand::create, context)->addParam("type", actionType);
+
 }
 

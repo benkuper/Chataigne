@@ -9,6 +9,7 @@
 */
 
 #include "TimeCue.h"
+#include "Sequence.h"
 
 TimeCue::TimeCue(const float & _time) :
 	BaseItem("Cue")
@@ -23,4 +24,18 @@ TimeCue::TimeCue(const float & _time) :
 
 TimeCue::~TimeCue()
 {
+}
+
+Sequence * TimeCue::getSequence()
+{
+	ControllableContainer * cc = parentContainer;
+
+	while (cc != nullptr)
+	{
+		Sequence * s = dynamic_cast<Sequence *>(cc);
+		if (s != nullptr) return s;
+		cc = cc->parentContainer;
+	}
+
+	return nullptr;
 }

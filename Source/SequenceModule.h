@@ -12,6 +12,8 @@
 #define SEQUENCEMODULE_H_INCLUDED
 
 #include "Module.h"
+#include "SequenceCommand.h"
+
 class SequenceManager;
 
 class SequenceModule :
@@ -23,6 +25,7 @@ public:
 
 	SequenceManager * manager;
 
+	CommandDefinition * createBaseDefinition(const String &menu, const String &type, CommandContext context, SequenceCommand::ActionType actionType);
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(SequenceModule)
 };

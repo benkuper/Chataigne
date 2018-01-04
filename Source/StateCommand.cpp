@@ -9,11 +9,7 @@
 */
 
 #include "StateCommand.h"
-
-#include "Action.h"
-#include "State.h"
-#include "StateCommandEditor.h"
-#include "Mapping.h"
+#include "StateManager.h"
 
 StateCommand::StateCommand(StateModule * _module, CommandContext context, var params) :
 	BaseCommand(_module,context,params),
@@ -21,8 +17,30 @@ StateCommand::StateCommand(StateModule * _module, CommandContext context, var pa
 {
 	target = addTargetParameter("Target", "Target for the command");
 	target->targetType = TargetParameter::CONTAINER;
-
 	actionType = (ActionType)(int)params.getProperty("type", ACTIVATE_STATE);
+
+	switch (actionType)
+	{
+	case ACTIVATE_STATE:
+	case DEACTIVATE_STATE:
+	case TOGGLE_STATE:
+		target->customGetTargetContainerFunc = &StateManager::showMenuAndGetState;
+		break;
+
+	case TRIGGER_ACTION:
+	case ENABLE_ACTION:
+	case DISABLE_ACTION:
+	case TOGGLE_ACTION:
+		target->customGetTargetContainerFunc = &StateManager::showMenuAndGetAction;
+		break;
+
+	case ENABLE_MAPPING:
+	case DISABLE_MAPPING:
+	case TOGGLE_MAPPING:
+		target->customGetTargetContainerFunc = &StateManager::showMenuAndGetMapping;
+		break;
+
+	}
 }
 
 StateCommand::~StateCommand()
@@ -96,9 +114,4 @@ void StateCommand::endLoadFile()
 	dataToLoad = var();
 
 	Engine::mainEngine->removeEngineListener(this);
-}
-
-InspectableEditor * StateCommand::getEditor(bool isRoot)
-{
-	return new StateCommandEditor(this, isRoot);
 }

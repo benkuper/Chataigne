@@ -67,6 +67,10 @@ void WatchoutCommand::trigger()
 			case Controllable::FLOAT:
 				s += String(p->floatValue());
 				break;
+
+			default:
+				//NOT HANDLED
+				break;
 			}
 		}
 	}

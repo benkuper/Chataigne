@@ -11,7 +11,7 @@
 #include "Consequence.h"
 
 Consequence::Consequence() :
-	BaseCommandHandler("Consequence"),
+	BaseCommandHandler("Consequence",CommandContext::ACTION),
 	forceDisabled(false)
 {
 	

@@ -28,64 +28,71 @@ SequenceManager::~SequenceManager()
 }
 
 
-PopupMenu SequenceManager::getAllSequencesMenu()
+Sequence * SequenceManager::showMenuAndGetSequence()
 {
 	PopupMenu menu;
-	for (int i = 0; i < items.size(); i++)
+	int numItems = SequenceManager::getInstance()->items.size();
+	for (int i = 0; i < numItems; i++)
 	{
-		menu.addItem(1 + i, items[i]->niceName);
+		menu.addItem(1 + i, SequenceManager::getInstance()->items[i]->niceName);
 	}
-
-	return menu;
+	int result = menu.show();
+	return SequenceManager::getInstance()->getSequenceForItemID(result);
 }
 
 Sequence * SequenceManager::getSequenceForItemID(int itemID)
 {
+	if (itemID <= 0 || itemID > items.size()) return nullptr;
 	return items[itemID - 1];
 }
 
-PopupMenu SequenceManager::getAllLayersMenu()
+SequenceLayer * SequenceManager::showmMenuAndGetLayer()
 {
 	PopupMenu menu;
-	for (int i = 0; i < items.size(); i++)
+	SequenceManager * sm = SequenceManager::getInstance();
+	for (int i = 0; i < sm->items.size(); i++)
 	{
 		PopupMenu sMenu;
-		int numValues = items[i]->layerManager->items.size();
+		int numValues = sm->items[i]->layerManager->items.size();
 		for (int j = 0; j < numValues; j++)
 		{
-			SequenceLayer * c = items[i]->layerManager->items[j];
+			SequenceLayer * c = sm->items[i]->layerManager->items[j];
 			sMenu.addItem(i * 1000 + j + 1, c->niceName);
 		}
-		menu.addSubMenu(items[i]->niceName, sMenu);
+		menu.addSubMenu(sm->items[i]->niceName, sMenu);
 	}
 
-	return menu;
+	int result = menu.show();
+	if (result == 0) return nullptr;
+	return SequenceManager::getInstance()->getLayerForItemID(result);
 }
 
 SequenceLayer * SequenceManager::getLayerForItemID(int itemID)
 {
 	if (itemID <= 0) return nullptr;
-	int moduleIndex = (int)floor((itemID - 1) / 1000);
-	int valueIndex = (itemID - 1) % 1000;
-	return items[moduleIndex]->layerManager->items[valueIndex];
+	int sequenceIndex = (int)floor((itemID - 1) / 1000);
+	int layerIndex = (itemID - 1) % 1000;
+	return items[sequenceIndex]->layerManager->items[layerIndex];
 }
 
-/*
-PopupMenu SequenceManager::getAllCuesMenu()
+TimeCue * SequenceManager::showMenuAndGetCue()
 {
 	PopupMenu menu;
-	for (int i = 0; i < items.size(); i++)
+	SequenceManager * sm = SequenceManager::getInstance();
+	for (int i = 0; i < sm->items.size(); i++)
 	{
 		PopupMenu sMenu;
-		int numValues = items[i]->cueManager->items.size();
+		int numValues = sm->items[i]->cueManager->items.size();
 		for (int j = 0; j < numValues; j++)
 		{
-			TimeCue * c = items[i]->cueManager->items[j];
+			TimeCue * c = sm->items[i]->cueManager->items[j];
 			sMenu.addItem(i * 1000 + j + 1, c->niceName);
 		}
-		menu.addSubMenu(items[i]->niceName, sMenu);
+		menu.addSubMenu(sm->items[i]->niceName, sMenu);
 	}
-	return menu;
+
+	int result = menu.show();
+	return SequenceManager::getInstance()->getCueForItemID(result);
 }
 
 TimeCue * SequenceManager::getCueForItemID(int itemID)
@@ -95,4 +102,3 @@ TimeCue * SequenceManager::getCueForItemID(int itemID)
 	int valueIndex = (itemID - 1) % 1000;
 	return items[moduleIndex]->cueManager->items[valueIndex];
 }
-*/

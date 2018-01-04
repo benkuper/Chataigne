@@ -12,8 +12,7 @@
 #define STATECOMMAND_H_INCLUDED
 
 #include "BaseCommand.h"
-#include "StateModule.h"
-
+class StateModule;
 
 class StateCommand :
 	public BaseCommand,
@@ -41,7 +40,6 @@ public:
 
 	static BaseCommand * create(ControllableContainer * module, CommandContext context, var params) { return new StateCommand((StateModule *)module, context, params); }
 
-	InspectableEditor * getEditor(bool isRoot) override;
 };
 
 

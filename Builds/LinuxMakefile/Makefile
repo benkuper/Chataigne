@@ -192,15 +192,9 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/DMXCommand_5ffc0ec5.o \
   $(JUCE_OBJDIR)/DMXModule_7722bc3c.o \
   $(JUCE_OBJDIR)/SerialModule_bd87ba09.o \
-  $(JUCE_OBJDIR)/StateChooserUI_aa930007.o \
-  $(JUCE_OBJDIR)/StateCommandEditor_9d48d90.o \
   $(JUCE_OBJDIR)/StateCommand_58f18103.o \
   $(JUCE_OBJDIR)/StateModule_b0b70a3e.o \
-  $(JUCE_OBJDIR)/SequenceChooserUI_956d18af.o \
-  $(JUCE_OBJDIR)/SequenceCueCommandEditor_cf465a8f.o \
-  $(JUCE_OBJDIR)/SequenceCommandEditor_53221238.o \
   $(JUCE_OBJDIR)/SequenceCommand_f949a3ab.o \
-  $(JUCE_OBJDIR)/SequenceCueCommand_d704b942.o \
   $(JUCE_OBJDIR)/SequenceModule_18fbf296.o \
   $(JUCE_OBJDIR)/AudioModule_88fd4f43.o \
   $(JUCE_OBJDIR)/GamepadManager_7fa3e695.o \
@@ -966,16 +960,6 @@ $(JUCE_OBJDIR)/SerialModule_bd87ba09.o: ../../Source/SerialModule.cpp
 	@echo "Compiling SerialModule.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
-$(JUCE_OBJDIR)/StateChooserUI_aa930007.o: ../../Source/StateChooserUI.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling StateChooserUI.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/StateCommandEditor_9d48d90.o: ../../Source/StateCommandEditor.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling StateCommandEditor.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
 $(JUCE_OBJDIR)/StateCommand_58f18103.o: ../../Source/StateCommand.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling StateCommand.cpp"
@@ -986,29 +970,9 @@ $(JUCE_OBJDIR)/StateModule_b0b70a3e.o: ../../Source/StateModule.cpp
 	@echo "Compiling StateModule.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
-$(JUCE_OBJDIR)/SequenceChooserUI_956d18af.o: ../../Source/SequenceChooserUI.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling SequenceChooserUI.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/SequenceCueCommandEditor_cf465a8f.o: ../../Source/SequenceCueCommandEditor.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling SequenceCueCommandEditor.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/SequenceCommandEditor_53221238.o: ../../Source/SequenceCommandEditor.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling SequenceCommandEditor.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
 $(JUCE_OBJDIR)/SequenceCommand_f949a3ab.o: ../../Source/SequenceCommand.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling SequenceCommand.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/SequenceCueCommand_d704b942.o: ../../Source/SequenceCueCommand.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling SequenceCueCommand.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/SequenceModule_18fbf296.o: ../../Source/SequenceModule.cpp

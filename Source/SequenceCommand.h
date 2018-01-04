@@ -12,8 +12,7 @@
 #define SEQUENCECOMMAND_H_INCLUDED
 
 #include "BaseCommand.h"
-#include "SequenceModule.h"
-
+class SequenceModule;
 
 class SequenceCommand :
 	public BaseCommand,
@@ -23,7 +22,7 @@ public:
 	SequenceCommand(SequenceModule * _module, CommandContext context, var params);
 	virtual ~SequenceCommand();
 
-	enum ActionType { PLAY_SEQUENCE, PAUSE_SEQUENCE, STOP_SEQUENCE, TOGGLE_SEQUENCE, ENABLE_LAYER, DISABLE_LAYER};
+	enum ActionType { PLAY_SEQUENCE, PAUSE_SEQUENCE, STOP_SEQUENCE, TOGGLE_SEQUENCE, ENABLE_LAYER, DISABLE_LAYER, SET_TIME, GOTO_CUE};
 
 	ActionType actionType;
 	SequenceModule * sequenceModule;
@@ -31,19 +30,16 @@ public:
 	BoolParameter * playFromStart;
 
 	TargetParameter * target;
+	FloatParameter * value;
 
 	virtual void trigger() override;
-
 
 	var dataToLoad;
 
 	virtual void loadJSONDataInternal(var data) override;
 	virtual void endLoadFile() override;
 
-
 	static BaseCommand * create(ControllableContainer * module, CommandContext context, var params);
-
-	InspectableEditor * getEditor(bool isRoot) override;
 };
 
 

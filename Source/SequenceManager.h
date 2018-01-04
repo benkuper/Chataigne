@@ -31,13 +31,13 @@ public:
 	SequenceModule module;
 
 
-	PopupMenu getAllSequencesMenu();
+	static Sequence * showMenuAndGetSequence();
 	Sequence * getSequenceForItemID(int itemID);
 
-	PopupMenu getAllLayersMenu();
+	static SequenceLayer * showmMenuAndGetLayer();
 	SequenceLayer * getLayerForItemID(int itemID);
 
-	PopupMenu getAllCuesMenu();
+	static TimeCue * showMenuAndGetCue();
 	TimeCue * getCueForItemID(int itemID);
 
 

@@ -8,10 +8,12 @@
   ==============================================================================
 */
 
+#include "SequenceModule.h"
 #include "SequenceCommand.h"
 #include "Sequence.h"
 #include "SequenceLayer.h"
-#include "SequenceCommandEditor.h"
+#include "SequenceManager.h"
+#include "TimeCue.h"
 
 SequenceCommand::SequenceCommand(SequenceModule * _module, CommandContext context, var params) :
 	BaseCommand(_module, context, params),
@@ -27,6 +29,27 @@ SequenceCommand::SequenceCommand(SequenceModule * _module, CommandContext contex
 	case PLAY_SEQUENCE:
 	case TOGGLE_SEQUENCE:
 		playFromStart = addBoolParameter("Play From Start", "If enabled, when the command is triggered, will position the time at 0 before playing", false);
+	case STOP_SEQUENCE:
+	case PAUSE_SEQUENCE:
+		target->showParentNameInEditor = false;
+		target->customGetTargetContainerFunc = &SequenceManager::showMenuAndGetSequence;
+		break;
+
+	case DISABLE_LAYER:
+	case ENABLE_LAYER:
+		target->customGetTargetContainerFunc = &SequenceManager::showmMenuAndGetLayer;
+		break;
+
+	case SET_TIME:
+		target->customGetTargetContainerFunc = &SequenceManager::showMenuAndGetSequence;
+
+		value = addFloatParameter("Time", "Target time to set", 0, 0, 3600);
+		value->defaultUI = FloatParameter::TIME;
+		setTargetMappingParameterAt(value, 0);
+		break;
+
+	case GOTO_CUE:
+		target->customGetTargetContainerFunc = &SequenceManager::showMenuAndGetCue;
 		break;
 
 	default:
@@ -70,7 +93,19 @@ void SequenceCommand::trigger()
     case DISABLE_LAYER:
         ((SequenceLayer *)target->targetContainer.get())->enabled->setValue(false);
         break;
-            
+
+	case SET_TIME:
+		((Sequence *)target->targetContainer.get())->currentTime->setValue(value->floatValue());
+		break;
+
+	case GOTO_CUE:
+		TimeCue * cue = dynamic_cast<TimeCue *>(target->targetContainer.get());
+		if (cue != nullptr)
+		{
+			Sequence * s = cue->getSequence();
+			if (s != nullptr) s->setCurrentTime(cue->time->floatValue());
+		}
+		break;
 	}
 }
 
@@ -78,7 +113,6 @@ void SequenceCommand::loadJSONDataInternal(var data)
 {
 	if (Engine::mainEngine->isLoadingFile)
 	{
-		DBG("Engine is loading, waiting after load");
 		Engine::mainEngine->addEngineListener(this);
 		dataToLoad = data;
 	}
@@ -89,7 +123,6 @@ void SequenceCommand::endLoadFile()
 {
 	//reset data we want to reload
 	target->setValue("",true);
-	DBG("Engine after load, load command data");
 
 	loadJSONData(dataToLoad);
 	dataToLoad = var();
@@ -98,11 +131,14 @@ void SequenceCommand::endLoadFile()
 
 }
 
+
 BaseCommand * SequenceCommand::create(ControllableContainer * module, CommandContext context, var params) {
 	return new SequenceCommand((SequenceModule *)module, context, params);
 }
 
+/*
 InspectableEditor * SequenceCommand::getEditor(bool isRoot)
 {
 	return new SequenceCommandEditor(this, isRoot);
 }
+*/

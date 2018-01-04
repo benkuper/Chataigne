@@ -12,6 +12,7 @@
 #define STATEMODULE_H_INCLUDED
 
 #include "Module.h"
+#include "StateCommand.h"
 class StateManager;
 
 class StateModule :
@@ -22,6 +23,8 @@ public:
 	~StateModule();
 
 	StateManager * manager;
+
+	CommandDefinition * getBaseStateCommand(const String &menu, const String &commandName, CommandContext context, StateCommand::ActionType actionType);
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(StateModule)
 };

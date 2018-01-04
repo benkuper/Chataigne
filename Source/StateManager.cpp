@@ -76,79 +76,88 @@ void StateManager::itemAdded(StateTransition * s)
 	if (!Engine::mainEngine->isLoadingFile) setStateActive(s->sourceState);
 }
 
-PopupMenu StateManager::getAllStatesMenu()
+
+State * StateManager::showMenuAndGetState()
 {
 	PopupMenu menu;
-	for (int i = 0; i < items.size(); i++)
+	StateManager * sm = StateManager::getInstance();
+	for (int i = 0; i < sm->items.size(); i++)
 	{
-		menu.addItem(1+i,items[i]->niceName);
+		menu.addItem(1+i,sm->items[i]->niceName);
 	}
 
-	return menu;
+	int result = menu.show();
+	return sm->getStateForItemID(result);
 }
+
 
 State * StateManager::getStateForItemID(int itemID)
 {
+	if (itemID <= 0 || itemID > items.size()) return nullptr;
 	return items[itemID-1];
 }
 
-PopupMenu StateManager::getAllActionsMenu()
+Action * StateManager::showMenuAndGetAction()
 {
 	PopupMenu menu;
-	for (int i = 0; i < items.size(); i++)
+	StateManager * sm = StateManager::getInstance();
+	for (int i = 0; i < sm->items.size(); i++)
 	{
 		PopupMenu sMenu;
-		int numValues = items[i]->pm.items.size();
+		int numValues = sm->items[i]->pm.items.size();
 		for (int j = 0; j < numValues; j++)
 		{
-			if (items[i]->pm.items[j]->type == Processor::ACTION)
+			if (sm->items[i]->pm.items[j]->type == Processor::ACTION)
 			{
-				Action * c = (Action *)(items[i]->pm.items[j]);
+				Action * c = (Action *)(sm->items[i]->pm.items[j]);
 				sMenu.addItem(i * 1000 + j + 1, c->niceName);
 			}
 		}
-		menu.addSubMenu(items[i]->niceName, sMenu);
+		menu.addSubMenu(sm->items[i]->niceName, sMenu);
 	}
 
-	return menu;
+	int result = menu.show();
+	return sm->getActionForItemID(result);
 }
 
 Action * StateManager::getActionForItemID(int itemID)
 {
 	if (itemID <= 0) return nullptr;
-	int moduleIndex = (int)floor((itemID - 1) / 1000);
-	int valueIndex = (itemID - 1) % 1000;
-	return (Action *)(items[moduleIndex]->pm.items[valueIndex]);
+	int stateIndex = (int)floor((itemID - 1) / 1000);
+	int actionIndex = (itemID - 1) % 1000;
+	return (Action *)(items[stateIndex]->pm.items[actionIndex]);
 }
 
-PopupMenu StateManager::getAllMappingsMenu()
+Mapping * StateManager::showMenuAndGetMapping()
 {
 	PopupMenu menu;
-	for (int i = 0; i < items.size(); i++)
+	StateManager * sm = StateManager::getInstance();
+	for (int i = 0; i < sm->items.size(); i++)
 	{
 		PopupMenu sMenu;
-		int numValues = items[i]->pm.items.size();
+		int numValues = sm->items[i]->pm.items.size();
 		for (int j = 0; j < numValues; j++)
 		{
-			if (items[i]->pm.items[j]->type == Processor::MAPPING)
+			if (sm->items[i]->pm.items[j]->type == Processor::MAPPING)
 			{
-				Mapping * c = (Mapping *)(items[i]->pm.items[j]);
+				Mapping * c = (Mapping *)(sm->items[i]->pm.items[j]);
 				sMenu.addItem(i * 1000 + j + 1, c->niceName);
 			}
 			
 		}
-		menu.addSubMenu(items[i]->niceName, sMenu);
+		menu.addSubMenu(sm->items[i]->niceName, sMenu);
 	}
 
-	return menu;
+	int result = menu.show();
+	return sm->getMappingForItemID(result);
 }
 
 Mapping * StateManager::getMappingForItemID(int itemID)
 {
 	if (itemID <= 0) return nullptr;
-	int moduleIndex = (int)floor((itemID - 1) / 1000);
-	int valueIndex = (itemID - 1) % 1000;
-	return (Mapping *)(items[moduleIndex]->pm.items[valueIndex]);
+	int stateIndex = (int)floor((itemID - 1) / 1000);
+	int mappingIndex = (itemID - 1) % 1000;
+	return (Mapping *)(items[stateIndex]->pm.items[mappingIndex]);
 }
 
 Array<State *> StateManager::getLinkedStates(State * s, Array<State *> * statesToAvoid)

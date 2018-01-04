@@ -12,6 +12,7 @@
 #define TIMECUE_H_INCLUDED
 
 #include "JuceHeader.h"
+class Sequence;
 
 class TimeCue :
 	public BaseItem
@@ -21,6 +22,7 @@ public:
 	~TimeCue();
 
 	FloatParameter * time;
+	Sequence * getSequence();
 };
 
 #endif  // TIMECUE_H_INCLUDED

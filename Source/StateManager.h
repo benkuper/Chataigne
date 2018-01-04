@@ -42,11 +42,11 @@ public:
 	void stateActivationChanged(State * s) override;
 	void itemAdded(StateTransition * s) override;
 
-	PopupMenu getAllStatesMenu();
+	static State * showMenuAndGetState();
 	State * getStateForItemID(int itemID);
-	PopupMenu getAllActionsMenu();
+	static Action * showMenuAndGetAction();
 	Action * getActionForItemID(int itemID);
-	PopupMenu getAllMappingsMenu();
+	static Mapping * showMenuAndGetMapping();
 	Mapping * getMappingForItemID(int itemID);
 
 

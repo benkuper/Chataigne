@@ -8,22 +8,27 @@
   ==============================================================================
 */
 
-#include "SequenceModule.h"
 #include "SequenceManager.h"
-#include "SequenceCommand.h"
-#include "SequenceCueCommand.h"
 
 SequenceModule::SequenceModule(SequenceManager * _manager) :
 	Module("Sequences"),
 	manager(_manager)
 {
-	defManager.add(CommandDefinition::createDef(this, "Sequence", "Play Sequence", &SequenceCommand::create, CommandContext::ACTION)->addParam("type", SequenceCommand::PLAY_SEQUENCE));
-	defManager.add(CommandDefinition::createDef(this, "Sequence", "Pause Sequence", &SequenceCommand::create, CommandContext::ACTION)->addParam("type", SequenceCommand::PAUSE_SEQUENCE));
-	defManager.add(CommandDefinition::createDef(this, "Sequence", "Stop Sequence", &SequenceCommand::create, CommandContext::ACTION)->addParam("type", SequenceCommand::STOP_SEQUENCE));
-	defManager.add(CommandDefinition::createDef(this, "Sequence", "Toggle Sequence", &SequenceCommand::create, CommandContext::ACTION)->addParam("type", SequenceCommand::TOGGLE_SEQUENCE));
-	defManager.add(CommandDefinition::createDef(this, "Sequence", "Go to cue", &SequenceCueCommand::create, CommandContext::ACTION));
+	defManager.add(createBaseDefinition("Playback","Play Sequence", CommandContext::ACTION,SequenceCommand::PLAY_SEQUENCE));
+	defManager.add(createBaseDefinition("Playback", "Pause Sequence", CommandContext::ACTION,SequenceCommand::PAUSE_SEQUENCE));
+	defManager.add(createBaseDefinition("Playback", "Stop Sequence", CommandContext::ACTION,SequenceCommand::STOP_SEQUENCE));
+	defManager.add(createBaseDefinition("Playback", "Toggle Sequence", CommandContext::ACTION,SequenceCommand::TOGGLE_SEQUENCE));
+	defManager.add(createBaseDefinition("Time", "Set Current Time", CommandContext::BOTH,SequenceCommand::SET_TIME));
+	defManager.add(createBaseDefinition("Time", "Go to cue", CommandContext::ACTION, SequenceCommand::GOTO_CUE));
+	defManager.add(createBaseDefinition("Layer", "Enable Layer",CommandContext::ACTION, SequenceCommand::ENABLE_LAYER));
+	defManager.add(createBaseDefinition("Layer", "Go to cue", CommandContext::ACTION, SequenceCommand::DISABLE_LAYER));
 }
 
 SequenceModule::~SequenceModule()
 {
+}
+
+CommandDefinition * SequenceModule::createBaseDefinition(const String & menu, const String & type, CommandContext context, SequenceCommand::ActionType actionType)
+{
+	return CommandDefinition::createDef(this, menu, type, &SequenceCommand::create, context)->addParam("type", actionType);
 }
