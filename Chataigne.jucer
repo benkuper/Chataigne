@@ -1114,9 +1114,11 @@
     <LINUX_MAKE targetFolder="Builds/LinuxMakefile" externalLibraries="bluetooth">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" isDebug="1" optimisation="1" targetName="Chataigne"
-                       headerPath="../../External/wiiuse&#10;../../External/serial/include"/>
+                       headerPath="../../External/wiiuse&#10;../../External/serial/include"
+                       linuxArchitecture="-m64"/>
         <CONFIGURATION name="Release" isDebug="0" optimisation="3" targetName="Chataigne"
-                       headerPath="../../External/wiiuse&#10;../../External/serial/include"/>
+                       headerPath="../../External/wiiuse&#10;../../External/serial/include"
+                       linuxArchitecture="-m64"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_video" path="../JUCE/modules"/>

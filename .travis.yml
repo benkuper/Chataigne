@@ -40,4 +40,4 @@ branches:
   - master
 script:
 - export JUCE_MODULES_PATH=/home/travis/build/benkuper/JUCE/modules
-- make -j 8 TARGET_ARCH="-march=x86-64" CONFIG=Release -C "Chataigne/Builds/LinuxMakefile/"
+- make -j 8 CONFIG=Release -C "Chataigne/Builds/LinuxMakefile/"
