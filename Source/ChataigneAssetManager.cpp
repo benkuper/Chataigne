@@ -47,6 +47,11 @@ Image ChataigneAssetManager::getSnapImage()
 	return ImageCache::getFromMemory(BinaryData::snap_png, BinaryData::snap_pngSize);
 }
 
+Image ChataigneAssetManager::getAboutImage()
+{
+	return ImageCache::getFromMemory(BinaryData::about_png, BinaryData::about_pngSize);
+}
+
 ImageButton * ChataigneAssetManager::getSetupBTImage(const Image & image)
 {
 	ImageButton * bt = new ImageButton();

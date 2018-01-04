@@ -8,6 +8,9 @@
 
 namespace BinaryData
 {
+    extern const char*   about_png;
+    const int            about_pngSize = 36971;
+
     extern const char*   add_png;
     const int            add_pngSize = 16103;
 
@@ -18,7 +21,7 @@ namespace BinaryData
     const int            icon_pngSize = 42153;
 
     extern const char*   in_png;
-    const int            in_pngSize = 20744;
+    const int            in_pngSize = 3528;
 
     extern const char*   nextcue_png;
     const int            nextcue_pngSize = 16077;
@@ -33,7 +36,7 @@ namespace BinaryData
     const int            prevcue_pngSize = 16089;
 
     extern const char*   snap_png;
-    const int            snap_pngSize = 2911;
+    const int            snap_pngSize = 3649;
 
     extern const char*   stop_png;
     const int            stop_pngSize = 15967;
@@ -42,7 +45,7 @@ namespace BinaryData
     extern const char* namedResourceList[];
 
     // Number of elements in the namedResourceList array.
-    const int namedResourceListSize = 10;
+    const int namedResourceListSize = 11;
 
     // If you provide the name of one of the binary resource variables above, this function will
     // return the corresponding data and its size (or a null pointer if the name isn't found).

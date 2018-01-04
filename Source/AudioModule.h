@@ -17,6 +17,17 @@
 #define AUDIO_INPUT_GRAPH_ID 1
 #define AUDIO_OUTPUT_GRAPH_ID 2
 
+class AudioModuleHardwareSettings :
+	public ControllableContainer
+{
+public:
+	AudioModuleHardwareSettings(AudioDeviceManager * am);
+	~AudioModuleHardwareSettings() {}
+	AudioDeviceManager * am;
+
+	InspectableEditor * getEditor(bool isRoot) override;
+};
+
 class AudioModule :
 	public Module,
 	public AudioIODeviceCallback,
@@ -26,6 +37,7 @@ public:
 	AudioModule(const String &name = "Sound Card");
 	~AudioModule();
 
+	AudioModuleHardwareSettings hs;
 	AudioDeviceManager am;
 	AudioProcessorPlayer player;
 	AudioProcessorGraph graph;
@@ -50,7 +62,6 @@ public:
 	Array<BoolParameter *> monitorOutChannels;
 	Array<int> selectedMonitorOutChannels;
 	int numActiveMonitorOutputs;
-
 
 	//Values
 	FloatParameter * volume;
@@ -101,5 +112,7 @@ private:
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(AudioModule)
 };
+
+
 
 #endif  // AUDIOMODULE_H_INCLUDED

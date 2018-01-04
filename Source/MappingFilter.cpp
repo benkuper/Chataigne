@@ -11,11 +11,13 @@
 #include "MappingFilter.h"
 #include "MappingFilterEditor.h"
 
-MappingFilter::MappingFilter(const String &name, var /*params*/) :
+MappingFilter::MappingFilter(const String &name, var params) :
 	BaseItem(name),
 	sourceParam(nullptr),
 	filteredParameter(nullptr),
 	filterParams("filterParams"),
+	forceOutParameterType(String::empty),
+	needsContinuousProcess(false),
 	autoSetRange(true)
 {
 	isSelectable = false;
@@ -24,6 +26,8 @@ MappingFilter::MappingFilter(const String &name, var /*params*/) :
 	filterParams.skipControllableNameInAddress = true;
 	addChildControllableContainer(&filterParams);
 	filterParams.addControllableContainerListener(this);
+
+	forceOutParameterType = params.getProperty("forceType", "");
 }
 
 MappingFilter::~MappingFilter()
@@ -51,10 +55,10 @@ void MappingFilter::setupSource(Parameter * source)
 	mappingFilterListeners.call(&FilterListener::filteredParamChanged, this);
 }
 
-Parameter * MappingFilter::setupParameterInternal(Parameter * source, const String &forceType)
+Parameter * MappingFilter::setupParameterInternal(Parameter * source)
 {
 	if (source == nullptr) return nullptr;
-	Parameter * p = (Parameter *) ControllableFactory::createControllable(forceType.isNotEmpty()?forceType:source->getTypeString());
+	Parameter * p = (Parameter *) ControllableFactory::createControllable(forceOutParameterType.isNotEmpty()? forceOutParameterType :source->getTypeString());
 	p->setNiceName("Out");
 	p->setValue(source->getValue());
 	p->setRange(source->minimumValue, source->maximumValue);

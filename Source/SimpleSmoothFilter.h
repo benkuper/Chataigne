@@ -11,7 +11,24 @@
 #ifndef SIMPLESMOOTHFILTER_H_INCLUDED
 #define SIMPLESMOOTHFILTER_H_INCLUDED
 
+#include "MappingFilter.h"
 
+class SimpleSmoothFilter :
+	public MappingFilter
+{
+public:
+	SimpleSmoothFilter(var params);
+	~SimpleSmoothFilter();
+
+	FloatParameter * smooth;
+
+	void processInternal() override;
+
+
+	static SimpleSmoothFilter * create(var params) { return new SimpleSmoothFilter(params); }
+	String getTypeString() const override { return "Simple Smooth"; }
+
+};
 
 
 

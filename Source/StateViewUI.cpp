@@ -28,7 +28,7 @@ BaseItemUI<State>(state, ResizeMode::ALL, true),
 	}
 
 	setSize(200,200);
-	//resized();
+	resized();
 }
 	
 

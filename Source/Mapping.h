@@ -20,7 +20,8 @@
 class Mapping :
 	public Processor,
 	public MappingInput::Listener,
-	public Timer
+	public Timer,
+	public MappingFilterManager::BaseManager::Listener
 {
 public:
 	Mapping(bool canBeDisabled = true);
@@ -35,6 +36,7 @@ public:
 
 	bool inputIsLocked;
 	void lockInputTo(Parameter * lockParam);
+	void checkFiltersNeedContinuousProcess();
 
 	void process();
 
@@ -45,6 +47,9 @@ public:
 	void inputParameterValueChanged(MappingInput *) override;
 
 	void onContainerParameterChangedInternal(Parameter *) override;
+
+	void itemAdded(MappingFilter * m) override;
+	void itemRemoved(MappingFilter * m) override;
 
 	// Inherited via Timer
 	virtual void timerCallback() override;

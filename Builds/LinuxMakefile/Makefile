@@ -68,6 +68,7 @@ endif
 OBJECTS_APP := \
   $(JUCE_OBJDIR)/ProjectSettings_6f8498bd.o \
   $(JUCE_OBJDIR)/GlobalSettings_72a3f96f.o \
+  $(JUCE_OBJDIR)/AboutWindow_ecd5b1be.o \
   $(JUCE_OBJDIR)/ChataigneAssetManager_e104aa7c.o \
   $(JUCE_OBJDIR)/ProcessorManagerUI_2a595c98.o \
   $(JUCE_OBJDIR)/ProcessorUI_aaf05207.o \
@@ -156,6 +157,7 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/ModuleRouterValue_937230fd.o \
   $(JUCE_OBJDIR)/ModuleRouter_785566de.o \
   $(JUCE_OBJDIR)/ModuleRouterManager_16ed3779.o \
+  $(JUCE_OBJDIR)/TimeModule_2a9df8a2.o \
   $(JUCE_OBJDIR)/SendUDPStringCommand_92456b6a.o \
   $(JUCE_OBJDIR)/UDPModule_6171c46e.o \
   $(JUCE_OBJDIR)/SignalModule_18fcd9bd.o \
@@ -196,6 +198,7 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/StateModule_b0b70a3e.o \
   $(JUCE_OBJDIR)/SequenceCommand_f949a3ab.o \
   $(JUCE_OBJDIR)/SequenceModule_18fbf296.o \
+  $(JUCE_OBJDIR)/AudioModuleHardwareEditor_49dc1dd8.o \
   $(JUCE_OBJDIR)/AudioModule_88fd4f43.o \
   $(JUCE_OBJDIR)/GamepadManager_7fa3e695.o \
   $(JUCE_OBJDIR)/GamepadModule_543d4e0e.o \
@@ -338,6 +341,11 @@ $(JUCE_OBJDIR)/ProjectSettings_6f8498bd.o: ../../Source/ProjectSettings.cpp
 $(JUCE_OBJDIR)/GlobalSettings_72a3f96f.o: ../../Source/GlobalSettings.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling GlobalSettings.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/AboutWindow_ecd5b1be.o: ../../Source/AboutWindow.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling AboutWindow.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/ChataigneAssetManager_e104aa7c.o: ../../Source/ChataigneAssetManager.cpp
@@ -780,6 +788,11 @@ $(JUCE_OBJDIR)/ModuleRouterManager_16ed3779.o: ../../Source/ModuleRouterManager.
 	@echo "Compiling ModuleRouterManager.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
+$(JUCE_OBJDIR)/TimeModule_2a9df8a2.o: ../../Source/TimeModule.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling TimeModule.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
 $(JUCE_OBJDIR)/SendUDPStringCommand_92456b6a.o: ../../Source/SendUDPStringCommand.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling SendUDPStringCommand.cpp"
@@ -978,6 +991,11 @@ $(JUCE_OBJDIR)/SequenceCommand_f949a3ab.o: ../../Source/SequenceCommand.cpp
 $(JUCE_OBJDIR)/SequenceModule_18fbf296.o: ../../Source/SequenceModule.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling SequenceModule.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/AudioModuleHardwareEditor_49dc1dd8.o: ../../Source/AudioModuleHardwareEditor.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling AudioModuleHardwareEditor.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/AudioModule_88fd4f43.o: ../../Source/AudioModule.cpp

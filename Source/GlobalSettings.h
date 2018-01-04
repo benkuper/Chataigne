@@ -27,7 +27,13 @@ public:
 	BoolParameter * checkBetaUpdates;
 	BoolParameter * updateHelpOnStartup;
 	BoolParameter * openLastDocumentOnStartup;
+	BoolParameter * openSpecificFileOnStartup;
+	StringParameter * fileToOpenOnStartup;
 
 	ControllableContainer confirmationsCC;
+	BoolParameter * askForSaveBeforeClosing;
 	BoolParameter * askBeforeRemovingItems;
+
+	void controllableFeedbackUpdate(ControllableContainer *, Controllable * c) override;
+	void loadJSONDataInternal(var data) override;
 };

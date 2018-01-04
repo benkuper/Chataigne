@@ -24,11 +24,14 @@ public:
 	Parameter * sourceParam;
 	WeakReference<Parameter> filteredParameter;
 	ControllableContainer filterParams;
+	
+	String forceOutParameterType;
 
+	bool needsContinuousProcess;
 	bool autoSetRange; //if true, will check at process if ranges are differents between source and filtered, and if so, will reassign
 
 	void setupSource(Parameter * source);
-	virtual Parameter * setupParameterInternal(Parameter * source, const String &forceType = String::empty);
+	virtual Parameter * setupParameterInternal(Parameter * source);
 
 	void onControllableFeedbackUpdateInternal(ControllableContainer *, Controllable * p) override;
 	virtual void filterParamChanged(Parameter * ) {};

@@ -61,7 +61,7 @@ void TimeTriggerManagerUI::mouseDown(const MouseEvent & e)
 	BaseManagerUI::mouseDown(e);
 	if (e.mods.isLeftButtonDown())
 	{
-		if (e.mods.isCtrlDown())
+		if (e.mods.isCommandDown())
 		{
 			float time = timeline->getTimeForX(getMouseXYRelative().x);
 			manager->addTriggerAt(time,getMouseXYRelative().y*1.f/getHeight());

@@ -45,19 +45,21 @@ void ChataigneApplication::initialise(const String & commandLine)
 	Analytics::getInstance()->addDestination(new GoogleAnalyticsDestination());
 	Analytics::getInstance()->logEvent("startup", {});
 
-
 	//Crash handler
 #if JUCE_WINDOWS
 	SystemStats::setApplicationCrashHandler((SystemStats::CrashHandlerFunction)createMiniDump);
 #endif
 
 
-	if(GlobalSettings::getInstance()->openLastDocumentOnStartup->boolValue())  Engine::mainEngine->loadFrom(Engine::mainEngine->getLastDocumentOpened(), true);
+	if (GlobalSettings::getInstance()->openLastDocumentOnStartup->boolValue())  Engine::mainEngine->loadFrom(Engine::mainEngine->getLastDocumentOpened(), true);
+	else if(GlobalSettings::getInstance()->openSpecificFileOnStartup->boolValue() && GlobalSettings::getInstance()->fileToOpenOnStartup->stringValue().isNotEmpty())  Engine::mainEngine->loadFrom(File(GlobalSettings::getInstance()->fileToOpenOnStartup->stringValue()), true);
 }
 
 
 inline void ChataigneApplication::shutdown()
 {
+	
+	
 	var boundsVar = var(new DynamicObject());
 	juce::Rectangle<int> r = mainWindow->getScreenBounds();
 
@@ -153,13 +155,18 @@ inline ChataigneApplication::MainWindow::MainWindow(String name) : DocumentWindo
 	
 }
 
-inline void ChataigneApplication::MainWindow::closeButtonPressed() 
+void ChataigneApplication::MainWindow::closeButtonPressed() 
 {
-	// This is called when the user tries to close this window. Here, we'll just
-	// ask the app to quit when this happens, but you can change this to do
-	// whatever you need.
 
-	
+	if (GlobalSettings::getInstance()->askForSaveBeforeClosing->boolValue())
+	{
+		int result = AlertWindow::showYesNoCancelBox(AlertWindow::QuestionIcon, "Save document", "Do you want to save the document before opening a new one ?");
+		if (result != 0)
+		{
+			if (result == 1) Engine::mainEngine->save(true, true);
+		}
+	}
+
 #if JUCE_OPENGL && JUCE_WINDOWS
 	openGLContext.detach();
 #endif

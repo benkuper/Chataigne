@@ -12,8 +12,8 @@
 
 AutomationUI::AutomationUI(Automation * _automation) :
 	BaseManagerUI("Automation",_automation,false),
-firstROIKey(0),lastROIKey(0), currentPosition(0),
-valueBGColor(Colours::white.withAlpha(.1f)),
+	firstROIKey(0),lastROIKey(0), currentPosition(0),
+	valueBGColor(Colours::white.withAlpha(.1f)),
 	currentUI(nullptr)
 {
 	manager->selectionManager->addSelectionListener(this);
@@ -26,9 +26,9 @@ valueBGColor(Colours::white.withAlpha(.1f)),
 	manager->addAsyncContainerListener(this);
 
 	resizeOnChildBoundsChanged = false;
-	addExistingItems();
+	addExistingItems(); 
 
-#if JUCE_MAC
+#if JUCE_C
 	noItemText = "Add keys using Command + Left Click";
 #else 
 	noItemText = "Add keys using Ctrl + Left Click";
@@ -255,7 +255,7 @@ void AutomationUI::mouseDown(const MouseEvent & e)
 
 	if (e.eventComponent == this)
 	{
-		if (e.mods.isLeftButtonDown() && e.mods.isCtrlDown())
+		if (e.mods.isLeftButtonDown() && e.mods.isCommandDown())
 		{
 			manager->addItem(getPosForX(e.getPosition().x), getValueForY(e.getPosition().y));
 		}else

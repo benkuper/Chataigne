@@ -32,6 +32,7 @@
 #include "SignalModule.h"
 #include "UDPModule.h"
 #include "WatchoutModule.h"
+#include "TimeModule.h"
 
 juce_ImplementSingleton(ModuleFactory)
 
@@ -68,6 +69,8 @@ ModuleFactory::ModuleFactory() {
 	moduleDefs.add(new ModuleDefinition("Generator", "Metronome", &MetronomeModule::create));
 	moduleDefs.add(new ModuleDefinition("Generator", "Signal", &SignalModule::create));
 	
+	moduleDefs.add(new ModuleDefinition("System", "Time", &TimeModule::create));
+
 	addCustomModules();
 	buildPopupMenu();
 }

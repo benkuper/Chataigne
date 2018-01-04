@@ -56,6 +56,7 @@ void DMXModule::setCurrentDMXDevice(DMXDevice * d)
 	}
 
 	dmxDevice = d;
+	dmxConnected->setValue(false);
 
 	if (dmxDevice != nullptr)
 	{

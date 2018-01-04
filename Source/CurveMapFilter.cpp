@@ -20,6 +20,8 @@ CurveMapFilter::CurveMapFilter(var params) :
 	curve.showUIInEditor = true;
 	curve.selectItemWhenCreated = false;
 	filterParams.addChildControllableContainer(&curve);
+
+	forceOutParameterType = FloatParameter::getTypeStringStatic();
 }
 
 CurveMapFilter::~CurveMapFilter()
@@ -45,15 +47,3 @@ void CurveMapFilter::loadJSONDataInternal(var data)
 	curve.loadJSONData(data.getProperty("curve", var()), true);
 }
 
-Parameter * CurveMapFilter::setupParameterInternal(Parameter * source, const String & forceType)
-{
-	return MappingFilter::setupParameterInternal(source, FloatParameter::getTypeStringStatic());
-}
-
-
-/*
-InspectableEditor * CurveMapFilter::getEditor(bool isRoot)
-{
-	return new CurveMapFilterEditor(this, isRoot);
-}
-*/

@@ -8,6 +8,7 @@
               companyCopyright="Ben Kuper">
   <MAINGROUP id="EDDVhd" name="Chataigne">
     <GROUP id="{E61F6705-4C4B-3F04-F742-20CC91F590E4}" name="Resources">
+      <FILE id="qDQaKu" name="about.png" compile="0" resource="1" file="Resources/about.png"/>
       <FILE id="fwyowN" name="add.png" compile="0" resource="1" file="Resources/add.png"/>
       <FILE id="vsuOJZ" name="default.chalayout" compile="0" resource="1"
             file="Resources/default.chalayout"/>
@@ -39,6 +40,8 @@
               file="Source/GoogleAnalyticsDestination.h"/>
       </GROUP>
       <GROUP id="{FA0E78EC-9F83-99D0-4BB9-C686CC8B957D}" name="UI">
+        <FILE id="DB3yuB" name="AboutWindow.cpp" compile="1" resource="0" file="Source/AboutWindow.cpp"/>
+        <FILE id="Ma85de" name="AboutWindow.h" compile="0" resource="0" file="Source/AboutWindow.h"/>
         <FILE id="iuBdcn" name="ChataigneAssetManager.cpp" compile="1" resource="0"
               file="Source/ChataigneAssetManager.cpp"/>
         <FILE id="HboC1m" name="ChataigneAssetManager.h" compile="0" resource="0"
@@ -420,6 +423,12 @@
                 file="Source/ModuleRouterManager.h"/>
         </GROUP>
         <GROUP id="{766BCE2E-5C2E-5A80-EC80-7FFA2C7ABBBA}" name="modules">
+          <GROUP id="{2086FD88-5179-1DFE-5E2F-7AC0D91DE535}" name="system">
+            <GROUP id="{C115AA58-9CEE-B7D5-941D-2EB4E07B8E75}" name="time">
+              <FILE id="qeWJSa" name="TimeModule.cpp" compile="1" resource="0" file="Source/TimeModule.cpp"/>
+              <FILE id="T6epyL" name="TimeModule.h" compile="0" resource="0" file="Source/TimeModule.h"/>
+            </GROUP>
+          </GROUP>
           <GROUP id="{D82DB122-A65D-E344-54C5-043A4960C873}" name="udp">
             <GROUP id="{81640B5A-35F1-039D-00AD-598C60CF54BC}" name="commands">
               <FILE id="sSC51W" name="SendUDPStringCommand.cpp" compile="1" resource="0"
@@ -574,6 +583,12 @@
                   file="Source/SequenceModule.h"/>
           </GROUP>
           <GROUP id="{5D8075B9-A82A-4F9F-D7BE-2C452ACB19CD}" name="audio">
+            <GROUP id="{7F9BF799-D05E-62A1-AF83-1802003F880F}" name="ui">
+              <FILE id="cGI4ae" name="AudioModuleHardwareEditor.cpp" compile="1"
+                    resource="0" file="Source/AudioModuleHardwareEditor.cpp"/>
+              <FILE id="fPWnVG" name="AudioModuleHardwareEditor.h" compile="0" resource="0"
+                    file="Source/AudioModuleHardwareEditor.h"/>
+            </GROUP>
             <GROUP id="{82F2973E-907D-8772-1FEB-87BD84D1E329}" name="libs">
               <GROUP id="{B0B28BE4-92BF-F583-B619-DDD6371372BA}" name="pitch">
                 <FILE id="fClJua" name="PitchMPM.h" compile="0" resource="0" file="Source/pitch/PitchMPM.h"/>

@@ -9,3 +9,28 @@
 */
 
 #include "LagFilter.h"
+
+LagFilter::LagFilter(var params)
+{
+	frequency = filterParams.addFloatParameter("Frequency", "Lag frequency in Hz", 5, .01f, 50);
+	startTimerHz(frequency->floatValue());
+}
+
+LagFilter::~LagFilter()
+{
+}
+
+void LagFilter::processInternal()
+{
+	filteredParameter->setValue(tempVal);
+}
+
+void LagFilter::filterParamChanged(Parameter * p)
+{
+	if(p == frequency) startTimerHz(frequency->floatValue());
+}
+
+void LagFilter::timerCallback()
+{
+	tempVal = sourceParam->value;
+}

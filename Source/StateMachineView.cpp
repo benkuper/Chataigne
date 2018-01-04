@@ -16,6 +16,7 @@ StateMachineView::StateMachineView(const String &contentName, StateManager * _ma
 	transitionCreationMode(false),
 	transitionCreationSourceUI(nullptr)
 {
+	canZoom = false;
 	contentIsFlexible = true;
 	addItemText = "Add State";
 	

@@ -13,6 +13,7 @@
 SimpleRemapFilter::SimpleRemapFilter(var params) :
 	MappingFilter(getTypeString(),params)
 {
+
 	targetMin = filterParams.addFloatParameter("Target Min", "New minimum for output", 0, 0, 1);
 	targetMin->isCustomizableByUser = true;
 	targetMin->saveValueOnly = false;
@@ -21,6 +22,7 @@ SimpleRemapFilter::SimpleRemapFilter(var params) :
 	targetMax->saveValueOnly = false;
 	
 	autoSetRange = false;
+	forceOutParameterType = FloatParameter::getTypeStringStatic();
 }
 
 SimpleRemapFilter::~SimpleRemapFilter()
@@ -32,12 +34,6 @@ void SimpleRemapFilter::processInternal()
 	filteredParameter->setNormalizedValue(sourceParam->getNormalizedValue());
 }
 
-Parameter * SimpleRemapFilter::setupParameterInternal(Parameter * source, const String &forceType)
-{
-	Parameter * p = MappingFilter::setupParameterInternal(source,FloatParameter::getTypeStringStatic());
-	p->setRange(targetMin->floatValue(), targetMax->floatValue());
-	return p;
-}
 
 void SimpleRemapFilter::filterParamChanged(Parameter * p)
 {

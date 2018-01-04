@@ -31,6 +31,8 @@ KinectV2Module::KinectV2Module() :
 	handsAngle = valuesCC.addFloatParameter("Hands Rotation", "Hands Rotation", 0, 0, 360);
 	leftHandOpen = valuesCC.addBoolParameter("Left Hand Open", "Left Hand Open", false);
 	rightHandOpen = valuesCC.addBoolParameter("Right Hand Open", "Right Hand Open", false);
+
+	for (auto &c : valuesCC.controllables) c->isControllableFeedbackOnly = true;
 }
 
 KinectV2Module::~KinectV2Module()

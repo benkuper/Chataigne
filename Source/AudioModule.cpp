@@ -10,9 +10,11 @@
 
 #include "AudioModule.h"
 #include "MIDIManager.h"
+#include "AudioModuleHardwareEditor.h"
 
 AudioModule::AudioModule(const String & name) :
 	Module(name),
+	hs(&am),
 	uidIncrement(100),
 	numActiveMonitorOutputs(0),
 	pitchDetector(nullptr),
@@ -29,13 +31,10 @@ AudioModule::AudioModule(const String & name) :
 
 	//Values
 	volume = valuesCC.addFloatParameter("Volume", "Volume of the audio input", 0, 0, 1);
-	volume->isControllableFeedbackOnly = true;
 
 	frequency = valuesCC.addFloatParameter("Freq", "Freq", 0, 0, 2000);
-	frequency->isControllableFeedbackOnly = true;
 
 	pitch = valuesCC.addIntParameter("Pitch", "Pitch", 0, 0, 300);
-	pitch->isControllableFeedbackOnly = true;
 
 	note = valuesCC.addEnumParameter("Note", "Detected note");
 	note->addOption("-", -1);
@@ -62,6 +61,11 @@ AudioModule::AudioModule(const String & name) :
 	graph.addNode(new AudioProcessorGraph::AudioGraphIOProcessor(AudioProcessorGraph::AudioGraphIOProcessor::audioInputNode), 1);
 	graph.addNode(new AudioProcessorGraph::AudioGraphIOProcessor(AudioProcessorGraph::AudioGraphIOProcessor::audioOutputNode), 2);
 	player.setProcessor(&graph);
+
+	addChildControllableContainer(&hs);
+	controllableContainers.move(controllableContainers.indexOf(&hs), controllableContainers.indexOf(&valuesCC));
+
+	for (auto &c : valuesCC.controllables) c->isControllableFeedbackOnly = true;
 }
 
 AudioModule::~AudioModule()
@@ -184,17 +188,14 @@ void AudioModule::audioDeviceIOCallback(const float ** inputChannelData, int num
 
 void AudioModule::audioDeviceAboutToStart(AudioIODevice *)
 {
-	DBG("device about to start");
 }
 
 void AudioModule::audioDeviceStopped()
 {
-	DBG("device stopped");
 }
 
 void AudioModule::changeListenerCallback(ChangeBroadcaster *)
 {
-	DBG("Change ! ");
 	AudioDeviceManager::AudioDeviceSetup setup;
 	am.getAudioDeviceSetup(setup);
 	currentSampleRate = setup.sampleRate;
@@ -205,7 +206,6 @@ void AudioModule::changeListenerCallback(ChangeBroadcaster *)
 	graph.setPlayConfigDetails(0, numSelectedOutputChannelsInSetup, currentSampleRate, currentBufferSize);
 	graph.prepareToPlay(currentSampleRate, currentBufferSize);
 
-	DBG("total output : " << graph.getBusCount(false) << "/" << graph.getBus(false, 0)->getNumberOfChannels());
 
 	for (auto &c : monitorOutChannels) monitorParams.removeControllable(c);
 	monitorOutChannels.clear();
@@ -229,3 +229,13 @@ int AudioModule::getNoteForFrequency(float freq)
 	return (int)(69 + 12 * log2(freq / 440)); //A = 440
 }
 
+AudioModuleHardwareSettings::AudioModuleHardwareSettings(AudioDeviceManager * am) :
+	ControllableContainer("Hardware Settings"),
+	am(am)
+{
+}
+
+InspectableEditor * AudioModuleHardwareSettings::getEditor(bool isRoot)
+{
+	return new AudioModuleHardwareEditor(this, isRoot);
+}

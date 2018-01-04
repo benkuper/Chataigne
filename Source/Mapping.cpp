@@ -18,6 +18,7 @@ Mapping::Mapping(bool canBeDisabled) :
 	type = MAPPING;
 
 	continuousProcess = addBoolParameter("Continuous", "If enabled, the mapping will process continuously rather than only when parameter value has changed", false);
+	continuousProcess->hideInEditor = true;
 
 	cdm.editorIsCollapsed = true;
 
@@ -25,7 +26,8 @@ Mapping::Mapping(bool canBeDisabled) :
 	addChildControllableContainer(&cdm);
 	addChildControllableContainer(&fm);
 	addChildControllableContainer(&om);
-
+	
+	fm.addBaseManagerListener(this);
 	input.addMappingInputListener(this);
 
 	helpID = "Mapping";
@@ -40,6 +42,21 @@ void Mapping::lockInputTo(Parameter * lockParam)
 	inputIsLocked = lockParam != nullptr;
 	input.lockInput(lockParam);
 	input.hideInEditor = inputIsLocked;
+}
+
+void Mapping::checkFiltersNeedContinuousProcess()
+{
+	bool need = false;
+	for (auto &f : fm.items)
+	{
+		if (f->needsContinuousProcess)
+		{
+			need = true;
+			break;
+		}
+	}
+
+	continuousProcess->setValue(need);
 }
 
 void Mapping::process()
@@ -94,6 +111,16 @@ void Mapping::onContainerParameterChangedInternal(Parameter * p)
 	}
 }
 
+void Mapping::itemAdded(MappingFilter * m)
+{
+	checkFiltersNeedContinuousProcess();
+}
+
+void Mapping::itemRemoved(MappingFilter * m)
+{
+	checkFiltersNeedContinuousProcess();
+}
+
 
 ProcessorUI * Mapping::getUI()
 {
@@ -102,6 +129,6 @@ ProcessorUI * Mapping::getUI()
 
 void Mapping::timerCallback()
 {
-	if ((canBeDisabled && !enabled->boolValue()) || forceDisabled) return
-		process();
+	if ((canBeDisabled && !enabled->boolValue()) || forceDisabled) return;
+	process();
 }
