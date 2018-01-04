@@ -17,6 +17,7 @@ void ChataigneApplication::initialise(const String & commandLine)
 	GlobalSettings::getInstance()->loadJSONData(gs);
 
 	engine = new ChataigneEngine(appProperties, getAppVersion());
+	engine->addEngineListener(this);
 
 	GlobalSettings::getInstance()->selectionManager = InspectableSelectionManager::mainSelectionManager;
 
@@ -28,7 +29,7 @@ void ChataigneApplication::initialise(const String & commandLine)
 		engine->setChangedFlag(false);
 	}
 
-	mainWindow->setName(getApplicationName() + " " + getApplicationVersion());
+	updateAppTitle();
 
 	AppUpdater::getInstance()->setURLs(URL("http://benjamin.kuperberg.fr/chataigne/releases/update.json"), URL("http://benjamin.kuperberg.fr/chataigne/#download"));
 	
@@ -39,15 +40,6 @@ void ChataigneApplication::initialise(const String & commandLine)
 
 	//ANALYTICS
 	Analytics::getInstance()->setUserId(SystemStats::getFullUserName());
-
-	// Add any other constant user information.
-	DBG("version " << getAppVersion() << ", " << SystemStats::getOperatingSystemName());
-	/*
-	StringPairArray userData;
-	userData.set("app-version", getAppVersion());
-	userData.set("Operating System", SystemStats::getOperatingSystemName());
-	Analytics::getInstance()->setUserProperties(userData);
-	*/
 
 	// Add any analytics destinations we want to use to the Analytics singleton.
 	Analytics::getInstance()->addDestination(new GoogleAnalyticsDestination());
@@ -100,19 +92,36 @@ inline void ChataigneApplication::systemRequestedQuit()
 
 inline void ChataigneApplication::anotherInstanceStarted(const String & commandLine)
 {
-	// When another instance of the app is launched while this one is running,
-	// this method is invoked, and the commandLine parameter tells you what
-	// the other instance's command-line arguments were.
-	
 	engine->parseCommandline(commandLine);
-	LOG("Instance started here !");
+}
+
+void ChataigneApplication::endLoadFile()
+{
+	updateAppTitle();
+}
+
+void ChataigneApplication::fileSaved()
+{
+	updateAppTitle();	
+}
+
+void ChataigneApplication::engineCleared()
+{
+	updateAppTitle();
+}
+
+void ChataigneApplication::updateAppTitle()
+{
+	mainWindow->setName(getApplicationName() + " " + getApplicationVersion() + " - " + Engine::mainEngine->getDocumentTitle()); 
+
 }
 
 inline ChataigneApplication::MainWindow::MainWindow(String name) : DocumentWindow(name,
 	Colours::lightgrey,
 	DocumentWindow::allButtons)
-	//,sender("SpoutMainAugmenta")
 {
+
+
 	setResizable(true, true);
 	setUsingNativeTitleBar(true);
 	mainComponent = new MainContentComponent();

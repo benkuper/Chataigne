@@ -33,7 +33,8 @@ It contains the basic startup code for a Juce application.
 #include "GoogleAnalyticsDestination.h"
 
 //==============================================================================
-class ChataigneApplication : public JUCEApplication
+class ChataigneApplication : public JUCEApplication,
+	public EngineListener
 {
 public:
 	//==============================================================================
@@ -49,24 +50,16 @@ public:
 	bool moreThanOneInstanceAllowed() override { return true; }
 
 
-	//==============================================================================
 	void initialise(const String& /*commandLine*/) override;
-
 	void shutdown() override;
-
-
-	//==============================================================================
 	void systemRequestedQuit() override;
-
 	void anotherInstanceStarted(const String& commandLine) override;
 
-	//==============================================================================
-	/*
-	This class implements the desktop window that contains an instance of
-	our MainContentComponent class.
-	*/
+	void endLoadFile() override;
+	void fileSaved() override;
+	void engineCleared() override;
 
-
+	void updateAppTitle();
 
 	class MainWindow : public DocumentWindow
 	{
@@ -77,25 +70,13 @@ public:
 
 
 		MainContentComponent * mainComponent;
-
-
-		/* Note: Be careful if you override any DocumentWindow methods - the base
-		class uses a lot of them, so by overriding you might break its functionality.
-		It's best to do all your work in your content component instead, but if
-		you really have to override any DocumentWindow methods, make sure your
-		subclass also calls the superclass's method.
-		*/
 		void visibilityChanged() override;
 
 #if JUCE_OPENGL
 		OpenGLContext openGLContext;
 #endif
 
-
-	private:
-		JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MainWindow)
-
-
+	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MainWindow)
 	};
 
 	ScopedPointer<MainWindow> mainWindow;
