@@ -19,7 +19,7 @@ class BaseCommandHandlerManagerEditor :
 {
 public:
 	BaseCommandHandlerManagerEditor(BaseManager<T> * manager, CommandContext context,bool isRoot) :
-		GenericManagerEditor(manager,isRoot)
+		GenericManagerEditor<T>(manager,isRoot)
 	{
 
 	}
@@ -35,7 +35,7 @@ public:
 		if (def == nullptr) return;
 		else
 		{
-			T * item = manager->BaseManager<T>::addItem();
+			T * item = this->manager->BaseManager<T>::addItem();
 			BaseCommandHandler * c = dynamic_cast<BaseCommandHandler *>(item);
 			c->setCommand(def);
 		}
