@@ -25,7 +25,9 @@ AudioModule::AudioModule(const String & name) :
 	inputGain = moduleParams.addFloatParameter("Input Gain", "Gain for the input volume", 1, 0, 10);
 	activityThreshold = moduleParams.addFloatParameter("Activity Threshold", "Threshold to consider activity from the source.\nAnalysis will compute only if volume is greater than this parameter", .1f, 0, 1);
 	keepLastDetectedValues = moduleParams.addBoolParameter("Keep Values", "Keep last detected values when no activity detected.", false);
-
+    
+    outVolume = moduleParams.addFloatParameter("Out Volume","Global volume multiplier for all sound that is played through this module",1,0,10);
+    
 	moduleParams.addChildControllableContainer(&monitorParams);
 	monitorVolume = monitorParams.addFloatParameter("Monitor Volume", "Volume multiplier for the monitor output. This will affect all the input channels and all the selected output channels", 1, 0, 10);
 
@@ -219,7 +221,8 @@ void AudioModule::changeListenerCallback(ChangeBroadcaster *)
 		monitorOutChannels.add(b);
 	}
 	updateSelectedMonitorChannels();
-
+    
+    audioModuleListeners.call(&AudioModuleListener::audioSetupChanged);
 	audioModuleListeners.call(&AudioModuleListener::monitorSetupChanged);
 }
 

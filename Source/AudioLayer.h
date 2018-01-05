@@ -20,7 +20,8 @@ class AudioLayerProcessor;
 
 class AudioLayer :
 	public SequenceLayer,
-	public ModuleManager::Listener
+	public ModuleManager::Listener,
+    public AudioModule::AudioModuleListener
 {
 public:
 	AudioLayer(Sequence * sequence, var params);
@@ -34,6 +35,7 @@ public:
 	Array<BoolParameter *> outChannels;
 	Array<int> selectedOutChannels;
 
+    FloatParameter * volume;
 	FloatParameter * enveloppe;
 
 	int numActiveOutputs;
@@ -56,6 +58,7 @@ public:
 	virtual SequenceLayerPanel * getPanel() override;
 	virtual SequenceLayerTimeline * getTimelineUI() override;
 
+    void audioSetupChanged() override;
 	
 	void sequenceCurrentTimeChanged(Sequence *, float prevTime, bool evaluatedSkippedData) override;
 	void sequencePlayStateChanged(Sequence *) override;

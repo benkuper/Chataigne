@@ -56,6 +56,7 @@ public:
 	//Parameters
 	FloatParameter * inputGain;
 	FloatParameter * activityThreshold;
+    FloatParameter * outVolume;
 
 	ControllableContainer monitorParams;
 	FloatParameter * monitorVolume;
@@ -98,6 +99,7 @@ public:
 	public:
 		virtual ~AudioModuleListener() {}
 		virtual void monitorSetupChanged() {}
+        virtual void audioSetupChanged() {}
 	};
 
 	ListenerList<AudioModuleListener> audioModuleListeners;

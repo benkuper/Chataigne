@@ -22,7 +22,9 @@ AudioLayer::AudioLayer(Sequence * _sequence, var params) :
 {
 	ModuleManager::getInstance()->addBaseManagerListener(this);
 
-
+    
+    volume = addFloatParameter("Volume","Volume multiplier for the layer",1,0,10);
+    
 	enveloppe = addFloatParameter("Enveloppe", "Enveloppe", 0, 0, 1);
 	enveloppe->isControllableFeedbackOnly = true;
 
@@ -53,6 +55,7 @@ void AudioLayer::setAudioModule(AudioModule * newModule)
 {
 	if (audioModule != nullptr)
 	{
+        audioModule->removeAudioModuleListener(this);
 		audioModule->graph.removeNode(graphID);
 		currentProcessor->clear();
 		currentProcessor = nullptr;
@@ -65,7 +68,7 @@ void AudioLayer::setAudioModule(AudioModule * newModule)
 
 	if (audioModule != nullptr)
 	{
-
+        
 		currentProcessor = new AudioLayerProcessor(this);
 		
 		graphID = audioModule->uidIncrement++;
@@ -80,6 +83,7 @@ void AudioLayer::setAudioModule(AudioModule * newModule)
 			outChannels.add(b);
 		}
 		
+        audioModule->addAudioModuleListener(this);
 
 	}
 
@@ -166,6 +170,11 @@ void AudioLayer::updateSelectedOutChannels()
 
 	numActiveOutputs = selectedOutChannels.size();
 
+}
+
+void AudioLayer::audioSetupChanged()
+{
+    setAudioModule(audioModule); //force recreate out channels
 }
 
 void AudioLayer::onContainerParameterChangedInternal(Parameter * p)
@@ -298,7 +307,7 @@ void AudioLayerProcessor::processBlock(AudioBuffer<float>& buffer, MidiBuffer & 
 
 	int numBufferSamples = buffer.getNumSamples();
 
-	float volumeFactor = currentClip->volume->floatValue();
+    float volumeFactor = currentClip->volume->floatValue() * layer->volume->floatValue() * layer->audioModule->outVolume->floatValue();
 
 
 	int bufferChannels = buffer.getNumChannels();

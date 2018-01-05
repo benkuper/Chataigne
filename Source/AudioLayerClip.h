@@ -39,6 +39,7 @@ public:
 
 	void setIsCurrent(bool value);
 
+    
 	
 	bool isInRange(float time);
 

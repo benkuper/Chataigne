@@ -21,7 +21,7 @@ public:
 	AudioLayerClipManager();
 	~AudioLayerClipManager();
 
-	void addClipAt(float time);
+	AudioLayerClip * addClipAt(float time);
 
 	AudioLayerClip * getClipAtTime(float time);
 };

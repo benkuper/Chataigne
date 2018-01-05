@@ -19,10 +19,11 @@ AudioLayerClipManager::~AudioLayerClipManager()
 {
 }
 
-void AudioLayerClipManager::addClipAt(float time)
+AudioLayerClip * AudioLayerClipManager::addClipAt(float time)
 {
 	AudioLayerClip * t = new AudioLayerClip(time);
 	BaseManager::addItem(t);
+    return t;
 }
 
 AudioLayerClip * AudioLayerClipManager::getClipAtTime(float time)

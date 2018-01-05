@@ -65,8 +65,18 @@ void AudioLayerClipManagerUI::addItemFromMenu(bool isFromAddButton, Point<int> m
 {
 	if (isFromAddButton) return;
 
-	float time = timeline->getTimeForX(mouseDownPos.x);
-	manager->addClipAt(time);
+    FileChooser chooser("Load a carrot", File::nonexistent, "*.wav;*.mp3");
+    bool result = chooser.browseForFileToOpen();
+    if (result)
+    {
+        float time = timeline->getTimeForX(mouseDownPos.x);
+        AudioLayerClip * clip = manager->addClipAt(time);
+        clip->filePath->setValue(chooser.getResult().getFullPathName());
+
+    }
+	
+    
+    
 }
 
 void AudioLayerClipManagerUI::addItemUIInternal(AudioLayerClipUI * cui)
