@@ -57,7 +57,7 @@ void ChataigneApplication::initialise(const String & commandLine)
 
 inline void ChataigneApplication::shutdown()
 {
-	
+    
 	
 	var boundsVar = var(new DynamicObject());
 	juce::Rectangle<int> r = mainWindow->getScreenBounds();
@@ -86,6 +86,17 @@ inline void ChataigneApplication::shutdown()
 
 inline void ChataigneApplication::systemRequestedQuit()
 {
+    if (GlobalSettings::getInstance()->askForSaveBeforeClosing->boolValue())
+    {
+        int result = AlertWindow::showYesNoCancelBox(AlertWindow::QuestionIcon, "Save document", "Do you want to save the document before opening a new one ?");
+        if (result != 0)
+        {
+            if (result == 1) Engine::mainEngine->save(true, true);
+        }else
+        {
+            return; //prevent killing
+        }
+    }
 	// This is called when the app is being asked to quit: you can ignore this
 	// request and let the app carry on running, or call quit() to allow the app to close.
 	quit();
@@ -157,14 +168,7 @@ inline ChataigneApplication::MainWindow::MainWindow(String name) : DocumentWindo
 void ChataigneApplication::MainWindow::closeButtonPressed() 
 {
 
-	if (GlobalSettings::getInstance()->askForSaveBeforeClosing->boolValue())
-	{
-		int result = AlertWindow::showYesNoCancelBox(AlertWindow::QuestionIcon, "Save document", "Do you want to save the document before opening a new one ?");
-		if (result != 0)
-		{
-			if (result == 1) Engine::mainEngine->save(true, true);
-		}
-	}
+	
 
 #if JUCE_OPENGL && JUCE_WINDOWS
 	openGLContext.detach();
