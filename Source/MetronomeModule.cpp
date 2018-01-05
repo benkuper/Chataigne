@@ -22,7 +22,7 @@ MetronomeModule::MetronomeModule() :
 	tick = valuesCC.addBoolParameter("Tick", "When the metronome is ticking", false);
 	startTimer(0, 1000.0f / frequency->floatValue());
 
-	for (auto &c : valuesCC.controllables) c->isControllableFeedbackOnly = false;
+	for (auto &c : valuesCC.controllables) c->isControllableFeedbackOnly = true;
 }
 
 MetronomeModule::~MetronomeModule()

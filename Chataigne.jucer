@@ -417,23 +417,46 @@
                 file="Source/ModuleRouterManager.h"/>
         </GROUP>
         <GROUP id="{766BCE2E-5C2E-5A80-EC80-7FFA2C7ABBBA}" name="modules">
+          <GROUP id="{AD1901AB-424E-4914-CA0D-03EDD5A74747}" name="common">
+            <GROUP id="{326D0695-EBBF-4628-12A4-8BED30F11F68}" name="commands">
+              <FILE id="mRE38p" name="SendStreamRawDataCommand.cpp" compile="1" resource="0"
+                    file="Source/SendStreamRawDataCommand.cpp"/>
+              <FILE id="PbIUNA" name="SendStreamRawDataCommand.h" compile="0" resource="0"
+                    file="Source/SendStreamRawDataCommand.h"/>
+              <FILE id="hD1JXW" name="SendStreamStringCommand.cpp" compile="1" resource="0"
+                    file="Source/SendStreamStringCommand.cpp"/>
+              <FILE id="cHihST" name="SendStreamStringCommand.h" compile="0" resource="0"
+                    file="Source/SendStreamStringCommand.h"/>
+            </GROUP>
+            <FILE id="ptNiQR" name="NetworkStreamingModule.cpp" compile="1" resource="0"
+                  file="Source/NetworkStreamingModule.cpp"/>
+            <FILE id="jelAkc" name="NetworkStreamingModule.h" compile="0" resource="0"
+                  file="Source/NetworkStreamingModule.h"/>
+            <FILE id="w2Nnnm" name="StreamingModule.cpp" compile="1" resource="0"
+                  file="Source/StreamingModule.cpp"/>
+            <FILE id="sWmXSX" name="StreamingModule.h" compile="0" resource="0"
+                  file="Source/StreamingModule.h"/>
+          </GROUP>
           <GROUP id="{2086FD88-5179-1DFE-5E2F-7AC0D91DE535}" name="system">
+            <GROUP id="{999BC48E-EA35-6B97-5C36-A5B38CE643A2}" name="os">
+              <GROUP id="{F7F1DA8A-E24D-1DEB-4D73-44D9BEE4986C}" name="commands">
+                <FILE id="ggJCsA" name="OSExecCommand.cpp" compile="1" resource="0"
+                      file="Source/OSExecCommand.cpp"/>
+                <FILE id="d6cyCc" name="OSExecCommand.h" compile="0" resource="0" file="Source/OSExecCommand.h"/>
+                <FILE id="JHtApz" name="OSPowerCommand.cpp" compile="1" resource="0"
+                      file="Source/OSPowerCommand.cpp"/>
+                <FILE id="Y35mQt" name="OSPowerCommand.h" compile="0" resource="0"
+                      file="Source/OSPowerCommand.h"/>
+              </GROUP>
+              <FILE id="Q0OthW" name="OSModule.cpp" compile="1" resource="0" file="Source/OSModule.cpp"/>
+              <FILE id="jIb3EB" name="OSModule.h" compile="0" resource="0" file="Source/OSModule.h"/>
+            </GROUP>
             <GROUP id="{C115AA58-9CEE-B7D5-941D-2EB4E07B8E75}" name="time">
               <FILE id="qeWJSa" name="TimeModule.cpp" compile="1" resource="0" file="Source/TimeModule.cpp"/>
               <FILE id="T6epyL" name="TimeModule.h" compile="0" resource="0" file="Source/TimeModule.h"/>
             </GROUP>
           </GROUP>
           <GROUP id="{D82DB122-A65D-E344-54C5-043A4960C873}" name="udp">
-            <GROUP id="{81640B5A-35F1-039D-00AD-598C60CF54BC}" name="commands">
-              <FILE id="Pd3xux" name="SendUDPRawDataCommand.cpp" compile="1" resource="0"
-                    file="Source/SendUDPRawDataCommand.cpp"/>
-              <FILE id="mfIS90" name="SendUDPRawDataCommand.h" compile="0" resource="0"
-                    file="Source/SendUDPRawDataCommand.h"/>
-              <FILE id="sSC51W" name="SendUDPStringCommand.cpp" compile="1" resource="0"
-                    file="Source/SendUDPStringCommand.cpp"/>
-              <FILE id="iZ8Le1" name="SendUDPStringCommand.h" compile="0" resource="0"
-                    file="Source/SendUDPStringCommand.h"/>
-            </GROUP>
             <FILE id="GhQSXM" name="UDPModule.cpp" compile="1" resource="0" file="Source/UDPModule.cpp"/>
             <FILE id="flXK6U" name="UDPModule.h" compile="0" resource="0" file="Source/UDPModule.h"/>
           </GROUP>
@@ -452,6 +475,11 @@
             </GROUP>
           </GROUP>
           <GROUP id="{31751EEF-7631-994D-CF00-3D84A9A143E5}" name="tcp">
+            <GROUP id="{3D10C1A4-BC90-A557-F29D-C7DF68111C8B}" name="pjlink">
+              <FILE id="U4Azee" name="PJLinkModule.cpp" compile="1" resource="0"
+                    file="Source/PJLinkModule.cpp"/>
+              <FILE id="lgJ2IM" name="PJLinkModule.h" compile="0" resource="0" file="Source/PJLinkModule.h"/>
+            </GROUP>
             <GROUP id="{A877B928-40D1-A998-0E6E-332B897A536A}" name="watchout">
               <GROUP id="{EFE7EEA8-82CF-809F-5B90-F2D2063FE681}" name="commands">
                 <FILE id="r75ahE" name="WatchoutCommand.cpp" compile="1" resource="0"
@@ -463,20 +491,6 @@
                     file="Source/WatchoutModule.cpp"/>
               <FILE id="Wy4OyC" name="WatchoutModule.h" compile="0" resource="0"
                     file="Source/WatchoutModule.h"/>
-            </GROUP>
-            <GROUP id="{A88C254E-3AEA-5262-B78F-8BE0F0707AE5}" name="commands">
-              <FILE id="k7hs2Y" name="SendTCPCommand.cpp" compile="1" resource="0"
-                    file="Source/SendTCPCommand.cpp"/>
-              <FILE id="Lmq4R1" name="SendTCPCommand.h" compile="0" resource="0"
-                    file="Source/SendTCPCommand.h"/>
-              <FILE id="mRE38p" name="SendTCPRawDataCommand.cpp" compile="1" resource="0"
-                    file="Source/SendTCPRawDataCommand.cpp"/>
-              <FILE id="PbIUNA" name="SendTCPRawDataCommand.h" compile="0" resource="0"
-                    file="Source/SendTCPRawDataCommand.h"/>
-              <FILE id="hD1JXW" name="SendTCPStringCommand.cpp" compile="1" resource="0"
-                    file="Source/SendTCPStringCommand.cpp"/>
-              <FILE id="cHihST" name="SendTCPStringCommand.h" compile="0" resource="0"
-                    file="Source/SendTCPStringCommand.h"/>
             </GROUP>
             <GROUP id="{A0F2C351-0E0D-3410-A453-A4F060F8B2E4}" name="vlc">
               <FILE id="nT9pwL" name="VLCModule.cpp" compile="1" resource="0" file="Source/VLCModule.cpp"/>

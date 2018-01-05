@@ -33,6 +33,8 @@
 #include "UDPModule.h"
 #include "WatchoutModule.h"
 #include "TimeModule.h"
+#include "OSModule.h"
+#include "PJLinkModule.h"
 
 juce_ImplementSingleton(ModuleFactory)
 
@@ -41,8 +43,10 @@ ModuleFactory::ModuleFactory() {
 	moduleDefs.add(new ModuleDefinition("Protocol", "MIDI", &MIDIModule::create));
 	moduleDefs.add(new ModuleDefinition("Protocol", "DMX", &DMXModule::create));
 	moduleDefs.add(new ModuleDefinition("Protocol", "Serial", &SerialModule::create));
-	moduleDefs.add(new ModuleDefinition("Protocol", "TCP", &TCPModule::create));
 	moduleDefs.add(new ModuleDefinition("Protocol", "UDP", &UDPModule::create));  
+	moduleDefs.add(new ModuleDefinition("Protocol", "TCP Client", &TCPModule::create));
+	moduleDefs.add(new ModuleDefinition("Protocol", "PJLink", &PJLinkModule::create));
+
 	
 #if JUCE_WINDOWS
 	//moduleDefs.add(new ModuleDefinition("Controller", "Myo", &MyoModule::create));
@@ -70,6 +74,7 @@ ModuleFactory::ModuleFactory() {
 	moduleDefs.add(new ModuleDefinition("Generator", "Signal", &SignalModule::create));
 	
 	moduleDefs.add(new ModuleDefinition("System", "Time", &TimeModule::create));
+	moduleDefs.add(new ModuleDefinition("System", "OS", &OSModule::create));
 
 	addCustomModules();
 	buildPopupMenu();

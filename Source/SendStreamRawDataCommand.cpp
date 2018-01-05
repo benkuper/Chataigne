@@ -8,11 +8,11 @@
   ==============================================================================
 */
 
-#include "SendTCPRawDataCommand.h"
+#include "SendStreamRawDataCommand.h"
 
-SendTCPRawDataCommand::SendTCPRawDataCommand(TCPModule * _module, CommandContext context, var params) :
+SendStreamRawDataCommand::SendStreamRawDataCommand(StreamingModule * _module, CommandContext context, var params) :
 	BaseCommand(_module,context, params),
-	tcpModule(_module),
+	streamingModule(_module),
 	dataContainer("Bytes")
 {
 	numBytes = addIntParameter("Num bytes", "Number of bytes to send", 1, 1, 512);
@@ -20,11 +20,11 @@ SendTCPRawDataCommand::SendTCPRawDataCommand(TCPModule * _module, CommandContext
 	updateBytesParams();
 }
 
-SendTCPRawDataCommand::~SendTCPRawDataCommand()
+SendStreamRawDataCommand::~SendStreamRawDataCommand()
 {
 }
 
-void SendTCPRawDataCommand::updateBytesParams()
+void SendStreamRawDataCommand::updateBytesParams()
 {
 	
 	while (dataContainer.controllables.size() > numBytes->intValue())
@@ -40,7 +40,7 @@ void SendTCPRawDataCommand::updateBytesParams()
 
 }
 
-void SendTCPRawDataCommand::onContainerParameterChangedAsync(Parameter * p, const var &)
+void SendStreamRawDataCommand::onContainerParameterChangedAsync(Parameter * p, const var &)
 {
 	if (p == numBytes)
 	{
@@ -48,9 +48,9 @@ void SendTCPRawDataCommand::onContainerParameterChangedAsync(Parameter * p, cons
 	}
 }
 
-void SendTCPRawDataCommand::trigger()
+void SendStreamRawDataCommand::trigger()
 {
 	Array<uint8> data;
 	for (auto &c : dataContainer.controllables) data.add(((IntParameter *)c)->intValue());
-	tcpModule->sendRawData(data);
+	streamingModule->sendBytes(data);
 }

@@ -11,16 +11,16 @@
 #pragma once
 
 #include "BaseCommand.h"
-#include "TCPModule.h"
+#include "StreamingModule.h"
 
-class SendTCPStringCommand :
+class SendStreamStringCommand :
 	public BaseCommand
 {
 public:
-	SendTCPStringCommand(TCPModule * _module, CommandContext context, var params);
-	~SendTCPStringCommand();
+	SendStreamStringCommand(StreamingModule * _module, CommandContext context, var params);
+	~SendStreamStringCommand();
 
-	TCPModule * tcpModule;
+	StreamingModule * streamingModule;
 
 	BoolParameter * appendCR;
 	BoolParameter * appendNL;
@@ -29,6 +29,6 @@ public:
 
 	void trigger() override;
 
-	static SendTCPStringCommand * create(ControllableContainer * module, CommandContext context, var params) { return new SendTCPStringCommand((TCPModule *)module, context, params); }
+	static SendStreamStringCommand * create(ControllableContainer * module, CommandContext context, var params) { return new SendStreamStringCommand((StreamingModule *)module, context, params); }
 
 };

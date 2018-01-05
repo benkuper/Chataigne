@@ -1,18 +1,18 @@
 /*
   ==============================================================================
 
-    SendTCPStringCommand.cpp
+    SendStreamStringCommand.cpp
     Created: 21 Oct 2017 5:05:39pm
     Author:  Ben
 
   ==============================================================================
 */
 
-#include "SendTCPStringCommand.h"
+#include "SendStreamStringCommand.h"
 
-SendTCPStringCommand::SendTCPStringCommand(TCPModule * _module, CommandContext context, var params) :
+SendStreamStringCommand::SendStreamStringCommand(StreamingModule * _module, CommandContext context, var params) :
 	BaseCommand(_module,context,params),
-	tcpModule(_module)
+	streamingModule(_module)
 {
 	valueParam = addStringParameter("Value", "Value to send via TCP", "example");
 	if (params.hasProperty("fixedValue"))
@@ -36,11 +36,11 @@ SendTCPStringCommand::SendTCPStringCommand(TCPModule * _module, CommandContext c
 	}
 }
 
-SendTCPStringCommand::~SendTCPStringCommand()
+SendStreamStringCommand::~SendStreamStringCommand()
 {
 }
 
-void SendTCPStringCommand::trigger()
+void SendStreamStringCommand::trigger()
 {
-	tcpModule->sendStringPacket(valueParam->stringValue()+(appendCR->boolValue()?"\r":"")+(appendNL->boolValue()?"\n":""));
+	streamingModule->sendMessage(valueParam->stringValue()+(appendCR->boolValue()?"\r":"")+(appendNL->boolValue()?"\n":""));
 }

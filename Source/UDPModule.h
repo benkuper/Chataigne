@@ -10,60 +10,31 @@
 
 #pragma once
 
-#include "Module.h"
+#include "NetworkStreamingModule.h"
 
 class UDPModule :
-	public Module,
-	public Thread
+	public NetworkStreamingModule
 {
 public:
-	UDPModule(const String &name ="UDP", int defaultLocalPort = 12000, int defaultRemotePort = 9000, bool canHaveInput = true, bool canHaveOutput = true);
-	~UDPModule();
+	UDPModule(const String &name = "UDP", bool canHaveInput = true, bool canHaveOutput = true, int defaultLocalPort= 10000, int defaultRemotePort = 10001);
+	virtual ~UDPModule();
 
-	enum Mode { LINES, DATA255, RAW, COBS };
-	EnumParameter * modeParam;
-
-	//RECEIVE
-	IntParameter * localPort;
-	BoolParameter * isConnected;
 	ScopedPointer<DatagramSocket> receiver;
-
-	//SEND
-	BoolParameter * useLocal;
-	StringParameter * remoteHost;
-	IntParameter * remotePort;
 	ScopedPointer<DatagramSocket> sender;
 
-	ScopedPointer<EnablingControllableContainer> receiveCC;
-	ScopedPointer<EnablingControllableContainer> sendCC;
+	virtual void setupReceiver() override;
+	virtual void setupSender() override;
 
-	//Script
-	const Identifier udpEventId = "udpEvent";
-	const Identifier sendUDPId = "send";
+	virtual bool checkReceiverIsReady() override;
+	virtual bool isReadyToSend() override;
 
-	//RECEIVE
-	virtual void setupReceiver();
+	virtual void sendMessageInternal(const String &message) override;
+	virtual void sendBytesInternal(Array<uint8> data) override;
 
-	void processMessage(const String & msg);
-	virtual void processMessageInternal(const String &) {}
+	virtual Array<uint8> readBytes() override;
 
-	//SEND
-	virtual void setupSender();
-	void sendMessage(const String &msg);
+	virtual void clearInternal() override;
 
-	//Script
-	static var sendMessageFromScript(const var::NativeFunctionArgs &args);
-
-	//save / load
-	virtual var getJSONData() override;
-	virtual void loadJSONDataInternal(var data) override;
-
-	virtual void onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c) override;
-
-	static UDPModule * create() { return new UDPModule(); }
+	static UDPModule * create() { return new UDPModule(); } 
 	virtual String getDefaultTypeString() const override { return "UDP"; }
-
-
-	// Inherited via Thread
-	virtual void run() override;
 };

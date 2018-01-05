@@ -9,274 +9,74 @@
 */
 
 #include "UDPModule.h"
-#include "SendUDPStringCommand.h"
 
-UDPModule::UDPModule(const String & name, int defaultLocalPort, int defaultRemotePort, bool canHaveInput, bool canHaveOutput) :
-	Module(name),
-	Thread("udpReceive")
+UDPModule::UDPModule(const String & name, bool canHaveInput, bool canHaveOutput, int defaultLocalPort, int defaultRemotePort) :
+	NetworkStreamingModule(name, canHaveInput,canHaveOutput,defaultLocalPort,defaultRemotePort)
 {
-
-	setupIOConfiguration(canHaveInput, canHaveOutput);
-	canHandleRouteValues = canHaveOutput;
-
-
-	//Receive
-	if (canHaveInput)
-	{
-		receiveCC = new EnablingControllableContainer("UDP Input");
-		moduleParams.addChildControllableContainer(receiveCC);
-
-		localPort = receiveCC->addIntParameter("Local Port", "Local Port to bind to receive UDP Messages", defaultLocalPort, 1024, 65535);
-		localPort->hideInOutliner = true;
-		localPort->isTargettable = false;
-
-		modeParam = receiveCC->addEnumParameter("Mode", "Protocol for treating the incoming data");
-		modeParam->addOption("Lines", LINES)->addOption("Raw", RAW)->addOption("Data255", DATA255)->addOption("COBS", COBS);
-
-		setupReceiver();
-	}
-
-	//Send
-	if (canHaveOutput)
-	{
-		sendCC = new EnablingControllableContainer("UDP Output");
-		moduleParams.addChildControllableContainer(sendCC);
-
-		useLocal = sendCC->addBoolParameter("Local", "Send to Local IP (127.0.0.1). Allow to quickly switch between local and remote IP.", true);
-		remoteHost = sendCC->addStringParameter("Remote Host", "Remote Host to send to.", "127.0.0.1");
-		remoteHost->setEnabled(!useLocal->boolValue());
-		remotePort = sendCC->addIntParameter("Remote port", "Port on which the remote host is listening to", defaultRemotePort, 1024, 65535);
-
-		setupSender();
-	}
-
-	defManager.add(CommandDefinition::createDef(this, "", "Send string", &SendUDPStringCommand::create, CommandContext::ACTION));
-
-	//Script
-	scriptObject.setMethod(sendUDPId, UDPModule::sendMessageFromScript);
+	if (senderIsConnected != nullptr) senderIsConnected->hideInOutliner = true; //no need because UDP doesn't check remote client existance
+	setupReceiver();
+	setupSender();
 }
 
 UDPModule::~UDPModule()
 {
-	signalThreadShouldExit();
-	while (isThreadRunning());
-	if (receiver != nullptr) receiver->shutdown();
 }
 
 void UDPModule::setupReceiver()
 {
+	clearThread();
+	clearInternal();
 	if (receiveCC == nullptr) return;
-
-	signalThreadShouldExit();
-	while (isThreadRunning());
-	receiver = nullptr;
-	
 	if (!receiveCC->enabled->boolValue()) return;
-
 	receiver = new DatagramSocket();
-	bool result = receiver->bindToPort(localPort->intValue());
-
-	if (result)
-	{
-		NLOG(niceName, "Now receiving on port : " + localPort->stringValue());
-	} else
-	{
-		NLOG(niceName, "Error binding port " + localPort->stringValue());
-	}
-
-	startThread();
-
-	Array<IPAddress> ad;
-	IPAddress::findAllAddresses(ad);
-
-	String s = "Local IPs:";
-	for (auto &a : ad) s += String("\n > ") + a.toString();
-	NLOG(niceName, s);
+	receiver->bindToPort(localPort->intValue());
+	receiverIsBound->setValue(receiver->getBoundPort() != -1);
+	if(receiverIsBound->boolValue()) startThread();
 }
-
-void UDPModule::processMessage(const String & msg)
-{
-	if (logIncomingData->boolValue())
-	{
-		NLOG(niceName, msg);
-	}
-
-	inActivityTrigger->trigger();
-	processMessageInternal(msg);
-
-	scriptManager->callFunctionOnAllItems(udpEventId, msg);
-}
-
 
 void UDPModule::setupSender()
 {
-	if (sendCC == nullptr) return;
-
 	sender = nullptr;
-	if (!sendCC->enabled->boolValue()) return;
-
-	sender = new DatagramSocket();
-}
-
-
-
-void UDPModule::sendMessage(const String & msg)
-{
-	if (!enabled->boolValue()) return;
 	if (sendCC == nullptr) return;
-
 	if (!sendCC->enabled->boolValue()) return;
-
-	if (logOutgoingData->boolValue()) NLOG(niceName, "Send UDP : " << msg);
-
-	outActivityTrigger->trigger();
-	
-	String targetHost = useLocal->boolValue() ? "127.0.0.1" : remoteHost->stringValue(); 
-	sender->write(targetHost,remotePort->intValue(),msg.getCharPointer(),msg.length());
+	sender = new DatagramSocket();
+	senderIsConnected->setValue(true);
 }
 
-var UDPModule::sendMessageFromScript(const var::NativeFunctionArgs & a)
+bool UDPModule::checkReceiverIsReady()
 {
-	UDPModule * m = getObjectFromJS<UDPModule>(a);
-	if (!m->enabled->boolValue()) return var();
-
-	if (a.numArguments == 0) return var();
-
-	String msg(a.arguments[0].toString());
-
-	m->sendMessage(msg);
-
-	return var();
+	if (receiver == nullptr) return false;
+	if (receiver->getBoundPort() == -1) return false;
+	return receiver->waitUntilReady(true, 300) == 1;
 }
 
-var UDPModule::getJSONData()
+bool UDPModule::isReadyToSend()
 {
-	var data = Module::getJSONData();
-	if (receiveCC != nullptr) data.getDynamicObject()->setProperty("input", receiveCC->getJSONData());
-	if (sendCC != nullptr) data.getDynamicObject()->setProperty("output", sendCC->getJSONData());
-	return data;
+	if (sender == nullptr) return false;
+	return sender->waitUntilReady(false, 300) == 1;
 }
 
-void UDPModule::loadJSONDataInternal(var data)
+void UDPModule::sendMessageInternal(const String & message)
 {
-	Module::loadJSONDataInternal(data);
-	if (receiveCC != nullptr) receiveCC->loadJSONData(data.getProperty("input", var()));
-	if (sendCC != nullptr) sendCC->loadJSONData(data.getProperty("output", var()));
+	String targetHost = useLocal->boolValue() ? "127.0.0.1" : remoteHost->stringValue();
+	sender->write(targetHost, remotePort->intValue(),message.getCharPointer(), message.length());
 }
 
-
-
-void UDPModule::onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c)
+void UDPModule::sendBytesInternal(Array<uint8> data)
 {
-	Module::onControllableFeedbackUpdateInternal(cc, c);
-
-	if (receiveCC != nullptr && c == receiveCC->enabled)
-	{
-		bool rv = receiveCC->enabled->boolValue();
-		bool sv = sendCC->enabled->boolValue();
-		setupIOConfiguration(rv, sv);
-		localPort->setEnabled(rv);
-		setupReceiver();
-
-	} else if (sendCC != nullptr && c == sendCC->enabled)
-	{
-		bool rv = receiveCC->enabled->boolValue();
-		bool sv = sendCC->enabled->boolValue();
-		setupIOConfiguration(rv, sv);
-		remoteHost->setEnabled(sv);
-		remotePort->setEnabled(sv);
-		useLocal->setEnabled(sv);
-		setupSender();
-
-	} else if (c == localPort) setupReceiver();
-	else if (c == remoteHost || c == remotePort || c == useLocal)
-	{
-		setupSender();
-		if (c == useLocal) remoteHost->setEnabled(!useLocal->boolValue());
-	}
+	String targetHost = useLocal->boolValue() ? "127.0.0.1" : remoteHost->stringValue();
+	sender->write(targetHost, remotePort->intValue(), data.getRawDataPointer(), data.size());
 }
 
-
-void UDPModule::run()
+Array<uint8> UDPModule::readBytes()
 {
-	receiver->waitUntilReady(false, 100);
-	char buffer[512];
+	uint8 data[255];
+	int numBytes = receiver->read(data, 255, false);
+	return Array<uint8>(data, numBytes);
+}
 
-	String stringBuffer = ""; //for lines;
-	Array<uint8> byteBuffer; //for cobs and data255
-
-	while (!threadShouldExit())
-	{
-		sleep(10); //100fps
-
-		if (receiver == nullptr) return;
-		
-		try
-		{
-
-			size_t numBytes = receiver->read(buffer, 512, false);
-			if (numBytes == 0) continue;
-
-			Mode m = modeParam->getValueDataAsEnum<Mode>();
-			switch (m)
-			{
-
-			case LINES:
-			{
-				stringBuffer.append(String::fromUTF8(buffer, (int)numBytes),numBytes);
-				StringArray sa;
-				sa.addTokens(stringBuffer, "\n", "\"");
-				for (int i = 0; i < sa.size() - 1; i++) processMessage(sa[i]);
-				stringBuffer = sa[sa.size() - 1];
-			}
-			break;
-
-			case RAW:
-			{
-				processMessage(String::fromUTF8(buffer, (int)numBytes));
-			}
-			break;
-
-			case DATA255:
-			{
-				for (int i = 0; i < numBytes; i++)
-				{
-					uint8 b = buffer[i];
-					if (b == 255)
-					{
-						//processBytes here
-						byteBuffer.clear();
-					} else
-					{
-						byteBuffer.add(b);
-					}
-				}
-				
-			}
-			break;
-
-			case COBS:
-			{
-				/*
-				for (int i = 0; i < numBytes; i++)
-				{
-					uint8_t b = port->port->read(1)[0];
-					byteBuffer.push_back(b);
-					if (b == 0)
-					{
-						uint8_t decodedData[255];
-						size_t numDecoded = cobs_decode(byteBuffer.data(), byteBuffer.size(), decodedData);
-						serialThreadListeners.call(&SerialThreadListener::newMessage, var(decodedData, numDecoded));
-						byteBuffer.clear();
-					}
-				}
-				*/
-			}
-			break;
-			}
-		} catch (...)
-		{
-			DBG("### UDP Problem ");
-		}
-	}
+void UDPModule::clearInternal()
+{
+	if (receiver != nullptr) receiver->shutdown();
+	receiver = nullptr;
 }

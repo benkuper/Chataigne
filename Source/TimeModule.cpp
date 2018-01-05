@@ -29,7 +29,7 @@ TimeModule::TimeModule(const String & name) :
 	seconds = valuesCC.addIntParameter("Seconds", "Current second relative to the current minute (0 > 59)", 0, 0, 59);
 	
 	moduleParams.hideInEditor = true;
-	for (auto &c : valuesCC.controllables) c->isControllableFeedbackOnly = false;
+	for (auto &c : valuesCC.controllables) c->isControllableFeedbackOnly = true;
 
 	startTimer(1000);
 	timerCallback(); //force one

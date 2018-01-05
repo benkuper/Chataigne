@@ -85,18 +85,24 @@ void SerialModule::onContainerParameterChangedInternal(Parameter * p) {
 
 void SerialModule::processDataLine(const String & message)
 {
+	if (!enabled->boolValue()) return;
 	if (logIncomingData->boolValue()) NLOG(niceName, "Message received :\n" + message);
+	inActivityTrigger->trigger();
+	
 	scriptManager->callFunctionOnAllItems(serialEventId,message);
 }
 
 void SerialModule::processDataBytes(Array<uint8_t> data)
 {
+	if (!enabled->boolValue()) return;
 	if (logIncomingData->boolValue())
 	{
-		String msg = "Message received :";
+		String msg = String(data.size()) + "sytes received :";
 		for (auto &d : data) msg += "\n" + String(d);
 		NLOG(niceName, msg);
 	}
+
+	inActivityTrigger->trigger();
 
 	if (scriptManager->items.size() > 0)
 	{

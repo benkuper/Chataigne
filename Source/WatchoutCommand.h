@@ -10,11 +10,11 @@
 
 #pragma once
 
-#include "SendTCPStringCommand.h"
+#include "SendStreamStringCommand.h"
 #include "WatchoutModule.h"
 
 class WatchoutCommand :
-	public SendTCPStringCommand
+	public SendStreamStringCommand
 {
 public:
 	WatchoutCommand(WatchoutModule * _module, CommandContext context, var params);

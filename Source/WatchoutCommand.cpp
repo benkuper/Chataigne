@@ -11,7 +11,7 @@
 #include "WatchoutCommand.h"
 
 WatchoutCommand::WatchoutCommand(WatchoutModule * _module, CommandContext context, var params) :
-	SendTCPStringCommand(_module,context,params),
+	SendStreamStringCommand(_module,context,params),
 	wModule(_module)
 {
 	String argsP = params.getProperty("args", "").toString();
@@ -77,5 +77,5 @@ void WatchoutCommand::trigger()
 
 	s += "\r\n";
 
-	wModule->sendStringPacket(s);
+	wModule->sendMessage(s);
 }

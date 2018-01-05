@@ -14,7 +14,9 @@
 WatchoutModule::WatchoutModule() :
 	TCPModule("Watchout",3040)
 {
-	modeParam->hideInEditor = true;
+	streamingType->hideInEditor = true;
+	streamingType->setValueWithData(LINES);
+
 	defManager.add(getBaseWCommand("","Ping","ping"));
 	defManager.add(getBaseWCommand("", "Load", "load", "s:\"File Path\""));
 	defManager.add(getBaseWCommand("", "Online", "online", "b:Value"));

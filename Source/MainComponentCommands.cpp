@@ -231,11 +231,19 @@ bool MainContentComponent::perform(const InvocationInfo& info) {
 	break;
 
 	case CommandIDs::save:
-		Engine::mainEngine->save(true, true);
+	{
+		FileBasedDocument::SaveResult result = Engine::mainEngine->save(true, true);
+		if(result == FileBasedDocument::savedOk) LOG("File saved !");
+		else LOGERROR("Error saving file");
+	}
 		break;
 
 	case CommandIDs::saveAs:
-		Engine::mainEngine->saveAs(File::nonexistent, true, true, true);
+	{
+		FileBasedDocument::SaveResult result = Engine::mainEngine->saveAs(File::nonexistent, true, true, true);
+		if (result == FileBasedDocument::savedOk) LOG("File saved !");
+		else LOGERROR("Error saving file");
+	}
 		break;
 
 	case CommandIDs::checkForUpdates:
@@ -286,15 +294,17 @@ void MainContentComponent::menuItemSelected(int menuItemID, int topLevelMenuInde
 {
 	DBG("Menu item selected " << menuItemID << ", " << topLevelMenuIndex);
 
+/*
 #if JUCE_MAC && JUCE_MAJOR_VERSION >= 5
-	//topLevelMenuIndex--; //On mac and juce 5, first menu index is 1 (because of the App menu); -> NOT THE CASE ANYMORE, keep that just as reminder
+	topLevelMenuIndex--; //On mac and juce 5, first menu index is 1 (because of the App menu); -> NOT THE CASE ANYMORE, keep that just as reminder
 #endif
-
+*/
 	String menuName = getMenuBarNames()[topLevelMenuIndex];
 
 	if (menuName == "Panels")
 	{
 		ShapeShifterManager::getInstance()->handleMenuPanelCommand(menuItemID);
+
 	} else if (isPositiveAndBelow(menuItemID - CommandIDs::lastFileStartID, 100)) {
 		RecentlyOpenedFilesList recentFiles;
 		recentFiles.restoreFromString(getAppProperties().getUserSettings()

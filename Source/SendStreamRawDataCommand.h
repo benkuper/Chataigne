@@ -11,16 +11,16 @@
 #pragma once
 
 #include "BaseCommand.h"
-#include "TCPModule.h"
+#include "StreamingModule.h"
 
-class SendTCPRawDataCommand :
+class SendStreamRawDataCommand :
 	public BaseCommand
 {
 public:
-	SendTCPRawDataCommand(TCPModule * _module, CommandContext context, var params);
-	~SendTCPRawDataCommand();
+	SendStreamRawDataCommand(StreamingModule * _module, CommandContext context, var params);
+	~SendStreamRawDataCommand();
 
-	TCPModule * tcpModule;
+	StreamingModule * streamingModule;
 
 	IntParameter * numBytes;
 	ControllableContainer dataContainer;
@@ -30,6 +30,5 @@ public:
 	void onContainerParameterChangedAsync(Parameter * p, const var &param) override;
 	void trigger() override;
 
-	static SendTCPRawDataCommand * create(ControllableContainer * module, CommandContext context, var params) { return new SendTCPRawDataCommand((TCPModule *)module, context, params); }
-
+	static SendStreamRawDataCommand * create(ControllableContainer * module, CommandContext context, var params) { return new SendStreamRawDataCommand((StreamingModule *)module, context, params); }
 };
