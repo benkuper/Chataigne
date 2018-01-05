@@ -19,7 +19,7 @@ public:
 	OSModule();
 	~OSModule();
 	
-	enum OSType { WIN, MAC, LINUX };
+	enum OSType { OS_WIN, OS_MAC, OS_LINUX };
 
 	EnumParameter * osType;
 	StringParameter * osName;

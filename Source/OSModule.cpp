@@ -18,13 +18,13 @@ OSModule::OSModule() :
 	setupIOConfiguration(false, true);
 
 	osType = valuesCC.addEnumParameter("OS Type", "Type of OS");
-	osType->addOption("Windows", WIN)->addOption("MacOS", MAC)->addOption("Linux", LINUX);
+	osType->addOption("Windows", OS_WIN)->addOption("MacOS", OS_MAC)->addOption("Linux", OS_LINUX);
 #if JUCE_WINDOWS
-	osType->setValueWithData(WIN);
+	osType->setValueWithData(OS_WIN);
 #elif JUCE_MAC
-	osType->setValueWithData(MAC);
+	osType->setValueWithData(OS_MAC);
 #elif JUCE_LINUX
-	osType->setValueWithData(LINUX);
+	osType->setValueWithData(OS_LINUX);
 #endif
 
 	osName = valuesCC.addStringParameter("OS Name", "Name of the OS", SystemStats::getOperatingSystemName());
