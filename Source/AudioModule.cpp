@@ -16,9 +16,9 @@ AudioModule::AudioModule(const String & name) :
 	Module(name),
 	hs(&am),
 	uidIncrement(100),
-	numActiveMonitorOutputs(0),
-	pitchDetector(nullptr),
-	monitorParams("Monitor")
+    monitorParams("Monitor"),
+    numActiveMonitorOutputs(0),
+    pitchDetector(nullptr)
 {
 	setupIOConfiguration(true, true);
 

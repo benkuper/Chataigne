@@ -56,7 +56,7 @@ Controllable * ModuleManager::showAllValuesAndGetControllable(bool showTriggers,
 		for (int j = 0; j < numValues; j++)
 		{
 			Controllable * c = m->valuesCC.controllables[j];
-			if (c->type == Controllable::TRIGGER) if(!showTriggers) continue;
+            if (c->type == Controllable::TRIGGER) { if(!showTriggers) continue; }
 			else if (!showParameters) continue;
 
 			sMenu.addItem(i * 1000 + j + 1, c->niceName);

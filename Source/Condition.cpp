@@ -14,8 +14,8 @@
 
 Condition::Condition(const String &n, var /*params*/) :
 	BaseItem(n),
-	validationAsyncNotifier(10),
-	forceDisabled(false)
+    forceDisabled(false),
+    validationAsyncNotifier(10)
 {
 	
 	isSelectable = false;

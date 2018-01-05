@@ -80,6 +80,6 @@ void OSExecCommand::killProcess(const String & name)
 	}
 	CloseHandle(hSnapShot);
 #else
-	system(String("kill "+ String(killMode->boolValue()?"-9":"-2") +" "+target->stringValue()).getCharPointer());
+	system(String("killall "+ String(killMode->boolValue()?"-9":"-2") +" \""+target->stringValue()+"\"").getCharPointer());
 #endif
 }

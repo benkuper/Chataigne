@@ -62,7 +62,7 @@ public:
 	void updateAppTitle();
 
 	class MainWindow : public DocumentWindow
-	{
+	{		
 	public:
 		MainWindow(String name);
 

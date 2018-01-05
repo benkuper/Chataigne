@@ -17,8 +17,8 @@ AudioLayer::AudioLayer(Sequence * _sequence, var params) :
 	SequenceLayer(_sequence, "New Audio Layer"),
 	audioModule(nullptr),
 	currentProcessor(nullptr),
-	graphID(-1),
-	numActiveOutputs(0)
+	numActiveOutputs(0), 
+    graphID(-1)
 {
 	ModuleManager::getInstance()->addBaseManagerListener(this);
 
