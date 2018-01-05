@@ -37,10 +37,12 @@ public:
 
 	bool validationWaiting;
 	float prevTimerTime;
-
+	bool forceDisabled;
 
 	void addItemInternal(Condition *, var data) override;
 	void removeItemInternal(Condition *) override;
+
+	void setForceDisabled(bool value, bool force = false);
 
 	void checkAllConditions();
 
@@ -51,6 +53,7 @@ public:
 	int getNumValidConditions();
 
 	bool getIsValid(bool emptyIsValid);
+
 
 	void dispatchConditionValidationChanged();
 

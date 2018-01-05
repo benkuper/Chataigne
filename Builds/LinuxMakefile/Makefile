@@ -67,7 +67,6 @@ endif
 
 OBJECTS_APP := \
   $(JUCE_OBJDIR)/ProjectSettings_6f8498bd.o \
-  $(JUCE_OBJDIR)/GlobalSettings_72a3f96f.o \
   $(JUCE_OBJDIR)/AboutWindow_ecd5b1be.o \
   $(JUCE_OBJDIR)/ChataigneAssetManager_e104aa7c.o \
   $(JUCE_OBJDIR)/ProcessorManagerUI_2a595c98.o \
@@ -158,6 +157,7 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/ModuleRouter_785566de.o \
   $(JUCE_OBJDIR)/ModuleRouterManager_16ed3779.o \
   $(JUCE_OBJDIR)/TimeModule_2a9df8a2.o \
+  $(JUCE_OBJDIR)/SendUDPRawDataCommand_7fa57cd3.o \
   $(JUCE_OBJDIR)/SendUDPStringCommand_92456b6a.o \
   $(JUCE_OBJDIR)/UDPModule_6171c46e.o \
   $(JUCE_OBJDIR)/SignalModule_18fcd9bd.o \
@@ -165,6 +165,7 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/WatchoutCommand_5b76d08d.o \
   $(JUCE_OBJDIR)/WatchoutModule_13e4a174.o \
   $(JUCE_OBJDIR)/SendTCPCommand_e5ea805b.o \
+  $(JUCE_OBJDIR)/SendTCPRawDataCommand_8b6ab0f3.o \
   $(JUCE_OBJDIR)/SendTCPStringCommand_dcf9334a.o \
   $(JUCE_OBJDIR)/VLCModule_fde4e21a.o \
   $(JUCE_OBJDIR)/TCPModule_6b3d188e.o \
@@ -336,11 +337,6 @@ $(JUCE_OUTDIR)/$(JUCE_TARGET_APP) : check-pkg-config $(OBJECTS_APP) $(RESOURCES)
 $(JUCE_OBJDIR)/ProjectSettings_6f8498bd.o: ../../Source/ProjectSettings.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling ProjectSettings.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/GlobalSettings_72a3f96f.o: ../../Source/GlobalSettings.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling GlobalSettings.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/AboutWindow_ecd5b1be.o: ../../Source/AboutWindow.cpp
@@ -793,6 +789,11 @@ $(JUCE_OBJDIR)/TimeModule_2a9df8a2.o: ../../Source/TimeModule.cpp
 	@echo "Compiling TimeModule.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
+$(JUCE_OBJDIR)/SendUDPRawDataCommand_7fa57cd3.o: ../../Source/SendUDPRawDataCommand.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling SendUDPRawDataCommand.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
 $(JUCE_OBJDIR)/SendUDPStringCommand_92456b6a.o: ../../Source/SendUDPStringCommand.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling SendUDPStringCommand.cpp"
@@ -826,6 +827,11 @@ $(JUCE_OBJDIR)/WatchoutModule_13e4a174.o: ../../Source/WatchoutModule.cpp
 $(JUCE_OBJDIR)/SendTCPCommand_e5ea805b.o: ../../Source/SendTCPCommand.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling SendTCPCommand.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/SendTCPRawDataCommand_8b6ab0f3.o: ../../Source/SendTCPRawDataCommand.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling SendTCPRawDataCommand.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/SendTCPStringCommand_dcf9334a.o: ../../Source/SendTCPStringCommand.cpp

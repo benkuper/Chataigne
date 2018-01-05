@@ -20,7 +20,7 @@ public:
 	SendUDPStringCommand(UDPModule * _module, CommandContext context, var params);
 	~SendUDPStringCommand();
 
-	UDPModule * tcpModule;
+	UDPModule * udpModule;
 	StringParameter * valueParam;
 
 	void trigger() override;

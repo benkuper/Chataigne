@@ -27,15 +27,20 @@ ProcessorManager::~ProcessorManager()
 {
 }
 
-void ProcessorManager::setForceDisabled(bool value)
+void ProcessorManager::setForceDisabled(bool value, bool force)
 {
-	if (forceDisabled == value) return;
+	if (forceDisabled == value && !force) return;
 	forceDisabled = value;
-	for (auto &i : items) i->forceDisabled = forceDisabled;
+	for (auto &i : items) i->setForceDisabled(forceDisabled);
 }
 
 void ProcessorManager::addItemInternal(Processor * item, var data)
 {
-	item->forceDisabled = forceDisabled;
+	item->setForceDisabled(forceDisabled);
+}
+
+void ProcessorManager::loadJSONDataInternal(var data)
+{
+	setForceDisabled(forceDisabled, true);
 }
 

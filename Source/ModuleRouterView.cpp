@@ -12,7 +12,6 @@
 #include "ModuleRouterManager.h"
 
 ModuleRouterView::ModuleRouterView() :
-    addBT("Add a module router"),
 	currentRouter(nullptr),
 	sourceLabel("SourceModule","Source Module"),
 	destLabel("OutModule","Out Module"),
@@ -22,10 +21,6 @@ ModuleRouterView::ModuleRouterView() :
 	outParamsLabel("OutParams","Out Parameters")
 {
 	InspectableSelectionManager::mainSelectionManager->addSelectionListener(this);
-
-	addAndMakeVisible(&addBT);
-	addBT.addListener(this);
-
 
 	sourceChooser.setTextWhenNoChoicesAvailable("No Module");
 	sourceChooser.setTextWhenNothingSelected("[Source Module]");
@@ -69,13 +64,19 @@ ModuleRouterView::~ModuleRouterView()
 	setRouter(nullptr);
 }
 
-void ModuleRouterView::resized()
+void ModuleRouterView::paint(Graphics & g)
 {
 	if (currentRouter == nullptr)
 	{
-		addBT.setBounds(getLocalBounds().withSizeKeepingCentre(150, 100));
-		return;
+		g.setColour(BG_COLOR.brighter(.3f));
+		g.setFont(14);
+		g.drawFittedText("To start routing values between modules, add a router from the menu on the left", getLocalBounds().reduced(10), Justification::centred, 4);
 	}
+}
+
+void ModuleRouterView::resized()
+{
+	if (currentRouter == nullptr) return;
 
 	Rectangle<int> r = getLocalBounds();
 	Rectangle<int> h = r.removeFromTop(20).reduced(2);
@@ -128,7 +129,6 @@ void ModuleRouterView::setRouter(ModuleRouter * router)
 		removeChildComponent(deselectAllTrigger);
 		deselectAllTrigger = nullptr;
 
-		addAndMakeVisible(&addBT);
 		removeChildComponent(&sourceChooser);
 		removeChildComponent(&destChooser);
 
@@ -147,7 +147,6 @@ void ModuleRouterView::setRouter(ModuleRouter * router)
 	{
 		currentRouter->addRouterListener(this);
 		currentRouter->addInspectableListener(this);
-		removeChildComponent(&addBT);
 
 		addAndMakeVisible(&sourceChooser);
 		addAndMakeVisible(&destChooser);
@@ -194,11 +193,6 @@ void ModuleRouterView::sourceModuleChanged(ModuleRouter *)
 void ModuleRouterView::destModuleChanged(ModuleRouter *)
 {
 	//
-}
-
-void ModuleRouterView::buttonClicked(Button * b)
-{
-	if (b == &addBT) ModuleRouterManager::getInstance()->addItem();
 }
 
 void ModuleRouterView::inspectablesSelectionChanged()

@@ -27,7 +27,7 @@ public:
 
 	bool forceDisabled;
 	
-	void setForceDisabled(bool value);
+	void setForceDisabled(bool value, bool force = false);
 
 	Trigger * triggerAll;
 

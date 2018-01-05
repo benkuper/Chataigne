@@ -27,9 +27,9 @@ ConsequenceManager::~ConsequenceManager()
 {
 }
 
-void ConsequenceManager::setForceDisabled(bool value)
+void ConsequenceManager::setForceDisabled(bool value, bool force)
 {
-	if (forceDisabled == value) return;
+	if (forceDisabled == value && !force) return;
 	forceDisabled = value;
 	for (auto &i : items) i->forceDisabled = value;
 }
@@ -37,11 +37,7 @@ void ConsequenceManager::setForceDisabled(bool value)
 void ConsequenceManager::onContainerTriggerTriggered(Trigger * t)
 {
 	if (forceDisabled) return;
-
-	if (t == triggerAll)
-	{
-		for (auto &c : items) c->trigger->trigger();
-	}
+	if (t == triggerAll) for (auto &c : items) c->trigger->trigger();
 }
 
 void ConsequenceManager::addItemInternal(Consequence * c, var data)

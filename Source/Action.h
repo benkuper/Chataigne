@@ -32,7 +32,7 @@ public:
 	BoolParameter * isValid; //whether the action can process or not
 	Trigger * trigger;
 
-	virtual void setForceDisabled(bool value) override;
+	virtual void setForceDisabled(bool value, bool force = false) override;
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;

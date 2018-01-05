@@ -22,8 +22,12 @@ public:
 	Condition(const String &name = "Condition", var params = var());
 	virtual ~Condition();
 
+	bool forceDisabled;
+
 	BoolParameter * isValid;
 	virtual void onContainerParameterChangedInternal(Parameter *) override;
+
+	virtual void setForceDisabled(bool value, bool force = false);
 
 	class ConditionListener
 	{

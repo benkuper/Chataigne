@@ -25,6 +25,8 @@ SignalModule::SignalModule() :
 
 	value = valuesCC.addFloatParameter("Value", "The signal value", 0, 0, 1);
 
+	for (auto &c : valuesCC.controllables) c->isControllableFeedbackOnly = false;
+
 	startTimer(0,1000.0f/refreshRate->floatValue());
 }
 

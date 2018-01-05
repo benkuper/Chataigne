@@ -23,7 +23,7 @@ ConditionManagerEditor::~ConditionManagerEditor()
 
 void ConditionManagerEditor::itemAdded(Condition *)
 {
-	if (manager->items.size() > 1) resetAndBuild();
+	if (manager->items.size() >= 1) resetAndBuild();
 }
 
 void ConditionManagerEditor::itemRemoved(Condition *)

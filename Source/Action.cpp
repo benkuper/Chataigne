@@ -34,9 +34,10 @@ Action::~Action()
 {
 }
 
-void Action::setForceDisabled(bool value)
+void Action::setForceDisabled(bool value, bool force)
 {
-	Processor::setForceDisabled(value);
+	Processor::setForceDisabled(value, force);
+	cdm.setForceDisabled(value);
 	csm.setForceDisabled(value);
 }
 

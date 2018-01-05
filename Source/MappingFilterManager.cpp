@@ -20,6 +20,8 @@ MappingFilterManager::MappingFilterManager() :
 	BaseManager<MappingFilter>("Filters"),
 	inputSourceParam(nullptr)
 {
+	editorIsCollapsed = true;
+
 	managerFactory = &factory;
 	factory.defs.add(Factory<MappingFilter>::Definition::createDef("Remap", "Inverse", &InverseFilter::create));
 	factory.defs.add(Factory<MappingFilter>::Definition::createDef("Remap", "Simple Remap", &SimpleRemapFilter::create));

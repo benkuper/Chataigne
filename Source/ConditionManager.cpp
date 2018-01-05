@@ -19,7 +19,8 @@ juce_ImplementSingleton(ConditionManager)
 ConditionManager::ConditionManager(bool _operatorOnSide) :
 	BaseManager<Condition>("Conditions"),
 	operatorOnSide(_operatorOnSide),
-	validationProgress(nullptr)
+	validationProgress(nullptr),
+	forceDisabled(false)
 {
 	
 	managerFactory = &factory;
@@ -39,11 +40,13 @@ ConditionManager::ConditionManager(bool _operatorOnSide) :
 	conditionOperator->hideInEditor = true;
 
 	validationTime = addFloatParameter("Validation Time", "If greater than 0, the conditions will be validated only if they remain valid for this amount of time", 0, 0, 10);
-	
+	validationTime->hideInEditor = true;
+
 	validationProgress = addFloatParameter("Progress", "Validation time progress", 0, 0, validationTime->floatValue());
 	validationProgress->isControllableFeedbackOnly = true;
 	validationProgress->isEditable = false;
 	validationProgress->setEnabled(false);
+	validationProgress->hideInEditor = true;
 }
 
 ConditionManager::~ConditionManager()
@@ -56,6 +59,7 @@ void ConditionManager::addItemInternal(Condition * c, var data)
 	c->addConditionListener(this);
 	conditionOperator->hideInEditor = items.size() <= 1;
 	validationTime->hideInEditor = items.size() == 0;
+	validationProgress->hideInEditor = items.size() == 0;
 }
 
 void ConditionManager::removeItemInternal(Condition * c)
@@ -63,6 +67,14 @@ void ConditionManager::removeItemInternal(Condition * c)
 	c->removeConditionListener(this);
 	conditionOperator->hideInEditor = items.size() <= 1;
 	validationTime->hideInEditor = items.size() == 0;
+	validationProgress->hideInEditor = items.size() == 0;
+}
+
+void ConditionManager::setForceDisabled(bool value, bool force)
+{
+	if (forceDisabled == value && !force) return;
+	forceDisabled = value;
+	for (auto &i : items) i->forceDisabled = value;
 }
 
 void ConditionManager::checkAllConditions()

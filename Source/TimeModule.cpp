@@ -13,6 +13,8 @@
 TimeModule::TimeModule(const String & name) :
 	Module(name)
 {
+	setupIOConfiguration(false, false);
+
 	year = valuesCC.addIntParameter("Year", "Current year", 2000, 2000, 5000);
 	monthName = valuesCC.addEnumParameter("Month name", "Name of the current month");
 	monthName->addOption("January", JANUARY)->addOption("February", FEBRUARY)->addOption("March", MARCH)->addOption("April", APRIL)->addOption("May", MAY)->addOption("June", JUNE)->addOption("July", JULY)->addOption("August", AUGUST)->addOption("September", SEPTEMBER)->addOption("October", OCTOBER)->addOption("November", NOVEMBER)->addOption("December", DECEMBER);
@@ -26,6 +28,7 @@ TimeModule::TimeModule(const String & name) :
 	minutes = valuesCC.addIntParameter("Minutes", "Current minute relative to the current hour (0 > 59)", 0, 0, 59);
 	seconds = valuesCC.addIntParameter("Seconds", "Current second relative to the current minute (0 > 59)", 0, 0, 59);
 	
+	moduleParams.hideInEditor = true;
 	for (auto &c : valuesCC.controllables) c->isControllableFeedbackOnly = false;
 
 	startTimer(1000);

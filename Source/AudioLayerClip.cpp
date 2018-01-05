@@ -31,6 +31,10 @@ AudioLayerClip::AudioLayerClip(float _time) :
 
 	formatManager.registerBasicFormats();
 
+	FileChooser chooser("Load a carrot", File::nonexistent, "*.wav;*.mp3");
+	bool result = chooser.browseForFileToOpen();
+	if (result) filePath->setValue(chooser.getResult().getFullPathName());
+
 }
 
 AudioLayerClip::~AudioLayerClip()

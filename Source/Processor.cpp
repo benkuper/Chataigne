@@ -23,12 +23,10 @@ Processor::~Processor()
 
 }
 
-void Processor::setForceDisabled(bool value)
+void Processor::setForceDisabled(bool value, bool force)
 {
-	if (forceDisabled == value) return;
+	if (forceDisabled == value && !force) return;
 	forceDisabled = value;
-
-	//todo disabled conditions for better performance (no computation) when disabled
 }
 
 ProcessorUI * Processor::getUI()

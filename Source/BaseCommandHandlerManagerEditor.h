@@ -19,7 +19,8 @@ class BaseCommandHandlerManagerEditor :
 {
 public:
 	BaseCommandHandlerManagerEditor(BaseManager<T> * manager, CommandContext context,bool isRoot) :
-		GenericManagerEditor<T>(manager,isRoot)
+		GenericManagerEditor<T>(manager,isRoot),
+		context(context)
 	{
 
 	}

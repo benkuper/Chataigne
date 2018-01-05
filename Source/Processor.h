@@ -27,7 +27,7 @@ public:
 	
 	bool forceDisabled;
 
-	virtual void setForceDisabled(bool value);
+	virtual void setForceDisabled(bool value, bool force = false);
 
 	//UI
 	virtual ProcessorUI * getUI();

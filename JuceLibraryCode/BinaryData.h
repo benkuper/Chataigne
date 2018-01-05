@@ -21,13 +21,13 @@ namespace BinaryData
     const int            icon_pngSize = 42153;
 
     extern const char*   in_png;
-    const int            in_pngSize = 3528;
+    const int            in_pngSize = 3358;
 
     extern const char*   nextcue_png;
     const int            nextcue_pngSize = 16077;
 
     extern const char*   out_png;
-    const int            out_pngSize = 20427;
+    const int            out_pngSize = 3368;
 
     extern const char*   playpause_png;
     const int            playpause_pngSize = 16163;

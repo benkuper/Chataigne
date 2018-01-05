@@ -10,11 +10,14 @@
 
 #include "TCPModule.h"
 #include "SendTCPStringCommand.h"
+#include "SendTCPRawDataCommand.h"
 
 TCPModule::TCPModule(const String & name, int defaultRemotePort) :
 	Module(name),
 	Thread(name)
 {
+	sender = new StreamingSocket();
+
 	setupIOConfiguration(true, true);
 
 	canHandleRouteValues = true;
@@ -39,37 +42,40 @@ TCPModule::TCPModule(const String & name, int defaultRemotePort) :
 
 	//Commands
 	defManager.add(CommandDefinition::createDef(this, "", "Send string", &SendTCPStringCommand::create, CommandContext::ACTION));
+	defManager.add(CommandDefinition::createDef(this, "", "Send raw data", &SendTCPRawDataCommand::create, CommandContext::ACTION));
 
 	//Script
 	scriptObject.setMethod(sendTCPId, TCPModule::sendMessageFromScript);
+	scriptObject.setMethod(writeTCPId, TCPModule::writeDataFromScript);
 
 }
 
 TCPModule::~TCPModule()
 {
-	//
+	DBG("Delete");
 	signalThreadShouldExit();
-	if (sender.isConnected()) sender.close();
-
 	while (isThreadRunning());
+	DBG("Close sender");
+	sender->close();
+	DBG("Delete sender");
+	sender = nullptr;
 }
 
 
 void TCPModule::setupSender()
 {
+	sender->close();
 	signalThreadShouldExit();
-	if (sender.isConnected()) sender.close();
 	while (isThreadRunning());
-
 	startThread();
 }
 
 void TCPModule::sendStringPacket(const String &s)
 {
+	DBG("Here sending packet");
 	if (!enabled->boolValue()) return;
-	if (!sender.isConnected()) setupSender();
+	if (!sender->isConnected()) return;
 
-	DBG("Send TCP String :" << s << " > " << s.length());
 
 	 outActivityTrigger->trigger();
 	 if (logOutgoingData->boolValue())
@@ -78,15 +84,50 @@ void TCPModule::sendStringPacket(const String &s)
 		 NLOG(niceName, "Sending " << s << " to " << rh << ":" << remotePort->intValue());
 	 }
 
-	sender.write(s.getCharPointer(), s.length());
+	sender->write(s.getCharPointer(), s.length());
 	//sender.close();
 }
+
+
+void TCPModule::sendRawData(Array<uint8> data)
+{
+	DBG("Here send raw data");
+	if (!enabled->boolValue()) return;
+	if (!sender->isConnected()) return;
+
+	outActivityTrigger->trigger();
+	if (logOutgoingData->boolValue())
+	{
+		String rh = useLocal->boolValue() ? "127.0.0.1" : remoteHost->stringValue();
+		NLOG(niceName, "Sending " << data.size() << " bytes to " << rh << ":" << remotePort->intValue());
+	}
+
+	sender->write(data.getRawDataPointer(), data.size());
+}
+
+
+void TCPModule::processRawData(Array<uint8> data)
+{
+	if (logIncomingData->boolValue())
+	{
+		NLOG(niceName, "Received " + String(data.size()) + " bytes :");
+		for (auto &b : data) LOG(String(b));
+	}
+
+	inActivityTrigger->trigger();
+	
+	var bData = var();
+	for (auto &b : data) bData.append(b);
+	scriptManager->callFunctionOnAllItems(tcpEventId, bData);
+}
+
+
 
 void TCPModule::processMessage(const String & msg)
 {
 	if (logIncomingData->boolValue())
 	{
-		NLOG(niceName, msg);
+		NLOG(niceName, "Received message :\n"+msg);
 	}
 
 	inActivityTrigger->trigger();
@@ -119,16 +160,26 @@ var TCPModule::sendMessageFromScript(const var::NativeFunctionArgs & a)
 	return var();
 }
 
-InspectableEditor * TCPModule::getEditor(bool isRoot)
+var TCPModule::writeDataFromScript(const var::NativeFunctionArgs & a)
 {
-	return Module::getEditor(isRoot);
+	TCPModule * m = getObjectFromJS<TCPModule>(a);
+	if (!m->enabled->boolValue()) return var();
+
+	if (a.numArguments == 0) return var();
+
+	Array<uint8> data;
+	for (int i = 0; i < a.numArguments; i++) data.add((uint8)(int)a.arguments[i]);
+
+	m->sendRawData(data);
+
+	return var();
 }
 
 void TCPModule::run()
 {
 	String targetHost = useLocal->boolValue() ? "127.0.0.1" : remoteHost->stringValue();
 	NLOG(niceName, "Connecting to " + targetHost + ":"+ String(remotePort->intValue())+"...");
-	bool result = sender.connect(targetHost, remotePort->intValue(),500);
+	bool result = sender->connect(targetHost, remotePort->intValue(),500);
 	
 	isConnected->setValue(result);
 	if (result)
@@ -140,7 +191,6 @@ void TCPModule::run()
 		return;
 	}
 
-	sender.waitUntilReady(false, 100);
 	char buffer[512];
 	String stringBuffer = ""; //for lines;
 	Array<uint8> byteBuffer; //for cobs and data255
@@ -150,76 +200,80 @@ void TCPModule::run()
 	{
 		sleep(10); //100 fps
 
-		if (sender.isConnected())
+		if (sender->isConnected())
 		{
-			try
+			int ready = sender->waitUntilReady(true, 300);
+			if (ready == 1)
 			{
-				int numBytes = sender.read(buffer, 512, false);
-				if (numBytes == 0) continue;
-
-				Mode m = modeParam->getValueDataAsEnum<Mode>();
-				switch (m)
+				try
 				{
+					int numBytes = sender->read(buffer, 512, false);
+					if (numBytes == 0) continue;
 
-				case LINES:
-				{
-					stringBuffer.append(String::fromUTF8(buffer, (int)numBytes), numBytes);
-					StringArray sa;
-					sa.addTokens(stringBuffer, "\n", "\"");
-					for (int i = 0; i < sa.size() - 1; i++) processMessage(sa[i]);
-					stringBuffer = sa[sa.size() - 1];
-				}
-				break;
-
-				case RAW:
-				{
-					processMessage(String::fromUTF8(buffer, (int)numBytes));
-				}
-				break;
-
-				case DATA255:
-				{
-					for (int i = 0; i < numBytes; i++)
+					Mode m = modeParam->getValueDataAsEnum<Mode>();
+					switch (m)
 					{
-						uint8 b = buffer[i];
-						if (b == 255)
+
+					case LINES:
+					{
+						stringBuffer.append(String::fromUTF8(buffer, (int)numBytes), numBytes);
+						StringArray sa;
+						sa.addTokens(stringBuffer, "\n", "\"");
+						for (int i = 0; i < sa.size() - 1; i++) processMessage(sa[i]);
+						stringBuffer = sa[sa.size() - 1];
+					}
+					break;
+
+					case RAW:
+					{
+						processRawData(Array<uint8>(buffer, (int)numBytes));
+					}
+					break;
+
+					case DATA255:
+					{
+						for (int i = 0; i < numBytes; i++)
 						{
-							//processBytes here
-							byteBuffer.clear();
-						} else
-						{
-							byteBuffer.add(b);
+							uint8 b = buffer[i];
+							if (b == 255)
+							{
+								processRawData(byteBuffer);
+								byteBuffer.clear();
+							} else
+							{
+								byteBuffer.add(b);
+							}
 						}
+
 					}
+					break;
 
-				}
-				break;
-
-				case COBS:
+					case COBS:
+					{
+						/*
+						for (int i = 0; i < numBytes; i++)
+						{
+						uint8_t b = port->port->read(1)[0];
+						byteBuffer.push_back(b);
+						if (b == 0)
+						{
+						uint8_t decodedData[255];
+						size_t numDecoded = cobs_decode(byteBuffer.data(), byteBuffer.size(), decodedData);
+						serialThreadListeners.call(&SerialThreadListener::newMessage, var(decodedData, numDecoded));
+						byteBuffer.clear();
+						}
+						}
+						*/
+					}
+					break;
+					}
+				} catch (...)
 				{
-					/*
-					for (int i = 0; i < numBytes; i++)
-					{
-					uint8_t b = port->port->read(1)[0];
-					byteBuffer.push_back(b);
-					if (b == 0)
-					{
-					uint8_t decodedData[255];
-					size_t numDecoded = cobs_decode(byteBuffer.data(), byteBuffer.size(), decodedData);
-					serialThreadListeners.call(&SerialThreadListener::newMessage, var(decodedData, numDecoded));
-					byteBuffer.clear();
-					}
-					}
-					*/
+					DBG("### TCP Problem ");
 				}
-				break;
-				}
-			} catch (...)
-			{
-				DBG("### UDP Problem ");
-			}
 
+			}
+			
 		}
-		sleep(10);
 	}
 }

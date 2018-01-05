@@ -11,7 +11,6 @@
 
 #include "MainComponent.h"
 #include "ProjectSettings.h"
-#include "GlobalSettings.h"
 #include "AboutWindow.h"
 
 namespace CommandIDs

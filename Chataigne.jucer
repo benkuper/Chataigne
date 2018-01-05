@@ -29,12 +29,6 @@
         <FILE id="HAMWie" name="ProjectSettings.h" compile="0" resource="0"
               file="Source/ProjectSettings.h"/>
       </GROUP>
-      <GROUP id="{B7AE4CF6-C109-933F-DE7E-494B9C9E3C1A}" name="Preferences">
-        <FILE id="kw3z7v" name="GlobalSettings.cpp" compile="1" resource="0"
-              file="Source/GlobalSettings.cpp"/>
-        <FILE id="jKB7vV" name="GlobalSettings.h" compile="0" resource="0"
-              file="Source/GlobalSettings.h"/>
-      </GROUP>
       <GROUP id="{C6C9402E-3E5F-DA24-8E22-DE4CD0AB4FD4}" name="Analytics">
         <FILE id="rqVuQx" name="GoogleAnalyticsDestination.h" compile="0" resource="0"
               file="Source/GoogleAnalyticsDestination.h"/>
@@ -431,6 +425,10 @@
           </GROUP>
           <GROUP id="{D82DB122-A65D-E344-54C5-043A4960C873}" name="udp">
             <GROUP id="{81640B5A-35F1-039D-00AD-598C60CF54BC}" name="commands">
+              <FILE id="Pd3xux" name="SendUDPRawDataCommand.cpp" compile="1" resource="0"
+                    file="Source/SendUDPRawDataCommand.cpp"/>
+              <FILE id="mfIS90" name="SendUDPRawDataCommand.h" compile="0" resource="0"
+                    file="Source/SendUDPRawDataCommand.h"/>
               <FILE id="sSC51W" name="SendUDPStringCommand.cpp" compile="1" resource="0"
                     file="Source/SendUDPStringCommand.cpp"/>
               <FILE id="iZ8Le1" name="SendUDPStringCommand.h" compile="0" resource="0"
@@ -471,6 +469,10 @@
                     file="Source/SendTCPCommand.cpp"/>
               <FILE id="Lmq4R1" name="SendTCPCommand.h" compile="0" resource="0"
                     file="Source/SendTCPCommand.h"/>
+              <FILE id="mRE38p" name="SendTCPRawDataCommand.cpp" compile="1" resource="0"
+                    file="Source/SendTCPRawDataCommand.cpp"/>
+              <FILE id="PbIUNA" name="SendTCPRawDataCommand.h" compile="0" resource="0"
+                    file="Source/SendTCPRawDataCommand.h"/>
               <FILE id="hD1JXW" name="SendTCPStringCommand.cpp" compile="1" resource="0"
                     file="Source/SendTCPStringCommand.cpp"/>
               <FILE id="cHihST" name="SendTCPStringCommand.h" compile="0" resource="0"

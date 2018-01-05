@@ -14,7 +14,8 @@
 
 Condition::Condition(const String &n, var /*params*/) :
 	BaseItem(n),
-	validationAsyncNotifier(10)
+	validationAsyncNotifier(10),
+	forceDisabled(false)
 {
 	
 	isSelectable = false;
@@ -32,12 +33,23 @@ Condition::~Condition()
 void Condition::onContainerParameterChangedInternal(Parameter * p)
 {
 	BaseItem::onContainerParameterChangedInternal(p);
+
 	if (p == isValid)
 	{
-		conditionListeners.call(&ConditionListener::conditionValidationChanged, this);
-		validationAsyncNotifier.addMessage(new ValidationAsyncEvent(isValid->boolValue()));
+		if (!forceDisabled)
+		{
+			conditionListeners.call(&ConditionListener::conditionValidationChanged, this);
+			validationAsyncNotifier.addMessage(new ValidationAsyncEvent(isValid->boolValue()));
+		}
 	}else if (p == enabled)
 	{
 		isValid->setValue(false);
 	}
+}
+
+void Condition::setForceDisabled(bool value, bool force)
+{
+	if (forceDisabled == value && !force) return;
+	forceDisabled = value;
+	isValid->setEnabled(!forceDisabled);
 }

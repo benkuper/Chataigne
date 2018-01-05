@@ -12,7 +12,7 @@
 
 SendUDPStringCommand::SendUDPStringCommand(UDPModule * _module, CommandContext context, var params) :
 	BaseCommand(_module, context, params),
-	tcpModule(_module)
+	udpModule(_module)
 {
 	valueParam = addStringParameter("Value", "Value to send via UDP", "example");
 	if (params.hasProperty("fixedValue"))
@@ -28,5 +28,5 @@ SendUDPStringCommand::~SendUDPStringCommand()
 
 void SendUDPStringCommand::trigger()
 {
-	tcpModule->sendMessage(valueParam->stringValue());
+	udpModule->sendMessage(valueParam->stringValue());
 }

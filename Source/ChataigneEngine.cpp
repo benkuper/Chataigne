@@ -30,7 +30,6 @@ ChataigneEngine::ChataigneEngine(ApplicationProperties * appProperties, const St
 {
 	//init here
 	Engine::mainEngine = this;
-
 	addChildControllableContainer(ProjectSettings::getInstance());
 	addChildControllableContainer(ModuleManager::getInstance());
 	addChildControllableContainer(StateManager::getInstance());

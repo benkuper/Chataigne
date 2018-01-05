@@ -118,7 +118,7 @@ void Module::setupModuleFromJSONData(var data)
 		NamedValueSet valueProps = defaultsData.getDynamicObject()->getProperties();
 		for (auto &p : valueProps)
 		{
-			Parameter * c = static_cast<Parameter *>(getControllableByName(p.name.toString()));
+			Parameter * c = static_cast<Parameter *>(moduleParams.getControllableByName(p.name.toString()));
 			if (c == nullptr) continue;
 			c->setValue(p.value);
 		}

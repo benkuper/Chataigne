@@ -18,7 +18,6 @@
 class ModuleRouterView :
 	public Component,
 	public ModuleRouter::RouterListener,
-	public ButtonListener,
 	public InspectableSelectionManager::Listener,
 	public Inspectable::InspectableListener,
 	public ModuleChooserUI::ChooserListener
@@ -28,7 +27,6 @@ public:
 	ModuleRouterView();
 	~ModuleRouterView();
 
-	TextButton addBT;
 	ModuleRouter * currentRouter;
 
 	ScopedPointer<TriggerButtonUI> selectAllTrigger;
@@ -46,7 +44,7 @@ public:
 
 	ScopedPointer<BaseManagerUI<BaseManager<ModuleRouterValue>, ModuleRouterValue, ModuleRouterValueEditor>> managerUI;
 
-
+	void paint(Graphics &g) override;
 	void resized() override;
 	void setRouter(ModuleRouter * router);
 	
@@ -55,7 +53,6 @@ public:
 	void sourceModuleChanged(ModuleRouter *) override;
 	void destModuleChanged(ModuleRouter *) override;
 
-	void buttonClicked(Button * b) override;
 
 	void inspectablesSelectionChanged() override;
 	void inspectableDestroyed(Inspectable * i) override;

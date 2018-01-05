@@ -23,10 +23,12 @@ public:
 	~ProcessorManager();
 
 	bool forceDisabled;
-	void setForceDisabled(bool value);
+	void setForceDisabled(bool value, bool force = false);
 	void addItemInternal(Processor * item, var data) override;
 
 	Factory<Processor> factory;
+
+	void loadJSONDataInternal(var data) override;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ProcessorManager)
 

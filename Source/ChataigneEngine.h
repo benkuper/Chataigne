@@ -32,8 +32,6 @@ public:
 	void childStructureChanged(ControllableContainer * cc) override;
 
 	String getMinimumRequiredFileVersion() override;
-
-
 };
 
 #endif
