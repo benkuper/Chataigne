@@ -73,7 +73,7 @@ void CustomOSCModule::processMessageInternal(const OSCMessage & msg)
 
 			if (c != nullptr)
 			{
-				c->setCustomShortName(cShortName); //force safeName for search
+				c->setCustomShortName(cShortName + "_" + String(i)); //force safeName for search
 				c->isCustomizableByUser = true;
 				c->isRemovableByUser = true;
 				c->saveValueOnly = false;
