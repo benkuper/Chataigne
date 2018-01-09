@@ -33,7 +33,7 @@ ifeq ($(CONFIG),Debug)
     TARGET_ARCH := -m64
   endif
 
-  JUCE_CPPFLAGS := $(DEPFLAGS) -DLINUX=1 -DDEBUG=1 -D_DEBUG=1 -DJUCER_LINUX_MAKE_6D53C8B4=1 -DJUCE_APP_VERSION=1.2.0 -DJUCE_APP_VERSION_HEX=0x10200 $(shell pkg-config --cflags alsa freetype2 libcurl x11 xext xinerama) -pthread -I../../JuceLibraryCode -I../../../../../../Softwares/JUCE/modules -I../../../JUCE/modules -I../../../JUCE\ Modules -I../../External/wiiuse -I../../External/serial/include $(CPPFLAGS)
+  JUCE_CPPFLAGS := $(DEPFLAGS) -DLINUX=1 -DDEBUG=1 -D_DEBUG=1 -DJUCER_LINUX_MAKE_6D53C8B4=1 -DJUCE_APP_VERSION=1.2.1 -DJUCE_APP_VERSION_HEX=0x10201 $(shell pkg-config --cflags alsa freetype2 libcurl x11 xext xinerama) -pthread -I../../JuceLibraryCode -I../../../../../../Softwares/JUCE/modules -I../../../JUCE/modules -I../../../JUCE\ Modules -I../../External/wiiuse -I../../External/serial/include $(CPPFLAGS)
   JUCE_CPPFLAGS_APP := -DJucePlugin_Build_VST=0 -DJucePlugin_Build_VST3=0 -DJucePlugin_Build_AU=0 -DJucePlugin_Build_AUv3=0 -DJucePlugin_Build_RTAS=0 -DJucePlugin_Build_AAX=0 -DJucePlugin_Build_Standalone=0
   JUCE_TARGET_APP := Chataigne
 
@@ -54,7 +54,7 @@ ifeq ($(CONFIG),Release)
     TARGET_ARCH := -m64
   endif
 
-  JUCE_CPPFLAGS := $(DEPFLAGS) -DLINUX=1 -DNDEBUG=1 -DJUCER_LINUX_MAKE_6D53C8B4=1 -DJUCE_APP_VERSION=1.2.0 -DJUCE_APP_VERSION_HEX=0x10200 $(shell pkg-config --cflags alsa freetype2 libcurl x11 xext xinerama) -pthread -I../../JuceLibraryCode -I../../../../../../Softwares/JUCE/modules -I../../../JUCE/modules -I../../../JUCE\ Modules -I../../External/wiiuse -I../../External/serial/include $(CPPFLAGS)
+  JUCE_CPPFLAGS := $(DEPFLAGS) -DLINUX=1 -DNDEBUG=1 -DJUCER_LINUX_MAKE_6D53C8B4=1 -DJUCE_APP_VERSION=1.2.1 -DJUCE_APP_VERSION_HEX=0x10201 $(shell pkg-config --cflags alsa freetype2 libcurl x11 xext xinerama) -pthread -I../../JuceLibraryCode -I../../../../../../Softwares/JUCE/modules -I../../../JUCE/modules -I../../../JUCE\ Modules -I../../External/wiiuse -I../../External/serial/include $(CPPFLAGS)
   JUCE_CPPFLAGS_APP := -DJucePlugin_Build_VST=0 -DJucePlugin_Build_VST3=0 -DJucePlugin_Build_AU=0 -DJucePlugin_Build_AUv3=0 -DJucePlugin_Build_RTAS=0 -DJucePlugin_Build_AAX=0 -DJucePlugin_Build_Standalone=0
   JUCE_TARGET_APP := Chataigne
 
@@ -214,10 +214,7 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/DLightModule_cebd51a7.o \
   $(JUCE_OBJDIR)/MilluminModule_c935c8ae.o \
   $(JUCE_OBJDIR)/LiveOSCCommandBase_f8e2d952.o \
-  $(JUCE_OBJDIR)/LiveOSCDeviceCommand_e278ffeb.o \
   $(JUCE_OBJDIR)/LiveOSCSceneCommand_a17f3893.o \
-  $(JUCE_OBJDIR)/LiveOSCTrackCommand_2dfdc274.o \
-  $(JUCE_OBJDIR)/LiveOSCVolumeCommand_c30ed4a7.o \
   $(JUCE_OBJDIR)/LiveOSCModule_c0be62a0.o \
   $(JUCE_OBJDIR)/ReaperTimeCommandUI_93c58e24.o \
   $(JUCE_OBJDIR)/ReaperTimeCommand_829de850.o \
@@ -1077,24 +1074,9 @@ $(JUCE_OBJDIR)/LiveOSCCommandBase_f8e2d952.o: ../../Source/LiveOSCCommandBase.cp
 	@echo "Compiling LiveOSCCommandBase.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
-$(JUCE_OBJDIR)/LiveOSCDeviceCommand_e278ffeb.o: ../../Source/LiveOSCDeviceCommand.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling LiveOSCDeviceCommand.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
 $(JUCE_OBJDIR)/LiveOSCSceneCommand_a17f3893.o: ../../Source/LiveOSCSceneCommand.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling LiveOSCSceneCommand.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/LiveOSCTrackCommand_2dfdc274.o: ../../Source/LiveOSCTrackCommand.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling LiveOSCTrackCommand.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/LiveOSCVolumeCommand_c30ed4a7.o: ../../Source/LiveOSCVolumeCommand.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling LiveOSCVolumeCommand.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/LiveOSCModule_c0be62a0.o: ../../Source/LiveOSCModule.cpp

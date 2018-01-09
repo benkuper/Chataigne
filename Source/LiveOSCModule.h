@@ -21,7 +21,7 @@ public:
 	~LiveOSCModule() {}
 
 	static LiveOSCModule * create() { return new LiveOSCModule(); }
-	virtual String getDefaultTypeString() const override { return "LiveOSC"; }
+	virtual String getDefaultTypeString() const override { return "LiveOSC2"; }
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(LiveOSCModule)
 };

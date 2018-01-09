@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.2.0"
+<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.2.1"
               bundleIdentifier="benkuper.Chataigne" includeBinaryInAppConfig="1"
               jucerVersion="5.2.0" companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
               companyEmail="benjamin@kuperberg.fr" defines="" displaySplashScreen="1"
@@ -667,22 +667,10 @@
                       file="Source/LiveOSCCommandBase.cpp"/>
                 <FILE id="BNIfH3" name="LiveOSCCommandBase.h" compile="0" resource="0"
                       file="Source/LiveOSCCommandBase.h"/>
-                <FILE id="Fe8PWj" name="LiveOSCDeviceCommand.cpp" compile="1" resource="0"
-                      file="Source/LiveOSCDeviceCommand.cpp"/>
-                <FILE id="GAuxXY" name="LiveOSCDeviceCommand.h" compile="0" resource="0"
-                      file="Source/LiveOSCDeviceCommand.h"/>
                 <FILE id="H9vYcE" name="LiveOSCSceneCommand.cpp" compile="1" resource="0"
                       file="Source/LiveOSCSceneCommand.cpp"/>
                 <FILE id="sqwXdC" name="LiveOSCSceneCommand.h" compile="0" resource="0"
                       file="Source/LiveOSCSceneCommand.h"/>
-                <FILE id="fI2wLI" name="LiveOSCTrackCommand.cpp" compile="1" resource="0"
-                      file="Source/LiveOSCTrackCommand.cpp"/>
-                <FILE id="aOeCaw" name="LiveOSCTrackCommand.h" compile="0" resource="0"
-                      file="Source/LiveOSCTrackCommand.h"/>
-                <FILE id="IpEOs2" name="LiveOSCVolumeCommand.cpp" compile="1" resource="0"
-                      file="Source/LiveOSCVolumeCommand.cpp"/>
-                <FILE id="kGq9EU" name="LiveOSCVolumeCommand.h" compile="0" resource="0"
-                      file="Source/LiveOSCVolumeCommand.h"/>
               </GROUP>
               <FILE id="ALQEbe" name="LiveOSCModule.cpp" compile="1" resource="0"
                     file="Source/LiveOSCModule.cpp"/>

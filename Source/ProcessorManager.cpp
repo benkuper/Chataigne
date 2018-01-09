@@ -41,6 +41,7 @@ void ProcessorManager::addItemInternal(Processor * item, var data)
 
 void ProcessorManager::loadJSONDataInternal(var data)
 {
+	BaseManager::loadJSONDataInternal(data);
 	setForceDisabled(forceDisabled, true);
 }
 

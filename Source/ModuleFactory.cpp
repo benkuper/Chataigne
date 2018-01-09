@@ -63,7 +63,7 @@ ModuleFactory::ModuleFactory() {
 	*/
 
 	moduleDefs.add(new ModuleDefinition("Software", "DLight", &DLightModule::create));
-	moduleDefs.add(new ModuleDefinition("Software", "LiveOSC", &LiveOSCModule::create));
+	moduleDefs.add(new ModuleDefinition("Software", "LiveOSC2", &LiveOSCModule::create));
 	moduleDefs.add(new ModuleDefinition("Software", "Millumin", &MilluminModule::create));
 	moduleDefs.add(new ModuleDefinition("Software", "Reaper", &ReaperModule::create));
 	moduleDefs.add(new ModuleDefinition("Software", "Resolume", &ResolumeModule::create));

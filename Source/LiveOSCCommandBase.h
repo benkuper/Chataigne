@@ -24,17 +24,38 @@ public:
 
 	LiveOSCModule * liveModule;
 
+	enum ActionType {ARM, MUTE, PAN, SOLO, VOLUME, SEND, TRACK_STOP, CLIP_PLAY, CLIP_STOP, DEVICE_ENABLE, DEVICE_PARAM};
+	ActionType type;
+
+	enum ValueType {NONE, FLOAT, BOOL };
+	ValueType valueType;
+
+	String liveCommand;
+
+	//Target
+	EnumParameter * trackTarget;
+
+	//Track / Return
 	IntParameter * trackID;
-	FloatParameter * value;
 
-	BoolParameter * toggle;
-	BoolParameter * autoNext;
+	//Clip
+	IntParameter * clipID;
 
-	Trigger * muteAllTracks;
+	//Device
+	IntParameter * deviceID;
 
-	void trigger() override;
+	//Send
+	IntParameter * sendID;
 
-	void onContainerTriggerTriggered(Trigger * t) override;
+	//Parameter
+	IntParameter * parameterID;
+
+	//Values
+	Parameter * value;
+
+	void rebuildAddress() override;
+
+	void onContainerParameterChanged(Parameter * p) override;
 
 	static LiveOSCCommandBase * create(ControllableContainer * module, CommandContext context, var params) { return new LiveOSCCommandBase((LiveOSCModule *)module, context, params); }
 

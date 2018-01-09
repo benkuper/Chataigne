@@ -29,7 +29,7 @@ public:
 	String addressModel;
 	bool rebuildAddressOnParamChanged;
 
-	void rebuildAddress();
+	virtual void rebuildAddress();
 	void buildArgsAndParamsFromData(var data);
 
 

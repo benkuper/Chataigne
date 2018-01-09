@@ -36,19 +36,22 @@ OSCCommand::~OSCCommand()
 
 void OSCCommand::rebuildAddress()
 {
-	//rebuild by replacing [..] with parameters
-
 	
 	String targetAddress(addressModel);
-	for (auto & c : controllables)
-	{
-		if (c->type != Controllable::TRIGGER && c != address)
-		{
-			Parameter * p = static_cast<Parameter *>(c);
-			if (p == nullptr) continue;
-			
 
-			targetAddress = targetAddress.replace("[" + p->shortName + "]", p->stringValue());
+	if (targetAddress.containsChar('['))
+	{
+		//rebuild by replacing [..] with parameters
+		for (auto & c : controllables)
+		{
+			if (c->type != Controllable::TRIGGER && c != address)
+			{
+				Parameter * p = static_cast<Parameter *>(c);
+				if (p == nullptr) continue;
+
+
+				targetAddress = targetAddress.replace("[" + p->shortName + "]", p->stringValue());
+			}
 		}
 	}
 
@@ -120,6 +123,8 @@ void OSCCommand::trigger()
 	
 	for (auto &a : argumentsContainer.controllables)
 	{
+		if (!a->enabled) continue;
+
 		Parameter * p = static_cast<Parameter *>(a);
 		if (p == nullptr) continue;
 		switch (p->type)

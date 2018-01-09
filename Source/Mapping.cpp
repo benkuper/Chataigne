@@ -82,7 +82,7 @@ var Mapping::getJSONData()
 
 void Mapping::loadJSONDataInternal(var data)
 {
-	BaseItem::loadJSONDataInternal(data);
+	Processor::loadJSONDataInternal(data);
 	input.loadJSONData(data.getProperty("input", var()));
 	cdm.loadJSONData(data.getProperty("conditions", var()));
 	fm.loadJSONData(data.getProperty("filters", var()));

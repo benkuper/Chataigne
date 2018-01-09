@@ -15,6 +15,9 @@ LiveOSCSceneCommand::LiveOSCSceneCommand(LiveOSCModule * _module, CommandContext
 	OSCCommand(_module, context, params),
 	liveModule(_module)
 {
+	addressModel = "/live/scene/play";
+	rebuildAddress();
+
 	targetScene = argumentsContainer.addIntParameter("Scene", "Index of the scene to play", 0, 0, 1000);
 	autoNextScene = addBoolParameter("Auto Next", "If enabled, when triggered, scene will increment", false);
 	resetScene = addTrigger("Reset", "Reset to scene 1");
