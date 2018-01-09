@@ -32,7 +32,7 @@ public:
 
 	String addressSuffix;
 
-	virtual void rebuildAddress();
+	virtual void rebuildAddress() override;
 
 	virtual void onContainerParameterChanged(Parameter *) override;
 
