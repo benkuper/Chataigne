@@ -132,6 +132,7 @@ void OSCModule::setupSender()
 
 	String targetHost = useLocal->boolValue() ? "127.0.0.1" : remoteHost->stringValue();
 	sender.connect(targetHost, remotePort->intValue());
+	NLOG(niceName, "Now sending to " + remoteHost->stringValue()+":"+remotePort->stringValue());
 }
 
 void OSCModule::sendOSC(const OSCMessage & msg)
