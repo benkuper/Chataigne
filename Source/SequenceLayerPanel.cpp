@@ -28,9 +28,9 @@ SequenceLayerPanel::~SequenceLayerPanel()
 
 void SequenceLayerPanel::paintOverChildren(Graphics & g)
 {
-	BaseItemUI::paintOverChildren(g);
 	g.setColour(item->color->getColor());
 	g.drawRoundedRectangle(getLocalBounds().reduced(1).toFloat(), 2, 2);
+	BaseItemUI::paintOverChildren(g);
 }
 
 void SequenceLayerPanel::resized()

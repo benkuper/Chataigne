@@ -12,9 +12,9 @@
 #include "Sequence.h"
 
 TimeCue::TimeCue(const float & _time) :
-	BaseItem("Cue")
+	BaseItem("Time Cue")
 {
-	nameParam->hideInEditor = false;
+	//nameParam->hideInEditor = false;
 
 	time = addFloatParameter("Time", "Cue Time", _time, 0, 3600);
 	time->defaultUI = FloatParameter::TIME;

@@ -30,7 +30,9 @@ MappingLayer::MappingLayer(Sequence *_sequence, var params) :
 	mode->addOption("Point 3D (XYZ)", MODE_3D);
 	mode->addOption("Color (RGBA)", MODE_COLOR);
 	
-	//mode->setValueWithData((Mode)(int)params.getProperty("mode", MODE_1D));
+	mode->setValueWithData((Mode)(int)params.getProperty("mode", MODE_1D));
+
+	if (mode->getValueDataAsEnum<Mode>() == MODE_COLOR) setNiceName("New Color Layer");
 
 	setupMappingForCurrentMode();
 	uiHeight->setValue(100);

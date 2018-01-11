@@ -148,7 +148,7 @@ void SequenceTimelineHeader::mouseDown(const MouseEvent & e)
 {
 	if (e.mods.isLeftButtonDown())
 	{
-		if (e.mods.isCtrlDown())
+		if (e.mods.isCommandDown())
 		{
 			cueManagerUI.addCueAtPos(e.getMouseDownX());
 		}

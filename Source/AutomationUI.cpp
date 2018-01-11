@@ -274,7 +274,7 @@ void AutomationUI::mouseDown(const MouseEvent & e)
 				transformer = nullptr;
 			}
 
-			if(InspectableSelector::getInstance()) InspectableSelector::getInstance()->startSelection(this, selectables, inspectables,manager->selectionManager);
+			if(InspectableSelector::getInstance()) InspectableSelector::getInstance()->startSelection(this, selectables, inspectables,manager->selectionManager,!e.mods.isShiftDown());
 		}
 	}
 	

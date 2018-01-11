@@ -27,6 +27,10 @@ public:
 	Sequence();
 	virtual ~Sequence();
 
+
+	ScopedPointer<TimeCueManager> cueManager;
+	ScopedPointer<SequenceLayerManager> layerManager;
+
 	BoolParameter * startAtLoad;
 	FloatParameter * totalTime;
 	FloatParameter * currentTime;
@@ -47,8 +51,6 @@ public:
 	AudioModule * masterAudioModule;
 	double hiResAudioTime;
 
-	ScopedPointer<SequenceLayerManager> layerManager;
-	ScopedPointer<TimeCueManager> cueManager;
 
 	//Temp variables
 	uint32 prevMillis; 

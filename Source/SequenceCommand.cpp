@@ -37,6 +37,7 @@ SequenceCommand::SequenceCommand(SequenceModule * _module, CommandContext contex
 
 	case DISABLE_LAYER:
 	case ENABLE_LAYER:
+	case TOGGLE_LAYER:
 		target->customGetTargetContainerFunc = &SequenceManager::showmMenuAndGetLayer;
 		break;
 
@@ -93,6 +94,10 @@ void SequenceCommand::trigger()
     case DISABLE_LAYER:
         ((SequenceLayer *)target->targetContainer.get())->enabled->setValue(false);
         break;
+
+	case TOGGLE_LAYER:
+		((SequenceLayer *)target->targetContainer.get())->enabled->setValue(!((SequenceLayer *)target->targetContainer.get())->enabled->boolValue());
+		break;
 
 	case SET_TIME:
 		((Sequence *)target->targetContainer.get())->currentTime->setValue(value->floatValue());

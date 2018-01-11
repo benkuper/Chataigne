@@ -18,6 +18,7 @@ StandardCondition::StandardCondition(var params) :
 {
 	sourceTarget = addTargetParameter("Source", "Element that will be the source to check if condition is active or not"); 
 	sourceTarget->customGetTargetFunc = &ModuleManager::showAllValuesAndGetControllable;
+	sourceTarget->customGetControllableLabelFunc = &Module::getTargetLabelForValueControllable;
 	sourceTarget->hideInEditor = true;
 }
 

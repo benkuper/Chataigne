@@ -44,8 +44,13 @@ float SequenceLayerTimeline::getTimeForX(int tx, bool offsetStart)
 
 void SequenceLayerTimeline::paintOverChildren(Graphics & g)
 {
+
 	g.setColour(Colours::white.withAlpha(.4f));
 	g.drawVerticalLine(getXForTime(item->sequence->currentTime->floatValue()), 0, (float)getHeight());
+
+	g.setColour(item->color->getColor());
+	g.drawRoundedRectangle(getLocalBounds().reduced(1).toFloat(), 2, 2);
+
 	BaseItemMinimalUI::paintOverChildren(g);
 }
 

@@ -30,10 +30,7 @@ MappingLayerPanel::MappingLayerPanel(MappingLayer * layer) :
 
 		automationInspector = new Inspector(mappingLayer->automations[0]->selectionManager);
 		addAndMakeVisible(automationInspector);
-
 	}
-	
-	
 }
 
 MappingLayerPanel::~MappingLayerPanel()

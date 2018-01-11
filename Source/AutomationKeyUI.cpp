@@ -109,7 +109,7 @@ void AutomationKeyUI::mouseDown(const MouseEvent & e)
 	{
 		if (e.mods.isLeftButtonDown())
 		{
-			if (e.mods.isCtrlDown()) item->remove();
+			if (e.mods.isCommandDown()) item->remove();
 			else
 			{
 				posAtMouseDown = item->position->floatValue();
@@ -138,7 +138,7 @@ void AutomationKeyUI::mouseDown(const MouseEvent & e)
 				item->easingType->setValueWithKey(keys[result - 1]);
 				item->easing->selectThis(); //reselect after changing easing
 			}
-		}else if (e.mods.isCtrlDown())
+		}else if (e.mods.isCommandDown())
 		{
 			item->easingType->setNext();
 			item->easing->selectThis(); //reselect after changing easing

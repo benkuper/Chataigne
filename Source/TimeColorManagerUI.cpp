@@ -98,7 +98,7 @@ void TimeColorManagerUI::mouseDown(const MouseEvent & e)
 {
 	if (e.originalComponent == this)
 	{
-		if (e.mods.isLeftButtonDown() && e.mods.isCtrlDown())
+		if (e.mods.isLeftButtonDown() && e.mods.isCommandDown())
 		{
 			float pos = getPosForX(e.getMouseDownX());
 			manager->addColorAt(pos, manager->getColorForPosition(pos));

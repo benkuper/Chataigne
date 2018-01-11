@@ -18,7 +18,10 @@ AudioLayerPanel::AudioLayerPanel(AudioLayer * layer) :
 	
 	moduleChooser.setTextWhenNoChoicesAvailable("No audio module");
 	moduleChooser.setTextWhenNothingSelected("Choose an audio module");
+	
 	moduleChooser.filterModuleFunc = &AudioLayerPanel::isAudioModule;
+	moduleChooser.buildModuleBox();
+
 	moduleChooser.addChooserListener(this);
 	moduleChooser.setModuleSelected(audioLayer->audioModule,true);
 

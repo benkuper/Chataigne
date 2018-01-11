@@ -183,3 +183,16 @@ InspectableEditor * Module::getEditor(bool isRoot)
 {
 	return new ModuleEditor(this, isRoot); //temp, should have a proper base module editor
 }
+
+String Module::getTargetLabelForValueControllable(Controllable * c)
+{
+	ControllableContainer * cc = c->parentContainer;
+	while (cc != nullptr)
+	{
+		Module * m = dynamic_cast<Module *>(cc);
+		if (m != nullptr) return m->niceName + ":" + c->niceName;
+		cc = cc->parentContainer;
+	}
+
+	return c->niceName;
+}

@@ -15,6 +15,7 @@ AudioLayerClipManagerUI::AudioLayerClipManagerUI(AudioLayerTimeline * _timeline,
 	BaseManagerUI("Clip Manager", manager, false),
 	timeline(_timeline)
 {
+	noItemText = "To add an audio clip to this layer, right-click then Add Audio Clip";
 	addItemText = "Add Audio";
 	animateItemOnAdd = false;
 	transparentBG = true;
@@ -53,7 +54,7 @@ void AudioLayerClipManagerUI::mouseDown(const MouseEvent & e)
 	BaseManagerUI::mouseDown(e);
 	if (e.mods.isLeftButtonDown())
 	{
-		if (e.mods.isCtrlDown())
+		if (e.mods.isCommandDown())
 		{
 			float time = timeline->getTimeForX(getMouseXYRelative().x);
 			manager->addClipAt(time);

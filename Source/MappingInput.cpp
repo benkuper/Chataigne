@@ -21,6 +21,7 @@ MappingInput::MappingInput() :
 	inputTarget = addTargetParameter("Input", "Parameter to be the input");
 	inputTarget->showTriggers = false;
 	inputTarget->customGetTargetFunc = &ModuleManager::getInstance()->showAllValuesAndGetControllable;
+	inputTarget->customGetControllableLabelFunc = &Module::getTargetLabelForValueControllable; 
 }
 
 MappingInput::~MappingInput()

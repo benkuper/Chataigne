@@ -16,6 +16,7 @@ MappingLayerTimeline::MappingLayerTimeline(MappingLayer * layer) :
 	SequenceLayerTimeline(layer),
 	mappingLayer(layer)
 {
+	setInterceptsMouseClicks(true, true);
 	bgColor = MAPPING_COLOR.withSaturation(.2f).darker(1);
 	setupUIForLayerMode();
 	updateContent();

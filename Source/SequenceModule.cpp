@@ -21,7 +21,8 @@ SequenceModule::SequenceModule(SequenceManager * _manager) :
 	defManager.add(createBaseDefinition("Time", "Set Current Time", CommandContext::BOTH,SequenceCommand::SET_TIME));
 	defManager.add(createBaseDefinition("Time", "Go to cue", CommandContext::ACTION, SequenceCommand::GOTO_CUE));
 	defManager.add(createBaseDefinition("Layer", "Enable Layer",CommandContext::ACTION, SequenceCommand::ENABLE_LAYER));
-	defManager.add(createBaseDefinition("Layer", "Go to cue", CommandContext::ACTION, SequenceCommand::DISABLE_LAYER));
+	defManager.add(createBaseDefinition("Layer", "Disable layer", CommandContext::ACTION, SequenceCommand::DISABLE_LAYER));
+	defManager.add(createBaseDefinition("Layer", "Toggle layer", CommandContext::ACTION, SequenceCommand::TOGGLE_LAYER));
 }
 
 SequenceModule::~SequenceModule()

@@ -48,7 +48,7 @@ void TimeCueUI::resized()
 void TimeCueUI::mouseDown(const MouseEvent & e)
 {
 	BaseItemMinimalUI::mouseDown(e);
-	if (e.mods.isCtrlDown())
+	if (e.mods.isCommandDown())
 	{
 		item->remove();
 	}
