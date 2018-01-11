@@ -30,8 +30,10 @@ MIDIModule::MIDIModule(const String & name, bool _useGenericControls) :
 		defManager.add(CommandDefinition::createDef(this, "", "Note On", &MIDINoteAndCCCommand::create)->addParam("type", (int)MIDINoteAndCCCommand::NOTE_ON));
 		defManager.add(CommandDefinition::createDef(this, "", "Note Off", &MIDINoteAndCCCommand::create)->addParam("type", (int)MIDINoteAndCCCommand::NOTE_OFF));
 		defManager.add(CommandDefinition::createDef(this, "", "Controller Change", &MIDINoteAndCCCommand::create)->addParam("type", (int)MIDINoteAndCCCommand::CONTROLCHANGE));
+		defManager.add(CommandDefinition::createDef(this, "", "Sysex Message", &MIDISysExCommand::create));
 	}
 	
+	setupIOConfiguration(inputDevice != nullptr, outputDevice != nullptr);
 }
 
 MIDIModule::~MIDIModule()
@@ -43,6 +45,7 @@ MIDIModule::~MIDIModule()
 
 void MIDIModule::sendNoteOn(int pitch, int velocity, int channel)
 {
+	if (!enabled->boolValue()) return;
 	if (outputDevice == nullptr) return;
 	if (logOutgoingData->boolValue()) NLOG(niceName, "Send Note on " << MIDIManager::getNoteName(pitch) << ", " << velocity << ", " << channel);
 	outActivityTrigger->trigger();
@@ -51,6 +54,7 @@ void MIDIModule::sendNoteOn(int pitch, int velocity, int channel)
 
 void MIDIModule::sendNoteOff(int pitch, int channel)
 {
+	if (!enabled->boolValue()) return;
 	if (outputDevice == nullptr) return;
 	if (logOutgoingData->boolValue()) NLOG(niceName, "Send Note off " << MIDIManager::getNoteName(pitch) << ", " << channel);
 	outActivityTrigger->trigger();
@@ -59,11 +63,22 @@ void MIDIModule::sendNoteOff(int pitch, int channel)
 
 void MIDIModule::sendControlChange(int number, int value, int channel)
 {
+	if (!enabled->boolValue()) return;
 	if (outputDevice == nullptr) return;
 	if (logOutgoingData->boolValue()) NLOG(niceName, "Send Control Change " << number << ", " << value << ", " << channel);
 	outActivityTrigger->trigger();
 	outputDevice->sendControlChange(number,value,channel);
 }
+
+void MIDIModule::sendSysex(Array<uint8> data)
+{
+	if (!enabled->boolValue()) return;
+	if (outputDevice == nullptr) return;
+	if (logOutgoingData->boolValue()) NLOG(niceName, "Send Sysex " << data.size() << " bytes");
+	outActivityTrigger->trigger();
+	outputDevice->sendSysEx(data);
+}
+
 
 void MIDIModule::onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c)
 {
@@ -74,7 +89,6 @@ void MIDIModule::onControllableFeedbackUpdateInternal(ControllableContainer * cc
 		updateMIDIDevices();
 	}
 }
-
 
 void MIDIModule::updateMIDIDevices()
 {
@@ -99,45 +113,51 @@ void MIDIModule::updateMIDIDevices()
 		outputDevice = newOutput;
 		if(outputDevice != nullptr) outputDevice->open();
 	}
+
+	setupIOConfiguration(inputDevice != nullptr, outputDevice != nullptr);
 }
 
 void MIDIModule::noteOnReceived(const int & channel, const int & pitch, const int & velocity)
 {
+	if (!enabled->boolValue()) return; 
 	inActivityTrigger->trigger();
 	if (logIncomingData->boolValue())  NLOG(niceName, "Note On : " << channel << ", " << MIDIManager::getNoteName(pitch) << ", " << velocity);
 
-	if (useGenericControls) updateValue(MIDIManager::getNoteName(pitch), velocity);
+	if (useGenericControls) updateValue(channel, MIDIManager::getNoteName(pitch), velocity);
 }
 
 void MIDIModule::noteOffReceived(const int & channel, const int & pitch, const int & velocity)
 {
+	if (!enabled->boolValue()) return; 
 	inActivityTrigger->trigger();
 	if (logIncomingData->boolValue()) NLOG(niceName, "Note Off : " << channel << ", " << MIDIManager::getNoteName(pitch) << ", " << velocity);
 
-	if (useGenericControls) updateValue(MIDIManager::getNoteName(pitch), velocity);
+	if (useGenericControls) updateValue(channel, MIDIManager::getNoteName(pitch), velocity);
 	
 }
 
 void MIDIModule::controlChangeReceived(const int & channel, const int & number, const int & value)
 {
+	if (!enabled->boolValue()) return; 
 	inActivityTrigger->trigger();
 	if (logIncomingData->boolValue()) NLOG(niceName, "Control Change : " << channel << ", " << number << ", " << value);
 
-	if (useGenericControls) updateValue("CC"+String(number), value);
+	if (useGenericControls) updateValue(channel, "CC"+String(number), value);
 
 }
 
-void MIDIModule::updateValue(const String & n, const int & val)
+void MIDIModule::updateValue(const int &channel, const String & n, const int & val)
 {
-	
-	Parameter * p = dynamic_cast<Parameter *>(valuesCC.getControllableByName(n,true));
+	const String nWithChannel = "[" + String(channel) + "] " + n;
+	Parameter * p = dynamic_cast<Parameter *>(valuesCC.getControllableByName(nWithChannel,true));
 	if (p == nullptr)
 	{
 		if (autoAdd->boolValue())
 		{
-			p = valuesCC.addIntParameter(n, n, val, 0, 127);
+			p = new IntParameter(nWithChannel, "Channel "+String(channel)+" : "+n, val, 0, 127);
 			p->isRemovableByUser = true;
 			p->saveValueOnly = false;
+			valuesCC.addParameter(p);
 			valuesCC.orderControllablesAlphabetically();
 		}
 	}

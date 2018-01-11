@@ -13,7 +13,7 @@
 MetronomeModule::MetronomeModule() :
 	Module(getTypeString())
 {
-	setupIOConfiguration(false, false);
+	setupIOConfiguration(true, false);
 
 	frequency = moduleParams.addFloatParameter("Frequency", "Frequency of the timer, in Hz (the greater the value, the faster the tempo)", 1, 0.0001f, 100);
 	onTime = moduleParams.addFloatParameter("ON Time", "Amount of time the metronome stays valid when triggered", .5f, 0, 1);
@@ -43,10 +43,10 @@ void MetronomeModule::onControllableFeedbackUpdateInternal(ControllableContainer
 void MetronomeModule::timerCallback(int timerID)
 {
 	if (!enabled->boolValue()) return;
-
 	if (timerID == 0)
 	{
 		tick->setValue(true);
+		inActivityTrigger->trigger();
 		float nextTime = 1000 / frequency->floatValue();
 		
 		if (random->floatValue() > 0)

@@ -27,6 +27,8 @@ public:
 
 	void filterParamChanged(Parameter *) override;
 
+	Parameter * setupParameterInternal(Parameter * source) override;
+
 	static SimpleRemapFilter * create(var params) { return new SimpleRemapFilter(params); }
 	String getTypeString() const override { return "Simple Remap"; }
 

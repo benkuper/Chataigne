@@ -51,5 +51,6 @@ void ModuleEditor::moduleIOConfigurationChanged()
 {
 	logIncomingUI->setVisible(module->hasInput);
 	logOutgoingUI->setVisible(module->hasOutput);
-    resized();
+	resetAndBuild();
+	resized();
 }

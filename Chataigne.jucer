@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.2.2"
+<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.2.3"
               bundleIdentifier="benkuper.Chataigne" includeBinaryInAppConfig="1"
               jucerVersion="5.2.0" companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
               companyEmail="benjamin@kuperberg.fr" defines="" displaySplashScreen="1"
@@ -1100,12 +1100,11 @@
             vst3Folder="">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" winWarningLevel="4" generateManifest="1" winArchitecture="x64"
-                       isDebug="1" optimisation="1" targetName="Chataigne-x64_Debug"
-                       headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;$(ASIOSDK)/common&#10;$(KINECTSDK20_DIR)inc&#10;"
+                       isDebug="1" optimisation="1" targetName="ChataigneDebug" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;$(ASIOSDK)/common&#10;$(KINECTSDK20_DIR)inc&#10;"
                        libraryPath="$(KINECTSDK20_DIR)Lib\x64" binaryPath="Binaries"
                        debugInformationFormat="ProgramDatabase" enablePluginBinaryCopyStep="0"/>
         <CONFIGURATION name="Release" winWarningLevel="4" generateManifest="1" winArchitecture="x64"
-                       isDebug="0" optimisation="3" targetName="Chataigne-x64" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;$(ASIOSDK)/common&#10;$(KINECTSDK20_DIR)inc&#10;"
+                       isDebug="0" optimisation="3" targetName="Chataigne" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;$(ASIOSDK)/common&#10;$(KINECTSDK20_DIR)inc&#10;"
                        libraryPath="$(KINECTSDK20_DIR)Lib\x64" binaryPath="Binaries"
                        debugInformationFormat="ProgramDatabase" enablePluginBinaryCopyStep="0"
                        linkTimeOptimisation="1"/>
@@ -1180,8 +1179,7 @@
     <MODULE id="juce_video" showAllCode="1" useLocalCopy="0"/>
   </MODULES>
   <JUCEOPTIONS JUCE_ASIO="enabled" JUCE_WASAPI="enabled" JUCE_ENABLE_LIVE_CONSTANT_EDITOR="disabled"
-               JUCE_USE_CDREADER="disabled" JUCE_USE_CDBURNER="disabled" JUCE_WEB_BROWSER="disabled"
-               JUCE_USE_WINRT_MIDI="enabled"/>
+               JUCE_USE_CDREADER="disabled" JUCE_USE_CDBURNER="disabled" JUCE_WEB_BROWSER="disabled"/>
   <LIVE_SETTINGS>
     <WINDOWS/>
   </LIVE_SETTINGS>

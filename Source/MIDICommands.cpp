@@ -43,6 +43,8 @@ MIDINoteAndCCCommand::MIDINoteAndCCCommand(MIDIModule * module, CommandContext c
 	case CONTROLCHANGE:
 		number = addIntParameter("CC Number", "Number of the CC (0-127)", 0, 0, 127);
 		velocity = addIntParameter("CC Value", "Value of the CC", 0, 0, 127);
+
+
 	}
 
 	setTargetMappingParameterAt(velocity, 0);
@@ -84,3 +86,48 @@ void MIDINoteAndCCCommand::trigger()
 		break;
 	}
 }
+
+
+MIDISysExCommand::MIDISysExCommand(MIDIModule * module, CommandContext context, var params) :
+	MIDICommand(module, context, params),
+	dataContainer("Bytes")
+{
+	numBytes = addIntParameter("Num bytes", "Number of bytes to send", 1, 1, 512);
+	addChildControllableContainer(&dataContainer);
+	updateBytesParams();
+}
+MIDISysExCommand::~MIDISysExCommand()
+{
+}
+
+void MIDISysExCommand::updateBytesParams()
+{
+
+	while (dataContainer.controllables.size() > numBytes->intValue())
+	{
+		dataContainer.controllables[dataContainer.controllables.size() - 1]->remove();
+	}
+
+	while (dataContainer.controllables.size() < numBytes->intValue())
+	{
+		String index = String(dataContainer.controllables.size());
+		dataContainer.addIntParameter("#" + index, "Data for the byte #" + index, 0, 0, 255);
+	}
+
+}
+
+void MIDISysExCommand::onContainerParameterChangedAsync(Parameter * p, const var &)
+{
+	if (p == numBytes)
+	{
+		updateBytesParams();
+	}
+}
+
+void MIDISysExCommand::trigger()
+{
+	Array<uint8> data;
+	for (auto &c : dataContainer.controllables) data.add(((IntParameter *)c)->intValue());
+	midiModule->sendSysex(data);
+}
+

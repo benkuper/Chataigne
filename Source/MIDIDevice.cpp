@@ -132,10 +132,9 @@ void MIDIOutputDevice::sendControlChange(int number, int value, int channel)
 	device->sendMessageNow(MidiMessage::controllerEvent(channel,number,value));
 }
 
-void MIDIOutputDevice::sendSysEx(uint8 d1, uint8 d2, uint8 d3, uint8 d4)
+void MIDIOutputDevice::sendSysEx(Array<uint8> data)
 {
 	if (device == nullptr) return;
-	uint8 d[4]{ d1,d2,d3,d4 };
-	device->sendMessageNow(MidiMessage::createSysExMessage(d, 4));
+	device->sendMessageNow(MidiMessage::createSysExMessage(data.getRawDataPointer(), data.size()));
 }
 

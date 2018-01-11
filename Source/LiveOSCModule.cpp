@@ -13,10 +13,8 @@
 #include "LiveOSCCommandBase.h"
 
 LiveOSCModule::LiveOSCModule() :
-	OSCModule(getDefaultTypeString(), 9000, 9001, true, true)
+	OSCModule(getDefaultTypeString(), 9000, 9001, false, true)
 {
-	valuesCC.hideInEditor = true;
-
 	defManager.add(CommandDefinition::createDef(this, "General", "Play", &OSCCommand::create, CommandContext::ACTION)->addParam("address", "/live/play"));
 	defManager.add(CommandDefinition::createDef(this, "General", "Continue", &OSCCommand::create, CommandContext::ACTION)->addParam("address", "/live/play/continue"));
 	defManager.add(CommandDefinition::createDef(this, "General", "Stop", &OSCCommand::create, CommandContext::ACTION)->addParam("address", "/live/stop"));

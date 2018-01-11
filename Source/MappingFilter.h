@@ -39,8 +39,8 @@ public:
 	Parameter * process(Parameter * source);
 	virtual void processInternal() {}
 
-	var getJSONData() override;
-	void loadJSONDataInternal(var data) override;
+	virtual var getJSONData() override;
+	virtual void loadJSONDataInternal(var data) override;
 
 	InspectableEditor * getEditor(bool isRoot) override;
 

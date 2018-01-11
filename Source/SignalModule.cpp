@@ -14,7 +14,7 @@ SignalModule::SignalModule() :
 	Module(getTypeString()),
 	progression(0)
 {
-	setupIOConfiguration(false, false);
+	setupIOConfiguration(true, false);
 
 	type = moduleParams.addEnumParameter("Type", "Signal type");
 	type->addOption("Sine", SINE)->addOption("Saw",SAW)->addOption("Triangle",TRIANGLE)->addOption("Perlin", PERLIN);
@@ -49,12 +49,15 @@ void SignalModule::onControllableFeedbackUpdateInternal(ControllableContainer * 
 
 void SignalModule::timerCallback(int timerID)
 {
+	if (!enabled->boolValue()) return;
+
 	if (timerID == 0)
 	{
 		SignalType t = type->getValueDataAsEnum<SignalType>();
 
 		float val = 0;
 		progression = progression + getTimerInterval(0)*frequency->floatValue() / 1000.0f;
+
 
 		switch (t)
 		{
@@ -76,6 +79,7 @@ void SignalModule::timerCallback(int timerID)
 		}
 
 		value->setValue(val);
+		inActivityTrigger->trigger();
 	}
 
 	

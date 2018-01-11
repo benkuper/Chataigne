@@ -45,13 +45,14 @@ void CustomOSCModule::processMessageInternal(const OSCMessage & msg)
 	const String cShortName = cNiceName.replaceCharacters("/", "_");
 	Controllable * c = nullptr;
 
-	if(msg.size() > 1 && splitArgs->boolValue())
+
+	if(msg.size() > 1 && splitArgs->boolValue()) // Split args on multi type
 	{
-		for (int i = 0; i < msg.size(); i++)
+		for (int i = 0; i < msg.size(); i++) 
 		{
-			c = valuesCC.getControllableByName(cShortName+"_"+String(i));
+			c = valuesCC.getControllableByName(cShortName+" "+String(i));
 			Parameter * p = (Parameter *)c;
-			if (c != nullptr)
+			if (c != nullptr) //Args already exists
 			{
 				switch (c->type)
 				{
@@ -62,27 +63,28 @@ void CustomOSCModule::processMessageInternal(const OSCMessage & msg)
                     default:
                         break;
 				}
-			} else
+			} else //Args don't exist yet
 			{
-				String argIAddress = cNiceName + "_" + String(i);
+				String argIAddress = cNiceName + " " + String(i);
 				if (msg[i].isInt32()) c = valuesCC.addIntParameter(argIAddress, "", msg[i].getInt32(), msg[i].getInt32(), msg[i].getInt32());
 				else if (msg[i].isFloat32()) c = valuesCC.addFloatParameter(argIAddress, "", msg[i].getFloat32());
 				else if (msg[i].isString()) c = valuesCC.addStringParameter(argIAddress, "", msg[i].getString());
-				((Parameter *)c)->autoAdaptRange = true;
-			}
 
-			if (c != nullptr)
-			{
-				c->setCustomShortName(cShortName + "_" + String(i)); //force safeName for search
-				c->isCustomizableByUser = true;
-				c->isRemovableByUser = true;
-				c->saveValueOnly = false;
-				if (c->type != Controllable::TRIGGER) ((Parameter *)c)->autoAdaptRange = true;
+
+				if (c != nullptr) //Args have been sucessfully created 
+				{
+					c->setCustomShortName(cShortName + " " + String(i)); //force safeName for search
+					c->isCustomizableByUser = true;
+					c->isRemovableByUser = true;
+					c->saveValueOnly = false;
+					if (c->type != Controllable::TRIGGER) ((Parameter *)c)->autoAdaptRange = true;
+				}
 			}
 		}
-	} else
+	} else //Standard handling of incoming messages
 	{
 		c = valuesCC.getControllableByName(cShortName);
+
 		if (c != nullptr) //update existing controllable
 		{
 			switch (c->type)
@@ -109,7 +111,6 @@ void CustomOSCModule::processMessageInternal(const OSCMessage & msg)
 				{
 					IntParameter *i = (IntParameter *)c;
 					if (msg.size() >= 3 && autoRange->boolValue()) i->setRange(getIntArg(msg[1]), getIntArg(msg[2]));
-
 					i->setValue(getIntArg(msg[0]));
 				}
 				break;
@@ -124,6 +125,10 @@ void CustomOSCModule::processMessageInternal(const OSCMessage & msg)
 
 			case Controllable::POINT3D:
 				if (msg.size() >= 3) ((Point3DParameter *)c)->setVector(Vector3D<float>(getFloatArg(msg[0]), getFloatArg(msg[1]), getFloatArg(msg[2])));
+				break;
+
+			case Controllable::COLOR:
+				if (msg.size() >= 4) ((ColorParameter *)c)->setColor(Colour((uint8)(getFloatArg(msg[0]) * 255), (uint8)(getFloatArg(msg[1]) * 255), (uint8)(getFloatArg(msg[2]) * 255), getFloatArg(msg[3])));
 				break;
 
 			default:
@@ -170,8 +175,19 @@ void CustomOSCModule::processMessageInternal(const OSCMessage & msg)
 			if (msg[0].isInt32()) c = new IntParameter(cNiceName, "", getIntArg(msg[0]), getIntArg(msg[1]), getIntArg(msg[2]));
 			else if (msg[0].isFloat32())
 			{
+
 				c = new Point3DParameter(cNiceName, "");
 				((Point3DParameter *)c)->setVector(getFloatArg(msg[0]), getFloatArg(msg[1]), getFloatArg(msg[2]));
+			} else if (msg[0].isString())
+			{
+				c = new StringParameter(cNiceName, "", getStringArg(msg[0]));
+			}
+			break;
+
+		case 4:
+			if (msg[0].isFloat32() && msg[1].isFloat32() && msg[2].isFloat32() && msg[3].isFloat32())
+			{
+				c = new ColorParameter(cNiceName, "", Colour((uint8)(getFloatArg(msg[0]) * 255), (uint8)(getFloatArg(msg[1]) * 255), (uint8)(getFloatArg(msg[2]) * 255), getFloatArg(msg[3])));
 			} else if (msg[0].isString())
 			{
 				c = new StringParameter(cNiceName, "", getStringArg(msg[0]));
@@ -184,14 +200,17 @@ void CustomOSCModule::processMessageInternal(const OSCMessage & msg)
 		}
 
 		
-		c->setCustomShortName(cShortName); //force safeName for search
-		c->isCustomizableByUser = true;
-		c->isRemovableByUser = true;
-		c->saveValueOnly = false;
-		if(c->type != Controllable::TRIGGER) ((Parameter *)c)->autoAdaptRange = true;
+		if (c != nullptr)
+		{
+			c->setCustomShortName(cShortName); //force safeName for search
+			c->isCustomizableByUser = true;
+			c->isRemovableByUser = true;
+			c->saveValueOnly = false;
+			if (c->type != Controllable::TRIGGER) ((Parameter *)c)->autoAdaptRange = true;
 
-		valuesCC.addControllable(c);
-		valuesCC.orderControllablesAlphabetically();
+			valuesCC.addControllable(c);
+			valuesCC.orderControllablesAlphabetically();
+		}
 	}
 }
 

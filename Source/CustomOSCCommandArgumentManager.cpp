@@ -26,6 +26,7 @@ void CustomOSCCommandArgumentManager::addItemWithParam(Parameter * p, var data, 
 	CustomOSCCommandArgument * a = new CustomOSCCommandArgument("#" + String(items.size() + 1), p,mappingEnabled);
 	a->addArgumentListener(this);
 	addItem(a, data, fromUndoableAction);
+	if (items.size() == 1) a->useForMapping->setValue(true);
 }
 
 void CustomOSCCommandArgumentManager::addItemFromType(Parameter::Type type, var data, bool fromUndoableAction)

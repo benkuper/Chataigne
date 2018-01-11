@@ -34,6 +34,7 @@ public:
 	virtual void sendNoteOn(int pitch, int velocity, int channel = 0);
 	virtual void sendNoteOff(int pitch, int channel = 0);
 	virtual void sendControlChange(int number, int value, int channel = 0);
+	virtual void sendSysex(Array<uint8> data);
 
 	void onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c) override;
 	void updateMIDIDevices();
@@ -42,7 +43,7 @@ public:
 	virtual void noteOffReceived(const int &channel, const int &pitch, const int &velocity) override;
 	virtual void controlChangeReceived(const int &channel, const int &number, const int &value) override;
 
-	void updateValue(const String &n, const int &val);
+	void updateValue(const int &channel, const String &n, const int &val);
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;

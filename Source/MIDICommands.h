@@ -25,8 +25,8 @@ public:
 	MIDIModule *  midiModule;
 
 	static BaseCommand * create(ControllableContainer * module, CommandContext context, var params) { return new MIDICommand((MIDIModule *)module, context, params); }
-
 };
+
 
 class MIDINoteAndCCCommand :
 	public MIDICommand
@@ -48,7 +48,26 @@ public:
 	void setValue(var value) override;
 	void trigger() override;
 
-	static BaseCommand * create(ControllableContainer * module, CommandContext context, var params) { return new MIDINoteAndCCCommand((MIDIModule *)module, context, params); }
+	static MIDINoteAndCCCommand * create(ControllableContainer * module, CommandContext context, var params) { return new MIDINoteAndCCCommand((MIDIModule *)module, context, params); }
+
+};
+
+class MIDISysExCommand :
+	public MIDICommand
+{
+public:
+	MIDISysExCommand(MIDIModule *, CommandContext context, var params);
+	~MIDISysExCommand();
+
+	IntParameter * numBytes;
+	ControllableContainer dataContainer;
+	Array<IntParameter *> bytes;
+
+	void updateBytesParams();
+	void onContainerParameterChangedAsync(Parameter * p, const var &param) override;
+	void trigger() override;
+
+	static MIDISysExCommand * create(ControllableContainer * module, CommandContext context, var params) { return new MIDISysExCommand((MIDIModule *)module, context, params); }
 
 };
 

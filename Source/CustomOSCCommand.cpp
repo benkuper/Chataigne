@@ -18,7 +18,7 @@ CustomOSCCommand::CustomOSCCommand(CustomOSCModule * module, CommandContext cont
 	address->isSavable = true;
 
 	removeChildControllableContainer(&argumentsContainer);
-	addChildControllableContainer(&argManager);
+	addChildControllableContainer(&argManager);  
 	argManager.addArgumentManagerListener(this);
 }
 
