@@ -119,7 +119,6 @@ void OSCModule::processMessage(const OSCMessage & msg)
 		params.add(args);
 		scriptManager->callFunctionOnAllItems(oscEventId, params);
 	}
-
 }
 
 
