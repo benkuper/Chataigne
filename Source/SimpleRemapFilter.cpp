@@ -14,10 +14,12 @@ SimpleRemapFilter::SimpleRemapFilter(var params) :
 	MappingFilter(getTypeString(),params)
 {
 
-	targetMin = filterParams.addFloatParameter("Target Min", "New minimum for output", 0, (float)INT_MIN, (float)INT_MAX);
-	targetMax = filterParams.addFloatParameter("Target Max", "New maximum for output", 1, (float)INT_MIN, (float)INT_MAX);
+	targetMin = filterParams.addFloatParameter("Target Min", "New minimum for output", 0, 0,1);
+	targetMax = filterParams.addFloatParameter("Target Max", "New maximum for output", 1, 0,1);
 	targetMin->defaultUI = FloatParameter::LABEL;
+	targetMin->autoAdaptRange = true;
 	targetMax->defaultUI = FloatParameter::LABEL;
+	targetMax->autoAdaptRange = true;
 	targetMin->isCustomizableByUser = false;
 	targetMax->isCustomizableByUser = false;
 
