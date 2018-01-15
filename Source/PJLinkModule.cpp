@@ -16,6 +16,8 @@ PJLinkModule::PJLinkModule() :
 {
 	defManager.add(getBasePJCommand("", "Power On", "%1POWR 1", CommandContext::ACTION));
 	defManager.add(getBasePJCommand("", "Power Off", "%1POWR 0", CommandContext::ACTION));
+	defManager.add(getBasePJCommand("", "Shutter On", "%1AVMT 1", CommandContext::ACTION));
+	defManager.add(getBasePJCommand("", "Shutter Off", "%1AVMT 0", CommandContext::ACTION));
 }
 
 CommandDefinition * PJLinkModule::getBasePJCommand(const String & menu, const String & commandName, const String & command, CommandContext context)
