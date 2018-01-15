@@ -165,6 +165,9 @@ void Sequence::onContainerParameterChangedInternal(Parameter * p)
 			stopTimer();
 		}
 
+		sequenceListeners.call(&SequenceListener::sequencePlayStateChanged, this);
+
+
 	} else if (p == fps)
 	{
 		if (isPlaying->boolValue())

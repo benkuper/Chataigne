@@ -63,7 +63,7 @@ void OSCModule::setupReceiver()
 		NLOG(niceName, "Now receiving on port : " + localPort->stringValue());
 	} else
 	{
-		NLOG(niceName, "Error binding port " + localPort->stringValue());
+		NLOGERROR(niceName, "Error binding port " + localPort->stringValue());
 	}
 	
 	Array<IPAddress> ad;

@@ -88,7 +88,7 @@ inline void ChataigneApplication::systemRequestedQuit()
 {
     if (GlobalSettings::getInstance()->askForSaveBeforeClosing->boolValue())
     {
-        int result = AlertWindow::showYesNoCancelBox(AlertWindow::QuestionIcon, "Save document", "Do you want to save the document before opening a new one ?");
+        int result = AlertWindow::showYesNoCancelBox(AlertWindow::QuestionIcon, "Save document", "Do you want to save the document before closing this awesome app ?");
         if (result != 0)
         {
             if (result == 1) Engine::mainEngine->save(true, true);

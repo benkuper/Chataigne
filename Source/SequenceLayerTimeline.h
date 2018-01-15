@@ -22,6 +22,8 @@ public:
 	SequenceLayerTimeline(SequenceLayer *);
 	virtual ~SequenceLayerTimeline();
 
+	const Colour defaultTimeBarColor = Colours::white.withAlpha(.4f);
+	Colour timeBarColor;
 	int getXForTime(float time);
 	float getTimeForX(int tx, bool offsetStart = true);
 

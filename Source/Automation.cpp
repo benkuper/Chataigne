@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    Automation.cpp
-    Created: 11 Dec 2016 1:21:37pm
-    Author:  Ben
+	Automation.cpp
+	Created: 11 Dec 2016 1:21:37pm
+	Author:  Ben
 
   ==============================================================================
 */
@@ -13,17 +13,22 @@
 
 AutomationKeyComparator Automation::comparator;
 
-Automation::Automation() :
-BaseManager("Automation"),
-showUIInEditor(false),
+Automation::Automation(AutomationRecorder * _recorder) :
+	BaseManager("Automation"),
+	recorder(_recorder),
+	showUIInEditor(false),
 	positionMax(1)
 {
 	position = addFloatParameter("Position", "The current position in the automation. Used for automatic retrieve value and feedback.", 0, 0, positionMax);
+	position->hideInEditor = true;
 	value = addFloatParameter("Value", "The current value, depending on the position", 0, 0, 1);
+	value->hideInEditor = true;
 	value->isControllableFeedbackOnly = true;
 
-	enableSnap = addBoolParameter("Enable Snap", "If enabled, moving keys will be automatically adjusted to interesting positions such as automation position",true);
+	enableSnap = addBoolParameter("Enable Snap", "If enabled, moving keys will be automatically adjusted to interesting positions such as automation position", true);
 	snapSensitivity = addFloatParameter("Snap Sensitivity", "Controls the sensitivity of the snapping, if enabled.\nThe greater the value, the more likely a position will be snapped.", .5f, 0, 3);
+	enableSnap->hideInEditor = true;
+	snapSensitivity->hideInEditor = true; 
 
 	//selectItemWhenCreated = false;
 	selectionManager = new InspectableSelectionManager(false);
@@ -40,6 +45,13 @@ void Automation::reorderItems()
 {
 	items.sort(Automation::comparator, true);
 	BaseManager::reorderItems();
+}
+
+void Automation::removeKeysBetween(float start, float end)
+{
+	Array<AutomationKey *> keysToRemove;
+	for (auto &k : items) if (k->position->floatValue() >= start && k->position->floatValue() <= end) keysToRemove.add(k);
+	for (auto &k : keysToRemove) removeItem(k);
 }
 
 void Automation::removeAllSelectedKeys()
@@ -62,7 +74,7 @@ float Automation::getClosestSnapForPos(float pos, int start, int end)
 	if (end == -1) end = snapPositions.size() - 1;
 
 	if (pos < snapPositions[0]) return snapPositions[0];
-	if (pos > snapPositions[snapPositions.size()-1]) return snapPositions[snapPositions.size()-1];
+	if (pos > snapPositions[snapPositions.size() - 1]) return snapPositions[snapPositions.size() - 1];
 
 	if (end - start <= 1) return snapPositions[start];
 
@@ -74,8 +86,7 @@ float Automation::getClosestSnapForPos(float pos, int start, int end)
 	else if (pos > medPos)
 	{
 		return getClosestSnapForPos(pos, midIndex, end);
-	}
-	else
+	} else
 	{
 		return getClosestSnapForPos(pos, start, midIndex);
 	}
@@ -101,8 +112,7 @@ AutomationKey * Automation::getClosestKeyForPos(float pos, int start, int end)
 	else if (pos > medPos)
 	{
 		return getClosestKeyForPos(pos, midIndex, end);
-	}
-	else
+	} else
 	{
 		return getClosestKeyForPos(pos, start, midIndex);
 	}
@@ -120,7 +130,7 @@ float Automation::getValueForPosition(float pos)
 	if (items.size() == 0) return 0;
 	if (pos <= items[0]->position->floatValue()) return items[0]->value->floatValue();
 	else if (pos >= items[items.size() - 1]->position->floatValue()) return items[items.size() - 1]->value->floatValue();
-	
+
 	AutomationKey * k = getClosestKeyForPos(pos);
 	if (k == nullptr) return 0;
 	return k->getValue(items[items.indexOf(k) + 1], pos);
@@ -146,28 +156,27 @@ void Automation::onControllableFeedbackUpdate(ControllableContainer * cc, Contro
 {
 	AutomationKey * t = dynamic_cast<AutomationKey *>(cc);
 
-	if (enableSnap->boolValue() && c == t->position)
-	{
-		float curPos = position->floatValue();
-		float tPos = t->position->floatValue();
-		if (fabsf(curPos - tPos) < snapSensitivity->floatValue())
-		{
-			t->position->setValue(curPos);
-			return;
-		}
-		else
-		{
-			float newPos = getClosestSnapForPos(tPos);
-			if (newPos != tPos && fabsf(newPos-tPos) < snapSensitivity->floatValue())
-			{
-				t->position->setValue(newPos);
-				return;
-			}
-		}
-	}
-
 	if (t != nullptr)
 	{
+		if (enableSnap->boolValue() && c == t->position)
+		{
+			float curPos = position->floatValue();
+			float tPos = t->position->floatValue();
+			if (fabsf(curPos - tPos) < snapSensitivity->floatValue())
+			{
+				t->position->setValue(curPos);
+				return;
+			} else
+			{
+				float newPos = getClosestSnapForPos(tPos);
+				if (newPos != tPos && fabsf(newPos - tPos) < snapSensitivity->floatValue())
+				{
+					t->position->setValue(newPos);
+					return;
+				}
+			}
+		}
+
 		value->setValue(getValueForPosition(position->floatValue()));
 
 		if (c == t->position)
@@ -177,15 +186,12 @@ void Automation::onControllableFeedbackUpdate(ControllableContainer * cc, Contro
 			{
 				items.swap(index, index - 1);
 				baseManagerListeners.call(&Listener::itemsReordered);
-			}
-			else if (index < items.size() - 1 && t->position->floatValue() > items[index + 1]->position->floatValue())
+			} else if (index < items.size() - 1 && t->position->floatValue() > items[index + 1]->position->floatValue())
 			{
 				items.swap(index, index + 1);
 				baseManagerListeners.call(&Listener::itemsReordered);
 			}
 		}
-
-		
 	}
 }
 
@@ -194,8 +200,7 @@ void Automation::onContainerParameterChanged(Parameter * p)
 	if (p == position)
 	{
 		value->setValue(getValueForPosition(position->floatValue()));
-	}
-	else if (p == enableSnap)
+	} else if (p == enableSnap)
 	{
 		snapSensitivity->setEnabled(enableSnap->boolValue());
 	}

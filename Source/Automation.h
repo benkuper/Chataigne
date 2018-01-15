@@ -12,6 +12,7 @@
 #define AUTOMATION_H_INCLUDED
 
 #include "AutomationKey.h"
+#include "AutomationRecorder.h"
 
 class InspectableSelectionManager;
 
@@ -30,18 +31,21 @@ class Automation :
 	public BaseManager<AutomationKey>
 {
 public:
-	Automation();
+	Automation(AutomationRecorder * recorder = nullptr);
 	virtual ~Automation();
+
+
+	//Recorder
+	AutomationRecorder * recorder;
 
 	//ui
 	bool showUIInEditor;
 
 	float positionMax;
 	void setPositionMax(float val);	
-
 	
 
-	//Current position
+	//Position and value
 	FloatParameter * position;
 	FloatParameter * value;
 
@@ -60,6 +64,7 @@ public:
 	void addItem(const float position, const float value);
 	void reorderItems() override;
 
+	void removeKeysBetween(float start, float end);
 	void removeAllSelectedKeys();
 
 	void setSnapPositions(Array<float> positions);

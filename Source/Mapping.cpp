@@ -20,8 +20,6 @@ Mapping::Mapping(bool canBeDisabled) :
 	continuousProcess = addBoolParameter("Continuous", "If enabled, the mapping will process continuously rather than only when parameter value has changed", false);
 	continuousProcess->hideInEditor = true;
 
-	cdm.editorIsCollapsed = true;
-
 	addChildControllableContainer(&input);
 	addChildControllableContainer(&cdm);
 	addChildControllableContainer(&fm);

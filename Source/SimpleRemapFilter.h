@@ -20,8 +20,8 @@ public:
 	SimpleRemapFilter(var params);
 	~SimpleRemapFilter();
 
-	Parameter * targetMin;
-	Parameter * targetMax;
+	FloatParameter * targetMin;
+	FloatParameter * targetMax;
 
 	void processInternal() override;
 

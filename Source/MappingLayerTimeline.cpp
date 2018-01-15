@@ -19,6 +19,7 @@ MappingLayerTimeline::MappingLayerTimeline(MappingLayer * layer) :
 	setInterceptsMouseClicks(true, true);
 	bgColor = MAPPING_COLOR.withSaturation(.2f).darker(1);
 	setupUIForLayerMode();
+	timeBarColor = mappingLayer->recorder.arm->boolValue() ? Colours::red : defaultTimeBarColor;
 	updateContent();
 }
 
@@ -89,5 +90,9 @@ void MappingLayerTimeline::controllableFeedbackUpdateInternal(Controllable * c)
 	if (c == mappingLayer->mode)
 	{
 		setupUIForLayerMode();
+	} else if (c == mappingLayer->recorder.arm)
+	{
+		timeBarColor = mappingLayer->recorder.arm->boolValue() ? Colours::red : defaultTimeBarColor;
+		repaint();
 	}
 }

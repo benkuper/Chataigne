@@ -11,7 +11,8 @@
 #include "SequenceLayerTimeline.h"
 
 SequenceLayerTimeline::SequenceLayerTimeline(SequenceLayer * layer) :
-	BaseItemMinimalUI<SequenceLayer>(layer)
+	BaseItemMinimalUI<SequenceLayer>(layer),
+	timeBarColor(defaultTimeBarColor)
 {
 	item->sequence->addAsyncContainerListener(this);
 	setSize(100, item->uiHeight->intValue());
@@ -45,7 +46,7 @@ float SequenceLayerTimeline::getTimeForX(int tx, bool offsetStart)
 void SequenceLayerTimeline::paintOverChildren(Graphics & g)
 {
 
-	g.setColour(Colours::white.withAlpha(.4f));
+	g.setColour(timeBarColor);
 	g.drawVerticalLine(getXForTime(item->sequence->currentTime->floatValue()), 0, (float)getHeight());
 
 	g.setColour(item->color->getColor());

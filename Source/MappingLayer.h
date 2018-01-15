@@ -33,6 +33,7 @@ public:
 	OwnedArray<Automation> automations; //later: automation Manager to allow for multi curve layer
 	ScopedPointer<TimeColorManager> timeColorManager;
 
+	AutomationRecorder recorder;
 	Mapping mapping;
 
 	void setupMappingForCurrentMode();
@@ -51,12 +52,12 @@ public:
 	virtual SequenceLayerTimeline * getTimelineUI() override;
 
 	virtual void onContainerParameterChangedInternal(Parameter * p) override;
-
+	virtual void onContainerTriggerTriggered(Trigger * t) override;
 	void onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c) override;
 
 	virtual void sequenceTotalTimeChanged(Sequence *) override;
-	virtual void sequenceCurrentTimeChanged(Sequence *, float /*prevTime */, bool /*evaluateSkippedData */) override;
-
+	virtual void sequenceCurrentTimeChanged(Sequence *, float prevTime , bool evaluateSkippedData) override;
+	virtual void sequencePlayStateChanged(Sequence *) override;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MappingLayer)
 };

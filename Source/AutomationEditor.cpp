@@ -11,7 +11,8 @@
 #include "AutomationEditor.h"
 
 AutomationEditor::AutomationEditor(Automation * automation, bool isRoot) :
-	InspectableEditor(automation, isRoot),
+	GenericControllableContainerEditor(automation, isRoot),
+	automation(automation),
 	automationUI(nullptr)
 {
 	if (automation->showUIInEditor)
@@ -23,7 +24,6 @@ AutomationEditor::AutomationEditor(Automation * automation, bool isRoot) :
 		addAndMakeVisible(automationUI);
 		automationUI->setViewRange(0, automation->positionMax);
 		setSize(100, 100);
-
 	}
 }
 
@@ -31,7 +31,13 @@ AutomationEditor::~AutomationEditor()
 {
 }
 
-void AutomationEditor::resized()
+void AutomationEditor::resizedInternalContent(Rectangle<int> &r)
 {
-	if (automationUI != nullptr) automationUI->setBounds(getLocalBounds());
+	if (automationUI != nullptr)
+	{
+		if (automationUI != nullptr) automationUI->setBounds(r.withHeight(automationUI->getHeight()));
+		r.translate(0, automationUI->getHeight());
+	}
+	
+	r.setHeight(0);
 }

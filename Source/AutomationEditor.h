@@ -14,15 +14,16 @@
 #include "AutomationUI.h"
 
 class AutomationEditor :
-	public InspectableEditor
+	public GenericControllableContainerEditor
 {
 public:
 	AutomationEditor(Automation * automation, bool isRoot);
 	~AutomationEditor();
 
+	Automation * automation;
 	ScopedPointer<AutomationUI> automationUI;
 
-	void resized() override;
+	void resizedInternalContent(Rectangle<int> &r) override;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(AutomationEditor)
 };

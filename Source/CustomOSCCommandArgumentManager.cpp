@@ -78,9 +78,10 @@ void CustomOSCCommandArgumentManager::autoRenameItems()
 	}
 }
 
-void CustomOSCCommandArgumentManager::removeItemInternal(CustomOSCCommandArgument *)
+void CustomOSCCommandArgumentManager::removeItemInternal(CustomOSCCommandArgument * i)
 {
 	autoRenameItems();
+	useForMappingChanged(i);
 }
 
 void CustomOSCCommandArgumentManager::useForMappingChanged(CustomOSCCommandArgument * i)

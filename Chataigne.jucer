@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.2.4"
+<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.2.5"
               bundleIdentifier="benkuper.Chataigne" includeBinaryInAppConfig="1"
               jucerVersion="5.2.0" companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
               companyEmail="benjamin@kuperberg.fr" defines="" displaySplashScreen="1"
@@ -304,6 +304,12 @@
           <FILE id="k95V0p" name="PluginManager.h" compile="0" resource="0" file="Source/PluginManager.h"/>
         </GROUP>
         <GROUP id="{35974B24-06CE-D2B0-10E2-28EC5F180B57}" name="Automation">
+          <GROUP id="{E9858734-8999-786A-04BD-79693B37B6BD}" name="recorder">
+            <FILE id="PDaeG1" name="AutomationRecorder.cpp" compile="1" resource="0"
+                  file="Source/AutomationRecorder.cpp"/>
+            <FILE id="TWEBYT" name="AutomationRecorder.h" compile="0" resource="0"
+                  file="Source/AutomationRecorder.h"/>
+          </GROUP>
           <GROUP id="{119C0D0B-5C9F-590C-778F-E6320A718265}" name="easing">
             <GROUP id="{EA6F771F-744D-8561-7D50-8736697A9E15}" name="ui">
               <FILE id="mdt7Gy" name="EasingUI.cpp" compile="1" resource="0" file="Source/EasingUI.cpp"/>

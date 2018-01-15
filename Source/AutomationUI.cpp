@@ -34,6 +34,7 @@ AutomationUI::AutomationUI(Automation * _automation) :
 	noItemText = "Add keys using Ctrl + Left Click";
 #endif
 
+	setSize(100, 100);
 }
 
 AutomationUI::~AutomationUI()
@@ -99,17 +100,48 @@ void AutomationUI::updateROI()
 void AutomationUI::paint(Graphics & g)
 {
 	BaseManagerUI::paint(g);
-
 	
-	if (itemsUI.size() < 2) return;
 
 	//int count = 0;
-	int ty = getYForValue(currentValue);
-	Rectangle<int> vr = getLocalBounds().withTop(ty);
-	g.setColour(valueBGColor);
-	g.fillRect(vr);
-	g.setColour(Colours::orange);
-	g.drawEllipse(Rectangle<int>(0, 0, 3,3).withCentre(Point<int>(getXForPos(currentPosition), ty)).toFloat(), 1);
+	if (itemsUI.size() >= 2)
+	{
+		int ty = getYForValue(currentValue);
+		Rectangle<int> vr = getLocalBounds().withTop(ty);
+		g.setColour(valueBGColor);
+		g.fillRect(vr);
+
+		//pos-value feedback
+		g.setColour(Colours::orange);
+		g.drawEllipse(Rectangle<int>(0, 0, 3, 3).withCentre(Point<int>(getXForPos(currentPosition), ty)).toFloat(), 1);
+	}
+	
+	//recorder
+	if (manager->recorder != nullptr)
+	{
+		if (manager->recorder->isRecording->boolValue())
+		{
+			g.setColour(Colours::red.withAlpha(.3f));
+			g.fillRect(getLocalBounds().withLeft(getXForPos(manager->recorder->timeOffset)).withRight(getXForPos(currentPosition)));
+
+			int numRKeys = manager->recorder->keys.size();
+			if (numRKeys >= 2)
+			{
+				Path p;
+				Point<float> k = manager->recorder->keys[0];
+				p.startNewSubPath(getXForPos(k.x), getYForValue(k.x));
+				for (int i = 1; i < numRKeys; i++)
+				{
+					k = manager->recorder->keys[i];
+					p.lineTo(getXForPos(k.x), getYForValue(k.y));
+				}
+				//p.closeSubPath();
+				g.setColour(Colours::orangered);
+				g.strokePath(p, PathStrokeType(2));
+			}
+		}
+	}
+
+	
 }
 
 

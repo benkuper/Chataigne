@@ -38,7 +38,6 @@ public:
 	Colour valueBGColor;
 
 	AutomationKeyUI * currentUI;
-
 	ScopedPointer<AutomationMultiKeyTransformer> transformer;
 
 	void setCurrentPosition(const float &pos);
@@ -57,7 +56,6 @@ public:
 
 	int getYForValue(float value);
 	float getValueForY(int ty);
-
 
 	bool isInView(AutomationKeyUI * kui);
 

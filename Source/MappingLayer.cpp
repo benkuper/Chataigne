@@ -19,21 +19,23 @@ MappingLayer::MappingLayer(Sequence *_sequence, var params) :
 	curveValue(nullptr),
 	mapping(false)
 {
-
+	
 	canInspectChildContainers = true;
+	
+	mapping.editorIsCollapsed = false;
 	addChildControllableContainer(&mapping);
+	addChildControllableContainer(&recorder);
 
 	mode = addEnumParameter("Mode", "Automation Mode, 1D, 2D, 3D or Color");
-	
 	mode->addOption("Single Value", MODE_1D);
 	mode->addOption("Point 2D (XY)", MODE_2D);
 	mode->addOption("Point 3D (XYZ)", MODE_3D);
 	mode->addOption("Color (RGBA)", MODE_COLOR);
-	
 	mode->setValueWithData((Mode)(int)params.getProperty("mode", MODE_1D));
-
+	mode->hideInEditor = true;
 	if (mode->getValueDataAsEnum<Mode>() == MODE_COLOR) setNiceName("New Color Layer");
 
+	
 	setupMappingForCurrentMode();
 	uiHeight->setValue(100);
 }
@@ -102,7 +104,10 @@ void MappingLayer::setupMappingForCurrentMode()
 	{
 		if(i >= automations.size())
 		{
-			automations.add(new Automation());
+			Automation * a = new Automation(automations.size() == 0 ? &recorder : nullptr); //only put the record on the first automation for now
+			a->hideInEditor = true;
+			automations.add(a);
+
 			addChildControllableContainer(automations[i]);
 		}
 
@@ -136,8 +141,6 @@ void MappingLayer::updateCurvesValues()
 		break;
 	}
 
-	
-	
 }
 
 String MappingLayer::getHelpID()
@@ -169,6 +172,9 @@ var MappingLayer::getJSONData()
 	{
 		data.getDynamicObject()->setProperty("colors", timeColorManager->getJSONData());
 	}
+
+	data.getDynamicObject()->setProperty("recorder", recorder.getJSONData());
+
 	return data;
 }
 
@@ -184,6 +190,8 @@ void MappingLayer::loadJSONDataInternal(var data)
 	{
 		timeColorManager->loadJSONData(data.getProperty("colors", var()));
 	}
+
+	recorder.loadJSONData(data.getProperty("recorder", var()));
 }
 
 SequenceLayerPanel * MappingLayer::getPanel()
@@ -202,6 +210,11 @@ void MappingLayer::onContainerParameterChangedInternal(Parameter * p)
 	{
 		setupMappingForCurrentMode();
 	}
+}
+
+void MappingLayer::onContainerTriggerTriggered(Trigger * t)
+{
+	SequenceLayer::onContainerTriggerTriggered(t);
 }
 
 void MappingLayer::onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c)
@@ -237,7 +250,7 @@ void MappingLayer::sequenceTotalTimeChanged(Sequence *)
 	}
 }
 
-void MappingLayer::sequenceCurrentTimeChanged(Sequence *, float, bool)
+void MappingLayer::sequenceCurrentTimeChanged(Sequence *, float prevTime, bool)
 {
 	if (!enabled->boolValue() || !sequence->enabled->boolValue()) return;
 	
@@ -248,5 +261,39 @@ void MappingLayer::sequenceCurrentTimeChanged(Sequence *, float, bool)
 
 	for(auto &a : automations) a->position->setValue(sequence->currentTime->floatValue());
 	
+	if (automations.size() > 0 && prevTime > sequence->currentTime->floatValue() && automations[0]->recorder->isRecording->boolValue())
+	{
+		if (sequence->isPlaying->boolValue()) automations[0]->recorder->startRecording(sequence->currentTime->floatValue());
+		else automations[0]->recorder->cancelRecording();
+	}
+
 	//updateCurvesValues();
+}
+
+void MappingLayer::sequencePlayStateChanged(Sequence *)
+{
+	if (automations.size() > 0)
+	{
+		if (sequence->isPlaying->boolValue())
+		{
+			if(recorder.shouldRecord()) automations[0]->recorder->startRecording(sequence->currentTime->floatValue());
+		}
+		else
+		{
+			if (automations[0]->recorder->isRecording->boolValue())
+			{
+				Array<Point<float>> keys = automations[0]->recorder->stopRecordingAndGetKeys();
+				if (keys.size() >= 2)
+				{
+					automations[0]->removeKeysBetween(keys[0].x, keys[keys.size() - 1].x);
+					for (auto &k : keys)
+					{
+						automations[0]->addItem(k.x, k.y);
+					}
+
+					automations[0]->reorderItems();
+				}
+			}
+		}
+	}
 }
