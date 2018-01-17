@@ -144,12 +144,12 @@ AutomationKey * Automation::createItem()
 	return k;
 }
 
-void Automation::addItem(const float _position, const float _value)
+void Automation::addItem(const float _position, const float _value, bool addToUndo)
 {
 	AutomationKey * k = createItem();
 	k->position->setValue(_position);
 	k->value->setValue(_value);
-	BaseManager::addItem(k);
+	BaseManager::addItem(k,var(), addToUndo); 
 }
 
 void Automation::onControllableFeedbackUpdate(ControllableContainer * cc, Controllable * c)

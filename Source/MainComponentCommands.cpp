@@ -100,14 +100,14 @@ void MainContentComponent::getCommandInfo(CommandID commandID, ApplicationComman
 		break;
 
 	case CommandIDs::undo:
-		//result.setInfo("Undo " + UndoMaster::getInstance()->getUndoDescription(),"Undo the last action", category, 0);
-		//result.defaultKeypresses.add(KeyPress('z', ModifierKeys::ctrlModifier, 0));
+		result.setInfo("Undo " + UndoMaster::getInstance()->getUndoDescription(),"Undo the last action", category, 0);
+		result.defaultKeypresses.add(KeyPress('z', ModifierKeys::ctrlModifier, 0));
 		break;
 
 	case CommandIDs::redo:
-		//result.setInfo("Redo " + UndoMaster::getInstance()->getRedoDescription(), "Redo the undone action", category, 0);
-		//result.defaultKeypresses.add(KeyPress('z', ModifierKeys::shiftModifier | ModifierKeys::commandModifier, 0));
-		//result.defaultKeypresses.add(KeyPress('y', ModifierKeys::ctrlModifier, 0));
+		result.setInfo("Redo " + UndoMaster::getInstance()->getRedoDescription(), "Redo the undone action", category, 0);
+		result.defaultKeypresses.add(KeyPress('z', ModifierKeys::shiftModifier | ModifierKeys::commandModifier, 0));
+		result.defaultKeypresses.add(KeyPress('y', ModifierKeys::ctrlModifier, 0));
 		break;
 
 	default:
@@ -129,9 +129,9 @@ void MainContentComponent::getAllCommands(Array<CommandID>& commands) {
 	  CommandIDs::editProjectSettings,
 	  CommandIDs::showAbout,
 	  CommandIDs::gotoWebsite,
-	  CommandIDs::gotoForum
-	  //CommandIDs::undo,
-	  //CommandIDs::redo
+	  CommandIDs::gotoForum,
+	  CommandIDs::undo,
+	  CommandIDs::redo
 	};
 
 	commands.addArray(ids, numElementsInArray(ids));
@@ -251,11 +251,11 @@ bool MainContentComponent::perform(const InvocationInfo& info) {
 		break;
 
 	case CommandIDs::undo:
-		//UndoMaster::getInstance()->undo();
+		UndoMaster::getInstance()->undo();
 		break;
 
 	case CommandIDs::redo:
-		//UndoMaster::getInstance()->redo();
+		UndoMaster::getInstance()->redo();
 		break;
 
 	case CommandIDs::editProjectSettings:
@@ -263,7 +263,6 @@ bool MainContentComponent::perform(const InvocationInfo& info) {
 		break;
 
 	case CommandIDs::editGlobalSettings:
-		DBG("Here");
 		GlobalSettings::getInstance()->selectThis();
 		break;
 
@@ -294,11 +293,6 @@ void MainContentComponent::menuItemSelected(int menuItemID, int topLevelMenuInde
 {
 	DBG("Menu item selected " << menuItemID << ", " << topLevelMenuIndex);
 
-/*
-#if JUCE_MAC && JUCE_MAJOR_VERSION >= 5
-	topLevelMenuIndex--; //On mac and juce 5, first menu index is 1 (because of the App menu); -> NOT THE CASE ANYMORE, keep that just as reminder
-#endif
-*/
 	String menuName = getMenuBarNames()[topLevelMenuIndex];
 
 	if (menuName == "Panels")
@@ -315,6 +309,6 @@ void MainContentComponent::menuItemSelected(int menuItemID, int topLevelMenuInde
 
 
 StringArray MainContentComponent::getMenuBarNames() {
-	const char* const names[] = { "File",/*"Edit",*/"Panels", "Help",nullptr };
+	const char* const names[] = { "File","Edit","Panels", "Help",nullptr };
 	return StringArray(names);
 }

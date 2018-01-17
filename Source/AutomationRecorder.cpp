@@ -16,7 +16,7 @@ AutomationRecorder::AutomationRecorder() :
 	timeAtRecord(0),
 	timeOffset(0)
 {
-	input = addTargetParameter("Input Value", "Input value used for recording", ModuleManager::getInstance());
+	input = addTargetParameter("Input Value", "Input value used for recording");
 	input->showTriggers = false;
 	input->customGetTargetFunc = &ModuleManager::getInstance()->showAllValuesAndGetControllable;
 	input->customGetControllableLabelFunc = &Module::getTargetLabelForValueControllable;
