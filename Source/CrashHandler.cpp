@@ -16,14 +16,14 @@
 #include <DbgHelp.h>
 #include <tchar.h>
 
+
 /**
 * Crash handler for Windows.
 */
 LONG WINAPI createMiniDump(LPEXCEPTION_POINTERS exceptionPointers)
 {
+	//Analytics::getInstance()->logEvent("crash", {});
 	
-
-	Analytics::getInstance()->logEvent("crash", {});
 
 	auto dumpFileName = "crash.log";
 

@@ -2,6 +2,12 @@
 
 //==============================================================================
 
+ChataigneApplication::ChataigneApplication() :
+	chataigneSettings("Other Settings")
+{
+	enableSendAnalytics = chataigneSettings.addBoolParameter("Send Analytics", "This helps me improve the software by sending basic start/stop/crash infos", true);
+}
+
 void ChataigneApplication::initialise(const String & commandLine)
 {
 	PropertiesFile::Options options;
@@ -11,6 +17,8 @@ void ChataigneApplication::initialise(const String & commandLine)
 
 	appProperties = new ApplicationProperties();
 	appProperties->setStorageParameters(options);
+
+	GlobalSettings::getInstance()->addChildControllableContainer(&chataigneSettings);
 
 	var gs = JSON::fromString(getAppProperties().getUserSettings()->getValue("globalSettings", ""));
 	GlobalSettings::getInstance()->loadJSONData(gs);
@@ -38,11 +46,14 @@ void ChataigneApplication::initialise(const String & commandLine)
 	else HelpBox::getInstance()->loadLocalHelp();
 
 	//ANALYTICS
-	Analytics::getInstance()->setUserId(SystemStats::getFullUserName());
+	if (enableSendAnalytics->boolValue())
+	{
+		Analytics::getInstance()->setUserId(SystemStats::getFullUserName());
 
-	// Add any analytics destinations we want to use to the Analytics singleton.
-	Analytics::getInstance()->addDestination(new GoogleAnalyticsDestination());
-	Analytics::getInstance()->logEvent("startup", {});
+		// Add any analytics destinations we want to use to the Analytics singleton.
+		Analytics::getInstance()->addDestination(new GoogleAnalyticsDestination());
+		Analytics::getInstance()->logEvent("startup", {});
+	}
 
 	//Crash handler
 #if JUCE_WINDOWS
@@ -73,8 +84,11 @@ void ChataigneApplication::shutdown()
 	// Add your application's shutdown code here..
 	mainWindow = nullptr; // (deletes our window)
 
-	Analytics::getInstance()->logEvent("shutdown", {});	
-	
+	if (enableSendAnalytics->boolValue())
+	{
+		Analytics::getInstance()->logEvent("shutdown", {});
+	}
+
 	AppUpdater::deleteInstance();
 }
 

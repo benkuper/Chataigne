@@ -32,18 +32,26 @@ It contains the basic startup code for a Juce application.
 
 #include "GoogleAnalyticsDestination.h"
 
+
 //==============================================================================
 class ChataigneApplication : public JUCEApplication,
 	public EngineListener
 {
 public:
 	//==============================================================================
-	ChataigneApplication() {}
+	ChataigneApplication();
+
+
+	//---- GLOBAL SETTINGS CHATAIGNE SPECIFIC
+
+	ControllableContainer chataigneSettings;
+	BoolParameter * enableSendAnalytics;
+	//
+
 
 	ApplicationCommandManager commandManager;
 	ScopedPointer<ApplicationProperties> appProperties;
 	ScopedPointer<ChataigneEngine> engine;
-
 	
 	const String getApplicationName() override { return ProjectInfo::projectName; }
 	const String getApplicationVersion() override { return ProjectInfo::versionString; }
