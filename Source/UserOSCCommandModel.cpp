@@ -84,7 +84,6 @@ void OSCCommandModelArgument::loadJSONDataInternal(var data)
 
 void OSCCommandModelArgument::onContainerNiceNameChanged()
 {
-	BaseItem::onContainerNiceNameChanged();
 	param->setNiceName(niceName);
 }
 

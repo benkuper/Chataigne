@@ -19,7 +19,6 @@ ModuleRouterValue::ModuleRouterValue(Controllable * _sourceValue, int _index) :
 	outModule(nullptr)
 {
 	jassert(sourceValue != nullptr);
-	nameParam->isEditable = false;
 
 	userCanRemove = false;
 	doRoute = addBoolParameter("Route", "Activate the routing for this value", false);

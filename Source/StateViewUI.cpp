@@ -64,7 +64,7 @@ void StateViewUI::mouseDown(const MouseEvent & e)
 
 	if (transitionReceptionMode)
 	{
-		stateEditorListeners.call(&Listener::askFinishTransitionFromUI, this);
+		stateEditorListeners.call(&StateViewUI::Listener::askFinishTransitionFromUI, this);
 	} else
 	{
 		if (e.mods.isLeftButtonDown())
@@ -80,7 +80,7 @@ void StateViewUI::mouseDown(const MouseEvent & e)
 				switch (result)
 				{
 				case 1:
-					stateEditorListeners.call(&Listener::askCreateTransitionFromUI, this);
+					stateEditorListeners.call(&StateViewUI::Listener::askCreateTransitionFromUI, this);
 					break;
 				}
 			}
@@ -144,5 +144,5 @@ void StateViewUI::controllableFeedbackUpdateInternal(Controllable * c)
 void StateViewUI::inspectableSelectionChanged(Inspectable * i)
 {
 	BaseItemUI::inspectableSelectionChanged(i);
-	stateEditorListeners.call(&Listener::editorSelectionChanged, this);
+	stateEditorListeners.call(&StateViewUI::Listener::editorSelectionChanged, this);
 }

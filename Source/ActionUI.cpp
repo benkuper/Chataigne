@@ -32,6 +32,7 @@ ActionUI::~ActionUI()
 
 void ActionUI::resizedInternalHeader(Rectangle<int>& r)
 {
+	BaseItemUI::resizedInternalHeader(r);
 	validUI->setBounds(r.removeFromRight(headerHeight));
 	r.removeFromRight(2);
 	triggerAllUI->setBounds(r.removeFromRight(40));
