@@ -101,13 +101,13 @@ void MainContentComponent::getCommandInfo(CommandID commandID, ApplicationComman
 
 	case CommandIDs::undo:
 		result.setInfo("Undo " + UndoMaster::getInstance()->getUndoDescription(),"Undo the last action", category, 0);
-		result.defaultKeypresses.add(KeyPress('z', ModifierKeys::ctrlModifier, 0));
+		result.defaultKeypresses.add(KeyPress('z', ModifierKeys::commandModifier, 0));
 		break;
 
 	case CommandIDs::redo:
 		result.setInfo("Redo " + UndoMaster::getInstance()->getRedoDescription(), "Redo the undone action", category, 0);
 		result.defaultKeypresses.add(KeyPress('z', ModifierKeys::shiftModifier | ModifierKeys::commandModifier, 0));
-		result.defaultKeypresses.add(KeyPress('y', ModifierKeys::ctrlModifier, 0));
+		result.defaultKeypresses.add(KeyPress('y', ModifierKeys::commandModifier, 0));
 		break;
 
 	default:
