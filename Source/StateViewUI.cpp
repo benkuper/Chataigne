@@ -146,3 +146,4 @@ void StateViewUI::inspectableSelectionChanged(Inspectable * i)
 	BaseItemUI::inspectableSelectionChanged(i);
 	stateEditorListeners.call(&StateViewUI::Listener::editorSelectionChanged, this);
 }
+

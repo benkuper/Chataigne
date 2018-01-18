@@ -64,6 +64,12 @@ void AudioLayerClipUI::mouseDrag(const MouseEvent & e)
 	clipUIListeners.call(&ClipUIListener::clipUIDragged, this, e);
 }
 
+void AudioLayerClipUI::mouseUp(const MouseEvent & e)
+{
+	BaseItemUI::mouseUp(e);
+	item->time->setUndoableValue(timeAtMouseDown, item->time->floatValue());
+}
+
 void AudioLayerClipUI::buttonClicked(Button * b)
 {
 	BaseItemUI::buttonClicked(b);
@@ -71,7 +77,7 @@ void AudioLayerClipUI::buttonClicked(Button * b)
 	{
 		FileChooser chooser("Load a carrot", File::nonexistent, "*.wav;*.mp3");
 		bool result = chooser.browseForFileToOpen();
-		if (result) clip->filePath->setValue(chooser.getResult().getFullPathName());
+		if (result) clip->filePath->setUndoableValue(clip->filePath->stringValue(),chooser.getResult().getFullPathName());
 	}
 }
 

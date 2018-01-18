@@ -46,6 +46,7 @@ public:
 	void controllableFeedbackUpdateInternal(Controllable *) override;
 
 	void inspectableSelectionChanged(Inspectable *) override;
+
 	
 	class Listener
 	{

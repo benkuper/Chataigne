@@ -49,5 +49,10 @@ void TimeColorUI::resized()
 void TimeColorUI::mouseDown(const MouseEvent & e)
 {
 	BaseItemMinimalUI::mouseDown(e);
-	
+	posAtMouseDown = item->position->floatValue();
+}
+
+void TimeColorUI::mouseUp(const MouseEvent & e)
+{
+	item->position->setUndoableValue(posAtMouseDown, item->position->floatValue());
 }

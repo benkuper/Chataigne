@@ -278,6 +278,7 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/MappingLayerTimeline_96e8bd0d.o \
   $(JUCE_OBJDIR)/MappingLayer_50b4042c.o \
   $(JUCE_OBJDIR)/TimeTriggerManagerUI_db89a9f.o \
+  $(JUCE_OBJDIR)/TimeTriggerMultiTransformer_9b073f4c.o \
   $(JUCE_OBJDIR)/TimeTriggerUI_9c11bde0.o \
   $(JUCE_OBJDIR)/TriggerLayerPanel_72c06ec.o \
   $(JUCE_OBJDIR)/TriggerLayerTimeline_b139b163.o \
@@ -1393,6 +1394,11 @@ $(JUCE_OBJDIR)/MappingLayer_50b4042c.o: ../../Source/MappingLayer.cpp
 $(JUCE_OBJDIR)/TimeTriggerManagerUI_db89a9f.o: ../../Source/TimeTriggerManagerUI.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling TimeTriggerManagerUI.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/TimeTriggerMultiTransformer_9b073f4c.o: ../../Source/TimeTriggerMultiTransformer.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling TimeTriggerMultiTransformer.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/TimeTriggerUI_9c11bde0.o: ../../Source/TimeTriggerUI.cpp

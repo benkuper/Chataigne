@@ -962,6 +962,10 @@
                         file="Source/TimeTriggerManagerUI.cpp"/>
                   <FILE id="bl7PO5" name="TimeTriggerManagerUI.h" compile="0" resource="0"
                         file="Source/TimeTriggerManagerUI.h"/>
+                  <FILE id="G3PWcZ" name="TimeTriggerMultiTransformer.cpp" compile="1"
+                        resource="0" file="Source/TimeTriggerMultiTransformer.cpp"/>
+                  <FILE id="UahATX" name="TimeTriggerMultiTransformer.h" compile="0"
+                        resource="0" file="Source/TimeTriggerMultiTransformer.h"/>
                   <FILE id="XtKIy8" name="TimeTriggerUI.cpp" compile="1" resource="0"
                         file="Source/TimeTriggerUI.cpp"/>
                   <FILE id="dhbOWO" name="TimeTriggerUI.h" compile="0" resource="0" file="Source/TimeTriggerUI.h"/>

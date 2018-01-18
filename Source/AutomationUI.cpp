@@ -28,11 +28,7 @@ AutomationUI::AutomationUI(Automation * _automation) :
 	resizeOnChildBoundsChanged = false;
 	addExistingItems(); 
 
-#if JUCE_C
-	noItemText = "Add keys using Command + Left Click";
-#else 
-	noItemText = "Add keys using Ctrl + Left Click";
-#endif
+	noItemText = "Add keys by double-clicking here";
 
 	setSize(100, 100);
 }
@@ -40,7 +36,6 @@ AutomationUI::AutomationUI(Automation * _automation) :
 AutomationUI::~AutomationUI()
 {
 	manager->selectionManager->removeSelectionListener(this);
-
 	manager->removeAsyncContainerListener(this);
 }
 
@@ -286,7 +281,7 @@ void AutomationUI::mouseDown(const MouseEvent & e)
 
 	if (e.eventComponent == this)
 	{
-		if (e.mods.isLeftButtonDown() && e.mods.isCommandDown())
+		if (e.mods.isLeftButtonDown() && e.mods.isAltDown())
 		{
 			manager->addItem(getPosForX(e.getPosition().x), getValueForY(e.getPosition().y));
 		}else
@@ -305,10 +300,15 @@ void AutomationUI::mouseDown(const MouseEvent & e)
 				transformer = nullptr;
 			}
 
-			if(InspectableSelector::getInstance()) InspectableSelector::getInstance()->startSelection(this, selectables, inspectables,manager->selectionManager,!e.mods.isShiftDown());
+			if(InspectableSelector::getInstance()) InspectableSelector::getInstance()->startSelection(this, selectables, inspectables,manager->selectionManager,!e.mods.isCommandDown());
 		}
 	}
 	
+}
+
+void AutomationUI::mouseDoubleClick(const MouseEvent & e)
+{
+	manager->addItem(getPosForX(e.getPosition().x), getValueForY(e.getPosition().y));
 }
 
 void AutomationUI::mouseDrag(const MouseEvent & e)

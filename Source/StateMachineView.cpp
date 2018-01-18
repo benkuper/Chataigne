@@ -116,4 +116,3 @@ void StateMachineView::askFinishTransitionFromUI(StateViewUI * se)
 {
 	finishCreateTransition(se);
 }
-
