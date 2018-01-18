@@ -24,7 +24,7 @@ ConditionManager::ConditionManager(bool _operatorOnSide) :
 {
 	
 	managerFactory = &factory;
-	factory.defs.add(Factory<Condition>::Definition::createDef("", "From Value", &StandardCondition::create));
+	factory.defs.add(Factory<Condition>::Definition::createDef("", StandardCondition::getTypeStringStatic(), &StandardCondition::create));
 	factory.defs.add(Factory<Condition>::Definition::createDef("", "Group", &ConditionGroup::create));
 	factory.defs.add(Factory<Condition>::Definition::createDef("", "Script", &ScriptCondition::create));
 

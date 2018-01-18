@@ -14,7 +14,7 @@
 #include "ModuleManager.h"
 
 StandardCondition::StandardCondition(var params) :
-	Condition(getTypeString(),params)
+	Condition(StandardCondition::getTypeStringStatic(),params)
 {
 	sourceTarget = addTargetParameter("Input Value", "Element that will be the source to check if condition is active or not"); 
 	sourceTarget->customGetTargetFunc = &ModuleManager::showAllValuesAndGetControllable;

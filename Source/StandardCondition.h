@@ -34,7 +34,8 @@ public:
 
 	InspectableEditor * getEditor(bool isRoot) override;
 
-	String getTypeString() const override { return "From Input Value"; }
+	String getTypeString() const override { return StandardCondition::getTypeStringStatic(); }
+	static String getTypeStringStatic() { return "From Input Value"; }
 	static StandardCondition * create(var params) { return new StandardCondition(params); }
 
 };
