@@ -31,7 +31,7 @@ public:
 	void updateContent();
 
 	void placeClipUI(AudioLayerClipUI * cui);
-	void mouseDown(const MouseEvent &e) override;
+	void mouseDoubleClick(const MouseEvent &e) override;
 
 	void addItemFromMenu(bool, Point<int> mouseDownPos) override;
 	void addItemUIInternal(AudioLayerClipUI * cui) override;

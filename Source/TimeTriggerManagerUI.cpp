@@ -22,11 +22,7 @@ TimeTriggerManagerUI::TimeTriggerManagerUI(TriggerLayerTimeline * _timeline, Tim
 
 	addItemBT->setVisible(false);
 
-#if JUCE_MAC
-	noItemText = "Add triggers using Command + Left Click";
-#else 
-	noItemText = "Add triggers using Ctrl + Left Click";
-#endif
+	noItemText = "To add triggers, double click here";
 
 	manager->selectionManager->addSelectionListener(this);
 
