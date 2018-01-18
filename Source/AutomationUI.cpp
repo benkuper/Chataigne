@@ -284,7 +284,6 @@ void AutomationUI::mouseDown(const MouseEvent & e)
 {
 	BaseManagerUI::mouseDown(e);
 
-
 	if (e.eventComponent == this)
 	{
 		if (e.mods.isLeftButtonDown() && e.mods.isCommandDown())
@@ -363,6 +362,32 @@ void AutomationUI::mouseDrag(const MouseEvent & e)
 
 void AutomationUI::mouseUp(const MouseEvent & e)
 {
+	if (e.originalComponent == this)
+	{
+
+	} else
+	{
+		AutomationKeyUI::Handle * h = dynamic_cast<AutomationKeyUI::Handle *>(e.eventComponent);
+		if (h != nullptr)
+		{
+			AutomationKeyUI * kui = static_cast<AutomationKeyUI *>(h->getParentComponent());
+			if (e.mods.isLeftButtonDown())
+			{
+
+				Array<UndoableAction *> actions;
+				actions.add(kui->item->position->setUndoableValue(kui->posAtMouseDown, kui->item->position->floatValue(), true));
+				actions.add(kui->item->value->setUndoableValue(kui->valueAtMouseDown, kui->item->value->floatValue(), true));
+				UndoMaster::getInstance()->performActions("Move automation key", actions);
+
+			}
+		}
+	}
+}
+
+bool AutomationUI::keyPressed(const KeyPress & e)
+{
+	BaseManagerUI::keyPressed(e);
+	return false;
 }
 
 void AutomationUI::newMessage(const ContainerAsyncEvent & e)
@@ -425,6 +450,7 @@ void AutomationUI::inspectablesSelectionChanged()
 	{
 		transformer = new AutomationMultiKeyTransformer(this, uiSelection);
 		addAndMakeVisible(transformer);
+		transformer->grabKeyboardFocus(); // so no specific key has the focus for deleting
 	}
 }
 

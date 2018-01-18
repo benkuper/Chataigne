@@ -58,6 +58,7 @@ public:
 	void endLoadFile() override;
 	void fileSaved() override;
 	void engineCleared() override;
+	void fileChanged() override;
 
 	void updateAppTitle();
 

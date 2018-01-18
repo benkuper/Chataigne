@@ -55,10 +55,8 @@ void ChataigneApplication::initialise(const String & commandLine)
 }
 
 
-inline void ChataigneApplication::shutdown()
-{
-    
-	
+void ChataigneApplication::shutdown()
+{   
 	var boundsVar = var(new DynamicObject());
 	juce::Rectangle<int> r = mainWindow->getScreenBounds();
 
@@ -78,25 +76,20 @@ inline void ChataigneApplication::shutdown()
 	Analytics::getInstance()->logEvent("shutdown", {});	
 	
 	AppUpdater::deleteInstance();
-	GlobalSettings::deleteInstance();
 }
 
 
 //==============================================================================
 
-inline void ChataigneApplication::systemRequestedQuit()
+void ChataigneApplication::systemRequestedQuit()
 {
-    if (GlobalSettings::getInstance()->askForSaveBeforeClosing->boolValue())
-    {
-        int result = AlertWindow::showYesNoCancelBox(AlertWindow::QuestionIcon, "Save document", "Do you want to save the document before closing this awesome app ?");
-        if (result != 0)
-        {
-            if (result == 1) Engine::mainEngine->save(true, true);
-        }else
-        {
-            return; //prevent killing
-        }
-    }
+	FileBasedDocument::SaveResult result = Engine::mainEngine->saveIfNeededAndUserAgrees();
+	if (result == FileBasedDocument::SaveResult::userCancelledSave) return;
+	else if (result == FileBasedDocument::SaveResult::failedToWriteToFile)
+	{
+		LOGERROR("Could not save the document (Failed to write to file)\nCancelled loading of the new document");
+		return;
+	}
 	// This is called when the app is being asked to quit: you can ignore this
 	// request and let the app carry on running, or call quit() to allow the app to close.
 	quit();
@@ -122,9 +115,15 @@ void ChataigneApplication::engineCleared()
 	updateAppTitle();
 }
 
+void ChataigneApplication::fileChanged()
+{
+	DBG("Changed here");
+	updateAppTitle();
+}
+
 void ChataigneApplication::updateAppTitle()
 {
-	mainWindow->setName(getApplicationName() + " " + getApplicationVersion() + " - " + Engine::mainEngine->getDocumentTitle()); 
+	mainWindow->setName(getApplicationName() + " " + getApplicationVersion() + " - " + Engine::mainEngine->getDocumentTitle()+(Engine::mainEngine->hasChangedSinceSaved()?" *":"")); 
 
 }
 

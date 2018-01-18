@@ -196,22 +196,32 @@ bool MainContentComponent::perform(const InvocationInfo& info) {
 
 	case CommandIDs::newFile:
 	{
-		int result = AlertWindow::showYesNoCancelBox(AlertWindow::QuestionIcon, "Save document", "Do you want to save the document before creating a new one ?");
-		if (result != 0)
+		FileBasedDocument::SaveResult result = Engine::mainEngine->saveIfNeededAndUserAgrees();
+		if (result == FileBasedDocument::SaveResult::userCancelledSave)
 		{
-			if (result == 1) Engine::mainEngine->save(true, true);
-			Engine::mainEngine->createNewGraph();
 
+		} else if (result == FileBasedDocument::SaveResult::failedToWriteToFile)
+		{
+			LOGERROR("Could not save the document (Failed to write to file)\nCancelled loading of the new document");
+		} else
+		{
+			Engine::mainEngine->createNewGraph();
 		}
 	}
 	break;
 
 	case CommandIDs::open:
 	{
-		int result = AlertWindow::showYesNoCancelBox(AlertWindow::QuestionIcon, "Save document", "Do you want to save the document before opening a new one ?");
-		if (result != 0)
+		FileBasedDocument::SaveResult result = Engine::mainEngine->saveIfNeededAndUserAgrees();
+		if (result == FileBasedDocument::SaveResult::userCancelledSave)
 		{
-			if (result == 1) Engine::mainEngine->save(true, true);
+
+		}
+		else if (result == FileBasedDocument::SaveResult::failedToWriteToFile)
+		{
+			LOGERROR("Could not save the document (Failed to write to file)\nCancelled loading of the new document");
+		} else
+		{
 			Engine::mainEngine->loadFromUserSpecifiedFile(true);
 		}
 	}
@@ -219,12 +229,15 @@ bool MainContentComponent::perform(const InvocationInfo& info) {
 
 	case CommandIDs::openLastDocument:
 	{
-		// TODO implement the JUCE version calling change every time something is made (maybe todo with undomanager)
-		//			int result = Engine::mainEngine->saveIfNeededAndUserAgrees();
-		int result = AlertWindow::showYesNoCancelBox(AlertWindow::QuestionIcon, "Save document", "Do you want to save the document before opening the last one ?");
-		if (result != 0)
+		FileBasedDocument::SaveResult result = Engine::mainEngine->saveIfNeededAndUserAgrees();
+		if (result == FileBasedDocument::SaveResult::userCancelledSave)
 		{
-			if (result == 1) Engine::mainEngine->save(true, true);
+		}
+		else if (result == FileBasedDocument::SaveResult::failedToWriteToFile)
+		{
+			LOGERROR("Could not save the document (Failed to write to file)\nCancelled loading of the new document");
+		} else
+		{
 			Engine::mainEngine->loadFrom(Engine::mainEngine->getLastDocumentOpened(), true);
 		}
 	}
