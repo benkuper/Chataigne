@@ -47,6 +47,14 @@ void Automation::reorderItems()
 	BaseManager::reorderItems();
 }
 
+Array<UndoableAction *> Automation::getRemoveKeysBetweenAction(float start, float end)
+{
+	Array<UndoableAction *> actions;
+	Array<AutomationKey *> keysToRemove;
+	for (auto &k : items) if (k->position->floatValue() >= start && k->position->floatValue() <= end) actions.add(getRemoveItemUndoableAction(k));
+	return actions;
+}
+
 void Automation::removeKeysBetween(float start, float end)
 {
 	Array<AutomationKey *> keysToRemove;
@@ -144,12 +152,34 @@ AutomationKey * Automation::createItem()
 	return k;
 }
 
-void Automation::addItem(const float _position, const float _value)
+void Automation::addItems(Array<Point<float>> keys, bool removeExistingOverlappingKeys, bool addToUndo)
+{
+	Array<UndoableAction *> actions;
+	if(removeExistingOverlappingKeys) actions.addArray(getRemoveKeysBetweenAction(keys[0].x, keys[keys.size() - 1].x));
+	
+	Array<AutomationKey *> newKeys;
+
+	for (auto &k : keys)
+	{
+		AutomationKey * ak = createItem();
+		ak->position->setValue(k.x);
+		ak->value->setValue(k.y);
+		newKeys.add(ak);
+	}
+	 
+	actions.addArray(BaseManager::addItems(newKeys, true, true));
+
+	UndoMaster::getInstance()->performActions("Add recorded values", actions);
+
+	reorderItems();
+}
+
+void Automation::addItem(const float _position, const float _value, bool addToUndo)
 {
 	AutomationKey * k = createItem();
 	k->position->setValue(_position);
 	k->value->setValue(_value);
-	BaseManager::addItem(k);
+	BaseManager::addItem(k,var(), addToUndo); 
 }
 
 void Automation::onControllableFeedbackUpdate(ControllableContainer * cc, Controllable * c)

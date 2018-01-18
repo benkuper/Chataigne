@@ -27,12 +27,14 @@ ModuleManager::~ModuleManager()
 	ModuleFactory::deleteInstance();
 }
 
-void ModuleManager::addItemFromData(var data, bool fromUndoableAction)
+Module * ModuleManager::addItemFromData(var data, bool fromUndoableAction)
 {
 	String moduleType = data.getProperty("type", "none");
-	if (moduleType.isEmpty()) return;
+	if (moduleType.isEmpty()) return nullptr;
 	Module * i = ModuleFactory::getInstance()->createModule(moduleType);
-	if (i != nullptr) addItem(i, data, fromUndoableAction);
+	if (i != nullptr) return addItem(i, data, fromUndoableAction);
+	
+	return nullptr;
 }
 
 Module * ModuleManager::getModuleWithName(const String & moduleName)

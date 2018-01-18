@@ -30,12 +30,13 @@ SequenceLayer * SequenceLayerManager::createItem()
 	return new SequenceLayer(sequence);
 }
 
-void SequenceLayerManager::addItemFromData(var data, bool fromUndoableAction)
+SequenceLayer * SequenceLayerManager::addItemFromData(var data, bool fromUndoableAction)
 {
 	String layerType = data.getProperty("type", "none");
-	if (layerType.isEmpty()) return;
+	if (layerType.isEmpty()) return nullptr;
 	SequenceLayer * i = SequenceLayerFactory::getInstance()->createSequenceLayer(sequence,layerType);
-	if (i != nullptr) addItem(i, data, fromUndoableAction);
+	if (i != nullptr) return addItem(i, data, fromUndoableAction);
+	return nullptr;
 }
 
 void SequenceLayerManager::addItemInternal(SequenceLayer * item, var data)

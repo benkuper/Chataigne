@@ -127,6 +127,7 @@ void ChataigneEngine::loadJSONDataInternalEngine(var data, ProgressTask * loadin
 
 void ChataigneEngine::childStructureChanged(ControllableContainer * cc)
 {
+	Engine::childStructureChanged(cc);
 	// child structure changed
 }
 

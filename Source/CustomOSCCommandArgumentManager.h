@@ -24,10 +24,10 @@ public:
 
 	bool mappingEnabled;
 
-	void addItemWithParam(Parameter * p, var data = var(), bool fromUndoableAction = false);
-	void addItemFromType(Parameter::Type type, var data = var(), bool fromUndoableAction = false);
+	CustomOSCCommandArgument * addItemWithParam(Parameter * p, var data = var(), bool fromUndoableAction = false);
+	CustomOSCCommandArgument * addItemFromType(Parameter::Type type, var data = var(), bool fromUndoableAction = false);
 
-	void addItemFromData(var data, bool fromUndoableAction = false) override;
+	CustomOSCCommandArgument * addItemFromData(var data, bool fromUndoableAction = false) override;
 
 	void autoRenameItems();
 	void removeItemInternal(CustomOSCCommandArgument * i) override;

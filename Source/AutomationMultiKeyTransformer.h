@@ -24,6 +24,7 @@ public:
 	AutomationUI * aui;
 	Array<AutomationKeyUI *> keysUI;
 	Array<Point<float>> keysRelativePositions;
+	Array<Point<float>> keysTimesAndValuesPositions;
 
 	ResizableBorderComponent resizer;
 	
@@ -40,6 +41,7 @@ public:
 
 	void mouseDown(const MouseEvent &e) override;
 	void mouseDrag(const MouseEvent &e) override;
+	void mouseUp(const MouseEvent &e) override;
 };
 
 

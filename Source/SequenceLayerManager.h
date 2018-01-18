@@ -28,7 +28,7 @@ public:
 	AudioLayer * masterAudioLayer;
 	
 	SequenceLayer * createItem() override;
-	void addItemFromData(var data, bool fromUndoableAction = false) override;
+	SequenceLayer * addItemFromData(var data, bool fromUndoableAction = false) override;
 
 	void addItemInternal(SequenceLayer * item, var data) override;
 	void removeItemInternal(SequenceLayer * item) override;

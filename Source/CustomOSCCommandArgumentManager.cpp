@@ -21,15 +21,16 @@ CustomOSCCommandArgumentManager::CustomOSCCommandArgumentManager(bool _mappingEn
 	
 }
 
-void CustomOSCCommandArgumentManager::addItemWithParam(Parameter * p, var data, bool fromUndoableAction)
+CustomOSCCommandArgument * CustomOSCCommandArgumentManager::addItemWithParam(Parameter * p, var data, bool fromUndoableAction)
 {
 	CustomOSCCommandArgument * a = new CustomOSCCommandArgument("#" + String(items.size() + 1), p,mappingEnabled);
 	a->addArgumentListener(this);
 	addItem(a, data, fromUndoableAction);
 	if (mappingEnabled && items.size() == 1) a->useForMapping->setValue(true);
+	return a;
 }
 
-void CustomOSCCommandArgumentManager::addItemFromType(Parameter::Type type, var data, bool fromUndoableAction)
+CustomOSCCommandArgument * CustomOSCCommandArgumentManager::addItemFromType(Parameter::Type type, var data, bool fromUndoableAction)
 {
 	Parameter * p = nullptr;
 	String id = String(items.size() + 1);
@@ -48,26 +49,27 @@ void CustomOSCCommandArgumentManager::addItemFromType(Parameter::Type type, var 
 	case Parameter::BOOL:
 		p = new BoolParameter("#" + id, "Argument #" + id + ", type bool", false);
 		break;
+
         default:
             break;
 	}
 
-	jassert(p != nullptr);
-	addItemWithParam(p, data, fromUndoableAction);
+	if (p == nullptr) return nullptr;
+	return addItemWithParam(p, data, fromUndoableAction);
 }
 
-void CustomOSCCommandArgumentManager::addItemFromData(var data, bool fromUndoableAction)
+CustomOSCCommandArgument * CustomOSCCommandArgumentManager::addItemFromData(var data, bool fromUndoableAction)
 {
 	String s = data.getProperty("type", "");
-	if (s.isEmpty()) return;
+	if (s.isEmpty()) return nullptr;
 	Parameter * p = (Parameter *)ControllableFactory::createControllable(s);
 	if (p == nullptr)
 	{
 		LOG("Error loading custom argument !");
-		return;
+		return nullptr;
 	}
 
- 	addItemWithParam(p, data, fromUndoableAction);
+ 	return addItemWithParam(p, data, fromUndoableAction);
 }
 
 void CustomOSCCommandArgumentManager::autoRenameItems()

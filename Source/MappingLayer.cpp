@@ -285,13 +285,7 @@ void MappingLayer::sequencePlayStateChanged(Sequence *)
 				Array<Point<float>> keys = automations[0]->recorder->stopRecordingAndGetKeys();
 				if (keys.size() >= 2)
 				{
-					automations[0]->removeKeysBetween(keys[0].x, keys[keys.size() - 1].x);
-					for (auto &k : keys)
-					{
-						automations[0]->addItem(k.x, k.y);
-					}
-
-					automations[0]->reorderItems();
+					automations[0]->addItems(keys, true, true);
 				}
 			}
 		}

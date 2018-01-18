@@ -84,7 +84,6 @@ void OSCCommandModelArgument::loadJSONDataInternal(var data)
 
 void OSCCommandModelArgument::onContainerNiceNameChanged()
 {
-	BaseItem::onContainerNiceNameChanged();
 	param->setNiceName(niceName);
 }
 
@@ -130,13 +129,13 @@ OSCCommandModelArgumentManager::OSCCommandModelArgumentManager() :
 	selectItemWhenCreated = false;
 }
 
-void OSCCommandModelArgumentManager::addItemWithParam(Parameter * p, var data, bool fromUndoableAction)
+OSCCommandModelArgument * OSCCommandModelArgumentManager::addItemWithParam(Parameter * p, var data, bool fromUndoableAction)
 {
 	OSCCommandModelArgument * a = new OSCCommandModelArgument("#"+String(items.size()+1),p);
-	addItem(a,data, fromUndoableAction);
+	return addItem(a,data, fromUndoableAction);
 }
 
-void OSCCommandModelArgumentManager::addItemFromType(Parameter::Type type, var data, bool fromUndoableAction)
+OSCCommandModelArgument * OSCCommandModelArgumentManager::addItemFromType(Parameter::Type type, var data, bool fromUndoableAction)
 { 
 	Parameter * p = nullptr;
 	String id = String(items.size()+1);
@@ -159,21 +158,22 @@ void OSCCommandModelArgumentManager::addItemFromType(Parameter::Type type, var d
             break;
 	}
 	
-	jassert(p != nullptr);
-	addItemWithParam(p,data, fromUndoableAction);
+	if (p == nullptr) return nullptr;
+	return addItemWithParam(p,data, fromUndoableAction);
 }
 
-void OSCCommandModelArgumentManager::addItemFromData(var data, bool fromUndoableAction)
+OSCCommandModelArgument * OSCCommandModelArgumentManager::addItemFromData(var data, bool fromUndoableAction)
 {
 	String s = data.getProperty("type", "");
-	if (s.isEmpty()) return;
+	if (s.isEmpty()) return nullptr;
 	Parameter * p = (Parameter *)ControllableFactory::createControllable(s);
 	if (p == nullptr)
 	{
 		LOG("Problem loading OSC Command model argument");
-		return;
+		return nullptr;
 	}
-	addItemWithParam(p, data, fromUndoableAction);
+
+	return addItemWithParam(p, data, fromUndoableAction);
 }
 
 void OSCCommandModelArgumentManager::autoRenameItems()

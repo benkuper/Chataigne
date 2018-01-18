@@ -23,11 +23,10 @@ public:
 	StateTransitionManager(StateManager * sm);
 	~StateTransitionManager();
 
-	StateManager *sm;
+	StateManager * sm;
 
-	void addItemFromData(var data, bool fromUndoableAction = false) override;
-
-	void addItem(State * source, State * dest, var data = var(), bool fromUndoableAction = false);
+	StateTransition * addItemFromData(var data, bool fromUndoableAction = false) override;
+	StateTransition * addItem(State * source, State * dest, var data = var(), bool fromUndoableAction = false);
 
 	Array<State *> getAllStatesLinkedTo(State * state);
 	void removeAllLinkedTransitions(State * linkedState);
