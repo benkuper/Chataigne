@@ -11,7 +11,7 @@
 #include "ScriptCondition.h"
 
 ScriptCondition::ScriptCondition(var params) :
-	Condition(getTypeString(), params),
+	Condition(ScriptCondition::getTypeStringStatic(), params),
 	script(this,false)
 {
 	scriptObject.setMethod("setValid", ScriptCondition::setValidFromScript);

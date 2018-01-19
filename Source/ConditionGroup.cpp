@@ -11,7 +11,7 @@
 #include "ConditionGroup.h"
 
 ConditionGroup::ConditionGroup(var params) :
-	Condition(getTypeString(), params)
+	Condition(ConditionGroup::getTypeStringStatic(), params)
 {
 	addChildControllableContainer(&manager);
 	manager.addConditionManagerListener(this);

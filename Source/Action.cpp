@@ -54,7 +54,6 @@ var Action::getJSONData()
 void Action::loadJSONDataInternal(var data)
 {
 	Processor::loadJSONDataInternal(data);
-	DBG("Load json internal data " << JSON::toString(data.getProperty("conditions", var())));
 	cdm.loadJSONData(data.getProperty("conditions", var()));
 	csm.loadJSONData(data.getProperty("consequences", var()));
 }
