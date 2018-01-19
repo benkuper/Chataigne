@@ -16,8 +16,8 @@ AutomationUI::AutomationUI(Automation * _automation) :
 	valueBGColor(Colours::white.withAlpha(.1f)),
 	currentUI(nullptr)
 {
-	manager->selectionManager->addSelectionListener(this);
 
+	manager->selectionManager->addSelectionListener(this);
 	setShowAddButton(false);
 	animateItemOnAdd = false;
 
@@ -37,6 +37,7 @@ AutomationUI::~AutomationUI()
 {
 	manager->selectionManager->removeSelectionListener(this);
 	manager->removeAsyncContainerListener(this);
+	manager->selectionManager->clearSelection();
 }
 
 void AutomationUI::setCurrentPosition(const float &pos)
