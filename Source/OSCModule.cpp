@@ -10,7 +10,6 @@
 
 #include "OSCModule.h"
 #include "EnablingNetworkControllableContainerEditor.h"
-#include "zeroconf.hpp"
 
 OSCModule::OSCModule(const String & name, int defaultLocalPort, int defaultRemotePort, bool canHaveInput, bool canHaveOutput) :
 	Module(name)
