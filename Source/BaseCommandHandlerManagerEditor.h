@@ -26,7 +26,6 @@ public:
 	}
 
 	CommandContext context;
-
 	~BaseCommandHandlerManagerEditor() {}
 
 	
@@ -36,9 +35,11 @@ public:
 		if (def == nullptr) return;
 		else
 		{
-			T * item = this->manager->BaseManager<T>::addItem();
+			T * item = this->manager->createItem();
 			BaseCommandHandler * c = dynamic_cast<BaseCommandHandler *>(item);
 			c->setCommand(def);
+			this->manager->addItem(item);
+			this->setCollapsed(false, true);
 		}
 	}
 };

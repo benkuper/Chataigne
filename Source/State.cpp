@@ -11,9 +11,9 @@
 #include "State.h"
 
 State::State() :
-	BaseItem("State",true),
+	BaseItem(getTypeString(),true),
 	pm("Processors")
-{
+{ 
 	//canInspectChildContainers = false;
 
 	active = addBoolParameter("Active", "If active, the state's actions and mappings will be effective, otherwise this state won't do anything.", false);
@@ -44,7 +44,8 @@ void State::onContainerParameterChangedInternal(Parameter *p)
 var State::getJSONData()
 {
 	var data = BaseItem::getJSONData();
-	data.getDynamicObject()->setProperty("processors", pm.getJSONData());
+	var pData = pm.getJSONData();
+	if(!pData.isVoid() && pData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty("processors", pData);
 	return data;
 }
 

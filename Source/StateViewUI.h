@@ -25,8 +25,9 @@ public:
 	~StateViewUI();
 
 	ScopedPointer<BoolToggleUI> activeUI;
-
 	ProcessorManagerUI pmui;
+
+	Grabber bottomGrabber;
 
 	//transition
 	bool transitionReceptionMode;
@@ -41,13 +42,13 @@ public:
 
 	void resizedInternalHeader(Rectangle<int> &r) override;
 	void resizedInternalContent(Rectangle<int> &r) override;
+	void resizedInternalFooter(Rectangle<int> &r) override;
 
 	void childBoundsChanged(Component *) override;
 	void controllableFeedbackUpdateInternal(Controllable *) override;
 
 	void inspectableSelectionChanged(Inspectable *) override;
 
-	
 	class Listener
 	{
 	public:

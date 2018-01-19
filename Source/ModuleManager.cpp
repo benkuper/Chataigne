@@ -87,6 +87,32 @@ Controllable * ModuleManager::showAllValuesAndGetControllable(bool showTriggers,
 
 }
 
+bool ModuleManager::checkControllableIsAValue(Controllable * c)
+{
+	ControllableContainer * cc = c->parentContainer;
+	while (cc != nullptr)
+	{
+		Module * m = dynamic_cast<Module *>(cc); //If controllable is child of a module
+		
+		if (c->parentContainer == m || c->parentContainer == &m->moduleParams) return false; //If controllable is direct child of this module, or child 
+
+		if (m != nullptr)
+		{
+			ControllableContainer * vcc = c->parentContainer;
+			while (vcc != nullptr)
+			{
+				if (vcc == &m->valuesCC) return true; //If controllable is child of this module's valuesCC
+				vcc = vcc->parentContainer;
+			}
+
+			return false;
+		}
+
+		cc = cc->parentContainer;
+	}
+	return false;
+}
+
 PopupMenu ModuleManager::getAllModulesCommandMenu(CommandContext context)
 {
 	PopupMenu menu;

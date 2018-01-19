@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.2.5"
+<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.2.6"
               bundleIdentifier="benkuper.Chataigne" includeBinaryInAppConfig="1"
               jucerVersion="5.2.0" companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
               companyEmail="benjamin@kuperberg.fr" defines="" displaySplashScreen="1"
@@ -89,6 +89,9 @@
                 <FILE id="O0jaCt" name="InverseFilter.h" compile="0" resource="0" file="Source/InverseFilter.h"/>
                 <FILE id="Iqwwn4" name="LagFilter.cpp" compile="1" resource="0" file="Source/LagFilter.cpp"/>
                 <FILE id="U46NtO" name="LagFilter.h" compile="0" resource="0" file="Source/LagFilter.h"/>
+                <FILE id="vuB5hh" name="OffsetFilter.cpp" compile="1" resource="0"
+                      file="Source/OffsetFilter.cpp"/>
+                <FILE id="Y3LMVr" name="OffsetFilter.h" compile="0" resource="0" file="Source/OffsetFilter.h"/>
                 <FILE id="dkB5N1" name="ScriptFilter.cpp" compile="1" resource="0"
                       file="Source/ScriptFilter.cpp"/>
                 <FILE id="D7rCiH" name="ScriptFilter.h" compile="0" resource="0" file="Source/ScriptFilter.h"/>
@@ -424,24 +427,32 @@
         </GROUP>
         <GROUP id="{766BCE2E-5C2E-5A80-EC80-7FFA2C7ABBBA}" name="modules">
           <GROUP id="{AD1901AB-424E-4914-CA0D-03EDD5A74747}" name="common">
-            <GROUP id="{326D0695-EBBF-4628-12A4-8BED30F11F68}" name="commands">
-              <FILE id="mRE38p" name="SendStreamRawDataCommand.cpp" compile="1" resource="0"
-                    file="Source/SendStreamRawDataCommand.cpp"/>
-              <FILE id="PbIUNA" name="SendStreamRawDataCommand.h" compile="0" resource="0"
-                    file="Source/SendStreamRawDataCommand.h"/>
-              <FILE id="hD1JXW" name="SendStreamStringCommand.cpp" compile="1" resource="0"
-                    file="Source/SendStreamStringCommand.cpp"/>
-              <FILE id="cHihST" name="SendStreamStringCommand.h" compile="0" resource="0"
-                    file="Source/SendStreamStringCommand.h"/>
+            <GROUP id="{5C01210C-0BDB-2E4C-EA31-A80EFE913C0B}" name="ui">
+              <FILE id="Lnza8q" name="EnablingNetworkControllableContainerEditor.cpp"
+                    compile="1" resource="0" file="Source/EnablingNetworkControllableContainerEditor.cpp"/>
+              <FILE id="UcR7TI" name="EnablingNetworkControllableContainerEditor.h"
+                    compile="0" resource="0" file="Source/EnablingNetworkControllableContainerEditor.h"/>
             </GROUP>
-            <FILE id="ptNiQR" name="NetworkStreamingModule.cpp" compile="1" resource="0"
-                  file="Source/NetworkStreamingModule.cpp"/>
-            <FILE id="jelAkc" name="NetworkStreamingModule.h" compile="0" resource="0"
-                  file="Source/NetworkStreamingModule.h"/>
-            <FILE id="w2Nnnm" name="StreamingModule.cpp" compile="1" resource="0"
-                  file="Source/StreamingModule.cpp"/>
-            <FILE id="sWmXSX" name="StreamingModule.h" compile="0" resource="0"
-                  file="Source/StreamingModule.h"/>
+            <GROUP id="{4D9D34AB-C2BF-C076-C55C-2F7A60BF0530}" name="streaming">
+              <GROUP id="{326D0695-EBBF-4628-12A4-8BED30F11F68}" name="commands">
+                <FILE id="mRE38p" name="SendStreamRawDataCommand.cpp" compile="1" resource="0"
+                      file="Source/SendStreamRawDataCommand.cpp"/>
+                <FILE id="PbIUNA" name="SendStreamRawDataCommand.h" compile="0" resource="0"
+                      file="Source/SendStreamRawDataCommand.h"/>
+                <FILE id="hD1JXW" name="SendStreamStringCommand.cpp" compile="1" resource="0"
+                      file="Source/SendStreamStringCommand.cpp"/>
+                <FILE id="cHihST" name="SendStreamStringCommand.h" compile="0" resource="0"
+                      file="Source/SendStreamStringCommand.h"/>
+              </GROUP>
+              <FILE id="ptNiQR" name="NetworkStreamingModule.cpp" compile="1" resource="0"
+                    file="Source/NetworkStreamingModule.cpp"/>
+              <FILE id="jelAkc" name="NetworkStreamingModule.h" compile="0" resource="0"
+                    file="Source/NetworkStreamingModule.h"/>
+              <FILE id="w2Nnnm" name="StreamingModule.cpp" compile="1" resource="0"
+                    file="Source/StreamingModule.cpp"/>
+              <FILE id="sWmXSX" name="StreamingModule.h" compile="0" resource="0"
+                    file="Source/StreamingModule.h"/>
+            </GROUP>
           </GROUP>
           <GROUP id="{2086FD88-5179-1DFE-5E2F-7AC0D91DE535}" name="system">
             <GROUP id="{999BC48E-EA35-6B97-5C36-A5B38CE643A2}" name="os">

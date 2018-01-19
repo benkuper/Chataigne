@@ -44,6 +44,23 @@ public:
 	ListenerList<Listener> mappinginputListeners;
 	void addMappingInputListener(Listener* newListener) { mappinginputListeners.add(newListener); }
 	void removeMappingInputListener(Listener* listener) { mappinginputListeners.remove(listener); }
+
+
+	class MappingInputEvent {
+	public:
+		enum Type { INPUT_REFERENCE_CHANGED, PARAMETER_VALUE_CHANGED };
+		MappingInputEvent(Type type, MappingInput * i) : type(type), mappingInput(i) {}
+		Type type;
+		MappingInput * mappingInput;
+	};
+	QueuedNotifier<MappingInputEvent> mappingInputAsyncNotifier;
+	typedef QueuedNotifier<MappingInputEvent>::Listener AsyncListener;
+
+
+	void addAsyncMappingInputListener(AsyncListener* newListener) { mappingInputAsyncNotifier.addListener(newListener); }
+	void addAsyncCoalescedMappingInputListener(AsyncListener* newListener) { mappingInputAsyncNotifier.addAsyncCoalescedListener(newListener); }
+	void removeAsyncMappingInputListener(AsyncListener* listener) { mappingInputAsyncNotifier.removeListener(listener); }
+
 };
 
 

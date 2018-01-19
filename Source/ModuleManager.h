@@ -29,7 +29,8 @@ public:
 
 	//Input values menu
 	static Controllable * showAllValuesAndGetControllable(bool showTriggers, bool showParameters);
-		
+	static bool checkControllableIsAValue(Controllable * c);
+
 	//Command menu
 	PopupMenu getAllModulesCommandMenu(CommandContext context);
 	CommandDefinition * getCommandDefinitionForItemID(int itemID, Module * lockedModule);

@@ -19,6 +19,8 @@ StandardCondition::StandardCondition(var params) :
 	sourceTarget = addTargetParameter("Input Value", "Element that will be the source to check if condition is active or not"); 
 	sourceTarget->customGetTargetFunc = &ModuleManager::showAllValuesAndGetControllable;
 	sourceTarget->customGetControllableLabelFunc = &Module::getTargetLabelForValueControllable;
+	sourceTarget->customCheckAssignOnNextChangeFunc = &ModuleManager::checkControllableIsAValue;
+
 	sourceTarget->hideInEditor = true;
 }
 
@@ -79,6 +81,7 @@ void StandardCondition::setSourceControllable(WeakReference<Controllable> c)
 	}
 
 	conditionListeners.call(&ConditionListener::conditionSourceChanged, this);
+	conditionAsyncNotifier.addMessage(new ConditionEvent(ConditionEvent::SOURCE_CHANGED, this));
 }
 
 void StandardCondition::onContainerParameterChangedInternal(Parameter * p)

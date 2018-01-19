@@ -15,18 +15,18 @@
 #include "InverseFilter.h"
 #include "SimpleSmoothFilter.h"
 #include "LagFilter.h"
+#include "OffsetFilter.h"
 
 MappingFilterManager::MappingFilterManager() :
 	BaseManager<MappingFilter>("Filters"),
 	inputSourceParam(nullptr)
 {
-	editorIsCollapsed = true;
-
 	managerFactory = &factory;
 	factory.defs.add(Factory<MappingFilter>::Definition::createDef("Remap", "Inverse", &InverseFilter::create));
-	factory.defs.add(Factory<MappingFilter>::Definition::createDef("Remap", "Simple Remap", &SimpleRemapFilter::create));
+	factory.defs.add(Factory<MappingFilter>::Definition::createDef("Remap", "Offset", &OffsetFilter::create));
+	factory.defs.add(Factory<MappingFilter>::Definition::createDef("Remap", "Remap", &SimpleRemapFilter::create));
 	factory.defs.add(Factory<MappingFilter>::Definition::createDef("Remap", "Curve Map", &CurveMapFilter::create));
-	factory.defs.add(Factory<MappingFilter>::Definition::createDef("Physics", "Simple Smooth", &SimpleSmoothFilter::create));
+	factory.defs.add(Factory<MappingFilter>::Definition::createDef("Physics", "Smooth", &SimpleSmoothFilter::create));
 	factory.defs.add(Factory<MappingFilter>::Definition::createDef("Physics", "Lag", &LagFilter::create));
 	factory.defs.add(Factory<MappingFilter>::Definition::createDef("", "Script", &ScriptFilter::create));
 

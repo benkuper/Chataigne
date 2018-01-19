@@ -15,7 +15,7 @@
 Condition::Condition(const String &n, var /*params*/) :
 	BaseItem(n),
     forceDisabled(false),
-    validationAsyncNotifier(10)
+	conditionAsyncNotifier(10)
 {
 	
 	isSelectable = false;
@@ -39,7 +39,7 @@ void Condition::onContainerParameterChangedInternal(Parameter * p)
 		if (!forceDisabled)
 		{
 			conditionListeners.call(&ConditionListener::conditionValidationChanged, this);
-			validationAsyncNotifier.addMessage(new ValidationAsyncEvent(isValid->boolValue()));
+			conditionAsyncNotifier.addMessage(new ConditionEvent(ConditionEvent::VALIDATION_CHANGED,this));
 		}
 	}else if (p == enabled)
 	{

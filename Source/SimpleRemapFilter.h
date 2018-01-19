@@ -30,7 +30,7 @@ public:
 	Parameter * setupParameterInternal(Parameter * source) override;
 
 	static SimpleRemapFilter * create(var params) { return new SimpleRemapFilter(params); }
-	String getTypeString() const override { return "Simple Remap"; }
+	String getTypeString() const override { return "Remap"; }
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(SimpleRemapFilter)
 };

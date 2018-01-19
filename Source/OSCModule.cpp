@@ -9,6 +9,8 @@
 */
 
 #include "OSCModule.h"
+#include "EnablingNetworkControllableContainerEditor.h"
+#include "zeroconf.hpp"
 
 OSCModule::OSCModule(const String & name, int defaultLocalPort, int defaultRemotePort, bool canHaveInput, bool canHaveOutput) :
 	Module(name)
@@ -21,6 +23,7 @@ OSCModule::OSCModule(const String & name, int defaultLocalPort, int defaultRemot
 	if (canHaveInput)
 	{
 		receiveCC = new EnablingControllableContainer("OSC Input");
+		receiveCC->customGetEditorFunc = &EnablingNetworkControllableContainerEditor::create;
 		moduleParams.addChildControllableContainer(receiveCC);
 
 		localPort = receiveCC->addIntParameter("Local Port", "Local Port to bind to receive OSC Messages", defaultLocalPort, 1024, 65535);
@@ -65,12 +68,17 @@ void OSCModule::setupReceiver()
 	{
 		NLOGERROR(niceName, "Error binding port " + localPort->stringValue());
 	}
+
 	
 	Array<IPAddress> ad;
 	IPAddress::findAllAddresses(ad);
 
+	Array<String> ips;
+	for (auto &a : ad) ips.add(a.toString());
+	ips.sort();
 	String s = "Local IPs:";
-	for (auto &a : ad) s += String("\n > ") + a.toString();
+	for (auto &ip : ips) s += String("\n > ") + ip;
+
 	NLOG(niceName, s);
 }
 
@@ -204,8 +212,18 @@ var OSCModule::argumentToVar(const OSCArgument & a)
 var OSCModule::getJSONData()
 {
 	var data = Module::getJSONData();
-	if (receiveCC != nullptr) data.getDynamicObject()->setProperty("input", receiveCC->getJSONData());
-	if (sendCC != nullptr) data.getDynamicObject()->setProperty("output", sendCC->getJSONData());
+	if (receiveCC != nullptr)
+	{
+		var inputData = receiveCC->getJSONData();
+		if (!inputData.isVoid()) data.getDynamicObject()->setProperty("input", inputData);
+	}
+
+	if (sendCC != nullptr)
+	{
+		var outputData = sendCC->getJSONData();
+		if (!outputData.isVoid()) data.getDynamicObject()->setProperty("output", outputData);
+	}
+
 	return data;
 }
 
@@ -278,10 +296,3 @@ void OSCModule::oscBundleReceived(const OSCBundle & bundle)
 		processMessage(m.getMessage());
 	}
 }
-
-/*
-InspectableEditor * OSCModule::getEditor(bool isRoot)
-{
-	return new ModuleEditor(this, isRoot);
-}
-*/

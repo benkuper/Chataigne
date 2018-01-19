@@ -82,10 +82,12 @@ void MainContentComponent::getCommandInfo(CommandID commandID, ApplicationComman
 
 	case CommandIDs::editProjectSettings:
 		result.setInfo("Project Settings...", "Edit the settings related to this project", category, 0);
+		result.defaultKeypresses.add(KeyPress(';', ModifierKeys::commandModifier, 0));
 		break;
 
 	case CommandIDs::editGlobalSettings:
 		result.setInfo("Preferences", "Edit the general settings related to this application", category, 0);
+		result.defaultKeypresses.add(KeyPress(',', ModifierKeys::commandModifier, 0));
 		break;
 
 	case CommandIDs::showAbout:

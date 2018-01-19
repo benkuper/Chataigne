@@ -300,15 +300,44 @@ void AutomationUI::mouseDown(const MouseEvent & e)
 				transformer = nullptr;
 			}
 
-			if(InspectableSelector::getInstance()) InspectableSelector::getInstance()->startSelection(this, selectables, inspectables,manager->selectionManager,!e.mods.isCommandDown());
+			if(InspectableSelector::getInstance()) InspectableSelector::getInstance()->startSelection(this, selectables, inspectables,manager->selectionManager,!e.mods.isCommandDown() && ! e.mods.isShiftDown());
 		}
+	} else
+	{
+		if (e.mods.isShiftDown())
+		{
+			AutomationKeyUI::Handle * kHandle = dynamic_cast<AutomationKeyUI::Handle *>(e.eventComponent);
+			if (kHandle != nullptr)
+			{
+				if (manager->selectionManager->currentInspectables.size() > 0)
+				{
+					AutomationKey * lastSelectedKey = (AutomationKey *)manager->selectionManager->currentInspectables[manager->selectionManager->currentInspectables.size() - 1];
+					AutomationKey * sKey = ((AutomationKeyUI *)kHandle->getParentComponent())->item;
+
+					int i1 = manager->items.indexOf(lastSelectedKey);
+					int i2 = manager->items.indexOf(sKey);
+					
+					int index1 = jmin(i1, i2) + 1;
+					int index2 = jmax(i1, i2) - 1;
+
+					DBG(i1 << ", " << i2 << ", " << index1 << ", " << index2);
+
+					for (int i = index1; i <= index2; i++)
+					{
+						DBG("Select item : " << i);
+						manager->items[i]->selectThis(true);
+					}
+				}
+			}
+		}
+		
 	}
 	
 }
 
 void AutomationUI::mouseDoubleClick(const MouseEvent & e)
 {
-	manager->addItem(getPosForX(e.getPosition().x), getValueForY(e.getPosition().y));
+	if(e.eventComponent == this) manager->addItem(getPosForX(e.getPosition().x), getValueForY(e.getPosition().y));
 }
 
 void AutomationUI::mouseDrag(const MouseEvent & e)

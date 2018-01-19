@@ -33,7 +33,6 @@ public:
 	{
 	public:
 		virtual ~ConditionListener() {}
-		virtual void conditionEnableChanged(Condition *) {}
 		virtual void conditionValidationChanged(Condition *) {}
 		virtual void conditionSourceChanged(Condition *) {}
 	};
@@ -43,18 +42,20 @@ public:
 	void removeConditionListener(ConditionListener* listener) { conditionListeners.remove(listener); }
 
 
-	class ValidationAsyncEvent {
+	class ConditionEvent {
 	public:
-		ValidationAsyncEvent(bool _value) : value(_value) {}
-		bool value;
+		enum Type { VALIDATION_CHANGED, SOURCE_CHANGED };
+		ConditionEvent(Type type, Condition * c) : type(type), condition(c) {}
+		Type type;
+		Condition * condition;
 	};
-	QueuedNotifier<ValidationAsyncEvent> validationAsyncNotifier;
-	typedef QueuedNotifier<ValidationAsyncEvent>::Listener AsyncListener;
+	QueuedNotifier<ConditionEvent> conditionAsyncNotifier;
+	typedef QueuedNotifier<ConditionEvent>::Listener AsyncListener;
 
 
-	void addAsyncValidationListener(AsyncListener* newListener) { validationAsyncNotifier.addListener(newListener); }
-	void addAsyncCoalescedValidationListener(AsyncListener* newListener) { validationAsyncNotifier.addAsyncCoalescedListener(newListener); }
-	void removeAsyncValidationListener(AsyncListener* listener) { validationAsyncNotifier.removeListener(listener); }
+	void addAsyncConditionListener(AsyncListener* newListener) { conditionAsyncNotifier.addListener(newListener); }
+	void addAsyncCoalescedConditionListener(AsyncListener* newListener) { conditionAsyncNotifier.addAsyncCoalescedListener(newListener); }
+	void removeAsyncConditionListener(AsyncListener* listener) { conditionAsyncNotifier.removeListener(listener); }
 
 
 	virtual String getTypeString() const override { jassert(false); return "error"; }

@@ -59,7 +59,6 @@ public:
 	bool hitTest(int tx, int ty) override;
 
 	void mouseDown(const MouseEvent &e) override;
-	void mouseDoubleClick(const MouseEvent &e) override;
 	void mouseUp(const MouseEvent &e) override;
 
 	void controllableFeedbackUpdateInternal(Controllable * c) override;

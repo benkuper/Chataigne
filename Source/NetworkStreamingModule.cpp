@@ -9,7 +9,7 @@
 */
 
 #include "NetworkStreamingModule.h"
-
+#include "EnablingNetworkControllableContainerEditor.h"
 
 NetworkStreamingModule::NetworkStreamingModule(const String &name, bool canHaveInput, bool canHaveOutput, int defaultLocalPort, int defaultRemotePort) :
 	StreamingModule(name),
@@ -21,6 +21,8 @@ NetworkStreamingModule::NetworkStreamingModule(const String &name, bool canHaveI
 	if (canHaveInput)
 	{
 		receiveCC = new EnablingControllableContainer("Input");
+		receiveCC->customGetEditorFunc = &EnablingNetworkControllableContainerEditor::create;
+
 		moduleParams.addChildControllableContainer(receiveCC);
 
 		localPort = receiveCC->addIntParameter("Local Port", "Local Port to bind to receive UDP Messages", defaultLocalPort, 1024, 65535);

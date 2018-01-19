@@ -114,8 +114,10 @@ bool Sequence::timeIsDrivenByAudio()
 var Sequence::getJSONData()
 {
 	var data = BaseItem::getJSONData();
-	data.getDynamicObject()->setProperty("layerManager", layerManager->getJSONData());
-	data.getDynamicObject()->setProperty("cueManager", cueManager->getJSONData());
+	var layerData = layerManager->getJSONData();
+	if(!layerData.isVoid()) data.getDynamicObject()->setProperty("layerManager", layerData );
+	var cueData = cueManager->getJSONData();
+	if(!cueData.isVoid()) data.getDynamicObject()->setProperty("cueManager", cueData);
 	return data;
 }
 

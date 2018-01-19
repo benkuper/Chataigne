@@ -56,6 +56,22 @@ public:
 	void addMappingFilterListener(FilterListener* newListener) { mappingFilterListeners.add(newListener); }
 	void removeMappingFilterListener(FilterListener* listener) { mappingFilterListeners.remove(listener); }
 
+	class FilterEvent {
+	public:
+		enum Type { FILTER_PARAM_CHANGED };
+		FilterEvent(Type type, MappingFilter * i) : type(type), filter(i) {}
+		Type type;
+		MappingFilter * filter;
+	};
+	QueuedNotifier<FilterEvent> mappingFilterAsyncNotifier;
+	typedef QueuedNotifier<FilterEvent>::Listener AsyncListener;
+
+
+	void addAsyncFilterListener(AsyncListener* newListener) { mappingFilterAsyncNotifier.addListener(newListener); }
+	void addAsyncCoalescedFilterListener(AsyncListener* newListener) { mappingFilterAsyncNotifier.addAsyncCoalescedListener(newListener); }
+	void removeAsyncFilterListener(AsyncListener* listener) { mappingFilterAsyncNotifier.removeListener(listener); }
+
+
 	virtual String getTypeString() const override { jassert(false); return "[ERROR]"; }
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MappingFilter)

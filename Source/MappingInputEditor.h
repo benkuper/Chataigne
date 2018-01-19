@@ -15,7 +15,7 @@
 
 class MappingInputEditor :
 	public GenericControllableContainerEditor,
-	public MappingInput::Listener
+	public MappingInput::AsyncListener
 {
 public:
 	MappingInputEditor(MappingInput * input, bool isRoot);
@@ -28,7 +28,10 @@ public:
 	void updateSourceUI();
 	void resizedInternalHeader(Rectangle<int> &r) override;
 
-	void inputReferenceChanged(MappingInput *) override;
+	virtual void inputReferenceChangedAsync(MappingInput *);
+
+protected:
+	void newMessage(const MappingInput::MappingInputEvent &e) override;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MappingInputEditor)
 };

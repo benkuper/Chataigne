@@ -229,7 +229,8 @@ var CustomOSCModule::getJSONData()
 {
 	var data = OSCModule::getJSONData();
 	data.getDynamicObject()->setProperty("values", valuesCC.getJSONData());
-	data.getDynamicObject()->setProperty("models", umm.getJSONData());
+	var modelData = umm.getJSONData();
+	if(!modelData.isVoid() && modelData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty("models", modelData);
 	return data;
 }
 

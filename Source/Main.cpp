@@ -131,7 +131,6 @@ void ChataigneApplication::engineCleared()
 
 void ChataigneApplication::fileChanged()
 {
-	DBG("Changed here");
 	updateAppTitle();
 }
 

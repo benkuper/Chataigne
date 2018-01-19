@@ -27,6 +27,8 @@ public:
 	ScopedPointer<ControllableUI> sourceFeedbackUI;
 	ScopedPointer<BaseComparatorUI> comparatorUI;
 	
+	void setCollapsed(bool value, bool force = false, bool animate = true) override;
+
 	void resizedInternalHeaderItemInternal(Rectangle<int> &r) override;
 	void resizedInternalContent(Rectangle<int> &r) override;
 	void updateUI() override;

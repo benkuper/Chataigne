@@ -166,14 +166,16 @@ var MappingLayer::getJSONData()
 	data.getDynamicObject()->setProperty("mapping", mapping.getJSONData());
 	for (int i = 0; i < automations.size(); i++)
 	{
-		data.getDynamicObject()->setProperty("automation"+String(i), automations[i]->getJSONData());
+		var aData = automations[i]->getJSONData();
+		if(!aData.isVoid()) data.getDynamicObject()->setProperty("automation"+String(i), aData);
 	}
 	if (timeColorManager != nullptr)
 	{
 		data.getDynamicObject()->setProperty("colors", timeColorManager->getJSONData());
 	}
 
-	data.getDynamicObject()->setProperty("recorder", recorder.getJSONData());
+	var rData = recorder.getJSONData();
+	if(!rData.isVoid()) data.getDynamicObject()->setProperty("recorder", rData);
 
 	return data;
 }

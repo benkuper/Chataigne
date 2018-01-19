@@ -18,8 +18,9 @@ AutomationRecorder::AutomationRecorder() :
 {
 	input = addTargetParameter("Input Value", "Input value used for recording");
 	input->showTriggers = false;
-	input->customGetTargetFunc = &ModuleManager::getInstance()->showAllValuesAndGetControllable;
+	input->customGetTargetFunc = &ModuleManager::showAllValuesAndGetControllable;
 	input->customGetControllableLabelFunc = &Module::getTargetLabelForValueControllable;
+	input->customCheckAssignOnNextChangeFunc = &ModuleManager::checkControllableIsAValue;
 
 	arm = addBoolParameter("Arm", "If set, when a sequence will play, this will start recording. In any case, when a sequence is stopped or seeked, the recording stops as well", false);
 	arm->setEnabled(input->target != nullptr);

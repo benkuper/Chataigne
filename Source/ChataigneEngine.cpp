@@ -78,11 +78,20 @@ var ChataigneEngine::getJSONData()
 	var data = Engine::getJSONData();
 
 	//save here
-	data.getDynamicObject()->setProperty("projectSettings", ProjectSettings::getInstance()->getJSONData());
-	data.getDynamicObject()->setProperty("moduleManager", ModuleManager::getInstance()->getJSONData());
-	data.getDynamicObject()->setProperty("stateManager", StateManager::getInstance()->getJSONData());
-	data.getDynamicObject()->setProperty("sequenceManager", SequenceManager::getInstance()->getJSONData());
-	data.getDynamicObject()->setProperty("routerManager", ModuleRouterManager::getInstance()->getJSONData());
+	var pData = ProjectSettings::getInstance()->getJSONData();
+	if(!pData.isVoid() && pData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty("projectSettings", pData);
+
+	var mData = ModuleManager::getInstance()->getJSONData();
+	if(!mData.isVoid() && mData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty("moduleManager", mData);
+
+	var sData = StateManager::getInstance()->getJSONData();
+	if(!sData.isVoid() && sData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty("stateManager", sData);
+
+	var seqData = SequenceManager::getInstance()->getJSONData();
+	if(!seqData.isVoid() && seqData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty("sequenceManager", seqData);
+
+	var rData = ModuleRouterManager::getInstance()->getJSONData();
+	if(!rData.isVoid() && rData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty("routerManager", rData);
 
 
 	return data;

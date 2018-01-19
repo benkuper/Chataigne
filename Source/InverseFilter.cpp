@@ -13,6 +13,8 @@
 InverseFilter::InverseFilter(var params) :
 	MappingFilter(getTypeString(), params)
 {
+	editorCanBeCollapsed = false;
+	editorIsCollapsed = true;
 }
 
 InverseFilter::~InverseFilter()

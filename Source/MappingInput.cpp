@@ -14,7 +14,8 @@
 
 MappingInput::MappingInput() :
 	ControllableContainer("Input"),
-	inputReference(nullptr)
+	inputReference(nullptr),
+	mappingInputAsyncNotifier(10)
 {
 	
 	nameCanBeChangedByUser = false;
@@ -22,6 +23,7 @@ MappingInput::MappingInput() :
 	inputTarget->showTriggers = false;
 	inputTarget->customGetTargetFunc = &ModuleManager::getInstance()->showAllValuesAndGetControllable;
 	inputTarget->customGetControllableLabelFunc = &Module::getTargetLabelForValueControllable; 
+	inputTarget->customCheckAssignOnNextChangeFunc = &ModuleManager::checkControllableIsAValue;
 }
 
 MappingInput::~MappingInput()
@@ -50,6 +52,7 @@ void MappingInput::setInput(Parameter * _input)
 	}
 
 	mappinginputListeners.call(&MappingInput::Listener::inputReferenceChanged, this);
+	mappingInputAsyncNotifier.addMessage(new MappingInputEvent(MappingInputEvent::INPUT_REFERENCE_CHANGED, this));
 }
 
 void MappingInput::onContainerParameterChanged(Parameter * p)
@@ -65,6 +68,7 @@ void MappingInput::onExternalParameterChanged(Parameter * p)
 	if (p == inputReference)
 	{
 		mappinginputListeners.call(&MappingInput::Listener::inputParameterValueChanged, this);
+		mappingInputAsyncNotifier.addMessage(new MappingInputEvent(MappingInputEvent::PARAMETER_VALUE_CHANGED, this));
 	}
 }
 

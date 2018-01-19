@@ -147,11 +147,6 @@ void AutomationKeyUI::mouseDown(const MouseEvent & e)
 	}
 }
 
-void AutomationKeyUI::mouseDoubleClick(const MouseEvent & e)
-{
-	if (e.eventComponent == &handle) showKeyEditorWindow();
-}
-
 void AutomationKeyUI::mouseUp(const MouseEvent & e)
 {
 	handle.setMouseCursor(MouseCursor::NormalCursor);

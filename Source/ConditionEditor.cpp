@@ -14,16 +14,14 @@ ConditionEditor::ConditionEditor(Condition * _condition, bool isRoot) :
 	BaseItemEditor(_condition, isRoot),
 	condition(_condition)
 {
-	condition->addConditionListener(this);
-	condition->addAsyncCoalescedValidationListener(this);
+	condition->addAsyncConditionListener(this);
 }
 
 ConditionEditor::~ConditionEditor()
 {
 	if (!inspectable.wasObjectDeleted())
 	{
-		condition->removeConditionListener(this);
-		condition->removeAsyncValidationListener(this);
+		condition->removeAsyncConditionListener(this);
 	}
 }
 
@@ -36,12 +34,21 @@ void ConditionEditor::paintOverChildren(Graphics & g)
 	}
 }
 
-void ConditionEditor::conditionSourceChanged(Condition *)
+void ConditionEditor::conditionSourceChangedAsync(Condition *)
 {
 	updateUI();
 }
 
-void ConditionEditor::newMessage(const Condition::ValidationAsyncEvent &)
+void ConditionEditor::newMessage(const Condition::ConditionEvent &e)
 {
-	repaint();
+	switch (e.type)
+	{
+	case Condition::ConditionEvent::VALIDATION_CHANGED:
+		repaint();
+		break;
+
+	case Condition::ConditionEvent::SOURCE_CHANGED:
+		conditionSourceChangedAsync(e.condition);
+		break;
+	}
 }

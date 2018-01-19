@@ -33,7 +33,7 @@ ifeq ($(CONFIG),Debug)
     TARGET_ARCH := -m64
   endif
 
-  JUCE_CPPFLAGS := $(DEPFLAGS) -DLINUX=1 -DDEBUG=1 -D_DEBUG=1 -DJUCER_LINUX_MAKE_6D53C8B4=1 -DJUCE_APP_VERSION=1.2.5 -DJUCE_APP_VERSION_HEX=0x10205 $(shell pkg-config --cflags alsa freetype2 libcurl x11 xext xinerama) -pthread -I../../JuceLibraryCode -I../../../../../../Softwares/JUCE/modules -I../../../JUCE/modules -I../../../JUCE\ Modules -I../../External/wiiuse -I../../External/serial/include $(CPPFLAGS)
+  JUCE_CPPFLAGS := $(DEPFLAGS) -DLINUX=1 -DDEBUG=1 -D_DEBUG=1 -DJUCER_LINUX_MAKE_6D53C8B4=1 -DJUCE_APP_VERSION=1.2.6 -DJUCE_APP_VERSION_HEX=0x10206 $(shell pkg-config --cflags alsa freetype2 libcurl x11 xext xinerama) -pthread -I../../JuceLibraryCode -I../../../../../../Softwares/JUCE/modules -I../../../JUCE/modules -I../../../JUCE\ Modules -I../../External/wiiuse -I../../External/serial/include $(CPPFLAGS)
   JUCE_CPPFLAGS_APP := -DJucePlugin_Build_VST=0 -DJucePlugin_Build_VST3=0 -DJucePlugin_Build_AU=0 -DJucePlugin_Build_AUv3=0 -DJucePlugin_Build_RTAS=0 -DJucePlugin_Build_AAX=0 -DJucePlugin_Build_Standalone=0
   JUCE_TARGET_APP := Chataigne
 
@@ -54,7 +54,7 @@ ifeq ($(CONFIG),Release)
     TARGET_ARCH := -m64
   endif
 
-  JUCE_CPPFLAGS := $(DEPFLAGS) -DLINUX=1 -DNDEBUG=1 -DJUCER_LINUX_MAKE_6D53C8B4=1 -DJUCE_APP_VERSION=1.2.5 -DJUCE_APP_VERSION_HEX=0x10205 $(shell pkg-config --cflags alsa freetype2 libcurl x11 xext xinerama) -pthread -I../../JuceLibraryCode -I../../../../../../Softwares/JUCE/modules -I../../../JUCE/modules -I../../../JUCE\ Modules -I../../External/wiiuse -I../../External/serial/include $(CPPFLAGS)
+  JUCE_CPPFLAGS := $(DEPFLAGS) -DLINUX=1 -DNDEBUG=1 -DJUCER_LINUX_MAKE_6D53C8B4=1 -DJUCE_APP_VERSION=1.2.6 -DJUCE_APP_VERSION_HEX=0x10206 $(shell pkg-config --cflags alsa freetype2 libcurl x11 xext xinerama) -pthread -I../../JuceLibraryCode -I../../../../../../Softwares/JUCE/modules -I../../../JUCE/modules -I../../../JUCE\ Modules -I../../External/wiiuse -I../../External/serial/include $(CPPFLAGS)
   JUCE_CPPFLAGS_APP := -DJucePlugin_Build_VST=0 -DJucePlugin_Build_VST3=0 -DJucePlugin_Build_AU=0 -DJucePlugin_Build_AUv3=0 -DJucePlugin_Build_RTAS=0 -DJucePlugin_Build_AAX=0 -DJucePlugin_Build_Standalone=0
   JUCE_TARGET_APP := Chataigne
 
@@ -79,6 +79,7 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/CurveMapFilter_84c144ce.o \
   $(JUCE_OBJDIR)/InverseFilter_66642a29.o \
   $(JUCE_OBJDIR)/LagFilter_15ce140b.o \
+  $(JUCE_OBJDIR)/OffsetFilter_e90c64f4.o \
   $(JUCE_OBJDIR)/ScriptFilter_fbaaeb2c.o \
   $(JUCE_OBJDIR)/SimpleRemapFilter_6a007ff0.o \
   $(JUCE_OBJDIR)/SimpleSmoothFilter_df9c3321.o \
@@ -157,6 +158,7 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/ModuleRouterValue_937230fd.o \
   $(JUCE_OBJDIR)/ModuleRouter_785566de.o \
   $(JUCE_OBJDIR)/ModuleRouterManager_16ed3779.o \
+  $(JUCE_OBJDIR)/EnablingNetworkControllableContainerEditor_69404a20.o \
   $(JUCE_OBJDIR)/SendStreamRawDataCommand_a8c8304a.o \
   $(JUCE_OBJDIR)/SendStreamStringCommand_7ad2ed13.o \
   $(JUCE_OBJDIR)/NetworkStreamingModule_5a389ce9.o \
@@ -399,6 +401,11 @@ $(JUCE_OBJDIR)/InverseFilter_66642a29.o: ../../Source/InverseFilter.cpp
 $(JUCE_OBJDIR)/LagFilter_15ce140b.o: ../../Source/LagFilter.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling LagFilter.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/OffsetFilter_e90c64f4.o: ../../Source/OffsetFilter.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling OffsetFilter.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/ScriptFilter_fbaaeb2c.o: ../../Source/ScriptFilter.cpp
@@ -789,6 +796,11 @@ $(JUCE_OBJDIR)/ModuleRouter_785566de.o: ../../Source/ModuleRouter.cpp
 $(JUCE_OBJDIR)/ModuleRouterManager_16ed3779.o: ../../Source/ModuleRouterManager.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling ModuleRouterManager.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/EnablingNetworkControllableContainerEditor_69404a20.o: ../../Source/EnablingNetworkControllableContainerEditor.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling EnablingNetworkControllableContainerEditor.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/SendStreamRawDataCommand_a8c8304a.o: ../../Source/SendStreamRawDataCommand.cpp

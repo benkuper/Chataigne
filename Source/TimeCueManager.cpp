@@ -95,6 +95,7 @@ float TimeCueManager::getPrevCueForTime(float time, float goToPreviousThreshold)
 
 void TimeCueManager::onControllableFeedbackUpdate(ControllableContainer * cc, Controllable * c)
 {
+	/*
 	TimeCue * t = static_cast<TimeCue *>(cc);
 	if (t != nullptr)
 	{
@@ -112,6 +113,6 @@ void TimeCueManager::onControllableFeedbackUpdate(ControllableContainer * cc, Co
 				baseManagerListeners.call(&Listener::itemsReordered);
 			}
 		}
-
 	}
+	*/
 }

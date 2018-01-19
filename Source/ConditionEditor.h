@@ -15,7 +15,6 @@
 
 class ConditionEditor :
 	public BaseItemEditor,
-	public Condition::ConditionListener,
 	public Condition::AsyncListener
 {
 public:
@@ -28,10 +27,10 @@ public:
 	virtual void paintOverChildren(Graphics &g) override;
 	virtual void updateUI() {}
 
-	void conditionSourceChanged(Condition *) override;
+	virtual void conditionSourceChangedAsync(Condition *);
 
 	//async
-	void newMessage(const Condition::ValidationAsyncEvent &e) override;
+	void newMessage(const Condition::ConditionEvent &e) override;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ConditionEditor)
 };

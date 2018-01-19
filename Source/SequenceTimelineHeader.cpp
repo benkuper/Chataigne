@@ -148,15 +148,7 @@ void SequenceTimelineHeader::mouseDown(const MouseEvent & e)
 {
 	if (e.mods.isLeftButtonDown())
 	{
-		if (e.mods.isCommandDown())
-		{
-			cueManagerUI.addCueAtPos(e.getMouseDownX());
-		}
-		else
-		{
-			sequence->setCurrentTime(getTimeForX(e.getPosition().x));
-		}
-		
+		sequence->setCurrentTime(getTimeForX(e.getPosition().x));	
 	}
 }
 
@@ -165,6 +157,14 @@ void SequenceTimelineHeader::mouseDrag(const MouseEvent & e)
 	if(e.mods.isLeftButtonDown())
 	{
 		sequence->setCurrentTime(getTimeForX(e.getPosition().x));
+	}
+}
+
+void SequenceTimelineHeader::mouseDoubleClick(const MouseEvent & e)
+{
+	if (e.mods.isLeftButtonDown())
+	{
+		cueManagerUI.addCueAtPos(e.getMouseDownX());
 	}
 }
 

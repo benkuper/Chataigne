@@ -32,6 +32,15 @@ void UDPModule::setupReceiver()
 	receiver->bindToPort(localPort->intValue());
 	receiverIsBound->setValue(receiver->getBoundPort() != -1);
 	if(receiverIsBound->boolValue()) startThread();
+
+	Array<IPAddress> ad;
+	IPAddress::findAllAddresses(ad);
+
+	Array<String> ips;
+	for (auto &a : ad) ips.add(a.toString());
+	ips.sort();
+	String s = "Local IPs:";
+	for (auto &ip : ips) s += String("\n > ") + ip;
 }
 
 void UDPModule::setupSender()

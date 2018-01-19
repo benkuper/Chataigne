@@ -16,12 +16,12 @@ MappingFilterEditor::MappingFilterEditor(MappingFilter * m, bool isRoot) :
 	filteredUI(nullptr)
 {
 	updateFilteredUI();
-	filter->addMappingFilterListener(this);
+	filter->addAsyncFilterListener(this);
 }
 
 MappingFilterEditor::~MappingFilterEditor()
 {
-	if (!inspectable.wasObjectDeleted()) filter->removeMappingFilterListener(this);
+	if (!inspectable.wasObjectDeleted()) filter->removeAsyncFilterListener(this);
 }
 
 void MappingFilterEditor::resizedInternalHeaderItemInternal(Rectangle<int>& r)
@@ -48,7 +48,17 @@ void MappingFilterEditor::updateFilteredUI()
 	resized();
 }
 
-void MappingFilterEditor::filteredParamChanged(MappingFilter *)
+void MappingFilterEditor::newMessage(const MappingFilter::FilterEvent & e)
+{
+	switch (e.type)
+	{
+	case MappingFilter::FilterEvent::FILTER_PARAM_CHANGED:
+		filteredParamChangedAsync(e.filter);
+		break;
+	}
+}
+
+void MappingFilterEditor::filteredParamChangedAsync(MappingFilter *)
 {
 	updateFilteredUI();
 }

@@ -27,7 +27,11 @@ BaseItemUI<State>(state, ResizeMode::ALL, true),
 		addAndMakeVisible(&pmui);
 	}
 
-	setSize(200,200);
+	addAndMakeVisible(&bottomGrabber);
+
+	DBG("New viewUI " << (int)(item->miniMode->boolValue()));
+	setSize(200, 200);
+	updateMiniModeUI();
 	resized();
 }
 	
@@ -50,11 +54,12 @@ void StateViewUI::updateMiniModeUI()
 	if (item->miniMode->boolValue())
 	{
 		removeChildComponent(&pmui);
+		removeChildComponent(&bottomGrabber);
 	} else
 	{
 		addAndMakeVisible(&pmui);
+		addAndMakeVisible(&bottomGrabber);
 	}
-
 }
 
 void StateViewUI::mouseDown(const MouseEvent & e)
@@ -122,6 +127,11 @@ void StateViewUI::resizedInternalHeader(Rectangle<int>& r)
 void StateViewUI::resizedInternalContent(Rectangle<int>& r)
 {
 	pmui.setBounds(r);
+}
+
+void StateViewUI::resizedInternalFooter(Rectangle<int>& r)
+{
+	bottomGrabber.setBounds(r.removeFromLeft(r.getWidth()-cornerResizer->getWidth() + 2));
 }
 
 void StateViewUI::childBoundsChanged(Component * c)

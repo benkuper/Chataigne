@@ -14,13 +14,13 @@ MappingInputEditor::MappingInputEditor(MappingInput * _input, bool isRoot) :
 	GenericControllableContainerEditor(_input,isRoot),
 	input(_input)
 {
-	input->addMappingInputListener(this);
+	input->addAsyncMappingInputListener(this);
 	updateSourceUI();
 }
 
 MappingInputEditor::~MappingInputEditor()
 {
-	input->removeMappingInputListener(this);
+	input->removeAsyncMappingInputListener(this);
 }
 
 void MappingInputEditor::updateSourceUI()
@@ -42,8 +42,21 @@ void MappingInputEditor::resizedInternalHeader(Rectangle<int>& r)
 	GenericControllableContainerEditor::resizedInternalHeader(r);
 }
 
+void MappingInputEditor::newMessage(const MappingInput::MappingInputEvent & e)
+{
+	switch (e.type)
+	{
+	case MappingInput::MappingInputEvent::INPUT_REFERENCE_CHANGED:
+		inputReferenceChangedAsync(e.mappingInput);
+		break;
 
-void MappingInputEditor::inputReferenceChanged(MappingInput *)
+	case MappingInput::MappingInputEvent::PARAMETER_VALUE_CHANGED:
+		break;
+	}
+}
+
+
+void MappingInputEditor::inputReferenceChangedAsync(MappingInput *)
 {
 	updateSourceUI();
 }

@@ -45,15 +45,10 @@ void TimeCueUI::resized()
 	drawPath = drawPath.createPathWithRoundedCorners(1);
 }
 
-void TimeCueUI::mouseDown(const MouseEvent & e)
+void TimeCueUI::mouseDoubleClick(const MouseEvent & e)
 {
-	BaseItemMinimalUI::mouseDown(e);
-	if (e.mods.isCommandDown())
-	{
-		item->remove();
-	}
-	//timeAtMouseDown = item->time->floatValue();
-	//posAtMouseDown = getX();
+	BaseItemMinimalUI::mouseDoubleClick(e);
+	if (e.mods.isCommandDown()) item->remove();
 }
 
 void TimeCueUI::mouseDrag(const MouseEvent & e)

@@ -189,7 +189,8 @@ Array<State *> StateManager::getLinkedStates(State * s, Array<State *> * statesT
 var StateManager::getJSONData()
 {
 	var data = BaseManager::getJSONData();
-	data.getDynamicObject()->setProperty("transitions", stm.getJSONData());
+	var tData = stm.getJSONData();
+	if (!tData.isVoid() && tData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty("transitions",tData);
 	return data;
 }
 

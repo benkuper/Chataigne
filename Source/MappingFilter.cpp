@@ -18,7 +18,8 @@ MappingFilter::MappingFilter(const String &name, var params) :
 	filterParams("filterParams"),
 	forceOutParameterType(String::empty),
 	needsContinuousProcess(false),
-	autoSetRange(true)
+	autoSetRange(true),
+	mappingFilterAsyncNotifier(10)
 {
 	isSelectable = false;
 
@@ -53,6 +54,7 @@ void MappingFilter::setupSource(Parameter * source)
 	}
 	
 	mappingFilterListeners.call(&FilterListener::filteredParamChanged, this);
+	mappingFilterAsyncNotifier.addMessage(new FilterEvent(FilterEvent::FILTER_PARAM_CHANGED, this));
 }
 
 Parameter * MappingFilter::setupParameterInternal(Parameter * source)

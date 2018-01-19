@@ -26,7 +26,7 @@ public:
 
 
 	static SimpleSmoothFilter * create(var params) { return new SimpleSmoothFilter(params); }
-	String getTypeString() const override { return "Simple Smooth"; }
+	String getTypeString() const override { return "Smooth"; }
 
 };
 
