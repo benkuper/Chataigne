@@ -42,6 +42,8 @@ public:
 
 	void addTriggerAt(float time,float flagYPos);
 	void reorderItems() override;
+	
+	TimeTrigger * addItemFromClipboard() override;
 
 	Array<TimeTrigger *> getTriggersInTimespan(float startTime, float endTime, bool includeAlreadyTriggered = false);
 

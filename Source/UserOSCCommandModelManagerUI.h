@@ -27,7 +27,8 @@ public:
 
 class UserOSCCommandModelManagerWindow : 
 	public ShapeShifterContentComponent,
-	public InspectableSelectionManager::Listener
+	public InspectableSelectionManager::Listener,
+	public Inspectable::InspectableListener
 	
 {
 public:
@@ -43,7 +44,7 @@ public:
 	void paint(Graphics &g) override;
 
 	void inspectablesSelectionChanged() override;
-	
+	void inspectableDestroyed(Inspectable *) override;
 
 	static UserOSCCommandModelManagerWindow * create(const String &contentName) { return new UserOSCCommandModelManagerWindow(contentName); }
 

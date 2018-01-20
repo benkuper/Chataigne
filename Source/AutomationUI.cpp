@@ -62,6 +62,8 @@ void AutomationUI::setViewRange(float start, float end)
 
 void AutomationUI::updateROI()
 {
+	MessageManagerLock mmLock;
+
 	if (itemsUI.size() == 0) return;
 
 	int len = itemsUI.size()-1;
@@ -115,23 +117,27 @@ void AutomationUI::paint(Graphics & g)
 	{
 		if (manager->recorder->isRecording->boolValue())
 		{
-			g.setColour(Colours::red.withAlpha(.3f));
-			g.fillRect(getLocalBounds().withLeft(getXForPos(manager->recorder->timeOffset)).withRight(getXForPos(currentPosition)));
-
 			int numRKeys = manager->recorder->keys.size();
-			if (numRKeys >= 2)
+			DBG("Recording, num Keys " << numRKeys);
+			if (numRKeys > 0)
 			{
-				Path p;
-				Point<float> k = manager->recorder->keys[0];
-				p.startNewSubPath(getXForPos(k.x), getYForValue(k.x));
-				for (int i = 1; i < numRKeys; i++)
+				g.setColour(Colours::red.withAlpha(.3f));
+				g.fillRect(getLocalBounds().withLeft(getXForPos(manager->recorder->keys[0].x)).withRight(getXForPos(currentPosition)));
+
+				if (numRKeys >= 2)
 				{
-					k = manager->recorder->keys[i];
-					p.lineTo(getXForPos(k.x), getYForValue(k.y));
+					Path p;
+					Point<float> k = manager->recorder->keys[0];
+					p.startNewSubPath(getXForPos(k.x), getYForValue(k.x));
+					for (int i = 1; i < numRKeys; i++)
+					{
+						k = manager->recorder->keys[i];
+						p.lineTo(getXForPos(k.x), getYForValue(k.y));
+					}
+					//p.closeSubPath();
+					g.setColour(Colours::orangered);
+					g.strokePath(p, PathStrokeType(2));
 				}
-				//p.closeSubPath();
-				g.setColour(Colours::orangered);
-				g.strokePath(p, PathStrokeType(2));
 			}
 		}
 	}
@@ -142,6 +148,9 @@ void AutomationUI::paint(Graphics & g)
 
 void AutomationUI::resized()
 {
+
+	MessageManagerLock mm;
+
 	if (getParentComponent() == nullptr) return;
 	if (getWidth() == 0 || getHeight() == 0) return;
 	if (itemsUI.size() == 0) return;
@@ -157,6 +166,7 @@ void AutomationUI::resized()
 
 void AutomationUI::placeKeyUI(AutomationKeyUI * kui, bool placePrevKUI) 
 {
+
 	int index = itemsUI.indexOf(kui);
 	if (kui == nullptr) return;
 

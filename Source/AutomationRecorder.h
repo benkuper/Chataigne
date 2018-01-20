@@ -14,7 +14,8 @@
 
 
 class AutomationRecorder :
-	public EnablingControllableContainer
+	public EnablingControllableContainer,
+	public Inspectable::InspectableListener
 {
 public:
 	AutomationRecorder();
@@ -29,23 +30,21 @@ public:
 	BoolParameter * isRecording;
 
 	Array<Point<float>> keys;
-	float timeAtRecord;
-	float timeOffset;
 
 	void setCurrentInput(Parameter * input);
 
 	void clearKeys();
-	void addKey(float value);
+	void addKeyAt(float time);
 
-	void startRecording(float timeOffset = 0);
+	void startRecording();
 	void cancelRecording();
 	Array<Point<float>> stopRecordingAndGetKeys();
 
 	bool shouldRecord();
-	
 
 	void onContainerParameterChanged(Parameter * p) override;
-	void onExternalParameterChanged(Parameter * p) override;
+	
+	void inspectableDestroyed(Inspectable * i) override;
 
 private:
 	Array<Point<float>> getSimplifiedKeys(Array<Point<float>> arr, float epsilon);

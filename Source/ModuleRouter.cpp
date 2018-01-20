@@ -35,6 +35,7 @@ void ModuleRouter::setSourceModule(Module * m)
 	{
 		sourceModule->valuesCC.removeAsyncContainerListener(this);
 		sourceModule->removeInspectableListener(this);
+		sourceModule->removeControllableContainerListener(this);
 		sourceValues.clear();
 	}
 	
@@ -44,6 +45,7 @@ void ModuleRouter::setSourceModule(Module * m)
 	{
 		sourceModule->valuesCC.addAsyncContainerListener(this);
 		sourceModule->addInspectableListener(this);
+		sourceModule->addControllableContainerListener(this);
 
 		Array<WeakReference<Controllable>> values = sourceModule->valuesCC.getAllControllables();
 		int index = 0;
@@ -113,7 +115,7 @@ void ModuleRouter::newMessage(const ContainerAsyncEvent & e)
 			sourceValues.addItem(mrv);
 			mrv->setSourceAndOutModule(sourceModule, destModule);
 		}
-	} else if (e.type == ContainerAsyncEvent::ControllableContainerRemoved)
+	} else if (e.type == ContainerAsyncEvent::ControllableRemoved)
 	{
 		if (e.targetControllable->parentContainer->parentContainer == sourceModule)
 		{
@@ -150,3 +152,4 @@ void ModuleRouter::inspectableDestroyed(Inspectable * i)
 	if (i == sourceModule) setSourceModule(nullptr);
 	else if (i == destModule) setDestModule(nullptr);
 }
+

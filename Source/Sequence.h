@@ -86,7 +86,8 @@ public:
 	public:
 		virtual ~SequenceListener() {}
 		virtual void sequencePlayStateChanged(Sequence *) {}
-		virtual void sequenceCurrentTimeChanged(Sequence * , float /*prevTime*/, bool /*evaluateSkippedData*/) {}
+		virtual void sequenceCurrentTimeChanged(Sequence *, float /*prevTime*/, bool /*evaluateSkippedData*/) {}
+		virtual void sequenceLooped(Sequence *) {}
 		virtual void sequenceTotalTimeChanged(Sequence *) {}
 		virtual void sequenceMasterAudioModuleChanged(Sequence *) {}
 	};

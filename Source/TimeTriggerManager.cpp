@@ -41,6 +41,14 @@ void TimeTriggerManager::reorderItems()
 	BaseManager::reorderItems();
 }
 
+TimeTrigger * TimeTriggerManager::addItemFromClipboard()
+{
+	TimeTrigger * t = BaseManager::addItemFromClipboard();
+	if (t == nullptr) return nullptr;
+	t->time->setValue(sequence->currentTime->floatValue());
+	return t;
+}
+
 Array<TimeTrigger*> TimeTriggerManager::getTriggersInTimespan(float startTime, float endTime, bool includeAlreadyTriggered)
 {
 	Array<TimeTrigger*> result;

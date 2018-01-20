@@ -232,7 +232,11 @@ void Sequence::hiResTimerCallback()
 
 	if (currentTime->floatValue() >= (float)currentTime->maximumValue)
 	{
-		if (loopParam->boolValue()) setCurrentTime(0);
+		if (loopParam->boolValue())
+		{
+			sequenceListeners.call(&SequenceListener::sequenceLooped, this);
+			setCurrentTime(0);
+		}
 		else finishTrigger->trigger();
 	}
 }

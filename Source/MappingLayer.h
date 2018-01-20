@@ -40,6 +40,8 @@ public:
 
 	void updateCurvesValues();
 
+	void stopRecorderAndAddKeys();
+
 	String getHelpID() override;
 
 	var getJSONData() override;
@@ -58,6 +60,7 @@ public:
 	virtual void sequenceTotalTimeChanged(Sequence *) override;
 	virtual void sequenceCurrentTimeChanged(Sequence *, float prevTime , bool evaluateSkippedData) override;
 	virtual void sequencePlayStateChanged(Sequence *) override;
+	virtual void sequenceLooped(Sequence *) override;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MappingLayer)
 };

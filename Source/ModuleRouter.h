@@ -45,6 +45,7 @@ public:
 
 	void inspectableDestroyed(Inspectable * m) override;
 
+
 	class RouterListener
 	{
 	public:

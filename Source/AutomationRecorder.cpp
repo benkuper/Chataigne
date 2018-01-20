@@ -12,9 +12,7 @@
 #include "ModuleManager.h"
 
 AutomationRecorder::AutomationRecorder() :
-	EnablingControllableContainer("Recorder"),
-	timeAtRecord(0),
-	timeOffset(0)
+	EnablingControllableContainer("Recorder")
 {
 	input = addTargetParameter("Input Value", "Input value used for recording");
 	input->showTriggers = false;
@@ -40,14 +38,16 @@ void AutomationRecorder::setCurrentInput(Parameter * newInput)
 {
 	if (!currentInput.wasObjectDeleted() && currentInput != nullptr)
 	{
-		currentInput->removeParameterListener(this);
+		//currentInput->removeParameterListener(this);
+		currentInput->removeInspectableListener(this);
 	}
 
 	currentInput = newInput;
 
 	if (!currentInput.wasObjectDeleted() && currentInput != nullptr)
 	{
-		currentInput->addParameterListener(this);
+		//currentInput->addParameterListener(this);
+		currentInput->addInspectableListener(this);
 		arm->setEnabled(input->target != nullptr);
 	}
 }
@@ -57,14 +57,12 @@ void AutomationRecorder::clearKeys()
 	keys.clear();
 }
 
-void AutomationRecorder::addKey(float value)
+void AutomationRecorder::addKeyAt(float time)
 {
-	float t = (Time::getMillisecondCounter() / 1000.0f - timeAtRecord) + timeOffset;
-
-	keys.add(Point<float>(t, value));
+	if(isRecording->boolValue() && currentInput != nullptr) keys.add(Point<float>(time,currentInput->getNormalizedValue()));
 }
 
-void AutomationRecorder::startRecording(float _timeOffset)
+void AutomationRecorder::startRecording()
 {
 	if (currentInput == nullptr)
 	{
@@ -77,10 +75,7 @@ void AutomationRecorder::startRecording(float _timeOffset)
 		DBG("Already recording, cancel before start again");
 		cancelRecording();
 	}
-	DBG("Start recording here");
-
-	timeAtRecord = Time::getMillisecondCounter() / 1000.0f;
-	timeOffset = _timeOffset;
+	
 
 	isRecording->setValue(true);
 }
@@ -95,6 +90,7 @@ Array<Point<float>> AutomationRecorder::stopRecordingAndGetKeys()
 {
 	Array<Point<float>> simplifiedKeys = getSimplifiedKeys(keys,simplificationFactor->floatValue()/10); //fine tune with simplification factor
 	isRecording->setValue(false);
+	arm->setValue(false);
 
 	clearKeys();
 	return simplifiedKeys;
@@ -110,14 +106,10 @@ void AutomationRecorder::onContainerParameterChanged(Parameter * p)
 	if (p == input) setCurrentInput(dynamic_cast<Parameter *>(input->target.get()));
 }
 
-void AutomationRecorder::onExternalParameterChanged(Parameter * p)
+void AutomationRecorder::inspectableDestroyed(Inspectable * i)
 {
-	if (p == currentInput)
-	{
-		if (isRecording->boolValue()) addKey(currentInput->getNormalizedValue());
-	}
+	if (!currentInput.wasObjectDeleted() && i == currentInput) setCurrentInput(nullptr);
 }
-
 
 Array<Point<float>> AutomationRecorder::getSimplifiedKeys(Array<Point<float>> arr, float epsilon)
 {

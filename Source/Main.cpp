@@ -24,7 +24,7 @@ void ChataigneApplication::initialise(const String & commandLine)
 	GlobalSettings::getInstance()->loadJSONData(gs);
 
 	engine = new ChataigneEngine(appProperties, getAppVersion());
-	engine->addEngineListener(this);
+	engine->addAsyncEngineListener(this);
 
 	GlobalSettings::getInstance()->selectionManager = InspectableSelectionManager::mainSelectionManager;
 
@@ -42,7 +42,7 @@ void ChataigneApplication::initialise(const String & commandLine)
 	
 	AppUpdater::getInstance()->checkForBetas = GlobalSettings::getInstance()->checkBetaUpdates->boolValue();
 	if (GlobalSettings::getInstance()->checkUpdatesOnStartup->boolValue()) AppUpdater::getInstance()->checkForUpdates();
-	if (GlobalSettings::getInstance()->updateHelpOnStartup->boolValue()) HelpBox::getInstance()->loadHelp(URL("http://benjamin.kuperberg.fr/chataigne/help/help.json"));
+	if (GlobalSettings::getInstance()->updateHelpOnStartup->boolValue()) HelpBox::getInstance()->loadHelp(URL("http://benjamin.kuperberg.fr/chataigne/community/help.json"));
 	else HelpBox::getInstance()->loadLocalHelp();
 
 	//ANALYTICS
@@ -114,30 +114,27 @@ inline void ChataigneApplication::anotherInstanceStarted(const String & commandL
 	engine->parseCommandline(commandLine);
 }
 
-void ChataigneApplication::endLoadFile()
-{
-	updateAppTitle();
-}
 
-void ChataigneApplication::fileSaved()
-{
-	updateAppTitle();	
-}
 
-void ChataigneApplication::engineCleared()
+void ChataigneApplication::newMessage(const Engine::EngineEvent & e)
 {
-	updateAppTitle();
-}
-
-void ChataigneApplication::fileChanged()
-{
-	updateAppTitle();
+	switch (e.type)
+	{
+	case Engine::EngineEvent::END_LOAD_FILE:
+	case Engine::EngineEvent::FILE_SAVED:
+	case Engine::EngineEvent::ENGINE_CLEARED:
+	case Engine::EngineEvent::FILE_CHANGED:
+		updateAppTitle();
+		break;
+	default:
+		//
+		break;
+	}
 }
 
 void ChataigneApplication::updateAppTitle()
 {
 	mainWindow->setName(getApplicationName() + " " + getApplicationVersion() + " - " + Engine::mainEngine->getDocumentTitle()+(Engine::mainEngine->hasChangedSinceSaved()?" *":"")); 
-
 }
 
 inline ChataigneApplication::MainWindow::MainWindow(String name) : DocumentWindow(name,

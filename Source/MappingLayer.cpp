@@ -143,6 +143,19 @@ void MappingLayer::updateCurvesValues()
 
 }
 
+void MappingLayer::stopRecorderAndAddKeys()
+{
+	MessageManagerLock mmLock;
+
+	if (automations.size() == 0) return;
+
+	Array<Point<float>> keys = automations[0]->recorder->stopRecordingAndGetKeys();
+	if (keys.size() >= 2)
+	{
+		automations[0]->addItems(keys, true, true);
+	}
+}
+
 String MappingLayer::getHelpID()
 {
 	Mode mappingMode = mode->getValueDataAsEnum<Mode>(); 
@@ -263,13 +276,22 @@ void MappingLayer::sequenceCurrentTimeChanged(Sequence *, float prevTime, bool)
 
 	for(auto &a : automations) a->position->setValue(sequence->currentTime->floatValue());
 	
-	if (automations.size() > 0 && prevTime > sequence->currentTime->floatValue() && automations[0]->recorder->isRecording->boolValue())
+	if (sequence->isPlaying->boolValue())
 	{
-		if (sequence->isPlaying->boolValue()) automations[0]->recorder->startRecording(sequence->currentTime->floatValue());
-		else automations[0]->recorder->cancelRecording();
+		if (automations.size() > 0)
+		{
+			if (automations[0]->recorder->isRecording->boolValue())
+			{
+				if (prevTime < sequence->currentTime->floatValue())
+				{
+					automations[0]->recorder->addKeyAt(sequence->currentTime->floatValue());
+				} else
+				{
+					automations[0]->recorder->startRecording();
+				}
+			}
+		}
 	}
-
-	//updateCurvesValues();
 }
 
 void MappingLayer::sequencePlayStateChanged(Sequence *)
@@ -278,18 +300,22 @@ void MappingLayer::sequencePlayStateChanged(Sequence *)
 	{
 		if (sequence->isPlaying->boolValue())
 		{
-			if(recorder.shouldRecord()) automations[0]->recorder->startRecording(sequence->currentTime->floatValue());
+			if(recorder.shouldRecord()) automations[0]->recorder->startRecording();
 		}
 		else
 		{
 			if (automations[0]->recorder->isRecording->boolValue())
 			{
-				Array<Point<float>> keys = automations[0]->recorder->stopRecordingAndGetKeys();
-				if (keys.size() >= 2)
-				{
-					automations[0]->addItems(keys, true, true);
-				}
+				stopRecorderAndAddKeys();
 			}
 		}
+	}
+}
+
+void MappingLayer::sequenceLooped(Sequence *)
+{
+	if (automations.size() > 0 && automations[0]->recorder->isRecording->boolValue())
+	{
+		stopRecorderAndAddKeys();
 	}
 }
