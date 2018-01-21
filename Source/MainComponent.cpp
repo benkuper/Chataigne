@@ -16,6 +16,8 @@
 #include "StateManagerUI.h"
 #include "SequenceManagerUI.h"
 
+String getAppVersion();
+
 //==============================================================================
 MainContentComponent::MainContentComponent()
 {
@@ -39,8 +41,16 @@ MainContentComponent::MainContentComponent()
 	
 	ShapeShifterManager::getInstance()->setDefaultFileData(BinaryData::default_chalayout);
 	ShapeShifterManager::getInstance()->setLayoutInformations("chalayout", "Chataigne/layouts");
-    
-	ShapeShifterManager::getInstance()->loadLastSessionLayoutFile();
+
+	String lastVersion = getAppProperties().getCommonSettings(true)->getValue("lastVersion", "0");
+	if (lastVersion != getAppVersion())
+	{
+		DBG("New version, load default layout");
+		ShapeShifterManager::getInstance()->loadDefaultLayoutFile();
+	} else
+	{
+		ShapeShifterManager::getInstance()->loadLastSessionLayoutFile();
+	}
 	
 	(&getCommandManager())->registerAllCommandsForTarget(this);
 	(&getCommandManager())->setFirstCommandTarget(this);

@@ -874,6 +874,8 @@ typedef enum wiiuse_loglevel {
  *
  *****************************************/
 
+#define WIIUSE_STATIC
+
 #ifdef WIIUSE_WIN32
 	#ifdef WIIUSE_STATIC
 		#define WIIUSE_EXPORT_DECL
@@ -887,11 +889,13 @@ typedef enum wiiuse_loglevel {
 	#define WIIUSE_IMPORT_DECL
 #endif
 
+/*
 #ifdef WIIUSE_COMPILE_LIB
 	#define WIIUSE_EXPORT_DECL
 #else
 	#define WIIUSE_IMPORT_DECL
 #endif
+*/
 
 #ifdef __cplusplus
 extern "C" {

@@ -83,6 +83,7 @@ void ChataigneApplication::shutdown()
 	getAppProperties().getCommonSettings(true)->setValue("windowWidth", r.getWidth());
 	getAppProperties().getCommonSettings(true)->setValue("windowHeight", r.getHeight());
 	getAppProperties().getCommonSettings(true)->setValue("fullscreen", mainWindow->isFullScreen());
+	getAppProperties().getCommonSettings(true)->setValue("lastVersion", getApplicationVersion());
 	getAppProperties().getCommonSettings(true)->saveIfNeeded();
 
 	getAppProperties().getUserSettings()->setValue("globalSettings", JSON::toString(GlobalSettings::getInstance()->getJSONData()));
