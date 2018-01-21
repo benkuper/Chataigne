@@ -38,9 +38,11 @@ void ChataigneApplication::initialise(const String & commandLine)
 
 	updateAppTitle();
 
-	AppUpdater::getInstance()->setURLs(URL("http://benjamin.kuperberg.fr/chataigne/releases/update.json"), URL("http://benjamin.kuperberg.fr/chataigne/#download"));
+	AppUpdater::getInstance()->setURLs(URL("http://benjamin.kuperberg.fr/chataigne/releases/update.json"), "http://benjamin.kuperberg.fr/chataigne/user/data/","Chataigne");
 	
 	AppUpdater::getInstance()->checkForBetas = GlobalSettings::getInstance()->checkBetaUpdates->boolValue();
+	AppUpdater::getInstance()->addAsyncUpdateListener(this);
+
 	if (GlobalSettings::getInstance()->checkUpdatesOnStartup->boolValue()) AppUpdater::getInstance()->checkForUpdates();
 	if (GlobalSettings::getInstance()->updateHelpOnStartup->boolValue()) HelpBox::getInstance()->loadHelp(URL("http://benjamin.kuperberg.fr/chataigne/community/help.json"));
 	else HelpBox::getInstance()->loadLocalHelp();
@@ -132,6 +134,23 @@ void ChataigneApplication::newMessage(const Engine::EngineEvent & e)
 	}
 }
 
+void ChataigneApplication::newMessage(const AppUpdater::UpdateEvent & e)
+{
+	switch (e.type)
+	{
+	case AppUpdater::UpdateEvent::UPDATE_FINISHED:
+	{
+		File appFile = File::getSpecialLocation(File::currentExecutableFile);
+		File appDir = appFile.getParentDirectory();
+		File tempDir = appDir.getChildFile("temp");
+		tempDir.deleteRecursively();
+		appFile.startAsProcess();
+		JUCEApplication::getInstance()->systemRequestedQuit();
+	}
+		break;
+	}
+}
+
 void ChataigneApplication::updateAppTitle()
 {
 	mainWindow->setName(getApplicationName() + " " + getApplicationVersion() + " - " + Engine::mainEngine->getDocumentTitle()+(Engine::mainEngine->hasChangedSinceSaved()?" *":"")); 
@@ -141,8 +160,6 @@ inline ChataigneApplication::MainWindow::MainWindow(String name) : DocumentWindo
 	Colours::lightgrey,
 	DocumentWindow::allButtons)
 {
-
-
 	setResizable(true, true);
 	setUsingNativeTitleBar(true);
 	mainComponent = new MainContentComponent();
@@ -166,7 +183,7 @@ inline ChataigneApplication::MainWindow::MainWindow(String name) : DocumentWindo
 	setVisible(true);
 
     
-#if JUCE_OPENGL && JUCE_WINDOWS
+#if JUCE_OPENGL
 	openGLContext.setComponentPaintingEnabled(true);
 	openGLContext.attachTo(*this);
 #endif
@@ -176,10 +193,7 @@ inline ChataigneApplication::MainWindow::MainWindow(String name) : DocumentWindo
 
 void ChataigneApplication::MainWindow::closeButtonPressed() 
 {
-
-	
-
-#if JUCE_OPENGL && JUCE_WINDOWS
+#if JUCE_OPENGL
 	openGLContext.detach();
 #endif
 

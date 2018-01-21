@@ -35,7 +35,8 @@ It contains the basic startup code for a Juce application.
 
 //==============================================================================
 class ChataigneApplication : public JUCEApplication,
-	public Engine::AsyncListener
+	public Engine::AsyncListener,
+	public AppUpdater::AsyncListener
 {
 public:
 	//==============================================================================
@@ -64,6 +65,8 @@ public:
 	void anotherInstanceStarted(const String& commandLine) override;
 
 	void newMessage(const Engine::EngineEvent &e) override;
+	void newMessage(const AppUpdater::UpdateEvent &e) override;
+
 
 	void updateAppTitle();
 
