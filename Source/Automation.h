@@ -61,7 +61,7 @@ public:
 	static AutomationKeyComparator comparator;
 	
 	AutomationKey * createItem() override;
-	void addItems(Array<Point<float>> keys, bool removeExistingOverlappingKeys = true, bool addToUndo = true);
+	void addItems(Array<Point<float>> keys, bool removeExistingOverlappingKeys = true, bool addToUndo = true, bool autoSmoothCurve = false);
 	void addItem(const float position, const float value, bool addToUndo = true);
 	void reorderItems() override;
 

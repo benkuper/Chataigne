@@ -152,7 +152,7 @@ AutomationKey * Automation::createItem()
 	return k;
 }
 
-void Automation::addItems(Array<Point<float>> keys, bool removeExistingOverlappingKeys, bool addToUndo)
+void Automation::addItems(Array<Point<float>> keys, bool removeExistingOverlappingKeys, bool addToUndo, bool autoSmoothCurve)
 {
 	Array<UndoableAction *> actions;
 	if(removeExistingOverlappingKeys) actions.addArray(getRemoveKeysBetweenAction(keys[0].x, keys[keys.size() - 1].x));
@@ -164,6 +164,7 @@ void Automation::addItems(Array<Point<float>> keys, bool removeExistingOverlappi
 		AutomationKey * ak = createItem();
 		ak->position->setValue(k.x);
 		ak->value->setValue(k.y);
+		if (autoSmoothCurve) ak->setEasing(Easing::BEZIER);
 		newKeys.add(ak);
 	}
 	 

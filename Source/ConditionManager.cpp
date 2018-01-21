@@ -41,6 +41,7 @@ ConditionManager::ConditionManager(bool _operatorOnSide) :
 
 	validationTime = addFloatParameter("Validation Time", "If greater than 0, the conditions will be validated only if they remain valid for this amount of time", 0, 0, 10);
 	validationTime->hideInEditor = true;
+	validationTime->defaultUI = FloatParameter::TIME;
 
 	validationProgress = addFloatParameter("Progress", "Validation time progress", 0, 0, validationTime->floatValue());
 	validationProgress->isControllableFeedbackOnly = true;

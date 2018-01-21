@@ -52,7 +52,7 @@ void ModuleRouter::setSourceModule(Module * m)
 		for (auto &c : values)
 		{
 			ModuleRouterValue * mrv = new ModuleRouterValue(c, index++);
-			sourceValues.addItem(mrv);
+			sourceValues.addItem(mrv, var(), false);
 			mrv->setSourceAndOutModule(sourceModule,destModule);
 		}
 	}
@@ -112,7 +112,7 @@ void ModuleRouter::newMessage(const ContainerAsyncEvent & e)
 		if (e.targetControllable->parentContainer->parentContainer == sourceModule)
 		{
 			ModuleRouterValue * mrv = new ModuleRouterValue(e.targetControllable, sourceValues.items.size());
-			sourceValues.addItem(mrv);
+			sourceValues.addItem(mrv, var(), false);
 			mrv->setSourceAndOutModule(sourceModule, destModule);
 		}
 	} else if (e.type == ContainerAsyncEvent::ControllableRemoved)
@@ -121,7 +121,7 @@ void ModuleRouter::newMessage(const ContainerAsyncEvent & e)
 		{
 			ModuleRouterValue * v = getRouterValueForControllable(e.targetControllable);
 			if (v == nullptr) return;
-			sourceValues.removeItem(v);
+			sourceValues.removeItem(v, false);
 		}
 	}
 }
