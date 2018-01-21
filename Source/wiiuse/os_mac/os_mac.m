@@ -238,7 +238,7 @@
 		}
 	}
 	
-	return (error == kIOReturnSuccess) ? length : 0;
+	return (error == kIOReturnSuccess) ? (int)length : 0;
 }
 
 #pragma mark IOBluetoothL2CAPChannelDelegate
@@ -333,7 +333,7 @@
 	// copy to struct
 	memcpy(buffer, bytes, length);
 	
-	return length;
+	return (int)length;
 }
 
 @end

@@ -39,6 +39,7 @@ MainContentComponent::MainContentComponent()
 	
 	ShapeShifterManager::getInstance()->setDefaultFileData(BinaryData::default_chalayout);
 	ShapeShifterManager::getInstance()->setLayoutInformations("chalayout", "Chataigne/layouts");
+    
 	ShapeShifterManager::getInstance()->loadLastSessionLayoutFile();
 	
 	(&getCommandManager())->registerAllCommandsForTarget(this);

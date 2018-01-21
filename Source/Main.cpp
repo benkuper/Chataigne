@@ -1,5 +1,10 @@
 #include "Main.h"
 
+#if JUCE_MAC //for chmod
+#include <sys/types.h>
+#include <sys/stat.h>
+#endif
+
 //==============================================================================
 
 ChataigneApplication::ChataigneApplication() :
@@ -138,16 +143,25 @@ void ChataigneApplication::newMessage(const AppUpdater::UpdateEvent & e)
 {
 	switch (e.type)
 	{
+        case AppUpdater::UpdateEvent::DOWNLOAD_STARTED:
+            ShapeShifterManager::getInstance()->showContent("Logger");
+            break;
+            
 	case AppUpdater::UpdateEvent::UPDATE_FINISHED:
 	{
-		File appFile = File::getSpecialLocation(File::currentExecutableFile);
+		File appFile = File::getSpecialLocation(File::currentApplicationFile);
 		File appDir = appFile.getParentDirectory();
 		File tempDir = appDir.getChildFile("temp");
 		tempDir.deleteRecursively();
+#if JUCE_MAC
+        chmod (File::getSpecialLocation(File::currentExecutableFile).getFullPathName().toUTF8(), S_IRWXO | S_IRWXU | S_IRWXG);
+#endif
 		appFile.startAsProcess();
 		JUCEApplication::getInstance()->systemRequestedQuit();
 	}
 		break;
+        default:
+            break;
 	}
 }
 

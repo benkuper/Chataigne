@@ -56,7 +56,7 @@
 
 
 static void event_data_read(struct wiimote_t* wm, byte* msg);
-static void event_data_write(struct wiimote_t *wm, byte *msg);
+//static inline void event_data_write(struct wiimote_t *wm, byte *msg);
 static void event_status(struct wiimote_t* wm, byte* msg);
 static void handle_expansion(struct wiimote_t* wm, byte* msg);
 
@@ -437,21 +437,21 @@ static void event_data_read(struct wiimote_t* wm, byte* msg) {
 	}
 }
 
-
+/*
 static void event_data_write(struct wiimote_t *wm, byte *msg) {
 
 	struct data_req_t* req = wm->data_req;
 
 	wiiuse_pressed_buttons(wm, msg);
 
-	/* if we don't have a request out then we didn't ask for this packet */
+    // if we don't have a request out then we didn't ask for this packet
 	if (!req) {
 		WIIUSE_WARNING("Transmitting data packet when no request was made.");
 		return;
 	}
 	if (!(req->state == REQ_SENT)) {
 		WIIUSE_WARNING("Transmission is not necessary");
-		/* delete this request */
+		// delete this request
 		wm->data_req = req->next;
 		free(req);
 		return;
@@ -461,27 +461,28 @@ static void event_data_write(struct wiimote_t *wm, byte *msg) {
 	req->state = REQ_DONE;
 
 	if (req->cb) {
-		/* this was a callback, so invoke it now */
+		// this was a callback, so invoke it now
 		req->cb(wm, NULL, 0);
-		/* delete this request */
+		// delete this request
 		wm->data_req = req->next;
 		free(req);
 	} else {
-		/*
-		 *  This should generate an event.
-		 *  We need to leave the event in the array so the client
-		 *  can access it still.  We'll flag is as being 'REQ_DONE'
-		 *  and give the client one cycle to use it.  Next event
-		 *  we will remove it from the list.
-		 */
+ 
+		 //  This should generate an event.
+		 //  We need to leave the event in the array so the client
+         // can access it still.  We'll flag is as being 'REQ_DONE'
+		 //  and give the client one cycle to use it.  Next event
+         //  we will remove it from the list.
+ 
 		wm->event = WIIUSE_WRITE_DATA;
 
 	}
-	/* if another request exists send it to the wiimote */
+	// if another request exists send it to the wiimote
 	if (wm->data_req)   {
 		wiiuse_send_next_pending_write_request(wm);
 	}
 }
+ */
 
 /**
  *	@brief Read the controller status.

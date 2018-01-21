@@ -662,7 +662,7 @@ void wiiuse_send_next_pending_write_request(struct wiimote_t* wm) {
 	if (!req) {
 		return;
 	}
-	if (!req->data || !req->len) {
+	if (!req->len) {
 		return;
 	}
 	if (req->state != REQ_READY) {

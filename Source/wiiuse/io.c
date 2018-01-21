@@ -135,7 +135,7 @@ void wiiuse_disconnect(struct wiimote_t* wm) {
 *    Returns 1 on success, -1 on failure.
 *
 */
-unsigned long wiiuse_os_ticks();
+unsigned long wiiuse_os_ticks(void);
 int wiiuse_os_read(struct wiimote_t *wm, byte *buffer, int bufferLength);
 
 int wiiuse_wait_report(struct wiimote_t *wm, int report, byte *buffer, int bufferLength, unsigned long timeout_ms) {

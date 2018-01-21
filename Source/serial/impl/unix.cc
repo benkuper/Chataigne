@@ -538,7 +538,7 @@ Serial::SerialImpl::read (uint8_t *buf, size_t size)
   // Calculate total timeout in milliseconds t_c + (t_m * N)
   long total_timeout_ms = timeout_.read_timeout_constant;
   total_timeout_ms += timeout_.read_timeout_multiplier * static_cast<long> (size);
-  MillisecondTimer total_timeout(total_timeout_ms);
+  MillisecondTimer total_timeout((unsigned int)total_timeout_ms);
 
   // Pre-fill buffer with available bytes
   {
@@ -615,7 +615,7 @@ Serial::SerialImpl::write (const uint8_t *data, size_t length)
   // Calculate total timeout in milliseconds t_c + (t_m * N)
   long total_timeout_ms = timeout_.write_timeout_constant;
   total_timeout_ms += timeout_.write_timeout_multiplier * static_cast<long> (length);
-  MillisecondTimer total_timeout(total_timeout_ms);
+  MillisecondTimer total_timeout((unsigned int)total_timeout_ms);
 
   while (bytes_written < length) {
     int64_t timeout_remaining_ms = total_timeout.remaining();
@@ -623,7 +623,7 @@ Serial::SerialImpl::write (const uint8_t *data, size_t length)
       // Timed out
       break;
     }
-    timespec timeout(timespec_from_ms(timeout_remaining_ms));
+    timespec timeout(timespec_from_ms((unsigned int)timeout_remaining_ms));
 
     FD_ZERO (&writefds);
     FD_SET (fd_, &writefds);

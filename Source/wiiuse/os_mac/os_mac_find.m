@@ -180,7 +180,7 @@
 			IOBluetoothDeviceInquiry* inquiry = [self start];
 			if(inquiry) {
 				[self wait];
-				result = [self collectResultsOf: inquiry];
+				result = (int)[self collectResultsOf: inquiry];
 				WIIUSE_INFO("Found %i Wiimote device(s).", result);
 			}
 		}

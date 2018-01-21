@@ -154,7 +154,7 @@ const std::pair<int, float> AutomationRecorder::findMaximumDistance(Array<Point<
 					   //distance calculation
 	Line<float> line(firstpoint, lastpoint);
 	
-	Point<float> p = lastpoint - firstpoint;
+	//Point<float> p = lastpoint - firstpoint;
 	Point<float> lp;
 	for (int i = 1; i < numKeys - 1; i++) { //traverse through second point to second last point
 		float Dist = line.getDistanceFromPoint(arr[i],lp);

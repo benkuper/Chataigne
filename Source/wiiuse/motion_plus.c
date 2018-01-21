@@ -163,17 +163,21 @@ void wiiuse_motion_plus_handshake(struct wiimote_t *wm, byte *data, unsigned sho
 	}
 }
 
+/*
 static void wiiuse_set_motion_plus_clear2(struct wiimote_t *wm, byte *data, unsigned short len) {
 	WIIMOTE_DISABLE_STATE(wm, WIIMOTE_STATE_EXP_FAILED);
 	WIIMOTE_DISABLE_STATE(wm, WIIMOTE_STATE_EXP_HANDSHAKE);
 	wiiuse_set_ir_mode(wm);
 	wiiuse_status(wm);
 }
+ */
 
-static void wiiuse_set_motion_plus_clear1(struct wiimote_t *wm, byte *data, unsigned short len) {
+/*
+static inline void wiiuse_set_motion_plus_clear1(struct wiimote_t *wm, byte *data, unsigned short len) {
 	byte val = 0x00;
 	wiiuse_write_data_cb(wm, WM_EXP_MEM_ENABLE1, &val, 1, wiiuse_set_motion_plus_clear2);
 }
+ */
 
 /**
  *      @brief Enable/disable Motion+ expansion
