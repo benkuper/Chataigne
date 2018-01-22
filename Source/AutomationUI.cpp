@@ -62,8 +62,6 @@ void AutomationUI::setViewRange(float start, float end)
 
 void AutomationUI::updateROI()
 {
-	MessageManagerLock mmLock;
-
 	if (itemsUI.size() == 0) return;
 
 	int len = itemsUI.size()-1;
@@ -118,7 +116,6 @@ void AutomationUI::paint(Graphics & g)
 		if (manager->recorder->isRecording->boolValue())
 		{
 			int numRKeys = manager->recorder->keys.size();
-			DBG("Recording, num Keys " << numRKeys);
 			if (numRKeys > 0)
 			{
 				g.setColour(Colours::red.withAlpha(.3f));
@@ -255,16 +252,16 @@ AutomationKeyUI * AutomationUI::getClosestKeyUIForPos(float pos, int start, int 
 	}
 }
 
-void AutomationUI::itemAdded(AutomationKey * k)
+void AutomationUI::itemAddedAsync(AutomationKey * k)
 {
-	BaseManagerUI::itemAdded(k);
+	BaseManagerUI::itemAddedAsync(k);
 	updateROI();
 	
 }
 
-void AutomationUI::itemsReordered()
+void AutomationUI::itemsReorderedAsync()
 {
-	BaseManagerUI::itemsReordered();
+	BaseManagerUI::itemsReorderedAsync();
 	updateROI();
 }
 
@@ -330,11 +327,8 @@ void AutomationUI::mouseDown(const MouseEvent & e)
 					int index1 = jmin(i1, i2) + 1;
 					int index2 = jmax(i1, i2) - 1;
 
-					DBG(i1 << ", " << i2 << ", " << index1 << ", " << index2);
-
 					for (int i = index1; i <= index2; i++)
 					{
-						DBG("Select item : " << i);
 						manager->items[i]->selectThis(true);
 					}
 				}

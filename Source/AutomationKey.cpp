@@ -14,7 +14,6 @@
 AutomationKey::AutomationKey() :
 	BaseItem("Key",false)
 {
-
 	hideEditorHeader = true;
 
 	position = addFloatParameter("Position", "Position of the key", 0, 0, 5);

@@ -130,7 +130,7 @@ void MappingLayer::updateCurvesValues()
 		break;
 
 	case MODE_1D:
-		curveValue->setValue(automations[0]->value->floatValue());
+		if(automations[0] != nullptr) curveValue->setValue(automations[0]->value->floatValue());
 		break;
 
 	case MODE_2D:
@@ -145,14 +145,12 @@ void MappingLayer::updateCurvesValues()
 
 void MappingLayer::stopRecorderAndAddKeys()
 {
-	MessageManagerLock mmLock;
-
 	if (automations.size() == 0) return;
 
 	Array<Point<float>> keys = automations[0]->recorder->stopRecordingAndGetKeys(); 
 	if (keys.size() >= 2)
 	{
-		automations[0]->addItems(keys, true, true,true);
+		automations[0]->addItems(keys, true, true, true);
 	}
 }
 

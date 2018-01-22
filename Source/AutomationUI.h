@@ -61,8 +61,8 @@ public:
 
 	AutomationKeyUI * getClosestKeyUIForPos(float pos, int start = - 1, int end = -1);
 
-	void itemAdded(AutomationKey *) override;
-	void itemsReordered() override;
+	void itemAddedAsync(AutomationKey *) override;
+	void itemsReorderedAsync() override;
 
 	void addItemUIInternal(AutomationKeyUI *) override;
 	void removeItemUIInternal(AutomationKeyUI *) override;

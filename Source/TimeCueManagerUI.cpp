@@ -46,7 +46,6 @@ void TimeCueManagerUI::updateContent()
 
 bool TimeCueManagerUI::hitTest(int x, int y)
 {
-	DBG("hit test ");
 	for (auto &i : itemsUI)
 	{
 		if (i->getBounds().contains(Point<int>(x,y)))

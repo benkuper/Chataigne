@@ -154,6 +154,7 @@ AutomationKey * Automation::createItem()
 
 void Automation::addItems(Array<Point<float>> keys, bool removeExistingOverlappingKeys, bool addToUndo, bool autoSmoothCurve)
 {
+	selectionManager->setEnabled(false);
 	Array<UndoableAction *> actions;
 	if(removeExistingOverlappingKeys) actions.addArray(getRemoveKeysBetweenAction(keys[0].x, keys[keys.size() - 1].x));
 	
@@ -173,6 +174,8 @@ void Automation::addItems(Array<Point<float>> keys, bool removeExistingOverlappi
 	UndoMaster::getInstance()->performActions("Add recorded values", actions);
 
 	reorderItems();
+
+	selectionManager->setEnabled(false);
 }
 
 void Automation::addItem(const float _position, const float _value, bool addToUndo)

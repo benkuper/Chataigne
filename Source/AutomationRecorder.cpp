@@ -22,6 +22,7 @@ AutomationRecorder::AutomationRecorder() :
 
 	arm = addBoolParameter("Arm", "If set, when a sequence will play, this will start recording. In any case, when a sequence is stopped or seeked, the recording stops as well", false);
 	arm->setEnabled(input->target != nullptr);
+	autoDisarm = addBoolParameter("Auto Disarm", "If set, the arm parameter will be automatically set to off when a record has been saved", false);
 
 	simplificationFactor = addFloatParameter("Simplification", "Level of simplification after recording", .5f, 0, 1);
 
@@ -90,9 +91,9 @@ Array<Point<float>> AutomationRecorder::stopRecordingAndGetKeys()
 {
 	Array<Point<float>> simplifiedKeys = getSimplifiedKeys(keys,simplificationFactor->floatValue()/10); //fine tune with simplification factor
 	isRecording->setValue(false);
-	arm->setValue(false);
 
 	clearKeys();
+	if (autoDisarm->boolValue()) arm->setValue(false);
 	return simplifiedKeys;
 }
 

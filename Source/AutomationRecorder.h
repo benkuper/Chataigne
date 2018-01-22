@@ -24,6 +24,7 @@ public:
 	TargetParameter * input;
 	FloatParameter * simplificationFactor;
 	BoolParameter * arm;
+	BoolParameter * autoDisarm;
 
 	WeakReference<Parameter> currentInput;
 
