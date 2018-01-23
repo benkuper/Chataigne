@@ -12,9 +12,10 @@
 
 
 AutomationKeyUI::AutomationKeyUI(AutomationKey * key) :
-	BaseItemMinimalUI(key)
+	BaseItemMinimalUI(key),
+    keyYPos1(-1),
+    keyYPos2(-1)
 {
-
 	addAndMakeVisible(&handle);
 	//removeMouseListener(this);
 
@@ -42,7 +43,7 @@ void AutomationKeyUI::setEasingUI(EasingUI * eui)
 		addAndMakeVisible(easingUI);
 		easingUI->toBack();
 		resized();
-		easingUI->setKeyPositions(keyYPos1, keyYPos2);
+		if(keyYPos1 > -1 && keyYPos2 > -1) easingUI->setKeyPositions(keyYPos1, keyYPos2);
 	}
 }
 

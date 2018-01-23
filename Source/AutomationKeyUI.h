@@ -20,6 +20,9 @@ class AutomationKeyUI :
 public:
 	AutomationKeyUI(AutomationKey *);
 	virtual ~AutomationKeyUI();
+    
+    int keyYPos1;
+    int keyYPos2;
 
 	ScopedPointer<EasingUI> easingUI;
 
@@ -41,10 +44,8 @@ public:
 		void paint(Graphics &g) override;
 	};
 
-	Handle handle;
-
-	int keyYPos1;
-	int keyYPos2;
+    Handle handle;
+    
 
 	void paint(Graphics &) override {}; //avoid default item painting
 
