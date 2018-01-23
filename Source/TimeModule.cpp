@@ -13,7 +13,7 @@
 TimeModule::TimeModule(const String & name) :
 	Module(name)
 {
-	setupIOConfiguration(false, false);
+	setupIOConfiguration(true, false);
 
 	year = valuesCC.addIntParameter("Year", "Current year", 2000, 2000, 5000);
 	monthName = valuesCC.addEnumParameter("Month name", "Name of the current month");
@@ -27,7 +27,10 @@ TimeModule::TimeModule(const String & name) :
 	hour = valuesCC.addIntParameter("Hour", "Current hour relative to the day (0 > 23)", 0, 0, 23);
 	minutes = valuesCC.addIntParameter("Minutes", "Current minute relative to the current hour (0 > 59)", 0, 0, 59);
 	seconds = valuesCC.addIntParameter("Seconds", "Current second relative to the current minute (0 > 59)", 0, 0, 59);
-	
+
+	dayTime = valuesCC.addFloatParameter("Full Day Time", "The current time in the day, second accurate.\nA convenient way to check a particular time in the day", 0, 0, 86400); //86400 seconds in a day
+	dayTime->defaultUI = FloatParameter::TIME;
+
 	moduleParams.hideInEditor = true;
 	for (auto &c : valuesCC.controllables) c->isControllableFeedbackOnly = true;
 
@@ -42,7 +45,9 @@ TimeModule::~TimeModule()
 
 void TimeModule::timerCallback()
 {
+	if (!enabled->boolValue()) return;
 	Time time = Time::getCurrentTime();
+	
 	year->setValue(time.getYear());
 	monthName->setValueWithData((Month)time.getMonth());
 	month->setValue(time.getMonth() + 1);
@@ -53,4 +58,8 @@ void TimeModule::timerCallback()
 	hour->setValue(time.getHours());
 	minutes->setValue(time.getMinutes());
 	seconds->setValue(time.getSeconds());
+	dayTime->setValue(time.getHours()*3600 + time.getMinutes()*60 + time.getSeconds());
+
+	inActivityTrigger->trigger();
+
 }

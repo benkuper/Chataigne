@@ -31,6 +31,7 @@ public:
 	IntParameter * hour;
 	IntParameter * minutes;
 	IntParameter * seconds;
+	FloatParameter * dayTime;
 
 	virtual String getDefaultTypeString() const override { return "Time"; }
 	static TimeModule * create() { return new TimeModule(); }

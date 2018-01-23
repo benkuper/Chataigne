@@ -29,7 +29,6 @@ public:
 	ConsequenceManager csm;
 
 	BoolParameter * isActive;
-	BoolParameter * isValid; //whether the action can process or not
 	Trigger * trigger;
 
 	virtual void setForceDisabled(bool value, bool force = false) override;

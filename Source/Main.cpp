@@ -35,12 +35,7 @@ void ChataigneApplication::initialise(const String & commandLine)
 
 	mainWindow = new MainWindow(getApplicationName());
 
-	engine->parseCommandline(commandLine);
-	if (!engine->getFile().existsAsFile()) {
-		engine->createNewGraph();
-		engine->setChangedFlag(false);
-	}
-
+	
 	updateAppTitle();
 
 	AppUpdater::getInstance()->setURLs(URL("http://benjamin.kuperberg.fr/chataigne/releases/update.json"), "http://benjamin.kuperberg.fr/chataigne/user/data/","Chataigne");
@@ -67,9 +62,21 @@ void ChataigneApplication::initialise(const String & commandLine)
 	SystemStats::setApplicationCrashHandler((SystemStats::CrashHandlerFunction)createMiniDump);
 #endif
 
+	engine->parseCommandline(commandLine);
 
-	if (GlobalSettings::getInstance()->openLastDocumentOnStartup->boolValue())  Engine::mainEngine->loadFrom(Engine::mainEngine->getLastDocumentOpened(), true);
-	else if(GlobalSettings::getInstance()->openSpecificFileOnStartup->boolValue() && GlobalSettings::getInstance()->fileToOpenOnStartup->stringValue().isNotEmpty())  Engine::mainEngine->loadFrom(File(GlobalSettings::getInstance()->fileToOpenOnStartup->stringValue()), true);
+	if (!engine->getFile().existsAsFile()) {
+		if (GlobalSettings::getInstance()->openLastDocumentOnStartup->boolValue())  Engine::mainEngine->loadFrom(Engine::mainEngine->getLastDocumentOpened(), true);
+		else if (GlobalSettings::getInstance()->openSpecificFileOnStartup->boolValue() && GlobalSettings::getInstance()->fileToOpenOnStartup->stringValue().isNotEmpty())  Engine::mainEngine->loadFrom(File(GlobalSettings::getInstance()->fileToOpenOnStartup->stringValue()), true);
+		else
+		{
+			engine->createNewGraph();
+			engine->setChangedFlag(false);
+		}
+	}
+
+
+	
+
 }
 
 

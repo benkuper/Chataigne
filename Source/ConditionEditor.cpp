@@ -15,6 +15,7 @@ ConditionEditor::ConditionEditor(Condition * _condition, bool isRoot) :
 	condition(_condition)
 {
 	condition->addAsyncConditionListener(this);
+	repaint();
 }
 
 ConditionEditor::~ConditionEditor()
@@ -27,6 +28,7 @@ ConditionEditor::~ConditionEditor()
 
 void ConditionEditor::paintOverChildren(Graphics & g)
 {
+	DBG("Paint over children : " << (int)condition->isValid->boolValue());
 	if (condition->isValid->boolValue())
 	{
 		g.setColour(condition->enabled->boolValue() ? GREEN_COLOR : LIGHTCONTOUR_COLOR);
@@ -44,6 +46,7 @@ void ConditionEditor::newMessage(const Condition::ConditionEvent &e)
 	switch (e.type)
 	{
 	case Condition::ConditionEvent::VALIDATION_CHANGED:
+		DBG("Validation changed");
 		repaint();
 		break;
 

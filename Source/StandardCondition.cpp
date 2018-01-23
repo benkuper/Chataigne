@@ -102,6 +102,5 @@ InspectableEditor * StandardCondition::getEditor(bool isRoot)
 void StandardCondition::comparatorValidationChanged(BaseComparator *)
 {
 	isValid->setValue(comparator->isValid);
-
 }
 

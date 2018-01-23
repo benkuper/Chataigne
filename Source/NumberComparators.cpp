@@ -15,6 +15,7 @@ FloatComparator::FloatComparator(Controllable * c) :
 	floatParam((FloatParameter *)c)
 {
 	floatRef = addFloatParameter("Reference", "Comparison Reference to check against source value", floatParam->defaultValue, floatParam->minimumValue, floatParam->maximumValue);
+	floatRef->defaultUI = floatParam->defaultUI;
 	reference = floatRef;
 
 	addCompareOption("=", equalsId);
@@ -24,8 +25,6 @@ FloatComparator::FloatComparator(Controllable * c) :
 	addCompareOption(">=", greaterOrEqualId);
 	addCompareOption("<=", lessOrEqualId);
 	addCompareOption("~", inRangeId);
-
-
 	
 }
 

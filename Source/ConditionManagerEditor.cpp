@@ -14,6 +14,7 @@ ConditionManagerEditor::ConditionManagerEditor(ConditionManager * _manager, bool
 	GenericManagerEditor<Condition>(_manager, isRoot),
 	conditionManager(_manager)
 {
+	contourColor = conditionManager->isValid->boolValue() ? GREEN_COLOR : BG_COLOR.brighter(.3f);
 }
 
 ConditionManagerEditor::~ConditionManagerEditor()

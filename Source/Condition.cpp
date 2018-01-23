@@ -10,6 +10,7 @@
 
 #include "Condition.h"
 #include  "ComparatorFactory.h"
+#include "ConditionEditor.h"
 #include "ModuleManager.h"
 
 Condition::Condition(const String &n, var /*params*/) :
@@ -52,4 +53,9 @@ void Condition::setForceDisabled(bool value, bool force)
 	if (forceDisabled == value && !force) return;
 	forceDisabled = value;
 	isValid->setEnabled(!forceDisabled);
+}
+
+InspectableEditor * Condition::getEditor(bool isRoot)
+{
+	return new ConditionEditor(this, isRoot);
 }
