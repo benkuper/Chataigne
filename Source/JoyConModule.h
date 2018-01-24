@@ -11,8 +11,9 @@
 #pragma once
 
 #include "Module.h"
+#if JUCE_WINDOWS
 #include "joytime-input-hidapi.hpp"
-
+#endif
 class JoyConModule :
 	public Module,
 	public Thread
@@ -56,8 +57,10 @@ public:
 	BoolParameter * home;
 	BoolParameter * plus;
 
+#if JUCE_WINDOWS
 	void updateController(Joytime::Controller * c);
-
+#endif
+    
 	static JoyConModule * create() { return new JoyConModule(); }
 	virtual String getDefaultTypeString() const override { return "JoyCon"; }
 
