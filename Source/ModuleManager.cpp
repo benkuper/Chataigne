@@ -79,7 +79,7 @@ Controllable * ModuleManager::showAllValuesAndGetControllable(bool showTriggers,
 			{
 				Controllable * c = vcc->controllables[kj];
 				if (c->type == Controllable::TRIGGER) { if (!showTriggers) continue; } else if (!showParameters) continue;
-				sMenu.addItem(curID, c->niceName);
+				cMenu.addItem(curID, c->niceName);
 				controllableMenuRefs.add(c);
 				curID++;
 			}
