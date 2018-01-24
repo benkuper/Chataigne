@@ -64,7 +64,8 @@ JoyConModule::~JoyConModule()
 	while (isThreadRunning());
 }
 
-#if JUCE_WINDOWS
+#if JUCE_WINDOWS
+
 void JoyConModule::updateController(Joytime::Controller * controller)
 {
 	controller->update();
