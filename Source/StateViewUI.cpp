@@ -29,7 +29,6 @@ BaseItemUI<State>(state, ResizeMode::ALL, true),
 
 	addAndMakeVisible(&bottomGrabber);
 
-	DBG("New viewUI " << (int)(item->miniMode->boolValue()));
 	setSize(200, 200);
 	updateMiniModeUI();
 	resized();

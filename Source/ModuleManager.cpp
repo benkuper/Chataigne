@@ -48,6 +48,9 @@ Module * ModuleManager::getModuleWithName(const String & moduleName)
 
 Controllable * ModuleManager::showAllValuesAndGetControllable(bool showTriggers, bool showParameters)
 {
+	Array<WeakReference<Controllable>> controllableMenuRefs;
+	int curID = 1;
+
 	PopupMenu menu;
 	int numItems = ModuleManager::getInstance()->items.size();
 	for (int i = 0; i < numItems; i++)
@@ -61,28 +64,42 @@ Controllable * ModuleManager::showAllValuesAndGetControllable(bool showTriggers,
             if (c->type == Controllable::TRIGGER) { if(!showTriggers) continue; }
 			else if (!showParameters) continue;
 
-			sMenu.addItem(i * 1000 + j + 1, c->niceName);
+			sMenu.addItem(curID, c->niceName);
+			controllableMenuRefs.add(c);
+			curID++;
 		}
+
+		int numContainers = m->valuesCC.controllableContainers.size();
+		for (int k = 0; k < numContainers; k++)
+		{
+			ControllableContainer * vcc = m->valuesCC.controllableContainers[k];
+			PopupMenu cMenu;
+			int numCValues = vcc->controllables.size();
+			for (int kj = 0; kj < numCValues; kj++)
+			{
+				Controllable * c = vcc->controllables[kj];
+				if (c->type == Controllable::TRIGGER) { if (!showTriggers) continue; } else if (!showParameters) continue;
+				sMenu.addItem(curID, c->niceName);
+				controllableMenuRefs.add(c);
+				curID++;
+			}
+			sMenu.addSubMenu(vcc->niceName, cMenu);
+		}
+
 		menu.addSubMenu(m->niceName, sMenu);
 	}
 
 	//TODO : move from here the handling of other values than modules
-	ControllableChooserPopupMenu engineMenu(Engine::mainEngine, showParameters,showTriggers, numItems * 1000);
+	ControllableChooserPopupMenu engineMenu(Engine::mainEngine, showParameters,showTriggers, numItems * 10000);
 	menu.addSubMenu("Generic", engineMenu);
 	int itemID = menu.show();
 
-
-	if (itemID <= 0) return nullptr;
-
-	int moduleIndex = (int)floor((itemID-1) / 1000);
-	int valueIndex = (itemID-1) % 1000;
-
-	if (moduleIndex >= numItems)
+	if (itemID >= 10000)
 	{
 		return engineMenu.getControllableForResult(itemID);
 	} else
 	{
-		return ModuleManager::getInstance()->items[moduleIndex]->valuesCC.controllables[valueIndex];
+		return controllableMenuRefs[itemID-1];
 	}
 
 }

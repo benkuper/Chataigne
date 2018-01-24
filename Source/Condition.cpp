@@ -18,9 +18,7 @@ Condition::Condition(const String &n, var /*params*/) :
     forceDisabled(false),
 	conditionAsyncNotifier(10)
 {
-	
 	isSelectable = false;
-
 	isValid = addBoolParameter("Is Valid", "Where the condition passed the test or not.", false);
 	isValid->isEditable = false;
 	isValid->isSavable = false;

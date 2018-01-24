@@ -28,7 +28,6 @@ ConditionEditor::~ConditionEditor()
 
 void ConditionEditor::paintOverChildren(Graphics & g)
 {
-	DBG("Paint over children : " << (int)condition->isValid->boolValue());
 	if (condition->isValid->boolValue())
 	{
 		g.setColour(condition->enabled->boolValue() ? GREEN_COLOR : LIGHTCONTOUR_COLOR);

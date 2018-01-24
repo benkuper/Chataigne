@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.2.9"
+<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.2.10"
               bundleIdentifier="benkuper.Chataigne" includeBinaryInAppConfig="1"
               jucerVersion="5.2.0" companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
               companyEmail="benjamin@kuperberg.fr" defines="" displaySplashScreen="1"
@@ -517,6 +517,11 @@
             <FILE id="yothfD" name="TCPModule.h" compile="0" resource="0" file="Source/TCPModule.h"/>
           </GROUP>
           <GROUP id="{3AAC0EE2-7222-71DA-41E1-DB4E88C812CE}" name="controller">
+            <GROUP id="{77473C69-C8FB-0A45-E419-1E45CF15A0E4}" name="joycon">
+              <FILE id="hUlItr" name="JoyConModule.cpp" compile="1" resource="0"
+                    file="Source/JoyConModule.cpp"/>
+              <FILE id="Y10DcP" name="JoyConModule.h" compile="0" resource="0" file="Source/JoyConModule.h"/>
+            </GROUP>
             <GROUP id="{35421CCB-191E-EB2F-8C3D-2EE58B569B35}" name="myo">
               <FILE id="R097Eg" name="MyoDevice.cpp" compile="1" resource="0" file="Source/MyoDevice.cpp"/>
               <FILE id="E7qycF" name="MyoDevice.h" compile="0" resource="0" file="Source/MyoDevice.h"/>
@@ -1116,19 +1121,20 @@
         <MODULEPATH id="juce_analytics" path="../../../../Softwares/JUCE/modules"/>
       </MODULEPATHS>
     </XCODE_MAC>
-    <VS2017 targetFolder="Builds/VisualStudio2017" externalLibraries="Setupapi.lib&#10;hid.lib&#10;Kinect20.lib"
+    <VS2017 targetFolder="Builds/VisualStudio2017" externalLibraries="Setupapi.lib&#10;hid.lib&#10;Kinect20.lib&#10;joytime-core.lib&#10;joytime-input-hidapi.lib"
             smallIcon="nVz6Li" bigIcon="nVz6Li" windowsTargetPlatformVersion="10.0.16299.0"
             vst3Folder="">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" winWarningLevel="4" generateManifest="1" winArchitecture="x64"
-                       isDebug="1" optimisation="1" targetName="ChataigneDebug" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;$(ASIOSDK)/common&#10;$(KINECTSDK20_DIR)inc&#10;"
-                       libraryPath="$(KINECTSDK20_DIR)Lib\x64" binaryPath="Binaries"
-                       debugInformationFormat="ProgramDatabase" enablePluginBinaryCopyStep="0"/>
+                       isDebug="1" optimisation="1" targetName="ChataigneDebug" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;$(ASIOSDK)/common&#10;$(KINECTSDK20_DIR)inc&#10;../../External/joycon/include"
+                       libraryPath="$(KINECTSDK20_DIR)Lib\x64&#10;../../External/joycon/lib"
+                       binaryPath="Binaries" debugInformationFormat="ProgramDatabase"
+                       enablePluginBinaryCopyStep="0" useRuntimeLibDLL="0"/>
         <CONFIGURATION name="Release" winWarningLevel="4" generateManifest="1" winArchitecture="x64"
-                       isDebug="0" optimisation="3" targetName="Chataigne" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;$(ASIOSDK)/common&#10;$(KINECTSDK20_DIR)inc&#10;"
-                       libraryPath="$(KINECTSDK20_DIR)Lib\x64" binaryPath="Binaries"
-                       debugInformationFormat="ProgramDatabase" enablePluginBinaryCopyStep="0"
-                       linkTimeOptimisation="1"/>
+                       isDebug="0" optimisation="3" targetName="Chataigne" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;$(ASIOSDK)/common&#10;$(KINECTSDK20_DIR)inc&#10;../../External/joycon/include"
+                       libraryPath="$(KINECTSDK20_DIR)Lib\x64&#10;../../External/joycon/lib"
+                       binaryPath="Binaries" debugInformationFormat="ProgramDatabase"
+                       enablePluginBinaryCopyStep="0" linkTimeOptimisation="1" useRuntimeLibDLL="0"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_video" path="D:/Softwares\JUCE\modules"/>

@@ -23,7 +23,7 @@ public:
 	virtual ~StandardConditionEditor();
 
 	StandardCondition * standardCondition;
-	ScopedPointer<TargetParameterUI> targetUI;
+	ScopedPointer<InspectableEditor> targetUI;
 	ScopedPointer<ControllableUI> sourceFeedbackUI;
 	ScopedPointer<BaseComparatorUI> comparatorUI;
 	

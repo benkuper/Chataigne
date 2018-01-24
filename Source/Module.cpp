@@ -195,5 +195,5 @@ String Module::getTargetLabelForValueControllable(Controllable * c)
 		cc = cc->parentContainer;
 	}
 
-	return c->niceName;
+	return c->getControlAddress();
 }

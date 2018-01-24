@@ -14,7 +14,7 @@ StandardConditionEditor::StandardConditionEditor(StandardCondition * _condition,
 	ConditionEditor(_condition, isRoot),
 	standardCondition(_condition)
 {
-	targetUI = standardCondition->sourceTarget->createTargetUI();
+	targetUI = standardCondition->sourceTarget->getEditor(false);
 	addChildComponent(targetUI);
 
 	targetUI->setVisible(!standardCondition->editorIsCollapsed);

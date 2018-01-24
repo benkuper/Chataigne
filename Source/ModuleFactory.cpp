@@ -35,6 +35,7 @@
 #include "TimeModule.h"
 #include "OSModule.h"
 #include "PJLinkModule.h"
+#include "JoyConModule.h"
 
 juce_ImplementSingleton(ModuleFactory)
 
@@ -56,6 +57,7 @@ ModuleFactory::ModuleFactory() {
 	moduleDefs.add(new ModuleDefinition("Hardware", "Launchpad", &LaunchpadModule::create));
 	moduleDefs.add(new ModuleDefinition("Hardware", "Sound Card", &AudioModule::create));
 	moduleDefs.add(new ModuleDefinition("Hardware", "Wiimote", &WiimoteModule::create));
+	moduleDefs.add(new ModuleDefinition("Hardware", "JoyCon", &JoyConModule::create));
 
 	/*
 	moduleDefs.add(new ModuleDefinition("Hardware", "HID", &HIDModule::create));

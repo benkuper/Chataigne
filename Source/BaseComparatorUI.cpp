@@ -26,7 +26,7 @@ BaseComparatorUI::BaseComparatorUI(BaseComparator * _comparator) :
 		addAndMakeVisible(refEditor);
 	}
 
-	setSize(100, 18); //init size
+	setSize(100, 16); //init size
 }
 
 BaseComparatorUI::~BaseComparatorUI()

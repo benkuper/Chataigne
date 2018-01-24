@@ -178,7 +178,6 @@ var MIDIModule::getJSONData()
 void MIDIModule::loadJSONDataInternal(var data)
 {
 	Module::loadJSONDataInternal(data);
-	DBG("Values cc load with create if not there");
 	valuesCC.loadJSONData(data.getProperty("values", var()), true);
 	valuesCC.orderControllablesAlphabetically();
 }
