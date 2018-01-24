@@ -64,6 +64,7 @@ JoyConModule::~JoyConModule()
 	while (isThreadRunning());
 }
 
+#if JUCE_WINDOWS
 void JoyConModule::updateController(Joytime::Controller * controller)
 {
 	controller->update();
@@ -128,13 +129,12 @@ void JoyConModule::updateController(Joytime::Controller * controller)
 
 		rightAxis->setPoint(tx, ty);
 	}
-	
-
-	
 }
+#endif
 
 void JoyConModule::run()
 {
+#if JUCE_WINDOWS
 	std::vector<Joytime::Controller> controllers = Joytime::scanForControllers();
 	
 	for (Joytime::Controller& controller : controllers) {
@@ -150,5 +150,6 @@ void JoyConModule::run()
 	}
 
 	controllers.clear();
-
+#endif
+    
 }
