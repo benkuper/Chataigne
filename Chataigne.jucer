@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.2.11"
+<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.2.12"
               bundleIdentifier="benkuper.Chataigne" includeBinaryInAppConfig="1"
               jucerVersion="5.2.0" companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
               companyEmail="benjamin@kuperberg.fr" defines="" displaySplashScreen="1"
@@ -80,6 +80,8 @@
                       file="Source/MappingFilterEditor.h"/>
               </GROUP>
               <GROUP id="{B0B4810E-8573-A36C-4561-1CE52F06C6BA}" name="filters">
+                <FILE id="XSBEMR" name="CropFilter.cpp" compile="1" resource="0" file="Source/CropFilter.cpp"/>
+                <FILE id="BTIr51" name="CropFilter.h" compile="0" resource="0" file="Source/CropFilter.h"/>
                 <FILE id="Zy0njO" name="CurveMapFilter.cpp" compile="1" resource="0"
                       file="Source/CurveMapFilter.cpp"/>
                 <FILE id="g6Fuvk" name="CurveMapFilter.h" compile="0" resource="0"

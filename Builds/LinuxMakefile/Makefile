@@ -33,7 +33,7 @@ ifeq ($(CONFIG),Debug)
     TARGET_ARCH := -m64
   endif
 
-  JUCE_CPPFLAGS := $(DEPFLAGS) -DLINUX=1 -DDEBUG=1 -D_DEBUG=1 -DJUCER_LINUX_MAKE_6D53C8B4=1 -DJUCE_APP_VERSION=1.2.11 -DJUCE_APP_VERSION_HEX=0x1020b $(shell pkg-config --cflags alsa freetype2 libcurl x11 xext xinerama) -pthread -I../../JuceLibraryCode -I../../../../../../Softwares/JUCE/modules -I../../../JUCE/modules -I../../../JUCE\ Modules -I../../External/wiiuse -I../../External/serial/include $(CPPFLAGS)
+  JUCE_CPPFLAGS := $(DEPFLAGS) -DLINUX=1 -DDEBUG=1 -D_DEBUG=1 -DJUCER_LINUX_MAKE_6D53C8B4=1 -DJUCE_APP_VERSION=1.2.12 -DJUCE_APP_VERSION_HEX=0x1020c $(shell pkg-config --cflags alsa freetype2 libcurl x11 xext xinerama) -pthread -I../../JuceLibraryCode -I../../../../../../Softwares/JUCE/modules -I../../../JUCE/modules -I../../../JUCE\ Modules -I../../External/wiiuse -I../../External/serial/include $(CPPFLAGS)
   JUCE_CPPFLAGS_APP := -DJucePlugin_Build_VST=0 -DJucePlugin_Build_VST3=0 -DJucePlugin_Build_AU=0 -DJucePlugin_Build_AUv3=0 -DJucePlugin_Build_RTAS=0 -DJucePlugin_Build_AAX=0 -DJucePlugin_Build_Standalone=0
   JUCE_TARGET_APP := Chataigne
 
@@ -54,7 +54,7 @@ ifeq ($(CONFIG),Release)
     TARGET_ARCH := -m64
   endif
 
-  JUCE_CPPFLAGS := $(DEPFLAGS) -DLINUX=1 -DNDEBUG=1 -DJUCER_LINUX_MAKE_6D53C8B4=1 -DJUCE_APP_VERSION=1.2.11 -DJUCE_APP_VERSION_HEX=0x1020b $(shell pkg-config --cflags alsa freetype2 libcurl x11 xext xinerama) -pthread -I../../JuceLibraryCode -I../../../../../../Softwares/JUCE/modules -I../../../JUCE/modules -I../../../JUCE\ Modules -I../../External/wiiuse -I../../External/serial/include $(CPPFLAGS)
+  JUCE_CPPFLAGS := $(DEPFLAGS) -DLINUX=1 -DNDEBUG=1 -DJUCER_LINUX_MAKE_6D53C8B4=1 -DJUCE_APP_VERSION=1.2.12 -DJUCE_APP_VERSION_HEX=0x1020c $(shell pkg-config --cflags alsa freetype2 libcurl x11 xext xinerama) -pthread -I../../JuceLibraryCode -I../../../../../../Softwares/JUCE/modules -I../../../JUCE/modules -I../../../JUCE\ Modules -I../../External/wiiuse -I../../External/serial/include $(CPPFLAGS)
   JUCE_CPPFLAGS_APP := -DJucePlugin_Build_VST=0 -DJucePlugin_Build_VST3=0 -DJucePlugin_Build_AU=0 -DJucePlugin_Build_AUv3=0 -DJucePlugin_Build_RTAS=0 -DJucePlugin_Build_AAX=0 -DJucePlugin_Build_Standalone=0
   JUCE_TARGET_APP := Chataigne
 
@@ -76,6 +76,7 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/MappingOutput_7f60db50.o \
   $(JUCE_OBJDIR)/MappingOutputManager_681d3ec7.o \
   $(JUCE_OBJDIR)/MappingFilterEditor_1ce883d4.o \
+  $(JUCE_OBJDIR)/CropFilter_da0187b1.o \
   $(JUCE_OBJDIR)/CurveMapFilter_84c144ce.o \
   $(JUCE_OBJDIR)/InverseFilter_66642a29.o \
   $(JUCE_OBJDIR)/LagFilter_15ce140b.o \
@@ -387,6 +388,11 @@ $(JUCE_OBJDIR)/MappingOutputManager_681d3ec7.o: ../../Source/MappingOutputManage
 $(JUCE_OBJDIR)/MappingFilterEditor_1ce883d4.o: ../../Source/MappingFilterEditor.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling MappingFilterEditor.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/CropFilter_da0187b1.o: ../../Source/CropFilter.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling CropFilter.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/CurveMapFilter_84c144ce.o: ../../Source/CurveMapFilter.cpp

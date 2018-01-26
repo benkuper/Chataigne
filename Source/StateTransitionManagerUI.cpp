@@ -31,7 +31,7 @@ StateTransitionManagerUI::~StateTransitionManagerUI()
 
 void StateTransitionManagerUI::resized()
 {
-
+	for (auto &sui : itemsUI) sui->updateBounds();
 }
 
 

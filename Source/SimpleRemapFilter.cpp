@@ -17,8 +17,8 @@ SimpleRemapFilter::SimpleRemapFilter(var params) :
 	targetMin = filterParams.addFloatParameter("Target Min", "New minimum for output", 0, 0,1);
 	targetMax = filterParams.addFloatParameter("Target Max", "New maximum for output", 1, 0,1);
 	targetMin->defaultUI = FloatParameter::LABEL;
-	targetMin->autoAdaptRange = true;
 	targetMax->defaultUI = FloatParameter::LABEL;
+	targetMin->autoAdaptRange = true;
 	targetMax->autoAdaptRange = true;
 	targetMin->isCustomizableByUser = false;
 	targetMax->isCustomizableByUser = false;
