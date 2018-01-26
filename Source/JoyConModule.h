@@ -81,11 +81,11 @@ public:
 #if JUCE_WINDOWS
 	void updateController(Joytime::Controller * c);
 	void processIMU(Joytime::Controller * c);
-
+    void onControllableFeedbackUpdateInternal(ControllableContainer *, Controllable *c) override;
+    void onContainerTriggerTriggered(Trigger * t) override;
 #endif
     
-	void onControllableFeedbackUpdateInternal(ControllableContainer *, Controllable *c) override;
-	void onContainerTriggerTriggered(Trigger * t) override;
+
 
 	static JoyConModule * create() { return new JoyConModule(); }
 	virtual String getDefaultTypeString() const override { return "JoyCon"; }
