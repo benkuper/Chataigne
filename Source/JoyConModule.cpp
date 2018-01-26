@@ -16,9 +16,9 @@ JoyConModule::JoyConModule() :
 	leftValues("Left Controller"),
 	rightValues("Right Controller"),
 	imuParams("IMU"),
-	imuError(0),
-	resetIMUOnNextPacket(true),
-	lastIMUProcessTime(0)
+    lastIMUProcessTime(0),
+    resetIMUOnNextPacket(true),
+    imuError(0)
 {
 	startThread();
 
