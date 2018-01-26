@@ -75,6 +75,7 @@ void ConditionManager::setForceDisabled(bool value, bool force)
 {
 	if (forceDisabled == value && !force) return;
 	forceDisabled = value;
+	if (forceDisabled) isValid->setValue(false);
 	for (auto &i : items) i->forceDisabled = value;
 }
 

@@ -39,9 +39,15 @@ var StateTransition::getJSONData()
 void StateTransition::onContainerTriggerTriggered(Trigger * t)
 {
 	Action::onContainerTriggerTriggered(t);
+	
 	if (t == trigger)
 	{
-		destState->active->setValue(true);
-		sourceState->active->setValue(false);
+		
+		if (sourceState->active->boolValue())
+		{
+			DBG("Action trigger ! " << niceName << ", " << sourceState->niceName << ", " << destState->niceName);
+			destState->active->setValue(true);
+			sourceState->active->setValue(false); //just to be sure but should be handled when activating the dest state
+		}
 	}
 }

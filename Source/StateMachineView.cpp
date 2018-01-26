@@ -63,6 +63,7 @@ void StateMachineView::resized()
 {
 	BaseManagerViewUI::resized();
 	stmUI->setBounds(getLocalBounds());
+	stmUI->resized();
 }
 
 

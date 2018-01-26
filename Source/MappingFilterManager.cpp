@@ -16,6 +16,7 @@
 #include "SimpleSmoothFilter.h"
 #include "LagFilter.h"
 #include "OffsetFilter.h"
+#include "CropFilter.h"
 
 MappingFilterManager::MappingFilterManager() :
 	BaseManager<MappingFilter>("Filters"),
@@ -25,6 +26,7 @@ MappingFilterManager::MappingFilterManager() :
 	factory.defs.add(Factory<MappingFilter>::Definition::createDef("Remap", "Inverse", &InverseFilter::create));
 	factory.defs.add(Factory<MappingFilter>::Definition::createDef("Remap", "Offset", &OffsetFilter::create));
 	factory.defs.add(Factory<MappingFilter>::Definition::createDef("Remap", "Remap", &SimpleRemapFilter::create));
+	factory.defs.add(Factory<MappingFilter>::Definition::createDef("Remap", "Crop", &CropFilter::create));
 	factory.defs.add(Factory<MappingFilter>::Definition::createDef("Remap", "Curve Map", &CurveMapFilter::create));
 	factory.defs.add(Factory<MappingFilter>::Definition::createDef("Physics", "Smooth", &SimpleSmoothFilter::create));
 	factory.defs.add(Factory<MappingFilter>::Definition::createDef("Physics", "Lag", &LagFilter::create));

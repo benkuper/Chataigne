@@ -77,6 +77,7 @@ void CustomOSCModule::processMessageInternal(const OSCMessage & msg)
 					c->isCustomizableByUser = true;
 					c->isRemovableByUser = true;
 					c->saveValueOnly = false;
+					c->isControllableFeedbackOnly = true;
 					if (c->type != Controllable::TRIGGER) ((Parameter *)c)->autoAdaptRange = autoRange->boolValue();
 				}
 			}
@@ -207,6 +208,8 @@ void CustomOSCModule::processMessageInternal(const OSCMessage & msg)
 			c->isCustomizableByUser = true;
 			c->isRemovableByUser = true;
 			c->saveValueOnly = false;
+			c->isControllableFeedbackOnly = true;
+
 			if (c->type != Controllable::TRIGGER) ((Parameter *)c)->autoAdaptRange = autoRange->boolValue();
 
 			valuesCC.addControllable(c);
@@ -241,8 +244,8 @@ void CustomOSCModule::loadJSONDataInternal(var data)
 	valuesCC.loadJSONData(data.getProperty("values", var()), true);
 	valuesCC.orderControllablesAlphabetically();
 	umm.loadJSONData(data.getProperty("models", var()),true);
-
 }
+
 /*
 InspectableEditor * CustomOSCModule::getEditor(bool isRoot)
 {
