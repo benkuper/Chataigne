@@ -41,7 +41,8 @@ public:
 
 	ModuleRouterValue * getRouterValueForControllable(Controllable * c);
 
-	void onContainerTriggerTriggered(Trigger *) override;
+	void onContainerParameterChangedInternal(Parameter * p) override;
+	void onContainerTriggerTriggered(Trigger * t) override;
 
 	void inspectableDestroyed(Inspectable * m) override;
 

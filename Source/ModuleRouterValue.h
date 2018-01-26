@@ -20,11 +20,12 @@ public:
 	ModuleRouterValue(Controllable * sourceValue = nullptr, int index = 0);
 	~ModuleRouterValue();
 
+	
 	int valueIndex;
 	WeakReference<Controllable> sourceValue;
 	Module * outModule;
 
-	BoolParameter * doRoute;
+	bool forceDisabled; //for router enable
 
 	ScopedPointer<Module::RouteParams> routeParams;
 

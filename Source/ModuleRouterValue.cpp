@@ -13,16 +13,15 @@
 #include "Module.h"
 
 ModuleRouterValue::ModuleRouterValue(Controllable * _sourceValue, int _index) :
-	BaseItem(_sourceValue->niceName,false),
+	BaseItem(_sourceValue->niceName),
 	valueIndex(_index),
 	sourceValue(_sourceValue),
-	outModule(nullptr)
+	outModule(nullptr),
+	forceDisabled(false)
 {
 	jassert(sourceValue != nullptr);
 
 	userCanRemove = false;
-	doRoute = addBoolParameter("Route", "Activate the routing for this value", false);
-
 }
 
 ModuleRouterValue::~ModuleRouterValue()
@@ -78,9 +77,9 @@ void ModuleRouterValue::onContainerParameterChangedInternal(Parameter * p)
 {
 	if (sourceValue == nullptr || sourceValue.wasObjectDeleted()) return;
 
-	if (p == doRoute)
+	if (p == enabled)
 	{
-		if (doRoute->boolValue())
+		if (enabled->boolValue())
 		{
 			if (sourceValue->type == Controllable::TRIGGER) ((Trigger *)sourceValue.get())->addTriggerListener(this);
 			else ((Parameter *)sourceValue.get())->addParameterListener(this);
@@ -95,11 +94,13 @@ void ModuleRouterValue::onContainerParameterChangedInternal(Parameter * p)
 void ModuleRouterValue::onExternalParameterChanged(Parameter * p)
 {
 	if (outModule == nullptr) return;
+	if (!enabled->boolValue() || forceDisabled) return;
 	if(p == sourceValue) outModule->handleRoutedModuleValue(sourceValue, routeParams);
 }
 
 void ModuleRouterValue::onExternalTriggerTriggered(Trigger * t)
 {
 	if (outModule == nullptr) return;
+	if (!enabled->boolValue() || forceDisabled) return;
 	if(t == sourceValue) outModule->handleRoutedModuleValue(sourceValue, routeParams);
 }

@@ -23,7 +23,9 @@ MIDICommand::~MIDICommand()
 }
 
 MIDINoteAndCCCommand::MIDINoteAndCCCommand(MIDIModule * module, CommandContext context, var params) :
-	MIDICommand(module,context,params)
+	MIDICommand(module, context, params),
+	velocity(nullptr),
+	onTime(nullptr)
 {
 	channel = addIntParameter("Channel", "Channel for the note message", 1, 1, 16);
 	type = (MessageType)(int)params.getProperty("type", 0);
@@ -31,20 +33,25 @@ MIDINoteAndCCCommand::MIDINoteAndCCCommand(MIDIModule * module, CommandContext c
 	{
 	case NOTE_ON:
 	case NOTE_OFF:
+	case FULL_NOTE:
 		noteEnum = addEnumParameter("Note", "Note from C to B");
 		for (int i = 0; i < 12; i++)
 		{
 			noteEnum->addOption(MidiMessage::getMidiNoteName(i, true, false, 5), i);
 		}
 		octave = addIntParameter("Octave", "Octave for the note", 5, 0, 10);
-		velocity = addIntParameter("Velocity", "Velocity of the note, between 0 and 127", type == NOTE_OFF ? 0 : 127, 0, 127);
+		if(type != NOTE_OFF) velocity = addIntParameter("Velocity", "Velocity of the note, between 0 and 127", 127, 0, 127);
 		break;
 
 	case CONTROLCHANGE:
 		number = addIntParameter("CC Number", "Number of the CC (0-127)", 0, 0, 127);
 		velocity = addIntParameter("CC Value", "Value of the CC", 0, 0, 127);
+	}
 
-
+	if (type == FULL_NOTE)
+	{
+		onTime = addFloatParameter("On Time", "Interval between the note on and note off", 1, 0, 3600);
+		onTime->defaultUI = FloatParameter::TIME;
 	}
 
 	setTargetMappingParameterAt(velocity, 0);
@@ -58,7 +65,7 @@ MIDINoteAndCCCommand::~MIDINoteAndCCCommand()
 void MIDINoteAndCCCommand::setValue(var value)
 {
 	BaseCommand::setValue(value);
-	velocity->setValue(value, true);		
+	if(velocity != nullptr) velocity->setValue(value, true);		
 	trigger();
 }
 
@@ -77,6 +84,11 @@ void MIDINoteAndCCCommand::trigger()
 		midiModule->sendNoteOff(pitch, channel->intValue());
 		break;
 
+	case FULL_NOTE:
+		midiModule->sendNoteOn(pitch, velocity->intValue(), channel->intValue());
+		startTimer(onTime->floatValue() * 1000);
+		break;
+
 	case CONTROLCHANGE:
 		midiModule->sendControlChange(pitch, velocity->intValue(), channel->intValue());
 		break;
@@ -85,6 +97,13 @@ void MIDINoteAndCCCommand::trigger()
 		DBG("NOT A VALID TYPE !");
 		break;
 	}
+}
+
+void MIDINoteAndCCCommand::timerCallback()
+{
+	stopTimer();
+	int pitch = (int)noteEnum->getValueData() + (octave->intValue() - (int)octave->minimumValue) * 12;
+	if (midiModule != nullptr) midiModule->sendNoteOff(pitch, channel->intValue());
 }
 
 

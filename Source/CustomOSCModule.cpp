@@ -77,7 +77,7 @@ void CustomOSCModule::processMessageInternal(const OSCMessage & msg)
 					c->isCustomizableByUser = true;
 					c->isRemovableByUser = true;
 					c->saveValueOnly = false;
-					if (c->type != Controllable::TRIGGER) ((Parameter *)c)->autoAdaptRange = true;
+					if (c->type != Controllable::TRIGGER) ((Parameter *)c)->autoAdaptRange = autoRange->boolValue();
 				}
 			}
 		}
@@ -85,8 +85,11 @@ void CustomOSCModule::processMessageInternal(const OSCMessage & msg)
 	{
 		c = valuesCC.getControllableByName(cShortName);
 
+		
 		if (c != nullptr) //update existing controllable
 		{
+			if (c->type != Controllable::TRIGGER) ((Parameter *)c)->autoAdaptRange = autoRange->boolValue();
+
 			switch (c->type)
 			{
 			case Controllable::TRIGGER:
@@ -101,7 +104,6 @@ void CustomOSCModule::processMessageInternal(const OSCMessage & msg)
 				if (msg.size() >= 1)
 				{
 					FloatParameter *f = (FloatParameter *)c;
-					if (msg.size() >= 3 && autoRange->boolValue()) f->setRange(getFloatArg(msg[1]), getFloatArg(msg[2]));
 					f->setValue(getFloatArg(msg[0]));
 				}
 				break;
@@ -110,7 +112,6 @@ void CustomOSCModule::processMessageInternal(const OSCMessage & msg)
 				if (msg.size() >= 1)
 				{
 					IntParameter *i = (IntParameter *)c;
-					if (msg.size() >= 3 && autoRange->boolValue()) i->setRange(getIntArg(msg[1]), getIntArg(msg[2]));
 					i->setValue(getIntArg(msg[0]));
 				}
 				break;
@@ -206,7 +207,7 @@ void CustomOSCModule::processMessageInternal(const OSCMessage & msg)
 			c->isCustomizableByUser = true;
 			c->isRemovableByUser = true;
 			c->saveValueOnly = false;
-			if (c->type != Controllable::TRIGGER) ((Parameter *)c)->autoAdaptRange = true;
+			if (c->type != Controllable::TRIGGER) ((Parameter *)c)->autoAdaptRange = autoRange->boolValue();
 
 			valuesCC.addControllable(c);
 			valuesCC.orderControllablesAlphabetically();

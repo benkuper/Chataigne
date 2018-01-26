@@ -29,14 +29,14 @@ void BaseCommand::setTargetMappingParameterAt(Parameter * p, int index)
 
 	if (oldP != nullptr)
 	{
-		oldP->isControllableFeedbackOnly = false;
+		oldP->setControllableFeedbackOnly(false);
 	}
 
 	targetMappingParameters.set(index,p);
 
 	if (p != nullptr)
 	{
-		p->isControllableFeedbackOnly = true;
+		p->setControllableFeedbackOnly(true);
 	}
 }
 
@@ -54,10 +54,12 @@ void BaseCommand::setValue(var value)
 	}
 	else
 	{
+		DBG("Here array ");
 		int maxSize = jmin(value.size(),targetMappingParameters.size());
 		for (int i = 0; i < maxSize; i++)
 		{
 			Parameter * p = targetMappingParameters[i];
+			DBG("Target mapping parameter at : " << i << " : " << (p != nullptr ? p->niceName : "null"));
 			if (p != nullptr)
 			{
 				if (p->value.isArray() && p->value.size() == value.size())
@@ -66,7 +68,8 @@ void BaseCommand::setValue(var value)
 				}
 				else
 				{
-					p->setValue(i,value[i]);
+					DBG("Set value " << value[i].toString() << " for " << p->niceName);
+					p->setValue(value[i]);
 				}
 			}
 		}

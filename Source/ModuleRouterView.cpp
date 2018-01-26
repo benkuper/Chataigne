@@ -101,6 +101,7 @@ void ModuleRouterView::resized()
 
 	Rectangle<int> sr = routeLabel.getBounds().translated(0, 15).withSizeKeepingCentre(120, 16);
 	selectAllTrigger->setBounds(sr.removeFromLeft(50));
+	sr.removeFromLeft(4);
 	deselectAllTrigger->setBounds(sr);
 
 	outParamsLabel.setBounds(outr);

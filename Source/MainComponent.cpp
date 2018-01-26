@@ -46,7 +46,7 @@ MainContentComponent::MainContentComponent()
 	if (lastVersion != getAppVersion())
 	{
 		DBG("New version, load default layout");
-		ShapeShifterManager::getInstance()->loadDefaultLayoutFile();
+		ShapeShifterManager::getInstance()->loadDefaultLayoutFile(true);
 	} else
 	{
 		ShapeShifterManager::getInstance()->loadLastSessionLayoutFile();

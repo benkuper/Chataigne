@@ -22,8 +22,16 @@ public:
 	JoyConModule();
 	~JoyConModule();
 
-	ScopedPointer<ControllableContainer> leftValues;
-	ScopedPointer<ControllableContainer> rightValues;
+#if JUCE_WINDOWS
+	Array<Joytime::Controller *> controllers;
+#endif
+
+	ControllableContainer leftValues;
+	ControllableContainer rightValues;
+	EnablingControllableContainer imuParams;
+
+	FloatParameter * imuFilterWeight;
+	Trigger * resetIMU;
 
 	//Left controller
 	FloatParameter * leftRoll;
@@ -57,10 +65,28 @@ public:
 	BoolParameter * home;
 	BoolParameter * plus;
 
+
+	//imu
+	double lastIMUProcessTime;
+	bool resetIMUOnNextPacket;
+	float imuError;
+
+	Vector3D<float> i_b;
+	Vector3D<float> j_b;
+	Vector3D<float> k_b;
+	Vector3D<float> k_acc;
+	Vector3D<float> i_b_;
+	Vector3D<float> w_a, w_g;
+
 #if JUCE_WINDOWS
 	void updateController(Joytime::Controller * c);
+	void processIMU(Joytime::Controller * c);
+
 #endif
     
+	void onControllableFeedbackUpdateInternal(ControllableContainer *, Controllable *c) override;
+	void onContainerTriggerTriggered(Trigger * t) override;
+
 	static JoyConModule * create() { return new JoyConModule(); }
 	virtual String getDefaultTypeString() const override { return "JoyCon"; }
 

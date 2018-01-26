@@ -31,6 +31,7 @@ CustomOSCCommandArgument::CustomOSCCommandArgument(const String &name, Parameter
 	{
 		useForMapping = addBoolParameter("Use for mapping", "Check this to automatically set its value when used in a mapping flow.", false);
 		useForMapping->hideInEditor = true;
+		useForMapping->forceSaveValue = true;
 	}
 
 	param->hideInEditor = true;

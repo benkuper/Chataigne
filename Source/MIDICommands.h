@@ -29,13 +29,14 @@ public:
 
 
 class MIDINoteAndCCCommand :
-	public MIDICommand
+	public MIDICommand,
+	public Timer
 {
 public:
 	MIDINoteAndCCCommand(MIDIModule * module, CommandContext context, var params);
 	~MIDINoteAndCCCommand();
 
-	enum MessageType {NOTE_ON,NOTE_OFF,CONTROLCHANGE};
+	enum MessageType {NOTE_ON,NOTE_OFF,FULL_NOTE, CONTROLCHANGE};
 	
 	MessageType type;
 
@@ -44,11 +45,16 @@ public:
 	IntParameter * octave;
 	IntParameter * number; //for CC
 	IntParameter * velocity;
+	FloatParameter * onTime;
 
 	void setValue(var value) override;
 	void trigger() override;
 
 	static MIDINoteAndCCCommand * create(ControllableContainer * module, CommandContext context, var params) { return new MIDINoteAndCCCommand((MIDIModule *)module, context, params); }
+
+
+	// Inherited via Timer
+	virtual void timerCallback() override;
 
 };
 

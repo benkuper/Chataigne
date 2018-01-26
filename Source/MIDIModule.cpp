@@ -29,6 +29,7 @@ MIDIModule::MIDIModule(const String & name, bool _useGenericControls) :
 		autoAdd = moduleParams.addBoolParameter("Auto Add", "Auto Add MIDI values that are received but not in the list", false);
 		defManager.add(CommandDefinition::createDef(this, "", "Note On", &MIDINoteAndCCCommand::create)->addParam("type", (int)MIDINoteAndCCCommand::NOTE_ON));
 		defManager.add(CommandDefinition::createDef(this, "", "Note Off", &MIDINoteAndCCCommand::create)->addParam("type", (int)MIDINoteAndCCCommand::NOTE_OFF));
+		defManager.add(CommandDefinition::createDef(this, "", "Full Note", &MIDINoteAndCCCommand::create)->addParam("type", (int)MIDINoteAndCCCommand::FULL_NOTE));
 		defManager.add(CommandDefinition::createDef(this, "", "Controller Change", &MIDINoteAndCCCommand::create)->addParam("type", (int)MIDINoteAndCCCommand::CONTROLCHANGE));
 		defManager.add(CommandDefinition::createDef(this, "", "Sysex Message", &MIDISysExCommand::create));
 	}
@@ -112,9 +113,9 @@ void MIDIModule::updateMIDIDevices()
 		if(outputDevice != nullptr) outputDevice->close();
 		outputDevice = newOutput;
 		if(outputDevice != nullptr) outputDevice->open();
-	}
+	} 
 
-	setupIOConfiguration(inputDevice != nullptr, outputDevice != nullptr);
+	setupIOConfiguration(inputDevice != nullptr || valuesCC.controllables.size() > 0, outputDevice != nullptr);
 }
 
 void MIDIModule::noteOnReceived(const int & channel, const int & pitch, const int & velocity)
@@ -180,6 +181,8 @@ void MIDIModule::loadJSONDataInternal(var data)
 	Module::loadJSONDataInternal(data);
 	valuesCC.loadJSONData(data.getProperty("values", var()), true);
 	valuesCC.orderControllablesAlphabetically();
+
+	setupIOConfiguration(inputDevice != nullptr || valuesCC.controllables.size() > 0, outputDevice != nullptr);
 }
 
 /*

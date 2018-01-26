@@ -47,7 +47,7 @@ void ModuleRouter::setSourceModule(Module * m)
 		sourceModule->addInspectableListener(this);
 		sourceModule->addControllableContainerListener(this);
 
-		Array<WeakReference<Controllable>> values = sourceModule->valuesCC.getAllControllables();
+		Array<WeakReference<Controllable>> values = sourceModule->valuesCC.getAllControllables(true);
 		int index = 0;
 		for (auto &c : values)
 		{
@@ -78,6 +78,7 @@ void ModuleRouter::setDestModule(Module * m)
 	for (auto &mrv : sourceValues.items)
 	{
 		mrv->setSourceAndOutModule(sourceModule, destModule);
+		mrv->forceDisabled = !enabled->boolValue();
 	}
 
 	routerListeners.call(&RouterListener::destModuleChanged, this);
@@ -136,13 +137,21 @@ ModuleRouterValue * ModuleRouter::getRouterValueForControllable(Controllable * c
 	return nullptr;
 }
 
+void ModuleRouter::onContainerParameterChangedInternal(Parameter * p)
+{
+	if (p == enabled)
+	{
+		for (auto &mrv : sourceValues.items) mrv->forceDisabled = !enabled->boolValue();
+	}
+}
+
 void ModuleRouter::onContainerTriggerTriggered(Trigger * t)
 {
 	if (t == selectAllValues || t == deselectAllValues)
 	{
 		for (auto &sv : sourceValues.items)
 		{
-			sv->doRoute->setValue(t == selectAllValues);
+			sv->enabled->setValue(t == selectAllValues);
 		}
 	}
 }

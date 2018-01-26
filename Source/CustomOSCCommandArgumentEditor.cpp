@@ -41,7 +41,7 @@ void CustomOSCCommandArgumentEditor::resizedInternalHeaderItemInternal(Rectangle
 {
 	if (arg->mappingEnabled)
 	{
-		useInMappingUI->setBounds(r.removeFromRight(100));
+		useInMappingUI->setBounds(r.removeFromRight(100).reduced(2));
 		r.removeFromRight(2);
 	}
 	if(paramUI != nullptr) paramUI->setBounds(r.removeFromRight(r.getWidth() - 70).reduced(2));

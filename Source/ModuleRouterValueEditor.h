@@ -24,7 +24,6 @@ public:
 	ModuleRouterValueEditor(ModuleRouterValue * mrv);
 	~ModuleRouterValueEditor();
 
-	ScopedPointer<BoolToggleUI> doRouteUI;
 	ScopedPointer<ControllableUI> valueUI;
 	OwnedArray<ControllableEditor> routeParamsUI;
 

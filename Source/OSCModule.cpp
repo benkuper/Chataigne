@@ -236,9 +236,17 @@ void OSCModule::loadJSONDataInternal(var data)
 
 void OSCModule::handleRoutedModuleValue(Controllable * c, RouteParams * p)
 {
-	OSCRouteParams * op = static_cast<OSCRouteParams *>(p);
+	OSCRouteParams * op = dynamic_cast<OSCRouteParams *>(p);
 	OSCMessage m(op->address->stringValue());
-	if (c->type != Controllable::TRIGGER) m.addArgument(varToArgument(((Parameter *)c)->getValue()));
+	if (c->type != Controllable::TRIGGER)
+	{
+		var v = dynamic_cast<Parameter *>(c)->getValue();
+		if (!v.isArray()) m.addArgument(varToArgument(v));
+		else
+		{
+			for (int i = 0; i < v.size(); i++) m.addArgument(varToArgument(v[i]));
+		}
+	}
 	sendOSC(m);
 }
 
@@ -294,4 +302,30 @@ void OSCModule::oscBundleReceived(const OSCBundle & bundle)
 	{
 		processMessage(m.getMessage());
 	}
+}
+
+OSCModule::OSCRouteParams::OSCRouteParams(Module * sourceModule, Controllable * c) {
+	bool sourceIsGenericOSC = sourceModule->getTypeString() == "OSC";
+
+	String tAddress;
+	tAddress = c->shortName;
+
+	if (!sourceIsGenericOSC)
+	{
+		ControllableContainer * cc = c->parentContainer;
+		while (cc != nullptr)
+		{
+			if (cc->shortName != "values")
+			{
+				tAddress = cc->shortName + "/" + tAddress;
+			}
+			Module * m = dynamic_cast<Module *>(cc);
+			if (m != nullptr) break;
+
+			cc = cc->parentContainer;
+		}
+	}
+
+	if (!tAddress.startsWithChar('/')) tAddress = "/" + tAddress;
+	address = addStringParameter("Address", "Route Address", tAddress);
 }

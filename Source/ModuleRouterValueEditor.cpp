@@ -16,12 +16,9 @@ ModuleRouterValueEditor::ModuleRouterValueEditor(ModuleRouterValue * mrv) :
 {
 	item->addValueListener(this);
 
-	doRouteUI = item->doRoute->createToggle();
 	valueUI = item->sourceValue->createDefaultUI();
-	doRouteUI->showLabel = false;
 	valueUI->showLabel = false;
 	addAndMakeVisible(valueUI);
-	addAndMakeVisible(doRouteUI);
 
 	buildRouteParamsUI();
 }
@@ -63,7 +60,6 @@ void ModuleRouterValueEditor::resizedInternalHeader(Rectangle<int>& r)
 
 	valueUI->setBounds(tr.removeFromLeft(100));
 	tr.removeFromLeft(20);
-	doRouteUI->setBounds(tr.removeFromLeft(50));
 
 	if (routeParamsUI.size() == 1)
 	{

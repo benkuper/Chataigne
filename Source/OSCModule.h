@@ -69,14 +69,7 @@ public:
 		public RouteParams
 	{
 	public:
-		OSCRouteParams(Module * sourceModule, Controllable * c) {
-			bool sourceIsGenericOSC = sourceModule->getTypeString() == "OSC";
-			
-			String tAddress;
-			if (sourceIsGenericOSC) tAddress = c->niceName;
-			else tAddress = "/" + c->parentContainer->parentContainer->shortName + (c->shortName.startsWithChar('/') ? "" : "/") + c->shortName;
-			address = addStringParameter("Address", "Route Address", tAddress);
-		}
+		OSCRouteParams(Module * sourceModule, Controllable * c);
 		~OSCRouteParams() {}
 		StringParameter * address;
 	};
