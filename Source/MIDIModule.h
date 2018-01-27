@@ -31,9 +31,9 @@ public:
 	
 	bool useGenericControls;
 
-	virtual void sendNoteOn(int pitch, int velocity, int channel = 0);
+	virtual void sendNoteOn(int pitch, int velocity, int channel = 1);
 	virtual void sendNoteOff(int pitch, int channel = 0);
-	virtual void sendControlChange(int number, int value, int channel = 0);
+	virtual void sendControlChange(int number, int value, int channel = 1);
 	virtual void sendSysex(Array<uint8> data);
 
 	void onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c) override;
@@ -44,6 +44,23 @@ public:
 	virtual void controlChangeReceived(const int &channel, const int &number, const int &value) override;
 
 	void updateValue(const int &channel, const String &n, const int &val);
+
+	//Routing
+	class MIDIRouteParams :
+		public RouteParams
+	{
+	public:
+		MIDIRouteParams(Module * sourceModule, Controllable * c);
+		~MIDIRouteParams() {}
+		enum Type { NOTE_ON, NOTE_OFF, FULL_NOTE, CONTROL_CHANGE };
+		EnumParameter * type;
+		IntParameter * channel;
+		IntParameter * pitchOrNumber;
+	};
+
+	virtual RouteParams * createRouteParamsForSourceValue(Module * sourceModule, Controllable * c, int /*index*/) override { return new MIDIRouteParams(sourceModule, c); }
+	virtual void handleRoutedModuleValue(Controllable * c, RouteParams * p) override;
+
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;

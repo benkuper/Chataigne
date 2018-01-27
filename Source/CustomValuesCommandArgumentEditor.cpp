@@ -1,18 +1,16 @@
 /*
   ==============================================================================
 
-    CustomOSCCommandArgumentEditor.cpp
+    CustomValuesCommandArgumentEditor.cpp
     Created: 22 Feb 2017 8:53:11am
     Author:  Ben
 
   ==============================================================================
 */
 
-#include "CustomOSCCommandArgumentEditor.h"
+#include "CustomValuesCommandArgumentEditor.h"
 
-
-
-CustomOSCCommandArgumentEditor::CustomOSCCommandArgumentEditor(CustomOSCCommandArgument * a, bool isRoot) :
+CustomValuesCommandArgumentEditor::CustomValuesCommandArgumentEditor(CustomValuesCommandArgument * a, bool isRoot) :
 	BaseItemEditor(a, isRoot),
 	arg(a)
 {
@@ -32,12 +30,12 @@ CustomOSCCommandArgumentEditor::CustomOSCCommandArgumentEditor(CustomOSCCommandA
 	resetAndBuild();
 }
 
-CustomOSCCommandArgumentEditor::~CustomOSCCommandArgumentEditor()
+CustomValuesCommandArgumentEditor::~CustomValuesCommandArgumentEditor()
 {
 }
 
 
-void CustomOSCCommandArgumentEditor::resizedInternalHeaderItemInternal(Rectangle<int>& r)
+void CustomValuesCommandArgumentEditor::resizedInternalHeaderItemInternal(Rectangle<int>& r)
 {
 	if (arg->mappingEnabled)
 	{
@@ -47,7 +45,7 @@ void CustomOSCCommandArgumentEditor::resizedInternalHeaderItemInternal(Rectangle
 	if(paramUI != nullptr) paramUI->setBounds(r.removeFromRight(r.getWidth() - 70).reduced(2));
 }
 
-void CustomOSCCommandArgumentEditor::childBoundsChanged(Component * child)
+void CustomValuesCommandArgumentEditor::childBoundsChanged(Component * child)
 {
 	if (child == paramUI) resized();
 }

@@ -429,6 +429,28 @@
         </GROUP>
         <GROUP id="{766BCE2E-5C2E-5A80-EC80-7FFA2C7ABBBA}" name="modules">
           <GROUP id="{AD1901AB-424E-4914-CA0D-03EDD5A74747}" name="common">
+            <GROUP id="{D9278CE9-C3E4-17C6-1349-1B55DA9D17EF}" name="commands">
+              <GROUP id="{DEB88ABE-7E0C-C4E5-EDD8-93F2B148E9BB}" name="customvalues">
+                <GROUP id="{3B147154-3CFA-970E-E371-6120BD47FB29}" name="ui">
+                  <FILE id="KA0uGt" name="CustomValuesCommandArgumentEditor.cpp" compile="1"
+                        resource="0" file="Source/CustomValuesCommandArgumentEditor.cpp"/>
+                  <FILE id="w0VB3B" name="CustomValuesCommandArgumentEditor.h" compile="0"
+                        resource="0" file="Source/CustomValuesCommandArgumentEditor.h"/>
+                  <FILE id="chl4Wl" name="CustomValuesCommandArgumentManagerEditor.cpp"
+                        compile="1" resource="0" file="Source/CustomValuesCommandArgumentManagerEditor.cpp"/>
+                  <FILE id="kmZb7g" name="CustomValuesCommandArgumentManagerEditor.h"
+                        compile="0" resource="0" file="Source/CustomValuesCommandArgumentManagerEditor.h"/>
+                </GROUP>
+                <FILE id="hZMvii" name="CustomValuesCommandArgumentManager.cpp" compile="1"
+                      resource="0" file="Source/CustomValuesCommandArgumentManager.cpp"/>
+                <FILE id="K42wpv" name="CustomValuesCommandArgumentManager.h" compile="0"
+                      resource="0" file="Source/CustomValuesCommandArgumentManager.h"/>
+                <FILE id="X3xJzZ" name="CustomValuesCommandArgument.cpp" compile="1"
+                      resource="0" file="Source/CustomValuesCommandArgument.cpp"/>
+                <FILE id="hYCcM3" name="CustomValuesCommandArgument.h" compile="0"
+                      resource="0" file="Source/CustomValuesCommandArgument.h"/>
+              </GROUP>
+            </GROUP>
             <GROUP id="{5C01210C-0BDB-2E4C-EA31-A80EFE913C0B}" name="ui">
               <FILE id="Lnza8q" name="EnablingNetworkControllableContainerEditor.cpp"
                     compile="1" resource="0" file="Source/EnablingNetworkControllableContainerEditor.cpp"/>
@@ -445,6 +467,14 @@
                       file="Source/SendStreamStringCommand.cpp"/>
                 <FILE id="cHihST" name="SendStreamStringCommand.h" compile="0" resource="0"
                       file="Source/SendStreamStringCommand.h"/>
+                <FILE id="FJcZPA" name="SendStreamValuesCommand.cpp" compile="1" resource="0"
+                      file="Source/SendStreamValuesCommand.cpp"/>
+                <FILE id="rnk6tC" name="SendStreamValuesCommand.h" compile="0" resource="0"
+                      file="Source/SendStreamValuesCommand.h"/>
+                <FILE id="rJP0ZU" name="StreamingCommand.cpp" compile="1" resource="0"
+                      file="Source/StreamingCommand.cpp"/>
+                <FILE id="rOa3BJ" name="StreamingCommand.h" compile="0" resource="0"
+                      file="Source/StreamingCommand.h"/>
               </GROUP>
               <FILE id="ptNiQR" name="NetworkStreamingModule.cpp" compile="1" resource="0"
                     file="Source/NetworkStreamingModule.cpp"/>
@@ -724,14 +754,6 @@
             </GROUP>
             <GROUP id="{725F299B-4972-D857-5400-57EB8633E4A9}" name="custom">
               <GROUP id="{054F9429-4D5F-5398-2370-34DC34C50A1E}" name="commands">
-                <FILE id="hZMvii" name="CustomOSCCommandArgumentManager.cpp" compile="1"
-                      resource="0" file="Source/CustomOSCCommandArgumentManager.cpp"/>
-                <FILE id="K42wpv" name="CustomOSCCommandArgumentManager.h" compile="0"
-                      resource="0" file="Source/CustomOSCCommandArgumentManager.h"/>
-                <FILE id="X3xJzZ" name="CustomOSCCommandArgument.cpp" compile="1" resource="0"
-                      file="Source/CustomOSCCommandArgument.cpp"/>
-                <FILE id="hYCcM3" name="CustomOSCCommandArgument.h" compile="0" resource="0"
-                      file="Source/CustomOSCCommandArgument.h"/>
                 <GROUP id="{7006A5C5-4F64-5AC5-84CA-FF17A52209BC}" name="user">
                   <GROUP id="{AA4047DB-9521-A804-2662-257FB65454B3}" name="model">
                     <FILE id="eDhc6j" name="UserOSCCommandModel.cpp" compile="1" resource="0"
@@ -767,16 +789,6 @@
                         file="Source/UserOSCCommand.cpp"/>
                   <FILE id="ogoqrW" name="UserOSCCommand.h" compile="0" resource="0"
                         file="Source/UserOSCCommand.h"/>
-                </GROUP>
-                <GROUP id="{3B147154-3CFA-970E-E371-6120BD47FB29}" name="ui">
-                  <FILE id="KA0uGt" name="CustomOSCCommandArgumentEditor.cpp" compile="1"
-                        resource="0" file="Source/CustomOSCCommandArgumentEditor.cpp"/>
-                  <FILE id="w0VB3B" name="CustomOSCCommandArgumentEditor.h" compile="0"
-                        resource="0" file="Source/CustomOSCCommandArgumentEditor.h"/>
-                  <FILE id="chl4Wl" name="CustomOSCCommandArgumentManagerEditor.cpp"
-                        compile="1" resource="0" file="Source/CustomOSCCommandArgumentManagerEditor.cpp"/>
-                  <FILE id="kmZb7g" name="CustomOSCCommandArgumentManagerEditor.h" compile="0"
-                        resource="0" file="Source/CustomOSCCommandArgumentManagerEditor.h"/>
                 </GROUP>
                 <FILE id="lv7MmC" name="CustomOSCCommand.cpp" compile="1" resource="0"
                       file="Source/CustomOSCCommand.cpp"/>

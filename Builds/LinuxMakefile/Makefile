@@ -159,9 +159,15 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/ModuleRouterValue_937230fd.o \
   $(JUCE_OBJDIR)/ModuleRouter_785566de.o \
   $(JUCE_OBJDIR)/ModuleRouterManager_16ed3779.o \
+  $(JUCE_OBJDIR)/CustomValuesCommandArgumentEditor_585ed0e3.o \
+  $(JUCE_OBJDIR)/CustomValuesCommandArgumentManagerEditor_173146ce.o \
+  $(JUCE_OBJDIR)/CustomValuesCommandArgumentManager_f3a980c1.o \
+  $(JUCE_OBJDIR)/CustomValuesCommandArgument_5ff97e96.o \
   $(JUCE_OBJDIR)/EnablingNetworkControllableContainerEditor_69404a20.o \
   $(JUCE_OBJDIR)/SendStreamRawDataCommand_a8c8304a.o \
   $(JUCE_OBJDIR)/SendStreamStringCommand_7ad2ed13.o \
+  $(JUCE_OBJDIR)/SendStreamValuesCommand_23f68b62.o \
+  $(JUCE_OBJDIR)/StreamingCommand_6d934692.o \
   $(JUCE_OBJDIR)/NetworkStreamingModule_5a389ce9.o \
   $(JUCE_OBJDIR)/StreamingModule_670ed6cf.o \
   $(JUCE_OBJDIR)/OSExecCommand_ac882577.o \
@@ -225,8 +231,6 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/ReaperTimeCommand_829de850.o \
   $(JUCE_OBJDIR)/ReaperModule_fdf36c24.o \
   $(JUCE_OBJDIR)/OSCCommand_a034ed5.o \
-  $(JUCE_OBJDIR)/CustomOSCCommandArgumentManager_becd71b4.o \
-  $(JUCE_OBJDIR)/CustomOSCCommandArgument_aba6903.o \
   $(JUCE_OBJDIR)/UserOSCCommandModel_e494bd53.o \
   $(JUCE_OBJDIR)/UserOSCCommandModelManager_54caa364.o \
   $(JUCE_OBJDIR)/UserOSCCommandModelEditor_8d0d4de0.o \
@@ -234,8 +238,6 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/UserOSCCommandModelUI_535b2e67.o \
   $(JUCE_OBJDIR)/UserOSCCommandEditor_d66e784d.o \
   $(JUCE_OBJDIR)/UserOSCCommand_ef0d7d80.o \
-  $(JUCE_OBJDIR)/CustomOSCCommandArgumentEditor_eb4f7590.o \
-  $(JUCE_OBJDIR)/CustomOSCCommandArgumentManagerEditor_ca2b7581.o \
   $(JUCE_OBJDIR)/CustomOSCCommand_684cdda6.o \
   $(JUCE_OBJDIR)/CustomOSCModule_c9fc0d3b.o \
   $(JUCE_OBJDIR)/ResolumeBaseCommandEditor_bef083d8.o \
@@ -805,6 +807,26 @@ $(JUCE_OBJDIR)/ModuleRouterManager_16ed3779.o: ../../Source/ModuleRouterManager.
 	@echo "Compiling ModuleRouterManager.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
+$(JUCE_OBJDIR)/CustomValuesCommandArgumentEditor_585ed0e3.o: ../../Source/CustomValuesCommandArgumentEditor.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling CustomValuesCommandArgumentEditor.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/CustomValuesCommandArgumentManagerEditor_173146ce.o: ../../Source/CustomValuesCommandArgumentManagerEditor.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling CustomValuesCommandArgumentManagerEditor.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/CustomValuesCommandArgumentManager_f3a980c1.o: ../../Source/CustomValuesCommandArgumentManager.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling CustomValuesCommandArgumentManager.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/CustomValuesCommandArgument_5ff97e96.o: ../../Source/CustomValuesCommandArgument.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling CustomValuesCommandArgument.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
 $(JUCE_OBJDIR)/EnablingNetworkControllableContainerEditor_69404a20.o: ../../Source/EnablingNetworkControllableContainerEditor.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling EnablingNetworkControllableContainerEditor.cpp"
@@ -818,6 +840,16 @@ $(JUCE_OBJDIR)/SendStreamRawDataCommand_a8c8304a.o: ../../Source/SendStreamRawDa
 $(JUCE_OBJDIR)/SendStreamStringCommand_7ad2ed13.o: ../../Source/SendStreamStringCommand.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling SendStreamStringCommand.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/SendStreamValuesCommand_23f68b62.o: ../../Source/SendStreamValuesCommand.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling SendStreamValuesCommand.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/StreamingCommand_6d934692.o: ../../Source/StreamingCommand.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling StreamingCommand.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/NetworkStreamingModule_5a389ce9.o: ../../Source/NetworkStreamingModule.cpp
@@ -1135,16 +1167,6 @@ $(JUCE_OBJDIR)/OSCCommand_a034ed5.o: ../../Source/OSCCommand.cpp
 	@echo "Compiling OSCCommand.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
-$(JUCE_OBJDIR)/CustomOSCCommandArgumentManager_becd71b4.o: ../../Source/CustomOSCCommandArgumentManager.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling CustomOSCCommandArgumentManager.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/CustomOSCCommandArgument_aba6903.o: ../../Source/CustomOSCCommandArgument.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling CustomOSCCommandArgument.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
 $(JUCE_OBJDIR)/UserOSCCommandModel_e494bd53.o: ../../Source/UserOSCCommandModel.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling UserOSCCommandModel.cpp"
@@ -1178,16 +1200,6 @@ $(JUCE_OBJDIR)/UserOSCCommandEditor_d66e784d.o: ../../Source/UserOSCCommandEdito
 $(JUCE_OBJDIR)/UserOSCCommand_ef0d7d80.o: ../../Source/UserOSCCommand.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling UserOSCCommand.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/CustomOSCCommandArgumentEditor_eb4f7590.o: ../../Source/CustomOSCCommandArgumentEditor.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling CustomOSCCommandArgumentEditor.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/CustomOSCCommandArgumentManagerEditor_ca2b7581.o: ../../Source/CustomOSCCommandArgumentManagerEditor.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling CustomOSCCommandArgumentManagerEditor.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/CustomOSCCommand_684cdda6.o: ../../Source/CustomOSCCommand.cpp

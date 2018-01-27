@@ -1,23 +1,23 @@
 /*
   ==============================================================================
 
-    CustomOSCCommandArgumentManagerEditor.cpp
+    CustomValuesCommandArgumentManagerEditor.cpp
     Created: 22 Feb 2017 9:07:39am
     Author:  Ben
 
   ==============================================================================
 */
 
-#include "CustomOSCCommandArgumentManagerEditor.h"
+#include "CustomValuesCommandArgumentManagerEditor.h"
 
 
-CustomOSCCommandArgumentManagerEditor::CustomOSCCommandArgumentManagerEditor(CustomOSCCommandArgumentManager * manager, bool isRoot) :
+CustomValuesCommandArgumentManagerEditor::CustomValuesCommandArgumentManagerEditor(CustomValuesCommandArgumentManager * manager, bool isRoot) :
 	GenericManagerEditor(manager, isRoot),
 	aManager(manager)
 {
 }
 
-void CustomOSCCommandArgumentManagerEditor::showMenuAndAddItem(bool)
+void CustomValuesCommandArgumentManagerEditor::showMenuAndAddItem(bool)
 {
 
 	PopupMenu p;

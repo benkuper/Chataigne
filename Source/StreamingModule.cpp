@@ -11,6 +11,7 @@
 #include "StreamingModule.h"
 #include "SendStreamRawDataCommand.h"
 #include "SendStreamStringCommand.h"
+#include "SendStreamValuesCommand.h"
 
 StreamingModule::StreamingModule(const String & name) :
 	Module(name)
@@ -23,7 +24,8 @@ StreamingModule::StreamingModule(const String & name) :
 	scriptObject.setMethod(sendBytesId, StreamingModule::sendBytesFromScript);
 
 	defManager.add(CommandDefinition::createDef(this, "", "Send string", &SendStreamStringCommand::create, CommandContext::ACTION));
-	defManager.add(CommandDefinition::createDef(this, "", "Send raw data", &SendStreamRawDataCommand::create, CommandContext::ACTION));
+	defManager.add(CommandDefinition::createDef(this, "", "Send raw bytes", &SendStreamRawDataCommand::create, CommandContext::BOTH));
+	defManager.add(CommandDefinition::createDef(this, "", "Send custom values", &SendStreamValuesCommand::create, CommandContext::BOTH));
 }
 
 StreamingModule::~StreamingModule()
@@ -71,6 +73,12 @@ void StreamingModule::sendMessage(const String & message)
 void StreamingModule::sendBytes(Array<uint8> bytes)
 {
 	if (!enabled->boolValue() || !isReadyToSend()) return;
+
+	if (streamingType->getValueDataAsEnum<StreamingType>() == COBS)
+	{
+		Array<uint8> sourceBytes = Array<uint8>(bytes);
+		cobs_encode(sourceBytes.getRawDataPointer(), bytes.size(), bytes.getRawDataPointer());
+	}
 
 	sendBytesInternal(bytes);
 	outActivityTrigger->trigger();

@@ -21,6 +21,16 @@ ModuleRouterValue::ModuleRouterValue(Controllable * _sourceValue, int _index) :
 {
 	jassert(sourceValue != nullptr);
 
+	if (enabled->boolValue())
+	{
+		if (sourceValue->type == Controllable::TRIGGER) ((Trigger *)sourceValue.get())->addTriggerListener(this);
+		else ((Parameter *)sourceValue.get())->addParameterListener(this);
+	} else
+	{
+		if (sourceValue->type == Controllable::TRIGGER) ((Trigger *)sourceValue.get())->removeTriggerListener(this);
+		else ((Parameter *)sourceValue.get())->removeParameterListener(this);
+	}
+
 	userCanRemove = false;
 }
 

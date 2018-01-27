@@ -116,7 +116,7 @@ int SerialDevice::writeBytes(Array<uint8_t> data)
 #endif
 }
 
-void SerialDevice::newMessage(const var & data) {
+void SerialDevice::dataReceived(const var & data) {
 	listeners.call(&SerialDeviceListener::serialDataReceived, data);
 }
 
@@ -167,7 +167,7 @@ void SerialReadThread::run()
 				std::string line = port->port->readline();
 				if (line.size() > 0)
 				{
-					serialThreadListeners.call(&SerialThreadListener::newMessage, var(line));
+					serialThreadListeners.call(&SerialThreadListener::dataReceived, var(line));
 				}
 
 			}
@@ -177,7 +177,7 @@ void SerialReadThread::run()
 			{
 				std::vector<uint8_t> data;
 				port->port->read(data,numBytes);
-				serialThreadListeners.call(&SerialThreadListener::newMessage, var(data.data(),numBytes));
+				serialThreadListeners.call(&SerialThreadListener::dataReceived, var(data.data(),numBytes));
 			}
 			break;
 
@@ -188,7 +188,7 @@ void SerialReadThread::run()
 					uint8_t b = port->port->read(1)[0];
 					if (b == 255)
 					{
-						serialThreadListeners.call(&SerialThreadListener::newMessage, var(byteBuffer.data(),byteBuffer.size()));
+						serialThreadListeners.call(&SerialThreadListener::dataReceived, var(byteBuffer.data(),byteBuffer.size()));
 						byteBuffer.clear();
 					}
 					else
@@ -209,7 +209,7 @@ void SerialReadThread::run()
 					{
 						uint8_t decodedData[255];
 						size_t numDecoded = cobs_decode(byteBuffer.data(), byteBuffer.size(), decodedData); 
-						serialThreadListeners.call(&SerialThreadListener::newMessage, var(decodedData, numDecoded));
+						serialThreadListeners.call(&SerialThreadListener::dataReceived, var(decodedData, numDecoded));
 						byteBuffer.clear();
 					}
 				}				

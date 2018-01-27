@@ -1,18 +1,17 @@
 /*
   ==============================================================================
 
-    CustomOSCCommandArgumentManager.cpp
+    CustomValuesCommandArgumentManager.cpp
     Created: 22 Feb 2017 8:51:39am
     Author:  Ben
 
   ==============================================================================
 */
 
-#include "CustomOSCCommandArgumentManager.h"
+#include "CustomValuesCommandArgumentManager.h"
+#include "CustomValuesCommandArgumentManagerEditor.h"
 
-#include "CustomOSCCommandArgumentManagerEditor.h"
-
-CustomOSCCommandArgumentManager::CustomOSCCommandArgumentManager(bool _mappingEnabled) :
+CustomValuesCommandArgumentManager::CustomValuesCommandArgumentManager(bool _mappingEnabled) :
 	BaseManager("arguments"),
 	mappingEnabled(_mappingEnabled)
 {
@@ -21,16 +20,16 @@ CustomOSCCommandArgumentManager::CustomOSCCommandArgumentManager(bool _mappingEn
 	
 }
 
-CustomOSCCommandArgument * CustomOSCCommandArgumentManager::addItemWithParam(Parameter * p, var data, bool fromUndoableAction)
+CustomValuesCommandArgument * CustomValuesCommandArgumentManager::addItemWithParam(Parameter * p, var data, bool fromUndoableAction)
 {
-	CustomOSCCommandArgument * a = new CustomOSCCommandArgument("#" + String(items.size() + 1), p,mappingEnabled);
+	CustomValuesCommandArgument * a = new CustomValuesCommandArgument("#" + String(items.size() + 1), p,mappingEnabled);
 	a->addArgumentListener(this);
 	if (mappingEnabled && items.size() == 1) a->useForMapping->setValue(true); 
 	addItem(a, data, fromUndoableAction);
 	return a;
 }
 
-CustomOSCCommandArgument * CustomOSCCommandArgumentManager::addItemFromType(Parameter::Type type, var data, bool fromUndoableAction)
+CustomValuesCommandArgument * CustomValuesCommandArgumentManager::addItemFromType(Parameter::Type type, var data, bool fromUndoableAction)
 {
 	Parameter * p = nullptr;
 	String id = String(items.size() + 1);
@@ -58,7 +57,7 @@ CustomOSCCommandArgument * CustomOSCCommandArgumentManager::addItemFromType(Para
 	return addItemWithParam(p, data, fromUndoableAction);
 }
 
-CustomOSCCommandArgument * CustomOSCCommandArgumentManager::addItemFromData(var data, bool fromUndoableAction)
+CustomValuesCommandArgument * CustomValuesCommandArgumentManager::addItemFromData(var data, bool fromUndoableAction)
 {
 	String s = data.getProperty("type", "");
 	if (s.isEmpty()) return nullptr;
@@ -72,7 +71,7 @@ CustomOSCCommandArgument * CustomOSCCommandArgumentManager::addItemFromData(var 
  	return addItemWithParam(p, data, fromUndoableAction);
 }
 
-void CustomOSCCommandArgumentManager::autoRenameItems()
+void CustomValuesCommandArgumentManager::autoRenameItems()
 {
 	for (int i = 0; i < items.size(); i++)
 	{
@@ -80,13 +79,13 @@ void CustomOSCCommandArgumentManager::autoRenameItems()
 	}
 }
 
-void CustomOSCCommandArgumentManager::removeItemInternal(CustomOSCCommandArgument * i)
+void CustomValuesCommandArgumentManager::removeItemInternal(CustomValuesCommandArgument * i)
 {
 	autoRenameItems();
 	useForMappingChanged(i);
 }
 
-void CustomOSCCommandArgumentManager::useForMappingChanged(CustomOSCCommandArgument * i)
+void CustomValuesCommandArgumentManager::useForMappingChanged(CustomValuesCommandArgument * i)
 {
 	/*
 	if (i->useForMapping->boolValue())
@@ -98,7 +97,7 @@ void CustomOSCCommandArgumentManager::useForMappingChanged(CustomOSCCommandArgum
 	argumentManagerListeners.call(&ManagerListener::useForMappingChanged, i);
 }
 
-InspectableEditor * CustomOSCCommandArgumentManager::getEditor(bool isRoot)
+InspectableEditor * CustomValuesCommandArgumentManager::getEditor(bool isRoot)
 {
-	return new CustomOSCCommandArgumentManagerEditor(this, isRoot);
+	return new CustomValuesCommandArgumentManagerEditor(this, isRoot);
 }

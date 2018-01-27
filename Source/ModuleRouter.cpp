@@ -53,6 +53,7 @@ void ModuleRouter::setSourceModule(Module * m)
 		{
 			ModuleRouterValue * mrv = new ModuleRouterValue(c, index++);
 			sourceValues.addItem(mrv, var(), false);
+			mrv->forceDisabled = !enabled->boolValue();
 			mrv->setSourceAndOutModule(sourceModule,destModule);
 		}
 	}

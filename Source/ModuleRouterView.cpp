@@ -17,7 +17,6 @@ ModuleRouterView::ModuleRouterView() :
 	destLabel("OutModule","Out Module"),
 	sourceValueLabel("SourceValue","Source Value"),
 	feedbackLabel("Feedback","Value Feedback"),
-	routeLabel("Route","Route"),
 	outParamsLabel("OutParams","Out Parameters")
 {
 	InspectableSelectionManager::mainSelectionManager->addSelectionListener(this);
@@ -38,14 +37,12 @@ ModuleRouterView::ModuleRouterView() :
 	destLabel.setColour(Label::textColourId, Colours::grey);
 	sourceValueLabel.setColour(Label::textColourId, Colours::grey);
 	feedbackLabel.setColour(Label::textColourId, Colours::grey);
-	routeLabel.setColour(Label::textColourId, Colours::grey);
 	outParamsLabel.setColour(Label::textColourId, Colours::grey);
 	
 	sourceLabel.setFont(12);
 	destLabel.setFont(12);
 	sourceValueLabel.setFont(12);
 	feedbackLabel.setFont(12);
-	routeLabel.setFont(12);
 	outParamsLabel.setFont(12);
 
 
@@ -54,7 +51,6 @@ ModuleRouterView::ModuleRouterView() :
 	
 	addAndMakeVisible(&sourceValueLabel);
 	addAndMakeVisible(&feedbackLabel);
-	addAndMakeVisible(&routeLabel);
 	addAndMakeVisible(&outParamsLabel);
 }
 
@@ -97,9 +93,8 @@ void ModuleRouterView::resized()
 	sourceValueLabel.setBounds(mr.removeFromLeft(100));
 	feedbackLabel.setBounds(mr.removeFromLeft(100));
 	mr.removeFromLeft(20);
-	routeLabel.setBounds(mr.removeFromLeft(50));
 
-	Rectangle<int> sr = routeLabel.getBounds().translated(0, 15).withSizeKeepingCentre(120, 16);
+	Rectangle<int> sr = sourceValueLabel.getBounds().translated(10, 15).withSize(120, 16);
 	selectAllTrigger->setBounds(sr.removeFromLeft(50));
 	sr.removeFromLeft(4);
 	deselectAllTrigger->setBounds(sr);
@@ -135,7 +130,6 @@ void ModuleRouterView::setRouter(ModuleRouter * router)
 
 		removeChildComponent(&sourceValueLabel);
 		removeChildComponent(&feedbackLabel);
-		removeChildComponent(&routeLabel);
 		removeChildComponent(&outParamsLabel);
 
 		sourceChooser.setSelectedItemIndex(-1, dontSendNotification);
@@ -153,7 +147,6 @@ void ModuleRouterView::setRouter(ModuleRouter * router)
 		addAndMakeVisible(&destChooser);
 		addAndMakeVisible(&sourceValueLabel);
 		addAndMakeVisible(&feedbackLabel);
-		addAndMakeVisible(&routeLabel);
 		addAndMakeVisible(&outParamsLabel);
 		sourceChooser.setModuleSelected(currentRouter->sourceModule,true);
 		destChooser.setModuleSelected(currentRouter->destModule,true);

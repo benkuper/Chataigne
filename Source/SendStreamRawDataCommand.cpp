@@ -11,12 +11,18 @@
 #include "SendStreamRawDataCommand.h"
 
 SendStreamRawDataCommand::SendStreamRawDataCommand(StreamingModule * _module, CommandContext context, var params) :
-	BaseCommand(_module,context, params),
-	streamingModule(_module),
-	dataContainer("Bytes")
+	StreamingCommand(_module,context, params),
+	dataContainer("Bytes"),
+	targetMappingByteIndex(nullptr)
 {
 	numBytes = addIntParameter("Num bytes", "Number of bytes to send", 1, 1, 512);
 	addChildControllableContainer(&dataContainer);
+
+	if (context == CommandContext::MAPPING)
+	{
+		targetMappingByteIndex = addIntParameter("Map to byte #", "The index of the byte to use as mapping output, -1 = none", -1, -1, 0);
+	}
+
 	updateBytesParams();
 }
 
@@ -38,6 +44,8 @@ void SendStreamRawDataCommand::updateBytesParams()
 		dataContainer.addIntParameter("#" + index, "Data for the byte #" + index, 0, 0, 255);
 	}
 
+	if (context == CommandContext::MAPPING) targetMappingByteIndex->setRange(-1, numBytes->intValue() - 1);
+
 }
 
 void SendStreamRawDataCommand::onContainerParameterChangedAsync(Parameter * p, const var &)
@@ -45,6 +53,10 @@ void SendStreamRawDataCommand::onContainerParameterChangedAsync(Parameter * p, c
 	if (p == numBytes)
 	{
 		updateBytesParams();
+	} else if (p == targetMappingByteIndex)
+	{
+		clearTargetMappingParameters();
+		if (targetMappingByteIndex->intValue() >= 0 && targetMappingByteIndex->intValue() < numBytes->intValue()) setTargetMappingParameterAt((Parameter *)dataContainer.controllables[targetMappingByteIndex->intValue()],0);
 	}
 }
 

@@ -18,7 +18,6 @@ CustomOSCModule::CustomOSCModule() :
 	OSCModule("OSC"),
 	autoAdd(nullptr)
 {
-
 	autoAdd = moduleParams.addBoolParameter("Auto Add", "Add automatically any message that is received\nand try to create the corresponding value depending on the message content.", true);
 	autoAdd->isTargettable = false;
 

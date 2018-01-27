@@ -10,21 +10,20 @@
 
 #pragma once
 
-#include "BaseCommand.h"
-#include "StreamingModule.h"
+#include "StreamingCommand.h"
 
 class SendStreamStringCommand :
-	public BaseCommand
+	public StreamingCommand
 {
 public:
 	SendStreamStringCommand(StreamingModule * _module, CommandContext context, var params);
 	~SendStreamStringCommand();
 
-	StreamingModule * streamingModule;
 
 	BoolParameter * appendCR;
 	BoolParameter * appendNL;
 
+	StringParameter * prefix;
 	StringParameter * valueParam;
 
 	void trigger() override;

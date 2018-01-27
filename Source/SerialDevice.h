@@ -47,7 +47,7 @@ public:
 	class SerialThreadListener {
 	public:
 		virtual ~SerialThreadListener() {};
-		virtual void newMessage(const var &) {};
+		virtual void dataReceived(const var &) {};
 	};
 
 	ListenerList<SerialThreadListener> serialThreadListeners;
@@ -106,7 +106,7 @@ public:
 	int writeString(String message, bool endLine = true);
 	int writeBytes(Array<uint8_t> data);
 
-	virtual void newMessage(const var &data) override;
+	virtual void dataReceived(const var &data) override;
 
 	class SerialDeviceListener
 	{

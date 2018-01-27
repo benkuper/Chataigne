@@ -12,21 +12,12 @@
 
 
 SerialModule::SerialModule(const String &name) :
-	Module(name),
+	StreamingModule(name),
 	port(nullptr)
 {
-	setupIOConfiguration(true, true);
-
 	portParam = new SerialDeviceParameter("Port", "Serial Port to connect",true);
 	moduleParams.addParameter(portParam);
 	
-	modeParam = moduleParams.addEnumParameter("Mode", "Protocol for treating the incoming data"); 
-	modeParam->addOption("Lines", SerialDevice::LINES)->addOption("Raw", SerialDevice::RAW) ->addOption("Data255", SerialDevice::DATA255) ->addOption("COBS", SerialDevice::COBS);
-
-	scriptObject.setMethod(sendId, SerialModule::sendStringFromScript);
-	scriptObject.setMethod(sendLineId, SerialModule::sendStringWithNewLineFromScript);
-	scriptObject.setMethod(writeId, SerialModule::sendBytesFromScript);
-
 	SerialManager::getInstance()->addSerialManagerListener(this);
 }
 
@@ -83,41 +74,9 @@ void SerialModule::onContainerParameterChangedInternal(Parameter * p) {
 };
 
 
-void SerialModule::processDataLine(const String & message)
-{
-	if (!enabled->boolValue()) return;
-	if (logIncomingData->boolValue()) NLOG(niceName, "Message received :\n" + message);
-	inActivityTrigger->trigger();
-	
-	scriptManager->callFunctionOnAllItems(serialEventId,message);
-}
-
-void SerialModule::processDataBytes(Array<uint8_t> data)
-{
-	if (!enabled->boolValue()) return;
-	if (logIncomingData->boolValue())
-	{
-		String msg = String(data.size()) + "sytes received :";
-		for (auto &d : data) msg += "\n" + String(d);
-		NLOG(niceName, msg);
-	}
-
-	inActivityTrigger->trigger();
-
-	if (scriptManager->items.size() > 0)
-	{
-		var args;
-		for (auto &d : data) args.append(d);
-		scriptManager->callFunctionOnAllItems(serialEventId, args);
-	}
-	
-}
-
-
 void SerialModule::portOpened(SerialDevice *)
 {
 	serialModuleListeners.call(&SerialModuleListener::portOpened);
-
 }
 
 void SerialModule::portClosed(SerialDevice *)
@@ -132,8 +91,6 @@ void SerialModule::portRemoved(SerialDevice *)
 
 void SerialModule::serialDataReceived(const var & data)
 {
-	inActivityTrigger->trigger();
-	
 	switch (port->mode)
 	{
 
@@ -149,53 +106,7 @@ void SerialModule::serialDataReceived(const var & data)
 	break;
 
 	}
-	
 }
-
-var SerialModule::sendStringFromScript(const var::NativeFunctionArgs & a)
-{
-	SerialModule * m = getObjectFromJS<SerialModule>(a);
-	if (!m->enabled->boolValue()) return var();
-	if (m->port == nullptr) return var();
-
-	m->port->writeString(a.arguments[0].toString(),false);
-	return var();
-}
-
-var SerialModule::sendStringWithNewLineFromScript(const var::NativeFunctionArgs & a)
-{
-	SerialModule * m = getObjectFromJS<SerialModule>(a);
-	if (!m->enabled->boolValue()) return var();
-	if (m->port == nullptr) return var();
-
-	m->port->writeString(a.arguments[0].toString(),true);
-	return var();
-}
-
-
-var SerialModule::sendBytesFromScript(const var::NativeFunctionArgs & a)
-{
-	SerialModule * m = getObjectFromJS<SerialModule>(a);
-	if (!m->enabled->boolValue()) return var();
-	if (m->port == nullptr) return var();
-	
-	Array<uint8> data;
-	for (int i = 0; i < a.numArguments; i++)
-	{
-		if (a.arguments[i].isArray())
-		{
-			Array<var> * aa = a.arguments[i].getArray();
-			for (auto &vaa : *aa) data.add((uint8)(int)vaa);
-		}
-		else if(a.arguments[i].isInt())
-		{
-			data.add((uint8)(int)a.arguments[i]);
-		}
-	}
-	m->port->writeBytes(data);
-	return var();
-}
-
 
 void SerialModule::portAdded(SerialDeviceInfo * info)
 {

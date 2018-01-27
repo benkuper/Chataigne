@@ -1,17 +1,17 @@
 /*
   ==============================================================================
 
-    CustomOSCCommandArgument.cpp
+    CustomValuesCommandArgument.cpp
     Created: 22 Feb 2017 8:51:30am
     Author:  Ben
 
   ==============================================================================
 */
 
-#include "CustomOSCCommandArgument.h"
-#include "CustomOSCCommandArgumentEditor.h"
+#include "CustomValuesCommandArgument.h"
+#include "CustomValuesCommandArgumentEditor.h"
 
-CustomOSCCommandArgument::CustomOSCCommandArgument(const String &name, Parameter * _p, bool _mappingEnabled) :
+CustomValuesCommandArgument::CustomValuesCommandArgument(const String &name, Parameter * _p, bool _mappingEnabled) :
 	BaseItem(name, false),
 	param(_p),
 	useForMapping(nullptr),
@@ -39,20 +39,20 @@ CustomOSCCommandArgument::CustomOSCCommandArgument(const String &name, Parameter
 
 
 
-var CustomOSCCommandArgument::getJSONData()
+var CustomValuesCommandArgument::getJSONData()
 {
 	var data = BaseItem::getJSONData();
 	data.getDynamicObject()->setProperty("param", param->getJSONData());
 	return data;
 }
 
-void CustomOSCCommandArgument::loadJSONDataInternal(var data)
+void CustomValuesCommandArgument::loadJSONDataInternal(var data)
 {
 	BaseItem::loadJSONDataInternal(data);
 	param->loadJSONData(data.getProperty("param", var()));
 }
 
-void CustomOSCCommandArgument::onContainerParameterChangedInternal(Parameter * p)
+void CustomValuesCommandArgument::onContainerParameterChangedInternal(Parameter * p)
 {
 	if (p == useForMapping)
 	{
@@ -60,14 +60,14 @@ void CustomOSCCommandArgument::onContainerParameterChangedInternal(Parameter * p
 	}
 }
 
-String CustomOSCCommandArgument::getTypeString() const
+String CustomValuesCommandArgument::getTypeString() const
 {
 	return param->getTypeString();
 }
 
 
 
-InspectableEditor * CustomOSCCommandArgument::getEditor(bool isRoot)
+InspectableEditor * CustomValuesCommandArgument::getEditor(bool isRoot)
 {
-	return new CustomOSCCommandArgumentEditor(this, isRoot);
+	return new CustomValuesCommandArgumentEditor(this, isRoot);
 }

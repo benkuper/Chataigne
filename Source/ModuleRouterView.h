@@ -39,7 +39,6 @@ public:
 	Label destLabel;
 	Label sourceValueLabel;
 	Label feedbackLabel;
-	Label routeLabel;
 	Label outParamsLabel;
 
 	ScopedPointer<BaseManagerUI<BaseManager<ModuleRouterValue>, ModuleRouterValue, ModuleRouterValueEditor>> managerUI;

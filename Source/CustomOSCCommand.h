@@ -13,17 +13,17 @@
 
 #include "OSCCommand.h"
 #include "CustomOSCModule.h"
-#include "CustomOSCCommandArgumentManager.h"
+#include "CustomValuesCommandArgumentManager.h"
 
 class CustomOSCCommand :
 	public OSCCommand,
-	public CustomOSCCommandArgumentManager::ManagerListener
+	public CustomValuesCommandArgumentManager::ManagerListener
 {
 public:
 	CustomOSCCommand(CustomOSCModule * output, CommandContext context, var params);
 	~CustomOSCCommand();
 	
-	CustomOSCCommandArgumentManager argManager;
+	CustomValuesCommandArgumentManager argManager;
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
@@ -31,13 +31,10 @@ public:
 
 	void trigger() override;
 
-	void useForMappingChanged(CustomOSCCommandArgument * a) override;
+	void useForMappingChanged(CustomValuesCommandArgument * a) override;
 
 	static CustomOSCCommand * create(ControllableContainer * module, CommandContext context, var params) { return new CustomOSCCommand((CustomOSCModule *)module, context, params); }
 
-private:
-	WeakReference<CustomOSCCommand>::Master masterReference;
-	friend class WeakReference<CustomOSCCommand>;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(CustomOSCCommand)
 };

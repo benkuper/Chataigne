@@ -12,7 +12,7 @@
 
 BaseCommand::BaseCommand(Module * _module, CommandContext _context, var _params) :
 ControllableContainer("Command"),
-context(_context),
+	context(_context),
 	module(_module),
 	params(_params)
 {
@@ -54,12 +54,10 @@ void BaseCommand::setValue(var value)
 	}
 	else
 	{
-		DBG("Here array ");
 		int maxSize = jmin(value.size(),targetMappingParameters.size());
 		for (int i = 0; i < maxSize; i++)
 		{
 			Parameter * p = targetMappingParameters[i];
-			DBG("Target mapping parameter at : " << i << " : " << (p != nullptr ? p->niceName : "null"));
 			if (p != nullptr)
 			{
 				if (p->value.isArray() && p->value.size() == value.size())
@@ -68,7 +66,6 @@ void BaseCommand::setValue(var value)
 				}
 				else
 				{
-					DBG("Set value " << value[i].toString() << " for " << p->niceName);
 					p->setValue(value[i]);
 				}
 			}

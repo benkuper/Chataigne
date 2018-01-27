@@ -304,14 +304,16 @@ void OSCModule::oscBundleReceived(const OSCBundle & bundle)
 	}
 }
 
-OSCModule::OSCRouteParams::OSCRouteParams(Module * sourceModule, Controllable * c) {
+OSCModule::OSCRouteParams::OSCRouteParams(Module * sourceModule, Controllable * c) 
+{
 	bool sourceIsGenericOSC = sourceModule->getTypeString() == "OSC";
 
 	String tAddress;
-	tAddress = c->shortName;
 
 	if (!sourceIsGenericOSC)
 	{
+		tAddress = c->shortName;
+
 		ControllableContainer * cc = c->parentContainer;
 		while (cc != nullptr)
 		{
@@ -324,8 +326,12 @@ OSCModule::OSCRouteParams::OSCRouteParams(Module * sourceModule, Controllable * 
 
 			cc = cc->parentContainer;
 		}
+	} else
+	{
+		tAddress = c->niceName; //on CustomOSCModule, niceName is the actual address
 	}
 
 	if (!tAddress.startsWithChar('/')) tAddress = "/" + tAddress;
+	
 	address = addStringParameter("Address", "Route Address", tAddress);
 }

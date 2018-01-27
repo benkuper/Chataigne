@@ -1,23 +1,23 @@
 /*
   ==============================================================================
 
-    CustomOSCCommandArgument.h
+    CustomValuesCommandArgument.h
     Created: 22 Feb 2017 8:51:30am
     Author:  Ben
 
   ==============================================================================
 */
 
-#ifndef CUSTOMOSCCOMMANDARGUMENT_H_INCLUDED
-#define CUSTOMOSCCOMMANDARGUMENT_H_INCLUDED
+#ifndef CustomValuesCommandARGUMENT_H_INCLUDED
+#define CustomValuesCommandARGUMENT_H_INCLUDED
 
 #include "JuceHeader.h"
 
-class CustomOSCCommandArgument :
+class CustomValuesCommandArgument :
 	public BaseItem
 {
 public:
-	CustomOSCCommandArgument(const String &name = "arg", Parameter * p = nullptr, bool mappingEnabled = false);
+	CustomValuesCommandArgument(const String &name = "arg", Parameter * p = nullptr, bool mappingEnabled = false);
 
 	Parameter * param;
 	BoolParameter * useForMapping;
@@ -38,7 +38,7 @@ public:
 	public:
 		/** Destructor. */
 		virtual ~ArgumentListener() {}
-		virtual void useForMappingChanged(CustomOSCCommandArgument *) {};
+		virtual void useForMappingChanged(CustomValuesCommandArgument *) {};
 	};
 
 	ListenerList<ArgumentListener> argumentListeners;
@@ -52,4 +52,4 @@ public:
 
 
 
-#endif  // CUSTOMOSCCOMMANDARGUMENT_H_INCLUDED
+#endif  // CustomValuesCommandARGUMENT_H_INCLUDED

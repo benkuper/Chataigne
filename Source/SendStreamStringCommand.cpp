@@ -11,10 +11,21 @@
 #include "SendStreamStringCommand.h"
 
 SendStreamStringCommand::SendStreamStringCommand(StreamingModule * _module, CommandContext context, var params) :
-	BaseCommand(_module,context,params),
-	streamingModule(_module)
+	StreamingCommand(_module,context,params),
+	prefix(nullptr)
 {
+	if (context == CommandContext::MAPPING)
+	{
+		prefix = addStringParameter("Prefix", "Add some data before the mapped value\nThis does NOT automatically append a whitespace !","");
+	}
+
 	valueParam = addStringParameter("Value", "Value to send via TCP", "example");
+
+	if (context == CommandContext::MAPPING)
+	{
+		setTargetMappingParameterAt(valueParam, 0);
+	}
+
 	if (params.hasProperty("fixedValue"))
 	{
 		valueParam->isEditable = false;
@@ -42,5 +53,7 @@ SendStreamStringCommand::~SendStreamStringCommand()
 
 void SendStreamStringCommand::trigger()
 {
-	streamingModule->sendMessage(valueParam->stringValue()+(appendCR->boolValue()?"\r":"")+(appendNL->boolValue()?"\n":""));
+	String m = valueParam->stringValue() + (appendCR->boolValue() ? "\r" : "") + (appendNL->boolValue() ? "\n" : "");
+	if (prefix != nullptr) m = prefix->stringValue() + m;
+	streamingModule->sendMessage(m);
 }

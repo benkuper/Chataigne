@@ -19,7 +19,7 @@ MIDIModule::MIDIModule(const String & name, bool _useGenericControls) :
 {
 	setupIOConfiguration(true, true);
 
-	//canHandleRouteValues = true;
+	canHandleRouteValues = true;
 
 	midiParam = new MIDIDeviceParameter("Devices");
 	moduleParams.addParameter(midiParam);
@@ -169,6 +169,34 @@ void MIDIModule::updateValue(const int &channel, const String & n, const int & v
 
 }
 
+void MIDIModule::handleRoutedModuleValue(Controllable * c, RouteParams * p)
+{
+	DBG("Handle route value " << c->niceName);
+	MIDIRouteParams * mp = dynamic_cast<MIDIRouteParams *>(p);
+	if (mp->type == nullptr) return;
+
+	MIDIRouteParams::Type t = mp->type->getValueDataAsEnum<MIDIRouteParams::Type>();
+
+	int value = 127;
+	Parameter * sp = c->type == Controllable::TRIGGER?nullptr:dynamic_cast<Parameter *>(c);
+	if (sp != nullptr) value = sp->getNormalizedValue()*127;
+
+	switch (t)
+	{
+	case MIDIRouteParams::NOTE_ON:
+		sendNoteOn(mp->pitchOrNumber->intValue(), value, mp->channel->intValue());
+		break;
+
+	case MIDIRouteParams::NOTE_OFF:
+		sendNoteOff(mp->pitchOrNumber->intValue(), mp->channel->intValue());
+		break;
+
+	case MIDIRouteParams::CONTROL_CHANGE:
+		sendControlChange(mp->pitchOrNumber->intValue(), value, mp->channel->intValue());
+		break;
+	}
+}
+
 var MIDIModule::getJSONData()
 {
 	var data = Module::getJSONData();
@@ -191,3 +219,21 @@ InspectableEditor * MIDIModule::getEditor(bool isRoot)
 	return new MIDIModuleEditor(this,isRoot);
 }
 */
+
+MIDIModule::MIDIRouteParams::MIDIRouteParams(Module * sourceModule, Controllable * c) :
+	type(nullptr),
+	channel(nullptr),
+	pitchOrNumber(nullptr)
+{
+	if (c->type != Controllable::FLOAT && c->type != Controllable::INT && c->type != Controllable::BOOL)
+	{
+		NLOGWARNING(niceName, c->niceName + " is of type " + c->getTypeString() + ",\nOnly float and integers can be routed through MIDI");
+		return;
+	}
+
+	type = addEnumParameter("Type", "The type of MIDI Command to route");
+	type->addOption("Control Change", CONTROL_CHANGE)->addOption("Note On", NOTE_ON)->addOption("Note Off",NOTE_OFF);
+
+	channel = addIntParameter("Channel", "The Channel", 1, 1, 16);
+	pitchOrNumber = addIntParameter("Pitch / Number", "Pitch if type is a note, number if it is a controlChange", 0, 0, 127);
+}

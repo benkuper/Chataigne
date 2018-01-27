@@ -83,7 +83,7 @@ void CustomOSCCommand::trigger()
 	}
 }
 
-void CustomOSCCommand::useForMappingChanged(CustomOSCCommandArgument *)
+void CustomOSCCommand::useForMappingChanged(CustomValuesCommandArgument *)
 {
 	clearTargetMappingParameters();
 	int index = 0;

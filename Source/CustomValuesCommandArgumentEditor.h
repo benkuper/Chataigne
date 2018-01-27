@@ -1,29 +1,27 @@
 /*
   ==============================================================================
 
-    CustomOSCCommandArgumentEditor.h
+    CustomValuesCommandArgumentEditor.h
     Created: 22 Feb 2017 8:53:11am
     Author:  Ben
 
   ==============================================================================
 */
 
-#ifndef CUSTOMOSCCOMMANDARGUMENTEDITOR_H_INCLUDED
-#define CUSTOMOSCCOMMANDARGUMENTEDITOR_H_INCLUDED
+#ifndef CustomValuesCommandARGUMENTEDITOR_H_INCLUDED
+#define CustomValuesCommandARGUMENTEDITOR_H_INCLUDED
 
 
-#include "CustomOSCCommandArgument.h"
+#include "CustomValuesCommandArgument.h"
 
-
-
-class CustomOSCCommandArgumentEditor :
+class CustomValuesCommandArgumentEditor :
 	public BaseItemEditor
 {
 public:
-	CustomOSCCommandArgumentEditor(CustomOSCCommandArgument * a, bool isRoot);
-	~CustomOSCCommandArgumentEditor();
+	CustomValuesCommandArgumentEditor(CustomValuesCommandArgument * a, bool isRoot);
+	~CustomValuesCommandArgumentEditor();
 
-	CustomOSCCommandArgument * arg;
+	CustomValuesCommandArgument * arg;
 
 	ScopedPointer<ParameterEditor> paramUI;
 	ScopedPointer<BoolToggleUI> useInMappingUI;
@@ -34,4 +32,4 @@ public:
 
 
 
-#endif  // CUSTOMOSCCOMMANDARGUMENTEDITOR_H_INCLUDED
+#endif  // CustomValuesCommandARGUMENTEDITOR_H_INCLUDED

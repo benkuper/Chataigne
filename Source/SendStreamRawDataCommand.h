@@ -10,20 +10,18 @@
 
 #pragma once
 
-#include "BaseCommand.h"
-#include "StreamingModule.h"
+#include "StreamingCommand.h"
 
 class SendStreamRawDataCommand :
-	public BaseCommand
+	public StreamingCommand
 {
 public:
 	SendStreamRawDataCommand(StreamingModule * _module, CommandContext context, var params);
 	~SendStreamRawDataCommand();
 
-	StreamingModule * streamingModule;
-
 	IntParameter * numBytes;
 	ControllableContainer dataContainer;
+	IntParameter * targetMappingByteIndex;
 	Array<IntParameter *> bytes;
 
 	void updateBytesParams();
