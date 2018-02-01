@@ -17,7 +17,8 @@ SerialModule::SerialModule(const String &name) :
 {
 	portParam = new SerialDeviceParameter("Port", "Serial Port to connect",true);
 	moduleParams.addParameter(portParam);
-	
+	baudRate = moduleParams.addIntParameter("Baud Rate", "The connection speed. Common values are 9600, 57600, 115200", 9600, 9600, 1000000);
+	portParam->openBaudRate = baudRate->intValue();
 	SerialManager::getInstance()->addSerialManagerListener(this);
 }
 
@@ -44,15 +45,17 @@ void SerialModule::setCurrentPort(SerialDevice * _port)
 
 	if (port != nullptr)
 	{
+		DBG(" > " << port->info->port);
+
 		port->addSerialDeviceListener(this);
-		port->open();
+		port->open(baudRate->intValue());
 		if (!port->isOpen())
 		{
 			NLOG(niceName, "Could not open port : " << port->info->port);
 		}
 		else
 		{
-			port->mode = (SerialDevice::PortMode)(int)modeParam->getValueData();
+			port->setMode(streamingType->getValueDataAsEnum<SerialDevice::PortMode>());
 		}
 		lastOpenedPortID = port->info->port;
 	}
@@ -60,16 +63,27 @@ void SerialModule::setCurrentPort(SerialDevice * _port)
 	serialModuleListeners.call(&SerialModuleListener::currentPortChanged);
 }
 
+void SerialModule::onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c)
+{
+	StreamingModule::onControllableFeedbackUpdateInternal(cc, c);
 
-void SerialModule::onContainerParameterChangedInternal(Parameter * p) {
-	Module::onContainerParameterChangedInternal(p);
-	
-	if (p == portParam)
+	if (c == baudRate)
+	{
+		portParam->openBaudRate = baudRate->intValue();
+		if (portParam->getDevice() != nullptr)
+		{
+			var val = portParam->value;
+			portParam->setValue(var());
+			portParam->setValue(val);
+		}
+		
+	}
+	if (c == portParam)
 	{
 		 setCurrentPort(portParam->getDevice());
-	}if (p == modeParam)
+	}if (c == streamingType)
 	{
-		if (port != nullptr) port->mode = (SerialDevice::PortMode)(int)modeParam->getValueData();
+		if (port != nullptr) port->setMode((SerialDevice::PortMode)(int)streamingType->getValueData());
 	}
 };
 

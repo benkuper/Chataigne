@@ -22,6 +22,8 @@ OSPowerCommand::~OSPowerCommand()
 
 void OSPowerCommand::trigger()
 {
+	BaseCommand::trigger();
+
 	switch (actionType)
 	{
 	case SHUTDOWN:

@@ -24,6 +24,8 @@ public:
 	WeakReference<Controllable> sourceControllable;
 	ScopedPointer<BaseComparator> comparator;
 
+	var loadingComparatorData; //for dynamically created parameter, allows to reload comparator data after these are created
+
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
 

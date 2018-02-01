@@ -115,10 +115,17 @@ SerialDevice * SerialManager::getPort(SerialDeviceInfo * portInfo, bool createIf
 
 	if (createIfNotThere)
 	{
-		Serial * newSerial = new Serial(portInfo->port.toStdString(), openBaudRate, serial::Timeout::simpleTimeout(1000));
-		SerialDevice *p = new SerialDevice(newSerial, portInfo);
-		openedPorts.add(p);
-		return p;
+		try
+		{
+			Serial * newSerial = new Serial(portInfo->port.toStdString(), openBaudRate, serial::Timeout::simpleTimeout(1000));
+			SerialDevice *p = new SerialDevice(newSerial, portInfo);
+			openedPorts.add(p);
+			return p;
+		} catch (std::exception &e)
+		{
+			LOGERROR("Error trying to open port " + portInfo->port.toStdString()+"\n"+String(e.what()));
+			return nullptr;
+		}
 	}
 #endif
 

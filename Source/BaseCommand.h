@@ -32,7 +32,7 @@ public:
 	void setTargetMappingParameterAt(Parameter * p,int index);
 	void clearTargetMappingParameters();
 
-	virtual void trigger() {} //for trigger context, to override
+	virtual void trigger(); //for trigger context, to override
 	virtual void setValue(var value); //for mapping context
 
 	virtual void loadPreviousCommandData(var data)

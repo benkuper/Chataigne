@@ -52,6 +52,7 @@ void GenericControllableCommand::setValueParameter(Parameter * p)
 
 void GenericControllableCommand::trigger()
 {
+	BaseCommand::trigger();
 
 	if (target->target == nullptr) return;
 

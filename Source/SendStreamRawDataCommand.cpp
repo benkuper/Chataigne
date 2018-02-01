@@ -62,6 +62,8 @@ void SendStreamRawDataCommand::onContainerParameterChangedAsync(Parameter * p, c
 
 void SendStreamRawDataCommand::trigger()
 {
+	StreamingCommand::trigger();
+
 	Array<uint8> data;
 	for (auto &c : dataContainer.controllables) data.add(((IntParameter *)c)->intValue());
 	streamingModule->sendBytes(data);

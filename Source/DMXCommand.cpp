@@ -53,6 +53,8 @@ DMXCommand::~DMXCommand()
 
 void DMXCommand::trigger()
 {
+	BaseCommand::trigger();
+
 	switch (dmxAction) 
 	{
 

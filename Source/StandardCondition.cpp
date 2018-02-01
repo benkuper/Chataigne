@@ -42,6 +42,11 @@ void StandardCondition::loadJSONDataInternal(var data)
 {
 	Condition::loadJSONDataInternal(data);
 	if (comparator != nullptr) comparator->loadJSONData(data.getProperty("comparator", var()));
+	else if (Engine::mainEngine->isLoadingFile)
+	{
+		DBG("Comparator null while engine loading, probably a script generated target");
+		loadingComparatorData = data.getProperty("comparator", var());
+	}
 }
 
 
@@ -65,11 +70,14 @@ void StandardCondition::setSourceControllable(WeakReference<Controllable> c)
 		if (comparator != nullptr)
 		{
 			if (!oldData.isVoid()) comparator->loadJSONData(oldData);
+			else if (!loadingComparatorData.isVoid())
+			{
+				comparator->loadJSONData(loadingComparatorData);
+				loadingComparatorData = var();
+			}
 			comparator->addComparatorListener(this);
 			comparator->compare();
 		}
-
-
 	} else
 	{
 		if (comparator != nullptr)

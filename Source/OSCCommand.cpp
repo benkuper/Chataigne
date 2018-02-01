@@ -119,6 +119,8 @@ void OSCCommand::trigger()
 {
 	if (oscModule == nullptr) return;
 
+	BaseCommand::trigger();
+
 	OSCMessage m(address->stringValue());
 	
 	for (auto &a : argumentsContainer.controllables)

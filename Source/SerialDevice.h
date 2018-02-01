@@ -96,8 +96,9 @@ public:
 	SerialDeviceInfo * info;
 
 	PortMode mode;
+	void setMode(PortMode mode);
 
-	void open();
+	void open(int baud = 9600);
 	void close();
 
 	bool isOpen();

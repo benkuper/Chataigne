@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    BaseCommand.cpp
-    Created: 3 Nov 2016 10:50:32am
-    Author:  bkupe
+	BaseCommand.cpp
+	Created: 3 Nov 2016 10:50:32am
+	Author:  bkupe
 
   ==============================================================================
 */
@@ -11,12 +11,12 @@
 #include "BaseCommand.h"
 
 BaseCommand::BaseCommand(Module * _module, CommandContext _context, var _params) :
-ControllableContainer("Command"),
+	ControllableContainer("Command"),
 	context(_context),
 	module(_module),
 	params(_params)
 {
-	
+
 }
 
 void BaseCommand::setTargetMappingParameterAt(Parameter * p, int index)
@@ -32,7 +32,7 @@ void BaseCommand::setTargetMappingParameterAt(Parameter * p, int index)
 		oldP->setControllableFeedbackOnly(false);
 	}
 
-	targetMappingParameters.set(index,p);
+	targetMappingParameters.set(index, p);
 
 	if (p != nullptr)
 	{
@@ -46,15 +46,15 @@ void BaseCommand::clearTargetMappingParameters()
 	targetMappingParameters.clear();
 }
 
+
 void BaseCommand::setValue(var value)
 {
 	if (!value.isArray())
 	{
 		if (targetMappingParameters.size() > 0 && targetMappingParameters[0] != nullptr) targetMappingParameters[0]->setValue(value);
-	}
-	else
+	} else
 	{
-		int maxSize = jmin(value.size(),targetMappingParameters.size());
+		int maxSize = jmin(value.size(), targetMappingParameters.size());
 		for (int i = 0; i < maxSize; i++)
 		{
 			Parameter * p = targetMappingParameters[i];
@@ -63,8 +63,7 @@ void BaseCommand::setValue(var value)
 				if (p->value.isArray() && p->value.size() == value.size())
 				{
 					p->setValue(value);
-				}
-				else
+				} else
 				{
 					p->setValue(value[i]);
 				}
@@ -73,4 +72,10 @@ void BaseCommand::setValue(var value)
 	}
 
 	trigger();
+}
+
+
+void BaseCommand::trigger()
+{
+
 }

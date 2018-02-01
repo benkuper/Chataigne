@@ -29,11 +29,12 @@ public:
 	String lastOpenedPortID; //for ghosting
 
 	SerialDeviceParameter * portParam;
-	EnumParameter * modeParam;
+	IntParameter * baudRate;
+	BoolParameter * connected;
 	SerialDevice * port; 
 
 	virtual void setCurrentPort(SerialDevice *port);
-	virtual void onContainerParameterChangedInternal(Parameter * p) override;
+	virtual void onControllableFeedbackUpdateInternal(ControllableContainer *, Controllable * c) override;
 
 	// Inherited via SerialDeviceListener
 	virtual void portOpened(SerialDevice *) override;

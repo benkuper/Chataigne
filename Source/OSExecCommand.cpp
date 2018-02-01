@@ -39,6 +39,8 @@ OSExecCommand::~OSExecCommand()
 
 void OSExecCommand::trigger()
 {
+	BaseCommand::trigger();
+
 	bool result = false;
 	switch (actionType)
 	{

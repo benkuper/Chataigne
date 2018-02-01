@@ -11,7 +11,8 @@
 #include "SerialDeviceParameter.h"
 
 SerialDeviceParameter::SerialDeviceParameter(const String & name, const String & description, bool enabled) :
-	EnumParameter(name,description,enabled)
+	EnumParameter(name,description,enabled),
+	openBaudRate(9600)
 {
 	SerialManager::getInstance()->addSerialManagerListener(this);
 	updatePortList(); 
@@ -31,7 +32,7 @@ void SerialDeviceParameter::setValueInternal(var &v)
 {
 	EnumParameter::setValueInternal(v);
 	var data = getValueData();
-	currentDevice = SerialManager::getInstance()->getPort(data.getProperty("hardwareID","").toString(), data.getProperty("port", "").toString(),true,115200);
+	currentDevice = SerialManager::getInstance()->getPort(data.getProperty("hardwareID","").toString(), data.getProperty("port", "").toString(),true,openBaudRate);
 	//DBG("current device from setValueInternal : " << (int)currentDevice);
 }
 

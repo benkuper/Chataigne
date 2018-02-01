@@ -25,6 +25,8 @@ public:
 	SerialDevice * currentDevice;
 	SerialDevice * getDevice();
 
+	int openBaudRate;
+
 	void setValueInternal(var &value) override;
 
 	void updatePortList();

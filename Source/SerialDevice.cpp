@@ -39,14 +39,29 @@ SerialDevice::~SerialDevice()
 	listeners.call(&SerialDeviceListener::portRemoved, this);
 }
 
-void SerialDevice::open()
+void SerialDevice::setMode(PortMode _mode)
+{
+	if (_mode == LINES) //must restart to make sure thread is not hanging in readLine
+	{
+		thread.signalThreadShouldExit();
+		thread.stopThread(500);
+		thread.startThread();
+	}
+
+	mode = _mode;
+}
+
+void SerialDevice::open(int baud)
 {
 #if SERIALSUPPORT
 	if (!port->isOpen())
 	{
+		
+		port->setBaudrate(baud);
 		port->open();
 	}
 
+	
 	port->setDTR();
 	port->setRTS();
 
@@ -177,6 +192,7 @@ void SerialReadThread::run()
 			{
 				std::vector<uint8_t> data;
 				port->port->read(data,numBytes);
+				for (int i = 0; i < data.size(); i++) DBG("Data " << data[i]);
 				serialThreadListeners.call(&SerialThreadListener::dataReceived, var(data.data(),numBytes));
 			}
 			break;

@@ -49,6 +49,8 @@ StateCommand::~StateCommand()
 
 void StateCommand::trigger()
 {
+	BaseCommand::trigger();
+
 	if (target->targetContainer == nullptr) return; 
 	if (target->targetContainer.wasObjectDeleted()) return;
 	

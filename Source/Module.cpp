@@ -139,8 +139,8 @@ void Module::setupModuleFromJSONData(var data)
 
 	if (data.getDynamicObject()->hasProperty("parameters"))
 	{
-		var valuesData = data.getProperty("parameters", var());
-		NamedValueSet valueProps = valuesData.getDynamicObject()->getProperties();
+		var paramsData = data.getProperty("parameters", var());
+		NamedValueSet valueProps = paramsData.getDynamicObject()->getProperties();
 		for (auto &p : valueProps)
 		{
 			Controllable * c = getControllableForJSONDefinition(p.name.toString(), p.value);

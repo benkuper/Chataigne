@@ -43,6 +43,9 @@ void CustomOSCCommand::loadJSONDataInternal(var data)
 void CustomOSCCommand::trigger()
 {
 	if (oscModule == nullptr) return;
+	
+	BaseCommand::trigger();
+
 	String addString = address->stringValue();
 	
 	try
