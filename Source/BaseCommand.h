@@ -28,8 +28,8 @@ public:
 	Module * module;
 	var params;
 
-	Array<Parameter *> targetMappingParameters;
-	void setTargetMappingParameterAt(Parameter * p,int index);
+	Array<WeakReference<Parameter>> targetMappingParameters;
+	void setTargetMappingParameterAt(WeakReference<Parameter> p,int index);
 	void clearTargetMappingParameters();
 
 	virtual void trigger(); //for trigger context, to override

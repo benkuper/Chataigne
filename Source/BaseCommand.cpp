@@ -19,22 +19,22 @@ BaseCommand::BaseCommand(Module * _module, CommandContext _context, var _params)
 
 }
 
-void BaseCommand::setTargetMappingParameterAt(Parameter * p, int index)
+void BaseCommand::setTargetMappingParameterAt(WeakReference<Parameter> p, int index)
 {
 	if (context != CommandContext::MAPPING) return;
 
 	if (index < 0) return;
 	if (index >= targetMappingParameters.size()) targetMappingParameters.resize(index + 1);
-	Parameter * oldP = targetMappingParameters[index];
+	WeakReference<Parameter> oldP = targetMappingParameters[index];
 
-	if (oldP != nullptr)
+	if (oldP != nullptr && !oldP.wasObjectDeleted())
 	{
 		oldP->setControllableFeedbackOnly(false);
 	}
 
 	targetMappingParameters.set(index, p);
 
-	if (p != nullptr)
+	if (p != nullptr && !p.wasObjectDeleted())
 	{
 		p->setControllableFeedbackOnly(true);
 	}
@@ -57,8 +57,8 @@ void BaseCommand::setValue(var value)
 		int maxSize = jmin(value.size(), targetMappingParameters.size());
 		for (int i = 0; i < maxSize; i++)
 		{
-			Parameter * p = targetMappingParameters[i];
-			if (p != nullptr)
+			WeakReference<Parameter> p = targetMappingParameters[i];
+			if (p != nullptr && !p.wasObjectDeleted())
 			{
 				if (p->value.isArray() && p->value.size() == value.size())
 				{
