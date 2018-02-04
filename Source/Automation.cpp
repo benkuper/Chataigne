@@ -47,19 +47,15 @@ void Automation::reorderItems()
 	BaseManager::reorderItems();
 }
 
-Array<UndoableAction *> Automation::getRemoveKeysBetweenAction(float start, float end)
-{
-	Array<UndoableAction *> actions;
-	Array<AutomationKey *> keysToRemove;
-	for (auto &k : items) if (k->position->floatValue() >= start && k->position->floatValue() <= end) actions.add(getRemoveItemUndoableAction(k));
-	return actions;
-}
 
 void Automation::removeKeysBetween(float start, float end)
 {
+
 	Array<AutomationKey *> keysToRemove;
 	for (auto &k : items) if (k->position->floatValue() >= start && k->position->floatValue() <= end) keysToRemove.add(k);
-	for (auto &k : keysToRemove) removeItem(k);
+	DBG("Remove keys between " << start << " : " << end << " > "  << keysToRemove.size());
+
+	removeItems(keysToRemove);
 }
 
 void Automation::removeAllSelectedKeys()
@@ -155,9 +151,13 @@ AutomationKey * Automation::createItem()
 void Automation::addItems(Array<Point<float>> keys, bool removeExistingOverlappingKeys, bool addToUndo, bool autoSmoothCurve)
 {
 	selectionManager->setEnabled(false);
-	Array<UndoableAction *> actions;
-	if(removeExistingOverlappingKeys) actions.addArray(getRemoveKeysBetweenAction(keys[0].x, keys[keys.size() - 1].x));
+
+	//Array<UndoableAction *> actions;
+	//if(removeExistingOverlappingKeys) actions.addArray(getRemoveKeysBetweenAction(keys[0].x, keys[keys.size() - 1].x));
 	
+	DBG("Add items in Automation");
+	removeKeysBetween(keys[0].x, keys[keys.size() - 1].x);
+
 	Array<AutomationKey *> newKeys;
 
 	for (auto &k : keys)
@@ -168,14 +168,11 @@ void Automation::addItems(Array<Point<float>> keys, bool removeExistingOverlappi
 		if (autoSmoothCurve) ak->setEasing(Easing::BEZIER);
 		newKeys.add(ak);
 	}
-	 
-	actions.addArray(BaseManager::addItems(newKeys, true, true));
 
-	UndoMaster::getInstance()->performActions("Add recorded values", actions);
+	DBG("Here add items " << newKeys.size() << " items");
+	BaseManager::addItems(newKeys);
 
-	reorderItems();
-
-	selectionManager->setEnabled(false);
+	selectionManager->setEnabled(true);
 }
 
 void Automation::addItem(const float _position, const float _value, bool addToUndo)

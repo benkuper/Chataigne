@@ -171,7 +171,6 @@ void MIDIModule::updateValue(const int &channel, const String & n, const int & v
 
 void MIDIModule::handleRoutedModuleValue(Controllable * c, RouteParams * p)
 {
-	DBG("Handle route value " << c->niceName);
 	MIDIRouteParams * mp = dynamic_cast<MIDIRouteParams *>(p);
 	if (mp->type == nullptr) return;
 
