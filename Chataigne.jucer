@@ -1211,7 +1211,7 @@
       <MODULEPATHS>
         <MODULEPATH id="juce_video" path="../../juce"/>
         <MODULEPATH id="juce_osc" path="../../juce"/>
-        <MODULEPATH id="juce_organicui" path="../../juce"/>
+        <MODULEPATH id="juce_organicui" path="../JUCE Modules"/>
         <MODULEPATH id="juce_opengl" path="../../juce"/>
         <MODULEPATH id="juce_gui_extra" path="../../juce"/>
         <MODULEPATH id="juce_gui_basics" path="../../juce"/>
@@ -1244,7 +1244,7 @@
     <MODULE id="juce_gui_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
     <MODULE id="juce_gui_extra" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
     <MODULE id="juce_opengl" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
-    <MODULE id="juce_organicui" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_organicui" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_osc" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
     <MODULE id="juce_video" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
   </MODULES>
