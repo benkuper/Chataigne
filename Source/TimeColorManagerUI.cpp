@@ -52,7 +52,7 @@ void TimeColorManagerUI::paint(Graphics & g)
 	manager->gradient.point1.setX(getXForPos(0));
 	manager->gradient.point2.setX(getXForPos(manager->positionMax));
 
-	g.fillCheckerBoard(r, 12, 12, Colours::white, Colours::white.darker(.2f));
+	g.fillCheckerBoard(r.toFloat(), 12, 12, Colours::white, Colours::white.darker(.2f));
 	g.setGradientFill(manager->gradient);
 	g.fillRect(r);
 }
