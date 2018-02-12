@@ -15,6 +15,9 @@ notifications:
   email: false
 before_install:
 - export DEBIAN_FRONTEND=noninteractive
+- echo ${HOME}
+- export HOME=/home/travis/build/benkuper
+- echo ${HOME}
 - sudo add-apt-repository ppa:webkit-team/ppa -y
 - sudo apt-get update --fix-missing
 - sudo apt-get update -qq
@@ -39,5 +42,4 @@ branches:
   only:
   - master
 script:
-- export JUCE_MODULES_PATH=/home/travis/build/benkuper/JUCE/modules
 - make -j 8 CONFIG=Release -C "Chataigne/Builds/LinuxMakefile/"
