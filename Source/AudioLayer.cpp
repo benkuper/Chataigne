@@ -18,7 +18,7 @@ AudioLayer::AudioLayer(Sequence * _sequence, var params) :
 	audioModule(nullptr),
 	currentProcessor(nullptr),
 	numActiveOutputs(0), 
-    graphID(-1)
+    graphID(0) //was -1 but since 5.2.1, generated warning. Should do otherwise ?
 {
 	ModuleManager::getInstance()->addBaseManagerListener(this);
 
@@ -160,7 +160,7 @@ void AudioLayer::updateSelectedOutChannels()
 		if (outChannels[i]->boolValue())
 		{
 			selectedOutChannels.add(i);
-			audioModule->graph.addConnection(graphID, index, AUDIO_OUTPUT_GRAPH_ID, i);
+			audioModule->graph.addConnection({{graphID, index }, { AUDIO_OUTPUT_GRAPH_ID, i } });
 			index++;
 			DBG("Send out to channel : " << outChannels[i]->niceName);
 		}

@@ -40,7 +40,7 @@ public:
 
 	int numActiveOutputs;
 
-	int graphID;
+	AudioProcessorGraph::NodeID graphID;
 
 	void setAudioModule(AudioModule * newModule);
 	void updateCurrentClip();
