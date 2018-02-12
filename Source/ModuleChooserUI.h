@@ -18,7 +18,7 @@
 class ModuleChooserUI :
 	public ModuleManager::Listener,
 	public ComboBox,
-	public ComboBoxListener
+	public ComboBox::Listener
 {
 public:
 	ModuleChooserUI();

@@ -15,7 +15,7 @@
 
 class MIDIDeviceChooser :
 	public Component,
-	public ComboBoxListener,
+	public ComboBox::Listener,
 	public MIDIManager::Listener
 {
 public:

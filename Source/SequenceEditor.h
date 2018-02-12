@@ -19,7 +19,7 @@
 class SequenceEditor :
 	public Component,
 	public Sequence::SequenceListener,
-	public ScrollBarListener
+	public ScrollBar::Listener
 {
 public:
 	SequenceEditor(Sequence * _sequence);

@@ -15,7 +15,7 @@
 
 class CommandChooserUI :
 	public Component,
-	public ButtonListener
+	public Button::Listener
 {
 public:
 	CommandChooserUI(CommandContext context);
