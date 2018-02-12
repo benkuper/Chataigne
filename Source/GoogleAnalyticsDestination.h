@@ -203,6 +203,7 @@ private:
 
             restoredEventQueue.push_back ({
                 xmlEvent->getStringAttribute ("name"),
+				0,
                 (uint32) xmlEvent->getIntAttribute ("timestamp"),
                 parameters,
                 xmlEvent->getStringAttribute ("user_id"),
