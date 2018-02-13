@@ -19,6 +19,7 @@
 #include "WiimoteManager.h"
 #include "DMXManager.h"
 #include "ModuleRouterManager.h"
+#include "ChataigneAssetManager.h"
 
 #if JUCE_WINDOWS
 #include "MyoManager.h"
@@ -59,6 +60,7 @@ ChataigneEngine::~ChataigneEngine()
 #endif
 
 	ProjectSettings::deleteInstance();
+	ChataigneAssetManager::deleteInstance();
 }
 
 
