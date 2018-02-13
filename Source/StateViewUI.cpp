@@ -29,7 +29,7 @@ BaseItemUI<State>(state, ResizeMode::ALL, true),
 
 	addAndMakeVisible(&bottomGrabber);
 
-	setSize(200, 200);
+	setContentSize(item->viewUISize->x, item->viewUISize->y);
 	updateMiniModeUI();
 	resized();
 }
