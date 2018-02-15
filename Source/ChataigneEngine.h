@@ -13,7 +13,7 @@
 
 
 #include "JuceHeader.h"
-#include "ChataigneGenericModule.h"
+#include "Module/modules/generic/ChataigneGenericModule.h"
 
 class ChataigneEngine :
 	public Engine

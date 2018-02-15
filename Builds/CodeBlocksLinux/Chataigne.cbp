@@ -19,8 +19,8 @@
           <Add option="-DDEBUG=1"/>
           <Add option="-D_DEBUG=1"/>
           <Add option="-DJUCER_CODEBLOCKS_LINUX_191E0897=1"/>
-          <Add option="-DJUCE_APP_VERSION=1.2.15"/>
-          <Add option="-DJUCE_APP_VERSION_HEX=0x1020f"/>
+          <Add option="-DJUCE_APP_VERSION=1.3.0"/>
+          <Add option="-DJUCE_APP_VERSION_HEX=0x10300"/>
           <Add option="-DJucePlugin_Build_VST=0"/>
           <Add option="-DJucePlugin_Build_VST3=0"/>
           <Add option="-DJucePlugin_Build_AU=0"/>
@@ -41,6 +41,7 @@
           <Add directory="../../../JUCE Modules"/>
           <Add directory="../../External/wiiuse"/>
           <Add directory="../../External/serial/include"/>
+          <Add directory="../../Source"/>
           <Add directory="/usr/include/freetype2"/>
         </Compiler>
         <Linker>
@@ -63,8 +64,8 @@
           <Add option="-DLINUX=1"/>
           <Add option="-DNDEBUG=1"/>
           <Add option="-DJUCER_CODEBLOCKS_LINUX_191E0897=1"/>
-          <Add option="-DJUCE_APP_VERSION=1.2.15"/>
-          <Add option="-DJUCE_APP_VERSION_HEX=0x1020f"/>
+          <Add option="-DJUCE_APP_VERSION=1.3.0"/>
+          <Add option="-DJUCE_APP_VERSION_HEX=0x10300"/>
           <Add option="-DJucePlugin_Build_VST=0"/>
           <Add option="-DJucePlugin_Build_VST3=0"/>
           <Add option="-DJucePlugin_Build_AU=0"/>
@@ -85,6 +86,7 @@
           <Add directory="../../../JUCE Modules"/>
           <Add directory="../../External/wiiuse"/>
           <Add directory="../../External/serial/include"/>
+          <Add directory="../../Source"/>
           <Add directory="/usr/include/freetype2"/>
         </Compiler>
         <Linker>
@@ -174,2339 +176,2369 @@
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/ProjectSettings.cpp">
+    <Unit filename="../../Source/Analytics/GoogleAnalyticsDestination.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
+      <Option compile="0"/>
+      <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/ProjectSettings.h">
+    <Unit filename="../../Source/Common/Automation/easing/ui/EasingUI.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
-      <Option compile="0"/>
-      <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/GoogleAnalyticsDestination.h">
+    <Unit filename="../../Source/Common/Automation/easing/ui/EasingUI.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/AboutWindow.cpp">
+    <Unit filename="../../Source/Common/Automation/easing/Easing.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/AboutWindow.h">
+    <Unit filename="../../Source/Common/Automation/easing/Easing.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/ChataigneAssetManager.cpp">
+    <Unit filename="../../Source/Common/Automation/recorder/AutomationRecorder.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/ChataigneAssetManager.h">
+    <Unit filename="../../Source/Common/Automation/recorder/AutomationRecorder.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/ProcessorManagerUI.cpp">
+    <Unit filename="../../Source/Common/Automation/ui/AutomationEditor.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/ProcessorManagerUI.h">
+    <Unit filename="../../Source/Common/Automation/ui/AutomationEditor.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/ProcessorUI.cpp">
+    <Unit filename="../../Source/Common/Automation/ui/AutomationKeyUI.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/ProcessorUI.h">
+    <Unit filename="../../Source/Common/Automation/ui/AutomationKeyUI.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/MappingInputEditor.cpp">
+    <Unit filename="../../Source/Common/Automation/ui/AutomationMultiKeyTransformer.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/MappingInputEditor.h">
+    <Unit filename="../../Source/Common/Automation/ui/AutomationMultiKeyTransformer.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/MappingInput.cpp">
+    <Unit filename="../../Source/Common/Automation/ui/AutomationUI.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/MappingInput.h">
+    <Unit filename="../../Source/Common/Automation/ui/AutomationUI.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/MappingOutput.cpp">
+    <Unit filename="../../Source/Common/Automation/Automation.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/MappingOutput.h">
+    <Unit filename="../../Source/Common/Automation/Automation.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/MappingOutputManager.cpp">
+    <Unit filename="../../Source/Common/Automation/AutomationKey.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/MappingOutputManager.h">
+    <Unit filename="../../Source/Common/Automation/AutomationKey.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/MappingFilterEditor.cpp">
+    <Unit filename="../../Source/Common/Command/BaseCommand.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/MappingFilterEditor.h">
+    <Unit filename="../../Source/Common/Command/BaseCommand.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/CropFilter.cpp">
+    <Unit filename="../../Source/Common/Command/BaseCommandHandler.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/CropFilter.h">
+    <Unit filename="../../Source/Common/Command/BaseCommandHandler.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/CurveMapFilter.cpp">
+    <Unit filename="../../Source/Common/Command/CommandDefinition.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/CurveMapFilter.h">
+    <Unit filename="../../Source/Common/Command/CommandDefinition.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/InverseFilter.cpp">
+    <Unit filename="../../Source/Common/Command/CommandDefinitionManager.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/InverseFilter.h">
+    <Unit filename="../../Source/Common/Command/CommandDefinitionManager.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/LagFilter.cpp">
+    <Unit filename="../../Source/Common/Command/CommandFactory.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/LagFilter.h">
+    <Unit filename="../../Source/Common/Command/CommandFactory.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
+    </Unit>
+    <Unit filename="../../Source/Common/Command/ui/BaseCommandHandlerEditor.cpp">
+      <Option target="App | Debug"/>
+      <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/OffsetFilter.cpp">
+    <Unit filename="../../Source/Common/Command/ui/BaseCommandHandlerEditor.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
+      <Option compile="0"/>
+      <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/OffsetFilter.h">
+    <Unit filename="../../Source/Common/Command/ui/BaseCommandHandlerManagerEditor.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/ScriptFilter.cpp">
+    <Unit filename="../../Source/Common/Command/ui/CommandChooserUI.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/ScriptFilter.h">
+    <Unit filename="../../Source/Common/Command/ui/CommandChooserUI.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/SimpleRemapFilter.cpp">
+    <Unit filename="../../Source/Common/DMX/device/DMXArtNetDevice.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/SimpleRemapFilter.h">
+    <Unit filename="../../Source/Common/DMX/device/DMXArtNetDevice.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/SimpleSmoothFilter.cpp">
+    <Unit filename="../../Source/Common/DMX/device/DMXDevice.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/SimpleSmoothFilter.h">
+    <Unit filename="../../Source/Common/DMX/device/DMXDevice.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/MappingFilter.cpp">
+    <Unit filename="../../Source/Common/DMX/device/DMXEnttecProDevice.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/MappingFilter.h">
+    <Unit filename="../../Source/Common/DMX/device/DMXEnttecProDevice.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/MappingFilterManager.cpp">
+    <Unit filename="../../Source/Common/DMX/device/DMXOpenUSBDevice.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/MappingFilterManager.h">
+    <Unit filename="../../Source/Common/DMX/device/DMXOpenUSBDevice.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/MappingUI.cpp">
+    <Unit filename="../../Source/Common/DMX/device/DMXSerialDevice.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/MappingUI.h">
+    <Unit filename="../../Source/Common/DMX/device/DMXSerialDevice.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/Mapping.cpp">
+    <Unit filename="../../Source/Common/DMX/ui/DMXDashboard.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/Mapping.h">
+    <Unit filename="../../Source/Common/DMX/ui/DMXDashboard.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/Consequence.cpp">
+    <Unit filename="../../Source/Common/DMX/ui/DMXStateManagerUI.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/Consequence.h">
+    <Unit filename="../../Source/Common/DMX/ui/DMXStateManagerUI.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/ConsequenceManager.cpp">
+    <Unit filename="../../Source/Common/DMX/ui/DMXStateUI.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/ConsequenceManager.h">
+    <Unit filename="../../Source/Common/DMX/ui/DMXStateUI.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/ConditionGroup.cpp">
+    <Unit filename="../../Source/Common/DMX/DMXManager.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/ConditionGroup.h">
+    <Unit filename="../../Source/Common/DMX/DMXManager.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/StandardConditionEditor.cpp">
+    <Unit filename="../../Source/Common/DMX/DMXState.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/StandardConditionEditor.h">
+    <Unit filename="../../Source/Common/DMX/DMXState.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/StandardCondition.cpp">
+    <Unit filename="../../Source/Common/DMX/DMXStateManager.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/StandardCondition.h">
+    <Unit filename="../../Source/Common/DMX/DMXStateManager.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/ScriptCondition.cpp">
+    <Unit filename="../../Source/Common/MIDI/ui/MIDIDeviceChooser.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/ScriptCondition.h">
+    <Unit filename="../../Source/Common/MIDI/ui/MIDIDeviceChooser.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/BoolComparators.cpp">
+    <Unit filename="../../Source/Common/MIDI/ui/MIDIDeviceParameterUI.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/BoolComparators.h">
+    <Unit filename="../../Source/Common/MIDI/ui/MIDIDeviceParameterUI.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/EnumComparator.cpp">
+    <Unit filename="../../Source/Common/MIDI/MIDIDevice.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/EnumComparator.h">
+    <Unit filename="../../Source/Common/MIDI/MIDIDevice.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/NumberComparators.cpp">
+    <Unit filename="../../Source/Common/MIDI/MIDIDeviceParameter.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/NumberComparators.h">
+    <Unit filename="../../Source/Common/MIDI/MIDIDeviceParameter.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/Point2DComparators.cpp">
+    <Unit filename="../../Source/Common/MIDI/MIDIManager.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/Point2DComparators.h">
+    <Unit filename="../../Source/Common/MIDI/MIDIManager.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/Point3DComparators.cpp">
+    <Unit filename="../../Source/Common/Plugin/PluginManager.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/Point3DComparators.h">
+    <Unit filename="../../Source/Common/Plugin/PluginManager.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/StringComparators.cpp">
+    <Unit filename="../../Source/Common/Processor/Action/Condition/Comparator/comparators/BoolComparators.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/StringComparators.h">
+    <Unit filename="../../Source/Common/Processor/Action/Condition/Comparator/comparators/BoolComparators.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/BaseComparatorUI.cpp">
+    <Unit filename="../../Source/Common/Processor/Action/Condition/Comparator/comparators/EnumComparator.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/BaseComparatorUI.h">
+    <Unit filename="../../Source/Common/Processor/Action/Condition/Comparator/comparators/EnumComparator.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/BaseComparator.cpp">
+    <Unit filename="../../Source/Common/Processor/Action/Condition/Comparator/comparators/NumberComparators.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/BaseComparator.h">
+    <Unit filename="../../Source/Common/Processor/Action/Condition/Comparator/comparators/NumberComparators.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
+    </Unit>
+    <Unit filename="../../Source/Common/Processor/Action/Condition/Comparator/comparators/Point2DComparators.cpp">
+      <Option target="App | Debug"/>
+      <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/ComparatorFactory.h">
+    <Unit filename="../../Source/Common/Processor/Action/Condition/Comparator/comparators/Point2DComparators.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/ConditionEditor.cpp">
+    <Unit filename="../../Source/Common/Processor/Action/Condition/Comparator/comparators/Point3DComparators.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/ConditionEditor.h">
+    <Unit filename="../../Source/Common/Processor/Action/Condition/Comparator/comparators/Point3DComparators.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/ConditionManagerEditor.cpp">
+    <Unit filename="../../Source/Common/Processor/Action/Condition/Comparator/comparators/StringComparators.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/ConditionManagerEditor.h">
+    <Unit filename="../../Source/Common/Processor/Action/Condition/Comparator/comparators/StringComparators.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/Condition.cpp">
+    <Unit filename="../../Source/Common/Processor/Action/Condition/Comparator/ui/BaseComparatorUI.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/Condition.h">
+    <Unit filename="../../Source/Common/Processor/Action/Condition/Comparator/ui/BaseComparatorUI.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
+    </Unit>
+    <Unit filename="../../Source/Common/Processor/Action/Condition/Comparator/BaseComparator.cpp">
+      <Option target="App | Debug"/>
+      <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/ConditionManager.cpp">
+    <Unit filename="../../Source/Common/Processor/Action/Condition/Comparator/BaseComparator.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
+      <Option compile="0"/>
+      <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/ConditionManager.h">
+    <Unit filename="../../Source/Common/Processor/Action/Condition/Comparator/ComparatorFactory.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/ActionUI.cpp">
+    <Unit filename="../../Source/Common/Processor/Action/Condition/conditions/ConditionGroup/ConditionGroup.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/ActionUI.h">
+    <Unit filename="../../Source/Common/Processor/Action/Condition/conditions/ConditionGroup/ConditionGroup.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/Action.cpp">
+    <Unit filename="../../Source/Common/Processor/Action/Condition/conditions/StandardCondition/ui/StandardConditionEditor.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/Action.h">
+    <Unit filename="../../Source/Common/Processor/Action/Condition/conditions/StandardCondition/ui/StandardConditionEditor.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/Processor.cpp">
+    <Unit filename="../../Source/Common/Processor/Action/Condition/conditions/StandardCondition/StandardCondition.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/Processor.h">
+    <Unit filename="../../Source/Common/Processor/Action/Condition/conditions/StandardCondition/StandardCondition.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/ProcessorManager.cpp">
+    <Unit filename="../../Source/Common/Processor/Action/Condition/conditions/ScriptCondition/ScriptCondition.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/ProcessorManager.h">
+    <Unit filename="../../Source/Common/Processor/Action/Condition/conditions/ScriptCondition/ScriptCondition.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/DMXArtNetDevice.cpp">
+    <Unit filename="../../Source/Common/Processor/Action/Condition/ui/ConditionEditor.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/DMXArtNetDevice.h">
+    <Unit filename="../../Source/Common/Processor/Action/Condition/ui/ConditionEditor.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/DMXDevice.cpp">
+    <Unit filename="../../Source/Common/Processor/Action/Condition/ui/ConditionManagerEditor.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/DMXDevice.h">
+    <Unit filename="../../Source/Common/Processor/Action/Condition/ui/ConditionManagerEditor.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/DMXEnttecProDevice.cpp">
+    <Unit filename="../../Source/Common/Processor/Action/Condition/Condition.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/DMXEnttecProDevice.h">
+    <Unit filename="../../Source/Common/Processor/Action/Condition/Condition.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/DMXOpenUSBDevice.cpp">
+    <Unit filename="../../Source/Common/Processor/Action/Condition/ConditionManager.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/DMXOpenUSBDevice.h">
+    <Unit filename="../../Source/Common/Processor/Action/Condition/ConditionManager.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/DMXSerialDevice.cpp">
+    <Unit filename="../../Source/Common/Processor/Action/Consequence/Consequence.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/DMXSerialDevice.h">
+    <Unit filename="../../Source/Common/Processor/Action/Consequence/Consequence.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/DMXDashboard.cpp">
+    <Unit filename="../../Source/Common/Processor/Action/Consequence/ConsequenceManager.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/DMXDashboard.h">
+    <Unit filename="../../Source/Common/Processor/Action/Consequence/ConsequenceManager.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/DMXStateManagerUI.cpp">
+    <Unit filename="../../Source/Common/Processor/Action/ui/ActionUI.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/DMXStateManagerUI.h">
+    <Unit filename="../../Source/Common/Processor/Action/ui/ActionUI.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/DMXStateUI.cpp">
+    <Unit filename="../../Source/Common/Processor/Action/Action.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/DMXStateUI.h">
+    <Unit filename="../../Source/Common/Processor/Action/Action.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/DMXManager.cpp">
+    <Unit filename="../../Source/Common/Processor/Mapping/Filter/MappingFilter.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/DMXManager.h">
+    <Unit filename="../../Source/Common/Processor/Mapping/Filter/MappingFilter.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/DMXState.cpp">
+    <Unit filename="../../Source/Common/Processor/Mapping/Filter/MappingFilterManager.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/DMXState.h">
+    <Unit filename="../../Source/Common/Processor/Mapping/Filter/MappingFilterManager.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/DMXStateManager.cpp">
+    <Unit filename="../../Source/Common/Processor/Mapping/Filter/ui/MappingFilterEditor.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/DMXStateManager.h">
+    <Unit filename="../../Source/Common/Processor/Mapping/Filter/ui/MappingFilterEditor.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/cobs/cobs.cpp">
+    <Unit filename="../../Source/Common/Processor/Mapping/Filter/filters/CropFilter.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/cobs/cobs.h">
+    <Unit filename="../../Source/Common/Processor/Mapping/Filter/filters/CropFilter.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/serial/impl/list_ports/list_ports_linux.cc">
+    <Unit filename="../../Source/Common/Processor/Mapping/Filter/filters/CurveMapFilter.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/serial/impl/list_ports/list_ports_osx.cc">
+    <Unit filename="../../Source/Common/Processor/Mapping/Filter/filters/CurveMapFilter.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
+      <Option compile="0"/>
+      <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/serial/impl/list_ports/list_ports_win.cc">
+    <Unit filename="../../Source/Common/Processor/Mapping/Filter/filters/InverseFilter.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/serial/impl/unix.cc">
+    <Unit filename="../../Source/Common/Processor/Mapping/Filter/filters/InverseFilter.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
+      <Option compile="0"/>
+      <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/serial/impl/win.cc">
+    <Unit filename="../../Source/Common/Processor/Mapping/Filter/filters/LagFilter.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/serial/serial.cc">
+    <Unit filename="../../Source/Common/Processor/Mapping/Filter/filters/LagFilter.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
+      <Option compile="0"/>
+      <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/SerialDevice.cpp">
+    <Unit filename="../../Source/Common/Processor/Mapping/Filter/filters/OffsetFilter.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/SerialDevice.h">
+    <Unit filename="../../Source/Common/Processor/Mapping/Filter/filters/OffsetFilter.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/SerialDeviceParameter.cpp">
+    <Unit filename="../../Source/Common/Processor/Mapping/Filter/filters/ScriptFilter.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/SerialDeviceParameter.h">
+    <Unit filename="../../Source/Common/Processor/Mapping/Filter/filters/ScriptFilter.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/SerialManager.cpp">
+    <Unit filename="../../Source/Common/Processor/Mapping/Filter/filters/SimpleRemapFilter.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/SerialManager.h">
+    <Unit filename="../../Source/Common/Processor/Mapping/Filter/filters/SimpleRemapFilter.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/PluginManager.cpp">
+    <Unit filename="../../Source/Common/Processor/Mapping/Filter/filters/SimpleSmoothFilter.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/PluginManager.h">
+    <Unit filename="../../Source/Common/Processor/Mapping/Filter/filters/SimpleSmoothFilter.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/AutomationRecorder.cpp">
+    <Unit filename="../../Source/Common/Processor/Mapping/Input/ui/MappingInputEditor.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/AutomationRecorder.h">
+    <Unit filename="../../Source/Common/Processor/Mapping/Input/ui/MappingInputEditor.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/EasingUI.cpp">
+    <Unit filename="../../Source/Common/Processor/Mapping/Input/MappingInput.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/EasingUI.h">
+    <Unit filename="../../Source/Common/Processor/Mapping/Input/MappingInput.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/Easing.cpp">
+    <Unit filename="../../Source/Common/Processor/Mapping/Output/MappingOutput.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/Easing.h">
+    <Unit filename="../../Source/Common/Processor/Mapping/Output/MappingOutput.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/AutomationEditor.cpp">
+    <Unit filename="../../Source/Common/Processor/Mapping/Output/MappingOutputManager.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/AutomationEditor.h">
+    <Unit filename="../../Source/Common/Processor/Mapping/Output/MappingOutputManager.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/AutomationKeyUI.cpp">
+    <Unit filename="../../Source/Common/Processor/Mapping/ui/MappingUI.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/AutomationKeyUI.h">
+    <Unit filename="../../Source/Common/Processor/Mapping/ui/MappingUI.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/AutomationMultiKeyTransformer.cpp">
+    <Unit filename="../../Source/Common/Processor/Mapping/Mapping.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/AutomationMultiKeyTransformer.h">
+    <Unit filename="../../Source/Common/Processor/Mapping/Mapping.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/AutomationUI.cpp">
+    <Unit filename="../../Source/Common/Processor/ui/ProcessorManagerUI.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/AutomationUI.h">
+    <Unit filename="../../Source/Common/Processor/ui/ProcessorManagerUI.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/Automation.cpp">
+    <Unit filename="../../Source/Common/Processor/ui/ProcessorUI.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/Automation.h">
+    <Unit filename="../../Source/Common/Processor/ui/ProcessorUI.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/AutomationKey.cpp">
+    <Unit filename="../../Source/Common/Processor/Processor.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/AutomationKey.h">
+    <Unit filename="../../Source/Common/Processor/Processor.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/BaseCommandHandlerManagerEditor.h">
+    <Unit filename="../../Source/Common/Processor/ProcessorManager.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
-      <Option compile="0"/>
-      <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/BaseCommandHandlerEditor.cpp">
+    <Unit filename="../../Source/Common/Processor/ProcessorManager.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
+      <Option compile="0"/>
+      <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/CommandChooserUI.cpp">
+    <Unit filename="../../Source/Common/Serial/lib/cobs/cobs.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/CommandChooserUI.h">
+    <Unit filename="../../Source/Common/Serial/lib/cobs/cobs.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/BaseCommandHandlerEditor.h">
+    <Unit filename="../../Source/Common/Serial/lib/serial/serial.cc">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
-      <Option compile="0"/>
-      <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/BaseCommandHandler.cpp">
+    <Unit filename="../../Source/Common/Serial/lib/serial/impl/list_ports/list_ports_linux.cc">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/BaseCommandHandler.h">
+    <Unit filename="../../Source/Common/Serial/lib/serial/impl/list_ports/list_ports_osx.cc">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
-      <Option compile="0"/>
-      <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/CommandDefinition.cpp">
+    <Unit filename="../../Source/Common/Serial/lib/serial/impl/list_ports/list_ports_win.cc">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/CommandDefinition.h">
+    <Unit filename="../../Source/Common/Serial/lib/serial/impl/unix.cc">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
-      <Option compile="0"/>
-      <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/CommandFactory.cpp">
+    <Unit filename="../../Source/Common/Serial/lib/serial/impl/win.cc">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/CommandDefinitionManager.cpp">
+    <Unit filename="../../Source/Common/Serial/SerialDevice.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/CommandDefinitionManager.h">
+    <Unit filename="../../Source/Common/Serial/SerialDevice.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/BaseCommand.cpp">
+    <Unit filename="../../Source/Common/Serial/SerialDeviceParameter.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/BaseCommand.h">
+    <Unit filename="../../Source/Common/Serial/SerialDeviceParameter.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
+    </Unit>
+    <Unit filename="../../Source/Common/Serial/SerialManager.cpp">
+      <Option target="App | Debug"/>
+      <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/CommandFactory.h">
+    <Unit filename="../../Source/Common/Serial/SerialManager.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/MIDIDeviceChooser.cpp">
+    <Unit filename="../../Source/CustomVariables/Preset/CVGroupPreset.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/MIDIDeviceChooser.h">
+    <Unit filename="../../Source/CustomVariables/Preset/CVGroupPreset.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/MIDIDeviceParameterUI.cpp">
+    <Unit filename="../../Source/CustomVariables/ui/CVGroupView.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/MIDIDeviceParameterUI.h">
+    <Unit filename="../../Source/CustomVariables/ui/CVGroupView.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/MIDIDevice.cpp">
+    <Unit filename="../../Source/CustomVariables/ui/CVPanel.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/MIDIDevice.h">
+    <Unit filename="../../Source/CustomVariables/ui/CVPanel.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/MIDIDeviceParameter.cpp">
+    <Unit filename="../../Source/CustomVariables/CVGroup.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/MIDIDeviceParameter.h">
+    <Unit filename="../../Source/CustomVariables/CVGroup.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/MIDIManager.cpp">
+    <Unit filename="../../Source/Module/modules/audio/libs/pitch/PitchMPM.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
+      <Option compile="0"/>
+      <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/MIDIManager.h">
+    <Unit filename="../../Source/Module/modules/audio/libs/pitch/PitchYIN.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/ModuleRouterPanelView.cpp">
+    <Unit filename="../../Source/Module/modules/audio/ui/AudioModuleHardwareEditor.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/ModuleRouterPanelView.h">
+    <Unit filename="../../Source/Module/modules/audio/ui/AudioModuleHardwareEditor.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/ModuleRouterValueEditor.cpp">
+    <Unit filename="../../Source/Module/modules/audio/AudioModule.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/ModuleRouterValueEditor.h">
+    <Unit filename="../../Source/Module/modules/audio/AudioModule.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/ModuleRouterView.cpp">
+    <Unit filename="../../Source/Module/modules/common/commands/customvalues/ui/CustomValuesCommandArgumentEditor.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/ModuleRouterView.h">
+    <Unit filename="../../Source/Module/modules/common/commands/customvalues/ui/CustomValuesCommandArgumentEditor.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/ModuleRouterValue.cpp">
+    <Unit filename="../../Source/Module/modules/common/commands/customvalues/ui/CustomValuesCommandArgumentManagerEditor.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/ModuleRouterValue.h">
+    <Unit filename="../../Source/Module/modules/common/commands/customvalues/ui/CustomValuesCommandArgumentManagerEditor.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/ModuleRouter.cpp">
+    <Unit filename="../../Source/Module/modules/common/commands/customvalues/CustomValuesCommandArgument.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/ModuleRouter.h">
+    <Unit filename="../../Source/Module/modules/common/commands/customvalues/CustomValuesCommandArgument.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/ModuleRouterManager.cpp">
+    <Unit filename="../../Source/Module/modules/common/commands/customvalues/CustomValuesCommandArgumentManager.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/ModuleRouterManager.h">
+    <Unit filename="../../Source/Module/modules/common/commands/customvalues/CustomValuesCommandArgumentManager.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/CustomValuesCommandArgumentEditor.cpp">
+    <Unit filename="../../Source/Module/modules/common/streaming/commands/SendStreamRawDataCommand.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/CustomValuesCommandArgumentEditor.h">
+    <Unit filename="../../Source/Module/modules/common/streaming/commands/SendStreamRawDataCommand.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/CustomValuesCommandArgumentManagerEditor.cpp">
+    <Unit filename="../../Source/Module/modules/common/streaming/commands/SendStreamStringCommand.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/CustomValuesCommandArgumentManagerEditor.h">
+    <Unit filename="../../Source/Module/modules/common/streaming/commands/SendStreamStringCommand.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/CustomValuesCommandArgumentManager.cpp">
+    <Unit filename="../../Source/Module/modules/common/streaming/commands/SendStreamValuesCommand.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/CustomValuesCommandArgumentManager.h">
+    <Unit filename="../../Source/Module/modules/common/streaming/commands/SendStreamValuesCommand.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/CustomValuesCommandArgument.cpp">
+    <Unit filename="../../Source/Module/modules/common/streaming/commands/StreamingCommand.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/CustomValuesCommandArgument.h">
+    <Unit filename="../../Source/Module/modules/common/streaming/commands/StreamingCommand.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/EnablingNetworkControllableContainerEditor.cpp">
+    <Unit filename="../../Source/Module/modules/common/streaming/NetworkStreamingModule.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/EnablingNetworkControllableContainerEditor.h">
+    <Unit filename="../../Source/Module/modules/common/streaming/NetworkStreamingModule.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/SendStreamRawDataCommand.cpp">
+    <Unit filename="../../Source/Module/modules/common/streaming/StreamingModule.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/SendStreamRawDataCommand.h">
+    <Unit filename="../../Source/Module/modules/common/streaming/StreamingModule.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/SendStreamStringCommand.cpp">
+    <Unit filename="../../Source/Module/modules/common/ui/EnablingNetworkControllableContainerEditor.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/SendStreamStringCommand.h">
+    <Unit filename="../../Source/Module/modules/common/ui/EnablingNetworkControllableContainerEditor.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/SendStreamValuesCommand.cpp">
+    <Unit filename="../../Source/Module/modules/controller/gamepad/GamepadManager.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/SendStreamValuesCommand.h">
+    <Unit filename="../../Source/Module/modules/controller/gamepad/GamepadManager.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/StreamingCommand.cpp">
+    <Unit filename="../../Source/Module/modules/controller/gamepad/GamepadModule.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/StreamingCommand.h">
+    <Unit filename="../../Source/Module/modules/controller/gamepad/GamepadModule.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/NetworkStreamingModule.cpp">
+    <Unit filename="../../Source/Module/modules/controller/hid/HIDModule.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/NetworkStreamingModule.h">
+    <Unit filename="../../Source/Module/modules/controller/hid/HIDModule.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/StreamingModule.cpp">
+    <Unit filename="../../Source/Module/modules/controller/joycon/JoyConModule.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/StreamingModule.h">
+    <Unit filename="../../Source/Module/modules/controller/joycon/JoyConModule.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/OSExecCommand.cpp">
+    <Unit filename="../../Source/Module/modules/controller/kinect/KinectV2Module.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/OSExecCommand.h">
+    <Unit filename="../../Source/Module/modules/controller/kinect/KinectV2Module.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/OSPowerCommand.cpp">
+    <Unit filename="../../Source/Module/modules/controller/myo/MyoDevice.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/OSPowerCommand.h">
+    <Unit filename="../../Source/Module/modules/controller/myo/MyoDevice.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/OSModule.cpp">
+    <Unit filename="../../Source/Module/modules/controller/myo/MyoManager.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/OSModule.h">
+    <Unit filename="../../Source/Module/modules/controller/myo/MyoManager.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/TimeModule.cpp">
+    <Unit filename="../../Source/Module/modules/controller/myo/MyoModule.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/TimeModule.h">
+    <Unit filename="../../Source/Module/modules/controller/myo/MyoModule.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/UDPModule.cpp">
+    <Unit filename="../../Source/Module/modules/controller/wiimote/lib/wiiuse/os_mac/os_mac.c">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/UDPModule.h">
+    <Unit filename="../../Source/Module/modules/controller/wiimote/lib/wiiuse/os_mac/os_mac.m">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
-      <Option compile="0"/>
-      <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/PerlinNoise.hpp">
+    <Unit filename="../../Source/Module/modules/controller/wiimote/lib/wiiuse/os_mac/os_mac_find.m">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
-      <Option compile="0"/>
-      <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/SignalModule.cpp">
+    <Unit filename="../../Source/Module/modules/controller/wiimote/lib/wiiuse/os_mac/os_mac_interface.m">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/SignalModule.h">
+    <Unit filename="../../Source/Module/modules/controller/wiimote/lib/wiiuse/classic.c">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
-      <Option compile="0"/>
-      <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/MetronomeModule.cpp">
+    <Unit filename="../../Source/Module/modules/controller/wiimote/lib/wiiuse/dynamics.c">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/MetronomeModule.h">
+    <Unit filename="../../Source/Module/modules/controller/wiimote/lib/wiiuse/events.c">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
-      <Option compile="0"/>
-      <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/PJLinkModule.cpp">
+    <Unit filename="../../Source/Module/modules/controller/wiimote/lib/wiiuse/guitar_hero_3.c">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/PJLinkModule.h">
+    <Unit filename="../../Source/Module/modules/controller/wiimote/lib/wiiuse/io.c">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
-      <Option compile="0"/>
-      <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/WatchoutCommand.cpp">
+    <Unit filename="../../Source/Module/modules/controller/wiimote/lib/wiiuse/ir.c">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/WatchoutCommand.h">
+    <Unit filename="../../Source/Module/modules/controller/wiimote/lib/wiiuse/motion_plus.c">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
-      <Option compile="0"/>
-      <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/WatchoutModule.cpp">
+    <Unit filename="../../Source/Module/modules/controller/wiimote/lib/wiiuse/nunchuk.c">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/WatchoutModule.h">
+    <Unit filename="../../Source/Module/modules/controller/wiimote/lib/wiiuse/os_nix.c">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
-      <Option compile="0"/>
-      <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/VLCModule.cpp">
+    <Unit filename="../../Source/Module/modules/controller/wiimote/lib/wiiuse/os_win.c">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/VLCModule.h">
+    <Unit filename="../../Source/Module/modules/controller/wiimote/lib/wiiuse/util.c">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
-      <Option compile="0"/>
-      <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/TCPModule.cpp">
+    <Unit filename="../../Source/Module/modules/controller/wiimote/lib/wiiuse/wiiboard.c">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/TCPModule.h">
+    <Unit filename="../../Source/Module/modules/controller/wiimote/lib/wiiuse/wiiuse.c">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
-      <Option compile="0"/>
-      <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/JoyConModule.cpp">
+    <Unit filename="../../Source/Module/modules/controller/wiimote/WiimoteManager.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/JoyConModule.h">
+    <Unit filename="../../Source/Module/modules/controller/wiimote/WiimoteManager.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/MyoDevice.cpp">
+    <Unit filename="../../Source/Module/modules/controller/wiimote/WiimoteModule.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/MyoDevice.h">
+    <Unit filename="../../Source/Module/modules/controller/wiimote/WiimoteModule.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/MyoManager.cpp">
+    <Unit filename="../../Source/Module/modules/controller/wiimote/WiimotePairUtil.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/MyoManager.h">
+    <Unit filename="../../Source/Module/modules/controller/wiimote/WiimotePairUtil.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/MyoModule.cpp">
+    <Unit filename="../../Source/Module/modules/dmx/commands/DMXCommand.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/MyoModule.h">
+    <Unit filename="../../Source/Module/modules/dmx/commands/DMXCommand.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/KinectV2Module.cpp">
+    <Unit filename="../../Source/Module/modules/dmx/DMXModule.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/KinectV2Module.h">
+    <Unit filename="../../Source/Module/modules/dmx/DMXModule.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/wiiuse/os_mac/os_mac.c">
+    <Unit filename="../../Source/Module/modules/generators/metronome/MetronomeModule.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/wiiuse/os_mac/os_mac.m">
+    <Unit filename="../../Source/Module/modules/generators/metronome/MetronomeModule.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
+      <Option compile="0"/>
+      <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/wiiuse/os_mac/os_mac_find.m">
+    <Unit filename="../../Source/Module/modules/generators/signal/PerlinNoise.hpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
+      <Option compile="0"/>
+      <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/wiiuse/os_mac/os_mac_interface.m">
+    <Unit filename="../../Source/Module/modules/generators/signal/SignalModule.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/wiiuse/classic.c">
+    <Unit filename="../../Source/Module/modules/generators/signal/SignalModule.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
+      <Option compile="0"/>
+      <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/wiiuse/dynamics.c">
+    <Unit filename="../../Source/Module/modules/generic/commands/GenericControllableCommand.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/wiiuse/events.c">
+    <Unit filename="../../Source/Module/modules/generic/commands/GenericControllableCommand.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
+      <Option compile="0"/>
+      <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/wiiuse/guitar_hero_3.c">
+    <Unit filename="../../Source/Module/modules/generic/ChataigneGenericModule.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/wiiuse/io.c">
+    <Unit filename="../../Source/Module/modules/generic/ChataigneGenericModule.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
+      <Option compile="0"/>
+      <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/wiiuse/ir.c">
+    <Unit filename="../../Source/Module/modules/midi/commands/MIDICommands.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/wiiuse/motion_plus.c">
+    <Unit filename="../../Source/Module/modules/midi/commands/MIDICommands.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
+      <Option compile="0"/>
+      <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/wiiuse/nunchuk.c">
+    <Unit filename="../../Source/Module/modules/midi/Launchpad/LaunchpadModule.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/wiiuse/os_nix.c">
+    <Unit filename="../../Source/Module/modules/midi/Launchpad/LaunchpadModule.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
+      <Option compile="0"/>
+      <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/wiiuse/os_win.c">
+    <Unit filename="../../Source/Module/modules/midi/MIDIModule.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/wiiuse/util.c">
+    <Unit filename="../../Source/Module/modules/midi/MIDIModule.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
+      <Option compile="0"/>
+      <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/wiiuse/wiiboard.c">
+    <Unit filename="../../Source/Module/modules/osc/commands/OSCCommand.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/wiiuse/wiiuse.c">
+    <Unit filename="../../Source/Module/modules/osc/commands/OSCCommand.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
+      <Option compile="0"/>
+      <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/WiimoteManager.cpp">
+    <Unit filename="../../Source/Module/modules/osc/custom/commands/user/model/ui/UserOSCCommandModelEditor.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/WiimoteManager.h">
+    <Unit filename="../../Source/Module/modules/osc/custom/commands/user/model/ui/UserOSCCommandModelEditor.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/WiimoteModule.cpp">
+    <Unit filename="../../Source/Module/modules/osc/custom/commands/user/model/ui/UserOSCCommandModelManagerUI.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/WiimoteModule.h">
+    <Unit filename="../../Source/Module/modules/osc/custom/commands/user/model/ui/UserOSCCommandModelManagerUI.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/WiimotePairUtil.cpp">
+    <Unit filename="../../Source/Module/modules/osc/custom/commands/user/model/ui/UserOSCCommandModelUI.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/WiimotePairUtil.h">
+    <Unit filename="../../Source/Module/modules/osc/custom/commands/user/model/ui/UserOSCCommandModelUI.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/GenericControllableCommand.cpp">
+    <Unit filename="../../Source/Module/modules/osc/custom/commands/user/model/UserOSCCommandModel.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/GenericControllableCommand.h">
+    <Unit filename="../../Source/Module/modules/osc/custom/commands/user/model/UserOSCCommandModel.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/ChataigneGenericModule.cpp">
+    <Unit filename="../../Source/Module/modules/osc/custom/commands/user/model/UserOSCCommandModelManager.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/ChataigneGenericModule.h">
+    <Unit filename="../../Source/Module/modules/osc/custom/commands/user/model/UserOSCCommandModelManager.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/DMXCommand.cpp">
+    <Unit filename="../../Source/Module/modules/osc/custom/commands/user/ui/UserOSCCommandEditor.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/DMXCommand.h">
+    <Unit filename="../../Source/Module/modules/osc/custom/commands/user/ui/UserOSCCommandEditor.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/DMXModule.cpp">
+    <Unit filename="../../Source/Module/modules/osc/custom/commands/user/UserOSCCommand.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/DMXModule.h">
+    <Unit filename="../../Source/Module/modules/osc/custom/commands/user/UserOSCCommand.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/SerialModule.cpp">
+    <Unit filename="../../Source/Module/modules/osc/custom/commands/CustomOSCCommand.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/SerialModule.h">
+    <Unit filename="../../Source/Module/modules/osc/custom/commands/CustomOSCCommand.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/StateCommand.cpp">
+    <Unit filename="../../Source/Module/modules/osc/custom/CustomOSCModule.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/StateCommand.h">
+    <Unit filename="../../Source/Module/modules/osc/custom/CustomOSCModule.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/StateModule.cpp">
+    <Unit filename="../../Source/Module/modules/osc/dlight/DLightModule.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/StateModule.h">
+    <Unit filename="../../Source/Module/modules/osc/dlight/DLightModule.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/SequenceCommand.cpp">
+    <Unit filename="../../Source/Module/modules/osc/live/commands/LiveOSCCommandBase.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/SequenceCommand.h">
+    <Unit filename="../../Source/Module/modules/osc/live/commands/LiveOSCCommandBase.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/SequenceModule.cpp">
+    <Unit filename="../../Source/Module/modules/osc/live/commands/LiveOSCSceneCommand.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/SequenceModule.h">
+    <Unit filename="../../Source/Module/modules/osc/live/commands/LiveOSCSceneCommand.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/AudioModuleHardwareEditor.cpp">
+    <Unit filename="../../Source/Module/modules/osc/live/LiveOSCModule.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/AudioModuleHardwareEditor.h">
+    <Unit filename="../../Source/Module/modules/osc/live/LiveOSCModule.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/pitch/PitchMPM.h">
+    <Unit filename="../../Source/Module/modules/osc/millumin/MilluminModule.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
-      <Option compile="0"/>
-      <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/pitch/PitchYIN.h">
+    <Unit filename="../../Source/Module/modules/osc/millumin/MilluminModule.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/AudioModule.cpp">
+    <Unit filename="../../Source/Module/modules/osc/reaper/commands/ui/ReaperTimeCommandUI.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/AudioModule.h">
+    <Unit filename="../../Source/Module/modules/osc/reaper/commands/ui/ReaperTimeCommandUI.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/GamepadManager.cpp">
+    <Unit filename="../../Source/Module/modules/osc/reaper/commands/ReaperTimeCommand.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/GamepadManager.h">
+    <Unit filename="../../Source/Module/modules/osc/reaper/commands/ReaperTimeCommand.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/GamepadModule.cpp">
+    <Unit filename="../../Source/Module/modules/osc/reaper/ReaperModule.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/GamepadModule.h">
+    <Unit filename="../../Source/Module/modules/osc/reaper/ReaperModule.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/HIDModule.cpp">
+    <Unit filename="../../Source/Module/modules/osc/resolume/commands/ui/ResolumeBaseCommandEditor.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/HIDModule.h">
+    <Unit filename="../../Source/Module/modules/osc/resolume/commands/ui/ResolumeBaseCommandEditor.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/LaunchpadModule.cpp">
+    <Unit filename="../../Source/Module/modules/osc/resolume/commands/ResolumeBaseCommand.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/LaunchpadModule.h">
+    <Unit filename="../../Source/Module/modules/osc/resolume/commands/ResolumeBaseCommand.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/MIDICommands.cpp">
+    <Unit filename="../../Source/Module/modules/osc/resolume/commands/ResolumeClipCommand.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/MIDICommands.h">
+    <Unit filename="../../Source/Module/modules/osc/resolume/commands/ResolumeClipCommand.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/MIDIModule.cpp">
+    <Unit filename="../../Source/Module/modules/osc/resolume/commands/ResolumeFXCommand.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/MIDIModule.h">
+    <Unit filename="../../Source/Module/modules/osc/resolume/commands/ResolumeFXCommand.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/MadMapperModule.cpp">
+    <Unit filename="../../Source/Module/modules/osc/resolume/ResolumeModule.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/MadMapperModule.h">
+    <Unit filename="../../Source/Module/modules/osc/resolume/ResolumeModule.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/DLightModule.cpp">
+    <Unit filename="../../Source/Module/modules/osc/OSCModule.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/DLightModule.h">
+    <Unit filename="../../Source/Module/modules/osc/OSCModule.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/MilluminModule.cpp">
+    <Unit filename="../../Source/Module/modules/sequence/commands/SequenceCommand.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/MilluminModule.h">
+    <Unit filename="../../Source/Module/modules/sequence/commands/SequenceCommand.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/LiveOSCCommandBase.cpp">
+    <Unit filename="../../Source/Module/modules/sequence/SequenceModule.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/LiveOSCCommandBase.h">
+    <Unit filename="../../Source/Module/modules/sequence/SequenceModule.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/LiveOSCSceneCommand.cpp">
+    <Unit filename="../../Source/Module/modules/serial/SerialModule.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/LiveOSCSceneCommand.h">
+    <Unit filename="../../Source/Module/modules/serial/SerialModule.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/LiveOSCModule.cpp">
+    <Unit filename="../../Source/Module/modules/state/commands/StateCommand.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/LiveOSCModule.h">
+    <Unit filename="../../Source/Module/modules/state/commands/StateCommand.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/ReaperTimeCommandUI.cpp">
+    <Unit filename="../../Source/Module/modules/state/StateModule.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/ReaperTimeCommandUI.h">
+    <Unit filename="../../Source/Module/modules/state/StateModule.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/ReaperTimeCommand.cpp">
+    <Unit filename="../../Source/Module/modules/system/os/commands/OSExecCommand.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/ReaperTimeCommand.h">
+    <Unit filename="../../Source/Module/modules/system/os/commands/OSExecCommand.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/ReaperModule.cpp">
+    <Unit filename="../../Source/Module/modules/system/os/commands/OSPowerCommand.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/ReaperModule.h">
+    <Unit filename="../../Source/Module/modules/system/os/commands/OSPowerCommand.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/OSCCommand.cpp">
+    <Unit filename="../../Source/Module/modules/system/os/OSModule.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/OSCCommand.h">
+    <Unit filename="../../Source/Module/modules/system/os/OSModule.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/UserOSCCommandModel.cpp">
+    <Unit filename="../../Source/Module/modules/system/time/TimeModule.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/UserOSCCommandModel.h">
+    <Unit filename="../../Source/Module/modules/system/time/TimeModule.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/UserOSCCommandModelManager.cpp">
+    <Unit filename="../../Source/Module/modules/tcp/pjlink/PJLinkModule.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/UserOSCCommandModelManager.h">
+    <Unit filename="../../Source/Module/modules/tcp/pjlink/PJLinkModule.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/UserOSCCommandModelEditor.cpp">
+    <Unit filename="../../Source/Module/modules/tcp/vlc/VLCModule.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/UserOSCCommandModelEditor.h">
+    <Unit filename="../../Source/Module/modules/tcp/vlc/VLCModule.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/UserOSCCommandModelManagerUI.cpp">
+    <Unit filename="../../Source/Module/modules/tcp/watchout/commands/WatchoutCommand.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/UserOSCCommandModelManagerUI.h">
+    <Unit filename="../../Source/Module/modules/tcp/watchout/commands/WatchoutCommand.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/UserOSCCommandModelUI.cpp">
+    <Unit filename="../../Source/Module/modules/tcp/watchout/WatchoutModule.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/UserOSCCommandModelUI.h">
+    <Unit filename="../../Source/Module/modules/tcp/watchout/WatchoutModule.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/UserOSCCommandEditor.cpp">
+    <Unit filename="../../Source/Module/modules/tcp/TCPModule.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/UserOSCCommandEditor.h">
+    <Unit filename="../../Source/Module/modules/tcp/TCPModule.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/UserOSCCommand.cpp">
+    <Unit filename="../../Source/Module/modules/udp/UDPModule.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/UserOSCCommand.h">
+    <Unit filename="../../Source/Module/modules/udp/UDPModule.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/CustomOSCCommand.cpp">
+    <Unit filename="../../Source/Module/Routing/ui/ModuleRouterPanelView.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/CustomOSCCommand.h">
+    <Unit filename="../../Source/Module/Routing/ui/ModuleRouterPanelView.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/CustomOSCModule.cpp">
+    <Unit filename="../../Source/Module/Routing/ui/ModuleRouterValueEditor.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/CustomOSCModule.h">
+    <Unit filename="../../Source/Module/Routing/ui/ModuleRouterValueEditor.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/ResolumeBaseCommandEditor.cpp">
+    <Unit filename="../../Source/Module/Routing/ui/ModuleRouterView.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/ResolumeBaseCommandEditor.h">
+    <Unit filename="../../Source/Module/Routing/ui/ModuleRouterView.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/ResolumeBaseCommand.cpp">
+    <Unit filename="../../Source/Module/Routing/ModuleRouter.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/ResolumeBaseCommand.h">
+    <Unit filename="../../Source/Module/Routing/ModuleRouter.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/ResolumeClipCommand.cpp">
+    <Unit filename="../../Source/Module/Routing/ModuleRouterManager.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/ResolumeClipCommand.h">
+    <Unit filename="../../Source/Module/Routing/ModuleRouterManager.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/ResolumeFXCommand.cpp">
+    <Unit filename="../../Source/Module/Routing/ModuleRouterValue.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/ResolumeFXCommand.h">
+    <Unit filename="../../Source/Module/Routing/ModuleRouterValue.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/ResolumeModule.cpp">
+    <Unit filename="../../Source/Module/ui/ModuleChooserUI.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/ResolumeModule.h">
+    <Unit filename="../../Source/Module/ui/ModuleChooserUI.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/OSCModule.cpp">
+    <Unit filename="../../Source/Module/ui/ModuleEditor.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/OSCModule.h">
+    <Unit filename="../../Source/Module/ui/ModuleEditor.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/ModuleChooserUI.cpp">
+    <Unit filename="../../Source/Module/ui/ModuleManagerUI.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/ModuleChooserUI.h">
+    <Unit filename="../../Source/Module/ui/ModuleManagerUI.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/ModuleEditor.cpp">
+    <Unit filename="../../Source/Module/ui/ModuleUI.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/ModuleEditor.h">
+    <Unit filename="../../Source/Module/ui/ModuleUI.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/ModuleManagerUI.cpp">
+    <Unit filename="../../Source/Module/Module.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/ModuleManagerUI.h">
+    <Unit filename="../../Source/Module/Module.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/ModuleUI.cpp">
+    <Unit filename="../../Source/Module/ModuleFactory.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/ModuleUI.h">
+    <Unit filename="../../Source/Module/ModuleFactory.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/ModuleManager.cpp">
+    <Unit filename="../../Source/Module/ModuleManager.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/ModuleManager.h">
+    <Unit filename="../../Source/Module/ModuleManager.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/ModuleFactory.cpp">
+    <Unit filename="../../Source/Project/ProjectSettings.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/ModuleFactory.h">
+    <Unit filename="../../Source/Project/ProjectSettings.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/Module.cpp">
+    <Unit filename="../../Source/StateMachine/State/ui/StateUI.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/Module.h">
+    <Unit filename="../../Source/StateMachine/State/ui/StateUI.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/StateViewUI.cpp">
+    <Unit filename="../../Source/StateMachine/State/ui/StateViewUI.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/StateViewUI.h">
+    <Unit filename="../../Source/StateMachine/State/ui/StateViewUI.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/StateUI.cpp">
+    <Unit filename="../../Source/StateMachine/State/State.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/StateUI.h">
+    <Unit filename="../../Source/StateMachine/State/State.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/State.cpp">
+    <Unit filename="../../Source/StateMachine/Transition/ui/StateTransitionManagerUI.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/State.h">
+    <Unit filename="../../Source/StateMachine/Transition/ui/StateTransitionManagerUI.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/StateTransitionManagerUI.cpp">
+    <Unit filename="../../Source/StateMachine/Transition/ui/StateTransitionUI.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/StateTransitionManagerUI.h">
+    <Unit filename="../../Source/StateMachine/Transition/ui/StateTransitionUI.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/StateTransitionUI.cpp">
+    <Unit filename="../../Source/StateMachine/Transition/StateTransition.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/StateTransitionUI.h">
+    <Unit filename="../../Source/StateMachine/Transition/StateTransition.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/StateTransition.cpp">
+    <Unit filename="../../Source/StateMachine/Transition/StateTransitionManager.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/StateTransition.h">
+    <Unit filename="../../Source/StateMachine/Transition/StateTransitionManager.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/StateTransitionManager.cpp">
+    <Unit filename="../../Source/StateMachine/ui/StateMachineView.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/StateTransitionManager.h">
+    <Unit filename="../../Source/StateMachine/ui/StateMachineView.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/StateMachineView.cpp">
+    <Unit filename="../../Source/StateMachine/ui/StateManagerUI.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/StateMachineView.h">
+    <Unit filename="../../Source/StateMachine/ui/StateManagerUI.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/StateManagerUI.cpp">
+    <Unit filename="../../Source/StateMachine/StateManager.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/StateManagerUI.h">
+    <Unit filename="../../Source/StateMachine/StateManager.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/StateManager.cpp">
+    <Unit filename="../../Source/TimeMachine/Sequence/Cue/ui/TimeCueManagerUI.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/StateManager.h">
+    <Unit filename="../../Source/TimeMachine/Sequence/Cue/ui/TimeCueManagerUI.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/TimeCueManagerUI.cpp">
+    <Unit filename="../../Source/TimeMachine/Sequence/Cue/ui/TimeCueUI.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/TimeCueManagerUI.h">
+    <Unit filename="../../Source/TimeMachine/Sequence/Cue/ui/TimeCueUI.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/TimeCueUI.cpp">
+    <Unit filename="../../Source/TimeMachine/Sequence/Cue/TimeCue.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/TimeCueUI.h">
+    <Unit filename="../../Source/TimeMachine/Sequence/Cue/TimeCue.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/TimeCue.cpp">
+    <Unit filename="../../Source/TimeMachine/Sequence/Cue/TimeCueManager.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/TimeCue.h">
+    <Unit filename="../../Source/TimeMachine/Sequence/Cue/TimeCueManager.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/TimeCueManager.cpp">
+    <Unit filename="../../Source/TimeMachine/Sequence/Layer/layers/audio/ui/AudioLayerClipManagerUI.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/TimeCueManager.h">
+    <Unit filename="../../Source/TimeMachine/Sequence/Layer/layers/audio/ui/AudioLayerClipManagerUI.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/SequenceLayerFactory.cpp">
+    <Unit filename="../../Source/TimeMachine/Sequence/Layer/layers/audio/ui/AudioLayerClipUI.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/SequenceLayerFactory.h">
+    <Unit filename="../../Source/TimeMachine/Sequence/Layer/layers/audio/ui/AudioLayerClipUI.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/AudioLayerClipManagerUI.cpp">
+    <Unit filename="../../Source/TimeMachine/Sequence/Layer/layers/audio/ui/AudioLayerPanel.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/AudioLayerClipManagerUI.h">
+    <Unit filename="../../Source/TimeMachine/Sequence/Layer/layers/audio/ui/AudioLayerPanel.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/AudioLayerClipUI.cpp">
+    <Unit filename="../../Source/TimeMachine/Sequence/Layer/layers/audio/ui/AudioLayerTimeline.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/AudioLayerClipUI.h">
+    <Unit filename="../../Source/TimeMachine/Sequence/Layer/layers/audio/ui/AudioLayerTimeline.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/AudioLayerPanel.cpp">
+    <Unit filename="../../Source/TimeMachine/Sequence/Layer/layers/audio/AudioLayer.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/AudioLayerPanel.h">
+    <Unit filename="../../Source/TimeMachine/Sequence/Layer/layers/audio/AudioLayer.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/AudioLayerTimeline.cpp">
+    <Unit filename="../../Source/TimeMachine/Sequence/Layer/layers/audio/AudioLayerClip.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/AudioLayerTimeline.h">
+    <Unit filename="../../Source/TimeMachine/Sequence/Layer/layers/audio/AudioLayerClip.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/AudioLayer.cpp">
+    <Unit filename="../../Source/TimeMachine/Sequence/Layer/layers/audio/AudioLayerClipManager.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/AudioLayer.h">
+    <Unit filename="../../Source/TimeMachine/Sequence/Layer/layers/audio/AudioLayerClipManager.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/AudioLayerClip.cpp">
+    <Unit filename="../../Source/TimeMachine/Sequence/Layer/layers/mapping/timecolor/ui/TimeColorManagerUI.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/AudioLayerClip.h">
+    <Unit filename="../../Source/TimeMachine/Sequence/Layer/layers/mapping/timecolor/ui/TimeColorManagerUI.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/AudioLayerClipManager.cpp">
+    <Unit filename="../../Source/TimeMachine/Sequence/Layer/layers/mapping/timecolor/ui/TimeColorUI.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/AudioLayerClipManager.h">
+    <Unit filename="../../Source/TimeMachine/Sequence/Layer/layers/mapping/timecolor/ui/TimeColorUI.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/TimeColor.cpp">
+    <Unit filename="../../Source/TimeMachine/Sequence/Layer/layers/mapping/timecolor/TimeColor.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/TimeColor.h">
+    <Unit filename="../../Source/TimeMachine/Sequence/Layer/layers/mapping/timecolor/TimeColor.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/TimeColorManager.cpp">
+    <Unit filename="../../Source/TimeMachine/Sequence/Layer/layers/mapping/timecolor/TimeColorManager.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/TimeColorManager.h">
+    <Unit filename="../../Source/TimeMachine/Sequence/Layer/layers/mapping/timecolor/TimeColorManager.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/TimeColorManagerUI.cpp">
+    <Unit filename="../../Source/TimeMachine/Sequence/Layer/layers/mapping/ui/MappingLayerEditor.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/TimeColorManagerUI.h">
+    <Unit filename="../../Source/TimeMachine/Sequence/Layer/layers/mapping/ui/MappingLayerEditor.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/TimeColorUI.cpp">
+    <Unit filename="../../Source/TimeMachine/Sequence/Layer/layers/mapping/ui/MappingLayerPanel.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/TimeColorUI.h">
+    <Unit filename="../../Source/TimeMachine/Sequence/Layer/layers/mapping/ui/MappingLayerPanel.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/MappingLayerEditor.cpp">
+    <Unit filename="../../Source/TimeMachine/Sequence/Layer/layers/mapping/ui/MappingLayerTimeline.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/MappingLayerEditor.h">
+    <Unit filename="../../Source/TimeMachine/Sequence/Layer/layers/mapping/ui/MappingLayerTimeline.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/MappingLayerPanel.cpp">
+    <Unit filename="../../Source/TimeMachine/Sequence/Layer/layers/mapping/MappingLayer.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/MappingLayerPanel.h">
+    <Unit filename="../../Source/TimeMachine/Sequence/Layer/layers/mapping/MappingLayer.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/MappingLayerTimeline.cpp">
+    <Unit filename="../../Source/TimeMachine/Sequence/Layer/layers/trigger/ui/TimeTriggerManagerUI.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/MappingLayerTimeline.h">
+    <Unit filename="../../Source/TimeMachine/Sequence/Layer/layers/trigger/ui/TimeTriggerManagerUI.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/MappingLayer.cpp">
+    <Unit filename="../../Source/TimeMachine/Sequence/Layer/layers/trigger/ui/TimeTriggerMultiTransformer.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/MappingLayer.h">
+    <Unit filename="../../Source/TimeMachine/Sequence/Layer/layers/trigger/ui/TimeTriggerMultiTransformer.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/TimeTriggerManagerUI.cpp">
+    <Unit filename="../../Source/TimeMachine/Sequence/Layer/layers/trigger/ui/TimeTriggerUI.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/TimeTriggerManagerUI.h">
+    <Unit filename="../../Source/TimeMachine/Sequence/Layer/layers/trigger/ui/TimeTriggerUI.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/TimeTriggerMultiTransformer.cpp">
+    <Unit filename="../../Source/TimeMachine/Sequence/Layer/layers/trigger/ui/TriggerLayerPanel.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/TimeTriggerMultiTransformer.h">
+    <Unit filename="../../Source/TimeMachine/Sequence/Layer/layers/trigger/ui/TriggerLayerPanel.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/TimeTriggerUI.cpp">
+    <Unit filename="../../Source/TimeMachine/Sequence/Layer/layers/trigger/ui/TriggerLayerTimeline.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/TimeTriggerUI.h">
+    <Unit filename="../../Source/TimeMachine/Sequence/Layer/layers/trigger/ui/TriggerLayerTimeline.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/TriggerLayerPanel.cpp">
+    <Unit filename="../../Source/TimeMachine/Sequence/Layer/layers/trigger/TimeTrigger.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/TriggerLayerPanel.h">
+    <Unit filename="../../Source/TimeMachine/Sequence/Layer/layers/trigger/TimeTrigger.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/TriggerLayerTimeline.cpp">
+    <Unit filename="../../Source/TimeMachine/Sequence/Layer/layers/trigger/TimeTriggerManager.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/TriggerLayerTimeline.h">
+    <Unit filename="../../Source/TimeMachine/Sequence/Layer/layers/trigger/TimeTriggerManager.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/TimeTrigger.cpp">
+    <Unit filename="../../Source/TimeMachine/Sequence/Layer/layers/trigger/TriggerLayer.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/TimeTrigger.h">
+    <Unit filename="../../Source/TimeMachine/Sequence/Layer/layers/trigger/TriggerLayer.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/TimeTriggerManager.cpp">
+    <Unit filename="../../Source/TimeMachine/Sequence/Layer/ui/SequenceLayerPanel.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/TimeTriggerManager.h">
+    <Unit filename="../../Source/TimeMachine/Sequence/Layer/ui/SequenceLayerPanel.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/TriggerLayer.cpp">
+    <Unit filename="../../Source/TimeMachine/Sequence/Layer/ui/SequenceLayerPanelManagerUI.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/TriggerLayer.h">
+    <Unit filename="../../Source/TimeMachine/Sequence/Layer/ui/SequenceLayerPanelManagerUI.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/SequenceLayerTimelineManagerUI.cpp">
+    <Unit filename="../../Source/TimeMachine/Sequence/Layer/ui/SequenceLayerTimeline.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/SequenceLayerTimelineManagerUI.h">
+    <Unit filename="../../Source/TimeMachine/Sequence/Layer/ui/SequenceLayerTimeline.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/SequenceLayerPanel.cpp">
+    <Unit filename="../../Source/TimeMachine/Sequence/Layer/ui/SequenceLayerTimelineManagerUI.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/SequenceLayerPanel.h">
+    <Unit filename="../../Source/TimeMachine/Sequence/Layer/ui/SequenceLayerTimelineManagerUI.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/SequenceLayerTimeline.cpp">
+    <Unit filename="../../Source/TimeMachine/Sequence/Layer/SequenceLayer.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/SequenceLayerTimeline.h">
+    <Unit filename="../../Source/TimeMachine/Sequence/Layer/SequenceLayer.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
+    </Unit>
+    <Unit filename="../../Source/TimeMachine/Sequence/Layer/SequenceLayerFactory.cpp">
+      <Option target="App | Debug"/>
+      <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/SequenceLayerPanelManagerUI.h">
+    <Unit filename="../../Source/TimeMachine/Sequence/Layer/SequenceLayerFactory.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
+    </Unit>
+    <Unit filename="../../Source/TimeMachine/Sequence/Layer/SequenceLayerManager.cpp">
+      <Option target="App | Debug"/>
+      <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/SequenceLayerPanelManagerUI.cpp">
+    <Unit filename="../../Source/TimeMachine/Sequence/Layer/SequenceLayerManager.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
+      <Option compile="0"/>
+      <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/SequenceLayerManager.cpp">
+    <Unit filename="../../Source/TimeMachine/Sequence/ui/SequenceEditor.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/SequenceLayerManager.h">
+    <Unit filename="../../Source/TimeMachine/Sequence/ui/SequenceEditor.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/SequenceLayer.cpp">
+    <Unit filename="../../Source/TimeMachine/Sequence/ui/SequenceTimelineHeader.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/SequenceLayer.h">
+    <Unit filename="../../Source/TimeMachine/Sequence/ui/SequenceTimelineHeader.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/SequenceTimelineHeader.cpp">
+    <Unit filename="../../Source/TimeMachine/Sequence/ui/SequenceTimelineNavigationUI.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/SequenceTimelineHeader.h">
+    <Unit filename="../../Source/TimeMachine/Sequence/ui/SequenceTimelineNavigationUI.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/SequenceTimelineSeeker.cpp">
+    <Unit filename="../../Source/TimeMachine/Sequence/ui/SequenceTimelineSeeker.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/SequenceTimelineSeeker.h">
+    <Unit filename="../../Source/TimeMachine/Sequence/ui/SequenceTimelineSeeker.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/SequenceEditor.cpp">
+    <Unit filename="../../Source/TimeMachine/Sequence/ui/SequenceTransportUI.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/SequenceEditor.h">
+    <Unit filename="../../Source/TimeMachine/Sequence/ui/SequenceTransportUI.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/SequenceTimelineNavigationUI.cpp">
+    <Unit filename="../../Source/TimeMachine/Sequence/ui/SequenceUI.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/SequenceTimelineNavigationUI.h">
+    <Unit filename="../../Source/TimeMachine/Sequence/ui/SequenceUI.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/SequenceTransportUI.cpp">
+    <Unit filename="../../Source/TimeMachine/Sequence/Sequence.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/SequenceTransportUI.h">
+    <Unit filename="../../Source/TimeMachine/Sequence/Sequence.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/SequenceUI.cpp">
+    <Unit filename="../../Source/TimeMachine/ui/SequenceManagerUI.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/SequenceUI.h">
+    <Unit filename="../../Source/TimeMachine/ui/SequenceManagerUI.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/Sequence.cpp">
+    <Unit filename="../../Source/TimeMachine/ui/TimeMachineView.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/Sequence.h">
+    <Unit filename="../../Source/TimeMachine/ui/TimeMachineView.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/SequenceManagerUI.cpp">
+    <Unit filename="../../Source/TimeMachine/SequenceManager.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/SequenceManagerUI.h">
+    <Unit filename="../../Source/TimeMachine/SequenceManager.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/TimeMachineView.cpp">
+    <Unit filename="../../Source/UI/AboutWindow.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/TimeMachineView.h">
+    <Unit filename="../../Source/UI/AboutWindow.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/SequenceManager.cpp">
+    <Unit filename="../../Source/UI/ChataigneAssetManager.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
-    <Unit filename="../../Source/SequenceManager.h">
+    <Unit filename="../../Source/UI/ChataigneAssetManager.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
@@ -9985,6 +10017,18 @@
       <Option link="0"/>
     </Unit>
     <Unit filename="../../../JUCE Modules/juce_organicui/controllable/parameter/EnumParameter.h">
+      <Option target="App | Debug"/>
+      <Option target="App | Release"/>
+      <Option compile="0"/>
+      <Option link="0"/>
+    </Unit>
+    <Unit filename="../../../JUCE Modules/juce_organicui/controllable/parameter/FileParameter.cpp">
+      <Option target="App | Debug"/>
+      <Option target="App | Release"/>
+      <Option compile="0"/>
+      <Option link="0"/>
+    </Unit>
+    <Unit filename="../../../JUCE Modules/juce_organicui/controllable/parameter/FileParameter.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>

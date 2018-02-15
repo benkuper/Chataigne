@@ -7,14 +7,13 @@
 */
 
 #include "MainComponent.h"
-#include "UserOSCCommandModelManagerUI.h"
-#include "ModuleManagerUI.h"
-#include "StateMachineView.h"
-#include "TimeMachineView.h"
-#include "UserOSCCommandModelManagerUI.h"
-#include "ModuleRouterPanelView.h"
-#include "StateManagerUI.h"
-#include "SequenceManagerUI.h"
+#include "Module/modules/osc/custom/commands/user/model/ui/UserOSCCommandModelManagerUI.h"
+#include "Module/ui/ModuleManagerUI.h"
+#include "StateMachine/ui/StateMachineView.h"
+#include "TimeMachine/ui/TimeMachineView.h"
+#include "Module/Routing/ui/ModuleRouterPanelView.h"
+#include "StateMachine/ui/StateManagerUI.h"
+#include "TimeMachine/ui/SequenceManagerUI.h"
 
 String getAppVersion();
 

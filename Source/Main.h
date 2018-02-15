@@ -30,7 +30,7 @@ It contains the basic startup code for a Juce application.
 #include "MainComponent.h"
 #include "ChataigneEngine.h"
 
-#include "GoogleAnalyticsDestination.h"
+#include "Analytics/GoogleAnalyticsDestination.h"
 
 
 //==============================================================================

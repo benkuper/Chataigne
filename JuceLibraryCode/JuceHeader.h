@@ -44,7 +44,7 @@
 namespace ProjectInfo
 {
     const char* const  projectName    = "Chataigne";
-    const char* const  versionString  = "1.2.15";
-    const int          versionNumber  = 0x1020f;
+    const char* const  versionString  = "1.3.0";
+    const int          versionNumber  = 0x10300;
 }
 #endif

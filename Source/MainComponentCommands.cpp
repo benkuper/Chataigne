@@ -10,8 +10,8 @@
 
 
 #include "MainComponent.h"
-#include "ProjectSettings.h"
-#include "AboutWindow.h"
+#include "Project/ProjectSettings.h"
+#include "UI/AboutWindow.h"
 
 namespace CommandIDs
 {

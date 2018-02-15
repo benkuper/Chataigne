@@ -9,20 +9,20 @@
  */
 #include "ChataigneEngine.h"
 
-#include "ProjectSettings.h"
-#include "ModuleManager.h"
-#include "StateManager.h"
-#include "SequenceManager.h"
-#include "MIDIManager.h"
-#include "SerialManager.h"
-#include "GamepadManager.h"
-#include "WiimoteManager.h"
-#include "DMXManager.h"
-#include "ModuleRouterManager.h"
-#include "ChataigneAssetManager.h"
+#include "Project/ProjectSettings.h"
+#include "Module/ModuleManager.h"
+#include "StateMachine/StateManager.h"
+#include "TimeMachine/SequenceManager.h"
+#include "Common/MIDI/MIDIManager.h"
+#include "Common/Serial/SerialManager.h"
+#include "Module/modules/controller/gamepad/GamepadManager.h"
+#include "Module/modules/controller/wiimote/WiimoteManager.h"
+#include "Common/DMX/DMXManager.h"
+#include "Module/Routing/ModuleRouterManager.h"
+#include "UI/ChataigneAssetManager.h"
 
 #if JUCE_WINDOWS
-#include "MyoManager.h"
+#include "Module/modules/controller/myo/MyoManager.h"
 #endif
 
 
