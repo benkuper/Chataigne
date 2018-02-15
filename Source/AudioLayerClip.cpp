@@ -17,8 +17,8 @@ AudioLayerClip::AudioLayerClip(float _time) :
 	clipSamplePos(0),
 	isCurrent(false)
 {
-	filePath = addStringParameter("File Path", "File Path", "");
-	filePath->defaultUI = StringParameter::FILE;
+	filePath = new FileParameter("File Path", "File Path", "");
+	addParameter(filePath);
 
 	time = addFloatParameter("Start Time", "Time of the start of the clip", _time, 0, 3600);
 	time->defaultUI = FloatParameter::TIME;
@@ -69,7 +69,7 @@ void AudioLayerClip::updateAudioSourceFile()
 	if (filePath->stringValue().startsWithChar('/')) return;
 #endif
 
-	ScopedPointer<AudioFormatReader>  reader(formatManager.createReaderFor(filePath->stringValue()));
+	ScopedPointer<AudioFormatReader>  reader(formatManager.createReaderFor(filePath->getAbsolutePath()));
 
 	if (reader != nullptr)
 	{

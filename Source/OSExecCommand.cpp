@@ -20,13 +20,16 @@ OSExecCommand::OSExecCommand(OSModule * _module, CommandContext context, var par
 {
 	actionType = (ActionType)(int)params.getProperty("type", LAUNCH_APP);
 
-	target = addStringParameter("Target", "The target file of app for this command", "");
+	
+
 	if (actionType != KILL_APP)
 	{
-		target->defaultUI = StringParameter::FILE;
+		target = new FileParameter("Target", "The target file of app for this command", "");
+		addParameter(target);
 		launchOptions = addStringParameter("Launch Options", "Additional options when launching the app", "");
 	} else
 	{
+		target = addStringParameter("Target", "The process name to kill", "");
 #if JUCE_MAC || JUCE_LINUX
 		killMode = addBoolParameter("Hard kill", "If enabled, will kill like a boss, not very gently", false);
 #endif
@@ -47,9 +50,12 @@ void OSExecCommand::trigger()
 	case LAUNCH_APP:
 	case OPEN_FILE:
 	{
+		File f = ((FileParameter *)target)->getFile();
+		File wDir = File::getCurrentWorkingDirectory();
 
-		File f(target->stringValue());
+		f.getParentDirectory().setAsCurrentWorkingDirectory();
 		result = f.startAsProcess(launchOptions->stringValue());
+		wDir.setAsCurrentWorkingDirectory();
 	}
 		break;
 

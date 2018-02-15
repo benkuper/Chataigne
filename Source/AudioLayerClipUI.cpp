@@ -27,7 +27,9 @@ AudioLayerClipUI::AudioLayerClipUI(AudioLayerClip * _clip) :
 #if JUCE_WINDOWS
 	if (clip->filePath->stringValue().startsWithChar('/')) return;
 #endif
-	thumbnail.setSource(new FileInputSource(File(clip->filePath->stringValue())));
+
+	DBG("Audio clip UI : " << clip->filePath->getFile().getFullPathName());
+	thumbnail.setSource(new FileInputSource(clip->filePath->getFile()));
 
 }
 
@@ -103,6 +105,6 @@ void AudioLayerClipUI::clipIsCurrentChanged(AudioLayerClip *)
 
 void AudioLayerClipUI::audioSourceChanged(AudioLayerClip *)
 {
-	thumbnail.setSource(new FileInputSource(File(clip->filePath->stringValue())));
+	thumbnail.setSource(new FileInputSource(clip->filePath->getFile()));
 	repaint();
 }

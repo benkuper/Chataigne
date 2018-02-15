@@ -23,7 +23,7 @@ public:
 	AudioFormatManager formatManager;
 	AudioSampleBuffer buffer;
 	
-	StringParameter * filePath;
+	FileParameter * filePath;
 
 	FloatParameter * time; 
 	FloatParameter * clipLength;
