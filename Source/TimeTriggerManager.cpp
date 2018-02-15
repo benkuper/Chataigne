@@ -95,7 +95,7 @@ void TimeTriggerManager::sequenceCurrentTimeChanged(Sequence * /*_sequence*/, fl
 			Array<TimeTrigger *> spanTriggers = getTriggersInTimespan(prevTime, sequence->currentTime->floatValue());
 			for (auto &tt : spanTriggers)
 			{
-				tt->trigger->trigger();
+				tt->triggerOn->trigger();
 			}
 		}
 	}else //loop or manual, untrigger

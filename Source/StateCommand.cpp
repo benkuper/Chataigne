@@ -69,7 +69,7 @@ void StateCommand::trigger()
 		break;
 
 	case TRIGGER_ACTION:
-		((Action *)target->targetContainer.get())->trigger->trigger();
+		((Action *)target->targetContainer.get())->triggerOn->trigger();
 		break;
 
 	case ENABLE_ACTION:

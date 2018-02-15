@@ -21,7 +21,7 @@ class ConsequenceManager :
 public:
 	juce_DeclareSingleton(ConsequenceManager, true)
 
-	ConsequenceManager();
+	ConsequenceManager(const String &name = "Consequences");
 	~ConsequenceManager();
 	
 

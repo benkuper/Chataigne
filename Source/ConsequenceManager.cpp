@@ -14,8 +14,8 @@
 
 juce_ImplementSingleton(ConsequenceManager)
 
-ConsequenceManager::ConsequenceManager() :
-	BaseManager<Consequence>("Consequences"),
+ConsequenceManager::ConsequenceManager(const String &name) :
+	BaseManager<Consequence>(name),
 	forceDisabled(false)
 {
 	selectItemWhenCreated = false;

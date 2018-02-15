@@ -40,7 +40,7 @@ void StateTransition::onContainerTriggerTriggered(Trigger * t)
 {
 	Action::onContainerTriggerTriggered(t);
 	
-	if (t == trigger)
+	if (t == triggerOn)
 	{
 		
 		if (sourceState->active->boolValue())

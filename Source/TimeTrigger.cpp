@@ -33,7 +33,7 @@ TimeTrigger::~TimeTrigger()
 void TimeTrigger::onContainerTriggerTriggered(Trigger * t)
 {
 	Action::onContainerTriggerTriggered(t);
-	if (t == trigger)
+	if (t == triggerOn)
 	{
 		isTriggered->setValue(true);
 	}

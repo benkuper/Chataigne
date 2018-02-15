@@ -21,7 +21,7 @@ ActionUI::ActionUI(Action * _action) :
 	validUI->showValue = false;
 	addAndMakeVisible(validUI);
 
-	triggerAllUI = action->csm.triggerAll->createButtonUI();
+	triggerAllUI = action->csmOn->triggerAll->createButtonUI();
 	addAndMakeVisible(triggerAllUI);
 }
 

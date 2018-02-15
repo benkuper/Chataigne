@@ -20,16 +20,20 @@ class Action :
 	public ConditionManager::ConditionManagerListener
 {
 public:
-	Action(const String &name = "Action");
+	Action(const String &name = "Action", var params = var());
 	virtual ~Action();
 
 	bool autoTriggerWhenAllConditionAreActives; //default true, but if false, let use Actions as user check tool without auto behavior (like TimeTriggers)
 
+	bool hasOffConsequences;
+
 	ConditionManager cdm;
-	ConsequenceManager csm;
+	ScopedPointer<ConsequenceManager> csmOn;
+	ScopedPointer<ConsequenceManager> csmOff;
 
 	BoolParameter * isActive;
-	Trigger * trigger;
+	Trigger * triggerOn;
+	Trigger * triggerOff;
 
 	virtual void setForceDisabled(bool value, bool force = false) override;
 
@@ -56,7 +60,7 @@ public:
 	void removeActionListener(ActionListener* listener) { actionListeners.remove(listener); }
 
 
-	static Action * create(var) { return new Action(); }
+	static Action * create(var params) { return new Action("Action", params); }
 	String getTypeString() const override { return "Action"; };
 
 	//InspectableEditor * getEditor(bool /*isRoot*/) override;
