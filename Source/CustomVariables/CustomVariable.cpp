@@ -1,23 +1,20 @@
 /*
   ==============================================================================
 
-    CVGroup.h
-    Created: 15 Feb 2018 3:49:35pm
+    CustomVariable.cpp
+    Created: 17 Feb 2018 10:15:09am
     Author:  Ben
 
   ==============================================================================
 */
 
-#pragma once
-
 #include "CustomVariable.h"
 
-class CVGroup :
-	public BaseItem
+CustomVariable::CustomVariable(const String & name, var params) :
+	BaseItem(name)
 {
-public:
-	CVGroup(const String &name = "CVGroup");
-	~CVGroup();
+}
 
-	BaseManager<CustomVariable> manager;
-};
+CustomVariable::~CustomVariable()
+  {
+  }

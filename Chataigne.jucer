@@ -388,6 +388,8 @@
           <FILE id="NVUblt" name="CVGroupPreset.cpp" compile="1" resource="0"
                 file="Source/CustomVariables/Preset/CVGroupPreset.cpp"/>
           <FILE id="aRTllr" name="CVGroupPreset.h" compile="0" resource="0" file="Source/CustomVariables/Preset/CVGroupPreset.h"/>
+          <FILE id="mQfph1" name="CVPreset.cpp" compile="1" resource="0" file="Source/CustomVariables/Preset/CVPreset.cpp"/>
+          <FILE id="GS887N" name="CVPreset.h" compile="0" resource="0" file="Source/CustomVariables/Preset/CVPreset.h"/>
         </GROUP>
         <GROUP id="{E5A1BFCC-BDA1-A961-4D9E-FD129B1A23A4}" name="ui">
           <FILE id="TV3jk1" name="CVGroupView.cpp" compile="1" resource="0" file="Source/CustomVariables/ui/CVGroupView.cpp"/>
@@ -395,8 +397,16 @@
           <FILE id="ZzhOAu" name="CVPanel.cpp" compile="1" resource="0" file="Source/CustomVariables/ui/CVPanel.cpp"/>
           <FILE id="BI8zv5" name="CVPanel.h" compile="0" resource="0" file="Source/CustomVariables/ui/CVPanel.h"/>
         </GROUP>
+        <FILE id="h7Tbxd" name="CustomVariable.cpp" compile="1" resource="0"
+              file="Source/CustomVariables/CustomVariable.cpp"/>
+        <FILE id="PjwL8M" name="CustomVariable.h" compile="0" resource="0"
+              file="Source/CustomVariables/CustomVariable.h"/>
         <FILE id="ff4BwR" name="CVGroup.cpp" compile="1" resource="0" file="Source/CustomVariables/CVGroup.cpp"/>
         <FILE id="Kw9Hct" name="CVGroup.h" compile="0" resource="0" file="Source/CustomVariables/CVGroup.h"/>
+        <FILE id="yrIHgg" name="CVGroupManager.cpp" compile="1" resource="0"
+              file="Source/CustomVariables/CVGroupManager.cpp"/>
+        <FILE id="QznlKd" name="CVGroupManager.h" compile="0" resource="0"
+              file="Source/CustomVariables/CVGroupManager.h"/>
       </GROUP>
       <GROUP id="{8FC20544-FEBB-B3BA-CF48-50962AA7C07C}" name="Module">
         <GROUP id="{6A9D374B-2C22-DB11-15C8-CA446252E36A}" name="modules">

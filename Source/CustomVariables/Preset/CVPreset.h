@@ -1,22 +1,11 @@
 /*
   ==============================================================================
 
-    CVGroup.cpp
-    Created: 15 Feb 2018 3:49:35pm
+    CVPreset.h
+    Created: 17 Feb 2018 10:15:38am
     Author:  Ben
 
   ==============================================================================
 */
 
-#include "CVGroup.h"
-
-CVGroup::CVGroup(const String & name) :
-	BaseItem(name),
-	manager("Variables")
-{
-
-}
-
-CVGroup::~CVGroup()
-{
-}
+#pragma once

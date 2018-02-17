@@ -153,9 +153,12 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/SerialDeviceParameter_2de97789.o \
   $(JUCE_OBJDIR)/SerialManager_fd829543.o \
   $(JUCE_OBJDIR)/CVGroupPreset_1af5b0ad.o \
+  $(JUCE_OBJDIR)/CVPreset_3c4a8f1a.o \
   $(JUCE_OBJDIR)/CVGroupView_1e9383c8.o \
   $(JUCE_OBJDIR)/CVPanel_d381f88.o \
+  $(JUCE_OBJDIR)/CustomVariable_3e9009df.o \
   $(JUCE_OBJDIR)/CVGroup_5e5064a4.o \
+  $(JUCE_OBJDIR)/CVGroupManager_45344ef3.o \
   $(JUCE_OBJDIR)/AudioModuleHardwareEditor_e9c8a821.o \
   $(JUCE_OBJDIR)/AudioModule_84057627.o \
   $(JUCE_OBJDIR)/CustomValuesCommandArgumentEditor_1cc8b6de.o \
@@ -772,6 +775,11 @@ $(JUCE_OBJDIR)/CVGroupPreset_1af5b0ad.o: ../../Source/CustomVariables/Preset/CVG
 	@echo "Compiling CVGroupPreset.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
+$(JUCE_OBJDIR)/CVPreset_3c4a8f1a.o: ../../Source/CustomVariables/Preset/CVPreset.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling CVPreset.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
 $(JUCE_OBJDIR)/CVGroupView_1e9383c8.o: ../../Source/CustomVariables/ui/CVGroupView.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling CVGroupView.cpp"
@@ -782,9 +790,19 @@ $(JUCE_OBJDIR)/CVPanel_d381f88.o: ../../Source/CustomVariables/ui/CVPanel.cpp
 	@echo "Compiling CVPanel.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
+$(JUCE_OBJDIR)/CustomVariable_3e9009df.o: ../../Source/CustomVariables/CustomVariable.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling CustomVariable.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
 $(JUCE_OBJDIR)/CVGroup_5e5064a4.o: ../../Source/CustomVariables/CVGroup.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling CVGroup.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/CVGroupManager_45344ef3.o: ../../Source/CustomVariables/CVGroupManager.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling CVGroupManager.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/AudioModuleHardwareEditor_e9c8a821.o: ../../Source/Module/modules/audio/ui/AudioModuleHardwareEditor.cpp

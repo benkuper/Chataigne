@@ -20,6 +20,7 @@
 #include "Common/DMX/DMXManager.h"
 #include "Module/Routing/ModuleRouterManager.h"
 #include "UI/ChataigneAssetManager.h"
+#include "CustomVariables/CVGroupManager.h"
 
 #if JUCE_WINDOWS
 #include "Module/modules/controller/myo/MyoManager.h"
@@ -36,6 +37,7 @@ ChataigneEngine::ChataigneEngine(ApplicationProperties * appProperties, const St
 	addChildControllableContainer(StateManager::getInstance());
 	addChildControllableContainer(SequenceManager::getInstance());
 	addChildControllableContainer(ModuleRouterManager::getInstance());
+	addChildControllableContainer(CVGroupManager::getInstance());
 
 }
 
@@ -61,6 +63,8 @@ ChataigneEngine::~ChataigneEngine()
 
 	ProjectSettings::deleteInstance();
 	ChataigneAssetManager::deleteInstance();
+
+	CVGroupManager::deleteInstance();
 }
 
 

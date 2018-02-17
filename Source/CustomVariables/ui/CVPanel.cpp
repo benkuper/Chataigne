@@ -9,3 +9,16 @@
 */
 
 #include "CVPanel.h"
+
+
+CVPanel::CVPanel(const String &name) :
+	ShapeShifterContentComponent(name),
+	groupManagerUI(name,CVGroupManager::getInstance())
+{
+	contentIsFlexible = true;
+}
+
+CVPanel::~CVPanel()
+{
+
+}
