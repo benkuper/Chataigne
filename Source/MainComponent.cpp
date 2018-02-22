@@ -14,7 +14,7 @@
 #include "Module/Routing/ui/ModuleRouterPanelView.h"
 #include "StateMachine/ui/StateManagerUI.h"
 #include "TimeMachine/ui/SequenceManagerUI.h"
-#include "CustomVariables/ui/CVPanel.h"
+#include "CustomVariables/ui/CVGroupManagerUI.h"
 
 String getAppVersion();
 
@@ -34,7 +34,7 @@ MainContentComponent::MainContentComponent()
 	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Module Router", &ModuleRouterPanelView::create));
 	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Modules", &ModuleManagerUI::create));
 	
-	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Custom Variables", &CVPanel::create));
+	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Custom Variables", &CVGroupManagerUI::create));
 	
 	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Sequences", &SequenceManagerUI::create));
 	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Sequence Editor", &TimeMachineView::create));
