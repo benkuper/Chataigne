@@ -15,7 +15,6 @@ juce_ImplementSingleton(CVGroupManager)
 CVGroupManager::CVGroupManager(const String & name) :
 	BaseManager(name)
 {
-
 }
 
 CVGroupManager::~CVGroupManager()

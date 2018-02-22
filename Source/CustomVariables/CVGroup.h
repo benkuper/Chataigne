@@ -10,14 +10,18 @@
 
 #pragma once
 
-#include "CustomVariable.h"
+#include "Preset/CVPresetManager.h"
 
 class CVGroup :
 	public BaseItem
 {
 public:
-	CVGroup(const String &name = "CVGroup");
+	CVGroup(const String &name = "Group");
 	~CVGroup();
 
-	BaseManager<CustomVariable> manager;
+	GenericControllableManager values;
+	CVPresetManager pm;
+
+	var getJSONData() override;
+	void loadJSONDataInternal(var data) override;
 };
