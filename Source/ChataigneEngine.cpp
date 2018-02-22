@@ -76,7 +76,7 @@ void ChataigneEngine::clearInternal()
 
 	ModuleRouterManager::getInstance()->clear();
 	ModuleManager::getInstance()->clear();
- 
+	CVGroupManager::getInstance()->clear();
 }
 
 var ChataigneEngine::getJSONData()
@@ -90,6 +90,9 @@ var ChataigneEngine::getJSONData()
 	var mData = ModuleManager::getInstance()->getJSONData();
 	if(!mData.isVoid() && mData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty("moduleManager", mData);
 
+	var cvData = CVGroupManager::getInstance()->getJSONData();
+	if (!cvData.isVoid() && cvData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty("customVariables", cvData);
+
 	var sData = StateManager::getInstance()->getJSONData();
 	if(!sData.isVoid() && sData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty("stateManager", sData);
 
@@ -99,7 +102,6 @@ var ChataigneEngine::getJSONData()
 	var rData = ModuleRouterManager::getInstance()->getJSONData();
 	if(!rData.isVoid() && rData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty("routerManager", rData);
 
-
 	return data;
 }
 
@@ -107,6 +109,7 @@ void ChataigneEngine::loadJSONDataInternalEngine(var data, ProgressTask * loadin
 {	
 	ProgressTask * projectTask = loadingTask->addTask("Project");
 	ProgressTask * moduleTask = loadingTask->addTask("Modules");
+	ProgressTask * cvTask = loadingTask->addTask("Custom Variables");
 	ProgressTask * stateTask = loadingTask->addTask("States");
 	ProgressTask * sequenceTask = loadingTask->addTask("Sequences");
 	ProgressTask * routerTask = loadingTask->addTask("Router");
@@ -122,6 +125,11 @@ void ChataigneEngine::loadJSONDataInternalEngine(var data, ProgressTask * loadin
 	ModuleManager::getInstance()->loadJSONData(data.getProperty("moduleManager",var()));
 	moduleTask->setProgress(1);
 	moduleTask->end();
+
+	cvTask->start();
+	CVGroupManager::getInstance()->loadJSONData(data.getProperty("customVariables", var()));
+	cvTask->setProgress(1);
+	cvTask->end();
 
 	stateTask->start();
 	StateManager::getInstance()->loadJSONData(data.getProperty("stateManager",var()));
