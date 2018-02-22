@@ -152,11 +152,9 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/SerialDevice_e404848a.o \
   $(JUCE_OBJDIR)/SerialDeviceParameter_2de97789.o \
   $(JUCE_OBJDIR)/SerialManager_fd829543.o \
-  $(JUCE_OBJDIR)/CVGroupPreset_1af5b0ad.o \
   $(JUCE_OBJDIR)/CVPreset_3c4a8f1a.o \
-  $(JUCE_OBJDIR)/CVGroupView_1e9383c8.o \
-  $(JUCE_OBJDIR)/CVPanel_d381f88.o \
-  $(JUCE_OBJDIR)/CustomVariable_3e9009df.o \
+  $(JUCE_OBJDIR)/CVPresetManager_6d2193bd.o \
+  $(JUCE_OBJDIR)/CVGroupManagerUI_95d59108.o \
   $(JUCE_OBJDIR)/CVGroup_5e5064a4.o \
   $(JUCE_OBJDIR)/CVGroupManager_45344ef3.o \
   $(JUCE_OBJDIR)/AudioModuleHardwareEditor_e9c8a821.o \
@@ -770,29 +768,19 @@ $(JUCE_OBJDIR)/SerialManager_fd829543.o: ../../Source/Common/Serial/SerialManage
 	@echo "Compiling SerialManager.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
-$(JUCE_OBJDIR)/CVGroupPreset_1af5b0ad.o: ../../Source/CustomVariables/Preset/CVGroupPreset.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling CVGroupPreset.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
 $(JUCE_OBJDIR)/CVPreset_3c4a8f1a.o: ../../Source/CustomVariables/Preset/CVPreset.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling CVPreset.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
-$(JUCE_OBJDIR)/CVGroupView_1e9383c8.o: ../../Source/CustomVariables/ui/CVGroupView.cpp
+$(JUCE_OBJDIR)/CVPresetManager_6d2193bd.o: ../../Source/CustomVariables/Preset/CVPresetManager.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling CVGroupView.cpp"
+	@echo "Compiling CVPresetManager.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
-$(JUCE_OBJDIR)/CVPanel_d381f88.o: ../../Source/CustomVariables/ui/CVPanel.cpp
+$(JUCE_OBJDIR)/CVGroupManagerUI_95d59108.o: ../../Source/CustomVariables/ui/CVGroupManagerUI.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling CVPanel.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/CustomVariable_3e9009df.o: ../../Source/CustomVariables/CustomVariable.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling CustomVariable.cpp"
+	@echo "Compiling CVGroupManagerUI.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/CVGroup_5e5064a4.o: ../../Source/CustomVariables/CVGroup.cpp

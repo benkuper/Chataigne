@@ -3,9 +3,9 @@
 <JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.3.0"
               bundleIdentifier="benkuper.Chataigne" includeBinaryInAppConfig="1"
               jucerVersion="5.2.1" companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
-              companyEmail="benjamin@kuperberg.fr" defines="" displaySplashScreen="1"
-              reportAppUsage="1" splashScreenColour="Dark" cppLanguageStandard="14"
-              companyCopyright="Ben Kuper" headerPath="../../Source">
+              companyEmail="benjamin@kuperberg.fr" defines="" displaySplashScreen="0"
+              splashScreenColour="Dark" cppLanguageStandard="14" companyCopyright="Ben Kuper"
+              headerPath="../../Source" reportAppUsage="0">
   <MAINGROUP id="EDDVhd" name="Chataigne">
     <GROUP id="{E61F6705-4C4B-3F04-F742-20CC91F590E4}" name="Resources">
       <FILE id="qDQaKu" name="about.png" compile="0" resource="1" file="Resources/about.png"/>
@@ -385,22 +385,19 @@
       </GROUP>
       <GROUP id="{B7AE4CF6-C109-933F-DE7E-494B9C9E3C1A}" name="CustomVariables">
         <GROUP id="{5F538722-534C-6E5F-A390-C27908706068}" name="Preset">
-          <FILE id="NVUblt" name="CVGroupPreset.cpp" compile="1" resource="0"
-                file="Source/CustomVariables/Preset/CVGroupPreset.cpp"/>
-          <FILE id="aRTllr" name="CVGroupPreset.h" compile="0" resource="0" file="Source/CustomVariables/Preset/CVGroupPreset.h"/>
           <FILE id="mQfph1" name="CVPreset.cpp" compile="1" resource="0" file="Source/CustomVariables/Preset/CVPreset.cpp"/>
           <FILE id="GS887N" name="CVPreset.h" compile="0" resource="0" file="Source/CustomVariables/Preset/CVPreset.h"/>
+          <FILE id="U7uefk" name="CVPresetManager.cpp" compile="1" resource="0"
+                file="Source/CustomVariables/Preset/CVPresetManager.cpp"/>
+          <FILE id="xEaYqr" name="CVPresetManager.h" compile="0" resource="0"
+                file="Source/CustomVariables/Preset/CVPresetManager.h"/>
         </GROUP>
         <GROUP id="{E5A1BFCC-BDA1-A961-4D9E-FD129B1A23A4}" name="ui">
-          <FILE id="TV3jk1" name="CVGroupView.cpp" compile="1" resource="0" file="Source/CustomVariables/ui/CVGroupView.cpp"/>
-          <FILE id="mdW6eX" name="CVGroupView.h" compile="0" resource="0" file="Source/CustomVariables/ui/CVGroupView.h"/>
-          <FILE id="ZzhOAu" name="CVPanel.cpp" compile="1" resource="0" file="Source/CustomVariables/ui/CVPanel.cpp"/>
-          <FILE id="BI8zv5" name="CVPanel.h" compile="0" resource="0" file="Source/CustomVariables/ui/CVPanel.h"/>
+          <FILE id="HjPtVt" name="CVGroupManagerUI.cpp" compile="1" resource="0"
+                file="Source/CustomVariables/ui/CVGroupManagerUI.cpp"/>
+          <FILE id="iadEms" name="CVGroupManagerUI.h" compile="0" resource="0"
+                file="Source/CustomVariables/ui/CVGroupManagerUI.h"/>
         </GROUP>
-        <FILE id="h7Tbxd" name="CustomVariable.cpp" compile="1" resource="0"
-              file="Source/CustomVariables/CustomVariable.cpp"/>
-        <FILE id="PjwL8M" name="CustomVariable.h" compile="0" resource="0"
-              file="Source/CustomVariables/CustomVariable.h"/>
         <FILE id="ff4BwR" name="CVGroup.cpp" compile="1" resource="0" file="Source/CustomVariables/CVGroup.cpp"/>
         <FILE id="Kw9Hct" name="CVGroup.h" compile="0" resource="0" file="Source/CustomVariables/CVGroup.h"/>
         <FILE id="yrIHgg" name="CVGroupManager.cpp" compile="1" resource="0"
