@@ -69,7 +69,7 @@ JoyConModule::JoyConModule() :
 JoyConModule::~JoyConModule()
 {
 	signalThreadShouldExit();
-	while (isThreadRunning());
+	stopThread(1000);
 }
 
 #if JUCE_WINDOWS
