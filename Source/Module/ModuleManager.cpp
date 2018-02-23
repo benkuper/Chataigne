@@ -12,6 +12,8 @@
 #include "ModuleFactory.h"
 #include "StateMachine/StateManager.h"
 #include "TimeMachine/SequenceManager.h"
+#include "CustomVariables/CVGroupManager.h"
+#include "Module/modules/customvariables/CustomVariablesModule.h"
 #include "ChataigneEngine.h"
 
 juce_ImplementSingleton(ModuleManager)
@@ -42,64 +44,42 @@ Module * ModuleManager::getModuleWithName(const String & moduleName)
 	//DBG("get Module with name : " << moduleName << " / " << StateManager::getInstance()->shortName);
 	if (moduleName == StateManager::getInstance()->module.shortName) return &StateManager::getInstance()->module;
 	if (moduleName == SequenceManager::getInstance()->module.shortName) return &SequenceManager::getInstance()->module;
+	if (moduleName == CVGroupManager::getInstance()->module->shortName) return CVGroupManager::getInstance()->module;
 	if (moduleName == static_cast<ChataigneEngine *>(Engine::mainEngine)->module.shortName) return &static_cast<ChataigneEngine *>(Engine::mainEngine)->module;
 	else return getItemWithName(moduleName);
 }
 
 Controllable * ModuleManager::showAllValuesAndGetControllable(bool showTriggers, bool showParameters)
 {
-	Array<WeakReference<Controllable>> controllableMenuRefs;
-	int curID = 1;
-
 	PopupMenu menu;
-	int numItems = ModuleManager::getInstance()->items.size();
+	
+	Array<Module *> mList = ModuleManager::getInstance()->getModuleList();
+	int numItems = mList.size();
+
+	const int maxValuesPerModule = 10000;
+	OwnedArray<ControllableChooserPopupMenu> moduleMenus;
+
 	for (int i = 0; i < numItems; i++)
 	{
-		Module * m = ModuleManager::getInstance()->items[i];
-		PopupMenu sMenu;
-		int numValues =  m->valuesCC.controllables.size();
-		for (int j = 0; j < numValues; j++)
-		{
-			Controllable * c = m->valuesCC.controllables[j];
-            if (c->type == Controllable::TRIGGER) { if(!showTriggers) continue; }
-			else if (!showParameters) continue;
-
-			sMenu.addItem(curID, c->niceName);
-			controllableMenuRefs.add(c);
-			curID++;
-		}
-
-		int numContainers = m->valuesCC.controllableContainers.size();
-		for (int k = 0; k < numContainers; k++)
-		{
-			ControllableContainer * vcc = m->valuesCC.controllableContainers[k];
-			PopupMenu cMenu;
-			int numCValues = vcc->controllables.size();
-			for (int kj = 0; kj < numCValues; kj++)
-			{
-				Controllable * c = vcc->controllables[kj];
-				if (c->type == Controllable::TRIGGER) { if (!showTriggers) continue; } else if (!showParameters) continue;
-				cMenu.addItem(curID, c->niceName);
-				controllableMenuRefs.add(c);
-				curID++;
-			}
-			sMenu.addSubMenu(vcc->niceName, cMenu);
-		}
-
-		menu.addSubMenu(m->niceName, sMenu);
+		Module * m = mList[i];
+		ControllableChooserPopupMenu *vCC = new ControllableChooserPopupMenu(&m->valuesCC, showParameters, showTriggers, i* maxValuesPerModule);
+		moduleMenus.add(vCC);
+		if (i == ModuleManager::getInstance()->items.size()) menu.addSeparator(); // Separator between user created module and special modules
+		menu.addSubMenu(m->niceName, *vCC);
 	}
 
-	//TODO : move from here the handling of other values than modules
-	ControllableChooserPopupMenu engineMenu(Engine::mainEngine, showParameters,showTriggers, numItems * 10000);
+	ControllableChooserPopupMenu engineMenu(Engine::mainEngine, showParameters, showTriggers, -100000);
 	menu.addSubMenu("Generic", engineMenu);
-	int itemID = menu.show();
+	
+	int result = menu.show();
 
-	if (itemID >= 10000)
+	if (result < 0)
 	{
-		return engineMenu.getControllableForResult(itemID);
+		return engineMenu.getControllableForResult(result);
 	} else
 	{
-		return controllableMenuRefs[itemID-1];
+		ControllableChooserPopupMenu * mm = moduleMenus[(int)floorf(result / maxValuesPerModule)];
+		return mm->getControllableForResult(result);
 	}
 
 }
@@ -136,7 +116,8 @@ PopupMenu ModuleManager::getAllModulesCommandMenu(CommandContext context)
 	for (int i = 0; i < items.size(); i++) menu.addSubMenu(items[i]->niceName, items[i]->defManager.getCommandMenu(i * 1000,context));
 	menu.addSubMenu(StateManager::getInstance()->module.niceName, StateManager::getInstance()->module.defManager.getCommandMenu(-1000, context));
 	menu.addSubMenu(SequenceManager::getInstance()->module.niceName, SequenceManager::getInstance()->module.defManager.getCommandMenu(-2000, context));
-	menu.addSubMenu(static_cast<ChataigneEngine *>(Engine::mainEngine)->module.niceName, static_cast<ChataigneEngine *>(Engine::mainEngine)->module.defManager.getCommandMenu(-3000, context));
+	menu.addSubMenu(CVGroupManager::getInstance()->module->niceName, CVGroupManager::getInstance()->module->defManager.getCommandMenu(-3000, context));
+	menu.addSubMenu(static_cast<ChataigneEngine *>(Engine::mainEngine)->module.niceName, static_cast<ChataigneEngine *>(Engine::mainEngine)->module.defManager.getCommandMenu(-10000, context));
 	return menu;
 }
 
@@ -148,11 +129,15 @@ CommandDefinition * ModuleManager::getCommandDefinitionForItemID(int itemID, Mod
 
 	Module * m = lockedModule;
 
-	if (itemID < -2000)
+	if (itemID < -9000)
 	{
 		m = &static_cast<ChataigneEngine *>(Engine::mainEngine)->module;
+		itemID += 10000;
+	} else if (itemID < -2000)
+	{
+		m = CVGroupManager::getInstance()->module;
 		itemID += 3000;
-	}else if (itemID < -1000)
+	} else if (itemID < -1000)
 	{
 		m = &SequenceManager::getInstance()->module;
 		itemID += 2000;
@@ -171,4 +156,19 @@ CommandDefinition * ModuleManager::getCommandDefinitionForItemID(int itemID, Mod
 
 	int commandIndex = itemID % 1000 - 1;
 	return m->defManager.definitions[commandIndex];
+}
+
+Array<Module*> ModuleManager::getModuleList(bool includeSpecialModules)
+{
+	Array<Module *> mList;
+	for (auto &m : ModuleManager::getInstance()->items) mList.add(m);
+	
+	if (includeSpecialModules)
+	{
+		mList.add(&StateManager::getInstance()->module);
+		mList.add(&SequenceManager::getInstance()->module);
+		mList.add(CVGroupManager::getInstance()->module);
+	}
+	
+	return mList;
 }
