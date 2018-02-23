@@ -51,7 +51,6 @@ MainContentComponent::MainContentComponent()
 	String lastVersion = getAppProperties().getCommonSettings(true)->getValue("lastVersion", "0");
 	if (lastVersion != getAppVersion())
 	{
-		DBG("New version, load default layout");
 		ShapeShifterManager::getInstance()->loadDefaultLayoutFile(true);
 	} else
 	{

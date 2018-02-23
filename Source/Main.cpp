@@ -40,7 +40,8 @@ void ChataigneApplication::initialise(const String & commandLine)
 
 	AppUpdater::getInstance()->setURLs(URL("http://benjamin.kuperberg.fr/chataigne/releases/update.json"), "http://benjamin.kuperberg.fr/chataigne/user/data/","Chataigne");
 	
-	AppUpdater::getInstance()->checkForBetas = GlobalSettings::getInstance()->checkBetaUpdates->boolValue();
+	bool isBeta = getAppVersion().endsWith("b");
+	AppUpdater::getInstance()->checkForBetas = GlobalSettings::getInstance()->checkBetaUpdates->boolValue() && (isBeta || !GlobalSettings::getInstance()->onlyCheckBetaFromBeta->boolValue());
 	AppUpdater::getInstance()->addAsyncUpdateListener(this);
 
 	if (GlobalSettings::getInstance()->checkUpdatesOnStartup->boolValue()) AppUpdater::getInstance()->checkForUpdates();
