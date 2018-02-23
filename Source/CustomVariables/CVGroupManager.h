@@ -12,6 +12,8 @@
 
 #include "CVGroup.h"
 
+class CustomVariablesModule;
+
 class CVGroupManager :
 	public BaseManager<CVGroup>
 {
@@ -20,4 +22,11 @@ public:
 
 	CVGroupManager(const String &name = "Custom Variables");
 	~CVGroupManager();
+
+	ScopedPointer<CustomVariablesModule> module;
+
+	//Input values menu
+	static ControllableContainer * showMenuAndGetContainer();
+	static Controllable * showMenuAndGetVariable(bool, bool);
+	static ControllableContainer * showMenuAndGetPreset();
 };

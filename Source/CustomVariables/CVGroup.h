@@ -19,8 +19,20 @@ public:
 	CVGroup(const String &name = "Group");
 	~CVGroup();
 
+	ControllableContainer params;
+
+	enum ControlMode { FREE, WEIGHTS, VORONOI, GRADIENT_BAND };
+	EnumParameter * controlMode;
+	Point2DParameter * targetPosition;
+
 	GenericControllableManager values;
 	CVPresetManager pm;
+
+	
+	void setValuesToPreset(CVPreset * preset);
+	void lerpPresets(CVPreset * p1, CVPreset * p2, float value);
+
+	void onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c) override;
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;

@@ -18,12 +18,13 @@ class GenericControllableManagerLinkedContainer :
 	public GenericControllableManager::Listener
 {
 public :
-	GenericControllableManagerLinkedContainer(GenericControllableManager * manager, const String &name);
+	GenericControllableManagerLinkedContainer(const String &name, GenericControllableManager * manager, bool keepValuesInSync);
 	~GenericControllableManagerLinkedContainer();
 
 	GenericControllableManager * manager;
 	HashMap<Parameter *, Parameter *> linkMap;
 
+	bool keepValuesInSync;
 	
 	void resetAndBuildValues(bool syncValues = true);
 
@@ -35,6 +36,7 @@ public :
 	void itemRemoved(GenericControllableItem *) override;
 	void itemsReordered() override;
 
+	void parameterValueChanged(Parameter *) override;
 	void parameterRangeChanged(Parameter *) override;
 	void controllableNameChanged(Controllable *) override;
 
@@ -55,6 +57,7 @@ public :
 	};
 
 	LinkedComparator linkedComparator;
+
 };
 
 class CVPreset :
@@ -67,6 +70,12 @@ public:
 	CVGroup * group;
 	GenericControllableManagerLinkedContainer values;
 
+	FloatParameter * weight;
+	Point2DParameter * pos;
+	ColorParameter * color;
+
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
+
+	InspectableEditor * getEditor(bool isRoot) override;
 };

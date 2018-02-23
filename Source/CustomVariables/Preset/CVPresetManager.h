@@ -22,6 +22,5 @@ public:
 	~CVPresetManager();
 
 	CVGroup * group;
-	
 	CVPreset * createItem() override;
 };

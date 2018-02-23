@@ -10,11 +10,12 @@
 
 #include "CVPreset.h"
 #include "../CVGroup.h"
+#include "ui/CVPresetEditor.h"
 
 CVPreset::CVPreset(CVGroup * group) :
 	BaseItem("Preset"),
 	group(group),
-	values(&group->values,"Values")
+	values("Values",&group->values,false)
 {
 	jassert(group != nullptr);
 	values.hideEditorHeader = true;
@@ -24,6 +25,15 @@ CVPreset::CVPreset(CVGroup * group) :
 	showInspectorOnSelect = false;
 
 	addChildControllableContainer(&values);
+
+
+	weight = addFloatParameter("Weight", "Weight of this preset in a non-free control mode", 0, 0, 1);
+	weight->hideInEditor = true;
+	pos = addPoint2DParameter("Position", "Position in a 2D interpolation control mode, such as Voronoi or Gradient Band");
+	pos->hideInEditor = true;
+	color = new ColorParameter("Color", "The color of the handle in a 2D interpolation editor");
+	addParameter(color);
+	color->hideInEditor = true;
 }
 
 CVPreset::~CVPreset()
@@ -43,14 +53,19 @@ void CVPreset::loadJSONDataInternal(var data)
 	values.loadJSONData(data.getProperty("values", var()),true);
 }
 
+InspectableEditor * CVPreset::getEditor(bool isRoot)
+{
+	return new CVPresetEditor(this, isRoot);
+}
 
-GenericControllableManagerLinkedContainer::GenericControllableManagerLinkedContainer(GenericControllableManager * manager, const String &name) :
+GenericControllableManagerLinkedContainer::GenericControllableManagerLinkedContainer(const String &name, GenericControllableManager * manager, bool keepValuesInSync) :
 	ControllableContainer(name),
 	manager(manager),
-	linkedComparator(manager)
+	linkedComparator(manager),
+	keepValuesInSync(keepValuesInSync)
 {
 	manager->addBaseManagerListener(this);
-	resetAndBuildValues();
+	resetAndBuildValues(keepValuesInSync);
 }
 
 GenericControllableManagerLinkedContainer::~GenericControllableManagerLinkedContainer()
@@ -137,11 +152,19 @@ void GenericControllableManagerLinkedContainer::itemsReordered()
 	queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerReordered, this));
 }
 
+void GenericControllableManagerLinkedContainer::parameterValueChanged(Parameter * source)
+{
+	if (!keepValuesInSync) return;
+	Parameter * p = getParameterForSource(source);
+	if (p == nullptr) return;
+	p->setValue(source->value);
+}
+
 void GenericControllableManagerLinkedContainer::parameterRangeChanged(Parameter * source)
 {
 	Parameter * p = getParameterForSource(source);
 	if (p == nullptr) return;
-	syncItem(p, source, false);
+	syncItem(p, source, keepValuesInSync);
 }
 
 void GenericControllableManagerLinkedContainer::controllableNameChanged(Controllable * sourceC)
@@ -151,7 +174,7 @@ void GenericControllableManagerLinkedContainer::controllableNameChanged(Controll
 
 	Parameter * p = getParameterForSource(source);
 	if (p == nullptr) return;
-	syncItem(p, source, false);
+	syncItem(p, source, keepValuesInSync);
 }
 
 Parameter * GenericControllableManagerLinkedContainer::getParameterForSource(Parameter * p)
@@ -160,3 +183,4 @@ Parameter * GenericControllableManagerLinkedContainer::getParameterForSource(Par
 	while (i.next()) if (p == i.getValue()) return i.getKey();
 	return nullptr;
 }
+
