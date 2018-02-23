@@ -40,7 +40,7 @@ void StandardConditionEditor::resizedInternalHeaderItemInternal(Rectangle<int>& 
 {
 	if (sourceFeedbackUI != nullptr)
 	{
-		sourceFeedbackUI->setBounds(r.removeFromRight(100).reduced(2));
+		sourceFeedbackUI->setBounds(r.removeFromRight(jmin(r.getWidth() - 150, 250)).reduced(2));
 		r.removeFromRight(2);
 	}
 	BaseItemEditor::resizedInternalHeaderItemInternal(r);

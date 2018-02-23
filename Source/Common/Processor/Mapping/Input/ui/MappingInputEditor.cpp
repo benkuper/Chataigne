@@ -38,7 +38,7 @@ void MappingInputEditor::updateSourceUI()
 
 void MappingInputEditor::resizedInternalHeader(Rectangle<int>& r)
 {
-	if (sourceFeedbackUI != nullptr) sourceFeedbackUI->setBounds(r.removeFromRight(100).reduced(2));
+	if (sourceFeedbackUI != nullptr) sourceFeedbackUI->setBounds(r.removeFromRight(jmin(r.getWidth()-150,200)).reduced(2));
 	GenericControllableContainerEditor::resizedInternalHeader(r);
 }
 

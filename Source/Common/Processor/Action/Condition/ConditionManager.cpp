@@ -61,6 +61,7 @@ void ConditionManager::addItemInternal(Condition * c, var data)
 	conditionOperator->hideInEditor = items.size() <= 1;
 	validationTime->hideInEditor = items.size() == 0;
 	validationProgress->hideInEditor = items.size() == 0;
+	checkAllConditions();
 }
 
 void ConditionManager::removeItemInternal(Condition * c)
@@ -69,6 +70,7 @@ void ConditionManager::removeItemInternal(Condition * c)
 	conditionOperator->hideInEditor = items.size() <= 1;
 	validationTime->hideInEditor = items.size() == 0;
 	validationProgress->hideInEditor = items.size() == 0;
+	checkAllConditions();
 }
 
 void ConditionManager::setForceDisabled(bool value, bool force)

@@ -77,6 +77,8 @@ void StandardCondition::setSourceControllable(WeakReference<Controllable> c)
 			}
 			comparator->addComparatorListener(this);
 			comparator->compare();
+			
+			isValid->setValue(comparator->isValid);
 		}
 	} else
 	{
@@ -90,6 +92,8 @@ void StandardCondition::setSourceControllable(WeakReference<Controllable> c)
 
 	conditionListeners.call(&ConditionListener::conditionSourceChanged, this);
 	conditionAsyncNotifier.addMessage(new ConditionEvent(ConditionEvent::SOURCE_CHANGED, this));
+
+	
 }
 
 void StandardCondition::onContainerParameterChangedInternal(Parameter * p)

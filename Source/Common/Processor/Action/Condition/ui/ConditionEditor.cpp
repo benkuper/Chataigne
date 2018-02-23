@@ -45,7 +45,6 @@ void ConditionEditor::newMessage(const Condition::ConditionEvent &e)
 	switch (e.type)
 	{
 	case Condition::ConditionEvent::VALIDATION_CHANGED:
-		DBG("Validation changed");
 		repaint();
 		break;
 
