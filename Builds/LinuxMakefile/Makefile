@@ -35,7 +35,7 @@ ifeq ($(CONFIG),Debug)
     TARGET_ARCH := -m64
   endif
 
-  JUCE_CPPFLAGS := $(DEPFLAGS) -DLINUX=1 -DDEBUG=1 -D_DEBUG=1 -DJUCER_LINUX_MAKE_6D53C8B4=1 -DJUCE_APP_VERSION=1.3.0 -DJUCE_APP_VERSION_HEX=0x10300 $(shell pkg-config --cflags alsa freetype2 libcurl x11 xext xinerama) -pthread -I../../JuceLibraryCode -I$(HOME)/JUCE/modules -I../../../JUCE\ Modules -I../../External/wiiuse -I../../External/serial/include -I../../Source $(CPPFLAGS)
+  JUCE_CPPFLAGS := $(DEPFLAGS) -DLINUX=1 -DDEBUG=1 -D_DEBUG=1 -DJUCER_LINUX_MAKE_6D53C8B4=1 -DJUCE_APP_VERSION=1.3.0b -DJUCE_APP_VERSION_HEX=0x10300 $(shell pkg-config --cflags alsa freetype2 libcurl x11 xext xinerama) -pthread -I../../JuceLibraryCode -I$(HOME)/JUCE/modules -I../../../JUCE\ Modules -I../../External/wiiuse -I../../External/serial/include -I../../Source $(CPPFLAGS)
   JUCE_CPPFLAGS_APP := -DJucePlugin_Build_VST=0 -DJucePlugin_Build_VST3=0 -DJucePlugin_Build_AU=0 -DJucePlugin_Build_AUv3=0 -DJucePlugin_Build_RTAS=0 -DJucePlugin_Build_AAX=0 -DJucePlugin_Build_Standalone=0
   JUCE_TARGET_APP := Chataigne
 
@@ -56,7 +56,7 @@ ifeq ($(CONFIG),Release)
     TARGET_ARCH := -m64
   endif
 
-  JUCE_CPPFLAGS := $(DEPFLAGS) -DLINUX=1 -DNDEBUG=1 -DJUCER_LINUX_MAKE_6D53C8B4=1 -DJUCE_APP_VERSION=1.3.0 -DJUCE_APP_VERSION_HEX=0x10300 $(shell pkg-config --cflags alsa freetype2 libcurl x11 xext xinerama) -pthread -I../../JuceLibraryCode -I$(HOME)/JUCE/modules -I../../../JUCE\ Modules -I../../External/wiiuse -I../../External/serial/include -I../../Source $(CPPFLAGS)
+  JUCE_CPPFLAGS := $(DEPFLAGS) -DLINUX=1 -DNDEBUG=1 -DJUCER_LINUX_MAKE_6D53C8B4=1 -DJUCE_APP_VERSION=1.3.0b -DJUCE_APP_VERSION_HEX=0x10300 $(shell pkg-config --cflags alsa freetype2 libcurl x11 xext xinerama) -pthread -I../../JuceLibraryCode -I$(HOME)/JUCE/modules -I../../../JUCE\ Modules -I../../External/wiiuse -I../../External/serial/include -I../../Source $(CPPFLAGS)
   JUCE_CPPFLAGS_APP := -DJucePlugin_Build_VST=0 -DJucePlugin_Build_VST3=0 -DJucePlugin_Build_AU=0 -DJucePlugin_Build_AUv3=0 -DJucePlugin_Build_RTAS=0 -DJucePlugin_Build_AAX=0 -DJucePlugin_Build_Standalone=0
   JUCE_TARGET_APP := Chataigne
 
@@ -152,11 +152,14 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/SerialDevice_e404848a.o \
   $(JUCE_OBJDIR)/SerialDeviceParameter_2de97789.o \
   $(JUCE_OBJDIR)/SerialManager_fd829543.o \
+  $(JUCE_OBJDIR)/CVPresetEditor_83210cfc.o \
   $(JUCE_OBJDIR)/CVPreset_3c4a8f1a.o \
   $(JUCE_OBJDIR)/CVPresetManager_6d2193bd.o \
   $(JUCE_OBJDIR)/CVGroupManagerUI_95d59108.o \
   $(JUCE_OBJDIR)/CVGroup_5e5064a4.o \
   $(JUCE_OBJDIR)/CVGroupManager_45344ef3.o \
+  $(JUCE_OBJDIR)/CustomVariablesModuleCommands_edf5eec8.o \
+  $(JUCE_OBJDIR)/CustomVariablesModule_cdc46d67.o \
   $(JUCE_OBJDIR)/AudioModuleHardwareEditor_e9c8a821.o \
   $(JUCE_OBJDIR)/AudioModule_84057627.o \
   $(JUCE_OBJDIR)/CustomValuesCommandArgumentEditor_1cc8b6de.o \
@@ -768,6 +771,11 @@ $(JUCE_OBJDIR)/SerialManager_fd829543.o: ../../Source/Common/Serial/SerialManage
 	@echo "Compiling SerialManager.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
+$(JUCE_OBJDIR)/CVPresetEditor_83210cfc.o: ../../Source/CustomVariables/Preset/ui/CVPresetEditor.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling CVPresetEditor.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
 $(JUCE_OBJDIR)/CVPreset_3c4a8f1a.o: ../../Source/CustomVariables/Preset/CVPreset.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling CVPreset.cpp"
@@ -791,6 +799,16 @@ $(JUCE_OBJDIR)/CVGroup_5e5064a4.o: ../../Source/CustomVariables/CVGroup.cpp
 $(JUCE_OBJDIR)/CVGroupManager_45344ef3.o: ../../Source/CustomVariables/CVGroupManager.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling CVGroupManager.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/CustomVariablesModuleCommands_edf5eec8.o: ../../Source/Module/modules/customvariables/commands/CustomVariablesModuleCommands.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling CustomVariablesModuleCommands.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/CustomVariablesModule_cdc46d67.o: ../../Source/Module/modules/customvariables/CustomVariablesModule.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling CustomVariablesModule.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/AudioModuleHardwareEditor_e9c8a821.o: ../../Source/Module/modules/audio/ui/AudioModuleHardwareEditor.cpp

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.3.0"
+<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.3.0b"
               bundleIdentifier="benkuper.Chataigne" includeBinaryInAppConfig="1"
               jucerVersion="5.2.1" companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
               companyEmail="benjamin@kuperberg.fr" defines="" displaySplashScreen="0"
@@ -385,6 +385,12 @@
       </GROUP>
       <GROUP id="{B7AE4CF6-C109-933F-DE7E-494B9C9E3C1A}" name="CustomVariables">
         <GROUP id="{5F538722-534C-6E5F-A390-C27908706068}" name="Preset">
+          <GROUP id="{CBA24D1A-B1C0-255E-3003-E37986E099CE}" name="ui">
+            <FILE id="yGVOVX" name="CVPresetEditor.cpp" compile="1" resource="0"
+                  file="Source/CustomVariables/Preset/ui/CVPresetEditor.cpp"/>
+            <FILE id="WDIsMR" name="CVPresetEditor.h" compile="0" resource="0"
+                  file="Source/CustomVariables/Preset/ui/CVPresetEditor.h"/>
+          </GROUP>
           <FILE id="mQfph1" name="CVPreset.cpp" compile="1" resource="0" file="Source/CustomVariables/Preset/CVPreset.cpp"/>
           <FILE id="GS887N" name="CVPreset.h" compile="0" resource="0" file="Source/CustomVariables/Preset/CVPreset.h"/>
           <FILE id="U7uefk" name="CVPresetManager.cpp" compile="1" resource="0"
@@ -407,6 +413,18 @@
       </GROUP>
       <GROUP id="{8FC20544-FEBB-B3BA-CF48-50962AA7C07C}" name="Module">
         <GROUP id="{6A9D374B-2C22-DB11-15C8-CA446252E36A}" name="modules">
+          <GROUP id="{1845D9E2-AABC-AF10-DF83-FE7DD092D098}" name="customvariables">
+            <GROUP id="{E384A9A3-5D10-939D-8450-418396EF3123}" name="commands">
+              <FILE id="flaypv" name="CustomVariablesModuleCommands.cpp" compile="1"
+                    resource="0" file="Source/Module/modules/customvariables/commands/CustomVariablesModuleCommands.cpp"/>
+              <FILE id="yBDsj3" name="CustomVariablesModuleCommands.h" compile="0"
+                    resource="0" file="Source/Module/modules/customvariables/commands/CustomVariablesModuleCommands.h"/>
+            </GROUP>
+            <FILE id="wfIMCu" name="CustomVariablesModule.cpp" compile="1" resource="0"
+                  file="Source/Module/modules/customvariables/CustomVariablesModule.cpp"/>
+            <FILE id="fZhjtl" name="CustomVariablesModule.h" compile="0" resource="0"
+                  file="Source/Module/modules/customvariables/CustomVariablesModule.h"/>
+          </GROUP>
           <GROUP id="{0A217116-DCE5-942C-8079-6BBFE1C91ECE}" name="audio">
             <GROUP id="{92F1950B-90FA-CF9E-6462-7285018BEE9F}" name="libs">
               <GROUP id="{59214ED5-C409-27E6-B013-DC2A214F30DC}" name="pitch">

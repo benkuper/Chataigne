@@ -19,7 +19,7 @@
           <Add option="-DDEBUG=1"/>
           <Add option="-D_DEBUG=1"/>
           <Add option="-DJUCER_CODEBLOCKS_LINUX_191E0897=1"/>
-          <Add option="-DJUCE_APP_VERSION=1.3.0"/>
+          <Add option="-DJUCE_APP_VERSION=1.3.0b"/>
           <Add option="-DJUCE_APP_VERSION_HEX=0x10300"/>
           <Add option="-DJucePlugin_Build_VST=0"/>
           <Add option="-DJucePlugin_Build_VST3=0"/>
@@ -64,7 +64,7 @@
           <Add option="-DLINUX=1"/>
           <Add option="-DNDEBUG=1"/>
           <Add option="-DJUCER_CODEBLOCKS_LINUX_191E0897=1"/>
-          <Add option="-DJUCE_APP_VERSION=1.3.0"/>
+          <Add option="-DJUCE_APP_VERSION=1.3.0b"/>
           <Add option="-DJUCE_APP_VERSION_HEX=0x10300"/>
           <Add option="-DJucePlugin_Build_VST=0"/>
           <Add option="-DJucePlugin_Build_VST3=0"/>
@@ -998,6 +998,16 @@
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
+    <Unit filename="../../Source/CustomVariables/Preset/ui/CVPresetEditor.cpp">
+      <Option target="App | Debug"/>
+      <Option target="App | Release"/>
+    </Unit>
+    <Unit filename="../../Source/CustomVariables/Preset/ui/CVPresetEditor.h">
+      <Option target="App | Debug"/>
+      <Option target="App | Release"/>
+      <Option compile="0"/>
+      <Option link="0"/>
+    </Unit>
     <Unit filename="../../Source/CustomVariables/Preset/CVPreset.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
@@ -1043,6 +1053,26 @@
       <Option target="App | Release"/>
     </Unit>
     <Unit filename="../../Source/CustomVariables/CVGroupManager.h">
+      <Option target="App | Debug"/>
+      <Option target="App | Release"/>
+      <Option compile="0"/>
+      <Option link="0"/>
+    </Unit>
+    <Unit filename="../../Source/Module/modules/customvariables/commands/CustomVariablesModuleCommands.cpp">
+      <Option target="App | Debug"/>
+      <Option target="App | Release"/>
+    </Unit>
+    <Unit filename="../../Source/Module/modules/customvariables/commands/CustomVariablesModuleCommands.h">
+      <Option target="App | Debug"/>
+      <Option target="App | Release"/>
+      <Option compile="0"/>
+      <Option link="0"/>
+    </Unit>
+    <Unit filename="../../Source/Module/modules/customvariables/CustomVariablesModule.cpp">
+      <Option target="App | Debug"/>
+      <Option target="App | Release"/>
+    </Unit>
+    <Unit filename="../../Source/Module/modules/customvariables/CustomVariablesModule.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
