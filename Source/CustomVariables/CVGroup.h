@@ -32,6 +32,9 @@ public:
 	void setValuesToPreset(CVPreset * preset);
 	void lerpPresets(CVPreset * p1, CVPreset * p2, float value);
 
+	void computeValues();
+	Array<float> getNormalizedPresetWeights();
+
 	void onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c) override;
 
 	var getJSONData() override;

@@ -16,6 +16,7 @@ CVGroup::CVGroup(const String & name) :
 	values("Variables",false,false,false),
 	pm(this)
 {
+
 	addChildControllableContainer(&params);
 	addChildControllableContainer(&values);
 	addChildControllableContainer(&pm);
@@ -24,7 +25,7 @@ CVGroup::CVGroup(const String & name) :
 Free mode lets you can change manually the values or tween them to preset values punctually.\n \
 Weights mode locks the values and interpolate them continuously depending on preset weights.\n \
 Voronoi and Gradient Band (not implemented yet) also locks values but interpolates them using 2D interpolators");
-	controlMode->addOption("Free", FREE)->addOption("Weights", WEIGHTS)->addOption("Voronoi", VORONOI)->addOption("Gradient Band", GRADIENT_BAND);
+	controlMode->addOption("Free", FREE)->addOption("Weights", WEIGHTS);// ->addOption("Voronoi", VORONOI)->addOption("Gradient Band", GRADIENT_BAND);
 
 	targetPosition = params.addPoint2DParameter("Target Position", "Use for 2D interpolator such as Voronoi or Gradient band", false);
 }
@@ -60,20 +61,79 @@ void CVGroup::lerpPresets(CVPreset * p1, CVPreset * p2, float weight)
 	}
 }
 
+
+void CVGroup::computeValues()
+{
+	ControlMode cm = controlMode->getValueDataAsEnum<ControlMode>();
+	if (cm == FREE) return;
+
+	Array<float> weights = getNormalizedPresetWeights();
+
+	switch (cm)
+	{
+	case WEIGHTS:
+
+		for (auto &v : values.items)
+		{
+			Array<var> pValues;
+			Parameter * vp = static_cast<Parameter *>(v->controllable);
+			for (auto &p : pm.items)
+			{
+				pValues.add(p->values.getParameterForSource(vp)->value);
+			}
+
+			vp->setWeightedValue(pValues, weights);
+		}
+		break;
+	}
+	
+}
+
+
+Array<float> CVGroup::getNormalizedPresetWeights()
+{
+	Array<float> normalizedWeights;
+	float totalWeight = 0;
+
+	for (auto &p : pm.items)
+	{
+		totalWeight += p->enabled->boolValue() ? p->weight->floatValue() : 0;
+	}
+
+	for (auto &p : pm.items)
+	{
+		float w = p->enabled->boolValue() ? p->weight->floatValue() : 0;
+		normalizedWeights.add(w / totalWeight);
+	}
+
+	return normalizedWeights;
+}
+
 void CVGroup::onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c)
 {
 	BaseItem::onControllableFeedbackUpdateInternal(cc, c);
+	
 	if (c == controlMode)
 	{
 		ControlMode cm = controlMode->getValueDataAsEnum<ControlMode>();
 		values.setForceItemsFeedbackOnly(cm != FREE);
 		targetPosition->setEnabled(cm == VORONOI || cm == GRADIENT_BAND);
+		if(cm != FREE) computeValues();
+
+	} else if(controlMode->getValueDataAsEnum<ControlMode>() == WEIGHTS)
+	{
+		CVPreset * p = static_cast<CVPreset *>(c->parentContainer);
+		if (p != nullptr && c == p->weight)
+		{
+			computeValues();
+		}
 	}
 }
 
 var CVGroup::getJSONData()
 {
 	var data = BaseItem::getJSONData();
+	data.getDynamicObject()->setProperty("params", params.getJSONData());
 	data.getDynamicObject()->setProperty("variables", values.getJSONData());
 	data.getDynamicObject()->setProperty("presets", pm.getJSONData());
 	return data;
@@ -82,6 +142,9 @@ var CVGroup::getJSONData()
 void CVGroup::loadJSONDataInternal(var data)
 {
 	BaseItem::loadJSONDataInternal(data);
+	params.loadJSONData(data.getProperty("params", var()));
 	values.loadJSONData(data.getProperty("variables", var()));
 	pm.loadJSONData(data.getProperty("presets", var()));
+
+	if (controlMode->getValueDataAsEnum<ControlMode>() != FREE) computeValues();
 }

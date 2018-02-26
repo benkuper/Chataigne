@@ -21,7 +21,7 @@ CustomVariablesModule::CustomVariablesModule(CVGroupManager * manager) :
 	defManager.add(CommandDefinition::createDef(this, "", "Set Preset", &CVCommand::create, CommandContext::ACTION)->addParam("type", CVCommand::SET_PRESET));
 	defManager.add(CommandDefinition::createDef(this, "", "Interpolate", &CVCommand::create, CommandContext::BOTH)->addParam("type", CVCommand::LERP_PRESETS));
 	defManager.add(CommandDefinition::createDef(this, "", "Set Preset Weight", &CVCommand::create, CommandContext::BOTH)->addParam("type", CVCommand::SET_PRESET_WEIGHT));
-	defManager.add(CommandDefinition::createDef(this,"", "Set Target Position", &CVCommand::create, CommandContext::BOTH)->addParam("type", CVCommand::SET_2DTARGET));
+	//defManager.add(CommandDefinition::createDef(this,"", "Set Target Position", &CVCommand::create, CommandContext::BOTH)->addParam("type", CVCommand::SET_2DTARGET));
 }
 
 CustomVariablesModule::~CustomVariablesModule()
