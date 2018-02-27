@@ -20,6 +20,8 @@ ModuleRouterValue::ModuleRouterValue(Controllable * _sourceValue, int _index) :
 {
 	jassert(sourceValue != nullptr);
 
+	showInspectorOnSelect = false;
+
 	if (enabled->boolValue())
 	{
 		if (sourceValue->type == Controllable::TRIGGER) ((Trigger *)sourceValue.get())->addTriggerListener(this);
