@@ -207,7 +207,7 @@ void CustomOSCModule::processMessageInternal(const OSCMessage & msg)
 			c->isCustomizableByUser = true;
 			c->isRemovableByUser = true;
 			c->saveValueOnly = false;
-			c->isControllableFeedbackOnly = true;
+			c->setControllableFeedbackOnly(true);
 
 			if (c->type != Controllable::TRIGGER) ((Parameter *)c)->autoAdaptRange = autoRange->boolValue();
 
@@ -243,6 +243,8 @@ void CustomOSCModule::loadJSONDataInternal(var data)
 	valuesCC.loadJSONData(data.getProperty("values", var()), true);
 	valuesCC.orderControllablesAlphabetically();
 	umm.loadJSONData(data.getProperty("models", var()),true);
+
+	for (auto & v : valuesCC.controllables) v->setControllableFeedbackOnly(true);
 }
 
 /*
