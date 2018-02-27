@@ -26,7 +26,6 @@ CVPreset::CVPreset(CVGroup * group) :
 
 	addChildControllableContainer(&values);
 
-
 	weight = addFloatParameter("Weight", "Weight of this preset in a non-free control mode", 0, 0, 1);
 	weight->hideInEditor = true;
 	pos = addPoint2DParameter("Position", "Position in a 2D interpolation control mode, such as Voronoi or Gradient Band");
@@ -154,6 +153,7 @@ void GenericControllableManagerLinkedContainer::itemsReordered()
 
 void GenericControllableManagerLinkedContainer::parameterValueChanged(Parameter * source)
 {
+	ControllableContainer::parameterValueChanged(source);
 	if (!keepValuesInSync) return;
 	Parameter * p = getParameterForSource(source);
 	if (p == nullptr) return;
@@ -162,6 +162,7 @@ void GenericControllableManagerLinkedContainer::parameterValueChanged(Parameter 
 
 void GenericControllableManagerLinkedContainer::parameterRangeChanged(Parameter * source)
 {
+	ControllableContainer::parameterRangeChanged(source);
 	Parameter * p = getParameterForSource(source);
 	if (p == nullptr) return;
 	syncItem(p, source, keepValuesInSync);

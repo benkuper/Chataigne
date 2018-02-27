@@ -36,6 +36,8 @@ CVGroup::~CVGroup()
 
 void CVGroup::setValuesToPreset(CVPreset * preset)
 {
+	if (!enabled->boolValue()) return;
+
 	for (auto &v : values.items)
 	{
 		Parameter * p = dynamic_cast<Parameter *>(v->controllable);
@@ -47,6 +49,8 @@ void CVGroup::setValuesToPreset(CVPreset * preset)
 
 void CVGroup::lerpPresets(CVPreset * p1, CVPreset * p2, float weight)
 {
+	if (!enabled->boolValue()) return;
+
 	for (auto &v : values.items)
 	{
 		Parameter * p = dynamic_cast<Parameter *>(v->controllable);
@@ -64,6 +68,8 @@ void CVGroup::lerpPresets(CVPreset * p1, CVPreset * p2, float weight)
 
 void CVGroup::computeValues()
 {
+	if (!enabled->boolValue()) return;
+
 	ControlMode cm = controlMode->getValueDataAsEnum<ControlMode>();
 	if (cm == FREE) return;
 
@@ -100,10 +106,11 @@ Array<float> CVGroup::getNormalizedPresetWeights()
 		totalWeight += p->enabled->boolValue() ? p->weight->floatValue() : 0;
 	}
 
+	
 	for (auto &p : pm.items)
 	{
 		float w = p->enabled->boolValue() ? p->weight->floatValue() : 0;
-		normalizedWeights.add(w / totalWeight);
+		normalizedWeights.add(totalWeight > 0 ? w / totalWeight : 0);
 	}
 
 	return normalizedWeights;
@@ -123,7 +130,8 @@ void CVGroup::onControllableFeedbackUpdateInternal(ControllableContainer * cc, C
 	} else if(controlMode->getValueDataAsEnum<ControlMode>() == WEIGHTS)
 	{
 		CVPreset * p = static_cast<CVPreset *>(c->parentContainer);
-		if (p != nullptr && c == p->weight)
+		if (p == nullptr) p = static_cast<CVPreset *>(c->parentContainer->parentContainer.get()); //if value
+		if (p != nullptr)
 		{
 			computeValues();
 		}
