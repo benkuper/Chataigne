@@ -38,7 +38,8 @@ You'll need to download and install the Kinect 2.0 SDK : https://www.microsoft.c
 The installer will automatically create an environment variable so you don't have to do anything else
 
 You'll need to download and link the ASIO SDK as well : https://www.steinberg.net/en/company/developers.html 
-Since this one is just a zip file, you'll need to create an environment variable called "ASIOSDK".
+Since this one is just a zip file, you'll need to create an environment variable called "ASIOSDK" : https://www.steinberg.net/en/company/developers.html
+
 **DLL dependencies** :
   - For **Release**, you can just copy the dll files included in the latest releases available on the website, and paste them in the same folder as the generated executable (in the Binaries folder)
   - For **Debug**, you can get a dependency pack there http://benjamin.kuperberg.fr/chataigne/user/data/Chataigne-win-x64-debug-dependencies.zip and do the same in the Binaries/Debug folder
