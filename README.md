@@ -53,4 +53,4 @@ there is also the official forum here : http://benjamin.kuperberg.fr/chataigne/f
 
 
 I do this on my own free time, feel free to buy me a beer :)
-[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://paypal.me/benkuper)
+[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](bkuperberg@hotmail.com)
