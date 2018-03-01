@@ -1,13 +1,11 @@
 matrix:
   matrix:
   include:
+    - os: osx
+      osx_image: xcode9.2
     - os: linux
       dist: trusty
       sudo: required
-    - os: osx
-      osx_image: xcode9.2
-  allow_failures:
-    - os: osx
 env:
   global:
   - FTP_USER=u67889354-benjamin
