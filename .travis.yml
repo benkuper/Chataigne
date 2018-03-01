@@ -1,29 +1,49 @@
-sudo: required
-dist: trusty
+matrix:
+  matrix:
+  include:
+    - os: linux
+      dist: trusty
+      sudo: required
+    - os: osx
+      osx_image: xcode9.2
+  allow_failures:
+    - os: osx
 env:
   global:
   - FTP_USER=u67889354-benjamin
   - secure: B5sTLX3Sxc+exaVZwLfVa4Xe1Zrm8JOIP79VUQcFO2qQ6rOZtpak6p+K56jf9I86cIXSGsoOWzqIfb0FC8IV3i08zBPGl/Z27gW3gC6I/pNJG/97BEkmvJcRwWJtYgHFwMFYUkx6tc2cuCycYpqfH8jRwAXEVhffeRZQStw2BgI4HqRdmqEjCSLZbOb+kg+KUA6L0/9wIjbV6oCN8qelp3843Yk0J05ukzqK4yrmzjIctktQec+DQy1RNAXjbV+zA1gS4CYtQj9wFfny6kH2by3JY9PkN+R5qifTUeIiJFk0g3554xiqfMStI3Mzsecw+gp3RKSfxkPsUwxLrA4bW2m5uA9vcgQ9KLCRdw2nv9pVn63AcC+hNQl2rmE7lvw9WOf4l4bR04scLkOfku2gCgyIo5l0InU9D+I0St+WU/eFdHe6BIo+gTz7H7KNDUnIsJT0oyRQ6pnCcGPS+3+MFDcZJE0ILrNdcrtNdRhG908yk/YlJZ8cYO8yq56Fk3HJNKSMWNoiz9yuYOyx9F9Yn9ZXorThm/lsjLxFztkz2eErQq/uvnxRJGN3z7jV0ihsBhV/9DuyIV+SjiOPiqWQt8tWhIx7JEmtdEEYyiqEgbLaQhpqH1pc0A7a7BlQvTq5NEiY1R6Djzm5cxhMkJWxPhs/L1g71utAi7zS1bVoEK4=
 after_success:
-- cd /home/travis/build/benkuper/Chataigne/Builds/LinuxMakefile/build
-- zip Chataigne-linux-x64-bleedingedge.zip Chataigne
-- curl --ftp-create-dirs -T Chataigne-linux-x64-bleedingedge.zip -u $FTP_USER:$FTP_PASSWORD ftp://ftp.kuperberg.fr/chataigne/user/data/
+- |
+  if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
+    cd /home/travis/build/benkuper/Chataigne/Builds/LinuxMakefile/build
+    zip Chataigne-linux-x64-bleedingedge.zip Chataigne
+    curl --ftp-create-dirs -T Chataigne-linux-x64-bleedingedge.zip -u $FTP_USER:$FTP_PASSWORD ftp://ftp.kuperberg.fr/chataigne/user/data/
+  else
+    cd /home/travis/build/benkuper/Chataigne/Builds/MacOSX/build/Release
+    zip Chataigne-osx-bleedingedge.zip Chataigne.app
+    curl --ftp-create-dirs -T Chataigne-osx-bleedingedge.zip -u $FTP_USER:$FTP_PASSWORD ftp://ftp.kuperberg.fr/chataigne/user/data/
 language: cpp
 git:
   depth: 1
 notifications:
   email: false
 before_install:
-- export DEBIAN_FRONTEND=noninteractive
-- echo ${HOME}
-- export HOME=/home/travis/build/benkuper
-- echo ${HOME}
-- sudo add-apt-repository ppa:webkit-team/ppa -y
-- sudo apt-get update --fix-missing
-- sudo apt-get update -qq
-- sudo apt-get install -qq clang libfreetype6-dev libx11-dev libxinerama-dev libxrandr-dev
-  libxcursor-dev libxcomposite-dev mesa-common-dev libasound2-dev freeglut3-dev libcurl4-gnutls-dev+
-  libasound2-dev libjack-dev libbluetooth-dev libgtk-3-dev libwebkit2gtk-4.0-dev
+- |
+  if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
+    export DEBIAN_FRONTEND=noninteractive
+    echo ${HOME}
+    export HOME=/home/travis/build/benkuper
+    echo ${HOME}
+    sudo add-apt-repository ppa:webkit-team/ppa -y
+    sudo apt-get update --fix-missing
+    sudo apt-get update -qq
+    sudo apt-get install -qq clang libfreetype6-dev libx11-dev libxinerama-dev libxrandr-dev libxcursor-dev libxcomposite-dev mesa-common-dev libasound2-dev freeglut3-dev libcurl4-gnutls-dev+ libasound2-dev libjack-dev libbluetooth-dev libgtk-3-dev libwebkit2gtk-4.0-dev
+  else
+    brew update
+    brew install cmake
+    CMAKE_EXECUTABLE=cmake
+  fi
+
 - pwd
 - ls -d */
 - cd ..
@@ -42,4 +62,9 @@ branches:
   only:
   - master
 script:
-- make -j 8 CONFIG=Release -C "Chataigne/Builds/LinuxMakefile/"
+- |
+  if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
+    make -j 8 CONFIG=Release -C "Chataigne/Builds/LinuxMakefile/"
+  else
+    xcodebuild -project Chataigne/Builds/MacOSX/Chataigne.xcodeproj -configuration Release -jobs 8
+  fi
