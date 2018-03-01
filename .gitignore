@@ -41,6 +41,7 @@ profile
 **/VisualStudio2015/Debug
 **/VisualStudio2015/Release
 **/VisualStudio2015/x64
+**/VisualStudio2017/x64
 **/Android/bin
 **/Android/libs
 **/Android/gen
@@ -58,8 +59,6 @@ Builds/VisualStudio2015/icon.ico
 Builds/VisualStudio2015/resources.rc
 Builds/VisualStudio2015/Flap.sln
 Builds/VisualStudio2015/
-Builds/MacOSX/*
-Builds/VisualStudio2017/
 Binaries/App/Chataigne-x64_Debug.exe
 Binaries/
 Builds/LinuxMakeFile/build
@@ -67,3 +66,11 @@ travis_enc.txt
 site/
 
 Builds/CodeBlocksLinux/Chataigne\.cbp
+
+Builds/VisualStudio2017/\.vs/
+
+Builds/VisualStudio2017/Presets/Main/URG-LiDAR/_temp\.pst
+
+Builds/VisualStudio2017/Presets/Main/URG-LiDAR/15-2-2018_13-12-5\.pst
+
+Builds/MacOSX/RecentFilesMenuTemplate\.nib
