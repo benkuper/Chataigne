@@ -18,7 +18,7 @@ after_success:
     curl --ftp-create-dirs -T Chataigne-linux-x64-bleedingedge.zip -u $FTP_USER:$FTP_PASSWORD ftp://ftp.kuperberg.fr/chataigne/user/data/
   else
     cd /home/travis/build/benkuper/Chataigne/Builds/MacOSX/build/Release
-    zip Chataigne-osx-bleedingedge.zip Chataigne.app
+    zip -r -y Chataigne-osx-bleedingedge.zip Chataigne.app
     curl --ftp-create-dirs -T Chataigne-osx-bleedingedge.zip -u $FTP_USER:$FTP_PASSWORD ftp://ftp.kuperberg.fr/chataigne/user/data/
 language: cpp
 git:
