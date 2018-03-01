@@ -48,13 +48,15 @@ before_install:
     pwd
     ls -d */
   else
+    pwd
+    ls -d */
     cd /Users/travis
     git clone --depth=1 --branch=master https://github.com/WeAreROLI/JUCE.git JUCE
     cd /Users/travis/benkuper
     mkdir "JUCE Modules"
     cd "JUCE Modules"
     git clone --depth=1 --branch=master https://github.com/benkuper/juce_organicui.git juce_organicui
-    cd ../benkuper
+    cd ../..
     pwd
     ls -d */
   fi
