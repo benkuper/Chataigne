@@ -36,24 +36,28 @@ before_install:
     sudo apt-get update --fix-missing
     sudo apt-get update -qq
     sudo apt-get install -qq clang libfreetype6-dev libx11-dev libxinerama-dev libxrandr-dev libxcursor-dev libxcomposite-dev mesa-common-dev libasound2-dev freeglut3-dev libcurl4-gnutls-dev+ libasound2-dev libjack-dev libbluetooth-dev libgtk-3-dev libwebkit2gtk-4.0-dev
+    pwd
+    ls -d */
+    cd ..
+    pwd
+    git clone --depth=1 --branch=master https://github.com/WeAreROLI/JUCE.git JUCE
+    mkdir "JUCE Modules"
+    cd "JUCE Modules"
+    git clone --depth=1 --branch=master https://github.com/benkuper/juce_organicui.git juce_organicui
+    cd ..
+    pwd
+    ls -d */
   else
-    brew update
-    brew install cmake
-    CMAKE_EXECUTABLE=cmake
+    cd /Users/travis
+    git clone --depth=1 --branch=master https://github.com/WeAreROLI/JUCE.git JUCE
+    cd /Users/travis/benkuper
+    mkdir "JUCE Modules"
+    cd "JUCE Modules"
+    git clone --depth=1 --branch=master https://github.com/benkuper/juce_organicui.git juce_organicui
+    cd ..
+    pwd
+    ls -d */
   fi
-
-- pwd
-- ls -d */
-- cd ..
-- pwd
-- git clone --depth=1 --branch=master https://github.com/WeAreROLI/JUCE.git JUCE
-- mkdir "JUCE Modules"
-- cd "JUCE Modules"
-- git clone --depth=1 --branch=master https://github.com/benkuper/juce_organicui.git
-  juce_organicui
-- cd ..
-- pwd
-- ls -d */
 compiler:
 - clang
 branches:
