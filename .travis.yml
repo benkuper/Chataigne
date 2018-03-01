@@ -50,6 +50,8 @@ before_install:
     pwd
     ls -d */
   else
+    gem install xcpretty
+    gem install xcpretty-travis-formatter
     pwd
     ls -d */
     cd /Users/travis
@@ -72,5 +74,5 @@ script:
   if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
     make -j 8 CONFIG=Release -C "Chataigne/Builds/LinuxMakefile/"
   else
-    xcodebuild -project Chataigne/Builds/MacOSX/Chataigne.xcodeproj -configuration Release -jobs 8
+    xcodebuild -project Chataigne/Builds/MacOSX/Chataigne.xcodeproj -configuration Release -jobs 8 | xcpretty -f `xcpretty-travis-formatter`
   fi
