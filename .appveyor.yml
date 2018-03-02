@@ -1,7 +1,6 @@
 environment:
   ASIOSDK: C:\projects\ASIOSDK2.3
   JUCE_DIR: C:\projects\JUCE
-  image: Visual Studio 2017
 
 before_build:
   ps: |
