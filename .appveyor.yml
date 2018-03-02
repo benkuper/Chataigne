@@ -1,9 +1,4 @@
 version: 1.0.{build}
-branches:
-  only:
-  - feature/ci
-  - develop
-
 environment:
   ASIOSDK: C:\projects\ASIOSDK2.3
   JUCE_DIR: C:\projects\JUCE
