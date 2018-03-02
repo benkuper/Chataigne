@@ -6929,6 +6929,9 @@
     <None Include="..\..\..\JUCE Modules\juce_organicui\README.md">
       <Filter>JUCE Modules\juce_organicui</Filter>
     </None>
+    <None Include=".\icon.ico">
+      <Filter>JUCE Library Code</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include=".\resources.rc">

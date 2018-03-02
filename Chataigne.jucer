@@ -1173,13 +1173,13 @@
             vst3Folder="">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" winWarningLevel="4" generateManifest="1" winArchitecture="x64"
-                       isDebug="1" optimisation="1" targetName="ChataigneDebug" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;$(ASIOSDK)/common&#10;$(KINECTSDK20_DIR)inc&#10;../../External/joycon/include"
-                       libraryPath="$(KINECTSDK20_DIR)Lib\x64&#10;../../External/joycon/lib"
+                       isDebug="1" optimisation="1" targetName="ChataigneDebug" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;$(ASIOSDK)/common&#10;../../External/kinect/include&#10;../../External/joycon/include"
+                       libraryPath="../../External/kinect/lib&#10;../../External/joycon/lib"
                        binaryPath="Binaries/Debug" debugInformationFormat="ProgramDatabase"
                        enablePluginBinaryCopyStep="0" useRuntimeLibDLL="0"/>
         <CONFIGURATION name="Release" winWarningLevel="4" generateManifest="1" winArchitecture="x64"
-                       isDebug="0" optimisation="3" targetName="Chataigne" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;$(ASIOSDK)/common&#10;$(KINECTSDK20_DIR)inc&#10;../../External/joycon/include"
-                       libraryPath="$(KINECTSDK20_DIR)Lib\x64&#10;../../External/joycon/lib"
+                       isDebug="0" optimisation="3" targetName="Chataigne" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;$(ASIOSDK)/common&#10;../../External/kinect/include&#10;../../External/joycon/include"
+                       libraryPath="../../External/kinect/lib&#10;../../External/joycon/lib"
                        binaryPath="Binaries" debugInformationFormat="ProgramDatabase"
                        enablePluginBinaryCopyStep="0" linkTimeOptimisation="1" useRuntimeLibDLL="0"/>
       </CONFIGURATIONS>
@@ -1261,10 +1261,11 @@
         <MODULEPATH id="juce_analytics" path="../../juce"/>
       </MODULEPATHS>
     </CODEBLOCKS_LINUX>
-    <VS2017 targetFolder="Builds/VisualStudio2017_CI" externalLibraries="Setupapi.lib&#10;hid.lib&#10;Kinect20.lib&#10;joytime-core.lib&#10;joytime-input-hidapi.lib">
+    <VS2017 targetFolder="Builds/VisualStudio2017_CI" externalLibraries="Setupapi.lib&#10;hid.lib&#10;Kinect20.lib&#10;joytime-core.lib&#10;joytime-input-hidapi.lib"
+            smallIcon="nVz6Li" bigIcon="nVz6Li">
       <CONFIGURATIONS>
-        <CONFIGURATION isDebug="0" name="Release" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;$(ASIOSDK)/common&#10;$(KINECTSDK20_DIR)inc&#10;../../External/joycon/include"
-                       libraryPath="$(KINECTSDK20_DIR)Lib\x64&#10;../../External/joycon/lib"
+        <CONFIGURATION isDebug="0" name="Release" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;$(ASIOSDK)/common&#10;../../External/kinect/include&#10;../../External/joycon/include"
+                       libraryPath="../../External/kinect/lib&#10;../../External/joycon/lib"
                        binaryPath="Binaries/CI"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
