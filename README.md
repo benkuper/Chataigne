@@ -29,19 +29,14 @@ So basically, you just need to :
   - Build the solution from your IDE or make in linux without Code::Blocks
 
 ### Dependencies
-
-Here are all the external dependencies needed to build Chataigne :
-  - Chataigne relies on the OrganicUI JUCE module that you can find here : https://github.com/benkuper/juce_organicui
+  
+  Chataigne relies on the OrganicUI JUCE module that you can find here : https://github.com/benkuper/juce_organicui
+  You will need to download, extract and link the Projucer juce_organicui module to its parent folder
 
 ### Windows only ###
-You'll need to download and install the Kinect 2.0 SDK : https://www.microsoft.com/en-us/download/details.aspx?id=44561
-The installer will automatically create an environment variable so you don't have to do anything else
-
-You'll need to download and link the ASIO SDK as well : https://www.steinberg.net/en/company/developers.html 
-Since this one is just a zip file, you'll need to create an environment variable called "ASIOSDK" : https://www.steinberg.net/en/company/developers.html
-
 **DLL dependencies** :
-  - For **Release**, you can just copy the dll files included in the latest releases available on the website, and paste them in the same folder as the generated executable (in the Binaries folder)
+  - For **Release**, you can just copy the dll files from there : http://benjamin.kuperberg.fr/chataigne/user/data/Chataigne-win-x64-release-dependencies.zip and paste them in the same folder as the generated executable (in the Binaries folder)
+  
   - For **Debug**, you can get a dependency pack there http://benjamin.kuperberg.fr/chataigne/user/data/Chataigne-win-x64-debug-dependencies.zip and do the same in the Binaries/Debug folder
   
   
