@@ -59,9 +59,9 @@ InspectableEditor * CVPreset::getEditor(bool isRoot)
 
 GenericControllableManagerLinkedContainer::GenericControllableManagerLinkedContainer(const String &name, GenericControllableManager * manager, bool keepValuesInSync) :
 	ControllableContainer(name),
-	manager(manager),
-	linkedComparator(manager),
-	keepValuesInSync(keepValuesInSync)
+    manager(manager),
+    keepValuesInSync(keepValuesInSync),
+	linkedComparator(manager)
 {
 	manager->addBaseManagerListener(this);
 	resetAndBuildValues(keepValuesInSync);

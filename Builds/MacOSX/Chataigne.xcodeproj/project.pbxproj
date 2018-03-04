@@ -24,6 +24,7 @@
 		FFBC11E7EE94DC34D717AD69 = {isa = PBXBuildFile; fileRef = F36349200785EF7B0D1E7329; };
 		C602EDD2320D46D71CF78955 = {isa = PBXBuildFile; fileRef = CFF11961CD6D0DFF4EB302A4; };
 		323F052E99BDC8B730E6C8DE = {isa = PBXBuildFile; fileRef = BAE663016FCFB6168EAA4BFE; };
+		2336CDBE00FFD57797DFD222 = {isa = PBXBuildFile; fileRef = C5E376B6E1A8AD2E4466CDA1; };
 		A606BD1161F311258A010F17 = {isa = PBXBuildFile; fileRef = 1173AB5152455DB12E2D2407; };
 		E5B79D77381A78E71F2F75AC = {isa = PBXBuildFile; fileRef = F110A90E2E199B9C44EC0E9C; };
 		D81BF04406254333E54E6E99 = {isa = PBXBuildFile; fileRef = 6DE6888C0820959D62595476; };
@@ -722,6 +723,7 @@
 		C49FCF8B1A26685194B3FFDB = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = StateManagerUI.cpp; path = ../../Source/StateMachine/ui/StateManagerUI.cpp; sourceTree = "SOURCE_ROOT"; };
 		C5310AD14DE7C82A67357B95 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = "os_win.c"; path = "../../Source/Module/modules/controller/wiimote/lib/wiiuse/os_win.c"; sourceTree = "SOURCE_ROOT"; };
 		C59D381E042481F4FB5DC78B = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CommandDefinitionManager.cpp; path = ../../Source/Common/Command/CommandDefinitionManager.cpp; sourceTree = "SOURCE_ROOT"; };
+		C5E376B6E1A8AD2E4466CDA1 = {isa = PBXFileReference; lastKnownFileType = file.dylib; name = libServus.dylib; path = ../../External/servus/lib/osx/release/libServus.dylib; sourceTree = "SOURCE_ROOT"; };
 		C6146FC3CED0ECD9A064C9B9 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MappingInput.cpp; path = ../../Source/Common/Processor/Mapping/Input/MappingInput.cpp; sourceTree = "SOURCE_ROOT"; };
 		C69FF11E58565E652FFE63EB = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AppConfig.h; path = ../../JuceLibraryCode/AppConfig.h; sourceTree = "SOURCE_ROOT"; };
 		C6D2FE7E6817726C8813E755 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = "include_juce_cryptography.mm"; path = "../../JuceLibraryCode/include_juce_cryptography.mm"; sourceTree = "SOURCE_ROOT"; };
@@ -865,6 +867,7 @@
 					5FA54638369A3C34CEB7FE3C,
 					331643DFCB261592E0B722B9,
 					AD11D16FF7B59083692E9F22,
+					C5E376B6E1A8AD2E4466CDA1,
 					ABE980A8C8A9E5C7E7344E09,
 					66A94D900181382D38807D43,
 					7A8B66D21332C88261E43EF9,
@@ -1701,7 +1704,8 @@
 		D450727BDA4BACBA916E8A08 = {isa = PBXGroup; children = (
 					1D3EEDB3310C60C71DD26A0C,
 					CFF11961CD6D0DFF4EB302A4,
-					BAE663016FCFB6168EAA4BFE, ); name = Resources; sourceTree = "<group>"; };
+					BAE663016FCFB6168EAA4BFE,
+					C5E376B6E1A8AD2E4466CDA1, ); name = Resources; sourceTree = "<group>"; };
 		73F1811C480E0C286CECB383 = {isa = PBXGroup; children = (
 					DA1455ABA352149A51F70529,
 					1952BD304214810D645BBDF6,
@@ -1750,12 +1754,14 @@
 					"JucePlugin_Build_AAX=0",
 					"JucePlugin_Build_Standalone=0", );
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				HEADER_SEARCH_PATHS = ("../../JuceLibraryCode", "~/JUCE/modules", "\"../../../JUCE Modules\"", "../../External/wiiuse", "../../External/serial/include", "../../Source", "$(inherited)");
+				HEADER_SEARCH_PATHS = ("../../JuceLibraryCode", "~/JUCE/modules", "\"../../../JUCE Modules\"", "../../External/wiiuse", "../../External/serial/include", "../../External/servus/include", "../../External/dnssd/include", "../../Source", "$(inherited)");
 				INFOPLIST_FILE = Info-App.plist;
 				INFOPLIST_PREPROCESS = NO;
 				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = ("$(inherited)", "\"../../External/servus/lib/osx/debug\"");
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MACOSX_DEPLOYMENT_TARGET_ppc = 10.4;
+				OTHER_LDFLAGS = "-lServus";
 				PRODUCT_BUNDLE_IDENTIFIER = benkuper.Chataigne;
 				SDKROOT_ppc = macosx10.5;
 				USE_HEADERMAP = NO; }; name = Debug; };
@@ -1782,13 +1788,15 @@
 					"JucePlugin_Build_Standalone=0", );
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				HEADER_SEARCH_PATHS = ("../../JuceLibraryCode", "~/JUCE/modules", "\"../../../JUCE Modules\"", "../../External/wiiuse", "../../External/serial/include", "../../Source", "$(inherited)");
+				HEADER_SEARCH_PATHS = ("../../JuceLibraryCode", "~/JUCE/modules", "\"../../../JUCE Modules\"", "../../External/wiiuse", "../../External/serial/include", "../../External/servus/include", "../../External/dnssd/include", "../../Source", "$(inherited)");
 				INFOPLIST_FILE = Info-App.plist;
 				INFOPLIST_PREPROCESS = NO;
 				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = ("$(inherited)", "\"../../External/servus/lib/osx/release\"");
 				LLVM_LTO = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MACOSX_DEPLOYMENT_TARGET_ppc = 10.4;
+				OTHER_LDFLAGS = "-lServus";
 				PRODUCT_BUNDLE_IDENTIFIER = benkuper.Chataigne;
 				SDKROOT_ppc = macosx10.5;
 				USE_HEADERMAP = NO; }; name = Release; };
@@ -1875,7 +1883,8 @@
 					E045C481EC242ED399656803, ); defaultConfigurationIsVisible = 0; defaultConfigurationName = Debug; };
 		3FA05CEBBC2BF1B4AAC173D5 = {isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (
 					C602EDD2320D46D71CF78955,
-					323F052E99BDC8B730E6C8DE, ); runOnlyForDeploymentPostprocessing = 0; };
+					323F052E99BDC8B730E6C8DE,
+					2336CDBE00FFD57797DFD222, ); runOnlyForDeploymentPostprocessing = 0; };
 		E8519AD77E15F3F7F7402D27 = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (
 					A606BD1161F311258A010F17,
 					E5B79D77381A78E71F2F75AC,

@@ -12,9 +12,9 @@
 #include "../../CVGroup.h"
 
 CVPresetEditor::CVPresetEditor(CVPreset * preset, bool isRoot) :
-	BaseItemEditor(preset, isRoot),
-	preset(preset),
-	weightUI(nullptr)
+    BaseItemEditor(preset, isRoot),
+    weightUI(nullptr),
+	preset(preset)
 {
 	weightUI = preset->weight->createSlider();
 	addChildComponent(weightUI);

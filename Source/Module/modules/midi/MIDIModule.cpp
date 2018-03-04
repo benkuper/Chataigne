@@ -193,6 +193,9 @@ void MIDIModule::handleRoutedModuleValue(Controllable * c, RouteParams * p)
 	case MIDIRouteParams::CONTROL_CHANGE:
 		sendControlChange(mp->pitchOrNumber->intValue(), value, mp->channel->intValue());
 		break;
+            
+        default:
+            break;
 	}
 }
 

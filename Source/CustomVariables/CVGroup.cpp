@@ -91,6 +91,9 @@ void CVGroup::computeValues()
 			vp->setWeightedValue(pValues, weights);
 		}
 		break;
+            
+        default:
+            break;
 	}
 	
 }
