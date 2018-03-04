@@ -12,7 +12,8 @@
 #include "Module/modules/common//ui/EnablingNetworkControllableContainerEditor.h"
 
 OSCModule::OSCModule(const String & name, int defaultLocalPort, int defaultRemotePort, bool canHaveInput, bool canHaveOutput) :
-	Module(name)
+	Module(name),
+	Thread("OSCZeroconf")
 {
 	
 	setupIOConfiguration(canHaveInput, canHaveOutput);
@@ -63,6 +64,8 @@ void OSCModule::setupReceiver()
 	if (result)
 	{
 		NLOG(niceName, "Now receiving on port : " + localPort->stringValue());
+		waitForThreadToExit(1000);
+		startThread();
 	} else
 	{
 		NLOGERROR(niceName, "Error binding port " + localPort->stringValue());
@@ -161,6 +164,19 @@ void OSCModule::sendOSC(const OSCMessage & msg)
 	sender.send(msg);
 }
 
+void OSCModule::setupZeroConf()
+{
+	if (!hasInput) return;
+
+	if (servus != nullptr)
+	{
+		servus->withdraw();
+		servus = nullptr;
+	}
+	servus = new Servus("_osc._udp");
+	servus->announce(localPort->intValue(), ("Chataigne - " + niceName).toStdString());
+}
+
 var OSCModule::sendOSCFromScript(const var::NativeFunctionArgs & a)
 {
 	OSCModule * m = getObjectFromJS<OSCModule>(a);
@@ -252,14 +268,18 @@ void OSCModule::handleRoutedModuleValue(Controllable * c, RouteParams * p)
 
 void OSCModule::onContainerParameterChangedInternal(Parameter * p)
 {
-	Module::onContainerParameterChangedInternal(p);
-
-	
+	Module::onContainerParameterChangedInternal(p);	
 }
 
-void OSCModule::controllableFeedbackUpdate(ControllableContainer * cc, Controllable * c)
+void OSCModule::onContainerNiceNameChanged()
 {
-	Module::controllableFeedbackUpdate(cc, c);
+	waitForThreadToExit(1000);
+	startThread();
+}
+
+void OSCModule::onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c)
+{
+	Module::onControllableFeedbackUpdateInternal(cc, c);
 
 	if (receiveCC != nullptr && c == receiveCC->enabled)
 	{
@@ -302,6 +322,11 @@ void OSCModule::oscBundleReceived(const OSCBundle & bundle)
 	{
 		processMessage(m.getMessage());
 	}
+}
+
+void OSCModule::run()
+{
+	setupZeroConf();
 }
 
 OSCModule::OSCRouteParams::OSCRouteParams(Module * sourceModule, Controllable * c) 

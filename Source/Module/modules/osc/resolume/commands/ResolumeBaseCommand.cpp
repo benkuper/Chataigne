@@ -33,6 +33,8 @@ ResolumeBaseCommand::ResolumeBaseCommand(ResolumeModule * _module, CommandContex
 	clipParam = addIntParameter(targetClipName, "The Target "+targetClipName, 1, 1, 100);
 	
 	levelParam->setValueWithKey(targetLevel);
+
+	resolumeModule->version->addParameterListener(this);
 	
 	/*
 	Level level = (Level)(int)levelParam->getValueData(); 
@@ -44,7 +46,7 @@ ResolumeBaseCommand::ResolumeBaseCommand(ResolumeModule * _module, CommandContex
 
 ResolumeBaseCommand::~ResolumeBaseCommand()
 {
-	
+	if(resolumeModule != nullptr) resolumeModule->version->removeParameterListener(this);
 }
 
 void ResolumeBaseCommand::rebuildAddress()
@@ -82,6 +84,14 @@ void ResolumeBaseCommand::onContainerParameterChanged(Parameter * p)
 		Level level = (Level)(int)levelParam->getValueData();
 		layerParam->hideInEditor = level == COMPOSITION || level == COLUMN;
 		clipParam->hideInEditor = level != CLIP && level != COLUMN;
+	} 
+}
+
+void ResolumeBaseCommand::onExternalParameterChanged(Parameter * p)
+{
+	if (p == resolumeModule->version) 
+	{
+		rebuildAddress();
 	}
 }
 

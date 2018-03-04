@@ -12,10 +12,13 @@
 #define OSCMODULE_H_INCLUDED
 
 #include "Module/Module.h"
+#include "servus/servus.h"
+using namespace servus;
 
 class OSCModule :
 	public Module,
-	public OSCReceiver::Listener<OSCReceiver::RealtimeCallback>
+	public OSCReceiver::Listener<OSCReceiver::RealtimeCallback>,
+	public Thread //for zeroconf async creation (smoother when creating an OSC module)
 { 
 public:
 	OSCModule(const String &name = "OSC", int defaultLocalPort = 12000, int defaultRemotePort = 9000, bool canHaveInput = true, bool canHaveOutput = true);
@@ -31,6 +34,9 @@ public:
 	StringParameter * remoteHost;
 	IntParameter * remotePort;
 	OSCSender sender;
+
+	//ZEROCONF
+	ScopedPointer<Servus> servus;
 
 	ScopedPointer<EnablingControllableContainer> receiveCC;
 	ScopedPointer<EnablingControllableContainer> sendCC;
@@ -51,6 +57,9 @@ public:
 	//SEND
 	virtual void setupSender();
 	void sendOSC(const OSCMessage &msg);
+
+	//ZEROCONF
+	void setupZeroConf();
 
 	//Script
 	static var sendOSCFromScript(const var::NativeFunctionArgs &args);
@@ -78,9 +87,14 @@ public:
 	virtual void handleRoutedModuleValue(Controllable * c, RouteParams * p) override;
 
 	virtual void onContainerParameterChangedInternal(Parameter * p) override;
-	virtual void controllableFeedbackUpdate(ControllableContainer * cc, Controllable * c) override;
+	virtual void onContainerNiceNameChanged() override;
+	virtual void onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c) override;
 	virtual void oscMessageReceived(const OSCMessage & message) override;
 	virtual void oscBundleReceived(const OSCBundle & bundle) override;
+
+
+	// Inherited via Thread
+	virtual void run() override;
 
 	//InspectableEditor * getEditor(bool isRoot) override;	
 };

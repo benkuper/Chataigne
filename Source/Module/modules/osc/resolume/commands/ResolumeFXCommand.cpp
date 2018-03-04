@@ -9,6 +9,7 @@
 */
 
 #include "ResolumeFXCommand.h"
+#include "../ResolumeModule.h"
 
 ResolumeFXCommand::ResolumeFXCommand(ResolumeModule * _module, CommandContext context, var params) :
 	ResolumeBaseCommand(_module,context,params)
@@ -23,15 +24,25 @@ ResolumeFXCommand::ResolumeFXCommand(ResolumeModule * _module, CommandContext co
 			nameParam->addOption("Opacity", "opacity");
 			nameParam->addOption("Width", "width");
 			nameParam->addOption("Height", "height");
-			nameParam->addOption("Scale", "scale");
-			nameParam->addOption("Position X", "positionx");
-			nameParam->addOption("Position Y", "positiony");
-			nameParam->addOption("Rotate X", "rotatex");
-			nameParam->addOption("Rotate Y", "rotatey");
-			nameParam->addOption("Rotate Z", "rotatez");
-			nameParam->addOption("Anchor X", "anchorx");
-			nameParam->addOption("Anchor Y", "anchory");
-			nameParam->addOption("Anchor Z", "anchorz");
+
+			int resolumeVersion = (int)resolumeModule->version->getValueData();
+			String suf = resolumeVersion >= 6 ? "effects/transform/" : "";
+
+			nameParam->addOption("Scale", suf+"scale");
+			if (resolumeVersion >= 6)
+			{
+				nameParam->addOption("ScaleW", suf + "scalew");
+				nameParam->addOption("ScaleH", suf + "scaleh");
+
+			}
+			nameParam->addOption("Position X", suf + "positionx");
+			nameParam->addOption("Position Y", suf + "positiony");
+			nameParam->addOption("Rotate X", suf + (resolumeVersion >= 6 ? "rotationx" : "rotatex"));
+			nameParam->addOption("Rotate Y", suf + (resolumeVersion >= 6 ? "rotationy" : "rotatex"));
+			nameParam->addOption("Rotate Z", suf + (resolumeVersion >= 6 ? "rotationz" : "rotatex"));
+			nameParam->addOption("Anchor X", suf + "anchorx");
+			nameParam->addOption("Anchor Y", suf + "anchory");
+			nameParam->addOption("Anchor Z", suf + "anchorz");
 		} else
 		{
 			nameParam->addOption("Volume", "volume");
@@ -59,11 +70,15 @@ ResolumeFXCommand::~ResolumeFXCommand()
 
 void ResolumeFXCommand::rebuildAddress()
 {
-	if (fxType == "transform") addressSuffix = "video/" + nameParam->getValueData().toString() + "/values";
-	else if (fxType == "audio") addressSuffix = "audio/" + nameParam->getValueData().toString() + "/values";
-	else if (fxType == "videofx") addressSuffix = "video/effect" + fxIndexParam->stringValue() + "/param" + indexParam->stringValue() + "/values";
-	else if (fxType == "vst") addressSuffix = "audio/effect" + fxIndexParam->stringValue() + "/param" + indexParam->stringValue() + "/values";
-	else if (fxType == "source") addressSuffix = "video/param" + indexParam->stringValue() + "/values";
+	int resolumeVersion = (int)resolumeModule->version->getValueData();
+
+	if (fxType == "transform") addressSuffix = "video/" + nameParam->getValueData().toString();
+	else if (fxType == "audio") addressSuffix = "audio/" + nameParam->getValueData().toString();
+	else if (fxType == "videofx") addressSuffix = "video/effect" + fxIndexParam->stringValue() + "/param" + indexParam->stringValue();
+	else if (fxType == "vst") addressSuffix = "audio/effect" + fxIndexParam->stringValue() + "/param" + indexParam->stringValue();
+	else if (fxType == "source") addressSuffix = "video/param" + indexParam->stringValue();
+
+	if (resolumeVersion == 5) addressSuffix += "/values";
 
 	ResolumeBaseCommand::rebuildAddress();
 }

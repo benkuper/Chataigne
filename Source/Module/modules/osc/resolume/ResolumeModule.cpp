@@ -18,7 +18,7 @@ ResolumeModule::ResolumeModule() :
 {	
 
 	version = moduleParams.addEnumParameter("Resolume Version", "Version of Resolume");
-	version->addOption("Resolume 5", 5)->addOption("Resolume 6", 6);
+	version->addOption("Resolume 6", 6)->addOption("Resolume 5", 5); 
 
 	var stopArgs = var();
 	stopArgs.append(ControllableUtil::createDataForParam(IntParameter::getTypeStringStatic(),"Value","Resolume needs this arg to trigger",1,0,1,false,true));
