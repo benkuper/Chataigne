@@ -14,7 +14,9 @@ after_success:
 - |
   if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
     cd /home/travis/build/benkuper/Chataigne/Builds/LinuxMakefile/build
-    zip Chataigne-linux-x64-bleedingedge.zip Chataigne
+    wget http://benjamin.kuperberg.fr/chataigne/user/data/Chataigne-linux-dependencies.zip
+    unzip Chataigne-linux-dependencies.zip
+    zip -r Chataigne-linux-x64-bleedingedge.zip Chataigne lib
     curl --ftp-create-dirs -T Chataigne-linux-x64-bleedingedge.zip -u $FTP_USER:$FTP_PASSWORD ftp://ftp.kuperberg.fr/chataigne/user/data/
   else
     cd /Users/travis/build/benkuper/Chataigne/Builds/MacOSX/build/Release
