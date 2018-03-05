@@ -41,6 +41,13 @@ before_install:
     sudo apt-get update --fix-missing
     sudo apt-get update -qq
     gcc -v && g++ -v && cmake --version
+    sudo apt-get install -qq g++-7
+    sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-7 90
+    echo $(CC)
+    echo $(CXX)
+    export CC=/usr/bin/gcc
+    export CXX=/usr/bin/g++
+    gcc -v && g++ -v && cmake --version
     sudo apt-get install -qq clang libfreetype6-dev libx11-dev libxinerama-dev libxrandr-dev libxcursor-dev libxcomposite-dev mesa-common-dev libasound2-dev freeglut3-dev libcurl4-gnutls-dev+ libasound2-dev libjack-dev libbluetooth-dev libgtk-3-dev libwebkit2gtk-4.0-dev
     pwd
     ls -d */
@@ -67,16 +74,6 @@ before_install:
     cd ..
     pwd
     ls -d */
-  fi
-install:
-  - if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
-    sudo apt-get install -qq g++-7
-    sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-7 90
-    echo $(CC)
-    echo $(CXX)
-    export CC=/usr/bin/gcc
-    export CXX=/usr/bin/g++
-    gcc -v && g++ -v && cmake --version
   fi
 branches:
   only:
