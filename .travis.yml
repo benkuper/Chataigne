@@ -43,8 +43,8 @@ before_install:
     gcc -v && g++ -v && cmake --version
     sudo apt-get install -qq g++-7
     sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-7 90
-    echo $(CC)
-    echo $(CXX)
+    echo ${CC}
+    echo ${CXX}
     export CC=/usr/bin/gcc
     export CXX=/usr/bin/g++
     gcc -v && g++ -v && cmake --version
