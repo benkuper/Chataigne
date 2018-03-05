@@ -65,8 +65,10 @@ install:
     export CC=/usr/bin/gcc;
     export CXX=/usr/bin/g++;
     apt-get install -qq git libfreetype6-dev libx11-dev libxinerama-dev libxrandr-dev libxcursor-dev libxcomposite-dev mesa-common-dev libasound2-dev freeglut3-dev libcurl4-gnutls-dev+ libasound2-dev libjack-dev libbluetooth-dev libgtk-3-dev libwebkit2gtk-4.0-dev;
-    cd /benkuper;
+    cd ~;
+    pwd;
     git clone --depth=1 --branch=master https://github.com/WeAreROLI/JUCE.git JUCE;
+    cd /benkuper;
     mkdir 'JUCE Modules';
     cd 'JUCE Modules';
     git clone --depth=1 --branch=master https://github.com/benkuper/juce_organicui.git juce_organicui;
