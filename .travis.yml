@@ -17,7 +17,6 @@ matrix:
       osx_image: xcode9.2
       compiler: clang
     - os: linux 
-      sudo: required
       services: docker
 
 env:
@@ -75,7 +74,7 @@ script:
   if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
     docker exec -t ubuntu bash -c "gcc -v;
     cd /benkuperChataigne/Builds/LinuxMakefile;
-    make -j 8 CONFIG=Release
+    make -j 8 CONFIG=Release"
   else
     xcodebuild -project Chataigne/Builds/MacOSX/Chataigne.xcodeproj -configuration Release -jobs 8 | xcpretty -f `xcpretty-travis-formatter`
   fi
