@@ -3,7 +3,7 @@ matrix:
   include:
     - os: osx
       osx_image: xcode9.2
-      
+
     - os: linux
       dist: trusty
       sudo: required
@@ -13,6 +13,7 @@ matrix:
           sources:
             - ubuntu-toolchain-r-test
           packages:
+            - gcc-7
             - g++-7
       env:
         - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7"
@@ -47,6 +48,11 @@ before_install:
     export HOME=/home/travis/build/benkuper
     echo ${HOME}
     eval "${MATRIX_EVAL}"
+    ln -s /usr/bin/gcc-7 /usr/local/bin/gcc
+    ln -s /usr/bin/g++-7 /usr/local/bin/g++
+    export CC=/usr/bin/gcc-7
+    export CXX=/usr/bin/g++-7
+    gcc -v && g++ -v && cmake --version
     sudo add-apt-repository ppa:webkit-team/ppa -y
     sudo apt-get update --fix-missing
     sudo apt-get update -qq
