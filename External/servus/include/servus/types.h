@@ -53,7 +53,9 @@ class Listener;
 class Serializable;
 class Servus;
 class URI;
+#ifndef __linux__
 class uint128_t;
+#endif
 
 typedef unsigned long long ull_t;
 typedef std::vector<std::string> Strings;

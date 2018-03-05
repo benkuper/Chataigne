@@ -88,6 +88,7 @@ void OSExecCommand::killProcess(const String & name)
 	}
 	CloseHandle(hSnapShot);
 #else
-	system(String("killall "+ String(killMode->boolValue()?"-9":"-2") +" \""+target->stringValue()+"\"").getCharPointer());
+	int result = system(String("killall "+ String(killMode->boolValue()?"-9":"-2") +" \""+target->stringValue()+"\"").getCharPointer());
+	if(result != 0) LOGWARNING("Problem killing app " + target->stringValue());
 #endif
 }

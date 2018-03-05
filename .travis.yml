@@ -1,54 +1,38 @@
+language: cpp
+
+git:
+  depth: 1
+
+notifications:
+  email: false
+
+branches:
+  only:
+  - master
+
 matrix:
   matrix:
   include:
     - os: osx
       osx_image: xcode9.2
-    - os: linux
-      dist: trusty
+      compiler: clang
+    - os: linux 
+      group: latest
       sudo: required
+      services: docker
+
 env:
   global:
   - FTP_USER=u67889354-benjamin
   - secure: B5sTLX3Sxc+exaVZwLfVa4Xe1Zrm8JOIP79VUQcFO2qQ6rOZtpak6p+K56jf9I86cIXSGsoOWzqIfb0FC8IV3i08zBPGl/Z27gW3gC6I/pNJG/97BEkmvJcRwWJtYgHFwMFYUkx6tc2cuCycYpqfH8jRwAXEVhffeRZQStw2BgI4HqRdmqEjCSLZbOb+kg+KUA6L0/9wIjbV6oCN8qelp3843Yk0J05ukzqK4yrmzjIctktQec+DQy1RNAXjbV+zA1gS4CYtQj9wFfny6kH2by3JY9PkN+R5qifTUeIiJFk0g3554xiqfMStI3Mzsecw+gp3RKSfxkPsUwxLrA4bW2m5uA9vcgQ9KLCRdw2nv9pVn63AcC+hNQl2rmE7lvw9WOf4l4bR04scLkOfku2gCgyIo5l0InU9D+I0St+WU/eFdHe6BIo+gTz7H7KNDUnIsJT0oyRQ6pnCcGPS+3+MFDcZJE0ILrNdcrtNdRhG908yk/YlJZ8cYO8yq56Fk3HJNKSMWNoiz9yuYOyx9F9Yn9ZXorThm/lsjLxFztkz2eErQq/uvnxRJGN3z7jV0ihsBhV/9DuyIV+SjiOPiqWQt8tWhIx7JEmtdEEYyiqEgbLaQhpqH1pc0A7a7BlQvTq5NEiY1R6Djzm5cxhMkJWxPhs/L1g71utAi7zS1bVoEK4=
-after_success:
-- |
-  if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
-    cd /home/travis/build/benkuper/Chataigne/Builds/LinuxMakefile/build
-    zip Chataigne-linux-x64-bleedingedge.zip Chataigne
-    curl --ftp-create-dirs -T Chataigne-linux-x64-bleedingedge.zip -u $FTP_USER:$FTP_PASSWORD ftp://ftp.kuperberg.fr/chataigne/user/data/
-  else
-    cd /Users/travis/build/benkuper/Chataigne/Builds/MacOSX/build/Release
-    ls
-    zip -r -y Chataigne-osx-bleedingedge.zip Chataigne.app
-    curl --ftp-create-dirs -T Chataigne-osx-bleedingedge.zip -u $FTP_USER:$FTP_PASSWORD ftp://ftp.kuperberg.fr/chataigne/user/data/
-  fi
-language: cpp
-git:
-  depth: 1
-notifications:
-  email: false
+
 before_install:
 - |
   if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
-    export DEBIAN_FRONTEND=noninteractive
-    echo ${HOME}
-    export HOME=/home/travis/build/benkuper
-    echo ${HOME}
-    sudo add-apt-repository ppa:webkit-team/ppa -y
-    sudo apt-get update --fix-missing
-    sudo apt-get update -qq
-    sudo apt-get install -qq clang libfreetype6-dev libx11-dev libxinerama-dev libxrandr-dev libxcursor-dev libxcomposite-dev mesa-common-dev libasound2-dev freeglut3-dev libcurl4-gnutls-dev+ libasound2-dev libjack-dev libbluetooth-dev libgtk-3-dev libwebkit2gtk-4.0-dev
-    pwd
-    ls -d */
     cd ..
     pwd
-    git clone --depth=1 --branch=master https://github.com/WeAreROLI/JUCE.git JUCE
-    mkdir "JUCE Modules"
-    cd "JUCE Modules"
-    git clone --depth=1 --branch=master https://github.com/benkuper/juce_organicui.git juce_organicui
-    cd ..
-    pwd
-    ls -d */
+    docker run -d --name ubuntu -v $(pwd):/benkuper ubuntu:latest tail -f /dev/null
+    docker ps
   else
     gem install xcpretty
     gem install xcpretty-travis-formatter
@@ -64,15 +48,57 @@ before_install:
     pwd
     ls -d */
   fi
-compiler:
-- clang
-branches:
-  only:
-  - master
+install:
+- |
+  if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
+    docker exec -t ubuntu bash -c "export DEBIAN_FRONTEND=noninteractive;
+    uname -a;
+    apt-get install software-properties-common
+    add-apt-repository ppa:webkit-team/ppa -y;
+    add-apt-repository -y ppa:ubuntu-toolchain-r/test;
+    apt-get update --fix-missing;
+    apt-get update -qq;
+    echo 'Installing GCC...';
+    apt-get install -y g++-7 gcc-7;
+    gcc -v;
+    update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 90;
+    update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-7 90;
+    export CC=/usr/bin/gcc;
+    export CXX=/usr/bin/g++;
+    echo ${CC};
+    echo ${CXX};
+    apt-get install -qq git libfreetype6-dev libx11-dev libxinerama-dev libxrandr-dev libxcursor-dev libxcomposite-dev mesa-common-dev libasound2-dev freeglut3-dev libcurl4-gnutls-dev+ libasound2-dev libjack-dev libbluetooth-dev libgtk-3-dev libwebkit2gtk-4.0-dev;
+    cd ~;
+    pwd;
+    git clone --depth=1 --branch=master https://github.com/WeAreROLI/JUCE.git JUCE;
+    cd /benkuper;
+    mkdir 'JUCE Modules';
+    cd 'JUCE Modules';
+    git clone --depth=1 --branch=master https://github.com/benkuper/juce_organicui.git juce_organicui"
+  fi
+
 script:
 - |
   if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
-    make -j 8 CONFIG=Release -C "Chataigne/Builds/LinuxMakefile/"
+    docker exec -t ubuntu bash -c "gcc -v;
+    cd /benkuper/Chataigne/Builds/LinuxMakefile;
+    make -j 8 CONFIG=Release"
   else
     xcodebuild -project Chataigne/Builds/MacOSX/Chataigne.xcodeproj -configuration Release -jobs 8 | xcpretty -f `xcpretty-travis-formatter`
+  fi
+
+after_success:
+- |
+  if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
+    docker exec -t ubuntu bash -c "echo 'AFTER SUCESS : ZIP AND UPLOADs';
+    cd /benkuper/Chataigne/Builds/LinuxMakefile/build;
+    wget http://benjamin.kuperberg.fr/chatagne/user/data/Chataigne-linux-dependencies.zip;
+    unzip Chataigne-linux-dependencies.zip;
+    zip -r Chataigne-linux-x64-bleedingedge.zip Chataigne lib;
+    curl --ftp-create-dirs -T Chataigne-linux-x64-bleedingedge.zip -u $FTP_USER:$FTP_PASSWORD ftp://ftp.kuperberg.fr/chataigne/user/data/"
+  else
+    cd /Users/travis/build/benkuper/Chataigne/Builds/MacOSX/build/Release
+    ls
+    zip -r -y Chataigne-osx-bleedingedge.zip Chataigne.app
+    curl --ftp-create-dirs -T Chataigne-osx-bleedingedge.zip -u $FTP_USER:$FTP_PASSWORD ftp://ftp.kuperberg.fr/chataigne/user/data/
   fi

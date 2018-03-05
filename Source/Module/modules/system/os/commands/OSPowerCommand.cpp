@@ -27,23 +27,29 @@ void OSPowerCommand::trigger()
 	switch (actionType)
 	{
 	case SHUTDOWN:
+	{
 #if JUCE_WINDOWS
 		std::system("shutdown -s -t 0");
 #elif JUCE_MAC
 		std::system("shutdown -s now");
 #elif JUCE_LINUX
-		std::system("shutdown -h now");
+		int result = std::system("shutdown -h now");
+		if(result != 0) LOGWARNING("Problem with shutdown command");
 #endif
+	}
 		break;
 
 	case REBOOT:
+	{
 #if JUCE_WINDOWS
 		std::system("shutdown -r -t 0");
 #elif JUCE_MAC
 		std::system("shutdown -r now");
 #elif JUCE_LINUX
-		std::system("shutdown -r now");
+		int result = std::system("shutdown -r now");
+		if(result != 0) LOGWARNING("Problem with reboot command");
 #endif
+	}
 		break;
 	}
 }
