@@ -5,18 +5,9 @@ matrix:
       osx_image: xcode9.2
 
     - os: linux
-      dist: trusty
+      dist: xenial
       sudo: required
       compiler: gcc
-      addons:
-        apt:
-          sources:
-            - ubuntu-toolchain-r-test
-          packages:
-            - gcc-7
-            - g++-7
-      env:
-        - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7"
 env:
   global:
   - FTP_USER=u67889354-benjamin
@@ -44,18 +35,11 @@ before_install:
 - |
   if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
     export DEBIAN_FRONTEND=noninteractive
-    echo ${HOME}
     export HOME=/home/travis/build/benkuper
-    echo ${HOME}
-    sudo eval "${MATRIX_EVAL}"
-    sudo ln -s /usr/bin/gcc-7 /usr/local/bin/gcc
-    sudo ln -s /usr/bin/g++-7 /usr/local/bin/g++
-    export CC=/usr/bin/gcc-7
-    export CXX=/usr/bin/g++-7
-    gcc -v && g++ -v && cmake --version
     sudo add-apt-repository ppa:webkit-team/ppa -y
     sudo apt-get update --fix-missing
     sudo apt-get update -qq
+    gcc -v && g++ -v && cmake --version
     sudo apt-get install -qq clang libfreetype6-dev libx11-dev libxinerama-dev libxrandr-dev libxcursor-dev libxcomposite-dev mesa-common-dev libasound2-dev freeglut3-dev libcurl4-gnutls-dev+ libasound2-dev libjack-dev libbluetooth-dev libgtk-3-dev libwebkit2gtk-4.0-dev
     pwd
     ls -d */
