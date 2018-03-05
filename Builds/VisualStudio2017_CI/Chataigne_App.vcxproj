@@ -3333,7 +3333,6 @@
     <None Include="..\..\Resources\default.chalayout"/>
     <None Include="..\..\Resources\icon.png"/>
     <None Include="..\..\Resources\in.png"/>
-    <None Include="..\..\External\servus\lib\osx\release\libServus.dylib"/>
     <None Include="..\..\Resources\nextcue.png"/>
     <None Include="..\..\Resources\out.png"/>
     <None Include="..\..\Resources\playpause.png"/>

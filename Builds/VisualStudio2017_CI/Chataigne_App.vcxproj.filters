@@ -6797,9 +6797,6 @@
     <None Include="..\..\Resources\in.png">
       <Filter>Chataigne\Resources</Filter>
     </None>
-    <None Include="..\..\External\servus\lib\osx\release\libServus.dylib">
-      <Filter>Chataigne\Resources</Filter>
-    </None>
     <None Include="..\..\Resources\nextcue.png">
       <Filter>Chataigne\Resources</Filter>
     </None>

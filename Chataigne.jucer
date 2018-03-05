@@ -14,8 +14,6 @@
             file="Resources/default.chalayout"/>
       <FILE id="nVz6Li" name="icon.png" compile="0" resource="1" file="Resources/icon.png"/>
       <FILE id="WlJm0v" name="in.png" compile="0" resource="1" file="Resources/in.png"/>
-      <FILE id="giEF2w" name="libServus.dylib" compile="0" resource="0" file="External/servus/lib/osx/release/libServus.dylib"
-            xcodeResource="1"/>
       <FILE id="A952C8" name="nextcue.png" compile="0" resource="1" file="Resources/nextcue.png"/>
       <FILE id="NkuJtC" name="out.png" compile="0" resource="1" file="Resources/out.png"/>
       <FILE id="otwIvC" name="playpause.png" compile="0" resource="1" file="Resources/playpause.png"/>
