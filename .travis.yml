@@ -47,9 +47,9 @@ before_install:
     echo ${HOME}
     export HOME=/home/travis/build/benkuper
     echo ${HOME}
-    eval "${MATRIX_EVAL}"
-    ln -s /usr/bin/gcc-7 /usr/local/bin/gcc
-    ln -s /usr/bin/g++-7 /usr/local/bin/g++
+    sudo eval "${MATRIX_EVAL}"
+    sudo ln -s /usr/bin/gcc-7 /usr/local/bin/gcc
+    sudo ln -s /usr/bin/g++-7 /usr/local/bin/g++
     export CC=/usr/bin/gcc-7
     export CXX=/usr/bin/g++-7
     gcc -v && g++ -v && cmake --version
