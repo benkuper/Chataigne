@@ -4,7 +4,7 @@ matrix:
     - os: osx
       osx_image: xcode9.2
 
-    - os: linux
+    - os: linux 
       dist: trusty
       sudo: required
       compiler: gcc
