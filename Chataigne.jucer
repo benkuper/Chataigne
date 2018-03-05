@@ -1207,7 +1207,7 @@
       </MODULEPATHS>
     </XCODE_MAC>
     <LINUX_MAKE targetFolder="Builds/LinuxMakefile" externalLibraries="bluetooth&#10;Servus"
-                extraLinkerFlags="-Wl,-rpath,&quot;lib&quot;">
+                extraLinkerFlags="-Wl,-rpath,&quot;lib&quot;" extraDefs="_GLIBCXX_USE_CXX11_ABI=0">
       <CONFIGURATIONS>
         <CONFIGURATION name="Release" isDebug="0" optimisation="3" targetName="Chataigne"
                        headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/dnssd/include"
