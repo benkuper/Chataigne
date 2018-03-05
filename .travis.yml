@@ -3,9 +3,19 @@ matrix:
   include:
     - os: osx
       osx_image: xcode9.2
+      
     - os: linux
       dist: trusty
       sudo: required
+      compiler: gcc
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-7
+      env:
+        - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7"
 env:
   global:
   - FTP_USER=u67889354-benjamin
@@ -36,6 +46,7 @@ before_install:
     echo ${HOME}
     export HOME=/home/travis/build/benkuper
     echo ${HOME}
+    eval "${MATRIX_EVAL}"
     sudo add-apt-repository ppa:webkit-team/ppa -y
     sudo apt-get update --fix-missing
     sudo apt-get update -qq
