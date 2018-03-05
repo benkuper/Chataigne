@@ -52,6 +52,7 @@ install:
 - |
   if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
     docker exec -t ubuntu bash -c "export DEBIAN_FRONTEND=noninteractive;
+    apt-get dist-upgrade -y
     add-apt-repository ppa:webkit-team/ppa -y;
     add-apt-repository -y ppa:ubuntu-toolchain-r/test;
     apt-get update --fix-missing;
