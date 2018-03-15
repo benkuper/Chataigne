@@ -18,7 +18,7 @@ Chataigne as been designed to fit both linear shows and realtime/interactive pro
 You can check the tutorials to better understand what and how you can use Chataigne for your projects.
 
 ## Using the software
-Compiled versions for Windows (8.1 and up), Mac OSX and Linux are available at : http://benjamin.kuperberg.fr/chataigne/download
+Compiled versions for Windows (8.1 and up), Mac OSX and Linux are available at : http://benjamin.kuperberg.fr/chataigne/#download
 If beta versions are available, they will show up on this page.
 If you wish to test the latest features and commits, the bleeding-edge section is generated at each commit.
 
