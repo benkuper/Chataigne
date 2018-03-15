@@ -88,6 +88,8 @@ void CustomOSCCommand::trigger()
 
 void CustomOSCCommand::useForMappingChanged(CustomValuesCommandArgument *)
 {
+	if (context != MAPPING) return;
+
 	clearTargetMappingParameters();
 	int index = 0;
 	for (auto &a : argManager.items)
