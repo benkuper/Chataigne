@@ -177,6 +177,7 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/GamepadModule_fc770758.o \
   $(JUCE_OBJDIR)/HIDModule_c3f9a29c.o \
   $(JUCE_OBJDIR)/JoyConModule_1410c7f4.o \
+  $(JUCE_OBJDIR)/KeyboardModule_965e79f4.o \
   $(JUCE_OBJDIR)/KinectV2Module_99832bf0.o \
   $(JUCE_OBJDIR)/MyoDevice_cb8c0306.o \
   $(JUCE_OBJDIR)/MyoManager_6eae647.o \
@@ -894,6 +895,11 @@ $(JUCE_OBJDIR)/HIDModule_c3f9a29c.o: ../../Source/Module/modules/controller/hid/
 $(JUCE_OBJDIR)/JoyConModule_1410c7f4.o: ../../Source/Module/modules/controller/joycon/JoyConModule.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling JoyConModule.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/KeyboardModule_965e79f4.o: ../../Source/Module/modules/controller/keyboard/KeyboardModule.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling KeyboardModule.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/KinectV2Module_99832bf0.o: ../../Source/Module/modules/controller/kinect/KinectV2Module.cpp

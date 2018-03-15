@@ -2,7 +2,7 @@
 
 <JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.3.3"
               bundleIdentifier="benkuper.Chataigne" includeBinaryInAppConfig="1"
-              jucerVersion="5.2.1" companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
+              jucerVersion="5.3.0" companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
               companyEmail="benjamin@kuperberg.fr" defines="" displaySplashScreen="0"
               splashScreenColour="Dark" cppLanguageStandard="14" companyCopyright="Ben Kuper"
               headerPath="../../Source" reportAppUsage="0">
@@ -517,6 +517,12 @@
               <FILE id="zxI9EX" name="JoyConModule.cpp" compile="1" resource="0"
                     file="Source/Module/modules/controller/joycon/JoyConModule.cpp"/>
               <FILE id="G3w16g" name="JoyConModule.h" compile="0" resource="0" file="Source/Module/modules/controller/joycon/JoyConModule.h"/>
+            </GROUP>
+            <GROUP id="{DD0E5C56-EE3B-3CF9-A333-D5778991DBAE}" name="keyboard">
+              <FILE id="nudXpb" name="KeyboardModule.cpp" compile="1" resource="0"
+                    file="Source/Module/modules/controller/keyboard/KeyboardModule.cpp"/>
+              <FILE id="CYr9Wv" name="KeyboardModule.h" compile="0" resource="0"
+                    file="Source/Module/modules/controller/keyboard/KeyboardModule.h"/>
             </GROUP>
             <GROUP id="{122191F4-B849-F53D-521E-9F1E09A3A5C0}" name="kinect">
               <FILE id="vmVn7s" name="KinectV2Module.cpp" compile="1" resource="0"

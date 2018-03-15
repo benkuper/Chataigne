@@ -17,6 +17,7 @@
 #include "modules/controller/hid/HIDModule.h"
 #include "modules/controller/gamepad/GamepadModule.h"
 #include "modules/controller/wiimote/WiimoteModule.h"
+#include "modules/controller/keyboard/KeyboardModule.h"
 #include "modules/osc/reaper/ReaperModule.h"
 #include "modules/audio/AudioModule.h"
 #include "modules/controller/kinect/KinectV2Module.h"
@@ -58,6 +59,7 @@ ModuleFactory::ModuleFactory() {
 	moduleDefs.add(new ModuleDefinition("Hardware", "Sound Card", &AudioModule::create));
 	moduleDefs.add(new ModuleDefinition("Hardware", "Wiimote", &WiimoteModule::create));
 	moduleDefs.add(new ModuleDefinition("Hardware", "JoyCon", &JoyConModule::create));
+	moduleDefs.add(new ModuleDefinition("Hardware", "Keyboard", &KeyboardModule::create));
 
 	/*
 	moduleDefs.add(new ModuleDefinition("Hardware", "HID", &HIDModule::create));

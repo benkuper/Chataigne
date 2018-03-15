@@ -133,6 +133,7 @@
 		6712C6C8DE23D03DD58C1ED7 = {isa = PBXBuildFile; fileRef = 97BB724F64701AA63B90C1E0; };
 		24E22D5701914F4AFD9C743E = {isa = PBXBuildFile; fileRef = B9CE8ECB6792329E61C5A10C; };
 		4C2D775E82C8238217DCB568 = {isa = PBXBuildFile; fileRef = EE16135FACA08DECECFBE1D6; };
+		324B449B4DC24BAEFCA1ED2A = {isa = PBXBuildFile; fileRef = 53A5A48ED7FEF0F32D648EA3; };
 		EC246C47CF365342F93FE894 = {isa = PBXBuildFile; fileRef = F4A3071E9B164D64387DC016; };
 		9AC3823C402FB61B801B2AC3 = {isa = PBXBuildFile; fileRef = 4E1502A270C713456D3EC085; };
 		34A0B05B551A83DF57905DFF = {isa = PBXBuildFile; fileRef = AF5984A61C24DDE49D5F7151; };
@@ -488,6 +489,7 @@
 		528CCEA221199E7763EE2317 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = UserOSCCommand.cpp; path = ../../Source/Module/modules/osc/custom/commands/user/UserOSCCommand.cpp; sourceTree = "SOURCE_ROOT"; };
 		533AE44B6839185BC220EADE = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = GamepadManager.cpp; path = ../../Source/Module/modules/controller/gamepad/GamepadManager.cpp; sourceTree = "SOURCE_ROOT"; };
 		53651DC87934A24263EB8C43 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DMXStateUI.h; path = ../../Source/Common/DMX/ui/DMXStateUI.h; sourceTree = "SOURCE_ROOT"; };
+		53A5A48ED7FEF0F32D648EA3 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = KeyboardModule.cpp; path = ../../Source/Module/modules/controller/keyboard/KeyboardModule.cpp; sourceTree = "SOURCE_ROOT"; };
 		543FDED6F64A77819875F097 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ActionUI.cpp; path = ../../Source/Common/Processor/Action/ui/ActionUI.cpp; sourceTree = "SOURCE_ROOT"; };
 		54538037968AA2031B2D6820 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ModuleUI.h; path = ../../Source/Module/ui/ModuleUI.h; sourceTree = "SOURCE_ROOT"; };
 		551CE20C88E53A262028FEBA = {isa = PBXFileReference; lastKnownFileType = file; name = "juce_gui_extra"; path = "~/JUCE/modules/juce_gui_extra"; sourceTree = "<absolute>"; };
@@ -532,6 +534,7 @@
 		6D0B7901FA978B59D5EC27E3 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TimeTriggerManager.h; path = ../../Source/TimeMachine/Sequence/Layer/layers/trigger/TimeTriggerManager.h; sourceTree = "SOURCE_ROOT"; };
 		6D345DAA00F1B0D0BA52A97A = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ResolumeBaseCommandEditor.h; path = ../../Source/Module/modules/osc/resolume/commands/ui/ResolumeBaseCommandEditor.h; sourceTree = "SOURCE_ROOT"; };
 		6DA48147D997BF10B507F9B9 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MappingInputEditor.cpp; path = ../../Source/Common/Processor/Mapping/Input/ui/MappingInputEditor.cpp; sourceTree = "SOURCE_ROOT"; };
+		6DDE46B937874C068E754258 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = KeyboardModule.h; path = ../../Source/Module/modules/controller/keyboard/KeyboardModule.h; sourceTree = "SOURCE_ROOT"; };
 		6DE6888C0820959D62595476 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = AutomationRecorder.cpp; path = ../../Source/Common/Automation/recorder/AutomationRecorder.cpp; sourceTree = "SOURCE_ROOT"; };
 		6E5D1560A551751CABF79621 = {isa = PBXFileReference; lastKnownFileType = file; name = "juce_core"; path = "~/JUCE/modules/juce_core"; sourceTree = "<absolute>"; };
 		6E9099CA2495D631898BAE85 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AudioLayerTimeline.h; path = ../../Source/TimeMachine/Sequence/Layer/layers/audio/ui/AudioLayerTimeline.h; sourceTree = "SOURCE_ROOT"; };
@@ -1207,6 +1210,9 @@
 		5196179CA1A0DDE3AAF00F3C = {isa = PBXGroup; children = (
 					EE16135FACA08DECECFBE1D6,
 					8A58CD77BC22FE5104C4B2FD, ); name = joycon; sourceTree = "<group>"; };
+		FDC3BCE022FBCF6F430EC94B = {isa = PBXGroup; children = (
+					53A5A48ED7FEF0F32D648EA3,
+					6DDE46B937874C068E754258, ); name = keyboard; sourceTree = "<group>"; };
 		DD353806E7A22359CB1D52C2 = {isa = PBXGroup; children = (
 					F4A3071E9B164D64387DC016,
 					99532205E848C75B528FEB0D, ); name = kinect; sourceTree = "<group>"; };
@@ -1251,6 +1257,7 @@
 					FE04D271FB3D733172FD0288,
 					CC99D6B30F0755A7DD435916,
 					5196179CA1A0DDE3AAF00F3C,
+					FDC3BCE022FBCF6F430EC94B,
 					DD353806E7A22359CB1D52C2,
 					3875F7FA2697FA120D92A3D1,
 					322A551738E8D1C0079D30DA, ); name = controller; sourceTree = "<group>"; };
@@ -1990,6 +1997,7 @@
 					6712C6C8DE23D03DD58C1ED7,
 					24E22D5701914F4AFD9C743E,
 					4C2D775E82C8238217DCB568,
+					324B449B4DC24BAEFCA1ED2A,
 					EC246C47CF365342F93FE894,
 					9AC3823C402FB61B801B2AC3,
 					34A0B05B551A83DF57905DFF,
