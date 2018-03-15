@@ -47,6 +47,7 @@ namespace CommandIDs
 void MainContentComponent::getCommandInfo(CommandID commandID, ApplicationCommandInfo& result) {
 	const String category("General");
 
+	
 	switch (commandID)
 	{
 	case CommandIDs::newFile:
@@ -79,6 +80,7 @@ void MainContentComponent::getCommandInfo(CommandID commandID, ApplicationComman
 	case CommandIDs::checkForUpdates:
 		result.setInfo("Check for updates", "Check if updates are available and download latest software", category, 0);
 		break;
+
 
 	case CommandIDs::editProjectSettings:
 		result.setInfo("Project Settings...", "Edit the settings related to this project", category, 0);
@@ -115,6 +117,7 @@ void MainContentComponent::getCommandInfo(CommandID commandID, ApplicationComman
 		break;
 
 	default:
+		JUCEApplication::getInstance()->getCommandInfo(commandID, result);
 		break;
 	}
 }
@@ -129,6 +132,7 @@ void MainContentComponent::getAllCommands(Array<CommandID>& commands) {
 	  CommandIDs::save,
 	  CommandIDs::saveAs,
 	  CommandIDs::checkForUpdates,
+	  StandardApplicationCommandIDs::quit,
 	  CommandIDs::editGlobalSettings,
 	  CommandIDs::editProjectSettings,
 	  CommandIDs::showAbout,
@@ -300,7 +304,7 @@ bool MainContentComponent::perform(const InvocationInfo& info) {
 
 	default:
 		DBG("no command found");
-		return false;
+		return JUCEApplication::getInstance()->perform(info);
 	}
 
 	return true;
