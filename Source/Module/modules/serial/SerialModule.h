@@ -36,6 +36,11 @@ public:
 	virtual void setCurrentPort(SerialDevice *port);
 	virtual void onControllableFeedbackUpdateInternal(ControllableContainer *, Controllable * c) override;
 
+	virtual bool isReadyToSend() override;
+	virtual void sendMessageInternal(const String &message) override;
+	virtual void sendBytesInternal(Array<uint8> data) override;
+
+
 	// Inherited via SerialDeviceListener
 	virtual void portOpened(SerialDevice *) override;
 	virtual void portClosed(SerialDevice *) override;

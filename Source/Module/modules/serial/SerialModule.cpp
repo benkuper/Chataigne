@@ -85,7 +85,28 @@ void SerialModule::onControllableFeedbackUpdateInternal(ControllableContainer * 
 	{
 		if (port != nullptr) port->setMode((SerialDevice::PortMode)(int)streamingType->getValueData());
 	}
-};
+}
+bool SerialModule::isReadyToSend()
+{
+	if (port == nullptr)
+	{
+		NLOGWARNING(niceName, "You must set a device before sending data.");
+		return false;
+	}
+
+	return true;
+}
+void SerialModule::sendMessageInternal(const String & message)
+{
+	if (port == nullptr) return;
+	port->writeString(message);
+}
+
+void SerialModule::sendBytesInternal(Array<uint8> data)
+{
+	if (port == nullptr) return;
+	port->writeBytes(data);
+}
 
 
 void SerialModule::portOpened(SerialDevice *)
