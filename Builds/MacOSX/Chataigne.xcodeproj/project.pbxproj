@@ -198,6 +198,7 @@
 		E54186450B80BBEF21F20009 = {isa = PBXBuildFile; fileRef = C7BE2656188911D29D8DC80D; };
 		EF6448DF1AA7F6C777028AB5 = {isa = PBXBuildFile; fileRef = 4DBD7E60443674BDA016F673; };
 		36E22D472D9042CB48981CEA = {isa = PBXBuildFile; fileRef = DC429F63AB712823DC8D776E; };
+		AE6EB1B6A4006F74B15D443A = {isa = PBXBuildFile; fileRef = BEB5FC676103F81A003208E8; };
 		DD7FE758703AC0C7402A9809 = {isa = PBXBuildFile; fileRef = 723AC83C92C5656505F6409C; };
 		842FFDD3DA695E4C5D014414 = {isa = PBXBuildFile; fileRef = 1DA1A4B47B6494AC2A79311C; };
 		33E16DCF5C4801FF0C7CBF6F = {isa = PBXBuildFile; fileRef = 2BAFF327FC54783886F8620F; };
@@ -354,6 +355,7 @@
 		1952BD304214810D645BBDF6 = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		1963F1D3623E1F2A7122FEB0 = {isa = PBXFileReference; lastKnownFileType = file; name = "juce_video"; path = "~/JUCE/modules/juce_video"; sourceTree = "<absolute>"; };
 		1B9A73C8CB3C33D68C682295 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SendStreamRawDataCommand.h; path = ../../Source/Module/modules/common/streaming/commands/SendStreamRawDataCommand.h; sourceTree = "SOURCE_ROOT"; };
+		1BD724662F7C81A7DBEDBA66 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = WakeOnLanCommand.h; path = ../../Source/Module/modules/system/os/commands/WakeOnLanCommand.h; sourceTree = "SOURCE_ROOT"; };
 		1BFA6EEFCE2A4D8498AB36DA = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SendStreamValuesCommand.cpp; path = ../../Source/Module/modules/common/streaming/commands/SendStreamValuesCommand.cpp; sourceTree = "SOURCE_ROOT"; };
 		1C1E617FDB20362DCED92DB7 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = UserOSCCommandModelUI.h; path = ../../Source/Module/modules/osc/custom/commands/user/model/ui/UserOSCCommandModelUI.h; sourceTree = "SOURCE_ROOT"; };
 		1C9F9F116CF5C8DCD5CFCA72 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MappingOutput.cpp; path = ../../Source/Common/Processor/Mapping/Output/MappingOutput.cpp; sourceTree = "SOURCE_ROOT"; };
@@ -709,6 +711,7 @@
 		BC78C63D601E0DC13788C4B6 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ChataigneGenericModule.h; path = ../../Source/Module/modules/generic/ChataigneGenericModule.h; sourceTree = "SOURCE_ROOT"; };
 		BE4924D424A41C0A3275F3C4 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ModuleUI.cpp; path = ../../Source/Module/ui/ModuleUI.cpp; sourceTree = "SOURCE_ROOT"; };
 		BEB54714E4B90120D22D47D6 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = BaseCommand.h; path = ../../Source/Common/Command/BaseCommand.h; sourceTree = "SOURCE_ROOT"; };
+		BEB5FC676103F81A003208E8 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = WakeOnLanCommand.cpp; path = ../../Source/Module/modules/system/os/commands/WakeOnLanCommand.cpp; sourceTree = "SOURCE_ROOT"; };
 		BEDFBEFAB93D6A8F37A47919 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DMXOpenUSBDevice.cpp; path = ../../Source/Common/DMX/device/DMXOpenUSBDevice.cpp; sourceTree = "SOURCE_ROOT"; };
 		BF56666BCED854C39FE8D1C1 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SignalModule.cpp; path = ../../Source/Module/modules/generators/signal/SignalModule.cpp; sourceTree = "SOURCE_ROOT"; };
 		BF9BE431A99A71683F148A0C = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MappingFilterManager.cpp; path = ../../Source/Common/Processor/Mapping/Filter/MappingFilterManager.cpp; sourceTree = "SOURCE_ROOT"; };
@@ -1402,7 +1405,9 @@
 					4DBD7E60443674BDA016F673,
 					9D8FF2DBA0D8821F5A7338EE,
 					DC429F63AB712823DC8D776E,
-					A827068B7EA45A80070F2DFD, ); name = commands; sourceTree = "<group>"; };
+					A827068B7EA45A80070F2DFD,
+					BEB5FC676103F81A003208E8,
+					1BD724662F7C81A7DBEDBA66, ); name = commands; sourceTree = "<group>"; };
 		649205809EDD4C846A2F8EB7 = {isa = PBXGroup; children = (
 					85F66D359D012C8C1A042DB4,
 					723AC83C92C5656505F6409C,
@@ -2062,6 +2067,7 @@
 					E54186450B80BBEF21F20009,
 					EF6448DF1AA7F6C777028AB5,
 					36E22D472D9042CB48981CEA,
+					AE6EB1B6A4006F74B15D443A,
 					DD7FE758703AC0C7402A9809,
 					842FFDD3DA695E4C5D014414,
 					33E16DCF5C4801FF0C7CBF6F,

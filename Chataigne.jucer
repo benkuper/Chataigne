@@ -787,6 +787,10 @@
                       file="Source/Module/modules/system/os/commands/OSPowerCommand.cpp"/>
                 <FILE id="uRplxR" name="OSPowerCommand.h" compile="0" resource="0"
                       file="Source/Module/modules/system/os/commands/OSPowerCommand.h"/>
+                <FILE id="UVisev" name="WakeOnLanCommand.cpp" compile="1" resource="0"
+                      file="Source/Module/modules/system/os/commands/WakeOnLanCommand.cpp"/>
+                <FILE id="KRSW2s" name="WakeOnLanCommand.h" compile="0" resource="0"
+                      file="Source/Module/modules/system/os/commands/WakeOnLanCommand.h"/>
               </GROUP>
               <FILE id="vKtN5d" name="OSModule.cpp" compile="1" resource="0" file="Source/Module/modules/system/os/OSModule.cpp"/>
               <FILE id="jz2p8w" name="OSModule.h" compile="0" resource="0" file="Source/Module/modules/system/os/OSModule.h"/>
@@ -1143,8 +1147,7 @@
   </MAINGROUP>
   <EXPORTFORMATS>
     <VS2017 targetFolder="Builds/VisualStudio2017" externalLibraries="Setupapi.lib&#10;hid.lib&#10;Kinect20.lib&#10;joytime-core.lib&#10;joytime-input-hidapi.lib&#10;Servus.lib&#10;dnssd.lib"
-            smallIcon="nVz6Li" bigIcon="nVz6Li" windowsTargetPlatformVersion="10.0.16299.0"
-            vst3Folder="">
+            smallIcon="nVz6Li" bigIcon="nVz6Li" vst3Folder="">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" winWarningLevel="4" generateManifest="1" winArchitecture="x64"
                        isDebug="1" optimisation="1" targetName="ChataigneDebug" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/asio&#10;../../External/kinect/include&#10;../../External/joycon/include&#10;../../External/servus/include&#10;../../External/dnssd/include"

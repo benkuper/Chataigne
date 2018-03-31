@@ -239,6 +239,7 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/StateModule_898183dd.o \
   $(JUCE_OBJDIR)/OSExecCommand_1adb1a06.o \
   $(JUCE_OBJDIR)/OSPowerCommand_8563ee44.o \
+  $(JUCE_OBJDIR)/WakeOnLanCommand_f0bfe78f.o \
   $(JUCE_OBJDIR)/OSModule_9cf844c7.o \
   $(JUCE_OBJDIR)/TimeModule_26aecc47.o \
   $(JUCE_OBJDIR)/PJLinkModule_528c0f0b.o \
@@ -1205,6 +1206,11 @@ $(JUCE_OBJDIR)/OSExecCommand_1adb1a06.o: ../../Source/Module/modules/system/os/c
 $(JUCE_OBJDIR)/OSPowerCommand_8563ee44.o: ../../Source/Module/modules/system/os/commands/OSPowerCommand.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling OSPowerCommand.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/WakeOnLanCommand_f0bfe78f.o: ../../Source/Module/modules/system/os/commands/WakeOnLanCommand.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling WakeOnLanCommand.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/OSModule_9cf844c7.o: ../../Source/Module/modules/system/os/OSModule.cpp

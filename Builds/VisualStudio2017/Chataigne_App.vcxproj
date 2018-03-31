@@ -331,6 +331,7 @@
     <ClCompile Include="..\..\Source\Module\modules\state\StateModule.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\system\os\commands\OSExecCommand.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\system\os\commands\OSPowerCommand.cpp"/>
+    <ClCompile Include="..\..\Source\Module\modules\system\os\commands\WakeOnLanCommand.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\system\os\OSModule.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\system\time\TimeModule.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\tcp\pjlink\PJLinkModule.cpp"/>
@@ -2613,6 +2614,7 @@
     <ClInclude Include="..\..\Source\Module\modules\state\StateModule.h"/>
     <ClInclude Include="..\..\Source\Module\modules\system\os\commands\OSExecCommand.h"/>
     <ClInclude Include="..\..\Source\Module\modules\system\os\commands\OSPowerCommand.h"/>
+    <ClInclude Include="..\..\Source\Module\modules\system\os\commands\WakeOnLanCommand.h"/>
     <ClInclude Include="..\..\Source\Module\modules\system\os\OSModule.h"/>
     <ClInclude Include="..\..\Source\Module\modules\system\time\TimeModule.h"/>
     <ClInclude Include="..\..\Source\Module\modules\tcp\pjlink\PJLinkModule.h"/>

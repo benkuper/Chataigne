@@ -1435,6 +1435,9 @@
     <ClCompile Include="..\..\Source\Module\modules\system\os\commands\OSPowerCommand.cpp">
       <Filter>Chataigne\Source\Module\modules\system\os\commands</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Module\modules\system\os\commands\WakeOnLanCommand.cpp">
+      <Filter>Chataigne\Source\Module\modules\system\os\commands</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\system\os\OSModule.cpp">
       <Filter>Chataigne\Source\Module\modules\system\os</Filter>
     </ClCompile>
@@ -4390,6 +4393,9 @@
       <Filter>Chataigne\Source\Module\modules\system\os\commands</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\system\os\commands\OSPowerCommand.h">
+      <Filter>Chataigne\Source\Module\modules\system\os\commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Module\modules\system\os\commands\WakeOnLanCommand.h">
       <Filter>Chataigne\Source\Module\modules\system\os\commands</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\system\os\OSModule.h">
