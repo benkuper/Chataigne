@@ -56,11 +56,15 @@ void OSExecCommand::trigger()
 		f.getParentDirectory().setAsCurrentWorkingDirectory();
 		result = f.startAsProcess(launchOptions->stringValue());
 		wDir.setAsCurrentWorkingDirectory();
+		module->outActivityTrigger->trigger();
 	}
 		break;
 
 	case KILL_APP:
+	{
 		killProcess(target->stringValue());
+		module->outActivityTrigger->trigger();
+	}
 		break;
 	}
 }
