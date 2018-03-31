@@ -58,7 +58,10 @@ MacOS : [![Build Status](https://travis-matrix-badges.herokuapp.com/repos/benkup
 
 Windows (x64) : [![Build status](https://ci.appveyor.com/api/projects/status/7lskg35ttnsv99cq?svg=true)](https://ci.appveyor.com/project/benkuper/chataigne)
 
+[![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](https://forthebadge.com)
 [![forthebadge](http://forthebadge.com/images/badges/gluten-free.svg)](http://forthebadge.com)
+[![forthebadge](https://forthebadge.com/images/badges/reading-6th-grade-level.svg)](https://forthebadge.com)
+[![forthebadge](https://forthebadge.com/images/badges/uses-badges.svg)](https://forthebadge.com)
 
 ## Perhaps the most important
 
