@@ -213,14 +213,16 @@ void Automation::onControllableFeedbackUpdate(ControllableContainer * cc, Contro
 		if (c == t->position)
 		{
 			int index = items.indexOf(t);
-			if (index > 0 && t->position->floatValue() < items[index - 1]->position->floatValue())
+			bool swapped = true;
+
+			if (index > 0 && t->position->floatValue() < items[index - 1]->position->floatValue()) items.swap(index, index - 1);
+			else if (index < items.size() - 1 && t->position->floatValue() > items[index + 1]->position->floatValue()) items.swap(index, index + 1);
+			else swapped = false;
+
+			if (swapped)
 			{
-				items.swap(index, index - 1);
 				baseManagerListeners.call(&Listener::itemsReordered);
-			} else if (index < items.size() - 1 && t->position->floatValue() > items[index + 1]->position->floatValue())
-			{
-				items.swap(index, index + 1);
-				baseManagerListeners.call(&Listener::itemsReordered);
+				managerNotifier.addMessage(new BaseManager::ManagerEvent(BaseManager::ManagerEvent::ITEMS_REORDERED));
 			}
 		}
 	}
