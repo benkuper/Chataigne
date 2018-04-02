@@ -36,7 +36,7 @@ public:
 	FloatParameter * validationProgress;
 
 	bool validationWaiting;
-	float prevTimerTime;
+	double prevTimerTime;
 	bool forceDisabled;
 
 	void addItemInternal(Condition *, var data) override;

@@ -39,7 +39,7 @@ ConditionManager::ConditionManager(bool _operatorOnSide) :
 	conditionOperator->addOption("OR", ConditionOperator::OR);
 	conditionOperator->hideInEditor = true;
 
-	validationTime = addFloatParameter("Validation Time", "If greater than 0, the conditions will be validated only if they remain valid for this amount of time", 0, 0, 10);
+	validationTime = addFloatParameter("Validation Time", "If greater than 0, the conditions will be validated only if they remain valid for this amount of time", 0, 0, (float)INT32_MAX);
 	validationTime->hideInEditor = true;
 	validationTime->defaultUI = FloatParameter::TIME;
 
@@ -117,7 +117,7 @@ void ConditionManager::checkAllConditions()
 		} else
 		{
 
-			prevTimerTime = Time::getMillisecondCounter() / 1000.0f;
+			prevTimerTime = Time::getHighResolutionTicks();
 			startTimer(20);
 		}
 	}
@@ -157,8 +157,8 @@ void ConditionManager::timerCallback()
 		return;
 	}
 
-	double curTime = Time::getMillisecondCounter() / 1000.0f;
-	validationProgress->setValue(validationProgress->floatValue() + (curTime - prevTimerTime));
+	double curTime = Time::getMillisecondCounterHiRes();
+	validationProgress->setValue(validationProgress->floatValue() + (curTime - prevTimerTime)/1000.f);
 	prevTimerTime = curTime;
 
 
