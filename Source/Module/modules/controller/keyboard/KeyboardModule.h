@@ -34,6 +34,8 @@ public:
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(KeyboardModule)
 
-		// Inherited via KeyListener
-		virtual bool keyPressed(const KeyPress & key, Component * originatingComponent) override;
+	// Inherited via KeyListener
+	virtual bool keyPressed(const KeyPress & key, Component * originatingComponent) override;
+	virtual bool keyStateChanged(bool isKeyDown, Component* originatingComponent) override;
+
 };

@@ -33,13 +33,25 @@ bool KeyboardModule::keyPressed(const KeyPress & key, Component * originatingCom
 {
 	char k = (char)key.getKeyCode();
 	String ks = String::fromUTF8(&k, 1);
-	DBG(ks);
 	lastKey->setValue(ks.toLowerCase());
+
 	shift->setValue(key.getModifiers().isShiftDown());
-	
 	ctrl->setValue(key.getModifiers().isCtrlDown());
 	command->setValue(key.getModifiers().isCommandDown());
 	alt->setValue(key.getModifiers().isAltDown());
 
+	return false;
+}
+
+bool KeyboardModule::keyStateChanged(bool isKeyDown, Component * originatingComponent)
+{
+	if (!isKeyDown)
+	{
+		lastKey->setValue("");
+		ctrl->setValue(false);
+		shift->setValue(false);
+		command->setValue(false);
+		alt->setValue(false);
+	}
 	return false;
 }
