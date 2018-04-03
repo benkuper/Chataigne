@@ -13,7 +13,7 @@
 ModuleChooserUI::ModuleChooserUI() :
 	filterModuleFunc(nullptr)
 {
-	ModuleManager::getInstance()->addBaseManagerListener(this);
+	ModuleManager::getInstance()->addAsyncManagerListener(this);
 	addListener(this);
 
 	buildModuleBox();
@@ -21,7 +21,7 @@ ModuleChooserUI::ModuleChooserUI() :
 
 ModuleChooserUI::~ModuleChooserUI()
 {
-	ModuleManager::getInstance()->removeBaseManagerListener(this);
+	ModuleManager::getInstance()->removeAsyncManagerListener(this);
 }
 
 
@@ -46,16 +46,6 @@ void ModuleChooserUI::buildModuleBox()
 	chooserListeners.call(&ChooserListener::moduleListChanged, this);
 }
 
-void ModuleChooserUI::itemAdded(Module *)
-{
-	buildModuleBox();
-}
-
-void ModuleChooserUI::itemRemoved(Module *)
-{
-	buildModuleBox();
-}
-
 void ModuleChooserUI::setModuleSelected(Module * m, bool silent)
 {
 	if (m == nullptr) return;
@@ -67,4 +57,10 @@ void ModuleChooserUI::comboBoxChanged(ComboBox *)
 	Module * m = ModuleManager::getInstance()->items[getSelectedId() - 1];
 	chooserListeners.call(&ChooserListener::selectedModuleChanged, this, m);
 	
+}
+
+void ModuleChooserUI::newMessage(const ModuleManager::ManagerEvent &)
+{
+	//Rebuild module for any type of manager event
+	buildModuleBox();
 }

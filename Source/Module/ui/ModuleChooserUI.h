@@ -16,7 +16,7 @@
 
 
 class ModuleChooserUI :
-	public ModuleManager::Listener,
+	public ModuleManager::AsyncListener,
 	public ComboBox,
 	public ComboBox::Listener
 {
@@ -28,12 +28,11 @@ public:
 
 	void buildModuleBox();
 
-	void itemAdded(Module *) override;
-	void itemRemoved(Module *) override;
-
 	void setModuleSelected(Module *, bool silent);
 
 	void comboBoxChanged(ComboBox *) override;
+
+	void newMessage(const ModuleManager::ManagerEvent &e) override;
 
 	class ChooserListener
 	{
