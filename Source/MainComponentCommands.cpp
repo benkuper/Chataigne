@@ -33,6 +33,8 @@ namespace CommandIDs
 	//undo
 	static const int undo = 0x40001;
 	static const int redo = 0x40002;
+	static const int duplicate = 0x40003;
+
 
 	// range ids
 	static const int lastFileStartID = 100; // 100 to 200 max
@@ -47,7 +49,7 @@ namespace CommandIDs
 void MainContentComponent::getCommandInfo(CommandID commandID, ApplicationCommandInfo& result) {
 	const String category("General");
 
-	
+
 	switch (commandID)
 	{
 	case CommandIDs::newFile:
@@ -104,7 +106,7 @@ void MainContentComponent::getCommandInfo(CommandID commandID, ApplicationComman
 		break;
 
 	case CommandIDs::undo:
-		result.setInfo("Undo " + UndoMaster::getInstance()->getUndoDescription(),"Undo the last action", category, 0);
+		result.setInfo("Undo " + UndoMaster::getInstance()->getUndoDescription(), "Undo the last action", category, 0);
 		result.defaultKeypresses.add(KeyPress('z', ModifierKeys::commandModifier, 0));
 		result.setActive(UndoMaster::getInstance()->canUndo());
 		break;
@@ -115,6 +117,43 @@ void MainContentComponent::getCommandInfo(CommandID commandID, ApplicationComman
 		result.defaultKeypresses.add(KeyPress('y', ModifierKeys::commandModifier, 0));
 		result.setActive(UndoMaster::getInstance()->canRedo());
 		break;
+
+	case StandardApplicationCommandIDs::copy:
+	{
+		BaseItem * item = InspectableSelectionManager::mainSelectionManager->getInspectableAs<BaseItem>();
+		result.setInfo(item != nullptr ? "Copy " + item->niceName : "Nothing to copy", "Copy the selected item", category, 0);
+		result.defaultKeypresses.add(KeyPress('c', ModifierKeys::commandModifier, 0));
+		result.setActive(item != nullptr);
+	}
+	break;
+
+	case StandardApplicationCommandIDs::cut:
+	{
+		BaseItem * item = InspectableSelectionManager::mainSelectionManager->getInspectableAs<BaseItem>();
+		result.setInfo(item != nullptr ? "Cut " + item->niceName : "Nothing to cut", "Cut the selected item", category, 0);
+		result.defaultKeypresses.add(KeyPress('x', ModifierKeys::commandModifier, 0));
+		result.setActive(item != nullptr);
+	}
+	break;
+
+	case StandardApplicationCommandIDs::paste:
+	{
+		bool canPaste = SystemClipboard::getTextFromClipboard().isNotEmpty();
+		result.setInfo(canPaste? "Paste":"Nothing to paste","Paste whatever is in the clipboard", category, 0);
+		result.defaultKeypresses.add(KeyPress('v', ModifierKeys::commandModifier, 0));
+		result.setActive(canPaste);
+	}
+	break;
+
+	case CommandIDs::duplicate:
+	{
+		BaseItem * item = InspectableSelectionManager::mainSelectionManager->getInspectableAs<BaseItem>();
+		result.setInfo(item != nullptr ? "Duplicate " + item->niceName : "Nothing to duplicate", "Duplicate the selected item", category, 0);
+		result.defaultKeypresses.add(KeyPress('d', ModifierKeys::commandModifier, 0));
+		result.setActive(item != nullptr);
+	}
+	break;
+
 
 	default:
 		JUCEApplication::getInstance()->getCommandInfo(commandID, result);
@@ -133,6 +172,10 @@ void MainContentComponent::getAllCommands(Array<CommandID>& commands) {
 	  CommandIDs::saveAs,
 	  CommandIDs::checkForUpdates,
 	  StandardApplicationCommandIDs::quit,
+	  StandardApplicationCommandIDs::copy,
+	  StandardApplicationCommandIDs::cut,
+	  StandardApplicationCommandIDs::paste,
+	  CommandIDs::duplicate,
 	  CommandIDs::editGlobalSettings,
 	  CommandIDs::editProjectSettings,
 	  CommandIDs::showAbout,
@@ -179,6 +222,11 @@ PopupMenu MainContentComponent::getMenuForIndex(int /*topLevelMenuIndex*/, const
 	{
 		menu.addCommandItem(&getCommandManager(), CommandIDs::undo);
 		menu.addCommandItem(&getCommandManager(), CommandIDs::redo);
+		menu.addSeparator();
+		menu.addCommandItem(&getCommandManager(), StandardApplicationCommandIDs::copy);
+		menu.addCommandItem(&getCommandManager(), StandardApplicationCommandIDs::cut);
+		menu.addCommandItem(&getCommandManager(), StandardApplicationCommandIDs::paste);
+		menu.addCommandItem(&getCommandManager(), CommandIDs::duplicate);
 
 	} else if (menuName == "Panels")
 	{
@@ -224,8 +272,7 @@ bool MainContentComponent::perform(const InvocationInfo& info) {
 		if (result == FileBasedDocument::SaveResult::userCancelledSave)
 		{
 
-		}
-		else if (result == FileBasedDocument::SaveResult::failedToWriteToFile)
+		} else if (result == FileBasedDocument::SaveResult::failedToWriteToFile)
 		{
 			LOGERROR("Could not save the document (Failed to write to file)\nCancelled loading of the new document");
 		} else
@@ -240,8 +287,7 @@ bool MainContentComponent::perform(const InvocationInfo& info) {
 		FileBasedDocument::SaveResult result = Engine::mainEngine->saveIfNeededAndUserAgrees();
 		if (result == FileBasedDocument::SaveResult::userCancelledSave)
 		{
-		}
-		else if (result == FileBasedDocument::SaveResult::failedToWriteToFile)
+		} else if (result == FileBasedDocument::SaveResult::failedToWriteToFile)
 		{
 			LOGERROR("Could not save the document (Failed to write to file)\nCancelled loading of the new document");
 		} else
@@ -254,10 +300,10 @@ bool MainContentComponent::perform(const InvocationInfo& info) {
 	case CommandIDs::save:
 	{
 		FileBasedDocument::SaveResult result = Engine::mainEngine->save(true, true);
-		if(result == FileBasedDocument::savedOk) LOG("File saved !");
+		if (result == FileBasedDocument::savedOk) LOG("File saved !");
 		else LOGERROR("Error saving file");
 	}
-		break;
+	break;
 
 	case CommandIDs::saveAs:
 	{
@@ -265,7 +311,7 @@ bool MainContentComponent::perform(const InvocationInfo& info) {
 		if (result == FileBasedDocument::savedOk) LOG("File saved !");
 		else LOGERROR("Error saving file");
 	}
-		break;
+	break;
 
 	case CommandIDs::checkForUpdates:
 		AppUpdater::getInstance()->checkForUpdates();
@@ -278,6 +324,39 @@ bool MainContentComponent::perform(const InvocationInfo& info) {
 	case CommandIDs::redo:
 		UndoMaster::getInstance()->redo();
 		break;
+
+
+	case StandardApplicationCommandIDs::copy:
+	case StandardApplicationCommandIDs::cut:
+	{
+		BaseItem * item = InspectableSelectionManager::mainSelectionManager->getInspectableAs<BaseItem>();
+		if (item != nullptr)
+		{
+			item->copy();
+			if (info.commandID == StandardApplicationCommandIDs::cut) item->remove();
+		}
+	}
+
+	break;
+
+	case StandardApplicationCommandIDs::paste:
+	{
+		BaseItem * item = InspectableSelectionManager::mainSelectionManager->getInspectableAs<BaseItem>();
+		if (item != nullptr) item->paste();
+		else
+		{
+			BaseItem::Listener * m = InspectableSelectionManager::mainSelectionManager->getInspectableAs<BaseItem::Listener>();
+			if (m != nullptr) m->askForPaste();
+		}
+	}
+	break;
+
+	case CommandIDs::duplicate:
+	{
+		BaseItem * item = InspectableSelectionManager::mainSelectionManager->getInspectableAs<BaseItem>();
+		if (item != nullptr) item->duplicate();
+	}
+	break;
 
 	case CommandIDs::editProjectSettings:
 		ProjectSettings::getInstance()->selectThis();
@@ -292,14 +371,14 @@ bool MainContentComponent::perform(const InvocationInfo& info) {
 		AboutWindow w;
 		DialogWindow::showModalDialog("About", &w, getTopLevelComponent(), Colours::transparentBlack, true);
 	}
-		break;
+	break;
 
 	case CommandIDs::gotoWebsite:
 		URL("http://benjamin.kuperberg.fr/chataigne").launchInDefaultBrowser();
 		break;
 
 	case CommandIDs::gotoForum:
-		URL("http://benjamin.kuperberg.fr/chataigne/forum").launchInDefaultBrowser(); 
+		URL("http://benjamin.kuperberg.fr/chataigne/forum").launchInDefaultBrowser();
 		break;
 
 	default:
