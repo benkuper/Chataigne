@@ -45,7 +45,7 @@ void ChataigneApplication::initialise(const String & commandLine)
 	AppUpdater::getInstance()->addAsyncUpdateListener(this);
 
 	if (GlobalSettings::getInstance()->checkUpdatesOnStartup->boolValue()) AppUpdater::getInstance()->checkForUpdates();
-	if (GlobalSettings::getInstance()->updateHelpOnStartup->boolValue()) HelpBox::getInstance()->loadHelp(URL("http://benjamin.kuperberg.fr/chataigne/community/help.json"));
+	if (GlobalSettings::getInstance()->updateHelpOnStartup->boolValue()) HelpBox::getInstance()->loadHelp(URL("http://benjamin.kuperberg.fr/chataigne/docs/help.json"));
 	else HelpBox::getInstance()->loadLocalHelp();
 
 	//ANALYTICS
