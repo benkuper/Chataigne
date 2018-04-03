@@ -19,6 +19,8 @@ Sequence::Sequence() :
 	masterAudioModule(nullptr),
 	hiResAudioTime(0)
 {
+	itemDataType = "Sequence";
+
 	isPlaying = addBoolParameter("Is Playing", "Is the sequence playing ?", false);
 	isPlaying->isControllableFeedbackOnly = true;
 	isPlaying->isEditable = false; 
@@ -84,6 +86,13 @@ void Sequence::setCurrentTime(float time, bool forceOverPlaying)
 		hiResAudioTime = time;
 		if (!isPlaying->boolValue()) currentTime->setValue(time);
 	}else currentTime->setValue(time);
+}
+
+bool Sequence::paste()
+{
+	SequenceLayer * p = layerManager->addItemFromClipboard(false);
+	if (p == nullptr) return BaseItem::paste();
+	return true;
 }
 
 void Sequence::setMasterAudioModule(AudioModule * module)

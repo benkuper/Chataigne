@@ -63,6 +63,8 @@ public:
 
 	void setCurrentTime(float time, bool forceOverPlaying = true);
 
+	virtual bool paste() override;
+
 	void setMasterAudioModule(AudioModule * module);
 
 	// Inherited via AudioIODeviceCallback

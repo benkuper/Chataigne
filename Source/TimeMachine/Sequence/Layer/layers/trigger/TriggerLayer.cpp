@@ -27,6 +27,13 @@ TriggerLayer::~TriggerLayer()
 }
 
 
+bool TriggerLayer::paste()
+{
+	TimeTrigger * p = ttm.addItemFromClipboard(false);
+	if (p == nullptr) return BaseItem::paste();
+	return true;
+}
+
 var TriggerLayer::getJSONData()
 {
 	var data = SequenceLayer::getJSONData();

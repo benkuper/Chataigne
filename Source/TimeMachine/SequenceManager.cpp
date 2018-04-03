@@ -19,6 +19,7 @@ SequenceManager::SequenceManager() :
 	BaseManager("Sequences"),
 	module(this)
 {
+	itemDataType = "Sequence";
 	helpID = "TimeMachine";
 }
 

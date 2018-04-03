@@ -19,6 +19,7 @@ TimeTriggerManager::TimeTriggerManager(TriggerLayer * _layer, Sequence * _sequen
 	layer(_layer),
 	sequence(_sequence)
 {
+	itemDataType = "TimeTrigger";
 	skipControllableNameInAddress = true;
 	sequence->addSequenceListener(this);
 }
@@ -41,9 +42,9 @@ void TimeTriggerManager::reorderItems()
 	BaseManager::reorderItems();
 }
 
-TimeTrigger * TimeTriggerManager::addItemFromClipboard()
+TimeTrigger * TimeTriggerManager::addItemFromClipboard(bool showWarning)
 {
-	TimeTrigger * t = BaseManager::addItemFromClipboard();
+	TimeTrigger * t = BaseManager::addItemFromClipboard(showWarning);
 	if (t == nullptr) return nullptr;
 	t->time->setValue(sequence->currentTime->floatValue());
 	return t;

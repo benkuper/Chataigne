@@ -19,6 +19,8 @@ Automation::Automation(AutomationRecorder * _recorder) :
 	showUIInEditor(false),
 	positionMax(1)
 {
+	itemDataType = "AutomationKey";
+
 	position = addFloatParameter("Position", "The current position in the automation. Used for automatic retrieve value and feedback.", 0, 0, positionMax);
 	position->hideInEditor = true;
 	value = addFloatParameter("Value", "The current value, depending on the position", 0, 0, 1);

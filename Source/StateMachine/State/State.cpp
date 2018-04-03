@@ -14,7 +14,7 @@ State::State() :
 	BaseItem(getTypeString(),true),
 	pm("Processors")
 { 
-	//canInspectChildContainers = false;
+	itemDataType = "State";
 
 	active = addBoolParameter("Active", "If active, the state's actions and mappings will be effective, otherwise this state won't do anything.", false);
 
@@ -53,4 +53,11 @@ void State::loadJSONDataInternal(var data)
 {
 	BaseItem::loadJSONDataInternal(data);
 	pm.loadJSONData(data.getProperty("processors", var()));
+}
+
+bool State::paste()
+{
+	Processor * p = pm.addItemFromClipboard(false);
+	if (p == nullptr) return BaseItem::paste();
+	return true;
 }

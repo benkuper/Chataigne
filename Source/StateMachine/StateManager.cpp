@@ -17,6 +17,7 @@ BaseManager<State>("States"),
 module(this),
 stm(this)
 {
+	itemDataType = "State";
 	helpID = "StateMachine";
 
 	isSelectable = true;

@@ -21,6 +21,8 @@ Module::Module(const String &name) :
 	commandTester("Command Tester", CommandContext::ACTION),
 	canHandleRouteValues(false)
 {
+	itemDataType = "Module";
+
 	canInspectChildContainers = true;
 
 	logIncomingData = addBoolParameter("Log Incoming", "Enable / Disable logging of incoming data for this module", false);

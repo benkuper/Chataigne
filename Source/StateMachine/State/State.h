@@ -37,6 +37,8 @@ public:
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
 
+	virtual bool paste() override;
+
 	virtual String getTypeString() const override { return "State"; }
 
 	class StateListener

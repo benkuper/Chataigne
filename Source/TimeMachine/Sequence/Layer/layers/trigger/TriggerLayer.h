@@ -23,6 +23,8 @@ public :
 
 	TimeTriggerManager ttm;
 
+	virtual bool paste() override;
+
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
 
