@@ -26,6 +26,8 @@ public:
 	virtual ~SequenceEditor();
 
 	Sequence * sequence;
+	WeakReference<Inspectable> sequenceRef;
+
 	//ui
 	Component panelContainer;
 	Component timelineContainer;

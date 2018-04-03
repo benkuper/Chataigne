@@ -12,8 +12,9 @@
 
 SequenceEditor::SequenceEditor(Sequence * _sequence) :
 	sequence(_sequence),
-navigationUI(_sequence),
-panelManagerUI(_sequence->layerManager),
+	sequenceRef(_sequence),
+	navigationUI(_sequence),
+	panelManagerUI(_sequence->layerManager),
 	timelineManagerUI(_sequence->layerManager),
 	transportUI(new SequenceTransportUI(_sequence)),
 	panelWidth(200)
@@ -34,10 +35,12 @@ panelManagerUI(_sequence->layerManager),
 	timelineManagerUI.viewport.addMouseListener(this, false);
 	addMouseListener(this, true);
 
+	sequence->isBeingEdited = true;
 }
 
 SequenceEditor::~SequenceEditor()
 {
+	if (!sequenceRef.wasObjectDeleted()) sequence->isBeingEdited = false; 
 }
 
 void SequenceEditor::paint(Graphics &)

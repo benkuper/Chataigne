@@ -17,7 +17,8 @@
 Sequence::Sequence() :
 	BaseItem("Sequence",true),
 	masterAudioModule(nullptr),
-	hiResAudioTime(0)
+	hiResAudioTime(0),
+	isBeingEdited(false)
 {
 	itemDataType = "Sequence";
 
@@ -76,6 +77,8 @@ Sequence::~Sequence()
 	stopTimer();
 	stopTrigger->trigger();
 	setMasterAudioModule(nullptr);
+
+	if (Engine::mainEngine != nullptr) Engine::mainEngine->removeEngineListener(this);
 }
 
 void Sequence::setCurrentTime(float time, bool forceOverPlaying)
@@ -127,6 +130,7 @@ var Sequence::getJSONData()
 	if(!layerData.isVoid()) data.getDynamicObject()->setProperty("layerManager", layerData );
 	var cueData = cueManager->getJSONData();
 	if(!cueData.isVoid()) data.getDynamicObject()->setProperty("cueManager", cueData);
+	if(isBeingEdited) data.getDynamicObject()->setProperty("editing", true);
 	return data;
 }
 
@@ -135,11 +139,13 @@ void Sequence::loadJSONDataInternal(var data)
 	BaseItem::loadJSONDataInternal(data);
 	layerManager->loadJSONData(data.getProperty("layerManager", var()));
 	cueManager->loadJSONData(data.getProperty("cueManager", var()));
+	isBeingEdited = data.getProperty("editing", false);
 
-	if (startAtLoad->boolValue())
+	if (Engine::mainEngine->isLoadingFile)
 	{
-		playTrigger->trigger();
+		Engine::mainEngine->addEngineListener(this);
 	}
+	
 }
 
 void Sequence::onContainerParameterChangedInternal(Parameter * p)
@@ -247,6 +253,17 @@ void Sequence::hiResTimerCallback()
 			setCurrentTime(0);
 		}
 		else finishTrigger->trigger();
+	}
+}
+
+void Sequence::endLoadFile()
+{
+	Engine::mainEngine->removeEngineListener(this);
+	if (isBeingEdited) selectThis();
+
+	if (startAtLoad->boolValue())
+	{
+		playTrigger->trigger();
 	}
 }
 

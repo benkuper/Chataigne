@@ -21,7 +21,8 @@ class TimeCueManager;
 class Sequence :
 	public BaseItem,
 	public HighResolutionTimer,
-	public AudioIODeviceCallback
+	public AudioIODeviceCallback,
+	public EngineListener
 {
 public:
 	Sequence();
@@ -60,6 +61,8 @@ public:
 	const float minViewTime = 1; //in seconds
 	FloatParameter * viewStartTime;
 	FloatParameter * viewEndTime;
+	bool isBeingEdited;
+
 
 	void setCurrentTime(float time, bool forceOverPlaying = true);
 
@@ -82,6 +85,8 @@ public:
 	void onContainerTriggerTriggered(Trigger *) override;
 
 	virtual void hiResTimerCallback() override;
+
+	virtual void endLoadFile() override;
 
 	class SequenceListener
 	{
