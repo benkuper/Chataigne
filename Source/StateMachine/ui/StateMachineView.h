@@ -34,6 +34,7 @@ public:
 	
 
 	void mouseMove(const MouseEvent &e) override;
+	void mouseDoubleClick(const MouseEvent &e) override;
 
 	void paint(Graphics &g) override;
 	void resized() override;

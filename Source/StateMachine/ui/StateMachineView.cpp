@@ -45,6 +45,11 @@ void StateMachineView::mouseMove(const MouseEvent & e)
 	if(transitionCreationMode) repaint();
 }
 
+void StateMachineView::mouseDoubleClick(const MouseEvent & e)
+{
+	manager->addItem(getViewPos(e.getMouseDownPosition()).toFloat());
+}
+
 void StateMachineView::paint(Graphics & g)
 {
 	BaseManagerViewUI::paint(g);

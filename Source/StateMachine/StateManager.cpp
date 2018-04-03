@@ -20,7 +20,6 @@ stm(this)
 	itemDataType = "State";
 	helpID = "StateMachine";
 
-	isSelectable = true;
 	addChildControllableContainer(&stm);
 	stm.hideInEditor = true;
 	stm.addBaseManagerListener(this);
