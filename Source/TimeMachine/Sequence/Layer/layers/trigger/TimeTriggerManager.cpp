@@ -46,7 +46,7 @@ TimeTrigger * TimeTriggerManager::addItemFromClipboard(bool showWarning)
 {
 	TimeTrigger * t = BaseManager::addItemFromClipboard(showWarning);
 	if (t == nullptr) return nullptr;
-	t->time->setValue(sequence->currentTime->floatValue());
+	if(sequence->currentTime->floatValue() > 0) t->time->setValue(sequence->currentTime->floatValue()); //only set time if time is > 0, most copy happen when sequence has not been launched
 	return t;
 }
 

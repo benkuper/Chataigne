@@ -18,9 +18,10 @@
 class TriggerLayerTimeline;
 
 class TimeTriggerManagerUI :
-	public BaseManagerUI<TimeTriggerManager,TimeTrigger,TimeTriggerUI>,
+	public BaseManagerUI<TimeTriggerManager, TimeTrigger, TimeTriggerUI>,
 	public TimeTriggerUI::TimeTriggerUIListener,
-	public InspectableSelectionManager::Listener
+	public InspectableSelectionManager::Listener,
+	public InspectableSelector::SelectorListener
 {
 public:
 	TimeTriggerManagerUI(TriggerLayerTimeline * timeline, TimeTriggerManager * manager);
@@ -36,7 +37,6 @@ public:
 
 	void mouseDown(const MouseEvent &e) override;
 	void mouseDoubleClick(const MouseEvent &e) override;
-	bool keyPressed(const KeyPress &e) override;
 
 	void addItemFromMenu(bool, Point<int> mouseDownPos) override;
 	void addItemUIInternal(TimeTriggerUI * ttui) override;
@@ -46,6 +46,7 @@ public:
 	void timeTriggerTimeChanged(TimeTriggerUI * ttui) override;
 
 
+	void selectionEnded(Array<Component *> selectedComponents) override;
 	void inspectablesSelectionChanged() override;
 };
 

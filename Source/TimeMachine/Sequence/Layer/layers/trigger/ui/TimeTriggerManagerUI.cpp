@@ -33,6 +33,7 @@ TimeTriggerManagerUI::TimeTriggerManagerUI(TriggerLayerTimeline * _timeline, Tim
 TimeTriggerManagerUI::~TimeTriggerManagerUI()
 {
 	manager->selectionManager->removeSelectionListener(this);
+	if (InspectableSelector::getInstanceWithoutCreating()) InspectableSelector::getInstance()->removeSelectorListener(this);
 }
 
 void TimeTriggerManagerUI::resized()
@@ -65,6 +66,7 @@ void TimeTriggerManagerUI::mouseDown(const MouseEvent & e)
 
 	if (e.eventComponent == this)
 	{
+
 		if (e.mods.isLeftButtonDown() && e.mods.isAltDown())
 		{
 			float time = timeline->getTimeForX(getMouseXYRelative().x);
@@ -85,7 +87,11 @@ void TimeTriggerManagerUI::mouseDown(const MouseEvent & e)
 				transformer = nullptr;
 			}
 
-			if (InspectableSelector::getInstance()) InspectableSelector::getInstance()->startSelection(this, selectables, inspectables, manager->selectionManager, !e.mods.isCommandDown());
+			if (InspectableSelector::getInstance())
+			{
+				InspectableSelector::getInstance()->startSelection(this, selectables, inspectables, manager->selectionManager, !e.mods.isCommandDown());
+				InspectableSelector::getInstance()->addSelectorListener(this);
+			}
 		}
 	}
 
@@ -97,11 +103,6 @@ void TimeTriggerManagerUI::mouseDoubleClick(const MouseEvent & e)
 	manager->addTriggerAt(time, getMouseXYRelative().y*1.f / getHeight());
 }
 
-bool TimeTriggerManagerUI::keyPressed(const KeyPress & e)
-{
-	BaseManagerUI::keyPressed(e);
-	return false;
-}
 
 
 void TimeTriggerManagerUI::addItemFromMenu(bool isFromAddButton, Point<int> mouseDownPos)
@@ -139,6 +140,12 @@ void TimeTriggerManagerUI::timeTriggerDragged(TimeTriggerUI * ttui, const MouseE
 void TimeTriggerManagerUI::timeTriggerTimeChanged(TimeTriggerUI * ttui)
 {
 	placeTimeTriggerUI(ttui);
+}
+
+void TimeTriggerManagerUI::selectionEnded(Array<Component*> selectedComponents)
+{
+	if(InspectableSelector::getInstanceWithoutCreating()) InspectableSelector::getInstance()->removeSelectorListener(this);
+	if (selectedComponents.size() == 0) timeline->item->selectThis();
 }
 
 void TimeTriggerManagerUI::inspectablesSelectionChanged()

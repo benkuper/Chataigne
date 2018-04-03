@@ -29,6 +29,7 @@ public:
 
 	virtual void updateContent() {} // to be overriden
 	virtual void paintOverChildren(Graphics & g) override;
+	virtual void mouseDown(const MouseEvent &e) override;
 
 	void controllableFeedbackUpdateInternal(Controllable * c) override;
 

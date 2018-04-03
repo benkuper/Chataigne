@@ -16,6 +16,8 @@ SequenceLayerTimeline::SequenceLayerTimeline(SequenceLayer * layer) :
 {
 	item->sequence->addAsyncContainerListener(this);
 	setSize(100, item->uiHeight->intValue());
+
+	setInterceptsMouseClicks(true, true);
 }
 
 SequenceLayerTimeline::~SequenceLayerTimeline()
@@ -53,6 +55,14 @@ void SequenceLayerTimeline::paintOverChildren(Graphics & g)
 	g.drawRoundedRectangle(getLocalBounds().reduced(1).toFloat(), 2, 2);
 
 	BaseItemMinimalUI::paintOverChildren(g);
+}
+
+void SequenceLayerTimeline::mouseDown(const MouseEvent &e)
+{
+	if (e.eventComponent->getParentComponent() == this)
+	{
+		item->selectThis();
+	}
 }
 
 void SequenceLayerTimeline::controllableFeedbackUpdateInternal(Controllable * c)
