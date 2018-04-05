@@ -168,13 +168,25 @@ void OSCModule::setupZeroConf()
 {
 	if (!hasInput) return;
 
-	if (servus != nullptr)
+	String nameToAdvertise;
+	while (nameToAdvertise != niceName)
 	{
-		servus->withdraw();
-		servus = nullptr;
+		nameToAdvertise = niceName;
+
+		if (servus != nullptr)
+		{
+			servus->withdraw();
+			servus = nullptr;
+		}
+		servus = new Servus("_osc._udp");
+		servus->announce(localPort->intValue(), ("Chataigne - " + nameToAdvertise).toStdString());
+		if (nameToAdvertise != niceName)
+		{
+			DBG("Name change during advertise, readvertising");
+		}
 	}
-	servus = new Servus("_osc._udp");
-	servus->announce(localPort->intValue(), ("Chataigne - " + niceName).toStdString());
+	
+	DBG("SERVUS THREAD END");
 }
 
 var OSCModule::sendOSCFromScript(const var::NativeFunctionArgs & a)
@@ -273,8 +285,7 @@ void OSCModule::onContainerParameterChangedInternal(Parameter * p)
 
 void OSCModule::onContainerNiceNameChanged()
 {
-	waitForThreadToExit(1000);
-	startThread();
+	if(!isThreadRunning()) startThread();
 }
 
 void OSCModule::onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c)
