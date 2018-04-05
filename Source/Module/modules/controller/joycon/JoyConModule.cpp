@@ -30,6 +30,13 @@ JoyConModule::JoyConModule() :
 	valuesCC.addChildControllableContainer(&rightValues);
 
 
+	leftAccelX = leftValues.addFloatParameter("Left Accel X", "", 0, -1, 1);
+	leftAccelY = leftValues.addFloatParameter("Left Accel Y", "", 0, -1, 1);
+	leftAccelZ = leftValues.addFloatParameter("Left Accel Z", "", 0, -1, 1);
+	leftAccelX->autoAdaptRange = true;
+	leftAccelY->autoAdaptRange = true;
+	leftAccelZ->autoAdaptRange = true;
+
 	leftRoll = leftValues.addFloatParameter("Left Roll", "", 0, -1, 1);
 	leftPitch = leftValues.addFloatParameter("Left Pitch", "", 0, -1, 1);
 	leftAxis = leftValues.addPoint2DParameter("Left Axis", "");
@@ -45,6 +52,13 @@ JoyConModule::JoyConModule() :
 	leftSR = leftValues.addBoolParameter("Left SR", "", false);
 	minus = leftValues.addBoolParameter("-", "", false);
 	capture = leftValues.addBoolParameter("Capture", "", false);
+
+	rightAccelX = leftValues.addFloatParameter("Right Accel X", "", 0, -1, 1);
+	rightAccelY = leftValues.addFloatParameter("Right Accel Y", "", 0, -1, 1);
+	rightAccelZ = leftValues.addFloatParameter("Right Accel Z", "", 0, -1, 1);
+	rightAccelX->autoAdaptRange = true;
+	rightAccelY->autoAdaptRange = true;
+	rightAccelZ->autoAdaptRange = true;
 
 	rightRoll = rightValues.addFloatParameter("Right Roll", "", 0, -1, 1);
 	rightPitch = rightValues.addFloatParameter("Right Pitch", "", 0, -1, 1);
@@ -92,6 +106,11 @@ void JoyConModule::updateController(Joytime::Controller * controller)
 		lStick->setValue(controller->buttons.lStick);
 		zl->setValue(controller->buttons.zl);
 		minus->setValue(controller->buttons.minus);
+
+		leftAccelX->setValue(controller->accelerometer.x);
+		leftAccelY->setValue(controller->accelerometer.y);
+		leftAccelZ->setValue(controller->accelerometer.z);
+
 		float tx = 0;
 		float ty = 0;
 		if (abs(controller->leftStick.x) > controller->leftStickCalibration.deadZone)
@@ -122,6 +141,10 @@ void JoyConModule::updateController(Joytime::Controller * controller)
 		plus->setValue(controller->buttons.plus);
 		home->setValue(controller->buttons.home);
 
+		rightAccelX->setValue(controller->accelerometer.x);
+		rightAccelX->setValue(controller->accelerometer.y);
+		rightAccelX->setValue(controller->accelerometer.z);
+
 		float tx = 0;
 		float ty = 0;
 		if (abs(controller->rightStick.x) > controller->rightStickCalibration.deadZone)
@@ -138,6 +161,8 @@ void JoyConModule::updateController(Joytime::Controller * controller)
 
 		rightAxis->setPoint(tx, ty);
 	}
+
+
 
 	processIMU(controller);
 }

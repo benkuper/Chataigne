@@ -34,6 +34,9 @@ public:
 	Trigger * resetIMU;
 
 	//Left controller
+	FloatParameter * leftAccelX;
+	FloatParameter * leftAccelY;
+	FloatParameter * leftAccelZ;
 	FloatParameter * leftRoll;
 	FloatParameter * leftPitch;
 	Point2DParameter * leftAxis;
@@ -50,6 +53,9 @@ public:
 	BoolParameter *  minus;
 
 	//Right controller
+	FloatParameter * rightAccelX;
+	FloatParameter * rightAccelY;
+	FloatParameter * rightAccelZ;
 	FloatParameter * rightRoll;
 	FloatParameter * rightPitch;
 	Point2DParameter * rightAxis;
