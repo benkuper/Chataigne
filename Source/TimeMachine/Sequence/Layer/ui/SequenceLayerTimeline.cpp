@@ -59,7 +59,7 @@ void SequenceLayerTimeline::paintOverChildren(Graphics & g)
 
 void SequenceLayerTimeline::mouseDown(const MouseEvent &e)
 {
-	if (e.eventComponent->getParentComponent() == this)
+	if (e.mods.isLeftButtonDown() && e.eventComponent->getParentComponent() == this)
 	{
 		item->selectThis();
 	}

@@ -66,35 +66,36 @@ void TimeTriggerManagerUI::mouseDown(const MouseEvent & e)
 
 	if (e.eventComponent == this)
 	{
-
-		if (e.mods.isLeftButtonDown() && e.mods.isAltDown())
+		if (e.mods.isLeftButtonDown())
 		{
-			float time = timeline->getTimeForX(getMouseXYRelative().x);
-			manager->addTriggerAt(time, getMouseXYRelative().y*1.f / getHeight());
-		} else
-		{
-			Array<Component *> selectables;
-			Array<Inspectable *> inspectables;
-			for (auto &i : itemsUI) if (i->isVisible())
+			if (e.mods.isAltDown())
 			{
-				selectables.add(i);
-				inspectables.add(i->inspectable);
-			}
+				float time = timeline->getTimeForX(getMouseXYRelative().x);
+				manager->addTriggerAt(time, getMouseXYRelative().y*1.f / getHeight());
+			} else
+			{
+				Array<Component *> selectables;
+				Array<Inspectable *> inspectables;
+				for (auto &i : itemsUI) if (i->isVisible())
+				{
+					selectables.add(i);
+					inspectables.add(i->inspectable);
+				}
 
-			if (transformer != nullptr)
-			{
-				removeChildComponent(transformer);
-				transformer = nullptr;
-			}
+				if (transformer != nullptr)
+				{
+					removeChildComponent(transformer);
+					transformer = nullptr;
+				}
 
-			if (InspectableSelector::getInstance())
-			{
-				InspectableSelector::getInstance()->startSelection(this, selectables, inspectables, manager->selectionManager, !e.mods.isCommandDown());
-				InspectableSelector::getInstance()->addSelectorListener(this);
+				if (InspectableSelector::getInstance())
+				{
+					InspectableSelector::getInstance()->startSelection(this, selectables, inspectables, manager->selectionManager, !e.mods.isCommandDown());
+					InspectableSelector::getInstance()->addSelectorListener(this);
+				}
 			}
 		}
 	}
-
 }
 
 void TimeTriggerManagerUI::mouseDoubleClick(const MouseEvent & e)
