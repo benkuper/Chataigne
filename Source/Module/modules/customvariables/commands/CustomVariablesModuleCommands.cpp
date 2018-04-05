@@ -15,6 +15,7 @@ CVCommand::CVCommand(CustomVariablesModule * _module, CommandContext context, va
 	target(nullptr),
 	targetPreset(nullptr),
 	targetPreset2(nullptr),
+	valueOperator(nullptr),
 	value(nullptr)
 {
 	type = (Type)(int)params.getProperty("type", 0);
@@ -25,6 +26,10 @@ CVCommand::CVCommand(CustomVariablesModule * _module, CommandContext context, va
 		target = addTargetParameter("Target Value", "The value to target for this command", CVGroupManager::getInstance());
 		target->customGetTargetFunc = &CVGroupManager::showMenuAndGetVariable;
 		target->defaultParentLabelLevel = 2;
+		
+		valueOperator = addEnumParameter("Operator", "The operator to apply. If you simply want to set the value, leave at the = option.");
+		valueOperator->addOption("=", EQUAL)->addOption("+", ADD)->addOption("-", SUBTRACT)->addOption("x", MULTIPLY)->addOption("/", DIVIDE);
+		valueOperator->hideInEditor = true;
 
 	} else if (type == SET_2DTARGET)
 	{
@@ -80,7 +85,13 @@ void CVCommand::onContainerParameterChanged(Parameter * p)
 	{
 		if (value != nullptr) removeControllable(value);
 		value = ControllableFactory::createParameterFrom(target->target);
-		if (value != nullptr) addParameter(value);
+		if (value != nullptr)
+		{
+			valueOperator->hideInEditor = value->type != Controllable::FLOAT && value->type != Controllable::INT;
+			
+			value->setNiceName("Value");
+			addParameter(value);
+		}
 
 	} else if (p == targetPreset || p == targetPreset2)
 	{
@@ -102,7 +113,41 @@ void CVCommand::trigger()
 		if (target->target != nullptr && value != nullptr)
 		{
 			Parameter * p = static_cast<Parameter *>(target->target.get());
-			if (p != nullptr) p->setValue(value->value);
+			if (p != nullptr)
+			{
+				if (value->type != Controllable::FLOAT && value->type != Controllable::INT)
+				{
+					p->setValue(value->value);
+				} else
+				{
+
+					Operator o = valueOperator->getValueDataAsEnum<Operator>();
+
+					switch (o)
+					{
+					case EQUAL:
+						p->setValue(value->value);
+						break;
+
+					case ADD:
+						p->setValue(p->floatValue() + value->floatValue());
+						break;
+
+					case SUBTRACT:
+						p->setValue(p->floatValue() - value->floatValue());
+						break;
+
+					case MULTIPLY:
+						p->setValue(p->floatValue() * value->floatValue());
+						break;
+
+					case DIVIDE:
+						p->setValue(p->floatValue() / value->floatValue());
+						break;
+					}
+				}
+				
+			}
 		}
 	}
 	break;
