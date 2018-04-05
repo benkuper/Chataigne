@@ -39,6 +39,14 @@ void UserOSCCommandModel::loadJSONDataInternal(var data)
 	arguments.loadJSONData(data.getProperty("arguments", var()));
 }
 
+void UserOSCCommandModel::onContainerParameterChangedInternal(Parameter * p)
+{
+	if (p == addressParam || p == addressIsEditable)
+	{
+		modelListeners.call(&ModelListener::commandModelAddressChanged, this);
+	}
+}
+
 
 
 //MODEL ARGUMENT

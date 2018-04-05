@@ -67,11 +67,21 @@ public:
 
 	OSCCommandModelArgumentManager arguments;
 
-	
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
 
+	void onContainerParameterChangedInternal(Parameter * p) override;
 
+	class ModelListener
+	{
+	public:
+		virtual ~ModelListener() {}
+		virtual void commandModelAddressChanged(UserOSCCommandModel *) {}
+	};
+
+	ListenerList<ModelListener> modelListeners;
+	void addCommandModelListener(ModelListener* newListener) { modelListeners.add(newListener); }
+	void removeCommandModelListener(ModelListener* listener) { modelListeners.remove(listener); }
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UserOSCCommandModel)
 };
