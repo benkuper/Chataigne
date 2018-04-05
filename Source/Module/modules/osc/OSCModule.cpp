@@ -64,8 +64,7 @@ void OSCModule::setupReceiver()
 	if (result)
 	{
 		NLOG(niceName, "Now receiving on port : " + localPort->stringValue());
-		waitForThreadToExit(1000);
-		startThread();
+		if(!isThreadRunning()) startThread();
 	} else
 	{
 		NLOGERROR(niceName, "Error binding port " + localPort->stringValue());
@@ -169,9 +168,11 @@ void OSCModule::setupZeroConf()
 	if (!hasInput) return;
 
 	String nameToAdvertise;
-	while (nameToAdvertise != niceName)
+	int portToAdvertise = 0;
+	while (nameToAdvertise != niceName || portToAdvertise != localPort->intValue())
 	{
 		nameToAdvertise = niceName;
+		portToAdvertise = localPort->intValue();
 
 		if (servus != nullptr)
 		{
@@ -179,14 +180,14 @@ void OSCModule::setupZeroConf()
 			servus = nullptr;
 		}
 		servus = new Servus("_osc._udp");
-		servus->announce(localPort->intValue(), ("Chataigne - " + nameToAdvertise).toStdString());
-		if (nameToAdvertise != niceName)
+		servus->announce(portToAdvertise, ("Chataigne - " + nameToAdvertise).toStdString());
+		if (nameToAdvertise != niceName || localPort->intValue() != portToAdvertise)
 		{
-			DBG("Name change during advertise, readvertising");
+			DBG("Name or port changed during advertise, readvertising");
 		}
 	}
 	
-	DBG("SERVUS THREAD END");
+	NLOG(niceName,"Zeroconf service created : " << nameToAdvertise << ":" << portToAdvertise);
 }
 
 var OSCModule::sendOSCFromScript(const var::NativeFunctionArgs & a)
