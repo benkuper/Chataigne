@@ -14,6 +14,7 @@ ModuleChooserUI::ModuleChooserUI() :
 	filterModuleFunc(nullptr)
 {
 	ModuleManager::getInstance()->addAsyncManagerListener(this);
+	ModuleManager::getInstance()->addAsyncContainerListener(this);
 	addListener(this);
 
 	buildModuleBox();
@@ -22,6 +23,7 @@ ModuleChooserUI::ModuleChooserUI() :
 ModuleChooserUI::~ModuleChooserUI()
 {
 	ModuleManager::getInstance()->removeAsyncManagerListener(this);
+	ModuleManager::getInstance()->removeAsyncContainerListener(this);
 }
 
 
@@ -63,4 +65,9 @@ void ModuleChooserUI::newMessage(const ModuleManager::ManagerEvent &)
 {
 	//Rebuild module for any type of manager event
 	buildModuleBox();
+}
+
+void ModuleChooserUI::newMessage(const ContainerAsyncEvent & e)
+{
+	if (e.type == ContainerAsyncEvent::ChildStructureChanged) buildModuleBox();
 }

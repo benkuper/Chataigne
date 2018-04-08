@@ -17,7 +17,7 @@
 
 class AutomationUI :
 	public BaseManagerUI<Automation,AutomationKey,AutomationKeyUI>,
-	public ControllableContainer::ContainerAsyncListener,
+	public ContainerAsyncListener,
 	public InspectableSelectionManager::Listener
 {
 public:

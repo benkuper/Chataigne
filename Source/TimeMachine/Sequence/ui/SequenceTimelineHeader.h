@@ -26,7 +26,7 @@ public:
 
 class SequenceTimelineHeader :
 	public Component,
-	public ControllableContainer::ContainerAsyncListener
+	public ContainerAsyncListener
 {
 public:
 	SequenceTimelineHeader(Sequence * _sequence);

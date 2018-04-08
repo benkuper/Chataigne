@@ -17,6 +17,7 @@
 
 class ModuleChooserUI :
 	public ModuleManager::AsyncListener,
+	public ContainerAsyncListener,
 	public ComboBox,
 	public ComboBox::Listener
 {
@@ -33,6 +34,7 @@ public:
 	void comboBoxChanged(ComboBox *) override;
 
 	void newMessage(const ModuleManager::ManagerEvent &e) override;
+	void newMessage(const ContainerAsyncEvent &e) override;
 
 	class ChooserListener
 	{

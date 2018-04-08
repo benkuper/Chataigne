@@ -16,7 +16,7 @@
 
 class TimeColorManagerUI :
 	public BaseManagerUI<TimeColorManager, TimeColor, TimeColorUI>,
-	public ControllableContainer::ContainerAsyncListener,
+	public ContainerAsyncListener,
 	public TimeColorManager::TimeColorManagerListener
 
 {

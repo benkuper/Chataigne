@@ -15,7 +15,7 @@
 
 class EasingUI :
 	public InspectableContentComponent,
-	public ControllableContainer::ContainerAsyncListener
+	public ContainerAsyncListener
 {
 public:
 	EasingUI(Easing * e);

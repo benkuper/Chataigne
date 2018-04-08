@@ -26,7 +26,7 @@ public:
 
 class SequenceTimelineSeeker :
 	public Component,
-	public ControllableContainer::ContainerAsyncListener
+	public ContainerAsyncListener
 {
 public:
 	SequenceTimelineSeeker(Sequence * _sequence);

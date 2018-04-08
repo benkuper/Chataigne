@@ -18,7 +18,7 @@
 class ModuleRouter :
 	public BaseItem,
 	public Inspectable::InspectableListener,
-	public ControllableContainer::ContainerAsyncListener
+	public ContainerAsyncListener
 {
 public:
 	ModuleRouter();
