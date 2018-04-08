@@ -82,9 +82,9 @@ void StandardConditionEditor::updateUI()
 	}
 	if (standardCondition->comparator != nullptr)
 	{
-		comparatorUI = standardCondition->comparator->createUI();
-		addChildComponent(comparatorUI);
-		comparatorUI->setVisible(!standardCondition->editorIsCollapsed);
+			comparatorUI = standardCondition->comparator->createUI();
+			addChildComponent(comparatorUI);
+			comparatorUI->setVisible(!standardCondition->editorIsCollapsed);
 	}
 
 	resized();
