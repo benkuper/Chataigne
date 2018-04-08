@@ -15,8 +15,10 @@ TimeColor::TimeColor(float _time, const Colour & _color, const String & name) :
 	BaseItem(name,false),
 	gradientIndex(-1)
 {
-	position = addFloatParameter("Time", "Time for the color", _time, 0, 3600);
-	color = new ColorParameter("Color", "Color of the item", _color);
+	position = addFloatParameter("Time", "Time for the color", 0, 0, 3600);
+	color = new ColorParameter("Color", "Color of the item", Colours::black);
+	position->setValue(_time);
+	color->setColor(_color);
 	addParameter(color);
 }
 

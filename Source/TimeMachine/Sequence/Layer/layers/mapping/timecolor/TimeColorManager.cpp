@@ -19,12 +19,17 @@ TimeColorManager::TimeColorManager(float _maxPosition) :
 	positionMax(_maxPosition)
 {
 
+	editorIsCollapsed = true;
 	skipControllableNameInAddress = true;
-
 	selectItemWhenCreated = false;
 
 	position = addFloatParameter("Position", "Position in the gradient", 0, 0, positionMax);
+	position->isSavable = false;
+	position->hideInEditor = true;
+
 	currentColor = new ColorParameter("Color", "Current color depending on time", Colours::black);
+	currentColor->isSavable = false;
+	currentColor->setControllableFeedbackOnly(true); 
 	addParameter(currentColor);
 
 	addColorAt(positionMax / 4, Colours::red);
@@ -70,6 +75,7 @@ void TimeColorManager::rebuildGradient()
 		i->gradientIndex = gradient.addColour(i->position->floatValue() / positionMax, i->color->getColor());
 	}
 
+	currentColor->setColor(getColorForPosition(position->floatValue()));
 
 	colorManagerListeners.call(&TimeColorManagerListener::gradientUpdated);
 }
@@ -133,5 +139,11 @@ void TimeColorManager::onControllableFeedbackUpdate(ControllableContainer * cc, 
 		currentColor->setColor(getColorForPosition(position->floatValue()));
 		rebuildGradient();
 	}
+}
+
+void TimeColorManager::loadJSONDataInternal(var data)
+{
+	BaseManager::loadJSONDataInternal(data);
+	rebuildGradient();
 }
 

@@ -57,6 +57,8 @@ public:
 	void onContainerParameterChanged(Parameter *) override;
 	void onControllableFeedbackUpdate(ControllableContainer * cc, Controllable * c) override;
 
+	void loadJSONDataInternal(var data) override;
+
 	class TimeColorManagerListener
 	{
 	public:
