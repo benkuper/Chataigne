@@ -37,15 +37,16 @@ OSCModule::OSCModule(const String & name, int defaultLocalPort, int defaultRemot
 	//Send
 	if (canHaveOutput)
 	{
-		sendCC = new EnablingControllableContainer("OSC Output");
-		moduleParams.addChildControllableContainer(sendCC);
 		
-		useLocal = sendCC->addBoolParameter("Local", "Send to Local IP (127.0.0.1). Allow to quickly switch between local and remote IP.", true);
-		remoteHost = sendCC->addStringParameter("Remote Host", "Remote Host to send to.", "127.0.0.1");
-		remoteHost->setEnabled(!useLocal->boolValue());
-		remotePort = sendCC->addIntParameter("Remote port", "Port on which the remote host is listening to", defaultRemotePort, 1024, 65535);
+		outputManager = new BaseManager<OSCOutput>("Outputs");
+		outputManager->setCanBeDisabled(true);
+		OSCOutput * o = outputManager->addItem(nullptr,var(),false);
+		
+		o->remotePort->defaultValue = defaultRemotePort;
+		o->remotePort->resetValue();
 
-		setupSender();
+		moduleParams.addChildControllableContainer(outputManager);
+		setupSenders();
 	}
 
 	//Script
@@ -131,24 +132,17 @@ void OSCModule::processMessage(const OSCMessage & msg)
 }
 
 
-void OSCModule::setupSender()
+void OSCModule::setupSenders()
 {
-	if (sendCC == nullptr) return;
-
-	sender.disconnect();
-	if (!sendCC->enabled->boolValue()) return;
-
-	String targetHost = useLocal->boolValue() ? "127.0.0.1" : remoteHost->stringValue();
-	sender.connect(targetHost, remotePort->intValue());
-	NLOG(niceName, "Now sending to " + remoteHost->stringValue()+":"+remotePort->stringValue());
+	for (auto &o : outputManager->items) o->setupSender();
 }
 
 void OSCModule::sendOSC(const OSCMessage & msg)
 {
 	if (!enabled->boolValue()) return;
-	if (sendCC == nullptr) return;
+	if (outputManager == nullptr) return;
 
-	if (!sendCC->enabled->boolValue()) return;
+	if (!outputManager->enabled->boolValue()) return;
 
 	if (logOutgoingData->boolValue())
 	{
@@ -160,7 +154,7 @@ void OSCModule::sendOSC(const OSCMessage & msg)
 	}
 
 	outActivityTrigger->trigger();
-	sender.send(msg);
+	for (auto &o : outputManager->items) o->sendOSC(msg);
 }
 
 void OSCModule::setupZeroConf()
@@ -246,10 +240,10 @@ var OSCModule::getJSONData()
 		if (!inputData.isVoid()) data.getDynamicObject()->setProperty("input", inputData);
 	}
 
-	if (sendCC != nullptr)
+	if (outputManager != nullptr)
 	{
-		var outputData = sendCC->getJSONData();
-		if (!outputData.isVoid()) data.getDynamicObject()->setProperty("output", outputData);
+		var outputsData = outputManager->getJSONData();
+		if (!outputsData.isVoid()) data.getDynamicObject()->setProperty("outputs", outputsData);
 	}
 
 	return data;
@@ -259,7 +253,7 @@ void OSCModule::loadJSONDataInternal(var data)
 {
 	Module::loadJSONDataInternal(data);
 	if (receiveCC != nullptr) receiveCC->loadJSONData(data.getProperty("input", var()));
-	if (sendCC != nullptr) sendCC->loadJSONData(data.getProperty("output", var()));
+	if (outputManager != nullptr) outputManager->loadJSONData(data.getProperty("outputs", var()));
 }
 
 
@@ -293,33 +287,23 @@ void OSCModule::onControllableFeedbackUpdateInternal(ControllableContainer * cc,
 {
 	Module::onControllableFeedbackUpdateInternal(cc, c);
 
-	if (receiveCC != nullptr && c == receiveCC->enabled)
+	if (outputManager != nullptr && c == outputManager->enabled)
 	{
 		bool rv = receiveCC->enabled->boolValue();
-		bool sv = sendCC->enabled->boolValue();
+		bool sv = outputManager->enabled->boolValue();
+		for(auto &o : outputManager->items) o->setForceDisabled(!sv);
+		setupIOConfiguration(rv, sv);
+
+	}else if (receiveCC != nullptr && c == receiveCC->enabled)
+	{
+		bool rv = receiveCC->enabled->boolValue();
+		bool sv = outputManager->enabled->boolValue();
 		setupIOConfiguration(rv,sv);
 		localPort->setEnabled(rv);
 		setupReceiver();
 
-	} else if (sendCC != nullptr && c == sendCC->enabled)
-	{
-		bool rv = receiveCC->enabled->boolValue();
-		bool sv = sendCC->enabled->boolValue();
-		setupIOConfiguration(rv, sv);
-		remoteHost->setEnabled(sv);
-		remotePort->setEnabled(sv);
-		useLocal->setEnabled(sv);
-		setupSender();
-
 	} else if (c == localPort) setupReceiver();
-	else if (c == remoteHost || c == remotePort || c == useLocal)
-	{
-		setupSender();
-		if (c == useLocal) remoteHost->setEnabled(!useLocal->boolValue());
-	}
 }
-
-
 
 void OSCModule::oscMessageReceived(const OSCMessage & message)
 {
@@ -371,4 +355,62 @@ OSCModule::OSCRouteParams::OSCRouteParams(Module * sourceModule, Controllable * 
 	if (!tAddress.startsWithChar('/')) tAddress = "/" + tAddress;
 	
 	address = addStringParameter("Address", "Route Address", tAddress);
+}
+
+
+
+
+
+
+
+///// OSC OUTPUT
+
+OSCOutput::OSCOutput() :
+	 BaseItem("Output"),
+	forceDisabled(false)
+{
+	isSelectable = false;
+
+	useLocal = addBoolParameter("Local", "Send to Local IP (127.0.0.1). Allow to quickly switch between local and remote IP.", true);
+	remoteHost = addStringParameter("Remote Host", "Remote Host to send to.", "127.0.0.1");
+	remoteHost->setEnabled(!useLocal->boolValue());
+	remotePort = addIntParameter("Remote port", "Port on which the remote host is listening to", 9000, 1024, 65535);
+
+}
+
+OSCOutput::~OSCOutput()
+{
+}
+
+void OSCOutput::setForceDisabled(bool value)
+{
+	if (forceDisabled == value) return;
+	forceDisabled = value;
+	setupSender();
+}
+
+void OSCOutput::onContainerParameterChangedInternal(Parameter * p)
+{
+
+	if (p == remoteHost || p == remotePort || p == useLocal)
+	{
+		setupSender();
+		if (p == useLocal) remoteHost->setEnabled(!useLocal->boolValue());
+	}
+}
+
+void OSCOutput::setupSender()
+{
+	sender.disconnect();
+	if (!enabled->boolValue() || forceDisabled) return;
+
+	String targetHost = useLocal->boolValue() ? "127.0.0.1" : remoteHost->stringValue();
+	sender.connect(targetHost, remotePort->intValue());
+	NLOG(niceName, "Now sending to " + remoteHost->stringValue() + ":" + remotePort->stringValue());
+}
+
+void OSCOutput::sendOSC(const OSCMessage & m)
+{
+	if (!enabled->boolValue() || forceDisabled) return;
+	sender.send(m);
 }

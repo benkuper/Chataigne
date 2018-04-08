@@ -15,8 +15,10 @@ UserOSCCommand::UserOSCCommand(CustomOSCModule * _module, CommandContext context
 	OSCCommand(_module, context, params),
 	cModule(_module)
 {
+
 	model = cModule->getModelForName(params.getProperty("model", ""));
-	jassert(model != nullptr);
+	jassert(model != nullptr); 
+	modelRef = model;
 
 	address->setValue(model->addressParam->stringValue());
 	address->isEditable = model->addressIsEditable->boolValue();
@@ -24,14 +26,18 @@ UserOSCCommand::UserOSCCommand(CustomOSCModule * _module, CommandContext context
 
 	rebuildArgsFromModel();
 
+	model->addCommandModelListener(this);
 }
 
 UserOSCCommand::~UserOSCCommand()
 {
+	if (!modelRef.wasObjectDeleted()) model->removeCommandModelListener(this);
 }
 
 void UserOSCCommand::rebuildArgsFromModel()
 {
+	var data = getJSONData();
+
 	argumentsContainer.clear();
 
 	//TODO : SlaveParameter ?
@@ -63,8 +69,25 @@ void UserOSCCommand::rebuildArgsFromModel()
 				mappingTargetIndex++;
 			}
 		}
-		
 	}
 
 	argumentsContainer.hideInEditor = model->arguments.items.size() == 0;
+
+	loadJSONData(data);
 }
+
+void UserOSCCommand::commandModelAddressChanged(UserOSCCommandModel *)
+{
+	address->defaultValue = model->addressParam->stringValue();
+
+	if (!address->isOverriden) address->resetValue();
+
+	address->isEditable = model->addressIsEditable->boolValue();
+	address->isSavable = address->isEditable;
+}
+
+void UserOSCCommand::commandModelArgumentsChanged(UserOSCCommandModel *)
+{
+	rebuildArgsFromModel();
+}
+

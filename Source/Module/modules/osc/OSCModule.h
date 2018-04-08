@@ -15,6 +15,28 @@
 #include "servus/servus.h"
 using namespace servus;
 
+class OSCOutput :
+	public BaseItem
+{
+public:
+	OSCOutput();
+	~OSCOutput();
+
+	bool forceDisabled;
+	//SEND
+	BoolParameter * useLocal;
+	StringParameter * remoteHost;
+	IntParameter * remotePort;
+	OSCSender sender;
+
+	void setForceDisabled(bool value);
+
+	virtual void setupSender();
+	void sendOSC(const OSCMessage & m);
+
+	void onContainerParameterChangedInternal(Parameter * p) override;
+};
+
 class OSCModule :
 	public Module,
 	public OSCReceiver::Listener<OSCReceiver::RealtimeCallback>,
@@ -24,22 +46,17 @@ public:
 	OSCModule(const String &name = "OSC", int defaultLocalPort = 12000, int defaultRemotePort = 9000, bool canHaveInput = true, bool canHaveOutput = true);
 	~OSCModule() {}
 
+	
 	//RECEIVE
 	IntParameter * localPort;
 	BoolParameter * isConnected;
 	OSCReceiver receiver;
 	
-	//SEND
-	BoolParameter * useLocal;
-	StringParameter * remoteHost;
-	IntParameter * remotePort;
-	OSCSender sender;
-
 	//ZEROCONF
 	ScopedPointer<Servus> servus;
 
 	ScopedPointer<EnablingControllableContainer> receiveCC;
-	ScopedPointer<EnablingControllableContainer> sendCC;
+	ScopedPointer<BaseManager<OSCOutput>> outputManager;
 
 	//Script
 	const Identifier oscEventId = "oscEvent";
@@ -55,7 +72,7 @@ public:
 	virtual void processMessageInternal(const OSCMessage &) {}
 
 	//SEND
-	virtual void setupSender();
+	virtual void setupSenders();
 	void sendOSC(const OSCMessage &msg);
 
 	//ZEROCONF

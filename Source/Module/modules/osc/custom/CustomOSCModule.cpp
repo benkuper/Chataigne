@@ -218,16 +218,6 @@ void CustomOSCModule::processMessageInternal(const OSCMessage & msg)
 }
 
 
-void CustomOSCModule::setupReceiver()
-{
-	OSCModule::setupReceiver();
-}
-
-void CustomOSCModule::setupSender()
-{
-	OSCModule::setupSender();
-}
-
 var CustomOSCModule::getJSONData()
 {
 	var data = OSCModule::getJSONData();

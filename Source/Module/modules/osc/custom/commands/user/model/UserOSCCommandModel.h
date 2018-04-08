@@ -56,7 +56,8 @@ public:
 };
 
 class UserOSCCommandModel :
-	public BaseItem
+	public BaseItem,
+	public OSCCommandModelArgumentManager::Listener
 {
 public:
 	UserOSCCommandModel();
@@ -67,11 +68,26 @@ public:
 
 	OSCCommandModelArgumentManager arguments;
 
-	
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
 
+	void onContainerParameterChangedInternal(Parameter * p) override;
+	void onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c) override;
+	void itemAdded(OSCCommandModelArgument *) override;
+	void itemRemoved(OSCCommandModelArgument *) override;
+	void itemsReordered() override;
 
+	class ModelListener
+	{
+	public:
+		virtual ~ModelListener() {}
+		virtual void commandModelAddressChanged(UserOSCCommandModel *) {}
+		virtual void commandModelArgumentsChanged(UserOSCCommandModel *) {}
+	};
+
+	ListenerList<ModelListener> modelListeners;
+	void addCommandModelListener(ModelListener* newListener) { modelListeners.add(newListener); }
+	void removeCommandModelListener(ModelListener* listener) { modelListeners.remove(listener); }
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UserOSCCommandModel)
 };

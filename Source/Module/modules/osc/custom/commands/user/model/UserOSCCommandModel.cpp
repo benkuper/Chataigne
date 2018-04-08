@@ -17,13 +17,16 @@
 UserOSCCommandModel::UserOSCCommandModel() :
 	BaseItem("New Model",false)
 {
+	itemDataType = "OSCModel";
 	addressParam = addStringParameter("OSC Address", "OSC Adress that will sent", "/example");
 	addressIsEditable = addBoolParameter("Editable", "If check, the address will be editable in each command created", false);
 	addChildControllableContainer(&arguments);
+	arguments.addBaseManagerListener(this);
 }
 
 UserOSCCommandModel::~UserOSCCommandModel()
 {
+	arguments.removeBaseManagerListener(this);
 }
 
 var UserOSCCommandModel::getJSONData()
@@ -37,6 +40,34 @@ void UserOSCCommandModel::loadJSONDataInternal(var data)
 {
 	DBG("Load jsondata internal " << niceName);
 	arguments.loadJSONData(data.getProperty("arguments", var()));
+}
+
+void UserOSCCommandModel::onContainerParameterChangedInternal(Parameter * p)
+{
+	if (p == addressParam || p == addressIsEditable)
+	{
+		modelListeners.call(&ModelListener::commandModelAddressChanged, this);
+	}
+}
+
+void UserOSCCommandModel::onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c)
+{
+	if (cc == &arguments) modelListeners.call(&ModelListener::commandModelArgumentsChanged, this);
+}
+
+void UserOSCCommandModel::itemAdded(OSCCommandModelArgument *)
+{
+	modelListeners.call(&ModelListener::commandModelArgumentsChanged, this);
+}
+
+void UserOSCCommandModel::itemRemoved(OSCCommandModelArgument *)
+{
+	modelListeners.call(&ModelListener::commandModelArgumentsChanged, this);
+}
+
+void UserOSCCommandModel::itemsReordered()
+{
+	modelListeners.call(&ModelListener::commandModelArgumentsChanged, this);
 }
 
 

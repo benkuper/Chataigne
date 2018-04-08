@@ -31,9 +31,6 @@ public:
 
 	void processMessageInternal(const OSCMessage &msg) override;
 
-	void setupReceiver() override;
-	void setupSender() override;
-
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;

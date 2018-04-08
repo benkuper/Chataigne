@@ -13,6 +13,7 @@
 UserOSCCommandModelManager::UserOSCCommandModelManager() :
 	BaseManager("Models")
 {
+	itemDataType = "OSCModel";
 }
 
 UserOSCCommandModelManager::~UserOSCCommandModelManager()
