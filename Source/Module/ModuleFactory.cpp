@@ -181,7 +181,6 @@ Module * ModuleFactory::createModule(const String & moduleType)
 		{
 			Module * m = d->createFunc();
 			if (!d->jsonData.isVoid()) m->setupModuleFromJSONData(d->jsonData);
-			else DBG("No Json Data for module definition");
 			return m;
 		}
 	}
