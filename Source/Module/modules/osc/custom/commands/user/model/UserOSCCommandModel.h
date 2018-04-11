@@ -14,7 +14,6 @@
 
 #include "Common/Command/CommandDefinition.h"
 
-class UserOSCCommandDefinition;
 
 class OSCCommandModelArgument :
 	public BaseItem

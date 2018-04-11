@@ -44,24 +44,4 @@ public:
 	void showMenuAndAddItem(bool) override;
 };
 
-class UserOSCCommandModelEditor :
-	public BaseItemEditor
-{
-public:
-	UserOSCCommandModelEditor(UserOSCCommandModel * model, bool isRoot);
-	~UserOSCCommandModelEditor();
-
-	UserOSCCommandModel * model;
-
-	ScopedPointer<InspectableEditor> addressUI;
-	ScopedPointer<BoolToggleUI> addressIsEditableUI;
-	ScopedPointer<InspectableEditor> argumentsEditor;
-
-	void resizedInternalContent(Rectangle<int> &r) override;
-
-	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UserOSCCommandModelEditor)
-};
-
-
-
 #endif  // USEROSCCOMMANDMODELEDITOR_H_INCLUDED

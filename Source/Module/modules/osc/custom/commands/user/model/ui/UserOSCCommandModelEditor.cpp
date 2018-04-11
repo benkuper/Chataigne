@@ -10,38 +10,6 @@
 
 #include "UserOSCCommandModelEditor.h"
 
-
-UserOSCCommandModelEditor::UserOSCCommandModelEditor(UserOSCCommandModel * _model, bool isRoot) :
-	BaseItemEditor(_model, isRoot),
-	model(_model)
-{
-	addressUI = model->addressParam->getEditor(false);
-	addressIsEditableUI = model->addressIsEditable->createToggle();
-	argumentsEditor = model->arguments.getEditor(false);
-
-	addAndMakeVisible(addressUI);
-	addAndMakeVisible(addressIsEditableUI);
-	addAndMakeVisible(argumentsEditor);
-}
-
-UserOSCCommandModelEditor::~UserOSCCommandModelEditor()
-{
-}
-
-void UserOSCCommandModelEditor::resizedInternalContent(Rectangle<int>& r)
-{
-	Rectangle<int> ar = r.withHeight(14);
-	addressIsEditableUI->setBounds(ar.removeFromRight(50));
-	ar.removeFromRight(2);
-	addressUI->setBounds(ar);
-
-	r.translate(0,ar.getHeight() + 2);
-
-	argumentsEditor->setBounds(r.withHeight(argumentsEditor->getHeight()));
-	r.setBottom(argumentsEditor->getBottom());
-
-}
-
 // MANAGER
 
 
