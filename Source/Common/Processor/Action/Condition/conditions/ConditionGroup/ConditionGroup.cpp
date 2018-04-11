@@ -24,7 +24,6 @@ ConditionGroup::~ConditionGroup()
 void ConditionGroup::conditionManagerValidationChanged(ConditionManager *)
 {
 	isValid->setValue(manager.isValid->boolValue());
-	DBG("HERE set valid " << (int)isValid->boolValue());
 }
 
 var ConditionGroup::getJSONData()

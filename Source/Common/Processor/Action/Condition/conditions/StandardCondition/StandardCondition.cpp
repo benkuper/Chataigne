@@ -44,7 +44,6 @@ void StandardCondition::loadJSONDataInternal(var data)
 	if (comparator != nullptr) comparator->loadJSONData(data.getProperty("comparator", var()));
 	else if (Engine::mainEngine->isLoadingFile)
 	{
-		DBG("Comparator null while engine loading, probably a script generated target");
 		loadingComparatorData = data.getProperty("comparator", var());
 	}
 }

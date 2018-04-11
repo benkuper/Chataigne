@@ -34,9 +34,4 @@ void DMXArtNetDevice::sendDMXValue(int channel, int value)
 	
 	sequence++;
 	artNetOut.write(nodeIP->stringValue(), nodePort->intValue(), fullMessage, NUM_CHANNELS+18);
-
-	for (int i = 0; i < 18; i++)
-	{
-		DBG("Send : " << (char)header[i] << " : " << (int)header[i]);
-	}
 }
