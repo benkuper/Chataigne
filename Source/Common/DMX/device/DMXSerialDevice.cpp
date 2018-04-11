@@ -90,7 +90,6 @@ void DMXSerialDevice::run()
 
 		sleep(23);
 	}
-	DBG("Exit DMX write thread");
 }
 
 void DMXSerialDevice::onContainerParameterChanged(Parameter * p)

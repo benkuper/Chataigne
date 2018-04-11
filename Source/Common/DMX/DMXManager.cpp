@@ -46,7 +46,6 @@ void DMXManager::timerCallback()
 
 void DMXManager::run()
 {
-	DBG("Start Artnet Run thread");
 	uint8 buffer[600];
 	while (threadShouldExit())
 	{
@@ -55,7 +54,7 @@ void DMXManager::run()
 		int numBytes = artNetUDP.read(buffer, 600, false, remoteIP, remotePort);
 		if (numBytes > 0)
 		{
-			DBG("Received : " << numBytes << "bytes from" << remoteIP << ":" << remotePort);
+
 		}
 		sleep(20);
 	}

@@ -66,16 +66,13 @@ void SequenceLayerManager::removeItemInternal(SequenceLayer * item)
 
 void SequenceLayerManager::targetAudioModuleChanged(AudioLayer *)
 {
-	DBG("target audio module changed");
 	updateTargetAudioLayer();
 }
 
 void SequenceLayerManager::updateTargetAudioLayer(AudioLayer * excludeLayer)
 {
-	DBG("update target audio layer");
 	if (masterAudioLayer == nullptr)
 	{
-		DBG("master is null");
 		for (auto &i : items)
 		{
 			if (i == excludeLayer) continue;
