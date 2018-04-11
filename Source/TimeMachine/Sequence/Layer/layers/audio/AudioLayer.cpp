@@ -130,7 +130,6 @@ void AudioLayer::itemRemoved(Module * m)
 {
 	if (audioModule == m)
 	{
-		DBG("AudioLayer, module removed, set audio module null");
 		setAudioModule(nullptr);
 	}
 }
@@ -140,8 +139,6 @@ void AudioLayer::updateSelectedOutChannels()
 	
 	selectedOutChannels.clear();
 
-	DBG("Update out channels : " << numActiveOutputs);
-	
 	if (audioModule == nullptr) return;
 
 	audioModule->graph.disconnectNode(graphID);
@@ -253,7 +250,6 @@ const String AudioLayerProcessor::getName() const
 
 void AudioLayerProcessor::prepareToPlay(double sampleRate, int maximumExpectedSamplesPerBlock)
 {
-	DBG("Prepare to play : " << sampleRate << " /" << maximumExpectedSamplesPerBlock);
 }
 
 void AudioLayerProcessor::releaseResources()

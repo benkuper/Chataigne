@@ -12,10 +12,13 @@
 
 AudioLayerClip::AudioLayerClip(float _time) :
 	BaseItem("Clip"),
+	Thread("AudioClipReader"),
 	clipDuration(0),
 	sampleRate(0),
 	clipSamplePos(0),
-	isCurrent(false)
+	isCurrent(false),
+	isLoading(false),
+	audioClipAsyncNotifier(10)
 {
 	filePath = new FileParameter("File Path", "File Path", "");
 	addParameter(filePath);
@@ -31,12 +34,12 @@ AudioLayerClip::AudioLayerClip(float _time) :
 
 	formatManager.registerBasicFormats();
 
-	
-
 }
 
 AudioLayerClip::~AudioLayerClip()
 {
+	signalThreadShouldExit();
+	waitForThreadToExit(3000);
 	masterReference.clear();
 }
 
@@ -54,6 +57,7 @@ void AudioLayerClip::setIsCurrent(bool value)
 	}
 
 	clipListeners.call(&ClipListener::clipIsCurrentChanged, this);
+	audioClipAsyncNotifier.addMessage(new ClipEvent(ClipEvent::CLIP_IS_CURRENT_CHANGED, this));
 }
 
 bool AudioLayerClip::isInRange(float _time)
@@ -69,6 +73,22 @@ void AudioLayerClip::updateAudioSourceFile()
 	if (filePath->stringValue().startsWithChar('/')) return;
 #endif
 
+	isLoading = true;
+	startThread();
+}
+
+void AudioLayerClip::onContainerParameterChanged(Parameter * p)
+{
+	if (p == filePath)
+	{
+		updateAudioSourceFile();
+	}
+}
+
+void AudioLayerClip::run()
+{
+	audioClipAsyncNotifier.addMessage(new ClipEvent(ClipEvent::SOURCE_LOAD_START, this));
+
 	ScopedPointer<AudioFormatReader>  reader(formatManager.createReaderFor(filePath->getAbsolutePath()));
 
 	if (reader != nullptr)
@@ -79,19 +99,9 @@ void AudioLayerClip::updateAudioSourceFile()
 		clipLength->setValue(clipDuration);
 		buffer.setSize((int)reader->numChannels, (int)reader->lengthInSamples);
 		reader->read(&buffer, 0, (int)reader->lengthInSamples, 0, true, true);
-
-		//DBG("Update audio source file, num channels : " << String(reader->numChannels) << "/" << buffer.getNumChannels());
-
 	}
 
-	
-	clipListeners.call(&ClipListener::audioSourceChanged, this);
-}
+	isLoading = false;
 
-void AudioLayerClip::onContainerParameterChanged(Parameter * p)
-{
-	if (p == filePath)
-	{
-		updateAudioSourceFile();
-	}
+	audioClipAsyncNotifier.addMessage(new ClipEvent(ClipEvent::SOURCE_LOAD_END, this));
 }

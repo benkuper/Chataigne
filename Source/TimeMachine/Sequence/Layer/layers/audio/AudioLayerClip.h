@@ -14,7 +14,8 @@
 #include "JuceHeader.h"
 
 class AudioLayerClip :
-	public BaseItem
+	public BaseItem,
+	public Thread //async loading
 {
 public:
 	AudioLayerClip(float time = 0);
@@ -36,6 +37,7 @@ public:
 	int clipSamplePos;
 
 	bool isCurrent;
+	bool isLoading;
 
 	void setIsCurrent(bool value);
 	
@@ -43,19 +45,34 @@ public:
 
 	void updateAudioSourceFile();
 	void onContainerParameterChanged(Parameter *) override;
-
+	
+	void run() override;
 
 	class ClipListener
 	{
 	public:
 		virtual ~ClipListener() {}
 		virtual void clipIsCurrentChanged(AudioLayerClip *) {}
-		virtual void audioSourceChanged(AudioLayerClip *) {}
 	};
 
 	ListenerList<ClipListener> clipListeners;
 	void addClipListener(ClipListener* newListener) { clipListeners.add(newListener); }
 	void removeClipListener(ClipListener* listener) { clipListeners.remove(listener); }
+
+	class ClipEvent {
+	public:
+		enum Type { CLIP_IS_CURRENT_CHANGED, SOURCE_LOAD_START, SOURCE_LOAD_END };
+		ClipEvent(Type type, AudioLayerClip * i) : type(type), clip(i) {}
+		Type type;
+		AudioLayerClip *clip;
+	};
+
+	QueuedNotifier<ClipEvent> audioClipAsyncNotifier;
+	typedef QueuedNotifier<ClipEvent>::Listener AsyncListener;
+
+	void addAsyncClipListener(AsyncListener* newListener) { audioClipAsyncNotifier.addListener(newListener); }
+	void addAsyncCoalescedClipListener(AsyncListener* newListener) { audioClipAsyncNotifier.addAsyncCoalescedListener(newListener); }
+	void removeAsyncClipListener(AsyncListener* listener) { audioClipAsyncNotifier.removeListener(listener); }
 
 
 private:

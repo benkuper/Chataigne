@@ -36,6 +36,8 @@ public:
 	void addItemUIInternal(AudioLayerClipUI * cui) override;
 	void removeItemUIInternal(AudioLayerClipUI * cui) override;
 
+	void addClipWithFileChooserAt(float position);
+
 	void clipUITimeChanged(AudioLayerClipUI * cui) override;
 	void clipUIDragged(AudioLayerClipUI * cui, const MouseEvent &) override;
 };

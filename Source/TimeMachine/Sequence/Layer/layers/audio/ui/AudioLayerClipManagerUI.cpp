@@ -51,26 +51,13 @@ void AudioLayerClipManagerUI::placeClipUI(AudioLayerClipUI * cui)
 
 void AudioLayerClipManagerUI::mouseDoubleClick(const MouseEvent & e)
 {
-	float time = timeline->getTimeForX(getMouseXYRelative().x);
-	manager->addClipAt(time);
+	addClipWithFileChooserAt(getMouseXYRelative().x);
 }
 
 void AudioLayerClipManagerUI::addItemFromMenu(bool isFromAddButton, Point<int> mouseDownPos)
 {
 	if (isFromAddButton) return;
-
-    FileChooser chooser("Load a carrot", File::nonexistent, "*.wav;*.mp3");
-    bool result = chooser.browseForFileToOpen();
-    if (result)
-    {
-        float time = timeline->getTimeForX(mouseDownPos.x);
-        AudioLayerClip * clip = manager->addClipAt(time);
-        clip->filePath->setValue(chooser.getResult().getFullPathName());
-
-    }
-	
-    
-    
+	addClipWithFileChooserAt(mouseDownPos.x);
 }
 
 void AudioLayerClipManagerUI::addItemUIInternal(AudioLayerClipUI * cui)
@@ -82,6 +69,20 @@ void AudioLayerClipManagerUI::addItemUIInternal(AudioLayerClipUI * cui)
 void AudioLayerClipManagerUI::removeItemUIInternal(AudioLayerClipUI * cui)
 {
 	cui->removeClipUIListener(this);
+}
+
+void AudioLayerClipManagerUI::addClipWithFileChooserAt(float position)
+{
+	FileChooser chooser("Load a carrot", File::nonexistent, "*.wav;*.mp3");
+	bool result = chooser.browseForFileToOpen();
+	if (result)
+	{
+		float time = timeline->getTimeForX(position);
+		AudioLayerClip * clip = manager->addClipAt(time);
+		clip->filePath->setValue(chooser.getResult().getFullPathName());
+
+	}
+
 }
 
 void AudioLayerClipManagerUI::clipUITimeChanged(AudioLayerClipUI * cui)

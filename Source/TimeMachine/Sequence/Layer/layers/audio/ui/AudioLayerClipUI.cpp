@@ -19,8 +19,7 @@ AudioLayerClipUI::AudioLayerClipUI(AudioLayerClip * _clip) :
 	browseBT = AssetManager::getInstance()->getFileBT();
 	addAndMakeVisible(browseBT);
 	browseBT->addListener(this);
-	clip->addClipListener(this);
-
+	clip->addAsyncClipListener(this);
 
 	bgColor = clip->isCurrent ? AUDIO_COLOR.brighter() : BG_COLOR.brighter(.1f);
 
@@ -28,14 +27,14 @@ AudioLayerClipUI::AudioLayerClipUI(AudioLayerClip * _clip) :
 	if (clip->filePath->stringValue().startsWithChar('/')) return;
 #endif
 
-	DBG("Audio clip UI : " << clip->filePath->getFile().getFullPathName());
 	thumbnail.setSource(new FileInputSource(clip->filePath->getFile()));
 
+	repaint();
 }
 
 AudioLayerClipUI::~AudioLayerClipUI()
 {
-	if (!inspectable.wasObjectDeleted()) clip->removeClipListener(this);
+	if (!inspectable.wasObjectDeleted()) clip->removeAsyncClipListener(this);
 }
 
 void AudioLayerClipUI::paint(Graphics & g)
@@ -44,7 +43,16 @@ void AudioLayerClipUI::paint(Graphics & g)
 
 	if (clip->filePath->stringValue().isEmpty()) return;
 	g.setColour(Colours::white.withAlpha(.5f));
-	thumbnail.drawChannels(g, getLocalBounds(), 0, item->clipDuration, item->volume->floatValue());
+	if (clip->isLoading)
+	{
+		g.setFont(20);
+		g.drawText("Loading...", getLocalBounds(), Justification::centred);
+		
+	} else
+	{
+		DBG("paint here");
+		thumbnail.drawChannels(g, getLocalBounds(), 0, item->clipDuration, item->volume->floatValue());
+	}
 }
 
 void AudioLayerClipUI::resizedInternalHeader(Rectangle<int>& r)
@@ -95,16 +103,25 @@ void AudioLayerClipUI::controllableFeedbackUpdateInternal(Controllable * c)
 	}
 }
 
-void AudioLayerClipUI::clipIsCurrentChanged(AudioLayerClip *)
+void AudioLayerClipUI::newMessage(const AudioLayerClip::ClipEvent & e)
 {
-	bgColor = clip->isCurrent ? AUDIO_COLOR.brighter() : BG_COLOR.brighter(.1f);
+	switch (e.type)
+	{
+	case AudioLayerClip::ClipEvent::CLIP_IS_CURRENT_CHANGED:
+		bgColor = clip->isCurrent ? AUDIO_COLOR.brighter() : BG_COLOR.brighter(.1f);
+		repaint();
+		break;
 
-	MessageManagerLock mmLock;
-	if(mmLock.lockWasGained()) repaint();
-}
+	case AudioLayerClip::ClipEvent::SOURCE_LOAD_START:
+		thumbnail.setSource(nullptr);
+		repaint();
+		break;
 
-void AudioLayerClipUI::audioSourceChanged(AudioLayerClip *)
-{
-	thumbnail.setSource(new FileInputSource(clip->filePath->getFile()));
-	repaint();
+	case AudioLayerClip::ClipEvent::SOURCE_LOAD_END:
+		thumbnail.setSource(new FileInputSource(clip->filePath->getFile()));
+		repaint();
+		break;
+	
+	}
+	
 }

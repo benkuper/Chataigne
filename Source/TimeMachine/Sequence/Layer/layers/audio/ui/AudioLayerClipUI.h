@@ -16,7 +16,7 @@
 
 class AudioLayerClipUI :
 	public BaseItemUI<AudioLayerClip>,
-	public AudioLayerClip::ClipListener
+	public AudioLayerClip::AsyncListener
 {
 public:
 	AudioLayerClipUI(AudioLayerClip * clip);
@@ -41,8 +41,8 @@ public:
 	void buttonClicked(Button * b) override;
 
 	void controllableFeedbackUpdateInternal(Controllable *) override;
-	void clipIsCurrentChanged(AudioLayerClip *) override;
-	void audioSourceChanged(AudioLayerClip *) override;
+
+	void newMessage(const AudioLayerClip::ClipEvent &e) override;
 
 	class ClipUIListener
 	{
