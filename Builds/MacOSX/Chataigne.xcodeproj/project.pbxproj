@@ -1327,10 +1327,8 @@
 					1DFE7060FD22370CD4E71D5A,
 					23ADA3186B4A93FBE2F36746,
 					C9CE12A5F2E43DB209DA1731, ); name = commands; sourceTree = "<group>"; };
-		76A6D1550E28648B148091D7 = {isa = PBXGroup; children = (  ); name = ui; sourceTree = "<group>"; };
 		227EAC43F6EBC36576C6C2E1 = {isa = PBXGroup; children = (
 					DFD6DA276EF5FFC4042560D5,
-					76A6D1550E28648B148091D7,
 					917F8F23507E7AE42797E326,
 					ABCEA66DEFC594141E8D30A6, ); name = custom; sourceTree = "<group>"; };
 		199ABFB6E28A9E695E64522D = {isa = PBXGroup; children = (
