@@ -68,11 +68,11 @@ void OSCModule::setupReceiver()
 
 	if (result)
 	{
-		NLOG(parentContainer->parentContainer->niceName, "Now receiving on port : " + localPort->stringValue());
+		NLOG(niceName, "Now receiving on port : " + localPort->stringValue());
 		if(!isThreadRunning()) startThread();
 	} else
 	{
-		NLOGERROR(parentContainer->parentContainer->niceName, "Error binding port " + localPort->stringValue());
+		NLOGERROR(niceName, "Error binding port " + localPort->stringValue());
 	}
 
 	
