@@ -60,7 +60,7 @@ AudioModule::AudioModule(const String & name) :
 	graph.setPlayConfigDetails(0, 2, currentSampleRate, currentBufferSize);
 	graph.prepareToPlay(currentSampleRate, currentBufferSize);
 
-	graph.addNode(new AudioProcessorGraph::AudioGraphIOProcessor(AudioProcessorGraph::AudioGraphIOProcessor::audioInputNode), 1);
+	//graph.addNode(new AudioProcessorGraph::AudioGraphIOProcessor(AudioProcessorGraph::AudioGraphIOProcessor::audioInputNode), 1);
 	graph.addNode(new AudioProcessorGraph::AudioGraphIOProcessor(AudioProcessorGraph::AudioGraphIOProcessor::audioOutputNode), 2);
 	player.setProcessor(&graph);
 
@@ -89,13 +89,11 @@ void AudioModule::updateSelectedMonitorChannels()
 		if (monitorOutChannels[i]->boolValue())
 		{
 			selectedMonitorOutChannels.add(i);
-			DBG("Send monitor out to channel : " << monitorOutChannels[i]->niceName);
 		}
 	}
 
 	
 	numActiveMonitorOutputs = selectedMonitorOutChannels.size();
-	DBG("Num Active monitor outputs : " << numActiveMonitorOutputs);
 }
 
 void AudioModule::onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c)
@@ -105,6 +103,16 @@ void AudioModule::onControllableFeedbackUpdateInternal(ControllableContainer * c
 	if (c->type == Controllable::BOOL && monitorOutChannels.indexOf((BoolParameter *)c) > -1)
 	{
 		updateSelectedMonitorChannels();
+	}
+}
+
+void AudioModule::onContainerParameterChangedInternal(Parameter * p)
+{
+	if (p == enabled)
+	{
+		DBG("Enabled " << (int)enabled->boolValue());
+		if (enabled->boolValue()) player.setProcessor(&graph);
+		else player.setProcessor(nullptr);
 	}
 }
 
@@ -137,6 +145,8 @@ void AudioModule::audioDeviceIOCallback(const float ** inputChannelData, int num
 	//DBG("audio callback");
 
 	for (int i = 0; i < numOutputChannels; i++) FloatVectorOperations::clear(outputChannelData[i], numSamples);
+
+	if (!enabled->boolValue()) return;
 
 	for (int i = 0; i < numInputChannels; i++)
 	{

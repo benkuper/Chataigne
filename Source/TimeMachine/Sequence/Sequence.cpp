@@ -104,6 +104,7 @@ void Sequence::setMasterAudioModule(AudioModule * module)
 
 	if (masterAudioModule != nullptr)
 	{
+		masterAudioModule->enabled->removeParameterListener(this);
 		masterAudioModule->am.removeAudioCallback(this);
 	}
 
@@ -111,16 +112,16 @@ void Sequence::setMasterAudioModule(AudioModule * module)
 
 	if (masterAudioModule != nullptr)
 	{
+		masterAudioModule->enabled->addParameterListener(this);
 		masterAudioModule->am.addAudioCallback(this);
 	}
 
-	DBG("Set master audio module " << (masterAudioModule != nullptr ? masterAudioModule->niceName : "null"));
 	sequenceListeners.call(&SequenceListener::sequenceMasterAudioModuleChanged, this);
 }
 
 bool Sequence::timeIsDrivenByAudio()
 {
-	return masterAudioModule != nullptr;
+	return masterAudioModule != nullptr && masterAudioModule->enabled->boolValue();
 }
 
 var Sequence::getJSONData()
@@ -227,6 +228,11 @@ void Sequence::onContainerTriggerTriggered(Trigger * t)
 	{
 		setCurrentTime(cueManager->getNextCueForTime(currentTime->floatValue()));
 	}
+}
+
+void Sequence::onExternalParameterChanged(Parameter * p)
+{
+	if(masterAudioModule != nullptr && p == masterAudioModule->enabled) sequenceListeners.call(&SequenceListener::sequenceMasterAudioModuleChanged, this);
 }
 
 void Sequence::hiResTimerCallback()

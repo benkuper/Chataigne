@@ -32,8 +32,6 @@ SequenceTransportUI::SequenceTransportUI(Sequence * _sequence) :
 	addAndMakeVisible(stopUI);
 	addAndMakeVisible(nextCueUI);
 	addAndMakeVisible(prevCueUI);
-	
-	
 }
 
 SequenceTransportUI::~SequenceTransportUI()
@@ -48,11 +46,10 @@ SequenceTransportUI::~SequenceTransportUI()
 
 void SequenceTransportUI::paint(Graphics &g)
 {
-	if (sequence->timeIsDrivenByAudio())
+	if (sequence->masterAudioModule != nullptr)
 	{
-		g.setColour(AUDIO_COLOR);
 		Rectangle<int> r = getLocalBounds().reduced(2).removeFromTop(timeLabel.getHeight()).withLeft(timeLabel.getRight() + 5);
-		g.setColour(AUDIO_COLOR.brighter(.7f));
+		g.setColour(sequence->timeIsDrivenByAudio()?AUDIO_COLOR.brighter(.7f):HIGHLIGHT_COLOR);
 		g.drawFittedText(sequence->masterAudioModule->niceName, r.reduced(2), Justification::centred, 1);
 	}
 }

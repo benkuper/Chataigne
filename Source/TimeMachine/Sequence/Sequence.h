@@ -83,6 +83,7 @@ public:
 
 	void onContainerParameterChangedInternal(Parameter *) override;
 	void onContainerTriggerTriggered(Trigger *) override;
+	void onExternalParameterChanged(Parameter *) override;
 
 	virtual void hiResTimerCallback() override;
 

@@ -77,6 +77,8 @@ public:
 	void updateSelectedMonitorChannels();
 
 	void onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c) override;
+	void onContainerParameterChangedInternal(Parameter * p) override;
+
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
