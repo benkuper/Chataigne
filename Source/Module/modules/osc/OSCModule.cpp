@@ -39,14 +39,18 @@ OSCModule::OSCModule(const String & name, int defaultLocalPort, int defaultRemot
 	{
 		
 		outputManager = new BaseManager<OSCOutput>("Outputs");
-		outputManager->setCanBeDisabled(true);
-		OSCOutput * o = outputManager->addItem(nullptr,var(),false);
-		
-		o->remotePort->defaultValue = defaultRemotePort;
-		o->remotePort->resetValue();
-
 		moduleParams.addChildControllableContainer(outputManager);
-		setupSenders();
+
+		outputManager->setCanBeDisabled(true);
+		if (!Engine::mainEngine->isLoadingFile)
+		{
+			OSCOutput * o = outputManager->addItem(nullptr, var(), false);
+
+			o->remotePort->defaultValue = defaultRemotePort;
+			o->remotePort->resetValue();
+			setupSenders();
+		}
+		
 	}
 
 	//Script
@@ -64,11 +68,11 @@ void OSCModule::setupReceiver()
 
 	if (result)
 	{
-		NLOG(niceName, "Now receiving on port : " + localPort->stringValue());
+		NLOG(parentContainer->parentContainer->niceName, "Now receiving on port : " + localPort->stringValue());
 		if(!isThreadRunning()) startThread();
 	} else
 	{
-		NLOGERROR(niceName, "Error binding port " + localPort->stringValue());
+		NLOGERROR(parentContainer->parentContainer->niceName, "Error binding port " + localPort->stringValue());
 	}
 
 	
@@ -253,7 +257,11 @@ void OSCModule::loadJSONDataInternal(var data)
 {
 	Module::loadJSONDataInternal(data);
 	if (receiveCC != nullptr) receiveCC->loadJSONData(data.getProperty("input", var()));
-	if (outputManager != nullptr) outputManager->loadJSONData(data.getProperty("outputs", var()));
+	if (outputManager != nullptr)
+	{
+		outputManager->loadJSONData(data.getProperty("outputs", var()));
+		setupSenders();
+	}
 }
 
 
@@ -359,10 +367,6 @@ OSCModule::OSCRouteParams::OSCRouteParams(Module * sourceModule, Controllable * 
 
 
 
-
-
-
-
 ///// OSC OUTPUT
 
 OSCOutput::OSCOutput() :
@@ -376,6 +380,7 @@ OSCOutput::OSCOutput() :
 	remoteHost->setEnabled(!useLocal->boolValue());
 	remotePort = addIntParameter("Remote port", "Port on which the remote host is listening to", 9000, 1024, 65535);
 
+	if (!Engine::mainEngine->isLoadingFile) setupSender();
 }
 
 OSCOutput::~OSCOutput()
@@ -394,7 +399,7 @@ void OSCOutput::onContainerParameterChangedInternal(Parameter * p)
 
 	if (p == remoteHost || p == remotePort || p == useLocal)
 	{
-		setupSender();
+		if(!Engine::mainEngine->isLoadingFile) setupSender();
 		if (p == useLocal) remoteHost->setEnabled(!useLocal->boolValue());
 	}
 }
@@ -402,11 +407,18 @@ void OSCOutput::onContainerParameterChangedInternal(Parameter * p)
 void OSCOutput::setupSender()
 {
 	sender.disconnect();
-	if (!enabled->boolValue() || forceDisabled) return;
+	if (!enabled->boolValue() || forceDisabled || Engine::mainEngine->isClearing) return;
 
 	String targetHost = useLocal->boolValue() ? "127.0.0.1" : remoteHost->stringValue();
-	sender.connect(targetHost, remotePort->intValue());
-	NLOG(niceName, "Now sending to " + remoteHost->stringValue() + ":" + remotePort->stringValue());
+	bool result = sender.connect(targetHost, remotePort->intValue());
+	if (result)
+	{ 
+		NLOG(niceName, "Now sending to " + remoteHost->stringValue() + ":" + remotePort->stringValue());
+	} else
+	{
+		NLOGWARNING(niceName, "Could not connect to " + remoteHost->stringValue() + ":" + remotePort->stringValue());
+	}
+	
 }
 
 void OSCOutput::sendOSC(const OSCMessage & m)
