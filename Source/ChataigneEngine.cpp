@@ -45,6 +45,9 @@ ChataigneEngine::~ChataigneEngine()
 {
 	//Application-end cleanup, nothing should be recreated after this
 	//delete singletons here
+
+	isClearing = true;
+
 	ModuleRouterManager::deleteInstance();
 
 	SequenceManager::deleteInstance();

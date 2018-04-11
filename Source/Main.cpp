@@ -176,6 +176,7 @@ void ChataigneApplication::newMessage(const AppUpdater::UpdateEvent & e)
 
 void ChataigneApplication::updateAppTitle()
 {
+	if (mainWindow == nullptr) return;
 	mainWindow->setName(getApplicationName() + " " + getApplicationVersion() + " - " + Engine::mainEngine->getDocumentTitle()+(Engine::mainEngine->hasChangedSinceSaved()?" *":"")); 
 }
 
