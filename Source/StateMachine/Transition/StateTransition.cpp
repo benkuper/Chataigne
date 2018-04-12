@@ -10,14 +10,14 @@
 
 #include "StateTransition.h"
 #include "../State/State.h"
-
+#include "../StateManager.h"
 StateTransition::StateTransition(State * source, State * dest) :
 	Action("transition"),//String(source->niceName << "_" << dest->niceName)),
 	sourceState(source),
 	destState(dest)
 {
-	sourceState->outTransitions.add(this);
-	destState->inTransitions.add(this);
+	if(sourceState != nullptr)	sourceState->outTransitions.add(this);
+	if(destState != nullptr) destState->inTransitions.add(this);
 
 	helpID = "StateTransition";
  }
@@ -34,6 +34,17 @@ var StateTransition::getJSONData()
 	data.getDynamicObject()->setProperty("sourceState", sourceState->shortName);
 	data.getDynamicObject()->setProperty("destState", destState->shortName);
 	return data;
+}
+
+void StateTransition::loadJSONDataInternal(var data)
+{
+	BaseItem::loadJSONDataInternal(data);
+	if (sourceState != nullptr) sourceState->outTransitions.removeAllInstancesOf(this);
+	if (destState != nullptr) destState->inTransitions.removeAllInstancesOf(this);
+	sourceState = StateManager::getInstance()->getItemWithName(data.getProperty("sourceState", ""));
+	destState = StateManager::getInstance()->getItemWithName(data.getProperty("destState", ""));
+	if (sourceState != nullptr) sourceState->outTransitions.add(this);
+	if (destState != nullptr) destState->inTransitions.add(this);
 }
 
 void StateTransition::onContainerTriggerTriggered(Trigger * t)

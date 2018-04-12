@@ -39,6 +39,9 @@ public:
 	void addItemInternal(State * s, var data) override;
 	void removeItemInternal(State * s) override;
 
+	Array<UndoableAction *> getRemoveItemUndoableAction(State * item) override;
+	Array<UndoableAction *> getRemoveItemsUndoableAction(Array<State *> itemsToRemove) override;
+
 	void stateActivationChanged(State * s) override;
 	void itemAdded(StateTransition * s) override;
 

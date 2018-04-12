@@ -22,18 +22,18 @@ StateTransitionManager::~StateTransitionManager()
 {
 }
 
-StateTransition * StateTransitionManager::addItemFromData(var data, bool fromUndoableAction)
+StateTransition * StateTransitionManager::addItemFromData(var data, bool addToUndo)
 {
 	State * sourceState = sm->getItemWithName(data.getProperty("sourceState", ""));
 	State * destState = sm->getItemWithName(data.getProperty("destState", ""));
 	if (sourceState == nullptr || destState == nullptr) return nullptr;
-	return addItem(sourceState, destState, data, fromUndoableAction);
+	return addItem(sourceState, destState, data, addToUndo);
 }
 
-StateTransition * StateTransitionManager::addItem(State * source, State * dest, var data, bool fromUndoableAction)
+StateTransition * StateTransitionManager::addItem(State * source, State * dest, var data, bool addToUndo)
 {
 	if (getItemForSourceAndDest(source, dest) != nullptr) return nullptr;
-	return BaseManager::addItem(new StateTransition(source, dest), data,fromUndoableAction);
+	return BaseManager::addItem(new StateTransition(source, dest), data,addToUndo);
 }
 
 Array<State*> StateTransitionManager::getAllStatesLinkedTo(State * state)
@@ -44,15 +44,12 @@ Array<State*> StateTransitionManager::getAllStatesLinkedTo(State * state)
 	return result;
 }
 
-void StateTransitionManager::removeAllLinkedTransitions(State * linkedState)
+Array<UndoableAction *> StateTransitionManager::getRemoveAllLinkedTransitionsAction(State * linkedState)
 {
 	Array<StateTransition *> transitionsToRemove;
 	transitionsToRemove.addArray(linkedState->inTransitions);
 	transitionsToRemove.addArray(linkedState->outTransitions);
-	for (auto &st : transitionsToRemove)
-	{
-		st->remove();
-	}
+	return getRemoveItemsUndoableAction(transitionsToRemove);
 }
 
 StateTransition * StateTransitionManager::getItemForSourceAndDest(State * source, State * dest)

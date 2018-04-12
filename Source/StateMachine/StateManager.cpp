@@ -58,9 +58,24 @@ void StateManager::addItemInternal(State * s, var data)
 
 void StateManager::removeItemInternal(State * s)
 {
-	//DBG("StateManager removeItemInternal");
 	s->removeStateListener(this);
-	stm.removeAllLinkedTransitions(s);
+}
+
+Array<UndoableAction *> StateManager::getRemoveItemUndoableAction(State * item)
+{
+	Array<UndoableAction *> result;
+	result.addArray(stm.getRemoveAllLinkedTransitionsAction(item));
+	result.addArray(BaseManager::getRemoveItemUndoableAction(item));
+
+	return result;
+}
+
+Array<UndoableAction*> StateManager::getRemoveItemsUndoableAction(Array<State*> itemsToRemove)
+{
+	Array<UndoableAction *> result;
+	for (auto &i : itemsToRemove) result.addArray(stm.getRemoveAllLinkedTransitionsAction(i));
+	result.addArray(BaseManager::getRemoveItemsUndoableAction(itemsToRemove));
+	return result;
 }
 
 void StateManager::stateActivationChanged(State * s)

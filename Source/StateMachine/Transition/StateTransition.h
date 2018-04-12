@@ -26,6 +26,7 @@ public:
 	WeakReference<State> destState;
 
 	var getJSONData() override;
+	void loadJSONDataInternal(var data) override;
 
 	void onContainerTriggerTriggered(Trigger *) override;
 
