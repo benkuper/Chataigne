@@ -25,7 +25,6 @@ StateMachineView::StateMachineView(const String &contentName, StateManager * _ma
 	stmUI = new StateTransitionManagerUI(this, &manager->stm);
 	addAndMakeVisible(stmUI, 0);
 
-
 	
 	noItemText = "Add interaction by creating a State";
 
@@ -45,9 +44,33 @@ void StateMachineView::mouseMove(const MouseEvent & e)
 	if(transitionCreationMode) repaint();
 }
 
+void StateMachineView::mouseDown(const MouseEvent & e)
+{
+	if (transitionCreationMode && e.eventComponent == this)
+	{
+		cancelCreateTransition();
+		return;
+	}
+
+	BaseManagerShapeShifterViewUI::mouseDown(e);
+}
+
 void StateMachineView::mouseDoubleClick(const MouseEvent & e)
 {
+	BaseManagerShapeShifterViewUI::mouseDoubleClick(e);
 	manager->addItem(getViewPos(e.getMouseDownPosition()).toFloat());
+}
+
+bool StateMachineView::keyPressed(const KeyPress & e)
+{
+
+	if (e.isKeyCode(KeyPress::escapeKey) && transitionCreationMode)
+	{
+		cancelCreateTransition();
+		return true;
+	}
+
+	return BaseManagerShapeShifterViewUI::keyPressed(e);
 }
 
 void StateMachineView::paint(Graphics & g)
@@ -55,9 +78,7 @@ void StateMachineView::paint(Graphics & g)
 	BaseManagerViewUI::paint(g);
 
 	if (transitionCreationMode)
-
 	{
-		//Point<int> midP = (transitionCreationSourceUI->getBounds().getCentre() + getMouseXYRelative()) / 2;
 		Point<int> sourceP = transitionCreationSourceUI->getBounds().getConstrainedPoint(getMouseXYRelative());
 		g.setColour(HIGHLIGHT_COLOR);
 		Line<float> line(sourceP.x, sourceP.y, getMouseXYRelative().x, getMouseXYRelative().y);
@@ -82,7 +103,6 @@ void StateMachineView::startCreateTransition(StateViewUI * sourceUI)
 
 	for (auto &sui : itemsUI)
 	{
-		if (sui == sourceUI) continue;
 		sui->setTransitionReceptionMode(true);
 	}
 }
@@ -91,7 +111,7 @@ void StateMachineView::finishCreateTransition(StateViewUI * destUI)
 {
 	transitionCreationMode = false;
 
-	if (transitionCreationSourceUI != nullptr && destUI != nullptr)
+	if (transitionCreationSourceUI != nullptr && destUI != nullptr && destUI != transitionCreationSourceUI)
 	{
 		manager->stm.addItem(transitionCreationSourceUI->item, destUI->item);
 	}
@@ -100,6 +120,20 @@ void StateMachineView::finishCreateTransition(StateViewUI * destUI)
 	{
 		sui->setTransitionReceptionMode(false);
 	}
+
+	repaint();
+}
+
+void StateMachineView::cancelCreateTransition()
+{
+	transitionCreationMode = false;
+	transitionCreationSourceUI = nullptr;
+	for (auto &sui : itemsUI)
+	{
+		sui->setTransitionReceptionMode(false);
+	}
+
+	repaint();
 }
 
 void StateMachineView::addItemUIInternal(StateViewUI * se)

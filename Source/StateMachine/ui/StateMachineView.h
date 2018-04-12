@@ -34,7 +34,9 @@ public:
 	
 
 	void mouseMove(const MouseEvent &e) override;
+	void mouseDown(const MouseEvent &e) override;
 	void mouseDoubleClick(const MouseEvent &e) override;
+	bool keyPressed(const KeyPress &e) override;
 
 	void paint(Graphics &g) override;
 	void resized() override;
@@ -42,6 +44,7 @@ public:
 	//Transition
 	void startCreateTransition(StateViewUI * sourceUI);
 	void finishCreateTransition(StateViewUI * destUI);
+	void cancelCreateTransition();
 
 	void addItemUIInternal(StateViewUI * s) override;
 	void removeItemUIInternal(StateViewUI * s) override;

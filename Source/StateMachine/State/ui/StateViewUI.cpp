@@ -44,6 +44,7 @@ void StateViewUI::setTransitionReceptionMode(bool value)
 	transitionReceptionMode = value;
 	pmui.setEnabled(!transitionReceptionMode);
 	grabber->setEnabled(!transitionReceptionMode);
+	setRepaintsOnMouseActivity(transitionReceptionMode);
 }
 
 void StateViewUI::updateMiniModeUI()
