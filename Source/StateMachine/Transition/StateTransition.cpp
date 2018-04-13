@@ -38,7 +38,7 @@ var StateTransition::getJSONData()
 
 void StateTransition::loadJSONDataInternal(var data)
 {
-	BaseItem::loadJSONDataInternal(data);
+	Action::loadJSONDataInternal(data);
 	if (sourceState != nullptr) sourceState->outTransitions.removeAllInstancesOf(this);
 	if (destState != nullptr) destState->inTransitions.removeAllInstancesOf(this);
 	sourceState = StateManager::getInstance()->getItemWithName(data.getProperty("sourceState", ""));
