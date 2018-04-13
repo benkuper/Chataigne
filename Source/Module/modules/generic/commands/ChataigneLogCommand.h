@@ -25,7 +25,7 @@ public:
 	StringParameter * message;
 	TargetParameter * value;
 
-	void trigger();
+	void trigger() override;
 
 	static BaseCommand * create(ControllableContainer * module, CommandContext context, var params);
 };
