@@ -14,7 +14,18 @@ ActionUI::ActionUI(Action * _action) :
 	ProcessorUI(_action),
 	action(_action)
 {
-	bgColor = ACTION_COLOR.withSaturation(.2f).darker(1);
+	switch (action->actionRole)
+	{
+	case Action::STANDARD:
+		bgColor = ACTION_COLOR.withSaturation(.2f).darker(1);
+		break;
+	case Action::ACTIVATE:
+		bgColor = BLUE_COLOR.withSaturation(.2f).darker(1);
+		break;
+	case Action::DEACTIVATE:
+		bgColor = RED_COLOR.withSaturation(.2f).darker(1);
+		break;
+	}
 
 	validUI = action->cdm.isValid->createToggle();
 	validUI->showLabel = false;

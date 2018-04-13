@@ -23,8 +23,10 @@ public:
 	Action(const String &name = "Action", var params = var());
 	virtual ~Action();
 
-	bool autoTriggerWhenAllConditionAreActives; //default true, but if false, let use Actions as user check tool without auto behavior (like TimeTriggers)
+	enum Role { STANDARD, ACTIVATE, DEACTIVATE };
+	Role actionRole;
 
+	bool autoTriggerWhenAllConditionAreActives; //default true, but if false, let use Actions as user check tool without auto behavior (like TimeTriggers)
 	bool hasOffConsequences;
 
 	ConditionManager cdm;

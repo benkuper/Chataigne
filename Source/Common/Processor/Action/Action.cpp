@@ -12,19 +12,20 @@
 #include "ui/ActionUI.h"
 
 Action::Action(const String & name, var params) :
-	Processor(name),
+	Processor(params.getProperty("name",name)),
 	autoTriggerWhenAllConditionAreActives(true),
 	triggerOn(nullptr),
 	triggerOff(nullptr)
 {
 	type = ACTION;
+	actionRole = (Role)(int)params.getProperty("role", STANDARD);
 
 	addChildControllableContainer(&cdm);
 
 	csmOn = new ConsequenceManager("Consequences : TRUE");
 	addChildControllableContainer(csmOn);
 
-	hasOffConsequences = params.getProperty("hasOffConsequences", false);
+	hasOffConsequences = params.getProperty("hasOffConsequences", false) && actionRole == STANDARD;
 
 	if (hasOffConsequences)
 	{
@@ -57,7 +58,7 @@ void Action::setForceDisabled(bool value, bool force)
 	Processor::setForceDisabled(value, force);
 	cdm.setForceDisabled(value);
 	csmOn->setForceDisabled(value);
-	csmOff->setForceDisabled(value);
+	if(hasOffConsequences) csmOff->setForceDisabled(value);
 }
 
 var Action::getJSONData()
@@ -97,12 +98,15 @@ void Action::onContainerTriggerTriggered(Trigger * t)
 
 void Action::conditionManagerValidationChanged(ConditionManager *)
 {
-	if (cdm.isValid->boolValue())
+	if (autoTriggerWhenAllConditionAreActives)
 	{
-		triggerOn->trigger(); //force trigger from onContainerTriggerTriggered, for derivating child classes
-	} else
-	{
-		if(hasOffConsequences) triggerOff->trigger();
+		if (cdm.isValid->boolValue())
+		{
+			triggerOn->trigger(); //force trigger from onContainerTriggerTriggered, for derivating child classes
+		} else
+		{
+			if (hasOffConsequences) triggerOff->trigger();
+		}
 	}
 }
 

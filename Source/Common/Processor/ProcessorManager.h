@@ -14,6 +14,8 @@
 #define PROCESSORMANAGER_H_INCLUDED
 
 #include "Processor.h"
+class Mapping;
+class Action;
 
 class ProcessorManager :
 	public BaseManager<Processor>
@@ -25,6 +27,12 @@ public:
 	bool forceDisabled;
 	void setForceDisabled(bool value, bool force = false);
 	void addItemInternal(Processor * item, var data) override;
+
+	Array<Action *> getAllActions();
+	Array<Mapping *> getAllMappings();
+	void triggerAllActivateActions();
+	void triggerAllDeactivateActions();
+
 
 	Factory<Processor> factory;
 
