@@ -57,7 +57,7 @@
     <ClCompile>
       <Optimization>Full</Optimization>
       <AdditionalIncludeDirectories>..\..\JuceLibraryCode;..\..\..\JUCE\modules;..\..\..\JUCE Modules;../../External/wiiuse;../../External/serial/include;../../External/asio;../../External/kinect/include;../../External/joycon/include;../../External/servus/include;../../External/dnssd/include;../../Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;NDEBUG;JUCER_VS2017_78A57A61=1;JUCE_APP_VERSION=1.3.7;JUCE_APP_VERSION_HEX=0x10307;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_RTAS=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;NDEBUG;JUCER_VS2017_78A57A61=1;JUCE_APP_VERSION=1.3.8b;JUCE_APP_VERSION_HEX=0x10308;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_RTAS=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <PrecompiledHeader/>
@@ -230,6 +230,7 @@
     <ClCompile Include="..\..\Source\Module\modules\dmx\DMXModule.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\generators\metronome\MetronomeModule.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\generators\signal\SignalModule.cpp"/>
+    <ClCompile Include="..\..\Source\Module\modules\generic\commands\ChataigneLogCommand.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\generic\commands\GenericControllableCommand.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\generic\ChataigneGenericModule.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\midi\commands\MIDICommands.cpp"/>
@@ -2492,6 +2493,7 @@
     <ClInclude Include="..\..\Source\Module\modules\generators\metronome\MetronomeModule.h"/>
     <ClInclude Include="..\..\Source\Module\modules\generators\signal\PerlinNoise.hpp"/>
     <ClInclude Include="..\..\Source\Module\modules\generators\signal\SignalModule.h"/>
+    <ClInclude Include="..\..\Source\Module\modules\generic\commands\ChataigneLogCommand.h"/>
     <ClInclude Include="..\..\Source\Module\modules\generic\commands\GenericControllableCommand.h"/>
     <ClInclude Include="..\..\Source\Module\modules\generic\ChataigneGenericModule.h"/>
     <ClInclude Include="..\..\Source\Module\modules\midi\commands\MIDICommands.h"/>

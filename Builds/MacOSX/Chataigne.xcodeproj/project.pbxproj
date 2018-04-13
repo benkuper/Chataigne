@@ -162,6 +162,7 @@
 		A8F24E2C856C08B3352A81EC = {isa = PBXBuildFile; fileRef = 475B531BE155FABCB2DE5765; };
 		8CA4517F298BA2614C4054B7 = {isa = PBXBuildFile; fileRef = D862BA10E224787BB6A887DD; };
 		4D76E54F132133C54A03DF02 = {isa = PBXBuildFile; fileRef = BF56666BCED854C39FE8D1C1; };
+		E6C4A435A7B2A024E8745DE3 = {isa = PBXBuildFile; fileRef = CFE8B29F9B948CF706C3EC75; };
 		07030143DF5F6F8D87E59358 = {isa = PBXBuildFile; fileRef = CAE2E4FE6BFCC743FDBEF690; };
 		47B06F7D8CE1EF794F466906 = {isa = PBXBuildFile; fileRef = AB7074B97A9CC50CDEFF3AD8; };
 		00F7943B39DC4F058928E693 = {isa = PBXBuildFile; fileRef = C0BFDCF118F92A603852B8EB; };
@@ -754,6 +755,7 @@
 		CE9837F0BBB91B9A4C09E2C9 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DLightModule.h; path = ../../Source/Module/modules/osc/dlight/DLightModule.h; sourceTree = "SOURCE_ROOT"; };
 		CFDFDA098CB0A28A21BB937C = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ModuleRouterView.cpp; path = ../../Source/Module/Routing/ui/ModuleRouterView.cpp; sourceTree = "SOURCE_ROOT"; };
 		CFE4F3C8D5417D715DDE367A = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SequenceCommand.h; path = ../../Source/Module/modules/sequence/commands/SequenceCommand.h; sourceTree = "SOURCE_ROOT"; };
+		CFE8B29F9B948CF706C3EC75 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ChataigneLogCommand.cpp; path = ../../Source/Module/modules/generic/commands/ChataigneLogCommand.cpp; sourceTree = "SOURCE_ROOT"; };
 		CFF11961CD6D0DFF4EB302A4 = {isa = PBXFileReference; lastKnownFileType = file.nib; name = RecentFilesMenuTemplate.nib; path = RecentFilesMenuTemplate.nib; sourceTree = "SOURCE_ROOT"; };
 		D0D5A0883EF64C22324AC868 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = StateUI.h; path = ../../Source/StateMachine/State/ui/StateUI.h; sourceTree = "SOURCE_ROOT"; };
 		D0FA69340D3CAF9809B29B29 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MappingFilterEditor.cpp; path = ../../Source/Common/Processor/Mapping/Filter/ui/MappingFilterEditor.cpp; sourceTree = "SOURCE_ROOT"; };
@@ -799,6 +801,7 @@
 		E059640D32B2F34315B8E93C = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = BaseComparatorUI.cpp; path = ../../Source/Common/Processor/Action/Condition/Comparator/ui/BaseComparatorUI.cpp; sourceTree = "SOURCE_ROOT"; };
 		E1DC8CBAF35FAAB742559C6B = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "list_ports_win.cc"; path = "../../Source/Common/Serial/lib/serial/impl/list_ports/list_ports_win.cc"; sourceTree = "SOURCE_ROOT"; };
 		E1E225BE4721476EA16AD814 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CustomValuesCommandArgumentManager.cpp; path = ../../Source/Module/modules/common/commands/customvalues/CustomValuesCommandArgumentManager.cpp; sourceTree = "SOURCE_ROOT"; };
+		E282A320F0E547C1419D5D5A = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ChataigneLogCommand.h; path = ../../Source/Module/modules/generic/commands/ChataigneLogCommand.h; sourceTree = "SOURCE_ROOT"; };
 		E2E597186A12CD91B5651747 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MappingOutput.h; path = ../../Source/Common/Processor/Mapping/Output/MappingOutput.h; sourceTree = "SOURCE_ROOT"; };
 		E31474B19421A6947C35E910 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TriggerLayerTimeline.h; path = ../../Source/TimeMachine/Sequence/Layer/layers/trigger/ui/TriggerLayerTimeline.h; sourceTree = "SOURCE_ROOT"; };
 		E3334C7CE4EE2A23F2323183 = {isa = PBXFileReference; lastKnownFileType = image.png; name = snap.png; path = ../../Resources/snap.png; sourceTree = "SOURCE_ROOT"; };
@@ -1282,6 +1285,8 @@
 					A26166E65C821049F6216AC8,
 					88865CA8100C83590AD7A17A, ); name = generators; sourceTree = "<group>"; };
 		19FB798FF72A5337130FA5B1 = {isa = PBXGroup; children = (
+					CFE8B29F9B948CF706C3EC75,
+					E282A320F0E547C1419D5D5A,
 					CAE2E4FE6BFCC743FDBEF690,
 					D4E1D32E8F42717371112360, ); name = commands; sourceTree = "<group>"; };
 		C4B5A56AF9E60B23C4052B42 = {isa = PBXGroup; children = (
@@ -1750,8 +1755,8 @@
 					"_DEBUG=1",
 					"DEBUG=1",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
-					"JUCE_APP_VERSION=1.3.7",
-					"JUCE_APP_VERSION_HEX=0x10307",
+					"JUCE_APP_VERSION=1.3.8b",
+					"JUCE_APP_VERSION_HEX=0x10308",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
 					"JucePlugin_Build_AU=0",
@@ -1783,8 +1788,8 @@
 					"_NDEBUG=1",
 					"NDEBUG=1",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
-					"JUCE_APP_VERSION=1.3.7",
-					"JUCE_APP_VERSION_HEX=0x10307",
+					"JUCE_APP_VERSION=1.3.8b",
+					"JUCE_APP_VERSION_HEX=0x10308",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
 					"JucePlugin_Build_AU=0",
@@ -2029,6 +2034,7 @@
 					A8F24E2C856C08B3352A81EC,
 					8CA4517F298BA2614C4054B7,
 					4D76E54F132133C54A03DF02,
+					E6C4A435A7B2A024E8745DE3,
 					07030143DF5F6F8D87E59358,
 					47B06F7D8CE1EF794F466906,
 					00F7943B39DC4F058928E693,
