@@ -38,6 +38,7 @@ public:
 	Trigger * triggerOff;
 
 	virtual void setForceDisabled(bool value, bool force = false) override;
+	void setHasOffConsequences(bool value);
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;

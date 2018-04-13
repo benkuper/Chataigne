@@ -34,20 +34,14 @@ State::~State()
 
 void State::onContainerParameterChangedInternal(Parameter *p)
 {
-	if (p == active)
+	if (p == active || p == enabled)
 	{		
-		if (enabled->boolValue())
-		{
-			if (p == active)
-			{
-				if (active->boolValue()) pm.triggerAllActivateActions();
-				else pm.triggerAllDeactivateActions();
-			}
-		}
+		if (enabled->boolValue() && p == active && !active->boolValue()) pm.triggerAllDeactivateActions();
 
 		stateListeners.call(&StateListener::stateActivationChanged, this);
 		pm.setForceDisabled(!active->boolValue() || !enabled->boolValue());
 
+		if (enabled->boolValue() && p == active && active->boolValue()) pm.triggerAllActivateActions();
 	}
 }
 

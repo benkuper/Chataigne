@@ -66,7 +66,13 @@ Array<Mapping*> ProcessorManager::getAllMappings()
 void ProcessorManager::triggerAllActivateActions()
 {
 	Array<Action*> actions = getAllActions();
-	for (auto &a : actions) if (a->actionRole == Action::ACTIVATE) a->triggerOn->trigger();
+	for (auto &a : actions)
+	{
+		if (a->actionRole == Action::ACTIVATE)
+		{
+			a->triggerOn->trigger();
+		}
+	}
 }
 
 void ProcessorManager::triggerAllDeactivateActions()

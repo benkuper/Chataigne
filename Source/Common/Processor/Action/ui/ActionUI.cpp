@@ -17,13 +17,13 @@ ActionUI::ActionUI(Action * _action) :
 	switch (action->actionRole)
 	{
 	case Action::STANDARD:
-		bgColor = ACTION_COLOR.withSaturation(.2f).darker(1);
+		bgColor = ACTION_COLOR.withSaturation(.4f).darker(1);
 		break;
 	case Action::ACTIVATE:
-		bgColor = BLUE_COLOR.withSaturation(.2f).darker(1);
+		bgColor = GREEN_COLOR.withSaturation(.4f).darker(1);
 		break;
 	case Action::DEACTIVATE:
-		bgColor = RED_COLOR.withSaturation(.2f).darker(1);
+		bgColor = RED_COLOR.withSaturation(.4f).darker(1);
 		break;
 	}
 

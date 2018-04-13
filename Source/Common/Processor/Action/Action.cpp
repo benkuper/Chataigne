@@ -12,10 +12,12 @@
 #include "ui/ActionUI.h"
 
 Action::Action(const String & name, var params) :
-	Processor(params.getProperty("name",name)),
+	Processor(params.getProperty("name", name)),
 	autoTriggerWhenAllConditionAreActives(true),
+	actionRole(Action::STANDARD),
 	triggerOn(nullptr),
-	triggerOff(nullptr)
+	triggerOff(nullptr),
+	hasOffConsequences(false)
 {
 	type = ACTION;
 	actionRole = (Role)(int)params.getProperty("role", STANDARD);
@@ -25,25 +27,12 @@ Action::Action(const String & name, var params) :
 	csmOn = new ConsequenceManager("Consequences : TRUE");
 	addChildControllableContainer(csmOn);
 
-	hasOffConsequences = params.getProperty("hasOffConsequences", false) && actionRole == STANDARD;
+	setHasOffConsequences(params.getProperty("hasOffConsequences", false) && actionRole == STANDARD);
 
-	if (hasOffConsequences)
-	{
-		csmOff = new ConsequenceManager("Consequences : FALSE");
-		addChildControllableContainer(csmOff);
-	}
-	
 	cdm.addConditionManagerListener(this);
 
 	triggerOn = addTrigger("Trigger Validate", "Triggers the action");
 	triggerOn->hideInEditor = true;
-
-	if (hasOffConsequences)
-	{
-		triggerOff = addTrigger("Trigger Invalidate", "Triggers the action");
-		triggerOff->hideInEditor = true;
-	}
-	
 
 	
 	helpID = "Action";
@@ -61,9 +50,30 @@ void Action::setForceDisabled(bool value, bool force)
 	if(hasOffConsequences) csmOff->setForceDisabled(value);
 }
 
+void Action::setHasOffConsequences(bool value)
+{
+	if (value == hasOffConsequences) return;
+	hasOffConsequences = value;
+	if (hasOffConsequences)
+	{
+		csmOff = new ConsequenceManager("Consequences : FALSE");
+		addChildControllableContainer(csmOff);
+		triggerOff = addTrigger("Trigger Invalidate", "Triggers the action");
+		triggerOff->hideInEditor = true;
+
+	} else
+	{
+		removeChildControllableContainer(csmOff);
+		csmOff = nullptr;
+		removeControllable(triggerOff);
+		triggerOff = nullptr;
+	}
+}
+
 var Action::getJSONData()
 {
 	var data = Processor::getJSONData();
+	if(actionRole != STANDARD) data.getDynamicObject()->setProperty("role", actionRole);
 	data.getDynamicObject()->setProperty("conditions", cdm.getJSONData());
 	data.getDynamicObject()->setProperty("consequences", csmOn->getJSONData());
 	if(hasOffConsequences) data.getDynamicObject()->setProperty("consequencesOff", csmOff->getJSONData());
@@ -73,6 +83,9 @@ var Action::getJSONData()
 void Action::loadJSONDataInternal(var data)
 {
 	Processor::loadJSONDataInternal(data);
+	actionRole = (Role)(int)data.getProperty("role", actionRole);
+	if (actionRole != STANDARD) setHasOffConsequences(false);
+
 	cdm.loadJSONData(data.getProperty("conditions", var()));
 	csmOn->loadJSONData(data.getProperty("consequences", var()));
 	if(hasOffConsequences) csmOff->loadJSONData(data.getProperty("consequencesOff", var()));
