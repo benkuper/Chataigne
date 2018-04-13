@@ -11,6 +11,8 @@
 #include "StateTransition.h"
 #include "../State/State.h"
 #include "../StateManager.h"
+
+
 StateTransition::StateTransition(State * source, State * dest) :
 	Action("transition"),//String(source->niceName << "_" << dest->niceName)),
 	sourceState(source),
@@ -49,14 +51,11 @@ void StateTransition::loadJSONDataInternal(var data)
 
 void StateTransition::onContainerTriggerTriggered(Trigger * t)
 {
-	Action::onContainerTriggerTriggered(t);
-	
 	if (t == triggerOn)
 	{
-		
 		if (sourceState->active->boolValue())
 		{
-			DBG("Action trigger ! " << niceName << ", " << sourceState->niceName << ", " << destState->niceName);
+			Action::onContainerTriggerTriggered(t);
 			destState->active->setValue(true);
 			sourceState->active->setValue(false); //just to be sure but should be handled when activating the dest state
 		}
