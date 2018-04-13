@@ -33,7 +33,7 @@ void ChataigneLogCommand::trigger()
 		break;
 
 	case VALUE:
-		LOG(message->stringValue() + " " + (value->target != nullptr ? ((Parameter *)value->target.get())->value : " not set"));
+		LOG(message->stringValue() + " " + String(value->target != nullptr ? ((Parameter *)value->target.get())->value : " not set"));
 		break;
 	}
 }
