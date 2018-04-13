@@ -9,10 +9,23 @@
 */
 
 #pragma once
-/*
+#include "Common/Command/BaseCommand.h"
+#include "../ChataigneGenericModule.h"
+
 class ChataigneLogCommand :
 	public BaseCommand
 {
+public:
+	ChataigneLogCommand(ChataigneGenericModule * _module, CommandContext context, var params);
+	~ChataigneLogCommand();
 
+	enum Type { MESSAGE, VALUE };
+	Type type;
+
+	StringParameter * message;
+	TargetParameter * value;
+
+	void trigger();
+
+	static BaseCommand * create(ControllableContainer * module, CommandContext context, var params);
 };
-*/
