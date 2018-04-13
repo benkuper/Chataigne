@@ -34,6 +34,8 @@ public:
 
 	BoolParameter * onlyOneActiveState; //whether activating a state automatically deactivates all other non-permanent states
 
+	void clear() override;
+
 	void setStateActive(State * s);
 
 	void addItemInternal(State * s, var data) override;

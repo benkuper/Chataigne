@@ -32,6 +32,12 @@ StateManager::~StateManager()
 }
 
 
+void StateManager::clear()
+{
+	stm.clear();
+	BaseManager::clear();
+}
+
 void StateManager::setStateActive(State * s)
 {
 	if (onlyOneActiveState->boolValue())
