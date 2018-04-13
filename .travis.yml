@@ -39,7 +39,7 @@ before_install:
     pwd
     ls -d */
     cd /Users/travis
-    git clone --depth=1 --branch=master https://github.com/WeAreROLI/JUCE.git JUCE
+    git clone --depth=1 --branch=master https://github.com/benkuper/JUCE.git JUCE
     cd /Users/travis/build/benkuper
     mkdir "JUCE Modules"
     cd "JUCE Modules"
