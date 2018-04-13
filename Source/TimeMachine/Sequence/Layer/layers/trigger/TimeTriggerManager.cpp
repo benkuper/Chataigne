@@ -50,6 +50,11 @@ TimeTrigger * TimeTriggerManager::addItemFromClipboard(bool showWarning)
 	return t;
 }
 
+bool TimeTriggerManager::canAddItemOfType(const String & typeToCheck)
+{
+	return typeToCheck == itemDataType || typeToCheck == "Action";
+}
+
 Array<TimeTrigger*> TimeTriggerManager::getTriggersInTimespan(float startTime, float endTime, bool includeAlreadyTriggered)
 {
 	Array<TimeTrigger*> result;

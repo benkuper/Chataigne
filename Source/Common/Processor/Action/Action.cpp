@@ -19,6 +19,7 @@ Action::Action(const String & name, var params) :
 	triggerOff(nullptr),
 	hasOffConsequences(false)
 {
+	itemDataType = "Action";
 	type = ACTION;
 	actionRole = (Role)(int)params.getProperty("role", STANDARD);
 

@@ -43,6 +43,11 @@ void ProcessorManager::addItemInternal(Processor * item, var data)
 	item->setForceDisabled(forceDisabled);
 }
 
+bool ProcessorManager::canAddItemOfType(const String & typeToCheck)
+{
+	return typeToCheck == itemDataType || typeToCheck == "Action" || typeToCheck == "Mapping";
+}
+
 Array<Action*> ProcessorManager::getAllActions()
 {
 	Array<Action*> result;

@@ -44,6 +44,7 @@ public:
 	void reorderItems() override;
 	
 	TimeTrigger * addItemFromClipboard(bool showWarning = true) override;
+	bool canAddItemOfType(const String & typeToCheck) override;
 
 	Array<TimeTrigger *> getTriggersInTimespan(float startTime, float endTime, bool includeAlreadyTriggered = false);
 

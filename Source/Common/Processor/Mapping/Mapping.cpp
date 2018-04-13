@@ -15,6 +15,7 @@ Mapping::Mapping(bool canBeDisabled) :
 	Processor("Mapping", canBeDisabled),
 	inputIsLocked(false)
 {
+	itemDataType = "Mapping";
 	type = MAPPING;
 
 	continuousProcess = addBoolParameter("Continuous", "If enabled, the mapping will process continuously rather than only when parameter value has changed", false);

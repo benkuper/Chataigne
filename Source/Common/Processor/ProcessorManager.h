@@ -28,6 +28,8 @@ public:
 	void setForceDisabled(bool value, bool force = false);
 	void addItemInternal(Processor * item, var data) override;
 
+	bool canAddItemOfType(const String &typeToCheck) override;
+
 	Array<Action *> getAllActions();
 	Array<Mapping *> getAllMappings();
 	void triggerAllActivateActions();
