@@ -83,13 +83,19 @@ void CVCommand::onContainerParameterChanged(Parameter * p)
 {
 	if (p == target && type == SET_VALUE)
 	{
-		if (value != nullptr) removeControllable(value);
+		if (value != nullptr)
+		{
+			clearTargetMappingParameters();
+			removeControllable(value);
+		}
+
 		value = ControllableFactory::createParameterFrom(target->target);
 		if (value != nullptr)
 		{
 			valueOperator->hideInEditor = value->type != Controllable::FLOAT && value->type != Controllable::INT;
 			
 			value->setNiceName("Value");
+			setTargetMappingParameterAt(value, 0);
 			addParameter(value);
 		}
 
