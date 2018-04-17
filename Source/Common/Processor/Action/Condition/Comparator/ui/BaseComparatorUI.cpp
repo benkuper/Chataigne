@@ -23,6 +23,12 @@ BaseComparatorUI::BaseComparatorUI(BaseComparator * _comparator) :
 	{
 		refEditor = (ControllableEditor *)comparator->reference->getEditor(false);
 		refEditor->setShowLabel(false);
+		if (comparator->reference->type != Controllable::TRIGGER)
+		{
+			Parameter * p = dynamic_cast<Parameter *>(comparator->reference);
+			p->addAsyncParameterListener(this);
+		}
+
 		addAndMakeVisible(refEditor);
 	}
 
@@ -31,6 +37,11 @@ BaseComparatorUI::BaseComparatorUI(BaseComparator * _comparator) :
 
 BaseComparatorUI::~BaseComparatorUI()
 {
+	if (comparator->reference->type != Controllable::TRIGGER)
+	{
+		Parameter * p = dynamic_cast<Parameter *>(comparator->reference);
+		p->removeAsyncParameterListener(this);
+	}
 }
 
 void BaseComparatorUI::resized()
@@ -38,9 +49,15 @@ void BaseComparatorUI::resized()
 	if (refEditor != nullptr)
 	{
 		Rectangle<int> r = getLocalBounds().reduced(2, 0);
-		compareFuncUI->setBounds(r.removeFromLeft(80));
+		compareFuncUI->setBounds(r.removeFromLeft(80).withHeight(16)); 
 		r.removeFromLeft(2);
-		refEditor->setBounds(r);
+		refEditor->setBounds(r.withHeight(refEditor->getHeight()));
 	}
-	
+
+	setSize(getWidth(), refEditor->getBottom());
+}
+
+void BaseComparatorUI::newMessage(const Parameter::ParameterEvent & e)
+{
+	if (e.type == Parameter::ParameterEvent::CONTROLMODE_CHANGED) resized();
 }

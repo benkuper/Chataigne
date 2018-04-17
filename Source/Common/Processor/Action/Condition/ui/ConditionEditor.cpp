@@ -53,3 +53,8 @@ void ConditionEditor::newMessage(const Condition::ConditionEvent &e)
 		break;
 	}
 }
+
+void ConditionEditor::childBoundsChanged(Component *)
+{
+	resized();
+}

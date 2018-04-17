@@ -14,7 +14,8 @@
 #include "../BaseComparator.h"
 
 class BaseComparatorUI :
-	public Component
+	public Component,
+	public Parameter::AsyncListener
 {
 public:
 	BaseComparatorUI(BaseComparator * comparator);
@@ -27,6 +28,8 @@ public:
 
 	ScopedPointer<ControllableEditor> refEditor;
 	void resized() override;
+
+	void newMessage(const Parameter::ParameterEvent &e) override;
 };
 
 
