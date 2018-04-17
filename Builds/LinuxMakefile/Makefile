@@ -124,6 +124,7 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/MappingFilter_806fb652.o \
   $(JUCE_OBJDIR)/MappingFilterManager_2c745d85.o \
   $(JUCE_OBJDIR)/MappingFilterEditor_f7157696.o \
+  $(JUCE_OBJDIR)/ConversionFilters_b963b15d.o \
   $(JUCE_OBJDIR)/CropFilter_481b2f1a.o \
   $(JUCE_OBJDIR)/CurveMapFilter_75770fb7.o \
   $(JUCE_OBJDIR)/InverseFilter_e1c4de20.o \
@@ -632,6 +633,11 @@ $(JUCE_OBJDIR)/MappingFilterManager_2c745d85.o: ../../Source/Common/Processor/Ma
 $(JUCE_OBJDIR)/MappingFilterEditor_f7157696.o: ../../Source/Common/Processor/Mapping/Filter/ui/MappingFilterEditor.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling MappingFilterEditor.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/ConversionFilters_b963b15d.o: ../../Source/Common/Processor/Mapping/Filter/filters/ConversionFilters.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling ConversionFilters.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/CropFilter_481b2f1a.o: ../../Source/Common/Processor/Mapping/Filter/filters/CropFilter.cpp

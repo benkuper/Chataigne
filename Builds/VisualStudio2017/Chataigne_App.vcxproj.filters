@@ -1078,6 +1078,9 @@
     <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\ui\MappingFilterEditor.cpp">
       <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\ui</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\ConversionFilters.cpp">
+      <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\CropFilter.cpp">
       <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters</Filter>
     </ClCompile>
@@ -4040,6 +4043,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\ui\MappingFilterEditor.h">
       <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\ConversionFilters.h">
+      <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\CropFilter.h">
       <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters</Filter>

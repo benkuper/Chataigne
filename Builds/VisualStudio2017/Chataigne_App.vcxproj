@@ -216,6 +216,7 @@
     <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\MappingFilter.cpp"/>
     <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\MappingFilterManager.cpp"/>
     <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\ui\MappingFilterEditor.cpp"/>
+    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\ConversionFilters.cpp"/>
     <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\CropFilter.cpp"/>
     <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\CurveMapFilter.cpp"/>
     <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\InverseFilter.cpp"/>
@@ -2496,6 +2497,7 @@
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\MappingFilter.h"/>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\MappingFilterManager.h"/>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\ui\MappingFilterEditor.h"/>
+    <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\ConversionFilters.h"/>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\CropFilter.h"/>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\CurveMapFilter.h"/>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\InverseFilter.h"/>

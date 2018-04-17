@@ -280,6 +280,10 @@
                       file="Source/Common/Processor/Mapping/Filter/ui/MappingFilterEditor.h"/>
               </GROUP>
               <GROUP id="{B0B4810E-8573-A36C-4561-1CE52F06C6BA}" name="filters">
+                <FILE id="MB5sgv" name="ConversionFilters.cpp" compile="1" resource="0"
+                      file="Source/Common/Processor/Mapping/Filter/filters/ConversionFilters.cpp"/>
+                <FILE id="zbVVCK" name="ConversionFilters.h" compile="0" resource="0"
+                      file="Source/Common/Processor/Mapping/Filter/filters/ConversionFilters.h"/>
                 <FILE id="cKeic2" name="CropFilter.cpp" compile="1" resource="0" file="Source/Common/Processor/Mapping/Filter/filters/CropFilter.cpp"/>
                 <FILE id="rdaHZm" name="CropFilter.h" compile="0" resource="0" file="Source/Common/Processor/Mapping/Filter/filters/CropFilter.h"/>
                 <FILE id="DvPe0g" name="CurveMapFilter.cpp" compile="1" resource="0"

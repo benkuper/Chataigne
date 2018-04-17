@@ -17,6 +17,7 @@
 #include "filters/LagFilter.h"
 #include "filters/OffsetFilter.h"
 #include "filters/CropFilter.h"
+#include "filters/ConversionFilters.h"
 
 MappingFilterManager::MappingFilterManager() :
 	BaseManager<MappingFilter>("Filters"),
@@ -28,8 +29,12 @@ MappingFilterManager::MappingFilterManager() :
 	factory.defs.add(Factory<MappingFilter>::Definition::createDef("Remap", "Remap", &SimpleRemapFilter::create));
 	factory.defs.add(Factory<MappingFilter>::Definition::createDef("Remap", "Crop", &CropFilter::create));
 	factory.defs.add(Factory<MappingFilter>::Definition::createDef("Remap", "Curve Map", &CurveMapFilter::create));
+	
+	factory.defs.add(Factory<MappingFilter>::Definition::createDef("Conversion", "Convert To Integer", &ToIntFilter::create));
+
 	factory.defs.add(Factory<MappingFilter>::Definition::createDef("Physics", "Smooth", &SimpleSmoothFilter::create));
 	factory.defs.add(Factory<MappingFilter>::Definition::createDef("Physics", "Lag", &LagFilter::create));
+
 	factory.defs.add(Factory<MappingFilter>::Definition::createDef("", "Script", &ScriptFilter::create));
 
 	selectItemWhenCreated = false;

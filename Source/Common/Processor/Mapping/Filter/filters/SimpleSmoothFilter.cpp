@@ -16,7 +16,7 @@ SimpleSmoothFilter::SimpleSmoothFilter(var params) :
 {
 	needsContinuousProcess = true;
 	forceOutParameterType = FloatParameter::getTypeStringStatic();
-		smooth = filterParams.addFloatParameter("Smoothing", "Smooth amount of the filter. 0=no smoothing, 1=max smoothing (value will not change at all)", .5f, 0, 1);
+	smooth = filterParams.addFloatParameter("Smoothing", "Smooth amount of the filter. 0=no smoothing, 1=max smoothing (value will not change at all)", .5f, 0, 1);
 }
 
 SimpleSmoothFilter::~SimpleSmoothFilter()

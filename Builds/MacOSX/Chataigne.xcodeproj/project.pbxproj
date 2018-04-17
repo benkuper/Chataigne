@@ -80,6 +80,7 @@
 		75E62FACE939E95457E7F961 = {isa = PBXBuildFile; fileRef = 9BF05C0D475358E71512E9B7; };
 		7EE2BBB08C08D1DBB434ED32 = {isa = PBXBuildFile; fileRef = BF9BE431A99A71683F148A0C; };
 		CD63ECC155516890AB267937 = {isa = PBXBuildFile; fileRef = D0FA69340D3CAF9809B29B29; };
+		7501C5AAA72882A153BCDDD5 = {isa = PBXBuildFile; fileRef = 9D140B0127A9DF4E73935500; };
 		B8F8C5CEEF86D546765CEC2B = {isa = PBXBuildFile; fileRef = 63338F701037572BA9336354; };
 		5411CF0345FFD6D944E86012 = {isa = PBXBuildFile; fileRef = 660D0C6ADE2F09F949AFD580; };
 		AA2B59E6C251B7BF5817A4D0 = {isa = PBXBuildFile; fileRef = 07DA0428A4E51B7E53A11897; };
@@ -512,6 +513,7 @@
 		5FA54638369A3C34CEB7FE3C = {isa = PBXFileReference; lastKnownFileType = file.chalayout; name = default.chalayout; path = ../../Resources/default.chalayout; sourceTree = "SOURCE_ROOT"; };
 		6098C6356F6D0B16B55883D2 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CustomValuesCommandArgumentManagerEditor.h; path = ../../Source/Module/modules/common/commands/customvalues/ui/CustomValuesCommandArgumentManagerEditor.h; sourceTree = "SOURCE_ROOT"; };
 		60C2F429971AA38584B05844 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ScriptFilter.cpp; path = ../../Source/Common/Processor/Mapping/Filter/filters/ScriptFilter.cpp; sourceTree = "SOURCE_ROOT"; };
+		61A03C461E20B39BBA82ECC2 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ConversionFilters.h; path = ../../Source/Common/Processor/Mapping/Filter/filters/ConversionFilters.h; sourceTree = "SOURCE_ROOT"; };
 		629996A7896E858640C400FF = {isa = PBXFileReference; lastKnownFileType = file; name = "juce_events"; path = "~/JUCE/modules/juce_events"; sourceTree = "<absolute>"; };
 		63338F701037572BA9336354 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CropFilter.cpp; path = ../../Source/Common/Processor/Mapping/Filter/filters/CropFilter.cpp; sourceTree = "SOURCE_ROOT"; };
 		63721D54ECE83C8FC7B1E667 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ProcessorManagerUI.h; path = ../../Source/Common/Processor/ui/ProcessorManagerUI.h; sourceTree = "SOURCE_ROOT"; };
@@ -638,6 +640,7 @@
 		9BDC1033C6085F642661E8B9 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = TimeCue.cpp; path = ../../Source/TimeMachine/Sequence/Cue/TimeCue.cpp; sourceTree = "SOURCE_ROOT"; };
 		9BF05C0D475358E71512E9B7 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MappingFilter.cpp; path = ../../Source/Common/Processor/Mapping/Filter/MappingFilter.cpp; sourceTree = "SOURCE_ROOT"; };
 		9D053157B64EC441463A5D29 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = WiimoteManager.h; path = ../../Source/Module/modules/controller/wiimote/WiimoteManager.h; sourceTree = "SOURCE_ROOT"; };
+		9D140B0127A9DF4E73935500 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ConversionFilters.cpp; path = ../../Source/Common/Processor/Mapping/Filter/filters/ConversionFilters.cpp; sourceTree = "SOURCE_ROOT"; };
 		9D8FF2DBA0D8821F5A7338EE = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OSExecCommand.h; path = ../../Source/Module/modules/system/os/commands/OSExecCommand.h; sourceTree = "SOURCE_ROOT"; };
 		9DD64A74FA3FA91032907BDD = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = AboutWindow.cpp; path = ../../Source/UI/AboutWindow.cpp; sourceTree = "SOURCE_ROOT"; };
 		9E690FBCCDBE656FEEE7C5EE = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SequenceLayerPanelManagerUI.h; path = ../../Source/TimeMachine/Sequence/Layer/ui/SequenceLayerPanelManagerUI.h; sourceTree = "SOURCE_ROOT"; };
@@ -1040,6 +1043,8 @@
 					D0FA69340D3CAF9809B29B29,
 					040F7315F50E852C0354EF84, ); name = ui; sourceTree = "<group>"; };
 		4545E10ABE8AF2EF652D28E0 = {isa = PBXGroup; children = (
+					9D140B0127A9DF4E73935500,
+					61A03C461E20B39BBA82ECC2,
 					63338F701037572BA9336354,
 					EC23908C8F5633348E6B378B,
 					660D0C6ADE2F09F949AFD580,
@@ -1952,6 +1957,7 @@
 					75E62FACE939E95457E7F961,
 					7EE2BBB08C08D1DBB434ED32,
 					CD63ECC155516890AB267937,
+					7501C5AAA72882A153BCDDD5,
 					B8F8C5CEEF86D546765CEC2B,
 					5411CF0345FFD6D944E86012,
 					AA2B59E6C251B7BF5817A4D0,
