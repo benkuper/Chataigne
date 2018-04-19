@@ -154,7 +154,7 @@ void CustomOSCModule::processMessageInternal(const OSCMessage & msg)
 			break;
 
 		case 1:
-			if (msg[0].isInt32()) c = new IntParameter(cNiceName, "", msg[0].getInt32(), msg[0].getInt32(), msg[0].getInt32());
+			if (msg[0].isInt32()) c = new IntParameter(cNiceName, "", msg[0].getInt32());
 			else if (msg[0].isFloat32()) c = new FloatParameter(cNiceName, "", msg[0].getFloat32());
 			else if (msg[0].isString()) c = new StringParameter(cNiceName, "", msg[0].getString());
 			break;
