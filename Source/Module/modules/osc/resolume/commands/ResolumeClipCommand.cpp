@@ -24,8 +24,8 @@ ResolumeClipCommand::ResolumeClipCommand(ResolumeModule * _module, CommandContex
 
 	if (params.getProperty("multi", false))
 	{
-		firstClip = addIntParameter("First Clip", "First Clip of the MultiClip", 1, 1, 100);
-		lastClip = addIntParameter("Last Clip", "Last Clip of the MultiClip", 1, 1, 100);
+		firstClip = addIntParameter("First Clip", "First Clip of the MultiClip", 1, 1,INT_MAX);
+		lastClip = addIntParameter("Last Clip", "Last Clip of the MultiClip", 1, 1, INT_MAX);
 		loopClips = addBoolParameter("Loop", "Loop when reached last clip", true);
 		randomClips = addBoolParameter("Random", "Random between first and last clip", false);
 	}
