@@ -28,6 +28,7 @@ BaseComparator::BaseComparator(Controllable * _source) :
 
 BaseComparator::~BaseComparator()
 {
+	masterReference.clear();
 }
 
 void BaseComparator::setValid(bool value)

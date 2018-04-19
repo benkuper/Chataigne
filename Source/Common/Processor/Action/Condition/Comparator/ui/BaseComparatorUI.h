@@ -21,7 +21,7 @@ public:
 	BaseComparatorUI(BaseComparator * comparator);
 	virtual ~BaseComparatorUI();
 
-	BaseComparator * comparator;
+	WeakReference<BaseComparator> comparator;
 
 	//ScopedPointer<BoolToggleUI> alwaysDispatchUI;
 	ScopedPointer<EnumParameterUI> compareFuncUI;

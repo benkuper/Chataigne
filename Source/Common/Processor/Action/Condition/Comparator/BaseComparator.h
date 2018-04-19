@@ -52,6 +52,9 @@ public:
 	virtual BaseComparatorUI * createUI();
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(BaseComparator)
+
+	WeakReference<BaseComparator>::Master masterReference;
+	friend class BaseComparator;
 };
 
 class TriggerComparator :

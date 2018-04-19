@@ -19,7 +19,7 @@ BaseComparatorUI::BaseComparatorUI(BaseComparator * _comparator) :
 	addAndMakeVisible(compareFuncUI);
 	//addAndMakeVisible(alwaysDispatchUI);
 
-	if (comparator->reference != nullptr) //null if comparator is trigger
+	if (!comparator.wasObjectDeleted() && comparator->reference != nullptr) //null if comparator is trigger
 	{
 		refEditor = (ControllableEditor *)comparator->reference->getEditor(false);
 		refEditor->setShowLabel(false);
@@ -35,9 +35,9 @@ BaseComparatorUI::BaseComparatorUI(BaseComparator * _comparator) :
 	setSize(100, 16); //init size
 }
 
-BaseComparatorUI::~BaseComparatorUI()
+BaseComparatorUI::~BaseComparatorUI() 
 {
-	if (comparator->reference->type != Controllable::TRIGGER)
+	if (!comparator.wasObjectDeleted() && comparator->reference->type != Controllable::TRIGGER)
 	{
 		Parameter * p = dynamic_cast<Parameter *>(comparator->reference);
 		p->removeAsyncParameterListener(this);
