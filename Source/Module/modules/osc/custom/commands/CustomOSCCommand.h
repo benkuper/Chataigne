@@ -25,13 +25,14 @@ public:
 	
 	CustomValuesCommandArgumentManager argManager;
 
-	var getJSONData() override;
-	void loadJSONDataInternal(var data) override;
-
+	var lastValue;
 
 	void trigger() override;
-
 	void useForMappingChanged(CustomValuesCommandArgument * a) override;
+
+
+	var getJSONData() override;
+	void loadJSONDataInternal(var data) override;
 
 	static CustomOSCCommand * create(ControllableContainer * module, CommandContext context, var params) { return new CustomOSCCommand((CustomOSCModule *)module, context, params); }
 

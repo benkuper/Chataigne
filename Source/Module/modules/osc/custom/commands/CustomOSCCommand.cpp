@@ -27,18 +27,6 @@ CustomOSCCommand::~CustomOSCCommand()
 	masterReference.clear();
 }
 
-var CustomOSCCommand::getJSONData()
-{
-	var data = OSCCommand::getJSONData();
-	data.getDynamicObject()->setProperty("argManager", argManager.getJSONData());
-	return data;
-}
-
-void CustomOSCCommand::loadJSONDataInternal(var data)
-{
-	OSCCommand::loadJSONDataInternal(data);
-	argManager.loadJSONData(data.getProperty("argManager", var()), true);
-}
 
 void CustomOSCCommand::trigger()
 {
@@ -100,4 +88,18 @@ void CustomOSCCommand::useForMappingChanged(CustomValuesCommandArgument *)
 			index++;
 		}
 	}
+}
+
+
+var CustomOSCCommand::getJSONData()
+{
+	var data = OSCCommand::getJSONData();
+	data.getDynamicObject()->setProperty("argManager", argManager.getJSONData());
+	return data;
+}
+
+void CustomOSCCommand::loadJSONDataInternal(var data)
+{
+	OSCCommand::loadJSONDataInternal(data);
+	argManager.loadJSONData(data.getProperty("argManager", var()), true);
 }
