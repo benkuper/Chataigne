@@ -56,8 +56,8 @@ void StateTransition::onContainerTriggerTriggered(Trigger * t)
 		if (sourceState->active->boolValue())
 		{
 			Action::onContainerTriggerTriggered(t);
+			sourceState->active->setValue(false); //first deactivate this one just in case the dest state instantly reactivates this one...
 			destState->active->setValue(true);
-			sourceState->active->setValue(false); //just to be sure but should be handled when activating the dest state
 		}
 	}
 }

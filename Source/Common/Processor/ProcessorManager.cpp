@@ -68,22 +68,30 @@ Array<Mapping*> ProcessorManager::getAllMappings()
 	return result;
 }
 
-void ProcessorManager::triggerAllActivateActions()
+void ProcessorManager::checkAllActivateActions()
 {
 	Array<Action*> actions = getAllActions();
 	for (auto &a : actions)
 	{
 		if (a->actionRole == Action::ACTIVATE)
 		{
-			a->triggerOn->trigger();
+			a->cdm.validationProgress->setValue(0);
+			a->cdm.checkAllConditions(true);
 		}
 	}
 }
 
-void ProcessorManager::triggerAllDeactivateActions()
+void ProcessorManager::checkAllDeactivateActions()
 {
 	Array<Action*> actions = getAllActions();
-	for (auto &a : actions) if (a->actionRole == Action::DEACTIVATE) a->triggerOn->trigger();
+	for (auto &a : actions)
+	{
+		if (a->actionRole == Action::DEACTIVATE)
+		{
+			a->cdm.validationProgress->setValue(0);
+			a->cdm.checkAllConditions(true);
+		}
+	}
 }
 
 void ProcessorManager::loadJSONDataInternal(var data)

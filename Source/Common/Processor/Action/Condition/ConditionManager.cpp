@@ -81,18 +81,18 @@ void ConditionManager::setForceDisabled(bool value, bool force)
 	for (auto &i : items) i->forceDisabled = value;
 }
 
-void ConditionManager::checkAllConditions()
+void ConditionManager::checkAllConditions(bool emptyIsValid)
 {
 	bool valid = false;
 	ConditionOperator op = (ConditionOperator)(int)conditionOperator->getValueData();
 	switch (op)
 	{
 	case ConditionOperator::AND:
-		valid = areAllConditionsValid();
+		valid = areAllConditionsValid(emptyIsValid);
 		break;
 
 	case ConditionOperator::OR:
-		valid = isAtLeastOneConditionValid();
+		valid = isAtLeastOneConditionValid(emptyIsValid);
 		break;
 	}
 
@@ -170,29 +170,35 @@ void ConditionManager::timerCallback()
 	}
 }
 
-bool ConditionManager::areAllConditionsValid()
+bool ConditionManager::areAllConditionsValid(bool emptyIsValid)
 {
-	if (items.size() == 0) return false;
+	if (items.size() == 0) return emptyIsValid;
 
+	int conditionsChecked = 0;
 	for (auto &c : items)
 	{
 		if (!c->enabled->boolValue()) continue;
 		if (!c->isValid->boolValue()) return false;
+		conditionsChecked++;
 	}
 
+	if (conditionsChecked == 0) return emptyIsValid;
 	return true;
 }
 
-bool ConditionManager::isAtLeastOneConditionValid()
+bool ConditionManager::isAtLeastOneConditionValid(bool emptyIsValid)
 {
-	if (items.size() == 0) return false;
+	if (items.size() == 0) return emptyIsValid;
 
+	int conditionsChecked = 0; 
 	for (auto &c : items)
 	{
 		if (!c->enabled->boolValue()) continue;
 		if (c->isValid->boolValue()) return true;
+		conditionsChecked++;
 	}
 
+	if (conditionsChecked == 0) return emptyIsValid;
 	return false;
 }
 

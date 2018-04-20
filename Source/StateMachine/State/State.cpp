@@ -47,11 +47,11 @@ void State::onContainerParameterChangedInternal(Parameter *p)
 			{
 				pm.setForceDisabled(!active->boolValue() || !enabled->boolValue());
 				stateListeners.call(&StateListener::stateActivationChanged, this);
-				pm.triggerAllActivateActions();
-				
+
+				pm.checkAllActivateActions();
 			} else
 			{
-				pm.triggerAllDeactivateActions();
+				pm.checkAllDeactivateActions();
 				stateListeners.call(&StateListener::stateActivationChanged, this);
 				pm.setForceDisabled(!active->boolValue() || !enabled->boolValue());
 			}

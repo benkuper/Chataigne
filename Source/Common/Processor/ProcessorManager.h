@@ -32,8 +32,8 @@ public:
 
 	Array<Action *> getAllActions();
 	Array<Mapping *> getAllMappings();
-	void triggerAllActivateActions();
-	void triggerAllDeactivateActions();
+	void checkAllActivateActions();
+	void checkAllDeactivateActions();
 
 
 	Factory<Processor> factory;

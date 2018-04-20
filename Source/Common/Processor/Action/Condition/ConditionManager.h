@@ -44,10 +44,10 @@ public:
 
 	void setForceDisabled(bool value, bool force = false);
 
-	void checkAllConditions();
+	void checkAllConditions(bool emptyIsValid = false);
 
-	bool areAllConditionsValid();
-	bool isAtLeastOneConditionValid();
+	bool areAllConditionsValid(bool emptyIsValid = false);
+	bool isAtLeastOneConditionValid(bool emptyIsValid = false);
 
 	int getNumEnabledConditions();
 	int getNumValidConditions();
