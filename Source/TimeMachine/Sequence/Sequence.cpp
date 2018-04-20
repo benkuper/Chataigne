@@ -42,7 +42,7 @@ Sequence::Sequence() :
 	currentTime->defaultUI = FloatParameter::TIME;
 	currentTime->isSavable = false;
 
-	totalTime = addFloatParameter("Total Time", "Total time of this sequence, in seconds", initTotalTime, 1, 3600); //max 1h
+	totalTime = addFloatParameter("Total Time", "Total time of this sequence, in seconds", initTotalTime, 1, INT32_MAX);
 	totalTime->defaultUI = FloatParameter::TIME;
 
 	loopParam = addBoolParameter("Loop", "Whether the sequence plays again from the start when reached the end while playing", false);
