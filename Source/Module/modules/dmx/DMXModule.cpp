@@ -56,6 +56,8 @@ void DMXModule::setCurrentDMXDevice(DMXDevice * d)
 	}
 
 	dmxDevice = d;
+	
+	dmxConnected->hideInEditor = dmxDevice == nullptr || dmxDevice->type == DMXDevice::ARTNET;
 	dmxConnected->setValue(false);
 
 	if (dmxDevice != nullptr)
@@ -64,6 +66,7 @@ void DMXModule::setCurrentDMXDevice(DMXDevice * d)
 		moduleParams.addChildControllableContainer(dmxDevice);
 	}
 
+	
 	dmxModuleListeners.call(&DMXModuleListener::dmxDeviceChanged);
 }
 

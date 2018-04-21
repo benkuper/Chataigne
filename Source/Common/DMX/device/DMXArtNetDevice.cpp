@@ -17,7 +17,7 @@ DMXArtNetDevice::DMXArtNetDevice() :
 {
 	nodeIP = addStringParameter("Node IP", "IP of the ArtNet Device", "192.168.1.255");
 	nodePort = addIntParameter("Node Port", "Port of the Node, usually 6454", 6454, 1024, 65535);
-
+	
 	memset(fullMessage, 0, (NUM_CHANNELS + 18) * sizeof(uint8));
 	memcpy(fullMessage, header, 18 * sizeof(uint8));
 }
