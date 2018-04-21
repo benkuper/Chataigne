@@ -62,8 +62,8 @@ Parameter * MappingFilter::setupParameterInternal(Parameter * source)
 	if (source == nullptr) return nullptr;
 	Parameter * p = (Parameter *) ControllableFactory::createControllable(forceOutParameterType.isNotEmpty()? forceOutParameterType :source->getTypeString());
 	p->setNiceName("Out");
-	p->setValue(source->getValue());
 	p->setRange(source->minimumValue, source->maximumValue);
+	p->setValue(source->getValue());
 	p->hideInEditor = true;
 	return p;
 }
@@ -83,7 +83,7 @@ Parameter * MappingFilter::process(Parameter * source)
 		filteredParameter->setRange(sourceParam->minimumValue, sourceParam->maximumValue);
 	}
 
-	processInternal(); 
+	if (filteredParameter != nullptr) processInternal();  //avoid cross-thread crash
 
 	return filteredParameter;
 }
