@@ -92,6 +92,7 @@ after_success:
   if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
     docker exec -t ubuntu bash -c "echo 'AFTER SUCESS : ZIP AND UPLOADs';
     cd /benkuper/Chataigne/Builds/LinuxMakefile/build;
+    apt-get install -y wget unzip zip;
     wget http://benjamin.kuperberg.fr/chatagne/user/data/Chataigne-linux-dependencies.zip;
     unzip Chataigne-linux-dependencies.zip;
     zip -r Chataigne-linux-x64-bleedingedge.zip Chataigne lib;
