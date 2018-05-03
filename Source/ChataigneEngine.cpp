@@ -9,7 +9,6 @@
  */
 #include "ChataigneEngine.h"
 
-#include "Project/ProjectSettings.h"
 #include "Module/ModuleManager.h"
 #include "StateMachine/StateManager.h"
 #include "TimeMachine/SequenceManager.h"
@@ -32,7 +31,6 @@ ChataigneEngine::ChataigneEngine(ApplicationProperties * appProperties, const St
 {
 	//init here
 	Engine::mainEngine = this;
-	addChildControllableContainer(ProjectSettings::getInstance());
 	addChildControllableContainer(ModuleManager::getInstance());
 	addChildControllableContainer(StateManager::getInstance());
 	addChildControllableContainer(SequenceManager::getInstance());

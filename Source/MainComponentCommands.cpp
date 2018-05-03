@@ -10,7 +10,6 @@
 
 
 #include "MainComponent.h"
-#include "Project/ProjectSettings.h"
 #include "UI/AboutWindow.h"
 
 namespace CommandIDs

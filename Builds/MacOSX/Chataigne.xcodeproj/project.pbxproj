@@ -222,7 +222,6 @@
 		08AC591089BBE936B40638E0 = {isa = PBXBuildFile; fileRef = 498E36E4BBEBDCC6F4155CB4; };
 		19CC2ABB56F9EF9273DDF0F9 = {isa = PBXBuildFile; fileRef = C011CD17DA02C50BA1542AD8; };
 		690B4496ABF612682FA603E6 = {isa = PBXBuildFile; fileRef = 17AF8E6632B75805AD969E9E; };
-		CC2007ED2CDD9CBA5B549EC9 = {isa = PBXBuildFile; fileRef = A00CE65B8341CD241E44AD46; };
 		D342F5881A16D25C229F2A7C = {isa = PBXBuildFile; fileRef = DBC595D222F79223C4B97FCE; };
 		E9E6A4C4EB06AE2B2D5193DD = {isa = PBXBuildFile; fileRef = 46735792BB7D3BA31D3F594F; };
 		5A09627B5BC7EADA5D8ACF1F = {isa = PBXBuildFile; fileRef = 12DDF7A00AC1057D87937493; };
@@ -648,7 +647,6 @@
 		9EB5EECB134C6E74D074AB10 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = "include_juce_video.mm"; path = "../../JuceLibraryCode/include_juce_video.mm"; sourceTree = "SOURCE_ROOT"; };
 		9FA5201B24DEF339459A4BFA = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ProcessorUI.h; path = ../../Source/Common/Processor/ui/ProcessorUI.h; sourceTree = "SOURCE_ROOT"; };
 		9FBD97B2B4965F06E7BC9079 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AutomationKey.h; path = ../../Source/Common/Automation/AutomationKey.h; sourceTree = "SOURCE_ROOT"; };
-		A00CE65B8341CD241E44AD46 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ProjectSettings.cpp; path = ../../Source/Project/ProjectSettings.cpp; sourceTree = "SOURCE_ROOT"; };
 		A07AB46E1CB4B4698F148FC8 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MIDIManager.cpp; path = ../../Source/Common/MIDI/MIDIManager.cpp; sourceTree = "SOURCE_ROOT"; };
 		A166E3006BBC663DDF05DE54 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = "include_juce_graphics.mm"; path = "../../JuceLibraryCode/include_juce_graphics.mm"; sourceTree = "SOURCE_ROOT"; };
 		A18B69298A0A42084F375802 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ModuleRouterPanelView.cpp; path = ../../Source/Module/Routing/ui/ModuleRouterPanelView.cpp; sourceTree = "SOURCE_ROOT"; };
@@ -725,7 +723,6 @@
 		C0BFDCF118F92A603852B8EB = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MIDICommands.cpp; path = ../../Source/Module/modules/midi/commands/MIDICommands.cpp; sourceTree = "SOURCE_ROOT"; };
 		C0C2DF64A8321AD22A762995 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CustomValuesCommandArgument.h; path = ../../Source/Module/modules/common/commands/customvalues/CustomValuesCommandArgument.h; sourceTree = "SOURCE_ROOT"; };
 		C0E2F5B8B835592A04BFB2FD = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = UserOSCCommandEditor.h; path = ../../Source/Module/modules/osc/custom/commands/user/ui/UserOSCCommandEditor.h; sourceTree = "SOURCE_ROOT"; };
-		C2736834468483C88057B3A2 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ProjectSettings.h; path = ../../Source/Project/ProjectSettings.h; sourceTree = "SOURCE_ROOT"; };
 		C29417E373D7D8FB320997EA = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TimeColorManager.h; path = ../../Source/TimeMachine/Sequence/Layer/layers/mapping/timecolor/TimeColorManager.h; sourceTree = "SOURCE_ROOT"; };
 		C3DDE9B9D449A6FB26D1D354 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = NetworkStreamingModule.h; path = ../../Source/Module/modules/common/streaming/NetworkStreamingModule.h; sourceTree = "SOURCE_ROOT"; };
 		C45B37ABCDE0A9FA3B40EA19 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MIDIDeviceParameter.cpp; path = ../../Source/Common/MIDI/MIDIDeviceParameter.cpp; sourceTree = "SOURCE_ROOT"; };
@@ -1498,9 +1495,6 @@
 					45293A26D5C1BC84EF82F6AE,
 					17AF8E6632B75805AD969E9E,
 					210AC54DECDB85FC732D8331, ); name = Module; sourceTree = "<group>"; };
-		E4992BE7CF44CB66FCCC0B84 = {isa = PBXGroup; children = (
-					A00CE65B8341CD241E44AD46,
-					C2736834468483C88057B3A2, ); name = Project; sourceTree = "<group>"; };
 		2D45D4FBB5D9F374A9337309 = {isa = PBXGroup; children = (
 					DBC595D222F79223C4B97FCE,
 					D0D5A0883EF64C22324AC868,
@@ -1663,7 +1657,6 @@
 					77E313CFAABA49104A328F3F,
 					CA79AE04437B8324C214D2A4,
 					24072684F5725E4CED6E741B,
-					E4992BE7CF44CB66FCCC0B84,
 					1F91D1EABD2CA768C36D63B7,
 					0738717842FAF0B8EB23EE47,
 					DA0AD6BD0967E11D1BD8ADDA,
@@ -2099,7 +2092,6 @@
 					08AC591089BBE936B40638E0,
 					19CC2ABB56F9EF9273DDF0F9,
 					690B4496ABF612682FA603E6,
-					CC2007ED2CDD9CBA5B549EC9,
 					D342F5881A16D25C229F2A7C,
 					E9E6A4C4EB06AE2B2D5193DD,
 					5A09627B5BC7EADA5D8ACF1F,

@@ -290,7 +290,6 @@
     <ClCompile Include="..\..\Source\Module\Module.cpp"/>
     <ClCompile Include="..\..\Source\Module\ModuleFactory.cpp"/>
     <ClCompile Include="..\..\Source\Module\ModuleManager.cpp"/>
-    <ClCompile Include="..\..\Source\Project\ProjectSettings.cpp"/>
     <ClCompile Include="..\..\Source\StateMachine\State\ui\StateUI.cpp"/>
     <ClCompile Include="..\..\Source\StateMachine\State\ui\StateViewUI.cpp"/>
     <ClCompile Include="..\..\Source\StateMachine\State\State.cpp"/>
@@ -2248,6 +2247,9 @@
     <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\progress\ProgressNotifier.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\remotecontrol\OSCRemoteControl.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\resources\OrganicBinaryData.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -2270,6 +2272,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\settings\GlobalSettings.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\settings\ProjectSettings.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\ui\shapeshifter\GapGrabber.cpp">
@@ -2554,7 +2559,6 @@
     <ClInclude Include="..\..\Source\Module\Module.h"/>
     <ClInclude Include="..\..\Source\Module\ModuleFactory.h"/>
     <ClInclude Include="..\..\Source\Module\ModuleManager.h"/>
-    <ClInclude Include="..\..\Source\Project\ProjectSettings.h"/>
     <ClInclude Include="..\..\Source\StateMachine\State\ui\StateUI.h"/>
     <ClInclude Include="..\..\Source\StateMachine\State\ui\StateViewUI.h"/>
     <ClInclude Include="..\..\Source\StateMachine\State\State.h"/>
@@ -3294,6 +3298,7 @@
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\help\HelpBox.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\help\HelpPanel.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\helpers\DebugHelpers.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\helpers\OSCHelpers.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\helpers\QueuedNotifier.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\helpers\RegexFunctions.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\helpers\StringUtil.h"/>
@@ -3323,6 +3328,7 @@
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\outliner\Outliner.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\progress\ui\ProgressWindow.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\progress\ProgressNotifier.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\remotecontrol\OSCRemoteControl.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\resources\OrganicBinaryData.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\script\ui\ScriptEditor.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\script\ExpressionListener.h"/>
@@ -3332,6 +3338,7 @@
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\script\ScriptTarget.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\script\ScriptUtil.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\settings\GlobalSettings.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\settings\ProjectSettings.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\ui\shapeshifter\GapGrabber.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\ui\shapeshifter\ShapeShifter.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\ui\shapeshifter\ShapeShifterContainer.h"/>

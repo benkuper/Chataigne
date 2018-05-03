@@ -263,7 +263,6 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/Module_14b9fb70.o \
   $(JUCE_OBJDIR)/ModuleFactory_f0ade584.o \
   $(JUCE_OBJDIR)/ModuleManager_ee65baa7.o \
-  $(JUCE_OBJDIR)/ProjectSettings_cacd14a7.o \
   $(JUCE_OBJDIR)/StateUI_cf33c402.o \
   $(JUCE_OBJDIR)/StateViewUI_87e08687.o \
   $(JUCE_OBJDIR)/State_6ea1d8c3.o \
@@ -1328,11 +1327,6 @@ $(JUCE_OBJDIR)/ModuleFactory_f0ade584.o: ../../Source/Module/ModuleFactory.cpp
 $(JUCE_OBJDIR)/ModuleManager_ee65baa7.o: ../../Source/Module/ModuleManager.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling ModuleManager.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/ProjectSettings_cacd14a7.o: ../../Source/Project/ProjectSettings.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling ProjectSettings.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/StateUI_cf33c402.o: ../../Source/StateMachine/State/ui/StateUI.cpp

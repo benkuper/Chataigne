@@ -29,7 +29,7 @@ MainContentComponent::MainContentComponent()
 	lookAndFeelOO = new LookAndFeelOO();
 	LookAndFeel::setDefaultLookAndFeel(lookAndFeelOO);
 
-	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Help", &HelpPanel::create));
+	//ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Help", &HelpPanel::create));
 
 	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Module Router", &ModuleRouterPanelView::create));
 	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Modules", &ModuleManagerUI::create));

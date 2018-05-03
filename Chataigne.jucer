@@ -889,12 +889,6 @@
               file="Source/Module/ModuleManager.cpp"/>
         <FILE id="Ts1rVW" name="ModuleManager.h" compile="0" resource="0" file="Source/Module/ModuleManager.h"/>
       </GROUP>
-      <GROUP id="{F232B150-75C7-24A5-DC13-BE51D75310B4}" name="Project">
-        <FILE id="YEoQOG" name="ProjectSettings.cpp" compile="1" resource="0"
-              file="Source/Project/ProjectSettings.cpp"/>
-        <FILE id="qc2Xps" name="ProjectSettings.h" compile="0" resource="0"
-              file="Source/Project/ProjectSettings.h"/>
-      </GROUP>
       <GROUP id="{0E730883-131C-8FE1-935C-80A576276FD6}" name="StateMachine">
         <GROUP id="{E41EEA0B-D68F-F331-0EBD-9752E221EA23}" name="State">
           <GROUP id="{C1C460E3-2747-F29D-F409-6C73D17AAE1E}" name="ui">
