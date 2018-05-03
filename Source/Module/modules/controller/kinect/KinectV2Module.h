@@ -31,6 +31,12 @@ public:
 	KinectV2Module();
 	~KinectV2Module();
 
+	FloatParameter * bodyX;
+	FloatParameter * bodyY;
+	FloatParameter * bodyZ;
+	FloatParameter * headX;
+	FloatParameter * headY;
+	FloatParameter * headZ;
 	FloatParameter * leftHandX;
 	FloatParameter * leftHandY;
 	FloatParameter * rightHandX;

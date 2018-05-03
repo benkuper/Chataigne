@@ -23,10 +23,19 @@ KinectV2Module::KinectV2Module() :
 
 	startTimer(20); //50 fps
 
-	leftHandX = valuesCC.addFloatParameter("Left Hand X", "Left hand X", 0, -2, 2);
-	leftHandY = valuesCC.addFloatParameter("Left Hand Y", "Left hand Y", 0, -2, 2);
-	rightHandX = valuesCC.addFloatParameter("Right Hand X", "Right Hand X", 0, -2, 2);
-	rightHandY = valuesCC.addFloatParameter("Right Hand Y", "Right Hand Y", 0, -2, 2);
+	bodyX = valuesCC.addFloatParameter("Body X", "", 0, -5, 5);
+	bodyY = valuesCC.addFloatParameter("Body Y", "", 0, -5, 5); 
+	bodyZ = valuesCC.addFloatParameter("Body Z", "", 0, -5, 5);
+
+	headX = valuesCC.addFloatParameter("Head X", "", 0, -5, 5);
+	headY = valuesCC.addFloatParameter("Head Y", "", 0, -5, 5);
+	headZ = valuesCC.addFloatParameter("Head Z", "", 0, -5, 5);
+
+	leftHandX = valuesCC.addFloatParameter("Left Hand X", "Left hand X", 0, -5, 5);
+	leftHandY = valuesCC.addFloatParameter("Left Hand Y", "Left hand Y", 0, -5, 5);
+	rightHandX = valuesCC.addFloatParameter("Right Hand X", "Right Hand X", 0, -5, 5);
+	rightHandY = valuesCC.addFloatParameter("Right Hand Y", "Right Hand Y", 0, -5, 5);
+
 	handsDistance = valuesCC.addFloatParameter("Hands Distance", "Hands Distance", 0, 0, 3);
 	handsAngle = valuesCC.addFloatParameter("Hands Rotation", "Hands Rotation", 0, 0, 360);
 	leftHandOpen = valuesCC.addBoolParameter("Left Hand Open", "Left Hand Open", false);
@@ -179,10 +188,21 @@ void KinectV2Module::processBody(int nBodyCount, IBody ** ppBodies)
 
 	pBody->GetJoints(_countof(joints), joints);
 	
+	Vector3D<float> bodyPos = Vector3D<float>(joints[JointType_SpineMid].Position.X, joints[JointType_SpineMid].Position.Y, joints[JointType_SpineMid].Position.Z);
+	Vector3D<float> headPos = Vector3D<float>(joints[JointType_Head].Position.X, joints[JointType_Head].Position.Y, joints[JointType_Head].Position.Z);
 	Vector3D<float> leftHandPos = Vector3D<float>(joints[JointType_HandLeft].Position.X, joints[JointType_HandLeft].Position.Y, joints[JointType_HandLeft].Position.Z);
 	Vector3D<float> rightHandPos = Vector3D<float>(joints[JointType_HandRight].Position.X, joints[JointType_HandRight].Position.Y, joints[JointType_HandRight].Position.Z);
+
 	Point<float> left2D = Point<float>(leftHandPos.x, leftHandPos.y);
 	Point<float> right2D = Point<float>(rightHandPos.x, rightHandPos.y);
+
+	bodyX->setValue(bodyPos.x);
+	bodyY->setValue(bodyPos.y);
+	bodyZ->setValue(bodyPos.z);
+	
+	headX->setValue(headPos.x);
+	headY->setValue(headPos.y);
+	headZ->setValue(headPos.z);
 
 	leftHandX->setValue(leftHandPos.x);
 	leftHandY->setValue(leftHandPos.y);
