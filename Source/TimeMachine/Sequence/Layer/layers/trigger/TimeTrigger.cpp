@@ -35,12 +35,8 @@ TimeTrigger::~TimeTrigger()
 
 }
 
-
-void TimeTrigger::onContainerTriggerTriggered(Trigger * t)
+void TimeTrigger::trigger()
 {
-	Action::onContainerTriggerTriggered(t);
-	if (t == triggerOn)
-	{
-		isTriggered->setValue(true);
-	}
+	isTriggered->setValue(true);
+	triggerOn->trigger();
 }

@@ -26,7 +26,7 @@ public:
 	//ui
 	FloatParameter * flagY;
 
-	void onContainerTriggerTriggered(Trigger * t) override;
+	void trigger();
 };
 
 
