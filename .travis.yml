@@ -17,14 +17,10 @@ matrix:
       osx_image: xcode9.2
       compiler: clang
     - os: linux 
+      dist: trusty
       group: latest
       sudo: required
       services: docker
-
-env:
-  global:
-  - FTP_USER=u67889354-benjamin
-  - secure: B5sTLX3Sxc+exaVZwLfVa4Xe1Zrm8JOIP79VUQcFO2qQ6rOZtpak6p+K56jf9I86cIXSGsoOWzqIfb0FC8IV3i08zBPGl/Z27gW3gC6I/pNJG/97BEkmvJcRwWJtYgHFwMFYUkx6tc2cuCycYpqfH8jRwAXEVhffeRZQStw2BgI4HqRdmqEjCSLZbOb+kg+KUA6L0/9wIjbV6oCN8qelp3843Yk0J05ukzqK4yrmzjIctktQec+DQy1RNAXjbV+zA1gS4CYtQj9wFfny6kH2by3JY9PkN+R5qifTUeIiJFk0g3554xiqfMStI3Mzsecw+gp3RKSfxkPsUwxLrA4bW2m5uA9vcgQ9KLCRdw2nv9pVn63AcC+hNQl2rmE7lvw9WOf4l4bR04scLkOfku2gCgyIo5l0InU9D+I0St+WU/eFdHe6BIo+gTz7H7KNDUnIsJT0oyRQ6pnCcGPS+3+MFDcZJE0ILrNdcrtNdRhG908yk/YlJZ8cYO8yq56Fk3HJNKSMWNoiz9yuYOyx9F9Yn9ZXorThm/lsjLxFztkz2eErQq/uvnxRJGN3z7jV0ihsBhV/9DuyIV+SjiOPiqWQt8tWhIx7JEmtdEEYyiqEgbLaQhpqH1pc0A7a7BlQvTq5NEiY1R6Djzm5cxhMkJWxPhs/L1g71utAi7zS1bVoEK4=
 
 before_install:
 - |
@@ -96,11 +92,10 @@ after_success:
     wget http://benjamin.kuperberg.fr/chatagne/user/data/Chataigne-linux-dependencies.zip
     unzip Chataigne-linux-dependencies.zip
     zip -r Chataigne-linux-x64-bleedingedge.zip Chataigne lib
-    echo 'Test : $FTP_PASSWORD'
-    curl --ftp-create-dirs -T Chataigne-linux-x64-bleedingedge.zip -u $FTP_USER:$FTP_PASSWORD ftp://ftp.kuperberg.fr/chataigne/user/data/
+    curl --ftp-create-dirs -T Chataigne-linux-x64-bleedingedge.zip -u $FTP_USER:$FTP_PASSWORD sftp://home403871847.1and1-data.host:22/
   else
     cd /Users/travis/build/benkuper/Chataigne/Builds/MacOSX/build/Release
     ls
     zip -r -y Chataigne-osx-bleedingedge.zip Chataigne.app
-    curl --ftp-create-dirs -T Chataigne-osx-bleedingedge.zip -u $FTP_USER:$FTP_PASSWORD ftp://ftp.kuperberg.fr/chataigne/user/data/
+    curl --ftp-create-dirs -T Chataigne-osx-bleedingedge.zip -u $FTP_USER:$FTP_PASSWORD sftp://home403871847.1and1-data.host:22/
   fi
