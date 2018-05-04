@@ -4,7 +4,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING .ISS SCRIPT FILES!
 
 #define ApplicationName 'Chataigne'
-#define ApplicationVersion GetFileVersion('Binaries/App/Chataigne.exe')
+#define ApplicationVersion GetFileVersion('Binaries/CI/App/Chataigne.exe')
 
 [Setup]
 AppName={#ApplicationName}
