@@ -3,26 +3,32 @@
 
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING .ISS SCRIPT FILES!
 
+#define ApplicationName 'Chataigne'
+#define ApplicationVersion GetFileVersion('Binaries/App/Chataigne.exe')
+
 [Setup]
-AppName=Chataigne
-AppVersion=1.3.11
+AppName={#ApplicationName}
+AppVersion={#ApplicationVersion}
 AppPublisher=Ben Kuper
 AppPublisherURL=http://benjamin.kuperberg.fr/chataigne
-DefaultDirName={pf}\Chataigne
-DefaultGroupName=Chataigne
-UninstallDisplayIcon={app}\Chataigne.exe
-UninstallDisplayName=Chataigne
+DefaultDirName={pf}\{#ApplicationName}
+DefaultGroupName=ApplicationName
+UninstallDisplayIcon={app}\{#ApplicationName}.exe
+UninstallDisplayName={#ApplicationName}
 Compression=lzma2
 SolidCompression=yes
 ArchitecturesAllowed=x64
 ArchitecturesInstallIn64BitMode=x64
+OutputDir=/
+OutputBaseFilename={#ApplicationName}-win-x64-bleedingedge
+SetupIconFile=setup.ico
 
 [Files]
-Source: "Binaries/App/Chataigne.exe"; DestDir: "{app}"
-Source: "Binaries/App/*.dll"; DestDir: "{app}"
+Source: "Binaries/CI/App/{#ApplicationName}.exe"; DestDir: "{app}"
+Source: "Binaries/CI/App/*.dll"; DestDir: "{app}"
 
 [Icons]
-Name: "{group}\Chataigne"; Filename: "{app}\Chataigne.exe"
+Name: "{group}\{#ApplicationName}"; Filename: "{app}\{#ApplicationName}.exe"
 
 [Run]
-Filename: "{app}\Chataigne.exe"; Description: "{cm:LaunchProgram,Chataigne.exe}"; Flags: nowait postinstall skipifsilent
+Filename: "{app}\{#ApplicationName}.exe"; Description: "{cm:LaunchProgram,{#ApplicationName}.exe}"; Flags: nowait postinstall skipifsilent
