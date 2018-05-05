@@ -48,6 +48,15 @@ CustomValuesCommandArgument * CustomValuesCommandArgumentManager::addItemFromTyp
 	case Parameter::BOOL:
 		p = new BoolParameter("#" + id, "Argument #" + id + ", type bool", false);
 		break;
+	case Parameter::COLOR:
+		p = new ColorParameter("#" + id, "Argument #" + id + ", type color");
+		break;
+	case Parameter::POINT2D:
+		p = new Point2DParameter("#" + id, "Argument #" + id + ", type 2D");
+		break;
+	case Parameter::POINT3D:
+		p = new Point3DParameter("#" + id, "Argument #" + id + ", type 3D");
+		break;
 
         default:
             break;

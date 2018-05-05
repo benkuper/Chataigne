@@ -174,10 +174,10 @@ OSCCommandModelArgument * OSCCommandModelArgumentManager::addItemFromType(Parame
 	switch (type)
 	{
 	case Parameter::STRING:
-		p = new StringParameter("#" + id, "Argument #" + id + ", type int", "myString");
+		p = new StringParameter("#" + id, "Argument #" + id + ", type string", "myString");
 		break;
 	case Parameter::FLOAT:
-		p = new FloatParameter("#" + id, "Argument #" + id + ", type foat", 0, 0, 1);
+		p = new FloatParameter("#" + id, "Argument #" + id + ", type float", 0, 0, 1);
 		break;
 	case Parameter::INT:
 		p = new IntParameter("#" + id, "Argument #" + id + ", type int", 0, -1000, 1000);
@@ -185,7 +185,17 @@ OSCCommandModelArgument * OSCCommandModelArgumentManager::addItemFromType(Parame
 	case Parameter::BOOL:
 		p = new BoolParameter("#" + id, "Argument #" + id + ", type bool", false);
 		break;
-        default:
+	case Parameter::COLOR:
+		p = new ColorParameter("#" + id, "Argument #" + id + ", type color");
+		break;
+	case Parameter::POINT2D:
+		p = new Point2DParameter("#" + id, "Argument #" + id + ", type 2D");
+		break;
+	case Parameter::POINT3D:
+		p = new Point3DParameter("#" + id, "Argument #" + id + ", type 3D");
+		break;
+
+	default:
             break;
 	}
 	

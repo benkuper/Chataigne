@@ -27,6 +27,9 @@ void UserOSCCommandModelArgumentManagerEditor::showMenuAndAddItem(bool)
 	p.addItem(2, "Add Float Argument");
 	p.addItem(3, "Add String Argument");
 	p.addItem(4, "Add Boolean Argument");
+	p.addItem(5, "Add Color Argument");
+	p.addItem(6, "Add Point2D Argument");
+	p.addItem(7, "Add Point3D Argument");
 
 	int result = p.show();
 
@@ -43,6 +46,15 @@ void UserOSCCommandModelArgumentManagerEditor::showMenuAndAddItem(bool)
 		break;
 	case 4:
 		aManager->addItemFromType(Parameter::BOOL, var(), false);
+		break;
+	case 5:
+		aManager->addItemFromType(Parameter::COLOR, var(), false);
+		break;
+	case 6:
+		aManager->addItemFromType(Parameter::POINT2D, var(), false);
+		break;
+	case 7:
+		aManager->addItemFromType(Parameter::POINT3D, var(), false);
 		break;
 	}
 }
