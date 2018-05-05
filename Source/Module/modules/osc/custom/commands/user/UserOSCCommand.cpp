@@ -20,7 +20,8 @@ UserOSCCommand::UserOSCCommand(CustomOSCModule * _module, CommandContext context
 	jassert(model != nullptr);
 	modelRef = model;
 
-	address->setValue(model->addressParam->stringValue());
+	address->defaultValue = model->addressParam->stringValue();
+	address->resetValue();
 	address->isEditable = model->addressIsEditable->boolValue();
 	address->isSavable = address->isEditable;
 
