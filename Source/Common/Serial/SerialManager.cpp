@@ -123,7 +123,7 @@ SerialDevice * SerialManager::getPort(SerialDeviceInfo * portInfo, bool createIf
 			return p;
 		} catch (std::exception &e)
 		{
-			LOGERROR("Error trying to open port " + portInfo->port.toStdString()+"\n"+String(e.what()));
+			LOGERROR("Error trying to open port " << portInfo->port.toStdString() << "\n"+String(e.what()));
 			return nullptr;
 		}
 	}

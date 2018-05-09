@@ -8,21 +8,6 @@
     <Filter Include="Chataigne\Source\Analytics">
       <UniqueIdentifier>{BFFB54F9-F042-7395-56B9-D0358B5F6ED9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Chataigne\Source\Common\Automation\easing\ui">
-      <UniqueIdentifier>{87D3EC12-99A1-32C4-376E-C39BFA8E980F}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Common\Automation\easing">
-      <UniqueIdentifier>{A4C49357-69DE-1DF6-B559-44B099BCB4A5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Common\Automation\recorder">
-      <UniqueIdentifier>{1F78A9C0-E67F-82CE-25C3-04D92CB7F14F}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Common\Automation\ui">
-      <UniqueIdentifier>{8DA0849D-0A4E-0C04-6C86-4092BBEA7059}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Common\Automation">
-      <UniqueIdentifier>{957F8349-20C7-A348-225D-A720C3F91622}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Chataigne\Source\Common\Command\ui">
       <UniqueIdentifier>{9DC719BC-0221-FA4E-5A0E-C23170388D98}</UniqueIdentifier>
     </Filter>
@@ -800,6 +785,27 @@
     <Filter Include="JUCE Modules\juce_organicui\app">
       <UniqueIdentifier>{713F9F29-C2A1-3D8F-4394-6A948FA0175D}</UniqueIdentifier>
     </Filter>
+    <Filter Include="JUCE Modules\juce_organicui\automation\easing\ui">
+      <UniqueIdentifier>{113BFDB2-6CD7-CBB1-E543-F27243786328}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_organicui\automation\easing">
+      <UniqueIdentifier>{06A9AB2B-A0BE-520F-1D4A-417ACF8A2D0E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_organicui\automation\parameter\ui">
+      <UniqueIdentifier>{FC220C33-4611-4F86-D380-C3817446B359}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_organicui\automation\parameter">
+      <UniqueIdentifier>{536EB392-F941-573E-557A-ABB126B53BD1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_organicui\automation\recorder">
+      <UniqueIdentifier>{D3E35206-F386-CFAB-A812-9B7BDB340B71}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_organicui\automation\ui">
+      <UniqueIdentifier>{538772B5-B0E8-2C17-C250-C2F6EE345CA1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_organicui\automation">
+      <UniqueIdentifier>{A0724705-28B2-FE7E-9FDC-273B8930E824}</UniqueIdentifier>
+    </Filter>
     <Filter Include="JUCE Modules\juce_organicui\controllable\parameter\ui">
       <UniqueIdentifier>{8985EB6E-3B3D-2F50-8596-35A90644BBDF}</UniqueIdentifier>
     </Filter>
@@ -910,33 +916,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Source\Common\Automation\easing\ui\EasingUI.cpp">
-      <Filter>Chataigne\Source\Common\Automation\easing\ui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Common\Automation\easing\Easing.cpp">
-      <Filter>Chataigne\Source\Common\Automation\easing</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Common\Automation\recorder\AutomationRecorder.cpp">
-      <Filter>Chataigne\Source\Common\Automation\recorder</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Common\Automation\ui\AutomationEditor.cpp">
-      <Filter>Chataigne\Source\Common\Automation\ui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Common\Automation\ui\AutomationKeyUI.cpp">
-      <Filter>Chataigne\Source\Common\Automation\ui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Common\Automation\ui\AutomationMultiKeyTransformer.cpp">
-      <Filter>Chataigne\Source\Common\Automation\ui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Common\Automation\ui\AutomationUI.cpp">
-      <Filter>Chataigne\Source\Common\Automation\ui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Common\Automation\Automation.cpp">
-      <Filter>Chataigne\Source\Common\Automation</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Common\Automation\AutomationKey.cpp">
-      <Filter>Chataigne\Source\Common\Automation</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Source\Common\Command\BaseCommand.cpp">
       <Filter>Chataigne\Source\Common\Command</Filter>
     </ClCompile>
@@ -2174,6 +2153,9 @@
       <Filter>JUCE Modules\juce_core\containers</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\JUCE\modules\juce_core\containers\juce_PropertySet.cpp">
+      <Filter>JUCE Modules\juce_core\containers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE\modules\juce_core\containers\juce_SparseSet.cpp">
       <Filter>JUCE Modules\juce_core\containers</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\JUCE\modules\juce_core\containers\juce_Variant.cpp">
@@ -3463,6 +3445,42 @@
     <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\app\OrganicMainComponentCommands.cpp">
       <Filter>JUCE Modules\juce_organicui\app</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\automation\easing\ui\EasingUI.cpp">
+      <Filter>JUCE Modules\juce_organicui\automation\easing\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\automation\easing\Easing.cpp">
+      <Filter>JUCE Modules\juce_organicui\automation\easing</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\automation\parameter\ui\PlayableParameterAutomationEditor.cpp">
+      <Filter>JUCE Modules\juce_organicui\automation\parameter\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\automation\parameter\ParameterAutomation.cpp">
+      <Filter>JUCE Modules\juce_organicui\automation\parameter</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\automation\parameter\ParameterAutomationManager.cpp">
+      <Filter>JUCE Modules\juce_organicui\automation\parameter</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\automation\recorder\AutomationRecorder.cpp">
+      <Filter>JUCE Modules\juce_organicui\automation\recorder</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\automation\ui\AutomationEditor.cpp">
+      <Filter>JUCE Modules\juce_organicui\automation\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\automation\ui\AutomationKeyUI.cpp">
+      <Filter>JUCE Modules\juce_organicui\automation\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\automation\ui\AutomationMultiKeyTransformer.cpp">
+      <Filter>JUCE Modules\juce_organicui\automation\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\automation\ui\AutomationUI.cpp">
+      <Filter>JUCE Modules\juce_organicui\automation\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\automation\Automation.cpp">
+      <Filter>JUCE Modules\juce_organicui\automation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\automation\AutomationKey.cpp">
+      <Filter>JUCE Modules\juce_organicui\automation</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\controllable\parameter\ui\BetterStepper.cpp">
       <Filter>JUCE Modules\juce_organicui\controllable\parameter\ui</Filter>
     </ClCompile>
@@ -3872,33 +3890,6 @@
   <ItemGroup>
     <ClInclude Include="..\..\Source\Analytics\GoogleAnalyticsDestination.h">
       <Filter>Chataigne\Source\Analytics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Common\Automation\easing\ui\EasingUI.h">
-      <Filter>Chataigne\Source\Common\Automation\easing\ui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Common\Automation\easing\Easing.h">
-      <Filter>Chataigne\Source\Common\Automation\easing</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Common\Automation\recorder\AutomationRecorder.h">
-      <Filter>Chataigne\Source\Common\Automation\recorder</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Common\Automation\ui\AutomationEditor.h">
-      <Filter>Chataigne\Source\Common\Automation\ui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Common\Automation\ui\AutomationKeyUI.h">
-      <Filter>Chataigne\Source\Common\Automation\ui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Common\Automation\ui\AutomationMultiKeyTransformer.h">
-      <Filter>Chataigne\Source\Common\Automation\ui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Common\Automation\ui\AutomationUI.h">
-      <Filter>Chataigne\Source\Common\Automation\ui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Common\Automation\Automation.h">
-      <Filter>Chataigne\Source\Common\Automation</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Common\Automation\AutomationKey.h">
-      <Filter>Chataigne\Source\Common\Automation</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\Command\BaseCommand.h">
       <Filter>Chataigne\Source\Common\Command</Filter>
@@ -6441,6 +6432,42 @@
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\app\OrganicMainComponent.h">
       <Filter>JUCE Modules\juce_organicui\app</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\automation\easing\ui\EasingUI.h">
+      <Filter>JUCE Modules\juce_organicui\automation\easing\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\automation\easing\Easing.h">
+      <Filter>JUCE Modules\juce_organicui\automation\easing</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\automation\parameter\ui\PlayableParameterAutomationEditor.h">
+      <Filter>JUCE Modules\juce_organicui\automation\parameter\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\automation\parameter\ParameterAutomation.h">
+      <Filter>JUCE Modules\juce_organicui\automation\parameter</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\automation\parameter\ParameterAutomationManager.h">
+      <Filter>JUCE Modules\juce_organicui\automation\parameter</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\automation\recorder\AutomationRecorder.h">
+      <Filter>JUCE Modules\juce_organicui\automation\recorder</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\automation\ui\AutomationEditor.h">
+      <Filter>JUCE Modules\juce_organicui\automation\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\automation\ui\AutomationKeyUI.h">
+      <Filter>JUCE Modules\juce_organicui\automation\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\automation\ui\AutomationMultiKeyTransformer.h">
+      <Filter>JUCE Modules\juce_organicui\automation\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\automation\ui\AutomationUI.h">
+      <Filter>JUCE Modules\juce_organicui\automation\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\automation\Automation.h">
+      <Filter>JUCE Modules\juce_organicui\automation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\automation\AutomationKey.h">
+      <Filter>JUCE Modules\juce_organicui\automation</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\controllable\parameter\ui\BetterStepper.h">
       <Filter>JUCE Modules\juce_organicui\controllable\parameter\ui</Filter>
     </ClInclude>
@@ -6832,6 +6859,9 @@
       <Filter>JUCE Modules\juce_video\capture</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\JUCE\modules\juce_video\native\juce_android_CameraDevice.h">
+      <Filter>JUCE Modules\juce_video\native</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\JUCE\modules\juce_video\native\juce_ios_CameraDevice.h">
       <Filter>JUCE Modules\juce_video\native</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\JUCE\modules\juce_video\native\juce_mac_CameraDevice.h">

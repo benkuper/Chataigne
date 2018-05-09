@@ -18,11 +18,11 @@ juce_ImplementSingleton(SequenceLayerFactory)
 
 SequenceLayerFactory::SequenceLayerFactory() {
 	layerDefs.add(SequenceLayerDefinition::createDef("Trigger", &TriggerLayer::create));
-	layerDefs.add(SequenceLayerDefinition::createDef("Audio", &AudioLayer::create));
-	layerDefs.add(SequenceLayerDefinition::createDef("Automation", &MappingLayer::create)->addParam("mode",MappingLayer::MODE_1D));
+	layerDefs.add(SequenceLayerDefinition::createDef("Mapping", &MappingLayer::create)->addParam("mode",MappingLayer::MODE_1D));
 	//layerDefs.add(SequenceLayerDefinition::createDef("Automation 2D", &MappingLayer::create)->addParam("mode", MappingLayer::MODE_2D));
 	//layerDefs.add(SequenceLayerDefinition::createDef("Automation 3D", &MappingLayer::create)->addParam("mode", MappingLayer::MODE_3D));
 	layerDefs.add(SequenceLayerDefinition::createDef("Color", &MappingLayer::create)->addParam("mode", MappingLayer::MODE_COLOR));
+	layerDefs.add(SequenceLayerDefinition::createDef("Audio", &AudioLayer::create));
 
 	buildPopupMenu();
 }

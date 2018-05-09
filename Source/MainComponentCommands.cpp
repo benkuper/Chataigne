@@ -306,7 +306,7 @@ bool MainContentComponent::perform(const InvocationInfo& info) {
 
 	case CommandIDs::saveAs:
 	{
-		FileBasedDocument::SaveResult result = Engine::mainEngine->saveAs(File::nonexistent, true, true, true);
+		FileBasedDocument::SaveResult result = Engine::mainEngine->saveAs(File(), true, true, true);
 		if (result == FileBasedDocument::savedOk) LOG("File saved !");
 		else LOGERROR("Error saving file");
 	}

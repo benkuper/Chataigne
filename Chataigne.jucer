@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.3.10"
+<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.4.0"
               bundleIdentifier="benkuper.Chataigne" includeBinaryInAppConfig="1"
-              jucerVersion="5.3.1" companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
+              jucerVersion="5.3.2" companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
               companyEmail="benjamin@kuperberg.fr" defines="" displaySplashScreen="0"
               splashScreenColour="Dark" cppLanguageStandard="14" companyCopyright="Ben Kuper"
               headerPath="../../Source" reportAppUsage="0">
@@ -27,44 +27,6 @@
               file="Source/Analytics/GoogleAnalyticsDestination.h"/>
       </GROUP>
       <GROUP id="{6C7DFFF7-D47E-97B5-FE74-27F24C7A349F}" name="Common">
-        <GROUP id="{35974B24-06CE-D2B0-10E2-28EC5F180B57}" name="Automation">
-          <GROUP id="{119C0D0B-5C9F-590C-778F-E6320A718265}" name="easing">
-            <GROUP id="{EA6F771F-744D-8561-7D50-8736697A9E15}" name="ui">
-              <FILE id="nQvcTH" name="EasingUI.cpp" compile="1" resource="0" file="Source/Common/Automation/easing/ui/EasingUI.cpp"/>
-              <FILE id="umABiW" name="EasingUI.h" compile="0" resource="0" file="Source/Common/Automation/easing/ui/EasingUI.h"/>
-            </GROUP>
-            <FILE id="tIkgMk" name="Easing.cpp" compile="1" resource="0" file="Source/Common/Automation/easing/Easing.cpp"/>
-            <FILE id="oWaS43" name="Easing.h" compile="0" resource="0" file="Source/Common/Automation/easing/Easing.h"/>
-          </GROUP>
-          <GROUP id="{E9858734-8999-786A-04BD-79693B37B6BD}" name="recorder">
-            <FILE id="B8bRSX" name="AutomationRecorder.cpp" compile="1" resource="0"
-                  file="Source/Common/Automation/recorder/AutomationRecorder.cpp"/>
-            <FILE id="ZBWsdD" name="AutomationRecorder.h" compile="0" resource="0"
-                  file="Source/Common/Automation/recorder/AutomationRecorder.h"/>
-          </GROUP>
-          <GROUP id="{291CDE68-998A-6011-15C9-6E9F700A1C2F}" name="ui">
-            <FILE id="KP8fuX" name="AutomationEditor.cpp" compile="1" resource="0"
-                  file="Source/Common/Automation/ui/AutomationEditor.cpp"/>
-            <FILE id="vXqIsp" name="AutomationEditor.h" compile="0" resource="0"
-                  file="Source/Common/Automation/ui/AutomationEditor.h"/>
-            <FILE id="VvIped" name="AutomationKeyUI.cpp" compile="1" resource="0"
-                  file="Source/Common/Automation/ui/AutomationKeyUI.cpp"/>
-            <FILE id="FAC6In" name="AutomationKeyUI.h" compile="0" resource="0"
-                  file="Source/Common/Automation/ui/AutomationKeyUI.h"/>
-            <FILE id="ssLOs1" name="AutomationMultiKeyTransformer.cpp" compile="1"
-                  resource="0" file="Source/Common/Automation/ui/AutomationMultiKeyTransformer.cpp"/>
-            <FILE id="c4j9uX" name="AutomationMultiKeyTransformer.h" compile="0"
-                  resource="0" file="Source/Common/Automation/ui/AutomationMultiKeyTransformer.h"/>
-            <FILE id="Xu0Kjk" name="AutomationUI.cpp" compile="1" resource="0"
-                  file="Source/Common/Automation/ui/AutomationUI.cpp"/>
-            <FILE id="a9kDlo" name="AutomationUI.h" compile="0" resource="0" file="Source/Common/Automation/ui/AutomationUI.h"/>
-          </GROUP>
-          <FILE id="kAzFZW" name="Automation.cpp" compile="1" resource="0" file="Source/Common/Automation/Automation.cpp"/>
-          <FILE id="vseR6A" name="Automation.h" compile="0" resource="0" file="Source/Common/Automation/Automation.h"/>
-          <FILE id="txzE5U" name="AutomationKey.cpp" compile="1" resource="0"
-                file="Source/Common/Automation/AutomationKey.cpp"/>
-          <FILE id="mKEGd8" name="AutomationKey.h" compile="0" resource="0" file="Source/Common/Automation/AutomationKey.h"/>
-        </GROUP>
         <GROUP id="{E7C8AAFC-E2FA-90D0-859B-423BC528A52F}" name="Command">
           <FILE id="NlN3XS" name="BaseCommand.cpp" compile="1" resource="0" file="Source/Common/Command/BaseCommand.cpp"/>
           <FILE id="f5gUen" name="BaseCommand.h" compile="0" resource="0" file="Source/Common/Command/BaseCommand.h"/>

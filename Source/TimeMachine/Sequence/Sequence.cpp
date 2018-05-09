@@ -42,7 +42,7 @@ Sequence::Sequence() :
 	currentTime->defaultUI = FloatParameter::TIME;
 	currentTime->isSavable = false;
 
-	totalTime = addFloatParameter("Total Time", "Total time of this sequence, in seconds", initTotalTime, 1, INT32_MAX);
+	totalTime = addFloatParameter("Total Time", "Total time of this sequence, in seconds", initTotalTime, minSequenceTime, INT32_MAX);
 	totalTime->defaultUI = FloatParameter::TIME;
 
 	loopParam = addBoolParameter("Loop", "Whether the sequence plays again from the start when reached the end while playing", false);
@@ -54,10 +54,10 @@ Sequence::Sequence() :
 	prevCue = addTrigger("Prev Cue", "Jump to previous cue, if previous cue is less than 1 sec before, jump to the one before that.");
 	nextCue = addTrigger("Next Cue", "Jump to the next cue");
 
-	viewStartTime = addFloatParameter("View start time", "Start time of the view", 0, 0, initTotalTime - minViewTime);
+	viewStartTime = addFloatParameter("View start time", "Start time of the view", 0, 0, initTotalTime - minSequenceTime);
 	viewStartTime->hideInEditor = true;
 
-	viewEndTime = addFloatParameter("View end time", "End time of the view", initTotalTime, minViewTime, initTotalTime);
+	viewEndTime = addFloatParameter("View end time", "End time of the view", initTotalTime, minSequenceTime, initTotalTime);
 	viewEndTime->hideInEditor = true;
 
 	layerManager = new SequenceLayerManager(this);
@@ -164,8 +164,8 @@ void Sequence::onContainerParameterChangedInternal(Parameter * p)
 	else if (p == totalTime)
 	{
 		currentTime->setRange(0, totalTime->floatValue());
-		viewStartTime->setRange(0, totalTime->floatValue() - minViewTime);
-		viewEndTime->setRange(viewStartTime->floatValue()+minViewTime, totalTime->floatValue());
+		viewStartTime->setRange(0, totalTime->floatValue() - minSequenceTime);
+		viewEndTime->setRange(viewStartTime->floatValue()+minSequenceTime, totalTime->floatValue());
 		sequenceListeners.call(&SequenceListener::sequenceTotalTimeChanged, this);
 	} else if (p == playSpeed)
 	{
@@ -196,7 +196,7 @@ void Sequence::onContainerParameterChangedInternal(Parameter * p)
 	}
 	else if (p == viewStartTime)
 	{
-		viewEndTime->setRange(viewStartTime->floatValue() + minViewTime, totalTime->floatValue()); //Should be a range value
+		viewEndTime->setRange(viewStartTime->floatValue() + minSequenceTime, totalTime->floatValue()); //Should be a range value
 	}
 }
 

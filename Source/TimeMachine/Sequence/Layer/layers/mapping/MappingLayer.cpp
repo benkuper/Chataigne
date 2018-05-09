@@ -13,6 +13,7 @@
 #include "ui/MappingLayerPanel.h"
 #include "ui/MappingLayerTimeline.h"
 #include "ui/MappingLayerEditor.h"
+#include "Module/ModuleManager.h"
 
 MappingLayer::MappingLayer(Sequence *_sequence, var params) :
 	SequenceLayer(_sequence, "New Automation Layer"),
@@ -25,6 +26,9 @@ MappingLayer::MappingLayer(Sequence *_sequence, var params) :
 	mapping.editorIsCollapsed = false;
 	addChildControllableContainer(&mapping);
 	addChildControllableContainer(&recorder);
+	recorder.input->customGetTargetFunc = &ModuleManager::showAllValuesAndGetControllable;
+	recorder.input->customGetControllableLabelFunc = &Module::getTargetLabelForValueControllable;
+	recorder.input->customCheckAssignOnNextChangeFunc = &ModuleManager::checkControllableIsAValue;
 
 	mode = addEnumParameter("Mode", "Automation Mode, 1D, 2D, 3D or Color");
 	mode->addOption("Single Value", MODE_1D);
@@ -111,7 +115,7 @@ void MappingLayer::setupMappingForCurrentMode()
 			addChildControllableContainer(automations[i]);
 		}
 
-		automations[i]->setPositionMax(sequence->totalTime->floatValue());
+		automations[i]->length->setValue(sequence->totalTime->floatValue());
 	}
 
 	curveValue->isControllableFeedbackOnly = true;
@@ -259,7 +263,7 @@ void MappingLayer::sequenceTotalTimeChanged(Sequence *)
 	}
 	else
 	{
-		for (auto &a : automations) a->setPositionMax(sequence->totalTime->floatValue());
+		for (auto &a : automations) a->length->setValue(sequence->totalTime->floatValue());
 	}
 }
 

@@ -16,7 +16,7 @@ MappingFilter::MappingFilter(const String &name, var params) :
 	sourceParam(nullptr),
 	filteredParameter(nullptr),
 	filterParams("filterParams"),
-	forceOutParameterType(String::empty),
+	forceOutParameterType(""),
 	needsContinuousProcess(false),
 	autoSetRange(true),
 	mappingFilterAsyncNotifier(10)

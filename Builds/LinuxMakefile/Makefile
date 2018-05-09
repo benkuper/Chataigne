@@ -35,7 +35,7 @@ ifeq ($(CONFIG),Release)
     TARGET_ARCH := -m64
   endif
 
-  JUCE_CPPFLAGS := $(DEPFLAGS) -DLINUX=1 -DNDEBUG=1 -DJUCER_LINUX_MAKE_6D53C8B4=1 -DJUCE_APP_VERSION=1.3.10 -DJUCE_APP_VERSION_HEX=0x1030a $(shell pkg-config --cflags alsa freetype2 libcurl x11 xext xinerama) -pthread -I../../JuceLibraryCode -I$(HOME)/JUCE/modules -I../../../JUCE\ Modules -I../../External/wiiuse -I../../External/serial/include -I../../External/servus/include -I../../External/dnssd/include -I../../Source $(CPPFLAGS)
+  JUCE_CPPFLAGS := $(DEPFLAGS) -DLINUX=1 -DNDEBUG=1 -DJUCER_LINUX_MAKE_6D53C8B4=1 -DJUCE_APP_VERSION=1.4.0 -DJUCE_APP_VERSION_HEX=0x10400 $(shell pkg-config --cflags alsa freetype2 libcurl x11 xext xinerama) -pthread -I../../JuceLibraryCode -I$(HOME)/JUCE/modules -I../../../JUCE\ Modules -I../../External/wiiuse -I../../External/serial/include -I../../External/servus/include -I../../External/dnssd/include -I../../Source $(CPPFLAGS)
   JUCE_CPPFLAGS_APP := -DJucePlugin_Build_VST=0 -DJucePlugin_Build_VST3=0 -DJucePlugin_Build_AU=0 -DJucePlugin_Build_AUv3=0 -DJucePlugin_Build_RTAS=0 -DJucePlugin_Build_AAX=0 -DJucePlugin_Build_Standalone=0
   JUCE_TARGET_APP := Chataigne
 
@@ -56,7 +56,7 @@ ifeq ($(CONFIG),Debug)
     TARGET_ARCH := -m64
   endif
 
-  JUCE_CPPFLAGS := $(DEPFLAGS) -DLINUX=1 -DDEBUG=1 -D_DEBUG=1 -DJUCER_LINUX_MAKE_6D53C8B4=1 -DJUCE_APP_VERSION=1.3.10 -DJUCE_APP_VERSION_HEX=0x1030a $(shell pkg-config --cflags alsa freetype2 libcurl x11 xext xinerama) -pthread -I../../JuceLibraryCode -I$(HOME)/JUCE/modules -I../../../JUCE\ Modules -I../../External/wiiuse -I../../External/serial/include -I../../External/servus/include -I../../External/dnssd/include -I../../Source $(CPPFLAGS)
+  JUCE_CPPFLAGS := $(DEPFLAGS) -DLINUX=1 -DDEBUG=1 -D_DEBUG=1 -DJUCER_LINUX_MAKE_6D53C8B4=1 -DJUCE_APP_VERSION=1.4.0 -DJUCE_APP_VERSION_HEX=0x10400 $(shell pkg-config --cflags alsa freetype2 libcurl x11 xext xinerama) -pthread -I../../JuceLibraryCode -I$(HOME)/JUCE/modules -I../../../JUCE\ Modules -I../../External/wiiuse -I../../External/serial/include -I../../External/servus/include -I../../External/dnssd/include -I../../Source $(CPPFLAGS)
   JUCE_CPPFLAGS_APP := -DJucePlugin_Build_VST=0 -DJucePlugin_Build_VST3=0 -DJucePlugin_Build_AU=0 -DJucePlugin_Build_AUv3=0 -DJucePlugin_Build_RTAS=0 -DJucePlugin_Build_AAX=0 -DJucePlugin_Build_Standalone=0
   JUCE_TARGET_APP := Chataigne
 
@@ -68,15 +68,6 @@ ifeq ($(CONFIG),Debug)
 endif
 
 OBJECTS_APP := \
-  $(JUCE_OBJDIR)/EasingUI_4b0bc593.o \
-  $(JUCE_OBJDIR)/Easing_1560fe5c.o \
-  $(JUCE_OBJDIR)/AutomationRecorder_dc2ece33.o \
-  $(JUCE_OBJDIR)/AutomationEditor_937d3d4c.o \
-  $(JUCE_OBJDIR)/AutomationKeyUI_dc7d597e.o \
-  $(JUCE_OBJDIR)/AutomationMultiKeyTransformer_99f45c9e.o \
-  $(JUCE_OBJDIR)/AutomationUI_65a3b3d3.o \
-  $(JUCE_OBJDIR)/Automation_b9dd2ef4.o \
-  $(JUCE_OBJDIR)/AutomationKey_343bb8d5.o \
   $(JUCE_OBJDIR)/BaseCommand_2318dc9b.o \
   $(JUCE_OBJDIR)/BaseCommandHandler_4d357439.o \
   $(JUCE_OBJDIR)/CommandDefinition_7c3c255f.o \
@@ -353,51 +344,6 @@ $(JUCE_OUTDIR)/$(JUCE_TARGET_APP) : check-pkg-config $(OBJECTS_APP) $(RESOURCES)
 	-$(V_AT)mkdir -p $(JUCE_LIBDIR)
 	-$(V_AT)mkdir -p $(JUCE_OUTDIR)
 	$(V_AT)$(CXX) -o $(JUCE_OUTDIR)/$(JUCE_TARGET_APP) $(OBJECTS_APP) $(JUCE_LDFLAGS) $(JUCE_LDFLAGS_APP) $(RESOURCES) $(TARGET_ARCH)
-
-$(JUCE_OBJDIR)/EasingUI_4b0bc593.o: ../../Source/Common/Automation/easing/ui/EasingUI.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling EasingUI.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/Easing_1560fe5c.o: ../../Source/Common/Automation/easing/Easing.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling Easing.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/AutomationRecorder_dc2ece33.o: ../../Source/Common/Automation/recorder/AutomationRecorder.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling AutomationRecorder.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/AutomationEditor_937d3d4c.o: ../../Source/Common/Automation/ui/AutomationEditor.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling AutomationEditor.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/AutomationKeyUI_dc7d597e.o: ../../Source/Common/Automation/ui/AutomationKeyUI.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling AutomationKeyUI.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/AutomationMultiKeyTransformer_99f45c9e.o: ../../Source/Common/Automation/ui/AutomationMultiKeyTransformer.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling AutomationMultiKeyTransformer.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/AutomationUI_65a3b3d3.o: ../../Source/Common/Automation/ui/AutomationUI.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling AutomationUI.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/Automation_b9dd2ef4.o: ../../Source/Common/Automation/Automation.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling Automation.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/AutomationKey_343bb8d5.o: ../../Source/Common/Automation/AutomationKey.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling AutomationKey.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/BaseCommand_2318dc9b.o: ../../Source/Common/Command/BaseCommand.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
