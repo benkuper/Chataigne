@@ -6914,16 +6914,34 @@
     <None Include="..\..\Resources\out.png">
       <Filter>Chataigne\Resources</Filter>
     </None>
+    <None Include="..\..\Resources\padlock.png">
+      <Filter>Chataigne\Resources</Filter>
+    </None>
+    <None Include="..\..\Resources\pause.png">
+      <Filter>Chataigne\Resources</Filter>
+    </None>
+    <None Include="..\..\Resources\play.png">
+      <Filter>Chataigne\Resources</Filter>
+    </None>
+    <None Include="..\..\Resources\playing.png">
+      <Filter>Chataigne\Resources</Filter>
+    </None>
     <None Include="..\..\Resources\playpause.png">
       <Filter>Chataigne\Resources</Filter>
     </None>
     <None Include="..\..\Resources\prevcue.png">
       <Filter>Chataigne\Resources</Filter>
     </None>
+    <None Include="..\..\Resources\smallstripe.png">
+      <Filter>Chataigne\Resources</Filter>
+    </None>
     <None Include="..\..\Resources\snap.png">
       <Filter>Chataigne\Resources</Filter>
     </None>
     <None Include="..\..\Resources\stop.png">
+      <Filter>Chataigne\Resources</Filter>
+    </None>
+    <None Include="..\..\Resources\stripe.png">
       <Filter>Chataigne\Resources</Filter>
     </None>
     <None Include="..\..\..\JUCE\modules\juce_audio_formats\codecs\flac\Flac Licence.txt">

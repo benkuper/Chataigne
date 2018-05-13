@@ -9,6 +9,7 @@
 */
 
 #include "AudioLayerClipUI.h"
+#include "UI/ChataigneAssetManager.h"
 
 AudioLayerClipUI::AudioLayerClipUI(AudioLayerClip * _clip) :
 	BaseItemUI(_clip),
@@ -29,6 +30,9 @@ AudioLayerClipUI::AudioLayerClipUI(AudioLayerClip * _clip) :
 
 	thumbnail.setSource(new FileInputSource(clip->filePath->getFile()));
 
+	lockUI = item->isLocked->createImageToggle(ChataigneAssetManager::getInstance()->getToggleBTImage(ChataigneAssetManager::getInstance()->getLockImage()));
+	addAndMakeVisible(lockUI);
+
 	repaint();
 }
 
@@ -41,8 +45,16 @@ void AudioLayerClipUI::paint(Graphics & g)
 {
 	BaseItemUI::paint(g);
 
+	if (item->isLocked->boolValue())
+	{
+		g.setTiledImageFill(ChataigneAssetManager::getInstance()->stripeImage, 0, 0, .1f);
+		g.fillRoundedRectangle(getMainBounds().toFloat(), 2);
+	}
+
 	if (clip->filePath->stringValue().isEmpty()) return;
 	g.setColour(Colours::white.withAlpha(.5f));
+
+
 	if (clip->isLoading)
 	{
 		g.setFont(20);
@@ -50,7 +62,6 @@ void AudioLayerClipUI::paint(Graphics & g)
 		
 	} else
 	{
-		DBG("paint here");
 		thumbnail.drawChannels(g, getLocalBounds(), 0, item->clipDuration, item->volume->floatValue());
 	}
 }
@@ -58,12 +69,15 @@ void AudioLayerClipUI::paint(Graphics & g)
 void AudioLayerClipUI::resizedInternalHeader(Rectangle<int>& r)
 {
 	browseBT->setBounds(r.removeFromRight(r.getHeight()));
+	lockUI->setBounds(r.removeFromRight(r.getHeight()));
 	r.removeFromRight(2);
+
 }
 
 void AudioLayerClipUI::mouseDown(const MouseEvent & e)
 {
 	BaseItemUI::mouseDown(e);
+	if (item->isLocked->boolValue()) return;
 	timeAtMouseDown = clip->time->floatValue();
 	posAtMouseDown = getX();
 }
@@ -71,12 +85,14 @@ void AudioLayerClipUI::mouseDown(const MouseEvent & e)
 void AudioLayerClipUI::mouseDrag(const MouseEvent & e)
 {
 	BaseItemUI::mouseDrag(e);
+	if (item->isLocked->boolValue()) return;
 	clipUIListeners.call(&ClipUIListener::clipUIDragged, this, e);
 }
 
 void AudioLayerClipUI::mouseUp(const MouseEvent & e)
 {
 	BaseItemUI::mouseUp(e);
+	if (item->isLocked->boolValue()) return;
 	item->time->setUndoableValue(timeAtMouseDown, item->time->floatValue());
 }
 
@@ -98,6 +114,9 @@ void AudioLayerClipUI::controllableFeedbackUpdateInternal(Controllable * c)
 		clipUIListeners.call(&ClipUIListener::clipUITimeChanged, this);
 		repaint();
 	} else if (c == item->volume)
+	{
+		repaint();
+	} else if (c == item->isLocked)
 	{
 		repaint();
 	}

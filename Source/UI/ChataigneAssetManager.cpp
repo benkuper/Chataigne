@@ -4,6 +4,8 @@ juce_ImplementSingleton(ChataigneAssetManager);
 
 ChataigneAssetManager::ChataigneAssetManager()
 {
+	smallStripeImage = ImageCache::getFromMemory(BinaryData::smallstripe_png, BinaryData::smallstripe_pngSize);
+	stripeImage = ImageCache::getFromMemory(BinaryData::stripe_png, BinaryData::stripe_pngSize);
 }
 
 ChataigneAssetManager::~ChataigneAssetManager()
@@ -24,7 +26,7 @@ Image ChataigneAssetManager::getOutImage()
 
 Image ChataigneAssetManager::getPlayImage()
 {
-	return ImageCache::getFromMemory(BinaryData::playpause_png, BinaryData::playpause_pngSize);
+	return ImageCache::getFromMemory(BinaryData::play_png, BinaryData::play_pngSize);
 }
 
 Image ChataigneAssetManager::getStopImage()
@@ -52,6 +54,11 @@ Image ChataigneAssetManager::getAboutImage()
 	return ImageCache::getFromMemory(BinaryData::about_png, BinaryData::about_pngSize);
 }
 
+Image ChataigneAssetManager::getLockImage()
+{
+	return ImageCache::getFromMemory(BinaryData::padlock_png, BinaryData::padlock_pngSize);
+}
+
 ImageButton * ChataigneAssetManager::getSetupBTImage(const Image & image)
 {
 	ImageButton * bt = new ImageButton();
@@ -59,6 +66,17 @@ ImageButton * ChataigneAssetManager::getSetupBTImage(const Image & image)
 		image, 0.7f, Colours::transparentBlack,
 		image, 1.0f, Colours::transparentBlack,
 		image, 1.0f, Colours::white.withAlpha(.7f),0);
+	return bt;
+}
+
+ImageButton * ChataigneAssetManager::getBTDoubleImage(const Image & onImage, const Image & offImage)
+{
+	ImageButton * bt = new ImageButton();
+
+	bt->setImages(false, true, true,
+		offImage, 0.5f, Colours::transparentBlack,
+		offImage, 1.0f, Colours::white.withAlpha(.2f),
+		onImage, 1.0f, Colours::transparentBlack, 0);
 	return bt;
 }
 

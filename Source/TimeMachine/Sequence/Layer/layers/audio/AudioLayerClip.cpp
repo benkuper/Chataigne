@@ -32,6 +32,9 @@ AudioLayerClip::AudioLayerClip(float _time) :
 	volume = addFloatParameter("Volume", "Volume multiplier", 1, 0, 50);
 	scratch = addBoolParameter("Scratch", "Scratch when seeking", false);
 
+	isLocked = addBoolParameter("Locked", "When locked, you can't change time or flag values", false);
+
+
 	formatManager.registerBasicFormats();
 
 }

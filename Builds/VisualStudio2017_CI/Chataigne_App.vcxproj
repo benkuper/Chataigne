@@ -3418,10 +3418,16 @@
     <None Include="..\..\Resources\in.png"/>
     <None Include="..\..\Resources\nextcue.png"/>
     <None Include="..\..\Resources\out.png"/>
+    <None Include="..\..\Resources\padlock.png"/>
+    <None Include="..\..\Resources\pause.png"/>
+    <None Include="..\..\Resources\play.png"/>
+    <None Include="..\..\Resources\playing.png"/>
     <None Include="..\..\Resources\playpause.png"/>
     <None Include="..\..\Resources\prevcue.png"/>
+    <None Include="..\..\Resources\smallstripe.png"/>
     <None Include="..\..\Resources\snap.png"/>
     <None Include="..\..\Resources\stop.png"/>
+    <None Include="..\..\Resources\stripe.png"/>
     <None Include="..\..\..\JUCE\modules\juce_audio_formats\codecs\flac\Flac Licence.txt"/>
     <None Include="..\..\..\JUCE\modules\juce_audio_formats\codecs\oggvorbis\Ogg Vorbis Licence.txt"/>
     <None Include="..\..\..\JUCE\modules\juce_graphics\image_formats\jpglib\changes to libjpeg for JUCE.txt"/>

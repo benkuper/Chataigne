@@ -16,10 +16,16 @@
       <FILE id="WlJm0v" name="in.png" compile="0" resource="1" file="Resources/in.png"/>
       <FILE id="A952C8" name="nextcue.png" compile="0" resource="1" file="Resources/nextcue.png"/>
       <FILE id="NkuJtC" name="out.png" compile="0" resource="1" file="Resources/out.png"/>
+      <FILE id="mpY0b5" name="padlock.png" compile="0" resource="1" file="Resources/padlock.png"/>
+      <FILE id="np7NY1" name="pause.png" compile="0" resource="1" file="Resources/pause.png"/>
+      <FILE id="c9BYPH" name="play.png" compile="0" resource="1" file="Resources/play.png"/>
+      <FILE id="Fae72K" name="playing.png" compile="0" resource="1" file="Resources/playing.png"/>
       <FILE id="otwIvC" name="playpause.png" compile="0" resource="1" file="Resources/playpause.png"/>
       <FILE id="S9TDqN" name="prevcue.png" compile="0" resource="1" file="Resources/prevcue.png"/>
+      <FILE id="lg5eC9" name="smallstripe.png" compile="0" resource="1" file="Resources/smallstripe.png"/>
       <FILE id="kly3dv" name="snap.png" compile="0" resource="1" file="Resources/snap.png"/>
       <FILE id="Umk8sJ" name="stop.png" compile="0" resource="1" file="Resources/stop.png"/>
+      <FILE id="tF7PTq" name="stripe.png" compile="0" resource="1" file="Resources/stripe.png"/>
     </GROUP>
     <GROUP id="{31908E9E-F626-E2D6-1A6D-E188C9D72C25}" name="Source">
       <GROUP id="{C6C9402E-3E5F-DA24-8E22-DE4CD0AB4FD4}" name="Analytics">

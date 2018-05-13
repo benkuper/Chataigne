@@ -32,6 +32,8 @@ public:
 	FloatParameter * volume;
 	BoolParameter * scratch;
 
+	BoolParameter * isLocked;
+
 	double clipDuration;
 	double sampleRate;
 	int clipSamplePos;

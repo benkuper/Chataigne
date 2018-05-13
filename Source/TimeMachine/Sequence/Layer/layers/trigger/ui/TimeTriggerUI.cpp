@@ -9,6 +9,7 @@
 */
 
 #include "TimeTriggerUI.h"
+#include "UI/ChataigneAssetManager.h"
 
 TimeTriggerUI::TimeTriggerUI(TimeTrigger * _tt) :
 	BaseItemUI<TimeTrigger>(_tt, ResizeMode::NONE, false)
@@ -17,8 +18,14 @@ TimeTriggerUI::TimeTriggerUI(TimeTrigger * _tt) :
 	autoDrawHighlightWhenSelected = false;
 	setName(_tt->niceName);
 
+
+	lockUI = item->isLocked->createImageToggle(ChataigneAssetManager::getInstance()->getToggleBTImage(ChataigneAssetManager::getInstance()->getLockImage()));
+	addAndMakeVisible(lockUI);
+
 	removeBT->setVisible(item->isSelected);
 	enabledBT->setVisible(item->isSelected);
+	lockUI->setVisible(item->isSelected);
+
 	updateSizeFromName();
 
 }
@@ -30,12 +37,21 @@ TimeTriggerUI::~TimeTriggerUI()
 void TimeTriggerUI::paint(Graphics & g)
 {
 	Colour c = BG_COLOR.brighter(.1f);
-	if (item->isTriggered->boolValue()) c = GREEN_COLOR.darker();
-	if (!item->enabled->boolValue()) c = c.darker(.6f);
+	if (!item->enabled->boolValue()) c = c.darker(.6f).withAlpha(.7f);
 
 	g.setColour(c);
-	 
+	
 	g.fillRect(flagRect);
+
+
+	if (item->isLocked->boolValue())
+	{
+		g.setTiledImageFill(ChataigneAssetManager::getInstance()->smallStripeImage, 0, 0, .1f); 
+		g.fillRect(flagRect);
+	}
+
+	if (item->isTriggered->boolValue()) c = GREEN_COLOR.darker();
+
 	g.setColour(item->isSelected?HIGHLIGHT_COLOR:c.brighter());
 	g.drawRect(flagRect);
 	g.drawVerticalLine(0, 0, (float)getHeight());
@@ -59,6 +75,7 @@ void TimeTriggerUI::resized()
 		p.removeFromRight(2);
 		enabledBT->setBounds(p.removeFromRight(15));
 		p.removeFromRight(2);
+		lockUI->setBounds(p.removeFromRight(p.getHeight()));
 	}
 
 	itemLabel.setBounds(p);
@@ -74,13 +91,18 @@ bool TimeTriggerUI::hitTest(int x, int y)
 void TimeTriggerUI::updateSizeFromName()
 {
 	int newWidth = itemLabel.getFont().getStringWidth(itemLabel.getText())+ 15;
-	if (item->isSelected) newWidth += removeBT->getWidth() + enabledBT->getWidth() + 10;
+	if (item->isSelected)
+	{
+		newWidth += 60; //for all the buttons
+	}
 	setSize(newWidth, getHeight());
 }
 
 void TimeTriggerUI::mouseDown(const MouseEvent & e)
 {
 	BaseItemUI::mouseDown(e);
+	if (item->isLocked->boolValue()) return;
+
 	timeAtMouseDown = item->time->floatValue();
 	posAtMouseDown = getX();
 	flagYAtMouseDown = item->flagY->floatValue();
@@ -89,6 +111,7 @@ void TimeTriggerUI::mouseDown(const MouseEvent & e)
 void TimeTriggerUI::mouseDrag(const MouseEvent & e)
 {
 	if (itemLabel.isBeingEdited()) return;
+	if (item->isLocked->boolValue()) return;
 
 	BaseItemUI::mouseDrag(e);
 
@@ -109,6 +132,7 @@ void TimeTriggerUI::mouseUp(const MouseEvent & e)
 {
 	BaseItemUI::mouseUp(e);
 
+	if (item->isLocked->boolValue()) return;
 	if (flagYAtMouseDown == item->flagY->floatValue() && timeAtMouseDown == item->time->floatValue()) return;
 
 	Array<UndoableAction *> actions;
@@ -136,6 +160,9 @@ void TimeTriggerUI::controllableFeedbackUpdateInternal(Controllable * c)
 	} else if (c == item->isTriggered)
 	{
 		repaint();
+	} else if (c == item->isLocked)
+	{
+		repaint();
 	}
 }
 
@@ -144,6 +171,7 @@ void TimeTriggerUI::inspectableSelectionChanged(Inspectable * i)
 	BaseItemUI::inspectableSelectionChanged(i);
 	removeBT->setVisible(item->isSelected);
 	enabledBT->setVisible(item->isSelected);
+	lockUI->setVisible(item->isSelected);
 
 	updateSizeFromName();
 }

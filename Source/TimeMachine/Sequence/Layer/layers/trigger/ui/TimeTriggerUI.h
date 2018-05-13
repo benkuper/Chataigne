@@ -24,6 +24,8 @@ public:
 	Rectangle<int> flagRect;
 	Rectangle<int> lineRect;
 
+	ScopedPointer<BoolImageToggleUI> lockUI;
+
 	//interaction
 	float timeAtMouseDown;
 	int posAtMouseDown;

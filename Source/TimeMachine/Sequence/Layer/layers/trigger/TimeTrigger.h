@@ -23,8 +23,12 @@ public:
 	FloatParameter * time;
 	BoolParameter * isTriggered;
 	
+	BoolParameter * isLocked;
+
 	//ui
 	FloatParameter * flagY;
+
+	void onContainerParameterChangedInternal(Parameter * p) override;
 
 	void trigger();
 };

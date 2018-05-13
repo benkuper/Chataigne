@@ -27,6 +27,8 @@ public:
 	int posAtMouseDown;
 
 	ScopedPointer<ImageButton> browseBT;
+	ScopedPointer<BoolImageToggleUI> lockUI;
+
 	AudioThumbnailCache thumbnailCache;
 	AudioThumbnail thumbnail;
 	AudioLayerClip * clip;

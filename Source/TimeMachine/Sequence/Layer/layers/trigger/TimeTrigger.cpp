@@ -25,7 +25,10 @@ TimeTrigger::TimeTrigger(float _time, float flagYPos, const String &name) :
 	time->setValue(_time);
 	flagY->setValue(flagYPos);
 
+	isLocked = addBoolParameter("Locked", "When locked, you can't change time or flag values", false);
+
 	isTriggered->hideInEditor = true;
+	isTriggered->isSavable = false;
 
 	autoTriggerWhenAllConditionAreActives = false;
 }
@@ -33,6 +36,15 @@ TimeTrigger::TimeTrigger(float _time, float flagYPos, const String &name) :
 TimeTrigger::~TimeTrigger()
 {
 
+}
+
+void TimeTrigger::onContainerParameterChangedInternal(Parameter * p)
+{
+	if (p == isLocked)
+	{
+		time->setControllableFeedbackOnly(isLocked->boolValue());
+		flagY->setControllableFeedbackOnly(isLocked->boolValue());
+	}
 }
 
 void TimeTrigger::trigger()
