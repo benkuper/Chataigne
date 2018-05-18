@@ -119,7 +119,6 @@ void SequenceTimelineHeader::paint(Graphics & g)
 				
 			}
 		}
-		
 	}
 
 	g.setColour(BG_COLOR.brighter(.7f));
@@ -129,8 +128,6 @@ void SequenceTimelineHeader::paint(Graphics & g)
 
 	g.setColour(BG_COLOR.darker(.6f));
 	g.drawRoundedRectangle(getLocalBounds().toFloat(), 2, 2);
-
-	cueManagerUI.updateContent();
 }
 
 void SequenceTimelineHeader::resized()
@@ -193,6 +190,7 @@ void SequenceTimelineHeader::newMessage(const ContainerAsyncEvent & e)
 		{
 			repaint();
 			resized();
+			cueManagerUI.updateContent();
 		} else if (e.targetControllable == sequence->currentTime)
 		{
 			resized();

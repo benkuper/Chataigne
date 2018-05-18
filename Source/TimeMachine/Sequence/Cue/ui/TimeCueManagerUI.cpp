@@ -39,13 +39,14 @@ void TimeCueManagerUI::updateContent()
 	{
 		//DBG("place " << tui->item->time->floatValue());
 		placeTimeCueUI(tui);
-		if(tui->item->isSelected) tui->toFront(true);
+		if (tui->item->isSelected) tui->toFront(true);
 		else tui->toBack();
 	}
 }
 
 bool TimeCueManagerUI::hitTest(int x, int y)
 {
+
 	for (auto &i : itemsUI)
 	{
 		if (i->getBounds().contains(Point<int>(x,y)))
@@ -62,6 +63,7 @@ void TimeCueManagerUI::placeTimeCueUI(TimeCueUI * ttui)
 	int tx = header->getXForTime(ttui->item->time->floatValue());
 	ttui->setBounds(tx-ttui->getWidth()/2, getHeight()/2, ttui->getWidth(), getHeight()/2);	
 }
+
 
 void TimeCueManagerUI::addCueAtPos(int x)
 {
@@ -88,6 +90,7 @@ void TimeCueManagerUI::removeItemUIInternal(TimeCueUI * ttui)
 {
 	ttui->removeCueUIListener(this);
 }
+
 
 void TimeCueManagerUI::cueDragged(TimeCueUI * ttui, const MouseEvent & e)
 {
