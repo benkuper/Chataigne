@@ -26,8 +26,8 @@
 #endif
 
 ChataigneEngine::ChataigneEngine(ApplicationProperties * appProperties, const String &appVersion) :
-	Engine("Chataigne", ".noisette", appProperties, appVersion),
-	ossiaDevice(nullptr)
+	Engine("Chataigne", ".noisette", appProperties, appVersion)
+	//ossiaDevice(nullptr)
 {
 	convertURL = "http://benjamin.kuperberg.fr/chataigne/releases/convert.php";
 
@@ -39,12 +39,13 @@ ChataigneEngine::ChataigneEngine(ApplicationProperties * appProperties, const St
 	addChildControllableContainer(ModuleRouterManager::getInstance());
 	addChildControllableContainer(CVGroupManager::getInstance());
 
+	/*
 	ossiaProtocol = ossia_protocol_oscquery_server_create(1234, 5678);
 	ossiaDevice = ossia_device_create(ossiaProtocol, "Chataigne");
 	ossiaRoot = ossia_device_get_root_node(ossiaDevice);
 	isPushingParameter = false;
 	updateOssiaStructure();
-
+	*/
 }
 
 ChataigneEngine::~ChataigneEngine()
@@ -75,8 +76,8 @@ ChataigneEngine::~ChataigneEngine()
 
 	CVGroupManager::deleteInstance();
 
-	ossia_device_free(ossiaDevice);
-	ossia_protocol_free(ossiaProtocol); 
+	//ossia_device_free(ossiaDevice);
+	//ossia_protocol_free(ossiaProtocol); 
 }
 
 
@@ -164,15 +165,16 @@ void ChataigneEngine::childStructureChanged(ControllableContainer * cc)
 {
 	Engine::childStructureChanged(cc);
 
-	updateOssiaStructure();
+	//updateOssiaStructure();
 }
 
 void ChataigneEngine::controllableFeedbackUpdate(ControllableContainer * cc, Controllable * c)
 {
 	if (isClearing || isLoadingFile) return;
-	updateOssiaControllable(c);
+	//updateOssiaControllable(c);
 }
 
+/*
 void ChataigneEngine::updateOssiaStructure()
 {
 	
@@ -339,16 +341,14 @@ void ChataigneEngine::ossiaCallback(void * ctx, ossia_value_t value)
 		}
 	}
 
-	/* ownership of the value is transfered to the callback */
 	ossia_value_free(value);
-
-
 }
+*/
 
 void ChataigneEngine::handleAsyncUpdate()
 {
 	Engine::handleAsyncUpdate();
-	updateOssiaStructure();
+	//updateOssiaStructure();
 }
 
 String ChataigneEngine::getMinimumRequiredFileVersion()

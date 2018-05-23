@@ -27,17 +27,19 @@ public:
 	ChataigneGenericModule module;
 
 	//Ossia
+	/*
 	ossia_protocol_t ossiaProtocol;
 	ossia_device_t ossiaDevice;
 	ossia_node_t ossiaRoot;
 	bool isPushingParameter; //avoid handling ossia feedback when changes come from Chataigne
-
+	*/
+	
 	void clearInternal() override;
 
-	void updateOssiaStructure();
-	void createOssiaStructureForContainer(ossia_node_t parent, ControllableContainer * container);
-	void updateOssiaControllable(Controllable * c);
-	static void ossiaCallback(void * ctx, ossia_value_t param);
+	//void updateOssiaStructure();
+	//void createOssiaStructureForContainer(ossia_node_t parent, ControllableContainer * container);
+	//void updateOssiaControllable(Controllable * c);
+	//static void ossiaCallback(void * ctx, ossia_value_t param);
 
 	var getJSONData() override;
 	void loadJSONDataInternalEngine(var data, ProgressTask * loadingTask) override;
