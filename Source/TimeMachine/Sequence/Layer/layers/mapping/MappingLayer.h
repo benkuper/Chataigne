@@ -12,7 +12,6 @@
 #define MAPPINGLAYER_H_INCLUDED
 
 #include "../../SequenceLayer.h"
-#include "Common/Automation/Automation.h"
 #include "Common/Processor/Mapping/Mapping.h"
 #include "timecolor/TimeColorManager.h"
 
@@ -48,7 +47,7 @@ public:
 	void loadJSONDataInternal(var data) override;
 
 	static MappingLayer * create(Sequence * sequence, var params) { return new MappingLayer(sequence, params); }
-	virtual String getTypeString() const override { return "Automation"; }
+	virtual String getTypeString() const override { return "Mapping"; }
 
 	virtual SequenceLayerPanel * getPanel() override;
 	virtual SequenceLayerTimeline * getTimelineUI() override;

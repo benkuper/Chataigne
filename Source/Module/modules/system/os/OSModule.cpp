@@ -16,7 +16,6 @@
 OSModule::OSModule() :
 	Module(getDefaultTypeString())
 {
-	setupIOConfiguration(false, true);
 
 	osType = valuesCC.addEnumParameter("OS Type", "Type of OS");
 	osType->addOption("Windows", OS_WIN)->addOption("MacOS", OS_MAC)->addOption("Linux", OS_LINUX);
@@ -33,6 +32,7 @@ OSModule::OSModule() :
 
 	for (auto &c : valuesCC.controllables) c->isControllableFeedbackOnly = true;
 
+	setupIOConfiguration(false, true);
 
 	defManager.add(CommandDefinition::createDef(this, "Power", "Shutdown", &OSPowerCommand::create, CommandContext::ACTION)->addParam("type", OSPowerCommand::SHUTDOWN));
 	defManager.add(CommandDefinition::createDef(this, "Power", "Reboot", &OSPowerCommand::create, CommandContext::ACTION)->addParam("type", OSPowerCommand::REBOOT));

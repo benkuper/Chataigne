@@ -23,7 +23,6 @@ public:
 	~CustomOSCModule() {}
 
 	BoolParameter * autoAdd;
-	BoolParameter * autoRange;
 	BoolParameter * splitArgs;
 
 	UserOSCCommandModelManager umm;

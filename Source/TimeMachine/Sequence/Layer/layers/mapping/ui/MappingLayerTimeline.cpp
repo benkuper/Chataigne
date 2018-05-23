@@ -38,16 +38,21 @@ void MappingLayerTimeline::setupUIForLayerMode()
 	for(auto &aui :automationsUI) removeChildComponent(aui);
 	automationsUI.clear();
 
+	int index = 0;
 	for (auto &a : mappingLayer->automations)
 	{
-		AutomationUI * aui = new AutomationUI(a);
+		Colour c = Colours::white;
+		if (index == 0 && mappingLayer->automations.size() > 1) c = RED_COLOR;
+		if (index == 1) c = GREEN_COLOR;
+		if (index == 2) c = BLUE_COLOR;
+		AutomationUI * aui = new AutomationUI(a,c);
 		addAndMakeVisible(aui);
 		automationsUI.add(aui);
+		index++;
 	}
 
 	if (mappingLayer->mode->getValueDataAsEnum<MappingLayer::Mode>() == MappingLayer::MODE_COLOR)
 	{
-		DBG("Here");
 		colorManagerUI = new TimeColorManagerUI(mappingLayer->timeColorManager);
 		addAndMakeVisible(colorManagerUI);
 	}

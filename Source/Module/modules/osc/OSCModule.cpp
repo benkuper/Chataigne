@@ -46,8 +46,7 @@ OSCModule::OSCModule(const String & name, int defaultLocalPort, int defaultRemot
 		{
 			OSCOutput * o = outputManager->addItem(nullptr, var(), false);
 
-			o->remotePort->defaultValue = defaultRemotePort;
-			o->remotePort->resetValue();
+			o->remotePort->setValue(defaultRemotePort);
 			setupSenders();
 		}
 		
@@ -70,22 +69,24 @@ void OSCModule::setupReceiver()
 	{
 		NLOG(niceName, "Now receiving on port : " + localPort->stringValue());
 		if(!isThreadRunning()) startThread();
+
+		Array<IPAddress> ad;
+		IPAddress::findAllAddresses(ad);
+
+		Array<String> ips;
+		for (auto &a : ad) ips.add(a.toString());
+		ips.sort();
+		String s = "Local IPs:";
+		for (auto &ip : ips) s += String("\n > ") + ip;
+
+		NLOG(niceName, s);
 	} else
 	{
 		NLOGERROR(niceName, "Error binding port " + localPort->stringValue());
 	}
 
 	
-	Array<IPAddress> ad;
-	IPAddress::findAllAddresses(ad);
-
-	Array<String> ips;
-	for (auto &a : ad) ips.add(a.toString());
-	ips.sort();
-	String s = "Local IPs:";
-	for (auto &ip : ips) s += String("\n > ") + ip;
-
-	NLOG(niceName, s);
+	
 }
 
 float OSCModule::getFloatArg(OSCArgument a)
@@ -178,7 +179,10 @@ void OSCModule::setupZeroConf()
 			servus = nullptr;
 		}
 		servus = new Servus("_osc._udp");
-		servus->announce(portToAdvertise, ("Chataigne - " + nameToAdvertise).toStdString());
+		if (servus != nullptr)
+		{
+			servus->announce(portToAdvertise, ("Chataigne - " + nameToAdvertise).toStdString());
+		}
 		if (nameToAdvertise != niceName || localPort->intValue() != portToAdvertise)
 		{
 			DBG("Name or port changed during advertise, readvertising");

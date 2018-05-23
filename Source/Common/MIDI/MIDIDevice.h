@@ -16,7 +16,7 @@
 class MIDIDevice
 {
 public:
-	enum Type { IN, OUT };
+	enum Type { MIDI_IN, MIDI_OUT };
 	MIDIDevice(const String &deviceName, Type t);
 	virtual ~MIDIDevice() {}
 	String name;

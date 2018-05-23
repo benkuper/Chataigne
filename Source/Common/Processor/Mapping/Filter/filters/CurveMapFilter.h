@@ -8,11 +8,9 @@
   ==============================================================================
 */
 
-#ifndef CURVEMAPFILTER_H_INCLUDED
-#define CURVEMAPFILTER_H_INCLUDED
+#pragma once
 
 #include "../MappingFilter.h"
-#include "Common/Automation/Automation.h"
 
 class CurveMapFilter :
 	public MappingFilter
@@ -36,9 +34,3 @@ public:
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(CurveMapFilter)
 };
-
-
-
-
-
-#endif  // CURVEMAPFILTER_H_INCLUDED

@@ -30,6 +30,7 @@ MappingLayerPanel::MappingLayerPanel(MappingLayer * layer) :
 
 		automationInspector = new Inspector(mappingLayer->automations[0]->selectionManager);
 		addAndMakeVisible(automationInspector);
+
 	}
 }
 
@@ -53,7 +54,7 @@ void MappingLayerPanel::resizedInternalContent(Rectangle<int>& r)
 		snapUI->setBounds(scr.removeFromLeft(scr.getHeight()));
 		scr.reduce(0, 2);
 		scr.removeFromLeft(10);
-		snapSensitivityUI->setBounds(scr);
+		snapSensitivityUI->setBounds(scr);	
 
 		cr.removeFromTop(2);
 		automationInspector->setBounds(cr);

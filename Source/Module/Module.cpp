@@ -70,7 +70,7 @@ void Module::setupIOConfiguration(bool _hasInput, bool _hasOutput)
 	if (_hasInput != hasInput) hasInput = _hasInput;
 	if (_hasOutput != hasOutput) hasOutput = _hasOutput;
 	
-	valuesCC.hideInEditor = !hasInput && valuesCC.controllables.size() == 0;
+	valuesCC.hideInEditor = !hasInput && valuesCC.controllables.size() == 0 && valuesCC.controllableContainers.size() == 0;
 	commandTester.hideInEditor = !hasOutput;
 	moduleListeners.call(&ModuleListener::moduleIOConfigurationChanged);
 }

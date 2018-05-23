@@ -21,9 +21,6 @@ CustomOSCModule::CustomOSCModule() :
 	autoAdd = moduleParams.addBoolParameter("Auto Add", "Add automatically any message that is received\nand try to create the corresponding value depending on the message content.", true);
 	autoAdd->isTargettable = false;
 
-	autoRange = moduleParams.addBoolParameter("Auto Range", "If checked, will change range of already existing values if more than one argument is provided in the incoming OSC message", false);
-	autoRange->isTargettable = false;
-
 	splitArgs = moduleParams.addBoolParameter("Split Arguments", "If checked, a message with multiple arguments will be exploded in multliple values", false);
 	splitArgs->isTargettable = false;
 
@@ -77,7 +74,7 @@ void CustomOSCModule::processMessageInternal(const OSCMessage & msg)
 					c->isRemovableByUser = true;
 					c->saveValueOnly = false;
 					c->isControllableFeedbackOnly = true;
-					if (c->type != Controllable::TRIGGER) ((Parameter *)c)->autoAdaptRange = autoRange->boolValue();
+					if (c->type != Controllable::TRIGGER) ((Parameter *)c)->autoAdaptRange = true;
 				}
 			}
 		}
@@ -88,7 +85,7 @@ void CustomOSCModule::processMessageInternal(const OSCMessage & msg)
 		
 		if (c != nullptr) //update existing controllable
 		{
-			if (c->type != Controllable::TRIGGER) ((Parameter *)c)->autoAdaptRange = autoRange->boolValue();
+			if (c->type != Controllable::TRIGGER) ((Parameter *)c)->autoAdaptRange = true;
 
 			switch (c->type)
 			{
@@ -209,7 +206,7 @@ void CustomOSCModule::processMessageInternal(const OSCMessage & msg)
 			c->saveValueOnly = false;
 			c->setControllableFeedbackOnly(true);
 
-			if (c->type != Controllable::TRIGGER) ((Parameter *)c)->autoAdaptRange = autoRange->boolValue();
+			if (c->type != Controllable::TRIGGER) ((Parameter *)c)->autoAdaptRange = true;
 
 			valuesCC.addControllable(c);
 			valuesCC.orderControllablesAlphabetically();

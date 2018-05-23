@@ -13,7 +13,6 @@
 
 #include "../../../ui/SequenceLayerTimeline.h"
 #include "../MappingLayer.h"
-#include "Common/Automation/ui/AutomationUI.h"
 #include "../timecolor/ui/TimeColorManagerUI.h"
 
 class MappingLayerTimeline :
@@ -27,7 +26,6 @@ public:
 
 	OwnedArray<AutomationUI> automationsUI;
 	ScopedPointer<TimeColorManagerUI> colorManagerUI;
-
 
 	void setupUIForLayerMode();
 

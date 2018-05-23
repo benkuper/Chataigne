@@ -18,7 +18,7 @@
 
 
  MIDIInputDevice::MIDIInputDevice(const String & deviceName) :
-	 MIDIDevice(deviceName, IN)
+	 MIDIDevice(deviceName, MIDI_IN)
  {
  }
 
@@ -78,7 +78,7 @@ void MIDIInputDevice::handleIncomingMidiMessage(MidiInput * source, const MidiMe
 
 
 MIDIOutputDevice::MIDIOutputDevice(const String & deviceName) :
-	MIDIDevice(deviceName, OUT),
+	MIDIDevice(deviceName, MIDI_OUT),
 	usageCount(0)
 {}
 

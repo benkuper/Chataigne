@@ -1,0 +1,105 @@
+//! \file eggs/variant/detail/config/suffix.hpp
+// Eggs.Variant
+//
+// Copyright Agustin K-ballo Berge, Fusion Fenix 2014-2017
+//
+// Distributed under the Boost Software License, Version 1.0. (See accompanying
+// file LICENSE.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+
+/// no header guards
+
+/// constexpr support
+#ifdef EGGS_CXX11_HAS_CONSTEXPR_DEFINED
+#  undef EGGS_CXX11_HAS_CONSTEXPR
+#  undef EGGS_CXX11_HAS_CONSTEXPR_DEFINED
+#endif
+
+#ifdef EGGS_CXX11_CONSTEXPR_DEFINED
+#  undef EGGS_CXX11_CONSTEXPR
+#  undef EGGS_CXX11_CONSTEXPR_DEFINED
+#endif
+
+#ifdef EGGS_CXX11_STATIC_CONSTEXPR_DEFINED
+#  undef EGGS_CXX11_STATIC_CONSTEXPR
+#  undef EGGS_CXX11_STATIC_CONSTEXPR_DEFINED
+#endif
+
+#ifdef EGGS_CXX14_HAS_CONSTEXPR_DEFINED
+#  undef EGGS_CXX14_HAS_CONSTEXPR
+#  undef EGGS_CXX14_HAS_CONSTEXPR_DEFINED
+#endif
+
+#ifdef EGGS_CXX14_CONSTEXPR_DEFINED
+#  undef EGGS_CXX14_CONSTEXPR
+#  undef EGGS_CXX14_CONSTEXPR_DEFINED
+#endif
+
+/// RTTI support
+#ifdef EGGS_CXX98_HAS_RTTI_DEFINED
+#  undef EGGS_CXX98_HAS_RTTI
+#  undef EGGS_CXX98_HAS_RTTI_DEFINED
+#endif
+
+/// RTTI constexpr support
+#ifdef EGGS_CXX11_HAS_CONSTEXPR_RTTI_DEFINED
+#  undef EGGS_CXX11_HAS_CONSTEXPR_RTTI
+#  undef EGGS_CXX11_HAS_CONSTEXPR_RTTI_DEFINED
+#endif
+
+/// exception support
+#ifdef EGGS_CXX98_HAS_EXCEPTIONS_DEFINED
+#  undef EGGS_CXX98_HAS_EXCEPTIONS
+#  undef EGGS_CXX98_HAS_EXCEPTIONS_DEFINED
+#endif
+
+/// noreturn support
+#ifdef EGGS_CXX11_NORETURN_DEFINED
+#  undef EGGS_CXX11_NORETURN
+#  undef EGGS_CXX11_NORETURN_DEFINED
+#endif
+
+/// sfinae for expressions support
+#ifdef EGGS_CXX11_HAS_SFINAE_FOR_EXPRESSIONS_DEFINED
+#  undef EGGS_CXX11_HAS_SFINAE_FOR_EXPRESSIONS
+#  undef EGGS_CXX11_HAS_SFINAE_FOR_EXPRESSIONS_DEFINED
+#endif
+
+/// variable templates support
+#ifdef EGGS_CXX14_HAS_VARIABLE_TEMPLATES_DEFINED
+#  undef EGGS_CXX14_HAS_VARIABLE_TEMPLATES
+#  undef EGGS_CXX14_HAS_VARIABLE_TEMPLATES_DEFINED
+#endif
+
+/// constexpr std::addressof support
+#ifdef EGGS_CXX17_STD_HAS_CONSTEXPR_ADDRESSOF_DEFINED
+#  undef EGGS_CXX17_STD_HAS_CONSTEXPR_ADDRESSOF
+#  undef EGGS_CXX17_STD_HAS_CONSTEXPR_ADDRESSOF_DEFINED
+#endif
+
+/// std::is_nothrow_* support
+#ifdef EGGS_CXX11_STD_HAS_IS_NOTHROW_TRAITS_DEFINED
+#  undef EGGS_CXX11_STD_HAS_IS_NOTHROW_TRAITS
+#  undef EGGS_CXX11_STD_HAS_IS_NOTHROW_TRAITS_DEFINED
+#endif
+
+/// std::is_[nothrow_]swappable support
+#ifdef EGGS_CXX17_STD_HAS_SWAPPABLE_TRAITS_DEFINED
+#  undef EGGS_CXX17_STD_HAS_SWAPPABLE_TRAITS
+#  undef EGGS_CXX17_STD_HAS_SWAPPABLE_TRAITS_DEFINED
+#endif
+
+/// std::is_trivially_copyable support
+#ifdef EGGS_CXX11_STD_HAS_IS_TRIVIALLY_COPYABLE_DEFINED
+#  undef EGGS_CXX11_STD_HAS_IS_TRIVIALLY_COPYABLE
+#  undef EGGS_CXX11_STD_HAS_IS_TRIVIALLY_COPYABLE_DEFINED
+#endif
+
+/// std::is_trivially_destructible support
+#ifdef EGGS_CXX11_STD_HAS_IS_TRIVIALLY_DESTRUCTIBLE_DEFINED
+#  undef EGGS_CXX11_STD_HAS_IS_TRIVIALLY_DESTRUCTIBLE
+#  undef EGGS_CXX11_STD_HAS_IS_TRIVIALLY_DESTRUCTIBLE_DEFINED
+#endif
+
+#if defined(_MSC_VER)
+#  pragma warning(pop)
+#endif
