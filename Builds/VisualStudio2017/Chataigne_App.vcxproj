@@ -55,12 +55,12 @@
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(Platform)\$(Configuration)\App\</IntDir>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">ChataigneDebug</TargetName>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</GenerateManifest>
-    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(LibraryPath);../../External/kinect/lib;../../External/joycon/lib;../../External/servus/lib/win/x64/debug;../../External/dnssd/lib;../../External/ossia/lib</LibraryPath>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(LibraryPath);../../External/kinect/lib;../../External/joycon/lib;../../External/servus/lib/win/x64/debug;../../External/dnssd/lib;../../External/ossia/lib/win</LibraryPath>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\..\..\Binaries\App\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)\$(Configuration)\App\</IntDir>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Chataigne</TargetName>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</GenerateManifest>
-    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(LibraryPath);../../External/kinect/lib;../../External/joycon/lib;../../External/servus/lib/win/x64/release;../../External/dnssd/lib;../../External/ossia/lib</LibraryPath>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(LibraryPath);../../External/kinect/lib;../../External/joycon/lib;../../External/servus/lib/win/x64/release;../../External/dnssd/lib;../../External/ossia/lib/win</LibraryPath>
     <PlatformToolset>v141</PlatformToolset>
     <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
@@ -98,7 +98,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(IntDir)\ChataigneDebug.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
-      <AdditionalLibraryDirectories>../../External/kinect/lib;../../External/joycon/lib;../../External/servus/lib/win/x64/debug;../../External/dnssd/lib;../../External/ossia/lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../../External/kinect/lib;../../External/joycon/lib;../../External/servus/lib/win/x64/debug;../../External/dnssd/lib;../../External/ossia/lib/win;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <LargeAddressAware>true</LargeAddressAware>
       <AdditionalDependencies>Setupapi.lib;hid.lib;Kinect20.lib;joytime-core.lib;joytime-input-hidapi.lib;Servus.lib;dnssd.lib;ossia.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
@@ -108,7 +108,7 @@
     </Bscmake>
     <Lib>
       <AdditionalDependencies>Setupapi.lib;hid.lib;Kinect20.lib;joytime-core.lib;joytime-input-hidapi.lib;Servus.lib;dnssd.lib;ossia.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>../../External/kinect/lib;../../External/joycon/lib;../../External/servus/lib/win/x64/debug;../../External/dnssd/lib;../../External/ossia/lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../../External/kinect/lib;../../External/joycon/lib;../../External/servus/lib/win/x64/debug;../../External/dnssd/lib;../../External/ossia/lib/win;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -146,7 +146,7 @@
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <AdditionalLibraryDirectories>../../External/kinect/lib;../../External/joycon/lib;../../External/servus/lib/win/x64/release;../../External/dnssd/lib;../../External/ossia/lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../../External/kinect/lib;../../External/joycon/lib;../../External/servus/lib/win/x64/release;../../External/dnssd/lib;../../External/ossia/lib/win;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <LargeAddressAware>true</LargeAddressAware>
       <AdditionalDependencies>Setupapi.lib;hid.lib;Kinect20.lib;joytime-core.lib;joytime-input-hidapi.lib;Servus.lib;dnssd.lib;ossia.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
@@ -156,7 +156,7 @@
     </Bscmake>
     <Lib>
       <AdditionalDependencies>Setupapi.lib;hid.lib;Kinect20.lib;joytime-core.lib;joytime-input-hidapi.lib;Servus.lib;dnssd.lib;ossia.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>../../External/kinect/lib;../../External/joycon/lib;../../External/servus/lib/win/x64/release;../../External/dnssd/lib;../../External/ossia/lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../../External/kinect/lib;../../External/joycon/lib;../../External/servus/lib/win/x64/release;../../External/dnssd/lib;../../External/ossia/lib/win;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>

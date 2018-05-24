@@ -1121,12 +1121,12 @@
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" winWarningLevel="4" generateManifest="1" winArchitecture="x64"
                        isDebug="1" optimisation="1" targetName="ChataigneDebug" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/asio&#10;../../External/kinect/include&#10;../../External/joycon/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/ossia/include"
-                       libraryPath="../../External/kinect/lib&#10;../../External/joycon/lib&#10;../../External/servus/lib/win/x64/debug&#10;../../External/dnssd/lib&#10;../../External/ossia/lib"
+                       libraryPath="../../External/kinect/lib&#10;../../External/joycon/lib&#10;../../External/servus/lib/win/x64/debug&#10;../../External/dnssd/lib&#10;../../External/ossia/lib/win"
                        binaryPath="Binaries/Debug" debugInformationFormat="ProgramDatabase"
                        enablePluginBinaryCopyStep="0" useRuntimeLibDLL="0"/>
         <CONFIGURATION name="Release" winWarningLevel="4" generateManifest="1" winArchitecture="x64"
                        isDebug="0" optimisation="3" targetName="Chataigne" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/asio&#10;../../External/kinect/include&#10;../../External/joycon/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/ossia/include"
-                       libraryPath="../../External/kinect/lib&#10;../../External/joycon/lib&#10;../../External/servus/lib/win/x64/release&#10;../../External/dnssd/lib&#10;../../External/ossia/lib"
+                       libraryPath="../../External/kinect/lib&#10;../../External/joycon/lib&#10;../../External/servus/lib/win/x64/release&#10;../../External/dnssd/lib&#10;../../External/ossia/lib/win"
                        binaryPath="Binaries" debugInformationFormat="ProgramDatabase"
                        enablePluginBinaryCopyStep="0" linkTimeOptimisation="1" useRuntimeLibDLL="0"/>
       </CONFIGURATIONS>
@@ -1156,12 +1156,12 @@
                externalLibraries="Servus">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" isDebug="1" optimisation="1" targetName="Chataigne"
-                       headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/dnssd/include"
+                       headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/ossia/include"
                        cppLanguageStandard="c++11" cppLibType="libc++" enablePluginBinaryCopyStep="1"
-                       osxCompatibility="10.9 SDK" libraryPath="../../External/servus/lib/osx/debug"/>
+                       osxCompatibility="10.9 SDK" libraryPath="../../External/servus/lib/osx/debug&#10;../../External/ossia/lib/osx"/>
         <CONFIGURATION name="Release" isDebug="0" optimisation="3" targetName="Chataigne"
-                       headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/dnssd/include"
-                       enablePluginBinaryCopyStep="1" osxCompatibility="10.9 SDK" libraryPath="../../External/servus/lib/osx/release"/>
+                       headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/ossia/include"
+                       enablePluginBinaryCopyStep="1" osxCompatibility="10.9 SDK" libraryPath="../../External/servus/lib/osx/release&#10;../../External/ossia/lib/osx"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_video" path="~/JUCE/modules"/>
@@ -1187,11 +1187,11 @@
                 extraLinkerFlags="-Wl,-rpath,&quot;lib&quot;">
       <CONFIGURATIONS>
         <CONFIGURATION name="Release" isDebug="0" optimisation="3" targetName="Chataigne"
-                       headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/dnssd/include"
-                       linuxArchitecture="-m64" libraryPath="../../External/servus/lib/linux"/>
+                       headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/ossia/include"
+                       linuxArchitecture="-m64" libraryPath="../../External/servus/lib/linux&#10;../../External/ossia/lib/linux"/>
         <CONFIGURATION name="Debug" isDebug="1" optimisation="1" targetName="Chataigne"
-                       headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/dnssd/include"
-                       linuxArchitecture="-m64" libraryPath="../../External/servus/lib/linux"/>
+                       headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/ossia/include"
+                       linuxArchitecture="-m64" libraryPath="../../External/servus/lib/linux&#10;../../External/ossia/lib/linux"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_video" path="~/JUCE/modules"/>
@@ -1242,11 +1242,11 @@
         <MODULEPATH id="juce_analytics" path="../../juce"/>
       </MODULEPATHS>
     </CODEBLOCKS_LINUX>
-    <VS2017 targetFolder="Builds/VisualStudio2017_CI" externalLibraries="Setupapi.lib&#10;hid.lib&#10;Kinect20.lib&#10;joytime-core.lib&#10;joytime-input-hidapi.lib&#10;Servus.lib&#10;dnssd.lib"
+    <VS2017 targetFolder="Builds/VisualStudio2017_CI" externalLibraries="Setupapi.lib&#10;hid.lib&#10;Kinect20.lib&#10;joytime-core.lib&#10;joytime-input-hidapi.lib&#10;Servus.lib&#10;dnssd.lib&#10;ossia.lib"
             smallIcon="nVz6Li" bigIcon="nVz6Li">
       <CONFIGURATIONS>
-        <CONFIGURATION isDebug="0" name="Release" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/asio&#10;../../External/kinect/include&#10;../../External/joycon/include&#10;../../External/servus/include&#10;../../External/dnssd/include"
-                       libraryPath="../../External/kinect/lib&#10;../../External/joycon/lib&#10;../../External/servus/lib/win/x64/release&#10;../../External/dnssd/lib"
+        <CONFIGURATION isDebug="0" name="Release" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/asio&#10;../../External/kinect/include&#10;../../External/joycon/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/ossia/include"
+                       libraryPath="../../External/kinect/lib&#10;../../External/joycon/lib&#10;../../External/servus/lib/win/x64/release&#10;../../External/dnssd/lib&#10;../../External/ossia/lib/win"
                        binaryPath="Binaries/CI"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
