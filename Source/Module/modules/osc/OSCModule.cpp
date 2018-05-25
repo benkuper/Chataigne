@@ -38,7 +38,7 @@ OSCModule::OSCModule(const String & name, int defaultLocalPort, int defaultRemot
 	if (canHaveOutput)
 	{
 		
-		outputManager = new BaseManager<OSCOutput>("Outputs");
+		outputManager = new BaseManager<OSCOutput>("OSC Outputs");
 		moduleParams.addChildControllableContainer(outputManager);
 
 		outputManager->setCanBeDisabled(true);
@@ -374,7 +374,7 @@ OSCModule::OSCRouteParams::OSCRouteParams(Module * sourceModule, Controllable * 
 ///// OSC OUTPUT
 
 OSCOutput::OSCOutput() :
-	 BaseItem("Output"),
+	 BaseItem("OSC Output"),
 	forceDisabled(false)
 {
 	isSelectable = false;
