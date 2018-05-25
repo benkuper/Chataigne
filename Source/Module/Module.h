@@ -52,7 +52,7 @@ public:
 
 
 	Array<WeakReference<Controllable>> getValueControllables();
-
+	OwnedArray<ControllableContainer> customModuleContainers; //for user-custom modules
 
 	class RouteParams :
 		public ControllableContainer
@@ -71,6 +71,9 @@ public:
 	void loadJSONDataInternal(var data) override;
 
 	virtual void setupModuleFromJSONData(var data); //Used for custom modules with a module.json definition, to automatically create parameters, command and values from this file.
+	void loadDefaultsParameterValuesForContainer(var data, ControllableContainer * cc);
+	void createControllablesForContainer(var data, ControllableContainer * cc);
+
 	Controllable * getControllableForJSONDefinition(const String &name, var def);
 
 	String getTypeString() const override { if (customType.isNotEmpty()) return customType; else return getDefaultTypeString(); } //should be overriden

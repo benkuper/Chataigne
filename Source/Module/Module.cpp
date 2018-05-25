@@ -82,7 +82,7 @@ String Module::getHelpID()
 
 Array<WeakReference<Controllable>> Module::getValueControllables()
 {
-	return valuesCC.getAllControllables();
+	return valuesCC.getAllControllables(true);
 }
 
 void Module::onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c)
@@ -91,7 +91,12 @@ void Module::onControllableFeedbackUpdateInternal(ControllableContainer * cc, Co
 	{
 		Array<var> args;
 		args.add(c->getScriptObject());
-		scriptManager->callFunctionOnAllItems("moduleValueParamChanged", args);
+		scriptManager->callFunctionOnAllItems("moduleValueChanged", args);
+	} else if (cc == &moduleParams)
+	{
+		Array<var> args;
+		args.add(c->getScriptObject());
+		scriptManager->callFunctionOnAllItems("moduleParameterChanged", args);
 	}
 }
 
@@ -113,41 +118,12 @@ void Module::setupModuleFromJSONData(var data)
 	customType = data.getProperty("name","");
 	setNiceName(data.getProperty("name",""));
 
-	if (data.getDynamicObject()->hasProperty("defaults"))
-	{
-		var defaultsData = data.getProperty("defaults", var());
-		NamedValueSet valueProps = defaultsData.getDynamicObject()->getProperties();
-		for (auto &p : valueProps)
-		{
-			Parameter * c = static_cast<Parameter *>(moduleParams.getControllableByName(p.name.toString()));
-			if (c == nullptr) continue;
-			c->setValue(p.value);
-		}
-	}
+	loadDefaultsParameterValuesForContainer(data.getProperty("defaults", var()), &moduleParams);
+	createControllablesForContainer(data.getProperty("parameters", var()), &moduleParams);
+	createControllablesForContainer(data.getProperty("values", var()), &valuesCC);
 
-	if (data.getDynamicObject()->hasProperty("values"))
-	{
-		var valuesData = data.getProperty("values", var());
-		NamedValueSet valueProps = valuesData.getDynamicObject()->getProperties();
-		for (auto &p : valueProps)
-		{
-			Controllable * c = getControllableForJSONDefinition(p.name.toString(), p.value);
-			if (c == nullptr) continue;
-			valuesCC.addControllable(c);
-		}
-	}
-
-	if (data.getDynamicObject()->hasProperty("parameters"))
-	{
-		var paramsData = data.getProperty("parameters", var());
-		NamedValueSet valueProps = paramsData.getDynamicObject()->getProperties();
-		for (auto &p : valueProps)
-		{
-			Controllable * c = getControllableForJSONDefinition(p.name.toString(), p.value);
-			if (c == nullptr) continue;
-			addControllable(c);
-		}
-	}
+	Array<WeakReference<Controllable>> valueList = getValueControllables();
+	for (auto &c : valueList) c->setControllableFeedbackOnly(true);
 
 	Array<var> * scriptData = data.getProperty("scripts", var()).getArray();
 	for (auto &s : *scriptData)
@@ -156,7 +132,62 @@ void Module::setupModuleFromJSONData(var data)
 		//DBG("Set script path : " << data.getProperty("modulePath", "").toString() << "/" << s.toString());
 		script->filePath->setValue(data.getProperty("modulePath", "").toString() + "/"+s.toString());
 	}
+
+	bool valuesAreEmpty = valuesCC.controllables.size() == 0 && valuesCC.controllableContainers.size() == 0;
+	bool hInput = data.getProperty("hasInput", valuesAreEmpty ? false : hasInput);
+	bool hOutput = data.getProperty("hasOutput", hasOutput);
+	setupIOConfiguration(hInput, hOutput);
 }
+
+void Module::loadDefaultsParameterValuesForContainer(var data, ControllableContainer * cc)
+{
+	if (data.isVoid()) return;
+
+	NamedValueSet valueProps = data.getDynamicObject()->getProperties();
+	for (auto &p : valueProps)
+	{
+		Parameter * c = static_cast<Parameter *>(cc->getControllableByName(p.name.toString(),true));
+		if (c != nullptr)
+		{
+			c->setValue(p.value);
+		} else
+		{
+			ControllableContainer * childCC = cc->getControllableContainerByName(p.name.toString(), true);
+			if (childCC != nullptr)
+			{
+				loadDefaultsParameterValuesForContainer(p.value, childCC);
+			}
+		}
+	};
+}
+
+void Module::createControllablesForContainer(var data, ControllableContainer * cc)
+{
+	if (data.isVoid()) return;
+
+	NamedValueSet valueProps = data.getDynamicObject()->getProperties();
+	for (auto &p : valueProps)
+	{
+		if (p.value.getProperty("type", "") == "Container")
+		{
+			ControllableContainer * childCC = cc->getControllableContainerByName(p.name.toString(), true);
+			if (childCC == nullptr)
+			{
+				childCC = new ControllableContainer(p.name.toString());
+				cc->addChildControllableContainer(childCC);
+				customModuleContainers.add(childCC);
+			}
+			createControllablesForContainer(p.value, childCC);
+
+		} else
+		{
+			Controllable * c = getControllableForJSONDefinition(p.name.toString(), p.value);
+			if (c == nullptr) continue;
+			cc->addControllable(c);
+		}
+	}
+}
+
 
 Controllable * Module::getControllableForJSONDefinition(const String &name, var def)
 {
