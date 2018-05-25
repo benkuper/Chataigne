@@ -138,7 +138,7 @@ void MainContentComponent::getCommandInfo(CommandID commandID, ApplicationComman
 	case StandardApplicationCommandIDs::paste:
 	{
 		bool canPaste = SystemClipboard::getTextFromClipboard().isNotEmpty();
-		result.setInfo(canPaste? "Paste":"Nothing to paste","Paste whatever is in the clipboard", category, 0);
+		result.setInfo(canPaste ? "Paste" : "Nothing to paste", "Paste whatever is in the clipboard", category, 0);
 		result.defaultKeypresses.add(KeyPress('v', ModifierKeys::commandModifier, 0));
 		result.setActive(canPaste);
 	}
@@ -300,7 +300,7 @@ bool MainContentComponent::perform(const InvocationInfo& info) {
 	{
 		FileBasedDocument::SaveResult result = Engine::mainEngine->save(true, true);
 		if (result == FileBasedDocument::savedOk) LOG("File saved !");
-		else LOGERROR("Error saving file");
+		else if (result == FileBasedDocument::failedToWriteToFile) LOGERROR("Error saving file, failed to write file");
 	}
 	break;
 
@@ -308,7 +308,7 @@ bool MainContentComponent::perform(const InvocationInfo& info) {
 	{
 		FileBasedDocument::SaveResult result = Engine::mainEngine->saveAs(File(), true, true, true);
 		if (result == FileBasedDocument::savedOk) LOG("File saved !");
-		else LOGERROR("Error saving file");
+		else if (result == FileBasedDocument::failedToWriteToFile) LOGERROR("Error saving file, failed to write file");
 	}
 	break;
 
