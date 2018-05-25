@@ -241,6 +241,15 @@ InspectableEditor * CustomOSCModule::getEditor(bool isRoot)
 }
 */
 
+void CustomOSCModule::setupModuleFromJSONData(var data)
+{
+	OSCModule::setupModuleFromJSONData(data);
+
+	autoAdd->setValue(false);
+	autoAdd->hideInEditor = true;
+	splitArgs->hideInEditor = true;
+}
+
 void CustomOSCModule::itemAdded(UserOSCCommandModel * model)
 {
 	defManager.add(UserOSCCommandDefinition::createDef(this, model, &UserOSCCommand::create));

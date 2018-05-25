@@ -37,8 +37,7 @@ public:
 	static CustomOSCModule * create() { return new CustomOSCModule(); }
 	virtual String getDefaultTypeString() const override { return "OSC"; }
 
-	//InspectableEditor * getEditor(bool isRoot) override;
-
+	virtual void setupModuleFromJSONData(var data) override;
 	
 
 	//ModelManager callbacks
