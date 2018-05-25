@@ -228,7 +228,7 @@ void CustomOSCModule::loadJSONDataInternal(var data)
 {
 	OSCModule::loadJSONDataInternal(data);
 	valuesCC.loadJSONData(data.getProperty("values", var()), true);
-	valuesCC.orderControllablesAlphabetically();
+	//valuesCC.orderControllablesAlphabetically();
 	umm.loadJSONData(data.getProperty("models", var()),true);
 
 	for (auto & v : valuesCC.controllables) v->setControllableFeedbackOnly(true);
@@ -244,7 +244,6 @@ InspectableEditor * CustomOSCModule::getEditor(bool isRoot)
 void CustomOSCModule::setupModuleFromJSONData(var data)
 {
 	OSCModule::setupModuleFromJSONData(data);
-
 	autoAdd->setValue(false);
 	autoAdd->hideInEditor = true;
 	splitArgs->hideInEditor = true;

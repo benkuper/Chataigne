@@ -18,7 +18,7 @@ OSCModule::OSCModule(const String & name, int defaultLocalPort, int defaultRemot
 	
 	setupIOConfiguration(canHaveInput, canHaveOutput);
 	canHandleRouteValues = canHaveOutput;
-
+	
 	//Receive
 	if (canHaveInput)
 	{
@@ -32,12 +32,15 @@ OSCModule::OSCModule(const String & name, int defaultLocalPort, int defaultRemot
 
 		receiver.addListener(this);
 		setupReceiver();
+	} else
+	{
+		if (receiveCC != nullptr) moduleParams.removeChildControllableContainer(receiveCC);
+		receiveCC = nullptr;
 	}
 
 	//Send
 	if (canHaveOutput)
 	{
-		
 		outputManager = new BaseManager<OSCOutput>("OSC Outputs");
 		moduleParams.addChildControllableContainer(outputManager);
 
@@ -45,11 +48,13 @@ OSCModule::OSCModule(const String & name, int defaultLocalPort, int defaultRemot
 		if (!Engine::mainEngine->isLoadingFile)
 		{
 			OSCOutput * o = outputManager->addItem(nullptr, var(), false);
-
 			o->remotePort->setValue(defaultRemotePort);
 			setupSenders();
 		}
-		
+	} else
+	{
+		if (outputManager != nullptr) removeChildControllableContainer(outputManager);
+		outputManager = nullptr;
 	}
 
 	//Script
@@ -58,11 +63,12 @@ OSCModule::OSCModule(const String & name, int defaultLocalPort, int defaultRemot
 
 void OSCModule::setupReceiver()
 {
+	
+	receiver.disconnect();
 	if (receiveCC == nullptr) return;
 
-	receiver.disconnect();
-
 	if (!receiveCC->enabled->boolValue()) return;
+	DBG("Local port set to : " << localPort->intValue());
 	bool result = receiver.connect(localPort->intValue());
 
 	if (result)
@@ -84,8 +90,6 @@ void OSCModule::setupReceiver()
 	{
 		NLOGERROR(niceName, "Error binding port " + localPort->stringValue());
 	}
-
-	
 	
 }
 
@@ -136,6 +140,21 @@ void OSCModule::processMessage(const OSCMessage & msg)
 	}
 }
 
+void OSCModule::setupModuleFromJSONData(var data)
+{
+	Module::setupModuleFromJSONData(data);
+
+	if (receiveCC != nullptr)
+	{
+		receiveCC->enabled->setValue(hasInput);
+		receiveCC->hideInEditor = !hasInput;
+	}
+	if (outputManager != nullptr)
+	{
+		outputManager->enabled->setValue(hasOutput);
+		outputManager->hideInEditor = !hasOutput;
+	}
+}
 
 void OSCModule::setupSenders()
 {

@@ -94,7 +94,20 @@ void ModuleFactory::addCustomModules()
 	for (auto &m : modulesList)
 	{
 		File moduleFile = m.getChildFile("module.json");
+		if (!moduleFile.existsAsFile())
+		{
+			LOGWARNING("Folder " << m.getFileName() << "does not contain a module.json file, skipping");
+			continue;
+		}
+
 		var moduleData = JSON::parse(moduleFile);
+
+		if (!moduleData.isObject())
+		{
+			LOGWARNING("Module " << m.getFileName() << " has an invalid module.json file, skipping");
+			continue;
+		}
+
 		moduleData.getDynamicObject()->setProperty("modulePath", m.getFullPathName());
 		
 		String moduleName = moduleData.getProperty("name", "");

@@ -23,6 +23,7 @@ public:
 	~OSCOutput();
 
 	bool forceDisabled;
+	
 	//SEND
 	BoolParameter * useLocal;
 	StringParameter * remoteHost;
@@ -46,7 +47,7 @@ public:
 	OSCModule(const String &name = "OSC", int defaultLocalPort = 12000, int defaultRemotePort = 9000, bool canHaveInput = true, bool canHaveOutput = true);
 	~OSCModule() {}
 
-	
+
 	//RECEIVE
 	IntParameter * localPort;
 	BoolParameter * isConnected;
@@ -70,6 +71,8 @@ public:
 
 	void processMessage(const OSCMessage & msg);
 	virtual void processMessageInternal(const OSCMessage &) {}
+
+	virtual void setupModuleFromJSONData(var data) override;
 
 	//SEND
 	virtual void setupSenders();

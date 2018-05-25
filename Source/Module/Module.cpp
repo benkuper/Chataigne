@@ -196,15 +196,30 @@ Controllable * Module::getControllableForJSONDefinition(const String &name, var 
 	if (c == nullptr) return nullptr;
 
 	c->setNiceName(name);
+
+	DynamicObject * d = def.getDynamicObject();
+
 	if (c->type != Controllable::TRIGGER)
 	{
-		if (def.getDynamicObject()->hasProperty("min") && def.getDynamicObject()->hasProperty("max"))
+		if (d->hasProperty("min") && d->hasProperty("max")) ((Parameter *)c)->setRange(d->getProperty("min"), d->getProperty("max"));
+		
+		if (d->hasProperty("default")) ((Parameter *)c)->setValue(d->getProperty("default"));
+
+		if (c->type == Controllable::ENUM)
 		{
-			((Parameter *)c)->setRange(def.getProperty("min", 0), def.getProperty("max", 1));
-		}
-		if (def.getDynamicObject()->hasProperty("default"))
-		{
-			((Parameter *)c)->setValue(def.getProperty("default", 0));
+			EnumParameter * ep = dynamic_cast<EnumParameter *>(c);
+
+			if (d->hasProperty("options") && d->getProperty("options").isObject())
+			{
+				NamedValueSet options = d->getProperty("options").getDynamicObject()->getProperties();
+				for (auto &o : options)
+				{
+					ep->addOption(o.name.toString(), o.value);
+				}
+			} else
+			{
+				LOG("Options property is not valid : " << d->getProperty("options").toString());
+			}
 		}
 	}
 

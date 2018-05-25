@@ -42,7 +42,7 @@ public:
 
 	String customType; //for custom modules;
 
-	void setupIOConfiguration(bool _hasInput, bool _hasOutput);
+	virtual void setupIOConfiguration(bool _hasInput, bool _hasOutput);
 
 	//ROUTING
 	bool canHandleRouteValues;
