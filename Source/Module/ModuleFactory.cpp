@@ -87,8 +87,7 @@ ModuleFactory::ModuleFactory() {
 void ModuleFactory::addCustomModules()
 {
 	File modulesFolder = File::getSpecialLocation(File::SpecialLocationType::userDocumentsDirectory).getChildFile("Chataigne/modules");
-	if (!modulesFolder.exists()) return;
-	if (!modulesFolder.isDirectory()) return;
+	modulesFolder.createDirectory();
 
 	Array<File> modulesList;
 	modulesFolder.findChildFiles(modulesList, File::findDirectories, false);
