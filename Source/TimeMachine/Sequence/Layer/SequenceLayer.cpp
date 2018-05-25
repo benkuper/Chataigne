@@ -32,7 +32,7 @@ SequenceLayer::SequenceLayer(Sequence * _sequence, const String &name) :
 
 SequenceLayer::~SequenceLayer()
 {
-	sequence->removeSequenceListener(this);
+	if(sequence != nullptr) sequence->removeSequenceListener(this);
 }
 
 SequenceLayerPanel * SequenceLayer::getPanel()
