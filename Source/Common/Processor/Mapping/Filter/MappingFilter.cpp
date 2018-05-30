@@ -62,7 +62,7 @@ Parameter * MappingFilter::setupParameterInternal(Parameter * source)
 	if (source == nullptr) return nullptr;
 	Parameter * p = (Parameter *) ControllableFactory::createControllable(forceOutParameterType.isNotEmpty()? forceOutParameterType :source->getTypeString());
 	p->setNiceName("Out");
-	p->setRange(source->minimumValue, source->maximumValue);
+	if(source->hasRange()) p->setRange(source->minimumValue, source->maximumValue);
 	p->setValue(source->getValue());
 	p->hideInEditor = true;
 	return p;

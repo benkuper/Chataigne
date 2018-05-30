@@ -13,7 +13,7 @@
 OffsetFilter::OffsetFilter(var params) :
 	MappingFilter(getTypeString(),params)
 {
-	offset = filterParams.addFloatParameter("Offset", "The amount of offset to apply", .5f, -1, 1);
+	offset = filterParams.addFloatParameter("Offset", "The amount of offset to apply", 0);
 	offset->isCustomizableByUser = true;
 	forceOutParameterType = FloatParameter::getTypeStringStatic();
 }
@@ -24,12 +24,12 @@ OffsetFilter::~OffsetFilter()
 
 void OffsetFilter::processInternal()
 {
-	filteredParameter->setValue(sourceParam->floatValue() + offset->floatValue());
-}
-
-Parameter * OffsetFilter::setupParameterInternal(Parameter * source)
-{ 
-	Parameter * p = MappingFilter::setupParameterInternal(source);
-	offset->setRange((float)p->minimumValue-((float)p->maximumValue-(float)p->minimumValue), p->maximumValue);
-	return p;
+	if (sourceParam->hasRange() && !sourceParam->value.isArray())
+	{
+		filteredParameter->setRange((float)sourceParam->minimumValue + offset->floatValue(), (float)sourceParam->maximumValue + offset->floatValue());
+		filteredParameter->setNormalizedValue(sourceParam->getNormalizedValue());
+	} else
+	{
+		filteredParameter->setValue(sourceParam->floatValue() + offset->floatValue());
+	}
 }

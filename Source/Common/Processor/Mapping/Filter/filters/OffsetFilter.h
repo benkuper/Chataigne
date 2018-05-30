@@ -22,7 +22,6 @@ public:
 	FloatParameter * offset;
 
 	void processInternal() override;
-	Parameter * setupParameterInternal(Parameter * source) override;
 
 	static OffsetFilter * create(var params) { return new OffsetFilter(params); }
 	virtual String getTypeString() const override { return "Offset"; }
