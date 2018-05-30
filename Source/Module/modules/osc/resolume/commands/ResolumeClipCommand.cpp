@@ -22,8 +22,10 @@ ResolumeClipCommand::ResolumeClipCommand(ResolumeModule * _module, CommandContex
 
 	address->isEditable = false;
 
+
 	if (params.getProperty("multi", false))
 	{
+		clipParam->setControllableFeedbackOnly(true);
 		firstClip = addIntParameter("First Clip", "First Clip of the MultiClip", 1, 1,INT32_MAX);
 		lastClip = addIntParameter("Last Clip", "Last Clip of the MultiClip", 1, 1, INT32_MAX);
 		loopClips = addBoolParameter("Loop", "Loop when reached last clip", true);

@@ -22,14 +22,24 @@ public:
 	~ResolumeFXCommand();
 
 	String fxType;
-	FloatParameter * valueParam;
 
 	EnumParameter * nameParam; //for transform and audio
 	IntParameter * fxIndexParam; //for fx
+
+	Parameter * valueParam;
+	
+	//Resolume 5
 	IntParameter * indexParam; //for source and fx
+
+	//Resolume 6
+	EnumParameter * fxParamType;
+	StringParameter * fxName;
+	StringParameter * fxParamName;
 
 	void rebuildAddress() override;
 	void onContainerParameterChanged(Parameter * p) override;
+
+	void setupValueParam();
 	
 	static BaseCommand * create(ControllableContainer * module, CommandContext context, var params) { 
 		params.getDynamicObject()->setProperty("multiLevel", true);
