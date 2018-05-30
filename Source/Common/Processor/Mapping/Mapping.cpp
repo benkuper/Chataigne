@@ -63,7 +63,7 @@ void Mapping::checkFiltersNeedContinuousProcess()
 void Mapping::updateMappingChain()
 {
 	checkFiltersNeedContinuousProcess();
-	Parameter * p = fm.items.size() > 0 ? fm.items[fm.items.size() - 1]->filteredParameter : input.inputReference;
+	Parameter * p = fm.items.size() > 0 ? fm.items[fm.items.size() - 1]->filteredParameter.get() : input.inputReference;
 	if (outputParam != p)
 	{
 		outputParam = p;
