@@ -40,10 +40,10 @@ CustomValuesCommandArgument * CustomValuesCommandArgumentManager::addItemFromTyp
 		p = new StringParameter("#" + id, "Argument #" + id + ", type int", "example");
 		break;
 	case Parameter::FLOAT:
-		p = new FloatParameter("#" + id, "Argument #" + id + ", type foat", 0, 0, 1);
+		p = new FloatParameter("#" + id, "Argument #" + id + ", type foat", 0);
 		break;
 	case Parameter::INT:
-		p = new IntParameter("#" + id, "Argument #" + id + ", type int", 0, -1000, 1000);
+		p = new IntParameter("#" + id, "Argument #" + id + ", type int", 0);
 		break;
 	case Parameter::BOOL:
 		p = new BoolParameter("#" + id, "Argument #" + id + ", type bool", false);
@@ -63,6 +63,7 @@ CustomValuesCommandArgument * CustomValuesCommandArgumentManager::addItemFromTyp
 	}
 
 	if (p == nullptr) return nullptr;
+	p->isCustomizableByUser = true;
 	return addItemWithParam(p, data, fromUndoableAction);
 }
 

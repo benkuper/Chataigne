@@ -12,6 +12,7 @@
 #include "commands/SendStreamRawDataCommand.h"
 #include "commands/SendStreamStringCommand.h"
 #include "commands/SendStreamValuesCommand.h"
+#include "commands/SendStreamStringValuesCommand.h"
 
 StreamingModule::StreamingModule(const String & name) :
 	Module(name)
@@ -23,7 +24,8 @@ StreamingModule::StreamingModule(const String & name) :
 	scriptObject.setMethod(sendId, StreamingModule::sendStringFromScript);
 	scriptObject.setMethod(sendBytesId, StreamingModule::sendBytesFromScript);
 
-	defManager.add(CommandDefinition::createDef(this, "", "Send string", &SendStreamStringCommand::create, CommandContext::ACTION));
+	defManager.add(CommandDefinition::createDef(this, "", "Send string", &SendStreamStringCommand::create, CommandContext::BOTH));
+	defManager.add(CommandDefinition::createDef(this, "", "Send values as string", &SendStreamStringValuesCommand::create, CommandContext::BOTH));
 	defManager.add(CommandDefinition::createDef(this, "", "Send raw bytes", &SendStreamRawDataCommand::create, CommandContext::BOTH));
 	defManager.add(CommandDefinition::createDef(this, "", "Send custom values", &SendStreamValuesCommand::create, CommandContext::BOTH));
 }

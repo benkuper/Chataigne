@@ -67,7 +67,7 @@ AudioModule::AudioModule(const String & name) :
 	addChildControllableContainer(&hs);
 	controllableContainers.move(controllableContainers.indexOf(&hs), controllableContainers.indexOf(&valuesCC));
 
-	for (auto &c : valuesCC.controllables) c->isControllableFeedbackOnly = true;
+	for (auto &c : valuesCC.controllables) c->setControllableFeedbackOnly(true);
 }
 
 AudioModule::~AudioModule()

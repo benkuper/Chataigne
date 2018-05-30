@@ -162,6 +162,7 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/CustomValuesCommandArgumentManager_fc7128f.o \
   $(JUCE_OBJDIR)/SendStreamRawDataCommand_ca89c0e3.o \
   $(JUCE_OBJDIR)/SendStreamStringCommand_d6c0655a.o \
+  $(JUCE_OBJDIR)/SendStreamStringValuesCommand_814cbb58.o \
   $(JUCE_OBJDIR)/SendStreamValuesCommand_7fe403a9.o \
   $(JUCE_OBJDIR)/StreamingCommand_19b7802b.o \
   $(JUCE_OBJDIR)/NetworkStreamingModule_a6ae39cf.o \
@@ -815,6 +816,11 @@ $(JUCE_OBJDIR)/SendStreamRawDataCommand_ca89c0e3.o: ../../Source/Module/modules/
 $(JUCE_OBJDIR)/SendStreamStringCommand_d6c0655a.o: ../../Source/Module/modules/common/streaming/commands/SendStreamStringCommand.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling SendStreamStringCommand.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/SendStreamStringValuesCommand_814cbb58.o: ../../Source/Module/modules/common/streaming/commands/SendStreamStringValuesCommand.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling SendStreamStringValuesCommand.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/SendStreamValuesCommand_7fe403a9.o: ../../Source/Module/modules/common/streaming/commands/SendStreamValuesCommand.cpp

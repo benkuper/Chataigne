@@ -456,6 +456,10 @@
                       file="Source/Module/modules/common/streaming/commands/SendStreamStringCommand.cpp"/>
                 <FILE id="diugVS" name="SendStreamStringCommand.h" compile="0" resource="0"
                       file="Source/Module/modules/common/streaming/commands/SendStreamStringCommand.h"/>
+                <FILE id="nr0jls" name="SendStreamStringValuesCommand.cpp" compile="1"
+                      resource="0" file="Source/Module/modules/common/streaming/commands/SendStreamStringValuesCommand.cpp"/>
+                <FILE id="y7Irad" name="SendStreamStringValuesCommand.h" compile="0"
+                      resource="0" file="Source/Module/modules/common/streaming/commands/SendStreamStringValuesCommand.h"/>
                 <FILE id="s5jCcF" name="SendStreamValuesCommand.cpp" compile="1" resource="0"
                       file="Source/Module/modules/common/streaming/commands/SendStreamValuesCommand.cpp"/>
                 <FILE id="AXJdjt" name="SendStreamValuesCommand.h" compile="0" resource="0"

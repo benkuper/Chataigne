@@ -189,6 +189,7 @@
     <ClCompile Include="..\..\Source\Module\modules\common\commands\customvalues\CustomValuesCommandArgumentManager.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\common\streaming\commands\SendStreamRawDataCommand.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\common\streaming\commands\SendStreamStringCommand.cpp"/>
+    <ClCompile Include="..\..\Source\Module\modules\common\streaming\commands\SendStreamStringValuesCommand.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\common\streaming\commands\SendStreamValuesCommand.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\common\streaming\commands\StreamingCommand.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\common\streaming\NetworkStreamingModule.cpp"/>
@@ -2503,6 +2504,7 @@
     <ClInclude Include="..\..\Source\Module\modules\common\commands\customvalues\CustomValuesCommandArgumentManager.h"/>
     <ClInclude Include="..\..\Source\Module\modules\common\streaming\commands\SendStreamRawDataCommand.h"/>
     <ClInclude Include="..\..\Source\Module\modules\common\streaming\commands\SendStreamStringCommand.h"/>
+    <ClInclude Include="..\..\Source\Module\modules\common\streaming\commands\SendStreamStringValuesCommand.h"/>
     <ClInclude Include="..\..\Source\Module\modules\common\streaming\commands\SendStreamValuesCommand.h"/>
     <ClInclude Include="..\..\Source\Module\modules\common\streaming\commands\StreamingCommand.h"/>
     <ClInclude Include="..\..\Source\Module\modules\common\streaming\NetworkStreamingModule.h"/>

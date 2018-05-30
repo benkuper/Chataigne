@@ -75,11 +75,13 @@ void SendStreamValuesCommand::trigger()
 
 void SendStreamValuesCommand::useForMappingChanged(CustomValuesCommandArgument *)
 {
+	if (context != CommandContext::MAPPING) return;
+
 	clearTargetMappingParameters();
 	int index = 0;
 	for (auto &a : argManager.items)
 	{
-		if (a->useForMapping->boolValue())
+		if (a->useForMapping != nullptr && a->useForMapping->boolValue())
 		{
 			setTargetMappingParameterAt(a->param, index);
 			index++;

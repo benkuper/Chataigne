@@ -118,6 +118,7 @@
 		E5E2B1F2B9C5737AF77BFDB8 = {isa = PBXBuildFile; fileRef = E1E225BE4721476EA16AD814; };
 		F8075E191AA13F6E11CCB97B = {isa = PBXBuildFile; fileRef = 4CE96507F1DE9FCD311D77C0; };
 		DA7D08AAF7C54095A32321FB = {isa = PBXBuildFile; fileRef = AE5E1271E6FEE99A8E7B23C4; };
+		3986C021AC2DF7B667989EE0 = {isa = PBXBuildFile; fileRef = EFCFF6ABEE325027389614D9; };
 		96A9C650585E1E46761353FB = {isa = PBXBuildFile; fileRef = 1BFA6EEFCE2A4D8498AB36DA; };
 		DFBB4AE2F56A57CDD60D75CE = {isa = PBXBuildFile; fileRef = CD5D8C5532DEB75C26E18D1D; };
 		9A671E6CC2C86695A5BE4A84 = {isa = PBXBuildFile; fileRef = C71E6DD8C2EE411A6B4C9784; };
@@ -318,6 +319,7 @@
 		08A60E869B62F7F1D59E350E = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SequenceLayerTimelineManagerUI.cpp; path = ../../Source/TimeMachine/Sequence/Layer/ui/SequenceLayerTimelineManagerUI.cpp; sourceTree = "SOURCE_ROOT"; };
 		09E3B9DC39267AB5D9BAD384 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = StateTransition.cpp; path = ../../Source/StateMachine/Transition/StateTransition.cpp; sourceTree = "SOURCE_ROOT"; };
 		09F517E8BB12782E3FF11E32 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ConditionEditor.cpp; path = ../../Source/Common/Processor/Action/Condition/ui/ConditionEditor.cpp; sourceTree = "SOURCE_ROOT"; };
+		09F8E8D2AE008C1F9AD215F6 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SendStreamStringValuesCommand.h; path = ../../Source/Module/modules/common/streaming/commands/SendStreamStringValuesCommand.h; sourceTree = "SOURCE_ROOT"; };
 		0A7A0D9E8AEA99B5AC15A4F5 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CommandChooserUI.cpp; path = ../../Source/Common/Command/ui/CommandChooserUI.cpp; sourceTree = "SOURCE_ROOT"; };
 		0B970F4F6ED09F8B505B3D31 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CustomVariablesModuleCommands.h; path = ../../Source/Module/modules/customvariables/commands/CustomVariablesModuleCommands.h; sourceTree = "SOURCE_ROOT"; };
 		0BAD0628AAC8156B90AF64F7 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ModuleRouterValue.cpp; path = ../../Source/Module/Routing/ModuleRouterValue.cpp; sourceTree = "SOURCE_ROOT"; };
@@ -820,6 +822,7 @@
 		EE7734BE83426C490017DACD = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = EnablingNetworkControllableContainerEditor.cpp; path = ../../Source/Module/modules/common/ui/EnablingNetworkControllableContainerEditor.cpp; sourceTree = "SOURCE_ROOT"; };
 		EF2BF6BA3CC96A950AE71602 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = StateTransitionManager.cpp; path = ../../Source/StateMachine/Transition/StateTransitionManager.cpp; sourceTree = "SOURCE_ROOT"; };
 		EF81E1C0EB0D80EDA3D24847 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Processor.h; path = ../../Source/Common/Processor/Processor.h; sourceTree = "SOURCE_ROOT"; };
+		EFCFF6ABEE325027389614D9 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SendStreamStringValuesCommand.cpp; path = ../../Source/Module/modules/common/streaming/commands/SendStreamStringValuesCommand.cpp; sourceTree = "SOURCE_ROOT"; };
 		EFDAED7A7D09C4AB1AF0BC5D = {isa = PBXFileReference; lastKnownFileType = image.png; name = play.png; path = ../../Resources/play.png; sourceTree = "SOURCE_ROOT"; };
 		EFDC31FB6CF760BCD77CE22A = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MIDIDeviceChooser.h; path = ../../Source/Common/MIDI/ui/MIDIDeviceChooser.h; sourceTree = "SOURCE_ROOT"; };
 		F011A601BDA4798BDBF9008D = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MyoModule.h; path = ../../Source/Module/modules/controller/myo/MyoModule.h; sourceTree = "SOURCE_ROOT"; };
@@ -1159,6 +1162,8 @@
 					1B9A73C8CB3C33D68C682295,
 					AE5E1271E6FEE99A8E7B23C4,
 					47B377C35AB9E2C42DF136E7,
+					EFCFF6ABEE325027389614D9,
+					09F8E8D2AE008C1F9AD215F6,
 					1BFA6EEFCE2A4D8498AB36DA,
 					90BB7E4DA8885328DB33049C,
 					CD5D8C5532DEB75C26E18D1D,
@@ -1958,6 +1963,7 @@
 					E5E2B1F2B9C5737AF77BFDB8,
 					F8075E191AA13F6E11CCB97B,
 					DA7D08AAF7C54095A32321FB,
+					3986C021AC2DF7B667989EE0,
 					96A9C650585E1E46761353FB,
 					DFBB4AE2F56A57CDD60D75CE,
 					9A671E6CC2C86695A5BE4A84,

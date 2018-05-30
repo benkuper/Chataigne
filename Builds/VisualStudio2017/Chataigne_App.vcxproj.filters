@@ -1201,6 +1201,9 @@
     <ClCompile Include="..\..\Source\Module\modules\common\streaming\commands\SendStreamStringCommand.cpp">
       <Filter>Chataigne\Source\Module\modules\common\streaming\commands</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Module\modules\common\streaming\commands\SendStreamStringValuesCommand.cpp">
+      <Filter>Chataigne\Source\Module\modules\common\streaming\commands</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\common\streaming\commands\SendStreamValuesCommand.cpp">
       <Filter>Chataigne\Source\Module\modules\common\streaming\commands</Filter>
     </ClCompile>
@@ -4174,6 +4177,9 @@
       <Filter>Chataigne\Source\Module\modules\common\streaming\commands</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\common\streaming\commands\SendStreamStringCommand.h">
+      <Filter>Chataigne\Source\Module\modules\common\streaming\commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Module\modules\common\streaming\commands\SendStreamStringValuesCommand.h">
       <Filter>Chataigne\Source\Module\modules\common\streaming\commands</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\common\streaming\commands\SendStreamValuesCommand.h">
