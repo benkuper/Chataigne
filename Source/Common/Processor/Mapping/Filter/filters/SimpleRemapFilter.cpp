@@ -13,7 +13,7 @@
 SimpleRemapFilter::SimpleRemapFilter(var params) :
 	MappingFilter(getTypeString(),params)
 {
-	inputRangeFromSource = filterParams.addBoolParameter("Use Custom Input Range", "If enabled, the input range will be set from the source input range", false);
+	useCustomInputRange = filterParams.addBoolParameter("Use Custom Input Range", "If enabled, the input range will be set from the source input range", false);
 	
 	targetIn = filterParams.addPoint2DParameter("Input Min/Max", "Custom input range",false);
 	targetIn->setPoint(0, 1);
@@ -32,32 +32,41 @@ SimpleRemapFilter::~SimpleRemapFilter()
 
 void SimpleRemapFilter::processInternal()
 {
-	if (inputRangeFromSource->boolValue())
+
+	if (useCustomInputRange->boolValue())
 	{
-		filteredParameter->setValue(jmap(sourceParam->floatValue(), targetIn->x, targetIn->y, targetOut->x, targetOut->y));
+		float targetValue = jmap(sourceParam->floatValue(), targetIn->x, targetIn->y, targetOut->x, targetOut->y);
+		if (targetOut->x > targetOut->y) targetValue = targetOut->y + (targetValue - targetOut->y) / (targetOut->x - targetOut->y);
+		filteredParameter->setValue(targetValue);
 	} else
 	{
-		filteredParameter->setNormalizedValue(sourceParam->getNormalizedValue()); 
+		float targetNValue = sourceParam->getNormalizedValue();
+		if (targetOut->x > targetOut->y) targetNValue = 1 - targetNValue;
+		filteredParameter->setNormalizedValue(targetNValue);
 	}
 }
 
 
 void SimpleRemapFilter::filterParamChanged(Parameter * p)
 {
-	if (p == inputRangeFromSource)
+	if (p == useCustomInputRange)
 	{
-		targetIn->setEnabled(inputRangeFromSource->boolValue());
+		targetIn->setEnabled(useCustomInputRange->boolValue());
 
 	}else if (p == targetOut)
 	{
 
-		if(filteredParameter != nullptr) filteredParameter->setRange(targetOut->x, jmax<float>(targetOut->x,targetOut->y));
+		if (filteredParameter != nullptr)
+		{
+			filteredParameter->setRange(jmin<float>(targetOut->x,targetOut->y), jmax<float>(targetOut->x, targetOut->y));
+		}
 	}
 }
 
 Parameter * SimpleRemapFilter::setupParameterInternal(Parameter * source)
 { 
 	Parameter * p = MappingFilter::setupParameterInternal(source);
+	useCustomInputRange->setValue(!source->hasRange());
 	p->setRange(targetOut->x, jmax<float>(targetOut->x, targetOut->y));
 	return p;
 }

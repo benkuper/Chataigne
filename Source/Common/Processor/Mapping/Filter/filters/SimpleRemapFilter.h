@@ -20,9 +20,10 @@ public:
 	SimpleRemapFilter(var params);
 	~SimpleRemapFilter();
 
-	BoolParameter * inputRangeFromSource;
+	BoolParameter * useCustomInputRange;
 	Point2DParameter * targetIn;
 	Point2DParameter * targetOut;
+
 
 	void processInternal() override;
 
