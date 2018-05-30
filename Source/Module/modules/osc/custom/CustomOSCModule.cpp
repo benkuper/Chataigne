@@ -63,7 +63,7 @@ void CustomOSCModule::processMessageInternal(const OSCMessage & msg)
 			{
 				String argIAddress = cNiceName + " " + String(i);
 				if (msg[i].isInt32()) c = valuesCC.addIntParameter(argIAddress, "", msg[i].getInt32(), msg[i].getInt32(), msg[i].getInt32());
-				else if (msg[i].isFloat32()) c = valuesCC.addFloatParameter(argIAddress, "", msg[i].getFloat32());
+				else if (msg[i].isFloat32()) c = valuesCC.addFloatParameter(argIAddress, "", msg[i].getFloat32(),msg[i].getFloat32(),msg[i].getFloat32());
 				else if (msg[i].isString()) c = valuesCC.addStringParameter(argIAddress, "", msg[i].getString());
 
 
@@ -151,8 +151,8 @@ void CustomOSCModule::processMessageInternal(const OSCMessage & msg)
 			break;
 
 		case 1:
-			if (msg[0].isInt32()) c = new IntParameter(cNiceName, "", msg[0].getInt32());
-			else if (msg[0].isFloat32()) c = new FloatParameter(cNiceName, "", msg[0].getFloat32());
+			if (msg[0].isInt32()) c = new IntParameter(cNiceName, "", msg[0].getInt32(),msg[0].getInt32(),msg[0].getInt32());
+			else if (msg[0].isFloat32()) c = new FloatParameter(cNiceName, "", msg[0].getFloat32(), msg[0].getFloat32(), msg[0].getFloat32());
 			else if (msg[0].isString()) c = new StringParameter(cNiceName, "", msg[0].getString());
 			break;
 
