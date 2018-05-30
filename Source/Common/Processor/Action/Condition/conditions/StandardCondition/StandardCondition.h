@@ -8,8 +8,7 @@
   ==============================================================================
 */
 
-#ifndef STANDARDCONDITION_H_INCLUDED
-#define STANDARDCONDITION_H_INCLUDED
+#pragma once
 
 #include "../../Condition.h"
 
@@ -42,5 +41,3 @@ public:
 
 };
 
-
-#endif  // STANDARDCONDITION_H_INCLUDED

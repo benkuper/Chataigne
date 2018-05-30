@@ -127,6 +127,7 @@
     <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\Comparator\comparators\StringComparators.cpp"/>
     <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\Comparator\ui\BaseComparatorUI.cpp"/>
     <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\Comparator\BaseComparator.cpp"/>
+    <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\conditions\ActivationCondition\ActivationCondition.cpp"/>
     <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\conditions\ConditionGroup\ConditionGroup.cpp"/>
     <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\conditions\StandardCondition\ui\StandardConditionEditor.cpp"/>
     <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\conditions\StandardCondition\StandardCondition.cpp"/>
@@ -183,6 +184,7 @@
     <ClCompile Include="..\..\Source\Module\modules\audio\AudioModule.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\common\commands\customvalues\ui\CustomValuesCommandArgumentEditor.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\common\commands\customvalues\ui\CustomValuesCommandArgumentManagerEditor.cpp"/>
+    <ClCompile Include="..\..\Source\Module\modules\common\commands\customvalues\CustomValuesCommand.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\common\commands\customvalues\CustomValuesCommandArgument.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\common\commands\customvalues\CustomValuesCommandArgumentManager.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\common\streaming\commands\SendStreamRawDataCommand.cpp"/>
@@ -2443,6 +2445,7 @@
     <ClInclude Include="..\..\Source\Common\Processor\Action\Condition\Comparator\ui\BaseComparatorUI.h"/>
     <ClInclude Include="..\..\Source\Common\Processor\Action\Condition\Comparator\BaseComparator.h"/>
     <ClInclude Include="..\..\Source\Common\Processor\Action\Condition\Comparator\ComparatorFactory.h"/>
+    <ClInclude Include="..\..\Source\Common\Processor\Action\Condition\conditions\ActivationCondition\ActivationCondition.h"/>
     <ClInclude Include="..\..\Source\Common\Processor\Action\Condition\conditions\ConditionGroup\ConditionGroup.h"/>
     <ClInclude Include="..\..\Source\Common\Processor\Action\Condition\conditions\StandardCondition\ui\StandardConditionEditor.h"/>
     <ClInclude Include="..\..\Source\Common\Processor\Action\Condition\conditions\StandardCondition\StandardCondition.h"/>
@@ -2495,6 +2498,7 @@
     <ClInclude Include="..\..\Source\Module\modules\audio\AudioModule.h"/>
     <ClInclude Include="..\..\Source\Module\modules\common\commands\customvalues\ui\CustomValuesCommandArgumentEditor.h"/>
     <ClInclude Include="..\..\Source\Module\modules\common\commands\customvalues\ui\CustomValuesCommandArgumentManagerEditor.h"/>
+    <ClInclude Include="..\..\Source\Module\modules\common\commands\customvalues\CustomValuesCommand.h"/>
     <ClInclude Include="..\..\Source\Module\modules\common\commands\customvalues\CustomValuesCommandArgument.h"/>
     <ClInclude Include="..\..\Source\Module\modules\common\commands\customvalues\CustomValuesCommandArgumentManager.h"/>
     <ClInclude Include="..\..\Source\Module\modules\common\streaming\commands\SendStreamRawDataCommand.h"/>

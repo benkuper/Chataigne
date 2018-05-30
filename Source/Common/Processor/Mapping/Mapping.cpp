@@ -13,7 +13,9 @@
 
 Mapping::Mapping(bool canBeDisabled) :
 	Processor("Mapping", canBeDisabled),
-	inputIsLocked(false)
+	inputIsLocked(false),
+	outputParam(nullptr),
+	mappingAsyncNotifier(10)
 {
 	itemDataType = "Mapping";
 	type = MAPPING;
@@ -22,7 +24,7 @@ Mapping::Mapping(bool canBeDisabled) :
 	continuousProcess->hideInEditor = true;
 
 	addChildControllableContainer(&input);
-	addChildControllableContainer(&cdm);
+	//addChildControllableContainer(&cdm);
 	addChildControllableContainer(&fm);
 	addChildControllableContainer(&om);
 	
@@ -58,11 +60,23 @@ void Mapping::checkFiltersNeedContinuousProcess()
 	continuousProcess->setValue(need);
 }
 
+void Mapping::updateMappingChain()
+{
+	checkFiltersNeedContinuousProcess();
+	Parameter * p = fm.items.size() > 0 ? fm.items[fm.items.size() - 1]->filteredParameter : input.inputReference;
+	if (outputParam != p)
+	{
+		outputParam = p;
+		mappingAsyncNotifier.addMessage(new MappingEvent(MappingEvent::OUTPUT_TYPE_CHANGED, this));
+
+	}
+}
+
 void Mapping::process()
 {
 	if ((canBeDisabled && !enabled->boolValue()) || forceDisabled) return;
 	if (input.inputReference == nullptr) return;
-	if (!cdm.getIsValid(true)) return;
+	//if (!cdm.getIsValid(true)) return;
 
 	Parameter * filteredParam = fm.processFilters();
 	if (filteredParam == nullptr) return;
@@ -73,7 +87,7 @@ var Mapping::getJSONData()
 {
 	var data = BaseItem::getJSONData();
 	data.getDynamicObject()->setProperty("input", input.getJSONData());
-	data.getDynamicObject()->setProperty("conditions", cdm.getJSONData());
+	//data.getDynamicObject()->setProperty("conditions", cdm.getJSONData());
 	data.getDynamicObject()->setProperty("filters", fm.getJSONData());
 	data.getDynamicObject()->setProperty("outputs", om.getJSONData());
 	return data;
@@ -83,16 +97,19 @@ void Mapping::loadJSONDataInternal(var data)
 {
 	Processor::loadJSONDataInternal(data);
 	input.loadJSONData(data.getProperty("input", var()));
-	cdm.loadJSONData(data.getProperty("conditions", var()));
+	//cdm.loadJSONData(data.getProperty("conditions", var()));
 	fm.loadJSONData(data.getProperty("filters", var()));
 	om.loadJSONData(data.getProperty("outputs", var()));
 
 	fm.setupSource(input.inputReference);
+
+	updateMappingChain();
 }
 
 void Mapping::inputReferenceChanged(MappingInput *)
 {
 	fm.setupSource(input.inputReference);
+	updateMappingChain();
 }
 
 void Mapping::inputParameterValueChanged(MappingInput *)
@@ -112,14 +129,13 @@ void Mapping::onContainerParameterChangedInternal(Parameter * p)
 
 void Mapping::itemAdded(MappingFilter * m)
 {
-	checkFiltersNeedContinuousProcess();
+	updateMappingChain();
 }
 
 void Mapping::itemRemoved(MappingFilter * m)
 {
-	checkFiltersNeedContinuousProcess();
+	updateMappingChain();
 }
-
 
 ProcessorUI * Mapping::getUI()
 {

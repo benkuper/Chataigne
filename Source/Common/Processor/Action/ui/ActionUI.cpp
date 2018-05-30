@@ -14,6 +14,30 @@ ActionUI::ActionUI(Action * _action) :
 	ProcessorUI(_action),
 	action(_action)
 {
+	action->addAsyncActionListener(this);
+
+	
+
+	/*
+	validUI = action->cdm.isValid->createToggle();
+	validUI->showLabel = false;
+	validUI->showValue = false;
+	addAndMakeVisible(validUI);
+	*/
+
+	triggerAllUI = action->csmOn->triggerAll->createButtonUI();
+	addAndMakeVisible(triggerAllUI);
+
+	updateRoleBGColor();
+}
+
+ActionUI::~ActionUI()
+{
+	if (!inspectable.wasObjectDeleted()) action->removeAsyncActionListener(this);
+}
+
+void ActionUI::updateRoleBGColor()
+{
 	switch (action->actionRole)
 	{
 	case Action::STANDARD:
@@ -26,25 +50,41 @@ ActionUI::ActionUI(Action * _action) :
 		bgColor = RED_COLOR.withSaturation(.4f).darker(1);
 		break;
 	}
-
-	validUI = action->cdm.isValid->createToggle();
-	validUI->showLabel = false;
-	validUI->showValue = false;
-	addAndMakeVisible(validUI);
-
-	triggerAllUI = action->csmOn->triggerAll->createButtonUI();
-	addAndMakeVisible(triggerAllUI);
-}
-
-ActionUI::~ActionUI()
-{
-
 }
 
 void ActionUI::resizedInternalHeader(Rectangle<int>& r)
 {
 	BaseItemUI::resizedInternalHeader(r);
-	validUI->setBounds(r.removeFromRight(headerHeight));
-	r.removeFromRight(2);
-	triggerAllUI->setBounds(r.removeFromRight(40));
+	//validUI->setBounds(r.removeFromRight(headerHeight));
+	//r.removeFromRight(2);
+	triggerAllUI->setBounds(r.removeFromRight(60));
+}
+
+void ActionUI::paintOverChildren(Graphics & g)
+{
+	BaseItemUI::paintOverChildren(g);
+	if (action->cdm.isValid->boolValue() && action->actionRole == Action::STANDARD)
+	{
+		g.setColour(GREEN_COLOR);
+		g.drawRoundedRectangle(getMainBounds().toFloat(), rounderCornerSize, 2);
+	}
+}
+
+void ActionUI::newMessage(const Action::ActionEvent & e)
+{
+	switch (e.type)
+	{
+	case Action::ActionEvent::ENABLED_CHANGED:
+		break;
+
+	case Action::ActionEvent::ROLE_CHANGED:
+		updateRoleBGColor();
+		repaint();
+		break;
+
+	case Action::ActionEvent::VALIDATION_CHANGED:
+		if(action->actionRole == Action::STANDARD) repaint();
+		break;
+
+	}
 }

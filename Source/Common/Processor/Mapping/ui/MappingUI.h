@@ -15,11 +15,22 @@
 #include "../../ui/ProcessorUI.h"
 
 class MappingUI :
-	public ProcessorUI
+	public ProcessorUI,
+	public Mapping::AsyncListener
 {
 public:
 	MappingUI(Mapping *);
 	virtual ~MappingUI();
+
+	Mapping * mapping;
+
+	ScopedPointer<ControllableUI> outputParamUI;
+	
+	void updateOutputParamUI();
+
+	void resizedInternalHeader(Rectangle<int> &r) override;
+
+	void newMessage(const Mapping::MappingEvent &e) override;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MappingUI)
 };

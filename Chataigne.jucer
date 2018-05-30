@@ -175,6 +175,12 @@
                       file="Source/Common/Processor/Action/Condition/Comparator/ComparatorFactory.h"/>
               </GROUP>
               <GROUP id="{D6ADE71C-FE26-85F8-193D-108C1D0EF059}" name="conditions">
+                <GROUP id="{42D35307-D62F-0CDA-D315-E549DE0408B4}" name="ActivationCondition">
+                  <FILE id="P4Tgf2" name="ActivationCondition.cpp" compile="1" resource="0"
+                        file="Source/Common/Processor/Action/Condition/conditions/ActivationCondition/ActivationCondition.cpp"/>
+                  <FILE id="PM7Faq" name="ActivationCondition.h" compile="0" resource="0"
+                        file="Source/Common/Processor/Action/Condition/conditions/ActivationCondition/ActivationCondition.h"/>
+                </GROUP>
                 <GROUP id="{4E3CE793-8D65-93CF-8AFA-F33A32BF6F35}" name="ConditionGroup">
                   <FILE id="OCTnHx" name="ConditionGroup.cpp" compile="1" resource="0"
                         file="Source/Common/Processor/Action/Condition/conditions/ConditionGroup/ConditionGroup.cpp"/>
@@ -426,6 +432,10 @@
                   <FILE id="XjyHhP" name="CustomValuesCommandArgumentManagerEditor.h"
                         compile="0" resource="0" file="Source/Module/modules/common/commands/customvalues/ui/CustomValuesCommandArgumentManagerEditor.h"/>
                 </GROUP>
+                <FILE id="oGlUMy" name="CustomValuesCommand.cpp" compile="1" resource="0"
+                      file="Source/Module/modules/common/commands/customvalues/CustomValuesCommand.cpp"/>
+                <FILE id="R5bO48" name="CustomValuesCommand.h" compile="0" resource="0"
+                      file="Source/Module/modules/common/commands/customvalues/CustomValuesCommand.h"/>
                 <FILE id="UpbUq3" name="CustomValuesCommandArgument.cpp" compile="1"
                       resource="0" file="Source/Module/modules/common/commands/customvalues/CustomValuesCommandArgument.cpp"/>
                 <FILE id="q0MsJ2" name="CustomValuesCommandArgument.h" compile="0"

@@ -8,28 +8,30 @@
   ==============================================================================
 */
 
-#ifndef ACTIONUI_H_INCLUDED
-#define ACTIONUI_H_INCLUDED
-
+#pragma once
 
 #include "../Action.h"
 #include "../../ui/ProcessorUI.h"
  
 class ActionUI :
-	public ProcessorUI
+	public ProcessorUI,
+	public Action::AsyncListener
 {
 public:
 	ActionUI(Action *);
 	virtual ~ActionUI();
 
 	Action * action;
-	void resizedInternalHeader(Rectangle<int> &r) override;
 
-	ScopedPointer<BoolToggleUI> validUI;
 	ScopedPointer<TriggerButtonUI> triggerAllUI;
+
+	void updateRoleBGColor();
+
+	void resizedInternalHeader(Rectangle<int> &r) override;
+	void paintOverChildren(Graphics &g) override;
+
+	void newMessage(const Action::ActionEvent &e) override;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ActionUI)
 };
 
-
-#endif  // ACTIONUI_H_INCLUDED

@@ -8,8 +8,7 @@
   ==============================================================================
 */
 
-#ifndef CONDITIONGROUP_H_INCLUDED
-#define CONDITIONGROUP_H_INCLUDED
+#pragma once
 
 #include "../../Condition.h"
 #include "../../ConditionManager.h"
@@ -36,6 +35,3 @@ public:
 	static ConditionGroup * create(var params) { return new ConditionGroup(params); }
 };
 
-
-
-#endif  // CONDITIONGROUP_H_INCLUDED

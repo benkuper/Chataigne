@@ -28,15 +28,19 @@ public:
 	virtual ~Mapping();
 
 	MappingInput input;
-	ConditionManager cdm;
+	//ConditionManager cdm;
 	MappingFilterManager fm;
 	MappingOutputManager om;
 
 	BoolParameter * continuousProcess;
 
+	Parameter * outputParam;
+
 	bool inputIsLocked;
 	void lockInputTo(Parameter * lockParam);
 	void checkFiltersNeedContinuousProcess();
+
+	void updateMappingChain(); //will host warnings and type change checks
 
 	void process();
 
@@ -55,6 +59,21 @@ public:
 	virtual void timerCallback() override;
 
 	ProcessorUI * getUI() override;
+
+	class MappingEvent {
+	public:
+		enum Type { OUTPUT_TYPE_CHANGED };
+		MappingEvent(Type type, Mapping * m) : type(type), mapping(m) {}
+		Type type;
+		Mapping * mapping;
+	};
+	QueuedNotifier<MappingEvent> mappingAsyncNotifier;
+	typedef QueuedNotifier<MappingEvent>::Listener AsyncListener;
+
+	void addAsyncMappingListener(AsyncListener* newListener) { mappingAsyncNotifier.addListener(newListener); }
+	void addAsyncCoalescedMappingListener(AsyncListener* newListener) { mappingAsyncNotifier.addAsyncCoalescedListener(newListener); }
+	void removeAsyncMappingListener(AsyncListener* listener) { mappingAsyncNotifier.removeListener(listener); }
+
 
 	static Mapping * create(var) { return new Mapping(); }
 	String getTypeString() const override { return "Mapping"; };

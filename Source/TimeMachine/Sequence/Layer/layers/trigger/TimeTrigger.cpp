@@ -31,6 +31,9 @@ TimeTrigger::TimeTrigger(float _time, float flagYPos, const String &name) :
 	isTriggered->isSavable = false;
 
 	autoTriggerWhenAllConditionAreActives = false;
+
+	setHasOffConsequences(false);
+	cdm.setHasActivationDefinitions(false);
 }
 
 TimeTrigger::~TimeTrigger()

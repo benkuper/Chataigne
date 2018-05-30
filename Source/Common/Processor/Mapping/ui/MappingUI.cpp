@@ -11,13 +11,55 @@
 #include "MappingUI.h"
 
 MappingUI::MappingUI(Mapping * mapping) :
-	ProcessorUI(mapping)
+	ProcessorUI(mapping),
+	mapping(mapping),
+	outputParamUI(nullptr)
 {
+	mapping->addAsyncMappingListener(this);
 	bgColor = MAPPING_COLOR.withSaturation(.2f).darker(1);
-
+	updateOutputParamUI();
 }
 
 MappingUI::~MappingUI()
 {
-
+	if (!inspectable.wasObjectDeleted()) mapping->removeAsyncMappingListener(this);
 }
+
+void MappingUI::updateOutputParamUI()
+{
+	if(outputParamUI != nullptr && outputParamUI->controllable == mapping->outputParam) return;
+
+	if (outputParamUI != nullptr)
+	{
+		removeChildComponent(outputParamUI);
+	}
+
+	if (mapping->outputParam != nullptr)
+	{
+		outputParamUI = mapping->outputParam->createDefaultUI();
+		addAndMakeVisible(outputParamUI);
+	}
+
+	resized();
+}
+
+void MappingUI::resizedInternalHeader(Rectangle<int> & r)
+{
+	ProcessorUI::resizedInternalHeader(r);
+	if (outputParamUI != nullptr)
+	{
+		outputParamUI->setBounds(r.removeFromRight(60).reduced(2));
+	}
+}
+
+
+void MappingUI::newMessage(const Mapping::MappingEvent & e)
+{
+	switch (e.type)
+	{
+	case Mapping::MappingEvent::OUTPUT_TYPE_CHANGED:
+		updateOutputParamUI();
+		break;
+	}
+}
+

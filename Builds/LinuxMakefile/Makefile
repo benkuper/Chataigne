@@ -100,6 +100,7 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/StringComparators_61def56.o \
   $(JUCE_OBJDIR)/BaseComparatorUI_a3309572.o \
   $(JUCE_OBJDIR)/BaseComparator_c76f1d55.o \
+  $(JUCE_OBJDIR)/ActivationCondition_54e1de99.o \
   $(JUCE_OBJDIR)/ConditionGroup_1310754d.o \
   $(JUCE_OBJDIR)/StandardConditionEditor_d7753ad.o \
   $(JUCE_OBJDIR)/StandardCondition_9fb607cb.o \
@@ -156,6 +157,7 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/AudioModule_84057627.o \
   $(JUCE_OBJDIR)/CustomValuesCommandArgumentEditor_1cc8b6de.o \
   $(JUCE_OBJDIR)/CustomValuesCommandArgumentManagerEditor_8192c073.o \
+  $(JUCE_OBJDIR)/CustomValuesCommand_2f0f022b.o \
   $(JUCE_OBJDIR)/CustomValuesCommandArgument_96a63888.o \
   $(JUCE_OBJDIR)/CustomValuesCommandArgumentManager_fc7128f.o \
   $(JUCE_OBJDIR)/SendStreamRawDataCommand_ca89c0e3.o \
@@ -505,6 +507,11 @@ $(JUCE_OBJDIR)/BaseComparator_c76f1d55.o: ../../Source/Common/Processor/Action/C
 	@echo "Compiling BaseComparator.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
+$(JUCE_OBJDIR)/ActivationCondition_54e1de99.o: ../../Source/Common/Processor/Action/Condition/conditions/ActivationCondition/ActivationCondition.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling ActivationCondition.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
 $(JUCE_OBJDIR)/ConditionGroup_1310754d.o: ../../Source/Common/Processor/Action/Condition/conditions/ConditionGroup/ConditionGroup.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling ConditionGroup.cpp"
@@ -783,6 +790,11 @@ $(JUCE_OBJDIR)/CustomValuesCommandArgumentEditor_1cc8b6de.o: ../../Source/Module
 $(JUCE_OBJDIR)/CustomValuesCommandArgumentManagerEditor_8192c073.o: ../../Source/Module/modules/common/commands/customvalues/ui/CustomValuesCommandArgumentManagerEditor.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling CustomValuesCommandArgumentManagerEditor.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/CustomValuesCommand_2f0f022b.o: ../../Source/Module/modules/common/commands/customvalues/CustomValuesCommand.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling CustomValuesCommand.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/CustomValuesCommandArgument_96a63888.o: ../../Source/Module/modules/common/commands/customvalues/CustomValuesCommandArgument.cpp

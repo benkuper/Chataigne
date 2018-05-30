@@ -8,8 +8,7 @@
   ==============================================================================
 */
 
-#ifndef SCRIPTCONDITION_H_INCLUDED
-#define SCRIPTCONDITION_H_INCLUDED
+#pragma once
 
 #include "../../Condition.h"
 
@@ -35,4 +34,3 @@ public:
 
 };
 
-#endif  // SCRIPTCONDITION_H_INCLUDED

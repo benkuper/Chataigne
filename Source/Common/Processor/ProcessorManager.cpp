@@ -20,10 +20,8 @@ ProcessorManager::ProcessorManager(const String &name) :
 {
 	itemDataType = "Processor"; 
 	managerFactory = &factory;
-	factory.defs.add(Factory<Processor>::Definition::createDef("", "Action", &Action::create)->addParam("hasOffConsequences",true));
+	factory.defs.add(Factory<Processor>::Definition::createDef("", "Action", &Action::create));
 	factory.defs.add(Factory<Processor>::Definition::createDef("", "Mapping", &Mapping::create));
-	factory.defs.add(Factory<Processor>::Definition::createDef("", "On Activate", &Action::create)->addParam("role", Action::ACTIVATE)->addParam("name","On Activate"));
-	factory.defs.add(Factory<Processor>::Definition::createDef("", "On Deactivate", &Action::create)->addParam("role", Action::DEACTIVATE)->addParam("name","On Deactivate"));
 
 }
 

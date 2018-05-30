@@ -10,6 +10,7 @@
 
 #include "Action.h"
 #include "ui/ActionUI.h"
+#include "Condition/conditions/ActivationCondition/ActivationCondition.h"
 
 Action::Action(const String & name, var params) :
 	Processor(params.getProperty("name", name)),
@@ -17,30 +18,61 @@ Action::Action(const String & name, var params) :
 	actionRole(Action::STANDARD),
 	triggerOn(nullptr),
 	triggerOff(nullptr),
-	hasOffConsequences(false)
+	forceNoOffConsequences(false),
+	hasOffConsequences(false),
+	actionAsyncNotifier(10)
 {
 	itemDataType = "Action";
 	type = ACTION;
-	actionRole = (Role)(int)params.getProperty("role", STANDARD);
 
+	triggerOn = addTrigger("Trigger Validate", "Triggers the action");
+	triggerOn->hideInEditor = true;
+
+	cdm.setHasActivationDefinitions(params.getProperty("hasActivationDefinitions",true));
+	cdm.addConditionManagerListener(this);
+	cdm.addBaseManagerListener(this);
 	addChildControllableContainer(&cdm);
 
 	csmOn = new ConsequenceManager("Consequences : TRUE");
 	addChildControllableContainer(csmOn);
 
-	setHasOffConsequences(params.getProperty("hasOffConsequences", false) && actionRole == STANDARD);
+	forceNoOffConsequences = params.getProperty("forceNoOffConsequences", false);
+	setRole((Role)(int)params.getProperty("role", STANDARD), true);
 
-	cdm.addConditionManagerListener(this);
-
-	triggerOn = addTrigger("Trigger Validate", "Triggers the action");
-	triggerOn->hideInEditor = true;
-
-	
 	helpID = "Action";
 }
 
 Action::~Action()
 {
+}
+
+void Action::updateConditionRole()
+{
+	Role r = STANDARD;
+	for (auto &c : cdm.items)
+	{
+		ActivationCondition * ac = dynamic_cast<ActivationCondition *>(c);
+		if (ac != nullptr)
+		{
+			r = ac->type == ActivationCondition::ON_ACTIVATE ? ACTIVATE : DEACTIVATE;
+			break;
+		}
+	}
+
+	setRole(r);
+}
+
+void Action::setRole(Role role, bool force)
+{
+	if (Engine::mainEngine->isClearing) return;
+	if (actionRole == role && !force) return;
+
+	actionRole = role;
+	setHasOffConsequences(!forceNoOffConsequences && actionRole == STANDARD);
+	
+	actionListeners.call(&ActionListener::actionRoleChanged, this);
+	actionAsyncNotifier.addMessage(new ActionEvent(ActionEvent::ROLE_CHANGED, this));
+
 }
 
 void Action::setForceDisabled(bool value, bool force)
@@ -53,14 +85,24 @@ void Action::setForceDisabled(bool value, bool force)
 
 void Action::setHasOffConsequences(bool value)
 {
+	if (Engine::mainEngine->isClearing) return;
 	if (value == hasOffConsequences) return;
+
 	hasOffConsequences = value;
+
 	if (hasOffConsequences)
 	{
-		csmOff = new ConsequenceManager("Consequences : FALSE");
-		addChildControllableContainer(csmOff);
-		triggerOff = addTrigger("Trigger Invalidate", "Triggers the action");
-		triggerOff->hideInEditor = true;
+		if (csmOff == nullptr)
+		{
+			csmOff = new ConsequenceManager("Consequences : FALSE");
+			addChildControllableContainer(csmOff);
+		}
+
+		if(triggerOff == nullptr)
+		{
+			triggerOff = addTrigger("Trigger Invalidate", "Triggers the action");
+			triggerOff->hideInEditor = true;
+		}
 
 	} else
 	{
@@ -84,17 +126,22 @@ var Action::getJSONData()
 void Action::loadJSONDataInternal(var data)
 {
 	Processor::loadJSONDataInternal(data);
-	actionRole = (Role)(int)data.getProperty("role", actionRole);
-	if (actionRole != STANDARD) setHasOffConsequences(false);
 
 	cdm.loadJSONData(data.getProperty("conditions", var()));
 	csmOn->loadJSONData(data.getProperty("consequences", var()));
+
+	updateConditionRole();
 	if(hasOffConsequences) csmOff->loadJSONData(data.getProperty("consequencesOff", var()));
+
 }
 
 void Action::onContainerParameterChangedInternal(Parameter * p)
 {
-	if (p == enabled) actionListeners.call(&Action::ActionListener::actionEnableChanged, this);
+	if (p == enabled)
+	{
+		actionListeners.call(&Action::ActionListener::actionEnableChanged, this);
+		actionAsyncNotifier.addMessage(new ActionEvent(ActionEvent::ENABLED_CHANGED, this));
+	}
 }
 
 void Action::onContainerTriggerTriggered(Trigger * t)
@@ -122,8 +169,21 @@ void Action::conditionManagerValidationChanged(ConditionManager *)
 			if (hasOffConsequences) triggerOff->trigger();
 		}
 	}
+
+	actionListeners.call(&ActionListener::actionValidationChanged, this);
+	actionAsyncNotifier.addMessage(new ActionEvent(ActionEvent::ActionEvent::VALIDATION_CHANGED, this));
 }
 
+
+void Action::itemAdded(Condition *)
+{
+	updateConditionRole();
+}
+
+void Action::itemRemoved(Condition *)
+{
+	updateConditionRole();
+}
 
 ProcessorUI * Action::getUI()
 {

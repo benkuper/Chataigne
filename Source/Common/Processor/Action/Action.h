@@ -17,7 +17,8 @@
 
 class Action :
 	public Processor,
-	public ConditionManager::ConditionManagerListener
+	public ConditionManager::ConditionManagerListener,
+	public ConditionManager::Listener
 {
 public:
 	Action(const String &name = "Action", var params = var());
@@ -27,6 +28,8 @@ public:
 	Role actionRole;
 
 	bool autoTriggerWhenAllConditionAreActives; //default true, but if false, let use Actions as user check tool without auto behavior (like TimeTriggers)
+	
+	bool forceNoOffConsequences; // independent of roles
 	bool hasOffConsequences;
 
 	ConditionManager cdm;
@@ -37,8 +40,12 @@ public:
 	Trigger * triggerOn;
 	Trigger * triggerOff;
 
+	void updateConditionRole();
+	void setRole(Role role, bool force = false);
+
 	virtual void setForceDisabled(bool value, bool force = false) override;
 	void setHasOffConsequences(bool value);
+
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
@@ -47,6 +54,9 @@ public:
     void onContainerTriggerTriggered(Trigger *) override;
 	void conditionManagerValidationChanged(ConditionManager *) override;
 
+	void itemAdded(Condition *) override;
+	void itemRemoved(Condition *) override;
+
 	ProcessorUI * getUI() override;
 
 	class ActionListener
@@ -54,13 +64,29 @@ public:
 	public:
 		virtual ~ActionListener() {}
 		virtual void actionEnableChanged(Action *) {}
+		virtual void actionRoleChanged(Action *) {}
 		virtual void actionValidationChanged(Action *) {}
-		virtual void actionActivationChanged(Action *) {}
 	};
 
 	ListenerList<ActionListener> actionListeners;
 	void addActionListener(ActionListener* newListener) { actionListeners.add(newListener); }
 	void removeActionListener(ActionListener* listener) { actionListeners.remove(listener); }
+
+
+	class ActionEvent {
+	public:
+		enum Type { ENABLED_CHANGED, ROLE_CHANGED, VALIDATION_CHANGED };
+		ActionEvent(Type type, Action * c) : type(type), action(c) {}
+		Type type;
+		Action * action;
+	};
+	QueuedNotifier<ActionEvent> actionAsyncNotifier;
+	typedef QueuedNotifier<ActionEvent>::Listener AsyncListener;
+
+
+	void addAsyncActionListener(AsyncListener* newListener) { actionAsyncNotifier.addListener(newListener); }
+	void addAsyncCoalescedActionListener(AsyncListener* newListener) { actionAsyncNotifier.addAsyncCoalescedListener(newListener); }
+	void removeAsyncActionListener(AsyncListener* listener) { actionAsyncNotifier.removeListener(listener); }
 
 
 	static Action * create(var params) { return new Action("Action", params); }

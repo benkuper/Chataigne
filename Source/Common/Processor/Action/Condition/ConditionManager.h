@@ -25,6 +25,8 @@ public:
 	~ConditionManager();
 	
 	Factory<Condition> factory;
+	Factory<Condition>::Definition * activateDef;
+	Factory<Condition>::Definition * deactivateDef;
 
 	BoolParameter * isValid;
 
@@ -38,6 +40,8 @@ public:
 	bool validationWaiting;
 	double prevTimerTime;
 	bool forceDisabled;
+
+	void setHasActivationDefinitions(bool value);
 
 	void addItemInternal(Condition *, var data) override;
 	void removeItemInternal(Condition *) override;

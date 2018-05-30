@@ -13,6 +13,7 @@
 #include "conditions/StandardCondition/StandardCondition.h"
 #include "conditions/ConditionGroup/ConditionGroup.h"
 #include "conditions/ScriptCondition/ScriptCondition.h"
+#include "conditions/ActivationCondition/ActivationCondition.h"
 
 juce_ImplementSingleton(ConditionManager)
 
@@ -20,14 +21,17 @@ ConditionManager::ConditionManager(bool _operatorOnSide) :
 	BaseManager<Condition>("Conditions"),
 	operatorOnSide(_operatorOnSide),
 	validationProgress(nullptr),
-	forceDisabled(false)
+	forceDisabled(false),
+	activateDef(nullptr),
+	deactivateDef(nullptr)
 {
 	
 	managerFactory = &factory;
 	factory.defs.add(Factory<Condition>::Definition::createDef("", StandardCondition::getTypeStringStatic(), &StandardCondition::create));
 	factory.defs.add(Factory<Condition>::Definition::createDef("", ConditionGroup::getTypeStringStatic(), &ConditionGroup::create));
 	factory.defs.add(Factory<Condition>::Definition::createDef("", ScriptCondition::getTypeStringStatic(), &ScriptCondition::create));
-
+	
+	
 	selectItemWhenCreated = false;
 
 	isValid = addBoolParameter("Is Valid","Indicates if all the conditions are valid. If so, the consequences are triggered one time, at the moment the action becomes valid.",false);
@@ -54,6 +58,28 @@ ConditionManager::~ConditionManager()
 {
 }
 
+
+void ConditionManager::setHasActivationDefinitions(bool value)
+{
+	if (value)
+	{
+		if (activateDef == nullptr && deactivateDef == nullptr)
+		{
+			activateDef = Factory<Condition>::Definition::createDef("", ActivationCondition::getTypeStringStatic(ActivationCondition::ON_ACTIVATE), &ActivationCondition::create)->addParam("type", ActivationCondition::ON_ACTIVATE);
+			deactivateDef = Factory<Condition>::Definition::createDef("", ActivationCondition::getTypeStringStatic(ActivationCondition::ON_DEACTIVATE), &ActivationCondition::create)->addParam("type", ActivationCondition::ON_DEACTIVATE);
+			factory.defs.add(activateDef);
+			factory.defs.add(deactivateDef);
+			factory.buildPopupMenu();
+		}
+	} else
+	{
+		factory.defs.removeObject(activateDef);
+		factory.defs.removeObject(deactivateDef);
+		activateDef = nullptr;
+		deactivateDef = nullptr;
+		factory.buildPopupMenu();
+	}
+}
 
 void ConditionManager::addItemInternal(Condition * c, var data)
 {
