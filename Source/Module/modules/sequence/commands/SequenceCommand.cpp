@@ -72,7 +72,7 @@ void SequenceCommand::trigger()
 	switch (actionType)
 	{
 	case PLAY_SEQUENCE:
-		if (playFromStart->boolValue()) ((Sequence *)target->targetContainer.get())->currentTime->setValue(0);
+		if (playFromStart->boolValue()) ((Sequence *)target->targetContainer.get())->stopTrigger->trigger();
 		((Sequence *)target->targetContainer.get())->playTrigger->trigger();
 		break;
 
