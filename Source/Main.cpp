@@ -8,10 +8,9 @@
 //==============================================================================
 
 ChataigneApplication::ChataigneApplication() :
-	OrganicApplication("Chataigne"),
-	chataigneSettings("Other Settings")
+	OrganicApplication("Chataigne")
 {
-	enableSendAnalytics = chataigneSettings.addBoolParameter("Send Analytics", "This helps me improve the software by sending basic start/stop/crash infos", true);
+	enableSendAnalytics = appSettings.addBoolParameter("Send Analytics", "This helps me improve the software by sending basic start/stop/crash infos", true);
 }
 
 
@@ -19,8 +18,6 @@ void ChataigneApplication::initialiseInternal(const String &)
 {
 	AppUpdater::getInstance()->setURLs(URL("http://benjamin.kuperberg.fr/chataigne/releases/update.json"), "http://benjamin.kuperberg.fr/chataigne/user/data/", "Chataigne");
 	HelpBox::getInstance()->helpURL = URL("http://benjamin.kuperberg.fr/chataigne/docs/help.json");
-
-	GlobalSettings::getInstance()->addChildControllableContainer(&chataigneSettings);
 
 	engine = new ChataigneEngine(appProperties, getAppVersion());
 	mainComponent = new MainContentComponent();

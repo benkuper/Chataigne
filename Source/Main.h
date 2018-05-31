@@ -23,7 +23,6 @@ public:
 	ChataigneApplication();
 
 	//---- GLOBAL SETTINGS CHATAIGNE SPECIFIC
-	ControllableContainer chataigneSettings;
 	BoolParameter * enableSendAnalytics;
 	//
 
