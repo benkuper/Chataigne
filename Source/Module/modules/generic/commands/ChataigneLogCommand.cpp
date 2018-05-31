@@ -17,11 +17,17 @@ ChataigneLogCommand::ChataigneLogCommand(ChataigneGenericModule * _module, Comma
 	type = (Type)(int)(params.getProperty("type", MESSAGE));
 
 	message = addStringParameter("Message", "The message to log", "Wubba Lubba Dub Dub");
-	if(type == VALUE) value = addTargetParameter("Target", "The target to log the value from");
+	if(type == VALUE && context == ACTION) value = addTargetParameter("Target", "The target to log the value from");
 }
 
 ChataigneLogCommand::~ChataigneLogCommand()
 {
+}
+
+void ChataigneLogCommand::setValue(var _value)
+{
+	BaseCommand::setValue(_value);
+	logValue = _value;
 }
 
 void ChataigneLogCommand::trigger()
@@ -33,7 +39,10 @@ void ChataigneLogCommand::trigger()
 		break;
 
 	case VALUE:
-		LOG(message->stringValue() + " " + String(value->target != nullptr ? ((Parameter *)value->target.get())->stringValue() : " not set"));
+	{
+		String vString = context == ACTION ? String(value->target != nullptr?((Parameter *)value->target.get())->stringValue():"[not set]"):logValue.toString();
+		LOG(message->stringValue() + " " + vString);
+	}
 		break;
 	}
 }
