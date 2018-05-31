@@ -24,8 +24,8 @@ CustomValuesCommandArgument * CustomValuesCommandArgumentManager::addItemWithPar
 {
 	CustomValuesCommandArgument * a = new CustomValuesCommandArgument("#" + String(items.size() + 1), p,mappingEnabled);
 	a->addArgumentListener(this);
-	if (mappingEnabled && items.size() == 1) a->useForMapping->setValue(true); 
 	addItem(a, data, fromUndoableAction);
+	if (mappingEnabled && items.size() == 1) a->useForMapping->setValue(true); 
 	return a;
 }
 
@@ -97,13 +97,6 @@ void CustomValuesCommandArgumentManager::removeItemInternal(CustomValuesCommandA
 
 void CustomValuesCommandArgumentManager::useForMappingChanged(CustomValuesCommandArgument * i)
 {
-	/*
-	if (i->useForMapping->boolValue())
-	{
-		for (auto &it : items) if (it != i) it->useForMapping->setValue(false);
-	}
-	*/
-
 	argumentManagerListeners.call(&ManagerListener::useForMappingChanged, i);
 }
 
