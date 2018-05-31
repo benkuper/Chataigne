@@ -27,7 +27,7 @@ MappingUI::~MappingUI()
 
 void MappingUI::updateOutputParamUI()
 {
-	if(outputParamUI != nullptr && outputParamUI->controllable == mapping->outputParam) return;
+	if(outputParamUI != nullptr && mapping->outputParam != nullptr && outputParamUI->controllable == mapping->outputParam) return;
 
 	if (outputParamUI != nullptr)
 	{
