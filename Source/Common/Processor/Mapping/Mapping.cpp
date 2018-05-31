@@ -28,7 +28,7 @@ Mapping::Mapping(bool canBeDisabled) :
 	addChildControllableContainer(&fm);
 	addChildControllableContainer(&om);
 	
-	fm.addBaseManagerListener(this);
+	fm.addAsyncManagerListener(this);
 	input.addMappingInputListener(this);
 
 	helpID = "Mapping";
@@ -64,11 +64,29 @@ void Mapping::updateMappingChain()
 {
 	checkFiltersNeedContinuousProcess();
 	Parameter * p = fm.items.size() > 0 ? fm.items[fm.items.size() - 1]->filteredParameter.get() : input.inputReference;
-	if (outputParam != p)
-	{
-		outputParam = p;
+	
+	if (outputParam == nullptr && p == nullptr) return;
+
+	if (outputParam == nullptr || p == nullptr || outputParam->type != p->type)
+	{		
+		if (outputParam != nullptr) removeControllable(outputParam);
+		outputParam = nullptr;
+
+		if (p != nullptr)
+		{ 
+			outputParam = ControllableFactory::createParameterFrom(p, false, true);
+			outputParam->setNiceName("Out value");
+			outputParam->isEditable = false;
+			outputParam->hideInEditor = true;
+		}
+
+		om.setOutParam(outputParam);
 		mappingAsyncNotifier.addMessage(new MappingEvent(MappingEvent::OUTPUT_TYPE_CHANGED, this));
 
+		if (outputParam != nullptr)
+		{
+			addParameter(outputParam);
+		}
 	}
 }
 
@@ -80,7 +98,10 @@ void Mapping::process()
 
 	Parameter * filteredParam = fm.processFilters();
 	if (filteredParam == nullptr) return;
-	om.setValue(filteredParam->getValue());
+
+	if (outputParam == nullptr) updateMappingChain();
+	if (outputParam == nullptr) return;
+	outputParam->setValue(filteredParam->getValue());
 }
 
 var Mapping::getJSONData()
@@ -124,18 +145,17 @@ void Mapping::onContainerParameterChangedInternal(Parameter * p)
 	{
 		if (continuousProcess->boolValue()) startTimerHz(30);
 		else stopTimer();
+	} else if (p == outputParam)
+	{
+		om.setValue(outputParam->getValue());
 	}
 }
 
-void Mapping::itemAdded(MappingFilter * m)
+void Mapping::newMessage(const MappingFilterManager::ManagerEvent & e)
 {
 	updateMappingChain();
 }
 
-void Mapping::itemRemoved(MappingFilter * m)
-{
-	updateMappingChain();
-}
 
 ProcessorUI * Mapping::getUI()
 {

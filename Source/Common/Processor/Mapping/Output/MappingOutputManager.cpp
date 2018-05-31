@@ -10,9 +10,12 @@
 
 #include "MappingOutputManager.h"
 #include "Common/Command/ui/BaseCommandHandlerManagerEditor.h"
+#include "ui/MappingOutputManagerEditor.h"
 
 MappingOutputManager::MappingOutputManager() :
-	BaseManager<MappingOutput>("Outputs")
+	BaseManager<MappingOutput>("Outputs"),
+	outParam(nullptr),
+	omAsyncNotifier(5)
 {
 	selectItemWhenCreated = false;
 }
@@ -29,7 +32,14 @@ void MappingOutputManager::setValue(var value)
 	}
 }
 
+void MappingOutputManager::setOutParam(Parameter * p)
+{
+	if (outParam == p) return;
+	outParam = p;
+	omAsyncNotifier.addMessage(new OutputManagerEvent(OutputManagerEvent::OUTPUT_CHANGED));
+}
+
 InspectableEditor * MappingOutputManager::getEditor(bool isRoot)
 {
-	return new BaseCommandHandlerManagerEditor<MappingOutput>(this, CommandContext::MAPPING, isRoot);
+	return new MappingOutputManagerEditor(this, isRoot);
 }

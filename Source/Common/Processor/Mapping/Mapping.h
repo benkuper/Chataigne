@@ -21,7 +21,7 @@ class Mapping :
 	public Processor,
 	public MappingInput::Listener,
 	public Timer,
-	public MappingFilterManager::BaseManager::Listener
+	public MappingFilterManager::BaseManager::AsyncListener
 {
 public:
 	Mapping(bool canBeDisabled = true);
@@ -52,8 +52,7 @@ public:
 
 	void onContainerParameterChangedInternal(Parameter *) override;
 
-	void itemAdded(MappingFilter * m) override;
-	void itemRemoved(MappingFilter * m) override;
+	void newMessage(const MappingFilterManager::ManagerEvent &e) override;
 
 	// Inherited via Timer
 	virtual void timerCallback() override;

@@ -83,6 +83,7 @@
 		510AEDCE5408A44A681F3446 = {isa = PBXBuildFile; fileRef = FE2F05A1562D99C12A2FB4D7; };
 		3F1359A0AFF213630A7B75E8 = {isa = PBXBuildFile; fileRef = 6DA48147D997BF10B507F9B9; };
 		C4EB08B8F89C1EF160E72A07 = {isa = PBXBuildFile; fileRef = C6146FC3CED0ECD9A064C9B9; };
+		FDB37E4517D95C090BA8BE7E = {isa = PBXBuildFile; fileRef = 0196897A6CE603D0F42453D4; };
 		324EAD30760EA8E3881688A4 = {isa = PBXBuildFile; fileRef = 1C9F9F116CF5C8DCD5CFCA72; };
 		354F03D3E4769822EA4BC06C = {isa = PBXBuildFile; fileRef = 2FAC44CBAAC99F2D1B182674; };
 		3D0503C2719586ECB61BF520 = {isa = PBXBuildFile; fileRef = 712B39A79176F387DC023DCF; };
@@ -300,6 +301,7 @@
 		012696F83269C0DFA8F5FF62 = {isa = PBXFileReference; lastKnownFileType = file; name = "juce_audio_utils"; path = "~/JUCE/modules/juce_audio_utils"; sourceTree = "<absolute>"; };
 		016E97C128B092CFDA699560 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SequenceTransportUI.cpp; path = ../../Source/TimeMachine/Sequence/ui/SequenceTransportUI.cpp; sourceTree = "SOURCE_ROOT"; };
 		0189433D1F58B3EFCB328C09 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MIDIModule.cpp; path = ../../Source/Module/modules/midi/MIDIModule.cpp; sourceTree = "SOURCE_ROOT"; };
+		0196897A6CE603D0F42453D4 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MappingOutputManagerEditor.cpp; path = ../../Source/Common/Processor/Mapping/Output/ui/MappingOutputManagerEditor.cpp; sourceTree = "SOURCE_ROOT"; };
 		01AB0AA978B28173A67067D8 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Action.h; path = ../../Source/Common/Processor/Action/Action.h; sourceTree = "SOURCE_ROOT"; };
 		01FB0EC51EDF5579E6446D73 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Action.cpp; path = ../../Source/Common/Processor/Action/Action.cpp; sourceTree = "SOURCE_ROOT"; };
 		0317CC9300E36DBB54680045 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MappingLayerEditor.h; path = ../../Source/TimeMachine/Sequence/Layer/layers/mapping/ui/MappingLayerEditor.h; sourceTree = "SOURCE_ROOT"; };
@@ -520,6 +522,7 @@
 		6AB115D848E1553D7F5C50B6 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = wiiboard.c; path = ../../Source/Module/modules/controller/wiimote/lib/wiiuse/wiiboard.c; sourceTree = "SOURCE_ROOT"; };
 		6CA4A3E58A5777D0B0F8CF65 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MappingLayerTimeline.cpp; path = ../../Source/TimeMachine/Sequence/Layer/layers/mapping/ui/MappingLayerTimeline.cpp; sourceTree = "SOURCE_ROOT"; };
 		6CA54F330A265B66584BC7CC = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = StateManagerUI.h; path = ../../Source/StateMachine/ui/StateManagerUI.h; sourceTree = "SOURCE_ROOT"; };
+		6CAEF93880656E5D314F5481 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MappingOutputManagerEditor.h; path = ../../Source/Common/Processor/Mapping/Output/ui/MappingOutputManagerEditor.h; sourceTree = "SOURCE_ROOT"; };
 		6CF41E270B09CEAC122E1D64 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SerialManager.h; path = ../../Source/Common/Serial/SerialManager.h; sourceTree = "SOURCE_ROOT"; };
 		6CFA3DB0B33499174D9A5C98 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Main.cpp; path = ../../Source/Main.cpp; sourceTree = "SOURCE_ROOT"; };
 		6D0B7901FA978B59D5EC27E3 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TimeTriggerManager.h; path = ../../Source/TimeMachine/Sequence/Layer/layers/trigger/TimeTriggerManager.h; sourceTree = "SOURCE_ROOT"; };
@@ -1043,7 +1046,11 @@
 					C2E1D3E074C728CAF2B2E921,
 					C6146FC3CED0ECD9A064C9B9,
 					46737E6904653930EEBB8031, ); name = Input; sourceTree = "<group>"; };
+		DB3139201ED9003B204AB344 = {isa = PBXGroup; children = (
+					0196897A6CE603D0F42453D4,
+					6CAEF93880656E5D314F5481, ); name = ui; sourceTree = "<group>"; };
 		3DF965B3EEAFD27D962F6CA1 = {isa = PBXGroup; children = (
+					DB3139201ED9003B204AB344,
 					1C9F9F116CF5C8DCD5CFCA72,
 					E2E597186A12CD91B5651747,
 					2FAC44CBAAC99F2D1B182674,
@@ -1928,6 +1935,7 @@
 					510AEDCE5408A44A681F3446,
 					3F1359A0AFF213630A7B75E8,
 					C4EB08B8F89C1EF160E72A07,
+					FDB37E4517D95C090BA8BE7E,
 					324EAD30760EA8E3881688A4,
 					354F03D3E4769822EA4BC06C,
 					3D0503C2719586ECB61BF520,

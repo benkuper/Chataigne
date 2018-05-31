@@ -89,6 +89,9 @@
     <Filter Include="Chataigne\Source\Common\Processor\Mapping\Input">
       <UniqueIdentifier>{0B9120DF-A247-98DE-5204-71EA07C9D59F}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Chataigne\Source\Common\Processor\Mapping\Output\ui">
+      <UniqueIdentifier>{5FDFE6E2-3883-2FBE-DD23-60CCE1BF215A}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Chataigne\Source\Common\Processor\Mapping\Output">
       <UniqueIdentifier>{57173695-E263-6E6A-97FC-DC148C6698A6}</UniqueIdentifier>
     </Filter>
@@ -1095,6 +1098,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Common\Processor\Mapping\Input\MappingInput.cpp">
       <Filter>Chataigne\Source\Common\Processor\Mapping\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Output\ui\MappingOutputManagerEditor.cpp">
+      <Filter>Chataigne\Source\Common\Processor\Mapping\Output\ui</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Common\Processor\Mapping\Output\MappingOutput.cpp">
       <Filter>Chataigne\Source\Common\Processor\Mapping\Output</Filter>
@@ -4085,6 +4091,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Input\MappingInput.h">
       <Filter>Chataigne\Source\Common\Processor\Mapping\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\Processor\Mapping\Output\ui\MappingOutputManagerEditor.h">
+      <Filter>Chataigne\Source\Common\Processor\Mapping\Output\ui</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Output\MappingOutput.h">
       <Filter>Chataigne\Source\Common\Processor\Mapping\Output</Filter>

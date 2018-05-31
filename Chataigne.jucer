@@ -297,6 +297,12 @@
               <FILE id="LBLQTv" name="MappingInput.h" compile="0" resource="0" file="Source/Common/Processor/Mapping/Input/MappingInput.h"/>
             </GROUP>
             <GROUP id="{18518876-74C1-2B25-1A4A-02F7AB24FFB8}" name="Output">
+              <GROUP id="{5C583B99-90CB-DA96-EC0A-625FC344B9E5}" name="ui">
+                <FILE id="U4Otov" name="MappingOutputManagerEditor.cpp" compile="1"
+                      resource="0" file="Source/Common/Processor/Mapping/Output/ui/MappingOutputManagerEditor.cpp"/>
+                <FILE id="IrCOpD" name="MappingOutputManagerEditor.h" compile="0" resource="0"
+                      file="Source/Common/Processor/Mapping/Output/ui/MappingOutputManagerEditor.h"/>
+              </GROUP>
               <FILE id="xSAASH" name="MappingOutput.cpp" compile="1" resource="0"
                     file="Source/Common/Processor/Mapping/Output/MappingOutput.cpp"/>
               <FILE id="Tk53fT" name="MappingOutput.h" compile="0" resource="0" file="Source/Common/Processor/Mapping/Output/MappingOutput.h"/>

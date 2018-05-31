@@ -127,6 +127,7 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/SimpleSmoothFilter_9930618a.o \
   $(JUCE_OBJDIR)/MappingInputEditor_3aad72e6.o \
   $(JUCE_OBJDIR)/MappingInput_d2e57b44.o \
+  $(JUCE_OBJDIR)/MappingOutputManagerEditor_c1da629b.o \
   $(JUCE_OBJDIR)/MappingOutput_feb174a4.o \
   $(JUCE_OBJDIR)/MappingOutputManager_b8813ef3.o \
   $(JUCE_OBJDIR)/MappingUI_939edaca.o \
@@ -641,6 +642,11 @@ $(JUCE_OBJDIR)/MappingInputEditor_3aad72e6.o: ../../Source/Common/Processor/Mapp
 $(JUCE_OBJDIR)/MappingInput_d2e57b44.o: ../../Source/Common/Processor/Mapping/Input/MappingInput.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling MappingInput.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/MappingOutputManagerEditor_c1da629b.o: ../../Source/Common/Processor/Mapping/Output/ui/MappingOutputManagerEditor.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling MappingOutputManagerEditor.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/MappingOutput_feb174a4.o: ../../Source/Common/Processor/Mapping/Output/MappingOutput.cpp

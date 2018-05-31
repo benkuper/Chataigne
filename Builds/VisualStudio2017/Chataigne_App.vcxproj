@@ -219,6 +219,7 @@
     <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\SimpleSmoothFilter.cpp"/>
     <ClCompile Include="..\..\Source\Common\Processor\Mapping\Input\ui\MappingInputEditor.cpp"/>
     <ClCompile Include="..\..\Source\Common\Processor\Mapping\Input\MappingInput.cpp"/>
+    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Output\ui\MappingOutputManagerEditor.cpp"/>
     <ClCompile Include="..\..\Source\Common\Processor\Mapping\Output\MappingOutput.cpp"/>
     <ClCompile Include="..\..\Source\Common\Processor\Mapping\Output\MappingOutputManager.cpp"/>
     <ClCompile Include="..\..\Source\Common\Processor\Mapping\ui\MappingUI.cpp"/>
@@ -2538,6 +2539,7 @@
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\SimpleSmoothFilter.h"/>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Input\ui\MappingInputEditor.h"/>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Input\MappingInput.h"/>
+    <ClInclude Include="..\..\Source\Common\Processor\Mapping\Output\ui\MappingOutputManagerEditor.h"/>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Output\MappingOutput.h"/>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Output\MappingOutputManager.h"/>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\ui\MappingUI.h"/>
