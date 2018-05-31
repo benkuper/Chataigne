@@ -23,12 +23,12 @@ ConditionManagerEditor::~ConditionManagerEditor()
 }
 
 
-void ConditionManagerEditor::itemAdded(Condition *)
+void ConditionManagerEditor::itemAddedAsync(Condition *)
 {
 	if (manager->items.size() >= 1) resetAndBuild();
 }
 
-void ConditionManagerEditor::itemRemoved(Condition *)
+void ConditionManagerEditor::itemRemovedAsync(Condition *)
 {
 	if (manager->items.size() <= 1) resetAndBuild();
 }

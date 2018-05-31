@@ -24,8 +24,8 @@ public:
 
 	ConditionManager * conditionManager;
 
-	void itemAdded(Condition *) override;
-	void itemRemoved(Condition *) override;
+	void itemAddedAsync(Condition *) override;
+	void itemRemovedAsync(Condition *) override;
 
 	void controllableFeedbackUpdate(Controllable * c) override;
 
