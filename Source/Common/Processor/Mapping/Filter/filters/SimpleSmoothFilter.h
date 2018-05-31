@@ -20,10 +20,13 @@ public:
 	SimpleSmoothFilter(var params);
 	~SimpleSmoothFilter();
 
+	BoolParameter * async;
 	FloatParameter * smooth;
+	FloatParameter * downSmooth;
 
 	void processInternal() override;
 
+	void onContainerParameterChangedInternal(Parameter * p) override;
 
 	static SimpleSmoothFilter * create(var params) { return new SimpleSmoothFilter(params); }
 	String getTypeString() const override { return "Smooth"; }
