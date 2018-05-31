@@ -32,5 +32,6 @@ void LagFilter::filterParamChanged(Parameter * p)
 
 void LagFilter::timerCallback()
 {
+	if (sourceParam == nullptr) return;
 	tempVal = sourceParam->value;
 }
