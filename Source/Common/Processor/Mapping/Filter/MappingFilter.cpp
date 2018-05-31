@@ -33,23 +33,37 @@ MappingFilter::MappingFilter(const String &name, var params) :
 
 MappingFilter::~MappingFilter()
 {
+	if (sourceParam != nullptr) sourceParam->removeParameterListener(this);
 }
 
 void MappingFilter::setupSource(Parameter * source)
 {
+	if (source != nullptr)
+	{
+		source->removeParameterListener(this);
+	}
+
 	if (filteredParameter != nullptr)
 	{
+		filteredParameter->removeParameterListener(this);
 		removeControllable(filteredParameter);
 	}
 	
 	sourceParam = source;
 
-	if(source != nullptr) filteredParameter = setupParameterInternal(source);
-	else filteredParameter = nullptr;
+	if (source != nullptr)
+	{
+		filteredParameter = setupParameterInternal(source);
+		source->addParameterListener(this);
+	} else
+	{
+		filteredParameter = nullptr;
+	}
 
 	if (filteredParameter != nullptr)
 	{
 		filteredParameter->isControllableFeedbackOnly = true;
+		filteredParameter->addParameterListener(this);
 		addParameter(filteredParameter);
 	}
 	
@@ -103,4 +117,13 @@ void MappingFilter::loadJSONDataInternal(var data)
 InspectableEditor * MappingFilter::getEditor(bool isRoot)
 {
 	return new MappingFilterEditor(this, isRoot);
+}
+
+void MappingFilter::parameterRangeChanged(Parameter *)
+{
+	if (filteredParameter != nullptr && autoSetRange && (filteredParameter->minimumValue != sourceParam->minimumValue || filteredParameter->maximumValue != sourceParam->maximumValue))
+	{
+		filteredParameter->setRange(sourceParam->minimumValue, sourceParam->maximumValue);
+	}
+	mappingFilterListeners.call(&FilterListener::filteredParamRangeChanged, this);
 }

@@ -29,6 +29,7 @@ public:
 	void onContainerParameterChanged(Parameter * p) override;
 	void onExternalParameterChanged(Parameter *p) override;
 
+	void parameterRangeChanged(Parameter * p) override;
 
 	InspectableEditor * getEditor(bool isRoot) override;
 
@@ -39,6 +40,7 @@ public:
 		virtual ~Listener() {}
 		virtual void inputReferenceChanged(MappingInput *) {};
 		virtual void inputParameterValueChanged(MappingInput *) {};
+		virtual void inputParameterRangeChanged(MappingInput *) {};
 	};
 
 	ListenerList<Listener> mappinginputListeners;

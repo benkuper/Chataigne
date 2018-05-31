@@ -17,21 +17,32 @@ class CustomValuesCommandArgument :
 	public BaseItem
 {
 public:
-	CustomValuesCommandArgument(const String &name = "arg", Parameter * p = nullptr, bool mappingEnabled = false);
+	CustomValuesCommandArgument(const String &name = "arg", Parameter * p = nullptr, bool mappingEnabled = false, bool templateMode  = false); 
+	~CustomValuesCommandArgument();
 
 	Parameter * param;
+	BoolParameter * editable;
 	BoolParameter * useForMapping;
 
 	bool mappingEnabled;
+	bool templateMode;
 	
+	CustomValuesCommandArgument * linkedTemplate;
+	WeakReference<Inspectable *> linkedTemplateRef;
+
+	void linkToTemplate(CustomValuesCommandArgument * t);
+
+	void updateParameterFromTemplate();
+
 	void onContainerParameterChangedInternal(Parameter * p) override;
+	void onExternalParameterChanged(Parameter * p) override;
+
+
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
 
 	virtual String getTypeString() const override;
-
-	
 
 	class  ArgumentListener
 	{

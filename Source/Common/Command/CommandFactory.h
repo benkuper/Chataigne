@@ -13,6 +13,7 @@
 
 
 #include "CommandDefinition.h"
+
 class Module;
 
 class CommandFactory

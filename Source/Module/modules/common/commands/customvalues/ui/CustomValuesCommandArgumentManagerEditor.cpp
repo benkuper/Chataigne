@@ -21,13 +21,13 @@ void CustomValuesCommandArgumentManagerEditor::showMenuAndAddItem(bool)
 {
 
 	PopupMenu p;
-	p.addItem(1, "Add Int Argument");
-	p.addItem(2, "Add Float Argument");
-	p.addItem(3, "Add String Argument");
-	p.addItem(4, "Add Boolean Argument");
-	p.addItem(5, "Add Color Argument");
-	p.addItem(6, "Add Point2D Argument");
-	p.addItem(7, "Add Point3D Argument");
+	if(aManager->allowedTypes.isEmpty() || aManager->allowedTypes.contains(Controllable::INT)) p.addItem(1, "Add Int Argument");
+	if (aManager->allowedTypes.isEmpty() || aManager->allowedTypes.contains(Controllable::FLOAT)) p.addItem(2, "Add Float Argument");
+	if (aManager->allowedTypes.isEmpty() || aManager->allowedTypes.contains(Controllable::STRING)) p.addItem(3, "Add String Argument");
+	if (aManager->allowedTypes.isEmpty() || aManager->allowedTypes.contains(Controllable::BOOL)) p.addItem(4, "Add Boolean Argument");
+	if (aManager->allowedTypes.isEmpty() || aManager->allowedTypes.contains(Controllable::COLOR)) p.addItem(5, "Add Color Argument");
+	if (aManager->allowedTypes.isEmpty() || aManager->allowedTypes.contains(Controllable::POINT2D)) p.addItem(6, "Add Point2D Argument");
+	if (aManager->allowedTypes.isEmpty() || aManager->allowedTypes.contains(Controllable::POINT3D)) p.addItem(7, "Add Point3D Argument");
 
 	int result = p.show();
 

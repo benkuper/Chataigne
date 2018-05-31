@@ -11,6 +11,7 @@
 #include "Module.h"
 #include "Common/Command/CommandFactory.h"
 #include "ui/ModuleEditor.h"
+#include "Common/Command/Template/CommandTemplate.h"
 
 Module::Module(const String &name) :
 	BaseItem(name, true, true),
@@ -19,7 +20,8 @@ Module::Module(const String &name) :
 	moduleParams("Parameters"),
 	valuesCC("Values"),
 	commandTester("Command Tester", CommandContext::ACTION),
-	canHandleRouteValues(false)
+	canHandleRouteValues(false),
+	templateManager(this)
 {
 	itemDataType = "Module";
 
@@ -85,6 +87,33 @@ Array<WeakReference<Controllable>> Module::getValueControllables()
 	return valuesCC.getAllControllables(true);
 }
 
+Array<CommandDefinition*> Module::getCommands(bool includeTemplateCommands)
+{
+	Array<CommandDefinition*> result;
+	for (auto &d : defManager.definitions) result.add(d);
+	if (includeTemplateCommands)
+	{
+		for (auto &td : templateManager.defManager.definitions) result.add(td);
+	}
+
+	return result;
+}
+
+PopupMenu Module::getCommandMenu(int offset, CommandContext context)
+{
+	PopupMenu m = defManager.getCommandMenu(offset, context);
+	m.addSeparator();
+	templateManager.defManager.addCommandsToMenu(&m,offset + 500, context);
+	
+	return m;
+}
+
+CommandDefinition * Module::getCommandDefinitionForItemID(int itemID)
+{
+	if(itemID >= 500) return templateManager.defManager.definitions[itemID-500];
+	else return defManager.definitions[itemID];
+}
+
 void Module::onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c)
 {
 	if (cc == &valuesCC)
@@ -104,6 +133,10 @@ var Module::getJSONData()
 {
 	var data = BaseItem::getJSONData();
 	data.getDynamicObject()->setProperty("params", moduleParams.getJSONData());
+
+	var templateData = templateManager.getJSONData();
+	if (!templateData.isVoid() && templateData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty("templates", templateData);
+
 	return data;
 }
 
@@ -111,6 +144,7 @@ void Module::loadJSONDataInternal(var data)
 {
 	BaseItem::loadJSONDataInternal(data);
 	moduleParams.loadJSONData(data.getProperty("params", var()));
+	templateManager.loadJSONData(data.getProperty("templates", var()), true);
 }
 
 void Module::setupModuleFromJSONData(var data)
@@ -186,6 +220,12 @@ void Module::createControllablesForContainer(var data, ControllableContainer * c
 			cc->addControllable(c);
 		}
 	}
+}
+
+void Module::onContainerNiceNameChanged()
+{
+	BaseItem::onContainerNiceNameChanged();
+	templateManager.setupTemplateDefinition();
 }
 
 

@@ -30,9 +30,15 @@ void CommandDefinitionManager::remove(CommandDefinition * def)
 	definitions.removeObject(def);
 }
 
-void CommandDefinitionManager::rebuildCommandMenu(int baseID, CommandContext context)
+PopupMenu CommandDefinitionManager::getCommandMenu(int baseID, CommandContext context)
 {
-	commandMenu.clear();
+	PopupMenu p;
+	addCommandsToMenu(&p, baseID, context);
+	return p;
+}
+
+void CommandDefinitionManager::addCommandsToMenu(PopupMenu * commandMenu, int baseID, CommandContext context)
+{
 	OwnedArray<PopupMenu> subMenus;
 	Array<String> subMenuNames;
 
@@ -44,7 +50,7 @@ void CommandDefinitionManager::rebuildCommandMenu(int baseID, CommandContext con
 
 		if (d->menuPath.isEmpty())
 		{
-			commandMenu.addItem(itemID, d->commandType);
+			commandMenu->addItem(itemID, d->commandType);
 			continue;
 		}
 
@@ -68,14 +74,7 @@ void CommandDefinitionManager::rebuildCommandMenu(int baseID, CommandContext con
 		subMenus[subMenuIndex]->addItem(itemID, d->commandType);
 	}
 
-	for (int i = 0; i < subMenus.size(); i++) commandMenu.addSubMenu(subMenuNames[i], *subMenus[i]);
-}
-
-
-PopupMenu CommandDefinitionManager::getCommandMenu(int baseID, CommandContext context)
-{
-	rebuildCommandMenu(baseID, context);
-	return commandMenu;
+	for (int i = 0; i < subMenus.size(); i++) commandMenu->addSubMenu(subMenuNames[i], *subMenus[i]);
 }
 
 CommandDefinition * CommandDefinitionManager::getCommandDefinitionFor(const String & menuPath, const String & moduleType)

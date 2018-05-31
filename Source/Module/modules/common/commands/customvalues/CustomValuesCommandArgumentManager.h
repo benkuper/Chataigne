@@ -15,13 +15,23 @@
 
 class CustomValuesCommandArgumentManager :
 	public BaseManager<CustomValuesCommandArgument>,
-	public CustomValuesCommandArgument::ArgumentListener
+	public CustomValuesCommandArgument::ArgumentListener,
+	public BaseManager<CustomValuesCommandArgument>::Listener
 {
 public:
-	CustomValuesCommandArgumentManager(bool _mappingEnabled);
-	~CustomValuesCommandArgumentManager() {}
+	CustomValuesCommandArgumentManager(bool _mappingEnabled, bool templateMode = false);
+	~CustomValuesCommandArgumentManager();
 
 	bool mappingEnabled;
+	bool templateMode;
+
+	Array<Controllable::Type> allowedTypes;
+
+	CustomValuesCommandArgumentManager * linkedTemplateManager;
+	WeakReference<Inspectable> linkedTemplateManagerRef;
+
+	void linkToTemplate(CustomValuesCommandArgumentManager * t);
+	void rebuildFromTemplate();
 
 	CustomValuesCommandArgument * addItemWithParam(Parameter * p, var data = var(), bool fromUndoableAction = false);
 	CustomValuesCommandArgument * addItemFromType(Parameter::Type type, var data = var(), bool fromUndoableAction = false);
@@ -33,6 +43,11 @@ public:
 
 
 	void useForMappingChanged(CustomValuesCommandArgument * i) override;
+
+	void controllableFeedbackUpdate(ControllableContainer * cc, Controllable * c) override;
+
+	void itemAdded(CustomValuesCommandArgument * i) override; //FROM TEMPLATE
+	void itemRemoved(CustomValuesCommandArgument * i) override; //FROM TEMPLATE
 
 	InspectableEditor * getEditor(bool isRoot) override;
 

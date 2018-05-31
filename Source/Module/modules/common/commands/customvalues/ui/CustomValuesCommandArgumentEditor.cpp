@@ -14,6 +14,12 @@ CustomValuesCommandArgumentEditor::CustomValuesCommandArgumentEditor(CustomValue
 	BaseItemEditor(a, isRoot),
 	arg(a)
 {
+	
+	if (arg->editable != nullptr)
+	{
+		editableUI = arg->editable->createToggle();
+		addAndMakeVisible(editableUI);
+	}
 
 	if (arg->mappingEnabled)
 	{
@@ -42,6 +48,13 @@ void CustomValuesCommandArgumentEditor::resizedInternalHeaderItemInternal(Rectan
 		useInMappingUI->setBounds(r.removeFromRight(100).reduced(2));
 		r.removeFromRight(2);
 	}
+
+	if (editableUI != nullptr)
+	{
+		editableUI->setBounds(r.removeFromRight(80).reduced(2));
+		r.removeFromRight(2);
+	}
+
 	if(paramUI != nullptr) paramUI->setBounds(r.removeFromRight(r.getWidth() - 70).reduced(2));
 }
 

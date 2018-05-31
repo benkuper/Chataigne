@@ -11,11 +11,14 @@
 #include "CustomValuesCommandArgument.h"
 #include "ui/CustomValuesCommandArgumentEditor.h"
 
-CustomValuesCommandArgument::CustomValuesCommandArgument(const String &name, Parameter * _p, bool _mappingEnabled) :
+CustomValuesCommandArgument::CustomValuesCommandArgument(const String &name, Parameter * _p, bool _mappingEnabled, bool templateMode) :
 	BaseItem(name, false),
 	param(_p),
 	useForMapping(nullptr),
-	mappingEnabled(_mappingEnabled)
+	editable(nullptr),
+	mappingEnabled(_mappingEnabled),
+	templateMode(templateMode),
+	linkedTemplate(nullptr)
 {
 	editorCanBeCollapsed = false;
 
@@ -26,6 +29,12 @@ CustomValuesCommandArgument::CustomValuesCommandArgument(const String &name, Par
 	jassert(param != nullptr);
 	addControllable(param);
 
+	if (templateMode)
+	{
+		editable = addBoolParameter("Editable", "If unchecked, this parameter will not be editable when instantiating this template command", true);
+		editable->hideInEditor = true;
+	}
+
 	//argumentName = addStringParameter("Argument name", "Name for the argument", "Arg");
 	if (mappingEnabled)
 	{
@@ -35,8 +44,13 @@ CustomValuesCommandArgument::CustomValuesCommandArgument(const String &name, Par
 	}
 
 	param->hideInEditor = true;
+
 }
 
+CustomValuesCommandArgument::~CustomValuesCommandArgument()
+{
+	linkToTemplate(nullptr);
+}
 
 
 var CustomValuesCommandArgument::getJSONData()
@@ -52,12 +66,55 @@ void CustomValuesCommandArgument::loadJSONDataInternal(var data)
 	param->loadJSONData(data.getProperty("param", var()));
 }
 
+void CustomValuesCommandArgument::linkToTemplate(CustomValuesCommandArgument * t)
+{
+	if (linkedTemplate != nullptr && !linkedTemplateRef.wasObjectDeleted())
+	{
+		linkedTemplate->param->removeParameterListener(this);
+		linkedTemplate->editable->removeParameterListener(this);
+		linkedTemplate->useForMapping->removeParameterListener(this);
+		linkedTemplate = nullptr;
+	}
+
+	linkedTemplate = t;
+
+	if (linkedTemplate != nullptr)
+	{
+		linkedTemplate->param->addParameterListener(this);
+		linkedTemplate->editable->addParameterListener(this);
+		linkedTemplate->useForMapping->addParameterListener(this);
+	}
+}
+
+void CustomValuesCommandArgument::updateParameterFromTemplate()
+{
+	if (linkedTemplate != nullptr)
+	{
+		param->setControllableFeedbackOnly(!linkedTemplate->editable->boolValue());
+
+		param->setRange(linkedTemplate->param->minimumValue, linkedTemplate->param->maximumValue);
+
+		if (useForMapping != nullptr && linkedTemplate->useForMapping != nullptr) useForMapping->setValue(linkedTemplate->useForMapping);
+		
+		if (param->isControllableFeedbackOnly || !param->isOverriden)
+		{
+			param->defaultValue = linkedTemplate->param->value;
+			param->resetValue();
+		}
+	}
+}
+
 void CustomValuesCommandArgument::onContainerParameterChangedInternal(Parameter * p)
 {
 	if (p == useForMapping)
 	{
 		argumentListeners.call(&ArgumentListener::useForMappingChanged, this);
 	}
+}
+
+void CustomValuesCommandArgument::onExternalParameterChanged(Parameter * p)
+{
+	if (p->parentContainer == linkedTemplate) updateParameterFromTemplate();
 }
 
 String CustomValuesCommandArgument::getTypeString() const

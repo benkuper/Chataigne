@@ -34,6 +34,40 @@
       </GROUP>
       <GROUP id="{6C7DFFF7-D47E-97B5-FE74-27F24C7A349F}" name="Common">
         <GROUP id="{E7C8AAFC-E2FA-90D0-859B-423BC528A52F}" name="Command">
+          <FILE id="KxsRZB" name="CommandContext.h" compile="0" resource="0"
+                file="Source/Common/Command/CommandContext.h"/>
+          <GROUP id="{AE92A138-8B95-9F91-4BDE-879E255DDF34}" name="Template">
+            <GROUP id="{900A49A5-4A27-E57C-BCA9-E4F6C4DA5B93}" name="ui">
+              <FILE id="WfqHIA" name="CommandTemplateEditor.cpp" compile="1" resource="0"
+                    file="Source/Common/Command/Template/ui/CommandTemplateEditor.cpp"/>
+              <FILE id="cm5zq6" name="CommandTemplateEditor.h" compile="0" resource="0"
+                    file="Source/Common/Command/Template/ui/CommandTemplateEditor.h"/>
+              <FILE id="lUJmSG" name="CommandTemplateManagerUI.cpp" compile="1" resource="0"
+                    file="Source/Common/Command/Template/ui/CommandTemplateManagerUI.cpp"/>
+              <FILE id="oLgTIq" name="CommandTemplateManagerUI.h" compile="0" resource="0"
+                    file="Source/Common/Command/Template/ui/CommandTemplateManagerUI.h"/>
+              <FILE id="Yix0T4" name="CommandTemplateParameterEditor.cpp" compile="1"
+                    resource="0" file="Source/Common/Command/Template/ui/CommandTemplateParameterEditor.cpp"/>
+              <FILE id="yhWq5Z" name="CommandTemplateParameterEditor.h" compile="0"
+                    resource="0" file="Source/Common/Command/Template/ui/CommandTemplateParameterEditor.h"/>
+            </GROUP>
+            <FILE id="Eshzp1" name="CommandTemplate.cpp" compile="1" resource="0"
+                  file="Source/Common/Command/Template/CommandTemplate.cpp"/>
+            <FILE id="p1OFbG" name="CommandTemplate.h" compile="0" resource="0"
+                  file="Source/Common/Command/Template/CommandTemplate.h"/>
+            <FILE id="i5GkMB" name="CommandTemplateFactory.cpp" compile="1" resource="0"
+                  file="Source/Common/Command/Template/CommandTemplateFactory.cpp"/>
+            <FILE id="ezTNk5" name="CommandTemplateFactory.h" compile="0" resource="0"
+                  file="Source/Common/Command/Template/CommandTemplateFactory.h"/>
+            <FILE id="fKhJTJ" name="CommandTemplateManager.cpp" compile="1" resource="0"
+                  file="Source/Common/Command/Template/CommandTemplateManager.cpp"/>
+            <FILE id="Im6koP" name="CommandTemplateManager.h" compile="0" resource="0"
+                  file="Source/Common/Command/Template/CommandTemplateManager.h"/>
+            <FILE id="aSADXK" name="CommandTemplateParameter.cpp" compile="1" resource="0"
+                  file="Source/Common/Command/Template/CommandTemplateParameter.cpp"/>
+            <FILE id="sSNOyi" name="CommandTemplateParameter.h" compile="0" resource="0"
+                  file="Source/Common/Command/Template/CommandTemplateParameter.h"/>
+          </GROUP>
           <FILE id="NlN3XS" name="BaseCommand.cpp" compile="1" resource="0" file="Source/Common/Command/BaseCommand.cpp"/>
           <FILE id="f5gUen" name="BaseCommand.h" compile="0" resource="0" file="Source/Common/Command/BaseCommand.h"/>
           <FILE id="ZuWANL" name="BaseCommandHandler.cpp" compile="1" resource="0"

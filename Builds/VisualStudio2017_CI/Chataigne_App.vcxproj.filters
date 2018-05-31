@@ -8,6 +8,12 @@
     <Filter Include="Chataigne\Source\Analytics">
       <UniqueIdentifier>{BFFB54F9-F042-7395-56B9-D0358B5F6ED9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Chataigne\Source\Common\Command\Template\ui">
+      <UniqueIdentifier>{F2CAF67C-41CA-7457-88E2-3F0457E78267}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Common\Command\Template">
+      <UniqueIdentifier>{19F60CF8-3745-EAD2-B8B1-1E040BF0EA15}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Chataigne\Source\Common\Command\ui">
       <UniqueIdentifier>{9DC719BC-0221-FA4E-5A0E-C23170388D98}</UniqueIdentifier>
     </Filter>
@@ -922,6 +928,27 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\Common\Command\Template\ui\CommandTemplateEditor.cpp">
+      <Filter>Chataigne\Source\Common\Command\Template\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Command\Template\ui\CommandTemplateManagerUI.cpp">
+      <Filter>Chataigne\Source\Common\Command\Template\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Command\Template\ui\CommandTemplateParameterEditor.cpp">
+      <Filter>Chataigne\Source\Common\Command\Template\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Command\Template\CommandTemplate.cpp">
+      <Filter>Chataigne\Source\Common\Command\Template</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Command\Template\CommandTemplateFactory.cpp">
+      <Filter>Chataigne\Source\Common\Command\Template</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Command\Template\CommandTemplateManager.cpp">
+      <Filter>Chataigne\Source\Common\Command\Template</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Command\Template\CommandTemplateParameter.cpp">
+      <Filter>Chataigne\Source\Common\Command\Template</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Common\Command\BaseCommand.cpp">
       <Filter>Chataigne\Source\Common\Command</Filter>
     </ClCompile>
@@ -3908,6 +3935,30 @@
   <ItemGroup>
     <ClInclude Include="..\..\Source\Analytics\GoogleAnalyticsDestination.h">
       <Filter>Chataigne\Source\Analytics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\Command\CommandContext.h">
+      <Filter>Chataigne\Source\Common\Command</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\Command\Template\ui\CommandTemplateEditor.h">
+      <Filter>Chataigne\Source\Common\Command\Template\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\Command\Template\ui\CommandTemplateManagerUI.h">
+      <Filter>Chataigne\Source\Common\Command\Template\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\Command\Template\ui\CommandTemplateParameterEditor.h">
+      <Filter>Chataigne\Source\Common\Command\Template\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\Command\Template\CommandTemplate.h">
+      <Filter>Chataigne\Source\Common\Command\Template</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\Command\Template\CommandTemplateFactory.h">
+      <Filter>Chataigne\Source\Common\Command\Template</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\Command\Template\CommandTemplateManager.h">
+      <Filter>Chataigne\Source\Common\Command\Template</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\Command\Template\CommandTemplateParameter.h">
+      <Filter>Chataigne\Source\Common\Command\Template</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\Command\BaseCommand.h">
       <Filter>Chataigne\Source\Common\Command</Filter>

@@ -138,6 +138,11 @@ void Mapping::inputParameterValueChanged(MappingInput *)
 	process();
 }
 
+void Mapping::inputParameterRangeChanged(MappingInput *)
+{
+	if (fm.items.size() == 0) outputParam->setRange(input.inputReference->minimumValue, input.inputReference->maximumValue);
+}
+
 void Mapping::onContainerParameterChangedInternal(Parameter * p)
 {
 	BaseItem::onContainerParameterChangedInternal(p);
@@ -153,7 +158,17 @@ void Mapping::onContainerParameterChangedInternal(Parameter * p)
 
 void Mapping::newMessage(const MappingFilterManager::ManagerEvent & e)
 {
+	if (e.type == MappingFilterManager::ManagerEvent::ITEM_ADDED) e.getItem()->addMappingFilterListener(this);
 	updateMappingChain();
+}
+
+void Mapping::filteredParamRangeChanged(MappingFilter * mf)
+{
+	if (fm.items.indexOf(mf) == fm.items.size() - 1)
+	{
+		//Last item
+		outputParam->setRange(mf->filteredParameter->minimumValue, mf->filteredParameter->maximumValue);
+	}
 }
 
 

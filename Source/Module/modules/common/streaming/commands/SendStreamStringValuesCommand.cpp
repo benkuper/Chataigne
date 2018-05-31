@@ -38,7 +38,7 @@ void SendStreamStringValuesCommand::trigger()
 {
 	if (streamingModule == nullptr) return;
 	String s = "";
-	for (auto &a : argManager.items)
+	for (auto &a : customValuesManager->items)
 	{
 		if (s.length() > 0) s += separator->stringValue();
 		Parameter * p = a->param;

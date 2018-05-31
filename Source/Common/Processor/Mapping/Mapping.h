@@ -21,7 +21,8 @@ class Mapping :
 	public Processor,
 	public MappingInput::Listener,
 	public Timer,
-	public MappingFilterManager::BaseManager::AsyncListener
+	public MappingFilterManager::BaseManager::AsyncListener,
+	public MappingFilter::FilterListener
 {
 public:
 	Mapping(bool canBeDisabled = true);
@@ -49,12 +50,14 @@ public:
 
 	void inputReferenceChanged(MappingInput *) override;
 	void inputParameterValueChanged(MappingInput *) override;
+	void inputParameterRangeChanged(MappingInput *) override;
 
 	void onContainerParameterChangedInternal(Parameter *) override;
 
 	void newMessage(const MappingFilterManager::ManagerEvent &e) override;
 
-	// Inherited via Timer
+	void filteredParamRangeChanged(MappingFilter * mf) override;
+
 	virtual void timerCallback() override;
 
 	ProcessorUI * getUI() override;

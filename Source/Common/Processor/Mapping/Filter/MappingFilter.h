@@ -44,12 +44,15 @@ public:
 
 	InspectableEditor * getEditor(bool isRoot) override;
 
+	virtual void parameterRangeChanged(Parameter *) override;
+
 	class  FilterListener
 	{
 	public:
 		/** Destructor. */
 		virtual ~FilterListener() {}
 		virtual void filteredParamChanged(MappingFilter *) {};
+		virtual void filteredParamRangeChanged(MappingFilter *) {}
 	};
 
 	ListenerList<FilterListener> mappingFilterListeners;

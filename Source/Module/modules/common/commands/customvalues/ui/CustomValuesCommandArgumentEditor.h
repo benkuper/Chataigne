@@ -25,6 +25,7 @@ public:
 
 	ScopedPointer<ParameterEditor> paramUI;
 	ScopedPointer<BoolToggleUI> useInMappingUI;
+	ScopedPointer<BoolToggleUI> editableUI;
 
 	void resizedInternalHeaderItemInternal(Rectangle<int> &r) override;
 	void childBoundsChanged(Component *) override;

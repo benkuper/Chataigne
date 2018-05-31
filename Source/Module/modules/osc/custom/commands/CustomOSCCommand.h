@@ -23,7 +23,6 @@ public:
 	CustomOSCCommand(CustomOSCModule * output, CommandContext context, var params);
 	~CustomOSCCommand();
 	
-	CustomValuesCommandArgumentManager argManager;
 
 	var lastValue;
 

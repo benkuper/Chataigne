@@ -50,6 +50,11 @@ Module * ModuleManager::getModuleWithName(const String & moduleName)
 	else return getItemWithName(moduleName);
 }
 
+void ModuleManager::addItemInternal(Module * module, var data)
+{
+	module->templateManager.setupTemplateDefinition();
+}
+
 Controllable * ModuleManager::showAllValuesAndGetControllable(bool showTriggers, bool showParameters)
 {
 	PopupMenu menu;
@@ -114,11 +119,11 @@ bool ModuleManager::checkControllableIsAValue(Controllable * c)
 PopupMenu ModuleManager::getAllModulesCommandMenu(CommandContext context)
 {
 	PopupMenu menu;
-	for (int i = 0; i < items.size(); i++) menu.addSubMenu(items[i]->niceName, items[i]->defManager.getCommandMenu(i * 1000,context));
-	menu.addSubMenu(StateManager::getInstance()->module.niceName, StateManager::getInstance()->module.defManager.getCommandMenu(-1000, context));
-	menu.addSubMenu(SequenceManager::getInstance()->module.niceName, SequenceManager::getInstance()->module.defManager.getCommandMenu(-2000, context));
-	menu.addSubMenu(CVGroupManager::getInstance()->module->niceName, CVGroupManager::getInstance()->module->defManager.getCommandMenu(-3000, context));
-	menu.addSubMenu(static_cast<ChataigneEngine *>(Engine::mainEngine)->module.niceName, static_cast<ChataigneEngine *>(Engine::mainEngine)->module.defManager.getCommandMenu(-10000, context));
+	for (int i = 0; i < items.size(); i++) menu.addSubMenu(items[i]->niceName, items[i]->getCommandMenu(i * 1000,context));
+	menu.addSubMenu(StateManager::getInstance()->module.niceName, StateManager::getInstance()->module.getCommandMenu(-1000, context));
+	menu.addSubMenu(SequenceManager::getInstance()->module.niceName, SequenceManager::getInstance()->module.getCommandMenu(-2000, context));
+	menu.addSubMenu(CVGroupManager::getInstance()->module->niceName, CVGroupManager::getInstance()->module->getCommandMenu(-3000, context));
+	menu.addSubMenu(static_cast<ChataigneEngine *>(Engine::mainEngine)->module.niceName, static_cast<ChataigneEngine *>(Engine::mainEngine)->module.getCommandMenu(-10000, context));
 	return menu;
 }
 
@@ -156,7 +161,7 @@ CommandDefinition * ModuleManager::getCommandDefinitionForItemID(int itemID, Mod
 	if (m == nullptr) return nullptr;
 
 	int commandIndex = itemID % 1000 - 1;
-	return m->defManager.definitions[commandIndex];
+	return m->getCommandDefinitionForItemID(commandIndex);
 }
 
 Array<Module*> ModuleManager::getModuleList(bool includeSpecialModules)

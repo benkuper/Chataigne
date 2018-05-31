@@ -14,6 +14,7 @@
 #include "JuceHeader.h"
 #include "Common/Command/BaseCommandHandler.h"
 #include "Common/Command/CommandDefinitionManager.h"
+#include "Common/Command/Template/CommandTemplateManager.h"
 
 class CommandDefinition;
 
@@ -42,6 +43,9 @@ public:
 
 	String customType; //for custom modules;
 
+	//Template
+	CommandTemplateManager templateManager;
+
 	virtual void setupIOConfiguration(bool _hasInput, bool _hasOutput);
 
 	//ROUTING
@@ -53,6 +57,10 @@ public:
 
 	Array<WeakReference<Controllable>> getValueControllables();
 	OwnedArray<ControllableContainer> customModuleContainers; //for user-custom modules
+	Array<CommandDefinition *> getCommands(bool includeTemplateCommands = true);
+
+	PopupMenu getCommandMenu(int offset, CommandContext context);
+	CommandDefinition * getCommandDefinitionForItemID(int itemID);
 
 	class RouteParams :
 		public ControllableContainer
@@ -73,6 +81,8 @@ public:
 	virtual void setupModuleFromJSONData(var data); //Used for custom modules with a module.json definition, to automatically create parameters, command and values from this file.
 	void loadDefaultsParameterValuesForContainer(var data, ControllableContainer * cc);
 	void createControllablesForContainer(var data, ControllableContainer * cc);
+
+	virtual void onContainerNiceNameChanged() override;
 
 	Controllable * getControllableForJSONDefinition(const String &name, var def);
 

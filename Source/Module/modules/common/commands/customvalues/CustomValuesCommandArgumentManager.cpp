@@ -11,21 +11,62 @@
 #include "CustomValuesCommandArgumentManager.h"
 #include "ui/CustomValuesCommandArgumentManagerEditor.h"
 
-CustomValuesCommandArgumentManager::CustomValuesCommandArgumentManager(bool _mappingEnabled) :
+CustomValuesCommandArgumentManager::CustomValuesCommandArgumentManager(bool _mappingEnabled, bool templateMode) :
 	BaseManager("arguments"),
-	mappingEnabled(_mappingEnabled)
+	mappingEnabled(_mappingEnabled),
+	templateMode(templateMode),
+	linkedTemplateManager(nullptr)
 {
 	selectItemWhenCreated = false;
 	editorCanBeCollapsed = false;
 	
 }
 
+CustomValuesCommandArgumentManager::~CustomValuesCommandArgumentManager()
+{
+	linkToTemplate(nullptr);
+}
+
+void CustomValuesCommandArgumentManager::linkToTemplate(CustomValuesCommandArgumentManager * t)
+{
+	if (linkedTemplateManager != nullptr && !linkedTemplateManagerRef.wasObjectDeleted())
+	{
+		if (linkedTemplateManager != nullptr)
+		{
+			linkedTemplateManager->removeBaseManagerListener(this);
+		}
+		linkedTemplateManager = nullptr;
+	}
+
+	linkedTemplateManager = t;
+	linkedTemplateManagerRef = t;
+
+	if (linkedTemplateManager != nullptr)
+	{
+		linkedTemplateManager->addBaseManagerListener(this);
+	}
+
+	userCanAddItemsManually = linkedTemplateManager == nullptr;
+	rebuildFromTemplate();
+}
+
+void CustomValuesCommandArgumentManager::rebuildFromTemplate()
+{
+	clear();
+	if (linkedTemplateManager == nullptr || linkedTemplateManagerRef.wasObjectDeleted()) return;
+	for (auto & i : linkedTemplateManager->items)
+	{
+		CustomValuesCommandArgument * a = addItemFromData(i->getJSONData());
+		 a->linkToTemplate(i);
+	}
+}
+
 CustomValuesCommandArgument * CustomValuesCommandArgumentManager::addItemWithParam(Parameter * p, var data, bool fromUndoableAction)
 {
-	CustomValuesCommandArgument * a = new CustomValuesCommandArgument("#" + String(items.size() + 1), p,mappingEnabled);
+	CustomValuesCommandArgument * a = new CustomValuesCommandArgument("#" + String(items.size() + 1), p,mappingEnabled,templateMode);
 	a->addArgumentListener(this);
 	addItem(a, data, fromUndoableAction);
-	if (mappingEnabled && items.size() == 1) a->useForMapping->setValue(true); 
+	if (linkedTemplateManager == nullptr && mappingEnabled && items.size() == 1) a->useForMapping->setValue(true); 
 	return a;
 }
 
@@ -98,6 +139,31 @@ void CustomValuesCommandArgumentManager::removeItemInternal(CustomValuesCommandA
 void CustomValuesCommandArgumentManager::useForMappingChanged(CustomValuesCommandArgument * i)
 {
 	argumentManagerListeners.call(&ManagerListener::useForMappingChanged, i);
+}
+
+void CustomValuesCommandArgumentManager::controllableFeedbackUpdate(ControllableContainer * cc, Controllable * c)
+{
+
+}
+
+void CustomValuesCommandArgumentManager::itemAdded(CustomValuesCommandArgument * i)
+{
+	CustomValuesCommandArgument * a = addItemFromData(i->getJSONData());
+	a->linkToTemplate(i);
+}
+
+void CustomValuesCommandArgumentManager::itemRemoved(CustomValuesCommandArgument * i)
+{
+	CustomValuesCommandArgument * itemToRemove = nullptr;
+	for (auto & it : items)
+	{
+		if (it->linkedTemplate == i)
+		{
+			itemToRemove = it;
+			break;
+		}
+	}
+	if (itemToRemove != nullptr) removeItem(itemToRemove, false);
 }
 
 InspectableEditor * CustomValuesCommandArgumentManager::getEditor(bool isRoot)

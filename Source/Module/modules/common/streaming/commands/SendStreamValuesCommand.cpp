@@ -11,11 +11,11 @@
 #include "SendStreamValuesCommand.h"
 
 SendStreamValuesCommand::SendStreamValuesCommand(StreamingModule * module, CommandContext context, var params) :
-	StreamingCommand(module, context, params),
-	argManager(context == MAPPING)
+	StreamingCommand(module, context, params)
 {
-	addChildControllableContainer(&argManager);
-	argManager.addArgumentManagerListener(this);
+	customValuesManager = new CustomValuesCommandArgumentManager(context == MAPPING);
+	addChildControllableContainer(customValuesManager);
+	customValuesManager->addArgumentManagerListener(this);
 }
 
 SendStreamValuesCommand::~SendStreamValuesCommand()
@@ -26,14 +26,14 @@ SendStreamValuesCommand::~SendStreamValuesCommand()
 var SendStreamValuesCommand::getJSONData()
 {
 	var data = StreamingCommand::getJSONData();
-	data.getDynamicObject()->setProperty("argManager", argManager.getJSONData());
+	data.getDynamicObject()->setProperty("argManager", customValuesManager->getJSONData());
 	return data;
 }
 
 void SendStreamValuesCommand::loadJSONDataInternal(var data)
 {
 	StreamingCommand::loadJSONDataInternal(data);
-	argManager.loadJSONData(data.getProperty("argManager", var()), true);
+	customValuesManager->loadJSONData(data.getProperty("argManager", var()), true);
 }
 
 void SendStreamValuesCommand::trigger()
@@ -42,7 +42,7 @@ void SendStreamValuesCommand::trigger()
 	
 	MemoryOutputStream data;
 
-	for (auto &a : argManager.items)
+	for (auto &a : customValuesManager->items)
 	{
 		Parameter * p = a->param;
 		if (p == nullptr) continue;
@@ -79,7 +79,7 @@ void SendStreamValuesCommand::useForMappingChanged(CustomValuesCommandArgument *
 
 	clearTargetMappingParameters();
 	int index = 0;
-	for (auto &a : argManager.items)
+	for (auto &a : customValuesManager->items)
 	{
 		if (a->useForMapping != nullptr && a->useForMapping->boolValue())
 		{

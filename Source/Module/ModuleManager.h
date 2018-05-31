@@ -27,6 +27,8 @@ public:
 	
 	Module * getModuleWithName(const String &moduleName);
 
+	void addItemInternal(Module * module, var data) override;
+
 	//Input values menu
 	static Controllable * showAllValuesAndGetControllable(bool showTriggers, bool showParameters);
 	static bool checkControllableIsAValue(Controllable * c);

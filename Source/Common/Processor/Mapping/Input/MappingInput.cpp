@@ -72,6 +72,12 @@ void MappingInput::onExternalParameterChanged(Parameter * p)
 	}
 }
 
+void MappingInput::parameterRangeChanged(Parameter * p)
+{
+	ControllableContainer::parameterRangeChanged(p);
+	mappinginputListeners.call(&MappingInput::Listener::inputParameterRangeChanged, this);
+}
+
 InspectableEditor * MappingInput::getEditor(bool isRoot)
 {
 	return new MappingInputEditor(this, isRoot);

@@ -11,15 +11,15 @@
 #include "CustomOSCCommand.h"
 
 CustomOSCCommand::CustomOSCCommand(CustomOSCModule * module, CommandContext context, var params) :
-	OSCCommand(module, context, params),
-	argManager(context == MAPPING)
+	OSCCommand(module, context, params)
 {
 	address->isEditable = true;
 	address->isSavable = true;
 
 	removeChildControllableContainer(&argumentsContainer);
-	addChildControllableContainer(&argManager);  
-	argManager.addArgumentManagerListener(this);
+	customValuesManager = new CustomValuesCommandArgumentManager(context == MAPPING);
+	addChildControllableContainer(customValuesManager);  
+	customValuesManager->addArgumentManagerListener(this);
 }
 
 CustomOSCCommand::~CustomOSCCommand()
@@ -40,7 +40,7 @@ void CustomOSCCommand::trigger()
 	{
 		OSCMessage m(address->stringValue());
 
-		for (auto &a : argManager.items)
+		for (auto &a : customValuesManager->items)
 		{
 			Parameter * p = a->param;
 			if (p == nullptr) continue;
@@ -90,7 +90,7 @@ void CustomOSCCommand::useForMappingChanged(CustomValuesCommandArgument *)
 
 	clearTargetMappingParameters();
 	int index = 0;
-	for (auto &a : argManager.items)
+	for (auto &a : customValuesManager->items)
 	{
 		if (a->useForMapping->boolValue())
 		{
@@ -104,12 +104,12 @@ void CustomOSCCommand::useForMappingChanged(CustomValuesCommandArgument *)
 var CustomOSCCommand::getJSONData()
 {
 	var data = OSCCommand::getJSONData();
-	data.getDynamicObject()->setProperty("argManager", argManager.getJSONData());
+	data.getDynamicObject()->setProperty("argManager", customValuesManager->getJSONData());
 	return data;
 }
 
 void CustomOSCCommand::loadJSONDataInternal(var data)
 {
 	OSCCommand::loadJSONDataInternal(data);
-	argManager.loadJSONData(data.getProperty("argManager", var()), true);
+	customValuesManager->loadJSONData(data.getProperty("argManager", var()), true);
 }

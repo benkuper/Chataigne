@@ -24,9 +24,9 @@ public:
 	void add(CommandDefinition * def);
 	void remove(CommandDefinition * def);
 
-	PopupMenu commandMenu;
-	void rebuildCommandMenu(int baseID, CommandContext context);
 	PopupMenu getCommandMenu(int baseID, CommandContext context);
+	void addCommandsToMenu(PopupMenu * m, int baseID, CommandContext context);
+
 	CommandDefinition * getCommandDefinitionFor(const String &menuPath, const String &moduleType);
 };
 

@@ -22,7 +22,6 @@ public:
 	SendStreamValuesCommand(StreamingModule * output, CommandContext context, var params);
 	~SendStreamValuesCommand();
 
-	CustomValuesCommandArgumentManager argManager;
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;

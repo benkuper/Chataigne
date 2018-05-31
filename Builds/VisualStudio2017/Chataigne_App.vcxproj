@@ -160,6 +160,13 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\Common\Command\Template\ui\CommandTemplateEditor.cpp"/>
+    <ClCompile Include="..\..\Source\Common\Command\Template\ui\CommandTemplateManagerUI.cpp"/>
+    <ClCompile Include="..\..\Source\Common\Command\Template\ui\CommandTemplateParameterEditor.cpp"/>
+    <ClCompile Include="..\..\Source\Common\Command\Template\CommandTemplate.cpp"/>
+    <ClCompile Include="..\..\Source\Common\Command\Template\CommandTemplateFactory.cpp"/>
+    <ClCompile Include="..\..\Source\Common\Command\Template\CommandTemplateManager.cpp"/>
+    <ClCompile Include="..\..\Source\Common\Command\Template\CommandTemplateParameter.cpp"/>
     <ClCompile Include="..\..\Source\Common\Command\BaseCommand.cpp"/>
     <ClCompile Include="..\..\Source\Common\Command\BaseCommandHandler.cpp"/>
     <ClCompile Include="..\..\Source\Common\Command\CommandDefinition.cpp"/>
@@ -2478,6 +2485,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Source\Analytics\GoogleAnalyticsDestination.h"/>
+    <ClInclude Include="..\..\Source\Common\Command\CommandContext.h"/>
+    <ClInclude Include="..\..\Source\Common\Command\Template\ui\CommandTemplateEditor.h"/>
+    <ClInclude Include="..\..\Source\Common\Command\Template\ui\CommandTemplateManagerUI.h"/>
+    <ClInclude Include="..\..\Source\Common\Command\Template\ui\CommandTemplateParameterEditor.h"/>
+    <ClInclude Include="..\..\Source\Common\Command\Template\CommandTemplate.h"/>
+    <ClInclude Include="..\..\Source\Common\Command\Template\CommandTemplateFactory.h"/>
+    <ClInclude Include="..\..\Source\Common\Command\Template\CommandTemplateManager.h"/>
+    <ClInclude Include="..\..\Source\Common\Command\Template\CommandTemplateParameter.h"/>
     <ClInclude Include="..\..\Source\Common\Command\BaseCommand.h"/>
     <ClInclude Include="..\..\Source\Common\Command\BaseCommandHandler.h"/>
     <ClInclude Include="..\..\Source\Common\Command\CommandDefinition.h"/>
