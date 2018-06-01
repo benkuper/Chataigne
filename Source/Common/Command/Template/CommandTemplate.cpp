@@ -119,6 +119,11 @@ var CommandTemplate::getJSONData()
 		pData.append(ctp->getJSONData());
 	}
 
+	if (customValuesManager != nullptr)
+	{
+		data.getDynamicObject()->setProperty("customValues", customValuesManager->getJSONData());
+	}
+
 	data.getDynamicObject()->setProperty("params", pData);
 	return data;
 }
@@ -132,11 +137,17 @@ void CommandTemplate::loadJSONDataInternal(var data)
 		Array<var> * paramsData = data.getProperty("params", var()).getArray();
 		for (auto &pd : *paramsData)
 		{
-			CommandTemplateParameter * ctp = dynamic_cast<CommandTemplateParameter *>(paramsContainer.getControllableContainerByName(pd.getProperty("name",""), true));
+			CommandTemplateParameter * ctp = dynamic_cast<CommandTemplateParameter *>(paramsContainer.getControllableContainerByName(pd.getProperty("niceName",""), true));
 			jassert(ctp != nullptr);
 			ctp->loadJSONData(pd);
 		}
 	}
+
+	if (customValuesManager != nullptr)
+	{
+		customValuesManager->loadJSONData(data.getProperty("customValues",var()));
+	}
+
 	
 }
 

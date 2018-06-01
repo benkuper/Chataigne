@@ -66,7 +66,7 @@ CustomValuesCommandArgument * CustomValuesCommandArgumentManager::addItemWithPar
 	CustomValuesCommandArgument * a = new CustomValuesCommandArgument("#" + String(items.size() + 1), p,mappingEnabled,templateMode);
 	a->addArgumentListener(this);
 	addItem(a, data, fromUndoableAction);
-	if (linkedTemplateManager == nullptr && mappingEnabled && items.size() == 1) a->useForMapping->setValue(true); 
+	if (!Engine::mainEngine->isLoadingFile && linkedTemplateManager == nullptr && mappingEnabled && items.size() == 1) a->useForMapping->setValue(true); 
 	return a;
 }
 

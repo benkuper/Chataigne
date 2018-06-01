@@ -19,6 +19,8 @@ CommandTemplateParameter::CommandTemplateParameter(Parameter * sourceParam) :
 	addParameter(parameter);
 	editable = addBoolParameter("Editable", "If enabled, the parameter will be editable when instantiating this template", true);
 	editable->forceSaveValue = true;
+	editable->saveValueOnly = false;
+	saveAndLoadName = true;
 }
 
 CommandTemplateParameter::~CommandTemplateParameter()
