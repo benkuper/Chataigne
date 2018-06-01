@@ -21,7 +21,7 @@ class ChataigneEngine :
 	public Engine
 {
 public:
-	ChataigneEngine(ApplicationProperties * appProperties, const String &appVersion);
+	ChataigneEngine();
 	~ChataigneEngine();
 
 	ChataigneGenericModule module;

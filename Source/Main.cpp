@@ -19,7 +19,7 @@ void ChataigneApplication::initialiseInternal(const String &)
 	AppUpdater::getInstance()->setURLs(URL("http://benjamin.kuperberg.fr/chataigne/releases/update.json"), "http://benjamin.kuperberg.fr/chataigne/user/data/", "Chataigne");
 	HelpBox::getInstance()->helpURL = URL("http://benjamin.kuperberg.fr/chataigne/docs/help.json");
 
-	engine = new ChataigneEngine(appProperties, getAppVersion());
+	engine = new ChataigneEngine();
 	mainComponent = new MainContentComponent();
 
 

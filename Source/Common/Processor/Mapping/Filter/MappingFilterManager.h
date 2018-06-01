@@ -31,6 +31,8 @@ public:
 	void addItemInternal(MappingFilter * m, var data) override;
 	void removeItemInternal(MappingFilter *) override;
 	
+	void reorderItems() override;
+
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MappingFilterManager)
 };
 

@@ -81,3 +81,9 @@ void MappingFilterManager::removeItemInternal(MappingFilter *)
 	rebuildFilterChain();
 }
 
+void MappingFilterManager::reorderItems()
+{
+	BaseManager::reorderItems(); 
+	rebuildFilterChain();
+}
+

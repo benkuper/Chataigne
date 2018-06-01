@@ -66,7 +66,7 @@ void SimpleRemapFilter::filterParamChanged(Parameter * p)
 Parameter * SimpleRemapFilter::setupParameterInternal(Parameter * source)
 { 
 	Parameter * p = MappingFilter::setupParameterInternal(source);
-	useCustomInputRange->setValue(!source->hasRange());
+	if(!useCustomInputRange->isOverriden) useCustomInputRange->setValue(!source->hasRange());
 	p->setRange(targetOut->x, jmax<float>(targetOut->x, targetOut->y));
 	return p;
 }

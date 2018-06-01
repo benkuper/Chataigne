@@ -56,6 +56,7 @@ Module::Module(const String &name) :
 	commandTester.userCanRemove = false;
 	commandTester.canBeDisabled = false;
 	commandTester.lockedModule = this;
+	commandTester.canBeReorderedInEditor = false;
 
 	controllableContainers.move(controllableContainers.indexOf(scriptManager.get()), controllableContainers.size() - 1);
 

@@ -25,8 +25,8 @@
 #include "Module/modules/controller/myo/MyoManager.h"
 #endif
 
-ChataigneEngine::ChataigneEngine(ApplicationProperties * appProperties, const String &appVersion) :
-	Engine("Chataigne", ".noisette", appProperties, appVersion)
+ChataigneEngine::ChataigneEngine() :
+	Engine("Chataigne", ".noisette")
 	//ossiaDevice(nullptr)
 {
 	convertURL = "http://benjamin.kuperberg.fr/chataigne/releases/convert.php";

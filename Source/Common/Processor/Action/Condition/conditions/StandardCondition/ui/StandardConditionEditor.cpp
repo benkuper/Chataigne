@@ -27,9 +27,9 @@ StandardConditionEditor::~StandardConditionEditor()
 {
 }
 
-void StandardConditionEditor::setCollapsed(bool value, bool force, bool animate)
+void StandardConditionEditor::setCollapsed(bool value, bool force, bool animate, bool doNotRebuild)
 {
-	ConditionEditor::setCollapsed(value, force, animate);
+	ConditionEditor::setCollapsed(value, force, animate, doNotRebuild);
 
 	targetUI->setVisible(!standardCondition->editorIsCollapsed);
 	if(sourceFeedbackUI != nullptr)	sourceFeedbackUI->setVisible(!standardCondition->editorIsCollapsed);
