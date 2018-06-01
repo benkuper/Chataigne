@@ -10,7 +10,7 @@
     <GROUP id="{E61F6705-4C4B-3F04-F742-20CC91F590E4}" name="Resources">
       <FILE id="qDQaKu" name="about.png" compile="0" resource="1" file="Resources/about.png"/>
       <FILE id="fwyowN" name="add.png" compile="0" resource="1" file="Resources/add.png"/>
-      <FILE id="vsuOJZ" name="default.chalayout" compile="0" resource="1"
+      <FILE id="gZcS0r" name="default.chalayout" compile="0" resource="1"
             file="Resources/default.chalayout"/>
       <FILE id="nVz6Li" name="icon.png" compile="0" resource="1" file="Resources/icon.png"/>
       <FILE id="WlJm0v" name="in.png" compile="0" resource="1" file="Resources/in.png"/>

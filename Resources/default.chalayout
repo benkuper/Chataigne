@@ -14,19 +14,19 @@
           {
             "type": 1,
             "width": 1920,
-            "height": 620,
+            "height": 639,
             "direction": 1,
             "shifters": [
               {
                 "type": 1,
-                "width": 254,
-                "height": 620,
+                "width": 269,
+                "height": 639,
                 "direction": 2,
                 "shifters": [
                   {
                     "type": 0,
-                    "width": 254,
-                    "height": 318,
+                    "width": 269,
+                    "height": 325,
                     "currentContent": "Modules",
                     "tabs": [
                       {
@@ -36,15 +36,15 @@
                   },
                   {
                     "type": 0,
-                    "width": 254,
-                    "height": 296,
-                    "currentContent": "Custom Variables",
+                    "width": 269,
+                    "height": 308,
+                    "currentContent": "Command Templates",
                     "tabs": [
                       {
-                        "name": "Custom Variables"
+                        "name": "Command Templates"
                       },
                       {
-                        "name": "OSC Command Models"
+                        "name": "Custom Variables"
                       }
                     ]
                   }
@@ -52,8 +52,8 @@
               },
               {
                 "type": 0,
-                "width": 1245,
-                "height": 620,
+                "width": 1183,
+                "height": 639,
                 "currentContent": "State Machine",
                 "tabs": [
                   {
@@ -69,8 +69,8 @@
               },
               {
                 "type": 0,
-                "width": 409,
-                "height": 620,
+                "width": 456,
+                "height": 639,
                 "currentContent": "Inspector",
                 "tabs": [
                   {
@@ -83,13 +83,13 @@
           {
             "type": 1,
             "width": 1920,
-            "height": 370,
+            "height": 351,
             "direction": 1,
             "shifters": [
               {
                 "type": 0,
-                "width": 218,
-                "height": 370,
+                "width": 255,
+                "height": 351,
                 "currentContent": "Sequences",
                 "tabs": [
                   {
@@ -99,8 +99,8 @@
               },
               {
                 "type": 0,
-                "width": 1095,
-                "height": 370,
+                "width": 1253,
+                "height": 351,
                 "currentContent": "Sequence Editor",
                 "tabs": [
                   {
@@ -110,21 +110,13 @@
               },
               {
                 "type": 0,
-                "width": 277,
-                "height": 370,
-                "currentContent": "Help",
+                "width": 400,
+                "height": 351,
+                "currentContent": "Logger",
                 "tabs": [
                   {
                     "name": "Help"
-                  }
-                ]
-              },
-              {
-                "type": 0,
-                "width": 312,
-                "height": 370,
-                "currentContent": "Logger",
-                "tabs": [
+                  },
                   {
                     "name": "Logger"
                   }
