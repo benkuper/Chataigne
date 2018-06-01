@@ -19,6 +19,11 @@ CustomValuesCommandArgumentManagerEditor::CustomValuesCommandArgumentManagerEdit
 
 void CustomValuesCommandArgumentManagerEditor::showMenuAndAddItem(bool)
 {
+	if (aManager->allowedTypes.size() == 1)
+	{
+		aManager->addItemFromType(aManager->allowedTypes[0]);
+		return;
+	}
 
 	PopupMenu p;
 	if(aManager->allowedTypes.isEmpty() || aManager->allowedTypes.contains(Controllable::INT)) p.addItem(1, "Add Int Argument");
@@ -33,26 +38,12 @@ void CustomValuesCommandArgumentManagerEditor::showMenuAndAddItem(bool)
 
 	switch (result)
 	{
-	case 1:
-		aManager->addItemFromType(Parameter::INT);
-		break;
-	case 2:
-		aManager->addItemFromType(Parameter::FLOAT);
-		break;
-	case 3:
-		aManager->addItemFromType(Parameter::STRING);
-		break;
-	case 4:
-		aManager->addItemFromType(Parameter::BOOL);
-		break;
-	case 5:
-		aManager->addItemFromType(Parameter::COLOR);
-		break;
-	case 6:
-		aManager->addItemFromType(Parameter::POINT2D);
-		break;
-	case 7:
-		aManager->addItemFromType(Parameter::POINT3D);
-		break;
+	case 1: aManager->addItemFromType(Parameter::INT); break;
+	case 2:	aManager->addItemFromType(Parameter::FLOAT); break;
+	case 3:	aManager->addItemFromType(Parameter::STRING); break;
+	case 4:	aManager->addItemFromType(Parameter::BOOL); break;
+	case 5:	aManager->addItemFromType(Parameter::COLOR); break;
+	case 6: aManager->addItemFromType(Parameter::POINT2D); break;
+	case 7: aManager->addItemFromType(Parameter::POINT3D); break;
 	}
 }

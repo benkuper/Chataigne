@@ -22,7 +22,7 @@ public:
 	SendStreamValuesCommand(StreamingModule * output, CommandContext context, var params);
 	~SendStreamValuesCommand();
 
-
+	
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
 

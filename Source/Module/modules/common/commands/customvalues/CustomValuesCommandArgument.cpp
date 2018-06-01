@@ -84,6 +84,8 @@ void CustomValuesCommandArgument::linkToTemplate(CustomValuesCommandArgument * t
 		linkedTemplate->editable->addParameterListener(this);
 		linkedTemplate->useForMapping->addParameterListener(this);
 	}
+	
+	canBeReorderedInEditor = linkedTemplate == nullptr;
 }
 
 void CustomValuesCommandArgument::updateParameterFromTemplate()

@@ -123,6 +123,7 @@ void BaseCommand::setupTemplateParameters(CommandTemplate * ct)
 	{
 		//create customValuesTemplateManager
 		ct->customValuesManager = new CustomValuesCommandArgumentManager(true, true);
+		ct->customValuesManager->allowedTypes.addArray(customValuesManager->allowedTypes);
 		ct->addChildControllableContainer(ct->customValuesManager);
 	}
 }
