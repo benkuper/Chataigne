@@ -20,6 +20,12 @@ ModuleRouterValueEditor::ModuleRouterValueEditor(ModuleRouterValue * mrv) :
 	valueUI->showLabel = false;
 	addAndMakeVisible(valueUI);
 
+	valueLabel.setColour(valueLabel.textColourId, TEXTNAME_COLOR);
+	valueLabel.setFont(10);
+	valueLabel.setText(item->sourceValue->niceName,dontSendNotification);
+
+	addAndMakeVisible(&valueLabel);
+
 	buildRouteParamsUI();
 }
 
@@ -53,10 +59,12 @@ void ModuleRouterValueEditor::buildRouteParamsUI()
 void ModuleRouterValueEditor::resizedInternalHeader(Rectangle<int>& r)
 {
 
-	Rectangle<int> rr = r.removeFromRight(r.getWidth() - 250);
+	Rectangle<int> rr = r.removeFromRight(r.getWidth() - 350);
 	Rectangle<int> tr = r.removeFromRight(r.getWidth() - 100);
 	tr.removeFromLeft(2);
 
+	valueLabel.setBounds(tr.removeFromLeft(100));
+	tr.removeFromLeft(2);
 	valueUI->setBounds(tr.removeFromLeft(100));
 	tr.removeFromLeft(20);
 

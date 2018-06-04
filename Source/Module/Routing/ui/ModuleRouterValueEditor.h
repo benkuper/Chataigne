@@ -24,6 +24,7 @@ public:
 	ModuleRouterValueEditor(ModuleRouterValue * mrv);
 	~ModuleRouterValueEditor();
 
+	Label valueLabel;
 	ScopedPointer<ControllableUI> valueUI;
 	OwnedArray<ControllableEditor> routeParamsUI;
 

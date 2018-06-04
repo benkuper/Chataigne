@@ -20,6 +20,7 @@ ModuleRouterValue::ModuleRouterValue(Controllable * _sourceValue, int _index) :
 {
 	jassert(sourceValue != nullptr);
 
+	saveAndLoadName = true;
 	showInspectorOnSelect = false;
 
 	if (enabled->boolValue())
@@ -74,15 +75,21 @@ void ModuleRouterValue::setSourceAndOutModule(Module * s, Module * m)
 var ModuleRouterValue::getJSONData()
 {
 	var data = BaseItem::getJSONData();
+	
+	data.getDynamicObject()->setProperty("customName", niceName);
+	if (sourceValue != nullptr) data.getDynamicObject()->setProperty("niceName", sourceValue->niceName);
+
 	if (routeParams != nullptr) data.getDynamicObject()->setProperty("routeParams", routeParams->getJSONData());
 	return data;
 }
 
 void ModuleRouterValue::loadJSONDataInternal(var data)
 {
+	if(sourceValue != nullptr) setNiceName(data.getProperty("niceName", sourceValue->niceName));
 	BaseItem::loadJSONDataInternal(data);
+	setNiceName(data.getProperty("customName", niceName));
 	if (routeParams != nullptr) routeParams->loadJSONData(data.getProperty("routeParams", var()));
-}
+} 
 
 void ModuleRouterValue::onContainerParameterChangedInternal(Parameter * p)
 {

@@ -22,6 +22,7 @@ public:
 
 	
 	int valueIndex;
+	StringParameter * customName;
 	WeakReference<Controllable> sourceValue;
 	Module * outModule;
 
