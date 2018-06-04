@@ -26,7 +26,7 @@ public:
 
 	void processInternal() override;
 
-	void onContainerParameterChangedInternal(Parameter * p) override;
+	void onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c) override;
 
 	static SimpleSmoothFilter * create(var params) { return new SimpleSmoothFilter(params); }
 	String getTypeString() const override { return "Smooth"; }
