@@ -30,15 +30,15 @@ DMXDevice::~DMXDevice()
 	if (DMXManager::getInstanceWithoutCreating() != nullptr) DMXManager::getInstance()->removeDMXManagerListener(this);
 }
 
-void DMXDevice::sendDMXValue(int channel, int value) //channel 0-511
+void DMXDevice::sendDMXValue(int channel, int value) //channel 1-512
 {
-	dmxDataOut[channel] = (uint8)value;
+	dmxDataOut[channel-1] = (uint8)value;
 }
 
-void DMXDevice::setDMXValueIn(int channel, int value) //channel 0-511
+void DMXDevice::setDMXValueIn(int channel, int value) //channel 1-512
 {
-	if (dmxDataIn[channel] == value) return;
-	dmxDataIn[channel] = (uint8)value;
+	if (dmxDataIn[channel-1] == value) return;
+	dmxDataIn[channel-1] = (uint8)value;
 	//notify
 	dmxDeviceListeners.call(&DMXDeviceListener::dmxDataInChanged, channel, value);
 }

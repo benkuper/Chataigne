@@ -20,20 +20,20 @@ DMXCommand::DMXCommand(DMXModule * _module, CommandContext context, var params) 
 	{
 	
 	case SET_VALUE:
-		channel = addIntParameter("Channel", "DMX Channel", 0,0,511);
+		channel = addIntParameter("Channel", "DMX Channel", 1,1,512);
 		value = addIntParameter("Value", "DMX Value", 0, 0, 255);
 		setTargetMappingParameterAt(value,0);
 		break;
 
 	case SET_RANGE:
-		channel = addIntParameter("Start Channel", "First DMX Channel", 0, 0,511);
-		channel2 = addIntParameter("End Channel", "Last DMX Channel (inclusive)", 4, 0,511);
+		channel = addIntParameter("Start Channel", "First DMX Channel", 1,1,512);
+		channel2 = addIntParameter("End Channel", "Last DMX Channel (inclusive)", 4, 1,512);
 		value = addIntParameter("Value", "DMX Value", 0, 0, 255);
 		setTargetMappingParameterAt(value,0);
 		break;
 
 	case COLOR:
-		channel = addIntParameter("Start Channel", "DMX Channel", 0, 0, 511);
+		channel = addIntParameter("Start Channel", "DMX Channel", 1, 1,512);
 		colorParam = new ColorParameter("Color", "DMX Color");
 		addParameter(colorParam);
 		setTargetMappingParameterAt(colorParam, 0);

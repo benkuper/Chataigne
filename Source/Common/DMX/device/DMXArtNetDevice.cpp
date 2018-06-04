@@ -29,7 +29,7 @@ DMXArtNetDevice::~DMXArtNetDevice()
 void DMXArtNetDevice::sendDMXValue(int channel, int value)
 {
 	DMXDevice::sendDMXValue(channel, value);
-	fullMessage[channel + 18] = (uint8)value;
+	fullMessage[channel-1 + 18] = (uint8)value;
 	fullMessage[12] = (uint8)sequence;
 	
 	sequence++;
