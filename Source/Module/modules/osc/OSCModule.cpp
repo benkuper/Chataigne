@@ -13,7 +13,8 @@
 
 OSCModule::OSCModule(const String & name, int defaultLocalPort, int defaultRemotePort, bool canHaveInput, bool canHaveOutput) :
 	Module(name),
-	Thread("OSCZeroconf")
+	Thread("OSCZeroconf"),
+	servus("_osc._udp")
 {
 	
 	setupIOConfiguration(canHaveInput, canHaveOutput);
@@ -61,9 +62,18 @@ OSCModule::OSCModule(const String & name, int defaultLocalPort, int defaultRemot
 	scriptObject.setMethod(sendOSCId, OSCModule::sendOSCFromScript);
 }
 
+OSCModule::~OSCModule()
+{
+	if (isThreadRunning())
+	{
+		signalThreadShouldExit();
+		waitForThreadToExit(1000);
+		stopThread(100);
+	}
+}
+
 void OSCModule::setupReceiver()
 {
-	
 	receiver.disconnect();
 	if (receiveCC == nullptr) return;
 
@@ -74,7 +84,7 @@ void OSCModule::setupReceiver()
 	if (result)
 	{
 		NLOG(niceName, "Now receiving on port : " + localPort->stringValue());
-		if(!isThreadRunning()) startThread();
+		if(!isThreadRunning() && !Engine::mainEngine->isLoadingFile) startThread();
 
 		Array<IPAddress> ad;
 		IPAddress::findAllAddresses(ad);
@@ -183,7 +193,7 @@ void OSCModule::sendOSC(const OSCMessage & msg)
 
 void OSCModule::setupZeroConf()
 {
-	if (!hasInput) return;
+	//if (Engine::mainEngine->isLoadingFile) return;
 
 	String nameToAdvertise;
 	int portToAdvertise = 0;
@@ -192,17 +202,14 @@ void OSCModule::setupZeroConf()
 		nameToAdvertise = niceName;
 		portToAdvertise = localPort->intValue();
 
-		if (servus != nullptr)
-		{
-			servus->withdraw();
-			servus = nullptr;
-		}
-		servus = new Servus("_osc._udp");
-		if (servus != nullptr)
-		{
-			servus->announce(portToAdvertise, ("Chataigne - " + nameToAdvertise).toStdString());
-		}
-		if (nameToAdvertise != niceName || localPort->intValue() != portToAdvertise)
+		servus.withdraw();
+		
+		if (!hasInput) return;
+
+		DBG("ADVERTISE");
+		servus.announce(portToAdvertise, ("Chataigne - " + nameToAdvertise).toStdString());
+		
+		if (nameToAdvertise != niceName || localPort->intValue() != portToAdvertise || !hasInput)
 		{
 			DBG("Name or port changed during advertise, readvertising");
 		}
@@ -285,6 +292,8 @@ void OSCModule::loadJSONDataInternal(var data)
 		outputManager->loadJSONData(data.getProperty("outputs", var()));
 		setupSenders();
 	}
+
+	if(!isThreadRunning()) startThread();
 }
 
 
@@ -311,6 +320,7 @@ void OSCModule::onContainerParameterChangedInternal(Parameter * p)
 
 void OSCModule::onContainerNiceNameChanged()
 {
+	if (Engine::mainEngine->isLoadingFile || Engine::mainEngine->isClearing) return;
 	if(!isThreadRunning()) startThread();
 }
 

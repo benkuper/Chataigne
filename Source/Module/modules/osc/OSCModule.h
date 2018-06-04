@@ -45,7 +45,7 @@ class OSCModule :
 { 
 public:
 	OSCModule(const String &name = "OSC", int defaultLocalPort = 12000, int defaultRemotePort = 9000, bool canHaveInput = true, bool canHaveOutput = true);
-	~OSCModule() {}
+	~OSCModule();
 
 
 	//RECEIVE
@@ -54,7 +54,7 @@ public:
 	OSCReceiver receiver;
 	
 	//ZEROCONF
-	ScopedPointer<Servus> servus;
+	Servus servus;
 
 	ScopedPointer<EnablingControllableContainer> receiveCC;
 	ScopedPointer<BaseManager<OSCOutput>> outputManager;
