@@ -14,7 +14,9 @@
 OSCModule::OSCModule(const String & name, int defaultLocalPort, int defaultRemotePort, bool canHaveInput, bool canHaveOutput) :
 	Module(name),
 	Thread("OSCZeroconf"),
-	servus("_osc._udp")
+	servus("_osc._udp"),
+	localPort(nullptr),
+	receiveCC(nullptr)
 {
 	
 	setupIOConfiguration(canHaveInput, canHaveOutput);
@@ -193,7 +195,7 @@ void OSCModule::sendOSC(const OSCMessage & msg)
 
 void OSCModule::setupZeroConf()
 {
-	//if (Engine::mainEngine->isLoadingFile) return;
+	if (Engine::mainEngine->isClearing || localPort == nullptr) return;
 
 	String nameToAdvertise;
 	int portToAdvertise = 0;
