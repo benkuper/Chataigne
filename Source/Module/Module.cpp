@@ -163,7 +163,7 @@ void Module::setupModuleFromJSONData(var data)
 	Array<var> * scriptData = data.getProperty("scripts", var()).getArray();
 	for (auto &s : *scriptData)
 	{
-		Script * script = scriptManager->addItem();
+		Script * script = scriptManager->addItem(nullptr,var(),false);
 		//DBG("Set script path : " << data.getProperty("modulePath", "").toString() << "/" << s.toString());
 		script->filePath->setValue(data.getProperty("modulePath", "").toString() + "/"+s.toString());
 	}
