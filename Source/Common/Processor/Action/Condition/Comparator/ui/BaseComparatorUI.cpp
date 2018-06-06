@@ -55,7 +55,7 @@ void BaseComparatorUI::resized()
 		setSize(getWidth(), refEditor->getBottom());
 	} else
 	{
-		setSize(getWidth(), compareFuncUI->getBottom());
+		setSize(getWidth(), compareFuncUI->getBottom()); 
 	}
 
 }
