@@ -37,7 +37,7 @@ BaseComparatorUI::BaseComparatorUI(BaseComparator * _comparator) :
 
 BaseComparatorUI::~BaseComparatorUI() 
 {
-	if (!comparator.wasObjectDeleted() && comparator->reference->type != Controllable::TRIGGER)
+	if (!comparator.wasObjectDeleted() && comparator->reference != nullptr && comparator->reference->type != Controllable::TRIGGER)
 	{
 		Parameter * p = dynamic_cast<Parameter *>(comparator->reference);
 		p->removeAsyncParameterListener(this);
@@ -52,9 +52,12 @@ void BaseComparatorUI::resized()
 		compareFuncUI->setBounds(r.removeFromLeft(80).withHeight(16)); 
 		r.removeFromLeft(2);
 		refEditor->setBounds(r.withHeight(refEditor->getHeight()));
+		setSize(getWidth(), refEditor->getBottom());
+	} else
+	{
+		setSize(getWidth(), compareFuncUI->getBottom());
 	}
 
-	setSize(getWidth(), refEditor->getBottom());
 }
 
 void BaseComparatorUI::newMessage(const Parameter::ParameterEvent & e)
