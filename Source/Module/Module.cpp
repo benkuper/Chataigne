@@ -100,6 +100,12 @@ Array<CommandDefinition*> Module::getCommands(bool includeTemplateCommands)
 	return result;
 }
 
+CommandDefinition * Module::getCommandDefinitionFor(StringRef menu, StringRef name)
+{
+	if (menu == templateManager.menuName) return templateManager.defManager.getCommandDefinitionFor(menu, name);
+	return defManager.getCommandDefinitionFor(menu, name);
+}
+
 PopupMenu Module::getCommandMenu(int offset, CommandContext context)
 {
 	PopupMenu m = defManager.getCommandMenu(offset, context);

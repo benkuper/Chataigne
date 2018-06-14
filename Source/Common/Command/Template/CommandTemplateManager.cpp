@@ -24,19 +24,19 @@ CommandTemplateManager::~CommandTemplateManager()
 
 void CommandTemplateManager::addItemInternal(CommandTemplate * item, var)
 {
-	defManager.add(CommandDefinition::createDef(module, "Templates", item->niceName, &BaseCommand::create)->addParam("template",item->shortName)); 
+	defManager.add(CommandDefinition::createDef(module, menuName, item->niceName, &BaseCommand::create)->addParam("template",item->shortName)); 
 	item->addCommandTemplateListener(this);
 }
 
 void CommandTemplateManager::removeItemInternal(CommandTemplate * item)
 {
-	defManager.remove(defManager.getCommandDefinitionFor("", item->niceName));
+	CommandDefinition * d = defManager.getCommandDefinitionFor(menuName, item->niceName); 
+	defManager.remove(d);
 	item->removeCommandTemplateListener(this);
 }
 
 CommandTemplate * CommandTemplateManager::addItemFromData(var data, bool addToUndo)
 {
-	DBG("Add item from data : " << JSON::toString(data));
 	CommandTemplate * ct = new CommandTemplate(module, data);
 	return addItem(ct, data, addToUndo);
 }

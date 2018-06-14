@@ -26,6 +26,8 @@ public:
 	Module * module;
 	Factory<CommandTemplate> factory;
 
+	const String menuName = "Templates";
+
 	CommandDefinitionManager defManager;
 
 	void addItemInternal(CommandTemplate * item, var data) override;

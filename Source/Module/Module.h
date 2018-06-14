@@ -58,6 +58,7 @@ public:
 	Array<WeakReference<Controllable>> getValueControllables();
 	OwnedArray<ControllableContainer> customModuleContainers; //for user-custom modules
 	Array<CommandDefinition *> getCommands(bool includeTemplateCommands = true);
+	CommandDefinition * getCommandDefinitionFor(StringRef menu, StringRef name);
 
 	PopupMenu getCommandMenu(int offset, CommandContext context);
 	CommandDefinition * getCommandDefinitionForItemID(int itemID);
