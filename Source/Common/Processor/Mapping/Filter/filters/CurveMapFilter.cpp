@@ -11,8 +11,10 @@
 #include "CurveMapFilter.h"
 
 CurveMapFilter::CurveMapFilter(var params) :
-	MappingFilter(getTypeString(), params)
+	MappingFilter(getTypeString(), params),
+	curve("Curve")
 {
+	curve.isSelectable = false;
 	curve.length->setValue(1);
 	curve.addItem(0, 0, false);
 	curve.items[0]->setEasing(Easing::BEZIER);

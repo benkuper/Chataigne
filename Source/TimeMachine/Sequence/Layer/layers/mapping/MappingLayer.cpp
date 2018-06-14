@@ -108,7 +108,7 @@ void MappingLayer::setupMappingForCurrentMode()
 	{
 		if(i >= automations.size())
 		{
-			Automation * a = new Automation(automations.size() == 0 ? &recorder : nullptr); //only put the record on the first automation for now
+			Automation * a = new Automation("Mapping curve",automations.size() == 0 ? &recorder : nullptr); //only put the record on the first automation for now
 			a->hideInEditor = true;
 			automations.add(a);
 
