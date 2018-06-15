@@ -28,6 +28,7 @@ public:
 	ScopedPointer<BoolToggleUI> editableUI;
 
 	void resizedInternalHeaderItemInternal(Rectangle<int> &r) override;
+	void resizedInternalContent(Rectangle<int> &r) override;
 	void childBoundsChanged(Component *) override;
 };
 

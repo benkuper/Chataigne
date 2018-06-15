@@ -31,8 +31,7 @@ CustomValuesCommandArgumentEditor::CustomValuesCommandArgumentEditor(CustomValue
 	addAndMakeVisible(paramUI);
 	paramUI->setShowLabel(false);
 
-	headerHeight = 20;
-
+	headerHeight = 16;
 	resetAndBuild();
 }
 
@@ -54,12 +53,24 @@ void CustomValuesCommandArgumentEditor::resizedInternalHeaderItemInternal(Rectan
 		editableUI->setBounds(r.removeFromRight(80).reduced(2));
 		r.removeFromRight(2);
 	}
+}
 
-	if(paramUI != nullptr) paramUI->setBounds(r.removeFromRight(r.getWidth() - 70).reduced(2));
+void CustomValuesCommandArgumentEditor::resizedInternalContent(Rectangle<int>& r)
+{
+	BaseItemEditor::resizedInternalContent(r);
+
+	if (paramUI != nullptr)
+	{
+		paramUI->setBounds(r.withHeight(paramUI->getHeight()));
+		r.translate(0, paramUI->getHeight() + 2);
+	}
 }
 
 void CustomValuesCommandArgumentEditor::childBoundsChanged(Component * child)
 {
-	if (child == paramUI) resized();
+	if (child == paramUI)
+	{
+		resized();
+	}
 }
 
