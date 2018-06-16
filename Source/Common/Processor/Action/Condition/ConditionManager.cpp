@@ -19,11 +19,11 @@ juce_ImplementSingleton(ConditionManager)
 
 ConditionManager::ConditionManager(bool _operatorOnSide) :
 	BaseManager<Condition>("Conditions"),
-	operatorOnSide(_operatorOnSide),
-	validationProgress(nullptr),
-	forceDisabled(false),
 	activateDef(nullptr),
-	deactivateDef(nullptr)
+	deactivateDef(nullptr),
+    operatorOnSide(_operatorOnSide),
+    validationProgress(nullptr),
+    forceDisabled(false)
 {
 	
 	managerFactory = &factory;

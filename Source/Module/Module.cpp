@@ -20,8 +20,9 @@ Module::Module(const String &name) :
 	moduleParams("Parameters"),
 	valuesCC("Values"),
 	commandTester("Command Tester", CommandContext::ACTION),
-	canHandleRouteValues(false),
-	templateManager(this)
+	templateManager(this),
+    canHandleRouteValues(false)
+
 {
 	itemDataType = "Module";
 

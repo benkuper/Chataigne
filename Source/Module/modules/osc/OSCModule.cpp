@@ -14,8 +14,8 @@
 OSCModule::OSCModule(const String & name, int defaultLocalPort, int defaultRemotePort, bool canHaveInput, bool canHaveOutput) :
 	Module(name),
 	Thread("OSCZeroconf"),
-	servus("_osc._udp"),
 	localPort(nullptr),
+    servus("_osc._udp"),
 	receiveCC(nullptr)
 {
 	
