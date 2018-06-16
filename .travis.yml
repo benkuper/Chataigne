@@ -43,7 +43,7 @@ before_install:
   fi;
 
   echo "Suffix : $SUFFIX"
-  
+
   if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
     cd ..
     pwd
@@ -112,10 +112,10 @@ after_success:
     wget http://benjamin.kuperberg.fr/chatagne/user/data/Chataigne-linux-dependencies.zip
     unzip Chataigne-linux-dependencies.zip
     zip -r Chataigne-linux-x64-$SUFFIX.zip Chataigne lib
-    curl --ftp-create-dirs -T Chataigne-linux-x64-$SUFFIX.zip -u $FTP_USER:$FTP_PASSWORD --insecure ftp://ftp.kuperberg.fr/
+    curl -T Chataigne-linux-x64-$SUFFIX.zip -u $FTP_USER:$FTP_PASSWORD ftp://ftp.kuperberg.fr -v
   else
-    cd /Users/travis/build/benkuper/Chataigne/Builds/MacOSX/build/Release
+    cd /Users/travis/build/benkuper/Chataigne/Builds/MacOSX/build/$MAKECONF
     ls
     zip -r -y Chataigne-osx-$SUFFIX.zip Chataigne.app
-    curl --ftp-create-dirs -T Chataigne-osx-$SUFFIX.zip -u $FTP_USER:$FTP_PASSWORD --insecure ftp://ftp.kuperberg.fr/
+    curl -T Chataigne-osx-$SUFFIX.zip -u $FTP_USER:$FTP_PASSWORD --insecure ftp://ftp.kuperberg.fr/
   fi
