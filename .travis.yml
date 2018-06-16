@@ -112,7 +112,8 @@ after_success:
     wget http://benjamin.kuperberg.fr/chatagne/user/data/Chataigne-linux-dependencies.zip
     unzip Chataigne-linux-dependencies.zip
     zip -r Chataigne-linux-x64-$SUFFIX.zip Chataigne lib
-    curl -T Chataigne-linux-x64-$SUFFIX.zip -u $FTP_USER:$FTP_PASSWORD ftp.kuperberg.fr -v
+    apt-get install ftp-upload -qq
+    ftp-upload -h ftp.kuperberg.fr -u $FTP_USER -password $FTP_PASSWORD --passive -v Chataigne-osx-$SUFFIX.zip
   else
     cd /Users/travis/build/benkuper/Chataigne/Builds/MacOSX/build/$MAKECONF
     ls
