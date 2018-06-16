@@ -24,6 +24,26 @@ matrix:
 
 before_install:
 - |
+  if [[ -n "$TRAVIS_TAG" ]]; 
+   then 
+    if [[ "$TRAVIS_TAG" == *b ]]; 
+    then 
+      echo "Beta version, set config to Debug"; 
+      export MAKECONF=Debug
+      export SUFFIX=$TRAVIS_TAG-beta
+    else 
+      echo "Stable version, set config to Release"; 
+      export MAKECONF=Release
+      export SUFFIX=TRAVIS_TAG-stable
+    fi; 
+  else 
+    echo "No tag set, set config to Debug / bleeding"; 
+    export MAKECONF=Debug
+    export SUFFIX=bleedingedge
+  fi;
+
+  echo "Suffix : $SUFFIX"
+  
   if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
     cd ..
     pwd
@@ -78,9 +98,9 @@ script:
   if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
     docker exec -t ubuntu bash -c "gcc -v;
     cd /benkuper/Chataigne/Builds/LinuxMakefile;
-    make -j 8 CONFIG=Release"
+    make -j 8 CONFIG=$MAKECONF"
   else
-    xcodebuild -project Chataigne/Builds/MacOSX/Chataigne.xcodeproj -configuration Release -jobs 8 | xcpretty -f `xcpretty-travis-formatter`
+    xcodebuild -project Chataigne/Builds/MacOSX/Chataigne.xcodeproj -configuration $MAKECONF -jobs 8 | xcpretty -f `xcpretty-travis-formatter`
   fi
 
 after_success:
@@ -91,11 +111,11 @@ after_success:
     docker cp ubuntu:/benkuper/Chataigne/Builds/LinuxMakefile/build/Chataigne .
     wget http://benjamin.kuperberg.fr/chatagne/user/data/Chataigne-linux-dependencies.zip
     unzip Chataigne-linux-dependencies.zip
-    zip -r Chataigne-linux-x64-bleedingedge.zip Chataigne lib
-    curl --ftp-create-dirs -T Chataigne-linux-x64-bleedingedge.zip -u $FTP_USER:$FTP_PASSWORD --insecure ftp://ftp.kuperberg.fr/
+    zip -r Chataigne-linux-x64-$SUFFIX.zip Chataigne lib
+    curl --ftp-create-dirs -T Chataigne-linux-x64-$SUFFIX.zip -u $FTP_USER:$FTP_PASSWORD --insecure ftp://ftp.kuperberg.fr/
   else
     cd /Users/travis/build/benkuper/Chataigne/Builds/MacOSX/build/Release
     ls
-    zip -r -y Chataigne-osx-bleedingedge.zip Chataigne.app
-    curl --ftp-create-dirs -T Chataigne-osx-bleedingedge.zip -u $FTP_USER:$FTP_PASSWORD --insecure ftp://ftp.kuperberg.fr/
+    zip -r -y Chataigne-osx-$SUFFIX.zip Chataigne.app
+    curl --ftp-create-dirs -T Chataigne-osx-$SUFFIX.zip -u $FTP_USER:$FTP_PASSWORD --insecure ftp://ftp.kuperberg.fr/
   fi
