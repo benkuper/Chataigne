@@ -68,7 +68,7 @@ void ResolumeClipCommand::trigger()
 
 	if (firstClip != nullptr)
 	{
-		int targetClip = randomClips->boolValue() ? clipRand.nextInt(Range<int>(firstClip->intValue(),lastClip->intValue())) : clipParam->intValue() + 1;
+		int targetClip = randomClips->boolValue() ? clipRand.nextInt(Range<int>(firstClip->intValue(),lastClip->intValue()+1)) : clipParam->intValue() + 1;
 		if (targetClip > lastClip->intValue())
 		{
 			targetClip = loopClips->boolValue() ? firstClip->intValue() : lastClip->intValue();
