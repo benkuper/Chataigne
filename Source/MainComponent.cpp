@@ -23,7 +23,7 @@ String getAppVersion();
 //==============================================================================
 MainContentComponent::MainContentComponent()
 {
-
+	getCommandManager().registerAllCommandsForTarget(this);
 }
 
 
