@@ -14,13 +14,13 @@
 
 Action::Action(const String & name, var params) :
 	Processor(params.getProperty("name", name)),
-	autoTriggerWhenAllConditionAreActives(true),
 	actionRole(Action::STANDARD),
-	triggerOn(nullptr),
-	triggerOff(nullptr),
-	forceNoOffConsequences(false),
+    autoTriggerWhenAllConditionAreActives(true),
+    forceNoOffConsequences(false),
 	hasOffConsequences(false),
-	actionAsyncNotifier(10)
+    triggerOn(nullptr),
+    triggerOff(nullptr),
+    actionAsyncNotifier(10)
 {
 	itemDataType = "Action";
 	type = ACTION;

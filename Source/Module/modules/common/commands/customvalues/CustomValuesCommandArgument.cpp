@@ -14,9 +14,9 @@
 CustomValuesCommandArgument::CustomValuesCommandArgument(const String &name, Parameter * _p, bool _mappingEnabled, bool templateMode) :
 	BaseItem(name, false),
 	param(_p),
-	useForMapping(nullptr),
 	editable(nullptr),
-	mappingEnabled(_mappingEnabled),
+    useForMapping(nullptr),
+    mappingEnabled(_mappingEnabled),
 	templateMode(templateMode),
 	linkedTemplate(nullptr)
 {
