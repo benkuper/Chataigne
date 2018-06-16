@@ -41,7 +41,7 @@ MappingLayer::MappingLayer(Sequence *_sequence, var params) :
 
 	
 	setupMappingForCurrentMode();
-	uiHeight->setValue(100);
+	uiHeight->setValue(120);
 }
 
 MappingLayer::~MappingLayer()

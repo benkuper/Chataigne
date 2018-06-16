@@ -30,12 +30,18 @@ MappingLayerPanel::MappingLayerPanel(MappingLayer * layer) :
 
 		automationInspector = new Inspector(mappingLayer->automations[0]->selectionManager);
 		addAndMakeVisible(automationInspector);
-
 	}
+
+	mappingLayer->mapping.addAsyncMappingListener(this);
+
+	mappingOutputUI = dynamic_cast<ParameterUI *>(mappingLayer->mapping.outputParam->createDefaultUI());
+	if (mappingOutputUI != nullptr) addAndMakeVisible(mappingOutputUI);
+	resized();
 }
 
 MappingLayerPanel::~MappingLayerPanel()
 {
+	if(!inspectable.wasObjectDeleted()) mappingLayer->mapping.removeAsyncMappingListener(this);
 }
 
 void MappingLayerPanel::resizedInternalHeader(Rectangle<int>& r)
@@ -57,7 +63,30 @@ void MappingLayerPanel::resizedInternalContent(Rectangle<int>& r)
 		snapSensitivityUI->setBounds(scr);	
 
 		cr.removeFromTop(2);
+
+		if (mappingOutputUI != nullptr)
+		{
+			mappingOutputUI->setBounds(cr.removeFromTop(14));
+			cr.removeFromTop(2);
+		}
+
 		automationInspector->setBounds(cr);
 		
+	}
+}
+
+void MappingLayerPanel::newMessage(const Mapping::MappingEvent & e)
+{
+	switch (e.type)
+	{
+	case Mapping::MappingEvent::OUTPUT_TYPE_CHANGED:
+		if (mappingOutputUI != nullptr)
+		{
+			removeChildComponent(mappingOutputUI);
+			mappingOutputUI = dynamic_cast<ParameterUI *>(mappingLayer->mapping.outputParam->createDefaultUI());
+			if (mappingOutputUI != nullptr) addAndMakeVisible(mappingOutputUI);
+			resized();
+		}
+		break;
 	}
 }

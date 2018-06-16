@@ -16,7 +16,8 @@
 #include "../MappingLayer.h"
 
 class MappingLayerPanel :
-	public SequenceLayerPanel
+	public SequenceLayerPanel,
+	public Mapping::AsyncListener
 {
 public:
 	MappingLayerPanel(MappingLayer * layer);
@@ -27,12 +28,14 @@ public:
 
 	ScopedPointer<BoolImageToggleUI> snapUI;
 	ScopedPointer<FloatSliderUI> snapSensitivityUI;
+	ScopedPointer<ParameterUI> mappingOutputUI;
 
 	ScopedPointer<Inspector> automationInspector;
 
 	void resizedInternalHeader(Rectangle<int> &r) override;
 	void resizedInternalContent(Rectangle<int> &r) override;
 
+	void newMessage(const Mapping::MappingEvent &e) override;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MappingLayerPanel)
 };
