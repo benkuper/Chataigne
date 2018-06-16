@@ -22,6 +22,7 @@ CurveMapFilter::CurveMapFilter(var params) :
 	curve.enableSnap->setValue(false);
 	curve.showUIInEditor = true;
 	curve.selectItemWhenCreated = false;
+	curve.hideEditorHeader = true;
 	filterParams.addChildControllableContainer(&curve);
 
 	forceOutParameterType = FloatParameter::getTypeStringStatic();
