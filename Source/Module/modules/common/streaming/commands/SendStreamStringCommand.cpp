@@ -28,7 +28,7 @@ SendStreamStringCommand::SendStreamStringCommand(StreamingModule * _module, Comm
 
 	if (params.hasProperty("fixedValue"))
 	{
-		valueParam->isEditable = false;
+		valueParam->setControllableFeedbackOnly(true);
 		valueParam->setValue(params.getProperty("fixedValue", ""));
 	}
 	

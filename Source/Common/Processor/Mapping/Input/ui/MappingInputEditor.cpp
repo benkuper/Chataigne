@@ -29,7 +29,7 @@ void MappingInputEditor::updateSourceUI()
 	if (input->inputReference != nullptr)
 	{
 		sourceFeedbackUI = input->inputReference->createDefaultUI();
-		sourceFeedbackUI->setForceFeedbackOnly(true);
+		//sourceFeedbackUI->setForceFeedbackOnly(true);
 		addAndMakeVisible(sourceFeedbackUI);
 	}
 

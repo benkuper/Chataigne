@@ -76,7 +76,7 @@ void Mapping::updateMappingChain()
 		{ 
 			outputParam = ControllableFactory::createParameterFrom(p, false, true);
 			outputParam->setNiceName("Out value");
-			outputParam->isEditable = false;
+			outputParam->setControllableFeedbackOnly(true);
 			outputParam->hideInEditor = true;
 		}
 

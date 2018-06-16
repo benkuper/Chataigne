@@ -113,7 +113,7 @@ void BaseCommand::setupTemplateParameters(CommandTemplate * ct)
 	Array<WeakReference<Parameter>> allParams = getAllParameters();
 	for (auto &p : allParams)
 	{
-		if (!p->isEditable || p->isControllableFeedbackOnly || p->hideInEditor) continue;
+		if (!p->enabled || p->isControllableFeedbackOnly || p->hideInEditor) continue;
 		CommandTemplateParameter * ctp = new CommandTemplateParameter(p);
 		ct->paramsContainer.addChildControllableContainer(ctp);
 		ct->templateParams.add(ctp);

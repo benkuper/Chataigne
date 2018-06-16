@@ -70,7 +70,7 @@ void StandardConditionEditor::updateUI()
 	if (standardCondition->sourceControllable != nullptr)
 	{
 		sourceFeedbackUI = standardCondition->sourceControllable->createDefaultUI();
-		sourceFeedbackUI->setForceFeedbackOnly(true);
+		//sourceFeedbackUI->setForceFeedbackOnly(true);
 		addChildComponent(sourceFeedbackUI);
 		sourceFeedbackUI->setVisible(!standardCondition->editorIsCollapsed);
 	}

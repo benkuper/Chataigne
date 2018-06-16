@@ -20,9 +20,6 @@ ResolumeClipCommand::ResolumeClipCommand(ResolumeModule * _module, CommandContex
 	connectParam = argumentsContainer.addIntParameter("Connect", "", 1, 1, 1);
 	argumentsContainer.hideInEditor = true;
 
-	address->isEditable = false;
-
-
 	if (params.getProperty("multi", false))
 	{
 		clipParam->setControllableFeedbackOnly(true);

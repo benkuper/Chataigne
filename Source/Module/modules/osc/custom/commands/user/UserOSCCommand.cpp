@@ -22,8 +22,7 @@ UserOSCCommand::UserOSCCommand(CustomOSCModule * _module, CommandContext context
 
 	address->defaultValue = model->addressParam->stringValue();
 	address->resetValue();
-	address->isEditable = model->addressIsEditable->boolValue();
-	address->isSavable = address->isEditable;
+	address->setControllableFeedbackOnly(!model->addressIsEditable->boolValue());
 
 	rebuildArgsFromModel();
 
@@ -79,7 +78,7 @@ void UserOSCCommand::rebuildArgsFromModel()
 		}
 
 		argumentsContainer.addParameter(p);
-		p->isEditable = a->editable->boolValue();
+		p->setControllableFeedbackOnly(!a->editable->boolValue());
 
 		if (context == MAPPING)
 		{
@@ -104,8 +103,7 @@ void UserOSCCommand::commandModelAddressChanged(UserOSCCommandModel *)
 
 	if (!address->isOverriden) address->resetValue();
 
-	address->isEditable = model->addressIsEditable->boolValue();
-	address->isSavable = address->isEditable;
+	address->setControllableFeedbackOnly(!model->addressIsEditable->boolValue());
 }
 
 void UserOSCCommand::commandModelArgumentsChanged(UserOSCCommandModel *)

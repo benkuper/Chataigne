@@ -23,8 +23,7 @@ Sequence::Sequence() :
 	itemDataType = "Sequence";
 
 	isPlaying = addBoolParameter("Is Playing", "Is the sequence playing ?", false);
-	isPlaying->isControllableFeedbackOnly = true;
-	isPlaying->isEditable = false; 
+	isPlaying->setControllableFeedbackOnly(true);
 	isPlaying->isSavable = false;
 	
 	playTrigger = addTrigger("Play", "Play the sequence");

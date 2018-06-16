@@ -48,8 +48,7 @@ ConditionManager::ConditionManager(bool _operatorOnSide) :
 	validationTime->defaultUI = FloatParameter::TIME;
 
 	validationProgress = addFloatParameter("Progress", "Validation time progress", 0, 0, validationTime->floatValue());
-	validationProgress->isControllableFeedbackOnly = true;
-	validationProgress->isEditable = false;
+	validationProgress->setControllableFeedbackOnly(true);
 	validationProgress->setEnabled(false);
 	validationProgress->hideInEditor = true;
 }
