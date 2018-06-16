@@ -16,7 +16,7 @@ ChataigneLogCommand::ChataigneLogCommand(ChataigneGenericModule * _module, Comma
 {
 	type = (Type)(int)(params.getProperty("type", MESSAGE));
 
-	message = addStringParameter("Message", "The message to log", "Wubba Lubba Dub Dub");
+	message = addStringParameter("Message", "The message to log", type == VALUE?"My value is":"Wubba Lubba Dub Dub");
 	if(type == VALUE && context == ACTION) value = addTargetParameter("Target", "The target to log the value from");
 }
 
