@@ -9,7 +9,7 @@ notifications:
 branches:
   only:
   - master
-  - /^\d+\.\d+(\.\d+)b?$/.
+  - /^\d+\.\d+(\.\d+)(b?)$/.
   - test
   
 matrix:
