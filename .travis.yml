@@ -36,7 +36,7 @@ before_install:
     else 
       echo "Stable version, set config to Release"; 
       export MAKECONF=Release
-      export SUFFIX=TRAVIS_TAG-stable
+      export SUFFIX=$TRAVIS_TAG-stable
     fi; 
   else 
     echo "No tag set, set config to Debug / bleeding"; 
