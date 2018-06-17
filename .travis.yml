@@ -85,7 +85,7 @@ install:
     export CXX=/usr/bin/g++;
     echo ${CC};
     echo ${CXX};
-    apt-get install -qq git libfreetype6-dev libx11-dev libxinerama-dev libxrandr-dev libxcursor-dev libxcomposite-dev mesa-common-dev libasound2-dev freeglut3-dev libcurl4-gnutls-dev+ libasound2-dev libjack-dev libbluetooth-dev libgtk-3-dev libwebkit2gtk-4.0-dev;
+    apt-get install -qq git libfreetype6-dev libx11-dev libxinerama-dev libxrandr-dev libxcursor-dev libxcomposite-dev mesa-common-dev libasound2-dev freeglut3-dev libcurl4-gnutls-dev+ libasound2-dev libjack-dev libbluetooth-dev libgtk-3-dev libwebkit2gtk-4.0-dev ftp-upload;
     cd ~;
     pwd;
     git clone --depth=1 --branch=master https://github.com/WeAreROLI/JUCE.git JUCE;
@@ -108,14 +108,11 @@ script:
 after_success:
 - |
   if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
-    mkdir export
-    cd export
-    docker cp ubuntu:/benkuper/Chataigne/Builds/LinuxMakefile/build/Chataigne .
-    wget http://benjamin.kuperberg.fr/chatagne/user/data/Chataigne-linux-dependencies.zip
-    unzip Chataigne-linux-dependencies.zip
-    zip -r Chataigne-linux-x64-$SUFFIX.zip Chataigne lib
-    apt-get install ftp-upload -qq
-    ftp-upload -h ftp.kuperberg.fr -u $FTP_USER -password $FTP_PASSWORD --passive -v Chataigne-osx-$SUFFIX.zip
+    docker exec -t ubuntu bash -c "/benkuper/Chataigne/Builds/LinuxMakefile/build;
+    wget http://benjamin.kuperberg.fr/chatagne/user/data/Chataigne-linux-dependencies.zip;
+    unzip Chataigne-linux-dependencies.zip;
+    zip -r Chataigne-linux-x64-$SUFFIX.zip Chataigne lib;
+    ftp-upload -h ftp.kuperberg.fr -u $FTP_USER -password $FTP_PASSWORD --passive -v Chataigne-osx-$SUFFIX.zip"
   else
     cd /Users/travis/build/benkuper/Chataigne/Builds/MacOSX/build/$MAKECONF
     ls
