@@ -27,6 +27,8 @@ public:
 	//
 
 	void initialiseInternal(const String& /*commandLine*/) override;
+	void afterInit() override;
+
 	void shutdown() override;
 };
 
