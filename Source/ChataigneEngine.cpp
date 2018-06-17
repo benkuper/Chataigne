@@ -14,8 +14,8 @@
 #include "TimeMachine/SequenceManager.h"
 #include "Common/MIDI/MIDIManager.h"
 #include "Common/Serial/SerialManager.h"
-#include "Module/modules/controller/gamepad/GamepadManager.h"
 #include "Module/modules/controller/wiimote/WiimoteManager.h"
+#include "Common/InputSystem/InputSystemManager.h"
 #include "Common/DMX/DMXManager.h"
 #include "Module/Routing/ModuleRouterManager.h"
 #include "UI/ChataigneAssetManager.h"
@@ -64,9 +64,9 @@ ChataigneEngine::~ChataigneEngine()
 	MIDIManager::deleteInstance();
 	DMXManager::deleteInstance();
 	SerialManager::deleteInstance();
-	GamepadManager::deleteInstance();
 	WiimoteManager::deleteInstance();
-    
+	InputSystemManager::deleteInstance();
+
 #if JUCE_WINDOWS
 	MyoManager::deleteInstance();
 #endif

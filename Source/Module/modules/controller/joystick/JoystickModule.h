@@ -1,8 +1,8 @@
 /*
   ==============================================================================
 
-    GamepadModule.h
-    Created: 26 Dec 2016 4:56:31pm
+    JoystickModule.h
+    Created: 17 Jun 2018 9:32:37pm
     Author:  Ben
 
   ==============================================================================
@@ -13,27 +13,26 @@
 #include "Module/Module.h"
 #include "Common/InputSystem/InputSystemManager.h"
 
-class GamepadModule :
+class JoystickModule :
 	public Module,
 	public InputSystemManager::InputManagerListener
 {
 public:
-	GamepadModule(const String &name = "Gamepad");
-	~GamepadModule();
+	JoystickModule(const String &name = "Joystick");
+	~JoystickModule();
 
-	GamepadParameter * gamepadParam;
-	
+	JoystickParameter * joystickParam;
+
 	void rebuildValues();
-
-	void gamepadAdded(Gamepad *) override;
-	void gamepadRemoved(Gamepad *) override;
 
 	void onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c) override;
 
-	static GamepadModule * create() { return new GamepadModule(); }
-	virtual String getDefaultTypeString() const override { return "Gamepad"; }
+	static JoystickModule * create() { return new JoystickModule(); }
+	virtual String getDefaultTypeString() const override { return "Joystick"; }
 
-	
+
 
 };
+
+
 

@@ -8,8 +8,7 @@
   ==============================================================================
 */
 
-#ifndef MIDIDEVICECHOOSER_H_INCLUDED
-#define MIDIDEVICECHOOSER_H_INCLUDED
+#pragma once
 
 #include "../MIDIManager.h"
 
@@ -66,5 +65,3 @@ public:
 	void removeMIDIChooserListener(ChooserListener* listener) { chooserListeners.remove(listener); }
 
 };
-
-#endif  // MIDIDEVICECHOOSER_H_INCLUDED

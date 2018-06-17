@@ -16,6 +16,7 @@
 #include "modules/midi/MIDIModule.h"
 #include "modules/controller/hid/HIDModule.h"
 #include "modules/controller/gamepad/GamepadModule.h"
+#include "modules/controller/joystick/JoystickModule.h"
 #include "modules/controller/wiimote/WiimoteModule.h"
 #include "modules/controller/keyboard/KeyboardModule.h"
 #include "modules/osc/reaper/ReaperModule.h"
@@ -63,8 +64,10 @@ ModuleFactory::ModuleFactory() {
 
 	/*
 	moduleDefs.add(new ModuleDefinition("Hardware", "HID", &HIDModule::create));
-	moduleDefs.add(new ModuleDefinition("Hardware", "Gamepad", &GamepadModule::create));
 	*/
+	moduleDefs.add(new ModuleDefinition("Hardware", "Gamepad", &GamepadModule::create));
+	moduleDefs.add(new ModuleDefinition("Hardware", "Joystick", &JoystickModule::create));
+	
 
 	moduleDefs.add(new ModuleDefinition("Software", "DLight", &DLightModule::create));
 	moduleDefs.add(new ModuleDefinition("Software", "LiveOSC2", &LiveOSCModule::create));

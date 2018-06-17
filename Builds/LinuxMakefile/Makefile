@@ -68,6 +68,8 @@ ifeq ($(CONFIG),Debug)
 endif
 
 OBJECTS_APP := \
+  $(JUCE_OBJDIR)/InputDeviceHelpers_f77a7a0.o \
+  $(JUCE_OBJDIR)/InputSystemManager_a791f74f.o \
   $(JUCE_OBJDIR)/CommandTemplateEditor_5399b8ad.o \
   $(JUCE_OBJDIR)/CommandTemplateManagerUI_dc305a4b.o \
   $(JUCE_OBJDIR)/CommandTemplateParameterEditor_a7196f80.o \
@@ -176,7 +178,7 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/NetworkStreamingModule_a6ae39cf.o \
   $(JUCE_OBJDIR)/StreamingModule_8e8f50a9.o \
   $(JUCE_OBJDIR)/EnablingNetworkControllableContainerEditor_5d799d9a.o \
-  $(JUCE_OBJDIR)/GamepadManager_dea1568b.o \
+  $(JUCE_OBJDIR)/JoystickModule_4129a194.o \
   $(JUCE_OBJDIR)/GamepadModule_fc770758.o \
   $(JUCE_OBJDIR)/HIDModule_c3f9a29c.o \
   $(JUCE_OBJDIR)/JoyConModule_1410c7f4.o \
@@ -355,6 +357,16 @@ $(JUCE_OUTDIR)/$(JUCE_TARGET_APP) : check-pkg-config $(OBJECTS_APP) $(RESOURCES)
 	-$(V_AT)mkdir -p $(JUCE_LIBDIR)
 	-$(V_AT)mkdir -p $(JUCE_OUTDIR)
 	$(V_AT)$(CXX) -o $(JUCE_OUTDIR)/$(JUCE_TARGET_APP) $(OBJECTS_APP) $(JUCE_LDFLAGS) $(JUCE_LDFLAGS_APP) $(RESOURCES) $(TARGET_ARCH)
+
+$(JUCE_OBJDIR)/InputDeviceHelpers_f77a7a0.o: ../../Source/Common/InputSystem/InputDeviceHelpers.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling InputDeviceHelpers.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/InputSystemManager_a791f74f.o: ../../Source/Common/InputSystem/InputSystemManager.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling InputSystemManager.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/CommandTemplateEditor_5399b8ad.o: ../../Source/Common/Command/Template/ui/CommandTemplateEditor.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
@@ -896,9 +908,9 @@ $(JUCE_OBJDIR)/EnablingNetworkControllableContainerEditor_5d799d9a.o: ../../Sour
 	@echo "Compiling EnablingNetworkControllableContainerEditor.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
-$(JUCE_OBJDIR)/GamepadManager_dea1568b.o: ../../Source/Module/modules/controller/gamepad/GamepadManager.cpp
+$(JUCE_OBJDIR)/JoystickModule_4129a194.o: ../../Source/Module/modules/controller/joystick/JoystickModule.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling GamepadManager.cpp"
+	@echo "Compiling JoystickModule.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/GamepadModule_fc770758.o: ../../Source/Module/modules/controller/gamepad/GamepadModule.cpp

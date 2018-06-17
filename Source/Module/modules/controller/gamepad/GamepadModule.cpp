@@ -14,49 +14,49 @@ GamepadModule::GamepadModule(const String & name) :
 	Module(name)
 {
 	setupIOConfiguration(true, false);
-
-	GamepadManager::getInstance();
-
-
-	/*
-	Gamepad_deviceAttachFunc(deviceAddedStaticCallback, this);
-	Gamepad_deviceAttachFunc(deviceRemovedStaticCallback, this);
-
-	Gamepad_init();
-	Gamepad_detectDevices();
-	*/
+	gamepadParam = new GamepadParameter("Device", "The Gamepad to connect to");
+	moduleParams.addParameter(gamepadParam);
+	InputSystemManager::getInstance()->addInputManagerListener(this);
 }
 
 GamepadModule::~GamepadModule()
 {
+	if(InputSystemManager::getInstanceWithoutCreating() != nullptr) InputSystemManager::getInstance()->removeInputManagerListener(this);
 }
 
-void GamepadModule::checkDevices()
+void GamepadModule::rebuildValues()
 {
-}
-
-/*
-void GamepadModule::deviceAddedCallback(Gamepad_device * device)
-{
-	DBG("Device added : " << String(device->description));
-}
-
-void GamepadModule::deviceRemovedCallback(Gamepad_device * device)
-{
-}
-*/
-void GamepadModule::timerCallback(int /*timerID*/)
-{
-}
-
-/*
-void deviceAddedStaticCallback(Gamepad_device * device, void * context)
-{
-	GamepadModule * m = reinterpret_cast<GamepadModule *>(context);
+	valuesCC.clear();
+	if (gamepadParam->gamepad == nullptr) return;
+	valuesCC.addChildControllableContainer(&gamepadParam->gamepad->axesCC);
+	valuesCC.addChildControllableContainer(&gamepadParam->gamepad->buttonsCC);
 }
 
 
-void deviceRemovedStaticCallback(Gamepad_device * device, void * context)
+void GamepadModule::gamepadAdded(Gamepad * g)
 {
+	String gName = String(SDL_GameControllerName(g->gamepad));
+	if (gName == gamepadParam->ghostName)
+	{
+		gamepadParam->setGamepad(g);
+	}
 }
-*/
+
+
+void GamepadModule::gamepadRemoved(Gamepad * g)
+{
+	if (gamepadParam->gamepad == g)
+	{
+		valuesCC.removeChildControllableContainer(&gamepadParam->gamepad->axesCC);
+		valuesCC.removeChildControllableContainer(&gamepadParam->gamepad->buttonsCC);
+	}
+}
+
+void GamepadModule::onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c)
+{
+	Module::onControllableFeedbackUpdateInternal(cc, c);
+	if (c == gamepadParam)
+	{
+		rebuildValues();
+	}
+}

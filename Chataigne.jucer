@@ -33,6 +33,18 @@
               file="Source/Analytics/GoogleAnalyticsDestination.h"/>
       </GROUP>
       <GROUP id="{6C7DFFF7-D47E-97B5-FE74-27F24C7A349F}" name="Common">
+        <GROUP id="{5C0648F7-9990-938A-3B45-609D366B138F}" name="InputSystem">
+          <GROUP id="{FDAA1738-EB88-1AB8-C6B5-1EFC3FA35B4F}" name="ui">
+            <FILE id="PjYTro" name="InputDeviceHelpers.cpp" compile="1" resource="0"
+                  file="Source/Common/InputSystem/InputDeviceHelpers.cpp"/>
+            <FILE id="FoGQT8" name="InputDeviceHelpers.h" compile="0" resource="0"
+                  file="Source/Common/InputSystem/InputDeviceHelpers.h"/>
+          </GROUP>
+          <FILE id="lgkfXQ" name="InputSystemManager.cpp" compile="1" resource="0"
+                file="Source/Common/InputSystem/InputSystemManager.cpp"/>
+          <FILE id="f3nikH" name="InputSystemManager.h" compile="0" resource="0"
+                file="Source/Common/InputSystem/InputSystemManager.h"/>
+        </GROUP>
         <GROUP id="{E7C8AAFC-E2FA-90D0-859B-423BC528A52F}" name="Command">
           <FILE id="KxsRZB" name="CommandContext.h" compile="0" resource="0"
                 file="Source/Common/Command/CommandContext.h"/>
@@ -526,11 +538,13 @@
             </GROUP>
           </GROUP>
           <GROUP id="{A597C064-C7DE-23AD-F74A-2E029F90FCEA}" name="controller">
+            <GROUP id="{1D8065A9-6361-47B1-8256-D348748068B3}" name="joystick">
+              <FILE id="LydpTA" name="JoystickModule.cpp" compile="1" resource="0"
+                    file="Source/Module/modules/controller/joystick/JoystickModule.cpp"/>
+              <FILE id="aiNFeG" name="JoystickModule.h" compile="0" resource="0"
+                    file="Source/Module/modules/controller/joystick/JoystickModule.h"/>
+            </GROUP>
             <GROUP id="{81CA9ED1-A78B-1B6C-6449-0316B6990BA0}" name="gamepad">
-              <FILE id="TONiYn" name="GamepadManager.cpp" compile="1" resource="0"
-                    file="Source/Module/modules/controller/gamepad/GamepadManager.cpp"/>
-              <FILE id="WC8qGq" name="GamepadManager.h" compile="0" resource="0"
-                    file="Source/Module/modules/controller/gamepad/GamepadManager.h"/>
               <FILE id="qZW7y5" name="GamepadModule.cpp" compile="1" resource="0"
                     file="Source/Module/modules/controller/gamepad/GamepadModule.cpp"/>
               <FILE id="K56p4X" name="GamepadModule.h" compile="0" resource="0" file="Source/Module/modules/controller/gamepad/GamepadModule.h"/>
@@ -1170,17 +1184,17 @@
     </GROUP>
   </MAINGROUP>
   <EXPORTFORMATS>
-    <VS2017 targetFolder="Builds/VisualStudio2017" externalLibraries="Setupapi.lib&#10;hid.lib&#10;Kinect20.lib&#10;joytime-core.lib&#10;joytime-input-hidapi.lib&#10;Servus.lib&#10;dnssd.lib&#10;ossia.lib"
+    <VS2017 targetFolder="Builds/VisualStudio2017" externalLibraries="Setupapi.lib&#10;hid.lib&#10;Kinect20.lib&#10;joytime-core.lib&#10;joytime-input-hidapi.lib&#10;Servus.lib&#10;dnssd.lib&#10;ossia.lib&#10;SDL2.lib"
             smallIcon="nVz6Li" bigIcon="nVz6Li" vst3Folder="">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" winWarningLevel="4" generateManifest="1" winArchitecture="x64"
-                       isDebug="1" optimisation="1" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/asio&#10;../../External/kinect/include&#10;../../External/joycon/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/ossia/include"
-                       libraryPath="../../External/kinect/lib&#10;../../External/joycon/lib&#10;../../External/servus/lib/win/x64/debug&#10;../../External/dnssd/lib&#10;../../External/ossia/lib/win"
+                       isDebug="1" optimisation="1" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/asio&#10;../../External/kinect/include&#10;../../External/joycon/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/ossia/include&#10;../../External/ois/include&#10;../../External/sdl/include"
+                       libraryPath="../../External/kinect/lib&#10;../../External/joycon/lib&#10;../../External/servus/lib/win/x64/debug&#10;../../External/dnssd/lib&#10;../../External/ossia/lib/win&#10;../../External/sdl/lib/win"
                        binaryPath="Binaries/Debug" debugInformationFormat="ProgramDatabase"
                        enablePluginBinaryCopyStep="0"/>
         <CONFIGURATION name="Release" winWarningLevel="4" generateManifest="1" winArchitecture="x64"
-                       isDebug="0" optimisation="3" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/asio&#10;../../External/kinect/include&#10;../../External/joycon/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/ossia/include"
-                       libraryPath="../../External/kinect/lib&#10;../../External/joycon/lib&#10;../../External/servus/lib/win/x64/release&#10;../../External/dnssd/lib&#10;../../External/ossia/lib/win"
+                       isDebug="0" optimisation="3" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/asio&#10;../../External/kinect/include&#10;../../External/joycon/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/ossia/include&#10;../../External/sdl/include"
+                       libraryPath="../../External/kinect/lib&#10;../../External/joycon/lib&#10;../../External/servus/lib/win/x64/release&#10;../../External/dnssd/lib&#10;../../External/ossia/lib/win&#10;../../External/sdl/lib/win"
                        binaryPath="Binaries" debugInformationFormat="ProgramDatabase"
                        enablePluginBinaryCopyStep="0" linkTimeOptimisation="1"/>
       </CONFIGURATIONS>
@@ -1296,13 +1310,13 @@
         <MODULEPATH id="juce_analytics" path="../../juce"/>
       </MODULEPATHS>
     </CODEBLOCKS_LINUX>
-    <VS2017 targetFolder="Builds/VisualStudio2017_CI" externalLibraries="Setupapi.lib&#10;hid.lib&#10;Kinect20.lib&#10;joytime-core.lib&#10;joytime-input-hidapi.lib&#10;Servus.lib&#10;dnssd.lib&#10;ossia.lib"
+    <VS2017 targetFolder="Builds/VisualStudio2017_CI" externalLibraries="Setupapi.lib&#10;hid.lib&#10;Kinect20.lib&#10;joytime-core.lib&#10;joytime-input-hidapi.lib&#10;Servus.lib&#10;dnssd.lib&#10;ossia.lib&#10;SDL2.lib"
             smallIcon="nVz6Li" bigIcon="nVz6Li">
       <CONFIGURATIONS>
-        <CONFIGURATION isDebug="1" name="Debug" binaryPath="Binaries/CI" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/asio&#10;../../External/kinect/include&#10;../../External/joycon/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/ossia/include"
-                       libraryPath="../../External/kinect/lib&#10;../../External/joycon/lib&#10;../../External/servus/lib/win/x64/debug&#10;../../External/dnssd/lib&#10;../../External/ossia/lib/win"/>
-        <CONFIGURATION isDebug="0" name="Release" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/asio&#10;../../External/kinect/include&#10;../../External/joycon/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/ossia/include"
-                       libraryPath="../../External/kinect/lib&#10;../../External/joycon/lib&#10;../../External/servus/lib/win/x64/release&#10;../../External/dnssd/lib&#10;../../External/ossia/lib/win"
+        <CONFIGURATION isDebug="1" name="Debug" binaryPath="Binaries/CI" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/asio&#10;../../External/kinect/include&#10;../../External/joycon/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/ossia/include&#10;../../External/sdl/include"
+                       libraryPath="../../External/kinect/lib&#10;../../External/joycon/lib&#10;../../External/servus/lib/win/x64/debug&#10;../../External/dnssd/lib&#10;../../External/ossia/lib/win&#10;../../External/sdl/lib/win"/>
+        <CONFIGURATION isDebug="0" name="Release" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/asio&#10;../../External/kinect/include&#10;../../External/joycon/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/ossia/include&#10;../../External/sdl/include"
+                       libraryPath="../../External/kinect/lib&#10;../../External/joycon/lib&#10;../../External/servus/lib/win/x64/release&#10;../../External/dnssd/lib&#10;../../External/ossia/lib/win&#10;../../External/sdl/lib/win"
                        binaryPath="Binaries/CI"/>
       </CONFIGURATIONS>
       <MODULEPATHS>

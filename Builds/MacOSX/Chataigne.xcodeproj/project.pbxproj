@@ -24,6 +24,8 @@
 		FFBC11E7EE94DC34D717AD69 = {isa = PBXBuildFile; fileRef = F36349200785EF7B0D1E7329; };
 		C602EDD2320D46D71CF78955 = {isa = PBXBuildFile; fileRef = CFF11961CD6D0DFF4EB302A4; };
 		323F052E99BDC8B730E6C8DE = {isa = PBXBuildFile; fileRef = BAE663016FCFB6168EAA4BFE; };
+		43E1EC2D9919CC1742754AA5 = {isa = PBXBuildFile; fileRef = 6EAF69491475B1BC390D110E; };
+		D5BA72E6B1F43C42CFDDCE35 = {isa = PBXBuildFile; fileRef = B68AA40E425DF28AFA78226B; };
 		FC96057BA4D7B3D6EB200D36 = {isa = PBXBuildFile; fileRef = F66196D674AE915B7A527E12; };
 		0816AC57CC5C0DAE9EBFAC02 = {isa = PBXBuildFile; fileRef = 6B267A36190DAF877689D537; };
 		A697B6FF5E6F510842584121 = {isa = PBXBuildFile; fileRef = 25816611130784FF4DA89AFD; };
@@ -132,7 +134,7 @@
 		9A671E6CC2C86695A5BE4A84 = {isa = PBXBuildFile; fileRef = C71E6DD8C2EE411A6B4C9784; };
 		31362975C7078AE89FAD4322 = {isa = PBXBuildFile; fileRef = 4413B1B6C315E4E1F1CC0BC3; };
 		D24D9221F54DA1CD4E4E3900 = {isa = PBXBuildFile; fileRef = EE7734BE83426C490017DACD; };
-		037F20178D0082DD23F752C8 = {isa = PBXBuildFile; fileRef = 533AE44B6839185BC220EADE; };
+		5799B2059BFEDDAEFBFA0DBB = {isa = PBXBuildFile; fileRef = E4F8764330C0A93E8E182D22; };
 		6712C6C8DE23D03DD58C1ED7 = {isa = PBXBuildFile; fileRef = 97BB724F64701AA63B90C1E0; };
 		24E22D5701914F4AFD9C743E = {isa = PBXBuildFile; fileRef = B9CE8ECB6792329E61C5A10C; };
 		4C2D775E82C8238217DCB568 = {isa = PBXBuildFile; fileRef = EE16135FACA08DECECFBE1D6; };
@@ -488,7 +490,6 @@
 		51E48B2FB3F206E53D1D792C = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CommandDefinitionManager.h; path = ../../Source/Common/Command/CommandDefinitionManager.h; sourceTree = "SOURCE_ROOT"; };
 		526F7B3CB32C2F185CE3428D = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ProcessorManager.h; path = ../../Source/Common/Processor/ProcessorManager.h; sourceTree = "SOURCE_ROOT"; };
 		528CCEA221199E7763EE2317 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = UserOSCCommand.cpp; path = ../../Source/Module/modules/osc/custom/commands/user/UserOSCCommand.cpp; sourceTree = "SOURCE_ROOT"; };
-		533AE44B6839185BC220EADE = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = GamepadManager.cpp; path = ../../Source/Module/modules/controller/gamepad/GamepadManager.cpp; sourceTree = "SOURCE_ROOT"; };
 		53651DC87934A24263EB8C43 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DMXStateUI.h; path = ../../Source/Common/DMX/ui/DMXStateUI.h; sourceTree = "SOURCE_ROOT"; };
 		53A5A48ED7FEF0F32D648EA3 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = KeyboardModule.cpp; path = ../../Source/Module/modules/controller/keyboard/KeyboardModule.cpp; sourceTree = "SOURCE_ROOT"; };
 		543FDED6F64A77819875F097 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ActionUI.cpp; path = ../../Source/Common/Processor/Action/ui/ActionUI.cpp; sourceTree = "SOURCE_ROOT"; };
@@ -531,6 +532,7 @@
 		6815E89223EE17A9736CCF13 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = TimeColor.cpp; path = ../../Source/TimeMachine/Sequence/Layer/layers/mapping/timecolor/TimeColor.cpp; sourceTree = "SOURCE_ROOT"; };
 		6AB115D848E1553D7F5C50B6 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = wiiboard.c; path = ../../Source/Module/modules/controller/wiimote/lib/wiiuse/wiiboard.c; sourceTree = "SOURCE_ROOT"; };
 		6B267A36190DAF877689D537 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CommandTemplateManagerUI.cpp; path = ../../Source/Common/Command/Template/ui/CommandTemplateManagerUI.cpp; sourceTree = "SOURCE_ROOT"; };
+		6B4B5B0AA9784F3136EA4326 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = InputSystemManager.h; path = ../../Source/Common/InputSystem/InputSystemManager.h; sourceTree = "SOURCE_ROOT"; };
 		6CA4A3E58A5777D0B0F8CF65 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MappingLayerTimeline.cpp; path = ../../Source/TimeMachine/Sequence/Layer/layers/mapping/ui/MappingLayerTimeline.cpp; sourceTree = "SOURCE_ROOT"; };
 		6CA54F330A265B66584BC7CC = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = StateManagerUI.h; path = ../../Source/StateMachine/ui/StateManagerUI.h; sourceTree = "SOURCE_ROOT"; };
 		6CAEF93880656E5D314F5481 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MappingOutputManagerEditor.h; path = ../../Source/Common/Processor/Mapping/Output/ui/MappingOutputManagerEditor.h; sourceTree = "SOURCE_ROOT"; };
@@ -543,6 +545,7 @@
 		6DDE46B937874C068E754258 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = KeyboardModule.h; path = ../../Source/Module/modules/controller/keyboard/KeyboardModule.h; sourceTree = "SOURCE_ROOT"; };
 		6E5D1560A551751CABF79621 = {isa = PBXFileReference; lastKnownFileType = file; name = "juce_core"; path = "~/JUCE/modules/juce_core"; sourceTree = "<absolute>"; };
 		6E9099CA2495D631898BAE85 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AudioLayerTimeline.h; path = ../../Source/TimeMachine/Sequence/Layer/layers/audio/ui/AudioLayerTimeline.h; sourceTree = "SOURCE_ROOT"; };
+		6EAF69491475B1BC390D110E = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = InputDeviceHelpers.cpp; path = ../../Source/Common/InputSystem/InputDeviceHelpers.cpp; sourceTree = "SOURCE_ROOT"; };
 		6F440F776BB8A545CB5B658F = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = WiimoteModule.h; path = ../../Source/Module/modules/controller/wiimote/WiimoteModule.h; sourceTree = "SOURCE_ROOT"; };
 		6F5251C7EEE1D1E800049865 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = TimeColorManagerUI.cpp; path = ../../Source/TimeMachine/Sequence/Layer/layers/mapping/timecolor/ui/TimeColorManagerUI.cpp; sourceTree = "SOURCE_ROOT"; };
 		6FEECB9A5D65350A863900DC = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CVPreset.h; path = ../../Source/CustomVariables/Preset/CVPreset.h; sourceTree = "SOURCE_ROOT"; };
@@ -550,6 +553,7 @@
 		70E432BF3298C3CB1C29AC5D = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ModuleRouterView.h; path = ../../Source/Module/Routing/ui/ModuleRouterView.h; sourceTree = "SOURCE_ROOT"; };
 		70EA23BFB947EAC9B1D89E45 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = BaseComparator.cpp; path = ../../Source/Common/Processor/Action/Condition/Comparator/BaseComparator.cpp; sourceTree = "SOURCE_ROOT"; };
 		712B39A79176F387DC023DCF = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MappingUI.cpp; path = ../../Source/Common/Processor/Mapping/ui/MappingUI.cpp; sourceTree = "SOURCE_ROOT"; };
+		716824D41028C3D53BDA009B = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = JoystickModule.h; path = ../../Source/Module/modules/controller/joystick/JoystickModule.h; sourceTree = "SOURCE_ROOT"; };
 		720ADC555A7AB7B70987F6CE = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = NumberComparators.cpp; path = ../../Source/Common/Processor/Action/Condition/Comparator/comparators/NumberComparators.cpp; sourceTree = "SOURCE_ROOT"; };
 		722557AC1AA50559314AAC74 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = StateMachineView.h; path = ../../Source/StateMachine/ui/StateMachineView.h; sourceTree = "SOURCE_ROOT"; };
 		723AC83C92C5656505F6409C = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = OSModule.cpp; path = ../../Source/Module/modules/system/os/OSModule.cpp; sourceTree = "SOURCE_ROOT"; };
@@ -702,6 +706,7 @@
 		B61C6A346B29E5036A613455 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VLCModule.h; path = ../../Source/Module/modules/tcp/vlc/VLCModule.h; sourceTree = "SOURCE_ROOT"; };
 		B63560F060FE73D4403EF4A9 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CommandTemplateParameter.cpp; path = ../../Source/Common/Command/Template/CommandTemplateParameter.cpp; sourceTree = "SOURCE_ROOT"; };
 		B659B9A2F92F0E7A59C628DD = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CommandTemplateManager.cpp; path = ../../Source/Common/Command/Template/CommandTemplateManager.cpp; sourceTree = "SOURCE_ROOT"; };
+		B68AA40E425DF28AFA78226B = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = InputSystemManager.cpp; path = ../../Source/Common/InputSystem/InputSystemManager.cpp; sourceTree = "SOURCE_ROOT"; };
 		B6A29DF2E614A624B07ADD6A = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DMXModule.h; path = ../../Source/Module/modules/dmx/DMXModule.h; sourceTree = "SOURCE_ROOT"; };
 		B7037B1303B113B3EB738DE2 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "os_mac_interface.m"; path = "../../Source/Module/modules/controller/wiimote/lib/wiiuse/os_mac/os_mac_interface.m"; sourceTree = "SOURCE_ROOT"; };
 		B7BBA4821B4CAD95A467E9DE = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Condition.cpp; path = ../../Source/Common/Processor/Action/Condition/Condition.cpp; sourceTree = "SOURCE_ROOT"; };
@@ -778,6 +783,7 @@
 		D4D03C54F677985319A479C3 = {isa = PBXFileReference; lastKnownFileType = file; name = "juce_data_structures"; path = "~/JUCE/modules/juce_data_structures"; sourceTree = "<absolute>"; };
 		D4E1D32E8F42717371112360 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GenericControllableCommand.h; path = ../../Source/Module/modules/generic/commands/GenericControllableCommand.h; sourceTree = "SOURCE_ROOT"; };
 		D52D0D1A91688CBF6AA0853F = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ModuleChooserUI.cpp; path = ../../Source/Module/ui/ModuleChooserUI.cpp; sourceTree = "SOURCE_ROOT"; };
+		D536C855ED7831E4FFE3E4AF = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = InputDeviceHelpers.h; path = ../../Source/Common/InputSystem/InputDeviceHelpers.h; sourceTree = "SOURCE_ROOT"; };
 		D54C06A1B7C04F210C6039B8 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ModuleRouterValueEditor.cpp; path = ../../Source/Module/Routing/ui/ModuleRouterValueEditor.cpp; sourceTree = "SOURCE_ROOT"; };
 		D579C550266882E67F15AF24 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ProcessorUI.cpp; path = ../../Source/Common/Processor/ui/ProcessorUI.cpp; sourceTree = "SOURCE_ROOT"; };
 		D59B4E874F4D619796456E27 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ResolumeBaseCommandEditor.cpp; path = ../../Source/Module/modules/osc/resolume/commands/ui/ResolumeBaseCommandEditor.cpp; sourceTree = "SOURCE_ROOT"; };
@@ -820,6 +826,7 @@
 		E46D3F257C0330881558C3AC = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = AudioLayerClipManager.cpp; path = ../../Source/TimeMachine/Sequence/Layer/layers/audio/AudioLayerClipManager.cpp; sourceTree = "SOURCE_ROOT"; };
 		E49476A81DB93D0B8094E56F = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Mapping.cpp; path = ../../Source/Common/Processor/Mapping/Mapping.cpp; sourceTree = "SOURCE_ROOT"; };
 		E49D109D2C54816EF89EC382 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SequenceManager.cpp; path = ../../Source/TimeMachine/SequenceManager.cpp; sourceTree = "SOURCE_ROOT"; };
+		E4F8764330C0A93E8E182D22 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = JoystickModule.cpp; path = ../../Source/Module/modules/controller/joystick/JoystickModule.cpp; sourceTree = "SOURCE_ROOT"; };
 		E595B2574DFE9E303F2916E2 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TimeModule.h; path = ../../Source/Module/modules/system/time/TimeModule.h; sourceTree = "SOURCE_ROOT"; };
 		E5AA04B82683E9B39FCBFDD3 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = util.c; path = ../../Source/Module/modules/controller/wiimote/lib/wiiuse/util.c; sourceTree = "SOURCE_ROOT"; };
 		E5D31E96C95008AB78305C46 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CVGroupManager.h; path = ../../Source/CustomVariables/CVGroupManager.h; sourceTree = "SOURCE_ROOT"; };
@@ -829,7 +836,6 @@
 		E68E0A177B0FFCF75AE44AB9 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = StringComparators.cpp; path = ../../Source/Common/Processor/Action/Condition/Comparator/comparators/StringComparators.cpp; sourceTree = "SOURCE_ROOT"; };
 		E76F2CCA04ED367B5C874780 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DMXDevice.h; path = ../../Source/Common/DMX/device/DMXDevice.h; sourceTree = "SOURCE_ROOT"; };
 		E7A9771682606E9757A2BBCC = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DMXDashboard.cpp; path = ../../Source/Common/DMX/ui/DMXDashboard.cpp; sourceTree = "SOURCE_ROOT"; };
-		E845029CD33ECAF1B704B711 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GamepadManager.h; path = ../../Source/Module/modules/controller/gamepad/GamepadManager.h; sourceTree = "SOURCE_ROOT"; };
 		E92288FB21A7A81372B50E88 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Point3DComparators.h; path = ../../Source/Common/Processor/Action/Condition/Comparator/comparators/Point3DComparators.h; sourceTree = "SOURCE_ROOT"; };
 		E92D98FE4486A9E2998BFD87 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SequenceTimelineSeeker.cpp; path = ../../Source/TimeMachine/Sequence/ui/SequenceTimelineSeeker.cpp; sourceTree = "SOURCE_ROOT"; };
 		E9EBDDA13FE294BD72E12E10 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TimeColorManagerUI.h; path = ../../Source/TimeMachine/Sequence/Layer/layers/mapping/timecolor/ui/TimeColorManagerUI.h; sourceTree = "SOURCE_ROOT"; };
@@ -901,6 +907,13 @@
 					2DDAE65EB5FF79ED1E458E52, ); name = Resources; sourceTree = "<group>"; };
 		9C36D31E3E718DBE09A0C37C = {isa = PBXGroup; children = (
 					56602E9E49E703AAD79A1ADF, ); name = Analytics; sourceTree = "<group>"; };
+		BC47915E490BCFF70A49CF9C = {isa = PBXGroup; children = (
+					6EAF69491475B1BC390D110E,
+					D536C855ED7831E4FFE3E4AF, ); name = ui; sourceTree = "<group>"; };
+		908BCEF32D152BB480771FFD = {isa = PBXGroup; children = (
+					BC47915E490BCFF70A49CF9C,
+					B68AA40E425DF28AFA78226B,
+					6B4B5B0AA9784F3136EA4326, ); name = InputSystem; sourceTree = "<group>"; };
 		9468DCF8AB612DCE2D6575E3 = {isa = PBXGroup; children = (
 					F66196D674AE915B7A527E12,
 					C7B87D07F4FBB8CE172A040C,
@@ -1145,6 +1158,7 @@
 					FFBCF506733331DD868A68EE,
 					6CF41E270B09CEAC122E1D64, ); name = Serial; sourceTree = "<group>"; };
 		77E313CFAABA49104A328F3F = {isa = PBXGroup; children = (
+					908BCEF32D152BB480771FFD,
 					308900D44331CCF323509065,
 					2F365699BD14F6406F50C73D,
 					E3E3010FE0B76E426CECDA59,
@@ -1229,9 +1243,10 @@
 					DBD563325091B44357FF63F8,
 					4549766A1D274B9A7CB38E30,
 					F9C83F4E0AF34BD6C2131C2C, ); name = common; sourceTree = "<group>"; };
+		8F6EAC12C7E1A5C5DC92DA84 = {isa = PBXGroup; children = (
+					E4F8764330C0A93E8E182D22,
+					716824D41028C3D53BDA009B, ); name = joystick; sourceTree = "<group>"; };
 		FE04D271FB3D733172FD0288 = {isa = PBXGroup; children = (
-					533AE44B6839185BC220EADE,
-					E845029CD33ECAF1B704B711,
 					97BB724F64701AA63B90C1E0,
 					79EA796B591281322DA21A35, ); name = gamepad; sourceTree = "<group>"; };
 		CC99D6B30F0755A7DD435916 = {isa = PBXGroup; children = (
@@ -1284,6 +1299,7 @@
 					B52752D23217AA7EC926EAF6,
 					8C49B305FD4D86D068A653A7, ); name = wiimote; sourceTree = "<group>"; };
 		F8AE04C7094D4FF5D9786FDE = {isa = PBXGroup; children = (
+					8F6EAC12C7E1A5C5DC92DA84,
 					FE04D271FB3D733172FD0288,
 					CC99D6B30F0755A7DD435916,
 					5196179CA1A0DDE3AAF00F3C,
@@ -1917,6 +1933,8 @@
 					C602EDD2320D46D71CF78955,
 					323F052E99BDC8B730E6C8DE, ); runOnlyForDeploymentPostprocessing = 0; };
 		E8519AD77E15F3F7F7402D27 = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (
+					43E1EC2D9919CC1742754AA5,
+					D5BA72E6B1F43C42CFDDCE35,
 					FC96057BA4D7B3D6EB200D36,
 					0816AC57CC5C0DAE9EBFAC02,
 					A697B6FF5E6F510842584121,
@@ -2025,7 +2043,7 @@
 					9A671E6CC2C86695A5BE4A84,
 					31362975C7078AE89FAD4322,
 					D24D9221F54DA1CD4E4E3900,
-					037F20178D0082DD23F752C8,
+					5799B2059BFEDDAEFBFA0DBB,
 					6712C6C8DE23D03DD58C1ED7,
 					24E22D5701914F4AFD9C743E,
 					4C2D775E82C8238217DCB568,

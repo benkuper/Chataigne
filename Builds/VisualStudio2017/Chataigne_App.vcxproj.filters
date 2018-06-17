@@ -8,6 +8,12 @@
     <Filter Include="Chataigne\Source\Analytics">
       <UniqueIdentifier>{BFFB54F9-F042-7395-56B9-D0358B5F6ED9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Chataigne\Source\Common\InputSystem\ui">
+      <UniqueIdentifier>{56DD9A38-8BBF-9782-AE19-F3A9A6734487}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Common\InputSystem">
+      <UniqueIdentifier>{2B092B7F-E42F-F28A-4047-78487812BEA9}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Chataigne\Source\Common\Command\Template\ui">
       <UniqueIdentifier>{F2CAF67C-41CA-7457-88E2-3F0457E78267}</UniqueIdentifier>
     </Filter>
@@ -184,6 +190,9 @@
     </Filter>
     <Filter Include="Chataigne\Source\Module\modules\common">
       <UniqueIdentifier>{E89D3705-9633-01AF-C6F5-82B057BCA7D4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\controller\joystick">
+      <UniqueIdentifier>{6DA3C3D4-EC70-8927-8E2C-CFF5F088926D}</UniqueIdentifier>
     </Filter>
     <Filter Include="Chataigne\Source\Module\modules\controller\gamepad">
       <UniqueIdentifier>{BA37F7B1-5569-18A7-B747-EA1F7C820F64}</UniqueIdentifier>
@@ -934,6 +943,12 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\Common\InputSystem\InputDeviceHelpers.cpp">
+      <Filter>Chataigne\Source\Common\InputSystem\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\InputSystem\InputSystemManager.cpp">
+      <Filter>Chataigne\Source\Common\InputSystem</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Common\Command\Template\ui\CommandTemplateEditor.cpp">
       <Filter>Chataigne\Source\Common\Command\Template\ui</Filter>
     </ClCompile>
@@ -1258,8 +1273,8 @@
     <ClCompile Include="..\..\Source\Module\modules\common\ui\EnablingNetworkControllableContainerEditor.cpp">
       <Filter>Chataigne\Source\Module\modules\common\ui</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\Module\modules\controller\gamepad\GamepadManager.cpp">
-      <Filter>Chataigne\Source\Module\modules\controller\gamepad</Filter>
+    <ClCompile Include="..\..\Source\Module\modules\controller\joystick\JoystickModule.cpp">
+      <Filter>Chataigne\Source\Module\modules\controller\joystick</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\controller\gamepad\GamepadModule.cpp">
       <Filter>Chataigne\Source\Module\modules\controller\gamepad</Filter>
@@ -4023,6 +4038,12 @@
     <ClInclude Include="..\..\Source\Analytics\GoogleAnalyticsDestination.h">
       <Filter>Chataigne\Source\Analytics</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\Common\InputSystem\InputDeviceHelpers.h">
+      <Filter>Chataigne\Source\Common\InputSystem\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\InputSystem\InputSystemManager.h">
+      <Filter>Chataigne\Source\Common\InputSystem</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\Common\Command\CommandContext.h">
       <Filter>Chataigne\Source\Common\Command</Filter>
     </ClInclude>
@@ -4344,8 +4365,8 @@
     <ClInclude Include="..\..\Source\Module\modules\common\ui\EnablingNetworkControllableContainerEditor.h">
       <Filter>Chataigne\Source\Module\modules\common\ui</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\Module\modules\controller\gamepad\GamepadManager.h">
-      <Filter>Chataigne\Source\Module\modules\controller\gamepad</Filter>
+    <ClInclude Include="..\..\Source\Module\modules\controller\joystick\JoystickModule.h">
+      <Filter>Chataigne\Source\Module\modules\controller\joystick</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\controller\gamepad\GamepadModule.h">
       <Filter>Chataigne\Source\Module\modules\controller\gamepad</Filter>
