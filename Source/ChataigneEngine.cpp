@@ -65,9 +65,9 @@ ChataigneEngine::~ChataigneEngine()
 	DMXManager::deleteInstance();
 	SerialManager::deleteInstance();
 	WiimoteManager::deleteInstance();
-	InputSystemManager::deleteInstance();
 
 #if JUCE_WINDOWS
+	InputSystemManager::deleteInstance();
 	MyoManager::deleteInstance();
 #endif
 
