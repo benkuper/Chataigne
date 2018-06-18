@@ -322,6 +322,7 @@ void OSCModule::onContainerParameterChangedInternal(Parameter * p)
 
 void OSCModule::onContainerNiceNameChanged()
 {
+	Module::onContainerNiceNameChanged();
 	if (Engine::mainEngine->isLoadingFile || Engine::mainEngine->isClearing) return;
 	if(!isThreadRunning()) startThread();
 }
