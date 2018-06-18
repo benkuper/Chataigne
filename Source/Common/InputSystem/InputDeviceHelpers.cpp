@@ -10,6 +10,8 @@
 
 #include "InputDeviceHelpers.h"
 
+#if  JUCE_WINDOWS
+
 JoystickParameterUI::JoystickParameterUI(JoystickParameter * p) :
 	ParameterUI(p),
 	joystickParam(p)
@@ -38,6 +40,7 @@ void JoystickParameterUI::rebuild()
 	WeakReference<Joystick> selectedJoystick = getJoystick();
 
 	chooser.clear(dontSendNotification);
+	chooser.setTextWhenNothingSelected(joystickParam->ghostName.isNotEmpty() ? joystickParam->ghostName + " disconnected" : "Select a joystick");
 
 	if (InputSystemManager::getInstance()->joysticks.size() == 0) return;
 
@@ -47,11 +50,11 @@ void JoystickParameterUI::rebuild()
 	{
 		joysticks.add(j);
 		chooser.addItem(SDL_JoystickName(j->joystick), id);
-		if (j == selectedJoystick) idToSelect = id;
+		if (j == selectedJoystick || j == joystickParam->joystick) idToSelect = id;
 		id++;
 	}
 	
-	chooser.setSelectedId(idToSelect, chooser.getSelectedId() != idToSelect?sendNotification:dontSendNotification);
+	chooser.setSelectedId(idToSelect, dontSendNotification);
 }
 
 void JoystickParameterUI::resized()
@@ -111,10 +114,7 @@ void GamepadParameterUI::rebuild()
 	chooser.clear(dontSendNotification);
 	chooser.setTextWhenNothingSelected(gamepadParam->ghostName.isNotEmpty()?gamepadParam->ghostName+" disconnected":"Select a gamepad");
 
-	if (InputSystemManager::getInstance()->gamepads.size() == 0)
-	{
-		return;
-	}
+	if (InputSystemManager::getInstance()->gamepads.size() == 0) return;
 
 	int id = 1;
 	int idToSelect = -1;
@@ -159,3 +159,5 @@ void GamepadParameterUI::comboBoxChanged(ComboBox *)
 {
 	if (!parameter.wasObjectDeleted()) gamepadParam->setGamepad(getGamepad());
 }
+
+#endif

@@ -9,6 +9,8 @@
 */
 
 #include "InputSystemManager.h"
+
+#if JUCE_WINDOWS
 #include "InputDeviceHelpers.h"
 
 juce_ImplementSingleton(InputSystemManager)
@@ -316,14 +318,17 @@ var JoystickParameter::getJSONDataInternal()
 
 void JoystickParameter::loadJSONDataInternal(var data)
 {
-	ghostName = data.getProperty("deviceName", "");
 	if (data.isArray())
 	{
 		for (int i = 0; i < 16; i++) ghostID.data[i] = (uint8_t)(int)data[i];
 		setJoystick(InputSystemManager::getInstance()->getJoystickForID(ghostID));
 	}
 
-	if (joystick == nullptr) setJoystick(InputSystemManager::getInstance()->getJoystickForName(ghostName));
+	if (joystick == nullptr)
+	{
+		ghostName = data.getProperty("deviceName", "");
+		setJoystick(InputSystemManager::getInstance()->getJoystickForName(ghostName));
+	}
 }
 
 ControllableUI * JoystickParameter::createDefaultUI(Controllable *)
@@ -365,13 +370,11 @@ void GamepadParameter::setGamepad(Gamepad * j)
 		var val;
 		ghostID = SDL_JoystickGetGUID(SDL_GameControllerGetJoystick(gamepad->gamepad));
 		ghostName = SDL_GameControllerName(gamepad->gamepad);
-		DBG("Set gamepad " << ghostName); 
 		for (int i = 0; i < 16; i++) val.append((int)ghostID.data[i]);
 		setValue(val, false, true);
 
 	} else
 	{
-		DBG("Set gamepad null");
 		var val;
 		for (int i = 0; i < 16; i++) val.append(0);
 		setValue(val,false,true);
@@ -404,3 +407,5 @@ ControllableUI * GamepadParameter::createDefaultUI(Controllable *)
 {
 	return new GamepadParameterUI(this);
 }
+
+#endif

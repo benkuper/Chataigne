@@ -11,6 +11,9 @@
 #pragma once
 
 #include "Module/Module.h"
+
+#if JUCE_WINDOWS
+
 #include "Common/InputSystem/InputSystemManager.h"
 
 class GamepadModule :
@@ -33,7 +36,7 @@ public:
 	static GamepadModule * create() { return new GamepadModule(); }
 	virtual String getDefaultTypeString() const override { return "Gamepad"; }
 
-	
-
 };
 
+
+#endif

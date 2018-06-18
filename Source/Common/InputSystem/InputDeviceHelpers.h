@@ -9,6 +9,9 @@
 */
 
 #pragma once
+#include "JuceHeader.h"
+
+#if JUCE_WINDOWS
 #include "InputSystemManager.h"
 
 class JoystickParameterUI :
@@ -57,3 +60,4 @@ public:
 	void newMessage(const InputSystemManager::InputSystemEvent &e) override;
 	virtual void comboBoxChanged(ComboBox *) override;
 };
+#endif

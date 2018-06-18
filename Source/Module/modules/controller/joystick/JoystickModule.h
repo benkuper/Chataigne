@@ -9,8 +9,9 @@
 */
 
 #pragma once
-
 #include "Module/Module.h"
+
+#if JUCE_WINDOWS
 #include "Common/InputSystem/InputSystemManager.h"
 
 class JoystickModule :
@@ -25,6 +26,9 @@ public:
 
 	void rebuildValues();
 
+	void joystickAdded(Joystick *) override;
+	void joystickRemoved(Joystick *) override;
+
 	void onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c) override;
 
 	static JoystickModule * create() { return new JoystickModule(); }
@@ -34,5 +38,4 @@ public:
 
 };
 
-
-
+#endif

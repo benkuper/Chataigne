@@ -65,9 +65,10 @@ ModuleFactory::ModuleFactory() {
 	/*
 	moduleDefs.add(new ModuleDefinition("Hardware", "HID", &HIDModule::create));
 	*/
+#if JUCE_WINDOWS
 	moduleDefs.add(new ModuleDefinition("Hardware", "Gamepad", &GamepadModule::create));
 	moduleDefs.add(new ModuleDefinition("Hardware", "Joystick", &JoystickModule::create));
-	
+#endif
 
 	moduleDefs.add(new ModuleDefinition("Software", "DLight", &DLightModule::create));
 	moduleDefs.add(new ModuleDefinition("Software", "LiveOSC2", &LiveOSCModule::create));
