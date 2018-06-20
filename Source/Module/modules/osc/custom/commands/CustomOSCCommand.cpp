@@ -14,6 +14,7 @@ CustomOSCCommand::CustomOSCCommand(CustomOSCModule * module, CommandContext cont
 	OSCCommand(module, context, params)
 {
 	address->setControllableFeedbackOnly(false);
+	address->isSavable = true;
 
 	removeChildControllableContainer(&argumentsContainer);
 	customValuesManager = new CustomValuesCommandArgumentManager(context == MAPPING);
