@@ -107,7 +107,7 @@ after_success:
     unzip Chataigne-linux-dependencies.zip;
     zip -r Chataigne-linux-x64-$SUFFIX.zip Chataigne lib;
     echo 'Uploading $SUFFIX ...';
-    ftp-upload -h ftp.kuperberg.fr -u $FTP_USER -password $FTP_PASSWORD --passive -v Chataigne-linux-x64-$SUFFIX.zip"
+    ftp-upload -h ftp.kuperberg.fr -u $FTP_USER --password $FTP_PASSWORD --passive -v Chataigne-linux-x64-$SUFFIX.zip"
   else
     cd /Users/travis/build/benkuper/Chataigne/Builds/MacOSX/build/$MAKECONF
     ls
