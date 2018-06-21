@@ -62,10 +62,10 @@ void SequenceTransportUI::resized()
 	
 	
 	Rectangle<int> pr = r.removeFromTop(24);
-	togglePlayUI->setBounds(pr.removeFromLeft(pr.getHeight()));
-	stopUI->setBounds(pr.removeFromLeft(pr.getHeight()));
-	prevCueUI->setBounds(pr.removeFromLeft(pr.getHeight()));
-	nextCueUI->setBounds(pr.removeFromLeft(pr.getHeight()));
+	togglePlayUI->setBounds(pr.removeFromLeft(pr.getHeight()).reduced(4));
+	stopUI->setBounds(pr.removeFromLeft(pr.getHeight()).reduced(4));
+	prevCueUI->setBounds(pr.removeFromLeft(pr.getHeight()).reduced(4));
+	nextCueUI->setBounds(pr.removeFromLeft(pr.getHeight()).reduced(4));
 	
 
 }
