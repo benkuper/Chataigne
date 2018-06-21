@@ -17,9 +17,10 @@ TriggerLayer::TriggerLayer(Sequence * _sequence, var params) :
 	ttm(this,_sequence)
 {
 	addChildControllableContainer(&ttm);
-
 	helpID = "TriggerLayer";
 
+	lockAll = addTrigger("Lock All", "Lock all existing triggers in this layer");
+	unlockAll = addTrigger("Unlock All", "Unlock all existing triggers in this layer");
 }
 
 TriggerLayer::~TriggerLayer()
@@ -32,6 +33,14 @@ bool TriggerLayer::paste()
 	TimeTrigger * p = ttm.addItemFromClipboard(false);
 	if (p == nullptr) return BaseItem::paste();
 	return true;
+}
+
+void TriggerLayer::onContainerTriggerTriggered(Trigger * t)
+{
+	SequenceLayer::onContainerTriggerTriggered(t);
+
+	if (t == lockAll) for (auto &i : ttm.items) i->isLocked->setValue(true);
+	else if (t == unlockAll) for (auto &i : ttm.items) i->isLocked->setValue(false);
 }
 
 var TriggerLayer::getJSONData()

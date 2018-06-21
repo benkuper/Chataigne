@@ -22,8 +22,13 @@ public :
 	~TriggerLayer();
 
 	TimeTriggerManager ttm;
+	
+	Trigger * lockAll;
+	Trigger * unlockAll;
 
 	virtual bool paste() override;
+
+	virtual void onContainerTriggerTriggered(Trigger *) override;
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;

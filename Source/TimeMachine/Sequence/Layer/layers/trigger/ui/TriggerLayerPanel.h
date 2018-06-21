@@ -22,6 +22,10 @@ public:
 	~TriggerLayerPanel();
 	
 	TriggerLayer * triggerLayer;
+	ScopedPointer<TriggerButtonUI> lockAllBT;
+	ScopedPointer<TriggerButtonUI> unlockAllBT;
+
+	void resizedInternalContent(Rectangle<int> &r) override;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(TriggerLayerPanel)
 };
