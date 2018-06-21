@@ -34,7 +34,7 @@ public:
 	Array<Mapping *> getAllMappings();
 	void checkAllActivateActions();
 	void checkAllDeactivateActions();
-
+	void processAllMappings();
 
 	Factory<Processor> factory;
 

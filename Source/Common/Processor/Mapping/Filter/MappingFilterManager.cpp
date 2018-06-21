@@ -65,15 +65,22 @@ Parameter * MappingFilterManager::processFilters()
 void MappingFilterManager::rebuildFilterChain()
 {
 	Parameter * fp = inputSourceParam;
+	lastEnabledFilter = nullptr;
 	for (auto &f : items)
 	{
-		f->setupSource(fp);
-		fp = f->filteredParameter;
+		if (f->enabled->boolValue())
+		{
+			f->setupSource(fp);
+			fp = f->filteredParameter;
+			lastEnabledFilter = f;
+		}
 	}
 }
-void MappingFilterManager::addItemInternal(MappingFilter * , var)
+
+void MappingFilterManager::addItemInternal(MappingFilter *f , var)
 {
 	rebuildFilterChain();
+	f->addAsyncFilterListener(this);
 }
 
 void MappingFilterManager::removeItemInternal(MappingFilter *)
@@ -85,5 +92,17 @@ void MappingFilterManager::reorderItems()
 {
 	BaseManager::reorderItems(); 
 	rebuildFilterChain();
+	baseManagerListeners.call(&BaseManager::Listener::itemsReordered);
+	managerNotifier.addMessage(new ManagerEvent(ManagerEvent::ITEMS_REORDERED));
 }
 
+
+void MappingFilterManager::newMessage(const MappingFilter::FilterEvent & e)
+{
+	if (e.type == MappingFilter::FilterEvent::FILTER_STATE_CHANGED)
+	{
+		rebuildFilterChain();
+		baseManagerListeners.call(&BaseManager::Listener::itemsReordered);
+		managerNotifier.addMessage(new ManagerEvent(ManagerEvent::ITEMS_REORDERED));
+	}
+}

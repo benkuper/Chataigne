@@ -15,7 +15,8 @@
 #include "MappingFilter.h"
 
 class MappingFilterManager :
-	public BaseManager<MappingFilter>
+	public BaseManager<MappingFilter>,
+	public MappingFilter::AsyncListener
 {
 public:
 	MappingFilterManager();
@@ -24,7 +25,8 @@ public:
 	Parameter * inputSourceParam;
 	void setupSource(Parameter * source);
 	void rebuildFilterChain();
-	
+	WeakReference<MappingFilter> getLastEnabledFilter() { return lastEnabledFilter; }
+
 	Parameter * processFilters();
 	Factory<MappingFilter> factory;
 
@@ -33,7 +35,12 @@ public:
 	
 	void reorderItems() override;
 
+	void newMessage(const MappingFilter::FilterEvent &e) override;
+
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MappingFilterManager)
+
+protected:
+	WeakReference<MappingFilter> lastEnabledFilter;
 };
 
 

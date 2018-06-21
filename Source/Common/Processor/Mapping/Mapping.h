@@ -22,7 +22,8 @@ class Mapping :
 	public MappingInput::Listener,
 	public Timer,
 	public MappingFilterManager::BaseManager::AsyncListener,
-	public MappingFilter::FilterListener
+	public MappingFilter::FilterListener,
+	public MappingFilter::AsyncListener
 {
 public:
 	Mapping(bool canBeDisabled = true);
@@ -57,6 +58,8 @@ public:
 	void newMessage(const MappingFilterManager::ManagerEvent &e) override;
 
 	void filteredParamRangeChanged(MappingFilter * mf) override;
+
+	void newMessage(const MappingFilter::FilterEvent &e) override;
 
 	virtual void timerCallback() override;
 

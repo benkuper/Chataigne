@@ -34,6 +34,7 @@ public:
 	virtual Parameter * setupParameterInternal(Parameter * source);
 
 	void onControllableFeedbackUpdateInternal(ControllableContainer *, Controllable * p) override;
+	void onContainerParameterChangedInternal(Parameter *p) override;
 	virtual void filterParamChanged(Parameter * ) {};
 
 	Parameter * process(Parameter * source);
@@ -61,7 +62,7 @@ public:
 
 	class FilterEvent {
 	public:
-		enum Type { FILTER_PARAM_CHANGED };
+		enum Type { FILTER_PARAM_CHANGED, FILTER_STATE_CHANGED };
 		FilterEvent(Type type, MappingFilter * i) : type(type), filter(i) {}
 		Type type;
 		MappingFilter * filter;
@@ -78,6 +79,9 @@ public:
 	virtual String getTypeString() const override { jassert(false); return "[ERROR]"; }
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MappingFilter)
+
+private:
+	JUCE_DECLARE_WEAK_REFERENCEABLE(MappingFilter)
 };
 
 

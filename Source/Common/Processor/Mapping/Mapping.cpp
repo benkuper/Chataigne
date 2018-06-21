@@ -63,8 +63,8 @@ void Mapping::checkFiltersNeedContinuousProcess()
 void Mapping::updateMappingChain()
 {
 	checkFiltersNeedContinuousProcess();
-	Parameter * p = fm.items.size() > 0 ? fm.items[fm.items.size() - 1]->filteredParameter.get() : input.inputReference;
-	
+	Parameter * p = fm.getLastEnabledFilter() != nullptr ? fm.getLastEnabledFilter()->filteredParameter.get() : input.inputReference;
+
 	if (outputParam == nullptr && p == nullptr) return;
 
 	if (outputParam == nullptr || p == nullptr || outputParam->type != p->type)
@@ -91,6 +91,8 @@ void Mapping::updateMappingChain()
 	{
 		outputParam->setRange(p->minimumValue, p->maximumValue);
 	}
+
+	process();
 }
 
 void Mapping::process()
@@ -156,24 +158,38 @@ void Mapping::onContainerParameterChangedInternal(Parameter * p)
 	} else if (p == outputParam)
 	{
 		om.setValue(outputParam->getValue());
+	} else if (p == enabled && enabled->boolValue() && !forceDisabled)
+	{
+			process();
 	}
 }
 
 void Mapping::newMessage(const MappingFilterManager::ManagerEvent & e)
 {
-	if (e.type == MappingFilterManager::ManagerEvent::ITEM_ADDED) e.getItem()->addMappingFilterListener(this);
+	if (e.type == MappingFilterManager::ManagerEvent::ITEM_ADDED)
+	{
+		e.getItem()->addMappingFilterListener(this);
+		e.getItem()->addAsyncFilterListener(this);
+	}
 	updateMappingChain();
 }
 
 void Mapping::filteredParamRangeChanged(MappingFilter * mf)
 {
-	if (fm.items.indexOf(mf) == fm.items.size() - 1)
+	if (mf == fm.getLastEnabledFilter())
 	{
 		//Last item
 		outputParam->setRange(mf->filteredParameter->minimumValue, mf->filteredParameter->maximumValue);
 	}
 }
 
+void Mapping::newMessage(const MappingFilter::FilterEvent & e)
+{
+	if (e.type == MappingFilter::FilterEvent::FILTER_PARAM_CHANGED)
+	{
+		process();
+	}
+}
 
 ProcessorUI * Mapping::getUI()
 {

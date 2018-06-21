@@ -92,6 +92,13 @@ void ProcessorManager::checkAllDeactivateActions()
 	}
 }
 
+void ProcessorManager::processAllMappings()
+{
+	Array<Mapping*> mappings = getAllMappings();
+	for (auto &m : mappings)
+		m->process();
+}
+
 void ProcessorManager::loadJSONDataInternal(var data)
 {
 	BaseManager::loadJSONDataInternal(data);
