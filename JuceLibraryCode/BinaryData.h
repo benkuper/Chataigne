@@ -45,7 +45,7 @@ namespace BinaryData
     const int            playpause_pngSize = 16163;
 
     extern const char*   prevcue_png;
-    const int            prevcue_pngSize = 1043;
+    const int            prevcue_pngSize = 2539;
 
     extern const char*   smallstripe_png;
     const int            smallstripe_pngSize = 1959;
