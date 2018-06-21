@@ -91,6 +91,8 @@ void Mapping::updateMappingChain()
 	{
 		outputParam->setRange(p->minimumValue, p->maximumValue);
 	}
+
+	process();
 }
 
 void Mapping::process()
