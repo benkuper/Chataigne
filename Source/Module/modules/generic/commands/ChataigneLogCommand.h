@@ -23,9 +23,7 @@ public:
 	Type type;
 
 	StringParameter * message;
-	TargetParameter * value;
-
-	var logValue;
+	Parameter * value;
 
 	void setValue(var value) override;
 	void trigger() override;

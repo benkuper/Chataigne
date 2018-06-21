@@ -17,7 +17,11 @@ ChataigneLogCommand::ChataigneLogCommand(ChataigneGenericModule * _module, Comma
 	type = (Type)(int)(params.getProperty("type", MESSAGE));
 
 	message = addStringParameter("Message", "The message to log", type == VALUE?"My value is":"Wubba Lubba Dub Dub");
-	if(type == VALUE && context == ACTION) value = addTargetParameter("Target", "The target to log the value from");
+	if (type == VALUE)
+	{
+		if (context == ACTION) value = addTargetParameter("Target", "The target to log the value from");
+		else if (context == MAPPING) value = addStringParameter("Value", "The value that will be logged", "[notset]");
+	}
 }
 
 ChataigneLogCommand::~ChataigneLogCommand()
@@ -27,7 +31,7 @@ ChataigneLogCommand::~ChataigneLogCommand()
 void ChataigneLogCommand::setValue(var _value)
 {
 	BaseCommand::setValue(_value);
-	logValue = _value;
+	((StringParameter *)value)->setValue(_value.toString());
 }
 
 void ChataigneLogCommand::trigger()
@@ -40,7 +44,7 @@ void ChataigneLogCommand::trigger()
 
 	case VALUE:
 	{
-		String vString = context == ACTION ? String(value->target != nullptr?((Parameter *)value->target.get())->stringValue():"[not set]"):logValue.toString();
+		String vString = context == ACTION ? String(((TargetParameter *)value)->target != nullptr?((Parameter *)((TargetParameter *)value)->target.get())->stringValue():"[not set]"):((StringParameter *)value)->stringValue();
 		LOG(message->stringValue() + " " + vString);
 	}
 		break;
