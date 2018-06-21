@@ -41,6 +41,9 @@ void State::onContainerParameterChangedInternal(Parameter *p)
 			stateListeners.call(&StateListener::stateActivationChanged, this);
 			pm.setForceDisabled(!active->boolValue() || !enabled->boolValue());
 
+			if (enabled->boolValue() && active->boolValue())
+				pm.processAllMappings();
+				
 		} else if(enabled->boolValue())
 		{
 			if (active->boolValue())
@@ -49,6 +52,7 @@ void State::onContainerParameterChangedInternal(Parameter *p)
 				stateListeners.call(&StateListener::stateActivationChanged, this);
 
 				pm.checkAllActivateActions();
+				pm.processAllMappings();
 			} else
 			{
 				pm.checkAllDeactivateActions();
