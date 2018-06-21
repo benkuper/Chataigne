@@ -84,7 +84,11 @@ Parameter * MappingFilter::setupParameterInternal(Parameter * source)
 
 void MappingFilter::onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * p)
 {
-	if (cc == &filterParams) filterParamChanged((Parameter *)p);
+	if (cc == &filterParams)
+	{
+		filterParamChanged((Parameter *)p);
+		mappingFilterAsyncNotifier.addMessage(new FilterEvent(FilterEvent::FILTER_PARAM_CHANGED, this));
+	}
 }
 
 Parameter * MappingFilter::process(Parameter * source)

@@ -163,7 +163,11 @@ void Mapping::onContainerParameterChangedInternal(Parameter * p)
 
 void Mapping::newMessage(const MappingFilterManager::ManagerEvent & e)
 {
-	if (e.type == MappingFilterManager::ManagerEvent::ITEM_ADDED) e.getItem()->addMappingFilterListener(this);
+	if (e.type == MappingFilterManager::ManagerEvent::ITEM_ADDED)
+	{
+		e.getItem()->addMappingFilterListener(this);
+		e.getItem()->addAsyncFilterListener(this);
+	}
 	updateMappingChain();
 }
 
@@ -176,6 +180,13 @@ void Mapping::filteredParamRangeChanged(MappingFilter * mf)
 	}
 }
 
+void Mapping::newMessage(const MappingFilter::FilterEvent & e)
+{
+	if (e.type == MappingFilter::FilterEvent::FILTER_PARAM_CHANGED)
+	{
+		process();
+	}
+}
 
 ProcessorUI * Mapping::getUI()
 {
