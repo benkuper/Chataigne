@@ -12,10 +12,36 @@
 #include "../ResolumeModule.h"
 #include "ui/ResolumeBaseCommandEditor.h"
 
-ResolumeBaseCommand::ResolumeBaseCommand(ResolumeModule * _module, CommandContext context, var params) :
+ResolumeBaseCommand::ResolumeBaseCommand(ResolumeModule * _module, CommandContext context, var params, bool customRebuild) :
 	OSCCommand(_module, context, params),
+	customRebuild(customRebuild),
 	resolumeModule(_module)
 {
+	resolumeModule->version->addParameterListener(this);
+	if(!customRebuild) rebuildParameters();
+}
+
+ResolumeBaseCommand::~ResolumeBaseCommand()
+{
+	if(resolumeModule != nullptr) resolumeModule->version->removeParameterListener(this);
+}
+
+void ResolumeBaseCommand::rebuildParameters()
+{
+	var data = getJSONData();
+
+	//Remove all parameters
+	for (auto &c : resolumeControllables)
+	{
+		if(c != nullptr && !c.wasObjectDeleted()) removeControllable(c);
+	}
+
+	levelParam = nullptr;
+	layerParam = nullptr;
+	clipParam = nullptr;
+
+
+	//Add all
 	multiLevelAccess = params.getProperty("multiLevel", true);
 	String targetLevel = params.getProperty("level", "Clip");
 	addressSuffix = params.getProperty("suffix", "");
@@ -30,23 +56,24 @@ ResolumeBaseCommand::ResolumeBaseCommand(ResolumeModule * _module, CommandContex
 
 	layerParam = addIntParameter("Layer", "The Target layer", 1, 1, 100);
 	String targetClipName = targetLevel == "Column" ? "Column" : "Clip";
-	clipParam = addIntParameter(targetClipName, "The Target "+targetClipName, 1, 1, 100);
-	
+	clipParam = addIntParameter(targetClipName, "The Target " + targetClipName, 1, 1, 100);
+
+	resolumeControllables.add(levelParam);
+	resolumeControllables.add(layerParam);
+	resolumeControllables.add(clipParam);
+
+	//Add internal oness
+	rebuildParametersInternal();
+
+	//Set level
 	levelParam->setValueWithKey(targetLevel);
-
-	resolumeModule->version->addParameterListener(this);
-	
-	/*
-	Level level = (Level)(int)levelParam->getValueData(); 
+	Level level = (Level)(int)levelParam->getValueData();
 	layerParam->hideInEditor = level == COMPOSITION || level == COLUMN;
-	clipParam->hideInEditor = level != CLIP;
-	rebuildAddress();
-	*/
-}
+	clipParam->hideInEditor = level != CLIP && level != COLUMN;
 
-ResolumeBaseCommand::~ResolumeBaseCommand()
-{
-	if(resolumeModule != nullptr) resolumeModule->version->removeParameterListener(this);
+	DBG("Reloading data from before rebuild : " << JSON::toString(data));
+	loadJSONData(data);
+	rebuildAddress();
 }
 
 void ResolumeBaseCommand::rebuildAddress()
@@ -91,7 +118,8 @@ void ResolumeBaseCommand::onExternalParameterChanged(Parameter * p)
 {
 	if (p == resolumeModule->version) 
 	{
-		rebuildAddress();
+		if(customRebuild) rebuildParameters();
+		else rebuildAddress();
 	}
 }
 

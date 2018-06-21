@@ -12,12 +12,34 @@
 #include "../ResolumeModule.h"
 
 ResolumeFXCommand::ResolumeFXCommand(ResolumeModule * _module, CommandContext context, var params) :
-	ResolumeBaseCommand(_module,context,params),
+	ResolumeBaseCommand(_module,context,params, true),
 	valueParam(nullptr),
+	fxParamName(nullptr),
 	fxParamType(nullptr),
-	fxName(nullptr)
+	nameParam(nullptr),
+	fxIndexParam(nullptr),
+	fxName(nullptr),
+	indexParam(nullptr)
 {
-	int resolumeVersion = (int)resolumeModule->version->getValueData();
+	rebuildParameters();
+}
+
+ResolumeFXCommand::~ResolumeFXCommand()
+{
+}
+
+
+void ResolumeFXCommand::rebuildParametersInternal()
+{
+	float resolumeVersion = (float)resolumeModule->version->getValueData();
+
+	//Set to null for later checks
+	fxParamName = nullptr;
+	fxParamType = nullptr;
+	fxIndexParam = nullptr;
+	fxName = nullptr;
+	indexParam = nullptr;
+	nameParam = nullptr;
 
 	fxType = params.getProperty("fxType", "transform");
 
@@ -30,10 +52,10 @@ ResolumeFXCommand::ResolumeFXCommand(ResolumeModule * _module, CommandContext co
 			nameParam->addOption("Width", "width");
 			nameParam->addOption("Height", "height");
 
-			
+
 			String suf = resolumeVersion >= 6 ? "effects/transform/" : "";
 
-			nameParam->addOption("Scale", suf+"scale");
+			nameParam->addOption("Scale", suf + "scale");
 			if (resolumeVersion >= 6)
 			{
 				nameParam->addOption("ScaleW", suf + "scalew");
@@ -53,54 +75,62 @@ ResolumeFXCommand::ResolumeFXCommand(ResolumeModule * _module, CommandContext co
 			nameParam->addOption("Volume", "volume");
 			nameParam->addOption("Pan", "pan");
 		}
-	} else if(fxType == "videofx" || fxType == "vst" || fxType == "source")
+	} else if (fxType == "videofx" || fxType == "vst" || fxType == "source")
 	{
 		if (resolumeVersion < 6)
 		{
 			if (fxType != "source") fxIndexParam = addIntParameter("Effect ID", "Id of the effect, depending on its position in the effect chain", 1, 1, 100);
 			indexParam = addIntParameter("Parameter ID", "Id of the parameter, depending on its position inside in the panel", 1, 1, 100);
-		}else
+		} else //Resolume 6+
 		{
+
 			fxParamType = addEnumParameter("Parameter type", "The type of parameter");
 			fxParamType->addOption("Float", FloatParameter::getTypeStringStatic())->addOption("Integer", IntParameter::getTypeStringStatic())
-					   ->addOption("Boolean", BoolParameter::getTypeStringStatic())->addOption("String", StringParameter::getTypeStringStatic())
-					   ->addOption("Color", ColorParameter::getTypeStringStatic());
-			if(fxType != "source") fxName = addStringParameter("Effect name", "Name of the effeect, either its view name (e.g. \"My Effect\") or its control name (e.g. \"myeffect\")", "");
-			fxParamName = addStringParameter("Parameter name", "Name of the parameter, either its view name (e.g. \"My Param\") or its control name (e.g. \"myparam\")", "");
+				->addOption("Boolean", BoolParameter::getTypeStringStatic())->addOption("String", StringParameter::getTypeStringStatic())
+				->addOption("Color", ColorParameter::getTypeStringStatic());
+			
+			if (resolumeVersion > 6 || (resolumeVersion == 6 && fxType != "source")) fxName = addStringParameter("Effect name", "Name of the effect, either its view name (e.g. \"My Effect\") or its control name (e.g. \"myeffect\")", "myeffect");
+			fxParamName = addStringParameter("Parameter name", "Name of the parameter, either its view name (e.g. \"My Param\") or its control name (e.g. \"myparam\")", "myparam");
 		}
 	}
 
-	setupValueParam();
-	rebuildAddress();
-}
+	if(nameParam != nullptr) resolumeControllables.add(nameParam);
+	if(fxParamName != nullptr) resolumeControllables.add(fxParamName);
+	if(fxIndexParam != nullptr) resolumeControllables.add(fxIndexParam);
+	if(fxParamType != nullptr) resolumeControllables.add(fxParamType);
+	if(fxName != nullptr) resolumeControllables.add(fxName);
+	if(indexParam != nullptr) resolumeControllables.add(indexParam);
 
-ResolumeFXCommand::~ResolumeFXCommand()
-{
+	setupValueParam();
 }
 
 void ResolumeFXCommand::rebuildAddress()
 {
-	int resolumeVersion = (int)resolumeModule->version->getValueData();
+	float resolumeVersion = (float)resolumeModule->version->getValueData();
 
 	if (fxType == "transform") addressSuffix = "video/" + nameParam->getValueData().toString();
 	else if (fxType == "audio") addressSuffix = "audio/" + nameParam->getValueData().toString();
-	else if (resolumeVersion < 6)
+	else if (resolumeVersion == 5)
 	{
-		if (fxType == "videofx") addressSuffix = "video/effect" + fxIndexParam->stringValue() + "/param" + indexParam->stringValue();
-		else if (fxType == "vst") addressSuffix = "audio/effect" + fxIndexParam->stringValue() + "/param" + indexParam->stringValue();
-		else if (fxType == "source") addressSuffix = "video/param" + indexParam->stringValue();
+		String paramId = indexParam == nullptr ? "[error]": indexParam->stringValue();
 
-		if (resolumeVersion == 5) addressSuffix += "/values";
-	} else
+		if (fxType == "videofx") addressSuffix = "video/effect" + fxIndexParam->stringValue() + "/param" + paramId;
+		else if (fxType == "vst") addressSuffix = "audio/effect" + fxIndexParam->stringValue() + "/param" + paramId;
+		else if (fxType == "source") addressSuffix = "video/param" + paramId;
+		 
+		addressSuffix += "/values";
+	} else //Resolume 6+
 	{
 		String fxn = fxName != nullptr ? fxName->stringValue().toLowerCase().replace(" ", "") : "";
 		String fxpn = fxParamName->stringValue().toLowerCase().replace(" ", "");
-
+		String sourceName = resolumeVersion == 6 ? "params" : fxn;
+		
 		if (fxType == "videofx") addressSuffix = "video/effects/" + fxn + "/effect/" + fxpn;
 		else if (fxType == "vst") addressSuffix = "audio/effects/" + fxn + "/effect/" + fxpn;
-		else if (fxType == "source") addressSuffix = "video/source/params/" + fxpn;
+		else if (fxType == "source") addressSuffix = "video/source/"+sourceName+"/" + fxpn;
 	}
 	
+	//setupValueParam();
 
 	ResolumeBaseCommand::rebuildAddress();
 }
@@ -120,7 +150,7 @@ void ResolumeFXCommand::onContainerParameterChanged(Parameter * p)
 
 void ResolumeFXCommand::setupValueParam()
 {
-	int resolumeVersion = (int)resolumeModule->version->getValueData();
+	float resolumeVersion = (float)resolumeModule->version->getValueData();
 
 	if (valueParam != nullptr)
 	{
@@ -134,7 +164,7 @@ void ResolumeFXCommand::setupValueParam()
 	{
 		if (fxParamType == nullptr) valueParam = new FloatParameter("Value", "Target parameter value", 0, 0, 1);
 		else valueParam = dynamic_cast<Parameter *>(ControllableFactory::createControllable(fxParamType->getValueData().toString()));
-		
+		valueParam->setNiceName("Value");
 		if (valueParam != nullptr)
 		{
 			argumentsContainer.addParameter(valueParam);

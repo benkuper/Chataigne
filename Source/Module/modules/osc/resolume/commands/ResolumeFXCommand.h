@@ -36,6 +36,7 @@ public:
 	StringParameter * fxName;
 	StringParameter * fxParamName;
 
+	void rebuildParametersInternal() override;
 	void rebuildAddress() override;
 	void onContainerParameterChanged(Parameter * p) override;
 

@@ -19,20 +19,25 @@ class ResolumeBaseCommand :
 	public OSCCommand
 {
 public:
-	ResolumeBaseCommand(ResolumeModule * _module, CommandContext context, var params);
+	ResolumeBaseCommand(ResolumeModule * _module, CommandContext context, var params, bool customRebuild = false);
 	virtual ~ResolumeBaseCommand();
 
-	enum Level {COMPOSITION,LAYER,CLIP,COLUMN};
+	enum Level { COMPOSITION, LAYER, CLIP, COLUMN };
 
 	ResolumeModule * resolumeModule;
-	
+	bool customRebuild;
+
 	bool multiLevelAccess;
 	EnumParameter * levelParam;
 	IntParameter * layerParam;
 	IntParameter * clipParam;
 
+	Array<WeakReference<Controllable>> resolumeControllables;
+
 	String addressSuffix;
 
+	virtual void rebuildParameters();
+	virtual void rebuildParametersInternal() {}
 	virtual void rebuildAddress() override;
 
 	virtual void onContainerParameterChanged(Parameter *) override;
@@ -43,7 +48,5 @@ public:
 	static BaseCommand * create(ControllableContainer * module, CommandContext context, var params) { return new ResolumeBaseCommand((ResolumeModule *)module, context, params); }
 
 };
-
-
 
 #endif  // RESOLUMEBASECOMMAND_H_INCLUDED
