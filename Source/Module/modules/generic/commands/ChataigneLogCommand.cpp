@@ -20,7 +20,11 @@ ChataigneLogCommand::ChataigneLogCommand(ChataigneGenericModule * _module, Comma
 	if (type == VALUE)
 	{
 		if (context == ACTION) value = addTargetParameter("Target", "The target to log the value from");
-		else if (context == MAPPING) value = addStringParameter("Value", "The value that will be logged", "[notset]");
+		else if (context == MAPPING)
+		{
+			value = addStringParameter("Value", "The value that will be logged", "[notset]");
+			value->setControllableFeedbackOnly(true);
+		}
 	}
 }
 
