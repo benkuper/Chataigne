@@ -57,6 +57,27 @@ void TimeTriggerManagerUI::updateContent()
 void TimeTriggerManagerUI::placeTimeTriggerUI(TimeTriggerUI * ttui)
 {
 	int tx = timeline->getXForTime(ttui->item->time->floatValue());
+	
+	float ttuiWidthTime = timeline->getTimeForX(ttui->getWidth(),false);
+	DBG(ttuiWidthTime << "/" << timeline->item->sequence->totalTime->floatValue());
+
+	float viewEnd = timeline->item->sequence->viewEndTime->floatValue();
+	float totalTime = timeline->item->sequence->totalTime->floatValue();
+	
+	float ttuiTime = totalTime - ttuiWidthTime;
+
+	if (viewEnd >= ttuiTime)
+	{
+		float rel = jmap<float>(viewEnd, ttuiTime, totalTime, 0, 1);
+		int minTx = getWidth() - ttui->getWidth() * rel;
+		int safeTx = jmin(tx, minTx); 
+		ttui->flagXOffset = tx - safeTx;
+		tx = safeTx;
+	} else
+	{
+		ttui->flagXOffset = 0;
+	}
+
 	ttui->setBounds(tx, 0, ttui->getWidth(), getHeight());
 }
 

@@ -25,7 +25,7 @@ TimeTrigger::TimeTrigger(float _time, float flagYPos, const String &name) :
 	time->setValue(_time);
 	flagY->setValue(flagYPos);
 
-	isLocked = addBoolParameter("Locked", "When locked, you can't change time or flag values", false);
+	isLocked = addBoolParameter("Locked", "When locked, you can't change time or flag values by dragging it", false);
 
 	isTriggered->hideInEditor = true;
 	isTriggered->isSavable = false;

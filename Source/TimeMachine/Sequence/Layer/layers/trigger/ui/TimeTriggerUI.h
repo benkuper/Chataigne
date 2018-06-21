@@ -31,6 +31,8 @@ public:
 	int posAtMouseDown;
 	float flagYAtMouseDown;
 
+	int flagXOffset; //to avoid end of layer overflow
+
 	void paint(Graphics &g) override;
 	void resized() override;
 

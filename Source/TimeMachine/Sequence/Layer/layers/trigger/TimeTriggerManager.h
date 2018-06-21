@@ -42,6 +42,8 @@ public:
 
 	void addTriggerAt(float time,float flagYPos);
 	void reorderItems() override;
+
+	void addItemInternal(TimeTrigger * t, var data) override;
 	
 	TimeTrigger * addItemFromClipboard(bool showWarning = true) override;
 	bool canAddItemOfType(const String & typeToCheck) override;
@@ -51,7 +53,7 @@ public:
 	void onControllableFeedbackUpdate(ControllableContainer * cc, Controllable * c) override;
 
 	void sequenceCurrentTimeChanged(Sequence * _sequence, float prevTime, bool evaluateSkippedData) override;
-
+	void sequenceTotalTimeChanged(Sequence *) override;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(TimeTriggerManager)
 };

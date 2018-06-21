@@ -12,7 +12,8 @@
 #include "UI/ChataigneAssetManager.h"
 
 TimeTriggerUI::TimeTriggerUI(TimeTrigger * _tt) :
-	BaseItemUI<TimeTrigger>(_tt, ResizeMode::NONE, false)
+	BaseItemUI<TimeTrigger>(_tt, ResizeMode::NONE, false),
+	flagXOffset(0)
 {
 
 	autoDrawHighlightWhenSelected = false;
@@ -54,7 +55,7 @@ void TimeTriggerUI::paint(Graphics & g)
 
 	g.setColour(item->isSelected?HIGHLIGHT_COLOR:c.brighter());
 	g.drawRect(flagRect);
-	g.drawVerticalLine(0, 0, (float)getHeight());
+	g.drawVerticalLine(flagXOffset, 0, (float)getHeight());
 
 }
 

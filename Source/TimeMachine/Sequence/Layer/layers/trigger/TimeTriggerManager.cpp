@@ -42,6 +42,11 @@ void TimeTriggerManager::reorderItems()
 	BaseManager::reorderItems();
 }
 
+void TimeTriggerManager::addItemInternal(TimeTrigger * t, var data)
+{
+	t->time->setRange(0, sequence->totalTime->floatValue());
+}
+
 TimeTrigger * TimeTriggerManager::addItemFromClipboard(bool showWarning)
 {
 	TimeTrigger * t = BaseManager::addItemFromClipboard(showWarning);
@@ -114,4 +119,9 @@ void TimeTriggerManager::sequenceCurrentTimeChanged(Sequence * /*_sequence*/, fl
 	}
 	
 	
+}
+
+void TimeTriggerManager::sequenceTotalTimeChanged(Sequence *)
+{
+	for(auto & t : items) t->time->setRange(0, sequence->totalTime->floatValue());
 }
