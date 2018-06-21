@@ -91,6 +91,14 @@ void MappingFilter::onControllableFeedbackUpdateInternal(ControllableContainer *
 	}
 }
 
+void MappingFilter::onContainerParameterChangedInternal(Parameter *p)
+{
+	if (p == enabled)
+	{
+		mappingFilterAsyncNotifier.addMessage(new FilterEvent(FilterEvent::FILTER_STATE_CHANGED, this));
+	}
+}
+
 Parameter * MappingFilter::process(Parameter * source)
 {
 	if(!enabled->boolValue()) return source; //default or disabled does nothing

@@ -63,8 +63,8 @@ void Mapping::checkFiltersNeedContinuousProcess()
 void Mapping::updateMappingChain()
 {
 	checkFiltersNeedContinuousProcess();
-	Parameter * p = fm.items.size() > 0 ? fm.items[fm.items.size() - 1]->filteredParameter.get() : input.inputReference;
-	
+	Parameter * p = fm.getLastEnabledFilter() != nullptr ? fm.getLastEnabledFilter()->filteredParameter.get() : input.inputReference;
+
 	if (outputParam == nullptr && p == nullptr) return;
 
 	if (outputParam == nullptr || p == nullptr || outputParam->type != p->type)
@@ -173,7 +173,7 @@ void Mapping::newMessage(const MappingFilterManager::ManagerEvent & e)
 
 void Mapping::filteredParamRangeChanged(MappingFilter * mf)
 {
-	if (fm.items.indexOf(mf) == fm.items.size() - 1)
+	if (mf == fm.getLastEnabledFilter())
 	{
 		//Last item
 		outputParam->setRange(mf->filteredParameter->minimumValue, mf->filteredParameter->maximumValue);
