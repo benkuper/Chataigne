@@ -9,6 +9,7 @@
 */
 
 #include "TimeCueUI.h"
+#include "UI/ChataigneAssetManager.h"
 
 TimeCueUI::TimeCueUI(TimeCue * timeCue) :
 	BaseItemMinimalUI(timeCue)
@@ -17,6 +18,9 @@ TimeCueUI::TimeCueUI(TimeCue * timeCue) :
 	setRepaintsOnMouseActivity(true);
 	autoDrawHighlightWhenSelected = false;
 	setSize(10, 20);
+
+	setTooltip(item->niceName);
+	
 }
 
 TimeCueUI::~TimeCueUI()
@@ -29,8 +33,17 @@ void TimeCueUI::paint(Graphics & g)
 	if (isMouseOver()) c = c.brighter();
 	g.setColour(c);
 	g.fillPath(drawPath);
+	
+	if (item->isLocked->boolValue())
+	{
+		g.setTiledImageFill(ChataigneAssetManager::getInstance()->smallStripeImage, 0, 0, .1f);
+		g.fillPath(drawPath);
+	}
+
 	g.setColour(c.darker());
 	g.strokePath(drawPath, PathStrokeType(1));
+
+
 }
 
 void TimeCueUI::resized()
@@ -54,7 +67,7 @@ void TimeCueUI::mouseDoubleClick(const MouseEvent & e)
 void TimeCueUI::mouseDrag(const MouseEvent & e)
 {
 	BaseItemMinimalUI::mouseDrag(e);
-	cueUIListeners.call(&TimeCueUIListener::cueDragged, this, e);
+	if(!item->isLocked->boolValue()) cueUIListeners.call(&TimeCueUIListener::cueDragged, this, e);
 }
 
 void TimeCueUI::controllableFeedbackUpdateInternal(Controllable * c)

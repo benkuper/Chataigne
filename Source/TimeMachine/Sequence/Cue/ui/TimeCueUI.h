@@ -14,7 +14,8 @@
 #include "../TimeCue.h"
 
 class TimeCueUI :
-	public BaseItemMinimalUI<TimeCue>
+	public BaseItemMinimalUI<TimeCue>,
+	public SettableTooltipClient
 {
 public:
 	TimeCueUI(TimeCue *);

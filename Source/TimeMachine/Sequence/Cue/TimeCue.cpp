@@ -19,6 +19,8 @@ TimeCue::TimeCue(const float & _time) :
 	time = addFloatParameter("Time", "Cue Time", _time, 0, 3600);
 	time->defaultUI = FloatParameter::TIME;
 
+	isLocked = addBoolParameter("Locked", "When locked, you can't change time by dragging it values", false);
+
 	helpID = "TimeCue";
 }
 

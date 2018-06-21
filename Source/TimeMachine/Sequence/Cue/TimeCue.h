@@ -22,6 +22,8 @@ public:
 	~TimeCue();
 
 	FloatParameter * time;
+	BoolParameter * isLocked;
+
 	Sequence * getSequence();
 };
 
