@@ -12,7 +12,8 @@
 #include "UI/ChataigneAssetManager.h"
 
 TimeCueUI::TimeCueUI(TimeCue * timeCue) :
-	BaseItemMinimalUI(timeCue)
+	BaseItemMinimalUI(timeCue),
+	timeAtMouseDown(timeCue->time->floatValue())
 {
 	bgColor = bgColor.brighter();
 	setRepaintsOnMouseActivity(true);
@@ -20,7 +21,8 @@ TimeCueUI::TimeCueUI(TimeCue * timeCue) :
 	setSize(10, 20);
 
 	setTooltip(item->niceName);
-	
+
+	removeMouseListener(this);
 }
 
 TimeCueUI::~TimeCueUI()
@@ -42,8 +44,6 @@ void TimeCueUI::paint(Graphics & g)
 
 	g.setColour(c.darker());
 	g.strokePath(drawPath, PathStrokeType(1));
-
-
 }
 
 void TimeCueUI::resized()
@@ -64,10 +64,23 @@ void TimeCueUI::mouseDoubleClick(const MouseEvent & e)
 	if (e.mods.isCommandDown()) item->remove();
 }
 
+void TimeCueUI::mouseDown(const MouseEvent & e)
+{
+	BaseItemMinimalUI::mouseDown(e);
+	timeAtMouseDown = item->time->floatValue();
+}
+
 void TimeCueUI::mouseDrag(const MouseEvent & e)
 {
 	BaseItemMinimalUI::mouseDrag(e);
 	if(!item->isLocked->boolValue()) cueUIListeners.call(&TimeCueUIListener::cueDragged, this, e);
+}
+
+void TimeCueUI::mouseUp(const MouseEvent & e)
+{
+	BaseItemMinimalUI::mouseUp(e);
+	DBG(item->time->floatValue() << " < > " << timeAtMouseDown);
+	if(item->time->floatValue() != timeAtMouseDown) item->time->setUndoableValue(timeAtMouseDown, item->time->floatValue());
 }
 
 void TimeCueUI::controllableFeedbackUpdateInternal(Controllable * c)
