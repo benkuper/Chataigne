@@ -22,6 +22,8 @@ public:
 	SequenceManagerUI(const String &contentName, SequenceManager *_manager);
 	~SequenceManagerUI();
 
+	void mouseDoubleClick(const MouseEvent &e) override;
+
 	static SequenceManagerUI * create(const String &contentName) { return new SequenceManagerUI(contentName, SequenceManager::getInstance()); }
 
 

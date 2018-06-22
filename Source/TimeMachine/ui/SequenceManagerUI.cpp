@@ -21,3 +21,9 @@ SequenceManagerUI::SequenceManagerUI(const String &contentName, SequenceManager 
 SequenceManagerUI::~SequenceManagerUI()
 {
 }
+
+void SequenceManagerUI::mouseDoubleClick(const MouseEvent & e)
+{
+	BaseManagerShapeShifterUI::mouseDoubleClick(e);
+	manager->addItem();
+}
