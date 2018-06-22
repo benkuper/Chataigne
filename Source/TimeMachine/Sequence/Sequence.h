@@ -66,6 +66,8 @@ public:
 
 	void setCurrentTime(float time, bool forceOverPlaying = true);
 
+	void setBeingEdited(bool value);
+
 	virtual bool paste() override;
 
 	void setMasterAudioModule(AudioModule * module);
@@ -98,11 +100,28 @@ public:
 		virtual void sequenceLooped(Sequence *) {}
 		virtual void sequenceTotalTimeChanged(Sequence *) {}
 		virtual void sequenceMasterAudioModuleChanged(Sequence *) {}
+		virtual void sequenceEditingStateChanged(Sequence *) {}
 	};
 
 	ListenerList<SequenceListener> sequenceListeners;
 	void addSequenceListener(SequenceListener* newListener) { sequenceListeners.add(newListener); }
 	void removeSequenceListener(SequenceListener* listener) { sequenceListeners.remove(listener); }
+
+
+	class SequenceEvent {
+	public:
+		enum Type { EDITING_STATE_CHANGED };
+		SequenceEvent(Type type, Sequence * s) : type(type), sequence(s) {}
+		Type type;
+		Sequence * sequence;
+	};
+
+	QueuedNotifier<SequenceEvent> sequenceNotifier;
+	typedef QueuedNotifier<SequenceEvent>::Listener AsyncListener;
+
+	void addAsyncSequenceListener(AsyncListener* newListener) { sequenceNotifier.addListener(newListener); }
+	void addAsyncCoalescedSequenceListener(AsyncListener* newListener) { sequenceNotifier.addAsyncCoalescedListener(newListener); }
+	void removeAsyncSequenceListener(AsyncListener* listener) { sequenceNotifier.removeListener(listener); }
 
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Sequence)

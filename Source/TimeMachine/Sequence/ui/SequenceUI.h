@@ -16,7 +16,7 @@
 
 class SequenceUI :
 	public BaseItemUI<Sequence>,
-	public Sequence::SequenceListener
+	public Sequence::AsyncListener
 {
 public:
 	SequenceUI(Sequence * output);
@@ -27,6 +27,8 @@ public:
 	void resizedInternalContent(Rectangle<int> &r) override;
 
 	void controllableFeedbackUpdateInternal(Controllable *) override;
+
+	void newMessage(const Sequence::SequenceEvent &e) override;
 
 	JUCE_DECLARE_NON_COPYABLE(SequenceUI)
 };

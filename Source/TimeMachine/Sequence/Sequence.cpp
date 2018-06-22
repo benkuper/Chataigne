@@ -18,7 +18,8 @@ Sequence::Sequence() :
 	BaseItem("Sequence",true),
 	masterAudioModule(nullptr),
 	hiResAudioTime(0),
-	isBeingEdited(false)
+	isBeingEdited(false),
+	sequenceNotifier(10)
 {
 	itemDataType = "Sequence";
 
@@ -88,6 +89,14 @@ void Sequence::setCurrentTime(float time, bool forceOverPlaying)
 		hiResAudioTime = time;
 		if (!isPlaying->boolValue()) currentTime->setValue(time);
 	}else currentTime->setValue(time);
+}
+
+void Sequence::setBeingEdited(bool value)
+{
+	if (isBeingEdited == value) return;
+	isBeingEdited = value;
+	sequenceListeners.call(&SequenceListener::sequenceEditingStateChanged, this);
+	sequenceNotifier.addMessage(new SequenceEvent(SequenceEvent::EDITING_STATE_CHANGED, this));
 }
 
 bool Sequence::paste()

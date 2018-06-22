@@ -35,12 +35,12 @@ SequenceEditor::SequenceEditor(Sequence * _sequence) :
 	timelineManagerUI.viewport.addMouseListener(this, false);
 	addMouseListener(this, true);
 
-	sequence->isBeingEdited = true;
+	sequence->setBeingEdited(true);
 }
 
 SequenceEditor::~SequenceEditor()
 {
-	if (!sequenceRef.wasObjectDeleted()) sequence->isBeingEdited = false; 
+	if (!sequenceRef.wasObjectDeleted()) sequence->setBeingEdited(false); 
 }
 
 void SequenceEditor::paint(Graphics &)

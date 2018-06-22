@@ -21,12 +21,16 @@ SequenceUI::SequenceUI(Sequence * sequence) :
 	timeUI->bgColor = BG_COLOR.darker(.1f);
 	addAndMakeVisible(timeUI);
 
+	bgColor = item->isBeingEdited ? BLUE_COLOR.darker() : BG_COLOR.brighter(.1f); 
+	
 	item->addAsyncContainerListener(this);
+	item->addAsyncSequenceListener(this);
 }
 
 SequenceUI::~SequenceUI()
 {
 	item->removeAsyncContainerListener(this);
+	if (!Engine::mainEngine->isClearing && !inspectable.wasObjectDeleted()) item->removeAsyncSequenceListener(this);
 }
 
 void SequenceUI::resizedInternalContent(Rectangle<int>& r)
@@ -41,5 +45,18 @@ void SequenceUI::controllableFeedbackUpdateInternal(Controllable * c)
 	{
 		if (item->isPlaying->boolValue()) timeUI->setFrontColor(HIGHLIGHT_COLOR);
 		else timeUI->resetFrontColor();
+	}
+}
+
+void SequenceUI::newMessage(const Sequence::SequenceEvent & e)
+{
+	switch (e.type)
+	{
+	case Sequence::SequenceEvent::EDITING_STATE_CHANGED:
+	{
+		bgColor = item->isBeingEdited ? BLUE_COLOR.darker() : BG_COLOR.brighter(.1f);
+		repaint();
+	}
+	break;
 	}
 }

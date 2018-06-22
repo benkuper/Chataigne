@@ -28,8 +28,8 @@ SequenceLayerPanel::~SequenceLayerPanel()
 
 void SequenceLayerPanel::paintOverChildren(Graphics & g)
 {
-	g.setColour(item->color->getColor());
-	g.drawRoundedRectangle(getLocalBounds().reduced(1).toFloat(), 2, 2);
+	//g.setColour(item->color->getColor());
+	//g.drawRoundedRectangle(getLocalBounds().reduced(1).toFloat(), 2, 2);
 	BaseItemUI::paintOverChildren(g);
 }
 
@@ -54,6 +54,7 @@ void SequenceLayerPanel::controllableFeedbackUpdateInternal(Controllable * c)
 	}
 	else if (c == item->color)
 	{
+		bgColor = item->color->getColor();
 		repaint();
 	}
 

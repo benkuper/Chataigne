@@ -14,6 +14,8 @@ SequenceLayerTimeline::SequenceLayerTimeline(SequenceLayer * layer) :
 	BaseItemMinimalUI<SequenceLayer>(layer),
 	timeBarColor(defaultTimeBarColor)
 {
+	bgColor = item->color->getColor();
+
 	item->sequence->addAsyncContainerListener(this);
 	setSize(100, item->uiHeight->intValue());
 
@@ -51,8 +53,8 @@ void SequenceLayerTimeline::paintOverChildren(Graphics & g)
 	g.setColour(timeBarColor);
 	g.drawVerticalLine(getXForTime(item->sequence->currentTime->floatValue()), 0, (float)getHeight());
 
-	g.setColour(item->color->getColor());
-	g.drawRoundedRectangle(getLocalBounds().reduced(1).toFloat(), 2, 2);
+	//g.setColour(item->color->getColor());
+	//g.drawRoundedRectangle(getLocalBounds().reduced(1).toFloat(), 2, 2);
 
 	BaseItemMinimalUI::paintOverChildren(g);
 }
@@ -80,6 +82,10 @@ void SequenceLayerTimeline::controllableFeedbackUpdateInternal(Controllable * c)
 	}
 	else if (c == item->sequence->currentTime)
 	{
+		repaint();
+	} else if (c == item->color)
+	{
+		bgColor = item->color->getColor();
 		repaint();
 	}
 }

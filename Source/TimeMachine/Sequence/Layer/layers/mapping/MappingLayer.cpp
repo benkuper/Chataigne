@@ -16,7 +16,7 @@
 #include "Module/ModuleManager.h"
 
 MappingLayer::MappingLayer(Sequence *_sequence, var params) :
-	SequenceLayer(_sequence, "New Automation Layer"),
+	SequenceLayer(_sequence, "New Mapping Layer"),
 	curveValue(nullptr),
 	mapping(false)
 {
