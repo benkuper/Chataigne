@@ -68,6 +68,7 @@ public:
 	float getFloatArg(OSCArgument a);
 	int getIntArg(OSCArgument a);
 	String getStringArg(OSCArgument a);
+	Colour getColorArg(OSCArgument a);
 
 	void processMessage(const OSCMessage & msg);
 	virtual void processMessageInternal(const OSCMessage &) {}
@@ -86,6 +87,7 @@ public:
 
 
 	static OSCArgument varToArgument(const var &v);
+	static OSCArgument varToColorArgument(const var &v);
 	static var argumentToVar(const OSCArgument &a);
 
 

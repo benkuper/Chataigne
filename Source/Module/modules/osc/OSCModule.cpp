@@ -110,6 +110,7 @@ float OSCModule::getFloatArg(OSCArgument a)
 	if (a.isFloat32()) return a.getFloat32();
 	if (a.isInt32()) return (float)a.getInt32();
 	if (a.isString()) return a.getString().getFloatValue();
+	if (a.isColor()) return a.getColor();
 	return 0;
 }
 
@@ -118,6 +119,7 @@ int OSCModule::getIntArg(OSCArgument a)
 	if (a.isInt32()) return a.getInt32();
 	if (a.isFloat32()) return roundf(a.getFloat32());
 	if (a.isString()) return a.getString().getIntValue();
+	if (a.isColor()) return a.getColor();
 	return 0;
 }
 
@@ -126,7 +128,17 @@ String OSCModule::getStringArg(OSCArgument a)
 	if (a.isString()) return a.getString();
 	if (a.isInt32()) return String(a.getInt32());
 	if (a.isFloat32()) return String(a.getFloat32());
+	if (a.isColor()) return String::toHexString(a.getColor());
 	return "";
+}
+
+Colour OSCModule::getColorArg(OSCArgument a)
+{
+	if (a.isColor()) return Colour(a.getColor());
+	if (a.isString()) return Colour::fromString(a.getString());
+	if (a.isInt32()) return Colour(a.getInt32());
+	if (a.isFloat32()) return Colour(a.getFloat32());
+	return Colours::black;
 }
 
 void OSCModule::processMessage(const OSCMessage & msg)
@@ -254,7 +266,17 @@ OSCArgument OSCModule::varToArgument(const var & v)
 	else if (v.isInt64()) return OSCArgument((int)v);
 	else if (v.isDouble()) return OSCArgument((float)v);
 	else if (v.isString()) return OSCArgument(v.toString());
+	jassert(false);
+	return OSCArgument("error");
+}
 
+OSCArgument OSCModule::varToColorArgument(const var & v)
+{
+	if (v.isBool()) return OSCArgument(v?0xffffff:0x000000,true);
+	else if (v.isInt()) return OSCArgument((int)v, true);
+	else if (v.isInt64()) return OSCArgument((int)v, true);
+	else if (v.isDouble()) return OSCArgument((float)v, true);
+	else if (v.isString()) return OSCArgument(Colour::fromString(v.toString()).getRGBA(),true);
 	jassert(false);
 	return OSCArgument("error");
 }
@@ -264,6 +286,7 @@ var OSCModule::argumentToVar(const OSCArgument & a)
 	if (a.isFloat32()) return var(a.getFloat32());
 	else if (a.isInt32()) return var(a.getInt32());
 	else if (a.isString()) return var(a.getString());
+	else if (a.isColor()) return var((int)a.getColor());
 	return var("error");
 }
 
@@ -306,12 +329,19 @@ void OSCModule::handleRoutedModuleValue(Controllable * c, RouteParams * p)
 	if (c->type != Controllable::TRIGGER)
 	{
 		var v = dynamic_cast<Parameter *>(c)->getValue();
-		if (!v.isArray()) m.addArgument(varToArgument(v));
+
+		if (c->type == Parameter::COLOR) m.addColor(((ColorParameter *)p)->getColor().getRGBA());
 		else
 		{
-			for (int i = 0; i < v.size(); i++) m.addArgument(varToArgument(v[i]));
+			if (!v.isArray())  m.addArgument(varToArgument(v));
+		    else
+			{
+				for (int i = 0; i < v.size(); i++) m.addArgument(varToArgument(v[i]));
+			}
 		}
+		
 	}
+
 	sendOSC(m);
 }
 
