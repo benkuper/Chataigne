@@ -46,7 +46,7 @@ void MappingFilter::setupSource(Parameter * source)
 	if (filteredParameter != nullptr)
 	{
 		filteredParameter->removeParameterListener(this);
-		removeControllable(filteredParameter);
+		removeControllable(filteredParameter.get());
 	}
 	
 	sourceParam = source;
