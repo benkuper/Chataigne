@@ -25,9 +25,9 @@ If you wish to test the latest features and commits, the bleeding-edge section i
 ## Building the software
 
 Chataigne is built on top of the JUCE frameworks. You can find more infos about it there : http://www.juce.com
-So basically, you just need to :
-  - Download JUCE
-  - Download the dependencies (see below)
+Chataigne is using a modified version of JUCE. So basically, you just need to :
+  - Clone the develop-local branch from the JUCE git here : http://github.com/benkuper/JUCE 
+  - Clone the dependencies (see below)
   - Launch the Projucer and open Chataigne.jucer
   - Link the dependencies
   - Save the jucer
@@ -49,7 +49,7 @@ So basically, you just need to :
 ## Troubleshooting
 
 If you have any issue regarding the software, you can post an issue on github (preferred for code-related problems and features),
-there is also the official forum here : http://benjamin.kuperberg.fr/chataigne/forum , more suited for questions, wishes and user-level issues.
+there is also the official forum here : http://benjamin.kuperberg.fr/chataigne/forum more suited for questions, wishes and user-level issues.
 
 ## The Badge Zone
 Linux (x64):  [![Build Status](https://travis-matrix-badges.herokuapp.com/repos/benkuper/Chataigne/branches/master/2)](https://travis-ci.org/benkuper/Chataigne)
