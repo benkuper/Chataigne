@@ -29,9 +29,9 @@ GenericControllableCommand::~GenericControllableCommand()
 
 void GenericControllableCommand::setValueParameter(Parameter * p)
 {
-	if (value != nullptr)
+	if (!value.wasObjectDeleted() && value != nullptr)
 	{
-		removeControllable(value);
+		removeControllable(value.get());
 		clearTargetMappingParameters();
 	}
 
@@ -84,6 +84,12 @@ void GenericControllableCommand::onContainerParameterChanged(Parameter * p)
 				else
 				{
 					Controllable * c = ControllableFactory::createControllable(target->target->getTypeString());
+					if (c == nullptr)
+					{
+						DBG("Should not be null here");
+						jassertfalse;
+					}
+						
 					c->setNiceName("Value");
 					Parameter * tp = dynamic_cast<Parameter *>(c);
 					setValueParameter(tp);

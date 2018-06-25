@@ -30,7 +30,8 @@ public:
 
 	Action action;
 	TargetParameter * target;
-	Parameter * value;
+	WeakReference<Parameter> value;
+	
 
 	void setValueParameter(Parameter * p);
 
