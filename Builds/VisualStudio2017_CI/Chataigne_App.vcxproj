@@ -3571,6 +3571,7 @@
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\controllable\ControllableContainerListener.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\controllable\ControllableFactory.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\controllable\ControllableHelpers.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\controllable\ControllableUtil.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\controllable\Trigger.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\dashboard\ui\DashboardItemManagerUI.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\dashboard\ui\DashboardItemUI.h"/>

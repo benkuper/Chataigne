@@ -7077,6 +7077,9 @@
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\controllable\ControllableHelpers.h">
       <Filter>JUCE Modules\juce_organicui\controllable</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\controllable\ControllableUtil.h">
+      <Filter>JUCE Modules\juce_organicui\controllable</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\controllable\Trigger.h">
       <Filter>JUCE Modules\juce_organicui\controllable</Filter>
     </ClInclude>
