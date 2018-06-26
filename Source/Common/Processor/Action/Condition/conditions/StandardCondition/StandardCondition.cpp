@@ -66,13 +66,15 @@ void StandardCondition::setSourceControllable(WeakReference<Controllable> c)
 		if (comparator != nullptr) oldData = comparator->getJSONData();
 		comparator = ComparatorFactory::createComparatorForControllable(sourceControllable);
 
+		DBG("Old comparator data : " << JSON::toString(oldData));
+
 		if (comparator != nullptr)
 		{
 			if (!oldData.isVoid()) comparator->loadJSONData(oldData);
 			else if (!loadingComparatorData.isVoid())
 			{
 				comparator->loadJSONData(loadingComparatorData);
-				loadingComparatorData = var();
+				//loadingComparatorData = var();
 			}
 			comparator->addComparatorListener(this);
 			comparator->compare();
@@ -83,9 +85,11 @@ void StandardCondition::setSourceControllable(WeakReference<Controllable> c)
 	{
 		if (comparator != nullptr)
 		{
+			loadingComparatorData = comparator->getJSONData();
 			comparator->removeComparatorListener(this);
 			removeChildControllableContainer(comparator);
 			comparator = nullptr;
+			
 		}
 	}
 
