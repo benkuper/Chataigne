@@ -66,7 +66,6 @@ Joystick * InputSystemManager::addJoystick(SDL_Joystick * sdlJ)
 	LOG("Joystick added : " << String(SDL_JoystickName(j->joystick)));
 	inputListeners.call(&InputManagerListener::joystickAdded, j);
 	inputQueuedNotifier.addMessage(new InputSystemEvent(InputSystemEvent::JOYSTICK_ADDED, j));
-	SDL_JoystickClose(j->joystick);
 	return j;
 }
 void InputSystemManager::removeJoystick(Joystick * j)
@@ -76,6 +75,7 @@ void InputSystemManager::removeJoystick(Joystick * j)
 	LOG("Joystick removed : " << String(SDL_JoystickName(j->joystick)));
 	inputListeners.call(&InputManagerListener::joystickRemoved, j);
 	inputQueuedNotifier.addMessage(new InputSystemEvent(InputSystemEvent::JOYSTICK_REMOVED, j));
+	SDL_JoystickClose(j->joystick);
 	delete j;
 }
 
