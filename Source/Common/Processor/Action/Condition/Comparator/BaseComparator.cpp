@@ -43,7 +43,7 @@ void BaseComparator::setValid(bool value)
 void BaseComparator::addCompareOption(const String & name, const Identifier & func)
 {
 	compareFunction->addOption(name, var(func.toString()));
-	//if (compareFunction->enumValues.size() == 1) compareFunction->setValue(name,false,true);
+	if (compareFunction->enumValues.size() == 1) compareFunction->setValue(name,false,true);
 }
 
 void BaseComparator::onContainerParameterChanged(Parameter * p)
