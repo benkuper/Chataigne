@@ -26,6 +26,10 @@ public:
 
 	Module * sourceModule;
 	Module * destModule;
+
+	WeakReference<Inspectable> sourceModuleRef;
+	WeakReference<Inspectable> destModuleRef;
+
 	BaseManager<ModuleRouterValue> sourceValues;
 
 	Trigger * selectAllValues;

@@ -31,6 +31,10 @@ ModuleRouter::~ModuleRouter()
 void ModuleRouter::setSourceModule(Module * m)
 {
 	if (m == sourceModule) return;
+
+	//make sure that destModule is in a null or stable state but not in a fucked state before reassigning all the routerValues
+	if (destModule != nullptr && destModuleRef.wasObjectDeleted()) setDestModule(nullptr);
+
 	if (sourceModule != nullptr)
 	{
 		sourceModule->valuesCC.removeAsyncContainerListener(this);
@@ -43,6 +47,8 @@ void ModuleRouter::setSourceModule(Module * m)
 
 	if (sourceModule != nullptr)
 	{
+		sourceModuleRef = sourceModule;
+
 		sourceModule->valuesCC.addAsyncContainerListener(this);
 		sourceModule->addInspectableListener(this);
 		sourceModule->addControllableContainerListener(this);
@@ -54,7 +60,7 @@ void ModuleRouter::setSourceModule(Module * m)
 			ModuleRouterValue * mrv = new ModuleRouterValue(c, index++);
 			sourceValues.addItem(mrv, var(), false);
 			mrv->forceDisabled = !enabled->boolValue();
-			mrv->setSourceAndOutModule(sourceModule,destModule);
+			mrv->setSourceAndOutModule(sourceModule, destModule);
 		}
 	}
 
@@ -64,7 +70,8 @@ void ModuleRouter::setSourceModule(Module * m)
 void ModuleRouter::setDestModule(Module * m)
 {
 	if (m == destModule) return;
-	if (destModule != nullptr)
+
+	if (!destModuleRef.wasObjectDeleted() && destModule != nullptr)
 	{
 		destModule->removeInspectableListener(this);
 	}
@@ -73,13 +80,17 @@ void ModuleRouter::setDestModule(Module * m)
 
 	if (destModule != nullptr)
 	{
+		destModuleRef = destModule;
 		destModule->addInspectableListener(this);
 	}
 
-	for (auto &mrv : sourceValues.items)
+	if (!sourceModuleRef.wasObjectDeleted())
 	{
-		mrv->setSourceAndOutModule(sourceModule, destModule);
-		mrv->forceDisabled = !enabled->boolValue();
+		for (auto &mrv : sourceValues.items)
+		{
+			mrv->setSourceAndOutModule(sourceModule, destModule);
+			mrv->forceDisabled = !enabled->boolValue();
+		}
 	}
 
 	routerListeners.call(&RouterListener::destModuleChanged, this);
