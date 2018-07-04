@@ -44,7 +44,7 @@ void ColorShiftFilter::processInternal()
 		if (sourceParam->isComplex())
 		{
 			b = sourceParam->value[1];
-			s = sourceParam->value.size() >= 3?sourceParam->value[2]:1;
+			s = sourceParam->value.size() >= 3?(float)sourceParam->value[2]:1;
 		}
 
 		c = Colour::fromHSV(h, s, b, 1);
