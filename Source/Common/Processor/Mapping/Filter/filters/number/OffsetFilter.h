@@ -10,7 +10,7 @@
 
 #pragma once
 
-#include "../MappingFilter.h"
+#include "../../MappingFilter.h"
 
 class OffsetFilter :
 	public MappingFilter

@@ -134,6 +134,8 @@ void Mapping::loadJSONDataInternal(var data)
 
 void Mapping::inputReferenceChanged(MappingInput *)
 {
+	if (Engine::mainEngine->isClearing) return;
+
 	fm.setupSource(input.inputReference);
 	updateMappingChain();
 }

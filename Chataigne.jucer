@@ -300,35 +300,47 @@
                       file="Source/Common/Processor/Mapping/Filter/ui/MappingFilterEditor.h"/>
               </GROUP>
               <GROUP id="{B0B4810E-8573-A36C-4561-1CE52F06C6BA}" name="filters">
-                <FILE id="MB5sgv" name="ConversionFilters.cpp" compile="1" resource="0"
-                      file="Source/Common/Processor/Mapping/Filter/filters/ConversionFilters.cpp"/>
-                <FILE id="zbVVCK" name="ConversionFilters.h" compile="0" resource="0"
-                      file="Source/Common/Processor/Mapping/Filter/filters/ConversionFilters.h"/>
-                <FILE id="cKeic2" name="CropFilter.cpp" compile="1" resource="0" file="Source/Common/Processor/Mapping/Filter/filters/CropFilter.cpp"/>
-                <FILE id="rdaHZm" name="CropFilter.h" compile="0" resource="0" file="Source/Common/Processor/Mapping/Filter/filters/CropFilter.h"/>
-                <FILE id="DvPe0g" name="CurveMapFilter.cpp" compile="1" resource="0"
-                      file="Source/Common/Processor/Mapping/Filter/filters/CurveMapFilter.cpp"/>
-                <FILE id="oGwRe0" name="CurveMapFilter.h" compile="0" resource="0"
-                      file="Source/Common/Processor/Mapping/Filter/filters/CurveMapFilter.h"/>
-                <FILE id="t8znqd" name="InverseFilter.cpp" compile="1" resource="0"
-                      file="Source/Common/Processor/Mapping/Filter/filters/InverseFilter.cpp"/>
-                <FILE id="wjgXwm" name="InverseFilter.h" compile="0" resource="0" file="Source/Common/Processor/Mapping/Filter/filters/InverseFilter.h"/>
-                <FILE id="jiRjzY" name="LagFilter.cpp" compile="1" resource="0" file="Source/Common/Processor/Mapping/Filter/filters/LagFilter.cpp"/>
-                <FILE id="tSaFMu" name="LagFilter.h" compile="0" resource="0" file="Source/Common/Processor/Mapping/Filter/filters/LagFilter.h"/>
-                <FILE id="RkJXbG" name="OffsetFilter.cpp" compile="1" resource="0"
-                      file="Source/Common/Processor/Mapping/Filter/filters/OffsetFilter.cpp"/>
-                <FILE id="GpmNjg" name="OffsetFilter.h" compile="0" resource="0" file="Source/Common/Processor/Mapping/Filter/filters/OffsetFilter.h"/>
+                <GROUP id="{641D0121-A8E2-C0FE-FB59-BF396A67A40C}" name="number">
+                  <FILE id="A56EOa" name="CropFilter.cpp" compile="1" resource="0" file="Source/Common/Processor/Mapping/Filter/filters/number/CropFilter.cpp"/>
+                  <FILE id="Y1uilS" name="CropFilter.h" compile="0" resource="0" file="Source/Common/Processor/Mapping/Filter/filters/number/CropFilter.h"/>
+                  <FILE id="BvilMR" name="CurveMapFilter.cpp" compile="1" resource="0"
+                        file="Source/Common/Processor/Mapping/Filter/filters/number/CurveMapFilter.cpp"/>
+                  <FILE id="qVB2H4" name="CurveMapFilter.h" compile="0" resource="0"
+                        file="Source/Common/Processor/Mapping/Filter/filters/number/CurveMapFilter.h"/>
+                  <FILE id="DuqCwD" name="InverseFilter.cpp" compile="1" resource="0"
+                        file="Source/Common/Processor/Mapping/Filter/filters/number/InverseFilter.cpp"/>
+                  <FILE id="rlXidx" name="InverseFilter.h" compile="0" resource="0" file="Source/Common/Processor/Mapping/Filter/filters/number/InverseFilter.h"/>
+                  <FILE id="n2Q3y7" name="LagFilter.cpp" compile="1" resource="0" file="Source/Common/Processor/Mapping/Filter/filters/number/LagFilter.cpp"/>
+                  <FILE id="xLQBcB" name="LagFilter.h" compile="0" resource="0" file="Source/Common/Processor/Mapping/Filter/filters/number/LagFilter.h"/>
+                  <FILE id="UXISiP" name="MathFilter.cpp" compile="1" resource="0" file="Source/Common/Processor/Mapping/Filter/filters/number/MathFilter.cpp"/>
+                  <FILE id="BPKqhS" name="MathFilter.h" compile="0" resource="0" file="Source/Common/Processor/Mapping/Filter/filters/number/MathFilter.h"/>
+                  <FILE id="JgZZ0J" name="OffsetFilter.cpp" compile="1" resource="0"
+                        file="Source/Common/Processor/Mapping/Filter/filters/number/OffsetFilter.cpp"/>
+                  <FILE id="re34cq" name="OffsetFilter.h" compile="0" resource="0" file="Source/Common/Processor/Mapping/Filter/filters/number/OffsetFilter.h"/>
+                  <FILE id="gYo8Qa" name="SimpleRemapFilter.cpp" compile="1" resource="0"
+                        file="Source/Common/Processor/Mapping/Filter/filters/number/SimpleRemapFilter.cpp"/>
+                  <FILE id="sx4EHQ" name="SimpleRemapFilter.h" compile="0" resource="0"
+                        file="Source/Common/Processor/Mapping/Filter/filters/number/SimpleRemapFilter.h"/>
+                  <FILE id="MxGZXg" name="SimpleSmoothFilter.cpp" compile="1" resource="0"
+                        file="Source/Common/Processor/Mapping/Filter/filters/number/SimpleSmoothFilter.cpp"/>
+                  <FILE id="wT0961" name="SimpleSmoothFilter.h" compile="0" resource="0"
+                        file="Source/Common/Processor/Mapping/Filter/filters/number/SimpleSmoothFilter.h"/>
+                </GROUP>
+                <GROUP id="{B7FF85C8-5933-B0A6-01EB-956029CA3808}" name="conversion">
+                  <FILE id="SZe1T3" name="ConversionFilters.cpp" compile="1" resource="0"
+                        file="Source/Common/Processor/Mapping/Filter/filters/conversion/ConversionFilters.cpp"/>
+                  <FILE id="Labzbe" name="ConversionFilters.h" compile="0" resource="0"
+                        file="Source/Common/Processor/Mapping/Filter/filters/conversion/ConversionFilters.h"/>
+                </GROUP>
+                <GROUP id="{DFEE3DF8-8874-CD04-277C-C8DED50DEBEA}" name="color">
+                  <FILE id="eqC8n5" name="ColorShiftFilter.cpp" compile="1" resource="0"
+                        file="Source/Common/Processor/Mapping/Filter/filters/color/ColorShiftFilter.cpp"/>
+                  <FILE id="Rgwli9" name="ColorShiftFilter.h" compile="0" resource="0"
+                        file="Source/Common/Processor/Mapping/Filter/filters/color/ColorShiftFilter.h"/>
+                </GROUP>
                 <FILE id="Z65PPX" name="ScriptFilter.cpp" compile="1" resource="0"
                       file="Source/Common/Processor/Mapping/Filter/filters/ScriptFilter.cpp"/>
                 <FILE id="Ax7zAS" name="ScriptFilter.h" compile="0" resource="0" file="Source/Common/Processor/Mapping/Filter/filters/ScriptFilter.h"/>
-                <FILE id="SyxSvm" name="SimpleRemapFilter.cpp" compile="1" resource="0"
-                      file="Source/Common/Processor/Mapping/Filter/filters/SimpleRemapFilter.cpp"/>
-                <FILE id="j1DFmG" name="SimpleRemapFilter.h" compile="0" resource="0"
-                      file="Source/Common/Processor/Mapping/Filter/filters/SimpleRemapFilter.h"/>
-                <FILE id="BQJugh" name="SimpleSmoothFilter.cpp" compile="1" resource="0"
-                      file="Source/Common/Processor/Mapping/Filter/filters/SimpleSmoothFilter.cpp"/>
-                <FILE id="sdsG9U" name="SimpleSmoothFilter.h" compile="0" resource="0"
-                      file="Source/Common/Processor/Mapping/Filter/filters/SimpleSmoothFilter.h"/>
               </GROUP>
             </GROUP>
             <GROUP id="{207D2841-DB7C-D3BB-0E72-1B1487D28404}" name="Input">

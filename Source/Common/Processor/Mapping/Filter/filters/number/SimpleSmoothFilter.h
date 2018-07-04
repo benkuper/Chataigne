@@ -11,7 +11,7 @@
 #ifndef SIMPLESMOOTHFILTER_H_INCLUDED
 #define SIMPLESMOOTHFILTER_H_INCLUDED
 
-#include "../MappingFilter.h"
+#include "../../MappingFilter.h"
 
 class SimpleSmoothFilter :
 	public MappingFilter

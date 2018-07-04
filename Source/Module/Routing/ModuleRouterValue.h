@@ -25,6 +25,7 @@ public:
 	StringParameter * customName;
 	WeakReference<Controllable> sourceValue;
 	Module * outModule;
+	WeakReference<Inspectable> outModuleRef;
 
 	bool forceDisabled; //for router enable
 

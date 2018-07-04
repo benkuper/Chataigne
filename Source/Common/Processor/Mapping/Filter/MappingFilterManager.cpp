@@ -9,31 +9,41 @@
 */
 
 #include "MappingFilterManager.h"
-#include "filters/SimpleRemapFilter.h"
-#include "filters/CurveMapFilter.h"
+
 #include "filters/ScriptFilter.h"
-#include "filters/InverseFilter.h"
-#include "filters/SimpleSmoothFilter.h"
-#include "filters/LagFilter.h"
-#include "filters/OffsetFilter.h"
-#include "filters/CropFilter.h"
-#include "filters/ConversionFilters.h"
+
+#include "filters/number/SimpleRemapFilter.h"
+#include "filters/number/CurveMapFilter.h"
+#include "filters/number/InverseFilter.h"
+#include "filters/number/SimpleSmoothFilter.h"
+#include "filters/number/LagFilter.h"
+#include "filters/number/OffsetFilter.h"
+#include "filters/number/CropFilter.h"
+#include "filters/number/MathFilter.h"
+
+#include "filters/conversion/ConversionFilters.h"
+
+#include "filters/color/ColorShiftFilter.h"
+
 
 MappingFilterManager::MappingFilterManager() :
 	BaseManager<MappingFilter>("Filters"),
 	inputSourceParam(nullptr)
 {
 	managerFactory = &factory;
+	factory.defs.add(Factory<MappingFilter>::Definition::createDef("Remap", "Remap", &SimpleRemapFilter::create));
+	factory.defs.add(Factory<MappingFilter>::Definition::createDef("Remap", "Curve Map", &CurveMapFilter::create));
+	factory.defs.add(Factory<MappingFilter>::Definition::createDef("Remap", "Math", &MathFilter::create));
 	factory.defs.add(Factory<MappingFilter>::Definition::createDef("Remap", "Inverse", &InverseFilter::create));
 	factory.defs.add(Factory<MappingFilter>::Definition::createDef("Remap", "Offset", &OffsetFilter::create));
-	factory.defs.add(Factory<MappingFilter>::Definition::createDef("Remap", "Remap", &SimpleRemapFilter::create));
 	factory.defs.add(Factory<MappingFilter>::Definition::createDef("Remap", "Crop", &CropFilter::create));
-	factory.defs.add(Factory<MappingFilter>::Definition::createDef("Remap", "Curve Map", &CurveMapFilter::create));
 	
 	factory.defs.add(Factory<MappingFilter>::Definition::createDef("Conversion", "Convert To Integer", &ToIntFilter::create));
 
 	factory.defs.add(Factory<MappingFilter>::Definition::createDef("Physics", "Smooth", &SimpleSmoothFilter::create));
 	factory.defs.add(Factory<MappingFilter>::Definition::createDef("Physics", "Lag", &LagFilter::create));
+
+	factory.defs.add(Factory<MappingFilter>::Definition::createDef("Color", "Color Shift", &ColorShiftFilter::create));
 
 	factory.defs.add(Factory<MappingFilter>::Definition::createDef("", "Script", &ScriptFilter::create));
 

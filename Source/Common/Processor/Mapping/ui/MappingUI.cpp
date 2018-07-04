@@ -16,7 +16,7 @@ MappingUI::MappingUI(Mapping * mapping) :
 	outputParamUI(nullptr)
 {
 	mapping->addAsyncMappingListener(this);
-	bgColor = MAPPING_COLOR.withSaturation(.2f).darker(1);
+	bgColor = MAPPING_COLOR;
 	updateOutputParamUI();
 }
 
@@ -48,7 +48,7 @@ void MappingUI::resizedInternalHeader(Rectangle<int> & r)
 	ProcessorUI::resizedInternalHeader(r);
 	if (outputParamUI != nullptr)
 	{
-		outputParamUI->setBounds(r.removeFromRight(60).reduced(2));
+		outputParamUI->setBounds(r.removeFromRight(90).reduced(2));
 	}
 }
 

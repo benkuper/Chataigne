@@ -13,11 +13,10 @@
 SequenceLayerPanel::SequenceLayerPanel(SequenceLayer * layer) :
 	BaseItemUI<SequenceLayer>(layer,ResizeMode::VERTICAL)
 {
+	bgColor = item->color->getColor(); 
 	colorUI = item->color->createColorParamUI();
 
 	addAndMakeVisible(colorUI);
-
-
 	setSize(100, item->uiHeight->intValue());
 }
 

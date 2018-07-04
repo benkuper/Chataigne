@@ -16,7 +16,6 @@ MappingLayerPanel::MappingLayerPanel(MappingLayer * layer) :
 	mappingLayer(layer)
 {
 
-	bgColor = MAPPING_COLOR.withSaturation(.2f).darker(1);
 	//modeUI = mappingLayer->mode->createUI();
 	//addAndMakeVisible(modeUI);
 
@@ -52,27 +51,26 @@ void MappingLayerPanel::resizedInternalHeader(Rectangle<int>& r)
 
 void MappingLayerPanel::resizedInternalContent(Rectangle<int>& r)
 {
+	Rectangle<int> cr = r.reduced(2, 0);
+
 	if (snapUI != nullptr)
 	{
-		//r.setHeight(r.getHeight);
-		Rectangle<int> cr = r.reduced(2, 0);
 		Rectangle<int> scr = cr.removeFromTop(20);
 		snapUI->setBounds(scr.removeFromLeft(scr.getHeight()));
 		scr.reduce(0, 2);
 		scr.removeFromLeft(10);
-		snapSensitivityUI->setBounds(scr);	
+		snapSensitivityUI->setBounds(scr);
 
 		cr.removeFromTop(2);
-
-		if (mappingOutputUI != nullptr)
-		{
-			mappingOutputUI->setBounds(cr.removeFromTop(14));
-			cr.removeFromTop(2);
-		}
-
-		automationInspector->setBounds(cr);
-		
 	}
+
+	if (mappingOutputUI != nullptr)
+	{
+		mappingOutputUI->setBounds(cr.removeFromTop(14));
+		cr.removeFromTop(2);
+	}
+	
+	if(automationInspector != nullptr) automationInspector->setBounds(cr);
 }
 
 void MappingLayerPanel::newMessage(const Mapping::MappingEvent & e)

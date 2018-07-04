@@ -125,15 +125,17 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/MappingFilter_806fb652.o \
   $(JUCE_OBJDIR)/MappingFilterManager_2c745d85.o \
   $(JUCE_OBJDIR)/MappingFilterEditor_f7157696.o \
-  $(JUCE_OBJDIR)/ConversionFilters_b963b15d.o \
-  $(JUCE_OBJDIR)/CropFilter_481b2f1a.o \
-  $(JUCE_OBJDIR)/CurveMapFilter_75770fb7.o \
-  $(JUCE_OBJDIR)/InverseFilter_e1c4de20.o \
-  $(JUCE_OBJDIR)/LagFilter_219d5b82.o \
-  $(JUCE_OBJDIR)/OffsetFilter_3759d61d.o \
+  $(JUCE_OBJDIR)/CropFilter_98bb03c6.o \
+  $(JUCE_OBJDIR)/CurveMapFilter_1384ae63.o \
+  $(JUCE_OBJDIR)/InverseFilter_3972b9f4.o \
+  $(JUCE_OBJDIR)/LagFilter_b09a4156.o \
+  $(JUCE_OBJDIR)/MathFilter_14041a3e.o \
+  $(JUCE_OBJDIR)/OffsetFilter_df572fc9.o \
+  $(JUCE_OBJDIR)/SimpleRemapFilter_f05c323b.o \
+  $(JUCE_OBJDIR)/SimpleSmoothFilter_24b6ca36.o \
+  $(JUCE_OBJDIR)/ConversionFilters_f819eebe.o \
+  $(JUCE_OBJDIR)/ColorShiftFilter_9fafa455.o \
   $(JUCE_OBJDIR)/ScriptFilter_49f85c55.o \
-  $(JUCE_OBJDIR)/SimpleRemapFilter_1d686067.o \
-  $(JUCE_OBJDIR)/SimpleSmoothFilter_9930618a.o \
   $(JUCE_OBJDIR)/MappingInputEditor_3aad72e6.o \
   $(JUCE_OBJDIR)/MappingInput_d2e57b44.o \
   $(JUCE_OBJDIR)/MappingOutputManagerEditor_c1da629b.o \
@@ -643,49 +645,59 @@ $(JUCE_OBJDIR)/MappingFilterEditor_f7157696.o: ../../Source/Common/Processor/Map
 	@echo "Compiling MappingFilterEditor.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
-$(JUCE_OBJDIR)/ConversionFilters_b963b15d.o: ../../Source/Common/Processor/Mapping/Filter/filters/ConversionFilters.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling ConversionFilters.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/CropFilter_481b2f1a.o: ../../Source/Common/Processor/Mapping/Filter/filters/CropFilter.cpp
+$(JUCE_OBJDIR)/CropFilter_98bb03c6.o: ../../Source/Common/Processor/Mapping/Filter/filters/number/CropFilter.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling CropFilter.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
-$(JUCE_OBJDIR)/CurveMapFilter_75770fb7.o: ../../Source/Common/Processor/Mapping/Filter/filters/CurveMapFilter.cpp
+$(JUCE_OBJDIR)/CurveMapFilter_1384ae63.o: ../../Source/Common/Processor/Mapping/Filter/filters/number/CurveMapFilter.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling CurveMapFilter.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
-$(JUCE_OBJDIR)/InverseFilter_e1c4de20.o: ../../Source/Common/Processor/Mapping/Filter/filters/InverseFilter.cpp
+$(JUCE_OBJDIR)/InverseFilter_3972b9f4.o: ../../Source/Common/Processor/Mapping/Filter/filters/number/InverseFilter.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling InverseFilter.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
-$(JUCE_OBJDIR)/LagFilter_219d5b82.o: ../../Source/Common/Processor/Mapping/Filter/filters/LagFilter.cpp
+$(JUCE_OBJDIR)/LagFilter_b09a4156.o: ../../Source/Common/Processor/Mapping/Filter/filters/number/LagFilter.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling LagFilter.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
-$(JUCE_OBJDIR)/OffsetFilter_3759d61d.o: ../../Source/Common/Processor/Mapping/Filter/filters/OffsetFilter.cpp
+$(JUCE_OBJDIR)/MathFilter_14041a3e.o: ../../Source/Common/Processor/Mapping/Filter/filters/number/MathFilter.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling MathFilter.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/OffsetFilter_df572fc9.o: ../../Source/Common/Processor/Mapping/Filter/filters/number/OffsetFilter.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling OffsetFilter.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/SimpleRemapFilter_f05c323b.o: ../../Source/Common/Processor/Mapping/Filter/filters/number/SimpleRemapFilter.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling SimpleRemapFilter.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/SimpleSmoothFilter_24b6ca36.o: ../../Source/Common/Processor/Mapping/Filter/filters/number/SimpleSmoothFilter.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling SimpleSmoothFilter.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/ConversionFilters_f819eebe.o: ../../Source/Common/Processor/Mapping/Filter/filters/conversion/ConversionFilters.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling ConversionFilters.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/ColorShiftFilter_9fafa455.o: ../../Source/Common/Processor/Mapping/Filter/filters/color/ColorShiftFilter.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling ColorShiftFilter.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/ScriptFilter_49f85c55.o: ../../Source/Common/Processor/Mapping/Filter/filters/ScriptFilter.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling ScriptFilter.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/SimpleRemapFilter_1d686067.o: ../../Source/Common/Processor/Mapping/Filter/filters/SimpleRemapFilter.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling SimpleRemapFilter.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/SimpleSmoothFilter_9930618a.o: ../../Source/Common/Processor/Mapping/Filter/filters/SimpleSmoothFilter.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling SimpleSmoothFilter.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/MappingInputEditor_3aad72e6.o: ../../Source/Common/Processor/Mapping/Input/ui/MappingInputEditor.cpp

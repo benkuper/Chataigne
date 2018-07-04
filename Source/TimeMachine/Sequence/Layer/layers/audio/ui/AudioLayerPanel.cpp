@@ -14,7 +14,6 @@ AudioLayerPanel::AudioLayerPanel(AudioLayer * layer) :
 	SequenceLayerPanel(layer),
 	audioLayer(layer)
 {
-	bgColor = AUDIO_COLOR.withSaturation(.2f).darker(1);
 	
 	moduleChooser.setTextWhenNoChoicesAvailable("No audio module");
 	moduleChooser.setTextWhenNothingSelected("Choose an audio module");
