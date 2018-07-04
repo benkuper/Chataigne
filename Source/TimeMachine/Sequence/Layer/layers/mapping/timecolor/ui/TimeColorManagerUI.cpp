@@ -47,14 +47,17 @@ void TimeColorManagerUI::paint(Graphics & g)
 	Rectangle<int> r = getLocalBounds();
 	
 	g.setColour(manager->currentColor->getColor());
-	g.fillRect(r.removeFromBottom(20).reduced(2,7));
+	g.fillRect(r.removeFromBottom(16).reduced(2,7));
 
 	manager->gradient.point1.setX(getXForPos(0));
 	manager->gradient.point2.setX(getXForPos(manager->positionMax));
 
 	g.fillCheckerBoard(r.toFloat(), 12, 12, Colours::white, Colours::white.darker(.2f));
-	g.setGradientFill(manager->gradient);
-	g.fillRect(r);
+	if (!manager->items.isEmpty())
+	{
+		g.setGradientFill(manager->gradient);
+		g.fillRect(r);
+	}
 }
 
 void TimeColorManagerUI::resized()

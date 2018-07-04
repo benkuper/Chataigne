@@ -59,7 +59,7 @@ void TimeColorManager::setPositionMax(float val)
 
 Colour TimeColorManager::getColorForPosition(const float & time) const
 {
-	if (items.isEmpty()) return Colours::black;
+	if (items.isEmpty()) return Colours::transparentBlack;
 	if (items.size() == 1) return items[0]->color->getColor();
 
 	return gradient.getColourAtPosition(time / positionMax);
@@ -82,9 +82,10 @@ void TimeColorManager::rebuildGradient()
 
 TimeColor * TimeColorManager::addColorAt(float time, Colour color)
 {
+	if (items.isEmpty())  color = color.withAlpha(1.0f); //if only one color, force a non-transparent one to avoid confusion
 	TimeColor * t = new TimeColor(time, color);
 	BaseManager::addItem(t);
-
+	rebuildGradient();
 	return t;
 }
 
