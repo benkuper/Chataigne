@@ -1240,8 +1240,8 @@
                        cppLanguageStandard="c++11" cppLibType="libc++" enablePluginBinaryCopyStep="1"
                        osxCompatibility="10.9 SDK" libraryPath="../../External/servus/lib/osx/debug&#10;../../External/ossia/lib/osx"/>
         <CONFIGURATION name="Release" isDebug="0" optimisation="3" targetName="Chataigne"
-                       headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/ossia/include"
-                       enablePluginBinaryCopyStep="1" osxCompatibility="10.9 SDK" libraryPath="../../External/servus/lib/osx/release&#10;../../External/ossia/lib/osx"/>
+                       headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/dnssd/include"
+                       enablePluginBinaryCopyStep="1" osxCompatibility="10.9 SDK" libraryPath="../../External/servus/lib/osx/release"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_video" path="~/JUCE/modules"/>
