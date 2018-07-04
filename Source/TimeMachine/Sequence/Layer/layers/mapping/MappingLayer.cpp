@@ -37,11 +37,14 @@ MappingLayer::MappingLayer(Sequence *_sequence, var params) :
 	mode->addOption("Color (RGBA)", MODE_COLOR);
 	mode->setValueWithData((Mode)(int)params.getProperty("mode", MODE_1D));
 	mode->hideInEditor = true;
-	if (mode->getValueDataAsEnum<Mode>() == MODE_COLOR) setNiceName("New Color Layer");
 
+	Mode m = mode->getValueDataAsEnum<Mode>();
+	if (m == MODE_COLOR) setNiceName("New Color Layer");
+
+	color->setColor(BG_COLOR.brighter(.1f));
 	
 	setupMappingForCurrentMode();
-	uiHeight->setValue(120);
+	uiHeight->setValue(m == MODE_COLOR?50:120);
 }
 
 MappingLayer::~MappingLayer()

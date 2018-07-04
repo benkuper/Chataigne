@@ -18,6 +18,7 @@ TriggerLayer::TriggerLayer(Sequence * _sequence, var params) :
 {
 	addChildControllableContainer(&ttm);
 	helpID = "TriggerLayer";
+	color->setColor(ACTION_COLOR);
 
 	lockAll = addTrigger("Lock All", "Lock all existing triggers in this layer");
 	unlockAll = addTrigger("Unlock All", "Unlock all existing triggers in this layer");

@@ -17,7 +17,8 @@ MappingLayerTimeline::MappingLayerTimeline(MappingLayer * layer) :
 	mappingLayer(layer)
 {
 	setInterceptsMouseClicks(true, true);
-	bgColor = MAPPING_COLOR.withSaturation(.2f).darker(1);
+	
+	
 	setupUIForLayerMode();
 	timeBarColor = mappingLayer->recorder.arm->boolValue() ? Colours::red : defaultTimeBarColor;
 	updateContent();
