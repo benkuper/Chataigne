@@ -135,7 +135,12 @@ void OSCCommand::trigger()
 		case Controllable::INT: m.addInt32(p->intValue()); break;
 		case Controllable::FLOAT: m.addFloat32(p->floatValue()); break;
 		case Controllable::STRING: m.addString(p->stringValue()); break;
-		case Controllable::COLOR: m.addColor(((ColorParameter *)p)->getColor().getRGBA()); break;
+		case Controllable::COLOR:
+		{
+			Colour c = ((ColorParameter*)p)->getColor();
+			m.addColor(OSCColor(c.getRed(), c.getGreen(), c.getBlue(), c.getAlpha()));
+		}
+		break;
 		case Controllable::POINT2D:
 			m.addFloat32(((Point2DParameter *)a)->x);
 			m.addFloat32(((Point2DParameter *)a)->y);
