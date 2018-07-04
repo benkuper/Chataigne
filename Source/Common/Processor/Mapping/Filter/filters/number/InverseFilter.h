@@ -11,7 +11,7 @@
 #ifndef INVERSEFILTER_H_INCLUDED
 #define INVERSEFILTER_H_INCLUDED
 
-#include "../MappingFilter.h"
+#include "../../MappingFilter.h"
 
 class InverseFilter :
 	public MappingFilter

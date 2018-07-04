@@ -11,7 +11,7 @@
 #ifndef SIMPLEREMAPFILTER_H_INCLUDED
 #define SIMPLEREMAPFILTER_H_INCLUDED
 
-#include "../MappingFilter.h"
+#include "../../MappingFilter.h"
 
 class SimpleRemapFilter :
 	public MappingFilter

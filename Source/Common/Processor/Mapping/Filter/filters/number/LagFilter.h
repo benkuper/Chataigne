@@ -11,7 +11,7 @@
 #ifndef LAGFILTER_H_INCLUDED
 #define LAGFILTER_H_INCLUDED
 
-#include "../MappingFilter.h"
+#include "../../MappingFilter.h"
 
 class LagFilter :
 	public MappingFilter,
