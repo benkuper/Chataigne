@@ -13,9 +13,9 @@
 #include "ui/ResolumeBaseCommandEditor.h"
 
 ResolumeBaseCommand::ResolumeBaseCommand(ResolumeModule * _module, CommandContext context, var params, bool customRebuild) :
-	OSCCommand(_module, context, params),
-	customRebuild(customRebuild),
-	resolumeModule(_module)
+    OSCCommand(_module, context, params),
+    resolumeModule(_module),
+	customRebuild(customRebuild)
 {
 	resolumeModule->version->addParameterListener(this);
 	if(!customRebuild) rebuildParameters();

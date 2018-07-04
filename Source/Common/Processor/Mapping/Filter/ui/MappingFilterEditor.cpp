@@ -55,6 +55,9 @@ void MappingFilterEditor::newMessage(const MappingFilter::FilterEvent & e)
 	case MappingFilter::FilterEvent::FILTER_PARAM_CHANGED:
 		filteredParamChangedAsync(e.filter);
 		break;
+            
+        default:
+            break;
 	}
 }
 

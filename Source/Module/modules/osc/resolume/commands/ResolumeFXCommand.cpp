@@ -13,13 +13,13 @@
 
 ResolumeFXCommand::ResolumeFXCommand(ResolumeModule * _module, CommandContext context, var params) :
 	ResolumeBaseCommand(_module,context,params, true),
-	valueParam(nullptr),
-	fxParamName(nullptr),
-	fxParamType(nullptr),
-	nameParam(nullptr),
-	fxIndexParam(nullptr),
-	fxName(nullptr),
-	indexParam(nullptr)
+    nameParam(nullptr),
+    fxIndexParam(nullptr),
+    valueParam(nullptr),
+    indexParam(nullptr),
+    fxParamType(nullptr),
+    fxName(nullptr),
+	fxParamName(nullptr)
 {
 	rebuildParameters();
 }
