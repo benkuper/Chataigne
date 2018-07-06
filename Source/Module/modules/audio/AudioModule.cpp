@@ -61,7 +61,7 @@ AudioModule::AudioModule(const String & name) :
 	graph.prepareToPlay(currentSampleRate, currentBufferSize);
 
 	//graph.addNode(new AudioProcessorGraph::AudioGraphIOProcessor(AudioProcessorGraph::AudioGraphIOProcessor::audioInputNode), 1);
-	graph.addNode(new AudioProcessorGraph::AudioGraphIOProcessor(AudioProcessorGraph::AudioGraphIOProcessor::audioOutputNode), 2);
+	graph.addNode(new AudioProcessorGraph::AudioGraphIOProcessor(AudioProcessorGraph::AudioGraphIOProcessor::audioOutputNode), AudioProcessorGraph::NodeID(2));
 	player.setProcessor(&graph);
 
 	addChildControllableContainer(&hs);

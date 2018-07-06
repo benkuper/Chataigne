@@ -73,7 +73,7 @@ void AudioLayer::setAudioModule(AudioModule * newModule)
         
 		currentProcessor = new AudioLayerProcessor(this);
 		
-		graphID = audioModule->uidIncrement++;
+		graphID = AudioProcessorGraph::NodeID(audioModule->uidIncrement++);
 		audioModule->graph.addNode(currentProcessor, graphID);
 		
 		int numChannels = audioModule->graph.getMainBusNumOutputChannels();
@@ -159,7 +159,7 @@ void AudioLayer::updateSelectedOutChannels()
 		if (outChannels[i]->boolValue())
 		{
 			selectedOutChannels.add(i);
-			audioModule->graph.addConnection({{graphID, index }, { AUDIO_OUTPUT_GRAPH_ID, i } });
+			audioModule->graph.addConnection({{AudioProcessorGraph::NodeID(graphID), index }, {AudioProcessorGraph::NodeID(AUDIO_OUTPUT_GRAPH_ID), i } });
 			index++;
 			DBG("Send out to channel : " << outChannels[i]->niceName);
 		}
