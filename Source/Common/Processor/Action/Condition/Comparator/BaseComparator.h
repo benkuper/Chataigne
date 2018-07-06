@@ -81,7 +81,7 @@ public:
 	ParameterComparator(Controllable *source);
 	virtual ~ParameterComparator();
 
-	Parameter * sourceParameter;
+	WeakReference<Parameter> sourceParameter;
 
 	const Identifier valueChangeId = "valueChange";
 	const Identifier always = "always";

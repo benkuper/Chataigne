@@ -100,7 +100,7 @@ ParameterComparator::ParameterComparator(Controllable * source) :
 
 ParameterComparator::~ParameterComparator()
 {
-	sourceParameter->removeParameterListener(this);
+    if(!sourceParameter.wasObjectDeleted()) sourceParameter->removeParameterListener(this);
 }
 
 void ParameterComparator::onExternalParameterChanged(Parameter * p)
