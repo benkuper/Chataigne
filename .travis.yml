@@ -79,7 +79,7 @@ install:
     export CXX=/usr/bin/g++;
     echo ${CC};
     echo ${CXX};
-    apt-get install -qq git libfreetype6-dev libx11-dev libxinerama-dev libxrandr-dev libxcursor-dev libxcomposite-dev mesa-common-dev libasound2-dev freeglut3-dev libcurl4-gnutls-dev+ libasound2-dev libjack-dev libbluetooth-dev libgtk-3-dev libwebkit2gtk-4.0-dev ftp-upload wget zip unzip;
+    apt-get install -qq git libfreetype6-dev libx11-dev libxinerama-dev libxrandr-dev libxcursor-dev libxcomposite-dev mesa-common-dev libasound2-dev freeglut3-dev libcurl4-gnutls-dev+ libasound2-dev libjack-dev libbluetooth-dev libgtk-3-dev libwebkit2gtk-4.0-dev curl wget zip unzip;
     cd ~;
     pwd;
     git clone --depth=1 --branch=develop-local https://github.com/benkuper/JUCE.git JUCE;
