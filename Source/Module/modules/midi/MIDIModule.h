@@ -8,12 +8,31 @@
   ==============================================================================
 */
 
-#ifndef MIDIMODULE_H_INCLUDED
-#define MIDIMODULE_H_INCLUDED
+#pragma once
 
 #include "Module/Module.h"
 #include "Common/MIDI/MIDIManager.h"
 #include "Common/MIDI/MIDIDeviceParameter.h"
+
+class MIDIValueParameter :
+	public IntParameter
+{
+public:
+	enum Type { NOTE_ON, NOTE_OFF, CONTROL_CHANGE, SYSEX };
+
+	MIDIValueParameter(const String &name, const String &description, int value, int channel, int pitchOrNumber, Type t) :
+		IntParameter(name, description, value, 0, 127),
+		type(t),
+		channel(channel),
+		pitchOrNumber(pitchOrNumber)
+	{}
+
+	~MIDIValueParameter() {}
+
+	Type type;
+	int channel;
+	int pitchOrNumber;
+};
 
 class MIDIModule :
 	public Module,
@@ -25,6 +44,7 @@ public:
 
 	MIDIDeviceParameter * midiParam;
 	BoolParameter * autoAdd;
+	BoolParameter * autoFeedback;
 
 	MIDIInputDevice * inputDevice;
 	MIDIOutputDevice * outputDevice;
@@ -43,7 +63,7 @@ public:
 	virtual void noteOffReceived(const int &channel, const int &pitch, const int &velocity) override;
 	virtual void controlChangeReceived(const int &channel, const int &number, const int &value) override;
 
-	void updateValue(const int &channel, const String &n, const int &val);
+	void updateValue(const int &channel, const String &n, const int &val, const MIDIValueParameter::Type &type, const int &pitchOrNumber);
 
 	//Routing
 	class MIDIRouteParams :
@@ -70,7 +90,3 @@ public:
 
 	//InspectableEditor * getEditor(bool isRoot) override;
 };
-
-
-
-#endif  // MIDIMODULE_H_INCLUDED

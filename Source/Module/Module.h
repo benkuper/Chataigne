@@ -54,7 +54,7 @@ public:
 	//help
     virtual String getHelpID() override;
 
-
+	bool isControllableInValuesContainer(Controllable * c);
 	Array<WeakReference<Controllable>> getValueControllables();
 	OwnedArray<ControllableContainer> customModuleContainers; //for user-custom modules
 	Array<CommandDefinition *> getCommands(bool includeTemplateCommands = true);
@@ -62,6 +62,8 @@ public:
 
 	PopupMenu getCommandMenu(int offset, CommandContext context);
 	CommandDefinition * getCommandDefinitionForItemID(int itemID);
+
+	
 
 	class RouteParams :
 		public ControllableContainer

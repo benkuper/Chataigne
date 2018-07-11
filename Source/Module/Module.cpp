@@ -84,6 +84,13 @@ String Module::getHelpID()
 	return getTypeString();
 }
 
+bool Module::isControllableInValuesContainer(Controllable * c)
+{
+	ControllableContainer * cc = c->parentContainer;
+	while (cc != nullptr && cc != &valuesCC) cc = cc->parentContainer;
+	return cc == &valuesCC;
+}
+
 Array<WeakReference<Controllable>> Module::getValueControllables()
 {
 	return valuesCC.getAllControllables(true);

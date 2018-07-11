@@ -24,21 +24,22 @@ public:
 
 	BoolParameter * autoAdd;
 	BoolParameter * splitArgs;
+	
+	BoolParameter * autoFeedback;
 
 	UserOSCCommandModelManager umm;
 
-
 	void processMessageInternal(const OSCMessage &msg) override;
-
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
+
+	void onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c) override;
 
 	static CustomOSCModule * create() { return new CustomOSCModule(); }
 	virtual String getDefaultTypeString() const override { return "OSC"; }
 
 	virtual void setupModuleFromJSONData(var data) override;
-	
 
 	//ModelManager callbacks
 	void itemAdded(UserOSCCommandModel * model) override;

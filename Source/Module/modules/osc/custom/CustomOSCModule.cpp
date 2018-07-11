@@ -24,6 +24,9 @@ CustomOSCModule::CustomOSCModule() :
 	splitArgs = moduleParams.addBoolParameter("Split Arguments", "If checked, a message with multiple arguments will be exploded in multliple values", false);
 	splitArgs->isTargettable = false;
 
+	autoFeedback = moduleParams.addBoolParameter("Auto Feedback", "If checked, all changed values will be resent automatically to the outputs", false);
+	autoFeedback->isTargettable = false;
+
 	defManager.add(CommandDefinition::createDef(this, "", "Custom Message", &CustomOSCCommand::create));
 	
 	addChildControllableContainer(&umm);
@@ -73,7 +76,7 @@ void CustomOSCModule::processMessageInternal(const OSCMessage & msg)
 					c->isCustomizableByUser = true;
 					c->isRemovableByUser = true;
 					c->saveValueOnly = false;
-					c->isControllableFeedbackOnly = true;
+					//c->isControllableFeedbackOnly = true;
 					if (c->type != Controllable::TRIGGER) ((Parameter *)c)->autoAdaptRange = true;
 				}
 			}
@@ -204,7 +207,7 @@ void CustomOSCModule::processMessageInternal(const OSCMessage & msg)
 			c->isCustomizableByUser = true;
 			c->isRemovableByUser = true;
 			c->saveValueOnly = false;
-			c->setControllableFeedbackOnly(true);
+			//c->setControllableFeedbackOnly(true);
 
 			if (c->type != Controllable::TRIGGER) ((Parameter *)c)->autoAdaptRange = true;
 
@@ -231,7 +234,33 @@ void CustomOSCModule::loadJSONDataInternal(var data)
 	//valuesCC.orderControllablesAlphabetically();
 	umm.loadJSONData(data.getProperty("models", var()),true);
 
-	for (auto & v : valuesCC.controllables) v->setControllableFeedbackOnly(true);
+	//for (auto & v : valuesCC.controllables) v->setControllableFeedbackOnly(true);
+}
+
+void CustomOSCModule::onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c)
+{
+	OSCModule::onControllableFeedbackUpdateInternal(cc, c); 
+
+	if (autoFeedback->boolValue())
+	{
+		if(isControllableInValuesContainer(c))
+		{
+			OSCMessage m(c->niceName);
+			if (c->type == Controllable::TRIGGER) sendOSC(m);
+			else
+			{
+				Parameter * p = static_cast<Parameter *>(c);
+				if (p != nullptr)
+				{
+					if (c->type == Controllable::COLOR) m.addArgument(varToColorArgument(p->value));
+					m.addArgument(varToArgument(p->value));
+				}
+			}
+
+			sendOSC(m);
+		}
+	}
+	
 }
 
 /*
