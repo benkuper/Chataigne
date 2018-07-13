@@ -317,6 +317,9 @@
     <Filter Include="Chataigne\Source\Module\modules\osc\resolume">
       <UniqueIdentifier>{F32577BA-A282-1F17-35F0-D2D9E95B0929}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\osc\powerpoint">
+      <UniqueIdentifier>{F80E5994-22FA-D70D-7452-7A69118A971C}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Chataigne\Source\Module\modules\osc">
       <UniqueIdentifier>{BDEA7630-997D-38E9-6AAE-6A9E604FCD8E}</UniqueIdentifier>
     </Filter>
@@ -1521,6 +1524,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\osc\resolume\ResolumeModule.cpp">
       <Filter>Chataigne\Source\Module\modules\osc\resolume</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Module\modules\osc\powerpoint\PowerpointModule.cpp">
+      <Filter>Chataigne\Source\Module\modules\osc\powerpoint</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\osc\OSCModule.cpp">
       <Filter>Chataigne\Source\Module\modules\osc</Filter>
@@ -4637,6 +4643,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\osc\resolume\ResolumeModule.h">
       <Filter>Chataigne\Source\Module\modules\osc\resolume</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Module\modules\osc\powerpoint\PowerpointModule.h">
+      <Filter>Chataigne\Source\Module\modules\osc\powerpoint</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\osc\OSCModule.h">
       <Filter>Chataigne\Source\Module\modules\osc</Filter>

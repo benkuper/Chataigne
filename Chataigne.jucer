@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.4.9"
+<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.4.10"
               bundleIdentifier="benkuper.Chataigne" includeBinaryInAppConfig="1"
               jucerVersion="5.3.2" companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
               companyEmail="benjamin@kuperberg.fr" defines="" displaySplashScreen="0"
@@ -803,6 +803,12 @@
                     file="Source/Module/modules/osc/resolume/ResolumeModule.cpp"/>
               <FILE id="MQRitU" name="ResolumeModule.h" compile="0" resource="0"
                     file="Source/Module/modules/osc/resolume/ResolumeModule.h"/>
+            </GROUP>
+            <GROUP id="{A4DDA752-3106-5CE3-F9F1-151BBE95684A}" name="powerpoint">
+              <FILE id="RSWiK8" name="PowerpointModule.cpp" compile="1" resource="0"
+                    file="Source/Module/modules/osc/powerpoint/PowerpointModule.cpp"/>
+              <FILE id="f1qYoS" name="PowerpointModule.h" compile="0" resource="0"
+                    file="Source/Module/modules/osc/powerpoint/PowerpointModule.h"/>
             </GROUP>
             <FILE id="G7KYlG" name="OSCModule.cpp" compile="1" resource="0" file="Source/Module/modules/osc/OSCModule.cpp"/>
             <FILE id="CTrveI" name="OSCModule.h" compile="0" resource="0" file="Source/Module/modules/osc/OSCModule.h"/>

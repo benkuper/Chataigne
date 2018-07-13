@@ -38,6 +38,7 @@
 #include "modules/system//os/OSModule.h"
 #include "modules/tcp/pjlink/PJLinkModule.h"
 #include "modules/controller/joycon/JoyConModule.h"
+#include "modules/osc/powerpoint/PowerpointModule.h"
 
 juce_ImplementSingleton(ModuleFactory)
 
@@ -76,6 +77,7 @@ ModuleFactory::ModuleFactory() {
 	moduleDefs.add(new ModuleDefinition("Software", "Reaper", &ReaperModule::create));
 	moduleDefs.add(new ModuleDefinition("Software", "Resolume", &ResolumeModule::create));
 	moduleDefs.add(new ModuleDefinition("Software", "VLC", &VLCModule::create));
+	moduleDefs.add(new ModuleDefinition("Software", "PowerPoint", &PowerPointModule::create));
 	moduleDefs.add(new ModuleDefinition("Software", "Watchout", &WatchoutModule::create));
 
 	moduleDefs.add(new ModuleDefinition("Generator", "Metronome", &MetronomeModule::create));

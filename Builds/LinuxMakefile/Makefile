@@ -35,7 +35,7 @@ ifeq ($(CONFIG),Release)
     TARGET_ARCH := -m64
   endif
 
-  JUCE_CPPFLAGS := $(DEPFLAGS) -DLINUX=1 -DNDEBUG=1 -DJUCER_LINUX_MAKE_6D53C8B4=1 -DJUCE_APP_VERSION=1.4.9 -DJUCE_APP_VERSION_HEX=0x10409 $(shell pkg-config --cflags alsa freetype2 x11 xext xinerama) -pthread -I../../JuceLibraryCode -I$(HOME)/JUCE/modules -I../../../JUCE\ Modules -I../../External/wiiuse -I../../External/serial/include -I../../External/servus/include -I../../External/dnssd/include -I../../External/ossia/include -I../../Source $(CPPFLAGS)
+  JUCE_CPPFLAGS := $(DEPFLAGS) -DLINUX=1 -DNDEBUG=1 -DJUCER_LINUX_MAKE_6D53C8B4=1 -DJUCE_APP_VERSION=1.4.10 -DJUCE_APP_VERSION_HEX=0x1040a $(shell pkg-config --cflags alsa freetype2 x11 xext xinerama) -pthread -I../../JuceLibraryCode -I$(HOME)/JUCE/modules -I../../../JUCE\ Modules -I../../External/wiiuse -I../../External/serial/include -I../../External/servus/include -I../../External/dnssd/include -I../../External/ossia/include -I../../Source $(CPPFLAGS)
   JUCE_CPPFLAGS_APP := -DJucePlugin_Build_VST=0 -DJucePlugin_Build_VST3=0 -DJucePlugin_Build_AU=0 -DJucePlugin_Build_AUv3=0 -DJucePlugin_Build_RTAS=0 -DJucePlugin_Build_AAX=0 -DJucePlugin_Build_Standalone=0
   JUCE_TARGET_APP := Chataigne
 
@@ -56,7 +56,7 @@ ifeq ($(CONFIG),Debug)
     TARGET_ARCH := -m64
   endif
 
-  JUCE_CPPFLAGS := $(DEPFLAGS) -DLINUX=1 -DDEBUG=1 -D_DEBUG=1 -DJUCER_LINUX_MAKE_6D53C8B4=1 -DJUCE_APP_VERSION=1.4.9 -DJUCE_APP_VERSION_HEX=0x10409 $(shell pkg-config --cflags alsa freetype2 x11 xext xinerama) -pthread -I../../JuceLibraryCode -I$(HOME)/JUCE/modules -I../../../JUCE\ Modules -I../../External/wiiuse -I../../External/serial/include -I../../External/servus/include -I../../External/dnssd/include -I../../External/ossia/include -I../../Source $(CPPFLAGS)
+  JUCE_CPPFLAGS := $(DEPFLAGS) -DLINUX=1 -DDEBUG=1 -D_DEBUG=1 -DJUCER_LINUX_MAKE_6D53C8B4=1 -DJUCE_APP_VERSION=1.4.10 -DJUCE_APP_VERSION_HEX=0x1040a $(shell pkg-config --cflags alsa freetype2 x11 xext xinerama) -pthread -I../../JuceLibraryCode -I$(HOME)/JUCE/modules -I../../../JUCE\ Modules -I../../External/wiiuse -I../../External/serial/include -I../../External/servus/include -I../../External/dnssd/include -I../../External/ossia/include -I../../Source $(CPPFLAGS)
   JUCE_CPPFLAGS_APP := -DJucePlugin_Build_VST=0 -DJucePlugin_Build_VST3=0 -DJucePlugin_Build_AU=0 -DJucePlugin_Build_AUv3=0 -DJucePlugin_Build_RTAS=0 -DJucePlugin_Build_AAX=0 -DJucePlugin_Build_Standalone=0
   JUCE_TARGET_APP := Chataigne
 
@@ -239,6 +239,7 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/ResolumeClipCommand_ac9cb6f1.o \
   $(JUCE_OBJDIR)/ResolumeFXCommand_82bf808f.o \
   $(JUCE_OBJDIR)/ResolumeModule_61b1e469.o \
+  $(JUCE_OBJDIR)/PowerpointModule_7e076149.o \
   $(JUCE_OBJDIR)/OSCModule_5d38d7b9.o \
   $(JUCE_OBJDIR)/SequenceCommand_5137c44f.o \
   $(JUCE_OBJDIR)/SequenceModule_6db3e719.o \
@@ -1213,6 +1214,11 @@ $(JUCE_OBJDIR)/ResolumeFXCommand_82bf808f.o: ../../Source/Module/modules/osc/res
 $(JUCE_OBJDIR)/ResolumeModule_61b1e469.o: ../../Source/Module/modules/osc/resolume/ResolumeModule.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling ResolumeModule.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/PowerpointModule_7e076149.o: ../../Source/Module/modules/osc/powerpoint/PowerpointModule.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling PowerpointModule.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/OSCModule_5d38d7b9.o: ../../Source/Module/modules/osc/OSCModule.cpp
