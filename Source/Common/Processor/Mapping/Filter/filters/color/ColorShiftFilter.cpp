@@ -37,14 +37,18 @@ void ColorShiftFilter::processInternal()
 	Colour c = Colours::black;
 	if (sourceParam->type != Parameter::COLOR)
 	{
-		float h = sourceParam->value[0];
+		float h = 0;
 		float b = 1;
 		float s = 1;
 
 		if (sourceParam->isComplex())
 		{
+			h = sourceParam->value[0];
 			b = sourceParam->value[1];
 			s = sourceParam->value.size() >= 3?(float)sourceParam->value[2]:1;
+		} else
+		{
+			h = sourceParam->floatValue();
 		}
 
 		c = Colour::fromHSV(h, s, b, 1);
