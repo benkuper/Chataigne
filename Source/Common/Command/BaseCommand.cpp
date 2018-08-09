@@ -41,7 +41,8 @@ void BaseCommand::setTargetMappingParameterAt(WeakReference<Parameter> p, int in
 		oldP->setControllableFeedbackOnly(false);
 	}
 
-	targetMappingParameters.set(index, p);
+	if (p.wasObjectDeleted()) targetMappingParameters.set(index, nullptr);
+	else targetMappingParameters.set(index, p);
 
 	if (p != nullptr && !p.wasObjectDeleted())
 	{

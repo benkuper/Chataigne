@@ -19,8 +19,8 @@ typedef std::function<BaseCommand*(ControllableContainer *, CommandContext, var 
 class CommandDefinition
 {
 public:
-	CommandDefinition() {}
-	virtual ~CommandDefinition() {}
+	CommandDefinition();
+	virtual ~CommandDefinition();
 	
 	CommandContext context;
 	String menuPath;
@@ -41,6 +41,8 @@ public:
 	static CommandDefinition * createDef(ControllableContainer * container, const String &menuPath, const String &type, CreateCommandFunc createFunc, CommandContext context = CommandContext::BOTH);
 	CommandDefinition * addParam(const String &paramName, var value);
 
+	WeakReference<CommandDefinition>::Master masterReference;
+	friend class CommandDefinition;
 };
 
 

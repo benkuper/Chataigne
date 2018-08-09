@@ -30,6 +30,11 @@ void CommandDefinitionManager::remove(CommandDefinition * def)
 	definitions.removeObject(def);
 }
 
+void CommandDefinitionManager::clear()
+{
+	definitions.clear();
+}
+
 PopupMenu CommandDefinitionManager::getCommandMenu(int baseID, CommandContext context)
 {
 	PopupMenu p;

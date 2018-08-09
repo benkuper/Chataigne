@@ -44,7 +44,6 @@ void BaseCommandHandler::setCommand(CommandDefinition * commandDef)
 
 	commandDefinition = commandDef;
 	if (commandDef != nullptr) command = commandDef->create(context);
-
 	else command = nullptr;
 
 	if (command != nullptr)
@@ -62,13 +61,14 @@ void BaseCommandHandler::setCommand(CommandDefinition * commandDef)
 var BaseCommandHandler::getJSONData()
 {
 	var data = BaseItem::getJSONData();
-	if (command != nullptr)
+	if (command != nullptr && !commandDefinition.wasObjectDeleted())
 	{
 		if(command->module != nullptr) data.getDynamicObject()->setProperty("commandModule", command->module->shortName);
 		data.getDynamicObject()->setProperty("commandPath", commandDefinition->menuPath);
 		data.getDynamicObject()->setProperty("commandType", commandDefinition->commandType);
 		data.getDynamicObject()->setProperty("command", command->getJSONData());
 	}
+
 	return data;
 }
 

@@ -25,7 +25,7 @@ public:
 
 	CommandContext context;
 	ScopedPointer<BaseCommand> command;
-	CommandDefinition * commandDefinition;
+	WeakReference<CommandDefinition> commandDefinition;
 
 	Module * lockedModule;
 	Trigger * trigger;

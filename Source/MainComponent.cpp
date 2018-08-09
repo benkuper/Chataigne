@@ -14,8 +14,6 @@
 #include "StateMachine/ui/StateManagerUI.h"
 #include "TimeMachine/ui/SequenceManagerUI.h"
 #include "CustomVariables/ui/CVGroupManagerUI.h"
-
-#include "Module/modules/osc/custom/commands/user/model/ui/UserOSCCommandModelManagerUI.h"
 #include "Common/Command/Template/ui/CommandTemplateManagerUI.h"
 
 String getAppVersion();
@@ -45,7 +43,6 @@ void MainContentComponent::init()
 	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("States", &StateManagerUI::create));
 	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("State Machine", &StateMachineView::create));
 
-	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("OSC Command Models", &UserOSCCommandModelManagerWindow::create));
 	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Command Templates", &CommandTemplateManagerPanel::create));
 
 

@@ -11,7 +11,6 @@
 #include "CustomOSCModule.h"
 #include "Common/Command/CommandFactory.h"
 #include "commands/CustomOSCCommand.h"
-#include "commands/user/UserOSCCommand.h"
 
 
 CustomOSCModule::CustomOSCModule() :
@@ -29,10 +28,6 @@ CustomOSCModule::CustomOSCModule() :
 
 	defManager.add(CommandDefinition::createDef(this, "", "Custom Message", &CustomOSCCommand::create));
 	
-	addChildControllableContainer(&umm);
-	umm.addBaseManagerListener(this);
-
-	umm.hideInEditor = true;
 }
 
 void CustomOSCModule::processMessageInternal(const OSCMessage & msg)
@@ -222,8 +217,6 @@ var CustomOSCModule::getJSONData()
 {
 	var data = OSCModule::getJSONData();
 	data.getDynamicObject()->setProperty("values", valuesCC.getJSONData());
-	var modelData = umm.getJSONData();
-	if(!modelData.isVoid() && modelData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty("models", modelData);
 	return data;
 }
 
@@ -232,8 +225,6 @@ void CustomOSCModule::loadJSONDataInternal(var data)
 	OSCModule::loadJSONDataInternal(data);
 	valuesCC.loadJSONData(data.getProperty("values", var()), true);
 	//valuesCC.orderControllablesAlphabetically();
-	umm.loadJSONData(data.getProperty("models", var()),true);
-
 	//for (auto & v : valuesCC.controllables) v->setControllableFeedbackOnly(true);
 }
 
@@ -276,34 +267,4 @@ void CustomOSCModule::setupModuleFromJSONData(var data)
 	autoAdd->setValue(false);
 	autoAdd->hideInEditor = true;
 	splitArgs->hideInEditor = true;
-}
-
-void CustomOSCModule::itemAdded(UserOSCCommandModel * model)
-{
-	defManager.add(UserOSCCommandDefinition::createDef(this, model, &UserOSCCommand::create));
-}
-
-void CustomOSCModule::itemRemoved(UserOSCCommandModel * model)
-{
-	CommandDefinition * d = getDefinitionForModel(model);
-	if (d == nullptr) return;
-	defManager.remove(d);
-}
-
-CommandDefinition * CustomOSCModule::getDefinitionForModel(UserOSCCommandModel * model)
-{
-	for (auto &d : defManager.definitions)
-	{
-		if (d->commandType == model->niceName) return d; 
-	}
-	return nullptr;
-}
-
-UserOSCCommandModel * CustomOSCModule::getModelForName(const String &modelName)
-{
-	for (auto &m : umm.items)
-	{
-		if (m->shortName == modelName) return m;
-	}
-	return nullptr;
 }

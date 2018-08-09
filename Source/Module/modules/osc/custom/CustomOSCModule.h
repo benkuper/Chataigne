@@ -12,11 +12,9 @@
 #define CUSTOMOSCMODULE_H_INCLUDED
 
 #include "../OSCModule.h"
-#include "commands/user/model/UserOSCCommandModelManager.h"
 
 class CustomOSCModule :
-	public OSCModule,
-	public UserOSCCommandModelManager::Listener
+	public OSCModule
 {
 public:
 	CustomOSCModule();
@@ -26,8 +24,6 @@ public:
 	BoolParameter * splitArgs;
 	
 	BoolParameter * autoFeedback;
-
-	UserOSCCommandModelManager umm;
 
 	void processMessageInternal(const OSCMessage &msg) override;
 
@@ -40,13 +36,6 @@ public:
 	virtual String getDefaultTypeString() const override { return "OSC"; }
 
 	virtual void setupModuleFromJSONData(var data) override;
-
-	//ModelManager callbacks
-	void itemAdded(UserOSCCommandModel * model) override;
-	void itemRemoved(UserOSCCommandModel * model) override;
-
-	CommandDefinition * getDefinitionForModel(UserOSCCommandModel * model);
-	UserOSCCommandModel * getModelForName(const String &modelName);
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(CustomOSCModule)
 };

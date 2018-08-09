@@ -179,6 +179,9 @@
     <Filter Include="Chataigne\Source\Module\modules\audio">
       <UniqueIdentifier>{2B354B83-B099-8834-CDE4-DFF9707AC0F2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\common\commands\scriptcommands">
+      <UniqueIdentifier>{53B20FE0-4E29-FA6A-BC6A-DBB1AD8A5AAD}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Chataigne\Source\Module\modules\common\commands\customvalues\ui">
       <UniqueIdentifier>{AFD76BDC-CCF2-4D8F-91E8-F55ACAA432DD}</UniqueIdentifier>
     </Filter>
@@ -268,18 +271,6 @@
     </Filter>
     <Filter Include="Chataigne\Source\Module\modules\osc\commands">
       <UniqueIdentifier>{4DC78688-F147-66B9-094F-569A37D8C91F}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\osc\custom\commands\user\model\ui">
-      <UniqueIdentifier>{0341774F-40BE-50A9-F9CB-754C232D831F}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\osc\custom\commands\user\model">
-      <UniqueIdentifier>{11E2B689-E209-B5D3-4C98-43EB5A4FA6BF}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\osc\custom\commands\user\ui">
-      <UniqueIdentifier>{8D7D305A-89D9-5004-716B-ABAF880E499C}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\osc\custom\commands\user">
-      <UniqueIdentifier>{00896E2B-1BDD-9000-2B6B-61A305DBF581}</UniqueIdentifier>
     </Filter>
     <Filter Include="Chataigne\Source\Module\modules\osc\custom\commands">
       <UniqueIdentifier>{DD9CEEFC-36EA-C1D7-7464-B0A9089F766A}</UniqueIdentifier>
@@ -1300,6 +1291,9 @@
     <ClCompile Include="..\..\Source\Module\modules\audio\AudioModule.cpp">
       <Filter>Chataigne\Source\Module\modules\audio</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Module\modules\common\commands\scriptcommands\ScriptCommand.cpp">
+      <Filter>Chataigne\Source\Module\modules\common\commands\scriptcommands</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\common\commands\customvalues\ui\CustomValuesCommandArgumentEditor.cpp">
       <Filter>Chataigne\Source\Module\modules\common\commands\customvalues\ui</Filter>
     </ClCompile>
@@ -1458,27 +1452,6 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\osc\commands\OSCCommand.cpp">
       <Filter>Chataigne\Source\Module\modules\osc\commands</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Module\modules\osc\custom\commands\user\model\ui\UserOSCCommandModelEditor.cpp">
-      <Filter>Chataigne\Source\Module\modules\osc\custom\commands\user\model\ui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Module\modules\osc\custom\commands\user\model\ui\UserOSCCommandModelManagerUI.cpp">
-      <Filter>Chataigne\Source\Module\modules\osc\custom\commands\user\model\ui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Module\modules\osc\custom\commands\user\model\ui\UserOSCCommandModelUI.cpp">
-      <Filter>Chataigne\Source\Module\modules\osc\custom\commands\user\model\ui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Module\modules\osc\custom\commands\user\model\UserOSCCommandModel.cpp">
-      <Filter>Chataigne\Source\Module\modules\osc\custom\commands\user\model</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Module\modules\osc\custom\commands\user\model\UserOSCCommandModelManager.cpp">
-      <Filter>Chataigne\Source\Module\modules\osc\custom\commands\user\model</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Module\modules\osc\custom\commands\user\ui\UserOSCCommandEditor.cpp">
-      <Filter>Chataigne\Source\Module\modules\osc\custom\commands\user\ui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Module\modules\osc\custom\commands\user\UserOSCCommand.cpp">
-      <Filter>Chataigne\Source\Module\modules\osc\custom\commands\user</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\osc\custom\commands\CustomOSCCommand.cpp">
       <Filter>Chataigne\Source\Module\modules\osc\custom\commands</Filter>
@@ -4467,6 +4440,9 @@
     <ClInclude Include="..\..\Source\Module\modules\audio\AudioModule.h">
       <Filter>Chataigne\Source\Module\modules\audio</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\Module\modules\common\commands\scriptcommands\ScriptCommand.h">
+      <Filter>Chataigne\Source\Module\modules\common\commands\scriptcommands</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\common\commands\customvalues\ui\CustomValuesCommandArgumentEditor.h">
       <Filter>Chataigne\Source\Module\modules\common\commands\customvalues\ui</Filter>
     </ClInclude>
@@ -4577,27 +4553,6 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\osc\commands\OSCCommand.h">
       <Filter>Chataigne\Source\Module\modules\osc\commands</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Module\modules\osc\custom\commands\user\model\ui\UserOSCCommandModelEditor.h">
-      <Filter>Chataigne\Source\Module\modules\osc\custom\commands\user\model\ui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Module\modules\osc\custom\commands\user\model\ui\UserOSCCommandModelManagerUI.h">
-      <Filter>Chataigne\Source\Module\modules\osc\custom\commands\user\model\ui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Module\modules\osc\custom\commands\user\model\ui\UserOSCCommandModelUI.h">
-      <Filter>Chataigne\Source\Module\modules\osc\custom\commands\user\model\ui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Module\modules\osc\custom\commands\user\model\UserOSCCommandModel.h">
-      <Filter>Chataigne\Source\Module\modules\osc\custom\commands\user\model</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Module\modules\osc\custom\commands\user\model\UserOSCCommandModelManager.h">
-      <Filter>Chataigne\Source\Module\modules\osc\custom\commands\user\model</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Module\modules\osc\custom\commands\user\ui\UserOSCCommandEditor.h">
-      <Filter>Chataigne\Source\Module\modules\osc\custom\commands\user\ui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Module\modules\osc\custom\commands\user\UserOSCCommand.h">
-      <Filter>Chataigne\Source\Module\modules\osc\custom\commands\user</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\osc\custom\commands\CustomOSCCommand.h">
       <Filter>Chataigne\Source\Module\modules\osc\custom\commands</Filter>

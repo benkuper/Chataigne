@@ -260,6 +260,7 @@
     <ClCompile Include="..\..\Source\Module\modules\customvariables\CustomVariablesModule.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\audio\ui\AudioModuleHardwareEditor.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\audio\AudioModule.cpp"/>
+    <ClCompile Include="..\..\Source\Module\modules\common\commands\scriptcommands\ScriptCommand.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\common\commands\customvalues\ui\CustomValuesCommandArgumentEditor.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\common\commands\customvalues\ui\CustomValuesCommandArgumentManagerEditor.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\common\commands\customvalues\CustomValuesCommand.cpp"/>
@@ -310,13 +311,6 @@
     <ClCompile Include="..\..\Source\Module\modules\midi\Launchpad\LaunchpadModule.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\midi\MIDIModule.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\osc\commands\OSCCommand.cpp"/>
-    <ClCompile Include="..\..\Source\Module\modules\osc\custom\commands\user\model\ui\UserOSCCommandModelEditor.cpp"/>
-    <ClCompile Include="..\..\Source\Module\modules\osc\custom\commands\user\model\ui\UserOSCCommandModelManagerUI.cpp"/>
-    <ClCompile Include="..\..\Source\Module\modules\osc\custom\commands\user\model\ui\UserOSCCommandModelUI.cpp"/>
-    <ClCompile Include="..\..\Source\Module\modules\osc\custom\commands\user\model\UserOSCCommandModel.cpp"/>
-    <ClCompile Include="..\..\Source\Module\modules\osc\custom\commands\user\model\UserOSCCommandModelManager.cpp"/>
-    <ClCompile Include="..\..\Source\Module\modules\osc\custom\commands\user\ui\UserOSCCommandEditor.cpp"/>
-    <ClCompile Include="..\..\Source\Module\modules\osc\custom\commands\user\UserOSCCommand.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\osc\custom\commands\CustomOSCCommand.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\osc\custom\CustomOSCModule.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\osc\dlight\DLightModule.cpp"/>
@@ -2697,6 +2691,7 @@
     <ClInclude Include="..\..\Source\Module\modules\audio\libs\pitch\PitchYIN.h"/>
     <ClInclude Include="..\..\Source\Module\modules\audio\ui\AudioModuleHardwareEditor.h"/>
     <ClInclude Include="..\..\Source\Module\modules\audio\AudioModule.h"/>
+    <ClInclude Include="..\..\Source\Module\modules\common\commands\scriptcommands\ScriptCommand.h"/>
     <ClInclude Include="..\..\Source\Module\modules\common\commands\customvalues\ui\CustomValuesCommandArgumentEditor.h"/>
     <ClInclude Include="..\..\Source\Module\modules\common\commands\customvalues\ui\CustomValuesCommandArgumentManagerEditor.h"/>
     <ClInclude Include="..\..\Source\Module\modules\common\commands\customvalues\CustomValuesCommand.h"/>
@@ -2734,13 +2729,6 @@
     <ClInclude Include="..\..\Source\Module\modules\midi\Launchpad\LaunchpadModule.h"/>
     <ClInclude Include="..\..\Source\Module\modules\midi\MIDIModule.h"/>
     <ClInclude Include="..\..\Source\Module\modules\osc\commands\OSCCommand.h"/>
-    <ClInclude Include="..\..\Source\Module\modules\osc\custom\commands\user\model\ui\UserOSCCommandModelEditor.h"/>
-    <ClInclude Include="..\..\Source\Module\modules\osc\custom\commands\user\model\ui\UserOSCCommandModelManagerUI.h"/>
-    <ClInclude Include="..\..\Source\Module\modules\osc\custom\commands\user\model\ui\UserOSCCommandModelUI.h"/>
-    <ClInclude Include="..\..\Source\Module\modules\osc\custom\commands\user\model\UserOSCCommandModel.h"/>
-    <ClInclude Include="..\..\Source\Module\modules\osc\custom\commands\user\model\UserOSCCommandModelManager.h"/>
-    <ClInclude Include="..\..\Source\Module\modules\osc\custom\commands\user\ui\UserOSCCommandEditor.h"/>
-    <ClInclude Include="..\..\Source\Module\modules\osc\custom\commands\user\UserOSCCommand.h"/>
     <ClInclude Include="..\..\Source\Module\modules\osc\custom\commands\CustomOSCCommand.h"/>
     <ClInclude Include="..\..\Source\Module\modules\osc\custom\CustomOSCModule.h"/>
     <ClInclude Include="..\..\Source\Module\modules\osc\dlight\DLightModule.h"/>

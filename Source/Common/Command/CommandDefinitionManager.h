@@ -23,6 +23,7 @@ public:
 
 	void add(CommandDefinition * def);
 	void remove(CommandDefinition * def);
+	void clear();
 
 	PopupMenu getCommandMenu(int baseID, CommandContext context);
 	void addCommandsToMenu(PopupMenu * m, int baseID, CommandContext context);

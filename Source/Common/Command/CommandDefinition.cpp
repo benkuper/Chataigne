@@ -10,6 +10,15 @@
 
 #include "CommandDefinition.h"
 
+CommandDefinition::CommandDefinition()
+{
+}
+
+CommandDefinition::~CommandDefinition() 
+{
+	masterReference.clear();
+}
+
 void CommandDefinition::setup(ControllableContainer * _container, const String & _menuPath, const String & _commandType, CommandContext _context,
 	CreateCommandFunc _createFunc)
 {

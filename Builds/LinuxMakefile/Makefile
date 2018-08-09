@@ -167,6 +167,7 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/CustomVariablesModule_cdc46d67.o \
   $(JUCE_OBJDIR)/AudioModuleHardwareEditor_e9c8a821.o \
   $(JUCE_OBJDIR)/AudioModule_84057627.o \
+  $(JUCE_OBJDIR)/ScriptCommand_658cfed3.o \
   $(JUCE_OBJDIR)/CustomValuesCommandArgumentEditor_1cc8b6de.o \
   $(JUCE_OBJDIR)/CustomValuesCommandArgumentManagerEditor_8192c073.o \
   $(JUCE_OBJDIR)/CustomValuesCommand_2f0f022b.o \
@@ -217,13 +218,6 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/LaunchpadModule_654c7bb.o \
   $(JUCE_OBJDIR)/MIDIModule_d3422ef9.o \
   $(JUCE_OBJDIR)/OSCCommand_779cc3a1.o \
-  $(JUCE_OBJDIR)/UserOSCCommandModelEditor_64a71933.o \
-  $(JUCE_OBJDIR)/UserOSCCommandModelManagerUI_3fe3e405.o \
-  $(JUCE_OBJDIR)/UserOSCCommandModelUI_66d9b3a.o \
-  $(JUCE_OBJDIR)/UserOSCCommandModel_399f4bed.o \
-  $(JUCE_OBJDIR)/UserOSCCommandModelManager_84d9538a.o \
-  $(JUCE_OBJDIR)/UserOSCCommandEditor_26442000.o \
-  $(JUCE_OBJDIR)/UserOSCCommand_7c414100.o \
   $(JUCE_OBJDIR)/CustomOSCCommand_61f60882.o \
   $(JUCE_OBJDIR)/CustomOSCModule_1d5ea018.o \
   $(JUCE_OBJDIR)/DLightModule_37bf0649.o \
@@ -856,6 +850,11 @@ $(JUCE_OBJDIR)/AudioModule_84057627.o: ../../Source/Module/modules/audio/AudioMo
 	@echo "Compiling AudioModule.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
+$(JUCE_OBJDIR)/ScriptCommand_658cfed3.o: ../../Source/Module/modules/common/commands/scriptcommands/ScriptCommand.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling ScriptCommand.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
 $(JUCE_OBJDIR)/CustomValuesCommandArgumentEditor_1cc8b6de.o: ../../Source/Module/modules/common/commands/customvalues/ui/CustomValuesCommandArgumentEditor.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling CustomValuesCommandArgumentEditor.cpp"
@@ -1104,41 +1103,6 @@ $(JUCE_OBJDIR)/MIDIModule_d3422ef9.o: ../../Source/Module/modules/midi/MIDIModul
 $(JUCE_OBJDIR)/OSCCommand_779cc3a1.o: ../../Source/Module/modules/osc/commands/OSCCommand.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling OSCCommand.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/UserOSCCommandModelEditor_64a71933.o: ../../Source/Module/modules/osc/custom/commands/user/model/ui/UserOSCCommandModelEditor.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling UserOSCCommandModelEditor.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/UserOSCCommandModelManagerUI_3fe3e405.o: ../../Source/Module/modules/osc/custom/commands/user/model/ui/UserOSCCommandModelManagerUI.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling UserOSCCommandModelManagerUI.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/UserOSCCommandModelUI_66d9b3a.o: ../../Source/Module/modules/osc/custom/commands/user/model/ui/UserOSCCommandModelUI.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling UserOSCCommandModelUI.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/UserOSCCommandModel_399f4bed.o: ../../Source/Module/modules/osc/custom/commands/user/model/UserOSCCommandModel.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling UserOSCCommandModel.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/UserOSCCommandModelManager_84d9538a.o: ../../Source/Module/modules/osc/custom/commands/user/model/UserOSCCommandModelManager.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling UserOSCCommandModelManager.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/UserOSCCommandEditor_26442000.o: ../../Source/Module/modules/osc/custom/commands/user/ui/UserOSCCommandEditor.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling UserOSCCommandEditor.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/UserOSCCommand_7c414100.o: ../../Source/Module/modules/osc/custom/commands/user/UserOSCCommand.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling UserOSCCommand.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/CustomOSCCommand_61f60882.o: ../../Source/Module/modules/osc/custom/commands/CustomOSCCommand.cpp

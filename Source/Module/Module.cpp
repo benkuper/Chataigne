@@ -12,6 +12,8 @@
 #include "Common/Command/CommandFactory.h"
 #include "ui/ModuleEditor.h"
 #include "Common/Command/Template/CommandTemplate.h"
+#include "Module/modules/common/commands/scriptcommands/ScriptCommand.h"
+
 
 Module::Module(const String &name) :
 	BaseItem(name, true, true),
@@ -185,6 +187,25 @@ void Module::setupModuleFromJSONData(var data)
 	bool valuesAreEmpty = valuesCC.controllables.size() == 0 && valuesCC.controllableContainers.size() == 0;
 	bool hInput = data.getProperty("hasInput", valuesAreEmpty ? false : hasInput);
 	bool hOutput = data.getProperty("hasOutput", hasOutput);
+
+	if (data.getProperty("hideDefaultCommands", false)) defManager.clear();
+
+	if (data.hasProperty("commands"))
+	{
+		NamedValueSet commandsData = data.getProperty("commands",var()).getDynamicObject()->getProperties();
+		for (auto &cData: commandsData)
+		{
+			CommandContext context = CommandContext::BOTH;
+			if (cData.value.hasProperty("context"))
+			{
+				String cContext = cData.value.getProperty("context", "both");
+				if (cContext == "action") context = CommandContext::ACTION;
+				else if (cContext == "mapping") context = CommandContext::MAPPING;
+			}
+
+			defManager.add(CommandDefinition::createDef(this, cData.value.getProperty("menu", ""), cData.name.toString(), &ScriptCommand::create)->addParam("data",cData.value));
+		}
+	}
 	setupIOConfiguration(hInput, hOutput);
 }
 
