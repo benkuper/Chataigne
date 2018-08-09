@@ -23,11 +23,14 @@ CustomValuesCommandArgument::CustomValuesCommandArgument(const String &name, Par
 	editorCanBeCollapsed = false;
 
 	isSelectable = false;
-	param->isCustomizableByUser = true;
-	param->saveValueOnly = false;
-
+	
+	
 	jassert(param != nullptr);
 	addControllable(param);
+
+	param->isCustomizableByUser = true;
+	param->forceSaveValue = true;
+	param->saveValueOnly = !templateMode;
 
 	if (templateMode)
 	{
@@ -84,6 +87,8 @@ void CustomValuesCommandArgument::linkToTemplate(CustomValuesCommandArgument * t
 		linkedTemplate->editable->addParameterListener(this);
 		linkedTemplate->useForMapping->addParameterListener(this);
 	}
+
+	if (param != nullptr) param->saveValueOnly = linkedTemplate != nullptr;
 	
 	canBeReorderedInEditor = linkedTemplate == nullptr;
 }
