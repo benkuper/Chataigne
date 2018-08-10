@@ -32,7 +32,8 @@ void SerialDeviceParameter::setValueInternal(var &v)
 {
 	EnumParameter::setValueInternal(v);
 	var data = getValueData();
-	currentDevice = SerialManager::getInstance()->getPort(data.getProperty("hardwareID","").toString(), data.getProperty("port", "").toString(),true,openBaudRate);
+	if (data.isVoid()) currentDevice = nullptr;
+	else currentDevice = SerialManager::getInstance()->getPort(data.getProperty("hardwareID","").toString(), data.getProperty("port", "").toString(),true,openBaudRate);
 	//DBG("current device from setValueInternal : " << (int)currentDevice);
 }
 
@@ -41,6 +42,7 @@ void SerialDeviceParameter::updatePortList()
 	clearOptions();
 	//DBG("num ports :" << SerialManager::getInstance()->portInfos.size());
 
+	if (SerialManager::getInstance()->portInfos.size() > 0) addOption("Don't connect", var(), false);
 	for (auto &p : SerialManager::getInstance()->portInfos)
 	{
 		var v(new DynamicObject());

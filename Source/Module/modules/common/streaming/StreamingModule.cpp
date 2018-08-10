@@ -38,7 +38,7 @@ StreamingModule::~StreamingModule()
 void StreamingModule::processDataLine(const String & message)
 {
 	if (!enabled->boolValue()) return;
-	if (logIncomingData->boolValue()) NLOG(niceName, "Message received :\n" + message);
+	if (logIncomingData->boolValue()) NLOG(niceName, /*"Message received :\n" +*/ message);
 	inActivityTrigger->trigger();
 
 	scriptManager->callFunctionOnAllItems(dataEventId, message);
