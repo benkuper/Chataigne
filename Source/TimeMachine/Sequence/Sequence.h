@@ -58,7 +58,7 @@ public:
 	float prevTime;
 
 	//UI
-	const float minSequenceTime = .1f; //in seconds
+	const float minSequenceTime = 1; //in seconds
 	FloatParameter * viewStartTime;
 	FloatParameter * viewEndTime;
 	bool isBeingEdited;

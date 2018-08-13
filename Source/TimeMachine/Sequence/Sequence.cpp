@@ -171,9 +171,11 @@ void Sequence::onContainerParameterChangedInternal(Parameter * p)
 	}
 	else if (p == totalTime)
 	{
+		float minViewTime = jmax(minSequenceTime, totalTime->floatValue() / 100.f); //small hack to avoid UI hang when zooming too much
+
 		currentTime->setRange(0, totalTime->floatValue());
-		viewStartTime->setRange(0, totalTime->floatValue() - minSequenceTime);
-		viewEndTime->setRange(viewStartTime->floatValue()+minSequenceTime, totalTime->floatValue());
+		viewStartTime->setRange(0, totalTime->floatValue() - minViewTime);
+		viewEndTime->setRange(viewStartTime->floatValue()+ minViewTime, totalTime->floatValue());
 		sequenceListeners.call(&SequenceListener::sequenceTotalTimeChanged, this);
 	} else if (p == playSpeed)
 	{
@@ -204,7 +206,8 @@ void Sequence::onContainerParameterChangedInternal(Parameter * p)
 	}
 	else if (p == viewStartTime)
 	{
-		viewEndTime->setRange(viewStartTime->floatValue() + minSequenceTime, totalTime->floatValue()); //Should be a range value
+		float minViewTime = jmax(minSequenceTime, totalTime->floatValue() / 100.f); //small hack to avoid UI hang when zooming too much
+		viewEndTime->setRange(viewStartTime->floatValue() + minViewTime, totalTime->floatValue()); //Should be a range value
 	}
 }
 

@@ -59,7 +59,7 @@ void TimeTriggerManagerUI::placeTimeTriggerUI(TimeTriggerUI * ttui)
 	int tx = timeline->getXForTime(ttui->item->time->floatValue());
 	
 	float ttuiWidthTime = timeline->getTimeForX(ttui->getWidth(),false);
-	DBG(ttuiWidthTime << "/" << timeline->item->sequence->totalTime->floatValue());
+	//DBG(ttuiWidthTime << "/" << timeline->item->sequence->totalTime->floatValue());
 
 	float viewEnd = timeline->item->sequence->viewEndTime->floatValue();
 	float totalTime = timeline->item->sequence->totalTime->floatValue();
