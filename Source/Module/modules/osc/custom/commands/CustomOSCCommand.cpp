@@ -58,16 +58,16 @@ void CustomOSCCommand::trigger()
 			m.addFloat32(c.getFloatBlue());
 			m.addFloat32(c.getFloatAlpha());
 			}
-				break;
+			break;
 
 			case Controllable::POINT2D:
-				m.addFloat32(((Point2DParameter *)a)->x);
-				m.addFloat32(((Point2DParameter *)a)->y);
+				m.addFloat32(((Point2DParameter *)p)->x);
+				m.addFloat32(((Point2DParameter *)p)->y);
 				break;
 			case Controllable::POINT3D:
-				m.addFloat32(((Point3DParameter *)a)->x);
-				m.addFloat32(((Point3DParameter *)a)->y);
-				m.addFloat32(((Point3DParameter *)a)->z);
+				m.addFloat32(((Point3DParameter *)p)->x);
+				m.addFloat32(((Point3DParameter *)p)->y);
+				m.addFloat32(((Point3DParameter *)p)->z);
 				break;
 
 			default:

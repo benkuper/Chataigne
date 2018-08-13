@@ -38,11 +38,13 @@ int SequenceLayerTimeline::getXForTime(float time)
 
 float SequenceLayerTimeline::getTimeForX(int tx, bool offsetStart)
 {
+	if (getWidth() == 0) return 0; 
+	
 	float viewStart = item->sequence->viewStartTime->floatValue();
 	float viewEnd = item->sequence->viewEndTime->floatValue();
 	float viewTime = viewEnd - viewStart;
 	float mapStart = offsetStart ? viewStart : 0;
-	return jmap<float>((float)tx, 0, (float)getWidth(), mapStart,mapStart+viewTime);
+;	return jmap<float>((float)tx, 0, (float)getWidth(), mapStart,mapStart+viewTime);
 }
 
 

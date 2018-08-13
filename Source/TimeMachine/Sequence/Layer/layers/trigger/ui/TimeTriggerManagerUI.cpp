@@ -66,7 +66,7 @@ void TimeTriggerManagerUI::placeTimeTriggerUI(TimeTriggerUI * ttui)
 	
 	float ttuiTime = totalTime - ttuiWidthTime;
 
-	if (viewEnd >= ttuiTime)
+	if (viewEnd >= ttuiTime && ttuiTime < totalTime)
 	{
 		float rel = jmap<float>(viewEnd, ttuiTime, totalTime, 0, 1);
 		int minTx = getWidth() - ttui->getWidth() * rel;
