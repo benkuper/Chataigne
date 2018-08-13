@@ -82,17 +82,39 @@ void SequenceEditor::scrollBarMoved(ScrollBar * scrollBarThatHasMoved, double /*
 	}
 }
 
-void SequenceEditor::mouseWheelMove(const MouseEvent & e, const MouseWheelDetails &)
+void SequenceEditor::mouseWheelMove(const MouseEvent & e, const MouseWheelDetails &details)
 {
-	//DBG("Mouse wheel move " << (int)panelManagerUI.isMouseOver(true) << ", " << (int)timelineManagerUI.isMouseOver(true) << " / " << panelManagerUI.getMouseXYRelative().toString());
+	//DBG("Mouse wheel move " << (int)panelManagerUI.isMouseOver(true) << ", " << (int)timelineManagerUI.isMouseOver(true) << " / deltaX : " << details.deltaX << ", deltaY : " << details.deltaY);
 	
-	if (panelManagerUI.getLocalBounds().contains(panelManagerUI.getMouseXYRelative())) //hack, need to ask Jules about listenedComponent for direct listener to event information, also have a unique "scrollbar" event for wheel+drag
+	if (details.deltaY != 0)
 	{
-		timelineManagerUI.viewport.setViewPosition(panelManagerUI.viewport.getViewPosition());
+		if (e.mods.isShiftDown())
+		{
+			/*
+			float sequenceViewMid = (sequence->viewStartTime->floatValue() + sequence->viewEndTime->floatValue()) / 2;
+			//float zoomFactor = details.deltaY; //*navigationUI.seeker.getTimeForX(details.deltaY);
+			float initDist = sequence->viewEndTime->floatValue() - sequence->viewStartTime->floatValue();
+			float zoomFactor = (details.deltaX * initDist) / 2;
+			sequence->viewStartTime->setValue(sequence->viewStartTime->floatValue() + zoomFactor);
+			sequence->viewEndTime->setValue(sequence->viewEndTime->floatValue() - zoomFactor);
+			*/
+		}else
+		{
+			if (panelManagerUI.getLocalBounds().contains(panelManagerUI.getMouseXYRelative())) //hack, need to ask Jules about listenedComponent for direct listener to event information, also have a unique "scrollbar" event for wheel+drag
+			{
+				timelineManagerUI.viewport.setViewPosition(panelManagerUI.viewport.getViewPosition());
+			} else if (timelineManagerUI.getLocalBounds().contains(timelineManagerUI.getMouseXYRelative()))
+			{
+				panelManagerUI.viewport.setViewPosition(timelineManagerUI.viewport.getViewPosition());
+			}
+		}
 	}
-	else if(timelineManagerUI.getLocalBounds().contains(timelineManagerUI.getMouseXYRelative()))
+
+	if (details.deltaX != 0)
 	{
-		panelManagerUI.viewport.setViewPosition(timelineManagerUI.viewport.getViewPosition());
+		float initDist = sequence->viewEndTime->floatValue() - sequence->viewStartTime->floatValue();
+		sequence->viewStartTime->setValue(jmin(sequence->viewStartTime->floatValue() - initDist * details.deltaX, sequence->totalTime->floatValue()-initDist));
+		sequence->viewEndTime->setValue(sequence->viewStartTime->floatValue() + initDist);
 	}
 }
 
