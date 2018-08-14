@@ -102,30 +102,35 @@ void TimeTriggerUI::updateSizeFromName()
 void TimeTriggerUI::mouseDown(const MouseEvent & e)
 {
 	BaseItemUI::mouseDown(e);
+	
+	flagYAtMouseDown = item->flagY->floatValue();
+	
 	if (item->isLocked->boolValue()) return;
 
 	timeAtMouseDown = item->time->floatValue();
 	posAtMouseDown = getX();
-	flagYAtMouseDown = item->flagY->floatValue();
 }
 
 void TimeTriggerUI::mouseDrag(const MouseEvent & e)
 {
 	if (itemLabel.isBeingEdited()) return;
-	if (item->isLocked->boolValue()) return;
 
 	BaseItemUI::mouseDrag(e);
-
-	if (!e.mods.isShiftDown())
-	{
-		triggerUIListeners.call(&TimeTriggerUIListener::timeTriggerDragged, this, e);
-	}
 
 	if (!e.mods.isCommandDown())
 	{
 		float ty = flagYAtMouseDown + e.getOffsetFromDragStart().y*1.f / (getHeight() - 20);
 		item->flagY->setValue(ty);
 	}
+	
+	if (item->isLocked->boolValue()) return; //After that, nothing will changed if item is locked
+	
+	if (!e.mods.isShiftDown())
+	{
+		triggerUIListeners.call(&TimeTriggerUIListener::timeTriggerDragged, this, e);
+	}
+
+	
 
 }
 
@@ -133,14 +138,12 @@ void TimeTriggerUI::mouseUp(const MouseEvent & e)
 {
 	BaseItemUI::mouseUp(e);
 
-	if (item->isLocked->boolValue()) return;
 	if (flagYAtMouseDown == item->flagY->floatValue() && timeAtMouseDown == item->time->floatValue()) return;
 
 	Array<UndoableAction *> actions;
 	actions.add(item->flagY->setUndoableValue(flagYAtMouseDown, item->flagY->floatValue(), true));
-	actions.add(item->time->setUndoableValue(timeAtMouseDown, item->time->floatValue(), true));
+	if (!item->isLocked->boolValue()) actions.add(item->time->setUndoableValue(timeAtMouseDown, item->time->floatValue(), true));
 	UndoMaster::getInstance()->performActions("Move Trigger \""+item->niceName+"\"", actions);
-
 }
 
 void TimeTriggerUI::containerChildAddressChangedAsync(ControllableContainer * cc)

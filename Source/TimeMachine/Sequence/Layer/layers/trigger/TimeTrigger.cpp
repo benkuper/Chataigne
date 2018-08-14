@@ -46,7 +46,7 @@ void TimeTrigger::onContainerParameterChangedInternal(Parameter * p)
 	if (p == isLocked)
 	{
 		time->setControllableFeedbackOnly(isLocked->boolValue());
-		flagY->setControllableFeedbackOnly(isLocked->boolValue());
+		//flagY->setControllableFeedbackOnly(isLocked->boolValue());
 	}
 }
 
