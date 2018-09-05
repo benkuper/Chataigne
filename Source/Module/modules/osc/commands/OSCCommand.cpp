@@ -138,7 +138,7 @@ void OSCCommand::trigger()
 		case Controllable::COLOR:
 		{
 			Colour c = ((ColorParameter*)p)->getColor();
-			m.addColor(OSCColor(c.getRed(), c.getGreen(), c.getBlue(), c.getAlpha()));
+			m.addColour(OSCHelpers::getOSCColour(c));
 		}
 		break;
 		case Controllable::POINT2D:

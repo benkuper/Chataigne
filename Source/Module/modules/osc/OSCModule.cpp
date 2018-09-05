@@ -110,7 +110,7 @@ float OSCModule::getFloatArg(OSCArgument a)
 	if (a.isFloat32()) return a.getFloat32();
 	if (a.isInt32()) return (float)a.getInt32();
 	if (a.isString()) return a.getString().getFloatValue();
-	if (a.isColor()) return getIntArg(a);
+	if (a.isColour()) return getIntArg(a);
 	return 0;
 }
 
@@ -119,11 +119,9 @@ int OSCModule::getIntArg(OSCArgument a)
 	if (a.isInt32()) return a.getInt32();
 	if (a.isFloat32()) return roundf(a.getFloat32());
 	if (a.isString()) return a.getString().getIntValue();
-	if (a.isColor())
-	{
-		OSCColor c = a.getColor();
-		return c.r << 24 | c.g << 16 | c.b << 8 | c.a;
-	}
+	if (a.isColour()) return a.getColour().toInt32();
+		//return c.red << 24 | c.green << 16 | c.blue << 8 | c.alpha;
+	//}
 
 	return 0;
 }
@@ -133,22 +131,13 @@ String OSCModule::getStringArg(OSCArgument a)
 	if (a.isString()) return a.getString();
 	if (a.isInt32()) return String(a.getInt32());
 	if (a.isFloat32()) return String(a.getFloat32());
-	if (a.isColor())
-	{
-		OSCColor oc = a.getColor();
-		Colour c = Colour(oc.r, oc.g, oc.b, oc.a);
-		return c.toString();
-	}
+	if (a.isColour()) return OSCHelpers::getColourFromOSC(a.getColour()).toString();
 	return "";
 }
 
 Colour OSCModule::getColorArg(OSCArgument a)
 {
-	if (a.isColor())
-	{
-		OSCColor c = a.getColor();
-		return Colour(c.r, c.g, c.b, c.a);
-	}
+	if (a.isColour()) return OSCHelpers::getColourFromOSC(a.getColour());
 	if (a.isString()) return Colour::fromString(a.getString());
 	if (a.isInt32()) return Colour(a.getInt32());
 	if (a.isFloat32()) return Colour(a.getFloat32());
@@ -286,17 +275,16 @@ OSCArgument OSCModule::varToArgument(const var & v)
 
 OSCArgument OSCModule::varToColorArgument(const var & v)
 {
-	if (v.isBool()) return OSCArgument((bool)v?OSCColor(255,255,255,255):OSCColor(0,0,0,0));
+	if (v.isBool()) return OSCArgument(OSCHelpers::getOSCColour((bool)v ? Colours::white : Colours::black));
 	else if (v.isInt() || v.isInt64() || v.isDouble())
 	{
 		int iv = (int)v;
-		OSCColor c(iv >> 24 & 0xFF, iv >> 16 & 0xFF, iv >> 8 & 0xFF, iv & 0xFF);
+		OSCColour c = OSCColour::fromInt32(iv);// >> 24 & 0xFF | iv >> 16 & 0xFF | iv >> 8 & 0xFF | iv & 0xFF);
 		return OSCArgument(c);
-	}
-	else if (v.isString())
+	}else if (v.isString())
 	{
 		Colour c = Colour::fromString(v.toString());
-		return OSCArgument(OSCColor(c.getRed(), c.getGreen(), c.getBlue(),c.getAlpha()));
+		return OSCArgument(OSCHelpers::getOSCColour(c));
 	}
 
 	jassert(false);
@@ -308,10 +296,10 @@ var OSCModule::argumentToVar(const OSCArgument & a)
 	if (a.isFloat32()) return var(a.getFloat32());
 	else if (a.isInt32()) return var(a.getInt32());
 	else if (a.isString()) return var(a.getString());
-	else if (a.isColor())
+	else if (a.isColour())
 	{
-		OSCColor c = a.getColor();
-		return var(c.r << 24 | c.g << 16 | c.b << 8 | c.a);
+		OSCColour c = a.getColour();
+		return var((int)c.toInt32());
 	}
 	
 	return var("error");
@@ -360,7 +348,7 @@ void OSCModule::handleRoutedModuleValue(Controllable * c, RouteParams * p)
 		if (c->type == Parameter::COLOR)
 		{
 			Colour col = ((ColorParameter*)p)->getColor();
-			m.addColor(OSCColor(col.getRed(), col.getGreen(), col.getBlue(), col.getAlpha()));
+			m.addColour(OSCHelpers::getOSCColour(col));
 		}else
 		{
 			if (!v.isArray())  m.addArgument(varToArgument(v));

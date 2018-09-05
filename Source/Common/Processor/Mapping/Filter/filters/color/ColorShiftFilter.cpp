@@ -28,12 +28,19 @@ ColorShiftFilter::~ColorShiftFilter()
 void ColorShiftFilter::processInternal()
 {
 	ColorParameter * tc = (ColorParameter *)filteredParameter.get();
+
 	if (tc == nullptr)
 	{
 		DBG("ERROR HERE, should not be null");
 		return;
 	}
 	
+	if (sourceParam == nullptr)
+	{
+		DBG("ERROR HERE, source should not be null");
+		return;
+	}
+
 	Colour c = Colours::black;
 	if (sourceParam->type != Parameter::COLOR)
 	{

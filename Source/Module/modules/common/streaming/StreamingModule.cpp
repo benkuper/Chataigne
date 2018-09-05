@@ -106,7 +106,7 @@ var StreamingModule::sendBytesFromScript(const var::NativeFunctionArgs & a)
 		{
 			Array<var> * aa = a.arguments[i].getArray();
 			for (auto &vaa : *aa) data.add((uint8)(int)vaa);
-		} else if (a.arguments[i].isInt())
+		} else if (a.arguments[i].isInt() || a.arguments[i].isDouble())
 		{
 			data.add((uint8)(int)a.arguments[i]);
 		}
