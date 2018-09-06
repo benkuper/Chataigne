@@ -27,7 +27,6 @@ OSCCommand::OSCCommand(OSCModule * _module, CommandContext context, var params) 
 	buildArgsAndParamsFromData(params);
 
 	if (rebuildAddressOnParamChanged) rebuildAddress();
-
 }
 
 OSCCommand::~OSCCommand()
@@ -79,6 +78,8 @@ void OSCCommand::buildArgsAndParamsFromData(var data)
 
 		argumentsContainer.hideInEditor = argumentsContainer.controllables.size() == 0;
 	}
+
+	argumentsContainer.hideInEditor = data.getProperty("hideArgs", argumentsContainer.hideInEditor);
 
 	if (data.getDynamicObject()->hasProperty("params") && data.getProperty("params",var()).isArray())
 	{

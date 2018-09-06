@@ -687,6 +687,11 @@
             <FILE id="dCkFW4" name="MIDIModule.h" compile="0" resource="0" file="Source/Module/modules/midi/MIDIModule.h"/>
           </GROUP>
           <GROUP id="{69C80207-6257-F263-BF16-4493C9A16861}" name="osc">
+            <GROUP id="{FA62B64A-4702-4B4D-FA34-5F23C168ED2C}" name="heavym">
+              <FILE id="WLmnmM" name="HeavyMModule.cpp" compile="1" resource="0"
+                    file="Source/Module/modules/osc/heavym/HeavyMModule.cpp"/>
+              <FILE id="QXWXaD" name="HeavyMModule.h" compile="0" resource="0" file="Source/Module/modules/osc/heavym/HeavyMModule.h"/>
+            </GROUP>
             <GROUP id="{1B95CD2F-342F-3FD8-868A-6AE9D1B94B50}" name="commands">
               <FILE id="ozAL3O" name="OSCCommand.cpp" compile="1" resource="0" file="Source/Module/modules/osc/commands/OSCCommand.cpp"/>
               <FILE id="UL19nP" name="OSCCommand.h" compile="0" resource="0" file="Source/Module/modules/osc/commands/OSCCommand.h"/>

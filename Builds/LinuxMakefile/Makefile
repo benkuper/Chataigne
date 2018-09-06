@@ -217,6 +217,7 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/MIDICommands_121216e.o \
   $(JUCE_OBJDIR)/LaunchpadModule_654c7bb.o \
   $(JUCE_OBJDIR)/MIDIModule_d3422ef9.o \
+  $(JUCE_OBJDIR)/HeavyMModule_344d2fc9.o \
   $(JUCE_OBJDIR)/OSCCommand_779cc3a1.o \
   $(JUCE_OBJDIR)/CustomOSCCommand_61f60882.o \
   $(JUCE_OBJDIR)/CustomOSCModule_1d5ea018.o \
@@ -1098,6 +1099,11 @@ $(JUCE_OBJDIR)/LaunchpadModule_654c7bb.o: ../../Source/Module/modules/midi/Launc
 $(JUCE_OBJDIR)/MIDIModule_d3422ef9.o: ../../Source/Module/modules/midi/MIDIModule.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling MIDIModule.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/HeavyMModule_344d2fc9.o: ../../Source/Module/modules/osc/heavym/HeavyMModule.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling HeavyMModule.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/OSCCommand_779cc3a1.o: ../../Source/Module/modules/osc/commands/OSCCommand.cpp

@@ -59,6 +59,8 @@ void CustomValuesCommandArgumentManager::rebuildFromTemplate()
 		CustomValuesCommandArgument * a = addItemFromData(i->getJSONData());
 		 a->linkToTemplate(i);
 	}
+
+	hideInEditor = items.size() == 0;
 }
 
 CustomValuesCommandArgument * CustomValuesCommandArgumentManager::addItemWithParam(Parameter * p, var data, bool fromUndoableAction)

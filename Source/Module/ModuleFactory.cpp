@@ -39,6 +39,7 @@
 #include "modules/tcp/pjlink/PJLinkModule.h"
 #include "modules/controller/joycon/JoyConModule.h"
 #include "modules/osc/powerpoint/PowerpointModule.h"
+#include "modules/osc/heavym/HeavyMModule.h"
 
 juce_ImplementSingleton(ModuleFactory)
 
@@ -72,6 +73,7 @@ ModuleFactory::ModuleFactory() {
 #endif
 
 	moduleDefs.add(new ModuleDefinition("Software", "DLight", &DLightModule::create));
+	moduleDefs.add(new ModuleDefinition("Software", "HeavyM", &HeavyMModule::create));
 	moduleDefs.add(new ModuleDefinition("Software", "LiveOSC2", &LiveOSCModule::create));
 	moduleDefs.add(new ModuleDefinition("Software", "Millumin", &MilluminModule::create));
 	moduleDefs.add(new ModuleDefinition("Software", "Reaper", &ReaperModule::create));

@@ -309,6 +309,7 @@
     <ClCompile Include="..\..\Source\Module\modules\midi\commands\MIDICommands.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\midi\Launchpad\LaunchpadModule.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\midi\MIDIModule.cpp"/>
+    <ClCompile Include="..\..\Source\Module\modules\osc\heavym\HeavyMModule.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\osc\commands\OSCCommand.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\osc\custom\commands\CustomOSCCommand.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\osc\custom\CustomOSCModule.cpp"/>
@@ -2739,6 +2740,7 @@
     <ClInclude Include="..\..\Source\Module\modules\midi\commands\MIDICommands.h"/>
     <ClInclude Include="..\..\Source\Module\modules\midi\Launchpad\LaunchpadModule.h"/>
     <ClInclude Include="..\..\Source\Module\modules\midi\MIDIModule.h"/>
+    <ClInclude Include="..\..\Source\Module\modules\osc\heavym\HeavyMModule.h"/>
     <ClInclude Include="..\..\Source\Module\modules\osc\commands\OSCCommand.h"/>
     <ClInclude Include="..\..\Source\Module\modules\osc\custom\commands\CustomOSCCommand.h"/>
     <ClInclude Include="..\..\Source\Module\modules\osc\custom\CustomOSCModule.h"/>

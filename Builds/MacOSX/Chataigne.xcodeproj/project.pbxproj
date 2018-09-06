@@ -176,6 +176,7 @@
 		00F7943B39DC4F058928E693 = {isa = PBXBuildFile; fileRef = C0BFDCF118F92A603852B8EB; };
 		61B19AD58450E773E66D0342 = {isa = PBXBuildFile; fileRef = EB2F2B9007A710D4B07ABEF8; };
 		EBB25F3C554B4D3C4931FA0B = {isa = PBXBuildFile; fileRef = 0189433D1F58B3EFCB328C09; };
+		F560A7641D963370FF460F6A = {isa = PBXBuildFile; fileRef = AC2CF94957A35C1F57DCE049; };
 		83A709B1B63AB9D0B893E8FE = {isa = PBXBuildFile; fileRef = 4122FC0A883E05DB2F0B99F8; };
 		66ECEBD14E636A08B90395F2 = {isa = PBXBuildFile; fileRef = 23ADA3186B4A93FBE2F36746; };
 		432D4FBB8351895E8F052B35 = {isa = PBXBuildFile; fileRef = 917F8F23507E7AE42797E326; };
@@ -624,6 +625,7 @@
 		917F8F23507E7AE42797E326 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CustomOSCModule.cpp; path = ../../Source/Module/modules/osc/custom/CustomOSCModule.cpp; sourceTree = "SOURCE_ROOT"; };
 		91FAD120CB39BF7A50BB6C51 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LiveOSCSceneCommand.h; path = ../../Source/Module/modules/osc/live/commands/LiveOSCSceneCommand.h; sourceTree = "SOURCE_ROOT"; };
 		923AE5135E5069CB080C5867 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = AudioModule.cpp; path = ../../Source/Module/modules/audio/AudioModule.cpp; sourceTree = "SOURCE_ROOT"; };
+		939053390E079C53D7BB813C = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = HeavyMModule.h; path = ../../Source/Module/modules/osc/heavym/HeavyMModule.h; sourceTree = "SOURCE_ROOT"; };
 		93D205C2FA1058AA0F5FD66F = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CurveMapFilter.cpp; path = ../../Source/Common/Processor/Mapping/Filter/filters/number/CurveMapFilter.cpp; sourceTree = "SOURCE_ROOT"; };
 		960087F9A23AE3C81E1156E0 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CommandFactory.cpp; path = ../../Source/Common/Command/CommandFactory.cpp; sourceTree = "SOURCE_ROOT"; };
 		962762E51A968A3E21612F7C = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LiveOSCCommandBase.cpp; path = ../../Source/Module/modules/osc/live/commands/LiveOSCCommandBase.cpp; sourceTree = "SOURCE_ROOT"; };
@@ -676,6 +678,7 @@
 		ABE980A8C8A9E5C7E7344E09 = {isa = PBXFileReference; lastKnownFileType = image.png; name = nextcue.png; path = ../../Resources/nextcue.png; sourceTree = "SOURCE_ROOT"; };
 		ABFB516A504EA44816966560 = {isa = PBXFileReference; lastKnownFileType = file; name = "juce_audio_devices"; path = "~/JUCE/modules/juce_audio_devices"; sourceTree = "<absolute>"; };
 		AC05E07AD24466AF65669CF6 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Point3DComparators.cpp; path = ../../Source/Common/Processor/Action/Condition/Comparator/comparators/Point3DComparators.cpp; sourceTree = "SOURCE_ROOT"; };
+		AC2CF94957A35C1F57DCE049 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = HeavyMModule.cpp; path = ../../Source/Module/modules/osc/heavym/HeavyMModule.cpp; sourceTree = "SOURCE_ROOT"; };
 		AC618D6B6BD7DB9CBEFD0818 = {isa = PBXFileReference; lastKnownFileType = image.png; name = add.png; path = ../../Resources/add.png; sourceTree = "SOURCE_ROOT"; };
 		AC674D30A38CA7B33B26F250 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SerialModule.cpp; path = ../../Source/Module/modules/serial/SerialModule.cpp; sourceTree = "SOURCE_ROOT"; };
 		ACA541CCEC95D9808171FAA9 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ProcessorManagerUI.cpp; path = ../../Source/Common/Processor/ui/ProcessorManagerUI.cpp; sourceTree = "SOURCE_ROOT"; };
@@ -1349,6 +1352,9 @@
 					DEBAC57FB0C64A4D1A836F3E,
 					0189433D1F58B3EFCB328C09,
 					D90842DA76257F12F36E8DB1, ); name = midi; sourceTree = "<group>"; };
+		6885BE82A9F609D9D0F8B5CB = {isa = PBXGroup; children = (
+					AC2CF94957A35C1F57DCE049,
+					939053390E079C53D7BB813C, ); name = heavym; sourceTree = "<group>"; };
 		F79FC768261B1C21B6005566 = {isa = PBXGroup; children = (
 					4122FC0A883E05DB2F0B99F8,
 					9B29E5CBD782D3E4918B125D, ); name = commands; sourceTree = "<group>"; };
@@ -1404,6 +1410,7 @@
 					6E734C416FC137CEF01B0CFD,
 					AF52F768B78BA08E716F431A, ); name = powerpoint; sourceTree = "<group>"; };
 		23E6D3E862CD3447CA729721 = {isa = PBXGroup; children = (
+					6885BE82A9F609D9D0F8B5CB,
 					F79FC768261B1C21B6005566,
 					227EAC43F6EBC36576C6C2E1,
 					199ABFB6E28A9E695E64522D,
@@ -2072,6 +2079,7 @@
 					00F7943B39DC4F058928E693,
 					61B19AD58450E773E66D0342,
 					EBB25F3C554B4D3C4931FA0B,
+					F560A7641D963370FF460F6A,
 					83A709B1B63AB9D0B893E8FE,
 					66ECEBD14E636A08B90395F2,
 					432D4FBB8351895E8F052B35,

@@ -269,6 +269,9 @@
     <Filter Include="Chataigne\Source\Module\modules\midi">
       <UniqueIdentifier>{D2A91548-5F0F-89AA-05AF-BCC03494605C}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\osc\heavym">
+      <UniqueIdentifier>{23381407-F713-1E94-D708-9B8F6ED05FB7}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Chataigne\Source\Module\modules\osc\commands">
       <UniqueIdentifier>{4DC78688-F147-66B9-094F-569A37D8C91F}</UniqueIdentifier>
     </Filter>
@@ -1452,6 +1455,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\midi\MIDIModule.cpp">
       <Filter>Chataigne\Source\Module\modules\midi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Module\modules\osc\heavym\HeavyMModule.cpp">
+      <Filter>Chataigne\Source\Module\modules\osc\heavym</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\osc\commands\OSCCommand.cpp">
       <Filter>Chataigne\Source\Module\modules\osc\commands</Filter>
@@ -4565,6 +4571,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\midi\MIDIModule.h">
       <Filter>Chataigne\Source\Module\modules\midi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Module\modules\osc\heavym\HeavyMModule.h">
+      <Filter>Chataigne\Source\Module\modules\osc\heavym</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\osc\commands\OSCCommand.h">
       <Filter>Chataigne\Source\Module\modules\osc\commands</Filter>
