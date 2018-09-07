@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    HeavyMModule.cpp
-    Created: 7 Sep 2018 12:15:30am
-    Author:  Ben
+	HeavyMModule.cpp
+	Created: 7 Sep 2018 12:15:30am
+	Author:  Ben
 
   ==============================================================================
 */
@@ -17,19 +17,20 @@ HeavyMModule::HeavyMModule() :
 
 	//GROUP
 	var groupIndexParams = var();
-	groupIndexParams.append(ControllableUtil::createDataForParam(IntParameter::getTypeStringStatic(), "Group", "Index of the group",0,0,7));
+	groupIndexParams.append(ControllableUtil::createDataForParam(IntParameter::getTypeStringStatic(), "Group", "Index of the group", 0, 0, 7));
 	var intTriggerArgs = var();
 	intTriggerArgs.append(ControllableUtil::createDataForParam(IntParameter::getTypeStringStatic(), "Trigger", "Just here to force trigger, from the HeavyM doc.", 1, 1, 1, false));
-	
-	defManager.add(CommandDefinition::createDef(this, "Group", "Select Group", &OSCCommand::create, CommandContext::ACTION)->addParam("address", "/SelectGroup[group]")->addParam("params",groupIndexParams)->addParam("args",intTriggerArgs)->addParam("hideArgs",true));
+
+	defManager.add(CommandDefinition::createDef(this, "Group", "Select Group", &OSCCommand::create, CommandContext::ACTION)->addParam("address", "/SelectGroup[group]")->addParam("params", groupIndexParams)->addParam("args", intTriggerArgs)->addParam("hideArgs", true));
 
 	//SEQUENCE
 	var indexArgs = var();
 	groupIndexParams.append(ControllableUtil::createDataForParam(IntParameter::getTypeStringStatic(), "Index", "Index to select", 0, 0, 1000));
 
-	var boolValueArg = var();
-	boolValueArg.append(ControllableUtil::createDataForParam(BoolParameter::getTypeStringStatic(), "Value", "Value for this command", true));
-
+	var boolValueArgs = var();
+	var boolValueArg = ControllableUtil::createDataForParam(BoolParameter::getTypeStringStatic(), "Value", "Value for this command", true);
+	boolValueArg.getDynamicObject()->setProperty("mappingIndex", 0);
+	boolValueArgs.append(boolValueArg);
 
 	defManager.add(CommandDefinition::createDef(this, "Sequence", "Toggle Play-Pause Sequence", &OSCCommand::create, CommandContext::ACTION)->addParam("address", "/SeqControlPlay")->addParam("args", intTriggerArgs)->addParam("hideArgs", true));
 	defManager.add(CommandDefinition::createDef(this, "Sequence", "Select Sequence", &OSCCommand::create, CommandContext::ACTION)->addParam("address", "/changeSeq")->addParam("args", indexArgs));
@@ -56,153 +57,223 @@ HeavyMModule::HeavyMModule() :
 	defManager.add(CommandDefinition::createDef(this, "Player", "Stop All Players", &OSCCommand::create, CommandContext::ACTION)->addParam("address", "/StopAllPlayers")->addParam("args", intTriggerArgs)->addParam("hideArgs", true));
 
 
-	//
-	/*
+	//Effects
+	OwnedArray<Effect> effects;
+	effects.add(Effect::create("Border", "Border")
+		->add("Activated", "Activated", Toggle)
+		->add("Mode", "Mode", Trigger)
+		->add("Color", "Color", Range)
+		->add("Width", "Width", Range)
+		->add("Speed", "Speed", Range)
+		->add("Phase", "Phase", Range)
+	);
 
-	//COLUMN
-	var columnIndexArgs = var();
-	columnIndexArgs.append(ControllableUtil::createDataForParam(IntParameter::getTypeStringStatic(), "Column Index", "Index of the Column", 0, 0, 10000));
+	effects.add(Effect::create("Line", "Line")
+		->add("Activated", "Activated", Toggle)
+		->add("Mode", "Mode", Trigger)
+		->add("Color", "Color", Range)
+		->add("Width", "Width", Range)
+		->add("Length", "Length", Range)
+		->add("Number", "Number", Range)
+		->add("Speed", "Speed", Range)
+		->add("Phase", "Phase", Range)
+		->add("Direction", "Direction", Trigger)
+	);
 
-	var columnNameArgs = var();
-	columnNameArgs.append(ControllableUtil::createDataForParam(StringParameter::getTypeStringStatic(), "Column Name", "Name of the Column", ""));
+	effects.add(Effect::create("Repeat", "Repeat")
+		->add("Activated", "Activated", Toggle)
+		->add("Number", "Number", Range)
+		->add("Depth", "Depth", Range)
+		->add("Center", "Center", Toggle)
+	);
 
+	effects.add(Effect::create("FillColor", "FillColor")
+		->add("Activated", "Activated", Toggle)
+		->add("Normal Activated", "NormalActivated", Trigger)
+		->add("Normal", "Normal", Range)
+		->add("Gradient Activated", "GradientActivated", Trigger)
+		->add("Gradient1", "Gradient1", Range)
+		->add("Gradient2", "Gradient2", Range)
+		->add("Gradient Mode", "GradientMode", Trigger)
+		->add("Gradient Direction", "GradientDirection", Range)
+		->add("Gradient Direction2", "GradientDirection2", Range)
+		->add("Gradient Speed", "GradientSpeed", Range)
+		->add("Gradient Phase", "GradientPhase", Range)
+		->add("Random Activated", "RandomActivated", Trigger)
+		->add("Random1", "Random1", Range)
+		->add("Random2", "Random2", Range)
+		->add("Random3", "Random3", Range)
+		->add("Random4", "Random4", Range)
+		->add("Random5", "Random5", Range)
+		->add("Random Weight1", "RandomWeight1", Range)
+		->add("Random Weight2", "RandomWeight2", Range)
+		->add("Random Weight3", "RandomWeight3", Range)
+		->add("Random Weight4", "RandomWeight4", Range)
+		->add("Random Weight5", "RandomWeight5", Range)
+		->add("Random Mode", "RandomMode", Trigger)
+		->add("Random Tempo", "RandomTempo", Range)
+		->add("Random Transition", "RandomTransition", Toggle)
+	);
 
-	defManager.add(CommandDefinition::createDef(this, "Column", "Launch Or Stop Column (by index)", &OSCCommand::create, CommandContext::ACTION)->addParam("address", "/millumin/action/launchOrStopColumn")->addParam("args", columnIndexArgs));
-	defManager.add(CommandDefinition::createDef(this, "Column", "Launch Or Stop Column (by name)", &OSCCommand::create, CommandContext::ACTION)->addParam("address", "/millumin/action/launchOrStopColumn")->addParam("args", columnNameArgs));
-	defManager.add(CommandDefinition::createDef(this, "Column", "Launch Column (by index)", &OSCCommand::create, CommandContext::ACTION)->addParam("address", "/millumin/action/launchColumn")->addParam("args", columnIndexArgs));
-	defManager.add(CommandDefinition::createDef(this, "Column", "Launch Column (by name)", &OSCCommand::create, CommandContext::ACTION)->addParam("address", "/millumin/action/launchColumn")->addParam("args", columnNameArgs));
-	defManager.add(CommandDefinition::createDef(this, "Column", "Stop Column (by index)", &OSCCommand::create, CommandContext::ACTION)->addParam("address", "/millumin/action/stopColumn")->addParam("args", columnIndexArgs));
-	defManager.add(CommandDefinition::createDef(this, "Column", "Stop Column (by name)", &OSCCommand::create, CommandContext::ACTION)->addParam("address", "/millumin/action/stopColumn")->addParam("args", columnNameArgs));
-	defManager.add(CommandDefinition::createDef(this, "Column", "Launch Previous Column", &OSCCommand::create, CommandContext::ACTION)->addParam("address", "/millumin/action/launchPreviousColumn"));
-	defManager.add(CommandDefinition::createDef(this, "Column", "Launch Next Column", &OSCCommand::create, CommandContext::ACTION)->addParam("address", "/millumin/action/launchNextColumn"));
-
-
-	//TIMELINE
-	defManager.add(CommandDefinition::createDef(this, "Timeline", "Play timeline", &OSCCommand::create, CommandContext::ACTION)->addParam("address", "/millumin/action/playTimeline"));
-	defManager.add(CommandDefinition::createDef(this, "Timeline", "Pause timeline", &OSCCommand::create, CommandContext::ACTION)->addParam("address", "/millumin/action/pauseTimeline"));
-	defManager.add(CommandDefinition::createDef(this, "Timeline", "Play or pause timeline ", &OSCCommand::create, CommandContext::ACTION)->addParam("address", "/millumin/action/playOrPauseTimeline"));
-
-	var segmentArg = var();
-	segmentArg.append(ControllableUtil::createDataForParam(StringParameter::getTypeStringStatic(), "Segment", "Name of the segment to go to", "segment"));
-	defManager.add(CommandDefinition::createDef(this, "Timeline", "Go to segment ", &OSCCommand::create, CommandContext::ACTION)->addParam("address", "/millumin/action/goToTimelineSegment")->addParam("args", segmentArg));
-
-
-	//BOARD
-	var boardIndexArgs = var();
-	boardIndexArgs.append(ControllableUtil::createDataForParam(IntParameter::getTypeStringStatic(), "Board Index", "Index of the Board", 0, 0, 10000));
-
-	var boardNameArgs = var();
-	boardNameArgs.append(ControllableUtil::createDataForParam(StringParameter::getTypeStringStatic(), "Board Name", "Name of the Board", ""));
-
-	defManager.add(CommandDefinition::createDef(this, "Board", "Select board (by index)", &OSCCommand::create, CommandContext::ACTION)->addParam("address", "/millumin/action/selectBoard")->addParam("args", boardIndexArgs));
-	defManager.add(CommandDefinition::createDef(this, "Board", "Select board (by name)", &OSCCommand::create, CommandContext::ACTION)->addParam("address", "/millumin/action/selectBoard")->addParam("args", boardNameArgs));
-
-
-	//INTERFACE
-	defManager.add(CommandDefinition::createDef(this, "Interface", "Enter fullscreen", &OSCCommand::create, CommandContext::ACTION)->addParam("address", "/millumin/action/enterFullscreen"));
-	defManager.add(CommandDefinition::createDef(this, "Interface", "Exit fullscreen", &OSCCommand::create, CommandContext::ACTION)->addParam("address", "/millumin/action/exitFullscreen"));
-	defManager.add(CommandDefinition::createDef(this, "Interface", "Quit Appliction", &OSCCommand::create, CommandContext::ACTION)->addParam("address", "/millumin/action/quit"));
-
-	//PROJECT
-	var pathArg = var();
-	pathArg.append(ControllableUtil::createDataForParam(StringParameter::getTypeStringStatic(), "Project path", "Path to the project file", "/path/to/my/project.millumin"));
-	defManager.add(CommandDefinition::createDef(this, "Project", "Open Project", &OSCCommand::create, CommandContext::ACTION)->addParam("address", "/millumin/action/openProject")->addParam("args", pathArg));
-	defManager.add(CommandDefinition::createDef(this, "Project", "Save Project", &OSCCommand::create, CommandContext::ACTION)->addParam("address", "/millumin/action/saveProject"));
-	defManager.add(CommandDefinition::createDef(this, "Project", "Save Project as...", &OSCCommand::create, CommandContext::ACTION)->addParam("address", "/millumin/action/saveProject")->addParam("args", pathArg));
-
-
-	//LAYER
-	var layerNameParams = var();
-	layerNameParams.append(ControllableUtil::createDataForParam(StringParameter::getTypeStringStatic(), "Layer Name", "Name of the Layer", "layerName"));
-
-	defManager.add(CommandDefinition::createDef(this, "Layer", "Select Layer", &OSCCommand::create, CommandContext::ACTION)->addParam("address", "/millumin/action/selectLayer")->addParam("args", layerNameParams));
-
-	var floatValueArgs = var();
-	var floatArg = ControllableUtil::createDataForParam(FloatParameter::getTypeStringStatic(), "Value", "Target Value", 0, 0, 1);
-	floatArg.getDynamicObject()->setProperty("mappingIndex", 0);
-	floatValueArgs.append(floatArg);
-
-	var xArg = ControllableUtil::createDataForParam(IntParameter::getTypeStringStatic(), "X", "Position X", 0, -10000, 10000);
-	xArg.getDynamicObject()->setProperty("mappingIndex", 0);
-
-	var yArg0 = ControllableUtil::createDataForParam(IntParameter::getTypeStringStatic(), "Y", "Position Y", 0, -10000, 10000);
-	yArg0.getDynamicObject()->setProperty("mappingIndex", 0);
-
-	var yArg1 = ControllableUtil::createDataForParam(IntParameter::getTypeStringStatic(), "Y", "Position Y", 0, -10000, 10000);
-	yArg0.getDynamicObject()->setProperty("mappingIndex", 1);
-
-	var xArgs = var();
-	xArgs.append(xArg);
-
-	var yArgs = var();
-	yArgs.append(yArg0);
-
-	var xyArgs = var();
-	xyArgs.append(xArg);
-	xyArgs.append(yArg1);
-
-	var rotArgs = var();
-	var rotArg = ControllableUtil::createDataForParam(FloatParameter::getTypeStringStatic(), "Rotation", "Target Rotation", 0, 0, 360);
-	rotArg.getDynamicObject()->setProperty("mappingIndex", 0);
-	rotArgs.append(rotArg);
-
-	defManager.add(CommandDefinition::createDef(this, "Layer", "Opacity", &OSCCommand::create, CommandContext::BOTH)->addParam("address", "/millumin/layer:[layerName]/opacity")->addParam("params", layerNameParams)->addParam("args", floatValueArgs));
-	defManager.add(CommandDefinition::createDef(this, "Layer", "Position X", &OSCCommand::create, CommandContext::BOTH)->addParam("address", "/millumin/layer:[layerName]/position/x")->addParam("params", layerNameParams)->addParam("args", xArgs));
-	defManager.add(CommandDefinition::createDef(this, "Layer", "Position Y", &OSCCommand::create, CommandContext::BOTH)->addParam("address", "/millumin/layer:[layerName]/position/y")->addParam("params", layerNameParams)->addParam("args", yArgs));
-	defManager.add(CommandDefinition::createDef(this, "Layer", "Position X/Y", &OSCCommand::create, CommandContext::BOTH)->addParam("address", "/millumin/layer:[layerName]/position/xy")->addParam("params", layerNameParams)->addParam("args", xyArgs));
-	defManager.add(CommandDefinition::createDef(this, "Layer", "Rotation", &OSCCommand::create, CommandContext::BOTH)->addParam("address", "/millumin/layer:[layerName]/rotation")->addParam("params", layerNameParams)->addParam("args", rotArgs));
-	defManager.add(CommandDefinition::createDef(this, "Layer", "Scale", &OSCCommand::create, CommandContext::BOTH)->addParam("address", "/millumin/layer:[layerName]/scale")->addParam("params", layerNameParams)->addParam("args", floatValueArgs));
+	effects.add(Effect::create("FillSpecial", "FillSpecial")
+		->add("Activated", "Activated", Toggle)
+		->add("Swipe Solo", "SwipeSolo", Trigger)
+		->add("Inside", "Inside", Trigger)
+		->add("Outside", "Outside", Trigger)
+		->add("Corner", "Corner", Trigger)
+		->add("Stairs", "Stairs", Trigger)
+		->add("Swipe Global", "SwipeGlobal", Trigger)
+		->add("Hypnotic", "Hypnotic", Trigger)
+		->add("Stripes", "Stripes", Trigger)
+		->add("Mosaic", "Mosaic", Trigger)
+		->add("Color", "Color", Range)
+		->add("Value", "Value", Range)
+		->add("Speed", "Speed", Range)
+		->add("Phase", "Phase", Range)
+		->add("Size Stripes", "SizeStripes", Range)
+		->add("Direction", "Direction", Range)
+		->add("Center", "Center", Toggle)
 
 
-	//LAYER MAPPING
-	defManager.add(CommandDefinition::createDef(this, "Layer Mapping", "Top/Left", &OSCCommand::create, CommandContext::BOTH)->addParam("address", "/millumin/layer:[layerName]/mapping/topLeft")->addParam("params", layerNameParams)->addParam("args", xyArgs));
-	defManager.add(CommandDefinition::createDef(this, "Layer Mapping", "Top/Right", &OSCCommand::create, CommandContext::BOTH)->addParam("address", "/millumin/layer:[layerName]/mapping/topRight")->addParam("params", layerNameParams)->addParam("args", xyArgs));
-	defManager.add(CommandDefinition::createDef(this, "Layer Mapping", "Bottom/Left", &OSCCommand::create, CommandContext::BOTH)->addParam("address", "/millumin/layer:[layerName]/mapping/bottomLeft")->addParam("params", layerNameParams)->addParam("args", xyArgs));
-	defManager.add(CommandDefinition::createDef(this, "Layer Mapping", "Bottom/Right", &OSCCommand::create, CommandContext::BOTH)->addParam("address", "/millumin/layer:[layerName]/mapping/bottomRight")->addParam("params", layerNameParams)->addParam("args", xyArgs));
+	);
+
+	effects.add(Effect::create("FillSnake", "FillSnake")
+		->add("Activated", "Activated", Toggle)
+		->add("Apply Color", "ApplyColor", Toggle)
+		->add("Apply Special", "ApplySpecial", Toggle)
+		->add("Direction", "Direction", Trigger)
+		->add("Size", "Size", Range)
+		->add("Speed", "Speed", Range)
 
 
-	//EFFECTS
-	var layerFXParams = var();
-	layerFXParams.append(ControllableUtil::createDataForParam(StringParameter::getTypeStringStatic(), "Layer Name", "Name of the Layer", "layerName"));
-	layerFXParams.append(ControllableUtil::createDataForParam(IntParameter::getTypeStringStatic(), "Effect Index", "Name of the Effect", 1, 1, 100));
-	layerFXParams.append(ControllableUtil::createDataForParam(StringParameter::getTypeStringStatic(), "Param Name", "Name of the effect's parameter", "paramName"));
+	);
 
-	defManager.add(CommandDefinition::createDef(this, "Layer Effect", "Set Effect Parameter", &OSCCommand::create, CommandContext::BOTH)->addParam("address", "/millumin/layer:[layerName]/effect[effectIndex]/[paramName]")->addParam("params", layerFXParams)->addParam("args", floatValueArgs));
+	effects.add(Effect::create("Rotation", "Rotation")
+		->add("Activated", "Activated", Toggle)
+		->add("X", "X", Toggle)
+		->add("Y", "Y", Toggle)
+		->add("Z", "Z", Toggle)
+		->add("Center", "Center", Toggle)
+		->add("Direction", "Direction", Trigger)
+		->add("Speed", "Speed", Range)
+		->add("Phase", "Phase", Range));
+
+	effects.add(Effect::create("Structure", "Structure")
+		->add("Activated", "Activated", Toggle)
+		->add("Radial Glow", "RadialGlow", Trigger)
+		->add("Wireframe", "Wireframe", Trigger)
+		->add("Origami", "Origami", Trigger)
+		->add("Elastic Position", "ElasticPosition", Trigger)
+		->add("Elastic Rotation", "ElasticRotation", Trigger)
+		->add("Elastic Scale", "ElasticScale", Trigger)
+		->add("Strokes", "Strokes", Trigger)
+		->add("Color", "Color", Range)
+		->add("Width", "Width", Range)
+		->add("Speed", "Speed", Range)
+		->add("Phase", "Phase", Range)
+		->add("Number", "Number", Range)
+		->add("Multiplier", "Multiplier", Range)
+		->add("Inside Phase", "InsidePhase", Range)
+		->add("Center", "Center", Toggle)
+		->add("Split Ellipse", "SplitEllipse", Range)
+	);
+
+	effects.add(Effect::create("Start Transition", "StartT")
+		->add("Activated", "Activated", Toggle)
+		->add("Swipe", "Swipe", Trigger)
+		->add("Inside", "Inside", Trigger)
+		->add("Outside", "Outside", Trigger)
+		->add("Corner", "Corner", Trigger)
+		->add("Stairs", "Stairs", Trigger)
+		->add("Fade", "Fade", Trigger)
+		->add("Blinds", "Blinds", Trigger)
+		->add("Falls", "Falls", Trigger)
+		->add("Direction", "Direction", Range)
+		->add("Orientation", "Orientation", Trigger)
+		->add("Upper Left", "UpperLeft", Trigger)
+		->add("Upper Right", "UpperRight", Trigger)
+		->add("Center", "Center", Trigger)
+		->add("Bottom Left", "BottomLeft", Trigger)
+		->add("Bottom Right", "BottomRight", Trigger)
 
 
-	//LIGHT
-	var lightNameParams = var();
-	lightNameParams.append(ControllableUtil::createDataForParam(StringParameter::getTypeStringStatic(), "Light Name", "Name of the Light", "lightName"));
+	);
 
-	defManager.add(CommandDefinition::createDef(this, "Light", "Select Light", &OSCCommand::create, CommandContext::ACTION)->addParam("address", "/millumin/action/selectLight")->addParam("args", lightNameParams));
-	defManager.add(CommandDefinition::createDef(this, "Light", "Intensity", &OSCCommand::create, CommandContext::BOTH)->addParam("address", "/millumin/light:[lightName]/intensity")->addParam("args", floatValueArgs));
+	effects.add(Effect::create("End Transition", "EndT")
+		->add("Activated", "Activated", Toggle)
+		->add("Swipe", "Swipe", Trigger)
+		->add("Inside", "Inside", Trigger)
+		->add("Outside", "Outside", Trigger)
+		->add("Corner", "Corner", Trigger)
+		->add("Stairs", "Stairs", Trigger)
+		->add("Fade", "Fade", Trigger)
+		->add("Blinds", "Blinds", Trigger)
+		->add("Falls", "Falls", Trigger)
+		->add("Direction", "Direction", Range)
+		->add("Orientation", "Orientation", Trigger)
+		->add("Upper Left", "UpperLeft", Trigger)
+		->add("Upper Right", "UpperRight", Trigger)
+		->add("Center", "Center", Trigger)
+		->add("Bottom Left", "BottomLeft", Trigger)
+		->add("Bottom Right", "BottomRight", Trigger)
 
 
-	//MEDIA
-	var mediaNameArgs = var();
-	mediaNameArgs.append(ControllableUtil::createDataForParam(StringParameter::getTypeStringStatic(), "Media name", "Name of the media to launch in the target layer", "Movie.mov"));
+	);
 
+	effects.add(Effect::create("Shader", "Shader")
+		->add("Black White Activate", "BlackWhiteActivate", Toggle)
+		->add("Black White", "BlackWhite", Range)
+		->add("Blue Activate", "BlueActivate", Toggle)
+		->add("Blue", "Blue", Range)
+		->add("Blur Activate", "BlurActivate", Toggle)
+		->add("Blur", "Blur", Range)
+		->add("Contraste Activate", "ContrasteActivate", Toggle)
+		->add("Contraste", "Contraste", Range)
+		->add("Convergence Activate", "ConvergenceActivate", Toggle)
+		->add("Convergence", "Convergence", Range)
+		->add("Cut Slider Activate", "CutSliderActivate", Toggle)
+		->add("Cut Slider", "CutSlider", Range)
+		->add("Glow Activate", "GlowActivate", Toggle)
+		->add("Glow", "Glow", Range)
+		->add("Green Activate", "GreenActivate", Toggle)
+		->add("Green", "Green", Range)
+		->add("Noise Activate", "NoiseActivate", Toggle)
+		->add("Noise", "Noise", Range)
+		->add("Old T V Activate", "OldTVActivate", Toggle)
+		->add("Old T V", "OldTV", Range)
+		->add("Red Activate", "RedActivate", Toggle)
+		->add("Red", "Red", Range)
+		->add("Shaker Activate", "ShakerActivate", Toggle)
+		->add("Shaker", "Shaker", Range)
+		->add("Strobe Activate", "StrobeActivate", Toggle)
+		->add("Strobe", "Strobe", Range)
+		->add("Slit Scan Activate", "SlitScanActivate", Toggle)
+		->add("Slit Scan", "SlitScan", Range)
+		->add("Swell Activate", "SwellActivate", Toggle)
+		->add("Swell", "Swell", Range)
+		->add("Twist Activate", "TwistActivate", Toggle)
+		->add("Twist", "Twist", Range)
+	);
 
-	var timeArgs = var();
-	var timeArg = ControllableUtil::createDataForParam(FloatParameter::getTypeStringStatic(), "Time", "Target Time", 0, 0, 1);
-	timeArg.getDynamicObject()->setProperty("mappingIndex", 0);
-	timeArg.getDynamicObject()->setProperty("defaultUI", FloatParameter::TIME);
-	timeArgs.append(timeArg);
+	
+	var rangeValueArgs = var();
+	var rangeValueArg = ControllableUtil::createDataForParam(IntParameter::getTypeStringStatic(), "Value", "Value of the parameter", 0, 0, 127);
+	rangeValueArg.getDynamicObject()->setProperty("mappingIndex", 0);
+	rangeValueArgs.append(rangeValueArg);
 
-	var quartzParams = var();
-	quartzParams.append(ControllableUtil::createDataForParam(StringParameter::getTypeStringStatic(), "Layer Name", "Name of the Layer", "layerName"));
-	quartzParams.append(ControllableUtil::createDataForParam(StringParameter::getTypeStringStatic(), "Quartz Input Name", "Name of the Quartz Input", "myQuartzInput"));
+	for (auto &e : effects)
+	{
+		for (auto &ep : e->params)
+		{
+			CommandDefinition * d = CommandDefinition::createDef(this, e->name+" Effect", ep->name, &OSCCommand::create, ep->type != Trigger ? CommandContext::BOTH : CommandContext::ACTION)->addParam("address","/"+e->prefix+ep->address);
+			switch (ep->type)
+			{
+				case Trigger: d->addParam("args", intTriggerArgs)->addParam("hideArgs", true); break;
+				case Range: d->addParam("args", rangeValueArgs); break;
+				case Toggle: d->addParam("args", boolValueArgs); break;
+			}
 
-	defManager.add(CommandDefinition::createDef(this, "Media", "Restart current media", &OSCCommand::create, CommandContext::BOTH)->addParam("address", "/millumin/layer:[layerName]/startMedia")->addParam("params", layerNameParams));
-	defManager.add(CommandDefinition::createDef(this, "Media", "Start media (by column)", &OSCCommand::create, CommandContext::BOTH)->addParam("address", "/millumin/layer:[layerName]/startMedia")->addParam("params", layerNameParams)->addParam("args", columnIndexArgs));
-	defManager.add(CommandDefinition::createDef(this, "Media", "Start media (by name)", &OSCCommand::create, CommandContext::BOTH)->addParam("address", "/millumin/layer:[layerName]/startMedia")->addParam("params", layerNameParams)->addParam("args", mediaNameArgs));
-	defManager.add(CommandDefinition::createDef(this, "Media", "Pause current media", &OSCCommand::create, CommandContext::BOTH)->addParam("address", "/millumin/layer:[layerName]/pauseMedia")->addParam("params", layerNameParams));
-	defManager.add(CommandDefinition::createDef(this, "Media", "Start or Pause current media", &OSCCommand::create, CommandContext::BOTH)->addParam("address", "/millumin/layer:[layerName]/startOrPauseMedia")->addParam("params", layerNameParams));
-	defManager.add(CommandDefinition::createDef(this, "Media", "Stop current media", &OSCCommand::create, CommandContext::BOTH)->addParam("address", "/millumin/layer:[layerName]/stopMedia")->addParam("params", layerNameParams));
-
-	defManager.add(CommandDefinition::createDef(this, "Media", "Time", &OSCCommand::create, CommandContext::BOTH)->addParam("address", "/millumin/layer:[layerName]/media/time")->addParam("params", layerNameParams)->addParam("args", timeArgs));
-	defManager.add(CommandDefinition::createDef(this, "Media", "Normalized Time", &OSCCommand::create, CommandContext::BOTH)->addParam("address", "/millumin/layer:[layerName]/media/normalizedTime")->addParam("params", layerNameParams)->addParam("args", floatValueArgs));
-	defManager.add(CommandDefinition::createDef(this, "Media", "Quartz Input", &OSCCommand::create, CommandContext::BOTH)->addParam("address", "/millumin/layer:[layerName]/media/[quartzInputName]")->addParam("params", quartzParams)->addParam("args", floatValueArgs));
-
-*/
+			defManager.add(d);
+		}
+	}
 }
