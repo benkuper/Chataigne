@@ -23,6 +23,8 @@ public:
 
 	EnumParameter * operation;
 	Parameter * operationValue;
+	
+	var opValueData; //for loading after setupParamInternal
 
 	Parameter * setupParameterInternal(Parameter * sourceParam) override;
 	void processInternal() override;
@@ -33,6 +35,9 @@ public:
 	float getProcessedValue(float val, int index = -1);
 
 	bool filteredParamShouldHaveRange();
+
+	var getJSONData() override;
+	void loadJSONDataInternal(var data) override;
 
 	static MathFilter * create(var params) { return new MathFilter(params); }
 	virtual String getTypeString() const override { return "Math"; }

@@ -32,9 +32,16 @@ Parameter * MathFilter::setupParameterInternal(Parameter * source)
 
 	if (operationValue == nullptr || operationValue->type != source->type)
 	{
-		if (operationValue != nullptr) filterParams.removeControllable(operationValue);
+		if (operationValue != nullptr)
+		{
+			opValueData = operationValue->getJSONData();
+			filterParams.removeControllable(operationValue);
+		}
+
 		operationValue = (Parameter *)ControllableFactory::createControllable(source->getTypeString());
 		operationValue->setNiceName("Value");
+		operationValue->loadJSONData(opValueData);
+		operationValue->isSavable = false;
 		filterParams.addParameter(operationValue);
 	}
 	
@@ -85,13 +92,12 @@ void MathFilter::updateFilteredParamRange(Parameter * p)
 		return;
 	}
 
-	DBG("update filtered param range");
-	
 	var newMin = var();
 	var newMax = var();
 
 	if (!sourceParam->isComplex())
 	{
+		
 		newMin = getProcessedValue(sourceParam->minimumValue);
 		newMax = jmax(getProcessedValue(sourceParam->maximumValue), (float)newMin + .001f);
 	} else
@@ -136,8 +142,8 @@ float MathFilter::getProcessedValue(float val, int index)
 	{
 		case OFFSET: return val + oVal;
 		case MULTIPLY: return val * oVal;
-		case DIVIDE: return val / oVal;
-		case MODULO: return fmodf(val, oVal);
+		case DIVIDE: return oVal > 0 ? val / oVal : (val / -oVal)*-1;
+		case MODULO: return fmodf(val, abs(oVal));
 
 		case FLOOR: return floorf(val);
 		case CEIL: return ceilf(val);
@@ -151,4 +157,18 @@ bool MathFilter::filteredParamShouldHaveRange()
 {
 	Operation o = operation->getValueDataAsEnum<Operation>();
 	return o != FLOOR && o != CEIL && o != ROUND && o != MODULO;
+}
+
+var MathFilter::getJSONData()
+{
+	var data = MappingFilter::getJSONData();
+	if (operationValue != nullptr) data.getDynamicObject()->setProperty("operationValue", operationValue->getJSONData());
+	return data;
+}
+
+void MathFilter::loadJSONDataInternal(var data)
+{
+	MappingFilter::loadJSONDataInternal(data);
+	opValueData = data.getProperty("operationValue", var());
+	
 }
