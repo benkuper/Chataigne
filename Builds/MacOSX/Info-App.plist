@@ -23,9 +23,9 @@
     <key>CFBundleSignature</key>
     <string>????</string>
     <key>CFBundleShortVersionString</key>
-    <string>1.4.11</string>
+    <string>1.4.12b</string>
     <key>CFBundleVersion</key>
-    <string>1.4.11</string>
+    <string>1.4.12b</string>
     <key>NSHumanReadableCopyright</key>
     <string>Ben Kuper</string>
     <key>NSHighResolutionCapable</key>
