@@ -11,7 +11,6 @@
 #ifndef BASECOMMAND_H_INCLUDED
 #define BASECOMMAND_H_INCLUDED
 
-#include "JuceHeader.h"
 #include "Template/CommandTemplate.h"
 #include "CommandContext.h"
 #include "Module/modules/common/commands/customvalues/CustomValuesCommandArgumentManager.h"
@@ -51,15 +50,25 @@ public:
 	virtual void trigger() {} //for trigger context, to override
 	virtual void setValue(var value); //for mapping context
 
-	virtual void loadPreviousCommandData(var data)
-	{
-		//default behavior is loading doing  nothing, can override that to trying hot swap of commands
-	}
-
-
+	virtual void loadPreviousCommandData(var data) {} //default behavior is loading doing  nothing, can override that to trying hot swap of commands
+	
 	void inspectableDestroyed(Inspectable * i) override;
 
 	static BaseCommand * create(ControllableContainer * module, CommandContext context, var params);
+
+
+	class CommandListener
+	{
+	public:
+		virtual ~CommandListener() {}
+		virtual void commandContentChanged() {}
+	};
+
+	ListenerList<CommandListener> commandListeners;
+	void addCommandListener(CommandListener* newListener) { commandListeners.add(newListener); }
+	void removeCommandListener(CommandListener* listener) { commandListeners.remove(listener); }
+
+
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(BaseCommand)
 };

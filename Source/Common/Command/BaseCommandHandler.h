@@ -12,12 +12,12 @@
 #define BASECOMMANDHANDLER_H_INCLUDED
 
 #include "CommandDefinition.h"
-
-class BaseCommand;
+#include "BaseCommand.h"
 
 class BaseCommandHandler :
 	public BaseItem,
-	public Inspectable::InspectableListener
+	public Inspectable::InspectableListener,
+	public BaseCommand::CommandListener
 {
 public:
 	BaseCommandHandler(const String &name = "BaseCommandHandler", CommandContext context = CommandContext::ACTION, Module * lockedModule = nullptr);
@@ -42,13 +42,17 @@ public:
 
 	void onContainerTriggerTriggered(Trigger *) override;
 
+	void commandContentChanged() override; //from BaseCommand
+
 	virtual void inspectableDestroyed(Inspectable *) override;
+
 
 	class CommandHandlerListener
 	{
 	public:
 		virtual ~CommandHandlerListener() {}
 		virtual void commandChanged(BaseCommandHandler *) {}
+		virtual void commandUpdated(BaseCommandHandler *) {}
 	};
 
 	ListenerList<CommandHandlerListener> commandHandlerListeners;

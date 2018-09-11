@@ -47,7 +47,10 @@ void BaseCommand::setTargetMappingParameterAt(WeakReference<Parameter> p, int in
 	if (p != nullptr && !p.wasObjectDeleted())
 	{
 		p->setControllableFeedbackOnly(true);
+
+		commandListeners.call(&CommandListener::commandContentChanged);
 	}
+
 }
 
 void BaseCommand::clearTargetMappingParameters()

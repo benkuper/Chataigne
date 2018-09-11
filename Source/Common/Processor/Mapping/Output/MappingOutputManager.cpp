@@ -26,10 +26,7 @@ MappingOutputManager::~MappingOutputManager()
 
 void MappingOutputManager::setValue(var value)
 {
-	for (auto &o : items)
-	{
-		o->setValue(value);
-	}
+	for (auto &o : items) o->setValue(value);
 }
 
 void MappingOutputManager::setOutParam(Parameter * p)
@@ -37,6 +34,34 @@ void MappingOutputManager::setOutParam(Parameter * p)
 	if (outParam == p) return;
 	outParam = p;
 	omAsyncNotifier.addMessage(new OutputManagerEvent(OutputManagerEvent::OUTPUT_CHANGED));
+}
+
+void MappingOutputManager::updateOutputValue(MappingOutput * o)
+{
+	if (outParam == nullptr) return;
+	if (o == nullptr) return;
+	o->setValue(outParam->value);
+}
+
+void MappingOutputManager::addItemInternal(MappingOutput * o, var)
+{
+	o->adCommandHandlerListener(this);
+	updateOutputValue(o);
+}
+
+void MappingOutputManager::removeItemInternal(MappingOutput * o)
+{
+	o->removeCommandHandlerListener(this);
+}
+
+void MappingOutputManager::commandChanged(BaseCommandHandler * h)
+{
+	updateOutputValue(dynamic_cast<MappingOutput *>(h));
+}
+
+void MappingOutputManager::commandUpdated(BaseCommandHandler * h)
+{
+	updateOutputValue(dynamic_cast<MappingOutput *>(h));
 }
 
 InspectableEditor * MappingOutputManager::getEditor(bool isRoot)

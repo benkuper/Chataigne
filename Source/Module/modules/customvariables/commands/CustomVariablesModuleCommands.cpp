@@ -95,8 +95,8 @@ void CVCommand::onContainerParameterChanged(Parameter * p)
 			valueOperator->hideInEditor = value->type != Controllable::FLOAT && value->type != Controllable::INT;
 			
 			value->setNiceName("Value");
-			setTargetMappingParameterAt(value, 0);
 			addParameter(value);
+			setTargetMappingParameterAt(value, 0);
 		}
 
 	} else if (p == targetPreset || p == targetPreset2)

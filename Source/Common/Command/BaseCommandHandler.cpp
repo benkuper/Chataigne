@@ -39,6 +39,7 @@ void BaseCommandHandler::setCommand(CommandDefinition * commandDef)
 	{
 		removeChildControllableContainer(command);
 		command->module->removeInspectableListener(this);
+		command->removeCommandListener(this);
 		oldData = command->getJSONData();
 	}
 
@@ -51,6 +52,7 @@ void BaseCommandHandler::setCommand(CommandDefinition * commandDef)
 		command->hideEditorHeader = true;
 		addChildControllableContainer(command);
 		command->module->addInspectableListener(this);
+		command->addCommandListener(this);
 		command->loadPreviousCommandData(oldData); //keep as much as similar parameter possible
 	}
 
@@ -102,6 +104,11 @@ void BaseCommandHandler::onContainerTriggerTriggered(Trigger * t)
 	{
 		triggerCommand();
 	}
+}
+
+void BaseCommandHandler::commandContentChanged()
+{
+	commandHandlerListeners.call(&CommandHandlerListener::commandUpdated, this);
 }
 
 void BaseCommandHandler::inspectableDestroyed(Inspectable *)

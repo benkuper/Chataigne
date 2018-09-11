@@ -15,7 +15,8 @@
 #include "MappingOutput.h"
 
 class MappingOutputManager :
-	public BaseManager<MappingOutput>
+	public BaseManager<MappingOutput>,
+	public BaseCommandHandler::CommandHandlerListener
 {
 public:
 	MappingOutputManager();
@@ -26,6 +27,14 @@ public:
 	void setValue(var value);
 
 	void setOutParam(Parameter * p);
+
+	void updateOutputValue(MappingOutput * o);
+
+	void addItemInternal(MappingOutput * o, var) override;
+	void removeItemInternal(MappingOutput * o) override;
+
+	void commandChanged(BaseCommandHandler * h) override;
+	void commandUpdated(BaseCommandHandler * h) override;
 
 	InspectableEditor * getEditor(bool isRoot) override;
 
