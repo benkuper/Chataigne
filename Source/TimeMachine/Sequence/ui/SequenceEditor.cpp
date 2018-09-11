@@ -90,14 +90,13 @@ void SequenceEditor::mouseWheelMove(const MouseEvent & e, const MouseWheelDetail
 	{
 		if (e.mods.isShiftDown())
 		{
-			/*
 			float sequenceViewMid = (sequence->viewStartTime->floatValue() + sequence->viewEndTime->floatValue()) / 2;
 			//float zoomFactor = details.deltaY; //*navigationUI.seeker.getTimeForX(details.deltaY);
 			float initDist = sequence->viewEndTime->floatValue() - sequence->viewStartTime->floatValue();
-			float zoomFactor = (details.deltaX * initDist) / 2;
+			float zoomFactor = (details.deltaY * initDist) / 2; 
 			sequence->viewStartTime->setValue(sequence->viewStartTime->floatValue() + zoomFactor);
 			sequence->viewEndTime->setValue(sequence->viewEndTime->floatValue() - zoomFactor);
-			*/
+			
 		}else
 		{
 			if (panelManagerUI.getLocalBounds().contains(panelManagerUI.getMouseXYRelative())) //hack, need to ask Jules about listenedComponent for direct listener to event information, also have a unique "scrollbar" event for wheel+drag
