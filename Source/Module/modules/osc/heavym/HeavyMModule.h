@@ -23,7 +23,7 @@ public:
 	~HeavyMModule() {}
 
 	static HeavyMModule * create() { return new HeavyMModule(); }
-	virtual String getDefaultTypeString() const override { return "Millumin"; }
+	virtual String getDefaultTypeString() const override { return "HeavyM"; }
 
 	enum ParamType { Trigger, Range, Toggle };
 
