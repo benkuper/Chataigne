@@ -1331,6 +1331,36 @@
         <MODULEPATH id="juce_analytics" path="../JUCE/modules"/>
       </MODULEPATHS>
     </VS2017>
+    <VS2017 targetFolder="Builds/VisualStudio2017_Win7" externalLibraries="Setupapi.lib&#10;hid.lib&#10;joytime-core.lib&#10;joytime-input-hidapi.lib&#10;Servus.lib&#10;dnssd.lib&#10;ossia.lib&#10;SDL2.lib"
+            smallIcon="nVz6Li" bigIcon="nVz6Li">
+      <CONFIGURATIONS>
+        <CONFIGURATION isDebug="1" name="Debug" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/asio&#10;../../External/joycon/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/ossia/include&#10;../../External/sdl/include"
+                       libraryPath="../../External/joycon/lib&#10;../../External/servus/lib/win/x64/debug&#10;../../External/dnssd/lib&#10;../../External/ossia/lib/win&#10;../../External/sdl/lib/win"
+                       binaryPath="Binaries/Win7/Debug"/>
+        <CONFIGURATION isDebug="0" name="Release" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/asio&#10;../../External/joycon/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/ossia/include&#10;../../External/sdl/include"
+                       libraryPath="../../External/joycon/lib&#10;../../External/servus/lib/win/x64/release&#10;../../External/dnssd/lib&#10;../../External/ossia/lib/win&#10;../../External/sdl/lib/win"
+                       binaryPath="Binaries/Win7"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_video" path="D:/Softwares\JUCE\modules"/>
+        <MODULEPATH id="juce_osc" path="D:/Softwares\JUCE\modules"/>
+        <MODULEPATH id="juce_organicui" path="../JUCE Modules"/>
+        <MODULEPATH id="juce_opengl" path="D:/Softwares\JUCE\modules"/>
+        <MODULEPATH id="juce_gui_extra" path="D:/Softwares\JUCE\modules"/>
+        <MODULEPATH id="juce_gui_basics" path="D:/Softwares\JUCE\modules"/>
+        <MODULEPATH id="juce_graphics" path="D:/Softwares\JUCE\modules"/>
+        <MODULEPATH id="juce_events" path="D:/Softwares\JUCE\modules"/>
+        <MODULEPATH id="juce_data_structures" path="D:/Softwares\JUCE\modules"/>
+        <MODULEPATH id="juce_cryptography" path="D:/Softwares\JUCE\modules"/>
+        <MODULEPATH id="juce_core" path="D:/Softwares\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_utils" path="D:/Softwares\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_processors" path="D:/Softwares\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_formats" path="D:/Softwares\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_devices" path="D:/Softwares\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_basics" path="D:/Softwares\JUCE\modules"/>
+        <MODULEPATH id="juce_analytics" path="D:/Softwares\JUCE\modules"/>
+      </MODULEPATHS>
+    </VS2017>
   </EXPORTFORMATS>
   <MODULES>
     <MODULE id="juce_analytics" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>

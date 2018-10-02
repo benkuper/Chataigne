@@ -13,11 +13,13 @@
 
 #include "Module/Module.h"
 
-#if JUCE_WINDOWS && WINVER!=0x0701
+#if JUCE_WINDOWS && WINVER > 0x0601
 #define USE_KINECT 1
 #else
 #define USE_KINECT 0
 #endif
+
+#define USE_KINECT 0
 
 #if USE_KINECT
 #include "Kinect.h"
