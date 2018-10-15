@@ -19,7 +19,7 @@
 #define USE_KINECT 0
 #endif
 
-#define USE_KINECT 0
+//#define USE_KINECT 0
 
 #if USE_KINECT
 #include "Kinect.h"
