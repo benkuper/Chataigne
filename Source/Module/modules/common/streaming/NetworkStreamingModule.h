@@ -39,7 +39,7 @@ public:
 	virtual Array<uint8> readBytes() { return Array<uint8>(); }
 	virtual bool checkReceiverIsReady() { return false; }
 
-	void clearThread();
+	virtual void clearThread();
 	virtual void clearInternal() {}
 
 	virtual void controllableFeedbackUpdate(ControllableContainer *, Controllable * c) override;
