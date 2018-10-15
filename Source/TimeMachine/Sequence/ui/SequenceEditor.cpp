@@ -90,7 +90,7 @@ void SequenceEditor::mouseWheelMove(const MouseEvent & e, const MouseWheelDetail
 	{
 		if (e.mods.isShiftDown())
 		{
-			float sequenceViewMid = (sequence->viewStartTime->floatValue() + sequence->viewEndTime->floatValue()) / 2;
+			//float sequenceViewMid = (sequence->viewStartTime->floatValue() + sequence->viewEndTime->floatValue()) / 2;
 			//float zoomFactor = details.deltaY; //*navigationUI.seeker.getTimeForX(details.deltaY);
 			float initDist = sequence->viewEndTime->floatValue() - sequence->viewStartTime->floatValue();
 			float zoomFactor = (details.deltaY * initDist) / 2; 
