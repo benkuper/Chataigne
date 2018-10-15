@@ -236,7 +236,7 @@ void CustomOSCModule::onControllableFeedbackUpdateInternal(ControllableContainer
 	{
 		if(isControllableInValuesContainer(c))
 		{
-			OSCMessage m(c->niceName);
+			OSCMessage m(c->shortName);
 			if (c->type == Controllable::TRIGGER) sendOSC(m);
 			else
 			{
