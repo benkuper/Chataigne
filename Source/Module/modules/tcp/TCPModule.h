@@ -24,6 +24,7 @@ public:
 
 	virtual void setupSender() override;
 	virtual void initThread() override;
+	virtual void clearThread() override;
 
 	virtual bool checkReceiverIsReady() override;
 	virtual bool isReadyToSend() override;

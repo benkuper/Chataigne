@@ -35,12 +35,18 @@ void TCPModule::setupSender()
 
 void TCPModule::initThread()
 {
-	if (sender.isConnected()) sender.close();
+	//if (sender.isConnected()) sender.close();
 
 	String targetHost = useLocal->boolValue() ? "127.0.0.1" : remoteHost->stringValue();
 	bool result = sender.connect(targetHost, remotePort->intValue(), 200);
 	
 	senderIsConnected->setValue(result);
+}
+
+void TCPModule::clearThread()
+{
+	NetworkStreamingModule::clearThread();
+	if (sender.isConnected()) sender.close();
 }
 
 bool TCPModule::checkReceiverIsReady()
