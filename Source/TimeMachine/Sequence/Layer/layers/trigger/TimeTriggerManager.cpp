@@ -125,3 +125,8 @@ void TimeTriggerManager::sequenceTotalTimeChanged(Sequence *)
 {
 	for(auto & t : items) t->time->setRange(0, sequence->totalTime->floatValue());
 }
+
+void TimeTriggerManager::sequenceLooped(Sequence *)
+{
+	for (auto & t : items) t->isTriggered->setValue(false);
+}

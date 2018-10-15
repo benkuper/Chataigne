@@ -54,6 +54,7 @@ public:
 
 	void sequenceCurrentTimeChanged(Sequence * _sequence, float prevTime, bool evaluateSkippedData) override;
 	void sequenceTotalTimeChanged(Sequence *) override;
+	void sequenceLooped(Sequence *) override;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(TimeTriggerManager)
 };

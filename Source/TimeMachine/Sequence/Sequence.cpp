@@ -184,7 +184,7 @@ void Sequence::onContainerParameterChangedInternal(Parameter * p)
 	{
 		if (isPlaying->boolValue())
 		{
-			prevMillis = Time::getMillisecondCounter();
+			prevMillis = Time::getMillisecondCounterHiRes();
 			prevTime = currentTime->floatValue();
 			startTimer(1000/fps->intValue());
 		}
@@ -250,24 +250,30 @@ void Sequence::hiResTimerCallback()
 {
 	jassert(isPlaying->boolValue());
 
+	double targetTime = 0;
 	if (timeIsDrivenByAudio())
 	{
+		targetTime = hiResAudioTime;
 		currentTime->setValue(hiResAudioTime);
 	}
 	else
 	{
-		uint32 millis = Time::getMillisecondCounter();
-		float deltaTime = (millis - prevMillis) / 1000.f;
-		currentTime->setValue(currentTime->floatValue() + deltaTime * playSpeed->floatValue());
+		double millis = Time::getMillisecondCounterHiRes();
+		double deltaTime = (millis - prevMillis) / 1000;
+		targetTime = currentTime->floatValue() + deltaTime * playSpeed->floatValue();
+		currentTime->setValue(targetTime);
 		prevMillis = millis;
 	}
 
-	if (currentTime->floatValue() >= (float)currentTime->maximumValue)
+	if (targetTime >= totalTime->floatValue())
 	{
 		if (loopParam->boolValue())
 		{
+			float offset = targetTime - totalTime->floatValue();
 			sequenceListeners.call(&SequenceListener::sequenceLooped, this);
-			setCurrentTime(0);
+			//setCurrentTime(0); //to change in trigger layer to avoid doing that
+			prevTime = 0;
+			setCurrentTime(offset);
 		}
 		else finishTrigger->trigger();
 	}

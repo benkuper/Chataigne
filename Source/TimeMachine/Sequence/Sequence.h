@@ -54,8 +54,8 @@ public:
 
 
 	//Temp variables
-	uint32 prevMillis; 
-	float prevTime;
+	double prevMillis; 
+	double prevTime;
 
 	//UI
 	const float minSequenceTime = 1; //in seconds
