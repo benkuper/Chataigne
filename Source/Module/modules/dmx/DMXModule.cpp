@@ -19,12 +19,14 @@ DMXModule::DMXModule() :
 
 	valuesCC.editorIsCollapsed = true;
 
-	//canHandleRouteValues = true;
+	canHandleRouteValues = true;
 
 	defManager.add(CommandDefinition::createDef(this, "", "Set value", &DMXCommand::create)->addParam("action", DMXCommand::SET_VALUE));
+	defManager.add(CommandDefinition::createDef(this, "", "Set value 16bit", &DMXCommand::create)->addParam("action", DMXCommand::SET_VALUE_16BIT));
 	defManager.add(CommandDefinition::createDef(this, "", "Set range", &DMXCommand::create)->addParam("action", DMXCommand::SET_RANGE));
 	defManager.add(CommandDefinition::createDef(this, "", "Set Color", &DMXCommand::create)->addParam("action",DMXCommand::COLOR));
 	defManager.add(CommandDefinition::createDef(this, "", "Clear all", &DMXCommand::create)->addParam("action", DMXCommand::CLEAR_ALL));
+
 	dmxType = moduleParams.addEnumParameter("DMX Type", "Choose the type of dmx interface you want to connect");
 
 	dmxType->addOption("Open DMX", DMXDevice::OPENDMX)->addOption("Enttec DMX Pro", DMXDevice::ENTTEC_DMXPRO)->addOption("Enttec DMX MkII", DMXDevice::ENTTEC_MK2)->addOption("Art-Net", DMXDevice::ARTNET);
@@ -78,6 +80,40 @@ void DMXModule::sendDMXValue(int channel, int value)
 	dmxDevice->sendDMXValue(channel, value);
 }
 
+void DMXModule::sendDMXValues(int startChannel, Array<int> values)
+{
+	if (dmxDevice == nullptr) return;
+	if (logOutgoingData->boolValue()) NLOG(niceName, "Send DMX : " + String(startChannel) + " > " + String(values.size()) + " values");
+	outActivityTrigger->trigger();
+
+	int numValues = values.size();
+	for(int i=0; i< numValues;i++) dmxDevice->sendDMXValue(startChannel+i, values[i]);
+}
+
+void DMXModule::send16BitDMXValue(int startChannel, int value, DMXByteOrder byteOrder)
+{
+	if (dmxDevice == nullptr) return;
+	if (logOutgoingData->boolValue()) NLOG(niceName, "Send 16-bit DMX : " + String(startChannel) + " > " + String(value));
+	outActivityTrigger->trigger(); 
+	dmxDevice->sendDMXValue(startChannel, byteOrder == MSB ? (value >> 8) & 0xFF : value & 0xFF);
+	dmxDevice->sendDMXValue(startChannel+1, byteOrder == MSB ? 0xFF : (value >> 8) & 0xFF);
+}
+
+void DMXModule::send16BitDMXValues(int startChannel, Array<int> values, DMXByteOrder byteOrder)
+{
+	if (dmxDevice == nullptr) return;
+	if (logOutgoingData->boolValue()) NLOG(niceName, "Send 16-bit DMX : " + String(startChannel) + " > " + String(values.size()) + " values");
+	outActivityTrigger->trigger();
+
+	int numValues = values.size();
+	for (int i = 0; i < numValues; i++)
+	{
+		int value = values[i];
+		dmxDevice->sendDMXValue(startChannel + i * 2, byteOrder == MSB ? (value >> 8) & 0xFF : value & 0xFF);
+		dmxDevice->sendDMXValue(startChannel + i * 2 + 1, byteOrder == MSB ? 0xFF : (value >> 8) & 0xFF);
+	}
+}
+
 var DMXModule::getJSONData()
 {
 	var data = Module::getJSONData();
@@ -115,3 +151,78 @@ void DMXModule::dmxDataInChanged(int channel, int value)
 	dmxInValues[channel - 1]->setValue(value);
 }
 
+DMXModule::DMXRouteParams::DMXRouteParams(Module * sourceModule, Controllable * c) :
+	mode16bit(nullptr),
+	channel(nullptr),
+	value(nullptr)
+{
+	if (c->type == Controllable::FLOAT || c->type == Controllable::INT || c->type == Controllable::BOOL || c->type == Controllable::POINT2D || c->type == Controllable::POINT3D)
+	{
+		mode16bit = addEnumParameter("Mode", "Choosing the resolution and Byte order for this routing");
+		mode16bit->addOption("8-bit", BIT8)->addOption("16-bit MSB", MSB)->addOption("16-bit LSB", LSB);
+	}
+
+	if (c->type == Controllable::FLOAT || c->type == Controllable::BOOL || c->type == Controllable::POINT2D || c->type == Controllable::POINT3D)
+	{
+		fullRange = addBoolParameter("Full Range", "If checked, value will be remapped from 0-1 will to 0-255 (or 0-65535 in 16-bit mode)", true);
+	}
+
+	channel = addIntParameter("Channel", "The Channel", 1, 1, 16);
+}
+
+void DMXModule::handleRoutedModuleValue(Controllable * c, RouteParams * p)
+{
+	DMXRouteParams * rp = dynamic_cast<DMXRouteParams *>(p);
+	
+	Parameter * sp = c->type == Controllable::TRIGGER ? nullptr : dynamic_cast<Parameter *>(c);
+
+	bool fullRange = rp->fullRange != nullptr ? rp->fullRange->boolValue() : false;
+	
+	DMXByteOrder byteOrder = rp->mode16bit->getValueDataAsEnum<DMXByteOrder>();
+
+	switch (c->type)
+	{
+	case Controllable::BOOL:
+	case Controllable::INT:
+	case Controllable::FLOAT:
+		if (byteOrder == BIT8) sendDMXValue(rp->channel->intValue(), fullRange?sp->getNormalizedValue()*255:sp->getValue());
+		else send16BitDMXValue(rp->channel->intValue(), fullRange?sp->getNormalizedValue()*65535:sp->getValue(), byteOrder);
+		break;
+
+	case Controllable::POINT2D:
+	{
+		Point<float> pp = ((Point2DParameter *)sp)->getPoint();
+		if (fullRange) pp *= byteOrder != BIT8 ? 65535 : 255;
+
+		Array<int> values;
+		values.add(pp.x, pp.y);
+
+		if (byteOrder == BIT8) sendDMXValues(rp->channel->intValue(), values);
+		else send16BitDMXValues(rp->channel->intValue(), values, byteOrder);
+	}
+	break;
+
+	case Controllable::POINT3D:
+	{
+		Vector3D<float> pp = ((Point3DParameter *)sp)->getVector();
+		if (fullRange) pp *= byteOrder != BIT8 ? 65535 : 255;
+
+		Array<int> values;
+		values.add(pp.x, pp.y, pp.z);
+
+		if (byteOrder == BIT8) sendDMXValues(rp->channel->intValue(), values);
+		else send16BitDMXValues(rp->channel->intValue(), values, byteOrder);
+	}
+	break;
+
+	case Controllable::COLOR:
+	{
+		Colour col = ((ColorParameter *)sp)->getColor();
+		Array<int> values;
+		values.add(col.getRed(), col.getGreen(), col.getBlue());
+		sendDMXValues(rp->channel->intValue(), values);
+	}
+
+	break;
+	}
+}

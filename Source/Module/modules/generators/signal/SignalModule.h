@@ -31,8 +31,10 @@ public:
 	FloatParameter * refreshRate;
 
 	FloatParameter * frequency;
+	FloatParameter * amplitude;
+		
 	FloatParameter * value;
-
+	
 
 	//Perlin
 	IntParameter * octaves;

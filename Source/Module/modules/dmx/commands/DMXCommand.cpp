@@ -16,12 +16,20 @@ DMXCommand::DMXCommand(DMXModule * _module, CommandContext context, var params) 
 {
 	
 	dmxAction = (DMXAction)(int)params.getProperty("action", 0);
+
+	if (dmxAction == SET_VALUE_16BIT)
+	{
+		byteOrder = addEnumParameter("Byte Order", "Byte ordering, most devices use MSB");
+		byteOrder->addOption("MSB", DMXModule::MSB)->addOption("LSB", DMXModule::LSB);
+	}
+
 	switch (dmxAction)
 	{
 	
 	case SET_VALUE:
+	case SET_VALUE_16BIT:
 		channel = addIntParameter("Channel", "DMX Channel", 1,1,512);
-		value = addIntParameter("Value", "DMX Value", 0, 0, 255);
+		value = addIntParameter("Value", "DMX Value", 0, 0, dmxAction == SET_VALUE_16BIT?65535:255);
 		setTargetMappingParameterAt(value,0);
 		break;
 
@@ -61,6 +69,16 @@ void DMXCommand::trigger()
 	case SET_VALUE:
 		dmxModule->sendDMXValue(channel->intValue(), value->intValue());
 		break;
+
+	case SET_VALUE_16BIT:
+	{
+		int v1 = value->intValue() & 0xFF;
+		int v2 = value->intValue() >> 8 & 0xFF;
+		bool msb = byteOrder->getValueDataAsEnum<DMXModule::DMXByteOrder>() == DMXModule::MSB;
+		dmxModule->sendDMXValue(channel->intValue(), msb ? v2 : v1);
+		dmxModule->sendDMXValue(channel->intValue(), msb ? v1 : v2);
+	}
+	break;
 
 	case SET_RANGE:
 		for (int i =channel->intValue();i<=channel2->intValue();i++) dmxModule->sendDMXValue(i, value->intValue());

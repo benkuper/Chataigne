@@ -18,13 +18,15 @@ class DMXCommand :
 	public BaseCommand
 {
 public:
-	enum DMXAction { SET_VALUE, SET_RANGE, COLOR, CLEAR_ALL};
+	enum DMXAction { SET_VALUE, SET_RANGE, COLOR, CLEAR_ALL, SET_VALUE_16BIT };
 
 	DMXCommand(DMXModule * _module, CommandContext context, var params);
 	~DMXCommand();
 
 	DMXAction dmxAction;
 	DMXModule * dmxModule;
+
+	EnumParameter * byteOrder;
 
 	IntParameter * channel;
 	IntParameter * channel2;

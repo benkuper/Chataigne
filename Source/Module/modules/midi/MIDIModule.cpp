@@ -190,35 +190,6 @@ void MIDIModule::updateValue(const int & channel, const String & n, const int & 
 
 }
 
-void MIDIModule::handleRoutedModuleValue(Controllable * c, RouteParams * p)
-{
-	MIDIRouteParams * mp = dynamic_cast<MIDIRouteParams *>(p);
-	if (mp->type == nullptr) return;
-
-	MIDIRouteParams::Type t = mp->type->getValueDataAsEnum<MIDIRouteParams::Type>();
-
-	int value = 127;
-	Parameter * sp = c->type == Controllable::TRIGGER?nullptr:dynamic_cast<Parameter *>(c);
-	if (sp != nullptr) value = sp->getNormalizedValue()*127;
-
-	switch (t)
-	{
-	case MIDIRouteParams::NOTE_ON:
-		sendNoteOn(mp->pitchOrNumber->intValue(), value, mp->channel->intValue());
-		break;
-
-	case MIDIRouteParams::NOTE_OFF:
-		sendNoteOff(mp->pitchOrNumber->intValue(), mp->channel->intValue());
-		break;
-
-	case MIDIRouteParams::CONTROL_CHANGE:
-		sendControlChange(mp->pitchOrNumber->intValue(), value, mp->channel->intValue());
-		break;
-            
-        default:
-            break;
-	}
-}
 
 var MIDIModule::getJSONData()
 {
@@ -236,12 +207,6 @@ void MIDIModule::loadJSONDataInternal(var data)
 	setupIOConfiguration(inputDevice != nullptr || valuesCC.controllables.size() > 0, outputDevice != nullptr);
 }
 
-/*
-InspectableEditor * MIDIModule::getEditor(bool isRoot)
-{
-	return new MIDIModuleEditor(this,isRoot);
-}
-*/
 
 MIDIModule::MIDIRouteParams::MIDIRouteParams(Module * sourceModule, Controllable * c) :
 	type(nullptr),
@@ -259,4 +224,35 @@ MIDIModule::MIDIRouteParams::MIDIRouteParams(Module * sourceModule, Controllable
 
 	channel = addIntParameter("Channel", "The Channel", 1, 1, 16);
 	pitchOrNumber = addIntParameter("Pitch / Number", "Pitch if type is a note, number if it is a controlChange", 0, 0, 127);
+}
+
+
+void MIDIModule::handleRoutedModuleValue(Controllable * c, RouteParams * p)
+{
+	MIDIRouteParams * mp = dynamic_cast<MIDIRouteParams *>(p);
+	if (mp->type == nullptr) return;
+
+	MIDIRouteParams::Type t = mp->type->getValueDataAsEnum<MIDIRouteParams::Type>();
+
+	int value = 127;
+	Parameter * sp = c->type == Controllable::TRIGGER ? nullptr : dynamic_cast<Parameter *>(c);
+	if (sp != nullptr) value = sp->getNormalizedValue() * 127;
+
+	switch (t)
+	{
+	case MIDIRouteParams::NOTE_ON:
+		sendNoteOn(mp->pitchOrNumber->intValue(), value, mp->channel->intValue());
+		break;
+
+	case MIDIRouteParams::NOTE_OFF:
+		sendNoteOff(mp->pitchOrNumber->intValue(), mp->channel->intValue());
+		break;
+
+	case MIDIRouteParams::CONTROL_CHANGE:
+		sendControlChange(mp->pitchOrNumber->intValue(), value, mp->channel->intValue());
+		break;
+
+	default:
+		break;
+	}
 }

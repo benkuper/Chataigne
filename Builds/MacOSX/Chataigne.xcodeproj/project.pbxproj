@@ -332,6 +332,7 @@
 		0C1C0CBF20BE5722919301E0 = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		0D4E4DD1A72C4AF6A613A8C5 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = OffsetFilter.cpp; path = ../../Source/Common/Processor/Mapping/Filter/filters/number/OffsetFilter.cpp; sourceTree = "SOURCE_ROOT"; };
 		0D9B10AF87FB00D8CF4E54A5 = {isa = PBXFileReference; lastKnownFileType = image.png; name = stop.png; path = ../../Resources/stop.png; sourceTree = "SOURCE_ROOT"; };
+		0DD04E60A5E6174F61924D04 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = JuceHeader.h; path = ../../JuceLibraryCode/JuceHeader.h; sourceTree = "SOURCE_ROOT"; };
 		0E0C3BD22A615072B34BFC26 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Consequence.h; path = ../../Source/Common/Processor/Action/Consequence/Consequence.h; sourceTree = "SOURCE_ROOT"; };
 		0E1E985727BD8051F2F34C72 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DMXStateManager.h; path = ../../Source/Common/DMX/DMXStateManager.h; sourceTree = "SOURCE_ROOT"; };
 		0F817C2EAE0CBC4703C94F5A = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TimeColorUI.h; path = ../../Source/TimeMachine/Sequence/Layer/layers/mapping/timecolor/ui/TimeColorUI.h; sourceTree = "SOURCE_ROOT"; };
@@ -1740,7 +1741,8 @@
 					F4590876F89E291434F6B792,
 					066DA60AFB60B8BE77E819E7,
 					8AB58B2FA156DD075B892850,
-					9EB5EECB134C6E74D074AB10, ); name = "JUCE Library Code"; sourceTree = "<group>"; };
+					9EB5EECB134C6E74D074AB10,
+					0DD04E60A5E6174F61924D04, ); name = "JUCE Library Code"; sourceTree = "<group>"; };
 		D450727BDA4BACBA916E8A08 = {isa = PBXGroup; children = (
 					1D3EEDB3310C60C71DD26A0C,
 					CFF11961CD6D0DFF4EB302A4,

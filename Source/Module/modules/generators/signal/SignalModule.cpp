@@ -19,7 +19,8 @@ SignalModule::SignalModule() :
 	type = moduleParams.addEnumParameter("Type", "Signal type");
 	type->addOption("Sine", SINE)->addOption("Saw",SAW)->addOption("Triangle",TRIANGLE)->addOption("Perlin", PERLIN);
 	refreshRate = moduleParams.addFloatParameter("Refresh Rate", "Time interval between value updates, in Hz", 50, 1, 100);
-	
+	amplitude = moduleParams.addFloatParameter("Amplitude", "Amplitude of the signal, act as a multiplier", 1);
+
 	frequency = moduleParams.addFloatParameter("Frequency", "Frequency of the signal", 1, 0.0001f, 5);
 	octaves = moduleParams.addIntParameter("Octaves", "Octave parameter for perlin noise", 3, 1, 100, false);
 
@@ -38,7 +39,10 @@ void SignalModule::onControllableFeedbackUpdateInternal(ControllableContainer * 
 {
 	Module::onControllableFeedbackUpdateInternal(cc, c);
 
-	if (c == refreshRate)
+	if (c == amplitude)
+	{
+		value->setRange(0, amplitude->floatValue());
+	}else if (c == refreshRate)
 	{
 		startTimer(0, 1000.0f / refreshRate->floatValue());
 	}else if(c == type)	
@@ -78,7 +82,7 @@ void SignalModule::timerCallback(int timerID)
 			break;
 		}
 
-		value->setValue(val);
+		value->setNormalizedValue(val);
 		inActivityTrigger->trigger();
 	}
 
