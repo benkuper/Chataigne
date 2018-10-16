@@ -19,7 +19,8 @@ public:
 	ScriptCommand(Module * module, CommandContext context, var data);
 	~ScriptCommand();
 
-
+	Array<Parameter *> params;
+	Identifier callback;
 
 	static BaseCommand * create(ControllableContainer * module, CommandContext context, var params)  { return new ScriptCommand((Module *)module, context, params); }
 };

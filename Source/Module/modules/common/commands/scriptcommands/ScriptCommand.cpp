@@ -14,7 +14,14 @@ ScriptCommand::ScriptCommand(Module * module, CommandContext context, var data) 
 	BaseCommand(module, context, data)
 {
 	//load params here
+	callback = data.getProperty("callback", "defaultCallback").toString();
 
+	var pData = data.getProperty("params", var());
+	if (pData.isObject())
+	{
+		NamedValueSet paramsData = pData.getDynamicObject()->getProperties();
+	}
+	
 }
 
 ScriptCommand::~ScriptCommand()
