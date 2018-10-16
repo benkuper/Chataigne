@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.4.13"
+<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.4.14"
               bundleIdentifier="benkuper.Chataigne" includeBinaryInAppConfig="1"
               jucerVersion="5.3.2" companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
               companyEmail="benjamin@kuperberg.fr" defines="" displaySplashScreen="0"
@@ -1332,7 +1332,7 @@
       </MODULEPATHS>
     </VS2017>
     <VS2017 targetFolder="Builds/VisualStudio2017_Win7" externalLibraries="Setupapi.lib&#10;hid.lib&#10;joytime-core.lib&#10;joytime-input-hidapi.lib&#10;Servus.lib&#10;dnssd.lib&#10;ossia.lib&#10;SDL2.lib"
-            smallIcon="nVz6Li" bigIcon="nVz6Li">
+            smallIcon="nVz6Li" bigIcon="nVz6Li" extraDefs="USE_KINECT=0">
       <CONFIGURATIONS>
         <CONFIGURATION isDebug="1" name="Debug" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/asio&#10;../../External/joycon/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/ossia/include&#10;../../External/sdl/include"
                        libraryPath="../../External/joycon/lib&#10;../../External/servus/lib/win/x64/debug&#10;../../External/dnssd/lib&#10;../../External/ossia/lib/win&#10;../../External/sdl/lib/win"
