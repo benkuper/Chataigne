@@ -195,7 +195,7 @@ void DMXModule::handleRoutedModuleValue(Controllable * c, RouteParams * p)
 		if (fullRange) pp *= byteOrder != BIT8 ? 65535 : 255;
 
 		Array<int> values;
-		values.add(pp.x, pp.y);
+		values.add((int)pp.x, (int)pp.y);
 
 		if (byteOrder == BIT8) sendDMXValues(rp->channel->intValue(), values);
 		else send16BitDMXValues(rp->channel->intValue(), values, byteOrder);
@@ -208,7 +208,7 @@ void DMXModule::handleRoutedModuleValue(Controllable * c, RouteParams * p)
 		if (fullRange) pp *= byteOrder != BIT8 ? 65535 : 255;
 
 		Array<int> values;
-		values.add(pp.x, pp.y, pp.z);
+		values.add((int)pp.x, (int)pp.y, (int)pp.z);
 
 		if (byteOrder == BIT8) sendDMXValues(rp->channel->intValue(), values);
 		else send16BitDMXValues(rp->channel->intValue(), values, byteOrder);
