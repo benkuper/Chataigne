@@ -185,8 +185,8 @@ void DMXModule::handleRoutedModuleValue(Controllable * c, RouteParams * p)
 	case Controllable::BOOL:
 	case Controllable::INT:
 	case Controllable::FLOAT:
-		if (byteOrder == BIT8) sendDMXValue(rp->channel->intValue(), fullRange?sp->getNormalizedValue()*255:sp->getValue());
-		else send16BitDMXValue(rp->channel->intValue(), fullRange?sp->getNormalizedValue()*65535:sp->getValue(), byteOrder);
+		if (byteOrder == BIT8) sendDMXValue(rp->channel->intValue(), fullRange?sp->getNormalizedValue()*255:(float)sp->getValue());
+		else send16BitDMXValue(rp->channel->intValue(), fullRange?sp->getNormalizedValue()*65535:(float)sp->getValue(), byteOrder);
 		break;
 
 	case Controllable::POINT2D:
