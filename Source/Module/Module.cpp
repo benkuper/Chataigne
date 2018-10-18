@@ -296,6 +296,17 @@ Controllable * Module::getControllableForJSONDefinition(const String &name, var 
 			{
 				LOG("Options property is not valid : " << d->getProperty("options").toString());
 			}
+		} else if (c->type == Controllable::FLOAT)
+		{
+			FloatParameter * ep = dynamic_cast<FloatParameter *>(c);
+			if (d->hasProperty("ui"))
+			{
+				String ui = d->getProperty("ui");
+				if (ui == "slider") ep->defaultUI = FloatParameter::SLIDER;
+				else if (ui == "stepper") ep->defaultUI = FloatParameter::STEPPER;
+				else if (ui == "label") ep->defaultUI = FloatParameter::LABEL;
+				else if (ui == "time") ep->defaultUI = FloatParameter::TIME;
+			}
 		}
 	}
 
