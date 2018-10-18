@@ -92,6 +92,7 @@ TimeColor * TimeColorManager::addColorAt(float time, Colour color)
 void TimeColorManager::addItemInternal(TimeColor * item, var data)
 {
 	item->gradientIndex = gradient.addColour(item->position->floatValue() / positionMax, item->color->getColor());
+	item->position->setRange(0, positionMax);
 }
 
 void TimeColorManager::removeItemInternal(TimeColor *)
