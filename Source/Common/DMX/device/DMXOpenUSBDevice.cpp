@@ -11,7 +11,7 @@
 #include "DMXOpenUSBDevice.h"
 
 DMXOpenUSBDevice::DMXOpenUSBDevice() :
-	DMXSerialDevice("OpenDMX", OPENDMX)
+	DMXSerialDevice("OpenDMX", OPENDMX, false)
 {
 }
 

@@ -19,13 +19,14 @@ class DMXDevice :
 {
 public:
 	enum Type { OPENDMX, ENTTEC_DMXPRO, ENTTEC_MK2, ARTNET};
-	DMXDevice(const String &name, Type type);
+	DMXDevice(const String &name, Type type, bool canReceive);
 	virtual ~DMXDevice();
 
 	Type type;
 	
 	uint8 dmxDataOut[512];
 	uint8 dmxDataIn[512];
+	bool canReceive;
 
 	virtual void sendDMXValue(int channel, int value);
 	void setDMXValueIn(int channel, int value);

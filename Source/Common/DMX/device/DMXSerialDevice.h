@@ -23,7 +23,7 @@ class DMXSerialDevice :
 {
 
 public:
-	DMXSerialDevice(const String &name, Type type);
+	DMXSerialDevice(const String &name, Type type, bool canReceive);
 	virtual ~DMXSerialDevice();
 
 	SerialDeviceParameter * portParam;
@@ -33,11 +33,13 @@ public:
 	String deviceID;
 	String lastOpenedPortID; //for ghosting
 
+	bool shouldSendData;
 
 	void setCurrentPort(SerialDevice * port);
 	virtual void setPortConfig() {}
 
 	virtual void processIncomingData();
+	virtual void sendDMXValue(int channel, int value) override;
 
 	virtual void run() override;
 	virtual void initRunLoop() {}

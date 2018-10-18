@@ -15,7 +15,7 @@ DMXModule::DMXModule() :
 	Module("DMX"),
 	dmxDevice(nullptr)
 {
-	setupIOConfiguration(true, true);
+	setupIOConfiguration(false, true);
 
 	valuesCC.editorIsCollapsed = true;
 
@@ -32,13 +32,18 @@ DMXModule::DMXModule() :
 	dmxType->addOption("Open DMX", DMXDevice::OPENDMX)->addOption("Enttec DMX Pro", DMXDevice::ENTTEC_DMXPRO)->addOption("Enttec DMX MkII", DMXDevice::ENTTEC_MK2)->addOption("Art-Net", DMXDevice::ARTNET);
 	dmxType->setValueWithKey("Open DMX");
 
+	autoAdd = moduleParams.addBoolParameter("Auto Add", "If checked, this will automatically add values for changed channels", true);
+	autoAdd->hideInEditor = !hasInput;
+
 	dmxConnected = moduleParams.addBoolParameter("Connected", "DMX is connected ?", false);
 	dmxConnected->isControllableFeedbackOnly = true;
 
+	/*
 	for (int i = 1; i <= 512; i++)
 	{
 		dmxInValues.add(valuesCC.addIntParameter("Channel " + String(i), "DMX Value for channel " + String(i), 0, 0, 255));
 	}
+	*/
 
 	setCurrentDMXDevice(DMXDevice::create((DMXDevice::Type)(int)dmxType->getValueData()));
 }
@@ -68,7 +73,9 @@ void DMXModule::setCurrentDMXDevice(DMXDevice * d)
 		moduleParams.addChildControllableContainer(dmxDevice);
 	}
 
-	
+	setupIOConfiguration(dmxDevice != nullptr && dmxDevice->canReceive, true);
+	autoAdd->hideInEditor = !hasInput;
+
 	dmxModuleListeners.call(&DMXModuleListener::dmxDeviceChanged);
 }
 
@@ -148,7 +155,17 @@ void DMXModule::dmxDataInChanged(int channel, int value)
 	if (logIncomingData->boolValue()) NLOG(niceName, "DMX In : " + String(channel) + " > " + String(value));
 	inActivityTrigger->trigger();
 
-	dmxInValues[channel - 1]->setValue(value);
+	IntParameter * dVal = channelMap.contains(channel) ? channelMap[channel] : nullptr;
+	if (dVal == nullptr)
+	{
+		if (!autoAdd->boolValue()) return;
+
+		dVal = valuesCC.addIntParameter("Channel " + String(channel), "DMX Value for channel " + String(channel), 0, 0, 255);
+		dVal->setControllableFeedbackOnly(true);
+		channelMap.set(channel, dVal);
+	}
+
+	dVal->setValue(value);
 }
 
 DMXModule::DMXRouteParams::DMXRouteParams(Module * sourceModule, Controllable * c) :

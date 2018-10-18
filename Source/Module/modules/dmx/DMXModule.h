@@ -24,11 +24,12 @@ public:
 
 	enum DMXByteOrder { BIT8, MSB, LSB };
 
-	Array<IntParameter *> dmxInValues;
-
 	EnumParameter * dmxType;
 	ScopedPointer<DMXDevice> dmxDevice;
 	BoolParameter * dmxConnected;
+	BoolParameter * autoAdd;
+
+	HashMap<int, IntParameter *> channelMap;
 
 	void setCurrentDMXDevice(DMXDevice * d);
 

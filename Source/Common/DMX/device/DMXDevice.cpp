@@ -14,9 +14,10 @@
 #include "DMXEnttecProDevice.h"
 #include "DMXArtNetDevice.h"
 
-DMXDevice::DMXDevice(const String &name, Type _type) :
+DMXDevice::DMXDevice(const String &name, Type _type, bool canReceive) :
 	ControllableContainer(name),
-	type(_type)
+	type(_type),
+	canReceive(canReceive)
 {
 	DMXManager::getInstance()->addDMXManagerListener(this);
 	
@@ -32,12 +33,15 @@ DMXDevice::~DMXDevice()
 
 void DMXDevice::sendDMXValue(int channel, int value) //channel 1-512
 {
+	if (channel > 512) return;
 	dmxDataOut[channel-1] = (uint8)value;
 }
 
 void DMXDevice::setDMXValueIn(int channel, int value) //channel 1-512
 {
-	if (dmxDataIn[channel-1] == value) return;
+	if (channel > 512) return;
+	if(dmxDataIn[channel-1] == value) return;
+	
 	dmxDataIn[channel-1] = (uint8)value;
 	//notify
 	dmxDeviceListeners.call(&DMXDeviceListener::dmxDataInChanged, channel, value);

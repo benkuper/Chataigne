@@ -11,10 +11,11 @@
 #include "DMXSerialDevice.h"
 
 
-DMXSerialDevice::DMXSerialDevice(const String &name, Type type) :
-	DMXDevice(name, type),
+DMXSerialDevice::DMXSerialDevice(const String &name, Type type, bool canReceive) :
+	DMXDevice(name, type, canReceive),
 	Thread("dmxRead"),
-	dmxPort(nullptr)
+	dmxPort(nullptr),
+	shouldSendData(false)
 {
 	startThread();
 
@@ -44,6 +45,7 @@ void DMXSerialDevice::setCurrentPort(SerialDevice * port)
 	if (dmxPort != nullptr)
 	{
 		dmxPort->addSerialDeviceListener(this);
+		dmxPort->setMode(SerialDevice::PortMode::RAW);
 		dmxPort->open();
 		if (!port->isOpen())
 		{
@@ -69,6 +71,13 @@ void DMXSerialDevice::processIncomingData()
 	DBG("Incoming data, process function not overriden, doing nothing.");
 }
 
+void DMXSerialDevice::sendDMXValue(int channel, int value)
+{
+	DMXDevice::sendDMXValue(channel, value);
+	shouldSendData = true;
+}
+
+
 void DMXSerialDevice::run()
 {
 	while (!threadShouldExit())
@@ -77,15 +86,17 @@ void DMXSerialDevice::run()
 		{
 			//DBG("send " << (int)dmxDataOut[0] << " / " << (int)dmxDataOut[1] << " / " << (int)dmxDataOut[2]);
 
-			try
+			if (shouldSendData)
 			{
-				sendDMXData();
+				try
+				{
+					sendDMXData();
+					shouldSendData = false;
+				} catch (std::exception e)
+				{
+					DBG("Error sending DMX Data " << e.what());
+				}
 			}
-			catch (std::exception e)
-			{
-				DBG("Error sending DMX Data " << e.what());
-			}
-
 		}
 
 		sleep(23);
