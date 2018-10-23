@@ -33,6 +33,8 @@ public:
 	void resized() override;
 
 	bool keyPressed(const KeyPress &e) override;
+
+	void inspectableSelectionChanged(Inspectable *) override;
 	
 	void controllableFeedbackUpdateInternal(Controllable * c) override;
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MappingLayerTimeline)

@@ -157,7 +157,7 @@ void MappingLayer::stopRecorderAndAddKeys()
 	Array<Point<float>> keys = automations[0]->recorder->stopRecordingAndGetKeys(); 
 	if (keys.size() >= 2)
 	{
-		automations[0]->addItems(keys, true, true, true);
+		automations[0]->addItems(keys, true, true);
 	}
 }
 
