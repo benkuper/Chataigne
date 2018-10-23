@@ -17,7 +17,6 @@
 
 class DMXSerialDevice :
 	public DMXDevice,
-	public Thread,
 	public SerialManager::SerialManagerListener,
 	public SerialDevice::SerialDeviceListener
 {
@@ -33,17 +32,15 @@ public:
 	String deviceID;
 	String lastOpenedPortID; //for ghosting
 
-	bool shouldSendData;
-
 	void setCurrentPort(SerialDevice * port);
 	virtual void setPortConfig() {}
 
 	virtual void processIncomingData();
 	virtual void sendDMXValue(int channel, int value) override;
 
-	virtual void run() override;
 	virtual void initRunLoop() {}
-	virtual void sendDMXData() {}
+	virtual void sendDMXValues() override;
+	virtual void sendDMXValuesSerialInternal() = 0;
 
 	virtual void onContainerParameterChanged(Parameter * p) override;
 

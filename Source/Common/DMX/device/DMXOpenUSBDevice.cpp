@@ -30,7 +30,7 @@ void DMXOpenUSBDevice::setPortConfig()
 	dmxPort->port->flush();
 }
 
-void DMXOpenUSBDevice::sendDMXData()
+void DMXOpenUSBDevice::sendDMXValuesSerialInternal()
 {
 	dmxPort->port->setBreak(true);
 	dmxPort->port->setBreak(false);

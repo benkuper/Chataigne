@@ -38,9 +38,7 @@ void DMXEnttecProDevice::setPortConfig()
 
 }
 
-
-
-void DMXEnttecProDevice::sendDMXData()
+void DMXEnttecProDevice::sendDMXValuesSerialInternal()
 {
 	//DBG("Send DMX Data " << (int)sendHeaderData[0] << ", " << (int)sendHeaderData[1]);
 	dmxPort->port->write(sendHeaderData, 5);
@@ -92,7 +90,7 @@ Array<uint8> DMXEnttecProDevice::getDMXPacket(Array<uint8> bytes, int &endIndex)
 
 void DMXEnttecProDevice::processDMXPacket(Array<uint8> bytes)
 {
-	int messageLabel = bytes[1];
+	int messageLabel = (int)bytes[1];
 	int length = (int)bytes[2] + ((int)bytes[3] << 8);
 
 	switch (messageLabel)
@@ -105,7 +103,7 @@ void DMXEnttecProDevice::processDMXPacket(Array<uint8> bytes)
 
 	case DMXPRO_SERIAL_NUMBER_LABEL:
 	{
-		int serialNumber = bytes[4] + (bytes[5] << 8) + (bytes[6] << 16) + (bytes[7] << 24);
+		int serialNumber = (int)(bytes[4] + (bytes[5] << 8) + (bytes[6] << 16) + (bytes[7] << 24));
 		LOG("Got serial number (" << length << ") : " << String::toHexString(serialNumber));
 	}
 	break;

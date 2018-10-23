@@ -28,10 +28,14 @@ DMXArtNetDevice::~DMXArtNetDevice()
 
 void DMXArtNetDevice::sendDMXValue(int channel, int value)
 {
-	DMXDevice::sendDMXValue(channel, value);
 	fullMessage[channel-1 + 18] = (uint8)value;
+	DMXDevice::sendDMXValue(channel, value);
+}
+
+void DMXArtNetDevice::sendDMXValues()
+{
 	fullMessage[12] = (uint8)sequence;
-	
+
 	sequence++;
-	artNetOut.write(nodeIP->stringValue(), nodePort->intValue(), fullMessage, NUM_CHANNELS+18);
+	artNetOut.write(nodeIP->stringValue(), nodePort->intValue(), fullMessage, NUM_CHANNELS + 18);
 }

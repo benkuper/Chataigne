@@ -43,7 +43,7 @@ public:
 	uint8 changeAlwaysData[6]{ DMXPRO_START_MESSAGE,DMXPRO_RECEIVE_ON_CHANGE_LABEL, 1, 0, DMXPRO_CHANGE_ALWAYS_CODE, DMXPRO_END_MESSAGE };
 
 	void setPortConfig();
-	void sendDMXData();
+	void sendDMXValuesSerialInternal() override;
 
 	void serialDataReceived(const var &data) override;
 	Array<uint8> getDMXPacket(Array<uint8> bytes, int &endIndex);

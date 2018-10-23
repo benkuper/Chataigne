@@ -13,22 +13,15 @@
 
 DMXSerialDevice::DMXSerialDevice(const String &name, Type type, bool canReceive) :
 	DMXDevice(name, type, canReceive),
-	Thread("dmxRead"),
-	dmxPort(nullptr),
-	shouldSendData(false)
+	dmxPort(nullptr)
 {
-	startThread();
-
 	portParam = new SerialDeviceParameter("Port", "USB Port for the DMX device", true);
 	addParameter(portParam);
 }
 
 DMXSerialDevice::~DMXSerialDevice()
 {
-	signalThreadShouldExit(); 
-	while (isThreadRunning());
 	setCurrentPort(nullptr);
-	
 }
 
 void DMXSerialDevice::setCurrentPort(SerialDevice * port)
@@ -74,37 +67,21 @@ void DMXSerialDevice::processIncomingData()
 void DMXSerialDevice::sendDMXValue(int channel, int value)
 {
 	DMXDevice::sendDMXValue(channel, value);
-	shouldSendData = true;
 }
 
 
-void DMXSerialDevice::run()
+void DMXSerialDevice::sendDMXValues()
 {
-	while (!threadShouldExit())
+	if (dmxPort != nullptr && dmxPort->port->isOpen())
 	{
-		if (dmxPort != nullptr && dmxPort->port->isOpen())
-		{
-			//DBG("send " << (int)dmxDataOut[0] << " / " << (int)dmxDataOut[1] << " / " << (int)dmxDataOut[2]);
-
-			if (shouldSendData)
-			{
-				try
-				{
-					sendDMXData();
-					shouldSendData = false;
-				} catch (std::exception e)
-				{
-					DBG("Error sending DMX Data " << e.what());
-				}
-			}
-		}
-
-		sleep(23);
+		sendDMXValuesSerialInternal();
 	}
 }
 
 void DMXSerialDevice::onContainerParameterChanged(Parameter * p)
 {
+	DMXDevice::onContainerParameterChanged(p);
+
 	if (p == portParam)
 	{
 		setCurrentPort(portParam->getDevice());

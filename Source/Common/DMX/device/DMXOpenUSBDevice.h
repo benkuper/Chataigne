@@ -23,7 +23,7 @@ public:
 	const uint8 startCode[1]{ 0 };
 
 	void setPortConfig() override;
-	void sendDMXData() override;
+	void sendDMXValuesSerialInternal() override;
 	
 };
 

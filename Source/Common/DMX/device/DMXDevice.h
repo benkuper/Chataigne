@@ -15,7 +15,8 @@
 
 class DMXDevice :
 	public ControllableContainer,
-	public DMXManager::DMXManagerListener
+	public DMXManager::DMXManagerListener,
+	public Timer
 {
 public:
 	enum Type { OPENDMX, ENTTEC_DMXPRO, ENTTEC_MK2, ARTNET};
@@ -28,10 +29,18 @@ public:
 	uint8 dmxDataIn[512];
 	bool canReceive;
 
+	BoolParameter * fixedRate;
+	IntParameter * targetRate;
+
 	virtual void sendDMXValue(int channel, int value);
 	void setDMXValueIn(int channel, int value);
+
+	virtual void sendDMXValues() = 0;
 	
 	static DMXDevice * create(Type type);
+
+
+	void onContainerParameterChanged(Parameter *p) override;
 
 	class DMXDeviceListener
 	{
@@ -48,6 +57,9 @@ public:
 	void removeDMXDeviceListener(DMXDeviceListener* listener) { dmxDeviceListeners.remove(listener); }
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(DMXDevice)
+
+		// Inherited via Timer
+		virtual void timerCallback() override;
 };
 
 
