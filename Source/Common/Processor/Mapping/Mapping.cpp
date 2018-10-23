@@ -36,6 +36,8 @@ Mapping::Mapping(bool canBeDisabled) :
 
 Mapping::~Mapping()
 {
+	fm.removeAsyncManagerListener(this);
+	input.removeMappingInputListener(this);
 }
 
 void Mapping::lockInputTo(Parameter * lockParam)
