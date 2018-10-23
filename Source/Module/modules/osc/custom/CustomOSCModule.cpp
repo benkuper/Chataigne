@@ -23,7 +23,10 @@ CustomOSCModule::CustomOSCModule() :
 	splitArgs = moduleParams.addBoolParameter("Split Arguments", "If checked, a message with multiple arguments will be exploded in multliple values", false);
 	splitArgs->isTargettable = false;
 
-	autoFeedback = moduleParams.addBoolParameter("Auto Feedback", "If checked, all changed values will be resent automatically to the outputs", false);
+	autoRange = moduleParams.addBoolParameter("Auto Range", "If checked, parameters with potential range like numbers will automatically have the range of the minimum and maximum received values", true);
+	autoRange->isTargettable = false;
+
+	autoFeedback = moduleParams.addBoolParameter("Auto Feedback", "If checked, all changed values will be automatically sent back to the outputs", false);
 	autoFeedback->isTargettable = false;
 
 	defManager.add(CommandDefinition::createDef(this, "", "Custom Message", &CustomOSCCommand::create));
@@ -57,12 +60,18 @@ void CustomOSCModule::processMessageInternal(const OSCMessage & msg)
                     default:
                         break;
 				}
-			} else //Args don't exist yet
+			} else if(autoAdd->boolValue())//Args don't exist yet
 			{
 				String argIAddress = cNiceName + " " + String(i);
-				if (msg[i].isInt32()) c = valuesCC.addIntParameter(argIAddress, "", msg[i].getInt32(), msg[i].getInt32(), msg[i].getInt32()+1);
-				else if (msg[i].isFloat32()) c = valuesCC.addFloatParameter(argIAddress, "", msg[i].getFloat32(),msg[i].getFloat32(),msg[i].getFloat32());
-				else if (msg[i].isString()) c = valuesCC.addStringParameter(argIAddress, "", msg[i].getString());
+				if (msg[i].isInt32())
+				{
+					if(autoRange->boolValue()) c = valuesCC.addIntParameter(argIAddress, "", msg[i].getInt32(), msg[i].getInt32(), msg[i].getInt32() + 1);
+					else c = valuesCC.addIntParameter(argIAddress, "", msg[i].getInt32());
+				} else if (msg[i].isFloat32())
+				{
+					if (autoRange->boolValue()) c = valuesCC.addFloatParameter(argIAddress, "", msg[i].getFloat32(), msg[i].getFloat32(), msg[i].getFloat32());
+					else c = valuesCC.addFloatParameter(argIAddress, "", msg[i].getFloat32());
+				} else if (msg[i].isString()) c = valuesCC.addStringParameter(argIAddress, "", msg[i].getString());
 
 
 				if (c != nullptr) //Args have been sucessfully created 
@@ -149,15 +158,25 @@ void CustomOSCModule::processMessageInternal(const OSCMessage & msg)
 			break;
 
 		case 1:
-			if (msg[0].isInt32()) c = new IntParameter(cNiceName, "", msg[0].getInt32(),msg[0].getInt32(),msg[0].getInt32());
-			else if (msg[0].isFloat32()) c = new FloatParameter(cNiceName, "", msg[0].getFloat32(), msg[0].getFloat32(), msg[0].getFloat32());
-			else if (msg[0].isString()) c = new StringParameter(cNiceName, "", msg[0].getString());
+			if (msg[0].isInt32())
+			{
+				if(autoRange->boolValue()) c = new IntParameter(cNiceName, "", msg[0].getInt32(), msg[0].getInt32(), msg[0].getInt32());
+				else  c = new IntParameter(cNiceName, "", msg[0].getInt32());
+			} else if (msg[0].isFloat32())
+			{
+				if (autoRange->boolValue()) c = new FloatParameter(cNiceName, "", msg[0].getFloat32(), msg[0].getFloat32(), msg[0].getFloat32());
+				else c = new FloatParameter(cNiceName, "", msg[0].getFloat32());
+			} else if (msg[0].isString()) c = new StringParameter(cNiceName, "", msg[0].getString());
+
 			break;
 
 		case 2:
 			//duplicate because may have other mechanism
-			if (msg[0].isInt32()) c = new IntParameter(cNiceName, "", getIntArg(msg[0]), getIntArg(msg[1]), getIntArg(msg[1]) + 1);
-			else if (msg[0].isFloat32())
+			if (msg[0].isInt32())
+			{
+				if(autoRange->boolValue()) c = new IntParameter(cNiceName, "", getIntArg(msg[0]), getIntArg(msg[1]), getIntArg(msg[1]) + 1);
+				else c = new IntParameter(cNiceName, "", getIntArg(msg[0]));
+			} else if (msg[0].isFloat32())
 			{
 				c = new Point2DParameter(cNiceName, "");
 				((Point2DParameter *)c)->setPoint(getFloatArg(msg[0]), getFloatArg(msg[1]));
