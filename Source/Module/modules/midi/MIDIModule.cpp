@@ -115,8 +115,8 @@ void MIDIModule::onControllableFeedbackUpdateInternal(ControllableContainer * cc
 void MIDIModule::updateMIDIDevices()
 {
 	MIDIInputDevice * newInput = midiParam->inputDevice;
-	if (inputDevice != newInput)
-	{
+	//if (inputDevice != newInput)
+	//{
 		if (inputDevice != nullptr)
 		{
 			inputDevice->removeMIDIInputListener(this);
@@ -126,15 +126,15 @@ void MIDIModule::updateMIDIDevices()
 		{
 			inputDevice->addMIDIInputListener(this);
 		}
-	}
+	//}
 
 	MIDIOutputDevice * newOutput = midiParam->outputDevice;
-	if (outputDevice != newOutput)
-	{
+	//if (outputDevice != newOutput)
+	//{
 		if(outputDevice != nullptr) outputDevice->close();
 		outputDevice = newOutput;
 		if(outputDevice != nullptr) outputDevice->open();
-	} 
+	//} 
 
 	setupIOConfiguration(inputDevice != nullptr || valuesCC.controllables.size() > 0, outputDevice != nullptr);
 }
