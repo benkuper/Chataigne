@@ -37,6 +37,7 @@ public:
 	virtual void compare() = 0; // to override
 
 	void onContainerParameterChanged(Parameter *) override;
+	void parameterRangeChanged(Parameter * p) override;
 
 	class ComparatorListener
 	{

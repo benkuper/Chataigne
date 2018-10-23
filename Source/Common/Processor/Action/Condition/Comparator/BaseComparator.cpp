@@ -23,18 +23,29 @@ BaseComparator::BaseComparator(Controllable * _source) :
 	compareFunction->hideInOutliner = true;
 	compareFunction->isTargettable = false;
 
+	Parameter * p = dynamic_cast<Parameter *>(source);
+	if (p != nullptr)
+	{
+		p->addParameterListener(this);
+	}
+
 	//alwaysDispatch = addBoolParameter("Dispatch on change", "Whether the comparator notifies only when validity changes (OFF),  or each time the comparator is checked. (ON)",false);
 }
 
 BaseComparator::~BaseComparator()
 {
 	masterReference.clear();
+
+	Parameter * p = dynamic_cast<Parameter *>(source);
+	if (p != nullptr)
+	{
+		p->removeParameterListener(this);
+	}
 }
 
 void BaseComparator::setValid(bool value)
 {
 	if (isValid == value/* && alwaysDispatch->boolValue()*/) return;
-
 
 	isValid = value;
 	comparatorListeners.call(&ComparatorListener::comparatorValidationChanged, this);
@@ -59,6 +70,20 @@ void BaseComparator::onContainerParameterChanged(Parameter * p)
 	{
 		compare();
 	}
+}
+
+void BaseComparator::parameterRangeChanged(Parameter * p)
+{
+	if (p == source)
+	{
+		Parameter * sp = dynamic_cast<Parameter *>(source);
+		Parameter * rp = dynamic_cast<Parameter *>(reference);
+		if (rp != nullptr) rp->setRange(sp->minimumValue, sp->maximumValue);
+	} else
+	{
+		ControllableContainer::parameterRangeChanged(p);
+	}
+	
 }
 
 BaseComparatorUI * BaseComparator::createUI()

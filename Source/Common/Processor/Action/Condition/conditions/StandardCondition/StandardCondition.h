@@ -33,6 +33,7 @@ public:
 
 	void onContainerParameterChangedInternal(Parameter * p) override;
 
+
 	InspectableEditor * getEditor(bool isRoot) override;
 
 	String getTypeString() const override { return StandardCondition::getTypeStringStatic(); }
