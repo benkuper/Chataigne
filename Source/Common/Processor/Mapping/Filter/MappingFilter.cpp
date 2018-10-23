@@ -33,7 +33,7 @@ MappingFilter::MappingFilter(const String &name, var params) :
 
 MappingFilter::~MappingFilter()
 {
-	if (sourceParam != nullptr) sourceParam->removeParameterListener(this);
+	
 }
 
 void MappingFilter::setupSource(Parameter * source)
@@ -112,6 +112,16 @@ Parameter * MappingFilter::process(Parameter * source)
 	if (filteredParameter != nullptr) processInternal();  //avoid cross-thread crash
 
 	return filteredParameter;
+}
+
+void MappingFilter::clearItem()
+{
+	if (!sourceParam.wasObjectDeleted() && sourceParam != nullptr)
+	{
+		sourceParam->removeParameterListener(this);
+		sourceParam = nullptr;
+	}
+
 }
 
 var MappingFilter::getJSONData()

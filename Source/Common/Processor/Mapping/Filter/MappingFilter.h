@@ -21,7 +21,7 @@ public:
 	MappingFilter(const String &name = "MappingFilter", var params = var());
 	virtual ~MappingFilter();
 
-	Parameter * sourceParam;
+	WeakReference<Parameter> sourceParam;
 	WeakReference<Parameter> filteredParameter;
 	ControllableContainer filterParams;
 	
@@ -39,6 +39,8 @@ public:
 
 	Parameter * process(Parameter * source);
 	virtual void processInternal() {}
+
+	virtual void clearItem() override;
 
 	virtual var getJSONData() override;
 	virtual void loadJSONDataInternal(var data) override;

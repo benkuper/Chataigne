@@ -61,7 +61,7 @@ void ColorShiftFilter::processInternal()
 		c = Colour::fromHSV(h, s, b, 1);
 	} else
 	{
-		c = ((ColorParameter *)sourceParam)->getColor();
+		c = ((ColorParameter *)sourceParam.get())->getColor();
 	}
 
 	ShiftMode m = mode->getValueDataAsEnum<ShiftMode>();
