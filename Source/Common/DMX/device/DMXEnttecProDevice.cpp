@@ -41,11 +41,12 @@ void DMXEnttecProDevice::setPortConfig()
 void DMXEnttecProDevice::sendDMXValuesSerialInternal()
 {
 	//DBG("Send DMX Data " << (int)sendHeaderData[0] << ", " << (int)sendHeaderData[1]);
+
 	dmxPort->port->write(sendHeaderData, 5);
 	dmxPort->port->write(dmxDataOut, 512);
 	dmxPort->port->write(sendFooterData, 1);
-	
 	dmxPort->port->write(changeAlwaysData, 6); //to avoid blocking the dmxPro on send
+	
 }
 
 

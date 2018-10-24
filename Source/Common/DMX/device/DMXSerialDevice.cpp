@@ -17,10 +17,16 @@ DMXSerialDevice::DMXSerialDevice(const String &name, Type type, bool canReceive)
 {
 	portParam = new SerialDeviceParameter("Port", "USB Port for the DMX device", true);
 	addParameter(portParam);
+	SerialManager::getInstance()->addSerialManagerListener(this);
 }
 
 DMXSerialDevice::~DMXSerialDevice()
 {
+	if (SerialManager::getInstanceWithoutCreating() != nullptr)
+	{
+		SerialManager::getInstance()->removeSerialManagerListener(this);
+	}
+	
 	setCurrentPort(nullptr);
 }
 
@@ -74,7 +80,13 @@ void DMXSerialDevice::sendDMXValues()
 {
 	if (dmxPort != nullptr && dmxPort->port->isOpen())
 	{
-		sendDMXValuesSerialInternal();
+		try
+		{
+			sendDMXValuesSerialInternal();
+		} catch(std::exception e)
+		{
+			LOGWARNING("Error sending values to DMX, maybe it has been disconnected ?");
+		}
 	}
 }
 
