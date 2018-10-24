@@ -84,7 +84,7 @@ void SerialManager::updateDeviceList()
 	for (auto &p : portsToNotifyRemoved)
 	{
 		portInfos.removeObject(p, false);
-		NLOG("SerialManager", "Port Added : \n" + p->port);
+		NLOG("SerialManager", "Port Removed : \n" + p->port);
 		listeners.call(&SerialManagerListener::portRemoved, p);
 
 		SerialDevice * port = getPort(p, false);
@@ -97,7 +97,7 @@ void SerialManager::updateDeviceList()
 
 		newInfos.removeObject(p, false);
 		portInfos.add(p);
-		NLOG("SerialManager", "Port Removed : \n"+p->port+"\n"+p->description+"\n"+p->hardwareID);
+		NLOG("SerialManager", "Port Added : \n"+p->port+"\n"+p->description+"\n"+p->hardwareID);
 		listeners.call(&SerialManagerListener::portAdded, p);
 
 	}
