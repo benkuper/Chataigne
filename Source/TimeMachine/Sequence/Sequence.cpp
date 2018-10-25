@@ -167,7 +167,7 @@ void Sequence::onContainerParameterChangedInternal(Parameter * p)
 	}
 	else if (p == currentTime)
 	{
-		sequenceListeners.call(&SequenceListener::sequenceCurrentTimeChanged, this, prevTime, isPlaying->boolValue());
+		sequenceListeners.call(&SequenceListener::sequenceCurrentTimeChanged, this, (float)prevTime, isPlaying->boolValue());
 		prevTime = currentTime->floatValue();
 		if (!isPlaying->boolValue() && timeIsDrivenByAudio()) hiResAudioTime = currentTime->floatValue();
 	}
