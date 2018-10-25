@@ -47,6 +47,9 @@ void MappingLayerTimeline::setupUIForLayerMode()
 		if (index == 1) c = GREEN_COLOR;
 		if (index == 2) c = BLUE_COLOR;
 		AutomationUI * aui = new AutomationUI(a,c);
+		aui->autoSwitchMode = true;
+		aui->setViewMode(AutomationUI::VIEW);
+
 		addAndMakeVisible(aui);
 		automationsUI.add(aui);
 		index++;
