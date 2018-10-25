@@ -56,12 +56,12 @@ void DMXSerialDevice::setCurrentPort(SerialDevice * port)
 			NLOG(niceName, "Port connected : " << port->info->port);
 			lastOpenedPortID = port->info->port;
 			setPortConfig();
-			dmxDeviceListeners.call(&DMXDeviceListener::dmxDeviceConnected);
+			setConnected(true);
 		}
 	}
 	else
 	{
-		dmxDeviceListeners.call(&DMXDeviceListener::dmxDeviceDisconnected);
+		setConnected(false);
 	}
 }
 

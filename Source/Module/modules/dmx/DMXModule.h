@@ -38,6 +38,9 @@ public:
 	void send16BitDMXValue(int startChannel, int value, DMXByteOrder byteOrder);
 	void send16BitDMXValues(int startChannel, Array<int> values, DMXByteOrder byteOrder);
 
+
+	virtual void clearItem() override;
+
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
 

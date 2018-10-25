@@ -59,6 +59,7 @@ void DMXModule::setCurrentDMXDevice(DMXDevice * d)
 	if (dmxDevice != nullptr)
 	{
 		dmxDevice->removeDMXDeviceListener(this);
+		dmxDevice->clearDevice();
 		moduleParams.removeChildControllableContainer(dmxDevice);
 	}
 
@@ -119,6 +120,11 @@ void DMXModule::send16BitDMXValues(int startChannel, Array<int> values, DMXByteO
 		dmxDevice->sendDMXValue(startChannel + i * 2, byteOrder == MSB ? (value >> 8) & 0xFF : value & 0xFF);
 		dmxDevice->sendDMXValue(startChannel + i * 2 + 1, byteOrder == MSB ? 0xFF : (value >> 8) & 0xFF);
 	}
+}
+
+void DMXModule::clearItem()
+{
+	setCurrentDMXDevice(nullptr);
 }
 
 var DMXModule::getJSONData()
