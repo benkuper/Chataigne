@@ -15,9 +15,10 @@ AudioModuleHardwareEditor::AudioModuleHardwareEditor(AudioModuleHardwareSettings
 	hs(hs),
 	selector(*hs->am, 0, 16, 0, 16, false, false, false, false)
 {
-	addAndMakeVisible(selector);
 	selector.setSize(100, 300);
 	selector.setVisible(!container->editorIsCollapsed);
+	addAndMakeVisible(selector);
+	if(selector.isVisible()) setSize(100,selector.getBottom() + headerHeight + headerGap);
 }
 
 AudioModuleHardwareEditor::~AudioModuleHardwareEditor()
