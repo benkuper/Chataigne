@@ -87,12 +87,6 @@ bool MappingLayerTimeline::keyPressed(const KeyPress & e)
 
 	return false;
 }
-void MappingLayerTimeline::inspectableSelectionChanged(Inspectable * i)
-{
-	SequenceLayerTimeline::inspectableSelectionChanged(i);
-	for (auto &aui : automationsUI) aui->setShowKeyHandles(mappingLayer->isSelected);
-}
-
 	
 
 void MappingLayerTimeline::controllableFeedbackUpdateInternal(Controllable * c)

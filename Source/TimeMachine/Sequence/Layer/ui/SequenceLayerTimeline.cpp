@@ -19,7 +19,11 @@ SequenceLayerTimeline::SequenceLayerTimeline(SequenceLayer * layer) :
 	item->sequence->addAsyncContainerListener(this);
 	setSize(100, item->uiHeight->intValue());
 
-	setInterceptsMouseClicks(true, true);
+
+	bringToFrontOnSelect = false;
+	//setInterceptsMouseClicks(true, true);
+	setWantsKeyboardFocus(false);
+	setMouseClickGrabsKeyboardFocus(false);
 }
 
 SequenceLayerTimeline::~SequenceLayerTimeline()
