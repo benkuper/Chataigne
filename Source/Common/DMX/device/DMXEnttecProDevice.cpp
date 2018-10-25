@@ -31,7 +31,7 @@ void DMXEnttecProDevice::setPortConfig()
 	//dmxPort->port->setRTS(false);
 	dmxPort->port->flush();
 
-	Array<uint8> getSerialNumberBytes((uint8)0x7E, (uint8)10, 0, 0, (uint8)0xE7);
+	Array<uint8> getSerialNumberBytes((uint8)0x7E, (uint8)10, (uint8)0, (uint8)0, (uint8)0xE7);
 	dmxPort->writeBytes(getSerialNumberBytes);
 
 	dmxPort->port->write(changeAlwaysData, 6); //to avoid blocking the dmxPro on send
