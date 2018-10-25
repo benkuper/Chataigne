@@ -15,7 +15,9 @@ AudioLayerClipUI::AudioLayerClipUI(AudioLayerClip * _clip) :
 	BaseItemUI(_clip),
 	thumbnailCache(100000),
 	thumbnail(50, _clip->formatManager, thumbnailCache),
-	clip(_clip)
+	clip(_clip),
+	clipViewStartTime(0),
+	clipViewEndTime(1)
 {
 	browseBT = AssetManager::getInstance()->getFileBT();
 	addAndMakeVisible(browseBT);
@@ -62,7 +64,8 @@ void AudioLayerClipUI::paint(Graphics & g)
 		
 	} else
 	{
-		thumbnail.drawChannels(g, getLocalBounds(), 0, item->clipDuration, item->volume->floatValue());
+		Rectangle<int> r = getLocalBounds().withLeft((clipViewStartTime / item->clipDuration)*getWidth()).withRight((clipViewEndTime / item->clipDuration)*getWidth());
+		thumbnail.drawChannels(g, r, clipViewStartTime, clipViewEndTime, item->volume->floatValue());
 	}
 }
 
@@ -72,6 +75,12 @@ void AudioLayerClipUI::resizedInternalHeader(Rectangle<int>& r)
 	lockUI->setBounds(r.removeFromRight(r.getHeight()));
 	r.removeFromRight(2);
 
+}
+
+void AudioLayerClipUI::setViewBounds(float start, float end)
+{
+	clipViewStartTime = jmax<float>(start-item->time->floatValue(), 0);
+	clipViewEndTime = jmin<float>(end - clip->time->floatValue(), item->clipDuration);
 }
 
 void AudioLayerClipUI::mouseDown(const MouseEvent & e)

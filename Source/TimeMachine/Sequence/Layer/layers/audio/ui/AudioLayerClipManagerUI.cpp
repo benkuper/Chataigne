@@ -45,6 +45,7 @@ void AudioLayerClipManagerUI::placeClipUI(AudioLayerClipUI * cui)
 {
 	int tx = timeline->getXForTime(cui->clip->time->floatValue());
 	int tx2 = timeline->getXForTime(cui->clip->time->floatValue() + cui->clip->clipLength->floatValue());
+	cui->setViewBounds(timeline->audioLayer->sequence->viewStartTime->floatValue(), timeline->audioLayer->sequence->viewEndTime->floatValue());
 	cui->setBounds(tx, 0, tx2-tx, getHeight());
 }
 

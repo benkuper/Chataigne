@@ -26,6 +26,9 @@ public:
 	float timeAtMouseDown;
 	int posAtMouseDown;
 
+	float clipViewStartTime;
+	float clipViewEndTime;
+
 	ScopedPointer<ImageButton> browseBT;
 	ScopedPointer<BoolImageToggleUI> lockUI;
 
@@ -35,6 +38,8 @@ public:
 
 	void paint(Graphics &g) override;
 	void resizedInternalHeader(Rectangle<int> &r) override;
+
+	void setViewBounds(float start, float end);
 
 	void mouseDown(const MouseEvent &e) override;
 	void mouseDrag(const MouseEvent &e) override;
