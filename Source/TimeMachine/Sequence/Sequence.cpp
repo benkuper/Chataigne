@@ -83,6 +83,8 @@ Sequence::~Sequence()
 
 void Sequence::setCurrentTime(float time, bool forceOverPlaying)
 {
+	time = jlimit<float>(0, totalTime->floatValue(), time);
+
 	if (isPlaying->boolValue() && !forceOverPlaying) return;
 	if (timeIsDrivenByAudio())
 	{
