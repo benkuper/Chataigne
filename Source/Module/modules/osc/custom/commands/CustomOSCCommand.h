@@ -23,12 +23,15 @@ public:
 	CustomOSCCommand(CustomOSCModule * output, CommandContext context, var params);
 	~CustomOSCCommand();
 	
-
 	var lastValue;
+
+	CustomValuesCommandArgumentManager wildcardsContainer;
+	Array<Parameter *> wildCardParams;
 
 	void trigger() override;
 	void useForMappingChanged(CustomValuesCommandArgument * a) override;
 
+	virtual void onContainerParameterChanged(Parameter * p) override;
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;

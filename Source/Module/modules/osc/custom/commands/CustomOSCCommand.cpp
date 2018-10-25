@@ -11,12 +11,14 @@
 #include "CustomOSCCommand.h"
 
 CustomOSCCommand::CustomOSCCommand(CustomOSCModule * module, CommandContext context, var params) :
-	OSCCommand(module, context, params)
+	OSCCommand(module, context, params),
+	wildcardsContainer("Address Parameters")
 {
 	address->setControllableFeedbackOnly(false);
 	address->isSavable = true;
 
 	removeChildControllableContainer(&argumentsContainer);
+	
 	customValuesManager = new CustomValuesCommandArgumentManager(context == MAPPING);
 	addChildControllableContainer(customValuesManager);  
 	customValuesManager->addArgumentManagerListener(this);
@@ -96,6 +98,23 @@ void CustomOSCCommand::useForMappingChanged(CustomValuesCommandArgument *)
 		{
 			setTargetMappingParameterAt(a->param, index);
 			index++;
+		}
+	}
+}
+
+void CustomOSCCommand::onContainerParameterChanged(Parameter * p)
+{
+	OSCCommand::onContainerParameterChanged(p);
+	if (p == address)
+	{
+
+
+		if (wildcardsContainer.items.size() == 0)
+		{
+			if (wildcardsContainer.parentContainer == this) removeChildControllableContainer(&wildcardsContainer);
+		} else
+		{
+			if (wildcardsContainer.parentContainer != this) addChildControllableContainer(&wildcardsContainer);
 		}
 	}
 }
