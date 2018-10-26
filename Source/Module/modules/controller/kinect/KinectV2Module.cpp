@@ -11,31 +11,21 @@
 #include "KinectV2Module.h"
 
 KinectV2Module::KinectV2Module() :
-	Module("Kinect V2"),
-	curBodyIndex(-1)
+	Module("Kinect V2")
 {
 	setupIOConfiguration(true, false);
 	moduleParams.hideInEditor = true;
-	
-	bodyX = valuesCC.addFloatParameter("Body X", "", 0, -5, 5);
-	bodyY = valuesCC.addFloatParameter("Body Y", "", 0, -5, 5); 
-	bodyZ = valuesCC.addFloatParameter("Body Z", "", 0, -5, 5);
 
-	headX = valuesCC.addFloatParameter("Head X", "", 0, -5, 5);
-	headY = valuesCC.addFloatParameter("Head Y", "", 0, -5, 5);
-	headZ = valuesCC.addFloatParameter("Head Z", "", 0, -5, 5);
+	numPersons = valuesCC.addIntParameter("Number of Persons", "Number of detected persons", 0, 0, 6);
+	numPersons->setControllableFeedbackOnly(true);
 
-	leftHandX = valuesCC.addFloatParameter("Left Hand X", "Left hand X", 0, -5, 5);
-	leftHandY = valuesCC.addFloatParameter("Left Hand Y", "Left hand Y", 0, -5, 5);
-	rightHandX = valuesCC.addFloatParameter("Right Hand X", "Right Hand X", 0, -5, 5);
-	rightHandY = valuesCC.addFloatParameter("Right Hand Y", "Right Hand Y", 0, -5, 5);
+	for (int i = 0; i < KINECT_MAX_PERSONS; i++)
+	{
+		KinectPersonValues * kpv = new KinectPersonValues(i + 1);
+		personValues.add(kpv);
+		valuesCC.addChildControllableContainer(kpv);
+	}
 
-	handsDistance = valuesCC.addFloatParameter("Hands Distance", "Hands Distance", 0, 0, 3);
-	handsAngle = valuesCC.addFloatParameter("Hands Rotation", "Hands Rotation", 0, 0, 360);
-	leftHandOpen = valuesCC.addBoolParameter("Left Hand Open", "Left Hand Open", false);
-	rightHandOpen = valuesCC.addBoolParameter("Right Hand Open", "Right Hand Open", false);
-
-	for (auto &c : valuesCC.controllables) c->isControllableFeedbackOnly = true;
 	
 	bool initResult = initKinect();
 	if (!initResult) return;
@@ -142,8 +132,7 @@ void KinectV2Module::updateKinect()
 #if USE_KINECT
 void KinectV2Module::processBody(int nBodyCount, IBody ** ppBodies)
 {
-	IBody* pBody = nullptr;
-
+	/*
 	if (curBodyIndex != -1)
 	{
 		IBody* b = ppBodies[curBodyIndex];
@@ -153,70 +142,92 @@ void KinectV2Module::processBody(int nBodyCount, IBody ** ppBodies)
 			HRESULT hr = b->get_IsTracked(&t);
 			if (SUCCEEDED(hr) && t) pBody = b;
 		}
-		
 	}
+	*/
 
-	if (pBody == nullptr)
+	int numDetectedBodies = 0;
+
+	for (int i = 0; i < nBodyCount && i < KINECT_MAX_PERSONS; i++)
 	{
-		for (int i = 0; i < nBodyCount; i++)
+		IBody* b = ppBodies[i];
+		if (!b) continue;
+		BOOLEAN t;
+		HRESULT hr = b->get_IsTracked(&t);
+		if (SUCCEEDED(hr) && t)
 		{
-			IBody* b = ppBodies[i];
-			if (!b) continue;
-			BOOLEAN t;
-			HRESULT hr = b->get_IsTracked(&t);
-			if (SUCCEEDED(hr) && t)
-			{
-				pBody = b;
-				curBodyIndex = i;
-				break;
-			}
+			numDetectedBodies++;
+
+			Joint joints[JointType_Count];
+			HandState leftHandState = HandState_Unknown;
+			HandState rightHandState = HandState_Unknown;
+
+			b->get_HandLeftState(&leftHandState);
+			b->get_HandRightState(&rightHandState);
+
+			b->GetJoints(_countof(joints), joints);
+
+			Vector3D<float> bodyPos = Vector3D<float>(joints[JointType_SpineMid].Position.X, joints[JointType_SpineMid].Position.Y, joints[JointType_SpineMid].Position.Z);
+			Vector3D<float> headPos = Vector3D<float>(joints[JointType_Head].Position.X, joints[JointType_Head].Position.Y, joints[JointType_Head].Position.Z);
+			Vector3D<float> leftHandPos = Vector3D<float>(joints[JointType_HandLeft].Position.X, joints[JointType_HandLeft].Position.Y, joints[JointType_HandLeft].Position.Z);
+			Vector3D<float> rightHandPos = Vector3D<float>(joints[JointType_HandRight].Position.X, joints[JointType_HandRight].Position.Y, joints[JointType_HandRight].Position.Z);
+
+			Point<float> left2D = Point<float>(leftHandPos.x, leftHandPos.y);
+			Point<float> right2D = Point<float>(rightHandPos.x, rightHandPos.y);
+
+			KinectPersonValues * kpv = personValues[i];
+
+			kpv->bodyX->setValue(bodyPos.x);
+			kpv->bodyY->setValue(bodyPos.y);
+			kpv->bodyZ->setValue(bodyPos.z);
+
+			kpv->headX->setValue(headPos.x);
+			kpv->headY->setValue(headPos.y);
+			kpv->headZ->setValue(headPos.z);
+
+			kpv->leftHandX->setValue(leftHandPos.x);
+			kpv->leftHandY->setValue(leftHandPos.y);
+			kpv->rightHandX->setValue(rightHandPos.x);
+			kpv->rightHandY->setValue(rightHandPos.y);
+			kpv->handsDistance->setValue((rightHandPos - leftHandPos).lengthSquared());
+			kpv->handsAngle->setValue(radiansToDegrees(left2D.getAngleToPoint(right2D)) + 180);
+			kpv->leftHandOpen->setValue(leftHandState == HandState_Open);
+			kpv->rightHandOpen->setValue(rightHandState == HandState_Open);
 		}
+
+		numPersons->setValue(numDetectedBodies);
 	}
-	
-
-	if (pBody == nullptr)
-	{
-		curBodyIndex = -1;
-		return;
-	}
-
-	Joint joints[JointType_Count];
-	HandState leftHandState = HandState_Unknown;
-	HandState rightHandState = HandState_Unknown;
-
-	pBody->get_HandLeftState(&leftHandState);
-	pBody->get_HandRightState(&rightHandState);
-
-	pBody->GetJoints(_countof(joints), joints);
-	
-	Vector3D<float> bodyPos = Vector3D<float>(joints[JointType_SpineMid].Position.X, joints[JointType_SpineMid].Position.Y, joints[JointType_SpineMid].Position.Z);
-	Vector3D<float> headPos = Vector3D<float>(joints[JointType_Head].Position.X, joints[JointType_Head].Position.Y, joints[JointType_Head].Position.Z);
-	Vector3D<float> leftHandPos = Vector3D<float>(joints[JointType_HandLeft].Position.X, joints[JointType_HandLeft].Position.Y, joints[JointType_HandLeft].Position.Z);
-	Vector3D<float> rightHandPos = Vector3D<float>(joints[JointType_HandRight].Position.X, joints[JointType_HandRight].Position.Y, joints[JointType_HandRight].Position.Z);
-
-	Point<float> left2D = Point<float>(leftHandPos.x, leftHandPos.y);
-	Point<float> right2D = Point<float>(rightHandPos.x, rightHandPos.y);
-
-	bodyX->setValue(bodyPos.x);
-	bodyY->setValue(bodyPos.y);
-	bodyZ->setValue(bodyPos.z);
-	
-	headX->setValue(headPos.x);
-	headY->setValue(headPos.y);
-	headZ->setValue(headPos.z);
-
-	leftHandX->setValue(leftHandPos.x);
-	leftHandY->setValue(leftHandPos.y);
-	rightHandX->setValue(rightHandPos.x);
-	rightHandY->setValue(rightHandPos.y);
-	handsDistance->setValue((rightHandPos - leftHandPos).lengthSquared());
-	handsAngle->setValue(radiansToDegrees(left2D.getAngleToPoint(right2D)) + 180);
-	leftHandOpen->setValue(leftHandState == HandState_Open);
-	rightHandOpen->setValue(rightHandState == HandState_Open);
 }
 #endif
 
 void KinectV2Module::timerCallback()
 {
 	updateKinect();
+}
+
+KinectPersonValues::KinectPersonValues(int id) :
+	ControllableContainer("Person "+String(id))
+{
+	bodyX = addFloatParameter("Body X", "", 0, -5, 5);
+	bodyY = addFloatParameter("Body Y", "", 0, -5, 5);
+	bodyZ = addFloatParameter("Body Z", "", 0, -5, 5);
+
+	headX = addFloatParameter("Head X", "", 0, -5, 5);
+	headY = addFloatParameter("Head Y", "", 0, -5, 5);
+	headZ = addFloatParameter("Head Z", "", 0, -5, 5);
+
+	leftHandX = addFloatParameter("Left Hand X", "Left hand X", 0, -5, 5);
+	leftHandY = addFloatParameter("Left Hand Y", "Left hand Y", 0, -5, 5);
+	rightHandX = addFloatParameter("Right Hand X", "Right Hand X", 0, -5, 5);
+	rightHandY = addFloatParameter("Right Hand Y", "Right Hand Y", 0, -5, 5);
+
+	handsDistance = addFloatParameter("Hands Distance", "Hands Distance", 0, 0, 3);
+	handsAngle =    addFloatParameter("Hands Rotation", "Hands Rotation", 0, 0, 360);
+	leftHandOpen =  addBoolParameter("Left Hand Open", "Left Hand Open", false);
+	rightHandOpen = addBoolParameter("Right Hand Open", "Right Hand Open", false);
+
+	for (auto &c : controllables) c->isControllableFeedbackOnly = true;
+}
+
+KinectPersonValues::~KinectPersonValues()
+{
 }

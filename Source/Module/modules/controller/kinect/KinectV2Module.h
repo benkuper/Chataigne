@@ -25,14 +25,15 @@
 #include "Kinect.h"
 #endif
 
-class KinectV2Module :
-	public Module,
-	public Timer
+#define KINECT_MAX_PERSONS 6 //defined in SDK
+
+class KinectPersonValues :
+	public ControllableContainer
 {
 public:
-	KinectV2Module();
-	~KinectV2Module();
-
+	KinectPersonValues(int id);
+	~KinectPersonValues();
+	
 	FloatParameter * bodyX;
 	FloatParameter * bodyY;
 	FloatParameter * bodyZ;
@@ -47,8 +48,18 @@ public:
 	FloatParameter * handsDistance;
 	BoolParameter * leftHandOpen;
 	BoolParameter * rightHandOpen;
+};
 
-	int curBodyIndex;
+class KinectV2Module :
+	public Module,
+	public Timer
+{
+public:
+	KinectV2Module();
+	~KinectV2Module();
+
+	IntParameter * numPersons;
+	OwnedArray<KinectPersonValues> personValues;
 
 	bool initKinect();
 	void updateKinect();
