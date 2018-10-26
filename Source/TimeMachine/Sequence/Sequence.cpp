@@ -250,7 +250,7 @@ void Sequence::onExternalParameterChanged(Parameter * p)
 
 void Sequence::hiResTimerCallback()
 {
-	jassert(isPlaying->boolValue());
+	if (!isPlaying->boolValue()) return;
 
 	double targetTime = 0;
 	if (timeIsDrivenByAudio())

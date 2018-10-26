@@ -129,6 +129,9 @@ bool SequenceEditor::keyPressed(const KeyPress & key)
 	else if (key.getKeyCode() == KeyPress::homeKey)
 	{
 		sequence->currentTime->setValue(0);
+	} else if (key.getKeyCode() == KeyPress::endKey)
+	{
+		sequence->currentTime->setValue(sequence->totalTime->floatValue());
 	}
 	
 

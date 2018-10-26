@@ -23,10 +23,15 @@ public:
 	virtual ~SequenceUI();
 
 	ScopedPointer<FloatSliderUI> timeUI;
+	ScopedPointer<TriggerImageUI> togglePlayUI;
+	ScopedPointer<TriggerImageUI> stopUI;
 
+	void resizedInternalHeader(Rectangle<int> &r) override;
 	void resizedInternalContent(Rectangle<int> &r) override;
 
 	void controllableFeedbackUpdateInternal(Controllable *) override;
+
+	bool keyPressed(const KeyPress &e) override;
 
 	void newMessage(const Sequence::SequenceEvent &e) override;
 

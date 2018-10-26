@@ -9,11 +9,18 @@
 */
 
 #include "SequenceUI.h"
+#include "UI/ChataigneAssetManager.h"
 
 SequenceUI::SequenceUI(Sequence * sequence) :
 	BaseItemUI<Sequence>(sequence)
 {
 	minContentHeight = 20; //To fix : need to pass in constructor of BaseItemUI
+
+	togglePlayUI = item->togglePlayTrigger->createImageUI(ChataigneAssetManager::getInstance()->getPlayImage());
+	stopUI = item->stopTrigger->createImageUI(ChataigneAssetManager::getInstance()->getStopImage());
+	addAndMakeVisible(togglePlayUI);
+	addAndMakeVisible(stopUI);
+
 
 	timeUI = item->currentTime->createSlider();
 	timeUI->showLabel = false;
@@ -33,6 +40,17 @@ SequenceUI::~SequenceUI()
 	if (!Engine::mainEngine->isClearing && !inspectable.wasObjectDeleted()) item->removeAsyncSequenceListener(this);
 }
 
+void SequenceUI::resizedInternalHeader(Rectangle<int>& r)
+{
+	stopUI->setBounds(r.removeFromRight(r.getHeight()).reduced(2));
+	r.removeFromRight(2);
+	togglePlayUI->setBounds(r.removeFromRight(r.getHeight()).reduced(2));
+	r.removeFromRight(2);
+
+	BaseItemUI::resizedInternalHeader(r);
+
+}
+
 void SequenceUI::resizedInternalContent(Rectangle<int>& r)
 {
 	r.setHeight(8);
@@ -46,6 +64,17 @@ void SequenceUI::controllableFeedbackUpdateInternal(Controllable * c)
 		if (item->isPlaying->boolValue()) timeUI->setFrontColor(HIGHLIGHT_COLOR);
 		else timeUI->resetFrontColor();
 	}
+}
+
+bool SequenceUI::keyPressed(const KeyPress & e)
+{
+	if (e.getKeyCode() == KeyPress::spaceKey)
+	{
+		item->togglePlayTrigger->trigger();
+		return true;
+	}
+
+	return false;
 }
 
 void SequenceUI::newMessage(const Sequence::SequenceEvent & e)
