@@ -9,3 +9,17 @@
 */
 
 #pragma once
+
+#include "../CommandTemplate.h"
+
+class CommandTemplateEditor :
+	public GenericControllableContainerEditor
+{
+public:
+	CommandTemplateEditor(CommandTemplate * t, bool isRoot);
+	~CommandTemplateEditor();
+
+	ScopedPointer<TriggerButtonUI> triggerUI;
+
+	void resizedInternalHeader(Rectangle<int> &r) override;
+};

@@ -11,13 +11,18 @@
 #include "CommandTemplate.h"
 #include "Common/Command/CommandDefinition.h"
 #include "Module/ModuleManager.h"
+#include "ui/CommandTemplateEditor.h"
 
 CommandTemplate::CommandTemplate(Module * m, var params) :
 	BaseItem(params.getProperty("commandType", "New Template"), false),
+	module(m),
 	paramsContainer("Parameters"),
 	sourceDef(nullptr)
 {
-	Array<CommandDefinition * > defs = m->getCommands(false);
+	triggerTrigger = addTrigger("Trigger","Trigger a command from this template");
+	triggerTrigger->hideInEditor = true;
+
+	Array<CommandDefinition *> defs = m->getCommands(false);
 	DBG("COMMAND TEMPLATE : " << params.getProperty("menuPath", "").toString() << " / " << params.getProperty("commandType", "").toString());
 	for (auto & d : defs)
 	{
@@ -45,6 +50,9 @@ CommandTemplate::CommandTemplate(var params) :
 
 	Module * m = ModuleManager::getInstance()->getModuleWithName(params.getProperty("module",""));
 	Array<CommandDefinition * > defs = m->getCommands(false);
+
+	triggerTrigger = addTrigger("Trigger", "Trigger a command from this template");
+	triggerTrigger->hideInEditor = true;
 
 	for (auto & d : defs)
 	{
@@ -107,6 +115,18 @@ void CommandTemplate::onContainerNiceNameChanged()
 	templateListeners.call(&TemplateListener::templateNameChanged, this);
 }
 
+void CommandTemplate::onContainerTriggerTriggered(Trigger * t)
+{
+	if (t == triggerTrigger)
+	{
+		if (module != nullptr)
+		{
+			ScopedPointer<BaseCommand> c = createCommand(module, CommandContext::ACTION, var());
+			c->trigger();
+		}
+	}
+}
+
 var CommandTemplate::getJSONData()
 {
 	var data = BaseItem::getJSONData();
@@ -149,6 +169,11 @@ void CommandTemplate::loadJSONDataInternal(var data)
 	}
 
 	
+}
+
+InspectableEditor * CommandTemplate::getEditor(bool isRoot)
+{
+	return new CommandTemplateEditor(this, isRoot);
 }
 
 

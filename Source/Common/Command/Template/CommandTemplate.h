@@ -27,6 +27,10 @@ public:
 	CommandTemplate(var params = var());
 	~CommandTemplate();
 
+	Module * module;
+
+	Trigger * triggerTrigger;
+
 	ControllableContainer paramsContainer;
 	CommandDefinition * sourceDef;
 	OwnedArray<CommandTemplateParameter> templateParams;
@@ -39,9 +43,12 @@ public:
 	void onContainerParameterChangedInternal(Parameter * p) override;
 	void onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c) override;
 	void onContainerNiceNameChanged() override;
+	void onContainerTriggerTriggered(Trigger * t) override;
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
+
+	InspectableEditor * getEditor(bool isRoot) override;
 
 	class TemplateListener
 	{
