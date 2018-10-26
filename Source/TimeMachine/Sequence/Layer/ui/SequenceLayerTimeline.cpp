@@ -83,8 +83,11 @@ void SequenceLayerTimeline::controllableFeedbackUpdateInternal(Controllable * c)
 	}
 	else if (c == item->sequence->viewStartTime || c == item->sequence->viewEndTime)
 	{
-		updateContent();
-		repaint();
+		if (isVisible())
+		{
+			updateContent();
+			repaint();
+		}
 	}
 	else if (c == item->sequence->currentTime)
 	{
