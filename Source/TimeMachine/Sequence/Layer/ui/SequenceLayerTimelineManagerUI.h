@@ -26,6 +26,7 @@ public:
 	SequenceLayerTimeline * createUIForItem(SequenceLayer * layer) override;
 
 	void resized() override;
+	void modifierKeysChanged(const ModifierKeys &keys) override;
 
 	void showMenuAndAddItem(bool, Point<int>) override;
 

@@ -32,6 +32,11 @@ void SequenceLayerTimelineManagerUI::resized()
 
 }
 
+void SequenceLayerTimelineManagerUI::modifierKeysChanged(const ModifierKeys &keys)
+{
+	viewport.setScrollBarsShown(!keys.isShiftDown(), false);
+}
+
 void SequenceLayerTimelineManagerUI::showMenuAndAddItem(bool, Point<int>)
 {
 	SequenceLayer * i = SequenceLayerFactory::getInstance()->showCreateMenu(manager->sequence);
