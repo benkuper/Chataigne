@@ -65,7 +65,7 @@ bool KinectV2Module::initKinect()
 	hr = GetDefaultKinectSensor(&m_pKinectSensor);
 	if (FAILED(hr))
 	{
-		LOG("Kinect init failed");
+		LOGERROR("Kinect init failed");
 		return false;
 	}
 
@@ -85,7 +85,7 @@ bool KinectV2Module::initKinect()
 
 	if (!m_pKinectSensor || FAILED(hr))
 	{
-		LOG("No ready Kinect found");
+		LOGERROR("No ready Kinect found");
 		return false;
 	}
 
@@ -93,6 +93,7 @@ bool KinectV2Module::initKinect()
 	return true;
 
 #else
+	LOGERROR("Kinect has not been compiled in this version");
     return false;
 #endif
 
