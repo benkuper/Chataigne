@@ -15,14 +15,8 @@ KinectV2Module::KinectV2Module() :
 	curBodyIndex(-1)
 {
 	setupIOConfiguration(true, false);
-
-	bool initResult = initKinect();
-	if (!initResult) return;
-
 	moduleParams.hideInEditor = true;
-
-	startTimer(20); //50 fps
-
+	
 	bodyX = valuesCC.addFloatParameter("Body X", "", 0, -5, 5);
 	bodyY = valuesCC.addFloatParameter("Body Y", "", 0, -5, 5); 
 	bodyZ = valuesCC.addFloatParameter("Body Z", "", 0, -5, 5);
@@ -42,6 +36,12 @@ KinectV2Module::KinectV2Module() :
 	rightHandOpen = valuesCC.addBoolParameter("Right Hand Open", "Right Hand Open", false);
 
 	for (auto &c : valuesCC.controllables) c->isControllableFeedbackOnly = true;
+	
+	bool initResult = initKinect();
+	if (!initResult) return;
+
+	startTimer(20); //50 fps 
+
 }
 
 KinectV2Module::~KinectV2Module()

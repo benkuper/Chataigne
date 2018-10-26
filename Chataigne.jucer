@@ -1177,7 +1177,7 @@
   </MAINGROUP>
   <EXPORTFORMATS>
     <VS2017 targetFolder="Builds/VisualStudio2017" externalLibraries="Setupapi.lib&#10;hid.lib&#10;Kinect20.lib&#10;joytime-core.lib&#10;joytime-input-hidapi.lib&#10;Servus.lib&#10;dnssd.lib&#10;ossia.lib&#10;SDL2.lib"
-            smallIcon="nVz6Li" bigIcon="nVz6Li" vst3Folder="">
+            smallIcon="nVz6Li" bigIcon="nVz6Li" vst3Folder="" extraDefs="USE_KINECT=1">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" winWarningLevel="4" generateManifest="1" winArchitecture="x64"
                        isDebug="1" optimisation="1" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/asio&#10;../../External/kinect/include&#10;../../External/joycon/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/ossia/include&#10;../../External/ois/include&#10;../../External/sdl/include"
@@ -1303,7 +1303,7 @@
       </MODULEPATHS>
     </CODEBLOCKS_LINUX>
     <VS2017 targetFolder="Builds/VisualStudio2017_CI" externalLibraries="Setupapi.lib&#10;hid.lib&#10;Kinect20.lib&#10;joytime-core.lib&#10;joytime-input-hidapi.lib&#10;Servus.lib&#10;dnssd.lib&#10;ossia.lib&#10;SDL2.lib"
-            smallIcon="nVz6Li" bigIcon="nVz6Li">
+            smallIcon="nVz6Li" bigIcon="nVz6Li" extraDefs="USE_KINECT=1">
       <CONFIGURATIONS>
         <CONFIGURATION isDebug="1" name="Debug" binaryPath="Binaries/CI" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/asio&#10;../../External/kinect/include&#10;../../External/joycon/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/ossia/include&#10;../../External/sdl/include"
                        libraryPath="../../External/kinect/lib&#10;../../External/joycon/lib&#10;../../External/servus/lib/win/x64/debug&#10;../../External/dnssd/lib&#10;../../External/ossia/lib/win&#10;../../External/sdl/lib/win"/>
