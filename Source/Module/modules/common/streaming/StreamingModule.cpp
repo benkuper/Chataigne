@@ -300,8 +300,10 @@ void StreamingModule::sendBytes(Array<uint8> bytes)
 	if (logOutgoingData->boolValue()) NLOG(niceName, "Sending " + String(bytes.size()) + " bytes");
 }
 
-void StreamingModule::onControllableFeedbackUpdateInternal(ControllableContainer *, Controllable * c)
+void StreamingModule::onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c)
 {
+	Module::onControllableFeedbackUpdateInternal(cc, c);
+
 	if (c == streamingType)
 	{
 		while (valuesCC.controllables.size() > 0) valuesCC.removeControllable(valuesCC.controllables[0]);
