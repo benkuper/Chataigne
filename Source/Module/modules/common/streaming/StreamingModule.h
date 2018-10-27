@@ -21,11 +21,18 @@ public:
 	virtual ~StreamingModule();
 
 	enum StreamingType { LINES, DATA255, RAW, COBS };
+	enum MessageStructure { LINES_SPACE, LINES_TAB, LINES_COMMA, RAW_1BYTE, RAW_FLOATS, RAW_COLORS};
 	EnumParameter * streamingType;
+
+	BoolParameter * autoAdd;
+	EnumParameter * messageStructure;
+	BoolParameter * firstValueIsTheName;
 
 	const Identifier dataEventId = "dataReceived";
 	const Identifier sendId = "send";
 	const Identifier sendBytesId = "sendBytes";
+
+	virtual void buildMessageStructureOptions();
 
 	virtual void processDataLine(const String &message);
 	virtual void processDataLineInternal(const String &message) {}
@@ -36,6 +43,8 @@ public:
 	virtual void sendMessageInternal(const String &message) {}
 	virtual void sendBytes(Array<uint8> bytes);
 	virtual void sendBytesInternal(Array<uint8> bytes) {}
+
+	virtual void onControllableFeedbackUpdateInternal(ControllableContainer *, Controllable * c) override;
 
 	virtual bool isReadyToSend() { return false; }
 

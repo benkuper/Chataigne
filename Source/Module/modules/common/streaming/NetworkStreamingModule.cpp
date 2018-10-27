@@ -73,7 +73,7 @@ void NetworkStreamingModule::run()
 {
 	initThread();
 
-	char buffer[512];
+	//char buffer[512];
 	String stringBuffer = ""; //for lines;
 	Array<uint8> byteBuffer; //for cobs and data255
 
@@ -113,7 +113,7 @@ void NetworkStreamingModule::run()
 				{
 					for (int i = 0; i < numBytes; i++)
 					{
-						uint8 b = buffer[i];
+						uint8 b = bytes[i];
 						if (b == 255)
 						{
 							processDataBytes(byteBuffer);
