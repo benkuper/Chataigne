@@ -49,11 +49,11 @@ public:
     {
         // Send events to Google Analytics.
 
-        String appData ("v=1&tid=" + apiKey + "&t=event&");
 
         StringArray postData;
 
-		
+		String eventType = "event";
+
         for (auto& event : events)
         {
             StringPairArray data;
@@ -62,8 +62,16 @@ public:
             {
                 data.set ("ec",  "info");
                 data.set ("ea",  "appStarted");
+				data.set("el", getAppVersion() + " on " + SystemStats::getOperatingSystemName());
 				data.set("sc", "start");
-				data.set("ua", SystemStats::getOperatingSystemName());
+				data.set("av", getAppVersion());
+				data.set("cd1", getAppVersion());
+#if JUCE_DEBUG
+				data.set("cd2", "Debug");
+#else
+				if(Engine::mainEngine != nullptr) data.set("cd2", Engine::mainEngine->isBetaVersion ? "Beta" : "Stable");
+#endif
+				data.set("cd3", SystemStats::getOperatingSystemName());
 			}
             else if (event.name == "shutdown")
             {
@@ -76,11 +84,10 @@ public:
                 data.set ("ec",  "info");
                 data.set ("ea",  "appCrashed");
 				data.set("sc", "end");
-            }
-            else
-            {
-                continue;
-            }
+            } else
+			{
+				continue;
+			}
 
 			data.set ("cid", event.userID);
 
@@ -88,6 +95,9 @@ public:
 
             for (auto& key : data.getAllKeys())
                 eventData.add (key + "=" + URL::addEscapeChars (data[key], true));
+
+
+			String appData("v=1&tid=" + apiKey + "&t=" + eventType + "&");
 
             postData.add (appData + eventData.joinIntoString ("&"));
         }
