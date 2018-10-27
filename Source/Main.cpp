@@ -26,9 +26,16 @@ void ChataigneApplication::initialiseInternal(const String &)
 	ShapeShifterManager::getInstance()->setDefaultFileData(BinaryData::default_chalayout);
 	ShapeShifterManager::getInstance()->setLayoutInformations("chalayout", "Chataigne/layouts");
 
+
+}
+
+
+void ChataigneApplication::afterInit()
+{
 	//ANALYTICS
 	if (enableSendAnalytics->boolValue())
 	{
+		DBG("Send analytics");
 		Analytics::getInstance()->setUserId(SystemStats::getFullUserName());
 
 		// Add any analytics destinations we want to use to the Analytics singleton.
@@ -36,14 +43,6 @@ void ChataigneApplication::initialiseInternal(const String &)
 		Analytics::getInstance()->logEvent("startup", {});
 	}
 
-}
-
-
-void ChataigneApplication::afterInit()
-{
-	//Crash test
-	//Engine * e = nullptr;
-	//e->isClearing = true;
 }
 
 void ChataigneApplication::shutdown()
