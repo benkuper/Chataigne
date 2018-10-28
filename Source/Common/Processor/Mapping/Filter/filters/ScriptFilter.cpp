@@ -14,6 +14,7 @@ ScriptFilter::ScriptFilter(var params) :
 	MappingFilter(getTypeString(),params)
 {
 	filterParams.addChildControllableContainer(&script);
+	script.scriptTemplate = "filter";
 }
 
 ScriptFilter::~ScriptFilter()

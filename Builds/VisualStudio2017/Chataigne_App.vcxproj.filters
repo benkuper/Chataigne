@@ -2,6 +2,12 @@
 
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <Filter Include="Chataigne\Resources\Templates\Scripts">
+      <UniqueIdentifier>{15E9DA26-CC04-D634-32AE-22A3FE2AA006}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Resources\Templates">
+      <UniqueIdentifier>{F3FD18E2-6AEA-F429-05C9-D3DC415E6F3C}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Chataigne\Resources">
       <UniqueIdentifier>{82D0FA96-65B2-9949-065F-D5C9B962961E}</UniqueIdentifier>
     </Filter>
@@ -7433,6 +7439,18 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\Resources\Templates\Scripts\conditionScriptTemplate.js">
+      <Filter>Chataigne\Resources\Templates\Scripts</Filter>
+    </None>
+    <None Include="..\..\Resources\Templates\Scripts\filterScriptTemplate.js">
+      <Filter>Chataigne\Resources\Templates\Scripts</Filter>
+    </None>
+    <None Include="..\..\Resources\Templates\Scripts\genericScriptTemplate.js">
+      <Filter>Chataigne\Resources\Templates\Scripts</Filter>
+    </None>
+    <None Include="..\..\Resources\Templates\Scripts\moduleScriptTemplate.js">
+      <Filter>Chataigne\Resources\Templates\Scripts</Filter>
+    </None>
     <None Include="..\..\Resources\about.png">
       <Filter>Chataigne\Resources</Filter>
     </None>

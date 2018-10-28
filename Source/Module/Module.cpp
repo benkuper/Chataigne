@@ -64,6 +64,8 @@ Module::Module(const String &name) :
 	controllableContainers.move(controllableContainers.indexOf(scriptManager.get()), controllableContainers.size() - 1);
 
 	addChildControllableContainer(&commandTester);
+
+	scriptManager->scriptTemplate = "module";
 }
 
 Module::~Module()

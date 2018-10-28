@@ -364,6 +364,7 @@
 		1F418B8EE52EF9CF868B0D7E = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MappingLayerTimeline.h; path = ../../Source/TimeMachine/Sequence/Layer/layers/mapping/ui/MappingLayerTimeline.h; sourceTree = "SOURCE_ROOT"; };
 		204D7E4EFCCE5DE79A20294F = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = WatchoutModule.cpp; path = ../../Source/Module/modules/tcp/watchout/WatchoutModule.cpp; sourceTree = "SOURCE_ROOT"; };
 		2095B733297F99FB69AC407F = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = TimeTriggerUI.cpp; path = ../../Source/TimeMachine/Sequence/Layer/layers/trigger/ui/TimeTriggerUI.cpp; sourceTree = "SOURCE_ROOT"; };
+		20A44377EAC767480769BEA5 = {isa = PBXFileReference; lastKnownFileType = file.js; name = moduleScriptTemplate.js; path = ../../Resources/Templates/Scripts/moduleScriptTemplate.js; sourceTree = "SOURCE_ROOT"; };
 		20E319398349A41336586E9D = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = nunchuk.c; path = ../../Source/Module/modules/controller/wiimote/lib/wiiuse/nunchuk.c; sourceTree = "SOURCE_ROOT"; };
 		210AC54DECDB85FC732D8331 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ModuleManager.h; path = ../../Source/Module/ModuleManager.h; sourceTree = "SOURCE_ROOT"; };
 		2142D7BF8502B7933A19DFB9 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CVPresetEditor.h; path = ../../Source/CustomVariables/Preset/ui/CVPresetEditor.h; sourceTree = "SOURCE_ROOT"; };
@@ -560,6 +561,7 @@
 		72E8FD28032EBC0067701668 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CustomValuesCommandArgumentManager.h; path = ../../Source/Module/modules/common/commands/customvalues/CustomValuesCommandArgumentManager.h; sourceTree = "SOURCE_ROOT"; };
 		72F63CCEBF93042240ECD710 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = TimeTriggerMultiTransformer.cpp; path = ../../Source/TimeMachine/Sequence/Layer/layers/trigger/ui/TimeTriggerMultiTransformer.cpp; sourceTree = "SOURCE_ROOT"; };
 		7335A92ACDE20B14F02ADA97 = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
+		7347A5FBEE965521C1AFC6A2 = {isa = PBXFileReference; lastKnownFileType = file.js; name = filterScriptTemplate.js; path = ../../Resources/Templates/Scripts/filterScriptTemplate.js; sourceTree = "SOURCE_ROOT"; };
 		736ABAC2D594FA4D888EA2D6 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Module.h; path = ../../Source/Module/Module.h; sourceTree = "SOURCE_ROOT"; };
 		767E6C14CD8A82E65606EB02 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = "include_juce_gui_basics.mm"; path = "../../JuceLibraryCode/include_juce_gui_basics.mm"; sourceTree = "SOURCE_ROOT"; };
 		769C484D3D325152FE333C47 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SequenceCommand.cpp; path = ../../Source/Module/modules/sequence/commands/SequenceCommand.cpp; sourceTree = "SOURCE_ROOT"; };
@@ -618,6 +620,7 @@
 		8E161399DEC1EED4622B6EE6 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = BinaryData.cpp; path = ../../JuceLibraryCode/BinaryData.cpp; sourceTree = "SOURCE_ROOT"; };
 		8EF33C0D2641C219CE9C9AD3 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PJLinkModule.h; path = ../../Source/Module/modules/tcp/pjlink/PJLinkModule.h; sourceTree = "SOURCE_ROOT"; };
 		8EFE304B0BBA3DFA624E0D0F = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DMXOpenUSBDevice.h; path = ../../Source/Common/DMX/device/DMXOpenUSBDevice.h; sourceTree = "SOURCE_ROOT"; };
+		8F1E0B684D1010283648DB5F = {isa = PBXFileReference; lastKnownFileType = file.js; name = genericScriptTemplate.js; path = ../../Resources/Templates/Scripts/genericScriptTemplate.js; sourceTree = "SOURCE_ROOT"; };
 		8F4E7615136F0F2BC4F13B36 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MIDIManager.h; path = ../../Source/Common/MIDI/MIDIManager.h; sourceTree = "SOURCE_ROOT"; };
 		8F80D77F9012D15293997784 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = InverseFilter.cpp; path = ../../Source/Common/Processor/Mapping/Filter/filters/number/InverseFilter.cpp; sourceTree = "SOURCE_ROOT"; };
 		903CDCB0E4926FADC367A3D0 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = StateModule.h; path = ../../Source/Module/modules/state/StateModule.h; sourceTree = "SOURCE_ROOT"; };
@@ -650,6 +653,7 @@
 		9FA5201B24DEF339459A4BFA = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ProcessorUI.h; path = ../../Source/Common/Processor/ui/ProcessorUI.h; sourceTree = "SOURCE_ROOT"; };
 		A07AB46E1CB4B4698F148FC8 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MIDIManager.cpp; path = ../../Source/Common/MIDI/MIDIManager.cpp; sourceTree = "SOURCE_ROOT"; };
 		A166E3006BBC663DDF05DE54 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = "include_juce_graphics.mm"; path = "../../JuceLibraryCode/include_juce_graphics.mm"; sourceTree = "SOURCE_ROOT"; };
+		A17ACDD4B45B14AB30469A2D = {isa = PBXFileReference; lastKnownFileType = file.js; name = conditionScriptTemplate.js; path = ../../Resources/Templates/Scripts/conditionScriptTemplate.js; sourceTree = "SOURCE_ROOT"; };
 		A18B69298A0A42084F375802 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ModuleRouterPanelView.cpp; path = ../../Source/Module/Routing/ui/ModuleRouterPanelView.cpp; sourceTree = "SOURCE_ROOT"; };
 		A1C6501ABE317D0EF13369A6 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = TimeTriggerManagerUI.cpp; path = ../../Source/TimeMachine/Sequence/Layer/layers/trigger/ui/TimeTriggerManagerUI.cpp; sourceTree = "SOURCE_ROOT"; };
 		A1DA51FAD7493D6C160F27A1 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SequenceLayerManager.cpp; path = ../../Source/TimeMachine/Sequence/Layer/SequenceLayerManager.cpp; sourceTree = "SOURCE_ROOT"; };
@@ -881,7 +885,15 @@
 		FF5E71729960E873EBC84B3F = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CVGroupManager.cpp; path = ../../Source/CustomVariables/CVGroupManager.cpp; sourceTree = "SOURCE_ROOT"; };
 		FF75DCCDA969DCD9F36F840C = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = BaseCommandHandlerManagerEditor.h; path = ../../Source/Common/Command/ui/BaseCommandHandlerManagerEditor.h; sourceTree = "SOURCE_ROOT"; };
 		FFBCF506733331DD868A68EE = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SerialManager.cpp; path = ../../Source/Common/Serial/SerialManager.cpp; sourceTree = "SOURCE_ROOT"; };
+		9449F38788B5B97C4B287083 = {isa = PBXGroup; children = (
+					A17ACDD4B45B14AB30469A2D,
+					7347A5FBEE965521C1AFC6A2,
+					8F1E0B684D1010283648DB5F,
+					20A44377EAC767480769BEA5, ); name = Scripts; sourceTree = "<group>"; };
+		C425CBE1320141CCBDD71858 = {isa = PBXGroup; children = (
+					9449F38788B5B97C4B287083, ); name = Templates; sourceTree = "<group>"; };
 		C220F6DC306F1E9F6178C370 = {isa = PBXGroup; children = (
+					C425CBE1320141CCBDD71858,
 					D79CC2C49C8F65182898823E,
 					AC618D6B6BD7DB9CBEFD0818,
 					5FA54638369A3C34CEB7FE3C,

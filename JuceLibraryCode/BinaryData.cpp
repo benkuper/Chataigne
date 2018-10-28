@@ -7,8 +7,355 @@
 namespace BinaryData
 {
 
-//================== about.png ==================
+//================== conditionScriptTemplate.js ==================
 static const unsigned char temp_binary_data_0[] =
+"/* ********** GENERAL SCRIPTING **********************\r\n"
+"\r\n"
+"\t\tThis templates shows what you can do in this is module script\r\n"
+"\t\tAll the code outside functions will be executed each time this script is loaded, meaning at file load, when hitting the \"reload\" button or when saving this file\r\n"
+"*/\r\n"
+"\r\n"
+"\r\n"
+"// You can add custom parameters to use in your script here, they will be replaced each time this script is saved\r\n"
+"var param1 = script.addFloatParameter(\"Param 1\",\"Description of my float param\",.4,0,1); \t\t//This will add a float number parameter (slider), default value of 0.1, with a range between 0 and 1\r\n"
+"var param2 = script.addFloatParameter(\"Param 2\",\"Description of my float param\",.5,0,1); \t\t//This will add a float number parameter (slider), default value of 0.1, with a range between 0 and 1\r\n"
+"\r\n"
+"//Here are all the type of parameters you can create\r\n"
+"/*\r\n"
+"var myTrigger = script.addTrigger(\"My Trigger\", \"Trigger description\"); \t\t\t\t\t\t\t\t\t//This will add a trigger (button)\r\n"
+"var myBoolParam = script.addBoolParameter(\"My Bool Param\",\"Description of my bool param\",false); \t\t\t//This will add a boolean parameter (toggle), defaut unchecked\r\n"
+"var myFloatParam = script.addFloatParameter(\"My Float Param\",\"Description of my float param\",.1,0,1); \t\t//This will add a float number parameter (slider), default value of 0.1, with a range between 0 and 1\r\n"
+"var myIntParam = script.addIntParameter(\"My Int Param\",\"Description of my int param\",2,0,10); \t\t\t\t//This will add an integer number parameter (stepper), default value of 2, with a range between 0 and 10\r\n"
+"var myStringParam = script.addStringParameter(\"My String Param\",\"Description of my string param\", \"cool\");\t//This will add a string parameter (text field), default value is \"cool\"\r\n"
+"var myColorParam = script.addColorParameter(\"My Color Param\",\"Description of my color param\",0xff0000ff); \t//This will add a color parameter (color picker), default value of opaque blue (ARGB)\r\n"
+"var myP2DParam = script.addPoint2DParameter(\"My P2D Param\",\"Description of my p2d param\"); \t\t\t\t\t//This will add a point 2d parameter\r\n"
+"var myP3DParam = script.addPoint3DParameter(\"My P3D Param\",\"Description of my p3d param\"); \t\t\t\t\t//This will add a point 3d parameter\r\n"
+"var myTargetParam = script.addTargetParameter(\"My Target Param\",\"Description of my target param\"); \t\t\t//This will add a target parameter (to reference another parameter)\r\n"
+"var myEnumParam = script.addEnumParameter(\"My Enum Param\",\"Description of my enum param\",\t\t\t\t\t//This will add a enum parameter (dropdown with options)\r\n"
+"\t\t\t\t\t\t\t\t\t\t\t\"Option 1\", 1,\t\t\t\t\t\t\t\t\t\t\t\t\t//Each pair of values after the first 2 arguments define an option and its linked data\r\n"
+"\t\t\t\t\t\t\t\t\t\t\t\"Option 2\", 5,\t\t\t\t\t\t\t\t\t\t\t\t    //First argument of an option is the label (string)\r\n"
+"\t\t\t\t\t\t\t\t\t\t\t\"Option 3\", \"banana\"\t\t\t\t\t\t\t\t\t\t\t//Second argument is the value, it can be whatever you want\r\n"
+"\t\t\t\t\t\t\t\t\t\t\t); \t\r\n"
+"*/\r\n"
+"\r\n"
+"\r\n"
+"//you can also declare custom internal variable\r\n"
+"//var myValue = 5;\r\n"
+"\r\n"
+"/*\r\n"
+" The init() function will allow you to init everything you want after the script has been checked and loaded\r\n"
+" WARNING it also means that if you change values of your parameters by hand and set their values inside the init() function, they will be reset to this value each time the script is reloaded !\r\n"
+"*/\r\n"
+"function init()\r\n"
+"{\r\n"
+"\t//myFloatParam.set(5); //The .set() function set the parameter to this value.\r\n"
+"\t//myColorParam.set([1,.5,1,1]);\t//for a color parameter, you need to pass an array with 3 (RGB) or 4 (RGBA) values.\r\n"
+"\t//myP2DParam.set([1.5,-5]); // for a Point2D parameter, you need to pass 2 values (XY)\r\n"
+"\t//myP3DParam.set([1.5,2,-3]); // for a Point3D parameter, you need to pass 3 values (XYZ)\r\n"
+"}\r\n"
+"\r\n"
+"/*\r\n"
+" This function will be called each time a parameter of your script has changed\r\n"
+"*/\r\n"
+"function scriptParameterChanged(param)\r\n"
+"{\r\n"
+"\t//You can use the script.log() function to show an information inside the logger panel. To be able to actuallt see it in the logger panel, you will have to turn on \"Log\" on this script.\r\n"
+"\tscript.log(\"Parameter changed : \"+param.name); //All parameters have \"name\" property\r\n"
+"\tif(param.is(myTrigger)) script.log(\"Trigger !\"); //You can check if two variables are the reference to the same parameter or object with the method .is()\r\n"
+"\telse if(param.is(myEnumParam)) script.log(\"Label = \"+param.get()+\", data = \"+param.getData()); //The enum parameter has a special function getData() to get the data associated to the option\r\n"
+"\telse script.log(\"Value is \"+param.get()); //All parameters have a get() method that will return their value\r\n"
+"\r\n"
+"\r\n"
+"\t//Condition check and validate\r\n"
+"\tif(param.is(param1) || param.is(param2))\r\n"
+"\t{\r\n"
+"\t\tif(param1.get() > param2.get()) local.setValid(true);\r\n"
+"\t\telse local.setValid(false);\r\n"
+"\t}\r\n"
+"}\r\n"
+"\r\n"
+"/*\r\n"
+" This function, if you declare it, will launch a timer at 50hz, calling this method on each tick\r\n"
+"*/\r\n"
+"/*\r\n"
+"function update(deltaTime)\r\n"
+"{\r\n"
+"\tscript.log(\"Update : \"+util.getTime()+\", delta = \"+deltaTime); //deltaTime is the time between now and last update() call, util.getTime() will give you a timestamp relative to either the launch time of the software, or the start of the computer"
+".\r\n"
+"}\r\n"
+"*/\r\n"
+"\r\n"
+"/* ********** CONDITION SPECIFIC SCRIPTING **********************\r\n"
+"\r\n"
+"\tThe \"local\" variable refers to the object containing the scripts. In this case, the local variable refers to the condition.\r\n"
+"\tIt means that you can access any control inside  this condition by accessing it through its address.\r\n"
+"\tThe condition has a method .setValid() which validate or invalidate this condition.\r\n"
+"\tYou can check its usage in the scriptParameterChanged\r\n"
+"*/";
+
+const char* conditionScriptTemplate_js = (const char*) temp_binary_data_0;
+
+//================== filterScriptTemplate.js ==================
+static const unsigned char temp_binary_data_1[] =
+"/* ********** GENERAL SCRIPTING **********************\r\n"
+"\r\n"
+"\t\tThis templates shows what you can do in this is module script\r\n"
+"\t\tAll the code outside functions will be executed each time this script is loaded, meaning at file load, when hitting the \"reload\" button or when saving this file\r\n"
+"*/\r\n"
+"\r\n"
+"\r\n"
+"// You can add custom parameters to use in your script here, they will be replaced each time this script is saved\r\n"
+"var myFloatParam = script.addFloatParameter(\"My Float Param\",\"Description of my float param\",.1,0,1); \t\t//This will add a float number parameter (slider), default value of 0.1, with a range between 0 and 1\r\n"
+"\r\n"
+"//Here are all the type of parameters you can create\r\n"
+"/*\r\n"
+"var myTrigger = script.addTrigger(\"My Trigger\", \"Trigger description\"); \t\t\t\t\t\t\t\t\t//This will add a trigger (button)\r\n"
+"var myBoolParam = script.addBoolParameter(\"My Bool Param\",\"Description of my bool param\",false); \t\t\t//This will add a boolean parameter (toggle), defaut unchecked\r\n"
+"var myFloatParam = script.addFloatParameter(\"My Float Param\",\"Description of my float param\",.1,0,1); \t\t//This will add a float number parameter (slider), default value of 0.1, with a range between 0 and 1\r\n"
+"var myIntParam = script.addIntParameter(\"My Int Param\",\"Description of my int param\",2,0,10); \t\t\t\t//This will add an integer number parameter (stepper), default value of 2, with a range between 0 and 10\r\n"
+"var myStringParam = script.addStringParameter(\"My String Param\",\"Description of my string param\", \"cool\");\t//This will add a string parameter (text field), default value is \"cool\"\r\n"
+"var myColorParam = script.addColorParameter(\"My Color Param\",\"Description of my color param\",0xff0000ff); \t//This will add a color parameter (color picker), default value of opaque blue (ARGB)\r\n"
+"var myP2DParam = script.addPoint2DParameter(\"My P2D Param\",\"Description of my p2d param\"); \t\t\t\t\t//This will add a point 2d parameter\r\n"
+"var myP3DParam = script.addPoint3DParameter(\"My P3D Param\",\"Description of my p3d param\"); \t\t\t\t\t//This will add a point 3d parameter\r\n"
+"var myTargetParam = script.addTargetParameter(\"My Target Param\",\"Description of my target param\"); \t\t\t//This will add a target parameter (to reference another parameter)\r\n"
+"var myEnumParam = script.addEnumParameter(\"My Enum Param\",\"Description of my enum param\",\t\t\t\t\t//This will add a enum parameter (dropdown with options)\r\n"
+"\t\t\t\t\t\t\t\t\t\t\t\"Option 1\", 1,\t\t\t\t\t\t\t\t\t\t\t\t\t//Each pair of values after the first 2 arguments define an option and its linked data\r\n"
+"\t\t\t\t\t\t\t\t\t\t\t\"Option 2\", 5,\t\t\t\t\t\t\t\t\t\t\t\t    //First argument of an option is the label (string)\r\n"
+"\t\t\t\t\t\t\t\t\t\t\t\"Option 3\", \"banana\"\t\t\t\t\t\t\t\t\t\t\t//Second argument is the value, it can be whatever you want\r\n"
+"\t\t\t\t\t\t\t\t\t\t\t); \t\r\n"
+"*/\r\n"
+"\r\n"
+"\r\n"
+"//you can also declare custom internal variable\r\n"
+"//var myValue = 5;\r\n"
+"\r\n"
+"/*\r\n"
+" The init() function will allow you to init everything you want after the script has been checked and loaded\r\n"
+" WARNING it also means that if you change values of your parameters by hand and set their values inside the init() function, they will be reset to this value each time the script is reloaded !\r\n"
+"*/\r\n"
+"function init()\r\n"
+"{\r\n"
+"\t//myFloatParam.set(5); //The .set() function set the parameter to this value.\r\n"
+"\t//myColorParam.set([1,.5,1,1]);\t//for a color parameter, you need to pass an array with 3 (RGB) or 4 (RGBA) values.\r\n"
+"\t//myP2DParam.set([1.5,-5]); // for a Point2D parameter, you need to pass 2 values (XY)\r\n"
+"\t//myP3DParam.set([1.5,2,-3]); // for a Point3D parameter, you need to pass 3 values (XYZ)\r\n"
+"}\r\n"
+"\r\n"
+"/*\r\n"
+" This function will be called each time a parameter of your script has changed\r\n"
+"*/\r\n"
+"function scriptParameterChanged(param)\r\n"
+"{\r\n"
+"\t//You can use the script.log() function to show an information inside the logger panel. To be able to actuallt see it in the logger panel, you will have to turn on \"Log\" on this script.\r\n"
+"\tscript.log(\"Parameter changed : \"+param.name); //All parameters have \"name\" property\r\n"
+"\tif(param.is(myTrigger)) script.log(\"Trigger !\"); //You can check if two variables are the reference to the same parameter or object with the method .is()\r\n"
+"\telse if(param.is(myEnumParam)) script.log(\"Label = \"+param.get()+\", data = \"+param.getData()); //The enum parameter has a special function getData() to get the data associated to the option\r\n"
+"\telse script.log(\"Value is \"+param.get()); //All parameters have a get() method that will return their value\r\n"
+"}\r\n"
+"\r\n"
+"/*\r\n"
+" This function, if you declare it, will launch a timer at 50hz, calling this method on each tick\r\n"
+"*/\r\n"
+"/*\r\n"
+"function update(deltaTime)\r\n"
+"{\r\n"
+"\tscript.log(\"Update : \"+util.getTime()+\", delta = \"+deltaTime); //deltaTime is the time between now and last update() call, util.getTime() will give you a timestamp relative to either the launch time of the software, or the start of the computer"
+".\r\n"
+"}\r\n"
+"*/\r\n"
+"\r\n"
+"\r\n"
+"\r\n"
+"/* ********** MODULE SPECIFIC SCRIPTING **********************\r\n"
+"\r\n"
+"\tThe \"local\" variable refers to the object containing the scripts. In this case, the local variable refers to the filter.\r\n"
+"\tIt means that you can access any control inside  this filter by accessing it through its address.\r\n"
+"*/\r\n"
+"\r\n"
+"/*\r\n"
+" This function will be called each time the filter is processed, and expects a return value.\r\n"
+" This function only exists because the script is in a filter\r\n"
+"*/\r\n"
+"function filter(inputValue, min, max)\r\n"
+"{\r\n"
+"\tvar result = inputValue * myFloatParam.get(); //Basic multiplication of the input value by the script parameter myFloatParam\r\n"
+"\treturn result;\r\n"
+"}";
+
+const char* filterScriptTemplate_js = (const char*) temp_binary_data_1;
+
+//================== genericScriptTemplate.js ==================
+static const unsigned char temp_binary_data_2[] =
+"/* ********** GENERAL SCRIPTING **********************\r\n"
+"\r\n"
+"\t\tThis templates shows what you can do in this is module script\r\n"
+"\t\tAll the code outside functions will be executed each time this script is loaded, meaning at file load, when hitting the \"reload\" button or when saving this file\r\n"
+"*/\r\n"
+"\r\n"
+"\r\n"
+"// You can add custom parameters to use in your script here, they will be replaced each time this script is saved\r\n"
+"var myFloatParam = script.addFloatParameter(\"My Float Param\",\"Description of my float param\",.1,0,1); \t\t//This will add a float number parameter (slider), default value of 0.1, with a range between 0 and 1\r\n"
+"\r\n"
+"//Here are all the type of parameters you can create\r\n"
+"/*\r\n"
+"var myTrigger = script.addTrigger(\"My Trigger\", \"Trigger description\"); \t\t\t\t\t\t\t\t\t//This will add a trigger (button)\r\n"
+"var myBoolParam = script.addBoolParameter(\"My Bool Param\",\"Description of my bool param\",false); \t\t\t//This will add a boolean parameter (toggle), defaut unchecked\r\n"
+"var myFloatParam = script.addFloatParameter(\"My Float Param\",\"Description of my float param\",.1,0,1); \t\t//This will add a float number parameter (slider), default value of 0.1, with a range between 0 and 1\r\n"
+"var myIntParam = script.addIntParameter(\"My Int Param\",\"Description of my int param\",2,0,10); \t\t\t\t//This will add an integer number parameter (stepper), default value of 2, with a range between 0 and 10\r\n"
+"var myStringParam = script.addStringParameter(\"My String Param\",\"Description of my string param\", \"cool\");\t//This will add a string parameter (text field), default value is \"cool\"\r\n"
+"var myColorParam = script.addColorParameter(\"My Color Param\",\"Description of my color param\",0xff0000ff); \t//This will add a color parameter (color picker), default value of opaque blue (ARGB)\r\n"
+"var myP2DParam = script.addPoint2DParameter(\"My P2D Param\",\"Description of my p2d param\"); \t\t\t\t\t//This will add a point 2d parameter\r\n"
+"var myP3DParam = script.addPoint3DParameter(\"My P3D Param\",\"Description of my p3d param\"); \t\t\t\t\t//This will add a point 3d parameter\r\n"
+"var myTargetParam = script.addTargetParameter(\"My Target Param\",\"Description of my target param\"); \t\t\t//This will add a target parameter (to reference another parameter)\r\n"
+"var myEnumParam = script.addEnumParameter(\"My Enum Param\",\"Description of my enum param\",\t\t\t\t\t//This will add a enum parameter (dropdown with options)\r\n"
+"\t\t\t\t\t\t\t\t\t\t\t\"Option 1\", 1,\t\t\t\t\t\t\t\t\t\t\t\t\t//Each pair of values after the first 2 arguments define an option and its linked data\r\n"
+"\t\t\t\t\t\t\t\t\t\t\t\"Option 2\", 5,\t\t\t\t\t\t\t\t\t\t\t\t    //First argument of an option is the label (string)\r\n"
+"\t\t\t\t\t\t\t\t\t\t\t\"Option 3\", \"banana\"\t\t\t\t\t\t\t\t\t\t\t//Second argument is the value, it can be whatever you want\r\n"
+"\t\t\t\t\t\t\t\t\t\t\t); \t\r\n"
+"*/\r\n"
+"\r\n"
+"\r\n"
+"//you can also declare custom internal variable\r\n"
+"//var myValue = 5;\r\n"
+"\r\n"
+"/*\r\n"
+" The init() function will allow you to init everything you want after the script has been checked and loaded\r\n"
+" WARNING it also means that if you change values of your parameters by hand and set their values inside the init() function, they will be reset to this value each time the script is reloaded !\r\n"
+"*/\r\n"
+"function init()\r\n"
+"{\r\n"
+"\t//myFloatParam.set(5); //The .set() function set the parameter to this value.\r\n"
+"\t//myColorParam.set([1,.5,1,1]);\t//for a color parameter, you need to pass an array with 3 (RGB) or 4 (RGBA) values.\r\n"
+"\t//myP2DParam.set([1.5,-5]); // for a Point2D parameter, you need to pass 2 values (XY)\r\n"
+"\t//myP3DParam.set([1.5,2,-3]); // for a Point3D parameter, you need to pass 3 values (XYZ)\r\n"
+"}\r\n"
+"\r\n"
+"/*\r\n"
+" This function will be called each time a parameter of your script has changed\r\n"
+"*/\r\n"
+"function scriptParameterChanged(param)\r\n"
+"{\r\n"
+"\t//You can use the script.log() function to show an information inside the logger panel. To be able to actuallt see it in the logger panel, you will have to turn on \"Log\" on this script.\r\n"
+"\tscript.log(\"Parameter changed : \"+param.name); //All parameters have \"name\" property\r\n"
+"\tif(param.is(myTrigger)) script.log(\"Trigger !\"); //You can check if two variables are the reference to the same parameter or object with the method .is()\r\n"
+"\telse if(param.is(myEnumParam)) script.log(\"Label = \"+param.get()+\", data = \"+param.getData()); //The enum parameter has a special function getData() to get the data associated to the option\r\n"
+"\telse script.log(\"Value is \"+param.get()); //All parameters have a get() method that will return their value\r\n"
+"}\r\n"
+"\r\n"
+"/*\r\n"
+" This function, if you declare it, will launch a timer at 50hz, calling this method on each tick\r\n"
+"*/\r\n"
+"/*\r\n"
+"function update(deltaTime)\r\n"
+"{\r\n"
+"\tscript.log(\"Update : \"+util.getTime()+\", delta = \"+deltaTime); //deltaTime is the time between now and last update() call, util.getTime() will give you a timestamp relative to either the launch time of the software, or the start of the computer"
+".\r\n"
+"}\r\n"
+"*/\r\n"
+"\r\n";
+
+const char* genericScriptTemplate_js = (const char*) temp_binary_data_2;
+
+//================== moduleScriptTemplate.js ==================
+static const unsigned char temp_binary_data_3[] =
+"/* ********** GENERAL SCRIPTING **********************\r\n"
+"\r\n"
+"\t\tThis templates shows what you can do in this is module script\r\n"
+"\t\tAll the code outside functions will be executed each time this script is loaded, meaning at file load, when hitting the \"reload\" button or when saving this file\r\n"
+"*/\r\n"
+"\r\n"
+"\r\n"
+"// You can add custom parameters to use in your script here, they will be replaced each time this script is saved\r\n"
+"var myFloatParam = script.addFloatParameter(\"My Float Param\",\"Description of my float param\",.1,0,1); \t\t//This will add a float number parameter (slider), default value of 0.1, with a range between 0 and 1\r\n"
+"\r\n"
+"//Here are all the type of parameters you can create\r\n"
+"/*\r\n"
+"var myTrigger = script.addTrigger(\"My Trigger\", \"Trigger description\"); \t\t\t\t\t\t\t\t\t//This will add a trigger (button)\r\n"
+"var myBoolParam = script.addBoolParameter(\"My Bool Param\",\"Description of my bool param\",false); \t\t\t//This will add a boolean parameter (toggle), defaut unchecked\r\n"
+"var myFloatParam = script.addFloatParameter(\"My Float Param\",\"Description of my float param\",.1,0,1); \t\t//This will add a float number parameter (slider), default value of 0.1, with a range between 0 and 1\r\n"
+"var myIntParam = script.addIntParameter(\"My Int Param\",\"Description of my int param\",2,0,10); \t\t\t\t//This will add an integer number parameter (stepper), default value of 2, with a range between 0 and 10\r\n"
+"var myStringParam = script.addStringParameter(\"My String Param\",\"Description of my string param\", \"cool\");\t//This will add a string parameter (text field), default value is \"cool\"\r\n"
+"var myColorParam = script.addColorParameter(\"My Color Param\",\"Description of my color param\",0xff0000ff); \t//This will add a color parameter (color picker), default value of opaque blue (ARGB)\r\n"
+"var myP2DParam = script.addPoint2DParameter(\"My P2D Param\",\"Description of my p2d param\"); \t\t\t\t\t//This will add a point 2d parameter\r\n"
+"var myP3DParam = script.addPoint3DParameter(\"My P3D Param\",\"Description of my p3d param\"); \t\t\t\t\t//This will add a point 3d parameter\r\n"
+"var myTargetParam = script.addTargetParameter(\"My Target Param\",\"Description of my target param\"); \t\t\t//This will add a target parameter (to reference another parameter)\r\n"
+"var myEnumParam = script.addEnumParameter(\"My Enum Param\",\"Description of my enum param\",\t\t\t\t\t//This will add a enum parameter (dropdown with options)\r\n"
+"\t\t\t\t\t\t\t\t\t\t\t\"Option 1\", 1,\t\t\t\t\t\t\t\t\t\t\t\t\t//Each pair of values after the first 2 arguments define an option and its linked data\r\n"
+"\t\t\t\t\t\t\t\t\t\t\t\"Option 2\", 5,\t\t\t\t\t\t\t\t\t\t\t\t    //First argument of an option is the label (string)\r\n"
+"\t\t\t\t\t\t\t\t\t\t\t\"Option 3\", \"banana\"\t\t\t\t\t\t\t\t\t\t\t//Second argument is the value, it can be whatever you want\r\n"
+"\t\t\t\t\t\t\t\t\t\t\t); \t\r\n"
+"*/\r\n"
+"\r\n"
+"\r\n"
+"//you can also declare custom internal variable\r\n"
+"//var myValue = 5;\r\n"
+"\r\n"
+"/*\r\n"
+" The init() function will allow you to init everything you want after the script has been checked and loaded\r\n"
+" WARNING it also means that if you change values of your parameters by hand and set their values inside the init() function, they will be reset to this value each time the script is reloaded !\r\n"
+"*/\r\n"
+"function init()\r\n"
+"{\r\n"
+"\t//myFloatParam.set(5); //The .set() function set the parameter to this value.\r\n"
+"\t//myColorParam.set([1,.5,1,1]);\t//for a color parameter, you need to pass an array with 3 (RGB) or 4 (RGBA) values.\r\n"
+"\t//myP2DParam.set([1.5,-5]); // for a Point2D parameter, you need to pass 2 values (XY)\r\n"
+"\t//myP3DParam.set([1.5,2,-3]); // for a Point3D parameter, you need to pass 3 values (XYZ)\r\n"
+"}\r\n"
+"\r\n"
+"/*\r\n"
+" This function will be called each time a parameter of your script has changed\r\n"
+"*/\r\n"
+"function scriptParameterChanged(param)\r\n"
+"{\r\n"
+"\t//You can use the script.log() function to show an information inside the logger panel. To be able to actuallt see it in the logger panel, you will have to turn on \"Log\" on this script.\r\n"
+"\tscript.log(\"Parameter changed : \"+param.name); //All parameters have \"name\" property\r\n"
+"\tif(param.is(myTrigger)) script.log(\"Trigger !\"); //You can check if two variables are the reference to the same parameter or object with the method .is()\r\n"
+"\telse if(param.is(myEnumParam)) script.log(\"Label = \"+param.get()+\", data = \"+param.getData()); //The enum parameter has a special function getData() to get the data associated to the option\r\n"
+"\telse script.log(\"Value is \"+param.get()); //All parameters have a get() method that will return their value\r\n"
+"}\r\n"
+"\r\n"
+"/*\r\n"
+" This function, if you declare it, will launch a timer at 50hz, calling this method on each tick\r\n"
+"*/\r\n"
+"/*\r\n"
+"function update(deltaTime)\r\n"
+"{\r\n"
+"\tscript.log(\"Update : \"+util.getTime()+\", delta = \"+deltaTime); //deltaTime is the time between now and last update() call, util.getTime() will give you a timestamp relative to either the launch time of the software, or the start of the computer"
+".\r\n"
+"}\r\n"
+"*/\r\n"
+"\r\n"
+"\r\n"
+"/* ********** MODULE SPECIFIC SCRIPTING **********************\r\n"
+"\r\n"
+"\tThe \"local\" variable refers to the object containing the scripts. In this case, the local variable refers to the module.\r\n"
+"\tIt means that you can access any control inside  this module by accessing it through its address.\r\n"
+"\tFor instance, if the module has a float value named \"Density\", you can access it via local.values.density\r\n"
+"\tThen you can retrieve its value using local.values.density.get() and change its value using local.values.density.set()\r\n"
+"*/\r\n"
+"\r\n"
+"/*\r\n"
+" This function will be called each time a parameter of this module has changed, meaning a parameter or trigger inside the \"Parameters\" panel of this module\r\n"
+" This function only exists because the script is in a module\r\n"
+"*/\r\n"
+"function moduleParameterChanged(param)\r\n"
+"{\r\n"
+"\tscript.log(\"Module parameter changed : \"+param.name+\" > \"+param.get());\r\n"
+"}\r\n"
+"\r\n"
+"/*\r\n"
+" This function will be called each time a value of this module has changed, meaning a parameter or trigger inside the \"Values\" panel of this module\r\n"
+" This function only exists because the script is in a module\r\n"
+"*/\r\n"
+"function moduleValueChanged(value)\r\n"
+"{\r\n"
+"\tscript.log(\"Module value changed : \"+value.name+\" > \"+value.get());\r\n"
+"}\r\n";
+
+const char* moduleScriptTemplate_js = (const char*) temp_binary_data_3;
+
+//================== about.png ==================
+static const unsigned char temp_binary_data_4[] =
 { 137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,3,32,0,0,1,224,8,6,0,0,0,93,7,9,245,0,0,0,9,112,72,89,115,0,0,14,196,0,0,14,196,1,149,43,14,27,0,0,6,233,105,84,88,116,88,77,76,58,99,111,109,46,97,100,111,98,101,46,120,109,112,0,0,0,0,0,60,63,120,112,
 97,99,107,101,116,32,98,101,103,105,110,61,34,239,187,191,34,32,105,100,61,34,87,53,77,48,77,112,67,101,104,105,72,122,114,101,83,122,78,84,99,122,107,99,57,100,34,63,62,32,60,120,58,120,109,112,109,101,116,97,32,120,109,108,110,115,58,120,61,34,97,100,
 111,98,101,58,110,115,58,109,101,116,97,47,34,32,120,58,120,109,112,116,107,61,34,65,100,111,98,101,32,88,77,80,32,67,111,114,101,32,53,46,54,45,99,49,52,50,32,55,57,46,49,54,48,57,50,52,44,32,50,48,49,55,47,48,55,47,49,51,45,48,49,58,48,54,58,51,57,
@@ -526,10 +873,10 @@ static const unsigned char temp_binary_data_0[] =
 1,4,0,0,0,0,1,4,0,0,0,0,1,4,0,0,0,0,8,32,0,0,0,0,8,32,0,0,0,0,64,0,1,0,0,0,64,0,1,0,0,0,0,78,2,0,0,0,0,2,8,0,0,0,0,2,8,0,0,0,0,16,64,0,0,0,0,16,64,0,0,0,0,128,0,2,0,0,0,128,0,2,0,0,0,128,0,2,0,0,0,0,4,16,0,0,0,0,4,16,0,0,0,0,32,128,0,0,0,0,32,128,0,0,
 0,0,32,128,0,0,0,0,0,1,4,0,0,0,0,1,4,0,0,0,0,8,32,0,0,0,0,8,32,0,0,0,0,8,32,0,0,0,0,80,19,254,31,186,211,221,255,42,1,230,166,0,0,0,0,73,69,78,68,174,66,96,130,0,0 };
 
-const char* about_png = (const char*) temp_binary_data_0;
+const char* about_png = (const char*) temp_binary_data_4;
 
 //================== add.png ==================
-static const unsigned char temp_binary_data_1[] =
+static const unsigned char temp_binary_data_5[] =
 "\x89PNG\r\n"
 "\x1a\n"
 "\0\0\0\rIHDR\0\0\0\x18\0\0\0\x18\x08\x06\0\0\0\xe0w=\xf8\0\0\0\tpHYs\0\0\x0b\x13\0\0\x0b\x13\x01\0\x9a\x9c\x18\0\0;\xa6iTXtXML:com.adobe.xmp\0\0\0\0\0<?xpacket begin=\"\xef\xbb\xbf\" id=\"W5M0MpCehiHzreSzNTczkc9d\"?>\n"
@@ -719,10 +1066,10 @@ static const unsigned char temp_binary_data_1[] =
 "_\xe7\xe3\xd1O6\xcb_\x8fL\xbc\x80\n"
 "\xa5""d\xcb\xa1\x94+i<y\xc3n\x9f\xce\xff^\xd1\xe3\x8f\xf6H\x01\xff\x0e\0\x1c';\xdb\x9d\xa1\xf8\xfb\0\0\0\0IEND\xae""B`\x82";
 
-const char* add_png = (const char*) temp_binary_data_1;
+const char* add_png = (const char*) temp_binary_data_5;
 
 //================== default.chalayout ==================
-static const unsigned char temp_binary_data_2[] =
+static const unsigned char temp_binary_data_6[] =
 "{\r\n"
 "  \"mainLayout\": {\r\n"
 "    \"type\": 1,\r\n"
@@ -856,10 +1203,10 @@ static const unsigned char temp_binary_data_2[] =
 "  \"windows\": null\r\n"
 "}";
 
-const char* default_chalayout = (const char*) temp_binary_data_2;
+const char* default_chalayout = (const char*) temp_binary_data_6;
 
 //================== icon.png ==================
-static const unsigned char temp_binary_data_3[] =
+static const unsigned char temp_binary_data_7[] =
 { 137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,1,0,0,0,1,0,8,6,0,0,0,92,114,168,102,0,0,0,9,112,72,89,115,0,0,11,19,0,0,11,19,1,0,154,156,24,0,0,10,79,105,67,67,80,80,104,111,116,111,115,104,111,112,32,73,67,67,32,112,114,111,102,105,108,101,0,0,120,
 218,157,83,103,84,83,233,22,61,247,222,244,66,75,136,128,148,75,111,82,21,8,32,82,66,139,128,20,145,38,42,33,9,16,74,136,33,161,217,21,81,193,17,69,69,4,27,200,160,136,3,142,142,128,140,21,81,44,12,138,10,216,7,228,33,162,142,131,163,136,138,202,251,
 225,123,163,107,214,188,247,230,205,254,181,215,62,231,172,243,157,179,207,7,192,8,12,150,72,51,81,53,128,12,169,66,30,17,224,131,199,196,198,225,228,46,64,129,10,36,112,0,16,8,179,100,33,115,253,35,1,0,248,126,60,60,43,34,192,7,190,0,1,120,211,11,8,
@@ -1428,10 +1775,10 @@ static const unsigned char temp_binary_data_3[] =
 52,26,45,0,26,141,70,11,128,70,163,209,2,160,209,104,180,0,104,52,26,45,0,26,141,70,11,128,70,163,5,64,163,209,104,1,208,104,52,90,0,52,26,141,22,0,141,70,163,5,64,163,209,104,1,208,104,52,187,39,255,63,0,251,9,211,62,187,88,73,220,0,0,0,0,73,69,78,68,
 174,66,96,130,0,0 };
 
-const char* icon_png = (const char*) temp_binary_data_3;
+const char* icon_png = (const char*) temp_binary_data_7;
 
 //================== in.png ==================
-static const unsigned char temp_binary_data_4[] =
+static const unsigned char temp_binary_data_8[] =
 "\x89PNG\r\n"
 "\x1a\n"
 "\0\0\0\rIHDR\0\0\0\x18\0\0\0\x18\x08\x06\0\0\0\xe0w=\xf8\0\0\0\tpHYs\0\0\x0b\x13\0\0\x0b\x13\x01\0\x9a\x9c\x18\0\0\x0b\xa7iTXtXML:com.adobe.xmp\0\0\0\0\0<?xpacket begin=\"\xef\xbb\xbf\" id=\"W5M0MpCehiHzreSzNTczkc9d\"?> <x:xmpmeta xmlns:x=\"adobe:ns:"
@@ -1452,10 +1799,10 @@ static const unsigned char temp_binary_data_4[] =
 "\xff\xc8\xb2\0\xdd\x92\x8d\xcf(\xb3\xe0'\xba""FM\xa0\xab\r\x80t\xd4\xe9\xff\xff\xbf\xff\x81`\x1c\x16\x10\x15""D\xe7\xd1""5n~\xfa\x1f+\xc0""b\xc1qb,\x08""A\xd7h\0\xd4""6\xf1""6\x02/\x7f\xf8\xff\xbf\xe5q\xac\x16\xb8\x13\x9b\xd1\xae\x92\x91\x07\xce\x93\x92"
 "\x93\x85\x80\xf8\x03\t\x86\xbf\x01""b>R\x0b;\x01\"}r\x01Zv\x91\\\x9a\xc2p0\xd4\xfb?\xa0""E\xf5\x7f(\xfb\x0c\x10\xfb\x90\\\\\x8fV\x99t\xb7\0\0\x1b""4\x8e\xdc\xbe\xf2\xc4]\0\0\0\0IEND\xae""B`\x82";
 
-const char* in_png = (const char*) temp_binary_data_4;
+const char* in_png = (const char*) temp_binary_data_8;
 
 //================== nextcue.png ==================
-static const unsigned char temp_binary_data_5[] =
+static const unsigned char temp_binary_data_9[] =
 { 137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,32,0,0,0,32,8,3,0,0,0,68,164,138,198,0,0,0,4,103,65,77,65,0,0,177,143,11,252,97,5,0,0,0,32,99,72,82,77,0,0,122,38,0,0,128,132,0,0,250,0,0,0,128,232,0,0,117,48,0,0,234,96,0,0,58,152,0,0,23,112,156,186,
 81,60,0,0,0,222,80,76,84,69,0,0,0,36,73,109,38,59,122,39,59,122,38,58,122,37,58,122,38,58,122,41,61,122,39,57,122,38,58,122,32,64,128,39,58,122,39,58,122,43,53,117,38,57,122,40,57,125,38,58,122,31,41,102,19,19,76,28,39,100,26,35,93,22,24,82,26,51,128,
 20,22,79,29,29,93,20,22,80,31,43,104,21,23,82,28,34,96,19,20,76,26,35,93,23,46,116,24,29,89,31,44,100,36,54,117,23,27,85,26,33,92,27,39,98,28,57,113,38,58,122,39,66,128,49,140,178,51,162,193,44,102,152,46,121,164,56,198,217,56,197,217,45,116,161,53,176,
@@ -1469,10 +1816,10 @@ static const unsigned char temp_binary_data_5[] =
 45,49,54,84,50,49,58,52,49,58,48,51,43,48,50,58,48,48,6,103,1,8,0,0,0,37,116,69,88,116,100,97,116,101,58,109,111,100,105,102,121,0,50,48,49,56,45,48,52,45,49,54,84,50,49,58,52,49,58,48,51,43,48,50,58,48,48,119,58,185,180,0,0,0,25,116,69,88,116,83,111,
 102,116,119,97,114,101,0,119,119,119,46,105,110,107,115,99,97,112,101,46,111,114,103,155,238,60,26,0,0,0,0,73,69,78,68,174,66,96,130,0,0 };
 
-const char* nextcue_png = (const char*) temp_binary_data_5;
+const char* nextcue_png = (const char*) temp_binary_data_9;
 
 //================== out.png ==================
-static const unsigned char temp_binary_data_6[] =
+static const unsigned char temp_binary_data_10[] =
 "\x89PNG\r\n"
 "\x1a\n"
 "\0\0\0\rIHDR\0\0\0\x18\0\0\0\x18\x08\x06\0\0\0\xe0w=\xf8\0\0\0\tpHYs\0\0\x0b\x13\0\0\x0b\x13\x01\0\x9a\x9c\x18\0\0\x0b\xa7iTXtXML:com.adobe.xmp\0\0\0\0\0<?xpacket begin=\"\xef\xbb\xbf\" id=\"W5M0MpCehiHzreSzNTczkc9d\"?> <x:xmpmeta xmlns:x=\"adobe:ns:"
@@ -1494,10 +1841,10 @@ static const unsigned char temp_binary_data_6[] =
 "\xb1N\x91m\xcd""1\xdd\xd5\x0e\xda]\x8c\x19x\xb4\x99""d\x7f\x0fu-\xc2\xdf\x84""e\xdb""e\x97\xf0\xc7_\xf3\xe6\xc2\xca,\xeb:+\xdc\xfa'\xe4[\xe8W\xb0""E\xf7\xe6\x7f\xb4\xff/\x18\x02\xed\x90y<\xc5""D\n"
 "I\0\0\0\0IEND\xae""B`\x82";
 
-const char* out_png = (const char*) temp_binary_data_6;
+const char* out_png = (const char*) temp_binary_data_10;
 
 //================== padlock.png ==================
-static const unsigned char temp_binary_data_7[] =
+static const unsigned char temp_binary_data_11[] =
 { 137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,16,0,0,0,16,8,6,0,0,0,31,243,255,97,0,0,0,4,115,66,73,84,8,8,8,8,124,8,100,136,0,0,0,9,112,72,89,115,0,0,0,111,0,0,0,111,1,241,162,220,67,0,0,0,25,116,69,88,116,83,111,102,116,119,97,114,101,0,119,119,
 119,46,105,110,107,115,99,97,112,101,46,111,114,103,155,238,60,26,0,0,1,197,73,68,65,84,56,141,149,147,207,75,212,65,24,198,63,239,204,184,187,186,152,30,190,225,10,9,181,20,88,75,138,244,15,36,68,55,59,247,7,116,242,98,144,215,110,30,2,141,186,117,138,
 110,93,186,120,111,97,5,15,130,116,73,232,7,164,132,169,169,184,108,202,254,202,242,251,125,59,140,251,235,187,27,209,11,3,195,51,239,243,60,51,207,204,136,170,18,175,187,139,92,11,29,79,80,106,64,26,216,142,82,60,46,204,82,137,247,186,56,48,189,72,198,
@@ -1507,10 +1854,10 @@ static const unsigned char temp_binary_data_7[] =
 4,234,191,225,52,132,100,236,189,154,54,189,158,215,152,11,96,183,162,92,31,13,153,26,59,35,157,212,142,181,246,114,231,246,110,167,132,29,235,247,41,46,127,242,139,153,11,158,248,229,200,114,101,200,99,239,191,195,143,154,88,212,115,221,249,249,179,
 155,71,12,156,148,109,215,110,84,253,248,184,215,194,118,79,204,128,64,22,120,231,0,172,80,221,58,68,247,19,174,35,45,197,191,137,72,149,246,95,95,57,21,181,66,21,224,15,150,241,159,135,159,221,99,248,0,0,0,0,73,69,78,68,174,66,96,130,0,0 };
 
-const char* padlock_png = (const char*) temp_binary_data_7;
+const char* padlock_png = (const char*) temp_binary_data_11;
 
 //================== pause.png ==================
-static const unsigned char temp_binary_data_8[] =
+static const unsigned char temp_binary_data_12[] =
 { 137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,32,0,0,0,32,8,3,0,0,0,68,164,138,198,0,0,0,3,115,66,73,84,8,8,8,219,225,79,224,0,0,0,9,112,72,89,115,0,0,0,221,0,0,0,221,1,112,83,162,7,0,0,0,25,116,69,88,116,83,111,102,116,119,97,114,101,0,119,119,
 119,46,105,110,107,115,99,97,112,101,46,111,114,103,155,238,60,26,0,0,0,213,80,76,84,69,255,255,255,36,109,146,64,96,159,53,106,149,51,102,153,51,87,138,46,85,137,57,102,147,43,80,138,43,76,132,52,101,150,48,81,132,48,85,140,46,80,136,54,102,151,54,103,
 150,54,102,149,46,79,135,46,78,134,54,103,151,45,77,133,52,97,147,54,103,150,44,76,133,45,75,133,44,73,131,54,103,150,54,102,149,54,103,151,45,75,133,43,71,131,43,72,131,54,103,150,54,103,150,54,103,150,41,65,126,40,64,124,41,66,126,40,61,123,39,59,122,
@@ -1522,10 +1869,10 @@ static const unsigned char temp_binary_data_8[] =
 45,147,148,57,175,47,179,10,142,193,70,125,153,192,62,216,234,79,3,24,91,224,176,222,215,235,15,209,153,36,201,115,14,78,224,113,47,166,84,207,205,46,188,48,6,113,168,93,57,93,92,96,253,210,86,197,245,118,253,218,67,113,181,103,42,156,82,92,110,153,75,
 79,137,219,35,220,84,188,66,140,251,59,134,250,206,203,127,112,122,0,202,255,31,225,225,147,220,177,251,209,106,0,0,0,0,73,69,78,68,174,66,96,130,0,0 };
 
-const char* pause_png = (const char*) temp_binary_data_8;
+const char* pause_png = (const char*) temp_binary_data_12;
 
 //================== play.png ==================
-static const unsigned char temp_binary_data_9[] =
+static const unsigned char temp_binary_data_13[] =
 { 137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,32,0,0,0,32,8,3,0,0,0,68,164,138,198,0,0,0,3,115,66,73,84,8,8,8,219,225,79,224,0,0,0,9,112,72,89,115,0,0,0,221,0,0,0,221,1,112,83,162,7,0,0,0,25,116,69,88,116,83,111,102,116,119,97,114,101,0,119,119,
 119,46,105,110,107,115,99,97,112,101,46,111,114,103,155,238,60,26,0,0,1,8,80,76,84,69,255,255,255,36,109,146,64,96,159,28,85,142,51,77,153,53,106,149,51,102,153,47,83,136,46,81,133,45,79,136,57,102,147,48,80,133,51,86,137,52,101,150,45,81,136,54,102,
 151,54,103,150,54,102,149,45,77,135,46,77,134,54,103,151,54,103,150,45,74,131,44,74,132,43,72,130,54,103,150,45,77,133,54,103,151,54,103,150,42,67,127,52,100,147,54,103,150,42,67,126,54,103,150,41,65,126,41,65,126,40,62,123,40,62,124,39,59,122,42,67,
@@ -1538,10 +1885,10 @@ static const unsigned char temp_binary_data_9[] =
 21,62,122,171,148,10,195,64,173,78,132,239,187,45,138,232,44,104,232,178,62,163,232,121,159,22,153,198,215,125,241,120,42,165,105,123,184,48,48,107,114,158,78,73,35,39,27,139,53,121,104,139,198,210,72,121,236,177,177,60,174,90,28,97,204,143,169,87,47,
 51,218,147,181,170,229,77,140,149,217,81,197,126,231,235,63,55,51,49,36,162,255,223,201,148,67,28,217,78,182,0,0,0,0,73,69,78,68,174,66,96,130,0,0 };
 
-const char* play_png = (const char*) temp_binary_data_9;
+const char* play_png = (const char*) temp_binary_data_13;
 
 //================== playing.png ==================
-static const unsigned char temp_binary_data_10[] =
+static const unsigned char temp_binary_data_14[] =
 { 137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,32,0,0,0,32,8,3,0,0,0,68,164,138,198,0,0,0,4,103,65,77,65,0,0,177,143,11,252,97,5,0,0,0,32,99,72,82,77,0,0,122,38,0,0,128,132,0,0,250,0,0,0,128,232,0,0,117,48,0,0,234,96,0,0,58,152,0,0,23,112,156,186,
 81,60,0,0,1,14,80,76,84,69,0,0,0,255,219,36,255,203,28,255,201,27,255,201,26,255,201,27,255,201,27,255,204,31,255,201,27,255,201,27,255,191,32,255,201,27,255,201,27,255,202,32,255,201,27,255,198,28,255,201,27,255,204,36,254,217,97,253,223,126,255,213,
 77,254,215,88,253,219,115,255,204,51,254,221,117,255,214,81,253,220,119,255,208,67,254,220,114,255,218,90,254,214,88,253,222,124,254,217,101,255,215,79,254,214,90,254,216,96,253,213,81,255,227,57,255,201,27,184,166,70,124,137,107,199,174,61,70,111,140,
@@ -1556,10 +1903,10 @@ static const unsigned char temp_binary_data_10[] =
 69,88,116,100,97,116,101,58,99,114,101,97,116,101,0,50,48,49,56,45,48,52,45,49,54,84,50,49,58,52,52,58,52,48,43,48,50,58,48,48,85,236,222,43,0,0,0,37,116,69,88,116,100,97,116,101,58,109,111,100,105,102,121,0,50,48,49,56,45,48,52,45,49,54,84,50,49,58,
 52,52,58,52,48,43,48,50,58,48,48,36,177,102,151,0,0,0,25,116,69,88,116,83,111,102,116,119,97,114,101,0,119,119,119,46,105,110,107,115,99,97,112,101,46,111,114,103,155,238,60,26,0,0,0,0,73,69,78,68,174,66,96,130,0,0 };
 
-const char* playing_png = (const char*) temp_binary_data_10;
+const char* playing_png = (const char*) temp_binary_data_14;
 
 //================== playpause.png ==================
-static const unsigned char temp_binary_data_11[] =
+static const unsigned char temp_binary_data_15[] =
 "\x89PNG\r\n"
 "\x1a\n"
 "\0\0\0\rIHDR\0\0\0\x18\0\0\0\x18\x08\x06\0\0\0\xe0w=\xf8\0\0\0\tpHYs\0\0\x0b\x13\0\0\x0b\x13\x01\0\x9a\x9c\x18\0\0:\xa9iTXtXML:com.adobe.xmp\0\0\0\0\0<?xpacket begin=\"\xef\xbb\xbf\" id=\"W5M0MpCehiHzreSzNTczkc9d\"?>\n"
@@ -1749,10 +2096,10 @@ static const unsigned char temp_binary_data_11[] =
 "K;\xce\x15""B\x10\xc7""1;;;\x84""a\x98\xe8\xb3g\xcf\xfe|\xe7\xce\x9d\xcf\xf6\xf6\xf6\xfc""F\xa3""A\xa9TBkM\x14""E\xcfN\xe8\x94\xd5\x1b\x93z\x9e\x87\xd6\x9a""0\x0c""1\xc6Ld\xd9\xdd\xdd""e{{;;~\xfc\xf8--\xa5\xfcr~~^\xe6y\xfei\xbb\xdd.W\xab\xd5\xb0V\xab"
 "\xb9~\xbfO\x18\x86\x08!^ \x19\x13\xd7\xebu|\xdf\xa7\xdb\xed\x12""E\x11Zk\xf2<\x9fK\xd3\xd4""6\x9b\xcd\x1f\xd7\xd7\xd7?\xffo\0\x05\x1a""4\x8d\x01%\xca%\0\0\0\0IEND\xae""B`\x82";
 
-const char* playpause_png = (const char*) temp_binary_data_11;
+const char* playpause_png = (const char*) temp_binary_data_15;
 
 //================== prevcue.png ==================
-static const unsigned char temp_binary_data_12[] =
+static const unsigned char temp_binary_data_16[] =
 { 137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,32,0,0,0,32,8,6,0,0,0,115,122,122,244,0,0,0,9,112,72,89,115,0,0,13,215,0,0,13,215,1,66,40,155,120,0,0,5,235,105,84,88,116,88,77,76,58,99,111,109,46,97,100,111,98,101,46,120,109,112,0,0,0,0,0,60,63,120,
 112,97,99,107,101,116,32,98,101,103,105,110,61,34,239,187,191,34,32,105,100,61,34,87,53,77,48,77,112,67,101,104,105,72,122,114,101,83,122,78,84,99,122,107,99,57,100,34,63,62,32,60,120,58,120,109,112,109,101,116,97,32,120,109,108,110,115,58,120,61,34,
 97,100,111,98,101,58,110,115,58,109,101,116,97,47,34,32,120,58,120,109,112,116,107,61,34,65,100,111,98,101,32,88,77,80,32,67,111,114,101,32,53,46,54,45,99,49,52,50,32,55,57,46,49,54,48,57,50,52,44,32,50,48,49,55,47,48,55,47,49,51,45,48,49,58,48,54,58,
@@ -1789,10 +2136,10 @@ static const unsigned char temp_binary_data_12[] =
 147,82,55,156,173,128,75,165,29,90,217,27,100,61,116,181,205,47,180,90,11,201,243,174,157,42,217,20,184,79,99,34,179,197,79,255,241,201,152,172,110,174,46,218,85,57,36,52,45,103,109,230,131,11,88,20,240,166,109,4,187,178,193,151,98,252,213,208,242,82,
 212,74,44,124,145,78,153,45,202,117,151,227,243,192,55,222,156,174,84,109,103,223,14,53,151,120,89,217,118,175,107,91,77,161,221,141,9,25,208,239,133,141,181,231,255,1,51,168,189,249,145,172,109,85,0,0,0,0,73,69,78,68,174,66,96,130,0,0 };
 
-const char* prevcue_png = (const char*) temp_binary_data_12;
+const char* prevcue_png = (const char*) temp_binary_data_16;
 
 //================== smallstripe.png ==================
-static const unsigned char temp_binary_data_13[] =
+static const unsigned char temp_binary_data_17[] =
 "\x89PNG\r\n"
 "\x1a\n"
 "\0\0\0\rIHDR\0\0\0\x0b\0\0\0\x16\x08\x02\0\0\0\x99\x86\xf1""4\0\0\0\tpHYs\0\0\x0b\x13\0\0\x0b\x13\x01\0\x9a\x9c\x18\0\0\x05\xebiTXtXML:com.adobe.xmp\0\0\0\0\0<?xpacket begin=\"\xef\xbb\xbf\" id=\"W5M0MpCehiHzreSzNTczkc9d\"?> <x:xmpmeta xmlns:x=\"adob"
@@ -1810,10 +2157,10 @@ static const unsigned char temp_binary_data_13[] =
 "!6\x9b\x8dm\xdbI\xc6x<62\x80\xc1`\x10\xaf\xe9\x97\x11\x04""A\xb3\xd9""4\xb2\xeb\xba\xcb\xe5\xf2""7\x8f\xf8""0C\x8c\xab\xd3\xe9\x98\x9e\xe2\0>D\xd7u\xf9\x9a\x08\xc0h4\xfa/\0\x80<\x9dN\xc7\xe3\xd1\xfc\xc5R\xa9\xf4g\xcf_\x82\xfd\x89\"\x99\x91\xa5\xe2\0\0"
 "\0\0IEND\xae""B`\x82";
 
-const char* smallstripe_png = (const char*) temp_binary_data_13;
+const char* smallstripe_png = (const char*) temp_binary_data_17;
 
 //================== snap.png ==================
-static const unsigned char temp_binary_data_14[] =
+static const unsigned char temp_binary_data_18[] =
 { 137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,32,0,0,0,32,8,6,0,0,0,115,122,122,244,0,0,0,9,112,72,89,115,0,0,11,19,0,0,11,19,1,0,154,156,24,0,0,6,182,105,84,88,116,88,77,76,58,99,111,109,46,97,100,111,98,101,46,120,109,112,0,0,0,0,0,60,63,120,
 112,97,99,107,101,116,32,98,101,103,105,110,61,34,239,187,191,34,32,105,100,61,34,87,53,77,48,77,112,67,101,104,105,72,122,114,101,83,122,78,84,99,122,107,99,57,100,34,63,62,32,60,120,58,120,109,112,109,101,116,97,32,120,109,108,110,115,58,120,61,34,
 97,100,111,98,101,58,110,115,58,109,101,116,97,47,34,32,120,58,120,109,112,116,107,61,34,65,100,111,98,101,32,88,77,80,32,67,111,114,101,32,53,46,54,45,99,49,52,50,32,55,57,46,49,54,48,57,50,52,44,32,50,48,49,55,47,48,55,47,49,51,45,48,49,58,48,54,58,
@@ -1866,10 +2213,10 @@ static const unsigned char temp_binary_data_14[] =
 111,198,135,9,25,33,129,146,15,82,242,115,23,208,169,18,8,24,134,97,68,26,30,173,5,149,163,227,145,125,191,240,126,218,227,55,86,42,97,165,178,177,236,218,253,180,85,142,163,5,65,156,243,5,134,97,102,136,8,31,38,52,179,251,84,117,76,68,94,3,14,139,10,
 228,158,112,37,195,54,4,32,252,139,97,24,198,144,138,52,2,194,70,102,25,113,24,17,106,206,144,55,195,204,248,111,252,19,142,97,179,28,126,185,64,78,0,0,0,0,73,69,78,68,174,66,96,130,0,0 };
 
-const char* snap_png = (const char*) temp_binary_data_14;
+const char* snap_png = (const char*) temp_binary_data_18;
 
 //================== stop.png ==================
-static const unsigned char temp_binary_data_15[] =
+static const unsigned char temp_binary_data_19[] =
 { 137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,32,0,0,0,32,8,3,0,0,0,68,164,138,198,0,0,0,4,103,65,77,65,0,0,177,143,11,252,97,5,0,0,0,32,99,72,82,77,0,0,122,38,0,0,128,132,0,0,250,0,0,0,128,232,0,0,117,48,0,0,234,96,0,0,58,152,0,0,23,112,156,186,
 81,60,0,0,0,174,80,76,84,69,0,0,0,36,73,109,38,59,122,39,59,122,40,59,122,39,58,122,39,59,122,41,61,122,39,59,122,39,59,122,32,64,128,39,60,122,39,59,122,43,64,117,40,59,122,40,57,125,39,60,122,38,57,121,26,32,90,27,33,92,30,43,104,21,24,81,26,33,90,
 28,33,94,27,37,96,25,29,88,20,22,79,35,50,99,29,35,99,39,59,122,53,62,116,66,65,111,68,66,110,90,72,97,66,66,109,148,83,77,250,106,36,255,107,34,255,109,31,255,124,0,255,124,1,201,101,35,39,58,121,52,41,80,74,40,59,25,30,88,18,17,73,25,30,89,25,31,89,
@@ -1882,10 +2229,10 @@ static const unsigned char temp_binary_data_15[] =
 49,56,45,48,52,45,49,54,84,50,49,58,52,51,58,49,49,43,48,50,58,48,48,89,167,192,130,0,0,0,37,116,69,88,116,100,97,116,101,58,109,111,100,105,102,121,0,50,48,49,56,45,48,52,45,49,54,84,50,49,58,52,51,58,49,49,43,48,50,58,48,48,40,250,120,62,0,0,0,25,116,
 69,88,116,83,111,102,116,119,97,114,101,0,119,119,119,46,105,110,107,115,99,97,112,101,46,111,114,103,155,238,60,26,0,0,0,0,73,69,78,68,174,66,96,130,0,0 };
 
-const char* stop_png = (const char*) temp_binary_data_15;
+const char* stop_png = (const char*) temp_binary_data_19;
 
 //================== stripe.png ==================
-static const unsigned char temp_binary_data_16[] =
+static const unsigned char temp_binary_data_20[] =
 "\x89PNG\r\n"
 "\x1a\n"
 "\0\0\0\rIHDR\0\0\0.\0\0\0\\\x08\x02\0\0\0\x9e""1\x10\xaa\0\0\0\tpHYs\0\0\x0b\x13\0\0\x0b\x13\x01\0\x9a\x9c\x18\0\0\x05\xddiTXtXML:com.adobe.xmp\0\0\0\0\0<?xpacket begin=\"\xef\xbb\xbf\" id=\"W5M0MpCehiHzreSzNTczkc9d\"?> <x:xmpmeta xmlns:x=\"adobe:ns:"
@@ -1908,7 +2255,7 @@ static const unsigned char temp_binary_data_16[] =
 ")Z$\xd2\x14""E\x12i\x8a\"\x89(E\x97""D\x94\xa2K\xd2\x9e\xa2N\xd2\x9e\xa2N\xd2\x98""bA\xd2\x98""bA\xd2\x92""bD\xd2\x92""bDR\x9d""bGR\x9d""bGR\x97""bJR\x97""bJR\x91""bMR\x91""bMR\x9a\xe2@R\x9a\xe2@R\x94\xe2""CR\x94\xe2""C\x92Oq#\xc9\xa7\xb8\x91""dR<I2)"
 "\x9e$O)\xce$O)\xce$\xb7)\xfe$\xb7)\xfe$\xe9\x94\x10\x92tJ\x08I\"%\x8a$\x91\x12""ErM\t$\xb9\xa6\x04\x92\x9cRbIN)\xb1$GJ8\xc9\x91\x12N\xf2My\x03\t\xf0\x0b""D\xda\x9b\t\xb2\x19\xe1S\0\0\0\0IEND\xae""B`\x82";
 
-const char* stripe_png = (const char*) temp_binary_data_16;
+const char* stripe_png = (const char*) temp_binary_data_20;
 
 
 const char* getNamedResource (const char* resourceNameUTF8, int& numBytes)
@@ -1920,6 +2267,10 @@ const char* getNamedResource (const char* resourceNameUTF8, int& numBytes)
 
     switch (hash)
     {
+        case 0x7fffe188:  numBytes = 5536; return conditionScriptTemplate_js;
+        case 0x5c8768cb:  numBytes = 5387; return filterScriptTemplate_js;
+        case 0xa23dd44c:  numBytes = 4737; return genericScriptTemplate_js;
+        case 0xb21f5457:  numBytes = 5943; return moduleScriptTemplate_js;
         case 0xb02b7677:  numBytes = 36971; return about_png;
         case 0xbb8f218b:  numBytes = 16103; return add_png;
         case 0x961b4a48:  numBytes = 3448; return default_chalayout;
@@ -1946,6 +2297,10 @@ const char* getNamedResource (const char* resourceNameUTF8, int& numBytes)
 
 const char* namedResourceList[] =
 {
+    "conditionScriptTemplate_js",
+    "filterScriptTemplate_js",
+    "genericScriptTemplate_js",
+    "moduleScriptTemplate_js",
     "about_png",
     "add_png",
     "default_chalayout",
@@ -1967,6 +2322,10 @@ const char* namedResourceList[] =
 
 const char* originalFilenames[] =
 {
+    "conditionScriptTemplate.js",
+    "filterScriptTemplate.js",
+    "genericScriptTemplate.js",
+    "moduleScriptTemplate.js",
     "about.png",
     "add.png",
     "default.chalayout",

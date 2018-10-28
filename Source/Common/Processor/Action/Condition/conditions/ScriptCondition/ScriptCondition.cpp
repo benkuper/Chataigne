@@ -17,6 +17,7 @@ ScriptCondition::ScriptCondition(var params) :
 	scriptObject.setMethod("setValid", ScriptCondition::setValidFromScript);
 	addChildControllableContainer(&script);
 	script.userCanRemove = false;
+	script.scriptTemplate = "condition";
 }
 
 ScriptCondition::~ScriptCondition()

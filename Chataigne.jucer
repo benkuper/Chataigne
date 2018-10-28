@@ -8,6 +8,18 @@
               headerPath="../../Source" reportAppUsage="0">
   <MAINGROUP id="EDDVhd" name="Chataigne">
     <GROUP id="{E61F6705-4C4B-3F04-F742-20CC91F590E4}" name="Resources">
+      <GROUP id="{2B6637A1-A2F4-FF34-9B3E-D1D7E87E01F8}" name="Templates">
+        <GROUP id="{053D51A3-B6CA-559C-CCC3-779F67848D87}" name="Scripts">
+          <FILE id="nsAVuW" name="conditionScriptTemplate.js" compile="0" resource="1"
+                file="Resources/Templates/Scripts/conditionScriptTemplate.js"/>
+          <FILE id="BMB8f0" name="filterScriptTemplate.js" compile="0" resource="1"
+                file="Resources/Templates/Scripts/filterScriptTemplate.js"/>
+          <FILE id="TcSxtH" name="genericScriptTemplate.js" compile="0" resource="1"
+                file="Resources/Templates/Scripts/genericScriptTemplate.js"/>
+          <FILE id="GlFclq" name="moduleScriptTemplate.js" compile="0" resource="1"
+                file="Resources/Templates/Scripts/moduleScriptTemplate.js"/>
+        </GROUP>
+      </GROUP>
       <FILE id="qDQaKu" name="about.png" compile="0" resource="1" file="Resources/about.png"/>
       <FILE id="fwyowN" name="add.png" compile="0" resource="1" file="Resources/add.png"/>
       <FILE id="gZcS0r" name="default.chalayout" compile="0" resource="1"
