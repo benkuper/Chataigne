@@ -42,7 +42,6 @@ public:
 	CommandDefinition * addParam(const String &paramName, var value);
 
 	WeakReference<CommandDefinition>::Master masterReference;
-	friend class CommandDefinition;
 };
 
 
