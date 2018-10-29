@@ -160,6 +160,13 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\Guider\guides\GuideCustomVariables.cpp"/>
+    <ClCompile Include="..\..\Source\Guider\guides\GuideInterfaceBasics.cpp"/>
+    <ClCompile Include="..\..\Source\Guider\guides\GuideSequenceBasics.cpp"/>
+    <ClCompile Include="..\..\Source\Guider\guides\GuideSoundToOSC.cpp"/>
+    <ClCompile Include="..\..\Source\Guider\guides\GuideStateTransitions.cpp"/>
+    <ClCompile Include="..\..\Source\Guider\Guide.cpp"/>
+    <ClCompile Include="..\..\Source\Guider\Guider.cpp"/>
     <ClCompile Include="..\..\Source\Common\InputSystem\InputDeviceHelpers.cpp"/>
     <ClCompile Include="..\..\Source\Common\InputSystem\InputSystemManager.cpp"/>
     <ClCompile Include="..\..\Source\Common\Command\Template\ui\CommandTemplateEditor.cpp"/>
@@ -2616,6 +2623,13 @@
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_video.cpp"/>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\Guider\guides\GuideCustomVariables.h"/>
+    <ClInclude Include="..\..\Source\Guider\guides\GuideInterfaceBasics.h"/>
+    <ClInclude Include="..\..\Source\Guider\guides\GuideSequenceBasics.h"/>
+    <ClInclude Include="..\..\Source\Guider\guides\GuideSoundToOSC.h"/>
+    <ClInclude Include="..\..\Source\Guider\guides\GuideStateTransitions.h"/>
+    <ClInclude Include="..\..\Source\Guider\Guide.h"/>
+    <ClInclude Include="..\..\Source\Guider\Guider.h"/>
     <ClInclude Include="..\..\Source\Analytics\GoogleAnalyticsDestination.h"/>
     <ClInclude Include="..\..\Source\Common\InputSystem\InputDeviceHelpers.h"/>
     <ClInclude Include="..\..\Source\Common\InputSystem\InputSystemManager.h"/>

@@ -40,6 +40,34 @@
       <FILE id="tF7PTq" name="stripe.png" compile="0" resource="1" file="Resources/stripe.png"/>
     </GROUP>
     <GROUP id="{31908E9E-F626-E2D6-1A6D-E188C9D72C25}" name="Source">
+      <GROUP id="{F784235F-A65F-E1E7-A5F1-8414A8D681B3}" name="Guider">
+        <GROUP id="{48A8CB31-FB6F-D3BB-9B53-BCE38E8AF3B4}" name="guides">
+          <FILE id="SKSMJc" name="GuideCustomVariables.cpp" compile="1" resource="0"
+                file="Source/Guider/guides/GuideCustomVariables.cpp"/>
+          <FILE id="epS7XS" name="GuideCustomVariables.h" compile="0" resource="0"
+                file="Source/Guider/guides/GuideCustomVariables.h"/>
+          <FILE id="yErUzY" name="GuideInterfaceBasics.cpp" compile="1" resource="0"
+                file="Source/Guider/guides/GuideInterfaceBasics.cpp"/>
+          <FILE id="LyDQq0" name="GuideInterfaceBasics.h" compile="0" resource="0"
+                file="Source/Guider/guides/GuideInterfaceBasics.h"/>
+          <FILE id="TOr74y" name="GuideSequenceBasics.cpp" compile="1" resource="0"
+                file="Source/Guider/guides/GuideSequenceBasics.cpp"/>
+          <FILE id="Sk47T5" name="GuideSequenceBasics.h" compile="0" resource="0"
+                file="Source/Guider/guides/GuideSequenceBasics.h"/>
+          <FILE id="GVvwOs" name="GuideSoundToOSC.cpp" compile="1" resource="0"
+                file="Source/Guider/guides/GuideSoundToOSC.cpp"/>
+          <FILE id="vtKXqj" name="GuideSoundToOSC.h" compile="0" resource="0"
+                file="Source/Guider/guides/GuideSoundToOSC.h"/>
+          <FILE id="cI2Xtt" name="GuideStateTransitions.cpp" compile="1" resource="0"
+                file="Source/Guider/guides/GuideStateTransitions.cpp"/>
+          <FILE id="P59BNs" name="GuideStateTransitions.h" compile="0" resource="0"
+                file="Source/Guider/guides/GuideStateTransitions.h"/>
+        </GROUP>
+        <FILE id="qxh9cY" name="Guide.cpp" compile="1" resource="0" file="Source/Guider/Guide.cpp"/>
+        <FILE id="kFy3YL" name="Guide.h" compile="0" resource="0" file="Source/Guider/Guide.h"/>
+        <FILE id="hYsdC9" name="Guider.cpp" compile="1" resource="0" file="Source/Guider/Guider.cpp"/>
+        <FILE id="nsqFK8" name="Guider.h" compile="0" resource="0" file="Source/Guider/Guider.h"/>
+      </GROUP>
       <GROUP id="{C6C9402E-3E5F-DA24-8E22-DE4CD0AB4FD4}" name="Analytics">
         <FILE id="WpUsgL" name="GoogleAnalyticsDestination.h" compile="0" resource="0"
               file="Source/Analytics/GoogleAnalyticsDestination.h"/>
