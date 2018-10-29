@@ -102,12 +102,16 @@ script:
 after_success:
 - |
   if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
-    docker exec -t ubuntu bash -c "/benkuper/Chataigne/Builds/LinuxMakefile/build;
-    wget http://benjamin.kuperberg.fr/chatagne/user/data/Chataigne-linux-dependencies.zip;
-    unzip Chataigne-linux-dependencies.zip;
-    zip -r Chataigne-linux-x64-$SUFFIX.zip Chataigne lib;
+    docker exec -t ubuntu bash -c "cd /benkuper/Chataigne/Builds/LinuxMakefile;
+    pwd
+    echo 'Downloading AppImageTool...';
+    wget "https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage";
+    chmod a+x appimagetool-x86_64.AppImage;
+    echo 'Packaging AppImage...';
+    cp build/Chataigne Chataigne.AppDir;
+    sudo ./appimagetool-x86_64.AppImage Chataigne.AppDir Chataigne-linux-x64-$SUFFIX.AppImage;
     echo 'Uploading $SUFFIX ...';
-    curl --verbose --progress-bar --ipv4 --connect-timeout 8      --max-time 120 --retry 128 --ftp-ssl --disable-epsv --ftp-pasv  -u "$FTP_USER:$FTP_PASSWORD" ftp://ftp.kuperberg.fr/ -T Chataigne-linux-x64-$SUFFIX.zip;"
+    curl --verbose --progress-bar --ipv4 --connect-timeout 8 --max-time 120 --retry 128 --ftp-ssl --disable-epsv --ftp-pasv  -u "$FTP_USER:$FTP_PASSWORD" ftp://ftp.kuperberg.fr/ -T Chataigne-linux-x64-$SUFFIX.AppImage"
   else
     cd /Users/travis/build/benkuper/Chataigne/Builds/MacOSX/build/$MAKECONF
     ls
