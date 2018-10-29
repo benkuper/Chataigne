@@ -11,12 +11,6 @@
     <Filter Include="Chataigne\Resources">
       <UniqueIdentifier>{82D0FA96-65B2-9949-065F-D5C9B962961E}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Chataigne\Source\Guider\guides">
-      <UniqueIdentifier>{C7280792-97A6-5489-A129-F7345313492F}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Guider">
-      <UniqueIdentifier>{E4F09BB7-32BE-CA5F-8532-81BCB2772E18}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Chataigne\Source\Analytics">
       <UniqueIdentifier>{BFFB54F9-F042-7395-56B9-D0358B5F6ED9}</UniqueIdentifier>
     </Filter>
@@ -1009,27 +1003,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Source\Guider\guides\GuideCustomVariables.cpp">
-      <Filter>Chataigne\Source\Guider\guides</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Guider\guides\GuideInterfaceBasics.cpp">
-      <Filter>Chataigne\Source\Guider\guides</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Guider\guides\GuideSequenceBasics.cpp">
-      <Filter>Chataigne\Source\Guider\guides</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Guider\guides\GuideSoundToOSC.cpp">
-      <Filter>Chataigne\Source\Guider\guides</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Guider\guides\GuideStateTransitions.cpp">
-      <Filter>Chataigne\Source\Guider\guides</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Guider\Guide.cpp">
-      <Filter>Chataigne\Source\Guider</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Guider\Guider.cpp">
-      <Filter>Chataigne\Source\Guider</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Source\Common\InputSystem\InputDeviceHelpers.cpp">
       <Filter>Chataigne\Source\Common\InputSystem\ui</Filter>
     </ClCompile>
@@ -4206,27 +4179,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Source\Guider\guides\GuideCustomVariables.h">
-      <Filter>Chataigne\Source\Guider\guides</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Guider\guides\GuideInterfaceBasics.h">
-      <Filter>Chataigne\Source\Guider\guides</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Guider\guides\GuideSequenceBasics.h">
-      <Filter>Chataigne\Source\Guider\guides</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Guider\guides\GuideSoundToOSC.h">
-      <Filter>Chataigne\Source\Guider\guides</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Guider\guides\GuideStateTransitions.h">
-      <Filter>Chataigne\Source\Guider\guides</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Guider\Guide.h">
-      <Filter>Chataigne\Source\Guider</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Guider\Guider.h">
-      <Filter>Chataigne\Source\Guider</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Source\Analytics\GoogleAnalyticsDestination.h">
       <Filter>Chataigne\Source\Analytics</Filter>
     </ClInclude>

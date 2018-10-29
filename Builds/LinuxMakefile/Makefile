@@ -68,13 +68,6 @@ ifeq ($(CONFIG),Debug)
 endif
 
 OBJECTS_APP := \
-  $(JUCE_OBJDIR)/GuideCustomVariables_dbd57812.o \
-  $(JUCE_OBJDIR)/GuideInterfaceBasics_138507aa.o \
-  $(JUCE_OBJDIR)/GuideSequenceBasics_43d882a4.o \
-  $(JUCE_OBJDIR)/GuideSoundToOSC_1b19d533.o \
-  $(JUCE_OBJDIR)/GuideStateTransitions_2cf7042b.o \
-  $(JUCE_OBJDIR)/Guide_5d655b8c.o \
-  $(JUCE_OBJDIR)/Guider_52ec0c30.o \
   $(JUCE_OBJDIR)/InputDeviceHelpers_f77a7a0.o \
   $(JUCE_OBJDIR)/InputSystemManager_a791f74f.o \
   $(JUCE_OBJDIR)/CommandTemplateEditor_5399b8ad.o \
@@ -362,41 +355,6 @@ $(JUCE_OUTDIR)/$(JUCE_TARGET_APP) : check-pkg-config $(OBJECTS_APP) $(RESOURCES)
 	-$(V_AT)mkdir -p $(JUCE_LIBDIR)
 	-$(V_AT)mkdir -p $(JUCE_OUTDIR)
 	$(V_AT)$(CXX) -o $(JUCE_OUTDIR)/$(JUCE_TARGET_APP) $(OBJECTS_APP) $(JUCE_LDFLAGS) $(JUCE_LDFLAGS_APP) $(RESOURCES) $(TARGET_ARCH)
-
-$(JUCE_OBJDIR)/GuideCustomVariables_dbd57812.o: ../../Source/Guider/guides/GuideCustomVariables.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling GuideCustomVariables.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/GuideInterfaceBasics_138507aa.o: ../../Source/Guider/guides/GuideInterfaceBasics.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling GuideInterfaceBasics.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/GuideSequenceBasics_43d882a4.o: ../../Source/Guider/guides/GuideSequenceBasics.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling GuideSequenceBasics.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/GuideSoundToOSC_1b19d533.o: ../../Source/Guider/guides/GuideSoundToOSC.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling GuideSoundToOSC.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/GuideStateTransitions_2cf7042b.o: ../../Source/Guider/guides/GuideStateTransitions.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling GuideStateTransitions.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/Guide_5d655b8c.o: ../../Source/Guider/Guide.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling Guide.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/Guider_52ec0c30.o: ../../Source/Guider/Guider.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling Guider.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/InputDeviceHelpers_f77a7a0.o: ../../Source/Common/InputSystem/InputDeviceHelpers.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
