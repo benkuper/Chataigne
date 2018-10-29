@@ -85,7 +85,7 @@ void StreamingModule::processDataLine(const String & message)
 	valuesString.addTokens(message, separator, "\"");
 	if (valuesString.size() == 0)
 	{
-		LOG("No usable data");
+		//LOG("No usable data");
 		return;
 	}
 
@@ -144,18 +144,23 @@ void StreamingModule::processDataLine(const String & message)
 		
 	} else
 	{
+		
 		int numArgs = valuesString.size();
 		int numValues = valuesCC.controllables.size();
-		while (numValues < numArgs)
+
+		if (autoAdd->boolValue())
 		{
-			FloatParameter * fp = new FloatParameter("Value " + String(numValues), "Value " + String(numValues), 0);
-			fp->isCustomizableByUser = true;
-			fp->isRemovableByUser = true;
-			fp->saveValueOnly = false;
+			while (numValues < numArgs)
+			{
+				FloatParameter * fp = new FloatParameter("Value " + String(numValues), "Value " + String(numValues), 0);
+				fp->isCustomizableByUser = true;
+				fp->isRemovableByUser = true;
+				fp->saveValueOnly = false;
 
-			valuesCC.addControllable(fp);
+				valuesCC.addControllable(fp);
 
-			numValues = valuesCC.controllables.size();
+				numValues = valuesCC.controllables.size();
+			}
 		}
 
 		for (int i = 0; i < numArgs; i++)
@@ -198,15 +203,18 @@ void StreamingModule::processDataBytes(Array<uint8_t> data)
 	case RAW_1BYTE:
 	{
 		int numArgs = data.size();
-		int numValues = valuesCC.controllables.size();
-		while (numValues < numArgs)
+		if (autoAdd->boolValue())
 		{
-			IntParameter * p = new IntParameter("Value " + String(numValues), "Value " + String(numValues), 0, 0, 255);
-			p->isCustomizableByUser = true;
-			p->isRemovableByUser = true;
-			p->saveValueOnly = false;
-			valuesCC.addControllable(p);
-			numValues = valuesCC.controllables.size();
+			int numValues = valuesCC.controllables.size();
+			while (numValues < numArgs)
+			{
+				IntParameter * p = new IntParameter("Value " + String(numValues), "Value " + String(numValues), 0, 0, 255);
+				p->isCustomizableByUser = true;
+				p->isRemovableByUser = true;
+				p->saveValueOnly = false;
+				valuesCC.addControllable(p);
+				numValues = valuesCC.controllables.size();
+			}
 		}
 
 		for (int i = 0; i < numArgs; i++)
@@ -223,18 +231,23 @@ void StreamingModule::processDataBytes(Array<uint8_t> data)
 	case RAW_FLOATS:
 	{
 		int numArgs = data.size() / 4;
-		int numValues = valuesCC.controllables.size();
-		while (numValues < numArgs)
+		
+		if (autoAdd->boolValue())
 		{
-			FloatParameter * p = new FloatParameter("Value " + String(numValues), "Value " + String(numValues), 0);
-			p->isCustomizableByUser = true;
-			p->isRemovableByUser = true;
-			p->saveValueOnly = false; 
-			valuesCC.addControllable(p);
-			
-			numValues = valuesCC.controllables.size();
-		}
+			int numValues = valuesCC.controllables.size();
+			while (numValues < numArgs)
+			{
+				FloatParameter * p = new FloatParameter("Value " + String(numValues), "Value " + String(numValues), 0);
+				p->isCustomizableByUser = true;
+				p->isRemovableByUser = true;
+				p->saveValueOnly = false;
+				valuesCC.addControllable(p);
 
+				numValues = valuesCC.controllables.size();
+			}
+
+		}
+		
 		for (int i = 0; i < numArgs; i++)
 		{
 			FloatParameter * c = dynamic_cast<FloatParameter *>(valuesCC.controllables[i]);
@@ -250,17 +263,22 @@ void StreamingModule::processDataBytes(Array<uint8_t> data)
 	case RAW_COLORS:
 	{
 		int numArgs = data.size() / 4;
-		int numValues = valuesCC.controllables.size();
-		while (numValues < numArgs)
-		{
-			ColorParameter * colP = new ColorParameter("Value " + String(numValues), "Value " + String(numValues));
-			colP->isCustomizableByUser = true;
-			colP->isRemovableByUser = true;
-			colP->saveValueOnly = false; 
 
-			valuesCC.addControllable(colP);
-			numValues = valuesCC.controllables.size();
+		if (autoAdd->boolValue())
+		{
+			int numValues = valuesCC.controllables.size();
+			while (numValues < numArgs)
+			{
+				ColorParameter * colP = new ColorParameter("Value " + String(numValues), "Value " + String(numValues));
+				colP->isCustomizableByUser = true;
+				colP->isRemovableByUser = true;
+				colP->saveValueOnly = false;
+
+				valuesCC.addControllable(colP);
+				numValues = valuesCC.controllables.size();
+			}
 		}
+		
 
 		for (int i = 0; i < numArgs; i++)
 		{
@@ -304,11 +322,17 @@ void StreamingModule::onControllableFeedbackUpdateInternal(ControllableContainer
 {
 	Module::onControllableFeedbackUpdateInternal(cc, c);
 
+	if (c == autoAdd || c == streamingType)
+	{
+		bool streamingLines = streamingType->getValueDataAsEnum<StreamingType>() == LINES;
+		messageStructure->setEnabled(autoAdd->boolValue());
+		firstValueIsTheName->setEnabled(streamingLines && autoAdd->boolValue());
+	}
+
 	if (c == streamingType)
 	{
 		while (valuesCC.controllables.size() > 0) valuesCC.removeControllable(valuesCC.controllables[0]);
 		buildMessageStructureOptions();
-		firstValueIsTheName->setEnabled(streamingType->getValueDataAsEnum<StreamingType>() == LINES);
 	} else if (c == messageStructure)
 	{
 		while (valuesCC.controllables.size() > 0) valuesCC.removeControllable(valuesCC.controllables[0]);

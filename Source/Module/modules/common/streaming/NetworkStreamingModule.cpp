@@ -25,7 +25,7 @@ NetworkStreamingModule::NetworkStreamingModule(const String &name, bool canHaveI
 
 		moduleParams.addChildControllableContainer(receiveCC);
 
-		localPort = receiveCC->addIntParameter("Local Port", "Local Port to bind to receive UDP Messages", defaultLocalPort, 1024, 65535);
+		localPort = receiveCC->addIntParameter("Local Port", "Local Port to bind", defaultLocalPort, 1, 65535);
 
 		receiverIsBound = receiveCC->addBoolParameter("Is Bound", "Will be active if receiver is bound", false);
 		receiverIsBound->isControllableFeedbackOnly = true;
@@ -40,7 +40,7 @@ NetworkStreamingModule::NetworkStreamingModule(const String &name, bool canHaveI
 		useLocal = sendCC->addBoolParameter("Local", "Send to Local IP (127.0.0.1). Allow to quickly switch between local and remote IP.", true);
 		remoteHost = sendCC->addStringParameter("Remote Host", "Remote Host to send to.", "127.0.0.1");
 		remoteHost->setEnabled(!useLocal->boolValue());
-		remotePort = sendCC->addIntParameter("Remote port", "Port on which the remote host is listening to", defaultRemotePort, 1024, 65535);
+		remotePort = sendCC->addIntParameter("Remote port", "Port on which the remote host is listening to", defaultRemotePort, 1, 65535);
 
 		senderIsConnected = sendCC->addBoolParameter("Is Connected", "Will be active is sender is connected", false);
 		senderIsConnected->isControllableFeedbackOnly = true;
@@ -95,11 +95,14 @@ void NetworkStreamingModule::run()
 
 				case LINES:
 				{
-					stringBuffer.append(String::fromUTF8((char *)bytes.getRawDataPointer(), numBytes),numBytes);
-					StringArray sa;
-					sa.addTokens(stringBuffer, "\n", "\"");
-					for (int i = 0; i < sa.size() - 1; i++) processDataLine(sa[i]);
-					stringBuffer = sa[sa.size() - 1];
+					if (CharPointer_UTF8::isValidString((char *)bytes.getRawDataPointer(), numBytes))
+					{
+						stringBuffer.append(String::fromUTF8((char *)bytes.getRawDataPointer(), numBytes), numBytes);
+						StringArray sa;
+						sa.addTokens(stringBuffer, "\r\n", "\"");
+						for (int i = 0; i < sa.size() - 1; i++) if(sa[i].isNotEmpty()) processDataLine(sa[i]);
+						stringBuffer = sa[sa.size() - 1];
+					}
 				}
 				break;
 
