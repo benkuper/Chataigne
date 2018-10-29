@@ -43,7 +43,7 @@ before_install:
   if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
     cd ..
     pwd
-    docker run -d --name ubuntu -v $(pwd):/benkuper ubuntu:latest tail -f /dev/null
+    docker run -d --name ubuntu --privileged -v $(pwd):/benkuper ubuntu:latest tail -f /dev/null
     docker ps
   else
     gem install xcpretty
