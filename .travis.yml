@@ -109,7 +109,7 @@ after_success:
     chmod a+x appimagetool-x86_64.AppImage;
     echo 'Packaging AppImage...';
     cp build/Chataigne Chataigne.AppDir;
-    sudo ./appimagetool-x86_64.AppImage Chataigne.AppDir Chataigne-linux-x64-$SUFFIX.AppImage;
+    ./appimagetool-x86_64.AppImage Chataigne.AppDir Chataigne-linux-x64-$SUFFIX.AppImage;
     echo 'Uploading $SUFFIX ...';
     curl --verbose --progress-bar --ipv4 --connect-timeout 8 --max-time 120 --retry 128 --ftp-ssl --disable-epsv --ftp-pasv  -u "$FTP_USER:$FTP_PASSWORD" ftp://ftp.kuperberg.fr/ -T Chataigne-linux-x64-$SUFFIX.AppImage"
   else
