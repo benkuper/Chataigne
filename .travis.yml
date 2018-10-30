@@ -24,8 +24,8 @@ before_install:
    then 
     if [[ "$TRAVIS_TAG" == *b ]]; 
     then 
-      echo "Beta version, set config to Debug"; 
-      export MAKECONF=Debug
+      echo "Beta version, set config to Release"; 
+      export MAKECONF=Release
       export SUFFIX=$TRAVIS_TAG-beta
     else 
       echo "Stable version, set config to Release"; 
