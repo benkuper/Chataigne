@@ -200,12 +200,12 @@ void Module::setupModuleFromJSONData(var data)
 			CommandContext context = CommandContext::BOTH;
 			if (cData.value.hasProperty("context"))
 			{
-				String cContext = cData.value.getProperty("context", "both");
+				String cContext = cData.value.getProperty("context", "both").toString().toLowerCase();
 				if (cContext == "action") context = CommandContext::ACTION;
 				else if (cContext == "mapping") context = CommandContext::MAPPING;
 			}
 
-			defManager.add(CommandDefinition::createDef(this, cData.value.getProperty("menu", ""), cData.name.toString(), &ScriptCommand::create)->addParam("data",cData.value));
+			defManager.add(CommandDefinition::createDef(this, cData.value.getProperty("menu", ""), cData.name.toString(), &ScriptCommand::create)->addParam("commandData",cData.value));
 		}
 	}
 	setupIOConfiguration(hInput, hOutput);
