@@ -24,6 +24,8 @@ SequenceLayerTimeline::SequenceLayerTimeline(SequenceLayer * layer) :
 	//setInterceptsMouseClicks(true, true);
 	setWantsKeyboardFocus(false);
 	setMouseClickGrabsKeyboardFocus(false);
+
+	startTimerHz(30);
 }
 
 SequenceLayerTimeline::~SequenceLayerTimeline()
@@ -86,15 +88,24 @@ void SequenceLayerTimeline::controllableFeedbackUpdateInternal(Controllable * c)
 		if (isVisible())
 		{
 			updateContent();
-			repaint();
+			shouldRepaint = true;
 		}
 	}
 	else if (c == item->sequence->currentTime)
 	{
-		repaint();
+		shouldRepaint = true;
 	} else if (c == item->color)
 	{
 		bgColor = item->color->getColor();
+		shouldRepaint = true;
+	}
+}
+
+void SequenceLayerTimeline::timerCallback()
+{
+	if (shouldRepaint)
+	{
 		repaint();
+		shouldRepaint = false;
 	}
 }

@@ -16,11 +16,14 @@
 #include "../SequenceLayer.h"
 
 class SequenceLayerTimeline :
-	public BaseItemMinimalUI<SequenceLayer>
+	public BaseItemMinimalUI<SequenceLayer>,
+	public Timer
 {
 public:
 	SequenceLayerTimeline(SequenceLayer *);
 	virtual ~SequenceLayerTimeline();
+
+	bool shouldRepaint;
 
 	const Colour defaultTimeBarColor = Colours::white.withAlpha(.4f);
 	Colour timeBarColor;
@@ -33,6 +36,7 @@ public:
 
 	void controllableFeedbackUpdateInternal(Controllable * c) override;
 
+	void timerCallback() override;
 
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(SequenceLayerTimeline)

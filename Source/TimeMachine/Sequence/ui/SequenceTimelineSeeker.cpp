@@ -17,6 +17,8 @@ SequenceTimelineSeeker::SequenceTimelineSeeker(Sequence * _sequence) :
 	addAndMakeVisible(&handle);
 	sequence->addAsyncContainerListener(this);
 	handle.addMouseListener(this,false);
+
+	startTimerHz(20);
 }
 
 SequenceTimelineSeeker::~SequenceTimelineSeeker()
@@ -139,7 +141,7 @@ void SequenceTimelineSeeker::newMessage(const ContainerAsyncEvent & e)
 		}
 		else if (e.targetControllable == sequence->currentTime)
 		{
-			repaint();
+			shouldRepaint = true;;
 			resized();
 		}
 		else if (e.targetControllable == sequence->totalTime)
@@ -152,6 +154,15 @@ void SequenceTimelineSeeker::newMessage(const ContainerAsyncEvent & e)
 	default:
 		//other events not handled 
 		break;
+	}
+}
+
+void SequenceTimelineSeeker::timerCallback()
+{
+	if (shouldRepaint)
+	{
+		repaint();
+		shouldRepaint = false;
 	}
 }
 

@@ -132,10 +132,15 @@ void SequenceTimelineHeader::paint(Graphics & g)
 
 void SequenceTimelineHeader::resized()
 {
-	Rectangle<int> r = getLocalBounds();
-	cueManagerUI.setBounds(r);
-	Rectangle<int> nr = r.withSize(7, getHeight());
-	nr.setPosition(getXForTime(sequence->currentTime->floatValue())-needle.getWidth()/2, 0);
+	cueManagerUI.setBounds(getLocalBounds());
+	updateNeedlePosition();
+	
+}
+
+void SequenceTimelineHeader::updateNeedlePosition()
+{
+	Rectangle<int> nr = getLocalBounds().withSize(7, getHeight());
+	nr.setPosition(getXForTime(sequence->currentTime->floatValue()) - needle.getWidth() / 2, 0);
 	needle.setBounds(nr);
 }
 
@@ -193,7 +198,7 @@ void SequenceTimelineHeader::newMessage(const ContainerAsyncEvent & e)
 			cueManagerUI.updateContent();
 		} else if (e.targetControllable == sequence->currentTime)
 		{
-			resized();
+			updateNeedlePosition();
 		} else if (e.targetControllable == sequence->totalTime)
 		{
 			resized();

@@ -26,7 +26,8 @@ public:
 
 class SequenceTimelineSeeker :
 	public Component,
-	public ContainerAsyncListener
+	public ContainerAsyncListener,
+	public Timer
 {
 public:
 	SequenceTimelineSeeker(Sequence * _sequence);
@@ -34,6 +35,8 @@ public:
 
 	Sequence * sequence;
 	SeekHandle handle;
+
+	bool shouldRepaint;
 
 	//interaction
 	float viewStartAtMouseDown;
@@ -55,6 +58,8 @@ public:
 	float getTimeForX(int tx);
 
 	void newMessage(const ContainerAsyncEvent &e) override;
+
+	void timerCallback() override;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(SequenceTimelineSeeker)
 
