@@ -80,13 +80,13 @@ CVCommand::~CVCommand()
 void CVCommand::updateOperatorOptions()
 {
 	valueOperator->clearOptions();
-	valueOperator->addOption("=", EQUAL);
+	valueOperator->addOption("Equals", EQUAL);
 
 	switch (value->type)
 	{
 	case Controllable::FLOAT:
 	case Controllable::INT:
-		valueOperator->addOption("Add", ADD)->addOption("Subtract", SUBTRACT)->addOption("Multiply", MULTIPLY)->addOption("Divide", DIVIDE);
+		valueOperator->addOption("Add", ADD)->addOption("Inverse", INVERSE)->addOption("Subtract", SUBTRACT)->addOption("Multiply", MULTIPLY)->addOption("Divide", DIVIDE);
 		break;
 
 	case Controllable::BOOL:
