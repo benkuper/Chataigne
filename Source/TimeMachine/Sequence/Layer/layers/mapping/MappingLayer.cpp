@@ -24,8 +24,11 @@ MappingLayer::MappingLayer(Sequence *_sequence, var params) :
 	canInspectChildContainers = true;
 	
 	mapping.editorIsCollapsed = false;
-	addChildControllableContainer(&mapping);
+	mapping.editorCanBeCollapsed = false;
+	mapping.hideEditorHeader = true;
+
 	addChildControllableContainer(&recorder);
+	addChildControllableContainer(&mapping);
 	recorder.input->customGetTargetFunc = &ModuleManager::showAllValuesAndGetControllable;
 	recorder.input->customGetControllableLabelFunc = &Module::getTargetLabelForValueControllable;
 	recorder.input->customCheckAssignOnNextChangeFunc = &ModuleManager::checkControllableIsAValue;

@@ -14,7 +14,7 @@ MappingLayerEditor::MappingLayerEditor(MappingLayer * layer, bool isRoot) :
 	BaseItemEditor(layer, isRoot),
 	mappingLayer(layer)
 {
-	mappingEditor = mappingLayer->mapping.getEditor(false);
+	mappingEditor = mappingLayer->mapping.getEditor(isRoot);
 	addAndMakeVisible(mappingEditor);
 }
 
