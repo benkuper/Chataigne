@@ -30,10 +30,12 @@ public:
 	TargetParameter * targetPreset2;
 
 	
-	enum Operator { EQUAL, ADD, SUBTRACT, MULTIPLY, DIVIDE };
+	enum Operator { EQUAL, INVERSE, ADD, SUBTRACT, MULTIPLY, DIVIDE };
 	EnumParameter * valueOperator; 
 	Parameter * value;
 	
+
+	void updateOperatorOptions();
 
 	void onContainerParameterChanged(Parameter * p) override;
 	void trigger() override;

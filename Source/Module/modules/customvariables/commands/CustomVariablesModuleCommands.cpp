@@ -27,10 +27,8 @@ CVCommand::CVCommand(CustomVariablesModule * _module, CommandContext context, va
 		target->customGetTargetFunc = &CVGroupManager::showMenuAndGetVariable;
 		target->defaultParentLabelLevel = 2;
 		
-		valueOperator = addEnumParameter("Operator", "The operator to apply. If you simply want to set the value, leave at the = option.");
-		valueOperator->addOption("=", EQUAL)->addOption("+", ADD)->addOption("-", SUBTRACT)->addOption("x", MULTIPLY)->addOption("/", DIVIDE);
-		valueOperator->hideInEditor = true;
-
+		valueOperator = addEnumParameter("Operator", "The operator to apply. If you simply want to set the value, leave at the = option.", false);
+		
 	} else if (type == SET_2DTARGET)
 	{
 		target = addTargetParameter("Target Group", "The group to target for this command", CVGroupManager::getInstance());
@@ -79,6 +77,29 @@ CVCommand::~CVCommand()
 
 }
 
+void CVCommand::updateOperatorOptions()
+{
+	valueOperator->clearOptions();
+	valueOperator->addOption("=", EQUAL);
+
+	switch (value->type)
+	{
+	case Controllable::FLOAT:
+	case Controllable::INT:
+		valueOperator->addOption("Add", ADD)->addOption("Subtract", SUBTRACT)->addOption("Multiply", MULTIPLY)->addOption("Divide", DIVIDE);
+		break;
+
+	case Controllable::BOOL:
+		valueOperator->addOption("Inverse", INVERSE);
+		break;
+
+	default:
+		break;
+	}
+	
+	valueOperator->setEnabled(valueOperator->getAllKeys().size() > 1);
+}
+
 void CVCommand::onContainerParameterChanged(Parameter * p)
 {
 	if (p == target && type == SET_VALUE)
@@ -92,7 +113,7 @@ void CVCommand::onContainerParameterChanged(Parameter * p)
 		value = ControllableFactory::createParameterFrom(target->target);
 		if (value != nullptr)
 		{
-			valueOperator->hideInEditor = value->type != Controllable::FLOAT && value->type != Controllable::INT;
+			updateOperatorOptions();
 			
 			value->setNiceName("Value");
 			addParameter(value);
@@ -107,6 +128,10 @@ void CVCommand::onContainerParameterChanged(Parameter * p)
 		{
 			LOGWARNING("The 2 presets are not from the same group !\nThis command won't have any effect until you choose presets from the same group.");
 		}
+	} else if (p == valueOperator)
+	{
+		Operator o = valueOperator->getValueDataAsEnum<Operator>();
+		value->hideInEditor = o == INVERSE;
 	}
 }
 
@@ -121,38 +146,34 @@ void CVCommand::trigger()
 			Parameter * p = static_cast<Parameter *>(target->target.get());
 			if (p != nullptr)
 			{
-				if (value->type != Controllable::FLOAT && value->type != Controllable::INT)
+				Operator o = valueOperator->getValueDataAsEnum<Operator>();
+
+				switch (o)
 				{
+				case EQUAL:
 					p->setValue(value->value);
-				} else
-				{
+					break;
 
-					Operator o = valueOperator->getValueDataAsEnum<Operator>();
+				case INVERSE:
+					p->setNormalizedValue(1 - p->getNormalizedValue());
+					break;
 
-					switch (o)
-					{
-					case EQUAL:
-						p->setValue(value->value);
-						break;
+				case ADD:
+					p->setValue(p->floatValue() + value->floatValue());
+					break;
 
-					case ADD:
-						p->setValue(p->floatValue() + value->floatValue());
-						break;
+				case SUBTRACT:
+					p->setValue(p->floatValue() - value->floatValue());
+					break;
 
-					case SUBTRACT:
-						p->setValue(p->floatValue() - value->floatValue());
-						break;
+				case MULTIPLY:
+					p->setValue(p->floatValue() * value->floatValue());
+					break;
 
-					case MULTIPLY:
-						p->setValue(p->floatValue() * value->floatValue());
-						break;
-
-					case DIVIDE:
-						p->setValue(p->floatValue() / value->floatValue());
-						break;
-					}
+				case DIVIDE:
+					p->setValue(p->floatValue() / value->floatValue());
+					break;
 				}
-				
 			}
 		}
 	}
