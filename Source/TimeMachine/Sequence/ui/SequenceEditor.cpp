@@ -45,6 +45,7 @@ SequenceEditor::~SequenceEditor()
 
 void SequenceEditor::paint(Graphics &)
 {
+    //DBG("Sequence Editor paint");
 	//g.fillAll(Colours::red);
 	//g.setColour(Colours::yellow);
 	//g.drawLine(panelWidth + 1, 0, panelWidth + 1, getHeight(), 1);

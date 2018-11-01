@@ -253,10 +253,13 @@ void Sequence::hiResTimerCallback()
 	if (!isPlaying->boolValue()) return;
 
 	double targetTime = 0;
-	if (timeIsDrivenByAudio())
+    
+    //DBG("Hi res callback here");
+    
+    if (timeIsDrivenByAudio())
 	{
 		targetTime = hiResAudioTime;
-		currentTime->setValue(hiResAudioTime);
+        currentTime->setValue(hiResAudioTime);
 	}
 	else
 	{

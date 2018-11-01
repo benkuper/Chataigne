@@ -30,6 +30,8 @@ SequenceTimelineSeeker::~SequenceTimelineSeeker()
 #pragma warning(disable:4244)
 void SequenceTimelineSeeker::paint(Graphics & g)
 {
+    //DBG("Sequence Seeker paint");
+    
 	g.setColour(BG_COLOR);
 	g.fillRoundedRectangle(getLocalBounds().toFloat(),2);
 	g.setColour(BG_COLOR.darker());
@@ -161,7 +163,7 @@ void SequenceTimelineSeeker::timerCallback()
 {
 	if (shouldRepaint)
 	{
-		repaint();
+		//repaint();
 		shouldRepaint = false;
 	}
 }

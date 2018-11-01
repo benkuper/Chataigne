@@ -11,8 +11,7 @@
 #include "SequenceLayerTimeline.h"
 
 SequenceLayerTimeline::SequenceLayerTimeline(SequenceLayer * layer) :
-	BaseItemMinimalUI<SequenceLayer>(layer),
-	timeBarColor(defaultTimeBarColor)
+	BaseItemMinimalUI<SequenceLayer>(layer)
 {
 	bgColor = item->color->getColor();
 
@@ -25,6 +24,8 @@ SequenceLayerTimeline::SequenceLayerTimeline(SequenceLayer * layer) :
 	setWantsKeyboardFocus(false);
 	setMouseClickGrabsKeyboardFocus(false);
 
+    addAndMakeVisible(&needle);
+    
 	startTimerHz(30);
 }
 
@@ -55,16 +56,10 @@ float SequenceLayerTimeline::getTimeForX(int tx, bool offsetStart)
 
 
 
-void SequenceLayerTimeline::paintOverChildren(Graphics & g)
+void SequenceLayerTimeline::updateNeedlePosition()
 {
-
-	g.setColour(timeBarColor);
-	g.drawVerticalLine(getXForTime(item->sequence->currentTime->floatValue()), 0, (float)getHeight());
-
-	//g.setColour(item->color->getColor());
-	//g.drawRoundedRectangle(getLocalBounds().reduced(1).toFloat(), 2, 2);
-
-	BaseItemMinimalUI::paintOverChildren(g);
+    int tx = getXForTime(item->sequence->currentTime->floatValue());
+    needle.setBounds(getLocalBounds().withWidth(1).withX(tx));
 }
 
 void SequenceLayerTimeline::mouseDown(const MouseEvent &e)
@@ -88,24 +83,40 @@ void SequenceLayerTimeline::controllableFeedbackUpdateInternal(Controllable * c)
 		if (isVisible())
 		{
 			updateContent();
-			shouldRepaint = true;
+			shouldUpdateNeedle = true;
 		}
 	}
 	else if (c == item->sequence->currentTime)
 	{
-		shouldRepaint = true;
+		shouldUpdateNeedle = true;
 	} else if (c == item->color)
 	{
 		bgColor = item->color->getColor();
-		shouldRepaint = true;
+        repaint();
 	}
 }
 
 void SequenceLayerTimeline::timerCallback()
 {
-	if (shouldRepaint)
+	if (shouldUpdateNeedle)
 	{
-		repaint();
-		shouldRepaint = false;
+        updateNeedlePosition();
+		shouldUpdateNeedle = false;
 	}
+}
+
+SequenceLayerTimeline::TimelineNeedle::TimelineNeedle() :
+timeBarColor(defaultTimeBarColor)
+{
+    
+}
+
+SequenceLayerTimeline::TimelineNeedle::~TimelineNeedle()
+{
+    
+}
+
+void SequenceLayerTimeline::TimelineNeedle::paint(juce::Graphics &g)
+{
+    g.fillAll(timeBarColor);
 }

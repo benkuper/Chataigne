@@ -26,7 +26,8 @@ public:
 
 class SequenceTimelineHeader :
 	public Component,
-	public ContainerAsyncListener
+	public ContainerAsyncListener,
+    public Timer
 {
 public:
 	SequenceTimelineHeader(Sequence * _sequence);
@@ -35,9 +36,10 @@ public:
 	Sequence * sequence;
 
 	TimeNeedleUI needle;
-
 	TimeCueManagerUI cueManagerUI;
 
+    bool shouldUpdateNeedle;
+    
 	//interaction
 
 	void paint(Graphics &g) override;
@@ -54,7 +56,8 @@ public:
 
 	void newMessage(const ContainerAsyncEvent &e) override;
 
-	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(SequenceTimelineHeader)
+    void timerCallback() override;
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(SequenceTimelineHeader)
 
 };
 

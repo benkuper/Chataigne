@@ -23,15 +23,13 @@ public:
 	SequenceLayerTimeline(SequenceLayer *);
 	virtual ~SequenceLayerTimeline();
 
-	bool shouldRepaint;
-
-	const Colour defaultTimeBarColor = Colours::white.withAlpha(.4f);
-	Colour timeBarColor;
+	bool shouldUpdateNeedle;
+	
 	int getXForTime(float time);
 	float getTimeForX(int tx, bool offsetStart = true);
-
+    
+    void updateNeedlePosition();
 	virtual void updateContent() {} // to be overriden
-	virtual void paintOverChildren(Graphics & g) override;
 	virtual void mouseDown(const MouseEvent &e) override;
 
 	void controllableFeedbackUpdateInternal(Controllable * c) override;
@@ -40,6 +38,22 @@ public:
 
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(SequenceLayerTimeline)
+    
+    class TimelineNeedle :
+        public Component
+    {
+    public:
+        TimelineNeedle();
+        ~TimelineNeedle();
+        
+        const Colour defaultTimeBarColor = Colours::white.withAlpha(.4f);
+        Colour timeBarColor;
+        
+        void paint(Graphics &g) override;
+        
+    };
+    
+    TimelineNeedle needle;
 };
 
 

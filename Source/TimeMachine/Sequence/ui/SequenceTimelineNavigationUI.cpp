@@ -26,6 +26,8 @@ SequenceTimelineNavigationUI::~SequenceTimelineNavigationUI()
 
 void SequenceTimelineNavigationUI::paint(Graphics &)
 {
+    //DBG("Sequence Navigation paint");
+    
 }
 
 void SequenceTimelineNavigationUI::resized()

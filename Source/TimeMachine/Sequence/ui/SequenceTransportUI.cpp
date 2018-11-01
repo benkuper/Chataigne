@@ -46,6 +46,8 @@ SequenceTransportUI::~SequenceTransportUI()
 
 void SequenceTransportUI::paint(Graphics &g)
 {
+    //DBG("Sequence Transport UI paint");
+    
 	if (sequence->masterAudioModule != nullptr)
 	{
 		Rectangle<int> r = getLocalBounds().reduced(2).removeFromTop(timeLabel.getHeight()).withLeft(timeLabel.getRight() + 5);

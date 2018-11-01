@@ -22,6 +22,8 @@ SequenceTimelineHeader::SequenceTimelineHeader(Sequence * _sequence) :
 	needle.setInterceptsMouseClicks(false, false);
 
 	setSize(100, 20);
+    
+    startTimerHz(20);
 }
 
 SequenceTimelineHeader::~SequenceTimelineHeader()
@@ -33,7 +35,9 @@ SequenceTimelineHeader::~SequenceTimelineHeader()
 #pragma warning(disable:4244)
 void SequenceTimelineHeader::paint(Graphics & g)
 {
-	g.setColour(BG_COLOR.darker(.1f));
+    //DBG("Sequence Timeline Header paint");
+    
+    g.setColour(BG_COLOR.darker(.1f));
 	g.fillRoundedRectangle(getLocalBounds().toFloat(), 2);
 
 	g.setColour(BG_COLOR.brighter(.1f));
@@ -198,7 +202,7 @@ void SequenceTimelineHeader::newMessage(const ContainerAsyncEvent & e)
 			cueManagerUI.updateContent();
 		} else if (e.targetControllable == sequence->currentTime)
 		{
-			updateNeedlePosition();
+            shouldUpdateNeedle = true;
 		} else if (e.targetControllable == sequence->totalTime)
 		{
 			resized();
@@ -209,6 +213,15 @@ void SequenceTimelineHeader::newMessage(const ContainerAsyncEvent & e)
 	//other events not handled 
 	break;
 	}
+}
+
+void SequenceTimelineHeader::timerCallback()
+{
+    if(shouldUpdateNeedle)
+    {
+        shouldUpdateNeedle = false;
+        updateNeedlePosition();
+    }
 }
 
 

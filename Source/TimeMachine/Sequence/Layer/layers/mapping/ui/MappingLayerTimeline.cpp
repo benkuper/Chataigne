@@ -20,7 +20,7 @@ MappingLayerTimeline::MappingLayerTimeline(MappingLayer * layer) :
 	
 	
 	setupUIForLayerMode();
-	timeBarColor = mappingLayer->recorder.arm->boolValue() ? Colours::red : defaultTimeBarColor;
+	needle.timeBarColor = mappingLayer->recorder.arm->boolValue() ? Colours::red : needle.defaultTimeBarColor;
 	updateContent();
 }
 
@@ -101,7 +101,7 @@ void MappingLayerTimeline::controllableFeedbackUpdateInternal(Controllable * c)
 		setupUIForLayerMode();
 	} else if (c == mappingLayer->recorder.arm)
 	{
-		timeBarColor = mappingLayer->recorder.arm->boolValue() ? Colours::red : defaultTimeBarColor;
+		needle.timeBarColor = mappingLayer->recorder.arm->boolValue() ? Colours::red : needle.defaultTimeBarColor;
 		repaint();
 	}
 }
