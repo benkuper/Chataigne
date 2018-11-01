@@ -155,7 +155,6 @@ void KinectV2Module::processBody(int nBodyCount, IBody ** ppBodies)
 		HRESULT hr = b->get_IsTracked(&t);
 		if (SUCCEEDED(hr) && t)
 		{
-			numDetectedBodies++;
 
 			Joint joints[JointType_Count];
 			HandState leftHandState = HandState_Unknown;
@@ -174,8 +173,9 @@ void KinectV2Module::processBody(int nBodyCount, IBody ** ppBodies)
 			Point<float> left2D = Point<float>(leftHandPos.x, leftHandPos.y);
 			Point<float> right2D = Point<float>(rightHandPos.x, rightHandPos.y);
 
-			KinectPersonValues * kpv = personValues[i];
-
+			KinectPersonValues * kpv = personValues[numDetectedBodies];
+			
+			kpv->bodyId->setValue(i + 1);
 			kpv->bodyX->setValue(bodyPos.x);
 			kpv->bodyY->setValue(bodyPos.y);
 			kpv->bodyZ->setValue(bodyPos.z);
@@ -192,6 +192,9 @@ void KinectV2Module::processBody(int nBodyCount, IBody ** ppBodies)
 			kpv->handsAngle->setValue(radiansToDegrees(left2D.getAngleToPoint(right2D)) + 180);
 			kpv->leftHandOpen->setValue(leftHandState == HandState_Open);
 			kpv->rightHandOpen->setValue(rightHandState == HandState_Open);
+
+			numDetectedBodies++;
+
 		}
 
 		numPersons->setValue(numDetectedBodies);
@@ -207,6 +210,7 @@ void KinectV2Module::timerCallback()
 KinectPersonValues::KinectPersonValues(int id) :
 	ControllableContainer("Person "+String(id))
 {
+	bodyId = addIntParameter("ID", "", 1, 1, 6);
 	bodyX = addFloatParameter("Body X", "", 0, -5, 5);
 	bodyY = addFloatParameter("Body Y", "", 0, -5, 5);
 	bodyZ = addFloatParameter("Body Z", "", 0, -5, 5);

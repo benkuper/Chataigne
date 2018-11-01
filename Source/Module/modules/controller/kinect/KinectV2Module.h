@@ -33,7 +33,8 @@ class KinectPersonValues :
 public:
 	KinectPersonValues(int id);
 	~KinectPersonValues();
-	
+
+	IntParameter * bodyId; 
 	FloatParameter * bodyX;
 	FloatParameter * bodyY;
 	FloatParameter * bodyZ;
@@ -68,8 +69,6 @@ public:
 	void processBody(int nBodyCount, IBody** ppBodies);
 #endif
   
-
-
 
 	// Current Kinect
 #if USE_KINECT
