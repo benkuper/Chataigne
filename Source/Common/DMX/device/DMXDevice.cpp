@@ -18,8 +18,8 @@ DMXDevice::DMXDevice(const String &name, Type _type, bool canReceive) :
 	ControllableContainer(name),
 	Thread("DMX Send"),
 	type(_type),
-	canReceive(canReceive),
-	isConnected(false)
+    isConnected(false),
+    canReceive(canReceive)
 {
 	DMXManager::getInstance()->addDMXManagerListener(this);
 

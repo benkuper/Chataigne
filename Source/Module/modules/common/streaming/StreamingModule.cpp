@@ -81,6 +81,8 @@ void StreamingModule::processDataLine(const String & message)
 	case LINES_SPACE: separator = " "; break;
 	case LINES_TAB:   separator = "\t"; break;
 	case LINES_COMMA: separator = ","; break;
+    default:
+        break;
 	}
 	valuesString.addTokens(message, separator, "\"");
 	if (valuesString.size() == 0)
@@ -138,6 +140,9 @@ void StreamingModule::processDataLine(const String & message)
 			case Controllable::COLOR:
 				if (numArgs >= 4) ((ColorParameter *)c)->setColor(Colour::fromFloatRGBA(valuesString[1].getFloatValue(), valuesString[2].getFloatValue(), valuesString[3].getFloatValue(), valuesString[4].getFloatValue()));
 				break;
+                    
+            default:
+                break;
 
 			}
 		}
@@ -291,7 +296,10 @@ void StreamingModule::processDataBytes(Array<uint8_t> data)
 		}
 	}
 	break;
-	}
+            
+    default:
+        break;
+    }
 	
 }
 

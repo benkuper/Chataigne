@@ -247,5 +247,8 @@ void DMXModule::handleRoutedModuleValue(Controllable * c, RouteParams * p)
 	}
 
 	break;
+            
+        default:
+            break;
 	}
 }

@@ -106,6 +106,9 @@ void MIDIModule::onControllableFeedbackUpdateInternal(ControllableContainer * cc
 				case MIDIValueParameter::NOTE_ON: sendNoteOn(mvp->pitchOrNumber, mvp->intValue(), mvp->channel); break;
 				case MIDIValueParameter::NOTE_OFF: sendNoteOff(mvp->pitchOrNumber, mvp->channel); break;
 				case MIDIValueParameter::CONTROL_CHANGE: sendControlChange(mvp->pitchOrNumber, mvp->intValue(), mvp->channel); break;
+                        
+                default:
+                    break;
 				}
 			}
 		}
