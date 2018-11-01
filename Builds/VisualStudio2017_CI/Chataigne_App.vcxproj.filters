@@ -959,6 +959,9 @@
     <Filter Include="JUCE Modules\juce_organicui\script">
       <UniqueIdentifier>{180BD6DA-9455-5755-E8FE-27A04695CF02}</UniqueIdentifier>
     </Filter>
+    <Filter Include="JUCE Modules\juce_organicui\settings\ui">
+      <UniqueIdentifier>{D61E743A-2670-BFB7-3B65-E8D8FB84E1D0}</UniqueIdentifier>
+    </Filter>
     <Filter Include="JUCE Modules\juce_organicui\settings">
       <UniqueIdentifier>{3D156A4D-FAA0-EEBB-777D-15BD25FA69A0}</UniqueIdentifier>
     </Filter>
@@ -4032,6 +4035,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\script\ScriptUtil.cpp">
       <Filter>JUCE Modules\juce_organicui\script</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\settings\ui\GlobalSettingsEditor.cpp">
+      <Filter>JUCE Modules\juce_organicui\settings\ui</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\settings\GlobalSettings.cpp">
       <Filter>JUCE Modules\juce_organicui\settings</Filter>
@@ -7316,6 +7322,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\script\ScriptUtil.h">
       <Filter>JUCE Modules\juce_organicui\script</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\settings\ui\GlobalSettingsEditor.h">
+      <Filter>JUCE Modules\juce_organicui\settings\ui</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\settings\GlobalSettings.h">
       <Filter>JUCE Modules\juce_organicui\settings</Filter>

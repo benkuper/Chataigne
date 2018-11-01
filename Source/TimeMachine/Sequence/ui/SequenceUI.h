@@ -31,8 +31,6 @@ public:
 
 	void controllableFeedbackUpdateInternal(Controllable *) override;
 
-	bool keyPressed(const KeyPress &e) override;
-
 	void newMessage(const Sequence::SequenceEvent &e) override;
 
 	JUCE_DECLARE_NON_COPYABLE(SequenceUI)

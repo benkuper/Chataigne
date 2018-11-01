@@ -25,6 +25,7 @@ public:
 	SequenceEditor(Sequence * _sequence);
 	virtual ~SequenceEditor();
 
+
 	Sequence * sequence;
 	WeakReference<Inspectable> sequenceRef;
 
@@ -50,9 +51,15 @@ public:
 	void mouseWheelMove(const MouseEvent &e, const MouseWheelDetails &) override;
 	bool keyPressed(const KeyPress &key) override;
 
+
+	
+
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(SequenceEditor)
 
 		
+
+		
+
 };
 
 

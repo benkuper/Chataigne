@@ -10,6 +10,9 @@
 
 #include "SequenceEditor.h"
 
+ApplicationCommandManager& getCommandManager();
+static OrganicApplication& getApp() { return *dynamic_cast<OrganicApplication*>(JUCEApplication::getInstance()); }
+
 SequenceEditor::SequenceEditor(Sequence * _sequence) :
 	sequence(_sequence),
 	sequenceRef(_sequence),
@@ -36,6 +39,7 @@ SequenceEditor::SequenceEditor(Sequence * _sequence) :
 	addMouseListener(this, true);
 
 	sequence->setBeingEdited(true);
+
 }
 
 SequenceEditor::~SequenceEditor()
@@ -122,12 +126,7 @@ bool SequenceEditor::keyPressed(const KeyPress & key)
 {
 	if (sequence == nullptr) return false;
 
-	if (key.getKeyCode() == KeyPress::spaceKey)
-	{
-		sequence->togglePlayTrigger->trigger();
-		return true;
-	}
-	else if (key.getKeyCode() == KeyPress::homeKey)
+	if (key.getKeyCode() == KeyPress::homeKey)
 	{
 		sequence->currentTime->setValue(0);
 	} else if (key.getKeyCode() == KeyPress::endKey)
@@ -138,4 +137,3 @@ bool SequenceEditor::keyPressed(const KeyPress & key)
 
 	return false;
 }
-

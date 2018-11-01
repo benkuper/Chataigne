@@ -2510,6 +2510,9 @@
     <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\script\ScriptUtil.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\settings\ui\GlobalSettingsEditor.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\settings\GlobalSettings.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -3663,6 +3666,7 @@
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\script\ScriptManager.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\script\ScriptTarget.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\script\ScriptUtil.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\settings\ui\GlobalSettingsEditor.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\settings\GlobalSettings.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\settings\ProjectSettings.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\ui\shapeshifter\GapGrabber.h"/>

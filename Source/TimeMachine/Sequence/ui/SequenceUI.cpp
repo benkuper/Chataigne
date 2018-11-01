@@ -66,17 +66,6 @@ void SequenceUI::controllableFeedbackUpdateInternal(Controllable * c)
 	}
 }
 
-bool SequenceUI::keyPressed(const KeyPress & e)
-{
-	if (e.getKeyCode() == KeyPress::spaceKey)
-	{
-		item->togglePlayTrigger->trigger();
-		return true;
-	}
-
-	return false;
-}
-
 void SequenceUI::newMessage(const Sequence::SequenceEvent & e)
 {
 	switch (e.type)
