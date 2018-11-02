@@ -46,9 +46,11 @@ DLightModule::DLightModule() :
 	subIntParam.append(ControllableUtil::createDataForParam(IntParameter::getTypeStringStatic(), "#", "Index of the submaster", 1, 0, 1000));
 	
 	var subIntValParam = var();
-	subIntParam.append(ControllableUtil::createDataForParam(IntParameter::getTypeStringStatic(), "#", "Index of the submaster", 1, 0, 1000));
+	subIntValParam.append(ControllableUtil::createDataForParam(IntParameter::getTypeStringStatic(), "#", "Index of the submaster", 1, 0, 1000));
+	
 	var subMapValParam = ControllableUtil::createDataForParam(FloatParameter::getTypeStringStatic(), "Value", "Value", 0,0,255);
 	subMapValParam.getDynamicObject()->setProperty("mappingIndex", 0);
+	
 	subIntValParam.append(subMapValParam);
 	
 	defManager.add(CommandDefinition::createDef(this, "Submaster", "Set Sub Level", &OSCCommand::create, CommandContext::BOTH)->addParam("address", "/sub/level")->addParam("args", subIntValParam));
