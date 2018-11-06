@@ -223,6 +223,10 @@ void AudioLayer::sequenceCurrentTimeChanged(Sequence *, float, bool)
 void AudioLayer::sequencePlayStateChanged(Sequence *)
 {
 	//
+	if (!sequence->isPlaying->boolValue())
+	{
+		enveloppe->setValue(0);
+	}
 }
 
 
