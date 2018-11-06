@@ -55,12 +55,15 @@ void MappingLayerTimeline::setupUIForLayerMode()
 		index++;
 	}
 
+
 	if (mappingLayer->mode->getValueDataAsEnum<MappingLayer::Mode>() == MappingLayer::MODE_COLOR)
 	{
 		colorManagerUI = new TimeColorManagerUI(mappingLayer->timeColorManager);
 		addAndMakeVisible(colorManagerUI);
+		colorManagerUI->toBack();
 	}
 
+	needle.toFront(false);
 	resized();
 	
 }
