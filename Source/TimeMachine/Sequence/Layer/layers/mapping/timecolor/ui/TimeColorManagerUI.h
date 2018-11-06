@@ -17,12 +17,15 @@
 class TimeColorManagerUI :
 	public BaseManagerUI<TimeColorManager, TimeColor, TimeColorUI>,
 	public ContainerAsyncListener,
-	public TimeColorManager::TimeColorManagerListener
+	public Timer
 
 {
 public:
 	TimeColorManagerUI(TimeColorManager * manager);
 	~TimeColorManagerUI();
+
+
+	bool shouldRepaint;
 
 	float viewStartPos;
 	float viewEndPos;
@@ -48,8 +51,8 @@ public:
 
 	void newMessage(const ContainerAsyncEvent &e) override;
 
-	void gradientUpdated() override;
 	
+	void timerCallback() override;
 };
 
 

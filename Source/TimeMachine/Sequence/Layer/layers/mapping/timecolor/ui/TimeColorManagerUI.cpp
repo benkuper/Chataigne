@@ -21,15 +21,15 @@ TimeColorManagerUI::TimeColorManagerUI(TimeColorManager * manager) :
 
 	resizeOnChildBoundsChanged = false;
 
-	//manager->addAsyncCoalescedContainerListener(this);
-	manager->addColorManagerListener(this);
+	manager->addAsyncCoalescedContainerListener(this);
 	addExistingItems();
+
+	startTimerHz(10);
 }
 
 TimeColorManagerUI::~TimeColorManagerUI()
 {
-	manager->removeColorManagerListener(this);
-	//manager->removeAsyncContainerListener(this);
+	manager->removeAsyncContainerListener(this);
 }
 
 void TimeColorManagerUI::setViewRange(float start, float end)
@@ -157,12 +157,16 @@ void TimeColorManagerUI::newMessage(const ContainerAsyncEvent & e)
 	{
 		if (e.targetControllable == manager->currentColor)
 		{
-			repaint();
+			shouldRepaint = true;
 		}
 	}
 }
 
-void TimeColorManagerUI::gradientUpdated()
+void TimeColorManagerUI::timerCallback()
 {
-	repaint();
+	if (shouldRepaint)
+	{
+		repaint();
+		shouldRepaint = false;
+	}
 }
