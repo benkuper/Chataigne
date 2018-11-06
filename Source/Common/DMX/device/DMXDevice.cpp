@@ -30,6 +30,7 @@ DMXDevice::DMXDevice(const String &name, Type _type, bool canReceive) :
 	targetRate = addIntParameter("Target send rate", "If fixed rate is checked, this is the frequency in Hz of the sending rate", 40, 1, 100);
 	sendSleepMS = 1000 / targetRate->intValue();
 
+	startThread();
 }
 
 DMXDevice::~DMXDevice()
