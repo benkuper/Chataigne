@@ -94,8 +94,7 @@ void DMXModule::sendDMXValues(int startChannel, Array<int> values)
 	if (logOutgoingData->boolValue()) NLOG(niceName, "Send DMX : " + String(startChannel) + " > " + String(values.size()) + " values");
 	outActivityTrigger->trigger();
 
-	int numValues = values.size();
-	for(int i=0; i< numValues;i++) dmxDevice->sendDMXValue(startChannel+i, values[i]);
+	dmxDevice->sendDMXRange(startChannel, values);
 }
 
 void DMXModule::send16BitDMXValue(int startChannel, int value, DMXByteOrder byteOrder)
@@ -113,13 +112,17 @@ void DMXModule::send16BitDMXValues(int startChannel, Array<int> values, DMXByteO
 	if (logOutgoingData->boolValue()) NLOG(niceName, "Send 16-bit DMX : " + String(startChannel) + " > " + String(values.size()) + " values");
 	outActivityTrigger->trigger();
 
+	Array<int> dmxValues;
 	int numValues = values.size();
+	dmxValues.resize(numValues * 2);
 	for (int i = 0; i < numValues; i++)
 	{
 		int value = values[i];
-		dmxDevice->sendDMXValue(startChannel + i * 2, byteOrder == MSB ? (value >> 8) & 0xFF : value & 0xFF);
-		dmxDevice->sendDMXValue(startChannel + i * 2 + 1, byteOrder == MSB ? 0xFF : (value >> 8) & 0xFF);
+		dmxValues.set(i * 2, byteOrder == MSB ? (value >> 8) & 0xFF : value & 0xFF);
+		dmxValues.set(i * 2 + 1, byteOrder == MSB ? 0xFF : (value >> 8) & 0xFF);
 	}
+
+	dmxDevice->sendDMXRange(startChannel, dmxValues);
 }
 
 void DMXModule::clearItem()

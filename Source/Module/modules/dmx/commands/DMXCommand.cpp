@@ -75,22 +75,41 @@ void DMXCommand::trigger()
 		int v1 = value->intValue() & 0xFF;
 		int v2 = value->intValue() >> 8 & 0xFF;
 		bool msb = byteOrder->getValueDataAsEnum<DMXModule::DMXByteOrder>() == DMXModule::MSB;
-		dmxModule->sendDMXValue(channel->intValue(), msb ? v2 : v1);
-		dmxModule->sendDMXValue(channel->intValue(), msb ? v1 : v2);
+		
+		int dmxV1 = msb ? v2 : v1;
+		int dmxV2 = msb ? v1 : v2;
+
+		Array<int> values(dmxV1, dmxV2);
+		dmxModule->sendDMXValues(channel->intValue(), values);
 	}
 	break;
 
 	case SET_RANGE:
-		for (int i =channel->intValue();i<=channel2->intValue();i++) dmxModule->sendDMXValue(i, value->intValue());
-		break;
+	{
+		Array<int> values;
+		int numValues = channel2->intValue() - channel->intValue();
+		values.resize(numValues);
+		values.fill(value->intValue());
+		dmxModule->sendDMXValues(channel->intValue(), values);
+	}
+	break;
 
 	case COLOR:
-		for (int i = 0; i < 3; i++) dmxModule->sendDMXValue(channel->intValue()+i, (int)((float)colorParam->value[i]*255));
-		break;
+	{
+		Array<int> values;
+		for (int i = 0; i < 3; i++) values.add((int)((float)colorParam->value[i] * 255));
+		dmxModule->sendDMXValues(channel->intValue(), values);
+	}
+	break;
 
 	case CLEAR_ALL:
-		for (int i = 1; i <= 512; i++) dmxModule->sendDMXValue(i, 0);
-		break;
+	{
+		Array<int> values;
+		values.resize(512);
+		values.fill(0);
+		dmxModule->sendDMXValues(channel->intValue(), values);
+	}
+	break;
 	}
 	
 }

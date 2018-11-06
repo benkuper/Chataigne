@@ -38,6 +38,7 @@ public:
 	void setConnected(bool value);
 
 	virtual void sendDMXValue(int channel, int value);
+	virtual void sendDMXRange(int startChannel, Array<int> values);
 	void setDMXValueIn(int channel, int value);
 
 	virtual void sendDMXValues() = 0;
