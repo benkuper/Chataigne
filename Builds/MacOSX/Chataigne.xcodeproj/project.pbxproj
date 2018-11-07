@@ -7155,7 +7155,6 @@
 					"../../External/serial/include",
 					"../../External/servus/include",
 					"../../External/dnssd/include",
-					"../../External/ossia/include",
 					"../../Source",
 					"$(inherited)",
 				);
@@ -7165,7 +7164,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"../../External/servus/lib/osx/debug\"",
-					"\"../../External/ossia/lib/osx\"",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				OTHER_LDFLAGS = "-lServus";
