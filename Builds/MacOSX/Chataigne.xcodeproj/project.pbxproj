@@ -1412,6 +1412,13 @@
 			path = ../../Resources/stop.png;
 			sourceTree = "SOURCE_ROOT";
 		};
+		0DD04E60A5E6174F61924D04 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = JuceHeader.h;
+			path = ../../JuceLibraryCode/JuceHeader.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		0E0C3BD22A615072B34BFC26 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -7151,6 +7158,7 @@
 				066DA60AFB60B8BE77E819E7,
 				8AB58B2FA156DD075B892850,
 				9EB5EECB134C6E74D074AB10,
+				0DD04E60A5E6174F61924D04,
 			);
 			name = "JUCE Library Code";
 			sourceTree = "<group>";
