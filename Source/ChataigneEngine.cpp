@@ -20,6 +20,7 @@
 #include "Module/Routing/ModuleRouterManager.h"
 #include "UI/ChataigneAssetManager.h"
 #include "CustomVariables/CVGroupManager.h"
+#include "Guider/Guider.h"
 
 #if JUCE_WINDOWS
 #include "Module/modules/controller/myo/MyoManager.h"
@@ -75,6 +76,8 @@ ChataigneEngine::~ChataigneEngine()
 	ChataigneAssetManager::deleteInstance();
 
 	CVGroupManager::deleteInstance();
+
+	Guider::deleteInstance();
 
 	//ossia_device_free(ossiaDevice);
 	//ossia_protocol_free(ossiaProtocol); 

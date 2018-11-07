@@ -12,6 +12,7 @@
 #include "MainComponent.h"
 #include "UI/AboutWindow.h"
 #include "TimeMachine/ui/TimeMachineView.h"
+#include "Guider/Guider.h"
 
 namespace ChataigneCommandIDs
 {
@@ -22,11 +23,16 @@ namespace ChataigneCommandIDs
 	static const int postGithubIssue = 0x60004;
 	static const int donate = 0x60005;
 	static const int playPauseSequenceEditor = 0x80000;
+	static const int guideStart = 0x300;
 }
 
-
-void MainContentComponent::getCommandInfo(CommandID commandID, ApplicationCommandInfo& result) {
-
+void MainContentComponent::getCommandInfo(CommandID commandID, ApplicationCommandInfo& result) 
+{
+	if (commandID >= ChataigneCommandIDs::guideStart && commandID < ChataigneCommandIDs::guideStart + 100)
+	{
+		result.setInfo(Guider::getInstance()->getGuideName(commandID - ChataigneCommandIDs::guideStart), "", "Guides", result.readOnlyInKeyEditor);
+		return;
+	}
 
 	switch (commandID)
 	{
@@ -81,6 +87,7 @@ void MainContentComponent::getAllCommands(Array<CommandID>& commands) {
 	};
 
 	commands.addArray(ids, numElementsInArray(ids));
+	for (int i = 0; i < Guider::getInstance()->factory.defs.size(); i++) commands.add(ChataigneCommandIDs::guideStart + i);
 }
 
 
@@ -100,12 +107,25 @@ PopupMenu MainContentComponent::getMenuForIndex(int topLevelMenuIndex, const Str
 		menu.addCommandItem(&getCommandManager(), ChataigneCommandIDs::gotoForum);
 		menu.addCommandItem(&getCommandManager(), ChataigneCommandIDs::gotoDocs);
 		menu.addCommandItem(&getCommandManager(), ChataigneCommandIDs::postGithubIssue);
+	}if (menuName == "Guides")
+	{
+		for (int i = 0; i < Guider::getInstance()->factory.defs.size(); i++)
+		{
+			menu.addCommandItem(&getCommandManager(), ChataigneCommandIDs::guideStart + i);
+		}
 	}
 
 	return menu;
 }
 
-bool MainContentComponent::perform(const InvocationInfo& info) {
+bool MainContentComponent::perform(const InvocationInfo& info)
+{
+
+	if (info.commandID >= ChataigneCommandIDs::guideStart && info.commandID < ChataigneCommandIDs::guideStart + 100)
+	{
+		Guider::getInstance()->launchGuideAtIndex(info.commandID - ChataigneCommandIDs::guideStart);
+		return true;
+	}
 
 	switch (info.commandID)
 	{
@@ -164,6 +184,7 @@ StringArray MainContentComponent::getMenuBarNames()
 {
 	StringArray names = OrganicMainContentComponent::getMenuBarNames();
 	names.add("Control");
+	names.add("Guides");
 	names.add("Help");
 	return names;
 }

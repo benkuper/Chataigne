@@ -77,6 +77,22 @@
 			isa = PBXBuildFile;
 			fileRef = BAE663016FCFB6168EAA4BFE;
 		};
+		B8EDA9B8045566479348B760 = {
+			isa = PBXBuildFile;
+			fileRef = E3D27DA7DF3C13FFDA2468FB;
+		};
+		EF06D68C5D80A560E01D5210 = {
+			isa = PBXBuildFile;
+			fileRef = AB0BB0296C9BACB012CC29B1;
+		};
+		A9F417BBCFA13B702734002D = {
+			isa = PBXBuildFile;
+			fileRef = E45FA3B841CA50679596AE4C;
+		};
+		A377485D00E6BD3B63525CE2 = {
+			isa = PBXBuildFile;
+			fileRef = E760AE782F147B81967ED0B3;
+		};
 		43E1EC2D9919CC1742754AA5 = {
 			isa = PBXBuildFile;
 			fileRef = 6EAF69491475B1BC390D110E;
@@ -1396,13 +1412,6 @@
 			path = ../../Resources/stop.png;
 			sourceTree = "SOURCE_ROOT";
 		};
-		0DD04E60A5E6174F61924D04 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = JuceHeader.h;
-			path = ../../JuceLibraryCode/JuceHeader.h;
-			sourceTree = "SOURCE_ROOT";
-		};
 		0E0C3BD22A615072B34BFC26 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -2159,6 +2168,13 @@
 			path = ../../Source/Module/modules/osc/resolume/commands/ResolumeClipCommand.h;
 			sourceTree = "SOURCE_ROOT";
 		};
+		4175BEDB9C6134A844603CC1 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = BasicsGuide.h;
+			path = ../../Source/Guider/guides/BasicsGuide.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		41BCFF7B0107510BBC870B10 = {
 			isa = PBXFileReference;
 			lastKnownFileType = wrapper.framework;
@@ -2360,6 +2376,20 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = MathFilter.h;
 			path = ../../Source/Common/Processor/Mapping/Filter/filters/number/MathFilter.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		4B2FCE14DFEE6D63E46D08B9 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = BaseGuide.h;
+			path = ../../Source/Guider/BaseGuide.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		4B6CDDE72FDA5A4885B824B2 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = GuideComponents.h;
+			path = ../../Source/Guider/GuideComponents.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		4BED9251CCB1DFC4B4F541A1 = {
@@ -2850,6 +2880,13 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = KeyboardModule.h;
 			path = ../../Source/Module/modules/controller/keyboard/KeyboardModule.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		6E49F2DD376B0AA6A86A75E9 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = Guider.h;
+			path = ../../Source/Guider/Guider.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		6E5D1560A551751CABF79621 = {
@@ -3802,6 +3839,13 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = ModuleRouterManager.cpp;
 			path = ../../Source/Module/Routing/ModuleRouterManager.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
+		AB0BB0296C9BACB012CC29B1 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = BaseGuide.cpp;
+			path = ../../Source/Guider/BaseGuide.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		AB7074B97A9CC50CDEFF3AD8 = {
@@ -4798,6 +4842,13 @@
 			path = ../../Source/Module/modules/common/streaming/commands/StreamingCommand.h;
 			sourceTree = "SOURCE_ROOT";
 		};
+		E3D27DA7DF3C13FFDA2468FB = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = BasicsGuide.cpp;
+			path = ../../Source/Guider/guides/BasicsGuide.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		E3F9EFD72705ECB6CEE5F94E = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -4824,6 +4875,13 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = LagFilter.h;
 			path = ../../Source/Common/Processor/Mapping/Filter/filters/number/LagFilter.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		E45FA3B841CA50679596AE4C = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = GuideComponents.cpp;
+			path = ../../Source/Guider/GuideComponents.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		E46D3F257C0330881558C3AC = {
@@ -4894,6 +4952,13 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = StringComparators.cpp;
 			path = ../../Source/Common/Processor/Action/Condition/Comparator/comparators/StringComparators.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
+		E760AE782F147B81967ED0B3 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = Guider.cpp;
+			path = ../../Source/Guider/Guider.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		E76F2CCA04ED367B5C874780 = {
@@ -5309,6 +5374,29 @@
 				2DDAE65EB5FF79ED1E458E52,
 			);
 			name = Resources;
+			sourceTree = "<group>";
+		};
+		49FF25F6B1E380551E17B569 = {
+			isa = PBXGroup;
+			children = (
+				E3D27DA7DF3C13FFDA2468FB,
+				4175BEDB9C6134A844603CC1,
+			);
+			name = guides;
+			sourceTree = "<group>";
+		};
+		35FD7B8838F4A0B49CE24427 = {
+			isa = PBXGroup;
+			children = (
+				49FF25F6B1E380551E17B569,
+				AB0BB0296C9BACB012CC29B1,
+				4B2FCE14DFEE6D63E46D08B9,
+				E45FA3B841CA50679596AE4C,
+				4B6CDDE72FDA5A4885B824B2,
+				E760AE782F147B81967ED0B3,
+				6E49F2DD376B0AA6A86A75E9,
+			);
+			name = Guider;
 			sourceTree = "<group>";
 		};
 		9C36D31E3E718DBE09A0C37C = {
@@ -6987,6 +7075,7 @@
 		A6036FD6B54D8D748F9FA2C3 = {
 			isa = PBXGroup;
 			children = (
+				35FD7B8838F4A0B49CE24427,
 				9C36D31E3E718DBE09A0C37C,
 				77E313CFAABA49104A328F3F,
 				CA79AE04437B8324C214D2A4,
@@ -7062,7 +7151,6 @@
 				066DA60AFB60B8BE77E819E7,
 				8AB58B2FA156DD075B892850,
 				9EB5EECB134C6E74D074AB10,
-				0DD04E60A5E6174F61924D04,
 			);
 			name = "JUCE Library Code";
 			sourceTree = "<group>";
@@ -7135,8 +7223,8 @@
 					"_DEBUG=1",
 					"DEBUG=1",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
-					"JUCE_APP_VERSION=1.5.0b",
-					"JUCE_APP_VERSION_HEX=0x10500",
+					"JUCE_APP_VERSION=1.5.1b",
+					"JUCE_APP_VERSION_HEX=0x10501",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
 					"JucePlugin_Build_AU=0",
@@ -7165,7 +7253,7 @@
 					"$(inherited)",
 					"\"../../External/servus/lib/osx/debug\"",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				OTHER_LDFLAGS = "-lServus";
 				PRODUCT_BUNDLE_IDENTIFIER = benkuper.Chataigne;
 				PRODUCT_NAME = "Chataigne";
@@ -7188,8 +7276,8 @@
 					"_NDEBUG=1",
 					"NDEBUG=1",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
-					"JUCE_APP_VERSION=1.5.0b",
-					"JUCE_APP_VERSION_HEX=0x10500",
+					"JUCE_APP_VERSION=1.5.1b",
+					"JUCE_APP_VERSION_HEX=0x10501",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
 					"JucePlugin_Build_AU=0",
@@ -7220,7 +7308,7 @@
 					"\"../../External/servus/lib/osx/release\"",
 				);
 				LLVM_LTO = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				OTHER_LDFLAGS = "-lServus";
 				PRODUCT_BUNDLE_IDENTIFIER = benkuper.Chataigne;
 				PRODUCT_NAME = "Chataigne";
@@ -7353,6 +7441,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B8EDA9B8045566479348B760,
+				EF06D68C5D80A560E01D5210,
+				A9F417BBCFA13B702734002D,
+				A377485D00E6BD3B63525CE2,
 				43E1EC2D9919CC1742754AA5,
 				D5BA72E6B1F43C42CFDDCE35,
 				FC96057BA4D7B3D6EB200D36,

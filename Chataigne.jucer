@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.5.0b"
+<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.5.1b"
               bundleIdentifier="benkuper.Chataigne" includeBinaryInAppConfig="1"
               jucerVersion="5.4.0" companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
               companyEmail="benjamin@kuperberg.fr" defines="" displaySplashScreen="0"
@@ -41,7 +41,18 @@
     </GROUP>
     <GROUP id="{31908E9E-F626-E2D6-1A6D-E188C9D72C25}" name="Source">
       <GROUP id="{F784235F-A65F-E1E7-A5F1-8414A8D681B3}" name="Guider">
-        <GROUP id="{48A8CB31-FB6F-D3BB-9B53-BCE38E8AF3B4}" name="guides"/>
+        <GROUP id="{48A8CB31-FB6F-D3BB-9B53-BCE38E8AF3B4}" name="guides">
+          <FILE id="zczlRA" name="BasicsGuide.cpp" compile="1" resource="0" file="Source/Guider/guides/BasicsGuide.cpp"/>
+          <FILE id="kOFuLO" name="BasicsGuide.h" compile="0" resource="0" file="Source/Guider/guides/BasicsGuide.h"/>
+        </GROUP>
+        <FILE id="NyAvOG" name="BaseGuide.cpp" compile="1" resource="0" file="Source/Guider/BaseGuide.cpp"/>
+        <FILE id="qKw3wA" name="BaseGuide.h" compile="0" resource="0" file="Source/Guider/BaseGuide.h"/>
+        <FILE id="ly4Ih6" name="GuideComponents.cpp" compile="1" resource="0"
+              file="Source/Guider/GuideComponents.cpp"/>
+        <FILE id="v6RsrQ" name="GuideComponents.h" compile="0" resource="0"
+              file="Source/Guider/GuideComponents.h"/>
+        <FILE id="ZWl1KJ" name="Guider.cpp" compile="1" resource="0" file="Source/Guider/Guider.cpp"/>
+        <FILE id="djiZVX" name="Guider.h" compile="0" resource="0" file="Source/Guider/Guider.h"/>
       </GROUP>
       <GROUP id="{C6C9402E-3E5F-DA24-8E22-DE4CD0AB4FD4}" name="Analytics">
         <FILE id="WpUsgL" name="GoogleAnalyticsDestination.h" compile="0" resource="0"
@@ -1233,10 +1244,10 @@
         <CONFIGURATION name="Debug" isDebug="1" optimisation="1" targetName="Chataigne"
                        headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/dnssd/include"
                        cppLanguageStandard="c++11" cppLibType="libc++" enablePluginBinaryCopyStep="1"
-                       osxCompatibility="10.9 SDK" libraryPath="../../External/servus/lib/osx/debug"/>
+                       osxCompatibility="10.8 SDK" libraryPath="../../External/servus/lib/osx/debug"/>
         <CONFIGURATION name="Release" isDebug="0" optimisation="3" targetName="Chataigne"
                        headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/dnssd/include"
-                       enablePluginBinaryCopyStep="1" osxCompatibility="10.9 SDK" libraryPath="../../External/servus/lib/osx/release"/>
+                       enablePluginBinaryCopyStep="1" osxCompatibility="10.8 SDK" libraryPath="../../External/servus/lib/osx/release"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_video" path="~/JUCE/modules"/>
