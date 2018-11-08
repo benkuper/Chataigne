@@ -8,8 +8,7 @@
   ==============================================================================
 */
 
-#ifndef SEQUENCELAYERFACTORY_H_INCLUDED
-#define SEQUENCELAYERFACTORY_H_INCLUDED
+#pragma once
 
 
 #include "SequenceLayer.h"
@@ -35,7 +34,7 @@ public:
 class SequenceLayerFactory
 {
 public:
-	juce_DeclareSingleton(SequenceLayerFactory, true);
+	juce_DeclareSingleton(SequenceLayerFactory,true)
 
 	OwnedArray<SequenceLayerDefinition> layerDefs;
 	PopupMenu menu;
@@ -45,26 +44,13 @@ public:
 
 	void buildPopupMenu();
 
-	static SequenceLayer * showCreateMenu(Sequence * sequence)
-	{
-		int result = getInstance()->menu.show();
-		if (result == 0) return nullptr;
-		else
-		{
-			SequenceLayerDefinition * d = getInstance()->layerDefs[result - 1];//result 0 is no result
-			return d->createFunc(sequence,d->params);
-		}
-	}
+	SequenceLayer * showCreateMenu(Sequence * sequence);
 
-	static SequenceLayer * createSequenceLayer(Sequence * sequence, const String &inputType)
+	SequenceLayer * createSequenceLayer(Sequence * sequence, const String &inputType)
 	{
-		for (auto &d : getInstance()->layerDefs) if (d->type == inputType) return d->createFunc(sequence,d->params);
+		for (auto &d : layerDefs) if (d->type == inputType) return d->createFunc(sequence,d->params);
 		return nullptr;
 	}
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(SequenceLayerFactory)
 };
-
-
-
-#endif  // SEQUENCELAYERFACTORY_H_INCLUDED

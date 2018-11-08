@@ -39,6 +39,7 @@ public:
 	bool shouldRepaint;
 
 	//interaction
+	Point<float> screenMousePosOnDown; 
 	float viewStartAtMouseDown;
 	float viewEndAtMouseDown;
 	float timeAnchorAtMouseDown;
@@ -46,6 +47,8 @@ public:
 	const float minActionDistX = 10;
 	const float minActionDistY = 15;
 	const float zoomSensitivity = .002f;
+
+	
 
 	void paint(Graphics &g) override;
 	void resized() override;

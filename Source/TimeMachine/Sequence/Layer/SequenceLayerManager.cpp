@@ -35,7 +35,7 @@ SequenceLayer * SequenceLayerManager::addItemFromData(var data, bool fromUndoabl
 {
 	String layerType = data.getProperty("type", "none");
 	if (layerType.isEmpty()) return nullptr;
-	SequenceLayer * i = SequenceLayerFactory::getInstance()->createSequenceLayer(sequence,layerType);
+	SequenceLayer * i = SequenceLayerFactory::getInstance()->createSequenceLayer(sequence, layerType);
 	if (i != nullptr) return addItem(i, data, fromUndoableAction);
 	return nullptr;
 }

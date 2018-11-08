@@ -32,7 +32,7 @@ SequenceLayer::SequenceLayer(Sequence * _sequence, const String &name) :
 
 SequenceLayer::~SequenceLayer()
 {
-	if(!Engine::mainEngine->isClearing && sequence != nullptr) sequence->removeSequenceListener(this);
+	sequence->removeSequenceListener(this);
 }
 
 SequenceLayerPanel * SequenceLayer::getPanel()
