@@ -9,6 +9,9 @@
 */
 
 #include "ScriptCondition.h"
+#include "UI/ChataigneAssetManager.h"
+
+String ScriptCondition::conditionTemplate = "";
 
 ScriptCondition::ScriptCondition(var params) :
 	Condition(ScriptCondition::getTypeStringStatic(), params),
@@ -17,7 +20,10 @@ ScriptCondition::ScriptCondition(var params) :
 	scriptObject.setMethod("setValid", ScriptCondition::setValidFromScript);
 	addChildControllableContainer(&script);
 	script.userCanRemove = false;
-	script.scriptTemplate = "condition";
+	
+	if(conditionTemplate.isEmpty()) conditionTemplate = ChataigneAssetManager::getInstance()->getScriptTemplate("condition");
+
+	script.scriptTemplate = &conditionTemplate; 
 }
 
 ScriptCondition::~ScriptCondition()

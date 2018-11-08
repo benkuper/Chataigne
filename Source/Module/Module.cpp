@@ -13,7 +13,7 @@
 #include "ui/ModuleEditor.h"
 #include "Common/Command/Template/CommandTemplate.h"
 #include "Module/modules/common/commands/scriptcommands/ScriptCommand.h"
-
+#include "UI/ChataigneAssetManager.h"
 
 Module::Module(const String &name) :
 	BaseItem(name, true, true),
@@ -65,7 +65,7 @@ Module::Module(const String &name) :
 
 	addChildControllableContainer(&commandTester);
 
-	scriptManager->scriptTemplate = "module";
+	scriptManager->scriptTemplate = ChataigneAssetManager::getInstance()->getScriptTemplate("module");
 }
 
 Module::~Module()

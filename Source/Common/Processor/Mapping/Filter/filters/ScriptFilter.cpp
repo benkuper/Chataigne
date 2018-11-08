@@ -9,12 +9,18 @@
 */
 
 #include "ScriptFilter.h"
+#include "UI/ChataigneAssetManager.h"
+
+String ScriptFilter::scriptTemplate = "";
 
 ScriptFilter::ScriptFilter(var params) :
 	MappingFilter(getTypeString(),params)
 {
 	filterParams.addChildControllableContainer(&script);
-	script.scriptTemplate = "filter";
+
+
+	if (scriptTemplate.isEmpty()) scriptTemplate = ChataigneAssetManager::getInstance()->getScriptTemplate("filter");
+	script.scriptTemplate = &scriptTemplate;
 }
 
 ScriptFilter::~ScriptFilter()

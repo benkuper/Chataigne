@@ -92,3 +92,10 @@ ImageButton * ChataigneAssetManager::getToggleBTImage(const Image & image)
 		image, 1.0f, Colours::transparentBlack, 0);
 	return bt; 
 }
+
+String ChataigneAssetManager::getScriptTemplate(const String & templateRef)
+{
+	int templateDataSize = 0;
+	String resourceName = templateRef + "ScriptTemplate_js";
+	return String(BinaryData::getNamedResource(resourceName.getCharPointer(), templateDataSize));
+}

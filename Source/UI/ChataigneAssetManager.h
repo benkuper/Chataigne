@@ -37,6 +37,8 @@ public:
 	ImageButton * getSetupBTImage(const Image & image);
 	ImageButton * getBTDoubleImage(const Image & onImage, const Image &offImage);
 	ImageButton * getToggleBTImage(const Image &image);
+
+	String getScriptTemplate(const String &templateRef);
 };
 
 

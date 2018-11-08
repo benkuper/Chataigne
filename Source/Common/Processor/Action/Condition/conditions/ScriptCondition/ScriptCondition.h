@@ -20,6 +20,7 @@ public:
 	ScriptCondition(var params);
 	~ScriptCondition();
 	
+	static String conditionTemplate;
 	Script script;
 
 	//Script

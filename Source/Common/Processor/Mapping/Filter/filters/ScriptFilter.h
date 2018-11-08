@@ -20,6 +20,7 @@ public:
 	ScriptFilter(var params);
 	~ScriptFilter();
 
+	static String scriptTemplate;
 	Script script;
 
 	void processInternal() override;
