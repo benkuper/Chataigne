@@ -41,6 +41,7 @@ void GamepadModule::gamepadAdded(Gamepad * g)
 	if (gName == gamepadParam->ghostName)
 	{
 		gamepadParam->setGamepad(g);
+		rebuildValues();
 	}
 }
 

@@ -28,7 +28,7 @@ InputSystemManager::InputSystemManager() :
 		return;
 	}
 
-	lastCheckTime = Time::getApproximateMillisecondCounter();
+	lastCheckTime = 0;
 	startThread();
 }
 
@@ -81,17 +81,22 @@ void InputSystemManager::removeJoystick(Joystick * j)
 
 Joystick * InputSystemManager::getJoystickForSDL(SDL_Joystick * tj)
 {
+	joysticks.getLock().enter();
 	for (auto &j : joysticks) if (j->joystick == tj) return j;
+	joysticks.getLock().exit();
 	return nullptr;
 }
 Gamepad * InputSystemManager::getGamepadForSDL(SDL_GameController * tg)
 {
+	gamepads.getLock().enter();
 	for (auto &g : gamepads) if (g->gamepad == tg) return g;
+	gamepads.getLock().exit();
 	return nullptr;
 }
 
 Joystick * InputSystemManager::getJoystickForID(SDL_JoystickGUID id)
 {
+	joysticks.getLock().enter();
 	for (auto &j : joysticks)
 	{
 		SDL_JoystickGUID guid = SDL_JoystickGetGUID(j->joystick);
@@ -99,12 +104,13 @@ Joystick * InputSystemManager::getJoystickForID(SDL_JoystickGUID id)
 		for (int i = 0; i < 16; i++) if (guid.data[i] != id.data[i]) isTheSame = false;;
 		if(isTheSame) return j;
 	}
-
+	joysticks.getLock().exit();
 	return nullptr;
 }
 
 Gamepad * InputSystemManager::getGamepadForID(SDL_JoystickGUID id)
 {
+	gamepads.getLock().enter();
 	for (auto &g : gamepads)
 	{
 		SDL_JoystickGUID guid = SDL_JoystickGetGUID(SDL_GameControllerGetJoystick(g->gamepad));
@@ -113,18 +119,23 @@ Gamepad * InputSystemManager::getGamepadForID(SDL_JoystickGUID id)
 		if(isTheSame) return g;
 	}
 
+	gamepads.getLock().exit();
 	return nullptr;
 }
 
 Joystick * InputSystemManager::getJoystickForName(String name)
 {
+	joysticks.getLock().enter();
 	for (auto &j : joysticks) if (String(SDL_JoystickName(j->joystick)) == name) return j;
+	joysticks.getLock().exit();
 	return nullptr;
 }
 
 Gamepad * InputSystemManager::getGamepadForName(String name)
 {
+	gamepads.getLock().enter();
 	for (auto &g : gamepads) if (String(SDL_GameControllerName(g->gamepad)) == name) return g;
+	gamepads.getLock().exit();
 	return nullptr;
 }
 
@@ -136,7 +147,9 @@ void InputSystemManager::run()
 		if (Time::getApproximateMillisecondCounter() > lastCheckTime + checkDeviceTime)
 		{
 			int numDevices = SDL_NumJoysticks();
-
+			
+			joysticks.getLock().enter();
+			gamepads.getLock().enter();
 
 			for (int i = 0; i < numDevices; i++)
 			{
@@ -168,13 +181,14 @@ void InputSystemManager::run()
 				//check removed devices
 				if (!SDL_JoystickGetAttached(j->joystick)) removeJoystick(j);
 			}
-
+			
 			for (auto &g : gamepads)
 			{
 				//check removed devices
 				DBG("Check if device is opened : " << (int)SDL_GameControllerGetAttached(g->gamepad));
 				if (!SDL_GameControllerGetAttached(g->gamepad)) removeGamepad(g);
 			}
+			
 			lastCheckTime = Time::getApproximateMillisecondCounter();
 		}
 
@@ -182,6 +196,10 @@ void InputSystemManager::run()
 		SDL_GameControllerUpdate();
 		for (auto &j : joysticks) j->update();
 		for (auto &g : gamepads) g->update();
+
+		joysticks.getLock().exit();
+		gamepads.getLock().exit();
+
 
 		sleep(10); //100fps
 	}
@@ -299,13 +317,13 @@ void JoystickParameter::setJoystick(Joystick * j)
 		ghostID = SDL_JoystickGetGUID(joystick->joystick);
 		ghostName = SDL_JoystickName(joystick->joystick);
 		for (int i = 0; i < 16; i++) val.append((int)ghostID.data[i]);
-		setValue(val);
+		setValue(val, false, true); //Can be the same name, force here
 
 	} else
 	{
 		var val;
 		for (int i = 0; i < 16; i++) val.append(0);
-		setValue(val);
+		setValue(val, false, true);
 	}
 }
 

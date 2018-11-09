@@ -112,8 +112,8 @@ public:
 	const uint32 checkDeviceTime = 1000; //ms
 	uint32 lastCheckTime;
 
-	OwnedArray<Joystick> joysticks;
-	OwnedArray<Gamepad> gamepads;
+	OwnedArray<Joystick, CriticalSection> joysticks;
+	OwnedArray<Gamepad, CriticalSection> gamepads;
 
 	Gamepad * addGamepad(SDL_GameController * controller);
 	void removeGamepad(Gamepad * g);

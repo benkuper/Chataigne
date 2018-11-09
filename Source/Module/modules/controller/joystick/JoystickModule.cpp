@@ -32,6 +32,7 @@ void JoystickModule::rebuildValues()
 
 	valuesCC.clear();
 	if (joystickParam->joystick == nullptr) return;
+
 	valuesCC.addChildControllableContainer(&joystickParam->joystick->axesCC);
 	valuesCC.addChildControllableContainer(&joystickParam->joystick->buttonsCC);
 }
@@ -42,6 +43,7 @@ void JoystickModule::joystickAdded(Joystick * j)
 	if (jName == joystickParam->ghostName)
 	{
 		joystickParam->setJoystick(j);
+		rebuildValues();
 	}
 }
 
