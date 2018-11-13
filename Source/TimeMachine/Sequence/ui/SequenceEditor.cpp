@@ -11,7 +11,6 @@
 #include "SequenceEditor.h"
 
 ApplicationCommandManager& getCommandManager();
-static OrganicApplication& getApp() { return *dynamic_cast<OrganicApplication*>(JUCEApplication::getInstance()); }
 
 SequenceEditor::SequenceEditor(Sequence * _sequence) :
 	sequence(_sequence),

@@ -68,7 +68,7 @@ public:
 
 	void itemUIAdded(StateViewUI * svui) override;
 
-	void containerRebuilt(GenericControllableContainerEditor * editor);
+    void containerRebuilt(GenericControllableContainerEditor * editor) override;
 
 	static BasicsGuide * create(var) { return new BasicsGuide(); }
 };
