@@ -23,7 +23,8 @@ AudioLayerClip::AudioLayerClip(float _time) :
 	filePath = new FileParameter("File Path", "File Path", "");
 	addParameter(filePath);
 
-	time = addFloatParameter("Start Time", "Time of the start of the clip", _time, 0, 3600);
+	time = addFloatParameter("Start Time", "Time of the start of the clip", 0, 0, 3600);
+	time->setValue(_time);
 	time->defaultUI = FloatParameter::TIME;
 
 	clipLength = addFloatParameter("Length", "Length of the clip (in seconds)", 10, .1f, 3600);
