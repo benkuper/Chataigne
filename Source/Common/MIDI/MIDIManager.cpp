@@ -9,11 +9,16 @@
 */
 
 #include "MIDIManager.h"
+#include "ChataigneEngine.h"
 
 juce_ImplementSingleton(MIDIManager)
 
 MIDIManager::MIDIManager()
 {
+
+	midiRouterDefaultType = dynamic_cast<ChataigneEngine *>(Engine::mainEngine)->defaultBehaviors.addEnumParameter("MIDI Router Ouput Type","Choose the default type when choosing a MIDI Module as Router output");
+	midiRouterDefaultType->addOption("Control Change", MIDIManager::CONTROL_CHANGE)->addOption("Note On", MIDIManager::NOTE_ON)->addOption("Note Off", MIDIManager::NOTE_OFF);
+
 	startTimer(500); //check devices each half seconds
 	checkDevices();
 }

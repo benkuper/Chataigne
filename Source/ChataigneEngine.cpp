@@ -26,8 +26,11 @@
 #include "Module/modules/controller/myo/MyoManager.h"
 #endif
 
+ControllableContainer * getAppSettings();
+
 ChataigneEngine::ChataigneEngine() :
-	Engine("Chataigne", ".noisette")
+	Engine("Chataigne", ".noisette"),
+	defaultBehaviors("Default Behaviors")
 	//ossiaDevice(nullptr)
 {
 	convertURL = "http://benjamin.kuperberg.fr/chataigne/releases/convert.php";
@@ -39,14 +42,11 @@ ChataigneEngine::ChataigneEngine() :
 	addChildControllableContainer(SequenceManager::getInstance());
 	addChildControllableContainer(ModuleRouterManager::getInstance());
 	addChildControllableContainer(CVGroupManager::getInstance());
+	
 
-	/*
-	ossiaProtocol = ossia_protocol_oscquery_server_create(1234, 5678);
-	ossiaDevice = ossia_device_create(ossiaProtocol, "Chataigne");
-	ossiaRoot = ossia_device_get_root_node(ossiaDevice);
-	isPushingParameter = false;
-	updateOssiaStructure();
-	*/
+	MIDIManager::getInstance(); //Trigger constructor, declare settings
+	getAppSettings()->addChildControllableContainer(&defaultBehaviors);
+
 }
 
 ChataigneEngine::~ChataigneEngine()

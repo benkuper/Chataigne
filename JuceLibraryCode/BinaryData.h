@@ -12,13 +12,22 @@ namespace BinaryData
     const int            conditionScriptTemplate_jsSize = 5536;
 
     extern const char*   filterScriptTemplate_js;
-    const int            filterScriptTemplate_jsSize = 5387;
+    const int            filterScriptTemplate_jsSize = 646;
 
     extern const char*   genericScriptTemplate_js;
     const int            genericScriptTemplate_jsSize = 4737;
 
+    extern const char*   midiScriptTemplate_js;
+    const int            midiScriptTemplate_jsSize = 1271;
+
     extern const char*   moduleScriptTemplate_js;
-    const int            moduleScriptTemplate_jsSize = 5943;
+    const int            moduleScriptTemplate_jsSize = 1204;
+
+    extern const char*   oscScriptTemplate_js;
+    const int            oscScriptTemplate_jsSize = 798;
+
+    extern const char*   streamingScriptTemplate_js;
+    const int            streamingScriptTemplate_jsSize = 1091;
 
     extern const char*   about_png;
     const int            about_pngSize = 36971;
@@ -72,7 +81,7 @@ namespace BinaryData
     const int            stripe_pngSize = 2043;
 
     // Number of elements in the namedResourceList and originalFileNames arrays.
-    const int namedResourceListSize = 21;
+    const int namedResourceListSize = 24;
 
     // Points to the start of a list of resource names.
     extern const char* namedResourceList[];

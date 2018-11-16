@@ -19,7 +19,7 @@ ScriptFilter::ScriptFilter(var params) :
 	filterParams.addChildControllableContainer(&script);
 
 
-	if (scriptTemplate.isEmpty()) scriptTemplate = ChataigneAssetManager::getInstance()->getScriptTemplate("filter");
+	if (scriptTemplate.isEmpty()) scriptTemplate = ChataigneAssetManager::getInstance()->getScriptTemplateBundle(StringArray("generic","filter"));
 	script.scriptTemplate = &scriptTemplate;
 }
 

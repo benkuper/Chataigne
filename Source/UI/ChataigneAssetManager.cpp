@@ -97,5 +97,23 @@ String ChataigneAssetManager::getScriptTemplate(const String & templateRef)
 {
 	int templateDataSize = 0;
 	String resourceName = templateRef + "ScriptTemplate_js";
-	return String(BinaryData::getNamedResource(resourceName.getCharPointer(), templateDataSize));
+	const char * result = BinaryData::getNamedResource(resourceName.getCharPointer(), templateDataSize);
+	if (templateDataSize == 0)
+	{
+		DBG("Template not found : " << templateRef);
+		return "";
+	}
+
+	return String(result);
+}
+
+String ChataigneAssetManager::getScriptTemplateBundle(StringArray templateRefs)
+{
+	String result = "";
+	for (auto &s : templateRefs)
+	{
+		result += getScriptTemplate(s);
+	}
+
+	return result;
 }

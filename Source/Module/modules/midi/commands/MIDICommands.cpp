@@ -78,20 +78,20 @@ void MIDINoteAndCCCommand::trigger()
 	switch(type)
 	{
 	case NOTE_ON:
-		midiModule->sendNoteOn(pitch, velocity->intValue(), channel->intValue());
+		midiModule->sendNoteOn(channel->intValue(), pitch, velocity->intValue());
 		break;
 
 	case NOTE_OFF:
-		midiModule->sendNoteOff(pitch, channel->intValue());
+		midiModule->sendNoteOff(channel->intValue(), pitch);
 		break;
 
 	case FULL_NOTE:
-		midiModule->sendNoteOn(pitch, velocity->intValue(), channel->intValue());
+		midiModule->sendNoteOn(channel->intValue(), pitch, velocity->intValue());
 		startTimer(onTime->floatValue() * 1000);
 		break;
 
 	case CONTROLCHANGE:
-		midiModule->sendControlChange(pitch, velocity->intValue(), channel->intValue());
+		midiModule->sendControlChange(channel->intValue(), pitch, velocity->intValue());
 		break;
 
 	default:
@@ -104,7 +104,7 @@ void MIDINoteAndCCCommand::timerCallback()
 {
 	stopTimer();
 	int pitch = (int)noteEnum->getValueData() + (octave->intValue() - (int)octave->minimumValue) * 12;
-	if (midiModule != nullptr) midiModule->sendNoteOff(pitch, channel->intValue());
+	if (midiModule != nullptr) midiModule->sendNoteOff(channel->intValue(), pitch);
 }
 
 

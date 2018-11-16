@@ -33,7 +33,10 @@ public:
 	MIDIInputDevice * getInputDeviceWithName(const String &name);
 	MIDIOutputDevice * getOutputDeviceWithName(const String &name);
 	
-	
+	//Gloabal Settings
+	enum MIDIEventType { NOTE_ON, NOTE_OFF, FULL_NOTE, CONTROL_CHANGE, SYSEX};
+	EnumParameter * midiRouterDefaultType;
+
 	class  Listener
 	{
 	public:

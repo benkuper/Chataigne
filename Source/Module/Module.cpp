@@ -65,7 +65,7 @@ Module::Module(const String &name) :
 
 	addChildControllableContainer(&commandTester);
 
-	scriptManager->scriptTemplate = ChataigneAssetManager::getInstance()->getScriptTemplate("module");
+	scriptManager->scriptTemplate = ChataigneAssetManager::getInstance()->getScriptTemplateBundle(StringArray("generic","module"));
 }
 
 Module::~Module()

@@ -7493,7 +7493,16 @@
     <None Include="..\..\Resources\Templates\Scripts\genericScriptTemplate.js">
       <Filter>Chataigne\Resources\Templates\Scripts</Filter>
     </None>
+    <None Include="..\..\Resources\Templates\Scripts\midiScriptTemplate.js">
+      <Filter>Chataigne\Resources\Templates\Scripts</Filter>
+    </None>
     <None Include="..\..\Resources\Templates\Scripts\moduleScriptTemplate.js">
+      <Filter>Chataigne\Resources\Templates\Scripts</Filter>
+    </None>
+    <None Include="..\..\Resources\Templates\Scripts\oscScriptTemplate.js">
+      <Filter>Chataigne\Resources\Templates\Scripts</Filter>
+    </None>
+    <None Include="..\..\Resources\Templates\Scripts\streamingScriptTemplate.js">
       <Filter>Chataigne\Resources\Templates\Scripts</Filter>
     </None>
     <None Include="..\..\Resources\about.png">

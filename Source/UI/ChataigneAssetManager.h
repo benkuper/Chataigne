@@ -39,6 +39,7 @@ public:
 	ImageButton * getToggleBTImage(const Image &image);
 
 	String getScriptTemplate(const String &templateRef);
+	String getScriptTemplateBundle(StringArray templateRefs);
 };
 
 

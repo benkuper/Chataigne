@@ -48,12 +48,23 @@ public:
 
 	MIDIInputDevice * inputDevice;
 	MIDIOutputDevice * outputDevice;
+
+	//Script
+	const Identifier noteOnEventId = "noteOnEvent";
+	const Identifier noteOffEventId = "noteOffEvent";
+	const Identifier ccEventId = "ccEvent";
+	const Identifier sysexEventId = "sysExEvent";
+
+	const Identifier sendNoteOnId = "sendNoteOn";
+	const Identifier sendNoteOffId = "sendNoteOff";
+	const Identifier sendCCId = "sendCC";
+	const Identifier sendSysexId = "sendSysex";
 	
 	bool useGenericControls;
 
-	virtual void sendNoteOn(int pitch, int velocity, int channel = 1);
-	virtual void sendNoteOff(int pitch, int channel = 0);
-	virtual void sendControlChange(int number, int value, int channel = 1);
+	virtual void sendNoteOn(int channel, int pitch, int velocity);
+	virtual void sendNoteOff(int channel, int pitch);
+	virtual void sendControlChange(int channel, int number, int value);
 	virtual void sendSysex(Array<uint8> data);
 
 	void onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c) override;
@@ -62,6 +73,15 @@ public:
 	virtual void noteOnReceived(const int &channel, const int &pitch, const int &velocity) override;
 	virtual void noteOffReceived(const int &channel, const int &pitch, const int &velocity) override;
 	virtual void controlChangeReceived(const int &channel, const int &number, const int &value) override;
+	virtual void sysExReceived(const MidiMessage & msg) override;
+
+
+	//Script
+	static var sendNoteOnFromScript(const var::NativeFunctionArgs &args);
+	static var sendNoteOffFromScript(const var::NativeFunctionArgs &args);
+	static var sendCCFromScript(const var::NativeFunctionArgs &args);
+	static var sendSysexFromScript(const var::NativeFunctionArgs &args);
+
 
 	void updateValue(const int &channel, const String &n, const int &val, const MIDIValueParameter::Type &type, const int &pitchOrNumber);
 
@@ -72,7 +92,6 @@ public:
 	public:
 		MIDIRouteParams(Module * sourceModule, Controllable * c);
 		~MIDIRouteParams() {}
-		enum Type { NOTE_ON, NOTE_OFF, FULL_NOTE, CONTROL_CHANGE };
 		EnumParameter * type;
 		IntParameter * channel;
 		IntParameter * pitchOrNumber;

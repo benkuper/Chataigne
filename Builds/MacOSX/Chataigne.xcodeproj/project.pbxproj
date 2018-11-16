@@ -1398,6 +1398,13 @@
 			path = System/Library/Frameworks/CoreMedia.framework;
 			sourceTree = SDKROOT;
 		};
+		0C5AF857C59082628C2BDB1A = {
+			isa = PBXFileReference;
+			lastKnownFileType = file.js;
+			name = streamingScriptTemplate.js;
+			path = ../../Resources/Templates/Scripts/streamingScriptTemplate.js;
+			sourceTree = "SOURCE_ROOT";
+		};
 		0D4E4DD1A72C4AF6A613A8C5 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -1494,6 +1501,13 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = "list_ports_linux.cc";
 			path = "../../Source/Common/Serial/lib/serial/impl/list_ports/list_ports_linux.cc";
+			sourceTree = "SOURCE_ROOT";
+		};
+		1542C0258C8286E5FD5F1206 = {
+			isa = PBXFileReference;
+			lastKnownFileType = file.js;
+			name = oscScriptTemplate.js;
+			path = ../../Resources/Templates/Scripts/oscScriptTemplate.js;
 			sourceTree = "SOURCE_ROOT";
 		};
 		16425EC5EB0EDEC42F5DA432 = {
@@ -4632,6 +4646,13 @@
 			path = ../../Source/Module/modules/osc/resolume/commands/ui/ResolumeBaseCommandEditor.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
+		D5FBA39828DF0F3D12B63CFF = {
+			isa = PBXFileReference;
+			lastKnownFileType = file.js;
+			name = midiScriptTemplate.js;
+			path = ../../Resources/Templates/Scripts/midiScriptTemplate.js;
+			sourceTree = "SOURCE_ROOT";
+		};
 		D6743891987873266310698C = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -5345,7 +5366,10 @@
 				A17ACDD4B45B14AB30469A2D,
 				7347A5FBEE965521C1AFC6A2,
 				8F1E0B684D1010283648DB5F,
+				D5FBA39828DF0F3D12B63CFF,
 				20A44377EAC767480769BEA5,
+				1542C0258C8286E5FD5F1206,
+				0C5AF857C59082628C2BDB1A,
 			);
 			name = Scripts;
 			sourceTree = "<group>";

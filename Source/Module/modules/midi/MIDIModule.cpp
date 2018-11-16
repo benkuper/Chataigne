@@ -10,6 +10,8 @@
 
 #include "MIDIModule.h"
 #include "commands/MIDICommands.h"
+#include "Common/MIDI/MIDIManager.h"
+#include "UI/ChataigneAssetManager.h"
 
 MIDIModule::MIDIModule(const String & name, bool _useGenericControls) :
 	Module(name),
@@ -38,6 +40,15 @@ MIDIModule::MIDIModule(const String & name, bool _useGenericControls) :
 	moduleParams.addParameter(midiParam);
 
 	setupIOConfiguration(inputDevice != nullptr, outputDevice != nullptr);
+
+
+	//Script
+	scriptObject.setMethod(sendNoteOnId, &MIDIModule::sendNoteOnFromScript);
+	scriptObject.setMethod(sendNoteOffId, &MIDIModule::sendNoteOffFromScript);
+	scriptObject.setMethod(sendCCId, &MIDIModule::sendCCFromScript);
+	scriptObject.setMethod(sendSysexId, &MIDIModule::sendSysexFromScript);
+
+	scriptManager->scriptTemplate += ChataigneAssetManager::getInstance()->getScriptTemplate("midi");
 }
 
 MIDIModule::~MIDIModule()
@@ -103,9 +114,9 @@ void MIDIModule::onControllableFeedbackUpdateInternal(ControllableContainer * cc
 			{
 				switch (mvp->type)
 				{
-				case MIDIValueParameter::NOTE_ON: sendNoteOn(mvp->pitchOrNumber, mvp->intValue(), mvp->channel); break;
-				case MIDIValueParameter::NOTE_OFF: sendNoteOff(mvp->pitchOrNumber, mvp->channel); break;
-				case MIDIValueParameter::CONTROL_CHANGE: sendControlChange(mvp->pitchOrNumber, mvp->intValue(), mvp->channel); break;
+				case MIDIValueParameter::NOTE_ON: sendNoteOn(mvp->channel, mvp->pitchOrNumber, mvp->intValue()); break;
+				case MIDIValueParameter::NOTE_OFF: sendNoteOff(mvp->channel, mvp->pitchOrNumber); break;
+				case MIDIValueParameter::CONTROL_CHANGE: sendControlChange(mvp->channel, mvp->pitchOrNumber, mvp->intValue()); break;
                         
                 default:
                     break;
@@ -149,6 +160,8 @@ void MIDIModule::noteOnReceived(const int & channel, const int & pitch, const in
 	if (logIncomingData->boolValue())  NLOG(niceName, "Note On : " << channel << ", " << MIDIManager::getNoteName(pitch) << ", " << velocity);
 
 	if (useGenericControls) updateValue(channel, MIDIManager::getNoteName(pitch), velocity, MIDIValueParameter::NOTE_ON, pitch);
+
+	if (scriptManager->items.size() > 0) scriptManager->callFunctionOnAllItems(noteOnEventId, Array<var>(channel, pitch, velocity));
 }
 
 void MIDIModule::noteOffReceived(const int & channel, const int & pitch, const int & velocity)
@@ -158,6 +171,8 @@ void MIDIModule::noteOffReceived(const int & channel, const int & pitch, const i
 	if (logIncomingData->boolValue()) NLOG(niceName, "Note Off : " << channel << ", " << MIDIManager::getNoteName(pitch) << ", " << velocity);
 
 	if (useGenericControls) updateValue(channel, MIDIManager::getNoteName(pitch), velocity, MIDIValueParameter::NOTE_OFF, pitch);
+
+	if (scriptManager->items.size() > 0) scriptManager->callFunctionOnAllItems(noteOffEventId, Array<var>(channel, pitch, velocity));
 	
 }
 
@@ -169,6 +184,91 @@ void MIDIModule::controlChangeReceived(const int & channel, const int & number, 
 
 	if (useGenericControls) updateValue(channel, "CC"+String(number), value, MIDIValueParameter::CONTROL_CHANGE, number);
 
+	if (scriptManager->items.size() > 0) scriptManager->callFunctionOnAllItems(ccEventId, Array<var>(channel, number, value));
+
+}
+
+void MIDIModule::sysExReceived(const MidiMessage & msg)
+{
+	if (!enabled->boolValue()) return;
+	inActivityTrigger->trigger(); 
+
+	Array<uint8> data(msg.getSysExData(), msg.getSysExDataSize());
+
+	if (logIncomingData->boolValue())
+	{
+		String log = "Sysex received, " + String(data.size()) + " bytes";
+		for (int i = 0; i < data.size(); i++)
+		{
+			log += "\n" + String(data[i]);
+		}
+		NLOG(niceName, log);
+	}
+
+	if (scriptManager->items.size() > 0) scriptManager->callFunctionOnAllItems(sysexEventId, Array<var>(data.getRawDataPointer(), data.size()));
+}
+
+var MIDIModule::sendNoteOnFromScript(const var::NativeFunctionArgs & args)
+{
+	MIDIModule * m = getObjectFromJS<MIDIModule>(args);
+	if (!m->enabled->boolValue()) return var();
+
+	if (args.numArguments < 3)
+	{
+		NLOG(m->niceName, "Not enough arguments passed from script, got " << args.numArguments << ", expected 3");
+		return var();
+	}
+
+	m->sendNoteOn(args.arguments[0], args.arguments[1], args.arguments[2]);
+	return var();
+}
+
+var MIDIModule::sendNoteOffFromScript(const var::NativeFunctionArgs & args)
+{
+	MIDIModule * m = getObjectFromJS<MIDIModule>(args);
+	if (!m->enabled->boolValue()) return var();
+
+	if (args.numArguments < 2)
+	{
+		NLOG(m->niceName, "Not enough arguments passed from script, got " << args.numArguments << ", expected 2");
+		return var();
+	}
+
+	m->sendNoteOff(args.arguments[0], args.arguments[1]);
+	return var();
+}
+
+var MIDIModule::sendCCFromScript(const var::NativeFunctionArgs & args)
+{
+	MIDIModule * m = getObjectFromJS<MIDIModule>(args);
+	if (!m->enabled->boolValue()) return var();
+
+	if (args.numArguments < 3)
+	{
+		NLOG(m->niceName, "Not enough arguments passed from script, got " << args.numArguments << ", expected 3");
+		return var();
+	}
+
+	m->sendControlChange(args.arguments[0], args.arguments[1], args.arguments[2]);
+	return var();
+}
+
+var MIDIModule::sendSysexFromScript(const var::NativeFunctionArgs & args)
+{
+	MIDIModule * m = getObjectFromJS<MIDIModule>(args);
+	if (!m->enabled->boolValue()) return var();
+
+	if (args.numArguments == 0)
+	{
+		NLOG(m->niceName, "Not enough arguments passed from script, got " << args.numArguments << ", expected at least 1");
+		return var();
+	}
+
+	Array<uint8> data;
+	for (int i = 0; i < args.numArguments; i++) data.add((uint8)(int)args.arguments[i]);
+	m->sendSysex(data);
+
+	return var();
 }
 
 void MIDIModule::updateValue(const int & channel, const String & n, const int & val, const MIDIValueParameter::Type & type, const int & pitchOrNumber)
@@ -223,7 +323,8 @@ MIDIModule::MIDIRouteParams::MIDIRouteParams(Module * sourceModule, Controllable
 	}
 
 	type = addEnumParameter("Type", "The type of MIDI Command to route");
-	type->addOption("Control Change", CONTROL_CHANGE)->addOption("Note On", NOTE_ON)->addOption("Note Off",NOTE_OFF);
+	type->addOption("Control Change", MIDIManager::CONTROL_CHANGE)->addOption("Note On", MIDIManager::NOTE_ON)->addOption("Note Off", MIDIManager::NOTE_OFF);
+	type->setValueWithData(MIDIManager::getInstance()->midiRouterDefaultType->getValueData());
 
 	channel = addIntParameter("Channel", "The Channel", 1, 1, 16);
 	pitchOrNumber = addIntParameter("Pitch / Number", "Pitch if type is a note, number if it is a controlChange", 0, 0, 127);
@@ -235,7 +336,7 @@ void MIDIModule::handleRoutedModuleValue(Controllable * c, RouteParams * p)
 	MIDIRouteParams * mp = dynamic_cast<MIDIRouteParams *>(p);
 	if (mp->type == nullptr) return;
 
-	MIDIRouteParams::Type t = mp->type->getValueDataAsEnum<MIDIRouteParams::Type>();
+	MIDIManager::MIDIEventType t = mp->type->getValueDataAsEnum<MIDIManager::MIDIEventType>();
 
 	int value = 127;
 	Parameter * sp = c->type == Controllable::TRIGGER ? nullptr : dynamic_cast<Parameter *>(c);
@@ -243,15 +344,15 @@ void MIDIModule::handleRoutedModuleValue(Controllable * c, RouteParams * p)
 
 	switch (t)
 	{
-	case MIDIRouteParams::NOTE_ON:
+	case MIDIManager::NOTE_ON:
 		sendNoteOn(mp->pitchOrNumber->intValue(), value, mp->channel->intValue());
 		break;
 
-	case MIDIRouteParams::NOTE_OFF:
+	case MIDIManager::NOTE_OFF:
 		sendNoteOff(mp->pitchOrNumber->intValue(), mp->channel->intValue());
 		break;
 
-	case MIDIRouteParams::CONTROL_CHANGE:
+	case MIDIManager::CONTROL_CHANGE:
 		sendControlChange(mp->pitchOrNumber->intValue(), value, mp->channel->intValue());
 		break;
 

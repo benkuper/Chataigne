@@ -13,6 +13,7 @@
 #include "commands/SendStreamStringCommand.h"
 #include "commands/SendStreamValuesCommand.h"
 #include "commands/SendStreamStringValuesCommand.h"
+#include "UI/ChataigneAssetManager.h"
 
 StreamingModule::StreamingModule(const String & name) :
 	Module(name)
@@ -26,13 +27,17 @@ StreamingModule::StreamingModule(const String & name) :
 	firstValueIsTheName = moduleParams.addBoolParameter("First value is the name", "If checked, the first value of a parsed message will be used to name the value, otherwise each values will be named by their index", true);
 	buildMessageStructureOptions();
 
-	scriptObject.setMethod(sendId, StreamingModule::sendStringFromScript);
-	scriptObject.setMethod(sendBytesId, StreamingModule::sendBytesFromScript);
-
 	defManager.add(CommandDefinition::createDef(this, "", "Send string", &SendStreamStringCommand::create, CommandContext::BOTH));
 	defManager.add(CommandDefinition::createDef(this, "", "Send values as string", &SendStreamStringValuesCommand::create, CommandContext::BOTH));
 	defManager.add(CommandDefinition::createDef(this, "", "Send raw bytes", &SendStreamRawDataCommand::create, CommandContext::BOTH));
-	defManager.add(CommandDefinition::createDef(this, "", "Send custom values", &SendStreamValuesCommand::create, CommandContext::BOTH));
+	defManager.add(CommandDefinition::createDef(this, "", "Send custom values", &SendStreamValuesCommand::create, CommandContext::BOTH)); 
+	
+	scriptObject.setMethod(sendId, StreamingModule::sendStringFromScript);
+	scriptObject.setMethod(sendBytesId, StreamingModule::sendBytesFromScript);
+	
+	scriptManager->scriptTemplate += ChataigneAssetManager::getInstance()->getScriptTemplate("streaming");
+
+	
 }
 
 StreamingModule::~StreamingModule()

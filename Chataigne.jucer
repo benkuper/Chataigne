@@ -16,8 +16,14 @@
                 file="Resources/Templates/Scripts/filterScriptTemplate.js"/>
           <FILE id="TcSxtH" name="genericScriptTemplate.js" compile="0" resource="1"
                 file="Resources/Templates/Scripts/genericScriptTemplate.js"/>
+          <FILE id="l9ld1m" name="midiScriptTemplate.js" compile="0" resource="1"
+                file="Resources/Templates/Scripts/midiScriptTemplate.js"/>
           <FILE id="GlFclq" name="moduleScriptTemplate.js" compile="0" resource="1"
                 file="Resources/Templates/Scripts/moduleScriptTemplate.js"/>
+          <FILE id="YGTbdF" name="oscScriptTemplate.js" compile="0" resource="1"
+                file="Resources/Templates/Scripts/oscScriptTemplate.js"/>
+          <FILE id="GYfwUG" name="streamingScriptTemplate.js" compile="0" resource="1"
+                file="Resources/Templates/Scripts/streamingScriptTemplate.js"/>
         </GROUP>
       </GROUP>
       <FILE id="qDQaKu" name="about.png" compile="0" resource="1" file="Resources/about.png"/>

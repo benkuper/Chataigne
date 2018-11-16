@@ -23,6 +23,7 @@ void ChataigneApplication::initialiseInternal(const String &)
 	engine = new ChataigneEngine();
 	mainComponent = new MainContentComponent();
 
+
 	ShapeShifterManager::getInstance()->setDefaultFileData(BinaryData::default_chalayout);
 	ShapeShifterManager::getInstance()->setLayoutInformations("chalayout", "Chataigne/layouts");
 

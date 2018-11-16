@@ -3713,7 +3713,10 @@
     <None Include="..\..\Resources\Templates\Scripts\conditionScriptTemplate.js"/>
     <None Include="..\..\Resources\Templates\Scripts\filterScriptTemplate.js"/>
     <None Include="..\..\Resources\Templates\Scripts\genericScriptTemplate.js"/>
+    <None Include="..\..\Resources\Templates\Scripts\midiScriptTemplate.js"/>
     <None Include="..\..\Resources\Templates\Scripts\moduleScriptTemplate.js"/>
+    <None Include="..\..\Resources\Templates\Scripts\oscScriptTemplate.js"/>
+    <None Include="..\..\Resources\Templates\Scripts\streamingScriptTemplate.js"/>
     <None Include="..\..\Resources\about.png"/>
     <None Include="..\..\Resources\add.png"/>
     <None Include="..\..\Resources\default.chalayout"/>

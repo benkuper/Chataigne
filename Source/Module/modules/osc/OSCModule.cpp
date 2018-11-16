@@ -10,6 +10,7 @@
 
 #include "OSCModule.h"
 #include "Module/modules/common//ui/EnablingNetworkControllableContainerEditor.h"
+#include "UI/ChataigneAssetManager.h"
 
 OSCModule::OSCModule(const String & name, int defaultLocalPort, int defaultRemotePort, bool canHaveInput, bool canHaveOutput) :
 	Module(name),
@@ -62,6 +63,7 @@ OSCModule::OSCModule(const String & name, int defaultLocalPort, int defaultRemot
 
 	//Script
 	scriptObject.setMethod(sendOSCId, OSCModule::sendOSCFromScript);
+	scriptManager->scriptTemplate += ChataigneAssetManager::getInstance()->getScriptTemplate("osc");
 }
 
 OSCModule::~OSCModule()
