@@ -78,11 +78,11 @@ void SequenceTimelineSeeker::mouseDrag(const MouseEvent & e)
 
 			if (e.getScreenPosition().x == 0 || e.getScreenPosition().y == 0) return;
 
-			Point<int> offset = e.getScreenPosition() - e.getMouseDownScreenPosition();
+			Point<float> offset = (e.getScreenPosition() - e.getMouseDownScreenPosition()).toFloat();
 			//float offsetY = e.getEventRelativeTo(this).getOffsetFromDragStart().y;
 
-			offset.x = offset.x < 0 ? jmin<int>(offset.x + minActionDistX, 0) : jmax<int>(offset.x - minActionDistX, 0);
-			offset.y = offset.y< 0 ? jmin<int>(offset.y + minActionDistY, 0) : jmax<int>(offset.y - minActionDistY, 0);
+			offset.x = offset.x < 0 ? jmin<float>(offset.x + minActionDistX, 0) : jmax<float>(offset.x - minActionDistX, 0);
+			offset.y = offset.y< 0 ? jmin<float>(offset.y + minActionDistY, 0) : jmax<float>(offset.y - minActionDistY, 0);
 
 			offset.y *= sequence->totalTime->floatValue();
 			if (e.mods.isShiftDown()) offset.y *= 2;
