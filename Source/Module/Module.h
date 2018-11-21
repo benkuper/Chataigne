@@ -39,6 +39,8 @@ public:
 	CommandDefinitionManager defManager;
 	ControllableContainer valuesCC;
 
+	bool includeValuesInSave;
+
 	BaseCommandHandler commandTester;
 
 	String customType; //for custom modules;

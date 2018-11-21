@@ -21,6 +21,7 @@ Module::Module(const String &name) :
 	hasOutput(true),
 	moduleParams("Parameters"),
 	valuesCC("Values"),
+	includeValuesInSave(false),
 	commandTester("Command Tester", CommandContext::ACTION),
 	templateManager(this),
     canHandleRouteValues(false)
@@ -156,6 +157,8 @@ var Module::getJSONData()
 	var templateData = templateManager.getJSONData();
 	if (!templateData.isVoid() && templateData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty("templates", templateData);
 
+	if(includeValuesInSave) data.getDynamicObject()->setProperty("values", valuesCC.getJSONData());
+
 	return data;
 }
 
@@ -164,6 +167,8 @@ void Module::loadJSONDataInternal(var data)
 	BaseItem::loadJSONDataInternal(data);
 	moduleParams.loadJSONData(data.getProperty("params", var()));
 	templateManager.loadJSONData(data.getProperty("templates", var()), true);
+
+	if (includeValuesInSave) valuesCC.loadJSONData(data.getProperty("values", var()), true);
 }
 
 void Module::setupModuleFromJSONData(var data)

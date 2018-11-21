@@ -20,8 +20,8 @@ MIDIModule::MIDIModule(const String & name, bool _useGenericControls) :
 	useGenericControls(_useGenericControls)
 {
 	setupIOConfiguration(true, true);
-
 	canHandleRouteValues = true;
+	includeValuesInSave = true;
 
 	if (useGenericControls)
 	{
@@ -293,20 +293,10 @@ void MIDIModule::updateValue(const int & channel, const String & n, const int & 
 
 }
 
-
-var MIDIModule::getJSONData()
-{
-	var data = Module::getJSONData();
-	data.getDynamicObject()->setProperty("values", valuesCC.getJSONData());
-	return data;
-}
-
 void MIDIModule::loadJSONDataInternal(var data)
 {
 	Module::loadJSONDataInternal(data);
-	valuesCC.loadJSONData(data.getProperty("values", var()), true);
 	valuesCC.orderControllablesAlphabetically();
-
 	setupIOConfiguration(inputDevice != nullptr || valuesCC.controllables.size() > 0, outputDevice != nullptr);
 }
 

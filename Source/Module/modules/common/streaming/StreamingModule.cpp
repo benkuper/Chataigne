@@ -18,7 +18,9 @@
 StreamingModule::StreamingModule(const String & name) :
 	Module(name)
 {
+	includeValuesInSave = true;
 	setupIOConfiguration(true, true);
+	
 	streamingType = moduleParams.addEnumParameter("Protocol", "Protocol for treating the incoming data");
 	streamingType->addOption("Lines", LINES)->addOption("Raw", RAW)->addOption("Data255", DATA255)->addOption("COBS", COBS);
 
@@ -36,8 +38,6 @@ StreamingModule::StreamingModule(const String & name) :
 	scriptObject.setMethod(sendBytesId, StreamingModule::sendBytesFromScript);
 	
 	scriptManager->scriptTemplate += ChataigneAssetManager::getInstance()->getScriptTemplate("streaming");
-
-	
 }
 
 StreamingModule::~StreamingModule()

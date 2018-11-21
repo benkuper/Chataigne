@@ -100,8 +100,6 @@ public:
 	virtual RouteParams * createRouteParamsForSourceValue(Module * sourceModule, Controllable * c, int /*index*/) override { return new MIDIRouteParams(sourceModule, c); }
 	virtual void handleRoutedModuleValue(Controllable * c, RouteParams * p) override;
 
-
-	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
 
 	static MIDIModule * create() { return new MIDIModule(); }

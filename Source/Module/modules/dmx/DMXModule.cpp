@@ -16,10 +16,9 @@ DMXModule::DMXModule() :
 	dmxDevice(nullptr)
 {
 	setupIOConfiguration(false, true);
-
 	valuesCC.editorIsCollapsed = true;
-
 	canHandleRouteValues = true;
+	includeValuesInSave = true;
 
 	defManager.add(CommandDefinition::createDef(this, "", "Set value", &DMXCommand::create)->addParam("action", DMXCommand::SET_VALUE));
 	defManager.add(CommandDefinition::createDef(this, "", "Set value 16bit", &DMXCommand::create)->addParam("action", DMXCommand::SET_VALUE_16BIT));

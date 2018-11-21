@@ -17,6 +17,8 @@ CustomOSCModule::CustomOSCModule() :
 	OSCModule("OSC"),
 	autoAdd(nullptr)
 {
+	includeValuesInSave = true;
+
 	autoAdd = moduleParams.addBoolParameter("Auto Add", "Add automatically any message that is received\nand try to create the corresponding value depending on the message content.", true);
 	autoAdd->isTargettable = false;
 
@@ -231,21 +233,6 @@ void CustomOSCModule::processMessageInternal(const OSCMessage & msg)
 	}
 }
 
-
-var CustomOSCModule::getJSONData()
-{
-	var data = OSCModule::getJSONData();
-	data.getDynamicObject()->setProperty("values", valuesCC.getJSONData());
-	return data;
-}
-
-void CustomOSCModule::loadJSONDataInternal(var data)
-{
-	OSCModule::loadJSONDataInternal(data);
-	valuesCC.loadJSONData(data.getProperty("values", var()), true);
-	//valuesCC.orderControllablesAlphabetically();
-	//for (auto & v : valuesCC.controllables) v->setControllableFeedbackOnly(true);
-}
 
 void CustomOSCModule::onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c)
 {

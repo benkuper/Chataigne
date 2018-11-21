@@ -48,6 +48,7 @@ public:
 
 	virtual bool isReadyToSend() { return false; }
 
+
 	static var sendStringFromScript(const var::NativeFunctionArgs &a);
 	static var sendBytesFromScript(const var::NativeFunctionArgs &a);
 
