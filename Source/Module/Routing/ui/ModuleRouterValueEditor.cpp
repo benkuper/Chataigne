@@ -10,7 +10,6 @@
 
 #include "ModuleRouterValueEditor.h"
 
-
 ModuleRouterValueEditor::ModuleRouterValueEditor(ModuleRouterValue * mrv) :
 	BaseItemUI(mrv)
 {
@@ -25,7 +24,6 @@ ModuleRouterValueEditor::ModuleRouterValueEditor(ModuleRouterValue * mrv) :
 	valueLabel.setText(item->sourceValue->niceName,dontSendNotification);
 
 	addAndMakeVisible(&valueLabel);
-
 	buildRouteParamsUI();
 }
 
@@ -52,6 +50,7 @@ void ModuleRouterValueEditor::buildRouteParamsUI()
 			addAndMakeVisible(cui);
 		}
 	}
+	
 	resized();
 }
 

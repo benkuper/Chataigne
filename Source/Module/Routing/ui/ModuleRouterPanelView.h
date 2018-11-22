@@ -22,6 +22,7 @@ public:
 	~ModuleRouterPanelView();
 
 	BaseManagerUI<ModuleRouterManager, ModuleRouter, BaseItemUI<ModuleRouter>> mui;
+	
 	ModuleRouterView view;
 
 	static ModuleRouterPanelView * create(const String & contentName) { return new ModuleRouterPanelView(contentName, ModuleRouterManager::getInstance()); }

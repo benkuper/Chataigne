@@ -34,7 +34,7 @@ ModuleRouterPanelView::~ModuleRouterPanelView()
 void ModuleRouterPanelView::resized()
 {
 	Rectangle<int> r = getLocalBounds();
-	mui.setBounds(r.removeFromLeft(250));
+	mui.setBounds(r.removeFromLeft(150));
 	r.removeFromLeft(2);
 	view.setBounds(r);
 }
