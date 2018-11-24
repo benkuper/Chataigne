@@ -170,6 +170,7 @@ void DMXModule::dmxDataInChanged(int channel, int value)
 
 		dVal = valuesCC.addIntParameter("Channel " + String(channel), "DMX Value for channel " + String(channel), 0, 0, 255);
 		dVal->setControllableFeedbackOnly(true);
+		dVal->saveValueOnly = false;
 		channelMap.set(channel, dVal);
 	}
 
