@@ -58,7 +58,7 @@ MIDIModule::~MIDIModule()
 }
 
 
-void MIDIModule::sendNoteOn(int pitch, int velocity, int channel)
+void MIDIModule::sendNoteOn(int channel, int pitch, int velocity)
 {
 	if (!enabled->boolValue()) return;
 	if (outputDevice == nullptr) return;
@@ -67,7 +67,7 @@ void MIDIModule::sendNoteOn(int pitch, int velocity, int channel)
 	outputDevice->sendNoteOn(pitch, velocity, channel);
 }
 
-void MIDIModule::sendNoteOff(int pitch, int channel)
+void MIDIModule::sendNoteOff(int channel, int pitch)
 {
 	if (!enabled->boolValue()) return;
 	if (outputDevice == nullptr) return;
@@ -76,7 +76,7 @@ void MIDIModule::sendNoteOff(int pitch, int channel)
 	outputDevice->sendNoteOff(pitch, channel);
 }
 
-void MIDIModule::sendControlChange(int number, int value, int channel)
+void MIDIModule::sendControlChange(int channel, int number, int value)
 {
 	if (!enabled->boolValue()) return;
 	if (outputDevice == nullptr) return;
@@ -335,15 +335,15 @@ void MIDIModule::handleRoutedModuleValue(Controllable * c, RouteParams * p)
 	switch (t)
 	{
 	case MIDIManager::NOTE_ON:
-		sendNoteOn(mp->pitchOrNumber->intValue(), value, mp->channel->intValue());
+		sendNoteOn(mp->channel->intValue(), mp->pitchOrNumber->intValue(), value);
 		break;
 
 	case MIDIManager::NOTE_OFF:
-		sendNoteOff(mp->pitchOrNumber->intValue(), mp->channel->intValue());
+		sendNoteOff(mp->channel->intValue(), mp->pitchOrNumber->intValue());
 		break;
 
 	case MIDIManager::CONTROL_CHANGE:
-		sendControlChange(mp->pitchOrNumber->intValue(), value, mp->channel->intValue());
+		sendControlChange(mp->channel->intValue(), mp->pitchOrNumber->intValue(), value);
 		break;
 
 	default:
