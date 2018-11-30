@@ -22,15 +22,15 @@ before_install:
 - |
   if [[ -n "$TRAVIS_TAG" ]]; 
    then 
-    if [[ "$TRAVIS_TAG" == *b ]]; 
+    if [[ "$TRAVIS_TAG" == *b* ]]; 
     then 
       echo "Beta version, set config to Release"; 
       export MAKECONF=Release
-      export SUFFIX=$TRAVIS_TAG-beta
+      export SUFFIX=$TRAVIS_TAG
     else 
       echo "Stable version, set config to Release"; 
       export MAKECONF=Release
-      export SUFFIX=$TRAVIS_TAG-stable
+      export SUFFIX=$TRAVIS_TAG
     fi; 
   else 
     echo "No tag set, set config to Debug / bleeding"; 
