@@ -52,6 +52,7 @@ MIDIModule::MIDIModule(const String & name, bool _useGenericControls) :
 
 	valuesCC.userCanAddControllables = true;
 	valuesCC.customUserCreateControllableFunc = &MIDIModule::showMenuAndCreateValue;
+	alwaysShowValues = true;
 }
 
 MIDIModule::~MIDIModule()

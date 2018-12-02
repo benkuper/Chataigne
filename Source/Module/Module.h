@@ -39,6 +39,8 @@ public:
 	CommandDefinitionManager defManager;
 	ControllableContainer valuesCC;
 
+	bool alwaysShowValues;
+
 	bool includeValuesInSave;
 
 	BaseCommandHandler commandTester;

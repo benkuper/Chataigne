@@ -38,6 +38,9 @@ StreamingModule::StreamingModule(const String & name) :
 	scriptObject.setMethod(sendBytesId, StreamingModule::sendBytesFromScript);
 	
 	scriptManager->scriptTemplate += ChataigneAssetManager::getInstance()->getScriptTemplate("streaming");
+
+	valuesCC.userCanAddControllables = true;
+	valuesCC.customUserCreateControllableFunc = &StreamingModule::showMenuAndCreateValue;
 }
 
 StreamingModule::~StreamingModule()
@@ -146,6 +149,10 @@ void StreamingModule::processDataLine(const String & message)
 				if (numArgs >= 4) ((ColorParameter *)c)->setColor(Colour::fromFloatRGBA(valuesString[1].getFloatValue(), valuesString[2].getFloatValue(), valuesString[3].getFloatValue(), valuesString[4].getFloatValue()));
 				break;
                     
+			case Controllable::STRING:
+				if(numArgs >= 1) ((StringParameter *)c)->setValue(valuesString[1]);
+				break;
+
             default:
                 break;
 
@@ -329,6 +336,31 @@ void StreamingModule::sendBytes(Array<uint8> bytes)
 	sendBytesInternal(bytes);
 	outActivityTrigger->trigger();
 	if (logOutgoingData->boolValue()) NLOG(niceName, "Sending " + String(bytes.size()) + " bytes");
+}
+
+void StreamingModule::showMenuAndCreateValue(ControllableContainer * container)
+{
+	StringArray filters = ControllableFactory::getTypesWithout(StringArray(EnumParameter::getTypeStringStatic(), TargetParameter::getTypeStringStatic(), FileParameter::getTypeStringStatic()));
+	Controllable * c = ControllableFactory::showFilteredCreateMenu(filters);
+	if (c == nullptr) return;
+
+	AlertWindow window("Add a value", "Configure the parameters for this value", AlertWindow::AlertIconType::NoIcon);
+	window.addTextEditor("address", "/myValue", "OSC Address");
+	window.addButton("OK", 1, KeyPress(KeyPress::returnKey));
+	window.addButton("Cancel", 0, KeyPress(KeyPress::escapeKey));
+
+	int result = window.runModalLoop();
+
+	if (result)
+	{
+		String addString = window.getTextEditorContents("address").replace(" ", "");
+		if (!addString.startsWith("/")) addString = "/" + addString;
+		c->setNiceName(addString);
+		container->addControllable(c);
+	} else
+	{
+		delete c;
+	}
 }
 
 void StreamingModule::onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c)

@@ -44,6 +44,8 @@ public:
 	virtual void sendBytes(Array<uint8> bytes);
 	virtual void sendBytesInternal(Array<uint8> bytes) {}
 
+	static void showMenuAndCreateValue(ControllableContainer * container);
+
 	virtual void onControllableFeedbackUpdateInternal(ControllableContainer *, Controllable * c) override;
 
 	virtual bool isReadyToSend() { return false; }
