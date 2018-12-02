@@ -37,12 +37,8 @@ DMXModule::DMXModule() :
 	dmxConnected = moduleParams.addBoolParameter("Connected", "DMX is connected ?", false);
 	dmxConnected->isControllableFeedbackOnly = true;
 
-	/*
-	for (int i = 1; i <= 512; i++)
-	{
-		dmxInValues.add(valuesCC.addIntParameter("Channel " + String(i), "DMX Value for channel " + String(i), 0, 0, 255));
-	}
-	*/
+	valuesCC.userCanAddControllables = true;
+	valuesCC.customUserCreateControllableFunc = &DMXModule::showMenuAndCreateValue;
 
 	setCurrentDMXDevice(DMXDevice::create((DMXDevice::Type)(int)dmxType->getValueData()));
 }
@@ -169,12 +165,32 @@ void DMXModule::dmxDataInChanged(int channel, int value)
 		if (!autoAdd->boolValue()) return;
 
 		dVal = valuesCC.addIntParameter("Channel " + String(channel), "DMX Value for channel " + String(channel), 0, 0, 255);
-		dVal->setControllableFeedbackOnly(true);
+		//dVal->setControllableFeedbackOnly(true);
 		dVal->saveValueOnly = false;
 		channelMap.set(channel, dVal);
 	}
 
 	dVal->setValue(value);
+}
+
+void DMXModule::showMenuAndCreateValue(ControllableContainer * container)
+{
+	DMXModule * module = dynamic_cast<DMXModule *>(container->parentContainer.get());
+	if (module == nullptr) return;
+
+	AlertWindow window("Add a value", "Configure the parameters for value", AlertWindow::AlertIconType::NoIcon);
+	window.addTextEditor("channel", "1", "Channel (1-512)");
+
+	window.addButton("OK", 1, KeyPress(KeyPress::returnKey));
+	window.addButton("Cancel", 0, KeyPress(KeyPress::escapeKey));
+
+	int result = window.runModalLoop();
+
+	if (result)
+	{
+		int channel = jlimit<int>(1, 512, window.getTextEditorContents("channel").getIntValue());
+		module->dmxDataInChanged(channel, 0);
+	}
 }
 
 DMXModule::DMXRouteParams::DMXRouteParams(Module * sourceModule, Controllable * c) :

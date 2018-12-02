@@ -49,6 +49,9 @@ MIDIModule::MIDIModule(const String & name, bool _useGenericControls) :
 	scriptObject.setMethod(sendSysexId, &MIDIModule::sendSysexFromScript);
 
 	scriptManager->scriptTemplate += ChataigneAssetManager::getInstance()->getScriptTemplate("midi");
+
+	valuesCC.userCanAddControllables = true;
+	valuesCC.customUserCreateControllableFunc = &MIDIModule::showMenuAndCreateValue;
 }
 
 MIDIModule::~MIDIModule()
@@ -291,6 +294,40 @@ void MIDIModule::updateValue(const int & channel, const String & n, const int & 
 		p->setValue(val);
 	}
 
+}
+
+void MIDIModule::showMenuAndCreateValue(ControllableContainer * container)
+{
+	MIDIModule * module = dynamic_cast<MIDIModule *>(container->parentContainer.get());
+	if (module == nullptr) return;
+
+	PopupMenu m;
+	m.addItem(1, "Add Note");
+	m.addItem(2, "Add Control Change");
+
+	int mResult = m.show();
+	if (mResult == 0) return;
+	
+	String mType = mResult == 1 ? "Note" : "Control Change";
+	String mName = mResult == 1 ? "Pitch" : "Number";
+
+	AlertWindow window("Add a "+mType, "Configure the parameters for this "+mType, AlertWindow::AlertIconType::NoIcon);
+	window.addTextEditor("channel", "1", "Channel (1-16)");
+	window.addTextEditor("pitch", "1", mName + "(1-127)");
+
+	window.addButton("OK", 1, KeyPress(KeyPress::returnKey));
+	window.addButton("Cancel", 0, KeyPress(KeyPress::escapeKey));
+
+	int result = window.runModalLoop();
+
+	if (result)
+	{
+		int channel = jlimit<int>(1, 16, window.getTextEditorContents("channel").getIntValue());
+		int pitch = jlimit<int>(1, 127, window.getTextEditorContents("pitch").getIntValue());
+
+		if (mResult == 1) module->noteOnReceived(channel, pitch, 0);
+		else module->controlChangeReceived(channel, pitch, 0);
+	}
 }
 
 void MIDIModule::loadJSONDataInternal(var data)

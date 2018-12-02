@@ -29,6 +29,8 @@ public:
 
 	void onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c) override;
 
+	static void showMenuAndCreateValue(ControllableContainer * container);
+
 	static CustomOSCModule * create() { return new CustomOSCModule(); }
 	virtual String getDefaultTypeString() const override { return "OSC"; }
 

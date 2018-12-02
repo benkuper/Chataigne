@@ -31,6 +31,9 @@ CustomOSCModule::CustomOSCModule() :
 	autoFeedback = moduleParams.addBoolParameter("Auto Feedback", "If checked, all changed values will be automatically sent back to the outputs", false);
 	autoFeedback->isTargettable = false;
 
+	valuesCC.userCanAddControllables = true;
+	valuesCC.customUserCreateControllableFunc = &CustomOSCModule::showMenuAndCreateValue;
+	
 	defManager.add(CommandDefinition::createDef(this, "", "Custom Message", &CustomOSCCommand::create));
 	
 }
@@ -258,6 +261,32 @@ void CustomOSCModule::onControllableFeedbackUpdateInternal(ControllableContainer
 		}
 	}
 	
+}
+
+void CustomOSCModule::showMenuAndCreateValue(ControllableContainer * container)
+{
+	StringArray filters = ControllableFactory::getTypesWithout(StringArray(EnumParameter::getTypeStringStatic(), TargetParameter::getTypeStringStatic(), FileParameter::getTypeStringStatic()));
+	Controllable * c = ControllableFactory::showFilteredCreateMenu(filters);
+	if (c == nullptr) return;
+
+	AlertWindow window("Add a value", "Configure the parameters for this value", AlertWindow::AlertIconType::NoIcon);
+	window.addTextEditor("address", "/myValue", "OSC Address");
+	window.addButton("OK", 1, KeyPress(KeyPress::returnKey));
+	window.addButton("Cancel", 0, KeyPress(KeyPress::escapeKey));
+
+	int result = window.runModalLoop();
+
+	if (result)
+	{
+		String addString = window.getTextEditorContents("address").replace(" ", "");
+		if (!addString.startsWith("/")) addString = "/" + addString;
+		c->setNiceName(addString);
+		container->addControllable(c);
+	}
+	else
+	{
+		delete c;
+	}
 }
 
 /*

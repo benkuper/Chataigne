@@ -107,7 +107,7 @@ void DMXCommand::trigger()
 		Array<int> values;
 		values.resize(512);
 		values.fill(0);
-		dmxModule->sendDMXValues(channel->intValue(), values);
+		dmxModule->sendDMXValues(1, values);
 	}
 	break;
 	}

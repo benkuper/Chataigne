@@ -51,6 +51,7 @@ public:
 
 	void dmxDataInChanged(int channel, int value) override;
 
+	static void showMenuAndCreateValue(ControllableContainer * container);
 
 	class DMXRouteParams :
 		public RouteParams

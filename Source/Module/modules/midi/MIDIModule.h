@@ -82,9 +82,10 @@ public:
 	static var sendCCFromScript(const var::NativeFunctionArgs &args);
 	static var sendSysexFromScript(const var::NativeFunctionArgs &args);
 
-
 	void updateValue(const int &channel, const String &n, const int &val, const MIDIValueParameter::Type &type, const int &pitchOrNumber);
 
+	static void showMenuAndCreateValue(ControllableContainer * container);
+	
 	//Routing
 	class MIDIRouteParams :
 		public RouteParams
