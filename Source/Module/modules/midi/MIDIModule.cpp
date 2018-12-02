@@ -39,9 +39,6 @@ MIDIModule::MIDIModule(const String & name, bool _useGenericControls) :
 	midiParam = new MIDIDeviceParameter("Devices");
 	moduleParams.addParameter(midiParam);
 
-	setupIOConfiguration(inputDevice != nullptr, outputDevice != nullptr);
-
-
 	//Script
 	scriptObject.setMethod(sendNoteOnId, &MIDIModule::sendNoteOnFromScript);
 	scriptObject.setMethod(sendNoteOffId, &MIDIModule::sendNoteOffFromScript);
@@ -53,6 +50,8 @@ MIDIModule::MIDIModule(const String & name, bool _useGenericControls) :
 	valuesCC.userCanAddControllables = true;
 	valuesCC.customUserCreateControllableFunc = &MIDIModule::showMenuAndCreateValue;
 	alwaysShowValues = true;
+
+	setupIOConfiguration(inputDevice != nullptr, outputDevice != nullptr);
 }
 
 MIDIModule::~MIDIModule()
