@@ -345,7 +345,7 @@ void StreamingModule::showMenuAndCreateValue(ControllableContainer * container)
 	if (c == nullptr) return;
 
 	AlertWindow window("Add a value", "Configure the parameters for this value", AlertWindow::AlertIconType::NoIcon);
-	window.addTextEditor("address", "/myValue", "OSC Address");
+	window.addTextEditor("address", "MyValue", "OSC Address");
 	window.addButton("OK", 1, KeyPress(KeyPress::returnKey));
 	window.addButton("Cancel", 0, KeyPress(KeyPress::escapeKey));
 
@@ -354,7 +354,6 @@ void StreamingModule::showMenuAndCreateValue(ControllableContainer * container)
 	if (result)
 	{
 		String addString = window.getTextEditorContents("address").replace(" ", "");
-		if (!addString.startsWith("/")) addString = "/" + addString;
 		c->setNiceName(addString);
 		container->addControllable(c);
 	} else
