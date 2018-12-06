@@ -501,10 +501,6 @@
 			isa = PBXBuildFile;
 			fileRef = 348E23A959123BF44DF9741C;
 		};
-		EE4210364A5A0D1BD3BD603D = {
-			isa = PBXBuildFile;
-			fileRef = D1E8C9CBF6B1FA5CF62547BE;
-		};
 		A95AD9190F6DB0D8E5FE2397 = {
 			isa = PBXBuildFile;
 			fileRef = F59BAB5EB52D3192EF62D037;
@@ -2516,13 +2512,6 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = ScriptCommand.cpp;
 			path = ../../Source/Module/modules/common/commands/scriptcommands/ScriptCommand.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
-		51AC203835BBEBA39059B84D = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = CustomValuesCommand.h;
-			path = ../../Source/Module/modules/common/commands/customvalues/CustomValuesCommand.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		51B8DD8FCD4AFD742BBD48DB = {
@@ -4548,13 +4537,6 @@
 			path = ../../Source/TimeMachine/Sequence/Layer/ui/SequenceLayerPanel.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
-		D1E8C9CBF6B1FA5CF62547BE = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = CustomValuesCommand.cpp;
-			path = ../../Source/Module/modules/common/commands/customvalues/CustomValuesCommand.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
 		D200ACD3EE45F2CAF4398070 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -6111,8 +6093,6 @@
 			isa = PBXGroup;
 			children = (
 				5FDF0AF160EE21C54BF9BC7D,
-				D1E8C9CBF6B1FA5CF62547BE,
-				51AC203835BBEBA39059B84D,
 				F59BAB5EB52D3192EF62D037,
 				C0C2DF64A8321AD22A762995,
 				E1E225BE4721476EA16AD814,
@@ -7579,7 +7559,6 @@
 				3BDB9330B75641F168BCEB29,
 				1E7BAD0D9759D453D9A7BD2A,
 				C7FD34F61596D993BF7D753E,
-				EE4210364A5A0D1BD3BD603D,
 				A95AD9190F6DB0D8E5FE2397,
 				E5E2B1F2B9C5737AF77BFDB8,
 				F8075E191AA13F6E11CCB97B,

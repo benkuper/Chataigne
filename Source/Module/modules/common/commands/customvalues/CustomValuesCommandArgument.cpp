@@ -28,10 +28,11 @@ CustomValuesCommandArgument::CustomValuesCommandArgument(const String &name, Par
 	jassert(param != nullptr);
 	addControllable(param);
 
-	param->isCustomizableByUser = true;
+	param->isCustomizableByUser = templateMode;
+	
 	param->forceSaveValue = true;
 	param->saveValueOnly = !templateMode;
-
+	
 	if (templateMode)
 	{
 		editable = addBoolParameter("Editable", "If unchecked, this parameter will not be editable when instantiating this template command", true);

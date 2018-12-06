@@ -533,10 +533,6 @@
                   <FILE id="XjyHhP" name="CustomValuesCommandArgumentManagerEditor.h"
                         compile="0" resource="0" file="Source/Module/modules/common/commands/customvalues/ui/CustomValuesCommandArgumentManagerEditor.h"/>
                 </GROUP>
-                <FILE id="oGlUMy" name="CustomValuesCommand.cpp" compile="1" resource="0"
-                      file="Source/Module/modules/common/commands/customvalues/CustomValuesCommand.cpp"/>
-                <FILE id="R5bO48" name="CustomValuesCommand.h" compile="0" resource="0"
-                      file="Source/Module/modules/common/commands/customvalues/CustomValuesCommand.h"/>
                 <FILE id="UpbUq3" name="CustomValuesCommandArgument.cpp" compile="1"
                       resource="0" file="Source/Module/modules/common/commands/customvalues/CustomValuesCommandArgument.cpp"/>
                 <FILE id="q0MsJ2" name="CustomValuesCommandArgument.h" compile="0"

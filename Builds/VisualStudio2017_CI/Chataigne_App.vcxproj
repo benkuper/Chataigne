@@ -257,7 +257,6 @@
     <ClCompile Include="..\..\Source\Module\modules\common\commands\scriptcommands\ScriptCommand.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\common\commands\customvalues\ui\CustomValuesCommandArgumentEditor.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\common\commands\customvalues\ui\CustomValuesCommandArgumentManagerEditor.cpp"/>
-    <ClCompile Include="..\..\Source\Module\modules\common\commands\customvalues\CustomValuesCommand.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\common\commands\customvalues\CustomValuesCommandArgument.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\common\commands\customvalues\CustomValuesCommandArgumentManager.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\common\streaming\commands\SendStreamRawDataCommand.cpp"/>
@@ -2723,7 +2722,6 @@
     <ClInclude Include="..\..\Source\Module\modules\common\commands\scriptcommands\ScriptCommand.h"/>
     <ClInclude Include="..\..\Source\Module\modules\common\commands\customvalues\ui\CustomValuesCommandArgumentEditor.h"/>
     <ClInclude Include="..\..\Source\Module\modules\common\commands\customvalues\ui\CustomValuesCommandArgumentManagerEditor.h"/>
-    <ClInclude Include="..\..\Source\Module\modules\common\commands\customvalues\CustomValuesCommand.h"/>
     <ClInclude Include="..\..\Source\Module\modules\common\commands\customvalues\CustomValuesCommandArgument.h"/>
     <ClInclude Include="..\..\Source\Module\modules\common\commands\customvalues\CustomValuesCommandArgumentManager.h"/>
     <ClInclude Include="..\..\Source\Module\modules\common\streaming\commands\SendStreamRawDataCommand.h"/>

@@ -1333,9 +1333,6 @@
     <ClCompile Include="..\..\Source\Module\modules\common\commands\customvalues\ui\CustomValuesCommandArgumentManagerEditor.cpp">
       <Filter>Chataigne\Source\Module\modules\common\commands\customvalues\ui</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\Module\modules\common\commands\customvalues\CustomValuesCommand.cpp">
-      <Filter>Chataigne\Source\Module\modules\common\commands\customvalues</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\common\commands\customvalues\CustomValuesCommandArgument.cpp">
       <Filter>Chataigne\Source\Module\modules\common\commands\customvalues</Filter>
     </ClCompile>
@@ -4526,9 +4523,6 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\common\commands\customvalues\ui\CustomValuesCommandArgumentManagerEditor.h">
       <Filter>Chataigne\Source\Module\modules\common\commands\customvalues\ui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Module\modules\common\commands\customvalues\CustomValuesCommand.h">
-      <Filter>Chataigne\Source\Module\modules\common\commands\customvalues</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\common\commands\customvalues\CustomValuesCommandArgument.h">
       <Filter>Chataigne\Source\Module\modules\common\commands\customvalues</Filter>

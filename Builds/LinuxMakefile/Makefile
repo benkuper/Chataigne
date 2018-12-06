@@ -174,7 +174,6 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/ScriptCommand_658cfed3.o \
   $(JUCE_OBJDIR)/CustomValuesCommandArgumentEditor_1cc8b6de.o \
   $(JUCE_OBJDIR)/CustomValuesCommandArgumentManagerEditor_8192c073.o \
-  $(JUCE_OBJDIR)/CustomValuesCommand_2f0f022b.o \
   $(JUCE_OBJDIR)/CustomValuesCommandArgument_96a63888.o \
   $(JUCE_OBJDIR)/CustomValuesCommandArgumentManager_fc7128f.o \
   $(JUCE_OBJDIR)/SendStreamRawDataCommand_ca89c0e3.o \
@@ -890,11 +889,6 @@ $(JUCE_OBJDIR)/CustomValuesCommandArgumentEditor_1cc8b6de.o: ../../Source/Module
 $(JUCE_OBJDIR)/CustomValuesCommandArgumentManagerEditor_8192c073.o: ../../Source/Module/modules/common/commands/customvalues/ui/CustomValuesCommandArgumentManagerEditor.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling CustomValuesCommandArgumentManagerEditor.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/CustomValuesCommand_2f0f022b.o: ../../Source/Module/modules/common/commands/customvalues/CustomValuesCommand.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling CustomValuesCommand.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/CustomValuesCommandArgument_96a63888.o: ../../Source/Module/modules/common/commands/customvalues/CustomValuesCommandArgument.cpp

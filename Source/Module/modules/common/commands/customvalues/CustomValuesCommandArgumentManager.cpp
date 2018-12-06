@@ -106,7 +106,6 @@ CustomValuesCommandArgument * CustomValuesCommandArgumentManager::addItemFromTyp
 	}
 
 	if (p == nullptr) return nullptr;
-	p->isCustomizableByUser = true;
 	return addItemWithParam(p, data, fromUndoableAction);
 }
 
