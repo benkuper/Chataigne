@@ -71,7 +71,7 @@ void ProcessorManager::checkAllActivateActions()
 	Array<Action*> actions = getAllActions();
 	for (auto &a : actions)
 	{
-		if (a->actionRole == Action::ACTIVATE)
+		if (a->actionRoles.contains(Action::ACTIVATE))
 		{
 			a->cdm.validationProgress->setValue(0);
 			a->cdm.checkAllConditions(true);
@@ -84,7 +84,7 @@ void ProcessorManager::checkAllDeactivateActions()
 	Array<Action*> actions = getAllActions();
 	for (auto &a : actions)
 	{
-		if (a->actionRole == Action::DEACTIVATE)
+		if (a->actionRoles.contains(Action::DEACTIVATE))
 		{
 			a->cdm.validationProgress->setValue(0);
 			a->cdm.checkAllConditions(true);

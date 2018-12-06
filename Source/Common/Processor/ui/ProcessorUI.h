@@ -13,11 +13,15 @@
 #include "../Processor.h"
 
 class ProcessorUI :
-	public BaseItemUI<Processor>
+	public BaseItemUI<Processor>,
+	public Timer
 {
 public:
 	ProcessorUI(Processor *);
 	virtual ~ProcessorUI();
 
+	bool shouldRepaint;
+
+	void timerCallback() override;
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ProcessorUI)
 };

@@ -14,7 +14,6 @@
 
 Action::Action(const String & name, var params) :
 	Processor(params.getProperty("name", name)),
-	actionRole(Action::STANDARD),
     autoTriggerWhenAllConditionAreActives(true),
     forceNoOffConsequences(false),
 	hasOffConsequences(false),
@@ -37,7 +36,6 @@ Action::Action(const String & name, var params) :
 	addChildControllableContainer(csmOn);
 
 	forceNoOffConsequences = params.getProperty("forceNoOffConsequences", false);
-	setRole((Role)(int)params.getProperty("role", STANDARD), true);
 
 	helpID = "Action";
 }
@@ -46,34 +44,26 @@ Action::~Action()
 {
 }
 
-void Action::updateConditionRole()
+void Action::updateConditionRoles()
 {
-	Role r = STANDARD;
+	if (Engine::mainEngine->isClearing) return;
+	
+	actionRoles.clear();
 	for (auto &c : cdm.items)
 	{
 		ActivationCondition * ac = dynamic_cast<ActivationCondition *>(c);
-		if (ac != nullptr)
+		if (ac != nullptr && ac->enabled->boolValue())
 		{
-			r = ac->type == ActivationCondition::ON_ACTIVATE ? ACTIVATE : DEACTIVATE;
-			break;
+			actionRoles.addIfNotAlreadyThere((ac->type == ActivationCondition::ON_ACTIVATE)  ? ACTIVATE : DEACTIVATE);
 		}
 	}
 
-	setRole(r);
-}
+	setHasOffConsequences(!forceNoOffConsequences && actionRoles.contains(DEACTIVATE));
 
-void Action::setRole(Role role, bool force)
-{
-	if (Engine::mainEngine->isClearing) return;
-	if (actionRole == role && !force) return;
-
-	actionRole = role;
-	setHasOffConsequences(!forceNoOffConsequences && actionRole == STANDARD);
-	
 	actionListeners.call(&ActionListener::actionRoleChanged, this);
 	actionAsyncNotifier.addMessage(new ActionEvent(ActionEvent::ROLE_CHANGED, this));
-
 }
+
 
 void Action::setForceDisabled(bool value, bool force)
 {
@@ -116,7 +106,6 @@ void Action::setHasOffConsequences(bool value)
 var Action::getJSONData()
 {
 	var data = Processor::getJSONData();
-	if(actionRole != STANDARD) data.getDynamicObject()->setProperty("role", actionRole);
 	data.getDynamicObject()->setProperty("conditions", cdm.getJSONData());
 	data.getDynamicObject()->setProperty("consequences", csmOn->getJSONData());
 	if(hasOffConsequences) data.getDynamicObject()->setProperty("consequencesOff", csmOff->getJSONData());
@@ -130,13 +119,15 @@ void Action::loadJSONDataInternal(var data)
 	cdm.loadJSONData(data.getProperty("conditions", var()));
 	csmOn->loadJSONData(data.getProperty("consequences", var()));
 
-	updateConditionRole();
+	updateConditionRoles();
 	if(hasOffConsequences) csmOff->loadJSONData(data.getProperty("consequencesOff", var()));
 
 }
 
 void Action::onContainerParameterChangedInternal(Parameter * p)
 {
+	Processor::onContainerParameterChangedInternal(p);
+
 	if (p == enabled)
 	{
 		actionListeners.call(&Action::ActionListener::actionEnableChanged, this);
@@ -146,6 +137,8 @@ void Action::onContainerParameterChangedInternal(Parameter * p)
 
 void Action::onContainerTriggerTriggered(Trigger * t)
 {
+	Processor::onContainerTriggerTriggered(t);
+
 	if (!enabled->boolValue() || forceDisabled) return;
 
 	if (t == triggerOn)
@@ -154,6 +147,17 @@ void Action::onContainerTriggerTriggered(Trigger * t)
 	} else if (t == triggerOff)
 	{
 		if(hasOffConsequences) csmOff->triggerAll->trigger();
+	}
+}
+
+void Action::controllableFeedbackUpdate(ControllableContainer * cc, Controllable * c)
+{
+	Processor::controllableFeedbackUpdate(cc, c);
+
+	ActivationCondition * ac = dynamic_cast<ActivationCondition *>(c->parentContainer);
+	if (ac != nullptr && c == ac->enabled)
+	{
+		updateConditionRoles();
 	}
 }
 
@@ -177,12 +181,12 @@ void Action::conditionManagerValidationChanged(ConditionManager *)
 
 void Action::itemAdded(Condition *)
 {
-	updateConditionRole();
+	updateConditionRoles();
 }
 
 void Action::itemRemoved(Condition *)
 {
-	updateConditionRole();
+	updateConditionRoles();
 }
 
 ProcessorUI * Action::getUI()

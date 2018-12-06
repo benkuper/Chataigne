@@ -24,8 +24,8 @@ public:
 	Action(const String &name = "Action", var params = var());
 	virtual ~Action();
 
-	enum Role { STANDARD, ACTIVATE, DEACTIVATE };
-	Role actionRole;
+	enum Role {ACTIVATE, DEACTIVATE};
+	Array<Role> actionRoles;
 
 	bool autoTriggerWhenAllConditionAreActives; //default true, but if false, let use Actions as user check tool without auto behavior (like TimeTriggers)
 	
@@ -40,8 +40,7 @@ public:
 	Trigger * triggerOn;
 	Trigger * triggerOff;
 
-	void updateConditionRole();
-	void setRole(Role role, bool force = false);
+	void updateConditionRoles();
 
 	virtual void setForceDisabled(bool value, bool force = false) override;
 	void setHasOffConsequences(bool value);
@@ -51,8 +50,11 @@ public:
 	void loadJSONDataInternal(var data) override;
 
 	void onContainerParameterChangedInternal(Parameter * p) override;
-    void onContainerTriggerTriggered(Trigger *) override;
+	void onContainerTriggerTriggered(Trigger *) override;
+	void controllableFeedbackUpdate(ControllableContainer * cc, Controllable * c) override;
+	
 	void conditionManagerValidationChanged(ConditionManager *) override;
+
 
 	void itemAdded(Condition *) override;
 	void itemRemoved(Condition *) override;

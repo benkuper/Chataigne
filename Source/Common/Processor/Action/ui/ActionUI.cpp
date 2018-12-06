@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    ActionUI.cpp
-    Created: 28 Oct 2016 8:05:24pm
-    Author:  bkupe
+	ActionUI.cpp
+	Created: 28 Oct 2016 8:05:24pm
+	Author:  bkupe
 
   ==============================================================================
 */
@@ -16,17 +16,13 @@ ActionUI::ActionUI(Action * _action) :
 {
 	action->addAsyncActionListener(this);
 
-	
-
-	/*
-	validUI = action->cdm.isValid->createToggle();
-	validUI->showLabel = false;
-	validUI->showValue = false;
-	addAndMakeVisible(validUI);
-	*/
-
 	triggerAllUI = action->csmOn->triggerAll->createButtonUI();
 	addAndMakeVisible(triggerAllUI);
+
+	progressionUI = action->cdm.validationProgress->createSlider();
+	progressionUI->showValue = false;
+	addChildComponent(progressionUI);
+	progressionUI->setVisible(action->cdm.validationProgress->enabled);
 
 	updateRoleBGColor();
 }
@@ -38,17 +34,26 @@ ActionUI::~ActionUI()
 
 void ActionUI::updateRoleBGColor()
 {
-	switch (action->actionRole)
+	bool isA = action->actionRoles.contains(Action::ACTIVATE);
+	bool isD = action->actionRoles.contains(Action::DEACTIVATE);
+
+	if (isA && isD) bgColor = Colours::orange.withSaturation(.4f).darker(1);
+	else if (isA) bgColor = GREEN_COLOR.withSaturation(.4f).darker(1);
+	else if (isD) bgColor = RED_COLOR.withSaturation(.4f).darker(1);
+	else bgColor = ACTION_COLOR.withSaturation(.4f).darker(1);
+}
+
+void ActionUI::controllableFeedbackUpdateInternal(Controllable * c)
+{
+	ProcessorUI::controllableFeedbackUpdateInternal(c);
+	if (c == action->cdm.validationTime)
 	{
-	case Action::STANDARD:
-		bgColor = ACTION_COLOR.withSaturation(.4f).darker(1);
-		break;
-	case Action::ACTIVATE:
-		bgColor = GREEN_COLOR.withSaturation(.4f).darker(1);
-		break;
-	case Action::DEACTIVATE:
-		bgColor = RED_COLOR.withSaturation(.4f).darker(1);
-		break;
+		bool v = action->cdm.validationProgress->enabled;
+		if (progressionUI->isVisible() != v)
+		{
+			progressionUI->setVisible(v);
+			resized();
+		}
 	}
 }
 
@@ -58,12 +63,16 @@ void ActionUI::resizedInternalHeader(Rectangle<int>& r)
 	//validUI->setBounds(r.removeFromRight(headerHeight));
 	//r.removeFromRight(2);
 	triggerAllUI->setBounds(r.removeFromRight(60));
+	if (progressionUI->isVisible())
+	{
+		progressionUI->setBounds(r.removeFromRight(40).reduced(2,6));
+	}
 }
 
 void ActionUI::paintOverChildren(Graphics & g)
 {
 	BaseItemUI::paintOverChildren(g);
-	if (action->cdm.isValid->boolValue() && action->actionRole == Action::STANDARD)
+	if (action->cdm.isValid->boolValue() && action->actionRoles.size() == 0) //no special roles like activate or deactivate
 	{
 		g.setColour(GREEN_COLOR);
 		g.drawRoundedRectangle(getMainBounds().toFloat(), rounderCornerSize, 2);
@@ -79,11 +88,11 @@ void ActionUI::newMessage(const Action::ActionEvent & e)
 
 	case Action::ActionEvent::ROLE_CHANGED:
 		updateRoleBGColor();
-		repaint();
+		shouldRepaint = true;
 		break;
 
 	case Action::ActionEvent::VALIDATION_CHANGED:
-		if(action->actionRole == Action::STANDARD) repaint();
+		if (action->actionRoles.size() == 0) shouldRepaint = true;
 		break;
 
 	}

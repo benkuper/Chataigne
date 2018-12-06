@@ -48,7 +48,7 @@ public:
 
 	void setForceDisabled(bool value, bool force = false);
 
-	void checkAllConditions(bool emptyIsValid = false);
+	void checkAllConditions(bool emptyIsValid = false, bool dispatchOnlyOnValidationChange = true);
 
 	bool areAllConditionsValid(bool emptyIsValid = false);
 	bool isAtLeastOneConditionValid(bool emptyIsValid = false);

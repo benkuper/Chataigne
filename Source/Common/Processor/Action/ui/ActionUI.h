@@ -24,8 +24,11 @@ public:
 	Action * action;
 
 	ScopedPointer<TriggerButtonUI> triggerAllUI;
+	ScopedPointer<FloatSliderUI> progressionUI;
 
 	void updateRoleBGColor();
+
+	void controllableFeedbackUpdateInternal(Controllable * c) override;
 
 	void resizedInternalHeader(Rectangle<int> &r) override;
 	void paintOverChildren(Graphics &g) override;

@@ -106,7 +106,7 @@ void ConditionManager::setForceDisabled(bool value, bool force)
 	for (auto &i : items) i->forceDisabled = value;
 }
 
-void ConditionManager::checkAllConditions(bool emptyIsValid)
+void ConditionManager::checkAllConditions(bool emptyIsValid, bool dispatchOnlyOnValidationChange)
 {
 	bool valid = false;
 	ConditionOperator op = (ConditionOperator)(int)conditionOperator->getValueData();
@@ -123,7 +123,7 @@ void ConditionManager::checkAllConditions(bool emptyIsValid)
 
 	if (validationTime->floatValue() == 0)
 	{
-		if (valid != isValid->boolValue())
+		if (valid != isValid->boolValue() || dispatchOnlyOnValidationChange)
 		{
 			isValid->setValue(valid);
 			dispatchConditionValidationChanged();

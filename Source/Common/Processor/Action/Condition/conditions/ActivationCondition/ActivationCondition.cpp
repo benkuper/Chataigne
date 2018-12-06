@@ -21,6 +21,15 @@ ActivationCondition::~ActivationCondition()
 {
 }
 
+void ActivationCondition::onContainerParameterChangedInternal(Parameter * p)
+{
+	Condition::onContainerParameterChangedInternal(p);
+	if (p == enabled)
+	{
+		isValid->setValue(enabled->boolValue());
+	}
+}
+
 var ActivationCondition::getJSONData()
 {
 	var data = Condition::getJSONData();
