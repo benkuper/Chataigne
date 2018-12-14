@@ -37,7 +37,7 @@ public:
 	BoolParameter * continuousProcess;
 
 	Parameter * outputParam;
-
+	 
 	bool inputIsLocked;
 	void lockInputTo(Parameter * lockParam);
 	void checkFiltersNeedContinuousProcess();

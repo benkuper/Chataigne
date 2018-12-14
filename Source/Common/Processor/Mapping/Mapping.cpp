@@ -164,7 +164,7 @@ void Mapping::onContainerParameterChangedInternal(Parameter * p)
 		om.setValue(outputParam->getValue());
 	} else if (p == enabled && enabled->boolValue() && !forceDisabled)
 	{
-			process();
+		process();
 	}
 }
 
