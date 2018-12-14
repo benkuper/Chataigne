@@ -48,6 +48,15 @@ StreamingModule::~StreamingModule()
 
 }
 
+void StreamingModule::setAutoAddAvailable(bool value)
+{
+	if(!value) autoAdd->setValue(false);
+	autoAdd->hideInEditor = !value;
+	streamingType->hideInEditor = !value;
+	messageStructure->hideInEditor = !value;
+	firstValueIsTheName->hideInEditor = !value;
+}
+
 void StreamingModule::buildMessageStructureOptions()
 {
 	StreamingType t = streamingType->getValueDataAsEnum<StreamingType>();
@@ -58,7 +67,7 @@ void StreamingModule::buildMessageStructureOptions()
 	
 	case LINES:
 	{
-		messageStructure->addOption("Space separated", LINES_SPACE)->addOption("Tab separated", LINES_TAB)->addOption("Comma separated", LINES_COMMA);
+		messageStructure->addOption("Space separated", LINES_SPACE)->addOption("Tab separated", LINES_TAB)->addOption("Comma (,) separated", LINES_COMMA)->addOption("Equals (=) separated", LINES_EQUALS);
 	}
 	break;
 	
@@ -76,10 +85,12 @@ void StreamingModule::processDataLine(const String & message)
 {
 	if (!enabled->boolValue()) return;
 	if (logIncomingData->boolValue()) NLOG(niceName, "Message received : " + message);
+
 	inActivityTrigger->trigger();
 
+	processDataLineInternal(message);
+	
 	scriptManager->callFunctionOnAllItems(dataEventId, message);
-
 
 	MessageStructure s = messageStructure->getValueDataAsEnum<MessageStructure>();
 	StringArray valuesString;
@@ -89,6 +100,7 @@ void StreamingModule::processDataLine(const String & message)
 	case LINES_SPACE: separator = " "; break;
 	case LINES_TAB:   separator = "\t"; break;
 	case LINES_COMMA: separator = ","; break;
+	case LINES_EQUALS: separator = "="; break;
     default:
         break;
 	}
@@ -204,6 +216,8 @@ void StreamingModule::processDataBytes(Array<uint8_t> data)
 	}
 
 	inActivityTrigger->trigger();
+
+	processDataBytesInternal(data);
 
 	if (scriptManager->items.size() > 0)
 	{

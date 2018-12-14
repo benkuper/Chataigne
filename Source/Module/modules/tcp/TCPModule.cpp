@@ -40,7 +40,7 @@ void TCPModule::initThread()
 
 	String targetHost = useLocal->boolValue() ? "127.0.0.1" : remoteHost->stringValue();
 	bool result = sender.connect(targetHost, remotePort->intValue(), 200);
-	
+	if(result) NLOG(niceName, "Sender bound to port " << sender.getBoundPort());
 	senderIsConnected->setValue(result);
 }
 
@@ -72,12 +72,19 @@ bool TCPModule::isReadyToSend()
 void TCPModule::sendMessageInternal(const String & message)
 {
 	int numBytes = sender.write(message.getCharPointer(), message.length());
-	if (numBytes == -1) senderIsConnected->setValue(false);
+	if (numBytes == -1)
+	{
+		NLOGERROR(niceName, "Error sending message");
+	}
 }
 
 void TCPModule::sendBytesInternal(Array<uint8> data)
 {
-	sender.write(data.getRawDataPointer(), data.size());
+	int numBytes = sender.write(data.getRawDataPointer(), data.size());
+	if (numBytes == -1)
+	{
+		NLOGERROR(niceName, "Error sending data");
+	}
 }
 
 Array<uint8> TCPModule::readBytes()
@@ -94,5 +101,6 @@ void TCPModule::clearInternal()
 
 void TCPModule::timerCallback()
 {
+	if (!sender.isConnected()) senderIsConnected->setValue(false);
 	if(!senderIsConnected->boolValue()) setupSender();
 }

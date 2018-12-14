@@ -21,7 +21,7 @@ public:
 	virtual ~StreamingModule();
 
 	enum StreamingType { LINES, DATA255, RAW, COBS };
-	enum MessageStructure { LINES_SPACE, LINES_TAB, LINES_COMMA, RAW_1BYTE, RAW_FLOATS, RAW_COLORS};
+	enum MessageStructure { LINES_SPACE, LINES_TAB, LINES_COMMA, LINES_EQUALS, RAW_1BYTE, RAW_FLOATS, RAW_COLORS};
 	EnumParameter * streamingType;
 
 	BoolParameter * autoAdd;
@@ -31,6 +31,8 @@ public:
 	const Identifier dataEventId = "dataReceived";
 	const Identifier sendId = "send";
 	const Identifier sendBytesId = "sendBytes";
+
+	virtual void setAutoAddAvailable(bool value);
 
 	virtual void buildMessageStructureOptions();
 
