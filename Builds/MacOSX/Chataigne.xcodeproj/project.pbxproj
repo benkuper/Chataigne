@@ -1415,13 +1415,6 @@
 			path = ../../Resources/stop.png;
 			sourceTree = "SOURCE_ROOT";
 		};
-		0DD04E60A5E6174F61924D04 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = JuceHeader.h;
-			path = ../../JuceLibraryCode/JuceHeader.h;
-			sourceTree = "SOURCE_ROOT";
-		};
 		0E0C3BD22A615072B34BFC26 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -7162,7 +7155,6 @@
 				066DA60AFB60B8BE77E819E7,
 				8AB58B2FA156DD075B892850,
 				9EB5EECB134C6E74D074AB10,
-				0DD04E60A5E6174F61924D04,
 			);
 			name = "JUCE Library Code";
 			sourceTree = "<group>";
@@ -7235,7 +7227,7 @@
 					"_DEBUG=1",
 					"DEBUG=1",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
-					"JUCE_APP_VERSION=1.5.3b2",
+					"JUCE_APP_VERSION=1.5.3b3",
 					"JUCE_APP_VERSION_HEX=0x10503",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
@@ -7288,7 +7280,7 @@
 					"_NDEBUG=1",
 					"NDEBUG=1",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
-					"JUCE_APP_VERSION=1.5.3b2",
+					"JUCE_APP_VERSION=1.5.3b3",
 					"JUCE_APP_VERSION_HEX=0x10503",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
