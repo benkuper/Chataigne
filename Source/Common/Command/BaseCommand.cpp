@@ -142,22 +142,51 @@ void BaseCommand::setValue(var value)
 {
 	if (!value.isArray())
 	{
-		if (targetMappingParameters.size() > 0 && targetMappingParameters[0] != nullptr) targetMappingParameters[0]->setValue(value);
+		if (targetMappingParameters.size() > 0 && targetMappingParameters[0] != nullptr)
+		{
+			WeakReference<Parameter> p = targetMappingParameters[0];
+			if (!p->value.isArray()) targetMappingParameters[0]->setValue(value);
+			else
+			{
+				
+				var newVal;
+				newVal.append(value);
+				for (int i = 1; i < p->value.size(); i++) newVal.append(p->value[i]);
+				targetMappingParameters[0]->setValue(newVal);
+			}
+		}
 	} else
 	{
-		int maxSize = jmin(value.size(), targetMappingParameters.size());
-		for (int i = 0; i < maxSize; i++)
+		int maxSize = value.size();
+		for (int i = 0; i < maxSize; )
 		{
 			WeakReference<Parameter> p = targetMappingParameters[i];
 			if (p != nullptr && !p.wasObjectDeleted())
 			{
-				if (p->value.isArray() && p->value.size() == value.size())
+				if (p->value.isArray()) 
 				{
-					p->setValue(value);
+					var newVal;
+					for (int j = 0; j < p->value.size(); j++)
+					{
+						if (i+j < maxSize)
+						{
+							newVal.append(value[i+j]);
+						}
+						else
+						{
+							newVal.append(p->value[j]);
+						}
+					}
+					p->setValue(newVal);
+					i += newVal.size();
 				} else
 				{
 					p->setValue(value[i]);
+					i++;
 				}
+			} else
+			{
+				break;
 			}
 		}
 	}

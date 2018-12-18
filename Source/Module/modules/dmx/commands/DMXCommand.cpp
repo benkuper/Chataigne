@@ -12,7 +12,12 @@
 
 DMXCommand::DMXCommand(DMXModule * _module, CommandContext context, var params) :
 	BaseCommand(_module,context,params),
-	dmxModule(_module)
+	dmxModule(_module),
+	byteOrder(nullptr),
+	channel(nullptr),
+	channel2(nullptr),
+	value(nullptr),
+	colorParam(nullptr)
 {
 	
 	dmxAction = (DMXAction)(int)params.getProperty("action", 0);
