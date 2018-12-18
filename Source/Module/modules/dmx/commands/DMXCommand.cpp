@@ -11,13 +11,14 @@
 #include "DMXCommand.h"
 
 DMXCommand::DMXCommand(DMXModule * _module, CommandContext context, var params) :
-	BaseCommand(_module,context,params),
+	BaseCommand(_module, context, params),
 	dmxModule(_module),
 	byteOrder(nullptr),
 	channel(nullptr),
 	channel2(nullptr),
 	value(nullptr),
-	colorParam(nullptr)
+	colorParam(nullptr),
+	remap01To255(nullptr)
 {
 	
 	dmxAction = (DMXAction)(int)params.getProperty("action", 0);
@@ -27,6 +28,7 @@ DMXCommand::DMXCommand(DMXModule * _module, CommandContext context, var params) 
 		byteOrder = addEnumParameter("Byte Order", "Byte ordering, most devices use MSB");
 		byteOrder->addOption("MSB", DMXModule::MSB)->addOption("LSB", DMXModule::LSB);
 	}
+
 
 	switch (dmxAction)
 	{
@@ -56,12 +58,24 @@ DMXCommand::DMXCommand(DMXModule * _module, CommandContext context, var params) 
 		break;
 	}
 
-	
+	if (context == MAPPING && (dmxAction == SET_VALUE || dmxAction == SET_VALUE_16BIT || dmxAction == SET_RANGE))
+	{
+		remap01To255 = addBoolParameter("Remap to 0-255", "If checked, this will automatically remap values from 0-1 to 0-255", false);
+	}
 }
 
 DMXCommand::~DMXCommand()
 {
 
+}
+
+void DMXCommand::setValue(var val)
+{
+	float mapFactor = (remap01To255 != nullptr && remap01To255->boolValue()) ? 255 : 1;
+	if (val.isArray()) val[0] = (float)val[0] * mapFactor;
+	else val = (float)val * mapFactor;
+
+	BaseCommand::setValue(val); 
 }
 
 void DMXCommand::trigger()

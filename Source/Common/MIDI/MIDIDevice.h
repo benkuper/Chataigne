@@ -71,9 +71,9 @@ public:
 
 	void close();
 
-	void sendNoteOn(int pitch, int velocity, int channel = 1);
-	void sendNoteOff(int pitch, int channel = 1);
-	void sendControlChange(int number, int value, int channel = 1);
+	void sendNoteOn(int channel, int pitch, int velocity);
+	void sendNoteOff(int channel, int pitch);
+	void sendControlChange(int channel, int number, int value);
 	void sendSysEx(Array<uint8> data);
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MIDIOutputDevice)

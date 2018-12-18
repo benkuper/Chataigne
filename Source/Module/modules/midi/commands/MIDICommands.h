@@ -37,7 +37,7 @@ public:
 	~MIDINoteAndCCCommand();
 
 	enum MessageType {NOTE_ON,NOTE_OFF,FULL_NOTE, CONTROLCHANGE};
-	
+	enum MapTo { PITCH, VELOCITY };
 	MessageType type;
 
 	IntParameter * channel;
@@ -46,6 +46,8 @@ public:
 	IntParameter * number; //for CC
 	IntParameter * velocity;
 	FloatParameter * onTime;
+
+	BoolParameter * remap01To127;
 
 	void setValue(var value) override;
 	void trigger() override;

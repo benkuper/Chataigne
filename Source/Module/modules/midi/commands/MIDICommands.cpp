@@ -25,10 +25,12 @@ MIDICommand::~MIDICommand()
 MIDINoteAndCCCommand::MIDINoteAndCCCommand(MIDIModule * module, CommandContext context, var params) :
 	MIDICommand(module, context, params),
 	velocity(nullptr),
-	onTime(nullptr)
+	onTime(nullptr),
+	remap01To127(nullptr)
 {
 	channel = addIntParameter("Channel", "Channel for the note message", 1, 1, 16);
 	type = (MessageType)(int)params.getProperty("type", 0);
+
 	switch (type)
 	{
 	case NOTE_ON:
@@ -54,7 +56,12 @@ MIDINoteAndCCCommand::MIDINoteAndCCCommand(MIDIModule * module, CommandContext c
 		onTime->defaultUI = FloatParameter::TIME;
 	}
 
-	setTargetMappingParameterAt(velocity, 0);
+	if (context == MAPPING)
+	{
+		remap01To127 = addBoolParameter("Remap to 0-127", "If checked, this will automatically remap values from 0-1 to 0-127", false);
+	}
+
+	if(velocity != nullptr) setTargetMappingParameterAt(velocity, 0);
 }
 
 MIDINoteAndCCCommand::~MIDINoteAndCCCommand()
@@ -64,9 +71,11 @@ MIDINoteAndCCCommand::~MIDINoteAndCCCommand()
 
 void MIDINoteAndCCCommand::setValue(var value)
 {
-	BaseCommand::setValue(value);
-	if(velocity != nullptr) velocity->setValue(value, true);		
-	trigger();
+	float mapFactor = (remap01To127 != nullptr && remap01To127->boolValue()) ? 127 : 1;
+	if (value.isArray()) value[0] = (float)value[0] * mapFactor;
+	else value = (float)value * mapFactor;
+	
+	MIDICommand::setValue(value);
 }
 
 void MIDINoteAndCCCommand::trigger()

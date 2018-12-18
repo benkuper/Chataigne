@@ -67,7 +67,7 @@ void MIDIModule::sendNoteOn(int channel, int pitch, int velocity)
 	if (outputDevice == nullptr) return;
 	if (logOutgoingData->boolValue()) NLOG(niceName, "Send Note on " << MIDIManager::getNoteName(pitch) << ", " << velocity << ", " << channel);
 	outActivityTrigger->trigger();
-	outputDevice->sendNoteOn(pitch, velocity, channel);
+	outputDevice->sendNoteOn(channel, pitch, velocity);
 }
 
 void MIDIModule::sendNoteOff(int channel, int pitch)
@@ -76,7 +76,7 @@ void MIDIModule::sendNoteOff(int channel, int pitch)
 	if (outputDevice == nullptr) return;
 	if (logOutgoingData->boolValue()) NLOG(niceName, "Send Note off " << MIDIManager::getNoteName(pitch) << ", " << channel);
 	outActivityTrigger->trigger();
-	outputDevice->sendNoteOff(pitch, channel);
+	outputDevice->sendNoteOff(channel, pitch);
 }
 
 void MIDIModule::sendControlChange(int channel, int number, int value)
@@ -85,7 +85,7 @@ void MIDIModule::sendControlChange(int channel, int number, int value)
 	if (outputDevice == nullptr) return;
 	if (logOutgoingData->boolValue()) NLOG(niceName, "Send Control Change " << number << ", " << value << ", " << channel);
 	outActivityTrigger->trigger();
-	outputDevice->sendControlChange(number,value,channel);
+	outputDevice->sendControlChange(channel, number, value);
 }
 
 void MIDIModule::sendSysex(Array<uint8> data)
