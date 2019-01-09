@@ -807,6 +807,9 @@
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_processors\format_types\VST3_SDK\public.sdk\source\vst\hosting\hostclasses.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_processors\format_types\VST3_SDK\public.sdk\source\vst\hosting\pluginterfacesupport.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_processors\format_types\VST3_SDK\public.sdk\source\vst\vstbus.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -1270,6 +1273,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_data_structures\values\juce_ValueTreeSynchroniser.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_data_structures\values\juce_ValueWithDefault.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_data_structures\juce_data_structures.cpp">
@@ -3043,6 +3049,7 @@
     <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_processors\format_types\VST3_SDK\pluginterfaces\base\istringresult.h"/>
     <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_processors\format_types\VST3_SDK\pluginterfaces\base\iupdatehandler.h"/>
     <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_processors\format_types\VST3_SDK\pluginterfaces\base\smartpointer.h"/>
+    <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_processors\format_types\VST3_SDK\pluginterfaces\base\typesizecheck.h"/>
     <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_processors\format_types\VST3_SDK\pluginterfaces\base\ustring.h"/>
     <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_processors\format_types\VST3_SDK\pluginterfaces\gui\iplugview.h"/>
     <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_processors\format_types\VST3_SDK\pluginterfaces\gui\iplugviewcontentscalesupport.h"/>
@@ -3058,8 +3065,11 @@
     <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_processors\format_types\VST3_SDK\pluginterfaces\vst\ivstinterappaudio.h"/>
     <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_processors\format_types\VST3_SDK\pluginterfaces\vst\ivstmessage.h"/>
     <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_processors\format_types\VST3_SDK\pluginterfaces\vst\ivstmidicontrollers.h"/>
+    <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_processors\format_types\VST3_SDK\pluginterfaces\vst\ivstmidilearn.h"/>
     <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_processors\format_types\VST3_SDK\pluginterfaces\vst\ivstnoteexpression.h"/>
     <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_processors\format_types\VST3_SDK\pluginterfaces\vst\ivstparameterchanges.h"/>
+    <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_processors\format_types\VST3_SDK\pluginterfaces\vst\ivstphysicalui.h"/>
+    <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_processors\format_types\VST3_SDK\pluginterfaces\vst\ivstpluginterfacesupport.h"/>
     <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_processors\format_types\VST3_SDK\pluginterfaces\vst\ivstplugview.h"/>
     <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_processors\format_types\VST3_SDK\pluginterfaces\vst\ivstprefetchablesupport.h"/>
     <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_processors\format_types\VST3_SDK\pluginterfaces\vst\ivstprocesscontext.h"/>
@@ -3071,6 +3081,7 @@
     <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_processors\format_types\VST3_SDK\public.sdk\source\common\memorystream.h"/>
     <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_processors\format_types\VST3_SDK\public.sdk\source\common\pluginview.h"/>
     <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_processors\format_types\VST3_SDK\public.sdk\source\vst\hosting\hostclasses.h"/>
+    <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_processors\format_types\VST3_SDK\public.sdk\source\vst\hosting\pluginterfacesupport.h"/>
     <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_processors\format_types\VST3_SDK\public.sdk\source\vst\vstbus.h"/>
     <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_processors\format_types\VST3_SDK\public.sdk\source\vst\vstcomponent.h"/>
     <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_processors\format_types\VST3_SDK\public.sdk\source\vst\vstcomponentbase.h"/>
@@ -3573,6 +3584,7 @@
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\controllable\parameter\ui\IntStepperUI.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\controllable\parameter\ui\ParameterEditor.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\controllable\parameter\ui\ParameterUI.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\controllable\parameter\ui\StringParameterTextUI.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\controllable\parameter\ui\StringParameterUI.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\controllable\parameter\ui\TargetParameterUI.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\controllable\parameter\ui\TripleSliderUI.h"/>

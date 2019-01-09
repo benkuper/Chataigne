@@ -3,9 +3,8 @@
 <JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.5.3b3"
               bundleIdentifier="benkuper.Chataigne" includeBinaryInAppConfig="1"
               jucerVersion="5.4.1" companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
-              companyEmail="benjamin@kuperberg.fr" defines="" displaySplashScreen="0"
-              splashScreenColour="Dark" cppLanguageStandard="14" companyCopyright="Ben Kuper"
-              headerPath="../../Source" reportAppUsage="0">
+              companyEmail="benjamin@kuperberg.fr" defines="" splashScreenColour="Dark"
+              cppLanguageStandard="14" companyCopyright="Ben Kuper" headerPath="../../Source">
   <MAINGROUP id="EDDVhd" name="Chataigne">
     <GROUP id="{E61F6705-4C4B-3F04-F742-20CC91F590E4}" name="Resources">
       <GROUP id="{2B6637A1-A2F4-FF34-9B3E-D1D7E87E01F8}" name="Templates">
