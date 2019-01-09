@@ -16,7 +16,8 @@ LiveOSCCommandBase::LiveOSCCommandBase(LiveOSCModule * _module, CommandContext c
 	OSCCommand(_module, context, params),
 	liveModule(_module),
 	trackTarget(nullptr),
-	trackID(nullptr)
+	trackID(nullptr),
+	value(nullptr)
 {
 	type = (ActionType)(int)params.getProperty("type", MUTE);
 
@@ -78,7 +79,7 @@ LiveOSCCommandBase::LiveOSCCommandBase(LiveOSCModule * _module, CommandContext c
 	case BOOL: value = argumentsContainer.addBoolParameter("Value", "Value", false); break;
 	}
 
-	setTargetMappingParameterAt(value, 0);
+	if(value != nullptr) setTargetMappingParameterAt(value, 0);
 	rebuildAddressOnParamChanged = true;
 	rebuildAddress();
 }
