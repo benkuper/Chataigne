@@ -119,8 +119,3 @@ void MIDIDeviceParameter::loadJSONDataInternal(var data)
 	if (outputDevice == nullptr) ghostDeviceOut = data.getProperty("value", var())[1];
 
 }
-
-InspectableEditor * MIDIDeviceParameter::getEditor(bool isRoot)
-{
-	return new ControllableEditor(this,isRoot,40);
-}

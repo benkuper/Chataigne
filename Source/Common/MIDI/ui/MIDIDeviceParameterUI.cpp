@@ -19,6 +19,8 @@ MIDIDeviceParameterUI::MIDIDeviceParameterUI(MIDIDeviceParameter * _midiParam) :
 	chooser.setSelectedInputDevice(midiParam->inputDevice);
 	chooser.setSelectedOutputDevice(midiParam->outputDevice);
 	chooser.setGhostValues(midiParam->ghostDeviceIn, midiParam->ghostDeviceOut);
+
+	setSize(100, 40);
 }
 
 MIDIDeviceParameterUI::~MIDIDeviceParameterUI()

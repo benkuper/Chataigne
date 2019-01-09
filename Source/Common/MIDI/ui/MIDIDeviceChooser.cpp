@@ -31,6 +31,7 @@ currentInputDevice(nullptr),
 		
 	}
 
+
 	setGhostValues("", "");
 
 	inputBox.addListener(this);

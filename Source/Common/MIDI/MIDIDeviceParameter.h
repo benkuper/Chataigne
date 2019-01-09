@@ -43,7 +43,6 @@ public:
 
 	void loadJSONDataInternal(var data) override;
 
-	InspectableEditor * getEditor(bool isRoot) override;
 };
 
 
