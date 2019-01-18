@@ -21,6 +21,7 @@ Action::Action(const String & name, var params) :
     triggerOff(nullptr),
     actionAsyncNotifier(10)
 {
+	helpID = "Action"; 
 	itemDataType = "Action";
 	type = ACTION;
 
@@ -37,7 +38,9 @@ Action::Action(const String & name, var params) :
 
 	forceNoOffConsequences = params.getProperty("forceNoOffConsequences", false);
 
-	helpID = "Action";
+	updateConditionRoles();
+
+	
 }
 
 Action::~Action()
@@ -58,7 +61,7 @@ void Action::updateConditionRoles()
 		}
 	}
 
-	setHasOffConsequences(!forceNoOffConsequences && actionRoles.contains(DEACTIVATE));
+	setHasOffConsequences(!forceNoOffConsequences && !actionRoles.contains(DEACTIVATE));
 
 	actionListeners.call(&ActionListener::actionRoleChanged, this);
 	actionAsyncNotifier.addMessage(new ActionEvent(ActionEvent::ROLE_CHANGED, this));
