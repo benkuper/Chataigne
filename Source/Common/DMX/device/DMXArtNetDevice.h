@@ -39,6 +39,7 @@ public:
 	uint8 fullMessage[NUM_CHANNELS + 18];
 
 	void sendDMXValue(int channel, int value) override;
+	void sendDMXRange(int startChannel, Array<int> values) override;
 
 	void sendDMXValues() override;
 };

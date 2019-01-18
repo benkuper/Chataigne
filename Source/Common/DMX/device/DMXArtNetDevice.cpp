@@ -32,6 +32,22 @@ void DMXArtNetDevice::sendDMXValue(int channel, int value)
 	DMXDevice::sendDMXValue(channel, value);
 }
 
+void DMXArtNetDevice::sendDMXRange(int startChannel, Array<int> values)
+{
+	int numValues = values.size();
+	for (int i = 0; i < numValues; i++)
+	{
+		int channel = startChannel + i;
+		if (channel < 0) continue;
+		if (channel > 512) break;
+
+		fullMessage[channel - 1 + 18] = (uint8)(values[i]);
+	}
+
+	DMXDevice::sendDMXRange(startChannel, values);
+
+}
+
 void DMXArtNetDevice::sendDMXValues()
 {
 	fullMessage[12] = (uint8)sequence;

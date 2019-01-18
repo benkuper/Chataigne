@@ -75,7 +75,7 @@ void DMXDevice::sendDMXRange(int startChannel, Array<int> values)
 		if (channel < 0) continue;
 		if (channel > 512) break;
 
-		dmxDataOut[channel - 1] = (uint8)values[i];
+		dmxDataOut[channel - 1] = (uint8)(values[i]);
 	}
 
 	if (!fixedRate->boolValue()) sendDMXValues();

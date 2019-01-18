@@ -106,7 +106,7 @@ void DMXCommand::trigger()
 	case SET_RANGE:
 	{
 		Array<int> values;
-		int numValues = channel2->intValue() - channel->intValue();
+		int numValues = channel2->intValue() - channel->intValue() + 1;
 		values.resize(numValues);
 		values.fill(value->intValue());
 		dmxModule->sendDMXValues(channel->intValue(), values);

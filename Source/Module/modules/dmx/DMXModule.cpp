@@ -86,7 +86,18 @@ void DMXModule::sendDMXValue(int channel, int value)
 void DMXModule::sendDMXValues(int startChannel, Array<int> values)
 {
 	if (dmxDevice == nullptr) return;
-	if (logOutgoingData->boolValue()) NLOG(niceName, "Send DMX : " + String(startChannel) + " > " + String(values.size()) + " values");
+	if (logOutgoingData->boolValue())
+	{
+		String s = "Send DMX : " + String(startChannel) + ", " + String(values.size()) + " values";
+		int ch = startChannel;
+		for (auto &v : values)
+		{
+			s += "\nChannel " + String(ch)+" : " + String(v);
+			ch++;
+		}
+		NLOG(niceName, s);
+	}
+
 	outActivityTrigger->trigger();
 
 	dmxDevice->sendDMXRange(startChannel, values);
