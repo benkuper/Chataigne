@@ -21,7 +21,7 @@ namespace BinaryData
     const int            midiScriptTemplate_jsSize = 1271;
 
     extern const char*   moduleScriptTemplate_js;
-    const int            moduleScriptTemplate_jsSize = 1204;
+    const int            moduleScriptTemplate_jsSize = 1305;
 
     extern const char*   oscScriptTemplate_js;
     const int            oscScriptTemplate_jsSize = 798;

@@ -162,7 +162,7 @@ void OSCModule::processMessage(const OSCMessage & msg)
 	{
 		Array<var> params;
 		params.add(msg.getAddressPattern().toString());
-		var args;
+		var args = var(Array<var>()); //initialize force array
 		for (auto &a : msg) args.append(OSCModule::argumentToVar(a));
 		params.add(args);
 		scriptManager->callFunctionOnAllItems(oscEventId, params);

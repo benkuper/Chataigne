@@ -20,16 +20,11 @@ CustomOSCModule::CustomOSCModule() :
 	includeValuesInSave = true;
 
 	autoAdd = moduleParams.addBoolParameter("Auto Add", "Add automatically any message that is received\nand try to create the corresponding value depending on the message content.", true);
-	autoAdd->isTargettable = false;
-
 	splitArgs = moduleParams.addBoolParameter("Split Arguments", "If checked, a message with multiple arguments will be exploded in multliple values", false);
-	splitArgs->isTargettable = false;
-
 	autoRange = moduleParams.addBoolParameter("Auto Range", "If checked, parameters with potential range like numbers will automatically have the range of the minimum and maximum received values", false);
-	autoRange->isTargettable = false;
-
 	autoFeedback = moduleParams.addBoolParameter("Auto Feedback", "If checked, all changed values will be automatically sent back to the outputs", false);
-	autoFeedback->isTargettable = false;
+
+	for (auto &p : moduleParams.controllables) p->isTargettable = false;
 
 	valuesCC.userCanAddControllables = true;
 	valuesCC.customUserCreateControllableFunc = &CustomOSCModule::showMenuAndCreateValue;
