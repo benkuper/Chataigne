@@ -133,7 +133,7 @@ void CustomOSCModule::processMessageInternal(const OSCMessage & msg)
 				break;
 
 			case Controllable::COLOR:
-				if (msg.size() >= 4) ((ColorParameter *)c)->setColor(Colour((uint8)(getFloatArg(msg[0]) * 255), (uint8)(getFloatArg(msg[1]) * 255), (uint8)(getFloatArg(msg[2]) * 255), getFloatArg(msg[3])));
+				if (msg.size() >= 3) ((ColorParameter *)c)->setColor(Colour((uint8)(getFloatArg(msg[0]) * 255), (uint8)(getFloatArg(msg[1]) * 255), (uint8)(getFloatArg(msg[2]) * 255), msg.size() >= 4?getFloatArg(msg[3]):1));
 				break;
 
 			default:
