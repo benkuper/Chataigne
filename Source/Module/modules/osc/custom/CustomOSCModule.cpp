@@ -276,6 +276,8 @@ void CustomOSCModule::showMenuAndCreateValue(ControllableContainer * container)
 		String addString = window.getTextEditorContents("address").replace(" ", "");
 		if (!addString.startsWith("/")) addString = "/" + addString;
 		c->setNiceName(addString);
+		c->isCustomizableByUser = true;
+		c->isRemovableByUser = true;
 		container->addControllable(c);
 	}
 	else
