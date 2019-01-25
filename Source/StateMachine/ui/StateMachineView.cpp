@@ -19,16 +19,14 @@ StateMachineView::StateMachineView(const String &contentName, StateManager * _ma
 	canZoom = false;
 	contentIsFlexible = true;
 	addItemText = "Add State";
+	noItemText = "Add interaction by creating a State";
 	
-	addExistingItems(false);
 
 	stmUI = new StateTransitionManagerUI(this, &manager->stm);
 	addAndMakeVisible(stmUI, 0);
-
 	
-	noItemText = "Add interaction by creating a State";
 
-	resized();
+	addExistingItems();
 	frameView();
 }
 
