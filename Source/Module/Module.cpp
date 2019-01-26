@@ -178,8 +178,22 @@ void Module::setupModuleFromJSONData(var data)
 	setNiceName(data.getProperty("name",""));
 
 	loadDefaultsParameterValuesForContainer(data.getProperty("defaults", var()), &moduleParams);
+
+	var hideParamsList = data.getProperty("hideDefaultParameters",var());
+	if (hideParamsList.isArray())
+	{
+		for (int i = 0; i < hideParamsList.size(); i++)
+		{
+			Controllable * c = moduleParams.getControllableByName(hideParamsList[i].toString(), true);
+			if (c != nullptr) c->hideInEditor = true;
+		}
+	}
+
+
 	createControllablesForContainer(data.getProperty("parameters", var()), &moduleParams);
 	createControllablesForContainer(data.getProperty("values", var()), &valuesCC);
+
+	
 
 	Array<WeakReference<Controllable>> valueList = getValueControllables();
 	for (auto &c : valueList) c->setControllableFeedbackOnly(true);
