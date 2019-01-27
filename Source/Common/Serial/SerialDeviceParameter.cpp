@@ -36,7 +36,7 @@ void SerialDeviceParameter::setValueInternal(var &v)
 	EnumParameter::setValueInternal(v);
 	var data = getValueData();
 	if (data.isVoid()) currentDevice = nullptr;
-	else currentDevice = SerialManager::getInstance()->getPort(data.getProperty("hardwareID","").toString(), data.getProperty("port", "").toString(),true,openBaudRate);
+	else currentDevice = SerialManager::getInstance()->getPort(data.getProperty("deviceID","").toString(), data.getProperty("port", "").toString(),true,openBaudRate);
 	//DBG("current device from setValueInternal : " << (int)currentDevice);
 }
 
@@ -54,7 +54,7 @@ void SerialDeviceParameter::updatePortList()
 		var v(new DynamicObject());
 		//DBG("Add option : " << p->port << ":" << p->hardwareID);
 		v.getDynamicObject()->setProperty("port", p->port);
-		v.getDynamicObject()->setProperty("hardwareID", p->hardwareID);
+		v.getDynamicObject()->setProperty("deviceID", p->deviceID);
 		String desc = p->description;
 #if !JUCE_WINDOWS 
 		desc += " (" + p->port + ")";

@@ -132,14 +132,14 @@ SerialDevice * SerialManager::getPort(SerialDeviceInfo * portInfo, bool createIf
 	return nullptr;
 }
 
-SerialDevice * SerialManager::getPort(String hardwareID, String portName, bool createIfNotThere, int openBaudRate)
+SerialDevice * SerialManager::getPort(String deviceID, String portName, bool createIfNotThere, int openBaudRate)
 {
 #if SERIALSUPPORT
 
 	for (auto & pi : portInfos)
 	{
 		
-		if (pi->hardwareID == hardwareID & pi->port == portName)
+		if (pi->deviceID == deviceID & pi->port == portName)
 		{
 			return getPort(pi, createIfNotThere,openBaudRate);
 		}

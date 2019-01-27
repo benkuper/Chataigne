@@ -29,7 +29,7 @@ public:
 	void updateDeviceList();
 
 	SerialDevice * getPort(SerialDeviceInfo *  portInfo, bool createIfNotThere = true, int openBaudRate = 9600);
-	SerialDevice * getPort(String hardwareID, String portName, bool createIfNotThere = true, int openBaudRate = 9600);
+	SerialDevice * getPort(String deviceID, String portName, bool createIfNotThere = true, int openBaudRate = 9600);
 
 	void removePort(SerialDevice * p);
 

@@ -64,6 +64,7 @@ void SerialModule::setCurrentPort(SerialDevice * _port)
 		{
 			port->setMode(streamingType->getValueDataAsEnum<SerialDevice::PortMode>());
 		}
+
 		lastOpenedPortID = port->info->deviceID;
 	}
 
