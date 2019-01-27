@@ -274,12 +274,15 @@ void SerialReadThread::run()
 SerialDeviceInfo::SerialDeviceInfo(String _port, String _description, String _hardwareID) :
 	port(_port), description(_description), hardwareID(_hardwareID)
 {
+#if JUCE_WINDOWS
 	vid = hardwareID.substring(8, 12).getHexValue32();
 	pid = hardwareID.substring(17, 21).getHexValue32();
-
-#if JUCE_WINDOWS
 	deviceID = description;
+	uniqueDescription = description; //COM port integrated in description
 #else
+	vid = hardwareID.substring(16, 20).getHexValue32();
+	pid = hardwareID.substring(23, 27).getHexValue32();
 	deviceID = hardwareID;
+	uniqueDescription = description + "(SN : " + deviceID.substring(35) + ")";
 #endif
 }

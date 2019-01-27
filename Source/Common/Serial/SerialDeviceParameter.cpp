@@ -55,10 +55,7 @@ void SerialDeviceParameter::updatePortList()
 		//DBG("Add option : " << p->port << ":" << p->hardwareID);
 		v.getDynamicObject()->setProperty("port", p->port);
 		v.getDynamicObject()->setProperty("deviceID", p->deviceID);
-		String desc = p->description;
-#if !JUCE_WINDOWS 
-		desc += " (" + p->port + ")";
-#endif
+		String desc = p->uniqueDescription;
 		addOption(desc, v, false);
 	}
 }

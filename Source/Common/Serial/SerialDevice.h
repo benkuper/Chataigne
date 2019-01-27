@@ -67,6 +67,7 @@ public:
 
 	String port;
 	String description;
+	String uniqueDescription;
 	String hardwareID;
 	int vid;
 	int pid;
