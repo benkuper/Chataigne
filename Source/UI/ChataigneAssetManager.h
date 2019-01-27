@@ -25,6 +25,8 @@ public:
 
 	Image getInImage();
 	Image getOutImage();
+	Image getConnectedImage();
+	Image getDisconnectedImage();
 
 	Image getPlayImage();
 	Image getStopImage();

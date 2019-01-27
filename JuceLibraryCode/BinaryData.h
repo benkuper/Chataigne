@@ -33,22 +33,28 @@ namespace BinaryData
     const int            about_pngSize = 36971;
 
     extern const char*   add_png;
-    const int            add_pngSize = 16103;
+    const int            add_pngSize = 3269;
+
+    extern const char*   connected_png;
+    const int            connected_pngSize = 3998;
 
     extern const char*   default_chalayout;
     const int            default_chalayoutSize = 3448;
+
+    extern const char*   disconnected_png;
+    const int            disconnected_pngSize = 3820;
 
     extern const char*   icon_png;
     const int            icon_pngSize = 42153;
 
     extern const char*   in_png;
-    const int            in_pngSize = 3358;
+    const int            in_pngSize = 3754;
 
     extern const char*   nextcue_png;
-    const int            nextcue_pngSize = 877;
+    const int            nextcue_pngSize = 2624;
 
     extern const char*   out_png;
-    const int            out_pngSize = 3368;
+    const int            out_pngSize = 4041;
 
     extern const char*   padlock_png;
     const int            padlock_pngSize = 584;
@@ -57,7 +63,7 @@ namespace BinaryData
     const int            pause_pngSize = 701;
 
     extern const char*   play_png;
-    const int            play_pngSize = 768;
+    const int            play_pngSize = 1849;
 
     extern const char*   playing_png;
     const int            playing_pngSize = 952;
@@ -66,7 +72,7 @@ namespace BinaryData
     const int            playpause_pngSize = 16163;
 
     extern const char*   prevcue_png;
-    const int            prevcue_pngSize = 2539;
+    const int            prevcue_pngSize = 2536;
 
     extern const char*   smallstripe_png;
     const int            smallstripe_pngSize = 1959;
@@ -75,13 +81,13 @@ namespace BinaryData
     const int            snap_pngSize = 3649;
 
     extern const char*   stop_png;
-    const int            stop_pngSize = 813;
+    const int            stop_pngSize = 1978;
 
     extern const char*   stripe_png;
     const int            stripe_pngSize = 2043;
 
     // Number of elements in the namedResourceList and originalFileNames arrays.
-    const int namedResourceListSize = 24;
+    const int namedResourceListSize = 26;
 
     // Points to the start of a list of resource names.
     extern const char* namedResourceList[];

@@ -26,6 +26,8 @@ public:
 	ScopedPointer<TriggerImageUI> inActivityUI;
 	ScopedPointer<TriggerImageUI> outActivityUI;
 
+	ScopedPointer<BoolImageToggleUI> connectionFeedbackUI;
+
 	void moduleIOConfigurationChanged() override;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ModuleUI)

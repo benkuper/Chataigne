@@ -18,6 +18,7 @@ port(_port),
 info(_info),
 mode(_mode)
 {
+	DBG("NEW SERIAL DEVICE");
 	open();
 
 	
@@ -41,29 +42,42 @@ SerialDevice::~SerialDevice()
 
 void SerialDevice::setMode(PortMode _mode)
 {
+	if (mode == _mode) return; //do nothing if the same
+
 	if (_mode == LINES) //must restart to make sure thread is not hanging in readLine
 	{
 		thread.signalThreadShouldExit();
-		thread.stopThread(500);
+		thread.stopThread(1000);
 		thread.startThread();
 	}
 
 	mode = _mode;
 }
 
+void SerialDevice::setBaudRate(int baudRate)
+{
+	if (port != nullptr)
+	{
+		DBG("Port is null here, not setting baudrate");
+		if ((uint32_t)baudRate == port->getBaudrate()) return;
+
+		port->setBaudrate(baudRate);
+	}
+}
+
 void SerialDevice::open(int baud)
 {
 #if SERIALSUPPORT
-	if (!port->isOpen())
-	{
-		
-		port->setBaudrate(baud);
-		port->open();
-	}
+	if (port == nullptr) return;
+
+	
+	port->setBaudrate(baud); 
+	if (!port->isOpen())  port->open();
 
 	
 	port->setDTR();
 	port->setRTS();
+	
 
 	if (!thread.isThreadRunning())
 	{
@@ -160,6 +174,8 @@ void SerialReadThread::run()
 	
 	std::vector<uint8_t> byteBuffer; //for cobs and data255
 
+	DBG("START SERIAL THREAD");
+
 	while (!threadShouldExit())
 	{
 		sleep(10); //100fps
@@ -238,8 +254,10 @@ void SerialReadThread::run()
 			DBG("### Serial Problem ");
 		}
 
-
+		
 	}
+
+	DBG("END SERIAL THREAD");
 #endif
 
 }

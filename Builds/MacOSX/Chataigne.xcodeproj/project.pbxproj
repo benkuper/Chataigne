@@ -1422,6 +1422,13 @@
 			path = ../../JuceLibraryCode/JuceHeader.h;
 			sourceTree = "SOURCE_ROOT";
 		};
+		0E0B1252FBC81A8784FD87B5 = {
+			isa = PBXFileReference;
+			lastKnownFileType = image.png;
+			name = disconnected.png;
+			path = ../../Resources/disconnected.png;
+			sourceTree = "SOURCE_ROOT";
+		};
 		0E0C3BD22A615072B34BFC26 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -3865,6 +3872,13 @@
 			path = ../../Source/Module/modules/generic/ChataigneGenericModule.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
+		AB7FDE005232965FA032439C = {
+			isa = PBXFileReference;
+			lastKnownFileType = image.png;
+			name = connected.png;
+			path = ../../Resources/connected.png;
+			sourceTree = "SOURCE_ROOT";
+		};
 		ABB0DE34096913DD3CB340F5 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -5370,7 +5384,9 @@
 				C425CBE1320141CCBDD71858,
 				D79CC2C49C8F65182898823E,
 				AC618D6B6BD7DB9CBEFD0818,
+				AB7FDE005232965FA032439C,
 				5FA54638369A3C34CEB7FE3C,
+				0E0B1252FBC81A8784FD87B5,
 				331643DFCB261592E0B722B9,
 				AD11D16FF7B59083692E9F22,
 				ABE980A8C8A9E5C7E7344E09,

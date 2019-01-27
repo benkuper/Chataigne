@@ -27,8 +27,11 @@
       </GROUP>
       <FILE id="qDQaKu" name="about.png" compile="0" resource="1" file="Resources/about.png"/>
       <FILE id="fwyowN" name="add.png" compile="0" resource="1" file="Resources/add.png"/>
+      <FILE id="KbrKp0" name="connected.png" compile="0" resource="1" file="Resources/connected.png"/>
       <FILE id="gZcS0r" name="default.chalayout" compile="0" resource="1"
             file="Resources/default.chalayout"/>
+      <FILE id="kXP3Ci" name="disconnected.png" compile="0" resource="1"
+            file="Resources/disconnected.png"/>
       <FILE id="nVz6Li" name="icon.png" compile="0" resource="1" file="Resources/icon.png"/>
       <FILE id="WlJm0v" name="in.png" compile="0" resource="1" file="Resources/in.png"/>
       <FILE id="A952C8" name="nextcue.png" compile="0" resource="1" file="Resources/nextcue.png"/>

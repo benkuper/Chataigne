@@ -14,6 +14,8 @@
 ModuleUI::ModuleUI(Module * module) :
 	BaseItemUI<Module>(module)
 {
+	headerHeight = 20;
+
 	module->addModuleListener(this);
 
 	inActivityUI = module->inActivityTrigger->createImageUI(ChataigneAssetManager::getInstance()->getInImage());
@@ -25,6 +27,12 @@ ModuleUI::ModuleUI(Module * module) :
 	outActivityUI->showLabel = false;
 	addAndMakeVisible(outActivityUI);
 	outActivityUI->setVisible(module->hasOutput);
+
+	if (module->connectionFeedbackRef != nullptr)
+	{
+		connectionFeedbackUI = module->connectionFeedbackRef->createImageToggle(ChataigneAssetManager::getInstance()->getBTDoubleImage(ChataigneAssetManager::getInstance()->getConnectedImage(), ChataigneAssetManager::getInstance()->getDisconnectedImage()));
+		addAndMakeVisible(connectionFeedbackUI);
+	}
 }
 
 ModuleUI::~ModuleUI()
@@ -35,8 +43,9 @@ ModuleUI::~ModuleUI()
 
 void ModuleUI::resizedInternalHeader(Rectangle<int>& r)
 {
-	outActivityUI->setBounds(r.removeFromRight(headerHeight));
-	inActivityUI->setBounds(r.removeFromRight(headerHeight));
+	outActivityUI->setBounds(r.removeFromRight(r.getHeight()));
+	inActivityUI->setBounds(r.removeFromRight(r.getHeight()));
+	if (connectionFeedbackUI != nullptr) connectionFeedbackUI->setBounds(r.removeFromRight(r.getHeight()));
 }
 
 void ModuleUI::moduleIOConfigurationChanged()

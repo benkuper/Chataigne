@@ -20,6 +20,7 @@ Module::Module(const String &name) :
 	hasInput(true),
 	hasOutput(true),
 	moduleParams("Parameters"),
+	connectionFeedbackRef(nullptr),
 	valuesCC("Values"),
 	alwaysShowValues(false),
 	includeValuesInSave(false),
@@ -44,11 +45,11 @@ Module::Module(const String &name) :
 
 	inActivityTrigger = addTrigger("IN Activity", "Incoming Activity Signal");
 	inActivityTrigger->hideInEditor = true;
-	inActivityTrigger->isControllableFeedbackOnly = true;
+	inActivityTrigger->setControllableFeedbackOnly(true);
 
 	outActivityTrigger = addTrigger("OUT Activity", "Outgoing Activity Signal");
 	outActivityTrigger->hideInEditor = true;
-	outActivityTrigger->isControllableFeedbackOnly = true;
+	outActivityTrigger->setControllableFeedbackOnly(true);
 
 	
 	moduleParams.saveAndLoadRecursiveData = true;

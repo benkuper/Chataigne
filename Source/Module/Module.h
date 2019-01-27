@@ -36,6 +36,8 @@ public:
 	Trigger * inActivityTrigger;
 	Trigger * outActivityTrigger;
 
+	BoolParameter * connectionFeedbackRef;
+
 	CommandDefinitionManager defManager;
 	ControllableContainer valuesCC;
 

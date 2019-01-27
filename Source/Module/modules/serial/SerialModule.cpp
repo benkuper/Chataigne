@@ -19,7 +19,13 @@ SerialModule::SerialModule(const String &name) :
 	moduleParams.addParameter(portParam);
 	baudRate = moduleParams.addIntParameter("Baud Rate", "The connection speed. Common values are 9600, 57600, 115200", 9600, 9600, 1000000);
 	portParam->openBaudRate = baudRate->intValue();
+	
+	isConnected = moduleParams.addBoolParameter("Is Connected", "This is checked if a serial port is connected.", false);
+	isConnected->setControllableFeedbackOnly(true);
+	connectionFeedbackRef = isConnected;
+	
 	SerialManager::getInstance()->addSerialManagerListener(this);
+	
 }
 
 SerialModule::~SerialModule()
@@ -60,6 +66,8 @@ void SerialModule::setCurrentPort(SerialDevice * _port)
 		lastOpenedPortID = port->info->port;
 	}
 
+	isConnected->setValue(port != nullptr);
+
 	serialModuleListeners.call(&SerialModuleListener::currentPortChanged);
 }
 
@@ -72,9 +80,10 @@ void SerialModule::onControllableFeedbackUpdateInternal(ControllableContainer * 
 		portParam->openBaudRate = baudRate->intValue();
 		if (portParam->getDevice() != nullptr)
 		{
-			var val = portParam->value;
-			portParam->setValue(var());
-			portParam->setValue(val);
+			portParam->getDevice()->setBaudRate(portParam->openBaudRate);
+			//var val = portParam->value;
+			//portParam->setValue(var());
+			//portParam->setValue(val);
 		}
 		
 	}
@@ -154,4 +163,5 @@ void SerialModule::portAdded(SerialDeviceInfo * info)
 
 void SerialModule::portRemoved(SerialDeviceInfo *)
 {
+	setCurrentPort(nullptr);
 }

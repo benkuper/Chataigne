@@ -30,8 +30,8 @@ public:
 
 	SerialDeviceParameter * portParam;
 	IntParameter * baudRate;
-	BoolParameter * connected;
 	SerialDevice * port; 
+	BoolParameter * isConnected;
 
 	virtual void setCurrentPort(SerialDevice *port);
 	virtual void onControllableFeedbackUpdateInternal(ControllableContainer *, Controllable * c) override;

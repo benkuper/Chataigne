@@ -12,6 +12,7 @@
 
 SerialDeviceParameter::SerialDeviceParameter(const String & name, const String & description, bool enabled) :
 	EnumParameter(name,description,enabled),
+	currentDevice(nullptr),
 	openBaudRate(9600)
 {
 	SerialManager::getInstance()->addSerialManagerListener(this);

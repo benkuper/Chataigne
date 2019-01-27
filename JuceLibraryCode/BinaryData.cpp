@@ -855,197 +855,76 @@ const char* about_png = (const char*) temp_binary_data_7;
 static const unsigned char temp_binary_data_8[] =
 "\x89PNG\r\n"
 "\x1a\n"
-"\0\0\0\rIHDR\0\0\0\x18\0\0\0\x18\x08\x06\0\0\0\xe0w=\xf8\0\0\0\tpHYs\0\0\x0b\x13\0\0\x0b\x13\x01\0\x9a\x9c\x18\0\0;\xa6iTXtXML:com.adobe.xmp\0\0\0\0\0<?xpacket begin=\"\xef\xbb\xbf\" id=\"W5M0MpCehiHzreSzNTczkc9d\"?>\n"
-"<x:xmpmeta xmlns:x=\"adobe:ns:meta/\" x:xmptk=\"Adobe XMP Core 5.6-c138 79.159824, 2016/09/14-01:09:01        \">\n"
-"   <rdf:RDF xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\">\n"
-"      <rdf:Description rdf:about=\"\"\n"
-"            xmlns:xmp=\"http://ns.adobe.com/xap/1.0/\"\n"
-"            xmlns:dc=\"http://purl.org/dc/elements/1.1/\"\n"
-"            xmlns:photoshop=\"http://ns.adobe.com/photoshop/1.0/\"\n"
-"            xmlns:xmpMM=\"http://ns.adobe.com/xap/1.0/mm/\"\n"
-"            xmlns:stEvt=\"http://ns.adobe.com/xap/1.0/sType/ResourceEvent#\"\n"
-"            xmlns:tiff=\"http://ns.adobe.com/tiff/1.0/\"\n"
-"            xmlns:exif=\"http://ns.adobe.com/exif/1.0/\">\n"
-"         <xmp:CreatorTool>Adobe Photoshop CC 2017 (Windows)</xmp:CreatorTool>\n"
-"         <xmp:CreateDate>2017-01-04T13:04:31+01:00</xmp:CreateDate>\n"
-"         <xmp:ModifyDate>2017-01-04T13:10:03+01:00</xmp:ModifyDate>\n"
-"         <xmp:MetadataDate>2017-01-04T13:10:03+01:00</xmp:MetadataDate>\n"
-"         <dc:format>image/png</dc:format>\n"
-"         <photoshop:ColorMode>3</photoshop:ColorMode>\n"
-"         <xmpMM:InstanceID>xmp.iid:885bffc4-07da-a748-86df-41c7a2b9dc65</xmpMM:InstanceID>\n"
-"         <xmpMM:DocumentID>adobe:docid:photoshop:b57f0b78-d276-11e6-86fd-f22ea20d4df0</xmpMM:DocumentID>\n"
-"         <xmpMM:OriginalDocumentID>xmp.did:c47ec9ce-5036-1546-8ca3-36273bed87f6</xmpMM:OriginalDocumentID>\n"
-"         <xmpMM:History>\n"
-"            <rdf:Seq>\n"
-"               <rdf:li rdf:parseType=\"Resource\">\n"
-"                  <stEvt:action>created</stEvt:action>\n"
-"                  <stEvt:instanceID>xmp.iid:c47ec9ce-5036-1546-8ca3-36273bed87f6</stEvt:instanceID>\n"
-"                  <stEvt:when>2017-01-04T13:04:31+01:00</stEvt:when>\n"
-"                  <stEvt:softwareAgent>Adobe Photoshop CC 2017 (Windows)</stEvt:softwareAgent>\n"
-"               </rdf:li>\n"
-"               <rdf:li rdf:parseType=\"Resource\">\n"
-"                  <stEvt:action>saved</stEvt:action>\n"
-"                  <stEvt:instanceID>xmp.iid:6286ab82-7d72-974d-b733-8603bb425782</stEvt:instanceID>\n"
-"                  <stEvt:when>2017-01-04T13:10:03+01:00</stEvt:when>\n"
-"                  <stEvt:softwareAgent>Adobe Photoshop CC 2017 (Windows)</stEvt:softwareAgent>\n"
-"                  <stEvt:changed>/</stEvt:changed>\n"
-"               </rdf:li>\n"
-"               <rdf:li rdf:parseType=\"Resource\">\n"
-"                  <stEvt:action>saved</stEvt:action>\n"
-"                  <stEvt:instanceID>xmp.iid:885bffc4-07da-a748-86df-41c7a2b9dc65</stEvt:instanceID>\n"
-"                  <stEvt:when>2017-01-04T13:10:03+01:00</stEvt:when>\n"
-"                  <stEvt:softwareAgent>Adobe Photoshop CC 2017 (Windows)</stEvt:softwareAgent>\n"
-"                  <stEvt:changed>/</stEvt:changed>\n"
-"               </rdf:li>\n"
-"            </rdf:Seq>\n"
-"         </xmpMM:History>\n"
-"         <tiff:Orientation>1</tiff:Orientation>\n"
-"         <tiff:XResolution>720000/10000</tiff:XResolution>\n"
-"         <tiff:YResolution>720000/10000</tiff:YResolution>\n"
-"         <tiff:ResolutionUnit>2</tiff:ResolutionUnit>\n"
-"         <exif:ColorSpace>65535</exif:ColorSpace>\n"
-"         <exif:PixelXDimension>24</exif:PixelXDimension>\n"
-"         <exif:PixelYDimension>24</exif:PixelYDimension>\n"
-"      </rdf:Description>\n"
-"   </rdf:RDF>\n"
-"</x:xmpmeta>\n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                                                                                                    \n"
-"                            \n"
-"<?xpacket end=\"w\"?>\xf3\x9f""E8\0\0\0 cHRM\0\0z%\0\0\x80\x83\0\0\xf9\xff\0\0\x80\xe9\0\0u0\0\0\xea`\0\0:\x98\0\0\x17o\x92_\xc5""F\0\0\x02\xbbIDATx\xda\xec\x95\xbd\x8fTe\x14\xc6\x7f\xe7}\xef\xc7\xcc\xec\xec\xb0\xb3\xab\x92""e\xfd Y!\x8b\x0c\x9d\xc6h"
-"\xc5\x1f\x80""Bc\xa1""f\xad\xacH\x8c\x18!Tv\x80%\x95@l\xd4""BL,61\xd4\x16Zh\xa1\x05\x89\n"
-"q\x83H\\\x8c""a\xbf\x86\xd9\xf9\xba\xf7\xbd\xf7}\x8f\x05\xd0m\xf4n\x01\x15Oy\x9a_\x9es\x9e<GT\x95\x87)\xc3""C\xd6""c\xc0\xff*\xdan(\x08\xa2\x11\x07\xaf\xbe\x8b\xf1\x96\"\n"
-"\x0b\x91O\x8f\tr\x08\x10\x95\xf0+\x94\xdf\x80\xfc\xa6\x16\xaew>\xc5[\x87\xa2\xd5\0\0*%*\x01\xeb[_ \xc5;\x06\xc3Xs\x14h\x90\x12""0gM\x88.\x97v\xb8\xe8\xad\x0b;r\xb0\xe7\x9f\xfd\x94V@k\xbf\xa8\xa1\x03\xe0\xf1""4L\n"
-"@\xa9\x1e""A\0y\xcb\x16\xc9\x8bS\xdd""C\x07""B\xa4\x81\xc9\x8a\x80\xb9\x95W\xb1n\xf6\xf2\xa8\xe6;\xde:P\xe1\xef\xa2\xcb\xd2\xdeS\xd4L\xcc\x91\x9b\x1f""3\x1bO\x11\x8c""C\xd4\xec\x9f\xff\xfd\x8d%\x95\xfc\x18/W<\xf2""F\x8b\xe7\x87\x8d\xfcM\xa1\x04\x15\xf4"
-"\xbe\x83v4A\xdbN\xe0\t(\xa0\x08*PF\x9bG\x8bh\xadS9E\xcd""a{1\n"
-"\x96 \x81\xdbn\x9d[n\x95^\xbeJ\xcf\x8f\xd8\xf2""c\xba\xf9\x1dn\xb9UV\xdc:\x01\x8f\x18\x8b\xf5\xcd\xb7+\xdf\0""1\x0b\x83""0\xa4""e\x1a,\xed;M;j\xd2\x0b#\xe6\xcdS\x18\x84\xef:\xe7\x99\xb4u\x86>\xe7\xe4_\x9f\xb1^\xf6i\xdat\xbe""2@\x83O0\x82(\xc4=O,\x05q"
-"Y 3\x80@\xb2Y\x90\xd8\x18\xa7\x05(\x88\x80""B\\\x19\xe0\x07Y\xbf""9\xd3\"\xcf\x1dG\xfe""8G\x19<\x83|\x8d\xef_\xfa\x84\xbaIx\xe5\xda\xfb""4\xd3'\xb0\xc6\xf0L{\x96\xc9z\x13\xb7""1\x18U\x07\x8c\xb3\x1f\xb4l-\x8a\x11\x9e\xdd\xfd""4*\xb0\xe2&h\xa5\x13\xd4"
-"$fzn/s\xc9""4\xa2\x02>\xa0\xc1Sle?W\xaf\x8a|\xf0\xa5\xdeu\x98""8\x81\xd2""C\x11""0\x1e\xfa\xd9\x90~6\xc4x\xa0\x08PzLj\xd1\r%\xdb\xe4\xf3\xca\x0e\xfa\xbb\x86\xfd,[9>\xbd""5\x7f""A\xa6\"\xc8<s\xe9\x0c\xef-_B\x14""f\xdbm$\x80\xd4,\xa6gY\x1f\xdc\xfe""0{\xb2"
-"\xe8n\x9b\x97\xed\x1e\x8e \x10\xe0\xb9o_;\xdf\xd6\x17N\xb0\xdb#F\x18\xa9\x03\xa0!)!\x04""d\xcd\xd0\x0b\xcb\x17\xff<|\xe5""8\x89\xdfY\x17""a`\xdc\xea~\xd0\xb8~\xf7G-\x8a\x8fl\xbd\xd6\x89\x93{\x1bu\xc5\0?p\xd7\xcc\xa6=3>x\xe7+\x12\xbf\xb3""6} \xab\tZ\xf7"
-"_\xe7\xe3\xd1O6\xcb_\x8fL\xbc\x80\n"
-"\xa5""d\xcb\xa1\x94+i<y\xc3n\x9f\xce\xff^\xd1\xe3\x8f\xf6H\x01\xff\x0e\0\x1c';\xdb\x9d\xa1\xf8\xfb\0\0\0\0IEND\xae""B`\x82";
+"\0\0\0\rIHDR\0\0\0\x18\0\0\0\x18\x08\x06\0\0\0\xe0w=\xf8\0\0\0\tpHYs\0\0\x0b\x13\0\0\x0b\x13\x01\0\x9a\x9c\x18\0\0\x07\xd0iTXtXML:com.adobe.xmp\0\0\0\0\0<?xpacket begin=\"\xef\xbb\xbf\" id=\"W5M0MpCehiHzreSzNTczkc9d\"?> <x:xmpmeta xmlns:x=\"adobe:ns:"
+"meta/\" x:xmptk=\"Adobe XMP Core 5.6-c145 79.163499, 2018/08/13-16:40:22        \"> <rdf:RDF xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"> <rdf:Description rdf:about=\"\" xmlns:xmp=\"http://ns.adobe.com/xap/1.0/\" xmlns:dc=\"http://purl."
+"org/dc/elements/1.1/\" xmlns:photoshop=\"http://ns.adobe.com/photoshop/1.0/\" xmlns:xmpMM=\"http://ns.adobe.com/xap/1.0/mm/\" xmlns:stEvt=\"http://ns.adobe.com/xap/1.0/sType/ResourceEvent#\" xmlns:tiff=\"http://ns.adobe.com/tiff/1.0/\" xmlns:exif=\"h"
+"ttp://ns.adobe.com/exif/1.0/\" xmp:CreatorTool=\"Adobe Photoshop CC 2017 (Windows)\" xmp:CreateDate=\"2017-01-04T13:04:31+01:00\" xmp:ModifyDate=\"2019-01-27T14:10+01:00\" xmp:MetadataDate=\"2019-01-27T14:10+01:00\" dc:format=\"image/png\" photoshop:"
+"ColorMode=\"3\" photoshop:ICCProfile=\"sRGB IEC61966-2.1\" xmpMM:InstanceID=\"xmp.iid:c43064d7-3a91-9040-a34e-80eb383c3c86\" xmpMM:DocumentID=\"adobe:docid:photoshop:b57f0b78-d276-11e6-86fd-f22ea20d4df0\" xmpMM:OriginalDocumentID=\"xmp.did:c47ec9ce-5"
+"036-1546-8ca3-36273bed87f6\" tiff:Orientation=\"1\" tiff:XResolution=\"720000/10000\" tiff:YResolution=\"720000/10000\" tiff:ResolutionUnit=\"2\" exif:ColorSpace=\"65535\" exif:PixelXDimension=\"24\" exif:PixelYDimension=\"24\"> <xmpMM:History> <rdf:"
+"Seq> <rdf:li stEvt:action=\"created\" stEvt:instanceID=\"xmp.iid:c47ec9ce-5036-1546-8ca3-36273bed87f6\" stEvt:when=\"2017-01-04T13:04:31+01:00\" stEvt:softwareAgent=\"Adobe Photoshop CC 2017 (Windows)\"/> <rdf:li stEvt:action=\"saved\" stEvt:instance"
+"ID=\"xmp.iid:6286ab82-7d72-974d-b733-8603bb425782\" stEvt:when=\"2017-01-04T13:10:03+01:00\" stEvt:softwareAgent=\"Adobe Photoshop CC 2017 (Windows)\" stEvt:changed=\"/\"/> <rdf:li stEvt:action=\"saved\" stEvt:instanceID=\"xmp.iid:c43064d7-3a91-9040-"
+"a34e-80eb383c3c86\" stEvt:when=\"2019-01-27T14:10+01:00\" stEvt:softwareAgent=\"Adobe Photoshop CC 2019 (Windows)\" stEvt:changed=\"/\"/> </rdf:Seq> </xmpMM:History> </rdf:Description> </rdf:RDF> </x:xmpmeta> <?xpacket end=\"r\"?>*1`\x9d\0\0\x04\x9bI"
+"DATH\x89\xb5\x96\xdb\xab\xddW\x11\xc7?3k\xfd~\xbf\xbd\xf7""9g\xf7\\\x92\x93\x93K\xb5\xa9V\x13%\x82\xc6\xb6\xd1\x06\x11\xf5""A\xbc\"\"\xf4\xd1\x0b\xfa \xfe\x01\xe2\xab\xef\x82\xf8*(\x88 *\"\xd8\x87""B\x83Tii\xaai\x89""F1i\xa8\xadMO\xea\xe9\xb9\xe5\xec"
+"\xb3\x7f\xfb\xf2\xfb\xad""5\xe3""CZ0\xd9I\xdf""2O\xeb""a\xd6|\x98""5\xb3""f\xbe\xe2\xee\xdcK\xd3{\x1a\x1d\x88o\x1f\xdes\xf9\x1bt'=\x16\x86\x8b\xd4\xdd\x1a\xf1\x88\x9a\x94\xd3\xb2>\xae\x16\xcf\x04\x8f\x1f\x05V\x01q\xf1M\xc8\x17\xc0\x9e\x0f\xb9\xfb\xb2"
+"\xa0\xd3\xd1\xdc\x06\x9b\x87.\x91\xe2\x18\xb5\xc8\xee\xd2\xdfo\x05\xdcn\x8e\xaf\x89\xeb\x97\x83\xc5\x87\xd5\xc3\x03\x8e\xdf\x9f<\xcf;H$\x0c\x03\xe1\x84#g\x81\x17\x80\xdf\x83_\x7f\xc7\x0cn\xb3\xf7\x02\x8f\x83|/xqHQZZ\xa6\x9ep\x9c \x8aR<\x94""1@\xbf\x84"
+"\xcb*\xae\xbft\xb1\xab.\x19\x17}G\xc0<\xf0""C\x94\xaf\xb8S:N&\xa3\x08=\xad\x80\x9b\x85\xcb\xe4\xb7\xfdW\xc4\xc2\x0f""B\x8e\xa7\xc4\xe5\x9b\xc0\xde]3\x10x\xb7\x9a|]\xad\xfa\xa4\x85T\xb9&\x1cXow8\xd3{\x88\xaf-~\x9c""B\x94_\xdfx\x8eg\xeb\xcb\x1c)\x96pI\x92"
+"C.\x8av\xe1\x13k\xeb\x8f}\xbf\x8d""7~\xea""2}\x99\xc5\xdb\0.^%\xcd\xa7\xdb\"}G\\\xd6\xd4""A\x04\xd4\x95\x9d\\\xb3R\xf4\xf9""B\xff#\x94Z\xf0t\xfd/v\xf2\x88""c\xc5""2\xaaN\xc6\xd1\\\x1c\x98\x1b\xae|;k\xefo\xa6\xf5\x1b\xc0\xe8\x16\x80Z8\xe9*\xa7\xa7U:\""
+"\xe6$\xcb\x98""8\x86\x83\xb7$k\x98z\x8b\x1b\xb4\xd6\xe0\xde""2\xf1\x16qA\tDM4\xd5\xd6\x8a\xd3\x9cv\xf2\xab\xc0\xf9[\0\xdd\xf1\xc2\xa7\x94\xf0\xa1`\x01\xc4\xd8\xce\xbbl\xb4\x03\x1c`|\x8d\xad\xb9-\x06""6\xa1\x12""ck\xba\x05\xe3\xd7\xb8\x82\"\x08\xab""E"
+"\x9f\xc3\xc5\x12""B\xc0\xads\n"
+"\xb3\x9d\x19@\xf0\xe2\x94""a\xc7\xa7>\xc5q\xce.\x9c\xe4}\xbd""c8P\xa7mNT\xc7\xe9jID\xf9\xe2\xca\xc7xp\xfe \xbd""b\x99\x82\xc8K\xe3u\xfe""9\xfa\x0f\xe6\x10\x08\xef\x8a\xa2'g\x8a\xec\xe2\x8b\xc9\xd3|C\x8b;<\xd6=\xc1\xb7\x96?Mvc@\x83\xba\xd3}\xcb\xfd\xf3"
+"\xfdG\xf8,\x8f\xb0 %\x1d-\xf9\xd9\xf6\x1f\xb9X\xff\x9b\xd6\x8dJ\xbc\x17""B\xec\xcf\x02\xec""f\xdb\xa9*\xee\xce\xfex\xc8\xf5\xed\r\xb2g\x06\xed\x88\xb9N\x8f\xb2\x7f\0\x11\xb8\xb1\x7f\x83z\\3\x8c=*\x89\x0c\xc6\xfb\x08""B\x10""A\x10\xdc\xf1\x19\x80M\xda"
+"\x1c\x8a\x98\x8b^\x17o3\x7f\xd8\xbd\xc0S\x1b/\x82;\xa3\xd1u\xce\xae\x9e\xe1\xbb\xbd\xafRh\xe4\xe7\x1bO\xf2\xa7\x8dg\xe9t\x8f\xa2\x02\x93\xd2\xa8:\x05\x94\x8aO\xb2Y\x93l\x06\x90\xc7\xcd\xb5\x88\x1c\x8b\xd2{\xd0\xc4Yg\x97-\x19\xe0\xe2\xb4\xf2\n"
+"+z\x1cQ!h\xe0\n"
+"or\x81+\x14\xda \x08+,pH\x96\xd1\x18h\xdb\xe9n\xae\x9b\xff\xce>Q3=oA\x96\xac\xb1GM`un\x99\xb5p\0\x13\xe7\xd2|\xc9j\xff""0\xbdPQId\xb5\x7f\x98\xc8\xfb\xf9`\xe7(\xea\x8aY\xc6\xdd\xb0VH\xa3\xf4R\x1a\xb6\x7f\x9d\xfd\xc9i\xfc""4c\xbd_JC\xfb\x11\xf7LnZL\x04"
+"\xda\x84\xa7LN\x19""C\xf0\x9c\xa1MdM\x98\tR\t\"\x01\x19\x08iO.6#97\x0b""0\xdbH\xb9~&\x8d\xe5\xdc\\q\xe8""3\xda+\xc8U\x86\x89s\xb4\\\xe6\xdah\x93\x1f\xbd\xf2;\"\xca\xab\xf2\x06G\x8a%\xc4\x80\n"
+"\x82\x96x\xed\xd4\xc3\xed?7\xd3\xf4\x8c""e}}\x16 B\xa6\xfdG\x9b\xf6~\x1c\xea\xb0Pr\xdf\xc3\xd2)Uc\xe2`\\ds\xb2\xcfo\x86\xe7\x11\x84\xfe\xfc\x02\x07;\x8b\xa4\x9c\xc1\x03""6j\xbd\xd9\x1f\xbe""0i\x06?q\xcaK\"%\xb3\0@\x88""C\xc4\xce\r\xf3\xfa\xb1\xb9\x1d"
+"\xef\xf6\xaa\xb5\x0f\xd8r\x0e\xee&\xb1*\x98/\xef\xbbyI\x8a\xb7\xfaP\\wb\x9eN\xb7\xaf\xd6\xbc\xf9\x0b\xa4\xfb\x84H\x98\xfc\x7f\xcc;\x8d\xeb\t\"\xbf\xcd\xa3\xe9\xeb\xcd\xde\xe0q\xb7\xe6sZ\x15K\xc4@\x11\x01\x07\xac\xa5m\x1b\xf2$\xed\xe9\xf6\xf4\xc9\\4\xbf"
+"\xa2/\xcf\x81Ln\x0fv\xc7\x85#\xa2[d\x7f\"\x8d&\x9bi0\xbe,Ex4\x86\xe2\x01\r\xa1\x87""C\xf2""4\xca)\xbd""fS\x7f\xbe\x18u\x9e\xf2y?/\"w\x94\x0fw]\x99""7g\xb5\xbc\x98-mH\x93\xaf\x8a\xd8\x87]\xe2\n"
+".n\xd2\xec""fO\x17\xdd\xf5/\x04\xae\x89\xca]\xa5\x89\xdck\xd9\xf2?+iWPrc{^\0\0\0\0IEND\xae""B`\x82";
 
 const char* add_png = (const char*) temp_binary_data_8;
 
-//================== default.chalayout ==================
+//================== connected.png ==================
 static const unsigned char temp_binary_data_9[] =
+"\x89PNG\r\n"
+"\x1a\n"
+"\0\0\0\rIHDR\0\0\0\x18\0\0\0\x18\x08\x06\0\0\0\xe0w=\xf8\0\0\0\tpHYs\0\0\x0b\x13\0\0\x0b\x13\x01\0\x9a\x9c\x18\0\0\n"
+"6iTXtXML:com.adobe.xmp\0\0\0\0\0<?xpacket begin=\"\xef\xbb\xbf\" id=\"W5M0MpCehiHzreSzNTczkc9d\"?> <x:xmpmeta xmlns:x=\"adobe:ns:meta/\" x:xmptk=\"Adobe XMP Core 5.6-c145 79.163499, 2018/08/13-16:40:22        \"> <rdf:RDF xmlns:rdf=\"http://www.w3.or"
+"g/1999/02/22-rdf-syntax-ns#\"> <rdf:Description rdf:about=\"\" xmlns:xmpMM=\"http://ns.adobe.com/xap/1.0/mm/\" xmlns:stEvt=\"http://ns.adobe.com/xap/1.0/sType/ResourceEvent#\" xmlns:stRef=\"http://ns.adobe.com/xap/1.0/sType/ResourceRef#\" xmlns:dc=\""
+"http://purl.org/dc/elements/1.1/\" xmlns:photoshop=\"http://ns.adobe.com/photoshop/1.0/\" xmlns:xmp=\"http://ns.adobe.com/xap/1.0/\" xmlns:tiff=\"http://ns.adobe.com/tiff/1.0/\" xmlns:exif=\"http://ns.adobe.com/exif/1.0/\" xmpMM:DocumentID=\"adobe:do"
+"cid:photoshop:cc9f056c-2c7e-704d-a9ad-900d10744c3f\" xmpMM:InstanceID=\"xmp.iid:ad956041-51d6-a147-8976-f4cc28c0cf87\" xmpMM:OriginalDocumentID=\"804224AE14CDA86C61B4F52790E3E185\" dc:format=\"image/png\" photoshop:ColorMode=\"3\" photoshop:ICCProfil"
+"e=\"sRGB IEC61966-2.1\" xmp:CreateDate=\"2019-01-27T13:40:59+01:00\" xmp:ModifyDate=\"2019-01-27T13:53:54+01:00\" xmp:MetadataDate=\"2019-01-27T13:53:54+01:00\" tiff:ImageWidth=\"1500\" tiff:ImageLength=\"1225\" tiff:PhotometricInterpretation=\"2\" t"
+"iff:SamplesPerPixel=\"3\" tiff:XResolution=\"300/1\" tiff:YResolution=\"300/1\" tiff:ResolutionUnit=\"2\" exif:ExifVersion=\"0221\" exif:ColorSpace=\"65535\" exif:PixelXDimension=\"1500\" exif:PixelYDimension=\"1225\"> <xmpMM:History> <rdf:Seq> <rdf:"
+"li stEvt:action=\"saved\" stEvt:instanceID=\"xmp.iid:51b7709a-3e12-ee44-8d84-5ee2a09b9357\" stEvt:when=\"2019-01-27T13:45:25+01:00\" stEvt:softwareAgent=\"Adobe Photoshop CC 2019 (Windows)\" stEvt:changed=\"/\"/> <rdf:li stEvt:action=\"converted\" st"
+"Evt:parameters=\"from image/jpeg to image/png\"/> <rdf:li stEvt:action=\"derived\" stEvt:parameters=\"converted from image/jpeg to image/png\"/> <rdf:li stEvt:action=\"saved\" stEvt:instanceID=\"xmp.iid:af85123e-f6f3-184a-8aab-b51a2801c3ba\" stEvt:wh"
+"en=\"2019-01-27T13:45:25+01:00\" stEvt:softwareAgent=\"Adobe Photoshop CC 2019 (Windows)\" stEvt:changed=\"/\"/> <rdf:li stEvt:action=\"saved\" stEvt:instanceID=\"xmp.iid:ad956041-51d6-a147-8976-f4cc28c0cf87\" stEvt:when=\"2019-01-27T13:53:54+01:00\""
+" stEvt:softwareAgent=\"Adobe Photoshop CC 2019 (Windows)\" stEvt:changed=\"/\"/> </rdf:Seq> </xmpMM:History> <xmpMM:DerivedFrom stRef:instanceID=\"xmp.iid:51b7709a-3e12-ee44-8d84-5ee2a09b9357\" stRef:documentID=\"804224AE14CDA86C61B4F52790E3E185\" st"
+"Ref:originalDocumentID=\"804224AE14CDA86C61B4F52790E3E185\"/> <tiff:BitsPerSample> <rdf:Seq> <rdf:li>8</rdf:li> <rdf:li>8</rdf:li> <rdf:li>8</rdf:li> </rdf:Seq> </tiff:BitsPerSample> </rdf:Description> </rdf:RDF> </x:xmpmeta> <?xpacket end=\"r\"?>\xed"
+"\xe7L:\0\0\x05\x0eIDATH\x89\xb5\x96YlTU\x1c\xc6\x7f\xe7.3w:\x0bS\x98\xb6ST\xaa@\xa7\x15\x14#\x88\xa8m\xa3\xa0\r\x04""5\xd1\xc4\x18\xb7\xb8\xe1\x02./\xc4\xf8\x02\x89\x0f\xe2\x9b\x89\xc4\x88\x1b\x9a\x18\x8d""b\xdc\xde\x14""d\x11\xa5\x8d\x82KD\x01\xe9\x82"
+"\xd4\x82\xb4\xa5\x9dn3s;s\xef\xdcs\x8f\x0f\x03""c\xcb<\xf3\xdd\x97\xfbp\xce\xff\xbb\xdf\xf7\xff\xce\xff\\\xa1\x94\xe2""bB\xbb\xa8\xd5\x01\xe3\xfc\x8b-\x1d\x06\xecQ\xfe\x9c""8E\xc8\x08ru|\x1e\xef\x9e\xd8\xbb*\xa0\x1b\xb7w\x0cw\xb5\x8e:\x99\x94\xab""d\x08"
+"\x10\xa6\xd0\n"
+"\x89@\xac\xb7\xa5\xa6\xb9\xa3\xe0\xbb;\x9f^x\xdb\x9e\xc3\xe3\xfd*'\x1d\x96\xc4.c^$A\xdc\x0c\xcf$8\x0f\x85\"lX\x97l\xeb\xdd\xf5\xf2\xe7\xa7\x0e\xde""3\x98\x9f\x88V\x19\x01""f\x07\"\x84\x8d \0S\x9e\x1b\xf8}\xaaoY\xe7h\xd7\xb2\xa4\x15_/\x95\xff""E{r\xc9"
+"\xe6\xac,\xf4_XO\x9c\xef\x81-\x1d\xce\xd8\xa3\xf4\xe7""F\x9a\xb6\xf6|\xf3\xfe\xde\xb3GZ\x92V\x9c\xd9\xc1\x08\xba\xd0\xf0|\x1f""Ei\xad&\x04\x86\xd0\xf1\x94\xcf\x98\x93""c\xa8""0\xce-u\x8b\x0f=\x9bZ\xf3""dC(q\xa4""a\x9a\x82r\x0f\x04\x82\x98\x11\xaa}\xbd"
+"w\xd7[\xfb\x86\x8f\xb6\xa4\xa2s\x99\x13\x8c\xe2+E\xd1\x97\x80""B\0\xba\xd0\xc8zy\xfa\xa7\xd2H%\xa9\xb5""b4F\xe7r`\xe4\xf8\x8a""7\xbawn\x8f\x99\xa1+\x04\xa2\xac\xa0L\x10\xd0\x0c\xfd\xdd\xbe}/\xed\x1a:\xbcra$\x89!4\xa4\xf2\x11\xe7\x1e[:8\xbe\xc7pa\x92j"
+"3\xcc\xc3\rm\x04""5\x93\x9c\x97'\xa0\xe9,\x08\xd7\xb1\x7f\xf8\xd8\x8a\xed'\xf7m\xb6\xf4\x80QA\xf0\xdb\xd8\xc9\xd6\x0f\xfe\xde\xff@2\x18'\xa8\x99\xf8(\x04\x02M\x08\xc6\xdd\x1cJ)\x86\x0b\x93\x08\x01\xdb\xaf_\xcf\x8b\x8b\xee\xa2\xa8$C\xf9I\xf2\xd2%\xa4\x07"
+"\xa8\xb7\xaa\xf9\xa8\xef\xc0\xfd\x07\xd3=\xab*R\xd4""9|\xbc}(\x9f\x89\xa7""bI<%\x01\xd0\x85\xa0\xcf\x1e\xa1>T\xcd\xb6\xeb\x1eg`j\x9c:k\x16\xb5V\x9c\xf5\xbf\xbeOwf\x80\x9a`\x14""AI\xed\x9c`\x84\xee\xcc`\xa8s\xa4\xbb\xfd\xe6\xda""E\xbbg\x12\xa4\xbbn1u\x1d"
+"C\xe8\x14\x95""DCc\xcc\xb5\x99""e\x86x{\xf9\x93\xb4\xd5""4\x97}]\xfb\xdd\xcb\xec\xec\xddM\xe3%\xcb\xd8\xba\xf4\x11\xba\xb3\x83l9\xfa%\x0b\"\xb5X\xbaIg\xbake\x85""E\x83\xf9\x89""E\xd5\x81*$>\x02p\x94G\xb6X\xe0\xd9\xd4\x9a\x19\xc5\x1d\xdf""cE\"\xc5\xdc"
+"\xd9\xf3ym\xe9\xc3\xac\x9d{-\x7f\x8c\xf7""a\xea\xa5T\xc5\xcd*F\x9d\xec\xfc\n"
+"\x8b\n"
+"\xb2\x18\x8b\x1aU\xf8\xaa\xe4\xbd#]\xc2""f\x80\x95u\x8bg\xe4:\xa8\x19l\xba\xfa\x1e\x9eJ\xad\xa6(%ww\xbc\xca\xf7g\x8fqE\xa4\x06\xa9|\xc2\x86\x85+\xbdX\x85\x02\x81(\xc2\xcc\xb9\x14\xd0\x0c\xc2\x86\xc5\x85""0\x84N\xbd\x15\xe7X\xe6""4\x07\x86\xff\"a\xc5\xf0"
+"\xa7m\x15\xe2\xff""Be\x02\xcb""0&3^\x1eM\x08@a\n"
+"\x9dq\xd7\xa6;3PAp\x1e\xab\xea\xae""bI\xbc\x01\xc7/\xa2\xce\xa5\xce\x96\x0e\xa6""0r\x15\x04I+\xde""3\xe9N\xa1\xa3\x01\x02K7\x19-\xe4x\xe5\xe8W\xa4\x9dlE\xf1\t\xd7""f\xfd\xcf\xdb\xe9\xc9\x0e\x10""7\xabJ\xca""4\x8dq7G\xc2\x8a\x9e\xa8 hM4\xffP\xf4%\x9e\x92"
+"H\xe5\x93\xf3\\\xb6\\s\x1f""7\xd7]\xc9""c\x07\xdf\xe4\xdb\xc1\xc3\x8c\xb9""9\x86\x0b\x19\xf6\x0e\x1d""a\xdd\xa1\xb7\xd8\xd1\xdfI\xdc,\x8d\x12\0_\xf9\xb8\xd2\xa3%\xd1\xb4\xbflg\x99\xa0\xf6\xca\xefj\x82\xd1\xe7\xc7\x9c\xdc\xac\xb0i\x11""2L6-\xbe\x9b\xdf"
+"\xc7\xfb\xb8""a\xf7&\x0e\x8d\xf6\xd0<\xebR\xa4\xefs:\x9f\xc6\x95\x1eM\xd1ztMG*\x1f""C\xe8\xa4\x9d\x0cs\x82Q\xbb\xb5\xa6yO\x85\x82""e\xb3\xe7w\xacK\xdd\xfa\xe9Y7\x83\x86@\x17\x82\xfb~\xdc\xca\x86_\xde""c^U\x82\xea@\x94Sv\x9a""3\xf9""1,-@\x9d\x15G\xd3J"
+"\x07LC\xe0*\x8f\xc1\xfc\x04\x0f]\xde\xb6\xe3\xc6""D\xaa\xac\xa0<M\x0b\xaa\xc8h>\x93\\w\xf0\xed\xcf\x0e\xa4\x8f\xb7-\x88$\xc9zy\x02\x9a""A\xc4\xb0\xf0\x95*O\xd3R\x0cJ\xd0\x85""FQI\xfe\xce\x0eqS\"\xd5\xf1\xce\xf2\xa7\x1f\xac\xb1\xa2\xa7""c\xe7\xfaRV\xa0"
+"Pd\xa5""3\xf4h}\xcb""3m\x89\xe6\x9fN\xd8""C\xa0\x04\x11\xc3:\x97\xac\xe9\x10\x18\x9a\x8e.J\xa7\xbd""73\xc8\x8d\x89\xa6\x9f""6,\\\xfd""D\xd6\xcb\x9fV\xd3\xe2\xae\xcd\xdc\x06Y/\x7f\xf4\x85\xe6;\xef\xdd\xd8t\xc7\x87\xba""F\xa1+{\x86\x7f\xec\x11\xa6\xa4S"
+"^gK\x87~{\x84\xae\xec\0\x02\x9c\xe7\x1a\xd7|\xb2\xb1\xe9\x8e\x07""2\xdeT\xcf\x85\x9fRq\xa3\t\x04\xb6\xe7\xfc\xbb\xa1\xb1\xfd\x11\xa5\xfc\x8f\x83\x9a\xb9\xb6s\xa4\xbbu\xac\x98[X\xf4\xbd*@\xc5\xccP\xa1\xa1j\xce\xc9\x9bj\x9a;\xf3\x9e\xfb\xf5\x86\xc6\xf6"
+"=\xbf\x8d\xf5\xc9\xe9\xf7@E\x0f.\x16.\xfa_\xc5\x7f\xae\xe8""9sg\xfd;Y\0\0\0\0IEND\xae""B`\x82";
+
+const char* connected_png = (const char*) temp_binary_data_9;
+
+//================== default.chalayout ==================
+static const unsigned char temp_binary_data_10[] =
 "{\r\n"
 "  \"mainLayout\": {\r\n"
 "    \"type\": 1,\r\n"
@@ -1179,10 +1058,46 @@ static const unsigned char temp_binary_data_9[] =
 "  \"windows\": null\r\n"
 "}";
 
-const char* default_chalayout = (const char*) temp_binary_data_9;
+const char* default_chalayout = (const char*) temp_binary_data_10;
+
+//================== disconnected.png ==================
+static const unsigned char temp_binary_data_11[] =
+"\x89PNG\r\n"
+"\x1a\n"
+"\0\0\0\rIHDR\0\0\0\x18\0\0\0\x18\x08\x06\0\0\0\xe0w=\xf8\0\0\0\tpHYs\0\0\x0b\x13\0\0\x0b\x13\x01\0\x9a\x9c\x18\0\0\tUiTXtXML:com.adobe.xmp\0\0\0\0\0<?xpacket begin=\"\xef\xbb\xbf\" id=\"W5M0MpCehiHzreSzNTczkc9d\"?> <x:xmpmeta xmlns:x=\"adobe:ns:meta/"
+"\" x:xmptk=\"Adobe XMP Core 5.6-c145 79.163499, 2018/08/13-16:40:22        \"> <rdf:RDF xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"> <rdf:Description rdf:about=\"\" xmlns:xmpMM=\"http://ns.adobe.com/xap/1.0/mm/\" xmlns:stEvt=\"http://ns"
+".adobe.com/xap/1.0/sType/ResourceEvent#\" xmlns:stRef=\"http://ns.adobe.com/xap/1.0/sType/ResourceRef#\" xmlns:dc=\"http://purl.org/dc/elements/1.1/\" xmlns:photoshop=\"http://ns.adobe.com/photoshop/1.0/\" xmlns:tiff=\"http://ns.adobe.com/tiff/1.0/\""
+" xmlns:exif=\"http://ns.adobe.com/exif/1.0/\" xmlns:xmp=\"http://ns.adobe.com/xap/1.0/\" xmpMM:DocumentID=\"adobe:docid:photoshop:bb3e1466-220f-3648-aa0d-27af66699334\" xmpMM:InstanceID=\"xmp.iid:6e369f37-3e44-0845-bfbd-52ce04da17d1\" xmpMM:OriginalD"
+"ocumentID=\"804224AE14CDA86C61B4F52790E3E185\" dc:format=\"image/png\" photoshop:ColorMode=\"3\" photoshop:ICCProfile=\"\" tiff:ImageWidth=\"1500\" tiff:ImageLength=\"1225\" tiff:PhotometricInterpretation=\"2\" tiff:SamplesPerPixel=\"3\" tiff:XResolu"
+"tion=\"300/1\" tiff:YResolution=\"300/1\" tiff:ResolutionUnit=\"2\" exif:ExifVersion=\"0221\" exif:ColorSpace=\"65535\" exif:PixelXDimension=\"1500\" exif:PixelYDimension=\"1225\" xmp:CreateDate=\"2019-01-27T13:40:59+01:00\" xmp:ModifyDate=\"2019-01-"
+"27T13:53:39+01:00\" xmp:MetadataDate=\"2019-01-27T13:53:39+01:00\"> <xmpMM:History> <rdf:Seq> <rdf:li stEvt:action=\"saved\" stEvt:instanceID=\"xmp.iid:53ab89fa-9ed0-d445-b137-d1858c8bf83c\" stEvt:when=\"2019-01-27T13:53:39+01:00\" stEvt:softwareAgen"
+"t=\"Adobe Photoshop CC 2019 (Windows)\" stEvt:changed=\"/\"/> <rdf:li stEvt:action=\"converted\" stEvt:parameters=\"from image/jpeg to image/png\"/> <rdf:li stEvt:action=\"derived\" stEvt:parameters=\"converted from image/jpeg to image/png\"/> <rdf:l"
+"i stEvt:action=\"saved\" stEvt:instanceID=\"xmp.iid:6e369f37-3e44-0845-bfbd-52ce04da17d1\" stEvt:when=\"2019-01-27T13:53:39+01:00\" stEvt:softwareAgent=\"Adobe Photoshop CC 2019 (Windows)\" stEvt:changed=\"/\"/> </rdf:Seq> </xmpMM:History> <xmpMM:Der"
+"ivedFrom stRef:instanceID=\"xmp.iid:53ab89fa-9ed0-d445-b137-d1858c8bf83c\" stRef:documentID=\"804224AE14CDA86C61B4F52790E3E185\" stRef:originalDocumentID=\"804224AE14CDA86C61B4F52790E3E185\"/> <tiff:BitsPerSample> <rdf:Seq> <rdf:li>8</rdf:li> <rdf:li"
+">8</rdf:li> <rdf:li>8</rdf:li> </rdf:Seq> </tiff:BitsPerSample> </rdf:Description> </rdf:RDF> </x:xmpmeta> <?xpacket end=\"r\"?>jm`\xd7\0\0\x05=IDATH\x89\xb5\x96ml\x1c\xd5\x19\x85\x9f;sg\xf6\xc3\xb1\xf7\xc3\x1b\xdb\xeb\x18L>\x1c[@A@\xa1\x8d\xdaJ!\xc6"
+"jR\x07\xa9? j*\xa0\xa8N)-\x02\x12""A*\x14\xd5\x14\xd5.RB\x13\xfeU\xc1\t\x02\x8c)\xc5""DUU\xa9\x15i\x90S\x85""4\xaa\xda*\xa5\r\xa2Ic\xc7\x8e\x9d\x92x\x1d{\xfd\xb1\xbb\x9e\x99\x9d\xb9\xb7?\xd6\xd9\xb2\x98\xfe\xcc\x95""F\x1ai^\x9d\xf3\x9e\xf3\x9e\xf7j\x84"
+"\xd6\x9a\xeby\x8c\xeb\x8a\x0e\xc8\xff\xf7!\x98\x9dk\x98<\xd8\xf7""D\xf6\x0fG7\xb9\x17\xc7\xdapuRH\tB\xa0\x8b>X\xe4\xac\xe6\xa6\x8f\x13\x1b;\x86\xea\xbf\xdfu\xd8J7\x8c|\x1e\x8e\xb8""f\x91\xd6\x1a!\x04\0\xf3'>\xf8\xfa\xd8\xae\xdd\x07\xf2\x1f\x9e\xbe\xd9"
+"\xb4#\x88h\x04""3\x14""A\x84""B\xa5\xda\xa2O\xb0\x98G;\x0e\xbe\x93'\xda\xdar\xbe\xf9\xa5\x9f\xff""8\xd1\xb9""e\xd0W\n"
+"|\x1fi\xdb\x9fO0\xf3\x9b\xdf>8\xbc\xa3\xeb\x15""5SH\xd8Mi\x84i\x81\0\xb4.=\x15\xed\t\xb4\n"
+"(^\xb9\x82\x19\xb1\x16\xea\x0f\xec\x7f""2\xf8\xce#o\xd8SS464T\x12\0\xcc\xfd\xf9\xaf_;{\xff\xd6_\x1bN\x90\x12\xa1""0\x04\x01""2\x11\xa7\\#\x04""B\x83?\x9b%\xc8\xe5\xb0\xea\xea""1\"aP\x8a ;CQ\xb9\xf3""5\x07\x0f\xed\xa8\xdb\xfe\xe0\xbb\xa9%\xcc\xf2\x90\x83"
+"\\.9\xfe\xf4\xce""C:;\x9f""2\xe3""5\xc4\xda\xef%\xd4\xb2\x16\xf7\xd2""8\x02""A07K\xb0""0\x87{\xf9?\x84W7s\xe3\x8b=\xd8""74\xe2\xcf""eA\x08\x8c""D\x02\xd3\xd5""5\xee\xf3\xdd{Wd2\xcd|\x96`\xea\xd5\xfe]\xb9\xbf\x9fn\xb5\xea\x1b(NO\x11\xdf\xdc\xc1-CG\xb1"
+"\x9bW\xb1""0v\x16Y\x9b@y\x0e\xb2\xa9\x81uo\xf7\x93~\xe6i\xb4""e\xe0^\xbd\x8c?;\x8b\xc0\xc0\xac[\x89w\xe1\xc2\xea\xec/\x0e?\xbb,E3\xbf\xff]\xbb!$\xa6\x1d\x82\xeaZFw?\x83L\xd5r\xcb\xd0qF\xf7<G\xc3\xa3]h\xd7""E&\x13\x98\xb1""8\xc3\xdf\xfa""6\xf3'O\x10J\xa6"
+"1c5h\x15 \xa4\x05v\x94\xab\xc7\xde\xfbj\xfa\x85=\x95""38\xbd\xbe""5\x1bLe\xe3""2\x91\x02!(^\x9d\xa4\xe8\xe6h\xed\xef'\xb5m[\xc5l\xcf=\xfc(c\x03oP\xdb\xd8\xc8\xbaW^\x05\xc3\xe0\xdf\x8f<\x84\xac\x8a\xa1\xf2yDU\xd8\xbb\xeb\xe2\x85P\x85""E\x14\x8aq#\x14\x01"
+"\xad \xf0\xb1S\r\xd8\xd1""8\xe7\xb6o\xe7\x93\x03/\x97\xcb\xb4\xef\x93\xe8h\xa7vm+7\xed\xdbO|\xeb""f\xe6?8\x01\x8e\x87@`\x86#\x88\xc0\xb0\x97Y$\xa4U\x92\xa8""5\x08\x83\xe2\xf4$\xa1\x96\xb5\xac\xeb>\xccho\x0fn&\xc3\xea\xde^\x84\x94\xd4=\xfc\x10\xc9-[\xc0"
+"\x92\x8c|\xf7""12o\xbeN8\xdd\x0c\x86QJ\xda\xa7\xd4\xfeO\xc1g\"\xae\x03""E\xb0\x98\xa7\xfa\xcb\x1bh;\xd4\xc7\x95#G\x18\xed~\x1e\xed\xfb \x04re\n"
+"\xf7\xfc\x08\xd9\xf7\x8f!\xab\xe2\x08)\x97\x9a\x13\x15""8e\x02\xed\xfb(\xc7)\x17\x18!\x9b\xe2\x95\xcb\x14>:C\xf4\xf6\xdb\xb9\xed\x9dw\x98|w\x90\xb1=\xdd\xa0J\xdd\x84[[\x88m\xf8\n"
+"\xca\xf1\xd0""AP\xc2)\x16""a\xe9\xbdRA\x95\x9cV\xee""b\x89@\x80\x11]\x81;=\xcd""DO/A\xbe@\xd5]wr\xdb\xe0 \xd3""C\xc7\xb8\xb4w_)\xda\xaf\xbd\xc9\xd4\x91""A\xacT\xb2""d\x8f""a\x10""8\x8bhCy\xcb\x08\"k\xd6\x9dU\xf9""E\xd0\x1a\xed\xb9\xa0|n\xdc\xb9\x1b\x19"
+"\x8f""3\xb2\xe3""1\x16N\x9e\"z\xe7\x1d\xdc:0\xc0\xa5\xde\x9f""1\xd9\xdfO\xcd\xa6\x8d\x84[\xd7\xe3""f>A\x18%(\x95/`\xadj\xfc\xd7""2\x82\xc4\x96\xce\xe3J\xfbZ\xfb~\xe9\x1aH\xd7\xd3\xfc\xf2>\xd2O=E\xe6Woqn\xdb\x03\x9c\xed\xf8\x06\x13\xdd=X\xd5q\xcewu\xe1"
+"\x0c\x0fs\xeb\xd1\xf7\xa8\xbe\xe7n\xfc\x99it\xe0\xa3\x9c<\xf1\xf6\x8e?\x95\xc3sm\x0f\x82\\.\xf9q{\xc7\xa9\xc2\xe9\x0f[\xadt\x13""f4\xc2\x8a\r_\xa2\xf0\x8f\x7f\xe2\x8e_\x02\xadP\x85""E0L\xec\xfa:\x8a""3WQ\xbe\xc3\xfa\xb7\xde\xc6\x19\xb9\xc0\xc4O^@;\x1e"
+"\xd6MM\xa3_8u\xf2^ke\xea""b\x05\x01@\xfe/\x7f\xdbtfk\xe7\xa0\xb9\x18\xd4\xca\xda\x14\xc5L\x06""3\x1a\xc1\x8c\xc5J\xd6)\xb5\xd4\x96@\x18\x06""A>\x87r<d2A0\x97\xc5W\xde""B\xdb\xc0/\x7f\x18\xef\xdc<\xb0\xcc\"\xa5\x14\xe1{\xbe""8\xb4\xa6\xaf\xef\x07\xd8""b"
+"\xde\x9d\x98@\xa6\x92\x18\xd5""5K7ue\x8e\xb5\xd6\x98U+0\xaa\"x\xe3\xe3\x04\x81\x97[\xf3\xd2\xfe\x1f\xc5:7\x0f|\xba\xb6\xac \x9f\xcb!\xc3""aBR2\x7f\xfc\xc4\x03\xa3;w\xf5\x14>:\xd3""f\x84\xa2\x18\xd1\x08\xa6\x15""F\x84J\x0b\xaa=\x8f\xc0u\xd0\x8e\x8b\xbf"
+"\xb8@\xb4\xad\xe5|\xf3\x8b{\x7f\x9a\xf8\xe6\xfd\x03""E\xa5\x10J!\xa5\xac$\xf0<\x0f\xdb.o8\xfeL\xb6i\xf2`\xdf\xe3\xd9\xf7\x8fn\xf2\xc6.\xde\x8c'bB\x9a\xe5\x9d\xc1""b\xce\xba""a\xd5\xb9\xc4\xc6\xfb\xfeX\xff\xf8\xf7\x0eY\x8d\xe9\xe1k\xcaJ.\x8aJ\x82\xebu"
+"\xae\xfb_\xc5\x7f\x01\x12\xcf[\x9a\xfb\xa3""bi\0\0\0\0IEND\xae""B`\x82";
+
+const char* disconnected_png = (const char*) temp_binary_data_11;
 
 //================== icon.png ==================
-static const unsigned char temp_binary_data_10[] =
+static const unsigned char temp_binary_data_12[] =
 { 137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,1,0,0,0,1,0,8,6,0,0,0,92,114,168,102,0,0,0,9,112,72,89,115,0,0,11,19,0,0,11,19,1,0,154,156,24,0,0,10,79,105,67,67,80,80,104,111,116,111,115,104,111,112,32,73,67,67,32,112,114,111,102,105,108,101,0,0,120,
 218,157,83,103,84,83,233,22,61,247,222,244,66,75,136,128,148,75,111,82,21,8,32,82,66,139,128,20,145,38,42,33,9,16,74,136,33,161,217,21,81,193,17,69,69,4,27,200,160,136,3,142,142,128,140,21,81,44,12,138,10,216,7,228,33,162,142,131,163,136,138,202,251,
 225,123,163,107,214,188,247,230,205,254,181,215,62,231,172,243,157,179,207,7,192,8,12,150,72,51,81,53,128,12,169,66,30,17,224,131,199,196,198,225,228,46,64,129,10,36,112,0,16,8,179,100,33,115,253,35,1,0,248,126,60,60,43,34,192,7,190,0,1,120,211,11,8,
@@ -1751,76 +1666,101 @@ static const unsigned char temp_binary_data_10[] =
 52,26,45,0,26,141,70,11,128,70,163,209,2,160,209,104,180,0,104,52,26,45,0,26,141,70,11,128,70,163,5,64,163,209,104,1,208,104,52,90,0,52,26,141,22,0,141,70,163,5,64,163,209,104,1,208,104,52,187,39,255,63,0,251,9,211,62,187,88,73,220,0,0,0,0,73,69,78,68,
 174,66,96,130,0,0 };
 
-const char* icon_png = (const char*) temp_binary_data_10;
+const char* icon_png = (const char*) temp_binary_data_12;
 
 //================== in.png ==================
-static const unsigned char temp_binary_data_11[] =
+static const unsigned char temp_binary_data_13[] =
 "\x89PNG\r\n"
 "\x1a\n"
-"\0\0\0\rIHDR\0\0\0\x18\0\0\0\x18\x08\x06\0\0\0\xe0w=\xf8\0\0\0\tpHYs\0\0\x0b\x13\0\0\x0b\x13\x01\0\x9a\x9c\x18\0\0\x0b\xa7iTXtXML:com.adobe.xmp\0\0\0\0\0<?xpacket begin=\"\xef\xbb\xbf\" id=\"W5M0MpCehiHzreSzNTczkc9d\"?> <x:xmpmeta xmlns:x=\"adobe:ns:"
-"meta/\" x:xmptk=\"Adobe XMP Core 5.6-c142 79.160924, 2017/07/13-01:06:39        \"> <rdf:RDF xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"> <rdf:Description rdf:about=\"\" xmlns:xmp=\"http://ns.adobe.com/xap/1.0/\" xmlns:dc=\"http://purl."
+"\0\0\0\rIHDR\0\0\0\x18\0\0\0\x18\x08\x06\0\0\0\xe0w=\xf8\0\0\0\tpHYs\0\0\x0b\x13\0\0\x0b\x13\x01\0\x9a\x9c\x18\0\0\x0b\xaciTXtXML:com.adobe.xmp\0\0\0\0\0<?xpacket begin=\"\xef\xbb\xbf\" id=\"W5M0MpCehiHzreSzNTczkc9d\"?> <x:xmpmeta xmlns:x=\"adobe:ns:"
+"meta/\" x:xmptk=\"Adobe XMP Core 5.6-c145 79.163499, 2018/08/13-16:40:22        \"> <rdf:RDF xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"> <rdf:Description rdf:about=\"\" xmlns:xmp=\"http://ns.adobe.com/xap/1.0/\" xmlns:dc=\"http://purl."
 "org/dc/elements/1.1/\" xmlns:xmpMM=\"http://ns.adobe.com/xap/1.0/mm/\" xmlns:stEvt=\"http://ns.adobe.com/xap/1.0/sType/ResourceEvent#\" xmlns:stRef=\"http://ns.adobe.com/xap/1.0/sType/ResourceRef#\" xmlns:photoshop=\"http://ns.adobe.com/photoshop/1.0"
 "/\" xmlns:xmpRights=\"http://ns.adobe.com/xap/1.0/rights/\" xmlns:tiff=\"http://ns.adobe.com/tiff/1.0/\" xmlns:exif=\"http://ns.adobe.com/exif/1.0/\" xmp:CreatorTool=\"Adobe Photoshop CC 2017 (Windows)\" xmp:CreateDate=\"2013-10-04T17:30:37+03:00\" x"
-"mp:MetadataDate=\"2018-01-05T01:08:44+01:00\" xmp:ModifyDate=\"2018-01-05T01:08:44+01:00\" dc:format=\"image/png\" xmpMM:InstanceID=\"xmp.iid:f5eaa01a-3bea-0342-be00-10694a2cb1dd\" xmpMM:DocumentID=\"adobe:docid:photoshop:59c2099f-80fd-0340-b0b0-8a23"
+"mp:MetadataDate=\"2019-01-27T13:44:43+01:00\" xmp:ModifyDate=\"2019-01-27T13:44:43+01:00\" dc:format=\"image/png\" xmpMM:InstanceID=\"xmp.iid:ab4eebb0-4282-5447-843b-c1bb55cee103\" xmpMM:DocumentID=\"adobe:docid:photoshop:59c2099f-80fd-0340-b0b0-8a23"
 "11633278\" xmpMM:OriginalDocumentID=\"xmp.did:05bd1fa1-dd19-8d49-a673-1ddd603b57d4\" photoshop:ColorMode=\"3\" photoshop:ICCProfile=\"sRGB IEC61966-2.1\" xmpRights:Marked=\"False\" tiff:Orientation=\"1\" tiff:XResolution=\"720000/10000\" tiff:YResolu"
 "tion=\"720000/10000\" tiff:ResolutionUnit=\"2\" exif:ColorSpace=\"1\" exif:PixelXDimension=\"24\" exif:PixelYDimension=\"24\"> <xmpMM:History> <rdf:Seq> <rdf:li stEvt:action=\"created\" stEvt:instanceID=\"xmp.iid:05bd1fa1-dd19-8d49-a673-1ddd603b57d4\""
 " stEvt:when=\"2013-10-04T17:30:37+03:00\" stEvt:softwareAgent=\"Adobe Photoshop CC (Windows)\"/> <rdf:li stEvt:action=\"saved\" stEvt:instanceID=\"xmp.iid:97feccd1-2f2d-3245-a56f-9f16d415b29e\" stEvt:when=\"2013-10-04T17:30:44+03:00\" stEvt:softwareA"
 "gent=\"Adobe Photoshop CC (Windows)\" stEvt:changed=\"/\"/> <rdf:li stEvt:action=\"saved\" stEvt:instanceID=\"xmp.iid:43d83052-e5e0-3c42-8178-157680ade203\" stEvt:when=\"2017-01-04T13:30:33+01:00\" stEvt:softwareAgent=\"Adobe Photoshop CC 2017 (Windo"
 "ws)\" stEvt:changed=\"/\"/> <rdf:li stEvt:action=\"converted\" stEvt:parameters=\"from application/vnd.adobe.photoshop to image/png\"/> <rdf:li stEvt:action=\"derived\" stEvt:parameters=\"converted from application/vnd.adobe.photoshop to image/png\"/"
 "> <rdf:li stEvt:action=\"saved\" stEvt:instanceID=\"xmp.iid:bd1e9f9b-1220-eb47-acb3-f57632bb1b8d\" stEvt:when=\"2017-01-04T13:30:33+01:00\" stEvt:softwareAgent=\"Adobe Photoshop CC 2017 (Windows)\" stEvt:changed=\"/\"/> <rdf:li stEvt:action=\"saved\""
-" stEvt:instanceID=\"xmp.iid:f5eaa01a-3bea-0342-be00-10694a2cb1dd\" stEvt:when=\"2018-01-05T01:08:44+01:00\" stEvt:softwareAgent=\"Adobe Photoshop CC (Windows)\" stEvt:changed=\"/\"/> </rdf:Seq> </xmpMM:History> <xmpMM:DerivedFrom stRef:instanceID=\"x"
-"mp.iid:43d83052-e5e0-3c42-8178-157680ade203\" stRef:documentID=\"xmp.did:963eb1fc-5696-f44c-bde6-5f8b30db2291\" stRef:originalDocumentID=\"xmp.did:05bd1fa1-dd19-8d49-a673-1ddd603b57d4\"/> </rdf:Description> </rdf:RDF> </x:xmpmeta> <?xpacket end=\"r\""
-"?>\xee\xd9t\xfb\0\0\x01\x1dIDATH\rc\xf8\xff\xff?\x03-1\xc3\xa8\x05$[\xa0q\x14\x03\xbb\x03\xf1q \xfe\x06\xc4\xff\xa0\xf8+\x10\x1f\x05""bGt\xf5\xa4X\xc0\t\xc4\xe7\x80\xf8?\x01|\x12\x88\xd9I\xb5\x80\x07\x88_\x13""a8\x0c?\x87:\x88h\x0b.\x90`8\x0c\x9f \xd6"
-"\x02o2\x0c\x87""aGb,8\x8b\xac\xc9\xec\xd8\xff\xff\xf7\xbe\xfe\xff\xeft\x0c!\xa6\x07\xc4Z\xc7\xb0Zp\x84\x18\x0b~ k\xf2<\xf9\xff\xff\xd7_\xff\xff\xbf\xfa\x81\xb0""d\xda\xdd\xff\xff\xdf\xfe\xc0j\xc1""7b,\xc0\xd0\x18p\x02\xd5\x92\x05\xf7\xff\x83\x01\x16\xb5"
-"\xff\xc8\xb2\0\xdd\x92\x8d\xcf(\xb3\xe0'\xba""FM\xa0\xab\r\x80t\xd4\xe9\xff\xff\xbf\xff\x81`\x1c\x16\x10\x15""D\xe7\xd1""5n~\xfa\x1f+\xc0""b\xc1qb,\x08""A\xd7h\0\xd4""6\xf1""6\x02/\x7f\xf8\xff\xbf\xe5q\xac\x16\xb8\x13\x9b\xd1\xae\x92\x91\x07\xce\x93\x92"
-"\x93\x85\x80\xf8\x03\t\x86\xbf\x01""b>R\x0b;\x01\"}r\x01Zv\x91\\\x9a\xc2p0\xd4\xfb?\xa0""E\xf5\x7f(\xfb\x0c\x10\xfb\x90\\\\\x8fV\x99t\xb7\0\0\x1b""4\x8e\xdc\xbe\xf2\xc4]\0\0\0\0IEND\xae""B`\x82";
+" stEvt:instanceID=\"xmp.iid:ab4eebb0-4282-5447-843b-c1bb55cee103\" stEvt:when=\"2019-01-27T13:44:43+01:00\" stEvt:softwareAgent=\"Adobe Photoshop CC 2019 (Windows)\" stEvt:changed=\"/\"/> </rdf:Seq> </xmpMM:History> <xmpMM:DerivedFrom stRef:instanceI"
+"D=\"xmp.iid:43d83052-e5e0-3c42-8178-157680ade203\" stRef:documentID=\"xmp.did:963eb1fc-5696-f44c-bde6-5f8b30db2291\" stRef:originalDocumentID=\"xmp.did:05bd1fa1-dd19-8d49-a673-1ddd603b57d4\"/> </rdf:Description> </rdf:RDF> </x:xmpmeta> <?xpacket end="
+"\"r\"?>R\x08\x9d\xff\0\0\x02\xa4IDATH\x89\xb5\xd6O\x88\x95U\x18\xc7\xf1\xcf\xfb\xde?\xce\x84\xe3\xe4L\xa3\x0e\xfd\x99\xc4\xfe\xa0\xe0\x84\x16\x04\x16m\xa2\x10*\t\xda\x04!Y\x8a\xe4>\t\n"
+"B\x14\xdc""E\x14\xfe\xa9U\xd4\xa2\xa0""6Z\xd4\xb2""emt\xa3\x0b\x83 b\xa6""B.9N\xe9""0z\xe7\xde{Z\x9c\xf7\x1d\xdfy\xef{kZ\xf8\x83\x03\xef=\x7f\x9e\xefy\x9e\xf3<\xe7\xdc$\x84\xe0v\xaa\x9e\x7fl\xfd\xa1o\xac\x81\xc7p\x08\xbb""1\x8e""4\x1b\xeb\xe1O|\x8b\x93"
+"\xb8\x80\xa5\xe2\xe2K\xbbJ\x80\x92\xd6\xe3ML\xe3QL\x94\xc6Sl\xc0\xb3\x18\xcb\0\xef\xe1\xaf\x81\x1e\x14t\x1f^\xc3\xdb\x03\xe0""E\xdd\x9d\xb5\xe7\xd1\xc6\xa7\x98-\xef\xa4\xa8\x06\x0e\xe2\xc8*\x8c\x17U\xc3""1\xbc\x9e\xd9\x18\x08x\x03\xfb\xfe\xa7\xf1\xa2"
+"\xf6""a\xff \xc0$\xf6\x88./\xeb\xef\x0e\x0b\xddU\x03\xee\xcfl\xdcU\x05x\t\x0f\x96Wl_\xcb\xe6!:=\xf2\x84\x0e\xe8\x84\xd8*\xf4""0^\xa8\x02\xbc\x92y\xb1l(\xedqx\x8a\xbd\x1bH\xba\xb1?\x88\x99QK\x90T\x02&\xb1""7\xffQ\xcc\xa2mh\xe6\x80\x1a""FS\xb6\x0c\xf1\xf8"
+"(sK\x9c\x9c%i\xb0k-{&huy\x7f\x86""5\xe9\n"
+"\xd6""0\x1e\xa9\xf2`]\xfe\x91\xe4""aH8s9\x86\xe7\xe0\x14/o\xa4\x19\x98\xac\xf1\xe2\x04\xcf\x8c\xd3\xeeUz1V\xe5\xc1\xb2r\xc0|\xe0\xf4,\xf5\xc0\x81\xcd\xbc\xf5\0\xad""6\xc3)\x0b=n\x86""AQ\xba\xa5""A\x95\x8c\x18\xa6N\x83/Z1\xe6\x87\xb6\xf0\xee""C\x9c\xbf"
+"\x1aw\xde[\xc5""5\xf6\xaf\x80\x04\x8b\xb8\xb8\xc8'\x7f\x90$\xbc:\xc5\x93\xe3\xac\xab""3\xb3""0p\xe9""2\xba\x08\xb8\x86\x91\xe2\xacN`z\x98\xa9\xb1x\xfa\x0bY&m\x1a\xca\x16'\x05K+5_\x05\xb8\x84\x1d\xb2R\x0fh\x87\x98""1\x07\xee""a\xd3\x1dqR7\xc4\xd6\x0b\xb1"
+"\x08+\xce\xe0\x06.V\x01\xbe\x12s\xf8^\xe2\xc2""5)\xdf\xcdSOyb\x84\xeb\xbd\xe8\xd5""d\x93\xf3\xd7""93\xc7p\xad\x0fr\x19\x9fW\x01\xbe\xc4s9\x80x\xc8\xb3m\xce^\xe1\xc2\xb5\x98""5\xb0\xbe\xce/7\xf8i\x91;\x1b}a\xfa\x19g\xab\0""3\xf8\x1a[\xb1""1\x0f\xd3HJ\xab"
+"\xc3oK\xb7v\xda\r4\x13""F\xfb\x8d\xff\x8eo2/\xfa\0p\"\x0b\xd3\xe1\xbc#\x88\xc6\x9a\xff\x95\xf0Q\x9f\xe1\xa3""bG\xf9\xba^\xc2)\x1c_\x95\xb9\x95:\x8a\x8f\x95\x9e\xce\xaa:\xf8\x15\x1f\x88\x99""9\x8d\x9d\n"
+"\xd7oI-\x9c\x13\x9f\xcc\x0fq\xa5<aP\xa1\xb5\xf0\x0e\x9e\x12\x1f\xa1\xa7""1je\xc2\xcc\xe1{\x9c\xc6\x8f\xe5\x9d\xe7Jn\xf7\xdf\x96\x7f\0Q\x10\xb1\xe8\x15`\xe8""7\0\0\0\0IEND\xae""B`\x82";
 
-const char* in_png = (const char*) temp_binary_data_11;
+const char* in_png = (const char*) temp_binary_data_13;
 
 //================== nextcue.png ==================
-static const unsigned char temp_binary_data_12[] =
-{ 137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,32,0,0,0,32,8,3,0,0,0,68,164,138,198,0,0,0,4,103,65,77,65,0,0,177,143,11,252,97,5,0,0,0,32,99,72,82,77,0,0,122,38,0,0,128,132,0,0,250,0,0,0,128,232,0,0,117,48,0,0,234,96,0,0,58,152,0,0,23,112,156,186,
-81,60,0,0,0,222,80,76,84,69,0,0,0,36,73,109,38,59,122,39,59,122,38,58,122,37,58,122,38,58,122,41,61,122,39,57,122,38,58,122,32,64,128,39,58,122,39,58,122,43,53,117,38,57,122,40,57,125,38,58,122,31,41,102,19,19,76,28,39,100,26,35,93,22,24,82,26,51,128,
-20,22,79,29,29,93,20,22,80,31,43,104,21,23,82,28,34,96,19,20,76,26,35,93,23,46,116,24,29,89,31,44,100,36,54,117,23,27,85,26,33,92,27,39,98,28,57,113,38,58,122,39,66,128,49,140,178,51,162,193,44,102,152,46,121,164,56,198,217,56,197,217,45,116,161,53,176,
-202,40,71,131,45,111,158,40,74,133,53,180,203,31,45,107,47,88,143,110,224,239,113,226,240,107,221,236,20,23,79,31,43,105,47,86,141,104,218,234,62,138,170,18,17,73,18,17,74,67,147,176,43,75,135,76,168,198,83,184,207,96,207,225,56,122,156,36,54,117,21,
-23,81,0,0,0,116,69,52,45,0,0,0,39,116,82,78,83,0,7,73,152,193,218,243,25,151,242,8,132,245,24,200,45,227,180,254,46,183,243,10,251,52,251,66,244,45,254,184,11,210,41,221,236,203,112,9,221,182,157,140,0,0,0,1,98,75,71,68,0,136,5,29,72,0,0,0,9,112,72,89,
-115,0,0,13,215,0,0,13,215,1,66,40,155,120,0,0,0,7,116,73,77,69,7,226,4,16,21,41,3,245,99,78,188,0,0,1,31,73,68,65,84,56,203,125,147,231,66,195,32,16,128,9,144,52,171,195,61,171,214,69,29,113,143,104,85,106,107,213,247,127,34,105,11,9,119,96,239,223,229,
-251,128,112,220,17,82,69,64,25,15,163,40,228,140,6,196,141,70,156,136,42,146,184,129,112,154,229,2,68,158,165,54,111,182,132,19,173,102,205,219,29,225,137,78,187,90,239,229,202,208,123,164,102,255,254,217,249,5,60,101,254,31,153,201,47,139,226,234,26,
-24,217,236,126,185,37,32,35,159,222,54,174,210,254,141,99,196,170,126,86,125,110,29,35,9,8,181,23,184,6,37,76,44,52,24,225,98,161,193,73,40,124,198,157,73,67,18,225,250,221,43,161,120,120,212,89,228,10,79,207,101,89,190,188,14,140,128,143,120,123,87,
-188,252,144,195,129,62,130,251,248,167,148,218,224,232,154,53,215,6,131,133,178,249,220,160,160,212,144,79,13,85,106,235,177,70,136,43,99,9,60,247,24,115,185,188,2,26,102,140,185,92,133,45,55,250,154,124,3,190,182,142,154,246,231,23,240,141,77,167,237,
-129,177,181,237,25,28,203,216,217,245,142,158,49,186,123,251,255,12,239,204,232,30,244,60,243,173,199,255,240,232,248,228,180,254,250,7,223,32,137,34,240,113,106,27,0,0,0,37,116,69,88,116,100,97,116,101,58,99,114,101,97,116,101,0,50,48,49,56,45,48,52,
-45,49,54,84,50,49,58,52,49,58,48,51,43,48,50,58,48,48,6,103,1,8,0,0,0,37,116,69,88,116,100,97,116,101,58,109,111,100,105,102,121,0,50,48,49,56,45,48,52,45,49,54,84,50,49,58,52,49,58,48,51,43,48,50,58,48,48,119,58,185,180,0,0,0,25,116,69,88,116,83,111,
-102,116,119,97,114,101,0,119,119,119,46,105,110,107,115,99,97,112,101,46,111,114,103,155,238,60,26,0,0,0,0,73,69,78,68,174,66,96,130,0,0 };
-
-const char* nextcue_png = (const char*) temp_binary_data_12;
-
-//================== out.png ==================
-static const unsigned char temp_binary_data_13[] =
+static const unsigned char temp_binary_data_14[] =
 "\x89PNG\r\n"
 "\x1a\n"
-"\0\0\0\rIHDR\0\0\0\x18\0\0\0\x18\x08\x06\0\0\0\xe0w=\xf8\0\0\0\tpHYs\0\0\x0b\x13\0\0\x0b\x13\x01\0\x9a\x9c\x18\0\0\x0b\xa7iTXtXML:com.adobe.xmp\0\0\0\0\0<?xpacket begin=\"\xef\xbb\xbf\" id=\"W5M0MpCehiHzreSzNTczkc9d\"?> <x:xmpmeta xmlns:x=\"adobe:ns:"
-"meta/\" x:xmptk=\"Adobe XMP Core 5.6-c142 79.160924, 2017/07/13-01:06:39        \"> <rdf:RDF xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"> <rdf:Description rdf:about=\"\" xmlns:xmp=\"http://ns.adobe.com/xap/1.0/\" xmlns:dc=\"http://purl."
+"\0\0\0\rIHDR\0\0\0 \0\0\0 \x08\x06\0\0\0szz\xf4\0\0\0\tpHYs\0\0\r\xd7\0\0\r\xd7\x01""B(\x9bx\0\0\x06\xbbiTXtXML:com.adobe.xmp\0\0\0\0\0<?xpacket begin=\"\xef\xbb\xbf\" id=\"W5M0MpCehiHzreSzNTczkc9d\"?> <x:xmpmeta xmlns:x=\"adobe:ns:meta/\" x:xmptk=\""
+"Adobe XMP Core 5.6-c145 79.163499, 2018/08/13-16:40:22        \"> <rdf:RDF xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"> <rdf:Description rdf:about=\"\" xmlns:xmp=\"http://ns.adobe.com/xap/1.0/\" xmlns:dc=\"http://purl.org/dc/elements/1."
+"1/\" xmlns:photoshop=\"http://ns.adobe.com/photoshop/1.0/\" xmlns:xmpMM=\"http://ns.adobe.com/xap/1.0/mm/\" xmlns:stEvt=\"http://ns.adobe.com/xap/1.0/sType/ResourceEvent#\" xmp:CreatorTool=\"Adobe Photoshop CC (Windows)\" xmp:CreateDate=\"2017-04-23T"
+"21:06:06+02:00\" xmp:ModifyDate=\"2019-01-27T14:15:55+01:00\" xmp:MetadataDate=\"2019-01-27T14:15:55+01:00\" dc:format=\"image/png\" photoshop:ColorMode=\"3\" photoshop:ICCProfile=\"sRGB IEC61966-2.1\" xmpMM:InstanceID=\"xmp.iid:f074bf3d-c8a4-8f47-8e"
+"84-1f2784897eab\" xmpMM:DocumentID=\"adobe:docid:photoshop:95e30313-fc38-7b4b-9522-80477eb8b22d\" xmpMM:OriginalDocumentID=\"xmp.did:f3fa921f-8ec6-ea46-a08e-9013d0e125b5\"> <xmpMM:History> <rdf:Seq> <rdf:li stEvt:action=\"created\" stEvt:instanceID=\""
+"xmp.iid:f3fa921f-8ec6-ea46-a08e-9013d0e125b5\" stEvt:when=\"2017-04-23T21:06:06+02:00\" stEvt:softwareAgent=\"Adobe Photoshop CC (Windows)\"/> <rdf:li stEvt:action=\"saved\" stEvt:instanceID=\"xmp.iid:2c7ab82d-ea2e-e249-ac5b-a61c8fe54910\" stEvt:when"
+"=\"2018-06-21T17:49:31+02:00\" stEvt:softwareAgent=\"Adobe Photoshop CC (Windows)\" stEvt:changed=\"/\"/> <rdf:li stEvt:action=\"saved\" stEvt:instanceID=\"xmp.iid:f074bf3d-c8a4-8f47-8e84-1f2784897eab\" stEvt:when=\"2019-01-27T14:15:55+01:00\" stEvt:"
+"softwareAgent=\"Adobe Photoshop CC 2019 (Windows)\" stEvt:changed=\"/\"/> </rdf:Seq> </xmpMM:History> </rdf:Description> </rdf:RDF> </x:xmpmeta> <?xpacket end=\"r\"?>r\xb2\x80\xda\0\0\x03+IDATX\x85\xed\x96]HSa\x18\xc7\xff\xefy\xcf\xb4-][EA vQC\x97uQ\t"
+"\xab@]j\xda\x87\x94""eR\xd4""E\xda\xc7\x95""D\x10Q\x94\x15I\x11""A\x94^\x96h\x86\x91\x99\x14Y:\xcc(\xcb\n"
+"e\x0b)\xa8)\xf6i\xa6\x15\xa4\xcd-\xd3\xb9s\xce\xd3\xc5\x0c\x9a:\x9b\x95\x16\xe4\x1f\xde\x9b\xf3?\x87\xe7\xf7>\xefy\x9e\xf7""aD\x84\xbf)\xe1\xaf""F\x1f\x07\x18\x07\x18\x0e`Y\xa9\r;nX\xb4\0\xa0/\xfc""8\xc8O\xbd\xf2P\xd8YY>\xcd\x9f\x1f\xb0\x88h\xc8""e\xb7"
+"\xedk\xa4\xe7k\xc8j\xcd\xaeN-\xbb\xcf\xf5\x05\x1f|\xfc\xd6\x86]nz\x99""BV\xeb\xfe;\xa9""e\x0f\x06\xf9\x81.\xbf\x19\x08\x0b\xfe\x1c\x01O(\xa2\xb5\xcd\x89%\xc6\x02)'\xdc\x12\x0f\0\xec\xac\x13+\xcb\xea\xd9TUw\x10\xdc:DOza.1\x16H\x07\xc2n.\xfe\x95\x04""0"
+"\x7f\x8d\xa8\xe3I\x16M\trBV\x82\xc0y\x0f H\xb0""9\"\xaav\xbfZ\xb3\\\x01G\x85\xf1\x0c\xe9T.\x1f\xff\x91\xc3Ps\xbcuYbM\x97""A\xee\xcc\x9c\x1e\x10\x80\xf8\xf3W\x08\xb2\xac\x06WdDOjN\xbe\x1aYH5]\xb3\x8b\x14""b \x12\xfa\xfd\t\xe0\x8a\x82\x85\xba""f\xf3""E"
+"\xcd\x07)\xb7=n\x01\xb0\xa9\xe1\x0f""e@\xe5\xf3\x9c""3\x19\xe0}P$5\x08\x0c\xc0\x8f\xdf""3p&\x01""b\x0f\x1a\x1c\x86\xda\x9c\xb7\xc9\xe6kiK\x94\xe1\0""F\\\x86""2q\xc8\x92\xba?\xec@x\x82L\x1c$i0_\xdf\x14s1\xe2\x9c|\xa2\xbax!\0L\xf6S)\xa3\xd2\x07\x14\x12"
+" \xf7i\xa1\x11{\xb1""7\xdc""b\xab\xad\xcf)^\x12\xfa\x9a\rU\xae\xa3\xda\x88""d9\x18$\xa9\x11""3\xd9\xbe\xb9\xd4\x98\xaf\xec\x9eqw\xce\x98\x02\0\x80\x02\x06\xd9\x13\x02\rw#{V\xc9\xd3=\x15\xe5""3\xc6\x14`\xa0\x06\xfe""5\x01\x94\xe1\xefI\0\x81\xa9\xba\xd1"
+"\xed\t\xc1\xa9""7)\xc6\x93\xabV\xb7\xfb\xfa\xa3(\xce\xdd`b/j:\xa2\n"
+"\xd3\xed\xdb\x85S\xedq\x8d\x83\x01G#0S\xc0\x83\x9c\xf8\"M\xc4\xb1\x96\x94y\xe6""E\xd9[\xeb\\3\xe9\xf3\x10\xddq\xc4G\xf0\xd3""F$x\0\xde\x8b\xba\x8e\xa8\xabG\xdf%\xa5U\xa6\x99\x08\0\xfc\xb5\xe6\0""3\xc0\xbc\xbb\x12\xbf\xe2\x93'\x14""e\x1fME\x0eI\r\x81I"
+">`\\\xe5\xc2\x17I\x8d#\xaf\xd6""E.2\x1d^\xf7=\xf8p\n"
+"\0\x80y/\x1b\xf1+l]\x86\xaa\xb5\x8d\x99,\xaf=.C`\x04\xc6\x14\xaf/\xf6\0\xa2\x1b\xf7:\xe7\x9e\xdf\xd0\xb4""E\xc8m\x8bm\n"
+"lc\xc3\x1c""A\xb0\xe0\xdd\x1d\x17]p\xcb\x1a\xe4\xb7%$d\xc5g\xdc\xbe\xff\xd8\x89\x95z;\x9b x\xbc\xbe\xca\tg\x9f\x0eymK\xa3\x0e&mx\x16k\n"
+"4\xb4W~3\xd0\xea\xd6""7A\xe5\x82\xcdi\xb8\xb5\xd1\xbeU<\xd4\xb2\xe2""6\0\xd0\x0e-*\xd6\x9b\xe8}\x9f\xd6\x89`\x07\xeeuF]H\xb7oc\xa7\xdb\xcc\xcf""F\x16\xba_\xfe&\x95\xc4KVl\xbf^\xa9%\"\xe8\x86\x98v\x92/\xd7#\xb3\xdc\x12\xfa+S\xd0\x8f\xcb\xefu<V\xfaw\xa7"
+"\xe2q\x80\xff\x06\xe0\x1bS}\xda\xa9YIiq\0\0\0\0IEND\xae""B`\x82";
+
+const char* nextcue_png = (const char*) temp_binary_data_14;
+
+//================== out.png ==================
+static const unsigned char temp_binary_data_15[] =
+"\x89PNG\r\n"
+"\x1a\n"
+"\0\0\0\rIHDR\0\0\0\x18\0\0\0\x18\x08\x06\0\0\0\xe0w=\xf8\0\0\0\tpHYs\0\0\x0b\x13\0\0\x0b\x13\x01\0\x9a\x9c\x18\0\0\x0b\xaciTXtXML:com.adobe.xmp\0\0\0\0\0<?xpacket begin=\"\xef\xbb\xbf\" id=\"W5M0MpCehiHzreSzNTczkc9d\"?> <x:xmpmeta xmlns:x=\"adobe:ns:"
+"meta/\" x:xmptk=\"Adobe XMP Core 5.6-c145 79.163499, 2018/08/13-16:40:22        \"> <rdf:RDF xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"> <rdf:Description rdf:about=\"\" xmlns:xmp=\"http://ns.adobe.com/xap/1.0/\" xmlns:dc=\"http://purl."
 "org/dc/elements/1.1/\" xmlns:xmpMM=\"http://ns.adobe.com/xap/1.0/mm/\" xmlns:stEvt=\"http://ns.adobe.com/xap/1.0/sType/ResourceEvent#\" xmlns:stRef=\"http://ns.adobe.com/xap/1.0/sType/ResourceRef#\" xmlns:photoshop=\"http://ns.adobe.com/photoshop/1.0"
 "/\" xmlns:xmpRights=\"http://ns.adobe.com/xap/1.0/rights/\" xmlns:tiff=\"http://ns.adobe.com/tiff/1.0/\" xmlns:exif=\"http://ns.adobe.com/exif/1.0/\" xmp:CreatorTool=\"Adobe Photoshop CC 2017 (Windows)\" xmp:CreateDate=\"2013-10-04T17:30:37+03:00\" x"
-"mp:MetadataDate=\"2018-01-05T01:09:42+01:00\" xmp:ModifyDate=\"2018-01-05T01:09:42+01:00\" dc:format=\"image/png\" xmpMM:InstanceID=\"xmp.iid:388ad9a7-ba95-7247-9d19-30ec4b93b8fe\" xmpMM:DocumentID=\"adobe:docid:photoshop:80723c03-d279-11e6-86fd-f22e"
+"mp:MetadataDate=\"2019-01-27T14:09:31+01:00\" xmp:ModifyDate=\"2019-01-27T14:09:31+01:00\" dc:format=\"image/png\" xmpMM:InstanceID=\"xmp.iid:2bbda2e4-72b7-064e-bc75-3593afb60418\" xmpMM:DocumentID=\"adobe:docid:photoshop:80723c03-d279-11e6-86fd-f22e"
 "a20d4df0\" xmpMM:OriginalDocumentID=\"xmp.did:05bd1fa1-dd19-8d49-a673-1ddd603b57d4\" photoshop:ColorMode=\"3\" photoshop:ICCProfile=\"sRGB IEC61966-2.1\" xmpRights:Marked=\"False\" tiff:Orientation=\"1\" tiff:XResolution=\"720000/10000\" tiff:YResolu"
 "tion=\"720000/10000\" tiff:ResolutionUnit=\"2\" exif:ColorSpace=\"1\" exif:PixelXDimension=\"24\" exif:PixelYDimension=\"24\"> <xmpMM:History> <rdf:Seq> <rdf:li stEvt:action=\"created\" stEvt:instanceID=\"xmp.iid:05bd1fa1-dd19-8d49-a673-1ddd603b57d4\""
 " stEvt:when=\"2013-10-04T17:30:37+03:00\" stEvt:softwareAgent=\"Adobe Photoshop CC (Windows)\"/> <rdf:li stEvt:action=\"saved\" stEvt:instanceID=\"xmp.iid:97feccd1-2f2d-3245-a56f-9f16d415b29e\" stEvt:when=\"2013-10-04T17:30:44+03:00\" stEvt:softwareA"
 "gent=\"Adobe Photoshop CC (Windows)\" stEvt:changed=\"/\"/> <rdf:li stEvt:action=\"saved\" stEvt:instanceID=\"xmp.iid:43d83052-e5e0-3c42-8178-157680ade203\" stEvt:when=\"2017-01-04T13:30:33+01:00\" stEvt:softwareAgent=\"Adobe Photoshop CC 2017 (Windo"
 "ws)\" stEvt:changed=\"/\"/> <rdf:li stEvt:action=\"converted\" stEvt:parameters=\"from application/vnd.adobe.photoshop to image/png\"/> <rdf:li stEvt:action=\"derived\" stEvt:parameters=\"converted from application/vnd.adobe.photoshop to image/png\"/"
 "> <rdf:li stEvt:action=\"saved\" stEvt:instanceID=\"xmp.iid:bd1e9f9b-1220-eb47-acb3-f57632bb1b8d\" stEvt:when=\"2017-01-04T13:30:33+01:00\" stEvt:softwareAgent=\"Adobe Photoshop CC 2017 (Windows)\" stEvt:changed=\"/\"/> <rdf:li stEvt:action=\"saved\""
-" stEvt:instanceID=\"xmp.iid:388ad9a7-ba95-7247-9d19-30ec4b93b8fe\" stEvt:when=\"2018-01-05T01:09:42+01:00\" stEvt:softwareAgent=\"Adobe Photoshop CC (Windows)\" stEvt:changed=\"/\"/> </rdf:Seq> </xmpMM:History> <xmpMM:DerivedFrom stRef:instanceID=\"x"
-"mp.iid:43d83052-e5e0-3c42-8178-157680ade203\" stRef:documentID=\"xmp.did:963eb1fc-5696-f44c-bde6-5f8b30db2291\" stRef:originalDocumentID=\"xmp.did:05bd1fa1-dd19-8d49-a673-1ddd603b57d4\"/> </rdf:Description> </rdf:RDF> </x:xmpmeta> <?xpacket end=\"r\""
-"?>\xb5$\x1e^\0\0\x01'IDATH\xc7\xed\x95\xbfK\x02q\x18\x87o\x8b@\"\xfa+\xd4!\x9a\x82\xc6Z$l\x10j\xea\x8f)1\xa2\xc9@\x90\xe6\xb6\xe6h\x08\x9a\x1c\x14\x15\xed\xc7\xd2\xda\x1ahA\x05\x9e\xe5p\x8f\xef\xe9\x9d\xc4W\xae\xde\xefI\xd0\xe0\xc1\x03""7\xdc\xfby\x8e"
-"\xf7\xbe\xef{\x0e\xe0\xfc%\xce\\0\xb3\xe0\x80\xe4\xa6P\x15\\\xc1\x0b\xf0\xef\xeb""B&\xb6@\x8a\x17\x85\x86\xc0/\xdc\x0bKV\x02)X\x10\x9e\x15\xe1!/B\xc2""F\xd0\xb4\x08\x0fyP\t\x82\x9e\x13\x93\x1d\x8d\xa0""f\x16\x1e\x92\xe6\x83W\xcc\xeb\x98\rS\xd0\xd6\x08"
-"z\xa6 \xcf*7\x9cQ\xe1\x9c""6\x97\x0c\xe8\x8f\x04U.L\xc1\xa7""F\xe0""E\xb5\xe0\x84-\xde\xe9L\x04\xd7\x94\xa6\x9e\x89-\x08\xc3\xfb\xf4(\xb3\x1f%\xf0""4\x02\xf7\xa7\xf0Sr\xd2\xb2\xb5(\x81\xaa""EuS\xd0\xe1i\x12>\xfe\xe8)Z\\Q\x10\x91""9t\x1a""A\xc6\x14\x1c"
-"\xb1N\x91m\xcd""1\xdd\xd5\x0e\xda]\x8c\x19x\xb4\x99""d\x7f\x0fu-\xc2\xdf\x84""e\xdb""e\x97\xf0\xc7_\xf3\xe6\xc2\xca,\xeb:+\xdc\xfa'\xe4[\xe8W\xb0""E\xf7\xe6\x7f\xb4\xff/\x18\x02\xed\x90y<\xc5""D\n"
-"I\0\0\0\0IEND\xae""B`\x82";
+" stEvt:instanceID=\"xmp.iid:2bbda2e4-72b7-064e-bc75-3593afb60418\" stEvt:when=\"2019-01-27T14:09:31+01:00\" stEvt:softwareAgent=\"Adobe Photoshop CC 2019 (Windows)\" stEvt:changed=\"/\"/> </rdf:Seq> </xmpMM:History> <xmpMM:DerivedFrom stRef:instanceI"
+"D=\"xmp.iid:43d83052-e5e0-3c42-8178-157680ade203\" stRef:documentID=\"xmp.did:963eb1fc-5696-f44c-bde6-5f8b30db2291\" stRef:originalDocumentID=\"xmp.did:05bd1fa1-dd19-8d49-a673-1ddd603b57d4\"/> </rdf:Description> </rdf:RDF> </x:xmpmeta> <?xpacket end="
+"\"r\"?>j\x08\x83""C\0\0\x03\xc3IDATH\x89\xb5VKlTU\x18\xfe\xfes\xef\xb9\xf7\xce\xb4w:\xd3\xa6XD[!\x86\x84""6\xad""5\x1aL$\x11]4\x06]UC\x82\x89$\x86\xbd\xae\x8cM\\\xe8""F\x8c\xc1\x95+W\xe0\x82-q\x03\x81\x05\xa0\x86\x85\tMMJ\xb1\x06(\xb5\xa0R(t:0g^\xf7q"
+"\xce\xef""b:\xb7\x9d\x07jc\xf8V'\xe7\xfc\xe7\xfb\xfe\xe7\xc9!f\xc6\x93\x84\r\0\xe3\xe7>i;xa\xcd\xdf\x1dK\x9a\xaav\xd1""d\xe8\x89\xac\xb6@\x9b\xcf-\rvj\xa6\xe8\x95\xf9\x8c\x1d\xf1\xb1\xb9^5\xd7\xca""1{\xe0\x18""D'\xd5\x11\x95\xf9\xb6\xe2\x8b\xf3""e_\xbc"
+"\x17\xa4(\xd7J\x0e\0\xda\x02\x05)\xea\xa9\xf8\xe2\xdd\x8a/\xce\x8d\xa8\xcc\xf1\xc7""F\xb0\xc9\xeb\x9d\x91""C_\x96""3b2\xf0\xc8\xfd\xc7\xd8\x01\x18""A\x08R\xf0\x82\x14=\x1d\xb9\xfc\xfep1\x93\x93!O]\xe9U\x0b\r\x9b$\x82\xf1\xbc\xffl\xe4\xd0\xd1""B\xbfu\xe8"
+"\xbf\x90\xb7\"t\xc9)\xf4[\x93\xa1K_\x8d\xe7\xfd\xa1\xb6\x08""B\x97\xbeVYqp\xab\xc4\xadPYk\x92\n"
+"\x9a\0\xbc\x93\x08\x8c\xad\xf9\xafV\xbb\xe9\x95XRSM\x04\x08\x06\x0c\x15U\x11\x9a\xb8#aF\xa6\xe1\n"
+"\x1b\x06\xf5n\xd4""6(r\xe9\xe5\xb1""B\xe6-\0gm\0\x88<q4\xf4hG\xeb""e\xcd\x06\0""010\x86\xe7\xba\xfb\x9b\xf6""5\x1b\x18""f\xfc\xb8""2\x8f\x95\xda""Cx\x96\x93\x9c\x07\x1em\xb7""b\xfe,\x11\xa8t\xd3\xbe\xd0%\xd9*\xd0\xf0j\xffS\xc3x}\xdbp\xc7\x08*q\x80\x0b"
+"\xf7\xae\"b\rk=\x01\x91""Cv\xa5[\xbc\x94\xa4(\x96h#o\xa4\xc8\"\x81\x99\xfc\"TT\x05\x83!\xc9\xc2p\xcf""3\x18\xea\xea\x87""f\x83\xd7\xb6\xed\xc1r\xb5\x80\xe9\xfcM\xa4\xed\x8d\xde\x88\xed:\xb7\r\xd4\xdb\xad\x13\x88\xea\xfb\x97\xf3\x0b\xb8\x9c_\xc0\x80\x97"
+"\xc3\x07\xbb\xf6""c\xa8k#]U\x1d\"b\xddv\x97\xd7""9;\x0e\xda""fh6\xb8]^\x85#$&\xb6\x8f\xe2\xc5\xdcN\xfc\xf6\xe8/L\xe7o\x82@\x08L\x8c\xd8h\x08\xea\xec\xa4\xddq\xb7\xe1\xc5\xfa;5\x9a\x1d\xc4\xa1\xa1}\x98\x18\x18\xc5r\xb5\x80\xef~\xff\t=2\x8d\xbd}\xcf\xc3"
+"\x13\x12\xd4>\xe8\t\x04\0\x08\xd3\xfe\xe0""13\x88\x08}\xae\x8f#\xbb\xdeH\xc8\xbf\xb9~\x16?\xaf^\x87 \x82""aF\xc4\x1a\x8c\xf6\xfb\xb4\xceY/D\x84(t\x9b\x0b]\x8ak\xd8\xd3\xb3\x03\x1f\xee>\x80\xb1\xec n\xa8\xbb""8\xbe\xf8\x03n\xa8\xbb\x88\xd9\xa0\x14\xd7"
+"p\xadx\x07\x17\xef]\xc5R\xe9>\\\xd1\xdc'\xb6\x86N\x04Re3\xcd$\xf6""F\xce""F\xabJa\xa1\x12\x87\x98Y[\xc4\xad\xf2}\xfc\xfa\xf0O\xfc\xb2\xb6\x04""A\x84n\xdb\xc5\xad\xf2\x03\x9c\\\xba\x84kj\x19""5\x13\xc2\xd9$ #\xd6\xa9\x12\xcf%\x02N\x8d?\xd7\x16\x9f\x88"
+"\x1c\x1al\x18\xa5-\x17\xf9@\xe1\xe4\xd2%x\x96\x03\x01\x82\xa0z\xdbJ\xb2\xb0\x1a(\xfcQ^E\xdav\xe1\t'\x99\x19\0p\xaa\xbc\xe2V\xcd\x17I\r\xe6r\xea\xa2\x0cy\xda\x8e""a\x1a""F\x06\xf5\x1a""4&\xd4\x80\x93""Aj\xac}\x99\x82""E\xa2\x89\\h\xb0\x0cxf.\xa7\xbeO\x04"
+"\0\xc0\t\xf8""c\xbf\xa0O\xb5Uk\x8b\xc8\xac\xe9\xd3n\xc0\x1f%\x82\x8d\xc5l\x9f\xba-C\xfe""4\xf7@\x9f\x92\x01G[%\x96!\xc7\xd9U}\xc6\tyj\xb6O\xddn\xec""7\xcd\xc1\x95^\xb5\x08\xe0\xe0\xc8\xa3\xcc\x89\xd0\xa3""7#\x87zC\x97<~L\x9b\x13\x03""2\xe0@\x86\\pk|a"
+"\xde/\x1e""FW\xb3M\xc7I\x9e\xf7\x8bGR\xca\xbc\x9dV\xe6\xb4W\xe1\x92\xa5\xdb\x7f\x06\x96""av\xab\\N\x97\xcc\xf9.e&\xe7\xfd\xe2\xe1\xceN<\xe1_\xc5\xbf\xbe""E\xff\x17\x7f\x03\xa3\xd7\x9d+\x7f\xb5\xf0s\0\0\0\0IEND\xae""B`\x82";
 
-const char* out_png = (const char*) temp_binary_data_13;
+const char* out_png = (const char*) temp_binary_data_15;
 
 //================== padlock.png ==================
-static const unsigned char temp_binary_data_14[] =
+static const unsigned char temp_binary_data_16[] =
 { 137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,16,0,0,0,16,8,6,0,0,0,31,243,255,97,0,0,0,4,115,66,73,84,8,8,8,8,124,8,100,136,0,0,0,9,112,72,89,115,0,0,0,111,0,0,0,111,1,241,162,220,67,0,0,0,25,116,69,88,116,83,111,102,116,119,97,114,101,0,119,119,
 119,46,105,110,107,115,99,97,112,101,46,111,114,103,155,238,60,26,0,0,1,197,73,68,65,84,56,141,149,147,207,75,212,65,24,198,63,239,204,184,187,186,152,30,190,225,10,9,181,20,88,75,138,244,15,36,68,55,59,247,7,116,242,98,144,215,110,30,2,141,186,117,138,
 110,93,186,120,111,97,5,15,130,116,73,232,7,164,132,169,169,184,108,202,254,202,242,251,125,59,140,251,235,187,27,209,11,3,195,51,239,243,60,51,207,204,136,170,18,175,187,139,92,11,29,79,80,106,64,26,216,142,82,60,46,204,82,137,247,186,56,48,189,72,198,
@@ -1830,10 +1770,10 @@ static const unsigned char temp_binary_data_14[] =
 4,234,191,225,52,132,100,236,189,154,54,189,158,215,152,11,96,183,162,92,31,13,153,26,59,35,157,212,142,181,246,114,231,246,110,167,132,29,235,247,41,46,127,242,139,153,11,158,248,229,200,114,101,200,99,239,191,195,143,154,88,212,115,221,249,249,179,
 155,71,12,156,148,109,215,110,84,253,248,184,215,194,118,79,204,128,64,22,120,231,0,172,80,221,58,68,247,19,174,35,45,197,191,137,72,149,246,95,95,57,21,181,66,21,224,15,150,241,159,135,159,221,99,248,0,0,0,0,73,69,78,68,174,66,96,130,0,0 };
 
-const char* padlock_png = (const char*) temp_binary_data_14;
+const char* padlock_png = (const char*) temp_binary_data_16;
 
 //================== pause.png ==================
-static const unsigned char temp_binary_data_15[] =
+static const unsigned char temp_binary_data_17[] =
 { 137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,32,0,0,0,32,8,3,0,0,0,68,164,138,198,0,0,0,3,115,66,73,84,8,8,8,219,225,79,224,0,0,0,9,112,72,89,115,0,0,0,221,0,0,0,221,1,112,83,162,7,0,0,0,25,116,69,88,116,83,111,102,116,119,97,114,101,0,119,119,
 119,46,105,110,107,115,99,97,112,101,46,111,114,103,155,238,60,26,0,0,0,213,80,76,84,69,255,255,255,36,109,146,64,96,159,53,106,149,51,102,153,51,87,138,46,85,137,57,102,147,43,80,138,43,76,132,52,101,150,48,81,132,48,85,140,46,80,136,54,102,151,54,103,
 150,54,102,149,46,79,135,46,78,134,54,103,151,45,77,133,52,97,147,54,103,150,44,76,133,45,75,133,44,73,131,54,103,150,54,102,149,54,103,151,45,75,133,43,71,131,43,72,131,54,103,150,54,103,150,54,103,150,41,65,126,40,64,124,41,66,126,40,61,123,39,59,122,
@@ -1845,26 +1785,30 @@ static const unsigned char temp_binary_data_15[] =
 45,147,148,57,175,47,179,10,142,193,70,125,153,192,62,216,234,79,3,24,91,224,176,222,215,235,15,209,153,36,201,115,14,78,224,113,47,166,84,207,205,46,188,48,6,113,168,93,57,93,92,96,253,210,86,197,245,118,253,218,67,113,181,103,42,156,82,92,110,153,75,
 79,137,219,35,220,84,188,66,140,251,59,134,250,206,203,127,112,122,0,202,255,31,225,225,147,220,177,251,209,106,0,0,0,0,73,69,78,68,174,66,96,130,0,0 };
 
-const char* pause_png = (const char*) temp_binary_data_15;
+const char* pause_png = (const char*) temp_binary_data_17;
 
 //================== play.png ==================
-static const unsigned char temp_binary_data_16[] =
-{ 137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,32,0,0,0,32,8,3,0,0,0,68,164,138,198,0,0,0,3,115,66,73,84,8,8,8,219,225,79,224,0,0,0,9,112,72,89,115,0,0,0,221,0,0,0,221,1,112,83,162,7,0,0,0,25,116,69,88,116,83,111,102,116,119,97,114,101,0,119,119,
-119,46,105,110,107,115,99,97,112,101,46,111,114,103,155,238,60,26,0,0,1,8,80,76,84,69,255,255,255,36,109,146,64,96,159,28,85,142,51,77,153,53,106,149,51,102,153,47,83,136,46,81,133,45,79,136,57,102,147,48,80,133,51,86,137,52,101,150,45,81,136,54,102,
-151,54,103,150,54,102,149,45,77,135,46,77,134,54,103,151,54,103,150,45,74,131,44,74,132,43,72,130,54,103,150,45,77,133,54,103,151,54,103,150,42,67,127,52,100,147,54,103,150,42,67,126,54,103,150,41,65,126,41,65,126,40,62,123,40,62,124,39,59,122,42,67,
-127,45,63,121,45,77,134,53,100,148,54,103,150,56,104,150,59,73,118,63,109,149,64,77,117,66,110,149,81,119,148,84,121,147,93,97,110,98,101,110,105,134,146,109,137,145,124,146,144,134,152,143,135,126,100,142,132,98,159,167,141,164,170,141,168,160,99,176,
-170,134,178,156,86,184,182,139,189,185,138,194,188,138,207,175,75,211,178,72,217,202,136,221,185,69,228,189,63,232,191,60,236,193,57,237,214,134,237,215,134,248,200,46,248,221,133,249,222,133,253,202,36,253,224,133,254,202,35,254,203,37,255,201,27,255,
-201,29,255,201,30,255,202,30,255,202,33,54,226,156,249,0,0,0,38,116,82,78,83,0,7,8,9,10,24,25,43,44,45,45,48,65,73,114,132,151,152,182,183,193,200,206,207,212,218,226,227,242,243,243,243,244,245,250,251,254,254,115,154,136,136,0,0,1,56,73,68,65,84,56,
-203,117,147,233,66,131,48,12,128,11,110,83,167,8,40,168,56,20,209,217,233,234,125,223,243,190,167,81,60,222,255,77,132,1,109,40,229,251,71,242,1,105,154,16,194,209,12,219,241,130,192,115,108,67,35,101,26,150,207,56,190,213,144,210,186,25,178,2,161,169,
-227,124,221,101,37,220,186,200,55,91,76,65,171,201,223,87,230,99,35,251,134,238,178,10,220,180,14,147,85,98,14,206,151,215,127,116,117,40,11,97,114,90,43,127,122,5,184,217,149,12,43,238,31,239,79,31,0,222,207,183,11,130,175,17,131,97,1,224,229,120,29,
-27,6,177,37,1,224,254,0,9,54,113,74,2,192,245,14,15,58,196,83,8,208,63,219,204,130,30,9,84,2,192,101,55,13,6,72,248,250,67,60,116,186,153,32,126,241,27,113,126,110,55,104,106,120,168,72,33,60,237,209,152,129,225,160,99,230,194,219,9,77,73,12,27,53,42,
-21,62,122,171,148,10,195,64,173,78,132,239,187,45,138,232,44,104,232,178,62,163,232,121,159,22,153,198,215,125,241,120,42,165,105,123,184,48,48,107,114,158,78,73,35,39,27,139,53,121,104,139,198,210,72,121,236,177,177,60,174,90,28,97,204,143,169,87,47,
-51,218,147,181,170,229,77,140,149,217,81,197,126,231,235,63,55,51,49,36,162,255,223,201,148,67,28,217,78,182,0,0,0,0,73,69,78,68,174,66,96,130,0,0 };
+static const unsigned char temp_binary_data_18[] =
+"\x89PNG\r\n"
+"\x1a\n"
+"\0\0\0\rIHDR\0\0\0 \0\0\0 \x08\x06\0\0\0szz\xf4\0\0\0\tpHYs\0\0\0\xec\0\0\0\xec\x01y(q\xbd\0\0\x05\x1ciTXtXML:com.adobe.xmp\0\0\0\0\0<?xpacket begin=\"\xef\xbb\xbf\" id=\"W5M0MpCehiHzreSzNTczkc9d\"?> <x:xmpmeta xmlns:x=\"adobe:ns:meta/\" x:xmptk=\"Ad"
+"obe XMP Core 5.6-c145 79.163499, 2018/08/13-16:40:22        \"> <rdf:RDF xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"> <rdf:Description rdf:about=\"\" xmlns:xmp=\"http://ns.adobe.com/xap/1.0/\" xmlns:dc=\"http://purl.org/dc/elements/1.1/"
+"\" xmlns:photoshop=\"http://ns.adobe.com/photoshop/1.0/\" xmlns:xmpMM=\"http://ns.adobe.com/xap/1.0/mm/\" xmlns:stEvt=\"http://ns.adobe.com/xap/1.0/sType/ResourceEvent#\" xmp:CreatorTool=\"Adobe Photoshop CC 2019 (Windows)\" xmp:CreateDate=\"2018-05-"
+"13T04:48:26+02:00\" xmp:ModifyDate=\"2019-01-27T14:13:08+01:00\" xmp:MetadataDate=\"2019-01-27T14:13:08+01:00\" dc:format=\"image/png\" photoshop:ColorMode=\"3\" photoshop:ICCProfile=\"sRGB IEC61966-2.1\" xmpMM:InstanceID=\"xmp.iid:116a9430-8c8a-4747"
+"-9881-93b288291091\" xmpMM:DocumentID=\"xmp.did:116a9430-8c8a-4747-9881-93b288291091\" xmpMM:OriginalDocumentID=\"xmp.did:116a9430-8c8a-4747-9881-93b288291091\"> <xmpMM:History> <rdf:Seq> <rdf:li stEvt:action=\"created\" stEvt:instanceID=\"xmp.iid:11"
+"6a9430-8c8a-4747-9881-93b288291091\" stEvt:when=\"2018-05-13T04:48:26+02:00\" stEvt:softwareAgent=\"Adobe Photoshop CC 2019 (Windows)\"/> </rdf:Seq> </xmpMM:History> </rdf:Description> </rdf:RDF> </x:xmpmeta> <?xpacket end=\"r\"?>?M\xa5\xaa\0\0\x01\xc3"
+"IDATX\x85\xed\x97\xbdk\xd5P\x18\xc6\x7f\xcf""9^\xad\x1d\x04\x1d""Eh\xd7\xe2\xe0\xe0\xe8\xc7\xe0\xec""b;\n"
+"\x0e:\xe8\xa6""C\x87r\xfd\x03\x04uQ'\x0bup\xd6\xd6\xc1""E\x87\x82_\x7f\x81\x82\xab.\x85N\x85\x0e""E\xc8\xc7\xe3\x90\xb6$\xd5\xc4\xdck\xf0:\xe4\x81\xc0I\xce{\xde\xf7w\xde$O\x88l3I\x85\x89V\xef\x01z\x80\xff\x01\xe0P\xdd""D\xfa\xe5\xc6L@K\xb9\xf2M\x14\x96"
+"\x03q\x83,)&c@\xdb)y\x92\xc2\xc9#\x90\x18\xb2\xdf\xec""E\x06\x83\x80pze4\0\xe0\xb6\xe5[B\0g\xc1""C\xe0s\xdb\x9d\xb5U\xed-\x90\xb8\xb4\x7f""b_\xb6\xb3w\xc0\x12""0\xdd""2\xf7U\xe0\x05\xf0\x12\xb8""62\0p\xd0\"\x8f;\xe8\x9e\x83\xde\x02\x17q)B \xc7\xa2W\xfb"
+"\x13\xbe\x83Y\0\xe6\r\x8b]\0\xec\xe9\x9c\xe1\x8d\x07<\xe0p8Q\x89\xaa\xae\xc8j\xc6\xad\x01\x1a\xd0<\xe5\xe9\xb8\xc8\xb1\xc1Ge\xbe\x02\xc5\x83""f\xbb\x0cQ\x8f\xf6\xd7\0{)\xcd\x9cS\xad:\xd5\n"
+"p\xaa\xb9T\xd7\0%\t\xae\xe7\xca> \xcf{D\x82\x0e\x8d\xc8\xb3HO\x15""43!\x80\xf1\xd4!\x80\xbe""a\xdft\xee\xef\xff\x1c\xc0\xf0,8^\xc0Z\xddu\xce\xd6j\xb2\xe2""f\x15u\xbe*\xfa.\xb0""FR\xb9\xdeZ\xe3u@\xfa\xa1\x9d\xec!\xdb\xc9yG\xad""A\xf1\xf6I*\x03\xb4""Bi"
+"\xea@]\x82O\x82\xa1\x12\xde;\xc9\xabQ\xd5\x15\xb1""4\x1et\x01\xb0\xa5\xdc\xf7\x81\xc7""D\xed\xa0R\x84\xc1\xca""8\xe0""BO\x80\x85\"\x91_\x8d\x0c`\xb3.q\xa6@\xd1k\x11\x86\x90""6|\x8e\x7f""1\xa0\xe7\xbbG\xa3\x9a:\xf0H\xd6\xd1\\\xf9&hYh\xe3O\xc9\xc6\x91\xfa"
+"\x1f\x93\x1e\xa0\x07\x98""4\xc0O\xfa>\x94|W\xa9(E\0\0\0\0IEND\xae""B`\x82";
 
-const char* play_png = (const char*) temp_binary_data_16;
+const char* play_png = (const char*) temp_binary_data_18;
 
 //================== playing.png ==================
-static const unsigned char temp_binary_data_17[] =
+static const unsigned char temp_binary_data_19[] =
 { 137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,32,0,0,0,32,8,3,0,0,0,68,164,138,198,0,0,0,4,103,65,77,65,0,0,177,143,11,252,97,5,0,0,0,32,99,72,82,77,0,0,122,38,0,0,128,132,0,0,250,0,0,0,128,232,0,0,117,48,0,0,234,96,0,0,58,152,0,0,23,112,156,186,
 81,60,0,0,1,14,80,76,84,69,0,0,0,255,219,36,255,203,28,255,201,27,255,201,26,255,201,27,255,201,27,255,204,31,255,201,27,255,201,27,255,191,32,255,201,27,255,201,27,255,202,32,255,201,27,255,198,28,255,201,27,255,204,36,254,217,97,253,223,126,255,213,
 77,254,215,88,253,219,115,255,204,51,254,221,117,255,214,81,253,220,119,255,208,67,254,220,114,255,218,90,254,214,88,253,222,124,254,217,101,255,215,79,254,214,90,254,216,96,253,213,81,255,227,57,255,201,27,184,166,70,124,137,107,199,174,61,70,111,140,
@@ -1879,10 +1823,10 @@ static const unsigned char temp_binary_data_17[] =
 69,88,116,100,97,116,101,58,99,114,101,97,116,101,0,50,48,49,56,45,48,52,45,49,54,84,50,49,58,52,52,58,52,48,43,48,50,58,48,48,85,236,222,43,0,0,0,37,116,69,88,116,100,97,116,101,58,109,111,100,105,102,121,0,50,48,49,56,45,48,52,45,49,54,84,50,49,58,
 52,52,58,52,48,43,48,50,58,48,48,36,177,102,151,0,0,0,25,116,69,88,116,83,111,102,116,119,97,114,101,0,119,119,119,46,105,110,107,115,99,97,112,101,46,111,114,103,155,238,60,26,0,0,0,0,73,69,78,68,174,66,96,130,0,0 };
 
-const char* playing_png = (const char*) temp_binary_data_17;
+const char* playing_png = (const char*) temp_binary_data_19;
 
 //================== playpause.png ==================
-static const unsigned char temp_binary_data_18[] =
+static const unsigned char temp_binary_data_20[] =
 "\x89PNG\r\n"
 "\x1a\n"
 "\0\0\0\rIHDR\0\0\0\x18\0\0\0\x18\x08\x06\0\0\0\xe0w=\xf8\0\0\0\tpHYs\0\0\x0b\x13\0\0\x0b\x13\x01\0\x9a\x9c\x18\0\0:\xa9iTXtXML:com.adobe.xmp\0\0\0\0\0<?xpacket begin=\"\xef\xbb\xbf\" id=\"W5M0MpCehiHzreSzNTczkc9d\"?>\n"
@@ -2072,50 +2016,36 @@ static const unsigned char temp_binary_data_18[] =
 "K;\xce\x15""B\x10\xc7""1;;;\x84""a\x98\xe8\xb3g\xcf\xfe|\xe7\xce\x9d\xcf\xf6\xf6\xf6\xfc""F\xa3""A\xa9TBkM\x14""E\xcfN\xe8\x94\xd5\x1b\x93z\x9e\x87\xd6\x9a""0\x0c""1\xc6Ld\xd9\xdd\xdd""e{{;;~\xfc\xf8--\xa5\xfcr~~^\xe6y\xfei\xbb\xdd.W\xab\xd5\xb0V\xab"
 "\xb9~\xbfO\x18\x86\x08!^ \x19\x13\xd7\xebu|\xdf\xa7\xdb\xed\x12""E\x11Zk\xf2<\x9fK\xd3\xd4""6\x9b\xcd\x1f\xd7\xd7\xd7?\xffo\0\x05\x1a""4\x8d\x01%\xca%\0\0\0\0IEND\xae""B`\x82";
 
-const char* playpause_png = (const char*) temp_binary_data_18;
+const char* playpause_png = (const char*) temp_binary_data_20;
 
 //================== prevcue.png ==================
-static const unsigned char temp_binary_data_19[] =
-{ 137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,32,0,0,0,32,8,6,0,0,0,115,122,122,244,0,0,0,9,112,72,89,115,0,0,13,215,0,0,13,215,1,66,40,155,120,0,0,5,235,105,84,88,116,88,77,76,58,99,111,109,46,97,100,111,98,101,46,120,109,112,0,0,0,0,0,60,63,120,
-112,97,99,107,101,116,32,98,101,103,105,110,61,34,239,187,191,34,32,105,100,61,34,87,53,77,48,77,112,67,101,104,105,72,122,114,101,83,122,78,84,99,122,107,99,57,100,34,63,62,32,60,120,58,120,109,112,109,101,116,97,32,120,109,108,110,115,58,120,61,34,
-97,100,111,98,101,58,110,115,58,109,101,116,97,47,34,32,120,58,120,109,112,116,107,61,34,65,100,111,98,101,32,88,77,80,32,67,111,114,101,32,53,46,54,45,99,49,52,50,32,55,57,46,49,54,48,57,50,52,44,32,50,48,49,55,47,48,55,47,49,51,45,48,49,58,48,54,58,
-51,57,32,32,32,32,32,32,32,32,34,62,32,60,114,100,102,58,82,68,70,32,120,109,108,110,115,58,114,100,102,61,34,104,116,116,112,58,47,47,119,119,119,46,119,51,46,111,114,103,47,49,57,57,57,47,48,50,47,50,50,45,114,100,102,45,115,121,110,116,97,120,45,110,
-115,35,34,62,32,60,114,100,102,58,68,101,115,99,114,105,112,116,105,111,110,32,114,100,102,58,97,98,111,117,116,61,34,34,32,120,109,108,110,115,58,120,109,112,61,34,104,116,116,112,58,47,47,110,115,46,97,100,111,98,101,46,99,111,109,47,120,97,112,47,
-49,46,48,47,34,32,120,109,108,110,115,58,100,99,61,34,104,116,116,112,58,47,47,112,117,114,108,46,111,114,103,47,100,99,47,101,108,101,109,101,110,116,115,47,49,46,49,47,34,32,120,109,108,110,115,58,112,104,111,116,111,115,104,111,112,61,34,104,116,116,
-112,58,47,47,110,115,46,97,100,111,98,101,46,99,111,109,47,112,104,111,116,111,115,104,111,112,47,49,46,48,47,34,32,120,109,108,110,115,58,120,109,112,77,77,61,34,104,116,116,112,58,47,47,110,115,46,97,100,111,98,101,46,99,111,109,47,120,97,112,47,49,
-46,48,47,109,109,47,34,32,120,109,108,110,115,58,115,116,69,118,116,61,34,104,116,116,112,58,47,47,110,115,46,97,100,111,98,101,46,99,111,109,47,120,97,112,47,49,46,48,47,115,84,121,112,101,47,82,101,115,111,117,114,99,101,69,118,101,110,116,35,34,32,
-120,109,112,58,67,114,101,97,116,111,114,84,111,111,108,61,34,65,100,111,98,101,32,80,104,111,116,111,115,104,111,112,32,67,67,32,40,87,105,110,100,111,119,115,41,34,32,120,109,112,58,67,114,101,97,116,101,68,97,116,101,61,34,50,48,49,55,45,48,52,45,
-50,51,84,50,49,58,48,54,58,48,54,43,48,50,58,48,48,34,32,120,109,112,58,77,111,100,105,102,121,68,97,116,101,61,34,50,48,49,56,45,48,54,45,50,49,84,49,55,58,52,57,58,51,49,43,48,50,58,48,48,34,32,120,109,112,58,77,101,116,97,100,97,116,97,68,97,116,101,
-61,34,50,48,49,56,45,48,54,45,50,49,84,49,55,58,52,57,58,51,49,43,48,50,58,48,48,34,32,100,99,58,102,111,114,109,97,116,61,34,105,109,97,103,101,47,112,110,103,34,32,112,104,111,116,111,115,104,111,112,58,67,111,108,111,114,77,111,100,101,61,34,51,34,
-32,112,104,111,116,111,115,104,111,112,58,73,67,67,80,114,111,102,105,108,101,61,34,115,82,71,66,32,73,69,67,54,49,57,54,54,45,50,46,49,34,32,120,109,112,77,77,58,73,110,115,116,97,110,99,101,73,68,61,34,120,109,112,46,105,105,100,58,50,99,55,97,98,56,
-50,100,45,101,97,50,101,45,101,50,52,57,45,97,99,53,98,45,97,54,49,99,56,102,101,53,52,57,49,48,34,32,120,109,112,77,77,58,68,111,99,117,109,101,110,116,73,68,61,34,97,100,111,98,101,58,100,111,99,105,100,58,112,104,111,116,111,115,104,111,112,58,49,
-101,56,49,57,48,56,51,45,99,57,56,98,45,54,52,52,55,45,56,49,97,100,45,56,50,52,54,100,101,97,53,101,50,56,49,34,32,120,109,112,77,77,58,79,114,105,103,105,110,97,108,68,111,99,117,109,101,110,116,73,68,61,34,120,109,112,46,100,105,100,58,102,51,102,
-97,57,50,49,102,45,56,101,99,54,45,101,97,52,54,45,97,48,56,101,45,57,48,49,51,100,48,101,49,50,53,98,53,34,62,32,60,120,109,112,77,77,58,72,105,115,116,111,114,121,62,32,60,114,100,102,58,83,101,113,62,32,60,114,100,102,58,108,105,32,115,116,69,118,
-116,58,97,99,116,105,111,110,61,34,99,114,101,97,116,101,100,34,32,115,116,69,118,116,58,105,110,115,116,97,110,99,101,73,68,61,34,120,109,112,46,105,105,100,58,102,51,102,97,57,50,49,102,45,56,101,99,54,45,101,97,52,54,45,97,48,56,101,45,57,48,49,51,
-100,48,101,49,50,53,98,53,34,32,115,116,69,118,116,58,119,104,101,110,61,34,50,48,49,55,45,48,52,45,50,51,84,50,49,58,48,54,58,48,54,43,48,50,58,48,48,34,32,115,116,69,118,116,58,115,111,102,116,119,97,114,101,65,103,101,110,116,61,34,65,100,111,98,101,
-32,80,104,111,116,111,115,104,111,112,32,67,67,32,40,87,105,110,100,111,119,115,41,34,47,62,32,60,114,100,102,58,108,105,32,115,116,69,118,116,58,97,99,116,105,111,110,61,34,115,97,118,101,100,34,32,115,116,69,118,116,58,105,110,115,116,97,110,99,101,
-73,68,61,34,120,109,112,46,105,105,100,58,50,99,55,97,98,56,50,100,45,101,97,50,101,45,101,50,52,57,45,97,99,53,98,45,97,54,49,99,56,102,101,53,52,57,49,48,34,32,115,116,69,118,116,58,119,104,101,110,61,34,50,48,49,56,45,48,54,45,50,49,84,49,55,58,52,
-57,58,51,49,43,48,50,58,48,48,34,32,115,116,69,118,116,58,115,111,102,116,119,97,114,101,65,103,101,110,116,61,34,65,100,111,98,101,32,80,104,111,116,111,115,104,111,112,32,67,67,32,40,87,105,110,100,111,119,115,41,34,32,115,116,69,118,116,58,99,104,
-97,110,103,101,100,61,34,47,34,47,62,32,60,47,114,100,102,58,83,101,113,62,32,60,47,120,109,112,77,77,58,72,105,115,116,111,114,121,62,32,60,47,114,100,102,58,68,101,115,99,114,105,112,116,105,111,110,62,32,60,47,114,100,102,58,82,68,70,62,32,60,47,120,
-58,120,109,112,109,101,116,97,62,32,60,63,120,112,97,99,107,101,116,32,101,110,100,61,34,114,34,63,62,16,45,17,249,0,0,3,166,73,68,65,84,88,133,197,151,77,104,92,85,24,134,159,115,238,220,185,105,146,73,108,147,152,140,205,63,131,237,216,4,20,26,147,
-84,70,98,68,164,221,68,171,187,32,138,8,138,80,74,22,221,148,26,66,253,217,136,116,225,66,252,1,5,117,225,66,52,27,109,16,155,148,10,37,182,69,105,12,85,27,52,154,208,9,105,77,58,115,77,166,247,206,189,247,184,48,147,182,201,204,157,201,31,121,87,23,
-206,119,190,231,229,156,243,221,115,62,65,129,138,28,60,98,200,100,168,91,64,143,82,68,21,132,5,132,1,20,196,5,196,133,224,138,130,65,175,204,60,51,241,237,187,86,33,121,69,190,128,104,236,120,216,115,232,87,130,94,32,84,160,95,83,40,62,151,1,78,94,57,
-247,86,124,93,6,26,187,6,138,12,219,62,1,244,41,40,46,16,188,50,249,34,112,202,10,6,223,152,28,25,184,85,176,129,125,109,199,106,210,1,253,107,4,237,235,1,175,146,98,84,119,210,79,141,95,120,123,38,175,129,189,157,175,181,122,194,253,6,168,221,20,248,
-109,77,75,165,29,250,245,252,235,99,57,13,236,107,59,86,147,214,245,11,91,0,95,54,161,167,211,109,119,174,132,150,249,104,236,26,40,18,138,211,8,30,88,107,214,96,75,61,197,135,59,208,235,171,112,254,156,5,199,205,21,90,230,73,45,22,138,60,254,217,205,
-201,17,7,64,102,70,12,219,62,177,158,61,55,14,236,161,244,249,199,208,35,53,24,7,246,96,180,71,252,39,8,218,151,14,55,203,6,162,177,227,97,160,111,61,240,146,167,59,10,40,230,85,234,91,98,254,111,192,115,232,95,107,169,101,131,187,179,9,172,209,137,188,
-115,21,20,123,14,253,0,34,114,240,136,33,19,161,235,20,254,147,201,9,55,223,27,194,51,83,133,166,49,189,114,179,74,202,100,168,123,27,224,0,33,153,12,117,75,1,61,219,0,7,64,64,143,84,138,232,118,192,1,148,34,42,213,210,141,230,11,111,139,108,58,28,64,
-65,88,138,60,6,44,51,65,209,19,173,171,74,205,252,224,187,13,193,1,4,132,3,190,240,196,60,11,55,174,241,112,180,137,160,126,59,212,245,20,103,203,138,73,221,92,216,144,1,0,169,32,235,125,109,37,230,49,175,253,133,103,219,140,125,121,230,174,49,77,10,
-58,79,246,178,163,182,98,67,112,5,113,173,178,46,246,44,208,144,13,14,10,128,217,31,126,70,222,87,73,245,222,198,229,24,61,160,81,243,104,11,51,23,175,226,36,215,183,21,2,198,181,202,250,88,7,176,63,23,60,163,153,225,75,155,110,66,8,78,107,21,245,49,
-23,232,245,131,111,153,9,65,191,182,179,229,193,41,97,25,71,173,196,188,225,7,223,2,19,166,87,110,190,170,205,77,252,232,150,150,70,31,49,227,83,247,231,131,23,98,98,250,236,56,222,45,59,111,14,161,248,248,234,240,59,131,26,64,168,226,161,95,156,212,
-194,43,40,85,240,197,154,203,132,183,171,132,127,70,127,247,135,195,162,12,240,204,141,191,207,253,43,1,166,127,251,232,178,113,207,206,161,66,225,25,253,212,255,62,151,7,71,214,58,13,224,84,230,185,190,252,36,11,53,31,254,138,197,185,163,158,235,4,215,
-146,105,102,248,18,41,1,165,77,187,185,62,25,103,226,195,239,253,183,64,49,106,27,193,23,51,79,178,187,150,188,174,238,185,253,41,43,121,222,75,219,190,127,200,108,210,130,69,148,55,68,144,1,221,47,108,213,163,84,222,57,58,53,245,233,197,146,170,240,
-147,82,55,156,173,128,75,165,29,90,217,27,100,61,116,181,205,47,180,90,11,201,243,174,157,42,217,20,184,79,99,34,179,197,79,255,241,201,152,172,110,174,46,218,85,57,36,52,45,103,109,230,131,11,88,20,240,166,109,4,187,178,193,151,98,252,213,208,242,82,
-212,74,44,124,145,78,153,45,202,117,151,227,243,192,55,222,156,174,84,109,103,223,14,53,151,120,89,217,118,175,107,91,77,161,221,141,9,25,208,239,133,141,181,231,255,1,51,168,189,249,145,172,109,85,0,0,0,0,73,69,78,68,174,66,96,130,0,0 };
+static const unsigned char temp_binary_data_21[] =
+"\x89PNG\r\n"
+"\x1a\n"
+"\0\0\0\rIHDR\0\0\0 \0\0\0 \x08\x06\0\0\0szz\xf4\0\0\0\tpHYs\0\0\r\xd7\0\0\r\xd7\x01""B(\x9bx\0\0\x06\xbbiTXtXML:com.adobe.xmp\0\0\0\0\0<?xpacket begin=\"\xef\xbb\xbf\" id=\"W5M0MpCehiHzreSzNTczkc9d\"?> <x:xmpmeta xmlns:x=\"adobe:ns:meta/\" x:xmptk=\""
+"Adobe XMP Core 5.6-c145 79.163499, 2018/08/13-16:40:22        \"> <rdf:RDF xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"> <rdf:Description rdf:about=\"\" xmlns:xmp=\"http://ns.adobe.com/xap/1.0/\" xmlns:dc=\"http://purl.org/dc/elements/1."
+"1/\" xmlns:photoshop=\"http://ns.adobe.com/photoshop/1.0/\" xmlns:xmpMM=\"http://ns.adobe.com/xap/1.0/mm/\" xmlns:stEvt=\"http://ns.adobe.com/xap/1.0/sType/ResourceEvent#\" xmp:CreatorTool=\"Adobe Photoshop CC (Windows)\" xmp:CreateDate=\"2017-04-23T"
+"21:06:06+02:00\" xmp:ModifyDate=\"2019-01-27T14:16:08+01:00\" xmp:MetadataDate=\"2019-01-27T14:16:08+01:00\" dc:format=\"image/png\" photoshop:ColorMode=\"3\" photoshop:ICCProfile=\"sRGB IEC61966-2.1\" xmpMM:InstanceID=\"xmp.iid:c871c922-f353-6e44-a7"
+"31-17b674c9bd61\" xmpMM:DocumentID=\"adobe:docid:photoshop:1e819083-c98b-6447-81ad-8246dea5e281\" xmpMM:OriginalDocumentID=\"xmp.did:f3fa921f-8ec6-ea46-a08e-9013d0e125b5\"> <xmpMM:History> <rdf:Seq> <rdf:li stEvt:action=\"created\" stEvt:instanceID=\""
+"xmp.iid:f3fa921f-8ec6-ea46-a08e-9013d0e125b5\" stEvt:when=\"2017-04-23T21:06:06+02:00\" stEvt:softwareAgent=\"Adobe Photoshop CC (Windows)\"/> <rdf:li stEvt:action=\"saved\" stEvt:instanceID=\"xmp.iid:2c7ab82d-ea2e-e249-ac5b-a61c8fe54910\" stEvt:when"
+"=\"2018-06-21T17:49:31+02:00\" stEvt:softwareAgent=\"Adobe Photoshop CC (Windows)\" stEvt:changed=\"/\"/> <rdf:li stEvt:action=\"saved\" stEvt:instanceID=\"xmp.iid:c871c922-f353-6e44-a731-17b674c9bd61\" stEvt:when=\"2019-01-27T14:16:08+01:00\" stEvt:"
+"softwareAgent=\"Adobe Photoshop CC 2019 (Windows)\" stEvt:changed=\"/\"/> </rdf:Seq> </xmpMM:History> </rdf:Description> </rdf:RDF> </x:xmpmeta> <?xpacket end=\"r\"?>\xeb\xb7\x1a\xf3\0\0\x02\xd3IDATX\x85\xed\x97KH\x94Q\x18\x86\x9f\xf3\x9f\x7f\xe6W\x9b"
+"\x19\xad\x8dT\x9aZ&3f\xab""2\x8a\x16""BEt\x81\x16""a\x84""EYH\xad\xba\x10\xd8\"*\xda\x04\xd1\xa2]\x10$\xe2\xd0\x85\xee\x0b)(/%\x18\x88\xa5\x18\x88\x8d\x16\x15I\x10\x19\x92\xce\x8c\x8d\x8e\xff\xad\x85""ch98\x92\x97""E\xbe\xbb\xc3\x0b\xdf\xf7\x9c\xf7||"
+"p\x84m\xdb\xcc\xa5\x94""9\xed>\x0f""0\x0f\0\xa8""c\x0f\xe5O\xaaIU\x87h\x0egS\x9eQGSx\x05M\xa1\x1c\xce""e\xd4P\xdb\xef\xa3%\xbc\x8c\xd3\x99\xf5""4\x06s9\xb9\xf4\x05o\x06""2\xb8\xf1\xbd\xd0}.\xe3y\xf8\xf8\xc7""b\0.d=\xe5U8\x9b\x17}+9\x93UC\xc5\xb7\r\x9e"
+"S\x8b_\x86|k/M\x08\xf0\xaf\t\xdc\xac,\xb8\x16\x02\x82\x13x\x12\xa8\xbd\xee\xab\x08\x02\x9d\xf1\n"
+"\xa8\xf1\x8cI\xb4\n"
+"\xe8(Z\xd4\x01\xd1""4\x16;C\x1e@\0\xa3Ke\xf3\x9d\xfc\xcazMF@w\x93\xa9\xf5y\xe3\x15\x9aj\x02\x02\xf0\x9f\xcf\xa9\xee\xf0""8\x06""0u\x0f\0""C\x96\x03\xc0\xf6\xe7\xdd\x06xz,\xf3Y\xbd\xa6\x0c""c\x1an\0\xa2V\xfc{N%\x01\xef]\xaf\xbf\xd3\xa5\xf5\x81\x91\x8c"
+"iK\xc0\xc6\xb6\x15,[P\x9a\xfe\xba\n"
+"8T\x98\xfa\x1e\x8c\x94\xdf\xfe""dJ\x04@\0\x0f/,\x7f\xb4\x1b""3\tSw\x8f+l\xd9*i\xea {\xd2\x9b\x0f""a:1\x8d\x94\x98\x93\xd8\x8a\x9f\x0c`\xf5=oU\xbbK\xfb\x01\xba\x0b\xd3V&(lc\x03\xa6\x91\x9cP\xc3?\x15o\x06\x04Py6\xebq\xbbK\xfd\x89""9\xec\x89""5\x9f~M\x94"
+"\x80\xef~~E`\x81""c\0[O\xc1""B\xccH\xe3x\0K\xce\xe7\xde\t`\xb8""0u\x17\x89\xbe\xe3\xbfh\\\xae""3{\xd7\x04\0\x80\xaf\x17?\x94\x14""DL\r\xe9\x18@\x99\xed\x04""bz\xbb""7pDi\xfc\x91\x7fK\xa8\x83H\x19\x9du\0\x18y\xfc\x03\x97\xbbw\x14""F\x8c$\xa4""3\x84\"\xac"
+"Y\x05\x18U\xeb\xbe\xae\xc3\xb2\xad\xcf\xdb(\xd4\x08R\x98\xfc=)\x02\x01Hu0\xe6O/\0\x80\x05\x14]\xfe\xbckM\xd4r \x1d""a\xe4\x98""4\x14""a\xd0o$\xf3\xa0g\xbd\xbfWw#\xd5H\xccOl\xa4\xa7\xb2]\xda\xf6\xbd;\xa8\xb6\xf6\xe7""5\xa0""F\x90r\x08\x10\x08""a\xa1\x08"
+"\x1b\xe0""0 Z\x82y\xcf""F\xfc\xc1\x84 \xa6\xba\xdeL`\xd3\x95\xee\x9d\x1b\xa3\x96\x86t\x84\x01HRt\xfc=\xeb""D\xe9\xfb\xfd\0\xdb\xaf~\xd9\xb6%j9\x91\xea\x88\xaf)\xc6\xb4\x01\x8c\xaa\xa9$P\xa6\xb6\x04s\x1b\xd0\xfa\xe9\xd5\x17\x0c""3~k=/\t\x94\xa9-\xa1\xbc"
+":\x1c""a\xbe""D\x17vM7\0\xc4\xd2""8\xd1Y\x96~\xfcSq\xb2S1q*\xe6\x9f\xfe\xd6\xa3\x9dGR\x01_\xbc\"b\xfeg4\x0f\xf0\xdf\x03\xfc\x02\x08\xe3\xfc,\xa1\xf5\xdd\xd8\0\0\0\0IEND\xae""B`\x82";
 
-const char* prevcue_png = (const char*) temp_binary_data_19;
+const char* prevcue_png = (const char*) temp_binary_data_21;
 
 //================== smallstripe.png ==================
-static const unsigned char temp_binary_data_20[] =
+static const unsigned char temp_binary_data_22[] =
 "\x89PNG\r\n"
 "\x1a\n"
 "\0\0\0\rIHDR\0\0\0\x0b\0\0\0\x16\x08\x02\0\0\0\x99\x86\xf1""4\0\0\0\tpHYs\0\0\x0b\x13\0\0\x0b\x13\x01\0\x9a\x9c\x18\0\0\x05\xebiTXtXML:com.adobe.xmp\0\0\0\0\0<?xpacket begin=\"\xef\xbb\xbf\" id=\"W5M0MpCehiHzreSzNTczkc9d\"?> <x:xmpmeta xmlns:x=\"adob"
@@ -2133,10 +2063,10 @@ static const unsigned char temp_binary_data_20[] =
 "!6\x9b\x8dm\xdbI\xc6x<62\x80\xc1`\x10\xaf\xe9\x97\x11\x04""A\xb3\xd9""4\xb2\xeb\xba\xcb\xe5\xf2""7\x8f\xf8""0C\x8c\xab\xd3\xe9\x98\x9e\xe2\0>D\xd7u\xf9\x9a\x08\xc0h4\xfa/\0\x80<\x9dN\xc7\xe3\xd1\xfc\xc5R\xa9\xf4g\xcf_\x82\xfd\x89\"\x99\x91\xa5\xe2\0\0"
 "\0\0IEND\xae""B`\x82";
 
-const char* smallstripe_png = (const char*) temp_binary_data_20;
+const char* smallstripe_png = (const char*) temp_binary_data_22;
 
 //================== snap.png ==================
-static const unsigned char temp_binary_data_21[] =
+static const unsigned char temp_binary_data_23[] =
 { 137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,32,0,0,0,32,8,6,0,0,0,115,122,122,244,0,0,0,9,112,72,89,115,0,0,11,19,0,0,11,19,1,0,154,156,24,0,0,6,182,105,84,88,116,88,77,76,58,99,111,109,46,97,100,111,98,101,46,120,109,112,0,0,0,0,0,60,63,120,
 112,97,99,107,101,116,32,98,101,103,105,110,61,34,239,187,191,34,32,105,100,61,34,87,53,77,48,77,112,67,101,104,105,72,122,114,101,83,122,78,84,99,122,107,99,57,100,34,63,62,32,60,120,58,120,109,112,109,101,116,97,32,120,109,108,110,115,58,120,61,34,
 97,100,111,98,101,58,110,115,58,109,101,116,97,47,34,32,120,58,120,109,112,116,107,61,34,65,100,111,98,101,32,88,77,80,32,67,111,114,101,32,53,46,54,45,99,49,52,50,32,55,57,46,49,54,48,57,50,52,44,32,50,48,49,55,47,48,55,47,49,51,45,48,49,58,48,54,58,
@@ -2189,26 +2119,32 @@ static const unsigned char temp_binary_data_21[] =
 111,198,135,9,25,33,129,146,15,82,242,115,23,208,169,18,8,24,134,97,68,26,30,173,5,149,163,227,145,125,191,240,126,218,227,55,86,42,97,165,178,177,236,218,253,180,85,142,163,5,65,156,243,5,134,97,102,136,8,31,38,52,179,251,84,117,76,68,94,3,14,139,10,
 228,158,112,37,195,54,4,32,252,139,97,24,198,144,138,52,2,194,70,102,25,113,24,17,106,206,144,55,195,204,248,111,252,19,142,97,179,28,126,185,64,78,0,0,0,0,73,69,78,68,174,66,96,130,0,0 };
 
-const char* snap_png = (const char*) temp_binary_data_21;
+const char* snap_png = (const char*) temp_binary_data_23;
 
 //================== stop.png ==================
-static const unsigned char temp_binary_data_22[] =
-{ 137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,32,0,0,0,32,8,3,0,0,0,68,164,138,198,0,0,0,4,103,65,77,65,0,0,177,143,11,252,97,5,0,0,0,32,99,72,82,77,0,0,122,38,0,0,128,132,0,0,250,0,0,0,128,232,0,0,117,48,0,0,234,96,0,0,58,152,0,0,23,112,156,186,
-81,60,0,0,0,174,80,76,84,69,0,0,0,36,73,109,38,59,122,39,59,122,40,59,122,39,58,122,39,59,122,41,61,122,39,59,122,39,59,122,32,64,128,39,60,122,39,59,122,43,64,117,40,59,122,40,57,125,39,60,122,38,57,121,26,32,90,27,33,92,30,43,104,21,24,81,26,33,90,
-28,33,94,27,37,96,25,29,88,20,22,79,35,50,99,29,35,99,39,59,122,53,62,116,66,65,111,68,66,110,90,72,97,66,66,109,148,83,77,250,106,36,255,107,34,255,109,31,255,124,0,255,124,1,201,101,35,39,58,121,52,41,80,74,40,59,25,30,88,18,17,73,25,30,89,25,31,89,
-47,29,67,145,76,70,249,105,35,197,94,26,39,36,86,48,28,68,50,29,67,19,19,75,0,0,0,145,126,156,208,0,0,0,29,116,82,78,83,0,7,73,152,193,218,243,25,151,242,8,132,245,24,200,45,227,219,229,202,101,253,203,54,178,235,251,36,80,233,228,196,164,0,0,0,1,98,
-75,71,68,0,136,5,29,72,0,0,0,9,112,72,89,115,0,0,13,215,0,0,13,215,1,66,40,155,120,0,0,0,7,116,73,77,69,7,226,4,16,21,43,11,201,142,164,12,0,0,1,25,73,68,65,84,56,203,125,147,215,130,130,48,16,69,67,139,20,197,222,55,234,22,23,23,53,234,86,255,255,203,
-54,33,3,14,101,56,111,48,135,144,153,228,50,86,96,217,142,235,113,238,185,142,109,177,58,29,63,16,5,129,223,169,148,195,168,43,74,116,163,16,215,123,177,168,17,247,30,245,254,64,52,48,232,23,223,55,214,149,1,107,132,177,32,136,205,62,34,65,18,101,253,
-229,251,223,108,21,187,103,205,75,222,139,238,214,135,135,215,183,189,226,61,209,28,62,82,243,210,87,243,131,249,108,178,58,8,201,225,104,140,192,98,54,44,176,221,99,33,57,157,141,97,51,135,16,164,49,28,230,82,130,49,92,230,145,130,188,40,195,99,156,
-22,228,53,21,188,85,80,6,111,251,133,54,134,45,155,204,24,209,109,26,198,228,160,64,152,80,163,190,153,250,212,122,28,214,231,23,58,172,111,88,96,134,142,59,253,249,85,252,157,52,240,189,188,207,241,133,73,175,178,202,162,124,229,106,198,50,172,92,218,
-138,177,90,215,174,125,201,88,61,53,4,7,25,203,53,142,86,17,189,220,184,47,74,209,67,225,205,140,233,108,222,144,111,136,255,112,52,158,160,248,255,3,150,171,108,93,106,102,188,252,0,0,0,37,116,69,88,116,100,97,116,101,58,99,114,101,97,116,101,0,50,48,
-49,56,45,48,52,45,49,54,84,50,49,58,52,51,58,49,49,43,48,50,58,48,48,89,167,192,130,0,0,0,37,116,69,88,116,100,97,116,101,58,109,111,100,105,102,121,0,50,48,49,56,45,48,52,45,49,54,84,50,49,58,52,51,58,49,49,43,48,50,58,48,48,40,250,120,62,0,0,0,25,116,
-69,88,116,83,111,102,116,119,97,114,101,0,119,119,119,46,105,110,107,115,99,97,112,101,46,111,114,103,155,238,60,26,0,0,0,0,73,69,78,68,174,66,96,130,0,0 };
+static const unsigned char temp_binary_data_24[] =
+"\x89PNG\r\n"
+"\x1a\n"
+"\0\0\0\rIHDR\0\0\0 \0\0\0 \x08\x06\0\0\0szz\xf4\0\0\0\tpHYs\0\0\r\xd7\0\0\r\xd7\x01""B(\x9bx\0\0\x05\x1ciTXtXML:com.adobe.xmp\0\0\0\0\0<?xpacket begin=\"\xef\xbb\xbf\" id=\"W5M0MpCehiHzreSzNTczkc9d\"?> <x:xmpmeta xmlns:x=\"adobe:ns:meta/\" x:xmptk=\""
+"Adobe XMP Core 5.6-c145 79.163499, 2018/08/13-16:40:22        \"> <rdf:RDF xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"> <rdf:Description rdf:about=\"\" xmlns:xmp=\"http://ns.adobe.com/xap/1.0/\" xmlns:dc=\"http://purl.org/dc/elements/1."
+"1/\" xmlns:photoshop=\"http://ns.adobe.com/photoshop/1.0/\" xmlns:xmpMM=\"http://ns.adobe.com/xap/1.0/mm/\" xmlns:stEvt=\"http://ns.adobe.com/xap/1.0/sType/ResourceEvent#\" xmp:CreatorTool=\"Adobe Photoshop CC 2019 (Windows)\" xmp:CreateDate=\"2017-0"
+"4-23T21:03:24+02:00\" xmp:ModifyDate=\"2019-01-27T14:13:57+01:00\" xmp:MetadataDate=\"2019-01-27T14:13:57+01:00\" dc:format=\"image/png\" photoshop:ColorMode=\"3\" photoshop:ICCProfile=\"sRGB IEC61966-2.1\" xmpMM:InstanceID=\"xmp.iid:b76d7782-8831-9f"
+"42-a897-a900903ff943\" xmpMM:DocumentID=\"xmp.did:b76d7782-8831-9f42-a897-a900903ff943\" xmpMM:OriginalDocumentID=\"xmp.did:b76d7782-8831-9f42-a897-a900903ff943\"> <xmpMM:History> <rdf:Seq> <rdf:li stEvt:action=\"created\" stEvt:instanceID=\"xmp.iid:"
+"b76d7782-8831-9f42-a897-a900903ff943\" stEvt:when=\"2017-04-23T21:03:24+02:00\" stEvt:softwareAgent=\"Adobe Photoshop CC 2019 (Windows)\"/> </rdf:Seq> </xmpMM:History> </rdf:Description> </rdf:RDF> </x:xmpmeta> <?xpacket end=\"r\"?>\xc8\xa5\xc9""E\0\0"
+"\x02""DIDATX\x85\xed\xd7""Ak\x13""A\x14\x07\xf0\xff{3\x9b\xddM\xd2\xdd""D\xa9UT\x10*b\x0bV\x10\xec\xc1\xa3'\xf1\xd0\x93""7\xc1\x8b\xe0\xd9/\xe0G\xd0\x9b \xde\xc5\xb3\xe0\xd1\x83_\xc0""B\n"
+"\xc5\"\x16-\xa5\x16\xdb&mM\x93\xecnf\xe6y\xa8\x8dUWX\xa4\x12\xc1<\x98\xcb\xbe""a\xe7\xc7\xdb\x19\xe6-\x89\x08\x86\x19<\xd4\xd5G\x80\x7f\x01\xa0\xf3\x1e>\xbe""5\x87\x8e\xd3|\xa3\xb6\xaaNy=\xbe\xbfrM\x7fH\"\x8aT6\x98# \xe7\xb1\tj\xbaw\xc6#\xeb;\x90=\xc8"
+"1De\xa2\xd2\xb5""4\xfa""47\xbe\xd8\xbey\xfc\xad\xfd""b\x02""3\xfb\xf4}1@\xc0\x96[\xc6\x9fi\xf6\xc3;S\xe5\xd6\xd5\x07\xa7\xdfp\xe2\x14""4}?1\x02\x12\xd6)\xebp+ eY\x04\x83$\x01\xe4\0\x97""A\xa7i\xcf""7\xdb\xfd\xea\xcb\x9a\x9f=\x04`\n"
+"\x01\x16\xbbu\x9e\x1d\xdb\xb8}6\xdc\xb9\xeb\x91\x8b.\x8e}\x06H\x80\x1fN,\x01:\x01\xaaM@\xe1\xa7\xdc\xa0\x14H\x92\x12\x16""6N\x9aW\x1f\xe3GS\xf9S~\x8d\xf9\xee\xb8\x9a\t[\xd7\xcfW7#\x08\x03\xc6\x07\xfa\x01`rF_\x03}\xe4\x8f\x14\x08\xaa\x19\"\xb5\xed\xbf"
+"x\x17\xab\xbc\xb5r\x01>Y\xed@)\xdc\x11\xecQ\x07""8\x10\x95\xb5+\x17\x06\x10@\xc8/\xea\x9f""FH\x84\xc9\xc2\x80\xbf\x10%\0\x13\xc3\x04\x08\xf6w\xc5\xd0\0\xbf\x8d\x11`\x04\x18\x01\xfe\x0f\0\x01\xc4$^a\xc0\xb7\x8b\x97\x8e\n"
+" \x80\xed;\xee\x14\x06""d\xa2\x0c\x13|\xf0\x11\xdcG\n"
+"pD\xed""f\xe2""5\xf2\xd2\xb9\r\xc9""e\x7f\xdd""6v\xc7^\xfbT\xbf""0\x19\xf4\xaa\x10\x02J\x0e\xd0\x0e\x90\x83\xc2\x10\xa0\r\x10\x98\xfd\xb7\x1c\xb6\x1e\xd4O\x01\xe8),7\xe3Zjy\xb7""0`\xda\xdbtK{\x95\xe7\xc7t\xac'\xc3\xee\x15\x10\xb0\xba\xe3\xd3zW\xc3\x1b"
+"T\x85\xc0Zk]\xc9*\xc4V\xe1PK\x06\x02\x89\xc0&\xc2\xed\xb2(\xbb\xd5\r\x17\x98\xf2?i. \x11\xed\x02v\xf3>\xdb\x06H\x08Z\xf0l9\xe6'Ku:\x11\x1a\0\x10\x01Pb\x17\xd7\xc3\x89i\x8f]\xd9\t\r\xfa=&\xf1""2\xcb\x9d\x95v\xd0\xb8wim\xef\\\xd4\x13\xe4\xf4\x83\0@\xa3"
+"_\xb3\x11`\xd8\x80\xaf""F0\xdb\x08\xf1\x03\xcb \0\0\0\0IEND\xae""B`\x82";
 
-const char* stop_png = (const char*) temp_binary_data_22;
+const char* stop_png = (const char*) temp_binary_data_24;
 
 //================== stripe.png ==================
-static const unsigned char temp_binary_data_23[] =
+static const unsigned char temp_binary_data_25[] =
 "\x89PNG\r\n"
 "\x1a\n"
 "\0\0\0\rIHDR\0\0\0.\0\0\0\\\x08\x02\0\0\0\x9e""1\x10\xaa\0\0\0\tpHYs\0\0\x0b\x13\0\0\x0b\x13\x01\0\x9a\x9c\x18\0\0\x05\xddiTXtXML:com.adobe.xmp\0\0\0\0\0<?xpacket begin=\"\xef\xbb\xbf\" id=\"W5M0MpCehiHzreSzNTczkc9d\"?> <x:xmpmeta xmlns:x=\"adobe:ns:"
@@ -2231,7 +2167,7 @@ static const unsigned char temp_binary_data_23[] =
 ")Z$\xd2\x14""E\x12i\x8a\"\x89(E\x97""D\x94\xa2K\xd2\x9e\xa2N\xd2\x9e\xa2N\xd2\x98""bA\xd2\x98""bA\xd2\x92""bD\xd2\x92""bDR\x9d""bGR\x9d""bGR\x97""bJR\x97""bJR\x91""bMR\x91""bMR\x9a\xe2@R\x9a\xe2@R\x94\xe2""CR\x94\xe2""C\x92Oq#\xc9\xa7\xb8\x91""dR<I2)"
 "\x9e$O)\xce$O)\xce$\xb7)\xfe$\xb7)\xfe$\xe9\x94\x10\x92tJ\x08I\"%\x8a$\x91\x12""ErM\t$\xb9\xa6\x04\x92\x9cRbIN)\xb1$GJ8\xc9\x91\x12N\xf2My\x03\t\xf0\x0b""D\xda\x9b\t\xb2\x19\xe1S\0\0\0\0IEND\xae""B`\x82";
 
-const char* stripe_png = (const char*) temp_binary_data_23;
+const char* stripe_png = (const char*) temp_binary_data_25;
 
 
 const char* getNamedResource (const char* resourceNameUTF8, int& numBytes)
@@ -2252,21 +2188,23 @@ const char* getNamedResource (const char* resourceNameUTF8, int& numBytes)
         case 0x83ff2424:  numBytes = 798; return oscScriptTemplate_js;
         case 0xb2ba4d21:  numBytes = 1091; return streamingScriptTemplate_js;
         case 0xb02b7677:  numBytes = 36971; return about_png;
-        case 0xbb8f218b:  numBytes = 16103; return add_png;
+        case 0xbb8f218b:  numBytes = 3269; return add_png;
+        case 0xd9f427f3:  numBytes = 3998; return connected_png;
         case 0x961b4a48:  numBytes = 3448; return default_chalayout;
+        case 0x488efa25:  numBytes = 3820; return disconnected_png;
         case 0xd4093963:  numBytes = 42153; return icon_png;
-        case 0xb967d40f:  numBytes = 3358; return in_png;
-        case 0x2fc6dfca:  numBytes = 877; return nextcue_png;
-        case 0xbe0a39b8:  numBytes = 3368; return out_png;
+        case 0xb967d40f:  numBytes = 3754; return in_png;
+        case 0x2fc6dfca:  numBytes = 2624; return nextcue_png;
+        case 0xbe0a39b8:  numBytes = 4041; return out_png;
         case 0x107086a8:  numBytes = 584; return padlock_png;
         case 0x31751c60:  numBytes = 701; return pause_png;
-        case 0x7000b29e:  numBytes = 768; return play_png;
+        case 0x7000b29e:  numBytes = 1849; return play_png;
         case 0xee61ea98:  numBytes = 952; return playing_png;
         case 0xab17ebac:  numBytes = 16163; return playpause_png;
-        case 0x8ff9208a:  numBytes = 2539; return prevcue_png;
+        case 0x8ff9208a:  numBytes = 2536; return prevcue_png;
         case 0x9da18b7e:  numBytes = 1959; return smallstripe_png;
         case 0x10f1dc34:  numBytes = 3649; return snap_png;
-        case 0x663b186c:  numBytes = 813; return stop_png;
+        case 0x663b186c:  numBytes = 1978; return stop_png;
         case 0xa58f5337:  numBytes = 2043; return stripe_png;
         default: break;
     }
@@ -2286,7 +2224,9 @@ const char* namedResourceList[] =
     "streamingScriptTemplate_js",
     "about_png",
     "add_png",
+    "connected_png",
     "default_chalayout",
+    "disconnected_png",
     "icon_png",
     "in_png",
     "nextcue_png",
@@ -2314,7 +2254,9 @@ const char* originalFilenames[] =
     "streamingScriptTemplate.js",
     "about.png",
     "add.png",
+    "connected.png",
     "default.chalayout",
+    "disconnected.png",
     "icon.png",
     "in.png",
     "nextcue.png",

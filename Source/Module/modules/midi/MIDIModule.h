@@ -49,6 +49,8 @@ public:
 	MIDIInputDevice * inputDevice;
 	MIDIOutputDevice * outputDevice;
 
+	BoolParameter * isConnected;
+
 	//Script
 	const Identifier noteOnEventId = "noteOnEvent";
 	const Identifier noteOffEventId = "noteOffEvent";

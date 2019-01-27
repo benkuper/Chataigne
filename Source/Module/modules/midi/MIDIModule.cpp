@@ -39,6 +39,11 @@ MIDIModule::MIDIModule(const String & name, bool _useGenericControls) :
 	midiParam = new MIDIDeviceParameter("Devices");
 	moduleParams.addParameter(midiParam);
 
+	isConnected = moduleParams.addBoolParameter("Is Connected", "This is checked if the module is connected to at least one input or output device", false);
+	isConnected->setControllableFeedbackOnly(true);
+	connectionFeedbackRef = isConnected;
+
+
 	//Script
 	scriptObject.setMethod(sendNoteOnId, &MIDIModule::sendNoteOnFromScript);
 	scriptObject.setMethod(sendNoteOffId, &MIDIModule::sendNoteOffFromScript);
@@ -154,6 +159,8 @@ void MIDIModule::updateMIDIDevices()
 	//} 
 
 	setupIOConfiguration(inputDevice != nullptr || valuesCC.controllables.size() > 0, outputDevice != nullptr);
+
+	isConnected->setValue(inputDevice != nullptr || outputDevice != nullptr);
 }
 
 void MIDIModule::noteOnReceived(const int & channel, const int & pitch, const int & velocity)

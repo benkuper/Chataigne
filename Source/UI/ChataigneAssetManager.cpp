@@ -24,6 +24,17 @@ Image ChataigneAssetManager::getOutImage()
 	return ImageCache::getFromMemory(BinaryData::out_png, BinaryData::out_pngSize);
 }
 
+Image ChataigneAssetManager::getConnectedImage()
+{
+	return ImageCache::getFromMemory(BinaryData::connected_png, BinaryData::connected_pngSize);
+}
+
+Image ChataigneAssetManager::getDisconnectedImage()
+{
+	return ImageCache::getFromMemory(BinaryData::disconnected_png, BinaryData::disconnected_pngSize);
+}
+
+
 Image ChataigneAssetManager::getPlayImage()
 {
 	return ImageCache::getFromMemory(BinaryData::play_png, BinaryData::play_pngSize);
