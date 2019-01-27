@@ -52,7 +52,12 @@ void ScriptCommand::createControllablesForContainer(var data, ControllableContai
 			Controllable * c = getControllableForJSONDefinition(p.name.toString(), p.value);
 			if (c == nullptr) continue;
 			cc->addControllable(c);
-			if(c->type != Controllable::TRIGGER) scriptParams.add((Parameter *)c);
+			if (c->type != Controllable::TRIGGER)
+			{
+				Parameter * param = (Parameter *)c;
+				scriptParams.add(param);
+				if (p.value.hasProperty("useForMapping")) setTargetMappingParameterAt(param, p.value.getProperty("useForMapping", -1));
+			}
 		}
 	}
 }
