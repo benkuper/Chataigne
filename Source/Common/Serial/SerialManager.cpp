@@ -97,7 +97,7 @@ void SerialManager::updateDeviceList()
 
 		newInfos.removeObject(p, false);
 		portInfos.add(p);
-		NLOG("SerialManager", "Port Added : \n"+p->port+"\n"+p->description+"\n"+p->hardwareID);
+		NLOG("SerialManager", "Port Added : \n" + p->port + ", " + p->description + "\nHardwareID : " + p->hardwareID + "\nPID / VID : 0x" + String::toHexString(p->pid) + " / 0x" + String::toHexString(p->vid));
 		listeners.call(&SerialManagerListener::portAdded, p);
 
 	}

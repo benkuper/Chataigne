@@ -64,7 +64,7 @@ void SerialModule::setCurrentPort(SerialDevice * _port)
 		{
 			port->setMode(streamingType->getValueDataAsEnum<SerialDevice::PortMode>());
 		}
-		lastOpenedPortID = port->info->port;
+		lastOpenedPortID = port->info->deviceID;
 	}
 
 	isConnected->setValue(port != nullptr);
@@ -166,10 +166,18 @@ void SerialModule::loadJSONDataInternal(var data)
 	lastOpenedPortID = data.getProperty("portID","");
 }
 
+void SerialModule::setupModuleFromJSONData(var data)
+{
+	if (data.hasProperty("vidFilter")) portParam->vidFilter = data.getDynamicObject()->getProperty("vidFilter").toString().getHexValue32();
+	if (data.hasProperty("pidFilter")) portParam->pidFilter = data.getDynamicObject()->getProperty("pidFilter").toString().getHexValue32();
+	
+	StreamingModule::setupModuleFromJSONData(data);
+}
+
 void SerialModule::portAdded(SerialDeviceInfo * info)
 {
 	//DBG("SerialModule, portAdded >" << info->hardwareID << "< > " << lastOpenedPortID);
-	if (port == nullptr && lastOpenedPortID == info->port)
+	if (port == nullptr && lastOpenedPortID == info->deviceID)
 	{
 		setCurrentPort(SerialManager::getInstance()->getPort(info));
 	}

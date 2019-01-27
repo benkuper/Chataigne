@@ -270,3 +270,16 @@ void SerialReadThread::run()
 #endif
 
 }
+
+SerialDeviceInfo::SerialDeviceInfo(String _port, String _description, String _hardwareID) :
+	port(_port), description(_description), hardwareID(_hardwareID)
+{
+	vid = hardwareID.substring(8, 12).getHexValue32();
+	pid = hardwareID.substring(17, 21).getHexValue32();
+
+#if JUCE_WINDOWS
+	deviceID = description;
+#else
+	deviceID = hardwareID;
+#endif
+}

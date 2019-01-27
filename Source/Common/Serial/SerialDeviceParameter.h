@@ -26,6 +26,8 @@ public:
 	SerialDevice * getDevice();
 
 	int openBaudRate;
+	int vidFilter;
+	int pidFilter;
 
 	void setValueInternal(var &value) override;
 

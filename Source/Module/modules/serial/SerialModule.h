@@ -50,6 +50,8 @@ public:
 	virtual var getJSONData() override;
 	virtual void loadJSONDataInternal(var data) override;
 
+	virtual void setupModuleFromJSONData(var data) override;
+
 	class SerialModuleListener
 	{
 	public:

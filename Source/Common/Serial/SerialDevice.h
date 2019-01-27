@@ -59,11 +59,11 @@ public:
 class SerialDeviceInfo
 {
 public:
-	SerialDeviceInfo(String _port, String _description, String _hardwareID) :
-		port(_port), description(_description), hardwareID(_hardwareID)
-	{}
+	SerialDeviceInfo(String _port, String _description, String _hardwareID);
 
 	virtual ~SerialDeviceInfo() {}
+
+	String deviceID; //This is what we will use to identify the device uniquely, the way it's set depends on the OS
 
 	String port;
 	String description;
