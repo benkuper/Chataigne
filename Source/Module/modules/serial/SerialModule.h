@@ -47,6 +47,9 @@ public:
 	virtual void portRemoved(SerialDevice *) override;
 	virtual void serialDataReceived(const var &data) override;
 
+	virtual var getJSONData() override;
+	virtual void loadJSONDataInternal(var data) override;
+
 	class SerialModuleListener
 	{
 	public:

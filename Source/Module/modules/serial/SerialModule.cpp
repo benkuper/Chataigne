@@ -153,6 +153,19 @@ void SerialModule::serialDataReceived(const var & data)
 	}
 }
 
+var SerialModule::getJSONData()
+{
+	var data = StreamingModule::getJSONData();
+	data.getDynamicObject()->setProperty("portID", lastOpenedPortID);
+	return data;
+}
+
+void SerialModule::loadJSONDataInternal(var data)
+{
+	StreamingModule::loadJSONDataInternal(data);
+	lastOpenedPortID = data.getProperty("portID","");
+}
+
 void SerialModule::portAdded(SerialDeviceInfo * info)
 {
 	//DBG("SerialModule, portAdded >" << info->hardwareID << "< > " << lastOpenedPortID);
