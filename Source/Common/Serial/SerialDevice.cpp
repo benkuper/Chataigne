@@ -130,7 +130,16 @@ int SerialDevice::writeString(String message, bool endLine)
 	//DBG("Write string : " << message << " -- endline ? " << String(endLine));
 	String m = message;
 	if (endLine) m += "\n";
-	return (int)port->write(m.toStdString());
+	try
+	{
+		return (int)port->write(m.toStdString());
+	}
+	catch (std::exception e)
+	{
+		LOGWARNING("Error writing to serial : " << e.what());
+		return 0;
+	}
+	
 #else
 	return 0;
 #endif

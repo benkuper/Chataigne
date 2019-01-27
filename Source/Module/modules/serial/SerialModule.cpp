@@ -161,7 +161,7 @@ void SerialModule::portAdded(SerialDeviceInfo * info)
 	}
 }
 
-void SerialModule::portRemoved(SerialDeviceInfo *)
+void SerialModule::portRemoved(SerialDeviceInfo * p)
 {
-	setCurrentPort(nullptr);
+	if(port != nullptr && port->info == p) setCurrentPort(nullptr);
 }
