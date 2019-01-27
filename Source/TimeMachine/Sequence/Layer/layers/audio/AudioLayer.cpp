@@ -12,6 +12,7 @@
 #include "ui/AudioLayerPanel.h"
 #include "ui/AudioLayerTimeline.h"
 
+
 AudioLayer::AudioLayer(Sequence * _sequence, var params) :
 	SequenceLayer(_sequence, "New Audio Layer"),
 	audioModule(nullptr),
@@ -20,7 +21,8 @@ AudioLayer::AudioLayer(Sequence * _sequence, var params) :
     graphID(0) //was -1 but since 5.2.1, generated warning. Should do otherwise ?
 {
 	ModuleManager::getInstance()->addBaseManagerListener(this);
-
+	
+	helpID = "AudioLayer";
     
     volume = addFloatParameter("Volume","Volume multiplier for the layer",1,0,10);
     
@@ -43,7 +45,17 @@ AudioLayer::AudioLayer(Sequence * _sequence, var params) :
 		}
 	}
 
-	helpID = "AudioLayer";
+	//Should move that in UI stuff ?
+	if (audioModule == nullptr)
+	{
+		int result = AlertWindow::showYesNoCancelBox(AlertWindow::WarningIcon, "Sound Card Module is required", "This Audio layer needs a Sound Card module to be able to actually output sound. Do you want to create one now ?","Yes", "No", "Cancel");
+		if (result == 1)
+		{
+			AudioModule * m = AudioModule::create();
+			ModuleManager::getInstance()->addItem(m);
+			setAudioModule(m);
+		}
+	}
 
 }
 
