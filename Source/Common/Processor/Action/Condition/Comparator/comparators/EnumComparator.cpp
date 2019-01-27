@@ -18,8 +18,7 @@ EnumComparator::EnumComparator(Controllable * c) :
 	
 	enumRef = addEnumParameter("Reference", "Comparison Reference to check against source value");
 	
-	HashMap<String, var>::Iterator i(enumParam->enumValues);
-	while (i.next()) enumRef->addOption(i.getKey(), i.getValue());
+	for (auto &ev : enumParam->enumValues) enumRef->addOption(ev->key, ev->value);
 
 	addCompareOption("=", equalsId);
 	addCompareOption("!=", equalsId);
