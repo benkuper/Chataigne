@@ -80,7 +80,7 @@ void SerialModule::onControllableFeedbackUpdateInternal(ControllableContainer * 
 	if (c == baudRate)
 	{
 		portParam->openBaudRate = baudRate->intValue();
-		if (portParam->getDevice() != nullptr)
+		if (port != nullptr && port->isOpen())
 		{
 			portParam->getDevice()->setBaudRate(portParam->openBaudRate);
 			//var val = portParam->value;
