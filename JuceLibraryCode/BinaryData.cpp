@@ -248,12 +248,12 @@ static const unsigned char temp_binary_data_4[] =
 "*/\r\n"
 "function moduleParameterChanged(param)\r\n"
 "{\r\n"
-"\tif(value.isParameter())\r\n"
+"\tif(param.isParameter())\r\n"
 "\t{\r\n"
-"\t\tscript.log(\"Module value changed : \"+value.name+\" > \"+value.get());\t\r\n"
+"\t\tscript.log(\"Module parameter changed : \"+param.name+\" > \"+param.get());\r\n"
 "\t}else \r\n"
 "\t{\r\n"
-"\t\tscript.log(\"Module value triggered : \"+value.name);\t\r\n"
+"\t\tscript.log(\"Module parameter triggered : \"+value.name);\t\r\n"
 "\t}\r\n"
 "}\r\n"
 "\r\n"
@@ -263,8 +263,14 @@ static const unsigned char temp_binary_data_4[] =
 "*/\r\n"
 "function moduleValueChanged(value)\r\n"
 "{\r\n"
-"\tscript.log(\"Module value changed : \"+value.name+\" > \"+value.get());\r\n"
-"}\r\n";
+"\tif(value.isParameter())\r\n"
+"\t{\r\n"
+"\t\tscript.log(\"Module value changed : \"+value.name+\" > \"+value.get());\t\r\n"
+"\t}else \r\n"
+"\t{\r\n"
+"\t\tscript.log(\"Module value triggered : \"+value.name);\t\r\n"
+"\t}\r\n"
+"}";
 
 const char* moduleScriptTemplate_js = (const char*) temp_binary_data_4;
 
@@ -2184,7 +2190,7 @@ const char* getNamedResource (const char* resourceNameUTF8, int& numBytes)
         case 0x5c8768cb:  numBytes = 646; return filterScriptTemplate_js;
         case 0xa23dd44c:  numBytes = 4737; return genericScriptTemplate_js;
         case 0x01c43842:  numBytes = 1271; return midiScriptTemplate_js;
-        case 0xb21f5457:  numBytes = 1305; return moduleScriptTemplate_js;
+        case 0xb21f5457:  numBytes = 1415; return moduleScriptTemplate_js;
         case 0x83ff2424:  numBytes = 798; return oscScriptTemplate_js;
         case 0xb2ba4d21:  numBytes = 1091; return streamingScriptTemplate_js;
         case 0xb02b7677:  numBytes = 36971; return about_png;

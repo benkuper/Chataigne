@@ -12,12 +12,12 @@
 */
 function moduleParameterChanged(param)
 {
-	if(value.isParameter())
+	if(param.isParameter())
 	{
-		script.log("Module value changed : "+value.name+" > "+value.get());	
+		script.log("Module parameter changed : "+param.name+" > "+param.get());
 	}else 
 	{
-		script.log("Module value triggered : "+value.name);	
+		script.log("Module parameter triggered : "+value.name);	
 	}
 }
 
@@ -27,5 +27,11 @@ function moduleParameterChanged(param)
 */
 function moduleValueChanged(value)
 {
-	script.log("Module value changed : "+value.name+" > "+value.get());
+	if(value.isParameter())
+	{
+		script.log("Module value changed : "+value.name+" > "+value.get());	
+	}else 
+	{
+		script.log("Module value triggered : "+value.name);	
+	}
 }
