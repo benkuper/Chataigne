@@ -36,6 +36,7 @@ DMXModule::DMXModule() :
 
 	dmxConnected = moduleParams.addBoolParameter("Connected", "DMX is connected ?", false);
 	dmxConnected->isControllableFeedbackOnly = true;
+	dmxConnected->isSavable = false;
 	connectionFeedbackRef = dmxConnected;
 
 	valuesCC.userCanAddControllables = true;

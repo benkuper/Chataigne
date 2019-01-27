@@ -41,6 +41,7 @@ MIDIModule::MIDIModule(const String & name, bool _useGenericControls) :
 
 	isConnected = moduleParams.addBoolParameter("Is Connected", "This is checked if the module is connected to at least one input or output device", false);
 	isConnected->setControllableFeedbackOnly(true);
+	isConnected->isSavable = false; 
 	connectionFeedbackRef = isConnected;
 
 

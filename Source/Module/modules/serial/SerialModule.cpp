@@ -22,6 +22,7 @@ SerialModule::SerialModule(const String &name) :
 	
 	isConnected = moduleParams.addBoolParameter("Is Connected", "This is checked if a serial port is connected.", false);
 	isConnected->setControllableFeedbackOnly(true);
+	isConnected->isSavable = false;
 	connectionFeedbackRef = isConnected;
 	
 	SerialManager::getInstance()->addSerialManagerListener(this);
