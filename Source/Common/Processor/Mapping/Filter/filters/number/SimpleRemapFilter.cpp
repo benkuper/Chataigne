@@ -32,9 +32,20 @@ SimpleRemapFilter::~SimpleRemapFilter()
 
 void SimpleRemapFilter::processInternal()
 {
+	if (targetOut->x == targetOut->y)
+	{
+		filteredParameter->setValue(targetOut->x);
+		return;
+	}
 
 	if (useCustomInputRange->boolValue())
 	{
+		if (targetIn->x == targetIn->y)
+		{
+			filteredParameter->setValue(targetOut->x);
+			return;
+		}
+			
 		float targetValue = jmap(sourceParam->floatValue(), targetIn->x, targetIn->y, targetOut->x, targetOut->y);
 		if (targetOut->x > targetOut->y) targetValue = targetOut->y + (targetValue - targetOut->y) / (targetOut->x - targetOut->y);
 		filteredParameter->setValue(targetValue);
