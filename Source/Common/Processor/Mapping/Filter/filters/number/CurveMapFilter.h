@@ -22,10 +22,11 @@ public:
 	Automation curve;
 
 	void processInternal() override;
+	
+	void onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c) override;
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
-
 
 	//InspectableEditor * getEditor(bool isRoot) override;
 

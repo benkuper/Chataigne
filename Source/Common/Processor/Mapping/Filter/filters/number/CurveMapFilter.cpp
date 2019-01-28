@@ -38,6 +38,12 @@ void CurveMapFilter::processInternal()
 	filteredParameter->setNormalizedValue(curve.value->floatValue());
 }
 
+void CurveMapFilter::onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c)
+{
+	if (c == curve.value) return; //avoid value change to be notifying the mapping, it would be recognized as a filter parameter and would trigger a new process
+	MappingFilter::onControllableFeedbackUpdateInternal(cc, c);
+}
+
 var CurveMapFilter::getJSONData()
 {
 	var data = MappingFilter::getJSONData();
