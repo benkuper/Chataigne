@@ -109,12 +109,12 @@ void ScriptCommand::createControllablesForContainer(var data, ControllableContai
 						} 
 						else
 						{
-							LOG("Could not find dependency source with name " << depVar.getProperty("source", "").toString());
+							LOGWARNING("Could not find dependency source with name " << depVar.getProperty("source", "").toString());
 						}
 					}
 					else
 					{
-						LOG("Dependency definition is not complete, requires source, value, check and action");
+						LOGWARNING("Dependency definition is not complete, requires source, value, check and action");
 					}
 				}
 			}
@@ -151,7 +151,7 @@ Controllable * ScriptCommand::getControllableForJSONDefinition(const String &nam
 				}
 			} else
 			{
-				LOG("Options property is not valid : " << d->getProperty("options").toString());
+				LOGWARNING("Options property is not valid : " << d->getProperty("options").toString());
 			}
 		} else if (c->type == Controllable::FLOAT)
 		{
