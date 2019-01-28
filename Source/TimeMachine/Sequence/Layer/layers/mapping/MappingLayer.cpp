@@ -27,6 +27,8 @@ MappingLayer::MappingLayer(Sequence *_sequence, var params) :
 	mapping.editorCanBeCollapsed = false;
 	mapping.hideEditorHeader = true;
 
+	alwaysUpdate = addBoolParameter("Always Update", "If checked, the mapping will be processed and output will be sent at each time change of the sequence", false);
+
 	addChildControllableContainer(&recorder);
 	addChildControllableContainer(&mapping);
 	recorder.input->customGetTargetFunc = &ModuleManager::showAllValuesAndGetControllable;
@@ -40,6 +42,7 @@ MappingLayer::MappingLayer(Sequence *_sequence, var params) :
 	mode->addOption("Color (RGBA)", MODE_COLOR);
 	mode->setValueWithData((Mode)(int)params.getProperty("mode", MODE_1D));
 	mode->hideInEditor = true;
+
 
 	Mode m = mode->getValueDataAsEnum<Mode>();
 	if (m == MODE_COLOR) setNiceName("New Color Layer");
@@ -233,6 +236,10 @@ void MappingLayer::onContainerParameterChangedInternal(Parameter * p)
 	{
 		setupMappingForCurrentMode();
 	}
+	else if (p == alwaysUpdate)
+	{
+		mapping.setProcessMode(alwaysUpdate->boolValue() ? Mapping::MANUAL : Mapping::VALUE_CHANGE);
+	}
 }
 
 void MappingLayer::onContainerTriggerTriggered(Trigger * t)
@@ -299,6 +306,11 @@ void MappingLayer::sequenceCurrentTimeChanged(Sequence *, float prevTime, bool)
 				}
 			}
 		}
+	}
+
+	if (alwaysUpdate->boolValue())
+	{
+		mapping.process();
 	}
 }
 

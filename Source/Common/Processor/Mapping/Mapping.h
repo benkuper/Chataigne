@@ -37,7 +37,13 @@ public:
 	BoolParameter * continuousProcess;
 
 	Parameter * outputParam;
-	 
+
+	enum ProcessMode { VALUE_CHANGE, MANUAL, TIMER };
+	ProcessMode processMode;
+
+
+	void setProcessMode(ProcessMode mode);
+
 	bool inputIsLocked;
 	void lockInputTo(Parameter * lockParam);
 	void checkFiltersNeedContinuousProcess();

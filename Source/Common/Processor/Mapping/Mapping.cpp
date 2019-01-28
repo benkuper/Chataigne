@@ -15,11 +15,12 @@ Mapping::Mapping(bool canBeDisabled) :
 	Processor("Mapping", canBeDisabled),
 	outputParam(nullptr),
     inputIsLocked(false),
-    mappingAsyncNotifier(10)
+    mappingAsyncNotifier(10),
+	processMode(VALUE_CHANGE)
 {
 	itemDataType = "Mapping";
 	type = MAPPING;
-
+	
 	continuousProcess = addBoolParameter("Continuous", "If enabled, the mapping will process continuously rather than only when parameter value has changed", false);
 	continuousProcess->hideInEditor = true;
 
@@ -40,6 +41,24 @@ Mapping::~Mapping()
 	input.removeMappingInputListener(this);
 }
 
+void Mapping::setProcessMode(ProcessMode mode)
+{
+	if (mode == processMode) return;
+	processMode = mode;
+
+	switch (processMode)
+	{
+	case VALUE_CHANGE:
+		break;
+	case MANUAL:
+		break;
+
+	case TIMER:
+		checkFiltersNeedContinuousProcess();
+		break;
+	}
+}
+
 void Mapping::lockInputTo(Parameter * lockParam)
 {
 	inputIsLocked = lockParam != nullptr;
@@ -49,13 +68,19 @@ void Mapping::lockInputTo(Parameter * lockParam)
 
 void Mapping::checkFiltersNeedContinuousProcess()
 {
+
 	bool need = false;
-	for (auto &f : fm.items)
+	if (processMode == TIMER) need = true;
+	
+	if (!need)
 	{
-		if (f->needsContinuousProcess)
+		for (auto &f : fm.items)
 		{
-			need = true;
-			break;
+			if (f->needsContinuousProcess)
+			{
+				need = true;
+				break;
+			}
 		}
 	}
 
@@ -108,7 +133,7 @@ void Mapping::process()
 
 	if (outputParam == nullptr) updateMappingChain();
 	if (outputParam == nullptr) return;
-	outputParam->setValue(filteredParam->getValue());
+	outputParam->setValue(filteredParam->getValue(), false, processMode == MANUAL);
 }
 
 var Mapping::getJSONData()
@@ -144,7 +169,7 @@ void Mapping::inputReferenceChanged(MappingInput *)
 
 void Mapping::inputParameterValueChanged(MappingInput *)
 {
-	process();
+	if(processMode == VALUE_CHANGE) process();
 }
 
 void Mapping::inputParameterRangeChanged(MappingInput *)

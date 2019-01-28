@@ -26,6 +26,8 @@ public:
 
 	EnumParameter * mode;
 
+	BoolParameter * alwaysUpdate;
+
 	Parameter * curveValue; //later : float / point2d / point3d / color (4d) for multi curve layer
 	//Parameter * mappedValue; //later : polymorph out from mapping, depending on filters
 
