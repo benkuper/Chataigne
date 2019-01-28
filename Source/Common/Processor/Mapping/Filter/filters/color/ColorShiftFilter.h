@@ -27,7 +27,7 @@ public:
 	void processInternal() override;
 
 	static ColorShiftFilter * create(var params) { return new ColorShiftFilter(params); }
-	virtual String getTypeString() const override { return "ColorShift"; }
+	virtual String getTypeString() const override { return "Color Shift"; }
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ColorShiftFilter)
 };
