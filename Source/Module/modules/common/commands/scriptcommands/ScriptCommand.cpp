@@ -9,10 +9,13 @@
 */
 
 #include "ScriptCommand.h"
+#include "ui/ScriptCommandEditor.h"
 
 ScriptCommand::ScriptCommand(Module * module, CommandContext context, var data) :
 	BaseCommand(module, context, data)
 {
+	saveAndLoadTargetMappings = true;
+
 	//load params here
 	var commandData = data.getProperty("commandData", var());
 	
@@ -94,7 +97,7 @@ void ScriptCommand::createControllablesForContainer(var data, ControllableContai
 			{
 				Parameter * param = (Parameter *)c;
 				scriptParams.add(param);
-				if (p.value.hasProperty("useForMapping")) setTargetMappingParameterAt(param, p.value.getProperty("useForMapping", -1));
+				if (p.value.hasProperty("useForMapping")) addTargetMappingParameterAt(param, p.value.getProperty("mappingIndex", 0));
 
 				if (p.value.hasProperty("dependency"))
 				{
@@ -169,7 +172,7 @@ Controllable * ScriptCommand::getControllableForJSONDefinition(const String &nam
 
 	if (c->type != Controllable::TRIGGER && def.getProperty("useForMapping", false))
 	{
-		setTargetMappingParameterAt((Parameter *)c, targetMappingParameters.size());
+		addTargetMappingParameterAt((Parameter *)c, targetMappingParameters.size());
 	}
 
 	return c;
@@ -186,6 +189,11 @@ void ScriptCommand::trigger()
 	}
 
 	if (module != nullptr) module->scriptManager->callFunctionOnAllItems(callback, args);
+}
+
+InspectableEditor * ScriptCommand::getEditor(bool isRoot)
+{
+	return new ScriptCommandEditor(this, isRoot);
 }
 
 

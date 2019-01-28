@@ -79,7 +79,7 @@ LiveOSCCommandBase::LiveOSCCommandBase(LiveOSCModule * _module, CommandContext c
 	case BOOL: value = argumentsContainer.addBoolParameter("Value", "Value", false); break;
 	}
 
-	if(value != nullptr) setTargetMappingParameterAt(value, 0);
+	if(value != nullptr) addTargetMappingParameterAt(value, 0);
 	rebuildAddressOnParamChanged = true;
 	rebuildAddress();
 }

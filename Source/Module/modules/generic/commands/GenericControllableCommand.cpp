@@ -44,7 +44,7 @@ void GenericControllableCommand::setValueParameter(Parameter * p)
 	{
 		
 		value->setRange(tp->minimumValue, tp->maximumValue);
-		setTargetMappingParameterAt(value, 0);
+		addTargetMappingParameterAt(value, 0);
 		addParameter(p);
 	}
 }

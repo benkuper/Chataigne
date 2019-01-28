@@ -71,7 +71,7 @@ void OSCCommand::buildArgsAndParamsFromData(var data)
 				p->saveValueOnly = false;
 				p->loadJSONData(a);
 				argumentsContainer.addParameter(p);
-				if (a.getDynamicObject()->hasProperty("mappingIndex")) setTargetMappingParameterAt(p, a.getProperty("mappingIndex", 0));
+				if (a.getDynamicObject()->hasProperty("mappingIndex")) addTargetMappingParameterAt(p, a.getProperty("mappingIndex", 0));
 
 			}
 		}

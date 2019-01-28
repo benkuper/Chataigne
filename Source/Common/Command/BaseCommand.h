@@ -29,15 +29,20 @@ public:
 	CommandContext context;
 	Module * module;
 	var params;
+	bool saveAndLoadTargetMappings;
 
 	//Template
 	CommandTemplate * linkedTemplate;
 	WeakReference<Inspectable> templateRef;
 	ScopedPointer<CustomValuesCommandArgumentManager> customValuesManager;
 
-	Array<WeakReference<Parameter>> targetMappingParameters;
-	
-	void setTargetMappingParameterAt(WeakReference<Parameter> p,int index);
+	OwnedArray<Array<WeakReference<Parameter>>> mappingParametersArray;
+	HashMap<int, Array<WeakReference<Parameter>> *> targetMappingParameters;
+	HashMap<Parameter *, int> parameterToIndexMap;
+
+	void addTargetMappingParameterAt(WeakReference<Parameter> p,int index);
+	void removeTargetMappingParameter(WeakReference<Parameter> p);
+	void clearTargetMappingParametersAt(int index);
 	void clearTargetMappingParameters();
 
 	void linkToTemplate(CommandTemplate * ct);
@@ -53,6 +58,12 @@ public:
 	virtual void loadPreviousCommandData(var data) {} //default behavior is loading doing  nothing, can override that to trying hot swap of commands
 	
 	void inspectableDestroyed(Inspectable * i) override;
+
+
+	var getJSONData() override;
+	void loadJSONDataInternal(var data) override;
+
+
 
 	static BaseCommand * create(ControllableContainer * module, CommandContext context, var params);
 

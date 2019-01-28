@@ -23,7 +23,7 @@ SendStreamStringCommand::SendStreamStringCommand(StreamingModule * _module, Comm
 
 	if (context == CommandContext::MAPPING)
 	{
-		setTargetMappingParameterAt(valueParam, 0);
+		addTargetMappingParameterAt(valueParam, 0);
 	}
 
 	if (params.hasProperty("fixedValue"))

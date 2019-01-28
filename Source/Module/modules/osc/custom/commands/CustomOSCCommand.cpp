@@ -96,7 +96,7 @@ void CustomOSCCommand::useForMappingChanged(CustomValuesCommandArgument *)
 	{
 		if (a->useForMapping->boolValue())
 		{
-			setTargetMappingParameterAt(a->param, index);
+			addTargetMappingParameterAt(a->param, index);
 			index++;
 		}
 	}

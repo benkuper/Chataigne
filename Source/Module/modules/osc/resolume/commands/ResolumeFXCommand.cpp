@@ -171,5 +171,5 @@ void ResolumeFXCommand::setupValueParam()
 		}
 	}
 
-	if(valueParam != nullptr) setTargetMappingParameterAt(valueParam, 0);
+	if(valueParam != nullptr) addTargetMappingParameterAt(valueParam, 0);
 }

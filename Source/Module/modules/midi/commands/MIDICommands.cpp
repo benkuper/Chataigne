@@ -61,7 +61,7 @@ MIDINoteAndCCCommand::MIDINoteAndCCCommand(MIDIModule * module, CommandContext c
 		remap01To127 = addBoolParameter("Remap to 0-127", "If checked, this will automatically remap values from 0-1 to 0-127", false);
 	}
 
-	if(velocity != nullptr) setTargetMappingParameterAt(velocity, 0);
+	if(velocity != nullptr) addTargetMappingParameterAt(velocity, 0);
 }
 
 MIDINoteAndCCCommand::~MIDINoteAndCCCommand()

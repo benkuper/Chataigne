@@ -37,7 +37,7 @@ CVCommand::CVCommand(CustomVariablesModule * _module, CommandContext context, va
 		target->maxDefaultSearchLevel = 1;
 		target->showParentNameInEditor = false;
 		value = addPoint2DParameter("Position", "The target position in the 2D interpolator");
-		setTargetMappingParameterAt(value, 0);
+		addTargetMappingParameterAt(value, 0);
 
 	} else if (type == SET_PRESET || type == LERP_PRESETS || type == SET_PRESET_WEIGHT)
 	{
@@ -55,14 +55,14 @@ CVCommand::CVCommand(CustomVariablesModule * _module, CommandContext context, va
 			targetPreset2->customGetTargetContainerFunc = &CVGroupManager::showMenuAndGetPreset;
 			targetPreset2->defaultParentLabelLevel = 2;
 			value = addFloatParameter("Value", "The interpolation value to weight between the 2 presets", 0, 0, 1);
-			setTargetMappingParameterAt(value, 0);
+			addTargetMappingParameterAt(value, 0);
 		}
 		break;
 
 		case SET_PRESET_WEIGHT:
 		{
 			value = addFloatParameter("Weight", "The weight of the preset to set", 0, 0, 1);
-			setTargetMappingParameterAt(value, 0);
+			addTargetMappingParameterAt(value, 0);
 		}
 		break;
 
@@ -117,7 +117,7 @@ void CVCommand::onContainerParameterChanged(Parameter * p)
 			
 			value->setNiceName("Value");
 			addParameter(value);
-			setTargetMappingParameterAt(value, 0);
+			addTargetMappingParameterAt(value, 0);
 		}
 
 	} else if (p == targetPreset || p == targetPreset2)

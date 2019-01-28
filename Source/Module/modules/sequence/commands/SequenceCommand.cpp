@@ -46,7 +46,7 @@ SequenceCommand::SequenceCommand(SequenceModule * _module, CommandContext contex
 
 		value = addFloatParameter("Time", "Target time to set", 0, 0, 3600);
 		value->defaultUI = FloatParameter::TIME;
-		setTargetMappingParameterAt(value, 0);
+		addTargetMappingParameterAt(value, 0);
 		break;
 
 	case GOTO_CUE:

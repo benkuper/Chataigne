@@ -17,6 +17,7 @@ BaseCommand::BaseCommand(Module * _module, CommandContext _context, var _params)
 	context(_context),
 	module(_module),
 	params(_params),
+	saveAndLoadTargetMappings(false),
 	linkedTemplate(nullptr),
 	customValuesManager(nullptr)
 {
@@ -25,14 +26,35 @@ BaseCommand::BaseCommand(Module * _module, CommandContext _context, var _params)
 
 BaseCommand::~BaseCommand()
 {
+	targetMappingParameters.clear();
+	parameterToIndexMap.clear(); 
+	mappingParametersArray.clear();
 	linkToTemplate(nullptr);
 }
 
-void BaseCommand::setTargetMappingParameterAt(WeakReference<Parameter> p, int index)
+void BaseCommand::addTargetMappingParameterAt(WeakReference<Parameter> p, int index)
 {
 	if (context != CommandContext::MAPPING) return;
 
 	if (index < 0) return;
+
+	if (parameterToIndexMap.contains(p)) targetMappingParameters[parameterToIndexMap[p]]->removeAllInstancesOf(p);
+
+	if (!targetMappingParameters.contains(index))
+	{
+		Array<WeakReference<Parameter>> * arr = new Array<WeakReference<Parameter>>();
+		mappingParametersArray.add(arr);
+		targetMappingParameters.set(index, arr);
+	}
+
+	targetMappingParameters[index]->addIfNotAlreadyThere(p);
+	parameterToIndexMap.set(p, index);
+	
+	DBG("Add target mapping parameter : " << targetMappingParameters[index]->size());
+	p->setControllableFeedbackOnly(true); 
+	commandListeners.call(&CommandListener::commandContentChanged);
+
+	/*
 	if (index >= targetMappingParameters.size()) targetMappingParameters.resize(index + 1);
 	WeakReference<Parameter> oldP = targetMappingParameters[index];
 
@@ -47,16 +69,54 @@ void BaseCommand::setTargetMappingParameterAt(WeakReference<Parameter> p, int in
 	if (p != nullptr && !p.wasObjectDeleted())
 	{
 		p->setControllableFeedbackOnly(true);
-
 		commandListeners.call(&CommandListener::commandContentChanged);
 	}
+	*/
+}
 
+void BaseCommand::removeTargetMappingParameter(WeakReference<Parameter> p)
+{
+	if (!parameterToIndexMap.contains(p)) return;
+	if (!targetMappingParameters.contains(parameterToIndexMap[p])) return;
+	Array<WeakReference<Parameter>> * arr = targetMappingParameters[parameterToIndexMap[p]];
+	arr->removeAllInstancesOf(p);
+	
+	if (targetMappingParameters[parameterToIndexMap[p]]->size() == 0)
+	{
+		mappingParametersArray.removeObject(arr);
+		targetMappingParameters.remove(parameterToIndexMap[p]);
+	}
+
+	p->setControllableFeedbackOnly(false);
+	parameterToIndexMap.remove(p);
+
+	commandListeners.call(&CommandListener::commandContentChanged);
+}
+
+void BaseCommand::clearTargetMappingParametersAt(int index)
+{
+	if (!targetMappingParameters.contains(index)) return;
+	for (auto &p : *targetMappingParameters[index])
+	{
+		parameterToIndexMap.remove(p);
+		targetMappingParameters.remove(parameterToIndexMap[p]);
+		p->setControllableFeedbackOnly(false);
+	}
+
+	mappingParametersArray.removeObject(targetMappingParameters[index]);
+	targetMappingParameters.remove(index);
+
+	commandListeners.call(&CommandListener::commandContentChanged);
 }
 
 void BaseCommand::clearTargetMappingParameters()
 {
-	for (int i = 0; i < targetMappingParameters.size(); i++) setTargetMappingParameterAt(nullptr, i);
+	for (HashMap<Parameter *, int>::Iterator i(parameterToIndexMap); i.next();) i.getKey()->setControllableFeedbackOnly(false);
+
 	targetMappingParameters.clear();
+	parameterToIndexMap.clear();
+
+	commandListeners.call(&CommandListener::commandContentChanged);
 }
 
 void BaseCommand::linkToTemplate(CommandTemplate * ct)
@@ -142,51 +202,60 @@ void BaseCommand::setValue(var value)
 {
 	if (!value.isArray())
 	{
-		if (targetMappingParameters.size() > 0 && targetMappingParameters[0] != nullptr)
+		if (targetMappingParameters.contains(0) && targetMappingParameters[0] != nullptr)
 		{
-			WeakReference<Parameter> p = targetMappingParameters[0];
-			if (!p->value.isArray()) targetMappingParameters[0]->setValue(value);
-			else
+			Array<WeakReference<Parameter>> pList = *targetMappingParameters[0];
+			for (auto &p : pList)
 			{
-				
-				var newVal;
-				newVal.append(value);
-				for (int i = 1; i < p->value.size(); i++) newVal.append(p->value[i]);
-				targetMappingParameters[0]->setValue(newVal);
+				if (p == nullptr || p.wasObjectDeleted()) continue;
+
+				if (!p->value.isArray()) p->setValue(value);
+				else
+				{
+
+					var newVal;
+					newVal.append(value);
+					for (int i = 1; i < p->value.size(); i++) newVal.append(p->value[i]);
+					p->setValue(newVal);
+				}
 			}
 		}
 	} else
 	{
 		int maxSize = value.size();
-		for (int i = 0; i < maxSize; )
+		for (int i = 0; i < maxSize; i++)
 		{
-			WeakReference<Parameter> p = targetMappingParameters[i];
-			if (p != nullptr && !p.wasObjectDeleted())
+			if (targetMappingParameters.contains(i) && targetMappingParameters[i] != nullptr)
 			{
-				if (p->value.isArray()) 
+				Array<WeakReference<Parameter>> pList = *targetMappingParameters[i];
+
+				for (auto &p : pList)
 				{
-					var newVal;
-					for (int j = 0; j < p->value.size(); j++)
+					if (p == nullptr || p.wasObjectDeleted()) continue;
+
+					if (p->value.isArray())
 					{
-						if (i+j < maxSize)
+						var newVal;
+						for (int j = 0; j < p->value.size(); j++)
 						{
-							newVal.append(value[i+j]);
+							if (i + j < maxSize)
+							{
+								newVal.append(value[i + j]);
+							}
+							else
+							{
+								newVal.append(p->value[j]);
+							}
 						}
-						else
-						{
-							newVal.append(p->value[j]);
-						}
+						p->setValue(newVal);
+						i += newVal.size();
 					}
-					p->setValue(newVal);
-					i += newVal.size();
-				} else
-				{
-					p->setValue(value[i]);
-					i++;
+					else
+					{
+						p->setValue(value[i]);
+						i++;
+					}
 				}
-			} else
-			{
-				break;
 			}
 		}
 	}
@@ -196,6 +265,50 @@ void BaseCommand::setValue(var value)
 void BaseCommand::inspectableDestroyed(Inspectable * i)
 {
 	if (templateRef.wasObjectDeleted()) linkToTemplate(nullptr);
+}
+
+var BaseCommand::getJSONData()
+{
+	var data = ControllableContainer::getJSONData();
+
+	if (saveAndLoadTargetMappings && context == MAPPING && targetMappingParameters.size() > 0)
+	{
+		var tmData = var(new DynamicObject());
+		for (HashMap<int, Array<WeakReference<Parameter>> *>::Iterator i(targetMappingParameters); i.next();)
+		{
+			var mData = var();
+			for (auto &p : *i.getValue()) mData.append(p->getControlAddress(this));
+			tmData.getDynamicObject()->setProperty(String(i.getKey()), mData);
+		}
+
+		data.getDynamicObject()->setProperty("targetMappings", tmData);
+	}
+
+	return data;
+}
+
+void BaseCommand::loadJSONDataInternal(var data)
+{
+	if (saveAndLoadTargetMappings && context == MAPPING)
+	{
+		var tmData = data.getProperty("targetMappings", var());
+		if (tmData.isObject())
+		{
+			NamedValueSet mList = tmData.getDynamicObject()->getProperties();
+			for (auto &m : mList)
+			{
+				int index = m.name.toString().getIntValue();
+				if (index < 0) continue;
+				if (!m.value.isArray()) continue;
+				for (int i = 0; i < m.value.size(); i++)
+				{
+					Parameter * p = dynamic_cast<Parameter *>(getControllableForAddress(m.value[i].toString()));
+					if (p == nullptr) continue;
+					addTargetMappingParameterAt(p, index);
+				}
+			}
+		}
+	}
 }
 
 BaseCommand * BaseCommand::create(ControllableContainer * module, CommandContext context, var params)
