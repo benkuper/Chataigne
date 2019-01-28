@@ -35,7 +35,16 @@ ChataigneLogCommand::~ChataigneLogCommand()
 void ChataigneLogCommand::setValue(var _value)
 {
 	BaseCommand::setValue(_value);
-	((StringParameter *)value)->setValue(_value.toString());
+	if (_value.isArray() && _value.size() > 0)
+	{
+		String s = _value[0].toString();
+		for (int i = 1; i < _value.size(); i++) s += ", "+_value[i].toString();
+		((StringParameter *)value)->setValue(s);
+	}else
+	{
+		((StringParameter *)value)->setValue(_value.toString());
+	}
+	
 }
 
 void ChataigneLogCommand::trigger()
