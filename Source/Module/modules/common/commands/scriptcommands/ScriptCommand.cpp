@@ -22,12 +22,50 @@ ScriptCommand::ScriptCommand(Module * module, CommandContext context, var data) 
 		var pData = commandData.getProperty("parameters", var());
 		createControllablesForContainer(pData, this);
 	}
+
+	//process all dependencies
+	for (auto &dep : dependencies) dep->process();
 }
 
 ScriptCommand::~ScriptCommand()
 {
 }
 
+
+void ScriptCommand::processDependencies(Parameter * p)
+{
+	//Dependencies
+	bool changed = false;
+	for (auto &d : dependencies)
+	{
+
+		if (d->source == p) if (d->process()) changed = true;
+	}
+
+	if (changed)
+	{
+		queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, this));
+	}
+}
+
+void ScriptCommand::onContainerParameterChanged(Parameter * p)
+{
+	BaseCommand::onContainerParameterChanged(p);
+	processDependencies(p);
+	
+}
+
+void ScriptCommand::onControllableFeedbackUpdate(ControllableContainer * cc, Controllable * c)
+{
+	BaseCommand::onControllableFeedbackUpdate(cc, c);
+
+	//check dependency
+	if (c->type != Controllable::TRIGGER)
+	{
+		Parameter * p = dynamic_cast<Parameter *>(c);
+		processDependencies(p);
+	}
+}
 
 void ScriptCommand::createControllablesForContainer(var data, ControllableContainer * cc)
 {
@@ -57,6 +95,28 @@ void ScriptCommand::createControllablesForContainer(var data, ControllableContai
 				Parameter * param = (Parameter *)c;
 				scriptParams.add(param);
 				if (p.value.hasProperty("useForMapping")) setTargetMappingParameterAt(param, p.value.getProperty("useForMapping", -1));
+
+				if (p.value.hasProperty("dependency"))
+				{
+					var depVar = p.value.getDynamicObject()->getProperty("dependency");
+					if (depVar.hasProperty("source") && depVar.hasProperty("value") && depVar.hasProperty("check") && depVar.hasProperty("action"))
+					{
+						Parameter * sourceP= cc->getParameterByName(depVar.getProperty("source", ""), true);
+						if (sourceP != nullptr)
+						{
+							Dependency * d = new Dependency(sourceP, param, depVar.getProperty("value", 0), depVar.getProperty("check", "").toString(), depVar.getProperty("action", "").toString());
+							dependencies.add(d);
+						} 
+						else
+						{
+							LOG("Could not find dependency source with name " << depVar.getProperty("source", "").toString());
+						}
+					}
+					else
+					{
+						LOG("Dependency definition is not complete, requires source, value, check and action");
+					}
+				}
 			}
 		}
 	}
@@ -118,6 +178,65 @@ Controllable * ScriptCommand::getControllableForJSONDefinition(const String &nam
 void ScriptCommand::trigger()
 {
 	Array<var> args;
-	for (auto &p : scriptParams) args.add(p->value);
+	for (auto &p : scriptParams)
+	{
+		var val = p->value;
+		if (p->type == Controllable::ENUM) val = ((EnumParameter *)p)->getValueData();
+		args.add(val);
+	}
+
 	if (module != nullptr) module->scriptManager->callFunctionOnAllItems(callback, args);
+}
+
+
+
+//DEPENDENCY
+
+
+ScriptCommand::Dependency::Dependency(Parameter * source, Parameter * target, var value, CheckType checkType, DepAction depAction)
+	: source(source), target(target), value(value), type(checkType), action(depAction)
+{
+	DBG("NEw dependency :" << type << " /" << action);
+}
+
+
+ScriptCommand::Dependency::Dependency(Parameter * source, Parameter * target, var value, StringRef typeName, StringRef actionName) :
+	Dependency(source, target, value, CHECK_NOT_SET, ACTION_NOT_SET)
+{
+	type = (CheckType)jmax(checkTypeNames.indexOf(typeName), 0);
+	action = (DepAction)jmax(actionNames.indexOf(actionName), 0);
+}
+
+bool ScriptCommand::Dependency::process()
+{
+	if (target.wasObjectDeleted()) return false;
+
+	bool depIsOk = false;
+
+	var valueToCheck = source->value;
+	if (source->type == Controllable::ENUM) valueToCheck = ((EnumParameter *)source)->getValueData();
+
+	switch (type)
+	{
+	case EQUALS: depIsOk = valueToCheck == value; break;
+	case NOT_EQUALS: depIsOk = valueToCheck != value; break;
+	}
+
+	
+	bool changed = false;
+
+	switch (action)
+	{
+	case SHOW:
+		changed = target->hideInEditor == depIsOk;
+		target->hideInEditor = !depIsOk;
+		break;
+
+	case ENABLE:
+		changed = target->enabled == !depIsOk;
+		target->setEnabled(depIsOk); 
+		break;
+	}
+
+	return changed;
 }
