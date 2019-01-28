@@ -28,7 +28,7 @@ MappingInput::MappingInput() :
 
 MappingInput::~MappingInput()
 {
-	setInput(nullptr);
+	clear();
 }
 
 void MappingInput::lockInput(Parameter * input)
@@ -76,6 +76,11 @@ void MappingInput::parameterRangeChanged(Parameter * p)
 {
 	ControllableContainer::parameterRangeChanged(p);
 	mappinginputListeners.call(&MappingInput::Listener::inputParameterRangeChanged, this);
+}
+
+void MappingInput::clear()
+{
+	setInput(nullptr);
 }
 
 InspectableEditor * MappingInput::getEditor(bool isRoot)

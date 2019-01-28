@@ -191,6 +191,9 @@
     <Filter Include="Chataigne\Source\Module\modules\audio">
       <UniqueIdentifier>{2B354B83-B099-8834-CDE4-DFF9707AC0F2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\common\commands\scriptcommands\ui">
+      <UniqueIdentifier>{42750FD9-B90F-5EAD-BB92-644AD5E68761}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Chataigne\Source\Module\modules\common\commands\scriptcommands">
       <UniqueIdentifier>{53B20FE0-4E29-FA6A-BC6A-DBB1AD8A5AAD}</UniqueIdentifier>
     </Filter>
@@ -1323,6 +1326,12 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\audio\AudioModule.cpp">
       <Filter>Chataigne\Source\Module\modules\audio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Module\modules\common\commands\scriptcommands\ui\MappableParameterEditor.cpp">
+      <Filter>Chataigne\Source\Module\modules\common\commands\scriptcommands\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Module\modules\common\commands\scriptcommands\ui\ScriptCommandEditor.cpp">
+      <Filter>Chataigne\Source\Module\modules\common\commands\scriptcommands\ui</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\common\commands\scriptcommands\ScriptCommand.cpp">
       <Filter>Chataigne\Source\Module\modules\common\commands\scriptcommands</Filter>
@@ -4520,6 +4529,12 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\audio\AudioModule.h">
       <Filter>Chataigne\Source\Module\modules\audio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Module\modules\common\commands\scriptcommands\ui\MappableParameterEditor.h">
+      <Filter>Chataigne\Source\Module\modules\common\commands\scriptcommands\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Module\modules\common\commands\scriptcommands\ui\ScriptCommandEditor.h">
+      <Filter>Chataigne\Source\Module\modules\common\commands\scriptcommands\ui</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\common\commands\scriptcommands\ScriptCommand.h">
       <Filter>Chataigne\Source\Module\modules\common\commands\scriptcommands</Filter>

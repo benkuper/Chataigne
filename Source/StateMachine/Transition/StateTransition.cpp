@@ -26,8 +26,13 @@ StateTransition::StateTransition(State * source, State * dest) :
 
 StateTransition::~StateTransition()
 {
-	if(!sourceState.wasObjectDeleted()) sourceState->outTransitions.removeAllInstancesOf(this);
-	if(!destState.wasObjectDeleted()) destState->inTransitions.removeAllInstancesOf(this);
+	
+}
+
+void StateTransition::clearItem()
+{
+	if (!sourceState.wasObjectDeleted()) sourceState->outTransitions.removeAllInstancesOf(this);
+	if (!destState.wasObjectDeleted()) destState->inTransitions.removeAllInstancesOf(this);
 }
 
 var StateTransition::getJSONData()

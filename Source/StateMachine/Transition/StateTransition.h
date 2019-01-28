@@ -25,6 +25,8 @@ public:
 	WeakReference<State> sourceState;
 	WeakReference<State> destState;
 
+	virtual void clearItem() override;
+
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
 

@@ -20,6 +20,8 @@ public:
 	MappingInput();
 	~MappingInput();
 
+	
+
 	TargetParameter * inputTarget;
 	Parameter * inputReference;
 
@@ -30,6 +32,8 @@ public:
 	void onExternalParameterChanged(Parameter *p) override;
 
 	void parameterRangeChanged(Parameter * p) override;
+
+	void clear() override;
 
 	InspectableEditor * getEditor(bool isRoot) override;
 

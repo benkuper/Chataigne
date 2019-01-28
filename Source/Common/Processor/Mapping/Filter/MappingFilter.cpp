@@ -121,7 +121,6 @@ void MappingFilter::clearItem()
 		sourceParam->removeParameterListener(this);
 		sourceParam = nullptr;
 	}
-
 }
 
 var MappingFilter::getJSONData()

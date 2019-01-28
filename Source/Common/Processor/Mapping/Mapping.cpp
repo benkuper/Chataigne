@@ -220,6 +220,11 @@ void Mapping::newMessage(const MappingFilter::FilterEvent & e)
 	}
 }
 
+void Mapping::clearItem()
+{
+	input.clear();
+}
+
 ProcessorUI * Mapping::getUI()
 {
 	return new MappingUI(this);

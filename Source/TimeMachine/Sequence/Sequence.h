@@ -28,6 +28,7 @@ public:
 	Sequence();
 	virtual ~Sequence();
 
+	
 
 	ScopedPointer<TimeCueManager> cueManager;
 	ScopedPointer<SequenceLayerManager> layerManager;
@@ -63,6 +64,7 @@ public:
 	FloatParameter * viewEndTime;
 	bool isBeingEdited;
 
+	virtual void clearItem() override;
 
 	void setCurrentTime(float time, bool forceOverPlaying = true);
 

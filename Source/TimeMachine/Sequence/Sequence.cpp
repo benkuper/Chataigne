@@ -74,6 +74,11 @@ Sequence::Sequence() :
 
 Sequence::~Sequence()
 {
+	
+}
+
+void Sequence::clearItem()
+{
 	stopTimer();
 	stopTrigger->trigger();
 	setMasterAudioModule(nullptr);

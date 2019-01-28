@@ -171,6 +171,8 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/CustomVariablesModule_cdc46d67.o \
   $(JUCE_OBJDIR)/AudioModuleHardwareEditor_e9c8a821.o \
   $(JUCE_OBJDIR)/AudioModule_84057627.o \
+  $(JUCE_OBJDIR)/MappableParameterEditor_d8c748c4.o \
+  $(JUCE_OBJDIR)/ScriptCommandEditor_bca818a9.o \
   $(JUCE_OBJDIR)/ScriptCommand_658cfed3.o \
   $(JUCE_OBJDIR)/CustomValuesCommandArgumentEditor_1cc8b6de.o \
   $(JUCE_OBJDIR)/CustomValuesCommandArgumentManagerEditor_8192c073.o \
@@ -874,6 +876,16 @@ $(JUCE_OBJDIR)/AudioModuleHardwareEditor_e9c8a821.o: ../../Source/Module/modules
 $(JUCE_OBJDIR)/AudioModule_84057627.o: ../../Source/Module/modules/audio/AudioModule.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling AudioModule.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/MappableParameterEditor_d8c748c4.o: ../../Source/Module/modules/common/commands/scriptcommands/ui/MappableParameterEditor.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling MappableParameterEditor.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/ScriptCommandEditor_bca818a9.o: ../../Source/Module/modules/common/commands/scriptcommands/ui/ScriptCommandEditor.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling ScriptCommandEditor.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/ScriptCommand_658cfed3.o: ../../Source/Module/modules/common/commands/scriptcommands/ScriptCommand.cpp
