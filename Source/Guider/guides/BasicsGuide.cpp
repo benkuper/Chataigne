@@ -93,7 +93,7 @@ void BasicsGuide::handleStep(int step)
 	case CONDITION:
 	{
 		Rectangle<int> r = getLocalArea(cme->addItemBT, cme->addItemBT->getLocalBounds()).expanded(10);
-		fc.setFocus(r, fc.CIRCLE, "Good ! We can now edit our Action inside the Inspector.\nLet's create a condition \"From Input Value\"\n(Because we want to check an input value. Duh.)");
+		fc.setFocus(r, fc.CIRCLE, "Good ! We can now edit our Action inside the Inspector.\nLet's create a condition \"From Input Value\"");
 	}
 	break;
 
