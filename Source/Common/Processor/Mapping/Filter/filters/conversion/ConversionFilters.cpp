@@ -41,7 +41,7 @@ Parameter * ConversionFilter::setupParameterInternal(Parameter * source)
 		retargetComponent->setEnabled(true);
 		transferType = p->isComplex() ? TARGET : EXTRACT;
 		retargetComponent->setNiceName(transferType == TARGET ? "Target Component" : "Extract Component");
-		Parameter * retargetP = transferType == TARGET ? p : sourceParam;
+		Parameter * retargetP = transferType == TARGET ? p : sourceParam.get();
 		StringArray valueNames = retargetP->getValuesNames();
 		for (int i = 0; i < valueNames.size(); i++)
 		{
