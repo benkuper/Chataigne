@@ -148,7 +148,11 @@ InspectableEditor * MappingFilter::getEditor(bool isRoot)
 
 void MappingFilter::parameterRangeChanged(Parameter *)
 {
-	if (filteredParameter != nullptr && autoSetRange && (filteredParameter->minimumValue != sourceParam->minimumValue || filteredParameter->maximumValue != sourceParam->maximumValue))
+	if (filteredParameter != nullptr 
+		&& autoSetRange 
+		&& (filteredParameter->minimumValue != sourceParam->minimumValue || filteredParameter->maximumValue != sourceParam->maximumValue)
+		&& filteredParameter->type == sourceParam->type
+		)
 	{
 		filteredParameter->setRange(sourceParam->minimumValue, sourceParam->maximumValue);
 	}
