@@ -197,6 +197,14 @@ void BaseCommand::templateParameterChanged(CommandTemplateParameter * ctp)
 	updateParameterFromTemplate(ctp);
 }
 
+void BaseCommand::setMappingValueType(Controllable::Type type)
+{
+	if (valueType == type) return;
+	valueType = type;
+	commandListeners.call(&CommandListener::valueTypeChanged);
+	
+}
+
 
 void BaseCommand::setValue(var value)
 {

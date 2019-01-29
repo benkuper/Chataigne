@@ -27,8 +27,14 @@ public:
 	ScopedPointer<BoolToggleUI> useForMappingUI;
 	ScopedPointer<IntParameterLabelUI> mappingIndexUI;
 
+	bool showIndex;
+
+	void setShowIndex(bool value);
+
 	void resized() override;
 	void newMessage(const Parameter::ParameterEvent &e) override;
+
+	void childBoundsChanged(Component * c) override;
 
 	class MappableListener
 	{

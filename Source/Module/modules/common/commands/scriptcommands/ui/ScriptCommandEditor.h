@@ -15,7 +15,8 @@
 
 class ScriptCommandEditor :
 	public GenericControllableContainerEditor,
-	public MappableParameterEditor::MappableListener
+	public MappableParameterEditor::MappableListener,
+	public ScriptCommand::CommandListener
 {
 public:
 	ScriptCommandEditor(ScriptCommand * sc, bool isRoot);
@@ -26,10 +27,9 @@ public:
 	void clear() override;
 	
 	void useForMappingChanged(MappableParameterEditor * mpe) override;
+	void valueTypeChanged() override;
 
 	virtual InspectableEditor * getEditorUIForControllable(Controllable * c) override;
 	virtual void removeEditorUI(InspectableEditor * i, bool resize = false) override;
-
-
 
 };

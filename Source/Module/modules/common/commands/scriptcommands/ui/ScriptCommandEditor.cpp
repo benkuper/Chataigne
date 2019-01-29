@@ -14,15 +14,23 @@ ScriptCommandEditor::ScriptCommandEditor(ScriptCommand * sc, bool isRoot) :
 	GenericControllableContainerEditor(sc, isRoot,false),
 	scriptCommand(sc)
 {
+	DBG("Add listener here");
+	scriptCommand->addCommandListener(this);
 	resetAndBuild();
 }
 
 ScriptCommandEditor::~ScriptCommandEditor()
 {
+	if (scriptCommand != nullptr && !inspectable.wasObjectDeleted())
+	{
+		DBG("Remove listener here");
+		scriptCommand->removeCommandListener(this);
+	}
 }
 
 void ScriptCommandEditor::clear()
 {
+	
 	for (auto &ce : childEditors)
 	{
 		MappableParameterEditor * mpe = dynamic_cast<MappableParameterEditor *>(ce);
@@ -40,6 +48,17 @@ void ScriptCommandEditor::useForMappingChanged(MappableParameterEditor * mpe)
  	else scriptCommand->removeTargetMappingParameter(p);
 }
 
+void ScriptCommandEditor::valueTypeChanged()
+{
+	bool showIndex = scriptCommand->valueType == Controllable::COLOR || scriptCommand->valueType == Controllable::POINT2D || scriptCommand->valueType == Controllable::POINT3D;
+	for (auto &ce : childEditors)
+	{
+		MappableParameterEditor * mpe = dynamic_cast<MappableParameterEditor *>(ce);
+		if (mpe != nullptr) mpe->setShowIndex(showIndex);
+	}
+
+}
+
 InspectableEditor * ScriptCommandEditor::getEditorUIForControllable(Controllable * c)
 {
 	if (scriptCommand->context != MAPPING || c->type == Controllable::TRIGGER || c->type == Controllable::ENUM || c->type == Controllable::TARGET) return GenericControllableContainerEditor::getEditorUIForControllable(c);
@@ -50,8 +69,11 @@ InspectableEditor * ScriptCommandEditor::getEditorUIForControllable(Controllable
 	if (scriptCommand->parameterToIndexMap.contains(p))
 	{
 		mpe->useForMapping.setValue(true);
-		mpe->mappingIndex.setValue(scriptCommand->parameterToIndexMap[p]);
+		mpe->mappingIndex.setValue(scriptCommand->parameterToIndexMap[p]);	
 	}
+
+	bool showIndex = scriptCommand->valueType == Controllable::COLOR || scriptCommand->valueType == Controllable::POINT2D || scriptCommand->valueType == Controllable::POINT3D;
+	mpe->setShowIndex(showIndex);
 
 	mpe->addMappableListener(this);
 	return mpe;

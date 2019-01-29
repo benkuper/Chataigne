@@ -127,8 +127,8 @@ void ScriptCommand::createControllablesForContainer(var data, ControllableContai
 
 Controllable * ScriptCommand::getControllableForJSONDefinition(const String &name, var def)
 {
-	String valueType = def.getProperty("type", "").toString();
-	Controllable * c = ControllableFactory::createControllable(valueType);
+	String valType = def.getProperty("type", "").toString();
+	Controllable * c = ControllableFactory::createControllable(valType);
 	if (c == nullptr) return nullptr;
 
 	c->setNiceName(name);

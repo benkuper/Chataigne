@@ -29,6 +29,7 @@ public:
 	CommandContext context;
 	Module * module;
 	var params;
+	Controllable::Type valueType;
 	bool saveAndLoadTargetMappings;
 
 	//Template
@@ -51,7 +52,8 @@ public:
 	virtual void setupTemplateParameters(CommandTemplate * ct);
 
 	void templateParameterChanged(CommandTemplateParameter * ctp) override;
-
+	
+	virtual void setMappingValueType(Controllable::Type type);
 	virtual void trigger() {} //for trigger context, to override
 	virtual void setValue(var value); //for mapping context
 
@@ -73,6 +75,7 @@ public:
 	public:
 		virtual ~CommandListener() {}
 		virtual void commandContentChanged() {}
+		virtual void valueTypeChanged() {}
 	};
 
 	ListenerList<CommandListener> commandListeners;
