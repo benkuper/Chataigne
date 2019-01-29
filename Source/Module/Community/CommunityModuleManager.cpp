@@ -29,7 +29,7 @@ CommunityModuleManager::~CommunityModuleManager()
 
 void CommunityModuleManager::run()
 {
-	URL modulesURL = "http://benjamin.kuperberg.fr/chataigne/releases/modules.json";
+	URL modulesURL("http://benjamin.kuperberg.fr/chataigne/releases/modules.json");
 
 	StringPairArray responseHeaders;
 	int statusCode = 0;
