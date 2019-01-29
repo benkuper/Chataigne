@@ -473,6 +473,18 @@
 			isa = PBXBuildFile;
 			fileRef = FF5E71729960E873EBC84B3F;
 		};
+		9505054C06127A07DB62A014 = {
+			isa = PBXBuildFile;
+			fileRef = 8C3C85E4F7C6FB804CBD9F59;
+		};
+		63C5D4EE57DB9E83CFADD764 = {
+			isa = PBXBuildFile;
+			fileRef = 66296EADEC35F9C69CE57E31;
+		};
+		2A5DED7FA17BE4A5FD0BA5A8 = {
+			isa = PBXBuildFile;
+			fileRef = 1991D78FED2DCE9A56B1220B;
+		};
 		AF70A4DC7FA481F5FB0C54CD = {
 			isa = PBXBuildFile;
 			fileRef = 7D1B09D24AF2AA1A035C862F;
@@ -1589,6 +1601,13 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = InverseFilter.h;
 			path = ../../Source/Common/Processor/Mapping/Filter/filters/number/InverseFilter.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		1991D78FED2DCE9A56B1220B = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = CommunityModuleManager.cpp;
+			path = ../../Source/Module/Community/CommunityModuleManager.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		1AEEEB0D0B4E406DA76434DE = {
@@ -2753,6 +2772,13 @@
 			path = ../../Source/TimeMachine/Sequence/Layer/SequenceLayerFactory.h;
 			sourceTree = "SOURCE_ROOT";
 		};
+		63D8A941A592D9916B9BE56D = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = CommunityModuleInfoEditor.h;
+			path = ../../Source/Module/Community/ui/CommunityModuleInfoEditor.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		63DC31ED0689235D19678535 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -2779,6 +2805,13 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = SequenceLayerTimeline.h;
 			path = ../../Source/TimeMachine/Sequence/Layer/ui/SequenceLayerTimeline.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		66296EADEC35F9C69CE57E31 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = CommunityModuleInfo.cpp;
+			path = ../../Source/Module/Community/CommunityModuleInfo.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		66A94D900181382D38807D43 = {
@@ -3439,6 +3472,13 @@
 			path = System/Library/Frameworks/CoreMIDI.framework;
 			sourceTree = SDKROOT;
 		};
+		8C3C85E4F7C6FB804CBD9F59 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = CommunityModuleInfoEditor.cpp;
+			path = ../../Source/Module/Community/ui/CommunityModuleInfoEditor.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		8C49B305FD4D86D068A653A7 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -4076,6 +4116,13 @@
 			path = "../../JuceLibraryCode/include_juce_data_structures.mm";
 			sourceTree = "SOURCE_ROOT";
 		};
+		B103D96B57924C72E6439E7D = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = CommunityModuleManager.h;
+			path = ../../Source/Module/Community/CommunityModuleManager.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		B27A7CEDC03061BEB5B3FFAE = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -4683,6 +4730,13 @@
 			lastKnownFileType = file.js;
 			name = midiScriptTemplate.js;
 			path = ../../Resources/Templates/Scripts/midiScriptTemplate.js;
+			sourceTree = "SOURCE_ROOT";
+		};
+		D62D7B28D310E97E20485AC9 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = CommunityModuleInfo.h;
+			path = ../../Source/Module/Community/CommunityModuleInfo.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		D6743891987873266310698C = {
@@ -6065,6 +6119,27 @@
 			name = CustomVariables;
 			sourceTree = "<group>";
 		};
+		12B6F01B9956DBE068612B90 = {
+			isa = PBXGroup;
+			children = (
+				8C3C85E4F7C6FB804CBD9F59,
+				63D8A941A592D9916B9BE56D,
+			);
+			name = ui;
+			sourceTree = "<group>";
+		};
+		68DAC89688DF4E12F2769199 = {
+			isa = PBXGroup;
+			children = (
+				12B6F01B9956DBE068612B90,
+				66296EADEC35F9C69CE57E31,
+				D62D7B28D310E97E20485AC9,
+				1991D78FED2DCE9A56B1220B,
+				B103D96B57924C72E6439E7D,
+			);
+			name = Community;
+			sourceTree = "<group>";
+		};
 		DB7058BCF02647886242628A = {
 			isa = PBXGroup;
 			children = (
@@ -6833,6 +6908,7 @@
 		24072684F5725E4CED6E741B = {
 			isa = PBXGroup;
 			children = (
+				68DAC89688DF4E12F2769199,
 				4665BC8668EBFB6331EA2AD6,
 				7E900B81E548D74148A4A3D8,
 				44138D9D8641DA8D064C435A,
@@ -7616,6 +7692,9 @@
 				C0FC21592BCB8F3C4B8F0452,
 				9CCC53C3655E156228C698D6,
 				33BD9FB6508BB8735FBA98FD,
+				9505054C06127A07DB62A014,
+				63C5D4EE57DB9E83CFADD764,
+				2A5DED7FA17BE4A5FD0BA5A8,
 				AF70A4DC7FA481F5FB0C54CD,
 				6088775CFABC552F51407DEF,
 				FDCA90E38FC8A70DA5C9B59E,

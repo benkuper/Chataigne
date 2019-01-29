@@ -13,6 +13,7 @@
 #include "UI/AboutWindow.h"
 #include "TimeMachine/ui/TimeMachineView.h"
 #include "Guider/Guider.h"
+#include "Module/Community/CommunityModuleManager.h"
 
 namespace ChataigneCommandIDs
 {
@@ -23,7 +24,8 @@ namespace ChataigneCommandIDs
 	static const int postGithubIssue = 0x60004;
 	static const int donate = 0x60005;
 	static const int playPauseSequenceEditor = 0x80000;
-	static const int guideStart = 0x300;
+	static const int guideStart = 0x300; //up to 0x300 +100
+	static const int goToCommunityModules = 0x500;
 }
 
 void MainContentComponent::getCommandInfo(CommandID commandID, ApplicationCommandInfo& result) 
@@ -64,6 +66,10 @@ void MainContentComponent::getCommandInfo(CommandID commandID, ApplicationComman
 		result.addDefaultKeypress(KeyPress::spaceKey, ModifierKeys::noModifiers);
 		break;
 
+	case ChataigneCommandIDs::goToCommunityModules:
+		result.setInfo("Community Modules Manager", "", "General", result.readOnlyInKeyEditor);
+		break;
+
 	default:
 		OrganicMainContentComponent::getCommandInfo(commandID, result);
 		break;
@@ -79,11 +85,12 @@ void MainContentComponent::getAllCommands(Array<CommandID>& commands) {
 	
 		ChataigneCommandIDs::showAbout,
 		ChataigneCommandIDs::donate,
-	  ChataigneCommandIDs::gotoWebsite,
-	  ChataigneCommandIDs::gotoForum,
-	  ChataigneCommandIDs::gotoDocs,
-	  ChataigneCommandIDs::postGithubIssue,
-	  ChataigneCommandIDs::playPauseSequenceEditor
+		ChataigneCommandIDs::gotoWebsite,
+		ChataigneCommandIDs::gotoForum,
+		ChataigneCommandIDs::gotoDocs,
+		ChataigneCommandIDs::postGithubIssue,
+		ChataigneCommandIDs::playPauseSequenceEditor,
+		ChataigneCommandIDs::goToCommunityModules
 	};
 
 	commands.addArray(ids, numElementsInArray(ids));
@@ -98,7 +105,7 @@ PopupMenu MainContentComponent::getMenuForIndex(int topLevelMenuIndex, const Str
 	if (menuName == "Control")
 	{
 		menu.addCommandItem(&getCommandManager(), ChataigneCommandIDs::playPauseSequenceEditor);
-	}if (menuName == "Help")
+	}else if (menuName == "Help")
 	{
 		menu.addCommandItem(&getCommandManager(), ChataigneCommandIDs::showAbout);
 		menu.addCommandItem(&getCommandManager(), ChataigneCommandIDs::donate);
@@ -107,7 +114,8 @@ PopupMenu MainContentComponent::getMenuForIndex(int topLevelMenuIndex, const Str
 		menu.addCommandItem(&getCommandManager(), ChataigneCommandIDs::gotoForum);
 		menu.addCommandItem(&getCommandManager(), ChataigneCommandIDs::gotoDocs);
 		menu.addCommandItem(&getCommandManager(), ChataigneCommandIDs::postGithubIssue);
-	}if (menuName == "Guides")
+
+	}else if (menuName == "Guides")
 	{
 		for (int i = 0; i < Guider::getInstance()->factory.defs.size(); i++)
 		{
@@ -116,6 +124,11 @@ PopupMenu MainContentComponent::getMenuForIndex(int topLevelMenuIndex, const Str
 	}
 
 	return menu;
+}
+
+void MainContentComponent::fillFileMenuInternal(PopupMenu & menu)
+{
+	menu.addCommandItem(&getCommandManager(), ChataigneCommandIDs::goToCommunityModules);
 }
 
 bool MainContentComponent::perform(const InvocationInfo& info)
@@ -156,6 +169,11 @@ bool MainContentComponent::perform(const InvocationInfo& info)
 
 	case ChataigneCommandIDs::postGithubIssue:
 		URL("http://github.com/benkuper/Chataigne/issues").launchInDefaultBrowser();
+		break;
+
+
+	case ChataigneCommandIDs::goToCommunityModules:
+		CommunityModuleManager::getInstance()->selectThis();
 		break;
 
 	case ChataigneCommandIDs::playPauseSequenceEditor:	

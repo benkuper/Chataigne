@@ -21,6 +21,7 @@
 #include "UI/ChataigneAssetManager.h"
 #include "CustomVariables/CVGroupManager.h"
 #include "Guider/Guider.h"
+#include "Module/Community/CommunityModuleManager.h"
 
 #if JUCE_WINDOWS
 #include "Module/modules/controller/myo/MyoManager.h"
@@ -45,6 +46,9 @@ ChataigneEngine::ChataigneEngine() :
 	
 
 	MIDIManager::getInstance(); //Trigger constructor, declare settings
+
+	CommunityModuleManager::getInstance(); //Trigger constructor, declare settings
+
 	getAppSettings()->addChildControllableContainer(&defaultBehaviors);
 
 }
@@ -56,6 +60,7 @@ ChataigneEngine::~ChataigneEngine()
 
 	isClearing = true;
 
+	CommunityModuleManager::deleteInstance();
 	ModuleRouterManager::deleteInstance();
 
 	SequenceManager::deleteInstance();

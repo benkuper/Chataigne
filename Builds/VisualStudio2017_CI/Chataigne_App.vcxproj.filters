@@ -173,6 +173,12 @@
     <Filter Include="Chataigne\Source\CustomVariables">
       <UniqueIdentifier>{5DF1DB46-6558-D6C7-6D99-00E0BAB1C125}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Chataigne\Source\Module\Community\ui">
+      <UniqueIdentifier>{547ABAD7-C45C-13B8-C16E-E7A1389A30F6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\Community">
+      <UniqueIdentifier>{6CEFF08B-E267-C21D-34E5-C8EAE64F596A}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Chataigne\Source\Module\modules\customvariables\commands">
       <UniqueIdentifier>{4C9511D9-D1B4-B5A7-5772-0E1D38BEF264}</UniqueIdentifier>
     </Filter>
@@ -1314,6 +1320,15 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\CustomVariables\CVGroupManager.cpp">
       <Filter>Chataigne\Source\CustomVariables</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Module\Community\ui\CommunityModuleInfoEditor.cpp">
+      <Filter>Chataigne\Source\Module\Community\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Module\Community\CommunityModuleInfo.cpp">
+      <Filter>Chataigne\Source\Module\Community</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Module\Community\CommunityModuleManager.cpp">
+      <Filter>Chataigne\Source\Module\Community</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\customvariables\commands\CustomVariablesModuleCommands.cpp">
       <Filter>Chataigne\Source\Module\modules\customvariables\commands</Filter>
@@ -4511,6 +4526,15 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\CustomVariables\CVGroupManager.h">
       <Filter>Chataigne\Source\CustomVariables</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Module\Community\ui\CommunityModuleInfoEditor.h">
+      <Filter>Chataigne\Source\Module\Community\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Module\Community\CommunityModuleInfo.h">
+      <Filter>Chataigne\Source\Module\Community</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Module\Community\CommunityModuleManager.h">
+      <Filter>Chataigne\Source\Module\Community</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\customvariables\commands\CustomVariablesModuleCommands.h">
       <Filter>Chataigne\Source\Module\modules\customvariables\commands</Filter>

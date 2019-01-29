@@ -94,7 +94,7 @@ ModuleFactory::ModuleFactory() {
 
 void ModuleFactory::addCustomModules()
 {
-	File modulesFolder = File::getSpecialLocation(File::SpecialLocationType::userDocumentsDirectory).getChildFile("Chataigne/modules");
+	File modulesFolder = getCustomModulesFolder();
 	modulesFolder.createDirectory();
 
 	Array<File> modulesList;
@@ -133,15 +133,38 @@ void ModuleFactory::addCustomModules()
 
 			LOG("Found custom module : " << moduleMenuPath << ":" << moduleName);
 			ModuleDefinition * def = moduleDefs.add(new ModuleDefinition(moduleMenuPath,moduleName, createFunc));
+			customModulesDefMap.set(moduleName, def);
 			def->jsonData = moduleData;
-
+			def->moduleFolder = m;
 		}
 		
 	}
 }
 
+void ModuleFactory::updateCustomModules()
+{
+	for (HashMap<String, ModuleDefinition *>::Iterator i(customModulesDefMap); i.next();) moduleDefs.removeObject(i.getValue());
+	customModulesDefMap.clear();
+	addCustomModules();
+	buildPopupMenu();
+}
+
+var ModuleFactory::getCustomModuleInfo(StringRef moduleName)
+{
+	if (!customModulesDefMap.contains(moduleName)) return var();
+	return customModulesDefMap[moduleName]->jsonData;
+}
+
+File ModuleFactory::getFolderForCustomModule(StringRef moduleName) const
+{
+	if (!customModulesDefMap.contains(moduleName)) return File();
+	return customModulesDefMap[moduleName]->moduleFolder;
+}
+
 void ModuleFactory::buildPopupMenu()
 {
+	menu.clear();
+
 	OwnedArray<PopupMenu> subMenus;
 	Array<String> subMenuNames;
 
@@ -176,6 +199,11 @@ void ModuleFactory::buildPopupMenu()
 	}
 
 	for (int i = 0; i < subMenus.size(); i++) menu.addSubMenu(subMenuNames[i], *subMenus[i]);
+}
+
+File ModuleFactory::getCustomModulesFolder() const
+{
+	return File::getSpecialLocation(File::SpecialLocationType::userDocumentsDirectory).getChildFile("Chataigne/modules");
 }
 
 Module * ModuleFactory::showCreateMenu()

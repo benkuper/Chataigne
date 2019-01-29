@@ -18,13 +18,14 @@ class ModuleDefinition
 public:
 	String menuPath;
 	String moduleType;
+	File moduleFolder; //for customModules
 	var jsonData;
 	std::function<Module*()> createFunc;
 
 	ModuleDefinition(const String &menuPath, const String &type, std::function<Module*()> createFunc, var jsonData = var()) :
 		menuPath(menuPath),
-    moduleType(type),
-    jsonData(jsonData),
+		moduleType(type),
+		jsonData(jsonData),
 		createFunc(createFunc)
 	{}
 };
@@ -35,14 +36,21 @@ public:
 	juce_DeclareSingleton(ModuleFactory, true);
 
 	OwnedArray<ModuleDefinition> moduleDefs;
+	HashMap<String, ModuleDefinition *> customModulesDefMap;
+
 	PopupMenu menu;
 
 	ModuleFactory();
 	~ModuleFactory() {}
 
-	void addCustomModules();
 
 	void buildPopupMenu();
+
+	void addCustomModules();
+	void updateCustomModules();
+	var getCustomModuleInfo(StringRef moduleName);
+	File getFolderForCustomModule(StringRef moduleName) const;
+	File getCustomModulesFolder() const;
 
 	static Module* showCreateMenu();
 	static Module * createModule(const String &moduleType);

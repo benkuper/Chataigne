@@ -488,6 +488,22 @@
               file="Source/CustomVariables/CVGroupManager.h"/>
       </GROUP>
       <GROUP id="{8FC20544-FEBB-B3BA-CF48-50962AA7C07C}" name="Module">
+        <GROUP id="{A24B14A8-FF67-ADCB-9E46-46C5033BFA49}" name="Community">
+          <GROUP id="{B0B256D2-DAF2-F548-FCFC-1DCE42C15269}" name="ui">
+            <FILE id="mF1hZz" name="CommunityModuleInfoEditor.cpp" compile="1"
+                  resource="0" file="Source/Module/Community/ui/CommunityModuleInfoEditor.cpp"/>
+            <FILE id="o923lk" name="CommunityModuleInfoEditor.h" compile="0" resource="0"
+                  file="Source/Module/Community/ui/CommunityModuleInfoEditor.h"/>
+          </GROUP>
+          <FILE id="V0waQO" name="CommunityModuleInfo.cpp" compile="1" resource="0"
+                file="Source/Module/Community/CommunityModuleInfo.cpp"/>
+          <FILE id="VvXghT" name="CommunityModuleInfo.h" compile="0" resource="0"
+                file="Source/Module/Community/CommunityModuleInfo.h"/>
+          <FILE id="l8HbuY" name="CommunityModuleManager.cpp" compile="1" resource="0"
+                file="Source/Module/Community/CommunityModuleManager.cpp"/>
+          <FILE id="F78gHh" name="CommunityModuleManager.h" compile="0" resource="0"
+                file="Source/Module/Community/CommunityModuleManager.h"/>
+        </GROUP>
         <GROUP id="{6A9D374B-2C22-DB11-15C8-CA446252E36A}" name="modules">
           <GROUP id="{1845D9E2-AABC-AF10-DF83-FE7DD092D098}" name="customvariables">
             <GROUP id="{E384A9A3-5D10-939D-8450-418396EF3123}" name="commands">

@@ -167,6 +167,9 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/CVGroupManagerUI_95d59108.o \
   $(JUCE_OBJDIR)/CVGroup_5e5064a4.o \
   $(JUCE_OBJDIR)/CVGroupManager_45344ef3.o \
+  $(JUCE_OBJDIR)/CommunityModuleInfoEditor_122ae75f.o \
+  $(JUCE_OBJDIR)/CommunityModuleInfo_23b085c3.o \
+  $(JUCE_OBJDIR)/CommunityModuleManager_e575a282.o \
   $(JUCE_OBJDIR)/CustomVariablesModuleCommands_edf5eec8.o \
   $(JUCE_OBJDIR)/CustomVariablesModule_cdc46d67.o \
   $(JUCE_OBJDIR)/AudioModuleHardwareEditor_e9c8a821.o \
@@ -856,6 +859,21 @@ $(JUCE_OBJDIR)/CVGroup_5e5064a4.o: ../../Source/CustomVariables/CVGroup.cpp
 $(JUCE_OBJDIR)/CVGroupManager_45344ef3.o: ../../Source/CustomVariables/CVGroupManager.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling CVGroupManager.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/CommunityModuleInfoEditor_122ae75f.o: ../../Source/Module/Community/ui/CommunityModuleInfoEditor.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling CommunityModuleInfoEditor.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/CommunityModuleInfo_23b085c3.o: ../../Source/Module/Community/CommunityModuleInfo.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling CommunityModuleInfo.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/CommunityModuleManager_e575a282.o: ../../Source/Module/Community/CommunityModuleManager.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling CommunityModuleManager.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/CustomVariablesModuleCommands_edf5eec8.o: ../../Source/Module/modules/customvariables/commands/CustomVariablesModuleCommands.cpp

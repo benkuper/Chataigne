@@ -250,6 +250,9 @@
     <ClCompile Include="..\..\Source\CustomVariables\ui\CVGroupManagerUI.cpp"/>
     <ClCompile Include="..\..\Source\CustomVariables\CVGroup.cpp"/>
     <ClCompile Include="..\..\Source\CustomVariables\CVGroupManager.cpp"/>
+    <ClCompile Include="..\..\Source\Module\Community\ui\CommunityModuleInfoEditor.cpp"/>
+    <ClCompile Include="..\..\Source\Module\Community\CommunityModuleInfo.cpp"/>
+    <ClCompile Include="..\..\Source\Module\Community\CommunityModuleManager.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\customvariables\commands\CustomVariablesModuleCommands.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\customvariables\CustomVariablesModule.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\audio\ui\AudioModuleHardwareEditor.cpp"/>
@@ -2721,6 +2724,9 @@
     <ClInclude Include="..\..\Source\CustomVariables\ui\CVGroupManagerUI.h"/>
     <ClInclude Include="..\..\Source\CustomVariables\CVGroup.h"/>
     <ClInclude Include="..\..\Source\CustomVariables\CVGroupManager.h"/>
+    <ClInclude Include="..\..\Source\Module\Community\ui\CommunityModuleInfoEditor.h"/>
+    <ClInclude Include="..\..\Source\Module\Community\CommunityModuleInfo.h"/>
+    <ClInclude Include="..\..\Source\Module\Community\CommunityModuleManager.h"/>
     <ClInclude Include="..\..\Source\Module\modules\customvariables\commands\CustomVariablesModuleCommands.h"/>
     <ClInclude Include="..\..\Source\Module\modules\customvariables\CustomVariablesModule.h"/>
     <ClInclude Include="..\..\Source\Module\modules\audio\libs\pitch\PitchMPM.h"/>
