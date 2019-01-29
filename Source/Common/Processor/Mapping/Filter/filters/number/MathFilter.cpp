@@ -134,7 +134,7 @@ float MathFilter::getProcessedValue(float val, int index)
 	Operation o = operation->getValueDataAsEnum<Operation>();
 	
 	float oVal = 0;
-	if (operationValue != nullptr) oVal = index == -1 ? operationValue->floatValue() : (float)operationValue->value[index];
+	if (operationValue != nullptr) oVal = (index == -1 && !operationValue->isComplex())? operationValue->floatValue() : (float)operationValue->value[index];
 
 	if ((o == DIVIDE || o == MODULO) && oVal == 0) return 0;
 

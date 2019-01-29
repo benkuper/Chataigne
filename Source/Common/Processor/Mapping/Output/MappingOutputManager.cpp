@@ -33,6 +33,8 @@ void MappingOutputManager::setOutParam(Parameter * p)
 {
 	if (outParam == p) return;
 	outParam = p;
+	for (auto &o : items) o->setOutputType(outParam->type);
+
 	omAsyncNotifier.addMessage(new OutputManagerEvent(OutputManagerEvent::OUTPUT_CHANGED));
 }
 
@@ -46,6 +48,7 @@ void MappingOutputManager::updateOutputValue(MappingOutput * o)
 void MappingOutputManager::addItemInternal(MappingOutput * o, var)
 {
 	o->adCommandHandlerListener(this);
+	if(outParam != nullptr) o->setOutputType(outParam->type);
 	updateOutputValue(o);
 }
 

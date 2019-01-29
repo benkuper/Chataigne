@@ -37,8 +37,7 @@ Mapping::Mapping(bool canBeDisabled) :
 
 Mapping::~Mapping()
 {
-	fm.removeAsyncManagerListener(this);
-	input.removeMappingInputListener(this);
+	clearItem();
 }
 
 void Mapping::setProcessMode(ProcessMode mode)
@@ -222,6 +221,8 @@ void Mapping::newMessage(const MappingFilter::FilterEvent & e)
 
 void Mapping::clearItem()
 {
+	fm.removeAsyncManagerListener(this);
+	input.removeMappingInputListener(this); 
 	input.clear();
 }
 

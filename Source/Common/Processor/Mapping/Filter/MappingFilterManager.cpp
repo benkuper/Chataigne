@@ -39,6 +39,10 @@ MappingFilterManager::MappingFilterManager() :
 	factory.defs.add(Factory<MappingFilter>::Definition::createDef("Remap", "Crop", &CropFilter::create));
 	
 	factory.defs.add(Factory<MappingFilter>::Definition::createDef("Conversion", "Convert To Integer", &ToIntFilter::create));
+	factory.defs.add(Factory<MappingFilter>::Definition::createDef("Conversion", "Convert To Float", &ToFloatFilter::create));
+	factory.defs.add(Factory<MappingFilter>::Definition::createDef("Conversion", "Convert To String", &ToStringFilter::create));
+	factory.defs.add(Factory<MappingFilter>::Definition::createDef("Conversion", "Convert To Point2D", &ToPoint2DFilter::create));
+	factory.defs.add(Factory<MappingFilter>::Definition::createDef("Conversion", "Convert To Point3D", &ToPoint3DFilter::create));
 
 	factory.defs.add(Factory<MappingFilter>::Definition::createDef("Physics", "Smooth", &SimpleSmoothFilter::create));
 	factory.defs.add(Factory<MappingFilter>::Definition::createDef("Physics", "Lag", &LagFilter::create));

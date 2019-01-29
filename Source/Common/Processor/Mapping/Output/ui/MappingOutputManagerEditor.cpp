@@ -43,7 +43,7 @@ void MappingOutputManagerEditor::updateOutputUI()
 void MappingOutputManagerEditor::resizedInternalHeader(Rectangle<int>& r)
 {
 	BaseCommandHandlerManagerEditor::resizedInternalHeader(r);
-	if (outUI != nullptr) outUI->setBounds(r.removeFromRight(100).reduced(3));
+	if (outUI != nullptr) outUI->setBounds(r.removeFromRight(120).reduced(3));
 }
 
 void MappingOutputManagerEditor::newMessage(const MappingOutputManager::OutputManagerEvent & e)

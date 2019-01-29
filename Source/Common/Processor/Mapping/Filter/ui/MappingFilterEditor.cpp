@@ -26,12 +26,14 @@ MappingFilterEditor::~MappingFilterEditor()
 
 void MappingFilterEditor::resizedInternalHeaderItemInternal(Rectangle<int>& r)
 {
-	if (filteredUI != nullptr) filteredUI->setBounds(r.removeFromRight(100).reduced(2));
+	if (filteredUI != nullptr) filteredUI->setBounds(r.removeFromRight(120).reduced(2));
 }
 
 
 void MappingFilterEditor::updateFilteredUI()
 {
+	if (filteredUI != nullptr && filteredUI->parameter == filter->filteredParameter) return;
+
 	if (filteredUI != nullptr)
 	{
 		removeChildComponent(filteredUI);

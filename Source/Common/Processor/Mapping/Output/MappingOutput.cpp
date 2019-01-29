@@ -22,6 +22,18 @@ MappingOutput::~MappingOutput()
 {
 }
 
+void MappingOutput::setOutputType(Controllable::Type type)
+{
+	outputType = type;
+	if (command != nullptr && command->context == CommandContext::MAPPING) command->setMappingValueType(outputType);
+}
+
+void MappingOutput::setCommand(CommandDefinition * cd)
+{
+	BaseCommandHandler::setCommand(cd);
+	if (command != nullptr && command->context == CommandContext::MAPPING) command->setMappingValueType(outputType);
+}
+
 void MappingOutput::setValue(var value)
 {
 	if (!enabled->boolValue()) return;
