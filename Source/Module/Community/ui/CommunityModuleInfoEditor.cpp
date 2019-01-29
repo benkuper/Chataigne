@@ -11,7 +11,7 @@
 #include "CommunityModuleInfoEditor.h"
 
 CommunityModuleInfoEditor::CommunityModuleInfoEditor(CommunityModuleInfo * cmi, bool isRoot) :
-	InspectableEditor(cmi, isRoot),
+	GenericControllableContainerEditor(cmi, isRoot, false),
 	cmi(cmi),
 	urlLabel("urlLabel","URL : "+cmi->url)
 {

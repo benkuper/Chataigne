@@ -16,6 +16,7 @@ CommunityModuleInfo::CommunityModuleInfo(StringRef name, var onlineData, var loc
 	BaseItem(name, false)
 {
 	userCanRemove = false;
+	canBeReorderedInEditor = false;
 
 	installTriger = addTrigger("Install", "Install or Update this module");
 	uninstallTrigger = addTrigger("Uninstall", "Uninstall this module");	
