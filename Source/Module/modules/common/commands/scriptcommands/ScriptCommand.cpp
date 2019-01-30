@@ -204,7 +204,7 @@ InspectableEditor * ScriptCommand::getEditor(bool isRoot)
 ScriptCommand::Dependency::Dependency(Parameter * source, Parameter * target, var value, CheckType checkType, DepAction depAction)
 	: source(source), target(target), value(value), type(checkType), action(depAction)
 {
-	DBG("NEw dependency :" << type << " /" << action);
+	//DBG("New dependency :" << type << " /" << action);
 }
 
 
@@ -228,6 +228,7 @@ bool ScriptCommand::Dependency::process()
 	{
 	case EQUALS: depIsOk = valueToCheck == value; break;
 	case NOT_EQUALS: depIsOk = valueToCheck != value; break;
+	default: break;
 	}
 
 	
@@ -244,6 +245,7 @@ bool ScriptCommand::Dependency::process()
 		changed = target->enabled == !depIsOk;
 		target->setEnabled(depIsOk); 
 		break;
+	default: break;
 	}
 
 	return changed;

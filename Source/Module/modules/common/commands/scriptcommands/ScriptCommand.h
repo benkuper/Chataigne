@@ -60,5 +60,5 @@ public:
 
 	static BaseCommand * create(ControllableContainer * module, CommandContext context, var params)  { return new ScriptCommand((Module *)module, context, params); }
 
-	InspectableEditor * getEditor(bool isRoot);
+	InspectableEditor * getEditor(bool isRoot) override;
 };
