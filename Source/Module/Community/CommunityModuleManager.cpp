@@ -19,6 +19,7 @@ CommunityModuleManager::CommunityModuleManager() :
 {
 	userCanAddControllables = false;
 	userCanAddItemsManually = false;
+    selectItemWhenCreated = false;
 	startThread();
 }
 

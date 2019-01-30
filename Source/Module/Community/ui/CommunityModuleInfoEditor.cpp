@@ -43,7 +43,7 @@ CommunityModuleInfoEditor::CommunityModuleInfoEditor(CommunityModuleInfo * cmi, 
 	}
 	
 
-	setSize(100, 80);
+	setSize(150, 80);
 }
 
 CommunityModuleInfoEditor::~CommunityModuleInfoEditor()
@@ -61,7 +61,7 @@ void CommunityModuleInfoEditor::controllableFeedbackUpdate(Controllable * c)
 
 void CommunityModuleInfoEditor::resizedInternalContent(Rectangle<int>& r)
 {
-	r.setHeight(80);
+	r.setHeight(120);
 
 	if (uninstallBT != nullptr && installBT != nullptr)
 	{
@@ -76,5 +76,5 @@ void CommunityModuleInfoEditor::resizedInternalContent(Rectangle<int>& r)
 	r.removeFromBottom(8);
 	description.setBounds(r);
 
-	r.translate(0,80);
+	r.translate(0,120);
 }
