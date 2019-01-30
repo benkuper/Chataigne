@@ -280,9 +280,20 @@ SerialDeviceInfo::SerialDeviceInfo(String _port, String _description, String _ha
 	deviceID = description;
 	uniqueDescription = description; //COM port integrated in description
 #else
-	vid = hardwareID.substring(16, 20).getHexValue32();
-	pid = hardwareID.substring(23, 27).getHexValue32();
+    StringArray eqSplit;
+    eqSplit.addTokens(hardwareID,"=","\"");
+    String sn = "not found";
+    if(eqSplit.size() >= 1)
+    {
+        vid = eqSplit[1].substring(0, 4).getHexValue32();
+        pid = eqSplit[1].substring(5, 9).getHexValue32();
+        sn = eqSplit[eqSplit.size()-1];
+    }else{
+        vid = 0;
+        pid = 0;
+    }
+    
 	deviceID = hardwareID;
-	uniqueDescription = description + "(SN : " + deviceID.substring(35) + ")";
+    uniqueDescription = description + "(SN : " + sn + ")";
 #endif
 }
