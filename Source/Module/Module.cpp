@@ -197,7 +197,6 @@ void Module::setupModuleFromJSONData(var data)
 	
 
 	Array<WeakReference<Controllable>> valueList = getValueControllables();
-	for (auto &c : valueList) c->setControllableFeedbackOnly(true);
 
 	Array<var> * scriptData = data.getProperty("scripts", var()).getArray();
 	for (auto &s : *scriptData)
@@ -264,12 +263,15 @@ void Module::createControllablesForContainer(var data, ControllableContainer * c
 		if (p.value.getProperty("type", "") == "Container")
 		{
 			ControllableContainer * childCC = cc->getControllableContainerByName(p.name.toString(), true);
+			
 			if (childCC == nullptr)
 			{
 				childCC = new ControllableContainer(p.name.toString());
 				cc->addChildControllableContainer(childCC);
 				customModuleContainers.add(childCC);
 			}
+
+			childCC->editorIsCollapsed = p.value.getProperty("collapsed", false);
 			createControllablesForContainer(p.value, childCC);
 
 		} else
