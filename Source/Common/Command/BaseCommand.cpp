@@ -111,7 +111,14 @@ void BaseCommand::clearTargetMappingParametersAt(int index)
 
 void BaseCommand::clearTargetMappingParameters()
 {
-	for (HashMap<Parameter *, int>::Iterator i(parameterToIndexMap); i.next();) i.getKey()->setControllableFeedbackOnly(false);
+	for (auto &arp : mappingParametersArray)
+	{
+		for (auto &p : *arp)
+		{
+			if(p.wasObjectDeleted()) continue;
+			p->setControllableFeedbackOnly(false);
+		}
+	}
 
 	targetMappingParameters.clear();
 	parameterToIndexMap.clear();
