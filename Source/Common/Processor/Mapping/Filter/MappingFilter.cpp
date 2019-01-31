@@ -33,7 +33,6 @@ MappingFilter::MappingFilter(const String &name, var params) :
 
 MappingFilter::~MappingFilter()
 {
-	DBG("MAPPING FILTER DESCTRUCTOR");
 	clearItem();
 }
 
@@ -41,7 +40,6 @@ void MappingFilter::setupSource(Parameter * source)
 {
 	if (sourceParam != nullptr)
 	{
-		DBG("Setup source remove parameter listener here");
 		sourceParam->removeParameterListener(this);
 	}
 
@@ -118,12 +116,10 @@ Parameter * MappingFilter::process(Parameter * source)
 
 void MappingFilter::clearItem()
 {
-	DBG("CLEAR MAPPING FILTER ITEM");
 	//setupSource(nullptr);
 
 	if (!sourceParam.wasObjectDeleted() && sourceParam != nullptr)
 	{
-		DBG("### Remove Source parameterListener");
 		sourceParam->removeParameterListener(this);
 		sourceParam = nullptr;
 	}
