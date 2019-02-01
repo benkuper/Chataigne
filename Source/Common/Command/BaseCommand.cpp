@@ -50,7 +50,6 @@ void BaseCommand::addTargetMappingParameterAt(WeakReference<Parameter> p, int in
 	targetMappingParameters[index]->addIfNotAlreadyThere(p);
 	parameterToIndexMap.set(p, index);
 	
-	DBG("Add target mapping parameter : " << targetMappingParameters[index]->size());
 	p->setControllableFeedbackOnly(true); 
 	commandListeners.call(&CommandListener::commandContentChanged);
 

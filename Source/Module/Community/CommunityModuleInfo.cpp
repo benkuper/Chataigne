@@ -23,8 +23,6 @@ CommunityModuleInfo::CommunityModuleInfo(StringRef name, var onlineData, var loc
 	isOnline = addBoolParameter("Is Online", "Is this module registered online ?", !onlineData.isVoid());
 	isLocal = addBoolParameter("Is Local", "Is this module installed locally ?", localFolder.exists());
 
-	DBG("New Module Info " << JSON::toString(onlineData) << " / " << localFolder.getFullPathName());
-
 	if (!onlineData.isVoid())
 	{
 		url = onlineData.getProperty("url", "");

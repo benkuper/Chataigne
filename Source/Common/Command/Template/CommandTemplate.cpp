@@ -23,7 +23,6 @@ CommandTemplate::CommandTemplate(Module * m, var params) :
 	triggerTrigger->hideInEditor = true;
 
 	Array<CommandDefinition *> defs = m->getCommands(false);
-	DBG("COMMAND TEMPLATE : " << params.getProperty("menuPath", "").toString() << " / " << params.getProperty("commandType", "").toString());
 	for (auto & d : defs)
 	{
 		if (d->menuPath == params.getProperty("menuPath", "").toString() && d->commandType == params.getProperty("commandType", "").toString())

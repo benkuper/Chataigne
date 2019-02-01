@@ -66,7 +66,6 @@ void StandardCondition::setSourceControllable(WeakReference<Controllable> c)
 		if (comparator != nullptr) oldData = comparator->getJSONData();
 		comparator = ComparatorFactory::createComparatorForControllable(sourceControllable);
 
-		DBG("Old comparator data : " << JSON::toString(oldData));
 
 		if (comparator != nullptr)
 		{

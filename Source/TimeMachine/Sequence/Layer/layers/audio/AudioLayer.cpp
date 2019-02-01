@@ -173,7 +173,6 @@ void AudioLayer::updateSelectedOutChannels()
 			selectedOutChannels.add(i);
 			audioModule->graph.addConnection({{AudioProcessorGraph::NodeID(graphID), index }, {AudioProcessorGraph::NodeID(AUDIO_OUTPUT_GRAPH_ID), i } });
 			index++;
-			DBG("Send out to channel : " << outChannels[i]->niceName);
 		}
 	}
 
