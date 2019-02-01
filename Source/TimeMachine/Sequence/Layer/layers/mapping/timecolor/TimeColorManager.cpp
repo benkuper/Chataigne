@@ -12,7 +12,6 @@
 
 TimeColorComparator TimeColorManager::comparator;
 
-
 TimeColorManager::TimeColorManager(float _maxPosition) :
 	BaseManager("Colors"),
 	gradient(Colours::red, 0, 0, Colours::blue, _maxPosition, 0, false),
@@ -29,12 +28,13 @@ TimeColorManager::TimeColorManager(float _maxPosition) :
 
 	currentColor = new ColorParameter("Color", "Current color depending on time", Colours::black);
 	currentColor->isSavable = false;
-	currentColor->setControllableFeedbackOnly(true); 
+	currentColor->setControllableFeedbackOnly(true);
 	addParameter(currentColor);
 
-	addColorAt(positionMax / 4, Colours::red);
-	addColorAt(positionMax / 2, Colours::green);
-	addColorAt(positionMax * 3 / 4, Colours::blue);
+	addColorAt(positionMax / 5, Colours::red);
+	addColorAt(positionMax * 2 / 5, Colours::yellow);
+	addColorAt(positionMax * 3 / 5, Colours::green)->interpolation->setValueWithData(ColourGradient::NONE);
+	addColorAt(positionMax * 4 / 5, Colours::blue);
 
 	rebuildGradient();
 
@@ -67,16 +67,17 @@ Colour TimeColorManager::getColorForPosition(const float & time) const
 
 void TimeColorManager::rebuildGradient()
 {
+	gradientLock.enter();
 	gradient.clearColours();
-	if (items.size() > 0 && items[0]->position->floatValue() > 0) gradient.addColour(0, items[0]->color->getColor());
+	if (items.size() > 0 && items[0]->position->floatValue() > 0) gradient.addColour(0, items[0]->color->getColor(), items[0]->interpolation->getValueDataAsEnum<ColourGradient::Interpolation>());
 
 	for (auto &i : items)
 	{
-		i->gradientIndex = gradient.addColour(i->position->floatValue() / positionMax, i->color->getColor());
+		i->gradientIndex = gradient.addColour(i->position->floatValue() / positionMax, i->color->getColor(), i->interpolation->getValueDataAsEnum<ColourGradient::Interpolation>());
 	}
+	gradientLock.exit();
 
 	currentColor->setColor(getColorForPosition(position->floatValue()));
-
 	colorManagerListeners.call(&TimeColorManagerListener::gradientUpdated);
 }
 
@@ -126,20 +127,26 @@ void TimeColorManager::onControllableFeedbackUpdate(ControllableContainer * cc, 
 			{
 				items.swap(index, index - 1);
 				baseManagerListeners.call(&Listener::itemsReordered);
-			} else if (index < items.size() - 1 && t->position->floatValue() > items[index + 1]->position->floatValue())
+			}
+			else if (index < items.size() - 1 && t->position->floatValue() > items[index + 1]->position->floatValue())
 			{
 				items.swap(index, index + 1);
 				baseManagerListeners.call(&Listener::itemsReordered);
 			}
 
-
-		} else if (c == t->color) {
+		}
+		else if (c == t->color) {
 			gradient.setColour(t->gradientIndex, t->color->getColor());
 			colorManagerListeners.call(&TimeColorManagerListener::gradientUpdated);
 		}
+		else if (c == t->interpolation)
+		{
+			gradient.setInterpolation(t->gradientIndex, t->interpolation->getValueDataAsEnum<ColourGradient::Interpolation>());
+			colorManagerListeners.call(&TimeColorManagerListener::gradientUpdated);
+		}
 
-		currentColor->setColor(getColorForPosition(position->floatValue()));
 		rebuildGradient();
+		currentColor->setColor(getColorForPosition(position->floatValue()));
 	}
 }
 

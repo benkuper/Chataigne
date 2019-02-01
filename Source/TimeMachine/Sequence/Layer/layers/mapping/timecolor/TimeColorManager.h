@@ -37,6 +37,7 @@ public:
 
 	ColorParameter * currentColor;
 	ColourGradient gradient;
+	SpinLock gradientLock;
 
 	FloatParameter * position;
 	float positionMax;

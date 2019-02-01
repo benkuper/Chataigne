@@ -17,18 +17,23 @@
 class TimeColorManagerUI :
 	public BaseManagerUI<TimeColorManager, TimeColor, TimeColorUI>,
 	public ContainerAsyncListener,
-	public Timer
+	public Timer,
+	public Thread
 
 {
 public:
 	TimeColorManagerUI(TimeColorManager * manager);
 	~TimeColorManagerUI();
 
-
 	bool shouldRepaint;
+	bool shouldUpdateImage;
 
 	float viewStartPos;
 	float viewEndPos;
+
+	Image viewImage;
+	SpinLock imageLock;
+
 
 	void setViewRange(float start, float end);
 
@@ -51,6 +56,7 @@ public:
 
 	void newMessage(const ContainerAsyncEvent &e) override;
 
+	void run() override;
 	
 	void timerCallback() override;
 };

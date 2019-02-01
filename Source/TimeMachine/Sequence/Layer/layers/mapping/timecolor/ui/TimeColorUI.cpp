@@ -16,7 +16,7 @@ TimeColorUI::TimeColorUI(TimeColor * item) :
 	autoDrawHighlightWhenSelected = false;
 	colorUI = item->color->createColorParamUI();
 	addAndMakeVisible(colorUI);
-	colorUI->addMouseListener(this, false);
+	//colorUI->addMouseListener(this, false); //why ??
 }
 
 TimeColorUI::~TimeColorUI()
@@ -50,6 +50,10 @@ void TimeColorUI::mouseDown(const MouseEvent & e)
 {
 	BaseItemMinimalUI::mouseDown(e);
 	posAtMouseDown = item->position->floatValue();
+	if (e.mods.isCommandDown())
+	{
+		item->interpolation->setNext(true, true);
+	}
 }
 
 void TimeColorUI::mouseUp(const MouseEvent & e)

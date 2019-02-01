@@ -23,6 +23,7 @@ public:
 
 	ColorParameter * color;
 	FloatParameter * position;
+	EnumParameter * interpolation;
 
 	int gradientIndex;
 };
