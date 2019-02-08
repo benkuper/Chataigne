@@ -167,6 +167,7 @@ void ResolumeFXCommand::setupValueParam()
 		valueParam->setNiceName("Value");
 		if (valueParam != nullptr)
 		{
+			if(valueParam->type == Controllable::STRING) ((StringParameter *)valueParam)->defaultUI = StringParameter::TEXT;	
 			argumentsContainer.addParameter(valueParam);
 		}
 	}
