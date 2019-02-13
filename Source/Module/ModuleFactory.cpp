@@ -40,6 +40,7 @@
 #include "modules/controller/joycon/JoyConModule.h"
 #include "modules/osc/powerpoint/PowerpointModule.h"
 #include "modules/osc/heavym/HeavyMModule.h"
+#include "modules/http/HTTPModule.h"
 
 juce_ImplementSingleton(ModuleFactory)
 
@@ -50,6 +51,7 @@ ModuleFactory::ModuleFactory() {
 	moduleDefs.add(new ModuleDefinition("Protocol", "Serial", &SerialModule::create));
 	moduleDefs.add(new ModuleDefinition("Protocol", "UDP", &UDPModule::create));  
 	moduleDefs.add(new ModuleDefinition("Protocol", "TCP Client", &TCPModule::create));
+	moduleDefs.add(new ModuleDefinition("Protocol", "HTTP", &HTTPModule::create));
 	moduleDefs.add(new ModuleDefinition("Protocol", "PJLink", &PJLinkModule::create));
 
 	

@@ -365,6 +365,12 @@
     <Filter Include="Chataigne\Source\Module\modules\system">
       <UniqueIdentifier>{E30AE2AD-548D-40F7-C658-D1241EF60E66}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\http\commands">
+      <UniqueIdentifier>{C2501901-DC28-59AD-5BC0-838470BF1A0E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\http">
+      <UniqueIdentifier>{D08B4676-A304-E303-0415-85A97C6159AD}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Chataigne\Source\Module\modules\tcp\pjlink">
       <UniqueIdentifier>{056DAAEC-3110-E1F3-2D92-A612A2BF0B21}</UniqueIdentifier>
     </Filter>
@@ -1167,6 +1173,12 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\system\time\TimeModule.cpp">
       <Filter>Chataigne\Source\Module\modules\system\time</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Module\modules\http\commands\HTTPCommand.cpp">
+      <Filter>Chataigne\Source\Module\modules\http\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Module\modules\http\HTTPModule.cpp">
+      <Filter>Chataigne\Source\Module\modules\http</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\tcp\pjlink\PJLinkModule.cpp">
       <Filter>Chataigne\Source\Module\modules\tcp\pjlink</Filter>
@@ -2427,6 +2439,12 @@
     <ClInclude Include="..\..\Source\Module\modules\system\time\TimeModule.h">
       <Filter>Chataigne\Source\Module\modules\system\time</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\Module\modules\http\commands\HTTPCommand.h">
+      <Filter>Chataigne\Source\Module\modules\http\commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Module\modules\http\HTTPModule.h">
+      <Filter>Chataigne\Source\Module\modules\http</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\tcp\pjlink\PJLinkModule.h">
       <Filter>Chataigne\Source\Module\modules\tcp\pjlink</Filter>
     </ClInclude>
@@ -3102,6 +3120,9 @@
       <Filter>Chataigne\Resources\Templates\Scripts</Filter>
     </None>
     <None Include="..\..\Resources\Templates\Scripts\genericScriptTemplate.js">
+      <Filter>Chataigne\Resources\Templates\Scripts</Filter>
+    </None>
+    <None Include="..\..\Resources\Templates\Scripts\httpScriptTemplate.js">
       <Filter>Chataigne\Resources\Templates\Scripts</Filter>
     </None>
     <None Include="..\..\Resources\Templates\Scripts\midiScriptTemplate.js">

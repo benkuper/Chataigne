@@ -17,6 +17,9 @@ namespace BinaryData
     extern const char*   genericScriptTemplate_js;
     const int            genericScriptTemplate_jsSize = 4737;
 
+    extern const char*   httpScriptTemplate_js;
+    const int            httpScriptTemplate_jsSize = 805;
+
     extern const char*   midiScriptTemplate_js;
     const int            midiScriptTemplate_jsSize = 1271;
 
@@ -87,7 +90,7 @@ namespace BinaryData
     const int            stripe_pngSize = 2043;
 
     // Number of elements in the namedResourceList and originalFileNames arrays.
-    const int namedResourceListSize = 26;
+    const int namedResourceListSize = 27;
 
     // Points to the start of a list of resource names.
     extern const char* namedResourceList[];

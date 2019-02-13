@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.5.7"
+<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.5.8b1"
               bundleIdentifier="benkuper.Chataigne" includeBinaryInAppConfig="1"
-              jucerVersion="5.4.1" companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
+              jucerVersion="5.4.2" companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
               companyEmail="benjamin@kuperberg.fr" defines="" splashScreenColour="Dark"
               cppLanguageStandard="14" companyCopyright="Ben Kuper" headerPath="../../Source">
   <MAINGROUP id="EDDVhd" name="Chataigne">
@@ -15,6 +15,8 @@
                 file="Resources/Templates/Scripts/filterScriptTemplate.js"/>
           <FILE id="TcSxtH" name="genericScriptTemplate.js" compile="0" resource="1"
                 file="Resources/Templates/Scripts/genericScriptTemplate.js"/>
+          <FILE id="kUN61z" name="httpScriptTemplate.js" compile="0" resource="1"
+                file="Resources/Templates/Scripts/httpScriptTemplate.js"/>
           <FILE id="l9ld1m" name="midiScriptTemplate.js" compile="0" resource="1"
                 file="Resources/Templates/Scripts/midiScriptTemplate.js"/>
           <FILE id="GlFclq" name="moduleScriptTemplate.js" compile="0" resource="1"
@@ -891,6 +893,14 @@
               <FILE id="Ijc9Mu" name="TimeModule.cpp" compile="1" resource="0" file="Source/Module/modules/system/time/TimeModule.cpp"/>
               <FILE id="rJZ74V" name="TimeModule.h" compile="0" resource="0" file="Source/Module/modules/system/time/TimeModule.h"/>
             </GROUP>
+          </GROUP>
+          <GROUP id="{107701F8-73B1-73F7-59D6-85F8A804B35D}" name="http">
+            <GROUP id="{6069A587-3ED1-6515-CE10-AED8384CFB00}" name="commands">
+              <FILE id="nCg1pd" name="HTTPCommand.cpp" compile="1" resource="0" file="Source/Module/modules/http/commands/HTTPCommand.cpp"/>
+              <FILE id="o5u5G9" name="HTTPCommand.h" compile="0" resource="0" file="Source/Module/modules/http/commands/HTTPCommand.h"/>
+            </GROUP>
+            <FILE id="El7GQo" name="HTTPModule.cpp" compile="1" resource="0" file="Source/Module/modules/http/HTTPModule.cpp"/>
+            <FILE id="JLZs5a" name="HTTPModule.h" compile="0" resource="0" file="Source/Module/modules/http/HTTPModule.h"/>
           </GROUP>
           <GROUP id="{60EE0B8D-6DCD-2F5E-B462-3F4F3DCA4184}" name="tcp">
             <GROUP id="{FB246D43-D01D-0AD6-DB10-303294A627F9}" name="pjlink">

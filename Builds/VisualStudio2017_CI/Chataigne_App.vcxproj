@@ -66,7 +66,7 @@
       <Optimization>Disabled</Optimization>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <AdditionalIncludeDirectories>..\..\JuceLibraryCode;..\..\..\JUCE\modules;..\..\..\JUCE Modules;../../External/wiiuse;../../External/serial/include;../../External/asio;../../External/kinect/include;../../External/joycon/include;../../External/servus/include;../../External/dnssd/include;../../External/sdl/include;../../Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;DEBUG;_DEBUG;USE_KINECT=1;JUCER_VS2017_78A57A61=1;JUCE_APP_VERSION=1.5.7;JUCE_APP_VERSION_HEX=0x10507;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_RTAS=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;DEBUG;_DEBUG;USE_KINECT=1;JUCER_VS2017_78A57A61=1;JUCE_APP_VERSION=1.5.8b1;JUCE_APP_VERSION_HEX=0x10508;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_RTAS=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <PrecompiledHeader/>
@@ -113,7 +113,7 @@
       <Optimization>Full</Optimization>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <AdditionalIncludeDirectories>..\..\JuceLibraryCode;..\..\..\JUCE\modules;..\..\..\JUCE Modules;../../External/wiiuse;../../External/serial/include;../../External/asio;../../External/kinect/include;../../External/joycon/include;../../External/servus/include;../../External/dnssd/include;../../External/sdl/include;../../Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;NDEBUG;USE_KINECT=1;JUCER_VS2017_78A57A61=1;JUCE_APP_VERSION=1.5.7;JUCE_APP_VERSION_HEX=0x10507;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_RTAS=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;NDEBUG;USE_KINECT=1;JUCER_VS2017_78A57A61=1;JUCE_APP_VERSION=1.5.8b1;JUCE_APP_VERSION_HEX=0x10508;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_RTAS=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <PrecompiledHeader/>
@@ -337,6 +337,8 @@
     <ClCompile Include="..\..\Source\Module\modules\system\os\commands\WakeOnLanCommand.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\system\os\OSModule.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\system\time\TimeModule.cpp"/>
+    <ClCompile Include="..\..\Source\Module\modules\http\commands\HTTPCommand.cpp"/>
+    <ClCompile Include="..\..\Source\Module\modules\http\HTTPModule.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\tcp\pjlink\PJLinkModule.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\tcp\vlc\VLCModule.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\tcp\watchout\commands\WatchoutCommand.cpp"/>
@@ -1015,6 +1017,8 @@
     <ClInclude Include="..\..\Source\Module\modules\system\os\commands\WakeOnLanCommand.h"/>
     <ClInclude Include="..\..\Source\Module\modules\system\os\OSModule.h"/>
     <ClInclude Include="..\..\Source\Module\modules\system\time\TimeModule.h"/>
+    <ClInclude Include="..\..\Source\Module\modules\http\commands\HTTPCommand.h"/>
+    <ClInclude Include="..\..\Source\Module\modules\http\HTTPModule.h"/>
     <ClInclude Include="..\..\Source\Module\modules\tcp\pjlink\PJLinkModule.h"/>
     <ClInclude Include="..\..\Source\Module\modules\tcp\vlc\VLCModule.h"/>
     <ClInclude Include="..\..\Source\Module\modules\tcp\watchout\commands\WatchoutCommand.h"/>
@@ -1242,6 +1246,7 @@
     <None Include="..\..\Resources\Templates\Scripts\conditionScriptTemplate.js"/>
     <None Include="..\..\Resources\Templates\Scripts\filterScriptTemplate.js"/>
     <None Include="..\..\Resources\Templates\Scripts\genericScriptTemplate.js"/>
+    <None Include="..\..\Resources\Templates\Scripts\httpScriptTemplate.js"/>
     <None Include="..\..\Resources\Templates\Scripts\midiScriptTemplate.js"/>
     <None Include="..\..\Resources\Templates\Scripts\moduleScriptTemplate.js"/>
     <None Include="..\..\Resources\Templates\Scripts\oscScriptTemplate.js"/>

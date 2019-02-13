@@ -833,6 +833,14 @@
 			isa = PBXBuildFile;
 			fileRef = 1DA1A4B47B6494AC2A79311C;
 		};
+		E100F7E75361CCE27D886FF9 = {
+			isa = PBXBuildFile;
+			fileRef = 203B23CC8571848A67B12459;
+		};
+		B273E2791D5ACAE101663028 = {
+			isa = PBXBuildFile;
+			fileRef = A949F877768B9F4072481556;
+		};
 		33E16DCF5C4801FF0C7CBF6F = {
 			isa = PBXBuildFile;
 			fileRef = 2BAFF327FC54783886F8620F;
@@ -1643,6 +1651,13 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = MappingLayerTimeline.h;
 			path = ../../Source/TimeMachine/Sequence/Layer/layers/mapping/ui/MappingLayerTimeline.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		203B23CC8571848A67B12459 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = HTTPCommand.cpp;
+			path = ../../Source/Module/modules/http/commands/HTTPCommand.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		204D7E4EFCCE5DE79A20294F = {
@@ -3829,6 +3844,13 @@
 			path = ../../Source/Common/Processor/Action/Condition/conditions/StandardCondition/StandardCondition.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
+		A949F877768B9F4072481556 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = HTTPModule.cpp;
+			path = ../../Source/Module/modules/http/HTTPModule.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		A9FC803DA1FE5532CB11D833 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -4564,6 +4586,13 @@
 			path = ../../Source/Module/modules/osc/reaper/ReaperModule.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
+		D3564553ECF4937D061B6C98 = {
+			isa = PBXFileReference;
+			lastKnownFileType = file.js;
+			name = httpScriptTemplate.js;
+			path = ../../Resources/Templates/Scripts/httpScriptTemplate.js;
+			sourceTree = "SOURCE_ROOT";
+		};
 		D3AC6DB8F537535B3BF2A807 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -4977,6 +5006,13 @@
 			path = ../../Source/Common/DMX/ui/DMXDashboard.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
+		E7CB9590B9D6627A2BD18C73 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = HTTPModule.h;
+			path = ../../Source/Module/modules/http/HTTPModule.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		E92288FB21A7A81372B50E88 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -5052,6 +5088,13 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = JoyConModule.cpp;
 			path = ../../Source/Module/modules/controller/joycon/JoyConModule.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
+		EE57E9D5209F785B203A64C8 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = HTTPCommand.h;
+			path = ../../Source/Module/modules/http/commands/HTTPCommand.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		EE7734BE83426C490017DACD = {
@@ -5340,6 +5383,7 @@
 				A17ACDD4B45B14AB30469A2D,
 				7347A5FBEE965521C1AFC6A2,
 				8F1E0B684D1010283648DB5F,
+				D3564553ECF4937D061B6C98,
 				D5FBA39828DF0F3D12B63CFF,
 				20A44377EAC767480769BEA5,
 				1542C0258C8286E5FD5F1206,
@@ -6671,6 +6715,25 @@
 			name = system;
 			sourceTree = "<group>";
 		};
+		3882FC6611F70732C1537A63 = {
+			isa = PBXGroup;
+			children = (
+				203B23CC8571848A67B12459,
+				EE57E9D5209F785B203A64C8,
+			);
+			name = commands;
+			sourceTree = "<group>";
+		};
+		D80815E6CA298099BA8E524C = {
+			isa = PBXGroup;
+			children = (
+				3882FC6611F70732C1537A63,
+				A949F877768B9F4072481556,
+				E7CB9590B9D6627A2BD18C73,
+			);
+			name = http;
+			sourceTree = "<group>";
+		};
 		7C223B85E0CE98F8D08AF607 = {
 			isa = PBXGroup;
 			children = (
@@ -6745,6 +6808,7 @@
 				8EC3C4B98ADD1102D4C6ACF4,
 				FE0EA6C38535EE229BDE0141,
 				564C145CA909D444862C257E,
+				D80815E6CA298099BA8E524C,
 				30D6E5F603110E42C1ABDBF9,
 				15ABF350156E6F47D7D40597,
 			);
@@ -7247,8 +7311,8 @@
 					"_DEBUG=1",
 					"DEBUG=1",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
-					"JUCE_APP_VERSION=1.5.7",
-					"JUCE_APP_VERSION_HEX=0x10507",
+					"JUCE_APP_VERSION=1.5.8b1",
+					"JUCE_APP_VERSION_HEX=0x10508",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
 					"JucePlugin_Build_AU=0",
@@ -7300,8 +7364,8 @@
 					"_NDEBUG=1",
 					"NDEBUG=1",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
-					"JUCE_APP_VERSION=1.5.7",
-					"JUCE_APP_VERSION_HEX=0x10507",
+					"JUCE_APP_VERSION=1.5.8b1",
+					"JUCE_APP_VERSION_HEX=0x10508",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
 					"JucePlugin_Build_AU=0",
@@ -7654,6 +7718,8 @@
 				AE6EB1B6A4006F74B15D443A,
 				DD7FE758703AC0C7402A9809,
 				842FFDD3DA695E4C5D014414,
+				E100F7E75361CCE27D886FF9,
+				B273E2791D5ACAE101663028,
 				33E16DCF5C4801FF0C7CBF6F,
 				96579460CFE54DB06569F21B,
 				0EE14FF9197B0DC31DA1022E,
@@ -7802,6 +7868,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (DD2989001B2BF710FEA75ED3);
+			knownRegions = (en, Base);
 		};
 	};
 	rootObject = CFE62146BE7CC7A0837B591F;
