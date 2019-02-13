@@ -106,6 +106,14 @@ void CustomValuesCommandArgument::updateParameterFromTemplate()
 		
 		if (param->isControllableFeedbackOnly || !param->isOverriden)
 		{
+			if (param->type == Controllable::ENUM)
+			{
+				EnumParameter * lep = (EnumParameter *)linkedTemplate->param;
+				EnumParameter * ep = (EnumParameter *)param;
+				ep->clearOptions();
+				for (auto &ev : lep->enumValues) ep->addOption(ev->key, ev->value);
+			}
+
 			param->defaultValue = linkedTemplate->param->value;
 			param->resetValue();
 		}
