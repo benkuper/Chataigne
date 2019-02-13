@@ -706,48 +706,6 @@
     <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\remotecontrol\OSCRemoteControl.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\BinaryData.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\include_juce_audio_basics.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\include_juce_audio_devices.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\include_juce_audio_formats.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\include_juce_audio_processors.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\include_juce_core.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\include_juce_cryptography.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\include_juce_data_structures.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\include_juce_events.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\include_juce_graphics.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\include_juce_gui_basics.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\include_juce_gui_extra.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\include_juce_opengl.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\include_juce_video.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\resources\OrganicBinaryData.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -1207,9 +1165,6 @@
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\progress\ui\ProgressWindow.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\progress\ProgressNotifier.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\remotecontrol\OSCRemoteControl.h"/>
-    <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\AppConfig.h"/>
-    <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\BinaryData.h"/>
-    <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\JuceHeader.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\resources\OrganicBinaryData.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\script\ui\ScriptEditor.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\script\ExpressionListener.h"/>
@@ -1269,7 +1224,6 @@
     <None Include="..\..\Resources\snap.png"/>
     <None Include="..\..\Resources\stop.png"/>
     <None Include="..\..\Resources\stripe.png"/>
-    <None Include="..\..\..\JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\ReadMe.txt"/>
     <None Include="..\..\..\JUCE Modules\juce_organicui\README.md"/>
     <None Include=".\icon.ico"/>
   </ItemGroup>

@@ -34,7 +34,11 @@ before_install:
     fi; 
   else 
     echo "No tag set, set config to Debug / bleeding"; 
-    export MAKECONF=Debug
+    if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
+      export MAKECONF=Debug
+    else
+      export MAKECONF=Release
+    fi
     export SUFFIX=bleedingedge
   fi;
 
@@ -59,6 +63,11 @@ before_install:
     cd ..
     pwd
     ls -d */
+    curl -L -o Packages.dmg 'http://s.sudre.free.fr/Software/files/Packages.dmg'
+    hdiutil mount Packages.dmg
+    sudo installer -pkg /Volumes/Packages\ 1.2.5/Install\ Packages.pkg -target /
+    hdiutil detach /Volumes/Packages\ 1.2.5/
+    cd /Users/travis/build/benkuper
   fi
 install:
 - |
@@ -114,8 +123,9 @@ after_success:
     echo 'Uploading $SUFFIX ...';
     curl --verbose --progress-bar --ipv4 --connect-timeout 8 --max-time 120 --retry 128 --ftp-ssl --disable-epsv --ftp-pasv  -u "$FTP_USER:$FTP_PASSWORD" ftp://ftp.kuperberg.fr/ -T Chataigne-linux-x64-$SUFFIX.AppImage"
   else
-    cd /Users/travis/build/benkuper/Chataigne/Builds/MacOSX/build/$MAKECONF
+    cd /Users/travis/build/benkuper/Chataigne/Package
     ls
-    zip -r -y Chataigne-osx-$SUFFIX.zip Chataigne.app
-    curl -T Chataigne-osx-$SUFFIX.zip -u $FTP_USER:$FTP_PASSWORD --insecure ftp://ftp.kuperberg.fr/
+    packagesbuild Chataigne.pkgproj
+    mv Chataigne.pkg Chataigne-osx-$SUFFIX.pkg
+    curl -T Chataigne-osx-$SUFFIX.pkg -u $FTP_USER:$FTP_PASSWORD --insecure ftp://ftp.kuperberg.fr/
   fi
