@@ -14,8 +14,8 @@
 Mapping::Mapping(bool canBeDisabled) :
 	Processor("Mapping", canBeDisabled),
 	outputParam(nullptr),
+    processMode(VALUE_CHANGE),
     inputIsLocked(false),
-	processMode(VALUE_CHANGE),
     mappingAsyncNotifier(10)
 {
 	itemDataType = "Mapping";
