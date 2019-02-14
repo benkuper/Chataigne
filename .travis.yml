@@ -88,7 +88,7 @@ install:
     export CXX=/usr/bin/g++;
     echo ${CC};
     echo ${CXX};
-    apt-get install -qq git libfreetype6-dev libx11-dev libxinerama-dev libxrandr-dev libxcursor-dev libxcomposite-dev mesa-common-dev libasound2-dev freeglut3-dev libcurl4-gnutls-dev+ libasound2-dev libjack-dev libbluetooth-dev libgtk-3-dev libwebkit2gtk-4.0-dev curl wget zip unzip libfuse2;
+    apt-get install -qq git libfreetype6-dev libx11-dev libxinerama-dev libxrandr-dev libxcursor-dev libxcomposite-dev mesa-common-dev libasound2-dev freeglut3-dev libcurl4-gnutls-dev+ libasound2-dev libjack-dev libbluetooth-dev libgtk-3-dev libwebkit2gtk-4.0-dev curl wget zip unzip libfuse2 sshpass;
     cd ~;
     pwd;
     git clone --depth=1 --branch=develop-local https://github.com/benkuper/JUCE.git JUCE;
@@ -121,7 +121,10 @@ after_success:
     cp build/Chataigne Chataigne.AppDir/usr/bin/;
     ./appimagetool-x86_64.AppImage Chataigne.AppDir Chataigne-linux-x64-$SUFFIX.AppImage;
     echo 'Uploading $SUFFIX ...';
-    curl --verbose --progress-bar --ipv4 --connect-timeout 8 --max-time 120 --retry 128 --ftp-ssl --disable-epsv --ftp-pasv  -u "$FTP_USER:$FTP_PASSWORD" ftp://ftp.kuperberg.fr/ -T Chataigne-linux-x64-$SUFFIX.AppImage"
+    sshpass -p $FTP_PASSWORD sftp -oBatchMode=no -b - $FTP_USER@ftp.kuperberg.fr << !
+    put test2.txt
+    bye
+    !;"
   else
     cd /Users/travis/build/benkuper/Chataigne/Package
     ls
