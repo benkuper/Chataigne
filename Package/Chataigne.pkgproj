@@ -45,9 +45,9 @@
 									<key>GID</key>
 									<integer>80</integer>
 									<key>PATH</key>
-									<string>/Users/benkuper/Documents/Dev/Chataigne/Builds/MacOSX/build/Release/Chataigne.app</string>
+									<string>../Builds/MacOSX/build/Release/Chataigne.app</string>
 									<key>PATH_TYPE</key>
-									<integer>0</integer>
+									<integer>1</integer>
 									<key>PERMISSIONS</key>
 									<integer>493</integer>
 									<key>TYPE</key>
