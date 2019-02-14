@@ -122,7 +122,7 @@ after_success:
     ./appimagetool-x86_64.AppImage Chataigne.AppDir Chataigne-linux-x64-$SUFFIX.AppImage;
     echo 'Uploading $SUFFIX ...';
     sshpass -p $FTP_PASSWORD sftp -oBatchMode=no -b - $FTP_USER@ftp.kuperberg.fr << !
-    put test2.txt
+    put Chataigne-linux-x64-$SUFFIX.AppImage
     bye
     !;"
   else
