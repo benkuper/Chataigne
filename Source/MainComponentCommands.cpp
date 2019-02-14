@@ -178,16 +178,21 @@ bool MainContentComponent::perform(const InvocationInfo& info)
 
 	case ChataigneCommandIDs::playPauseSequenceEditor:	
 	{
-		Component * c = ShapeShifterManager::getInstance()->getContentForName("Sequence Editor")->contentComponent;
-		TimeMachineView * tmw = dynamic_cast<TimeMachineView *>(c);
-		if (tmw != nullptr)
+		ShapeShifterContent * sContent = ShapeShifterManager::getInstance()->getContentForName("Sequence Editor");
+		if (sContent != nullptr)
 		{
-			SequenceEditor * se = tmw->editor;
-			if (se != nullptr)
+			Component * c = sContent->contentComponent;
+			TimeMachineView * tmw = dynamic_cast<TimeMachineView *>(c);
+			if (tmw != nullptr)
 			{
-				if (se->sequence != nullptr) se->sequence->togglePlayTrigger->trigger();
+				SequenceEditor * se = tmw->editor;
+				if (se != nullptr)
+				{
+					if (se->sequence != nullptr) se->sequence->togglePlayTrigger->trigger();
+				}
 			}
 		}
+		
 	}
 	break;
 
