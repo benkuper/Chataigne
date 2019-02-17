@@ -71,6 +71,8 @@ void NetworkStreamingModule::controllableFeedbackUpdate(ControllableContainer * 
 
 void NetworkStreamingModule::run()
 {
+	if (Engine::mainEngine != nullptr && Engine::mainEngine->isClearing) return;
+
 	initThread();
 
 	//char buffer[512];

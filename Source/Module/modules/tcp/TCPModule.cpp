@@ -30,6 +30,7 @@ void TCPModule::setupSender()
 	
 	if (sendCC == nullptr) return;
 	if (!sendCC->enabled->boolValue()) return;
+	if (Engine::mainEngine != nullptr && Engine::mainEngine->isClearing) return;
 
 	startThread();
 }
