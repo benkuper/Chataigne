@@ -12,9 +12,6 @@
 #define TIMECOLORMANAGER_H_INCLUDED
 
 #include "TimeColor.h"
-#include "../../../../Sequence.h"
-
-class MappingLayer;
 
 class TimeColorComparator
 {
@@ -28,28 +25,31 @@ public:
 };
 
 class TimeColorManager :
-	public BaseManager<TimeColor>,
-	public Sequence::SequenceListener
+	public BaseManager<TimeColor>
 {
 public:
 	TimeColorManager(float maxPosition = 10);
 	~TimeColorManager();
 
 	ColorParameter * currentColor;
-	ColourGradient gradient;
 	SpinLock gradientLock;
 
 	FloatParameter * position;
-	float positionMax;
-	void setPositionMax(float val);
+	FloatParameter * length;
+
+	bool allowKeysOutside;
+	
+	void setLength(float val, bool stretch = false, bool stickToEnd = false);
 
 	static TimeColorComparator comparator;
 
-	Colour getColorForPosition(const float &time) const;
+	Colour getColorForPosition(const float & time) const;
 	
-	void rebuildGradient();
+	//void rebuildGradient();
 	
 	TimeColor * addColorAt(float time, Colour color);
+	TimeColor * getItemAt(float time, bool getNearestPreviousKeyIfNotFound = false) const;
+
     void addItemInternal(TimeColor * item, var data) override;
 	void removeItemInternal(TimeColor * item) override;
 	

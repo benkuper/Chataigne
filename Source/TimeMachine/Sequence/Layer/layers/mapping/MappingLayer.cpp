@@ -94,8 +94,9 @@ void MappingLayer::setupMappingForCurrentMode()
 		if (timeColorManager == nullptr)
 		{
 			timeColorManager = new TimeColorManager(sequence->totalTime->floatValue());
+			timeColorManager->allowKeysOutside = false;
 			addChildControllableContainer(timeColorManager);
-			timeColorManager->setPositionMax(sequence->totalTime->floatValue());
+			timeColorManager->setLength(sequence->totalTime->floatValue());
 		}
 	}
 	else
@@ -272,7 +273,7 @@ void MappingLayer::sequenceTotalTimeChanged(Sequence *)
 {
 	if (mode->getValueDataAsEnum<Mode>() == MODE_COLOR)
 	{
-		timeColorManager->setPositionMax(sequence->totalTime->floatValue());
+		timeColorManager->setLength(sequence->totalTime->floatValue());
 	}
 	else
 	{

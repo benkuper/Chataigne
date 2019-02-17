@@ -15,10 +15,10 @@ TimeColor::TimeColor(float _time, const Colour & _color, const String & name) :
 	BaseItem(name,false),
 	gradientIndex(-1)
 {
-	position = addFloatParameter("Time", "Time for the color", 0, 0, 3600);
+	position = addFloatParameter("Time", "Time for the color",0);
 	color = new ColorParameter("Color", "Color of the item", Colours::black);
 	interpolation = addEnumParameter("Interpolation", "Interpolation to the next key");
-	interpolation->addOption("Linear", ColourGradient::Interpolation::LINEAR)->addOption("None", ColourGradient::Interpolation::NONE);
+	interpolation->addOption("Linear", Interpolation::LINEAR)->addOption("None", Interpolation::NONE);
 
 	position->setValue(_time);
 	color->setColor(_color);

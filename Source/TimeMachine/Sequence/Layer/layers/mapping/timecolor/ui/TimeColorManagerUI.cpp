@@ -20,7 +20,7 @@ TimeColorManagerUI::TimeColorManagerUI(TimeColorManager * manager) :
 	animateItemOnAdd = false;
 
 	transparentBG = true;
-	setViewRange(0, manager->positionMax);
+	setViewRange(0, manager->length->floatValue());
 
 	resizeOnChildBoundsChanged = false;
 
@@ -40,6 +40,7 @@ TimeColorManagerUI::~TimeColorManagerUI()
 
 void TimeColorManagerUI::setViewRange(float start, float end)
 {
+	
 	viewStartPos = start;
 	viewEndPos = end;
 	
@@ -67,7 +68,7 @@ void TimeColorManagerUI::paint(Graphics & g)
 	g.fillRect(r.removeFromBottom(16).reduced(2,7));z
 
 	manager->gradient.point1.setX(getXForPos(0));
-	manager->gradient.point2.setX(getXForPos(manager->positionMax));
+	manager->gradient.point2.setX(getXForPos(manager->length->floatValue()));
 
 	g.fillCheckerBoard(r.toFloat(), 12, 12, Colours::white, Colours::white.darker(.2f));
 	if (!manager->items.isEmpty())

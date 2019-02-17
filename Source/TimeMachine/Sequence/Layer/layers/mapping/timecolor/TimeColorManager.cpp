@@ -12,31 +12,32 @@
 
 TimeColorComparator TimeColorManager::comparator;
 
-TimeColorManager::TimeColorManager(float _maxPosition) :
+TimeColorManager::TimeColorManager(float _length) :
 	BaseManager("Colors"),
-	gradient(Colours::red, 0, 0, Colours::blue, _maxPosition, 0, false),
-	positionMax(_maxPosition)
+	allowKeysOutside(true)
 {
 
 	editorIsCollapsed = true;
 	skipControllableNameInAddress = true;
 	selectItemWhenCreated = false;
 
-	position = addFloatParameter("Position", "Position in the gradient", 0, 0, positionMax);
+	position = addFloatParameter("Position", "Position in the gradient", 0, 0, _length);
 	position->isSavable = false;
 	position->hideInEditor = true;
+
+	length = addFloatParameter("Length", "Length of the gradient", _length, 0, INT32_MAX);
 
 	currentColor = new ColorParameter("Color", "Current color depending on time", Colours::black);
 	currentColor->isSavable = false;
 	currentColor->setControllableFeedbackOnly(true);
 	addParameter(currentColor);
 
-	addColorAt(positionMax / 5, Colours::red);
-	addColorAt(positionMax * 2 / 5, Colours::yellow);
-	addColorAt(positionMax * 3 / 5, Colours::green)->interpolation->setValueWithData(ColourGradient::NONE);
-	addColorAt(positionMax * 4 / 5, Colours::blue);
+	addColorAt(length->floatValue() / 5, Colours::red);
+	addColorAt(length->floatValue() * 2 / 5, Colours::yellow);
+	addColorAt(length->floatValue() * 3 / 5, Colours::green)->interpolation->setValueWithData(TimeColor::NONE);
+	addColorAt(length->floatValue() * 4 / 5, Colours::blue);
 
-	rebuildGradient();
+	//rebuildGradient();
 
 	currentColor->setColor(getColorForPosition(position->floatValue()));
 }
@@ -46,25 +47,64 @@ TimeColorManager::~TimeColorManager()
 {
 }
 
-void TimeColorManager::setPositionMax(float val)
+void TimeColorManager::setLength(float val, bool stretch, bool stickToEnd)
 {
-	positionMax = val;
-	position->setRange(0, positionMax);
+	if (length->floatValue() == val) return;
+
+	float stretchFactor = val / length->floatValue();
+	
+	float lengthDiff = val - length->floatValue();
+
+	length->setValue(val);
+	position->setRange(0, length->floatValue());
+	
+	
 	for (auto &k : items)
 	{
 		//DBG("Set posMax to " << k->niceName << "/" << (int)k->position);
-		k->position->setRange(0, positionMax);
+
+		if (stretch && stretchFactor < 1) k->position->setValue(k->position->floatValue()*stretchFactor); //reposition then set range
+
+		if (!allowKeysOutside) k->position->setRange(0, length->floatValue());
+
+		if (stretch && stretchFactor > 1) k->position->setValue(k->position->floatValue()*stretchFactor); //set range then reposition
+
+		if (!stretch && stickToEnd) k->position->setValue(k->position->floatValue() + lengthDiff);
 	}
+	
 }
 
 Colour TimeColorManager::getColorForPosition(const float & time) const
 {
 	if (items.isEmpty()) return Colours::transparentBlack;
-	if (items.size() == 1) return items[0]->color->getColor();
+	if (time <= items[0]->position->floatValue()) return items[0]->color->getColor();
+	if (time >= items[items.size() - 1]->position->floatValue()) return items[items.size() - 1]->color->getColor();
 
-	return gradient.getColourAtPosition(time / positionMax);
+	TimeColor * nearest = getItemAt(time, true);
+
+	if (nearest == nullptr) return Colours::purple;
+
+	TimeColor::Interpolation interpolation = nearest->interpolation->getValueDataAsEnum<TimeColor::Interpolation>();
+
+	switch (interpolation)
+	{
+	case TimeColor::NONE:
+		return nearest->color->getColor();
+		break;
+
+	case TimeColor::LINEAR:
+	{
+		TimeColor * next = items[items.indexOf(nearest) + 1];
+		if (nearest == nullptr || next == nullptr || nearest->position->floatValue() == next->position->floatValue()) return nearest->color->getColor();
+		return nearest->color->getColor().interpolatedWith(next->color->getColor(), jmap<float>(time, nearest->position->floatValue(), next->position->floatValue(), 0, 1));
+	}
+	break;
+	}
+
+	return Colours::purple;
 }
 
+/*
 void TimeColorManager::rebuildGradient()
 {
 	gradientLock.enter();
@@ -73,32 +113,56 @@ void TimeColorManager::rebuildGradient()
 
 	for (auto &i : items)
 	{
-		i->gradientIndex = gradient.addColour(i->position->floatValue() / positionMax, i->color->getColor(), i->interpolation->getValueDataAsEnum<ColourGradient::Interpolation>());
+		i->gradientIndex = gradient.addColour(jlimit<float>(0,1,i->position->floatValue() / length->floatValue()), i->color->getColor(), i->interpolation->getValueDataAsEnum<ColourGradient::Interpolation>());
 	}
 	gradientLock.exit();
 
 	currentColor->setColor(getColorForPosition(position->floatValue()));
 	colorManagerListeners.call(&TimeColorManagerListener::gradientUpdated);
 }
+*/
 
 TimeColor * TimeColorManager::addColorAt(float time, Colour color)
 {
 	if (items.isEmpty())  color = color.withAlpha(1.0f); //if only one color, force a non-transparent one to avoid confusion
-	TimeColor * t = new TimeColor(time, color);
-	BaseManager::addItem(t);
-	rebuildGradient();
+	TimeColor * t = getItemAt(time);
+	if (t == nullptr)
+	{
+		t = new TimeColor(time, color);
+		BaseManager::addItem(t);
+	}
+	else
+	{
+		t->color->setColor(color);
+	}
+	
+	reorderItems();
+	//rebuildGradient();
 	return t;
+}
+
+TimeColor * TimeColorManager::getItemAt(float time, bool getNearestPreviousKeyIfNotFound) const
+{
+	TimeColor * nearestPrevious = nullptr;
+	for (auto &t : items)
+	{
+		if (t->position->floatValue() == time) return t;
+		if (t->position->floatValue() > time) break; //avoid looking for further keys, todo : implement dichotomy mechanism
+		nearestPrevious = t;
+	}
+
+	return getNearestPreviousKeyIfNotFound ? nearestPrevious : nullptr;
 }
 
 void TimeColorManager::addItemInternal(TimeColor * item, var data)
 {
-	item->gradientIndex = gradient.addColour(item->position->floatValue() / positionMax, item->color->getColor());
-	item->position->setRange(0, positionMax);
+	//item->gradientIndex = gradient.addColour(item->position->floatValue() / length->floatValue(), item->color->getColor());
+	if(!allowKeysOutside) item->position->setRange(0, length->floatValue());
 }
 
 void TimeColorManager::removeItemInternal(TimeColor *)
 {
-	rebuildGradient();
+	//rebuildGradient();
 }
 
 void TimeColorManager::reorderItems()
@@ -136,16 +200,16 @@ void TimeColorManager::onControllableFeedbackUpdate(ControllableContainer * cc, 
 
 		}
 		else if (c == t->color) {
-			gradient.setColour(t->gradientIndex, t->color->getColor());
+			//gradient.setColour(t->gradientIndex, t->color->getColor());
 			colorManagerListeners.call(&TimeColorManagerListener::gradientUpdated);
 		}
 		else if (c == t->interpolation)
 		{
-			gradient.setInterpolation(t->gradientIndex, t->interpolation->getValueDataAsEnum<ColourGradient::Interpolation>());
+			//gradient.setInterpolation(t->gradientIndex, t->interpolation->getValueDataAsEnum<ColourGradient::Interpolation>());
 			colorManagerListeners.call(&TimeColorManagerListener::gradientUpdated);
 		}
 
-		rebuildGradient();
+		//rebuildGradient();
 		currentColor->setColor(getColorForPosition(position->floatValue()));
 	}
 }
@@ -153,6 +217,6 @@ void TimeColorManager::onControllableFeedbackUpdate(ControllableContainer * cc, 
 void TimeColorManager::loadJSONDataInternal(var data)
 {
 	BaseManager::loadJSONDataInternal(data);
-	rebuildGradient();
+	//rebuildGradient();
 }
 
