@@ -30,4 +30,6 @@ public:
 
 	void controllableFeedbackUpdate(Controllable * c) override;
 	void resizedInternalContent(Rectangle<int> &r) override;
+
+	void mouseDown(const MouseEvent &e) override;
 };

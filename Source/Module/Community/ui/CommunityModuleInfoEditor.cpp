@@ -27,6 +27,8 @@ CommunityModuleInfoEditor::CommunityModuleInfoEditor(CommunityModuleInfo * cmi, 
 	urlLabel.setEditable(false);
 	urlLabel.setColour(urlLabel.textColourId, BLUE_COLOR);
 	urlLabel.setFont(12);
+	urlLabel.setMouseCursor(MouseCursor::PointingHandCursor);
+	urlLabel.addMouseListener(this, false);
 
 	addAndMakeVisible(&description);
 	addAndMakeVisible(&urlLabel);
@@ -77,4 +79,12 @@ void CommunityModuleInfoEditor::resizedInternalContent(Rectangle<int>& r)
 	description.setBounds(r);
 
 	r.translate(0,120);
+}
+
+void CommunityModuleInfoEditor::mouseDown(const MouseEvent & e)
+{
+	if (e.eventComponent == &urlLabel)
+	{
+		URL(cmi->url).launchInDefaultBrowser();
+	}
 }
