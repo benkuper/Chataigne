@@ -42,9 +42,12 @@
 #include "modules/osc/heavym/HeavyMModule.h"
 #include "modules/http/HTTPModule.h"
 
+#include "Community/CommunityModuleManager.h"
+
 juce_ImplementSingleton(ModuleFactory)
 
 ModuleFactory::ModuleFactory() {
+	
 	moduleDefs.add(new ModuleDefinition("Protocol", "OSC", &CustomOSCModule::create));
 	moduleDefs.add(new ModuleDefinition("Protocol", "MIDI", &MIDIModule::create));
 	moduleDefs.add(new ModuleDefinition("Protocol", "DMX", &DMXModule::create));
@@ -138,6 +141,7 @@ void ModuleFactory::addCustomModules()
 			customModulesDefMap.set(moduleName, def);
 			def->jsonData = moduleData;
 			def->moduleFolder = m;
+			def->isCustomModule = true;
 		}
 		
 	}
@@ -169,6 +173,7 @@ void ModuleFactory::buildPopupMenu()
 
 	OwnedArray<PopupMenu> subMenus;
 	Array<String> subMenuNames;
+	Array<bool> lastDefIsCustom;
 
 	for (auto &d : moduleDefs)
 	{
@@ -193,14 +198,25 @@ void ModuleFactory::buildPopupMenu()
 		if (subMenuIndex == -1)
 		{
 			subMenuNames.add(d->menuPath);
+			lastDefIsCustom.add(false);
 			subMenus.add(new PopupMenu());
 			subMenuIndex = subMenus.size() - 1;
 		}
 
+		if (d->isCustomModule && !lastDefIsCustom[subMenuIndex])
+		{
+			if(subMenus[subMenuIndex]->getNumItems() > 0) subMenus[subMenuIndex]->addSeparator();
+			subMenus[subMenuIndex]->addSectionHeader("Community Modules");
+		}
+
 		subMenus[subMenuIndex]->addItem(itemID, d->moduleType);
+		lastDefIsCustom.set(subMenuIndex, d->isCustomModule);
 	}
 
 	for (int i = 0; i < subMenus.size(); i++) menu.addSubMenu(subMenuNames[i], *subMenus[i]);
+
+	menu.addSeparator();
+	menu.addItem(-1, "Get more modules...");
 }
 
 File ModuleFactory::getCustomModulesFolder() const
@@ -212,6 +228,11 @@ Module * ModuleFactory::showCreateMenu()
 {
 	int result = getInstance()->menu.show();
 	if (result == 0) return nullptr;
+	if (result == -1)
+	{
+		CommunityModuleManager::getInstance()->selectThis();
+		return nullptr;
+	}
 
 	ModuleDefinition * d = getInstance()->moduleDefs[result - 1];//result 0 is no result
 	Module * m = d->createFunc();

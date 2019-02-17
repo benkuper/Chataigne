@@ -20,13 +20,16 @@ public:
 	String moduleType;
 	File moduleFolder; //for customModules
 	var jsonData;
+	bool isCustomModule;
 	std::function<Module*()> createFunc;
 
-	ModuleDefinition(const String &menuPath, const String &type, std::function<Module*()> createFunc, var jsonData = var()) :
+
+	ModuleDefinition(const String &menuPath, const String &type, std::function<Module*()> createFunc, var jsonData = var(), bool isCustomModule = false) :
 		menuPath(menuPath),
 		moduleType(type),
 		jsonData(jsonData),
-		createFunc(createFunc)
+		createFunc(createFunc),
+		isCustomModule(isCustomModule)
 	{}
 };
 
