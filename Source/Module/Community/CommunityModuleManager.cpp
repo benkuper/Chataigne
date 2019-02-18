@@ -30,40 +30,68 @@ CommunityModuleManager::~CommunityModuleManager()
 
 void CommunityModuleManager::run()
 {
-	URL modulesURL("http://benjamin.kuperberg.fr/chataigne/releases/modules.json");
+	var data = getJSONDataForURL(URL("http://benjamin.kuperberg.fr/chataigne/releases/modules.json"));
+	
+	if (!data.isObject())
+	{
+		LOGWARNING("Error fetching community modules, wrong data format.");
+		return;
+	}
 
+	var defs = data.getProperty("definitions", var());
+	
+	if (!defs.isArray()) return;
+
+	for (int i = 0; i < defs.size(); i++)
+	{
+		String defURL = defs[i].toString();
+		if (defURL.isEmpty()) continue;
+
+		var moduleDefData = getJSONDataForURL(URL(defURL));
+
+		if (!moduleDefData.isObject())
+		{
+			LOGWARNING("Community Module definition file is not valid : " << defURL);
+			continue;
+		}
+
+		String moduleName = moduleDefData.getProperty("name", "");
+
+		if (moduleName.isEmpty()) {
+			DBG("Module name is empty !");
+			continue;
+		}
+
+		CommunityModuleInfo * m = new CommunityModuleInfo(moduleName, moduleDefData);
+		addItem(m);
+		
+	}
+	
+}
+
+var CommunityModuleManager::getJSONDataForURL(URL url)
+{
+	
 	StringPairArray responseHeaders;
 	int statusCode = 0;
-	ScopedPointer<InputStream> stream(modulesURL.createInputStream(false, nullptr, nullptr, String(),
+	ScopedPointer<InputStream> stream(url.createInputStream(false, nullptr, nullptr, String(),
 		2000, // timeout in millisecs
 		&responseHeaders, &statusCode));
 #if JUCE_WINDOWS
 	if (statusCode != 200)
 	{
 		LOGWARNING("Failed to connect, status code = " + String(statusCode));
-		return;
+		return var();
 	}
 #endif
 
-	DBG("CommunityModule:: Status code " << statusCode);
 
 	if (stream != nullptr)
 	{
 		String content = stream->readEntireStreamAsString();
 		var data = JSON::parse(content);
-
-		if (data.isObject())
-		{
-			NamedValueSet mList = data.getDynamicObject()->getProperties();
-			for (auto &mData : mList)
-			{
-				var localData = ModuleFactory::getInstance()->getCustomModuleInfo(mData.name);
-				File localFolder = File();
-				if (!localData.isVoid()) localFolder = ModuleFactory::getInstance()->getFolderForCustomModule(mData.name);
-				CommunityModuleInfo * m = new CommunityModuleInfo(mData.name, mData.value, localData, localFolder);
-				addItem(m);
-			}
-		}
+		return data;
 	}
-	
+
+	return var();
 }

@@ -12,7 +12,7 @@
 #include "ui/CommunityModuleInfoEditor.h"
 #include "Module/ModuleFactory.h"
 
-CommunityModuleInfo::CommunityModuleInfo(StringRef name, var onlineData, var localData, File localFolder) :
+CommunityModuleInfo::CommunityModuleInfo(StringRef name, var onlineData) :
 	BaseItem(name, false)
 {
 	userCanRemove = false;
@@ -20,22 +20,21 @@ CommunityModuleInfo::CommunityModuleInfo(StringRef name, var onlineData, var loc
 
 	installTriger = addTrigger("Install", "Install or Update this module");
 	uninstallTrigger = addTrigger("Uninstall", "Uninstall this module");	
-	isOnline = addBoolParameter("Is Online", "Is this module registered online ?", !onlineData.isVoid());
-	isLocal = addBoolParameter("Is Local", "Is this module installed locally ?", localFolder.exists());
 
+	isOnline = addBoolParameter("Is Online", "Is this module registered online ?", !onlineData.isVoid());
+	isLocal = addBoolParameter("Is Local", "Is this module installed locally ?",  false);
+	
 	if (!onlineData.isVoid())
 	{
 		url = onlineData.getProperty("url", "");
 		description = onlineData.getProperty("description", "");
 		downloadURL = onlineData.getProperty("downloadURL", "");
-		onlineVersion = onlineData.getProperty("version", "0.0.0");
+		onlineVersion = onlineData.getProperty("version", "Unknown");
+
 	}
 
-	if (!localData.isVoid())
-	{
-		localVersion = localData.getProperty("version", "0.0.0");
-		if (localFolder.exists()) localModuleFolder = localFolder;
-	}
+	updateLocalData();
+	
 }
 
 CommunityModuleInfo::~CommunityModuleInfo()
@@ -45,7 +44,10 @@ CommunityModuleInfo::~CommunityModuleInfo()
 void CommunityModuleInfo::installModule()
 {
 	DBG("Download to file " << downloadURL << " > " << getDownloadFilePath().getFullPathName());
-	downloadTask = URL(downloadURL).downloadToFile(getDownloadFilePath(), "", this);
+	File df = getDownloadFilePath();
+	if (df.exists()) df.deleteFile();
+	downloadTask = nullptr;
+	downloadTask = URL(downloadURL).downloadToFile(df, "", this);
 	if (downloadTask == nullptr)
 	{
 		LOGERROR("Error trying to download module " + niceName);
@@ -57,6 +59,18 @@ File CommunityModuleInfo::getDownloadFilePath()
 	File tmpFolder = File::getSpecialLocation(File::tempDirectory).getChildFile("Chataigne");
 	if (!tmpFolder.exists()) tmpFolder.createDirectory();
 	return tmpFolder.getChildFile(niceName + ".zip");
+}
+
+void CommunityModuleInfo::updateLocalData()
+{
+	var localData = ModuleFactory::getInstance()->getCustomModuleInfo(niceName);
+	
+	localVersion = localData.getProperty("version", "Unknown");
+	localModuleFolder = ModuleFactory::getInstance()->getFolderForCustomModule(niceName);
+
+	installTriger->setEnabled(onlineVersion != localVersion);
+
+	isLocal->setValue(!localData.isVoid());
 }
 
 void CommunityModuleInfo::onContainerTriggerTriggered(Trigger * t)
@@ -73,8 +87,10 @@ void CommunityModuleInfo::onContainerTriggerTriggered(Trigger * t)
 			DBG("Local folder exists ? " << localModuleFolder.getFullPathName() << " : " << (int)localModuleFolder.exists());
 			if (localModuleFolder.exists()) localModuleFolder.deleteRecursively();
 			ModuleFactory::getInstance()->updateCustomModules();
-			isLocal->setValue(false);
+
+			updateLocalData();
 		}
+
 	}
 }
 
@@ -96,10 +112,11 @@ void CommunityModuleInfo::finished(URL::DownloadTask * task, bool success)
 
 	ModuleFactory::getInstance()->updateCustomModules();
 	localModuleFolder = ModuleFactory::getInstance()->getFolderForCustomModule(niceName);
-	isLocal->setValue(localModuleFolder.exists());
+	
+	updateLocalData();
 }
 
-void CommunityModuleInfo::progress(URL::DownloadTask * task, int64 bytesDownloaded, int64 totalLength)
+void CommunityModuleInfo::progress(URL::DownloadTask * /*task*/, int64 /*bytesDownloaded*/, int64 /*totalLength*/)
 {
 }
 

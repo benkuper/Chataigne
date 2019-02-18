@@ -16,7 +16,7 @@ class CommunityModuleInfo :
 	public URL::DownloadTask::Listener
 {
 public:
-	CommunityModuleInfo(StringRef name = "", var moduleData = var(), var localData = var(), File localFolder = File());
+	CommunityModuleInfo(StringRef name = "", var moduleData = var());
 	~CommunityModuleInfo();
 
 	String url;
@@ -35,6 +35,8 @@ public:
 
 	void installModule();
 	File getDownloadFilePath();
+
+	void updateLocalData();
 
 	void onContainerTriggerTriggered(Trigger * t) override;
 

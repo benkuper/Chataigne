@@ -21,12 +21,15 @@ public:
 
 	CommunityModuleInfo * cmi;
 	Label urlLabel;
+	Label versionsLabel;
 	TextEditor description;
 	ScopedPointer<TriggerButtonUI> installBT;
 	ScopedPointer<TriggerButtonUI> uninstallBT;
 
 
 	void resetAndBuild() override {} //do nothing
+
+	void updateVersionUI();
 
 	void controllableFeedbackUpdate(Controllable * c) override;
 	void resizedInternalContent(Rectangle<int> &r) override;

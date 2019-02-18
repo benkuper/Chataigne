@@ -30,20 +30,23 @@ CommunityModuleInfoEditor::CommunityModuleInfoEditor(CommunityModuleInfo * cmi, 
 	urlLabel.setMouseCursor(MouseCursor::PointingHandCursor);
 	urlLabel.addMouseListener(this, false);
 
+	versionsLabel.setEditable(false);
+	versionsLabel.setColour(urlLabel.textColourId, TEXT_COLOR);
+	versionsLabel.setFont(12);
+	versionsLabel.setJustificationType(Justification::centredRight);
+
 	addAndMakeVisible(&description);
 	addAndMakeVisible(&urlLabel);
+	addAndMakeVisible(&versionsLabel);
 
-	if (cmi->isOnline)
-	{
-		installBT = cmi->installTriger->createButtonUI();
-		addAndMakeVisible(installBT);
-		
-		uninstallBT = cmi->uninstallTrigger->createButtonUI();
-		addChildComponent(uninstallBT); 
-		
-		uninstallBT->setVisible(cmi->isLocal->boolValue());
-	}
 	
+	installBT = cmi->installTriger->createButtonUI();
+	addAndMakeVisible(installBT);
+		
+	uninstallBT = cmi->uninstallTrigger->createButtonUI();
+	addAndMakeVisible(uninstallBT); 
+		
+	updateVersionUI();
 
 	setSize(150, 80);
 }
@@ -52,13 +55,30 @@ CommunityModuleInfoEditor::~CommunityModuleInfoEditor()
 {
 }
 
+void CommunityModuleInfoEditor::updateVersionUI()
+{
+	String s = "Version : " + cmi->onlineVersion;
+	if (!cmi->isLocal->boolValue()) installBT->customText = ""; //Default to "install"
+	else
+	{
+		s += (" (Local : " + cmi->localVersion + ")");
+			
+		if (cmi->onlineVersion == cmi->localVersion) installBT->customText = "Up to date";
+		else installBT->customText = "Update";
+	}
+
+	versionsLabel.setText(s, dontSendNotification);
+
+	installBT->repaint();
+	cmi->uninstallTrigger->setEnabled(cmi->isLocal->boolValue());
+
+	resized();
+	
+}
+
 void CommunityModuleInfoEditor::controllableFeedbackUpdate(Controllable * c)
 {
-	if (c == cmi->isLocal)
-	{
-		uninstallBT->setVisible(cmi->isLocal->boolValue());
-		resized();
-	}
+	updateVersionUI();
 }
 
 void CommunityModuleInfoEditor::resizedInternalContent(Rectangle<int>& r)
@@ -68,9 +88,12 @@ void CommunityModuleInfoEditor::resizedInternalContent(Rectangle<int>& r)
 	if (uninstallBT != nullptr && installBT != nullptr)
 	{
 		Rectangle<int> footer = r.removeFromBottom(20).reduced(2);
+		uninstallBT->setBounds(footer.removeFromRight(100));
+		footer.removeFromRight(8);
 		installBT->setBounds(footer.removeFromRight(80));
 		footer.removeFromRight(8);
-		uninstallBT->setBounds(footer.removeFromRight(100));
+		versionsLabel.setBounds(footer);
+		
 		r.removeFromBottom(8);
 	}
 

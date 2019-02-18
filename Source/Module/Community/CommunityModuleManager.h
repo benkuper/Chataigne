@@ -22,4 +22,6 @@ public:
 	~CommunityModuleManager();
 
 	void run() override;
+
+	var getJSONDataForURL(URL url);
 };
