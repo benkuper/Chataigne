@@ -8,8 +8,7 @@
   ==============================================================================
 */
 
-#ifndef MODULEFACTORY_H_INCLUDED
-#define MODULEFACTORY_H_INCLUDED
+#pragma once
 
 #include "Module.h"
 
@@ -27,9 +26,9 @@ public:
 	ModuleDefinition(const String &menuPath, const String &type, std::function<Module*()> createFunc, var jsonData = var(), bool isCustomModule = false) :
 		menuPath(menuPath),
 		moduleType(type),
-		jsonData(jsonData),
-		createFunc(createFunc),
-		isCustomModule(isCustomModule)
+        jsonData(jsonData),
+        isCustomModule(isCustomModule),
+		createFunc(createFunc)
 	{}
 };
 
@@ -60,8 +59,3 @@ public:
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ModuleFactory)
 };
-
-
-
-
-#endif  // MODULEFACTORY_H_INCLUDED
