@@ -92,6 +92,8 @@ void CustomOSCCommand::useForMappingChanged(CustomValuesCommandArgument *)
 
 	clearTargetMappingParameters();
 	int index = 0;
+    if(customValuesManager == nullptr) return;
+    
 	for (auto &a : customValuesManager->items)
 	{
 		if (a->useForMapping->boolValue())
