@@ -12,10 +12,9 @@
 #define MODULE_H_INCLUDED
 
 #include "JuceHeader.h"
-#include "Common/Command/BaseCommandHandler.h"
-#include "Common/Command/CommandDefinitionManager.h"
 #include "Common/Command/Template/CommandTemplateManager.h"
 
+class BaseCommandHandler;
 class CommandDefinition;
 
 class Module :
@@ -45,7 +44,7 @@ public:
 
 	bool includeValuesInSave;
 
-	BaseCommandHandler commandTester;
+	ScopedPointer<BaseCommandHandler> commandTester;
 
 	String customType; //for custom modules;
 

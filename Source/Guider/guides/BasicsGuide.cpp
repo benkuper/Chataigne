@@ -180,7 +180,7 @@ void BasicsGuide::newMessage(const ConsequenceManager::ManagerEvent & e)
 		if (c != nullptr)
 		{
 			command = c;
-			command->adCommandHandlerListener(this);
+			command->addCommandHandlerListener(this);
 			nextStep();
 		}
 	}

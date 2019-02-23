@@ -276,9 +276,13 @@ void BaseCommand::setValue(var value)
 
 	trigger();
 }
+
 void BaseCommand::inspectableDestroyed(Inspectable * i)
 {
-	if (templateRef.wasObjectDeleted()) linkToTemplate(nullptr);
+	if (i == templateRef)
+	{
+		commandListeners.call(&CommandListener::commandTemplateDestroyed);// linkToTemplate(nullptr);
+	}
 }
 
 var BaseCommand::getJSONData()

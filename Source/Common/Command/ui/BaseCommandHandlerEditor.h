@@ -18,7 +18,7 @@
 class BaseCommandHandlerEditor :
 	public BaseItemEditor,
 	public CommandChooserUI::Listener,
-	public BaseCommandHandler::CommandHandlerListener
+	public BaseCommandHandler::AsyncListener
 {
 public:
 	BaseCommandHandlerEditor(BaseCommandHandler *, bool isRoot);
@@ -34,7 +34,7 @@ public:
 	void updateChooserLabel();
 
 	void definitionChosen(CommandDefinition * d) override;
-	void commandChanged(BaseCommandHandler*) override;
+	void newMessage(const BaseCommandHandler::CommandHandlerEvent &e) override;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(BaseCommandHandlerEditor)
 };

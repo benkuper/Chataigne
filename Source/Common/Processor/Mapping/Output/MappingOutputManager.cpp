@@ -47,7 +47,7 @@ void MappingOutputManager::updateOutputValue(MappingOutput * o)
 
 void MappingOutputManager::addItemInternal(MappingOutput * o, var)
 {
-	o->adCommandHandlerListener(this);
+	o->addCommandHandlerListener(this);
 	if(outParam != nullptr) o->setOutputType(outParam->type);
 	updateOutputValue(o);
 }

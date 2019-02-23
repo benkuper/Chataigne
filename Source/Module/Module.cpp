@@ -14,6 +14,8 @@
 #include "Common/Command/Template/CommandTemplate.h"
 #include "Module/modules/common/commands/scriptcommands/ScriptCommand.h"
 #include "UI/ChataigneAssetManager.h"
+#include "Common/Command/BaseCommandHandler.h"
+
 
 Module::Module(const String &name) :
 	BaseItem(name, true, true),
@@ -24,7 +26,6 @@ Module::Module(const String &name) :
 	valuesCC("Values"),
 	alwaysShowValues(false),
 	includeValuesInSave(false),
-	commandTester("Command Tester", CommandContext::ACTION),
 	templateManager(this),
     canHandleRouteValues(false)
 
@@ -59,21 +60,22 @@ Module::Module(const String &name) :
 	valuesCC.includeTriggersInSaveLoad = true;
 
 
-	commandTester.userCanRemove = false;
-	commandTester.canBeDisabled = false;
-	commandTester.lockedModule = this;
-	commandTester.canBeReorderedInEditor = false;
+	commandTester = new BaseCommandHandler("Command Tester", CommandContext::ACTION);
+
+	commandTester->userCanRemove = false;
+	commandTester->canBeDisabled = false;
+	commandTester->lockedModule = this;
+	commandTester->canBeReorderedInEditor = false;
 
 	controllableContainers.move(controllableContainers.indexOf(scriptManager.get()), controllableContainers.size() - 1);
 
-	addChildControllableContainer(&commandTester);
+	addChildControllableContainer(commandTester);
 
 	scriptManager->scriptTemplate = ChataigneAssetManager::getInstance()->getScriptTemplateBundle(StringArray("generic","module"));
 }
 
 Module::~Module()
 {
-
 }
 
 void Module::setupIOConfiguration(bool _hasInput, bool _hasOutput)
@@ -82,7 +84,7 @@ void Module::setupIOConfiguration(bool _hasInput, bool _hasOutput)
 	if (_hasOutput != hasOutput) hasOutput = _hasOutput;
 	
 	valuesCC.hideInEditor = !alwaysShowValues && !hasInput && valuesCC.controllables.size() == 0 && valuesCC.controllableContainers.size() == 0;
-	commandTester.hideInEditor = !hasOutput;
+	commandTester->hideInEditor = !hasOutput;
 	moduleListeners.call(&ModuleListener::moduleIOConfigurationChanged);
 }
 

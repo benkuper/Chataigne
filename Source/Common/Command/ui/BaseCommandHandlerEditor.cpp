@@ -23,7 +23,7 @@ BaseCommandHandlerEditor::BaseCommandHandlerEditor(BaseCommandHandler * _handler
 	chooser.lockedModule = handler->lockedModule;
 
 	addAndMakeVisible(&chooser);
-	handler->adCommandHandlerListener(this);
+	handler->addAsyncCommandHandlerListener(this);
 
 	triggerBT = handler->trigger->createButtonUI();
 	addAndMakeVisible(triggerBT);
@@ -38,9 +38,8 @@ BaseCommandHandlerEditor::BaseCommandHandlerEditor(BaseCommandHandler * _handler
 
 BaseCommandHandlerEditor::~BaseCommandHandlerEditor()
 {
-	handler->removeCommandHandlerListener(this);
+	if(!inspectable.wasObjectDeleted()) handler->removeAsyncCommandHandlerListener(this);
 }
-
 
 void BaseCommandHandlerEditor::resizedInternalHeaderItemInternal(Rectangle<int>& r)
 {
@@ -50,11 +49,10 @@ void BaseCommandHandlerEditor::resizedInternalHeaderItemInternal(Rectangle<int>&
 
 void BaseCommandHandlerEditor::updateChooserLabel()
 {
-	String text;
-	if (handler->command != nullptr)
-		text = handler->command->module->niceName + ":" + handler->commandDefinition->commandType;
+	if (inspectable.wasObjectDeleted()) return;
+	if (handler->command == nullptr || handler->commandDefinition == nullptr) return;
 
-	chooser.setLabel(text);
+	chooser.setLabel(handler->command->module->niceName + ":" + handler->commandDefinition->commandType);
 	chooser.repaint();
 }
 
@@ -63,8 +61,11 @@ void BaseCommandHandlerEditor::definitionChosen(CommandDefinition * d)
 	handler->setCommand(d);
 }
 
-void BaseCommandHandlerEditor::commandChanged(BaseCommandHandler *)
+void BaseCommandHandlerEditor::newMessage(const BaseCommandHandler::CommandHandlerEvent & e)
 {
-	updateChooserLabel();
-	resized();
+	if (e.type == BaseCommandHandler::CommandHandlerEvent::COMMAND_CHANGED)
+	{
+		updateChooserLabel();
+		resized();
+	}
 }
