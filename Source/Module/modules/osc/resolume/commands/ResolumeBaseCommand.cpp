@@ -71,7 +71,6 @@ void ResolumeBaseCommand::rebuildParameters()
 	layerParam->hideInEditor = level == COMPOSITION || level == COLUMN;
 	clipParam->hideInEditor = level != CLIP && level != COLUMN;
 
-	DBG("Reloading data from before rebuild : " << JSON::toString(data));
 	loadJSONData(data);
 	rebuildAddress();
 }
