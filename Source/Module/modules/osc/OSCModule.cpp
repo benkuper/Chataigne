@@ -34,7 +34,9 @@ OSCModule::OSCModule(const String & name, int defaultLocalPort, int defaultRemot
 		localPort->hideInOutliner = true;
 		localPort->isTargettable = false;
 
+		receiver.registerFormatErrorHandler(&OSCHelpers::logOSCFormatError);
 		receiver.addListener(this);
+
 		setupReceiver();
 	} else
 	{
