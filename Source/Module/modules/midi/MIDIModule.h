@@ -77,7 +77,6 @@ public:
 	virtual void controlChangeReceived(const int &channel, const int &number, const int &value) override;
 	virtual void sysExReceived(const MidiMessage & msg) override;
 
-
 	//Script
 	static var sendNoteOnFromScript(const var::NativeFunctionArgs &args);
 	static var sendNoteOffFromScript(const var::NativeFunctionArgs &args);
