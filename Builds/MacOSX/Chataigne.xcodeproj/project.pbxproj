@@ -717,6 +717,18 @@
 			isa = PBXBuildFile;
 			fileRef = 0189433D1F58B3EFCB328C09;
 		};
+		DC5C05891313B026B5F2B5A8 = {
+			isa = PBXBuildFile;
+			fileRef = D75B6A6DB57C7D3652AE5CE7;
+		};
+		E4169B77D7C1CE95BE7BEF0E = {
+			isa = PBXBuildFile;
+			fileRef = DB0E4F2C9CE337746D9A4530;
+		};
+		1E73C91ECDD1662DE063FC59 = {
+			isa = PBXBuildFile;
+			fileRef = D1471EBF90391F73F895EB4B;
+		};
 		F560A7641D963370FF460F6A = {
 			isa = PBXBuildFile;
 			fileRef = AC2CF94957A35C1F57DCE049;
@@ -2219,6 +2231,13 @@
 			name = AVKit.framework;
 			path = System/Library/Frameworks/AVKit.framework;
 			sourceTree = SDKROOT;
+		};
+		41CC5957D91E1CC1984D2AAD = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = GenericOSCQueryCommand.h;
+			path = ../../Source/Module/modules/oscquery/generic/GenericOSCQueryCommand.h;
+			sourceTree = "SOURCE_ROOT";
 		};
 		420BDEB0104F2AE7380CA494 = {
 			isa = PBXFileReference;
@@ -4537,6 +4556,13 @@
 			path = ../../Source/Common/Processor/Mapping/Filter/ui/MappingFilterEditor.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
+		D1471EBF90391F73F895EB4B = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = GenericOSCQueryModule.cpp;
+			path = ../../Source/Module/modules/oscquery/generic/GenericOSCQueryModule.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		D1560B172371D03B3564BA19 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -4670,6 +4696,13 @@
 			path = ../../Source/TimeMachine/Sequence/Layer/layers/mapping/ui/MappingLayerEditor.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
+		D75B6A6DB57C7D3652AE5CE7 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = MadMapperModule.cpp;
+			path = ../../Source/Module/modules/oscquery/MadMapperModule.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		D79093F70C3583A699ED2C52 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -4719,6 +4752,13 @@
 			path = ../../Source/Module/modules/midi/MIDIModule.h;
 			sourceTree = "SOURCE_ROOT";
 		};
+		D913745BAEC8B7D9FD3FC290 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = GenericOSCQueryModule.h;
+			path = ../../Source/Module/modules/oscquery/generic/GenericOSCQueryModule.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		D96A3F39FFB1F1FFBE297C29 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -4752,6 +4792,13 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = EnumComparator.h;
 			path = ../../Source/Common/Processor/Action/Condition/Comparator/comparators/EnumComparator.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		DB0E4F2C9CE337746D9A4530 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = GenericOSCQueryCommand.cpp;
+			path = ../../Source/Module/modules/oscquery/generic/GenericOSCQueryCommand.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		DBA7609C19925D70182B83C2 = {
@@ -5347,6 +5394,13 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = ResolumeBaseCommand.h;
 			path = ../../Source/Module/modules/osc/resolume/commands/ResolumeBaseCommand.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		FE03035FDEBD5D1FC17DF1E5 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = MadMapperModule.h;
+			path = ../../Source/Module/modules/oscquery/MadMapperModule.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		FEED8F0802FD25AAA83BF121 = {
@@ -6462,6 +6516,43 @@
 			name = midi;
 			sourceTree = "<group>";
 		};
+		0293A118B8CFB9F137A559DA = {
+			isa = PBXGroup;
+			children = (
+				D75B6A6DB57C7D3652AE5CE7,
+				FE03035FDEBD5D1FC17DF1E5,
+			);
+			name = madmapper;
+			sourceTree = "<group>";
+		};
+		171CC556D6E69BAF83FF74F4 = {
+			isa = PBXGroup;
+			children = (
+				DB0E4F2C9CE337746D9A4530,
+				41CC5957D91E1CC1984D2AAD,
+			);
+			name = commands;
+			sourceTree = "<group>";
+		};
+		BA0164422D299F0C63359319 = {
+			isa = PBXGroup;
+			children = (
+				171CC556D6E69BAF83FF74F4,
+				D1471EBF90391F73F895EB4B,
+				D913745BAEC8B7D9FD3FC290,
+			);
+			name = generic;
+			sourceTree = "<group>";
+		};
+		1569D7931C829FDCBE1FCE91 = {
+			isa = PBXGroup;
+			children = (
+				0293A118B8CFB9F137A559DA,
+				BA0164422D299F0C63359319,
+			);
+			name = oscquery;
+			sourceTree = "<group>";
+		};
 		6885BE82A9F609D9D0F8B5CB = {
 			isa = PBXGroup;
 			children = (
@@ -6803,6 +6894,7 @@
 				EAECA465AF99B19374D7BA35,
 				C4B5A56AF9E60B23C4052B42,
 				5076351BB7D36DE5CCE843F2,
+				1569D7931C829FDCBE1FCE91,
 				23E6D3E862CD3447CA729721,
 				B103252845E4067A39D719D5,
 				8EC3C4B98ADD1102D4C6ACF4,
@@ -7311,7 +7403,7 @@
 					"_DEBUG=1",
 					"DEBUG=1",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
-					"JUCE_APP_VERSION=1.5.9b1",
+					"JUCE_APP_VERSION=1.5.9b2",
 					"JUCE_APP_VERSION_HEX=0x10509",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
@@ -7364,7 +7456,7 @@
 					"_NDEBUG=1",
 					"NDEBUG=1",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
-					"JUCE_APP_VERSION=1.5.9b1",
+					"JUCE_APP_VERSION=1.5.9b2",
 					"JUCE_APP_VERSION_HEX=0x10509",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
@@ -7689,6 +7781,9 @@
 				00F7943B39DC4F058928E693,
 				61B19AD58450E773E66D0342,
 				EBB25F3C554B4D3C4931FA0B,
+				DC5C05891313B026B5F2B5A8,
+				E4169B77D7C1CE95BE7BEF0E,
+				1E73C91ECDD1662DE063FC59,
 				F560A7641D963370FF460F6A,
 				83A709B1B63AB9D0B893E8FE,
 				66ECEBD14E636A08B90395F2,

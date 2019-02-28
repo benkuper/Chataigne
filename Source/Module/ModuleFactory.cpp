@@ -41,6 +41,7 @@
 #include "modules/osc/powerpoint/PowerpointModule.h"
 #include "modules/osc/heavym/HeavyMModule.h"
 #include "modules/http/HTTPModule.h"
+#include "modules/oscquery/generic/GenericOSCQueryModule.h"
 
 #include "Community/CommunityModuleManager.h"
 
@@ -49,6 +50,7 @@ juce_ImplementSingleton(ModuleFactory)
 ModuleFactory::ModuleFactory() {
 	
 	moduleDefs.add(new ModuleDefinition("Protocol", "OSC", &CustomOSCModule::create));
+	moduleDefs.add(new ModuleDefinition("Protocol", "OSCQuery", &GenericOSCQueryModule::create));
 	moduleDefs.add(new ModuleDefinition("Protocol", "MIDI", &MIDIModule::create));
 	moduleDefs.add(new ModuleDefinition("Protocol", "DMX", &DMXModule::create));
 	moduleDefs.add(new ModuleDefinition("Protocol", "Serial", &SerialModule::create));
@@ -56,7 +58,6 @@ ModuleFactory::ModuleFactory() {
 	moduleDefs.add(new ModuleDefinition("Protocol", "TCP Client", &TCPModule::create));
 	moduleDefs.add(new ModuleDefinition("Protocol", "HTTP", &HTTPModule::create));
 	moduleDefs.add(new ModuleDefinition("Protocol", "PJLink", &PJLinkModule::create));
-
 	
 #if JUCE_WINDOWS
 	//moduleDefs.add(new ModuleDefinition("Controller", "Myo", &MyoModule::create));

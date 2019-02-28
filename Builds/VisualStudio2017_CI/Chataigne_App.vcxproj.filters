@@ -290,6 +290,18 @@
     <Filter Include="Chataigne\Source\Module\modules\midi">
       <UniqueIdentifier>{D2A91548-5F0F-89AA-05AF-BCC03494605C}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\oscquery\madmapper">
+      <UniqueIdentifier>{5023ED4A-9196-A411-1ECD-BDD8F074E194}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\oscquery\generic\commands">
+      <UniqueIdentifier>{853ADAB8-B4E3-9CA3-87CE-D338DC043327}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\oscquery\generic">
+      <UniqueIdentifier>{48F0F8E0-7438-0208-E550-1AD89128E38E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\oscquery">
+      <UniqueIdentifier>{5E9A2258-4AEC-F20C-D8B5-0F4E051C8575}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Chataigne\Source\Module\modules\osc\heavym">
       <UniqueIdentifier>{23381407-F713-1E94-D708-9B8F6ED05FB7}</UniqueIdentifier>
     </Filter>
@@ -1087,6 +1099,15 @@
     <ClCompile Include="..\..\Source\Module\modules\midi\MIDIModule.cpp">
       <Filter>Chataigne\Source\Module\modules\midi</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Module\modules\oscquery\MadMapperModule.cpp">
+      <Filter>Chataigne\Source\Module\modules\oscquery\madmapper</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Module\modules\oscquery\generic\GenericOSCQueryCommand.cpp">
+      <Filter>Chataigne\Source\Module\modules\oscquery\generic\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Module\modules\oscquery\generic\GenericOSCQueryModule.cpp">
+      <Filter>Chataigne\Source\Module\modules\oscquery\generic</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\osc\heavym\HeavyMModule.cpp">
       <Filter>Chataigne\Source\Module\modules\osc\heavym</Filter>
     </ClCompile>
@@ -1852,6 +1873,9 @@
     <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\ui\AssetManager.cpp">
       <Filter>JUCE Modules\juce_organicui\ui</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\ui\Grabber.cpp">
+      <Filter>JUCE Modules\juce_organicui\ui</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\ui\LookAndFeelOO.cpp">
       <Filter>JUCE Modules\juce_organicui\ui</Filter>
     </ClCompile>
@@ -2351,6 +2375,15 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\midi\MIDIModule.h">
       <Filter>Chataigne\Source\Module\modules\midi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Module\modules\oscquery\MadMapperModule.h">
+      <Filter>Chataigne\Source\Module\modules\oscquery\madmapper</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Module\modules\oscquery\generic\GenericOSCQueryCommand.h">
+      <Filter>Chataigne\Source\Module\modules\oscquery\generic\commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Module\modules\oscquery\generic\GenericOSCQueryModule.h">
+      <Filter>Chataigne\Source\Module\modules\oscquery\generic</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\osc\heavym\HeavyMModule.h">
       <Filter>Chataigne\Source\Module\modules\osc\heavym</Filter>
@@ -3085,6 +3118,9 @@
       <Filter>JUCE Modules\juce_organicui\ui\shapeshifter</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\ui\AssetManager.h">
+      <Filter>JUCE Modules\juce_organicui\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\ui\Grabber.h">
       <Filter>JUCE Modules\juce_organicui\ui</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\ui\LookAndFeelOO.h">
