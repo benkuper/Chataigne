@@ -35,7 +35,6 @@ void UDPModule::setupReceiver()
 
 	Array<IPAddress> ad;
 	IPAddress::findAllAddresses(ad);
-
 	Array<String> ips;
 	for (auto &a : ad) ips.add(a.toString());
 	ips.sort();

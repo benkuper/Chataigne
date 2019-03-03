@@ -36,6 +36,8 @@ public:
 	void sendOSC(const OSCMessage & m);
 
 	void onContainerParameterChangedInternal(Parameter * p) override;
+
+	virtual InspectableEditor * getEditor(bool isRoot) override;
 };
 
 class OSCModule :

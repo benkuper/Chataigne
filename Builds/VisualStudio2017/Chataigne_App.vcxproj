@@ -154,6 +154,7 @@
     <ClCompile Include="..\..\Source\Guider\BaseGuide.cpp"/>
     <ClCompile Include="..\..\Source\Guider\GuideComponents.cpp"/>
     <ClCompile Include="..\..\Source\Guider\Guider.cpp"/>
+    <ClCompile Include="..\..\Source\Common\Zeroconf\ZeroconfManager.cpp"/>
     <ClCompile Include="..\..\Source\Common\InputSystem\InputDeviceHelpers.cpp"/>
     <ClCompile Include="..\..\Source\Common\InputSystem\InputSystemManager.cpp"/>
     <ClCompile Include="..\..\Source\Common\Command\Template\ui\CommandTemplateEditor.cpp"/>
@@ -308,8 +309,10 @@
     <ClCompile Include="..\..\Source\Module\modules\midi\Launchpad\LaunchpadModule.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\midi\MIDIModule.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\oscquery\MadMapperModule.cpp"/>
+    <ClCompile Include="..\..\Source\Module\modules\oscquery\generic\ui\OSCQueryModuleEditor.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\oscquery\generic\GenericOSCQueryCommand.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\oscquery\generic\GenericOSCQueryModule.cpp"/>
+    <ClCompile Include="..\..\Source\Module\modules\osc\ui\OSCOutputEditor.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\osc\heavym\HeavyMModule.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\osc\commands\OSCCommand.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\osc\custom\commands\CustomOSCCommand.cpp"/>
@@ -854,6 +857,7 @@
     <ClInclude Include="..\..\Source\Guider\GuideComponents.h"/>
     <ClInclude Include="..\..\Source\Guider\Guider.h"/>
     <ClInclude Include="..\..\Source\Analytics\GoogleAnalyticsDestination.h"/>
+    <ClInclude Include="..\..\Source\Common\Zeroconf\ZeroconfManager.h"/>
     <ClInclude Include="..\..\Source\Common\InputSystem\InputDeviceHelpers.h"/>
     <ClInclude Include="..\..\Source\Common\InputSystem\InputSystemManager.h"/>
     <ClInclude Include="..\..\Source\Common\Command\CommandContext.h"/>
@@ -994,8 +998,10 @@
     <ClInclude Include="..\..\Source\Module\modules\midi\Launchpad\LaunchpadModule.h"/>
     <ClInclude Include="..\..\Source\Module\modules\midi\MIDIModule.h"/>
     <ClInclude Include="..\..\Source\Module\modules\oscquery\MadMapperModule.h"/>
+    <ClInclude Include="..\..\Source\Module\modules\oscquery\generic\ui\OSCQueryModuleEditor.h"/>
     <ClInclude Include="..\..\Source\Module\modules\oscquery\generic\GenericOSCQueryCommand.h"/>
     <ClInclude Include="..\..\Source\Module\modules\oscquery\generic\GenericOSCQueryModule.h"/>
+    <ClInclude Include="..\..\Source\Module\modules\osc\ui\OSCOutputEditor.h"/>
     <ClInclude Include="..\..\Source\Module\modules\osc\heavym\HeavyMModule.h"/>
     <ClInclude Include="..\..\Source\Module\modules\osc\commands\OSCCommand.h"/>
     <ClInclude Include="..\..\Source\Module\modules\osc\custom\commands\CustomOSCCommand.h"/>
@@ -1185,6 +1191,7 @@
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\help\HelpBox.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\help\HelpPanel.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\helpers\DebugHelpers.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\helpers\NetworkHelpers.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\helpers\OSCHelpers.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\helpers\QueuedNotifier.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\helpers\RegexFunctions.h"/>

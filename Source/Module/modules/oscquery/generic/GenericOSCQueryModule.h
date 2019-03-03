@@ -12,7 +12,17 @@
 
 #include "Module/Module.h"
 
+class GenericOSCQueryModule;
+class OSCQueryOutput :
+	public EnablingControllableContainer
+{
+public:
+	OSCQueryOutput(GenericOSCQueryModule * module);
+	~OSCQueryOutput();
 
+	GenericOSCQueryModule * module;
+	InspectableEditor * getEditor(bool isRoot) override;
+};
 
 class GenericOSCQueryModule :
 	public Module,
@@ -26,7 +36,7 @@ public:
 
 	Trigger * syncTrigger;
 
-	ScopedPointer<EnablingControllableContainer> sendCC;
+	ScopedPointer<OSCQueryOutput> sendCC;
 	BoolParameter * useLocal;
 	StringParameter * remoteHost;
 	IntParameter * remotePort;

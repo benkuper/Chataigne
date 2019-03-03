@@ -9,6 +9,7 @@
 */
 
 #include "GenericOSCQueryModule.h"
+#include "ui/OSCQueryModuleEditor.h"
 
 GenericOSCQueryModule::GenericOSCQueryModule(const String & name, int defaultRemotePort) :
 	Module(name),
@@ -19,7 +20,7 @@ GenericOSCQueryModule::GenericOSCQueryModule(const String & name, int defaultRem
 
 	syncTrigger = moduleParams.addTrigger("Sync Data", "Sync the data");
 
-	sendCC = new EnablingControllableContainer("Output");
+	sendCC = new OSCQueryOutput(this);
 	moduleParams.addChildControllableContainer(sendCC);
 
 	useLocal = sendCC->addBoolParameter("Local", "Send to Local IP (127.0.0.1). Allow to quickly switch between local and remote IP.", true);
@@ -221,4 +222,21 @@ void GenericOSCQueryModule::run()
 		if (logIncomingData->boolValue()) NLOGWARNING(niceName, "Error with request, status code : " << statusCode << ", url : " << url.toString(true));
 	}
 
+}
+
+
+OSCQueryOutput::OSCQueryOutput(GenericOSCQueryModule * module) :
+	EnablingControllableContainer("Output"),
+	module(module)
+{
+	
+}
+
+OSCQueryOutput::~OSCQueryOutput()
+{
+}
+
+InspectableEditor * OSCQueryOutput::getEditor(bool isRoot)
+{
+	return new OSCQueryModuleOutputEditor(this, isRoot);
 }

@@ -26,6 +26,7 @@ BaseCommandHandler::BaseCommandHandler(const String & name, CommandContext _cont
 BaseCommandHandler::~BaseCommandHandler()
 {
 	if (ModuleManager::getInstanceWithoutCreating() != nullptr) ModuleManager::getInstance()->removeBaseManagerListener(this);
+	setCommand(nullptr);
 }
 
 void BaseCommandHandler::clearItem()
@@ -41,6 +42,8 @@ void BaseCommandHandler::triggerCommand()
 
 void BaseCommandHandler::setCommand(CommandDefinition * commandDef)
 {
+	if (commandDefinition && commandDef) return;
+
 	var prevCommandData;
 	if (command != nullptr)
 	{

@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    EnablingNetworkControllableContainerEditor.cpp
-    Created: 19 Jan 2018 4:48:00pm
-    Author:  Ben
+	EnablingNetworkControllableContainerEditor.cpp
+	Created: 19 Jan 2018 4:48:00pm
+	Author:  Ben
 
   ==============================================================================
 */
@@ -13,22 +13,8 @@
 EnablingNetworkControllableContainerEditor::EnablingNetworkControllableContainerEditor(EnablingControllableContainer * cc, bool isRoot) :
 	EnablingControllableContainerEditor(cc, isRoot)
 {
-	
-
-	String text = "";
-	Array<IPAddress> ad;
-	IPAddress::findAllAddresses(ad);
-	for (auto &ip : ad)
-	{
-		if (ip.toString().startsWith("192.168.0.") || ip.toString().startsWith("192.168.1."))
-		{
-			if (text.isNotEmpty()) text += ", ";
-			text += ip.toString();
-			break;
-		}
-	}
-
-	ipLabel.setText("IPs : "+text,dontSendNotification);
+	StringArray ips = NetworkHelpers::getLocalIPs();
+	ipLabel.setText("IPs : "+ips.joinIntoString(","),dontSendNotification);
 	ipLabel.setColour(ipLabel.textColourId, TEXTNAME_COLOR);
 	ipLabel.setFont(headerHeight - 6);
 	addAndMakeVisible(&ipLabel);

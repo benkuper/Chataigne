@@ -11,6 +11,7 @@
 #include "OSCModule.h"
 #include "Module/modules/common//ui/EnablingNetworkControllableContainerEditor.h"
 #include "UI/ChataigneAssetManager.h"
+#include "ui/OSCOutputEditor.h"
 
 OSCModule::OSCModule(const String & name, int defaultLocalPort, int defaultRemotePort, bool canHaveInput, bool canHaveOutput) :
 	Module(name),
@@ -93,8 +94,8 @@ void OSCModule::setupReceiver()
 		if(!isThreadRunning() && !Engine::mainEngine->isLoadingFile) startThread();
 
 		Array<IPAddress> ad;
-		IPAddress::findAllAddresses(ad);
 
+		IPAddress::findAllAddresses(ad);
 		Array<String> ips;
 		for (auto &a : ad) ips.add(a.toString());
 		ips.sort();
@@ -490,6 +491,11 @@ void OSCOutput::onContainerParameterChangedInternal(Parameter * p)
 		if(!Engine::mainEngine->isLoadingFile) setupSender();
 		if (p == useLocal) remoteHost->setEnabled(!useLocal->boolValue());
 	}
+}
+
+InspectableEditor * OSCOutput::getEditor(bool isRoot)
+{
+	return new OSCOutputEditor(this, isRoot);
 }
 
 void OSCOutput::setupSender()

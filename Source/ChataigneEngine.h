@@ -15,8 +15,6 @@
 #include "JuceHeader.h"
 #include "Module/modules/generic/ChataigneGenericModule.h"
 
-//#include "ossia-c/ossia-c.h"
-
 class ChataigneEngine :
 	public Engine
 {

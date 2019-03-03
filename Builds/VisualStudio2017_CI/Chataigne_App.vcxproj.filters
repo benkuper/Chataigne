@@ -20,6 +20,9 @@
     <Filter Include="Chataigne\Source\Analytics">
       <UniqueIdentifier>{BFFB54F9-F042-7395-56B9-D0358B5F6ED9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Chataigne\Source\Common\Zeroconf">
+      <UniqueIdentifier>{C4DDA41D-2632-9CB5-32F2-C49815C7E269}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Chataigne\Source\Common\InputSystem\ui">
       <UniqueIdentifier>{56DD9A38-8BBF-9782-AE19-F3A9A6734487}</UniqueIdentifier>
     </Filter>
@@ -293,6 +296,9 @@
     <Filter Include="Chataigne\Source\Module\modules\oscquery\madmapper">
       <UniqueIdentifier>{5023ED4A-9196-A411-1ECD-BDD8F074E194}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\oscquery\generic\ui">
+      <UniqueIdentifier>{80445B17-1F33-F6A5-2E35-E6F3E782DE69}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Chataigne\Source\Module\modules\oscquery\generic\commands">
       <UniqueIdentifier>{853ADAB8-B4E3-9CA3-87CE-D338DC043327}</UniqueIdentifier>
     </Filter>
@@ -301,6 +307,9 @@
     </Filter>
     <Filter Include="Chataigne\Source\Module\modules\oscquery">
       <UniqueIdentifier>{5E9A2258-4AEC-F20C-D8B5-0F4E051C8575}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\osc\ui">
+      <UniqueIdentifier>{28AC6DBD-3300-5E97-393F-F14972FA36C6}</UniqueIdentifier>
     </Filter>
     <Filter Include="Chataigne\Source\Module\modules\osc\heavym">
       <UniqueIdentifier>{23381407-F713-1E94-D708-9B8F6ED05FB7}</UniqueIdentifier>
@@ -630,6 +639,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Guider\Guider.cpp">
       <Filter>Chataigne\Source\Guider</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Zeroconf\ZeroconfManager.cpp">
+      <Filter>Chataigne\Source\Common\Zeroconf</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Common\InputSystem\InputDeviceHelpers.cpp">
       <Filter>Chataigne\Source\Common\InputSystem\ui</Filter>
@@ -1102,11 +1114,17 @@
     <ClCompile Include="..\..\Source\Module\modules\oscquery\MadMapperModule.cpp">
       <Filter>Chataigne\Source\Module\modules\oscquery\madmapper</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Module\modules\oscquery\generic\ui\OSCQueryModuleEditor.cpp">
+      <Filter>Chataigne\Source\Module\modules\oscquery\generic\ui</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\oscquery\generic\GenericOSCQueryCommand.cpp">
       <Filter>Chataigne\Source\Module\modules\oscquery\generic\commands</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\oscquery\generic\GenericOSCQueryModule.cpp">
       <Filter>Chataigne\Source\Module\modules\oscquery\generic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Module\modules\osc\ui\OSCOutputEditor.cpp">
+      <Filter>Chataigne\Source\Module\modules\osc\ui</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\osc\heavym\HeavyMModule.cpp">
       <Filter>Chataigne\Source\Module\modules\osc\heavym</Filter>
@@ -1959,6 +1977,9 @@
     <ClInclude Include="..\..\Source\Analytics\GoogleAnalyticsDestination.h">
       <Filter>Chataigne\Source\Analytics</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\Common\Zeroconf\ZeroconfManager.h">
+      <Filter>Chataigne\Source\Common\Zeroconf</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\Common\InputSystem\InputDeviceHelpers.h">
       <Filter>Chataigne\Source\Common\InputSystem\ui</Filter>
     </ClInclude>
@@ -2379,11 +2400,17 @@
     <ClInclude Include="..\..\Source\Module\modules\oscquery\MadMapperModule.h">
       <Filter>Chataigne\Source\Module\modules\oscquery\madmapper</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\Module\modules\oscquery\generic\ui\OSCQueryModuleEditor.h">
+      <Filter>Chataigne\Source\Module\modules\oscquery\generic\ui</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\oscquery\generic\GenericOSCQueryCommand.h">
       <Filter>Chataigne\Source\Module\modules\oscquery\generic\commands</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\oscquery\generic\GenericOSCQueryModule.h">
       <Filter>Chataigne\Source\Module\modules\oscquery\generic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Module\modules\osc\ui\OSCOutputEditor.h">
+      <Filter>Chataigne\Source\Module\modules\osc\ui</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\osc\heavym\HeavyMModule.h">
       <Filter>Chataigne\Source\Module\modules\osc\heavym</Filter>
@@ -2950,6 +2977,9 @@
       <Filter>JUCE Modules\juce_organicui\help</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\helpers\DebugHelpers.h">
+      <Filter>JUCE Modules\juce_organicui\helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\helpers\NetworkHelpers.h">
       <Filter>JUCE Modules\juce_organicui\helpers</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\helpers\OSCHelpers.h">

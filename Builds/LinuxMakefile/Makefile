@@ -72,6 +72,7 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/BaseGuide_47922a3b.o \
   $(JUCE_OBJDIR)/GuideComponents_1e634f02.o \
   $(JUCE_OBJDIR)/Guider_52ec0c30.o \
+  $(JUCE_OBJDIR)/ZeroconfManager_68129d03.o \
   $(JUCE_OBJDIR)/InputDeviceHelpers_f77a7a0.o \
   $(JUCE_OBJDIR)/InputSystemManager_a791f74f.o \
   $(JUCE_OBJDIR)/CommandTemplateEditor_5399b8ad.o \
@@ -226,8 +227,10 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/LaunchpadModule_654c7bb.o \
   $(JUCE_OBJDIR)/MIDIModule_d3422ef9.o \
   $(JUCE_OBJDIR)/MadMapperModule_33fa8ca3.o \
+  $(JUCE_OBJDIR)/OSCQueryModuleEditor_f12aa46b.o \
   $(JUCE_OBJDIR)/GenericOSCQueryCommand_341c3887.o \
   $(JUCE_OBJDIR)/GenericOSCQueryModule_e955523a.o \
+  $(JUCE_OBJDIR)/OSCOutputEditor_6171624e.o \
   $(JUCE_OBJDIR)/HeavyMModule_344d2fc9.o \
   $(JUCE_OBJDIR)/OSCCommand_779cc3a1.o \
   $(JUCE_OBJDIR)/CustomOSCCommand_61f60882.o \
@@ -389,6 +392,11 @@ $(JUCE_OBJDIR)/GuideComponents_1e634f02.o: ../../Source/Guider/GuideComponents.c
 $(JUCE_OBJDIR)/Guider_52ec0c30.o: ../../Source/Guider/Guider.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling Guider.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/ZeroconfManager_68129d03.o: ../../Source/Common/Zeroconf/ZeroconfManager.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling ZeroconfManager.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/InputDeviceHelpers_f77a7a0.o: ../../Source/Common/InputSystem/InputDeviceHelpers.cpp
@@ -1161,6 +1169,11 @@ $(JUCE_OBJDIR)/MadMapperModule_33fa8ca3.o: ../../Source/Module/modules/oscquery/
 	@echo "Compiling MadMapperModule.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
+$(JUCE_OBJDIR)/OSCQueryModuleEditor_f12aa46b.o: ../../Source/Module/modules/oscquery/generic/ui/OSCQueryModuleEditor.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling OSCQueryModuleEditor.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
 $(JUCE_OBJDIR)/GenericOSCQueryCommand_341c3887.o: ../../Source/Module/modules/oscquery/generic/GenericOSCQueryCommand.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling GenericOSCQueryCommand.cpp"
@@ -1169,6 +1182,11 @@ $(JUCE_OBJDIR)/GenericOSCQueryCommand_341c3887.o: ../../Source/Module/modules/os
 $(JUCE_OBJDIR)/GenericOSCQueryModule_e955523a.o: ../../Source/Module/modules/oscquery/generic/GenericOSCQueryModule.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling GenericOSCQueryModule.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/OSCOutputEditor_6171624e.o: ../../Source/Module/modules/osc/ui/OSCOutputEditor.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling OSCOutputEditor.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/HeavyMModule_344d2fc9.o: ../../Source/Module/modules/osc/heavym/HeavyMModule.cpp

@@ -69,6 +69,12 @@
               file="Source/Analytics/GoogleAnalyticsDestination.h"/>
       </GROUP>
       <GROUP id="{6C7DFFF7-D47E-97B5-FE74-27F24C7A349F}" name="Common">
+        <GROUP id="{1B487EA1-C305-46F0-D55D-17FDE1399960}" name="Zeroconf">
+          <FILE id="r5sscj" name="ZeroconfManager.cpp" compile="1" resource="0"
+                file="Source/Common/Zeroconf/ZeroconfManager.cpp"/>
+          <FILE id="FXxC07" name="ZeroconfManager.h" compile="0" resource="0"
+                file="Source/Common/Zeroconf/ZeroconfManager.h"/>
+        </GROUP>
         <GROUP id="{5C0648F7-9990-938A-3B45-609D366B138F}" name="InputSystem">
           <GROUP id="{FDAA1738-EB88-1AB8-C6B5-1EFC3FA35B4F}" name="ui">
             <FILE id="PjYTro" name="InputDeviceHelpers.cpp" compile="1" resource="0"
@@ -752,6 +758,12 @@
                     file="Source/Module/modules/oscquery/MadMapperModule.h"/>
             </GROUP>
             <GROUP id="{AB2CCFAF-5B6F-0D08-58C1-933226EB65A5}" name="generic">
+              <GROUP id="{9FBFA086-D182-6172-C899-66C4DC7A1422}" name="ui">
+                <FILE id="rmWrBv" name="OSCQueryModuleEditor.cpp" compile="1" resource="0"
+                      file="Source/Module/modules/oscquery/generic/ui/OSCQueryModuleEditor.cpp"/>
+                <FILE id="Cm6wY6" name="OSCQueryModuleEditor.h" compile="0" resource="0"
+                      file="Source/Module/modules/oscquery/generic/ui/OSCQueryModuleEditor.h"/>
+              </GROUP>
               <GROUP id="{3754DBAA-42A4-087C-B68E-B1E881D2D0E0}" name="commands">
                 <FILE id="pNjHwd" name="GenericOSCQueryCommand.cpp" compile="1" resource="0"
                       file="Source/Module/modules/oscquery/generic/GenericOSCQueryCommand.cpp"/>
@@ -765,6 +777,12 @@
             </GROUP>
           </GROUP>
           <GROUP id="{69C80207-6257-F263-BF16-4493C9A16861}" name="osc">
+            <GROUP id="{DD297107-6126-0DF6-97C5-7161A333CE96}" name="ui">
+              <FILE id="UEXg8w" name="OSCOutputEditor.cpp" compile="1" resource="0"
+                    file="Source/Module/modules/osc/ui/OSCOutputEditor.cpp"/>
+              <FILE id="YSZGvi" name="OSCOutputEditor.h" compile="0" resource="0"
+                    file="Source/Module/modules/osc/ui/OSCOutputEditor.h"/>
+            </GROUP>
             <GROUP id="{FA62B64A-4702-4B4D-FA34-5F23C168ED2C}" name="heavym">
               <FILE id="WLmnmM" name="HeavyMModule.cpp" compile="1" resource="0"
                     file="Source/Module/modules/osc/heavym/HeavyMModule.cpp"/>

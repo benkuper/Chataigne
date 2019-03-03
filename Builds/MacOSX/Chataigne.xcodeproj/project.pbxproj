@@ -93,6 +93,10 @@
 			isa = PBXBuildFile;
 			fileRef = E760AE782F147B81967ED0B3;
 		};
+		6648A28A780225272E677EAE = {
+			isa = PBXBuildFile;
+			fileRef = 7548D863C3CCA4FF27887C03;
+		};
 		43E1EC2D9919CC1742754AA5 = {
 			isa = PBXBuildFile;
 			fileRef = 6EAF69491475B1BC390D110E;
@@ -721,6 +725,10 @@
 			isa = PBXBuildFile;
 			fileRef = D75B6A6DB57C7D3652AE5CE7;
 		};
+		A0631088CC1340AA1E9A87A5 = {
+			isa = PBXBuildFile;
+			fileRef = 90580D87459A72831017387A;
+		};
 		E4169B77D7C1CE95BE7BEF0E = {
 			isa = PBXBuildFile;
 			fileRef = DB0E4F2C9CE337746D9A4530;
@@ -728,6 +736,10 @@
 		1E73C91ECDD1662DE063FC59 = {
 			isa = PBXBuildFile;
 			fileRef = D1471EBF90391F73F895EB4B;
+		};
+		C61F054EF1FF46F1D32EC17B = {
+			isa = PBXBuildFile;
+			fileRef = B15587F80309F64EB05F1963;
 		};
 		F560A7641D963370FF460F6A = {
 			isa = PBXBuildFile;
@@ -1294,6 +1306,13 @@
 			path = ../../Source/Common/Processor/Action/Action.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
+		02719A9820DD6EE1547FA8FE = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = ZeroconfManager.h;
+			path = ../../Source/Common/Zeroconf/ZeroconfManager.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		0317CC9300E36DBB54680045 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -1782,6 +1801,13 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = CommandTemplateParameterEditor.cpp;
 			path = ../../Source/Common/Command/Template/ui/CommandTemplateParameterEditor.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
+		258CBEFBD4C30A507B9BB03D = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = OSCOutputEditor.h;
+			path = ../../Source/Module/modules/osc/ui/OSCOutputEditor.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		25AE8F2FFF5FE94EF1779849 = {
@@ -3093,6 +3119,13 @@
 			path = ../../Source/Module/Module.h;
 			sourceTree = "SOURCE_ROOT";
 		};
+		7548D863C3CCA4FF27887C03 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = ZeroconfManager.cpp;
+			path = ../../Source/Common/Zeroconf/ZeroconfManager.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		767E6C14CD8A82E65606EB02 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.objcpp;
@@ -3527,6 +3560,13 @@
 			path = ../../Source/Module/modules/state/StateModule.h;
 			sourceTree = "SOURCE_ROOT";
 		};
+		90580D87459A72831017387A = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = OSCQueryModuleEditor.cpp;
+			path = ../../Source/Module/modules/oscquery/generic/ui/OSCQueryModuleEditor.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		90BB7E4DA8885328DB33049C = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -3777,6 +3817,13 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = DLightModule.cpp;
 			path = ../../Source/Module/modules/osc/dlight/DLightModule.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
+		A3BEB8CF6471FD37FEFED3F9 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = OSCQueryModuleEditor.h;
+			path = ../../Source/Module/modules/oscquery/generic/ui/OSCQueryModuleEditor.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		A4262D690105D3F1D7FB0086 = {
@@ -4064,6 +4111,13 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = CommunityModuleManager.h;
 			path = ../../Source/Module/Community/CommunityModuleManager.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		B15587F80309F64EB05F1963 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = OSCOutputEditor.cpp;
+			path = ../../Source/Module/modules/osc/ui/OSCOutputEditor.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		B27A7CEDC03061BEB5B3FFAE = {
@@ -5512,6 +5566,15 @@
 			name = Analytics;
 			sourceTree = "<group>";
 		};
+		474351C538FC2A3059893B3E = {
+			isa = PBXGroup;
+			children = (
+				7548D863C3CCA4FF27887C03,
+				02719A9820DD6EE1547FA8FE,
+			);
+			name = Zeroconf;
+			sourceTree = "<group>";
+		};
 		BC47915E490BCFF70A49CF9C = {
 			isa = PBXGroup;
 			children = (
@@ -6051,6 +6114,7 @@
 		77E313CFAABA49104A328F3F = {
 			isa = PBXGroup;
 			children = (
+				474351C538FC2A3059893B3E,
 				908BCEF32D152BB480771FFD,
 				308900D44331CCF323509065,
 				2F365699BD14F6406F50C73D,
@@ -6525,6 +6589,15 @@
 			name = madmapper;
 			sourceTree = "<group>";
 		};
+		2E1D03E73F15222A2D1BE092 = {
+			isa = PBXGroup;
+			children = (
+				90580D87459A72831017387A,
+				A3BEB8CF6471FD37FEFED3F9,
+			);
+			name = ui;
+			sourceTree = "<group>";
+		};
 		171CC556D6E69BAF83FF74F4 = {
 			isa = PBXGroup;
 			children = (
@@ -6537,6 +6610,7 @@
 		BA0164422D299F0C63359319 = {
 			isa = PBXGroup;
 			children = (
+				2E1D03E73F15222A2D1BE092,
 				171CC556D6E69BAF83FF74F4,
 				D1471EBF90391F73F895EB4B,
 				D913745BAEC8B7D9FD3FC290,
@@ -6551,6 +6625,15 @@
 				BA0164422D299F0C63359319,
 			);
 			name = oscquery;
+			sourceTree = "<group>";
+		};
+		528E5CE6B15E37983B2CB3D5 = {
+			isa = PBXGroup;
+			children = (
+				B15587F80309F64EB05F1963,
+				258CBEFBD4C30A507B9BB03D,
+			);
+			name = ui;
 			sourceTree = "<group>";
 		};
 		6885BE82A9F609D9D0F8B5CB = {
@@ -6703,6 +6786,7 @@
 		23E6D3E862CD3447CA729721 = {
 			isa = PBXGroup;
 			children = (
+				528E5CE6B15E37983B2CB3D5,
 				6885BE82A9F609D9D0F8B5CB,
 				F79FC768261B1C21B6005566,
 				227EAC43F6EBC36576C6C2E1,
@@ -7625,6 +7709,7 @@
 				EF06D68C5D80A560E01D5210,
 				A9F417BBCFA13B702734002D,
 				A377485D00E6BD3B63525CE2,
+				6648A28A780225272E677EAE,
 				43E1EC2D9919CC1742754AA5,
 				D5BA72E6B1F43C42CFDDCE35,
 				FC96057BA4D7B3D6EB200D36,
@@ -7782,8 +7867,10 @@
 				61B19AD58450E773E66D0342,
 				EBB25F3C554B4D3C4931FA0B,
 				DC5C05891313B026B5F2B5A8,
+				A0631088CC1340AA1E9A87A5,
 				E4169B77D7C1CE95BE7BEF0E,
 				1E73C91ECDD1662DE063FC59,
+				C61F054EF1FF46F1D32EC17B,
 				F560A7641D963370FF460F6A,
 				83A709B1B63AB9D0B893E8FE,
 				66ECEBD14E636A08B90395F2,
