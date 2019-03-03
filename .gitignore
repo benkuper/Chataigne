@@ -77,3 +77,7 @@ Chataigne-win-x64-bleedingedge\.exe
 Builds/VisualStudio2017_Win7/
 
 *.exe
+
+*.AppImage
+
+Builds/LinuxMakefile/Chataigne\.AppDir/usr/bin/
