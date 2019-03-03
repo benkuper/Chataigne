@@ -63,7 +63,7 @@ void CommunityModuleManager::run()
 		}
 
 		CommunityModuleInfo * m = new CommunityModuleInfo(moduleName, moduleDefData);
-		addItem(m);
+		addItem(m, var(), false);
 		
 	}
 	
