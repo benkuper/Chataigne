@@ -48,7 +48,7 @@ public:
     bool logBatchedEvents (const Array<AnalyticsEvent>& events) override
     {
         // Send events to Google Analytics.
-
+		sleep(1000);
 
         StringArray postData;
 
