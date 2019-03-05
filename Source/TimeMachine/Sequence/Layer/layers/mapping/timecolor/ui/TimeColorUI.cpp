@@ -13,7 +13,7 @@
 TimeColorUI::TimeColorUI(TimeColor * item) :
 	BaseItemMinimalUI(item)
 {
-	autoDrawHighlightWhenSelected = false;
+	autoDrawContourWhenSelected = false;
 	colorUI = item->color->createColorParamUI();
 	addAndMakeVisible(colorUI);
 	//colorUI->addMouseListener(this, false); //why ??

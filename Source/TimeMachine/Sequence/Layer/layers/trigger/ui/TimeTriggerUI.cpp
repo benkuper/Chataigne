@@ -16,7 +16,7 @@ TimeTriggerUI::TimeTriggerUI(TimeTrigger * _tt) :
 	flagXOffset(0)
 {
 
-	autoDrawHighlightWhenSelected = false;
+	autoDrawContourWhenSelected = false;
 	setName(_tt->niceName);
 
 
