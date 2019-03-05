@@ -42,7 +42,7 @@ void BaseCommandHandler::triggerCommand()
 
 void BaseCommandHandler::setCommand(CommandDefinition * commandDef)
 {
-	if (commandDefinition && commandDef) return;
+	if (commandDefinition == commandDef) return;
 
 	var prevCommandData;
 	if (command != nullptr)
