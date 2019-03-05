@@ -39,7 +39,8 @@ public:
         // last lot of batched events. Be careful - if your app takes too long to
         // shut down then some operating systems will kill it forcibly!
         Thread::sleep (initialPeriodMs);
-
+        
+        shouldExit = true;
         stopAnalyticsThread (5000);
     }
 
@@ -47,8 +48,9 @@ public:
 
     bool logBatchedEvents (const Array<AnalyticsEvent>& events) override
     {
-        // Send events to Google Analytics.
-		sleep(1000);
+        // Send events to Google Analytics
+        
+        if(shouldExit) return false;
 
         StringArray postData;
 
@@ -56,6 +58,7 @@ public:
 
         for (auto& event : events)
         {
+            DBG("EVENT : " << event.name);
             StringPairArray data;
 
             if (event.name == "startup")
