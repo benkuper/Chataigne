@@ -87,7 +87,7 @@ public:
 	const Identifier valueChangeId = "valueChange";
 	const Identifier always = "always";
 
-	void onExternalParameterChanged(Parameter * p) override;
+	void onExternalParameterValueChanged(Parameter * p) override;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ParameterComparator)
 };

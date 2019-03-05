@@ -35,7 +35,7 @@ public:
 	void updateParameterFromTemplate();
 
 	void onContainerParameterChangedInternal(Parameter * p) override;
-	void onExternalParameterChanged(Parameter * p) override;
+	void onExternalParameterValueChanged(Parameter * p) override;
 
 
 

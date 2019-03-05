@@ -41,7 +41,7 @@ public:
 	virtual void rebuildAddress() override;
 
 	virtual void onContainerParameterChanged(Parameter *) override;
-	virtual void onExternalParameterChanged(Parameter *) override;
+	virtual void onExternalParameterValueChanged(Parameter *) override;
 
 	InspectableEditor * getEditor(bool isRoot) override;
 

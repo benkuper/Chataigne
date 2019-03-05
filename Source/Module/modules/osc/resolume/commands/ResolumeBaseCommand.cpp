@@ -113,7 +113,7 @@ void ResolumeBaseCommand::onContainerParameterChanged(Parameter * p)
 	} 
 }
 
-void ResolumeBaseCommand::onExternalParameterChanged(Parameter * p)
+void ResolumeBaseCommand::onExternalParameterValueChanged(Parameter * p)
 {
 	if (p == resolumeModule->version) 
 	{

@@ -128,7 +128,7 @@ ParameterComparator::~ParameterComparator()
     if(!sourceParameter.wasObjectDeleted()) sourceParameter->removeParameterListener(this);
 }
 
-void ParameterComparator::onExternalParameterChanged(Parameter * p)
+void ParameterComparator::onExternalParameterValueChanged(Parameter * p)
 {
 	if (p == sourceParameter) compare();
 }

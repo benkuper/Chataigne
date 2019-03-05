@@ -63,7 +63,7 @@ void MappingInput::onContainerParameterChanged(Parameter * p)
 	}
 }
 
-void MappingInput::onExternalParameterChanged(Parameter * p)
+void MappingInput::onExternalParameterValueChanged(Parameter * p)
 {
 	if (p == inputReference)
 	{

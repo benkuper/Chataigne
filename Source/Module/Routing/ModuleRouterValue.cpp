@@ -110,7 +110,7 @@ void ModuleRouterValue::onContainerParameterChangedInternal(Parameter * p)
 	}
 }
 
-void ModuleRouterValue::onExternalParameterChanged(Parameter * p)
+void ModuleRouterValue::onExternalParameterValueChanged(Parameter * p)
 {
 	if (outModule == nullptr) return;
 	if (!enabled->boolValue() || forceDisabled) return;

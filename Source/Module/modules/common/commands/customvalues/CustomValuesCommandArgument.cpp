@@ -128,7 +128,7 @@ void CustomValuesCommandArgument::onContainerParameterChangedInternal(Parameter 
 	}
 }
 
-void CustomValuesCommandArgument::onExternalParameterChanged(Parameter * p)
+void CustomValuesCommandArgument::onExternalParameterValueChanged(Parameter * p)
 {
 	if (p->parentContainer == linkedTemplate) updateParameterFromTemplate();
 }

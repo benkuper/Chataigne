@@ -29,7 +29,7 @@ public:
 	void setInput(Parameter * input);
 
 	void onContainerParameterChanged(Parameter * p) override;
-	void onExternalParameterChanged(Parameter *p) override;
+	void onExternalParameterValueChanged(Parameter *p) override;
 
 	void parameterRangeChanged(Parameter * p) override;
 

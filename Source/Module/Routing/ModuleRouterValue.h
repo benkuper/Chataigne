@@ -37,7 +37,7 @@ public:
 	void loadJSONDataInternal(var data) override;
 
 	void onContainerParameterChangedInternal(Parameter * p) override;
-	void onExternalParameterChanged(Parameter * p) override;
+	void onExternalParameterValueChanged(Parameter * p) override;
 	void onExternalTriggerTriggered(Trigger * t) override;
 	
 	

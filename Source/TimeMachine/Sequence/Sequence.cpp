@@ -248,7 +248,7 @@ void Sequence::onContainerTriggerTriggered(Trigger * t)
 	}
 }
 
-void Sequence::onExternalParameterChanged(Parameter * p)
+void Sequence::onExternalParameterValueChanged(Parameter * p)
 {
 	if(masterAudioModule != nullptr && p == masterAudioModule->enabled) sequenceListeners.call(&SequenceListener::sequenceMasterAudioModuleChanged, this);
 }
