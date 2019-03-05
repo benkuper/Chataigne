@@ -50,6 +50,8 @@ void DMXArtNetDevice::sendDMXRange(int startChannel, Array<int> values)
 
 void DMXArtNetDevice::sendDMXValues()
 {
+    if(nodeIP == nullptr || nodePort == nullptr) return;
+    
 	fullMessage[12] = (uint8)sequence;
 
 	sequence++;

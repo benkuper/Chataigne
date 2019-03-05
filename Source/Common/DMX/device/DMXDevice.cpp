@@ -149,6 +149,7 @@ void DMXDevice::onContainerParameterChanged(Parameter * p)
 
 void DMXDevice::run()
 {
+    sleep(500);
 	while (!threadShouldExit())
 	{
 		sendDMXValues();
