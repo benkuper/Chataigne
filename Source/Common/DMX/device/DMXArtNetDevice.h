@@ -12,6 +12,7 @@
 #define DMXARTNETDEVICE_H_INCLUDED
 
 #include "DMXDevice.h"
+#include "artnet.h"
 
 #define OP_CODE 0x5000
 #define PROTOCOL_VERSION 14
@@ -24,10 +25,15 @@ public:
 	DMXArtNetDevice();
 	~DMXArtNetDevice();
 
+	StringParameter * nodeName;
+	IntParameter * localPort;
+
 	StringParameter * nodeIP;
 	IntParameter * nodePort;
 
 	DatagramSocket artNetOut;
+
+	artnet_node node;
 
 	int sequence;
 	
@@ -37,6 +43,9 @@ public:
 					  (NUM_CHANNELS >> 8) & 255,NUM_CHANNELS & 255};
 
 	uint8 fullMessage[NUM_CHANNELS + 18];
+
+
+	void setupReceiver();
 
 	void sendDMXValue(int channel, int value) override;
 	void sendDMXRange(int startChannel, Array<int> values) override;
