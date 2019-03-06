@@ -67,6 +67,7 @@ public:
 
 	// Inherited via Timer
 	virtual void run() override;
+	virtual void runInternal() {}
 };
 
 

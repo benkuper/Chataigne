@@ -37,6 +37,8 @@ DMXDevice::~DMXDevice()
 {
 	if (DMXManager::getInstanceWithoutCreating() != nullptr) DMXManager::getInstance()->removeDMXManagerListener(this);
 
+	signalThreadShouldExit();
+	waitForThreadToExit(2000);
 }
 
 void DMXDevice::setConnected(bool value)
@@ -47,7 +49,7 @@ void DMXDevice::setConnected(bool value)
 	if (isConnected)
 	{
 		dmxDeviceListeners.call(&DMXDeviceListener::dmxDeviceConnected);
-		if(fixedRate->boolValue()) startThread();
+		startThread();
 	} else
 	{
 		dmxDeviceListeners.call(&DMXDeviceListener::dmxDeviceDisconnected);
@@ -136,14 +138,14 @@ void DMXDevice::onContainerParameterChanged(Parameter * p)
 
 		if (p == fixedRate) targetRate->setEnabled(fixedRate->boolValue());
 		
-		if (fixedRate->boolValue())
-		{
-			if(!isThreadRunning()) startThread(targetRate->intValue());
-		} else
-		{
-			signalThreadShouldExit();
-			waitForThreadToExit(2000);
-		}
+		//if (fixedRate->boolValue())
+		//{
+		//	if(!isThreadRunning()) startThread(targetRate->intValue());
+		//} else
+		//{
+		//	signalThreadShouldExit();
+		//	waitForThreadToExit(2000);
+		//}
 	}
 }
 
@@ -152,7 +154,8 @@ void DMXDevice::run()
     sleep(500);
 	while (!threadShouldExit())
 	{
-		sendDMXValues();
+		runInternal();
+		if (fixedRate->boolValue()) sendDMXValues();
 		sleep(sendSleepMS);
 	}
 

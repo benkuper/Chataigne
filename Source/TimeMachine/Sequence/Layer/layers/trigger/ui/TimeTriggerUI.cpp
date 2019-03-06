@@ -12,7 +12,7 @@
 #include "UI/ChataigneAssetManager.h"
 
 TimeTriggerUI::TimeTriggerUI(TimeTrigger * _tt) :
-	BaseItemUI<TimeTrigger>(_tt, ResizeMode::NONE, false),
+	BaseItemUI<TimeTrigger>(_tt, Direction::NONE, Direction::NONE),
 	flagXOffset(0)
 {
 
