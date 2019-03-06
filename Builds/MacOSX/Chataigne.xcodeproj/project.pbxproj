@@ -7635,6 +7635,7 @@
 					"../../External/serial/include",
 					"../../External/servus/include",
 					"../../External/dnssd/include",
+					"../../External/libartnet/include",
 					"../../Source",
 					"$(inherited)",
 				);
@@ -7644,9 +7645,10 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"../../External/servus/lib/osx/debug\"",
+					"\"../../External/libartnet/lib/osx\"",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
-				OTHER_LDFLAGS = "-lServus";
+				OTHER_LDFLAGS = "-lServus -lartnet";
 				PRODUCT_BUNDLE_IDENTIFIER = benkuper.Chataigne;
 				PRODUCT_NAME = "Chataigne";
 				USE_HEADERMAP = NO;
@@ -7689,6 +7691,7 @@
 					"../../External/serial/include",
 					"../../External/servus/include",
 					"../../External/dnssd/include",
+					"../../External/libartnet/include",
 					"../../Source",
 					"$(inherited)",
 				);
@@ -7698,10 +7701,11 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"../../External/servus/lib/osx/release\"",
+					"\"../../External/libartnet/lib/osx\"",
 				);
 				LLVM_LTO = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
-				OTHER_LDFLAGS = "-lServus";
+				OTHER_LDFLAGS = "-lServus -lartnet";
 				PRODUCT_BUNDLE_IDENTIFIER = benkuper.Chataigne;
 				PRODUCT_NAME = "Chataigne";
 				USE_HEADERMAP = NO;

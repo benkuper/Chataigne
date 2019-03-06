@@ -9,15 +9,18 @@
 */
 
 #include "DMXArtNetDevice.h"
+
+#if JUCE_WINDOWS
 #include <iphlpapi.h>
+#endif
 
 DMXArtNetDevice::DMXArtNetDevice() :
 	DMXDevice("ArtNet", ARTNET, true),
-	numFoundNodes(0),
 	ioNode(nullptr),
 	discoverNode(nullptr),
 	nodeName(nullptr),
-	noServerCreation(false)
+    numFoundNodes(0),
+    noServerCreation(false)
 {
 	networkInterface = addEnumParameter("Interface", "Interface to link the node to");
 	
@@ -45,7 +48,7 @@ void DMXArtNetDevice::setupReceiver()
 {
 	if (nodeName == nullptr) return;
 	if (noServerCreation) return;
-	if (Engine::mainEngine != nullptr && Engine::mainEngine->isLoadingFile || Engine::mainEngine->isClearing) return;
+	if (Engine::mainEngine != nullptr && (Engine::mainEngine->isLoadingFile || Engine::mainEngine->isClearing)) return;
 
 	setConnected(false);
 
@@ -122,7 +125,7 @@ void DMXArtNetDevice::discoverNodes()
 		return;
 	}
 
-	int sd = artnet_get_sd(discoverNode);
+	artnet_get_sd(discoverNode);
 
 	if (artnet_send_poll(discoverNode, NULL, ARTNET_TTM_DEFAULT) != ARTNET_EOK) {
 		//LOGWARNING("send poll failed\n");
@@ -227,6 +230,7 @@ Array<DMXArtNetDevice::NetworkInterface> DMXArtNetDevice::getAllInterfaces()
 {
 	Array<NetworkInterface> result;
 
+#if JUCE_WINDOWS
 	PIP_ADAPTER_ADDRESSES pAddresses = NULL;
 	ULONG outBufLen = 15e3;
 	pAddresses = (IP_ADAPTER_ADDRESSES *)malloc(outBufLen);
@@ -250,7 +254,7 @@ Array<DMXArtNetDevice::NetworkInterface> DMXArtNetDevice::getAllInterfaces()
 	}
 
 	if (pAddresses)  free(pAddresses);
-
+#endif
 
 	return result;
 }

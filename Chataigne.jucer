@@ -1316,14 +1316,14 @@
     <XCODE_MAC targetFolder="Builds/MacOSX" smallIcon="nVz6Li" bigIcon="nVz6Li"
                extraFrameworks="IOBluetooth" extraCompilerFlags="" documentExtensions="noisette"
                customPList="&lt;plist&gt;&#10;&lt;dict&gt;&#10;&lt;key&gt;NSAppTransportSecurity&lt;/key&gt;&#10;&#9;&lt;dict&gt;&#10;&#9;&#9;&lt;key&gt;NSAllowsArbitraryLoads&lt;/key&gt;&#10;&#9;&#9;&lt;true/&gt;&#10;&#9;&lt;/dict&gt;&#10;&lt;/dict&gt;&#10;&lt;/plist&gt;"
-               externalLibraries="Servus">
+               externalLibraries="Servus&#10;artnet">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" isDebug="1" optimisation="1" targetName="Chataigne"
-                       headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/dnssd/include"
+                       headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/libartnet/include"
                        cppLanguageStandard="c++11" cppLibType="libc++" enablePluginBinaryCopyStep="1"
-                       osxCompatibility="10.8 SDK" libraryPath="../../External/servus/lib/osx/debug"/>
-        <CONFIGURATION name="Release" optimisation="3" targetName="Chataigne" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/dnssd/include"
-                       enablePluginBinaryCopyStep="1" osxCompatibility="10.8 SDK" libraryPath="../../External/servus/lib/osx/release"/>
+                       osxCompatibility="10.8 SDK" libraryPath="../../External/servus/lib/osx/debug&#10;../../External/libartnet/lib/osx"/>
+        <CONFIGURATION name="Release" optimisation="3" targetName="Chataigne" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/libartnet/include"
+                       enablePluginBinaryCopyStep="1" osxCompatibility="10.8 SDK" libraryPath="../../External/servus/lib/osx/release&#10;../../External/libartnet/lib/osx"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_video" path="~/JUCE/modules"/>
@@ -1345,13 +1345,13 @@
         <MODULEPATH id="juce_analytics" path="~/JUCE/modules"/>
       </MODULEPATHS>
     </XCODE_MAC>
-    <LINUX_MAKE targetFolder="Builds/LinuxMakefile" externalLibraries="bluetooth&#10;Servus&#10;curl"
+    <LINUX_MAKE targetFolder="Builds/LinuxMakefile" externalLibraries="bluetooth&#10;Servus&#10;curl&#10;artnet"
                 extraLinkerFlags="-Wl,-rpath,&quot;lib&quot;">
       <CONFIGURATIONS>
-        <CONFIGURATION name="Release" optimisation="3" targetName="Chataigne" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/dnssd/include"
+        <CONFIGURATION name="Release" optimisation="3" targetName="Chataigne" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/libartnet/include"
                        linuxArchitecture="-m64" libraryPath="../../External/servus/lib/linux"/>
         <CONFIGURATION name="Debug" isDebug="1" optimisation="1" targetName="Chataigne"
-                       headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/dnssd/include"
+                       headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/libartnet/include"
                        linuxArchitecture="-m64" libraryPath="../../External/servus/lib/linux"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
