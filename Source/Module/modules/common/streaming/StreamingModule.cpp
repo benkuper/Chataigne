@@ -371,6 +371,7 @@ void StreamingModule::showMenuAndCreateValue(ControllableContainer * container)
 		c->setNiceName(addString);
 		c->isCustomizableByUser = true;
 		c->isRemovableByUser = true;
+		c->saveValueOnly = false;
 		container->addControllable(c);
 	} else
 	{
