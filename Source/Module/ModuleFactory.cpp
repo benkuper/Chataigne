@@ -58,24 +58,15 @@ ModuleFactory::ModuleFactory() {
 	moduleDefs.add(new ModuleDefinition("Protocol", "HTTP", &HTTPModule::create));
 	moduleDefs.add(new ModuleDefinition("Protocol", "PJLink", &PJLinkModule::create));
 	
-#if JUCE_WINDOWS
-	//moduleDefs.add(new ModuleDefinition("Controller", "Myo", &MyoModule::create));
-	moduleDefs.add(new ModuleDefinition("Hardware", "KinectV2", &KinectV2Module::create));
-#endif
+
+	moduleDefs.add(new ModuleDefinition("Hardware", "Sound Card", &AudioModule::create));
 
 	moduleDefs.add(new ModuleDefinition("Hardware", "Launchpad", &LaunchpadModule::create));
-	moduleDefs.add(new ModuleDefinition("Hardware", "Sound Card", &AudioModule::create));
 	moduleDefs.add(new ModuleDefinition("Hardware", "Wiimote", &WiimoteModule::create));
 	moduleDefs.add(new ModuleDefinition("Hardware", "JoyCon", &JoyConModule::create));
 	moduleDefs.add(new ModuleDefinition("Hardware", "Keyboard", &KeyboardModule::create));
 
-	/*
-	moduleDefs.add(new ModuleDefinition("Hardware", "HID", &HIDModule::create));
-	*/
-#if JUCE_WINDOWS
-	moduleDefs.add(new ModuleDefinition("Hardware", "Gamepad", &GamepadModule::create));
-	moduleDefs.add(new ModuleDefinition("Hardware", "Joystick", &JoystickModule::create));
-#endif
+
 
 	moduleDefs.add(new ModuleDefinition("Software", "DLight", &DLightModule::create));
 	moduleDefs.add(new ModuleDefinition("Software", "HeavyM", &HeavyMModule::create));
@@ -83,9 +74,17 @@ ModuleFactory::ModuleFactory() {
 	moduleDefs.add(new ModuleDefinition("Software", "Millumin", &MilluminModule::create));
 	moduleDefs.add(new ModuleDefinition("Software", "Reaper", &ReaperModule::create));
 	moduleDefs.add(new ModuleDefinition("Software", "Resolume", &ResolumeModule::create));
-	moduleDefs.add(new ModuleDefinition("Software", "VLC", &VLCModule::create));
-	moduleDefs.add(new ModuleDefinition("Software", "PowerPoint", &PowerPointModule::create));
+	//moduleDefs.add(new ModuleDefinition("Software", "VLC", &VLCModule::create));
 	moduleDefs.add(new ModuleDefinition("Software", "Watchout", &WatchoutModule::create));
+
+
+#if JUCE_WINDOWS
+	moduleDefs.add(new ModuleDefinition("Hardware", "KinectV2", &KinectV2Module::create));
+	moduleDefs.add(new ModuleDefinition("Hardware", "Gamepad", &GamepadModule::create));
+	moduleDefs.add(new ModuleDefinition("Hardware", "Joystick", &JoystickModule::create));
+	//moduleDefs.add(new ModuleDefinition("Hardware", "Myo", &MyoModule::create));
+	moduleDefs.add(new ModuleDefinition("Software", "PowerPoint", &PowerPointModule::create));
+#endif
 
 	moduleDefs.add(new ModuleDefinition("Generator", "Metronome", &MetronomeModule::create));
 	moduleDefs.add(new ModuleDefinition("Generator", "Signal", &SignalModule::create));
