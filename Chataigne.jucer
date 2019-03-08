@@ -1342,10 +1342,10 @@
                 extraLinkerFlags="-Wl,-rpath,&quot;lib&quot;">
       <CONFIGURATIONS>
         <CONFIGURATION name="Release" optimisation="3" targetName="Chataigne" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/libartnet/include"
-                       linuxArchitecture="-m64" libraryPath="../../External/servus/lib/linux"/>
+                       linuxArchitecture="-m64" libraryPath="../../External/servus/lib/linux&#10;../../External/libartnet/lib/linux"/>
         <CONFIGURATION name="Debug" isDebug="1" optimisation="1" targetName="Chataigne"
                        headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/libartnet/include"
-                       linuxArchitecture="-m64" libraryPath="../../External/servus/lib/linux"/>
+                       linuxArchitecture="-m64" libraryPath="../../External/servus/lib/linux&#10;../../External/libartnet/lib/linux"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_video" path="~/JUCE/modules"/>
@@ -1479,5 +1479,6 @@
   <LIVE_SETTINGS>
     <WINDOWS/>
     <OSX/>
+    <LINUX/>
   </LIVE_SETTINGS>
 </JUCERPROJECT>
