@@ -25,7 +25,7 @@ CommunityModuleManager::CommunityModuleManager() :
 
 CommunityModuleManager::~CommunityModuleManager()
 {
-
+	waitForThreadToExit(2000);
 }
 
 void CommunityModuleManager::run()
