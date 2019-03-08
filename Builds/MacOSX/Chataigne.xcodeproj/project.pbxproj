@@ -573,10 +573,6 @@
 			isa = PBXBuildFile;
 			fileRef = 97BB724F64701AA63B90C1E0;
 		};
-		24E22D5701914F4AFD9C743E = {
-			isa = PBXBuildFile;
-			fileRef = B9CE8ECB6792329E61C5A10C;
-		};
 		4C2D775E82C8238217DCB568 = {
 			isa = PBXBuildFile;
 			fileRef = EE16135FACA08DECECFBE1D6;
@@ -2447,13 +2443,6 @@
 			path = System/Library/Frameworks/CoreAudio.framework;
 			sourceTree = SDKROOT;
 		};
-		49165D9448C788B72A60DEE9 = {
-			isa = PBXFileReference;
-			lastKnownFileType = image.png;
-			name = pause.png;
-			path = ../../Resources/pause.png;
-			sourceTree = "SOURCE_ROOT";
-		};
 		493F19BB899B12C43429E1BA = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -2529,13 +2518,6 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = SequenceTimelineHeader.h;
 			path = ../../Source/TimeMachine/Sequence/ui/SequenceTimelineHeader.h;
-			sourceTree = "SOURCE_ROOT";
-		};
-		4C5DA1EF841CA81766770A06 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = HIDModule.h;
-			path = ../../Source/Module/modules/controller/hid/HIDModule.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		4CD7424E98D53E826B1E9B0B = {
@@ -3306,13 +3288,6 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = ReaperTimeCommandUI.cpp;
 			path = ../../Source/Module/modules/osc/reaper/commands/ui/ReaperTimeCommandUI.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
-		7A8B66D21332C88261E43EF9 = {
-			isa = PBXFileReference;
-			lastKnownFileType = image.png;
-			name = playpause.png;
-			path = ../../Resources/playpause.png;
 			sourceTree = "SOURCE_ROOT";
 		};
 		7C860EF3D88D260B7E03DF41 = {
@@ -4344,13 +4319,6 @@
 			path = ../../Source/Common/Serial/SerialDeviceParameter.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
-		B9CE8ECB6792329E61C5A10C = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = HIDModule.cpp;
-			path = ../../Source/Module/modules/controller/hid/HIDModule.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
 		BAE663016FCFB6168EAA4BFE = {
 			isa = PBXFileReference;
 			lastKnownFileType = file.icns;
@@ -4384,13 +4352,6 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = ChataigneGenericModule.h;
 			path = ../../Source/Module/modules/generic/ChataigneGenericModule.h;
-			sourceTree = "SOURCE_ROOT";
-		};
-		BD2EA80F8DE8B73FD2B37095 = {
-			isa = PBXFileReference;
-			lastKnownFileType = image.png;
-			name = playing.png;
-			path = ../../Resources/playing.png;
 			sourceTree = "SOURCE_ROOT";
 		};
 		BE4924D424A41C0A3275F3C4 = {
@@ -5634,10 +5595,7 @@
 				ABE980A8C8A9E5C7E7344E09,
 				66A94D900181382D38807D43,
 				1AEEEB0D0B4E406DA76434DE,
-				49165D9448C788B72A60DEE9,
 				EFDAED7A7D09C4AB1AF0BC5D,
-				BD2EA80F8DE8B73FD2B37095,
-				7A8B66D21332C88261E43EF9,
 				897F4323631CFAAAD468082A,
 				4CD7424E98D53E826B1E9B0B,
 				E3334C7CE4EE2A23F2323183,
@@ -6477,15 +6435,6 @@
 			name = gamepad;
 			sourceTree = "<group>";
 		};
-		CC99D6B30F0755A7DD435916 = {
-			isa = PBXGroup;
-			children = (
-				B9CE8ECB6792329E61C5A10C,
-				4C5DA1EF841CA81766770A06,
-			);
-			name = hid;
-			sourceTree = "<group>";
-		};
 		5196179CA1A0DDE3AAF00F3C = {
 			isa = PBXGroup;
 			children = (
@@ -6585,7 +6534,6 @@
 			children = (
 				8F6EAC12C7E1A5C5DC92DA84,
 				FE04D271FB3D733172FD0288,
-				CC99D6B30F0755A7DD435916,
 				5196179CA1A0DDE3AAF00F3C,
 				FDC3BCE022FBCF6F430EC94B,
 				DD353806E7A22359CB1D52C2,
@@ -7961,7 +7909,6 @@
 				D24D9221F54DA1CD4E4E3900,
 				5799B2059BFEDDAEFBFA0DBB,
 				6712C6C8DE23D03DD58C1ED7,
-				24E22D5701914F4AFD9C743E,
 				4C2D775E82C8238217DCB568,
 				324B449B4DC24BAEFCA1ED2A,
 				EC246C47CF365342F93FE894,

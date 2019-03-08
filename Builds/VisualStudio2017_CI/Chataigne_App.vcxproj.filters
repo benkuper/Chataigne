@@ -233,9 +233,6 @@
     <Filter Include="Chataigne\Source\Module\modules\controller\gamepad">
       <UniqueIdentifier>{BA37F7B1-5569-18A7-B747-EA1F7C820F64}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\controller\hid">
-      <UniqueIdentifier>{4FB93D46-C4E0-2DED-BE8F-964DCD854DFE}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Chataigne\Source\Module\modules\controller\joycon">
       <UniqueIdentifier>{B7484025-BCC7-9445-E7E5-A55499703E5D}</UniqueIdentifier>
     </Filter>
@@ -1423,9 +1420,6 @@
     <ClCompile Include="..\..\Source\Module\modules\controller\gamepad\GamepadModule.cpp">
       <Filter>Chataigne\Source\Module\modules\controller\gamepad</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\Module\modules\controller\hid\HIDModule.cpp">
-      <Filter>Chataigne\Source\Module\modules\controller\hid</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\controller\joycon\JoyConModule.cpp">
       <Filter>Chataigne\Source\Module\modules\controller\joycon</Filter>
     </ClCompile>
@@ -2005,10 +1999,10 @@
     <ClCompile Include="..\..\..\JUCE\modules\juce_audio_devices\audio_io\juce_AudioIODeviceType.cpp">
       <Filter>JUCE Modules\juce_audio_devices\audio_io</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\JUCE\modules\juce_audio_devices\midi_io\juce_MidiMessageCollector.cpp">
+    <ClCompile Include="..\..\..\JUCE\modules\juce_audio_devices\midi_io\juce_MidiDevices.cpp">
       <Filter>JUCE Modules\juce_audio_devices\midi_io</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\JUCE\modules\juce_audio_devices\midi_io\juce_MidiOutput.cpp">
+    <ClCompile Include="..\..\..\JUCE\modules\juce_audio_devices\midi_io\juce_MidiMessageCollector.cpp">
       <Filter>JUCE Modules\juce_audio_devices\midi_io</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\JUCE\modules\juce_audio_devices\native\juce_android_Audio.cpp">
@@ -4665,9 +4659,6 @@
     <ClInclude Include="..\..\Source\Module\modules\controller\gamepad\GamepadModule.h">
       <Filter>Chataigne\Source\Module\modules\controller\gamepad</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\Module\modules\controller\hid\HIDModule.h">
-      <Filter>Chataigne\Source\Module\modules\controller\hid</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\controller\joycon\JoyConModule.h">
       <Filter>Chataigne\Source\Module\modules\controller\joycon</Filter>
     </ClInclude>
@@ -5220,13 +5211,10 @@
     <ClInclude Include="..\..\..\JUCE\modules\juce_audio_devices\audio_io\juce_SystemAudioVolume.h">
       <Filter>JUCE Modules\juce_audio_devices\audio_io</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\JUCE\modules\juce_audio_devices\midi_io\juce_MidiInput.h">
+    <ClInclude Include="..\..\..\JUCE\modules\juce_audio_devices\midi_io\juce_MidiDevices.h">
       <Filter>JUCE Modules\juce_audio_devices\midi_io</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\JUCE\modules\juce_audio_devices\midi_io\juce_MidiMessageCollector.h">
-      <Filter>JUCE Modules\juce_audio_devices\midi_io</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\JUCE\modules\juce_audio_devices\midi_io\juce_MidiOutput.h">
       <Filter>JUCE Modules\juce_audio_devices\midi_io</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\JUCE\modules\juce_audio_devices\native\juce_ios_Audio.h">
@@ -7685,16 +7673,7 @@
     <None Include="..\..\Resources\padlock.png">
       <Filter>Chataigne\Resources</Filter>
     </None>
-    <None Include="..\..\Resources\pause.png">
-      <Filter>Chataigne\Resources</Filter>
-    </None>
     <None Include="..\..\Resources\play.png">
-      <Filter>Chataigne\Resources</Filter>
-    </None>
-    <None Include="..\..\Resources\playing.png">
-      <Filter>Chataigne\Resources</Filter>
-    </None>
-    <None Include="..\..\Resources\playpause.png">
       <Filter>Chataigne\Resources</Filter>
     </None>
     <None Include="..\..\Resources\prevcue.png">

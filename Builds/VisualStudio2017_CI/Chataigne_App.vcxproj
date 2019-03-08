@@ -275,7 +275,6 @@
     <ClCompile Include="..\..\Source\Module\modules\common\ui\EnablingNetworkControllableContainerEditor.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\controller\joystick\JoystickModule.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\controller\gamepad\GamepadModule.cpp"/>
-    <ClCompile Include="..\..\Source\Module\modules\controller\hid\HIDModule.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\controller\joycon\JoyConModule.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\controller\keyboard\KeyboardModule.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\controller\kinect\KinectV2Module.cpp"/>
@@ -545,10 +544,10 @@
     <ClCompile Include="..\..\..\JUCE\modules\juce_audio_devices\audio_io\juce_AudioIODeviceType.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\..\JUCE\modules\juce_audio_devices\midi_io\juce_MidiMessageCollector.cpp">
+    <ClCompile Include="..\..\..\JUCE\modules\juce_audio_devices\midi_io\juce_MidiDevices.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\..\JUCE\modules\juce_audio_devices\midi_io\juce_MidiOutput.cpp">
+    <ClCompile Include="..\..\..\JUCE\modules\juce_audio_devices\midi_io\juce_MidiMessageCollector.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\..\JUCE\modules\juce_audio_devices\native\juce_android_Audio.cpp">
@@ -2765,7 +2764,6 @@
     <ClInclude Include="..\..\Source\Module\modules\common\ui\EnablingNetworkControllableContainerEditor.h"/>
     <ClInclude Include="..\..\Source\Module\modules\controller\joystick\JoystickModule.h"/>
     <ClInclude Include="..\..\Source\Module\modules\controller\gamepad\GamepadModule.h"/>
-    <ClInclude Include="..\..\Source\Module\modules\controller\hid\HIDModule.h"/>
     <ClInclude Include="..\..\Source\Module\modules\controller\joycon\JoyConModule.h"/>
     <ClInclude Include="..\..\Source\Module\modules\controller\keyboard\KeyboardModule.h"/>
     <ClInclude Include="..\..\Source\Module\modules\controller\kinect\KinectV2Module.h"/>
@@ -2950,9 +2948,8 @@
     <ClInclude Include="..\..\..\JUCE\modules\juce_audio_devices\audio_io\juce_AudioIODevice.h"/>
     <ClInclude Include="..\..\..\JUCE\modules\juce_audio_devices\audio_io\juce_AudioIODeviceType.h"/>
     <ClInclude Include="..\..\..\JUCE\modules\juce_audio_devices\audio_io\juce_SystemAudioVolume.h"/>
-    <ClInclude Include="..\..\..\JUCE\modules\juce_audio_devices\midi_io\juce_MidiInput.h"/>
+    <ClInclude Include="..\..\..\JUCE\modules\juce_audio_devices\midi_io\juce_MidiDevices.h"/>
     <ClInclude Include="..\..\..\JUCE\modules\juce_audio_devices\midi_io\juce_MidiMessageCollector.h"/>
-    <ClInclude Include="..\..\..\JUCE\modules\juce_audio_devices\midi_io\juce_MidiOutput.h"/>
     <ClInclude Include="..\..\..\JUCE\modules\juce_audio_devices\native\juce_ios_Audio.h"/>
     <ClInclude Include="..\..\..\JUCE\modules\juce_audio_devices\native\juce_MidiDataConcatenator.h"/>
     <ClInclude Include="..\..\..\JUCE\modules\juce_audio_devices\sources\juce_AudioSourcePlayer.h"/>
@@ -3773,10 +3770,7 @@
     <None Include="..\..\Resources\nextcue.png"/>
     <None Include="..\..\Resources\out.png"/>
     <None Include="..\..\Resources\padlock.png"/>
-    <None Include="..\..\Resources\pause.png"/>
     <None Include="..\..\Resources\play.png"/>
-    <None Include="..\..\Resources\playing.png"/>
-    <None Include="..\..\Resources\playpause.png"/>
     <None Include="..\..\Resources\prevcue.png"/>
     <None Include="..\..\Resources\smallstripe.png"/>
     <None Include="..\..\Resources\snap.png"/>
