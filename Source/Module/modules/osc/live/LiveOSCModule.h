@@ -14,11 +14,23 @@
 #include "../OSCModule.h"
 
 class LiveOSCModule :
-	public OSCModule
+	public OSCModule,
+	public URL::DownloadTask::Listener
 {
 public:
 	LiveOSCModule();
 	~LiveOSCModule() {}
+
+
+	File liveFolder;
+	File pluginFolder;
+	File downloadedFile;
+	ScopedPointer<URL::DownloadTask> downloadTask;
+
+	void detectAndInstallLivePlugin();
+
+	void progress(URL::DownloadTask * , int64 bytesDownloaded, int64 totalBytes) override;
+	void finished(URL::DownloadTask * , bool success) override;
 
 	static LiveOSCModule * create() { return new LiveOSCModule(); }
 	virtual String getDefaultTypeString() const override { return "LiveOSC2"; }
