@@ -215,17 +215,10 @@ String ZeroconfManager::ZeroconfSearcher::getIPForHostAndPort(String host, int p
 	struct addrinfo* info = nullptr;
 	getaddrinfo(host.toRawUTF8(), String(port).toRawUTF8(), &hints, &info);
 
-	if (info != nullptr)
-	{
-		for (int i = 0; i < 4; i++)
-		{
-			if (i > 0) ip += ".";
-			ip += String((uint8)info->ai_addr->sa_data[i + 2]);
-		}
-	}
-
+	char * ipData = info->ai_addr->sa_data;
+	if (info != nullptr) ip = String((uint8)ipData[2]) + "." + String((uint8)ipData[3]) + "." + String((uint8)ipData[4]) + "." + String((uint8)ipData[5]);
+	
 	freeaddrinfo(info);
-
 
 	return ip;
 }

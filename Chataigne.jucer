@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.5.9b2"
+<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.5.9b3"
               bundleIdentifier="benkuper.Chataigne" includeBinaryInAppConfig="1"
               jucerVersion="5.4.3" companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
               companyEmail="benjamin@kuperberg.fr" defines="" splashScreenColour="Dark"
@@ -39,10 +39,7 @@
       <FILE id="A952C8" name="nextcue.png" compile="0" resource="1" file="Resources/nextcue.png"/>
       <FILE id="NkuJtC" name="out.png" compile="0" resource="1" file="Resources/out.png"/>
       <FILE id="mpY0b5" name="padlock.png" compile="0" resource="1" file="Resources/padlock.png"/>
-      <FILE id="np7NY1" name="pause.png" compile="0" resource="1" file="Resources/pause.png"/>
       <FILE id="c9BYPH" name="play.png" compile="0" resource="1" file="Resources/play.png"/>
-      <FILE id="Fae72K" name="playing.png" compile="0" resource="1" file="Resources/playing.png"/>
-      <FILE id="otwIvC" name="playpause.png" compile="0" resource="1" file="Resources/playpause.png"/>
       <FILE id="S9TDqN" name="prevcue.png" compile="0" resource="1" file="Resources/prevcue.png"/>
       <FILE id="lg5eC9" name="smallstripe.png" compile="0" resource="1" file="Resources/smallstripe.png"/>
       <FILE id="kly3dv" name="snap.png" compile="0" resource="1" file="Resources/snap.png"/>
@@ -629,10 +626,6 @@
               <FILE id="qZW7y5" name="GamepadModule.cpp" compile="1" resource="0"
                     file="Source/Module/modules/controller/gamepad/GamepadModule.cpp"/>
               <FILE id="K56p4X" name="GamepadModule.h" compile="0" resource="0" file="Source/Module/modules/controller/gamepad/GamepadModule.h"/>
-            </GROUP>
-            <GROUP id="{E06BC7AA-9B5F-EEC7-38E3-D535B4B60A05}" name="hid">
-              <FILE id="tV3V1t" name="HIDModule.cpp" compile="1" resource="0" file="Source/Module/modules/controller/hid/HIDModule.cpp"/>
-              <FILE id="wxb3I0" name="HIDModule.h" compile="0" resource="0" file="Source/Module/modules/controller/hid/HIDModule.h"/>
             </GROUP>
             <GROUP id="{B2643A70-9424-FF0A-99E1-F824ED6B791A}" name="joycon">
               <FILE id="zxI9EX" name="JoyConModule.cpp" compile="1" resource="0"
@@ -1280,16 +1273,16 @@
     </GROUP>
   </MAINGROUP>
   <EXPORTFORMATS>
-    <VS2017 targetFolder="Builds/VisualStudio2017" externalLibraries="Setupapi.lib&#10;hid.lib&#10;Kinect20.lib&#10;joytime-core.lib&#10;joytime-input-hidapi.lib&#10;Servus.lib&#10;dnssd.lib&#10;SDL2.lib"
+    <VS2017 targetFolder="Builds/VisualStudio2017" externalLibraries="Setupapi.lib&#10;hid.lib&#10;Kinect20.lib&#10;joytime-core.lib&#10;joytime-input-hidapi.lib&#10;Servus.lib&#10;dnssd.lib&#10;SDL2.lib&#10;libartnet.lib&#10;iphlpapi.lib"
             smallIcon="nVz6Li" bigIcon="nVz6Li" extraDefs="USE_KINECT=1">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" winWarningLevel="4" generateManifest="1" winArchitecture="x64"
-                       isDebug="1" optimisation="1" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/asio&#10;../../External/kinect/include&#10;../../External/joycon/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/ois/include&#10;../../External/sdl/include"
-                       libraryPath="../../External/kinect/lib&#10;../../External/joycon/lib&#10;../../External/servus/lib/win/x64/debug&#10;../../External/dnssd/lib&#10;../../External/sdl/lib/win"
+                       isDebug="1" optimisation="1" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/asio&#10;../../External/kinect/include&#10;../../External/joycon/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/ois/include&#10;../../External/sdl/include&#10;../../External/libartnet/include"
+                       libraryPath="../../External/kinect/lib&#10;../../External/joycon/lib&#10;../../External/servus/lib/win/x64/debug&#10;../../External/dnssd/lib&#10;../../External/sdl/lib/win&#10;../../External/libartnet/lib/win/debug"
                        binaryPath="Binaries/Debug" debugInformationFormat="ProgramDatabase"/>
         <CONFIGURATION name="Release" winWarningLevel="4" generateManifest="1" winArchitecture="x64"
-                       optimisation="3" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/asio&#10;../../External/kinect/include&#10;../../External/joycon/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/sdl/include"
-                       libraryPath="../../External/kinect/lib&#10;../../External/joycon/lib&#10;../../External/servus/lib/win/x64/release&#10;../../External/dnssd/lib&#10;../../External/sdl/lib/win"
+                       optimisation="3" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/asio&#10;../../External/kinect/include&#10;../../External/joycon/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/sdl/include&#10;../../External/libartnet/include"
+                       libraryPath="../../External/kinect/lib&#10;../../External/joycon/lib&#10;../../External/servus/lib/win/x64/release&#10;../../External/dnssd/lib&#10;../../External/sdl/lib/win&#10;../../External/libartnet/lib/win/release"
                        binaryPath="Binaries" debugInformationFormat="ProgramDatabase"
                        linkTimeOptimisation="1"/>
       </CONFIGURATIONS>
@@ -1316,14 +1309,14 @@
     <XCODE_MAC targetFolder="Builds/MacOSX" smallIcon="nVz6Li" bigIcon="nVz6Li"
                extraFrameworks="IOBluetooth" extraCompilerFlags="" documentExtensions="noisette"
                customPList="&lt;plist&gt;&#10;&lt;dict&gt;&#10;&lt;key&gt;NSAppTransportSecurity&lt;/key&gt;&#10;&#9;&lt;dict&gt;&#10;&#9;&#9;&lt;key&gt;NSAllowsArbitraryLoads&lt;/key&gt;&#10;&#9;&#9;&lt;true/&gt;&#10;&#9;&lt;/dict&gt;&#10;&lt;/dict&gt;&#10;&lt;/plist&gt;"
-               externalLibraries="Servus">
+               externalLibraries="Servus&#10;artnet">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" isDebug="1" optimisation="1" targetName="Chataigne"
-                       headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/dnssd/include"
+                       headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/libartnet/include"
                        cppLanguageStandard="c++11" cppLibType="libc++" enablePluginBinaryCopyStep="1"
-                       osxCompatibility="10.8 SDK" libraryPath="../../External/servus/lib/osx/debug"/>
-        <CONFIGURATION name="Release" optimisation="3" targetName="Chataigne" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/dnssd/include"
-                       enablePluginBinaryCopyStep="1" osxCompatibility="10.8 SDK" libraryPath="../../External/servus/lib/osx/release"/>
+                       osxCompatibility="10.8 SDK" libraryPath="../../External/servus/lib/osx/debug&#10;../../External/libartnet/lib/osx"/>
+        <CONFIGURATION name="Release" optimisation="3" targetName="Chataigne" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/libartnet/include"
+                       enablePluginBinaryCopyStep="1" osxCompatibility="10.8 SDK" libraryPath="../../External/servus/lib/osx/release&#10;../../External/libartnet/lib/osx"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_video" path="~/JUCE/modules"/>
@@ -1345,13 +1338,13 @@
         <MODULEPATH id="juce_analytics" path="~/JUCE/modules"/>
       </MODULEPATHS>
     </XCODE_MAC>
-    <LINUX_MAKE targetFolder="Builds/LinuxMakefile" externalLibraries="bluetooth&#10;Servus&#10;curl"
+    <LINUX_MAKE targetFolder="Builds/LinuxMakefile" externalLibraries="bluetooth&#10;Servus&#10;curl&#10;artnet"
                 extraLinkerFlags="-Wl,-rpath,&quot;lib&quot;">
       <CONFIGURATIONS>
-        <CONFIGURATION name="Release" optimisation="3" targetName="Chataigne" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/dnssd/include"
+        <CONFIGURATION name="Release" optimisation="3" targetName="Chataigne" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/libartnet/include"
                        linuxArchitecture="-m64" libraryPath="../../External/servus/lib/linux"/>
         <CONFIGURATION name="Debug" isDebug="1" optimisation="1" targetName="Chataigne"
-                       headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/dnssd/include"
+                       headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/libartnet/include"
                        linuxArchitecture="-m64" libraryPath="../../External/servus/lib/linux"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
@@ -1403,13 +1396,13 @@
         <MODULEPATH id="juce_analytics" path="../../juce"/>
       </MODULEPATHS>
     </CODEBLOCKS_LINUX>
-    <VS2017 targetFolder="Builds/VisualStudio2017_CI" externalLibraries="Setupapi.lib&#10;hid.lib&#10;Kinect20.lib&#10;joytime-core.lib&#10;joytime-input-hidapi.lib&#10;Servus.lib&#10;dnssd.lib&#10;SDL2.lib"
+    <VS2017 targetFolder="Builds/VisualStudio2017_CI" externalLibraries="Setupapi.lib&#10;hid.lib&#10;Kinect20.lib&#10;joytime-core.lib&#10;joytime-input-hidapi.lib&#10;Servus.lib&#10;dnssd.lib&#10;SDL2.lib&#10;libartnet.lib&#10;iphlpapi.lib"
             smallIcon="nVz6Li" bigIcon="nVz6Li" extraDefs="USE_KINECT=1">
       <CONFIGURATIONS>
-        <CONFIGURATION isDebug="1" name="Debug" binaryPath="Binaries/CI" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/asio&#10;../../External/kinect/include&#10;../../External/joycon/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/sdl/include"
-                       libraryPath="../../External/kinect/lib&#10;../../External/joycon/lib&#10;../../External/servus/lib/win/x64/debug&#10;../../External/dnssd/lib&#10;../../External/sdl/lib/win"/>
-        <CONFIGURATION isDebug="0" name="Release" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/asio&#10;../../External/kinect/include&#10;../../External/joycon/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/sdl/include"
-                       libraryPath="../../External/kinect/lib&#10;../../External/joycon/lib&#10;../../External/servus/lib/win/x64/release&#10;../../External/dnssd/lib&#10;../../External/sdl/lib/win"
+        <CONFIGURATION isDebug="1" name="Debug" binaryPath="Binaries/CI" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/asio&#10;../../External/kinect/include&#10;../../External/joycon/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/sdl/include&#10;../../External/libartnet/include"
+                       libraryPath="../../External/kinect/lib&#10;../../External/joycon/lib&#10;../../External/servus/lib/win/x64/debug&#10;../../External/dnssd/lib&#10;../../External/sdl/lib/win&#10;../../External/libartnet/lib/win/debug"/>
+        <CONFIGURATION isDebug="0" name="Release" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/asio&#10;../../External/kinect/include&#10;../../External/joycon/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/sdl/include&#10;../../External/libartnet/include"
+                       libraryPath="../../External/kinect/lib&#10;../../External/joycon/lib&#10;../../External/servus/lib/win/x64/release&#10;../../External/dnssd/lib&#10;../../External/sdl/lib/win&#10;../../External/libartnet/lib/win/release"
                        binaryPath="Binaries/CI" alwaysGenerateDebugSymbols="1" debugInformationFormat="ProgramDatabase"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
@@ -1432,14 +1425,14 @@
         <MODULEPATH id="juce_analytics" path="../JUCE/modules"/>
       </MODULEPATHS>
     </VS2017>
-    <VS2017 targetFolder="Builds/VisualStudio2017_Win7" externalLibraries="Setupapi.lib&#10;hid.lib&#10;joytime-core.lib&#10;joytime-input-hidapi.lib&#10;Servus.lib&#10;dnssd.lib&#10;SDL2.lib"
+    <VS2017 targetFolder="Builds/VisualStudio2017_Win7" externalLibraries="Setupapi.lib&#10;hid.lib&#10;joytime-core.lib&#10;joytime-input-hidapi.lib&#10;Servus.lib&#10;dnssd.lib&#10;SDL2.lib&#10;libartnet.lib&#10;iphlpapi.lib"
             smallIcon="nVz6Li" bigIcon="nVz6Li" extraDefs="USE_KINECT=0">
       <CONFIGURATIONS>
-        <CONFIGURATION isDebug="1" name="Debug" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/asio&#10;../../External/joycon/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/sdl/include"
-                       libraryPath="../../External/joycon/lib&#10;../../External/servus/lib/win/x64/debug&#10;../../External/dnssd/lib&#10;../../External/sdl/lib/win"
+        <CONFIGURATION isDebug="1" name="Debug" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/asio&#10;../../External/joycon/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/sdl/include&#10;../../External/libartnet/include"
+                       libraryPath="../../External/joycon/lib&#10;../../External/servus/lib/win/x64/debug&#10;../../External/dnssd/lib&#10;../../External/sdl/lib/win&#10;../../External/libartnet/lib/win/debug"
                        binaryPath="Binaries/Win7/Debug"/>
-        <CONFIGURATION isDebug="0" name="Release" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/asio&#10;../../External/joycon/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/sdl/include"
-                       libraryPath="../../External/joycon/lib&#10;../../External/servus/lib/win/x64/release&#10;../../External/dnssd/lib&#10;../../External/sdl/lib/win"
+        <CONFIGURATION isDebug="0" name="Release" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/asio&#10;../../External/joycon/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/sdl/include&#10;../../External/libartnet/include"
+                       libraryPath="../../External/joycon/lib&#10;../../External/servus/lib/win/x64/release&#10;../../External/dnssd/lib&#10;../../External/sdl/lib/win&#10;../../External/libartnet/lib/win/release"
                        binaryPath="Binaries/Win7"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
@@ -1464,23 +1457,23 @@
     </VS2017>
   </EXPORTFORMATS>
   <MODULES>
-    <MODULE id="juce_analytics" showAllCode="0" useLocalCopy="0" useGlobalPath="0"/>
-    <MODULE id="juce_audio_basics" showAllCode="0" useLocalCopy="0" useGlobalPath="0"/>
-    <MODULE id="juce_audio_devices" showAllCode="0" useLocalCopy="0" useGlobalPath="0"/>
-    <MODULE id="juce_audio_formats" showAllCode="0" useLocalCopy="0" useGlobalPath="0"/>
-    <MODULE id="juce_audio_processors" showAllCode="0" useLocalCopy="0" useGlobalPath="0"/>
-    <MODULE id="juce_audio_utils" showAllCode="0" useLocalCopy="0" useGlobalPath="0"/>
-    <MODULE id="juce_core" showAllCode="0" useLocalCopy="0" useGlobalPath="0"/>
-    <MODULE id="juce_cryptography" showAllCode="0" useLocalCopy="0" useGlobalPath="0"/>
-    <MODULE id="juce_data_structures" showAllCode="0" useLocalCopy="0" useGlobalPath="0"/>
-    <MODULE id="juce_events" showAllCode="0" useLocalCopy="0" useGlobalPath="0"/>
-    <MODULE id="juce_graphics" showAllCode="0" useLocalCopy="0" useGlobalPath="0"/>
-    <MODULE id="juce_gui_basics" showAllCode="0" useLocalCopy="0" useGlobalPath="0"/>
-    <MODULE id="juce_gui_extra" showAllCode="0" useLocalCopy="0" useGlobalPath="0"/>
-    <MODULE id="juce_opengl" showAllCode="0" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_analytics" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_audio_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_audio_devices" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_audio_formats" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_audio_processors" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_audio_utils" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_core" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_cryptography" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_data_structures" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_events" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_graphics" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_gui_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_gui_extra" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_opengl" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_organicui" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
-    <MODULE id="juce_osc" showAllCode="0" useLocalCopy="0" useGlobalPath="0"/>
-    <MODULE id="juce_video" showAllCode="0" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_osc" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_video" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
   </MODULES>
   <JUCEOPTIONS JUCE_ASIO="1" JUCE_WASAPI="1"/>
   <LIVE_SETTINGS>

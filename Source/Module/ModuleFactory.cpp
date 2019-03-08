@@ -14,7 +14,6 @@
 #include "modules/osc/resolume/ResolumeModule.h"
 #include "modules/osc/millumin/MilluminModule.h"
 #include "modules/midi/MIDIModule.h"
-#include "modules/controller/hid/HIDModule.h"
 #include "modules/controller/gamepad/GamepadModule.h"
 #include "modules/controller/joystick/JoystickModule.h"
 #include "modules/controller/wiimote/WiimoteModule.h"

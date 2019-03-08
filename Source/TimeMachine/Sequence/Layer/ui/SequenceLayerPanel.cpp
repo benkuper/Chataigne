@@ -11,7 +11,7 @@
 #include "SequenceLayerPanel.h"
 
 SequenceLayerPanel::SequenceLayerPanel(SequenceLayer * layer) :
-	BaseItemUI<SequenceLayer>(layer,ResizeMode::VERTICAL)
+	BaseItemUI<SequenceLayer>(layer, Direction::VERTICAL)
 {
 	setWantsKeyboardFocus(false); 
 	setMouseClickGrabsKeyboardFocus(false);

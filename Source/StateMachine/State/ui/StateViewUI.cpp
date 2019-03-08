@@ -11,7 +11,7 @@
 #include "StateViewUI.h"
 
 StateViewUI::StateViewUI(State * state) :
-BaseItemUI<State>(state, ResizeMode::ALL, true),
+BaseItemUI<State>(state, Direction::ALL, Direction::ALL),
 	pmui(&state->pm),
 	transitionReceptionMode(false)
 {
