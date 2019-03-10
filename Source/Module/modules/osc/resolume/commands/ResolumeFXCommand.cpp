@@ -124,9 +124,10 @@ void ResolumeFXCommand::rebuildAddress()
 		String fxn = fxName != nullptr ? fxName->stringValue().toLowerCase().replace(" ", "") : "";
 		String fxpn = fxParamName->stringValue().toLowerCase().replace(" ", "");
 		String sourceName = resolumeVersion == 6 ? "params" : fxn;
-		
-		if (fxType == "videofx") addressSuffix = "video/effects/" + fxn + "/effect/" + fxpn;
-		else if (fxType == "vst") addressSuffix = "audio/effects/" + fxn + "/effect/" + fxpn;
+		String effectSeparator = resolumeVersion >= 6.1f ? "/effect/" : "/";
+
+		if (fxType == "videofx") addressSuffix = "video/effects/" + fxn + effectSeparator + fxpn;
+		else if (fxType == "vst") addressSuffix = "audio/effects/" + fxn + effectSeparator + fxpn;
 		else if (fxType == "source") addressSuffix = "video/source/"+sourceName+"/" + fxpn;
 	}
 	
