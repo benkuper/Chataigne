@@ -913,6 +913,10 @@
 			isa = PBXBuildFile;
 			fileRef = D52D0D1A91688CBF6AA0853F;
 		};
+		C1B28215E1BFF24C927DE356 = {
+			isa = PBXBuildFile;
+			fileRef = 484D96DB30E2DDEA4E9AA343;
+		};
 		5E9D063BDA362F852047E51D = {
 			isa = PBXBuildFile;
 			fileRef = 315ECF9B992296CF1CC896EF;
@@ -928,6 +932,10 @@
 		08AC591089BBE936B40638E0 = {
 			isa = PBXBuildFile;
 			fileRef = 498E36E4BBEBDCC6F4155CB4;
+		};
+		DC470DD89A9F61DE890306BD = {
+			isa = PBXBuildFile;
+			fileRef = 07424E4DC32BDC636B956365;
 		};
 		19CC2ABB56F9EF9273DDF0F9 = {
 			isa = PBXBuildFile;
@@ -1384,6 +1392,13 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = BaseCommandHandler.h;
 			path = ../../Source/Common/Command/BaseCommandHandler.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		07424E4DC32BDC636B956365 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = ModuleCommandTester.cpp;
+			path = ../../Source/Module/ModuleCommandTester.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		08A60E869B62F7F1D59E350E = {
@@ -2268,6 +2283,13 @@
 			path = ../../Source/Module/modules/osc/commands/OSCCommand.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
+		414020D909CC3A3EE0316795 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = ModuleCommandTesterEditor.h;
+			path = ../../Source/Module/ui/ModuleCommandTesterEditor.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		4168AD487726AA2CD3E83EEB = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -2427,6 +2449,13 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = AudioLayerClipManagerUI.h;
 			path = ../../Source/TimeMachine/Sequence/Layer/layers/audio/ui/AudioLayerClipManagerUI.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		484D96DB30E2DDEA4E9AA343 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = ModuleCommandTesterEditor.cpp;
+			path = ../../Source/Module/ui/ModuleCommandTesterEditor.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		48864DF910AB963EBAB81124 = {
@@ -3806,6 +3835,13 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = MIDIManager.cpp;
 			path = ../../Source/Common/MIDI/MIDIManager.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
+		A122E7A4BAB0E37356E13E0F = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = ModuleCommandTester.h;
+			path = ../../Source/Module/ModuleCommandTester.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		A166E3006BBC663DDF05DE54 = {
@@ -7083,6 +7119,8 @@
 			children = (
 				D52D0D1A91688CBF6AA0853F,
 				8BCB6C9E9A0111F230FFFCD3,
+				484D96DB30E2DDEA4E9AA343,
+				414020D909CC3A3EE0316795,
 				315ECF9B992296CF1CC896EF,
 				AD115230A5A261C1C592E0AD,
 				33698FA29E16C5EF3535B38B,
@@ -7102,6 +7140,8 @@
 				44138D9D8641DA8D064C435A,
 				498E36E4BBEBDCC6F4155CB4,
 				736ABAC2D594FA4D888EA2D6,
+				07424E4DC32BDC636B956365,
+				A122E7A4BAB0E37356E13E0F,
 				C011CD17DA02C50BA1542AD8,
 				45293A26D5C1BC84EF82F6AE,
 				17AF8E6632B75805AD969E9E,
@@ -7994,10 +8034,12 @@
 				B57E07CD28E5B42C4EA31E68,
 				3922354C0091CF8DE610202E,
 				3E3259EC931DAA0C715921AD,
+				C1B28215E1BFF24C927DE356,
 				5E9D063BDA362F852047E51D,
 				728173B0E65C3E79D5F2B4F4,
 				52D6E25FEBF6815EEE8ADE9B,
 				08AC591089BBE936B40638E0,
+				DC470DD89A9F61DE890306BD,
 				19CC2ABB56F9EF9273DDF0F9,
 				690B4496ABF612682FA603E6,
 				D342F5881A16D25C229F2A7C,

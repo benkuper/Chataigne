@@ -14,6 +14,7 @@
 #include "JuceHeader.h"
 #include "Common/Command/Template/CommandTemplateManager.h"
 
+class ModuleCommandTester;
 class BaseCommandHandler;
 class CommandDefinition;
 
@@ -44,7 +45,7 @@ public:
 
 	bool includeValuesInSave;
 
-	ScopedPointer<BaseCommandHandler> commandTester;
+	ScopedPointer<ModuleCommandTester> commandTester;
 
 	String customType; //for custom modules;
 
