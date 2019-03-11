@@ -357,10 +357,12 @@
     <ClCompile Include="..\..\Source\Module\Routing\ModuleRouterManager.cpp"/>
     <ClCompile Include="..\..\Source\Module\Routing\ModuleRouterValue.cpp"/>
     <ClCompile Include="..\..\Source\Module\ui\ModuleChooserUI.cpp"/>
+    <ClCompile Include="..\..\Source\Module\ui\ModuleCommandTesterEditor.cpp"/>
     <ClCompile Include="..\..\Source\Module\ui\ModuleEditor.cpp"/>
     <ClCompile Include="..\..\Source\Module\ui\ModuleManagerUI.cpp"/>
     <ClCompile Include="..\..\Source\Module\ui\ModuleUI.cpp"/>
     <ClCompile Include="..\..\Source\Module\Module.cpp"/>
+    <ClCompile Include="..\..\Source\Module\ModuleCommandTester.cpp"/>
     <ClCompile Include="..\..\Source\Module\ModuleFactory.cpp"/>
     <ClCompile Include="..\..\Source\Module\ModuleManager.cpp"/>
     <ClCompile Include="..\..\Source\StateMachine\State\ui\StateUI.cpp"/>
@@ -2833,10 +2835,12 @@
     <ClInclude Include="..\..\Source\Module\Routing\ModuleRouterManager.h"/>
     <ClInclude Include="..\..\Source\Module\Routing\ModuleRouterValue.h"/>
     <ClInclude Include="..\..\Source\Module\ui\ModuleChooserUI.h"/>
+    <ClInclude Include="..\..\Source\Module\ui\ModuleCommandTesterEditor.h"/>
     <ClInclude Include="..\..\Source\Module\ui\ModuleEditor.h"/>
     <ClInclude Include="..\..\Source\Module\ui\ModuleManagerUI.h"/>
     <ClInclude Include="..\..\Source\Module\ui\ModuleUI.h"/>
     <ClInclude Include="..\..\Source\Module\Module.h"/>
+    <ClInclude Include="..\..\Source\Module\ModuleCommandTester.h"/>
     <ClInclude Include="..\..\Source\Module\ModuleFactory.h"/>
     <ClInclude Include="..\..\Source\Module\ModuleManager.h"/>
     <ClInclude Include="..\..\Source\StateMachine\State\ui\StateUI.h"/>

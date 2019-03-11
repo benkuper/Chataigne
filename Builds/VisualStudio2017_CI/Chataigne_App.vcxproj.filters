@@ -1675,6 +1675,9 @@
     <ClCompile Include="..\..\Source\Module\ui\ModuleChooserUI.cpp">
       <Filter>Chataigne\Source\Module\ui</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Module\ui\ModuleCommandTesterEditor.cpp">
+      <Filter>Chataigne\Source\Module\ui</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Module\ui\ModuleEditor.cpp">
       <Filter>Chataigne\Source\Module\ui</Filter>
     </ClCompile>
@@ -1685,6 +1688,9 @@
       <Filter>Chataigne\Source\Module\ui</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Module\Module.cpp">
+      <Filter>Chataigne\Source\Module</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Module\ModuleCommandTester.cpp">
       <Filter>Chataigne\Source\Module</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Module\ModuleFactory.cpp">
@@ -4866,6 +4872,9 @@
     <ClInclude Include="..\..\Source\Module\ui\ModuleChooserUI.h">
       <Filter>Chataigne\Source\Module\ui</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\Module\ui\ModuleCommandTesterEditor.h">
+      <Filter>Chataigne\Source\Module\ui</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\Module\ui\ModuleEditor.h">
       <Filter>Chataigne\Source\Module\ui</Filter>
     </ClInclude>
@@ -4876,6 +4885,9 @@
       <Filter>Chataigne\Source\Module\ui</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\Module.h">
+      <Filter>Chataigne\Source\Module</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Module\ModuleCommandTester.h">
       <Filter>Chataigne\Source\Module</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\ModuleFactory.h">

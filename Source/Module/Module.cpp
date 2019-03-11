@@ -15,7 +15,7 @@
 #include "Module/modules/common/commands/scriptcommands/ScriptCommand.h"
 #include "UI/ChataigneAssetManager.h"
 #include "Common/Command/BaseCommandHandler.h"
-
+#include "ModuleCommandTester.h"
 
 Module::Module(const String &name) :
 	BaseItem(name, true, true),
@@ -60,12 +60,7 @@ Module::Module(const String &name) :
 	valuesCC.includeTriggersInSaveLoad = true;
 
 
-	commandTester = new BaseCommandHandler("Command Tester", CommandContext::ACTION);
-
-	commandTester->userCanRemove = false;
-	commandTester->canBeDisabled = false;
-	commandTester->lockedModule = this;
-	commandTester->canBeReorderedInEditor = false;
+	commandTester = new ModuleCommandTester(this);
 
 	controllableContainers.move(controllableContainers.indexOf(scriptManager.get()), controllableContainers.size() - 1);
 
