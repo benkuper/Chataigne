@@ -108,13 +108,13 @@ void ResolumeFXCommand::rebuildAddress()
 {
 	float resolumeVersion = (float)resolumeModule->version->getValueData();
 
-	if (fxType == "transform") addressSuffix = "video/" + nameParam->getValueData().toString();
-	else if (fxType == "audio") addressSuffix = "audio/" + nameParam->getValueData().toString();
-	else if (resolumeVersion == 5)
+	if (resolumeVersion == 5)
 	{
 		String paramId = indexParam == nullptr ? "[error]": indexParam->stringValue();
 
-		if (fxType == "videofx") addressSuffix = "video/effect" + fxIndexParam->stringValue() + "/param" + paramId;
+		if (fxType == "transform") addressSuffix = "video/" + nameParam->getValueData().toString();
+		else if (fxType == "audio") addressSuffix = "audio/" + nameParam->getValueData().toString();
+		else if (fxType == "videofx") addressSuffix = "video/effect" + fxIndexParam->stringValue() + "/param" + paramId;
 		else if (fxType == "vst") addressSuffix = "audio/effect" + fxIndexParam->stringValue() + "/param" + paramId;
 		else if (fxType == "source") addressSuffix = "video/param" + paramId;
 		 
@@ -124,9 +124,14 @@ void ResolumeFXCommand::rebuildAddress()
 		String fxn = fxName != nullptr ? fxName->stringValue().toLowerCase().replace(" ", "") : "";
 		String fxpn = fxParamName->stringValue().toLowerCase().replace(" ", "");
 		String sourceName = resolumeVersion == 6 ? "params" : fxn;
-		
-		if (fxType == "videofx") addressSuffix = "video/effects/" + fxn + "/effect/" + fxpn;
-		else if (fxType == "vst") addressSuffix = "audio/effects/" + fxn + "/effect/" + fxpn;
+		String effectSeparator = "/effect/";
+		if (fxpn == "opacity") effectSeparator = "/";
+		else if (fxpn == "blendmode") effectSeparator = "/mixer/";
+
+		if (fxType == "transform") addressSuffix = "video/effects/transform/" + nameParam->getValueData().toString();
+		else if (fxType == "audio") addressSuffix = "audio/" + nameParam->getValueData().toString();
+		else if (fxType == "videofx") addressSuffix = "video/effects/" + fxn + effectSeparator + fxpn;
+		else if (fxType == "vst") addressSuffix = "audio/effects/" + fxn + effectSeparator + fxpn;
 		else if (fxType == "source") addressSuffix = "video/source/"+sourceName+"/" + fxpn;
 	}
 	

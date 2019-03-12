@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.5.9b3"
+<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.5.9b4"
               bundleIdentifier="benkuper.Chataigne" includeBinaryInAppConfig="1"
               jucerVersion="5.4.3" companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
               companyEmail="benjamin@kuperberg.fr" defines="" splashScreenColour="Dark"
@@ -995,6 +995,10 @@
                 file="Source/Module/ui/ModuleChooserUI.cpp"/>
           <FILE id="AvHWEd" name="ModuleChooserUI.h" compile="0" resource="0"
                 file="Source/Module/ui/ModuleChooserUI.h"/>
+          <FILE id="xR8g1P" name="ModuleCommandTesterEditor.cpp" compile="1"
+                resource="0" file="Source/Module/ui/ModuleCommandTesterEditor.cpp"/>
+          <FILE id="nZR3Mh" name="ModuleCommandTesterEditor.h" compile="0" resource="0"
+                file="Source/Module/ui/ModuleCommandTesterEditor.h"/>
           <FILE id="TU6kvM" name="ModuleEditor.cpp" compile="1" resource="0"
                 file="Source/Module/ui/ModuleEditor.cpp"/>
           <FILE id="kkuHTn" name="ModuleEditor.h" compile="0" resource="0" file="Source/Module/ui/ModuleEditor.h"/>
@@ -1007,6 +1011,10 @@
         </GROUP>
         <FILE id="I7xDJJ" name="Module.cpp" compile="1" resource="0" file="Source/Module/Module.cpp"/>
         <FILE id="Lh5WP9" name="Module.h" compile="0" resource="0" file="Source/Module/Module.h"/>
+        <FILE id="Ndfi0K" name="ModuleCommandTester.cpp" compile="1" resource="0"
+              file="Source/Module/ModuleCommandTester.cpp"/>
+        <FILE id="F5xK3Z" name="ModuleCommandTester.h" compile="0" resource="0"
+              file="Source/Module/ModuleCommandTester.h"/>
         <FILE id="qYVnqI" name="ModuleFactory.cpp" compile="1" resource="0"
               file="Source/Module/ModuleFactory.cpp"/>
         <FILE id="UBR5Wu" name="ModuleFactory.h" compile="0" resource="0" file="Source/Module/ModuleFactory.h"/>
