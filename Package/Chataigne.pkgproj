@@ -525,7 +525,7 @@
 			<key>BACKGROUND</key>
 			<dict>
 				<key>ALIGNMENT</key>
-				<integer>4</integer>
+				<integer>6</integer>
 				<key>APPAREANCES</key>
 				<dict>
 					<key>DARK_AQUA</key>
@@ -549,11 +549,11 @@
 					<key>LIGHT_AQUA</key>
 					<dict>
 						<key>ALIGNMENT</key>
-						<integer>4</integer>
+						<integer>6</integer>
 						<key>BACKGROUND_PATH</key>
 						<dict>
 							<key>PATH</key>
-							<string>../../BenTo/Package/bg.png</string>
+							<string>bg.png</string>
 							<key>PATH_TYPE</key>
 							<integer>1</integer>
 						</dict>
@@ -568,7 +568,7 @@
 				<key>BACKGROUND_PATH</key>
 				<dict>
 					<key>PATH</key>
-					<string>../../BenTo/Package/bg.png</string>
+					<string>bg.png</string>
 					<key>PATH_TYPE</key>
 					<integer>1</integer>
 				</dict>
@@ -579,7 +579,7 @@
 				<key>SCALING</key>
 				<integer>0</integer>
 				<key>SHARED_SETTINGS_FOR_ALL_APPAREANCES</key>
-				<false/>
+				<true/>
 			</dict>
 			<key>INSTALLATION TYPE</key>
 			<dict>
