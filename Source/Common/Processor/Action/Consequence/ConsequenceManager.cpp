@@ -96,7 +96,6 @@ void ConsequenceManager::run()
 		}
 
 		if (triggerIndex >= items.size()) return; 
-		DBG("Launch " << triggerIndex << "at time " << curTime);
 		items[triggerIndex]->trigger->trigger();
 		triggerIndex++;
 	}
