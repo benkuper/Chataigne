@@ -16,7 +16,8 @@
 
 class ConsequenceManager :
 	public BaseManager<Consequence>,
-	public Consequence::ConsequenceListener
+	public Consequence::ConsequenceListener,
+	public Thread
 {
 public:
 	juce_DeclareSingleton(ConsequenceManager, true)
@@ -25,15 +26,23 @@ public:
 	~ConsequenceManager();
 	
 
-	bool forceDisabled;
-	
-	void setForceDisabled(bool value, bool force = false);
-
 	Trigger * triggerAll;
+	FloatParameter * delay;
+	FloatParameter * stagger;
+
+	bool forceDisabled;
+
+	//delay and stagger
+	uint32 timeAtRun;
+	int triggerIndex;
+
+	void setForceDisabled(bool value, bool force = false);
 
 	void onContainerTriggerTriggered(Trigger *) override;
 	void addItemInternal(Consequence *, var data) override;
 	void removeItemInternal(Consequence *) override;
+
+	void run() override;
 
 	InspectableEditor * getEditor(bool isRoot) override; 
 
