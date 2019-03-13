@@ -214,6 +214,11 @@ String ZeroconfManager::ZeroconfSearcher::getIPForHostAndPort(String host, int p
 
 	struct addrinfo* info = nullptr;
 	getaddrinfo(host.toRawUTF8(), String(port).toRawUTF8(), &hints, &info);
+	if (info == nullptr)
+	{
+		DBG("Should not be null !");
+		return "";
+	}
 
 	char * ipData = info->ai_addr->sa_data;
 	if (info != nullptr) ip = String((uint8)ipData[2]) + "." + String((uint8)ipData[3]) + "." + String((uint8)ipData[4]) + "." + String((uint8)ipData[5]);
