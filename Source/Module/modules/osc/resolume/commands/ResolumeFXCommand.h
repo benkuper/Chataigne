@@ -44,6 +44,7 @@ public:
 	
 	static BaseCommand * create(ControllableContainer * module, CommandContext context, var params) { 
 		params.getDynamicObject()->setProperty("multiLevel", true);
+		params.getDynamicObject()->setProperty("restrictToFX", true);
 		return new ResolumeFXCommand((ResolumeModule *)module, context, params);
 	}
 

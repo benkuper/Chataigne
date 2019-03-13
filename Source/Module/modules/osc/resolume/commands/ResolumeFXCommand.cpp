@@ -43,10 +43,10 @@ void ResolumeFXCommand::rebuildParametersInternal()
 
 	fxType = params.getProperty("fxType", "transform");
 
-	if (fxType == "transform" || fxType == "audio")
+	if (fxType == "video" || fxType == "audio")
 	{
 		nameParam = addEnumParameter("Parameter", "Name of the target parameter in the transform menu");
-		if (fxType == "transform")
+		if (fxType == "video")
 		{
 			nameParam->addOption("Opacity", "opacity");
 			nameParam->addOption("Width", "width");
@@ -70,6 +70,13 @@ void ResolumeFXCommand::rebuildParametersInternal()
 			nameParam->addOption("Anchor X", suf + "anchorx");
 			nameParam->addOption("Anchor Y", suf + "anchory");
 			nameParam->addOption("Anchor Z", suf + "anchorz");
+
+			Level level = levelParam->getValueDataAsEnum<Level>();
+			if (level == LAYER || level == SELECTED_LAYER)
+			{
+				nameParam->addOption("Transition", "transition/mixer/blendmode");
+				nameParam->addOption("Transition", "transition/duration");
+			}
 		} else
 		{
 			nameParam->addOption("Volume", "volume");
@@ -108,12 +115,18 @@ void ResolumeFXCommand::rebuildAddress()
 {
 	float resolumeVersion = (float)resolumeModule->version->getValueData();
 
+	String nameParamValue = nameParam != nullptr ? nameParam->getValueData().toString() : "";
+	
 	if (resolumeVersion == 5)
 	{
 		String paramId = indexParam == nullptr ? "[error]": indexParam->stringValue();
 
-		if (fxType == "transform") addressSuffix = "video/" + nameParam->getValueData().toString();
-		else if (fxType == "audio") addressSuffix = "audio/" + nameParam->getValueData().toString();
+		if (fxType == "video")
+		{
+			if (nameParamValue == "transition/duration") addressSuffix = nameParamValue;
+			else addressSuffix = "video/" + nameParamValue;
+		}
+		else if (fxType == "audio") addressSuffix = "audio/" + nameParamValue;
 		else if (fxType == "videofx") addressSuffix = "video/effect" + fxIndexParam->stringValue() + "/param" + paramId;
 		else if (fxType == "vst") addressSuffix = "audio/effect" + fxIndexParam->stringValue() + "/param" + paramId;
 		else if (fxType == "source") addressSuffix = "video/param" + paramId;
@@ -122,14 +135,18 @@ void ResolumeFXCommand::rebuildAddress()
 	} else //Resolume 6+
 	{
 		String fxn = fxName != nullptr ? fxName->stringValue().toLowerCase().replace(" ", "") : "";
-		String fxpn = fxParamName->stringValue().toLowerCase().replace(" ", "");
+		String fxpn = fxParamName != nullptr ? fxParamName->stringValue().toLowerCase().replace(" ", "") : "";
 		String sourceName = resolumeVersion == 6 ? "params" : fxn;
 		String effectSeparator = "/effect/";
 		if (fxpn == "opacity") effectSeparator = "/";
 		else if (fxpn == "blendmode") effectSeparator = "/mixer/";
 
-		if (fxType == "transform") addressSuffix = "video/effects/transform/" + nameParam->getValueData().toString();
-		else if (fxType == "audio") addressSuffix = "audio/" + nameParam->getValueData().toString();
+		if (fxType == "video")
+		{
+			if (nameParamValue == "transition/duration") addressSuffix = nameParamValue;
+			else addressSuffix = "video/" + nameParamValue;
+		}
+		else if (fxType == "audio") addressSuffix = "audio/" + nameParamValue;
 		else if (fxType == "videofx") addressSuffix = "video/effects/" + fxn + effectSeparator + fxpn;
 		else if (fxType == "vst") addressSuffix = "audio/effects/" + fxn + effectSeparator + fxpn;
 		else if (fxType == "source") addressSuffix = "video/source/"+sourceName+"/" + fxpn;

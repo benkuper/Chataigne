@@ -22,12 +22,11 @@ public:
 	ResolumeBaseCommand(ResolumeModule * _module, CommandContext context, var params, bool customRebuild = false);
 	virtual ~ResolumeBaseCommand();
 
-	enum Level { COMPOSITION, LAYER, CLIP, COLUMN };
+	enum Level { COMPOSITION, LAYER, CLIP, COLUMN, SELECTED_CLIP, SELECTED_LAYER, DECK };
 
 	ResolumeModule * resolumeModule;
 	bool customRebuild;
 
-	bool multiLevelAccess;
 	EnumParameter * levelParam;
 	IntParameter * layerParam;
 	IntParameter * clipParam;
