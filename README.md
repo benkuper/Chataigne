@@ -7,6 +7,9 @@ Official website : http://benjamin.kuperberg.fr/chataigne
 Chataigne is made with one goal in mind : create a common tool for artists, technicians and developers who wish to use technology and synchronize softwares for shows, interactive installations or prototyping.
 It aims to be as simple as possible for basic interactions, but can be easily extended to create complex interactions.
 
+![What a beautiful screenshot !](http://benjamin.kuperberg.fr/chataigne/images/screenshot.png)
+
+
 ### Okay, but what does it do exactly ?
 
 While Chataigne won't do much by itself, its purpose is to be the central hub in a project involving multiple interfaces, softwares, devices and sensors.
