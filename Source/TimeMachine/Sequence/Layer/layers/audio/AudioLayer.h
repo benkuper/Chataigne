@@ -32,8 +32,9 @@ public:
 	WeakReference<AudioLayerClip> currentClip;
 	AudioLayerProcessor * currentProcessor;
 
-	Array<BoolParameter *> outChannels;
+	ControllableContainer channelsCC;
 	Array<int> selectedOutChannels;
+	var channelsData; //for ghosting
 
     FloatParameter * volume;
 	FloatParameter * enveloppe;

@@ -17,6 +17,7 @@ AudioLayer::AudioLayer(Sequence * _sequence, var params) :
 	SequenceLayer(_sequence, "New Audio Layer"),
 	audioModule(nullptr),
 	currentProcessor(nullptr),
+	channelsCC("Channels"),
 	numActiveOutputs(0), 
     graphID(0) //was -1 but since 5.2.1, generated warning. Should do otherwise ?
 {
@@ -31,7 +32,7 @@ AudioLayer::AudioLayer(Sequence * _sequence, var params) :
 
 	color->setColor(AUDIO_COLOR);
 
-
+	addChildControllableContainer(&channelsCC);
 	addChildControllableContainer(&clipManager);
 
 	//if already an audio module, assign it
@@ -74,8 +75,13 @@ void AudioLayer::setAudioModule(AudioModule * newModule)
 		currentProcessor->clear();
 		currentProcessor = nullptr;
 
-		for (auto &b : outChannels) removeControllable(b);
-		outChannels.clear();
+		if (!isCurrentlyLoadingData)
+		{
+			channelsData = channelsCC.getJSONData();
+			DBG("KEEP ghost " << channelsData.toString());
+		}
+
+		channelsCC.clear();
 	}
 
 	audioModule = newModule;
@@ -90,13 +96,21 @@ void AudioLayer::setAudioModule(AudioModule * newModule)
 		
 		int numChannels = audioModule->graph.getMainBusNumOutputChannels();
 		AudioChannelSet channelSet = audioModule->graph.getChannelLayoutOfBus(false, 0);
+
 		for (int i = 0; i < numChannels; i++)
 		{
 			String channelName = AudioChannelSet::getChannelTypeName(channelSet.getTypeOfChannel(i));
-			BoolParameter * b = addBoolParameter("Channel Out : " + channelName, "If enabled, sends audio from this layer to this channel", i < 2);
-			outChannels.add(b);
+			BoolParameter * b = channelsCC.addBoolParameter("Channel Out : " + channelName, "If enabled, sends audio from this layer to this channel", false);
+			b->setValue(i < 2, false);
 		}
 		
+		if (!channelsData.isVoid())
+		{
+			DBG("LOAD data " << JSON::toString(channelsData));
+			channelsCC.loadJSONData(channelsData);
+			channelsData = var();
+		}
+
         audioModule->addAudioModuleListener(this);
 
 	}
@@ -151,7 +165,6 @@ void AudioLayer::itemRemoved(Module * m)
 
 void AudioLayer::updateSelectedOutChannels()
 {
-	
 	selectedOutChannels.clear();
 
 	if (audioModule == nullptr) return;
@@ -159,16 +172,15 @@ void AudioLayer::updateSelectedOutChannels()
 	audioModule->graph.disconnectNode(graphID);
 
 	numActiveOutputs = 0;
-	for (int i = 0; i < outChannels.size(); i++) if (outChannels[i]) numActiveOutputs++;
-
+	for (int i = 0; i < channelsCC.controllables.size(); i++) if (((BoolParameter *)channelsCC.controllables[i])->boolValue()) numActiveOutputs++;
 
 	currentProcessor->setPlayConfigDetails(0, numActiveOutputs, audioModule->currentSampleRate, audioModule->currentBufferSize);
 	currentProcessor->prepareToPlay(audioModule->currentSampleRate, audioModule->currentBufferSize);
 
 	int index = 0;
-	for (int i = 0; i < outChannels.size(); i++)
+	for (int i = 0; i < channelsCC.controllables.size(); i++)
 	{
-		if (outChannels[i]->boolValue())
+		if (((BoolParameter *)channelsCC.controllables[i])->boolValue())
 		{
 			selectedOutChannels.add(i);
 			audioModule->graph.addConnection({{AudioProcessorGraph::NodeID(graphID), index }, {AudioProcessorGraph::NodeID(AUDIO_OUTPUT_GRAPH_ID), i } });
@@ -193,7 +205,7 @@ void AudioLayer::onContainerParameterChangedInternal(Parameter * p)
 
 	//DBG("audio layer container parameter changed internal " << p->niceName);
 
-	if (p->type == Controllable::BOOL && outChannels.indexOf((BoolParameter *)p) > -1)
+	if (p->type == Controllable::BOOL && channelsCC.controllables.indexOf((BoolParameter *)p) > -1)
 	{
 		updateSelectedOutChannels();
 	}
@@ -203,12 +215,20 @@ var AudioLayer::getJSONData()
 {
 	var data = SequenceLayer::getJSONData();
 	data.getDynamicObject()->setProperty("clipManager", clipManager.getJSONData());
-	if (audioModule != nullptr) data.getDynamicObject()->setProperty("audioModule", audioModule->shortName);
+	if (audioModule != nullptr)
+	{
+		data.getDynamicObject()->setProperty("audioModule", audioModule->shortName);
+		data.getDynamicObject()->setProperty("channels", channelsCC.getJSONData());
+	}
+
 	return data;
 }
 
 void AudioLayer::loadJSONDataInternal(var data)
 {
+	channelsData = data.getProperty("channels", var());
+
+
 	SequenceLayer::loadJSONDataInternal(data);
 	clipManager.loadJSONData(data.getProperty("clipManager", var()));
 	if (data.getDynamicObject()->hasProperty("audioModule")) setAudioModule(dynamic_cast<AudioModule *>(ModuleManager::getInstance()->getItemWithName(data.getProperty("audioModule", ""))));
