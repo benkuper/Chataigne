@@ -23,6 +23,8 @@ EnumComparator::EnumComparator(Controllable * c) :
 	addCompareOption("=", equalsId);
 	addCompareOption("!=", equalsId);
 
+	enumRef->setValue(enumParam->value, false, true, true);
+
 	reference = enumRef;
 
 }

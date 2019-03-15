@@ -15,7 +15,8 @@ StringComparator::StringComparator(Controllable * c) :
 	ParameterComparator(c),
 	stringParam((StringParameter *)c)
 {
-	stringRef = addStringParameter("Reference", "Comparison Reference to check against source value", stringParam->defaultValue);
+	stringRef = addStringParameter("Reference", "Comparison Reference to check against source value", stringParam->stringValue());
+	stringRef->setValue(stringParam->stringValue(), false, true, true);
 	reference = stringRef;
 
 	addCompareOption("=", equalsId);
