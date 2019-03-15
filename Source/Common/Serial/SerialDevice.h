@@ -96,12 +96,15 @@ public:
 
 	SerialDeviceInfo * info;
 
+	bool openedOk; //have to have that because when erroring on openPort, port stills says it's open
+
 	PortMode mode;
 	void setMode(PortMode mode);
 	void setBaudRate(int baudRate);
 
 	void open(int baud = 9600);
 	void close();
+
 
 	bool isOpen();
 

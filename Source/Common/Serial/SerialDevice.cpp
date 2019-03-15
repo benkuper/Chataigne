@@ -68,35 +68,47 @@ void SerialDevice::setBaudRate(int baudRate)
 void SerialDevice::open(int baud)
 {
 #if SERIALSUPPORT
+
+	openedOk = false;
+
 	if (port == nullptr) return;
-
-	
-	port->setBaudrate(baud); 
-	if (!port->isOpen())  port->open();
-
-	
-	port->setDTR();
-	port->setRTS();
-	
-
-	if (!thread.isThreadRunning())
+	try
 	{
-		thread.startThread();
+		port->setBaudrate(baud);
+		if (!port->isOpen())  port->open();
+		port->setDTR();
+		port->setRTS();
+
+
+		if (!thread.isThreadRunning())
+		{
+			thread.startThread();
 #ifdef SYNCHRONOUS_SERIAL_LISTENERS
-		thread.addSerialListener(this);
+			thread.addSerialListener(this);
 #else
-		thread.addAsyncSerialListener(this);
+			thread.addAsyncSerialListener(this);
 #endif
-		listeners.call(&SerialDeviceListener::portOpened, this);
+			listeners.call(&SerialDeviceListener::portOpened, this);
+		}
+
+		openedOk = true;
 	}
+	catch (std::exception e)
+	{
+		NLOGERROR("Serial", "Error opening the port " << info->description <<", try reconnecting the device.");
+		openedOk = false;
+	}
+
 #endif
 }
 
 void SerialDevice::close()
 {
 #if SERIALSUPPORT
-	if (port->isOpen())
+	if (isOpen())
 	{
+
+
 #ifdef SYNCHRONOUS_SERIAL_LISTENERS
 		thread.removeSerialListener(this);
 #else
@@ -106,9 +118,17 @@ void SerialDevice::close()
 		thread.signalThreadShouldExit();
 		while (thread.isThreadRunning());
 
-		port->close();
-		listeners.call(&SerialDeviceListener::portClosed, this);
+		try
+		{
+			port->close();
+			
+		}
+		catch (std::exception e)
+		{
+			NLOGWARNING("Serial", "Error closing port.");
+		}
 
+		listeners.call(&SerialDeviceListener::portClosed, this);
 	}
 #endif
 }
@@ -116,7 +136,7 @@ void SerialDevice::close()
 bool SerialDevice::isOpen() {
 #if SERIALSUPPORT
 	if (port == nullptr) return false;
-	return port->isOpen();
+	return port->isOpen() && openedOk;
 #else
 	return false;
 #endif
