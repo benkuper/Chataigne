@@ -247,21 +247,30 @@ var OSCModule::sendOSCFromScript(const var::NativeFunctionArgs & a)
 
 	if (a.numArguments == 0) return var();
 
-	OSCMessage msg(a.arguments[0].toString());
-
-	for (int i = 1; i < a.numArguments; i++)
+	try
 	{
-		if (a.arguments[i].isArray())
-		{
-			Array<var> * arr = a.arguments[i].getArray();
-			for (auto &aa : *arr) msg.addArgument(varToArgument(aa));
-		}else
-		{
-			msg.addArgument(varToArgument(a.arguments[i]));
-		}
-	}
+		OSCMessage msg(a.arguments[0].toString());
 
-	m->sendOSC(msg);
+		for (int i = 1; i < a.numArguments; i++)
+		{
+			if (a.arguments[i].isArray())
+			{
+				Array<var> * arr = a.arguments[i].getArray();
+				for (auto &aa : *arr) msg.addArgument(varToArgument(aa));
+			}
+			else
+			{
+				msg.addArgument(varToArgument(a.arguments[i]));
+			}
+		}
+
+		m->sendOSC(msg);
+	}
+	catch (OSCFormatError &e)
+	{
+		NLOGERROR(m->niceName, "Error sending message : " << e.description);
+	}
+	
 
 	return var();
 }
