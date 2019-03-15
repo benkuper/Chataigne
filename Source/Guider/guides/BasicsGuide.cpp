@@ -75,7 +75,7 @@ void BasicsGuide::handleStep(int step)
 	case STATE:
 	{
 		Rectangle<int> r = getLocalArea(smui->addItemBT, smui->addItemBT->getLocalBounds()).expanded(10);
-		fc.setFocus(r, fc.CIRCLE, "Now, let's add a State, in which will be able\nto add behaviors to create interaction between our 2 modules.");
+		fc.setFocus(r, fc.CIRCLE, "Now, let's add a State, so we can add behaviors to create interaction between our 2 modules.");
 	}
 	break;
 
