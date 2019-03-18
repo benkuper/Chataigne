@@ -35,6 +35,7 @@ public:
 
 	void newMessage(const Action::ActionEvent &e) override;
 
+
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ActionUI)
 };
 

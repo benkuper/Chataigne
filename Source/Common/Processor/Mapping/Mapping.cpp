@@ -28,7 +28,7 @@ Mapping::Mapping(bool canBeDisabled) :
 	//addChildControllableContainer(&cdm);
 	addChildControllableContainer(&fm);
 	addChildControllableContainer(&om);
-	
+
 	fm.addAsyncManagerListener(this);
 	input.addMappingInputListener(this);
 
@@ -235,4 +235,14 @@ void Mapping::timerCallback()
 {
 	if ((canBeDisabled && !enabled->boolValue()) || forceDisabled) return;
 	process();
+}
+
+void Mapping::highlightLinkedInspectables(bool value)
+{
+	Processor::highlightLinkedInspectables(value);
+	input.highlightLinkedInspectables(value);
+	for (auto & o : om.items)
+	{
+		o->highlightLinkedInspectables(value);
+	}
 }

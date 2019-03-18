@@ -39,8 +39,6 @@ Action::Action(const String & name, var params) :
 	forceNoOffConsequences = params.getProperty("forceNoOffConsequences", false);
 
 	updateConditionRoles();
-
-	
 }
 
 Action::~Action()
@@ -190,6 +188,14 @@ void Action::itemAdded(Condition *)
 void Action::itemRemoved(Condition *)
 {
 	updateConditionRoles();
+}
+
+void Action::highlightLinkedInspectables(bool value)
+{
+	Processor::highlightLinkedInspectables(value);
+	for (auto & cd : cdm.items) cd->highlightLinkedInspectables(value);
+	if (csmOn != nullptr) for (auto & cs : csmOn->items) cs->highlightLinkedInspectables(value);
+	if (csmOff != nullptr) for (auto & cs : csmOff->items) cs->highlightLinkedInspectables(value);
 }
 
 ProcessorUI * Action::getUI()

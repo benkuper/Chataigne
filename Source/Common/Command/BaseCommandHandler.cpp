@@ -52,6 +52,8 @@ void BaseCommandHandler::setCommand(CommandDefinition * commandDef)
 
 		command->removeCommandListener(this);
 		command->module->removeInspectableListener(this);
+
+		unregisterLinkedInspectable(command->module);
 	}
 
 
@@ -64,6 +66,7 @@ void BaseCommandHandler::setCommand(CommandDefinition * commandDef)
 		command->hideEditorHeader = true;
 		addChildControllableContainer(command);
 
+
 		if(!prevCommandData.isVoid()) command->loadPreviousCommandData(prevCommandData); //keep as much as similar parameter possible
 		else if (!ghostCommandData.isVoid()) command->loadJSONData(ghostCommandData);
 
@@ -75,6 +78,9 @@ void BaseCommandHandler::setCommand(CommandDefinition * commandDef)
 		command->addCommandListener(this);
 		command->module->addInspectableListener(this);
 		command->module->templateManager.removeBaseManagerListener(this);
+
+		registerLinkedInspectable(command->module);
+
 		if (ModuleManager::getInstanceWithoutCreating() != nullptr) ModuleManager::getInstance()->removeBaseManagerListener(this);
 	}
 

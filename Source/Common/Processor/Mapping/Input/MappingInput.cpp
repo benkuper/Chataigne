@@ -42,6 +42,9 @@ void MappingInput::setInput(Parameter * _input)
 	if (inputReference != nullptr)
 	{
 		inputReference->removeParameterListener(this);
+
+		Module * m = ControllableUtil::findParentAs<Module>(inputReference);
+		if (m != nullptr) unregisterLinkedInspectable(m);
 	}
 	
 	inputReference = _input;
@@ -49,6 +52,9 @@ void MappingInput::setInput(Parameter * _input)
 	if (inputReference != nullptr)
 	{
 		inputReference->addParameterListener(this);
+
+		Module * m = ControllableUtil::findParentAs<Module>(inputReference);
+		if (m != nullptr) registerLinkedInspectable(m);
 	}
 
 	mappinginputListeners.call(&MappingInput::Listener::inputReferenceChanged, this);

@@ -71,6 +71,8 @@ public:
 
 	virtual void timerCallback() override;
 
+	virtual void highlightLinkedInspectables(bool value) override;
+
 	ProcessorUI * getUI() override;
 
 	class MappingEvent {

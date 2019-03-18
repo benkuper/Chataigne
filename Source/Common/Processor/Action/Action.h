@@ -18,7 +18,8 @@
 class Action :
 	public Processor,
 	public ConditionManager::ConditionManagerListener,
-	public ConditionManager::Listener
+	public ConditionManager::Listener,
+	public Condition::ConditionListener
 {
 public:
 	Action(const String &name = "Action", var params = var());
@@ -55,9 +56,10 @@ public:
 	
 	void conditionManagerValidationChanged(ConditionManager *) override;
 
-
 	void itemAdded(Condition *) override;
 	void itemRemoved(Condition *) override;
+
+	virtual void highlightLinkedInspectables(bool value) override;
 
 	ProcessorUI * getUI() override;
 

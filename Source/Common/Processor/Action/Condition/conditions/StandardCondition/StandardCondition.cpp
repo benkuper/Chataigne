@@ -55,6 +55,9 @@ void StandardCondition::setSourceControllable(WeakReference<Controllable> c)
 	{
 		if (sourceControllable->type == Controllable::TRIGGER) ((Trigger *)sourceControllable.get())->removeTriggerListener(this);
 		else ((Parameter *)sourceControllable.get())->removeParameterListener(this);
+
+		Module * m = ControllableUtil::findParentAs<Module>(sourceControllable);
+		if(m != nullptr) unregisterLinkedInspectable(m);
 	}
 
 	sourceControllable = c;
@@ -66,6 +69,8 @@ void StandardCondition::setSourceControllable(WeakReference<Controllable> c)
 		if (comparator != nullptr) oldData = comparator->getJSONData();
 		comparator = ComparatorFactory::createComparatorForControllable(sourceControllable);
 
+		Module * m = ControllableUtil::findParentAs<Module>(sourceControllable);
+		if (m != nullptr) registerLinkedInspectable(m);
 
 		if (comparator != nullptr)
 		{

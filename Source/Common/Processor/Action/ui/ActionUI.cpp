@@ -23,7 +23,6 @@ ActionUI::ActionUI(Action * _action) :
 	progressionUI->showValue = false;
 	addChildComponent(progressionUI);
 	progressionUI->setVisible(action->cdm.validationProgress->enabled);
-
 	updateRoleBGColor();
 }
 
