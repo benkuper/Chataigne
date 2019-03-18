@@ -30,6 +30,7 @@ CommunityModuleManager::~CommunityModuleManager()
 
 void CommunityModuleManager::run()
 {
+	sleep(1000);
 	var data = getJSONDataForURL(URL("http://benjamin.kuperberg.fr/chataigne/releases/modules.json"));
 	
 	if (!data.isObject())
@@ -64,7 +65,6 @@ void CommunityModuleManager::run()
 
 		CommunityModuleInfo * m = new CommunityModuleInfo(moduleName, moduleDefData);
 		addItem(m, var(), false);
-		
 	}
 	
 }

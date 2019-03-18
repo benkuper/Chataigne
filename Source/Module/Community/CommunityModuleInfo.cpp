@@ -15,6 +15,7 @@
 CommunityModuleInfo::CommunityModuleInfo(StringRef name, var onlineData) :
 	BaseItem(name, false)
 {
+	nameCanBeChangedByUser = false;
 	userCanRemove = false;
 	canBeReorderedInEditor = false;
 
