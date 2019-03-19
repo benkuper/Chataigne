@@ -56,14 +56,14 @@ void ResolumeBaseCommand::rebuildParameters()
 		levelParam->addOption("Layer", LAYER, false);
 		levelParam->addOption("Selected Layer", SELECTED_LAYER, false);
 	}
-	if (multiLevelAccess || targetLevel == CLIP ||targetLevel == SELECTED_CLIP)
+	if (multiLevelAccess || targetLevel == CLIP || targetLevel == SELECTED_CLIP)
 	{
 		levelParam->addOption("Clip", CLIP, false);
 		levelParam->addOption("Selected Clip", SELECTED_CLIP, false);
 	}
 
-	if (!restrictToFX && multiLevelAccess || targetLevel == COLUMN) levelParam->addOption("Column", COLUMN, false);
-	if(!restrictToFX && multiLevelAccess || targetLevel == DECK) levelParam->addOption("Deck", DECK, false);
+	if (!restrictToFX && (multiLevelAccess || targetLevel == COLUMN)) levelParam->addOption("Column", COLUMN, false);
+	if(!restrictToFX && targetLevel == DECK) levelParam->addOption("Deck", DECK, false);
 
 	levelParam->hideInEditor = levelParam->enumValues.size() <= 1;
 

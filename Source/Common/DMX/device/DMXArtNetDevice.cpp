@@ -16,10 +16,10 @@
 
 DMXArtNetDevice::DMXArtNetDevice() :
 	DMXDevice("ArtNet", ARTNET, true),
-	ioNode(nullptr),
+    nodeName(nullptr),
+    ioNode(nullptr),
 	discoverNode(nullptr),
-	nodeName(nullptr),
-    numFoundNodes(0),
+	numFoundNodes(0),
     noServerCreation(false)
 {
 	networkInterface = addEnumParameter("Interface", "Interface to link the node to");
