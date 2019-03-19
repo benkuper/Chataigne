@@ -39,21 +39,21 @@ void MappingInput::lockInput(Parameter * input)
 
 void MappingInput::setInput(Parameter * _input)
 {
-	if (inputReference != nullptr)
+	if (!inputReference.wasObjectDeleted() && inputReference != nullptr)
 	{
 		inputReference->removeParameterListener(this);
 
-		Module * m = ControllableUtil::findParentAs<Module>(inputReference);
+		Module * m = ControllableUtil::findParentAs<Module>(inputReference.get());
 		if (m != nullptr) unregisterLinkedInspectable(m);
 	}
 	
 	inputReference = _input;
 
-	if (inputReference != nullptr)
+	if (!inputReference.wasObjectDeleted() && inputReference != nullptr)
 	{
 		inputReference->addParameterListener(this);
 
-		Module * m = ControllableUtil::findParentAs<Module>(inputReference);
+		Module * m = ControllableUtil::findParentAs<Module>(inputReference.get());
 		if (m != nullptr) registerLinkedInspectable(m);
 	}
 

@@ -23,7 +23,7 @@ public:
 	
 
 	TargetParameter * inputTarget;
-	Parameter * inputReference;
+	WeakReference<Parameter> inputReference;
 
 	void lockInput(Parameter * input);
 	void setInput(Parameter * input);

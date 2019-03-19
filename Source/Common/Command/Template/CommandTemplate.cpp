@@ -101,7 +101,7 @@ void CommandTemplate::onContainerParameterChangedInternal(Parameter * p)
 
 void CommandTemplate::onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c)
 {
-	CommandTemplateParameter * ctp = dynamic_cast<CommandTemplateParameter *>(c->parentContainer);
+	CommandTemplateParameter * ctp = c->getParentAs<CommandTemplateParameter>();
 	if (ctp != nullptr)
 	{
 		templateListeners.call(&TemplateListener::templateParameterChanged, ctp);

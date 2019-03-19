@@ -35,13 +35,17 @@ MappingLayer::MappingLayer(Sequence *_sequence, var params) :
 	recorder.input->customGetControllableLabelFunc = &Module::getTargetLabelForValueControllable;
 	recorder.input->customCheckAssignOnNextChangeFunc = &ModuleManager::checkControllableIsAValue;
 
-	mode = addEnumParameter("Mode", "Automation Mode, 1D, 2D, 3D or Color");
+	mode = new EnumParameter("Mode", "Automation Mode, 1D, 2D, 3D or Color");
 	mode->addOption("Single Value", MODE_1D);
 	mode->addOption("Point 2D (XY)", MODE_2D);
 	mode->addOption("Point 3D (XYZ)", MODE_3D);
 	mode->addOption("Color (RGBA)", MODE_COLOR);
 	mode->setValueWithData((Mode)(int)params.getProperty("mode", MODE_1D));
+	//mode->defaultValue = (int)params.getProperty("mode", MODE_1D);
+	//mode->resetValue(false);
+
 	mode->hideInEditor = true;
+	addParameter(mode); //avoid setting up
 
 
 	Mode m = mode->getValueDataAsEnum<Mode>();

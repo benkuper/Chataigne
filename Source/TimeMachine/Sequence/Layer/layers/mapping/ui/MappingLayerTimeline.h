@@ -35,6 +35,9 @@ public:
 	bool keyPressed(const KeyPress &e) override;
 
 	void controllableFeedbackUpdateInternal(Controllable * c) override;
+
+	void inspectableSelectionChanged(Inspectable * i) override;
+
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MappingLayerTimeline)
 
 };

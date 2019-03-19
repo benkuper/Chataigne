@@ -47,7 +47,7 @@ void MappingLayerTimeline::setupUIForLayerMode()
 		if (index == 1) c = GREEN_COLOR;
 		if (index == 2) c = BLUE_COLOR;
 		AutomationUI * aui = new AutomationUI(a,c);
-		aui->autoSwitchMode = true;
+		aui->autoSwitchMode = false;
 		aui->setViewMode(AutomationUI::VIEW);
 
 		addAndMakeVisible(aui);
@@ -106,5 +106,13 @@ void MappingLayerTimeline::controllableFeedbackUpdateInternal(Controllable * c)
 	{
 		needle.timeBarColor = mappingLayer->recorder.arm->boolValue() ? Colours::red : needle.defaultTimeBarColor;
 		repaint();
+	}
+}
+
+void MappingLayerTimeline::inspectableSelectionChanged(Inspectable * i)
+{
+	if (i == mappingLayer)
+	{
+		for (auto &aui : automationsUI) aui->setViewMode(mappingLayer->isSelected?AutomationUI::EDIT:AutomationUI::VIEW);
 	}
 }

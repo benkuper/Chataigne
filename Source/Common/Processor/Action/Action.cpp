@@ -155,7 +155,7 @@ void Action::controllableFeedbackUpdate(ControllableContainer * cc, Controllable
 {
 	Processor::controllableFeedbackUpdate(cc, c);
 
-	ActivationCondition * ac = dynamic_cast<ActivationCondition *>(c->parentContainer);
+	ActivationCondition * ac = c->getParentAs<ActivationCondition>();
 	if (ac != nullptr && c == ac->enabled)
 	{
 		updateConditionRoles();
