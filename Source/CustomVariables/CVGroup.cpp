@@ -132,8 +132,8 @@ void CVGroup::onControllableFeedbackUpdateInternal(ControllableContainer * cc, C
 
 	} else if(controlMode->getValueDataAsEnum<ControlMode>() == WEIGHTS)
 	{
-		CVPreset * p = static_cast<CVPreset *>(c->parentContainer);
-		if (p == nullptr) p = static_cast<CVPreset *>(c->parentContainer->parentContainer.get()); //if value
+		CVPreset * p = c->getParentAs<CVPreset>();
+		if (p == nullptr) p = dynamic_cast<CVPreset *>(c->parentContainer->parentContainer.get()); //if value
 		if (p != nullptr)
 		{
 			computeValues();

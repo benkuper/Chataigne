@@ -89,7 +89,7 @@ void Mapping::checkFiltersNeedContinuousProcess()
 void Mapping::updateMappingChain()
 {
 	checkFiltersNeedContinuousProcess();
-	Parameter * p = fm.getLastEnabledFilter() != nullptr ? fm.getLastEnabledFilter()->filteredParameter.get() : input.inputReference;
+	Parameter * p = fm.getLastEnabledFilter() != nullptr ? fm.getLastEnabledFilter()->filteredParameter.get() : input.inputReference.get();
 
 	if (outputParam == nullptr && p == nullptr) return;
 
