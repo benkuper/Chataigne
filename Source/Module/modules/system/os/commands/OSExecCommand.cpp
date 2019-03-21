@@ -44,6 +44,8 @@ void OSExecCommand::trigger()
 {
 	BaseCommand::trigger();
 
+	if (!module->enabled->boolValue()) return;
+
 	bool result = false;
 	switch (actionType)
 	{

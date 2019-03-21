@@ -24,6 +24,9 @@ void OSPowerCommand::trigger()
 {
 	BaseCommand::trigger();
 
+	if (!module->enabled->boolValue()) return;
+
+
 	switch (actionType)
 	{
 	case SHUTDOWN:

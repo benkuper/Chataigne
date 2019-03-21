@@ -46,6 +46,8 @@ void WakeOnLanCommand::onContainerParameterChanged(Parameter * p)
 
 void WakeOnLanCommand::trigger()
 {
+	if (!module->enabled->boolValue()) return;
+
 	if (mac.isNull())
 	{
 		LOG("WOL : mac is empty, not sending");
