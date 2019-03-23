@@ -28,7 +28,7 @@ public:
 	BoolParameter * autoNextScene;
 	Trigger * resetScene;
 
-	void trigger() override;
+	void triggerInternal() override;
 
 	void onContainerTriggerTriggered(Trigger * t) override;
 

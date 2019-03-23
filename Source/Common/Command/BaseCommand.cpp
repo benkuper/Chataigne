@@ -16,6 +16,7 @@ BaseCommand::BaseCommand(Module * _module, CommandContext _context, var _params)
 	ControllableContainer("Command"),
 	context(_context),
 	module(_module),
+    moduleRef(_module),
 	params(_params),
 	saveAndLoadTargetMappings(false),
 	linkedTemplate(nullptr),
@@ -211,6 +212,16 @@ void BaseCommand::setMappingValueType(Controllable::Type type)
 	
 }
 
+void BaseCommand::trigger()
+{
+    if(moduleRef.wasObjectDeleted())
+    {
+        DBG("Module removed, not processing that");
+        return;
+    }
+    
+    triggerInternal();
+}
 
 void BaseCommand::setValue(var value)
 {

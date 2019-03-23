@@ -78,9 +78,9 @@ void DMXCommand::setValue(var val)
 	BaseCommand::setValue(val); 
 }
 
-void DMXCommand::trigger()
+void DMXCommand::triggerInternal()
 {
-	BaseCommand::trigger();
+	BaseCommand::triggerInternal();
 
 	switch (dmxAction) 
 	{

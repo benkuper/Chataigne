@@ -78,9 +78,9 @@ void MIDINoteAndCCCommand::setValue(var value)
 	MIDICommand::setValue(value);
 }
 
-void MIDINoteAndCCCommand::trigger()
+void MIDINoteAndCCCommand::triggerInternal()
 {
-	MIDICommand::trigger();
+	MIDICommand::triggerInternal();
 
 	int pitch = type == CONTROLCHANGE? number->intValue() : (int)noteEnum->getValueData() + (octave->intValue() - (int)octave->minimumValue) * 12;
 
@@ -153,9 +153,9 @@ void MIDISysExCommand::onContainerParameterChangedAsync(Parameter * p, const var
 	}
 }
 
-void MIDISysExCommand::trigger()
+void MIDISysExCommand::triggerInternal()
 {
-	MIDICommand::trigger();
+	MIDICommand::triggerInternal();
 
 	Array<uint8> data;
 	for (auto &c : dataContainer.controllables) data.add(((IntParameter *)c)->intValue());

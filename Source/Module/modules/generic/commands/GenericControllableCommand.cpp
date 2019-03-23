@@ -50,9 +50,9 @@ void GenericControllableCommand::setValueParameter(Parameter * p)
 }
 
 
-void GenericControllableCommand::trigger()
+void GenericControllableCommand::triggerInternal()
 {
-	BaseCommand::trigger();
+	BaseCommand::triggerInternal();
 
 	if (target->target == nullptr) return;
 

@@ -59,9 +59,9 @@ void ResolumeClipCommand::onContainerParameterChanged(Parameter * p)
 	}
 }
 
-void ResolumeClipCommand::trigger()
+void ResolumeClipCommand::triggerInternal()
 {
-	ResolumeBaseCommand::trigger();
+	ResolumeBaseCommand::triggerInternal();
 
 	if (firstClip != nullptr)
 	{

@@ -23,7 +23,7 @@ public:
 	BoolParameter * appendCR;
 	BoolParameter * appendNL;
 
-	void trigger() override;
+	void triggerInternal() override;
 
 	static SendStreamStringValuesCommand * create(ControllableContainer * module, CommandContext context, var params) { return new SendStreamStringValuesCommand((StreamingModule *)module, context, params); }
 

@@ -27,9 +27,9 @@ LiveOSCSceneCommand::~LiveOSCSceneCommand()
 {
 }
 
-void LiveOSCSceneCommand::trigger()
+void LiveOSCSceneCommand::triggerInternal()
 {
-	OSCCommand::trigger();
+	OSCCommand::triggerInternal();
 	if (autoNextScene->boolValue()) targetScene->setValue(targetScene->intValue() + 1);
 }
 

@@ -178,7 +178,7 @@ Controllable * ScriptCommand::getControllableForJSONDefinition(const String &nam
 	return c;
 }
 
-void ScriptCommand::trigger()
+void ScriptCommand::triggerInternal()
 {
 	Array<var> args;
 	for (auto &p : scriptParams)

@@ -36,7 +36,7 @@ void SendStreamValuesCommand::loadJSONDataInternal(var data)
 	customValuesManager->loadJSONData(data.getProperty("argManager", var()), true);
 }
 
-void SendStreamValuesCommand::trigger()
+void SendStreamValuesCommand::triggerInternal()
 {
 	if (streamingModule == nullptr) return;
 	

@@ -50,7 +50,7 @@ public:
 	BoolParameter * remap01To127;
 
 	void setValue(var value) override;
-	void trigger() override;
+	void triggerInternal() override;
 
 	static MIDINoteAndCCCommand * create(ControllableContainer * module, CommandContext context, var params) { return new MIDINoteAndCCCommand((MIDIModule *)module, context, params); }
 
@@ -73,7 +73,7 @@ public:
 
 	void updateBytesParams();
 	void onContainerParameterChangedAsync(Parameter * p, const var &param) override;
-	void trigger() override;
+	void triggerInternal() override;
 
 	static MIDISysExCommand * create(ControllableContainer * module, CommandContext context, var params) { return new MIDISysExCommand((MIDIModule *)module, context, params); }
 

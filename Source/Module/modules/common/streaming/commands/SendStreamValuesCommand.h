@@ -26,7 +26,7 @@ public:
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
 
-	void trigger() override;
+	void triggerInternal() override;
 
 	void useForMappingChanged(CustomValuesCommandArgument * a) override;
 

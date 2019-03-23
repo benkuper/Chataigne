@@ -30,7 +30,7 @@ public:
 	Random clipRand;
 
 	void onContainerParameterChanged(Parameter *) override;
-	void trigger() override;
+	void triggerInternal() override;
 
 
 	static BaseCommand * create(ControllableContainer * module, CommandContext context, var params) { 

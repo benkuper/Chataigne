@@ -33,7 +33,7 @@ public:
 	TargetParameter * target;
 	FloatParameter * value;
 
-	virtual void trigger() override;
+	virtual void triggerInternal() override;
 
 	var dataToLoad;
 

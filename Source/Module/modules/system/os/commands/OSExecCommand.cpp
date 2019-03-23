@@ -40,9 +40,9 @@ OSExecCommand::~OSExecCommand()
 {
 }
 
-void OSExecCommand::trigger()
+void OSExecCommand::triggerInternal()
 {
-	BaseCommand::trigger();
+	BaseCommand::triggerInternal();
 
 	if (!module->enabled->boolValue()) return;
 

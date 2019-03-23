@@ -47,7 +47,7 @@ void ChataigneLogCommand::setValue(var _value)
 	
 }
 
-void ChataigneLogCommand::trigger()
+void ChataigneLogCommand::triggerInternal()
 {
 	switch (type)
 	{

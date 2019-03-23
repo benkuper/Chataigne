@@ -19,7 +19,7 @@ public:
 	SendStreamRawDataCommand(StreamingModule * _module, CommandContext context, var params);
 	~SendStreamRawDataCommand();
 
-	void trigger() override;
+	void triggerInternal() override;
 
 	static SendStreamRawDataCommand * create(ControllableContainer * module, CommandContext context, var params) { return new SendStreamRawDataCommand((StreamingModule *)module, context, params); }
 };

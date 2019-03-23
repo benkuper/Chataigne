@@ -20,9 +20,9 @@ OSPowerCommand::~OSPowerCommand()
 {
 }
 
-void OSPowerCommand::trigger()
+void OSPowerCommand::triggerInternal()
 {
-	BaseCommand::trigger();
+	BaseCommand::triggerInternal();
 
 	if (!module->enabled->boolValue()) return;
 

@@ -28,7 +28,7 @@ public:
 	CustomValuesCommandArgumentManager wildcardsContainer;
 	Array<Parameter *> wildCardParams;
 
-	void trigger() override;
+	void triggerInternal() override;
 	void useForMappingChanged(CustomValuesCommandArgument * a) override;
 
 	virtual void onContainerParameterChanged(Parameter * p) override;

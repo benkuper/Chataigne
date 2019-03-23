@@ -25,7 +25,7 @@ public:
 	BoolParameter * stopTimePlay;
 	FloatParameter * timeParam;
 
-	void trigger() override;
+	void triggerInternal() override;
 
 	static ReaperTimeCommand * create(ControllableContainer * module, CommandContext context, var params) { return new ReaperTimeCommand((ReaperModule *)module, context, params); }
 

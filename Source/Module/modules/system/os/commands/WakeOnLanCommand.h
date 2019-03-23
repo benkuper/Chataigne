@@ -28,7 +28,7 @@ public:
 	void generateMacFromString();
 
 	void onContainerParameterChanged(Parameter * p) override;
-	void trigger() override;
+	void triggerInternal() override;
 
 	static WakeOnLanCommand * create(ControllableContainer * module, CommandContext context, var params) { return new WakeOnLanCommand((OSModule *)module, context, params); }
 

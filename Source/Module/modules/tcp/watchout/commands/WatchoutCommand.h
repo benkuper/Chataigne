@@ -24,7 +24,7 @@ public:
 
 	ScopedPointer<ControllableContainer> paramContainer;
 
-	void trigger() override;
+	void triggerInternal() override;
 
 	static WatchoutCommand * create(ControllableContainer * module, CommandContext context, var params) { return new WatchoutCommand((WatchoutModule *)module, context, params); }
 

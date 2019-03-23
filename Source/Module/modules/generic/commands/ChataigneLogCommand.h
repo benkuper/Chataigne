@@ -26,7 +26,7 @@ public:
 	Parameter * value;
 
 	void setValue(var value) override;
-	void trigger() override;
+	void triggerInternal() override;
 
 	static BaseCommand * create(ControllableContainer * module, CommandContext context, var params);
 };

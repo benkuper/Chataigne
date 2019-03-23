@@ -29,7 +29,7 @@ HTTPCommand::~HTTPCommand()
 }
 
 
-void HTTPCommand::trigger()
+void HTTPCommand::triggerInternal()
 {
 	StringPairArray requestParams;
 	for (auto &p : customValuesManager->items) requestParams.set(p->shortName, p->param->stringValue());

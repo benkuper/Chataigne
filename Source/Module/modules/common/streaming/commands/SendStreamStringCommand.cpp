@@ -51,7 +51,7 @@ SendStreamStringCommand::~SendStreamStringCommand()
 {
 }
 
-void SendStreamStringCommand::trigger()
+void SendStreamStringCommand::triggerInternal()
 {
 	String m = valueParam->stringValue() + (appendCR->boolValue() ? "\r" : "") + (appendNL->boolValue() ? "\n" : "");
 	if (prefix != nullptr) m = prefix->stringValue() + m;

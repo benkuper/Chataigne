@@ -25,10 +25,10 @@ ReaperTimeCommand::~ReaperTimeCommand()
 {
 }
 
-void ReaperTimeCommand::trigger()
+void ReaperTimeCommand::triggerInternal()
 {
 	if (stopTimePlay->boolValue()) oscModule->sendOSC(OSCMessage("/stop"));
-	OSCCommand::trigger();
+	OSCCommand::triggerInternal();
 	if (stopTimePlay->boolValue()) oscModule->sendOSC(OSCMessage("/play"));
 	
 }

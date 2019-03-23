@@ -30,11 +30,11 @@ CustomOSCCommand::~CustomOSCCommand()
 }
 
 
-void CustomOSCCommand::trigger()
+void CustomOSCCommand::triggerInternal()
 {
 	if (oscModule == nullptr) return;
 	
-	BaseCommand::trigger();
+	BaseCommand::triggerInternal();
 
 	String addString = address->stringValue();
 	
@@ -78,7 +78,7 @@ void CustomOSCCommand::trigger()
 
 			}
 		}
-		oscModule->sendOSC(m);
+        oscModule->sendOSC(m);
 	}catch (const OSCFormatError &)
 	{
 		NLOG("OSC", "Address is invalid :\n" << address->stringValue());

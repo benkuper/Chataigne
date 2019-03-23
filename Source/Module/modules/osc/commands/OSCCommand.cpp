@@ -116,11 +116,11 @@ void OSCCommand::onContainerParameterChanged(Parameter * p)
 	}
 }
 
-void OSCCommand::trigger()
+void OSCCommand::triggerInternal()
 {
 	if (oscModule == nullptr) return;
 
-	BaseCommand::trigger();
+	BaseCommand::triggerInternal();
 
 	OSCMessage m(address->stringValue());
 	

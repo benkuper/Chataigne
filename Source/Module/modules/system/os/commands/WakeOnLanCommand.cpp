@@ -44,7 +44,7 @@ void WakeOnLanCommand::onContainerParameterChanged(Parameter * p)
 	}
 }
 
-void WakeOnLanCommand::trigger()
+void WakeOnLanCommand::triggerInternal()
 {
 	if (!module->enabled->boolValue()) return;
 

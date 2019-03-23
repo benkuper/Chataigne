@@ -30,7 +30,7 @@ public:
 
 	TargetParameter * target;
 
-	void trigger() override;
+	void triggerInternal() override;
 
 
 	//Delayed loading mechanism to ensure all content is created for right targeting

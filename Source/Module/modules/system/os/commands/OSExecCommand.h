@@ -27,7 +27,7 @@ public:
 	StringParameter * launchOptions;
 	BoolParameter * killMode;
 
-	void trigger() override;
+	void triggerInternal() override;
 
 	void killProcess(const String &name);
 

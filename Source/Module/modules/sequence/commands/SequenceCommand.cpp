@@ -62,9 +62,9 @@ SequenceCommand::~SequenceCommand()
 {
 }
 
-void SequenceCommand::trigger()
+void SequenceCommand::triggerInternal()
 {
-	BaseCommand::trigger();
+	BaseCommand::triggerInternal();
 
 	if (target->targetContainer == nullptr) return;
 	if (target->targetContainer.wasObjectDeleted()) return;

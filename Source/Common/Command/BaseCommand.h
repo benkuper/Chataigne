@@ -28,6 +28,8 @@ public:
 
 	CommandContext context;
 	Module * module;
+    WeakReference<Inspectable> moduleRef;
+    
 	var params;
 	Controllable::Type valueType;
 	bool saveAndLoadTargetMappings;
@@ -54,7 +56,8 @@ public:
 	void templateParameterChanged(CommandTemplateParameter * ctp) override;
 	
 	virtual void setMappingValueType(Controllable::Type type);
-	virtual void trigger() {} //for trigger context, to override
+    virtual void trigger(); //for trigger, will check validity of module
+    virtual void triggerInternal() {} // to be overriden
 	virtual void setValue(var value); //for mapping context
 
 	virtual void loadPreviousCommandData(var data) { } //default behavior is nothing, can override that to trying hot swap of commands

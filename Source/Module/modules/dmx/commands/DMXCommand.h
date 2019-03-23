@@ -36,7 +36,7 @@ public:
 	BoolParameter * remap01To255;
 
 	void setValue(var value) override;
-	void trigger() override;
+	void triggerInternal() override;
 
 	static BaseCommand * create(ControllableContainer * module, CommandContext context, var params) { return new DMXCommand((DMXModule *)module, context, params); }
 

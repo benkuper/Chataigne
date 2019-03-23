@@ -34,7 +34,7 @@ SendStreamStringValuesCommand::~SendStreamStringValuesCommand()
 {
 }
 
-void SendStreamStringValuesCommand::trigger()
+void SendStreamStringValuesCommand::triggerInternal()
 {
 	if (streamingModule == nullptr) return;
 	String s = "";

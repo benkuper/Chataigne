@@ -26,7 +26,7 @@ public:
 	StringParameter * prefix;
 	StringParameter * valueParam;
 
-	void trigger() override;
+	void triggerInternal() override;
 
 	static SendStreamStringCommand * create(ControllableContainer * module, CommandContext context, var params) { return new SendStreamStringCommand((StreamingModule *)module, context, params); }
 

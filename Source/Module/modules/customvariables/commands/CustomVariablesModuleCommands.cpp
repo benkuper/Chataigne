@@ -135,7 +135,7 @@ void CVCommand::onContainerParameterChanged(Parameter * p)
 	}
 }
 
-void CVCommand::trigger()
+void CVCommand::triggerInternal()
 {
 	switch (type)
 	{
