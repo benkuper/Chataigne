@@ -42,7 +42,7 @@ void BaseCommandHandler::triggerCommand()
 
 void BaseCommandHandler::setCommand(CommandDefinition * commandDef)
 {
-	if (commandDefinition == commandDef) return;
+	if (!commandDefinition.wasObjectDeleted() && commandDefinition == commandDef) return;
 
 	var prevCommandData;
 	if (command != nullptr)
@@ -58,7 +58,7 @@ void BaseCommandHandler::setCommand(CommandDefinition * commandDef)
 
 
 	commandDefinition = commandDef;
-	if (commandDef != nullptr) command = commandDef->create(context);e
+	if (commandDef != nullptr) command = commandDef->create(context);
 	else command = nullptr;
 
 	if (command != nullptr)
