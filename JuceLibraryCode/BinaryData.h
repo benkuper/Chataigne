@@ -9,28 +9,28 @@
 namespace BinaryData
 {
     extern const char*   conditionScriptTemplate_js;
-    const int            conditionScriptTemplate_jsSize = 5536;
+    const int            conditionScriptTemplate_jsSize = 5455;
 
     extern const char*   filterScriptTemplate_js;
-    const int            filterScriptTemplate_jsSize = 646;
+    const int            filterScriptTemplate_jsSize = 632;
 
     extern const char*   genericScriptTemplate_js;
-    const int            genericScriptTemplate_jsSize = 4737;
+    const int            genericScriptTemplate_jsSize = 4671;
 
     extern const char*   httpScriptTemplate_js;
     const int            httpScriptTemplate_jsSize = 805;
 
     extern const char*   midiScriptTemplate_js;
-    const int            midiScriptTemplate_jsSize = 1271;
+    const int            midiScriptTemplate_jsSize = 1232;
 
     extern const char*   moduleScriptTemplate_js;
-    const int            moduleScriptTemplate_jsSize = 1415;
+    const int            moduleScriptTemplate_jsSize = 1379;
 
     extern const char*   oscScriptTemplate_js;
-    const int            oscScriptTemplate_jsSize = 798;
+    const int            oscScriptTemplate_jsSize = 775;
 
     extern const char*   streamingScriptTemplate_js;
-    const int            streamingScriptTemplate_jsSize = 1091;
+    const int            streamingScriptTemplate_jsSize = 1064;
 
     extern const char*   about_png;
     const int            about_pngSize = 36971;
