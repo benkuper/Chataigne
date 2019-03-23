@@ -105,7 +105,7 @@ script:
     cd /benkuper/Chataigne/Builds/LinuxMakefile;
     make -j 8 CONFIG=$MAKECONF"
   else
-    xcodebuild -project Chataigne/Builds/MacOSX/Chataigne.xcodeproj -configuration $MAKECONF -jobs 8 | xcpretty -f `xcpretty-travis-formatter`
+    xcodebuild -project Chataigne/Builds/MacOSX/Chataigne.xcodeproj -configuration $MAKECONF -jobs 8 -verbose | xcpretty -f `xcpretty-travis-formatter`
   fi
 
 after_success:
