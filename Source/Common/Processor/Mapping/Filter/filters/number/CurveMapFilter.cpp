@@ -17,7 +17,7 @@ CurveMapFilter::CurveMapFilter(var params) :
 	curve.isSelectable = false;
 	curve.length->setValue(1);
 	curve.addItem(0, 0, false);
-	curve.items[0]->setEasing(Easing::BEZIER);
+	curve.items[0]->easingType->setValueWithData(Easing::BEZIER);
 	curve.addItem(1, 1, false);
 	curve.enableSnap->setValue(false);
 	curve.showUIInEditor = true;
@@ -40,7 +40,7 @@ void CurveMapFilter::processInternal()
 
 void CurveMapFilter::onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c)
 {
-	if (c == curve.value) return; //avoid value change to be notifying the mapping, it would be recognized as a filter parameter and would trigger a new process
+	if (c == curve.value || c == curve.position) return; //avoid value change to be notifying the mapping, it would be recognized as a filter parameter and would trigger a new process
 	MappingFilter::onControllableFeedbackUpdateInternal(cc, c);
 }
 
