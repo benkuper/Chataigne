@@ -20,9 +20,11 @@ public:
 	virtual ~ConversionFilter();
 
 	EnumParameter * retargetComponent;
+	var retargetValue; //ghosting
 	
 	enum TransferType { DIRECT, EXTRACT, TARGET};
 	TransferType transferType;
+
 
 	Parameter * setupParameterInternal(Parameter * sourceParam) override;
 	void processInternal() override;

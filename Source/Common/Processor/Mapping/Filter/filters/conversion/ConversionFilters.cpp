@@ -19,6 +19,7 @@ ConversionFilter::ConversionFilter(const String &name, var params, StringRef out
 	forceOutParameterType = outTypeString;
 	retargetComponent = filterParams.addEnumParameter("Extract Component", "This is the component of the source parameter to extract");
 	retargetComponent->setCustomShortName("retargetComponent");
+	retargetComponent->forceSaveValue = true;
 }
 
 ConversionFilter::~ConversionFilter()
@@ -45,8 +46,9 @@ Parameter * ConversionFilter::setupParameterInternal(Parameter * source)
 		StringArray valueNames = retargetP->getValuesNames();
 		for (int i = 0; i < valueNames.size(); i++)
 		{
-			retargetComponent->addOption(valueNames[i], i);
+			retargetComponent->addOption(valueNames[i], i, false);
 		}
+
 	}
 
 	return p;
