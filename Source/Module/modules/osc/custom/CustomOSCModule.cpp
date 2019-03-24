@@ -240,19 +240,27 @@ void CustomOSCModule::onControllableFeedbackUpdateInternal(ControllableContainer
 	{
 		if(isControllableInValuesContainer(c))
 		{
-			OSCMessage m(c->shortName);
-			if (c->type == Controllable::TRIGGER) sendOSC(m);
-			else
+			try
 			{
-				Parameter * p = static_cast<Parameter *>(c);
-				if (p != nullptr)
+				OSCMessage m(c->niceName);
+				if (c->type == Controllable::TRIGGER) sendOSC(m);
+				else
 				{
-					if (c->type == Controllable::COLOR) m.addArgument(varToColorArgument(p->value));
-					m.addArgument(varToArgument(p->value));
+					Parameter * p = static_cast<Parameter *>(c);
+					if (p != nullptr)
+					{
+						if (c->type == Controllable::COLOR) m.addArgument(varToColorArgument(p->value));
+						m.addArgument(varToArgument(p->value));
+					}
 				}
-			}
 
-			sendOSC(m);
+				sendOSC(m);
+			}
+			catch (OSCFormatError &e)
+			{
+				NLOGERROR(niceName, "Error sending feedback " << c->niceName << " : " << e.description);
+			}
+			
 		}
 	}
 	
