@@ -10,3 +10,17 @@
 
 #pragma once
 
+#include "generic/GenericOSCQueryModule.h"
+
+class MadMapperModule :
+	public GenericOSCQueryModule
+{
+public:
+	MadMapperModule();
+	~MadMapperModule();
+
+
+	String getTypeString() const override { return getTypeStringStatic();  }
+	static const String getTypeStringStatic() { return "MadMapper"; }
+	static MadMapperModule * create() { return new MadMapperModule(); }
+};

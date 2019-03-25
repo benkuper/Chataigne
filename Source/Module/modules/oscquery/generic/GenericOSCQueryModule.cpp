@@ -10,6 +10,7 @@
 
 #include "GenericOSCQueryModule.h"
 #include "ui/OSCQueryModuleEditor.h"
+#include "GenericOSCQueryCommand.h"
 
 GenericOSCQueryModule::GenericOSCQueryModule(const String & name, int defaultRemotePort) :
 	Module(name),
@@ -28,7 +29,11 @@ GenericOSCQueryModule::GenericOSCQueryModule(const String & name, int defaultRem
 	remoteHost->setEnabled(!useLocal->boolValue());
 	remotePort = sendCC->addIntParameter("Remote port", "Port on which the remote host is listening to", defaultRemotePort, 1, 65535);
 
+	defManager.add(CommandDefinition::createDef(this, "", "Set Value", &GenericOSCQueryCommand::create, CommandContext::BOTH));
+
 	sender.connect("0.0.0.0", 0);
+
+	syncTrigger->trigger();
 }
 
 GenericOSCQueryModule::~GenericOSCQueryModule()
@@ -184,7 +189,7 @@ void GenericOSCQueryModule::onControllableFeedbackUpdateInternal(ControllableCon
 
 void GenericOSCQueryModule::run()
 {
-	URL url("http://" + remoteHost->stringValue() + ":" + remotePort->stringValue());
+	URL url("http://" + (useLocal->boolValue()?"127.0.0.1":remoteHost->stringValue()) + ":" + remotePort->stringValue());
 
 	StringPairArray responseHeaders;
 	int statusCode = 0;
