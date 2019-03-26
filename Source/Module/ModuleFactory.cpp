@@ -41,7 +41,7 @@
 #include "modules/osc/heavym/HeavyMModule.h"
 #include "modules/http/HTTPModule.h"
 #include "modules/oscquery/generic/GenericOSCQueryModule.h"
-
+#include "modules/oscquery/MadMapperModule.h"
 #include "Community/CommunityModuleManager.h"
 
 juce_ImplementSingleton(ModuleFactory)
@@ -71,6 +71,7 @@ ModuleFactory::ModuleFactory() {
 	moduleDefs.add(new ModuleDefinition("Software", "DLight", &DLightModule::create));
 	moduleDefs.add(new ModuleDefinition("Software", "HeavyM", &HeavyMModule::create));
 	moduleDefs.add(new ModuleDefinition("Software", "LiveOSC2", &LiveOSCModule::create));
+	moduleDefs.add(new ModuleDefinition("Software", MadMapperModule::getTypeStringStatic(), &MadMapperModule::create));
 	moduleDefs.add(new ModuleDefinition("Software", "Millumin", &MilluminModule::create));
 	moduleDefs.add(new ModuleDefinition("Software", "Reaper", &ReaperModule::create));
 	moduleDefs.add(new ModuleDefinition("Software", "Resolume", &ResolumeModule::create));
