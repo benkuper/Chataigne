@@ -105,6 +105,11 @@ void SequenceLayerTimeline::timerCallback()
 	}
 }
 
+void SequenceLayerTimeline::visibilityChanged()
+{
+	if (isVisible()) updateContent();
+}
+
 SequenceLayerTimeline::TimelineNeedle::TimelineNeedle() :
 timeBarColor(defaultTimeBarColor)
 {
