@@ -84,7 +84,7 @@ void State::loadJSONDataInternal(var data)
 
 bool State::paste()
 {
-	Processor * p = pm.addItemFromClipboard(false);
-	if (p == nullptr) return BaseItem::paste();
+	Array<Processor *> p = pm.addItemsFromClipboard(false);
+	if (p.isEmpty()) return BaseItem::paste();
 	return true;
 }

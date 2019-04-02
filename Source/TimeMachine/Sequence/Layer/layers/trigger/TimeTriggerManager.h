@@ -45,7 +45,7 @@ public:
 
 	void addItemInternal(TimeTrigger * t, var data) override;
 	
-	TimeTrigger * addItemFromClipboard(bool showWarning = true) override;
+	Array<TimeTrigger *> addItemsFromClipboard(bool showWarning = true) override;
 	bool canAddItemOfType(const String & typeToCheck) override;
 
 	Array<TimeTrigger *> getTriggersInTimespan(float startTime, float endTime, bool includeAlreadyTriggered = false);

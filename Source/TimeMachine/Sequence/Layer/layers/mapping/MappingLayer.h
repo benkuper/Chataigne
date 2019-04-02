@@ -63,6 +63,9 @@ public:
 	virtual void sequencePlayStateChanged(Sequence *) override;
 	virtual void sequenceLooped(Sequence *) override;
 
+
+	virtual bool paste() override;
+
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MappingLayer)
 };
 

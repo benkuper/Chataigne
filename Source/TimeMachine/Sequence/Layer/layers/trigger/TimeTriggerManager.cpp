@@ -47,12 +47,26 @@ void TimeTriggerManager::addItemInternal(TimeTrigger * t, var data)
 	t->time->setRange(0, sequence->totalTime->floatValue());
 }
 
-TimeTrigger * TimeTriggerManager::addItemFromClipboard(bool showWarning)
+Array<TimeTrigger *> TimeTriggerManager::addItemsFromClipboard(bool showWarning)
 {
-	TimeTrigger * t = BaseManager::addItemFromClipboard(showWarning);
-	if (t == nullptr) return nullptr;
-	if(sequence->currentTime->floatValue() > 0) t->time->setValue(sequence->currentTime->floatValue()); //only set time if time is > 0, most copy happen when sequence has not been launched
-	return t;
+	Array<TimeTrigger *> triggers = BaseManager::addItemsFromClipboard(showWarning);
+	if (triggers.isEmpty()) return nullptr;
+
+	float minTime = triggers[0]->time->floatValue();
+	for (auto &tt : triggers)
+	{
+		if (tt->time->floatValue() < minTime)
+		{
+			minTime = tt->time->floatValue();
+		}
+	}
+
+	float diffTime = sequence->currentTime->floatValue() - minTime;
+	for(auto & tt : triggers) tt->time->setValue(tt->time->floatValue()+diffTime);
+
+	reorderItems();
+
+	return triggers;
 }
 
 bool TimeTriggerManager::canAddItemOfType(const String & typeToCheck)

@@ -108,8 +108,8 @@ void Sequence::setBeingEdited(bool value)
 
 bool Sequence::paste()
 {
-	SequenceLayer * p = layerManager->addItemFromClipboard(false);
-	if (p == nullptr) return BaseItem::paste();
+	Array<SequenceLayer *> p = layerManager->addItemsFromClipboard(false);
+	if (p.isEmpty()) return BaseItem::paste();
 	return true;
 }
 

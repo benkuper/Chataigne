@@ -31,8 +31,8 @@ TriggerLayer::~TriggerLayer()
 
 bool TriggerLayer::paste()
 {
-	TimeTrigger * p = ttm.addItemFromClipboard(false);
-	if (p == nullptr) return BaseItem::paste();
+	Array<TimeTrigger *> p = ttm.addItemsFromClipboard(false);
+	if (p.isEmpty()) return BaseItem::paste();
 	return true;
 }
 
