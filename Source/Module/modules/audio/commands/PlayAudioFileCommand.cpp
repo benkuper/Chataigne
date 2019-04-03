@@ -128,10 +128,12 @@ void PlayAudioFileCommand::onControllableFeedbackUpdate(ControllableContainer * 
 	}
 }
 
-void PlayAudioFileCommand::trigger()
+void PlayAudioFileCommand::triggerInternal()
 {
+	if (readerSource.get() == nullptr) return;
 	transportSource.setPosition(0);
 	transportSource.start();
+	audioModule->outActivityTrigger->trigger();
 }
 
 

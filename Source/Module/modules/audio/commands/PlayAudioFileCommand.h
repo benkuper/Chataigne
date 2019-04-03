@@ -51,7 +51,7 @@ public:
 	void onContainerParameterChanged(Parameter * p) override;
 	void onControllableFeedbackUpdate(ControllableContainer * cc, Controllable * c) override;
 
-	void trigger() override;
+	void triggerInternal() override;
 
 	static BaseCommand * create(ControllableContainer * module, CommandContext context, var params) { return new PlayAudioFileCommand((AudioModule *)module, context, params); }
 };
