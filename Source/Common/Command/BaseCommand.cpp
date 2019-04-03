@@ -22,6 +22,7 @@ BaseCommand::BaseCommand(Module * _module, CommandContext _context, var _params)
 	linkedTemplate(nullptr),
 	customValuesManager(nullptr)
 {
+	hideEditorHeader = true;
 
 }
 

@@ -63,7 +63,6 @@ void BaseCommandHandler::setCommand(CommandDefinition * commandDef)
 
 	if (command != nullptr)
 	{
-		command->hideEditorHeader = true;
 		addChildControllableContainer(command);
 
 
