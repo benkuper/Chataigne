@@ -26,6 +26,8 @@ public :
 	Trigger * lockAll;
 	Trigger * unlockAll;
 
+	BoolParameter * triggerWhenSeeking;
+
 	virtual bool paste() override;
 
 	virtual void onContainerTriggerTriggered(Trigger *) override;

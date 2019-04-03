@@ -22,6 +22,7 @@ TriggerLayer::TriggerLayer(Sequence * _sequence, var params) :
 
 	lockAll = addTrigger("Lock All", "Lock all existing triggers in this layer");
 	unlockAll = addTrigger("Unlock All", "Unlock all existing triggers in this layer");
+	triggerWhenSeeking = addBoolParameter("Trigger when seeking", "If checked, this when a sequence is playing and you jump on it forward, it will trigger all the triggers inbetween.", true);
 }
 
 TriggerLayer::~TriggerLayer()

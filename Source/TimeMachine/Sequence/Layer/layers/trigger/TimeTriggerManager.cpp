@@ -117,10 +117,13 @@ void TimeTriggerManager::sequenceCurrentTimeChanged(Sequence * /*_sequence*/, fl
 	{ 
 		if (evaluateSkippedData || ModifierKeys::getCurrentModifiers().isCtrlDown())
 		{
-			Array<TimeTrigger *> spanTriggers = getTriggersInTimespan(prevTime, sequence->currentTime->floatValue());
-			for (auto &tt : spanTriggers)
+			if (!sequence->isSeeking || !sequence->isPlaying->boolValue() || layer->triggerWhenSeeking->boolValue())
 			{
-				tt->trigger();
+				Array<TimeTrigger *> spanTriggers = getTriggersInTimespan(prevTime, sequence->currentTime->floatValue());
+				for (auto &tt : spanTriggers)
+				{
+					tt->trigger();
+				}
 			}
 		}
 	}else //loop or manual, untrigger
