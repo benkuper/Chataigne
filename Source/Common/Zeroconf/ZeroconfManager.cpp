@@ -31,7 +31,7 @@ ZeroconfManager::ZeroconfManager() :
 ZeroconfManager::~ZeroconfManager()
 {
 	signalThreadShouldExit();
-	waitForThreadToExit(3000);
+	waitForThreadToExit(500);
 }
 
 void ZeroconfManager::addSearcher(StringRef name, StringRef serviceName)
@@ -107,7 +107,7 @@ void ZeroconfManager::timerCallback()
 
 void ZeroconfManager::run()
 {
-	sleep(1000);
+	sleep(300);
 
 	bool changed = false;
 
@@ -133,9 +133,12 @@ ZeroconfManager::ZeroconfSearcher::~ZeroconfSearcher()
 
 bool ZeroconfManager::ZeroconfSearcher::search()
 {
+	if (Thread::getCurrentThread()->threadShouldExit()) return false;
+
 	Strings instances = servus.discover(Servus::Interface::IF_ALL, 200);
 
 	bool changed = false;
+
 
 	StringArray servicesArray;
 	for (auto &s : instances)  servicesArray.add(s);
@@ -196,10 +199,8 @@ bool ZeroconfManager::ZeroconfSearcher::search()
 			changed = true;
 			updateService(info, host, ip, port);
 		}
-
-
-
 	}
+
 
 	return changed;
 }
@@ -232,6 +233,7 @@ ZeroconfManager::ServiceInfo * ZeroconfManager::ZeroconfSearcher::getService(Str
 {
 	for (auto &i : services)
 	{
+		if (Thread::getCurrentThread()->threadShouldExit()) return nullptr;
 		if (i->name == sName && i->host == host && i->port == port) return i;
 	}
 	return nullptr;
@@ -239,6 +241,7 @@ ZeroconfManager::ServiceInfo * ZeroconfManager::ZeroconfSearcher::getService(Str
 
 void ZeroconfManager::ZeroconfSearcher::addService(StringRef sName, StringRef host, StringRef ip, int port)
 {
+	if (Thread::getCurrentThread()->threadShouldExit()) return;
 	NLOG("Zeroconf", "New " << name << " service discovered : " << sName << " on " << host << ", " << ip << ":" << port);
 	jassert(getService(sName, host, port) == nullptr);
 	services.add(new ServiceInfo{ sName, host, ip, port });
