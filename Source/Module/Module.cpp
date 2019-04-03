@@ -342,13 +342,23 @@ InspectableEditor * Module::getEditor(bool isRoot)
 
 String Module::getTargetLabelForValueControllable(Controllable * c)
 {
+	String label = c->niceName;
+
+	int maxLevels = 3;
+
+	Module * m = ControllableUtil::findParentAs<Module>(c);
+	if (m == nullptr) return c->getControlAddress();
+
+	int index = 0;
 	ControllableContainer * cc = c->parentContainer;
-	while (cc != nullptr)
+	while (cc != nullptr && cc != &m->valuesCC && index < maxLevels)
 	{
-		Module * m = dynamic_cast<Module *>(cc);
-		if (m != nullptr) return m->niceName + ":" + c->niceName;
+		label = cc->niceName + "/" + label;
 		cc = cc->parentContainer;
+		index++;
 	}
 
-	return c->getControlAddress();
+	label = m->niceName + ":" + label;
+
+	return label;
 }
