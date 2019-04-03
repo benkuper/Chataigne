@@ -11,6 +11,7 @@
 #include "AudioModule.h"
 #include "Common/MIDI/MIDIManager.h"
 #include "ui/AudioModuleHardwareEditor.h"
+#include "commands/PlayAudioFileCommand.h"
 
 AudioModule::AudioModule(const String & name) :
 	Module(name),
@@ -68,6 +69,8 @@ AudioModule::AudioModule(const String & name) :
 	controllableContainers.move(controllableContainers.indexOf(&hs), controllableContainers.indexOf(&valuesCC));
 
 	for (auto &c : valuesCC.controllables) c->setControllableFeedbackOnly(true);
+
+	defManager.add(CommandDefinition::createDef(this,"","Play audio file", &PlayAudioFileCommand::create, CommandContext::ACTION));
 }
 
 AudioModule::~AudioModule()

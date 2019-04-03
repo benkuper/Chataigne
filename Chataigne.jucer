@@ -523,6 +523,12 @@
                   file="Source/Module/modules/customvariables/CustomVariablesModule.h"/>
           </GROUP>
           <GROUP id="{0A217116-DCE5-942C-8079-6BBFE1C91ECE}" name="audio">
+            <GROUP id="{4A79FC82-A066-3853-4D6D-541B206D82F3}" name="commands">
+              <FILE id="zCTO4L" name="PlayAudioFileCommand.cpp" compile="1" resource="0"
+                    file="Source/Module/modules/audio/commands/PlayAudioFileCommand.cpp"/>
+              <FILE id="LENesG" name="PlayAudioFileCommand.h" compile="0" resource="0"
+                    file="Source/Module/modules/audio/commands/PlayAudioFileCommand.h"/>
+            </GROUP>
             <GROUP id="{92F1950B-90FA-CF9E-6462-7285018BEE9F}" name="libs">
               <GROUP id="{59214ED5-C409-27E6-B013-DC2A214F30DC}" name="pitch">
                 <FILE id="NvMMtX" name="PitchMPM.h" compile="0" resource="0" file="Source/Module/modules/audio/libs/pitch/PitchMPM.h"/>

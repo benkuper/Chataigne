@@ -173,6 +173,7 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/CommunityModuleManager_e575a282.o \
   $(JUCE_OBJDIR)/CustomVariablesModuleCommands_edf5eec8.o \
   $(JUCE_OBJDIR)/CustomVariablesModule_cdc46d67.o \
+  $(JUCE_OBJDIR)/PlayAudioFileCommand_45dfa479.o \
   $(JUCE_OBJDIR)/AudioModuleHardwareEditor_e9c8a821.o \
   $(JUCE_OBJDIR)/AudioModule_84057627.o \
   $(JUCE_OBJDIR)/MappableParameterEditor_d8c748c4.o \
@@ -899,6 +900,11 @@ $(JUCE_OBJDIR)/CustomVariablesModuleCommands_edf5eec8.o: ../../Source/Module/mod
 $(JUCE_OBJDIR)/CustomVariablesModule_cdc46d67.o: ../../Source/Module/modules/customvariables/CustomVariablesModule.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling CustomVariablesModule.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/PlayAudioFileCommand_45dfa479.o: ../../Source/Module/modules/audio/commands/PlayAudioFileCommand.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling PlayAudioFileCommand.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/AudioModuleHardwareEditor_e9c8a821.o: ../../Source/Module/modules/audio/ui/AudioModuleHardwareEditor.cpp

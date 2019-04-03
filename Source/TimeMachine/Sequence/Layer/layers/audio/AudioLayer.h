@@ -52,6 +52,7 @@ public:
 	void updateSelectedOutChannels();
 
 	void onContainerParameterChangedInternal(Parameter * p) override;
+	void onControllableFeedbackUpdateInternal(ControllableContainer *cc, Controllable * c) override;
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;

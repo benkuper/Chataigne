@@ -136,15 +136,15 @@ void AudioLayer::updateCurrentClip()
 	if (currentClip != nullptr)
 	{
 		currentClip->setIsCurrent(false);
-
 	}
 
 	currentClip = target;
 
 	if (currentClip != nullptr)
 	{
+		currentClip->transportSource.setPosition(sequence->hiResAudioTime - currentClip->time->floatValue());
 		currentClip->setIsCurrent(true);
-		currentClip->clipSamplePos = (sequence->currentTime->floatValue() - currentClip->time->floatValue())*currentClip->sampleRate;
+		if (sequence->isPlaying->boolValue()) currentClip->transportSource.start();
 	}
 
 }
@@ -177,6 +177,15 @@ void AudioLayer::updateSelectedOutChannels()
 	currentProcessor->setPlayConfigDetails(0, numActiveOutputs, audioModule->currentSampleRate, audioModule->currentBufferSize);
 	currentProcessor->prepareToPlay(audioModule->currentSampleRate, audioModule->currentBufferSize);
 
+
+
+	for (auto & c : clipManager.items)
+	{
+		c->channelRemapAudioSource.clearAllMappings();
+		c->channelRemapAudioSource.prepareToPlay(audioModule->currentBufferSize, audioModule->currentSampleRate);
+		//c->transportSource.prepareToPlay(audioModule->currentBufferSize, audioModule->currentSampleRate);
+	}
+
 	int index = 0;
 	for (int i = 0; i < channelsCC.controllables.size(); i++)
 	{
@@ -184,6 +193,7 @@ void AudioLayer::updateSelectedOutChannels()
 		{
 			selectedOutChannels.add(i);
 			audioModule->graph.addConnection({{AudioProcessorGraph::NodeID(graphID), index }, {AudioProcessorGraph::NodeID(AUDIO_OUTPUT_GRAPH_ID), i } });
+			for (auto & c : clipManager.items) c->channelRemapAudioSource.setOutputChannelMapping(index, index);
 			index++;
 		}
 	}
@@ -205,7 +215,14 @@ void AudioLayer::onContainerParameterChangedInternal(Parameter * p)
 
 	//DBG("audio layer container parameter changed internal " << p->niceName);
 
-	if (p->type == Controllable::BOOL && channelsCC.controllables.indexOf((BoolParameter *)p) > -1)
+
+}
+
+void AudioLayer::onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c)
+{
+	SequenceLayer::onControllableFeedbackUpdateInternal(cc, c);
+
+	if (cc == &channelsCC)
 	{
 		updateSelectedOutChannels();
 	}
@@ -249,6 +266,10 @@ void AudioLayer::sequenceCurrentTimeChanged(Sequence *, float, bool)
 	if (currentProcessor != nullptr) enveloppe->setValue(currentProcessor->currentEnveloppe);
 	else enveloppe->setValue(0);
 	updateCurrentClip();
+	if (currentClip != nullptr && sequence->isSeeking)
+	{
+  		currentClip->transportSource.setPosition(sequence->hiResAudioTime - currentClip->time->floatValue());
+	}
 }
 
 void AudioLayer::sequencePlayStateChanged(Sequence *)
@@ -257,6 +278,16 @@ void AudioLayer::sequencePlayStateChanged(Sequence *)
 	if (!sequence->isPlaying->boolValue())
 	{
 		enveloppe->setValue(0);
+		if (currentClip != nullptr) currentClip->transportSource.stop();
+	}
+	else
+	{
+
+		if (currentClip != nullptr)
+		{
+			currentClip->transportSource.setPosition(sequence->hiResAudioTime - currentClip->time->floatValue()); 
+			currentClip->transportSource.start();
+		}
 	}
 }
 
@@ -321,12 +352,19 @@ void AudioLayerProcessor::processBlock(AudioBuffer<float>& buffer, MidiBuffer & 
 		tempRMS = 0;
 		return;
 	}
+	
+	float volumeFactor = currentClip->volume->floatValue() * layer->volume->floatValue() * layer->audioModule->outVolume->floatValue();
+	layer->currentClip->transportSource.setGain(volumeFactor);
 
 
-	AudioSampleBuffer * clipBuffer = &layer->currentClip->buffer;
-	//int numClipSamples = clipBuffer->getNumSamples();
+	AudioSourceChannelInfo bufferToFill;
+	bufferToFill.buffer = &buffer;
+	bufferToFill.startSample = 0;
+	bufferToFill.numSamples = buffer.getNumSamples();
+	layer->currentClip->transportSource.getNextAudioBlock(bufferToFill);
 
-	float position = layer->sequence->hiResAudioTime - layer->currentClip->time->floatValue();
+	/*
+	double position = layer->sequence->hiResAudioTime - layer->currentClip->time->floatValue();
 
 	int curSamplePos = currentClip->clipSamplePos;
 	int targetSamplePos = position * currentClip->sampleRate;
@@ -340,8 +378,7 @@ void AudioLayerProcessor::processBlock(AudioBuffer<float>& buffer, MidiBuffer & 
 
 	int numBufferSamples = buffer.getNumSamples();
 
-    float volumeFactor = currentClip->volume->floatValue() * layer->volume->floatValue() * layer->audioModule->outVolume->floatValue();
-
+   
 
 	int bufferChannels = buffer.getNumChannels();
 
@@ -404,6 +441,7 @@ void AudioLayerProcessor::processBlock(AudioBuffer<float>& buffer, MidiBuffer & 
 	{
 		rmsCount++;
 	}
+	*/
 }
 
 double AudioLayerProcessor::getTailLengthSeconds() const

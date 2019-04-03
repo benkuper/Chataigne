@@ -497,6 +497,10 @@
 			isa = PBXBuildFile;
 			fileRef = 5025C5BAF50937621E4ACEA9;
 		};
+		8860CFD2716A05D12B8F6B8C = {
+			isa = PBXBuildFile;
+			fileRef = 334608D7C30F294FB4AFA0DD;
+		};
 		FDCA90E38FC8A70DA5C9B59E = {
 			isa = PBXBuildFile;
 			fileRef = 78B240F53429613DC1AD4C8F;
@@ -2077,6 +2081,13 @@
 			path = ../../Source/TimeMachine/Sequence/Layer/layers/trigger/ui/TimeTriggerUI.h;
 			sourceTree = "SOURCE_ROOT";
 		};
+		334608D7C30F294FB4AFA0DD = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = PlayAudioFileCommand.cpp;
+			path = ../../Source/Module/modules/audio/commands/PlayAudioFileCommand.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		33698FA29E16C5EF3535B38B = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -3643,6 +3654,13 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = InverseFilter.cpp;
 			path = ../../Source/Common/Processor/Mapping/Filter/filters/number/InverseFilter.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
+		8FAD87B31AD05BA50DCD5868 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = PlayAudioFileCommand.h;
+			path = ../../Source/Module/modules/audio/commands/PlayAudioFileCommand.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		903CDCB0E4926FADC367A3D0 = {
@@ -6333,6 +6351,15 @@
 			name = customvariables;
 			sourceTree = "<group>";
 		};
+		4E104E06011EE0EA07460804 = {
+			isa = PBXGroup;
+			children = (
+				334608D7C30F294FB4AFA0DD,
+				8FAD87B31AD05BA50DCD5868,
+			);
+			name = commands;
+			sourceTree = "<group>";
+		};
 		E33A19928DCC0685B4218957 = {
 			isa = PBXGroup;
 			children = (
@@ -6362,6 +6389,7 @@
 		9E1DD129C66F6E811ADD96CD = {
 			isa = PBXGroup;
 			children = (
+				4E104E06011EE0EA07460804,
 				B53187A0E593EA7869B18CED,
 				E86A3BB6C27484A0D2BFDDAF,
 				923AE5135E5069CB080C5867,
@@ -7958,6 +7986,7 @@
 				2A5DED7FA17BE4A5FD0BA5A8,
 				AF70A4DC7FA481F5FB0C54CD,
 				6088775CFABC552F51407DEF,
+				8860CFD2716A05D12B8F6B8C,
 				FDCA90E38FC8A70DA5C9B59E,
 				38943F372FE48254AA4E7025,
 				C83A2D0BD025D7F6C8AECA11,

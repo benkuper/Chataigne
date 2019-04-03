@@ -53,6 +53,7 @@ public:
 	AudioModule * masterAudioModule;
 	double hiResAudioTime;
 
+	bool isSeeking;
 
 	//Temp variables
 	double prevMillis; 
@@ -66,7 +67,7 @@ public:
 
 	virtual void clearItem() override;
 
-	void setCurrentTime(float time, bool forceOverPlaying = true);
+	void setCurrentTime(float time, bool forceOverPlaying = true, bool seekMode = false);
 
 	void setBeingEdited(bool value);
 

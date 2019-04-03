@@ -255,6 +255,7 @@
     <ClCompile Include="..\..\Source\Module\Community\CommunityModuleManager.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\customvariables\commands\CustomVariablesModuleCommands.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\customvariables\CustomVariablesModule.cpp"/>
+    <ClCompile Include="..\..\Source\Module\modules\audio\commands\PlayAudioFileCommand.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\audio\ui\AudioModuleHardwareEditor.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\audio\AudioModule.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\common\commands\scriptcommands\ui\MappableParameterEditor.cpp"/>
@@ -2760,6 +2761,7 @@
     <ClInclude Include="..\..\Source\Module\Community\CommunityModuleManager.h"/>
     <ClInclude Include="..\..\Source\Module\modules\customvariables\commands\CustomVariablesModuleCommands.h"/>
     <ClInclude Include="..\..\Source\Module\modules\customvariables\CustomVariablesModule.h"/>
+    <ClInclude Include="..\..\Source\Module\modules\audio\commands\PlayAudioFileCommand.h"/>
     <ClInclude Include="..\..\Source\Module\modules\audio\libs\pitch\PitchMPM.h"/>
     <ClInclude Include="..\..\Source\Module\modules\audio\libs\pitch\PitchYIN.h"/>
     <ClInclude Include="..\..\Source\Module\modules\audio\ui\AudioModuleHardwareEditor.h"/>

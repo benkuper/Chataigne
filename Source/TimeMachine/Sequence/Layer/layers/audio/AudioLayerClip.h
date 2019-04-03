@@ -22,8 +22,11 @@ public:
 	virtual ~AudioLayerClip();
 
 	AudioFormatManager formatManager;
-	AudioSampleBuffer buffer;
-	
+	//AudioSampleBuffer buffer;
+	std::unique_ptr<AudioFormatReaderSource> readerSource;
+	AudioTransportSource transportSource;
+	ChannelRemappingAudioSource channelRemapAudioSource;
+
 	FileParameter * filePath;
 
 	FloatParameter * time; 

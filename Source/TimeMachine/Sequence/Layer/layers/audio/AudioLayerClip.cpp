@@ -18,7 +18,8 @@ AudioLayerClip::AudioLayerClip(float _time) :
 	clipSamplePos(0),
 	isCurrent(false),
 	isLoading(false),
-	audioClipAsyncNotifier(10)
+	audioClipAsyncNotifier(10),
+	channelRemapAudioSource(&transportSource, false)
 {
 	filePath = new FileParameter("File Path", "File Path", "");
 	addParameter(filePath);
@@ -46,6 +47,7 @@ AudioLayerClip::~AudioLayerClip()
 	signalThreadShouldExit();
 	waitForThreadToExit(3000);
 	masterReference.clear();
+	transportSource.releaseResources();
 }
 
 void AudioLayerClip::setIsCurrent(bool value)
@@ -58,6 +60,7 @@ void AudioLayerClip::setIsCurrent(bool value)
 		clipSamplePos = 0;
 	} else
 	{
+		transportSource.stop();
 		clipSamplePos = -1;
 	}
 
@@ -94,19 +97,26 @@ void AudioLayerClip::run()
 {
 	audioClipAsyncNotifier.addMessage(new ClipEvent(ClipEvent::SOURCE_LOAD_START, this));
 
-	ScopedPointer<AudioFormatReader>  reader(formatManager.createReaderFor(filePath->getAbsolutePath()));
+	transportSource.setSource(nullptr);
+	readerSource.reset(nullptr);
+
+	AudioFormatReader * reader = formatManager.createReaderFor(filePath->getAbsolutePath());
 
 	if (reader != nullptr)
 	{
+		std::unique_ptr<AudioFormatReaderSource> newSource(new AudioFormatReaderSource(reader, true));
+		transportSource.setSource(newSource.get(), 0, nullptr, reader->sampleRate);
+		readerSource.reset(newSource.release());
+		
 		sampleRate = reader->sampleRate;
 		clipDuration = reader->lengthInSamples / sampleRate;
 
 		clipLength->setValue(clipDuration);
-		buffer.setSize((int)reader->numChannels, (int)reader->lengthInSamples);
-		reader->read(&buffer, 0, (int)reader->lengthInSamples, 0, true, true);
+		//buffer.setSize((int)reader->numChannels, (int)reader->lengthInSamples);
+		//reader->read(&buffer, 0, (int)reader->lengthInSamples, 0, true, true);
+
 	}
 
 	isLoading = false;
-
 	audioClipAsyncNotifier.addMessage(new ClipEvent(ClipEvent::SOURCE_LOAD_END, this));
 }

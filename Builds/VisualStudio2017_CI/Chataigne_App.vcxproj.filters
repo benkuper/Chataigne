@@ -188,6 +188,9 @@
     <Filter Include="Chataigne\Source\Module\modules\customvariables">
       <UniqueIdentifier>{DA086397-0387-8A6D-7D77-BA8F650045D5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\audio\commands">
+      <UniqueIdentifier>{10F2856B-5195-9BAA-93DD-E4FC0B5EFCE2}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Chataigne\Source\Module\modules\audio\libs\pitch">
       <UniqueIdentifier>{3C970071-0DE0-DD05-B44F-CE36FB54F926}</UniqueIdentifier>
     </Filter>
@@ -1365,6 +1368,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\customvariables\CustomVariablesModule.cpp">
       <Filter>Chataigne\Source\Module\modules\customvariables</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Module\modules\audio\commands\PlayAudioFileCommand.cpp">
+      <Filter>Chataigne\Source\Module\modules\audio\commands</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\audio\ui\AudioModuleHardwareEditor.cpp">
       <Filter>Chataigne\Source\Module\modules\audio\ui</Filter>
@@ -4622,6 +4628,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\customvariables\CustomVariablesModule.h">
       <Filter>Chataigne\Source\Module\modules\customvariables</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Module\modules\audio\commands\PlayAudioFileCommand.h">
+      <Filter>Chataigne\Source\Module\modules\audio\commands</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\audio\libs\pitch\PitchMPM.h">
       <Filter>Chataigne\Source\Module\modules\audio\libs\pitch</Filter>
