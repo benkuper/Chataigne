@@ -13,13 +13,13 @@
 AudioLayerClip::AudioLayerClip(float _time) :
 	BaseItem("Clip"),
 	Thread("AudioClipReader"),
-	clipDuration(0),
+    channelRemapAudioSource(&transportSource, false),
+    clipDuration(0),
 	sampleRate(0),
 	clipSamplePos(0),
 	isCurrent(false),
 	isLoading(false),
-	audioClipAsyncNotifier(10),
-	channelRemapAudioSource(&transportSource, false)
+	audioClipAsyncNotifier(10)
 {
 	filePath = new FileParameter("File Path", "File Path", "");
 	addParameter(filePath);
