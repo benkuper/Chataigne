@@ -337,6 +337,7 @@
     <ClCompile Include="..\..\Source\Module\modules\serial\SerialModule.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\state\commands\StateCommand.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\state\StateModule.cpp"/>
+    <ClCompile Include="..\..\Source\Module\modules\system\os\commands\ui\WakeOnLanCommandEditor.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\system\os\commands\OSExecCommand.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\system\os\commands\OSPowerCommand.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\system\os\commands\WakeOnLanCommand.cpp"/>
@@ -2523,7 +2524,7 @@
     <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\include_juce_video.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\resources\OrganicBinaryData.cpp">
+    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\resources\BinaryData.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\script\ui\ScriptEditor.cpp">
@@ -2830,6 +2831,7 @@
     <ClInclude Include="..\..\Source\Module\modules\serial\SerialModule.h"/>
     <ClInclude Include="..\..\Source\Module\modules\state\commands\StateCommand.h"/>
     <ClInclude Include="..\..\Source\Module\modules\state\StateModule.h"/>
+    <ClInclude Include="..\..\Source\Module\modules\system\os\commands\ui\WakeOnLanCommandEditor.h"/>
     <ClInclude Include="..\..\Source\Module\modules\system\os\commands\OSExecCommand.h"/>
     <ClInclude Include="..\..\Source\Module\modules\system\os\commands\OSPowerCommand.h"/>
     <ClInclude Include="..\..\Source\Module\modules\system\os\commands\WakeOnLanCommand.h"/>
@@ -3719,7 +3721,7 @@
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\AppConfig.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\BinaryData.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\JuceHeader.h"/>
-    <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\resources\OrganicBinaryData.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\resources\BinaryData.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\script\ui\ScriptEditor.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\script\ExpressionListener.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\script\Script.h"/>

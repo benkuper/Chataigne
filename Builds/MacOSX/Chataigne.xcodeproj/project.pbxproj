@@ -833,6 +833,10 @@
 			isa = PBXBuildFile;
 			fileRef = C7BE2656188911D29D8DC80D;
 		};
+		924E2DFEFCBA49A1F9D30045 = {
+			isa = PBXBuildFile;
+			fileRef = 3F49C5463CB01384FC57BD67;
+		};
 		EF6448DF1AA7F6C777028AB5 = {
 			isa = PBXBuildFile;
 			fileRef = 4DBD7E60443674BDA016F673;
@@ -1434,6 +1438,13 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = CommandChooserUI.cpp;
 			path = ../../Source/Common/Command/ui/CommandChooserUI.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
+		0B881AF2739B8F5059F7B142 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = WakeOnLanCommandEditor.h;
+			path = ../../Source/Module/modules/system/os/commands/ui/WakeOnLanCommandEditor.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		0B970F4F6ED09F8B505B3D31 = {
@@ -2260,6 +2271,13 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = cobs.cpp;
 			path = ../../Source/Common/Serial/lib/cobs/cobs.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
+		3F49C5463CB01384FC57BD67 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = WakeOnLanCommandEditor.cpp;
+			path = ../../Source/Module/modules/system/os/commands/ui/WakeOnLanCommandEditor.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		406322A7D6F019A7AF426E1D = {
@@ -6945,9 +6963,19 @@
 			name = state;
 			sourceTree = "<group>";
 		};
+		9D3CBCAF525A0E0550C0F1C5 = {
+			isa = PBXGroup;
+			children = (
+				3F49C5463CB01384FC57BD67,
+				0B881AF2739B8F5059F7B142,
+			);
+			name = ui;
+			sourceTree = "<group>";
+		};
 		85F66D359D012C8C1A042DB4 = {
 			isa = PBXGroup;
 			children = (
+				9D3CBCAF525A0E0550C0F1C5,
 				4DBD7E60443674BDA016F673,
 				9D8FF2DBA0D8821F5A7338EE,
 				DC429F63AB712823DC8D776E,
@@ -8014,6 +8042,7 @@
 				0BF78235DB06A8BBE2919FC8,
 				B0E6088468E6FA81C812F22F,
 				E54186450B80BBEF21F20009,
+				924E2DFEFCBA49A1F9D30045,
 				EF6448DF1AA7F6C777028AB5,
 				36E22D472D9042CB48981CEA,
 				AE6EB1B6A4006F74B15D443A,

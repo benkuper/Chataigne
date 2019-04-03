@@ -254,6 +254,7 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/SerialModule_a9d8bfb9.o \
   $(JUCE_OBJDIR)/StateCommand_1e7fa1.o \
   $(JUCE_OBJDIR)/StateModule_898183dd.o \
+  $(JUCE_OBJDIR)/WakeOnLanCommandEditor_98ea2f4d.o \
   $(JUCE_OBJDIR)/OSExecCommand_1adb1a06.o \
   $(JUCE_OBJDIR)/OSPowerCommand_8563ee44.o \
   $(JUCE_OBJDIR)/WakeOnLanCommand_f0bfe78f.o \
@@ -1303,6 +1304,11 @@ $(JUCE_OBJDIR)/StateCommand_1e7fa1.o: ../../Source/Module/modules/state/commands
 $(JUCE_OBJDIR)/StateModule_898183dd.o: ../../Source/Module/modules/state/StateModule.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling StateModule.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/WakeOnLanCommandEditor_98ea2f4d.o: ../../Source/Module/modules/system/os/commands/ui/WakeOnLanCommandEditor.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling WakeOnLanCommandEditor.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/OSExecCommand_1adb1a06.o: ../../Source/Module/modules/system/os/commands/OSExecCommand.cpp

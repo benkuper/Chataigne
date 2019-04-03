@@ -371,6 +371,9 @@
     <Filter Include="Chataigne\Source\Module\modules\state">
       <UniqueIdentifier>{F60DB4D5-E27F-61C9-F6B5-9C4E50129B4F}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\system\os\commands\ui">
+      <UniqueIdentifier>{F8541B8F-7D56-000D-0633-03B078721744}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Chataigne\Source\Module\modules\system\os\commands">
       <UniqueIdentifier>{C9364ECA-DA0A-7F9C-AE19-64688DEC85FC}</UniqueIdentifier>
     </Filter>
@@ -1614,6 +1617,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\state\StateModule.cpp">
       <Filter>Chataigne\Source\Module\modules\state</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Module\modules\system\os\commands\ui\WakeOnLanCommandEditor.cpp">
+      <Filter>Chataigne\Source\Module\modules\system\os\commands\ui</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\system\os\commands\OSExecCommand.cpp">
       <Filter>Chataigne\Source\Module\modules\system\os\commands</Filter>
@@ -4135,7 +4141,7 @@
     <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\include_juce_video.mm">
       <Filter>JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\resources\OrganicBinaryData.cpp">
+    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\resources\BinaryData.cpp">
       <Filter>JUCE Modules\juce_organicui\resources</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\script\ui\ScriptEditor.cpp">
@@ -4826,6 +4832,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\state\StateModule.h">
       <Filter>Chataigne\Source\Module\modules\state</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Module\modules\system\os\commands\ui\WakeOnLanCommandEditor.h">
+      <Filter>Chataigne\Source\Module\modules\system\os\commands\ui</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\system\os\commands\OSExecCommand.h">
       <Filter>Chataigne\Source\Module\modules\system\os\commands</Filter>
@@ -7494,7 +7503,7 @@
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\JuceHeader.h">
       <Filter>JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\resources\OrganicBinaryData.h">
+    <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\resources\BinaryData.h">
       <Filter>JUCE Modules\juce_organicui\resources</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\script\ui\ScriptEditor.h">

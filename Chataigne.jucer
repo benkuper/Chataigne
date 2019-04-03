@@ -905,6 +905,12 @@
           <GROUP id="{8130DE57-5D2E-CFBD-2BEF-CC72F42E64AA}" name="system">
             <GROUP id="{F66C40AA-E21C-D448-B0D3-26444099488A}" name="os">
               <GROUP id="{281EDB81-1834-FA75-0E15-20521938A211}" name="commands">
+                <GROUP id="{9C4AE9D5-9736-D363-49B0-076DDD4273FF}" name="ui">
+                  <FILE id="yVozYV" name="WakeOnLanCommandEditor.cpp" compile="1" resource="0"
+                        file="Source/Module/modules/system/os/commands/ui/WakeOnLanCommandEditor.cpp"/>
+                  <FILE id="Oaljm3" name="WakeOnLanCommandEditor.h" compile="0" resource="0"
+                        file="Source/Module/modules/system/os/commands/ui/WakeOnLanCommandEditor.h"/>
+                </GROUP>
                 <FILE id="JQuQlg" name="OSExecCommand.cpp" compile="1" resource="0"
                       file="Source/Module/modules/system/os/commands/OSExecCommand.cpp"/>
                 <FILE id="MPQ4Q5" name="OSExecCommand.h" compile="0" resource="0" file="Source/Module/modules/system/os/commands/OSExecCommand.h"/>

@@ -22,6 +22,7 @@ public:
 
 	OSModule * osModule;
 
+	Trigger * autoSet;
 	StringParameter * macAddress;
 	MACAddress mac;
 
@@ -29,6 +30,8 @@ public:
 
 	void onContainerParameterChanged(Parameter * p) override;
 	void triggerInternal() override;
+
+	InspectableEditor * getEditor(bool isRoot) override;
 
 	static WakeOnLanCommand * create(ControllableContainer * module, CommandContext context, var params) { return new WakeOnLanCommand((OSModule *)module, context, params); }
 

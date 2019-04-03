@@ -9,6 +9,7 @@
 */
 
 #include "WakeOnLanCommand.h"
+#include "ui/WakeOnLanCommandEditor.h"
 
 WakeOnLanCommand::WakeOnLanCommand(OSModule * _module, CommandContext context, var params) :
 	BaseCommand(_module, context, params),
@@ -16,6 +17,8 @@ WakeOnLanCommand::WakeOnLanCommand(OSModule * _module, CommandContext context, v
 {
 	macAddress = addStringParameter("MAC Address", "Mac address in the format FF:FF:FF:FF:FF:FF", "00:00:00:00:00:00");
 	generateMacFromString();
+
+	hideEditorHeader = false;
 }
 
 WakeOnLanCommand::~WakeOnLanCommand()
@@ -76,4 +79,9 @@ void WakeOnLanCommand::triggerInternal()
 	s.write(IPAddress::broadcast().toString(), 9, packet, packetSize);
 
 	osModule->outActivityTrigger->trigger();
+}
+
+InspectableEditor * WakeOnLanCommand::getEditor(bool isRoot)
+{
+	return new WakeOnLanCommandEditor(this, isRoot);
 }
