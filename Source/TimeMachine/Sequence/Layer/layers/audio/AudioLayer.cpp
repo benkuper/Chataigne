@@ -272,10 +272,9 @@ void AudioLayer::sequenceCurrentTimeChanged(Sequence *, float, bool)
 	updateCurrentClip();
 	if (currentClip != nullptr && sequence->isSeeking)
 	{
-
-        currentClip->transportSource.stop();
+        if(currentClip->transportSource.isPlaying()) currentClip->transportSource.stop();
         currentClip->transportSource.setPosition(sequence->hiResAudioTime - currentClip->time->floatValue());
-        currentClip->transportSource.start();
+        if(sequence->isPlaying->boolValue()) currentClip->transportSource.start();
 	}
 }
 
@@ -351,6 +350,11 @@ void AudioLayerProcessor::processBlock(AudioBuffer<float>& buffer, MidiBuffer & 
 		noProcess = true;
 	}
 
+	if (buffer.getNumChannels() == 0)
+	{
+		noProcess = true;
+	}
+
 	if (noProcess)
 	{
 		currentEnveloppe = 0;
@@ -363,6 +367,7 @@ void AudioLayerProcessor::processBlock(AudioBuffer<float>& buffer, MidiBuffer & 
 	float volumeFactor = currentClip->volume->floatValue() * layer->volume->floatValue() * layer->audioModule->outVolume->floatValue();
 	layer->currentClip->transportSource.setGain(volumeFactor);
 
+	
 
 	AudioSourceChannelInfo bufferToFill;
 	bufferToFill.buffer = &buffer;
@@ -371,7 +376,15 @@ void AudioLayerProcessor::processBlock(AudioBuffer<float>& buffer, MidiBuffer & 
     
 	layer->currentClip->channelRemapAudioSource.getNextAudioBlock(bufferToFill);
 
-	/*
+	float rms = 0;
+	for (int i = 0; i < buffer.getNumChannels(); i++)
+	{
+		rms = jmax(rms, buffer.getRMSLevel(i, bufferToFill.startSample, bufferToFill.numSamples));
+	}
+
+	layer->enveloppe->setValue(rms);
+
+	/*1
 	double position = layer->sequence->hiResAudioTime - layer->currentClip->time->floatValue();
 
 	int curSamplePos = currentClip->clipSamplePos;
