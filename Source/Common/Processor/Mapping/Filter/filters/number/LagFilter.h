@@ -29,7 +29,7 @@ public:
 	void filterParamChanged(Parameter * p) override;
 
 	static LagFilter * create(var params) { return new LagFilter(params); }
-	String getTypeString() const override { return "Lag"; }
+	String getTypeString() const override { return "FPS"; }
 
 
 	// Inherited via Timer

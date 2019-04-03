@@ -10,7 +10,8 @@
 
 #include "LagFilter.h"
 
-LagFilter::LagFilter(var params)
+LagFilter::LagFilter(var params) :
+	MappingFilter(getTypeString())
 {
 	frequency = filterParams.addFloatParameter("Frequency", "Lag frequency in Hz", 5, .01f, 50);
 	startTimerHz(frequency->floatValue());
