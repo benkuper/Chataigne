@@ -193,7 +193,7 @@ void ModuleRouterView::inspectablesSelectionChanged()
 {
 	if (InspectableSelectionManager::mainSelectionManager->currentInspectables.size() > 0)
 	{
-		ModuleRouter * m = dynamic_cast<ModuleRouter *>(InspectableSelectionManager::mainSelectionManager->currentInspectables[0]);
+		ModuleRouter * m = InspectableSelectionManager::mainSelectionManager->getInspectableAs<ModuleRouter>();
 		if(m != nullptr) setRouter(m);
 	}
 }

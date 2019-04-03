@@ -80,20 +80,6 @@ void MappingLayerTimeline::resized()
 	if (colorManagerUI != nullptr) colorManagerUI->setBounds(getLocalBounds());
 }
 
-bool MappingLayerTimeline::keyPressed(const KeyPress & e)
-{
-	if (e.getKeyCode() == e.backspaceKey || e.getKeyCode() == e.deleteKey)
-	{
-		for (auto &a : mappingLayer->automations)
-		{
-			a->removeAllSelectedKeys();
-		}
-		return true;
-	}
-
-	return false;
-}
-	
 
 void MappingLayerTimeline::controllableFeedbackUpdateInternal(Controllable * c)
 {

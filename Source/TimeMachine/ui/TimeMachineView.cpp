@@ -18,9 +18,11 @@ TimeMachineView::TimeMachineView(const String &contentName, SequenceManager * _m
 	contentIsFlexible = true;
 	InspectableSelectionManager::mainSelectionManager->addSelectionListener(this);
 	SequenceManager::getInstance()->addBaseManagerListener(this);
-
-
 	helpID = "SequenceEditor";
+
+
+	inspectablesSelectionChanged(); //force selecting 
+
 
 }
 
@@ -73,7 +75,7 @@ void TimeMachineView::inspectablesSelectionChanged()
 {
 	if (InspectableSelectionManager::mainSelectionManager->isEmpty()) return;
 	
-	ControllableContainer * cc = dynamic_cast<ControllableContainer *>(InspectableSelectionManager::mainSelectionManager->currentInspectables[0]);
+	ControllableContainer * cc = InspectableSelectionManager::mainSelectionManager->getInspectableAs<ControllableContainer>();
 	if (cc == nullptr) return;
 
 	Sequence * s = nullptr;
