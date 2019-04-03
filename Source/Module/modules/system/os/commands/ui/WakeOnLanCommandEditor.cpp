@@ -13,8 +13,9 @@
 
 WakeOnLanCommandEditor::WakeOnLanCommandEditor(WakeOnLanCommand * wolCommand, bool isRoot) :
 	GenericControllableContainerEditor(wolCommand, isRoot),
-	wolCommand(wolCommand),
-	zeroconfMenu("Auto set...")
+	zeroconfMenu("Auto set..."),
+    wolCommand(wolCommand)
+
 {
 	zeroconfMenu.addListener(this);
 	addAndMakeVisible(&zeroconfMenu);

@@ -13,11 +13,12 @@
 PlayAudioFileCommand::PlayAudioFileCommand(AudioModule * _module, CommandContext context, var params) :
 	BaseCommand(_module, context, params),
 	audioModule(_module),
-	channelsCC("Selected channels"),
-	fileSampleRate(44100),
-	channelRemapAudioSource(&transportSource, false),
-	numActiveOutputs(2),
-	numFileChannels(2)
+    channelRemapAudioSource(&transportSource, false),
+    fileSampleRate(44100),
+    channelsCC("Selected channels"),
+	numFileChannels(2),
+    numActiveOutputs(2)
+
 {
 
 	audioFile = addFileParameter("Audio file", "The Audio file to play");
