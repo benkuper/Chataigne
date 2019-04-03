@@ -79,7 +79,7 @@ void Module::setupIOConfiguration(bool _hasInput, bool _hasOutput)
 	if (_hasOutput != hasOutput) hasOutput = _hasOutput;
 	
 	valuesCC.hideInEditor = !alwaysShowValues && !hasInput && valuesCC.controllables.size() == 0 && valuesCC.controllableContainers.size() == 0;
-	commandTester->hideInEditor = !hasOutput;
+	commandTester->hideInEditor = defManager.definitions.size() == 0;// !hasOutput;
 	moduleListeners.call(&ModuleListener::moduleIOConfigurationChanged);
 }
 

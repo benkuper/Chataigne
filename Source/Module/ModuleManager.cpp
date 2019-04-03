@@ -119,7 +119,7 @@ bool ModuleManager::checkControllableIsAValue(Controllable * c)
 PopupMenu ModuleManager::getAllModulesCommandMenu(CommandContext context)
 {
 	PopupMenu menu;
-	for (int i = 0; i < items.size(); i++) if(items[i]->hasOutput) menu.addSubMenu(items[i]->niceName, items[i]->getCommandMenu(i * 1000,context));
+	for (int i = 0; i < items.size(); i++) menu.addSubMenu(items[i]->niceName, items[i]->getCommandMenu(i * 1000,context));
 	menu.addSeparator();
 	menu.addSubMenu(StateManager::getInstance()->module.niceName, StateManager::getInstance()->module.getCommandMenu(-1000, context));
 	menu.addSubMenu(SequenceManager::getInstance()->module.niceName, SequenceManager::getInstance()->module.getCommandMenu(-2000, context));
