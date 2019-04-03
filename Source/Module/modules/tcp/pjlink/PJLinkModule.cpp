@@ -17,7 +17,7 @@ PJLinkModule::PJLinkModule() :
 	alwaysShowValues = true;
 	includeValuesInSave = true;
 
-	setAutoAddAvailable(false);
+	//setAutoAddAvailable(false);
 	streamingType->setValueWithData(LINES);
 
 	powerStatus = valuesCC.addEnumParameter("Power Status", "Status of the projector");
