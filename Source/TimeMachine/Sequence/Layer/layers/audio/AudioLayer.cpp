@@ -25,7 +25,8 @@ AudioLayer::AudioLayer(Sequence * _sequence, var params) :
 	
 	helpID = "AudioLayer";
     
-    volume = addFloatParameter("Volume","Volume multiplier for the layer",1,0,10);
+	volume = addFloatParameter("Volume", "Volume multiplier for the layer", 1, 0, 10);
+	panning = addFloatParameter("Panning","If using 2 channels, panning of -1 is be left only, 0 is both and 1 is right only",0, -1, 1);
     
 	enveloppe = addFloatParameter("Enveloppe", "Enveloppe", 0, 0, 1);
 	enveloppe->isControllableFeedbackOnly = true;
@@ -373,9 +374,16 @@ void AudioLayerProcessor::processBlock(AudioBuffer<float>& buffer, MidiBuffer & 
 	bufferToFill.buffer = &buffer;
 	bufferToFill.startSample = 0;
 	bufferToFill.numSamples = buffer.getNumSamples();
-    
-	layer->currentClip->channelRemapAudioSource.getNextAudioBlock(bufferToFill);
 
+	layer->currentClip->channelRemapAudioSource.getNextAudioBlock(bufferToFill);
+	
+	if (buffer.getNumChannels() >= 2)
+	{
+		float panning = layer->panning->floatValue();
+		if (panning < 0) buffer.applyGain(1, bufferToFill.startSample, bufferToFill.numSamples, 1 + panning);
+		else if (panning > 0) buffer.applyGain(0, bufferToFill.startSample, bufferToFill.numSamples, 1 - panning);
+	}
+	
 	float rms = 0;
 	for (int i = 0; i < buffer.getNumChannels(); i++)
 	{

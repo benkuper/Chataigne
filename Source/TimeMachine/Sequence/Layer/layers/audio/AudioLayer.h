@@ -37,6 +37,7 @@ public:
 	var channelsData; //for ghosting
 
     FloatParameter * volume;
+	FloatParameter * panning;
 	FloatParameter * enveloppe;
 
 	int numActiveOutputs;
