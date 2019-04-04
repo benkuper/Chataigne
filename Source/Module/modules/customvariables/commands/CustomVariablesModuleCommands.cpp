@@ -130,8 +130,11 @@ void CVCommand::onContainerParameterChanged(Parameter * p)
 		}
 	} else if (p == valueOperator)
 	{
-		Operator o = valueOperator->getValueDataAsEnum<Operator>();
-		value->hideInEditor = o == INVERSE;
+		if (value != nullptr)
+		{
+			Operator o = valueOperator->getValueDataAsEnum<Operator>();
+			value->hideInEditor = o == INVERSE;
+		}
 	}
 }
 
