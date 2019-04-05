@@ -37,6 +37,10 @@
 			isa = PBXBuildFile;
 			fileRef = 48D6B341F756699DA2054362;
 		};
+		AF39E567B08EC2A6120300D6 = {
+			isa = PBXBuildFile;
+			fileRef = F7C65A10F005D2BA26D357E8;
+		};
 		204F4BFB9638B83FDC0CC9CA = {
 			isa = PBXBuildFile;
 			fileRef = 0C1C0CBF20BE5722919301E0;
@@ -5625,6 +5629,13 @@
 			path = "../../JuceLibraryCode/include_juce_events.mm";
 			sourceTree = "SOURCE_ROOT";
 		};
+		F7C65A10F005D2BA26D357E8 = {
+			isa = PBXFileReference;
+			lastKnownFileType = wrapper.framework;
+			name = CoreAudioKit.framework;
+			path = System/Library/Frameworks/CoreAudioKit.framework;
+			sourceTree = SDKROOT;
+		};
 		F7F53C6D57A9E26430F208A3 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -7707,6 +7718,7 @@
 				4A2D120957D96E42971F3697,
 				3149349D002EF31FDDDBA326,
 				48D6B341F756699DA2054362,
+				F7C65A10F005D2BA26D357E8,
 				0C1C0CBF20BE5722919301E0,
 				8BD13F2A50FC3588DC036461,
 				2EF4541423C08B373926C946,
@@ -8293,6 +8305,7 @@
 				7438DDB36BA97435A0318452,
 				DE87F2B6FF24002E15984FBE,
 				0B711A96469657F81C4C9FA8,
+				AF39E567B08EC2A6120300D6,
 				204F4BFB9638B83FDC0CC9CA,
 				6778D3B561B8796EC3F344CC,
 				5543461C198B589786255629,
