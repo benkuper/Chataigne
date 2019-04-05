@@ -30,6 +30,7 @@ public:
 	TriggerLayerTimeline * timeline;
 	ScopedPointer<TimeTriggerMultiTransformer> transformer;
 
+	void paint(Graphics &g) override;
 	void resized() override;
 	void updateContent();
 

@@ -42,6 +42,17 @@ TimeTriggerManagerUI::~TimeTriggerManagerUI()
 	if (InspectableSelector::getInstanceWithoutCreating()) InspectableSelector::getInstance()->removeSelectorListener(this);
 }
 
+void TimeTriggerManagerUI::paint(Graphics & g)
+{
+	BaseManagerUI::paint(g);
+	if (isDraggingOver)
+	{
+		g.setColour(BLUE_COLOR);
+		Line<int> line(getMouseXYRelative().withY(0), getMouseXYRelative().withY(getHeight()));
+		g.drawLine(line.toFloat(), 2);
+	}
+}
+
 void TimeTriggerManagerUI::resized()
 {
 	updateContent();
@@ -182,7 +193,7 @@ void TimeTriggerManagerUI::itemDropped(const SourceDetails & details)
 		StateCommand * command = dynamic_cast<StateCommand *>(c->command.get());
 		ActionUI * bui = dynamic_cast<ActionUI *>(details.sourceComponent.get());
 		if (bui != nullptr) command->target->setValueFromTarget(bui->item);
-
+		isDraggingOver = false;
 	}
 	else
 	{
