@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.5.11b3"
+<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.5.11b4"
               bundleIdentifier="benkuper.Chataigne" includeBinaryInAppConfig="1"
               jucerVersion="5.4.3" companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
               companyEmail="benjamin@kuperberg.fr" defines="" splashScreenColour="Dark"
@@ -66,6 +66,22 @@
               file="Source/Analytics/GoogleAnalyticsDestination.h"/>
       </GROUP>
       <GROUP id="{6C7DFFF7-D47E-97B5-FE74-27F24C7A349F}" name="Common">
+        <GROUP id="{C21F74B1-BBE0-83CC-BC8A-5EAFE2349CE3}" name="Comment">
+          <GROUP id="{DD49425A-B848-7496-B714-52FFE3D3AB79}" name="ui">
+            <FILE id="iDlqen" name="CommentManagerViewUI.cpp" compile="1" resource="0"
+                  file="Source/Common/Comment/ui/CommentManagerViewUI.cpp"/>
+            <FILE id="mFVYDp" name="CommentManagerViewUI.h" compile="0" resource="0"
+                  file="Source/Common/Comment/ui/CommentManagerViewUI.h"/>
+            <FILE id="Jz3gym" name="CommentUI.cpp" compile="1" resource="0" file="Source/Common/Comment/ui/CommentUI.cpp"/>
+            <FILE id="WRusw6" name="CommentUI.h" compile="0" resource="0" file="Source/Common/Comment/ui/CommentUI.h"/>
+          </GROUP>
+          <FILE id="ynooSZ" name="Comment.cpp" compile="1" resource="0" file="Source/Common/Comment/Comment.cpp"/>
+          <FILE id="tGUJqi" name="Comment.h" compile="0" resource="0" file="Source/Common/Comment/Comment.h"/>
+          <FILE id="I6r9fN" name="CommentManager.cpp" compile="1" resource="0"
+                file="Source/Common/Comment/CommentManager.cpp"/>
+          <FILE id="yXrV37" name="CommentManager.h" compile="0" resource="0"
+                file="Source/Common/Comment/CommentManager.h"/>
+        </GROUP>
         <GROUP id="{1B487EA1-C305-46F0-D55D-17FDE1399960}" name="Zeroconf">
           <FILE id="r5sscj" name="ZeroconfManager.cpp" compile="1" resource="0"
                 file="Source/Common/Zeroconf/ZeroconfManager.cpp"/>

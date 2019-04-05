@@ -16,6 +16,7 @@
 #include "Transition/StateTransitionManager.h"
 #include "Module/modules/state/StateModule.h"
 #include "Common/Processor/Mapping/Mapping.h"
+#include "Common/Comment/CommentManager.h"
 
 class StateManager :
 	public BaseManager<State>,
@@ -33,6 +34,8 @@ public:
 	StateTransitionManager stm;
 
 	BoolParameter * onlyOneActiveState; //whether activating a state automatically deactivates all other non-permanent states
+
+	CommentManager commentManager;
 
 	void clear() override;
 

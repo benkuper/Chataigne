@@ -29,8 +29,10 @@ public:
 	Grabber bottomGrabber;
 
 	//transition
-	bool transitionReceptionMode;
-	void setTransitionReceptionMode(bool value);
+	enum TransitionReceptionMode { NONE, START, FINISH };
+	TransitionReceptionMode transitionReceptionMode;
+
+	void setTransitionReceptionMode(TransitionReceptionMode value);
 
 	void updateMiniModeUI() override;
 

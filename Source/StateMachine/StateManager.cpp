@@ -20,11 +20,15 @@ stm(this)
 	itemDataType = "State";
 	helpID = "StateMachine";
 
+	onlyOneActiveState = addBoolParameter("One Active State", "If checked, when activating a state, all other non-permanent states will be automatically deactivated.", false);
+
+
 	addChildControllableContainer(&stm);
 	stm.hideInEditor = true;
 	stm.addBaseManagerListener(this);
 
-	onlyOneActiveState = addBoolParameter("One Active State", "If checked, when activating a state, all other non-permanent states will be automatically deactivated.", false);
+	addChildControllableContainer(&commentManager);
+
 }
 
 StateManager::~StateManager()
@@ -210,8 +214,11 @@ Array<State *> StateManager::getLinkedStates(State * s, Array<State *> * statesT
 var StateManager::getJSONData()
 {
 	var data = BaseManager::getJSONData();
+
 	var tData = stm.getJSONData();
 	if (!tData.isVoid() && tData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty("transitions",tData);
+	var cData = commentManager.getJSONData();
+	if (!cData.isVoid() && cData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty("comments", cData);
 	return data;
 }
 
@@ -219,4 +226,5 @@ void StateManager::loadJSONDataInternal(var data)
 {
 	BaseManager::loadJSONDataInternal(data);
 	stm.loadJSONData(data.getProperty("transitions", var()));
+	commentManager.loadJSONData(data.getProperty("comments", var()));
 }

@@ -15,6 +15,9 @@ ProcessorManagerUI::ProcessorManagerUI(ProcessorManager * _manager) :
 {
 	addExistingItems();
 
+	acceptedDropTypes.add("Action");
+	acceptedDropTypes.add("Mapping");
+
 	noItemText = "Add trigger interaction with an Action, or continuous interaction with a Mapping";
 }
 

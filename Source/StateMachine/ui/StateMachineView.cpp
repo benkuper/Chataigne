@@ -10,6 +10,9 @@
 
 #include "StateMachineView.h"
 
+#include "../Transition/ui/StateTransitionManagerUI.h"
+#include "Common/Comment/ui/CommentManagerViewUI.h"
+
 StateMachineView::StateMachineView(const String &contentName, StateManager * _manager) :
 	BaseManagerShapeShifterViewUI(contentName, _manager),
 	manager(_manager),
@@ -20,11 +23,14 @@ StateMachineView::StateMachineView(const String &contentName, StateManager * _ma
 	contentIsFlexible = true;
 	addItemText = "Add State";
 	noItemText = "Add interaction by creating a State";
-	
+
+	acceptedDropTypes.add("Comment");
 
 	stmUI = new StateTransitionManagerUI(this, &manager->stm);
 	addAndMakeVisible(stmUI, 0);
 	
+	commentManagerUI = new CommentManagerViewUI(&manager->commentManager);
+	addAndMakeVisible(commentManagerUI, 0);
 
 	addExistingItems();
 	frameView();
@@ -35,11 +41,10 @@ StateMachineView::~StateMachineView()
 	
 }
 
-
 void StateMachineView::mouseMove(const MouseEvent & e)
 {
 	BaseManagerViewUI::mouseMove(e);
-	if(transitionCreationMode) repaint();
+	if(transitionCreationMode && transitionCreationSourceUI != nullptr) repaint();
 }
 
 void StateMachineView::mouseDown(const MouseEvent & e)
@@ -75,11 +80,12 @@ void StateMachineView::paint(Graphics & g)
 {
 	BaseManagerViewUI::paint(g);
 
-	if (transitionCreationMode)
+	if (transitionCreationMode && transitionCreationSourceUI != nullptr)
 	{
 		Point<int> sourceP = transitionCreationSourceUI->getBounds().getConstrainedPoint(getMouseXYRelative());
 		g.setColour(HIGHLIGHT_COLOR);
 		Line<float> line(sourceP.x, sourceP.y, getMouseXYRelative().x, getMouseXYRelative().y);
+		
 		float dl[] = {5,5};
 		g.drawDashedLine(line, dl, 2);
 	}
@@ -91,6 +97,23 @@ void StateMachineView::resized()
 	BaseManagerViewUI::resized();
 	stmUI->setBounds(getLocalBounds());
 	stmUI->resized();
+	commentManagerUI->viewOffset = viewOffset;
+
+	commentManagerUI->setBounds(getLocalBounds());
+	commentManagerUI->resized();
+}
+
+void StateMachineView::showMenuAndAddItem(bool fromAddButton, Point<int> position)
+{
+	PopupMenu p;
+	p.addItem(1, "Add State");
+	p.addItem(2, "Add Comment");
+	p.addItem(3, "Add Transition");
+
+	int result = p.show();
+	if (result == 1)	BaseManagerViewUI::addItemFromMenu(fromAddButton, position);
+	else if (result == 2) commentManagerUI->addItemFromMenu(fromAddButton, position);
+	else if (result == 3) startCreateTransition(nullptr);
 }
 
 
@@ -99,9 +122,11 @@ void StateMachineView::startCreateTransition(StateViewUI * sourceUI)
 	transitionCreationMode = true;
 	transitionCreationSourceUI = sourceUI;
 
+	DBG("Start create transition " << (int)(transitionCreationSourceUI != nullptr));
+
 	for (auto &sui : itemsUI)
 	{
-		sui->setTransitionReceptionMode(true);
+		if (sui != sourceUI) sui->setTransitionReceptionMode(sourceUI != nullptr ? StateViewUI::FINISH : StateViewUI::START);
 	}
 }
 
@@ -116,7 +141,7 @@ void StateMachineView::finishCreateTransition(StateViewUI * destUI)
 
 	for (auto &sui : itemsUI)
 	{
-		sui->setTransitionReceptionMode(false);
+		sui->setTransitionReceptionMode(StateViewUI::NONE);
 	}
 
 	repaint();
@@ -128,7 +153,7 @@ void StateMachineView::cancelCreateTransition()
 	transitionCreationSourceUI = nullptr;
 	for (auto &sui : itemsUI)
 	{
-		sui->setTransitionReceptionMode(false);
+		sui->setTransitionReceptionMode(StateViewUI::NONE);
 	}
 
 	repaint();
@@ -156,4 +181,16 @@ void StateMachineView::askCreateTransitionFromUI(StateViewUI * se)
 void StateMachineView::askFinishTransitionFromUI(StateViewUI * se)
 {
 	finishCreateTransition(se);
+}
+
+void StateMachineView::itemDropped(const SourceDetails & details)
+{
+	String type = details.description.getProperty("type", "").toString();
+	if (type == "Comment")
+	{
+		commentManagerUI->itemDropped(details);
+		return;
+	}
+
+	BaseManagerViewUI::itemDropped(details);
 }

@@ -15,7 +15,9 @@
 
 #include "../StateManager.h"
 #include "../State/ui/StateViewUI.h"
-#include "../Transition/ui/StateTransitionManagerUI.h"
+
+class StateTransitionManagerUI;
+class CommentManagerViewUI;
 
 class StateMachineView :
 	public BaseManagerShapeShifterViewUI<StateManager,State,StateViewUI>,
@@ -31,6 +33,7 @@ public:
 	ScopedPointer<StateTransitionManagerUI> stmUI;
 	bool transitionCreationMode;
 	StateViewUI * transitionCreationSourceUI;
+	ScopedPointer<CommentManagerViewUI> commentManagerUI;
 	
 
 	void mouseMove(const MouseEvent &e) override;
@@ -38,9 +41,12 @@ public:
 	void mouseDoubleClick(const MouseEvent &e) override;
 	bool keyPressed(const KeyPress &e) override;
 
+
 	void paint(Graphics &g) override;
 	void resized() override;
 
+	void showMenuAndAddItem(bool fromAddButton, Point<int> position) override;
+	
 	//Transition
 	void startCreateTransition(StateViewUI * sourceUI);
 	void finishCreateTransition(StateViewUI * destUI);
@@ -53,6 +59,7 @@ public:
 	void askCreateTransitionFromUI(StateViewUI * se) override;
 	void askFinishTransitionFromUI(StateViewUI * se) override;
 
+	void itemDropped(const SourceDetails &details) override;
 
 	static StateMachineView * create(const String &contentName) { return new StateMachineView(contentName, StateManager::getInstance()); }
 

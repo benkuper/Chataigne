@@ -20,6 +20,12 @@
     <Filter Include="Chataigne\Source\Analytics">
       <UniqueIdentifier>{BFFB54F9-F042-7395-56B9-D0358B5F6ED9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Chataigne\Source\Common\Comment\ui">
+      <UniqueIdentifier>{17EA12CE-E8EF-2C75-8B42-79269D1D0049}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Common\Comment">
+      <UniqueIdentifier>{58275E3B-0A4C-2FC7-FB14-55C0B535A0E8}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Chataigne\Source\Common\Zeroconf">
       <UniqueIdentifier>{C4DDA41D-2632-9CB5-32F2-C49815C7E269}</UniqueIdentifier>
     </Filter>
@@ -1065,6 +1071,18 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Guider\Guider.cpp">
       <Filter>Chataigne\Source\Guider</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Comment\ui\CommentManagerViewUI.cpp">
+      <Filter>Chataigne\Source\Common\Comment\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Comment\ui\CommentUI.cpp">
+      <Filter>Chataigne\Source\Common\Comment\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Comment\Comment.cpp">
+      <Filter>Chataigne\Source\Common\Comment</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Comment\CommentManager.cpp">
+      <Filter>Chataigne\Source\Common\Comment</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Common\Zeroconf\ZeroconfManager.cpp">
       <Filter>Chataigne\Source\Common\Zeroconf</Filter>
@@ -4334,6 +4352,18 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Analytics\GoogleAnalyticsDestination.h">
       <Filter>Chataigne\Source\Analytics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\Comment\ui\CommentManagerViewUI.h">
+      <Filter>Chataigne\Source\Common\Comment\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\Comment\ui\CommentUI.h">
+      <Filter>Chataigne\Source\Common\Comment\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\Comment\Comment.h">
+      <Filter>Chataigne\Source\Common\Comment</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\Comment\CommentManager.h">
+      <Filter>Chataigne\Source\Common\Comment</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\Zeroconf\ZeroconfManager.h">
       <Filter>Chataigne\Source\Common\Zeroconf</Filter>

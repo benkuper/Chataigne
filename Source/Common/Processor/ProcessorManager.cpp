@@ -19,6 +19,7 @@ ProcessorManager::ProcessorManager(const String &name) :
 	forceDisabled(false)
 {
 	itemDataType = "Processor"; 
+
 	managerFactory = &factory;
 	factory.defs.add(Factory<Processor>::Definition::createDef("", "Action", &Action::create));
 	factory.defs.add(Factory<Processor>::Definition::createDef("", "Mapping", &Mapping::create));

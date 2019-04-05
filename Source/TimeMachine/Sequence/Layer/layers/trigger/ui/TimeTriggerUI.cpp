@@ -12,9 +12,11 @@
 #include "UI/ChataigneAssetManager.h"
 
 TimeTriggerUI::TimeTriggerUI(TimeTrigger * _tt) :
-	BaseItemUI<TimeTrigger>(_tt, Direction::NONE, Direction::NONE),
+	BaseItemUI(_tt, Direction::NONE),
 	flagXOffset(0)
 {
+
+	dragAndDropEnabled = false;
 
 	autoDrawContourWhenSelected = false;
 	setName(_tt->niceName);
@@ -129,9 +131,6 @@ void TimeTriggerUI::mouseDrag(const MouseEvent & e)
 	{
 		triggerUIListeners.call(&TimeTriggerUIListener::timeTriggerDragged, this, e);
 	}
-
-	
-
 }
 
 void TimeTriggerUI::mouseUp(const MouseEvent & e)

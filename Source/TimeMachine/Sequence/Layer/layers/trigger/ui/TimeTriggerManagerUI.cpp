@@ -11,6 +11,8 @@
 #include "TimeTriggerManagerUI.h"
 #include "TriggerLayerTimeline.h"
 #include "../../../../Cue/ui/TimeCueManagerUI.h"
+#include "StateMachine/StateManager.h"
+#include "Common/Processor/Action/ui/ActionUI.h"
 
 TimeTriggerManagerUI::TimeTriggerManagerUI(TriggerLayerTimeline * _timeline, TimeTriggerManager * manager) :
 	BaseManagerUI("Triggers", manager, false),
@@ -19,6 +21,10 @@ TimeTriggerManagerUI::TimeTriggerManagerUI(TriggerLayerTimeline * _timeline, Tim
 	addItemText = "Add Trigger";
 	animateItemOnAdd = false;
 	transparentBG = true;
+
+	acceptedDropTypes.add("Action");
+	acceptedDropTypes.add("CommandTemplate");
+	acceptedDropTypes.add("Module");
 
 	addItemBT->setVisible(false);
 
@@ -162,6 +168,26 @@ void TimeTriggerManagerUI::timeTriggerDragged(TimeTriggerUI * ttui, const MouseE
 void TimeTriggerManagerUI::timeTriggerTimeChanged(TimeTriggerUI * ttui)
 {
 	placeTimeTriggerUI(ttui);
+}
+
+void TimeTriggerManagerUI::itemDropped(const SourceDetails & details)
+{
+	String dataType = details.description.getProperty("type", "");
+	if (dataType == "Action")
+	{
+		float time = timeline->getTimeForX(getMouseXYRelative().x);
+		TimeTrigger * t = manager->addTriggerAt(time, getMouseXYRelative().y * 1.f / getHeight());
+		Consequence * c = t->csmOn->addItem();
+		c->setCommand(StateManager::getInstance()->module.getCommandDefinitionFor("Action", "Trigger Action"));
+		StateCommand * command = dynamic_cast<StateCommand *>(c->command.get());
+		ActionUI * bui = dynamic_cast<ActionUI *>(details.sourceComponent.get());
+		if (bui != nullptr) command->target->setValueFromTarget(bui->item);
+
+	}
+	else
+	{
+		TimeTriggerManagerUI::itemDropped(details);
+	}
 }
 
 void TimeTriggerManagerUI::selectionEnded(Array<Component*> selectedComponents)

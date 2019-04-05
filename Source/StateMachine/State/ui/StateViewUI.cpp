@@ -11,9 +11,9 @@
 #include "StateViewUI.h"
 
 StateViewUI::StateViewUI(State * state) :
-BaseItemUI<State>(state, Direction::ALL, Direction::ALL),
+	BaseItemUI(state, Direction::ALL),
 	pmui(&state->pm),
-	transitionReceptionMode(false)
+	transitionReceptionMode(NONE)
 {
 	activeUI = state->active->createToggle();
 
@@ -39,12 +39,11 @@ StateViewUI::~StateViewUI()
 {
 }
 
-void StateViewUI::setTransitionReceptionMode(bool value)
+void StateViewUI::setTransitionReceptionMode(TransitionReceptionMode value)
 {
 	transitionReceptionMode = value;
-	pmui.setEnabled(!transitionReceptionMode);
-	grabber->setEnabled(!transitionReceptionMode);
-	setRepaintsOnMouseActivity(transitionReceptionMode);
+	pmui.setEnabled(transitionReceptionMode == NONE);
+	setRepaintsOnMouseActivity(transitionReceptionMode != NONE);
 }
 
 void StateViewUI::updateMiniModeUI()
@@ -67,7 +66,11 @@ void StateViewUI::mouseDown(const MouseEvent & e)
 	BaseItemUI<State>::mouseDown(e);
 
 
-	if (transitionReceptionMode)
+	if (transitionReceptionMode == START)
+	{
+		stateEditorListeners.call(&StateViewUI::Listener::askCreateTransitionFromUI, this);
+	}
+	if (transitionReceptionMode == FINISH)
 	{
 		stateEditorListeners.call(&StateViewUI::Listener::askFinishTransitionFromUI, this);
 	} else
@@ -81,11 +84,17 @@ void StateViewUI::mouseDown(const MouseEvent & e)
 			{
 				PopupMenu p;
 				p.addItem(1, "Create Transition");
+				p.addItem(2, "Toggle Minimode");
+
 				int result = p.show();
 				switch (result)
 				{
 				case 1:
 					stateEditorListeners.call(&StateViewUI::Listener::askCreateTransitionFromUI, this);
+					break;
+				
+				case 2:
+					item->miniMode->setValue(!item->miniMode->boolValue());
 					break;
 				}
 			}

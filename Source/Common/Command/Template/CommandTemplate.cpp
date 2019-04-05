@@ -19,6 +19,8 @@ CommandTemplate::CommandTemplate(Module * m, var params) :
 	paramsContainer("Parameters"),
 	sourceDef(nullptr)
 {
+	itemDataType = "CommandTemplate";
+
 	triggerTrigger = addTrigger("Trigger","Trigger a command from this template");
 	triggerTrigger->hideInEditor = true;
 

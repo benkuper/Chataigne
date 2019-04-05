@@ -22,8 +22,10 @@ StateTransitionUI::StateTransitionUI(StateTransition * st, StateViewUI * _source
 
 	sourceSUI->addStateViewUIListener(this);
 	sourceSUI->addItemUIListener(this);
+	sourceSUI->addItemMinimalUIListener(this);
 	destSUI->addStateViewUIListener(this);
 	destSUI->addItemUIListener(this);
+	destSUI->addItemMinimalUIListener(this);
 	setRepaintsOnMouseActivity(true);
 	updateBounds();
 }
@@ -32,8 +34,10 @@ StateTransitionUI::~StateTransitionUI()
 {
 	sourceSUI->removeStateViewUIListener(this);
 	sourceSUI->removeItemUIListener(this);
+	sourceSUI->removeItemMinimalUIListener(this);
 	destSUI->removeStateViewUIListener(this);
 	destSUI->removeItemUIListener(this);
+	destSUI->removeItemMinimalUIListener(this);
 }
 
 void StateTransitionUI::updateBounds()
@@ -160,7 +164,21 @@ void StateTransitionUI::paint(Graphics & g)
 	if (isMouseOver()) c = c.brighter();
 	g.setColour(c);
 
-	g.drawLine(sourceP.x, sourceP.y,ap.x,ap.y, c == NORMAL_COLOR ? 1 : 2);
+	Line<float> sLine(sourceP.x, sourceP.y, ap.x, ap.y); 
+	int thickness = c == NORMAL_COLOR ? 1 : 2;
+
+	if (item->cdm.items.isEmpty())
+	{
+		float dl[] = { 5,5 };
+		g.drawDashedLine(sLine, dl, 2, thickness);
+	}
+	else
+	{
+		g.drawLine(sLine, thickness);
+	}
+
+
+
 	g.fillPath(arrow);
 	g.strokePath(base, PathStrokeType(2));
 }
@@ -182,14 +200,6 @@ bool StateTransitionUI::hitTest(int x, int y)
 
 	int dist = pol.getDistanceFrom(mousePos);
 	return dist  < 10;
-}
-
-
-
-void StateTransitionUI::itemUIGrabbed(BaseItemUI<State> *)
-{
-	updateBounds();
-	
 }
 
 void StateTransitionUI::itemUIMiniModeChanged(BaseItemUI<State> *)

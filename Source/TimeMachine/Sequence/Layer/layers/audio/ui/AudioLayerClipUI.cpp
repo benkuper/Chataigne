@@ -19,6 +19,8 @@ AudioLayerClipUI::AudioLayerClipUI(AudioLayerClip * _clip) :
 	thumbnail(50, _clip->formatManager, thumbnailCache),
 	clip(_clip)
 {
+	dragAndDropEnabled = false;
+
 	browseBT = AssetManager::getInstance()->getFileBT();
 	addAndMakeVisible(browseBT);
 	browseBT->addListener(this);
