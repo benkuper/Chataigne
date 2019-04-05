@@ -26,12 +26,16 @@ public:
 	ScopedPointer<TriggerButtonUI> triggerAllUI;
 	ScopedPointer<FloatSliderUI> progressionUI;
 
+	void paint(Graphics &g) override;
+
 	void updateRoleBGColor();
 
 	void controllableFeedbackUpdateInternal(Controllable * c) override;
 
 	void resizedInternalHeader(Rectangle<int> &r) override;
 	void paintOverChildren(Graphics &g) override;
+
+	void itemDropped(const SourceDetails &details) override;
 
 	void newMessage(const Action::ActionEvent &e) override;
 

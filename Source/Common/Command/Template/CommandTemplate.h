@@ -69,21 +69,3 @@ public:
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(CommandTemplate)
 };
-
-/*
-class CommandTemplateDefinition :
-	public CommandDefinition,
-	public ControllableContainerListener
-{
-public:
-	CommandTemplateDefinition(CommandTemplate * ct);
-	~CommandTemplateDefinition();
-
-	CommandTemplate * commandTemplate;
-
-	void childAddressChanged(ControllableContainer * cc) override;
-
-	static CommandTemplateDefinition * createDef(ControllableContainer * container, CommandTemplate * ct, CreateCommandFunc createFunc);
-
-};
-*/

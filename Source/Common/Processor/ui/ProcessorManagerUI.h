@@ -22,6 +22,8 @@ public:
 	ProcessorManagerUI(ProcessorManager *_manager);
 	~ProcessorManagerUI();
 
+	void itemDropped(const SourceDetails &details) override;
+
 	ProcessorUI * createUIForItem(Processor *) override;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ProcessorManagerUI)

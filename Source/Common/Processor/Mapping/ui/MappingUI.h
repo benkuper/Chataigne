@@ -26,9 +26,14 @@ public:
 
 	ScopedPointer<ControllableUI> outputParamUI;
 	
+
+	void paint(Graphics &g) override;
+
 	void updateOutputParamUI();
 
 	void resizedInternalHeader(Rectangle<int> &r) override;
+
+	void itemDropped(const SourceDetails &details) override;
 
 	void newMessage(const Mapping::MappingEvent &e) override;
 

@@ -44,6 +44,8 @@ public:
 	void mouseDrag(const MouseEvent &e) override;
 	void mouseUp(const MouseEvent &e) override;
 
+	void itemDropped(const SourceDetails &e) override;
+
 	void containerChildAddressChangedAsync(ControllableContainer *) override;
 	void controllableFeedbackUpdateInternal(Controllable *) override;
 	void inspectableSelectionChanged(Inspectable *) override;

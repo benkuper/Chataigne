@@ -13,6 +13,8 @@
 #include "../../../../Cue/ui/TimeCueManagerUI.h"
 #include "StateMachine/StateManager.h"
 #include "Common/Processor/Action/ui/ActionUI.h"
+#include "Module/ui/ModuleUI.h"
+#include "Common/Command/Template/CommandTemplate.h"
 
 TimeTriggerManagerUI::TimeTriggerManagerUI(TriggerLayerTimeline * _timeline, TimeTriggerManager * manager) :
 	BaseManagerUI("Triggers", manager, false),
@@ -183,21 +185,51 @@ void TimeTriggerManagerUI::timeTriggerTimeChanged(TimeTriggerUI * ttui)
 
 void TimeTriggerManagerUI::itemDropped(const SourceDetails & details)
 {
-	String dataType = details.description.getProperty("type", "");
-	if (dataType == "Action")
+	isDraggingOver = false;
+	
+	String dataType = details.description.getProperty("dataType", "");
+	CommandDefinition * def = nullptr;
+
+	if (dataType == "Action") def = StateManager::getInstance()->module.getCommandDefinitionFor("Action", "Trigger Action");
+	else if (dataType == "Module")
+	{
+		ModuleUI * mui = dynamic_cast<ModuleUI *>(details.sourceComponent.get());
+		if (mui != nullptr)
+		{
+			PopupMenu p = mui->item->getCommandMenu(0, CommandContext::ACTION);
+			int result = p.show();
+			if (result > 0) def= mui->item->getCommandDefinitionForItemID(result - 1);
+		}
+	}
+	else if (dataType == "CommandTemplate")
+	{
+		BaseItemUI<CommandTemplate> * tui = dynamic_cast<BaseItemUI<CommandTemplate> *>(details.sourceComponent.get());
+		if (tui != nullptr)
+		{
+			CommandTemplateManager * ctm = dynamic_cast<CommandTemplateManager *>(tui->item->parentContainer.get());
+			if(ctm != nullptr) def = ctm->defManager.getCommandDefinitionFor(ctm->menuName, tui->item->niceName);
+		}
+	}
+
+	BaseCommand * command = nullptr;
+
+	if (def != nullptr)
 	{
 		float time = timeline->getTimeForX(getMouseXYRelative().x);
 		TimeTrigger * t = manager->addTriggerAt(time, getMouseXYRelative().y * 1.f / getHeight());
 		Consequence * c = t->csmOn->addItem();
-		c->setCommand(StateManager::getInstance()->module.getCommandDefinitionFor("Action", "Trigger Action"));
-		StateCommand * command = dynamic_cast<StateCommand *>(c->command.get());
-		ActionUI * bui = dynamic_cast<ActionUI *>(details.sourceComponent.get());
-		if (bui != nullptr) command->target->setValueFromTarget(bui->item);
-		isDraggingOver = false;
+		c->setCommand(def);
+		command = c->command.get();
 	}
-	else
+
+	if (command != nullptr)
 	{
-		TimeTriggerManagerUI::itemDropped(details);
+		if (dataType == "Action")
+		{
+			StateCommand * sc = dynamic_cast<StateCommand *>(command);
+			ActionUI * bui = dynamic_cast<ActionUI *>(details.sourceComponent.get());
+			if (bui != nullptr) sc->target->setValueFromTarget(bui->item);
+		}
 	}
 }
 

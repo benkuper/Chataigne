@@ -16,6 +16,7 @@ CVGroup::CVGroup(const String & name) :
 	values("Variables",false,false,false),
 	pm(this)
 {
+	itemDataType = "CVGroup";
 
 	addChildControllableContainer(&params);
 	addChildControllableContainer(&values);

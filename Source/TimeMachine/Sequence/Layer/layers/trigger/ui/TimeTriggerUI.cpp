@@ -11,10 +11,20 @@
 #include "TimeTriggerUI.h"
 #include "UI/ChataigneAssetManager.h"
 
+#include "StateMachine/StateManager.h"
+#include "Common/Processor/Action/ui/ActionUI.h"
+#include "Module/ui/ModuleUI.h"
+#include "Common/Command/Template/CommandTemplate.h"
+
+
 TimeTriggerUI::TimeTriggerUI(TimeTrigger * _tt) :
 	BaseItemUI(_tt, Direction::NONE),
 	flagXOffset(0)
 {
+
+	acceptedDropTypes.add("Action");
+	acceptedDropTypes.add("Module");
+	acceptedDropTypes.add("CommandTemplate");
 
 	dragAndDropEnabled = false;
 
@@ -40,22 +50,23 @@ TimeTriggerUI::~TimeTriggerUI()
 void TimeTriggerUI::paint(Graphics & g)
 {
 	Colour c = BG_COLOR.brighter(.1f);
-	if (!item->enabled->boolValue()) c = c.darker(.6f).withAlpha(.7f);
+	if (isDraggingOver) c = BLUE_COLOR.darker(.3f);
 
+	if (!item->enabled->boolValue()) c = c.darker(.6f).withAlpha(.7f);
 	g.setColour(c);
-	
+
 	g.fillRect(flagRect);
 
 
 	if (item->isLocked->boolValue())
 	{
-		g.setTiledImageFill(ChataigneAssetManager::getInstance()->smallStripeImage, 0, 0, .1f); 
+		g.setTiledImageFill(ChataigneAssetManager::getInstance()->smallStripeImage, 0, 0, .1f);
 		g.fillRect(flagRect);
 	}
 
 	if (item->isTriggered->boolValue()) c = GREEN_COLOR.darker();
 
-	g.setColour(item->isSelected?HIGHLIGHT_COLOR:c.brighter());
+	g.setColour(item->isSelected ? HIGHLIGHT_COLOR : c.brighter());
 	g.drawRect(flagRect);
 	g.drawVerticalLine(flagXOffset, 0, (float)getHeight());
 
@@ -93,7 +104,7 @@ bool TimeTriggerUI::hitTest(int x, int y)
 
 void TimeTriggerUI::updateSizeFromName()
 {
-	int newWidth = itemLabel.getFont().getStringWidth(itemLabel.getText())+ 15;
+	int newWidth = itemLabel.getFont().getStringWidth(itemLabel.getText()) + 15;
 	if (item->isSelected)
 	{
 		newWidth += 60; //for all the buttons
@@ -104,9 +115,9 @@ void TimeTriggerUI::updateSizeFromName()
 void TimeTriggerUI::mouseDown(const MouseEvent & e)
 {
 	BaseItemUI::mouseDown(e);
-	
+
 	flagYAtMouseDown = item->flagY->floatValue();
-	
+
 	if (item->isLocked->boolValue()) return;
 
 	timeAtMouseDown = item->time->floatValue();
@@ -124,9 +135,9 @@ void TimeTriggerUI::mouseDrag(const MouseEvent & e)
 		float ty = flagYAtMouseDown + e.getOffsetFromDragStart().y*1.f / (getHeight() - 20);
 		item->flagY->setValue(ty);
 	}
-	
+
 	if (item->isLocked->boolValue()) return; //After that, nothing will changed if item is locked
-	
+
 	if (!e.mods.isShiftDown())
 	{
 		triggerUIListeners.call(&TimeTriggerUIListener::timeTriggerDragged, this, e);
@@ -142,7 +153,55 @@ void TimeTriggerUI::mouseUp(const MouseEvent & e)
 	Array<UndoableAction *> actions;
 	actions.add(item->flagY->setUndoableValue(flagYAtMouseDown, item->flagY->floatValue(), true));
 	if (!item->isLocked->boolValue()) actions.add(item->time->setUndoableValue(timeAtMouseDown, item->time->floatValue(), true));
-	UndoMaster::getInstance()->performActions("Move Trigger \""+item->niceName+"\"", actions);
+	UndoMaster::getInstance()->performActions("Move Trigger \"" + item->niceName + "\"", actions);
+}
+
+void TimeTriggerUI::itemDropped(const SourceDetails & details)
+{
+	BaseItemUI::itemDropped(details);
+	
+	String dataType = details.description.getProperty("dataType", "");
+	CommandDefinition * def = nullptr;
+
+	if (dataType == "Action") def = StateManager::getInstance()->module.getCommandDefinitionFor("Action", "Trigger Action");
+	else if (dataType == "Module")
+	{
+		ModuleUI * mui = dynamic_cast<ModuleUI *>(details.sourceComponent.get());
+		if (mui != nullptr)
+		{
+			PopupMenu p = mui->item->getCommandMenu(0, CommandContext::ACTION);
+			int result = p.show();
+			if (result > 0) def = mui->item->getCommandDefinitionForItemID(result - 1);
+		}
+	}
+	else if (dataType == "CommandTemplate")
+	{
+		BaseItemUI<CommandTemplate> * tui = dynamic_cast<BaseItemUI<CommandTemplate> *>(details.sourceComponent.get());
+		if (tui != nullptr)
+		{
+			CommandTemplateManager * ctm = dynamic_cast<CommandTemplateManager *>(tui->item->parentContainer.get());
+			if (ctm != nullptr) def = ctm->defManager.getCommandDefinitionFor(ctm->menuName, tui->item->niceName);
+		}
+	}
+
+	BaseCommand * command = nullptr;
+
+	if (def != nullptr)
+	{
+		Consequence * c = item->csmOn->addItem();
+		c->setCommand(def);
+		command = c->command.get();
+	}
+
+	if (command != nullptr)
+	{
+		if (dataType == "Action")
+		{
+			StateCommand * sc = dynamic_cast<StateCommand *>(command);
+			ActionUI * bui = dynamic_cast<ActionUI *>(details.sourceComponent.get());
+			if (bui != nullptr) sc->target->setValueFromTarget(bui->item);
+		}
+	}
 }
 
 void TimeTriggerUI::containerChildAddressChangedAsync(ControllableContainer * cc)
@@ -156,14 +215,17 @@ void TimeTriggerUI::controllableFeedbackUpdateInternal(Controllable * c)
 	if (c == item->time)
 	{
 		triggerUIListeners.call(&TimeTriggerUIListener::timeTriggerTimeChanged, this);
-	} else if (c == item->flagY)
+	}
+	else if (c == item->flagY)
 	{
 		repaint();
 		resized();
-	} else if (c == item->isTriggered)
+	}
+	else if (c == item->isTriggered)
 	{
 		repaint();
-	} else if (c == item->isLocked)
+	}
+	else if (c == item->isLocked)
 	{
 		repaint();
 	}
