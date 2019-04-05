@@ -15,12 +15,16 @@ TimeCueUI::TimeCueUI(TimeCue * timeCue) :
 	BaseItemMinimalUI(timeCue),
 	timeAtMouseDown(timeCue->time->floatValue())
 {
+	dragAndDropEnabled = false;
+
 	bgColor = bgColor.brighter();
 	setRepaintsOnMouseActivity(true);
 	autoDrawContourWhenSelected = false;
 	setSize(10, 20);
 
 	setTooltip(item->niceName);
+
+
 
 	removeMouseListener(this);
 }

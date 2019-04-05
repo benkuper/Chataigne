@@ -13,6 +13,8 @@
 TimeColorUI::TimeColorUI(TimeColor * item) :
 	BaseItemMinimalUI(item)
 {
+	dragAndDropEnabled = false;
+
 	autoDrawContourWhenSelected = false;
 	colorUI = item->color->createColorParamUI();
 	addAndMakeVisible(colorUI);
