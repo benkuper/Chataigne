@@ -32,7 +32,9 @@ ActionUI::ActionUI(Action * _action) :
 	progressionUI->showValue = false;
 	addChildComponent(progressionUI);
 	progressionUI->setVisible(action->cdm.validationProgress->enabled);
-	updateRoleBGColor();
+
+	baseSaturation = .4f;
+	updateBGColor();
 }
 
 ActionUI::~ActionUI()
@@ -51,15 +53,17 @@ void ActionUI::paint(Graphics & g)
 	}
 }
 
-void ActionUI::updateRoleBGColor()
+void ActionUI::updateBGColor()
 {
 	bool isA = action->actionRoles.contains(Action::ACTIVATE);
 	bool isD = action->actionRoles.contains(Action::DEACTIVATE);
 
-	if (isA && isD) bgColor = Colours::orange.withSaturation(.4f).darker(1);
-	else if (isA) bgColor = GREEN_COLOR.withSaturation(.4f).darker(1);
-	else if (isD) bgColor = RED_COLOR.withSaturation(.4f).darker(1);
-	else bgColor = ACTION_COLOR.withSaturation(.4f).darker(1);
+	if (isA && isD) baseBGColor = Colours::orange.darker(1);
+	else if (isA) baseBGColor = GREEN_COLOR.darker(1);
+	else if (isD) baseBGColor = RED_COLOR.darker(1);
+	else baseBGColor = ACTION_COLOR.darker(1);
+
+	ProcessorUI::updateBGColor();
 }
 
 void ActionUI::controllableFeedbackUpdateInternal(Controllable * c)
@@ -175,8 +179,7 @@ void ActionUI::newMessage(const Action::ActionEvent & e)
 		break;
 
 	case Action::ActionEvent::ROLE_CHANGED:
-		updateRoleBGColor();
-		shouldRepaint = true;
+		updateBGColor();
 		break;
 
 	case Action::ActionEvent::VALIDATION_CHANGED:

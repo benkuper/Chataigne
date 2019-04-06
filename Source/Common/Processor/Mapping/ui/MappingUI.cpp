@@ -24,7 +24,9 @@ MappingUI::MappingUI(Mapping * mapping) :
 	acceptedDropTypes.add("CommandTemplate");
 
 	mapping->addAsyncMappingListener(this);
-	bgColor = MAPPING_COLOR;
+	baseBGColor = MAPPING_COLOR;
+	updateBGColor();
+
 	updateOutputParamUI();
 }
 

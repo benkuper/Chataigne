@@ -28,7 +28,7 @@ public:
 
 	void paint(Graphics &g) override;
 
-	void updateRoleBGColor();
+	void updateBGColor() override;
 
 	void controllableFeedbackUpdateInternal(Controllable * c) override;
 

@@ -13,7 +13,8 @@
 
 Processor::Processor(const String & name, bool canBeDisabled) :
 	BaseItem(name, canBeDisabled),
-	forceDisabled(false)
+	forceDisabled(false),
+	processorAsyncNotifier(10)
 {
 	itemDataType = "Processor";
 	editorIsCollapsed = true;
@@ -28,6 +29,7 @@ void Processor::setForceDisabled(bool value, bool force)
 {
 	if (forceDisabled == value && !force) return;
 	forceDisabled = value;
+	processorAsyncNotifier.addMessage(new ProcessorEvent(ProcessorEvent::FORCE_DISABLED_CHANGED, this));
 }
 
 ProcessorUI * Processor::getUI()
