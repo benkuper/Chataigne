@@ -20,8 +20,8 @@ Comment::Comment() :
 	size = addFloatParameter("Size", "The text size", 14, 0,80);
 	size->customUI = FloatParameter::LABEL;
 
-	color = addColorParameter("olor", "The color of the text", TEXT_COLOR);
-	bgAlpha = addFloatParameter("Background Alpha", "The alpha", .1f, 0, 1);
+	color = addColorParameter("Color", "The color of the text", TEXT_COLOR);
+	bgAlpha = addFloatParameter("Background Alpha", "The alpha", 0, 0, 1);
 }
 
 Comment::~Comment()

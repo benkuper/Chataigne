@@ -13,13 +13,21 @@
 #include "../Comment.h"
 
 class CommentUI :
-	public BaseItemMinimalUI<Comment>
+	public BaseItemMinimalUI<Comment>,
+	public Label::Listener
 {
 public:
 	CommentUI(Comment * comment);
 	~CommentUI();
 
+	Label textUI;
+
 	void paint(Graphics &g) override;
+	void resized() override;
+
+	void labelTextChanged(Label *) override;
+	
+	bool canStartDrag(const MouseEvent &e) override;
 
 	void controllableFeedbackUpdateInternal(Controllable * c) override;
 };
