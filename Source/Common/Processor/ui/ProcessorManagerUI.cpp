@@ -19,15 +19,17 @@
 ProcessorManagerUI::ProcessorManagerUI(ProcessorManager * _manager) :
 	BaseManagerUI("Processors", _manager)
 {
-	addExistingItems();
-
+	drawContour = false; 
+	
 	acceptedDropTypes.add("Action");
 	acceptedDropTypes.add("Mapping");
 	acceptedDropTypes.add("Module");
 	acceptedDropTypes.add("CommandTemplate");
-	//acceptedDropTypes.add("CVGroup");
+	//acceptedDropTypes.add("CVGroup"); 
 
 	noItemText = "Add trigger interaction with an Action, or continuous interaction with a Mapping";
+
+	addExistingItems();
 }
 
 ProcessorManagerUI::~ProcessorManagerUI()

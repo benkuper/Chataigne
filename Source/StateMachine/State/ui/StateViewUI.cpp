@@ -19,15 +19,12 @@ StateViewUI::StateViewUI(State * state) :
 
 	addAndMakeVisible(activeUI);
 
-	pmui.drawContour = true;
 	pmui.addManagerUIListener(this);
 
 	if (!item->miniMode->boolValue())
 	{
 		addAndMakeVisible(&pmui);
 	}
-
-	addAndMakeVisible(&bottomGrabber);
 
 	setContentSize(item->viewUISize->x, item->viewUISize->y);
 	updateMiniModeUI();
@@ -50,15 +47,9 @@ void StateViewUI::updateMiniModeUI()
 {
 	BaseItemUI::updateMiniModeUI();
 
-	if (item->miniMode->boolValue())
-	{
-		removeChildComponent(&pmui);
-		removeChildComponent(&bottomGrabber);
-	} else
-	{
-		addAndMakeVisible(&pmui);
-		addAndMakeVisible(&bottomGrabber);
-	}
+	if (item->miniMode->boolValue()) removeChildComponent(&pmui);
+	else addAndMakeVisible(&pmui);
+	
 }
 
 void StateViewUI::mouseDown(const MouseEvent & e)
@@ -136,11 +127,6 @@ void StateViewUI::resizedInternalHeader(Rectangle<int>& r)
 void StateViewUI::resizedInternalContent(Rectangle<int>& r)
 {
 	pmui.setBounds(r);
-}
-
-void StateViewUI::resizedInternalFooter(Rectangle<int>& r)
-{
-	bottomGrabber.setBounds(r.removeFromLeft(r.getWidth()-cornerResizer->getWidth() + 2));
 }
 
 void StateViewUI::childBoundsChanged(Component * c)

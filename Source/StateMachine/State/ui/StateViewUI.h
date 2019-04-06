@@ -26,8 +26,6 @@ public:
 	ScopedPointer<BoolToggleUI> activeUI;
 	ProcessorManagerUI pmui;
 
-	Grabber bottomGrabber;
-
 	//transition
 	enum TransitionReceptionMode { NONE, START, FINISH };
 	TransitionReceptionMode transitionReceptionMode;
@@ -43,7 +41,6 @@ public:
 
 	void resizedInternalHeader(Rectangle<int> &r) override;
 	void resizedInternalContent(Rectangle<int> &r) override;
-	void resizedInternalFooter(Rectangle<int> &r) override;
 
 	void childBoundsChanged(Component *) override;
 	void controllableFeedbackUpdateInternal(Controllable *) override;
