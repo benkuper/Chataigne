@@ -83,8 +83,8 @@ void StateViewUI::mouseDown(const MouseEvent & e)
 			if (e.originalComponent != &pmui)
 			{
 				PopupMenu p;
-				p.addItem(1, "Create Transition");
-				p.addItem(2, "Toggle Minimode");
+				p.addItem(1, "Create Transition from here");
+				p.addItem(2, item->miniMode->boolValue()?"Maximize":"Minimize");
 
 				int result = p.show();
 				switch (result)

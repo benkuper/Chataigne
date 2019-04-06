@@ -45,6 +45,8 @@ public:
 	void paint(Graphics &g) override;
 	void resized() override;
 
+	void setViewZoom(float value) override;
+
 	void showMenuAndAddItem(bool fromAddButton, Point<int> position) override;
 	
 	//Transition

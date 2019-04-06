@@ -30,6 +30,7 @@ StateMachineView::StateMachineView(const String &contentName, StateManager * _ma
 	addAndMakeVisible(stmUI, 0);
 	
 	commentManagerUI = new CommentManagerViewUI(&manager->commentManager);
+	commentManagerUI->canZoom = true;
 	addAndMakeVisible(commentManagerUI, 0);
 
 	addExistingItems();
@@ -103,12 +104,18 @@ void StateMachineView::resized()
 	commentManagerUI->resized();
 }
 
+void StateMachineView::setViewZoom(float value)
+{
+	BaseManagerViewUI::setViewZoom(value);
+	commentManagerUI->setViewZoom(value);
+}
+
 void StateMachineView::showMenuAndAddItem(bool fromAddButton, Point<int> position)
 {
 	PopupMenu p;
 	p.addItem(1, "Add State");
 	p.addItem(2, "Add Comment");
-	p.addItem(3, "Add Transition");
+	p.addItem(3, "Create Transition");
 
 	int result = p.show();
 	if (result == 1)	BaseManagerViewUI::addItemFromMenu(fromAddButton, position);
@@ -122,7 +129,7 @@ void StateMachineView::startCreateTransition(StateViewUI * sourceUI)
 	transitionCreationMode = true;
 	transitionCreationSourceUI = sourceUI;
 
-	DBG("Start create transition " << (int)(transitionCreationSourceUI != nullptr));
+	//DBG("Start create transition " << (int)(transitionCreationSourceUI != nullptr));
 
 	for (auto &sui : itemsUI)
 	{
