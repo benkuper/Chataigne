@@ -19,7 +19,7 @@ StateMachineView::StateMachineView(const String &contentName, StateManager * _ma
 	transitionCreationMode(false),
 	transitionCreationSourceUI(nullptr)
 {
-	canZoom = false;
+	canZoom = true;
 	contentIsFlexible = true;
 	addItemText = "Add State";
 	noItemText = "Add interaction by creating a State";
