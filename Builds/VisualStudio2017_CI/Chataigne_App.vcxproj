@@ -66,7 +66,7 @@
       <Optimization>Disabled</Optimization>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <AdditionalIncludeDirectories>..\..\JuceLibraryCode;..\..\..\JUCE\modules;..\..\..\JUCE Modules;../../External/wiiuse;../../External/serial/include;../../External/asio;../../External/kinect/include;../../External/joycon/include;../../External/servus/include;../../External/dnssd/include;../../External/sdl/include;../../External/libartnet/include;../../Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;DEBUG;_DEBUG;USE_KINECT=1;JUCER_VS2017_78A57A61=1;JUCE_APP_VERSION=1.6.0b2;JUCE_APP_VERSION_HEX=0x10600;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_RTAS=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;DEBUG;_DEBUG;USE_KINECT=1;JUCER_VS2017_78A57A61=1;JUCE_APP_VERSION=1.6.0b3;JUCE_APP_VERSION_HEX=0x10600;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_RTAS=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <PrecompiledHeader/>
@@ -113,7 +113,7 @@
       <Optimization>Full</Optimization>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <AdditionalIncludeDirectories>..\..\JuceLibraryCode;..\..\..\JUCE\modules;..\..\..\JUCE Modules;../../External/wiiuse;../../External/serial/include;../../External/asio;../../External/kinect/include;../../External/joycon/include;../../External/servus/include;../../External/dnssd/include;../../External/sdl/include;../../External/libartnet/include;../../Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;NDEBUG;USE_KINECT=1;JUCER_VS2017_78A57A61=1;JUCE_APP_VERSION=1.6.0b2;JUCE_APP_VERSION_HEX=0x10600;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_RTAS=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;NDEBUG;USE_KINECT=1;JUCER_VS2017_78A57A61=1;JUCE_APP_VERSION=1.6.0b3;JUCE_APP_VERSION_HEX=0x10600;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_RTAS=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <PrecompiledHeader/>
@@ -309,6 +309,7 @@
     <ClCompile Include="..\..\Source\Module\modules\generators\signal\SignalModule.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\generic\commands\ChataigneLogCommand.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\generic\commands\GenericControllableCommand.cpp"/>
+    <ClCompile Include="..\..\Source\Module\modules\generic\commands\GenericScriptCommand.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\generic\ChataigneGenericModule.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\midi\commands\MIDICommands.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\midi\Launchpad\LaunchpadModule.cpp"/>
@@ -2805,6 +2806,7 @@
     <ClInclude Include="..\..\Source\Module\modules\generators\signal\SignalModule.h"/>
     <ClInclude Include="..\..\Source\Module\modules\generic\commands\ChataigneLogCommand.h"/>
     <ClInclude Include="..\..\Source\Module\modules\generic\commands\GenericControllableCommand.h"/>
+    <ClInclude Include="..\..\Source\Module\modules\generic\commands\GenericScriptCommand.h"/>
     <ClInclude Include="..\..\Source\Module\modules\generic\ChataigneGenericModule.h"/>
     <ClInclude Include="..\..\Source\Module\modules\midi\commands\MIDICommands.h"/>
     <ClInclude Include="..\..\Source\Module\modules\midi\Launchpad\LaunchpadModule.h"/>
@@ -3781,6 +3783,7 @@
     <ClInclude Include="..\..\JuceLibraryCode\JuceHeader.h"/>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\Resources\Templates\Scripts\commandScriptTemplate.js"/>
     <None Include="..\..\Resources\Templates\Scripts\conditionScriptTemplate.js"/>
     <None Include="..\..\Resources\Templates\Scripts\filterScriptTemplate.js"/>
     <None Include="..\..\Resources\Templates\Scripts\genericScriptTemplate.js"/>

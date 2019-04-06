@@ -1543,6 +1543,9 @@
     <ClCompile Include="..\..\Source\Module\modules\generic\commands\GenericControllableCommand.cpp">
       <Filter>Chataigne\Source\Module\modules\generic\commands</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Module\modules\generic\commands\GenericScriptCommand.cpp">
+      <Filter>Chataigne\Source\Module\modules\generic\commands</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\generic\ChataigneGenericModule.cpp">
       <Filter>Chataigne\Source\Module\modules\generic</Filter>
     </ClCompile>
@@ -4770,6 +4773,9 @@
     <ClInclude Include="..\..\Source\Module\modules\generic\commands\GenericControllableCommand.h">
       <Filter>Chataigne\Source\Module\modules\generic\commands</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\Module\modules\generic\commands\GenericScriptCommand.h">
+      <Filter>Chataigne\Source\Module\modules\generic\commands</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\generic\ChataigneGenericModule.h">
       <Filter>Chataigne\Source\Module\modules\generic</Filter>
     </ClInclude>
@@ -7694,6 +7700,9 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\Resources\Templates\Scripts\commandScriptTemplate.js">
+      <Filter>Chataigne\Resources\Templates\Scripts</Filter>
+    </None>
     <None Include="..\..\Resources\Templates\Scripts\conditionScriptTemplate.js">
       <Filter>Chataigne\Resources\Templates\Scripts</Filter>
     </None>

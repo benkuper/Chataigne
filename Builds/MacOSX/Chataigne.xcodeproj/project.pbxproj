@@ -725,6 +725,10 @@
 			isa = PBXBuildFile;
 			fileRef = CAE2E4FE6BFCC743FDBEF690;
 		};
+		C03AC9D3AD95414049531873 = {
+			isa = PBXBuildFile;
+			fileRef = BA79F5BFDEDF0D5BBEC70225;
+		};
 		47B06F7D8CE1EF794F466906 = {
 			isa = PBXBuildFile;
 			fileRef = AB7074B97A9CC50CDEFF3AD8;
@@ -2176,6 +2180,13 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = TimeCueUI.cpp;
 			path = ../../Source/TimeMachine/Sequence/Cue/ui/TimeCueUI.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
+		34DFE3A582DAFF805F97E141 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = GenericScriptCommand.h;
+			path = ../../Source/Module/modules/generic/commands/GenericScriptCommand.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		352A68459BA7879D1CFB0A7A = {
@@ -4453,6 +4464,13 @@
 			path = ../../Source/Common/Serial/SerialDeviceParameter.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
+		BA79F5BFDEDF0D5BBEC70225 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = GenericScriptCommand.cpp;
+			path = ../../Source/Module/modules/generic/commands/GenericScriptCommand.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		BAE663016FCFB6168EAA4BFE = {
 			isa = PBXFileReference;
 			lastKnownFileType = file.icns;
@@ -4577,6 +4595,13 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = NetworkStreamingModule.h;
 			path = ../../Source/Module/modules/common/streaming/NetworkStreamingModule.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		C4027CFB515DA11787FE11A9 = {
+			isa = PBXFileReference;
+			lastKnownFileType = file.js;
+			name = commandScriptTemplate.js;
+			path = ../../Resources/Templates/Scripts/commandScriptTemplate.js;
 			sourceTree = "SOURCE_ROOT";
 		};
 		C45B37ABCDE0A9FA3B40EA19 = {
@@ -5716,6 +5741,7 @@
 		9449F38788B5B97C4B287083 = {
 			isa = PBXGroup;
 			children = (
+				C4027CFB515DA11787FE11A9,
 				A17ACDD4B45B14AB30469A2D,
 				7347A5FBEE965521C1AFC6A2,
 				8F1E0B684D1010283648DB5F,
@@ -6786,6 +6812,8 @@
 				E282A320F0E547C1419D5D5A,
 				CAE2E4FE6BFCC743FDBEF690,
 				D4E1D32E8F42717371112360,
+				BA79F5BFDEDF0D5BBEC70225,
+				34DFE3A582DAFF805F97E141,
 			);
 			name = commands;
 			sourceTree = "<group>";
@@ -7767,7 +7795,7 @@
 					"_DEBUG=1",
 					"DEBUG=1",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
-					"JUCE_APP_VERSION=1.6.0b2",
+					"JUCE_APP_VERSION=1.6.0b3",
 					"JUCE_APP_VERSION_HEX=0x10600",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
@@ -7822,7 +7850,7 @@
 					"_NDEBUG=1",
 					"NDEBUG=1",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
-					"JUCE_APP_VERSION=1.6.0b2",
+					"JUCE_APP_VERSION=1.6.0b3",
 					"JUCE_APP_VERSION_HEX=0x10600",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
@@ -8150,6 +8178,7 @@
 				4D76E54F132133C54A03DF02,
 				E6C4A435A7B2A024E8745DE3,
 				07030143DF5F6F8D87E59358,
+				C03AC9D3AD95414049531873,
 				47B06F7D8CE1EF794F466906,
 				00F7943B39DC4F058928E693,
 				61B19AD58450E773E66D0342,

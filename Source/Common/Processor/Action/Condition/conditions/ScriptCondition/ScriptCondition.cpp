@@ -22,7 +22,6 @@ ScriptCondition::ScriptCondition(var params) :
 	script.userCanRemove = false;
 	
 	if(conditionTemplate.isEmpty()) conditionTemplate = ChataigneAssetManager::getInstance()->getScriptTemplate("condition");
-
 	script.scriptTemplate = &conditionTemplate; 
 }
 

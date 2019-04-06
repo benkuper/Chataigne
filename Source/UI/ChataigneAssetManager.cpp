@@ -115,7 +115,7 @@ String ChataigneAssetManager::getScriptTemplate(const String & templateRef)
 		return "";
 	}
 
-	return String(result);
+	return String("\n" + String(result) + "\n");
 }
 
 String ChataigneAssetManager::getScriptTemplateBundle(StringArray templateRefs)
