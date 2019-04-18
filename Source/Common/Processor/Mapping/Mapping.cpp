@@ -121,7 +121,7 @@ void Mapping::updateMappingChain()
 	process();
 }
 
-void Mapping::process()
+void Mapping::process(bool forceOutput)
 {
 	if ((canBeDisabled && !enabled->boolValue()) || forceDisabled) return;
 	if (input.inputReference == nullptr) return;
@@ -132,7 +132,7 @@ void Mapping::process()
 
 	if (outputParam == nullptr) updateMappingChain();
 	if (outputParam == nullptr) return;
-	outputParam->setValue(filteredParam->getValue(), false, processMode == MANUAL);
+	outputParam->setValue(filteredParam->getValue(), false, processMode == MANUAL || forceOutput);
 }
 
 var Mapping::getJSONData()

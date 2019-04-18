@@ -50,7 +50,7 @@ public:
 
 	void updateMappingChain(); //will host warnings and type change checks
 
-	void process();
+	void process(bool forceOutput = false);
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;

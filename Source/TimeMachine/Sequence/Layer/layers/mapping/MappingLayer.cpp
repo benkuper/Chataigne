@@ -28,6 +28,9 @@ MappingLayer::MappingLayer(Sequence *_sequence, var params) :
 	mapping.hideEditorHeader = true;
 
 	alwaysUpdate = addBoolParameter("Always Update", "If checked, the mapping will be processed and output will be sent at each time change of the sequence", false);
+	sendOnPlay = addBoolParameter("Send On Play", " If checked, this will force the value to go through the mapping when sequence starts playing", true);
+	sendOnStop = addBoolParameter("Send On Stop", " If checked, this will force the value to go through the mapping when sequence stops playing", true);
+	sendOnSeek = addBoolParameter("Send On Seek", " If checked, this will force the value to go through the mapping when jumping time", false);
 
 	addChildControllableContainer(&recorder);
 	addChildControllableContainer(&mapping);
@@ -144,11 +147,11 @@ void MappingLayer::updateCurvesValues()
 	switch (mappingMode)
 	{
 	case MODE_COLOR:
-		((ColorParameter *)curveValue)->setColor(timeColorManager->currentColor->getColor());
+		((ColorParameter *)curveValue)->setColor(timeColorManager->currentColor->getColor(), false);
 		break;
 
 	case MODE_1D:
-		if(automations[0] != nullptr) curveValue->setValue(automations[0]->value->floatValue());
+		if(automations[0] != nullptr) curveValue->setValue(automations[0]->value->floatValue(), false);
 		break;
 
 	case MODE_2D:
@@ -285,7 +288,7 @@ void MappingLayer::sequenceTotalTimeChanged(Sequence *)
 	}
 }
 
-void MappingLayer::sequenceCurrentTimeChanged(Sequence *, float prevTime, bool)
+void MappingLayer::sequenceCurrentTimeChanged(Sequence *, float prevTime, bool evaluateSkippedData)
 {
 	if (!enabled->boolValue() || !sequence->enabled->boolValue()) return;
 	
@@ -294,7 +297,7 @@ void MappingLayer::sequenceCurrentTimeChanged(Sequence *, float prevTime, bool)
 		timeColorManager->position->setValue(sequence->currentTime->floatValue());
 	}
 
-	for(auto &a : automations) a->position->setValue(sequence->currentTime->floatValue());
+	for (auto &a : automations) a->position->setValue(sequence->currentTime->floatValue());
 	
 	if (sequence->isPlaying->boolValue())
 	{
@@ -313,9 +316,10 @@ void MappingLayer::sequenceCurrentTimeChanged(Sequence *, float prevTime, bool)
 		}
 	}
 
-	if (alwaysUpdate->boolValue())
+	if (alwaysUpdate->boolValue() || (sequence->isSeeking && sendOnSeek->boolValue()))
 	{
-		mapping.process();
+		updateCurvesValues();
+		mapping.process(true);
 	}
 }
 
@@ -326,12 +330,22 @@ void MappingLayer::sequencePlayStateChanged(Sequence *)
 		if (sequence->isPlaying->boolValue())
 		{
 			if(recorder.shouldRecord()) automations[0]->recorder->startRecording();
+			if (sendOnPlay->boolValue())
+			{
+				updateCurvesValues();
+				mapping.process(true);
+			}
 		}
 		else
 		{
 			if (automations[0]->recorder->isRecording->boolValue())
 			{
 				stopRecorderAndAddKeys();
+			}
+			if (sendOnStop->boolValue())
+			{
+				updateCurvesValues();
+				mapping.process(true);
 			}
 		}
 	}
