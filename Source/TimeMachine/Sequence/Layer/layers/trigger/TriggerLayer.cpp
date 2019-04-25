@@ -37,6 +37,11 @@ bool TriggerLayer::paste()
 	return true;
 }
 
+void TriggerLayer::selectAll()
+{
+	ttm.askForSelectAllItems();
+}
+
 void TriggerLayer::onContainerTriggerTriggered(Trigger * t)
 {
 	SequenceLayer::onContainerTriggerTriggered(t);

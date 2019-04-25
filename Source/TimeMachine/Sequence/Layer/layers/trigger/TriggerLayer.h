@@ -29,6 +29,7 @@ public :
 	BoolParameter * triggerWhenSeeking;
 
 	virtual bool paste() override;
+	virtual void selectAll() override;
 
 	virtual void onContainerTriggerTriggered(Trigger *) override;
 

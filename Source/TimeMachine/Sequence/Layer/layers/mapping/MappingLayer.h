@@ -51,20 +51,25 @@ public:
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
 
-	static MappingLayer * create(Sequence * sequence, var params) { return new MappingLayer(sequence, params); }
-	virtual String getTypeString() const override { return "Mapping"; }
-
-	virtual SequenceLayerPanel * getPanel() override;
-	virtual SequenceLayerTimeline * getTimelineUI() override;
+	virtual void selectAll() override;
 
 	virtual void onContainerParameterChangedInternal(Parameter * p) override;
 	virtual void onContainerTriggerTriggered(Trigger * t) override;
 	void onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c) override;
 
 	virtual void sequenceTotalTimeChanged(Sequence *) override;
-	virtual void sequenceCurrentTimeChanged(Sequence *, float prevTime , bool evaluateSkippedData) override;
+	virtual void sequenceCurrentTimeChanged(Sequence *, float prevTime, bool evaluateSkippedData) override;
 	virtual void sequencePlayStateChanged(Sequence *) override;
 	virtual void sequenceLooped(Sequence *) override;
+
+	virtual SequenceLayerPanel * getPanel() override;
+	virtual SequenceLayerTimeline * getTimelineUI() override;
+
+
+	static MappingLayer * create(Sequence * sequence, var params) { return new MappingLayer(sequence, params); }
+	virtual String getTypeString() const override { return "Mapping"; }
+
+
 
 
 	virtual bool paste() override;

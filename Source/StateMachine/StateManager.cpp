@@ -20,9 +20,6 @@ stm(this)
 	itemDataType = "State";
 	helpID = "StateMachine";
 
-	onlyOneActiveState = addBoolParameter("One Active State", "If checked, when activating a state, all other non-permanent states will be automatically deactivated.", false);
-
-
 	addChildControllableContainer(&stm);
 	stm.hideInEditor = true;
 	stm.addBaseManagerListener(this);
@@ -44,19 +41,10 @@ void StateManager::clear()
 
 void StateManager::setStateActive(State * s)
 {
-	if (onlyOneActiveState->boolValue())
+	Array<State *> linkedStates = getLinkedStates(s);
+	for (auto &ss : linkedStates)
 	{
-		for (auto &ss : items)
-		{
-			if(ss != s) ss->active->setValue(false);
-		}
-	} else
-	{
-		Array<State *> linkedStates = getLinkedStates(s);
-		for (auto &ss : linkedStates)
-		{
-			ss->active->setValue(false);
-		}
+		ss->active->setValue(false);
 	}
 }
 

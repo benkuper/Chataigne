@@ -115,7 +115,7 @@ void StateMachineView::showMenuAndAddItem(bool fromAddButton, Point<int> positio
 	PopupMenu p;
 	p.addItem(1, "Add State");
 	p.addItem(2, "Add Comment");
-	p.addItem(3, "Create Transition");
+	p.addItem(3, "Create Transition", manager->items.size() >= 2);
 
 	int result = p.show();
 	if (result == 1)	BaseManagerViewUI::addItemFromMenu(fromAddButton, position);

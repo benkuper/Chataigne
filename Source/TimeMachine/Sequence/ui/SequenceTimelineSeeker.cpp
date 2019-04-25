@@ -118,7 +118,6 @@ void SequenceTimelineSeeker::mouseUp(const MouseEvent & e)
 	setMouseCursor(MouseCursor::NormalCursor);
 }
 
-
 int SequenceTimelineSeeker::getXForTime(float time)
 {
 	return (int)jmap<float>(time, 0, sequence->totalTime->floatValue(), 0, (float)getWidth());

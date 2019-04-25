@@ -228,6 +228,12 @@ void MappingLayer::loadJSONDataInternal(var data)
 	recorder.loadJSONData(data.getProperty("recorder", var()));
 }
 
+void MappingLayer::selectAll()
+{
+	if (mode->getValueDataAsEnum<Mode>() == MODE_COLOR) timeColorManager->askForSelectAllItems();
+	else if (automations.size() > 0) automations[0]->askForSelectAllItems();
+}
+
 SequenceLayerPanel * MappingLayer::getPanel()
 {
 	return new MappingLayerPanel(this);

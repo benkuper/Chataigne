@@ -33,8 +33,6 @@ public:
 
 	StateTransitionManager stm;
 
-	BoolParameter * onlyOneActiveState; //whether activating a state automatically deactivates all other non-permanent states
-
 	CommentManager commentManager;
 
 	void clear() override;

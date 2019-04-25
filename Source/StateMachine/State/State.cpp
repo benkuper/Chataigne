@@ -88,3 +88,8 @@ bool State::paste()
 	if (p.isEmpty()) return BaseItem::paste();
 	return true;
 }
+
+void State::selectAll()
+{
+	pm.askForSelectAllItems();
+}

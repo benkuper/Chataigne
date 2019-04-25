@@ -65,6 +65,7 @@ Module::Module(const String &name) :
 	controllableContainers.move(controllableContainers.indexOf(scriptManager.get()), controllableContainers.size() - 1);
 
 	addChildControllableContainer(commandTester);
+	addChildControllableContainer(&templateManager);
 
 	scriptManager->scriptTemplate = ChataigneAssetManager::getInstance()->getScriptTemplateBundle(StringArray("generic","module"));
 }

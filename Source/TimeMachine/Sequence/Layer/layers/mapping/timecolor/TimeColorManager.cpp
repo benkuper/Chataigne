@@ -32,9 +32,9 @@ TimeColorManager::TimeColorManager(float _length) :
 	currentColor->setControllableFeedbackOnly(true);
 	addParameter(currentColor);
 
-	addColorAt(length->floatValue() / 5, Colours::red);
+	addColorAt(length->floatValue() / 5, Colours::green);
 	addColorAt(length->floatValue() * 2 / 5, Colours::yellow);
-	addColorAt(length->floatValue() * 3 / 5, Colours::green)->interpolation->setValueWithData(TimeColor::NONE);
+	addColorAt(length->floatValue() * 3 / 5, Colours::red)->interpolation->setValueWithData(TimeColor::NONE);
 	addColorAt(length->floatValue() * 4 / 5, Colours::blue);
 
 	//rebuildGradient();
