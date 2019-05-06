@@ -15,6 +15,7 @@ ScriptCommand::ScriptCommand(Module * module, CommandContext context, var data) 
 	BaseCommand(module, context, data)
 {
 	saveAndLoadTargetMappings = true;
+	saveAndLoadRecursiveData = true;
 
 	//load params here
 	var commandData = data.getProperty("commandData", var());
