@@ -2223,6 +2223,9 @@
     <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\automation\parameter\ParameterAutomationManager.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\automation\recorder\ui\AutomationRecorderEditor.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\automation\recorder\AutomationRecorder.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -3623,6 +3626,7 @@
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\automation\parameter\ui\PlayableParameterAutomationEditor.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\automation\parameter\ParameterAutomation.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\automation\parameter\ParameterAutomationManager.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\automation\recorder\ui\AutomationRecorderEditor.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\automation\recorder\AutomationRecorder.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\automation\ui\AutomationEditor.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\automation\ui\AutomationKeyUI.h"/>

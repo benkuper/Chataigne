@@ -932,6 +932,9 @@
     <Filter Include="JUCE Modules\juce_organicui\automation\parameter">
       <UniqueIdentifier>{536EB392-F941-573E-557A-ABB126B53BD1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="JUCE Modules\juce_organicui\automation\recorder\ui">
+      <UniqueIdentifier>{408CE83D-36B4-E38E-1E21-0BD4809E9846}</UniqueIdentifier>
+    </Filter>
     <Filter Include="JUCE Modules\juce_organicui\automation\recorder">
       <UniqueIdentifier>{D3E35206-F386-CFAB-A812-9B7BDB340B71}</UniqueIdentifier>
     </Filter>
@@ -3822,6 +3825,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\automation\parameter\ParameterAutomationManager.cpp">
       <Filter>JUCE Modules\juce_organicui\automation\parameter</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\automation\recorder\ui\AutomationRecorderEditor.cpp">
+      <Filter>JUCE Modules\juce_organicui\automation\recorder\ui</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\automation\recorder\AutomationRecorder.cpp">
       <Filter>JUCE Modules\juce_organicui\automation\recorder</Filter>
@@ -7226,6 +7232,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\automation\parameter\ParameterAutomationManager.h">
       <Filter>JUCE Modules\juce_organicui\automation\parameter</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\automation\recorder\ui\AutomationRecorderEditor.h">
+      <Filter>JUCE Modules\juce_organicui\automation\recorder\ui</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\automation\recorder\AutomationRecorder.h">
       <Filter>JUCE Modules\juce_organicui\automation\recorder</Filter>
