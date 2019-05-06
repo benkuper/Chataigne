@@ -16,6 +16,8 @@
 StateMachineView::StateMachineView(const String &contentName, StateManager * _manager) :
 	BaseManagerShapeShifterViewUI(contentName, _manager),
 	manager(_manager),
+	stmUI(nullptr),
+	commentManagerUI(nullptr),
 	transitionCreationMode(false),
 	transitionCreationSourceUI(nullptr)
 {
@@ -26,6 +28,8 @@ StateMachineView::StateMachineView(const String &contentName, StateManager * _ma
 
 	acceptedDropTypes.add("Comment");
 
+	addExistingItems();
+	
 	stmUI = new StateTransitionManagerUI(this, &manager->stm);
 	addAndMakeVisible(stmUI, 0);
 	
@@ -33,7 +37,6 @@ StateMachineView::StateMachineView(const String &contentName, StateManager * _ma
 	commentManagerUI->canZoom = true;
 	addAndMakeVisible(commentManagerUI, 0);
 
-	addExistingItems();
 	frameView();
 }
 
@@ -96,12 +99,20 @@ void StateMachineView::paint(Graphics & g)
 void StateMachineView::resized()
 {
 	BaseManagerViewUI::resized();
-	stmUI->setBounds(getLocalBounds());
-	stmUI->resized();
-	commentManagerUI->viewOffset = viewOffset;
 
-	commentManagerUI->setBounds(getLocalBounds());
-	commentManagerUI->resized();
+	if (stmUI != nullptr)
+	{
+		stmUI->setBounds(getLocalBounds());
+		stmUI->resized();
+	}
+	
+	if (commentManagerUI != nullptr)
+	{
+		commentManagerUI->viewOffset = viewOffset;
+		commentManagerUI->setBounds(getLocalBounds());
+		commentManagerUI->resized();
+	}
+	
 }
 
 void StateMachineView::setViewZoom(float value)
