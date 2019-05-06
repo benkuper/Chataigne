@@ -345,7 +345,7 @@ Controllable * Module::getControllableForJSONDefinition(const String &name, var 
 		if (d->hasProperty("description"))
 
 		{
-			c->description = d->getProperty("descripton").toString();
+			c->description = d->getProperty("description").toString();
 		}
 	}
 
