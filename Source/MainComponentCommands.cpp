@@ -192,7 +192,6 @@ bool MainContentComponent::perform(const InvocationInfo& info)
 				}
 			}
 		}
-		
 	}
 	break;
 
