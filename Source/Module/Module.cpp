@@ -331,6 +331,11 @@ Controllable * Module::getControllableForJSONDefinition(const String &name, var 
 				else if (ui == "time") ep->defaultUI = FloatParameter::TIME;
 			}
 		}
+
+		if (d->hasProperty("readOnly"))
+		{
+			c->setControllableFeedbackOnly(d->getProperty("readOnly"));
+		}
 	}
 
 	return c;
