@@ -326,7 +326,7 @@ void MappingLayer::sequenceCurrentTimeChanged(Sequence *, float prevTime, bool e
 	{
 		updateCurvesValues();
 		
-		if (mode == MODE_1D)
+		if (mode->getValueDataAsEnum<Mode>() == MODE_1D)
 		{
 			if (automations[0] != nullptr && !automations[0]->items.isEmpty()) mapping.process(true); //process only if automation has keys
 		}
