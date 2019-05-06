@@ -336,6 +336,11 @@ Controllable * Module::getControllableForJSONDefinition(const String &name, var 
 		{
 			c->setControllableFeedbackOnly(d->getProperty("readOnly"));
 		}
+
+		if (d->hasProperty("shortName"))
+		{
+			c->setCustomShortName(d->getProperty("shortName"));
+		}
 	}
 
 	return c;
