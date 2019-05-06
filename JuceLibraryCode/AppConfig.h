@@ -276,6 +276,13 @@
 #endif
 
 //==============================================================================
+// juce_organicui flags:
+
+#ifndef    ORGANICUI_USE_SERVUS
+ #define   ORGANICUI_USE_SERVUS 1
+#endif
+
+//==============================================================================
 // juce_video flags:
 
 #ifndef    JUCE_USE_CAMERA
