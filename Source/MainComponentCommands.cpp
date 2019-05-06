@@ -14,6 +14,7 @@
 #include "TimeMachine/ui/TimeMachineView.h"
 #include "Guider/Guider.h"
 #include "Module/Community/CommunityModuleManager.h"
+#include "Module/ModuleFactory.h"
 
 namespace ChataigneCommandIDs
 {
@@ -26,6 +27,7 @@ namespace ChataigneCommandIDs
 	static const int playPauseSequenceEditor = 0x80000;
 	static const int guideStart = 0x300; //up to 0x300 +100
 	static const int goToCommunityModules = 0x500;
+	static const int reloadCustomModules = 0x501;
 }
 
 void MainContentComponent::getCommandInfo(CommandID commandID, ApplicationCommandInfo& result) 
@@ -70,6 +72,10 @@ void MainContentComponent::getCommandInfo(CommandID commandID, ApplicationComman
 		result.setInfo("Community Modules Manager", "", "General", result.readOnlyInKeyEditor);
 		break;
 
+	case ChataigneCommandIDs::reloadCustomModules:
+		result.setInfo("Reload Custom Modules", "", "General", result.readOnlyInKeyEditor);
+		break;
+
 	default:
 		OrganicMainContentComponent::getCommandInfo(commandID, result);
 		break;
@@ -90,7 +96,8 @@ void MainContentComponent::getAllCommands(Array<CommandID>& commands) {
 		ChataigneCommandIDs::gotoDocs,
 		ChataigneCommandIDs::postGithubIssue,
 		ChataigneCommandIDs::playPauseSequenceEditor,
-		ChataigneCommandIDs::goToCommunityModules
+		ChataigneCommandIDs::goToCommunityModules,
+		ChataigneCommandIDs::reloadCustomModules
 	};
 
 	commands.addArray(ids, numElementsInArray(ids));
@@ -129,6 +136,7 @@ PopupMenu MainContentComponent::getMenuForIndex(int topLevelMenuIndex, const Str
 void MainContentComponent::fillFileMenuInternal(PopupMenu & menu)
 {
 	menu.addCommandItem(&getCommandManager(), ChataigneCommandIDs::goToCommunityModules);
+	menu.addCommandItem(&getCommandManager(), ChataigneCommandIDs::reloadCustomModules);
 }
 
 bool MainContentComponent::perform(const InvocationInfo& info)
@@ -174,6 +182,10 @@ bool MainContentComponent::perform(const InvocationInfo& info)
 
 	case ChataigneCommandIDs::goToCommunityModules:
 		CommunityModuleManager::getInstance()->selectThis();
+		break;
+
+	case ChataigneCommandIDs::reloadCustomModules:
+		ModuleFactory::getInstance()->updateCustomModules();
 		break;
 
 	case ChataigneCommandIDs::playPauseSequenceEditor:	
