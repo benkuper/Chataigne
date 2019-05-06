@@ -347,7 +347,15 @@ void MappingLayer::sequencePlayStateChanged(Sequence *)
 			if (sendOnPlay->boolValue())
 			{
 				updateCurvesValues();
-				mapping.process(true);
+
+				if (mode->getValueDataAsEnum<Mode>() == MODE_1D)
+				{
+					if (automations[0] != nullptr && !automations[0]->items.isEmpty()) mapping.process(true); //process only if automation has keys
+				}
+				else
+				{
+					mapping.process(true);
+				}
 			}
 		}
 		else
@@ -359,7 +367,15 @@ void MappingLayer::sequencePlayStateChanged(Sequence *)
 			if (sendOnStop->boolValue())
 			{
 				updateCurvesValues();
-				mapping.process(true);
+
+				if (mode->getValueDataAsEnum<Mode>() == MODE_1D)
+				{
+					if (automations[0] != nullptr && !automations[0]->items.isEmpty()) mapping.process(true); //process only if automation has keys
+				}
+				else
+				{
+					mapping.process(true);
+				}
 			}
 		}
 	}
