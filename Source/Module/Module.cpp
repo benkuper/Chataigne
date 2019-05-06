@@ -339,7 +339,13 @@ Controllable * Module::getControllableForJSONDefinition(const String &name, var 
 
 		if (d->hasProperty("shortName"))
 		{
-			c->setCustomShortName(d->getProperty("shortName"));
+			c->setCustomShortName(d->getProperty("shortName").toString());
+		}
+
+		if (d->hasProperty("description"))
+
+		{
+			c->description = d->getProperty("descripton").toString();
 		}
 	}
 
