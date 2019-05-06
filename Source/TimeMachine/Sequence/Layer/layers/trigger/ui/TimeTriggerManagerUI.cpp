@@ -213,10 +213,12 @@ void TimeTriggerManagerUI::itemDropped(const SourceDetails & details)
 
 	BaseCommand * command = nullptr;
 
+	TimeTrigger * t = nullptr;
+
 	if (def != nullptr)
 	{
 		float time = timeline->getTimeForX(getMouseXYRelative().x);
-		TimeTrigger * t = manager->addTriggerAt(time, getMouseXYRelative().y * 1.f / getHeight());
+		t = manager->addTriggerAt(time, getMouseXYRelative().y * 1.f / getHeight());
 		Consequence * c = t->csmOn->addItem();
 		c->setCommand(def);
 		command = c->command.get();
@@ -228,7 +230,11 @@ void TimeTriggerManagerUI::itemDropped(const SourceDetails & details)
 		{
 			StateCommand * sc = dynamic_cast<StateCommand *>(command);
 			ActionUI * bui = dynamic_cast<ActionUI *>(details.sourceComponent.get());
-			if (bui != nullptr) sc->target->setValueFromTarget(bui->item);
+			if (bui != nullptr)
+			{
+				sc->target->setValueFromTarget(bui->item);
+				t->setNiceName(bui->item->niceName);
+			}
 		}
 	}
 }
