@@ -151,7 +151,7 @@ void MappingLayer::updateCurvesValues()
 		break;
 
 	case MODE_1D:
-		if(automations[0] != nullptr) curveValue->setValue(automations[0]->value->floatValue(), false);
+		if(automations[0] != nullptr && !automations[0]->items.isEmpty()) curveValue->setValue(automations[0]->value->floatValue(), false);
 		break;
 
 	case MODE_2D:
