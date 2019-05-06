@@ -32,6 +32,9 @@ MappingLayer::MappingLayer(Sequence *_sequence, var params) :
 	sendOnStop = addBoolParameter("Send On Stop", " If checked, this will force the value to go through the mapping when sequence stops playing", true);
 	sendOnSeek = addBoolParameter("Send On Seek", " If checked, this will force the value to go through the mapping when jumping time", false);
 
+	recordSendMode = addEnumParameter("Record Send Mode", "Choose what to do when recording");
+	recordSendMode->addOption("Do not send", DONOTSEND)->addOption("Send original value", SEND_ORIGINAL)->addOption("Send new value", SEND_NEW);
+
 	addChildControllableContainer(&recorder);
 	addChildControllableContainer(&mapping);
 	recorder.input->customGetTargetFunc = &ModuleManager::showAllValuesAndGetControllable;
@@ -151,8 +154,25 @@ void MappingLayer::updateCurvesValues()
 		break;
 
 	case MODE_1D:
-		if(automations[0] != nullptr && !automations[0]->items.isEmpty()) curveValue->setValue(automations[0]->value->floatValue(), false);
-		break;
+	{
+		if (recorder.isRecording->boolValue())
+		{
+			RecordSendMode m = recordSendMode->getValueDataAsEnum<RecordSendMode>();
+			if (m == SEND_ORIGINAL)
+			{
+				if (automations[0] != nullptr && !automations[0]->items.isEmpty()) curveValue->setValue(automations[0]->value->floatValue(), false);
+			}
+			else if(m == SEND_NEW)
+			{
+				if (recorder.keys.size() > 0) curveValue->setValue(recorder.keys[recorder.keys.size()-1].y);
+			}
+		}
+		else
+		{
+			if (automations[0] != nullptr && !automations[0]->items.isEmpty()) curveValue->setValue(automations[0]->value->floatValue(), false);
+		}
+	}
+	break;
 
 	case MODE_2D:
 	case MODE_3D:

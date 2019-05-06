@@ -31,6 +31,9 @@ public:
 	BoolParameter * sendOnStop;
 	BoolParameter * sendOnSeek;
 
+	enum RecordSendMode { DONOTSEND, SEND_ORIGINAL, SEND_NEW };
+	EnumParameter * recordSendMode;
+
 	Parameter * curveValue; //later : float / point2d / point3d / color (4d) for multi curve layer
 	//Parameter * mappedValue; //later : polymorph out from mapping, depending on filters
 
