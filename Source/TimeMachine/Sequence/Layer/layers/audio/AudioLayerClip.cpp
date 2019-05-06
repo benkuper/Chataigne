@@ -95,6 +95,8 @@ void AudioLayerClip::onContainerParameterChanged(Parameter * p)
 
 void AudioLayerClip::run()
 {
+	if (filePath == nullptr) return;
+
 	audioClipAsyncNotifier.addMessage(new ClipEvent(ClipEvent::SOURCE_LOAD_START, this));
 
 	transportSource.setSource(nullptr);
