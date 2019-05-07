@@ -69,7 +69,32 @@ public:
 	PopupMenu getCommandMenu(int offset, CommandContext context);
 	CommandDefinition * getCommandDefinitionForItemID(int itemID);
 
-	
+	class Dependency
+	{
+	public:
+		enum CheckType { CHECK_NOT_SET, EQUALS, NOT_EQUALS, MAX_TYPES };
+		const Array<String> checkTypeNames{ "notset", "equals","notEquals" };
+
+		enum DepAction { ACTION_NOT_SET, SHOW, ENABLE, MAX_ACTIONS };
+		const Array<String> actionNames{ "notset", "show", "enable" };
+
+		Dependency() {};
+		Dependency(Parameter * source, Parameter * target, var value, CheckType checkType, DepAction depAction);
+		Dependency(Parameter * source, Parameter * target, var value, StringRef typeName, StringRef actionName);
+
+		Parameter * source;
+		WeakReference<Parameter> target;
+		var value;
+		CheckType type;
+		DepAction action;
+
+		bool process(); //returns true if something changed
+	};
+
+	OwnedArray<Dependency> dependencies;
+	HashMap<Parameter *, Dependency *> dependencyMap;
+
+	void processDependencies(Parameter * p);
 
 	class RouteParams :
 		public ControllableContainer

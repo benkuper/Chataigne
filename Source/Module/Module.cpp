@@ -147,6 +147,8 @@ void Module::onControllableFeedbackUpdateInternal(ControllableContainer * cc, Co
 		args.add(c->getScriptObject());
 		scriptManager->callFunctionOnAllItems("moduleParameterChanged", args);
 	}
+
+	if(c->type != Controllable::TRIGGER) processDependencies((Parameter *)c);
 }
 
 var Module::getJSONData()
@@ -277,6 +279,33 @@ void Module::createControllablesForContainer(var data, ControllableContainer * c
 			Controllable * c = getControllableForJSONDefinition(p.name.toString(), p.value);
 			if (c == nullptr) continue;
 			cc->addControllable(c);
+
+
+			if (c->type != Controllable::TRIGGER)
+			{
+				Parameter * param = (Parameter *)c;
+				if (p.value.hasProperty("dependency"))
+				{
+					var depVar = p.value.getDynamicObject()->getProperty("dependency");
+					if (depVar.hasProperty("source") && depVar.hasProperty("value") && depVar.hasProperty("check") && depVar.hasProperty("action"))
+					{
+						Parameter * sourceP = cc->getParameterByName(depVar.getProperty("source", ""), true);
+						if (sourceP != nullptr)
+						{
+							Dependency * d = new Dependency(sourceP, param, depVar.getProperty("value", 0), depVar.getProperty("check", "").toString(), depVar.getProperty("action", "").toString());
+							dependencies.add(d);
+						}
+						else
+						{
+							LOGWARNING("Could not find dependency source with name " << depVar.getProperty("source", "").toString());
+						}
+					}
+					else
+					{
+						LOGWARNING("Dependency definition is not complete, requires source, value, check and action");
+					}
+				}
+			}
 		}
 	}
 }
@@ -343,13 +372,31 @@ Controllable * Module::getControllableForJSONDefinition(const String &name, var 
 		}
 
 		if (d->hasProperty("description"))
-
 		{
 			c->description = d->getProperty("description").toString();
 		}
+
+		
+		
 	}
 
 	return c;
+}
+
+void Module::processDependencies(Parameter * p)
+{
+	//Dependencies
+	bool changed = false;
+	for (auto &d : dependencies)
+	{
+
+		if (d->source == p) if (d->process()) changed = true;
+	}
+
+	if (changed)
+	{
+		queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, this));
+	}
 }
 
 InspectableEditor * Module::getEditor(bool isRoot)
@@ -378,4 +425,58 @@ String Module::getTargetLabelForValueControllable(Controllable * c)
 	label = m->niceName + ":" + label;
 
 	return label;
+}
+
+
+
+// DEPENDENCY
+
+Module::Dependency::Dependency(Parameter * source, Parameter * target, var value, CheckType checkType, DepAction depAction)
+	: source(source), target(target), value(value), type(checkType), action(depAction)
+{
+	//DBG("New dependency :" << type << " /" << action);
+}
+
+
+Module::Dependency::Dependency(Parameter * source, Parameter * target, var value, StringRef typeName, StringRef actionName) :
+	Dependency(source, target, value, CHECK_NOT_SET, ACTION_NOT_SET)
+{
+	type = (CheckType)jmax(checkTypeNames.indexOf(typeName), 0);
+	action = (DepAction)jmax(actionNames.indexOf(actionName), 0);
+}
+
+bool Module::Dependency::process()
+{
+	if (target.wasObjectDeleted()) return false;
+
+	bool depIsOk = false;
+
+	var valueToCheck = source->value;
+	if (source->type == Controllable::ENUM) valueToCheck = ((EnumParameter *)source)->getValueData();
+
+	switch (type)
+	{
+	case EQUALS: depIsOk = valueToCheck == value; break;
+	case NOT_EQUALS: depIsOk = valueToCheck != value; break;
+	default: break;
+	}
+
+
+	bool changed = false;
+
+	switch (action)
+	{
+	case SHOW:
+		changed = target->hideInEditor == depIsOk;
+		target->hideInEditor = !depIsOk;
+		break;
+
+	case ENABLE:
+		changed = target->enabled == !depIsOk;
+		target->setEnabled(depIsOk);
+		break;
+	default: break;
+	}
+
+	return changed;
 }
