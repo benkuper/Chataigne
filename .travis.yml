@@ -106,7 +106,7 @@ install:
       apt -y --assume-yes install libgtk-3-dev:armhf libwebkit2gtk-4.0-dev:armhf;
       apt -y --assume-yes install libbluetooth3:armhf;
       apt -y --assume-yes install libbluetooth-dev:armhf;
-      apt install g++-arm-linux-gnueabihf;
+      apt -y --assume-yes install g++-arm-linux-gnueabihf;
       
       export CXX=arm-linux-gnueabihf-g++;
       export CC=arm-linux-gnueabihf-gcc;
