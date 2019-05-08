@@ -98,15 +98,15 @@ install:
       apt update  -y --assume-yes -qq;
       apt upgrade  -y --assume-yes -qq;
 
-      apt -y --assume-yes install libc6:armhf;
-      apt -y --assume-yes install libc6-dev:armhf;
-      apt -y --assume-yes install libfreetype6-dev:armhf libx11-dev:armhf libxinerama-dev:armhf libxrandr-dev:armhf libxcursor-dev:armhf mesa-common-dev:armhf libasound2-dev:armhf freeglut3-dev:armhf libxcomposite-dev:armhf libjack-dev:armhf libcurl4-openssl-dev:armhf ladspa-sdk:armhf;
-      apt -y --assume-yes install -f libglib2.0-0:armhf libglib2.0-dev:armhf;
-      apt -y --assume-yes install -f libgdk-pixbuf2.0-0:armhf libgdk-pixbuf2.0-dev:armhf;
-      apt -y --assume-yes install -f libgtk-3-dev:armhf libwebkit2gtk-4.0-dev:armhf;
-      apt -y --assume-yes install -f libbluetooth3:armhf;
-      apt -y --assume-yes install -f libbluetooth-dev:armhf;
-      apt -y --assume-yes install -f g++-arm-linux-gnueabihf;
+      apt install -y --assume-yes -f libc6:armhf;
+      apt install -y --assume-yes -f libc6-dev:armhf;
+      apt install -y --assume-yes -f libfreetype6-dev:armhf libx11-dev:armhf libxinerama-dev:armhf libxrandr-dev:armhf libxcursor-dev:armhf mesa-common-dev:armhf libasound2-dev:armhf freeglut3-dev:armhf libxcomposite-dev:armhf libjack-dev:armhf libcurl4-openssl-dev:armhf ladspa-sdk:armhf;
+      apt install -y --assume-yes -f libglib2.0-0:armhf libglib2.0-dev:armhf;
+      apt install -y --assume-yes -f libgdk-pixbuf2.0-0:armhf libgdk-pixbuf2.0-dev:armhf;
+      apt install -y --assume-yes -f libgtk-3-dev:armhf libwebkit2gtk-4.0-dev:armhf;
+      apt install -y --assume-yes -f libbluetooth3:armhf;
+      apt install -y --assume-yes -f libbluetooth-dev:armhf;
+      apt install -y --assume-yes -f g++-arm-linux-gnueabihf;
       
       export CXX=arm-linux-gnueabihf-g++;
       export CC=arm-linux-gnueabihf-gcc;
