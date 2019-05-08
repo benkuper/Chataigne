@@ -11,14 +11,9 @@
 #ifndef SERIALDEVICE_H_INCLUDED
 #define SERIALDEVICE_H_INCLUDED
 
-
 #define SYNCHRONOUS_SERIAL_LISTENERS
 
-#if !defined __arm__
 #define SERIALSUPPORT 1
-#else
-#define SERIALSUPPORT 0
-#endif
 
 #if SERIALSUPPORT
 #include "serial/serial.h"

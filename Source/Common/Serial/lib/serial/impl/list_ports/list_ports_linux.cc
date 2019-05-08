@@ -1,4 +1,4 @@
-#if defined(__linux__) && !defined(__arm__)
+#if defined(__linux__)
 
 /*
  * Copyright (c) 2014 Craig Lilley <cralilley@gmail.com>

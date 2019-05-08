@@ -1382,13 +1382,21 @@
       </MODULEPATHS>
     </XCODE_MAC>
     <LINUX_MAKE targetFolder="Builds/LinuxMakefile" externalLibraries="bluetooth&#10;Servus&#10;curl&#10;artnet"
-                extraLinkerFlags="-Wl,-rpath,&quot;lib&quot;">
+                extraLinkerFlags="-Wl,-rpath,&quot;lib&quot;" smallIcon="nVz6Li"
+                bigIcon="nVz6Li">
       <CONFIGURATIONS>
         <CONFIGURATION name="Release" optimisation="3" targetName="Chataigne" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/libartnet/include"
                        linuxArchitecture="-m64" libraryPath="../../External/servus/lib/linux&#10;../../External/libartnet/lib/linux"/>
         <CONFIGURATION name="Debug" isDebug="1" optimisation="1" targetName="Chataigne"
                        headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/libartnet/include"
                        linuxArchitecture="-m64" libraryPath="../../External/servus/lib/linux&#10;../../External/libartnet/lib/linux"/>
+        <CONFIGURATION name="ReleaseRaspberry" optimisation="3" targetName="Chataigne"
+                       headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/libartnet/include"
+                       libraryPath="../../External/servus/lib/linux&#10;../../External/libartnet/lib/linux"
+                       linuxArchitecture="-march=armv7"/>
+        <CONFIGURATION name="DebugRaspberry" isDebug="1" optimisation="1" targetName="Chataigne"
+                       headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/libartnet/include"
+                       linuxArchitecture="-march=armv7" libraryPath="../../External/servus/lib/linux&#10;../../External/libartnet/lib/linux"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_video" path="~/JUCE/modules"/>
@@ -1410,35 +1418,31 @@
         <MODULEPATH id="juce_analytics" path="~/JUCE/modules"/>
       </MODULEPATHS>
     </LINUX_MAKE>
-    <CODEBLOCKS_LINUX targetFolder="Builds/CodeBlocksLinux" externalLibraries="bluetooth">
+    <LINUX_MAKE targetFolder="Builds/Raspberry">
       <CONFIGURATIONS>
-        <CONFIGURATION name="Debug" linuxCodeBlocksArchitecture="-m64" isDebug="1" optimisation="1"
-                       targetName="Chataigne" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/dnssd/include"
-                       userNotes=""/>
-        <CONFIGURATION name="Release" linuxCodeBlocksArchitecture="-m64" isDebug="0"
-                       optimisation="3" linkTimeOptimisation="1" targetName="Chataigne"
-                       headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/dnssd/include"/>
+        <CONFIGURATION isDebug="1" name="Debug"/>
+        <CONFIGURATION isDebug="0" name="Release"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
-        <MODULEPATH id="juce_video" path="../../juce"/>
-        <MODULEPATH id="juce_osc" path="../../juce"/>
-        <MODULEPATH id="juce_organicui" path="../JUCE Modules"/>
-        <MODULEPATH id="juce_opengl" path="../../juce"/>
-        <MODULEPATH id="juce_gui_extra" path="../../juce"/>
-        <MODULEPATH id="juce_gui_basics" path="../../juce"/>
-        <MODULEPATH id="juce_graphics" path="../../juce"/>
-        <MODULEPATH id="juce_events" path="../../juce"/>
-        <MODULEPATH id="juce_data_structures" path="../../juce"/>
-        <MODULEPATH id="juce_cryptography" path="../../juce"/>
-        <MODULEPATH id="juce_core" path="../../juce"/>
-        <MODULEPATH id="juce_audio_utils" path="../../juce"/>
-        <MODULEPATH id="juce_audio_processors" path="../../juce"/>
-        <MODULEPATH id="juce_audio_formats" path="../../juce"/>
-        <MODULEPATH id="juce_audio_devices" path="../../juce"/>
-        <MODULEPATH id="juce_audio_basics" path="../../juce"/>
-        <MODULEPATH id="juce_analytics" path="../../juce"/>
+        <MODULEPATH id="juce_video"/>
+        <MODULEPATH id="juce_osc"/>
+        <MODULEPATH id="juce_organicui"/>
+        <MODULEPATH id="juce_opengl"/>
+        <MODULEPATH id="juce_gui_extra"/>
+        <MODULEPATH id="juce_gui_basics"/>
+        <MODULEPATH id="juce_graphics"/>
+        <MODULEPATH id="juce_events"/>
+        <MODULEPATH id="juce_data_structures"/>
+        <MODULEPATH id="juce_cryptography"/>
+        <MODULEPATH id="juce_core"/>
+        <MODULEPATH id="juce_audio_utils"/>
+        <MODULEPATH id="juce_audio_processors"/>
+        <MODULEPATH id="juce_audio_formats"/>
+        <MODULEPATH id="juce_audio_devices"/>
+        <MODULEPATH id="juce_audio_basics"/>
+        <MODULEPATH id="juce_analytics"/>
       </MODULEPATHS>
-    </CODEBLOCKS_LINUX>
+    </LINUX_MAKE>
     <VS2017 targetFolder="Builds/VisualStudio2017_CI" externalLibraries="Setupapi.lib&#10;hid.lib&#10;Kinect20.lib&#10;joytime-core.lib&#10;joytime-input-hidapi.lib&#10;Servus.lib&#10;dnssd.lib&#10;SDL2.lib&#10;libartnet.lib&#10;iphlpapi.lib"
             smallIcon="nVz6Li" bigIcon="nVz6Li" extraDefs="USE_KINECT=1">
       <CONFIGURATIONS>

@@ -1,0 +1,93 @@
+version: 2
+jobs:
+###############
+# build Rasp 2/3
+##############
+
+  build_rasp:
+    working_directory: ~/Chataigne
+    docker:
+      - image: ubuntu
+        environment:
+          CROSS_ARCH: armhf
+          ARCH_FLAGS_PI3: -mcpu=cortex-a53 -mfpu=neon-fp-armv8 -mfloat-abi=hard # -ffast-math # arch flags for JUCEMakefile -> RPI3
+          ARCH_FLAGS_PI2: -mcpu=cortex-a7 -mfpu=neon-vfpv4 -mfloat-abi=hard  # -ffast-math # arch flags for JUCEMakefile -> RPI2
+
+    steps:
+      - run:
+          name: install git
+          command: |
+            if [[ -n "$TRAVIS_TAG" ]] 
+            then 
+              if [[ "$TRAVIS_TAG" == *b* ]] 
+              then 
+                echo "Beta version, set config to Release" 
+                export MAKECONF=Release-Raspberry
+                export SUFFIX=$TRAVIS_TAG
+              else 
+                echo "Stable version, set config to Release" 
+                export MAKECONF=Release-Raspberry
+                export SUFFIX=$TRAVIS_TAG
+              fi 
+              else 
+              echo "No tag set, set config to Debug / bleeding" 
+              if [[ "${TRAVIS_OS_NAME}" == "linux" ]] 
+              then
+                export MAKECONF=Debug-Raspberry
+              else
+                export MAKECONF=Release
+              fi
+              export SUFFIX=bleedingedge
+            fi
+
+            echo "Suffix : $SUFFIX"
+
+      - checkout
+      - run:
+          name: install ChataigneRasp dependencies
+          command: |
+            apt-get install software-properties-common
+            add-apt-repository ppa:webkit-team/ppa -y
+            add-apt-repository -y ppa:ubuntu-toolchain-r/test
+            apt-get update --fix-missing
+            apt-get update -qq
+            echo 'Installing GCC...'
+            apt-get install -y g++-7 gcc-7
+            gcc -v
+            update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 90
+            update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-7 90
+            export CC=/usr/bin/gcc
+            export CXX=/usr/bin/g++
+            echo ${CC}
+            echo ${CXX}
+            apt-get install -qq git libfreetype6-dev libx11-dev libxinerama-dev libxrandr-dev libxcursor-dev libxcomposite-dev mesa-common-dev libasound2-dev freeglut3-dev libcurl4-gnutls-dev+ libasound2-dev libjack-dev libbluetooth-dev libgtk-3-dev libwebkit2gtk-4.0-dev curl wget zip unzip libfuse2
+            cd ~
+            pwd
+            git clone --depth=1 --branch=develop-local https://github.com/benkuper/JUCE.git JUCE
+            cd /benkuper
+            mkdir 'JUCE Modules'
+            cd 'JUCE Modules'
+            git clone --depth=1 --branch=master https://github.com/benkuper/juce_organicui.git juce_organicui
+      - run:
+          name: build and package ChataigneRasp
+          command: |
+            export CXX=arm-linux-gnueabihf-g++-5
+            export ARCH_FLAGS=$ARCH_FLAGS_PI3
+            make CONFIG=$MAKECONF -m $ARCH_FLAGS
+            arm-linux-gnueabihf-objdump -x ~/Chataigne/Builds/LinuxMakefile/build/Chataigne | grep NEEDED > "$DST_CHATAIGNE_PATH/dependenciesRpi3.txt"
+      - store_artifacts:
+          path: /tmp/buildRasp/
+
+
+workflows:
+  version: 2
+  build_all_platforms:
+    jobs:
+      - build_rasp
+
+
+
+general:
+  branches:
+    only:
+      - master
