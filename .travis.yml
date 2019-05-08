@@ -79,14 +79,13 @@ before_install:
   fi
 install:
 - |
-  if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
-    docker exec -t ubuntu bash -c "export DEBIAN_FRONTEND=noninteractive;
-    uname -a;
-
+  if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; 
+  then
     if [[ "${TARGET_SYSTEM}" == "raspberry"]];
-     then;
+     then
+      docker exec -t ubuntu bash -c "export DEBIAN_FRONTEND=noninteractive;
+      uname -a;
       echo "Installing Raspberry cross-compile toolchain...";
-
       echo "deb [arch=armhf] http://ports.ubuntu.com/ubuntu-ports trusty main universe" >> /etc/apt/sources.list;
       echo "deb [arch=armhf] http://ports.ubuntu.com/ubuntu-ports trusty-updates main universe" >> /etc/apt/sources.list;
 
@@ -106,9 +105,15 @@ install:
       export PKG_CONFIG_PATH=/usr/lib/arm-linux-gnueabihf/pkgconfig;
       echo ${CC};
       echo ${CXX};
-
-    else;
+      cd ~;
+      pwd;
+      git clone --depth=1 --branch=develop-local https://github.com/benkuper/JUCE.git JUCE;
+      cd /benkuper;
+      mkdir 'JUCE Modules';
+      cd 'JUCE Modules';
+      git clone --depth=1 --branch=master https://github.com/benkuper/juce_organicui.git juce_organicui"
       
+    else
       docker exec -t ubuntu bash -c "export DEBIAN_FRONTEND=noninteractive;
       uname -a;
       apt-get install software-properties-common
@@ -125,19 +130,19 @@ install:
       export CXX=/usr/bin/g++;
       
       apt-get install -qq git libfreetype6-dev libx11-dev libxinerama-dev libxrandr-dev libxcursor-dev libxcomposite-dev mesa-common-dev libasound2-dev freeglut3-dev libcurl4-gnutls-dev+ libasound2-dev libjack-dev libbluetooth-dev libgtk-3-dev libwebkit2gtk-4.0-dev curl wget zip unzip libfuse2;
-    fi;
+      
+      echo ${CC};
+      echo ${CXX};
+      cd ~;
+      pwd;
+      git clone --depth=1 --branch=develop-local https://github.com/benkuper/JUCE.git JUCE;
+      cd /benkuper;
+      mkdir 'JUCE Modules';
+      cd 'JUCE Modules';
+      git clone --depth=1 --branch=master https://github.com/benkuper/juce_organicui.git juce_organicui"
 
-    echo ${CC};
-    echo ${CXX};
-    cd ~;
-    pwd;
-    git clone --depth=1 --branch=develop-local https://github.com/benkuper/JUCE.git JUCE;
-    cd /benkuper;
-    mkdir 'JUCE Modules';
-    cd 'JUCE Modules';
-    git clone --depth=1 --branch=master https://github.com/benkuper/juce_organicui.git juce_organicui"
-
-  fi;
+    fi
+  fi
 
 script:
 - |
