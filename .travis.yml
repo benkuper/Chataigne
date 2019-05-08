@@ -13,13 +13,13 @@ matrix:
       osx_image: xcode10.1
       compiler: clang
     - os: linux 
-      dist: trusty
+      dist: xenial
       group: latest
       sudo: required
       services: docker
       env: TARGET_SYSTEM=linux-x64 BUILD_FOLDER=LinuxMakefile TARGET_ARCH=x86_64
     - os: linux
-      dist: trusty
+      dist: xenial
       group: latest
       sudo: required
       services: docker
