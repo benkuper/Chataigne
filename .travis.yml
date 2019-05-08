@@ -82,12 +82,14 @@ install:
     if [ $TARGET_SYSTEM == "raspberry" ]; then
       docker exec -t ubuntu bash -c "export DEBIAN_FRONTEND=noninteractive;
       uname -a;
+
+      apt update  -y --assume-yes -qq;
+      apt-get install -qq software-properties-common
       add-apt-repository ppa:webkit-team/ppa -y;
       add-apt-repository -y ppa:ubuntu-toolchain-r/test;
       apt-get update -qq --fix-missing;
       apt-get update -qq;
 
-      apt-get install -qq software-properties-common
       
       echo 'Installing Raspberry cross-compile toolchain...';
       apt install -y --assume-yes -qq git curl wget zip unzip libfuse2;
@@ -97,7 +99,7 @@ install:
       dpkg --add-architecture armhf;
       
       apt update  -y --assume-yes -qq;
-      apt upgrade  -y --assume-yes -qq;
+      apt upgrade -y --assume-yes -qq;
 
       apt install -y --assume-yes -f libc6:armhf;
       apt install -y --assume-yes -f libc6-dev:armhf;
@@ -127,11 +129,11 @@ install:
 
       docker exec -t ubuntu bash -c "export DEBIAN_FRONTEND=noninteractive;
       uname -a;
+      apt-get install -qq software-properties-common
       add-apt-repository ppa:webkit-team/ppa -y;
       add-apt-repository -y ppa:ubuntu-toolchain-r/test;
       apt-get update --fix-missing;
       apt-get update -qq;
-      apt-get install -qq software-properties-common
       
       echo 'Installing GCC...';
       apt-get install -y g++-7 gcc-7;
