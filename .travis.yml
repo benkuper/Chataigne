@@ -82,10 +82,10 @@ install:
     if [ $TARGET_SYSTEM == "raspberry" ]; then
       docker exec -t ubuntu bash -c "export DEBIAN_FRONTEND=noninteractive;
       uname -a;
-      apt-get install software-properties-common
+      apt-get install -qq software-properties-common
       add-apt-repository ppa:webkit-team/ppa -y;
       add-apt-repository -y ppa:ubuntu-toolchain-r/test;
-      apt-get update --fix-missing;
+      apt-get update -qq --fix-missing;
       apt-get update -qq;
 
       echo 'Installing Raspberry cross-compile toolchain...';
@@ -125,7 +125,7 @@ install:
 
       docker exec -t ubuntu bash -c "export DEBIAN_FRONTEND=noninteractive;
       uname -a;
-      apt-get install software-properties-common
+      apt-get install -qq software-properties-common
       add-apt-repository ppa:webkit-team/ppa -y;
       add-apt-repository -y ppa:ubuntu-toolchain-r/test;
       apt-get update --fix-missing;
