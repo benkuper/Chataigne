@@ -127,7 +127,7 @@ install:
       
       echo $CC;
       echo $CXX;
-      echo "GCC Version";
+      echo 'GCC Version :';
       gcc -v;
       cd ~;
       pwd;
