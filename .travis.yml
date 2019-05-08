@@ -27,7 +27,7 @@ matrix:
 
 before_install:
 - |
-  if [[ " -n "$TRAVIS_TAG]];
+  if [[ -n "$TRAVIS_TAG"]];
    then 
     if [[ "$TRAVIS_TAG" == *b* ]]; 
     then 
@@ -84,7 +84,7 @@ install:
 
     echo "Linux machine"
     
-    if [[ $TARGET_SYSTEM == "raspberry"]];
+    if [[ "$TARGET_SYSTEM" == "raspberry"]];
      then
       
       echo "Raspberry target system"
