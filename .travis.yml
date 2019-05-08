@@ -170,20 +170,12 @@ after_success:
     docker exec -t ubuntu bash -c "cd /benkuper/Chataigne/Builds/$BUILD_FOLDER;
     pwd
     echo 'Downloading AppImageTool...';
-    if [ $TARGET_SYSTEM == "raspberry" ]; then
-      export APPIMAGE_FILENAME=appimagetool-$TARGET_ARCH.AppImage
-      export APPIMAGE_URL=https://github.com/AppImage/AppImageKit/releases/download/continuous/$APPIMAGE_FILENAME
-    else
-      export APPIMAGE_FILENAME=appimagetool-$TARGET_ARCH.AppImage
-      export APPIMAGE_URL=https://github.com/AppImage/AppImageKit/releases/download/continuous/$APPIMAGE_FILENAME
-    fi
-
-    wget "$APPIMAGE_URL";
-    chmod a+x $APPIMAGE_FILENAME;
+    wget "https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-$TARGET_ARCH.AppImage";
+    chmod a+x appimagetool-$TARGET_ARCH.AppImage;
     echo 'Packaging AppImage...';
     mkdir Chataigne.AppDir/usr/bin/;
     cp build/Chataigne Chataigne.AppDir/usr/bin/;
-    ./$APPIMAGE_FILENAME Chataigne.AppDir Chataigne-$TARGET_SYSTEM-$SUFFIX.AppImage;
+    ./appimagetool-$TARGET_ARCH.AppImage Chataigne.AppDir Chataigne-$TARGET_SYSTEM-$SUFFIX.AppImage;
     echo 'Uploading $SUFFIX ...';
     curl -X POST -F 'appFile=@Chataigne-$TARGET_SYSTEM-$SUFFIX.AppImage' -F 'pass=$UPLOAD_PASS' $UPLOAD_URL;"
   else
