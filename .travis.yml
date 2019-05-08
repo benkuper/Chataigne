@@ -17,13 +17,13 @@ matrix:
       group: latest
       sudo: required
       services: docker
-      env: TARGET_SYSTEM=linux-x64 BUILD_FOLDER=LinuxMakeFile
+      env: TARGET_SYSTEM=linux-x64 BUILD_FOLDER=LinuxMakefile TARGET_ARCH=x86_64
     - os: linux
       dist: trusty
       group: latest
       sudo: required
       services: docker
-      env: TARGET_SYSTEM=raspberry BUILD_FOLDER=Raspberry
+      env: TARGET_SYSTEM=raspberry BUILD_FOLDER=Raspberry TARGET_ARCH=armhf
 
 before_install:
 - |
@@ -127,6 +127,8 @@ install:
       
       echo $CC;
       echo $CXX;
+      echo "GCC Version";
+      gcc -v;
       cd ~;
       pwd;
       git clone --depth=1 --branch=develop-local https://github.com/benkuper/JUCE.git JUCE;
@@ -140,7 +142,7 @@ install:
 script:
 - |
   if [ "$TRAVIS_OS_NAME" == "linux" ]; then
-    docker exec -t ubuntu bash -c "gcc -v;
+    docker exec -t ubuntu bash -c "echo 'Building Chataigne for $TARGET_SYSTEM...';
     cd /benkuper/Chataigne/Builds/$BUILD_FOLDER;
     make -j 8 CONFIG=$MAKECONF"
   else
@@ -150,15 +152,23 @@ script:
 after_success:
 - |
   if [ "$TRAVIS_OS_NAME" == "linux" ]; then
-    docker exec -t ubuntu bash -c "cd /benkuper/Chataigne/Builds/LinuxMakefile;
+    docker exec -t ubuntu bash -c "cd /benkuper/Chataigne/Builds/$BUILD_FOLDER;
     pwd
     echo 'Downloading AppImageTool...';
-    wget "https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage";
-    chmod a+x appimagetool-x86_64.AppImage;
+    if [ $TARGET_SYSTEM == "raspberry" ]; then
+      export APPIMAGE_FILENAME=appimagetool-$TARGET_ARCH.AppImage
+      export APPIMAGE_URL=https://github.com/AppImage/AppImageKit/releases/download/continuous/$APPIMAGE_FILENAME
+    else
+      export APPIMAGE_FILENAME=appimagetool-$TARGET_ARCH.AppImage
+      export APPIMAGE_URL=https://github.com/AppImage/AppImageKit/releases/download/continuous/$APPIMAGE_FILENAME
+    fi
+
+    wget "$APPIMAGE_URL";
+    chmod a+x $APPIMAGE_FILENAME;
     echo 'Packaging AppImage...';
     mkdir Chataigne.AppDir/usr/bin/;
     cp build/Chataigne Chataigne.AppDir/usr/bin/;
-    ./appimagetool-x86_64.AppImage Chataigne.AppDir Chataigne-$TARGET_SYSTEM-$SUFFIX.AppImage;
+    ./$APPIMAGE_FILENAME Chataigne.AppDir Chataigne-$TARGET_SYSTEM-$SUFFIX.AppImage;
     echo 'Uploading $SUFFIX ...';
     curl -X POST -F 'appFile=@Chataigne-$TARGET_SYSTEM-$SUFFIX.AppImage' -F 'pass=$UPLOAD_PASS' $UPLOAD_URL;"
   else
