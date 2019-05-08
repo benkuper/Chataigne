@@ -83,7 +83,7 @@ install:
     docker exec -t ubuntu bash -c "export DEBIAN_FRONTEND=noninteractive;
     uname -a;
 
-    if [[ "${TARGET_SYSTEM}}" == "raspberry"]];
+    if [[ "${TARGET_SYSTEM}" == "raspberry"]];
      then;
       echo "Installing Raspberry cross-compile toolchain...";
 
