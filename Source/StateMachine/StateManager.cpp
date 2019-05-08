@@ -36,6 +36,7 @@ StateManager::~StateManager()
 void StateManager::clear()
 {
 	stm.clear();
+	commentManager.clear();
 	BaseManager::clear();
 }
 
