@@ -82,9 +82,9 @@ install:
     if [ $TARGET_SYSTEM == "raspberry" ]; then
       docker exec -t ubuntu bash -c "export DEBIAN_FRONTEND=noninteractive;
       uname -a;
-      echo "Installing Raspberry cross-compile toolchain...";
-      echo "deb [arch=armhf] http://ports.ubuntu.com/ubuntu-ports trusty main universe" >> /etc/apt/sources.list;
-      echo "deb [arch=armhf] http://ports.ubuntu.com/ubuntu-ports trusty-updates main universe" >> /etc/apt/sources.list;
+      echo 'Installing Raspberry cross-compile toolchain...';
+      echo 'deb [arch=armhf] http://ports.ubuntu.com/ubuntu-ports trusty main universe' >> /etc/apt/sources.list;
+      echo 'deb [arch=armhf] http://ports.ubuntu.com/ubuntu-ports trusty-updates main universe' >> /etc/apt/sources.list;
       dpkg --add-architecture armhf;
       apt update -qq;
       apt -y --assume-yes install libfreetype6-dev:armhf libx11-dev:armhf libxinerama-dev:armhf libxrandr-dev:armhf libxcursor-dev:armhf ;mesa-common-dev:armhf libasound2-dev:armhf freeglut3-dev:armhf libxcomposite-dev:armhf libjack-dev:armhf libcurl4-openssl-dev:armhf ladspa-sdk:armhf;
