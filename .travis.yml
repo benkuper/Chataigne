@@ -107,6 +107,7 @@ install:
       apt install -y --assume-yes -f libbluetooth3:armhf;
       apt install -y --assume-yes -f libbluetooth-dev:armhf;
       apt install -y --assume-yes -f g++-arm-linux-gnueabihf;
+      apt install -y --assume-yes -f make;
       
       export CXX=arm-linux-gnueabihf-g++;
       export CC=arm-linux-gnueabihf-gcc;
