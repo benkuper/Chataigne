@@ -17,6 +17,13 @@ matrix:
       group: latest
       sudo: required
       services: docker
+      env: TARGET_SYSTEM=linux-x64 BUILD_FOLDER=LinuxMakeFile
+    - os: linux
+      dist: trusty
+      group: latest
+      sudo: required
+      services: docker
+      env: TARGET_SYSTEM=raspberry BUILD_FOLDER=Raspberry
 
 before_install:
 - |
@@ -43,6 +50,7 @@ before_install:
   fi;
 
   echo "Suffix : $SUFFIX"
+  echo "Target system : $TARGET_SYSTEM"
 
   if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
     cd ..
@@ -74,21 +82,52 @@ install:
   if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
     docker exec -t ubuntu bash -c "export DEBIAN_FRONTEND=noninteractive;
     uname -a;
-    apt-get install software-properties-common
-    add-apt-repository ppa:webkit-team/ppa -y;
-    add-apt-repository -y ppa:ubuntu-toolchain-r/test;
-    apt-get update --fix-missing;
-    apt-get update -qq;
-    echo 'Installing GCC...';
-    apt-get install -y g++-7 gcc-7;
-    gcc -v;
-    update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 90;
-    update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-7 90;
-    export CC=/usr/bin/gcc;
-    export CXX=/usr/bin/g++;
+
+    if [[ "${TARGET_SYSTEM}}" == "raspberry"]]; then
+      echo "Installing Raspberry cross-compile toolchain...";
+
+      echo "deb [arch=armhf] http://ports.ubuntu.com/ubuntu-ports trusty main universe" >> /etc/apt/sources.list;
+      echo "deb [arch=armhf] http://ports.ubuntu.com/ubuntu-ports trusty-updates main universe" >> /etc/apt/sources.list;
+
+      dpkg --add-architecture armhf;
+      apt update -qq;
+      apt -y --assume-yes install libfreetype6-dev:armhf libx11-dev:armhf libxinerama-dev:armhf libxrandr-dev:armhf libxcursor-dev:armhf ;mesa-common-dev:armhf libasound2-dev:armhf freeglut3-dev:armhf libxcomposite-dev:armhf libjack-dev:armhf libcurl4-openssl-dev:armhf ladspa-sdk:armhf;
+
+      apt -y --assume-yes install libglib2.0-dev:armhf;
+      apt -y --assume-yes install libgdk-pixbuf2.0-dev:armhf;
+      apt -y --assume-yes install libgtk-3-dev:armhf libwebkit2gtk-4.0-dev:armhf;
+      apt -y --assume-yes install libbluetooth-dev:armhf;
+
+      apt install g++-arm-linux-gnueabihf;
+
+      export CXX=arm-linux-gnueabihf-g++;
+      export CC=arm-linux-gnueabihf-gcc;
+      export PKG_CONFIG_PATH=/usr/lib/arm-linux-gnueabihf/pkgconfig;
+      echo ${CC};
+      echo ${CXX};
+
+    else
+      
+      docker exec -t ubuntu bash -c "export DEBIAN_FRONTEND=noninteractive;
+      uname -a;
+      apt-get install software-properties-common
+      add-apt-repository ppa:webkit-team/ppa -y;
+      add-apt-repository -y ppa:ubuntu-toolchain-r/test;
+      apt-get update --fix-missing;
+      apt-get update -qq;
+      echo 'Installing GCC...';
+      apt-get install -y g++-7 gcc-7;
+      gcc -v;
+      update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 90;
+      update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-7 90;
+      export CC=/usr/bin/gcc;
+      export CXX=/usr/bin/g++;
+      
+      apt-get install -qq git libfreetype6-dev libx11-dev libxinerama-dev libxrandr-dev libxcursor-dev libxcomposite-dev mesa-common-dev libasound2-dev freeglut3-dev libcurl4-gnutls-dev+ libasound2-dev libjack-dev libbluetooth-dev libgtk-3-dev libwebkit2gtk-4.0-dev curl wget zip unzip libfuse2;
+    fi
+
     echo ${CC};
     echo ${CXX};
-    apt-get install -qq git libfreetype6-dev libx11-dev libxinerama-dev libxrandr-dev libxcursor-dev libxcomposite-dev mesa-common-dev libasound2-dev freeglut3-dev libcurl4-gnutls-dev+ libasound2-dev libjack-dev libbluetooth-dev libgtk-3-dev libwebkit2gtk-4.0-dev curl wget zip unzip libfuse2;
     cd ~;
     pwd;
     git clone --depth=1 --branch=develop-local https://github.com/benkuper/JUCE.git JUCE;
@@ -96,13 +135,14 @@ install:
     mkdir 'JUCE Modules';
     cd 'JUCE Modules';
     git clone --depth=1 --branch=master https://github.com/benkuper/juce_organicui.git juce_organicui"
+
   fi
 
 script:
 - |
   if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
     docker exec -t ubuntu bash -c "gcc -v;
-    cd /benkuper/Chataigne/Builds/LinuxMakefile;
+    cd /benkuper/Chataigne/Builds/$BUILD_FOLDER;
     make -j 8 CONFIG=$MAKECONF"
   else
     xcodebuild -project Chataigne/Builds/MacOSX/Chataigne.xcodeproj -configuration $MAKECONF -jobs 8 -verbose | xcpretty -f `xcpretty-travis-formatter`
@@ -119,9 +159,9 @@ after_success:
     echo 'Packaging AppImage...';
     mkdir Chataigne.AppDir/usr/bin/;
     cp build/Chataigne Chataigne.AppDir/usr/bin/;
-    ./appimagetool-x86_64.AppImage Chataigne.AppDir Chataigne-linux-x64-$SUFFIX.AppImage;
+    ./appimagetool-x86_64.AppImage Chataigne.AppDir Chataigne-$TARGET_SYSTEM-$SUFFIX.AppImage;
     echo 'Uploading $SUFFIX ...';
-    curl -X POST -F 'appFile=@Chataigne-linux-x64-$SUFFIX.AppImage' -F 'pass=$UPLOAD_PASS' $UPLOAD_URL;"
+    curl -X POST -F 'appFile=@Chataigne-$TARGET_SYSTEM-$SUFFIX.AppImage' -F 'pass=$UPLOAD_PASS' $UPLOAD_URL;"
   else
     cd /Users/travis/build/benkuper/Chataigne/Package
     ls
