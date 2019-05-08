@@ -27,7 +27,7 @@ matrix:
 
 before_install:
 - |
-  if [[ -n "$TRAVIS_TAG" ]]; 
+  if [[ -n "$TRAVIS_TAG" ]];
    then 
     if [[ "$TRAVIS_TAG" == *b* ]]; 
     then 
@@ -83,7 +83,8 @@ install:
     docker exec -t ubuntu bash -c "export DEBIAN_FRONTEND=noninteractive;
     uname -a;
 
-    if [[ "${TARGET_SYSTEM}}" == "raspberry"]]; then
+    if [[ "${TARGET_SYSTEM}}" == "raspberry"]];
+     then;
       echo "Installing Raspberry cross-compile toolchain...";
 
       echo "deb [arch=armhf] http://ports.ubuntu.com/ubuntu-ports trusty main universe" >> /etc/apt/sources.list;
@@ -106,7 +107,7 @@ install:
       echo ${CC};
       echo ${CXX};
 
-    else
+    else;
       
       docker exec -t ubuntu bash -c "export DEBIAN_FRONTEND=noninteractive;
       uname -a;
@@ -124,7 +125,7 @@ install:
       export CXX=/usr/bin/g++;
       
       apt-get install -qq git libfreetype6-dev libx11-dev libxinerama-dev libxrandr-dev libxcursor-dev libxcomposite-dev mesa-common-dev libasound2-dev freeglut3-dev libcurl4-gnutls-dev+ libasound2-dev libjack-dev libbluetooth-dev libgtk-3-dev libwebkit2gtk-4.0-dev curl wget zip unzip libfuse2;
-    fi
+    fi;
 
     echo ${CC};
     echo ${CXX};
@@ -136,7 +137,7 @@ install:
     cd 'JUCE Modules';
     git clone --depth=1 --branch=master https://github.com/benkuper/juce_organicui.git juce_organicui"
 
-  fi
+  fi;
 
 script:
 - |
