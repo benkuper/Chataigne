@@ -80,7 +80,7 @@ before_install:
 install:
 - |
   if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; 
-  then
+   then
     if [[ "${TARGET_SYSTEM}" == "raspberry"]];
      then
       docker exec -t ubuntu bash -c "export DEBIAN_FRONTEND=noninteractive;
@@ -112,7 +112,7 @@ install:
       mkdir 'JUCE Modules';
       cd 'JUCE Modules';
       git clone --depth=1 --branch=master https://github.com/benkuper/juce_organicui.git juce_organicui"
-      
+
     else
       docker exec -t ubuntu bash -c "export DEBIAN_FRONTEND=noninteractive;
       uname -a;
