@@ -1,0 +1,13 @@
+[Desktop Entry]
+Name=Chataigne
+Exec=Chataigne
+Icon=chataigne
+Type=Application
+Categories=AudioVideo;Art;
+Comment=Artist friendly Modular Machine for Art and Technology
+MimeType=text/chataigne;
+Name[en]=Chataigne
+Terminal=false
+StartupNotify=true
+NoDisplay=false
+Name[en_US]=chataigne.desktop
