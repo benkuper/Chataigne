@@ -13,6 +13,7 @@
 
 #include "Action/Action.h"
 #include "Mapping/Mapping.h"
+#include "Action/Condition/conditions/ActivationCondition/ActivationCondition.h"
 
 ProcessorManager::ProcessorManager(const String &name) :
 	BaseManager<Processor>(name),
@@ -72,11 +73,19 @@ void ProcessorManager::checkAllActivateActions()
 	Array<Action*> actions = getAllActions();
 	for (auto &a : actions)
 	{
+		for (auto &c : a->cdm.items)
+		{
+			ActivationCondition * ac = dynamic_cast<ActivationCondition *>(c);
+			if(ac != nullptr) ac->isValid->setValue(ac->type == ActivationCondition::Type::ON_ACTIVATE);
+		}
+
+		/*
 		if (a->actionRoles.contains(Action::ACTIVATE))
 		{
 			a->cdm.validationProgress->setValue(0);
-			a->cdm.checkAllConditions(true);
+			a->cdm.checkAllConditions(true, false);
 		}
+		*/
 	}
 }
 
@@ -85,11 +94,19 @@ void ProcessorManager::checkAllDeactivateActions()
 	Array<Action*> actions = getAllActions();
 	for (auto &a : actions)
 	{
+		for (auto &c : a->cdm.items)
+		{
+			ActivationCondition * ac = dynamic_cast<ActivationCondition *>(c);
+			if (ac != nullptr) ac->isValid->setValue(ac->type == ActivationCondition::Type::ON_DEACTIVATE);
+		}
+
+		/*
 		if (a->actionRoles.contains(Action::DEACTIVATE))
 		{
 			a->cdm.validationProgress->setValue(0);
 			a->cdm.checkAllConditions(true);
 		}
+		*/
 	}
 }
 
