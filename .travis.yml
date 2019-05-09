@@ -90,12 +90,12 @@ install:
       echo 'Set package config path to  $PKG_CONFIG_PATH';
 
       apt update  -qq;
-      apt install -qq apt-utils;
+      apt install -qq -y apt-utils;
       apt install -qq -y software-properties-common;
       add-apt-repository ppa:webkit-team/ppa -y;
       add-apt-repository -y ppa:ubuntu-toolchain-r/test;
-      apt update -qq --fix-missing;
-      apt update -qq;
+      apt update -qq -y --fix-missing;
+      apt update -qq -y;
       apt install -qq  build-essential;
       apt install -qq -y git curl wget zip unzip libfuse2;
       apt install -qq -y make pkg-config;
@@ -105,24 +105,24 @@ install:
       echo 'deb [arch=armhf] http://ports.ubuntu.com/ubuntu-ports bionic-updates main universe' >> /etc/apt/sources.list;
       dpkg --add-architecture armhf;
       
-      apt clean -qq;
-      apt update -qq;
-      apt upgrade -qq;
+      apt clean -qq -y ;
+      apt update -qq-y ;
+      apt upgrade -qq -y ;
 
-      apt install -qq g++-arm-linux-gnueabihf;
-      apt install -qq libc6:armhf;
-      apt install -qq libc6-dev:armhf;
-      apt install -qq libfreetype6-dev:armhf libx11-dev:armhf libxinerama-dev:armhf libxrandr-dev:armhf libxcursor-dev:armhf mesa-common-dev:armhf libasound2-dev:armhf freeglut3-dev:armhf libxcomposite-dev:armhf libjack-dev:armhf libcurl4-openssl-dev:armhf ladspa-sdk:armhf;
-      apt install -qq libglib2.0-0:armhf libglib2.0-dev:armhf;
-      apt install -qq libgdk-pixbuf2.0-0:armhf libgdk-pixbuf2.0-dev:armhf;
-      apt install -qq libgtk-3-dev:armhf libwebkit2gtk-4.0-dev:armhf;
-      apt install -qq libbluetooth3:armhf;
-      apt install -qq libbluetooth-dev:armhf;
-      apt install -qq g++-arm-linux-gnueabihf;
+      apt install -qq -y g++-arm-linux-gnueabihf;
+      apt install -qq -y libc6:armhf;
+      apt install -qq -y libc6-dev:armhf;
+      apt install -qq -y libfreetype6-dev:armhf libx11-dev:armhf libxinerama-dev:armhf libxrandr-dev:armhf libxcursor-dev:armhf mesa-common-dev:armhf libasound2-dev:armhf freeglut3-dev:armhf libxcomposite-dev:armhf libjack-dev:armhf libcurl4-openssl-dev:armhf ladspa-sdk:armhf;
+      apt install -qq -y libglib2.0-0:armhf libglib2.0-dev:armhf;
+      apt install -qq -y libgdk-pixbuf2.0-0:armhf libgdk-pixbuf2.0-dev:armhf;
+      apt install -qq -y libgtk-3-dev:armhf libwebkit2gtk-4.0-dev:armhf;
+      apt install -qq -y libbluetooth3:armhf;
+      apt install -qq -y libbluetooth-dev:armhf;
+      apt install -qq -y g++-arm-linux-gnueabihf;
       
-      apt -qq -f install;
+      apt -qq -y -f install;
       dpkg --configure -a;
-      apt -qq -f install;
+      apt -qq -y -f install;
 
       echo 'Check CXX - CC : $CXX - $CC';
       echo 'Check package config path $PKG_CONFIG_PATH';
