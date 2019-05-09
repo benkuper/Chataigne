@@ -50,7 +50,7 @@ TimeCueUI::~TimeCueUI()
 void TimeCueUI::paint(Graphics & g)
 {
 	
-	Colour c = item->isSelected ? HIGHLIGHT_COLOR : bgColor;
+	Colour c = item->isSelected ? HIGHLIGHT_COLOR : item->pauseOnCue->boolValue()?YELLOW_COLOR:bgColor;
 	if (isMouseOver()) c = c.brighter();
 	g.setColour(c);
 	g.fillPath(drawPath);

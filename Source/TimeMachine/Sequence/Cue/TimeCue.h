@@ -23,6 +23,7 @@ public:
 
 	FloatParameter * time;
 	BoolParameter * isLocked;
+	BoolParameter * pauseOnCue;
 
 	Sequence * getSequence();
 };

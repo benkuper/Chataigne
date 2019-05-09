@@ -181,6 +181,22 @@ void Sequence::onContainerParameterChangedInternal(Parameter * p)
 	else if (p == currentTime)
 	{
 		if ((!isPlaying->boolValue() || isSeeking) && timeIsDrivenByAudio()) hiResAudioTime = currentTime->floatValue(); 
+		
+		if (isPlaying->boolValue() && !isSeeking)
+		{
+			Array<TimeCue *> cues = cueManager->getCuesInTimespan(prevTime, currentTime->floatValue());
+			for (auto &c : cues)
+			{
+				if (c->pauseOnCue->boolValue())
+				{
+					pauseTrigger->trigger();
+					prevTime = currentTime->floatValue();
+					currentTime->setValue(c->time->floatValue());
+					return;
+				}
+			}
+		}
+		
 		sequenceListeners.call(&SequenceListener::sequenceCurrentTimeChanged, this, (float)prevTime, isPlaying->boolValue());
 		prevTime = currentTime->floatValue();
 	}

@@ -10,11 +10,10 @@
 
 #include "TimeCueManager.h"
 
-TimeCueComparator TimeCueManager::comparator;
-
 TimeCueManager::TimeCueManager() :
 	BaseManager("Cues")
 {
+	comparator.compareFunc = &TimeCueManager::compareTime;
 }
 
 TimeCueManager::~TimeCueManager()
@@ -65,6 +64,17 @@ float TimeCueManager::getNearestCueForTime(float time)
 	return result;
 }
 
+Array<TimeCue*> TimeCueManager::getCuesInTimespan(float startTime, float endTime)
+{
+	Array<TimeCue*> result;
+	for (auto &tt : items)
+	{
+		if (tt->time->floatValue() > startTime && tt->time->floatValue() <= endTime) result.add(tt);
+	}
+	return result;
+	
+}
+
 float TimeCueManager::getNextCueForTime(float time)
 {
 	int numItems = items.size();
@@ -91,6 +101,13 @@ float TimeCueManager::getPrevCueForTime(float time, float goToPreviousThreshold)
 	}
 
 	return result;
+}
+
+int TimeCueManager::compareTime(TimeCue * t1, TimeCue * t2)
+{
+	if (t1->time->floatValue() < t2->time->floatValue()) return -1;
+	else if (t1->time->floatValue() > t2->time->floatValue()) return 1;
+	return 0;
 }
 
 void TimeCueManager::onControllableFeedbackUpdate(ControllableContainer * cc, Controllable * c)

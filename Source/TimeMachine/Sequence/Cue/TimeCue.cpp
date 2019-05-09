@@ -21,6 +21,7 @@ TimeCue::TimeCue(const float & _time) :
 
 	isLocked = addBoolParameter("Locked", "When locked, you can't change time by dragging it values", false);
 
+	pauseOnCue = addBoolParameter("Pause On Cue", "If checked, the sequence will pause when the time is on this cue", false);
 	helpID = "TimeCue";
 }
 
