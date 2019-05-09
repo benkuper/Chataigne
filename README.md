@@ -61,6 +61,8 @@ MacOS : [![Build Status](https://travis-matrix-badges.herokuapp.com/repos/benkup
 
 Windows (x64) : [![Build status](https://ci.appveyor.com/api/projects/status/7lskg35ttnsv99cq?svg=true)](https://ci.appveyor.com/project/benkuper/chataigne)
 
+Raspberry Pi (3B):  [![Build Status](https://travis-matrix-badges.herokuapp.com/repos/benkuper/Chataigne/branches/master/3)](https://travis-ci.org/benkuper/Chataigne)
+
 [![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](https://forthebadge.com)
 [![forthebadge](http://forthebadge.com/images/badges/gluten-free.svg)](http://forthebadge.com)
 [![forthebadge](https://forthebadge.com/images/badges/makes-people-smile.svg)](https://forthebadge.com)
