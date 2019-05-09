@@ -85,7 +85,7 @@ install:
 
       apt update  -y --assume-yes -qq;
       apt install -y --assume-yes apt-utils;
-      apt install -qq software-properties-common
+      apt install -qq software-properties-common;
       add-apt-repository ppa:webkit-team/ppa -y;
       add-apt-repository -y ppa:ubuntu-toolchain-r/test;
       apt update -qq --fix-missing;
@@ -101,7 +101,7 @@ install:
       echo 'deb [arch=armhf] http://ports.ubuntu.com/ubuntu-ports bioni-cupdates main universe' >> /etc/apt/sources.list;
       dpkg --add-architecture armhf;
       
-      apt clean;
+      apt clean -y --assume-yes -qq
       apt update  -y --assume-yes -qq;
       apt upgrade -y --assume-yes -qq;
 
