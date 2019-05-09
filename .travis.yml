@@ -182,7 +182,7 @@ script:
     cd /benkuper/Chataigne/Builds/$BUILD_FOLDER;
     echo 'Check CXX - CC : $CXX - $CC';
     echo 'Check package config path $PKG_CONFIG_PATH';
-    make -j 8 CONFIG=$MAKECONF"
+    make -j 8 CONFIG=$MAKECONF CXX='arm-linux-gnueabihf-g++ -v' CC=$CC PKG_CONFIG_PATH=$PKG_CONFIG_PATH"
   else
     xcodebuild -project Chataigne/Builds/MacOSX/Chataigne.xcodeproj -configuration $MAKECONF -jobs 8 -verbose | xcpretty -f `xcpretty-travis-formatter`
   fi
