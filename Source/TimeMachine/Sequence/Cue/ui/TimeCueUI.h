@@ -15,7 +15,8 @@
 
 class TimeCueUI :
 	public BaseItemMinimalUI<TimeCue>,
-	public SettableTooltipClient
+	public SettableTooltipClient,
+	public Label::Listener
 {
 public:
 	TimeCueUI(TimeCue *);
@@ -23,6 +24,9 @@ public:
 
 	Path drawPath;
 	float timeAtMouseDown;
+	Label itemLabel;
+	
+	const int arrowSize = 10;
 	
 	void paint(Graphics &g) override;
 	void resized() override;
@@ -31,8 +35,10 @@ public:
 	void mouseDown(const MouseEvent &e) override;
 	void mouseDrag(const MouseEvent &e) override;
 	void mouseUp(const MouseEvent &e) override;
+	virtual void labelTextChanged(Label * l) override;
 
 	void controllableFeedbackUpdateInternal(Controllable *) override;
+	void containerChildAddressChangedAsync(ControllableContainer *) override;
 
 	class TimeCueUIListener
 	{

@@ -12,7 +12,7 @@
 #include "../Sequence.h"
 
 TimeCue::TimeCue(const float & _time) :
-	BaseItem("Time Cue")
+	BaseItem("Cue")
 {
 	//nameParam->hideInEditor = false;
 
