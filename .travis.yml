@@ -80,8 +80,14 @@ install:
   if [ "$TRAVIS_OS_NAME" == "linux" ]; then
     echo "Linux machine"
     if [ $TARGET_SYSTEM == "raspberry" ]; then
+      export CXX=arm-linux-gnueabihf-g++;
+      export CC=arm-linux-gnueabihf-gcc;
+      export PKG_CONFIG_PATH=/usr/lib/arm-linux-gnueabihf/pkgconfig;
+      
       docker exec -t ubuntu bash -c "export DEBIAN_FRONTEND=noninteractive;
       uname -a;
+
+      echo 'Set package config path to  $PKG_CONFIG_PATH';
 
       apt update  -y --assume-yes -qq;
       apt install -y --assume-yes apt-utils;
@@ -93,8 +99,6 @@ install:
       apt install -y --assume-yes-qq  build-essential;
       apt install -y --assume-yes -qq git curl wget zip unzip libfuse2;
       apt install -y --assume-yes -qq make pkg-config;
-      
-     
       
       echo 'Installing Raspberry cross-compile toolchain...';
       echo 'deb [arch=armhf] http://ports.ubuntu.com/ubuntu-ports bionic main universe' >> /etc/apt/sources.list;
@@ -120,12 +124,6 @@ install:
       dpkg --configure -a;
       apt -f install -y --assume-yes;
 
-      export CXX=arm-linux-gnueabihf-g++;
-      export CC=arm-linux-gnueabihf-gcc;
-      export PKG_CONFIG_PATH=/usr/lib/arm-linux-gnueabihf/pkgconfig;
-      echo $CC;
-      echo $CXX;
-      echo $PKG_CONFIG_PATH;
       cd ~;
       pwd;
       git clone --depth=1 --branch=develop-local https://github.com/benkuper/JUCE.git JUCE;
