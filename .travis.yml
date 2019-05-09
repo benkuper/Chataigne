@@ -181,7 +181,7 @@ script:
       cd /home/travis/build/benkuper/Chataigne/Builds/$BUILD_FOLDER
       echo 'Check CXX - CC : $CXX - $CC'
       echo 'Check package config path $PKG_CONFIG_PATH'
-      make -j 8 CONFIG=$MAKECONF CXX=$CXX CC=$CC PKG_CONFIG_PATH=$PKG_CONFIG_PATH"
+      make -j 8 CONFIG=$MAKECONF CXX=$CXX CC=$CC PKG_CONFIG_PATH=$PKG_CONFIG_PATH
     else
       docker exec -t ubuntu bash -c "echo 'Building Chataigne for $TARGET_SYSTEM...';
       cd /benkuper/Chataigne/Builds/$BUILD_FOLDER;
