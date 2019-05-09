@@ -92,10 +92,11 @@ install:
 
       
       echo 'Installing Raspberry cross-compile toolchain...';
+      apt-get install -y --assume-yes  build-essential;
       apt install -y --assume-yes -qq git curl wget zip unzip libfuse2;
       
-      echo 'deb [arch=armhf] http://ports.ubuntu.com/ubuntu-ports trusty main universe' >> /etc/apt/sources.list;
-      echo 'deb [arch=armhf] http://ports.ubuntu.com/ubuntu-ports trusty-updates main universe' >> /etc/apt/sources.list;
+      echo 'deb [arch=armhf] http://ports.ubuntu.com/ubuntu-ports xenial main universe' >> /etc/apt/sources.list;
+      echo 'deb [arch=armhf] http://ports.ubuntu.com/ubuntu-ports xenial-updates main universe' >> /etc/apt/sources.list;
       dpkg --add-architecture armhf;
       
       apt update  -y --assume-yes -qq;
@@ -110,7 +111,7 @@ install:
       apt install -y --assume-yes -f libbluetooth3:armhf;
       apt install -y --assume-yes -f libbluetooth-dev:armhf;
       apt install -y --assume-yes -f g++-arm-linux-gnueabihf;
-      apt install -y --assume-yes -f make pkg-config build-essential;
+      apt install -y --assume-yes -f make pkg-config;
       
       export CXX=arm-linux-gnueabihf-g++;
       export CC=arm-linux-gnueabihf-gcc;
