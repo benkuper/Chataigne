@@ -101,7 +101,7 @@ install:
       echo 'deb [arch=armhf] http://ports.ubuntu.com/ubuntu-ports bionic-updates main universe' >> /etc/apt/sources.list;
       dpkg --add-architecture armhf;
       
-      apt clean -y --assume-yes -qq
+      apt clean -y --assume-yes -qq;
       apt update  -y --assume-yes -qq;
       apt upgrade -y --assume-yes -qq;
 
