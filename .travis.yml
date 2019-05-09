@@ -80,49 +80,49 @@ install:
   if [ "$TRAVIS_OS_NAME" == "linux" ]; then
     echo "Linux machine"
     if [ $TARGET_SYSTEM == "raspberry" ]; then
-      export CXX=arm-linux-gnueabihf-g++;
-      export CC=arm-linux-gnueabihf-gcc;
-      export PKG_CONFIG_PATH=/usr/lib/arm-linux-gnueabihf/pkgconfig;
+      export CXX="arm-linux-gnueabihf-g++ -v"
+      export CC=arm-linux-gnueabihf-gcc
+      export PKG_CONFIG_PATH=/usr/lib/arm-linux-gnueabihf/pkgconfig
       
       docker exec -t ubuntu bash -c "export DEBIAN_FRONTEND=noninteractive;
       uname -a;
 
       echo 'Set package config path to  $PKG_CONFIG_PATH';
 
-      apt update  -qq -y --assume-yes -qq;
-      apt install -qq -y --assume-yes apt-utils;
-      apt install -qq -y --assume-yes -qq software-properties-common;
+      apt update  -qq;
+      apt install -qq apt-utils;
+      apt install -qq -y software-properties-common;
       add-apt-repository ppa:webkit-team/ppa -y;
       add-apt-repository -y ppa:ubuntu-toolchain-r/test;
       apt update -qq --fix-missing;
       apt update -qq;
-      apt install -qq -y --assume-yes-qq  build-essential;
-      apt install -qq -y --assume-yes -qq git curl wget zip unzip libfuse2;
-      apt install -qq -y --assume-yes -qq make pkg-config;
+      apt install -qq  build-essential;
+      apt install -qq -y git curl wget zip unzip libfuse2;
+      apt install -qq -y make pkg-config;
       
       echo 'Installing Raspberry cross-compile toolchain...';
       echo 'deb [arch=armhf] http://ports.ubuntu.com/ubuntu-ports bionic main universe' >> /etc/apt/sources.list;
       echo 'deb [arch=armhf] http://ports.ubuntu.com/ubuntu-ports bionic-updates main universe' >> /etc/apt/sources.list;
       dpkg --add-architecture armhf;
       
-      apt clean -qq -y --assume-yes -qq;
-      apt update -qq  -y --assume-yes -qq;
-      apt upgrade -qq -y --assume-yes -qq;
+      apt clean -qq;
+      apt update -qq;
+      apt upgrade -qq;
 
-      apt install -qq -y --assume-yes g++-arm-linux-gnueabihf;
-      apt install -qq -y --assume-yes libc6:armhf;
-      apt install -qq -y --assume-yes libc6-dev:armhf;
-      apt install -qq -y --assume-yes libfreetype6-dev:armhf libx11-dev:armhf libxinerama-dev:armhf libxrandr-dev:armhf libxcursor-dev:armhf mesa-common-dev:armhf libasound2-dev:armhf freeglut3-dev:armhf libxcomposite-dev:armhf libjack-dev:armhf libcurl4-openssl-dev:armhf ladspa-sdk:armhf;
-      apt install -qq -y --assume-yes libglib2.0-0:armhf libglib2.0-dev:armhf;
-      apt install -qq -y --assume-yes libgdk-pixbuf2.0-0:armhf libgdk-pixbuf2.0-dev:armhf;
-      apt install -qq -y --assume-yes libgtk-3-dev:armhf libwebkit2gtk-4.0-dev:armhf;
-      apt install -qq -y --assume-yes libbluetooth3:armhf;
-      apt install -qq -y --assume-yes libbluetooth-dev:armhf;
-      apt install -qq -y --assume-yes g++-arm-linux-gnueabihf;
+      apt install -qq g++-arm-linux-gnueabihf;
+      apt install -qq libc6:armhf;
+      apt install -qq libc6-dev:armhf;
+      apt install -qq libfreetype6-dev:armhf libx11-dev:armhf libxinerama-dev:armhf libxrandr-dev:armhf libxcursor-dev:armhf mesa-common-dev:armhf libasound2-dev:armhf freeglut3-dev:armhf libxcomposite-dev:armhf libjack-dev:armhf libcurl4-openssl-dev:armhf ladspa-sdk:armhf;
+      apt install -qq libglib2.0-0:armhf libglib2.0-dev:armhf;
+      apt install -qq libgdk-pixbuf2.0-0:armhf libgdk-pixbuf2.0-dev:armhf;
+      apt install -qq libgtk-3-dev:armhf libwebkit2gtk-4.0-dev:armhf;
+      apt install -qq libbluetooth3:armhf;
+      apt install -qq libbluetooth-dev:armhf;
+      apt install -qq g++-arm-linux-gnueabihf;
       
-      apt -qq -f install -y --assume-yes;
+      apt -qq -f install;
       dpkg --configure -a;
-      apt -qq -f install -y --assume-yes;
+      apt -qq -f install;
 
       echo 'Check CXX - CC : $CXX - $CC';
       echo 'Check package config path $PKG_CONFIG_PATH';
@@ -172,8 +172,16 @@ install:
 script:
 - |
   if [ "$TRAVIS_OS_NAME" == "linux" ]; then
+    if [ $TARGET_SYSTEM == "raspberry" ]; then
+      export CXX="arm-linux-gnueabihf-g++ -v"
+      export CC=arm-linux-gnueabihf-gcc
+      export PKG_CONFIG_PATH=/usr/lib/arm-linux-gnueabihf/pkgconfig
+    fi
+
     docker exec -t ubuntu bash -c "echo 'Building Chataigne for $TARGET_SYSTEM...';
     cd /benkuper/Chataigne/Builds/$BUILD_FOLDER;
+    echo 'Check CXX - CC : $CXX - $CC';
+    echo 'Check package config path $PKG_CONFIG_PATH';
     make -j 8 CONFIG=$MAKECONF"
   else
     xcodebuild -project Chataigne/Builds/MacOSX/Chataigne.xcodeproj -configuration $MAKECONF -jobs 8 -verbose | xcpretty -f `xcpretty-travis-formatter`
