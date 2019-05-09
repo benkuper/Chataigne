@@ -35,19 +35,23 @@ Chataigne is using a modified version of JUCE. So basically, you just need to :
   - Link the dependencies
   - Save the jucer
   - Open the solution for you platform in the Builds folder
-  - Build the solution from your IDE or make in linux without Code::Blocks
-
+  - Build the solution from your IDE or make in linux
+  - Check the dependency section below if you have dependency problems when running Chataigne
+  - Enjoy !
+  
 ### Dependencies
 
   Chataigne relies on the OrganicUI JUCE module that you can find here : https://github.com/benkuper/juce_organicui
   You will need to download, extract and link the Projucer juce_organicui module to its parent folder
 
-### Windows only ###
+### Windows running instructions ###
 **DLL dependencies** :
   - For **Release**, you can just copy the dll files from there : http://benjamin.kuperberg.fr/chataigne/user/data/Chataigne-win-x64-release-dependencies.zip and paste them in the same folder as the generated executable (in the Binaries folder)
   
   - For **Debug**, you can get a dependency pack there http://benjamin.kuperberg.fr/chataigne/user/data/Chataigne-win-x64-debug-dependencies.zip and do the same in the Binaries/Debug folder
-  
+ 
+### Linux running instructions ###
+  - Before running Chataigne, you will need to copy the lib folder from Chataigne.AppDir/usr/lib aside the Chataigne executable, i.e. in the build folder.
   
 ## Troubleshooting
 
