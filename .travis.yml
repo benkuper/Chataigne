@@ -85,7 +85,7 @@ install:
 
       apt update  -y --assume-yes -qq;
       apt install -y --assume-yes apt-utils;
-      apt install -qq software-properties-common;
+      apt install -y --assume-yes -qq software-properties-common;
       add-apt-repository ppa:webkit-team/ppa -y;
       add-apt-repository -y ppa:ubuntu-toolchain-r/test;
       apt update -qq --fix-missing;
