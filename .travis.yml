@@ -22,7 +22,6 @@ matrix:
       dist: xenial
       group: latest
       sudo: required
-      services: docker
       env: TARGET_SYSTEM=raspberry BUILD_FOLDER=Raspberry TARGET_ARCH=armhf
 
 before_install:
@@ -53,8 +52,12 @@ before_install:
   if [ "$TRAVIS_OS_NAME" == "linux" ]; then
     cd ..
     pwd
-    docker run -d --name ubuntu --privileged -v $(pwd):/benkuper ubuntu:latest tail -f /dev/null
-    docker ps
+    if [ $TARGET_SYSTEM == "raspberry" ]; then
+      echo "Raspberry build, no docker !"
+    else
+      docker run -d --name ubuntu --privileged -v $(pwd):/benkuper ubuntu:latest tail -f /dev/null
+      docker ps
+    fi
   else
     gem install xcpretty
     gem install xcpretty-travis-formatter
@@ -84,56 +87,53 @@ install:
       export CC=arm-linux-gnueabihf-gcc
       export PKG_CONFIG_PATH=/usr/lib/arm-linux-gnueabihf/pkgconfig
       
-      docker exec -t ubuntu bash -c "export DEBIAN_FRONTEND=noninteractive;
-      uname -a;
+      echo 'Set package config path to  $PKG_CONFIG_PATH'
 
-      echo 'Set package config path to  $PKG_CONFIG_PATH';
-
-      apt update  -qq -y;
-      apt install -qq -y apt-utils;
-      apt install -qq -y software-properties-common;
-      add-apt-repository ppa:webkit-team/ppa -y;
-      add-apt-repository -y ppa:ubuntu-toolchain-r/test;
-      apt update -qq -y --fix-missing;
-      apt update -qq -y;
-      apt install -qq -y build-essential;
-      apt install -qq -y git curl wget zip unzip libfuse2;
-      apt install -qq -y make pkg-config;
+      apt update  -qq -y
+      apt install -qq -y apt-utils
+      apt install -qq -y software-properties-common
+      add-apt-repository ppa:webkit-team/ppa -y
+      add-apt-repository -y ppa:ubuntu-toolchain-r/test
+      apt update -qq -y --fix-missing
+      apt update -qq -y
+      apt install -qq -y build-essential
+      apt install -qq -y git curl wget zip unzip libfuse2
+      apt install -qq -y make pkg-config
       
-      echo 'Installing Raspberry cross-compile toolchain...';
-      echo 'deb [arch=armhf] http://ports.ubuntu.com/ubuntu-ports bionic main universe' >> /etc/apt/sources.list;
-      echo 'deb [arch=armhf] http://ports.ubuntu.com/ubuntu-ports bionic-updates main universe' >> /etc/apt/sources.list;
-      dpkg --add-architecture armhf;
+      echo 'Installing Raspberry cross-compile toolchain...'
+      echo 'deb [arch=armhf] http://ports.ubuntu.com/ubuntu-ports bionic main universe' >> /etc/apt/sources.list
+      echo 'deb [arch=armhf] http://ports.ubuntu.com/ubuntu-ports bionic-updates main universe' >> /etc/apt/sources.list
+      dpkg --add-architecture armhf
       
-      apt clean -qq -y;
-      apt update -qq -y;
-      apt upgrade -qq -y;
+      apt clean -qq -y
+      apt update -qq -y
+      apt upgrade -qq -y
 
-      apt install -qq -y g++-arm-linux-gnueabihf;
-      apt install -qq -y libc6:armhf;
-      apt install -qq -y libc6-dev:armhf;
-      apt install -qq -y libfreetype6-dev:armhf libx11-dev:armhf libxinerama-dev:armhf libxrandr-dev:armhf libxcursor-dev:armhf mesa-common-dev:armhf libasound2-dev:armhf freeglut3-dev:armhf libxcomposite-dev:armhf libjack-dev:armhf libcurl4-openssl-dev:armhf ladspa-sdk:armhf;
-      apt install -qq -y libglib2.0-0:armhf libglib2.0-dev:armhf;
-      apt install -qq -y libgdk-pixbuf2.0-0:armhf libgdk-pixbuf2.0-dev:armhf;
-      apt install -qq -y libgtk-3-dev:armhf libwebkit2gtk-4.0-dev:armhf;
-      apt install -qq -y libbluetooth3:armhf;
-      apt install -qq -y libbluetooth-dev:armhf;
-      apt install -qq -y g++-arm-linux-gnueabihf;
+      apt install -qq -y g++-arm-linux-gnueabihf
+      apt install -qq -y libc6:armhf
+      apt install -qq -y libc6-dev:armhf
+      apt install -qq -y libfreetype6-dev:armhf libx11-dev:armhf libxinerama-dev:armhf libxrandr-dev:armhf libxcursor-dev:armhf mesa-common-dev:armhf libasound2-dev:armhf freeglut3-dev:armhf libxcomposite-dev:armhf libjack-dev:armhf libcurl4-openssl-dev:armhf ladspa-sdk:armhf
+      apt install -qq -y libglib2.0-0:armhf libglib2.0-dev:armhf
+      apt install -qq -y libgdk-pixbuf2.0-0:armhf libgdk-pixbuf2.0-dev:armhf
+      apt install -qq -y libgtk-3-dev:armhf libwebkit2gtk-4.0-dev:armhf
+      apt install -qq -y libbluetooth3:armhf
+      apt install -qq -y libbluetooth-dev:armhf
+      apt install -qq -y g++-arm-linux-gnueabihf
       
-      apt -qq -y -f install;
-      dpkg --configure -a;
-      apt -qq -y -f install;
+      apt -qq -y -f install
+      dpkg --configure -a
+      apt -qq -y -f install
 
-      echo 'Check CXX - CC : $CXX - $CC';
-      echo 'Check package config path $PKG_CONFIG_PATH';
+      echo 'Check CXX - CC : $CXX - $CC'
+      echo 'Check package config path $PKG_CONFIG_PATH'
 
-      cd ~;
-      pwd;
-      git clone --depth=1 --branch=develop-local https://github.com/benkuper/JUCE.git JUCE;
-      cd /benkuper;
-      mkdir 'JUCE Modules';
-      cd 'JUCE Modules';
-      git clone --depth=1 --branch=master https://github.com/benkuper/juce_organicui.git juce_organicui"
+      cd ~
+      pwd
+      git clone --depth=1 --branch=develop-local https://github.com/benkuper/JUCE.git JUCE
+      cd /home/travis/build/benkuper
+      mkdir 'JUCE Modules'
+      cd 'JUCE Modules'
+      git clone --depth=1 --branch=master https://github.com/benkuper/juce_organicui.git juce_organicui
 
     else
 
@@ -177,12 +177,10 @@ script:
       export CC=arm-linux-gnueabihf-gcc
       export PKG_CONFIG_PATH=/usr/lib/arm-linux-gnueabihf/pkgconfig
 
-      docker exec -t ubuntu bash -c "echo 'Building Chataigne for $TARGET_SYSTEM...';
-      cd /benkuper/Chataigne/Builds/$BUILD_FOLDER;
-      echo 'Check CXX - CC : $CXX - $CC';
-      ENV PKG_CONFIG_PATH /usr/lib/arm-linux-gnueabihf/pkgconfig;
-      ENV export PKG_CONFIG_PATH;
-      echo 'Check package config path $PKG_CONFIG_PATH';
+      echo 'Building Chataigne for $TARGET_SYSTEM...'
+      cd /home/travis/build/benkuper/Chataigne/Builds/$BUILD_FOLDER
+      echo 'Check CXX - CC : $CXX - $CC'
+      echo 'Check package config path $PKG_CONFIG_PATH'
       make -j 8 CONFIG=$MAKECONF CXX=$CXX CC=$CC PKG_CONFIG_PATH=$PKG_CONFIG_PATH"
     else
       docker exec -t ubuntu bash -c "echo 'Building Chataigne for $TARGET_SYSTEM...';
@@ -198,17 +196,27 @@ script:
 after_success:
 - |
   if [ "$TRAVIS_OS_NAME" == "linux" ]; then
-    docker exec -t ubuntu bash -c "cd /benkuper/Chataigne/Builds/$BUILD_FOLDER;
-    pwd
-    echo 'Downloading AppImageTool...';
-    wget "https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-$TARGET_ARCH.AppImage";
-    chmod a+x appimagetool-$TARGET_ARCH.AppImage;
-    echo 'Packaging AppImage...';
-    mkdir Chataigne.AppDir/usr/bin/;
-    cp build/Chataigne Chataigne.AppDir/usr/bin/;
-    ./appimagetool-$TARGET_ARCH.AppImage Chataigne.AppDir Chataigne-$TARGET_SYSTEM-$SUFFIX.AppImage;
-    echo 'Uploading $SUFFIX ...';
-    curl -X POST -F 'appFile=@Chataigne-$TARGET_SYSTEM-$SUFFIX.AppImage' -F 'pass=$UPLOAD_PASS' $UPLOAD_URL;"
+    if [ $TARGET_SYSTEM == "raspberry" ]; then
+      echo 'Packaging binary and libraries...'
+      cd /home/travis/build/benkuper/Chataigne/Builds/$BUILD_FOLDER
+      cp Chataigne.AppDir/usr/lib/ build
+      cd build
+      zip -r Chataigne-$TARGET_SYSTEM-$SUFFIX.zip Chataigne lib
+      echo 'Uploading $SUFFIX ...'
+      curl -X POST -F 'appFile=@Chataigne-$TARGET_SYSTEM-$SUFFIX.zip' -F 'pass=$UPLOAD_PASS' $UPLOAD_URL
+    else
+      docker exec -t ubuntu bash -c "cd /benkuper/Chataigne/Builds/$BUILD_FOLDER;
+      pwd
+      echo 'Downloading AppImageTool...';
+      wget "https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-$TARGET_ARCH.AppImage";
+      chmod a+x appimagetool-$TARGET_ARCH.AppImage;
+      echo 'Packaging AppImage...';
+      mkdir Chataigne.AppDir/usr/bin/;
+      cp build/Chataigne Chataigne.AppDir/usr/bin/;
+      ./appimagetool-$TARGET_ARCH.AppImage Chataigne.AppDir Chataigne-$TARGET_SYSTEM-$SUFFIX.AppImage;
+      echo 'Uploading $SUFFIX ...';
+      curl -X POST -F 'appFile=@Chataigne-$TARGET_SYSTEM-$SUFFIX.AppImage' -F 'pass=$UPLOAD_PASS' $UPLOAD_URL;"
+    fi
   else
     cd /Users/travis/build/benkuper/Chataigne/Package
     ls
