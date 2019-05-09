@@ -97,22 +97,6 @@
 			isa = PBXBuildFile;
 			fileRef = E760AE782F147B81967ED0B3;
 		};
-		9C2562B13C5EBB94B68C8E53 = {
-			isa = PBXBuildFile;
-			fileRef = C8CAB24B7DEC8A5EA7C683B2;
-		};
-		421B3402301018D213EFEBEB = {
-			isa = PBXBuildFile;
-			fileRef = 2FB6C29534D810CBBF012134;
-		};
-		36A1673B7F47FD658B87837B = {
-			isa = PBXBuildFile;
-			fileRef = DB20E50150AB283C48B7F93A;
-		};
-		FC04B4192A58DBBA56A99188 = {
-			isa = PBXBuildFile;
-			fileRef = B2EE4BBCDB1D0F8AF076D7B8;
-		};
 		6648A28A780225272E677EAE = {
 			isa = PBXBuildFile;
 			fileRef = 7548D863C3CCA4FF27887C03;
@@ -1285,6 +1269,10 @@
 			isa = PBXBuildFile;
 			fileRef = 066DA60AFB60B8BE77E819E7;
 		};
+		212B67A3534DE8B8475EFD36 = {
+			isa = PBXBuildFile;
+			fileRef = 03B34F65CD67AA62113F23C3;
+		};
 		A2C0DA5E1710F15AA0E3F840 = {
 			isa = PBXBuildFile;
 			fileRef = 8AB58B2FA156DD075B892850;
@@ -1298,13 +1286,6 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = SerialDevice.cpp;
 			path = ../../Source/Common/Serial/SerialDevice.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
-		011BA91AAFF6678E9E2C7933 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = CommentManagerViewUI.h;
-			path = ../../Source/Common/Comment/ui/CommentManagerViewUI.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		0122486E463EC8C60E48A1DB = {
@@ -1375,6 +1356,13 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = WatchoutModule.h;
 			path = ../../Source/Module/modules/tcp/watchout/WatchoutModule.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		03B34F65CD67AA62113F23C3 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = "include_juce_organicui2.cpp";
+			path = "../../JuceLibraryCode/include_juce_organicui2.cpp";
 			sourceTree = "SOURCE_ROOT";
 		};
 		040F7315F50E852C0354EF84 = {
@@ -1473,13 +1461,6 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = CommandChooserUI.cpp;
 			path = ../../Source/Common/Command/ui/CommandChooserUI.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
-		0A8119940F9D1C4323EE2B94 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = CommentManager.h;
-			path = ../../Source/Common/Comment/CommentManager.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		0B881AF2739B8F5059F7B142 = {
@@ -2054,13 +2035,6 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = MappingOutputManager.cpp;
 			path = ../../Source/Common/Processor/Mapping/Output/MappingOutputManager.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
-		2FB6C29534D810CBBF012134 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = CommentUI.cpp;
-			path = ../../Source/Common/Comment/ui/CommentUI.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		2FF1AE6FEB8241A5227E8215 = {
@@ -3400,13 +3374,6 @@
 			path = ../../Source/Module/modules/osc/reaper/commands/ui/ReaperTimeCommandUI.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
-		7B58008CB3971854075F5694 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = Comment.h;
-			path = ../../Source/Common/Comment/Comment.h;
-			sourceTree = "SOURCE_ROOT";
-		};
 		7C860EF3D88D260B7E03DF41 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -4261,13 +4228,6 @@
 			path = ../../Source/Module/modules/common/streaming/commands/SendStreamStringCommand.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
-		AE9A053FE171903757C8BA63 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = CommentUI.h;
-			path = ../../Source/Common/Comment/ui/CommentUI.h;
-			sourceTree = "SOURCE_ROOT";
-		};
 		AEE94AD7E1C97D1DE72EF414 = {
 			isa = PBXFileReference;
 			lastKnownFileType = file;
@@ -4336,13 +4296,6 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = AudioLayerClip.h;
 			path = ../../Source/TimeMachine/Sequence/Layer/layers/audio/AudioLayerClip.h;
-			sourceTree = "SOURCE_ROOT";
-		};
-		B2EE4BBCDB1D0F8AF076D7B8 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = CommentManager.cpp;
-			path = ../../Source/Common/Comment/CommentManager.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		B391A2398EFCCFCAF317B4F6 = {
@@ -4686,13 +4639,6 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = cobs.h;
 			path = ../../Source/Common/Serial/lib/cobs/cobs.h;
-			sourceTree = "SOURCE_ROOT";
-		};
-		C8CAB24B7DEC8A5EA7C683B2 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = CommentManagerViewUI.cpp;
-			path = ../../Source/Common/Comment/ui/CommentManagerViewUI.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		C8F7B577E4F08EE149D8F1F8 = {
@@ -5085,13 +5031,6 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = GenericOSCQueryCommand.cpp;
 			path = ../../Source/Module/modules/oscquery/generic/GenericOSCQueryCommand.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
-		DB20E50150AB283C48B7F93A = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = Comment.cpp;
-			path = ../../Source/Common/Comment/Comment.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		DBA7609C19925D70182B83C2 = {
@@ -5817,29 +5756,6 @@
 			name = Analytics;
 			sourceTree = "<group>";
 		};
-		62AA379A235BC781DA244B5B = {
-			isa = PBXGroup;
-			children = (
-				C8CAB24B7DEC8A5EA7C683B2,
-				011BA91AAFF6678E9E2C7933,
-				2FB6C29534D810CBBF012134,
-				AE9A053FE171903757C8BA63,
-			);
-			name = ui;
-			sourceTree = "<group>";
-		};
-		0B2744FE7C7019D11F042C8C = {
-			isa = PBXGroup;
-			children = (
-				62AA379A235BC781DA244B5B,
-				DB20E50150AB283C48B7F93A,
-				7B58008CB3971854075F5694,
-				B2EE4BBCDB1D0F8AF076D7B8,
-				0A8119940F9D1C4323EE2B94,
-			);
-			name = Comment;
-			sourceTree = "<group>";
-		};
 		474351C538FC2A3059893B3E = {
 			isa = PBXGroup;
 			children = (
@@ -6388,7 +6304,6 @@
 		77E313CFAABA49104A328F3F = {
 			isa = PBXGroup;
 			children = (
-				0B2744FE7C7019D11F042C8C,
 				474351C538FC2A3059893B3E,
 				908BCEF32D152BB480771FFD,
 				308900D44331CCF323509065,
@@ -7719,6 +7634,7 @@
 				378FBC82648FC26CBEC330A9,
 				F4590876F89E291434F6B792,
 				066DA60AFB60B8BE77E819E7,
+				03B34F65CD67AA62113F23C3,
 				8AB58B2FA156DD075B892850,
 				9EB5EECB134C6E74D074AB10,
 				0DD04E60A5E6174F61924D04,
@@ -8021,10 +7937,6 @@
 				EF06D68C5D80A560E01D5210,
 				A9F417BBCFA13B702734002D,
 				A377485D00E6BD3B63525CE2,
-				9C2562B13C5EBB94B68C8E53,
-				421B3402301018D213EFEBEB,
-				36A1673B7F47FD658B87837B,
-				FC04B4192A58DBBA56A99188,
 				6648A28A780225272E677EAE,
 				43E1EC2D9919CC1742754AA5,
 				D5BA72E6B1F43C42CFDDCE35,
@@ -8318,6 +8230,7 @@
 				F0BB5E30719519EA30B9FD86,
 				2231890C46C454B84C7D5049,
 				2270C7A2C18C1C8F04F83D18,
+				212B67A3534DE8B8475EFD36,
 				A2C0DA5E1710F15AA0E3F840,
 				BD9067271AF288F3D24C7A36,
 			);

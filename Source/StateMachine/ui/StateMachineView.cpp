@@ -11,7 +11,6 @@
 #include "StateMachineView.h"
 
 #include "../Transition/ui/StateTransitionManagerUI.h"
-#include "Common/Comment/ui/CommentManagerViewUI.h"
 
 StateMachineView::StateMachineView(const String &contentName, StateManager * _manager) :
 	BaseManagerShapeShifterViewUI(contentName, _manager),

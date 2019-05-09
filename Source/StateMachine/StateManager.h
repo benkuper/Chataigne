@@ -16,7 +16,6 @@
 #include "Transition/StateTransitionManager.h"
 #include "Module/modules/state/StateModule.h"
 #include "Common/Processor/Mapping/Mapping.h"
-#include "Common/Comment/CommentManager.h"
 
 class StateManager :
 	public BaseManager<State>,
