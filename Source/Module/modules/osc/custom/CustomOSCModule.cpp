@@ -24,8 +24,6 @@ CustomOSCModule::CustomOSCModule() :
 	autoRange = moduleParams.addBoolParameter("Auto Range", "If checked, parameters with potential range like numbers will automatically have the range of the minimum and maximum received values", false);
 	autoFeedback = moduleParams.addBoolParameter("Auto Feedback", "If checked, all changed values will be automatically sent back to the outputs", false);
 
-	for (auto &p : moduleParams.controllables) p->isTargettable = false;
-
 	valuesCC.userCanAddControllables = true;
 	valuesCC.customUserCreateControllableFunc = &CustomOSCModule::showMenuAndCreateValue;
 	

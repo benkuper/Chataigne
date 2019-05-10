@@ -1400,10 +1400,10 @@
       <CONFIGURATIONS>
         <CONFIGURATION isDebug="1" name="Debug" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/libartnet/include"
                        libraryPath="../../External/servus/lib/raspberry&#10;../../External/libartnet/lib/raspberry"
-                       linuxArchitecture="-march=armv7"/>
+                       linuxArchitecture="-march=native"/>
         <CONFIGURATION isDebug="0" name="Release" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/libartnet/include"
                        libraryPath="../../External/servus/lib/raspberry&#10;../../External/libartnet/lib/raspberry"
-                       linuxArchitecture="-march=armv7"/>
+                       linuxArchitecture="-march=native"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_video" path="~/JUCE/modules"/>

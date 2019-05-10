@@ -34,7 +34,6 @@ MIDIModule::MIDIModule(const String & name, bool _useGenericControls) :
 	}
 	
 	autoFeedback = moduleParams.addBoolParameter("Auto Feedback", "If checked, all changed values will be resent automatically to the outputs", false);
-	autoFeedback->isTargettable = false;
 
 	midiParam = new MIDIDeviceParameter("Devices");
 	moduleParams.addParameter(midiParam);

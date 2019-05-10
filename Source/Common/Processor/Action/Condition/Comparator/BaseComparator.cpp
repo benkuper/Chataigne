@@ -17,11 +17,9 @@ BaseComparator::BaseComparator(Controllable * _source) :
 	source(_source),
 	reference(nullptr)
 {
-	isTargettable = false;
 	compareFunction = addEnumParameter("Comparison Function", "Decides what function checks the activeness of the condition");
 	compareFunction->hideInEditor = true;
 	compareFunction->hideInOutliner = true;
-	compareFunction->isTargettable = false;
 
 	Parameter * p = dynamic_cast<Parameter *>(source);
 	if (p != nullptr)

@@ -2352,9 +2352,6 @@
     <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\controllable\ui\ControllableUI.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\controllable\ui\DashboardControllableUI.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\controllable\ui\GenericControllableContainerEditor.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -2382,25 +2379,19 @@
     <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\controllable\ControllableHelpers.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\controllable\DashboardControllableContainerItem.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\controllable\DashboardControllableItem.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\controllable\Trigger.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\dashboard\ui\DashboardItemManagerUI.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\dashboard\ui\DashboardItemUI.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\dashboard\ui\DashboardManagerUI.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\dashboard\ui\DashboardManagerView.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\dashboard\ui\DashboardTargetItemUI.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\dashboard\ui\DashboardUI.cpp">
@@ -2422,9 +2413,6 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\dashboard\DashboardManager.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\dashboard\DashboardScriptItem.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\dashboard\DashboardTargetItem.cpp">
@@ -3683,7 +3671,6 @@
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\controllable\parameter\TargetParameter.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\controllable\ui\ControllableEditor.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\controllable\ui\ControllableUI.h"/>
-    <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\controllable\ui\DashboardControllableUI.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\controllable\ui\GenericControllableContainerEditor.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\controllable\ui\TriggerBlinkUI.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\controllable\ui\TriggerButtonUI.h"/>
@@ -3695,13 +3682,11 @@
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\controllable\ControllableFactory.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\controllable\ControllableHelpers.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\controllable\ControllableUtil.h"/>
-    <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\controllable\DashboardControllableContainerItem.h"/>
-    <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\controllable\DashboardControllableItem.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\controllable\Trigger.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\dashboard\ui\DashboardItemManagerUI.h"/>
-    <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\dashboard\ui\DashboardItemUI.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\dashboard\ui\DashboardManagerUI.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\dashboard\ui\DashboardManagerView.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\dashboard\ui\DashboardTargetItemUI.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\dashboard\ui\DashboardUI.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\dashboard\Dashboard.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\dashboard\DashboardGroupItem.h"/>
@@ -3710,7 +3695,6 @@
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\dashboard\DashboardItemManager.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\dashboard\DashboardItemProvider.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\dashboard\DashboardManager.h"/>
-    <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\dashboard\DashboardScriptItem.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\dashboard\DashboardTargetItem.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\engine\Engine.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\engine\EngineListener.h"/>

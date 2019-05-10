@@ -37,12 +37,10 @@ Module::Module(const String &name) :
 	logIncomingData = addBoolParameter("Log Incoming", "Enable / Disable logging of incoming data for this module", false);
 	logIncomingData->hideInEditor = true;
 	logIncomingData->hideInOutliner = true;
-	logIncomingData->isTargettable = false;
 
 	logOutgoingData = addBoolParameter("Log Outgoing", "Enable / Disable logging of outgoing data for this module", false);
 	logOutgoingData->hideInEditor = true;
 	logOutgoingData->hideInOutliner = true;
-	logOutgoingData->isTargettable = false;
 
 	inActivityTrigger = addTrigger("IN Activity", "Incoming Activity Signal");
 	inActivityTrigger->hideInEditor = true;

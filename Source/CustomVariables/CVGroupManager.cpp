@@ -18,7 +18,6 @@ CVGroupManager::CVGroupManager(const String & name) :
 {
 	module = new CustomVariablesModule(this);
 	addChildControllableContainer(module);
-	module->isTargettable = false;
 }
 
 CVGroupManager::~CVGroupManager()
