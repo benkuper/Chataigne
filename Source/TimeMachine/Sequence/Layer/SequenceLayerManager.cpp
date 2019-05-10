@@ -17,7 +17,6 @@ SequenceLayerManager::SequenceLayerManager(Sequence * _sequence) :
 	masterAudioLayer(nullptr)
 {
 	itemDataType = "SequenceLayer";
-	skipControllableNameInAddress = true;
 	hideInEditor = true;
 }
 

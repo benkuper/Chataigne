@@ -21,7 +21,6 @@ TimeTriggerManager::TimeTriggerManager(TriggerLayer * _layer, Sequence * _sequen
 	comparator.compareFunc = &TimeTriggerManager::compareTime;
 
 	itemDataType = "TimeTrigger";
-	skipControllableNameInAddress = true;
 	sequence->addSequenceListener(this);
 }
 

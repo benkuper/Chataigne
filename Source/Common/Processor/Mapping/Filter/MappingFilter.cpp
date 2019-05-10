@@ -24,7 +24,6 @@ MappingFilter::MappingFilter(const String &name, var params) :
 	isSelectable = false;
 
 	filterParams.hideEditorHeader = true;
-	filterParams.skipControllableNameInAddress = true;
 	addChildControllableContainer(&filterParams);
 	filterParams.addControllableContainerListener(this);
 

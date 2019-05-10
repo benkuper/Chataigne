@@ -18,7 +18,6 @@ TimeColorManager::TimeColorManager(float _length) :
 {
 
 	editorIsCollapsed = true;
-	skipControllableNameInAddress = true;
 	selectItemWhenCreated = false;
 
 	position = addFloatParameter("Position", "Position in the gradient", 0, 0, _length);
