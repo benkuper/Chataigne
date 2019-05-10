@@ -32,7 +32,7 @@ ifeq ($(CONFIG),Debug)
   JUCE_OUTDIR := build
 
   ifeq ($(TARGET_ARCH),)
-    TARGET_ARCH := -march=armv7
+    TARGET_ARCH := -march=native
   endif
 
   JUCE_CPPFLAGS := $(DEPFLAGS) -DLINUX=1 -DDEBUG=1 -D_DEBUG=1 -DJUCER_LINUX_MAKE_9C1B7400=1 -DJUCE_APP_VERSION=1.6.0b5 -DJUCE_APP_VERSION_HEX=0x10600 $(shell pkg-config --cflags alsa freetype2 x11 xext xinerama webkit2gtk-4.0 gtk+-x11-3.0 libcurl) -pthread -I../../JuceLibraryCode -I$(HOME)/JUCE/modules -I../../../JUCE\ Modules -I../../External/wiiuse -I../../External/serial/include -I../../External/servus/include -I../../External/dnssd/include -I../../External/libartnet/include -I../../Source $(CPPFLAGS)
@@ -53,7 +53,7 @@ ifeq ($(CONFIG),Release)
   JUCE_OUTDIR := build
 
   ifeq ($(TARGET_ARCH),)
-    TARGET_ARCH := -march=armv7
+    TARGET_ARCH := -march=native
   endif
 
   JUCE_CPPFLAGS := $(DEPFLAGS) -DLINUX=1 -DNDEBUG=1 -DJUCER_LINUX_MAKE_9C1B7400=1 -DJUCE_APP_VERSION=1.6.0b5 -DJUCE_APP_VERSION_HEX=0x10600 $(shell pkg-config --cflags alsa freetype2 x11 xext xinerama webkit2gtk-4.0 gtk+-x11-3.0 libcurl) -pthread -I../../JuceLibraryCode -I$(HOME)/JUCE/modules -I../../../JUCE\ Modules -I../../External/wiiuse -I../../External/serial/include -I../../External/servus/include -I../../External/dnssd/include -I../../External/libartnet/include -I../../Source $(CPPFLAGS)
