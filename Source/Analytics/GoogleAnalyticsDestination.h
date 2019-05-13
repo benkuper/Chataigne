@@ -152,10 +152,10 @@ private:
         // method is called on app shutdown so it needs to complete quickly!
 
         XmlDocument previouslySavedEvents (savedEventsFile);
-        ScopedPointer<XmlElement> xml = previouslySavedEvents.getDocumentElement();
+        std::unique_ptr<XmlElement> xml = previouslySavedEvents.getDocumentElement();
 
-        if (xml == nullptr || xml->getTagName() != "events")
-            xml = new XmlElement ("events");
+		if (xml == nullptr || xml->getTagName() != "events")
+			xml.reset(new XmlElement("events"));
 
         for (auto& event : eventsToSave)
         {
@@ -181,13 +181,13 @@ private:
             xml->addChildElement (xmlEvent);
         }
 
-        xml->writeToFile (savedEventsFile, {});
+		xml->writeTo(savedEventsFile, {});
     }
 
     void restoreUnloggedEvents (std::deque<AnalyticsEvent>& restoredEventQueue) override
     {
         XmlDocument savedEvents (savedEventsFile);
-        ScopedPointer<XmlElement> xml = savedEvents.getDocumentElement();
+        std::unique_ptr<XmlElement> xml = savedEvents.getDocumentElement();
 
         if (xml == nullptr || xml->getTagName() != "events")
             return;

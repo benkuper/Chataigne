@@ -283,6 +283,13 @@
 #endif
 
 //==============================================================================
+// juce_osc flags:
+
+#ifndef    JUCE_ALLOW_SPECIAL_CHARS_IN_ADDRESS
+ #define   JUCE_ALLOW_SPECIAL_CHARS_IN_ADDRESS 1
+#endif
+
+//==============================================================================
 // juce_video flags:
 
 #ifndef    JUCE_USE_CAMERA

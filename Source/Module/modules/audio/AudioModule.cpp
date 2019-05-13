@@ -126,7 +126,7 @@ var AudioModule::getJSONData()
 	ScopedPointer<XmlElement> xmlData = am.createStateXml();
 	if (xmlData != nullptr)
 	{
-		data.getDynamicObject()->setProperty("audioSettings", xmlData->createDocument("", true, false));
+		data.getDynamicObject()->setProperty("audioSettings", xmlData->toString());
 	}
 
 	return data;
@@ -138,8 +138,8 @@ void AudioModule::loadJSONDataInternal(var data)
 	if (data.getDynamicObject()->hasProperty("audioSettings"))
 	{
 
-		ScopedPointer<XmlElement> elem = XmlDocument::parse(data.getProperty("audioSettings", ""));
-		am.initialise(2, 2, elem, true);
+		std::unique_ptr<XmlElement> elem = XmlDocument::parse(data.getProperty("audioSettings", ""));
+		am.initialise(2, 2, elem.get(), true);
 	}
 }
 

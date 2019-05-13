@@ -38,6 +38,8 @@ GenericOSCQueryModule::GenericOSCQueryModule(const String & name, int defaultRem
 
 GenericOSCQueryModule::~GenericOSCQueryModule()
 {
+	signalThreadShouldExit();
+	waitForThreadToExit(2000);
 }
 
 void GenericOSCQueryModule::sendOSCMessage(OSCMessage m)

@@ -8,9 +8,8 @@
  ==============================================================================
  */
 
-#ifndef CHATAIGNEENGINE_H_INCLUDED
-#define CHATAIGNEENGINE_H_INCLUDED
 
+#pragma once
 
 #include "JuceHeader.h"
 #include "Module/modules/generic/ChataigneGenericModule.h"
@@ -41,5 +40,3 @@ public:
 	String getMinimumRequiredFileVersion() override;
 
 };
-
-#endif
