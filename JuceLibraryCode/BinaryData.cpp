@@ -212,27 +212,27 @@ const char* genericScriptTemplate_js = (const char*) temp_binary_data_3;
 
 //================== httpScriptTemplate.js ==================
 static const unsigned char temp_binary_data_4[] =
-"\n"
-"\n"
-"/* ********** HTTP MODULE SPECIFIC SCRIPTING ********************* */\n"
-"/*\n"
-"\n"
-"HTTP Mdule has specific methods that can be used to handle receiving and sending data over the connection.\n"
-"With HTTP modules, there are 2 ways of sending data : either via GET or POST\n"
-"\n"
-"local.sendGET(\"https://httpbin.org/anything?myValue1=1&myValue2=super\");\n"
-"local.sendPOST(\"https://httpbin.org/anything\",\"myValue1\",1,\"myValue2\",2); //After address, values are taken 2 by 2 to form a name/value pair.\n"
-"\n"
-"*/\n"
-"\n"
-"/*\n"
-"You can intercept all the received data from this module with the method dataReceived(data).\n"
-"Depending on the Protocol you chose, the nature of the data passed in this function will be different.\n"
-"*/\n"
-"\n"
-"function dataReceived(data, requestURL)\n"
-"{\n"
-"\tscript.log(\"Data received, request URL :\"+requestURL+\"\\nContent :\\n\" +data);\n"
+"\r\n"
+"\r\n"
+"/* ********** HTTP MODULE SPECIFIC SCRIPTING ********************* */\r\n"
+"/*\r\n"
+"\r\n"
+"HTTP Mdule has specific methods that can be used to handle receiving and sending data over the connection.\r\n"
+"With HTTP modules, there are 2 ways of sending data : either via GET or POST\r\n"
+"\r\n"
+"local.sendGET(\"https://httpbin.org/anything?myValue1=1&myValue2=super\");\r\n"
+"local.sendPOST(\"https://httpbin.org/anything\",\"myValue1\",1,\"myValue2\",2); //After address, values are taken 2 by 2 to form a name/value pair.\r\n"
+"\r\n"
+"*/\r\n"
+"\r\n"
+"/*\r\n"
+"You can intercept all the received data from this module with the method dataReceived(data).\r\n"
+"Depending on the Protocol you chose, the nature of the data passed in this function will be different.\r\n"
+"*/\r\n"
+"\r\n"
+"function dataEvent(data, requestURL)\r\n"
+"{\r\n"
+"\tscript.log(\"Data received, request URL :\"+requestURL+\"\\nContent :\\n\" +data);\r\n"
 "}";
 
 const char* httpScriptTemplate_js = (const char*) temp_binary_data_4;
@@ -2014,7 +2014,7 @@ const char* getNamedResource (const char* resourceNameUTF8, int& numBytes)
         case 0x7fffe188:  numBytes = 5536; return conditionScriptTemplate_js;
         case 0x5c8768cb:  numBytes = 646; return filterScriptTemplate_js;
         case 0xa23dd44c:  numBytes = 4737; return genericScriptTemplate_js;
-        case 0xf15eedbb:  numBytes = 805; return httpScriptTemplate_js;
+        case 0xf15eedbb:  numBytes = 823; return httpScriptTemplate_js;
         case 0x01c43842:  numBytes = 1271; return midiScriptTemplate_js;
         case 0xb21f5457:  numBytes = 1415; return moduleScriptTemplate_js;
         case 0x83ff2424:  numBytes = 798; return oscScriptTemplate_js;

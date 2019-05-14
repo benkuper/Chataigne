@@ -78,7 +78,6 @@ public:
 		enum DepAction { ACTION_NOT_SET, SHOW, ENABLE, MAX_ACTIONS };
 		const Array<String> actionNames{ "notset", "show", "enable" };
 
-		Dependency() {};
 		Dependency(Parameter * source, Parameter * target, var value, CheckType checkType, DepAction depAction);
 		Dependency(Parameter * source, Parameter * target, var value, StringRef typeName, StringRef actionName);
 

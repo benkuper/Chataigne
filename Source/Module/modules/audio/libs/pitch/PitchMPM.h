@@ -1,28 +1,32 @@
-#include "JuceHeader.h"
-#include <float.h>
 
-#pragma once
-#pragma warning(push)
-#pragma warning(disable:4244)
 /*
  *  Adapted for JUCE from the McLeod Pitch Method implementation in https://github.com/sevagh/pitch-detection
  */
+
+#pragma once
+
+#include "JuceHeader.h"
+#include <float.h>
+#include "PitchDetector.h"
 
 #define CUTOFF 0.93 //0.97 is default
 #define SMALL_CUTOFF 0.5
 #define LOWER_PITCH_CUTOFF 80 //hz
 
-class PitchMPM
+#pragma warning(push)
+#pragma warning(disable:4244)
+class PitchMPM :
+	public PitchDetector
 {
 	 
 public:
 
-    PitchMPM(int bufferSize) : bufferSize (bufferSize), sampleRate (44100)
+    PitchMPM(int bufferSize) : bufferSize (bufferSize), sampleRate (44100), turningPointX(0), turningPointY(0)
     {
         nsdf.insertMultiple(0, 0.0, bufferSize);
     }
     
-    PitchMPM(int sampleRate, int bufferSize) : bufferSize (bufferSize), sampleRate (sampleRate)
+    PitchMPM(int sampleRate, int bufferSize) : bufferSize (bufferSize), sampleRate (sampleRate), turningPointX(0), turningPointY(0)
     {
         nsdf.insertMultiple(0, 0.0, bufferSize); // DRY!
     }
@@ -37,7 +41,7 @@ public:
         
     }
     
-    float getPitch(const float *audioBuffer)
+	float getPitch(const float* audioBuffer) override
     {
         
         float pitch;
@@ -102,9 +106,14 @@ public:
         sampleRate = newSampleRate;
     }
 
-	unsigned int getBufferSize()
+	unsigned int getBufferSize() override
 	{
 		return bufferSize;
+	}
+
+	void setBufferSize(int value) override
+	{
+		bufferSize = value;
 	}
 
 private:

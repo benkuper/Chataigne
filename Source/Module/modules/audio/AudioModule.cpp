@@ -12,14 +12,19 @@
 #include "Common/MIDI/MIDIManager.h"
 #include "ui/AudioModuleHardwareEditor.h"
 #include "commands/PlayAudioFileCommand.h"
+#include "libs/pitch/PitchMPM.h"
+#include "libs/pitch/PitchYIN.h"
 
 AudioModule::AudioModule(const String & name) :
 	Module(name),
 	hs(&am),
 	uidIncrement(100),
+	curBufferIndex(0),
     monitorParams("Monitor"),
     numActiveMonitorOutputs(0),
-    pitchDetector(nullptr)
+	noteCC("Pitch Detection"),
+	fftCC("FFT Enveloppes"),
+	pitchDetector(nullptr)
 {
 	setupIOConfiguration(true, true);
 
@@ -28,21 +33,34 @@ AudioModule::AudioModule(const String & name) :
 	keepLastDetectedValues = moduleParams.addBoolParameter("Keep Values", "Keep last detected values when no activity detected.", false);
     
     outVolume = moduleParams.addFloatParameter("Out Volume","Global volume multiplier for all sound that is played through this module",1,0,10);
-    
+	pitchDetectionMethod = moduleParams.addEnumParameter("Pitch Detection Method", "Choose how to detect the pitch.\nNone will disable the detection (for performance),\nMPM is better suited for monophonic sounds,\nYIN is better suited for high-pitched voices and music");
+	pitchDetectionMethod->addOption("None", NONE)->addOption("MPM", MPM)->addOption("YIN", YIN);
+
 	moduleParams.addChildControllableContainer(&monitorParams);
 	monitorVolume = monitorParams.addFloatParameter("Monitor Volume", "Volume multiplier for the monitor output. This will affect all the input channels and all the selected output channels", 1, 0, 10);
+
+	moduleParams.addChildControllableContainer(&analyzerManager);
+	analyzerManager.addBaseManagerListener(this);
 
 	//Values
 	volume = valuesCC.addFloatParameter("Volume", "Volume of the audio input", 0, 0, 1);
 
-	frequency = valuesCC.addFloatParameter("Freq", "Freq", 0, 0, 2000);
+	//Pitch Detection
+	frequency = noteCC.addFloatParameter("Freq", "Freq", 0, 0, 2000);
+	pitch = noteCC.addIntParameter("Pitch", "Pitch", 0, 0, 300);
 
-	pitch = valuesCC.addIntParameter("Pitch", "Pitch", 0, 0, 300);
-
-	note = valuesCC.addEnumParameter("Note", "Detected note");
+	note = noteCC.addEnumParameter("Note", "Detected note");
 	note->addOption("-", -1);
 	for (int i = 0; i < 12; i++) note->addOption(MIDIManager::getNoteName(i, false), i);
-	octave = valuesCC.addIntParameter("Octave", "Detected octave", 0, 0, 10);
+	
+	octave = noteCC.addIntParameter("Octave", "Detected octave", 0, 0, 10);
+	valuesCC.addChildControllableContainer(&noteCC);
+
+	//FFT
+	valuesCC.addChildControllableContainer(&fftCC);
+
+
+	//AUDIO
 
 	am.addAudioCallback(this);
 	am.addChangeListener(this);
@@ -94,7 +112,6 @@ void AudioModule::updateSelectedMonitorChannels()
 			selectedMonitorOutChannels.add(i);
 		}
 	}
-
 	
 	numActiveMonitorOutputs = selectedMonitorOutChannels.size();
 }
@@ -107,13 +124,28 @@ void AudioModule::onControllableFeedbackUpdateInternal(ControllableContainer * c
 	{
 		updateSelectedMonitorChannels();
 	}
+	else if (c == pitchDetectionMethod)
+	{
+		PitchDetectionMethod pdm = pitchDetectionMethod->getValueDataAsEnum<PitchDetectionMethod>();
+		
+		AudioDeviceManager::AudioDeviceSetup s;
+		am.getAudioDeviceSetup(s);
+		
+		
+		switch (pdm)
+		{
+		case NONE: pitchDetector = nullptr; break;
+		case MPM: pitchDetector = new PitchMPM((int)s.sampleRate, s.bufferSize);  break;
+		case YIN: pitchDetector = new PitchYIN((int)s.sampleRate, s.bufferSize); break;
+		}
+
+	}
 }
 
 void AudioModule::onContainerParameterChangedInternal(Parameter * p)
 {
 	if (p == enabled)
 	{
-		DBG("Enabled " << (int)enabled->boolValue());
 		if (enabled->boolValue()) player.setProcessor(&graph);
 		else player.setProcessor(nullptr);
 	}
@@ -129,6 +161,8 @@ var AudioModule::getJSONData()
 		data.getDynamicObject()->setProperty("audioSettings", xmlData->toString());
 	}
 
+	data.getDynamicObject()->setProperty("analyzer", analyzerManager.getJSONData());
+
 	return data;
 }
 
@@ -141,6 +175,8 @@ void AudioModule::loadJSONDataInternal(var data)
 		std::unique_ptr<XmlElement> elem = XmlDocument::parse(data.getProperty("audioSettings", ""));
 		am.initialise(2, 2, elem.get(), true);
 	}
+
+	analyzerManager.loadJSONData(data.getProperty("analyzer", var()));
 }
 
 void AudioModule::audioDeviceIOCallback(const float ** inputChannelData, int numInputChannels, float ** outputChannelData, int numOutputChannels, int numSamples)
@@ -159,27 +195,22 @@ void AudioModule::audioDeviceIOCallback(const float ** inputChannelData, int num
 			buffer.copyFromWithRamp(0, 0, inputChannelData[0], numSamples, 1, inputGain->floatValue());
 			volume->setValue(buffer.getRMSLevel(0, 0, numSamples));
 
-			//DBG("here");
-
 			if (volume->floatValue() > activityThreshold->floatValue())
 			{
 				inActivityTrigger->trigger();
-				if (pitchDetector == nullptr || (int)pitchDetector->getBufferSize() != numSamples)
+				
+				if (pitchDetector != nullptr)
 				{
-					AudioDeviceManager::AudioDeviceSetup s;
-					am.getAudioDeviceSetup(s);
-					pitchDetector = new PitchMPM((int)s.sampleRate, numSamples);
+					if ((int)pitchDetector->getBufferSize() != numSamples) pitchDetector->setBufferSize(numSamples);
 
+					float freq = pitchDetector->getPitch(inputChannelData[0]);
+					frequency->setValue(freq);
+					int pitchNote = getNoteForFrequency(freq);
+					pitch->setValue(pitchNote);
+
+					note->setValueWithKey(MIDIManager::getNoteName(pitchNote, false));
+					octave->setValue(floor(pitchNote / 12.0));
 				}
-				float freq = pitchDetector->getPitch(inputChannelData[0]);
-				frequency->setValue(freq);
-				int pitchNote = getNoteForFrequency(freq);
-				pitch->setValue(pitchNote);
-
-				note->setValueWithKey(MIDIManager::getNoteName(pitchNote, false));
-				octave->setValue(floor(pitchNote / 12.0));
-
-
 			} else
 			{
 				if (!keepLastDetectedValues->boolValue())
@@ -191,6 +222,9 @@ void AudioModule::audioDeviceIOCallback(const float ** inputChannelData, int num
 			}
 		}
 		
+		//Analysis
+		analyzerManager.process(inputChannelData[0], numSamples);
+
 		//Monitor
 		for (int j = 0; j < numActiveMonitorOutputs; j++)
 		{
@@ -233,10 +267,21 @@ void AudioModule::changeListenerCallback(ChangeBroadcaster *)
 		BoolParameter * b = monitorParams.addBoolParameter("Monitor Out : "+channelName, "If enabled, sends audio from this layer to this channel", i < selectedMonitorOutChannels.size());
 		monitorOutChannels.add(b);
 	}
+
 	updateSelectedMonitorChannels();
     
     audioModuleListeners.call(&AudioModuleListener::audioSetupChanged);
 	audioModuleListeners.call(&AudioModuleListener::monitorSetupChanged);
+}
+
+void AudioModule::itemAdded(FFTAnalyzer* item)
+{
+	fftCC.addParameter(item->value);
+}
+
+void AudioModule::itemRemoved(FFTAnalyzer* item)
+{
+	fftCC.removeControllable(item->value);
 }
 
 

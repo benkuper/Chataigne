@@ -8,14 +8,16 @@
   ==============================================================================
 */
 
-#ifndef AUDIOMODULE_H_INCLUDED
-#define AUDIOMODULE_H_INCLUDED
+#pragma once
 
 #include "Module/Module.h"
-#include "libs/pitch/PitchMPM.h"
+#include "libs/pitch/PitchDetector.h"
+
+#include "analysis/FFTAnalyzerManager.h"
 
 #define AUDIO_INPUT_GRAPH_ID 1
 #define AUDIO_OUTPUT_GRAPH_ID 2
+
 
 class AudioModuleHardwareSettings :
 	public ControllableContainer
@@ -31,7 +33,8 @@ public:
 class AudioModule :
 	public Module,
 	public AudioIODeviceCallback,
-	public ChangeListener
+	public ChangeListener,
+	public FFTAnalyzerManager::Listener
 {
 public:
 	AudioModule(const String &name = "Sound Card");
@@ -64,15 +67,23 @@ public:
 	Array<int> selectedMonitorOutChannels;
 	int numActiveMonitorOutputs;
 
+	enum PitchDetectionMethod { NONE, MPM, YIN };
+	EnumParameter * pitchDetectionMethod;
+
 	//Values
 	FloatParameter * volume;
+
+	ControllableContainer noteCC;
 	FloatParameter * frequency;
 	IntParameter * pitch;
-
 	EnumParameter * note;
 	IntParameter * octave;
 
-	ScopedPointer<PitchMPM> pitchDetector;
+	ControllableContainer fftCC;
+
+	FFTAnalyzerManager analyzerManager;
+
+	ScopedPointer<PitchDetector> pitchDetector;
 
 	void updateSelectedMonitorChannels();
 
@@ -91,6 +102,9 @@ public:
 	// Inherited via ChangeListener
 	virtual void changeListenerCallback(ChangeBroadcaster * source) override;
 
+
+	void itemAdded(FFTAnalyzer* item) override;
+	void itemRemoved(FFTAnalyzer* item) override;
 
 
 	static AudioModule * create() { return new AudioModule(); }
@@ -116,7 +130,3 @@ private:
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(AudioModule)
 };
-
-
-
-#endif  // AUDIOMODULE_H_INCLUDED
