@@ -22,6 +22,10 @@ public:
 
 	StringParameter * baseAddress;
 
+	const Identifier sendGETId = "sendGET";
+	const Identifier sendPOSTId = "sendPOST";
+	const Identifier dataEventId = "dataEvent";
+
 	
 	enum RequestMethod { GET, POST };
 	void sendRequest(StringRef address, RequestMethod method, StringPairArray params = StringPairArray());
@@ -33,10 +37,14 @@ public:
 		RequestMethod method;
 	};
 
-	const Identifier dataEventId = "dataReceived";
 
 	OwnedArray<Request, CriticalSection> requests;
 	void processRequest(Request * request);
+
+	//Script
+	void sendRequestFromScript(const var::NativeFunctionArgs& args, RequestMethod method);
+	static var sendGETFromScript(const var::NativeFunctionArgs& args);
+	static var sendPOSTFromScript(const var::NativeFunctionArgs& args);
 
 	String getTypeString() const override { return "HTTP"; }
 	static HTTPModule * create() { return new HTTPModule(); }
