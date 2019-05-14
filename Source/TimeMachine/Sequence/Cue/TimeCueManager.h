@@ -11,15 +11,6 @@
 #pragma once
 #include "TimeCue.h"
 
-class TimeCueComparator
-{
-public:
-	int compareElements(TimeCue * t1, TimeCue * t2)
-	{
-		
-	}
-};
-
 class TimeCueManager :
 	public BaseManager<TimeCue>
 {
