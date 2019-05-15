@@ -22,7 +22,10 @@ public:
 	enum Type { MESSAGE, VALUE };
 	Type type;
 
+	enum LogType { INFO, WARNING, ERROR };
+
 	StringParameter * message;
+	EnumParameter* logType;
 	Parameter * value;
 
 	void setValue(var value) override;
