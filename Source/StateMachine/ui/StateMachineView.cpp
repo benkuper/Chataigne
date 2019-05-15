@@ -16,9 +16,9 @@ StateMachineView::StateMachineView(const String &contentName, StateManager * _ma
 	BaseManagerShapeShifterViewUI(contentName, _manager),
 	manager(_manager),
 	stmUI(nullptr),
-	commentManagerUI(nullptr),
 	transitionCreationMode(false),
-	transitionCreationSourceUI(nullptr)
+	transitionCreationSourceUI(nullptr),
+    commentManagerUI(nullptr)
 {
 	canZoom = true;
 	contentIsFlexible = true;
