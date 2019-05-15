@@ -20,6 +20,7 @@ CommandTemplate::CommandTemplate(Module * m, var params) :
 	sourceDef(nullptr)
 {
 	itemDataType = "CommandTemplate";
+	showInspectorOnSelect = false;
 
 	triggerTrigger = addTrigger("Trigger","Trigger a command from this template");
 	triggerTrigger->hideInEditor = true;
@@ -46,8 +47,7 @@ CommandTemplate::CommandTemplate(var params) :
 	sourceDef(nullptr)
 {
 	itemDataType = "CommandTemplate";
-	editorIsCollapsed = false;
-	editorCanBeCollapsed = false;
+	showInspectorOnSelect = false;
 
 	Module * m = ModuleManager::getInstance()->getModuleWithName(params.getProperty("module",""));
 	Array<CommandDefinition * > defs = m->getCommands(false);
@@ -73,7 +73,8 @@ CommandTemplate::CommandTemplate(var params) :
 void CommandTemplate::generateParametersFromDefinition(CommandDefinition * def)
 {
 	paramsContainer.clear();
-	ScopedPointer<BaseCommand> c = def->create(CommandContext::ACTION);
+	std::unique_ptr<BaseCommand> c(def->create(CommandContext::ACTION));
+
 	c->setupTemplateParameters(this);
 	c->clear();
 }
@@ -122,7 +123,7 @@ void CommandTemplate::onContainerTriggerTriggered(Trigger * t)
 	{
 		if (module != nullptr)
 		{
-			ScopedPointer<BaseCommand> c = createCommand(module, CommandContext::ACTION, var());
+			std::unique_ptr<BaseCommand> c(createCommand(module, CommandContext::ACTION, var()));
 			c->trigger();
 		}
 	}

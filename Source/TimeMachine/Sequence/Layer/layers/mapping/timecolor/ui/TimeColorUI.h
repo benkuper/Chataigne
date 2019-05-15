@@ -20,7 +20,7 @@ public:
 	TimeColorUI(TimeColor * item);
 	~TimeColorUI();
 
-	ScopedPointer<ColorParameterUI> colorUI;
+	std::unique_ptr<ColorParameterUI> colorUI;
 	Path drawPath;
 
 	float posAtMouseDown; 

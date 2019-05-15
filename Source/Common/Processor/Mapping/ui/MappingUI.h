@@ -24,7 +24,7 @@ public:
 
 	Mapping * mapping;
 
-	ScopedPointer<ControllableUI> outputParamUI;
+	std::unique_ptr<ControllableUI> outputParamUI;
 	
 
 	void paint(Graphics &g) override;

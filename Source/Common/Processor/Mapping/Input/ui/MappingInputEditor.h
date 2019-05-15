@@ -23,7 +23,7 @@ public:
 
 	MappingInput * input;
 
-	ScopedPointer<ControllableUI> sourceFeedbackUI;
+	std::unique_ptr<ControllableUI> sourceFeedbackUI;
 
 	void updateSourceUI();
 	void resizedInternalHeader(Rectangle<int> &r) override;

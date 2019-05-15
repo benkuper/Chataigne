@@ -31,7 +31,7 @@ ZeroconfManager::ZeroconfManager() :
 ZeroconfManager::~ZeroconfManager()
 {
 	signalThreadShouldExit();
-	waitForThreadToExit(500);
+	waitForThreadToExit(2000);
 }
 
 void ZeroconfManager::addSearcher(StringRef name, StringRef serviceName)

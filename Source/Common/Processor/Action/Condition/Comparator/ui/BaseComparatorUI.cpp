@@ -13,15 +13,15 @@
 BaseComparatorUI::BaseComparatorUI(BaseComparator * _comparator) :
 	comparator(_comparator)
 {
-	compareFuncUI = comparator->compareFunction->createUI();
+	compareFuncUI.reset(comparator->compareFunction->createUI());
 	//alwaysDispatchUI = comparator->alwaysDispatch->createToggle();
 	
-	addAndMakeVisible(compareFuncUI);
+	addAndMakeVisible(compareFuncUI.get());
 	//addAndMakeVisible(alwaysDispatchUI);
 
 	if (!comparator.wasObjectDeleted() && comparator->reference != nullptr) //null if comparator is trigger
 	{
-		refEditor = (ControllableEditor *)comparator->reference->getEditor(false);
+		refEditor.reset((ControllableEditor*)comparator->reference->getEditor(false));
 		refEditor->setShowLabel(false);
 		if (comparator->reference->type != Controllable::TRIGGER)
 		{
@@ -29,7 +29,7 @@ BaseComparatorUI::BaseComparatorUI(BaseComparator * _comparator) :
 			p->addAsyncParameterListener(this);
 		}
 
-		addAndMakeVisible(refEditor);
+		addAndMakeVisible(refEditor.get());
 	}
 
 	setSize(100, 16); //init size

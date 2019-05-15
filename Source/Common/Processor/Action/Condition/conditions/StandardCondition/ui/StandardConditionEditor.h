@@ -23,9 +23,9 @@ public:
 	virtual ~StandardConditionEditor();
 
 	StandardCondition * standardCondition;
-	ScopedPointer<InspectableEditor> targetUI;
-	ScopedPointer<ControllableUI> sourceFeedbackUI;
-	ScopedPointer<BaseComparatorUI> comparatorUI;
+	std::unique_ptr<InspectableEditor> targetUI;
+	std::unique_ptr<ControllableUI> sourceFeedbackUI;
+	std::unique_ptr<BaseComparatorUI> comparatorUI;
 	
 	void setCollapsed(bool value, bool force = false, bool animate = true, bool doNotRebuild = false) override;
 

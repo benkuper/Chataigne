@@ -32,7 +32,7 @@ void MappingLayerTimeline::setupUIForLayerMode()
 {
 	if (colorManagerUI != nullptr)
 	{
-		removeChildComponent(colorManagerUI);
+		removeChildComponent(colorManagerUI.get());
 		colorManagerUI = nullptr;
 	}
 
@@ -58,8 +58,8 @@ void MappingLayerTimeline::setupUIForLayerMode()
 
 	if (mappingLayer->mode->getValueDataAsEnum<MappingLayer::Mode>() == MappingLayer::MODE_COLOR)
 	{
-		colorManagerUI = new TimeColorManagerUI(mappingLayer->timeColorManager);
-		addAndMakeVisible(colorManagerUI);
+		colorManagerUI.reset(new TimeColorManagerUI(mappingLayer->timeColorManager.get()));
+		addAndMakeVisible(colorManagerUI.get());
 		colorManagerUI->toBack();
 	}
 

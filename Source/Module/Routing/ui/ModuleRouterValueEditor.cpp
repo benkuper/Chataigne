@@ -15,9 +15,9 @@ ModuleRouterValueEditor::ModuleRouterValueEditor(ModuleRouterValue * mrv) :
 {
 	item->addValueListener(this);
 
-	valueUI = item->sourceValue->createDefaultUI();
+	valueUI.reset(item->sourceValue->createDefaultUI());
 	valueUI->showLabel = false;
-	addAndMakeVisible(valueUI);
+	addAndMakeVisible(valueUI.get());
 
 	valueLabel.setColour(valueLabel.textColourId, TEXTNAME_COLOR);
 	valueLabel.setFont(10);

@@ -21,7 +21,7 @@ public:
 
 	TargetParameter * sourceTarget;
 	WeakReference<Controllable> sourceControllable;
-	ScopedPointer<BaseComparator> comparator;
+	std::unique_ptr<BaseComparator> comparator;
 
 	var loadingComparatorData; //for dynamically created parameter, allows to reload comparator data after these are created
 

@@ -16,8 +16,8 @@ CVPresetEditor::CVPresetEditor(CVPreset * preset, bool isRoot) :
     weightUI(nullptr),
 	preset(preset)
 {
-	weightUI = preset->weight->createSlider();
-	addChildComponent(weightUI);
+	weightUI.reset(preset->weight->createSlider());
+	addChildComponent(weightUI.get());
 	weightUI->setVisible(preset->group->controlMode->getValueDataAsEnum<CVGroup::ControlMode>() != CVGroup::FREE);
 	preset->group->controlMode->addAsyncParameterListener(this);
 }

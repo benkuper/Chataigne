@@ -20,7 +20,7 @@ public:
 	CVPresetEditor(CVPreset * preset, bool isRoot);
 	~CVPresetEditor();
 
-	ScopedPointer<FloatSliderUI> weightUI;
+	std::unique_ptr<FloatSliderUI> weightUI;
 
 	CVPreset * preset;
 	

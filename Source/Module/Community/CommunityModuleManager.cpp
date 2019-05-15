@@ -74,7 +74,7 @@ var CommunityModuleManager::getJSONDataForURL(URL url)
 	
 	StringPairArray responseHeaders;
 	int statusCode = 0;
-	ScopedPointer<InputStream> stream(url.createInputStream(false, nullptr, nullptr, String(),
+	std::unique_ptr<InputStream> stream(url.createInputStream(false, nullptr, nullptr, String(),
 		2000, // timeout in millisecs
 		&responseHeaders, &statusCode));
 #if JUCE_WINDOWS

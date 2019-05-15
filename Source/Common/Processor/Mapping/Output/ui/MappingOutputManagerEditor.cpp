@@ -27,14 +27,14 @@ void MappingOutputManagerEditor::updateOutputUI()
 {
 	if (outUI != nullptr)
 	{
-		removeChildComponent(outUI);
+		removeChildComponent(outUI.get());
 		outUI = nullptr;
 	}
 
 	if (outputManager->outParam != nullptr)
 	{
-		outUI = (ParameterUI *)outputManager->outParam->createDefaultUI();
-		addAndMakeVisible(outUI);
+		outUI.reset((ParameterUI*)outputManager->outParam->createDefaultUI());
+		addAndMakeVisible(outUI.get());
 	}
 
 	resized();

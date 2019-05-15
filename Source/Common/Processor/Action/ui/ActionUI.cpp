@@ -25,12 +25,12 @@ ActionUI::ActionUI(Action * _action) :
 
 	action->addAsyncActionListener(this);
 
-	triggerAllUI = action->csmOn->triggerAll->createButtonUI();
-	addAndMakeVisible(triggerAllUI);
+	triggerAllUI.reset(action->csmOn->triggerAll->createButtonUI());
+	addAndMakeVisible(triggerAllUI.get());
 
-	progressionUI = action->cdm.validationProgress->createSlider();
+	progressionUI.reset(action->cdm.validationProgress->createSlider());
 	progressionUI->showValue = false;
-	addChildComponent(progressionUI);
+	addChildComponent(progressionUI.get());
 	progressionUI->setVisible(action->cdm.validationProgress->enabled);
 
 	baseSaturation = .4f;

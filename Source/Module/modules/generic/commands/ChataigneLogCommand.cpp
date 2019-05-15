@@ -1,22 +1,26 @@
 /*
   ==============================================================================
 
-    ChataigneLogCommands.cpp
-    Created: 13 Apr 2018 10:28:03am
-    Author:  Ben
+	ChataigneLogCommands.cpp
+	Created: 13 Apr 2018 10:28:03am
+	Author:  Ben
 
   ==============================================================================
 */
 
 #include "ChataigneLogCommand.h"
 
-ChataigneLogCommand::ChataigneLogCommand(ChataigneGenericModule * _module, CommandContext context, var params) :
+ChataigneLogCommand::ChataigneLogCommand(ChataigneGenericModule* _module, CommandContext context, var params) :
 	BaseCommand(_module, context, params),
 	value(nullptr)
 {
 	type = (Type)(int)(params.getProperty("type", MESSAGE));
 
-	message = addStringParameter("Message", "The message to log", type == VALUE?"My value is":"Wubba Lubba Dub Dub");
+	logType = addEnumParameter("Log Type", "The Type of log");
+	logType->addOption("Info", INFO)->addOption("Warning", WARNING)->addOption("Error", ERROR);
+
+	message = addStringParameter("Message", "The message to log", type == VALUE ? "My value is" : "Wubba Lubba Dub Dub");
+
 	if (type == VALUE)
 	{
 		if (context == ACTION) value = addTargetParameter("Target", "The target to log the value from");
@@ -38,34 +42,52 @@ void ChataigneLogCommand::setValue(var _value)
 	if (_value.isArray() && _value.size() > 0)
 	{
 		String s = _value[0].toString();
-		for (int i = 1; i < _value.size(); i++) s += ", "+_value[i].toString();
-		((StringParameter *)value)->setValue(s);
-	}else
-	{
-		((StringParameter *)value)->setValue(_value.toString());
+		for (int i = 1; i < _value.size(); i++) s += ", " + _value[i].toString();
+		((StringParameter*)value)->setValue(s);
 	}
-	
+	else
+	{
+		((StringParameter*)value)->setValue(_value.toString());
+	}
+
 }
 
 void ChataigneLogCommand::triggerInternal()
 {
+	LogType lt = logType->getValueDataAsEnum<LogType>();
+
 	switch (type)
 	{
 	case MESSAGE:
-		LOG(message->stringValue());
+
+		switch (lt)
+		{
+		case INFO: LOG(message->stringValue()); break;
+		case WARNING: LOGWARNING(message->stringValue()); break;
+		case ERROR: LOGERROR(message->stringValue()); break;
+
+		}
+
 		break;
 
 	case VALUE:
 	{
-		String vString = context == ACTION ? String(((TargetParameter *)value)->target != nullptr?((Parameter *)((TargetParameter *)value)->target.get())->stringValue():"[not set]"):((StringParameter *)value)->stringValue();
-		LOG(message->stringValue() + " " + vString);
+		String vString = context == ACTION ? String(((TargetParameter*)value)->target != nullptr ? ((Parameter*)((TargetParameter*)value)->target.get())->stringValue() : "[not set]") : ((StringParameter*)value)->stringValue();
+	
+		switch (lt)
+		{
+		case INFO: LOG(message->stringValue() + " " + vString); break;
+		case WARNING: LOGWARNING(message->stringValue() + " " + vString);; break;
+		case ERROR: LOGERROR(message->stringValue() + " " + vString); break;
+
+		}
 	}
-		break;
+	break;
 	}
 }
 
-BaseCommand * ChataigneLogCommand::create(ControllableContainer * module, CommandContext context, var params)
+BaseCommand* ChataigneLogCommand::create(ControllableContainer * module, CommandContext context, var params)
 {
-	return new ChataigneLogCommand((ChataigneGenericModule *)module, context, params);
+	return new ChataigneLogCommand((ChataigneGenericModule*)module, context, params);
 
 }

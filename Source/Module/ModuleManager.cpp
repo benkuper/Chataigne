@@ -45,7 +45,7 @@ Module * ModuleManager::getModuleWithName(const String & moduleName)
 	//DBG("get Module with name : " << moduleName << " / " << StateManager::getInstance()->shortName);
 	if (moduleName == StateManager::getInstance()->module.shortName) return &StateManager::getInstance()->module;
 	if (moduleName == SequenceManager::getInstance()->module.shortName) return &SequenceManager::getInstance()->module;
-	if (moduleName == CVGroupManager::getInstance()->module->shortName) return CVGroupManager::getInstance()->module;
+	if (moduleName == CVGroupManager::getInstance()->module->shortName) return CVGroupManager::getInstance()->module.get();
 	if (moduleName == static_cast<ChataigneEngine *>(Engine::mainEngine)->module.shortName) return &static_cast<ChataigneEngine *>(Engine::mainEngine)->module;
 	else return getItemWithName(moduleName);
 }
@@ -142,7 +142,7 @@ CommandDefinition * ModuleManager::getCommandDefinitionForItemID(int itemID, Mod
 		itemID += 10000;
 	} else if (itemID < -2000)
 	{
-		m = CVGroupManager::getInstance()->module;
+		m = CVGroupManager::getInstance()->module.get();
 		itemID += 3000;
 	} else if (itemID < -1000)
 	{
@@ -174,7 +174,7 @@ Array<Module*> ModuleManager::getModuleList(bool includeSpecialModules)
 	{
 		mList.add(&StateManager::getInstance()->module);
 		mList.add(&SequenceManager::getInstance()->module);
-		mList.add(CVGroupManager::getInstance()->module);
+		mList.add(CVGroupManager::getInstance()->module.get());
 	}
 	
 	return mList;

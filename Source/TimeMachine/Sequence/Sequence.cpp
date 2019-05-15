@@ -61,11 +61,11 @@ Sequence::Sequence() :
 	viewEndTime = addFloatParameter("View end time", "End time of the view", initTotalTime, minSequenceTime, initTotalTime);
 	viewEndTime->hideInEditor = true;
 
-	layerManager = new SequenceLayerManager(this);
-	addChildControllableContainer(layerManager);
+	layerManager.reset(new SequenceLayerManager(this));
+	addChildControllableContainer(layerManager.get());
 
-	cueManager = new TimeCueManager();
-	addChildControllableContainer(cueManager);
+	cueManager.reset(new TimeCueManager());
+	addChildControllableContainer(cueManager.get());
 	cueManager->hideInEditor = true;
 
 	listUISize->setValue(5);

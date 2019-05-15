@@ -27,10 +27,10 @@ SimpleSmoothFilter::~SimpleSmoothFilter()
 
 void SimpleSmoothFilter::processInternal()
 {
-	float oldVal = filteredParameter->getNormalizedValue();
-	float newVal = sourceParam->getNormalizedValue();
+	float oldVal = filteredParameter->getValue();
+	float newVal = sourceParam->getValue();
 	float smoothVal = async->boolValue() ? (newVal > oldVal ? smooth->floatValue() : downSmooth->floatValue()) : smooth->floatValue();
-	filteredParameter->setNormalizedValue(oldVal + (newVal - oldVal)*(1 - smoothVal));
+	filteredParameter->setValue(oldVal + (newVal - oldVal)*(1 - smoothVal));
 }
 
 void SimpleSmoothFilter::onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c)

@@ -134,7 +134,12 @@ void ModuleFactory::addCustomModules()
 			else if (moduleType == "OSC") createFunc = &CustomOSCModule::create;
 			else if (moduleType == "MIDI") createFunc = &MIDIModule::create;
 			else if (moduleType == "UDP") createFunc = &UDPModule::create;
-			else continue;
+			else if (moduleType == "HTTP") createFunc = &HTTPModule::create;
+			else
+			{
+				LOGWARNING("Problem loading custom module : " << moduleName << " : Base module type not handled : " << moduleType);
+				continue;
+			}
 
 			LOG("Found custom module : " << moduleMenuPath << ":" << moduleName);
 			ModuleDefinition * def = moduleDefs.add(new ModuleDefinition(moduleMenuPath,moduleName, createFunc));

@@ -108,7 +108,7 @@ Do you want to install it ?", "Yes", "No");
 		LOG("Downloading...");
 
 		downloadedFile = File::getSpecialLocation(File::tempDirectory).getChildFile("LiveOSC2.zip");
-		downloadTask = liveOSCURL.downloadToFile(downloadedFile, "", this);
+		downloadTask.reset(liveOSCURL.downloadToFile(downloadedFile, "", this));
 		if (downloadTask == nullptr)
 		{
 			LOGERROR("Error downloading LiveOSC2 plugin, are you connected to internet ?");

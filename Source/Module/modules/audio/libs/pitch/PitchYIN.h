@@ -1,6 +1,8 @@
 #include "JuceHeader.h"
+#include "PitchDetector.h"
 
-class PitchYIN
+class PitchYIN :
+	public PitchDetector
 {
 
 public:
@@ -25,10 +27,16 @@ public:
 		return sampleRate;
 	}
 
-	unsigned int getBufferSize()
+	unsigned int getBufferSize() override
 	{
 		return bufferSize;
 	}
+
+	void setBufferSize(int value) override
+	{
+		bufferSize = value;
+	}
+
 
     /** Output the difference function */
     void difference(AudioSampleBuffer& input) 
@@ -87,6 +95,12 @@ public:
     
     
     /** Full YIN algorithm */
+
+	float getPitch(const float* inputData) override
+	{
+		return calculatePitch(inputData);
+	}
+
     float calculatePitch (const float* inputData) noexcept
     {
         int period;

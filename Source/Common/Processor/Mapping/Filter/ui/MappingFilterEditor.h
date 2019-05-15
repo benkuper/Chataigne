@@ -23,7 +23,7 @@ public:
 	~MappingFilterEditor();
 
 	MappingFilter * filter;
-	ScopedPointer<ParameterUI> filteredUI;
+	std::unique_ptr<ParameterUI> filteredUI;
 
 	void resizedInternalHeaderItemInternal(Rectangle<int> &r) override;
 

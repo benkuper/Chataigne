@@ -29,8 +29,8 @@ public:
 
 	ModuleRouter * currentRouter;
 
-	ScopedPointer<TriggerButtonUI> selectAllTrigger;
-	ScopedPointer<TriggerButtonUI> deselectAllTrigger;
+	std::unique_ptr<TriggerButtonUI> selectAllTrigger;
+	std::unique_ptr<TriggerButtonUI> deselectAllTrigger;
 
 
 	ModuleChooserUI sourceChooser;
@@ -41,7 +41,7 @@ public:
 	Label feedbackLabel;
 	Label outParamsLabel;
 
-	ScopedPointer<BaseManagerUI<BaseManager<ModuleRouterValue>, ModuleRouterValue, ModuleRouterValueEditor>> managerUI;
+	std::unique_ptr<BaseManagerUI<BaseManager<ModuleRouterValue>, ModuleRouterValue, ModuleRouterValueEditor>> managerUI;
 
 	void paint(Graphics &g) override;
 	void resized() override;

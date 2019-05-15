@@ -17,18 +17,18 @@ CustomValuesCommandArgumentEditor::CustomValuesCommandArgumentEditor(CustomValue
 	
 	if (arg->editable != nullptr)
 	{
-		editableUI = arg->editable->createToggle();
-		addAndMakeVisible(editableUI);
+		editableUI.reset(arg->editable->createToggle());
+		addAndMakeVisible(editableUI.get());
 	}
 
 	if (arg->mappingEnabled)
 	{
-		useInMappingUI = arg->useForMapping->createToggle();
-		addAndMakeVisible(useInMappingUI);
+		useInMappingUI.reset(arg->useForMapping->createToggle());
+		addAndMakeVisible(useInMappingUI.get());
 	}
 
-	paramUI = static_cast<ParameterEditor *>(arg->param->getEditor(false));
-	addAndMakeVisible(paramUI);
+	paramUI.reset(static_cast<ParameterEditor*>(arg->param->getEditor(false)));
+	addAndMakeVisible(paramUI.get());
 	paramUI->setShowLabel(false);
 
 	headerHeight = 16;
@@ -68,7 +68,7 @@ void CustomValuesCommandArgumentEditor::resizedInternalContent(Rectangle<int>& r
 
 void CustomValuesCommandArgumentEditor::childBoundsChanged(Component * child)
 {
-	if (child == paramUI)
+	if (child == paramUI.get())
 	{
 		resized();
 	}

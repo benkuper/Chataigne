@@ -22,8 +22,8 @@ public:
 	~TriggerLayerPanel();
 	
 	TriggerLayer * triggerLayer;
-	ScopedPointer<TriggerButtonUI> lockAllBT;
-	ScopedPointer<TriggerButtonUI> unlockAllBT;
+	std::unique_ptr<TriggerButtonUI> lockAllBT;
+	std::unique_ptr<TriggerButtonUI> unlockAllBT;
 
 	void resizedInternalContent(Rectangle<int> &r) override;
 

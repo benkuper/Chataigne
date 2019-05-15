@@ -25,7 +25,7 @@ public:
 	~TimeMachineView();
 
 	SequenceManager * manager;
-	ScopedPointer<SequenceEditor> editor;
+	std::unique_ptr<SequenceEditor> editor;
 	
 	void paint(Graphics &g) override;
 	void resized() override;

@@ -54,7 +54,7 @@ void ModuleRouterValue::setSourceAndOutModule(Module * s, Module * m)
 	{
 		if (routeParams != nullptr)
 		{
-			removeChildControllableContainer(routeParams);
+			removeChildControllableContainer(routeParams.get());
 			prevData = routeParams->getJSONData();
 		}
 		routeParams = nullptr;
@@ -65,9 +65,9 @@ void ModuleRouterValue::setSourceAndOutModule(Module * s, Module * m)
 	if (outModule != nullptr)
 	{
 
-		routeParams = outModule->createRouteParamsForSourceValue(s, sourceValue,valueIndex);
+		routeParams.reset(outModule->createRouteParamsForSourceValue(s, sourceValue, valueIndex));
 		routeParams->loadJSONData(prevData);
-		addChildControllableContainer(routeParams);
+		addChildControllableContainer(routeParams.get());
 	}
 
 	valueListeners.call(&ValueListener::routeParamsChanged, this);
@@ -114,12 +114,12 @@ void ModuleRouterValue::onExternalParameterValueChanged(Parameter * p)
 {
 	if (outModule == nullptr) return;
 	if (!enabled->boolValue() || forceDisabled) return;
-	if(p == sourceValue) outModule->handleRoutedModuleValue(sourceValue, routeParams);
+	if(p == sourceValue) outModule->handleRoutedModuleValue(sourceValue, routeParams.get());
 }
 
 void ModuleRouterValue::onExternalTriggerTriggered(Trigger * t)
 {
 	if (outModule == nullptr) return;
 	if (!enabled->boolValue() || forceDisabled) return;
-	if(t == sourceValue) outModule->handleRoutedModuleValue(sourceValue, routeParams);
+	if(t == sourceValue) outModule->handleRoutedModuleValue(sourceValue, routeParams.get());
 }

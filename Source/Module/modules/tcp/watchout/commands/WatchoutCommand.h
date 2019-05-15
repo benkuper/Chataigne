@@ -22,7 +22,7 @@ public:
 
 	WatchoutModule * wModule;
 
-	ScopedPointer<ControllableContainer> paramContainer;
+	std::unique_ptr<ControllableContainer> paramContainer;
 
 	void triggerInternal() override;
 

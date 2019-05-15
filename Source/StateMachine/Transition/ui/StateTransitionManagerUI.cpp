@@ -18,7 +18,7 @@ StateTransitionManagerUI::StateTransitionManagerUI(StateMachineView * sv, StateT
 	transparentBG = true;
 	animateItemOnAdd = false;
 	setInterceptsMouseClicks(false, true);
-	removeChildComponent(addItemBT);
+	removeChildComponent(addItemBT.get());
 	
 	addExistingItems();
 }

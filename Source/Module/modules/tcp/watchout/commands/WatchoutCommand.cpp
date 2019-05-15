@@ -17,8 +17,8 @@ WatchoutCommand::WatchoutCommand(WatchoutModule * _module, CommandContext contex
 	String argsP = params.getProperty("args", "").toString();
 	if (argsP.isNotEmpty())
 	{
-		paramContainer = new ControllableContainer("Parameters");
-		addChildControllableContainer(paramContainer);
+		paramContainer.reset(new ControllableContainer("Parameters"));
+		addChildControllableContainer(paramContainer.get());
 	}
 
 	StringArray argsSplit;

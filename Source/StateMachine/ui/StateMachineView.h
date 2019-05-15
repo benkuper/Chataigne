@@ -30,10 +30,10 @@ public:
 	StateManager * manager;
 	
 	//Transitions
-	ScopedPointer<StateTransitionManagerUI> stmUI;
+	std::unique_ptr<StateTransitionManagerUI> stmUI;
 	bool transitionCreationMode;
 	StateViewUI * transitionCreationSourceUI;
-	ScopedPointer<CommentManagerViewUI> commentManagerUI;
+	std::unique_ptr<CommentManagerViewUI> commentManagerUI;
 	
 
 	void mouseMove(const MouseEvent &e) override;

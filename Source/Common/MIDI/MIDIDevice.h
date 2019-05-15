@@ -32,7 +32,7 @@ class MIDIInputDevice :
 public:
 	MIDIInputDevice(const String &deviceName);
 	~MIDIInputDevice();
-	ScopedPointer<MidiInput> device;
+	std::unique_ptr<MidiInput> device;
 
 	// Inherited via MidiInputCallback
 	virtual void handleIncomingMidiMessage(MidiInput * source, const MidiMessage & message) override;
@@ -64,7 +64,7 @@ public:
 	MIDIOutputDevice(const String &deviceName);
 	~MIDIOutputDevice();
 
-	ScopedPointer<MidiOutput> device;
+	std::unique_ptr<MidiOutput> device;
 	int usageCount;
 
 	void open();

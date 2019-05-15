@@ -13,7 +13,7 @@
 
 SequenceTimelineHeader::SequenceTimelineHeader(Sequence * _sequence) :
 	sequence(_sequence),
-	cueManagerUI(this,_sequence->cueManager)
+	cueManagerUI(this,_sequence->cueManager.get())
 {
 	sequence->addAsyncContainerListener(this);
 	addAndMakeVisible(&cueManagerUI);

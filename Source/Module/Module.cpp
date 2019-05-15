@@ -58,11 +58,11 @@ Module::Module(const String &name) :
 	valuesCC.includeTriggersInSaveLoad = true;
 
 
-	commandTester = new ModuleCommandTester(this);
+	commandTester.reset(new ModuleCommandTester(this));
 
 	controllableContainers.move(controllableContainers.indexOf(scriptManager.get()), controllableContainers.size() - 1);
 
-	addChildControllableContainer(commandTester);
+	addChildControllableContainer(commandTester.get());
 	addChildControllableContainer(&templateManager);
 
 	scriptManager->scriptTemplate = ChataigneAssetManager::getInstance()->getScriptTemplateBundle(StringArray("generic","module"));

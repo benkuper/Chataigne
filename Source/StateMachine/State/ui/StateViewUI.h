@@ -23,7 +23,7 @@ public:
 	StateViewUI(State * state);
 	~StateViewUI();
 
-	ScopedPointer<BoolToggleUI> activeUI;
+	std::unique_ptr<BoolToggleUI> activeUI;
 	ProcessorManagerUI pmui;
 
 	//transition

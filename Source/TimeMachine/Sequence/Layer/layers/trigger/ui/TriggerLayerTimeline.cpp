@@ -14,8 +14,8 @@
 TriggerLayerTimeline::TriggerLayerTimeline(TriggerLayer * layer) :
 	SequenceLayerTimeline(layer)
 {
-	ttmui = new TimeTriggerManagerUI(this, &layer->ttm);
-	addAndMakeVisible(ttmui);
+	ttmui.reset(new TimeTriggerManagerUI(this, &layer->ttm));
+	addAndMakeVisible(ttmui.get());
 
 	updateContent();
 }

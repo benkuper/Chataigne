@@ -11,20 +11,19 @@
 #include "CommandTemplateEditor.h"
 
 CommandTemplateEditor::CommandTemplateEditor(CommandTemplate * t, bool isRoot) :
-	GenericControllableContainerEditor(t, isRoot)
+	BaseItemEditor(t, isRoot)
 {
-	triggerUI = t->triggerTrigger->createButtonUI();
-	addAndMakeVisible(triggerUI);
+	triggerUI.reset(t->triggerTrigger->createButtonUI());
+	addAndMakeVisible(triggerUI.get());
 }
 
 CommandTemplateEditor::~CommandTemplateEditor()
 {
 }
 
-void CommandTemplateEditor::resizedInternalHeader(Rectangle<int>& r)
+void CommandTemplateEditor::resizedInternalHeaderItemInternal(Rectangle<int>& r)
 {
+	BaseItemEditor::resizedInternalHeaderItemInternal(r);
 	triggerUI->setBounds(r.removeFromRight(60).reduced(2));
 	r.removeFromRight(2);
-
-	GenericControllableContainerEditor::resizedInternalHeader(r);
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.6.0b6"
+<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.6.0b8"
               bundleIdentifier="benkuper.Chataigne" includeBinaryInAppConfig="1"
               jucerVersion="5.4.3" companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
               companyEmail="benjamin@kuperberg.fr" defines="" splashScreenColour="Dark"
@@ -525,6 +525,24 @@
                   file="Source/Module/modules/customvariables/CustomVariablesModule.h"/>
           </GROUP>
           <GROUP id="{0A217116-DCE5-942C-8079-6BBFE1C91ECE}" name="audio">
+            <GROUP id="{71C72045-E424-24CD-C308-4E38FBAD64EE}" name="analysis">
+              <GROUP id="{35423F5E-B088-ECF3-7E38-B45E7E33B141}" name="ui">
+                <FILE id="NY5u9u" name="FFTAnalyzerEditor.cpp" compile="1" resource="0"
+                      file="Source/Module/modules/audio/analysis/ui/FFTAnalyzerEditor.cpp"/>
+                <FILE id="KTzXK9" name="FFTAnalyzerEditor.h" compile="0" resource="0"
+                      file="Source/Module/modules/audio/analysis/ui/FFTAnalyzerEditor.h"/>
+                <FILE id="stDStO" name="FFTAnalyzerManagerEditor.cpp" compile="1" resource="0"
+                      file="Source/Module/modules/audio/analysis/ui/FFTAnalyzerManagerEditor.cpp"/>
+                <FILE id="y9bqPT" name="FFTAnalyzerManagerEditor.h" compile="0" resource="0"
+                      file="Source/Module/modules/audio/analysis/ui/FFTAnalyzerManagerEditor.h"/>
+              </GROUP>
+              <FILE id="HqFhXP" name="FFTAnalyzer.cpp" compile="1" resource="0" file="Source/Module/modules/audio/analysis/FFTAnalyzer.cpp"/>
+              <FILE id="trkJIZ" name="FFTAnalyzer.h" compile="0" resource="0" file="Source/Module/modules/audio/analysis/FFTAnalyzer.h"/>
+              <FILE id="LBcrv3" name="FFTAnalyzerManager.cpp" compile="1" resource="0"
+                    file="Source/Module/modules/audio/analysis/FFTAnalyzerManager.cpp"/>
+              <FILE id="NzxWgS" name="FFTAnalyzerManager.h" compile="0" resource="0"
+                    file="Source/Module/modules/audio/analysis/FFTAnalyzerManager.h"/>
+            </GROUP>
             <GROUP id="{4A79FC82-A066-3853-4D6D-541B206D82F3}" name="commands">
               <FILE id="zCTO4L" name="PlayAudioFileCommand.cpp" compile="1" resource="0"
                     file="Source/Module/modules/audio/commands/PlayAudioFileCommand.cpp"/>
@@ -533,6 +551,7 @@
             </GROUP>
             <GROUP id="{92F1950B-90FA-CF9E-6462-7285018BEE9F}" name="libs">
               <GROUP id="{59214ED5-C409-27E6-B013-DC2A214F30DC}" name="pitch">
+                <FILE id="PpWYeb" name="PitchDetector.h" compile="0" resource="0" file="Source/Module/modules/audio/libs/pitch/PitchDetector.h"/>
                 <FILE id="NvMMtX" name="PitchMPM.h" compile="0" resource="0" file="Source/Module/modules/audio/libs/pitch/PitchMPM.h"/>
                 <FILE id="yswzpe" name="PitchYIN.h" compile="0" resource="0" file="Source/Module/modules/audio/libs/pitch/PitchYIN.h"/>
               </GROUP>
@@ -726,6 +745,10 @@
                     file="Source/Module/modules/generic/commands/ChataigneLogCommand.cpp"/>
               <FILE id="ozjwZn" name="ChataigneLogCommand.h" compile="0" resource="0"
                     file="Source/Module/modules/generic/commands/ChataigneLogCommand.h"/>
+              <FILE id="kEIzuK" name="GenericAppCommand.cpp" compile="1" resource="0"
+                    file="Source/Module/modules/generic/commands/GenericAppCommand.cpp"/>
+              <FILE id="BFIwYv" name="GenericAppCommand.h" compile="0" resource="0"
+                    file="Source/Module/modules/generic/commands/GenericAppCommand.h"/>
               <FILE id="b5ieQu" name="GenericControllableCommand.cpp" compile="1"
                     resource="0" file="Source/Module/modules/generic/commands/GenericControllableCommand.cpp"/>
               <FILE id="wKdZSf" name="GenericControllableCommand.h" compile="0" resource="0"
@@ -1328,6 +1351,7 @@
         <MODULEPATH id="juce_audio_devices"/>
         <MODULEPATH id="juce_audio_basics"/>
         <MODULEPATH id="juce_analytics"/>
+        <MODULEPATH id="juce_dsp" path="../../../../Softwares/JUCE/modules"/>
       </MODULEPATHS>
     </VS2019>
     <VS2017 targetFolder="Builds/VisualStudio2017" externalLibraries="Setupapi.lib&#10;hid.lib&#10;Kinect20.lib&#10;joytime-core.lib&#10;joytime-input-hidapi.lib&#10;Servus.lib&#10;dnssd.lib&#10;SDL2.lib&#10;libartnet.lib&#10;iphlpapi.lib"
@@ -1361,6 +1385,7 @@
         <MODULEPATH id="juce_audio_devices" path="D:/Softwares\JUCE\modules"/>
         <MODULEPATH id="juce_audio_basics" path="D:/Softwares\JUCE\modules"/>
         <MODULEPATH id="juce_analytics" path="D:/Softwares\JUCE\modules"/>
+        <MODULEPATH id="juce_dsp" path="../../../../Softwares/JUCE/modules"/>
       </MODULEPATHS>
     </VS2017>
     <XCODE_MAC targetFolder="Builds/MacOSX" smallIcon="nVz6Li" bigIcon="nVz6Li"
@@ -1394,6 +1419,7 @@
         <MODULEPATH id="juce_gui_extra" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_organicui" path="../JUCE Modules"/>
         <MODULEPATH id="juce_analytics" path="~/JUCE/modules"/>
+        <MODULEPATH id="juce_dsp" path="../../../../Softwares/JUCE/modules"/>
       </MODULEPATHS>
     </XCODE_MAC>
     <LINUX_MAKE targetFolder="Builds/Raspberry" smallIcon="nVz6Li" bigIcon="nVz6Li"
@@ -1424,6 +1450,7 @@
         <MODULEPATH id="juce_audio_devices" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_audio_basics" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_analytics"/>
+        <MODULEPATH id="juce_dsp" path="../../../../Softwares/JUCE/modules"/>
       </MODULEPATHS>
     </LINUX_MAKE>
     <LINUX_MAKE targetFolder="Builds/LinuxMakefile" externalLibraries="bluetooth&#10;Servus&#10;curl&#10;artnet"
@@ -1454,6 +1481,7 @@
         <MODULEPATH id="juce_audio_devices" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_audio_basics" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_analytics" path="~/JUCE/modules"/>
+        <MODULEPATH id="juce_dsp" path="../../../../Softwares/JUCE/modules"/>
       </MODULEPATHS>
     </LINUX_MAKE>
     <VS2017 targetFolder="Builds/VisualStudio2017_CI" externalLibraries="Setupapi.lib&#10;hid.lib&#10;Kinect20.lib&#10;joytime-core.lib&#10;joytime-input-hidapi.lib&#10;Servus.lib&#10;dnssd.lib&#10;SDL2.lib&#10;libartnet.lib&#10;iphlpapi.lib"
@@ -1483,6 +1511,7 @@
         <MODULEPATH id="juce_audio_devices" path="../JUCE/modules"/>
         <MODULEPATH id="juce_audio_basics" path="../JUCE/modules"/>
         <MODULEPATH id="juce_analytics" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_dsp" path="../../../../Softwares/JUCE/modules"/>
       </MODULEPATHS>
     </VS2017>
     <VS2017 targetFolder="Builds/VisualStudio2017_Win7" externalLibraries="Setupapi.lib&#10;hid.lib&#10;joytime-core.lib&#10;joytime-input-hidapi.lib&#10;Servus.lib&#10;dnssd.lib&#10;SDL2.lib&#10;libartnet.lib&#10;iphlpapi.lib"
@@ -1513,6 +1542,7 @@
         <MODULEPATH id="juce_audio_devices" path="D:/Softwares\JUCE\modules"/>
         <MODULEPATH id="juce_audio_basics" path="D:/Softwares\JUCE\modules"/>
         <MODULEPATH id="juce_analytics" path="D:/Softwares\JUCE\modules"/>
+        <MODULEPATH id="juce_dsp" path="../../../../Softwares/JUCE/modules"/>
       </MODULEPATHS>
     </VS2017>
   </EXPORTFORMATS>
@@ -1526,6 +1556,7 @@
     <MODULE id="juce_core" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_cryptography" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_data_structures" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_dsp" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_events" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_graphics" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_gui_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>

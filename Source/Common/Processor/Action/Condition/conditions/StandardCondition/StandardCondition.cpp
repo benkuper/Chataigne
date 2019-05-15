@@ -67,7 +67,7 @@ void StandardCondition::setSourceControllable(WeakReference<Controllable> c)
 	{
 		var oldData = var();
 		if (comparator != nullptr) oldData = comparator->getJSONData();
-		comparator = ComparatorFactory::createComparatorForControllable(sourceControllable);
+		comparator.reset(ComparatorFactory::createComparatorForControllable(sourceControllable));
 
 		Module * m = ControllableUtil::findParentAs<Module>(sourceControllable);
 		if (m != nullptr) registerLinkedInspectable(m);
@@ -91,7 +91,7 @@ void StandardCondition::setSourceControllable(WeakReference<Controllable> c)
 		{
 			loadingComparatorData = comparator->getJSONData();
 			comparator->removeComparatorListener(this);
-			removeChildControllableContainer(comparator);
+			removeChildControllableContainer(comparator.get());
 			comparator = nullptr;
 			
 		}

@@ -33,8 +33,9 @@ Action::Action(const String & name, var params) :
 	cdm.addBaseManagerListener(this);
 	addChildControllableContainer(&cdm);
 
-	csmOn = new ConsequenceManager("Consequences : TRUE");
-	addChildControllableContainer(csmOn);
+	csmOn.reset(new ConsequenceManager("Consequences : TRUE"));
+
+	addChildControllableContainer(csmOn.get());
 
 	forceNoOffConsequences = params.getProperty("forceNoOffConsequences", false);
 
@@ -85,8 +86,8 @@ void Action::setHasOffConsequences(bool value)
 	{
 		if (csmOff == nullptr)
 		{
-			csmOff = new ConsequenceManager("Consequences : FALSE");
-			addChildControllableContainer(csmOff);
+			csmOff.reset(new ConsequenceManager("Consequences : FALSE"));
+			addChildControllableContainer(csmOff.get());
 		}
 
 		if(triggerOff == nullptr)
@@ -97,7 +98,7 @@ void Action::setHasOffConsequences(bool value)
 
 	} else
 	{
-		removeChildControllableContainer(csmOff);
+		removeChildControllableContainer(csmOff.get());
 		csmOff = nullptr;
 		removeControllable(triggerOff);
 		triggerOff = nullptr;

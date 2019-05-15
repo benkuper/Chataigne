@@ -36,7 +36,7 @@ public:
 	SequenceTimelineNavigationUI navigationUI;
 	SequenceLayerPanelManagerUI panelManagerUI;
 	SequenceLayerTimelineManagerUI timelineManagerUI;
-	ScopedPointer<SequenceTransportUI> transportUI;
+	std::unique_ptr<SequenceTransportUI> transportUI;
 
 	//layout
 	const float headerHeight = 50;

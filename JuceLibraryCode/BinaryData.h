@@ -21,7 +21,7 @@ namespace BinaryData
     const int            genericScriptTemplate_jsSize = 4737;
 
     extern const char*   httpScriptTemplate_js;
-    const int            httpScriptTemplate_jsSize = 805;
+    const int            httpScriptTemplate_jsSize = 823;
 
     extern const char*   midiScriptTemplate_js;
     const int            midiScriptTemplate_jsSize = 1271;
@@ -45,7 +45,7 @@ namespace BinaryData
     const int            connected_pngSize = 3998;
 
     extern const char*   default_chalayout;
-    const int            default_chalayoutSize = 3448;
+    const int            default_chalayoutSize = 3341;
 
     extern const char*   disconnected_png;
     const int            disconnected_pngSize = 3820;

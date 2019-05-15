@@ -20,10 +20,10 @@ NetworkStreamingModule::NetworkStreamingModule(const String &name, bool canHaveI
 	//Receive
 	if (canHaveInput)
 	{
-		receiveCC = new EnablingControllableContainer("Input");
+		receiveCC.reset(new EnablingControllableContainer("Input"));
 		receiveCC->customGetEditorFunc = &EnablingNetworkControllableContainerEditor::create;
 
-		moduleParams.addChildControllableContainer(receiveCC);
+		moduleParams.addChildControllableContainer(receiveCC.get());
 
 		localPort = receiveCC->addIntParameter("Local Port", "Local Port to bind", defaultLocalPort, 1, 65535);
 
@@ -34,8 +34,8 @@ NetworkStreamingModule::NetworkStreamingModule(const String &name, bool canHaveI
 	//Send
 	if (canHaveOutput)
 	{
-		sendCC = new EnablingControllableContainer("Output");
-		moduleParams.addChildControllableContainer(sendCC);
+		sendCC.reset(new EnablingControllableContainer("Output"));
+		moduleParams.addChildControllableContainer(sendCC.get());
 
 		useLocal = sendCC->addBoolParameter("Local", "Send to Local IP (127.0.0.1). Allow to quickly switch between local and remote IP.", true);
 		remoteHost = sendCC->addStringParameter("Remote Host", "Remote Host to send to.", "127.0.0.1");

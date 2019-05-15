@@ -23,7 +23,7 @@ public:
 	IntParameter * currentSlide;
 
 	File downloadedFile;
-	ScopedPointer<URL::DownloadTask> downloadTask; 
+	std::unique_ptr<URL::DownloadTask> downloadTask; 
 	void installPowerPointPlugin();
 
 	void progress(URL::DownloadTask *, int64 bytesDownloaded, int64 totalBytes) override;

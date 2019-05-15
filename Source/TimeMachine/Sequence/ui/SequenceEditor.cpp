@@ -16,15 +16,15 @@ SequenceEditor::SequenceEditor(Sequence * _sequence) :
 	sequence(_sequence),
 	sequenceRef(_sequence),
 	navigationUI(_sequence),
-	panelManagerUI(_sequence->layerManager),
-	timelineManagerUI(_sequence->layerManager),
+	panelManagerUI(_sequence->layerManager.get()),
+	timelineManagerUI(_sequence->layerManager.get()),
 	transportUI(new SequenceTransportUI(_sequence)),
 	panelWidth(200)
 {
 	addAndMakeVisible(panelContainer);
 	addAndMakeVisible(timelineContainer);
 	
-	panelContainer.addAndMakeVisible(transportUI);
+	panelContainer.addAndMakeVisible(transportUI.get());
 	panelContainer.addAndMakeVisible(&panelManagerUI);
 	
 	timelineContainer.addAndMakeVisible(&navigationUI);

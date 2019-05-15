@@ -20,12 +20,12 @@ public:
 	MappableParameterEditor(Parameter * p, bool isRoot);
 	~MappableParameterEditor();
 
-	ScopedPointer<ParameterEditor> paramEditor;
+	std::unique_ptr<ParameterEditor> paramEditor;
 	BoolParameter useForMapping;
 	IntParameter mappingIndex;
 
-	ScopedPointer<BoolToggleUI> useForMappingUI;
-	ScopedPointer<IntParameterLabelUI> mappingIndexUI;
+	std::unique_ptr<BoolToggleUI> useForMappingUI;
+	std::unique_ptr<IntParameterLabelUI> mappingIndexUI;
 
 	bool showIndex;
 

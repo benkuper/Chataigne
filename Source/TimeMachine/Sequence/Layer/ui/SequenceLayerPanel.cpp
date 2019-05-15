@@ -18,9 +18,9 @@ SequenceLayerPanel::SequenceLayerPanel(SequenceLayer * layer) :
 	bringToFrontOnSelect = false;
 	
 	bgColor = item->color->getColor(); 
-	colorUI = item->color->createColorParamUI();
+	colorUI.reset(item->color->createColorParamUI());
 
-	addAndMakeVisible(colorUI);
+	addAndMakeVisible(colorUI.get());
 	setSize(100, item->uiHeight->intValue());
 }
 

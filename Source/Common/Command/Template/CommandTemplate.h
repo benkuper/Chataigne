@@ -34,7 +34,7 @@ public:
 	ControllableContainer paramsContainer;
 	CommandDefinition * sourceDef;
 	OwnedArray<CommandTemplateParameter> templateParams;
-	ScopedPointer<CustomValuesCommandArgumentManager> customValuesManager;
+	std::unique_ptr<CustomValuesCommandArgumentManager> customValuesManager;
 
 	void generateParametersFromDefinition(CommandDefinition * def);
 

@@ -21,8 +21,8 @@ public:
 	~CommandTemplateParameterEditor();
 
 	CommandTemplateParameter * parameter;
-	ScopedPointer<InspectableEditor> parameterUI;
-	ScopedPointer<BoolToggleUI> editableUI;
+	std::unique_ptr<InspectableEditor> parameterUI;
+	std::unique_ptr<BoolToggleUI> editableUI;
 
 	void resized() override;
 };

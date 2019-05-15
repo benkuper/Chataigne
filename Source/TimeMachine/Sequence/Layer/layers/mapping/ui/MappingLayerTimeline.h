@@ -25,7 +25,7 @@ public:
 	MappingLayer * mappingLayer;
 
 	OwnedArray<AutomationUI> automationsUI;
-	ScopedPointer<TimeColorManagerUI> colorManagerUI;
+	std::unique_ptr<TimeColorManagerUI> colorManagerUI;
 
 	void setupUIForLayerMode();
 

@@ -23,8 +23,8 @@ public:
 	virtual ~ModuleEditor();
 
 	Module * module;
-	ScopedPointer<BoolToggleUI> logIncomingUI;
-	ScopedPointer<BoolToggleUI> logOutgoingUI;
+	std::unique_ptr<BoolToggleUI> logIncomingUI;
+	std::unique_ptr<BoolToggleUI> logOutgoingUI;
 
 	virtual void resizedInternalHeaderItemInternal(Rectangle<int> &r) override; 
 	

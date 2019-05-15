@@ -23,15 +23,15 @@ SequenceTransportUI::SequenceTransportUI(Sequence * _sequence) :
 	sequence->addSequenceListener(this);
 	 
 	
-	togglePlayUI = sequence->togglePlayTrigger->createImageUI(ChataigneAssetManager::getInstance()->getPlayImage());
-	stopUI = sequence->stopTrigger->createImageUI(ChataigneAssetManager::getInstance()->getStopImage());
-	nextCueUI = sequence->nextCue->createImageUI(ChataigneAssetManager::getInstance()->getNextCueImage());
-	prevCueUI = sequence->prevCue->createImageUI(ChataigneAssetManager::getInstance()->getPrevCueImage());
+	togglePlayUI.reset(sequence->togglePlayTrigger->createImageUI(ChataigneAssetManager::getInstance()->getPlayImage()));
+	stopUI.reset(sequence->stopTrigger->createImageUI(ChataigneAssetManager::getInstance()->getStopImage()));
+	nextCueUI.reset(sequence->nextCue->createImageUI(ChataigneAssetManager::getInstance()->getNextCueImage()));
+	prevCueUI.reset(sequence->prevCue->createImageUI(ChataigneAssetManager::getInstance()->getPrevCueImage()));
 	
-	addAndMakeVisible(togglePlayUI);
-	addAndMakeVisible(stopUI);
-	addAndMakeVisible(nextCueUI);
-	addAndMakeVisible(prevCueUI);
+	addAndMakeVisible(togglePlayUI.get());
+	addAndMakeVisible(stopUI.get());
+	addAndMakeVisible(nextCueUI.get());
+	addAndMakeVisible(prevCueUI.get());
 }
 
 SequenceTransportUI::~SequenceTransportUI()

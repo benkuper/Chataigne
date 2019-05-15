@@ -16,8 +16,8 @@ TimeColorUI::TimeColorUI(TimeColor * item) :
 	dragAndDropEnabled = false;
 
 	autoDrawContourWhenSelected = false;
-	colorUI = item->color->createColorParamUI();
-	addAndMakeVisible(colorUI);
+	colorUI.reset(item->color->createColorParamUI());
+	addAndMakeVisible(colorUI.get());
 	//colorUI->addMouseListener(this, false); //why ??
 }
 

@@ -82,7 +82,7 @@ public:
 
 #if SERIALSUPPORT
 	SerialDevice(Serial *port, SerialDeviceInfo * info, PortMode mode = LINES);
-	ScopedPointer<Serial> port;
+	std::unique_ptr<Serial> port;
 #else
 	SerialDevice(SerialDeviceInfo * info, PortMode mode = LINES);
 #endif

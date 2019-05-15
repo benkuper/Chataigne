@@ -22,12 +22,12 @@ public:
 	virtual ~NetworkStreamingModule();
 
 	//RECEIVE
-	ScopedPointer<EnablingControllableContainer> receiveCC;
+	std::unique_ptr<EnablingControllableContainer> receiveCC;
 	IntParameter * localPort;
 	BoolParameter * receiverIsBound;
 
 	//SEND
-	ScopedPointer<EnablingControllableContainer> sendCC;
+	std::unique_ptr<EnablingControllableContainer> sendCC;
 	BoolParameter * useLocal;
 	StringParameter * remoteHost;
 	IntParameter * remotePort;

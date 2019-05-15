@@ -23,8 +23,8 @@ public:
 	Label urlLabel;
 	Label versionsLabel;
 	TextEditor description;
-	ScopedPointer<TriggerButtonUI> installBT;
-	ScopedPointer<TriggerButtonUI> uninstallBT;
+	std::unique_ptr<TriggerButtonUI> installBT;
+	std::unique_ptr<TriggerButtonUI> uninstallBT;
 
 
 	void resetAndBuild() override {} //do nothing

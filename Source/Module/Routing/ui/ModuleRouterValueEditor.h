@@ -25,7 +25,7 @@ public:
 	~ModuleRouterValueEditor();
 
 	Label valueLabel;
-	ScopedPointer<ControllableUI> valueUI;
+	std::unique_ptr<ControllableUI> valueUI;
 	OwnedArray<ControllableEditor> routeParamsUI;
 
 	void buildRouteParamsUI();

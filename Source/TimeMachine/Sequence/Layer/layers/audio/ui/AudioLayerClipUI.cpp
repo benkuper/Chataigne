@@ -21,8 +21,8 @@ AudioLayerClipUI::AudioLayerClipUI(AudioLayerClip * _clip) :
 {
 	dragAndDropEnabled = false;
 
-	browseBT = AssetManager::getInstance()->getFileBT();
-	addAndMakeVisible(browseBT);
+	browseBT.reset(AssetManager::getInstance()->getFileBT());
+	addAndMakeVisible(browseBT.get());
 	browseBT->addListener(this);
 	clip->addAsyncClipListener(this);
 
@@ -34,8 +34,8 @@ AudioLayerClipUI::AudioLayerClipUI(AudioLayerClip * _clip) :
 
 	thumbnail.setSource(new FileInputSource(clip->filePath->getFile()));
 
-	lockUI = item->isLocked->createImageToggle(ChataigneAssetManager::getInstance()->getToggleBTImage(ChataigneAssetManager::getInstance()->getLockImage()));
-	addAndMakeVisible(lockUI);
+	lockUI.reset(item->isLocked->createImageToggle(ChataigneAssetManager::getInstance()->getToggleBTImage(ChataigneAssetManager::getInstance()->getLockImage())));
+	addAndMakeVisible(lockUI.get());
 
 	repaint();
 }
@@ -110,7 +110,7 @@ void AudioLayerClipUI::mouseUp(const MouseEvent & e)
 void AudioLayerClipUI::buttonClicked(Button * b)
 {
 	BaseItemUI::buttonClicked(b);
-	if (b == browseBT)
+	if (b == browseBT.get())
 	{
 		FileChooser chooser("Load a carrot", File(clip->filePath->stringValue()), "*.wav;*.mp3;*.aiff");
 		bool result = chooser.browseForFileToOpen();

@@ -40,11 +40,11 @@ CommunityModuleInfoEditor::CommunityModuleInfoEditor(CommunityModuleInfo * cmi, 
 	addAndMakeVisible(&versionsLabel);
 
 	
-	installBT = cmi->installTriger->createButtonUI();
-	addAndMakeVisible(installBT);
+	installBT.reset(cmi->installTriger->createButtonUI());
+	addAndMakeVisible(installBT.get());
 		
-	uninstallBT = cmi->uninstallTrigger->createButtonUI();
-	addAndMakeVisible(uninstallBT); 
+	uninstallBT.reset(cmi->uninstallTrigger->createButtonUI());
+	addAndMakeVisible(uninstallBT.get());
 		
 	updateVersionUI();
 

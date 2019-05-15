@@ -42,7 +42,7 @@ void CommandTemplateManagerPanel::editModule(Module * _module)
 
 	if (module != nullptr)
 	{
-		removeChildComponent(modelManagerUI);
+		removeChildComponent(modelManagerUI.get());
 		module->removeInspectableListener(this);
 		modelManagerUI = nullptr;
 	}
@@ -51,8 +51,8 @@ void CommandTemplateManagerPanel::editModule(Module * _module)
 
 	if (module != nullptr)
 	{
-		modelManagerUI = new CommandTemplateManagerUI(&module->templateManager, module->niceName);
-		contentComponent->addAndMakeVisible(modelManagerUI);
+		modelManagerUI.reset(new CommandTemplateManagerUI(&module->templateManager, module->niceName));
+		contentComponent->addAndMakeVisible(modelManagerUI.get());
 		module->addInspectableListener(this);
 		resized();
 	}

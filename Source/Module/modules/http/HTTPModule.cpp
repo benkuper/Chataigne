@@ -19,6 +19,8 @@ HTTPModule::HTTPModule() :
 	baseAddress = moduleParams.addStringParameter("Base Address", "The base adress to prepend to command addresses", "https://httpbin.org/");
 	defManager.add(CommandDefinition::createDef(this, "", "Request", &HTTPCommand::create, CommandContext::BOTH));
 	
+	scriptObject.setMethod(sendGETId, HTTPModule::sendGETFromScript);
+	scriptObject.setMethod(sendPOSTId, HTTPModule::sendPOSTFromScript);
 	scriptManager->scriptTemplate += ChataigneAssetManager::getInstance()->getScriptTemplate("http");
 
 	startThread();
@@ -48,7 +50,7 @@ void HTTPModule::processRequest(Request * request)
 {
 	StringPairArray responseHeaders;
 	int statusCode = 0;
-	ScopedPointer<InputStream> stream(request->url.createInputStream(request->method == POST, nullptr, nullptr, String(),
+	std::unique_ptr<InputStream> stream(request->url.createInputStream(request->method == POST, nullptr, nullptr, String(),
 		2000, // timeout in millisecs
 		&responseHeaders, &statusCode));
 #if JUCE_WINDOWS
@@ -82,6 +84,40 @@ void HTTPModule::processRequest(Request * request)
 	{
 		if (logIncomingData->boolValue()) NLOGWARNING(niceName, "Error with request, status code : " << statusCode << ", url : " << request->url.toString(true));
 	}
+}
+
+void HTTPModule::sendRequestFromScript(const var::NativeFunctionArgs& args, RequestMethod method)
+{
+	if (!enabled->boolValue()) return;
+
+	if (args.numArguments < 1)
+	{
+		LOGWARNING("Sending HTTP Request requires at least one argument being the address !");
+		return;
+	}
+
+	StringPairArray requestParams;
+	for (int i = 1; i < args.numArguments; i += 2)
+	{
+		if (i >= args.numArguments - 1) break;
+		requestParams.set(args.arguments[i], args.arguments[i + 1]);
+	}
+	sendRequest(args.arguments[0].toString(), method, requestParams);
+	return;
+}
+
+var HTTPModule::sendGETFromScript(const var::NativeFunctionArgs& args)
+{
+	HTTPModule* m = getObjectFromJS<HTTPModule>(args);
+	if (m != nullptr) m->sendRequestFromScript(args, GET);
+	return var();
+}
+
+var HTTPModule::sendPOSTFromScript(const var::NativeFunctionArgs& args)
+{
+	HTTPModule* m = getObjectFromJS<HTTPModule>(args);
+	if (m != nullptr) m->sendRequestFromScript(args, POST);
+	return var();
 }
 
 void HTTPModule::run()

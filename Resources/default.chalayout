@@ -1,32 +1,32 @@
 {
   "mainLayout": {
     "type": 1,
-    "width": 1920,
-    "height": 997,
+    "width": 1546,
+    "height": 876,
     "direction": 2,
     "shifters": [
       {
         "type": 1,
-        "width": 1920,
-        "height": 997,
+        "width": 1546,
+        "height": 876,
         "direction": 2,
         "shifters": [
           {
             "type": 1,
-            "width": 1920,
-            "height": 639,
+            "width": 1546,
+            "height": 514,
             "direction": 1,
             "shifters": [
               {
                 "type": 1,
-                "width": 269,
-                "height": 639,
+                "width": 307,
+                "height": 514,
                 "direction": 2,
                 "shifters": [
                   {
                     "type": 0,
-                    "width": 269,
-                    "height": 325,
+                    "width": 307,
+                    "height": 263,
                     "currentContent": "Modules",
                     "tabs": [
                       {
@@ -36,13 +36,10 @@
                   },
                   {
                     "type": 0,
-                    "width": 269,
-                    "height": 308,
-                    "currentContent": "Command Templates",
+                    "width": 307,
+                    "height": 244,
+                    "currentContent": "Custom Variables",
                     "tabs": [
-                      {
-                        "name": "Command Templates"
-                      },
                       {
                         "name": "Custom Variables"
                       }
@@ -52,8 +49,8 @@
               },
               {
                 "type": 0,
-                "width": 1183,
-                "height": 639,
+                "width": 846,
+                "height": 514,
                 "currentContent": "State Machine",
                 "tabs": [
                   {
@@ -69,8 +66,8 @@
               },
               {
                 "type": 0,
-                "width": 456,
-                "height": 639,
+                "width": 381,
+                "height": 514,
                 "currentContent": "Inspector",
                 "tabs": [
                   {
@@ -82,14 +79,14 @@
           },
           {
             "type": 1,
-            "width": 1920,
-            "height": 351,
+            "width": 1546,
+            "height": 356,
             "direction": 1,
             "shifters": [
               {
                 "type": 0,
-                "width": 255,
-                "height": 351,
+                "width": 178,
+                "height": 356,
                 "currentContent": "Sequences",
                 "tabs": [
                   {
@@ -99,8 +96,8 @@
               },
               {
                 "type": 0,
-                "width": 1253,
-                "height": 351,
+                "width": 960,
+                "height": 356,
                 "currentContent": "Sequence Editor",
                 "tabs": [
                   {
@@ -110,8 +107,8 @@
               },
               {
                 "type": 0,
-                "width": 400,
-                "height": 351,
+                "width": 396,
+                "height": 356,
                 "currentContent": "Logger",
                 "tabs": [
                   {

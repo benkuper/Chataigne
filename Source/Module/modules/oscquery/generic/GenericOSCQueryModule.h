@@ -36,7 +36,7 @@ public:
 
 	Trigger * syncTrigger;
 
-	ScopedPointer<OSCQueryOutput> sendCC;
+	std::unique_ptr<OSCQueryOutput> sendCC;
 	BoolParameter * useLocal;
 	StringParameter * remoteHost;
 	IntParameter * remotePort;

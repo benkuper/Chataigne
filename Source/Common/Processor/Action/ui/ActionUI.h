@@ -23,8 +23,8 @@ public:
 
 	Action * action;
 
-	ScopedPointer<TriggerButtonUI> triggerAllUI;
-	ScopedPointer<FloatSliderUI> progressionUI;
+	std::unique_ptr<TriggerButtonUI> triggerAllUI;
+	std::unique_ptr<FloatSliderUI> progressionUI;
 
 	void paint(Graphics &g) override;
 

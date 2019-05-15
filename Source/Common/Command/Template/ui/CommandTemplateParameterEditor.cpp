@@ -15,10 +15,10 @@ CommandTemplateParameterEditor::CommandTemplateParameterEditor(CommandTemplatePa
 	InspectableEditor(p, isRoot),
 	parameter(p)
 {
-	parameterUI = parameter->parameter->getEditor(false);
-	editableUI = parameter->editable->createToggle();
-	addAndMakeVisible(parameterUI);
-	addAndMakeVisible(editableUI);
+	parameterUI.reset(parameter->parameter->getEditor(false));
+	editableUI.reset(parameter->editable->createToggle());
+	addAndMakeVisible(parameterUI.get());
+	addAndMakeVisible(editableUI.get());
 
 	setSize(100, 16);
 }

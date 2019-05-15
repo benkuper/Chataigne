@@ -13,8 +13,8 @@
 SendStreamValuesCommand::SendStreamValuesCommand(StreamingModule * module, CommandContext context, var params) :
 	StreamingCommand(module, context, params)
 {
-	customValuesManager = new CustomValuesCommandArgumentManager(context == MAPPING);
-	addChildControllableContainer(customValuesManager);
+	customValuesManager.reset(new CustomValuesCommandArgumentManager(context == MAPPING));
+	addChildControllableContainer(customValuesManager.get());
 	customValuesManager->addArgumentManagerListener(this);
 }
 

@@ -21,8 +21,8 @@ GenericOSCQueryModule::GenericOSCQueryModule(const String & name, int defaultRem
 
 	syncTrigger = moduleParams.addTrigger("Sync Data", "Sync the data");
 
-	sendCC = new OSCQueryOutput(this);
-	moduleParams.addChildControllableContainer(sendCC);
+	sendCC.reset(new OSCQueryOutput(this));
+	moduleParams.addChildControllableContainer(sendCC.get());
 
 	useLocal = sendCC->addBoolParameter("Local", "Send to Local IP (127.0.0.1). Allow to quickly switch between local and remote IP.", true);
 	remoteHost = sendCC->addStringParameter("Remote Host", "Remote Host to send to.", "127.0.0.1");
@@ -195,7 +195,7 @@ void GenericOSCQueryModule::run()
 
 	StringPairArray responseHeaders;
 	int statusCode = 0;
-	ScopedPointer<InputStream> stream(url.createInputStream(false, nullptr, nullptr, String(),
+	std::unique_ptr<InputStream> stream(url.createInputStream(false, nullptr, nullptr, String(),
 		2000, // timeout in millisecs
 		&responseHeaders, &statusCode));
 #if JUCE_WINDOWS

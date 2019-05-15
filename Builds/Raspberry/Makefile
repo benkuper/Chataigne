@@ -35,7 +35,7 @@ ifeq ($(CONFIG),Debug)
     TARGET_ARCH := -march=native
   endif
 
-  JUCE_CPPFLAGS := $(DEPFLAGS) -DLINUX=1 -DDEBUG=1 -D_DEBUG=1 -DJUCER_LINUX_MAKE_9C1B7400=1 -DJUCE_APP_VERSION=1.6.0b6 -DJUCE_APP_VERSION_HEX=0x10600 $(shell pkg-config --cflags alsa freetype2 x11 xext xinerama webkit2gtk-4.0 gtk+-x11-3.0 libcurl) -pthread -I../../JuceLibraryCode -I$(HOME)/JUCE/modules -I../../../JUCE\ Modules -I../../External/wiiuse -I../../External/serial/include -I../../External/servus/include -I../../External/dnssd/include -I../../External/libartnet/include -I../../Source $(CPPFLAGS)
+  JUCE_CPPFLAGS := $(DEPFLAGS) -DLINUX=1 -DDEBUG=1 -D_DEBUG=1 -DJUCER_LINUX_MAKE_9C1B7400=1 -DJUCE_APP_VERSION=1.6.0b8 -DJUCE_APP_VERSION_HEX=0x10600 $(shell pkg-config --cflags alsa freetype2 x11 xext xinerama webkit2gtk-4.0 gtk+-x11-3.0 libcurl) -pthread -I../../JuceLibraryCode -I$(HOME)/JUCE/modules -I../../../../../../Softwares/JUCE/modules -I../../../JUCE\ Modules -I../../External/wiiuse -I../../External/serial/include -I../../External/servus/include -I../../External/dnssd/include -I../../External/libartnet/include -I../../Source $(CPPFLAGS)
   JUCE_CPPFLAGS_APP := -DJucePlugin_Build_VST=0 -DJucePlugin_Build_VST3=0 -DJucePlugin_Build_AU=0 -DJucePlugin_Build_AUv3=0 -DJucePlugin_Build_RTAS=0 -DJucePlugin_Build_AAX=0 -DJucePlugin_Build_Standalone=0 -DJucePlugin_Build_Unity=0
   JUCE_TARGET_APP := Chataigne
 
@@ -56,7 +56,7 @@ ifeq ($(CONFIG),Release)
     TARGET_ARCH := -march=native
   endif
 
-  JUCE_CPPFLAGS := $(DEPFLAGS) -DLINUX=1 -DNDEBUG=1 -DJUCER_LINUX_MAKE_9C1B7400=1 -DJUCE_APP_VERSION=1.6.0b6 -DJUCE_APP_VERSION_HEX=0x10600 $(shell pkg-config --cflags alsa freetype2 x11 xext xinerama webkit2gtk-4.0 gtk+-x11-3.0 libcurl) -pthread -I../../JuceLibraryCode -I$(HOME)/JUCE/modules -I../../../JUCE\ Modules -I../../External/wiiuse -I../../External/serial/include -I../../External/servus/include -I../../External/dnssd/include -I../../External/libartnet/include -I../../Source $(CPPFLAGS)
+  JUCE_CPPFLAGS := $(DEPFLAGS) -DLINUX=1 -DNDEBUG=1 -DJUCER_LINUX_MAKE_9C1B7400=1 -DJUCE_APP_VERSION=1.6.0b8 -DJUCE_APP_VERSION_HEX=0x10600 $(shell pkg-config --cflags alsa freetype2 x11 xext xinerama webkit2gtk-4.0 gtk+-x11-3.0 libcurl) -pthread -I../../JuceLibraryCode -I$(HOME)/JUCE/modules -I../../../../../../Softwares/JUCE/modules -I../../../JUCE\ Modules -I../../External/wiiuse -I../../External/serial/include -I../../External/servus/include -I../../External/dnssd/include -I../../External/libartnet/include -I../../Source $(CPPFLAGS)
   JUCE_CPPFLAGS_APP := -DJucePlugin_Build_VST=0 -DJucePlugin_Build_VST3=0 -DJucePlugin_Build_AU=0 -DJucePlugin_Build_AUv3=0 -DJucePlugin_Build_RTAS=0 -DJucePlugin_Build_AAX=0 -DJucePlugin_Build_Standalone=0 -DJucePlugin_Build_Unity=0
   JUCE_TARGET_APP := Chataigne
 
@@ -173,6 +173,10 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/CommunityModuleManager_e575a282.o \
   $(JUCE_OBJDIR)/CustomVariablesModuleCommands_edf5eec8.o \
   $(JUCE_OBJDIR)/CustomVariablesModule_cdc46d67.o \
+  $(JUCE_OBJDIR)/FFTAnalyzerEditor_79640ae4.o \
+  $(JUCE_OBJDIR)/FFTAnalyzerManagerEditor_2297f9ad.o \
+  $(JUCE_OBJDIR)/FFTAnalyzer_1855382c.o \
+  $(JUCE_OBJDIR)/FFTAnalyzerManager_c64bf26b.o \
   $(JUCE_OBJDIR)/PlayAudioFileCommand_45dfa479.o \
   $(JUCE_OBJDIR)/AudioModuleHardwareEditor_e9c8a821.o \
   $(JUCE_OBJDIR)/AudioModule_84057627.o \
@@ -221,6 +225,7 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/MetronomeModule_6453731e.o \
   $(JUCE_OBJDIR)/SignalModule_9a14db38.o \
   $(JUCE_OBJDIR)/ChataigneLogCommand_8373a622.o \
+  $(JUCE_OBJDIR)/GenericAppCommand_b0de605e.o \
   $(JUCE_OBJDIR)/GenericControllableCommand_caf6da58.o \
   $(JUCE_OBJDIR)/GenericScriptCommand_99bd8596.o \
   $(JUCE_OBJDIR)/ChataigneGenericModule_d6802829.o \
@@ -356,6 +361,7 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/include_juce_core_f26d17db.o \
   $(JUCE_OBJDIR)/include_juce_cryptography_8cb807a8.o \
   $(JUCE_OBJDIR)/include_juce_data_structures_7471b1e3.o \
+  $(JUCE_OBJDIR)/include_juce_dsp_aeb2060f.o \
   $(JUCE_OBJDIR)/include_juce_events_fd7d695.o \
   $(JUCE_OBJDIR)/include_juce_graphics_f817e147.o \
   $(JUCE_OBJDIR)/include_juce_gui_basics_e3f79785.o \
@@ -904,6 +910,26 @@ $(JUCE_OBJDIR)/CustomVariablesModule_cdc46d67.o: ../../Source/Module/modules/cus
 	@echo "Compiling CustomVariablesModule.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
+$(JUCE_OBJDIR)/FFTAnalyzerEditor_79640ae4.o: ../../Source/Module/modules/audio/analysis/ui/FFTAnalyzerEditor.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling FFTAnalyzerEditor.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/FFTAnalyzerManagerEditor_2297f9ad.o: ../../Source/Module/modules/audio/analysis/ui/FFTAnalyzerManagerEditor.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling FFTAnalyzerManagerEditor.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/FFTAnalyzer_1855382c.o: ../../Source/Module/modules/audio/analysis/FFTAnalyzer.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling FFTAnalyzer.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/FFTAnalyzerManager_c64bf26b.o: ../../Source/Module/modules/audio/analysis/FFTAnalyzerManager.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling FFTAnalyzerManager.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
 $(JUCE_OBJDIR)/PlayAudioFileCommand_45dfa479.o: ../../Source/Module/modules/audio/commands/PlayAudioFileCommand.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling PlayAudioFileCommand.cpp"
@@ -1142,6 +1168,11 @@ $(JUCE_OBJDIR)/SignalModule_9a14db38.o: ../../Source/Module/modules/generators/s
 $(JUCE_OBJDIR)/ChataigneLogCommand_8373a622.o: ../../Source/Module/modules/generic/commands/ChataigneLogCommand.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling ChataigneLogCommand.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/GenericAppCommand_b0de605e.o: ../../Source/Module/modules/generic/commands/GenericAppCommand.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling GenericAppCommand.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/GenericControllableCommand_caf6da58.o: ../../Source/Module/modules/generic/commands/GenericControllableCommand.cpp
@@ -1817,6 +1848,11 @@ $(JUCE_OBJDIR)/include_juce_cryptography_8cb807a8.o: ../../JuceLibraryCode/inclu
 $(JUCE_OBJDIR)/include_juce_data_structures_7471b1e3.o: ../../JuceLibraryCode/include_juce_data_structures.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling include_juce_data_structures.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/include_juce_dsp_aeb2060f.o: ../../JuceLibraryCode/include_juce_dsp.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling include_juce_dsp.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/include_juce_events_fd7d695.o: ../../JuceLibraryCode/include_juce_events.cpp

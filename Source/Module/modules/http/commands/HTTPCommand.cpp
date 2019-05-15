@@ -19,8 +19,8 @@ HTTPCommand::HTTPCommand(HTTPModule * _module, CommandContext context, var param
 
 	address = addStringParameter("Address", "Address to append to the module's base address", "anything");
 
-	customValuesManager = new CustomValuesCommandArgumentManager(context == MAPPING);
-	addChildControllableContainer(customValuesManager);
+	customValuesManager.reset(new CustomValuesCommandArgumentManager(context == MAPPING));
+	addChildControllableContainer(customValuesManager.get());
 	customValuesManager->addArgumentManagerListener(this);
 }
 

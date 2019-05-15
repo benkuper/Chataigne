@@ -47,7 +47,7 @@ void BaseCommandHandler::setCommand(CommandDefinition * commandDef)
 	var prevCommandData;
 	if (command != nullptr)
 	{
-		removeChildControllableContainer(command);
+		removeChildControllableContainer(command.get());
 		prevCommandData = command->getJSONData();
 
 		command->removeCommandListener(this);
@@ -58,12 +58,12 @@ void BaseCommandHandler::setCommand(CommandDefinition * commandDef)
 
 
 	commandDefinition = commandDef;
-	if (commandDef != nullptr) command = commandDef->create(context);
-	else command = nullptr;
+	if (commandDef != nullptr) command.reset(commandDef->create(context));
+	else command.reset();
 
 	if (command != nullptr)
 	{
-		addChildControllableContainer(command);
+		addChildControllableContainer(command.get());
 
 
 		if(!prevCommandData.isVoid()) command->loadPreviousCommandData(prevCommandData); //keep as much as similar parameter possible

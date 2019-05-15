@@ -64,7 +64,7 @@ void BasicsGuide::handleStep(int step)
 	case AUDIO_MODULE:
 	case RESOLUME_MODULE:
 	{
-		Rectangle<int> r = getLocalArea(mmui->addItemBT, mmui->addItemBT->getLocalBounds()).expanded(10);
+		Rectangle<int> r = getLocalArea(mmui->addItemBT.get(), mmui->addItemBT->getLocalBounds()).expanded(10);
 		String s;
 		if (step == 1) s = "Let's start by adding a module.\nClick on the + icon and then choose the Hardware > Sound Card module.";
 		else if (step == 2) s = "Now, let's add another module, for instance let's try to control Resolume.\nChoose in the same menu the Software > Resolume module.";
@@ -74,7 +74,7 @@ void BasicsGuide::handleStep(int step)
 
 	case STATE:
 	{
-		Rectangle<int> r = getLocalArea(smui->addItemBT, smui->addItemBT->getLocalBounds()).expanded(10);
+		Rectangle<int> r = getLocalArea(smui->addItemBT.get(), smui->addItemBT->getLocalBounds()).expanded(10);
 		fc.setFocus(r, fc.CIRCLE, "Now, let's add a State, so we can add behaviors to create interaction between our 2 modules.");
 	}
 	break;
@@ -84,7 +84,7 @@ void BasicsGuide::handleStep(int step)
 	{
 		if (svui != nullptr)
 		{
-			Rectangle<int> r = getLocalArea(svui->pmui.addItemBT, svui->pmui.addItemBT->getLocalBounds()).expanded(10);
+			Rectangle<int> r = getLocalArea(svui->pmui.addItemBT.get(), svui->pmui.addItemBT->getLocalBounds()).expanded(10);
 			fc.setFocus(r, fc.CIRCLE, "Ok we have a State. Now we want to create an Action that will compare an input value\nagainst another one.");
 		}
 	}
@@ -92,21 +92,21 @@ void BasicsGuide::handleStep(int step)
 
 	case CONDITION:
 	{
-		Rectangle<int> r = getLocalArea(cme->addItemBT, cme->addItemBT->getLocalBounds()).expanded(10);
+		Rectangle<int> r = getLocalArea(cme->addItemBT.get(), cme->addItemBT->getLocalBounds()).expanded(10);
 		fc.setFocus(r, fc.CIRCLE, "Good ! We can now edit our Action inside the Inspector.\nLet's create a condition \"From Input Value\"");
 	}
 	break;
 
 	case CONDITION_SOURCE:
 	{
-		Rectangle<int> r = getLocalArea(ce->targetUI, ce->targetUI->getLocalBounds()).expanded(10);
+		Rectangle<int> r = getLocalArea(ce->targetUI.get(), ce->targetUI->getLocalBounds()).expanded(10);
 		fc.setFocus(r, fc.RECTANGLE, "Great, now let's choose what value we want to compare.\nLet's choose the value \"Volume\" of the Sound Card");
 	}
 	break;
 
 	case CONSEQUENCE:
 	{
-		Rectangle<int> r = getLocalArea(csme->addItemBT, csme->addItemBT->getLocalBounds()).expanded(10);
+		Rectangle<int> r = getLocalArea(csme->addItemBT.get(), csme->addItemBT->getLocalBounds()).expanded(10);
 		fc.setFocus(r, fc.CIRCLE, "Almost done ! Now that our condition is set,\nlet's decide what consequence we want when this condition is validated.\nChoose whatever command from Resolume makes you happy !");
 
 	}
@@ -205,7 +205,7 @@ void BasicsGuide::currentInspectableChanged(Inspector *)
 			if (cce != nullptr)
 			{
 				cme = dynamic_cast<GenericManagerEditor<Condition> *>(cce->getEditorForInspectable(&a->cdm));
-				csme = dynamic_cast<BaseCommandHandlerManagerEditor<Consequence> *>(cce->getEditorForInspectable(a->csmOn));
+				csme = dynamic_cast<BaseCommandHandlerManagerEditor<Consequence> *>(cce->getEditorForInspectable(a->csmOn.get()));
 				cme->addContainerEditorListener(this);
 				csme->addContainerEditorListener(this);
 			}

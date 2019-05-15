@@ -29,7 +29,7 @@ public:
 	ModuleChooserUI moduleChooser;
 	AudioLayer * audioLayer;
 
-	ScopedPointer<FloatSliderUI> enveloppeUI;
+	std::unique_ptr<FloatSliderUI> enveloppeUI;
 
 	void resizedInternalContent(Rectangle<int> &r) override;
 

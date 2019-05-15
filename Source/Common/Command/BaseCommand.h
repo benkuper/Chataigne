@@ -37,7 +37,7 @@ public:
 	//Template
 	CommandTemplate * linkedTemplate;
 	WeakReference<Inspectable> templateRef;
-	ScopedPointer<CustomValuesCommandArgumentManager> customValuesManager;
+	std::unique_ptr<CustomValuesCommandArgumentManager> customValuesManager;
 
 	OwnedArray<Array<WeakReference<Parameter>>> mappingParametersArray;
 	HashMap<int, Array<WeakReference<Parameter>> *> targetMappingParameters;

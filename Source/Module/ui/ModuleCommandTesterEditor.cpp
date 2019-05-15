@@ -13,8 +13,8 @@
 ModuleCommandTesterEditor::ModuleCommandTesterEditor(ModuleCommandTester * tester, bool isRoot) :
 	BaseCommandHandlerEditor(tester, isRoot)
 {
-	autoTriggerUI = tester->autoTrigger->createToggle();
-	addAndMakeVisible(autoTriggerUI);
+	autoTriggerUI.reset(tester->autoTrigger->createToggle());
+	addAndMakeVisible(autoTriggerUI.get());
 	
 }
 

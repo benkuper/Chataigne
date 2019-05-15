@@ -16,7 +16,7 @@ You can intercept all the received data from this module with the method dataRec
 Depending on the Protocol you chose, the nature of the data passed in this function will be different.
 */
 
-function dataReceived(data, requestURL)
+function dataEvent(data, requestURL)
 {
 	script.log("Data received, request URL :"+requestURL+"\nContent :\n" +data);
 }
