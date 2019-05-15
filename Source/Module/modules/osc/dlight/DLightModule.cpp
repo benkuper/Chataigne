@@ -65,7 +65,7 @@ DLightModule::DLightModule() :
 	circMapValParam.getDynamicObject()->setProperty("mappingIndex", 0);
 	circIntValParam.append(circMapValParam);
 
-	defManager.add(CommandDefinition::createDef(this, "Circuit", "Circuit Level", &OSCCommand::create, CommandContext::BOTH)->addParam("address", "/sub/kill")->addParam("args", circIntValParam));
+	defManager.add(CommandDefinition::createDef(this, "Circuit", "Circuit Level", &OSCCommand::create, CommandContext::BOTH)->addParam("address", "/circ/level")->addParam("args", circIntValParam));
 
 	
 
