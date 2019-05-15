@@ -9,7 +9,7 @@
 */
 
 #pragma once
-#pragma warning(disable:4244 4100 4305)
+#pragma warning(disable:4244 4100 4305 26451 26495)
 
 #include "MainComponent.h"
 #include "ChataigneEngine.h"
