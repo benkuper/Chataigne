@@ -52,13 +52,13 @@ void MappingUI::updateOutputParamUI()
 
 	if (outputParamUI != nullptr)
 	{
-		removeChildComponent(outputParamUI);
+		removeChildComponent(outputParamUI.get());
 	}
 
 	if (mapping->outputParam != nullptr)
 	{
-		outputParamUI = mapping->outputParam->createDefaultUI();
-		addAndMakeVisible(outputParamUI);
+		outputParamUI.reset(mapping->outputParam->createDefaultUI());
+		addAndMakeVisible(outputParamUI.get());
 	}
 
 	resized();

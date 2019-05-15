@@ -15,11 +15,11 @@ ModuleEditor::ModuleEditor(Module * _module, bool isRoot) :
 	module(_module)
 {
     module->addModuleListener(this);
-	logIncomingUI = module->logIncomingData->createToggle();
-	logOutgoingUI = module->logOutgoingData->createToggle();
+	logIncomingUI.reset(module->logIncomingData->createToggle());
+	logOutgoingUI.reset(module->logOutgoingData->createToggle());
 
-	addAndMakeVisible(logIncomingUI);
-	addAndMakeVisible(logOutgoingUI);
+	addAndMakeVisible(logIncomingUI.get());
+	addAndMakeVisible(logOutgoingUI.get());
     
     logIncomingUI->setVisible(module->hasInput);
     logOutgoingUI->setVisible(module->hasOutput);

@@ -45,7 +45,7 @@ public:
 
 	bool includeValuesInSave;
 
-	ScopedPointer<ModuleCommandTester> commandTester;
+	std::unique_ptr<ModuleCommandTester> commandTester;
 
 	String customType; //for custom modules;
 

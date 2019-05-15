@@ -25,7 +25,7 @@ public:
 	File liveFolder;
 	File pluginFolder;
 	File downloadedFile;
-	ScopedPointer<URL::DownloadTask> downloadTask;
+	std::unique_ptr<URL::DownloadTask> downloadTask;
 
 	void detectAndInstallLivePlugin();
 

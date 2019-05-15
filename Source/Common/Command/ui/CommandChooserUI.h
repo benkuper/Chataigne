@@ -28,7 +28,7 @@ public:
 	bool commandIsSet;
 	String noTargetText;
 	Label label;
-	ScopedPointer<ImageButton> targetBT;
+	std::unique_ptr<ImageButton> targetBT;
 
 	void paint(Graphics &g) override;
 	void resized() override;

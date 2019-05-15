@@ -29,8 +29,8 @@ public:
 	float clipViewStartTime;
 	float clipViewEndTime;
 
-	ScopedPointer<ImageButton> browseBT;
-	ScopedPointer<BoolImageToggleUI> lockUI;
+	std::unique_ptr<ImageButton> browseBT;
+	std::unique_ptr<BoolImageToggleUI> lockUI;
 
 	AudioThumbnailCache thumbnailCache;
 	AudioThumbnail thumbnail;

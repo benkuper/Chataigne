@@ -23,7 +23,7 @@ public:
 	
 	Factory<BaseGuide> factory;
 
-	ScopedPointer<BaseGuide> guide;
+	std::unique_ptr<BaseGuide> guide;
 	void setCurrentGuide(BaseGuide * guide);
 	void launchGuideAtIndex(int guideIndex);
 

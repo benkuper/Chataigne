@@ -32,8 +32,8 @@ TimeTriggerUI::TimeTriggerUI(TimeTrigger * _tt) :
 	setName(_tt->niceName);
 
 
-	lockUI = item->isLocked->createImageToggle(ChataigneAssetManager::getInstance()->getToggleBTImage(ChataigneAssetManager::getInstance()->getLockImage()));
-	addAndMakeVisible(lockUI);
+	lockUI.reset(item->isLocked->createImageToggle(ChataigneAssetManager::getInstance()->getToggleBTImage(ChataigneAssetManager::getInstance()->getLockImage())));
+	addAndMakeVisible(lockUI.get());
 
 	removeBT->setVisible(item->isSelected);
 	enabledBT->setVisible(item->isSelected);

@@ -29,7 +29,7 @@ public:
 
 	bool forceDisabled; //for router enable
 
-	ScopedPointer<Module::RouteParams> routeParams;
+	std::unique_ptr<Module::RouteParams> routeParams;
 
 	void setSourceAndOutModule(Module * sourceModule, Module * outModule);
 

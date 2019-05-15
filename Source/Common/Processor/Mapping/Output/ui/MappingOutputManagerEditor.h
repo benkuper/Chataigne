@@ -22,7 +22,7 @@ public:
 	~MappingOutputManagerEditor();
 
 	MappingOutputManager * outputManager;
-	ScopedPointer<ParameterUI> outUI;
+	std::unique_ptr<ParameterUI> outUI;
 
 	void updateOutputUI();
 

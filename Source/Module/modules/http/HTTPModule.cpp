@@ -50,7 +50,7 @@ void HTTPModule::processRequest(Request * request)
 {
 	StringPairArray responseHeaders;
 	int statusCode = 0;
-	ScopedPointer<InputStream> stream(request->url.createInputStream(request->method == POST, nullptr, nullptr, String(),
+	std::unique_ptr<InputStream> stream(request->url.createInputStream(request->method == POST, nullptr, nullptr, String(),
 		2000, // timeout in millisecs
 		&responseHeaders, &statusCode));
 #if JUCE_WINDOWS

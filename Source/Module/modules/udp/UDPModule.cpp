@@ -28,7 +28,7 @@ void UDPModule::setupReceiver()
 	clearInternal();
 	if (receiveCC == nullptr) return;
 	if (!receiveCC->enabled->boolValue()) return;
-	receiver = new DatagramSocket();
+	receiver.reset(new DatagramSocket());
 	receiver->bindToPort(localPort->intValue());
 	receiverIsBound->setValue(receiver->getBoundPort() != -1);
 	if(receiverIsBound->boolValue()) startThread();
@@ -47,7 +47,7 @@ void UDPModule::setupSender()
 	sender = nullptr;
 	if (sendCC == nullptr) return;
 	if (!sendCC->enabled->boolValue()) return;
-	sender = new DatagramSocket();
+	sender.reset(new DatagramSocket());
 	senderIsConnected->setValue(true);
 }
 

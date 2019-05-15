@@ -34,7 +34,7 @@ public:
 	~CommandTemplateManagerPanel();
 
 	Module * module;
-	ScopedPointer<CommandTemplateManagerUI> modelManagerUI;
+	std::unique_ptr<CommandTemplateManagerUI> modelManagerUI;
 
 	void editModule(Module * module);
 	void resized() override;

@@ -27,9 +27,9 @@ OSCModule::OSCModule(const String & name, int defaultLocalPort, int defaultRemot
 	//Receive
 	if (canHaveInput)
 	{
-		receiveCC = new EnablingControllableContainer("OSC Input");
+		receiveCC.reset(new EnablingControllableContainer("OSC Input"));
 		receiveCC->customGetEditorFunc = &EnablingNetworkControllableContainerEditor::create;
-		moduleParams.addChildControllableContainer(receiveCC);
+		moduleParams.addChildControllableContainer(receiveCC.get());
 
 		localPort = receiveCC->addIntParameter("Local Port", "Local Port to bind to receive OSC Messages", defaultLocalPort, 1024, 65535);
 		localPort->hideInOutliner = true;
@@ -40,15 +40,15 @@ OSCModule::OSCModule(const String & name, int defaultLocalPort, int defaultRemot
 		setupReceiver();
 	} else
 	{
-		if (receiveCC != nullptr) moduleParams.removeChildControllableContainer(receiveCC);
+		if (receiveCC != nullptr) moduleParams.removeChildControllableContainer(receiveCC.get());
 		receiveCC = nullptr;
 	}
 
 	//Send
 	if (canHaveOutput)
 	{
-		outputManager = new BaseManager<OSCOutput>("OSC Outputs");
-		moduleParams.addChildControllableContainer(outputManager);
+		outputManager.reset(new BaseManager<OSCOutput>("OSC Outputs"));
+		moduleParams.addChildControllableContainer(outputManager.get());
 
 		outputManager->setCanBeDisabled(true);
 		if (!Engine::mainEngine->isLoadingFile)
@@ -59,7 +59,7 @@ OSCModule::OSCModule(const String & name, int defaultLocalPort, int defaultRemot
 		}
 	} else
 	{
-		if (outputManager != nullptr) removeChildControllableContainer(outputManager);
+		if (outputManager != nullptr) removeChildControllableContainer(outputManager.get());
 		outputManager = nullptr;
 	}
 

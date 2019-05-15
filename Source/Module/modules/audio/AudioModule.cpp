@@ -134,9 +134,9 @@ void AudioModule::onControllableFeedbackUpdateInternal(ControllableContainer * c
 		
 		switch (pdm)
 		{
-		case NONE: pitchDetector = nullptr; break;
-		case MPM: pitchDetector = new PitchMPM((int)s.sampleRate, s.bufferSize);  break;
-		case YIN: pitchDetector = new PitchYIN((int)s.sampleRate, s.bufferSize); break;
+		case NONE: pitchDetector.reset(nullptr); break;
+		case MPM: pitchDetector.reset(new PitchMPM((int)s.sampleRate, s.bufferSize));  break;
+		case YIN: pitchDetector.reset(new PitchYIN((int)s.sampleRate, s.bufferSize)); break;
 		}
 
 	}
@@ -155,7 +155,7 @@ var AudioModule::getJSONData()
 {
 	var data = Module::getJSONData();
 
-	ScopedPointer<XmlElement> xmlData = am.createStateXml();
+	std::unique_ptr<XmlElement> xmlData = am.createStateXml();
 	if (xmlData != nullptr)
 	{
 		data.getDynamicObject()->setProperty("audioSettings", xmlData->toString());

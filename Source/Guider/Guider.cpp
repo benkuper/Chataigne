@@ -33,15 +33,15 @@ void Guider::setCurrentGuide(BaseGuide * g)
 	{
 		guide->clear();
 		guide->removeGuideListener(this);
-		getApp().mainComponent->removeChildComponent(guide);
+		getApp().mainComponent->removeChildComponent(guide.get());
 	}
 
-	guide = g;
+	guide.reset(g);
 
 	if (guide != nullptr)
 	{
 		guide->addGuideListener(this);
-		getApp().mainComponent->addAndMakeVisible(guide);
+		getApp().mainComponent->addAndMakeVisible(guide.get());
 		guide->setBounds(getApp().mainComponent->getLocalBounds());
 		guide->toFront(true);
 		guide->init();

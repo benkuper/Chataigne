@@ -15,9 +15,9 @@ StateViewUI::StateViewUI(State * state) :
 	pmui(&state->pm),
 	transitionReceptionMode(NONE)
 {
-	activeUI = state->active->createToggle();
+	activeUI.reset(state->active->createToggle());
 
-	addAndMakeVisible(activeUI);
+	addAndMakeVisible(activeUI.get());
 
 	pmui.addManagerUIListener(this);
 

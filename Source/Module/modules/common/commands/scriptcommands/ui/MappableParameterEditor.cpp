@@ -16,17 +16,17 @@ MappableParameterEditor::MappableParameterEditor(Parameter * p, bool isRoot) :
 	mappingIndex("Index", "This is the index of the input to use if input has multiple values, like color or point2d/3d", 1, 1, 4),
 	showIndex(false)
 {
-	paramEditor = (ParameterEditor *)p->getEditor(isRoot);
+	paramEditor.reset((ParameterEditor*)p->getEditor(isRoot));
 	paramEditor->parameter->addAsyncParameterListener(this);
-	addAndMakeVisible(paramEditor);
+	addAndMakeVisible(paramEditor.get());
 
-	useForMappingUI = useForMapping.createToggle();
-	addAndMakeVisible(useForMappingUI);
+	useForMappingUI.reset(useForMapping.createToggle());
+	addAndMakeVisible(useForMappingUI.get());
 
-	mappingIndexUI = mappingIndex.createLabelUI();
+	mappingIndexUI.reset(mappingIndex.createLabelUI());
 	mappingIndexUI->showLabel = false;
 	mappingIndexUI->setVisible(showIndex);
-	addChildComponent(mappingIndexUI);
+	addChildComponent(mappingIndexUI.get());
 	mappingIndex.setEnabled(false);
 
 	useForMapping.addAsyncParameterListener(this);
@@ -37,17 +37,17 @@ MappableParameterEditor::MappableParameterEditor(Parameter * p, bool isRoot) :
 
 MappableParameterEditor::~MappableParameterEditor()
 {
-	removeChildComponent(useForMappingUI);
-	removeChildComponent(mappingIndexUI);
-	removeChildComponent(paramEditor);
+	removeChildComponent(useForMappingUI.get());
+	removeChildComponent(mappingIndexUI.get());
+	removeChildComponent(paramEditor.get());
 
 	useForMapping.removeAsyncParameterListener(this);
 	mappingIndex.removeAsyncParameterListener(this);
 	if (!paramEditor->parameter.wasObjectDeleted()) paramEditor->parameter->removeAsyncParameterListener(this);
 
-	useForMappingUI = nullptr;
-	mappingIndexUI = nullptr;
-	paramEditor = nullptr;
+	useForMappingUI.reset();
+	mappingIndexUI.reset();
+	paramEditor.reset();
 }
 
 void MappableParameterEditor::setShowIndex(bool value)
@@ -108,5 +108,5 @@ void MappableParameterEditor::newMessage(const Parameter::ParameterEvent & e)
 void MappableParameterEditor::childBoundsChanged(Component * c)
 {
 	InspectableEditor::childBoundsChanged(c); 
-	if (c == paramEditor) setSize(getWidth(), paramEditor->getHeight());
+	if (c == paramEditor.get()) setSize(getWidth(), paramEditor->getHeight());
 }

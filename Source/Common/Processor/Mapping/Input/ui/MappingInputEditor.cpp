@@ -25,12 +25,12 @@ MappingInputEditor::~MappingInputEditor()
 
 void MappingInputEditor::updateSourceUI()
 {
-	if (sourceFeedbackUI != nullptr) removeChildComponent(sourceFeedbackUI);
+	if (sourceFeedbackUI != nullptr) removeChildComponent(sourceFeedbackUI.get());
 	if (input->inputReference != nullptr)
 	{
-		sourceFeedbackUI = input->inputReference->createDefaultUI();
+		sourceFeedbackUI.reset(input->inputReference->createDefaultUI());
 		//sourceFeedbackUI->setForceFeedbackOnly(true);
-		addAndMakeVisible(sourceFeedbackUI);
+		addAndMakeVisible(sourceFeedbackUI.get());
 	}
 
 	resized();

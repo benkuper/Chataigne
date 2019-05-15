@@ -19,7 +19,7 @@ public:
 	CommandTemplateEditor(CommandTemplate * t, bool isRoot);
 	~CommandTemplateEditor();
 
-	ScopedPointer<TriggerButtonUI> triggerUI;
+	std::unique_ptr<TriggerButtonUI> triggerUI;
 
 	void resizedInternalHeaderItemInternal(Rectangle<int> &r) override;
 };

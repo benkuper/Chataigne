@@ -24,13 +24,13 @@ public:
 	~MappingLayerPanel();
 
 	MappingLayer * mappingLayer;
-	ScopedPointer<EnumParameterUI> modeUI;
+	std::unique_ptr<EnumParameterUI> modeUI;
 
-	ScopedPointer<BoolImageToggleUI> snapUI;
-	ScopedPointer<FloatSliderUI> snapSensitivityUI;
-	ScopedPointer<ParameterUI> mappingOutputUI;
+	std::unique_ptr<BoolImageToggleUI> snapUI;
+	std::unique_ptr<FloatSliderUI> snapSensitivityUI;
+	std::unique_ptr<ParameterUI> mappingOutputUI;
 
-	ScopedPointer<Inspector> automationInspector;
+	std::unique_ptr<Inspector> automationInspector;
 
 	void resizedInternalHeader(Rectangle<int> &r) override;
 	void resizedInternalContent(Rectangle<int> &r) override;

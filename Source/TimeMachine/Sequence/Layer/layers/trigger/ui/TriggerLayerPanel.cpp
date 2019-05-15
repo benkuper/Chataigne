@@ -14,10 +14,10 @@ TriggerLayerPanel::TriggerLayerPanel(TriggerLayer * layer) :
 	SequenceLayerPanel(layer),
 	triggerLayer(layer)
 {
-	lockAllBT = layer->lockAll->createButtonUI();
-	unlockAllBT = layer->unlockAll->createButtonUI();
-	addAndMakeVisible(lockAllBT);
-	addAndMakeVisible(unlockAllBT);
+	lockAllBT.reset(layer->lockAll->createButtonUI());
+	unlockAllBT.reset(layer->unlockAll->createButtonUI());
+	addAndMakeVisible(lockAllBT.get());
+	addAndMakeVisible(unlockAllBT.get());
 }
 
 TriggerLayerPanel::~TriggerLayerPanel()

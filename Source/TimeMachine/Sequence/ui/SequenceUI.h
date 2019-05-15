@@ -22,9 +22,9 @@ public:
 	SequenceUI(Sequence * output);
 	virtual ~SequenceUI();
 
-	ScopedPointer<FloatSliderUI> timeUI;
-	ScopedPointer<TriggerImageUI> togglePlayUI;
-	ScopedPointer<TriggerImageUI> stopUI;
+	std::unique_ptr<FloatSliderUI> timeUI;
+	std::unique_ptr<TriggerImageUI> togglePlayUI;
+	std::unique_ptr<TriggerImageUI> stopUI;
 
 	void resizedInternalHeader(Rectangle<int> &r) override;
 	void resizedInternalContent(Rectangle<int> &r) override;

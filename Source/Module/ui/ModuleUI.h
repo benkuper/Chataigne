@@ -23,10 +23,10 @@ public:
 
 	void resizedInternalHeader(Rectangle<int> &r) override;
 
-	ScopedPointer<TriggerImageUI> inActivityUI;
-	ScopedPointer<TriggerImageUI> outActivityUI;
+	std::unique_ptr<TriggerImageUI> inActivityUI;
+	std::unique_ptr<TriggerImageUI> outActivityUI;
 
-	ScopedPointer<BoolImageToggleUI> connectionFeedbackUI;
+	std::unique_ptr<BoolImageToggleUI> connectionFeedbackUI;
 
 	void moduleIOConfigurationChanged() override;
 

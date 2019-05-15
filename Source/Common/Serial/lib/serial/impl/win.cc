@@ -5,6 +5,8 @@
 #include <sstream>
 
 #include "serial/impl/win.h"
+ 
+#pragma warning(disable:4244)
 
 using std::string;
 using std::wstring;

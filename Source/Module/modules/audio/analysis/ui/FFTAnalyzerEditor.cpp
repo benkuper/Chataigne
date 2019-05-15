@@ -14,8 +14,8 @@ FFTAnalyzerEditor::FFTAnalyzerEditor(FFTAnalyzer* analyzer, bool isRoot) :
 	BaseItemEditor(analyzer, isRoot),
 	analyzer(analyzer)
 {
-	valueUI = analyzer->value->createSlider();
-	addAndMakeVisible(valueUI);
+	valueUI.reset(analyzer->value->createSlider());
+	addAndMakeVisible(valueUI.get());
 }
 
 FFTAnalyzerEditor::~FFTAnalyzerEditor()

@@ -19,8 +19,8 @@ CustomOSCCommand::CustomOSCCommand(CustomOSCModule * module, CommandContext cont
 
 	removeChildControllableContainer(&argumentsContainer);
 	
-	customValuesManager = new CustomValuesCommandArgumentManager(context == MAPPING);
-	addChildControllableContainer(customValuesManager);  
+	customValuesManager.reset(new CustomValuesCommandArgumentManager(context == MAPPING));
+	addChildControllableContainer(customValuesManager.get());
 	customValuesManager->addArgumentManagerListener(this);
 }
 

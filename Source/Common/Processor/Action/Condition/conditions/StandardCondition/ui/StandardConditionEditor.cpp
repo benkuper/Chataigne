@@ -1,21 +1,21 @@
 /*
   ==============================================================================
 
-    StandardConditionEditor.cpp
-    Created: 28 Oct 2016 8:07:05pm
-    Author:  bkupe
+	StandardConditionEditor.cpp
+	Created: 28 Oct 2016 8:07:05pm
+	Author:  bkupe
 
   ==============================================================================
 */
 
 #include "StandardConditionEditor.h"
 
-StandardConditionEditor::StandardConditionEditor(StandardCondition * _condition, bool isRoot) :
+StandardConditionEditor::StandardConditionEditor(StandardCondition* _condition, bool isRoot) :
 	ConditionEditor(_condition, isRoot),
 	standardCondition(_condition)
 {
-	targetUI = standardCondition->sourceTarget->getEditor(false);
-	addChildComponent(targetUI);
+	targetUI.reset(standardCondition->sourceTarget->getEditor(false));
+	addChildComponent(targetUI.get());
 
 	targetUI->setVisible(!standardCondition->editorIsCollapsed);
 
@@ -32,11 +32,11 @@ void StandardConditionEditor::setCollapsed(bool value, bool force, bool animate,
 	ConditionEditor::setCollapsed(value, force, animate, doNotRebuild);
 
 	targetUI->setVisible(!standardCondition->editorIsCollapsed);
-	if(sourceFeedbackUI != nullptr)	sourceFeedbackUI->setVisible(!standardCondition->editorIsCollapsed);
-	if(comparatorUI != nullptr) comparatorUI->setVisible(!standardCondition->editorIsCollapsed);
+	if (sourceFeedbackUI != nullptr)	sourceFeedbackUI->setVisible(!standardCondition->editorIsCollapsed);
+	if (comparatorUI != nullptr) comparatorUI->setVisible(!standardCondition->editorIsCollapsed);
 }
 
-void StandardConditionEditor::resizedInternalHeaderItemInternal(Rectangle<int>& r)
+void StandardConditionEditor::resizedInternalHeaderItemInternal(Rectangle<int> & r)
 {
 	if (sourceFeedbackUI != nullptr)
 	{
@@ -46,11 +46,11 @@ void StandardConditionEditor::resizedInternalHeaderItemInternal(Rectangle<int>& 
 	BaseItemEditor::resizedInternalHeaderItemInternal(r);
 }
 
-void StandardConditionEditor::resizedInternalContent(Rectangle<int>& r)
+void StandardConditionEditor::resizedInternalContent(Rectangle<int> & r)
 {
 	ConditionEditor::resizedInternalContent(r);
-	
-	Rectangle<int> sr = r.withHeight(16).reduced(2,0);
+
+	Rectangle<int> sr = r.withHeight(16).reduced(2, 0);
 	targetUI->setBounds(sr);
 	r.translate(0, 18);
 
@@ -58,7 +58,7 @@ void StandardConditionEditor::resizedInternalContent(Rectangle<int>& r)
 	{
 		comparatorUI->setBounds(r.withHeight(comparatorUI->getHeight()));
 		r.translate(0, comparatorUI->getHeight());
-	} 
+	}
 
 	r.translate(0, 2);
 	r.setHeight(0);
@@ -66,25 +66,25 @@ void StandardConditionEditor::resizedInternalContent(Rectangle<int>& r)
 
 void StandardConditionEditor::updateUI()
 {
-	if (sourceFeedbackUI != nullptr) removeChildComponent(sourceFeedbackUI);
+	if (sourceFeedbackUI != nullptr) removeChildComponent(sourceFeedbackUI.get());
 	if (standardCondition->sourceControllable != nullptr)
 	{
-		sourceFeedbackUI = standardCondition->sourceControllable->createDefaultUI();
+		sourceFeedbackUI.reset(standardCondition->sourceControllable->createDefaultUI());
 		//sourceFeedbackUI->setForceFeedbackOnly(true);
-		addChildComponent(sourceFeedbackUI);
+		addChildComponent(sourceFeedbackUI.get());
 		sourceFeedbackUI->setVisible(!standardCondition->editorIsCollapsed);
 	}
 
 	if (comparatorUI != nullptr)
 	{
-		removeChildComponent(comparatorUI);
+		removeChildComponent(comparatorUI.get());
 		comparatorUI = nullptr;
 	}
 	if (standardCondition->comparator != nullptr)
 	{
-			comparatorUI = standardCondition->comparator->createUI();
-			addChildComponent(comparatorUI);
-			comparatorUI->setVisible(!standardCondition->editorIsCollapsed);
+		comparatorUI.reset(standardCondition->comparator->createUI());
+		addChildComponent(comparatorUI.get());
+		comparatorUI->setVisible(!standardCondition->editorIsCollapsed);
 	}
 
 	resized();

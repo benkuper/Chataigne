@@ -36,15 +36,15 @@ void MappingFilterEditor::updateFilteredUI()
 
 	if (filteredUI != nullptr)
 	{
-		removeChildComponent(filteredUI);
+		removeChildComponent(filteredUI.get());
 	}
 
 	filteredUI = nullptr;
 
 	if (filter->filteredParameter != nullptr)
 	{
-		filteredUI = (ParameterUI *)(filter->filteredParameter->createDefaultUI());
-		addAndMakeVisible(filteredUI);
+		filteredUI.reset((ParameterUI*)(filter->filteredParameter->createDefaultUI()));
+		addAndMakeVisible(filteredUI.get());
 	}
 
 	resized();

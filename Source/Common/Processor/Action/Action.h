@@ -34,8 +34,8 @@ public:
 	bool hasOffConsequences;
 
 	ConditionManager cdm;
-	ScopedPointer<ConsequenceManager> csmOn;
-	ScopedPointer<ConsequenceManager> csmOff;
+	std::unique_ptr<ConsequenceManager> csmOn;
+	std::unique_ptr<ConsequenceManager> csmOff;
 
 	BoolParameter * isActive;
 	Trigger * triggerOn;

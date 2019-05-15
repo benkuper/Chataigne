@@ -20,7 +20,7 @@ public:
 	SequenceLayerPanel(SequenceLayer *);
 	virtual ~SequenceLayerPanel();
 
-	ScopedPointer<ColorParameterUI> colorUI;
+	std::unique_ptr<ColorParameterUI> colorUI;
 	void paintOverChildren(Graphics &g) override;
 	void resized() override;
 	void resizedInternalHeader(Rectangle<int> &r) override;

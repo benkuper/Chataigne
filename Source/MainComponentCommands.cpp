@@ -197,7 +197,7 @@ bool MainContentComponent::perform(const InvocationInfo& info)
 			TimeMachineView * tmw = dynamic_cast<TimeMachineView *>(c);
 			if (tmw != nullptr)
 			{
-				SequenceEditor * se = tmw->editor;
+				SequenceEditor * se = tmw->editor.get();
 				if (se != nullptr)
 				{
 					if (se->sequence != nullptr) se->sequence->togglePlayTrigger->trigger();

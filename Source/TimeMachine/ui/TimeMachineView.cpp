@@ -57,15 +57,15 @@ void TimeMachineView::setSequence(Sequence * sequence)
 
 	if (editor != nullptr)
 	{
-		removeChildComponent(editor);
+		removeChildComponent(editor.get());
 		editor = nullptr;
 		
 	}
 
 	if (sequence != nullptr)
 	{
-		editor = new SequenceEditor(sequence);
-		addAndMakeVisible(editor);
+		editor.reset(new SequenceEditor(sequence));
+		addAndMakeVisible(editor.get());
 	}
 	
 	resized();

@@ -20,8 +20,8 @@ void ChataigneApplication::initialiseInternal(const String &)
 	HelpBox::getInstance()->helpURL = URL("http://benjamin.kuperberg.fr/chataigne/docs/help.json");
 	CrashDumpUploader::getInstance()->remoteURL = URL("http://benjamin.kuperberg.fr/chataigne/support/crash_report.php");
 
-	engine = new ChataigneEngine();
-	mainComponent = new MainContentComponent();
+	engine.reset(new ChataigneEngine());
+	mainComponent.reset(new MainContentComponent());
 
 
 	ShapeShifterManager::getInstance()->setDefaultFileData(BinaryData::default_chalayout);

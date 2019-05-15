@@ -29,12 +29,12 @@ StateMachineView::StateMachineView(const String &contentName, StateManager * _ma
 
 	addExistingItems();
 	
-	stmUI = new StateTransitionManagerUI(this, &manager->stm);
-	addAndMakeVisible(stmUI, 0);
+	stmUI.reset(new StateTransitionManagerUI(this, &manager->stm));
+	addAndMakeVisible(stmUI.get(), 0);
 	
-	commentManagerUI = new CommentManagerViewUI(&manager->commentManager);
+	commentManagerUI.reset(new CommentManagerViewUI(&manager->commentManager));
 	commentManagerUI->canZoom = true;
-	addAndMakeVisible(commentManagerUI, 0);
+	addAndMakeVisible(commentManagerUI.get(), 0);
 
 	frameView();
 }

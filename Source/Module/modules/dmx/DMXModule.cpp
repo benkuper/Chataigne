@@ -51,16 +51,16 @@ DMXModule::~DMXModule()
 
 void DMXModule::setCurrentDMXDevice(DMXDevice * d)
 {
-	if (dmxDevice == d) return;
+	if (dmxDevice.get() == d) return;
 
 	if (dmxDevice != nullptr)
 	{
 		dmxDevice->removeDMXDeviceListener(this);
 		dmxDevice->clearDevice();
-		moduleParams.removeChildControllableContainer(dmxDevice);
+		moduleParams.removeChildControllableContainer(dmxDevice.get());
 	}
 
-	dmxDevice = d;
+	dmxDevice.reset(d);
 	
 	dmxConnected->hideInEditor = dmxDevice == nullptr || dmxDevice->type == DMXDevice::ARTNET;
 	dmxConnected->setValue(false);
@@ -68,7 +68,7 @@ void DMXModule::setCurrentDMXDevice(DMXDevice * d)
 	if (dmxDevice != nullptr)
 	{
 		dmxDevice->addDMXDeviceListener(this);
-		moduleParams.addChildControllableContainer(dmxDevice);
+		moduleParams.addChildControllableContainer(dmxDevice.get());
 	}
 
 	setupIOConfiguration(dmxDevice != nullptr && dmxDevice->canReceive, true);

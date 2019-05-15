@@ -22,7 +22,7 @@ public:
 	~MappingLayerEditor();
 
 	MappingLayer * mappingLayer;
-	ScopedPointer<InspectableEditor> mappingEditor;
+	std::unique_ptr<InspectableEditor> mappingEditor;
 
 	void resizedInternalContent(Rectangle<int> &r) override;
 };

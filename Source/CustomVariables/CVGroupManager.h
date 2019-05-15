@@ -23,7 +23,7 @@ public:
 	CVGroupManager(const String &name = "Custom Variables");
 	~CVGroupManager();
 
-	ScopedPointer<CustomVariablesModule> module;
+	std::unique_ptr<CustomVariablesModule> module;
 
 	//Input values menu
 	static ControllableContainer * showMenuAndGetContainer();

@@ -120,10 +120,10 @@ void ModuleRouterView::setRouter(ModuleRouter * router)
 		currentRouter->removeRouterListener(this);
 		currentRouter->removeInspectableListener(this);
 
-		removeChildComponent(selectAllTrigger);
-		selectAllTrigger = nullptr;
-		removeChildComponent(deselectAllTrigger);
-		deselectAllTrigger = nullptr;
+		removeChildComponent(selectAllTrigger.get());
+		selectAllTrigger.reset();
+		removeChildComponent(deselectAllTrigger.get());
+		deselectAllTrigger.reset();
 
 		removeChildComponent(&sourceChooser);
 		removeChildComponent(&destChooser);
@@ -151,10 +151,10 @@ void ModuleRouterView::setRouter(ModuleRouter * router)
 		sourceChooser.setModuleSelected(currentRouter->sourceModule,true);
 		destChooser.setModuleSelected(currentRouter->destModule,true);
 
-		selectAllTrigger = currentRouter->selectAllValues->createButtonUI();
-		deselectAllTrigger = currentRouter->deselectAllValues->createButtonUI();
-		addAndMakeVisible(selectAllTrigger);
-		addAndMakeVisible(deselectAllTrigger);
+		selectAllTrigger.reset(currentRouter->selectAllValues->createButtonUI());
+		deselectAllTrigger.reset(currentRouter->deselectAllValues->createButtonUI());
+		addAndMakeVisible(selectAllTrigger.get());
+		addAndMakeVisible(deselectAllTrigger.get());
 
 	} else
 	{
@@ -168,14 +168,13 @@ void ModuleRouterView::setRouter(ModuleRouter * router)
 
 void ModuleRouterView::buildValueManagerUI()
 {
-	if (managerUI != nullptr) removeChildComponent(managerUI);
+	if (managerUI != nullptr) removeChildComponent(managerUI.get());
 	if (currentRouter == nullptr) return;
 
-	managerUI = nullptr;
-	managerUI = new BaseManagerUI<BaseManager<ModuleRouterValue>, ModuleRouterValue, ModuleRouterValueEditor>("Values", &currentRouter->sourceValues);
+	managerUI.reset(new BaseManagerUI<BaseManager<ModuleRouterValue>, ModuleRouterValue, ModuleRouterValueEditor>("Values", &currentRouter->sourceValues));
 	managerUI->setShowAddButton(false);
 	managerUI->addExistingItems(); //force adding, normally we do it in a child classes but as we use the basic ui, we have to do it here
-	addAndMakeVisible(managerUI);
+	addAndMakeVisible(managerUI.get());
 }
 
 void ModuleRouterView::sourceModuleChanged(ModuleRouter *)

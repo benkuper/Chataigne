@@ -16,8 +16,8 @@ juce_ImplementSingleton(CVGroupManager)
 CVGroupManager::CVGroupManager(const String & name) :
 	BaseManager(name)
 {
-	module = new CustomVariablesModule(this);
-	addChildControllableContainer(module);
+	module.reset(new CustomVariablesModule(this));
+	addChildControllableContainer(module.get());
 }
 
 CVGroupManager::~CVGroupManager()

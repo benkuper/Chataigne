@@ -28,8 +28,8 @@ AudioLayerPanel::AudioLayerPanel(AudioLayer * layer) :
 
 	audioLayer->addAudioLayerListener(this);
 
-	enveloppeUI = audioLayer->enveloppe->createSlider();
-	addAndMakeVisible(enveloppeUI);
+	enveloppeUI.reset(audioLayer->enveloppe->createSlider());
+	addAndMakeVisible(enveloppeUI.get());
 
 }
 

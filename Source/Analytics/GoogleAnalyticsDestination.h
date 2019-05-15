@@ -116,7 +116,7 @@ public:
             if (shouldExit)
                 return false;
 
-            webStream = new WebInputStream (url, true);
+			webStream.reset(new WebInputStream(url, true));
         }
 
         const auto success = webStream->connect (nullptr);
@@ -232,7 +232,7 @@ private:
 
     CriticalSection webStreamCreation;
     bool shouldExit = false;
-    ScopedPointer<WebInputStream> webStream;
+    std::unique_ptr<WebInputStream> webStream;
 
     String apiKey;
 

@@ -20,7 +20,7 @@ public:
 	ModuleCommandTesterEditor(ModuleCommandTester * tester, bool isRoot = false);
 	~ModuleCommandTesterEditor();
 
-	ScopedPointer<BoolToggleUI> autoTriggerUI;
+	std::unique_ptr<BoolToggleUI> autoTriggerUI;
 
 	void resizedInternalHeaderItemInternal(Rectangle<int> &r) override;
 };

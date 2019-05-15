@@ -26,7 +26,7 @@ public:
 	String localVersion;
 	File localModuleFolder;
 
-	ScopedPointer<URL::DownloadTask> downloadTask;
+	std::unique_ptr<URL::DownloadTask> downloadTask;
 
 	BoolParameter * isLocal;
 	BoolParameter * isOnline; 

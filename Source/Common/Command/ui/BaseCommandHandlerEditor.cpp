@@ -25,8 +25,8 @@ BaseCommandHandlerEditor::BaseCommandHandlerEditor(BaseCommandHandler * _handler
 	addAndMakeVisible(&chooser);
 	handler->addAsyncCommandHandlerListener(this);
 
-	triggerBT = handler->trigger->createButtonUI();
-	addAndMakeVisible(triggerBT);
+	triggerBT.reset(handler->trigger->createButtonUI());
+	addAndMakeVisible(triggerBT.get());
 	setSize(10, 40);
 	
 	updateChooserLabel();

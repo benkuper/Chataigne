@@ -58,8 +58,8 @@ public:
 	//ZEROCONF
 	Servus servus;
 
-	ScopedPointer<EnablingControllableContainer> receiveCC;
-	ScopedPointer<BaseManager<OSCOutput>> outputManager;
+	std::unique_ptr<EnablingControllableContainer> receiveCC;
+	std::unique_ptr<BaseManager<OSCOutput>> outputManager;
 
 	//Script
 	const Identifier oscEventId = "oscEvent";

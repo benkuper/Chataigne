@@ -23,10 +23,10 @@ public:
 
 	WeakReference<BaseComparator> comparator;
 
-	//ScopedPointer<BoolToggleUI> alwaysDispatchUI;
-	ScopedPointer<EnumParameterUI> compareFuncUI;
+	//std::unique_ptr<BoolToggleUI> alwaysDispatchUI;
+	std::unique_ptr<EnumParameterUI> compareFuncUI;
 
-	ScopedPointer<ControllableEditor> refEditor;
+	std::unique_ptr<ControllableEditor> refEditor;
 	void resized() override;
 
 	void newMessage(const Parameter::ParameterEvent &e) override;

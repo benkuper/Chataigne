@@ -103,9 +103,9 @@ void MappingLayer::setupMappingForCurrentMode()
 	{
 		if (timeColorManager == nullptr)
 		{
-			timeColorManager = new TimeColorManager(sequence->totalTime->floatValue());
+			timeColorManager.reset(new TimeColorManager(sequence->totalTime->floatValue()));
 			timeColorManager->allowKeysOutside = false;
-			addChildControllableContainer(timeColorManager);
+			addChildControllableContainer(timeColorManager.get());
 			timeColorManager->setLength(sequence->totalTime->floatValue());
 		}
 	}
@@ -113,7 +113,7 @@ void MappingLayer::setupMappingForCurrentMode()
 	{
 		if (timeColorManager != nullptr)
 		{
-			removeChildControllableContainer(timeColorManager);
+			removeChildControllableContainer(timeColorManager.get());
 			timeColorManager = nullptr;
 		}
 	}

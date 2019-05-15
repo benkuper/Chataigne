@@ -29,7 +29,7 @@ public:
 	virtual void clearItem() override;
 
 	CommandContext context;
-	ScopedPointer<BaseCommand> command;
+	std::unique_ptr<BaseCommand> command;
 	WeakReference<CommandDefinition> commandDefinition;
 
 	Module * lockedModule;

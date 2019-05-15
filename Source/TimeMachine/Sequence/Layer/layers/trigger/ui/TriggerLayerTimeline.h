@@ -22,7 +22,7 @@ public:
 	TriggerLayerTimeline(TriggerLayer * layer);
 	~TriggerLayerTimeline();
 
-	ScopedPointer<TimeTriggerManagerUI> ttmui;
+	std::unique_ptr<TimeTriggerManagerUI> ttmui;
 
 	void resized() override;
 	virtual void updateContent() override;

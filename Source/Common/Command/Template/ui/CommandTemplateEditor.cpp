@@ -13,8 +13,8 @@
 CommandTemplateEditor::CommandTemplateEditor(CommandTemplate * t, bool isRoot) :
 	BaseItemEditor(t, isRoot)
 {
-	triggerUI = t->triggerTrigger->createButtonUI();
-	addAndMakeVisible(triggerUI);
+	triggerUI.reset(t->triggerTrigger->createButtonUI());
+	addAndMakeVisible(triggerUI.get());
 }
 
 CommandTemplateEditor::~CommandTemplateEditor()

@@ -23,9 +23,9 @@ public:
 
 	CustomValuesCommandArgument * arg;
 
-	ScopedPointer<ParameterEditor> paramUI;
-	ScopedPointer<BoolToggleUI> useInMappingUI;
-	ScopedPointer<BoolToggleUI> editableUI;
+	std::unique_ptr<ParameterEditor> paramUI;
+	std::unique_ptr<BoolToggleUI> useInMappingUI;
+	std::unique_ptr<BoolToggleUI> editableUI;
 
 	void resizedInternalHeaderItemInternal(Rectangle<int> &r) override;
 	void resizedInternalContent(Rectangle<int> &r) override;

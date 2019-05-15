@@ -20,7 +20,7 @@ public:
 	~FFTAnalyzerEditor();
 
 	FFTAnalyzer * analyzer;
-	ScopedPointer<FloatSliderUI> valueUI;
+	std::unique_ptr<FloatSliderUI> valueUI;
 
 	void resizedInternalHeaderItemInternal(Rectangle<int>& r) override;
 };

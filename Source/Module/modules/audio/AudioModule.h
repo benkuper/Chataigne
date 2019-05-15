@@ -83,7 +83,7 @@ public:
 
 	FFTAnalyzerManager analyzerManager;
 
-	ScopedPointer<PitchDetector> pitchDetector;
+	std::unique_ptr<PitchDetector> pitchDetector;
 
 	void updateSelectedMonitorChannels();
 

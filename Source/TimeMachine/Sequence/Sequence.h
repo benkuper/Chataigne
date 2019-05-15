@@ -30,8 +30,8 @@ public:
 
 	
 
-	ScopedPointer<TimeCueManager> cueManager;
-	ScopedPointer<SequenceLayerManager> layerManager;
+	std::unique_ptr<TimeCueManager> cueManager;
+	std::unique_ptr<SequenceLayerManager> layerManager;
 
 	BoolParameter * startAtLoad;
 	FloatParameter * totalTime;

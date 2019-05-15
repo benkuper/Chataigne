@@ -21,20 +21,20 @@ MappingLayerPanel::MappingLayerPanel(MappingLayer * layer) :
 
 	if (mappingLayer->automations.size() > 0)
 	{
-		snapUI = mappingLayer->automations[0]->enableSnap->createImageToggle(ChataigneAssetManager::getInstance()->getToggleBTImage(ChataigneAssetManager::getInstance()->getSnapImage()));
-		addAndMakeVisible(snapUI);
+		snapUI.reset(mappingLayer->automations[0]->enableSnap->createImageToggle(ChataigneAssetManager::getInstance()->getToggleBTImage(ChataigneAssetManager::getInstance()->getSnapImage())));
+		addAndMakeVisible(snapUI.get());
 
-		snapSensitivityUI = mappingLayer->automations[0]->snapSensitivity->createSlider();
-		addAndMakeVisible(snapSensitivityUI);
+		snapSensitivityUI.reset(mappingLayer->automations[0]->snapSensitivity->createSlider());
+		addAndMakeVisible(snapSensitivityUI.get());
 
-		automationInspector = new Inspector(mappingLayer->automations[0]->selectionManager);
-		addAndMakeVisible(automationInspector);
+		automationInspector.reset(new Inspector(mappingLayer->automations[0]->selectionManager));
+		addAndMakeVisible(automationInspector.get());
 	}
 
 	mappingLayer->mapping.addAsyncMappingListener(this);
 
-	mappingOutputUI = dynamic_cast<ParameterUI *>(mappingLayer->mapping.outputParam->createDefaultUI());
-	if (mappingOutputUI != nullptr) addAndMakeVisible(mappingOutputUI);
+	mappingOutputUI.reset(dynamic_cast<ParameterUI*>(mappingLayer->mapping.outputParam->createDefaultUI()));
+	if (mappingOutputUI != nullptr) addAndMakeVisible(mappingOutputUI.get());
 	resized();
 }
 
@@ -80,9 +80,9 @@ void MappingLayerPanel::newMessage(const Mapping::MappingEvent & e)
 	case Mapping::MappingEvent::OUTPUT_TYPE_CHANGED:
 		if (mappingOutputUI != nullptr)
 		{
-			removeChildComponent(mappingOutputUI);
-			mappingOutputUI = dynamic_cast<ParameterUI *>(mappingLayer->mapping.outputParam->createDefaultUI());
-			if (mappingOutputUI != nullptr) addAndMakeVisible(mappingOutputUI);
+			removeChildComponent(mappingOutputUI.get());
+			mappingOutputUI.reset(dynamic_cast<ParameterUI*>(mappingLayer->mapping.outputParam->createDefaultUI()));
+			if (mappingOutputUI != nullptr) addAndMakeVisible(mappingOutputUI.get());
 			resized();
 		}
 		break;

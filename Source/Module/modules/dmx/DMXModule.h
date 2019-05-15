@@ -25,7 +25,7 @@ public:
 	enum DMXByteOrder { BIT8, MSB, LSB };
 
 	EnumParameter * dmxType;
-	ScopedPointer<DMXDevice> dmxDevice;
+	std::unique_ptr<DMXDevice> dmxDevice;
 	BoolParameter * dmxConnected;
 	BoolParameter * autoAdd;
 

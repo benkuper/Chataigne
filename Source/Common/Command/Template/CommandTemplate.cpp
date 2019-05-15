@@ -73,7 +73,8 @@ CommandTemplate::CommandTemplate(var params) :
 void CommandTemplate::generateParametersFromDefinition(CommandDefinition * def)
 {
 	paramsContainer.clear();
-	ScopedPointer<BaseCommand> c = def->create(CommandContext::ACTION);
+	std::unique_ptr<BaseCommand> c(def->create(CommandContext::ACTION));
+
 	c->setupTemplateParameters(this);
 	c->clear();
 }
@@ -122,7 +123,7 @@ void CommandTemplate::onContainerTriggerTriggered(Trigger * t)
 	{
 		if (module != nullptr)
 		{
-			ScopedPointer<BaseCommand> c = createCommand(module, CommandContext::ACTION, var());
+			std::unique_ptr<BaseCommand> c(createCommand(module, CommandContext::ACTION, var()));
 			c->trigger();
 		}
 	}

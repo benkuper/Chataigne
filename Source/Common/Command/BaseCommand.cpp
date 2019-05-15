@@ -160,7 +160,7 @@ void BaseCommand::updateParametersFromTemplate()
 
 	if (customValuesManager != nullptr)
 	{
-		customValuesManager->linkToTemplate(linkedTemplate->customValuesManager);
+		customValuesManager->linkToTemplate(linkedTemplate->customValuesManager.get());
 	}
 }
 
@@ -194,9 +194,9 @@ void BaseCommand::setupTemplateParameters(CommandTemplate * ct)
 	if (customValuesManager != nullptr)
 	{
 		//create customValuesTemplateManager
-		ct->customValuesManager = new CustomValuesCommandArgumentManager(true, true);
+		ct->customValuesManager.reset(new CustomValuesCommandArgumentManager(true, true));
 		ct->customValuesManager->allowedTypes.addArray(customValuesManager->allowedTypes);
-		ct->addChildControllableContainer(ct->customValuesManager);
+		ct->addChildControllableContainer(ct->customValuesManager.get());
 	}
 }
 

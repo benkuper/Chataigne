@@ -19,10 +19,10 @@ noTargetText("[Click to select a command]")
 {
 	setInterceptsMouseClicks(true, true);
 
-	targetBT = AssetManager::getInstance()->getTargetBT();
+	targetBT.reset(AssetManager::getInstance()->getTargetBT());
 	targetBT->setInterceptsMouseClicks(false, false);
 
-	addAndMakeVisible(targetBT);
+	addAndMakeVisible(targetBT.get());
 
 	targetBT->addListener(this);
 	setRepaintsOnMouseActivity(true);
@@ -79,5 +79,5 @@ void CommandChooserUI::mouseDown(const MouseEvent &)
 
 void CommandChooserUI::buttonClicked(Button * b)
 {
-	if (b == targetBT) {} // move code here ?
+	if (b == targetBT.get()) {} // move code here ?
 }
