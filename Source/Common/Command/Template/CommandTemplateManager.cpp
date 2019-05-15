@@ -12,7 +12,7 @@
 #include "Module/Module.h"
 
 CommandTemplateManager::CommandTemplateManager(Module * module) :
-	BaseManager("Template"),
+	BaseManager("Templates"),
 	module(module)
 {
 	managerFactory = &factory;
