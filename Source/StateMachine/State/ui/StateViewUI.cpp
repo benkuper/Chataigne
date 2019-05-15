@@ -56,7 +56,6 @@ void StateViewUI::mouseDown(const MouseEvent & e)
 {
 	BaseItemUI<State>::mouseDown(e);
 
-
 	if (transitionReceptionMode == START)
 	{
 		stateEditorListeners.call(&StateViewUI::Listener::askCreateTransitionFromUI, this);
