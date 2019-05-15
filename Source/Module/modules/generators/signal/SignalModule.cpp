@@ -19,7 +19,8 @@ SignalModule::SignalModule() :
 	type = moduleParams.addEnumParameter("Type", "Signal type");
 	type->addOption("Sine", SINE)->addOption("Saw",SAW)->addOption("Triangle",TRIANGLE)->addOption("Perlin", PERLIN);
 	refreshRate = moduleParams.addFloatParameter("Refresh Rate", "Time interval between value updates, in Hz", 50, 1, 100);
-	amplitude = moduleParams.addFloatParameter("Amplitude", "Amplitude of the signal, act as a multiplier", 1);
+	amplitude = moduleParams.addFloatParameter("Amplitude", "Amplitude of the signal, act as a multiplier", 1, 0);
+	offset = moduleParams.addFloatParameter("Offset", "Offset the signal value", 0);
 
 	frequency = moduleParams.addFloatParameter("Frequency", "Frequency of the signal", 1, 0.0001f, 5);
 	octaves = moduleParams.addIntParameter("Octaves", "Octave parameter for perlin noise", 3, 1, 100, false);
@@ -39,9 +40,9 @@ void SignalModule::onControllableFeedbackUpdateInternal(ControllableContainer * 
 {
 	Module::onControllableFeedbackUpdateInternal(cc, c);
 
-	if (c == amplitude)
+	if (c == amplitude || c == offset)
 	{
-		value->setRange(0, amplitude->floatValue());
+		value->setRange(offset->floatValue(), amplitude->floatValue() + offset->floatValue());
 	}else if (c == refreshRate)
 	{
 		startTimer(0, 1000.0f / refreshRate->floatValue());
@@ -81,6 +82,8 @@ void SignalModule::timerCallback(int timerID)
 			val = perlin.octaveNoise0_1(progression, octaves->intValue());
 			break;
 		}
+
+
 
 		value->setNormalizedValue(val);
 		inActivityTrigger->trigger();

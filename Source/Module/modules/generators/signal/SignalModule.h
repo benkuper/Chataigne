@@ -32,7 +32,8 @@ public:
 
 	FloatParameter * frequency;
 	FloatParameter * amplitude;
-		
+	FloatParameter * offset;
+
 	FloatParameter * value;
 	
 
