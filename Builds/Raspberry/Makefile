@@ -225,6 +225,7 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/MetronomeModule_6453731e.o \
   $(JUCE_OBJDIR)/SignalModule_9a14db38.o \
   $(JUCE_OBJDIR)/ChataigneLogCommand_8373a622.o \
+  $(JUCE_OBJDIR)/GenericAppCommand_b0de605e.o \
   $(JUCE_OBJDIR)/GenericControllableCommand_caf6da58.o \
   $(JUCE_OBJDIR)/GenericScriptCommand_99bd8596.o \
   $(JUCE_OBJDIR)/ChataigneGenericModule_d6802829.o \
@@ -1167,6 +1168,11 @@ $(JUCE_OBJDIR)/SignalModule_9a14db38.o: ../../Source/Module/modules/generators/s
 $(JUCE_OBJDIR)/ChataigneLogCommand_8373a622.o: ../../Source/Module/modules/generic/commands/ChataigneLogCommand.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling ChataigneLogCommand.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/GenericAppCommand_b0de605e.o: ../../Source/Module/modules/generic/commands/GenericAppCommand.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling GenericAppCommand.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/GenericControllableCommand_caf6da58.o: ../../Source/Module/modules/generic/commands/GenericControllableCommand.cpp

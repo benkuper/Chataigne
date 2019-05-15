@@ -307,6 +307,7 @@
     <ClCompile Include="..\..\Source\Module\modules\generators\metronome\MetronomeModule.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\generators\signal\SignalModule.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\generic\commands\ChataigneLogCommand.cpp"/>
+    <ClCompile Include="..\..\Source\Module\modules\generic\commands\GenericAppCommand.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\generic\commands\GenericControllableCommand.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\generic\commands\GenericScriptCommand.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\generic\ChataigneGenericModule.cpp"/>
@@ -2876,6 +2877,7 @@
     <ClInclude Include="..\..\Source\Module\modules\generators\signal\PerlinNoise.hpp"/>
     <ClInclude Include="..\..\Source\Module\modules\generators\signal\SignalModule.h"/>
     <ClInclude Include="..\..\Source\Module\modules\generic\commands\ChataigneLogCommand.h"/>
+    <ClInclude Include="..\..\Source\Module\modules\generic\commands\GenericAppCommand.h"/>
     <ClInclude Include="..\..\Source\Module\modules\generic\commands\GenericControllableCommand.h"/>
     <ClInclude Include="..\..\Source\Module\modules\generic\commands\GenericScriptCommand.h"/>
     <ClInclude Include="..\..\Source\Module\modules\generic\ChataigneGenericModule.h"/>

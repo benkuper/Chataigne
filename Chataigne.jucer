@@ -745,6 +745,10 @@
                     file="Source/Module/modules/generic/commands/ChataigneLogCommand.cpp"/>
               <FILE id="ozjwZn" name="ChataigneLogCommand.h" compile="0" resource="0"
                     file="Source/Module/modules/generic/commands/ChataigneLogCommand.h"/>
+              <FILE id="kEIzuK" name="GenericAppCommand.cpp" compile="1" resource="0"
+                    file="Source/Module/modules/generic/commands/GenericAppCommand.cpp"/>
+              <FILE id="BFIwYv" name="GenericAppCommand.h" compile="0" resource="0"
+                    file="Source/Module/modules/generic/commands/GenericAppCommand.h"/>
               <FILE id="b5ieQu" name="GenericControllableCommand.cpp" compile="1"
                     resource="0" file="Source/Module/modules/generic/commands/GenericControllableCommand.cpp"/>
               <FILE id="wKdZSf" name="GenericControllableCommand.h" compile="0" resource="0"

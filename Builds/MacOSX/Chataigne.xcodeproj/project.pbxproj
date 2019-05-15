@@ -721,6 +721,10 @@
 			isa = PBXBuildFile;
 			fileRef = CFE8B29F9B948CF706C3EC75;
 		};
+		B6C4F21C44B0C9AB6D518C14 = {
+			isa = PBXBuildFile;
+			fileRef = 8D3AFD7B0479583F5D50856C;
+		};
 		07030143DF5F6F8D87E59358 = {
 			isa = PBXBuildFile;
 			fileRef = CAE2E4FE6BFCC743FDBEF690;
@@ -3037,6 +3041,13 @@
 			path = ../../Source/TimeMachine/Sequence/Layer/layers/mapping/timecolor/TimeColor.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
+		69DC77C2F77880760FAC313C = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = GenericAppCommand.h;
+			path = ../../Source/Module/modules/generic/commands/GenericAppCommand.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		6AB115D848E1553D7F5C50B6 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.c;
@@ -3693,6 +3704,13 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = ScriptCondition.h;
 			path = ../../Source/Common/Processor/Action/Condition/conditions/ScriptCondition/ScriptCondition.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		8D3AFD7B0479583F5D50856C = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = GenericAppCommand.cpp;
+			path = ../../Source/Module/modules/generic/commands/GenericAppCommand.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		8E161399DEC1EED4622B6EE6 = {
@@ -6847,6 +6865,8 @@
 			children = (
 				CFE8B29F9B948CF706C3EC75,
 				E282A320F0E547C1419D5D5A,
+				8D3AFD7B0479583F5D50856C,
+				69DC77C2F77880760FAC313C,
 				CAE2E4FE6BFCC743FDBEF690,
 				D4E1D32E8F42717371112360,
 				BA79F5BFDEDF0D5BBEC70225,
@@ -8219,6 +8239,7 @@
 				8CA4517F298BA2614C4054B7,
 				4D76E54F132133C54A03DF02,
 				E6C4A435A7B2A024E8745DE3,
+				B6C4F21C44B0C9AB6D518C14,
 				07030143DF5F6F8D87E59358,
 				C03AC9D3AD95414049531873,
 				47B06F7D8CE1EF794F466906,
