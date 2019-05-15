@@ -16,6 +16,7 @@ CommandTemplateManager::CommandTemplateManager(Module * module) :
 	module(module)
 {
 	managerFactory = &factory;
+	selectItemWhenCreated = false;
 }
 
 CommandTemplateManager::~CommandTemplateManager()

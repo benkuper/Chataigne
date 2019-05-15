@@ -20,6 +20,7 @@ CommandTemplate::CommandTemplate(Module * m, var params) :
 	sourceDef(nullptr)
 {
 	itemDataType = "CommandTemplate";
+	showInspectorOnSelect = false;
 
 	triggerTrigger = addTrigger("Trigger","Trigger a command from this template");
 	triggerTrigger->hideInEditor = true;
@@ -46,8 +47,7 @@ CommandTemplate::CommandTemplate(var params) :
 	sourceDef(nullptr)
 {
 	itemDataType = "CommandTemplate";
-	editorIsCollapsed = false;
-	editorCanBeCollapsed = false;
+	showInspectorOnSelect = false;
 
 	Module * m = ModuleManager::getInstance()->getModuleWithName(params.getProperty("module",""));
 	Array<CommandDefinition * > defs = m->getCommands(false);

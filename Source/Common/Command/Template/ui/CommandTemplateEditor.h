@@ -13,7 +13,7 @@
 #include "../CommandTemplate.h"
 
 class CommandTemplateEditor :
-	public GenericControllableContainerEditor
+	public BaseItemEditor
 {
 public:
 	CommandTemplateEditor(CommandTemplate * t, bool isRoot);
@@ -21,5 +21,5 @@ public:
 
 	ScopedPointer<TriggerButtonUI> triggerUI;
 
-	void resizedInternalHeader(Rectangle<int> &r) override;
+	void resizedInternalHeaderItemInternal(Rectangle<int> &r) override;
 };
