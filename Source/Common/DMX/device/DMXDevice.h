@@ -16,7 +16,7 @@
 class DMXDevice :
 	public ControllableContainer,
 	public DMXManager::DMXManagerListener,
-	public Thread
+	public HighResolutionTimer
 {
 public:
 	enum Type { OPENDMX, ENTTEC_DMXPRO, ENTTEC_MK2, ARTNET};
@@ -25,6 +25,7 @@ public:
 
 	Type type;
 
+	bool enabled;
 	bool isConnected;
 	
 	uint8 dmxDataOut[512];
@@ -33,7 +34,7 @@ public:
 
 	BoolParameter * fixedRate;
 	IntParameter * targetRate;
-	int sendSleepMS;
+	BoolParameter* enableReceive;
 
 	void setConnected(bool value);
 
@@ -48,6 +49,8 @@ public:
 	static DMXDevice * create(Type type);
 
 	void onContainerParameterChanged(Parameter *p) override;
+
+	virtual void hiResTimerCallback() override;
 
 	class DMXDeviceListener
 	{
@@ -65,9 +68,6 @@ public:
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(DMXDevice)
 
-	// Inherited via Timer
-	virtual void run() override;
-	virtual void runInternal() {}
 };
 
 

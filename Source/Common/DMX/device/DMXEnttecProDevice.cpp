@@ -54,6 +54,8 @@ void DMXEnttecProDevice::sendDMXValuesSerialInternal()
 
 void DMXEnttecProDevice::serialDataReceived(const var & data)
 {
+	if (!enableReceive->boolValue()) return;
+
 	serialBuffer.addArray((const uint8_t *)data.getBinaryData()->getData(), (int)data.getBinaryData()->getSize());
 
 	int endIndex = 0;

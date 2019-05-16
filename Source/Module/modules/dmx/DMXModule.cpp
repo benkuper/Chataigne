@@ -67,6 +67,7 @@ void DMXModule::setCurrentDMXDevice(DMXDevice * d)
 
 	if (dmxDevice != nullptr)
 	{
+		dmxDevice->enabled = enabled->boolValue();
 		dmxDevice->addDMXDeviceListener(this);
 		moduleParams.addChildControllableContainer(dmxDevice.get());
 	}
@@ -149,6 +150,15 @@ void DMXModule::loadJSONDataInternal(var data)
 {
 	Module::loadJSONDataInternal(data);
 	if (dmxDevice != nullptr && data.getDynamicObject()->hasProperty("device")) dmxDevice->loadJSONData(data.getProperty("device", ""));
+}
+
+void DMXModule::onContainerParameterChanged(Parameter* p)
+{
+	Module::onContainerParameterChanged(p);
+	if (p == enabled)
+	{
+		if (dmxDevice != nullptr) dmxDevice->enabled = enabled->boolValue();
+	}
 }
 
 void DMXModule::controllableFeedbackUpdate(ControllableContainer * cc, Controllable * c)

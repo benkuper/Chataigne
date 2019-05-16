@@ -8,8 +8,7 @@
   ==============================================================================
 */
 
-#ifndef DMXARTNETDEVICE_H_INCLUDED
-#define DMXARTNETDEVICE_H_INCLUDED
+#pragma once
 
 #include "DMXDevice.h"
 #include "artnet.h"
@@ -20,18 +19,21 @@
 
 class DMXArtNetDevice :
 	public DMXDevice,
-	public EngineListener
+	public EngineListener,
+	public Thread //receiving
 {
 public:
 	DMXArtNetDevice();
 	~DMXArtNetDevice();
 
-	EnumParameter * networkInterface; 
-
+	EnumParameter * networkInterface;
+	IntParameter* subnet;
+	IntParameter* universe;
 	StringParameter * nodeName;
-	
+
 	artnet_node ioNode;
 	artnet_node discoverNode;
+
 	int numFoundNodes;
 
 	bool noServerCreation;
@@ -62,9 +64,6 @@ public:
 	void onContainerParameterChanged(Parameter * p) override;
 	void onControllableFeedbackUpdate(ControllableContainer * cc, Controllable * c) override;
 	
-	void runInternal() override;
+	void run() override;
 };
 
-
-
-#endif  // DMXARTNETDEVICE_H_INCLUDED

@@ -14,31 +14,33 @@
 #include "DMXEnttecProDevice.h"
 #include "DMXArtNetDevice.h"
 
-DMXDevice::DMXDevice(const String &name, Type _type, bool canReceive) :
+DMXDevice::DMXDevice(const String& name, Type _type, bool canReceive) :
 	ControllableContainer(name),
-	Thread("DMX Send"),
 	type(_type),
-    isConnected(false),
-    canReceive(canReceive)
+	enabled(true),
+	isConnected(false),
+	canReceive(canReceive)
 {
 	DMXManager::getInstance()->addDMXManagerListener(this);
 
 	memset(dmxDataOut, 0, 512 * sizeof(uint8));
 	memset(dmxDataIn, 0, 512 * sizeof(uint8));
 
-	fixedRate = addBoolParameter("Use fixed send rate", "If checked, the device will always send the stored values to the constant rate set by the target rate parameter", true);
-	targetRate = addIntParameter("Target send rate", "If fixed rate is checked, this is the frequency in Hz of the sending rate", 40, 1, 100);
-	sendSleepMS = 1000 / targetRate->intValue();
 
-	startThread();
+	fixedRate = addBoolParameter("Use fixed send rate", "If checked, the device will always send the stored values to the constant rate set by the target rate parameter.\nIf you experience some lags, try unchecking this option.", true);
+	targetRate = addIntParameter("Target send rate", "If fixed rate is checked, this is the frequency in Hz of the sending rate", 40, 1, 100);
+	
+	if (canReceive)
+	{
+		enableReceive = addBoolParameter("Enable Receive", "If checked, will also receive data. This may affect the send rate when using a fixed rate.", false);
+	}
+	if (fixedRate->boolValue()) startTimer(1000/targetRate->intValue());
 }
 
 DMXDevice::~DMXDevice()
 {
 	if (DMXManager::getInstanceWithoutCreating() != nullptr) DMXManager::getInstance()->removeDMXManagerListener(this);
-
-	signalThreadShouldExit();
-	waitForThreadToExit(2000);
+	stopTimer();
 }
 
 void DMXDevice::setConnected(bool value)
@@ -49,15 +51,11 @@ void DMXDevice::setConnected(bool value)
 	if (isConnected)
 	{
 		dmxDeviceListeners.call(&DMXDeviceListener::dmxDeviceConnected);
-		startThread();
+		if (fixedRate->boolValue()) startTimer(1000/targetRate->intValue());
 	} else
 	{
 		dmxDeviceListeners.call(&DMXDeviceListener::dmxDeviceDisconnected);
-		if (isThreadRunning())
-		{
-			signalThreadShouldExit();
-			waitForThreadToExit(1500);
-		}
+		stopTimer();
 	}
 }
 
@@ -94,14 +92,10 @@ void DMXDevice::setDMXValueIn(int channel, int value) //channel 1-512
 	dmxDeviceListeners.call(&DMXDeviceListener::dmxDataInChanged, channel, value);
 }
 
-void DMXDevice::sendDMXValues()
-{
-}
 
 void DMXDevice::clearDevice()
 {
-	signalThreadShouldExit();
-	waitForThreadToExit(1000);
+	stopTimer();
 }
 
 DMXDevice * DMXDevice::create(Type type)
@@ -134,30 +128,17 @@ void DMXDevice::onContainerParameterChanged(Parameter * p)
 
 	if (p == fixedRate || p == targetRate)
 	{
-		sendSleepMS = 1000 / targetRate->intValue();
-
 		if (p == fixedRate) targetRate->setEnabled(fixedRate->boolValue());
 		
-		//if (fixedRate->boolValue())
-		//{
-		//	if(!isThreadRunning()) startThread(targetRate->intValue());
-		//} else
-		//{
-		//	signalThreadShouldExit();
-		//	waitForThreadToExit(2000);
-		//}
+		if (fixedRate->boolValue()) startTimer(targetRate->intValue());
+		else stopTimer();
 	}
 }
 
-void DMXDevice::run()
+void DMXDevice::hiResTimerCallback()
 {
-    sleep(500);
-	while (!threadShouldExit())
-	{
-		runInternal();
-		if (fixedRate->boolValue()) sendDMXValues();
-		sleep(sendSleepMS);
-	}
+	if (!enabled) return;
+	if (!fixedRate->boolValue()) return;
 
-	DBG("Exiting DMX Send Thread");
+	sendDMXValues();
 }

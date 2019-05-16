@@ -43,7 +43,8 @@ public:
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
-
+	
+	void onContainerParameterChanged(Parameter* p) override;
 	void controllableFeedbackUpdate(ControllableContainer * cc, Controllable * c) override;
 
 	void dmxDeviceConnected() override;

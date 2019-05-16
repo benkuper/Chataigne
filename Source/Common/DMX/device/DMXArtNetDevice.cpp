@@ -16,6 +16,7 @@
 
 DMXArtNetDevice::DMXArtNetDevice() :
 	DMXDevice("ArtNet", ARTNET, true),
+	Thread("ArtNetReceive"),
     nodeName(nullptr),
     ioNode(nullptr),
 	discoverNode(nullptr),
@@ -31,10 +32,14 @@ DMXArtNetDevice::DMXArtNetDevice() :
 		networkInterface->addOption(i.interfaceName + " (" + i.ipAddress + ")", i.ipAddress, true);
 	}
 	
+	subnet = addIntParameter("Subnet", "The subnet to work in, from 0 to 15", 0, 0, 15);
+	universe = addIntParameter("Universe", "The Universe to work in, from 0 to 15", 0, 0, 15);
+	
 	nodeName = addStringParameter("Node Name", "Name of the art-net node", "Chataigne ArtNet");
 
 	if (Engine::mainEngine->isLoadingFile) Engine::mainEngine->addEngineListener(this);
 	else setupReceiver();
+
 }
 
 DMXArtNetDevice::~DMXArtNetDevice()
@@ -42,6 +47,8 @@ DMXArtNetDevice::~DMXArtNetDevice()
 	if (Engine::mainEngine != nullptr) Engine::mainEngine->removeEngineListener(this);
 	if(ioNode != nullptr) artnet_destroy(ioNode);
 	if(discoverNode != nullptr) artnet_destroy(discoverNode);
+	signalThreadShouldExit();
+	waitForThreadToExit(200);
 }
 
 void DMXArtNetDevice::setupReceiver()
@@ -67,11 +74,13 @@ void DMXArtNetDevice::setupReceiver()
 	artnet_set_node_type(ioNode, artnet_node_type::ARTNET_NODE);
 
 	artnet_set_port_type(ioNode, 0, ARTNET_ENABLE_INPUT, ARTNET_PORT_DMX);
-	artnet_set_port_addr(ioNode, 0, ARTNET_INPUT_PORT, 0 /* universe */);
+	artnet_set_port_addr(ioNode, 0, ARTNET_INPUT_PORT, universe->intValue() /* universe */);
 	//artnet_set_subnet_addr(ioNode, 0);
 
 	artnet_set_port_type(ioNode, 1, ARTNET_ENABLE_OUTPUT, ARTNET_PORT_DMX);
-	artnet_set_port_addr(ioNode, 1, ARTNET_OUTPUT_PORT, 0);
+	artnet_set_port_addr(ioNode, 1, ARTNET_OUTPUT_PORT, universe->intValue());
+	
+	artnet_set_subnet_addr(ioNode, subnet->intValue());
 
 	artnet_set_dmx_handler(ioNode, &DMXArtNetDevice::artNetDMXReceiveHandler, this);
 
@@ -81,7 +90,7 @@ void DMXArtNetDevice::setupReceiver()
 	}
 
 	LOG("ArtNet Node created with name " << nodeName->stringValue());
-
+	
 	//ioNode = artnet_new(remoteHost->stringValue().toRawUTF8(), true);
 
 	//artnet_set_short_name(ioNode, StringUtil::toShortName(nodeName->stringValue()).toRawUTF8());
@@ -109,6 +118,8 @@ void DMXArtNetDevice::setupNode()
 	artnet_set_node_type(discoverNode, ARTNET_SRV);
 	artnet_set_handler(discoverNode, ARTNET_REPLY_HANDLER, &DMXArtNetDevice::artNetReplyHandler, this);
 	
+
+
 	numFoundNodes = 0;
 }
 
@@ -164,7 +175,8 @@ void DMXArtNetDevice::sendDMXValues()
 	  //sequence++;
 	  //artNetOut.write(nodeIP->stringValue(), nodePort->intValue(), fullMessage, NUM_CHANNELS + 18);
 
-	artnet_send_dmx(ioNode, 0  /* universe */, 512, dmxDataOut);
+
+	artnet_send_dmx(ioNode, 0, 512, dmxDataOut);
 }
 
 int DMXArtNetDevice::artNetReplyHandler(artnet_node node, void * pp, void * devicePtr)
@@ -268,6 +280,27 @@ void DMXArtNetDevice::onContainerParameterChanged(Parameter * p)
 		setupNode();
 		discoverNodes();
 	}
+	else if (p == enableReceive)
+	{
+		if(enableReceive->boolValue()) startThread();
+		else
+		{
+			signalThreadShouldExit();
+			waitForThreadToExit(200);
+		}
+	}
+	else if (p == universe)
+	{
+		if (ioNode != nullptr)
+		{
+			artnet_set_port_addr(ioNode, 0, ARTNET_INPUT_PORT, universe->intValue() /* universe */);
+			artnet_set_port_addr(ioNode, 1, ARTNET_OUTPUT_PORT, universe->intValue());
+		}
+	}
+	else if (p == subnet)
+	{
+		if (ioNode != nullptr) artnet_set_subnet_addr(ioNode, subnet->intValue());
+	}
 }
 
 void DMXArtNetDevice::onControllableFeedbackUpdate(ControllableContainer * cc, Controllable * c)
@@ -276,12 +309,13 @@ void DMXArtNetDevice::onControllableFeedbackUpdate(ControllableContainer * cc, C
 }
 
 
-void DMXArtNetDevice::runInternal()
+void DMXArtNetDevice::run()
 {
-	if (threadShouldExit()) return;
+	if (!enabled) return;
 
-	if (ioNode != nullptr)
+	while (!threadShouldExit())
 	{
-		artnet_read(ioNode, 1);
+		artnet_read(ioNode, 0);
+		sleep(25); //40fps
 	}
 }
