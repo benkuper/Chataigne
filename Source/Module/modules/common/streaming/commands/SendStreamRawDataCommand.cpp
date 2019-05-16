@@ -14,7 +14,6 @@ SendStreamRawDataCommand::SendStreamRawDataCommand(StreamingModule * _module, Co
 	SendStreamValuesCommand(_module,context, params)
 {
 	customValuesManager->allowedTypes.add(Controllable::INT);
-	DBG("Custom values manager : " << customValuesManager->allowedTypes.size());
 }
 
 SendStreamRawDataCommand::~SendStreamRawDataCommand()
