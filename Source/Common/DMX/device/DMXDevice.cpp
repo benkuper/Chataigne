@@ -130,7 +130,7 @@ void DMXDevice::onContainerParameterChanged(Parameter * p)
 	{
 		if (p == fixedRate) targetRate->setEnabled(fixedRate->boolValue());
 		
-		if (fixedRate->boolValue()) startTimer(targetRate->intValue());
+		if (fixedRate->boolValue()) startTimer(1000/targetRate->intValue());
 		else stopTimer();
 	}
 }
