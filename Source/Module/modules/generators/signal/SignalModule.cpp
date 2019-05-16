@@ -18,7 +18,7 @@ SignalModule::SignalModule() :
 
 	type = moduleParams.addEnumParameter("Type", "Signal type");
 	type->addOption("Sine", SINE)->addOption("Saw",SAW)->addOption("Triangle",TRIANGLE)->addOption("Perlin", PERLIN);
-	refreshRate = moduleParams.addFloatParameter("Refresh Rate", "Time interval between value updates, in Hz", 50, 1, 100);
+	refreshRate = moduleParams.addFloatParameter("Refresh Rate", "Time interval between value updates, in Hz", 50, 1, 200);
 	amplitude = moduleParams.addFloatParameter("Amplitude", "Amplitude of the signal, act as a multiplier", 1, 0);
 	offset = moduleParams.addFloatParameter("Offset", "Offset the signal value", 0);
 
