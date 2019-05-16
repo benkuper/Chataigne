@@ -16,6 +16,7 @@ ModuleCommandTester::ModuleCommandTester(Module * module) :
 {
 
 	userCanRemove = false;
+	userCanDuplicate = false;
 	canBeDisabled = false;
 	canBeReorderedInEditor = false;
 	nameCanBeChangedByUser = false;
