@@ -10,7 +10,7 @@
 
 #include "DMXCommand.h"
 
-DMXCommand::DMXCommand(DMXModule * _module, CommandContext context, var params) :
+DMXCommand::DMXCommand(DMXModule* _module, CommandContext context, var params) :
 	BaseCommand(_module, context, params),
 	dmxModule(_module),
 	byteOrder(nullptr),
@@ -20,7 +20,7 @@ DMXCommand::DMXCommand(DMXModule * _module, CommandContext context, var params) 
 	colorParam(nullptr),
 	remap01To255(nullptr)
 {
-	
+
 	dmxAction = (DMXAction)(int)params.getProperty("action", 0);
 
 	if (dmxAction == SET_VALUE_16BIT)
@@ -32,31 +32,48 @@ DMXCommand::DMXCommand(DMXModule * _module, CommandContext context, var params) 
 
 	switch (dmxAction)
 	{
-	
+
 	case SET_VALUE:
 	case SET_VALUE_16BIT:
-		channel = addIntParameter("Channel", "DMX Channel", 1,1,512);
-		value = addIntParameter("Value", "DMX Value", 0, 0, dmxAction == SET_VALUE_16BIT?65535:255);
-		addTargetMappingParameterAt(value,0);
+		channel = addIntParameter("Channel", "DMX Channel", 1, 1, 512);
+		value = addIntParameter("Value", "DMX Value", 0, 0, dmxAction == SET_VALUE_16BIT ? 65535 : 255);
+		addTargetMappingParameterAt(value, 0);
 		break;
 
 	case SET_RANGE:
-		channel = addIntParameter("Start Channel", "First DMX Channel", 1,1,512);
-		channel2 = addIntParameter("End Channel", "Last DMX Channel (inclusive)", 4, 1,512);
+		channel = addIntParameter("Start Channel", "First DMX Channel", 1, 1, 512);
+		channel2 = addIntParameter("End Channel", "Last DMX Channel (inclusive)", 4, 1, 512);
 		value = addIntParameter("Value", "DMX Value", 0, 0, 255);
-		addTargetMappingParameterAt(value,0);
+		addTargetMappingParameterAt(value, 0);
 		break;
 
 	case COLOR:
-		channel = addIntParameter("Start Channel", "DMX Channel", 1, 1,512);
+		channel = addIntParameter("Start Channel", "DMX Channel", 1, 1, 512);
 		colorParam = new ColorParameter("Color", "DMX Color");
 		addParameter(colorParam);
 		addTargetMappingParameterAt(colorParam, 0);
 		break;
 
-	case CLEAR_ALL:
+	case BLACK_OUT:
 		break;
+
+	case SET_ALL:
+		value = addIntParameter("Value", "DMX Value", 0, 0, dmxAction == SET_VALUE_16BIT ? 65535 : 255);
+		addTargetMappingParameterAt(value, 0); 
+		break;
+
+	case SET_CUSTOM:
+	{
+		channel = addIntParameter("Start Channel", "First DMX Channel", 1, 1, 512);
+		customValuesManager.reset(new CustomValuesCommandArgumentManager(context == MAPPING));
+		customValuesManager->allowedTypes.add(Controllable::INT); 
+		addChildControllableContainer(customValuesManager.get());
+		customValuesManager->addArgumentManagerListener(this);
+		customValuesManager->addBaseManagerListener(this);
 	}
+	break;
+	}
+
 
 	if (context == MAPPING && (dmxAction == SET_VALUE || dmxAction == SET_VALUE_16BIT || dmxAction == SET_RANGE))
 	{
@@ -104,14 +121,27 @@ void DMXCommand::triggerInternal()
 	break;
 
 	case SET_RANGE:
+	case SET_ALL:
 	{
 		Array<int> values;
-		int numValues = channel2->intValue() - channel->intValue() + 1;
+		int numValues = dmxAction == (SET_ALL ? 512 : channel2->intValue()) - channel->intValue() + 1;
 		values.resize(numValues);
 		values.fill(value->intValue());
 		dmxModule->sendDMXValues(channel->intValue(), values);
 	}
 	break;
+
+	case SET_CUSTOM:
+	{
+		Array<int> values;
+		for (auto& i : customValuesManager->items)
+		{
+			values.add(i->param->intValue());
+		}
+		dmxModule->sendDMXValues(channel->intValue(), values);
+	}
+	break;
+
 
 	case COLOR:
 	{
@@ -121,7 +151,7 @@ void DMXCommand::triggerInternal()
 	}
 	break;
 
-	case CLEAR_ALL:
+	case BLACK_OUT:
 	{
 		Array<int> values;
 		values.resize(512);
@@ -129,6 +159,42 @@ void DMXCommand::triggerInternal()
 		dmxModule->sendDMXValues(1, values);
 	}
 	break;
-	}
+
 	
+	}
+}
+
+var DMXCommand::getJSONData()
+{
+	var data = BaseCommand::getJSONData();
+	if(customValuesManager != nullptr) data.getDynamicObject()->setProperty("customValues", customValuesManager->getJSONData());
+	return data;
+}
+
+void DMXCommand::loadJSONDataInternal(var data)
+{
+	BaseCommand::loadJSONDataInternal(data);
+	if(customValuesManager != nullptr) customValuesManager->loadJSONData(data.getProperty("customValues", var()), true);
+}
+
+void DMXCommand::useForMappingChanged(CustomValuesCommandArgument*)
+{
+	if (context != CommandContext::MAPPING) return;
+	if (customValuesManager == nullptr) return;
+
+	clearTargetMappingParameters();
+	int index = 0;
+	for (auto& item : customValuesManager->items)
+	{
+		if (item->useForMapping != nullptr && item->useForMapping->boolValue())
+		{
+			addTargetMappingParameterAt(item->param, index);
+			index++;
+		}
+	}
+}
+
+void DMXCommand::itemAdded(CustomValuesCommandArgument* a)
+{
+	a->param->setRange(0, 255);
 }
