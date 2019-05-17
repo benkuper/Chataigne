@@ -114,7 +114,7 @@ void AudioLayerClipUI::buttonClicked(Button * b)
 	{
 		FileChooser chooser("Load a carrot", File(clip->filePath->stringValue()), "*.wav;*.mp3;*.aiff");
 		bool result = chooser.browseForFileToOpen();
-		if (result) clip->filePath->setUndoableValue(clip->filePath->stringValue(),chooser.getResult().getFullPathName());
+		if (result && clip != nullptr) clip->filePath->setUndoableValue(clip->filePath->stringValue(),chooser.getResult().getFullPathName());
 	}
 }
 

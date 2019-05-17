@@ -80,7 +80,7 @@ void AudioLayerClipManagerUI::addClipWithFileChooserAt(float position)
 	{
 		float time = timeline->getTimeForX(position);
 		AudioLayerClip * clip = manager->addClipAt(time);
-		clip->filePath->setValue(chooser.getResult().getFullPathName());
+		if(clip != nullptr) clip->filePath->setValue(chooser.getResult().getFullPathName());
 
 	}
 
