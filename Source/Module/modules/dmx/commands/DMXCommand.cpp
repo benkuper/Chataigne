@@ -124,7 +124,7 @@ void DMXCommand::triggerInternal()
 	case SET_ALL:
 	{
 		Array<int> values;
-		int numValues = dmxAction == (dmxAction == SET_ALL ? 512 : channel2->intValue()) - channel->intValue() + 1;
+		int numValues = dmxAction == SET_ALL ? 512 : channel2->intValue() - channel->intValue() + 1;
 		values.resize(numValues);
 		values.fill(value->intValue());
 		dmxModule->sendDMXValues(channel->intValue(), values);
