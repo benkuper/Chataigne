@@ -29,5 +29,3 @@ public:
 	virtual PopupMenu getMenuForIndex(int topLevelMenuIndex, const String& menuName) override;
 	void fillFileMenuInternal(PopupMenu &menu) override;
 };
-
-#pragma once
