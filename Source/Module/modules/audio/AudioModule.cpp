@@ -155,7 +155,7 @@ var AudioModule::getJSONData()
 {
 	var data = Module::getJSONData();
 
-	std::unique_ptr<XmlElement> xmlData = am.createStateXml();
+    std::unique_ptr<XmlElement> xmlData(am.createStateXml());
 	if (xmlData != nullptr)
 	{
 		data.getDynamicObject()->setProperty("audioSettings", xmlData->toString());

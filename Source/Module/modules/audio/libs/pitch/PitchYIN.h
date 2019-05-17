@@ -7,12 +7,12 @@ class PitchYIN :
 
 public:
 
-    PitchYIN (int sampleRate, unsigned int bufferSize) : yin (1, bufferSize), bufferSize (bufferSize), sampleRate(sampleRate), tolerence (0.15),
+    PitchYIN (int sampleRate, unsigned int bufferSize) : yin (1, bufferSize), bufferSize (bufferSize), tolerence (0.15), sampleRate(sampleRate),
     deltaWasNegative (false)
     {
     }
     
-    PitchYIN (unsigned int bufferSize) : yin (1, bufferSize), bufferSize (bufferSize), sampleRate(44100), tolerence (0.15),
+    PitchYIN (unsigned int bufferSize) : yin (1, bufferSize), bufferSize (bufferSize), tolerence (0.15), sampleRate(44100),
     deltaWasNegative (false)
     {
     }

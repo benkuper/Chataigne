@@ -29,5 +29,5 @@ public:
 
 	void onContainerNiceNameChanged() override;
 
-	InspectableEditor* getEditor(bool isRoot);
+	InspectableEditor* getEditor(bool isRoot) override	;
 };
