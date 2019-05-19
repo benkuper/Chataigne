@@ -186,6 +186,8 @@ void Module::setupModuleFromJSONData(var data)
 		{
 			Controllable * c = moduleParams.getControllableByName(hideParamsList[i].toString(), true);
 			if (c != nullptr) c->hideInEditor = true;
+			ControllableContainer* cc = moduleParams.getControllableContainerByName(hideParamsList[i].toString(), true);
+			if (cc != nullptr) cc->hideInEditor = true;
 		}
 	}
 
