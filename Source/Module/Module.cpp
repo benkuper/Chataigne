@@ -331,7 +331,7 @@ Controllable * Module::getControllableForJSONDefinition(const String &name, var 
 
 	if (c->type != Controllable::TRIGGER)
 	{
-		if (d->hasProperty("min") && d->hasProperty("max")) ((Parameter *)c)->setRange(d->getProperty("min"), d->getProperty("max"));
+		if (def.hasProperty("min") || def.hasProperty("max")) ((Parameter *)c)->setRange(def.getProperty("min",INT32_MIN), def.getProperty("max", INT32_MAX));
 		
 		if (d->hasProperty("default")) ((Parameter *)c)->setValue(d->getProperty("default"));
 
