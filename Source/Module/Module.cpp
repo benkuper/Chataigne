@@ -17,7 +17,7 @@
 #include "Common/Command/BaseCommandHandler.h"
 #include "ModuleCommandTester.h"
 
-Module::Module(const String &name) :
+Module::Module(const String& name) :
 	BaseItem(name, true, true),
 	hasInput(true),
 	hasOutput(true),
@@ -26,6 +26,7 @@ Module::Module(const String &name) :
 	valuesCC("Values"),
 	alwaysShowValues(false),
 	includeValuesInSave(false),
+	customType(""),
 	templateManager(this),
     canHandleRouteValues(false)
 

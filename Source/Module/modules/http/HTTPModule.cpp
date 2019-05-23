@@ -12,8 +12,8 @@
 #include "commands/HTTPCommand.h"
 #include "UI/ChataigneAssetManager.h"
 
-HTTPModule::HTTPModule() :
-	Module(getTypeString()),
+HTTPModule::HTTPModule(const String &name) :
+	Module(name),
 	Thread("HTTPModule Requests")
 {
 	baseAddress = moduleParams.addStringParameter("Base Address", "The base adress to prepend to command addresses", "https://httpbin.org/");

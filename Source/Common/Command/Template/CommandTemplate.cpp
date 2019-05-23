@@ -26,18 +26,26 @@ CommandTemplate::CommandTemplate(Module * m, var params) :
 	triggerTrigger->hideInEditor = true;
 
 	Array<CommandDefinition *> defs = m->getCommands(false);
+
+	String mPath = params.getProperty("menuPath", "").toString();
+	String cType = params.getProperty("commandType", "").toString();
 	for (auto & d : defs)
 	{
-		if (d->menuPath == params.getProperty("menuPath", "").toString() && d->commandType == params.getProperty("commandType", "").toString())
+		if (d->menuPath == mPath && d->commandType == cType)
 		{
 			sourceDef = d;
 			break;
 		}
 	}
-
-	jassert(sourceDef != nullptr);
-
+	
 	addChildControllableContainer(&paramsContainer);
+
+	if (sourceDef == nullptr)
+	{
+		NLOGERROR(niceName, "Error create command template for " << m->niceName << " > " << mPath << ":" << cType);
+		return;
+	}
+
 	generateParametersFromDefinition(sourceDef);
 }
 
@@ -55,23 +63,37 @@ CommandTemplate::CommandTemplate(var params) :
 	triggerTrigger = addTrigger("Trigger", "Trigger a command from this template");
 	triggerTrigger->hideInEditor = true;
 
+	String mPath = params.getProperty("menuPath", "").toString();
+	String cType = params.getProperty("commandType", "").toString();
+	
 	for (auto & d : defs)
 	{
-		if (d->menuPath == params.getProperty("menuPath", "").toString() && d->commandType == params.getProperty("commandType", "").toString())
+		if (d->menuPath == mPath && d->commandType == cType)
 		{
 			sourceDef = d;
 			break;
 		}
 	}
 
-	jassert(sourceDef != nullptr);
-
 	addChildControllableContainer(&paramsContainer);
+	
+	if (sourceDef == nullptr)
+	{
+		NLOGERROR(niceName, "Error create command template for " << m->niceName << " > " << mPath << ":" << cType);
+		return;
+	}
+
 	generateParametersFromDefinition(sourceDef);
 }
 
 void CommandTemplate::generateParametersFromDefinition(CommandDefinition * def)
 {
+	if (def == nullptr)
+	{
+		DBG("Error !!! should never be here");
+		return;
+	}
+
 	paramsContainer.clear();
 	std::unique_ptr<BaseCommand> c(def->create(CommandContext::ACTION));
 
@@ -132,6 +154,13 @@ void CommandTemplate::onContainerTriggerTriggered(Trigger * t)
 var CommandTemplate::getJSONData()
 {
 	var data = BaseItem::getJSONData();
+
+	if (sourceDef == nullptr)
+	{
+		LOGWARNING("Command template is broken, not saving");
+		return data;
+	}
+
 	data.getDynamicObject()->setProperty("menuPath", sourceDef->menuPath);
 	data.getDynamicObject()->setProperty("commandType", sourceDef->commandType);
 

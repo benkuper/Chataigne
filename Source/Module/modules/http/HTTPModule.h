@@ -17,7 +17,7 @@ class HTTPModule :
 	public Thread
 {
 public:
-	HTTPModule();
+	HTTPModule(const String& name = "HTTP");
 	~HTTPModule();
 
 	StringParameter * baseAddress;
@@ -46,7 +46,7 @@ public:
 	static var sendGETFromScript(const var::NativeFunctionArgs& args);
 	static var sendPOSTFromScript(const var::NativeFunctionArgs& args);
 
-	String getTypeString() const override { return "HTTP"; }
+	String getDefaultTypeString() const override { return "HTTP"; }
 	static HTTPModule * create() { return new HTTPModule(); }
 
 	// Inherited via Thread
