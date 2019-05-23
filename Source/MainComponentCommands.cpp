@@ -26,13 +26,15 @@ namespace ChataigneCommandIDs
 	static const int donate = 0x60005;
 	static const int playPauseSequenceEditor = 0x80000;
 	static const int guideStart = 0x300; //up to 0x300 +100
+	static const int exitGuide = 0x399; 
 	static const int goToCommunityModules = 0x500;
 	static const int reloadCustomModules = 0x501;
+	
 }
 
 void MainContentComponent::getCommandInfo(CommandID commandID, ApplicationCommandInfo& result) 
 {
-	if (commandID >= ChataigneCommandIDs::guideStart && commandID < ChataigneCommandIDs::guideStart + 100)
+	if (commandID >= ChataigneCommandIDs::guideStart && commandID < ChataigneCommandIDs::guideStart + 99)
 	{
 		result.setInfo(Guider::getInstance()->getGuideName(commandID - ChataigneCommandIDs::guideStart), "", "Guides", result.readOnlyInKeyEditor);
 		return;
@@ -76,6 +78,12 @@ void MainContentComponent::getCommandInfo(CommandID commandID, ApplicationComman
 		result.setInfo("Reload Custom Modules", "", "General", result.readOnlyInKeyEditor);
 		break;
 
+	case ChataigneCommandIDs::exitGuide:
+		result.setInfo("Exit current guide", "", "Guides", result.readOnlyInKeyEditor);
+		result.addDefaultKeypress(KeyPress::escapeKey, ModifierKeys::noModifiers);
+		result.setActive(Guider::getInstance()->guide != nullptr);
+		break;
+
 	default:
 		OrganicMainContentComponent::getCommandInfo(commandID, result);
 		break;
@@ -88,7 +96,7 @@ void MainContentComponent::getAllCommands(Array<CommandID>& commands) {
 	OrganicMainContentComponent::getAllCommands(commands);
 
 	const CommandID ids[] = {
-	
+
 		ChataigneCommandIDs::showAbout,
 		ChataigneCommandIDs::donate,
 		ChataigneCommandIDs::gotoWebsite,
@@ -97,7 +105,8 @@ void MainContentComponent::getAllCommands(Array<CommandID>& commands) {
 		ChataigneCommandIDs::postGithubIssue,
 		ChataigneCommandIDs::playPauseSequenceEditor,
 		ChataigneCommandIDs::goToCommunityModules,
-		ChataigneCommandIDs::reloadCustomModules
+		ChataigneCommandIDs::reloadCustomModules,
+		ChataigneCommandIDs::exitGuide,
 	};
 
 	commands.addArray(ids, numElementsInArray(ids));
@@ -128,6 +137,9 @@ PopupMenu MainContentComponent::getMenuForIndex(int topLevelMenuIndex, const Str
 		{
 			menu.addCommandItem(&getCommandManager(), ChataigneCommandIDs::guideStart + i);
 		}
+
+		menu.addSeparator();
+		menu.addCommandItem(&getCommandManager(), ChataigneCommandIDs::exitGuide);
 	}
 
 	return menu;
@@ -206,6 +218,10 @@ bool MainContentComponent::perform(const InvocationInfo& info)
 		}
 	}
 	break;
+
+	case ChataigneCommandIDs::exitGuide:
+		Guider::getInstance()->setCurrentGuide(nullptr);
+		break;
 
 	default:
 		return OrganicMainContentComponent::perform(info);

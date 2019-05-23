@@ -21,6 +21,8 @@ BasicsGuide::BasicsGuide() :
 	action(nullptr),
 	condition(nullptr),
 	consequence(nullptr),
+	cme(nullptr),
+	csme(nullptr),
 	command(nullptr)
 {
 	numSteps = 7;
