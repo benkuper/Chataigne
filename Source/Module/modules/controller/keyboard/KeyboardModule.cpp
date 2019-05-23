@@ -14,6 +14,8 @@ KeyboardModule::KeyboardModule() :
 	Module(getDefaultTypeString()),
 	window(nullptr)
 {
+	setupIOConfiguration(true, false);
+
 	window = TopLevelWindow::getActiveTopLevelWindow();
 	if(window != nullptr) window->addKeyListener(this);
 	
