@@ -60,7 +60,7 @@ void ActionUI::updateBGColor()
 
 	if (isA && isD) baseBGColor = Colours::orange.darker(1);
 	else if (isA) baseBGColor = GREEN_COLOR.darker(1);
-	else if (isD) baseBGColor = RED_COLOR.darker(1);
+	else if (isD) baseBGColor = Colours::orange.darker(1);
 	else baseBGColor = ACTION_COLOR.darker(1);
 
 	ProcessorUI::updateBGColor();
