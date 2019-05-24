@@ -26,7 +26,8 @@ BasicsGuide::BasicsGuide() :
 	command(nullptr)
 {
 	numSteps = 7;
-	ModuleManager::getInstance()->addAsyncManagerListener(this);
+
+	if(ModuleManager::getInstanceWithoutCreating() != nullptr) ModuleManager::getInstance()->addAsyncManagerListener(this);
 
 	mmui = dynamic_cast<ModuleManagerUI *>(ShapeShifterManager::getInstance()->getContentForName("Modules")->contentComponent);
 	smui = dynamic_cast<StateMachineView *>(ShapeShifterManager::getInstance()->getContentForName("State Machine")->contentComponent);
