@@ -55,6 +55,7 @@ IntComparator::IntComparator(Controllable * c) :
 
 	intRef = addIntParameter("Reference", "Comparison Reference to check against source value", intParam->defaultValue,intParam->minimumValue,intParam->maximumValue);
 	reference = intRef;
+	intRef->setValue(intRef->floatValue(), false, true, true);
 
 	addCompareOption("=", equalsId);
 	addCompareOption("!=", differentId);
