@@ -24,6 +24,6 @@ FFTAnalyzerEditor::~FFTAnalyzerEditor()
 
 void FFTAnalyzerEditor::resizedInternalHeaderItemInternal(Rectangle<int>& r)
 {
-	valueUI->setBounds(r.removeFromRight(80));
+	valueUI->setBounds(r.removeFromRight(80).reduced(2));
 	r.removeFromRight(2);
 }

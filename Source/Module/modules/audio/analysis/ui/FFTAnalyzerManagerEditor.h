@@ -13,8 +13,7 @@
 #include "../FFTAnalyzerManager.h"
 
 class FFTAnalyzerManagerEditor :
-	public GenericManagerEditor<FFTAnalyzer>,
-	public Timer
+	public GenericManagerEditor<FFTAnalyzer>
 {
 public:
 	FFTAnalyzerManagerEditor(FFTAnalyzerManager * manager, bool isRoot);
@@ -23,9 +22,22 @@ public:
 	FFTAnalyzerManager* analyzerManager;
 	Rectangle<int> fftBounds;
 
-	void paint(Graphics& g) override;
+	class FFTViz :
+		public Component,
+		public Timer
+	{
+	public:
+		FFTViz(FFTAnalyzerManager* manager);
+		~FFTViz() {}
+
+		FFTAnalyzerManager* analyzerManager;
+
+		void paint(Graphics& g) override;
+		virtual void timerCallback() override;
+	};
+
+	FFTViz viz;
+
 	void resizedInternalContent(Rectangle<int>& r) override;
 
-	// Inherited via Timer
-	virtual void timerCallback() override;
 };

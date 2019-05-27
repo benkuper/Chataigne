@@ -18,8 +18,8 @@ FFTAnalyzerManager::FFTAnalyzerManager() :
 {
 	setCanBeDisabled(true);
 	enabled->setValue(false);
+	editorIsCollapsed = true;
 
-	editorIsCollapsed = false;
 
 	minDB = addFloatParameter("Min DB", "", -100, -100, 20);
 	maxDB = addFloatParameter("Max DB", "", 0, -100, 20);
