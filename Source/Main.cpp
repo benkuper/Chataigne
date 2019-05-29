@@ -55,8 +55,8 @@ void ChataigneApplication::shutdown()
 	{
 		MatamoAnalytics::getInstance()->log(MatamoAnalytics::STOP);
 		Analytics::getInstance()->logEvent("shutdown", {});
-		MatamoAnalytics::deleteInstance();
 	}
 
+	if(MatamoAnalytics::getInstanceWithoutCreating() != nullptr) MatamoAnalytics::deleteInstance();
 	AppUpdater::deleteInstance();
 }
