@@ -14,6 +14,7 @@
 #include "MainComponent.h"
 #include "ChataigneEngine.h"
 #include "Analytics/GoogleAnalyticsDestination.h"
+#include "Analytics/MatamoAnalytics.h"
 
 //==============================================================================
 class ChataigneApplication : public OrganicApplication

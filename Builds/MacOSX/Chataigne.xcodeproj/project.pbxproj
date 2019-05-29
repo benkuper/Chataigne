@@ -97,6 +97,10 @@
 			isa = PBXBuildFile;
 			fileRef = E760AE782F147B81967ED0B3;
 		};
+		5E974F0C555238191CAFDDF0 = {
+			isa = PBXBuildFile;
+			fileRef = B9589C3CAD881FFF1CCB4A74;
+		};
 		6648A28A780225272E677EAE = {
 			isa = PBXBuildFile;
 			fileRef = 7548D863C3CCA4FF27887C03;
@@ -4497,6 +4501,13 @@
 			path = ../../Source/Common/Command/ui/BaseCommandHandlerEditor.h;
 			sourceTree = "SOURCE_ROOT";
 		};
+		B9589C3CAD881FFF1CCB4A74 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = MatamoAnalytics.cpp;
+			path = ../../Source/Analytics/MatamoAnalytics.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		B99392EFF004B85380C17689 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -4726,6 +4737,13 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = StateModule.cpp;
 			path = ../../Source/Module/modules/state/StateModule.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
+		C82F976EC75EC99CA6DE6D4D = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = MatamoAnalytics.h;
+			path = ../../Source/Analytics/MatamoAnalytics.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		C86A957BC44904609CAE5C07 = {
@@ -5867,6 +5885,8 @@
 			isa = PBXGroup;
 			children = (
 				56602E9E49E703AAD79A1ADF,
+				B9589C3CAD881FFF1CCB4A74,
+				C82F976EC75EC99CA6DE6D4D,
 			);
 			name = Analytics;
 			sourceTree = "<group>";
@@ -7855,7 +7875,7 @@
 					"_DEBUG=1",
 					"DEBUG=1",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
-					"JUCE_APP_VERSION=1.6.1b2",
+					"JUCE_APP_VERSION=1.6.1b3",
 					"JUCE_APP_VERSION_HEX=0x10601",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
@@ -7911,7 +7931,7 @@
 					"_NDEBUG=1",
 					"NDEBUG=1",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
-					"JUCE_APP_VERSION=1.6.1b2",
+					"JUCE_APP_VERSION=1.6.1b3",
 					"JUCE_APP_VERSION_HEX=0x10601",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
@@ -8083,6 +8103,7 @@
 				EF06D68C5D80A560E01D5210,
 				A9F417BBCFA13B702734002D,
 				A377485D00E6BD3B63525CE2,
+				5E974F0C555238191CAFDDF0,
 				6648A28A780225272E677EAE,
 				43E1EC2D9919CC1742754AA5,
 				D5BA72E6B1F43C42CFDDCE35,

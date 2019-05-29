@@ -23,10 +23,8 @@ void ChataigneApplication::initialiseInternal(const String &)
 	engine.reset(new ChataigneEngine());
 	mainComponent.reset(new MainContentComponent());
 
-
 	ShapeShifterManager::getInstance()->setDefaultFileData(BinaryData::default_chalayout);
 	ShapeShifterManager::getInstance()->setLayoutInformations("chalayout", "Chataigne/layouts");
-
 
 }
 
@@ -37,6 +35,9 @@ void ChataigneApplication::afterInit()
 	if (enableSendAnalytics->boolValue())
 	{
 		DBG("Send analytics");
+		
+		MatamoAnalytics::getInstance()->log(MatamoAnalytics::START);
+		
 		Analytics::getInstance()->setUserId(SystemStats::getFullUserName());
 
 		// Add any analytics destinations we want to use to the Analytics singleton.
@@ -50,6 +51,12 @@ void ChataigneApplication::shutdown()
 {   
 	OrganicApplication::shutdown();
 
-	if (enableSendAnalytics->boolValue()) Analytics::getInstance()->logEvent("shutdown", {});
+	if (enableSendAnalytics->boolValue())
+	{
+		MatamoAnalytics::getInstance()->log(MatamoAnalytics::STOP);
+		Analytics::getInstance()->logEvent("shutdown", {});
+		MatamoAnalytics::deleteInstance();
+	}
+
 	AppUpdater::deleteInstance();
 }

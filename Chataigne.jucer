@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.6.1b2"
+<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.6.1b3"
               bundleIdentifier="benkuper.Chataigne" includeBinaryInAppConfig="1"
               jucerVersion="5.4.3" companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
               companyEmail="benjamin@kuperberg.fr" defines="" splashScreenColour="Dark"
@@ -66,6 +66,10 @@
       <GROUP id="{C6C9402E-3E5F-DA24-8E22-DE4CD0AB4FD4}" name="Analytics">
         <FILE id="WpUsgL" name="GoogleAnalyticsDestination.h" compile="0" resource="0"
               file="Source/Analytics/GoogleAnalyticsDestination.h"/>
+        <FILE id="in1fwI" name="MatamoAnalytics.cpp" compile="1" resource="0"
+              file="Source/Analytics/MatamoAnalytics.cpp"/>
+        <FILE id="GNrv6Z" name="MatamoAnalytics.h" compile="0" resource="0"
+              file="Source/Analytics/MatamoAnalytics.h"/>
       </GROUP>
       <GROUP id="{6C7DFFF7-D47E-97B5-FE74-27F24C7A349F}" name="Common">
         <GROUP id="{1B487EA1-C305-46F0-D55D-17FDE1399960}" name="Zeroconf">

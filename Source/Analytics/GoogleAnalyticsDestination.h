@@ -89,7 +89,10 @@ public:
 				data.set("sc", "end");
             } else
 			{
-				continue;
+				LOGWARNING("Unknown analytics event " << event.name);
+				data.set("ec", "info");
+				data.set("ea", event.name);
+				data.set("sc", "start");
 			}
 
 			data.set ("cid", event.userID);
