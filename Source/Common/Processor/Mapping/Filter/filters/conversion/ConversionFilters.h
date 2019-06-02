@@ -58,7 +58,7 @@ public:
 	var convertValue(var sourceValue) override;
 
 	static ToIntFilter * create(var params) { return new ToIntFilter(params); }
-	String getTypeString() const override { return "Convert To String"; }
+	String getTypeString() const override { return "Convert To Integer"; }
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ToIntFilter)
 };
