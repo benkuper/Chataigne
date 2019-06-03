@@ -212,8 +212,6 @@ void Sequence::onContainerParameterChangedInternal(Parameter* p)
 
 		sequenceListeners.call(&SequenceListener::sequenceCurrentTimeChanged, this, (float)prevTime, isPlaying->boolValue());
 		prevTime = currentTime->floatValue();
-
-
 	}
 	else if (p == totalTime)
 	{
@@ -236,7 +234,7 @@ void Sequence::onContainerParameterChangedInternal(Parameter* p)
 			prevMillis = Time::getMillisecondCounterHiRes();
 			prevTime = currentTime->floatValue();
 			startTimer(1000 / fps->intValue());
-			if (mtcSender != nullptr) mtcSender->start();
+			if (mtcSender != nullptr) mtcSender->start(currentTime->floatValue());
 		}
 		else
 		{
@@ -280,7 +278,7 @@ void Sequence::onContainerTriggerTriggered(Trigger* t)
 	{
 		isPlaying->setValue(false);
 		currentTime->setValue(0);
-		mtcSender->stop();
+		if(mtcSender != nullptr) mtcSender->stop();
 	}
 	else if (t == pauseTrigger)
 	{

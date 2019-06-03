@@ -26,16 +26,10 @@ void MTCSender::setDevice(MIDIOutputDevice * newDevice)
 	if (device != nullptr) device->open();
 }
 
-void MTCSender::start()
+void MTCSender::start(double position)
 {
-    m_frame = 0;
-    m_second = 0;
-    m_minute = 0;
-    m_hour = 0;
-
-    device->sendFullframeTimecode(m_hour, m_minute, m_second, m_frame, MidiMessage::SmpteTimecodeType::fps25);
-
-    startTimer(1000 / 25 / 4);
+	setPosition(position);
+	startTimer(1000 / fps / 4);
 }
 
 void MTCSender::pause()
@@ -43,7 +37,7 @@ void MTCSender::pause()
     if (isTimerRunning())
         stopTimer();
     else
-        startTimer(1000 / 25 / 4);
+        startTimer(1000 / fps / 4);
 }
 
 void MTCSender::stop()
@@ -51,26 +45,27 @@ void MTCSender::stop()
     stopTimer();
 }
 
-void MTCSender::setPosition(double position)
+void MTCSender::setPosition(double position, bool fullFrame)
 {
-    std::unique_lock<std::mutex> lock_guard(m_mutex);
-    double unused;
 
-    m_frame = static_cast<int>(modf(position, &unused) * 25);
-    m_second = static_cast<int>(position) % 60;
-    m_minute = (static_cast<int>(position) / 60) % 60;
-    m_hour = (static_cast<int>(position) / 60 / 60) % 60;
+	if (device == nullptr) return; 
+	
+	lock.enter();
+	m_frame = fmodf(position, 1)* fps;// static_cast<int>(modf(position, &unused) * 25);
+    m_second = (int)floorf(position) % 60;
+    m_minute = (int)floorf(position / 60) % 60;
+	m_hour = floorf(position / 3600);
     m_piece = Piece::FrameLSB;
+	lock.exit();
 
-	device->sendFullframeTimecode(m_hour, m_minute, m_second, m_frame, MidiMessage::SmpteTimecodeType::fps25);
-
+	if(fullFrame) device->sendFullframeTimecode(m_hour, m_minute, m_second, m_frame, fpsType);
 }
 
 void MTCSender::hiResTimerCallback()
 {
    if (device == nullptr) return;
-
-    std::unique_lock<std::mutex> lock_guard(m_mutex);
+   
+   lock.enter();
 
     const int value = getValue(m_piece);
     device->sendQuarterframe(static_cast<int>(m_piece), value);
@@ -80,7 +75,7 @@ void MTCSender::hiResTimerCallback()
     if (++m_quarter >= 4)
     {
         m_quarter = 0;
-        if (++m_frame >= 25)
+        if (++m_frame >= fps)
         {
             m_frame = 0;
             if (++m_second >= 60)
@@ -96,8 +91,9 @@ void MTCSender::hiResTimerCallback()
                 }
             }
         }
-
     }
+
+	lock.exit();
 }
 
 int MTCSender::getValue(Piece piece)
@@ -118,7 +114,7 @@ int MTCSender::getValue(Piece piece)
     case Piece::HourLSB:
         return m_hour & 0b1111;
     case Piece::RateAndHourMSB:
-        return ((m_hour >> 4) & 0b0001) | (0b01 << 1);
+        return ((m_hour >> 4) & 0b0001) | ((0b00 | fpsType) << 1);
     }
 
     std::terminate();

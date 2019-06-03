@@ -2,7 +2,6 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 
-#include <mutex>
 #include "MIDIDevice.h"
 
 class MTCSender : 
@@ -12,11 +11,12 @@ public:
     MTCSender(MIDIOutputDevice* device = nullptr);
     ~MTCSender();
 
+
     void setDevice(MIDIOutputDevice* newDevice);
-    void start();
+    void start(double position = 0);
     void pause();
     void stop();
-    void setPosition(double position);
+    void setPosition(double position, bool fullFrame = false);
 
 private:
 	MIDIOutputDevice* device;
@@ -37,7 +37,11 @@ private:
     void hiResTimerCallback() override;
     int getValue(Piece piece);
 
-    std::mutex m_mutex;
+	SpinLock lock;
+
+	const int fps = 25;
+	const MidiMessage::SmpteTimecodeType fpsType = MidiMessage::SmpteTimecodeType::fps25;
+
     Piece m_piece{Piece::FrameLSB};
     int m_quarter{0};
     int m_frame{0};
