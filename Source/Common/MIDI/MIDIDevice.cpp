@@ -66,6 +66,7 @@ void MIDIInputDevice::handleIncomingMidiMessage(MidiInput * source, const MidiMe
 	else if (message.isNoteOff()) inputListeners.call(&MIDIInputListener::noteOffReceived, message.getChannel(), message.getNoteNumber(), 0); //force note off to velocity 0
 	else if (message.isController()) inputListeners.call(&MIDIInputListener::controlChangeReceived, message.getChannel(), message.getControllerNumber(), message.getControllerValue());
 	else if (message.isSysEx()) inputListeners.call(&MIDIInputListener::sysExReceived, message);
+	else if (message.isFullFrame()) inputListeners.call(&MIDIInputListener::fullFrameTimecodeReceived, message);
 }
 
 
@@ -134,5 +135,23 @@ void MIDIOutputDevice::sendSysEx(Array<uint8> data)
 {
 	if (device == nullptr) return;
 	device->sendMessageNow(MidiMessage::createSysExMessage(data.getRawDataPointer(), data.size()));
+}
+
+void MIDIOutputDevice::sendFullframeTimecode(int hours, int minutes, int seconds, int frames, MidiMessage::SmpteTimecodeType timecodeType)
+{
+	if (device == nullptr) return;
+	device->sendMessageNow(MidiMessage::fullFrame(hours, minutes, seconds, frames, timecodeType));
+}
+
+void MIDIOutputDevice::sendQuarterframe(int piece, int value)
+{
+	if (device == nullptr) return; 
+	device->sendMessageNow(MidiMessage::quarterFrame(piece, value));
+}
+
+void MIDIOutputDevice::sendMidiMachineControlCommand(MidiMessage::MidiMachineControlCommand command)
+{
+	if (device == nullptr) return;
+	device->sendMessageNow(MidiMessage::midiMachineControlCommand(command));
 }
 

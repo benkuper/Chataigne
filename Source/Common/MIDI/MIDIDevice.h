@@ -46,6 +46,7 @@ public:
 		virtual void noteOffReceived(const int &/*channel*/, const int &/*pitch*/, const int &/*velocity*/) {}
 		virtual void controlChangeReceived(const int &/*channel*/, const int &/*number*/, const int &/*value*/) {}
 		virtual void sysExReceived(const MidiMessage &/*msg*/) {}
+		virtual void fullFrameTimecodeReceived(const MidiMessage &/*msg*/){}
 	};
 
 	ListenerList<MIDIInputListener> inputListeners;
@@ -75,6 +76,9 @@ public:
 	void sendNoteOff(int channel, int pitch);
 	void sendControlChange(int channel, int number, int value);
 	void sendSysEx(Array<uint8> data);
+	void sendFullframeTimecode(int hours, int minutes, int seconds, int frames, MidiMessage::SmpteTimecodeType timecodeType);
+	void sendQuarterframe(int piece, int value);
+	void sendMidiMachineControlCommand(MidiMessage::MidiMachineControlCommand command);
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MIDIOutputDevice)
 };

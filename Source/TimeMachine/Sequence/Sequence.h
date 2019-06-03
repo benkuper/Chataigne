@@ -8,12 +8,14 @@
   ==============================================================================
 */
 
-#ifndef SEQUENCE_H_INCLUDED
-#define SEQUENCE_H_INCLUDED
+#pragma once
 
 #include "JuceHeader.h"
 
 class AudioModule;
+class MTCSender;
+class MIDIDeviceParameter;
+
 class SequenceLayerManager;
 class TimeCueManager;
 
@@ -27,8 +29,6 @@ class Sequence :
 public:
 	Sequence();
 	virtual ~Sequence();
-
-	
 
 	std::unique_ptr<TimeCueManager> cueManager;
 	std::unique_ptr<SequenceLayerManager> layerManager;
@@ -51,6 +51,10 @@ public:
 	BoolParameter * isPlaying;
 
 	AudioModule * masterAudioModule;
+
+	MIDIDeviceParameter* midiSyncDevice;
+	std::unique_ptr<MTCSender> mtcSender;
+
 	double hiResAudioTime;
 
 	bool isSeeking;
@@ -81,6 +85,7 @@ public:
 	virtual void audioDeviceStopped() override;
 
 	bool timeIsDrivenByAudio();
+
 	
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
@@ -136,6 +141,3 @@ public:
 };
 
 
-
-
-#endif  // SEQUENCE_H_INCLUDED

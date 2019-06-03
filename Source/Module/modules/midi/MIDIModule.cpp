@@ -102,6 +102,28 @@ void MIDIModule::sendSysex(Array<uint8> data)
 	outputDevice->sendSysEx(data);
 }
 
+void MIDIModule::sendFullFrameTimecode(int hours, int minutes, int seconds, int frames, MidiMessage::SmpteTimecodeType timecodeType)
+{
+	if (!enabled->boolValue()) return;
+	if (outputDevice == nullptr) return;
+	if (logOutgoingData->boolValue())
+	{
+		NLOG(niceName, "Send full frame timecode : " << hours << ":" << minutes << ":" << seconds << "." << frames << " / " << timecodeType);
+	}
+	outputDevice->sendFullframeTimecode(hours, minutes, seconds, frames, timecodeType);
+}
+
+void MIDIModule::sendMidiMachineControlCommand(MidiMessage::MidiMachineControlCommand command)
+{
+	if (!enabled->boolValue()) return;
+	if (outputDevice == nullptr) return;
+	if (logOutgoingData->boolValue())
+	{
+		NLOG(niceName, "Send midi machine control command : " << command);
+	}
+	outputDevice->sendMidiMachineControlCommand(command);
+}
+
 
 void MIDIModule::onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c)
 {
@@ -216,6 +238,14 @@ void MIDIModule::sysExReceived(const MidiMessage & msg)
 	}
 
 	if (scriptManager->items.size() > 0) scriptManager->callFunctionOnAllItems(sysexEventId, Array<var>(data.getRawDataPointer(), data.size()));
+}
+
+void MIDIModule::fullFrameTimecodeReceived(const MidiMessage& msg)
+{
+	int hours = 0, minutes = 0, seconds = 0, frames = 0;
+	MidiMessage::SmpteTimecodeType timecodeType;
+	msg.getFullFrameParameters(hours, minutes, seconds, frames,timecodeType);
+	NLOG(niceName, "Full frame timecode received : " << hours << ":" << minutes << ":" << seconds << "." << frames << " / " << timecodeType);
 }
 
 var MIDIModule::sendNoteOnFromScript(const var::NativeFunctionArgs & args)

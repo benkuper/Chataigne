@@ -68,14 +68,17 @@ public:
 	virtual void sendNoteOff(int channel, int pitch);
 	virtual void sendControlChange(int channel, int number, int value);
 	virtual void sendSysex(Array<uint8> data);
+	virtual void sendFullFrameTimecode(int hours, int minutes, int seconds, int frames, MidiMessage::SmpteTimecodeType timecodeType);
+	void sendMidiMachineControlCommand(MidiMessage::MidiMachineControlCommand command);
 
 	void onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c) override;
 	void updateMIDIDevices();
 
 	virtual void noteOnReceived(const int &channel, const int &pitch, const int &velocity) override;
-	virtual void noteOffReceived(const int &channel, const int &pitch, const int &velocity) override;
+	virtual void noteOffReceived(const int& channel, const int& pitch, const int& velocity) override;
 	virtual void controlChangeReceived(const int &channel, const int &number, const int &value) override;
 	virtual void sysExReceived(const MidiMessage & msg) override;
+	virtual void fullFrameTimecodeReceived(const MidiMessage& msg) override;
 
 	//Script
 	static var sendNoteOnFromScript(const var::NativeFunctionArgs &args);

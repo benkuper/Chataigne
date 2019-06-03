@@ -1204,6 +1204,9 @@
     <ClCompile Include="..\..\Source\Common\MIDI\MIDIManager.cpp">
       <Filter>Chataigne\Source\Common\MIDI</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Common\MIDI\MTCSender.cpp">
+      <Filter>Chataigne\Source\Common\MIDI</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Common\Plugin\PluginManager.cpp">
       <Filter>Chataigne\Source\Common\Plugin</Filter>
     </ClCompile>
@@ -4573,6 +4576,9 @@
       <Filter>Chataigne\Source\Common\MIDI</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\MIDI\MIDIManager.h">
+      <Filter>Chataigne\Source\Common\MIDI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\MIDI\MTCSender.h">
       <Filter>Chataigne\Source\Common\MIDI</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\Plugin\PluginManager.h">

@@ -26,8 +26,13 @@ AudioLayerClip * AudioLayerClipManager::addClipAt(float time)
     return t;
 }
 
-AudioLayerClip * AudioLayerClipManager::getClipAtTime(float time)
+AudioLayerClip * AudioLayerClipManager::getClipAtTime(float time, bool includeDisabled)
 {
-	for (auto &c : items) if (c->isInRange(time)) return c;
+	for (auto& c : items)
+	{
+		if (!includeDisabled && !c->enabled->boolValue()) continue;
+		if (c->isInRange(time)) return c;
+	}
+
 	return nullptr;
 }

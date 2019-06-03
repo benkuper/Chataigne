@@ -233,6 +233,10 @@
 			isa = PBXBuildFile;
 			fileRef = A07AB46E1CB4B4698F148FC8;
 		};
+		30A52645696FAF1864CC8297 = {
+			isa = PBXBuildFile;
+			fileRef = CDC2689AEBE1AE73D05F0293;
+		};
 		5EF5066556C2A34119BF92FD = {
 			isa = PBXBuildFile;
 			fileRef = 7E6F4F9F8AC83A4B95C7AAE9;
@@ -2695,6 +2699,13 @@
 			path = ../../Source/Module/modules/controller/myo/MyoDevice.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
+		4EF08030F4B5BF335BC0DDD8 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = MTCSender.h;
+			path = ../../Source/Common/MIDI/MTCSender.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		4F10DF2F3EFBC622492B19ED = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -4837,6 +4848,13 @@
 			path = ../../Source/CustomVariables/CVGroup.h;
 			sourceTree = "SOURCE_ROOT";
 		};
+		CDC2689AEBE1AE73D05F0293 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = MTCSender.cpp;
+			path = ../../Source/Common/MIDI/MTCSender.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		CDE9EF9B0E1277DC6C2D8577 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -6046,6 +6064,8 @@
 				5C12A4316D9EC6B2970870E9,
 				A07AB46E1CB4B4698F148FC8,
 				8F4E7615136F0F2BC4F13B36,
+				CDC2689AEBE1AE73D05F0293,
+				4EF08030F4B5BF335BC0DDD8,
 			);
 			name = MIDI;
 			sourceTree = "<group>";
@@ -7875,7 +7895,7 @@
 					"_DEBUG=1",
 					"DEBUG=1",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
-					"JUCE_APP_VERSION=1.6.1b3",
+					"JUCE_APP_VERSION=1.6.1b4",
 					"JUCE_APP_VERSION_HEX=0x10601",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
@@ -7931,7 +7951,7 @@
 					"_NDEBUG=1",
 					"NDEBUG=1",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
-					"JUCE_APP_VERSION=1.6.1b3",
+					"JUCE_APP_VERSION=1.6.1b4",
 					"JUCE_APP_VERSION_HEX=0x10601",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
@@ -8137,6 +8157,7 @@
 				A1E12D85C58B3A0D08EBD9F3,
 				9FFD82F750C3345EF22899A6,
 				A92916EA6FDDC5574A9C7FF9,
+				30A52645696FAF1864CC8297,
 				5EF5066556C2A34119BF92FD,
 				9EA034F221797BE59DC09D6C,
 				A7542A578E1E0D55254CC460,

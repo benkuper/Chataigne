@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    Sequence.cpp
-    Created: 28 Oct 2016 8:13:19pm
-    Author:  bkupe
+	Sequence.cpp
+	Created: 28 Oct 2016 8:13:19pm
+	Author:  bkupe
 
   ==============================================================================
 */
@@ -11,11 +11,14 @@
 #include "Sequence.h"
 #include "Layer/SequenceLayerManager.h"
 #include "Cue/TimeCueManager.h"
+#include "Common/MIDI/MTCSender.h"
+#include "Common/MIDI/MIDIDeviceParameter.h"
 #include "Layer/layers/audio/AudioLayer.h"
 #include "Module/modules/audio/AudioModule.h"
+#include "Module/modules/midi/MIDIModule.h"
 
 Sequence::Sequence() :
-	BaseItem("Sequence",true),
+	BaseItem("Sequence", true),
 	masterAudioModule(nullptr),
 	hiResAudioTime(0),
 	isSeeking(false),
@@ -27,14 +30,14 @@ Sequence::Sequence() :
 	isPlaying = addBoolParameter("Is Playing", "Is the sequence playing ?", false);
 	isPlaying->setControllableFeedbackOnly(true);
 	isPlaying->isSavable = false;
-	
+
 	playTrigger = addTrigger("Play", "Play the sequence");
 	stopTrigger = addTrigger("Stop", "Stops the sequence and set the current time at 0.");
 	finishTrigger = addTrigger("Finish", "When the sequence reached naturally its end, and there is no loop");
 	finishTrigger->hideInEditor = true;
 	pauseTrigger = addTrigger("Pause", "Pause the sequence and keep the current time as is.");
 	togglePlayTrigger = addTrigger("TogglePlay", "Toggle between play/pause or play/stop depending on sequence settings");
-	
+
 	float initTotalTime = 30; //default to 30 seconds, may be in general preferences later
 
 	startAtLoad = addBoolParameter("Play at Load", "If selected, the sequence will start playing just after loading the file", false);
@@ -47,14 +50,18 @@ Sequence::Sequence() :
 	totalTime->defaultUI = FloatParameter::TIME;
 
 	loopParam = addBoolParameter("Loop", "Whether the sequence plays again from the start when reached the end while playing", false);
-	playSpeed = addFloatParameter("Play Speed", "Playing speed factor, 1 is normal speed, 2 is double speed and 0.5 is half speed",1,0,100);
+	playSpeed = addFloatParameter("Play Speed", "Playing speed factor, 1 is normal speed, 2 is double speed and 0.5 is half speed", 1, 0, 100);
 	fps = addIntParameter("FPS", "Frame Per Second.\nDefines the number of times per seconds the sequence is evaluated, the higher the value is, the more previse the calculation will be.\n \
-									This setting also sets how many messages per seconds are sent from layer with automations.", 50, 1,500);
-	
-	
+									This setting also sets how many messages per seconds are sent from layer with automations.", 50, 1, 500);
+
+
 	prevCue = addTrigger("Prev Cue", "Jump to previous cue, if previous cue is less than 1 sec before, jump to the one before that.");
 	nextCue = addTrigger("Next Cue", "Jump to the next cue");
 
+	midiSyncDevice = new MIDIDeviceParameter("Sync Devices");
+	addParameter(midiSyncDevice);
+
+	
 	viewStartTime = addFloatParameter("View start time", "Start time of the view", 0, 0, initTotalTime - minSequenceTime);
 	viewStartTime->hideInEditor = true;
 
@@ -70,18 +77,19 @@ Sequence::Sequence() :
 
 	listUISize->setValue(5);
 
+
 	helpID = "Sequence";
 }
 
 Sequence::~Sequence()
 {
-	
+
 }
 
 void Sequence::clearItem()
 {
-	stopTimer();
 	stopTrigger->trigger();
+
 	setMasterAudioModule(nullptr);
 
 	if (Engine::mainEngine != nullptr) Engine::mainEngine->removeEngineListener(this);
@@ -116,12 +124,12 @@ void Sequence::setBeingEdited(bool value)
 
 bool Sequence::paste()
 {
-	Array<SequenceLayer *> p = layerManager->addItemsFromClipboard(false);
+	Array<SequenceLayer*> p = layerManager->addItemsFromClipboard(false);
 	if (p.isEmpty()) return BaseItem::paste();
 	return true;
 }
 
-void Sequence::setMasterAudioModule(AudioModule * module)
+void Sequence::setMasterAudioModule(AudioModule* module)
 {
 	if (masterAudioModule == module) return;
 
@@ -142,6 +150,7 @@ void Sequence::setMasterAudioModule(AudioModule * module)
 	sequenceListeners.call(&SequenceListener::sequenceMasterAudioModuleChanged, this);
 }
 
+
 bool Sequence::timeIsDrivenByAudio()
 {
 	return masterAudioModule != nullptr && masterAudioModule->enabled->boolValue();
@@ -151,10 +160,10 @@ var Sequence::getJSONData()
 {
 	var data = BaseItem::getJSONData();
 	var layerData = layerManager->getJSONData();
-	if(!layerData.isVoid()) data.getDynamicObject()->setProperty("layerManager", layerData );
+	if (!layerData.isVoid()) data.getDynamicObject()->setProperty("layerManager", layerData);
 	var cueData = cueManager->getJSONData();
-	if(!cueData.isVoid()) data.getDynamicObject()->setProperty("cueManager", cueData);
-	if(isBeingEdited) data.getDynamicObject()->setProperty("editing", true);
+	if (!cueData.isVoid()) data.getDynamicObject()->setProperty("cueManager", cueData);
+	if (isBeingEdited) data.getDynamicObject()->setProperty("editing", true);
 	return data;
 }
 
@@ -169,10 +178,10 @@ void Sequence::loadJSONDataInternal(var data)
 	{
 		Engine::mainEngine->addEngineListener(this);
 	}
-	
+
 }
 
-void Sequence::onContainerParameterChangedInternal(Parameter * p)
+void Sequence::onContainerParameterChangedInternal(Parameter* p)
 {
 	if (p == enabled)
 	{
@@ -180,12 +189,15 @@ void Sequence::onContainerParameterChangedInternal(Parameter * p)
 	}
 	else if (p == currentTime)
 	{
-		if ((!isPlaying->boolValue() || isSeeking) && timeIsDrivenByAudio()) hiResAudioTime = currentTime->floatValue(); 
-		
-		if (isPlaying->boolValue() && !isSeeking)
+		if ((!isPlaying->boolValue() || isSeeking))
 		{
-			Array<TimeCue *> cues = cueManager->getCuesInTimespan(prevTime, currentTime->floatValue());
-			for (auto &c : cues)
+			if (timeIsDrivenByAudio()) hiResAudioTime = currentTime->floatValue();
+			if (mtcSender != nullptr) mtcSender->setPosition(currentTime->floatValue());
+
+		}else if (isPlaying->boolValue() && !isSeeking)
+		{
+			Array<TimeCue*> cues = cueManager->getCuesInTimespan(prevTime, currentTime->floatValue());
+			for (auto& c : cues)
 			{
 				if (c->pauseOnCue->boolValue())
 				{
@@ -195,10 +207,13 @@ void Sequence::onContainerParameterChangedInternal(Parameter * p)
 					return;
 				}
 			}
+
 		}
-		
+
 		sequenceListeners.call(&SequenceListener::sequenceCurrentTimeChanged, this, (float)prevTime, isPlaying->boolValue());
 		prevTime = currentTime->floatValue();
+
+
 	}
 	else if (p == totalTime)
 	{
@@ -206,33 +221,37 @@ void Sequence::onContainerParameterChangedInternal(Parameter * p)
 
 		currentTime->setRange(0, totalTime->floatValue());
 		viewStartTime->setRange(0, totalTime->floatValue() - minViewTime);
-		viewEndTime->setRange(viewStartTime->floatValue()+ minViewTime, totalTime->floatValue());
+		viewEndTime->setRange(viewStartTime->floatValue() + minViewTime, totalTime->floatValue());
 		sequenceListeners.call(&SequenceListener::sequenceTotalTimeChanged, this);
-	} else if (p == playSpeed)
+	}
+	else if (p == playSpeed)
 	{
 
-	} else if (p == isPlaying)
+	}
+	else if (p == isPlaying)
 	{
+
 		if (isPlaying->boolValue())
 		{
 			prevMillis = Time::getMillisecondCounterHiRes();
 			prevTime = currentTime->floatValue();
-			startTimer(1000/fps->intValue());
+			startTimer(1000 / fps->intValue());
+			if (mtcSender != nullptr) mtcSender->start();
 		}
 		else
 		{
 			stopTimer();
+			if (mtcSender != nullptr) mtcSender->pause();
 		}
 
 		sequenceListeners.call(&SequenceListener::sequencePlayStateChanged, this);
-
-
-	} else if (p == fps)
+	}
+	else if (p == fps)
 	{
 		if (isPlaying->boolValue())
 		{
 			stopTimer();
-			startTimer(1000/fps->intValue());
+			startTimer(1000 / fps->intValue());
 		}
 	}
 	else if (p == viewStartTime)
@@ -240,41 +259,56 @@ void Sequence::onContainerParameterChangedInternal(Parameter * p)
 		float minViewTime = jmax(minSequenceTime, totalTime->floatValue() / 100.f); //small hack to avoid UI hang when zooming too much
 		viewEndTime->setRange(viewStartTime->floatValue() + minViewTime, totalTime->floatValue()); //Should be a range value
 	}
+	else if (p == midiSyncDevice)
+	{
+		if (midiSyncDevice->outputDevice == nullptr) mtcSender.reset();
+		else
+		{
+			mtcSender.reset(new MTCSender(midiSyncDevice->outputDevice));
+		}
+	}
 }
 
-void Sequence::onContainerTriggerTriggered(Trigger * t)
+void Sequence::onContainerTriggerTriggered(Trigger* t)
 {
 	if (t == playTrigger)
 	{
 		if (currentTime->floatValue() >= totalTime->floatValue()) currentTime->setValue(0); //if reached the end when hit play, go to 0
 		isPlaying->setValue(true);
-	} else if(t == stopTrigger)
+	}
+	else if (t == stopTrigger)
 	{
 		isPlaying->setValue(false);
 		currentTime->setValue(0);
-	} else if (t == pauseTrigger)
+		mtcSender->stop();
+	}
+	else if (t == pauseTrigger)
 	{
 		isPlaying->setValue(false);
-	} else if (t == finishTrigger)
+	}
+	else if (t == finishTrigger)
 	{
 		isPlaying->setValue(false);
-	} else if (t == togglePlayTrigger)
+	}
+	else if (t == togglePlayTrigger)
 	{
 		if (isPlaying->boolValue()) pauseTrigger->trigger();
 		else playTrigger->trigger();
 
-	} else if (t == prevCue)
+	}
+	else if (t == prevCue)
 	{
 		setCurrentTime(cueManager->getPrevCueForTime(currentTime->floatValue(), 1));
-	} else if (t == nextCue)
+	}
+	else if (t == nextCue)
 	{
 		setCurrentTime(cueManager->getNextCueForTime(currentTime->floatValue()));
 	}
 }
 
-void Sequence::onExternalParameterValueChanged(Parameter * p)
+void Sequence::onExternalParameterValueChanged(Parameter* p)
 {
-	if(masterAudioModule != nullptr && p == masterAudioModule->enabled) sequenceListeners.call(&SequenceListener::sequenceMasterAudioModuleChanged, this);
+	if (masterAudioModule != nullptr && p == masterAudioModule->enabled) sequenceListeners.call(&SequenceListener::sequenceMasterAudioModuleChanged, this);
 }
 
 void Sequence::hiResTimerCallback()
@@ -282,13 +316,13 @@ void Sequence::hiResTimerCallback()
 	if (!isPlaying->boolValue()) return;
 
 	double targetTime = 0;
-    
-    //DBG("Hi res callback here");
-    
-    if (timeIsDrivenByAudio())
+
+	//DBG("Hi res callback here");
+
+	if (timeIsDrivenByAudio())
 	{
 		targetTime = hiResAudioTime;
-        currentTime->setValue(hiResAudioTime);
+		currentTime->setValue(hiResAudioTime);
 	}
 	else
 	{
@@ -325,16 +359,16 @@ void Sequence::endLoadFile()
 }
 
 
-void Sequence::audioDeviceIOCallback(const float ** , int , float ** outputChannelData, int numOutputChannels, int numSamples)
+void Sequence::audioDeviceIOCallback(const float**, int, float** outputChannelData, int numOutputChannels, int numSamples)
 {
-	for(int i=0;i<numOutputChannels;i++) FloatVectorOperations::clear(outputChannelData[i], numSamples);
+	for (int i = 0; i < numOutputChannels; i++) FloatVectorOperations::clear(outputChannelData[i], numSamples);
 
 	AudioDeviceManager::AudioDeviceSetup s;
 	masterAudioModule->am.getAudioDeviceSetup(s);
-	if (isPlaying->boolValue()) hiResAudioTime += (numSamples / s.sampleRate)*playSpeed->floatValue();
+	if (isPlaying->boolValue()) hiResAudioTime += (numSamples / s.sampleRate) * playSpeed->floatValue();
 }
 
-void Sequence::audioDeviceAboutToStart(AudioIODevice *)
+void Sequence::audioDeviceAboutToStart(AudioIODevice*)
 {
 }
 

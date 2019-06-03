@@ -231,6 +231,10 @@ void AudioLayer::onControllableFeedbackUpdateInternal(ControllableContainer * cc
 	{
 		updateSelectedOutChannels();
 	}
+	else if (currentClip != nullptr && c == currentClip->enabled)
+	{
+		updateCurrentClip();
+	}
 }
 
 var AudioLayer::getJSONData()
@@ -335,7 +339,6 @@ void AudioLayerProcessor::releaseResources()
 
 void AudioLayerProcessor::processBlock(AudioBuffer<float>& buffer, MidiBuffer & midiMessages)
 {
-	
 	bool noProcess = false;
 
 	WeakReference<AudioLayerClip> currentClip;

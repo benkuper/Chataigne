@@ -21,7 +21,8 @@ class AudioLayerProcessor;
 class AudioLayer :
 	public SequenceLayer,
 	public ModuleManager::Listener,
-    public AudioModule::AudioModuleListener
+    public AudioModule::AudioModuleListener,
+	public AudioLayerClipManager::Listener
 {
 public:
 	AudioLayer(Sequence * sequence, var params);
@@ -29,6 +30,8 @@ public:
 	
 	AudioLayerClipManager clipManager;
 	AudioModule * audioModule;
+
+	SpinLock currentClipLock;
 	WeakReference<AudioLayerClip> currentClip;
 	AudioLayerProcessor * currentProcessor;
 

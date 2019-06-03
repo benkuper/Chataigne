@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.6.1b3"
+<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.6.1b4"
               bundleIdentifier="benkuper.Chataigne" includeBinaryInAppConfig="1"
               jucerVersion="5.4.3" companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
               companyEmail="benjamin@kuperberg.fr" defines="" splashScreenColour="Dark"
@@ -216,6 +216,8 @@
                 file="Source/Common/MIDI/MIDIDeviceParameter.h"/>
           <FILE id="yx6DYy" name="MIDIManager.cpp" compile="1" resource="0" file="Source/Common/MIDI/MIDIManager.cpp"/>
           <FILE id="rVJbQL" name="MIDIManager.h" compile="0" resource="0" file="Source/Common/MIDI/MIDIManager.h"/>
+          <FILE id="lLH5id" name="MTCSender.cpp" compile="1" resource="0" file="Source/Common/MIDI/MTCSender.cpp"/>
+          <FILE id="Y5NAoh" name="MTCSender.h" compile="0" resource="0" file="Source/Common/MIDI/MTCSender.h"/>
         </GROUP>
         <GROUP id="{70631E35-1CB6-82B1-0572-78D8D2F56250}" name="Plugin">
           <FILE id="JHMfXN" name="PluginManager.cpp" compile="1" resource="0"

@@ -23,7 +23,7 @@ public:
 
 	AudioLayerClip * addClipAt(float time);
 
-	AudioLayerClip * getClipAtTime(float time);
+	AudioLayerClip * getClipAtTime(float time, bool includeDisabled = false);
 };
 
 #endif  // AUDIOLAYERCLIPMANAGER_H_INCLUDED
