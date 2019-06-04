@@ -192,7 +192,7 @@ void Sequence::onContainerParameterChangedInternal(Parameter* p)
 		if ((!isPlaying->boolValue() || isSeeking))
 		{
 			if (timeIsDrivenByAudio()) hiResAudioTime = currentTime->floatValue();
-			if (mtcSender != nullptr) mtcSender->setPosition(currentTime->floatValue());
+			if (mtcSender != nullptr) mtcSender->setPosition(currentTime->floatValue(), true);
 
 		}else if (isPlaying->boolValue() && !isSeeking)
 		{
@@ -224,7 +224,7 @@ void Sequence::onContainerParameterChangedInternal(Parameter* p)
 	}
 	else if (p == playSpeed)
 	{
-
+		if (mtcSender != nullptr) mtcSender->setSpeedFactor(playSpeed->floatValue());
 	}
 	else if (p == isPlaying)
 	{
@@ -263,6 +263,7 @@ void Sequence::onContainerParameterChangedInternal(Parameter* p)
 		else
 		{
 			mtcSender.reset(new MTCSender(midiSyncDevice->outputDevice));
+			mtcSender->setSpeedFactor(playSpeed->floatValue());
 		}
 	}
 }

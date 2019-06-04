@@ -5,7 +5,7 @@
 #include "MIDIDevice.h"
 
 class MTCSender : 
-	HighResolutionTimer
+	Thread
 {
 public:
     MTCSender(MIDIOutputDevice* device = nullptr);
@@ -17,6 +17,7 @@ public:
     void pause();
     void stop();
     void setPosition(double position, bool fullFrame = false);
+	void setSpeedFactor(float speed);
 
 private:
 	MIDIOutputDevice* device;
@@ -34,13 +35,20 @@ private:
         HourLSB,
         RateAndHourMSB
     };
-    void hiResTimerCallback() override;
+
+    void run() override;
     int getValue(Piece piece);
 
 	SpinLock lock;
 
-	const int fps = 25;
-	const MidiMessage::SmpteTimecodeType fpsType = MidiMessage::SmpteTimecodeType::fps25;
+	float currentPosition;
+	float speedFactor;
+
+	double frameTime;
+	double lastFrameSendTime;
+
+	const int fps = 30;
+	const MidiMessage::SmpteTimecodeType fpsType = MidiMessage::SmpteTimecodeType::fps30;
 
     Piece m_piece{Piece::FrameLSB};
     int m_quarter{0};

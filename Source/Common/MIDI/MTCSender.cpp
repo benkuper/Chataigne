@@ -4,15 +4,21 @@
 #include <math.h>
 
 MTCSender::MTCSender(MIDIOutputDevice* device) :
-	device(device)
+	Thread("MTC"),
+	device(device),
+	speedFactor(1)
 {
 	// In your constructor, you should add any child components, and
 	// initialise any special settings that your component needs.
 	if (device != nullptr) device->open();
+
+	frameTime = (1000.0 / fps / 4) / speedFactor;
 }
 
 MTCSender::~MTCSender()
 {
+	signalThreadShouldExit();
+	waitForThreadToExit(10);
 }
 
 void MTCSender::setDevice(MIDIOutputDevice * newDevice)
@@ -29,71 +35,96 @@ void MTCSender::setDevice(MIDIOutputDevice * newDevice)
 void MTCSender::start(double position)
 {
 	setPosition(position);
-	startTimer(1000 / fps / 4);
+	startThread();
 }
 
 void MTCSender::pause()
 {
-    if (isTimerRunning())
-        stopTimer();
+	if (isThreadRunning())
+	{
+		signalThreadShouldExit();
+		waitForThreadToExit(10);
+	}
     else
-        startTimer(1000 / fps / 4);
+        startThread();
 }
 
 void MTCSender::stop()
 {
-    stopTimer();
+	signalThreadShouldExit();
+	waitForThreadToExit(10);
 }
 
 void MTCSender::setPosition(double position, bool fullFrame)
 {
-
 	if (device == nullptr) return; 
-	
+
+	double unused;
 	lock.enter();
-	m_frame = fmodf(position, 1)* fps;// static_cast<int>(modf(position, &unused) * 25);
-    m_second = (int)floorf(position) % 60;
-    m_minute = (int)floorf(position / 60) % 60;
-	m_hour = floorf(position / 3600);
-    m_piece = Piece::FrameLSB;
+	m_frame = static_cast<int>(modf(position, &unused) * fps);
+	m_second = static_cast<int>(position) % 60;
+	m_minute = (static_cast<int>(position) / 60) % 60;
+	m_hour = (static_cast<int>(position) / 60 / 60) % 60;
+	m_piece = Piece::FrameLSB;
 	lock.exit();
 
 	if(fullFrame) device->sendFullframeTimecode(m_hour, m_minute, m_second, m_frame, fpsType);
 }
 
-void MTCSender::hiResTimerCallback()
+void MTCSender::setSpeedFactor(float speed)
+{
+	speedFactor = speed;
+	frameTime = (1000.0 / fps / 4) / speedFactor;
+}
+
+void MTCSender::run()
 {
    if (device == nullptr) return;
    
-   lock.enter();
+   double lastFrameTime = Time::getMillisecondCounterHiRes();
 
-    const int value = getValue(m_piece);
-    device->sendQuarterframe(static_cast<int>(m_piece), value);
+   while (!threadShouldExit())
+   {
+	   sleep(1);
 
-    m_piece = static_cast<Piece>((static_cast<int>(m_piece) + 1) % 8);
+	   double t = Time::getMillisecondCounterHiRes();
+	   if (t < lastFrameTime + frameTime) continue;
 
-    if (++m_quarter >= 4)
-    {
-        m_quarter = 0;
-        if (++m_frame >= fps)
-        {
-            m_frame = 0;
-            if (++m_second >= 60)
-            {
-                m_second = 0;
-                if (++m_minute >= 60)
-                {
-                    m_minute = 0;
-                    if (++m_hour >= 24)
-                    {
-                        m_hour = 0;
-                    }
-                }
-            }
-        }
-    }
+	   lastFrameTime += frameTime;
 
-	lock.exit();
+	   lock.enter();
+
+		const int value = getValue(m_piece);
+		device->sendQuarterframe(static_cast<int>(m_piece), value);
+
+		m_piece = static_cast<Piece>((static_cast<int>(m_piece) + 1) % 8);
+
+		if (++m_quarter >= 4)
+		{
+			m_quarter = 0;
+			if (++m_frame >= fps)
+			{
+				m_frame = 0;
+				if (++m_second >= 60)
+				{
+					m_second = 0;
+					if (++m_minute >= 60)
+					{
+						m_minute = 0;
+						if (++m_hour >= 24)
+						{
+							m_hour = 0;
+						}
+					}
+				}
+			}
+		}
+
+		DBG("Send " << m_quarter << ", " << m_frame << ", " << m_second);
+
+		lock.exit();
+   }
+
 }
 
 int MTCSender::getValue(Piece piece)
