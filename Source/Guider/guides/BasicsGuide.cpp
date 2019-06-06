@@ -29,11 +29,19 @@ BasicsGuide::BasicsGuide() :
 
 	if(ModuleManager::getInstanceWithoutCreating() != nullptr) ModuleManager::getInstance()->addAsyncManagerListener(this);
 
+	ShapeShifterManager::getInstance()->loadDefaultLayoutFile();
+
 	mmui = dynamic_cast<ModuleManagerUI *>(ShapeShifterManager::getInstance()->getContentForName("Modules")->contentComponent);
 	smui = dynamic_cast<StateMachineView *>(ShapeShifterManager::getInstance()->getContentForName("State Machine")->contentComponent);
-	smui->addManagerUIListener(this);
-	inspector = &dynamic_cast<InspectorUI *>(ShapeShifterManager::getInstance()->getContentForName("Inspector")->contentComponent)->inspector;
-	inspector->addInspectorListener(this);
+	if(smui != nullptr) smui->addManagerUIListener(this);
+	
+	InspectorUI* inspectorUI = dynamic_cast<InspectorUI*>(ShapeShifterManager::getInstance()->getContentForName("Inspector")->contentComponent);
+
+	if (inspectorUI != nullptr)
+	{
+		inspector = &inspectorUI->inspector;
+		inspector->addInspectorListener(this);
+	}
 }
 
 BasicsGuide::~BasicsGuide()
@@ -62,6 +70,8 @@ void BasicsGuide::clear()
 
 void BasicsGuide::handleStep(int step)
 {
+	if (mmui == nullptr || smui == nullptr || inspector == nullptr) return;
+
 	switch (step)
 	{
 	case AUDIO_MODULE:
