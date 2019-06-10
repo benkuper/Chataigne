@@ -207,7 +207,7 @@ void SerialReadThread::run()
 
 	while (!threadShouldExit())
 	{
-		sleep(10); //100fps
+		sleep(2); //500fps
 
 		if (port == nullptr) return;
 		if (!port->isOpen()) return;
@@ -223,13 +223,11 @@ void SerialReadThread::run()
 
 			case SerialDevice::PortMode::LINES:
 			{
-
-				std::string line = port->port->readline();
-				if (line.size() > 0)
+				while (port->port->available())
 				{
-					serialThreadListeners.call(&SerialThreadListener::dataReceived, var(line));
+					std::string line = port->port->readline();
+					if(line.size() > 0) serialThreadListeners.call(&SerialThreadListener::dataReceived, var(line));
 				}
-
 			}
 			break;
 
