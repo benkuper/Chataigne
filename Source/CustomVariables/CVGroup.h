@@ -10,10 +10,14 @@
 
 #pragma once
 
-#include "Preset/CVPresetManager.h"
+#include "Preset/Morpher/Morpher.h"
+
+class CVPreset;
+class CVPresetManager;
 
 class CVGroup :
-	public BaseItem
+	public BaseItem,
+	public Morpher::MorpherListener
 {
 public:
 	CVGroup(const String &name = "Group");
@@ -26,14 +30,17 @@ public:
 	Point2DParameter * targetPosition;
 
 	GenericControllableManager values;
-	CVPresetManager pm;
 
+	std::unique_ptr<CVPresetManager> pm;
+	std::unique_ptr<Morpher> morpher;
 	
 	void setValuesToPreset(CVPreset * preset);
 	void lerpPresets(CVPreset * p1, CVPreset * p2, float value);
 
 	void computeValues();
 	Array<float> getNormalizedPresetWeights();
+
+	void weightsUpdated() override;
 
 	void onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c) override;
 

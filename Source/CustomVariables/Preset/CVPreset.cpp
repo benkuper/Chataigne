@@ -13,26 +13,22 @@
 #include "ui/CVPresetEditor.h"
 
 CVPreset::CVPreset(CVGroup * group) :
-	BaseItem("Preset"),
+	MorphTarget("Preset"),
 	group(group),
 	values("Values",&group->values,false)
 {
 	jassert(group != nullptr);
+
+
 	values.hideEditorHeader = true;
 	values.editorCanBeCollapsed = false;
 
 	isSelectable = false;
 	showInspectorOnSelect = false;
 
-	addChildControllableContainer(&values);
 
-	weight = addFloatParameter("Weight", "Weight of this preset in a non-free control mode", 0, 0, 1);
-	weight->hideInEditor = true;
-	pos = addPoint2DParameter("Position", "Position in a 2D interpolation control mode, such as Voronoi or Gradient Band");
-	pos->hideInEditor = true;
-	color = new ColorParameter("Color", "The color of the handle in a 2D interpolation editor");
-	addParameter(color);
-	color->hideInEditor = true;
+	addChildControllableContainer(&values);
+	
 }
 
 CVPreset::~CVPreset()
@@ -41,14 +37,14 @@ CVPreset::~CVPreset()
 
 var CVPreset::getJSONData()
 {
-	var data = BaseItem::getJSONData();
+	var data = MorphTarget::getJSONData();
 	data.getDynamicObject()->setProperty("values", values.getJSONData());
 	return data;
 }
 
 void CVPreset::loadJSONDataInternal(var data)
 {
-	BaseItem::loadJSONDataInternal(data);
+	MorphTarget::loadJSONDataInternal(data);
 	values.loadJSONData(data.getProperty("values", var()),true);
 }
 
@@ -56,6 +52,9 @@ InspectableEditor * CVPreset::getEditor(bool isRoot)
 {
 	return new CVPresetEditor(this, isRoot);
 }
+
+
+
 
 GenericControllableManagerLinkedContainer::GenericControllableManagerLinkedContainer(const String &name, GenericControllableManager * manager, bool keepValuesInSync) :
 	ControllableContainer(name),

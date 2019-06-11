@@ -1,0 +1,88 @@
+/*
+  ==============================================================================
+
+    Morpher.h
+    Created: 11 Dec 2017 5:00:03pm
+    Author:  Ben
+
+  ==============================================================================
+*/
+
+
+#pragma once
+
+#include "../CVPresetManager.h"
+#include "jc_voronoi.h"
+
+class Morpher :
+	public ControllableContainer,
+	public CVPresetManager::Listener,
+	public Thread
+{
+public:
+
+	Morpher(CVPresetManager * presetManager);
+	virtual ~Morpher();
+
+	CVPresetManager* presetManager;
+
+	//ui
+	StringParameter * bgImagePath;
+	FloatParameter * bgOpacity;
+	FloatParameter * bgScale;
+	FloatParameter * diagramOpacity;
+	BoolParameter * showDebug;
+
+	BoolParameter * useAttraction;
+	IntParameter* attractionUpdateRate;
+	FloatParameter * attractionSpeed;
+	FloatParameter * attractionDecay;
+
+	MorphTarget mainTarget;
+
+	Point<float> attractionDir;
+	int attractionSleepMS;
+
+	enum BlendMode { VORONOI, GRADIENT_BAND };
+	BlendMode blendMode;
+
+	enum AttractionMode { SIMPLE, PHYSICS };
+	EnumParameter * attractionMode;
+
+	Trigger * addTargetAtCurrentPosition;
+
+	Array<Point<float>> getNormalizedTargetPoints();
+	CVPreset * getEnabledTargetAtIndex(int index);
+
+	std::unique_ptr<jcv_diagram> diagram;
+
+	//Voronoi
+	void computeZones();
+	int getSiteIndexForPoint(Point<float> p);
+
+	void computeWeights();
+
+	bool checkSitesAreNeighbours(jcv_site * s1, jcv_site * s2);
+
+	void onContainerParameterChanged(Parameter* p) override;
+	void onControllableFeedbackUpdate(ControllableContainer * cc, Controllable* c) override;
+	void onContainerTriggerTriggered(Trigger* t) override;
+	void onExternalParameterValueChanged(Parameter* p) override;
+
+	void itemAdded(CVPreset *) override;
+	void itemRemoved(CVPreset*) override;
+
+	void run() override;
+
+	class MorpherListener
+	{
+	public:
+		/** Destructor. */
+		virtual ~MorpherListener() {}
+		virtual void weightsUpdated() {}
+	};
+
+	ListenerList<MorpherListener> morpherListeners;
+	void addMorpherListener(MorpherListener* newListener) { morpherListeners.add(newListener); }
+	void removeMorpherListener(MorpherListener* listener) { morpherListeners.remove(listener); }
+};

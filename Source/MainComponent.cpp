@@ -14,6 +14,7 @@
 #include "StateMachine/ui/StateManagerUI.h"
 #include "TimeMachine/ui/SequenceManagerUI.h"
 #include "CustomVariables/ui/CVGroupManagerUI.h"
+#include "CustomVariables/Preset/Morpher/ui/MorpherViewUI.h"
 #include "Common/Command/Template/ui/CommandTemplateManagerUI.h"
 
 String getAppVersion();
@@ -36,6 +37,7 @@ void MainContentComponent::init()
 	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Modules", &ModuleManagerUI::create));
 
 	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Custom Variables", &CVGroupManagerUI::create));
+	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Morpher", &MorpherPanel::create));
 
 	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Sequences", &SequenceManagerUI::create));
 	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Sequence Editor", &TimeMachineView::create));

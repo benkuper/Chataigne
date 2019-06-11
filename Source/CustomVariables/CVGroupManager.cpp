@@ -10,6 +10,7 @@
 
 #include "CVGroupManager.h"
 #include "Module/modules/customvariables/CustomVariablesModule.h"
+#include "Preset/CVPresetManager.h"
 
 juce_ImplementSingleton(CVGroupManager)
 
@@ -88,11 +89,11 @@ ControllableContainer * CVGroupManager::showMenuAndGetPreset()
 		CVGroup * g = CVGroupManager::getInstance()->items[i];
 
 		PopupMenu sMenu;
-		int numVariables = g->pm.items.size();
+		int numVariables = g->pm->items.size();
 		for (int j = 0; j < numVariables; j++)
 		{
-			presetRefs.add(g->pm.items[j]);
-			sMenu.addItem(itemID, g->pm.items[j]->niceName);
+			presetRefs.add(g->pm->items[j]);
+			sMenu.addItem(itemID, g->pm->items[j]->niceName);
 			itemID++;
 		}
 

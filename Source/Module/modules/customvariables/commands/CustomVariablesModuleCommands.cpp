@@ -10,6 +10,10 @@
 
 #include "CustomVariablesModuleCommands.h"
 
+#include "../CustomVariablesModule.h"
+#include "CustomVariables/CVGroupManager.h"
+#include "CustomVariables/Preset/CVPresetManager.h"
+
 CVCommand::CVCommand(CustomVariablesModule * _module, CommandContext context, var params) :
 	BaseCommand(_module, context, params),
 	target(nullptr),

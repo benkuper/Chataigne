@@ -11,7 +11,9 @@
 #pragma once
 
 #include "Common/Command/BaseCommand.h"
-#include "../CustomVariablesModule.h"
+
+class CustomVariablesModule;
+class CVGroupManager;
 
 class CVCommand :
 	public BaseCommand

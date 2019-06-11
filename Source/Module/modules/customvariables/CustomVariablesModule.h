@@ -13,6 +13,8 @@
 #include "CustomVariables/CVGroupManager.h"
 #include "../../Module.h"
 
+class GenericControllableManagerLinkedContainer;
+
 class CustomVariablesModule :
 	public Module,
 	public CVGroupManager::Listener

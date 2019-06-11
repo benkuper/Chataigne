@@ -21,6 +21,8 @@ public:
 	~CVPresetEditor();
 
 	std::unique_ptr<FloatSliderUI> weightUI;
+	std::unique_ptr<ColorParameterUI> colorUI;
+	std::unique_ptr<FloatSliderUI> attractionUI;
 
 	CVPreset * preset;
 	

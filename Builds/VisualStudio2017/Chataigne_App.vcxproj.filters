@@ -164,6 +164,12 @@
     <Filter Include="Chataigne\Source\Common">
       <UniqueIdentifier>{89F7165B-D034-6848-834E-0E1C945C6DFD}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Chataigne\Source\CustomVariables\Preset\Morpher\ui">
+      <UniqueIdentifier>{C4C8A509-38B6-B57A-BC01-BC622EEF412A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\CustomVariables\Preset\Morpher">
+      <UniqueIdentifier>{677D586A-8872-4B02-AB32-9C8F6BCB3444}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Chataigne\Source\CustomVariables\Preset\ui">
       <UniqueIdentifier>{DB3D96BF-00EB-8421-D369-8F02731991C9}</UniqueIdentifier>
     </Filter>
@@ -1377,6 +1383,21 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Common\Serial\SerialManager.cpp">
       <Filter>Chataigne\Source\Common\Serial</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\CustomVariables\Preset\Morpher\ui\CVPresetMorphUI.cpp">
+      <Filter>Chataigne\Source\CustomVariables\Preset\Morpher\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\CustomVariables\Preset\Morpher\ui\MorpherViewUI.cpp">
+      <Filter>Chataigne\Source\CustomVariables\Preset\Morpher\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\CustomVariables\Preset\Morpher\ui\MorphTargetUI.cpp">
+      <Filter>Chataigne\Source\CustomVariables\Preset\Morpher\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\CustomVariables\Preset\Morpher\Morpher.cpp">
+      <Filter>Chataigne\Source\CustomVariables\Preset\Morpher</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\CustomVariables\Preset\Morpher\MorphTarget.cpp">
+      <Filter>Chataigne\Source\CustomVariables\Preset\Morpher</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\CustomVariables\Preset\ui\CVPresetEditor.cpp">
       <Filter>Chataigne\Source\CustomVariables\Preset\ui</Filter>
@@ -4736,6 +4757,24 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\Serial\SerialManager.h">
       <Filter>Chataigne\Source\Common\Serial</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\CustomVariables\Preset\Morpher\ui\CVPresetMorphUI.h">
+      <Filter>Chataigne\Source\CustomVariables\Preset\Morpher\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\CustomVariables\Preset\Morpher\ui\MorpherViewUI.h">
+      <Filter>Chataigne\Source\CustomVariables\Preset\Morpher\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\CustomVariables\Preset\Morpher\ui\MorphTargetUI.h">
+      <Filter>Chataigne\Source\CustomVariables\Preset\Morpher\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\CustomVariables\Preset\Morpher\jc_voronoi.h">
+      <Filter>Chataigne\Source\CustomVariables\Preset\Morpher</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\CustomVariables\Preset\Morpher\Morpher.h">
+      <Filter>Chataigne\Source\CustomVariables\Preset\Morpher</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\CustomVariables\Preset\Morpher\MorphTarget.h">
+      <Filter>Chataigne\Source\CustomVariables\Preset\Morpher</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\CustomVariables\Preset\ui\CVPresetEditor.h">
       <Filter>Chataigne\Source\CustomVariables\Preset\ui</Filter>

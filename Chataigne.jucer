@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.6.2b3"
+<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.6.2b4"
               bundleIdentifier="benkuper.Chataigne" includeBinaryInAppConfig="1"
               jucerVersion="5.4.3" companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
               companyEmail="benjamin@kuperberg.fr" defines="" splashScreenColour="Dark"
@@ -474,6 +474,25 @@
       </GROUP>
       <GROUP id="{B7AE4CF6-C109-933F-DE7E-494B9C9E3C1A}" name="CustomVariables">
         <GROUP id="{5F538722-534C-6E5F-A390-C27908706068}" name="Preset">
+          <GROUP id="{7C4600DA-EA87-31A9-C169-F36E4160C336}" name="Morpher">
+            <GROUP id="{32C80DA9-7285-3DA9-4A81-1CFC8EC1FF47}" name="ui">
+              <FILE id="odSdpx" name="CVPresetMorphUI.cpp" compile="1" resource="0"
+                    file="Source/CustomVariables/Preset/Morpher/ui/CVPresetMorphUI.cpp"/>
+              <FILE id="TxHh4R" name="CVPresetMorphUI.h" compile="0" resource="0"
+                    file="Source/CustomVariables/Preset/Morpher/ui/CVPresetMorphUI.h"/>
+              <FILE id="PiOMeC" name="MorpherViewUI.cpp" compile="1" resource="0"
+                    file="Source/CustomVariables/Preset/Morpher/ui/MorpherViewUI.cpp"/>
+              <FILE id="FcwzkW" name="MorpherViewUI.h" compile="0" resource="0" file="Source/CustomVariables/Preset/Morpher/ui/MorpherViewUI.h"/>
+              <FILE id="F5RFMR" name="MorphTargetUI.cpp" compile="1" resource="0"
+                    file="Source/CustomVariables/Preset/Morpher/ui/MorphTargetUI.cpp"/>
+              <FILE id="HrQEd2" name="MorphTargetUI.h" compile="0" resource="0" file="Source/CustomVariables/Preset/Morpher/ui/MorphTargetUI.h"/>
+            </GROUP>
+            <FILE id="dIobVB" name="jc_voronoi.h" compile="0" resource="0" file="Source/CustomVariables/Preset/Morpher/jc_voronoi.h"/>
+            <FILE id="Z1ifun" name="Morpher.cpp" compile="1" resource="0" file="Source/CustomVariables/Preset/Morpher/Morpher.cpp"/>
+            <FILE id="tQysma" name="Morpher.h" compile="0" resource="0" file="Source/CustomVariables/Preset/Morpher/Morpher.h"/>
+            <FILE id="NN9a7f" name="MorphTarget.cpp" compile="1" resource="0" file="Source/CustomVariables/Preset/Morpher/MorphTarget.cpp"/>
+            <FILE id="MXiseT" name="MorphTarget.h" compile="0" resource="0" file="Source/CustomVariables/Preset/Morpher/MorphTarget.h"/>
+          </GROUP>
           <GROUP id="{CBA24D1A-B1C0-255E-3003-E37986E099CE}" name="ui">
             <FILE id="yGVOVX" name="CVPresetEditor.cpp" compile="1" resource="0"
                   file="Source/CustomVariables/Preset/ui/CVPresetEditor.cpp"/>

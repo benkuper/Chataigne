@@ -465,6 +465,26 @@
 			isa = PBXBuildFile;
 			fileRef = FFBCF506733331DD868A68EE;
 		};
+		BDC2F82BAFB691CFD02A57B6 = {
+			isa = PBXBuildFile;
+			fileRef = 64F92362AABC4519953B36C5;
+		};
+		02059C1A5638714F23EAAF02 = {
+			isa = PBXBuildFile;
+			fileRef = 5B9E2B5BB241EBB715F08431;
+		};
+		C4FB6D6C610F153180E9116A = {
+			isa = PBXBuildFile;
+			fileRef = 1FC22E16506F967E05CD4819;
+		};
+		97871CC83F0EFB56A3CF672D = {
+			isa = PBXBuildFile;
+			fileRef = E0DAA85E4ED4F51B9EFB98B8;
+		};
+		A155AAD4FF9201CF44EC7D60 = {
+			isa = PBXBuildFile;
+			fileRef = 7F19D3E7ECD40C602632DC55;
+		};
 		7918A416108FCE47B220B67D = {
 			isa = PBXBuildFile;
 			fileRef = 85D8FFDCE078F33306AB4713;
@@ -1796,6 +1816,13 @@
 			path = ../../Source/TimeMachine/Sequence/Layer/layers/mapping/ui/MappingLayerTimeline.h;
 			sourceTree = "SOURCE_ROOT";
 		};
+		1FC22E16506F967E05CD4819 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = MorphTargetUI.cpp;
+			path = ../../Source/CustomVariables/Preset/Morpher/ui/MorphTargetUI.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		203B23CC8571848A67B12459 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -2496,6 +2523,13 @@
 			path = "../../JuceLibraryCode/include_juce_dsp.mm";
 			sourceTree = "SOURCE_ROOT";
 		};
+		462C8FB6859681D01FC1E7C6 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = MorpherViewUI.h;
+			path = ../../Source/CustomVariables/Preset/Morpher/ui/MorpherViewUI.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		46735792BB7D3BA31D3F594F = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -2839,6 +2873,13 @@
 			path = ../../Source/Common/Processor/Mapping/Filter/MappingFilter.h;
 			sourceTree = "SOURCE_ROOT";
 		};
+		5835F7B7E9A758B2CB9F0DA4 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = CVPresetMorphUI.h;
+			path = ../../Source/CustomVariables/Preset/Morpher/ui/CVPresetMorphUI.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		589D06AF4BF9A0E8EC90AE00 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -2865,6 +2906,13 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = TimeCueUI.h;
 			path = ../../Source/TimeMachine/Sequence/Cue/ui/TimeCueUI.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		5B9E2B5BB241EBB715F08431 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = MorpherViewUI.cpp;
+			path = ../../Source/CustomVariables/Preset/Morpher/ui/MorpherViewUI.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		5BB5895E78590A3C0C655891 = {
@@ -3005,6 +3053,13 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = SequenceLayerTimeline.h;
 			path = ../../Source/TimeMachine/Sequence/Layer/ui/SequenceLayerTimeline.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		64F92362AABC4519953B36C5 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = CVPresetMorphUI.cpp;
+			path = ../../Source/CustomVariables/Preset/Morpher/ui/CVPresetMorphUI.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		66296EADEC35F9C69CE57E31 = {
@@ -3509,6 +3564,13 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = SequenceTimelineNavigationUI.cpp;
 			path = ../../Source/TimeMachine/Sequence/ui/SequenceTimelineNavigationUI.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
+		7F19D3E7ECD40C602632DC55 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = MorphTarget.cpp;
+			path = ../../Source/CustomVariables/Preset/Morpher/MorphTarget.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		7F32C6C606603DFD9E9C0531 = {
@@ -4582,6 +4644,13 @@
 			path = ../../Source/Module/modules/audio/analysis/FFTAnalyzerManager.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
+		BDB99CA1C253489009BCD225 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = Morpher.h;
+			path = ../../Source/CustomVariables/Preset/Morpher/Morpher.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		BE4924D424A41C0A3275F3C4 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -4806,6 +4875,13 @@
 			path = ../../Source/TimeMachine/Sequence/Layer/layers/audio/ui/AudioLayerClipUI.h;
 			sourceTree = "SOURCE_ROOT";
 		};
+		CC32A694BE65152C463DA1F0 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = MorphTargetUI.h;
+			path = ../../Source/CustomVariables/Preset/Morpher/ui/MorphTargetUI.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		CC389765208788865C6C6995 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -4965,6 +5041,13 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = MainComponent.cpp;
 			path = ../../Source/MainComponent.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
+		D2A603FB5BA44C1ECE0916D2 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = MorphTarget.h;
+			path = ../../Source/CustomVariables/Preset/Morpher/MorphTarget.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		D2CBC6B2653375E80180BD6C = {
@@ -5254,6 +5337,13 @@
 			path = ../../Source/Common/Processor/Action/Condition/Comparator/ui/BaseComparatorUI.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
+		E0DAA85E4ED4F51B9EFB98B8 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = Morpher.cpp;
+			path = ../../Source/CustomVariables/Preset/Morpher/Morpher.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		E1DC8CBAF35FAAB742559C6B = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -5469,6 +5559,13 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = TimeColorManagerUI.h;
 			path = ../../Source/TimeMachine/Sequence/Layer/layers/mapping/timecolor/ui/TimeColorManagerUI.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		EAF33109C5A8A991D0758364 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = "jc_voronoi.h";
+			path = "../../Source/CustomVariables/Preset/Morpher/jc_voronoi.h";
 			sourceTree = "SOURCE_ROOT";
 		};
 		EB2F2B9007A710D4B07ABEF8 = {
@@ -6471,6 +6568,32 @@
 			name = Common;
 			sourceTree = "<group>";
 		};
+		1DE4DBE73CD009C2979D6FF4 = {
+			isa = PBXGroup;
+			children = (
+				64F92362AABC4519953B36C5,
+				5835F7B7E9A758B2CB9F0DA4,
+				5B9E2B5BB241EBB715F08431,
+				462C8FB6859681D01FC1E7C6,
+				1FC22E16506F967E05CD4819,
+				CC32A694BE65152C463DA1F0,
+			);
+			name = ui;
+			sourceTree = "<group>";
+		};
+		0A138C210163AD1FE935E211 = {
+			isa = PBXGroup;
+			children = (
+				1DE4DBE73CD009C2979D6FF4,
+				EAF33109C5A8A991D0758364,
+				E0DAA85E4ED4F51B9EFB98B8,
+				BDB99CA1C253489009BCD225,
+				7F19D3E7ECD40C602632DC55,
+				D2A603FB5BA44C1ECE0916D2,
+			);
+			name = Morpher;
+			sourceTree = "<group>";
+		};
 		6522842162717048DD7564F4 = {
 			isa = PBXGroup;
 			children = (
@@ -6483,6 +6606,7 @@
 		5BCBD7C5FB4FF899CECCB276 = {
 			isa = PBXGroup;
 			children = (
+				0A138C210163AD1FE935E211,
 				6522842162717048DD7564F4,
 				771A246AE678B5F6659FB8E7,
 				6FEECB9A5D65350A863900DC,
@@ -7895,7 +8019,7 @@
 					"_DEBUG=1",
 					"DEBUG=1",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
-					"JUCE_APP_VERSION=1.6.2b3",
+					"JUCE_APP_VERSION=1.6.2b4",
 					"JUCE_APP_VERSION_HEX=0x10602",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
@@ -7951,7 +8075,7 @@
 					"_NDEBUG=1",
 					"NDEBUG=1",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
-					"JUCE_APP_VERSION=1.6.2b3",
+					"JUCE_APP_VERSION=1.6.2b4",
 					"JUCE_APP_VERSION_HEX=0x10602",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
@@ -8215,6 +8339,11 @@
 				368B92472DCB538CCCA262BF,
 				FE2B0421DE84A332791F1616,
 				DC698D2A9656DBDE928ADAA0,
+				BDC2F82BAFB691CFD02A57B6,
+				02059C1A5638714F23EAAF02,
+				C4FB6D6C610F153180E9116A,
+				97871CC83F0EFB56A3CF672D,
+				A155AAD4FF9201CF44EC7D60,
 				7918A416108FCE47B220B67D,
 				61B2E6EBD45A5C221EC50071,
 				8CA4C6AB4773781B66A4E0D5,
