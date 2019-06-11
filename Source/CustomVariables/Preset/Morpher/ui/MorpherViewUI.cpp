@@ -434,10 +434,6 @@ void MorpherViewUI::controllableFeedbackUpdateAsync(Controllable* c)
 		if (c == t->viewUIPosition || c == t->targetColor || c == t->enabled) shouldRepaint = true;
 		//
 	}
-	else if (c == morpher->blendMode)
-	{
-		shouldRepaint = true;
-	}
 }
 
 void MorpherViewUI::timerCallback()
