@@ -19,7 +19,6 @@ CustomValuesCommandArgumentManager::CustomValuesCommandArgumentManager(bool _map
 {
 	selectItemWhenCreated = false;
 	editorCanBeCollapsed = false;
-	
 }
 
 CustomValuesCommandArgumentManager::~CustomValuesCommandArgumentManager()
