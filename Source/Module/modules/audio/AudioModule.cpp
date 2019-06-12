@@ -80,7 +80,10 @@ AudioModule::AudioModule(const String & name) :
 	graph.prepareToPlay(currentSampleRate, currentBufferSize);
 
 	//graph.addNode(new AudioProcessorGraph::AudioGraphIOProcessor(AudioProcessorGraph::AudioGraphIOProcessor::audioInputNode), 1);
-	graph.addNode(new AudioProcessorGraph::AudioGraphIOProcessor(AudioProcessorGraph::AudioGraphIOProcessor::audioOutputNode), AudioProcessorGraph::NodeID(2));
+
+	std::unique_ptr<AudioProcessorGraph::AudioGraphIOProcessor> proc(new AudioProcessorGraph::AudioGraphIOProcessor(AudioProcessorGraph::AudioGraphIOProcessor::audioOutputNode));
+	graph.addNode(std::move(proc), AudioProcessorGraph::NodeID(2));
+	
 	player.setProcessor(&graph);
 
 	addChildControllableContainer(&hs);

@@ -90,10 +90,11 @@ void AudioLayer::setAudioModule(AudioModule * newModule)
 	if (audioModule != nullptr)
 	{
         
-		currentProcessor = new AudioLayerProcessor(this);
+		auto proc = std::unique_ptr<AudioLayerProcessor>(new AudioLayerProcessor(this));
+		currentProcessor = proc.get();
 		
 		graphID = AudioProcessorGraph::NodeID(audioModule->uidIncrement++);
-		audioModule->graph.addNode(currentProcessor, graphID);
+		audioModule->graph.addNode(std::move(proc), graphID);
 		
 		int numChannels = audioModule->graph.getMainBusNumOutputChannels();
 		AudioChannelSet channelSet = audioModule->graph.getChannelLayoutOfBus(false, 0);
@@ -107,7 +108,6 @@ void AudioLayer::setAudioModule(AudioModule * newModule)
 		
 		if (!channelsData.isVoid())
 		{
-			DBG("LOAD data " << JSON::toString(channelsData));
 			channelsCC.loadJSONData(channelsData);
 			channelsData = var();
 		}

@@ -26,10 +26,12 @@ PlayAudioFileCommand::PlayAudioFileCommand(AudioModule * _module, CommandContext
 
 	addChildControllableContainer(&channelsCC);
 
-	currentProcessor = new PlayAudioFileCommandProcessor(this);
+	std::unique_ptr<PlayAudioFileCommandProcessor> proc(new PlayAudioFileCommandProcessor(this));
+	currentProcessor = proc.get();
 
 	graphID = AudioProcessorGraph::NodeID(audioModule->uidIncrement++);
-	audioModule->graph.addNode(currentProcessor, graphID);
+
+	audioModule->graph.addNode(std::move(proc), graphID);
 
 	int numChannels = audioModule->graph.getMainBusNumOutputChannels();
 	AudioChannelSet channelSet = audioModule->graph.getChannelLayoutOfBus(false, 0);
