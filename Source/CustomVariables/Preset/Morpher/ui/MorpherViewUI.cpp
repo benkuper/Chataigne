@@ -268,7 +268,7 @@ void MorpherViewUI::paintBackground(Graphics& g)
 					//float totalDist = edgeDist + edgeNDist;
 
 
-					float minOtherEdgeDist = (float)INT_MAX;
+					float minOtherEdgeDist = (float)INT32_MAX;
 					jcv_graphedge* minEdge = nullptr;
 					int minEdgeIndex = -1;
 

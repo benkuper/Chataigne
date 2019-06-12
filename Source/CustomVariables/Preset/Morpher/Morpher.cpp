@@ -163,7 +163,7 @@ void Morpher::computeWeights()
 		CVPreset* mt = getEnabledTargetAtIndex(s.index);
 		float d = mp.getDistanceFrom(Point<float>(s.p.x, s.p.y));
 
-		float mw = (float)INT_MAX;
+		float mw = (float)INT32_MAX;
 		if (d != 0) mw = 1.0f / d;
 		rawWeights.set(mt, mw);
 		totalRawWeight += mw;
@@ -218,7 +218,7 @@ void Morpher::computeWeights()
 			float totalDist = edgeDist + edgeNDist;
 
 
-			float minOtherEdgeDist = (float)INT_MAX;
+			float minOtherEdgeDist = (float)INT32_MAX;
 			jcv_graphedge* minEdge = nullptr;
 
 			for (int j = 0; j < edges.size(); j++)
