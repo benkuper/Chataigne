@@ -76,6 +76,7 @@ void TCPModule::sendMessageInternal(const String & message)
 	if (numBytes == -1)
 	{
 		NLOGERROR(niceName, "Error sending message");
+		senderIsConnected->setValue(false);
 	}
 }
 
@@ -85,6 +86,7 @@ void TCPModule::sendBytesInternal(Array<uint8> data)
 	if (numBytes == -1)
 	{
 		NLOGERROR(niceName, "Error sending data");
+		senderIsConnected->setValue(false);
 	}
 }
 
@@ -92,6 +94,7 @@ Array<uint8> TCPModule::readBytes()
 {
 	uint8 bytes[255];
 	int numRead = sender.read(bytes, 255, false);
+	DBG("Num read : " << numRead);
 	return Array<uint8>(bytes, numRead);
 }
 
