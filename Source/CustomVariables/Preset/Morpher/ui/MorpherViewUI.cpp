@@ -315,7 +315,7 @@ void MorpherViewUI::paintBackground(Graphics& g)
 			Point<float> tp = getPosInView(mtp + morpher->attractionDir);
 			g.setColour(Colours::yellow);
 			g.drawLine(mp.x, mp.y, tp.x, tp.y);
-			g.fillEllipse(tp.x - 5, tp.y - 5, 10, 10);
+			//g.fillEllipse(tp.x - 5, tp.y - 5, 10, 10);
 		}
 	}
 

@@ -23,7 +23,8 @@ MorphTarget::MorphTarget(StringRef name) :
 	attraction->hideInEditor = true;
 
 	Random r(Time::getApproximateMillisecondCounter());
-	targetColor = addColorParameter("Color", "The color of the handle in a 2D interpolation editor", Colour::fromHSV(r.nextFloat(), 1, 1, 1));
+	targetColor = addColorParameter("Color", "The color of the handle in a 2D interpolation editor", Colours::black);
+	targetColor->setColor(Colour::fromHSV(r.nextFloat(), 1, 1, 1));
 	targetColor->hideInEditor = true;
 }
 

@@ -25,7 +25,7 @@ void CVPresetMorphUI::paint(Graphics& g)
 {
 	Colour c = item->targetColor->getColor();
 	if (isMouseOverOrDragging()) c = c.brighter();
-
+	
 	Rectangle<float> bounds = getLocalBounds().toFloat().reduced(2);
 
 	g.setColour(c.withMultipliedAlpha(.5f));
@@ -37,9 +37,8 @@ void CVPresetMorphUI::paint(Graphics& g)
 	g.setColour(HIGHLIGHT_COLOR.withAlpha(.5f));
 	g.drawEllipse((bounds * item->attraction->floatValue()).withCentre(getLocalBounds().toFloat().getCentre()), 1);
 
-	g.setColour(c);
+	g.setColour(item->isSelected?HIGHLIGHT_COLOR:c);
 	g.drawEllipse(bounds, 2);
-
 	
 
 	g.setColour(c.brighter());

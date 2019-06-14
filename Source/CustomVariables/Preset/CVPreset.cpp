@@ -23,7 +23,6 @@ CVPreset::CVPreset(CVGroup * group) :
 	values.hideEditorHeader = true;
 	values.editorCanBeCollapsed = false;
 
-	isSelectable = false;
 	showInspectorOnSelect = false;
 
 

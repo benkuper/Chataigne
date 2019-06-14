@@ -27,6 +27,8 @@ Morpher::Morpher(CVPresetManager* presetManager) :
 	presetManager->addControllableContainerListener(this);
 	presetManager->addBaseManagerListener(this);
 
+	presetManager->showInspectorOnSelect = false;
+
 	mainTarget.canBeDisabled = false;
 	mainTarget.userCanRemove = false;
 	mainTarget.userCanDuplicate = false;
@@ -37,11 +39,11 @@ Morpher::Morpher(CVPresetManager* presetManager) :
 
 	diagram.reset(new jcv_diagram());
 
-	bgImagePath = addStringParameter("Background Path", "", "");
-	bgImagePath->defaultUI = StringParameter::FILE;
+	bgImagePath = addFileParameter("Background Path", "", "");
+	bgImagePath->fileTypeFilter = "*.jpg; *.jpeg; *.png; *.bmp; *.tiff";
 
-	bgScale = addFloatParameter("Background Scale", "", 10, 1, 100);
-	bgOpacity = addFloatParameter("Background Opacity", "", 1);
+	bgScale = addFloatParameter("Background Scale", "", 500,10,2000);
+	bgOpacity = addFloatParameter("Background Opacity", "", 1,0,1);
 	diagramOpacity = addFloatParameter("Diagram Opacity", "Opacity of the Voronoi Diagram", .2f, 0, 1);
 
 	useAttraction = addBoolParameter("Use Attraction", "When enabled, you can add attraction factors to targets and the MainTarget will move automatically", false);
@@ -54,7 +56,6 @@ Morpher::Morpher(CVPresetManager* presetManager) :
 
 	attractionDecay = addFloatParameter("Attraction Decay", "Decay rate of the attraction on each target (1 = empty an attraction of 1 in 1s)", 0, 0, 10, false);
 
-	addTargetAtCurrentPosition = addTrigger("Add Target at Position", "Add a new target at the handle's position with current values");
 	showDebug = addBoolParameter("Show Debug", "Draw debug information on voronoi weights", false);
 }
 
@@ -91,6 +92,8 @@ CVPreset* Morpher::getEnabledTargetAtIndex(int index)
 
 void Morpher::computeZones()
 {
+	voronoiLock.enter();
+
 	Array<Point<float>> points = getNormalizedTargetPoints();
 
 	if (points.size() == 0) return;
@@ -108,6 +111,8 @@ void Morpher::computeZones()
 
 	if (diagram->internal != nullptr && diagram->internal->memctx != nullptr) jcv_diagram_free(diagram.get());
 	jcv_diagram_generate(points.size(), jPoints.getRawDataPointer() , nullptr, diagram.get());
+
+	voronoiLock.exit();
 
 	computeWeights();
 }
@@ -138,6 +143,8 @@ int Morpher::getSiteIndexForPoint(Point<float> p)
 
 void Morpher::computeWeights()
 {
+	if (!voronoiLock.tryEnter()) return;
+
 	switch (blendMode)
 	{
 	case VORONOI:
@@ -277,11 +284,14 @@ void Morpher::computeWeights()
 		break;
 	}
 
+	voronoiLock.exit();
+
 	morpherListeners.call(&MorpherListener::weightsUpdated);
 }
 
 bool Morpher::checkSitesAreNeighbours(jcv_site* s1, jcv_site* s2)
 {
+
 	jcv_graphedge* e = s1->edges;
 	while (e != nullptr)
 	{
@@ -335,21 +345,6 @@ void Morpher::onControllableFeedbackUpdate(ControllableContainer*, Controllable*
 		if (c == cvp->viewUIPosition || c == cvp->enabled) computeZones();
 	}
 }
-
-void Morpher::onContainerTriggerTriggered(Trigger* t)
-{
-	if (t == addTargetAtCurrentPosition)
-	{
-		CVPreset* cvp = presetManager->addItem();
-		cvp->viewUIPosition->setPoint(mainTarget.viewUIPosition->getPoint());
-	}
-}
-
-void Morpher::onExternalParameterValueChanged(Parameter* p)
-{
-
-}
-
 
 void Morpher::run()
 {

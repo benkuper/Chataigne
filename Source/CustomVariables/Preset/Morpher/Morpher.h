@@ -27,7 +27,7 @@ public:
 	CVPresetManager* presetManager;
 
 	//ui
-	StringParameter * bgImagePath;
+	FileParameter * bgImagePath;
 	FloatParameter * bgOpacity;
 	FloatParameter * bgScale;
 	FloatParameter * diagramOpacity;
@@ -49,12 +49,13 @@ public:
 	enum AttractionMode { SIMPLE, PHYSICS };
 	EnumParameter * attractionMode;
 
-	Trigger * addTargetAtCurrentPosition;
 
 	Array<Point<float>> getNormalizedTargetPoints();
 	CVPreset * getEnabledTargetAtIndex(int index);
 
 	std::unique_ptr<jcv_diagram> diagram;
+
+	SpinLock voronoiLock;
 
 	//Voronoi
 	void computeZones();
@@ -66,8 +67,6 @@ public:
 
 	void onContainerParameterChanged(Parameter* p) override;
 	void onControllableFeedbackUpdate(ControllableContainer * cc, Controllable* c) override;
-	void onContainerTriggerTriggered(Trigger* t) override;
-	void onExternalParameterValueChanged(Parameter* p) override;
 
 	void itemAdded(CVPreset *) override;
 	void itemRemoved(CVPreset*) override;

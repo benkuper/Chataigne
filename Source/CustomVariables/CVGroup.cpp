@@ -97,10 +97,11 @@ void CVGroup::computeValues()
 			Parameter * vp = static_cast<Parameter *>(v->controllable);
 			for (auto &p : pm->items)
 			{
-				pValues.add(p->values.getParameterForSource(vp)->value);
+				Parameter* sp = p->values.getParameterForSource(vp);
+				if(sp != nullptr) pValues.add(sp->value);
 			}
 
-			vp->setWeightedValue(pValues, weights);
+			if(pValues.size() == weights.size()) vp->setWeightedValue(pValues, weights);
 		}
 		break;
             
@@ -169,7 +170,7 @@ var CVGroup::getJSONData()
 	data.getDynamicObject()->setProperty("params", params.getJSONData());
 	data.getDynamicObject()->setProperty("variables", values.getJSONData());
 	data.getDynamicObject()->setProperty("presets", pm->getJSONData());
-	data.getDynamicObject()->setProperty("morpher", pm->getJSONData());
+	data.getDynamicObject()->setProperty("morpher", morpher->getJSONData());
 	return data;
 }
 
