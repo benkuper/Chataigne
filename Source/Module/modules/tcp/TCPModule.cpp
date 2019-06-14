@@ -13,10 +13,13 @@
 TCPModule::TCPModule(const String & name, int defaultRemotePort) :
 	NetworkStreamingModule(name,false, true, 0, defaultRemotePort)
 {
+	connectionFeedbackRef = senderIsConnected;
+
 	setupIOConfiguration(true, true);
 	autoAdd->setValue(false);
 	setupSender();
 	startTimerHz(1);
+
 }
 
 TCPModule::~TCPModule()

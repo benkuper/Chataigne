@@ -331,15 +331,27 @@ void StreamingModule::processDataBytes(Array<uint8_t> data)
 
 void StreamingModule::sendMessage(const String & message)
 {
-	if (!enabled->boolValue() || !isReadyToSend()) return;
+	if (!enabled->boolValue()) return;
+	if(!isReadyToSend())
+	{
+		if (logOutgoingData->boolValue()) NLOGWARNING(niceName, "Can't send message, TCP is not connected.");
+		return;
+	}
+	
 	sendMessageInternal(message);
 	outActivityTrigger->trigger();
+	
 	if (logOutgoingData->boolValue()) NLOG(niceName, "Sending : " << message);
 }
 
 void StreamingModule::sendBytes(Array<uint8> bytes)
 {
-	if (!enabled->boolValue() || !isReadyToSend()) return;
+	if (!enabled->boolValue()) return;
+	if(!isReadyToSend())
+	{
+		if (logOutgoingData->boolValue()) NLOGWARNING(niceName, "Can't send  data, TCP is not connected.");
+		return;
+	}
 
 	if (streamingType->getValueDataAsEnum<StreamingType>() == COBS)
 	{
