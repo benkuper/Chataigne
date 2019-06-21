@@ -13,7 +13,7 @@
 #include "DMXEnttecProDevice.h"
 
 DMXEnttecProDevice::DMXEnttecProDevice() :
-	DMXSerialDevice("DMX Pro",ENTTEC_DMXPRO, true)
+	DMXSerialDevice("DMX Pro", ENTTEC_DMXPRO, true)
 {
 }
 
@@ -23,7 +23,7 @@ DMXEnttecProDevice::~DMXEnttecProDevice()
 
 void DMXEnttecProDevice::setPortConfig()
 {
-	dmxPort->port->setBaudrate(38400);
+	dmxPort->port->setBaudrate(115200);
 	dmxPort->port->setBytesize(serial::eightbits);
 	dmxPort->port->setStopbits(serial::stopbits_one);
 	dmxPort->port->setParity(serial::parity_none);
@@ -40,23 +40,28 @@ void DMXEnttecProDevice::setPortConfig()
 
 void DMXEnttecProDevice::sendDMXValuesSerialInternal()
 {
-	//DBG("Send DMX Data " << (int)sendHeaderData[0] << ", " << (int)sendHeaderData[1]);
-	
+
 	dmxPort->port->write(sendHeaderData, 5);
 	dmxPort->port->write(dmxDataOut, 512);
 	dmxPort->port->write(sendFooterData, 1);
+	dmxPort->port->flush();
 
-	dmxPort->port->write(changeAlwaysData, 6); //to avoid blocking the dmxPro on send
-	
+	/*
+	DBG("********");
+	for (int i = 0; i < 5; i++) DBG("Send DMX Header " << i << " : " << (int)sendHeaderData[i]);
+	for (int i = 0; i < 4; i++) DBG("Send DMX Data " << i <<  (int)dmxDataOut[i]);
+	*/
+
+	if(enableReceive->boolValue()) dmxPort->port->write(changeAlwaysData, 6); //to avoid blocking the dmxPro on send
 }
 
 
 
-void DMXEnttecProDevice::serialDataReceived(const var & data)
+void DMXEnttecProDevice::serialDataReceived(const var& data)
 {
 	if (!enableReceive->boolValue()) return;
 
-	serialBuffer.addArray((const uint8_t *)data.getBinaryData()->getData(), (int)data.getBinaryData()->getSize());
+	serialBuffer.addArray((const uint8_t*)data.getBinaryData()->getData(), (int)data.getBinaryData()->getSize());
 
 	int endIndex = 0;
 	Array<uint8> packet = getDMXPacket(serialBuffer, endIndex);
@@ -67,9 +72,9 @@ void DMXEnttecProDevice::serialDataReceived(const var & data)
 		packet = getDMXPacket(serialBuffer, endIndex);
 	}
 }
-		
 
-Array<uint8> DMXEnttecProDevice::getDMXPacket(Array<uint8> bytes, int &endIndex)
+
+Array<uint8> DMXEnttecProDevice::getDMXPacket(Array<uint8> bytes, int& endIndex)
 {
 
 	if (bytes.size() < DMXPRO_HEADER_LENGTH + 1) return Array<uint8>(); //header + message_end 
@@ -77,14 +82,14 @@ Array<uint8> DMXEnttecProDevice::getDMXPacket(Array<uint8> bytes, int &endIndex)
 
 	for (int i = 0; i < numBytes; i++)
 	{
-		
+
 		if (bytes[i] == DMXPRO_START_MESSAGE)
 		{
-			int length = (int)bytes[i+2] + ((int)bytes[i+3] << 8);
+			int length = (int)bytes[i + 2] + ((int)bytes[i + 3] << 8);
 			if (bytes.size() - i < DMXPRO_HEADER_LENGTH + length) continue;
 			endIndex = i + DMXPRO_HEADER_LENGTH + length;
 
-			
+
 			//DBG("Checking endIndex should be " << endIndex << " / " << DMXPRO_END_MESSAGE);
 			//for (int i = 0; i < numBytes; i++) DBG(" > " << bytes[i]);
 
@@ -138,7 +143,7 @@ void DMXEnttecProDevice::processDMXPacket(Array<uint8> bytes)
 void DMXEnttecProDevice::readDMXPacket(Array<uint8> bytes, int expectedLength)
 {
 	//expected length includes DMX_START_CODE and DMX_END_CODE
-	if(expectedLength > DMXPRO_CHANNEL_COUNT + 2)
+	if (expectedLength > DMXPRO_CHANNEL_COUNT + 2)
 	{
 		LOGWARNING("Bad DMX Length : " << expectedLength);
 		return;
@@ -156,9 +161,9 @@ void DMXEnttecProDevice::readDMXPacket(Array<uint8> bytes, int expectedLength)
 		return;
 	}
 
-	for (int i = 0; i < expectedLength-1; i++)
+	for (int i = 0; i < expectedLength - 1; i++)
 	{
-		setDMXValueIn(i, bytes[DMXPRO_HEADER_LENGTH+i+1]);
+		setDMXValueIn(i, bytes[DMXPRO_HEADER_LENGTH + i + 1]);
 	}
 }
 
