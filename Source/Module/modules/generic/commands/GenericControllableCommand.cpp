@@ -42,8 +42,6 @@ void GenericControllableCommand::setValueParameter(Parameter * p)
 
 	if (value != nullptr)
 	{
-		
-		value->setRange(tp->minimumValue, tp->maximumValue);
 		addTargetMappingParameterAt(value, 0);
 		addParameter(p);
 	}
@@ -83,7 +81,7 @@ void GenericControllableCommand::onContainerParameterChanged(Parameter * p)
 				if (target->target->type == Controllable::TRIGGER) setValueParameter(nullptr);
 				else
 				{
-					Controllable * c = ControllableFactory::createControllable(target->target->getTypeString());
+					Controllable * c = ControllableFactory::createParameterFrom(target->target);
 					if (c == nullptr)
 					{
 						DBG("Should not be null here");
