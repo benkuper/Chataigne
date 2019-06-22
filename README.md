@@ -75,14 +75,14 @@ Raspberry Pi (3B):  [![Build Status](https://travis-matrix-badges.herokuapp.com/
 
 This list contains all the references to projects and libraries that Chataigne uses, either as an external libraries, or merged with and modified for Chataigne's source code.
 
-JUCE : https://www.juce.com
-Serial Library : https://github.com/wjwwood/serial
-MIDI Timecode, from MStarPlayer : https://github.com/ServiusHack/MStarPlayer
-Wiimote library Wiiuse : https://github.com/wiiuse/wiiuse
-Joycon library : https://github.com/CTCaer/joytime-core
-Zeroconf library Servus : https://github.com/HBPVIS/Servus
-Libartnet : https://github.com/OpenLightingProject/libartnet
-Joystick Library SDL : https://www.libsdl.org/
+- JUCE : https://www.juce.com
+- Serial Library : https://github.com/wjwwood/serial
+- MIDI Timecode, from MStarPlayer : https://github.com/ServiusHack/MStarPlayer
+- Wiimote library Wiiuse : https://github.com/wiiuse/wiiuse
+- Joycon library : https://github.com/CTCaer/joytime-core
+- Zeroconf library Servus : https://github.com/HBPVIS/Servus
+- Libartnet : https://github.com/OpenLightingProject/libartnet
+- Joystick Library SDL : https://www.libsdl.org/
 
 ## Perhaps the most important
 
