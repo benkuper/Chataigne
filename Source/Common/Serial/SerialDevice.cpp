@@ -168,7 +168,16 @@ int SerialDevice::writeString(String message, bool endLine)
 int SerialDevice::writeBytes(Array<uint8_t> data)
 {
 #if SERIALSUPPORT
-	return (int)port->write(data.getRawDataPointer(), data.size());
+	try
+	{
+		int result = (int)port->write(data.getRawDataPointer(), data.size());
+		return result;
+	}
+	catch (std::exception e)
+	{
+		NLOGERROR("Serial", "Error writing to serial : " << e.what());
+		return 0;
+	}
 #else
 	return 0;
 #endif

@@ -81,10 +81,13 @@ void StreamingModule::buildMessageStructureOptions()
 	}
 }
 
-void StreamingModule::processDataLine(const String & message)
+void StreamingModule::processDataLine(const String & msg)
 {
 	if (!enabled->boolValue()) return;
-	if (logIncomingData->boolValue()) NLOG(niceName, "Message received : " + message);
+	if (logIncomingData->boolValue()) NLOG(niceName, "Message received : " + msg);
+	
+	const String message = msg.removeCharacters("\r\n");
+	if (message.isEmpty()) return;
 
 	inActivityTrigger->trigger();
 
