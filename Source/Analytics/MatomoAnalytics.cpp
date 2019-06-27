@@ -1,21 +1,21 @@
 /*
   ==============================================================================
 
-    MatamoAnalytics.cpp
+    MatomoAnalytics.cpp
     Created: 29 May 2019 2:43:04am
     Author:  bkupe
 
   ==============================================================================
 */
 
-#include "MatamoAnalytics.h"
+#include "MatomoAnalytics.h"
 
-juce_ImplementSingleton(MatamoAnalytics)
+juce_ImplementSingleton(MatomoAnalytics)
 
 
 String getAppVersion();
 
-MatamoAnalytics::MatamoAnalytics() :
+MatomoAnalytics::MatomoAnalytics() :
 	Thread("Matamo"),
 	actionIsPing(false)
 {
@@ -50,29 +50,32 @@ MatamoAnalytics::MatamoAnalytics() :
 		.withParameter("_cvar", "{\"1\":[\"User name\",\"" + name + "\"], \"2\":[\"App Version\",\"" + getAppVersion() + "\"]}");
 }
 
-MatamoAnalytics::~MatamoAnalytics()
+MatomoAnalytics::~MatomoAnalytics()
 {
 	signalThreadShouldExit();
 	waitForThreadToExit(2000);
 }
 
-void MatamoAnalytics::log(AnalyticsAction action)
+void MatomoAnalytics::log(AnalyticsAction action, StringPairArray options)
 {
-	log(actionNames[action]);
 	actionIsPing = action == STOP;
+	log(actionNames[action]);
 }
 
-void MatamoAnalytics::log(StringRef actionName)
+void MatomoAnalytics::log(StringRef actionName, StringPairArray options)
 {
 	actionToLog = actionName;
+	optionsToLog = options;
 	startThread();
 }
 
-void MatamoAnalytics::run()
+void MatomoAnalytics::run()
 {
 	
 	URL url = baseURL.withParameter("action_name", actionToLog);
 	if (actionIsPing) url = url.withParameter("ping", "1");
+
+	url = url.withParameters(optionsToLog);
 
 	DBG("Send to analytics " << url.toString(false) << ", params :\n > " << url.getParameterValues().joinIntoString("\n > "));
 	StringPairArray responseHeaders;

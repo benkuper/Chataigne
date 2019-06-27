@@ -97,9 +97,9 @@
 			isa = PBXBuildFile;
 			fileRef = E760AE782F147B81967ED0B3;
 		};
-		5E974F0C555238191CAFDDF0 = {
+		2880570A24D66CE182245D76 = {
 			isa = PBXBuildFile;
-			fileRef = B9589C3CAD881FFF1CCB4A74;
+			fileRef = 0DBBCDD0D6FD50D57235BDA4;
 		};
 		6648A28A780225272E677EAE = {
 			isa = PBXBuildFile;
@@ -1576,6 +1576,13 @@
 			lastKnownFileType = image.png;
 			name = stop.png;
 			path = ../../Resources/stop.png;
+			sourceTree = "SOURCE_ROOT";
+		};
+		0DBBCDD0D6FD50D57235BDA4 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = MatomoAnalytics.cpp;
+			path = ../../Source/Analytics/MatomoAnalytics.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		0DD04E60A5E6174F61924D04 = {
@@ -4042,6 +4049,13 @@
 			path = "../../JuceLibraryCode/include_juce_video.mm";
 			sourceTree = "SOURCE_ROOT";
 		};
+		9EC8062B2F72CD178C678BC5 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = MatomoAnalytics.h;
+			path = ../../Source/Analytics/MatomoAnalytics.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		9FA5201B24DEF339459A4BFA = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -4574,13 +4588,6 @@
 			path = ../../Source/Common/Command/ui/BaseCommandHandlerEditor.h;
 			sourceTree = "SOURCE_ROOT";
 		};
-		B9589C3CAD881FFF1CCB4A74 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = MatamoAnalytics.cpp;
-			path = ../../Source/Analytics/MatamoAnalytics.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
 		B99392EFF004B85380C17689 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -4817,13 +4824,6 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = StateModule.cpp;
 			path = ../../Source/Module/modules/state/StateModule.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
-		C82F976EC75EC99CA6DE6D4D = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = MatamoAnalytics.h;
-			path = ../../Source/Analytics/MatamoAnalytics.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		C86A957BC44904609CAE5C07 = {
@@ -6000,8 +6000,8 @@
 			isa = PBXGroup;
 			children = (
 				56602E9E49E703AAD79A1ADF,
-				B9589C3CAD881FFF1CCB4A74,
-				C82F976EC75EC99CA6DE6D4D,
+				0DBBCDD0D6FD50D57235BDA4,
+				9EC8062B2F72CD178C678BC5,
 			);
 			name = Analytics;
 			sourceTree = "<group>";
@@ -8019,8 +8019,8 @@
 					"_DEBUG=1",
 					"DEBUG=1",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
-					"JUCE_APP_VERSION=1.6.2",
-					"JUCE_APP_VERSION_HEX=0x10602",
+					"JUCE_APP_VERSION=1.6.3b1",
+					"JUCE_APP_VERSION_HEX=0x10603",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
 					"JucePlugin_Build_AU=0",
@@ -8075,8 +8075,8 @@
 					"_NDEBUG=1",
 					"NDEBUG=1",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
-					"JUCE_APP_VERSION=1.6.2",
-					"JUCE_APP_VERSION_HEX=0x10602",
+					"JUCE_APP_VERSION=1.6.3b1",
+					"JUCE_APP_VERSION_HEX=0x10603",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
 					"JucePlugin_Build_AU=0",
@@ -8247,7 +8247,7 @@
 				EF06D68C5D80A560E01D5210,
 				A9F417BBCFA13B702734002D,
 				A377485D00E6BD3B63525CE2,
-				5E974F0C555238191CAFDDF0,
+				2880570A24D66CE182245D76,
 				6648A28A780225272E677EAE,
 				43E1EC2D9919CC1742754AA5,
 				D5BA72E6B1F43C42CFDDCE35,

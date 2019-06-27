@@ -36,13 +36,18 @@ void ChataigneApplication::afterInit()
 	{
 		DBG("Send analytics");
 		
-		MatamoAnalytics::getInstance()->log(MatamoAnalytics::START);
-		
 		Analytics::getInstance()->setUserId(SystemStats::getFullUserName());
-
-		// Add any analytics destinations we want to use to the Analytics singleton.
 		Analytics::getInstance()->addDestination(new GoogleAnalyticsDestination());
 		Analytics::getInstance()->logEvent("startup", {});
+
+		bool crashFound = CrashDumpUploader::getInstance()->crashFound;
+		
+		StringPairArray options;
+		
+		if (crashFound) MatomoAnalytics::getInstance()->log(MatomoAnalytics::CRASH); 
+		else options.set("new_visit", "1");
+
+		MatomoAnalytics::getInstance()->log(MatomoAnalytics::START, options);
 	}
 
 }
@@ -53,10 +58,10 @@ void ChataigneApplication::shutdown()
 
 	if (enableSendAnalytics->boolValue())
 	{
-		MatamoAnalytics::getInstance()->log(MatamoAnalytics::STOP);
+		MatomoAnalytics::getInstance()->log(MatomoAnalytics::STOP);
 		Analytics::getInstance()->logEvent("shutdown", {});
 	}
 
-	if(MatamoAnalytics::getInstanceWithoutCreating() != nullptr) MatamoAnalytics::deleteInstance();
+	if(MatomoAnalytics::getInstanceWithoutCreating() != nullptr) MatomoAnalytics::deleteInstance();
 	AppUpdater::deleteInstance();
 }

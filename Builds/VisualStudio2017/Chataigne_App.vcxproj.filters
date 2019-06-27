@@ -1108,7 +1108,7 @@
     <ClCompile Include="..\..\Source\Guider\Guider.cpp">
       <Filter>Chataigne\Source\Guider</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\Analytics\MatamoAnalytics.cpp">
+    <ClCompile Include="..\..\Source\Analytics\MatomoAnalytics.cpp">
       <Filter>Chataigne\Source\Analytics</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Common\Zeroconf\ZeroconfManager.cpp">
@@ -4491,7 +4491,7 @@
     <ClInclude Include="..\..\Source\Analytics\GoogleAnalyticsDestination.h">
       <Filter>Chataigne\Source\Analytics</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\Analytics\MatamoAnalytics.h">
+    <ClInclude Include="..\..\Source\Analytics\MatomoAnalytics.h">
       <Filter>Chataigne\Source\Analytics</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\Zeroconf\ZeroconfManager.h">
