@@ -1342,8 +1342,6 @@
             file="Source/MainComponent.cpp"/>
       <FILE id="ue12z5" name="MainComponentCommands.cpp" compile="1" resource="0"
             file="Source/MainComponentCommands.cpp"/>
-      <FILE id="FIKyBS" name="CrashHandler.cpp" compile="1" resource="0"
-            file="Source/CrashHandler.cpp"/>
     </GROUP>
   </MAINGROUP>
   <EXPORTFORMATS>

@@ -58,12 +58,14 @@ MatomoAnalytics::~MatomoAnalytics()
 
 void MatomoAnalytics::log(AnalyticsAction action, StringPairArray options)
 {
+	waitForThreadToExit(1000);
 	actionIsPing = action == STOP;
 	log(actionNames[action]);
 }
 
 void MatomoAnalytics::log(StringRef actionName, StringPairArray options)
 {
+	waitForThreadToExit(1000);
 	actionToLog = actionName;
 	optionsToLog = options;
 	startThread();
@@ -96,6 +98,7 @@ void MatomoAnalytics::run()
 	{
 		String content = stream->readEntireStreamAsString();
 		DBG("Got analytics data " << content);
+		DBG("Analytics sent : " << actionToLog);
 	}
 	else
 	{

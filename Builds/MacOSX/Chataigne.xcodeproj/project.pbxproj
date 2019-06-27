@@ -1249,10 +1249,6 @@
 			isa = PBXBuildFile;
 			fileRef = A89E9815C9ABE0721FF8CB75;
 		};
-		E3F2670A84F8C3E29851D186 = {
-			isa = PBXBuildFile;
-			fileRef = A4262D690105D3F1D7FB0086;
-		};
 		CCD9A22929C0C3B17DBDECFC = {
 			isa = PBXBuildFile;
 			fileRef = 8E161399DEC1EED4622B6EE6;
@@ -4152,13 +4148,6 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = OSCQueryModuleEditor.h;
 			path = ../../Source/Module/modules/oscquery/generic/ui/OSCQueryModuleEditor.h;
-			sourceTree = "SOURCE_ROOT";
-		};
-		A4262D690105D3F1D7FB0086 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = CrashHandler.cpp;
-			path = ../../Source/CrashHandler.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		A51F40E83109A9D7BFC2FF13 = {
@@ -7881,7 +7870,6 @@
 				A60987F239C18CD85E333A80,
 				D28E5B654C1454E5884A3E69,
 				A89E9815C9ABE0721FF8CB75,
-				A4262D690105D3F1D7FB0086,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -8535,7 +8523,6 @@
 				AA16489D69315BEFB98AFD53,
 				717D84B8FAE1A6D4EEF64DF7,
 				E5BCE37F04545290585BD411,
-				E3F2670A84F8C3E29851D186,
 				CCD9A22929C0C3B17DBDECFC,
 				5041976C53D21B56E8B678C5,
 				4482F1AEF42497B7CD326C97,

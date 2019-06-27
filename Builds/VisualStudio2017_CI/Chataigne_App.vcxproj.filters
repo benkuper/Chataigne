@@ -1972,9 +1972,6 @@
     <ClCompile Include="..\..\Source\MainComponentCommands.cpp">
       <Filter>Chataigne\Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\CrashHandler.cpp">
-      <Filter>Chataigne\Source</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\JUCE\modules\juce_analytics\analytics\juce_Analytics.cpp">
       <Filter>JUCE Modules\juce_analytics\analytics</Filter>
     </ClCompile>

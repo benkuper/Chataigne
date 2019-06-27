@@ -439,7 +439,6 @@
     <ClCompile Include="..\..\Source\Main.cpp"/>
     <ClCompile Include="..\..\Source\MainComponent.cpp"/>
     <ClCompile Include="..\..\Source\MainComponentCommands.cpp"/>
-    <ClCompile Include="..\..\Source\CrashHandler.cpp"/>
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_analytics\analytics\juce_Analytics.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
