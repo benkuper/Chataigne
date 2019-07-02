@@ -122,42 +122,49 @@ void OSCCommand::triggerInternal()
 
 	BaseCommand::triggerInternal();
 
-	OSCMessage m(address->stringValue());
-	
-	for (auto &a : argumentsContainer.controllables)
+	try
 	{
-		if (!a->enabled) continue;
+		OSCMessage m(address->stringValue());
 
-		Parameter * p = static_cast<Parameter *>(a);
-		if (p == nullptr) continue;
-		switch (p->type)
+		for (auto& a : argumentsContainer.controllables)
 		{
-		case Controllable::BOOL: m.addInt32(p->boolValue() ? 1 : 0); break;
-		case Controllable::INT: m.addInt32(p->intValue()); break;
-		case Controllable::FLOAT: m.addFloat32(p->floatValue()); break;
-		case Controllable::STRING: m.addString(p->stringValue()); break;
-		case Controllable::COLOR:
-		{
-			Colour c = ((ColorParameter*)p)->getColor();
-			m.addColour(OSCHelpers::getOSCColour(c));
-		}
-		break;
-		case Controllable::POINT2D:
-			m.addFloat32(((Point2DParameter *)a)->x);
-			m.addFloat32(((Point2DParameter *)a)->y);
-			break;
-		case Controllable::POINT3D:
-			m.addFloat32(((Point3DParameter *)a)->x);
-			m.addFloat32(((Point3DParameter *)a)->y);
-			m.addFloat32(((Point3DParameter *)a)->z);
-			break;
-			
-		default:
-		 //not handle
-		 break;
+			if (!a->enabled) continue;
 
+			Parameter* p = static_cast<Parameter*>(a);
+			if (p == nullptr) continue;
+			switch (p->type)
+			{
+			case Controllable::BOOL: m.addInt32(p->boolValue() ? 1 : 0); break;
+			case Controllable::INT: m.addInt32(p->intValue()); break;
+			case Controllable::FLOAT: m.addFloat32(p->floatValue()); break;
+			case Controllable::STRING: m.addString(p->stringValue()); break;
+			case Controllable::COLOR:
+			{
+				Colour c = ((ColorParameter*)p)->getColor();
+				m.addColour(OSCHelpers::getOSCColour(c));
+			}
+			break;
+			case Controllable::POINT2D:
+				m.addFloat32(((Point2DParameter*)a)->x);
+				m.addFloat32(((Point2DParameter*)a)->y);
+				break;
+			case Controllable::POINT3D:
+				m.addFloat32(((Point3DParameter*)a)->x);
+				m.addFloat32(((Point3DParameter*)a)->y);
+				m.addFloat32(((Point3DParameter*)a)->z);
+				break;
+
+			default:
+				//not handle
+				break;
+
+			}
 		}
+
+		oscModule->sendOSC(m);
 	}
-
-	oscModule->sendOSC(m);
+	catch (OSCFormatError& e)
+	{
+		LOGERROR("Can't send to address " << address->stringValue() << " : " << e.description);
+	}
 }

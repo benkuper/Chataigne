@@ -61,9 +61,18 @@ void GenericOSCQueryModule::sendOSCForControllable(Controllable * c)
 {
 	if (!enabled->boolValue()) return;
 
-	OSCMessage m(c->getControlAddress(&valuesCC));
-	if (c->type != Controllable::TRIGGER) m.addArgument(OSCHelpers::varToArgument(((Parameter *)c)->value));
-	sendOSCMessage(m);
+	String s = c->getControlAddress(&valuesCC);
+	try
+	{
+		OSCMessage m(s);
+		if (c->type != Controllable::TRIGGER) m.addArgument(OSCHelpers::varToArgument(((Parameter *)c)->value));
+		sendOSCMessage(m);
+	}
+	catch (OSCFormatError& e)
+	{
+		NLOGERROR(niceName, "Can't send to address " << s << " : " << e.description);
+	}
+
 }
 
 void GenericOSCQueryModule::syncData()
