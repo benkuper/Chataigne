@@ -1000,29 +1000,43 @@
             <FILE id="JLZs5a" name="HTTPModule.h" compile="0" resource="0" file="Source/Module/modules/http/HTTPModule.h"/>
           </GROUP>
           <GROUP id="{60EE0B8D-6DCD-2F5E-B462-3F4F3DCA4184}" name="tcp">
-            <GROUP id="{FB246D43-D01D-0AD6-DB10-303294A627F9}" name="pjlink">
-              <FILE id="NB0pJT" name="PJLinkModule.cpp" compile="1" resource="0"
-                    file="Source/Module/modules/tcp/pjlink/PJLinkModule.cpp"/>
-              <FILE id="lFlEGK" name="PJLinkModule.h" compile="0" resource="0" file="Source/Module/modules/tcp/pjlink/PJLinkModule.h"/>
+            <GROUP id="{8D7C6264-1681-0666-5410-2523AE1B6FC1}" name="tcpserver">
+              <FILE id="KPXcik" name="TCPServerConnectionManager.cpp" compile="1"
+                    resource="0" file="Source/Module/modules/tcp/tcpserver/TCPServerConnectionManager.cpp"/>
+              <FILE id="WneJRn" name="TCPServerConnectionManager.h" compile="0" resource="0"
+                    file="Source/Module/modules/tcp/tcpserver/TCPServerConnectionManager.h"/>
+              <FILE id="dfI4o7" name="TCPServerModule.cpp" compile="1" resource="0"
+                    file="Source/Module/modules/tcp/tcpserver/TCPServerModule.cpp"/>
+              <FILE id="l0K6Zw" name="TCPServerModule.h" compile="0" resource="0"
+                    file="Source/Module/modules/tcp/tcpserver/TCPServerModule.h"/>
             </GROUP>
-            <GROUP id="{A5846165-A407-545A-856D-4D8DFDA6055D}" name="vlc">
-              <FILE id="zzEPys" name="VLCModule.cpp" compile="1" resource="0" file="Source/Module/modules/tcp/vlc/VLCModule.cpp"/>
-              <FILE id="fhFaRD" name="VLCModule.h" compile="0" resource="0" file="Source/Module/modules/tcp/vlc/VLCModule.h"/>
-            </GROUP>
-            <GROUP id="{4F7005AE-9CD8-F426-EF55-DD62C5A06E36}" name="watchout">
-              <GROUP id="{B9A030BA-4582-23EB-A96F-03AFA7BF577E}" name="commands">
-                <FILE id="tWmM0b" name="WatchoutCommand.cpp" compile="1" resource="0"
-                      file="Source/Module/modules/tcp/watchout/commands/WatchoutCommand.cpp"/>
-                <FILE id="Vka5kM" name="WatchoutCommand.h" compile="0" resource="0"
-                      file="Source/Module/modules/tcp/watchout/commands/WatchoutCommand.h"/>
+            <GROUP id="{EADB0130-532F-2520-BBA3-A72E5A2C0C1E}" name="tcpclient">
+              <GROUP id="{D1DD19AA-A54A-A2C4-74C2-387FA9D7D733}" name="pjlink">
+                <FILE id="GN4KEU" name="PJLinkModule.cpp" compile="1" resource="0"
+                      file="Source/Module/modules/tcp/tcpclient/pjlink/PJLinkModule.cpp"/>
+                <FILE id="WlzAAJ" name="PJLinkModule.h" compile="0" resource="0" file="Source/Module/modules/tcp/tcpclient/pjlink/PJLinkModule.h"/>
               </GROUP>
-              <FILE id="Avh6N9" name="WatchoutModule.cpp" compile="1" resource="0"
-                    file="Source/Module/modules/tcp/watchout/WatchoutModule.cpp"/>
-              <FILE id="Dw8o7I" name="WatchoutModule.h" compile="0" resource="0"
-                    file="Source/Module/modules/tcp/watchout/WatchoutModule.h"/>
+              <GROUP id="{F639EA72-C83B-4D1C-5845-0CAF12167F16}" name="vlc">
+                <FILE id="nZ39cN" name="VLCModule.cpp" compile="1" resource="0" file="Source/Module/modules/tcp/tcpclient/vlc/VLCModule.cpp"/>
+                <FILE id="wOBHSI" name="VLCModule.h" compile="0" resource="0" file="Source/Module/modules/tcp/tcpclient/vlc/VLCModule.h"/>
+              </GROUP>
+              <GROUP id="{9D17EC97-106B-0725-8345-5F980F75F41B}" name="watchout">
+                <GROUP id="{2737ADD7-CED7-52D1-1D60-B63B50947807}" name="commands">
+                  <FILE id="Hxn6iB" name="WatchoutCommand.cpp" compile="1" resource="0"
+                        file="Source/Module/modules/tcp/tcpclient/watchout/commands/WatchoutCommand.cpp"/>
+                  <FILE id="DUVk4w" name="WatchoutCommand.h" compile="0" resource="0"
+                        file="Source/Module/modules/tcp/tcpclient/watchout/commands/WatchoutCommand.h"/>
+                </GROUP>
+                <FILE id="Wo0ptc" name="WatchoutModule.cpp" compile="1" resource="0"
+                      file="Source/Module/modules/tcp/tcpclient/watchout/WatchoutModule.cpp"/>
+                <FILE id="mHtiqP" name="WatchoutModule.h" compile="0" resource="0"
+                      file="Source/Module/modules/tcp/tcpclient/watchout/WatchoutModule.h"/>
+              </GROUP>
+              <FILE id="C2MK5S" name="TCPClientModule.cpp" compile="1" resource="0"
+                    file="Source/Module/modules/tcp/tcpclient/TCPClientModule.cpp"/>
+              <FILE id="F0NvXo" name="TCPClientModule.h" compile="0" resource="0"
+                    file="Source/Module/modules/tcp/tcpclient/TCPClientModule.h"/>
             </GROUP>
-            <FILE id="bEmLRO" name="TCPModule.cpp" compile="1" resource="0" file="Source/Module/modules/tcp/TCPModule.cpp"/>
-            <FILE id="LvrUiO" name="TCPModule.h" compile="0" resource="0" file="Source/Module/modules/tcp/TCPModule.h"/>
           </GROUP>
           <GROUP id="{7D2E89CA-CA8A-BD26-BC58-F2AE92B13C90}" name="udp">
             <FILE id="uUdZAS" name="UDPModule.cpp" compile="1" resource="0" file="Source/Module/modules/udp/UDPModule.cpp"/>

@@ -1,32 +1,31 @@
 /*
   ==============================================================================
 
-    TCPModule.cpp
+    TCPClientModule.cpp
     Created: 21 Oct 2017 5:04:54pm
     Author:  Ben
 
   ==============================================================================
 */
 
-#include "TCPModule.h"
+#include "TCPClientModule.h"
 
-TCPModule::TCPModule(const String & name, int defaultRemotePort) :
+TCPClientModule::TCPClientModule(const String & name, int defaultRemotePort) :
 	NetworkStreamingModule(name,false, true, 0, defaultRemotePort)
 {
 	connectionFeedbackRef = senderIsConnected;
 
 	setupIOConfiguration(true, true);
-	autoAdd->setValue(false);
 	setupSender();
 	startTimerHz(1);
 
 }
 
-TCPModule::~TCPModule()
+TCPClientModule::~TCPClientModule()
 {
 }
 
-void TCPModule::setupSender()
+void TCPClientModule::setupSender()
 {
 	clearThread();
 	clearInternal();
@@ -38,7 +37,7 @@ void TCPModule::setupSender()
 	startThread();
 }
 
-void TCPModule::initThread()
+void TCPClientModule::initThread()
 {
 	//if (sender.isConnected()) sender.close();
 
@@ -48,13 +47,13 @@ void TCPModule::initThread()
 	senderIsConnected->setValue(result);
 }
 
-void TCPModule::clearThread()
+void TCPClientModule::clearThread()
 {
 	NetworkStreamingModule::clearThread();
 	if (sender.isConnected()) sender.close();
 }
 
-bool TCPModule::checkReceiverIsReady()
+bool TCPClientModule::checkReceiverIsReady()
 {
 	if (!senderIsConnected->boolValue()) return false;
 	int result = sender.waitUntilReady(true, 100);
@@ -68,12 +67,12 @@ bool TCPModule::checkReceiverIsReady()
 	return result == 1;
 }
 
-bool TCPModule::isReadyToSend()
+bool TCPClientModule::isReadyToSend()
 {
 	return senderIsConnected->boolValue();
 }
 
-void TCPModule::sendMessageInternal(const String & message)
+void TCPClientModule::sendMessageInternal(const String & message)
 {
 	int numBytes = sender.write(message.getCharPointer(), message.length());
 	if (numBytes == -1)
@@ -83,7 +82,7 @@ void TCPModule::sendMessageInternal(const String & message)
 	}
 }
 
-void TCPModule::sendBytesInternal(Array<uint8> data)
+void TCPClientModule::sendBytesInternal(Array<uint8> data)
 {
 	int numBytes = sender.write(data.getRawDataPointer(), data.size());
 	if (numBytes == -1)
@@ -93,20 +92,19 @@ void TCPModule::sendBytesInternal(Array<uint8> data)
 	}
 }
 
-Array<uint8> TCPModule::readBytes()
+Array<uint8> TCPClientModule::readBytes()
 {
-	uint8 bytes[255];
-	int numRead = sender.read(bytes, 255, false);
-	DBG("Num read : " << numRead);
+	uint8 bytes[2048];
+	int numRead = sender.read(bytes, 2048, false);
 	return Array<uint8>(bytes, numRead);
 }
 
-void TCPModule::clearInternal()
+void TCPClientModule::clearInternal()
 {
 	if (sender.isConnected()) sender.close();
 }
 
-void TCPModule::timerCallback()
+void TCPClientModule::timerCallback()
 {
 	if (!sender.isConnected()) senderIsConnected->setValue(false);
 	if(!senderIsConnected->boolValue()) setupSender();

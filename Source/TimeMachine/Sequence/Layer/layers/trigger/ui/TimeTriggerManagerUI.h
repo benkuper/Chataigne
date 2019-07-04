@@ -8,8 +8,7 @@
   ==============================================================================
 */
 
-#ifndef TIMETRIGGERMANAGERUI_H_INCLUDED
-#define TIMETRIGGERMANAGERUI_H_INCLUDED
+#pragma once
 
 #include "../TimeTriggerManager.h"
 #include "TimeTriggerUI.h"
@@ -51,7 +50,3 @@ public:
 	void selectionEnded(Array<Component *> selectedComponents) override;
 	void inspectablesSelectionChanged() override;
 };
-
-
-
-#endif  // TIMETRIGGERMANAGERUI_H_INCLUDED 

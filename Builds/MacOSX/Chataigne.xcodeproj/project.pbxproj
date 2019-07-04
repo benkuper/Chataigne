@@ -925,25 +925,33 @@
 			isa = PBXBuildFile;
 			fileRef = A949F877768B9F4072481556;
 		};
-		33E16DCF5C4801FF0C7CBF6F = {
+		A660EAEA0519A545BF9E6323 = {
 			isa = PBXBuildFile;
-			fileRef = 2BAFF327FC54783886F8620F;
+			fileRef = 2C8F111514373C5BA8A33B7B;
 		};
-		96579460CFE54DB06569F21B = {
+		759B6E09C574DDA33F5CDEFC = {
 			isa = PBXBuildFile;
-			fileRef = 77AC249D29959902828A44C9;
+			fileRef = 4F2E249D01F2B4C825A1629B;
 		};
-		0EE14FF9197B0DC31DA1022E = {
+		C59EAFBF08C2FCB87940EE60 = {
 			isa = PBXBuildFile;
-			fileRef = 5C266BE2A7E0CDCC6500B108;
+			fileRef = 1919D8FF97CC9BF35C683A94;
 		};
-		25FD0DC423819BAF154BC056 = {
+		0E147308A3EB610FBBA8619B = {
 			isa = PBXBuildFile;
-			fileRef = 204D7E4EFCCE5DE79A20294F;
+			fileRef = 57E40F573658E6E60B479A6C;
 		};
-		C86058E8B703C6F5E39A67BF = {
+		31E8F3986C5AC02A1BFBFEDB = {
 			isa = PBXBuildFile;
-			fileRef = 4F3368050FB1C3C249118B7F;
+			fileRef = 35509A411A3E24FE92D2FFAE;
+		};
+		39E2B66DC6E1772B38F0677A = {
+			isa = PBXBuildFile;
+			fileRef = 6FCB47468FB24ECFF51A90D2;
+		};
+		30E97777747F251C9235E38A = {
+			isa = PBXBuildFile;
+			fileRef = 021E427BFA3E8B6BC6AC3D5A;
 		};
 		88CDCEA94B9AE6F3ADF56372 = {
 			isa = PBXBuildFile;
@@ -1385,6 +1393,13 @@
 			path = ../../Source/Common/Processor/Action/Action.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
+		021E427BFA3E8B6BC6AC3D5A = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = TCPClientModule.cpp;
+			path = ../../Source/Module/modules/tcp/tcpclient/TCPClientModule.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		02719A9820DD6EE1547FA8FE = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -1397,13 +1412,6 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = MappingLayerEditor.h;
 			path = ../../Source/TimeMachine/Sequence/Layer/layers/mapping/ui/MappingLayerEditor.h;
-			sourceTree = "SOURCE_ROOT";
-		};
-		03969D7CAD02A21E981930AA = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = WatchoutModule.h;
-			path = ../../Source/Module/modules/tcp/watchout/WatchoutModule.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		03B34F65CD67AA62113F23C3 = {
@@ -1481,6 +1489,13 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = FFTAnalyzerEditor.h;
 			path = ../../Source/Module/modules/audio/analysis/ui/FFTAnalyzerEditor.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		07AB011925F95832C5B2D642 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = TCPServerModule.h;
+			path = ../../Source/Module/modules/tcp/tcpserver/TCPServerModule.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		08A60E869B62F7F1D59E350E = {
@@ -1728,6 +1743,13 @@
 			path = ../../Source/Common/Processor/Mapping/Output/MappingOutputManager.h;
 			sourceTree = "SOURCE_ROOT";
 		};
+		1919D8FF97CC9BF35C683A94 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = PJLinkModule.cpp;
+			path = ../../Source/Module/modules/tcp/tcpclient/pjlink/PJLinkModule.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		1952BD304214810D645BBDF6 = {
 			isa = PBXFileReference;
 			lastKnownFileType = wrapper.framework;
@@ -1831,13 +1853,6 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = HTTPCommand.cpp;
 			path = ../../Source/Module/modules/http/commands/HTTPCommand.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
-		204D7E4EFCCE5DE79A20294F = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = WatchoutModule.cpp;
-			path = ../../Source/Module/modules/tcp/watchout/WatchoutModule.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		2095B733297F99FB69AC407F = {
@@ -2008,13 +2023,6 @@
 			path = ../../Source/Common/Processor/Action/Condition/ConditionManager.h;
 			sourceTree = "SOURCE_ROOT";
 		};
-		2BAFF327FC54783886F8620F = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = PJLinkModule.cpp;
-			path = ../../Source/Module/modules/tcp/pjlink/PJLinkModule.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
 		2BE3C41C55C2BFCAD0385D14 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -2027,6 +2035,13 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = AudioLayerClipManagerUI.cpp;
 			path = ../../Source/TimeMachine/Sequence/Layer/layers/audio/ui/AudioLayerClipManagerUI.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
+		2C8F111514373C5BA8A33B7B = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = TCPServerConnectionManager.cpp;
+			path = ../../Source/Module/modules/tcp/tcpserver/TCPServerConnectionManager.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		2CD0330136549E24276EC4E6 = {
@@ -2244,6 +2259,13 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = DMXManager.h;
 			path = ../../Source/Common/DMX/DMXManager.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		35509A411A3E24FE92D2FFAE = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = WatchoutCommand.cpp;
+			path = ../../Source/Module/modules/tcp/tcpclient/watchout/commands/WatchoutCommand.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		35C22A51CD35398B8C530679 = {
@@ -2526,6 +2548,13 @@
 			path = "../../JuceLibraryCode/include_juce_dsp.mm";
 			sourceTree = "SOURCE_ROOT";
 		};
+		457B541055574964947EF087 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = VLCModule.h;
+			path = ../../Source/Module/modules/tcp/tcpclient/vlc/VLCModule.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		462C8FB6859681D01FC1E7C6 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -2750,11 +2779,11 @@
 			path = ../../Source/Module/modules/audio/libs/pitch/PitchMPM.h;
 			sourceTree = "SOURCE_ROOT";
 		};
-		4F3368050FB1C3C249118B7F = {
+		4F2E249D01F2B4C825A1629B = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
-			name = TCPModule.cpp;
-			path = ../../Source/Module/modules/tcp/TCPModule.cpp;
+			name = TCPServerModule.cpp;
+			path = ../../Source/Module/modules/tcp/tcpserver/TCPServerModule.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		4F4804536C25AE1613284CDE = {
@@ -2820,6 +2849,13 @@
 			path = ../../Source/Common/Processor/Mapping/Filter/filters/number/SimpleRemapFilter.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
+		5391EA9CE86CA7CE99D66015 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = PJLinkModule.h;
+			path = ../../Source/Module/modules/tcp/tcpclient/pjlink/PJLinkModule.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		53A5A48ED7FEF0F32D648EA3 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -2874,6 +2910,13 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = MappingFilter.h;
 			path = ../../Source/Common/Processor/Mapping/Filter/MappingFilter.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		57E40F573658E6E60B479A6C = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = VLCModule.cpp;
+			path = ../../Source/Module/modules/tcp/tcpclient/vlc/VLCModule.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		5835F7B7E9A758B2CB9F0DA4 = {
@@ -2939,13 +2982,6 @@
 			path = ../../Source/Common/MIDI/MIDIDeviceParameter.h;
 			sourceTree = "SOURCE_ROOT";
 		};
-		5C266BE2A7E0CDCC6500B108 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = WatchoutCommand.cpp;
-			path = ../../Source/Module/modules/tcp/watchout/commands/WatchoutCommand.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
 		5C7B7096B6336C01EC92FB5D = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -2993,6 +3029,13 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = ScriptFilter.cpp;
 			path = ../../Source/Common/Processor/Mapping/Filter/filters/ScriptFilter.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
+		6289E76712F09C66C8822260 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = WatchoutModule.h;
+			path = ../../Source/Module/modules/tcp/tcpclient/watchout/WatchoutModule.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		629996A7896E858640C400FF = {
@@ -3268,6 +3311,13 @@
 			path = ../../Source/TimeMachine/Sequence/Layer/layers/mapping/timecolor/ui/TimeColorManagerUI.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
+		6FCB47468FB24ECFF51A90D2 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = WatchoutModule.cpp;
+			path = ../../Source/Module/modules/tcp/tcpclient/watchout/WatchoutModule.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		6FD6F29457AABC7104BF8F4F = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -3436,13 +3486,6 @@
 			path = ../../Source/Module/modules/osc/reaper/commands/ui/ReaperTimeCommandUI.h;
 			sourceTree = "SOURCE_ROOT";
 		};
-		77AC249D29959902828A44C9 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = VLCModule.cpp;
-			path = ../../Source/Module/modules/tcp/vlc/VLCModule.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
 		77B33461E589E94614FCF378 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -3462,13 +3505,6 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = ModuleManagerUI.h;
 			path = ../../Source/Module/ui/ModuleManagerUI.h;
-			sourceTree = "SOURCE_ROOT";
-		};
-		780B8FB57207EF9DC84ECD6B = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = TCPModule.h;
-			path = ../../Source/Module/modules/tcp/TCPModule.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		785C7E5B5E23CF418B801285 = {
@@ -3800,18 +3836,18 @@
 			path = ../../JuceLibraryCode/BinaryData.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
-		8EF33C0D2641C219CE9C9AD3 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = PJLinkModule.h;
-			path = ../../Source/Module/modules/tcp/pjlink/PJLinkModule.h;
-			sourceTree = "SOURCE_ROOT";
-		};
 		8EFE304B0BBA3DFA624E0D0F = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = DMXOpenUSBDevice.h;
 			path = ../../Source/Common/DMX/device/DMXOpenUSBDevice.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		8F138647B18B05C8E209974A = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = WatchoutCommand.h;
+			path = ../../Source/Module/modules/tcp/tcpclient/watchout/commands/WatchoutCommand.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		8F1E0B684D1010283648DB5F = {
@@ -4248,13 +4284,6 @@
 			path = ../../Source/Module/modules/udp/UDPModule.h;
 			sourceTree = "SOURCE_ROOT";
 		};
-		AA15E94C7AA369C6079BC810 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = WatchoutCommand.h;
-			path = ../../Source/Module/modules/tcp/watchout/commands/WatchoutCommand.h;
-			sourceTree = "SOURCE_ROOT";
-		};
 		AA881D5858A3809D2EE0A414 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -4500,6 +4529,13 @@
 			path = ../../Source/Module/modules/controller/wiimote/WiimotePairUtil.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
+		B58F472712F98039790C5BD8 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = TCPClientModule.h;
+			path = ../../Source/Module/modules/tcp/tcpclient/TCPClientModule.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		B5AB7C19D286C8E160628F77 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -4519,13 +4555,6 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = CVGroupManagerUI.cpp;
 			path = ../../Source/CustomVariables/ui/CVGroupManagerUI.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
-		B61C6A346B29E5036A613455 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = VLCModule.h;
-			path = ../../Source/Module/modules/tcp/vlc/VLCModule.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		B63560F060FE73D4403EF4A9 = {
@@ -5884,6 +5913,13 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = AudioModule.h;
 			path = ../../Source/Module/modules/audio/AudioModule.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		FF098AB8E70ECF988CC09470 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = TCPServerConnectionManager.h;
+			path = ../../Source/Module/modules/tcp/tcpserver/TCPServerConnectionManager.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		FF5E71729960E873EBC84B3F = {
@@ -7406,51 +7442,71 @@
 			name = http;
 			sourceTree = "<group>";
 		};
-		7C223B85E0CE98F8D08AF607 = {
+		0E2A85ADA00C6289CFBA8E8F = {
 			isa = PBXGroup;
 			children = (
-				2BAFF327FC54783886F8620F,
-				8EF33C0D2641C219CE9C9AD3,
+				2C8F111514373C5BA8A33B7B,
+				FF098AB8E70ECF988CC09470,
+				4F2E249D01F2B4C825A1629B,
+				07AB011925F95832C5B2D642,
+			);
+			name = tcpserver;
+			sourceTree = "<group>";
+		};
+		B6AF022D168AE1F92B7959A1 = {
+			isa = PBXGroup;
+			children = (
+				1919D8FF97CC9BF35C683A94,
+				5391EA9CE86CA7CE99D66015,
 			);
 			name = pjlink;
 			sourceTree = "<group>";
 		};
-		7893FAC1B9F521B978BB3F6F = {
+		8DB160CD8F95B5A25F21E2AC = {
 			isa = PBXGroup;
 			children = (
-				77AC249D29959902828A44C9,
-				B61C6A346B29E5036A613455,
+				57E40F573658E6E60B479A6C,
+				457B541055574964947EF087,
 			);
 			name = vlc;
 			sourceTree = "<group>";
 		};
-		9FEFBD693ADB9733F6C5D7B4 = {
+		035D08FAEE485BCCF77369AC = {
 			isa = PBXGroup;
 			children = (
-				5C266BE2A7E0CDCC6500B108,
-				AA15E94C7AA369C6079BC810,
+				35509A411A3E24FE92D2FFAE,
+				8F138647B18B05C8E209974A,
 			);
 			name = commands;
 			sourceTree = "<group>";
 		};
-		AC4EE6F121F8B17A191E3313 = {
+		E627E9076BC591A06A5F9D7D = {
 			isa = PBXGroup;
 			children = (
-				9FEFBD693ADB9733F6C5D7B4,
-				204D7E4EFCCE5DE79A20294F,
-				03969D7CAD02A21E981930AA,
+				035D08FAEE485BCCF77369AC,
+				6FCB47468FB24ECFF51A90D2,
+				6289E76712F09C66C8822260,
 			);
 			name = watchout;
+			sourceTree = "<group>";
+		};
+		01C949A12AA7CA273F33B9FF = {
+			isa = PBXGroup;
+			children = (
+				B6AF022D168AE1F92B7959A1,
+				8DB160CD8F95B5A25F21E2AC,
+				E627E9076BC591A06A5F9D7D,
+				021E427BFA3E8B6BC6AC3D5A,
+				B58F472712F98039790C5BD8,
+			);
+			name = tcpclient;
 			sourceTree = "<group>";
 		};
 		30D6E5F603110E42C1ABDBF9 = {
 			isa = PBXGroup;
 			children = (
-				7C223B85E0CE98F8D08AF607,
-				7893FAC1B9F521B978BB3F6F,
-				AC4EE6F121F8B17A191E3313,
-				4F3368050FB1C3C249118B7F,
-				780B8FB57207EF9DC84ECD6B,
+				0E2A85ADA00C6289CFBA8E8F,
+				01C949A12AA7CA273F33B9FF,
 			);
 			name = tcp;
 			sourceTree = "<group>";
@@ -8442,11 +8498,13 @@
 				842FFDD3DA695E4C5D014414,
 				E100F7E75361CCE27D886FF9,
 				B273E2791D5ACAE101663028,
-				33E16DCF5C4801FF0C7CBF6F,
-				96579460CFE54DB06569F21B,
-				0EE14FF9197B0DC31DA1022E,
-				25FD0DC423819BAF154BC056,
-				C86058E8B703C6F5E39A67BF,
+				A660EAEA0519A545BF9E6323,
+				759B6E09C574DDA33F5CDEFC,
+				C59EAFBF08C2FCB87940EE60,
+				0E147308A3EB610FBBA8619B,
+				31E8F3986C5AC02A1BFBFEDB,
+				39E2B66DC6E1772B38F0677A,
+				30E97777747F251C9235E38A,
 				88CDCEA94B9AE6F3ADF56372,
 				10F29E1523D25CF4900175AA,
 				C283F46774EAFE500D229FE2,

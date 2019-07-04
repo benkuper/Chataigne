@@ -10,10 +10,10 @@
 
 #pragma once
 
-#include "../TCPModule.h"
+#include "../TCPClientModule.h"
 
 class WatchoutModule :
-	public TCPModule
+	public TCPClientModule
 {
 public:
 	WatchoutModule();

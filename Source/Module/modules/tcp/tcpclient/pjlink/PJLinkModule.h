@@ -11,10 +11,10 @@
 #pragma once
 
 #pragma once
-#include "../TCPModule.h"
+#include "../TCPClientModule.h"
 
 class PJLinkModule :
-	public TCPModule
+	public TCPClientModule
 {
 public:
 	PJLinkModule();

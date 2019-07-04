@@ -14,6 +14,7 @@
 #if JUCE_WINDOWS
 #include "joytime-input-hidapi.hpp"
 #endif
+
 class JoyConModule :
 	public Module,
 	public Thread

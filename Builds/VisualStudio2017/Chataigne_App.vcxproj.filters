@@ -407,17 +407,23 @@
     <Filter Include="Chataigne\Source\Module\modules\http">
       <UniqueIdentifier>{D08B4676-A304-E303-0415-85A97C6159AD}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\tcp\pjlink">
-      <UniqueIdentifier>{056DAAEC-3110-E1F3-2D92-A612A2BF0B21}</UniqueIdentifier>
+    <Filter Include="Chataigne\Source\Module\modules\tcp\tcpserver">
+      <UniqueIdentifier>{13C22839-0474-1746-2AED-DF9E50D83B08}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\tcp\vlc">
-      <UniqueIdentifier>{6656323C-EC5D-25D6-2F61-297DA16F0BCA}</UniqueIdentifier>
+    <Filter Include="Chataigne\Source\Module\modules\tcp\tcpclient\pjlink">
+      <UniqueIdentifier>{B80B7BA6-0750-C92D-1C5D-7FF9A07E0EC3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\tcp\watchout\commands">
-      <UniqueIdentifier>{CEF43A0C-0A27-5F2A-B5B9-87D19A61276D}</UniqueIdentifier>
+    <Filter Include="Chataigne\Source\Module\modules\tcp\tcpclient\vlc">
+      <UniqueIdentifier>{858313A8-3B6D-1359-83FD-EF40E1CA47E0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\tcp\watchout">
-      <UniqueIdentifier>{9E7E9A47-7031-6219-9A0A-FD074D0AC37D}</UniqueIdentifier>
+    <Filter Include="Chataigne\Source\Module\modules\tcp\tcpclient\watchout\commands">
+      <UniqueIdentifier>{8E798873-96AF-189B-A4B8-1882EA5CB2DA}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\tcp\tcpclient\watchout">
+      <UniqueIdentifier>{F6C7E05E-DE7C-15BD-3965-685AD8CE620F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\tcp\tcpclient">
+      <UniqueIdentifier>{F9C6B28A-F792-BE1A-7B4E-53708BE792D9}</UniqueIdentifier>
     </Filter>
     <Filter Include="Chataigne\Source\Module\modules\tcp">
       <UniqueIdentifier>{C7BCF4FB-A321-0D94-8CE7-0E6C60E199F7}</UniqueIdentifier>
@@ -1066,6 +1072,12 @@
     </Filter>
     <Filter Include="JUCE Modules\juce_organicui\updater">
       <UniqueIdentifier>{4BC1AC06-AAA3-905B-8EC6-B4DDD74C0211}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_organicui\warning\ui">
+      <UniqueIdentifier>{53C1B9BB-CD33-B290-AF4D-9329F26F8E41}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_organicui\warning">
+      <UniqueIdentifier>{91FADFB6-70FE-3F81-2E5A-366E896BFF22}</UniqueIdentifier>
     </Filter>
     <Filter Include="JUCE Modules\juce_organicui">
       <UniqueIdentifier>{5F63D43A-3BA8-5209-9971-62F87C2979FE}</UniqueIdentifier>
@@ -1729,20 +1741,26 @@
     <ClCompile Include="..\..\Source\Module\modules\http\HTTPModule.cpp">
       <Filter>Chataigne\Source\Module\modules\http</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\Module\modules\tcp\pjlink\PJLinkModule.cpp">
-      <Filter>Chataigne\Source\Module\modules\tcp\pjlink</Filter>
+    <ClCompile Include="..\..\Source\Module\modules\tcp\tcpserver\TCPServerConnectionManager.cpp">
+      <Filter>Chataigne\Source\Module\modules\tcp\tcpserver</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\Module\modules\tcp\vlc\VLCModule.cpp">
-      <Filter>Chataigne\Source\Module\modules\tcp\vlc</Filter>
+    <ClCompile Include="..\..\Source\Module\modules\tcp\tcpserver\TCPServerModule.cpp">
+      <Filter>Chataigne\Source\Module\modules\tcp\tcpserver</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\Module\modules\tcp\watchout\commands\WatchoutCommand.cpp">
-      <Filter>Chataigne\Source\Module\modules\tcp\watchout\commands</Filter>
+    <ClCompile Include="..\..\Source\Module\modules\tcp\tcpclient\pjlink\PJLinkModule.cpp">
+      <Filter>Chataigne\Source\Module\modules\tcp\tcpclient\pjlink</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\Module\modules\tcp\watchout\WatchoutModule.cpp">
-      <Filter>Chataigne\Source\Module\modules\tcp\watchout</Filter>
+    <ClCompile Include="..\..\Source\Module\modules\tcp\tcpclient\vlc\VLCModule.cpp">
+      <Filter>Chataigne\Source\Module\modules\tcp\tcpclient\vlc</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\Module\modules\tcp\TCPModule.cpp">
-      <Filter>Chataigne\Source\Module\modules\tcp</Filter>
+    <ClCompile Include="..\..\Source\Module\modules\tcp\tcpclient\watchout\commands\WatchoutCommand.cpp">
+      <Filter>Chataigne\Source\Module\modules\tcp\tcpclient\watchout\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Module\modules\tcp\tcpclient\watchout\WatchoutModule.cpp">
+      <Filter>Chataigne\Source\Module\modules\tcp\tcpclient\watchout</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Module\modules\tcp\tcpclient\TCPClientModule.cpp">
+      <Filter>Chataigne\Source\Module\modules\tcp\tcpclient</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\udp\UDPModule.cpp">
       <Filter>Chataigne\Source\Module\modules\udp</Filter>
@@ -4366,6 +4384,18 @@
     <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\updater\AppUpdater.cpp">
       <Filter>JUCE Modules\juce_organicui\updater</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\warning\ui\WarningReporterPanel.cpp">
+      <Filter>JUCE Modules\juce_organicui\warning\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\warning\ui\WarningTargetUI.cpp">
+      <Filter>JUCE Modules\juce_organicui\warning\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\warning\WarningReporter.cpp">
+      <Filter>JUCE Modules\juce_organicui\warning</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\warning\WarningTarget.cpp">
+      <Filter>JUCE Modules\juce_organicui\warning</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\juce_organicui.cpp">
       <Filter>JUCE Modules\juce_organicui</Filter>
     </ClCompile>
@@ -5064,20 +5094,26 @@
     <ClInclude Include="..\..\Source\Module\modules\http\HTTPModule.h">
       <Filter>Chataigne\Source\Module\modules\http</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\Module\modules\tcp\pjlink\PJLinkModule.h">
-      <Filter>Chataigne\Source\Module\modules\tcp\pjlink</Filter>
+    <ClInclude Include="..\..\Source\Module\modules\tcp\tcpserver\TCPServerConnectionManager.h">
+      <Filter>Chataigne\Source\Module\modules\tcp\tcpserver</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\Module\modules\tcp\vlc\VLCModule.h">
-      <Filter>Chataigne\Source\Module\modules\tcp\vlc</Filter>
+    <ClInclude Include="..\..\Source\Module\modules\tcp\tcpserver\TCPServerModule.h">
+      <Filter>Chataigne\Source\Module\modules\tcp\tcpserver</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\Module\modules\tcp\watchout\commands\WatchoutCommand.h">
-      <Filter>Chataigne\Source\Module\modules\tcp\watchout\commands</Filter>
+    <ClInclude Include="..\..\Source\Module\modules\tcp\tcpclient\pjlink\PJLinkModule.h">
+      <Filter>Chataigne\Source\Module\modules\tcp\tcpclient\pjlink</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\Module\modules\tcp\watchout\WatchoutModule.h">
-      <Filter>Chataigne\Source\Module\modules\tcp\watchout</Filter>
+    <ClInclude Include="..\..\Source\Module\modules\tcp\tcpclient\vlc\VLCModule.h">
+      <Filter>Chataigne\Source\Module\modules\tcp\tcpclient\vlc</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\Module\modules\tcp\TCPModule.h">
-      <Filter>Chataigne\Source\Module\modules\tcp</Filter>
+    <ClInclude Include="..\..\Source\Module\modules\tcp\tcpclient\watchout\commands\WatchoutCommand.h">
+      <Filter>Chataigne\Source\Module\modules\tcp\tcpclient\watchout\commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Module\modules\tcp\tcpclient\watchout\WatchoutModule.h">
+      <Filter>Chataigne\Source\Module\modules\tcp\tcpclient\watchout</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Module\modules\tcp\tcpclient\TCPClientModule.h">
+      <Filter>Chataigne\Source\Module\modules\tcp\tcpclient</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\udp\UDPModule.h">
       <Filter>Chataigne\Source\Module\modules\udp</Filter>
@@ -6858,6 +6894,9 @@
     <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_graphics\image_formats\pnglib\pngconf.h">
       <Filter>JUCE Modules\juce_graphics\image_formats\pnglib</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_graphics\image_formats\pnglib\pngdebug.h">
+      <Filter>JUCE Modules\juce_graphics\image_formats\pnglib</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_graphics\image_formats\pnglib\pnginfo.h">
       <Filter>JUCE Modules\juce_graphics\image_formats\pnglib</Filter>
     </ClInclude>
@@ -7904,6 +7943,18 @@
     </ClInclude>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\updater\AppUpdater.h">
       <Filter>JUCE Modules\juce_organicui\updater</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\warning\ui\WarningReporterPanel.h">
+      <Filter>JUCE Modules\juce_organicui\warning\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\warning\ui\WarningTargetUI.h">
+      <Filter>JUCE Modules\juce_organicui\warning\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\warning\WarningReporter.h">
+      <Filter>JUCE Modules\juce_organicui\warning</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\warning\WarningTarget.h">
+      <Filter>JUCE Modules\juce_organicui\warning</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\juce_organicui.h">
       <Filter>JUCE Modules\juce_organicui</Filter>

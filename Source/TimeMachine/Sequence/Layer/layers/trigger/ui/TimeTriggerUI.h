@@ -8,8 +8,7 @@
   ==============================================================================
 */
 
-#ifndef TIMETRIGGERUI_H_INCLUDED
-#define TIMETRIGGERUI_H_INCLUDED
+#pragma once
 
 #include "../TimeTrigger.h"
 
@@ -63,7 +62,3 @@ public:
 	void removeTriggerUIListener(TimeTriggerUIListener* listener) { triggerUIListeners.remove(listener); }
 
 };
-
-
-
-#endif  // TIMETRIGGERUI_H_INCLUDED

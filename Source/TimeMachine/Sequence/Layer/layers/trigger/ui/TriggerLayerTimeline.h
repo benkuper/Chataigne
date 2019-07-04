@@ -8,8 +8,7 @@
   ==============================================================================
 */
 
-#ifndef TRIGGERLAYERTIMELINE_H_INCLUDED
-#define TRIGGERLAYERTIMELINE_H_INCLUDED
+#pragma once
 
 #include "../../../ui/SequenceLayerTimeline.h"
 #include "../TriggerLayer.h"
@@ -31,6 +30,3 @@ public:
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(TriggerLayerTimeline)
 
 };
-
-
-#endif  // TRIGGERLAYERTIMELINE_H_INCLUDED

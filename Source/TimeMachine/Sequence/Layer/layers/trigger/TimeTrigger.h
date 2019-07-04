@@ -8,8 +8,7 @@
   ==============================================================================
 */
 
-#ifndef TIMETRIGGER_H_INCLUDED
-#define TIMETRIGGER_H_INCLUDED
+#pragma once
 
 #include "Common/Processor/Action/Action.h"
 
@@ -32,7 +31,3 @@ public:
 
 	void trigger();
 };
-
-
-
-#endif  // TIMETRIGGER_H_INCLUDED

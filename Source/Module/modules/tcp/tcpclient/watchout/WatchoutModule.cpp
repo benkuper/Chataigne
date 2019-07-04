@@ -12,7 +12,7 @@
 #include "commands/WatchoutCommand.h"
 
 WatchoutModule::WatchoutModule() :
-	TCPModule("Watchout",3040)
+	TCPClientModule("Watchout",3040)
 {
 	streamingType->hideInEditor = true;
 	streamingType->setValueWithData(LINES);

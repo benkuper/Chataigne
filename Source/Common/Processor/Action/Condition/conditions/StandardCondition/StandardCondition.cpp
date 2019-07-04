@@ -30,7 +30,6 @@ StandardCondition::~StandardCondition()
 }
 
 
-
 var StandardCondition::getJSONData()
 {
 	var data = Condition::getJSONData();

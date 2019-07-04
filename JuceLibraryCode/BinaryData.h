@@ -45,7 +45,7 @@ namespace BinaryData
     const int            connected_pngSize = 3998;
 
     extern const char*   default_chalayout;
-    const int            default_chalayoutSize = 3341;
+    const int            default_chalayoutSize = 3506;
 
     extern const char*   disconnected_png;
     const int            disconnected_pngSize = 3820;

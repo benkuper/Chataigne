@@ -358,11 +358,13 @@
     <ClCompile Include="..\..\Source\Module\modules\system\time\TimeModule.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\http\commands\HTTPCommand.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\http\HTTPModule.cpp"/>
-    <ClCompile Include="..\..\Source\Module\modules\tcp\pjlink\PJLinkModule.cpp"/>
-    <ClCompile Include="..\..\Source\Module\modules\tcp\vlc\VLCModule.cpp"/>
-    <ClCompile Include="..\..\Source\Module\modules\tcp\watchout\commands\WatchoutCommand.cpp"/>
-    <ClCompile Include="..\..\Source\Module\modules\tcp\watchout\WatchoutModule.cpp"/>
-    <ClCompile Include="..\..\Source\Module\modules\tcp\TCPModule.cpp"/>
+    <ClCompile Include="..\..\Source\Module\modules\tcp\tcpserver\TCPServerConnectionManager.cpp"/>
+    <ClCompile Include="..\..\Source\Module\modules\tcp\tcpserver\TCPServerModule.cpp"/>
+    <ClCompile Include="..\..\Source\Module\modules\tcp\tcpclient\pjlink\PJLinkModule.cpp"/>
+    <ClCompile Include="..\..\Source\Module\modules\tcp\tcpclient\vlc\VLCModule.cpp"/>
+    <ClCompile Include="..\..\Source\Module\modules\tcp\tcpclient\watchout\commands\WatchoutCommand.cpp"/>
+    <ClCompile Include="..\..\Source\Module\modules\tcp\tcpclient\watchout\WatchoutModule.cpp"/>
+    <ClCompile Include="..\..\Source\Module\modules\tcp\tcpclient\TCPClientModule.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\udp\UDPModule.cpp"/>
     <ClCompile Include="..\..\Source\Module\Routing\ui\ModuleRouterPanelView.cpp"/>
     <ClCompile Include="..\..\Source\Module\Routing\ui\ModuleRouterValueEditor.cpp"/>
@@ -2674,6 +2676,18 @@
     <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\updater\AppUpdater.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\warning\ui\WarningReporterPanel.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\warning\ui\WarningTargetUI.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\warning\WarningReporter.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\warning\WarningTarget.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\juce_organicui.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -2935,11 +2949,13 @@
     <ClInclude Include="..\..\Source\Module\modules\system\time\TimeModule.h"/>
     <ClInclude Include="..\..\Source\Module\modules\http\commands\HTTPCommand.h"/>
     <ClInclude Include="..\..\Source\Module\modules\http\HTTPModule.h"/>
-    <ClInclude Include="..\..\Source\Module\modules\tcp\pjlink\PJLinkModule.h"/>
-    <ClInclude Include="..\..\Source\Module\modules\tcp\vlc\VLCModule.h"/>
-    <ClInclude Include="..\..\Source\Module\modules\tcp\watchout\commands\WatchoutCommand.h"/>
-    <ClInclude Include="..\..\Source\Module\modules\tcp\watchout\WatchoutModule.h"/>
-    <ClInclude Include="..\..\Source\Module\modules\tcp\TCPModule.h"/>
+    <ClInclude Include="..\..\Source\Module\modules\tcp\tcpserver\TCPServerConnectionManager.h"/>
+    <ClInclude Include="..\..\Source\Module\modules\tcp\tcpserver\TCPServerModule.h"/>
+    <ClInclude Include="..\..\Source\Module\modules\tcp\tcpclient\pjlink\PJLinkModule.h"/>
+    <ClInclude Include="..\..\Source\Module\modules\tcp\tcpclient\vlc\VLCModule.h"/>
+    <ClInclude Include="..\..\Source\Module\modules\tcp\tcpclient\watchout\commands\WatchoutCommand.h"/>
+    <ClInclude Include="..\..\Source\Module\modules\tcp\tcpclient\watchout\WatchoutModule.h"/>
+    <ClInclude Include="..\..\Source\Module\modules\tcp\tcpclient\TCPClientModule.h"/>
     <ClInclude Include="..\..\Source\Module\modules\udp\UDPModule.h"/>
     <ClInclude Include="..\..\Source\Module\Routing\ui\ModuleRouterPanelView.h"/>
     <ClInclude Include="..\..\Source\Module\Routing\ui\ModuleRouterValueEditor.h"/>
@@ -3533,6 +3549,7 @@
     <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_graphics\image_formats\jpglib\transupp.h"/>
     <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_graphics\image_formats\pnglib\png.h"/>
     <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_graphics\image_formats\pnglib\pngconf.h"/>
+    <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_graphics\image_formats\pnglib\pngdebug.h"/>
     <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_graphics\image_formats\pnglib\pnginfo.h"/>
     <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_graphics\image_formats\pnglib\pngpriv.h"/>
     <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_graphics\image_formats\pnglib\pngstruct.h"/>
@@ -3882,6 +3899,10 @@
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\ui\Style.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\undo\UndoMaster.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\updater\AppUpdater.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\warning\ui\WarningReporterPanel.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\warning\ui\WarningTargetUI.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\warning\WarningReporter.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\warning\WarningTarget.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\juce_organicui.h"/>
     <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_osc\osc\juce_OSCAddress.h"/>
     <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_osc\osc\juce_OSCArgument.h"/>

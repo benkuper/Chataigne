@@ -11,6 +11,7 @@
 #include "Action.h"
 #include "ui/ActionUI.h"
 #include "Condition/conditions/ActivationCondition/ActivationCondition.h"
+#include "Condition/conditions/StandardCondition/StandardCondition.h"
 
 Action::Action(const String & name, var params) :
 	Processor(params.getProperty("name", name)),
@@ -181,9 +182,12 @@ void Action::conditionManagerValidationChanged(ConditionManager *)
 }
 
 
-void Action::itemAdded(Condition *)
+void Action::itemAdded(Condition * c)
 {
 	updateConditionRoles();
+
+	StandardCondition* sc = dynamic_cast<StandardCondition*>(c);
+	if (sc != nullptr) sc->sourceTarget->warningResolveInspectable = this;
 }
 
 void Action::itemRemoved(Condition *)

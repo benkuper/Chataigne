@@ -18,6 +18,7 @@ Processor::Processor(const String & name, bool canBeDisabled) :
 {
 	itemDataType = "Processor";
 	editorIsCollapsed = true;
+	showWarningInUI = true;
 }
 
 Processor::~Processor()

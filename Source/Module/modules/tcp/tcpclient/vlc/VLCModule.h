@@ -12,10 +12,10 @@
 
 
 #pragma once
-#include "../TCPModule.h"
+#include "../TCPClientModule.h"
 
 class VLCModule :
-	public TCPModule
+	public TCPClientModule
 {
 public:
 	VLCModule();

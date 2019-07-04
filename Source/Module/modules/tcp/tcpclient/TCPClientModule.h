@@ -1,7 +1,7 @@
 /*
   ==============================================================================
 
-    TCPModule.h
+    TCPClientModule.h
     Created: 21 Oct 2017 5:04:54pm
     Author:  Ben
 
@@ -10,15 +10,15 @@
 
 #pragma once
 
-#include "../common/streaming/NetworkStreamingModule.h"
+#include "../../common/streaming/NetworkStreamingModule.h"
 
-class TCPModule :
+class TCPClientModule :
 	public NetworkStreamingModule,
 	public Timer
 {
 public:
-	TCPModule(const String &name = "TCP Client", int defaultRemotePort = 5001);
-	virtual ~TCPModule();
+	TCPClientModule(const String &name = "TCP Client", int defaultRemotePort = 5001);
+	virtual ~TCPClientModule();
 
 	StreamingSocket sender;
 
@@ -36,7 +36,7 @@ public:
 	
 	virtual void clearInternal() override;
 
-	static TCPModule * create() { return new TCPModule(); }
+	static TCPClientModule * create() { return new TCPClientModule(); }
 	virtual String getDefaultTypeString() const override { return "TCP Client"; }
 
 	// Inherited via Timer

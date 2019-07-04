@@ -9,10 +9,10 @@
 */
 
 #include "PJLinkModule.h"
-#include "../../common/streaming/commands/SendStreamStringCommand.h"
+#include "../../../common/streaming/commands/SendStreamStringCommand.h"
 
 PJLinkModule::PJLinkModule() :
-	TCPModule(getDefaultTypeString(), 4352)
+	TCPClientModule(getDefaultTypeString(), 4352)
 {
 	alwaysShowValues = true;
 	includeValuesInSave = true;

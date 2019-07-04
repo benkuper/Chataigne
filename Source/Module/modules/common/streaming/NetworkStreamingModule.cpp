@@ -13,7 +13,11 @@
 
 NetworkStreamingModule::NetworkStreamingModule(const String &name, bool canHaveInput, bool canHaveOutput, int defaultLocalPort, int defaultRemotePort) :
 	StreamingModule(name),
-	Thread("stream_"+name)
+	Thread("stream_"+name),
+	useLocal(nullptr),
+	senderIsConnected(nullptr),
+	remoteHost(nullptr),
+	remotePort(nullptr)
 {
 	setupIOConfiguration(canHaveInput, canHaveOutput);
 
@@ -81,7 +85,7 @@ void NetworkStreamingModule::run()
 
 	while (!threadShouldExit())
 	{
-		sleep(10); //100 fps
+		sleep(5); //200 fps
 
 		if (checkReceiverIsReady())
 		{
@@ -156,4 +160,6 @@ void NetworkStreamingModule::run()
 			}
 		}
 	}
+
+	DBG("Exit thread");
 }

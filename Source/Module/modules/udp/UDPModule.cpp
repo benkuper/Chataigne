@@ -78,8 +78,8 @@ void UDPModule::sendBytesInternal(Array<uint8> data)
 
 Array<uint8> UDPModule::readBytes()
 {
-	uint8 data[255];
-	int numBytes = receiver->read(data, 255, false);
+	uint8 data[2048];
+	int numBytes = receiver->read(data, 2048, false);
 	return Array<uint8>(data, numBytes);
 }
 

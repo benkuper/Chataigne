@@ -8,8 +8,7 @@
   ==============================================================================
 */
 
-#ifndef TRIGGERLAYER_H_INCLUDED
-#define TRIGGERLAYER_H_INCLUDED
+#pragma once
 
 #include "../../SequenceLayer.h"
 #include "TimeTriggerManager.h"
@@ -45,7 +44,3 @@ public :
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(TriggerLayer)
 };
-
-
-
-#endif  // TRIGGERLAYER_H_INCLUDED

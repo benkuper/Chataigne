@@ -23,7 +23,9 @@ ConditionManager::ConditionManager(bool _operatorOnSide) :
 	deactivateDef(nullptr),
     operatorOnSide(_operatorOnSide),
     validationProgress(nullptr),
-    forceDisabled(false)
+    forceDisabled(false),
+	prevTimerTime(0),
+	validationWaiting(false)
 {
 	
 	managerFactory = &factory;

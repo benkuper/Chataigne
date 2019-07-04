@@ -276,11 +276,13 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/TimeModule_26aecc47.o \
   $(JUCE_OBJDIR)/HTTPCommand_7771e2e1.o \
   $(JUCE_OBJDIR)/HTTPModule_da757f59.o \
-  $(JUCE_OBJDIR)/PJLinkModule_528c0f0b.o \
-  $(JUCE_OBJDIR)/VLCModule_e43b1167.o \
-  $(JUCE_OBJDIR)/WatchoutCommand_1abb5d65.o \
-  $(JUCE_OBJDIR)/WatchoutModule_630ef32b.o \
-  $(JUCE_OBJDIR)/TCPModule_24a2937d.o \
+  $(JUCE_OBJDIR)/TCPServerConnectionManager_d34fdc90.o \
+  $(JUCE_OBJDIR)/TCPServerModule_dab9835.o \
+  $(JUCE_OBJDIR)/PJLinkModule_32fc4f28.o \
+  $(JUCE_OBJDIR)/VLCModule_6d70eb44.o \
+  $(JUCE_OBJDIR)/WatchoutCommand_7f96a6c2.o \
+  $(JUCE_OBJDIR)/WatchoutModule_12f7dcc8.o \
+  $(JUCE_OBJDIR)/TCPClientModule_9b5f8345.o \
   $(JUCE_OBJDIR)/UDPModule_4d12fb3d.o \
   $(JUCE_OBJDIR)/ModuleRouterPanelView_3de9a86.o \
   $(JUCE_OBJDIR)/ModuleRouterValueEditor_7fd5857b.o \
@@ -1431,29 +1433,39 @@ $(JUCE_OBJDIR)/HTTPModule_da757f59.o: ../../Source/Module/modules/http/HTTPModul
 	@echo "Compiling HTTPModule.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
-$(JUCE_OBJDIR)/PJLinkModule_528c0f0b.o: ../../Source/Module/modules/tcp/pjlink/PJLinkModule.cpp
+$(JUCE_OBJDIR)/TCPServerConnectionManager_d34fdc90.o: ../../Source/Module/modules/tcp/tcpserver/TCPServerConnectionManager.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling TCPServerConnectionManager.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/TCPServerModule_dab9835.o: ../../Source/Module/modules/tcp/tcpserver/TCPServerModule.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling TCPServerModule.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/PJLinkModule_32fc4f28.o: ../../Source/Module/modules/tcp/tcpclient/pjlink/PJLinkModule.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling PJLinkModule.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
-$(JUCE_OBJDIR)/VLCModule_e43b1167.o: ../../Source/Module/modules/tcp/vlc/VLCModule.cpp
+$(JUCE_OBJDIR)/VLCModule_6d70eb44.o: ../../Source/Module/modules/tcp/tcpclient/vlc/VLCModule.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling VLCModule.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
-$(JUCE_OBJDIR)/WatchoutCommand_1abb5d65.o: ../../Source/Module/modules/tcp/watchout/commands/WatchoutCommand.cpp
+$(JUCE_OBJDIR)/WatchoutCommand_7f96a6c2.o: ../../Source/Module/modules/tcp/tcpclient/watchout/commands/WatchoutCommand.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling WatchoutCommand.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
-$(JUCE_OBJDIR)/WatchoutModule_630ef32b.o: ../../Source/Module/modules/tcp/watchout/WatchoutModule.cpp
+$(JUCE_OBJDIR)/WatchoutModule_12f7dcc8.o: ../../Source/Module/modules/tcp/tcpclient/watchout/WatchoutModule.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling WatchoutModule.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
-$(JUCE_OBJDIR)/TCPModule_24a2937d.o: ../../Source/Module/modules/tcp/TCPModule.cpp
+$(JUCE_OBJDIR)/TCPClientModule_9b5f8345.o: ../../Source/Module/modules/tcp/tcpclient/TCPClientModule.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling TCPModule.cpp"
+	@echo "Compiling TCPClientModule.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/UDPModule_4d12fb3d.o: ../../Source/Module/modules/udp/UDPModule.cpp

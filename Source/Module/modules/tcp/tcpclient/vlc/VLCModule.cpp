@@ -9,10 +9,10 @@ Author:  Ben
 */
 
 #include "VLCModule.h"
-#include "../../common/streaming/commands/SendStreamStringCommand.h"
+#include "../../../common/streaming/commands/SendStreamStringCommand.h"
 
 VLCModule::VLCModule() :
-	TCPModule(getDefaultTypeString(),50000)
+	TCPClientModule(getDefaultTypeString(),50000)
 {
 
 	NLOG("VLC", "Notice:\nTo be able to control VLC via Remote Control, you must launch the app with rc options:\nExample for launching in windows on port 50000 :\nvlc.exe --rc-host localhost:50000");
