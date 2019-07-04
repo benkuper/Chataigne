@@ -23,6 +23,7 @@ OSCModule::OSCModule(const String & name, int defaultLocalPort, int defaultRemot
 	
 	setupIOConfiguration(canHaveInput, canHaveOutput);
 	canHandleRouteValues = canHaveOutput;
+
 	
 	//Receive
 	if (canHaveInput)
@@ -48,6 +49,8 @@ OSCModule::OSCModule(const String & name, int defaultLocalPort, int defaultRemot
 	if (canHaveOutput)
 	{
 		outputManager.reset(new BaseManager<OSCOutput>("OSC Outputs"));
+		outputManager->addBaseManagerListener(this);
+
 		moduleParams.addChildControllableContainer(outputManager.get());
 
 		outputManager->setCanBeDisabled(true);
@@ -102,9 +105,11 @@ void OSCModule::setupReceiver()
 		for (auto &ip : ips) s += String("\n > ") + ip;
 
 		NLOG(niceName, s);
+		clearWarning();
 	} else
 	{
 		NLOGERROR(niceName, "Error binding port " + localPort->stringValue());
+		setWarningMessage("Error binding port " + localPort->stringValue());
 	}
 	
 }
@@ -185,6 +190,11 @@ void OSCModule::setupModuleFromJSONData(var data)
 		outputManager->enabled->setValue(hasOutput);
 		outputManager->hideInEditor = !hasOutput;
 	}
+}
+
+void OSCModule::itemAdded(OSCOutput* output)
+{
+	output->warningResolveInspectable = this;
 }
 
 void OSCModule::setupSenders()
@@ -516,9 +526,11 @@ void OSCOutput::setupSender()
 	if (result)
 	{ 
 		NLOG(niceName, "Now sending to " + remoteHost->stringValue() + ":" + remotePort->stringValue());
+		clearWarning();
 	} else
 	{
-		NLOGWARNING(niceName, "Could not connect to " + remoteHost->stringValue() + ":" + remotePort->stringValue());
+		NLOGWARNING(niceName, "Could not connect to " << remoteHost->stringValue() << ":" + remotePort->stringValue());
+		setWarningMessage("Could not connect to " + remoteHost->stringValue() + ":" + remotePort->stringValue());
 	}
 	
 }

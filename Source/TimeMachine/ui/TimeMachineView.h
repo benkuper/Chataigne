@@ -17,7 +17,7 @@
 class TimeMachineView :
 	public ShapeShifterContentComponent,
 	public InspectableSelectionManager::Listener,
-	public SequenceManager::Listener
+	public SequenceManager::ManagerListener
 {
 public:
 	

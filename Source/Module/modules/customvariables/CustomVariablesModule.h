@@ -17,7 +17,7 @@ class GenericControllableManagerLinkedContainer;
 
 class CustomVariablesModule :
 	public Module,
-	public CVGroupManager::Listener
+	public CVGroupManager::ManagerListener
 {
 public:
 	CustomVariablesModule(CVGroupManager * manager);

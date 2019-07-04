@@ -14,7 +14,7 @@
 
 class HTTPCommand :
 	public BaseCommand,
-	public CustomValuesCommandArgumentManager::ManagerListener
+	public CustomValuesCommandArgumentManager::ArgumentManagerListener
 {
 public:
 	HTTPCommand(HTTPModule * _module, CommandContext context, var params);

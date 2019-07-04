@@ -106,7 +106,7 @@ void MappingFilterManager::reorderItems()
 {
 	BaseManager::reorderItems(); 
 	rebuildFilterChain();
-	baseManagerListeners.call(&BaseManager::Listener::itemsReordered);
+	baseManagerListeners.call(&ManagerListener::itemsReordered);
 	managerNotifier.addMessage(new ManagerEvent(ManagerEvent::ITEMS_REORDERED));
 }
 
@@ -116,7 +116,7 @@ void MappingFilterManager::newMessage(const MappingFilter::FilterEvent & e)
 	if (e.type == MappingFilter::FilterEvent::FILTER_STATE_CHANGED)
 	{
 		rebuildFilterChain();
-		baseManagerListeners.call(&BaseManager::Listener::itemsReordered);
+		baseManagerListeners.call(&ManagerListener::itemsReordered);
 		managerNotifier.addMessage(new ManagerEvent(ManagerEvent::ITEMS_REORDERED));
 	}
 }

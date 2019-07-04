@@ -17,7 +17,7 @@ class CVGroup;
 
 class GenericControllableManagerLinkedContainer :
 	public ControllableContainer,
-	public GenericControllableManager::Listener
+	public GenericControllableManager::ManagerListener
 {
 public:
 	GenericControllableManagerLinkedContainer(const String& name, GenericControllableManager* manager, bool keepValuesInSync);

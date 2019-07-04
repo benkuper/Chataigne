@@ -17,8 +17,8 @@
 
 class DMXCommand :
 	public BaseCommand,
-	public CustomValuesCommandArgumentManager::ManagerListener,
-	public CustomValuesCommandArgumentManager::BaseManager::Listener
+	public CustomValuesCommandArgumentManager::ArgumentManagerListener,
+	public CustomValuesCommandArgumentManager::ManagerListener
 {
 public:
 	enum DMXAction { SET_VALUE, SET_RANGE, COLOR, SET_VALUE_16BIT, BLACK_OUT, SET_ALL, SET_CUSTOM };

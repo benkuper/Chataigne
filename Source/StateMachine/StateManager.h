@@ -20,7 +20,7 @@
 class StateManager :
 	public BaseManager<State>,
 	public State::StateListener,
-	public StateTransitionManager::Listener
+	public StateTransitionManager::ManagerListener
 {
 public:
 	juce_DeclareSingleton(StateManager, false)

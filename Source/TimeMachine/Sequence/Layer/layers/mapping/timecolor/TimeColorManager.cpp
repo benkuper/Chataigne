@@ -189,12 +189,12 @@ void TimeColorManager::onControllableFeedbackUpdate(ControllableContainer * cc, 
 			if (index > 0 && t->position->floatValue() < items[index - 1]->position->floatValue())
 			{
 				items.swap(index, index - 1);
-				baseManagerListeners.call(&Listener::itemsReordered);
+				baseManagerListeners.call(&ManagerListener::itemsReordered);
 			}
 			else if (index < items.size() - 1 && t->position->floatValue() > items[index + 1]->position->floatValue())
 			{
 				items.swap(index, index + 1);
-				baseManagerListeners.call(&Listener::itemsReordered);
+				baseManagerListeners.call(&ManagerListener::itemsReordered);
 			}
 
 		}

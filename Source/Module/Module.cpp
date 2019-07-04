@@ -32,6 +32,7 @@ Module::Module(const String& name) :
 
 {
 	itemDataType = "Module";
+	showWarningInUI = true;
 
 	canInspectChildContainers = true;
 

@@ -34,7 +34,7 @@ class AudioModule :
 	public Module,
 	public AudioIODeviceCallback,
 	public ChangeListener,
-	public FFTAnalyzerManager::Listener
+	public FFTAnalyzerManager::ManagerListener
 {
 public:
 	AudioModule(const String &name = "Sound Card");

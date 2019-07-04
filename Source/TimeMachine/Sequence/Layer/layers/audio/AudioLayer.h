@@ -20,9 +20,9 @@ class AudioLayerProcessor;
 
 class AudioLayer :
 	public SequenceLayer,
-	public ModuleManager::Listener,
+	public ModuleManager::ManagerListener,
     public AudioModule::AudioModuleListener,
-	public AudioLayerClipManager::Listener
+	public AudioLayerClipManager::ManagerListener
 {
 public:
 	AudioLayer(Sequence * sequence, var params);

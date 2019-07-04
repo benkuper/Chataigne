@@ -43,7 +43,8 @@ public:
 class OSCModule :
 	public Module,
 	public OSCReceiver::Listener<OSCReceiver::RealtimeCallback>,
-	public Thread //for zeroconf async creation (smoother when creating an OSC module)
+	public Thread, //for zeroconf async creation (smoother when creating an OSC module)
+	public BaseManager<OSCOutput>::ManagerListener
 { 
 public:
 	OSCModule(const String &name = "OSC", int defaultLocalPort = 12000, int defaultRemotePort = 9000, bool canHaveInput = true, bool canHaveOutput = true);
@@ -76,6 +77,8 @@ public:
 	virtual void processMessageInternal(const OSCMessage &) {}
 
 	virtual void setupModuleFromJSONData(var data) override;
+
+	void itemAdded(OSCOutput* output) override;
 
 	//SEND
 	virtual void setupSenders();

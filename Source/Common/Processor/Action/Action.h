@@ -18,7 +18,7 @@
 class Action :
 	public Processor,
 	public ConditionManager::ConditionManagerListener,
-	public ConditionManager::Listener,
+	public ConditionManager::ManagerListener,
 	public Condition::ConditionListener
 {
 public:

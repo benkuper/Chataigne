@@ -16,7 +16,7 @@
 
 class SendStreamValuesCommand :
 	public StreamingCommand,
-	public CustomValuesCommandArgumentManager::ManagerListener
+	public CustomValuesCommandArgumentManager::ArgumentManagerListener
 {
 public:
 	SendStreamValuesCommand(StreamingModule * output, CommandContext context, var params);

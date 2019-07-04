@@ -8,15 +8,14 @@
   ==============================================================================
 */
 
-#ifndef CustomValuesCommandArgumentMANAGER_H_INCLUDED
-#define CustomValuesCommandArgumentMANAGER_H_INCLUDED
+#pragma once
 
 #include "CustomValuesCommandArgument.h"
 
 class CustomValuesCommandArgumentManager :
 	public BaseManager<CustomValuesCommandArgument>,
 	public CustomValuesCommandArgument::ArgumentListener,
-	public BaseManager<CustomValuesCommandArgument>::Listener
+	public BaseManager<CustomValuesCommandArgument>::ManagerListener
 {
 public:
 	CustomValuesCommandArgumentManager(bool _mappingEnabled, bool templateMode = false);
@@ -51,22 +50,17 @@ public:
 
 	InspectableEditor * getEditor(bool isRoot) override;
 
-	class  ManagerListener
+	class  ArgumentManagerListener
 	{
 	public:
 		/** Destructor. */
-		virtual ~ManagerListener() {}
+		virtual ~ArgumentManagerListener() {}
 		virtual void useForMappingChanged(CustomValuesCommandArgument *) {};
 	};
 
-	ListenerList<ManagerListener> argumentManagerListeners;
-	void addArgumentManagerListener(ManagerListener* newListener) { argumentManagerListeners.add(newListener); }
-	void removeArgumentManagerListener(ManagerListener* listener) { argumentManagerListeners.remove(listener); }
+	ListenerList<ArgumentManagerListener> argumentManagerListeners;
+	void addArgumentManagerListener(ArgumentManagerListener* newListener) { argumentManagerListeners.add(newListener); }
+	void removeArgumentManagerListener(ArgumentManagerListener* listener) { argumentManagerListeners.remove(listener); }
 
 
 };
-
-
-
-
-#endif  // CustomValuesCommandArgumentMANAGER_H_INCLUDED

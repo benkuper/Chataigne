@@ -19,8 +19,8 @@ class BaseCommandHandler :
 	public BaseItem,
 	public Inspectable::InspectableListener,
 	public BaseCommand::CommandListener,
-	public ModuleManager::Listener,
-	public CommandTemplateManager::Listener
+	public ModuleManager::ManagerListener,
+	public CommandTemplateManager::ManagerListener
 {
 public:
 	BaseCommandHandler(const String &name = "BaseCommandHandler", CommandContext context = CommandContext::ACTION, Module * lockedModule = nullptr);

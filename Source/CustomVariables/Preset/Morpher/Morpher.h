@@ -16,7 +16,7 @@
 
 class Morpher :
 	public ControllableContainer,
-	public CVPresetManager::Listener,
+	public CVPresetManager::ManagerListener,
 	public Thread
 {
 public:

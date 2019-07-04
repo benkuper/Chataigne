@@ -17,7 +17,7 @@
 
 class CustomOSCCommand :
 	public OSCCommand,
-	public CustomValuesCommandArgumentManager::ManagerListener
+	public CustomValuesCommandArgumentManager::ArgumentManagerListener
 {
 public:
 	CustomOSCCommand(CustomOSCModule * output, CommandContext context, var params);

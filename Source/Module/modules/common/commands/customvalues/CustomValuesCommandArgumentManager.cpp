@@ -138,7 +138,7 @@ void CustomValuesCommandArgumentManager::removeItemInternal(CustomValuesCommandA
 
 void CustomValuesCommandArgumentManager::useForMappingChanged(CustomValuesCommandArgument * i)
 {
-	argumentManagerListeners.call(&ManagerListener::useForMappingChanged, i);
+	argumentManagerListeners.call(&ArgumentManagerListener::useForMappingChanged, i);
 }
 
 void CustomValuesCommandArgumentManager::controllableFeedbackUpdate(ControllableContainer * cc, Controllable * c)
