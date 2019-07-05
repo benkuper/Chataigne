@@ -34,6 +34,7 @@ OSCModule::OSCModule(const String & name, int defaultLocalPort, int defaultRemot
 
 		localPort = receiveCC->addIntParameter("Local Port", "Local Port to bind to receive OSC Messages", defaultLocalPort, 1024, 65535);
 		localPort->hideInOutliner = true;
+		localPort->warningResolveInspectable = this;
 
 		receiver.registerFormatErrorHandler(&OSCHelpers::logOSCFormatError);
 		receiver.addListener(this);
@@ -105,11 +106,11 @@ void OSCModule::setupReceiver()
 		for (auto &ip : ips) s += String("\n > ") + ip;
 
 		NLOG(niceName, s);
-		clearWarning();
+		localPort->clearWarning();
 	} else
 	{
 		NLOGERROR(niceName, "Error binding port " + localPort->stringValue());
-		setWarningMessage("Error binding port " + localPort->stringValue());
+		localPort->setWarningMessage("Error binding port " + localPort->stringValue());
 	}
 	
 }

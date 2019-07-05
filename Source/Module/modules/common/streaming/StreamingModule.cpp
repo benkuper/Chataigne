@@ -84,12 +84,11 @@ void StreamingModule::buildMessageStructureOptions()
 void StreamingModule::processDataLine(const String & msg)
 {
 	if (!enabled->boolValue()) return;
-	if (logIncomingData->boolValue()) NLOG(niceName, "Message received : " + msg);
-	
+	if (logIncomingData->boolValue()) NLOG(niceName, "Message received : " << (msg.isNotEmpty() ? msg : "(Empty message)"));
+	inActivityTrigger->trigger();
+
 	const String message = msg.removeCharacters("\r\n");
 	if (message.isEmpty()) return;
-
-	inActivityTrigger->trigger();
 
 	processDataLineInternal(message);
 	
@@ -118,18 +117,34 @@ void StreamingModule::processDataLine(const String & msg)
 	{
 		String valueName = valuesString[0];
 		int numArgs = valuesString.size() - 1;
+		
 		Controllable * c = valuesCC.getControllableByName(valueName, true);
+
 		if (c == nullptr)
 		{
 			if (!autoAdd->boolValue()) return;
 
-			switch (numArgs)
+			if (numArgs > 0 && valuesString[1].getFloatValue() == 0 && !valuesString[1].containsChar('0'))
 			{
-			case 0: c = new Trigger(valueName, valueName); break;
-			case 1:	c = new FloatParameter(valueName, valueName, valuesString[1].getFloatValue()); break;
-			case 2: c = new Point2DParameter(valueName, valueName); ((Point2DParameter *)c)->setPoint(valuesString[1].getFloatValue(), valuesString[2].getFloatValue()); break;
-			case 3: c = new Point3DParameter(valueName, valueName); ((Point3DParameter *)c)->setVector(valuesString[1].getFloatValue(), valuesString[2].getFloatValue(), valuesString[3].getFloatValue()); break;
-			case 4: c = new ColorParameter(valueName, valueName, Colour::fromFloatRGBA(valuesString[1].getFloatValue(), valuesString[2].getFloatValue(), valuesString[3].getFloatValue(), valuesString[4].getFloatValue()));
+				valuesString.remove(0);
+				c = new StringParameter(valueName, valueName, valuesString.joinIntoString(" "));
+			}
+			else
+			{
+				switch (numArgs)
+				{
+				case 0: c = new Trigger(valueName, valueName); break;
+				case 1:	c = new FloatParameter(valueName, valueName, valuesString[1].getFloatValue()); break;
+				case 2: c = new Point2DParameter(valueName, valueName); ((Point2DParameter*)c)->setPoint(valuesString[1].getFloatValue(), valuesString[2].getFloatValue()); break;
+				case 3: c = new Point3DParameter(valueName, valueName); ((Point3DParameter*)c)->setVector(valuesString[1].getFloatValue(), valuesString[2].getFloatValue(), valuesString[3].getFloatValue()); break;
+				case 4: c = new ColorParameter(valueName, valueName, Colour::fromFloatRGBA(valuesString[1].getFloatValue(), valuesString[2].getFloatValue(), valuesString[3].getFloatValue(), valuesString[4].getFloatValue()));
+				default:
+				{
+					valuesString.remove(0);
+					c = new StringParameter(valueName, valueName, valuesString.joinIntoString(" "));
+				}
+
+				}
 			}
 
 			if (c != nullptr)
@@ -165,8 +180,11 @@ void StreamingModule::processDataLine(const String & msg)
 				break;
                     
 			case Controllable::STRING:
-				if(numArgs >= 1) ((StringParameter *)c)->setValue(valuesString[1]);
-				break;
+			{
+				valuesString.remove(0);
+				if(numArgs >= 1) ((StringParameter *)c)->setValue(valuesString.joinIntoString(" "));
+			}
+			break;
 
             default:
                 break;
@@ -176,36 +194,50 @@ void StreamingModule::processDataLine(const String & msg)
 		
 	} else
 	{
-		
 		int numArgs = valuesString.size();
-		int numValues = valuesCC.controllables.size();
-
-		if (autoAdd->boolValue())
-		{
-			while (numValues < numArgs)
-			{
-				FloatParameter * fp = new FloatParameter("Value " + String(numValues), "Value " + String(numValues), 0);
-				fp->isCustomizableByUser = true;
-				fp->isRemovableByUser = true;
-				fp->saveValueOnly = false;
-
-				valuesCC.addControllable(fp);
-
-				numValues = valuesCC.controllables.size();
-			}
-		}
 
 		for (int i = 0; i < numArgs; i++)
 		{
-			FloatParameter * c = dynamic_cast<FloatParameter *>(valuesCC.controllables[i]);
+			Controllable* c = valuesCC.getControllableByName("Value " + String(i), true);
+
+			if (c == nullptr)
+			{
+				if (autoAdd->boolValue())
+				{
+					if (valuesString[i].getFloatValue() == 0 && !valuesString[i].containsChar('0'))
+					{
+						c = new StringParameter("Value " + String(i), "Value " + String(i), "");
+					}
+					else
+					{
+						c = new FloatParameter("Value " + String(i), "Value " + String(i), 0);
+					}
+
+					if (c != nullptr)
+					{
+						c->isCustomizableByUser = true;
+						c->isRemovableByUser = true;
+						c->saveValueOnly = false;
+
+						valuesCC.addControllable(c);
+					}
+
+				}
+			}
+			
 			if (c != nullptr)
 			{
-				c->setValue(valuesString[i].getFloatValue());
+				switch (c->type)
+				{
+				case Controllable::FLOAT: ((FloatParameter*)c)->setValue(valuesString[i].getFloatValue()); break;
+				case Controllable::STRING: ((StringParameter*)c)->setValue(valuesString[i]); break;
+				default:
+					((Parameter*)c)->setValue(valuesString[i].getFloatValue()); break;
+					break;
+				}
 			}
 		}
-
 	}
-
 }
 
 void StreamingModule::processDataBytes(Array<uint8_t> data)

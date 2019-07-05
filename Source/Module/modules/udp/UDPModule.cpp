@@ -26,12 +26,28 @@ void UDPModule::setupReceiver()
 {
 	clearThread();
 	clearInternal();
+
 	if (receiveCC == nullptr) return;
-	if (!receiveCC->enabled->boolValue()) return;
+	if (!receiveCC->enabled->boolValue())
+	{
+		localPort->clearWarning();
+		return;
+	}
+
 	receiver.reset(new DatagramSocket());
 	receiver->bindToPort(localPort->intValue());
 	receiverIsBound->setValue(receiver->getBoundPort() != -1);
-	if(receiverIsBound->boolValue()) startThread();
+	if (receiverIsBound->boolValue())
+	{
+		NLOG(niceName, "UDP Receiver bound to port " << localPort->intValue());
+		localPort->clearWarning();
+		startThread();
+	}
+	else
+	{
+		NLOGERROR(niceName, "UDP Receiver bound to port " << localPort->intValue());
+		localPort->setWarningMessage("Could not bind to port " + localPort->intValue());
+	}
 
 	Array<IPAddress> ad;
 	IPAddress::findAllAddresses(ad);

@@ -14,6 +14,8 @@
 TimeTrigger::TimeTrigger(float _time, float flagYPos, const String &name) :
 	Action(name)
 {
+	showWarningInUI = true;
+
 	itemDataType = "TimeTrigger"; 
 	
 	time = addFloatParameter("Time", "Time at which the action is triggered", 0, 0, 3600);

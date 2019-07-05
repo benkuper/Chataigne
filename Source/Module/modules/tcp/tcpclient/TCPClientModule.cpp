@@ -31,7 +31,12 @@ void TCPClientModule::setupSender()
 	clearInternal();
 	
 	if (sendCC == nullptr) return;
-	if (!sendCC->enabled->boolValue()) return;
+	if (!sendCC->enabled->boolValue())
+	{
+		sendCC->clearWarning();
+		return;
+	}
+
 	if (Engine::mainEngine != nullptr && Engine::mainEngine->isClearing) return;
 
 	startThread();
@@ -45,6 +50,20 @@ void TCPClientModule::initThread()
 	bool result = sender.connect(targetHost, remotePort->intValue(), 200);
 	if(result) NLOG(niceName, "Sender bound to port " << sender.getBoundPort());
 	senderIsConnected->setValue(result);
+
+	if (result)
+	{
+		NLOG(niceName, "Client is connected to " << remoteHost->stringValue() << ":" << remotePort->intValue());
+		sendCC->clearWarning();
+		startThread();
+	}
+	else
+	{
+		String s = "Could not connect to " + remoteHost->stringValue() + ":" + remotePort->stringValue();
+		NLOGERROR(niceName, s);
+		sendCC->setWarningMessage(s);
+	}
+
 }
 
 void TCPClientModule::clearThread()

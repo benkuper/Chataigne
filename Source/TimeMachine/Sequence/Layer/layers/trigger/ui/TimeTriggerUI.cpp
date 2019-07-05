@@ -40,7 +40,6 @@ TimeTriggerUI::TimeTriggerUI(TimeTrigger * _tt) :
 	lockUI->setVisible(item->isSelected);
 
 	updateSizeFromName();
-
 }
 
 TimeTriggerUI::~TimeTriggerUI()
@@ -92,6 +91,12 @@ void TimeTriggerUI::resized()
 		lockUI->setBounds(p.removeFromRight(p.getHeight()));
 	}
 
+	if (warningUI != nullptr && warningUI->isVisible())
+	{
+		warningUI->setBounds(p.removeFromLeft(p.getHeight()).reduced(1));
+		p.removeFromLeft(1);
+	}
+
 	itemLabel.setBounds(p);
 }
 
@@ -109,6 +114,7 @@ void TimeTriggerUI::updateSizeFromName()
 	{
 		newWidth += 60; //for all the buttons
 	}
+	if (warningUI != nullptr && warningUI->isVisible()) newWidth += warningUI->getWidth() + 1;
 	setSize(newWidth, getHeight());
 }
 

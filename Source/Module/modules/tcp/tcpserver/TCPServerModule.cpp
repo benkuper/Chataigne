@@ -132,5 +132,15 @@ void TCPServerModule::newConnection(StreamingSocket* s)
 void TCPServerModule::receiverBindChanged(bool isBound)
 {
 	receiverIsBound->setValue(isBound);
-	if (isBound) NLOG(niceName, "Server is bound on port " << localPort->intValue());
+	if (isBound)
+	{
+		NLOG(niceName, "Server is bound on port " << localPort->intValue());
+		localPort->clearWarning();
+	}
+	else
+	{	
+		String s = "Error binding to port " +  localPort->stringValue();
+		NLOGERROR(niceName, s);
+		localPort->setWarningMessage(s);
+	}
 }
