@@ -67,7 +67,13 @@ void StreamingModule::buildMessageStructureOptions()
 	
 	case LINES:
 	{
-		messageStructure->addOption("Space separated", LINES_SPACE)->addOption("Tab separated", LINES_TAB)->addOption("Comma (,) separated", LINES_COMMA)->addOption("Equals (=) separated", LINES_EQUALS);
+		messageStructure->addOption("Space separated", LINES_SPACE)
+			->addOption("Tab separated", LINES_TAB)
+			->addOption("Comma (,) separated", LINES_COMMA)
+			->addOption("Colon (:) separated", LINES_COLON)
+			->addOption("Semicolon (;) separated", LINES_SEMICOLON)
+			->addOption("Equals (=) separated", LINES_EQUALS)
+			->addOption("No separation (will create only one parameter)", NO_SEPARATION);
 	}
 	break;
 	
@@ -103,10 +109,19 @@ void StreamingModule::processDataLine(const String & msg)
 	case LINES_TAB:   separator = "\t"; break;
 	case LINES_COMMA: separator = ","; break;
 	case LINES_EQUALS: separator = "="; break;
+	case LINES_COLON: separator = ":"; break;
+	case LINES_SEMICOLON: separator = ";"; break;
     default:
         break;
 	}
-	valuesString.addTokens(message, separator, "\"");
+
+	if(s != NO_SEPARATION) valuesString.addTokens(message, separator, "\"");
+	else
+	{
+		if (firstValueIsTheName->boolValue()) valuesString.add("Value");
+		valuesString.add(message);
+	}
+
 	if (valuesString.size() == 0)
 	{
 		//LOG("No usable data");

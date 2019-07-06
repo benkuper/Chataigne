@@ -21,7 +21,7 @@ public:
 	virtual ~StreamingModule();
 
 	enum StreamingType { LINES, DATA255, RAW, COBS };
-	enum MessageStructure { LINES_SPACE, LINES_TAB, LINES_COMMA, LINES_EQUALS, RAW_1BYTE, RAW_FLOATS, RAW_COLORS};
+	enum MessageStructure { LINES_SPACE, LINES_TAB, LINES_COMMA, LINES_COLON, LINES_SEMICOLON, LINES_EQUALS, NO_SEPARATION, RAW_1BYTE, RAW_FLOATS, RAW_COLORS};
 	EnumParameter * streamingType;
 
 	BoolParameter * autoAdd;
