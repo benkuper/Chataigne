@@ -65,14 +65,19 @@ void NetworkStreamingModule::clearThread()
 	while (isThreadRunning());
 }
 
-void NetworkStreamingModule::controllableFeedbackUpdate(ControllableContainer * cc, Controllable * c)
+void NetworkStreamingModule::controllableFeedbackUpdate(ControllableContainer* cc, Controllable* c)
 {
 	StreamingModule::onControllableFeedbackUpdateInternal(cc, c);
 	if (c == remoteHost || c == remotePort || c == useLocal)
 	{
 		if (c == useLocal) remoteHost->setEnabled(!useLocal->boolValue());
 		setupSender();
-	} else if (c == localPort) setupReceiver();
+	}
+	else if (c == localPort) setupReceiver();
+	else if ((receiveCC != nullptr && c == receiveCC->enabled) || (sendCC != nullptr && c == sendCC->enabled))
+	{
+		setupIOConfiguration(receiveCC != nullptr?receiveCC->enabled->boolValue():false, sendCC != nullptr?sendCC->enabled->boolValue():false);
+	}
 }
 
 void NetworkStreamingModule::run()
