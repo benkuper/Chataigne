@@ -46,6 +46,7 @@ Array<TimeTrigger *> TimeTriggerManager::addItemsFromClipboard(bool showWarning)
 {
 	Array<TimeTrigger *> triggers = BaseManager::addItemsFromClipboard(showWarning);
 	if (triggers.isEmpty()) return nullptr;
+	if (triggers[0] == nullptr) return nullptr;
 
 	float minTime = triggers[0]->time->floatValue();
 	for (auto &tt : triggers)
