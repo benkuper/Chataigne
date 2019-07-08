@@ -110,7 +110,7 @@ Array<uint8> UDPModule::readBytes()
 
 		if (numBytes == 0) break;
 
-		result.addArray(data, numBytes);
+		result.addArray((const uint8 *)data, numBytes);
 	}
 	
 	return result;
