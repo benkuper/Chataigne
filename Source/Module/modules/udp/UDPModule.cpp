@@ -39,6 +39,8 @@ void UDPModule::setupReceiver()
 	receiverIsBound->setValue(receiver->getBoundPort() != -1);
 	if (receiverIsBound->boolValue())
 	{
+		receiver->setEnablePortReuse(true);
+
 		NLOG(niceName, "UDP Receiver bound to port " << localPort->intValue());
 		localPort->clearWarning();
 		startThread();
@@ -94,9 +96,25 @@ void UDPModule::sendBytesInternal(Array<uint8> data)
 
 Array<uint8> UDPModule::readBytes()
 {
-	uint8 data[2048];
-	int numBytes = receiver->read(data, 2048, false);
-	return Array<uint8>(data, numBytes);
+	Array<uint8> result;
+	uint8 data[255];
+	while (true)
+	{
+		int numBytes = receiver->read(data, 255, false);
+
+		if (numBytes == -1)
+		{
+			LOGERROR("Error receiving UDP data");
+			return result;
+		}
+
+		if (numBytes == 0) break;
+
+		result.addArray(data, numBytes);
+	}
+	
+	return result;
+
 }
 
 void UDPModule::clearInternal()
