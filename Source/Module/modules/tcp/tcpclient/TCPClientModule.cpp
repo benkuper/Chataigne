@@ -18,7 +18,6 @@ TCPClientModule::TCPClientModule(const String & name, int defaultRemotePort) :
 	setupIOConfiguration(true, true);
 	setupSender();
 	startTimerHz(1);
-
 }
 
 TCPClientModule::~TCPClientModule()

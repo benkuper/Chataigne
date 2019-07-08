@@ -17,11 +17,15 @@ NetworkStreamingModule::NetworkStreamingModule(const String &name, bool canHaveI
 	useLocal(nullptr),
 	senderIsConnected(nullptr),
 	remoteHost(nullptr),
-	remotePort(nullptr)
+	remotePort(nullptr),
+	receiveFrequency(nullptr)
 {
 	setupIOConfiguration(canHaveInput, canHaveOutput);
 
+
 	//Receive
+	receiveFrequency = new IntParameter("Receive Frequency", "The frequency at which to receive data, only change it if you need much high frequency", 100, 1, 1000);
+	
 	if (canHaveInput)
 	{
 		receiveCC.reset(new EnablingControllableContainer("Input"));
@@ -33,8 +37,11 @@ NetworkStreamingModule::NetworkStreamingModule(const String &name, bool canHaveI
 		localPort->warningResolveInspectable = this;
 		receiverIsBound = receiveCC->addBoolParameter("Is Bound", "Will be active if receiver is bound", false);
 		receiverIsBound->isControllableFeedbackOnly = true;
-
-		receiveFrequency = receiveCC->addIntParameter("Receive Frequency", "The frequency at which to receive data, only change it if you need much high frequency",100,1,1000);
+		receiveCC->addParameter(receiveFrequency);
+	}
+	else
+	{
+		moduleParams.addParameter(receiveFrequency);
 	}
 
 	//Send
