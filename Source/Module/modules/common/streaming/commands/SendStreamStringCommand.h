@@ -19,13 +19,18 @@ public:
 	SendStreamStringCommand(StreamingModule * _module, CommandContext context, var params);
 	~SendStreamStringCommand();
 
-
+	enum DataMode { STRING, HEX };
+	DataMode dataMode;
+	
 	BoolParameter * appendCR;
 	BoolParameter * appendNL;
 
 	StringParameter * prefix;
 	StringParameter * valueParam;
+	
+	Array<uint8> mappedValues;
 
+	void setValue(var value) override;
 	void triggerInternal() override;
 
 	static SendStreamStringCommand * create(ControllableContainer * module, CommandContext context, var params) { return new SendStreamStringCommand((StreamingModule *)module, context, params); }

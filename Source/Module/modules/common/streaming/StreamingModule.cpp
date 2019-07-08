@@ -32,7 +32,8 @@ StreamingModule::StreamingModule(const String & name) :
 	defManager.add(CommandDefinition::createDef(this, "", "Send string", &SendStreamStringCommand::create, CommandContext::BOTH));
 	defManager.add(CommandDefinition::createDef(this, "", "Send values as string", &SendStreamStringValuesCommand::create, CommandContext::BOTH));
 	defManager.add(CommandDefinition::createDef(this, "", "Send raw bytes", &SendStreamRawDataCommand::create, CommandContext::BOTH));
-	defManager.add(CommandDefinition::createDef(this, "", "Send custom values", &SendStreamValuesCommand::create, CommandContext::BOTH)); 
+	defManager.add(CommandDefinition::createDef(this, "", "Send custom values", &SendStreamValuesCommand::create, CommandContext::BOTH));
+	defManager.add(CommandDefinition::createDef(this, "", "Send hex data", &SendStreamStringCommand::create, CommandContext::BOTH)->addParam("mode", SendStreamStringCommand::DataMode::HEX));
 	
 	scriptObject.setMethod(sendId, StreamingModule::sendStringFromScript);
 	scriptObject.setMethod(sendBytesId, StreamingModule::sendBytesFromScript);
@@ -417,7 +418,13 @@ void StreamingModule::sendBytes(Array<uint8> bytes)
 
 	sendBytesInternal(bytes);
 	outActivityTrigger->trigger();
-	if (logOutgoingData->boolValue()) NLOG(niceName, "Sending " + String(bytes.size()) + " bytes");
+
+	if (logOutgoingData->boolValue())
+	{
+		String s = "Sending " + String(bytes.size()) + " bytes :";
+		for (auto& b : bytes) s += "\n0x" + String::toHexString(b);
+		NLOG(niceName, s);
+	}
 }
 
 void StreamingModule::showMenuAndCreateValue(ControllableContainer * container)
