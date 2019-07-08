@@ -182,6 +182,10 @@ void StreamingModule::processDataLine(const String & msg)
 				if (numArgs >= 1) ((FloatParameter *)c)->setValue(valuesString[1].getFloatValue());
 				break;
 
+			case Controllable::INT:
+				if (numArgs >= 1) ((IntParameter*)c)->setValue(valuesString[1].getIntValue());
+				break;
+
 			case Controllable::POINT2D:
 				if (numArgs >= 2) ((Point2DParameter *)c)->setPoint(valuesString[1].getFloatValue(), valuesString[2].getFloatValue());
 				break;
@@ -245,6 +249,7 @@ void StreamingModule::processDataLine(const String & msg)
 				switch (c->type)
 				{
 				case Controllable::FLOAT: ((FloatParameter*)c)->setValue(valuesString[i].getFloatValue()); break;
+				case Controllable::INT:((IntParameter*)c)->setValue(valuesString[i].getIntValue()); break;
 				case Controllable::STRING: ((StringParameter*)c)->setValue(valuesString[i]); break;
 				default:
 					((Parameter*)c)->setValue(valuesString[i].getFloatValue()); break;
@@ -293,6 +298,7 @@ void StreamingModule::processDataBytes(Array<uint8_t> data)
 				p->isCustomizableByUser = true;
 				p->isRemovableByUser = true;
 				p->saveValueOnly = false;
+				p->hexMode = true;
 				valuesCC.addControllable(p);
 				numValues = valuesCC.controllables.size();
 			}
@@ -460,6 +466,12 @@ void StreamingModule::onControllableFeedbackUpdateInternal(ControllableContainer
 	{
 		while (valuesCC.controllables.size() > 0) valuesCC.removeControllable(valuesCC.controllables[0]);
 	}
+}
+
+void StreamingModule::loadJSONDataInternal(var data)
+{
+	Module::loadJSONDataInternal(data);
+	for (auto& v : valuesCC.controllables) v->isCustomizableByUser = true;
 }
 
 var StreamingModule::sendStringFromScript(const var::NativeFunctionArgs & a)

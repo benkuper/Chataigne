@@ -52,6 +52,7 @@ public:
 
 	virtual bool isReadyToSend() { return false; }
 
+	void loadJSONDataInternal(var data) override;
 
 	static var sendStringFromScript(const var::NativeFunctionArgs &a);
 	static var sendBytesFromScript(const var::NativeFunctionArgs &a);

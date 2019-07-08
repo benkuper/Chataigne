@@ -25,6 +25,7 @@ public:
 	std::unique_ptr<EnablingControllableContainer> receiveCC;
 	IntParameter * localPort;
 	BoolParameter * receiverIsBound;
+	IntParameter* receiveFrequency;
 
 	//SEND
 	std::unique_ptr<EnablingControllableContainer> sendCC;

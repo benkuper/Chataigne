@@ -14,6 +14,7 @@ SendStreamRawDataCommand::SendStreamRawDataCommand(StreamingModule * _module, Co
 	SendStreamValuesCommand(_module,context, params)
 {
 	customValuesManager->allowedTypes.add(Controllable::INT);
+	customValuesManager->addBaseManagerListener(this);
 }
 
 SendStreamRawDataCommand::~SendStreamRawDataCommand()
@@ -27,4 +28,14 @@ void SendStreamRawDataCommand::triggerInternal()
 	Array<uint8> data;
 	for (auto &i : customValuesManager->items) data.add(i->param->intValue());
 	streamingModule->sendBytes(data);
+}
+
+void SendStreamRawDataCommand::itemAdded(CustomValuesCommandArgument* item)
+{
+	IntParameter* p = dynamic_cast<IntParameter*>(item->param);
+	if (p != nullptr)
+	{
+		p->hexMode = true;
+		p->setRange(0, 255);
+	}
 }
