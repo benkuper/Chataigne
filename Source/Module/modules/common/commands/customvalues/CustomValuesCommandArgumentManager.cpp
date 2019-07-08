@@ -104,6 +104,8 @@ CustomValuesCommandArgument * CustomValuesCommandArgumentManager::addItemFromTyp
             break;
 	}
 
+	if (linkedTemplateManager == nullptr) p->isCustomizableByUser = true;
+
 	if (p == nullptr) return nullptr;
 	return addItemWithParam(p, data, fromUndoableAction);
 }

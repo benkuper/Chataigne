@@ -28,7 +28,7 @@ CustomValuesCommandArgument::CustomValuesCommandArgument(const String &name, Par
 	jassert(param != nullptr);
 	addControllable(param);
 
-	param->isCustomizableByUser = templateMode;
+	if(templateMode) param->isCustomizableByUser = true;
 	
 	param->forceSaveValue = true;
 	param->saveValueOnly = !templateMode;
