@@ -25,7 +25,8 @@ public:
 
 	StringParameter * address;
 	EnumParameter * method;
-	
+	EnumParameter * resultDataType;
+
 	void triggerInternal() override;
 
 	void useForMappingChanged(CustomValuesCommandArgument *) override;

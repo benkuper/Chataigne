@@ -17,6 +17,9 @@ HTTPCommand::HTTPCommand(HTTPModule * _module, CommandContext context, var param
 	method = addEnumParameter("Method", "Request Method");
 	method->addOption("GET", HTTPModule::GET)->addOption("POST", HTTPModule::POST);
 
+	resultDataType = addEnumParameter("Result Type", "The type of data to parse the received data");
+	resultDataType->addOption("Raw", HTTPModule::RAW)->addOption("JSON", HTTPModule::JSON);
+
 	address = addStringParameter("Address", "Address to append to the module's base address", "anything");
 
 	customValuesManager.reset(new CustomValuesCommandArgumentManager(context == MAPPING));
@@ -33,7 +36,7 @@ void HTTPCommand::triggerInternal()
 {
 	StringPairArray requestParams;
 	for (auto &p : customValuesManager->items) requestParams.set(p->shortName, p->param->stringValue());
-	httpModule->sendRequest(address->stringValue(), method->getValueDataAsEnum<HTTPModule::RequestMethod>(), requestParams);
+	httpModule->sendRequest(address->stringValue(), method->getValueDataAsEnum<HTTPModule::RequestMethod>(), resultDataType->getValueDataAsEnum<HTTPModule::ResultDataType>(), requestParams);
 }
 
 void HTTPCommand::useForMappingChanged(CustomValuesCommandArgument *)
