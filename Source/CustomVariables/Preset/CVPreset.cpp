@@ -47,6 +47,31 @@ void CVPreset::loadJSONDataInternal(var data)
 	values.loadJSONData(data.getProperty("values", var()),true);
 }
 
+var CVPreset::getValuesAsJSON()
+{
+	var data = new DynamicObject();
+	Array<WeakReference<Parameter>> params = values.getAllParameters();
+	for (auto& p : params) data.getDynamicObject()->setProperty(p->shortName, p->value);
+
+	return data;
+}
+
+void CVPreset::loadValuesFromJSON(var data)
+{
+	if (!data.isObject())
+	{
+		NLOGWARNING(niceName, "Can't load preset values, data is not a json object");
+		return;
+	}
+
+	NamedValueSet props = data.getDynamicObject()->getProperties();
+	for (auto& nv : props)
+	{
+		Parameter* p = values.getParameterByName(nv.name.toString());
+		if (p != nullptr) p->setValue(nv.value);
+	}
+}
+
 InspectableEditor * CVPreset::getEditor(bool isRoot)
 {
 	return new CVPresetEditor(this, isRoot);

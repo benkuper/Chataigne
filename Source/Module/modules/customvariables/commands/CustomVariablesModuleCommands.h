@@ -24,13 +24,13 @@ public:
 
 	CVGroupManager * manager;
 
-	enum Type { SET_VALUE, SET_PRESET, LERP_PRESETS, SET_PRESET_WEIGHT, SET_2DTARGET };
+	enum Type { SET_VALUE, SET_PRESET, LERP_PRESETS, SET_PRESET_WEIGHT, SET_2DTARGET, LOAD_PRESET, SAVE_PRESET };
 	Type type;
 
 	TargetParameter * target;
 	TargetParameter * targetPreset;
 	TargetParameter * targetPreset2;
-
+	FileParameter* presetFile;
 	
 	enum Operator { EQUAL, INVERSE, ADD, SUBTRACT, MULTIPLY, DIVIDE };
 	EnumParameter * valueOperator; 

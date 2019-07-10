@@ -19,6 +19,7 @@ CVCommand::CVCommand(CustomVariablesModule * _module, CommandContext context, va
 	target(nullptr),
 	targetPreset(nullptr),
 	targetPreset2(nullptr),
+	presetFile(nullptr),
 	valueOperator(nullptr),
 	value(nullptr)
 {
@@ -43,7 +44,7 @@ CVCommand::CVCommand(CustomVariablesModule * _module, CommandContext context, va
 		value = addPoint2DParameter("Position", "The target position in the 2D interpolator");
 		addTargetMappingParameterAt(value, 0);
 
-	} else if (type == SET_PRESET || type == LERP_PRESETS || type == SET_PRESET_WEIGHT)
+	} else if (type == SET_PRESET || type == LERP_PRESETS || type == SET_PRESET_WEIGHT || type == SAVE_PRESET || type == LOAD_PRESET)
 	{
 		targetPreset = addTargetParameter("Target Preset", "The Preset to get the values from and set the variables to", CVGroupManager::getInstance());
 		targetPreset->targetType = TargetParameter::CONTAINER;
@@ -67,6 +68,13 @@ CVCommand::CVCommand(CustomVariablesModule * _module, CommandContext context, va
 		{
 			value = addFloatParameter("Weight", "The weight of the preset to set", 0, 0, 1);
 			addTargetMappingParameterAt(value, 0);
+		}
+		break;
+
+		case LOAD_PRESET:
+		case SAVE_PRESET:
+		{
+			presetFile = addFileParameter("File", "The file to save/load the preset to/from");
 		}
 		break;
 
@@ -232,7 +240,45 @@ void CVCommand::triggerInternal()
 		}
 	}
 	break;
+
+	case LOAD_PRESET:
+	case SAVE_PRESET:
+	{
+		if (targetPreset->targetContainer != nullptr)
+		{
+			CVPreset* p = static_cast<CVPreset*>(targetPreset->targetContainer.get());
+			if (p != nullptr)
+			{
+				File f = presetFile->getFile();
+				if (type == LOAD_PRESET)
+				{
+					if (f.exists())
+					{
+						std::unique_ptr<InputStream> is(f.createInputStream());
+						var data = JSON::fromString(is->readEntireStreamAsString());
+						p->loadValuesFromJSON(data);
+					}
+					else
+					{
+						NLOGWARNING(niceName, "Preset file does not exist");
+					}
+				}
+				else if (type == SAVE_PRESET)
+				{
+					if (f.exists()) f.deleteFile();
+
+					var data = p->getValuesAsJSON();
+					std::unique_ptr<OutputStream> os(f.createOutputStream());
+					JSON::writeToStream(*os, data);
+					os->flush();
+				}
+			}
+		}
 	}
+	break;
+
+	}
+
 }
 
 BaseCommand * CVCommand::create(ControllableContainer * module, CommandContext context, var params)
