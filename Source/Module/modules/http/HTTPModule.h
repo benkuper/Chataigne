@@ -30,15 +30,11 @@ public:
 	const Identifier rawDataTypeId = "raw";
 	const Identifier dataEventId = "dataEvent";
 
-	OwnedArray<ControllableContainer> valueContainers;
-	
 	enum RequestMethod { GET, POST };
 	enum ResultDataType { RAW, JSON };
 
 
 	void sendRequest(StringRef address, RequestMethod method, ResultDataType dataType = ResultDataType::RAW, StringPairArray params = StringPairArray());
-
-
 
 	struct Request
 	{

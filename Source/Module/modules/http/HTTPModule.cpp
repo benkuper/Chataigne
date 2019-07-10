@@ -23,7 +23,7 @@ HTTPModule::HTTPModule(const String &name) :
 	clearValues = moduleParams.addTrigger("Clear values", "When triggered, this will remove all stored values in this module");
 
 	valuesCC.userCanAddControllables = true;
-	//valuesCC.saveAndLoadRecursiveData = true;
+	valuesCC.saveAndLoadRecursiveData = true;
 
 	defManager.add(CommandDefinition::createDef(this, "", "Request", &HTTPCommand::create, CommandContext::BOTH));
 	
@@ -124,12 +124,16 @@ void HTTPModule::createControllablesFromJSONResult(var data, ControllableContain
 		if (p.value.isObject())
 		{
 			ControllableContainer* cc = container->getControllableContainerByName(p.name.toString(), true);
-			if(cc == nullptr) cc = new ControllableContainer(p.name.toString());
-			cc->userCanAddControllables = true;
-			//cc->saveAndLoadRecursiveData = true;
-			valueContainers.add(cc);
+			if (cc == nullptr)
+			{
+				cc = new ControllableContainer(p.name.toString());
+				container->addChildControllableContainer(cc, true);
+				cc->userCanAddControllables = true;
+				cc->saveAndLoadRecursiveData = true;
+				cc->saveAndLoadName = true;
+			}
+
 			createControllablesFromJSONResult(p.value, cc);
-			container->addChildControllableContainer(cc);
 		}
 		else
 		{
@@ -179,8 +183,6 @@ void HTTPModule::onControllableFeedbackUpdateInternal(ControllableContainer*, Co
 	{
 		for(auto & tc : valuesCC.controllables) valuesCC.removeControllable(tc);
 		for (auto& cc : valuesCC.controllableContainers) valuesCC.removeChildControllableContainer(cc);
-		valuesCC.clear();
-		valueContainers.clear();
 	}
 }
 
