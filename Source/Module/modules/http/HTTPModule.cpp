@@ -121,7 +121,24 @@ void HTTPModule::createControllablesFromJSONResult(var data, ControllableContain
 
 	for (auto& p : props)
 	{
-		if (p.value.isObject())
+		if (p.value.isArray())
+		{
+			for (int i = 0; i < p.value.size(); i++)
+			{
+				ControllableContainer* cc = container->getControllableContainerByName(String(i), true);
+				if (cc == nullptr)
+				{
+					cc = new ControllableContainer(String(i));
+					container->addChildControllableContainer(cc, true);
+					cc->userCanAddControllables = true;
+					cc->saveAndLoadRecursiveData = true;
+					cc->saveAndLoadName = true;
+				}
+
+				createControllablesFromJSONResult(p.value[i], cc);
+			}
+			
+		}else if (p.value.isObject())
 		{
 			ControllableContainer* cc = container->getControllableContainerByName(p.name.toString(), true);
 			if (cc == nullptr)
