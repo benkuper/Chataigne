@@ -557,6 +557,10 @@
 			isa = PBXBuildFile;
 			fileRef = 923AE5135E5069CB080C5867;
 		};
+		38B081F77C4704EC79C5466F = {
+			isa = PBXBuildFile;
+			fileRef = 4EC002DAFB1BBDC9C03CD4D6;
+		};
 		C83A2D0BD025D7F6C8AECA11 = {
 			isa = PBXBuildFile;
 			fileRef = 4ACCC8CEBA85463BA443B321;
@@ -2765,6 +2769,13 @@
 			path = ../../Source/Module/modules/controller/myo/MyoDevice.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
+		4EC002DAFB1BBDC9C03CD4D6 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = ScriptCallbackCommand.cpp;
+			path = ../../Source/Module/modules/common/commands/scriptcallback/ScriptCallbackCommand.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		4EF08030F4B5BF335BC0DDD8 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -3617,6 +3628,13 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = TimeTriggerManager.cpp;
 			path = ../../Source/TimeMachine/Sequence/Layer/layers/trigger/TimeTriggerManager.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
+		7FCAFC7304EC00159AB9C5F2 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = ScriptCallbackCommand.h;
+			path = ../../Source/Module/modules/common/commands/scriptcallback/ScriptCallbackCommand.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		817DE9E50F15959C24915DC6 = {
@@ -6775,6 +6793,15 @@
 			name = audio;
 			sourceTree = "<group>";
 		};
+		01C1F807C4474B0B0E302940 = {
+			isa = PBXGroup;
+			children = (
+				4EC002DAFB1BBDC9C03CD4D6,
+				7FCAFC7304EC00159AB9C5F2,
+			);
+			name = scriptcallback;
+			sourceTree = "<group>";
+		};
 		FA530EB4601FEACE8CACDBCD = {
 			isa = PBXGroup;
 			children = (
@@ -6822,6 +6849,7 @@
 		DBD563325091B44357FF63F8 = {
 			isa = PBXGroup;
 			children = (
+				01C1F807C4474B0B0E302940,
 				3722458946AD3C9232F47376,
 				67B72C40AB66D5213AE9FBF9,
 			);
@@ -8063,7 +8091,7 @@
 					"_DEBUG=1",
 					"DEBUG=1",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
-					"JUCE_APP_VERSION=1.6.3b6",
+					"JUCE_APP_VERSION=1.6.3b7",
 					"JUCE_APP_VERSION_HEX=0x10603",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
@@ -8119,7 +8147,7 @@
 					"_NDEBUG=1",
 					"NDEBUG=1",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
-					"JUCE_APP_VERSION=1.6.3b6",
+					"JUCE_APP_VERSION=1.6.3b7",
 					"JUCE_APP_VERSION_HEX=0x10603",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
@@ -8406,6 +8434,7 @@
 				8860CFD2716A05D12B8F6B8C,
 				FDCA90E38FC8A70DA5C9B59E,
 				38943F372FE48254AA4E7025,
+				38B081F77C4704EC79C5466F,
 				C83A2D0BD025D7F6C8AECA11,
 				F7CAB0F82333CA983C5984DD,
 				3BDB9330B75641F168BCEB29,

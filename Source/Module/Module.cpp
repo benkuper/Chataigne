@@ -16,6 +16,7 @@
 #include "UI/ChataigneAssetManager.h"
 #include "Common/Command/BaseCommandHandler.h"
 #include "ModuleCommandTester.h"
+#include "modules/common/commands/scriptcallback/ScriptCallbackCommand.h"
 
 Module::Module(const String& name) :
 	BaseItem(name, true, true),
@@ -68,6 +69,8 @@ Module::Module(const String& name) :
 	addChildControllableContainer(&templateManager);
 
 	scriptManager->scriptTemplate = ChataigneAssetManager::getInstance()->getScriptTemplateBundle(StringArray("generic","module"));
+
+	scriptCommanDef.reset(CommandDefinition::createDef(this, "", "Script callback", &ScriptCallbackCommand::create));
 }
 
 Module::~Module()
@@ -111,12 +114,15 @@ Array<CommandDefinition*> Module::getCommands(bool includeTemplateCommands)
 		for (auto &td : templateManager.defManager.definitions) result.add(td);
 	}
 
+	result.add(scriptCommanDef.get());
+
 	return result;
 }
 
 CommandDefinition * Module::getCommandDefinitionFor(StringRef menu, StringRef name)
 {
 	if (menu == templateManager.menuName) return templateManager.defManager.getCommandDefinitionFor(menu, name);
+	if (name == String("Script callback")) return scriptCommanDef.get();
 	return defManager.getCommandDefinitionFor(menu, name);
 }
 
@@ -125,12 +131,13 @@ PopupMenu Module::getCommandMenu(int offset, CommandContext context)
 	PopupMenu m = defManager.getCommandMenu(offset, context);
 	m.addSeparator();
 	templateManager.defManager.addCommandsToMenu(&m,offset + 500, context);
-	
+	m.addItem(offset+401, "Script callback");
 	return m;
 }
 
 CommandDefinition * Module::getCommandDefinitionForItemID(int itemID)
 {
+	if (itemID == 400) return scriptCommanDef.get();
 	if(itemID >= 500) return templateManager.defManager.definitions[itemID-500];
 	else return defManager.definitions[itemID];
 }
@@ -196,8 +203,6 @@ void Module::setupModuleFromJSONData(var data)
 
 	createControllablesForContainer(data.getProperty("parameters", var()), &moduleParams);
 	createControllablesForContainer(data.getProperty("values", var()), &valuesCC);
-
-	
 
 	Array<WeakReference<Controllable>> valueList = getValueControllables();
 

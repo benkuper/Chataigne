@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.6.3b6"
+<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.6.3b7"
               bundleIdentifier="benkuper.Chataigne" includeBinaryInAppConfig="1"
               jucerVersion="5.4.3" companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
               companyEmail="benjamin@kuperberg.fr" defines="" splashScreenColour="Dark"
@@ -592,6 +592,12 @@
           </GROUP>
           <GROUP id="{01EC461B-4BC5-C8F7-D379-477B101B8032}" name="common">
             <GROUP id="{FAB3DA65-9EC2-9C28-3056-B0C9309EFBEE}" name="commands">
+              <GROUP id="{D2E06C78-3A38-5C4B-026F-DE4BEE83F13E}" name="scriptcallback">
+                <FILE id="kJSyrI" name="ScriptCallbackCommand.cpp" compile="1" resource="0"
+                      file="Source/Module/modules/common/commands/scriptcallback/ScriptCallbackCommand.cpp"/>
+                <FILE id="EPqsRa" name="ScriptCallbackCommand.h" compile="0" resource="0"
+                      file="Source/Module/modules/common/commands/scriptcallback/ScriptCallbackCommand.h"/>
+              </GROUP>
               <GROUP id="{B061FF30-9D17-6208-8F0E-14FF411E0ACD}" name="scriptcommands">
                 <GROUP id="{93968D0B-6B90-7857-AA1F-30385F5B26FE}" name="ui">
                   <FILE id="YM9AVa" name="MappableParameterEditor.cpp" compile="1" resource="0"

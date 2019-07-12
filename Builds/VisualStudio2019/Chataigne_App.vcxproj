@@ -66,7 +66,7 @@
       <Optimization>Disabled</Optimization>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <AdditionalIncludeDirectories>..\..\JuceLibraryCode;D:\Softwares\JUCE\modules;..\..\..\..\..\..\Softwares\JUCE\modules;D:\Documents\Perso\Projects\JUCE Modules;../../External/wiiuse;../../External/serial/include;../../External/asio;../../External/kinect/include;../../External/joycon/include;../../External/servus/include;../../External/dnssd/include;../../External/ois/include;../../External/sdl/include;../../External/libartnet/include;../../Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;DEBUG;_DEBUG;USE_KINECT=1;JUCER_VS2019_78A5026=1;JUCE_APP_VERSION=1.6.3b6;JUCE_APP_VERSION_HEX=0x10603;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_RTAS=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;DEBUG;_DEBUG;USE_KINECT=1;JUCER_VS2019_78A5026=1;JUCE_APP_VERSION=1.6.3b7;JUCE_APP_VERSION_HEX=0x10603;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_RTAS=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <PrecompiledHeader/>
@@ -112,7 +112,7 @@
     <ClCompile>
       <Optimization>Full</Optimization>
       <AdditionalIncludeDirectories>..\..\JuceLibraryCode;D:\Softwares\JUCE\modules;..\..\..\..\..\..\Softwares\JUCE\modules;D:\Documents\Perso\Projects\JUCE Modules;../../External/wiiuse;../../External/serial/include;../../External/asio;../../External/kinect/include;../../External/joycon/include;../../External/servus/include;../../External/dnssd/include;../../External/sdl/include;../../External/libartnet/include;../../Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;NDEBUG;USE_KINECT=1;JUCER_VS2019_78A5026=1;JUCE_APP_VERSION=1.6.3b6;JUCE_APP_VERSION_HEX=0x10603;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_RTAS=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;NDEBUG;USE_KINECT=1;JUCER_VS2019_78A5026=1;JUCE_APP_VERSION=1.6.3b7;JUCE_APP_VERSION_HEX=0x10603;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_RTAS=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <PrecompiledHeader/>
@@ -269,6 +269,7 @@
     <ClCompile Include="..\..\Source\Module\modules\audio\commands\PlayAudioFileCommand.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\audio\ui\AudioModuleHardwareEditor.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\audio\AudioModule.cpp"/>
+    <ClCompile Include="..\..\Source\Module\modules\common\commands\scriptcallback\ScriptCallbackCommand.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\common\commands\scriptcommands\ui\MappableParameterEditor.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\common\commands\scriptcommands\ui\ScriptCommandEditor.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\common\commands\scriptcommands\ScriptCommand.cpp"/>
@@ -2876,6 +2877,7 @@
     <ClInclude Include="..\..\Source\Module\modules\audio\libs\pitch\PitchYIN.h"/>
     <ClInclude Include="..\..\Source\Module\modules\audio\ui\AudioModuleHardwareEditor.h"/>
     <ClInclude Include="..\..\Source\Module\modules\audio\AudioModule.h"/>
+    <ClInclude Include="..\..\Source\Module\modules\common\commands\scriptcallback\ScriptCallbackCommand.h"/>
     <ClInclude Include="..\..\Source\Module\modules\common\commands\scriptcommands\ui\MappableParameterEditor.h"/>
     <ClInclude Include="..\..\Source\Module\modules\common\commands\scriptcommands\ui\ScriptCommandEditor.h"/>
     <ClInclude Include="..\..\Source\Module\modules\common\commands\scriptcommands\ScriptCommand.h"/>

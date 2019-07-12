@@ -14,6 +14,7 @@
 CommandDefinition * CommandFactory::showMenuAndGetCommand(CommandContext context, Module * lockedModule)
 {
 	PopupMenu m = (lockedModule == nullptr) ? ModuleManager::getInstance()->getAllModulesCommandMenu(context) : lockedModule->getCommandMenu(0, context);
+	
 	int result = m.show();
 	if (result != 0) return ModuleManager::getInstance()->getCommandDefinitionForItemID(result,lockedModule);
 

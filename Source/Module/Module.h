@@ -46,6 +46,7 @@ public:
 	bool includeValuesInSave;
 
 	std::unique_ptr<ModuleCommandTester> commandTester;
+	std::unique_ptr<CommandDefinition> scriptCommanDef;
 
 	String customType; //for custom modules;
 
