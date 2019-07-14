@@ -17,7 +17,7 @@ class BaseGuide :
 	public Component
 {
 public:
-	BaseGuide(const String &name);
+	BaseGuide(const String &name = "");
 	virtual ~BaseGuide();
 
 	String guideName;
@@ -36,7 +36,7 @@ public:
 	void nextStep();
 	void setCurrentStep(int step);
 
-	virtual void handleStep(int step) = 0;
+	virtual void handleStep(int step) {};
 	virtual void launchFinish();
 	void finish();
 

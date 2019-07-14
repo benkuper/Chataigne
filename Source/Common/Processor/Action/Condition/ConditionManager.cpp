@@ -66,8 +66,8 @@ void ConditionManager::setHasActivationDefinitions(bool value)
 	{
 		if (activateDef == nullptr && deactivateDef == nullptr)
 		{
-			activateDef = Factory<Condition>::Definition::createDef("", ActivationCondition::getTypeStringStatic(ActivationCondition::ON_ACTIVATE), &ActivationCondition::create)->addParam("type", ActivationCondition::ON_ACTIVATE);
-			deactivateDef = Factory<Condition>::Definition::createDef("", ActivationCondition::getTypeStringStatic(ActivationCondition::ON_DEACTIVATE), &ActivationCondition::create)->addParam("type", ActivationCondition::ON_DEACTIVATE);
+			activateDef = (Factory<Condition>::Definition *)Factory<Condition>::Definition::createDef("", ActivationCondition::getTypeStringStatic(ActivationCondition::ON_ACTIVATE), &ActivationCondition::create)->addParam("type", ActivationCondition::ON_ACTIVATE);
+			deactivateDef = (Factory<Condition>::Definition *)Factory<Condition>::Definition::createDef("", ActivationCondition::getTypeStringStatic(ActivationCondition::ON_DEACTIVATE), &ActivationCondition::create)->addParam("type", ActivationCondition::ON_DEACTIVATE);
 			factory.defs.add(activateDef);
 			factory.defs.add(deactivateDef);
 			factory.buildPopupMenu();
