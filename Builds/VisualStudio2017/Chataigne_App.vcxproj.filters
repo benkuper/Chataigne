@@ -4216,9 +4216,6 @@
     <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\manager\BaseItem.cpp">
       <Filter>JUCE Modules\juce_organicui\manager</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\manager\Factory.cpp">
-      <Filter>JUCE Modules\juce_organicui\manager</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\manager\GenericControllableItem.cpp">
       <Filter>JUCE Modules\juce_organicui\manager</Filter>
     </ClCompile>
