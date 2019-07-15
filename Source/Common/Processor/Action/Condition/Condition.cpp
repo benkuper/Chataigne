@@ -22,6 +22,7 @@ Condition::Condition(const String &n, var /*params*/) :
 	isValid = addBoolParameter("Is Valid", "Where the condition passed the test or not.", false);
 	isValid->setControllableFeedbackOnly(true);
 	isValid->hideInEditor = true;
+	isValid->isSavable = false;
 }
 
 Condition::~Condition()

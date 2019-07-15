@@ -214,14 +214,6 @@ void AudioLayer::audioSetupChanged()
     setAudioModule(audioModule); //force recreate out channels
 }
 
-void AudioLayer::onContainerParameterChangedInternal(Parameter * p)
-{
-	SequenceLayer::onContainerParameterChangedInternal(p);
-
-	//DBG("audio layer container parameter changed internal " << p->niceName);
-
-
-}
 
 void AudioLayer::onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c)
 {
@@ -253,7 +245,6 @@ var AudioLayer::getJSONData()
 void AudioLayer::loadJSONDataInternal(var data)
 {
 	channelsData = data.getProperty("channels", var());
-
 
 	SequenceLayer::loadJSONDataInternal(data);
 	clipManager.loadJSONData(data.getProperty("clipManager", var()));

@@ -33,12 +33,12 @@ ConditionManager::ConditionManager(bool _operatorOnSide) :
 	factory.defs.add(Factory<Condition>::Definition::createDef("", ConditionGroup::getTypeStringStatic(), &ConditionGroup::create));
 	factory.defs.add(Factory<Condition>::Definition::createDef("", ScriptCondition::getTypeStringStatic(), &ScriptCondition::create));
 	
-	
 	selectItemWhenCreated = false;
 
 	isValid = addBoolParameter("Is Valid","Indicates if all the conditions are valid. If so, the consequences are triggered one time, at the moment the action becomes valid.",false);
 	isValid->isControllableFeedbackOnly = true;
 	isValid->hideInEditor = true;
+	isValid->isSavable = false;
 
 	conditionOperator = addEnumParameter("Operator", "Operator for this manager, will decides how the conditions are validated");
 	conditionOperator->addOption("AND", ConditionOperator::AND);
@@ -53,6 +53,7 @@ ConditionManager::ConditionManager(bool _operatorOnSide) :
 	validationProgress->setControllableFeedbackOnly(true);
 	validationProgress->setEnabled(false);
 	validationProgress->hideInEditor = true;
+	validationProgress->isSavable = false;
 }
 
 ConditionManager::~ConditionManager()

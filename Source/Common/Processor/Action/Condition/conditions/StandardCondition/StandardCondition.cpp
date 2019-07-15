@@ -20,7 +20,6 @@ StandardCondition::StandardCondition(var params) :
 	sourceTarget->customGetTargetFunc = &ModuleManager::showAllValuesAndGetControllable;
 	sourceTarget->customGetControllableLabelFunc = &Module::getTargetLabelForValueControllable;
 	sourceTarget->customCheckAssignOnNextChangeFunc = &ModuleManager::checkControllableIsAValue;
-
 	sourceTarget->hideInEditor = true;
 }
 
