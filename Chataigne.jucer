@@ -1258,7 +1258,7 @@
       <MODULEPATHS>
         <MODULEPATH id="juce_video"/>
         <MODULEPATH id="juce_osc"/>
-        <MODULEPATH id="juce_organicui"/>
+        <MODULEPATH id="juce_organicui" path="../JUCE Modules"/>
         <MODULEPATH id="juce_opengl"/>
         <MODULEPATH id="juce_gui_extra"/>
         <MODULEPATH id="juce_gui_basics"/>
@@ -1269,12 +1269,12 @@
         <MODULEPATH id="juce_core"/>
         <MODULEPATH id="juce_audio_utils"/>
         <MODULEPATH id="juce_audio_processors"/>
-        <MODULEPATH id="juce_audio_formats"/>
         <MODULEPATH id="juce_audio_devices"/>
         <MODULEPATH id="juce_audio_basics"/>
         <MODULEPATH id="juce_analytics"/>
-        <MODULEPATH id="juce_dsp" path="../../../../Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_dsp"/>
         <MODULEPATH id="juce_timeline" path="../JUCE Modules"/>
+        <MODULEPATH id="juce_audio_formats" path="D:/Softwares\JUCE\modules"/>
       </MODULEPATHS>
     </VS2019>
     <VS2017 targetFolder="Builds/VisualStudio2017" externalLibraries="Setupapi.lib&#10;hid.lib&#10;Kinect20.lib&#10;joytime-core.lib&#10;joytime-input-hidapi.lib&#10;Servus.lib&#10;dnssd.lib&#10;SDL2.lib&#10;libartnet.lib&#10;iphlpapi.lib"
@@ -1291,25 +1291,25 @@
                        linkTimeOptimisation="1"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
-        <MODULEPATH id="juce_video" path="D:/Softwares\JUCE\modules"/>
-        <MODULEPATH id="juce_osc" path="D:/Softwares\JUCE\modules"/>
+        <MODULEPATH id="juce_video"/>
+        <MODULEPATH id="juce_osc"/>
         <MODULEPATH id="juce_organicui" path="../JUCE Modules"/>
-        <MODULEPATH id="juce_opengl" path="D:/Softwares\JUCE\modules"/>
-        <MODULEPATH id="juce_gui_extra" path="D:/Softwares\JUCE\modules"/>
-        <MODULEPATH id="juce_gui_basics" path="D:/Softwares\JUCE\modules"/>
-        <MODULEPATH id="juce_graphics" path="D:/Softwares\JUCE\modules"/>
-        <MODULEPATH id="juce_events" path="D:/Softwares\JUCE\modules"/>
-        <MODULEPATH id="juce_data_structures" path="D:/Softwares\JUCE\modules"/>
-        <MODULEPATH id="juce_cryptography" path="D:/Softwares\JUCE\modules"/>
-        <MODULEPATH id="juce_core" path="D:/Softwares\JUCE\modules"/>
-        <MODULEPATH id="juce_audio_utils" path="D:/Softwares\JUCE\modules"/>
-        <MODULEPATH id="juce_audio_processors" path="D:/Softwares\JUCE\modules"/>
-        <MODULEPATH id="juce_audio_formats" path="D:/Softwares\JUCE\modules"/>
-        <MODULEPATH id="juce_audio_devices" path="D:/Softwares\JUCE\modules"/>
-        <MODULEPATH id="juce_audio_basics" path="D:/Softwares\JUCE\modules"/>
+        <MODULEPATH id="juce_opengl"/>
+        <MODULEPATH id="juce_gui_extra"/>
+        <MODULEPATH id="juce_gui_basics"/>
+        <MODULEPATH id="juce_graphics"/>
+        <MODULEPATH id="juce_events"/>
+        <MODULEPATH id="juce_data_structures"/>
+        <MODULEPATH id="juce_cryptography"/>
+        <MODULEPATH id="juce_core"/>
+        <MODULEPATH id="juce_audio_utils"/>
+        <MODULEPATH id="juce_audio_processors"/>
+        <MODULEPATH id="juce_audio_devices"/>
+        <MODULEPATH id="juce_audio_basics"/>
         <MODULEPATH id="juce_analytics" path="D:/Softwares\JUCE\modules"/>
-        <MODULEPATH id="juce_dsp" path="../../../../Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_dsp"/>
         <MODULEPATH id="juce_timeline" path="../JUCE Modules"/>
+        <MODULEPATH id="juce_audio_formats" path="D:/Softwares\JUCE\modules"/>
       </MODULEPATHS>
     </VS2017>
     <XCODE_MAC targetFolder="Builds/MacOSX" smallIcon="nVz6Li" bigIcon="nVz6Li"
@@ -1336,15 +1336,15 @@
         <MODULEPATH id="juce_cryptography" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_core" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_audio_processors" path="~/JUCE/modules"/>
-        <MODULEPATH id="juce_audio_formats" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_audio_devices" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_audio_basics" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_audio_utils" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_gui_extra" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_organicui" path="../JUCE Modules"/>
         <MODULEPATH id="juce_analytics" path="~/JUCE/modules"/>
-        <MODULEPATH id="juce_dsp" path="../../../../Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_dsp" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_timeline" path="../JUCE Modules"/>
+        <MODULEPATH id="juce_audio_formats" path="~/JUCE/modules"/>
       </MODULEPATHS>
     </XCODE_MAC>
     <LINUX_MAKE targetFolder="Builds/Raspberry" smallIcon="nVz6Li" bigIcon="nVz6Li"
@@ -1371,12 +1371,12 @@
         <MODULEPATH id="juce_core" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_audio_utils" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_audio_processors" path="~/JUCE/modules"/>
-        <MODULEPATH id="juce_audio_formats" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_audio_devices" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_audio_basics" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_analytics"/>
-        <MODULEPATH id="juce_dsp" path="../../../../Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_dsp" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_timeline" path="../JUCE Modules"/>
+        <MODULEPATH id="juce_audio_formats" path="~/JUCE/modules"/>
       </MODULEPATHS>
     </LINUX_MAKE>
     <LINUX_MAKE targetFolder="Builds/LinuxMakefile" externalLibraries="bluetooth&#10;Servus&#10;curl&#10;artnet"
@@ -1403,12 +1403,12 @@
         <MODULEPATH id="juce_core" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_audio_utils" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_audio_processors" path="~/JUCE/modules"/>
-        <MODULEPATH id="juce_audio_formats" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_audio_devices" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_audio_basics" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_analytics" path="~/JUCE/modules"/>
-        <MODULEPATH id="juce_dsp" path="../../../../Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_dsp" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_timeline" path="../JUCE Modules"/>
+        <MODULEPATH id="juce_audio_formats" path="~/JUCE/modules"/>
       </MODULEPATHS>
     </LINUX_MAKE>
     <VS2017 targetFolder="Builds/VisualStudio2017_CI" externalLibraries="Setupapi.lib&#10;hid.lib&#10;Kinect20.lib&#10;joytime-core.lib&#10;joytime-input-hidapi.lib&#10;Servus.lib&#10;dnssd.lib&#10;SDL2.lib&#10;libartnet.lib&#10;iphlpapi.lib"
@@ -1434,12 +1434,12 @@
         <MODULEPATH id="juce_core" path="../JUCE/modules"/>
         <MODULEPATH id="juce_audio_utils" path="../JUCE/modules"/>
         <MODULEPATH id="juce_audio_processors" path="../JUCE/modules"/>
-        <MODULEPATH id="juce_audio_formats" path="../JUCE/modules"/>
         <MODULEPATH id="juce_audio_devices" path="../JUCE/modules"/>
         <MODULEPATH id="juce_audio_basics" path="../JUCE/modules"/>
         <MODULEPATH id="juce_analytics" path="../JUCE/modules"/>
-        <MODULEPATH id="juce_dsp" path="../../../../Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_dsp" path="../JUCE/modules"/>
         <MODULEPATH id="juce_timeline" path="../JUCE Modules"/>
+        <MODULEPATH id="juce_audio_formats" path="../JUCE/modules"/>
       </MODULEPATHS>
     </VS2017>
     <VS2017 targetFolder="Builds/VisualStudio2017_Win7" externalLibraries="Setupapi.lib&#10;hid.lib&#10;joytime-core.lib&#10;joytime-input-hidapi.lib&#10;Servus.lib&#10;dnssd.lib&#10;SDL2.lib&#10;libartnet.lib&#10;iphlpapi.lib"
@@ -1453,25 +1453,25 @@
                        binaryPath="Binaries/Win7"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
-        <MODULEPATH id="juce_video" path="D:/Softwares\JUCE\modules"/>
-        <MODULEPATH id="juce_osc" path="D:/Softwares\JUCE\modules"/>
+        <MODULEPATH id="juce_video"/>
+        <MODULEPATH id="juce_osc"/>
         <MODULEPATH id="juce_organicui" path="../JUCE Modules"/>
-        <MODULEPATH id="juce_opengl" path="D:/Softwares\JUCE\modules"/>
-        <MODULEPATH id="juce_gui_extra" path="D:/Softwares\JUCE\modules"/>
-        <MODULEPATH id="juce_gui_basics" path="D:/Softwares\JUCE\modules"/>
-        <MODULEPATH id="juce_graphics" path="D:/Softwares\JUCE\modules"/>
-        <MODULEPATH id="juce_events" path="D:/Softwares\JUCE\modules"/>
-        <MODULEPATH id="juce_data_structures" path="D:/Softwares\JUCE\modules"/>
-        <MODULEPATH id="juce_cryptography" path="D:/Softwares\JUCE\modules"/>
-        <MODULEPATH id="juce_core" path="D:/Softwares\JUCE\modules"/>
-        <MODULEPATH id="juce_audio_utils" path="D:/Softwares\JUCE\modules"/>
-        <MODULEPATH id="juce_audio_processors" path="D:/Softwares\JUCE\modules"/>
-        <MODULEPATH id="juce_audio_formats" path="D:/Softwares\JUCE\modules"/>
+        <MODULEPATH id="juce_opengl"/>
+        <MODULEPATH id="juce_gui_extra"/>
+        <MODULEPATH id="juce_gui_basics"/>
+        <MODULEPATH id="juce_graphics"/>
+        <MODULEPATH id="juce_events"/>
+        <MODULEPATH id="juce_data_structures"/>
+        <MODULEPATH id="juce_cryptography"/>
+        <MODULEPATH id="juce_core"/>
+        <MODULEPATH id="juce_audio_utils"/>
+        <MODULEPATH id="juce_audio_processors"/>
         <MODULEPATH id="juce_audio_devices" path="D:/Softwares\JUCE\modules"/>
         <MODULEPATH id="juce_audio_basics" path="D:/Softwares\JUCE\modules"/>
         <MODULEPATH id="juce_analytics" path="D:/Softwares\JUCE\modules"/>
-        <MODULEPATH id="juce_dsp" path="../../../../Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_dsp"/>
         <MODULEPATH id="juce_timeline" path="../JUCE Modules"/>
+        <MODULEPATH id="juce_audio_formats"/>
       </MODULEPATHS>
     </VS2017>
   </EXPORTFORMATS>

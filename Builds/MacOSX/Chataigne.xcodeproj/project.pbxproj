@@ -1757,13 +1757,6 @@
 			path = ../../Source/Module/ModuleManager.h;
 			sourceTree = "SOURCE_ROOT";
 		};
-		211F61A316188516E88711A3 = {
-			isa = PBXFileReference;
-			lastKnownFileType = file;
-			name = "juce_dsp";
-			path = "../../../../../../Softwares/JUCE/modules/juce_dsp";
-			sourceTree = "SOURCE_ROOT";
-		};
 		2142D7BF8502B7933A19DFB9 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -2176,6 +2169,13 @@
 			name = BaseCommand.cpp;
 			path = ../../Source/Common/Command/BaseCommand.cpp;
 			sourceTree = "SOURCE_ROOT";
+		};
+		3AF9467129255C92F2F4A7B3 = {
+			isa = PBXFileReference;
+			lastKnownFileType = file;
+			name = "juce_dsp";
+			path = "~/JUCE/modules/juce_dsp";
+			sourceTree = "<absolute>";
 		};
 		3B99BE9C316E5F04AC3CD1DB = {
 			isa = PBXFileReference;
@@ -7349,7 +7349,7 @@
 				6E5D1560A551751CABF79621,
 				E02828640DADD827542B8456,
 				D4D03C54F677985319A479C3,
-				211F61A316188516E88711A3,
+				3AF9467129255C92F2F4A7B3,
 				629996A7896E858640C400FF,
 				48864DF910AB963EBAB81124,
 				32C9F3B10334451C423488F7,
@@ -7478,7 +7478,6 @@
 				HEADER_SEARCH_PATHS = (
 					"../../JuceLibraryCode",
 					"$(HOME)/JUCE/modules",
-					"../../../../../../Softwares/JUCE/modules",
 					"\"../../../JUCE Modules\"",
 					"../../External/wiiuse",
 					"../../External/serial/include",
@@ -7535,7 +7534,6 @@
 				HEADER_SEARCH_PATHS = (
 					"../../JuceLibraryCode",
 					"$(HOME)/JUCE/modules",
-					"../../../../../../Softwares/JUCE/modules",
 					"\"../../../JUCE Modules\"",
 					"../../External/wiiuse",
 					"../../External/serial/include",
