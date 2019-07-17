@@ -25,7 +25,7 @@
 #include "Module/Community/CommunityModuleManager.h"
 
 #include "StateMachine/StateManager.h"
-#include "TimeMachine/SequenceManager.h"
+#include "TimeMachine/ChataigneSequenceManager.h"
 
 
 #if JUCE_WINDOWS
@@ -46,11 +46,10 @@ ChataigneEngine::ChataigneEngine() :
 	Engine::mainEngine = this;
 	addChildControllableContainer(ModuleManager::getInstance());
 	addChildControllableContainer(StateManager::getInstance());
-	addChildControllableContainer(SequenceManager::getInstance());
+	addChildControllableContainer(ChataigneSequenceManager::getInstance());
 	addChildControllableContainer(ModuleRouterManager::getInstance());
 	addChildControllableContainer(CVGroupManager::getInstance());
 	
-
 	MIDIManager::getInstance(); //Trigger constructor, declare settings
 
 	CommunityModuleManager::getInstance(); //Trigger constructor, declare settings
@@ -74,7 +73,7 @@ ChataigneEngine::~ChataigneEngine()
 	CommunityModuleManager::deleteInstance();
 	ModuleRouterManager::deleteInstance();
 
-	SequenceManager::deleteInstance();
+	ChataigneSequenceManager::deleteInstance();
 	StateManager::deleteInstance();
 	ModuleManager::deleteInstance();
 
@@ -101,7 +100,7 @@ void ChataigneEngine::clearInternal()
 {
 	//clear
 	StateManager::getInstance()->clear();
-	SequenceManager::getInstance()->clear();
+	ChataigneSequenceManager::getInstance()->clear();
 
 	ModuleRouterManager::getInstance()->clear();
 	ModuleManager::getInstance()->clear();
@@ -125,7 +124,7 @@ var ChataigneEngine::getJSONData()
 	var sData = StateManager::getInstance()->getJSONData();
 	if(!sData.isVoid() && sData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty("stateManager", sData);
 
-	var seqData = SequenceManager::getInstance()->getJSONData();
+	var seqData = ChataigneSequenceManager::getInstance()->getJSONData();
 	if(!seqData.isVoid() && seqData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty("sequenceManager", seqData);
 
 	var rData = ModuleRouterManager::getInstance()->getJSONData();
@@ -166,7 +165,7 @@ void ChataigneEngine::loadJSONDataInternalEngine(var data, ProgressTask * loadin
 	stateTask->end();
 
 	sequenceTask->start();
-	SequenceManager::getInstance()->loadJSONData(data.getProperty("sequenceManager",var()));
+	ChataigneSequenceManager::getInstance()->loadJSONData(data.getProperty("sequenceManager",var()));
 	sequenceTask->setProgress(1);
 	sequenceTask->end();
 	

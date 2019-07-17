@@ -8,9 +8,9 @@
   ==============================================================================
 */
 
-#include "TimeMachine/SequenceManager.h"
+#include "TimeMachine/ChataigneSequenceManager.h"
 
-SequenceModule::SequenceModule(SequenceManager * _manager) :
+SequenceModule::SequenceModule(ChataigneSequenceManager * _manager) :
 	Module("Sequences"),
 	manager(_manager)
 {

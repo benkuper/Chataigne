@@ -393,50 +393,20 @@
     <ClCompile Include="..\..\Source\StateMachine\ui\StateMachineView.cpp"/>
     <ClCompile Include="..\..\Source\StateMachine\ui\StateManagerUI.cpp"/>
     <ClCompile Include="..\..\Source\StateMachine\StateManager.cpp"/>
-    <ClCompile Include="..\..\Source\TimeMachine\Sequence\Cue\ui\TimeCueManagerUI.cpp"/>
-    <ClCompile Include="..\..\Source\TimeMachine\Sequence\Cue\ui\TimeCueUI.cpp"/>
-    <ClCompile Include="..\..\Source\TimeMachine\Sequence\Cue\TimeCue.cpp"/>
-    <ClCompile Include="..\..\Source\TimeMachine\Sequence\Cue\TimeCueManager.cpp"/>
-    <ClCompile Include="..\..\Source\TimeMachine\Sequence\Layer\layers\audio\ui\AudioLayerClipManagerUI.cpp"/>
-    <ClCompile Include="..\..\Source\TimeMachine\Sequence\Layer\layers\audio\ui\AudioLayerClipUI.cpp"/>
-    <ClCompile Include="..\..\Source\TimeMachine\Sequence\Layer\layers\audio\ui\AudioLayerPanel.cpp"/>
-    <ClCompile Include="..\..\Source\TimeMachine\Sequence\Layer\layers\audio\ui\AudioLayerTimeline.cpp"/>
-    <ClCompile Include="..\..\Source\TimeMachine\Sequence\Layer\layers\audio\AudioLayer.cpp"/>
-    <ClCompile Include="..\..\Source\TimeMachine\Sequence\Layer\layers\audio\AudioLayerClip.cpp"/>
-    <ClCompile Include="..\..\Source\TimeMachine\Sequence\Layer\layers\audio\AudioLayerClipManager.cpp"/>
-    <ClCompile Include="..\..\Source\TimeMachine\Sequence\Layer\layers\mapping\timecolor\ui\TimeColorManagerUI.cpp"/>
-    <ClCompile Include="..\..\Source\TimeMachine\Sequence\Layer\layers\mapping\timecolor\ui\TimeColorUI.cpp"/>
-    <ClCompile Include="..\..\Source\TimeMachine\Sequence\Layer\layers\mapping\timecolor\TimeColor.cpp"/>
-    <ClCompile Include="..\..\Source\TimeMachine\Sequence\Layer\layers\mapping\timecolor\TimeColorManager.cpp"/>
-    <ClCompile Include="..\..\Source\TimeMachine\Sequence\Layer\layers\mapping\ui\MappingLayerEditor.cpp"/>
-    <ClCompile Include="..\..\Source\TimeMachine\Sequence\Layer\layers\mapping\ui\MappingLayerPanel.cpp"/>
-    <ClCompile Include="..\..\Source\TimeMachine\Sequence\Layer\layers\mapping\ui\MappingLayerTimeline.cpp"/>
-    <ClCompile Include="..\..\Source\TimeMachine\Sequence\Layer\layers\mapping\MappingLayer.cpp"/>
-    <ClCompile Include="..\..\Source\TimeMachine\Sequence\Layer\layers\trigger\ui\TimeTriggerManagerUI.cpp"/>
-    <ClCompile Include="..\..\Source\TimeMachine\Sequence\Layer\layers\trigger\ui\TimeTriggerMultiTransformer.cpp"/>
-    <ClCompile Include="..\..\Source\TimeMachine\Sequence\Layer\layers\trigger\ui\TimeTriggerUI.cpp"/>
-    <ClCompile Include="..\..\Source\TimeMachine\Sequence\Layer\layers\trigger\ui\TriggerLayerPanel.cpp"/>
-    <ClCompile Include="..\..\Source\TimeMachine\Sequence\Layer\layers\trigger\ui\TriggerLayerTimeline.cpp"/>
-    <ClCompile Include="..\..\Source\TimeMachine\Sequence\Layer\layers\trigger\TimeTrigger.cpp"/>
-    <ClCompile Include="..\..\Source\TimeMachine\Sequence\Layer\layers\trigger\TimeTriggerManager.cpp"/>
-    <ClCompile Include="..\..\Source\TimeMachine\Sequence\Layer\layers\trigger\TriggerLayer.cpp"/>
-    <ClCompile Include="..\..\Source\TimeMachine\Sequence\Layer\ui\SequenceLayerPanel.cpp"/>
-    <ClCompile Include="..\..\Source\TimeMachine\Sequence\Layer\ui\SequenceLayerPanelManagerUI.cpp"/>
-    <ClCompile Include="..\..\Source\TimeMachine\Sequence\Layer\ui\SequenceLayerTimeline.cpp"/>
-    <ClCompile Include="..\..\Source\TimeMachine\Sequence\Layer\ui\SequenceLayerTimelineManagerUI.cpp"/>
-    <ClCompile Include="..\..\Source\TimeMachine\Sequence\Layer\SequenceLayer.cpp"/>
-    <ClCompile Include="..\..\Source\TimeMachine\Sequence\Layer\SequenceLayerFactory.cpp"/>
-    <ClCompile Include="..\..\Source\TimeMachine\Sequence\Layer\SequenceLayerManager.cpp"/>
-    <ClCompile Include="..\..\Source\TimeMachine\Sequence\ui\SequenceEditor.cpp"/>
-    <ClCompile Include="..\..\Source\TimeMachine\Sequence\ui\SequenceTimelineHeader.cpp"/>
-    <ClCompile Include="..\..\Source\TimeMachine\Sequence\ui\SequenceTimelineNavigationUI.cpp"/>
-    <ClCompile Include="..\..\Source\TimeMachine\Sequence\ui\SequenceTimelineSeeker.cpp"/>
-    <ClCompile Include="..\..\Source\TimeMachine\Sequence\ui\SequenceTransportUI.cpp"/>
-    <ClCompile Include="..\..\Source\TimeMachine\Sequence\ui\SequenceUI.cpp"/>
-    <ClCompile Include="..\..\Source\TimeMachine\Sequence\Sequence.cpp"/>
-    <ClCompile Include="..\..\Source\TimeMachine\ui\SequenceManagerUI.cpp"/>
-    <ClCompile Include="..\..\Source\TimeMachine\ui\TimeMachineView.cpp"/>
-    <ClCompile Include="..\..\Source\TimeMachine\SequenceManager.cpp"/>
+    <ClCompile Include="..\..\Source\TimeMachine\Sequence\layers\audio\ui\ChataigneAudioLayerPanel.cpp"/>
+    <ClCompile Include="..\..\Source\TimeMachine\Sequence\layers\audio\ChataigneAudioLayer.cpp"/>
+    <ClCompile Include="..\..\Source\TimeMachine\Sequence\layers\mapping\timecolor\ui\TimeColorManagerUI.cpp"/>
+    <ClCompile Include="..\..\Source\TimeMachine\Sequence\layers\mapping\timecolor\ui\TimeColorUI.cpp"/>
+    <ClCompile Include="..\..\Source\TimeMachine\Sequence\layers\mapping\timecolor\TimeColor.cpp"/>
+    <ClCompile Include="..\..\Source\TimeMachine\Sequence\layers\mapping\timecolor\TimeColorManager.cpp"/>
+    <ClCompile Include="..\..\Source\TimeMachine\Sequence\layers\mapping\ui\MappingLayerEditor.cpp"/>
+    <ClCompile Include="..\..\Source\TimeMachine\Sequence\layers\mapping\ui\MappingLayerPanel.cpp"/>
+    <ClCompile Include="..\..\Source\TimeMachine\Sequence\layers\mapping\ui\MappingLayerTimeline.cpp"/>
+    <ClCompile Include="..\..\Source\TimeMachine\Sequence\layers\mapping\MappingLayer.cpp"/>
+    <ClCompile Include="..\..\Source\TimeMachine\Sequence\layers\action\ActionLayer.cpp"/>
+    <ClCompile Include="..\..\Source\TimeMachine\Sequence\layers\action\TimeAction.cpp"/>
+    <ClCompile Include="..\..\Source\TimeMachine\Sequence\ChataigneSequence.cpp"/>
+    <ClCompile Include="..\..\Source\TimeMachine\ChataigneSequenceManager.cpp"/>
     <ClCompile Include="..\..\Source\UI\AboutWindow.cpp"/>
     <ClCompile Include="..\..\Source\UI\ChataigneAssetManager.cpp"/>
     <ClCompile Include="..\..\Source\ChataigneEngine.cpp"/>
@@ -2723,6 +2693,171 @@
     <ClCompile Include="..\..\..\JUCE\modules\juce_osc\juce_osc.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode\BinaryData.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode\include_juce_audio_basics.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode\include_juce_audio_devices.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode\include_juce_audio_formats.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode\include_juce_audio_processors.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode\include_juce_core.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode\include_juce_cryptography.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode\include_juce_data_structures.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode\include_juce_events.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode\include_juce_graphics.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode\include_juce_gui_basics.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode\include_juce_gui_extra.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode\include_juce_opengl.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode\include_juce_video.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\resources\BinaryData.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Cue\ui\TimeCueManagerUI.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Cue\ui\TimeCueUI.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Cue\TimeCue.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Cue\TimeCueManager.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\audio\ui\AudioLayerClipManagerUI.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\audio\ui\AudioLayerClipUI.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\audio\ui\AudioLayerPanel.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\audio\ui\AudioLayerTimeline.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\audio\AudioLayer.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\audio\AudioLayerClip.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\audio\AudioLayerClipManager.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\Block\ui\LayerBlockManagerUI.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\Block\ui\LayerBlockUI.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\Block\LayerBlock.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\Block\LayerBlockManager.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\Trigger\ui\TimeTriggerManagerUI.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\Trigger\ui\TimeTriggerMultiTransformer.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\Trigger\ui\TimeTriggerUI.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\Trigger\ui\TriggerLayerPanel.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\Trigger\ui\TriggerLayerTimeline.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\Trigger\TimeTrigger.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\Trigger\TimeTriggerManager.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\Trigger\TriggerLayer.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\ui\SequenceLayerPanel.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\ui\SequenceLayerPanelManagerUI.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\ui\SequenceLayerTimeline.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\ui\SequenceLayerTimelineManagerUI.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\SequenceLayer.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\SequenceLayerManager.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\ui\SequenceEditorView.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\ui\SequenceTimelineHeader.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\ui\SequenceTimelineNavigationUI.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\ui\SequenceTimelineSeeker.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\ui\SequenceTransportUI.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\ui\SequenceUI.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Sequence.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\timeline\ui\SequenceManagerUI.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\timeline\ui\TimeMachineView.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\timeline\SequenceManager.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\juce_timeline.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\..\JUCE\modules\juce_video\capture\juce_CameraDevice.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -2751,6 +2886,7 @@
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_organicui.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_organicui2.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_osc.cpp"/>
+    <ClCompile Include="..\..\JuceLibraryCode\include_juce_timeline.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_video.cpp"/>
   </ItemGroup>
   <ItemGroup>
@@ -2985,50 +3121,21 @@
     <ClInclude Include="..\..\Source\StateMachine\ui\StateMachineView.h"/>
     <ClInclude Include="..\..\Source\StateMachine\ui\StateManagerUI.h"/>
     <ClInclude Include="..\..\Source\StateMachine\StateManager.h"/>
-    <ClInclude Include="..\..\Source\TimeMachine\Sequence\Cue\ui\TimeCueManagerUI.h"/>
-    <ClInclude Include="..\..\Source\TimeMachine\Sequence\Cue\ui\TimeCueUI.h"/>
-    <ClInclude Include="..\..\Source\TimeMachine\Sequence\Cue\TimeCue.h"/>
-    <ClInclude Include="..\..\Source\TimeMachine\Sequence\Cue\TimeCueManager.h"/>
-    <ClInclude Include="..\..\Source\TimeMachine\Sequence\Layer\layers\audio\ui\AudioLayerClipManagerUI.h"/>
-    <ClInclude Include="..\..\Source\TimeMachine\Sequence\Layer\layers\audio\ui\AudioLayerClipUI.h"/>
-    <ClInclude Include="..\..\Source\TimeMachine\Sequence\Layer\layers\audio\ui\AudioLayerPanel.h"/>
-    <ClInclude Include="..\..\Source\TimeMachine\Sequence\Layer\layers\audio\ui\AudioLayerTimeline.h"/>
-    <ClInclude Include="..\..\Source\TimeMachine\Sequence\Layer\layers\audio\AudioLayer.h"/>
-    <ClInclude Include="..\..\Source\TimeMachine\Sequence\Layer\layers\audio\AudioLayerClip.h"/>
-    <ClInclude Include="..\..\Source\TimeMachine\Sequence\Layer\layers\audio\AudioLayerClipManager.h"/>
-    <ClInclude Include="..\..\Source\TimeMachine\Sequence\Layer\layers\mapping\timecolor\ui\TimeColorManagerUI.h"/>
-    <ClInclude Include="..\..\Source\TimeMachine\Sequence\Layer\layers\mapping\timecolor\ui\TimeColorUI.h"/>
-    <ClInclude Include="..\..\Source\TimeMachine\Sequence\Layer\layers\mapping\timecolor\TimeColor.h"/>
-    <ClInclude Include="..\..\Source\TimeMachine\Sequence\Layer\layers\mapping\timecolor\TimeColorManager.h"/>
-    <ClInclude Include="..\..\Source\TimeMachine\Sequence\Layer\layers\mapping\ui\MappingLayerEditor.h"/>
-    <ClInclude Include="..\..\Source\TimeMachine\Sequence\Layer\layers\mapping\ui\MappingLayerPanel.h"/>
-    <ClInclude Include="..\..\Source\TimeMachine\Sequence\Layer\layers\mapping\ui\MappingLayerTimeline.h"/>
-    <ClInclude Include="..\..\Source\TimeMachine\Sequence\Layer\layers\mapping\MappingLayer.h"/>
-    <ClInclude Include="..\..\Source\TimeMachine\Sequence\Layer\layers\trigger\ui\TimeTriggerManagerUI.h"/>
-    <ClInclude Include="..\..\Source\TimeMachine\Sequence\Layer\layers\trigger\ui\TimeTriggerMultiTransformer.h"/>
-    <ClInclude Include="..\..\Source\TimeMachine\Sequence\Layer\layers\trigger\ui\TimeTriggerUI.h"/>
-    <ClInclude Include="..\..\Source\TimeMachine\Sequence\Layer\layers\trigger\ui\TriggerLayerPanel.h"/>
-    <ClInclude Include="..\..\Source\TimeMachine\Sequence\Layer\layers\trigger\ui\TriggerLayerTimeline.h"/>
-    <ClInclude Include="..\..\Source\TimeMachine\Sequence\Layer\layers\trigger\TimeTrigger.h"/>
-    <ClInclude Include="..\..\Source\TimeMachine\Sequence\Layer\layers\trigger\TimeTriggerManager.h"/>
-    <ClInclude Include="..\..\Source\TimeMachine\Sequence\Layer\layers\trigger\TriggerLayer.h"/>
-    <ClInclude Include="..\..\Source\TimeMachine\Sequence\Layer\ui\SequenceLayerPanel.h"/>
-    <ClInclude Include="..\..\Source\TimeMachine\Sequence\Layer\ui\SequenceLayerPanelManagerUI.h"/>
-    <ClInclude Include="..\..\Source\TimeMachine\Sequence\Layer\ui\SequenceLayerTimeline.h"/>
-    <ClInclude Include="..\..\Source\TimeMachine\Sequence\Layer\ui\SequenceLayerTimelineManagerUI.h"/>
-    <ClInclude Include="..\..\Source\TimeMachine\Sequence\Layer\SequenceLayer.h"/>
-    <ClInclude Include="..\..\Source\TimeMachine\Sequence\Layer\SequenceLayerFactory.h"/>
-    <ClInclude Include="..\..\Source\TimeMachine\Sequence\Layer\SequenceLayerManager.h"/>
-    <ClInclude Include="..\..\Source\TimeMachine\Sequence\ui\SequenceEditor.h"/>
-    <ClInclude Include="..\..\Source\TimeMachine\Sequence\ui\SequenceTimelineHeader.h"/>
-    <ClInclude Include="..\..\Source\TimeMachine\Sequence\ui\SequenceTimelineNavigationUI.h"/>
-    <ClInclude Include="..\..\Source\TimeMachine\Sequence\ui\SequenceTimelineSeeker.h"/>
-    <ClInclude Include="..\..\Source\TimeMachine\Sequence\ui\SequenceTransportUI.h"/>
-    <ClInclude Include="..\..\Source\TimeMachine\Sequence\ui\SequenceUI.h"/>
-    <ClInclude Include="..\..\Source\TimeMachine\Sequence\Sequence.h"/>
-    <ClInclude Include="..\..\Source\TimeMachine\ui\SequenceManagerUI.h"/>
-    <ClInclude Include="..\..\Source\TimeMachine\ui\TimeMachineView.h"/>
-    <ClInclude Include="..\..\Source\TimeMachine\SequenceManager.h"/>
+    <ClInclude Include="..\..\Source\TimeMachine\Sequence\layers\audio\ui\ChataigneAudioLayerPanel.h"/>
+    <ClInclude Include="..\..\Source\TimeMachine\Sequence\layers\audio\ChataigneAudioLayer.h"/>
+    <ClInclude Include="..\..\Source\TimeMachine\Sequence\layers\audio\ChataigneAudioLayerListener.h"/>
+    <ClInclude Include="..\..\Source\TimeMachine\Sequence\layers\mapping\timecolor\ui\TimeColorManagerUI.h"/>
+    <ClInclude Include="..\..\Source\TimeMachine\Sequence\layers\mapping\timecolor\ui\TimeColorUI.h"/>
+    <ClInclude Include="..\..\Source\TimeMachine\Sequence\layers\mapping\timecolor\TimeColor.h"/>
+    <ClInclude Include="..\..\Source\TimeMachine\Sequence\layers\mapping\timecolor\TimeColorManager.h"/>
+    <ClInclude Include="..\..\Source\TimeMachine\Sequence\layers\mapping\ui\MappingLayerEditor.h"/>
+    <ClInclude Include="..\..\Source\TimeMachine\Sequence\layers\mapping\ui\MappingLayerPanel.h"/>
+    <ClInclude Include="..\..\Source\TimeMachine\Sequence\layers\mapping\ui\MappingLayerTimeline.h"/>
+    <ClInclude Include="..\..\Source\TimeMachine\Sequence\layers\mapping\MappingLayer.h"/>
+    <ClInclude Include="..\..\Source\TimeMachine\Sequence\layers\action\ActionLayer.h"/>
+    <ClInclude Include="..\..\Source\TimeMachine\Sequence\layers\action\TimeAction.h"/>
+    <ClInclude Include="..\..\Source\TimeMachine\Sequence\ChataigneSequence.h"/>
+    <ClInclude Include="..\..\Source\TimeMachine\ChataigneSequenceManager.h"/>
     <ClInclude Include="..\..\Source\UI\AboutWindow.h"/>
     <ClInclude Include="..\..\Source\UI\ChataigneAssetManager.h"/>
     <ClInclude Include="..\..\Source\ChataigneEngine.h"/>
@@ -3918,6 +4025,50 @@
     <ClInclude Include="..\..\..\JUCE\modules\juce_osc\osc\juce_OSCTimeTag.h"/>
     <ClInclude Include="..\..\..\JUCE\modules\juce_osc\osc\juce_OSCTypes.h"/>
     <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_osc\juce_osc.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode\AppConfig.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode\BinaryData.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode\JuceHeader.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\resources\BinaryData.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Cue\ui\TimeCueManagerUI.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Cue\ui\TimeCueUI.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Cue\TimeCue.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Cue\TimeCueManager.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\audio\ui\AudioLayerClipManagerUI.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\audio\ui\AudioLayerClipUI.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\audio\ui\AudioLayerPanel.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\audio\ui\AudioLayerTimeline.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\audio\AudioLayer.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\audio\AudioLayerClip.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\audio\AudioLayerClipManager.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\Block\ui\LayerBlockManagerUI.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\Block\ui\LayerBlockUI.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\Block\LayerBlock.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\Block\LayerBlockManager.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\Trigger\ui\TimeTriggerManagerUI.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\Trigger\ui\TimeTriggerMultiTransformer.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\Trigger\ui\TimeTriggerUI.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\Trigger\ui\TriggerLayerPanel.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\Trigger\ui\TriggerLayerTimeline.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\Trigger\TimeTrigger.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\Trigger\TimeTriggerManager.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\Trigger\TriggerLayer.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\ui\SequenceLayerPanel.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\ui\SequenceLayerPanelManagerUI.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\ui\SequenceLayerTimeline.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\ui\SequenceLayerTimelineManagerUI.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\SequenceLayer.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\SequenceLayerManager.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\ui\SequenceEditorView.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\ui\SequenceTimelineHeader.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\ui\SequenceTimelineNavigationUI.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\ui\SequenceTimelineSeeker.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\ui\SequenceTransportUI.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\ui\SequenceUI.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Sequence.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\timeline\ui\SequenceManagerUI.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\timeline\ui\TimeMachineView.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\timeline\SequenceManager.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\juce_timeline.h"/>
     <ClInclude Include="..\..\..\JUCE\modules\juce_video\capture\juce_CameraDevice.h"/>
     <ClInclude Include="..\..\..\JUCE\modules\juce_video\native\juce_android_CameraDevice.h"/>
     <ClInclude Include="..\..\..\JUCE\modules\juce_video\native\juce_android_Video.h"/>
@@ -3970,6 +4121,8 @@
     <None Include="..\..\..\JUCE\modules\juce_graphics\image_formats\pnglib\libpng_readme.txt"/>
     <None Include="..\..\..\JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\ReadMe.txt"/>
     <None Include="..\..\..\JUCE Modules\juce_organicui\README.md"/>
+    <None Include="..\..\..\JUCE Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode\ReadMe.txt"/>
+    <None Include="..\..\..\JUCE Modules\juce_timeline\README.md"/>
     <None Include=".\icon.ico"/>
   </ItemGroup>
   <ItemGroup>

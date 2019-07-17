@@ -1061,181 +1061,61 @@
 			isa = PBXBuildFile;
 			fileRef = F77776C3AB9DC4C71C47419E;
 		};
-		5BC9331135C2107AD1897F95 = {
+		7633BC0B9AD9E55D29B62A3A = {
 			isa = PBXBuildFile;
-			fileRef = DBB1B64D4CE4DEF68C44B7C7;
+			fileRef = 91F013D5F5CD4BC069CEF902;
 		};
-		967799AA45C9702CD5007393 = {
+		AB15FBD03761FD81F11EAA1A = {
 			isa = PBXBuildFile;
-			fileRef = 34C44D3459952A207547EAFE;
+			fileRef = 51FDE47C4EDEF58051AC4915;
 		};
-		F5075D03EE8779296218C79B = {
+		2369EBD63C3A81443AE504CA = {
 			isa = PBXBuildFile;
-			fileRef = 9BDC1033C6085F642661E8B9;
+			fileRef = 2938D13B1F2F83389F4515BF;
 		};
-		2AA8AD10CCD65D704D647E2A = {
+		2D3C33C687ACEB948560B6E0 = {
 			isa = PBXBuildFile;
-			fileRef = 849B815B61C5B16AE11EC0A3;
+			fileRef = 07229D4A9C3CC581C15AA8C2;
 		};
-		28D8BCEEA3AB6A9001CC146C = {
+		80FFEF215FA2223A767DBC00 = {
 			isa = PBXBuildFile;
-			fileRef = 2C28826638E1C965AE860AD8;
+			fileRef = AD797321C1E4BDA6A8C85AC8;
 		};
-		840CA0C026308181D7A12140 = {
+		486B2033FCBD5192C31DC106 = {
 			isa = PBXBuildFile;
-			fileRef = 67B0B60F3471B840F56F177B;
+			fileRef = 0237FC10DBABBC0C9D77624D;
 		};
-		78F1CCC1E91FF0B94FF2FA6C = {
+		8B436EA80D2BE2C1724EC34B = {
 			isa = PBXBuildFile;
-			fileRef = B99392EFF004B85380C17689;
+			fileRef = FC76F2E50BCEC7920127A00D;
 		};
-		1BD95EBB28EBAA3DCD458DF3 = {
+		21F5C9B547EB024F64A9FE98 = {
 			isa = PBXBuildFile;
-			fileRef = DD9C6037023A4294B72D32AB;
+			fileRef = 6CA9791613F4714D4BE107E9;
 		};
-		3F6CB78D9A6E1CEE3859729E = {
+		9E75E08D180BA690D1F8E480 = {
 			isa = PBXBuildFile;
-			fileRef = B5B52C2A10BB6DE73C7C04ED;
+			fileRef = 7F80183903E97917BAE096C6;
 		};
-		61E4A26AFCF42EB2E83371E3 = {
+		7BE1B137C5961E5B4A4E3204 = {
 			isa = PBXBuildFile;
-			fileRef = 35C22A51CD35398B8C530679;
+			fileRef = 95CA364F04E46872816321FC;
 		};
-		C0B829DC5D72C0FB59E2A12E = {
+		BD56E62FEC2D5447C9C47ECC = {
 			isa = PBXBuildFile;
-			fileRef = E46D3F257C0330881558C3AC;
+			fileRef = 364C2897456D38E0303ED70E;
 		};
-		D2483C29AE6ABBB65CAA1A6C = {
+		3FCEA28B9B565F56C2C12E8E = {
 			isa = PBXBuildFile;
-			fileRef = 6F5251C7EEE1D1E800049865;
+			fileRef = 2E5B94F1DE60ED3B8B9EB4FD;
 		};
-		520F87A86A09E82C08DB809D = {
+		828EBF971915CC5211ACB057 = {
 			isa = PBXBuildFile;
-			fileRef = 3484F203F39A189881BC88B9;
+			fileRef = 55E5E4547FF6CFC7E6F7C586;
 		};
-		C1ECFDC19215D9B1C37AAA42 = {
+		AB51BF5F993B10E2F9430F54 = {
 			isa = PBXBuildFile;
-			fileRef = 6815E89223EE17A9736CCF13;
-		};
-		C43646D088EEB4D980C1D33C = {
-			isa = PBXBuildFile;
-			fileRef = E65E5CBB4A10BD49BAE917DD;
-		};
-		AF9CDAF2C17CD4FF8DAA2F0C = {
-			isa = PBXBuildFile;
-			fileRef = D6743891987873266310698C;
-		};
-		FE24D4DC415E2CDFCA8E9932 = {
-			isa = PBXBuildFile;
-			fileRef = 77B33461E589E94614FCF378;
-		};
-		C84409F57EDE820AD0426E9A = {
-			isa = PBXBuildFile;
-			fileRef = 6CA4A3E58A5777D0B0F8CF65;
-		};
-		E369B84AF1343D99ACA3EAEF = {
-			isa = PBXBuildFile;
-			fileRef = D1560B172371D03B3564BA19;
-		};
-		464E04C81978C7D8828181E6 = {
-			isa = PBXBuildFile;
-			fileRef = A1C6501ABE317D0EF13369A6;
-		};
-		DD5FD61860413CD0BBD1C5F9 = {
-			isa = PBXBuildFile;
-			fileRef = 72F63CCEBF93042240ECD710;
-		};
-		0EAA8B1171F795E4B00C0E98 = {
-			isa = PBXBuildFile;
-			fileRef = 2095B733297F99FB69AC407F;
-		};
-		82656857B35BD41799F09901 = {
-			isa = PBXBuildFile;
-			fileRef = 46EE7E1DFD41983A6FED954A;
-		};
-		2B51D220F25C92E5D0697985 = {
-			isa = PBXBuildFile;
-			fileRef = F470AAA6D7170C0DD343FAB9;
-		};
-		C587ADE088ACF5407265267C = {
-			isa = PBXBuildFile;
-			fileRef = 83AFE0FC8DCDA59DB102D666;
-		};
-		AAF1B4DAF8B0C0E46E5BEFE6 = {
-			isa = PBXBuildFile;
-			fileRef = 7F32C6C606603DFD9E9C0531;
-		};
-		A680E81A4DED2A6864EE03C8 = {
-			isa = PBXBuildFile;
-			fileRef = ABB0DE34096913DD3CB340F5;
-		};
-		7C8303911E9D4A5296F269C7 = {
-			isa = PBXBuildFile;
-			fileRef = D19217CBF6F4D413ADFF3F35;
-		};
-		E29D9D9FF1C793731E01125A = {
-			isa = PBXBuildFile;
-			fileRef = B5AB7C19D286C8E160628F77;
-		};
-		0291B626CB421DB875A88B67 = {
-			isa = PBXBuildFile;
-			fileRef = 817DE9E50F15959C24915DC6;
-		};
-		04816675B037497E98B39933 = {
-			isa = PBXBuildFile;
-			fileRef = 08A60E869B62F7F1D59E350E;
-		};
-		EF937E064A1BD939842C6D04 = {
-			isa = PBXBuildFile;
-			fileRef = 46BE16F8B669DC52584123F8;
-		};
-		132D379CC5CAAAA22EEBD621 = {
-			isa = PBXBuildFile;
-			fileRef = 2FF1AE6FEB8241A5227E8215;
-		};
-		F922BED551056A66BA3E9533 = {
-			isa = PBXBuildFile;
-			fileRef = A1DA51FAD7493D6C160F27A1;
-		};
-		844190AC0C3658AAFD9966E7 = {
-			isa = PBXBuildFile;
-			fileRef = F2289BBB71AE9ACEB227BA29;
-		};
-		281F0262569F914A33714ECE = {
-			isa = PBXBuildFile;
-			fileRef = 3BFA32586F86E0694CB28082;
-		};
-		4924712E1B015FA430FDEDFC = {
-			isa = PBXBuildFile;
-			fileRef = 7F12B4CB484DDCF15A6EFF6A;
-		};
-		040CE99BCA3ECF51804E2F2D = {
-			isa = PBXBuildFile;
-			fileRef = E92D98FE4486A9E2998BFD87;
-		};
-		1B4B463A08BE0BF2393178F0 = {
-			isa = PBXBuildFile;
-			fileRef = 016E97C128B092CFDA699560;
-		};
-		0ACC7E47161FE76CBA58FDD0 = {
-			isa = PBXBuildFile;
-			fileRef = DFED7E2EAD1644D8C058C4FF;
-		};
-		5073C56E12DDAB3ECAF77E93 = {
-			isa = PBXBuildFile;
-			fileRef = 77E8D116C0DE3D493B81BC71;
-		};
-		26370928424CD14A280CCB2D = {
-			isa = PBXBuildFile;
-			fileRef = 270117CFA58F49BD10BA43B0;
-		};
-		543E1F1AA1EB482E2AE7D916 = {
-			isa = PBXBuildFile;
-			fileRef = 63DC31ED0689235D19678535;
-		};
-		529DEE9F30EDEDAF9DDD37A1 = {
-			isa = PBXBuildFile;
-			fileRef = E49D109D2C54816EF89EC382;
+			fileRef = 79C7DF572850E6FDA55CEC12;
 		};
 		4901731157879611D8BF22A8 = {
 			isa = PBXBuildFile;
@@ -1337,6 +1217,10 @@
 			isa = PBXBuildFile;
 			fileRef = 8AB58B2FA156DD075B892850;
 		};
+		6FB44A657258A9A5ACB8BE85 = {
+			isa = PBXBuildFile;
+			fileRef = 4D147E8D071C0C93CB433813;
+		};
 		BD9067271AF288F3D24C7A36 = {
 			isa = PBXBuildFile;
 			fileRef = 9EB5EECB134C6E74D074AB10;
@@ -1361,13 +1245,6 @@
 			name = "juce_audio_utils";
 			path = "~/JUCE/modules/juce_audio_utils";
 			sourceTree = "<absolute>";
-		};
-		016E97C128B092CFDA699560 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = SequenceTransportUI.cpp;
-			path = ../../Source/TimeMachine/Sequence/ui/SequenceTransportUI.cpp;
-			sourceTree = "SOURCE_ROOT";
 		};
 		0189433D1F58B3EFCB328C09 = {
 			isa = PBXFileReference;
@@ -1404,6 +1281,13 @@
 			path = ../../Source/Module/modules/tcp/tcpclient/TCPClientModule.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
+		0237FC10DBABBC0C9D77624D = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = TimeColorManager.cpp;
+			path = ../../Source/TimeMachine/Sequence/layers/mapping/timecolor/TimeColorManager.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		02719A9820DD6EE1547FA8FE = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -1411,11 +1295,11 @@
 			path = ../../Source/Common/Zeroconf/ZeroconfManager.h;
 			sourceTree = "SOURCE_ROOT";
 		};
-		0317CC9300E36DBB54680045 = {
+		02F0670054F134E41AB3FA1A = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
-			name = MappingLayerEditor.h;
-			path = ../../Source/TimeMachine/Sequence/Layer/layers/mapping/ui/MappingLayerEditor.h;
+			name = TimeColorManager.h;
+			path = ../../Source/TimeMachine/Sequence/layers/mapping/timecolor/TimeColorManager.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		03B34F65CD67AA62113F23C3 = {
@@ -1474,6 +1358,13 @@
 			path = "../../JuceLibraryCode/include_juce_organicui.cpp";
 			sourceTree = "SOURCE_ROOT";
 		};
+		07229D4A9C3CC581C15AA8C2 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = TimeColorUI.cpp;
+			path = ../../Source/TimeMachine/Sequence/layers/mapping/timecolor/ui/TimeColorUI.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		0737D4DC75687E6B61669785 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -1500,13 +1391,6 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = TCPServerModule.h;
 			path = ../../Source/Module/modules/tcp/tcpserver/TCPServerModule.h;
-			sourceTree = "SOURCE_ROOT";
-		};
-		08A60E869B62F7F1D59E350E = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = SequenceLayerTimelineManagerUI.cpp;
-			path = ../../Source/TimeMachine/Sequence/Layer/ui/SequenceLayerTimelineManagerUI.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		09E3B9DC39267AB5D9BAD384 = {
@@ -1628,13 +1512,6 @@
 			path = ../../Source/Common/DMX/DMXStateManager.h;
 			sourceTree = "SOURCE_ROOT";
 		};
-		0F817C2EAE0CBC4703C94F5A = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = TimeColorUI.h;
-			path = ../../Source/TimeMachine/Sequence/Layer/layers/mapping/timecolor/ui/TimeColorUI.h;
-			sourceTree = "SOURCE_ROOT";
-		};
 		10B33E7F3EE7009BEA77D0AC = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -1668,6 +1545,13 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = DMXArtNetDevice.h;
 			path = ../../Source/Common/DMX/device/DMXArtNetDevice.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		1274B9CFA5C1166729EC9F38 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = TimeAction.h;
+			path = ../../Source/TimeMachine/Sequence/layers/action/TimeAction.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		12DDF7A00AC1057D87937493 = {
@@ -1705,6 +1589,13 @@
 			path = ../../Resources/Templates/Scripts/oscScriptTemplate.js;
 			sourceTree = "SOURCE_ROOT";
 		};
+		162B54549733F9A5604EBC9C = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = ChataigneSequenceManager.h;
+			path = ../../Source/TimeMachine/ChataigneSequenceManager.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		16425EC5EB0EDEC42F5DA432 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -1717,13 +1608,6 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = LagFilter.cpp;
 			path = ../../Source/Common/Processor/Mapping/Filter/filters/number/LagFilter.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
-		177D236F1F1A3210480A233C = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = MappingLayerPanel.h;
-			path = ../../Source/TimeMachine/Sequence/Layer/layers/mapping/ui/MappingLayerPanel.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		177DC5C34CD7158022576694 = {
@@ -1838,13 +1722,6 @@
 			path = "../../Source/Module/modules/controller/wiimote/lib/wiiuse/os_mac/os_mac.m";
 			sourceTree = "SOURCE_ROOT";
 		};
-		1F418B8EE52EF9CF868B0D7E = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = MappingLayerTimeline.h;
-			path = ../../Source/TimeMachine/Sequence/Layer/layers/mapping/ui/MappingLayerTimeline.h;
-			sourceTree = "SOURCE_ROOT";
-		};
 		1FC22E16506F967E05CD4819 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -1857,13 +1734,6 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = HTTPCommand.cpp;
 			path = ../../Source/Module/modules/http/commands/HTTPCommand.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
-		2095B733297F99FB69AC407F = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = TimeTriggerUI.cpp;
-			path = ../../Source/TimeMachine/Sequence/Layer/layers/trigger/ui/TimeTriggerUI.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		20A44377EAC767480769BEA5 = {
@@ -1992,13 +1862,6 @@
 			path = ../../Source/Common/DMX/device/DMXDevice.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
-		270117CFA58F49BD10BA43B0 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = SequenceManagerUI.cpp;
-			path = ../../Source/TimeMachine/ui/SequenceManagerUI.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
 		2836B9A143627258BC150671 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -2011,6 +1874,13 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = ModuleRouter.h;
 			path = ../../Source/Module/Routing/ModuleRouter.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		2938D13B1F2F83389F4515BF = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = TimeColorManagerUI.cpp;
+			path = ../../Source/TimeMachine/Sequence/layers/mapping/timecolor/ui/TimeColorManagerUI.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		29D04BA49B995123DB200E5E = {
@@ -2032,13 +1902,6 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = Main.h;
 			path = ../../Source/Main.h;
-			sourceTree = "SOURCE_ROOT";
-		};
-		2C28826638E1C965AE860AD8 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = AudioLayerClipManagerUI.cpp;
-			path = ../../Source/TimeMachine/Sequence/Layer/layers/audio/ui/AudioLayerClipManagerUI.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		2C8F111514373C5BA8A33B7B = {
@@ -2069,13 +1932,6 @@
 			path = ../../Source/Common/Processor/Mapping/Filter/MappingFilterManager.h;
 			sourceTree = "SOURCE_ROOT";
 		};
-		2D405E2CABA9BAEB5A014AD8 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = TimeColor.h;
-			path = ../../Source/TimeMachine/Sequence/Layer/layers/mapping/timecolor/TimeColor.h;
-			sourceTree = "SOURCE_ROOT";
-		};
 		2D5CCA1C4264DD472237CA04 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -2104,11 +1960,25 @@
 			path = ../../Source/Module/modules/system/os/OSModule.h;
 			sourceTree = "SOURCE_ROOT";
 		};
+		2E5B94F1DE60ED3B8B9EB4FD = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = TimeAction.cpp;
+			path = ../../Source/TimeMachine/Sequence/layers/action/TimeAction.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		2E7534A1FF9877E7021A0027 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = EnumComparator.cpp;
 			path = ../../Source/Common/Processor/Action/Condition/Comparator/comparators/EnumComparator.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
+		2E7C1FFF6EA11E733AA3305F = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = TimeColorUI.h;
+			path = ../../Source/TimeMachine/Sequence/layers/mapping/timecolor/ui/TimeColorUI.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		2E93B8A7CF9DCDC3A41DEA0C = {
@@ -2130,13 +2000,6 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = MappingOutputManager.cpp;
 			path = ../../Source/Common/Processor/Mapping/Output/MappingOutputManager.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
-		2FF1AE6FEB8241A5227E8215 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = SequenceLayerFactory.cpp;
-			path = ../../Source/TimeMachine/Sequence/Layer/SequenceLayerFactory.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		306C379FA8EDF09052FE046B = {
@@ -2188,13 +2051,6 @@
 			path = ../../Resources/icon.png;
 			sourceTree = "SOURCE_ROOT";
 		};
-		333A44D16CBA81A0F0D27A8C = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = TimeTriggerUI.h;
-			path = ../../Source/TimeMachine/Sequence/Layer/layers/trigger/ui/TimeTriggerUI.h;
-			sourceTree = "SOURCE_ROOT";
-		};
 		334608D7C30F294FB4AFA0DD = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -2207,13 +2063,6 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = ModuleManagerUI.cpp;
 			path = ../../Source/Module/ui/ModuleManagerUI.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
-		3433286192B417969D8F29A0 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = SequenceManager.h;
-			path = ../../Source/TimeMachine/SequenceManager.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		3449F147311F84BA64933833 = {
@@ -2230,25 +2079,11 @@
 			path = ../../Source/Common/Processor/Action/Condition/conditions/StandardCondition/ui/StandardConditionEditor.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
-		3484F203F39A189881BC88B9 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = TimeColorUI.cpp;
-			path = ../../Source/TimeMachine/Sequence/Layer/layers/mapping/timecolor/ui/TimeColorUI.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
 		348E23A959123BF44DF9741C = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = CustomValuesCommandArgumentManagerEditor.cpp;
 			path = ../../Source/Module/modules/common/commands/customvalues/ui/CustomValuesCommandArgumentManagerEditor.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
-		34C44D3459952A207547EAFE = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = TimeCueUI.cpp;
-			path = ../../Source/TimeMachine/Sequence/Cue/ui/TimeCueUI.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		34DFE3A582DAFF805F97E141 = {
@@ -2272,18 +2107,18 @@
 			path = ../../Source/Module/modules/tcp/tcpclient/watchout/commands/WatchoutCommand.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
-		35C22A51CD35398B8C530679 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = AudioLayerClip.cpp;
-			path = ../../Source/TimeMachine/Sequence/Layer/layers/audio/AudioLayerClip.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
 		360A95B17201CF4B7B98859D = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = ConditionGroup.h;
 			path = ../../Source/Common/Processor/Action/Condition/conditions/ConditionGroup/ConditionGroup.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		364C2897456D38E0303ED70E = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = ActionLayer.cpp;
+			path = ../../Source/TimeMachine/Sequence/layers/action/ActionLayer.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		366AA3F45F51FF497A90AE85 = {
@@ -2314,13 +2149,6 @@
 			path = ../../Source/Module/modules/controller/wiimote/lib/wiiuse/events.c;
 			sourceTree = "SOURCE_ROOT";
 		};
-		38CA12F9C973B48F91B2D3CB = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = MappingLayer.h;
-			path = ../../Source/TimeMachine/Sequence/Layer/layers/mapping/MappingLayer.h;
-			sourceTree = "SOURCE_ROOT";
-		};
 		394CDA5516B2A8FB43FF8A6C = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -2333,13 +2161,6 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = WiimoteModule.cpp;
 			path = ../../Source/Module/modules/controller/wiimote/WiimoteModule.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
-		3A6380290AA1BEA508DF5D8A = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = AudioLayerPanel.h;
-			path = ../../Source/TimeMachine/Sequence/Layer/layers/audio/ui/AudioLayerPanel.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		3A8ED79B787F415BE7FBB2C7 = {
@@ -2368,20 +2189,6 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = MappingUI.h;
 			path = ../../Source/Common/Processor/Mapping/ui/MappingUI.h;
-			sourceTree = "SOURCE_ROOT";
-		};
-		3BFA32586F86E0694CB28082 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = SequenceTimelineHeader.cpp;
-			path = ../../Source/TimeMachine/Sequence/ui/SequenceTimelineHeader.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
-		3CDB83CB84731F6D656FA457 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = AudioLayerClipManager.h;
-			path = ../../Source/TimeMachine/Sequence/Layer/layers/audio/AudioLayerClipManager.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		3D79C9F6BD87A9B257C9AE04 = {
@@ -2417,13 +2224,6 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = WakeOnLanCommandEditor.cpp;
 			path = ../../Source/Module/modules/system/os/commands/ui/WakeOnLanCommandEditor.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
-		406322A7D6F019A7AF426E1D = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = SequenceLayerManager.h;
-			path = ../../Source/TimeMachine/Sequence/Layer/SequenceLayerManager.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		406FDBCD428D2C569FAD1B54 = {
@@ -2475,13 +2275,6 @@
 			path = ../../Source/Module/modules/oscquery/generic/GenericOSCQueryCommand.h;
 			sourceTree = "SOURCE_ROOT";
 		};
-		420BDEB0104F2AE7380CA494 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = TimeCue.h;
-			path = ../../Source/TimeMachine/Sequence/Cue/TimeCue.h;
-			sourceTree = "SOURCE_ROOT";
-		};
 		427351EDE8E9909FC1886C8A = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -2531,13 +2324,6 @@
 			path = ../../Source/Common/DMX/ui/DMXStateManagerUI.h;
 			sourceTree = "SOURCE_ROOT";
 		};
-		447FEE494D6831E4EF71B905 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = TimeTrigger.h;
-			path = ../../Source/TimeMachine/Sequence/Layer/layers/trigger/TimeTrigger.h;
-			sourceTree = "SOURCE_ROOT";
-		};
 		45293A26D5C1BC84EF82F6AE = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -2580,20 +2366,6 @@
 			path = ../../Source/Common/Processor/Mapping/Input/MappingInput.h;
 			sourceTree = "SOURCE_ROOT";
 		};
-		46BE16F8B669DC52584123F8 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = SequenceLayer.cpp;
-			path = ../../Source/TimeMachine/Sequence/Layer/SequenceLayer.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
-		46EE7E1DFD41983A6FED954A = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = TriggerLayerPanel.cpp;
-			path = ../../Source/TimeMachine/Sequence/Layer/layers/trigger/ui/TriggerLayerPanel.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
 		46F2EDE77746DD3B70BA3157 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.objcpp;
@@ -2622,18 +2394,18 @@
 			path = ../../Source/Module/modules/common/streaming/commands/SendStreamStringCommand.h;
 			sourceTree = "SOURCE_ROOT";
 		};
-		47DF088D549693B2CC21B840 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = AudioLayerClipManagerUI.h;
-			path = ../../Source/TimeMachine/Sequence/Layer/layers/audio/ui/AudioLayerClipManagerUI.h;
-			sourceTree = "SOURCE_ROOT";
-		};
 		484D96DB30E2DDEA4E9AA343 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = ModuleCommandTesterEditor.cpp;
 			path = ../../Source/Module/ui/ModuleCommandTesterEditor.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
+		4882C84B587A01AB6A9177D0 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = ChataigneAudioLayerPanel.h;
+			path = ../../Source/TimeMachine/Sequence/layers/audio/ui/ChataigneAudioLayerPanel.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		48864DF910AB963EBAB81124 = {
@@ -2649,13 +2421,6 @@
 			name = CoreAudio.framework;
 			path = System/Library/Frameworks/CoreAudio.framework;
 			sourceTree = SDKROOT;
-		};
-		493F19BB899B12C43429E1BA = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = SequenceTransportUI.h;
-			path = ../../Source/TimeMachine/Sequence/ui/SequenceTransportUI.h;
-			sourceTree = "SOURCE_ROOT";
 		};
 		498E36E4BBEBDCC6F4155CB4 = {
 			isa = PBXFileReference;
@@ -2713,18 +2478,18 @@
 			path = ../../Source/Guider/GuideComponents.h;
 			sourceTree = "SOURCE_ROOT";
 		};
+		4BCDE8AC4E4B125F794861AE = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = MappingLayerTimeline.h;
+			path = ../../Source/TimeMachine/Sequence/layers/mapping/ui/MappingLayerTimeline.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		4BED9251CCB1DFC4B4F541A1 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = SerialDeviceParameter.h;
 			path = ../../Source/Common/Serial/SerialDeviceParameter.h;
-			sourceTree = "SOURCE_ROOT";
-		};
-		4C5222F8702645A1D308FD7D = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = SequenceTimelineHeader.h;
-			path = ../../Source/TimeMachine/Sequence/ui/SequenceTimelineHeader.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		4CD7424E98D53E826B1E9B0B = {
@@ -2739,6 +2504,13 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = SendStreamRawDataCommand.cpp;
 			path = ../../Source/Module/modules/common/streaming/commands/SendStreamRawDataCommand.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
+		4D147E8D071C0C93CB433813 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = "include_juce_timeline.cpp";
+			path = "../../JuceLibraryCode/include_juce_timeline.cpp";
 			sourceTree = "SOURCE_ROOT";
 		};
 		4D18D702523B6FF2C0AB90DE = {
@@ -2839,6 +2611,13 @@
 			path = ../../Source/Common/Command/CommandDefinitionManager.h;
 			sourceTree = "SOURCE_ROOT";
 		};
+		51FDE47C4EDEF58051AC4915 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = ChataigneAudioLayer.cpp;
+			path = ../../Source/TimeMachine/Sequence/layers/audio/ChataigneAudioLayer.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		526F7B3CB32C2F185CE3428D = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -2909,6 +2688,13 @@
 			path = ../../Source/Common/Processor/Action/Condition/ui/ConditionManagerEditor.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
+		55E5E4547FF6CFC7E6F7C586 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = ChataigneSequence.cpp;
+			path = ../../Source/TimeMachine/Sequence/ChataigneSequence.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		56602E9E49E703AAD79A1ADF = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -2958,13 +2744,6 @@
 			path = ../../Source/Module/modules/common/commands/customvalues/ui/CustomValuesCommandArgumentEditor.h;
 			sourceTree = "SOURCE_ROOT";
 		};
-		5A226D9E78226164E3D31450 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = TimeCueUI.h;
-			path = ../../Source/TimeMachine/Sequence/Cue/ui/TimeCueUI.h;
-			sourceTree = "SOURCE_ROOT";
-		};
 		5B9E2B5BB241EBB715F08431 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -2998,13 +2777,6 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = unix.cc;
 			path = ../../Source/Common/Serial/lib/serial/impl/unix.cc;
-			sourceTree = "SOURCE_ROOT";
-		};
-		5D7F74A4F785CBED7590482F = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = SequenceEditor.h;
-			path = ../../Source/TimeMachine/Sequence/ui/SequenceEditor.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		5D89B92BBA87AFC030B5C515 = {
@@ -3070,25 +2842,11 @@
 			path = ../../Source/Common/Processor/ui/ProcessorManagerUI.h;
 			sourceTree = "SOURCE_ROOT";
 		};
-		639E54B043B6EDDD12AAD3D8 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = SequenceLayerFactory.h;
-			path = ../../Source/TimeMachine/Sequence/Layer/SequenceLayerFactory.h;
-			sourceTree = "SOURCE_ROOT";
-		};
 		63D8A941A592D9916B9BE56D = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = CommunityModuleInfoEditor.h;
 			path = ../../Source/Module/Community/ui/CommunityModuleInfoEditor.h;
-			sourceTree = "SOURCE_ROOT";
-		};
-		63DC31ED0689235D19678535 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = TimeMachineView.cpp;
-			path = ../../Source/TimeMachine/ui/TimeMachineView.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		640D6840DF6EA26FE8E882D8 = {
@@ -3104,13 +2862,6 @@
 			name = QuartzCore.framework;
 			path = System/Library/Frameworks/QuartzCore.framework;
 			sourceTree = SDKROOT;
-		};
-		64D063AA2E619473639F12C3 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = SequenceLayerTimeline.h;
-			path = ../../Source/TimeMachine/Sequence/Layer/ui/SequenceLayerTimeline.h;
-			sourceTree = "SOURCE_ROOT";
 		};
 		64F92362AABC4519953B36C5 = {
 			isa = PBXFileReference;
@@ -3133,13 +2884,6 @@
 			path = ../../Resources/out.png;
 			sourceTree = "SOURCE_ROOT";
 		};
-		66E755FD57AD8F8A8B3AB85A = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = SequenceManagerUI.h;
-			path = ../../Source/TimeMachine/ui/SequenceManagerUI.h;
-			sourceTree = "SOURCE_ROOT";
-		};
 		66FB3CD683B9EE7A37CC2C5D = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.c;
@@ -3154,18 +2898,11 @@
 			path = "../../Source/Module/modules/controller/wiimote/lib/wiiuse/os_mac/os_mac.c";
 			sourceTree = "SOURCE_ROOT";
 		};
-		67B0B60F3471B840F56F177B = {
+		6929C423C5CF5840C3755F47 = {
 			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = AudioLayerClipUI.cpp;
-			path = ../../Source/TimeMachine/Sequence/Layer/layers/audio/ui/AudioLayerClipUI.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
-		6815E89223EE17A9736CCF13 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = TimeColor.cpp;
-			path = ../../Source/TimeMachine/Sequence/Layer/layers/mapping/timecolor/TimeColor.cpp;
+			lastKnownFileType = sourcecode.c.h;
+			name = TimeColor.h;
+			path = ../../Source/TimeMachine/Sequence/layers/mapping/timecolor/TimeColor.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		69DC77C2F77880760FAC313C = {
@@ -3196,18 +2933,18 @@
 			path = ../../Source/Common/InputSystem/InputSystemManager.h;
 			sourceTree = "SOURCE_ROOT";
 		};
-		6CA4A3E58A5777D0B0F8CF65 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = MappingLayerTimeline.cpp;
-			path = ../../Source/TimeMachine/Sequence/Layer/layers/mapping/ui/MappingLayerTimeline.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
 		6CA54F330A265B66584BC7CC = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = StateManagerUI.h;
 			path = ../../Source/StateMachine/ui/StateManagerUI.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		6CA9791613F4714D4BE107E9 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = MappingLayerPanel.cpp;
+			path = ../../Source/TimeMachine/Sequence/layers/mapping/ui/MappingLayerPanel.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		6CAEF93880656E5D314F5481 = {
@@ -3229,13 +2966,6 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = Main.cpp;
 			path = ../../Source/Main.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
-		6D0B7901FA978B59D5EC27E3 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = TimeTriggerManager.h;
-			path = ../../Source/TimeMachine/Sequence/Layer/layers/trigger/TimeTriggerManager.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		6D345DAA00F1B0D0BA52A97A = {
@@ -3294,13 +3024,6 @@
 			path = ../../Source/Module/modules/osc/powerpoint/PowerpointModule.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
-		6E9099CA2495D631898BAE85 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = AudioLayerTimeline.h;
-			path = ../../Source/TimeMachine/Sequence/Layer/layers/audio/ui/AudioLayerTimeline.h;
-			sourceTree = "SOURCE_ROOT";
-		};
 		6EAF69491475B1BC390D110E = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -3313,13 +3036,6 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = WiimoteModule.h;
 			path = ../../Source/Module/modules/controller/wiimote/WiimoteModule.h;
-			sourceTree = "SOURCE_ROOT";
-		};
-		6F5251C7EEE1D1E800049865 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = TimeColorManagerUI.cpp;
-			path = ../../Source/TimeMachine/Sequence/Layer/layers/mapping/timecolor/ui/TimeColorManagerUI.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		6FCB47468FB24ECFF51A90D2 = {
@@ -3399,13 +3115,6 @@
 			path = ../../Source/Module/modules/system/os/OSModule.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
-		723AF0273177C9C38D5A7EA1 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = Sequence.h;
-			path = ../../Source/TimeMachine/Sequence/Sequence.h;
-			sourceTree = "SOURCE_ROOT";
-		};
 		72C0CFA5A21406D1C204F01F = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -3418,13 +3127,6 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = CustomValuesCommandArgumentManager.h;
 			path = ../../Source/Module/modules/common/commands/customvalues/CustomValuesCommandArgumentManager.h;
-			sourceTree = "SOURCE_ROOT";
-		};
-		72F63CCEBF93042240ECD710 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = TimeTriggerMultiTransformer.cpp;
-			path = ../../Source/TimeMachine/Sequence/Layer/layers/trigger/ui/TimeTriggerMultiTransformer.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		7335A92ACDE20B14F02ADA97 = {
@@ -3497,20 +3199,6 @@
 			path = ../../Source/Module/modules/osc/reaper/commands/ui/ReaperTimeCommandUI.h;
 			sourceTree = "SOURCE_ROOT";
 		};
-		77B33461E589E94614FCF378 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = MappingLayerPanel.cpp;
-			path = ../../Source/TimeMachine/Sequence/Layer/layers/mapping/ui/MappingLayerPanel.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
-		77E8D116C0DE3D493B81BC71 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = Sequence.cpp;
-			path = ../../Source/TimeMachine/Sequence/Sequence.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
 		77FDC417ABF22A287F49034A = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -3546,6 +3234,13 @@
 			path = ../../Source/Common/Processor/Action/Consequence/ConsequenceManager.h;
 			sourceTree = "SOURCE_ROOT";
 		};
+		79C7DF572850E6FDA55CEC12 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = ChataigneSequenceManager.cpp;
+			path = ../../Source/TimeMachine/ChataigneSequenceManager.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		79EA796B591281322DA21A35 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -3558,13 +3253,6 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = ReaperTimeCommandUI.cpp;
 			path = ../../Source/Module/modules/osc/reaper/commands/ui/ReaperTimeCommandUI.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
-		7C860EF3D88D260B7E03DF41 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = SequenceUI.h;
-			path = ../../Source/TimeMachine/Sequence/ui/SequenceUI.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		7CFE921B02AEF88DD2320245 = {
@@ -3609,13 +3297,6 @@
 			path = ../../Source/StateMachine/State/State.h;
 			sourceTree = "SOURCE_ROOT";
 		};
-		7F12B4CB484DDCF15A6EFF6A = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = SequenceTimelineNavigationUI.cpp;
-			path = ../../Source/TimeMachine/Sequence/ui/SequenceTimelineNavigationUI.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
 		7F19D3E7ECD40C602632DC55 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -3623,11 +3304,11 @@
 			path = ../../Source/CustomVariables/Preset/Morpher/MorphTarget.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
-		7F32C6C606603DFD9E9C0531 = {
+		7F80183903E97917BAE096C6 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
-			name = TimeTriggerManager.cpp;
-			path = ../../Source/TimeMachine/Sequence/Layer/layers/trigger/TimeTriggerManager.cpp;
+			name = MappingLayerTimeline.cpp;
+			path = ../../Source/TimeMachine/Sequence/layers/mapping/ui/MappingLayerTimeline.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		7FCAFC7304EC00159AB9C5F2 = {
@@ -3635,13 +3316,6 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = ScriptCallbackCommand.h;
 			path = ../../Source/Module/modules/common/commands/scriptcallback/ScriptCallbackCommand.h;
-			sourceTree = "SOURCE_ROOT";
-		};
-		817DE9E50F15959C24915DC6 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = SequenceLayerTimeline.cpp;
-			path = ../../Source/TimeMachine/Sequence/Layer/ui/SequenceLayerTimeline.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		818E7F9708353CFDE88AEF66 = {
@@ -3658,20 +3332,6 @@
 			path = ../../Source/Module/modules/audio/ui/AudioModuleHardwareEditor.h;
 			sourceTree = "SOURCE_ROOT";
 		};
-		83AFE0FC8DCDA59DB102D666 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = TimeTrigger.cpp;
-			path = ../../Source/TimeMachine/Sequence/Layer/layers/trigger/TimeTrigger.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
-		849B815B61C5B16AE11EC0A3 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = TimeCueManager.cpp;
-			path = ../../Source/TimeMachine/Sequence/Cue/TimeCueManager.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
 		84F5DBF407AF952C73614D85 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -3679,18 +3339,18 @@
 			path = ../../Source/Common/DMX/ui/DMXDashboard.h;
 			sourceTree = "SOURCE_ROOT";
 		};
-		85BC387471A4B89C31E0C46B = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = TimeTriggerManagerUI.h;
-			path = ../../Source/TimeMachine/Sequence/Layer/layers/trigger/ui/TimeTriggerManagerUI.h;
-			sourceTree = "SOURCE_ROOT";
-		};
 		85D8FFDCE078F33306AB4713 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = CVPresetEditor.cpp;
 			path = ../../Source/CustomVariables/Preset/ui/CVPresetEditor.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
+		85EEFA7FD0EF84C47F198A73 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = MappingLayerPanel.h;
+			path = ../../Source/TimeMachine/Sequence/layers/mapping/ui/MappingLayerPanel.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		8615CE9282DE48602A86E758 = {
@@ -3740,13 +3400,6 @@
 			lastKnownFileType = sourcecode.cpp.objcpp;
 			name = "include_juce_audio_basics.mm";
 			path = "../../JuceLibraryCode/include_juce_audio_basics.mm";
-			sourceTree = "SOURCE_ROOT";
-		};
-		891498C89BBF4BAD1F8923EB = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = TriggerLayerPanel.h;
-			path = ../../Source/TimeMachine/Sequence/Layer/layers/trigger/ui/TriggerLayerPanel.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		897F4323631CFAAAD468082A = {
@@ -3931,6 +3584,13 @@
 			path = ../../Source/Module/modules/osc/custom/CustomOSCModule.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
+		91F013D5F5CD4BC069CEF902 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = ChataigneAudioLayerPanel.cpp;
+			path = ../../Source/TimeMachine/Sequence/layers/audio/ui/ChataigneAudioLayerPanel.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		91FAD120CB39BF7A50BB6C51 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -3957,6 +3617,20 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = CurveMapFilter.cpp;
 			path = ../../Source/Common/Processor/Mapping/Filter/filters/number/CurveMapFilter.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
+		95AEC1AF13540DDDA6F391C8 = {
+			isa = PBXFileReference;
+			lastKnownFileType = file;
+			name = "juce_timeline";
+			path = "../../../JUCE Modules/juce_timeline";
+			sourceTree = "SOURCE_ROOT";
+		};
+		95CA364F04E46872816321FC = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = MappingLayer.cpp;
+			path = ../../Source/TimeMachine/Sequence/layers/mapping/MappingLayer.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		960087F9A23AE3C81E1156E0 = {
@@ -4029,13 +3703,6 @@
 			path = ../../Source/Module/modules/osc/commands/OSCCommand.h;
 			sourceTree = "SOURCE_ROOT";
 		};
-		9BDC1033C6085F642661E8B9 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = TimeCue.cpp;
-			path = ../../Source/TimeMachine/Sequence/Cue/TimeCue.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
 		9BF05C0D475358E71512E9B7 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -4057,6 +3724,13 @@
 			path = ../../Source/Common/Processor/Mapping/Filter/filters/number/SimpleSmoothFilter.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
+		9CF4C5D82F20C4A7756238A0 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = ChataigneAudioLayer.h;
+			path = ../../Source/TimeMachine/Sequence/layers/audio/ChataigneAudioLayer.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		9D053157B64EC441463A5D29 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -4076,13 +3750,6 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = AboutWindow.cpp;
 			path = ../../Source/UI/AboutWindow.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
-		9E690FBCCDBE656FEEE7C5EE = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = SequenceLayerPanelManagerUI.h;
-			path = ../../Source/TimeMachine/Sequence/Layer/ui/SequenceLayerPanelManagerUI.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		9E7F30DC83A1EFB56E6A5AA0 = {
@@ -4148,20 +3815,6 @@
 			path = ../../Source/Module/Routing/ui/ModuleRouterPanelView.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
-		A1C6501ABE317D0EF13369A6 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = TimeTriggerManagerUI.cpp;
-			path = ../../Source/TimeMachine/Sequence/Layer/layers/trigger/ui/TimeTriggerManagerUI.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
-		A1DA51FAD7493D6C160F27A1 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = SequenceLayerManager.cpp;
-			path = ../../Source/TimeMachine/Sequence/Layer/SequenceLayerManager.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
 		A21339CDFA808ECC229E2449 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -4204,11 +3857,11 @@
 			path = ../../Source/Module/modules/oscquery/generic/ui/OSCQueryModuleEditor.h;
 			sourceTree = "SOURCE_ROOT";
 		};
-		A51F40E83109A9D7BFC2FF13 = {
+		A4D77D050C4414D7A89D9CB0 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
-			name = TimeTriggerMultiTransformer.h;
-			path = ../../Source/TimeMachine/Sequence/Layer/layers/trigger/ui/TimeTriggerMultiTransformer.h;
+			name = ActionLayer.h;
+			path = ../../Source/TimeMachine/Sequence/layers/action/ActionLayer.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		A60987F239C18CD85E333A80 = {
@@ -4237,13 +3890,6 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = ResolumeFXCommand.cpp;
 			path = ../../Source/Module/modules/osc/resolume/commands/ResolumeFXCommand.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
-		A78BFC011F7196AAAEE85303 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = SequenceLayer.h;
-			path = ../../Source/TimeMachine/Sequence/Layer/SequenceLayer.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		A827068B7EA45A80070F2DFD = {
@@ -4288,6 +3934,13 @@
 			path = ../../Source/Module/modules/http/HTTPModule.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
+		A9861A4739E1BC7CEEA3E820 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = TimeColorManagerUI.h;
+			path = ../../Source/TimeMachine/Sequence/layers/mapping/timecolor/ui/TimeColorManagerUI.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		A99666B3FB03511628C7425B = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -4328,13 +3981,6 @@
 			lastKnownFileType = image.png;
 			name = connected.png;
 			path = ../../Resources/connected.png;
-			sourceTree = "SOURCE_ROOT";
-		};
-		ABB0DE34096913DD3CB340F5 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = TriggerLayer.cpp;
-			path = ../../Source/TimeMachine/Sequence/Layer/layers/trigger/TriggerLayer.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		ABCEA66DEFC594141E8D30A6 = {
@@ -4428,6 +4074,13 @@
 			path = ../../Source/Module/modules/serial/SerialModule.h;
 			sourceTree = "SOURCE_ROOT";
 		};
+		AD797321C1E4BDA6A8C85AC8 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = TimeColor.cpp;
+			path = ../../Source/TimeMachine/Sequence/layers/mapping/timecolor/TimeColor.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		ADCBDA61AEBC12CB643E0EC2 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -4477,13 +4130,6 @@
 			path = ../../Source/Module/modules/common/commands/scriptcommands/ui/ScriptCommandEditor.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
-		AFFF3E1150CFDA540684584E = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = TimeMachineView.h;
-			path = ../../Source/TimeMachine/ui/TimeMachineView.h;
-			sourceTree = "SOURCE_ROOT";
-		};
 		B041687DBC635A565CFE93F4 = {
 			isa = PBXFileReference;
 			lastKnownFileType = file;
@@ -4512,32 +4158,11 @@
 			path = ../../Source/Module/modules/osc/ui/OSCOutputEditor.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
-		B27A7CEDC03061BEB5B3FFAE = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = AudioLayerClip.h;
-			path = ../../Source/TimeMachine/Sequence/Layer/layers/audio/AudioLayerClip.h;
-			sourceTree = "SOURCE_ROOT";
-		};
-		B391A2398EFCCFCAF317B4F6 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = SequenceLayerPanel.h;
-			path = ../../Source/TimeMachine/Sequence/Layer/ui/SequenceLayerPanel.h;
-			sourceTree = "SOURCE_ROOT";
-		};
 		B3F9109E23EBCBBC1AD7FD5F = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = CropFilter.h;
 			path = ../../Source/Common/Processor/Mapping/Filter/filters/number/CropFilter.h;
-			sourceTree = "SOURCE_ROOT";
-		};
-		B4EDEE230DF334B1336147D6 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = TriggerLayer.h;
-			path = ../../Source/TimeMachine/Sequence/Layer/layers/trigger/TriggerLayer.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		B52752D23217AA7EC926EAF6 = {
@@ -4552,20 +4177,6 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = TCPClientModule.h;
 			path = ../../Source/Module/modules/tcp/tcpclient/TCPClientModule.h;
-			sourceTree = "SOURCE_ROOT";
-		};
-		B5AB7C19D286C8E160628F77 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = SequenceLayerPanelManagerUI.cpp;
-			path = ../../Source/TimeMachine/Sequence/Layer/ui/SequenceLayerPanelManagerUI.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
-		B5B52C2A10BB6DE73C7C04ED = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = AudioLayer.cpp;
-			path = ../../Source/TimeMachine/Sequence/Layer/layers/audio/AudioLayer.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		B5C6C01816DB10267E81F0A4 = {
@@ -4622,13 +4233,6 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = BaseCommandHandlerEditor.h;
 			path = ../../Source/Common/Command/ui/BaseCommandHandlerEditor.h;
-			sourceTree = "SOURCE_ROOT";
-		};
-		B99392EFF004B85380C17689 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = AudioLayerPanel.cpp;
-			path = ../../Source/TimeMachine/Sequence/Layer/layers/audio/ui/AudioLayerPanel.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		B9A0D94EF384D7EF9357D66C = {
@@ -4771,13 +4375,6 @@
 			path = ../../Source/Module/modules/common/commands/customvalues/CustomValuesCommandArgument.h;
 			sourceTree = "SOURCE_ROOT";
 		};
-		C29417E373D7D8FB320997EA = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = TimeColorManager.h;
-			path = ../../Source/TimeMachine/Sequence/Layer/layers/mapping/timecolor/TimeColorManager.h;
-			sourceTree = "SOURCE_ROOT";
-		};
 		C3DDE9B9D449A6FB26D1D354 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -4897,6 +4494,13 @@
 			path = ../../Source/Module/modules/osc/custom/commands/CustomOSCCommand.h;
 			sourceTree = "SOURCE_ROOT";
 		};
+		CA392D20C778B856781D7F42 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = MappingLayer.h;
+			path = ../../Source/TimeMachine/Sequence/layers/mapping/MappingLayer.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		CAE2E4FE6BFCC743FDBEF690 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -4904,11 +4508,11 @@
 			path = ../../Source/Module/modules/generic/commands/GenericControllableCommand.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
-		CBAE91BB0458E41F04ACA28A = {
+		CBB3A02D0C384DE3EE983267 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
-			name = AudioLayerClipUI.h;
-			path = ../../Source/TimeMachine/Sequence/Layer/layers/audio/ui/AudioLayerClipUI.h;
+			name = ChataigneAudioLayerListener.h;
+			path = ../../Source/TimeMachine/Sequence/layers/audio/ChataigneAudioLayerListener.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		CC32A694BE65152C463DA1F0 = {
@@ -5037,25 +4641,11 @@
 			path = ../../Source/Module/modules/oscquery/generic/GenericOSCQueryModule.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
-		D1560B172371D03B3564BA19 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = MappingLayer.cpp;
-			path = ../../Source/TimeMachine/Sequence/Layer/layers/mapping/MappingLayer.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
 		D186E23672CC910C8904260B = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = CommandFactory.h;
 			path = ../../Source/Common/Command/CommandFactory.h;
-			sourceTree = "SOURCE_ROOT";
-		};
-		D19217CBF6F4D413ADFF3F35 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = SequenceLayerPanel.cpp;
-			path = ../../Source/TimeMachine/Sequence/Layer/ui/SequenceLayerPanel.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		D200ACD3EE45F2CAF4398070 = {
@@ -5177,13 +4767,6 @@
 			path = ../../Source/Module/Community/CommunityModuleInfo.h;
 			sourceTree = "SOURCE_ROOT";
 		};
-		D6743891987873266310698C = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = MappingLayerEditor.cpp;
-			path = ../../Source/TimeMachine/Sequence/Layer/layers/mapping/ui/MappingLayerEditor.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
 		D75B6A6DB57C7D3652AE5CE7 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -5254,13 +4837,6 @@
 			path = ../../Source/Common/Processor/Mapping/Filter/filters/number/CropFilter.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
-		D999AC85528C882A0AA6C81C = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = SequenceLayerTimelineManagerUI.h;
-			path = ../../Source/TimeMachine/Sequence/Layer/ui/SequenceLayerTimelineManagerUI.h;
-			sourceTree = "SOURCE_ROOT";
-		};
 		DA1455ABA352149A51F70529 = {
 			isa = PBXFileReference;
 			lastKnownFileType = wrapper.framework;
@@ -5296,13 +4872,6 @@
 			path = ../../Source/Common/Command/Template/ui/CommandTemplateManagerUI.h;
 			sourceTree = "SOURCE_ROOT";
 		};
-		DBB1B64D4CE4DEF68C44B7C7 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = TimeCueManagerUI.cpp;
-			path = ../../Source/TimeMachine/Sequence/Cue/ui/TimeCueManagerUI.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
 		DBC595D222F79223C4B97FCE = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -5324,13 +4893,6 @@
 			path = ../../Source/Module/modules/system/os/commands/OSPowerCommand.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
-		DD9C6037023A4294B72D32AB = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = AudioLayerTimeline.cpp;
-			path = ../../Source/TimeMachine/Sequence/Layer/layers/audio/ui/AudioLayerTimeline.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
 		DE11D226FA3C16D2908002A7 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -5343,13 +4905,6 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = LiveOSCSceneCommand.cpp;
 			path = ../../Source/Module/modules/osc/live/commands/LiveOSCSceneCommand.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
-		DFED7E2EAD1644D8C058C4FF = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = SequenceUI.cpp;
-			path = ../../Source/TimeMachine/Sequence/ui/SequenceUI.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		E001D75A29B5AF290246E897 = {
@@ -5394,6 +4949,13 @@
 			path = ../../Source/Module/modules/common/commands/customvalues/CustomValuesCommandArgumentManager.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
+		E272A8048FC5E5538CB6E898 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = MappingLayerEditor.h;
+			path = ../../Source/TimeMachine/Sequence/layers/mapping/ui/MappingLayerEditor.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		E282A320F0E547C1419D5D5A = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -5406,13 +4968,6 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = MappingOutput.h;
 			path = ../../Source/Common/Processor/Mapping/Output/MappingOutput.h;
-			sourceTree = "SOURCE_ROOT";
-		};
-		E31474B19421A6947C35E910 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = TriggerLayerTimeline.h;
-			path = ../../Source/TimeMachine/Sequence/Layer/layers/trigger/ui/TriggerLayerTimeline.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		E3334C7CE4EE2A23F2323183 = {
@@ -5471,25 +5026,11 @@
 			path = ../../Source/Guider/GuideComponents.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
-		E46D3F257C0330881558C3AC = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = AudioLayerClipManager.cpp;
-			path = ../../Source/TimeMachine/Sequence/Layer/layers/audio/AudioLayerClipManager.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
 		E49476A81DB93D0B8094E56F = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = Mapping.cpp;
 			path = ../../Source/Common/Processor/Mapping/Mapping.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
-		E49D109D2C54816EF89EC382 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = SequenceManager.cpp;
-			path = ../../Source/TimeMachine/SequenceManager.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		E4F8764330C0A93E8E182D22 = {
@@ -5518,20 +5059,6 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = CVGroupManager.h;
 			path = ../../Source/CustomVariables/CVGroupManager.h;
-			sourceTree = "SOURCE_ROOT";
-		};
-		E634D995E503314262646374 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = TimeCueManagerUI.h;
-			path = ../../Source/TimeMachine/Sequence/Cue/ui/TimeCueManagerUI.h;
-			sourceTree = "SOURCE_ROOT";
-		};
-		E65E5CBB4A10BD49BAE917DD = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = TimeColorManager.cpp;
-			path = ../../Source/TimeMachine/Sequence/Layer/layers/mapping/timecolor/TimeColorManager.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		E68E0A177B0FFCF75AE44AB9 = {
@@ -5576,25 +5103,11 @@
 			path = ../../Source/Common/Processor/Action/Condition/Comparator/comparators/Point3DComparators.h;
 			sourceTree = "SOURCE_ROOT";
 		};
-		E92D98FE4486A9E2998BFD87 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = SequenceTimelineSeeker.cpp;
-			path = ../../Source/TimeMachine/Sequence/ui/SequenceTimelineSeeker.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
 		E9DC14E295FEC8CF62406CB1 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = ColorShiftFilter.h;
 			path = ../../Source/Common/Processor/Mapping/Filter/filters/color/ColorShiftFilter.h;
-			sourceTree = "SOURCE_ROOT";
-		};
-		E9EBDDA13FE294BD72E12E10 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = TimeColorManagerUI.h;
-			path = ../../Source/TimeMachine/Sequence/Layer/layers/mapping/timecolor/ui/TimeColorManagerUI.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		EAF33109C5A8A991D0758364 = {
@@ -5609,13 +5122,6 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = LaunchpadModule.cpp;
 			path = ../../Source/Module/modules/midi/Launchpad/LaunchpadModule.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
-		EB5C7671591C2E344E24B601 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = SequenceTimelineNavigationUI.h;
-			path = ../../Source/TimeMachine/Sequence/ui/SequenceTimelineNavigationUI.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		EBC87E462F16C039A00173C9 = {
@@ -5716,20 +5222,6 @@
 			path = ../../Source/Common/Processor/Action/Consequence/Consequence.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
-		F0BAFF56E3F9BEBABEF12EA1 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = TimeCueManager.h;
-			path = ../../Source/TimeMachine/Sequence/Cue/TimeCueManager.h;
-			sourceTree = "SOURCE_ROOT";
-		};
-		F2289BBB71AE9ACEB227BA29 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = SequenceEditor.cpp;
-			path = ../../Source/TimeMachine/Sequence/ui/SequenceEditor.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
 		F36349200785EF7B0D1E7329 = {
 			isa = PBXFileReference;
 			lastKnownFileType = wrapper.framework;
@@ -5744,25 +5236,11 @@
 			path = ../../Source/Common/Command/Template/CommandTemplateManager.h;
 			sourceTree = "SOURCE_ROOT";
 		};
-		F40343F58EC047EC5AF3378F = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = AudioLayer.h;
-			path = ../../Source/TimeMachine/Sequence/Layer/layers/audio/AudioLayer.h;
-			sourceTree = "SOURCE_ROOT";
-		};
 		F4590876F89E291434F6B792 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.objcpp;
 			name = "include_juce_opengl.mm";
 			path = "../../JuceLibraryCode/include_juce_opengl.mm";
-			sourceTree = "SOURCE_ROOT";
-		};
-		F470AAA6D7170C0DD343FAB9 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = TriggerLayerTimeline.cpp;
-			path = ../../Source/TimeMachine/Sequence/Layer/layers/trigger/ui/TriggerLayerTimeline.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		F48B60EA0060221C4AE8EFB4 = {
@@ -5891,11 +5369,11 @@
 			path = ../../Source/Common/Command/ui/CommandChooserUI.h;
 			sourceTree = "SOURCE_ROOT";
 		};
-		FAF808BF92AB7D5577FD4E58 = {
+		FA4C14B931E890BB595FF1AA = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
-			name = SequenceTimelineSeeker.h;
-			path = ../../Source/TimeMachine/Sequence/ui/SequenceTimelineSeeker.h;
+			name = ChataigneSequence.h;
+			path = ../../Source/TimeMachine/Sequence/ChataigneSequence.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		FB167DE6387AEA2CF355751D = {
@@ -5910,6 +5388,13 @@
 			lastKnownFileType = sourcecode.c.c;
 			name = "motion_plus.c";
 			path = "../../Source/Module/modules/controller/wiimote/lib/wiiuse/motion_plus.c";
+			sourceTree = "SOURCE_ROOT";
+		};
+		FC76F2E50BCEC7920127A00D = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = MappingLayerEditor.cpp;
+			path = ../../Source/TimeMachine/Sequence/layers/mapping/ui/MappingLayerEditor.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		FD7380F983823A057E46080D = {
@@ -7702,225 +7187,110 @@
 			name = StateMachine;
 			sourceTree = "<group>";
 		};
-		196A16BB9757D2F370517DC7 = {
+		83DA861AD30B9F6928ABBB07 = {
 			isa = PBXGroup;
 			children = (
-				DBB1B64D4CE4DEF68C44B7C7,
-				E634D995E503314262646374,
-				34C44D3459952A207547EAFE,
-				5A226D9E78226164E3D31450,
+				91F013D5F5CD4BC069CEF902,
+				4882C84B587A01AB6A9177D0,
 			);
 			name = ui;
 			sourceTree = "<group>";
 		};
-		FDD80FADBBC16227F61B521A = {
+		C121694CAA30EFD0C8527A69 = {
 			isa = PBXGroup;
 			children = (
-				196A16BB9757D2F370517DC7,
-				9BDC1033C6085F642661E8B9,
-				420BDEB0104F2AE7380CA494,
-				849B815B61C5B16AE11EC0A3,
-				F0BAFF56E3F9BEBABEF12EA1,
-			);
-			name = Cue;
-			sourceTree = "<group>";
-		};
-		5777AB70BAA734CD51F91D99 = {
-			isa = PBXGroup;
-			children = (
-				2C28826638E1C965AE860AD8,
-				47DF088D549693B2CC21B840,
-				67B0B60F3471B840F56F177B,
-				CBAE91BB0458E41F04ACA28A,
-				B99392EFF004B85380C17689,
-				3A6380290AA1BEA508DF5D8A,
-				DD9C6037023A4294B72D32AB,
-				6E9099CA2495D631898BAE85,
-			);
-			name = ui;
-			sourceTree = "<group>";
-		};
-		6D79E24A5EDA5400059D0079 = {
-			isa = PBXGroup;
-			children = (
-				5777AB70BAA734CD51F91D99,
-				B5B52C2A10BB6DE73C7C04ED,
-				F40343F58EC047EC5AF3378F,
-				35C22A51CD35398B8C530679,
-				B27A7CEDC03061BEB5B3FFAE,
-				E46D3F257C0330881558C3AC,
-				3CDB83CB84731F6D656FA457,
+				83DA861AD30B9F6928ABBB07,
+				51FDE47C4EDEF58051AC4915,
+				9CF4C5D82F20C4A7756238A0,
+				CBB3A02D0C384DE3EE983267,
 			);
 			name = audio;
 			sourceTree = "<group>";
 		};
-		2AA4CF546E956118607DE493 = {
+		0A4DF3DDB96A1F96388DE121 = {
 			isa = PBXGroup;
 			children = (
-				6F5251C7EEE1D1E800049865,
-				E9EBDDA13FE294BD72E12E10,
-				3484F203F39A189881BC88B9,
-				0F817C2EAE0CBC4703C94F5A,
+				2938D13B1F2F83389F4515BF,
+				A9861A4739E1BC7CEEA3E820,
+				07229D4A9C3CC581C15AA8C2,
+				2E7C1FFF6EA11E733AA3305F,
 			);
 			name = ui;
 			sourceTree = "<group>";
 		};
-		026AC7FF66D55FF46ABF63C8 = {
+		20827D0AF2C413ED2C7A55A6 = {
 			isa = PBXGroup;
 			children = (
-				2AA4CF546E956118607DE493,
-				6815E89223EE17A9736CCF13,
-				2D405E2CABA9BAEB5A014AD8,
-				E65E5CBB4A10BD49BAE917DD,
-				C29417E373D7D8FB320997EA,
+				0A4DF3DDB96A1F96388DE121,
+				AD797321C1E4BDA6A8C85AC8,
+				6929C423C5CF5840C3755F47,
+				0237FC10DBABBC0C9D77624D,
+				02F0670054F134E41AB3FA1A,
 			);
 			name = timecolor;
 			sourceTree = "<group>";
 		};
-		321846D5942B32C45AA17A91 = {
+		FF9538C2BD9C4A002CC77E89 = {
 			isa = PBXGroup;
 			children = (
-				D6743891987873266310698C,
-				0317CC9300E36DBB54680045,
-				77B33461E589E94614FCF378,
-				177D236F1F1A3210480A233C,
-				6CA4A3E58A5777D0B0F8CF65,
-				1F418B8EE52EF9CF868B0D7E,
+				FC76F2E50BCEC7920127A00D,
+				E272A8048FC5E5538CB6E898,
+				6CA9791613F4714D4BE107E9,
+				85EEFA7FD0EF84C47F198A73,
+				7F80183903E97917BAE096C6,
+				4BCDE8AC4E4B125F794861AE,
 			);
 			name = ui;
 			sourceTree = "<group>";
 		};
-		365E81E9ED9B9BC955DA94D6 = {
+		7BA55BE1AFBABFDF0832D425 = {
 			isa = PBXGroup;
 			children = (
-				026AC7FF66D55FF46ABF63C8,
-				321846D5942B32C45AA17A91,
-				D1560B172371D03B3564BA19,
-				38CA12F9C973B48F91B2D3CB,
+				20827D0AF2C413ED2C7A55A6,
+				FF9538C2BD9C4A002CC77E89,
+				95CA364F04E46872816321FC,
+				CA392D20C778B856781D7F42,
 			);
 			name = mapping;
 			sourceTree = "<group>";
 		};
-		B95D2C73EC2C0B3832811BA0 = {
+		C46EAA44C25FAD1386F1993C = {
 			isa = PBXGroup;
 			children = (
-				A1C6501ABE317D0EF13369A6,
-				85BC387471A4B89C31E0C46B,
-				72F63CCEBF93042240ECD710,
-				A51F40E83109A9D7BFC2FF13,
-				2095B733297F99FB69AC407F,
-				333A44D16CBA81A0F0D27A8C,
-				46EE7E1DFD41983A6FED954A,
-				891498C89BBF4BAD1F8923EB,
-				F470AAA6D7170C0DD343FAB9,
-				E31474B19421A6947C35E910,
+				364C2897456D38E0303ED70E,
+				A4D77D050C4414D7A89D9CB0,
+				2E5B94F1DE60ED3B8B9EB4FD,
+				1274B9CFA5C1166729EC9F38,
 			);
-			name = ui;
+			name = action;
 			sourceTree = "<group>";
 		};
-		66F9F02A1D037941BB0A94C0 = {
+		D2B0B4BC8878A5157D9AE392 = {
 			isa = PBXGroup;
 			children = (
-				B95D2C73EC2C0B3832811BA0,
-				83AFE0FC8DCDA59DB102D666,
-				447FEE494D6831E4EF71B905,
-				7F32C6C606603DFD9E9C0531,
-				6D0B7901FA978B59D5EC27E3,
-				ABB0DE34096913DD3CB340F5,
-				B4EDEE230DF334B1336147D6,
-			);
-			name = trigger;
-			sourceTree = "<group>";
-		};
-		F691D588C51640987FF397CC = {
-			isa = PBXGroup;
-			children = (
-				6D79E24A5EDA5400059D0079,
-				365E81E9ED9B9BC955DA94D6,
-				66F9F02A1D037941BB0A94C0,
+				C121694CAA30EFD0C8527A69,
+				7BA55BE1AFBABFDF0832D425,
+				C46EAA44C25FAD1386F1993C,
 			);
 			name = layers;
 			sourceTree = "<group>";
 		};
-		AC82D3A6BDA64866F0590EDA = {
+		C3F8B0DB970EAB99C1439DB6 = {
 			isa = PBXGroup;
 			children = (
-				D19217CBF6F4D413ADFF3F35,
-				B391A2398EFCCFCAF317B4F6,
-				B5AB7C19D286C8E160628F77,
-				9E690FBCCDBE656FEEE7C5EE,
-				817DE9E50F15959C24915DC6,
-				64D063AA2E619473639F12C3,
-				08A60E869B62F7F1D59E350E,
-				D999AC85528C882A0AA6C81C,
-			);
-			name = ui;
-			sourceTree = "<group>";
-		};
-		D2B7F3509D403665AE6B5A87 = {
-			isa = PBXGroup;
-			children = (
-				F691D588C51640987FF397CC,
-				AC82D3A6BDA64866F0590EDA,
-				46BE16F8B669DC52584123F8,
-				A78BFC011F7196AAAEE85303,
-				2FF1AE6FEB8241A5227E8215,
-				639E54B043B6EDDD12AAD3D8,
-				A1DA51FAD7493D6C160F27A1,
-				406322A7D6F019A7AF426E1D,
-			);
-			name = Layer;
-			sourceTree = "<group>";
-		};
-		132E5438EE1F532992A0AB83 = {
-			isa = PBXGroup;
-			children = (
-				F2289BBB71AE9ACEB227BA29,
-				5D7F74A4F785CBED7590482F,
-				3BFA32586F86E0694CB28082,
-				4C5222F8702645A1D308FD7D,
-				7F12B4CB484DDCF15A6EFF6A,
-				EB5C7671591C2E344E24B601,
-				E92D98FE4486A9E2998BFD87,
-				FAF808BF92AB7D5577FD4E58,
-				016E97C128B092CFDA699560,
-				493F19BB899B12C43429E1BA,
-				DFED7E2EAD1644D8C058C4FF,
-				7C860EF3D88D260B7E03DF41,
-			);
-			name = ui;
-			sourceTree = "<group>";
-		};
-		1B32569437E69922391B6C54 = {
-			isa = PBXGroup;
-			children = (
-				FDD80FADBBC16227F61B521A,
-				D2B7F3509D403665AE6B5A87,
-				132E5438EE1F532992A0AB83,
-				77E8D116C0DE3D493B81BC71,
-				723AF0273177C9C38D5A7EA1,
+				D2B0B4BC8878A5157D9AE392,
+				55E5E4547FF6CFC7E6F7C586,
+				FA4C14B931E890BB595FF1AA,
 			);
 			name = Sequence;
 			sourceTree = "<group>";
 		};
-		697D37DA71D70FE71DB8B7E7 = {
+		5AE13B561A23064A4451C881 = {
 			isa = PBXGroup;
 			children = (
-				270117CFA58F49BD10BA43B0,
-				66E755FD57AD8F8A8B3AB85A,
-				63DC31ED0689235D19678535,
-				AFFF3E1150CFDA540684584E,
-			);
-			name = ui;
-			sourceTree = "<group>";
-		};
-		0738717842FAF0B8EB23EE47 = {
-			isa = PBXGroup;
-			children = (
-				1B32569437E69922391B6C54,
-				697D37DA71D70FE71DB8B7E7,
-				E49D109D2C54816EF89EC382,
-				3433286192B417969D8F29A0,
+				C3F8B0DB970EAB99C1439DB6,
+				79C7DF572850E6FDA55CEC12,
+				162B54549733F9A5604EBC9C,
 			);
 			name = TimeMachine;
 			sourceTree = "<group>";
@@ -7945,7 +7315,7 @@
 				CA79AE04437B8324C214D2A4,
 				24072684F5725E4CED6E741B,
 				1F91D1EABD2CA768C36D63B7,
-				0738717842FAF0B8EB23EE47,
+				5AE13B561A23064A4451C881,
 				DA0AD6BD0967E11D1BD8ADDA,
 				10C259C57E6992D9DC19D7DF,
 				21BA4427E24C4E8222A34E78,
@@ -7987,6 +7357,7 @@
 				B041687DBC635A565CFE93F4,
 				434101C3EDB8F153178FE4A5,
 				13F1733B1CD06F34477459C0,
+				95AEC1AF13540DDDA6F391C8,
 				1963F1D3623E1F2A7122FEB0,
 			);
 			name = "JUCE Modules";
@@ -8016,6 +7387,7 @@
 				066DA60AFB60B8BE77E819E7,
 				03B34F65CD67AA62113F23C3,
 				8AB58B2FA156DD075B892850,
+				4D147E8D071C0C93CB433813,
 				9EB5EECB134C6E74D074AB10,
 				0DD04E60A5E6174F61924D04,
 			);
@@ -8560,50 +7932,20 @@
 				507BEACB388EE5FF1141A911,
 				21CCAF5ECEB34915F8266178,
 				36559FDEF92F576BF1E0A3C3,
-				5BC9331135C2107AD1897F95,
-				967799AA45C9702CD5007393,
-				F5075D03EE8779296218C79B,
-				2AA8AD10CCD65D704D647E2A,
-				28D8BCEEA3AB6A9001CC146C,
-				840CA0C026308181D7A12140,
-				78F1CCC1E91FF0B94FF2FA6C,
-				1BD95EBB28EBAA3DCD458DF3,
-				3F6CB78D9A6E1CEE3859729E,
-				61E4A26AFCF42EB2E83371E3,
-				C0B829DC5D72C0FB59E2A12E,
-				D2483C29AE6ABBB65CAA1A6C,
-				520F87A86A09E82C08DB809D,
-				C1ECFDC19215D9B1C37AAA42,
-				C43646D088EEB4D980C1D33C,
-				AF9CDAF2C17CD4FF8DAA2F0C,
-				FE24D4DC415E2CDFCA8E9932,
-				C84409F57EDE820AD0426E9A,
-				E369B84AF1343D99ACA3EAEF,
-				464E04C81978C7D8828181E6,
-				DD5FD61860413CD0BBD1C5F9,
-				0EAA8B1171F795E4B00C0E98,
-				82656857B35BD41799F09901,
-				2B51D220F25C92E5D0697985,
-				C587ADE088ACF5407265267C,
-				AAF1B4DAF8B0C0E46E5BEFE6,
-				A680E81A4DED2A6864EE03C8,
-				7C8303911E9D4A5296F269C7,
-				E29D9D9FF1C793731E01125A,
-				0291B626CB421DB875A88B67,
-				04816675B037497E98B39933,
-				EF937E064A1BD939842C6D04,
-				132D379CC5CAAAA22EEBD621,
-				F922BED551056A66BA3E9533,
-				844190AC0C3658AAFD9966E7,
-				281F0262569F914A33714ECE,
-				4924712E1B015FA430FDEDFC,
-				040CE99BCA3ECF51804E2F2D,
-				1B4B463A08BE0BF2393178F0,
-				0ACC7E47161FE76CBA58FDD0,
-				5073C56E12DDAB3ECAF77E93,
-				26370928424CD14A280CCB2D,
-				543E1F1AA1EB482E2AE7D916,
-				529DEE9F30EDEDAF9DDD37A1,
+				7633BC0B9AD9E55D29B62A3A,
+				AB15FBD03761FD81F11EAA1A,
+				2369EBD63C3A81443AE504CA,
+				2D3C33C687ACEB948560B6E0,
+				80FFEF215FA2223A767DBC00,
+				486B2033FCBD5192C31DC106,
+				8B436EA80D2BE2C1724EC34B,
+				21F5C9B547EB024F64A9FE98,
+				9E75E08D180BA690D1F8E480,
+				7BE1B137C5961E5B4A4E3204,
+				BD56E62FEC2D5447C9C47ECC,
+				3FCEA28B9B565F56C2C12E8E,
+				828EBF971915CC5211ACB057,
+				AB51BF5F993B10E2F9430F54,
 				4901731157879611D8BF22A8,
 				C9AA14A5183E26927E2C3DB4,
 				A5CD0A74A4102CB06964CD68,
@@ -8629,6 +7971,7 @@
 				2270C7A2C18C1C8F04F83D18,
 				212B67A3534DE8B8475EFD36,
 				A2C0DA5E1710F15AA0E3F840,
+				6FB44A657258A9A5ACB8BE85,
 				BD9067271AF288F3D24C7A36,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

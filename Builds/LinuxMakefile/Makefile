@@ -310,50 +310,20 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/StateMachineView_e5e08766.o \
   $(JUCE_OBJDIR)/StateManagerUI_a2d9b59b.o \
   $(JUCE_OBJDIR)/StateManager_ec4bbd6.o \
-  $(JUCE_OBJDIR)/TimeCueManagerUI_b2d29c4a.o \
-  $(JUCE_OBJDIR)/TimeCueUI_c10d7695.o \
-  $(JUCE_OBJDIR)/TimeCue_a13ab31a.o \
-  $(JUCE_OBJDIR)/TimeCueManager_4480efbd.o \
-  $(JUCE_OBJDIR)/AudioLayerClipManagerUI_9973a193.o \
-  $(JUCE_OBJDIR)/AudioLayerClipUI_e31de16c.o \
-  $(JUCE_OBJDIR)/AudioLayerPanel_51233d86.o \
-  $(JUCE_OBJDIR)/AudioLayerTimeline_28b4bc89.o \
-  $(JUCE_OBJDIR)/AudioLayer_c91e7f33.o \
-  $(JUCE_OBJDIR)/AudioLayerClip_604aefa3.o \
-  $(JUCE_OBJDIR)/AudioLayerClipManager_d1763714.o \
-  $(JUCE_OBJDIR)/TimeColorManagerUI_d8674ab7.o \
-  $(JUCE_OBJDIR)/TimeColorUI_4c8e78c8.o \
-  $(JUCE_OBJDIR)/TimeColor_f2e47aa7.o \
-  $(JUCE_OBJDIR)/TimeColorManager_b39eff90.o \
-  $(JUCE_OBJDIR)/MappingLayerEditor_949073f5.o \
-  $(JUCE_OBJDIR)/MappingLayerPanel_f16bd606.o \
-  $(JUCE_OBJDIR)/MappingLayerTimeline_88bf5409.o \
-  $(JUCE_OBJDIR)/MappingLayer_461e6c03.o \
-  $(JUCE_OBJDIR)/TimeTriggerManagerUI_3a8b4b85.o \
-  $(JUCE_OBJDIR)/TimeTriggerMultiTransformer_e11cdfa6.o \
-  $(JUCE_OBJDIR)/TimeTriggerUI_1103a3ba.o \
-  $(JUCE_OBJDIR)/TriggerLayerPanel_42a36fc6.o \
-  $(JUCE_OBJDIR)/TriggerLayerTimeline_de0c6249.o \
-  $(JUCE_OBJDIR)/TimeTrigger_4aecc13f.o \
-  $(JUCE_OBJDIR)/TimeTriggerManager_28e9df8.o \
-  $(JUCE_OBJDIR)/TriggerLayer_270d0aaf.o \
-  $(JUCE_OBJDIR)/SequenceLayerPanel_b503e081.o \
-  $(JUCE_OBJDIR)/SequenceLayerPanelManagerUI_b9ca64ca.o \
-  $(JUCE_OBJDIR)/SequenceLayerTimeline_2eaf3ae.o \
-  $(JUCE_OBJDIR)/SequenceLayerTimelineManagerUI_8411943d.o \
-  $(JUCE_OBJDIR)/SequenceLayer_c9c02da2.o \
-  $(JUCE_OBJDIR)/SequenceLayerFactory_eda63712.o \
-  $(JUCE_OBJDIR)/SequenceLayerManager_eb5e0c35.o \
-  $(JUCE_OBJDIR)/SequenceEditor_88b31cd9.o \
-  $(JUCE_OBJDIR)/SequenceTimelineHeader_e6ae3a1a.o \
-  $(JUCE_OBJDIR)/SequenceTimelineNavigationUI_7c174fb5.o \
-  $(JUCE_OBJDIR)/SequenceTimelineSeeker_77a668b2.o \
-  $(JUCE_OBJDIR)/SequenceTransportUI_f5171adb.o \
-  $(JUCE_OBJDIR)/SequenceUI_d0a961e0.o \
-  $(JUCE_OBJDIR)/Sequence_b81dca9b.o \
-  $(JUCE_OBJDIR)/SequenceManagerUI_68ff9d23.o \
-  $(JUCE_OBJDIR)/TimeMachineView_84e65f62.o \
-  $(JUCE_OBJDIR)/SequenceManager_b4b96c18.o \
+  $(JUCE_OBJDIR)/ChataigneAudioLayerPanel_4ae871a.o \
+  $(JUCE_OBJDIR)/ChataigneAudioLayer_3f84aced.o \
+  $(JUCE_OBJDIR)/TimeColorManagerUI_195cb4d9.o \
+  $(JUCE_OBJDIR)/TimeColorUI_b69950e6.o \
+  $(JUCE_OBJDIR)/TimeColor_e61e87c9.o \
+  $(JUCE_OBJDIR)/TimeColorManager_c654482e.o \
+  $(JUCE_OBJDIR)/MappingLayerEditor_a17bc097.o \
+  $(JUCE_OBJDIR)/MappingLayerPanel_65736d24.o \
+  $(JUCE_OBJDIR)/MappingLayerTimeline_80a002b.o \
+  $(JUCE_OBJDIR)/MappingLayer_dc860121.o \
+  $(JUCE_OBJDIR)/ActionLayer_1aa0557f.o \
+  $(JUCE_OBJDIR)/TimeAction_15311b29.o \
+  $(JUCE_OBJDIR)/ChataigneSequence_6a3640ef.o \
+  $(JUCE_OBJDIR)/ChataigneSequenceManager_cd775ccc.o \
   $(JUCE_OBJDIR)/AboutWindow_970e3d2b.o \
   $(JUCE_OBJDIR)/ChataigneAssetManager_b7ab91a9.o \
   $(JUCE_OBJDIR)/ChataigneEngine_2d424321.o \
@@ -379,6 +349,7 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/include_juce_organicui_2c36794d.o \
   $(JUCE_OBJDIR)/include_juce_organicui2_5ab8c64f.o \
   $(JUCE_OBJDIR)/include_juce_osc_f3df604d.o \
+  $(JUCE_OBJDIR)/include_juce_timeline_e6183ffd.o \
   $(JUCE_OBJDIR)/include_juce_video_be78589.o \
 
 .PHONY: clean all strip
@@ -1604,224 +1575,74 @@ $(JUCE_OBJDIR)/StateManager_ec4bbd6.o: ../../Source/StateMachine/StateManager.cp
 	@echo "Compiling StateManager.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
-$(JUCE_OBJDIR)/TimeCueManagerUI_b2d29c4a.o: ../../Source/TimeMachine/Sequence/Cue/ui/TimeCueManagerUI.cpp
+$(JUCE_OBJDIR)/ChataigneAudioLayerPanel_4ae871a.o: ../../Source/TimeMachine/Sequence/layers/audio/ui/ChataigneAudioLayerPanel.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling TimeCueManagerUI.cpp"
+	@echo "Compiling ChataigneAudioLayerPanel.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
-$(JUCE_OBJDIR)/TimeCueUI_c10d7695.o: ../../Source/TimeMachine/Sequence/Cue/ui/TimeCueUI.cpp
+$(JUCE_OBJDIR)/ChataigneAudioLayer_3f84aced.o: ../../Source/TimeMachine/Sequence/layers/audio/ChataigneAudioLayer.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling TimeCueUI.cpp"
+	@echo "Compiling ChataigneAudioLayer.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
-$(JUCE_OBJDIR)/TimeCue_a13ab31a.o: ../../Source/TimeMachine/Sequence/Cue/TimeCue.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling TimeCue.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/TimeCueManager_4480efbd.o: ../../Source/TimeMachine/Sequence/Cue/TimeCueManager.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling TimeCueManager.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/AudioLayerClipManagerUI_9973a193.o: ../../Source/TimeMachine/Sequence/Layer/layers/audio/ui/AudioLayerClipManagerUI.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling AudioLayerClipManagerUI.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/AudioLayerClipUI_e31de16c.o: ../../Source/TimeMachine/Sequence/Layer/layers/audio/ui/AudioLayerClipUI.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling AudioLayerClipUI.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/AudioLayerPanel_51233d86.o: ../../Source/TimeMachine/Sequence/Layer/layers/audio/ui/AudioLayerPanel.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling AudioLayerPanel.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/AudioLayerTimeline_28b4bc89.o: ../../Source/TimeMachine/Sequence/Layer/layers/audio/ui/AudioLayerTimeline.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling AudioLayerTimeline.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/AudioLayer_c91e7f33.o: ../../Source/TimeMachine/Sequence/Layer/layers/audio/AudioLayer.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling AudioLayer.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/AudioLayerClip_604aefa3.o: ../../Source/TimeMachine/Sequence/Layer/layers/audio/AudioLayerClip.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling AudioLayerClip.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/AudioLayerClipManager_d1763714.o: ../../Source/TimeMachine/Sequence/Layer/layers/audio/AudioLayerClipManager.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling AudioLayerClipManager.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/TimeColorManagerUI_d8674ab7.o: ../../Source/TimeMachine/Sequence/Layer/layers/mapping/timecolor/ui/TimeColorManagerUI.cpp
+$(JUCE_OBJDIR)/TimeColorManagerUI_195cb4d9.o: ../../Source/TimeMachine/Sequence/layers/mapping/timecolor/ui/TimeColorManagerUI.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling TimeColorManagerUI.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
-$(JUCE_OBJDIR)/TimeColorUI_4c8e78c8.o: ../../Source/TimeMachine/Sequence/Layer/layers/mapping/timecolor/ui/TimeColorUI.cpp
+$(JUCE_OBJDIR)/TimeColorUI_b69950e6.o: ../../Source/TimeMachine/Sequence/layers/mapping/timecolor/ui/TimeColorUI.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling TimeColorUI.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
-$(JUCE_OBJDIR)/TimeColor_f2e47aa7.o: ../../Source/TimeMachine/Sequence/Layer/layers/mapping/timecolor/TimeColor.cpp
+$(JUCE_OBJDIR)/TimeColor_e61e87c9.o: ../../Source/TimeMachine/Sequence/layers/mapping/timecolor/TimeColor.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling TimeColor.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
-$(JUCE_OBJDIR)/TimeColorManager_b39eff90.o: ../../Source/TimeMachine/Sequence/Layer/layers/mapping/timecolor/TimeColorManager.cpp
+$(JUCE_OBJDIR)/TimeColorManager_c654482e.o: ../../Source/TimeMachine/Sequence/layers/mapping/timecolor/TimeColorManager.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling TimeColorManager.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
-$(JUCE_OBJDIR)/MappingLayerEditor_949073f5.o: ../../Source/TimeMachine/Sequence/Layer/layers/mapping/ui/MappingLayerEditor.cpp
+$(JUCE_OBJDIR)/MappingLayerEditor_a17bc097.o: ../../Source/TimeMachine/Sequence/layers/mapping/ui/MappingLayerEditor.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling MappingLayerEditor.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
-$(JUCE_OBJDIR)/MappingLayerPanel_f16bd606.o: ../../Source/TimeMachine/Sequence/Layer/layers/mapping/ui/MappingLayerPanel.cpp
+$(JUCE_OBJDIR)/MappingLayerPanel_65736d24.o: ../../Source/TimeMachine/Sequence/layers/mapping/ui/MappingLayerPanel.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling MappingLayerPanel.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
-$(JUCE_OBJDIR)/MappingLayerTimeline_88bf5409.o: ../../Source/TimeMachine/Sequence/Layer/layers/mapping/ui/MappingLayerTimeline.cpp
+$(JUCE_OBJDIR)/MappingLayerTimeline_80a002b.o: ../../Source/TimeMachine/Sequence/layers/mapping/ui/MappingLayerTimeline.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling MappingLayerTimeline.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
-$(JUCE_OBJDIR)/MappingLayer_461e6c03.o: ../../Source/TimeMachine/Sequence/Layer/layers/mapping/MappingLayer.cpp
+$(JUCE_OBJDIR)/MappingLayer_dc860121.o: ../../Source/TimeMachine/Sequence/layers/mapping/MappingLayer.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling MappingLayer.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
-$(JUCE_OBJDIR)/TimeTriggerManagerUI_3a8b4b85.o: ../../Source/TimeMachine/Sequence/Layer/layers/trigger/ui/TimeTriggerManagerUI.cpp
+$(JUCE_OBJDIR)/ActionLayer_1aa0557f.o: ../../Source/TimeMachine/Sequence/layers/action/ActionLayer.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling TimeTriggerManagerUI.cpp"
+	@echo "Compiling ActionLayer.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
-$(JUCE_OBJDIR)/TimeTriggerMultiTransformer_e11cdfa6.o: ../../Source/TimeMachine/Sequence/Layer/layers/trigger/ui/TimeTriggerMultiTransformer.cpp
+$(JUCE_OBJDIR)/TimeAction_15311b29.o: ../../Source/TimeMachine/Sequence/layers/action/TimeAction.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling TimeTriggerMultiTransformer.cpp"
+	@echo "Compiling TimeAction.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
-$(JUCE_OBJDIR)/TimeTriggerUI_1103a3ba.o: ../../Source/TimeMachine/Sequence/Layer/layers/trigger/ui/TimeTriggerUI.cpp
+$(JUCE_OBJDIR)/ChataigneSequence_6a3640ef.o: ../../Source/TimeMachine/Sequence/ChataigneSequence.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling TimeTriggerUI.cpp"
+	@echo "Compiling ChataigneSequence.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
-$(JUCE_OBJDIR)/TriggerLayerPanel_42a36fc6.o: ../../Source/TimeMachine/Sequence/Layer/layers/trigger/ui/TriggerLayerPanel.cpp
+$(JUCE_OBJDIR)/ChataigneSequenceManager_cd775ccc.o: ../../Source/TimeMachine/ChataigneSequenceManager.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling TriggerLayerPanel.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/TriggerLayerTimeline_de0c6249.o: ../../Source/TimeMachine/Sequence/Layer/layers/trigger/ui/TriggerLayerTimeline.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling TriggerLayerTimeline.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/TimeTrigger_4aecc13f.o: ../../Source/TimeMachine/Sequence/Layer/layers/trigger/TimeTrigger.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling TimeTrigger.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/TimeTriggerManager_28e9df8.o: ../../Source/TimeMachine/Sequence/Layer/layers/trigger/TimeTriggerManager.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling TimeTriggerManager.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/TriggerLayer_270d0aaf.o: ../../Source/TimeMachine/Sequence/Layer/layers/trigger/TriggerLayer.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling TriggerLayer.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/SequenceLayerPanel_b503e081.o: ../../Source/TimeMachine/Sequence/Layer/ui/SequenceLayerPanel.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling SequenceLayerPanel.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/SequenceLayerPanelManagerUI_b9ca64ca.o: ../../Source/TimeMachine/Sequence/Layer/ui/SequenceLayerPanelManagerUI.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling SequenceLayerPanelManagerUI.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/SequenceLayerTimeline_2eaf3ae.o: ../../Source/TimeMachine/Sequence/Layer/ui/SequenceLayerTimeline.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling SequenceLayerTimeline.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/SequenceLayerTimelineManagerUI_8411943d.o: ../../Source/TimeMachine/Sequence/Layer/ui/SequenceLayerTimelineManagerUI.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling SequenceLayerTimelineManagerUI.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/SequenceLayer_c9c02da2.o: ../../Source/TimeMachine/Sequence/Layer/SequenceLayer.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling SequenceLayer.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/SequenceLayerFactory_eda63712.o: ../../Source/TimeMachine/Sequence/Layer/SequenceLayerFactory.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling SequenceLayerFactory.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/SequenceLayerManager_eb5e0c35.o: ../../Source/TimeMachine/Sequence/Layer/SequenceLayerManager.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling SequenceLayerManager.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/SequenceEditor_88b31cd9.o: ../../Source/TimeMachine/Sequence/ui/SequenceEditor.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling SequenceEditor.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/SequenceTimelineHeader_e6ae3a1a.o: ../../Source/TimeMachine/Sequence/ui/SequenceTimelineHeader.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling SequenceTimelineHeader.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/SequenceTimelineNavigationUI_7c174fb5.o: ../../Source/TimeMachine/Sequence/ui/SequenceTimelineNavigationUI.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling SequenceTimelineNavigationUI.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/SequenceTimelineSeeker_77a668b2.o: ../../Source/TimeMachine/Sequence/ui/SequenceTimelineSeeker.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling SequenceTimelineSeeker.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/SequenceTransportUI_f5171adb.o: ../../Source/TimeMachine/Sequence/ui/SequenceTransportUI.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling SequenceTransportUI.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/SequenceUI_d0a961e0.o: ../../Source/TimeMachine/Sequence/ui/SequenceUI.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling SequenceUI.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/Sequence_b81dca9b.o: ../../Source/TimeMachine/Sequence/Sequence.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling Sequence.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/SequenceManagerUI_68ff9d23.o: ../../Source/TimeMachine/ui/SequenceManagerUI.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling SequenceManagerUI.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/TimeMachineView_84e65f62.o: ../../Source/TimeMachine/ui/TimeMachineView.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling TimeMachineView.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/SequenceManager_b4b96c18.o: ../../Source/TimeMachine/SequenceManager.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling SequenceManager.cpp"
+	@echo "Compiling ChataigneSequenceManager.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/AboutWindow_970e3d2b.o: ../../Source/UI/AboutWindow.cpp
@@ -1947,6 +1768,11 @@ $(JUCE_OBJDIR)/include_juce_organicui2_5ab8c64f.o: ../../JuceLibraryCode/include
 $(JUCE_OBJDIR)/include_juce_osc_f3df604d.o: ../../JuceLibraryCode/include_juce_osc.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling include_juce_osc.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/include_juce_timeline_e6183ffd.o: ../../JuceLibraryCode/include_juce_timeline.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling include_juce_timeline.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/include_juce_video_be78589.o: ../../JuceLibraryCode/include_juce_video.cpp

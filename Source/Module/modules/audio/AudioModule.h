@@ -71,7 +71,7 @@ public:
 	EnumParameter * pitchDetectionMethod;
 
 	//Values
-	FloatParameter * volume;
+	FloatParameter * detectedVolume;
 
 	ControllableContainer noteCC;
 	FloatParameter * frequency;

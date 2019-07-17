@@ -179,7 +179,7 @@ void BasicsGuide::newMessage(const StandardCondition::ConditionEvent & e)
 		StandardCondition * c = dynamic_cast<StandardCondition *>(e.condition);
 		if (c != nullptr)
 		{
-			if (c->sourceTarget->target != nullptr && c->sourceTarget->target == audioModule->volume) nextStep();
+			if (c->sourceTarget->target != nullptr && c->sourceTarget->target == audioModule->detectedVolume) nextStep();
 		}
 	}
 }
