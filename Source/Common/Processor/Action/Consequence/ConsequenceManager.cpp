@@ -19,6 +19,8 @@ ConsequenceManager::ConsequenceManager(const String &name) :
 	Thread("consequences"),
 	forceDisabled(false)
 {
+	canBeDisabled = false;
+
 	selectItemWhenCreated = false;
 	triggerAll = addTrigger("Trigger All", "Trigger all the consequences in the manager");
 	triggerAll->hideInEditor = true;

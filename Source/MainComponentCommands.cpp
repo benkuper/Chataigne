@@ -11,7 +11,6 @@
 
 #include "MainComponent.h"
 #include "UI/AboutWindow.h"
-#include "TimeMachine/ui/TimeMachineView.h"
 #include "Guider/Guider.h"
 #include "Module/Community/CommunityModuleManager.h"
 #include "Module/ModuleFactory.h"
@@ -89,6 +88,7 @@ void MainContentComponent::getCommandInfo(CommandID commandID, ApplicationComman
 		break;
 	}
 }
+
 
 
 void MainContentComponent::getAllCommands(Array<CommandID>& commands) {
@@ -209,7 +209,7 @@ bool MainContentComponent::perform(const InvocationInfo& info)
 			TimeMachineView * tmw = dynamic_cast<TimeMachineView *>(c);
 			if (tmw != nullptr)
 			{
-				SequenceEditor * se = tmw->editor.get();
+				SequenceEditorView * se = tmw->editor.get();
 				if (se != nullptr)
 				{
 					if (se->sequence != nullptr) se->sequence->togglePlayTrigger->trigger();

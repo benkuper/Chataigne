@@ -10,10 +10,7 @@
 
 #include "../SequenceModule.h"
 #include "SequenceCommand.h"
-#include "TimeMachine/Sequence/Sequence.h"
-#include "TimeMachine/Sequence/Layer/SequenceLayer.h"
-#include "TimeMachine/SequenceManager.h"
-#include "TimeMachine/Sequence/Cue/TimeCue.h"
+#include "TimeMachine/ChataigneSequenceManager.h"
 
 SequenceCommand::SequenceCommand(SequenceModule * _module, CommandContext context, var params) :
 	BaseCommand(_module, context, params),
@@ -32,17 +29,17 @@ SequenceCommand::SequenceCommand(SequenceModule * _module, CommandContext contex
 	case STOP_SEQUENCE:
 	case PAUSE_SEQUENCE:
 		target->showParentNameInEditor = false;
-		target->customGetTargetContainerFunc = &SequenceManager::showMenuAndGetSequence;
+		target->customGetTargetContainerFunc = &ChataigneSequenceManager::showMenuAndGetSequenceStatic;
 		break;
 
 	case DISABLE_LAYER:
 	case ENABLE_LAYER:
 	case TOGGLE_LAYER:
-		target->customGetTargetContainerFunc = &SequenceManager::showmMenuAndGetLayer;
+		target->customGetTargetContainerFunc = &ChataigneSequenceManager::showmMenuAndGetLayerStatic;
 		break;
 
 	case SET_TIME:
-		target->customGetTargetContainerFunc = &SequenceManager::showMenuAndGetSequence;
+		target->customGetTargetContainerFunc = &ChataigneSequenceManager::showMenuAndGetSequenceStatic;
 
 		value = addFloatParameter("Time", "Target time to set", 0, 0, 3600);
 		value->defaultUI = FloatParameter::TIME;
@@ -50,7 +47,7 @@ SequenceCommand::SequenceCommand(SequenceModule * _module, CommandContext contex
 		break;
 
 	case GOTO_CUE:
-		target->customGetTargetContainerFunc = &SequenceManager::showMenuAndGetCue;
+		target->customGetTargetContainerFunc = &ChataigneSequenceManager::showMenuAndGetCueStatic;
 		break;
 
 	default:

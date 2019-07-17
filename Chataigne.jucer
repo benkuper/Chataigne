@@ -1153,195 +1153,74 @@
               file="Source/StateMachine/StateManager.cpp"/>
         <FILE id="UliENL" name="StateManager.h" compile="0" resource="0" file="Source/StateMachine/StateManager.h"/>
       </GROUP>
-      <GROUP id="{4E8B7BB9-54DB-2C2D-2DE2-E9E57DF055ED}" name="TimeMachine">
-        <GROUP id="{BADAC7AC-C589-BF99-32CC-E0BDED5F03B1}" name="Sequence">
-          <GROUP id="{678C11D1-72E6-E0B9-07E9-F27F5989123B}" name="Cue">
-            <GROUP id="{61A3631A-41D9-3225-D46A-52A1E7DD9291}" name="ui">
-              <FILE id="s4LjRi" name="TimeCueManagerUI.cpp" compile="1" resource="0"
-                    file="Source/TimeMachine/Sequence/Cue/ui/TimeCueManagerUI.cpp"/>
-              <FILE id="vKeKWG" name="TimeCueManagerUI.h" compile="0" resource="0"
-                    file="Source/TimeMachine/Sequence/Cue/ui/TimeCueManagerUI.h"/>
-              <FILE id="n9hsWu" name="TimeCueUI.cpp" compile="1" resource="0" file="Source/TimeMachine/Sequence/Cue/ui/TimeCueUI.cpp"/>
-              <FILE id="DP0GuT" name="TimeCueUI.h" compile="0" resource="0" file="Source/TimeMachine/Sequence/Cue/ui/TimeCueUI.h"/>
-            </GROUP>
-            <FILE id="qHDtrj" name="TimeCue.cpp" compile="1" resource="0" file="Source/TimeMachine/Sequence/Cue/TimeCue.cpp"/>
-            <FILE id="Ftf0dK" name="TimeCue.h" compile="0" resource="0" file="Source/TimeMachine/Sequence/Cue/TimeCue.h"/>
-            <FILE id="BJN8Nn" name="TimeCueManager.cpp" compile="1" resource="0"
-                  file="Source/TimeMachine/Sequence/Cue/TimeCueManager.cpp"/>
-            <FILE id="qfgyUf" name="TimeCueManager.h" compile="0" resource="0"
-                  file="Source/TimeMachine/Sequence/Cue/TimeCueManager.h"/>
-          </GROUP>
-          <GROUP id="{5E5CE20F-0045-70EC-835B-AF327CC94251}" name="Layer">
-            <GROUP id="{E5E100AF-4067-652C-9F45-C69AF8DB997B}" name="layers">
-              <GROUP id="{85946119-D8E6-6446-5275-30B401773014}" name="audio">
-                <GROUP id="{859A33F3-D518-5746-5399-FF98E4F3F168}" name="ui">
-                  <FILE id="Yg3gfK" name="AudioLayerClipManagerUI.cpp" compile="1" resource="0"
-                        file="Source/TimeMachine/Sequence/Layer/layers/audio/ui/AudioLayerClipManagerUI.cpp"/>
-                  <FILE id="MxHQ34" name="AudioLayerClipManagerUI.h" compile="0" resource="0"
-                        file="Source/TimeMachine/Sequence/Layer/layers/audio/ui/AudioLayerClipManagerUI.h"/>
-                  <FILE id="iWogi3" name="AudioLayerClipUI.cpp" compile="1" resource="0"
-                        file="Source/TimeMachine/Sequence/Layer/layers/audio/ui/AudioLayerClipUI.cpp"/>
-                  <FILE id="uWdLEP" name="AudioLayerClipUI.h" compile="0" resource="0"
-                        file="Source/TimeMachine/Sequence/Layer/layers/audio/ui/AudioLayerClipUI.h"/>
-                  <FILE id="FFJFrS" name="AudioLayerPanel.cpp" compile="1" resource="0"
-                        file="Source/TimeMachine/Sequence/Layer/layers/audio/ui/AudioLayerPanel.cpp"/>
-                  <FILE id="nhOSiG" name="AudioLayerPanel.h" compile="0" resource="0"
-                        file="Source/TimeMachine/Sequence/Layer/layers/audio/ui/AudioLayerPanel.h"/>
-                  <FILE id="dRXkV5" name="AudioLayerTimeline.cpp" compile="1" resource="0"
-                        file="Source/TimeMachine/Sequence/Layer/layers/audio/ui/AudioLayerTimeline.cpp"/>
-                  <FILE id="KzuWBw" name="AudioLayerTimeline.h" compile="0" resource="0"
-                        file="Source/TimeMachine/Sequence/Layer/layers/audio/ui/AudioLayerTimeline.h"/>
-                </GROUP>
-                <FILE id="kzZG8y" name="AudioLayer.cpp" compile="1" resource="0" file="Source/TimeMachine/Sequence/Layer/layers/audio/AudioLayer.cpp"/>
-                <FILE id="ZT2Fvv" name="AudioLayer.h" compile="0" resource="0" file="Source/TimeMachine/Sequence/Layer/layers/audio/AudioLayer.h"/>
-                <FILE id="JUsFhe" name="AudioLayerClip.cpp" compile="1" resource="0"
-                      file="Source/TimeMachine/Sequence/Layer/layers/audio/AudioLayerClip.cpp"/>
-                <FILE id="n6p9WH" name="AudioLayerClip.h" compile="0" resource="0"
-                      file="Source/TimeMachine/Sequence/Layer/layers/audio/AudioLayerClip.h"/>
-                <FILE id="OhSi7J" name="AudioLayerClipManager.cpp" compile="1" resource="0"
-                      file="Source/TimeMachine/Sequence/Layer/layers/audio/AudioLayerClipManager.cpp"/>
-                <FILE id="Ocgorv" name="AudioLayerClipManager.h" compile="0" resource="0"
-                      file="Source/TimeMachine/Sequence/Layer/layers/audio/AudioLayerClipManager.h"/>
+      <GROUP id="{385034AB-BB8A-1A0B-677C-4890320C1929}" name="TimeMachine">
+        <GROUP id="{34E053CC-6BB4-AEF4-A5AE-B46B09297363}" name="Sequence">
+          <GROUP id="{D10B0FB5-159B-06C6-95CF-79B2E2FE1F11}" name="layers">
+            <GROUP id="{FB6A16ED-AF1A-4851-B4BF-65CA88B1942C}" name="audio">
+              <GROUP id="{40C039F6-5D82-E09C-0BCC-4CBF9F98F4F9}" name="ui">
+                <FILE id="q7qyC5" name="ChataigneAudioLayerPanel.cpp" compile="1" resource="0"
+                      file="Source/TimeMachine/Sequence/layers/audio/ui/ChataigneAudioLayerPanel.cpp"/>
+                <FILE id="FwvBpL" name="ChataigneAudioLayerPanel.h" compile="0" resource="0"
+                      file="Source/TimeMachine/Sequence/layers/audio/ui/ChataigneAudioLayerPanel.h"/>
               </GROUP>
-              <GROUP id="{770C85C4-198C-C99D-5E69-F5253EE96372}" name="mapping">
-                <GROUP id="{7C406034-B71A-C5FF-375C-F259CFEE9ACD}" name="timecolor">
-                  <GROUP id="{550A086C-3DBA-5CDF-12A9-ED3C77424075}" name="ui">
-                    <FILE id="cocOxp" name="TimeColorManagerUI.cpp" compile="1" resource="0"
-                          file="Source/TimeMachine/Sequence/Layer/layers/mapping/timecolor/ui/TimeColorManagerUI.cpp"/>
-                    <FILE id="aHcHgE" name="TimeColorManagerUI.h" compile="0" resource="0"
-                          file="Source/TimeMachine/Sequence/Layer/layers/mapping/timecolor/ui/TimeColorManagerUI.h"/>
-                    <FILE id="K6U3Cu" name="TimeColorUI.cpp" compile="1" resource="0" file="Source/TimeMachine/Sequence/Layer/layers/mapping/timecolor/ui/TimeColorUI.cpp"/>
-                    <FILE id="ziSTaT" name="TimeColorUI.h" compile="0" resource="0" file="Source/TimeMachine/Sequence/Layer/layers/mapping/timecolor/ui/TimeColorUI.h"/>
-                  </GROUP>
-                  <FILE id="aqdM3o" name="TimeColor.cpp" compile="1" resource="0" file="Source/TimeMachine/Sequence/Layer/layers/mapping/timecolor/TimeColor.cpp"/>
-                  <FILE id="izb4kE" name="TimeColor.h" compile="0" resource="0" file="Source/TimeMachine/Sequence/Layer/layers/mapping/timecolor/TimeColor.h"/>
-                  <FILE id="M8u6eN" name="TimeColorManager.cpp" compile="1" resource="0"
-                        file="Source/TimeMachine/Sequence/Layer/layers/mapping/timecolor/TimeColorManager.cpp"/>
-                  <FILE id="L1KSDu" name="TimeColorManager.h" compile="0" resource="0"
-                        file="Source/TimeMachine/Sequence/Layer/layers/mapping/timecolor/TimeColorManager.h"/>
-                </GROUP>
-                <GROUP id="{27B9256C-F408-88F4-3258-FED033D5FEE8}" name="ui">
-                  <FILE id="mPRFzE" name="MappingLayerEditor.cpp" compile="1" resource="0"
-                        file="Source/TimeMachine/Sequence/Layer/layers/mapping/ui/MappingLayerEditor.cpp"/>
-                  <FILE id="wujDWg" name="MappingLayerEditor.h" compile="0" resource="0"
-                        file="Source/TimeMachine/Sequence/Layer/layers/mapping/ui/MappingLayerEditor.h"/>
-                  <FILE id="VF5MU8" name="MappingLayerPanel.cpp" compile="1" resource="0"
-                        file="Source/TimeMachine/Sequence/Layer/layers/mapping/ui/MappingLayerPanel.cpp"/>
-                  <FILE id="nfrOdY" name="MappingLayerPanel.h" compile="0" resource="0"
-                        file="Source/TimeMachine/Sequence/Layer/layers/mapping/ui/MappingLayerPanel.h"/>
-                  <FILE id="l1Je2i" name="MappingLayerTimeline.cpp" compile="1" resource="0"
-                        file="Source/TimeMachine/Sequence/Layer/layers/mapping/ui/MappingLayerTimeline.cpp"/>
-                  <FILE id="IOQAhq" name="MappingLayerTimeline.h" compile="0" resource="0"
-                        file="Source/TimeMachine/Sequence/Layer/layers/mapping/ui/MappingLayerTimeline.h"/>
-                </GROUP>
-                <FILE id="Pk8U7b" name="MappingLayer.cpp" compile="1" resource="0"
-                      file="Source/TimeMachine/Sequence/Layer/layers/mapping/MappingLayer.cpp"/>
-                <FILE id="sQUEW6" name="MappingLayer.h" compile="0" resource="0" file="Source/TimeMachine/Sequence/Layer/layers/mapping/MappingLayer.h"/>
-              </GROUP>
-              <GROUP id="{A1A8F1F2-62C2-FA25-D175-1DEACDE0DD1A}" name="trigger">
-                <GROUP id="{3CA908B3-C0BD-448D-D26E-D0C57F8387B4}" name="ui">
-                  <FILE id="JozeUu" name="TimeTriggerManagerUI.cpp" compile="1" resource="0"
-                        file="Source/TimeMachine/Sequence/Layer/layers/trigger/ui/TimeTriggerManagerUI.cpp"/>
-                  <FILE id="e7W19o" name="TimeTriggerManagerUI.h" compile="0" resource="0"
-                        file="Source/TimeMachine/Sequence/Layer/layers/trigger/ui/TimeTriggerManagerUI.h"/>
-                  <FILE id="FAal2C" name="TimeTriggerMultiTransformer.cpp" compile="1"
-                        resource="0" file="Source/TimeMachine/Sequence/Layer/layers/trigger/ui/TimeTriggerMultiTransformer.cpp"/>
-                  <FILE id="Ve5hTG" name="TimeTriggerMultiTransformer.h" compile="0"
-                        resource="0" file="Source/TimeMachine/Sequence/Layer/layers/trigger/ui/TimeTriggerMultiTransformer.h"/>
-                  <FILE id="rfZgiT" name="TimeTriggerUI.cpp" compile="1" resource="0"
-                        file="Source/TimeMachine/Sequence/Layer/layers/trigger/ui/TimeTriggerUI.cpp"/>
-                  <FILE id="pn8LMa" name="TimeTriggerUI.h" compile="0" resource="0" file="Source/TimeMachine/Sequence/Layer/layers/trigger/ui/TimeTriggerUI.h"/>
-                  <FILE id="VBKxd1" name="TriggerLayerPanel.cpp" compile="1" resource="0"
-                        file="Source/TimeMachine/Sequence/Layer/layers/trigger/ui/TriggerLayerPanel.cpp"/>
-                  <FILE id="VDoK4z" name="TriggerLayerPanel.h" compile="0" resource="0"
-                        file="Source/TimeMachine/Sequence/Layer/layers/trigger/ui/TriggerLayerPanel.h"/>
-                  <FILE id="Sry5UY" name="TriggerLayerTimeline.cpp" compile="1" resource="0"
-                        file="Source/TimeMachine/Sequence/Layer/layers/trigger/ui/TriggerLayerTimeline.cpp"/>
-                  <FILE id="dezg00" name="TriggerLayerTimeline.h" compile="0" resource="0"
-                        file="Source/TimeMachine/Sequence/Layer/layers/trigger/ui/TriggerLayerTimeline.h"/>
-                </GROUP>
-                <FILE id="Zgg78t" name="TimeTrigger.cpp" compile="1" resource="0" file="Source/TimeMachine/Sequence/Layer/layers/trigger/TimeTrigger.cpp"/>
-                <FILE id="N5oQrA" name="TimeTrigger.h" compile="0" resource="0" file="Source/TimeMachine/Sequence/Layer/layers/trigger/TimeTrigger.h"/>
-                <FILE id="mBDJdc" name="TimeTriggerManager.cpp" compile="1" resource="0"
-                      file="Source/TimeMachine/Sequence/Layer/layers/trigger/TimeTriggerManager.cpp"/>
-                <FILE id="gvcSDP" name="TimeTriggerManager.h" compile="0" resource="0"
-                      file="Source/TimeMachine/Sequence/Layer/layers/trigger/TimeTriggerManager.h"/>
-                <FILE id="COuKjG" name="TriggerLayer.cpp" compile="1" resource="0"
-                      file="Source/TimeMachine/Sequence/Layer/layers/trigger/TriggerLayer.cpp"/>
-                <FILE id="cDjftK" name="TriggerLayer.h" compile="0" resource="0" file="Source/TimeMachine/Sequence/Layer/layers/trigger/TriggerLayer.h"/>
-              </GROUP>
+              <FILE id="crs36i" name="ChataigneAudioLayer.cpp" compile="1" resource="0"
+                    file="Source/TimeMachine/Sequence/layers/audio/ChataigneAudioLayer.cpp"/>
+              <FILE id="cyfYIR" name="ChataigneAudioLayer.h" compile="0" resource="0"
+                    file="Source/TimeMachine/Sequence/layers/audio/ChataigneAudioLayer.h"/>
+              <FILE id="v7RjWc" name="ChataigneAudioLayerListener.h" compile="0"
+                    resource="0" file="Source/TimeMachine/Sequence/layers/audio/ChataigneAudioLayerListener.h"/>
             </GROUP>
-            <GROUP id="{7B408CF2-C22E-0C44-5614-C80E9D903A72}" name="ui">
-              <FILE id="fupkTO" name="SequenceLayerPanel.cpp" compile="1" resource="0"
-                    file="Source/TimeMachine/Sequence/Layer/ui/SequenceLayerPanel.cpp"/>
-              <FILE id="y67tIC" name="SequenceLayerPanel.h" compile="0" resource="0"
-                    file="Source/TimeMachine/Sequence/Layer/ui/SequenceLayerPanel.h"/>
-              <FILE id="RnDYmX" name="SequenceLayerPanelManagerUI.cpp" compile="1"
-                    resource="0" file="Source/TimeMachine/Sequence/Layer/ui/SequenceLayerPanelManagerUI.cpp"/>
-              <FILE id="CiE9cS" name="SequenceLayerPanelManagerUI.h" compile="0"
-                    resource="0" file="Source/TimeMachine/Sequence/Layer/ui/SequenceLayerPanelManagerUI.h"/>
-              <FILE id="Feg5V0" name="SequenceLayerTimeline.cpp" compile="1" resource="0"
-                    file="Source/TimeMachine/Sequence/Layer/ui/SequenceLayerTimeline.cpp"/>
-              <FILE id="uNTedF" name="SequenceLayerTimeline.h" compile="0" resource="0"
-                    file="Source/TimeMachine/Sequence/Layer/ui/SequenceLayerTimeline.h"/>
-              <FILE id="iB82X9" name="SequenceLayerTimelineManagerUI.cpp" compile="1"
-                    resource="0" file="Source/TimeMachine/Sequence/Layer/ui/SequenceLayerTimelineManagerUI.cpp"/>
-              <FILE id="wb1sG7" name="SequenceLayerTimelineManagerUI.h" compile="0"
-                    resource="0" file="Source/TimeMachine/Sequence/Layer/ui/SequenceLayerTimelineManagerUI.h"/>
+            <GROUP id="{43CDA754-BA40-749C-1F35-8733A474B6F9}" name="mapping">
+              <GROUP id="{FCD61B19-4F83-5FEC-4C0D-98A137047588}" name="timecolor">
+                <GROUP id="{2A0EE67E-63D4-CF44-B47C-D671AECF03AF}" name="ui">
+                  <FILE id="OEgzht" name="TimeColorManagerUI.cpp" compile="1" resource="0"
+                        file="Source/TimeMachine/Sequence/layers/mapping/timecolor/ui/TimeColorManagerUI.cpp"/>
+                  <FILE id="MkPMpM" name="TimeColorManagerUI.h" compile="0" resource="0"
+                        file="Source/TimeMachine/Sequence/layers/mapping/timecolor/ui/TimeColorManagerUI.h"/>
+                  <FILE id="ccJrAW" name="TimeColorUI.cpp" compile="1" resource="0" file="Source/TimeMachine/Sequence/layers/mapping/timecolor/ui/TimeColorUI.cpp"/>
+                  <FILE id="Tjrq2p" name="TimeColorUI.h" compile="0" resource="0" file="Source/TimeMachine/Sequence/layers/mapping/timecolor/ui/TimeColorUI.h"/>
+                </GROUP>
+                <FILE id="ptngf2" name="TimeColor.cpp" compile="1" resource="0" file="Source/TimeMachine/Sequence/layers/mapping/timecolor/TimeColor.cpp"/>
+                <FILE id="USYoiR" name="TimeColor.h" compile="0" resource="0" file="Source/TimeMachine/Sequence/layers/mapping/timecolor/TimeColor.h"/>
+                <FILE id="rAz7s3" name="TimeColorManager.cpp" compile="1" resource="0"
+                      file="Source/TimeMachine/Sequence/layers/mapping/timecolor/TimeColorManager.cpp"/>
+                <FILE id="XERbkR" name="TimeColorManager.h" compile="0" resource="0"
+                      file="Source/TimeMachine/Sequence/layers/mapping/timecolor/TimeColorManager.h"/>
+              </GROUP>
+              <GROUP id="{071E6E14-B2B7-5D15-02BF-BCC713578CF2}" name="ui">
+                <FILE id="u3Ftks" name="MappingLayerEditor.cpp" compile="1" resource="0"
+                      file="Source/TimeMachine/Sequence/layers/mapping/ui/MappingLayerEditor.cpp"/>
+                <FILE id="JS8hYq" name="MappingLayerEditor.h" compile="0" resource="0"
+                      file="Source/TimeMachine/Sequence/layers/mapping/ui/MappingLayerEditor.h"/>
+                <FILE id="L2jHkN" name="MappingLayerPanel.cpp" compile="1" resource="0"
+                      file="Source/TimeMachine/Sequence/layers/mapping/ui/MappingLayerPanel.cpp"/>
+                <FILE id="wJQyUC" name="MappingLayerPanel.h" compile="0" resource="0"
+                      file="Source/TimeMachine/Sequence/layers/mapping/ui/MappingLayerPanel.h"/>
+                <FILE id="gXuMS4" name="MappingLayerTimeline.cpp" compile="1" resource="0"
+                      file="Source/TimeMachine/Sequence/layers/mapping/ui/MappingLayerTimeline.cpp"/>
+                <FILE id="bqsE58" name="MappingLayerTimeline.h" compile="0" resource="0"
+                      file="Source/TimeMachine/Sequence/layers/mapping/ui/MappingLayerTimeline.h"/>
+              </GROUP>
+              <FILE id="wxLkNN" name="MappingLayer.cpp" compile="1" resource="0"
+                    file="Source/TimeMachine/Sequence/layers/mapping/MappingLayer.cpp"/>
+              <FILE id="WBJmQT" name="MappingLayer.h" compile="0" resource="0" file="Source/TimeMachine/Sequence/layers/mapping/MappingLayer.h"/>
             </GROUP>
-            <FILE id="pIMj01" name="SequenceLayer.cpp" compile="1" resource="0"
-                  file="Source/TimeMachine/Sequence/Layer/SequenceLayer.cpp"/>
-            <FILE id="ww3c3Z" name="SequenceLayer.h" compile="0" resource="0" file="Source/TimeMachine/Sequence/Layer/SequenceLayer.h"/>
-            <FILE id="ZkcwyB" name="SequenceLayerFactory.cpp" compile="1" resource="0"
-                  file="Source/TimeMachine/Sequence/Layer/SequenceLayerFactory.cpp"/>
-            <FILE id="EBhQuT" name="SequenceLayerFactory.h" compile="0" resource="0"
-                  file="Source/TimeMachine/Sequence/Layer/SequenceLayerFactory.h"/>
-            <FILE id="rk3X8P" name="SequenceLayerManager.cpp" compile="1" resource="0"
-                  file="Source/TimeMachine/Sequence/Layer/SequenceLayerManager.cpp"/>
-            <FILE id="X8Efal" name="SequenceLayerManager.h" compile="0" resource="0"
-                  file="Source/TimeMachine/Sequence/Layer/SequenceLayerManager.h"/>
+            <GROUP id="{4882D8F6-1A50-19D8-0E4A-90EE079491AF}" name="action">
+              <FILE id="hmhgsi" name="ActionLayer.cpp" compile="1" resource="0" file="Source/TimeMachine/Sequence/layers/action/ActionLayer.cpp"/>
+              <FILE id="Ra41aa" name="ActionLayer.h" compile="0" resource="0" file="Source/TimeMachine/Sequence/layers/action/ActionLayer.h"/>
+              <FILE id="LqKWkn" name="TimeAction.cpp" compile="1" resource="0" file="Source/TimeMachine/Sequence/layers/action/TimeAction.cpp"/>
+              <FILE id="H87yrS" name="TimeAction.h" compile="0" resource="0" file="Source/TimeMachine/Sequence/layers/action/TimeAction.h"/>
+            </GROUP>
           </GROUP>
-          <GROUP id="{832D2C2D-9936-2CE1-55E9-14710BD4220C}" name="ui">
-            <FILE id="zluEjq" name="SequenceEditor.cpp" compile="1" resource="0"
-                  file="Source/TimeMachine/Sequence/ui/SequenceEditor.cpp"/>
-            <FILE id="wm6YZz" name="SequenceEditor.h" compile="0" resource="0"
-                  file="Source/TimeMachine/Sequence/ui/SequenceEditor.h"/>
-            <FILE id="m7aZHw" name="SequenceTimelineHeader.cpp" compile="1" resource="0"
-                  file="Source/TimeMachine/Sequence/ui/SequenceTimelineHeader.cpp"/>
-            <FILE id="WIA4ma" name="SequenceTimelineHeader.h" compile="0" resource="0"
-                  file="Source/TimeMachine/Sequence/ui/SequenceTimelineHeader.h"/>
-            <FILE id="xZvcym" name="SequenceTimelineNavigationUI.cpp" compile="1"
-                  resource="0" file="Source/TimeMachine/Sequence/ui/SequenceTimelineNavigationUI.cpp"/>
-            <FILE id="sTznep" name="SequenceTimelineNavigationUI.h" compile="0"
-                  resource="0" file="Source/TimeMachine/Sequence/ui/SequenceTimelineNavigationUI.h"/>
-            <FILE id="s4N96n" name="SequenceTimelineSeeker.cpp" compile="1" resource="0"
-                  file="Source/TimeMachine/Sequence/ui/SequenceTimelineSeeker.cpp"/>
-            <FILE id="i5cm6N" name="SequenceTimelineSeeker.h" compile="0" resource="0"
-                  file="Source/TimeMachine/Sequence/ui/SequenceTimelineSeeker.h"/>
-            <FILE id="GQnSBT" name="SequenceTransportUI.cpp" compile="1" resource="0"
-                  file="Source/TimeMachine/Sequence/ui/SequenceTransportUI.cpp"/>
-            <FILE id="YcGA7Z" name="SequenceTransportUI.h" compile="0" resource="0"
-                  file="Source/TimeMachine/Sequence/ui/SequenceTransportUI.h"/>
-            <FILE id="N1PQD7" name="SequenceUI.cpp" compile="1" resource="0" file="Source/TimeMachine/Sequence/ui/SequenceUI.cpp"/>
-            <FILE id="Xv6aFu" name="SequenceUI.h" compile="0" resource="0" file="Source/TimeMachine/Sequence/ui/SequenceUI.h"/>
-          </GROUP>
-          <FILE id="DeE774" name="Sequence.cpp" compile="1" resource="0" file="Source/TimeMachine/Sequence/Sequence.cpp"/>
-          <FILE id="fAxHjv" name="Sequence.h" compile="0" resource="0" file="Source/TimeMachine/Sequence/Sequence.h"/>
+          <FILE id="AgsPCv" name="ChataigneSequence.cpp" compile="1" resource="0"
+                file="Source/TimeMachine/Sequence/ChataigneSequence.cpp"/>
+          <FILE id="NAOj5I" name="ChataigneSequence.h" compile="0" resource="0"
+                file="Source/TimeMachine/Sequence/ChataigneSequence.h"/>
         </GROUP>
-        <GROUP id="{3885DBBB-ADD1-B8D3-664E-9CAFB235AEA3}" name="ui">
-          <FILE id="XxZkWP" name="SequenceManagerUI.cpp" compile="1" resource="0"
-                file="Source/TimeMachine/ui/SequenceManagerUI.cpp"/>
-          <FILE id="lMrtji" name="SequenceManagerUI.h" compile="0" resource="0"
-                file="Source/TimeMachine/ui/SequenceManagerUI.h"/>
-          <FILE id="A4oUmb" name="TimeMachineView.cpp" compile="1" resource="0"
-                file="Source/TimeMachine/ui/TimeMachineView.cpp"/>
-          <FILE id="g6TXSm" name="TimeMachineView.h" compile="0" resource="0"
-                file="Source/TimeMachine/ui/TimeMachineView.h"/>
-        </GROUP>
-        <FILE id="pYwlbT" name="SequenceManager.cpp" compile="1" resource="0"
-              file="Source/TimeMachine/SequenceManager.cpp"/>
-        <FILE id="z3tHxx" name="SequenceManager.h" compile="0" resource="0"
-              file="Source/TimeMachine/SequenceManager.h"/>
+        <FILE id="SBO8Vt" name="ChataigneSequenceManager.cpp" compile="1" resource="0"
+              file="Source/TimeMachine/ChataigneSequenceManager.cpp"/>
+        <FILE id="EadjSJ" name="ChataigneSequenceManager.h" compile="0" resource="0"
+              file="Source/TimeMachine/ChataigneSequenceManager.h"/>
       </GROUP>
       <GROUP id="{FA0E78EC-9F83-99D0-4BB9-C686CC8B957D}" name="UI">
         <FILE id="HYpDUa" name="AboutWindow.cpp" compile="1" resource="0" file="Source/UI/AboutWindow.cpp"/>
@@ -1395,6 +1274,7 @@
         <MODULEPATH id="juce_audio_basics"/>
         <MODULEPATH id="juce_analytics"/>
         <MODULEPATH id="juce_dsp" path="../../../../Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_timeline" path="../JUCE Modules"/>
       </MODULEPATHS>
     </VS2019>
     <VS2017 targetFolder="Builds/VisualStudio2017" externalLibraries="Setupapi.lib&#10;hid.lib&#10;Kinect20.lib&#10;joytime-core.lib&#10;joytime-input-hidapi.lib&#10;Servus.lib&#10;dnssd.lib&#10;SDL2.lib&#10;libartnet.lib&#10;iphlpapi.lib"
@@ -1429,6 +1309,7 @@
         <MODULEPATH id="juce_audio_basics" path="D:/Softwares\JUCE\modules"/>
         <MODULEPATH id="juce_analytics" path="D:/Softwares\JUCE\modules"/>
         <MODULEPATH id="juce_dsp" path="../../../../Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_timeline" path="../JUCE Modules"/>
       </MODULEPATHS>
     </VS2017>
     <XCODE_MAC targetFolder="Builds/MacOSX" smallIcon="nVz6Li" bigIcon="nVz6Li"
@@ -1463,6 +1344,7 @@
         <MODULEPATH id="juce_organicui" path="../JUCE Modules"/>
         <MODULEPATH id="juce_analytics" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_dsp" path="../../../../Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_timeline" path="../JUCE Modules"/>
       </MODULEPATHS>
     </XCODE_MAC>
     <LINUX_MAKE targetFolder="Builds/Raspberry" smallIcon="nVz6Li" bigIcon="nVz6Li"
@@ -1494,6 +1376,7 @@
         <MODULEPATH id="juce_audio_basics" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_analytics"/>
         <MODULEPATH id="juce_dsp" path="../../../../Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_timeline" path="../JUCE Modules"/>
       </MODULEPATHS>
     </LINUX_MAKE>
     <LINUX_MAKE targetFolder="Builds/LinuxMakefile" externalLibraries="bluetooth&#10;Servus&#10;curl&#10;artnet"
@@ -1525,6 +1408,7 @@
         <MODULEPATH id="juce_audio_basics" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_analytics" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_dsp" path="../../../../Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_timeline" path="../JUCE Modules"/>
       </MODULEPATHS>
     </LINUX_MAKE>
     <VS2017 targetFolder="Builds/VisualStudio2017_CI" externalLibraries="Setupapi.lib&#10;hid.lib&#10;Kinect20.lib&#10;joytime-core.lib&#10;joytime-input-hidapi.lib&#10;Servus.lib&#10;dnssd.lib&#10;SDL2.lib&#10;libartnet.lib&#10;iphlpapi.lib"
@@ -1555,6 +1439,7 @@
         <MODULEPATH id="juce_audio_basics" path="../JUCE/modules"/>
         <MODULEPATH id="juce_analytics" path="../JUCE/modules"/>
         <MODULEPATH id="juce_dsp" path="../../../../Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_timeline" path="../JUCE Modules"/>
       </MODULEPATHS>
     </VS2017>
     <VS2017 targetFolder="Builds/VisualStudio2017_Win7" externalLibraries="Setupapi.lib&#10;hid.lib&#10;joytime-core.lib&#10;joytime-input-hidapi.lib&#10;Servus.lib&#10;dnssd.lib&#10;SDL2.lib&#10;libartnet.lib&#10;iphlpapi.lib"
@@ -1586,6 +1471,7 @@
         <MODULEPATH id="juce_audio_basics" path="D:/Softwares\JUCE\modules"/>
         <MODULEPATH id="juce_analytics" path="D:/Softwares\JUCE\modules"/>
         <MODULEPATH id="juce_dsp" path="../../../../Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_timeline" path="../JUCE Modules"/>
       </MODULEPATHS>
     </VS2017>
   </EXPORTFORMATS>
@@ -1607,10 +1493,11 @@
     <MODULE id="juce_opengl" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_organicui" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_osc" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_timeline" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_video" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
   </MODULES>
   <JUCEOPTIONS JUCE_ASIO="1" JUCE_WASAPI="1" JUCE_JACK="1" ORGANICUI_USE_SERVUS="1"
-               JUCE_ALLOW_SPECIAL_CHARS_IN_ADDRESS="1"/>
+               JUCE_ALLOW_SPECIAL_CHARS_IN_ADDRESS="1" TIMELINE_USE_SEQUENCEMANAGER_SINGLETON="0"/>
   <LIVE_SETTINGS>
     <WINDOWS/>
     <OSX/>

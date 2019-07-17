@@ -65,6 +65,7 @@
 #define JUCE_MODULE_AVAILABLE_juce_opengl                1
 #define JUCE_MODULE_AVAILABLE_juce_organicui             1
 #define JUCE_MODULE_AVAILABLE_juce_osc                   1
+#define JUCE_MODULE_AVAILABLE_juce_timeline              1
 #define JUCE_MODULE_AVAILABLE_juce_video                 1
 
 #define JUCE_GLOBAL_MODULE_SETTINGS_INCLUDED 1
@@ -306,11 +307,22 @@
  #define   ORGANICUI_USE_SERVUS 1
 #endif
 
+#ifndef    ORGANICUI_DEFAULT_REMOTECONTROL_PORT
+ //#define ORGANICUI_DEFAULT_REMOTECONTROL_PORT 0
+#endif
+
 //==============================================================================
 // juce_osc flags:
 
 #ifndef    JUCE_ALLOW_SPECIAL_CHARS_IN_ADDRESS
  #define   JUCE_ALLOW_SPECIAL_CHARS_IN_ADDRESS 1
+#endif
+
+//==============================================================================
+// juce_timeline flags:
+
+#ifndef    TIMELINE_USE_SEQUENCEMANAGER_SINGLETON
+ #define   TIMELINE_USE_SEQUENCEMANAGER_SINGLETON 0
 #endif
 
 //==============================================================================

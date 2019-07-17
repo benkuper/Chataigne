@@ -43,7 +43,7 @@ AudioModule::AudioModule(const String & name) :
 	analyzerManager.addBaseManagerListener(this);
 
 	//Values
-	volume = valuesCC.addFloatParameter("Volume", "Volume of the audio input", 0, 0, 1);
+	detectedVolume = valuesCC.addFloatParameter("Volume", "Volume of the audio input", 0, 0, 1);
 
 	//Pitch Detection
 	frequency = noteCC.addFloatParameter("Freq", "Freq", 0, 0, 2000);
@@ -196,9 +196,9 @@ void AudioModule::audioDeviceIOCallback(const float ** inputChannelData, int num
 		{
 			if (buffer.getNumSamples() != numSamples) buffer.setSize(1, numSamples);
 			buffer.copyFromWithRamp(0, 0, inputChannelData[0], numSamples, 1, inputGain->floatValue());
-			volume->setValue(buffer.getRMSLevel(0, 0, numSamples));
+			detectedVolume->setValue(buffer.getRMSLevel(0, 0, numSamples));
 
-			if (volume->floatValue() > activityThreshold->floatValue())
+			if (detectedVolume->floatValue() > activityThreshold->floatValue())
 			{
 				inActivityTrigger->trigger();
 				

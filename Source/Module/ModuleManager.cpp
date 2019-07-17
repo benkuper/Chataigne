@@ -11,7 +11,7 @@
 #include "ModuleManager.h"
 #include "ModuleFactory.h"
 #include "StateMachine/StateManager.h"
-#include "TimeMachine/SequenceManager.h"
+#include "TimeMachine/ChataigneSequenceManager.h"
 #include "CustomVariables/CVGroupManager.h"
 #include "Module/modules/customvariables/CustomVariablesModule.h"
 #include "ChataigneEngine.h"
@@ -44,7 +44,7 @@ Module * ModuleManager::getModuleWithName(const String & moduleName)
 {
 	//DBG("get Module with name : " << moduleName << " / " << StateManager::getInstance()->shortName);
 	if (moduleName == StateManager::getInstance()->module.shortName) return &StateManager::getInstance()->module;
-	if (moduleName == SequenceManager::getInstance()->module.shortName) return &SequenceManager::getInstance()->module;
+	if (moduleName == ChataigneSequenceManager::getInstance()->module.shortName) return &ChataigneSequenceManager::getInstance()->module;
 	if (moduleName == CVGroupManager::getInstance()->module->shortName) return CVGroupManager::getInstance()->module.get();
 	if (moduleName == static_cast<ChataigneEngine *>(Engine::mainEngine)->module.shortName) return &static_cast<ChataigneEngine *>(Engine::mainEngine)->module;
 	else return getItemWithName(moduleName);
@@ -122,7 +122,7 @@ PopupMenu ModuleManager::getAllModulesCommandMenu(CommandContext context)
 	for (int i = 0; i < items.size(); i++) menu.addSubMenu(items[i]->niceName, items[i]->getCommandMenu(i * 1000,context));
 	menu.addSeparator();
 	menu.addSubMenu(StateManager::getInstance()->module.niceName, StateManager::getInstance()->module.getCommandMenu(-1000, context));
-	menu.addSubMenu(SequenceManager::getInstance()->module.niceName, SequenceManager::getInstance()->module.getCommandMenu(-2000, context));
+	menu.addSubMenu(ChataigneSequenceManager::getInstance()->module.niceName, ChataigneSequenceManager::getInstance()->module.getCommandMenu(-2000, context));
 	menu.addSubMenu(CVGroupManager::getInstance()->module->niceName, CVGroupManager::getInstance()->module->getCommandMenu(-3000, context));
 	menu.addSubMenu(static_cast<ChataigneEngine *>(Engine::mainEngine)->module.niceName, static_cast<ChataigneEngine *>(Engine::mainEngine)->module.getCommandMenu(-10000, context));
 	return menu;
@@ -146,7 +146,7 @@ CommandDefinition * ModuleManager::getCommandDefinitionForItemID(int itemID, Mod
 		itemID += 3000;
 	} else if (itemID < -1000)
 	{
-		m = &SequenceManager::getInstance()->module;
+		m = &ChataigneSequenceManager::getInstance()->module;
 		itemID += 2000;
 	}else if (itemID < 0)
 	{
@@ -173,7 +173,7 @@ Array<Module*> ModuleManager::getModuleList(bool includeSpecialModules)
 	if (includeSpecialModules)
 	{
 		mList.add(&StateManager::getInstance()->module);
-		mList.add(&SequenceManager::getInstance()->module);
+		mList.add(&ChataigneSequenceManager::getInstance()->module);
 		mList.add(CVGroupManager::getInstance()->module.get());
 	}
 	

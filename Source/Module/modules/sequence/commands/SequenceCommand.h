@@ -8,8 +8,7 @@
   ==============================================================================
 */
 
-#ifndef SEQUENCECOMMAND_H_INCLUDED
-#define SEQUENCECOMMAND_H_INCLUDED
+#pragma once
 
 #include "Common/Command/BaseCommand.h"
 
@@ -42,7 +41,3 @@ public:
 
 	static BaseCommand * create(ControllableContainer * module, CommandContext context, var params);
 };
-
-
-
-#endif  // SEQUENCECOMMAND_H_INCLUDED

@@ -8,28 +8,23 @@
   ==============================================================================
 */
 
-#ifndef SEQUENCEMODULE_H_INCLUDED
-#define SEQUENCEMODULE_H_INCLUDED
+#pragma once
 
 #include "Module/Module.h"
 #include "commands/SequenceCommand.h"
 
-class SequenceManager;
+class ChataigneSequenceManager;
 
 class SequenceModule :
 	public Module
 {
 public:
-	SequenceModule(SequenceManager * manager);
+	SequenceModule(ChataigneSequenceManager * manager);
 	~SequenceModule();
 
-	SequenceManager * manager;
+	ChataigneSequenceManager* manager;
 
 	CommandDefinition * createBaseDefinition(const String &menu, const String &type, CommandContext context, SequenceCommand::ActionType actionType);
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(SequenceModule)
 };
-
-
-
-#endif  // SEQUENCEMODULE_H_INCLUDED
