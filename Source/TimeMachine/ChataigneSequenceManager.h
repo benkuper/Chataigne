@@ -29,9 +29,9 @@ public:
 
 	SequenceModule module;
 
-	static Sequence* showMenuAndGetSequence();
-	static SequenceLayer* showmMenuAndGetLayer();
-	static TimeCue* showMenuAndGetCue();
+	static Sequence* showMenuAndGetSequenceStatic();
+	static SequenceLayer* showmMenuAndGetLayerStatic();
+	static TimeCue* showMenuAndGetCueStatic();
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ChataigneSequenceManager)
 };

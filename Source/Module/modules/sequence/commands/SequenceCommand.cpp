@@ -29,17 +29,17 @@ SequenceCommand::SequenceCommand(SequenceModule * _module, CommandContext contex
 	case STOP_SEQUENCE:
 	case PAUSE_SEQUENCE:
 		target->showParentNameInEditor = false;
-		target->customGetTargetContainerFunc = &ChataigneSequenceManager::showMenuAndGetSequence;
+		target->customGetTargetContainerFunc = &ChataigneSequenceManager::showMenuAndGetSequenceStatic;
 		break;
 
 	case DISABLE_LAYER:
 	case ENABLE_LAYER:
 	case TOGGLE_LAYER:
-		target->customGetTargetContainerFunc = &ChataigneSequenceManager::showmMenuAndGetLayer;
+		target->customGetTargetContainerFunc = &ChataigneSequenceManager::showmMenuAndGetLayerStatic;
 		break;
 
 	case SET_TIME:
-		target->customGetTargetContainerFunc = &ChataigneSequenceManager::showMenuAndGetSequence;
+		target->customGetTargetContainerFunc = &ChataigneSequenceManager::showMenuAndGetSequenceStatic;
 
 		value = addFloatParameter("Time", "Target time to set", 0, 0, 3600);
 		value->defaultUI = FloatParameter::TIME;
@@ -47,7 +47,7 @@ SequenceCommand::SequenceCommand(SequenceModule * _module, CommandContext contex
 		break;
 
 	case GOTO_CUE:
-		target->customGetTargetContainerFunc = &ChataigneSequenceManager::showMenuAndGetCue;
+		target->customGetTargetContainerFunc = &ChataigneSequenceManager::showMenuAndGetCueStatic;
 		break;
 
 	default:

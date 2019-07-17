@@ -30,17 +30,17 @@ Sequence* ChataigneSequenceManager::createItem()
 	return new ChataigneSequence();
 }
 
-Sequence* ChataigneSequenceManager::showMenuAndGetSequence()
+Sequence* ChataigneSequenceManager::showMenuAndGetSequenceStatic()
 {
 	return getInstance()->showMenuAndGetSequence();
 }
 
-SequenceLayer* ChataigneSequenceManager::showmMenuAndGetLayer()
+SequenceLayer* ChataigneSequenceManager::showmMenuAndGetLayerStatic()
 {
 	return getInstance()->showmMenuAndGetLayer();
 }
 
-TimeCue* ChataigneSequenceManager::showMenuAndGetCue()
+TimeCue* ChataigneSequenceManager::showMenuAndGetCueStatic()
 {
 	return getInstance()->showMenuAndGetCue();
 }
