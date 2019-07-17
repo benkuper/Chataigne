@@ -23,7 +23,8 @@
 
 MappingLayer::MappingLayer(Sequence *_sequence, var params) :
 	SequenceLayer(_sequence, "Mapping"),
-	curveValue(nullptr)
+	curveValue(nullptr),
+	mode(nullptr)
 {
 	
 	canInspectChildContainers = true;
@@ -109,7 +110,7 @@ void MappingLayer::setupMappingForCurrentMode()
 	{
 		if (timeColorManager == nullptr)
 		{
-			timeColorManager.reset(new TimeColorManager(sequence->totalTime->floatValue()));
+			timeColorManager.reset(new TimeColorManager(sequence->totalTime->floatValue(), !isCurrentlyLoadingData));
 			timeColorManager->allowKeysOutside = false;
 			addChildControllableContainer(timeColorManager.get());
 			timeColorManager->setLength(sequence->totalTime->floatValue());
@@ -323,9 +324,11 @@ void MappingLayer::sequenceTotalTimeChanged(Sequence *)
 void MappingLayer::sequenceCurrentTimeChanged(Sequence *, float prevTime, bool evaluateSkippedData)
 {
 	if (!enabled->boolValue() || !sequence->enabled->boolValue()) return;
-	
+	if (mode == nullptr) return; //not init yet
+
 	if (mode->getValueDataAsEnum<Mode>() == MODE_COLOR)
 	{
+		if (timeColorManager == nullptr) return;
 		timeColorManager->position->setValue(sequence->currentTime->floatValue());
 	}
 

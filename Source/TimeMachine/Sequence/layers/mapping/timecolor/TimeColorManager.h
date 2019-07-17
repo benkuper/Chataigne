@@ -28,7 +28,7 @@ class TimeColorManager :
 	public BaseManager<TimeColor>
 {
 public:
-	TimeColorManager(float maxPosition = 10);
+	TimeColorManager(float maxPosition = 10, bool addDefaultColors = false);
 	~TimeColorManager();
 
 	ColorParameter * currentColor;

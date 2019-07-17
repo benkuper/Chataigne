@@ -12,7 +12,7 @@
 
 TimeColorComparator TimeColorManager::comparator;
 
-TimeColorManager::TimeColorManager(float _length) :
+TimeColorManager::TimeColorManager(float _length, bool addDefaultColors) :
 	BaseManager("Colors"),
 	allowKeysOutside(true)
 {
@@ -31,10 +31,14 @@ TimeColorManager::TimeColorManager(float _length) :
 	currentColor->setControllableFeedbackOnly(true);
 	addParameter(currentColor);
 
-	addColorAt(length->floatValue() / 5, Colours::green);
-	addColorAt(length->floatValue() * 2 / 5, Colours::yellow);
-	addColorAt(length->floatValue() * 3 / 5, Colours::red)->interpolation->setValueWithData(TimeColor::NONE);
-	addColorAt(length->floatValue() * 4 / 5, Colours::blue);
+	if (addDefaultColors)
+	{
+		addColorAt(length->floatValue() / 5, Colours::green);
+		addColorAt(length->floatValue() * 2 / 5, Colours::yellow);
+		addColorAt(length->floatValue() * 3 / 5, Colours::red)->interpolation->setValueWithData(TimeColor::NONE);
+		addColorAt(length->floatValue() * 4 / 5, Colours::blue);
+	}
+	
 
 	//rebuildGradient();
 
