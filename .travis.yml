@@ -166,7 +166,8 @@ install:
       cd /benkuper;
       mkdir 'JUCE Modules';
       cd 'JUCE Modules';
-      git clone --depth=1 --branch=master https://github.com/benkuper/juce_organicui.git juce_organicui"
+      git clone --depth=1 --branch=master https://github.com/benkuper/juce_organicui.git juce_organicui
+      git clone --depth=1 --branch=master https://github.com/benkuper/juce_timeline.git juce_timeline"
     fi
   fi
 
