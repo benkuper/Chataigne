@@ -68,14 +68,6 @@ void Action::updateConditionRoles()
 }
 
 
-void Action::setForceDisabled(bool value, bool force)
-{
-	Processor::setForceDisabled(value, force);
-	cdm.setForceDisabled(value);
-	csmOn->setForceDisabled(value);
-	if(hasOffConsequences) csmOff->setForceDisabled(value);
-}
-
 void Action::setHasOffConsequences(bool value)
 {
 	if (Engine::mainEngine->isClearing) return;
@@ -104,6 +96,14 @@ void Action::setHasOffConsequences(bool value)
 		removeControllable(triggerOff);
 		triggerOff = nullptr;
 	}
+}
+
+void Action::updateDisables()
+{
+	Processor::updateDisables();
+	cdm.setForceDisabled(forceDisabled || !enabled->boolValue());
+	csmOn->setForceDisabled(forceDisabled || !enabled->boolValue());
+	if (hasOffConsequences) csmOff->setForceDisabled(forceDisabled || !enabled->boolValue());
 }
 
 var Action::getJSONData()

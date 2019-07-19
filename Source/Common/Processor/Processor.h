@@ -27,7 +27,9 @@ public:
 	
 	bool forceDisabled;
 
+	virtual  void onContainerParameterChangedInternal(Parameter* p) override;
 	virtual void setForceDisabled(bool value, bool force = false);
+	virtual void updateDisables() {}
 
 
 	class ProcessorEvent {

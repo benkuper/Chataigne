@@ -42,6 +42,7 @@ void ConsequenceManager::setForceDisabled(bool value, bool force)
 {
 	if (forceDisabled == value && !force) return;
 	forceDisabled = value;
+	triggerAll->setEnabled(!forceDisabled);
 	for (auto &i : items) i->forceDisabled = value;
 }
 

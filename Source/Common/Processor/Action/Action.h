@@ -43,8 +43,9 @@ public:
 
 	void updateConditionRoles();
 
-	virtual void setForceDisabled(bool value, bool force = false) override;
 	void setHasOffConsequences(bool value);
+
+	virtual void updateDisables();
 
 
 	var getJSONData() override;

@@ -26,10 +26,20 @@ Processor::~Processor()
 
 }
 
+void Processor::onContainerParameterChangedInternal(Parameter* p)
+{
+	BaseItem::onContainerParameterChangedInternal(p);
+	if (p == enabled)
+	{
+		updateDisables();
+	}
+}
+
 void Processor::setForceDisabled(bool value, bool force)
 {
 	if (forceDisabled == value && !force) return;
 	forceDisabled = value;
+	updateDisables();
 	processorAsyncNotifier.addMessage(new ProcessorEvent(ProcessorEvent::FORCE_DISABLED_CHANGED, this));
 }
 
