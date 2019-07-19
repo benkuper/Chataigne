@@ -24,6 +24,13 @@ public:
 	EnumParameter * osType;
 	StringParameter * osName;
 
+	//Script
+	const Identifier launchAppId = "launchFile";
+
+
+	bool launchFile(File f, String args = "");
+	static var launchFileFromScript(const var::NativeFunctionArgs& args);
+
 	virtual String getDefaultTypeString() const override { return "OS"; }
 	static OSModule * create() { return new OSModule(); }
 

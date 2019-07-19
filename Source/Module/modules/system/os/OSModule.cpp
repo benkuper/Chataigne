@@ -41,9 +41,48 @@ OSModule::OSModule() :
 	defManager.add(CommandDefinition::createDef(this, "Process", "Open File", &OSExecCommand::create, CommandContext::ACTION)->addParam("type", OSExecCommand::OPEN_FILE));
 	defManager.add(CommandDefinition::createDef(this, "Process", "Launch App", &OSExecCommand::create, CommandContext::ACTION)->addParam("type", OSExecCommand::LAUNCH_APP));
 	defManager.add(CommandDefinition::createDef(this, "Process", "Kill App", &OSExecCommand::create, CommandContext::ACTION)->addParam("type", OSExecCommand::KILL_APP));
+
+	scriptObject.setMethod(launchAppId, &OSModule::launchFileFromScript);
 }
 
 OSModule::~OSModule()
 {
 
+}
+
+bool OSModule::launchFile(File f, String args)
+{
+	if (!f.exists())
+	{
+		NLOGWARNING(niceName, "File does not exist : " + f.getFullPathName());
+		return false;
+	}
+
+	File wDir = File::getCurrentWorkingDirectory();
+	f.getParentDirectory().setAsCurrentWorkingDirectory();
+	bool result = f.startAsProcess(args);
+	wDir.setAsCurrentWorkingDirectory();
+	outActivityTrigger->trigger();
+	return result;
+}
+
+var OSModule::launchFileFromScript(const var::NativeFunctionArgs& args)
+{
+	OSModule* m = getObjectFromJS<OSModule>(args);
+	if (!m->enabled->boolValue()) return var();
+
+	if (args.numArguments == 0) return var();
+
+	try
+	{
+		File f = File(args.arguments[0]);
+		m->launchFile(f, args.numArguments > 1 ? args.arguments[1].toString():"");
+	}
+	catch (OSCFormatError& e)
+	{
+		NLOGERROR(m->niceName, "Error sending message : " << e.description);
+	}
+
+
+	return var();
 }

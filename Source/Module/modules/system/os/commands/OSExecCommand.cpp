@@ -25,6 +25,7 @@ OSExecCommand::OSExecCommand(OSModule * _module, CommandContext context, var par
 	if (actionType != KILL_APP)
 	{
 		target = new FileParameter("Target", "The target file of app for this command", "");
+		target->multiline = true;
 		addParameter(target);
 		launchOptions = addStringParameter("Launch Options", "Additional options when launching the app", "");
 	} else
