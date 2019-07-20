@@ -38,7 +38,7 @@ public:
 	void loadJSONDataInternal(var data) override;
 
 	virtual bool paste() override;
-	virtual void selectAll() override;
+	virtual void selectAll(bool addToSelection = false) override;
 
 	virtual String getTypeString() const override { return "State"; }
 

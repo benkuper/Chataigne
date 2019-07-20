@@ -1,4 +1,3 @@
-#include "ChataigneSequenceManager.h"
 /*
   ==============================================================================
 
@@ -9,6 +8,7 @@
   ==============================================================================
 */
 
+#include "ChataigneSequenceManager.h"
 juce_ImplementSingleton(ChataigneSequenceManager)
 
 #include "Sequence/ChataigneSequence.h"

@@ -55,7 +55,7 @@ public:
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
 
-	virtual void selectAll() override;
+	virtual void selectAll(bool addToSelection = false) override;
 
 	virtual void onContainerParameterChangedInternal(Parameter* p) override;
 	virtual void onContainerTriggerTriggered(Trigger* t) override;

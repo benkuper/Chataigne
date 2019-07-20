@@ -310,6 +310,8 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/StateMachineView_e5e08766.o \
   $(JUCE_OBJDIR)/StateManagerUI_a2d9b59b.o \
   $(JUCE_OBJDIR)/StateManager_ec4bbd6.o \
+  $(JUCE_OBJDIR)/ChataigneTriggerLayer_f5de836d.o \
+  $(JUCE_OBJDIR)/ChataigneTimeTrigger_17ca38c1.o \
   $(JUCE_OBJDIR)/ChataigneAudioLayerPanel_4ae871a.o \
   $(JUCE_OBJDIR)/ChataigneAudioLayer_3f84aced.o \
   $(JUCE_OBJDIR)/TimeColorManagerUI_195cb4d9.o \
@@ -320,8 +322,6 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/MappingLayerPanel_65736d24.o \
   $(JUCE_OBJDIR)/MappingLayerTimeline_80a002b.o \
   $(JUCE_OBJDIR)/MappingLayer_dc860121.o \
-  $(JUCE_OBJDIR)/ActionLayer_1aa0557f.o \
-  $(JUCE_OBJDIR)/TimeAction_15311b29.o \
   $(JUCE_OBJDIR)/ChataigneSequence_6a3640ef.o \
   $(JUCE_OBJDIR)/ChataigneSequenceManager_cd775ccc.o \
   $(JUCE_OBJDIR)/AboutWindow_970e3d2b.o \
@@ -1575,6 +1575,16 @@ $(JUCE_OBJDIR)/StateManager_ec4bbd6.o: ../../Source/StateMachine/StateManager.cp
 	@echo "Compiling StateManager.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
+$(JUCE_OBJDIR)/ChataigneTriggerLayer_f5de836d.o: ../../Source/TimeMachine/Sequence/layers/trigger/ChataigneTriggerLayer.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling ChataigneTriggerLayer.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/ChataigneTimeTrigger_17ca38c1.o: ../../Source/TimeMachine/Sequence/layers/trigger/ChataigneTimeTrigger.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling ChataigneTimeTrigger.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
 $(JUCE_OBJDIR)/ChataigneAudioLayerPanel_4ae871a.o: ../../Source/TimeMachine/Sequence/layers/audio/ui/ChataigneAudioLayerPanel.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling ChataigneAudioLayerPanel.cpp"
@@ -1623,16 +1633,6 @@ $(JUCE_OBJDIR)/MappingLayerTimeline_80a002b.o: ../../Source/TimeMachine/Sequence
 $(JUCE_OBJDIR)/MappingLayer_dc860121.o: ../../Source/TimeMachine/Sequence/layers/mapping/MappingLayer.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling MappingLayer.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/ActionLayer_1aa0557f.o: ../../Source/TimeMachine/Sequence/layers/action/ActionLayer.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling ActionLayer.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/TimeAction_15311b29.o: ../../Source/TimeMachine/Sequence/layers/action/TimeAction.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling TimeAction.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/ChataigneSequence_6a3640ef.o: ../../Source/TimeMachine/Sequence/ChataigneSequence.cpp

@@ -1156,6 +1156,16 @@
       <GROUP id="{385034AB-BB8A-1A0B-677C-4890320C1929}" name="TimeMachine">
         <GROUP id="{34E053CC-6BB4-AEF4-A5AE-B46B09297363}" name="Sequence">
           <GROUP id="{D10B0FB5-159B-06C6-95CF-79B2E2FE1F11}" name="layers">
+            <GROUP id="{11579F84-0750-EA75-82AA-9E0475910F93}" name="trigger">
+              <FILE id="eaRx9H" name="ChataigneTriggerLayer.cpp" compile="1" resource="0"
+                    file="Source/TimeMachine/Sequence/layers/trigger/ChataigneTriggerLayer.cpp"/>
+              <FILE id="wPyEZW" name="ChataigneTriggerLayer.h" compile="0" resource="0"
+                    file="Source/TimeMachine/Sequence/layers/trigger/ChataigneTriggerLayer.h"/>
+              <FILE id="eFjJCi" name="ChataigneTimeTrigger.cpp" compile="1" resource="0"
+                    file="Source/TimeMachine/Sequence/layers/trigger/ChataigneTimeTrigger.cpp"/>
+              <FILE id="QVCq4r" name="ChataigneTimeTrigger.h" compile="0" resource="0"
+                    file="Source/TimeMachine/Sequence/layers/trigger/ChataigneTimeTrigger.h"/>
+            </GROUP>
             <GROUP id="{FB6A16ED-AF1A-4851-B4BF-65CA88B1942C}" name="audio">
               <GROUP id="{40C039F6-5D82-E09C-0BCC-4CBF9F98F4F9}" name="ui">
                 <FILE id="q7qyC5" name="ChataigneAudioLayerPanel.cpp" compile="1" resource="0"
@@ -1204,12 +1214,6 @@
               <FILE id="wxLkNN" name="MappingLayer.cpp" compile="1" resource="0"
                     file="Source/TimeMachine/Sequence/layers/mapping/MappingLayer.cpp"/>
               <FILE id="WBJmQT" name="MappingLayer.h" compile="0" resource="0" file="Source/TimeMachine/Sequence/layers/mapping/MappingLayer.h"/>
-            </GROUP>
-            <GROUP id="{4882D8F6-1A50-19D8-0E4A-90EE079491AF}" name="action">
-              <FILE id="hmhgsi" name="ActionLayer.cpp" compile="1" resource="0" file="Source/TimeMachine/Sequence/layers/action/ActionLayer.cpp"/>
-              <FILE id="Ra41aa" name="ActionLayer.h" compile="0" resource="0" file="Source/TimeMachine/Sequence/layers/action/ActionLayer.h"/>
-              <FILE id="LqKWkn" name="TimeAction.cpp" compile="1" resource="0" file="Source/TimeMachine/Sequence/layers/action/TimeAction.cpp"/>
-              <FILE id="H87yrS" name="TimeAction.h" compile="0" resource="0" file="Source/TimeMachine/Sequence/layers/action/TimeAction.h"/>
             </GROUP>
           </GROUP>
           <FILE id="AgsPCv" name="ChataigneSequence.cpp" compile="1" resource="0"

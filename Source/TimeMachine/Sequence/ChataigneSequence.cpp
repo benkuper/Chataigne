@@ -15,7 +15,7 @@
 #include "Common/MIDI/MTCSender.h"
 #include "Common/MIDI/MIDIDeviceParameter.h"
 
-#include "layers/action/ActionLayer.h"
+#include "layers/trigger/ChataigneTriggerLayer.h"
 #include "layers/mapping/MappingLayer.h"
 #include "layers/audio/ChataigneAudioLayer.h"
 
@@ -27,7 +27,7 @@ ChataigneSequence::ChataigneSequence() :
 	midiSyncDevice = new MIDIDeviceParameter("Sync Devices");
 	addParameter(midiSyncDevice);
 	
-	layerManager->factory.defs.add(SequenceLayerManager::LayerDefinition::createDef("", "Action", &ActionLayer::create, this));
+	layerManager->factory.defs.add(SequenceLayerManager::LayerDefinition::createDef("", "Trigger", &ChataigneTriggerLayer::create, this));
 	layerManager->factory.defs.add(SequenceLayerManager::LayerDefinition::createDef("", "Mapping", &MappingLayer::create, this)->addParam("mode", MappingLayer::MODE_1D));
 	layerManager->factory.defs.add(SequenceLayerManager::LayerDefinition::createDef("", "Audio", &ChataigneAudioLayer::create, this));
 	layerManager->factory.defs.add(SequenceLayerManager::LayerDefinition::createDef("", "Color", &MappingLayer::create, this)->addParam("mode", MappingLayer::MODE_COLOR));
@@ -193,14 +193,6 @@ void ChataigneSequence::loadJSONDataInternal(var data)
 {
 	//CONVERSION RETROCOMPAT change layer type "Trigger" to "Action", to remove in next major version (1.7.0)
 	var layerData = data.getProperty("layerManager",var()).getProperty("items",var());
-	if (layerData.isArray())
-	{
-		for (int i = 0; i < layerData.size(); i++)
-		{
-			if (layerData[i].getProperty("type", "").toString() == "Trigger") layerData[i].getDynamicObject()->setProperty("type", "Action");
-		}
-	}
-
 	Sequence::loadJSONDataInternal(data);
 }
 

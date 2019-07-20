@@ -1,7 +1,7 @@
 /*
   ==============================================================================
 
-    TimeAction.h
+    ChataigneTimeTrigger.h
     Created: 20 Nov 2016 3:18:20pm
     Author:  Ben Kuper
 
@@ -12,12 +12,12 @@
 
 #include "Common/Processor/Action/Action.h"
 
-class TimeAction :
+class ChataigneTimeTrigger :
 	public TimeTrigger
 {
 public:
-	TimeAction(StringRef name = "Action");
-	virtual ~TimeAction();
+	ChataigneTimeTrigger(StringRef name = "Trigger");
+	virtual ~ChataigneTimeTrigger();
 
 	ConsequenceManager csm;
 

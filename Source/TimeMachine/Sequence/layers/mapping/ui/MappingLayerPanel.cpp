@@ -28,6 +28,7 @@ MappingLayerPanel::MappingLayerPanel(MappingLayer * layer) :
 		addAndMakeVisible(snapSensitivityUI.get());
 
 		automationInspector.reset(new Inspector(mappingLayer->automations[0]->selectionManager));
+		automationInspector->showTextOnEmptyOrMulti = false;
 		addAndMakeVisible(automationInspector.get());
 	}
 

@@ -89,7 +89,8 @@ bool State::paste()
 	return true;
 }
 
-void State::selectAll()
+void State::selectAll(bool addToSelection)
 {
-	pm.askForSelectAllItems();
+	deselectThis(pm.items.size() == 0);
+	pm.askForSelectAllItems(addToSelection);
 }

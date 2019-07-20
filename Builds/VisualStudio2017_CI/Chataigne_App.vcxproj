@@ -393,6 +393,8 @@
     <ClCompile Include="..\..\Source\StateMachine\ui\StateMachineView.cpp"/>
     <ClCompile Include="..\..\Source\StateMachine\ui\StateManagerUI.cpp"/>
     <ClCompile Include="..\..\Source\StateMachine\StateManager.cpp"/>
+    <ClCompile Include="..\..\Source\TimeMachine\Sequence\layers\trigger\ChataigneTriggerLayer.cpp"/>
+    <ClCompile Include="..\..\Source\TimeMachine\Sequence\layers\trigger\ChataigneTimeTrigger.cpp"/>
     <ClCompile Include="..\..\Source\TimeMachine\Sequence\layers\audio\ui\ChataigneAudioLayerPanel.cpp"/>
     <ClCompile Include="..\..\Source\TimeMachine\Sequence\layers\audio\ChataigneAudioLayer.cpp"/>
     <ClCompile Include="..\..\Source\TimeMachine\Sequence\layers\mapping\timecolor\ui\TimeColorManagerUI.cpp"/>
@@ -403,8 +405,6 @@
     <ClCompile Include="..\..\Source\TimeMachine\Sequence\layers\mapping\ui\MappingLayerPanel.cpp"/>
     <ClCompile Include="..\..\Source\TimeMachine\Sequence\layers\mapping\ui\MappingLayerTimeline.cpp"/>
     <ClCompile Include="..\..\Source\TimeMachine\Sequence\layers\mapping\MappingLayer.cpp"/>
-    <ClCompile Include="..\..\Source\TimeMachine\Sequence\layers\action\ActionLayer.cpp"/>
-    <ClCompile Include="..\..\Source\TimeMachine\Sequence\layers\action\TimeAction.cpp"/>
     <ClCompile Include="..\..\Source\TimeMachine\Sequence\ChataigneSequence.cpp"/>
     <ClCompile Include="..\..\Source\TimeMachine\ChataigneSequenceManager.cpp"/>
     <ClCompile Include="..\..\Source\UI\AboutWindow.cpp"/>
@@ -2738,6 +2738,9 @@
     <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\resources\BinaryData.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Common\TimedLayerItem.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Cue\ui\TimeCueManagerUI.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -3121,6 +3124,8 @@
     <ClInclude Include="..\..\Source\StateMachine\ui\StateMachineView.h"/>
     <ClInclude Include="..\..\Source\StateMachine\ui\StateManagerUI.h"/>
     <ClInclude Include="..\..\Source\StateMachine\StateManager.h"/>
+    <ClInclude Include="..\..\Source\TimeMachine\Sequence\layers\trigger\ChataigneTriggerLayer.h"/>
+    <ClInclude Include="..\..\Source\TimeMachine\Sequence\layers\trigger\ChataigneTimeTrigger.h"/>
     <ClInclude Include="..\..\Source\TimeMachine\Sequence\layers\audio\ui\ChataigneAudioLayerPanel.h"/>
     <ClInclude Include="..\..\Source\TimeMachine\Sequence\layers\audio\ChataigneAudioLayer.h"/>
     <ClInclude Include="..\..\Source\TimeMachine\Sequence\layers\audio\ChataigneAudioLayerListener.h"/>
@@ -3132,8 +3137,6 @@
     <ClInclude Include="..\..\Source\TimeMachine\Sequence\layers\mapping\ui\MappingLayerPanel.h"/>
     <ClInclude Include="..\..\Source\TimeMachine\Sequence\layers\mapping\ui\MappingLayerTimeline.h"/>
     <ClInclude Include="..\..\Source\TimeMachine\Sequence\layers\mapping\MappingLayer.h"/>
-    <ClInclude Include="..\..\Source\TimeMachine\Sequence\layers\action\ActionLayer.h"/>
-    <ClInclude Include="..\..\Source\TimeMachine\Sequence\layers\action\TimeAction.h"/>
     <ClInclude Include="..\..\Source\TimeMachine\Sequence\ChataigneSequence.h"/>
     <ClInclude Include="..\..\Source\TimeMachine\ChataigneSequenceManager.h"/>
     <ClInclude Include="..\..\Source\UI\AboutWindow.h"/>
@@ -4029,6 +4032,7 @@
     <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode\BinaryData.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode\JuceHeader.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\resources\BinaryData.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Common\TimedLayerItem.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Cue\ui\TimeCueManagerUI.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Cue\ui\TimeCueUI.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Cue\TimeCue.h"/>

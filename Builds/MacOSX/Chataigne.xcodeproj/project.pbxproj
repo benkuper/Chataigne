@@ -1061,6 +1061,14 @@
 			isa = PBXBuildFile;
 			fileRef = F77776C3AB9DC4C71C47419E;
 		};
+		8699EC7762FB4BF7C4B7432F = {
+			isa = PBXBuildFile;
+			fileRef = DD3EE502856770F0B005957C;
+		};
+		E65A3F5F00F9E9BBB4CB02DF = {
+			isa = PBXBuildFile;
+			fileRef = 6B6CAC3FCD9D9BB003564213;
+		};
 		7633BC0B9AD9E55D29B62A3A = {
 			isa = PBXBuildFile;
 			fileRef = 91F013D5F5CD4BC069CEF902;
@@ -1100,14 +1108,6 @@
 		7BE1B137C5961E5B4A4E3204 = {
 			isa = PBXBuildFile;
 			fileRef = 95CA364F04E46872816321FC;
-		};
-		BD56E62FEC2D5447C9C47ECC = {
-			isa = PBXBuildFile;
-			fileRef = 364C2897456D38E0303ED70E;
-		};
-		3FCEA28B9B565F56C2C12E8E = {
-			isa = PBXBuildFile;
-			fileRef = 2E5B94F1DE60ED3B8B9EB4FD;
 		};
 		828EBF971915CC5211ACB057 = {
 			isa = PBXBuildFile;
@@ -1547,13 +1547,6 @@
 			path = ../../Source/Common/DMX/device/DMXArtNetDevice.h;
 			sourceTree = "SOURCE_ROOT";
 		};
-		1274B9CFA5C1166729EC9F38 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = TimeAction.h;
-			path = ../../Source/TimeMachine/Sequence/layers/action/TimeAction.h;
-			sourceTree = "SOURCE_ROOT";
-		};
 		12DDF7A00AC1057D87937493 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -1953,13 +1946,6 @@
 			path = ../../Source/Module/modules/system/os/OSModule.h;
 			sourceTree = "SOURCE_ROOT";
 		};
-		2E5B94F1DE60ED3B8B9EB4FD = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = TimeAction.cpp;
-			path = ../../Source/TimeMachine/Sequence/layers/action/TimeAction.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
 		2E7534A1FF9877E7021A0027 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -2105,13 +2091,6 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = ConditionGroup.h;
 			path = ../../Source/Common/Processor/Action/Condition/conditions/ConditionGroup/ConditionGroup.h;
-			sourceTree = "SOURCE_ROOT";
-		};
-		364C2897456D38E0303ED70E = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = ActionLayer.cpp;
-			path = ../../Source/TimeMachine/Sequence/layers/action/ActionLayer.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		366AA3F45F51FF497A90AE85 = {
@@ -2931,6 +2910,13 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = InputSystemManager.h;
 			path = ../../Source/Common/InputSystem/InputSystemManager.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		6B6CAC3FCD9D9BB003564213 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = ChataigneTimeTrigger.cpp;
+			path = ../../Source/TimeMachine/Sequence/layers/trigger/ChataigneTimeTrigger.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		6CA54F330A265B66584BC7CC = {
@@ -3857,13 +3843,6 @@
 			path = ../../Source/Module/modules/oscquery/generic/ui/OSCQueryModuleEditor.h;
 			sourceTree = "SOURCE_ROOT";
 		};
-		A4D77D050C4414D7A89D9CB0 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = ActionLayer.h;
-			path = ../../Source/TimeMachine/Sequence/layers/action/ActionLayer.h;
-			sourceTree = "SOURCE_ROOT";
-		};
 		A60987F239C18CD85E333A80 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -4128,6 +4107,13 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = ScriptCommandEditor.cpp;
 			path = ../../Source/Module/modules/common/commands/scriptcommands/ui/ScriptCommandEditor.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
+		AFDAEB70EAEA484C53D8F1B0 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = ChataigneTriggerLayer.h;
+			path = ../../Source/TimeMachine/Sequence/layers/trigger/ChataigneTriggerLayer.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		B041687DBC635A565CFE93F4 = {
@@ -4893,6 +4879,13 @@
 			path = ../../Source/Module/modules/system/os/commands/OSPowerCommand.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
+		DD3EE502856770F0B005957C = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = ChataigneTriggerLayer.cpp;
+			path = ../../Source/TimeMachine/Sequence/layers/trigger/ChataigneTriggerLayer.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		DE11D226FA3C16D2908002A7 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -5164,6 +5157,13 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = HTTPCommand.h;
 			path = ../../Source/Module/modules/http/commands/HTTPCommand.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		EE6E908FC2B0B6A0D3CFD5E1 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = ChataigneTimeTrigger.h;
+			path = ../../Source/TimeMachine/Sequence/layers/trigger/ChataigneTimeTrigger.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		EE7734BE83426C490017DACD = {
@@ -7187,6 +7187,17 @@
 			name = StateMachine;
 			sourceTree = "<group>";
 		};
+		6D3B8FB3C9DCC615F49AC480 = {
+			isa = PBXGroup;
+			children = (
+				DD3EE502856770F0B005957C,
+				AFDAEB70EAEA484C53D8F1B0,
+				6B6CAC3FCD9D9BB003564213,
+				EE6E908FC2B0B6A0D3CFD5E1,
+			);
+			name = trigger;
+			sourceTree = "<group>";
+		};
 		83DA861AD30B9F6928ABBB07 = {
 			isa = PBXGroup;
 			children = (
@@ -7254,23 +7265,12 @@
 			name = mapping;
 			sourceTree = "<group>";
 		};
-		C46EAA44C25FAD1386F1993C = {
-			isa = PBXGroup;
-			children = (
-				364C2897456D38E0303ED70E,
-				A4D77D050C4414D7A89D9CB0,
-				2E5B94F1DE60ED3B8B9EB4FD,
-				1274B9CFA5C1166729EC9F38,
-			);
-			name = action;
-			sourceTree = "<group>";
-		};
 		D2B0B4BC8878A5157D9AE392 = {
 			isa = PBXGroup;
 			children = (
+				6D3B8FB3C9DCC615F49AC480,
 				C121694CAA30EFD0C8527A69,
 				7BA55BE1AFBABFDF0832D425,
-				C46EAA44C25FAD1386F1993C,
 			);
 			name = layers;
 			sourceTree = "<group>";
@@ -7930,6 +7930,8 @@
 				507BEACB388EE5FF1141A911,
 				21CCAF5ECEB34915F8266178,
 				36559FDEF92F576BF1E0A3C3,
+				8699EC7762FB4BF7C4B7432F,
+				E65A3F5F00F9E9BBB4CB02DF,
 				7633BC0B9AD9E55D29B62A3A,
 				AB15FBD03761FD81F11EAA1A,
 				2369EBD63C3A81443AE504CA,
@@ -7940,8 +7942,6 @@
 				21F5C9B547EB024F64A9FE98,
 				9E75E08D180BA690D1F8E480,
 				7BE1B137C5961E5B4A4E3204,
-				BD56E62FEC2D5447C9C47ECC,
-				3FCEA28B9B565F56C2C12E8E,
 				828EBF971915CC5211ACB057,
 				AB51BF5F993B10E2F9430F54,
 				4901731157879611D8BF22A8,

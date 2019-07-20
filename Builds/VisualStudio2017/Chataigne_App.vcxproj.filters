@@ -467,6 +467,9 @@
     <Filter Include="Chataigne\Source\StateMachine">
       <UniqueIdentifier>{90B3A8D6-B737-31F4-417D-F161DB6DFA8B}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Chataigne\Source\TimeMachine\Sequence\layers\trigger">
+      <UniqueIdentifier>{FD8AC6FE-ABB8-D6A7-888F-0314955A6179}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Chataigne\Source\TimeMachine\Sequence\layers\audio\ui">
       <UniqueIdentifier>{EAF39CA8-7B1C-1FD5-29D1-5CAD99363315}</UniqueIdentifier>
     </Filter>
@@ -484,9 +487,6 @@
     </Filter>
     <Filter Include="Chataigne\Source\TimeMachine\Sequence\layers\mapping">
       <UniqueIdentifier>{6C14A398-F738-9DD3-3A1F-7AB26BBD3356}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\TimeMachine\Sequence\layers\action">
-      <UniqueIdentifier>{9977C4A9-3A81-0A6F-1611-F29127331CE4}</UniqueIdentifier>
     </Filter>
     <Filter Include="Chataigne\Source\TimeMachine\Sequence\layers">
       <UniqueIdentifier>{C210777A-6A2C-BACD-53F9-C5AEFAAA2DB7}</UniqueIdentifier>
@@ -1078,6 +1078,9 @@
     </Filter>
     <Filter Include="JUCE Modules\juce_timeline\resources">
       <UniqueIdentifier>{D391EFE7-9D9C-64D9-7CA8-C06DBE64F72C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_timeline\timeline\Sequence\Common">
+      <UniqueIdentifier>{87993395-387D-3067-FA8B-D7C9311C4390}</UniqueIdentifier>
     </Filter>
     <Filter Include="JUCE Modules\juce_timeline\timeline\Sequence\Cue\ui">
       <UniqueIdentifier>{675B1DB0-7AEA-A463-6F13-A6C8D7C5D25A}</UniqueIdentifier>
@@ -1882,6 +1885,12 @@
     <ClCompile Include="..\..\Source\StateMachine\StateManager.cpp">
       <Filter>Chataigne\Source\StateMachine</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\TimeMachine\Sequence\layers\trigger\ChataigneTriggerLayer.cpp">
+      <Filter>Chataigne\Source\TimeMachine\Sequence\layers\trigger</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\TimeMachine\Sequence\layers\trigger\ChataigneTimeTrigger.cpp">
+      <Filter>Chataigne\Source\TimeMachine\Sequence\layers\trigger</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\TimeMachine\Sequence\layers\audio\ui\ChataigneAudioLayerPanel.cpp">
       <Filter>Chataigne\Source\TimeMachine\Sequence\layers\audio\ui</Filter>
     </ClCompile>
@@ -1911,12 +1920,6 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\TimeMachine\Sequence\layers\mapping\MappingLayer.cpp">
       <Filter>Chataigne\Source\TimeMachine\Sequence\layers\mapping</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\TimeMachine\Sequence\layers\action\ActionLayer.cpp">
-      <Filter>Chataigne\Source\TimeMachine\Sequence\layers\action</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\TimeMachine\Sequence\layers\action\TimeAction.cpp">
-      <Filter>Chataigne\Source\TimeMachine\Sequence\layers\action</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\TimeMachine\Sequence\ChataigneSequence.cpp">
       <Filter>Chataigne\Source\TimeMachine\Sequence</Filter>
@@ -4465,6 +4468,9 @@
     <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\resources\BinaryData.cpp">
       <Filter>JUCE Modules\juce_timeline\resources</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Common\TimedLayerItem.cpp">
+      <Filter>JUCE Modules\juce_timeline\timeline\Sequence\Common</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Cue\ui\TimeCueManagerUI.cpp">
       <Filter>JUCE Modules\juce_timeline\timeline\Sequence\Cue\ui</Filter>
     </ClCompile>
@@ -5355,6 +5361,12 @@
     <ClInclude Include="..\..\Source\StateMachine\StateManager.h">
       <Filter>Chataigne\Source\StateMachine</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\TimeMachine\Sequence\layers\trigger\ChataigneTriggerLayer.h">
+      <Filter>Chataigne\Source\TimeMachine\Sequence\layers\trigger</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\TimeMachine\Sequence\layers\trigger\ChataigneTimeTrigger.h">
+      <Filter>Chataigne\Source\TimeMachine\Sequence\layers\trigger</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\TimeMachine\Sequence\layers\audio\ui\ChataigneAudioLayerPanel.h">
       <Filter>Chataigne\Source\TimeMachine\Sequence\layers\audio\ui</Filter>
     </ClInclude>
@@ -5387,12 +5399,6 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\TimeMachine\Sequence\layers\mapping\MappingLayer.h">
       <Filter>Chataigne\Source\TimeMachine\Sequence\layers\mapping</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\TimeMachine\Sequence\layers\action\ActionLayer.h">
-      <Filter>Chataigne\Source\TimeMachine\Sequence\layers\action</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\TimeMachine\Sequence\layers\action\TimeAction.h">
-      <Filter>Chataigne\Source\TimeMachine\Sequence\layers\action</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\TimeMachine\Sequence\ChataigneSequence.h">
       <Filter>Chataigne\Source\TimeMachine\Sequence</Filter>
@@ -8078,6 +8084,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\resources\BinaryData.h">
       <Filter>JUCE Modules\juce_timeline\resources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Common\TimedLayerItem.h">
+      <Filter>JUCE Modules\juce_timeline\timeline\Sequence\Common</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Cue\ui\TimeCueManagerUI.h">
       <Filter>JUCE Modules\juce_timeline\timeline\Sequence\Cue\ui</Filter>

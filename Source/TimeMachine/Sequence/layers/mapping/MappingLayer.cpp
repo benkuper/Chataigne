@@ -255,10 +255,18 @@ void MappingLayer::loadJSONDataInternal(var data)
 	recorder.loadJSONData(data.getProperty("recorder", var()));
 }
 
-void MappingLayer::selectAll()
+void MappingLayer::selectAll(bool addToSelection)
 {
-	if (mode->getValueDataAsEnum<Mode>() == MODE_COLOR) timeColorManager->askForSelectAllItems();
-	else if (automations.size() > 0) automations[0]->askForSelectAllItems();
+	if (mode->getValueDataAsEnum<Mode>() == MODE_COLOR)
+	{
+		deselectThis(timeColorManager->items.size() == 0);
+		timeColorManager->askForSelectAllItems(addToSelection);
+	}
+	else if (automations.size() > 0)
+	{
+		deselectThis(automations[0]->items.size() == 0);
+		automations[0]->askForSelectAllItems(addToSelection);
+	}
 }
 
 SequenceLayerPanel * MappingLayer::getPanel()
