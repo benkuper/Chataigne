@@ -25,7 +25,7 @@ public:
 	StringParameter * osName;
 
 	//Script
-	const Identifier launchAppId = "launchFile";
+	const Identifier launchAppId = "launchApp";
 
 
 	bool launchFile(File f, String args = "");

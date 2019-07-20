@@ -62,7 +62,10 @@ bool OSModule::launchFile(File f, String args)
 	f.getParentDirectory().setAsCurrentWorkingDirectory();
 	bool result = f.startAsProcess(args);
 	wDir.setAsCurrentWorkingDirectory();
-	outActivityTrigger->trigger();
+
+	if (result) outActivityTrigger->trigger();
+	else NLOGERROR(niceName, "Could not launch application " + f.getFullPathName()+" with arguments : "+args);
+
 	return result;
 }
 
@@ -73,16 +76,8 @@ var OSModule::launchFileFromScript(const var::NativeFunctionArgs& args)
 
 	if (args.numArguments == 0) return var();
 
-	try
-	{
-		File f = File(args.arguments[0]);
-		m->launchFile(f, args.numArguments > 1 ? args.arguments[1].toString():"");
-	}
-	catch (OSCFormatError& e)
-	{
-		NLOGERROR(m->niceName, "Error sending message : " << e.description);
-	}
+	File f = File(args.arguments[0]);
+	bool result = m->launchFile(f, args.numArguments > 1 ? args.arguments[1].toString():"");
 
-
-	return var();
+	return result;
 }
