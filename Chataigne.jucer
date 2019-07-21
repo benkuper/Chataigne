@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.6.3b7"
+<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.6.3b8"
               bundleIdentifier="benkuper.Chataigne" includeBinaryInAppConfig="1"
               jucerVersion="5.4.3" companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
               companyEmail="benjamin@kuperberg.fr" defines="" splashScreenColour="Dark"
@@ -1181,22 +1181,6 @@
                     resource="0" file="Source/TimeMachine/Sequence/layers/audio/ChataigneAudioLayerListener.h"/>
             </GROUP>
             <GROUP id="{43CDA754-BA40-749C-1F35-8733A474B6F9}" name="mapping">
-              <GROUP id="{FCD61B19-4F83-5FEC-4C0D-98A137047588}" name="timecolor">
-                <GROUP id="{2A0EE67E-63D4-CF44-B47C-D671AECF03AF}" name="ui">
-                  <FILE id="OEgzht" name="TimeColorManagerUI.cpp" compile="1" resource="0"
-                        file="Source/TimeMachine/Sequence/layers/mapping/timecolor/ui/TimeColorManagerUI.cpp"/>
-                  <FILE id="MkPMpM" name="TimeColorManagerUI.h" compile="0" resource="0"
-                        file="Source/TimeMachine/Sequence/layers/mapping/timecolor/ui/TimeColorManagerUI.h"/>
-                  <FILE id="ccJrAW" name="TimeColorUI.cpp" compile="1" resource="0" file="Source/TimeMachine/Sequence/layers/mapping/timecolor/ui/TimeColorUI.cpp"/>
-                  <FILE id="Tjrq2p" name="TimeColorUI.h" compile="0" resource="0" file="Source/TimeMachine/Sequence/layers/mapping/timecolor/ui/TimeColorUI.h"/>
-                </GROUP>
-                <FILE id="ptngf2" name="TimeColor.cpp" compile="1" resource="0" file="Source/TimeMachine/Sequence/layers/mapping/timecolor/TimeColor.cpp"/>
-                <FILE id="USYoiR" name="TimeColor.h" compile="0" resource="0" file="Source/TimeMachine/Sequence/layers/mapping/timecolor/TimeColor.h"/>
-                <FILE id="rAz7s3" name="TimeColorManager.cpp" compile="1" resource="0"
-                      file="Source/TimeMachine/Sequence/layers/mapping/timecolor/TimeColorManager.cpp"/>
-                <FILE id="XERbkR" name="TimeColorManager.h" compile="0" resource="0"
-                      file="Source/TimeMachine/Sequence/layers/mapping/timecolor/TimeColorManager.h"/>
-              </GROUP>
               <GROUP id="{071E6E14-B2B7-5D15-02BF-BCC713578CF2}" name="ui">
                 <FILE id="u3Ftks" name="MappingLayerEditor.cpp" compile="1" resource="0"
                       file="Source/TimeMachine/Sequence/layers/mapping/ui/MappingLayerEditor.cpp"/>

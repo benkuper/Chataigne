@@ -15,7 +15,6 @@
 
 #include "Common/Processor/Mapping/Mapping.h"
 #include "Module/ModuleManager.h"
-#include "timecolor/TimeColorManager.h"
 
 #include "ui/MappingLayerPanel.h"
 #include "ui/MappingLayerTimeline.h"
@@ -108,20 +107,20 @@ void MappingLayer::setupMappingForCurrentMode()
 
 	if (m == MODE_COLOR)
 	{
-		if (timeColorManager == nullptr)
+		if (colorManager == nullptr)
 		{
-			timeColorManager.reset(new TimeColorManager(sequence->totalTime->floatValue(), !isCurrentlyLoadingData));
-			timeColorManager->allowKeysOutside = false;
-			addChildControllableContainer(timeColorManager.get());
-			timeColorManager->setLength(sequence->totalTime->floatValue());
+			colorManager.reset(new GradientColorManager(sequence->totalTime->floatValue(), !isCurrentlyLoadingData));
+			colorManager->allowKeysOutside = false;
+			addChildControllableContainer(colorManager.get());
+			colorManager->setLength(sequence->totalTime->floatValue());
 		}
 	}
 	else
 	{
-		if (timeColorManager != nullptr)
+		if (colorManager != nullptr)
 		{
-			removeChildControllableContainer(timeColorManager.get());
-			timeColorManager = nullptr;
+			removeChildControllableContainer(colorManager.get());
+			colorManager = nullptr;
 		}
 	}
 
@@ -157,7 +156,7 @@ void MappingLayer::updateCurvesValues()
 	switch (mappingMode)
 	{
 	case MODE_COLOR:
-		((ColorParameter *)curveValue)->setColor(timeColorManager->currentColor->getColor(), false);
+		((ColorParameter *)curveValue)->setColor(colorManager->currentColor->getColor(), false);
 		break;
 
 	case MODE_1D:
@@ -228,9 +227,9 @@ var MappingLayer::getJSONData()
 		var aData = automations[i]->getJSONData();
 		if(!aData.isVoid()) data.getDynamicObject()->setProperty("automation"+String(i), aData);
 	}
-	if (timeColorManager != nullptr)
+	if (colorManager != nullptr)
 	{
-		data.getDynamicObject()->setProperty("colors", timeColorManager->getJSONData());
+		data.getDynamicObject()->setProperty("colors", colorManager->getJSONData());
 	}
 
 	var rData = recorder.getJSONData();
@@ -247,9 +246,9 @@ void MappingLayer::loadJSONDataInternal(var data)
 	{
 		automations[i]->loadJSONData(data.getProperty("automation"+String(i), var()));
 	}
-	if (timeColorManager != nullptr)
+	if (colorManager != nullptr)
 	{
-		timeColorManager->loadJSONData(data.getProperty("colors", var()));
+		colorManager->loadJSONData(data.getProperty("colors", var()));
 	}
 
 	recorder.loadJSONData(data.getProperty("recorder", var()));
@@ -259,8 +258,8 @@ void MappingLayer::selectAll(bool addToSelection)
 {
 	if (mode->getValueDataAsEnum<Mode>() == MODE_COLOR)
 	{
-		deselectThis(timeColorManager->items.size() == 0);
-		timeColorManager->askForSelectAllItems(addToSelection);
+		deselectThis(colorManager->items.size() == 0);
+		colorManager->askForSelectAllItems(addToSelection);
 	}
 	else if (automations.size() > 0)
 	{
@@ -301,7 +300,7 @@ void MappingLayer::onControllableFeedbackUpdateInternal(ControllableContainer * 
 	bool doUpdate = false;
 	if (mode->getValueDataAsEnum<Mode>() == MODE_COLOR)
 	{
-		doUpdate = c == timeColorManager->currentColor;
+		doUpdate = c == colorManager->currentColor;
 	} else
 	{
 		for (auto &a : automations)
@@ -321,7 +320,7 @@ void MappingLayer::sequenceTotalTimeChanged(Sequence *)
 {
 	if (mode->getValueDataAsEnum<Mode>() == MODE_COLOR)
 	{
-		timeColorManager->setLength(sequence->totalTime->floatValue());
+		colorManager->setLength(sequence->totalTime->floatValue());
 	}
 	else
 	{
@@ -336,8 +335,8 @@ void MappingLayer::sequenceCurrentTimeChanged(Sequence *, float prevTime, bool e
 
 	if (mode->getValueDataAsEnum<Mode>() == MODE_COLOR)
 	{
-		if (timeColorManager == nullptr) return;
-		timeColorManager->position->setValue(sequence->currentTime->floatValue());
+		if (colorManager == nullptr) return;
+		colorManager->position->setValue(sequence->currentTime->floatValue());
 	}
 
 	for (auto &a : automations) a->position->setValue(sequence->currentTime->floatValue());

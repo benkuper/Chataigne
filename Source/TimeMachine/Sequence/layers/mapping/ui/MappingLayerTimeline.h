@@ -11,7 +11,6 @@
 #pragma once
 
 #include "../MappingLayer.h"
-#include "../timecolor/ui/TimeColorManagerUI.h"
 
 class MappingLayerTimeline :
 	public SequenceLayerTimeline
@@ -23,7 +22,7 @@ public:
 	MappingLayer * mappingLayer;
 
 	OwnedArray<AutomationUI> automationsUI;
-	std::unique_ptr<TimeColorManagerUI> colorManagerUI;
+	std::unique_ptr<GradientColorManagerUI> colorManagerUI;
 
 	void setupUIForLayerMode();
 

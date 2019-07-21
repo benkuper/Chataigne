@@ -35,7 +35,7 @@ ifeq ($(CONFIG),Debug)
     TARGET_ARCH := -m64
   endif
 
-  JUCE_CPPFLAGS := $(DEPFLAGS) -DLINUX=1 -DDEBUG=1 -D_DEBUG=1 -DJUCER_LINUX_MAKE_6D53C8B4=1 -DJUCE_APP_VERSION=1.6.3b7 -DJUCE_APP_VERSION_HEX=0x10603 $(shell pkg-config --cflags alsa freetype2 x11 xext xinerama webkit2gtk-4.0 gtk+-x11-3.0 libcurl) -pthread -I../../JuceLibraryCode -I$(HOME)/JUCE/modules -I../../../JUCE\ Modules -I../../External/wiiuse -I../../External/serial/include -I../../External/servus/include -I../../External/dnssd/include -I../../External/libartnet/include -I../../Source $(CPPFLAGS)
+  JUCE_CPPFLAGS := $(DEPFLAGS) -DLINUX=1 -DDEBUG=1 -D_DEBUG=1 -DJUCER_LINUX_MAKE_6D53C8B4=1 -DJUCE_APP_VERSION=1.6.3b8 -DJUCE_APP_VERSION_HEX=0x10603 $(shell pkg-config --cflags alsa freetype2 x11 xext xinerama webkit2gtk-4.0 gtk+-x11-3.0 libcurl) -pthread -I../../JuceLibraryCode -I$(HOME)/JUCE/modules -I../../../JUCE\ Modules -I../../External/wiiuse -I../../External/serial/include -I../../External/servus/include -I../../External/dnssd/include -I../../External/libartnet/include -I../../Source $(CPPFLAGS)
   JUCE_CPPFLAGS_APP := -DJucePlugin_Build_VST=0 -DJucePlugin_Build_VST3=0 -DJucePlugin_Build_AU=0 -DJucePlugin_Build_AUv3=0 -DJucePlugin_Build_RTAS=0 -DJucePlugin_Build_AAX=0 -DJucePlugin_Build_Standalone=0 -DJucePlugin_Build_Unity=0
   JUCE_TARGET_APP := Chataigne
 
@@ -56,7 +56,7 @@ ifeq ($(CONFIG),Release)
     TARGET_ARCH := -m64
   endif
 
-  JUCE_CPPFLAGS := $(DEPFLAGS) -DLINUX=1 -DNDEBUG=1 -DJUCER_LINUX_MAKE_6D53C8B4=1 -DJUCE_APP_VERSION=1.6.3b7 -DJUCE_APP_VERSION_HEX=0x10603 $(shell pkg-config --cflags alsa freetype2 x11 xext xinerama webkit2gtk-4.0 gtk+-x11-3.0 libcurl) -pthread -I../../JuceLibraryCode -I$(HOME)/JUCE/modules -I../../../JUCE\ Modules -I../../External/wiiuse -I../../External/serial/include -I../../External/servus/include -I../../External/dnssd/include -I../../External/libartnet/include -I../../Source $(CPPFLAGS)
+  JUCE_CPPFLAGS := $(DEPFLAGS) -DLINUX=1 -DNDEBUG=1 -DJUCER_LINUX_MAKE_6D53C8B4=1 -DJUCE_APP_VERSION=1.6.3b8 -DJUCE_APP_VERSION_HEX=0x10603 $(shell pkg-config --cflags alsa freetype2 x11 xext xinerama webkit2gtk-4.0 gtk+-x11-3.0 libcurl) -pthread -I../../JuceLibraryCode -I$(HOME)/JUCE/modules -I../../../JUCE\ Modules -I../../External/wiiuse -I../../External/serial/include -I../../External/servus/include -I../../External/dnssd/include -I../../External/libartnet/include -I../../Source $(CPPFLAGS)
   JUCE_CPPFLAGS_APP := -DJucePlugin_Build_VST=0 -DJucePlugin_Build_VST3=0 -DJucePlugin_Build_AU=0 -DJucePlugin_Build_AUv3=0 -DJucePlugin_Build_RTAS=0 -DJucePlugin_Build_AAX=0 -DJucePlugin_Build_Standalone=0 -DJucePlugin_Build_Unity=0
   JUCE_TARGET_APP := Chataigne
 
@@ -314,10 +314,6 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/ChataigneTimeTrigger_17ca38c1.o \
   $(JUCE_OBJDIR)/ChataigneAudioLayerPanel_4ae871a.o \
   $(JUCE_OBJDIR)/ChataigneAudioLayer_3f84aced.o \
-  $(JUCE_OBJDIR)/TimeColorManagerUI_195cb4d9.o \
-  $(JUCE_OBJDIR)/TimeColorUI_b69950e6.o \
-  $(JUCE_OBJDIR)/TimeColor_e61e87c9.o \
-  $(JUCE_OBJDIR)/TimeColorManager_c654482e.o \
   $(JUCE_OBJDIR)/MappingLayerEditor_a17bc097.o \
   $(JUCE_OBJDIR)/MappingLayerPanel_65736d24.o \
   $(JUCE_OBJDIR)/MappingLayerTimeline_80a002b.o \
@@ -1593,26 +1589,6 @@ $(JUCE_OBJDIR)/ChataigneAudioLayerPanel_4ae871a.o: ../../Source/TimeMachine/Sequ
 $(JUCE_OBJDIR)/ChataigneAudioLayer_3f84aced.o: ../../Source/TimeMachine/Sequence/layers/audio/ChataigneAudioLayer.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling ChataigneAudioLayer.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/TimeColorManagerUI_195cb4d9.o: ../../Source/TimeMachine/Sequence/layers/mapping/timecolor/ui/TimeColorManagerUI.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling TimeColorManagerUI.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/TimeColorUI_b69950e6.o: ../../Source/TimeMachine/Sequence/layers/mapping/timecolor/ui/TimeColorUI.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling TimeColorUI.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/TimeColor_e61e87c9.o: ../../Source/TimeMachine/Sequence/layers/mapping/timecolor/TimeColor.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling TimeColor.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/TimeColorManager_c654482e.o: ../../Source/TimeMachine/Sequence/layers/mapping/timecolor/TimeColorManager.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling TimeColorManager.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/MappingLayerEditor_a17bc097.o: ../../Source/TimeMachine/Sequence/layers/mapping/ui/MappingLayerEditor.cpp

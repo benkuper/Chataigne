@@ -55,7 +55,7 @@ void MappingLayerTimeline::setupUIForLayerMode()
 
 	if (mappingLayer->mode->getValueDataAsEnum<MappingLayer::Mode>() == MappingLayer::MODE_COLOR)
 	{
-		colorManagerUI.reset(new TimeColorManagerUI(mappingLayer->timeColorManager.get()));
+		colorManagerUI.reset(new GradientColorManagerUI(mappingLayer->colorManager.get()));
 		addAndMakeVisible(colorManagerUI.get());
 		colorManagerUI->toBack();
 	}

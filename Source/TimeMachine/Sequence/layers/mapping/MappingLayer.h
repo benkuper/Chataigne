@@ -12,7 +12,7 @@
 
 #include "JuceHeader.h"
 
-class TimeColorManager;
+class GradientColorManager;
 class Mapping;
 
 
@@ -39,7 +39,7 @@ public:
 	//Parameter * mappedValue; //later : polymorph out from mapping, depending on filters
 
 	OwnedArray<Automation> automations; //later: automation Manager to allow for multi curve layer
-	std::unique_ptr<TimeColorManager> timeColorManager;
+	std::unique_ptr<GradientColorManager> colorManager;
 
 	AutomationRecorder recorder;
 	std::unique_ptr<Mapping> mapping;

@@ -66,7 +66,7 @@
       <Optimization>Disabled</Optimization>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <AdditionalIncludeDirectories>..\..\JuceLibraryCode;D:\Softwares\JUCE\modules;..\..\..\JUCE Modules;../../External/wiiuse;../../External/serial/include;../../External/asio;../../External/kinect/include;../../External/joycon/include;../../External/servus/include;../../External/dnssd/include;../../External/ois/include;../../External/sdl/include;../../External/libartnet/include;../../Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;DEBUG;_DEBUG;USE_KINECT=1;JUCER_VS2019_78A5026=1;JUCE_APP_VERSION=1.6.3b7;JUCE_APP_VERSION_HEX=0x10603;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_RTAS=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;DEBUG;_DEBUG;USE_KINECT=1;JUCER_VS2019_78A5026=1;JUCE_APP_VERSION=1.6.3b8;JUCE_APP_VERSION_HEX=0x10603;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_RTAS=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <PrecompiledHeader/>
@@ -112,7 +112,7 @@
     <ClCompile>
       <Optimization>Full</Optimization>
       <AdditionalIncludeDirectories>..\..\JuceLibraryCode;D:\Softwares\JUCE\modules;..\..\..\JUCE Modules;../../External/wiiuse;../../External/serial/include;../../External/asio;../../External/kinect/include;../../External/joycon/include;../../External/servus/include;../../External/dnssd/include;../../External/sdl/include;../../External/libartnet/include;../../Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;NDEBUG;USE_KINECT=1;JUCER_VS2019_78A5026=1;JUCE_APP_VERSION=1.6.3b7;JUCE_APP_VERSION_HEX=0x10603;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_RTAS=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;NDEBUG;USE_KINECT=1;JUCER_VS2019_78A5026=1;JUCE_APP_VERSION=1.6.3b8;JUCE_APP_VERSION_HEX=0x10603;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_RTAS=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <PrecompiledHeader/>
@@ -396,10 +396,6 @@
     <ClCompile Include="..\..\Source\TimeMachine\Sequence\layers\trigger\ChataigneTimeTrigger.cpp"/>
     <ClCompile Include="..\..\Source\TimeMachine\Sequence\layers\audio\ui\ChataigneAudioLayerPanel.cpp"/>
     <ClCompile Include="..\..\Source\TimeMachine\Sequence\layers\audio\ChataigneAudioLayer.cpp"/>
-    <ClCompile Include="..\..\Source\TimeMachine\Sequence\layers\mapping\timecolor\ui\TimeColorManagerUI.cpp"/>
-    <ClCompile Include="..\..\Source\TimeMachine\Sequence\layers\mapping\timecolor\ui\TimeColorUI.cpp"/>
-    <ClCompile Include="..\..\Source\TimeMachine\Sequence\layers\mapping\timecolor\TimeColor.cpp"/>
-    <ClCompile Include="..\..\Source\TimeMachine\Sequence\layers\mapping\timecolor\TimeColorManager.cpp"/>
     <ClCompile Include="..\..\Source\TimeMachine\Sequence\layers\mapping\ui\MappingLayerEditor.cpp"/>
     <ClCompile Include="..\..\Source\TimeMachine\Sequence\layers\mapping\ui\MappingLayerPanel.cpp"/>
     <ClCompile Include="..\..\Source\TimeMachine\Sequence\layers\mapping\ui\MappingLayerTimeline.cpp"/>
@@ -2254,13 +2250,10 @@
     <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\automation\easing\Easing.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\automation\parameter\ui\PlayableParameterAutomationEditor.cpp">
+    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\automation\parameter\ui\ParameterAutomationEditor.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\automation\parameter\ParameterAutomation.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\automation\parameter\ParameterAutomationManager.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\automation\recorder\ui\AutomationRecorderEditor.cpp">
@@ -2297,6 +2290,21 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\comment\CommentManager.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\controllable\parameter\gradient\ui\GradientColorManagerEditor.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\controllable\parameter\gradient\ui\GradientColorManagerUI.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\controllable\parameter\gradient\ui\GradientColorUI.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\controllable\parameter\gradient\GradientColor.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\controllable\parameter\gradient\GradientColorManager.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\controllable\parameter\ui\BetterStepper.cpp">
@@ -3128,10 +3136,6 @@
     <ClInclude Include="..\..\Source\TimeMachine\Sequence\layers\audio\ui\ChataigneAudioLayerPanel.h"/>
     <ClInclude Include="..\..\Source\TimeMachine\Sequence\layers\audio\ChataigneAudioLayer.h"/>
     <ClInclude Include="..\..\Source\TimeMachine\Sequence\layers\audio\ChataigneAudioLayerListener.h"/>
-    <ClInclude Include="..\..\Source\TimeMachine\Sequence\layers\mapping\timecolor\ui\TimeColorManagerUI.h"/>
-    <ClInclude Include="..\..\Source\TimeMachine\Sequence\layers\mapping\timecolor\ui\TimeColorUI.h"/>
-    <ClInclude Include="..\..\Source\TimeMachine\Sequence\layers\mapping\timecolor\TimeColor.h"/>
-    <ClInclude Include="..\..\Source\TimeMachine\Sequence\layers\mapping\timecolor\TimeColorManager.h"/>
     <ClInclude Include="..\..\Source\TimeMachine\Sequence\layers\mapping\ui\MappingLayerEditor.h"/>
     <ClInclude Include="..\..\Source\TimeMachine\Sequence\layers\mapping\ui\MappingLayerPanel.h"/>
     <ClInclude Include="..\..\Source\TimeMachine\Sequence\layers\mapping\ui\MappingLayerTimeline.h"/>
@@ -3871,9 +3875,8 @@
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\app\OrganicMainComponent.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\automation\easing\ui\EasingUI.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\automation\easing\Easing.h"/>
-    <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\automation\parameter\ui\PlayableParameterAutomationEditor.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\automation\parameter\ui\ParameterAutomationEditor.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\automation\parameter\ParameterAutomation.h"/>
-    <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\automation\parameter\ParameterAutomationManager.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\automation\recorder\ui\AutomationRecorderEditor.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\automation\recorder\AutomationRecorder.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\automation\ui\AutomationEditor.h"/>
@@ -3886,6 +3889,11 @@
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\comment\ui\CommentUI.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\comment\Comment.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\comment\CommentManager.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\controllable\parameter\gradient\ui\GradientColorManagerEditor.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\controllable\parameter\gradient\ui\GradientColorManagerUI.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\controllable\parameter\gradient\ui\GradientColorUI.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\controllable\parameter\gradient\GradientColor.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\controllable\parameter\gradient\GradientColorManager.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\controllable\parameter\ui\BetterStepper.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\controllable\parameter\ui\BoolImageToggleUI.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\controllable\parameter\ui\BoolToggleUI.h"/>

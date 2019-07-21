@@ -1077,22 +1077,6 @@
 			isa = PBXBuildFile;
 			fileRef = 51FDE47C4EDEF58051AC4915;
 		};
-		2369EBD63C3A81443AE504CA = {
-			isa = PBXBuildFile;
-			fileRef = 2938D13B1F2F83389F4515BF;
-		};
-		2D3C33C687ACEB948560B6E0 = {
-			isa = PBXBuildFile;
-			fileRef = 07229D4A9C3CC581C15AA8C2;
-		};
-		80FFEF215FA2223A767DBC00 = {
-			isa = PBXBuildFile;
-			fileRef = AD797321C1E4BDA6A8C85AC8;
-		};
-		486B2033FCBD5192C31DC106 = {
-			isa = PBXBuildFile;
-			fileRef = 0237FC10DBABBC0C9D77624D;
-		};
 		8B436EA80D2BE2C1724EC34B = {
 			isa = PBXBuildFile;
 			fileRef = FC76F2E50BCEC7920127A00D;
@@ -1281,25 +1265,11 @@
 			path = ../../Source/Module/modules/tcp/tcpclient/TCPClientModule.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
-		0237FC10DBABBC0C9D77624D = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = TimeColorManager.cpp;
-			path = ../../Source/TimeMachine/Sequence/layers/mapping/timecolor/TimeColorManager.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
 		02719A9820DD6EE1547FA8FE = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = ZeroconfManager.h;
 			path = ../../Source/Common/Zeroconf/ZeroconfManager.h;
-			sourceTree = "SOURCE_ROOT";
-		};
-		02F0670054F134E41AB3FA1A = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = TimeColorManager.h;
-			path = ../../Source/TimeMachine/Sequence/layers/mapping/timecolor/TimeColorManager.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		03B34F65CD67AA62113F23C3 = {
@@ -1356,13 +1326,6 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = "include_juce_organicui.cpp";
 			path = "../../JuceLibraryCode/include_juce_organicui.cpp";
-			sourceTree = "SOURCE_ROOT";
-		};
-		07229D4A9C3CC581C15AA8C2 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = TimeColorUI.cpp;
-			path = ../../Source/TimeMachine/Sequence/layers/mapping/timecolor/ui/TimeColorUI.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		0737D4DC75687E6B61669785 = {
@@ -1862,13 +1825,6 @@
 			path = ../../Source/Module/Routing/ModuleRouter.h;
 			sourceTree = "SOURCE_ROOT";
 		};
-		2938D13B1F2F83389F4515BF = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = TimeColorManagerUI.cpp;
-			path = ../../Source/TimeMachine/Sequence/layers/mapping/timecolor/ui/TimeColorManagerUI.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
 		29D04BA49B995123DB200E5E = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -1951,13 +1907,6 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = EnumComparator.cpp;
 			path = ../../Source/Common/Processor/Action/Condition/Comparator/comparators/EnumComparator.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
-		2E7C1FFF6EA11E733AA3305F = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = TimeColorUI.h;
-			path = ../../Source/TimeMachine/Sequence/layers/mapping/timecolor/ui/TimeColorUI.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		2E93B8A7CF9DCDC3A41DEA0C = {
@@ -2875,13 +2824,6 @@
 			lastKnownFileType = sourcecode.c.c;
 			name = "os_mac.c";
 			path = "../../Source/Module/modules/controller/wiimote/lib/wiiuse/os_mac/os_mac.c";
-			sourceTree = "SOURCE_ROOT";
-		};
-		6929C423C5CF5840C3755F47 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = TimeColor.h;
-			path = ../../Source/TimeMachine/Sequence/layers/mapping/timecolor/TimeColor.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		69DC77C2F77880760FAC313C = {
@@ -3913,13 +3855,6 @@
 			path = ../../Source/Module/modules/http/HTTPModule.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
-		A9861A4739E1BC7CEEA3E820 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = TimeColorManagerUI.h;
-			path = ../../Source/TimeMachine/Sequence/layers/mapping/timecolor/ui/TimeColorManagerUI.h;
-			sourceTree = "SOURCE_ROOT";
-		};
 		A99666B3FB03511628C7425B = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -4051,13 +3986,6 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = SerialModule.h;
 			path = ../../Source/Module/modules/serial/SerialModule.h;
-			sourceTree = "SOURCE_ROOT";
-		};
-		AD797321C1E4BDA6A8C85AC8 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = TimeColor.cpp;
-			path = ../../Source/TimeMachine/Sequence/layers/mapping/timecolor/TimeColor.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		ADCBDA61AEBC12CB643E0EC2 = {
@@ -7218,29 +7146,6 @@
 			name = audio;
 			sourceTree = "<group>";
 		};
-		0A4DF3DDB96A1F96388DE121 = {
-			isa = PBXGroup;
-			children = (
-				2938D13B1F2F83389F4515BF,
-				A9861A4739E1BC7CEEA3E820,
-				07229D4A9C3CC581C15AA8C2,
-				2E7C1FFF6EA11E733AA3305F,
-			);
-			name = ui;
-			sourceTree = "<group>";
-		};
-		20827D0AF2C413ED2C7A55A6 = {
-			isa = PBXGroup;
-			children = (
-				0A4DF3DDB96A1F96388DE121,
-				AD797321C1E4BDA6A8C85AC8,
-				6929C423C5CF5840C3755F47,
-				0237FC10DBABBC0C9D77624D,
-				02F0670054F134E41AB3FA1A,
-			);
-			name = timecolor;
-			sourceTree = "<group>";
-		};
 		FF9538C2BD9C4A002CC77E89 = {
 			isa = PBXGroup;
 			children = (
@@ -7257,7 +7162,6 @@
 		7BA55BE1AFBABFDF0832D425 = {
 			isa = PBXGroup;
 			children = (
-				20827D0AF2C413ED2C7A55A6,
 				FF9538C2BD9C4A002CC77E89,
 				95CA364F04E46872816321FC,
 				CA392D20C778B856781D7F42,
@@ -7463,7 +7367,7 @@
 					"_DEBUG=1",
 					"DEBUG=1",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
-					"JUCE_APP_VERSION=1.6.3b7",
+					"JUCE_APP_VERSION=1.6.3b8",
 					"JUCE_APP_VERSION_HEX=0x10603",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
@@ -7518,7 +7422,7 @@
 					"_NDEBUG=1",
 					"NDEBUG=1",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
-					"JUCE_APP_VERSION=1.6.3b7",
+					"JUCE_APP_VERSION=1.6.3b8",
 					"JUCE_APP_VERSION_HEX=0x10603",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
@@ -7934,10 +7838,6 @@
 				E65A3F5F00F9E9BBB4CB02DF,
 				7633BC0B9AD9E55D29B62A3A,
 				AB15FBD03761FD81F11EAA1A,
-				2369EBD63C3A81443AE504CA,
-				2D3C33C687ACEB948560B6E0,
-				80FFEF215FA2223A767DBC00,
-				486B2033FCBD5192C31DC106,
 				8B436EA80D2BE2C1724EC34B,
 				21F5C9B547EB024F64A9FE98,
 				9E75E08D180BA690D1F8E480,
