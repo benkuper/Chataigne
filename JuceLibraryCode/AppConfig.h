@@ -325,6 +325,10 @@
  #define   TIMELINE_USE_SEQUENCEMANAGER_SINGLETON 0
 #endif
 
+#ifndef    TIMELINE_ADD_MENU_ITEMS
+ //#define TIMELINE_ADD_MENU_ITEMS 1
+#endif
+
 //==============================================================================
 // juce_video flags:
 

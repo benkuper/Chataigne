@@ -23,7 +23,6 @@ namespace ChataigneCommandIDs
 	static const int gotoDocs = 0x60003;
 	static const int postGithubIssue = 0x60004;
 	static const int donate = 0x60005;
-	static const int playPauseSequenceEditor = 0x80000;
 	static const int guideStart = 0x300; //up to 0x300 +100
 	static const int exitGuide = 0x399; 
 	static const int goToCommunityModules = 0x500;
@@ -64,11 +63,6 @@ void MainContentComponent::getCommandInfo(CommandID commandID, ApplicationComman
 		result.setInfo("Post an issue on github", "", "Help", result.readOnlyInKeyEditor);
 		break;
 
-	case ChataigneCommandIDs::playPauseSequenceEditor:
-		result.setInfo("Play/Pause Sequence", "", "Control", 0);
-		result.addDefaultKeypress(KeyPress::spaceKey, ModifierKeys::noModifiers);
-		break;
-
 	case ChataigneCommandIDs::goToCommunityModules:
 		result.setInfo("Community Modules Manager", "", "General", result.readOnlyInKeyEditor);
 		break;
@@ -103,7 +97,6 @@ void MainContentComponent::getAllCommands(Array<CommandID>& commands) {
 		ChataigneCommandIDs::gotoForum,
 		ChataigneCommandIDs::gotoDocs,
 		ChataigneCommandIDs::postGithubIssue,
-		ChataigneCommandIDs::playPauseSequenceEditor,
 		ChataigneCommandIDs::goToCommunityModules,
 		ChataigneCommandIDs::reloadCustomModules,
 		ChataigneCommandIDs::exitGuide,
@@ -118,10 +111,7 @@ PopupMenu MainContentComponent::getMenuForIndex(int topLevelMenuIndex, const Str
 {
 	PopupMenu menu = OrganicMainContentComponent::getMenuForIndex(topLevelMenuIndex, menuName);
 
-	if (menuName == "Control")
-	{
-		menu.addCommandItem(&getCommandManager(), ChataigneCommandIDs::playPauseSequenceEditor);
-	}else if (menuName == "Help")
+	if (menuName == "Help")
 	{
 		menu.addCommandItem(&getCommandManager(), ChataigneCommandIDs::showAbout);
 		menu.addCommandItem(&getCommandManager(), ChataigneCommandIDs::donate);
@@ -200,25 +190,6 @@ bool MainContentComponent::perform(const InvocationInfo& info)
 		ModuleFactory::getInstance()->updateCustomModules();
 		break;
 
-	case ChataigneCommandIDs::playPauseSequenceEditor:	
-	{
-		ShapeShifterContent * sContent = ShapeShifterManager::getInstance()->getContentForName("Sequence Editor");
-		if (sContent != nullptr)
-		{
-			Component * c = sContent->contentComponent;
-			TimeMachineView * tmw = dynamic_cast<TimeMachineView *>(c);
-			if (tmw != nullptr)
-			{
-				SequenceEditorView * se = tmw->editor.get();
-				if (se != nullptr)
-				{
-					if (se->sequence != nullptr) se->sequence->togglePlayTrigger->trigger();
-				}
-			}
-		}
-	}
-	break;
-
 	case ChataigneCommandIDs::exitGuide:
 		Guider::getInstance()->setCurrentGuide(nullptr);
 		break;
@@ -233,7 +204,6 @@ bool MainContentComponent::perform(const InvocationInfo& info)
 StringArray MainContentComponent::getMenuBarNames()
 {
 	StringArray names = OrganicMainContentComponent::getMenuBarNames();
-	names.add("Control");
 	names.add("Guides");
 	names.add("Help");
 	return names;

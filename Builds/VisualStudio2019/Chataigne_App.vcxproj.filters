@@ -4591,6 +4591,9 @@
     <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\juce_timeline.cpp">
       <Filter>JUCE Modules\juce_timeline</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\TimelineAppCommands.cpp">
+      <Filter>JUCE Modules\juce_timeline</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_video\capture\juce_CameraDevice.cpp">
       <Filter>JUCE Modules\juce_video\capture</Filter>
     </ClCompile>
@@ -8204,6 +8207,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\timeline\SequenceManager.h">
       <Filter>JUCE Modules\juce_timeline\timeline</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\TimelineAppCommands.h">
+      <Filter>JUCE Modules\juce_timeline</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\juce_timeline.h">
       <Filter>JUCE Modules\juce_timeline</Filter>
