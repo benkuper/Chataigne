@@ -23,7 +23,6 @@ SimpleRemapFilter::SimpleRemapFilter(var params) :
 	targetOut->setPoint(0, 1);
 
 	autoSetRange = false;
-	forceOutParameterType = FloatParameter::getTypeStringStatic();
 }
 
 SimpleRemapFilter::~SimpleRemapFilter()
@@ -34,7 +33,16 @@ void SimpleRemapFilter::processInternal()
 {
 	if (targetOut->x == targetOut->y)
 	{
-		filteredParameter->setValue(targetOut->x);
+		if (filteredParameter->isComplex())
+		{
+			var val;
+			for (int i = 0; i < filteredParameter->value.size(); i++) val.append(targetOut->x);
+			filteredParameter->setValue(val);
+		}
+		else
+		{
+			filteredParameter->setValue(targetOut->x);
+		}
 		return;
 	}
 
@@ -42,18 +50,57 @@ void SimpleRemapFilter::processInternal()
 	{
 		if (targetIn->x == targetIn->y)
 		{
-			filteredParameter->setValue(targetOut->x);
+			if (filteredParameter->isComplex())
+			{
+				var val;
+				for (int i = 0; i < filteredParameter->value.size(); i++) val.append(targetOut->x);
+				filteredParameter->setValue(val);
+			}
+			else
+			{
+				filteredParameter->setValue(targetOut->x);
+			}
 			return;
 		}
-			
-		float targetValue = jmap(sourceParam->floatValue(), targetIn->x, targetIn->y, targetOut->x, targetOut->y);
-		if (targetOut->x > targetOut->y) targetValue = targetOut->y + (targetValue - targetOut->y) / (targetOut->x - targetOut->y);
-		filteredParameter->setValue(targetValue);
+		
+		if (filteredParameter->isComplex())
+		{
+			var val;
+			for (int i = 0; i < filteredParameter->value.size(); i++)
+			{
+				float targetValue = jmap<float>(sourceParam->value[i], targetIn->x, targetIn->y, targetOut->x, targetOut->y);
+				if (targetOut->x > targetOut->y) targetValue = targetOut->y + (targetValue - targetOut->y) / (targetOut->x - targetOut->y);
+				val.append(targetValue);
+			}
+			filteredParameter->setValue(val);
+		}
+		else
+		{
+			float targetValue = jmap(sourceParam->floatValue(), targetIn->x, targetIn->y, targetOut->x, targetOut->y);
+			if (targetOut->x > targetOut->y) targetValue = targetOut->y + (targetValue - targetOut->y) / (targetOut->x - targetOut->y);
+			filteredParameter->setValue(targetValue);
+		}
+		
 	} else
 	{
-		float targetNValue = sourceParam->getNormalizedValue();
-		if (targetOut->x > targetOut->y) targetNValue = 1 - targetNValue;
-		filteredParameter->setNormalizedValue(targetNValue);
+		if (filteredParameter->isComplex())
+		{
+			var val;
+			for (int i = 0; i < filteredParameter->value.size(); i++)
+			{
+				float targetNValue = ((float)sourceParam->value[i]- (float)sourceParam->minimumValue[i]) / ((float)sourceParam->maximumValue[i] - (float)sourceParam->minimumValue[i]);
+				if (targetOut->x > targetOut->y) targetNValue = 1 - targetNValue;
+				val.append(targetNValue);
+			}
+			val.append(val);
+			filteredParameter->setValue(val);
+		}
+		else
+		{
+			float targetNValue = sourceParam->getNormalizedValue();
+			if (targetOut->x > targetOut->y) targetNValue = 1 - targetNValue;
+			filteredParameter->setNormalizedValue(targetNValue);
+		}
 	}
 }
 

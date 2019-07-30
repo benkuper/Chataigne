@@ -24,7 +24,6 @@ CropFilter::CropFilter(var params) :
 	targetMax->isCustomizableByUser = false;
 
 	autoSetRange = false;
-	forceOutParameterType = FloatParameter::getTypeStringStatic();
 }
 
 CropFilter::~CropFilter()
@@ -33,7 +32,7 @@ CropFilter::~CropFilter()
 
 void CropFilter::processInternal()
 {
-	filteredParameter->setValue(sourceParam->floatValue());
+	filteredParameter->setValue(sourceParam->value);
 }
 
 
@@ -41,7 +40,6 @@ void CropFilter::filterParamChanged(Parameter * p)
 {
 	if (p == targetMin || p == targetMax)
 	{
-
 		if (filteredParameter != nullptr) filteredParameter->setRange(targetMin->floatValue(), jmax<float>(targetMax->floatValue(), targetMin->floatValue()));
 	}
 }
@@ -49,6 +47,21 @@ void CropFilter::filterParamChanged(Parameter * p)
 Parameter * CropFilter::setupParameterInternal(Parameter * source)
 {
 	Parameter * p = MappingFilter::setupParameterInternal(source);
-	p->setRange(targetMin->floatValue(), jmax<float>(targetMax->floatValue(), targetMin->floatValue()));
+	if (p->isComplex())
+	{
+		var minVal;
+		var maxVal;
+		for (int i = 0; i < p->value.size(); i++)
+		{
+			minVal.append(targetMin->floatValue());
+			maxVal.append(jmax<float>(targetMax->floatValue(), targetMin->floatValue()));
+		}
+
+		p->setRange(minVal, maxVal);
+	}
+	else
+	{
+		p->setRange(targetMin->floatValue(), jmax<float>(targetMax->floatValue(), targetMin->floatValue()));
+	}
 	return p;
 }

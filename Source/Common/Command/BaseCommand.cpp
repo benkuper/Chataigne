@@ -279,7 +279,6 @@ void BaseCommand::setValue(var value)
 					else
 					{
 						p->setValue(value[i]);
-						i++;
 					}
 				}
 			}

@@ -75,7 +75,7 @@ DMXCommand::DMXCommand(DMXModule* _module, CommandContext context, var params) :
 	}
 
 
-	if (context == MAPPING && (dmxAction == SET_VALUE || dmxAction == SET_VALUE_16BIT || dmxAction == SET_RANGE))
+	if (context == MAPPING && (dmxAction == SET_VALUE || dmxAction == SET_VALUE_16BIT || dmxAction == SET_RANGE || dmxAction == SET_CUSTOM))
 	{
 		remap01To255 = addBoolParameter("Remap to 0-255", "If checked, this will automatically remap values from 0-1 to 0-255", false);
 	}
@@ -89,10 +89,21 @@ DMXCommand::~DMXCommand()
 void DMXCommand::setValue(var val)
 {
 	float mapFactor = (remap01To255 != nullptr && remap01To255->boolValue()) ? 255 : 1;
-	if (val.isArray()) val[0] = (float)val[0] * mapFactor;
-	else val = (float)val * mapFactor;
+	var newVal;
 
-	BaseCommand::setValue(val); 
+	if (val.isArray())
+	{
+		for (int i = 0; i < newVal.size(); i++)
+		{
+			newVal.append((float)val[i] * mapFactor);
+		}
+	}
+	else
+	{
+		newVal = (float)val * mapFactor;
+	}
+
+	BaseCommand::setValue(newVal);
 }
 
 void DMXCommand::triggerInternal()
