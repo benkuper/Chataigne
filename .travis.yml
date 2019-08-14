@@ -72,8 +72,8 @@ before_install:
     ls -d */
     curl -L -o Packages.dmg 'http://s.sudre.free.fr/Software/files/Packages.dmg'
     hdiutil mount Packages.dmg
-    sudo installer -pkg /Volumes/Packages\ 1.2.5/Install\ Packages.pkg -target /
-    hdiutil detach /Volumes/Packages\ 1.2.5/
+    sudo installer -pkg /Volumes/Packages\ $PACKAGES_VERSION/Install\ Packages.pkg -target /
+    hdiutil detach /Volumes/Packages\ $PACKAGES_VERSION/
     cd /Users/travis/build/benkuper
   fi
 install:
