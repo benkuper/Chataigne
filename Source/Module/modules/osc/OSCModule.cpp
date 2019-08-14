@@ -87,7 +87,12 @@ void OSCModule::setupReceiver()
 	receiver.disconnect();
 	if (receiveCC == nullptr) return;
 
-	if (!receiveCC->enabled->boolValue()) return;
+	if (!receiveCC->enabled->boolValue())
+	{
+		localPort->clearWarning();
+		return;
+	}
+
 	DBG("Local port set to : " << localPort->intValue());
 	bool result = receiver.connect(localPort->intValue());
 
