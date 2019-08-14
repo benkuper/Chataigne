@@ -45,6 +45,8 @@ public:
 
 	virtual void controllableFeedbackUpdate(ControllableContainer *, Controllable * c) override;
 
+	virtual void loadJSONDataInternal(var data) override;
+
 	virtual void initThread() {}
 	virtual void run() override;
 	

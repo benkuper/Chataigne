@@ -23,8 +23,9 @@ public:
 	ModuleManager();
 	~ModuleManager();
 
-	virtual Module * addItemFromData(var data, bool fromUndoableAction = false) override;
-	
+	virtual Module * addItemFromData(var data, bool addToUndo = false) override;
+	virtual Array<Module*> addItemsFromData(var data, bool addToUndo = false) override;
+
 	Module * getModuleWithName(const String &moduleName);
 
 	void addItemInternal(Module * module, var data) override;

@@ -16,7 +16,7 @@ HTTPModule::HTTPModule(const String &name) :
 	Module(name),
 	Thread("HTTPModule Requests")
 {
-	includeValuesInSave = true;
+	includeValuesInSave = true; 
 	
 	baseAddress = moduleParams.addStringParameter("Base Address", "The base adress to prepend to command addresses", "https://httpbin.org/");
 	autoAdd = moduleParams.addBoolParameter("Auto add", "If checked, will try to add values depending on received data and expected data type", true);

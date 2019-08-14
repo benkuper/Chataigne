@@ -14,7 +14,7 @@ UDPModule::UDPModule(const String & name, bool canHaveInput, bool canHaveOutput,
 	NetworkStreamingModule(name, canHaveInput,canHaveOutput,defaultLocalPort,defaultRemotePort)
 {
 	if (senderIsConnected != nullptr) senderIsConnected->hideInOutliner = true; //no need because UDP doesn't check remote client existance
-	setupReceiver();
+	if(!Engine::mainEngine->isLoadingFile) setupReceiver();
 	setupSender();
 }
 

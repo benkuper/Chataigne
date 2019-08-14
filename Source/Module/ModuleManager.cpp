@@ -30,14 +30,29 @@ ModuleManager::~ModuleManager()
 	ModuleFactory::deleteInstance();
 }
 
-Module * ModuleManager::addItemFromData(var data, bool fromUndoableAction)
+Module * ModuleManager::addItemFromData(var data, bool addToUndo)
 {
 	String moduleType = data.getProperty("type", "none");
 	if (moduleType.isEmpty()) return nullptr;
 	Module * i = ModuleFactory::getInstance()->createModule(moduleType);
-	if (i != nullptr) return addItem(i, data, fromUndoableAction);
+	if (i != nullptr) return addItem(i, data, addToUndo);
 	
 	return nullptr;
+}
+
+Array<Module*> ModuleManager::addItemsFromData(var data, bool addToUndo)
+{
+	Array<Module *> itemsToAdd;
+	
+	for (int i = 0; i < data.size(); i++)
+	{
+		String moduleType = data[i].getProperty("type", "none");
+		if (moduleType.isEmpty()) return nullptr;
+		Module* mi = ModuleFactory::getInstance()->createModule(moduleType);
+		if (mi != nullptr) itemsToAdd.add(mi);
+	}
+
+	return addItems(itemsToAdd, data, addToUndo);
 }
 
 Module * ModuleManager::getModuleWithName(const String & moduleName)

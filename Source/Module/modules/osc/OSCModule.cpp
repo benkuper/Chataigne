@@ -39,7 +39,7 @@ OSCModule::OSCModule(const String & name, int defaultLocalPort, int defaultRemot
 		receiver.registerFormatErrorHandler(&OSCHelpers::logOSCFormatError);
 		receiver.addListener(this);
 
-		setupReceiver();
+		if(!Engine::mainEngine->isLoadingFile) setupReceiver();
 	} else
 	{
 		if (receiveCC != nullptr) moduleParams.removeChildControllableContainer(receiveCC.get());
@@ -59,7 +59,7 @@ OSCModule::OSCModule(const String & name, int defaultLocalPort, int defaultRemot
 		{
 			OSCOutput * o = outputManager->addItem(nullptr, var(), false);
 			o->remotePort->setValue(defaultRemotePort);
-			setupSenders();
+			if (!Engine::mainEngine->isLoadingFile) setupSenders();
 		}
 	} else
 	{
@@ -358,6 +358,8 @@ void OSCModule::loadJSONDataInternal(var data)
 	}
 
 	if(!isThreadRunning()) startThread();
+
+	setupReceiver();
 }
 
 
@@ -416,9 +418,13 @@ void OSCModule::onControllableFeedbackUpdateInternal(ControllableContainer * cc,
 		bool sv = outputManager->enabled->boolValue();
 		setupIOConfiguration(rv,sv);
 		localPort->setEnabled(rv);
-		setupReceiver();
+		if(!isCurrentlyLoadingData) setupReceiver();
 
-	} else if (c == localPort) setupReceiver();
+	}
+	else if (c == localPort)
+	{
+		if (!isCurrentlyLoadingData) setupReceiver();
+	}
 }
 
 void OSCModule::oscMessageReceived(const OSCMessage & message)

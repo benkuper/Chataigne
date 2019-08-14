@@ -45,7 +45,6 @@ public:
 	ModuleFactory();
 	~ModuleFactory() {}
 
-
 	void buildPopupMenu();
 
 	void addCustomModules();

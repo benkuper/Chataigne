@@ -82,11 +82,20 @@ void NetworkStreamingModule::controllableFeedbackUpdate(ControllableContainer* c
 		if (c == useLocal) remoteHost->setEnabled(!useLocal->boolValue());
 		setupSender();
 	}
-	else if (c == localPort) setupReceiver();
+	else if (c == localPort)
+	{
+		if (!isCurrentlyLoadingData) setupReceiver();
+	}
 	else if ((receiveCC != nullptr && c == receiveCC->enabled) || (sendCC != nullptr && c == sendCC->enabled))
 	{
 		setupIOConfiguration(receiveCC != nullptr?receiveCC->enabled->boolValue():false, sendCC != nullptr?sendCC->enabled->boolValue():false);
 	}
+}
+
+void NetworkStreamingModule::loadJSONDataInternal(var data)
+{
+	StreamingModule::loadJSONDataInternal(data);
+	setupReceiver();
 }
 
 void NetworkStreamingModule::run()

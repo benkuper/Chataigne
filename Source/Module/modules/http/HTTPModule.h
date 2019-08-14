@@ -50,9 +50,8 @@ public:
 	void processRequest(Request * request);
 
 	void createControllablesFromJSONResult(var data, ControllableContainer* container);
-
-
 	void onControllableFeedbackUpdateInternal(ControllableContainer*, Controllable* c) override;
+
 	//Script
 	void sendRequestFromScript(const var::NativeFunctionArgs& args, RequestMethod method);
 	static var sendGETFromScript(const var::NativeFunctionArgs& args);

@@ -19,7 +19,7 @@ TCPServerModule::TCPServerModule(const String& name, int defaultLocalPort) :
 
 	connectionManager.addConnectionManagerListener(this);
 
-	setupReceiver();
+	if(!Engine::mainEngine->isLoadingFile) setupReceiver();
 }
 
 TCPServerModule::~TCPServerModule()
