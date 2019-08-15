@@ -7,7 +7,7 @@ Official website : http://benjamin.kuperberg.fr/chataigne
 Chataigne is made with one goal in mind : create a common tool for artists, technicians and developers who wish to use technology and synchronize softwares for shows, interactive installations or prototyping.
 It aims to be as simple as possible for basic interactions, but can be easily extended to create complex interactions.
 
-![What a beautiful screenshot !](http://benjamin.kuperberg.fr/chataigne/images/screenshot.png)
+![What a beautiful screenshot !](http://benjamin.kuperberg.fr/chataigne/user/images/screenshot2.png)
 
 
 ### Okay, but what does it do exactly ?
@@ -88,3 +88,7 @@ This list contains all the references to projects and libraries that Chataigne u
 
 I do this on my own free time, feel free to buy me a beer :)
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=KLQ6QBDF3ZL2W&lc=FR&item_name=Chataigne&item_number=chataigne%2dgithub&currency_code=EUR&bn=PP%2dDonationsBF%3adonate%2epng%3aNonHosted)
+
+Are you using Chataigne on a regular basis ? Then why not support me on Patreon, so I can have a more stable way to work on it !
+
+<a href="https://www.patreon.com/bePatron?u=23293310"><img src="https://c5.patreon.com/external/logo/become_a_patron_button@2x.png" width="140"></a>
