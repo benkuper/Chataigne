@@ -8,9 +8,7 @@
   ==============================================================================
 */
 
-#ifndef MAPPINGFILTERMANAGER_H_INCLUDED
-#define MAPPINGFILTERMANAGER_H_INCLUDED
-
+#pragma once
 
 #include "MappingFilter.h"
 
@@ -33,16 +31,15 @@ public:
 	void addItemInternal(MappingFilter * m, var data) override;
 	void removeItemInternal(MappingFilter *) override;
 	
+	void setItemIndex(MappingFilter* item, int index) override;
 	void reorderItems() override;
 
 	void newMessage(const MappingFilter::FilterEvent &e) override;
+
+	void loadJSONDataManagerInternal(var data) override;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MappingFilterManager)
 
 protected:
 	WeakReference<MappingFilter> lastEnabledFilter;
 };
-
-
-
-#endif  // MAPPINGFILTERMANAGER_H_INCLUDED

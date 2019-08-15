@@ -159,3 +159,96 @@ var ToPoint3DFilter::convertValue(var sourceValue)
 	if (sourceValue.isString()) return sourceValue.toString().getFloatValue();
 	return (float)sourceValue;
 }
+
+ToColorFilter::ToColorFilter(var params) :
+	ConversionFilter(getTypeString(), params, ColorParameter::getTypeStringStatic()),
+	baseColor(nullptr)
+{
+}
+
+ToColorFilter::~ToColorFilter()
+{
+}
+
+Parameter* ToColorFilter::setupParameterInternal(Parameter* sourceParam)
+{
+	Parameter* p = ConversionFilter::setupParameterInternal(sourceParam);
+	
+	if (transferType != TARGET)
+	{
+		if (baseColor != nullptr)
+		{
+			filterParams.removeControllable(baseColor);
+			baseColor = nullptr;
+		}
+	}
+
+	switch(transferType)
+	{
+	case DIRECT:
+		//retargetComponent->setEnabled(true);
+		//retargetComponent->addOption("RGB", RGB)->addOption("HSV", HSV);
+		break;
+
+	case TARGET:
+		retargetComponent->addOption("Hue", HUE)->addOption("Saturation", SAT)->addOption("Brightness", VAL);
+		retargetComponent->setValueWithData(HUE);
+		baseColor = filterParams.addColorParameter("Base Color", "Color to use to convert", Colours::red);
+		break;
+	}
+
+	return p;
+}
+
+void ToColorFilter::processInternal()
+{
+	switch (transferType)
+	{
+
+	case TARGET:
+	{
+		int comp = retargetComponent->getValueData();
+
+		switch (comp)
+		{
+		case HUE:
+		{
+			Colour c = baseColor->getColor().withHue(sourceParam->value);
+			((ColorParameter*)filteredParameter.get())->setColor(c);
+		}
+		break;
+
+		case SAT:
+		{
+			Colour c = baseColor->getColor().withSaturation(sourceParam->value);
+			((ColorParameter*)filteredParameter.get())->setColor(c);
+		}
+		break;
+
+		case VAL:
+		{
+			Colour c = baseColor->getColor().withBrightness(sourceParam->value);
+			((ColorParameter*)filteredParameter.get())->setColor(c);
+		}
+		break;
+
+		default:
+		{
+			var val = var();
+			for (int i = 0; i < filteredParameter->value.size(); i++) val.append(baseColor->value[i]); //force alpha to 1
+			val[(int)retargetComponent->getValueData()] = convertValue(sourceParam->getValue());
+			filteredParameter->setValue(val);
+		}
+		break;
+		}
+		
+	}
+	break;
+
+	default:
+		ConversionFilter::processInternal();
+		break;
+	}
+
+	
+}

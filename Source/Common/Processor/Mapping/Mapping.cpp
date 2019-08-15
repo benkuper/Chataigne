@@ -115,7 +115,7 @@ void Mapping::updateMappingChain()
 		}
 	} else
 	{
-		outputParam->setRange(p->minimumValue, p->maximumValue);
+		if(outputParam != nullptr && p != nullptr) outputParam->setRange(p->minimumValue, p->maximumValue);
 	}
 
 	process();
@@ -199,7 +199,8 @@ void Mapping::newMessage(const MappingFilterManager::ManagerEvent & e)
 		e.getItem()->addMappingFilterListener(this);
 		e.getItem()->addAsyncFilterListener(this);
 	}
-	updateMappingChain();
+
+	if(!isCurrentlyLoadingData) updateMappingChain();
 }
 
 void Mapping::filteredParamRangeChanged(MappingFilter * mf)

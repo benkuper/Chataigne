@@ -25,9 +25,8 @@ public:
 	enum TransferType { DIRECT, EXTRACT, TARGET};
 	TransferType transferType;
 
-
 	Parameter * setupParameterInternal(Parameter * sourceParam) override;
-	void processInternal() override;
+	virtual void processInternal() override;
 	virtual var convertValue(var sourceValue) { return var(sourceValue); }
 };
 
@@ -60,7 +59,6 @@ public:
 	static ToIntFilter * create(var params) { return new ToIntFilter(params); }
 	String getTypeString() const override { return "Convert To Integer"; }
 
-	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ToIntFilter)
 };
 
 class ToStringFilter :
@@ -78,7 +76,6 @@ public:
 	static ToStringFilter * create(var params) { return new ToStringFilter(params); }
 	String getTypeString() const override { return "Convert To String"; }
 
-	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ToStringFilter)
 };
 
 
@@ -95,7 +92,6 @@ public:
 	static ToPoint2DFilter * create(var params) { return new ToPoint2DFilter(params); }
 	String getTypeString() const override { return "Convert To Point2D"; }
 
-	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ToPoint2DFilter)
 };
 
 
@@ -111,5 +107,25 @@ public:
 	static ToPoint3DFilter * create(var params) { return new ToPoint3DFilter(params); }
 	String getTypeString() const override { return "Convert To Point3D"; }
 
-	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ToPoint3DFilter)
+};
+
+class ToColorFilter :
+	public ConversionFilter
+{
+public:
+	ToColorFilter(var params);
+	~ToColorFilter();
+
+
+	enum RetargetMode { HUE = -1, SAT = -2, VAL = -3};
+
+	ColorParameter* baseColor;
+
+	Parameter* setupParameterInternal(Parameter* sourceParam) override;
+	void processInternal() override;
+	//var convertValue(var sourceValue) override;
+
+	static ToColorFilter* create(var params) { return new ToColorFilter(params); }
+	String getTypeString() const override { return "Convert To Color"; }
+
 };

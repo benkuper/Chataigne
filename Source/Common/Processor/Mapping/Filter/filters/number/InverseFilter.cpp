@@ -27,8 +27,17 @@ void InverseFilter::processInternal()
 	{
 		var val;
 		int numValToInverse = sourceParam->type != Controllable::COLOR ? sourceParam->value.size() : 3; //do not invert alpha by default (may improve to have an option)
-		for (int i = 0; i < numValToInverse; i++)
+		
+		if (sourceParam->minimumValue.size() != sourceParam->value.size())
 		{
+			DBG("PROBLEM HERE !");
+			return;
+		}
+
+		for (int i = 0; i < numValToInverse && i < sourceParam->value.size(); i++)
+		{
+			DBG("sizes " << sourceParam->value.size() << " / " << sourceParam->minimumValue.size() << " / " << sourceParam->maximumValue.size());
+
 			float normVal = ((float)sourceParam->value[i] - (float)sourceParam->minimumValue[i]) / ((float)sourceParam->maximumValue[i] - (float)sourceParam->minimumValue[i]);
 			val.append(jmap<float>(normVal, sourceParam->maximumValue[i], sourceParam->minimumValue[i]));
 		}

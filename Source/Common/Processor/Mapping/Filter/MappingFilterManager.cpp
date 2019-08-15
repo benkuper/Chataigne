@@ -41,6 +41,7 @@ MappingFilterManager::MappingFilterManager() :
 	factory.defs.add(Factory<MappingFilter>::Definition::createDef("Conversion", "Convert To String", &ToStringFilter::create));
 	factory.defs.add(Factory<MappingFilter>::Definition::createDef("Conversion", "Convert To Point2D", &ToPoint2DFilter::create));
 	factory.defs.add(Factory<MappingFilter>::Definition::createDef("Conversion", "Convert To Point3D", &ToPoint3DFilter::create));
+	factory.defs.add(Factory<MappingFilter>::Definition::createDef("Conversion", "Convert To Color", &ToColorFilter::create));
 
 	factory.defs.add(Factory<MappingFilter>::Definition::createDef("Time", "Smooth", &SimpleSmoothFilter::create));
 	factory.defs.add(Factory<MappingFilter>::Definition::createDef("Time", "FPS", &LagFilter::create));
@@ -59,7 +60,7 @@ MappingFilterManager::~MappingFilterManager()
 void MappingFilterManager::setupSource(Parameter * source)
 {
 	inputSourceParam = source;
-	rebuildFilterChain();
+	if(!isCurrentlyLoadingData) rebuildFilterChain();
 }
 
 
@@ -91,19 +92,25 @@ void MappingFilterManager::rebuildFilterChain()
 
 void MappingFilterManager::addItemInternal(MappingFilter *f , var)
 {
-	rebuildFilterChain();
+	if (!isCurrentlyLoadingData) rebuildFilterChain();
 	f->addAsyncFilterListener(this);
 }
 
 void MappingFilterManager::removeItemInternal(MappingFilter *)
 {
-	rebuildFilterChain();
+	if (!isCurrentlyLoadingData) rebuildFilterChain();
+}
+
+void MappingFilterManager::setItemIndex(MappingFilter* item, int index)
+{
+	BaseManager::setItemIndex(item, index);
+	if(!isCurrentlyLoadingData) rebuildFilterChain();
 }
 
 void MappingFilterManager::reorderItems()
 {
 	BaseManager::reorderItems(); 
-	rebuildFilterChain();
+	if (!isCurrentlyLoadingData) rebuildFilterChain();
 	baseManagerListeners.call(&ManagerListener::itemsReordered);
 	managerNotifier.addMessage(new ManagerEvent(ManagerEvent::ITEMS_REORDERED));
 }
@@ -113,8 +120,14 @@ void MappingFilterManager::newMessage(const MappingFilter::FilterEvent & e)
 {
 	if (e.type == MappingFilter::FilterEvent::FILTER_STATE_CHANGED)
 	{
-		rebuildFilterChain();
+		if (!isCurrentlyLoadingData) rebuildFilterChain();
 		baseManagerListeners.call(&ManagerListener::itemsReordered);
 		managerNotifier.addMessage(new ManagerEvent(ManagerEvent::ITEMS_REORDERED));
 	}
+}
+
+void MappingFilterManager::loadJSONDataManagerInternal(var data)
+{
+	BaseManager::loadJSONDataManagerInternal(data);
+	rebuildFilterChain();
 }
