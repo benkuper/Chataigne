@@ -1338,10 +1338,10 @@
     <LINUX_MAKE targetFolder="Builds/Raspberry" smallIcon="nVz6Li" bigIcon="nVz6Li"
                 extraLinkerFlags="-Wl,-rpath,&quot;lib&quot;" externalLibraries="bluetooth&#10;Servus&#10;curl&#10;artnet">
       <CONFIGURATIONS>
-        <CONFIGURATION isDebug="1" name="Debug" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/libartnet/include"
+        <CONFIGURATION isDebug="1" name="Debug" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/libartnet/include&#10;/usr/include/freetype2"
                        libraryPath="../../External/servus/lib/raspberry&#10;../../External/libartnet/lib/raspberry"
                        linuxArchitecture="-march=native"/>
-        <CONFIGURATION isDebug="0" name="Release" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/libartnet/include"
+        <CONFIGURATION isDebug="0" name="Release" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/libartnet/include&#10;/usr/include/freetype2"
                        libraryPath="../../External/servus/lib/raspberry&#10;../../External/libartnet/lib/raspberry"
                        linuxArchitecture="-march=native"/>
       </CONFIGURATIONS>
