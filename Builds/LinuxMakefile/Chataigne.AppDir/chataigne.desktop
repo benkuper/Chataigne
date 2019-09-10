@@ -5,6 +5,7 @@ Icon=chataigne
 Type=Application
 Categories=AudioVideo;Art;
 Comment=Artist friendly Modular Machine for Art and Technology
+Comment[fr]=Machine modulaire pour l'art et la technologie, adaptée aux artistes
 MimeType=text/chataigne;
 Name[en]=Chataigne
 Terminal=false
