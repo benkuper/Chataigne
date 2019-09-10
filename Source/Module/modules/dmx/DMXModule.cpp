@@ -45,6 +45,10 @@ DMXModule::DMXModule() :
 	valuesCC.customUserCreateControllableFunc = &DMXModule::showMenuAndCreateValue;
 
 	setCurrentDMXDevice(DMXDevice::create((DMXDevice::Type)(int)dmxType->getValueData()));
+
+	//Script
+	scriptObject.setMethod(sendDMXId, DMXModule::sendDMXFromScript);
+	//scriptManager->scriptTemplate += ChataigneAssetManager::getInstance()->getScriptTemplate("osc");
 }
 
 DMXModule::~DMXModule()
@@ -134,6 +138,32 @@ void DMXModule::send16BitDMXValues(int startChannel, Array<int> values, DMXByteO
 	}
 
 	dmxDevice->sendDMXRange(startChannel, dmxValues);
+}
+
+var DMXModule::sendDMXFromScript(const var::NativeFunctionArgs& args)
+{
+	DMXModule * m = getObjectFromJS<DMXModule>(args);
+	if (!m->enabled->boolValue()) return var();
+
+	if (args.numArguments < 2) return var();
+
+	int startChannel = args.arguments[0];
+	Array<int> values;
+	for (int i = 1; i < args.numArguments; i++)
+	{
+		if (args.arguments[i].isArray())
+		{
+			for (int j = 0; j < args.arguments[i].size();j++) values.add(args.arguments[i][j]);
+		}
+		else
+		{
+			values.add(args.arguments[i]);
+		}
+	}
+
+	m->sendDMXValues(startChannel, values);
+	return var();
+
 }
 
 void DMXModule::clearItem()

@@ -31,6 +31,10 @@ public:
 
 	HashMap<int, IntParameter *> channelMap;
 
+	//Script
+	const Identifier dmxEventId = "dmxEvent";
+	const Identifier sendDMXId = "send";
+
 	void setCurrentDMXDevice(DMXDevice * d);
 
 	void sendDMXValue(int channel, int value);
@@ -38,6 +42,9 @@ public:
 	void send16BitDMXValue(int startChannel, int value, DMXByteOrder byteOrder);
 	void send16BitDMXValues(int startChannel, Array<int> values, DMXByteOrder byteOrder);
 
+
+	//Script
+	static var sendDMXFromScript(const var::NativeFunctionArgs& args);
 
 	virtual void clearItem() override;
 
