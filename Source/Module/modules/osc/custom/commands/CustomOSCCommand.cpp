@@ -10,7 +10,7 @@
 
 #include "CustomOSCCommand.h"
 
-CustomOSCCommand::CustomOSCCommand(CustomOSCModule * module, CommandContext context, var params) :
+CustomOSCCommand::CustomOSCCommand(OSCModule * module, CommandContext context, var params) :
 	OSCCommand(module, context, params),
 	wildcardsContainer("Address Parameters")
 {

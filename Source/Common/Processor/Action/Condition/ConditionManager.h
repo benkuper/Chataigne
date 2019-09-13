@@ -65,6 +65,8 @@ public:
 
 	void onContainerParameterChanged(Parameter *) override;
 
+	void loadJSONDataInternal(var data) override;
+
 	InspectableEditor * getEditor(bool isRoot) override;
 
 	class ConditionManagerListener

@@ -8,8 +8,7 @@
   ==============================================================================
 */
 
-#ifndef OSCMODULE_H_INCLUDED
-#define OSCMODULE_H_INCLUDED
+#pragma once
 
 #include "Module/Module.h"
 #include "servus/servus.h"
@@ -125,6 +124,3 @@ public:
 
 	//InspectableEditor * getEditor(bool isRoot) override;	
 };
-
-
-#endif  // OSCMODULE_H_INCLUDED

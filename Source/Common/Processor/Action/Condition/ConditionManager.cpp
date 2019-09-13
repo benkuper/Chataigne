@@ -89,7 +89,6 @@ void ConditionManager::addItemInternal(Condition * c, var data)
 	conditionOperator->hideInEditor = items.size() <= 1;
 	validationTime->hideInEditor = items.size() == 0;
 	validationProgress->hideInEditor = items.size() == 0;
-	checkAllConditions();
 }
 
 void ConditionManager::removeItemInternal(Condition * c)
@@ -98,7 +97,7 @@ void ConditionManager::removeItemInternal(Condition * c)
 	conditionOperator->hideInEditor = items.size() <= 1;
 	validationTime->hideInEditor = items.size() == 0;
 	validationProgress->hideInEditor = items.size() == 0;
-	checkAllConditions();
+	if(!Engine::mainEngine->isLoadingFile && !Engine::mainEngine->isClearing) checkAllConditions();
 }
 
 void ConditionManager::setForceDisabled(bool value, bool force)
@@ -167,6 +166,19 @@ void ConditionManager::onContainerParameterChanged(Parameter * p)
 	{
 		checkAllConditions();
 	}
+}
+
+void ConditionManager::loadJSONDataInternal(var data)
+{
+	BaseManager::loadJSONDataInternal(data);
+
+	for (auto& c : items)
+	{
+		ActivationCondition* ac = dynamic_cast<ActivationCondition*>(c);
+		if (ac != nullptr && ac->type == ActivationCondition::ON_ACTIVATE) ac->isValid->setValue(!forceDisabled);
+	}
+
+	checkAllConditions();
 }
 
 

@@ -20,7 +20,7 @@ class CustomOSCCommand :
 	public CustomValuesCommandArgumentManager::ArgumentManagerListener
 {
 public:
-	CustomOSCCommand(CustomOSCModule * output, CommandContext context, var params);
+	CustomOSCCommand(OSCModule * output, CommandContext context, var params);
 	~CustomOSCCommand();
 	
 	var lastValue;
