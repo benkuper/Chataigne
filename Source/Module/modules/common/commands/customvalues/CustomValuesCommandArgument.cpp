@@ -67,7 +67,17 @@ var CustomValuesCommandArgument::getJSONData()
 void CustomValuesCommandArgument::loadJSONDataInternal(var data)
 {
 	BaseItem::loadJSONDataInternal(data);
+	if (!templateMode)
+	{
+		DBG("Param has range ? " << (int)param->hasRange());
+		if (linkedTemplate != nullptr) DBG(" > Linked template has range : " << (int)linkedTemplate->param->hasRange());
+	}
 	param->loadJSONData(data.getProperty("param", var()));
+	
+	if (!templateMode)
+	{
+		DBG("After loadJSON param has range ? " << (int)param->hasRange());
+	}
 }
 
 void CustomValuesCommandArgument::linkToTemplate(CustomValuesCommandArgument * t)
@@ -84,14 +94,24 @@ void CustomValuesCommandArgument::linkToTemplate(CustomValuesCommandArgument * t
 
 	if (linkedTemplate != nullptr)
 	{
+		DBG("Link to template :  " << (int)param->hasRange() << " / " << (int)linkedTemplate->param->hasRange());
 		linkedTemplate->param->addParameterListener(this);
 		linkedTemplate->editable->addParameterListener(this);
 		linkedTemplate->useForMapping->addParameterListener(this);
+		if (!templateMode) updateParameterFromTemplate();
+
 	}
 
 	if (param != nullptr) param->saveValueOnly = linkedTemplate != nullptr;
-	
+
 	canBeReorderedInEditor = linkedTemplate == nullptr;
+
+	if(linkedTemplate != nullptr) DBG("After Link to template :  " << (int)param->hasRange() << " / " << (int)linkedTemplate->param->hasRange());
+	else
+	{
+		DBG("Linked template null !");
+	}
+
 }
 
 void CustomValuesCommandArgument::updateParameterFromTemplate()
@@ -99,10 +119,10 @@ void CustomValuesCommandArgument::updateParameterFromTemplate()
 	if (linkedTemplate != nullptr)
 	{
 		param->setControllableFeedbackOnly(!linkedTemplate->editable->boolValue());
-
 		param->setRange(linkedTemplate->param->minimumValue, linkedTemplate->param->maximumValue);
+		DBG("Update from template : " << (int)param->hasRange() << " / " << (int)linkedTemplate->param->hasRange());
 
-		if (useForMapping != nullptr && linkedTemplate->useForMapping != nullptr) useForMapping->setValue(linkedTemplate->useForMapping);
+		if (useForMapping != nullptr && linkedTemplate->useForMapping != nullptr && !useForMapping->isOverriden) useForMapping->setValue(linkedTemplate->useForMapping);
 		
 		if (param->isControllableFeedbackOnly || !param->isOverriden)
 		{
@@ -137,7 +157,6 @@ String CustomValuesCommandArgument::getTypeString() const
 {
 	return param->getTypeString();
 }
-
 
 
 InspectableEditor * CustomValuesCommandArgument::getEditor(bool isRoot)

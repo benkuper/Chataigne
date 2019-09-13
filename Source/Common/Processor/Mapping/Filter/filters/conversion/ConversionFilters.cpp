@@ -170,9 +170,9 @@ ToColorFilter::~ToColorFilter()
 {
 }
 
-Parameter* ToColorFilter::setupParameterInternal(Parameter* sourceParam)
+Parameter* ToColorFilter::setupParameterInternal(Parameter* sp)
 {
-	Parameter* p = ConversionFilter::setupParameterInternal(sourceParam);
+	Parameter* p = ConversionFilter::setupParameterInternal(sp);
 	
 	if (transferType != TARGET)
 	{

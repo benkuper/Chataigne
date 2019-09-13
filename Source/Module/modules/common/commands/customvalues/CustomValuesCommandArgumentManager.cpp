@@ -57,6 +57,8 @@ void CustomValuesCommandArgumentManager::rebuildFromTemplate()
 	{
 		CustomValuesCommandArgument * a = addItemFromData(i->getJSONData());
 		 a->linkToTemplate(i);
+		 a->userCanRemove = false;
+		 a->userCanDuplicate = false;
 	}
 
 	hideInEditor = items.size() == 0;
@@ -82,7 +84,7 @@ CustomValuesCommandArgument * CustomValuesCommandArgumentManager::addItemFromTyp
 		p = new StringParameter("#" + id, "Argument #" + id + ", type int", "example");
 		break;
 	case Parameter::FLOAT:
-		p = new FloatParameter("#" + id, "Argument #" + id + ", type foat", 0);
+		p = new FloatParameter("#" + id, "Argument #" + id + ", type float", 0);
 		break;
 	case Parameter::INT:
 		p = new IntParameter("#" + id, "Argument #" + id + ", type int", 0);

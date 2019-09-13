@@ -70,13 +70,14 @@ Array<Mapping*> ProcessorManager::getAllMappings()
 
 void ProcessorManager::checkAllActivateActions()
 {
+//	DBG("Check all activate actions");
 	Array<Action*> actions = getAllActions();
 	for (auto &a : actions)
 	{
 		for (auto &c : a->cdm.items)
 		{
 			ActivationCondition * ac = dynamic_cast<ActivationCondition *>(c);
-			if(ac != nullptr) ac->isValid->setValue(ac->type == ActivationCondition::Type::ON_ACTIVATE);
+			if(ac != nullptr) ac->isValid->setValue(ac->type == ActivationCondition::Type::ON_ACTIVATE, false, true);
 		}
 
 		/*

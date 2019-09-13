@@ -10,7 +10,6 @@
 
 #include "CustomOSCModule.h"
 #include "Common/Command/CommandFactory.h"
-#include "commands/CustomOSCCommand.h"
 
 
 CustomOSCModule::CustomOSCModule() :
@@ -27,7 +26,6 @@ CustomOSCModule::CustomOSCModule() :
 	valuesCC.userCanAddControllables = true;
 	valuesCC.customUserCreateControllableFunc = &CustomOSCModule::showMenuAndCreateValue;
 	
-	defManager.add(CommandDefinition::createDef(this, "", "Custom Message", &CustomOSCCommand::create));
 	
 }
 
