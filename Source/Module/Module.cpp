@@ -172,13 +172,11 @@ var Module::getJSONData()
 	return data;
 }
 
-void Module::loadJSONDataInternal(var data)
+void Module::loadJSONDataItemInternal(var data)
 {
-	BaseItem::loadJSONDataInternal(data);
+	if (includeValuesInSave) valuesCC.loadJSONData(data.getProperty("values", var()), true);
 	moduleParams.loadJSONData(data.getProperty("params", var()));
 	templateManager.loadJSONData(data.getProperty("templates", var()), true);
-
-	if (includeValuesInSave) valuesCC.loadJSONData(data.getProperty("values", var()), true);
 }
 
 void Module::setupModuleFromJSONData(var data)
