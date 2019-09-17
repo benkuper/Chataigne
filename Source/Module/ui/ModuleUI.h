@@ -25,6 +25,7 @@ public:
 
 	std::unique_ptr<TriggerImageUI> inActivityUI;
 	std::unique_ptr<TriggerImageUI> outActivityUI;
+	ImageComponent iconUI;
 
 	std::unique_ptr<BoolImageToggleUI> connectionFeedbackUI;
 

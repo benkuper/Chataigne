@@ -1,7 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <Filter Include="Chataigne\Resources\Modules">
+      <UniqueIdentifier>{C5043D1E-E801-06DA-E55C-5DB9F7BCAED7}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Chataigne\Resources\Templates\Scripts">
       <UniqueIdentifier>{15E9DA26-CC04-D634-32AE-22A3FE2AA006}</UniqueIdentifier>
     </Filter>
@@ -1582,15 +1584,6 @@
     <ClCompile Include="..\..\Source\Module\modules\controller\wiimote\lib\wiiuse\os_mac\os_mac.c">
       <Filter>Chataigne\Source\Module\modules\controller\wiimote\lib\wiiuse\os_mac</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\Module\modules\controller\wiimote\lib\wiiuse\os_mac\os_mac.m">
-      <Filter>Chataigne\Source\Module\modules\controller\wiimote\lib\wiiuse\os_mac</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Module\modules\controller\wiimote\lib\wiiuse\os_mac\os_mac_find.m">
-      <Filter>Chataigne\Source\Module\modules\controller\wiimote\lib\wiiuse\os_mac</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Module\modules\controller\wiimote\lib\wiiuse\os_mac\os_mac_interface.m">
-      <Filter>Chataigne\Source\Module\modules\controller\wiimote\lib\wiiuse\os_mac</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\controller\wiimote\lib\wiiuse\classic.c">
       <Filter>Chataigne\Source\Module\modules\controller\wiimote\lib\wiiuse</Filter>
     </ClCompile>
@@ -2044,9 +2037,6 @@
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_basics\juce_audio_basics.cpp">
       <Filter>JUCE Modules\juce_audio_basics</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_basics\juce_audio_basics.mm">
-      <Filter>JUCE Modules\juce_audio_basics</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_devices\audio_io\juce_AudioDeviceManager.cpp">
       <Filter>JUCE Modules\juce_audio_devices\audio_io</Filter>
     </ClCompile>
@@ -2114,9 +2104,6 @@
       <Filter>JUCE Modules\juce_audio_devices\sources</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_devices\juce_audio_devices.cpp">
-      <Filter>JUCE Modules\juce_audio_devices</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_devices\juce_audio_devices.mm">
       <Filter>JUCE Modules\juce_audio_devices</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_formats\codecs\flac\libFLAC\bitmath.c">
@@ -2287,9 +2274,6 @@
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_formats\juce_audio_formats.cpp">
       <Filter>JUCE Modules\juce_audio_formats</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_formats\juce_audio_formats.mm">
-      <Filter>JUCE Modules\juce_audio_formats</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_processors\format\juce_AudioPluginFormat.cpp">
       <Filter>JUCE Modules\juce_audio_processors\format</Filter>
     </ClCompile>
@@ -2365,9 +2349,6 @@
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_processors\format_types\VST3_SDK\public.sdk\source\vst\vstpresetfile.cpp">
       <Filter>JUCE Modules\juce_audio_processors\format_types\VST3_SDK\public.sdk\source\vst</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_processors\format_types\juce_AudioUnitPluginFormat.mm">
-      <Filter>JUCE Modules\juce_audio_processors\format_types</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_processors\format_types\juce_LADSPAPluginFormat.cpp">
       <Filter>JUCE Modules\juce_audio_processors\format_types</Filter>
     </ClCompile>
@@ -2434,9 +2415,6 @@
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_processors\juce_audio_processors.cpp">
       <Filter>JUCE Modules\juce_audio_processors</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_processors\juce_audio_processors.mm">
-      <Filter>JUCE Modules\juce_audio_processors</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_utils\audio_cd\juce_AudioCDReader.cpp">
       <Filter>JUCE Modules\juce_audio_utils\audio_cd</Filter>
     </ClCompile>
@@ -2461,22 +2439,10 @@
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_utils\native\juce_android_BluetoothMidiDevicePairingDialogue.cpp">
       <Filter>JUCE Modules\juce_audio_utils\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_utils\native\juce_ios_BluetoothMidiDevicePairingDialogue.mm">
-      <Filter>JUCE Modules\juce_audio_utils\native</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_utils\native\juce_linux_AudioCDReader.cpp">
       <Filter>JUCE Modules\juce_audio_utils\native</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_utils\native\juce_linux_BluetoothMidiDevicePairingDialogue.cpp">
-      <Filter>JUCE Modules\juce_audio_utils\native</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_utils\native\juce_mac_AudioCDBurner.mm">
-      <Filter>JUCE Modules\juce_audio_utils\native</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_utils\native\juce_mac_AudioCDReader.mm">
-      <Filter>JUCE Modules\juce_audio_utils\native</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_utils\native\juce_mac_BluetoothMidiDevicePairingDialogue.mm">
       <Filter>JUCE Modules\juce_audio_utils\native</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_utils\native\juce_win_BluetoothMidiDevicePairingDialogue.cpp">
@@ -2495,9 +2461,6 @@
       <Filter>JUCE Modules\juce_audio_utils\players</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_utils\juce_audio_utils.cpp">
-      <Filter>JUCE Modules\juce_audio_utils</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_utils\juce_audio_utils.mm">
       <Filter>JUCE Modules\juce_audio_utils</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_core\containers\juce_AbstractFifo.cpp">
@@ -2630,21 +2593,6 @@
       <Filter>JUCE Modules\juce_core\native</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_core\native\juce_linux_Threads.cpp">
-      <Filter>JUCE Modules\juce_core\native</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_core\native\juce_mac_Files.mm">
-      <Filter>JUCE Modules\juce_core\native</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_core\native\juce_mac_Network.mm">
-      <Filter>JUCE Modules\juce_core\native</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_core\native\juce_mac_Strings.mm">
-      <Filter>JUCE Modules\juce_core\native</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_core\native\juce_mac_SystemStats.mm">
-      <Filter>JUCE Modules\juce_core\native</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_core\native\juce_mac_Threads.mm">
       <Filter>JUCE Modules\juce_core\native</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_core\native\juce_posix_NamedPipe.cpp">
@@ -2818,9 +2766,6 @@
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_core\juce_core.cpp">
       <Filter>JUCE Modules\juce_core</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_core\juce_core.mm">
-      <Filter>JUCE Modules\juce_core</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_cryptography\encryption\juce_BlowFish.cpp">
       <Filter>JUCE Modules\juce_cryptography\encryption</Filter>
     </ClCompile>
@@ -2840,9 +2785,6 @@
       <Filter>JUCE Modules\juce_cryptography\hashing</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_cryptography\juce_cryptography.cpp">
-      <Filter>JUCE Modules\juce_cryptography</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_cryptography\juce_cryptography.mm">
       <Filter>JUCE Modules\juce_cryptography</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_data_structures\app_properties\juce_ApplicationProperties.cpp">
@@ -2870,9 +2812,6 @@
       <Filter>JUCE Modules\juce_data_structures\values</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_data_structures\juce_data_structures.cpp">
-      <Filter>JUCE Modules\juce_data_structures</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_data_structures\juce_data_structures.mm">
       <Filter>JUCE Modules\juce_data_structures</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_dsp\containers\juce_AudioBlock_test.cpp">
@@ -2938,9 +2877,6 @@
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_dsp\juce_dsp.cpp">
       <Filter>JUCE Modules\juce_dsp</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_dsp\juce_dsp.mm">
-      <Filter>JUCE Modules\juce_dsp</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_events\broadcasters\juce_ActionBroadcaster.cpp">
       <Filter>JUCE Modules\juce_events\broadcasters</Filter>
     </ClCompile>
@@ -2977,13 +2913,7 @@
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_events\native\juce_android_Messaging.cpp">
       <Filter>JUCE Modules\juce_events\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_events\native\juce_ios_MessageManager.mm">
-      <Filter>JUCE Modules\juce_events\native</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_events\native\juce_linux_Messaging.cpp">
-      <Filter>JUCE Modules\juce_events\native</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_events\native\juce_mac_MessageManager.mm">
       <Filter>JUCE Modules\juce_events\native</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_events\native\juce_win32_Messaging.cpp">
@@ -2999,9 +2929,6 @@
       <Filter>JUCE Modules\juce_events\timers</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_events\juce_events.cpp">
-      <Filter>JUCE Modules\juce_events</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_events\juce_events.mm">
       <Filter>JUCE Modules\juce_events</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_graphics\colour\juce_Colour.cpp">
@@ -3286,12 +3213,6 @@
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_graphics\native\juce_linux_IconHelpers.cpp">
       <Filter>JUCE Modules\juce_graphics\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_graphics\native\juce_mac_CoreGraphicsContext.mm">
-      <Filter>JUCE Modules\juce_graphics\native</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_graphics\native\juce_mac_Fonts.mm">
-      <Filter>JUCE Modules\juce_graphics\native</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_graphics\native\juce_mac_IconHelpers.cpp">
       <Filter>JUCE Modules\juce_graphics\native</Filter>
     </ClCompile>
@@ -3314,9 +3235,6 @@
       <Filter>JUCE Modules\juce_graphics\placement</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_graphics\juce_graphics.cpp">
-      <Filter>JUCE Modules\juce_graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_graphics\juce_graphics.mm">
       <Filter>JUCE Modules\juce_graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_basics\application\juce_Application.cpp">
@@ -3583,15 +3501,6 @@
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_basics\native\juce_ios_ContentSharer.cpp">
       <Filter>JUCE Modules\juce_gui_basics\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_basics\native\juce_ios_FileChooser.mm">
-      <Filter>JUCE Modules\juce_gui_basics\native</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_basics\native\juce_ios_UIViewComponentPeer.mm">
-      <Filter>JUCE Modules\juce_gui_basics\native</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_basics\native\juce_ios_Windowing.mm">
-      <Filter>JUCE Modules\juce_gui_basics\native</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_basics\native\juce_linux_FileChooser.cpp">
       <Filter>JUCE Modules\juce_gui_basics\native</Filter>
     </ClCompile>
@@ -3602,21 +3511,6 @@
       <Filter>JUCE Modules\juce_gui_basics\native</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_basics\native\juce_linux_X11_Windowing.cpp">
-      <Filter>JUCE Modules\juce_gui_basics\native</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_basics\native\juce_mac_FileChooser.mm">
-      <Filter>JUCE Modules\juce_gui_basics\native</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_basics\native\juce_mac_MainMenu.mm">
-      <Filter>JUCE Modules\juce_gui_basics\native</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_basics\native\juce_mac_MouseCursor.mm">
-      <Filter>JUCE Modules\juce_gui_basics\native</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_basics\native\juce_mac_NSViewComponentPeer.mm">
-      <Filter>JUCE Modules\juce_gui_basics\native</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_basics\native\juce_mac_Windowing.mm">
       <Filter>JUCE Modules\juce_gui_basics\native</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_basics\native\juce_win32_DragAndDrop.cpp">
@@ -3742,9 +3636,6 @@
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_basics\juce_gui_basics.cpp">
       <Filter>JUCE Modules\juce_gui_basics</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_basics\juce_gui_basics.mm">
-      <Filter>JUCE Modules\juce_gui_basics</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_extra\code_editor\juce_CodeDocument.cpp">
       <Filter>JUCE Modules\juce_gui_extra\code_editor</Filter>
     </ClCompile>
@@ -3805,9 +3696,6 @@
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_extra\native\juce_ios_PushNotifications.cpp">
       <Filter>JUCE Modules\juce_gui_extra\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_extra\native\juce_ios_UIViewComponent.mm">
-      <Filter>JUCE Modules\juce_gui_extra\native</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_extra\native\juce_linux_X11_SystemTrayIcon.cpp">
       <Filter>JUCE Modules\juce_gui_extra\native</Filter>
     </ClCompile>
@@ -3817,19 +3705,10 @@
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_extra\native\juce_linux_XEmbedComponent.cpp">
       <Filter>JUCE Modules\juce_gui_extra\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_extra\native\juce_mac_AppleRemote.mm">
-      <Filter>JUCE Modules\juce_gui_extra\native</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_extra\native\juce_mac_NSViewComponent.mm">
-      <Filter>JUCE Modules\juce_gui_extra\native</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_extra\native\juce_mac_PushNotifications.cpp">
       <Filter>JUCE Modules\juce_gui_extra\native</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_extra\native\juce_mac_SystemTrayIcon.cpp">
-      <Filter>JUCE Modules\juce_gui_extra\native</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_extra\native\juce_mac_WebBrowserComponent.mm">
       <Filter>JUCE Modules\juce_gui_extra\native</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_extra\native\juce_win32_ActiveXComponent.cpp">
@@ -3842,9 +3721,6 @@
       <Filter>JUCE Modules\juce_gui_extra\native</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_extra\juce_gui_extra.cpp">
-      <Filter>JUCE Modules\juce_gui_extra</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_extra\juce_gui_extra.mm">
       <Filter>JUCE Modules\juce_gui_extra</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_opengl\opengl\juce_OpenGLContext.cpp">
@@ -3875,9 +3751,6 @@
       <Filter>JUCE Modules\juce_opengl\utils</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_opengl\juce_opengl.cpp">
-      <Filter>JUCE Modules\juce_opengl</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_opengl\juce_opengl.mm">
       <Filter>JUCE Modules\juce_opengl</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\app\CrashHandler.cpp">
@@ -4192,79 +4065,40 @@
     <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\include_juce_audio_basics.cpp">
       <Filter>JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\include_juce_audio_basics.mm">
-      <Filter>JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\include_juce_audio_devices.cpp">
-      <Filter>JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\include_juce_audio_devices.mm">
       <Filter>JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\include_juce_audio_formats.cpp">
       <Filter>JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\include_juce_audio_formats.mm">
-      <Filter>JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\include_juce_audio_processors.cpp">
-      <Filter>JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\include_juce_audio_processors.mm">
       <Filter>JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\include_juce_core.cpp">
       <Filter>JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\include_juce_core.mm">
-      <Filter>JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\include_juce_cryptography.cpp">
-      <Filter>JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\include_juce_cryptography.mm">
       <Filter>JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\include_juce_data_structures.cpp">
       <Filter>JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\include_juce_data_structures.mm">
-      <Filter>JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\include_juce_events.cpp">
-      <Filter>JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\include_juce_events.mm">
       <Filter>JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\include_juce_graphics.cpp">
       <Filter>JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\include_juce_graphics.mm">
-      <Filter>JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\include_juce_gui_basics.cpp">
-      <Filter>JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\include_juce_gui_basics.mm">
       <Filter>JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\include_juce_gui_extra.cpp">
       <Filter>JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\include_juce_gui_extra.mm">
-      <Filter>JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\include_juce_opengl.cpp">
       <Filter>JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\include_juce_opengl.mm">
-      <Filter>JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\include_juce_video.cpp">
-      <Filter>JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\include_juce_video.mm">
       <Filter>JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\resources\BinaryData.cpp">
@@ -4393,79 +4227,40 @@
     <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode\include_juce_audio_basics.cpp">
       <Filter>JUCE Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode\include_juce_audio_basics.mm">
-      <Filter>JUCE Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode\include_juce_audio_devices.cpp">
-      <Filter>JUCE Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode\include_juce_audio_devices.mm">
       <Filter>JUCE Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode\include_juce_audio_formats.cpp">
       <Filter>JUCE Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode\include_juce_audio_formats.mm">
-      <Filter>JUCE Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode\include_juce_audio_processors.cpp">
-      <Filter>JUCE Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode\include_juce_audio_processors.mm">
       <Filter>JUCE Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode\include_juce_core.cpp">
       <Filter>JUCE Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode\include_juce_core.mm">
-      <Filter>JUCE Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode\include_juce_cryptography.cpp">
-      <Filter>JUCE Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode\include_juce_cryptography.mm">
       <Filter>JUCE Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode\include_juce_data_structures.cpp">
       <Filter>JUCE Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode\include_juce_data_structures.mm">
-      <Filter>JUCE Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode\include_juce_events.cpp">
-      <Filter>JUCE Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode\include_juce_events.mm">
       <Filter>JUCE Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode\include_juce_graphics.cpp">
       <Filter>JUCE Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode\include_juce_graphics.mm">
-      <Filter>JUCE Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode\include_juce_gui_basics.cpp">
-      <Filter>JUCE Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode\include_juce_gui_basics.mm">
       <Filter>JUCE Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode\include_juce_gui_extra.cpp">
       <Filter>JUCE Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode\include_juce_gui_extra.mm">
-      <Filter>JUCE Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode\include_juce_opengl.cpp">
       <Filter>JUCE Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode\include_juce_opengl.mm">
-      <Filter>JUCE Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode\include_juce_video.cpp">
-      <Filter>JUCE Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode\include_juce_video.mm">
       <Filter>JUCE Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\resources\BinaryData.cpp">
@@ -4606,9 +4401,6 @@
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_video\juce_video.cpp">
       <Filter>JUCE Modules\juce_video</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_video\juce_video.mm">
-      <Filter>JUCE Modules\juce_video</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\JuceLibraryCode\BinaryData.cpp">
       <Filter>JUCE Library Code</Filter>
     </ClCompile>
@@ -4685,9 +4477,6 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Guider\Guider.h">
       <Filter>Chataigne\Source\Guider</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Analytics\GoogleAnalyticsDestination.h">
-      <Filter>Chataigne\Source\Analytics</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Analytics\MatomoAnalytics.h">
       <Filter>Chataigne\Source\Analytics</Filter>
@@ -5332,9 +5121,6 @@
       <Filter>Chataigne\Source\Module</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\ModuleFactory.h">
-      <Filter>Chataigne\Source\Module</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Module\ModuleManager.h">
       <Filter>Chataigne\Source\Module</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\StateMachine\State\ui\StateUI.h">
@@ -8259,8 +8045,65 @@
     <ClInclude Include="..\..\JuceLibraryCode\JuceHeader.h">
       <Filter>JUCE Library Code</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\Module\ModuleManager.h">
+      <Filter>Chataigne\Source\StateMachine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\Resources\Modules\DLight.png">
+      <Filter>Chataigne\Resources\Modules</Filter>
+    </None>
+    <None Include="..\..\Resources\Modules\DMX.png">
+      <Filter>Chataigne\Resources\Modules</Filter>
+    </None>
+    <None Include="..\..\Resources\Modules\HTTP.png">
+      <Filter>Chataigne\Resources\Modules</Filter>
+    </None>
+    <None Include="..\..\Resources\Modules\LiveOSC2.png">
+      <Filter>Chataigne\Resources\Modules</Filter>
+    </None>
+    <None Include="..\..\Resources\Modules\MIDI.png">
+      <Filter>Chataigne\Resources\Modules</Filter>
+    </None>
+    <None Include="..\..\Resources\Modules\Millumin.png">
+      <Filter>Chataigne\Resources\Modules</Filter>
+    </None>
+    <None Include="..\..\Resources\Modules\OSC.png">
+      <Filter>Chataigne\Resources\Modules</Filter>
+    </None>
+    <None Include="..\..\Resources\Modules\OSCQuery.png">
+      <Filter>Chataigne\Resources\Modules</Filter>
+    </None>
+    <None Include="..\..\Resources\Modules\PJLink.png">
+      <Filter>Chataigne\Resources\Modules</Filter>
+    </None>
+    <None Include="..\..\Resources\Modules\PowerPoint.png">
+      <Filter>Chataigne\Resources\Modules</Filter>
+    </None>
+    <None Include="..\..\Resources\Modules\Reaper.png">
+      <Filter>Chataigne\Resources\Modules</Filter>
+    </None>
+    <None Include="..\..\Resources\Modules\Resolume.png">
+      <Filter>Chataigne\Resources\Modules</Filter>
+    </None>
+    <None Include="..\..\Resources\Modules\Serial.png">
+      <Filter>Chataigne\Resources\Modules</Filter>
+    </None>
+    <None Include="..\..\Resources\Modules\Sound Card.png">
+      <Filter>Chataigne\Resources\Modules</Filter>
+    </None>
+    <None Include="..\..\Resources\Modules\TCP Client.png">
+      <Filter>Chataigne\Resources\Modules</Filter>
+    </None>
+    <None Include="..\..\Resources\Modules\TCP Server.png">
+      <Filter>Chataigne\Resources\Modules</Filter>
+    </None>
+    <None Include="..\..\Resources\Modules\UDP.png">
+      <Filter>Chataigne\Resources\Modules</Filter>
+    </None>
+    <None Include="..\..\Resources\Modules\Watchout.png">
+      <Filter>Chataigne\Resources\Modules</Filter>
+    </None>
     <None Include="..\..\Resources\Templates\Scripts\commandScriptTemplate.js">
       <Filter>Chataigne\Resources\Templates\Scripts</Filter>
     </None>

@@ -2,6 +2,9 @@
 
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <Filter Include="Chataigne\Resources\Modules">
+      <UniqueIdentifier>{C5043D1E-E801-06DA-E55C-5DB9F7BCAED7}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Chataigne\Resources\Templates\Scripts">
       <UniqueIdentifier>{15E9DA26-CC04-D634-32AE-22A3FE2AA006}</UniqueIdentifier>
     </Filter>
@@ -4686,9 +4689,6 @@
     <ClInclude Include="..\..\Source\Guider\Guider.h">
       <Filter>Chataigne\Source\Guider</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\Analytics\GoogleAnalyticsDestination.h">
-      <Filter>Chataigne\Source\Analytics</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Source\Analytics\MatomoAnalytics.h">
       <Filter>Chataigne\Source\Analytics</Filter>
     </ClInclude>
@@ -8261,6 +8261,60 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\Resources\Modules\DLight.png">
+      <Filter>Chataigne\Resources\Modules</Filter>
+    </None>
+    <None Include="..\..\Resources\Modules\DMX.png">
+      <Filter>Chataigne\Resources\Modules</Filter>
+    </None>
+    <None Include="..\..\Resources\Modules\HTTP.png">
+      <Filter>Chataigne\Resources\Modules</Filter>
+    </None>
+    <None Include="..\..\Resources\Modules\LiveOSC2.png">
+      <Filter>Chataigne\Resources\Modules</Filter>
+    </None>
+    <None Include="..\..\Resources\Modules\MIDI.png">
+      <Filter>Chataigne\Resources\Modules</Filter>
+    </None>
+    <None Include="..\..\Resources\Modules\Millumin.png">
+      <Filter>Chataigne\Resources\Modules</Filter>
+    </None>
+    <None Include="..\..\Resources\Modules\OSC.png">
+      <Filter>Chataigne\Resources\Modules</Filter>
+    </None>
+    <None Include="..\..\Resources\Modules\OSCQuery.png">
+      <Filter>Chataigne\Resources\Modules</Filter>
+    </None>
+    <None Include="..\..\Resources\Modules\PJLink.png">
+      <Filter>Chataigne\Resources\Modules</Filter>
+    </None>
+    <None Include="..\..\Resources\Modules\PowerPoint.png">
+      <Filter>Chataigne\Resources\Modules</Filter>
+    </None>
+    <None Include="..\..\Resources\Modules\Reaper.png">
+      <Filter>Chataigne\Resources\Modules</Filter>
+    </None>
+    <None Include="..\..\Resources\Modules\Resolume.png">
+      <Filter>Chataigne\Resources\Modules</Filter>
+    </None>
+    <None Include="..\..\Resources\Modules\Serial.png">
+      <Filter>Chataigne\Resources\Modules</Filter>
+    </None>
+    <None Include="..\..\Resources\Modules\Sound Card.png">
+      <Filter>Chataigne\Resources\Modules</Filter>
+    </None>
+    <None Include="..\..\Resources\Modules\TCP Client.png">
+      <Filter>Chataigne\Resources\Modules</Filter>
+    </None>
+    <None Include="..\..\Resources\Modules\TCP Server.png">
+      <Filter>Chataigne\Resources\Modules</Filter>
+    </None>
+    <None Include="..\..\Resources\Modules\UDP.png">
+      <Filter>Chataigne\Resources\Modules</Filter>
+    </None>
+    <None Include="..\..\Resources\Modules\Watchout.png">
+      <Filter>Chataigne\Resources\Modules</Filter>
+    </None>
     <None Include="..\..\Resources\Templates\Scripts\commandScriptTemplate.js">
       <Filter>Chataigne\Resources\Templates\Scripts</Filter>
     </None>

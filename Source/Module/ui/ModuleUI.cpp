@@ -33,6 +33,16 @@ ModuleUI::ModuleUI(Module * module) :
 		connectionFeedbackUI.reset(module->connectionFeedbackRef->createImageToggle(ChataigneAssetManager::getInstance()->getBTDoubleImage(ChataigneAssetManager::getInstance()->getConnectedImage(), ChataigneAssetManager::getInstance()->getDisconnectedImage())));
 		addAndMakeVisible(connectionFeedbackUI.get());
 	}
+
+
+	int numBytes = 0;
+	const char* iconData = BinaryData::getNamedResource((item->getTypeString().replace(" ", "_") + "_png").getCharPointer(), numBytes);;
+	if (iconData != nullptr)
+	{
+		iconUI.setImage(ImageCache::getFromMemory(iconData, numBytes));
+		addAndMakeVisible(iconUI);
+		iconUI.setInterceptsMouseClicks(false, false);
+	}
 }
 
 ModuleUI::~ModuleUI()
@@ -43,6 +53,8 @@ ModuleUI::~ModuleUI()
 
 void ModuleUI::resizedInternalHeader(Rectangle<int>& r)
 {
+	if (iconUI.getImage().isValid()) iconUI.setBounds(r.removeFromLeft(r.getHeight()).reduced(1));
+
 	outActivityUI->setBounds(r.removeFromRight(r.getHeight()));
 	inActivityUI->setBounds(r.removeFromRight(r.getHeight()));
 	if (connectionFeedbackUI != nullptr) connectionFeedbackUI->setBounds(r.removeFromRight(r.getHeight()));

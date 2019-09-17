@@ -35,12 +35,6 @@ void ChataigneApplication::afterInit()
 	//ANALYTICS
 	if (enableSendAnalytics->boolValue())
 	{
-		DBG("Send analytics");
-		
-		Analytics::getInstance()->setUserId(SystemStats::getFullUserName());
-		Analytics::getInstance()->addDestination(new GoogleAnalyticsDestination());
-		Analytics::getInstance()->logEvent("startup", {});
-
 		bool crashFound = CrashDumpUploader::getInstance()->crashFound;
 		
 		StringPairArray options;
@@ -60,7 +54,6 @@ void ChataigneApplication::shutdown()
 	if (enableSendAnalytics->boolValue())
 	{
 		MatomoAnalytics::getInstance()->log(MatomoAnalytics::STOP);
-		Analytics::getInstance()->logEvent("shutdown", {});
 	}
 
 	if(MatomoAnalytics::getInstanceWithoutCreating() != nullptr) MatomoAnalytics::deleteInstance();

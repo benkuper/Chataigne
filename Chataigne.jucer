@@ -7,6 +7,26 @@
               cppLanguageStandard="14" companyCopyright="Ben Kuper" headerPath="../../Source">
   <MAINGROUP id="EDDVhd" name="Chataigne">
     <GROUP id="{E61F6705-4C4B-3F04-F742-20CC91F590E4}" name="Resources">
+      <GROUP id="{400148EF-B215-CD72-18E1-183E2FCE16F3}" name="Modules">
+        <FILE id="MPJkAm" name="DLight.png" compile="0" resource="1" file="Resources/Modules/DLight.png"/>
+        <FILE id="kdkONp" name="DMX.png" compile="0" resource="1" file="Resources/Modules/DMX.png"/>
+        <FILE id="OrCxSg" name="HTTP.png" compile="0" resource="1" file="Resources/Modules/HTTP.png"/>
+        <FILE id="k0DW1I" name="LiveOSC2.png" compile="0" resource="1" file="Resources/Modules/LiveOSC2.png"/>
+        <FILE id="rV6E05" name="MIDI.png" compile="0" resource="1" file="Resources/Modules/MIDI.png"/>
+        <FILE id="XUwKVr" name="Millumin.png" compile="0" resource="1" file="Resources/Modules/Millumin.png"/>
+        <FILE id="CBoeF1" name="OSC.png" compile="0" resource="1" file="Resources/Modules/OSC.png"/>
+        <FILE id="mQRViU" name="OSCQuery.png" compile="0" resource="1" file="Resources/Modules/OSCQuery.png"/>
+        <FILE id="hswQuk" name="PJLink.png" compile="0" resource="1" file="Resources/Modules/PJLink.png"/>
+        <FILE id="Hlm2j3" name="PowerPoint.png" compile="0" resource="1" file="Resources/Modules/PowerPoint.png"/>
+        <FILE id="ccXjD9" name="Reaper.png" compile="0" resource="1" file="Resources/Modules/Reaper.png"/>
+        <FILE id="E4CDyf" name="Resolume.png" compile="0" resource="1" file="Resources/Modules/Resolume.png"/>
+        <FILE id="FUQUfm" name="Serial.png" compile="0" resource="1" file="Resources/Modules/Serial.png"/>
+        <FILE id="Pa5iXe" name="Sound Card.png" compile="0" resource="1" file="Resources/Modules/Sound Card.png"/>
+        <FILE id="VUSpt3" name="TCP Client.png" compile="0" resource="1" file="Resources/Modules/TCP Client.png"/>
+        <FILE id="JHC4oG" name="TCP Server.png" compile="0" resource="1" file="Resources/Modules/TCP Server.png"/>
+        <FILE id="Yc4byM" name="UDP.png" compile="0" resource="1" file="Resources/Modules/UDP.png"/>
+        <FILE id="cODnxv" name="Watchout.png" compile="0" resource="1" file="Resources/Modules/Watchout.png"/>
+      </GROUP>
       <GROUP id="{2B6637A1-A2F4-FF34-9B3E-D1D7E87E01F8}" name="Templates">
         <GROUP id="{053D51A3-B6CA-559C-CCC3-779F67848D87}" name="Scripts">
           <FILE id="MCfjDX" name="commandScriptTemplate.js" compile="0" resource="1"
@@ -64,8 +84,6 @@
         <FILE id="djiZVX" name="Guider.h" compile="0" resource="0" file="Source/Guider/Guider.h"/>
       </GROUP>
       <GROUP id="{C6C9402E-3E5F-DA24-8E22-DE4CD0AB4FD4}" name="Analytics">
-        <FILE id="WpUsgL" name="GoogleAnalyticsDestination.h" compile="0" resource="0"
-              file="Source/Analytics/GoogleAnalyticsDestination.h"/>
         <FILE id="in1fwI" name="MatomoAnalytics.cpp" compile="1" resource="0"
               file="Source/Analytics/MatomoAnalytics.cpp"/>
         <FILE id="GNrv6Z" name="MatomoAnalytics.h" compile="0" resource="0"

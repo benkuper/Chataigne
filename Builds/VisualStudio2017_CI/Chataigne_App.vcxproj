@@ -2911,7 +2911,6 @@
     <ClInclude Include="..\..\Source\Guider\BaseGuide.h"/>
     <ClInclude Include="..\..\Source\Guider\GuideComponents.h"/>
     <ClInclude Include="..\..\Source\Guider\Guider.h"/>
-    <ClInclude Include="..\..\Source\Analytics\GoogleAnalyticsDestination.h"/>
     <ClInclude Include="..\..\Source\Analytics\MatomoAnalytics.h"/>
     <ClInclude Include="..\..\Source\Common\Zeroconf\ZeroconfManager.h"/>
     <ClInclude Include="..\..\Source\Common\InputSystem\InputDeviceHelpers.h"/>
@@ -4104,6 +4103,24 @@
     <ClInclude Include="..\..\JuceLibraryCode\JuceHeader.h"/>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\Resources\Modules\DLight.png"/>
+    <None Include="..\..\Resources\Modules\DMX.png"/>
+    <None Include="..\..\Resources\Modules\HTTP.png"/>
+    <None Include="..\..\Resources\Modules\LiveOSC2.png"/>
+    <None Include="..\..\Resources\Modules\MIDI.png"/>
+    <None Include="..\..\Resources\Modules\Millumin.png"/>
+    <None Include="..\..\Resources\Modules\OSC.png"/>
+    <None Include="..\..\Resources\Modules\OSCQuery.png"/>
+    <None Include="..\..\Resources\Modules\PJLink.png"/>
+    <None Include="..\..\Resources\Modules\PowerPoint.png"/>
+    <None Include="..\..\Resources\Modules\Reaper.png"/>
+    <None Include="..\..\Resources\Modules\Resolume.png"/>
+    <None Include="..\..\Resources\Modules\Serial.png"/>
+    <None Include="..\..\Resources\Modules\Sound Card.png"/>
+    <None Include="..\..\Resources\Modules\TCP Client.png"/>
+    <None Include="..\..\Resources\Modules\TCP Server.png"/>
+    <None Include="..\..\Resources\Modules\UDP.png"/>
+    <None Include="..\..\Resources\Modules\Watchout.png"/>
     <None Include="..\..\Resources\Templates\Scripts\commandScriptTemplate.js"/>
     <None Include="..\..\Resources\Templates\Scripts\conditionScriptTemplate.js"/>
     <None Include="..\..\Resources\Templates\Scripts\filterScriptTemplate.js"/>

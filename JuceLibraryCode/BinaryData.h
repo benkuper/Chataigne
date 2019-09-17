@@ -8,6 +8,60 @@
 
 namespace BinaryData
 {
+    extern const char*   DLight_png;
+    const int            DLight_pngSize = 3180;
+
+    extern const char*   DMX_png;
+    const int            DMX_pngSize = 1298;
+
+    extern const char*   HTTP_png;
+    const int            HTTP_pngSize = 1102;
+
+    extern const char*   LiveOSC2_png;
+    const int            LiveOSC2_pngSize = 3172;
+
+    extern const char*   MIDI_png;
+    const int            MIDI_pngSize = 3792;
+
+    extern const char*   Millumin_png;
+    const int            Millumin_pngSize = 3457;
+
+    extern const char*   OSC_png;
+    const int            OSC_pngSize = 3566;
+
+    extern const char*   OSCQuery_png;
+    const int            OSCQuery_pngSize = 3840;
+
+    extern const char*   PJLink_png;
+    const int            PJLink_pngSize = 1008;
+
+    extern const char*   PowerPoint_png;
+    const int            PowerPoint_pngSize = 2548;
+
+    extern const char*   Reaper_png;
+    const int            Reaper_pngSize = 3655;
+
+    extern const char*   Resolume_png;
+    const int            Resolume_pngSize = 4182;
+
+    extern const char*   Serial_png;
+    const int            Serial_pngSize = 2298;
+
+    extern const char*   Sound_Card_png;
+    const int            Sound_Card_pngSize = 1266;
+
+    extern const char*   TCP_Client_png;
+    const int            TCP_Client_pngSize = 2909;
+
+    extern const char*   TCP_Server_png;
+    const int            TCP_Server_pngSize = 2909;
+
+    extern const char*   UDP_png;
+    const int            UDP_pngSize = 2698;
+
+    extern const char*   Watchout_png;
+    const int            Watchout_pngSize = 2380;
+
     extern const char*   commandScriptTemplate_js;
     const int            commandScriptTemplate_jsSize = 444;
 
@@ -84,7 +138,7 @@ namespace BinaryData
     const int            stripe_pngSize = 2043;
 
     // Number of elements in the namedResourceList and originalFileNames arrays.
-    const int namedResourceListSize = 25;
+    const int namedResourceListSize = 43;
 
     // Points to the start of a list of resource names.
     extern const char* namedResourceList[];

@@ -13,7 +13,6 @@
 
 #include "MainComponent.h"
 #include "ChataigneEngine.h"
-#include "Analytics/GoogleAnalyticsDestination.h"
 #include "Analytics/MatomoAnalytics.h"
 
 //==============================================================================
