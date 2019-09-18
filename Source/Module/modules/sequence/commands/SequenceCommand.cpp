@@ -44,10 +44,13 @@ SequenceCommand::SequenceCommand(SequenceModule * _module, CommandContext contex
 		value = addFloatParameter("Time", "Target time to set", 0, 0, 3600);
 		value->defaultUI = FloatParameter::TIME;
 		addTargetMappingParameterAt(value, 0);
+		
+		playFromStart = addBoolParameter("Play", "If enabled, will force playing the sequence after setting the time", false);
 		break;
 
 	case GOTO_CUE:
 		target->customGetTargetContainerFunc = &ChataigneSequenceManager::showMenuAndGetCueStatic;
+		playFromStart = addBoolParameter("Play", "If enabled, will force playing the sequence after setting the time to the cue", false);
 		break;
 
 	default:
@@ -82,7 +85,7 @@ void SequenceCommand::triggerInternal()
 		break;
 
 	case TOGGLE_SEQUENCE:
-		if (playFromStart->boolValue() && !((Sequence *)target->targetContainer.get())->isPlaying->boolValue()) ((Sequence *)target->targetContainer.get())->currentTime->setValue(0);
+		if (playFromStart->boolValue() && !((Sequence *)target->targetContainer.get())->isPlaying->boolValue()) ((Sequence *)target->targetContainer.get())->setCurrentTime(0);
 		((Sequence *)target->targetContainer.get())->togglePlayTrigger->trigger();
 		break;
             
@@ -99,7 +102,8 @@ void SequenceCommand::triggerInternal()
 		break;
 
 	case SET_TIME:
-		((Sequence *)target->targetContainer.get())->currentTime->setValue(value->floatValue());
+		((Sequence *)target->targetContainer.get())->setCurrentTime(value->floatValue(), true, true);
+		if(playFromStart->boolValue()) ((Sequence*)target->targetContainer.get())->playTrigger->trigger();
 		break;
 
 	case GOTO_CUE:
@@ -107,7 +111,8 @@ void SequenceCommand::triggerInternal()
 		if (cue != nullptr)
 		{
 			Sequence * s = cue->getSequence();
-			if (s != nullptr) s->setCurrentTime(cue->time->floatValue());
+			((Sequence*)target->targetContainer.get())->setCurrentTime(value->floatValue(), true, true); 
+			if (playFromStart->boolValue()) s->playTrigger->trigger();
 		}
 		break;
 	}
