@@ -105,7 +105,13 @@ void OSExecCommand::triggerInternal()
         String launchPrefix = f.getFileName().endsWith("sh")?"sh ":"./";
         
     #if JUCE_MAC
-        String command = "osascript -e 'tell application \"Terminal\" to do script \"cd "+ dir +" && "+launchPrefix + f.getFileName()+"\"'";
+        
+        String command = "osascript -e 'tell application \"Terminal\""
+        +String("\nactivate")
+        +"\ndo script \"cd "+ dir +" && "+launchPrefix + f.getFileName()+"\""
+        +"\nend tell'";
+        
+            //"osascript -e 'tell application \"Terminal\" to do script \"cd "+ dir +" && "+launchPrefix + f.getFileName()+"\"'";
     #else //linux
         String command = "cd " + f.getFullPathName() + " && " + launchPrefix + f.getFileName();
     #endif
