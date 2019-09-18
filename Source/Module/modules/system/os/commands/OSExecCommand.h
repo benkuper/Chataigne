@@ -20,7 +20,7 @@ public:
 	OSExecCommand(OSModule * _module, CommandContext context, var params);
 	~OSExecCommand();
 
-	enum ActionType { OPEN_FILE, LAUNCH_APP, KILL_APP };
+	enum ActionType { OPEN_FILE, LAUNCH_APP, KILL_APP, LAUNCH_COMMAND, LAUNCH_COMMAND_FILE };
 	ActionType actionType;
 
 	StringParameter * target;

@@ -16,22 +16,35 @@
 #endif
 
 OSExecCommand::OSExecCommand(OSModule * _module, CommandContext context, var params) :
-	BaseCommand(_module, context, params)
+	BaseCommand(_module, context, params),
+	launchOptions(nullptr)
 {
 	actionType = (ActionType)(int)params.getProperty("type", LAUNCH_APP);
 
 	
-
-	if (actionType != KILL_APP)
+	switch (actionType)
 	{
+	case OPEN_FILE:
+	case LAUNCH_APP:
+	case LAUNCH_COMMAND_FILE:
 		target = new FileParameter("Target", "The target file of app for this command", "");
-		target->multiline = true;
 		addParameter(target);
-		launchOptions = addStringParameter("Launch Options", "Additional options when launching the app", "");
-	} else
-	{
+		if (actionType != LAUNCH_COMMAND_FILE)
+		{
+			launchOptions = addStringParameter("Launch Options", "Additional options when launching the app", "");
+			launchOptions->multiline = true;
+		}
+		break;
+
+	case KILL_APP:
 		target = addStringParameter("Target", "The process name to kill", "");
 		killMode = addBoolParameter("Hard kill", "If enabled, will kill like a boss, not very gently", false);
+		break;
+
+	case LAUNCH_COMMAND:
+		target = addStringParameter("Command", "The command to launch.Every line is a new command", "");
+		target->multiline = true;
+		break;
 	}
 }
 
@@ -45,28 +58,57 @@ void OSExecCommand::triggerInternal()
 
 	if (!module->enabled->boolValue()) return;
 
-	bool result = false;
 	switch (actionType)
 	{
 	case LAUNCH_APP:
 	case OPEN_FILE:
 	{
-		File f = ((FileParameter *)target)->getFile();
+		File f = ((FileParameter*)target)->getFile();
 		File wDir = File::getCurrentWorkingDirectory();
 
 		f.getParentDirectory().setAsCurrentWorkingDirectory();
-		result = f.startAsProcess(launchOptions->stringValue());
+		bool result = f.startAsProcess(launchOptions->stringValue());
+		if (!result) NLOGERROR(module->niceName, "Error trying to launch process : " << f.getFullPathName());
 		wDir.setAsCurrentWorkingDirectory();
 		module->outActivityTrigger->trigger();
 	}
-		break;
+	break;
 
 	case KILL_APP:
 	{
 		killProcess(target->stringValue());
 		module->outActivityTrigger->trigger();
 	}
-		break;
+	break;
+
+	case LAUNCH_COMMAND:
+	{
+		String command = target->stringValue().replace("\n", " && ");
+		int result = system(command.getCharPointer());
+		if (module->logOutgoingData->boolValue()) NLOG(module->niceName, "Launching : " + command);
+		if (result != 0) NLOGERROR(module->niceName, "Error trying to launch command : " << target->stringValue());
+		module->outActivityTrigger->trigger();
+	}
+	break;
+
+	case LAUNCH_COMMAND_FILE:
+	{
+		File f = ((FileParameter*)target)->getFile();
+		String dir = f.getParentDirectory().getFullPathName();
+		
+#if JUCE_WINDOWS
+		String driveLetter = dir.substring(0, 2);
+		String command = driveLetter + " && cd " + dir + " && " + f.getFileName();
+		if (module->logOutgoingData->boolValue()) NLOG(module->niceName, "Launching : " + command);
+		int result = system(command.getCharPointer());
+#else
+		String command = "cd " + f.getFullPathName() + " && ./" + f.getFileName();
+		int result = system(command.getCharPointer());
+#endif
+		if (result != 0) NLOGERROR(module->niceName, "Error trying to launch command : " << f.getFullPathName());
+		module->outActivityTrigger->trigger();
+	}
+	break;
 	}
 }
 
