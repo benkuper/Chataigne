@@ -188,6 +188,8 @@ File ModuleFactory::getFolderForCustomModule(StringRef moduleName) const
 
 void ModuleFactory::buildPopupMenu()
 {
+	MessageManagerLock mmLock;
+
 	menu.clear();
 
 	OwnedArray<PopupMenu> subMenus;
@@ -200,7 +202,7 @@ void ModuleFactory::buildPopupMenu()
 
 		if (d->menuPath.isEmpty())
 		{
-			menu.addItem(itemID, d->moduleType);
+			menu.addItem(itemID, d->moduleType, true, false, d->icon);
 			continue;
 		}
 
@@ -228,7 +230,7 @@ void ModuleFactory::buildPopupMenu()
 			subMenus[subMenuIndex]->addSectionHeader("Community Modules");
 		}
 
-		subMenus[subMenuIndex]->addItem(itemID, d->moduleType);
+		subMenus[subMenuIndex]->addItem(itemID, d->moduleType, true, false, d->icon); 
 		lastDefIsCustom.set(subMenuIndex, d->isCustomModule);
 	}
 
@@ -275,4 +277,18 @@ Module * ModuleFactory::createModule(const String & moduleType)
 		}
 	}
 	return nullptr;
+}
+
+
+
+ModuleDefinition::ModuleDefinition(const String& menuPath, const String& type, std::function<Module* ()> createFunc, var jsonData, bool isCustomModule) :
+	menuPath(menuPath),
+	moduleType(type),
+	jsonData(jsonData),
+	isCustomModule(isCustomModule),
+	createFunc(createFunc)
+{
+	int numBytes = 0;
+	const char* iconData = BinaryData::getNamedResource((type.replace(" ", "_") + "_png").getCharPointer(), numBytes);
+	if (iconData != nullptr) icon = ImageCache::getFromMemory(iconData, numBytes);
 }

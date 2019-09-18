@@ -14,17 +14,32 @@ namespace BinaryData
     extern const char*   DMX_png;
     const int            DMX_pngSize = 1298;
 
+    extern const char*   HeavyM_png;
+    const int            HeavyM_pngSize = 3533;
+
     extern const char*   HTTP_png;
     const int            HTTP_pngSize = 1102;
 
+    extern const char*   Keyboard_png;
+    const int            Keyboard_pngSize = 1860;
+
     extern const char*   LiveOSC2_png;
     const int            LiveOSC2_pngSize = 3172;
+
+    extern const char*   MadMapper_png;
+    const int            MadMapper_pngSize = 3783;
+
+    extern const char*   Metronome_png;
+    const int            Metronome_pngSize = 1314;
 
     extern const char*   MIDI_png;
     const int            MIDI_pngSize = 3792;
 
     extern const char*   Millumin_png;
     const int            Millumin_pngSize = 3457;
+
+    extern const char*   OS_png;
+    const int            OS_pngSize = 1669;
 
     extern const char*   OSC_png;
     const int            OSC_pngSize = 3566;
@@ -47,6 +62,9 @@ namespace BinaryData
     extern const char*   Serial_png;
     const int            Serial_pngSize = 2298;
 
+    extern const char*   Signal_png;
+    const int            Signal_pngSize = 1749;
+
     extern const char*   Sound_Card_png;
     const int            Sound_Card_pngSize = 1266;
 
@@ -55,6 +73,9 @@ namespace BinaryData
 
     extern const char*   TCP_Server_png;
     const int            TCP_Server_pngSize = 2909;
+
+    extern const char*   Time_png;
+    const int            Time_pngSize = 661;
 
     extern const char*   UDP_png;
     const int            UDP_pngSize = 2698;
@@ -138,7 +159,7 @@ namespace BinaryData
     const int            stripe_pngSize = 2043;
 
     // Number of elements in the namedResourceList and originalFileNames arrays.
-    const int namedResourceListSize = 43;
+    const int namedResourceListSize = 50;
 
     // Points to the start of a list of resource names.
     extern const char* namedResourceList[];

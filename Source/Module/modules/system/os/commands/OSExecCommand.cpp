@@ -31,9 +31,7 @@ OSExecCommand::OSExecCommand(OSModule * _module, CommandContext context, var par
 	} else
 	{
 		target = addStringParameter("Target", "The process name to kill", "");
-#if JUCE_MAC || JUCE_LINUX
 		killMode = addBoolParameter("Hard kill", "If enabled, will kill like a boss, not very gently", false);
-#endif
 	}
 }
 
@@ -75,7 +73,7 @@ void OSExecCommand::triggerInternal()
 void OSExecCommand::killProcess(const String & name)
 {
 #if JUCE_WINDOWS
-	HANDLE hSnapShot = CreateToolhelp32Snapshot(TH32CS_SNAPALL, NULL);
+	/*HANDLE hSnapShot = CreateToolhelp32Snapshot(TH32CS_SNAPALL, NULL);
 	PROCESSENTRY32 pEntry;
 	pEntry.dwSize = sizeof(pEntry);
 	BOOL hRes = Process32First(hSnapShot, &pEntry);
@@ -94,6 +92,10 @@ void OSExecCommand::killProcess(const String & name)
 		hRes = Process32Next(hSnapShot, &pEntry);
 	}
 	CloseHandle(hSnapShot);
+	*/
+
+	int result = system(String("taskkill " + String(killMode->boolValue() ? "/f " : "") + "/im \"" + target->stringValue() + "\"").getCharPointer());
+	if (result != 0) LOGWARNING("Problem killing app " + target->stringValue());
 #else
 	int result = system(String("killall "+ String(killMode->boolValue()?"-9":"-2") +" \""+target->stringValue()+"\"").getCharPointer());
 	if(result != 0) LOGWARNING("Problem killing app " + target->stringValue());

@@ -21,15 +21,9 @@ public:
 	var jsonData;
 	bool isCustomModule;
 	std::function<Module*()> createFunc;
+	Image icon;
 
-
-	ModuleDefinition(const String &menuPath, const String &type, std::function<Module*()> createFunc, var jsonData = var(), bool isCustomModule = false) :
-		menuPath(menuPath),
-		moduleType(type),
-        jsonData(jsonData),
-        isCustomModule(isCustomModule),
-		createFunc(createFunc)
-	{}
+	ModuleDefinition(const String& menuPath, const String& type, std::function<Module* ()> createFunc, var jsonData = var(), bool isCustomModule = false);
 };
 
 class ModuleFactory

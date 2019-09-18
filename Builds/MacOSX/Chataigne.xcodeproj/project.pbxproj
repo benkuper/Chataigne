@@ -2567,6 +2567,13 @@
 			path = ../../Source/Module/modules/common/commands/scriptcommands/ScriptCommand.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
+		5163443F8020E6D7801B6CC0 = {
+			isa = PBXFileReference;
+			lastKnownFileType = image.png;
+			name = Signal.png;
+			path = ../../Resources/Modules/Signal.png;
+			sourceTree = "SOURCE_ROOT";
+		};
 		51B8DD8FCD4AFD742BBD48DB = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -2719,6 +2726,13 @@
 			lastKnownFileType = image.png;
 			name = OSC.png;
 			path = ../../Resources/Modules/OSC.png;
+			sourceTree = "SOURCE_ROOT";
+		};
+		5A60F64718B023B15C6B6F70 = {
+			isa = PBXFileReference;
+			lastKnownFileType = image.png;
+			name = Metronome.png;
+			path = ../../Resources/Modules/Metronome.png;
 			sourceTree = "SOURCE_ROOT";
 		};
 		5B9E2B5BB241EBB715F08431 = {
@@ -3729,6 +3743,13 @@
 			path = ../../Source/Common/Command/Template/ui/CommandTemplateParameterEditor.h;
 			sourceTree = "SOURCE_ROOT";
 		};
+		9C71210A77B55F5535E5EC03 = {
+			isa = PBXFileReference;
+			lastKnownFileType = image.png;
+			name = Keyboard.png;
+			path = ../../Resources/Modules/Keyboard.png;
+			sourceTree = "SOURCE_ROOT";
+		};
 		9CB8705EAE553E539485DE5D = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -3748,6 +3769,13 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = WiimoteManager.h;
 			path = ../../Source/Module/modules/controller/wiimote/WiimoteManager.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		9D0A3612B3732B6D0B69FF7E = {
+			isa = PBXFileReference;
+			lastKnownFileType = image.png;
+			name = OS.png;
+			path = ../../Resources/Modules/OS.png;
 			sourceTree = "SOURCE_ROOT";
 		};
 		9D8FF2DBA0D8821F5A7338EE = {
@@ -4427,6 +4455,13 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = CommandDefinitionManager.cpp;
 			path = ../../Source/Common/Command/CommandDefinitionManager.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
+		C60629FA5A98B14697D1DA4E = {
+			isa = PBXFileReference;
+			lastKnownFileType = image.png;
+			name = HeavyM.png;
+			path = ../../Resources/Modules/HeavyM.png;
 			sourceTree = "SOURCE_ROOT";
 		};
 		C6146FC3CED0ECD9A064C9B9 = {
@@ -5325,6 +5360,13 @@
 			path = ../../Source/Common/Serial/lib/serial/impl/win.cc;
 			sourceTree = "SOURCE_ROOT";
 		};
+		F5827D6B2391F3539343CE59 = {
+			isa = PBXFileReference;
+			lastKnownFileType = image.png;
+			name = Time.png;
+			path = ../../Resources/Modules/Time.png;
+			sourceTree = "SOURCE_ROOT";
+		};
 		F58BA7324F5F5A4FAC7BB4A4 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -5451,6 +5493,13 @@
 			path = ../../Source/Module/modules/osc/resolume/commands/ResolumeBaseCommand.h;
 			sourceTree = "SOURCE_ROOT";
 		};
+		FDC68A7B4E5FD9E5DB23819F = {
+			isa = PBXFileReference;
+			lastKnownFileType = image.png;
+			name = MadMapper.png;
+			path = ../../Resources/Modules/MadMapper.png;
+			sourceTree = "SOURCE_ROOT";
+		};
 		FE03035FDEBD5D1FC17DF1E5 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -5505,10 +5554,15 @@
 			children = (
 				5E64FD363DAEBC97B49C0E98,
 				068D5BDCBB49D14D8C13012E,
+				C60629FA5A98B14697D1DA4E,
 				119888D65DE05EACD18D1B11,
+				9C71210A77B55F5535E5EC03,
 				0ADF29DB8E1BCCC58ACC8C91,
+				FDC68A7B4E5FD9E5DB23819F,
+				5A60F64718B023B15C6B6F70,
 				E3D81D58A2F55922C54F1F18,
 				278F096FADEA555F2103718E,
+				9D0A3612B3732B6D0B69FF7E,
 				5A09E732212BD7F0F838B951,
 				54D225421E0211F8F2E4EBFA,
 				B1FD26BF556916851197C97B,
@@ -5516,9 +5570,11 @@
 				70E1471749F3AF5353951EC5,
 				7A91E8D798CAD8D2754205F1,
 				842C24D22B14BC2701DAA448,
+				5163443F8020E6D7801B6CC0,
 				35977A9DDCCE3222324C96F9,
 				5C13AE7A8B665A7EA4229092,
 				E19D6C3FD6EB1EF65F6461E2,
+				F5827D6B2391F3539343CE59,
 				4DFD263C9E82F18D49C8E12F,
 				AAA49AA961808130DB88D7E4,
 			);
@@ -7511,7 +7567,7 @@
 					"_DEBUG=1",
 					"DEBUG=1",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
-					"JUCE_APP_VERSION=1.6.4b4",
+					"JUCE_APP_VERSION=1.6.4b5",
 					"JUCE_APP_VERSION_HEX=0x10604",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
@@ -7566,7 +7622,7 @@
 					"_NDEBUG=1",
 					"NDEBUG=1",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
-					"JUCE_APP_VERSION=1.6.4b4",
+					"JUCE_APP_VERSION=1.6.4b5",
 					"JUCE_APP_VERSION_HEX=0x10604",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
