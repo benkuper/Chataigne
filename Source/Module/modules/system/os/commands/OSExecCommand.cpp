@@ -98,7 +98,7 @@ void OSExecCommand::triggerInternal()
 		
 #if JUCE_WINDOWS
 		String driveLetter = dir.substring(0, 2);
-		String command = driveLetter + " && cd " + dir + " && " + f.getFileName();
+		String command = driveLetter + " && cd \"" + dir + "\" && \"" + f.getFileName()+"\"";
 		if (module->logOutgoingData->boolValue()) NLOG(module->niceName, "Launching : " + command);
 		int result = system(command.getCharPointer());
 #else
@@ -108,12 +108,12 @@ void OSExecCommand::triggerInternal()
         
         String command = "osascript -e 'tell application \"Terminal\""
         +String("\nactivate")
-        +"\ndo script \"cd "+ dir +" && "+launchPrefix + f.getFileName()+"\""
+        +"\ndo script \"cd "+ dir +" && "+launchPrefix + "\\\""+f.getFileName()+"\\\"\""
         +"\nend tell'";
         
             //"osascript -e 'tell application \"Terminal\" to do script \"cd "+ dir +" && "+launchPrefix + f.getFileName()+"\"'";
     #else //linux
-        String command = "cd " + dir + " && gnome-terminal -- bash -c '" + launchPrefix + f.getFileName()+"'";
+        String command = "cd \"" + dir + "\" && gnome-terminal -- bash -c '" + launchPrefix + "\""+ f.getFileName()+"\"'";
     #endif
         
         if (module->logOutgoingData->boolValue()) NLOG(module->niceName, "Launching : " + command);
