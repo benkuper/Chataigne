@@ -30,7 +30,7 @@ public:
 	WeakReference<Inspectable> linkedTemplateManagerRef;
 
 	void linkToTemplate(CustomValuesCommandArgumentManager * t);
-	void rebuildFromTemplate();
+	void rebuildFromTemplate(bool clearData);
 
 	CustomValuesCommandArgument * addItemWithParam(Parameter * p, var data = var(), bool fromUndoableAction = false);
 	CustomValuesCommandArgument * addItemFromType(Parameter::Type type, var data = var(), bool fromUndoableAction = false);
@@ -43,10 +43,10 @@ public:
 
 	void useForMappingChanged(CustomValuesCommandArgument * i) override;
 
-	void controllableFeedbackUpdate(ControllableContainer * cc, Controllable * c) override;
-
 	void itemAdded(CustomValuesCommandArgument * i) override; //FROM TEMPLATE
 	void itemRemoved(CustomValuesCommandArgument * i) override; //FROM TEMPLATE
+
+	void loadJSONDataManagerInternal(var data) override;
 
 	InspectableEditor * getEditor(bool isRoot) override;
 

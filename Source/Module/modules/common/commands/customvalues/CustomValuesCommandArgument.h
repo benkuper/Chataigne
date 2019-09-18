@@ -36,7 +36,7 @@ public:
 
 	void onContainerParameterChangedInternal(Parameter * p) override;
 	void onExternalParameterValueChanged(Parameter * p) override;
-
+	void onExternalParameterRangeChanged(Parameter* p) override;
 
 
 	var getJSONData() override;

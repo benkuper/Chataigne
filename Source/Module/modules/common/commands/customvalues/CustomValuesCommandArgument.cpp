@@ -26,6 +26,7 @@ CustomValuesCommandArgument::CustomValuesCommandArgument(const String &name, Par
 	
 	
 	jassert(param != nullptr);
+	param->isSavable = false; // save manually
 	addControllable(param);
 
 	if(templateMode) param->isCustomizableByUser = true;
@@ -49,6 +50,7 @@ CustomValuesCommandArgument::CustomValuesCommandArgument(const String &name, Par
 
 	param->hideInEditor = true;
 
+
 }
 
 CustomValuesCommandArgument::~CustomValuesCommandArgument()
@@ -60,23 +62,20 @@ CustomValuesCommandArgument::~CustomValuesCommandArgument()
 var CustomValuesCommandArgument::getJSONData()
 {
 	var data = BaseItem::getJSONData();
-	data.getDynamicObject()->setProperty("param", param->getJSONData());
+	if (param->isOverriden)
+	{
+		
+		data.getDynamicObject()->setProperty("param", param->getJSONData());
+	}
 	return data;
 }
 
 void CustomValuesCommandArgument::loadJSONDataInternal(var data)
 {
 	BaseItem::loadJSONDataInternal(data);
-	if (!templateMode)
+	if (data.getDynamicObject()->hasProperty("param"))
 	{
-		DBG("Param has range ? " << (int)param->hasRange());
-		if (linkedTemplate != nullptr) DBG(" > Linked template has range : " << (int)linkedTemplate->param->hasRange());
-	}
-	param->loadJSONData(data.getProperty("param", var()));
-	
-	if (!templateMode)
-	{
-		DBG("After loadJSON param has range ? " << (int)param->hasRange());
+		param->loadJSONData(data.getProperty("param", var()));
 	}
 }
 
@@ -94,23 +93,21 @@ void CustomValuesCommandArgument::linkToTemplate(CustomValuesCommandArgument * t
 
 	if (linkedTemplate != nullptr)
 	{
-		DBG("Link to template :  " << (int)param->hasRange() << " / " << (int)linkedTemplate->param->hasRange());
 		linkedTemplate->param->addParameterListener(this);
 		linkedTemplate->editable->addParameterListener(this);
 		linkedTemplate->useForMapping->addParameterListener(this);
 		if (!templateMode) updateParameterFromTemplate();
+
 
 	}
 
 	if (param != nullptr) param->saveValueOnly = linkedTemplate != nullptr;
 
 	canBeReorderedInEditor = linkedTemplate == nullptr;
+	userCanRemove = linkedTemplate == nullptr;
+	userCanDuplicate = linkedTemplate == nullptr;
+	nameCanBeChangedByUser = linkedTemplate == nullptr;
 
-	if(linkedTemplate != nullptr) DBG("After Link to template :  " << (int)param->hasRange() << " / " << (int)linkedTemplate->param->hasRange());
-	else
-	{
-		DBG("Linked template null !");
-	}
 
 }
 
@@ -119,11 +116,13 @@ void CustomValuesCommandArgument::updateParameterFromTemplate()
 	if (linkedTemplate != nullptr)
 	{
 		param->setControllableFeedbackOnly(!linkedTemplate->editable->boolValue());
-		param->setRange(linkedTemplate->param->minimumValue, linkedTemplate->param->maximumValue);
-		DBG("Update from template : " << (int)param->hasRange() << " / " << (int)linkedTemplate->param->hasRange());
+		if(linkedTemplate->param->hasRange()) param->setRange(linkedTemplate->param->minimumValue, linkedTemplate->param->maximumValue);
 
 		if (useForMapping != nullptr && linkedTemplate->useForMapping != nullptr && !useForMapping->isOverriden) useForMapping->setValue(linkedTemplate->useForMapping);
 		
+		param->defaultValue = linkedTemplate->param->value;
+
+
 		if (param->isControllableFeedbackOnly || !param->isOverriden)
 		{
 			if (param->type == Controllable::ENUM)
@@ -133,8 +132,7 @@ void CustomValuesCommandArgument::updateParameterFromTemplate()
 				ep->clearOptions();
 				for (auto &ev : lep->enumValues) ep->addOption(ev->key, ev->value);
 			}
-
-			param->defaultValue = linkedTemplate->param->value;
+			
 			param->resetValue();
 		}
 	}
@@ -149,6 +147,11 @@ void CustomValuesCommandArgument::onContainerParameterChangedInternal(Parameter 
 }
 
 void CustomValuesCommandArgument::onExternalParameterValueChanged(Parameter * p)
+{
+	if (p->parentContainer == linkedTemplate) updateParameterFromTemplate();
+}
+
+void CustomValuesCommandArgument::onExternalParameterRangeChanged(Parameter* p)
 {
 	if (p->parentContainer == linkedTemplate) updateParameterFromTemplate();
 }

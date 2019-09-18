@@ -46,19 +46,29 @@ void CustomValuesCommandArgumentManager::linkToTemplate(CustomValuesCommandArgum
 	}
 
 	userCanAddItemsManually = linkedTemplateManager == nullptr;
-	rebuildFromTemplate();
+	rebuildFromTemplate(true);
 }
 
-void CustomValuesCommandArgumentManager::rebuildFromTemplate()
+void CustomValuesCommandArgumentManager::rebuildFromTemplate(bool clearItems)
 {
-	clear();
 	if (linkedTemplateManager == nullptr || linkedTemplateManagerRef.wasObjectDeleted()) return;
+	
+	if(clearItems) clear();
+	
 	for (auto & i : linkedTemplateManager->items)
 	{
-		CustomValuesCommandArgument * a = addItemFromData(i->getJSONData());
-		 a->linkToTemplate(i);
-		 a->userCanRemove = false;
-		 a->userCanDuplicate = false;
+		CustomValuesCommandArgument* a = nullptr;
+		if (clearItems) a = addItemFromData(i->getJSONData());
+		else a = items[linkedTemplateManager->items.indexOf(i)];
+
+		jassert(a != nullptr);
+
+		if (a != nullptr)
+		{
+			a->linkToTemplate(i);
+			a->userCanRemove = false;
+			a->userCanDuplicate = false;
+		}
 	}
 
 	hideInEditor = items.size() == 0;
@@ -76,6 +86,7 @@ CustomValuesCommandArgument * CustomValuesCommandArgumentManager::addItemWithPar
 CustomValuesCommandArgument * CustomValuesCommandArgumentManager::addItemFromType(Parameter::Type type, var data, bool fromUndoableAction)
 {
 	Parameter * p = nullptr;
+
 	String id = String(items.size() + 1);
 
 	switch (type)
@@ -106,7 +117,10 @@ CustomValuesCommandArgument * CustomValuesCommandArgumentManager::addItemFromTyp
             break;
 	}
 
-	if (linkedTemplateManager == nullptr) p->isCustomizableByUser = true;
+	if (p != nullptr && linkedTemplateManager == nullptr)
+	{
+		p->isCustomizableByUser = true;
+	}
 
 	if (p == nullptr) return nullptr;
 	return addItemWithParam(p, data, fromUndoableAction);
@@ -145,10 +159,6 @@ void CustomValuesCommandArgumentManager::useForMappingChanged(CustomValuesComman
 	argumentManagerListeners.call(&ArgumentManagerListener::useForMappingChanged, i);
 }
 
-void CustomValuesCommandArgumentManager::controllableFeedbackUpdate(ControllableContainer * cc, Controllable * c)
-{
-
-}
 
 void CustomValuesCommandArgumentManager::itemAdded(CustomValuesCommandArgument * i)
 {
@@ -168,6 +178,13 @@ void CustomValuesCommandArgumentManager::itemRemoved(CustomValuesCommandArgument
 		}
 	}
 	if (itemToRemove != nullptr) removeItem(itemToRemove, false);
+}
+
+void CustomValuesCommandArgumentManager::loadJSONDataManagerInternal(var data)
+{
+	BaseManager::loadJSONDataManagerInternal(data);
+	//after load
+	if(linkedTemplateManager != nullptr) rebuildFromTemplate(false);
 }
 
 InspectableEditor * CustomValuesCommandArgumentManager::getEditor(bool isRoot)
