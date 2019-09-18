@@ -48,10 +48,13 @@ MatomoAnalytics::MatomoAnalytics() :
 		.withParameter("rec", "1").withParameter("idsite", "1").withParameter("apiv", "1").withParameter("ua", ua)
 		.withParameter("res", res).withParameter("rand", String(rand.nextInt())).withParameter("_id", id).withParameter("uid", name)
 		.withParameter("_cvar", "{\"1\":[\"User name\",\"" + name + "\"], \"2\":[\"App Version\",\"" + getAppVersion() + "\"]}");
+
+	startTimer(5 * 60 * 1000); //every 5 minutes
 }
 
 MatomoAnalytics::~MatomoAnalytics()
 {
+	stopTimer();
 	signalThreadShouldExit();
 	waitForThreadToExit(2000);
 }
@@ -59,7 +62,7 @@ MatomoAnalytics::~MatomoAnalytics()
 void MatomoAnalytics::log(AnalyticsAction action, StringPairArray options)
 {
 	waitForThreadToExit(1000);
-	actionIsPing = action == STOP;
+	actionIsPing = action == STOP || action == PING;
 	log(actionNames[action]);
 }
 
@@ -74,8 +77,9 @@ void MatomoAnalytics::log(StringRef actionName, StringPairArray options)
 void MatomoAnalytics::run()
 {
 	
-	URL url = baseURL.withParameter("action_name", actionToLog);
-	if (actionIsPing) url = url.withParameter("ping", "1");
+	URL url = baseURL; 
+	if(!actionIsPing) url = url.withParameter("action_name", actionToLog);
+	else url = url.withParameter("ping", "1");
 
 	url = url.withParameters(optionsToLog);
 
@@ -104,4 +108,10 @@ void MatomoAnalytics::run()
 	{
 		NLOGWARNING("Matomo Analytics", "Error with request, status code : " << statusCode << ", url : " << url.toString(true));
 	}
+}
+
+void MatomoAnalytics::timerCallback()
+{
+	DBG("Send ping");
+	log(PING);
 }

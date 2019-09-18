@@ -13,7 +13,8 @@
 #include "JuceHeader.h"
 
 class MatomoAnalytics :
-	public Thread
+	public Thread,
+	public Timer
 {
 public:
 	juce_DeclareSingleton(MatomoAnalytics, true)
@@ -21,8 +22,8 @@ public:
 	MatomoAnalytics();
 	~MatomoAnalytics();
 
-	enum AnalyticsAction { NONE, START, STOP, CRASH, MAX_ACTIONS };
-	const String actionNames[MAX_ACTIONS] {"None", "App / Start", "App / Stop", "App / Crash"};
+	enum AnalyticsAction { NONE, START, PING, STOP, CRASH, MAX_ACTIONS };
+	const String actionNames[MAX_ACTIONS] {"None", "App / Start", "Ping", "App / Stop", "App / Crash"};
 
 	URL baseURL;
 
@@ -34,4 +35,6 @@ public:
 	void log(StringRef actionName, StringPairArray options = {});
 
 	void run() override;
+
+	void timerCallback() override;
 };
