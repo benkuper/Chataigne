@@ -23,6 +23,7 @@ ModuleManager::ModuleManager() :
 {
 	itemDataType = "Module";
 	helpID = "Modules";
+	showInspectorOnSelect = false;
 }
 
 ModuleManager::~ModuleManager()
