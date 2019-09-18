@@ -429,7 +429,7 @@ bool MappingLayer::paste()
 {
 	var data = JSON::fromString(SystemClipboard::getTextFromClipboard());
 	String type = data.getProperty("itemType", "");
-	if (type == automations[0]->itemDataType)
+	if (automations.size() > 0 && type == automations[0]->itemDataType)
 	{
 		automations[0]->askForPaste();
 		return true;
