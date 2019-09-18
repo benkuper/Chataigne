@@ -102,9 +102,18 @@ void OSExecCommand::triggerInternal()
 		if (module->logOutgoingData->boolValue()) NLOG(module->niceName, "Launching : " + command);
 		int result = system(command.getCharPointer());
 #else
-		String command = "cd " + f.getFullPathName() + " && ./" + f.getFileName();
-		int result = system(command.getCharPointer());
+        String launchPrefix = f.getFileName().endsWith("sh")?"sh ":"./";
+        
+    #if JUCE_MAC
+        String command = "osascript -e 'tell application \"Terminal\" to do script \"cd "+ dir +" && "+launchPrefix + f.getFileName()+"\"'";
+    #else //linux
+        String command = "cd " + f.getFullPathName() + " && " + launchPrefix + f.getFileName();
+    #endif
+        
+        if (module->logOutgoingData->boolValue()) NLOG(module->niceName, "Launching : " + command);
+        int result = system(command.getCharPointer());
 #endif
+        
 		if (result != 0) NLOGERROR(module->niceName, "Error trying to launch command : " << f.getFullPathName());
 		module->outActivityTrigger->trigger();
 	}
