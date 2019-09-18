@@ -64,7 +64,7 @@ AudioModule::AudioModule(const String & name) :
 
 	am.addAudioCallback(this);
 	am.addChangeListener(this);
-	am.initialiseWithDefaultDevices(2, 2);
+	am.initialiseWithDefaultDevices(0, 2);
 
 	am.addAudioCallback(&player);
 
@@ -75,6 +75,7 @@ AudioModule::AudioModule(const String & name) :
 	currentSampleRate = setup.sampleRate;
 	currentBufferSize = setup.bufferSize;
 
+	if (setup.outputDeviceName.isEmpty()) setWarningMessage("Module is not connected to an audio output");
 
 	graph.setPlayConfigDetails(0, 2, currentSampleRate, currentBufferSize);
 	graph.prepareToPlay(currentSampleRate, currentBufferSize);
@@ -92,6 +93,8 @@ AudioModule::AudioModule(const String & name) :
 	for (auto &c : valuesCC.controllables) c->setControllableFeedbackOnly(true);
 
 	defManager.add(CommandDefinition::createDef(this,"","Play audio file", &PlayAudioFileCommand::create, CommandContext::ACTION));
+
+	
 }
 
 AudioModule::~AudioModule()
@@ -166,6 +169,8 @@ var AudioModule::getJSONData()
 
 	data.getDynamicObject()->setProperty("analyzer", analyzerManager.getJSONData());
 
+	
+
 	return data;
 }
 
@@ -176,10 +181,15 @@ void AudioModule::loadJSONDataInternal(var data)
 	{
 
 		std::unique_ptr<XmlElement> elem = XmlDocument::parse(data.getProperty("audioSettings", ""));
-		am.initialise(2, 2, elem.get(), true);
+		am.initialise(0, 2, elem.get(), true);
 	}
 
 	analyzerManager.loadJSONData(data.getProperty("analyzer", var()));
+
+	AudioDeviceManager::AudioDeviceSetup setup;
+	am.getAudioDeviceSetup(setup);
+	if (setup.outputDeviceName.isEmpty()) setWarningMessage("Module is not connected to an audio output");
+	else clearWarning();
 }
 
 void AudioModule::audioDeviceIOCallback(const float ** inputChannelData, int numInputChannels, float ** outputChannelData, int numOutputChannels, int numSamples)
@@ -240,6 +250,7 @@ void AudioModule::audioDeviceIOCallback(const float ** inputChannelData, int num
 
 void AudioModule::audioDeviceAboutToStart(AudioIODevice *)
 {
+
 }
 
 void AudioModule::audioDeviceStopped()
@@ -252,6 +263,8 @@ void AudioModule::changeListenerCallback(ChangeBroadcaster *)
 	am.getAudioDeviceSetup(setup);
 	currentSampleRate = setup.sampleRate;
 	currentBufferSize = setup.bufferSize;
+
+	
 
 	int numSelectedOutputChannelsInSetup = setup.outputChannels.countNumberOfSetBits();
 
@@ -275,6 +288,9 @@ void AudioModule::changeListenerCallback(ChangeBroadcaster *)
     
     audioModuleListeners.call(&AudioModuleListener::audioSetupChanged);
 	audioModuleListeners.call(&AudioModuleListener::monitorSetupChanged);
+
+	if (setup.outputDeviceName.isEmpty()) setWarningMessage("Module is not connected to an audio output");
+	else clearWarning();
 }
 
 void AudioModule::itemAdded(FFTAnalyzer* item)
