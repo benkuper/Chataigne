@@ -19,7 +19,8 @@ class Action :
 	public Processor,
 	public ConditionManager::ConditionManagerListener,
 	public ConditionManager::ManagerListener,
-	public Condition::ConditionListener
+	public Condition::ConditionListener,
+	public EngineListener
 {
 public:
 	Action(const String &name = "Action", var params = var());
@@ -37,7 +38,6 @@ public:
 	std::unique_ptr<ConsequenceManager> csmOn;
 	std::unique_ptr<ConsequenceManager> csmOff;
 
-	BoolParameter * isActive;
 	Trigger * triggerOn;
 	Trigger * triggerOff;
 
@@ -47,9 +47,9 @@ public:
 
 	virtual void updateDisables();
 
-
 	var getJSONData() override;
-	void loadJSONDataInternal(var data) override;
+	void loadJSONDataItemInternal(var data) override;
+	void endLoadFile() override;
 
 	void onContainerParameterChangedInternal(Parameter * p) override;
 	void onContainerTriggerTriggered(Trigger *) override;

@@ -115,16 +115,24 @@ var Action::getJSONData()
 	return data;
 }
 
-void Action::loadJSONDataInternal(var data)
+void Action::loadJSONDataItemInternal(var data)
 {
-	Processor::loadJSONDataInternal(data);
+	Processor::loadJSONDataItemInternal(data);
 
 	cdm.loadJSONData(data.getProperty("conditions", var()));
 	csmOn->loadJSONData(data.getProperty("consequences", var()));
 
 	updateConditionRoles();
-	if(hasOffConsequences) csmOff->loadJSONData(data.getProperty("consequencesOff", var()));
 
+	if (enabled->boolValue() && !forceDisabled && actionRoles.contains(Role::ACTIVATE) && Engine::mainEngine->isLoadingFile) Engine::mainEngine->addEngineListener(this);
+
+	if(hasOffConsequences) csmOff->loadJSONData(data.getProperty("consequencesOff", var()));
+}
+
+void Action::endLoadFile()
+{
+	Engine::mainEngine->removeEngineListener(this);
+	if (actionRoles.contains(Role::ACTIVATE) && cdm.getIsValid(false)) triggerOn->trigger();
 }
 
 void Action::onContainerParameterChangedInternal(Parameter * p)
