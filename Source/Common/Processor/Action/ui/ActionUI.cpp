@@ -85,7 +85,7 @@ void ActionUI::resizedInternalHeader(Rectangle<int>& r)
 	BaseItemUI::resizedInternalHeader(r);
 	//validUI->setBounds(r.removeFromRight(headerHeight));
 	//r.removeFromRight(2);
-	triggerAllUI->setBounds(r.removeFromRight(60));
+	triggerAllUI->setBounds(r.removeFromRight(70));
 	if (progressionUI->isVisible())
 	{
 		progressionUI->setBounds(r.removeFromRight(40).reduced(2, 6));
