@@ -25,6 +25,9 @@ HTTPCommand::HTTPCommand(HTTPModule * _module, CommandContext context, var param
 	customValuesManager.reset(new CustomValuesCommandArgumentManager(context == MAPPING));
 	addChildControllableContainer(customValuesManager.get());
 	customValuesManager->addArgumentManagerListener(this);
+
+	extraHeaders = addStringParameter("Extra Headers", "HTTP headers to add to the request", "");
+	extraHeaders->multiline = true;
 }
 
 HTTPCommand::~HTTPCommand()
@@ -35,8 +38,11 @@ HTTPCommand::~HTTPCommand()
 void HTTPCommand::triggerInternal()
 {
 	StringPairArray requestParams;
-	for (auto &p : customValuesManager->items) requestParams.set(p->shortName, p->param->stringValue());
-	httpModule->sendRequest(address->stringValue(), method->getValueDataAsEnum<HTTPModule::RequestMethod>(), resultDataType->getValueDataAsEnum<HTTPModule::ResultDataType>(), requestParams);
+	for (auto &p : customValuesManager->items) requestParams.set(p->niceName, p->param->stringValue());
+	
+	StringPairArray headers;
+	
+	httpModule->sendRequest(address->stringValue(), method->getValueDataAsEnum<HTTPModule::RequestMethod>(), resultDataType->getValueDataAsEnum<HTTPModule::ResultDataType>(), requestParams, extraHeaders->stringValue());
 }
 
 void HTTPCommand::useForMappingChanged(CustomValuesCommandArgument *)

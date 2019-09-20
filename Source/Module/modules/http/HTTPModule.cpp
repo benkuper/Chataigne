@@ -40,17 +40,18 @@ HTTPModule::~HTTPModule()
 	waitForThreadToExit(3000);
 }
 
-void HTTPModule::sendRequest(StringRef address, RequestMethod method, ResultDataType dataType, StringPairArray params)
+void HTTPModule::sendRequest(StringRef address, RequestMethod method, ResultDataType dataType, StringPairArray params, String extraHeaders)
 {
 
 	String urlString = baseAddress->stringValue() + address;
 	URL url = URL(urlString).withParameters(params);
 
+
 	outActivityTrigger->trigger();
 	if (logOutgoingData->boolValue())  NLOG(niceName, "Send " + String(method == GET?"GET":"POST") + " Request : " + url.toString(true));
 
 	requests.getLock().enter();
-	requests.add(new Request(url, method, dataType));
+	requests.add(new Request(url, method, dataType, extraHeaders));
 	requests.getLock().exit();
 }
 
@@ -59,7 +60,7 @@ void HTTPModule::processRequest(Request * request)
 	StringPairArray responseHeaders;
 	int statusCode = 0;
 
-	std::unique_ptr<InputStream> stream(request->url.createInputStream(request->method == POST, nullptr, nullptr, String(),
+	std::unique_ptr<InputStream> stream(request->url.createInputStream(request->method == POST, nullptr, nullptr, request->extraHeaders,
 		2000, // timeout in millisecs
 		&responseHeaders, &statusCode));
 
@@ -117,7 +118,10 @@ void HTTPModule::createControllablesFromJSONResult(var data, ControllableContain
 {
 	if (!data.isObject()) return;
 
-	NamedValueSet props = data.getDynamicObject()->getProperties();
+	DynamicObject* dataObject = data.getDynamicObject();
+	if (dataObject == nullptr) return;
+
+	NamedValueSet props = dataObject->getProperties();
 
 	for (auto& p : props)
 	{

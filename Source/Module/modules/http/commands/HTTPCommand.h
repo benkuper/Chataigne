@@ -27,6 +27,8 @@ public:
 	EnumParameter * method;
 	EnumParameter * resultDataType;
 
+	StringParameter* extraHeaders;
+
 	void triggerInternal() override;
 
 	void useForMappingChanged(CustomValuesCommandArgument *) override;

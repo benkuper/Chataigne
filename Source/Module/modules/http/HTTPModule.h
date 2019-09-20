@@ -34,15 +34,16 @@ public:
 	enum ResultDataType { RAW, JSON };
 
 
-	void sendRequest(StringRef address, RequestMethod method, ResultDataType dataType = ResultDataType::RAW, StringPairArray params = StringPairArray());
+	void sendRequest(StringRef address, RequestMethod method, ResultDataType dataType = ResultDataType::RAW, StringPairArray params = StringPairArray(), String extraHeaders = String());
 
 	struct Request
 	{
-		Request(URL u, RequestMethod m, ResultDataType dataType = ResultDataType::RAW) : url(u), method(m), resultDataType(dataType) {}
+		Request(URL u, RequestMethod m, ResultDataType dataType = ResultDataType::RAW, String extraHeaders = String()) : url(u), method(m), resultDataType(dataType), extraHeaders(extraHeaders){}
 
 		URL url;
 		RequestMethod method;
 		ResultDataType resultDataType;
+		String extraHeaders;
 	};
 
 
