@@ -111,7 +111,7 @@ void SequenceCommand::triggerInternal()
 		if (cue != nullptr)
 		{
 			Sequence * s = cue->getSequence();
-			((Sequence*)target->targetContainer.get())->setCurrentTime(value->floatValue(), true, true); 
+			s->setCurrentTime(value->floatValue(), true, true); 
 			if (playFromStart->boolValue()) s->playTrigger->trigger();
 		}
 		break;
