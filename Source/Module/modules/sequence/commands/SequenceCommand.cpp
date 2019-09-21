@@ -111,7 +111,7 @@ void SequenceCommand::triggerInternal()
 		if (cue != nullptr)
 		{
 			Sequence * s = cue->getSequence();
-			s->setCurrentTime(value->floatValue(), true, true); 
+			s->setCurrentTime(cue->time->floatValue(), true, true); 
 			if (playFromStart->boolValue()) s->playTrigger->trigger();
 		}
 		break;
