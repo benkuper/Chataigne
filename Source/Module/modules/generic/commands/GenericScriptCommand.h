@@ -26,7 +26,7 @@ public:
 	const Identifier setValueId = "setValue";
 	const Identifier triggerId = "trigger";
 
-	void setValue(var value) override;
+	void setValueInternal(var value) override;
 	void triggerInternal() override;
 
 	static BaseCommand * create(ControllableContainer * module, CommandContext context, var params);

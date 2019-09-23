@@ -26,9 +26,8 @@ GenericScriptCommand::~GenericScriptCommand()
 {
 }
 
-void GenericScriptCommand::setValue(var value)
+void GenericScriptCommand::setValueInternal(var value)
 {
-	BaseCommand::setValue(value);
 	Array<var> values;
 	values.add(value);
 	script.callFunction(setValueId, values);
@@ -36,7 +35,7 @@ void GenericScriptCommand::setValue(var value)
 
 void GenericScriptCommand::triggerInternal()
 {
-	script.callFunction(triggerId, Array<var>());
+	if(context != MAPPING) script.callFunction(triggerId, Array<var>());
 }
 
 BaseCommand * GenericScriptCommand::create(ControllableContainer * module, CommandContext context, var params)
