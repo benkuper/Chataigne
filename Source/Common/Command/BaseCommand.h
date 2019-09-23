@@ -59,6 +59,7 @@ public:
     virtual void trigger(); //for trigger, will check validity of module
     virtual void triggerInternal() {} // to be overriden
 	virtual void setValue(var value); //for mapping context
+	virtual void setValueInternal(var value) {}
 
 	virtual void loadPreviousCommandData(var data) { } //default behavior is nothing, can override that to trying hot swap of commands
 	
@@ -67,8 +68,6 @@ public:
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
-
-
 
 	static BaseCommand * create(ControllableContainer * module, CommandContext context, var params);
 

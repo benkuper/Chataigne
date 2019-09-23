@@ -285,6 +285,8 @@ void BaseCommand::setValue(var value)
 		}
 	}
 
+	setValueInternal(value);
+
 	trigger();
 }
 

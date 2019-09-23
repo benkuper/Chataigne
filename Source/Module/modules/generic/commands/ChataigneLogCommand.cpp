@@ -36,9 +36,8 @@ ChataigneLogCommand::~ChataigneLogCommand()
 {
 }
 
-void ChataigneLogCommand::setValue(var _value)
+void ChataigneLogCommand::setValueInternal(var _value)
 {
-	BaseCommand::setValue(_value);
 	if (_value.isArray() && _value.size() > 0)
 	{
 		String s = _value[0].toString();
@@ -49,7 +48,6 @@ void ChataigneLogCommand::setValue(var _value)
 	{
 		((StringParameter*)value)->setValue(_value.toString());
 	}
-
 }
 
 void ChataigneLogCommand::triggerInternal()
