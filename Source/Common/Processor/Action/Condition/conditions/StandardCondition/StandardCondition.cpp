@@ -39,7 +39,11 @@ var StandardCondition::getJSONData()
 void StandardCondition::loadJSONDataInternal(var data)
 {
 	Condition::loadJSONDataInternal(data);
-	if (comparator != nullptr) comparator->loadJSONData(data.getProperty("comparator", var()));
+	if (comparator != nullptr)
+	{
+		comparator->loadJSONData(data.getProperty("comparator", var()));
+		isValid->alwaysNotify = comparator->alwaysTrigger->boolValue();
+	}
 	else if (Engine::mainEngine->isLoadingFile)
 	{
 		loadingComparatorData = data.getProperty("comparator", var());
@@ -67,6 +71,9 @@ void StandardCondition::setSourceControllable(WeakReference<Controllable> c)
 		if (comparator != nullptr) oldData = comparator->getJSONData();
 		comparator.reset(ComparatorFactory::createComparatorForControllable(sourceControllable));
 
+		comparator->hideInEditor = true;
+		addChildControllableContainer(comparator.get());
+
 		Module * m = ControllableUtil::findParentAs<Module>(sourceControllable);
 		if (m != nullptr) registerLinkedInspectable(m);
 
@@ -78,10 +85,13 @@ void StandardCondition::setSourceControllable(WeakReference<Controllable> c)
 				comparator->loadJSONData(loadingComparatorData);
 				//loadingComparatorData = var();
 			}
+			
 			comparator->addComparatorListener(this);
 			comparator->compare();
 			
+			isValid->alwaysNotify = comparator->alwaysTrigger->boolValue();
 			isValid->setValue(comparator->isValid);
+
 		}
 	} else
 	{
@@ -107,6 +117,16 @@ void StandardCondition::onContainerParameterChangedInternal(Parameter * p)
 	if (p == sourceTarget)
 	{
 		setSourceControllable(sourceTarget->target);
+	}
+}
+
+void StandardCondition::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c)
+{
+	Condition::onControllableFeedbackUpdateInternal(cc, c);
+
+	if (comparator != nullptr && c == comparator->alwaysTrigger)
+	{
+		isValid->alwaysNotify = comparator->alwaysTrigger->boolValue();
 	}
 }
 

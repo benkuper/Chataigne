@@ -27,7 +27,7 @@ BaseComparator::BaseComparator(Controllable * _source) :
 		p->addParameterListener(this);
 	}
 
-	//alwaysDispatch = addBoolParameter("Dispatch on change", "Whether the comparator notifies only when validity changes (OFF),  or each time the comparator is checked. (ON)",false);
+	alwaysTrigger = addBoolParameter("Always Trigger", "If NOT checked the comparator notifies only when VALIDITY changes. If checked, the comparator notifies everytime the comparator is checked, meaning everytime the value is changed.",false);
 }
 
 BaseComparator::~BaseComparator()
@@ -43,7 +43,7 @@ BaseComparator::~BaseComparator()
 
 void BaseComparator::setValid(bool value)
 {
-	if (isValid == value/* && alwaysDispatch->boolValue()*/) return;
+	if (isValid == value && !alwaysTrigger->boolValue()) return;
 
 	isValid = value;
 	comparatorListeners.call(&ComparatorListener::comparatorValidationChanged, this);

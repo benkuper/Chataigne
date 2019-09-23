@@ -28,7 +28,7 @@ public:
 	Controllable * source;
 	Controllable * reference;
 	EnumParameter * compareFunction;
-	//BoolParameter * alwaysDispatch;
+	BoolParameter * alwaysTrigger;
 
 	Identifier currentFunctionId;
 

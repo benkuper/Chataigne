@@ -23,7 +23,7 @@ public:
 
 	WeakReference<BaseComparator> comparator;
 
-	//std::unique_ptr<BoolToggleUI> alwaysDispatchUI;
+	std::unique_ptr<BoolToggleUI> alwaysTriggerUI;
 	std::unique_ptr<EnumParameterUI> compareFuncUI;
 
 	std::unique_ptr<ControllableEditor> refEditor;
