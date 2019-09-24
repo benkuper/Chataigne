@@ -33,9 +33,8 @@ void GenericAppCommand::triggerInternal()
 	{
 	case NEW_SESSION:
 	{
-
-		MessageManagerLock mmLock;
-		Engine::mainEngine->createNewGraph();
+		auto newGraphFunc = std::bind(&Engine::createNewGraph, Engine::mainEngine);
+		Timer::callAfterDelay(.01f, newGraphFunc); //force timer to avoid clearing everything inside the trigger func which will bubble up after everything has been deleted
 	}
 	break;
 
@@ -43,14 +42,15 @@ void GenericAppCommand::triggerInternal()
 	{
 		if(file->getFile().exists())
 		{
-			MessageManagerLock mmLock;
-			Engine::mainEngine->loadDocument(file->getFile());
+			auto loadFileFunc = std::bind(&Engine::loadDocument, Engine::mainEngine, file->getFile());
+			Timer::callAfterDelay(.01f, loadFileFunc); //force timer to avoid clearing everything inside the trigger func which will bubble up after everything has been deleted
 		}
 		else
 		{
 			NLOGWARNING(niceName, "File doesn't exist : " << file->getFile().getFullPathName());
 		}
 	}
+	break;
 
 	case CLOSE_APP:
 	{
