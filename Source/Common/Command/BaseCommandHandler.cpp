@@ -78,10 +78,20 @@ void BaseCommandHandler::setCommand(CommandDefinition * commandDef)
 		command->module->addInspectableListener(this);
 		command->module->templateManager.removeBaseManagerListener(this);
 
+		if (!Engine::mainEngine->isClearing) clearWarning();
+
 		registerLinkedInspectable(command->module);
 
 		if (ModuleManager::getInstanceWithoutCreating() != nullptr) ModuleManager::getInstance()->removeBaseManagerListener(this);
 	}
+	else
+	{
+		if (!Engine::mainEngine->isClearing)
+		{
+			setWarningMessage("Command not found : " + ghostModuleName + ":" + ghostCommandName);
+		}
+	}
+
 
 	commandHandlerListeners.call(&CommandHandlerListener::commandChanged, this);
 	handlerNotifier.addMessage(new CommandHandlerEvent(CommandHandlerEvent::COMMAND_CHANGED, this));
@@ -139,6 +149,15 @@ void BaseCommandHandler::loadJSONDataInternal(var data)
 	if (command == nullptr && ghostModuleName.isNotEmpty() && ModuleManager::getInstanceWithoutCreating() != nullptr)
 	{
 		ModuleManager::getInstance()->addBaseManagerListener(this);
+	}
+
+	if (command == nullptr && ghostCommandName.isNotEmpty())
+	{
+		setWarningMessage("Command not found : " + ghostModuleName + ":" + ghostCommandName);
+	}
+	else
+	{
+		clearWarning();
 	}
 }
 
