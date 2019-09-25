@@ -87,7 +87,6 @@ ChataigneEngine::~ChataigneEngine()
 	MyoManager::deleteInstance();
 #endif
 
-	ProjectSettings::deleteInstance();
 	ChataigneAssetManager::deleteInstance();
 
 	CVGroupManager::deleteInstance();
