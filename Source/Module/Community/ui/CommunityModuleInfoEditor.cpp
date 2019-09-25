@@ -58,13 +58,13 @@ CommunityModuleInfoEditor::~CommunityModuleInfoEditor()
 void CommunityModuleInfoEditor::updateVersionUI()
 {
 	String s = "Version : " + cmi->onlineVersion;
-	if (!cmi->isLocal->boolValue()) installBT->customText = ""; //Default to "install"
+	if (!cmi->isLocal->boolValue()) installBT->customLabel = ""; //Default to "install"
 	else
 	{
 		s += (" (Local : " + cmi->localVersion + ")");
 			
-		if (cmi->onlineVersion == cmi->localVersion) installBT->customText = "Up to date";
-		else installBT->customText = "Update";
+		if (cmi->onlineVersion == cmi->localVersion) installBT->customLabel = "Up to date";
+		else installBT->customLabel = "Update";
 	}
 
 	versionsLabel.setText(s, dontSendNotification);
