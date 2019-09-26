@@ -56,5 +56,5 @@ void CustomValuesCommandArgumentManagerEditor::showMenuAndAddItem(bool)
 
 	int result = p.show();
 
-	handleMenuSelectedID(result);
+	if(result) handleMenuSelectedID(result);
 }
