@@ -467,12 +467,8 @@ void StreamingModule::onControllableFeedbackUpdateInternal(ControllableContainer
 
 	if (c == streamingType)
 	{
-		while (valuesCC.controllables.size() > 0) valuesCC.removeControllable(valuesCC.controllables[0]);
 		buildMessageStructureOptions();
-	} else if (c == messageStructure)
-	{
-		while (valuesCC.controllables.size() > 0) valuesCC.removeControllable(valuesCC.controllables[0]);
-	}
+	} 
 }
 
 void StreamingModule::loadJSONDataInternal(var data)
