@@ -20,7 +20,7 @@ CommandTemplateParameterEditor::CommandTemplateParameterEditor(CommandTemplatePa
 	addAndMakeVisible(parameterUI.get());
 	addAndMakeVisible(editableUI.get());
 
-	setSize(100, 16);
+	setSize(200, parameterUI->getHeight());
 }
 
 CommandTemplateParameterEditor::~CommandTemplateParameterEditor()
