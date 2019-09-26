@@ -20,7 +20,7 @@ StringComparator::StringComparator(Controllable * c) :
 	reference = stringRef;
 
 	addCompareOption("=", equalsId);
-	addCompareOption("!=", equalsId);
+	addCompareOption("!=", differentId);
 	addCompareOption("Contains", containsId);
 	addCompareOption("Starts with", startsWith);
 	addCompareOption("Ends with", endsWidth);
