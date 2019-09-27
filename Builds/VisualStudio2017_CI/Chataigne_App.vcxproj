@@ -2509,6 +2509,12 @@
     <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\help\HelpPanel.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\helpers\crypto\hmac\HMAC_SHA1.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\helpers\crypto\hmac\SHA1.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\helpers\StringUtil.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -4001,6 +4007,8 @@
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\engine\EngineListener.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\help\HelpBox.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\help\HelpPanel.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\helpers\crypto\hmac\HMAC_SHA1.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\helpers\crypto\hmac\SHA1.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\helpers\DebugHelpers.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\helpers\NetworkHelpers.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\helpers\OSCHelpers.h"/>

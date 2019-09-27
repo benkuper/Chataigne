@@ -1004,6 +1004,12 @@
     <Filter Include="JUCE Modules\juce_organicui\help">
       <UniqueIdentifier>{54FE50EF-F56B-C1E4-8E3C-A566B33B6F8E}</UniqueIdentifier>
     </Filter>
+    <Filter Include="JUCE Modules\juce_organicui\helpers\crypto\hmac">
+      <UniqueIdentifier>{A5633EBC-1E29-7D6F-3236-00828EC13E8A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_organicui\helpers\crypto">
+      <UniqueIdentifier>{427229E6-5C9E-151E-F571-468B856BB151}</UniqueIdentifier>
+    </Filter>
     <Filter Include="JUCE Modules\juce_organicui\helpers">
       <UniqueIdentifier>{1DE9CE4E-5887-D7C5-F2FF-C3AD214BEE3E}</UniqueIdentifier>
     </Filter>
@@ -4173,6 +4179,12 @@
     </ClCompile>
     <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\help\HelpPanel.cpp">
       <Filter>JUCE Modules\juce_organicui\help</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\helpers\crypto\hmac\HMAC_SHA1.cpp">
+      <Filter>JUCE Modules\juce_organicui\helpers\crypto\hmac</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\helpers\crypto\hmac\SHA1.cpp">
+      <Filter>JUCE Modules\juce_organicui\helpers\crypto\hmac</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\helpers\StringUtil.cpp">
       <Filter>JUCE Modules\juce_organicui\helpers</Filter>
@@ -7916,6 +7928,12 @@
     </ClInclude>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\help\HelpPanel.h">
       <Filter>JUCE Modules\juce_organicui\help</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\helpers\crypto\hmac\HMAC_SHA1.h">
+      <Filter>JUCE Modules\juce_organicui\helpers\crypto\hmac</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\helpers\crypto\hmac\SHA1.h">
+      <Filter>JUCE Modules\juce_organicui\helpers\crypto\hmac</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\helpers\DebugHelpers.h">
       <Filter>JUCE Modules\juce_organicui\helpers</Filter>
