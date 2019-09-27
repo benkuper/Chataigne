@@ -26,6 +26,7 @@ public:
 	StringParameter * target;
 	StringParameter * launchOptions;
 	BoolParameter * killMode;
+	BoolParameter* silentMode;
 
 	void triggerInternal() override;
 

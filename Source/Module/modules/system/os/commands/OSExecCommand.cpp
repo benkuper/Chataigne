@@ -15,9 +15,10 @@
 #include <Tlhelp32.h>
 #endif
 
-OSExecCommand::OSExecCommand(OSModule * _module, CommandContext context, var params) :
+OSExecCommand::OSExecCommand(OSModule* _module, CommandContext context, var params) :
 	BaseCommand(_module, context, params),
-	launchOptions(nullptr)
+	launchOptions(nullptr),
+	silentMode(nullptr)
 {
 	actionType = (ActionType)(int)params.getProperty("type", LAUNCH_APP);
 
@@ -45,6 +46,11 @@ OSExecCommand::OSExecCommand(OSModule * _module, CommandContext context, var par
 		target = addStringParameter("Command", "The command to launch.Every line is a new command", "");
 		target->multiline = true;
 		break;
+	}
+
+	if (actionType == LAUNCH_COMMAND || actionType == LAUNCH_COMMAND_FILE)
+	{
+		silentMode = addBoolParameter("Silent mode", "If checked, will not open a new terminal window, but if the process never stops, there is no way to shut it down without closing Chataigne !", false);
 	}
 }
 
@@ -84,7 +90,9 @@ void OSExecCommand::triggerInternal()
 	case LAUNCH_COMMAND:
 	{
 		String command = target->stringValue().replace("\n", " && ");
-		int result = system(command.getCharPointer());
+		int result = 0;
+		if(silentMode->boolValue()) WinExec(command.getCharPointer(), SW_HIDE);
+		else result = system(command.getCharPointer());
 		if (module->logOutgoingData->boolValue()) NLOG(module->niceName, "Launching : " + command);
 		if (result != 0) NLOGERROR(module->niceName, "Error trying to launch command : " << target->stringValue());
 		module->outActivityTrigger->trigger();
@@ -100,7 +108,9 @@ void OSExecCommand::triggerInternal()
 		String driveLetter = dir.substring(0, 2);
 		String command = driveLetter + " && cd \"" + dir + "\" && \"" + f.getFileName()+"\"";
 		if (module->logOutgoingData->boolValue()) NLOG(module->niceName, "Launching : " + command);
-		int result = system(command.getCharPointer());
+		int result = 0;
+		if (silentMode->boolValue()) WinExec(command.getCharPointer(), SW_HIDE);
+		else system(command.getCharPointer());
 #else
         String launchPrefix = f.getFileName().endsWith("sh")?"sh ":"./";
         
