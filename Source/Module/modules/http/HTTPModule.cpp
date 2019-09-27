@@ -218,22 +218,30 @@ void HTTPModule::sendRequestFromScript(const var::NativeFunctionArgs& args, Requ
 	}
 
 	ResultDataType dataType = ResultDataType::RAW;
-	if (args.numArguments >= 2)
-	{
-		String dataTypeString = args.arguments[1].toString().toLowerCase();
-		if (dataTypeString == jsonDataTypeId.toString()) dataType = ResultDataType::JSON;
-		else if(dataTypeString == rawDataTypeId.toString()) dataType = ResultDataType::RAW;
-	}
 
+	String extraHeaders = "";
 	StringPairArray requestParams;
-	for (int i = 2; i < args.numArguments; i += 2)
-	{
-		if (i >= args.numArguments - 1) break;
-		requestParams.set(args.arguments[i], args.arguments[i + 1]);
-	}
 
+	if (method == GET)
+	{
+		if (args.numArguments >= 2)
+		{
+			String dataTypeString = args.arguments[1].toString().toLowerCase();
+			if (dataTypeString == jsonDataTypeId.toString()) dataType = ResultDataType::JSON;
+			else if (dataTypeString == rawDataTypeId.toString()) dataType = ResultDataType::RAW;
+			if (args.numArguments >= 3) extraHeaders = args.arguments[2].toString();
+		}
+	}
+	else if(method == POST)
+	{
+		for (int i = 2; i < args.numArguments; i += 2)
+		{
+			if (i >= args.numArguments - 1) break;
+			requestParams.set(args.arguments[i], args.arguments[i + 1]);
+		}
+	}
 	
-	sendRequest(args.arguments[0].toString(), method, dataType, requestParams);
+	sendRequest(args.arguments[0].toString(), method, dataType, requestParams, extraHeaders);
 	return;
 }
 
