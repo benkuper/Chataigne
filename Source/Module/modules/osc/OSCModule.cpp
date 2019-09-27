@@ -321,7 +321,7 @@ OSCArgument OSCModule::varToColorArgument(const var & v)
 	}
 	else if (v.isArray() && v.size() >= 3)
 	{
-		Colour c = Colour::fromFloatRGBA(v[0], v[1], v[2], v.size() >= 4 ? v[3] : 1);
+		Colour c = Colour::fromFloatRGBA(v[0], v[1], v[2], v.size() >= 4 ? (float)v[3] : 1.0f);
 		return OSCArgument(OSCHelpers::getOSCColour(c));
 	}
 

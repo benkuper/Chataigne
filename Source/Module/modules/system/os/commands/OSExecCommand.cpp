@@ -91,8 +91,12 @@ void OSExecCommand::triggerInternal()
 	{
 		String command = target->stringValue().replace("\n", " && ");
 		int result = 0;
-		if(silentMode->boolValue()) WinExec(command.getCharPointer(), SW_HIDE);
+#if JUCE_WINDOWS
+        if(silentMode->boolValue()) WinExec(command.getCharPointer(), SW_HIDE);
 		else result = system(command.getCharPointer());
+#else
+        result = system(command.getCharPointer());
+#endif
 		if (module->logOutgoingData->boolValue()) NLOG(module->niceName, "Launching : " + command);
 		if (result != 0) NLOGERROR(module->niceName, "Error trying to launch command : " << target->stringValue());
 		module->outActivityTrigger->trigger();
