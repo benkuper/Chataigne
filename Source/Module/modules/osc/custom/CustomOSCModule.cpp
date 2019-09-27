@@ -246,7 +246,16 @@ void CustomOSCModule::onControllableFeedbackUpdateInternal(ControllableContainer
 					if (p != nullptr)
 					{
 						if (c->type == Controllable::COLOR) m.addArgument(varToColorArgument(p->value));
-						m.addArgument(varToArgument(p->value));
+						else if (p->value.isArray())
+						{
+
+							Array<var>* arr = p->value.getArray();
+							for (auto& aa : *arr) m.addArgument(varToArgument(aa));
+						}
+						else
+						{
+							m.addArgument(varToArgument(p->value));
+						}
 					}
 				}
 
