@@ -69,6 +69,12 @@ void StandardCondition::setSourceControllable(WeakReference<Controllable> c)
 	{
 		var oldData = var();
 		if (comparator != nullptr) oldData = comparator->getJSONData();
+		
+		if (comparator != nullptr)
+		{
+			removeChildControllableContainer(comparator.get());
+		}
+
 		comparator.reset(ComparatorFactory::createComparatorForControllable(sourceControllable));
 
 		comparator->hideInEditor = true;
