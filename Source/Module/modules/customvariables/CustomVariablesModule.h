@@ -30,6 +30,7 @@ public:
 
 	void clearItems();
 
+
 	void itemAdded(CVGroup * g) override;
 	void itemRemoved(CVGroup * g) override;
 	void childAddressChanged(ControllableContainer * cc) override;

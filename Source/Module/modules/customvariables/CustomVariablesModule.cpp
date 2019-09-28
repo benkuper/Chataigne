@@ -55,6 +55,7 @@ void CustomVariablesModule::clearItems()
 
 }
 
+
 void CustomVariablesModule::itemAdded(CVGroup * g)
 {
 	GenericControllableManagerLinkedContainer * cc = new GenericControllableManagerLinkedContainer(g->niceName,&g->values,true);

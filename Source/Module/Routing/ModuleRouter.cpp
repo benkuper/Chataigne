@@ -10,6 +10,8 @@
 
 #include "ModuleRouter.h"
 #include "../ModuleManager.h"
+#include "CustomVariables/CVGroupManager.h"
+#include "Module/modules/customvariables/CustomVariablesModule.h"
 
 ModuleRouter::ModuleRouter() :
 	BaseItem("Router"),
@@ -96,6 +98,26 @@ void ModuleRouter::setDestModule(Module * m)
 	routerListeners.call(&RouterListener::destModuleChanged, this);
 }
 
+void ModuleRouter::reloadSourceValues(bool keepData)
+{
+	var prevData = sourceValues.getJSONData();
+
+	sourceValues.clear();
+
+	Array<WeakReference<Controllable>> values = sourceModule->valuesCC.getAllControllables(true);
+	int index = 0;
+	for (auto& c : values)
+	{
+		ModuleRouterValue* mrv = new ModuleRouterValue(c, index++);
+		sourceValues.addItem(mrv, var(), false);
+		mrv->forceDisabled = !enabled->boolValue();
+		mrv->setSourceAndOutModule(sourceModule, destModule);
+	}
+
+	if (keepData) sourceValues.loadItemsData(prevData);
+
+}
+
 
 var ModuleRouter::getJSONData()
 {
@@ -113,16 +135,22 @@ var ModuleRouter::getJSONData()
 void ModuleRouter::loadJSONDataInternal(var data)
 {
 	BaseItem::loadJSONDataInternal(data);
-	setSourceModule(ModuleManager::getInstance()->getItemWithName(data.getProperty("sourceModule", "")));
+
+	String moduleName = data.getProperty("sourceModule", "");
+	if (moduleName == CVGroupManager::getInstance()->module->shortName) setSourceModule(CVGroupManager::getInstance()->module.get());
+	else setSourceModule(ModuleManager::getInstance()->getItemWithName(moduleName));
+	
 	setDestModule(ModuleManager::getInstance()->getItemWithName(data.getProperty("destModule", "")));
+	
 	if (data.getDynamicObject()->hasProperty("sourceValues")) sourceValues.loadItemsData(data.getProperty("sourceValues", var()));
 }
 
 void ModuleRouter::newMessage(const ContainerAsyncEvent & e)
 {
+	/*
 	if (e.type == ContainerAsyncEvent::ControllableAdded)
 	{
-		if (e.targetControllable->parentContainer->parentContainer == sourceModule)
+		if (sourceModule->valuesCC.containsControllable(e.targetControllable))
 		{
 			ModuleRouterValue * mrv = new ModuleRouterValue(e.targetControllable, sourceValues.items.size());
 			sourceValues.addItem(mrv, var(), false);
@@ -130,11 +158,19 @@ void ModuleRouter::newMessage(const ContainerAsyncEvent & e)
 		}
 	} else if (e.type == ContainerAsyncEvent::ControllableRemoved)
 	{
-		if (e.targetControllable->parentContainer->parentContainer == sourceModule)
+		if (sourceModule->valuesCC.containsControllable(e.targetControllable))
 		{
 			ModuleRouterValue * v = getRouterValueForControllable(e.targetControllable);
 			if (v == nullptr) return;
 			sourceValues.removeItem(v, false);
+		}
+	}*/
+
+	if (e.type == e.ChildStructureChanged)
+	{
+		if (!Engine::mainEngine->isLoadingFile && !isCurrentlyLoadingData && !Engine::mainEngine->isClearing)
+		{
+			reloadSourceValues();
 		}
 	}
 }

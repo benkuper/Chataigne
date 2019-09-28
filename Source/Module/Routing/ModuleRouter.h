@@ -38,6 +38,9 @@ public:
 	void setSourceModule(Module * m);
 	void setDestModule(Module * m);
 
+	void reloadSourceValues(bool keepData = true);
+
+
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
 

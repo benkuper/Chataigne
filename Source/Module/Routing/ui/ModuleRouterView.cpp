@@ -31,7 +31,6 @@ ModuleRouterView::ModuleRouterView() :
 	destChooser.addChooserListener(this);
 	destChooser.filterModuleFunc = &ModuleRouterView::isModuleRoutable;
 	addAndMakeVisible(&destChooser);
-
 	
 	sourceLabel.setColour(Label::textColourId, Colours::grey);
 	destLabel.setColour(Label::textColourId, Colours::grey);
@@ -173,6 +172,7 @@ void ModuleRouterView::buildValueManagerUI()
 
 	managerUI.reset(new BaseManagerUI<BaseManager<ModuleRouterValue>, ModuleRouterValue, ModuleRouterValueEditor>("Values", &currentRouter->sourceValues));
 	managerUI->setShowAddButton(false);
+	managerUI->animateItemOnAdd = false;
 	managerUI->addExistingItems(); //force adding, normally we do it in a child classes but as we use the basic ui, we have to do it here
 	addAndMakeVisible(managerUI.get());
 }

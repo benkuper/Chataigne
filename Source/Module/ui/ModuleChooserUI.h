@@ -8,23 +8,23 @@
   ==============================================================================
 */
 
-#ifndef MODULECHOOSERUI_H_INCLUDED
-#define MODULECHOOSERUI_H_INCLUDED
-
+#pragma once
 
 #include "ModuleManagerUI.h"
-
+#include "CustomVariables/CVGroupManager.h"
 
 class ModuleChooserUI :
 	public ModuleManager::AsyncListener,
+	public CVGroupManager::AsyncListener,
 	public ContainerAsyncListener,
 	public ComboBox,
 	public ComboBox::Listener
 {
 public:
-	ModuleChooserUI();
+	ModuleChooserUI(bool includeCVModule = true);
 	virtual ~ModuleChooserUI();
 
+	bool includeCVModule;
 	std::function<bool(Module *)> filterModuleFunc;
 
 	void buildModuleBox();
@@ -33,7 +33,8 @@ public:
 
 	void comboBoxChanged(ComboBox *) override;
 
-	void newMessage(const ModuleManager::ManagerEvent &e) override;
+	void newMessage(const ModuleManager::ManagerEvent& e) override;
+	void newMessage(const CVGroupManager::ManagerEvent &e) override;
 	void newMessage(const ContainerAsyncEvent &e) override;
 
 	class ChooserListener
@@ -49,7 +50,3 @@ public:
 	void removeChooserListener(ChooserListener* listener) { chooserListeners.remove(listener); }
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ModuleChooserUI)
 };
-
-
-
-#endif  // MODULECHOOSERUI_H_INCLUDED
