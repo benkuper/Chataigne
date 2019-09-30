@@ -61,7 +61,7 @@ public:
 	const Identifier sendNoteOffId = "sendNoteOff";
 	const Identifier sendCCId = "sendCC";
 	const Identifier sendSysexId = "sendSysex";
-	const Identifier sendProgramChangedId = "sendProgramChange";
+	const Identifier sendProgramChangeId = "sendProgramChange";
 	
 	bool useGenericControls;
 
