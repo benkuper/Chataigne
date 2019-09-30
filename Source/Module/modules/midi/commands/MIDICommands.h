@@ -36,7 +36,7 @@ public:
 	MIDINoteAndCCCommand(MIDIModule * module, CommandContext context, var params);
 	~MIDINoteAndCCCommand();
 
-	enum MessageType {NOTE_ON,NOTE_OFF,FULL_NOTE, CONTROLCHANGE};
+	enum MessageType {NOTE_ON,NOTE_OFF,FULL_NOTE, CONTROLCHANGE, PROGRAMCHANGE};
 	enum MapTo { PITCH, VELOCITY };
 	MessageType type;
 

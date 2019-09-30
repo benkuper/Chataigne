@@ -134,6 +134,12 @@ void MIDIOutputDevice::sendControlChange(int channel, int number, int value)
 	device->sendMessageNow(MidiMessage::controllerEvent(channel, number, value));
 }
 
+void MIDIOutputDevice::sendProgramChange(int channel, int number)
+{
+	if (device == nullptr) return;
+	device->sendMessageNow(MidiMessage::programChange(channel, number));
+}
+
 void MIDIOutputDevice::sendSysEx(Array<uint8> data)
 {
 	if (device == nullptr) return;

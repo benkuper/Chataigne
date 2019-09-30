@@ -75,6 +75,7 @@ public:
 	void sendNoteOn(int channel, int pitch, int velocity);
 	void sendNoteOff(int channel, int pitch);
 	void sendControlChange(int channel, int number, int value);
+	void sendProgramChange(int channel, int number);
 	void sendSysEx(Array<uint8> data);
 	void sendFullframeTimecode(int hours, int minutes, int seconds, int frames, MidiMessage::SmpteTimecodeType timecodeType);
 	void sendQuarterframe(int piece, int value);

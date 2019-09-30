@@ -31,6 +31,7 @@ MIDIModule::MIDIModule(const String & name, bool _useGenericControls) :
 		defManager.add(CommandDefinition::createDef(this, "", "Full Note", &MIDINoteAndCCCommand::create)->addParam("type", (int)MIDINoteAndCCCommand::FULL_NOTE));
 		defManager.add(CommandDefinition::createDef(this, "", "Controller Change", &MIDINoteAndCCCommand::create)->addParam("type", (int)MIDINoteAndCCCommand::CONTROLCHANGE));
 		defManager.add(CommandDefinition::createDef(this, "", "Sysex Message", &MIDISysExCommand::create));
+		defManager.add(CommandDefinition::createDef(this, "", "Program Change", &MIDINoteAndCCCommand::create)->addParam("type", (int)MIDINoteAndCCCommand::PROGRAMCHANGE));;
 	}
 	
 	autoFeedback = moduleParams.addBoolParameter("Auto Feedback", "If checked, all changed values will be resent automatically to the outputs", false);
@@ -49,6 +50,7 @@ MIDIModule::MIDIModule(const String & name, bool _useGenericControls) :
 	scriptObject.setMethod(sendNoteOffId, &MIDIModule::sendNoteOffFromScript);
 	scriptObject.setMethod(sendCCId, &MIDIModule::sendCCFromScript);
 	scriptObject.setMethod(sendSysexId, &MIDIModule::sendSysexFromScript);
+	scriptObject.setMethod(sendSysexId, &MIDIModule::sendProgramChangeFromScript);
 
 	scriptManager->scriptTemplate += ChataigneAssetManager::getInstance()->getScriptTemplate("midi");
 
@@ -91,6 +93,15 @@ void MIDIModule::sendControlChange(int channel, int number, int value)
 	if (logOutgoingData->boolValue()) NLOG(niceName, "Send Control Change " << number << ", " << value << ", " << channel);
 	outActivityTrigger->trigger();
 	outputDevice->sendControlChange(channel, number, value);
+}
+
+void MIDIModule::sendProgramChange(int channel, int program)
+{
+	if (!enabled->boolValue()) return;
+	if (outputDevice == nullptr) return;
+	if (logOutgoingData->boolValue()) NLOG(niceName, "Send ProgramChange " << program);
+	outActivityTrigger->trigger();
+	outputDevice->sendProgramChange(channel, program);
 }
 
 void MIDIModule::sendSysex(Array<uint8> data)
@@ -308,6 +319,21 @@ var MIDIModule::sendSysexFromScript(const var::NativeFunctionArgs & args)
 	for (int i = 0; i < args.numArguments; i++) data.add((uint8)(int)args.arguments[i]);
 	m->sendSysex(data);
 
+	return var();
+}
+
+var MIDIModule::sendProgramChangeFromScript(const var::NativeFunctionArgs& args)
+{
+	MIDIModule* m = getObjectFromJS<MIDIModule>(args);
+	if (!m->enabled->boolValue()) return var();
+
+	if (args.numArguments < 2)
+	{
+		NLOG(m->niceName, "Not enough arguments passed from script, got " << args.numArguments << ", expected 2");
+		return var();
+	}
+
+	m->sendProgramChange(args.arguments[0], args.arguments[1]);
 	return var();
 }
 
