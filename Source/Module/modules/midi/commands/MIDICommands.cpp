@@ -48,7 +48,14 @@ MIDINoteAndCCCommand::MIDINoteAndCCCommand(MIDIModule * module, CommandContext c
 	case CONTROLCHANGE:
 		number = addIntParameter("CC Number", "Number of the CC (0-127)", 0, 0, 127);
 		velocity = addIntParameter("CC Value", "Value of the CC", 0, 0, 127);
+		break;
+
+	case PROGRAMCHANGE:
+		number = addIntParameter("Program", "The program to set", 0, 0, 127);
+		break;
 	}
+
+
 
 	if (type == FULL_NOTE)
 	{
@@ -82,7 +89,7 @@ void MIDINoteAndCCCommand::triggerInternal()
 {
 	MIDICommand::triggerInternal();
 
-	int pitch = type == CONTROLCHANGE? number->intValue() : (int)noteEnum->getValueData() + (octave->intValue() - (int)octave->minimumValue) * 12;
+	int pitch = (type == CONTROLCHANGE || type == PROGRAMCHANGE)? number->intValue() : (int)noteEnum->getValueData() + (octave->intValue() - (int)octave->minimumValue) * 12;
 
 	switch(type)
 	{
@@ -101,6 +108,10 @@ void MIDINoteAndCCCommand::triggerInternal()
 
 	case CONTROLCHANGE:
 		midiModule->sendControlChange(channel->intValue(), pitch, velocity->intValue());
+		break;
+
+	case PROGRAMCHANGE:
+		midiModule->sendProgramChange(channel->intValue(), pitch);
 		break;
 
 	default:
