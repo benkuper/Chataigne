@@ -52,7 +52,7 @@ void BaseCommandHandlerEditor::updateChooserLabel()
 	if (inspectable.wasObjectDeleted()) return;
 	if (handler->command == nullptr || handler->commandDefinition == nullptr) return;
 
-	chooser.setLabel(handler->command->module->niceName + ":" + handler->commandDefinition->commandType);
+	chooser.setLabel(handler->command->module->niceName + " > " + handler->commandDefinition->commandType);
 	chooser.repaint();
 }
 
