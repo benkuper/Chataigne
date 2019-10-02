@@ -8,8 +8,7 @@
   ==============================================================================
 */
 
-#ifndef STATEMANAGERUI_H_INCLUDED
-#define STATEMANAGERUI_H_INCLUDED
+#pragma once
 
 
 #include "../StateManager.h"
@@ -27,8 +26,3 @@ public:
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(StateManagerUI)
 };
-
-
-
-
-#endif  // STATEMANAGERUI_H_INCLUDED

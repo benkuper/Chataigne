@@ -36,6 +36,8 @@ StateMachineView::StateMachineView(const String &contentName, StateManager * _ma
 	commentManagerUI->canZoom = true;
 	addAndMakeVisible(commentManagerUI.get(), 0);
 
+	updatePositionOnDragMove = true;
+
 	frameView();
 }
 

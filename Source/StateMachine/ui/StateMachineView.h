@@ -8,8 +8,7 @@
   ==============================================================================
 */
 
-#ifndef STATEMACHINEVIEW_H_INCLUDED
-#define STATEMACHINEVIEW_H_INCLUDED
+#pragma once
 
 #pragma warning(disable:4244 4100 4305)
 
@@ -40,7 +39,7 @@ public:
 	void mouseDown(const MouseEvent &e) override;
 	void mouseDoubleClick(const MouseEvent &e) override;
 	bool keyPressed(const KeyPress &e) override;
-
+	
 
 	void paint(Graphics &g) override;
 	void resized() override;
@@ -68,7 +67,3 @@ public:
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(StateMachineView)
 };
-
-
-
-#endif  // STATEMACHINEVIEW_H_INCLUDED
