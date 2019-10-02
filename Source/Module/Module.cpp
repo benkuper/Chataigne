@@ -428,7 +428,7 @@ String Module::getTargetLabelForValueControllable(Controllable * c)
 		index++;
 	}
 
-	label = m->niceName + ":" + label;
+	label = m->niceName + " > " + label;
 
 	return label;
 }
