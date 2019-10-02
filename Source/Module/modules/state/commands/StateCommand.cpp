@@ -25,6 +25,7 @@ StateCommand::StateCommand(StateModule * _module, CommandContext context, var pa
 	case DEACTIVATE_STATE:
 	case TOGGLE_STATE:
 		target->customGetTargetContainerFunc = &StateManager::showMenuAndGetState;
+		target->defaultParentLabelLevel = 0;
 		break;
 
 	case TRIGGER_ACTION:
@@ -32,12 +33,14 @@ StateCommand::StateCommand(StateModule * _module, CommandContext context, var pa
 	case DISABLE_ACTION:
 	case TOGGLE_ACTION:
 		target->customGetTargetContainerFunc = &StateManager::showMenuAndGetAction;
+		target->defaultParentLabelLevel = 1;
 		break;
 
 	case ENABLE_MAPPING:
 	case DISABLE_MAPPING:
 	case TOGGLE_MAPPING:
 		target->customGetTargetContainerFunc = &StateManager::showMenuAndGetMapping;
+		target->defaultParentLabelLevel = 1;
 		break;
 
 	}
