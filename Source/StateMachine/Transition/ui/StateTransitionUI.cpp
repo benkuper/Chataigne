@@ -27,6 +27,9 @@ StateTransitionUI::StateTransitionUI(StateTransition * st, StateViewUI * _source
 	destSUI->addItemUIListener(this);
 	destSUI->addItemMinimalUIListener(this);
 	setRepaintsOnMouseActivity(true);
+
+	dragAndDropEnabled = false;
+
 	updateBounds();
 }
 
