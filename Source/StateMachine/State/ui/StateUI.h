@@ -8,10 +8,7 @@
   ==============================================================================
 */
 
-#ifndef STATEUI_H_INCLUDED
-#define STATEUI_H_INCLUDED
-
-
+#pragma once
 
 #include "../State.h"
 
@@ -22,9 +19,12 @@ public:
 	StateUI(State * output);
 	virtual ~StateUI();
 
+	std::unique_ptr<BoolToggleUI> activeUI;
+	std::unique_ptr<ImageButton> showInViewBT;
+
+	void resizedInternalHeader(Rectangle<int>& r) override;
+
+	void buttonClicked(Button* b) override;
+
 	JUCE_DECLARE_NON_COPYABLE(StateUI)
 };
-
-
-
-#endif  // STATEUI_H_INCLUDED
