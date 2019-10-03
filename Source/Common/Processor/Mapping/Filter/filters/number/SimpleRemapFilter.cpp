@@ -125,6 +125,6 @@ Parameter * SimpleRemapFilter::setupParameterInternal(Parameter * source)
 { 
 	Parameter * p = MappingFilter::setupParameterInternal(source);
 	if(!useCustomInputRange->isOverriden) useCustomInputRange->setValue(!source->hasRange());
-	p->setRange(targetOut->x, jmax<float>(targetOut->x, targetOut->y));
+	p->setRange(jmin<float>(targetOut->x,targetOut->y), jmax<float>(targetOut->x, targetOut->y));
 	return p;
 }
