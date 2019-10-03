@@ -26,6 +26,9 @@ StateViewUI::StateViewUI(State * state) :
 		addAndMakeVisible(&pmui);
 	}
 
+	autoHideWhenDragging = false;
+	drawEmptyDragIcon = true;
+
 	setContentSize(item->viewUISize->x, item->viewUISize->y);
 	updateMiniModeUI();
 	resized();
