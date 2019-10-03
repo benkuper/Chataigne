@@ -43,6 +43,7 @@ public:
 	virtual void clearThread();
 	virtual void clearInternal() {}
 
+	virtual void onContainerParameterChangedInternal(Parameter* p) override;
 	virtual void controllableFeedbackUpdate(ControllableContainer *, Controllable * c) override;
 
 	virtual void loadJSONDataInternal(var data) override;

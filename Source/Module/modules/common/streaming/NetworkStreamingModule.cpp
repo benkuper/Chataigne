@@ -71,7 +71,19 @@ NetworkStreamingModule::~NetworkStreamingModule()
 void NetworkStreamingModule::clearThread()
 {
 	signalThreadShouldExit();
-	while (isThreadRunning());
+	waitForThreadToExit(1000);
+}
+
+void NetworkStreamingModule::onContainerParameterChangedInternal(Parameter* p)
+{
+	if (p == enabled)
+	{
+		if (!isCurrentlyLoadingData)
+		{
+			setupSender();
+			setupReceiver();
+		}
+	}
 }
 
 void NetworkStreamingModule::controllableFeedbackUpdate(ControllableContainer* cc, Controllable* c)
@@ -80,7 +92,7 @@ void NetworkStreamingModule::controllableFeedbackUpdate(ControllableContainer* c
 	if (c == remoteHost || c == remotePort || c == useLocal)
 	{
 		if (c == useLocal) remoteHost->setEnabled(!useLocal->boolValue());
-		setupSender();
+		if(!isCurrentlyLoadingData) setupSender();
 	}
 	else if (c == localPort)
 	{
@@ -95,6 +107,7 @@ void NetworkStreamingModule::controllableFeedbackUpdate(ControllableContainer* c
 void NetworkStreamingModule::loadJSONDataInternal(var data)
 {
 	StreamingModule::loadJSONDataInternal(data);
+	setupSender();
 	setupReceiver();
 }
 

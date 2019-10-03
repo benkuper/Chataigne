@@ -34,6 +34,8 @@ public:
 	BoolParameter * isConnected;
 
 	virtual void setCurrentPort(SerialDevice *port);
+
+	virtual void onContainerParameterChangedInternal(Parameter* p) override;
 	virtual void onControllableFeedbackUpdateInternal(ControllableContainer *, Controllable * c) override;
 
 	virtual bool isReadyToSend() override;

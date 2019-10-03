@@ -55,7 +55,7 @@ void SerialModule::setCurrentPort(SerialDevice * _port)
 		DBG(" > " << port->info->port);
 
 		port->addSerialDeviceListener(this);
-		port->open(baudRate->intValue());
+		if(enabled->boolValue()) port->open(baudRate->intValue());
 		if (!port->isOpen())
 		{
 			NLOG(niceName, "Could not open port : " << port->info->port);
@@ -73,10 +73,26 @@ void SerialModule::setCurrentPort(SerialDevice * _port)
 	serialModuleListeners.call(&SerialModuleListener::currentPortChanged);
 }
 
+void SerialModule::onContainerParameterChangedInternal(Parameter* p)
+{
+	StreamingModule::onContainerParameterChangedInternal(p);
+	if (p == enabled)
+	{
+		if (port != nullptr)
+		{
+			if (enabled->boolValue()) port->open(baudRate->intValue());
+			else port->close();
+
+			NLOG(niceName, "Module is " << (enabled->boolValue() ? "enabled" : "disabled") << ", " << (enabled->boolValue() ? "opening" : "closing serial port"));
+		}
+	}
+}
+
 void SerialModule::onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c)
 {
 	StreamingModule::onControllableFeedbackUpdateInternal(cc, c);
 
+	
 	if (c == baudRate)
 	{
 		portParam->openBaudRate = baudRate->intValue();

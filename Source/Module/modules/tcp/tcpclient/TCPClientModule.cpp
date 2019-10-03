@@ -16,7 +16,12 @@ TCPClientModule::TCPClientModule(const String & name, int defaultRemotePort) :
 	connectionFeedbackRef = senderIsConnected;
 
 	setupIOConfiguration(true, true);
-	setupSender();
+
+	if (!Engine::mainEngine->isLoadingFile)
+	{
+		setupSender();
+	}
+
 	startTimerHz(1);
 }
 
@@ -29,6 +34,7 @@ void TCPClientModule::setupSender()
 	clearThread();
 	clearInternal();
 	
+	if (!enabled->boolValue()) return;
 	if (sendCC == nullptr) return;
 	if (!sendCC->enabled->boolValue())
 	{
@@ -45,6 +51,8 @@ void TCPClientModule::initThread()
 {
 	//if (sender.isConnected()) sender.close();
 
+	if (!enabled->boolValue()) return;
+
 	String targetHost = useLocal->boolValue() ? "127.0.0.1" : remoteHost->stringValue();
 	bool result = sender.connect(targetHost, remotePort->intValue(), 200);
 	if(result) NLOG(niceName, "Sender bound to port " << sender.getBoundPort());
@@ -59,7 +67,7 @@ void TCPClientModule::initThread()
 	else
 	{
 		String s = "Could not connect to " + remoteHost->stringValue() + ":" + remotePort->stringValue();
-		NLOGERROR(niceName, s);
+		if(getWarningMessage().isEmpty()) NLOGERROR(niceName, s);
 		sendCC->setWarningMessage(s);
 	}
 
