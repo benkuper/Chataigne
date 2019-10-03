@@ -42,6 +42,7 @@ public:
 	bool hitTest(int x, int y) override;
 
 	void itemUIMiniModeChanged(BaseItemUI<State>  *) override;
+	void itemUIViewPositionChanged(BaseItemMinimalUI<State>*) override;
 	void editorSelectionChanged(StateViewUI *) override;
 };
 

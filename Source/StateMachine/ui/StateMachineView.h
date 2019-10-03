@@ -46,6 +46,8 @@ public:
 
 	void setViewZoom(float value) override;
 
+	void updateItemsVisibility() override;
+
 	void showMenuAndAddItem(bool fromAddButton, Point<int> position) override;
 	
 	//Transition
@@ -61,6 +63,7 @@ public:
 	void askFinishTransitionFromUI(StateViewUI * se) override;
 
 	void itemDropped(const SourceDetails &details) override;
+
 
 	static StateMachineView * create(const String &contentName) { return new StateMachineView(contentName, StateManager::getInstance()); }
 

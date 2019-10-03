@@ -119,7 +119,13 @@ void StateMachineView::resized()
 void StateMachineView::setViewZoom(float value)
 {
 	BaseManagerViewUI::setViewZoom(value);
-	commentManagerUI->setViewZoom(value);
+	if(commentManagerUI != nullptr) commentManagerUI->setViewZoom(value);
+}
+
+void StateMachineView::updateItemsVisibility()
+{
+	BaseManagerViewUI::updateItemsVisibility();
+	if(commentManagerUI != nullptr) commentManagerUI->updateItemsVisibility();
 }
 
 void StateMachineView::showMenuAndAddItem(bool fromAddButton, Point<int> position)

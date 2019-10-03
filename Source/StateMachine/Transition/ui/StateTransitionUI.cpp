@@ -210,6 +210,11 @@ void StateTransitionUI::itemUIMiniModeChanged(BaseItemUI<State> *)
 	updateBounds();
 }
 
+void StateTransitionUI::itemUIViewPositionChanged(BaseItemMinimalUI<State>*)
+{
+	updateBounds();
+}
+
 void StateTransitionUI::editorSelectionChanged(StateViewUI *)
 {
 	repaint();
