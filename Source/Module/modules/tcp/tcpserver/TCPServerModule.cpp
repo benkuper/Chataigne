@@ -9,6 +9,7 @@
 */
 
 #include "TCPServerModule.h"
+#include "ui/TCPServerModuleUI.h"
 
 TCPServerModule::TCPServerModule(const String& name, int defaultLocalPort) :
 	NetworkStreamingModule(name, true, false, 6000)
@@ -17,6 +18,7 @@ TCPServerModule::TCPServerModule(const String& name, int defaultLocalPort) :
 	numClients->setControllableFeedbackOnly(true);
 	setupIOConfiguration(true, true);
 
+	receiveCC->canBeDisabled = false;
 	connectionManager.addConnectionManagerListener(this);
 
 	if(!Engine::mainEngine->isLoadingFile) setupReceiver();
@@ -30,8 +32,10 @@ void TCPServerModule::setupReceiver()
 {
 	clearThread();
 	clearInternal();
+	connectionManager.close();
 	
 	if (Engine::mainEngine == nullptr || Engine::mainEngine->isClearing) return;
+	if (!enabled->boolValue()) return;
 
 	connectionManager.setupReceiver(localPort->intValue());
 	startThread();
@@ -102,18 +106,38 @@ Array<uint8> TCPServerModule::readBytes()
 {
 	Array<uint8> result;
 	
+	Array<StreamingSocket*> connectionsToRemove;
+
 	for (auto& c : connectionManager.connections)
 	{
 		uint8 bytes[2048];
-		int numRead = c->read(bytes, 2048, false);
-		if (numRead == -1)
+
+		int ready = c->waitUntilReady(true, 20);
+		if (ready == -1)
 		{
-			NLOGERROR(niceName, "Error reading data");
+			connectionsToRemove.add(c);
 			continue;
 		}
-		result.addArray(Array<uint8>(bytes, numRead)); //Not that great, all values will be stacked together. Needs proper handling
+
+		if (ready == 1)
+		{
+			int numRead = c->read(bytes, 2048, false);
+			if (numRead <= 0)
+			{
+				connectionsToRemove.add(c);
+				continue;
+			}
+
+			DBG("Num read : " << numRead);
+			result.addArray(Array<uint8>(bytes, numRead)); //Not that great, all values will be stacked together. Needs proper handling
+		}
 	}
 
+	for (auto& c : connectionsToRemove)
+	{
+		NLOGWARNING(niceName, "Connection to TCP client seems lost, removing client");
+		connectionManager.removeConnection(c);
+	}
 	return result;
 }
 
@@ -143,4 +167,9 @@ void TCPServerModule::receiverBindChanged(bool isBound)
 		NLOGERROR(niceName, s);
 		localPort->setWarningMessage(s);
 	}
+}
+
+ModuleUI* TCPServerModule::getModuleUI()
+{
+	return new TCPServerModuleUI(this);
 }

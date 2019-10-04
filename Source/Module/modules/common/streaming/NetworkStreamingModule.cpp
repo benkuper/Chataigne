@@ -80,6 +80,8 @@ void NetworkStreamingModule::onContainerParameterChangedInternal(Parameter* p)
 	{
 		if (!isCurrentlyLoadingData)
 		{
+			NLOG(niceName, "Module is " << (enabled->boolValue() ? "enabled" : "disabled") << ", " << (enabled->boolValue() ? "opening" : "closing") << " connections");
+			
 			setupSender();
 			setupReceiver();
 		}

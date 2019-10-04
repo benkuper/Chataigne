@@ -8,8 +8,7 @@
   ==============================================================================
 */
 
-#ifndef MODULEMANAGERUI_H_INCLUDED
-#define MODULEMANAGERUI_H_INCLUDED
+#pragma once
 
 #include "ModuleUI.h"
 #include "../ModuleManager.h"
@@ -22,14 +21,10 @@ public:
 	ModuleManagerUI(const String &contentName, ModuleManager *_manager);
 	~ModuleManagerUI();
 
+	ModuleUI* createUIForItem(Module* item) override;
 	void showMenuAndAddItem(bool ,Point<int>) override;
 
 	static ModuleManagerUI * create(const String &contentName) { return new ModuleManagerUI(contentName, ModuleManager::getInstance()); }
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ModuleManagerUI)
 };
-
-
-
-
-#endif  // MODULEMANAGERUI_H_INCLUDED

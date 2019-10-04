@@ -44,6 +44,8 @@ public:
 	void newConnection(StreamingSocket * s) override;
 	void receiverBindChanged(bool isBound) override;
 
+	ModuleUI* getModuleUI() override;
+
 	static TCPServerModule* create() { return new TCPServerModule(); }
 	virtual String getDefaultTypeString() const override { return "TCP Server"; }
 };

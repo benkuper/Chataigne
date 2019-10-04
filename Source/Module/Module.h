@@ -8,8 +8,7 @@
   ==============================================================================
 */
 
-#ifndef MODULE_H_INCLUDED
-#define MODULE_H_INCLUDED
+#pragma once
 
 #include "JuceHeader.h"
 #include "Common/Command/Template/CommandTemplateManager.h"
@@ -17,6 +16,7 @@
 class ModuleCommandTester;
 class BaseCommandHandler;
 class CommandDefinition;
+class ModuleUI;
 
 class Module :
 	public BaseItem
@@ -124,7 +124,7 @@ public:
 	virtual String getDefaultTypeString() const { jassert(false); return ""; }
 
 	virtual InspectableEditor * getEditor(bool isRoot) override;
-
+	virtual ModuleUI* getModuleUI();
 
 	class ModuleListener
 	{
@@ -141,8 +141,3 @@ public:
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Module)
 };
-
-
-
-
-#endif  // MODULE_H_INCLUDED

@@ -11,6 +11,7 @@
 #include "Module.h"
 #include "Common/Command/CommandFactory.h"
 #include "ui/ModuleEditor.h"
+#include "ui/ModuleUI.h"
 #include "Common/Command/Template/CommandTemplate.h"
 #include "Module/modules/common/commands/scriptcommands/ScriptCommand.h"
 #include "UI/ChataigneAssetManager.h"
@@ -408,6 +409,11 @@ void Module::processDependencies(Parameter * p)
 InspectableEditor * Module::getEditor(bool isRoot)
 {
 	return new ModuleEditor(this, isRoot); //temp, should have a proper base module editor
+}
+
+ModuleUI* Module::getModuleUI()
+{
+	return new ModuleUI(this);
 }
 
 String Module::getTargetLabelForValueControllable(Controllable * c)

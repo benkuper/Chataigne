@@ -12,7 +12,8 @@
 
 TCPServerConnectionManager::TCPServerConnectionManager() :
 	Thread("TCP Server Connections"),
-	portToBind(0)
+	portToBind(0),
+	queuedNotifier(10)
 {
 }
 
@@ -31,11 +32,16 @@ void TCPServerConnectionManager::setupReceiver(int port)
 void TCPServerConnectionManager::removeConnection(StreamingSocket* connection)
 {
 	connections.removeObject(connection);
+	queuedNotifier.addMessage(new ConnectionManagerEvent(ConnectionManagerEvent::CONNECTIONS_CHANGED));
 }
 
 void TCPServerConnectionManager::close()
 {
-	if (receiver.isConnected()) receiver.close();
+	if (receiver.isConnected())
+	{
+		receiver.close();
+		while (connections.size() > 0) removeConnection(connections[0]);
+	}
 	signalThreadShouldExit();
 	waitForThreadToExit(100);
 }
@@ -54,6 +60,7 @@ void TCPServerConnectionManager::run()
 			{
 				connections.add(socket);
 				connectionManagerListeners.call(&ConnectionManagerListener::newConnection, socket);
+				queuedNotifier.addMessage(new ConnectionManagerEvent(ConnectionManagerEvent::CONNECTIONS_CHANGED));
 			}
 		}
 	}

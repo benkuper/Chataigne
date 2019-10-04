@@ -39,6 +39,26 @@ public:
 	void addConnectionManagerListener(ConnectionManagerListener* newListener) { connectionManagerListeners.add(newListener); }
 	void removeConnectionManagerListener(ConnectionManagerListener* listener) { connectionManagerListeners.remove(listener); }
 
+	class  ConnectionManagerEvent
+	{
+	public:
+		enum Type { CONNECTIONS_CHANGED };
+
+		ConnectionManagerEvent(Type t) : type(t) {}
+
+		Type type;
+	};
+
+	QueuedNotifier<ConnectionManagerEvent> queuedNotifier;
+	typedef QueuedNotifier<ConnectionManagerEvent>::Listener AsyncListener;
+
+
+	void addAsyncConnectionManagerListener(AsyncListener* newListener) { queuedNotifier.addListener(newListener); }
+	void addAsyncCoalescedConnectionManagerListener(AsyncListener* newListener) { queuedNotifier.addAsyncCoalescedListener(newListener); }
+	void removeAsyncConnectionManagerListener(AsyncListener* listener) { queuedNotifier.removeListener(listener); }
+
+
+
 	// Inherited via Thread
 	virtual void run() override;
 

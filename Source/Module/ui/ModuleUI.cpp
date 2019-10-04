@@ -58,6 +58,8 @@ void ModuleUI::resizedInternalHeader(Rectangle<int>& r)
 	outActivityUI->setBounds(r.removeFromRight(r.getHeight()));
 	inActivityUI->setBounds(r.removeFromRight(r.getHeight()));
 	if (connectionFeedbackUI != nullptr) connectionFeedbackUI->setBounds(r.removeFromRight(r.getHeight()));
+
+	resizedInternalHeaderModule(r);
 }
 
 void ModuleUI::moduleIOConfigurationChanged()

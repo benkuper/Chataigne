@@ -122,6 +122,13 @@ Array<uint8> TCPClientModule::readBytes()
 {
 	uint8 bytes[2048];
 	int numRead = sender.read(bytes, 2048, false);
+
+	if (numRead == 0)
+	{
+		NLOGWARNING(niceName, "Connection to TCP Server seems lost, disconnecting");
+		senderIsConnected->setValue(false);
+	}
+
 	return Array<uint8>(bytes, numRead);
 }
 
@@ -129,6 +136,7 @@ void TCPClientModule::clearInternal()
 {
 	if (sender.isConnected()) sender.close();
 }
+
 
 void TCPClientModule::timerCallback()
 {

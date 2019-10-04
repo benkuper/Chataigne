@@ -8,8 +8,7 @@
   ==============================================================================
 */
 
-#ifndef MODULEUI_H_INCLUDED
-#define MODULEUI_H_INCLUDED
+#pragma once
 
 #include "../Module.h"
 
@@ -21,7 +20,8 @@ public:
 	ModuleUI(Module * module);
 	virtual ~ModuleUI();
 
-	void resizedInternalHeader(Rectangle<int> &r) override;
+	virtual void resizedInternalHeader(Rectangle<int> &r) override;
+	virtual void resizedInternalHeaderModule(Rectangle<int>& r) {}
 
 	std::unique_ptr<TriggerImageUI> inActivityUI;
 	std::unique_ptr<TriggerImageUI> outActivityUI;
@@ -33,10 +33,3 @@ public:
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ModuleUI)
 };
-
-
-
-
-
-
-#endif  // MODULEUI_H_INCLUDED

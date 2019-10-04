@@ -23,6 +23,11 @@ ModuleManagerUI::~ModuleManagerUI()
 {
 }
 
+ModuleUI* ModuleManagerUI::createUIForItem(Module* item)
+{
+	return item->getModuleUI();
+}
+
 void ModuleManagerUI::showMenuAndAddItem(bool, Point<int>)
 {
 	Module * m = ModuleFactory::getInstance()->showCreateMenu();
