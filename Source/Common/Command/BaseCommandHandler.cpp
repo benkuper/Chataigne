@@ -68,6 +68,7 @@ void BaseCommandHandler::setCommand(CommandDefinition * commandDef)
 		
 		/*if(!prevCommandData.isVoid()) command->loadPreviousCommandData(prevCommandData); //keep as much as similar parameter possible
 		else */ 
+		DBG("GHOST Command data : " << JSON::toString(ghostCommandData));
 		if (!ghostCommandData.isVoid()) command->loadJSONData(ghostCommandData);
 		//else if (!isCurrentlyLoadingData) setNiceName(commandDef->commandType);
 
@@ -183,6 +184,7 @@ void BaseCommandHandler::commandTemplateDestroyed()
 	if (command != nullptr)
 	{
 		ghostCommandData = command->getJSONData();
+		DBG("Template destroyed, command data = "+JSON::toString(ghostCommandData));
 		command->module->templateManager.addBaseManagerListener(this);
 		if (!Engine::mainEngine->isClearing && ModuleManager::getInstanceWithoutCreating() != nullptr) ModuleManager::getInstance()->addBaseManagerListener(this);
 	}

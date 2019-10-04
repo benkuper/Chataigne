@@ -97,11 +97,14 @@ void CustomValuesCommandArgument::linkToTemplate(CustomValuesCommandArgument * t
 		linkedTemplate->editable->addParameterListener(this);
 		linkedTemplate->useForMapping->addParameterListener(this);
 		if (!templateMode) updateParameterFromTemplate();
-
-
 	}
+	
 
-	if (param != nullptr) param->saveValueOnly = linkedTemplate != nullptr;
+	if (param != nullptr)
+	{
+		param->saveValueOnly = linkedTemplate != nullptr;
+		param->isCustomizableByUser = linkedTemplate == nullptr;
+	}
 
 	canBeReorderedInEditor = linkedTemplate == nullptr;
 	userCanRemove = linkedTemplate == nullptr;

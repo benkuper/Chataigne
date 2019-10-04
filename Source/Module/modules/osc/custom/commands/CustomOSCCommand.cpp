@@ -124,8 +124,9 @@ void CustomOSCCommand::onContainerParameterChanged(Parameter * p)
 
 var CustomOSCCommand::getJSONData()
 {
-	var data = OSCCommand::getJSONData();
-	data.getDynamicObject()->setProperty("argManager", customValuesManager->getJSONData());
+	var data = BaseCommand::getJSONData(); //do not inherit OSC:Command to avoid saving "arguments"
+	var customValuesData = customValuesManager->getJSONData();
+	if(!customValuesData.isVoid()) data.getDynamicObject()->setProperty("argManager", customValuesData);
 	return data;
 }
 

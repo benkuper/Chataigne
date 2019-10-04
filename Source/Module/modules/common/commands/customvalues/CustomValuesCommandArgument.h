@@ -58,7 +58,6 @@ public:
 
 	InspectableEditor * getEditor(bool isRoot) override;
 
-
 };
 
 

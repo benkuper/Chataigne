@@ -21,6 +21,7 @@ public:
 	CustomValuesCommandArgumentManager(bool _mappingEnabled, bool templateMode = false);
 	~CustomValuesCommandArgumentManager();
 
+	bool isBeingDestroyed; //to keep track for templates, do not sync on destroy, so we can keep a ghost
 	bool mappingEnabled;
 	bool templateMode;
 
@@ -46,7 +47,7 @@ public:
 	void itemAdded(CustomValuesCommandArgument * i) override; //FROM TEMPLATE
 	void itemRemoved(CustomValuesCommandArgument * i) override; //FROM TEMPLATE
 
-	void loadJSONDataManagerInternal(var data) override;
+	void loadJSONDataInternal(var data) override;
 
 	InspectableEditor * getEditor(bool isRoot) override;
 

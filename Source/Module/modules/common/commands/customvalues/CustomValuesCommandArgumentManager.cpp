@@ -15,6 +15,7 @@ CustomValuesCommandArgumentManager::CustomValuesCommandArgumentManager(bool _map
 	BaseManager("arguments"),
 	mappingEnabled(_mappingEnabled),
 	templateMode(templateMode),
+	isBeingDestroyed(false),
 	linkedTemplateManager(nullptr)
 {
 	selectItemWhenCreated = false;
@@ -23,6 +24,7 @@ CustomValuesCommandArgumentManager::CustomValuesCommandArgumentManager(bool _map
 
 CustomValuesCommandArgumentManager::~CustomValuesCommandArgumentManager()
 {
+	isBeingDestroyed = true;
 	linkToTemplate(nullptr);
 }
 
@@ -43,10 +45,10 @@ void CustomValuesCommandArgumentManager::linkToTemplate(CustomValuesCommandArgum
 	if (linkedTemplateManager != nullptr)
 	{
 		linkedTemplateManager->addBaseManagerListener(this);
+		rebuildFromTemplate(true);
 	}
 
 	userCanAddItemsManually = linkedTemplateManager == nullptr;
-	rebuildFromTemplate(true);
 }
 
 void CustomValuesCommandArgumentManager::rebuildFromTemplate(bool clearItems)
@@ -177,14 +179,18 @@ void CustomValuesCommandArgumentManager::itemRemoved(CustomValuesCommandArgument
 			break;
 		}
 	}
-	if (itemToRemove != nullptr) removeItem(itemToRemove, false);
+	if (itemToRemove != nullptr)
+	{
+		if (linkedTemplateManager != nullptr && linkedTemplateManager->isBeingDestroyed) itemToRemove->linkToTemplate(nullptr); //do not sync on template destroy so we can keep ghost data
+		else removeItem(itemToRemove, false);
+	}
 }
 
-void CustomValuesCommandArgumentManager::loadJSONDataManagerInternal(var data)
+void CustomValuesCommandArgumentManager::loadJSONDataInternal(var data)
 {
-	BaseManager::loadJSONDataManagerInternal(data);
-	//after load
-	if(linkedTemplateManager != nullptr) rebuildFromTemplate(false);
+	DBG("Load data, isVoid ? " << (int)data.isVoid() << " / " << JSON::toString(data));
+	if(linkedTemplateManager == nullptr || !data.isVoid()) BaseManager::loadJSONDataInternal(data);
+	rebuildFromTemplate(false); //cannot do without clearing, already cleared by parent method
 }
 
 InspectableEditor * CustomValuesCommandArgumentManager::getEditor(bool isRoot)
