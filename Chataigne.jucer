@@ -1032,6 +1032,12 @@
           </GROUP>
           <GROUP id="{60EE0B8D-6DCD-2F5E-B462-3F4F3DCA4184}" name="tcp">
             <GROUP id="{8D7C6264-1681-0666-5410-2523AE1B6FC1}" name="tcpserver">
+              <GROUP id="{3586C115-8317-8ED7-FDFE-E0428B2754C4}" name="ui">
+                <FILE id="BTLrla" name="TCPServerModuleUI.cpp" compile="1" resource="0"
+                      file="Source/Module/modules/tcp/tcpserver/ui/TCPServerModuleUI.cpp"/>
+                <FILE id="Y7qDDE" name="TCPServerModuleUI.h" compile="0" resource="0"
+                      file="Source/Module/modules/tcp/tcpserver/ui/TCPServerModuleUI.h"/>
+              </GROUP>
               <FILE id="KPXcik" name="TCPServerConnectionManager.cpp" compile="1"
                     resource="0" file="Source/Module/modules/tcp/tcpserver/TCPServerConnectionManager.cpp"/>
               <FILE id="WneJRn" name="TCPServerConnectionManager.h" compile="0" resource="0"

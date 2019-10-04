@@ -13,7 +13,7 @@
 TCPServerModuleUI::TCPServerModuleUI(TCPServerModule* m) :
 	ModuleUI(m),
 	tcpServerModule(m)
-{
+{ 
 	updateConnectionsLabel();
 	
 	connectionsLabel.setColour(Label::textColourId, NORMAL_COLOR.brighter(.1f));

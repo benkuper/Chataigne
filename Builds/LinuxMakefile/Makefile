@@ -277,6 +277,7 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/TimeModule_26aecc47.o \
   $(JUCE_OBJDIR)/HTTPCommand_7771e2e1.o \
   $(JUCE_OBJDIR)/HTTPModule_da757f59.o \
+  $(JUCE_OBJDIR)/TCPServerModuleUI_4a6f5a6e.o \
   $(JUCE_OBJDIR)/TCPServerConnectionManager_d34fdc90.o \
   $(JUCE_OBJDIR)/TCPServerModule_dab9835.o \
   $(JUCE_OBJDIR)/PJLinkModule_32fc4f28.o \
@@ -1404,6 +1405,11 @@ $(JUCE_OBJDIR)/HTTPCommand_7771e2e1.o: ../../Source/Module/modules/http/commands
 $(JUCE_OBJDIR)/HTTPModule_da757f59.o: ../../Source/Module/modules/http/HTTPModule.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling HTTPModule.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/TCPServerModuleUI_4a6f5a6e.o: ../../Source/Module/modules/tcp/tcpserver/ui/TCPServerModuleUI.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling TCPServerModuleUI.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/TCPServerConnectionManager_d34fdc90.o: ../../Source/Module/modules/tcp/tcpserver/TCPServerConnectionManager.cpp

@@ -413,6 +413,9 @@
     <Filter Include="Chataigne\Source\Module\modules\http">
       <UniqueIdentifier>{D08B4676-A304-E303-0415-85A97C6159AD}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\tcp\tcpserver\ui">
+      <UniqueIdentifier>{79848392-2320-A507-44A6-DBB8A764369A}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Chataigne\Source\Module\modules\tcp\tcpserver">
       <UniqueIdentifier>{13C22839-0474-1746-2AED-DF9E50D83B08}</UniqueIdentifier>
     </Filter>
@@ -1812,6 +1815,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\http\HTTPModule.cpp">
       <Filter>Chataigne\Source\Module\modules\http</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Module\modules\tcp\tcpserver\ui\TCPServerModuleUI.cpp">
+      <Filter>Chataigne\Source\Module\modules\tcp\tcpserver\ui</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\tcp\tcpserver\TCPServerConnectionManager.cpp">
       <Filter>Chataigne\Source\Module\modules\tcp\tcpserver</Filter>
@@ -5327,6 +5333,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\http\HTTPModule.h">
       <Filter>Chataigne\Source\Module\modules\http</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Module\modules\tcp\tcpserver\ui\TCPServerModuleUI.h">
+      <Filter>Chataigne\Source\Module\modules\tcp\tcpserver\ui</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\tcp\tcpserver\TCPServerConnectionManager.h">
       <Filter>Chataigne\Source\Module\modules\tcp\tcpserver</Filter>

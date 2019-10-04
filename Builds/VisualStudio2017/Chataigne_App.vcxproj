@@ -359,6 +359,7 @@
     <ClCompile Include="..\..\Source\Module\modules\system\time\TimeModule.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\http\commands\HTTPCommand.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\http\HTTPModule.cpp"/>
+    <ClCompile Include="..\..\Source\Module\modules\tcp\tcpserver\ui\TCPServerModuleUI.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\tcp\tcpserver\TCPServerConnectionManager.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\tcp\tcpserver\TCPServerModule.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\tcp\tcpclient\pjlink\PJLinkModule.cpp"/>
@@ -3139,6 +3140,7 @@
     <ClInclude Include="..\..\Source\Module\modules\system\time\TimeModule.h"/>
     <ClInclude Include="..\..\Source\Module\modules\http\commands\HTTPCommand.h"/>
     <ClInclude Include="..\..\Source\Module\modules\http\HTTPModule.h"/>
+    <ClInclude Include="..\..\Source\Module\modules\tcp\tcpserver\ui\TCPServerModuleUI.h"/>
     <ClInclude Include="..\..\Source\Module\modules\tcp\tcpserver\TCPServerConnectionManager.h"/>
     <ClInclude Include="..\..\Source\Module\modules\tcp\tcpserver\TCPServerModule.h"/>
     <ClInclude Include="..\..\Source\Module\modules\tcp\tcpclient\pjlink\PJLinkModule.h"/>

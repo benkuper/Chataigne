@@ -929,6 +929,10 @@
 			isa = PBXBuildFile;
 			fileRef = A949F877768B9F4072481556;
 		};
+		6FF52EB20191BACA75809BCF = {
+			isa = PBXBuildFile;
+			fileRef = 54D47C50CDDAE6840047A6A8;
+		};
 		A660EAEA0519A545BF9E6323 = {
 			isa = PBXBuildFile;
 			fileRef = 2C8F111514373C5BA8A33B7B;
@@ -2630,6 +2634,13 @@
 			path = ../../Source/Module/modules/controller/keyboard/KeyboardModule.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
+		53D926D7C103930896CAAA73 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = TCPServerModuleUI.h;
+			path = ../../Source/Module/modules/tcp/tcpserver/ui/TCPServerModuleUI.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		543FDED6F64A77819875F097 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -2649,6 +2660,13 @@
 			lastKnownFileType = image.png;
 			name = OSCQuery.png;
 			path = ../../Resources/Modules/OSCQuery.png;
+			sourceTree = "SOURCE_ROOT";
+		};
+		54D47C50CDDAE6840047A6A8 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = TCPServerModuleUI.cpp;
+			path = ../../Source/Module/modules/tcp/tcpserver/ui/TCPServerModuleUI.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		55061C5BEAC3CA82CAED15A2 = {
@@ -7083,9 +7101,19 @@
 			name = http;
 			sourceTree = "<group>";
 		};
+		E667C337240D03D040A8F05A = {
+			isa = PBXGroup;
+			children = (
+				54D47C50CDDAE6840047A6A8,
+				53D926D7C103930896CAAA73,
+			);
+			name = ui;
+			sourceTree = "<group>";
+		};
 		0E2A85ADA00C6289CFBA8E8F = {
 			isa = PBXGroup;
 			children = (
+				E667C337240D03D040A8F05A,
 				2C8F111514373C5BA8A33B7B,
 				FF098AB8E70ECF988CC09470,
 				4F2E249D01F2B4C825A1629B,
@@ -8001,6 +8029,7 @@
 				842FFDD3DA695E4C5D014414,
 				E100F7E75361CCE27D886FF9,
 				B273E2791D5ACAE101663028,
+				6FF52EB20191BACA75809BCF,
 				A660EAEA0519A545BF9E6323,
 				759B6E09C574DDA33F5CDEFC,
 				C59EAFBF08C2FCB87940EE60,
