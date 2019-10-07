@@ -12,7 +12,7 @@
 #include "Common/Command/CommandFactory.h"
 #include "ui/ModuleEditor.h"
 #include "ui/ModuleUI.h"
-#include "Common/Command/Template/CommandtemplateManager.h"
+#include "Common/Command/Template/CommandTemplateManager.h"
 #include "Module/modules/common/commands/scriptcommands/ScriptCommand.h"
 #include "UI/ChataigneAssetManager.h"
 #include "Common/Command/BaseCommandHandler.h"
