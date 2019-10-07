@@ -10,6 +10,7 @@
 
 #pragma once
 
+#include "JuceHeader.h"
 
 #include "StreamingCommand.h"
 #include "../../commands/customvalues/CustomValuesCommandArgumentManager.h"
@@ -22,7 +23,6 @@ public:
 	SendStreamValuesCommand(StreamingModule * output, CommandContext context, var params);
 	~SendStreamValuesCommand();
 
-	
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
 

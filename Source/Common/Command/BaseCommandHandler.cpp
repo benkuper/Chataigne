@@ -79,7 +79,7 @@ void BaseCommandHandler::setCommand(CommandDefinition * commandDef)
 
 		command->addCommandListener(this);
 		command->module->addInspectableListener(this);
-		command->module->templateManager.removeBaseManagerListener(this);
+		command->module->templateManager->removeBaseManagerListener(this);
 
 		if (!Engine::mainEngine->isClearing) clearWarning();
 
@@ -185,7 +185,7 @@ void BaseCommandHandler::commandTemplateDestroyed()
 	{
 		ghostCommandData = command->getJSONData();
 		DBG("Template destroyed, command data = "+JSON::toString(ghostCommandData));
-		command->module->templateManager.addBaseManagerListener(this);
+		command->module->templateManager->addBaseManagerListener(this);
 		if (!Engine::mainEngine->isClearing && ModuleManager::getInstanceWithoutCreating() != nullptr) ModuleManager::getInstance()->addBaseManagerListener(this);
 	}
 	setCommand(nullptr);

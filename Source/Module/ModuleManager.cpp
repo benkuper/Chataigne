@@ -68,7 +68,7 @@ Module * ModuleManager::getModuleWithName(const String & moduleName)
 
 void ModuleManager::addItemInternal(Module * module, var data)
 {
-	module->templateManager.setupTemplateDefinition();
+	module->templateManager->setupDefinitionsFromModule();
 }
 
 Controllable * ModuleManager::showAllValuesAndGetControllable(bool showTriggers, bool showParameters)

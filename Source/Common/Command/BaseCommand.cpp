@@ -9,7 +9,7 @@
 */
 
 #include "BaseCommand.h"
-#include "Template/CommandTemplate.h"
+#include "Template/CommandTemplateManager.h"
 #include "Module/Module.h"
 
 BaseCommand::BaseCommand(Module * _module, CommandContext _context, var _params) :
@@ -346,7 +346,7 @@ BaseCommand * BaseCommand::create(ControllableContainer * module, CommandContext
 {
 	Module * m = dynamic_cast<Module *>(module);
 	jassert(m != nullptr);
-	CommandTemplate * commandTemplate = m->templateManager.getItemWithName(params.getProperty("template",""));
+	CommandTemplate * commandTemplate = m->templateManager->getItemWithName(params.getProperty("template",""));
 	if (commandTemplate == nullptr)
 	{
 		LOGERROR("Template not found : " << params.getProperty("template", "").toString());

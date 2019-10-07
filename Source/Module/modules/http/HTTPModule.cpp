@@ -25,7 +25,7 @@ HTTPModule::HTTPModule(const String &name) :
 	valuesCC.userCanAddControllables = true;
 	valuesCC.saveAndLoadRecursiveData = true;
 
-	defManager.add(CommandDefinition::createDef(this, "", "Request", &HTTPCommand::create, CommandContext::BOTH));
+	defManager->add(CommandDefinition::createDef(this, "", "Request", &HTTPCommand::create, CommandContext::BOTH));
 	
 	scriptObject.setMethod(sendGETId, HTTPModule::sendGETFromScript);
 	scriptObject.setMethod(sendPOSTId, HTTPModule::sendPOSTFromScript);

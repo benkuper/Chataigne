@@ -21,7 +21,7 @@ HeavyMModule::HeavyMModule() :
 	var intTriggerArgs = var();
 	intTriggerArgs.append(ControllableUtil::createDataForParam(IntParameter::getTypeStringStatic(), "Trigger", "Just here to force trigger, from the HeavyM doc.", 1, 1, 1, false));
 
-	defManager.add(CommandDefinition::createDef(this, "Group", "Select Group", &OSCCommand::create, CommandContext::ACTION)->addParam("address", "/SelectGroup[group]")->addParam("params", groupIndexParams)->addParam("args", intTriggerArgs)->addParam("hideArgs", true));
+	defManager->add(CommandDefinition::createDef(this, "Group", "Select Group", &OSCCommand::create, CommandContext::ACTION)->addParam("address", "/SelectGroup[group]")->addParam("params", groupIndexParams)->addParam("args", intTriggerArgs)->addParam("hideArgs", true));
 
 	//SEQUENCE
 	var indexArgs = var();
@@ -32,29 +32,29 @@ HeavyMModule::HeavyMModule() :
 	boolValueArg.getDynamicObject()->setProperty("mappingIndex", 0);
 	boolValueArgs.append(boolValueArg);
 
-	defManager.add(CommandDefinition::createDef(this, "Sequence", "Toggle Play-Pause Sequence", &OSCCommand::create, CommandContext::ACTION)->addParam("address", "/SeqControlPlay")->addParam("args", intTriggerArgs)->addParam("hideArgs", true));
-	defManager.add(CommandDefinition::createDef(this, "Sequence", "Select Sequence", &OSCCommand::create, CommandContext::ACTION)->addParam("address", "/changeSeq")->addParam("args", indexArgs));
-	defManager.add(CommandDefinition::createDef(this, "Sequence", "Select Previous Sequence", &OSCCommand::create, CommandContext::ACTION)->addParam("address", "/SeqControlPrevious")->addParam("args", intTriggerArgs)->addParam("hideArgs", true));
-	defManager.add(CommandDefinition::createDef(this, "Sequence", "Select Next Sequence", &OSCCommand::create, CommandContext::ACTION)->addParam("address", "/SeqControlNext")->addParam("args", intTriggerArgs)->addParam("hideArgs", true));
-	defManager.add(CommandDefinition::createDef(this, "Sequence", "Set Shuffle Sequence", &OSCCommand::create, CommandContext::ACTION)->addParam("address", "/SeqControlShuffle")->addParam("args", boolValueArg));
-	defManager.add(CommandDefinition::createDef(this, "Sequence", "Add Sequence", &OSCCommand::create, CommandContext::ACTION)->addParam("address", "/SeqControlAdd")->addParam("args", intTriggerArgs)->addParam("hideArgs", true));
-	defManager.add(CommandDefinition::createDef(this, "Sequence", "Delete Sequence", &OSCCommand::create, CommandContext::ACTION)->addParam("address", "/SeqControlDelete")->addParam("args", intTriggerArgs)->addParam("hideArgs", true));
+	defManager->add(CommandDefinition::createDef(this, "Sequence", "Toggle Play-Pause Sequence", &OSCCommand::create, CommandContext::ACTION)->addParam("address", "/SeqControlPlay")->addParam("args", intTriggerArgs)->addParam("hideArgs", true));
+	defManager->add(CommandDefinition::createDef(this, "Sequence", "Select Sequence", &OSCCommand::create, CommandContext::ACTION)->addParam("address", "/changeSeq")->addParam("args", indexArgs));
+	defManager->add(CommandDefinition::createDef(this, "Sequence", "Select Previous Sequence", &OSCCommand::create, CommandContext::ACTION)->addParam("address", "/SeqControlPrevious")->addParam("args", intTriggerArgs)->addParam("hideArgs", true));
+	defManager->add(CommandDefinition::createDef(this, "Sequence", "Select Next Sequence", &OSCCommand::create, CommandContext::ACTION)->addParam("address", "/SeqControlNext")->addParam("args", intTriggerArgs)->addParam("hideArgs", true));
+	defManager->add(CommandDefinition::createDef(this, "Sequence", "Set Shuffle Sequence", &OSCCommand::create, CommandContext::ACTION)->addParam("address", "/SeqControlShuffle")->addParam("args", boolValueArg));
+	defManager->add(CommandDefinition::createDef(this, "Sequence", "Add Sequence", &OSCCommand::create, CommandContext::ACTION)->addParam("address", "/SeqControlAdd")->addParam("args", intTriggerArgs)->addParam("hideArgs", true));
+	defManager->add(CommandDefinition::createDef(this, "Sequence", "Delete Sequence", &OSCCommand::create, CommandContext::ACTION)->addParam("address", "/SeqControlDelete")->addParam("args", intTriggerArgs)->addParam("hideArgs", true));
 
 
 	//TEMPO
 	var tempoArgs = var();
 	tempoArgs.append(ControllableUtil::createDataForParam(IntParameter::getTypeStringStatic(), "Value", "New tempo value, in BPM", 120, 20, 400));
 	//tempoArgs.append(ControllableUtil::createDataForParam(IntParameter::getTypeStringStatic(), "Trigger", "Just here to force trigger, from the HeavyM doc.", 1, 1, 1, false));
-	defManager.add(CommandDefinition::createDef(this, "Tempo", "Set Tempo", &OSCCommand::create, CommandContext::ACTION)->addParam("address", "/Tempo")->addParam("args", tempoArgs));
-	defManager.add(CommandDefinition::createDef(this, "Tempo", "Tap Tempo", &OSCCommand::create, CommandContext::ACTION)->addParam("address", "/TapTempo")->addParam("args", intTriggerArgs)->addParam("hideArgs", true));
+	defManager->add(CommandDefinition::createDef(this, "Tempo", "Set Tempo", &OSCCommand::create, CommandContext::ACTION)->addParam("address", "/Tempo")->addParam("args", tempoArgs));
+	defManager->add(CommandDefinition::createDef(this, "Tempo", "Tap Tempo", &OSCCommand::create, CommandContext::ACTION)->addParam("address", "/TapTempo")->addParam("args", intTriggerArgs)->addParam("hideArgs", true));
 
 	//PLAYERS
 	var playerIndexParams = var();
 	playerIndexParams.append(ControllableUtil::createDataForParam(IntParameter::getTypeStringStatic(), "Player ID", "Id of the player", 0, 0, 1000));
-	defManager.add(CommandDefinition::createDef(this, "Player", "Toggle Play-Pause Player", &OSCCommand::create, CommandContext::ACTION)->addParam("address", "/PlayerPlayPause/[playerid]")->addParam("params", playerIndexParams)->addParam("args", intTriggerArgs)->addParam("hideArgs", true));
-	defManager.add(CommandDefinition::createDef(this, "Player", "Play All Players", &OSCCommand::create, CommandContext::ACTION)->addParam("address", "/PlayAllPlayers")->addParam("args", intTriggerArgs)->addParam("hideArgs", true));
-	defManager.add(CommandDefinition::createDef(this, "Player", "Pause All Players", &OSCCommand::create, CommandContext::ACTION)->addParam("address", "/PauseAllPlayers")->addParam("args", intTriggerArgs)->addParam("hideArgs", true));
-	defManager.add(CommandDefinition::createDef(this, "Player", "Stop All Players", &OSCCommand::create, CommandContext::ACTION)->addParam("address", "/StopAllPlayers")->addParam("args", intTriggerArgs)->addParam("hideArgs", true));
+	defManager->add(CommandDefinition::createDef(this, "Player", "Toggle Play-Pause Player", &OSCCommand::create, CommandContext::ACTION)->addParam("address", "/PlayerPlayPause/[playerid]")->addParam("params", playerIndexParams)->addParam("args", intTriggerArgs)->addParam("hideArgs", true));
+	defManager->add(CommandDefinition::createDef(this, "Player", "Play All Players", &OSCCommand::create, CommandContext::ACTION)->addParam("address", "/PlayAllPlayers")->addParam("args", intTriggerArgs)->addParam("hideArgs", true));
+	defManager->add(CommandDefinition::createDef(this, "Player", "Pause All Players", &OSCCommand::create, CommandContext::ACTION)->addParam("address", "/PauseAllPlayers")->addParam("args", intTriggerArgs)->addParam("hideArgs", true));
+	defManager->add(CommandDefinition::createDef(this, "Player", "Stop All Players", &OSCCommand::create, CommandContext::ACTION)->addParam("address", "/StopAllPlayers")->addParam("args", intTriggerArgs)->addParam("hideArgs", true));
 
 
 	//Effects
@@ -273,7 +273,7 @@ HeavyMModule::HeavyMModule() :
 				case Toggle: d->addParam("args", boolValueArgs); break;
 			}
 
-			defManager.add(d);
+			defManager->add(d);
 		}
 	}
 }

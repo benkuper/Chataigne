@@ -29,7 +29,7 @@ GenericOSCQueryModule::GenericOSCQueryModule(const String & name, int defaultRem
 	remoteHost->setEnabled(!useLocal->boolValue());
 	remotePort = sendCC->addIntParameter("Remote port", "Port on which the remote host is listening to", defaultRemotePort, 1, 65535);
 
-	defManager.add(CommandDefinition::createDef(this, "", "Set Value", &GenericOSCQueryCommand::create, CommandContext::BOTH));
+	defManager->add(CommandDefinition::createDef(this, "", "Set Value", &GenericOSCQueryCommand::create, CommandContext::BOTH));
 
 	sender.connect("0.0.0.0", 0);
 

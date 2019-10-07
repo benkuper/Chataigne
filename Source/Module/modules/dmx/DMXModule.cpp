@@ -20,13 +20,13 @@ DMXModule::DMXModule() :
 	canHandleRouteValues = true;
 	includeValuesInSave = true;
 
-	defManager.add(CommandDefinition::createDef(this, "", "Black out", &DMXCommand::create)->addParam("action", DMXCommand::BLACK_OUT));
-	defManager.add(CommandDefinition::createDef(this, "", "Set value", &DMXCommand::create)->addParam("action", DMXCommand::SET_VALUE));
-	defManager.add(CommandDefinition::createDef(this, "", "Set value 16bit", &DMXCommand::create)->addParam("action", DMXCommand::SET_VALUE_16BIT));
-	defManager.add(CommandDefinition::createDef(this, "", "Set range", &DMXCommand::create)->addParam("action", DMXCommand::SET_RANGE));
-	defManager.add(CommandDefinition::createDef(this, "", "Set all", &DMXCommand::create)->addParam("action", DMXCommand::SET_ALL));
-	defManager.add(CommandDefinition::createDef(this, "", "Set custom values", &DMXCommand::create)->addParam("action", DMXCommand::SET_CUSTOM));
-	defManager.add(CommandDefinition::createDef(this, "", "Set Color", &DMXCommand::create)->addParam("action",DMXCommand::COLOR));
+	defManager->add(CommandDefinition::createDef(this, "", "Black out", &DMXCommand::create)->addParam("action", DMXCommand::BLACK_OUT));
+	defManager->add(CommandDefinition::createDef(this, "", "Set value", &DMXCommand::create)->addParam("action", DMXCommand::SET_VALUE));
+	defManager->add(CommandDefinition::createDef(this, "", "Set value 16bit", &DMXCommand::create)->addParam("action", DMXCommand::SET_VALUE_16BIT));
+	defManager->add(CommandDefinition::createDef(this, "", "Set range", &DMXCommand::create)->addParam("action", DMXCommand::SET_RANGE));
+	defManager->add(CommandDefinition::createDef(this, "", "Set all", &DMXCommand::create)->addParam("action", DMXCommand::SET_ALL));
+	defManager->add(CommandDefinition::createDef(this, "", "Set custom values", &DMXCommand::create)->addParam("action", DMXCommand::SET_CUSTOM));
+	defManager->add(CommandDefinition::createDef(this, "", "Set Color", &DMXCommand::create)->addParam("action",DMXCommand::COLOR));
 	
 	dmxType = moduleParams.addEnumParameter("DMX Type", "Choose the type of dmx interface you want to connect");
 

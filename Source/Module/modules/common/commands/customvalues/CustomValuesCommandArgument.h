@@ -8,8 +8,7 @@
   ==============================================================================
 */
 
-#ifndef CustomValuesCommandARGUMENT_H_INCLUDED
-#define CustomValuesCommandARGUMENT_H_INCLUDED
+#pragma once
 
 #include "JuceHeader.h"
 
@@ -59,7 +58,3 @@ public:
 	InspectableEditor * getEditor(bool isRoot) override;
 
 };
-
-
-
-#endif  // CustomValuesCommandARGUMENT_H_INCLUDED

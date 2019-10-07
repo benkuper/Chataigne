@@ -25,14 +25,13 @@ CommandTemplateManager::~CommandTemplateManager()
 
 void CommandTemplateManager::addItemInternal(CommandTemplate * item, var)
 {
-	defManager.add(CommandDefinition::createDef(module, menuName, item->niceName, &BaseCommand::create)->addParam("template",item->shortName)); 
+	setupTemplatesDefinitions();
 	item->addCommandTemplateListener(this);
 }
 
 void CommandTemplateManager::removeItemInternal(CommandTemplate * item)
 {
-	CommandDefinition * d = defManager.getCommandDefinitionFor(menuName, item->niceName); 
-	defManager.remove(d);
+	setupTemplatesDefinitions();
 	item->removeCommandTemplateListener(this);
 }
 
@@ -42,10 +41,10 @@ CommandTemplate * CommandTemplateManager::addItemFromData(var data, bool addToUn
 	return addItem(ct, data, addToUndo);
 }
 
-void CommandTemplateManager::setupTemplateDefinition()
+void CommandTemplateManager::setupDefinitionsFromModule()
 {
 	factory.defs.clear();
-	for (auto &d : module->defManager.definitions)
+	for (auto& d : module->defManager->definitions)
 	{
 		factory.defs.add(Factory<CommandTemplate>::Definition::createDef(d->menuPath, d->commandType, CommandTemplate::create)
 			->addParam("module", module->shortName)
@@ -53,12 +52,29 @@ void CommandTemplateManager::setupTemplateDefinition()
 	}
 }
 
+void CommandTemplateManager::setupTemplatesDefinitions()
+{
+	defManager.clear();
+	for (auto& item : items)
+	{
+		defManager.add(CommandDefinition::createDef(module, menuName, item->niceName, &BaseCommand::create)->addParam("template", item->shortName));
+	}
+}
+
+void CommandTemplateManager::reorderItems()
+{
+	BaseManager::reorderItems();
+	if(!isCurrentlyLoadingData) setupTemplatesDefinitions();
+}
+
 void CommandTemplateManager::templateNameChanged(CommandTemplate * ct)
 {
-	if (Engine::mainEngine->isLoadingFile || Engine::mainEngine->isClearing) return;
-	CommandDefinition * def = defManager.definitions[items.indexOf(ct)];
-	jassert(def != nullptr);
-	
-	def->commandType = ct->niceName;
-	def->params.getDynamicObject()->setProperty("template", ct->shortName);
+	if (!isCurrentlyLoadingData && Engine::mainEngine->isLoadingFile || Engine::mainEngine->isClearing) return;
+	if(!isCurrentlyLoadingData) setupTemplatesDefinitions();
+}
+
+void CommandTemplateManager::loadJSONDataManagerInternal(var data)
+{
+	BaseManager::loadJSONDataManagerInternal(data);
+	setupTemplatesDefinitions();
 }

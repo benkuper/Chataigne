@@ -51,7 +51,7 @@ void CommandTemplateManagerPanel::editModule(Module * _module)
 
 	if (module != nullptr)
 	{
-		modelManagerUI.reset(new CommandTemplateManagerUI(&module->templateManager, module->niceName));
+		modelManagerUI.reset(new CommandTemplateManagerUI(module->templateManager.get(), module->niceName));
 		contentComponent->addAndMakeVisible(modelManagerUI.get());
 		module->addInspectableListener(this);
 		resized();

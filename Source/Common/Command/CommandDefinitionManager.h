@@ -8,8 +8,8 @@
   ==============================================================================
 */
 
-#ifndef COMMANDDEFINITIONMANAGER_H_INCLUDED
-#define COMMANDDEFINITIONMANAGER_H_INCLUDED
+
+#pragma once
 
 #include "CommandDefinition.h"
 
@@ -30,7 +30,3 @@ public:
 
 	CommandDefinition * getCommandDefinitionFor(const String &menuPath, const String &moduleType);
 };
-
-
-
-#endif  // COMMANDDEFINITIONMANAGER_H_INCLUDED

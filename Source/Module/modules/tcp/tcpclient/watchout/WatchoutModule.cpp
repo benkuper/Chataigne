@@ -17,14 +17,14 @@ WatchoutModule::WatchoutModule() :
 	streamingType->hideInEditor = true;
 	streamingType->setValueWithData(LINES);
 
-	defManager.add(getBaseWCommand("","Ping","ping"));
-	defManager.add(getBaseWCommand("", "Load", "load", "s:\"File Path\""));
-	defManager.add(getBaseWCommand("", "Online", "online", "b:Value"));
-	defManager.add(getBaseWCommand("", "Run", "run"));
-	defManager.add(getBaseWCommand("", "Halt", "halt"));
-	defManager.add(getBaseWCommand("", "Go To Time", "gotoTime", "i:Time"));
-	defManager.add(getBaseWCommand("", "Go To Cue", "gotoControlCue", "s:Cue"));
-	defManager.add(getBaseWCommand("", "Stand By", "standBy", "b:Value i:Fade"));
+	defManager->add(getBaseWCommand("","Ping","ping"));
+	defManager->add(getBaseWCommand("", "Load", "load", "s:\"File Path\""));
+	defManager->add(getBaseWCommand("", "Online", "online", "b:Value"));
+	defManager->add(getBaseWCommand("", "Run", "run"));
+	defManager->add(getBaseWCommand("", "Halt", "halt"));
+	defManager->add(getBaseWCommand("", "Go To Time", "gotoTime", "i:Time"));
+	defManager->add(getBaseWCommand("", "Go To Cue", "gotoControlCue", "s:Cue"));
+	defManager->add(getBaseWCommand("", "Stand By", "standBy", "b:Value i:Fade"));
 
 }
 

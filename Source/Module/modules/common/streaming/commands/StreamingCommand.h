@@ -11,6 +11,7 @@
 #pragma once
 
 #include "../StreamingModule.h"
+#include "Common/Command/BaseCommand.h"
 
 class StreamingCommand :
 	public BaseCommand

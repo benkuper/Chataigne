@@ -73,7 +73,7 @@ OSCModule::OSCModule(const String & name, int defaultLocalPort, int defaultRemot
 	scriptManager->scriptTemplate += ChataigneAssetManager::getInstance()->getScriptTemplate("osc");
 
 
-	defManager.add(CommandDefinition::createDef(this, "", "Custom Message", &CustomOSCCommand::create));
+	defManager->add(CommandDefinition::createDef(this, "", "Custom Message", &CustomOSCCommand::create));
 }
 
 OSCModule::~OSCModule()

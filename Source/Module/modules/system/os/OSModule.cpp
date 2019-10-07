@@ -34,15 +34,15 @@ OSModule::OSModule() :
 
 	setupIOConfiguration(false, true);
 
-	defManager.add(CommandDefinition::createDef(this, "Power", "Shutdown", &OSPowerCommand::create, CommandContext::ACTION)->addParam("type", OSPowerCommand::SHUTDOWN));
-	defManager.add(CommandDefinition::createDef(this, "Power", "Reboot", &OSPowerCommand::create, CommandContext::ACTION)->addParam("type", OSPowerCommand::REBOOT));
-	defManager.add(CommandDefinition::createDef(this, "Power", "Wake On Lan", &WakeOnLanCommand::create, CommandContext::ACTION));
+	defManager->add(CommandDefinition::createDef(this, "Power", "Shutdown", &OSPowerCommand::create, CommandContext::ACTION)->addParam("type", OSPowerCommand::SHUTDOWN));
+	defManager->add(CommandDefinition::createDef(this, "Power", "Reboot", &OSPowerCommand::create, CommandContext::ACTION)->addParam("type", OSPowerCommand::REBOOT));
+	defManager->add(CommandDefinition::createDef(this, "Power", "Wake On Lan", &WakeOnLanCommand::create, CommandContext::ACTION));
 	
-	defManager.add(CommandDefinition::createDef(this, "Process", "Open File", &OSExecCommand::create, CommandContext::ACTION)->addParam("type", OSExecCommand::OPEN_FILE));
-	defManager.add(CommandDefinition::createDef(this, "Process", "Launch App", &OSExecCommand::create, CommandContext::ACTION)->addParam("type", OSExecCommand::LAUNCH_APP));
-	defManager.add(CommandDefinition::createDef(this, "Process", "Launch Command", &OSExecCommand::create, CommandContext::ACTION)->addParam("type", OSExecCommand::LAUNCH_COMMAND));
-	defManager.add(CommandDefinition::createDef(this, "Process", "Launch Command File", &OSExecCommand::create, CommandContext::ACTION)->addParam("type", OSExecCommand::LAUNCH_COMMAND_FILE));
-	defManager.add(CommandDefinition::createDef(this, "Process", "Kill App", &OSExecCommand::create, CommandContext::ACTION)->addParam("type", OSExecCommand::KILL_APP));
+	defManager->add(CommandDefinition::createDef(this, "Process", "Open File", &OSExecCommand::create, CommandContext::ACTION)->addParam("type", OSExecCommand::OPEN_FILE));
+	defManager->add(CommandDefinition::createDef(this, "Process", "Launch App", &OSExecCommand::create, CommandContext::ACTION)->addParam("type", OSExecCommand::LAUNCH_APP));
+	defManager->add(CommandDefinition::createDef(this, "Process", "Launch Command", &OSExecCommand::create, CommandContext::ACTION)->addParam("type", OSExecCommand::LAUNCH_COMMAND));
+	defManager->add(CommandDefinition::createDef(this, "Process", "Launch Command File", &OSExecCommand::create, CommandContext::ACTION)->addParam("type", OSExecCommand::LAUNCH_COMMAND_FILE));
+	defManager->add(CommandDefinition::createDef(this, "Process", "Kill App", &OSExecCommand::create, CommandContext::ACTION)->addParam("type", OSExecCommand::KILL_APP));
 
 	scriptObject.setMethod(launchAppId, &OSModule::launchFileFromScript);
 }

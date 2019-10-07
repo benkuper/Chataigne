@@ -29,11 +29,11 @@ StreamingModule::StreamingModule(const String & name) :
 	firstValueIsTheName = moduleParams.addBoolParameter("First value is the name", "If checked, the first value of a parsed message will be used to name the value, otherwise each values will be named by their index", true);
 	buildMessageStructureOptions();
 
-	defManager.add(CommandDefinition::createDef(this, "", "Send string", &SendStreamStringCommand::create, CommandContext::BOTH));
-	defManager.add(CommandDefinition::createDef(this, "", "Send values as string", &SendStreamStringValuesCommand::create, CommandContext::BOTH));
-	defManager.add(CommandDefinition::createDef(this, "", "Send raw bytes", &SendStreamRawDataCommand::create, CommandContext::BOTH));
-	defManager.add(CommandDefinition::createDef(this, "", "Send custom values", &SendStreamValuesCommand::create, CommandContext::BOTH));
-	defManager.add(CommandDefinition::createDef(this, "", "Send hex data", &SendStreamStringCommand::create, CommandContext::BOTH)->addParam("mode", SendStreamStringCommand::DataMode::HEX));
+	defManager->add(CommandDefinition::createDef(this, "", "Send string", &SendStreamStringCommand::create, CommandContext::BOTH));
+	defManager->add(CommandDefinition::createDef(this, "", "Send values as string", &SendStreamStringValuesCommand::create, CommandContext::BOTH));
+	defManager->add(CommandDefinition::createDef(this, "", "Send raw bytes", &SendStreamRawDataCommand::create, CommandContext::BOTH));
+	defManager->add(CommandDefinition::createDef(this, "", "Send custom values", &SendStreamValuesCommand::create, CommandContext::BOTH));
+	defManager->add(CommandDefinition::createDef(this, "", "Send hex data", &SendStreamStringCommand::create, CommandContext::BOTH)->addParam("mode", SendStreamStringCommand::DataMode::HEX));
 	
 	scriptObject.setMethod(sendId, StreamingModule::sendStringFromScript);
 	scriptObject.setMethod(sendBytesId, StreamingModule::sendBytesFromScript);

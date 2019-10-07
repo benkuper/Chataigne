@@ -14,15 +14,15 @@ SequenceModule::SequenceModule(ChataigneSequenceManager * _manager) :
 	Module("Sequences"),
 	manager(_manager)
 {
-	defManager.add(createBaseDefinition("Playback","Play Sequence", CommandContext::ACTION,SequenceCommand::PLAY_SEQUENCE));
-	defManager.add(createBaseDefinition("Playback", "Pause Sequence", CommandContext::ACTION,SequenceCommand::PAUSE_SEQUENCE));
-	defManager.add(createBaseDefinition("Playback", "Stop Sequence", CommandContext::ACTION,SequenceCommand::STOP_SEQUENCE));
-	defManager.add(createBaseDefinition("Playback", "Toggle Sequence", CommandContext::ACTION,SequenceCommand::TOGGLE_SEQUENCE));
-	defManager.add(createBaseDefinition("Time", "Set Current Time", CommandContext::BOTH,SequenceCommand::SET_TIME));
-	defManager.add(createBaseDefinition("Time", "Go to cue", CommandContext::ACTION, SequenceCommand::GOTO_CUE));
-	defManager.add(createBaseDefinition("Layer", "Enable Layer",CommandContext::ACTION, SequenceCommand::ENABLE_LAYER));
-	defManager.add(createBaseDefinition("Layer", "Disable layer", CommandContext::ACTION, SequenceCommand::DISABLE_LAYER));
-	defManager.add(createBaseDefinition("Layer", "Toggle layer", CommandContext::ACTION, SequenceCommand::TOGGLE_LAYER));
+	defManager->add(createBaseDefinition("Playback","Play Sequence", CommandContext::ACTION,SequenceCommand::PLAY_SEQUENCE));
+	defManager->add(createBaseDefinition("Playback", "Pause Sequence", CommandContext::ACTION,SequenceCommand::PAUSE_SEQUENCE));
+	defManager->add(createBaseDefinition("Playback", "Stop Sequence", CommandContext::ACTION,SequenceCommand::STOP_SEQUENCE));
+	defManager->add(createBaseDefinition("Playback", "Toggle Sequence", CommandContext::ACTION,SequenceCommand::TOGGLE_SEQUENCE));
+	defManager->add(createBaseDefinition("Time", "Set Current Time", CommandContext::BOTH,SequenceCommand::SET_TIME));
+	defManager->add(createBaseDefinition("Time", "Go to cue", CommandContext::ACTION, SequenceCommand::GOTO_CUE));
+	defManager->add(createBaseDefinition("Layer", "Enable Layer",CommandContext::ACTION, SequenceCommand::ENABLE_LAYER));
+	defManager->add(createBaseDefinition("Layer", "Disable layer", CommandContext::ACTION, SequenceCommand::DISABLE_LAYER));
+	defManager->add(createBaseDefinition("Layer", "Toggle layer", CommandContext::ACTION, SequenceCommand::TOGGLE_LAYER));
 }
 
 SequenceModule::~SequenceModule()

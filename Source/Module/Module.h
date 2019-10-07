@@ -11,11 +11,13 @@
 #pragma once
 
 #include "JuceHeader.h"
-#include "Common/Command/Template/CommandTemplateManager.h"
+#include "Common/Command/CommandContext.h"
+#include  "Common/Command/CommandDefinitionManager.h"
 
 class ModuleCommandTester;
 class BaseCommandHandler;
 class CommandDefinition;
+class CommandTemplateManager;
 class ModuleUI;
 
 class Module :
@@ -38,7 +40,7 @@ public:
 
 	BoolParameter * connectionFeedbackRef;
 
-	CommandDefinitionManager defManager;
+	std::unique_ptr<CommandDefinitionManager> defManager;
 	ControllableContainer valuesCC;
 
 	bool alwaysShowValues;
@@ -51,7 +53,7 @@ public:
 	String customType; //for custom modules;
 
 	//Template
-	CommandTemplateManager templateManager;
+	std::unique_ptr<CommandTemplateManager> templateManager;
 
 	virtual void setupIOConfiguration(bool _hasInput, bool _hasOutput);
 

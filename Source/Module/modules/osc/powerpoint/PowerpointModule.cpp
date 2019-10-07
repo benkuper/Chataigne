@@ -24,9 +24,9 @@ PowerPointModule::PowerPointModule() :
 	indexArg.getDynamicObject()->setProperty("mappingIndex", 0);
 	indexArgs.append(indexArg);
 
-	defManager.add(CommandDefinition::createDef(this, "", "Next Slide", &OSCCommand::create, CommandContext::BOTH)->addParam("address", "/next"));
-	defManager.add(CommandDefinition::createDef(this, "", "Previous Slide", &OSCCommand::create, CommandContext::BOTH)->addParam("address", "/previous"));
-	defManager.add(CommandDefinition::createDef(this, "", "Go to Slide", &OSCCommand::create, CommandContext::BOTH)->addParam("address", "/page")->addParam("args", indexArgs));
+	defManager->add(CommandDefinition::createDef(this, "", "Next Slide", &OSCCommand::create, CommandContext::BOTH)->addParam("address", "/next"));
+	defManager->add(CommandDefinition::createDef(this, "", "Previous Slide", &OSCCommand::create, CommandContext::BOTH)->addParam("address", "/previous"));
+	defManager->add(CommandDefinition::createDef(this, "", "Go to Slide", &OSCCommand::create, CommandContext::BOTH)->addParam("address", "/page")->addParam("args", indexArgs));
 
 	installPowerPointPlugin();
 }
