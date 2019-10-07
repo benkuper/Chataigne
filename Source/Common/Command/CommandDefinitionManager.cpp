@@ -20,9 +20,10 @@ CommandDefinitionManager::~CommandDefinitionManager()
 {
 }
 
-void CommandDefinitionManager::add(CommandDefinition * def)
+void CommandDefinitionManager::add(CommandDefinition * def, int index)
 {
-	definitions.add(def);
+	if(index == -1) definitions.add(def);
+	else definitions.insert(index, def);
 }
 
 void CommandDefinitionManager::remove(CommandDefinition * def)

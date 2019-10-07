@@ -36,8 +36,10 @@ public:
 	CommandTemplate * addItemFromData(var data, bool addToUndo = true) override;
 
 	void setupDefinitionsFromModule();
-	void setupTemplatesDefinitions();
+
+	void setItemIndex(CommandTemplate* t, int newIndex) override;
 	void reorderItems() override;
+	void reorderDefinitions();
 
 	void templateNameChanged(CommandTemplate * ct) override;
 	void loadJSONDataManagerInternal(var data) override;

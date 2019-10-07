@@ -208,7 +208,7 @@ void BaseCommandHandler::itemAdded(Module * m)
 
 void BaseCommandHandler::itemAdded(CommandTemplate * t)
 {
-	if (command == nullptr && ghostCommandMenuPath == "Templates" && t->shortName == ghostCommandName)
+	if (command == nullptr && ghostCommandMenuPath == "Templates" && t->niceName == ghostCommandName)
 	{
 		Module * m = ModuleManager::getInstance()->getItemWithName(ghostModuleName);
 		if(m != nullptr) setCommand(m->getCommandDefinitionFor(ghostCommandMenuPath, ghostCommandName));

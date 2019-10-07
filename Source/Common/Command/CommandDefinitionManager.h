@@ -21,7 +21,7 @@ public:
 
 	OwnedArray<CommandDefinition> definitions;
 
-	void add(CommandDefinition * def);
+	void add(CommandDefinition* def, int index = -1);
 	void remove(CommandDefinition * def);
 	void clear();
 

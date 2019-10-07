@@ -25,13 +25,14 @@ CommandTemplateManager::~CommandTemplateManager()
 
 void CommandTemplateManager::addItemInternal(CommandTemplate * item, var)
 {
-	setupTemplatesDefinitions();
+	defManager.add(CommandDefinition::createDef(module, menuName, item->niceName, &BaseCommand::create)->addParam("template", item->shortName), items.indexOf(item));
 	item->addCommandTemplateListener(this);
 }
 
 void CommandTemplateManager::removeItemInternal(CommandTemplate * item)
 {
-	setupTemplatesDefinitions();
+	CommandDefinition * d = defManager.getCommandDefinitionFor(menuName, item->niceName); 
+	defManager.remove(d);
 	item->removeCommandTemplateListener(this);
 }
 
@@ -52,29 +53,41 @@ void CommandTemplateManager::setupDefinitionsFromModule()
 	}
 }
 
-void CommandTemplateManager::setupTemplatesDefinitions()
+void CommandTemplateManager::setItemIndex(CommandTemplate* t, int newIndex)
 {
-	defManager.clear();
-	for (auto& item : items)
-	{
-		defManager.add(CommandDefinition::createDef(module, menuName, item->niceName, &BaseCommand::create)->addParam("template", item->shortName));
-	}
+	BaseManager::setItemIndex(t, newIndex);
+	reorderDefinitions();
 }
 
 void CommandTemplateManager::reorderItems()
 {
 	BaseManager::reorderItems();
-	if(!isCurrentlyLoadingData) setupTemplatesDefinitions();
+	reorderDefinitions();
 }
+
+void CommandTemplateManager::reorderDefinitions()
+{
+	int index = 0;
+	for (auto& item : items)
+	{
+		CommandDefinition* d = defManager.getCommandDefinitionFor(menuName, item->niceName);
+		if (d != nullptr) defManager.definitions.move(defManager.definitions.indexOf(d), index++);
+	}
+}
+
 
 void CommandTemplateManager::templateNameChanged(CommandTemplate * ct)
 {
 	if (!isCurrentlyLoadingData && Engine::mainEngine->isLoadingFile || Engine::mainEngine->isClearing) return;
-	if(!isCurrentlyLoadingData) setupTemplatesDefinitions();
+
+	CommandDefinition* def = defManager.definitions[items.indexOf(ct)];
+	jassert(def != nullptr);
+
+	def->commandType = ct->niceName;
+	def->params.getDynamicObject()->setProperty("template", ct->shortName);
 }
 
 void CommandTemplateManager::loadJSONDataManagerInternal(var data)
 {
 	BaseManager::loadJSONDataManagerInternal(data);
-	setupTemplatesDefinitions();
 }
