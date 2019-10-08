@@ -88,21 +88,29 @@ DMXCommand::~DMXCommand()
 
 void DMXCommand::setValue(var val)
 {
+	DBG("Value val " << (int)val.isArray() << " / " << val.size()) ;
+
 	float mapFactor = (remap01To255 != nullptr && remap01To255->boolValue()) ? 255 : 1;
 	var newVal;
 
 	if (val.isArray())
 	{
-		for (int i = 0; i < newVal.size(); i++)
+		for (int i = 0; i < val.size(); i++)
 		{
-			newVal.append((float)val[i] * mapFactor);
+			DBG("Value remap to " << i << " / " << (float)val[i]);
+			newVal.append(((float)val[i]) * mapFactor);
 		}
 	}
 	else
 	{
-		newVal = (float)val * mapFactor;
+		newVal = ((float)val) * mapFactor;
 	}
 
+	if (newVal.isArray())
+	{
+		DBG("Val is array ");
+		for(int i=0;i<newVal.size();i++) DBG("new val [" << i << "]/ " << (float)newVal[i]);
+	}
 	BaseCommand::setValue(newVal);
 }
 
