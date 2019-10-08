@@ -26,7 +26,7 @@ MappingFilterEditor::~MappingFilterEditor()
 
 void MappingFilterEditor::resizedInternalHeaderItemInternal(Rectangle<int>& r)
 {
-	if (filteredUI != nullptr) filteredUI->setBounds(r.removeFromRight(120).reduced(2));
+	if (filteredUI != nullptr) filteredUI->setBounds(r.removeFromRight(140).reduced(2));
 }
 
 
@@ -44,6 +44,7 @@ void MappingFilterEditor::updateFilteredUI()
 	if (filter->filteredParameter != nullptr)
 	{
 		filteredUI.reset((ParameterUI*)(filter->filteredParameter->createDefaultUI()));
+		filteredUI->showLabel = false;
 		addAndMakeVisible(filteredUI.get());
 	}
 

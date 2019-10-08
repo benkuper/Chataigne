@@ -29,6 +29,7 @@ void MappingInputEditor::updateSourceUI()
 	if (input->inputReference != nullptr)
 	{
 		sourceFeedbackUI.reset(input->inputReference->createDefaultUI());
+		sourceFeedbackUI->showLabel = false;
 		//sourceFeedbackUI->setForceFeedbackOnly(true);
 		addAndMakeVisible(sourceFeedbackUI.get());
 	}
