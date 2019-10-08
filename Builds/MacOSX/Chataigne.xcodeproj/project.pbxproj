@@ -909,6 +909,10 @@
 			isa = PBXBuildFile;
 			fileRef = DC429F63AB712823DC8D776E;
 		};
+		0DE921BE6450F120B88760DF = {
+			isa = PBXBuildFile;
+			fileRef = 47178AE896950A3C6423AC8C;
+		};
 		AE6EB1B6A4006F74B15D443A = {
 			isa = PBXBuildFile;
 			fileRef = BEB5FC676103F81A003208E8;
@@ -2338,6 +2342,13 @@
 			lastKnownFileType = sourcecode.cpp.objcpp;
 			name = "include_juce_core.mm";
 			path = "../../JuceLibraryCode/include_juce_core.mm";
+			sourceTree = "SOURCE_ROOT";
+		};
+		47178AE896950A3C6423AC8C = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = OSWindowCommand.cpp;
+			path = ../../Source/Module/modules/system/os/commands/OSWindowCommand.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		475B531BE155FABCB2DE5765 = {
@@ -3997,6 +4008,13 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = UDPModule.h;
 			path = ../../Source/Module/modules/udp/UDPModule.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		AA6D95775FFFE12E6CB93617 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = OSWindowCommand.h;
+			path = ../../Source/Module/modules/system/os/commands/OSWindowCommand.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		AA881D5858A3809D2EE0A414 = {
@@ -7048,6 +7066,8 @@
 				9D8FF2DBA0D8821F5A7338EE,
 				DC429F63AB712823DC8D776E,
 				A827068B7EA45A80070F2DFD,
+				47178AE896950A3C6423AC8C,
+				AA6D95775FFFE12E6CB93617,
 				BEB5FC676103F81A003208E8,
 				1BD724662F7C81A7DBEDBA66,
 			);
@@ -7595,7 +7615,7 @@
 					"_DEBUG=1",
 					"DEBUG=1",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
-					"JUCE_APP_VERSION=1.6.5b13",
+					"JUCE_APP_VERSION=1.6.5b14",
 					"JUCE_APP_VERSION_HEX=0x10605",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
@@ -7650,7 +7670,7 @@
 					"_NDEBUG=1",
 					"NDEBUG=1",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
-					"JUCE_APP_VERSION=1.6.5b13",
+					"JUCE_APP_VERSION=1.6.5b14",
 					"JUCE_APP_VERSION_HEX=0x10605",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
@@ -8024,6 +8044,7 @@
 				924E2DFEFCBA49A1F9D30045,
 				EF6448DF1AA7F6C777028AB5,
 				36E22D472D9042CB48981CEA,
+				0DE921BE6450F120B88760DF,
 				AE6EB1B6A4006F74B15D443A,
 				DD7FE758703AC0C7402A9809,
 				842FFDD3DA695E4C5D014414,

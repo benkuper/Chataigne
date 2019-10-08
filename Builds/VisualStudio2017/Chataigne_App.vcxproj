@@ -66,7 +66,7 @@
       <Optimization>Disabled</Optimization>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <AdditionalIncludeDirectories>..\..\JuceLibraryCode;D:\Softwares\JUCE\modules;..\..\..\JUCE Modules;../../External/wiiuse;../../External/serial/include;../../External/asio;../../External/kinect/include;../../External/joycon/include;../../External/servus/include;../../External/dnssd/include;../../External/ois/include;../../External/sdl/include;../../External/libartnet/include;../../Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;DEBUG;_DEBUG;USE_KINECT=1;JUCER_VS2017_78A5024=1;JUCE_APP_VERSION=1.6.5b13;JUCE_APP_VERSION_HEX=0x10605;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_RTAS=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;DEBUG;_DEBUG;USE_KINECT=1;JUCER_VS2017_78A5024=1;JUCE_APP_VERSION=1.6.5b14;JUCE_APP_VERSION_HEX=0x10605;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_RTAS=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <PrecompiledHeader/>
@@ -112,7 +112,7 @@
     <ClCompile>
       <Optimization>Full</Optimization>
       <AdditionalIncludeDirectories>..\..\JuceLibraryCode;D:\Softwares\JUCE\modules;..\..\..\JUCE Modules;../../External/wiiuse;../../External/serial/include;../../External/asio;../../External/kinect/include;../../External/joycon/include;../../External/servus/include;../../External/dnssd/include;../../External/sdl/include;../../External/libartnet/include;../../Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;NDEBUG;USE_KINECT=1;JUCER_VS2017_78A5024=1;JUCE_APP_VERSION=1.6.5b13;JUCE_APP_VERSION_HEX=0x10605;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_RTAS=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;NDEBUG;USE_KINECT=1;JUCER_VS2017_78A5024=1;JUCE_APP_VERSION=1.6.5b14;JUCE_APP_VERSION_HEX=0x10605;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_RTAS=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <PrecompiledHeader/>
@@ -354,6 +354,7 @@
     <ClCompile Include="..\..\Source\Module\modules\system\os\commands\ui\WakeOnLanCommandEditor.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\system\os\commands\OSExecCommand.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\system\os\commands\OSPowerCommand.cpp"/>
+    <ClCompile Include="..\..\Source\Module\modules\system\os\commands\OSWindowCommand.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\system\os\commands\WakeOnLanCommand.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\system\os\OSModule.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\system\time\TimeModule.cpp"/>
@@ -3135,6 +3136,7 @@
     <ClInclude Include="..\..\Source\Module\modules\system\os\commands\ui\WakeOnLanCommandEditor.h"/>
     <ClInclude Include="..\..\Source\Module\modules\system\os\commands\OSExecCommand.h"/>
     <ClInclude Include="..\..\Source\Module\modules\system\os\commands\OSPowerCommand.h"/>
+    <ClInclude Include="..\..\Source\Module\modules\system\os\commands\OSWindowCommand.h"/>
     <ClInclude Include="..\..\Source\Module\modules\system\os\commands\WakeOnLanCommand.h"/>
     <ClInclude Include="..\..\Source\Module\modules\system\os\OSModule.h"/>
     <ClInclude Include="..\..\Source\Module\modules\system\time\TimeModule.h"/>
