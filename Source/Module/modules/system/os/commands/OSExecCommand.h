@@ -24,7 +24,7 @@ public:
 	OSExecCommand(OSModule * _module, CommandContext context, var params);
 	~OSExecCommand();
 
-	enum ActionType { OPEN_FILE, LAUNCH_APP, KILL_APP, LAUNCH_COMMAND, LAUNCH_COMMAND_FILE, FOCUS_APP };
+	enum ActionType { OPEN_FILE, LAUNCH_APP, KILL_APP, LAUNCH_COMMAND, LAUNCH_COMMAND_FILE, SET_WINDOW };
 	ActionType actionType;
 
 	enum FilterType { CONTAINS, STARTS_WITH, ENDS_WITH, EXACT_MATCH };
@@ -34,6 +34,11 @@ public:
 	StringParameter * launchOptions;
 	BoolParameter * killMode;
 	BoolParameter* silentMode;
+	
+	BoolParameter* onTop;
+	BoolParameter* decoration;
+	Point2DParameter* windowPos;
+	Point2DParameter* windowSize;
 
 	void triggerInternal() override;
 

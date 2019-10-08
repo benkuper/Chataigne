@@ -19,7 +19,8 @@ OSExecCommand::OSExecCommand(OSModule* _module, CommandContext context, var para
 	BaseCommand(_module, context, params),
 	launchOptions(nullptr),
 	silentMode(nullptr),
-	focusFilter(nullptr)
+	focusFilter(nullptr),
+	onTop(nullptr), decoration(nullptr), windowPos(nullptr), windowSize(nullptr)
 {
 	actionType = (ActionType)(int)params.getProperty("type", LAUNCH_APP);
 
@@ -47,10 +48,17 @@ OSExecCommand::OSExecCommand(OSModule* _module, CommandContext context, var para
 		target->multiline = true;
 		break;
 
-	case FOCUS_APP:
+	case SET_WINDOW:
 		focusFilter = addEnumParameter("Filter", "How to filter windows with value");
 		focusFilter->addOption("Contains", CONTAINS)->addOption("Starts With", STARTS_WITH)->addOption("Ends with", ENDS_WITH)->addOption("Exact match", EXACT_MATCH);
 		target = addStringParameter("Name", "The name of the window, used with filter", "");
+		onTop = addBoolParameter("Bring to top", "If checked, will bring to top, otherwise will leave where it is", false);
+		decoration = addBoolParameter("Decoration", "Will enable or disable decoration. Disable this parameter to not change it", true, false);
+		decoration->canBeDisabledByUser = true;
+		windowPos = addPoint2DParameter("Position", "The window position. Leave disable to not change it", false);
+		windowPos->canBeDisabledByUser = true;
+		windowSize = addPoint2DParameter("Position", "The window size. Leave disable to not change it", false);
+		windowSize->canBeDisabledByUser = true;
 		break;
 	}
 
@@ -145,11 +153,11 @@ void OSExecCommand::triggerInternal()
 	}
 	break;
 
-
-	case FOCUS_APP:
+	case SET_WINDOW:
 #if JUCE_WINDOWS
 		EnumWindows(enumWindowCallback, reinterpret_cast<LPARAM>(this));
 #endif
+		module->outActivityTrigger->trigger();
 		break;
 	}
 }
@@ -157,27 +165,6 @@ void OSExecCommand::triggerInternal()
 void OSExecCommand::killProcess(const String & name)
 {
 #if JUCE_WINDOWS
-	/*HANDLE hSnapShot = CreateToolhelp32Snapshot(TH32CS_SNAPALL, NULL);
-	PROCESSENTRY32 pEntry;
-	pEntry.dwSize = sizeof(pEntry);
-	BOOL hRes = Process32First(hSnapShot, &pEntry);
-	while (hRes)
-	{
-		if (strcmp(pEntry.szExeFile, name.getCharPointer()) == 0)
-		{
-			HANDLE hProcess = OpenProcess(PROCESS_TERMINATE, 0,
-				(DWORD)pEntry.th32ProcessID);
-			if (hProcess != NULL)
-			{
-				TerminateProcess(hProcess, 9);
-				CloseHandle(hProcess);
-			}
-		}
-		hRes = Process32Next(hSnapShot, &pEntry);
-	}
-	CloseHandle(hSnapShot);
-	*/
-
 	int result = system(String("taskkill " + String(killMode->boolValue() ? "/f " : "") + "/im \"" + target->stringValue() + "\"").getCharPointer());
 	if (result != 0) LOGWARNING("Problem killing app " + target->stringValue());
 #else
@@ -196,8 +183,6 @@ BOOL OSExecCommand::enumWindowCallback(HWND hWnd, LPARAM lparam)
 
 	// Ignore windows if invisible or missing a title
 	if (IsWindowVisible(hWnd) && length != 0) {
-		DBG("WINDOW : " << (int)hWnd << ":  " << windowTitle);
-		
 		String title = String(windowTitle);
 
 		OSExecCommand* c = reinterpret_cast<OSExecCommand*>(lparam);
@@ -215,9 +200,45 @@ BOOL OSExecCommand::enumWindowCallback(HWND hWnd, LPARAM lparam)
 
 		if (isValid)
 		{
+			
 			if (c->module->logOutgoingData->boolValue())
 			{
-				NLOG(c->module->niceName, "Set Focus to window " + title);
+				String s = "Set Window \"" + title + "\"parameters :";
+				if (c->onTop->boolValue()) s += "\nBring to top";
+				if (c->decoration->enabled) s += "\nDecoration " + String(c->decoration->boolValue()?"enabled":"disabled");
+				if (c->windowPos->enabled) s += "\nPosition : " + String(c->windowPos->x) + ", " + String(c->windowPos->y);
+				if (c->windowSize->enabled) s += "\nSize : "+String(c->windowSize->x)+", "+String(c->windowSize->y);
+				NLOG(c->module->niceName, s);
+			}
+			
+
+			if (c->decoration->enabled)
+			{
+				LONG lStyle = GetWindowLong(hWnd, GWL_STYLE);
+				LONG lExStyle = GetWindowLong(hWnd, GWL_EXSTYLE);
+
+				LONG allStyle = (WS_CAPTION | WS_THICKFRAME | WS_MINIMIZEBOX | WS_MAXIMIZEBOX | WS_SYSMENU);
+				LONG allExStyle = (WS_EX_DLGMODALFRAME | WS_EX_CLIENTEDGE | WS_EX_STATICEDGE);
+
+				lStyle = ~c->decoration->boolValue() ? lStyle | allStyle : lStyle & ~allStyle;
+				lExStyle &= ~c->decoration->boolValue() ? lExStyle | allExStyle : lExStyle & ~allExStyle;
+
+				SetWindowLong(hWnd /*The handle of the window to remove its borders*/, GWL_STYLE, c->decoration->boolValue()?allStyle:WS_POPUP);
+				//SetWindowLong(hWnd, GWL_STYLE, lStyle);
+				//SetWindowLong(hWnd, GWL_EXSTYLE, lExStyle);
+			}
+
+			if (c->windowPos->enabled || c->windowSize || c->decoration)
+			{
+				UINT uFlags = SWP_SHOWWINDOW | SWP_NOREPOSITION | SWP_FRAMECHANGED | SWP_NOZORDER | (c->windowPos->enabled ? 0 : SWP_NOMOVE) | (c->windowSize->enabled ? 0 : SWP_NOSIZE);
+				bool result = SetWindowPos(hWnd, HWND_NOTOPMOST, (int)c->windowPos->x, (int)c->windowPos->y, (int)c->windowSize->x, (int)c->windowSize->y, uFlags);
+				if (!result) LOGWARNING("Could not set window " + title);
+			}
+
+			
+			if (c->onTop->boolValue())
+			{
+				ShowWindow(hWnd, SW_RESTORE);
 				SetForegroundWindow(hWnd);
 			}
 		}
