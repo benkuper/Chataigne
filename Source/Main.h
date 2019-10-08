@@ -32,5 +32,4 @@ public:
 	void shutdown() override;
 };
 
-
 START_JUCE_APPLICATION(ChataigneApplication)

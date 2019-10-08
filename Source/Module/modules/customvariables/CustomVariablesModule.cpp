@@ -64,6 +64,17 @@ void CustomVariablesModule::itemAdded(CVGroup * g)
 	valuesContainers.add(cc);
 }
 
+void CustomVariablesModule::itemsAdded(Array<CVGroup*> groups)
+{
+	for (auto& g : groups)
+	{
+		GenericControllableManagerLinkedContainer* cc = new GenericControllableManagerLinkedContainer(g->niceName, &g->values, true);
+		valuesCC.addChildControllableContainer(cc);
+		g->addControllableContainerListener(this);
+		valuesContainers.add(cc);
+	}
+}
+
 void CustomVariablesModule::itemRemoved(CVGroup * g)
 {
 	GenericControllableManagerLinkedContainer * cc = getValueCCForGroup(g);
@@ -72,6 +83,19 @@ void CustomVariablesModule::itemRemoved(CVGroup * g)
 	valuesCC.removeChildControllableContainer(cc);
 	g->removeControllableContainerListener(this);
 	valuesContainers.removeObject(cc);
+}
+
+void CustomVariablesModule::itemsRemoved(Array<CVGroup*> groups)
+{
+	for (auto& g : groups)
+	{
+		GenericControllableManagerLinkedContainer* cc = getValueCCForGroup(g);
+		if (cc == nullptr) return;
+
+		valuesCC.removeChildControllableContainer(cc);
+		g->removeControllableContainerListener(this);
+		valuesContainers.removeObject(cc);
+	}
 }
 
 void CustomVariablesModule::childAddressChanged(ControllableContainer * cc)

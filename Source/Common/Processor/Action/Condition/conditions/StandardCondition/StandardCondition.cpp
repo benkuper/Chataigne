@@ -85,11 +85,14 @@ void StandardCondition::setSourceControllable(WeakReference<Controllable> c)
 
 		if (comparator != nullptr)
 		{
-			if (!oldData.isVoid()) comparator->loadJSONData(oldData);
-			else if (!loadingComparatorData.isVoid())
+			if (!isCurrentlyLoadingData)
 			{
-				comparator->loadJSONData(loadingComparatorData);
-				//loadingComparatorData = var();
+				if (!loadingComparatorData.isVoid())
+				{
+					comparator->loadJSONData(loadingComparatorData);
+					//loadingComparatorData = var();
+				}
+				else if (!oldData.isVoid()) comparator->loadJSONData(oldData);
 			}
 			
 			comparator->addComparatorListener(this);

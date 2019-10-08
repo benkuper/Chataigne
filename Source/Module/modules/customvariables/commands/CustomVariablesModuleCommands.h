@@ -35,7 +35,7 @@ public:
 	enum Operator { EQUAL, INVERSE, ADD, SUBTRACT, MULTIPLY, DIVIDE };
 	EnumParameter * valueOperator; 
 	Parameter * value;
-	
+	var ghostValueData;
 
 	void updateOperatorOptions();
 

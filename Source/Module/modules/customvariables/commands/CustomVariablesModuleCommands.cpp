@@ -91,43 +91,53 @@ CVCommand::~CVCommand()
 
 void CVCommand::updateOperatorOptions()
 {
+	var oldData = valueOperator->getValueData();
 	valueOperator->clearOptions();
-	valueOperator->addOption("Equals", EQUAL);
+	valueOperator->addOption("Equals", EQUAL, false);
 
 	switch (value->type)
 	{
 	case Controllable::FLOAT:
 	case Controllable::INT:
-		valueOperator->addOption("Add", ADD)->addOption("Inverse", INVERSE)->addOption("Subtract", SUBTRACT)->addOption("Multiply", MULTIPLY)->addOption("Divide", DIVIDE);
+		valueOperator->addOption("Add", ADD, false)->addOption("Inverse", INVERSE, false)->addOption("Subtract", SUBTRACT, false)->addOption("Multiply", MULTIPLY, false)->addOption("Divide", DIVIDE, false);
 		break;
 
 	case Controllable::BOOL:
-		valueOperator->addOption("Inverse", INVERSE);
+		valueOperator->addOption("Inverse", INVERSE, false);
 		break;
 
 	default:
 		break;
 	}
 	
+	valueOperator->setValueWithData(oldData.isVoid()?EQUAL:oldData);
 	valueOperator->setEnabled(valueOperator->getAllKeys().size() > 1);
+
+	value->hideInEditor = valueOperator->getValueDataAsEnum<Operator>() == INVERSE;
 }
 
 void CVCommand::onContainerParameterChanged(Parameter * p)
 {
 	if (p == target && type == SET_VALUE)
 	{
+		ghostValueData;
 		if (value != nullptr)
 		{
+			ghostValueData = value->getJSONData();
 			clearTargetMappingParameters();
 			removeControllable(value);
 		}
 
-		value = ControllableFactory::createParameterFrom(target->target);
+		if (target->target != nullptr) value = ControllableFactory::createParameterFrom(target->target);
+		else value = nullptr;
+
 		if (value != nullptr)
 		{
 			updateOperatorOptions();
-			
+
+			if (!ghostValueData.isVoid()) value->loadJSONData(ghostValueData);
 			value->setNiceName("Value");
+		
 			addParameter(value);
 			addTargetMappingParameterAt(value, 0);
 		}
@@ -145,7 +155,9 @@ void CVCommand::onContainerParameterChanged(Parameter * p)
 		if (value != nullptr)
 		{
 			Operator o = valueOperator->getValueDataAsEnum<Operator>();
+			bool curHide = value->hideInEditor;
 			value->hideInEditor = o == INVERSE;
+			if (curHide != value->hideInEditor) queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, this));
 		}
 	}
 }

@@ -31,8 +31,10 @@ public:
 	void clearItems();
 
 
-	void itemAdded(CVGroup * g) override;
-	void itemRemoved(CVGroup * g) override;
+	void itemAdded(CVGroup* g) override;
+	void itemsAdded(Array<CVGroup*> g) override;
+	void itemRemoved(CVGroup* g) override;
+	void itemsRemoved(Array<CVGroup *> g) override;
 	void childAddressChanged(ControllableContainer * cc) override;
 
 	String getDefaultTypeString() const override { return "CustomVariables"; }
