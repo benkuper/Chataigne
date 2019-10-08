@@ -18,11 +18,11 @@
 OSExecCommand::OSExecCommand(OSModule* _module, CommandContext context, var params) :
 	BaseCommand(_module, context, params),
 	launchOptions(nullptr),
-	silentMode(nullptr)
+	silentMode(nullptr),
+	focusFilter(nullptr)
 {
 	actionType = (ActionType)(int)params.getProperty("type", LAUNCH_APP);
 
-	
 	switch (actionType)
 	{
 	case OPEN_FILE:
@@ -45,6 +45,12 @@ OSExecCommand::OSExecCommand(OSModule* _module, CommandContext context, var para
 	case LAUNCH_COMMAND:
 		target = addStringParameter("Command", "The command to launch.Every line is a new command", "");
 		target->multiline = true;
+		break;
+
+	case FOCUS_APP:
+		focusFilter = addEnumParameter("Filter", "How to filter windows with value");
+		focusFilter->addOption("Contains", CONTAINS)->addOption("Starts With", STARTS_WITH)->addOption("Ends with", ENDS_WITH)->addOption("Exact match", EXACT_MATCH);
+		target = addStringParameter("Name", "The name of the window, used with filter", "");
 		break;
 	}
 
@@ -138,6 +144,13 @@ void OSExecCommand::triggerInternal()
 		module->outActivityTrigger->trigger();
 	}
 	break;
+
+
+	case FOCUS_APP:
+#if JUCE_WINDOWS
+		EnumWindows(enumWindowCallback, reinterpret_cast<LPARAM>(this));
+#endif
+		break;
 	}
 }
 
@@ -172,3 +185,44 @@ void OSExecCommand::killProcess(const String & name)
 	if(result != 0) LOGWARNING("Problem killing app " + target->stringValue());
 #endif
 }
+
+#if JUCE_WINDOWS
+BOOL OSExecCommand::enumWindowCallback(HWND hWnd, LPARAM lparam) 
+{
+	int length = GetWindowTextLength(hWnd);
+	char* buffer = new char[length + 1];
+	GetWindowText(hWnd, buffer, length + 1);
+	std::string windowTitle(buffer);
+
+	// Ignore windows if invisible or missing a title
+	if (IsWindowVisible(hWnd) && length != 0) {
+		DBG("WINDOW : " << (int)hWnd << ":  " << windowTitle);
+		
+		String title = String(windowTitle);
+
+		OSExecCommand* c = reinterpret_cast<OSExecCommand*>(lparam);
+		FilterType t = c->focusFilter->getValueDataAsEnum<FilterType>();
+		String target = c->target->stringValue();
+
+		bool isValid = false;
+		switch (t)
+		{
+		case CONTAINS: isValid = title.contains(target); break;
+		case STARTS_WITH: isValid = title.startsWith(target); break;
+		case ENDS_WITH: isValid = title.endsWith(target); break;
+		case EXACT_MATCH: isValid = title == target; break;
+		}
+
+		if (isValid)
+		{
+			if (c->module->logOutgoingData->boolValue())
+			{
+				NLOG(c->module->niceName, "Set Focus to window " + title);
+				SetForegroundWindow(hWnd);
+			}
+		}
+	}
+
+	return TRUE;
+}
+#endif

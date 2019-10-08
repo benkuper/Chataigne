@@ -43,6 +43,7 @@ OSModule::OSModule() :
 	defManager->add(CommandDefinition::createDef(this, "Process", "Launch Command", &OSExecCommand::create, CommandContext::ACTION)->addParam("type", OSExecCommand::LAUNCH_COMMAND));
 	defManager->add(CommandDefinition::createDef(this, "Process", "Launch Command File", &OSExecCommand::create, CommandContext::ACTION)->addParam("type", OSExecCommand::LAUNCH_COMMAND_FILE));
 	defManager->add(CommandDefinition::createDef(this, "Process", "Kill App", &OSExecCommand::create, CommandContext::ACTION)->addParam("type", OSExecCommand::KILL_APP));
+	defManager->add(CommandDefinition::createDef(this, "Process", "Focus App", &OSExecCommand::create, CommandContext::ACTION)->addParam("type", OSExecCommand::FOCUS_APP));
 
 	scriptObject.setMethod(launchAppId, &OSModule::launchFileFromScript);
 }
