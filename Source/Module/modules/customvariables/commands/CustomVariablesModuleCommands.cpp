@@ -110,7 +110,7 @@ void CVCommand::updateOperatorOptions()
 		break;
 	}
 	
-	valueOperator->setValueWithData(oldData.isVoid()?EQUAL:oldData);
+	valueOperator->setValueWithData(oldData.isVoid()?EQUAL:(Operator)(oldData));
 	valueOperator->setEnabled(valueOperator->getAllKeys().size() > 1);
 
 	value->hideInEditor = valueOperator->getValueDataAsEnum<Operator>() == INVERSE;
