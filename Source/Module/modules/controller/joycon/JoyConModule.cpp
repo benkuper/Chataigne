@@ -194,7 +194,7 @@ void JoyConModule::onContainerTriggerTriggered(Trigger * t)
 
 void JoyConModule::run()
 {
-#if JUCE_WINDOWS || JUCE_MAC
+#if JUCE_WINDOWS || JUCE_MAC
     std::vector<Joytime::Controller> cVector = Joytime::scanForControllers();
 
 	controllers.clear();
