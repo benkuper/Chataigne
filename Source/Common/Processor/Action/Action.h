@@ -45,7 +45,7 @@ public:
 
 	void setHasOffConsequences(bool value);
 
-	virtual void updateDisables();
+    virtual void updateDisables() override;
 
 	var getJSONData() override;
 	void loadJSONDataItemInternal(var data) override;

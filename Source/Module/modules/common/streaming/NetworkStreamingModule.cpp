@@ -14,11 +14,11 @@
 NetworkStreamingModule::NetworkStreamingModule(const String &name, bool canHaveInput, bool canHaveOutput, int defaultLocalPort, int defaultRemotePort) :
 	StreamingModule(name),
 	Thread("stream_"+name),
-	useLocal(nullptr),
-	senderIsConnected(nullptr),
-	remoteHost(nullptr),
+	receiveFrequency(nullptr),
+    useLocal(nullptr),
+    remoteHost(nullptr),
 	remotePort(nullptr),
-	receiveFrequency(nullptr)
+    senderIsConnected(nullptr)
 {
 	setupIOConfiguration(canHaveInput, canHaveOutput);
 

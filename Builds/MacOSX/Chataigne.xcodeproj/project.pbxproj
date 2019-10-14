@@ -7615,8 +7615,8 @@
 					"_DEBUG=1",
 					"DEBUG=1",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
-					"JUCE_APP_VERSION=1.6.5",
-					"JUCE_APP_VERSION_HEX=0x10605",
+					"JUCE_APP_VERSION=1.6.6b1",
+					"JUCE_APP_VERSION_HEX=0x10606",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
 					"JucePlugin_Build_AU=0",
@@ -7636,6 +7636,7 @@
 					"../../External/servus/include",
 					"../../External/dnssd/include",
 					"../../External/libartnet/include",
+					"../../External/joycon/include",
 					"../../Source",
 					"$(inherited)",
 				);
@@ -7646,9 +7647,10 @@
 					"$(inherited)",
 					"\"../../External/servus/lib/osx/debug\"",
 					"\"../../External/libartnet/lib/osx\"",
+					"\"../../External/joycon/lib/osx\"",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
-				OTHER_LDFLAGS = "-lServus -lartnet";
+				OTHER_LDFLAGS = "-lServus -lartnet -lhidapi -ljoytime-core -ljoytime-input-hidapi";
 				PRODUCT_BUNDLE_IDENTIFIER = benkuper.Chataigne;
 				PRODUCT_NAME = "Chataigne";
 				USE_HEADERMAP = NO;
@@ -7670,8 +7672,8 @@
 					"_NDEBUG=1",
 					"NDEBUG=1",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
-					"JUCE_APP_VERSION=1.6.5",
-					"JUCE_APP_VERSION_HEX=0x10605",
+					"JUCE_APP_VERSION=1.6.6b1",
+					"JUCE_APP_VERSION_HEX=0x10606",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
 					"JucePlugin_Build_AU=0",
@@ -7692,6 +7694,7 @@
 					"../../External/servus/include",
 					"../../External/dnssd/include",
 					"../../External/libartnet/include",
+					"../../External/joycon/include",
 					"../../Source",
 					"$(inherited)",
 				);
@@ -7702,10 +7705,11 @@
 					"$(inherited)",
 					"\"../../External/servus/lib/osx/release\"",
 					"\"../../External/libartnet/lib/osx\"",
+					"\"../../External/joycon/lib/osx\"",
 				);
 				LLVM_LTO = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
-				OTHER_LDFLAGS = "-lServus -lartnet";
+				OTHER_LDFLAGS = "-lServus -lartnet -lhidapi -ljoytime-core -ljoytime-input-hidapi";
 				PRODUCT_BUNDLE_IDENTIFIER = benkuper.Chataigne;
 				PRODUCT_NAME = "Chataigne";
 				USE_HEADERMAP = NO;

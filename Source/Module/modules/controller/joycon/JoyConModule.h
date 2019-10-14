@@ -13,6 +13,10 @@
 #include "Module/Module.h"
 #if JUCE_WINDOWS
 #include "joytime-input-hidapi.hpp"
+#elif JUCE_MAC
+#define JOYTIME_CORE_BUILT_AS_STATIC
+#define JOYTIME_INPUT_HIDAPI_BUILT_AS_STATIC
+#include "joytime-input-hidapi.hpp"
 #endif
 
 class JoyConModule :
@@ -23,7 +27,7 @@ public:
 	JoyConModule();
 	~JoyConModule();
 
-#if JUCE_WINDOWS
+#if JUCE_WINDOWS || JUCE_MAC
 	Array<Joytime::Controller *> controllers;
 #endif
 
@@ -85,7 +89,7 @@ public:
 	Vector3D<float> i_b_;
 	Vector3D<float> w_a, w_g;
 
-#if JUCE_WINDOWS
+#if JUCE_WINDOWS || JUCE_MAC
 	void updateController(Joytime::Controller * c);
 	void processIMU(Joytime::Controller * c);
     void onControllableFeedbackUpdateInternal(ControllableContainer *, Controllable *c) override;

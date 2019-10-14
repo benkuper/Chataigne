@@ -17,9 +17,9 @@ Morpher::Morpher(CVPresetManager* presetManager) :
 	ControllableContainer("Morpher"),
 	Thread("Morpher"),
 	presetManager(presetManager),
-	mainTarget("Main"),
-	blendMode(VORONOI),
-	attractionSleepMS(20)
+    mainTarget("Main"),
+    attractionSleepMS(20),
+	blendMode(VORONOI)
 {
 
 	showInspectorOnSelect = false;

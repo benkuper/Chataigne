@@ -234,7 +234,7 @@ void MorpherViewUI::paintBackground(Graphics& g)
 					Line<float> line(Point<float>(edge->pos[0].x, edge->pos[0].y), Point<float>(edge->pos[1].x, edge->pos[1].y));
 					Point<float> np;
 					float distToEdge = line.getDistanceFromPoint(mp, np);
-					Point<float> sp;
+					//Point<float> sp;
 					float distNeighbourToEdgePoint = np.getDistanceFrom(Point<float>(ns->p.x, ns->p.y));
 
 					edges.add(edge);

@@ -195,6 +195,9 @@ Parameter* ToColorFilter::setupParameterInternal(Parameter* sp)
 		retargetComponent->setValueWithData(HUE);
 		baseColor = filterParams.addColorParameter("Base Color", "Color to use to convert", Colours::red);
 		break;
+            
+        default:
+            break;
 	}
 
 	return p;

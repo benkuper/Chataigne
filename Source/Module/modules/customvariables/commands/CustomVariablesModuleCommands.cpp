@@ -120,7 +120,6 @@ void CVCommand::onContainerParameterChanged(Parameter * p)
 {
 	if (p == target && type == SET_VALUE)
 	{
-		ghostValueData;
 		if (value != nullptr)
 		{
 			ghostValueData = value->getJSONData();

@@ -12,9 +12,9 @@
 
 SendStreamStringCommand::SendStreamStringCommand(StreamingModule* _module, CommandContext context, var params) :
 	StreamingCommand(_module, context, params),
-	prefix(nullptr),
 	appendCR(nullptr),
-	appendNL(nullptr)
+	appendNL(nullptr),
+    prefix(nullptr)
 {
 	if (context == CommandContext::MAPPING)
 	{

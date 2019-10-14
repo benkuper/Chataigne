@@ -78,7 +78,7 @@ void CommandTemplateManager::reorderDefinitions()
 
 void CommandTemplateManager::templateNameChanged(CommandTemplate * ct)
 {
-	if (!isCurrentlyLoadingData && Engine::mainEngine->isLoadingFile || Engine::mainEngine->isClearing) return;
+	if (isCurrentlyLoadingData || Engine::mainEngine->isLoadingFile || Engine::mainEngine->isClearing) return;
 
 	CommandDefinition* def = defManager.definitions[items.indexOf(ct)];
 	jassert(def != nullptr);

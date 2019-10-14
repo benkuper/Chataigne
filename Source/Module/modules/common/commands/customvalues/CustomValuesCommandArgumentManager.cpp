@@ -14,8 +14,8 @@
 CustomValuesCommandArgumentManager::CustomValuesCommandArgumentManager(bool _mappingEnabled, bool templateMode) :
 	BaseManager("arguments"),
 	mappingEnabled(_mappingEnabled),
-	templateMode(templateMode),
 	isBeingDestroyed(false),
+    templateMode(templateMode),
 	linkedTemplateManager(nullptr)
 {
 	selectItemWhenCreated = false;
