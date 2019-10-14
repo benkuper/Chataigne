@@ -48,7 +48,7 @@ void UDPModule::setupReceiver()
 	else
 	{
 		NLOGERROR(niceName, "UDP Receiver bound to port " << localPort->intValue());
-		localPort->setWarningMessage("Could not bind to port " + localPort->intValue());
+		localPort->setWarningMessage("Could not bind to port " + String(localPort->intValue()));
 	}
 
 	Array<IPAddress> ad;

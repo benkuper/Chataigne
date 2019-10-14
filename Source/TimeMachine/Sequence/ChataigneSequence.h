@@ -48,7 +48,7 @@ public:
 	void itemAdded(SequenceLayer* layer) override;
 	void itemRemoved(SequenceLayer* layer) override;
 	
-	virtual bool timeIsDrivenByAudio();
+    virtual bool timeIsDrivenByAudio() override;
 
 	virtual void onContainerParameterChangedInternal(Parameter *) override;
 	virtual void onContainerTriggerTriggered(Trigger *) override;

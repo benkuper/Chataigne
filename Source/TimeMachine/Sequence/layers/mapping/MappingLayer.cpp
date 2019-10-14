@@ -22,8 +22,9 @@
 
 MappingLayer::MappingLayer(Sequence *_sequence, var params) :
 	SequenceLayer(_sequence, "Mapping"),
-	curveValue(nullptr),
-	mode(nullptr)
+	mode(nullptr),
+    curveValue(nullptr)
+
 {
 	
 	canInspectChildContainers = true;
