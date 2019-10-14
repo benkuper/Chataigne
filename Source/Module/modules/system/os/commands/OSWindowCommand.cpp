@@ -31,7 +31,7 @@ OSWindowCommand::OSWindowCommand(OSModule* _module, CommandContext context, var 
 	windowPos = addPoint2DParameter("Position", "The window position. Leave disable to not change it", false);
 	windowPos->canBeDisabledByUser = true;
 
-	windowSize = addPoint2DParameter("Position", "The window size. Leave disable to not change it", false);
+	windowSize = addPoint2DParameter("Size", "The window size. Leave disable to not change it", false);
 	windowSize->canBeDisabledByUser = true;
 }
 
