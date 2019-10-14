@@ -30,19 +30,18 @@ If you wish to test the latest features and commits, the bleeding-edge section i
 Chataigne is built on top of the JUCE frameworks. You can find more infos about it there : http://www.juce.com
 Chataigne is using a modified version of JUCE. So basically, you just need to :
   - Clone the develop-local branch from the JUCE git here : http://github.com/benkuper/JUCE 
-  - Clone the dependencies (see below)
+  - Clone OrganicUI : https://github.com/benkuper/juce_organicui 
+  - Clone Timeline : https://github.com/benkuper/juce_timeline
   - Launch the Projucer and open Chataigne.jucer
-  - Link the dependencies
+  - Link the juce_organicui and juce_timeline modules in the Projucer (see the JUCE documentation) 
   - Save the jucer
   - Open the solution for you platform in the Builds folder
   - Build the solution from your IDE or make in linux
   - Check the dependency section below if you have dependency problems when running Chataigne
   - Enjoy !
   
-### Dependencies
-
-  Chataigne relies on the OrganicUI JUCE module that you can find here : https://github.com/benkuper/juce_organicui
-  You will need to download, extract and link the Projucer juce_organicui module to its parent folder
+  
+## Dependencies
 
 ### Windows running instructions ###
 **DLL dependencies** :
