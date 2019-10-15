@@ -4,7 +4,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING .ISS SCRIPT FILES!
 
 #define ApplicationName 'Chataigne'
-#define ApplicationVersion GetStringFileInfo('Binaries/Win7/App/Chataigne.exe',"ProductVersion")
+#define ApplicationVersion GetStringFileInfo('Binaries/Win7CI/App/Chataigne.exe',"ProductVersion")
 
 [Setup]
 AppName={#ApplicationName}
@@ -28,8 +28,8 @@ SetupIconFile=setup.ico
 SetupWindowTitle={#ApplicationName} {#ApplicationVersion} Setup
 
 [Files]
-Source: "Binaries/CI/App/{#ApplicationName}.exe"; DestDir: "{app}"
-Source: "Binaries/CI/App/*.dll"; DestDir: "{app}"
+Source: "Binaries/CI/App/{#ApplicationName}.exe"; DestDir: "{app}" ; Flags: ignoreversion
+Source: "Binaries/CI/App/*.dll"; DestDir: "{app}"; Flags: ignoreversion
 
 [Icons]
 Name: "{group}\{#ApplicationName}"; Filename: "{app}\{#ApplicationName}.exe"
