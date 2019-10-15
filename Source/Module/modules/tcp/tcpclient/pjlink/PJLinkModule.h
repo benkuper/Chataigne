@@ -20,9 +20,15 @@ public:
 	PJLinkModule();
 	~PJLinkModule() {}
 
+	StringParameter* password;
+
 	EnumParameter * powerStatus;
 	BoolParameter * shutterVideoStatus;
 	BoolParameter * shutterAudioStatus;
+
+	String passBytes;
+
+	virtual void sendMessageInternal(const String& message) override;
 
 	CommandDefinition * getBasePJCommand(const String &menu, const String &commandName, const String &command, CommandContext context = CommandContext::ACTION);
 

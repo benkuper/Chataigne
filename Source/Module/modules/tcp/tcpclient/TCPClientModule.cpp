@@ -35,6 +35,7 @@ void TCPClientModule::setupSender()
 	clearInternal();
 	
 	if (!enabled->boolValue()) return;
+	if (isCurrentlyLoadingData) return;
 	if (sendCC == nullptr) return;
 	if (!sendCC->enabled->boolValue())
 	{
