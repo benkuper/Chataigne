@@ -53,9 +53,9 @@ JoyConModule::JoyConModule() :
 	minus = leftValues.addBoolParameter("-", "", false);
 	capture = leftValues.addBoolParameter("Capture", "", false);
 
-	rightAccelX = leftValues.addFloatParameter("Right Accel X", "", 0, -1, 1);
-	rightAccelY = leftValues.addFloatParameter("Right Accel Y", "", 0, -1, 1);
-	rightAccelZ = leftValues.addFloatParameter("Right Accel Z", "", 0, -1, 1);
+	rightAccelX = rightValues.addFloatParameter("Right Accel X", "", 0, -1, 1);
+	rightAccelY = rightValues.addFloatParameter("Right Accel Y", "", 0, -1, 1);
+	rightAccelZ = rightValues.addFloatParameter("Right Accel Z", "", 0, -1, 1);
 	rightAccelX->autoAdaptRange = true;
 	rightAccelY->autoAdaptRange = true;
 	rightAccelZ->autoAdaptRange = true;
