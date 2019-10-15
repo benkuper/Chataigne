@@ -66,8 +66,17 @@ void ModuleRouterValue::setSourceAndOutModule(Module * s, Module * m)
 	{
 
 		routeParams.reset(outModule->createRouteParamsForSourceValue(s, sourceValue, valueIndex));
-		routeParams->loadJSONData(prevData);
-		addChildControllableContainer(routeParams.get());
+		if (routeParams != nullptr)
+		{
+			routeParams->loadJSONData(prevData);
+			addChildControllableContainer(routeParams.get());
+		}
+		else
+		{
+			NLOGERROR(niceName, "Error when trying to create routing values for out module : " << outModule->niceName);
+			return;
+		}
+			
 	}
 
 	valueListeners.call(&ValueListener::routeParamsChanged, this);
