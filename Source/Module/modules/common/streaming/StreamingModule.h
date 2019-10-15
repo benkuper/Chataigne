@@ -52,6 +52,22 @@ public:
 
 	virtual bool isReadyToSend() { return false; }
 
+	class StreamingRouteParams :
+		public RouteParams
+	{
+	public:
+		StreamingRouteParams(Module* sourceModule, Controllable* c);
+		~StreamingRouteParams() {}
+		
+		StringParameter* prefix;
+
+		BoolParameter* appendNL;
+		BoolParameter* appendCR;
+	};
+
+	virtual RouteParams* createRouteParamsForSourceValue(Module* sourceModule, Controllable* c, int /*index*/) override { return new StreamingRouteParams(sourceModule, c); }
+	virtual void handleRoutedModuleValue(Controllable* c, RouteParams* p) override;
+
 	void loadJSONDataInternal(var data) override;
 
 	static var sendStringFromScript(const var::NativeFunctionArgs &a);

@@ -20,7 +20,8 @@ StreamingModule::StreamingModule(const String & name) :
 {
 	includeValuesInSave = true;
 	setupIOConfiguration(true, true);
-	
+	canHandleRouteValues = hasOutput;
+
 	streamingType = moduleParams.addEnumParameter("Protocol", "Protocol for treating the incoming data");
 	streamingType->addOption("Lines", LINES)->addOption("Raw", RAW)->addOption("Data255", DATA255)->addOption("COBS", COBS);
 
@@ -504,4 +505,28 @@ var StreamingModule::sendBytesFromScript(const var::NativeFunctionArgs & a)
 
 	m->sendBytes(data);
 	return var();
+}
+
+StreamingModule::StreamingRouteParams::StreamingRouteParams(Module* sourceModule, Controllable* c)
+{
+	prefix = addStringParameter("Prefix", "Prefix to put before the actual value", c->shortName+" ");
+	appendNL = addBoolParameter("NL", "Append NL (New Line) at the end", false);
+	appendCR = addBoolParameter("CR", "Append CR (Charriot Return) at the end", false);
+}
+
+
+void StreamingModule::handleRoutedModuleValue(Controllable* c, RouteParams* p)
+{
+	StreamingRouteParams* op = dynamic_cast<StreamingRouteParams*>(p);
+	
+	String s = op->prefix->stringValue();
+	if (c->type != Controllable::TRIGGER)
+	{
+		s += dynamic_cast<Parameter*>(c)->stringValue();
+	}
+
+	s += op->appendCR->boolValue() ? "\r" : "";
+	s += op->appendNL->boolValue() ? "\n" : "";
+
+	sendMessage(s);
 }
