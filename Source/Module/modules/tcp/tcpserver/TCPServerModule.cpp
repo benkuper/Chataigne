@@ -70,15 +70,23 @@ void TCPServerModule::sendMessageInternal(const String& message)
 		return;
 	}
 
+	Array<StreamingSocket*> connectionsToRemove;
+
+	connectionManager.connectionLock.enter();
+
 	for (auto& c : connectionManager.connections)
 	{
 		int numBytes = c->write(message.getCharPointer(), message.length());
-		if (numBytes == -1)
-		{
-			NLOGERROR(niceName, "Error sending message, removing client");
-			connectionManager.removeConnection(c);
-			numClients->setValue(connectionManager.connections.size());
-		}
+		if (numBytes == -1) connectionsToRemove.add(c);
+	}
+
+	connectionManager.connectionLock.exit();
+
+	for (auto& c : connectionsToRemove)
+	{
+		NLOGERROR(niceName, "Error sending message, removing client");
+		connectionManager.removeConnection(c);
+		numClients->setValue(connectionManager.connections.size());
 	}
 }
 
@@ -108,6 +116,8 @@ Array<uint8> TCPServerModule::readBytes()
 	
 	Array<StreamingSocket*> connectionsToRemove;
 
+	connectionManager.connectionLock.enter();
+
 	for (auto& c : connectionManager.connections)
 	{
 		uint8 bytes[2048];
@@ -133,11 +143,14 @@ Array<uint8> TCPServerModule::readBytes()
 		}
 	}
 
+	connectionManager.connectionLock.exit();
+
 	for (auto& c : connectionsToRemove)
 	{
 		NLOGWARNING(niceName, "Connection to TCP client seems lost, removing client");
 		connectionManager.removeConnection(c);
 	}
+
 	return result;
 }
 
