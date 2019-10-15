@@ -166,6 +166,12 @@ void TCPServerModule::newConnection(StreamingSocket* s)
 	NLOG(niceName, "New Client connected : " << s->getHostName() << ":" << s->getPort());
 }
 
+void TCPServerModule::connectionRemoved(StreamingSocket* s)
+{
+	numClients->setValue(connectionManager.connections.size());
+	NLOG(niceName, "Connection removed : " << s->getHostName() << ":" << s->getPort());
+}
+
 void TCPServerModule::receiverBindChanged(bool isBound)
 {
 	receiverIsBound->setValue(isBound);

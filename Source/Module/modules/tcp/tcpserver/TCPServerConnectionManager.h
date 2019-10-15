@@ -34,7 +34,8 @@ public:
 	public:
 		virtual ~ConnectionManagerListener() {}
 		virtual void receiverBindChanged(bool /*isBound*/) {}
-		virtual void newConnection(StreamingSocket *) {}
+		virtual void newConnection(StreamingSocket*) {}
+		virtual void connectionRemoved(StreamingSocket *) {}
 	};
 
 	ListenerList<ConnectionManagerListener> connectionManagerListeners;

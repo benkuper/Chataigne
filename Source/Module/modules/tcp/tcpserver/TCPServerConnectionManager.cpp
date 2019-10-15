@@ -32,10 +32,13 @@ void TCPServerConnectionManager::setupReceiver(int port)
 void TCPServerConnectionManager::removeConnection(StreamingSocket* connection)
 {
 	connectionLock.enter();
-	connections.removeObject(connection);
+	connections.removeObject(connection, false);
 	connectionLock.exit();
 
+	connectionManagerListeners.call(&ConnectionManagerListener::connectionRemoved, connection);
 	queuedNotifier.addMessage(new ConnectionManagerEvent(ConnectionManagerEvent::CONNECTIONS_CHANGED));
+
+	delete connection;
 }
 
 void TCPServerConnectionManager::close()

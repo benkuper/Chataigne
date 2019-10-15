@@ -41,7 +41,8 @@ public:
 
 	virtual void clearInternal() override;
 
-	void newConnection(StreamingSocket * s) override;
+	void newConnection(StreamingSocket* s) override;
+	void connectionRemoved(StreamingSocket * s) override;
 	void receiverBindChanged(bool isBound) override;
 
 	ModuleUI* getModuleUI() override;
