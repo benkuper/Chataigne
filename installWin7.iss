@@ -28,8 +28,8 @@ SetupIconFile=setup.ico
 SetupWindowTitle={#ApplicationName} {#ApplicationVersion} Setup
 
 [Files]
-Source: "Binaries/CI/App/{#ApplicationName}.exe"; DestDir: "{app}" ; Flags: ignoreversion
-Source: "Binaries/CI/App/*.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "Binaries/Win7CI/App/{#ApplicationName}.exe"; DestDir: "{app}" ; Flags: ignoreversion
+Source: "Binaries/Win7CI/App/*.dll"; DestDir: "{app}"; Flags: ignoreversion
 
 [Icons]
 Name: "{group}\{#ApplicationName}"; Filename: "{app}\{#ApplicationName}.exe"
