@@ -254,6 +254,7 @@ Array<DMXArtNetDevice::NetworkInterface> DMXArtNetDevice::getAllInterfaces()
 		PIP_ADAPTER_ADDRESSES a = pAddresses;
 
 		while (a) {
+			if (a == nullptr || a->FirstUnicastAddress == nullptr) continue;
 			char * ipData = a->FirstUnicastAddress->Address.lpSockaddr->sa_data;
 			String ip = String((uint8)ipData[2]) + "." + String((uint8)ipData[3]) + "." + String((uint8)ipData[4]) + "." + String((uint8)ipData[5]);
 			result.add({ a->FriendlyName, ip });
