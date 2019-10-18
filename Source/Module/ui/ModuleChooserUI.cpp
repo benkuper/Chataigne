@@ -56,7 +56,10 @@ void ModuleChooserUI::buildModuleBox()
 		addItem(m->niceName, id);
 	}
 
-	if (includeCVModule) addItem("Custom Variables", 1000);
+	if (includeCVModule)
+	{
+		if (filterModuleFunc == nullptr || filterModuleFunc(CVGroupManager::getInstance()->module.get())) addItem("Custom Variables", 1000);
+	}
 	
 	setInterceptsMouseClicks(getNumItems() > 0, false);
 	//repaint();
