@@ -314,13 +314,6 @@
 #endif
 
 //==============================================================================
-// juce_osc flags:
-
-#ifndef    JUCE_ALLOW_SPECIAL_CHARS_IN_ADDRESS
- #define   JUCE_ALLOW_SPECIAL_CHARS_IN_ADDRESS 1
-#endif
-
-//==============================================================================
 // juce_timeline flags:
 
 #ifndef    TIMELINE_USE_SEQUENCEMANAGER_SINGLETON
