@@ -376,6 +376,8 @@ void MappingLayer::sequenceCurrentTimeChanged(Sequence *, float prevTime, bool e
 
 void MappingLayer::sequencePlayStateChanged(Sequence *)
 {
+	if (!enabled->boolValue() || !sequence->enabled->boolValue()) return;
+
 	if (automations.size() > 0)
 	{
 		if (sequence->isPlaying->boolValue())
