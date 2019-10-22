@@ -14,7 +14,10 @@
 
 GenericOSCQueryModule::GenericOSCQueryModule(const String & name, int defaultRemotePort) :
 	Module(name),
-	Thread("OSCQuery")
+	Thread("OSCQuery"),
+    useLocal(nullptr),
+    remoteHost(nullptr),
+    remotePort(nullptr)
 {
 	alwaysShowValues = true;
 	setupIOConfiguration(false, true);
@@ -200,6 +203,7 @@ void GenericOSCQueryModule::onControllableFeedbackUpdateInternal(ControllableCon
 
 void GenericOSCQueryModule::run()
 {
+    if(useLocal == nullptr || remoteHost == nullptr || remotePort == nullptr) return;
 	URL url("http://" + (useLocal->boolValue()?"127.0.0.1":remoteHost->stringValue()) + ":" + remotePort->stringValue());
 
 	StringPairArray responseHeaders;
