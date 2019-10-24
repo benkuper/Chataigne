@@ -31,6 +31,8 @@ StateTransition::~StateTransition()
 
 void StateTransition::clearItem()
 {
+	BaseItem::clearItem();
+
 	if (!sourceState.wasObjectDeleted()) sourceState->outTransitions.removeAllInstancesOf(this);
 	if (!destState.wasObjectDeleted()) destState->inTransitions.removeAllInstancesOf(this);
 }

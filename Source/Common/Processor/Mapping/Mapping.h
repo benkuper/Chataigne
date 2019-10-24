@@ -67,7 +67,7 @@ public:
 
 	void newMessage(const MappingFilter::FilterEvent &e) override;
 
-	void clearItem() override;
+	virtual void clearItem() override;
 
 	virtual void timerCallback() override;
 

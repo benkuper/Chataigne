@@ -222,6 +222,8 @@ void Mapping::newMessage(const MappingFilter::FilterEvent & e)
 
 void Mapping::clearItem()
 {
+	BaseItem::clearItem();
+
 	fm.removeAsyncManagerListener(this);
 	input.removeMappingInputListener(this); 
 	input.clear();

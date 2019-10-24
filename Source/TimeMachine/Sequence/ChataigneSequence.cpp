@@ -42,6 +42,8 @@ ChataigneSequence::~ChataigneSequence()
 
 void ChataigneSequence::clearItem()
 {
+	BaseItem::clearItem();
+
 	setMasterAudioLayer(nullptr);
 	Sequence::clearItem();
 }

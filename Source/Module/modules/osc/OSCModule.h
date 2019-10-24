@@ -22,6 +22,7 @@ public:
 	~OSCOutput();
 
 	bool forceDisabled;
+	bool senderIsConnected;
 	
 	//SEND
 	BoolParameter * useLocal;

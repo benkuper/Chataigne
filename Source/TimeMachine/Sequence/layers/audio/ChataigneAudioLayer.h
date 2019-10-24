@@ -29,7 +29,7 @@ public:
 	AudioModule * audioModule;
 	ChataigneSequence* chataigneSequence;
 
-	void clearItem() override;
+	virtual void clearItem() override;
 
 	void setAudioModule(AudioModule * newModule);
 

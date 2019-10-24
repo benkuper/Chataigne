@@ -119,6 +119,8 @@ Parameter * MappingFilter::process(Parameter * source)
 
 void MappingFilter::clearItem()
 {
+	BaseItem::clearItem();
+
 	//setupSource(nullptr);
 
 	if (!sourceParam.wasObjectDeleted() && sourceParam != nullptr)

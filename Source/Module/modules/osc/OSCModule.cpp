@@ -499,7 +499,8 @@ OSCModule::OSCRouteParams::OSCRouteParams(Module * sourceModule, Controllable * 
 
 OSCOutput::OSCOutput() :
 	 BaseItem("OSC Output"),
-	forceDisabled(false)
+	forceDisabled(false),
+	senderIsConnected(false)
 {
 	isSelectable = false;
 
@@ -543,8 +544,8 @@ void OSCOutput::setupSender()
 	if (!enabled->boolValue() || forceDisabled || Engine::mainEngine->isClearing) return;
 
 	String targetHost = useLocal->boolValue() ? "127.0.0.1" : remoteHost->stringValue();
-	bool result = sender.connect(targetHost, remotePort->intValue());
-	if (result)
+	senderIsConnected = sender.connect(targetHost, remotePort->intValue());
+	if (senderIsConnected)
 	{ 
 		NLOG(niceName, "Now sending to " + remoteHost->stringValue() + ":" + remotePort->stringValue());
 		clearWarning();
@@ -558,6 +559,6 @@ void OSCOutput::setupSender()
 
 void OSCOutput::sendOSC(const OSCMessage & m)
 {
-	if (!enabled->boolValue() || forceDisabled) return;
+	if (!enabled->boolValue() || forceDisabled || !senderIsConnected) return;
 	sender.send(m);
 }

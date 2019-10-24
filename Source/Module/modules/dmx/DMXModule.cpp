@@ -168,6 +168,7 @@ var DMXModule::sendDMXFromScript(const var::NativeFunctionArgs& args)
 
 void DMXModule::clearItem()
 {
+	BaseItem::clearItem();
 	setCurrentDMXDevice(nullptr);
 }
 

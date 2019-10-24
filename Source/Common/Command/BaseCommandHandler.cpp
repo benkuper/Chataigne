@@ -31,6 +31,7 @@ BaseCommandHandler::~BaseCommandHandler()
 
 void BaseCommandHandler::clearItem()
 {
+	BaseItem::clearItem();
 	setCommand(nullptr);
 }
 
