@@ -19,10 +19,10 @@ matrix:
       sudo: required
       env: TARGET_SYSTEM=linux-x64 BUILD_FOLDER=LinuxMakefile SYSTEM_ARCH=x86_64 JUCE_PATH=~/ JUCE_MODULES_PATH=~/build/benkuper APPIMAGE_PATH=~/
     - os: linux
-      arch: arm64
+      arch: amd64
       dist: bionic
       sudo: required
-      env: TARGET_SYSTEM=linux-armv8 BUILD_FOLDER=Raspberry SYSTEM_ARCH=armhf JUCE_PATH=~/ JUCE_MODULES_PATH=~/build/benkuper APPIMAGE_PATH=~/
+      env: TARGET_SYSTEM=linux-armhf BUILD_FOLDER=Raspberry SYSTEM_ARCH=armhf JUCE_PATH=~/ JUCE_MODULES_PATH=~/build/benkuper APPIMAGE_PATH=~/
 
 before_install:
 - |
@@ -50,11 +50,31 @@ before_install:
   echo "Target system : $TARGET_SYSTEM"
 
   if [ "$TRAVIS_OS_NAME" == "linux" ]; then
+    if [ $TARGET_SYSTEM == "linux-armhf" ]; then
+      echo 'deb [arch=armhf] http://ports.ubuntu.com/ubuntu-ports bionic main universe' >> /etc/apt/sources.list
+      echo 'deb [arch=armhf] http://ports.ubuntu.com/ubuntu-ports bionic-updates main universe' >> /etc/apt/sources.list
+      sudo dpkg --add-architecture armhf
+      
+      sudo apt-get update
+      echo "Installing armhf cross compilation tools"
+      sudo apt-get install -q g++-arm-linux-gnueabihf
+
+      echo "Installing extra lib dependencies"
+      sudo apt-get install -q libgdk-pixbuf2.0-dev:armhf libpango1.0-dev:armhf libsoup2.4-dev:armhf libharfbuzz-dev:armhf libxml2-dev:armhf libicu-dev:armhf
+      
+      export CXX=arm-linux-gnueabihf-g++
+      export CC=arm-linux-gnueabihf-gcc
+      export PKG_CONFIG_PATH=/usr/lib/arm-linux-gnueabihf/pkgconfig
+      export TARGET_ARCH="-march=armv8-a"
+    fi
+
     sudo apt-get update
-    sudo apt-get install -qq git libfreetype6-dev libx11-dev libxinerama-dev libxrandr-dev libxcursor-dev libxcomposite-dev mesa-common-dev libasound2-dev freeglut3-dev libcurl4-gnutls-dev+ libasound2-dev libjack-dev libbluetooth-dev libgtk-3-dev libwebkit2gtk-4.0-dev curl wget zip unzip libfuse2
+    echo "Installing JUCE lib dependencies and extra tools"
+    sudo apt-get install -q libfreetype6-dev:$SYSTEM_ARCH libx11-dev:$SYSTEM_ARCH libxinerama-dev:$SYSTEM_ARCH libxrandr-dev:$SYSTEM_ARCH libxcursor-dev:$SYSTEM_ARCH libxcomposite-dev:$SYSTEM_ARCH mesa-common-dev:$SYSTEM_ARCH libasound2-dev:$SYSTEM_ARCH freeglut3-dev:$SYSTEM_ARCH libcurl4-gnutls-dev:$SYSTEM_ARCH libasound2-dev:$SYSTEM_ARCH libjack-dev:$SYSTEM_ARCH libbluetooth-dev:$SYSTEM_ARCH libgtk-3-dev:$SYSTEM_ARCH libwebkit2gtk-4.0-dev:$SYSTEM_ARCH
+    sudo apt-get install -q curl wget zip unzip
     
-    echo 'GCC Version :'
-    gcc -v
+    echo 'GCC Version:'
+    $CC -v
 
     echo 'Downloading AppImageTool...'
     cd $APPIMAGE_PATH
@@ -74,7 +94,7 @@ before_install:
 install:
 - |
   cd $JUCE_PATH
-  git clone --depth=1 --branch=develop-local https://github.com/benkuper/JUCE.git JUCE;
+  git clone --depth=1 --branch=develop-local https://github.com/benkuper/JUCE.git JUCE
 
   cd $JUCE_MODULES_PATH;
   mkdir "JUCE Modules";
