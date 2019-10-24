@@ -17,14 +17,12 @@ matrix:
       arch: amd64
       dist: bionic
       sudo: required
-      env: TARGET_SYSTEM=linux-x64 BUILD_FOLDER=LinuxMakefile TARGET_ARCH=x86_64
-      env: JUCE_PATH=~/ JUCE_MODULES_PATH=/benkuper APPIMAGE_PATH=~/
+      env: TARGET_SYSTEM=linux-x64 BUILD_FOLDER=LinuxMakefile TARGET_ARCH=x86_64 JUCE_PATH=~/ JUCE_MODULES_PATH=/benkuper APPIMAGE_PATH=~/
     - os: linux
       arch: arm64
       dist: bionic
       sudo: required
-      env: TARGET_SYSTEM=linux-armv8 BUILD_FOLDER=Raspberry TARGET_ARCH=armhf 
-      env: JUCE_PATH=~/ JUCE_MODULES_PATH=/benkuper APPIMAGE_PATH=~/
+      env: TARGET_SYSTEM=linux-armv8 BUILD_FOLDER=Raspberry TARGET_ARCH=armhf JUCE_PATH=~/ JUCE_MODULES_PATH=/benkuper APPIMAGE_PATH=~/
 
 before_install:
 - |
