@@ -14,6 +14,7 @@
 #include "conditions/ConditionGroup/ConditionGroup.h"
 #include "conditions/ScriptCondition/ScriptCondition.h"
 #include "conditions/ActivationCondition/ActivationCondition.h"
+#include "Common/Processor/Action/Action.h"
 
 juce_ImplementSingleton(ConditionManager)
 
@@ -89,6 +90,13 @@ void ConditionManager::addItemInternal(Condition * c, var data)
 	conditionOperator->hideInEditor = items.size() <= 1;
 	validationTime->hideInEditor = items.size() == 0;
 	validationProgress->hideInEditor = items.size() == 0;
+	
+	StandardCondition* sc = dynamic_cast<StandardCondition*>(c);
+	if (sc != nullptr)
+	{
+		Action* a = ControllableUtil::findParentAs<Action>(this);
+		sc->sourceTarget->warningResolveInspectable = a != nullptr ? (Inspectable*)a : this;
+	}
 }
 
 void ConditionManager::removeItemInternal(Condition * c)
