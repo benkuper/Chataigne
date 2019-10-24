@@ -17,12 +17,12 @@ matrix:
       arch: amd64
       dist: bionic
       sudo: required
-      env: TARGET_SYSTEM=linux-x64 BUILD_FOLDER=LinuxMakefile TARGET_ARCH=x86_64 JUCE_PATH=~/ JUCE_MODULES_PATH=/benkuper APPIMAGE_PATH=~/
+      env: TARGET_SYSTEM=linux-x64 BUILD_FOLDER=LinuxMakefile SYSTEM_ARCH=x86_64 JUCE_PATH=~/ JUCE_MODULES_PATH=~/build/benkuper APPIMAGE_PATH=~/
     - os: linux
       arch: arm64
       dist: bionic
       sudo: required
-      env: TARGET_SYSTEM=linux-armv8 BUILD_FOLDER=Raspberry TARGET_ARCH=armhf JUCE_PATH=~/ JUCE_MODULES_PATH=/benkuper APPIMAGE_PATH=~/
+      env: TARGET_SYSTEM=linux-armv8 BUILD_FOLDER=Raspberry SYSTEM_ARCH=armhf JUCE_PATH=~/ JUCE_MODULES_PATH=~/build/benkuper APPIMAGE_PATH=~/
 
 before_install:
 - |
@@ -58,8 +58,8 @@ before_install:
 
     echo 'Downloading AppImageTool...'
     cd $APPIMAGE_PATH
-    wget "https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-$TARGET_ARCH.AppImage"
-    chmod a+x appimagetool-$TARGET_ARCH.AppImage
+    wget "https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-$SYSTEM_ARCH.AppImage"
+    chmod a+x appimagetool-$SYSTEM_ARCH.AppImage
   else
     gem install xcpretty
     gem install xcpretty-travis-formatter
@@ -85,7 +85,7 @@ install:
 script:
 - |
   if [ "$TRAVIS_OS_NAME" == "linux" ]; then
-    cd /benkuper/Chataigne/Builds/$BUILD_FOLDER
+    cd ~/build/benkuper/Chataigne/Builds/$BUILD_FOLDER
     make -j2 CONFIG=$MAKECONF
   else
     cd /Users/travis/build/benkuper
@@ -95,12 +95,12 @@ script:
 after_success:
 - |
   if [ "$TRAVIS_OS_NAME" == "linux" ]; then
-    cd /benkuper/Chataigne/Builds/$BUILD_FOLDER
+    cd ~/build/benkuper/Chataigne/Builds/$BUILD_FOLDER
     
     echo 'Packaging AppImage...'
     mkdir Chataigne.AppDir/usr/bin/
     cp build/Chataigne Chataigne.AppDir/usr/bin/
-    $APPIMAGE_PATH/appimagetool-$TARGET_ARCH.AppImage Chataigne.AppDir Chataigne-$TARGET_SYSTEM-$SUFFIX.AppImage
+    $APPIMAGE_PATH/appimagetool-$SYSTEM_ARCH.AppImage Chataigne.AppDir Chataigne-$TARGET_SYSTEM-$SUFFIX.AppImage
     echo 'Uploading $SUFFIX ...'
     curl -X POST -F 'appFile=@Chataigne-$TARGET_SYSTEM-$SUFFIX.AppImage' -F 'pass=$UPLOAD_PASS' $UPLOAD_URL
   else
