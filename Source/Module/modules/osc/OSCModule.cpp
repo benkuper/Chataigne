@@ -506,6 +506,7 @@ OSCOutput::OSCOutput() :
 
 	useLocal = addBoolParameter("Local", "Send to Local IP (127.0.0.1). Allow to quickly switch between local and remote IP.", true);
 	remoteHost = addStringParameter("Remote Host", "Remote Host to send to.", "127.0.0.1");
+	remoteHost->autoTrim = true;
 	remoteHost->setEnabled(!useLocal->boolValue());
 	remotePort = addIntParameter("Remote port", "Port on which the remote host is listening to", 9000, 1024, 65535);
 

@@ -29,6 +29,7 @@ GenericOSCQueryModule::GenericOSCQueryModule(const String & name, int defaultRem
 
 	useLocal = sendCC->addBoolParameter("Local", "Send to Local IP (127.0.0.1). Allow to quickly switch between local and remote IP.", true);
 	remoteHost = sendCC->addStringParameter("Remote Host", "Remote Host to send to.", "127.0.0.1");
+	remoteHost->autoTrim = true;
 	remoteHost->setEnabled(!useLocal->boolValue());
 	remotePort = sendCC->addIntParameter("Remote port", "Port on which the remote host is listening to", defaultRemotePort, 1, 65535);
 
