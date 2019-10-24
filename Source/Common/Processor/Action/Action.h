@@ -8,8 +8,7 @@
   ==============================================================================
 */
 
-#ifndef ACTION_H_INCLUDED
-#define ACTION_H_INCLUDED
+#pragma once
 
 #include "../Processor.h"
 #include "Condition/ConditionManager.h"
@@ -102,9 +101,3 @@ public:
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Action)
 };
-
-
-
-
-
-#endif  // ACTION_H_INCLUDED
