@@ -113,10 +113,11 @@ ModuleFactory::ModuleFactory() {
 
 void ModuleFactory::addCustomModules()
 {
+	Array<File> modulesList;
+
 	File modulesFolder = getCustomModulesFolder();
 	modulesFolder.createDirectory();
 
-	Array<File> modulesList;
 	modulesFolder.findChildFiles(modulesList, File::findDirectories, false);
 	for (auto &m : modulesList)
 	{

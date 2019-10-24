@@ -211,8 +211,9 @@ void Module::setupModuleFromJSONData(var data)
 	for (auto &s : *scriptData)
 	{
 		Script * script = scriptManager->addItem(nullptr,var(),false);
-		//DBG("Set script path : " << data.getProperty("modulePath", "").toString() << "/" << s.toString());
-		script->filePath->setValue(data.getProperty("modulePath", "").toString() + "/"+s.toString());
+		script->filePath->customBasePath = data.getProperty("modulePath", "");
+		script->filePath->setControllableFeedbackOnly(true);
+		script->filePath->setValue(s.toString());
 	}
 
 	bool valuesAreEmpty = valuesCC.controllables.size() == 0 && valuesCC.controllableContainers.size() == 0;
