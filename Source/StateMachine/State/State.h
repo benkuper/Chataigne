@@ -8,10 +8,7 @@
   ==============================================================================
 */
 
-#ifndef STATE_H_INCLUDED
-#define STATE_H_INCLUDED
-
-
+#pragma once
 
 #include "Common/Processor/ProcessorManager.h"
 #include "../Transition/StateTransition.h"
@@ -25,6 +22,7 @@ public:
 
 	//
 	BoolParameter * active;
+	BoolParameter * forceActiveOnStart;
 
 	//Transition
 	Array<StateTransition *> inTransitions;
@@ -61,7 +59,3 @@ private:
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(State)
 };
-
-
-
-#endif  // STATE_H_INCLUDED

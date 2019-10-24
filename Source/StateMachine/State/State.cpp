@@ -17,6 +17,8 @@ State::State() :
 	itemDataType = "State";
 
 	active = addBoolParameter("Active", "If active, the state's actions and mappings will be effective, otherwise this state won't do anything.", false);
+	forceActiveOnStart = addBoolParameter("Active on load", "If enabled, then it will force the state to be activated or deactivated depending on the parameter value", false, false);
+	forceActiveOnStart->canBeDisabledByUser = true;
 
 	addChildControllableContainer(&pm);
 
@@ -80,6 +82,8 @@ void State::loadJSONDataInternal(var data)
 {
 	BaseItem::loadJSONDataInternal(data);
 	pm.loadJSONData(data.getProperty("processors", var()));
+
+	if (forceActiveOnStart->enabled) active->setValue(forceActiveOnStart->boolValue());
 }
 
 bool State::paste()
