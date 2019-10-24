@@ -40,6 +40,8 @@ StateMachineView::StateMachineView(const String &contentName, StateManager * _ma
 
 	enableSnapping = true;
 
+	setShowPane(true);
+
 	frameView();
 }
 
