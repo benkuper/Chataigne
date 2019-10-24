@@ -25,11 +25,12 @@ stm(this)
 	stm.addBaseManagerListener(this);
 
 	addChildControllableContainer(&commentManager);
-
+	Engine::mainEngine->addEngineListener(this);
 }
 
 StateManager::~StateManager()
 {
+	if(Engine::mainEngine != nullptr) Engine::mainEngine->removeEngineListener(this);
 }
 
 
@@ -52,12 +53,20 @@ void StateManager::setStateActive(State * s)
 void StateManager::addItemInternal(State * s, var data)
 {
 	s->addStateListener(this);
-	if (!Engine::mainEngine->isLoadingFile) s->active->setValue(true);	
+	if (!Engine::mainEngine->isLoadingFile)
+	{
+		s->active->setValue(true);
+	}
 }
 
 void StateManager::removeItemInternal(State * s)
 {
 	s->removeStateListener(this);
+
+	Array<State*> avoid;
+	avoid.add(s);
+	Array<State*> linkedStates;
+	for (auto& ls : linkedStates) checkStartActivationOverlap(ls, avoid);
 }
 
 Array<UndoableAction *> StateManager::getRemoveItemUndoableAction(State * item)
@@ -85,9 +94,80 @@ void StateManager::stateActivationChanged(State * s)
 	}
 }
 
+void StateManager::stateStartActivationChanged(State* s)
+{
+	checkStartActivationOverlap(s);
+}
+
+void StateManager::checkStartActivationOverlap(State* s, Array<State*> statesToAvoid)
+{
+	if (s == nullptr) return;
+
+	Array<State*> linkedStates = getLinkedStates(s, &statesToAvoid);
+	linkedStates.add(s);
+	Array<State*> forceActiveStates;
+	for (auto& ss : linkedStates)
+	{
+		if (ss->loadActivationBehavior->getValueDataAsEnum<State::LoadBehavior>() == State::ACTIVE) forceActiveStates.add(ss);
+		else ss->clearWarning();
+	}
+
+	if (forceActiveStates.size() > 1)
+	{
+		LOGWARNING("Multiple linked states are set to activate on load, it may lead to unexpected behaviors");
+		for (auto& fs : forceActiveStates) fs->setWarningMessage("Concurrent Active on Load state");
+	}
+	else if (forceActiveStates.size() > 0) forceActiveStates[0]->clearWarning();
+}
+
 void StateManager::itemAdded(StateTransition * s)
 {
-	if (!Engine::mainEngine->isLoadingFile) setStateActive(s->sourceState);
+	if (!Engine::mainEngine->isLoadingFile)
+	{
+		if(s->sourceState->active->boolValue()) setStateActive(s->sourceState);
+		else if(s->destState->active->boolValue()) setStateActive(s->destState);
+
+		checkStartActivationOverlap(s->sourceState);
+	}
+}
+
+void StateManager::itemsAdded(Array<StateTransition*> states)
+{
+	if (!Engine::mainEngine->isLoadingFile)
+	{
+		for (auto& s : states)
+		{
+			if (s->sourceState->active->boolValue()) setStateActive(s->sourceState);
+			else if (s->destState->active->boolValue()) setStateActive(s->destState);
+
+			checkStartActivationOverlap(s->sourceState);
+		}
+	}
+}
+
+void StateManager::itemRemoved(StateTransition* s)
+{
+	if (!Engine::mainEngine->isClearing)
+	{
+		Array<State*> avoidStates;
+		avoidStates.add(s->sourceState, s->destState);
+		checkStartActivationOverlap(s->sourceState, avoidStates);
+		checkStartActivationOverlap(s->destState, avoidStates);
+	}
+}
+
+void StateManager::itemsRemoved(Array<StateTransition*> states)
+{
+	if (!Engine::mainEngine->isClearing)
+	{
+		for (auto& s : states)
+		{
+			Array<State*> avoidStates;
+			avoidStates.add(s->sourceState, s->destState);
+			checkStartActivationOverlap(s->sourceState, avoidStates);
+			checkStartActivationOverlap(s->destState, avoidStates);
+		}
+	}
 }
 
 
@@ -216,4 +296,21 @@ void StateManager::loadJSONDataInternal(var data)
 	BaseManager::loadJSONDataInternal(data);
 	stm.loadJSONData(data.getProperty("transitions", var()));
 	commentManager.loadJSONData(data.getProperty("comments", var()));
+
+	for (auto& s : items)
+	{
+		State::LoadBehavior b = s->loadActivationBehavior->getValueDataAsEnum<State::LoadBehavior>();
+		if (b == State::ACTIVE)
+		{
+			s->active->setValue(true);
+			setStateActive(s);
+			checkStartActivationOverlap(s);
+		}
+		
+	}
+}
+
+void StateManager::endLoadFile()
+{
+	for (auto& s : items) if (s->active->boolValue()) s->active->setValue(true, false, true);
 }

@@ -8,9 +8,7 @@
   ==============================================================================
 */
 
-#ifndef STATEMANAGER_H_INCLUDED
-#define STATEMANAGER_H_INCLUDED
-
+#pragma once
 
 #include "State/State.h"
 #include "Transition/StateTransitionManager.h"
@@ -20,7 +18,8 @@
 class StateManager :
 	public BaseManager<State>,
 	public State::StateListener,
-	public StateTransitionManager::ManagerListener
+	public StateTransitionManager::ManagerListener,
+	public EngineListener
 {
 public:
 	juce_DeclareSingleton(StateManager, false)
@@ -44,8 +43,15 @@ public:
 	Array<UndoableAction *> getRemoveItemUndoableAction(State * item) override;
 	Array<UndoableAction *> getRemoveItemsUndoableAction(Array<State *> itemsToRemove) override;
 
-	void stateActivationChanged(State * s) override;
-	void itemAdded(StateTransition * s) override;
+	void stateActivationChanged(State* s) override;
+	void stateStartActivationChanged(State * s) override;
+
+	void checkStartActivationOverlap(State* s, Array<State *> statesToAvoid = Array<State *>());
+
+	void itemAdded(StateTransition* s) override;
+	void itemsAdded(Array<StateTransition *> s) override;
+	void itemRemoved(StateTransition* s) override;
+	void itemsRemoved(Array<StateTransition*> s) override;
 
 	static State * showMenuAndGetState();
 	State * getStateForItemID(int itemID);
@@ -60,12 +66,7 @@ public:
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
 
+	void endLoadFile() override;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(StateManager)
 };
-
-
-
-
-
-#endif  // STATEMANAGER_H_INCLUDED

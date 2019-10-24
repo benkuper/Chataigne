@@ -22,7 +22,9 @@ public:
 
 	//
 	BoolParameter * active;
-	BoolParameter * forceActiveOnStart;
+
+	enum LoadBehavior { KEEP, ACTIVE, NONACTIVE };
+	EnumParameter * loadActivationBehavior;
 
 	//Transition
 	Array<StateTransition *> inTransitions;
@@ -44,7 +46,8 @@ public:
 	{
 	public:
 		virtual ~StateListener() {}
-		virtual void stateActivationChanged(State *) {}
+		virtual void stateActivationChanged(State*) {}
+		virtual void stateStartActivationChanged(State *) {}
 	};
 
 	ListenerList<StateListener> stateListeners;
