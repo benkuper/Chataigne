@@ -21,7 +21,7 @@ WelcomeScreen::WelcomeScreen()
 	
 	setSize(810,610);
 	addAndMakeVisible(webComp);
-	webComp.goToURL("http://benjamin.kuperberg.fr/chataigne/welcome/welcome.php?firstRun="+String((int)firstRun)+"&version="+getAppVersion(), nullptr, nullptr);
+	webComp.setBaseURL("http://benjamin.kuperberg.fr/chataigne/welcome/welcome.php?firstRun="+String((int)firstRun)+"&version="+getAppVersion());
 }
 
 WelcomeScreen::~WelcomeScreen()
@@ -38,9 +38,18 @@ void WelcomeScreen::resized()
 	webComp.setBounds(getLocalBounds().reduced(5));
 }
 
-bool WelcomeScreen::WebComp::pageAboutToLoad(const String& url) { 
+void WelcomeScreen::WebComp::setBaseURL(StringRef url)
+{
+	baseURL = url;
+	goToURL(baseURL);
+}
+
+bool WelcomeScreen::WebComp::pageAboutToLoad(const String& url) {
 	DBG("About to load : " << url);  
-	return true; 
+	if(url == baseURL) return true; 
+
+	URL(url).launchInDefaultBrowser();
+	return false;
 }
 
 void WelcomeScreen::WebComp::pageFinishedLoading(const String& url) {

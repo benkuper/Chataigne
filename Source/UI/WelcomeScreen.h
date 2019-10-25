@@ -28,8 +28,8 @@ public:
 	public:
 		WebComp() {}
 		~WebComp() {}
-		ComponentAnimator ca;
-
+		String baseURL;
+		void setBaseURL(StringRef url);
 		bool pageAboutToLoad(const String& url) override;
 		void pageFinishedLoading(const String& url) override;
 		bool pageLoadHadNetworkError(const String& error) override;
