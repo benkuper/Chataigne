@@ -11,6 +11,7 @@
 
 #include "MainComponent.h"
 #include "UI/AboutWindow.h"
+#include "UI/WelcomeScreen.h"
 #include "Guider/Guider.h"
 #include "Module/Community/CommunityModuleManager.h"
 #include "Module/ModuleFactory.h"
@@ -23,6 +24,8 @@ namespace ChataigneCommandIDs
 	static const int gotoDocs = 0x60003;
 	static const int postGithubIssue = 0x60004;
 	static const int donate = 0x60005;
+	static const int showWelcome = 0x60006;
+
 	static const int guideStart = 0x300; //up to 0x300 +100
 	static const int exitGuide = 0x399; 
 	static const int goToCommunityModules = 0x500;
@@ -42,6 +45,10 @@ void MainContentComponent::getCommandInfo(CommandID commandID, ApplicationComman
 	{
 	case ChataigneCommandIDs::showAbout:
 		result.setInfo("About...", "", "General", result.readOnlyInKeyEditor);
+		break;
+
+	case ChataigneCommandIDs::showWelcome:
+		result.setInfo("Show Welcome Screen...", "", "General", result.readOnlyInKeyEditor);
 		break;
 
 	case ChataigneCommandIDs::donate:
@@ -92,6 +99,7 @@ void MainContentComponent::getAllCommands(Array<CommandID>& commands) {
 	const CommandID ids[] = {
 
 		ChataigneCommandIDs::showAbout,
+		ChataigneCommandIDs::showWelcome,
 		ChataigneCommandIDs::donate,
 		ChataigneCommandIDs::gotoWebsite,
 		ChataigneCommandIDs::gotoForum,
@@ -114,6 +122,7 @@ PopupMenu MainContentComponent::getMenuForIndex(int topLevelMenuIndex, const Str
 	if (menuName == "Help")
 	{
 		menu.addCommandItem(&getCommandManager(), ChataigneCommandIDs::showAbout);
+		menu.addCommandItem(&getCommandManager(), ChataigneCommandIDs::showWelcome);
 		menu.addCommandItem(&getCommandManager(), ChataigneCommandIDs::donate);
 		menu.addSeparator();
 		menu.addCommandItem(&getCommandManager(), ChataigneCommandIDs::gotoWebsite);
@@ -158,6 +167,13 @@ bool MainContentComponent::perform(const InvocationInfo& info)
 	{
 		AboutWindow w;
 		DialogWindow::showModalDialog("About", &w, getTopLevelComponent(), Colours::transparentBlack, true);
+	}
+	break;
+
+	case ChataigneCommandIDs::showWelcome:
+	{
+		WelcomeScreen w;
+		DialogWindow::showModalDialog("Welcome", &w, getTopLevelComponent(), Colours::black, true);
 	}
 	break;
 

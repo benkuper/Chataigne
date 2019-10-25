@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.6.6b5"
+<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.6.6b6"
               bundleIdentifier="benkuper.Chataigne" includeBinaryInAppConfig="1"
               jucerVersion="5.4.5" companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
               companyEmail="benjamin@kuperberg.fr" defines="" splashScreenColour="Dark"
@@ -1252,6 +1252,9 @@
               file="Source/UI/ChataigneAssetManager.cpp"/>
         <FILE id="nDo7Cu" name="ChataigneAssetManager.h" compile="0" resource="0"
               file="Source/UI/ChataigneAssetManager.h"/>
+        <FILE id="Oq9vEL" name="WelcomeScreen.cpp" compile="1" resource="0"
+              file="Source/UI/WelcomeScreen.cpp"/>
+        <FILE id="H2TuzF" name="WelcomeScreen.h" compile="0" resource="0" file="Source/UI/WelcomeScreen.h"/>
       </GROUP>
       <FILE id="miMqpn" name="ChataigneEngine.cpp" compile="1" resource="0"
             file="Source/ChataigneEngine.cpp"/>

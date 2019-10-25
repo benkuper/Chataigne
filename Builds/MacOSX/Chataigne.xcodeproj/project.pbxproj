@@ -1117,6 +1117,10 @@
 			isa = PBXBuildFile;
 			fileRef = F48B60EA0060221C4AE8EFB4;
 		};
+		84213934FB6D67E10FFBFAC6 = {
+			isa = PBXBuildFile;
+			fileRef = E8A5F9A2228D5E3719F9F36B;
+		};
 		A5CD0A74A4102CB06964CD68 = {
 			isa = PBXBuildFile;
 			fileRef = 10C259C57E6992D9DC19D7DF;
@@ -4745,6 +4749,13 @@
 			path = ../../Source/Common/Processor/Action/ui/ActionUI.h;
 			sourceTree = "SOURCE_ROOT";
 		};
+		D2069FDD45985C94F69B02FD = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = WelcomeScreen.h;
+			path = ../../Source/UI/WelcomeScreen.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		D27111DF8E72AF344A255BFF = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -5212,6 +5223,13 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = HTTPModule.h;
 			path = ../../Source/Module/modules/http/HTTPModule.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		E8A5F9A2228D5E3719F9F36B = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = WelcomeScreen.cpp;
+			path = ../../Source/UI/WelcomeScreen.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		E92288FB21A7A81372B50E88 = {
@@ -7461,6 +7479,8 @@
 				04CDC9F8DBC38B390BD5304F,
 				F48B60EA0060221C4AE8EFB4,
 				DA313B773F3BE136635AC538,
+				E8A5F9A2228D5E3719F9F36B,
+				D2069FDD45985C94F69B02FD,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -7623,7 +7643,7 @@
 					"_DEBUG=1",
 					"DEBUG=1",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
-					"JUCE_APP_VERSION=1.6.6b5",
+					"JUCE_APP_VERSION=1.6.6b6",
 					"JUCE_APP_VERSION_HEX=0x10606",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
@@ -7681,7 +7701,7 @@
 					"_NDEBUG=1",
 					"NDEBUG=1",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
-					"JUCE_APP_VERSION=1.6.6b5",
+					"JUCE_APP_VERSION=1.6.6b6",
 					"JUCE_APP_VERSION_HEX=0x10606",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
@@ -8111,6 +8131,7 @@
 				AB51BF5F993B10E2F9430F54,
 				4901731157879611D8BF22A8,
 				C9AA14A5183E26927E2C3DB4,
+				84213934FB6D67E10FFBFAC6,
 				A5CD0A74A4102CB06964CD68,
 				AA16489D69315BEFB98AFD53,
 				717D84B8FAE1A6D4EEF64DF7,

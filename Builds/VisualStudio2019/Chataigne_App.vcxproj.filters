@@ -1957,6 +1957,9 @@
     <ClCompile Include="..\..\Source\UI\ChataigneAssetManager.cpp">
       <Filter>Chataigne\Source\UI</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\UI\WelcomeScreen.cpp">
+      <Filter>Chataigne\Source\UI</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\ChataigneEngine.cpp">
       <Filter>Chataigne\Source</Filter>
     </ClCompile>
@@ -5479,6 +5482,9 @@
       <Filter>Chataigne\Source\UI</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\UI\ChataigneAssetManager.h">
+      <Filter>Chataigne\Source\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\UI\WelcomeScreen.h">
       <Filter>Chataigne\Source\UI</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\ChataigneEngine.h">
