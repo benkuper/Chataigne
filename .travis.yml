@@ -105,26 +105,26 @@ install:
   cd $HOME
   git clone --depth=1 --branch=develop-local https://github.com/benkuper/JUCE.git JUCE
 
-  cd $TRAVIS_BUILD_DIR;
-  mkdir "JUCE Modules";
-  cd "JUCE Modules";
+  cd $TRAVIS_BUILD_DIR/..
+  mkdir "JUCE Modules"
+  cd "JUCE Modules"
   git clone --depth=1 --branch=master https://github.com/benkuper/juce_organicui.git juce_organicui
   git clone --depth=1 --branch=master https://github.com/benkuper/juce_timeline.git juce_timeline
 
 script:
 - |
   if [ "$TRAVIS_OS_NAME" == "linux" ]; then
-    cd $TRAVIS_BUILD_DIR/Chataigne/Builds/$BUILD_FOLDER
+    cd $TRAVIS_BUILD_DIR/Builds/$BUILD_FOLDER
     make -j2 CONFIG=$MAKECONF
   else
     cd $TRAVIS_BUILD_DIR
-    xcodebuild -project Chataigne/Builds/MacOSX/Chataigne.xcodeproj -configuration $MAKECONF -jobs 2 -verbose | xcpretty -f `xcpretty-travis-formatter`
+    xcodebuild -project Builds/MacOSX/Chataigne.xcodeproj -configuration $MAKECONF -jobs 2 -verbose | xcpretty -f `xcpretty-travis-formatter`
   fi
 
 after_success:
 - |
   if [ "$TRAVIS_OS_NAME" == "linux" ]; then
-    cd $TRAVIS_BUILD_DIR/Chataigne/Builds/$BUILD_FOLDER
+    cd $TRAVIS_BUILD_DIR/Builds/$BUILD_FOLDER
 
     echo 'Packaging AppImage...'
     mkdir Chataigne.AppDir/usr/bin/
@@ -133,7 +133,7 @@ after_success:
     echo 'Uploading $SUFFIX ...'
     curl -X POST -F "appFile=@Chataigne-$TARGET_SYSTEM-$SUFFIX.AppImage" -F "pass=$UPLOAD_PASS" $UPLOAD_URL
   else
-    cd $TRAVIS_BUILD_DIR/Chataigne/Package
+    cd $TRAVIS_BUILD_DIR/Package
     ls
     packagesbuild Chataigne.pkgproj
     mv Chataigne.pkg Chataigne-osx-$SUFFIX.pkg
