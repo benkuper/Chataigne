@@ -40,6 +40,12 @@ void Guider::setCurrentGuide(BaseGuide * g)
 
 	if (guide != nullptr)
 	{
+		FileBasedDocument::SaveResult result = Engine::mainEngine->saveIfNeededAndUserAgrees();
+		if (result == FileBasedDocument::SaveResult::failedToWriteToFile) LOGERROR("Could not save the document (Failed to write to file)\nCancelled loading of the new document");
+		else Engine::mainEngine->createNewGraph();
+
+		ShapeShifterManager::getInstance()->loadDefaultLayoutFile();
+
 		guide->addGuideListener(this);
 		getApp().mainComponent->addAndMakeVisible(guide.get());
 		guide->setBounds(getApp().mainComponent->getLocalBounds());

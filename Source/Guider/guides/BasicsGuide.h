@@ -36,7 +36,7 @@ public:
 	BasicsGuide();
 	~BasicsGuide();
 
-	enum Steps { NOTHING, AUDIO_MODULE, RESOLUME_MODULE, STATE, ACTION, CONDITION, CONDITION_SOURCE, CONSEQUENCE };
+	enum Steps { INTRO, AUDIO_MODULE, RESOLUME_MODULE, STATE, ACTION, CONDITION, CONDITION_SOURCE, CONSEQUENCE, STEPS_MAX };
 
 	AudioModule * audioModule;
 	ResolumeModule * resolumeModule;
@@ -55,6 +55,7 @@ public:
 	BaseCommandHandler * command;
 	
 
+	void initInternal() override;
 	void clear() override;
 	void handleStep(int step) override;
 

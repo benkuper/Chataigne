@@ -25,16 +25,22 @@ BasicsGuide::BasicsGuide() :
 	csme(nullptr),
 	command(nullptr)
 {
-	numSteps = 7;
+	numSteps = STEPS_MAX-1;
+}
 
-	if(ModuleManager::getInstanceWithoutCreating() != nullptr) ModuleManager::getInstance()->addAsyncManagerListener(this);
+BasicsGuide::~BasicsGuide()
+{
+}
 
-	ShapeShifterManager::getInstance()->loadDefaultLayoutFile();
+void BasicsGuide::initInternal()
+{
 
-	mmui = dynamic_cast<ModuleManagerUI *>(ShapeShifterManager::getInstance()->getContentForName("Modules")->contentComponent);
-	smui = dynamic_cast<StateMachineView *>(ShapeShifterManager::getInstance()->getContentForName("State Machine")->contentComponent);
-	if(smui != nullptr) smui->addManagerUIListener(this);
-	
+	if (ModuleManager::getInstanceWithoutCreating() != nullptr) ModuleManager::getInstance()->addAsyncManagerListener(this);
+
+	mmui = dynamic_cast<ModuleManagerUI*>(ShapeShifterManager::getInstance()->getContentForName("Modules")->contentComponent);
+	smui = dynamic_cast<StateMachineView*>(ShapeShifterManager::getInstance()->getContentForName("State Machine")->contentComponent);
+	if (smui != nullptr) smui->addManagerUIListener(this);
+
 	InspectorUI* inspectorUI = dynamic_cast<InspectorUI*>(ShapeShifterManager::getInstance()->getContentForName("Inspector")->contentComponent);
 
 	if (inspectorUI != nullptr)
@@ -42,10 +48,6 @@ BasicsGuide::BasicsGuide() :
 		inspector = &inspectorUI->inspector;
 		inspector->addInspectorListener(this);
 	}
-}
-
-BasicsGuide::~BasicsGuide()
-{
 }
 
 void BasicsGuide::clear()
@@ -74,13 +76,17 @@ void BasicsGuide::handleStep(int step)
 
 	switch (step)
 	{
+	case INTRO:
+		fc.setFocus(Rectangle<int>(), GuideFocusComponent::NONE, "In this tutorial, we're gonna link an Audio Module to a Resolume Module.\nJust follow the light...", "Ok let's go !");
+		break;
+
 	case AUDIO_MODULE:
 	case RESOLUME_MODULE:
 	{
 		Rectangle<int> r = getLocalArea(mmui->addItemBT.get(), mmui->addItemBT->getLocalBounds()).expanded(10);
 		String s;
-		if (step == 1) s = "Let's start by adding a module.\nClick on the + icon and then choose the Hardware > Sound Card module.";
-		else if (step == 2) s = "Now, let's add another module, for instance let's try to control Resolume.\nChoose in the same menu the Software > Resolume module.";
+		if (step == AUDIO_MODULE) s = "Let's start by adding a module.\nClick on the + icon and then choose the Hardware > Sound Card module.";
+		else if (step == RESOLUME_MODULE) s = "Now, let's add another module, for instance let's try to control Resolume.\nChoose in the same menu the Software > Resolume module.";
 		fc.setFocus(r, fc.CIRCLE, s);
 	}
 	break;

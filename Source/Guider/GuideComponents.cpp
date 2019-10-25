@@ -10,8 +10,12 @@
 
 #include "GuideComponents.h"
 
-GuideFocusComponent::GuideFocusComponent()
+GuideFocusComponent::GuideFocusComponent() :
+	nextBT("NextBT")
 {
+	nextBT.addListener(this);
+	addChildComponent(&nextBT);
+
 	setAlpha(0);
 }
 
@@ -25,29 +29,31 @@ bool GuideFocusComponent::hitTest(int x, int y)
 	return getLocalBounds().contains(p) && !area.contains(p);
 }
 
-void GuideFocusComponent::show(Rectangle<int> _area, FocusLook _look, const String &_text)
+void GuideFocusComponent::show(Rectangle<int> _area, FocusLook _look, const String &_text, const String& _nextText)
 {
 	this->look = _look;
 	this->area = _area;
 	this->text = _text;
 	
+	if (_nextText.isNotEmpty()) nextBT.setButtonText(_nextText);
+	nextBT.setVisible(_nextText.isNotEmpty());
+
 	resized();
 	repaint(); 
 	
 	animator.fadeIn(this, 1000);
 }
 
-void GuideFocusComponent::setFocus(Rectangle<int> _area, FocusLook _look, const String &_text)
+void GuideFocusComponent::setFocus(Rectangle<int> _area, FocusLook _look, const String &_text, const String &_nextText)
 {
-	
 	if (text.isNotEmpty())
 	{
 		animator.fadeOut(this, 500);
-		auto showFunc = std::bind(&GuideFocusComponent::show, this, _area, _look, _text);
+		auto showFunc = std::bind(&GuideFocusComponent::show, this, _area, _look, _text, _nextText);
 		Timer::callAfterDelay(500, showFunc);
 	} else
 	{
-		show(_area, _look, _text);
+		show(_area, _look, _text, _nextText);
 	}
 }
 
@@ -61,7 +67,10 @@ void GuideFocusComponent::resized()
 	{
 		case RECTANGLE: path.addRectangle(area.toFloat()); break;
 		case CIRCLE: path.addEllipse(area.toFloat()); break;
+		default:break;
 	}
+
+	if (nextBT.isVisible()) nextBT.setBounds(getLocalBounds().removeFromBottom(getHeight() / 3).withSizeKeepingCentre(200, 60));
 }
 
 void GuideFocusComponent::paint(Graphics & g)
@@ -74,9 +83,15 @@ void GuideFocusComponent::paint(Graphics & g)
 	{
 	case RECTANGLE: g.drawRect(area.toFloat(),3); break;
 	case CIRCLE: g.drawEllipse(area.toFloat(),3); break;
+	default:break;
 	}
 
 	g.setColour(TEXT_COLOR);
-	g.setFont(50);
+	g.setFont(40);
 	g.drawFittedText(text, getLocalBounds(), Justification::centred, 5);
+}
+
+void GuideFocusComponent::buttonClicked(Button* b)
+{
+	if (b == &nextBT) guideComponentListeners.call(&GuideComponentListener::askForNextStep);
 }

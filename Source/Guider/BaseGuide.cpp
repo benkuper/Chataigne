@@ -15,6 +15,7 @@ BaseGuide::BaseGuide(const String &name) :
 	numSteps(1),
 	currentStep(0)
 {
+	fc.addGuideComponentListener(this);
 	addAndMakeVisible(&fc);
 	setInterceptsMouseClicks(false, true);
 
@@ -27,7 +28,7 @@ BaseGuide::~BaseGuide()
 void BaseGuide::init()
 {
 	initInternal();
-	setCurrentStep(1);
+	setCurrentStep(0);
 }
 
 void BaseGuide::resized()
@@ -47,7 +48,7 @@ void BaseGuide::nextStep()
 
 void BaseGuide::setCurrentStep(int step)
 {
-	if (currentStep == step) return;
+	if (step != 0 && currentStep == step) return;
 	if (step > numSteps)
 	{
 		launchFinish();
@@ -56,6 +57,11 @@ void BaseGuide::setCurrentStep(int step)
 
 	currentStep = step;
 	handleStep(currentStep);
+}
+
+void BaseGuide::askForNextStep()
+{
+	nextStep();
 }
 
 

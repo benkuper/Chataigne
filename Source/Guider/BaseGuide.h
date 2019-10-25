@@ -14,7 +14,8 @@
 #include "GuideComponents.h"
 
 class BaseGuide :
-	public Component
+	public Component,
+	public GuideFocusComponent::GuideComponentListener
 {
 public:
 	BaseGuide(const String &name = "");
@@ -36,9 +37,12 @@ public:
 	void nextStep();
 	void setCurrentStep(int step);
 
+	void askForNextStep() override;
+
 	virtual void handleStep(int step) {};
 	virtual void launchFinish();
 	void finish();
+
 
 	//Helpers
 
