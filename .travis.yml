@@ -12,17 +12,16 @@ matrix:
     - os: osx
       osx_image: xcode10.1
       compiler: clang
-      env: JUCE_PATH=/Users/travis JUCE_MODULES_PATH=/Users/travis/build/benkuper PACKAGER_PATH=/Users/travis
     - os: linux 
       arch: amd64
       dist: bionic
       sudo: required
-      env: TARGET_SYSTEM=linux-x64 BUILD_FOLDER=LinuxMakefile SYSTEM_ARCH=x86_64 JUCE_PATH=~/ JUCE_MODULES_PATH=~/build/benkuper APPIMAGE_PATH=~/
+      env: TARGET_SYSTEM=linux-x64 BUILD_FOLDER=LinuxMakefile 
     - os: linux
       arch: amd64
       dist: bionic
       sudo: required
-      env: TARGET_SYSTEM=linux-armhf BUILD_FOLDER=Raspberry SYSTEM_ARCH=armhf JUCE_PATH=~/ JUCE_MODULES_PATH=~/build/benkuper APPIMAGE_PATH=~/
+      env: TARGET_SYSTEM=linux-armhf BUILD_FOLDER=Raspberry
 
 before_install:
 - |
@@ -61,30 +60,40 @@ before_install:
 
       echo "Installing extra lib dependencies"
       sudo apt-get install -q libgdk-pixbuf2.0-dev:armhf libpango1.0-dev:armhf libsoup2.4-dev:armhf libharfbuzz-dev:armhf libxml2-dev:armhf libicu-dev:armhf
+
+      echo "Downloading AppImage runtime for armhf"
+      cd $HOME
+      wget "https://github.com/AppImage/AppImageKit/releases/download/continuous/runtime-armhf"
+      export APPIMAGE_RUNTIME="--runtime-file $HOME/runtime-armhf"
       
       export CXX=arm-linux-gnueabihf-g++
       export CC=arm-linux-gnueabihf-gcc
       export PKG_CONFIG_PATH=/usr/lib/arm-linux-gnueabihf/pkgconfig
-      export TARGET_ARCH="-march=armv8-a"
+
+      # TARGET_ARCH is used in the Makefile
+      export TARGET_ARCH="-march=armv8-a" 
+
+      # DEP_ARCH is used later when downloading the dependencies
+      export DEP_ARCH="armhf"
     fi
 
     sudo apt-get update
     echo "Installing JUCE lib dependencies and extra tools"
-    sudo apt-get install -q libfreetype6-dev:$SYSTEM_ARCH libx11-dev:$SYSTEM_ARCH libxinerama-dev:$SYSTEM_ARCH libxrandr-dev:$SYSTEM_ARCH libxcursor-dev:$SYSTEM_ARCH libxcomposite-dev:$SYSTEM_ARCH mesa-common-dev:$SYSTEM_ARCH libasound2-dev:$SYSTEM_ARCH freeglut3-dev:$SYSTEM_ARCH libcurl4-gnutls-dev:$SYSTEM_ARCH libasound2-dev:$SYSTEM_ARCH libjack-dev:$SYSTEM_ARCH libbluetooth-dev:$SYSTEM_ARCH libgtk-3-dev:$SYSTEM_ARCH libwebkit2gtk-4.0-dev:$SYSTEM_ARCH
-    sudo apt-get install -q curl wget zip unzip
+    sudo apt-get install -q libfreetype6-dev:$DEP_ARCH libx11-dev:$DEP_ARCH libxinerama-dev:$DEP_ARCH libxrandr-dev:$DEP_ARCH libxcursor-dev:$DEP_ARCH libxcomposite-dev:$DEP_ARCH mesa-common-dev:$DEP_ARCH libasound2-dev:$DEP_ARCH freeglut3-dev:$DEP_ARCH libcurl4-gnutls-dev:$DEP_ARCH libasound2-dev:$DEP_ARCH libjack-dev:$DEP_ARCH libbluetooth-dev:$DEP_ARCH libgtk-3-dev:$DEP_ARCH libwebkit2gtk-4.0-dev:$DEP_ARCH
+    sudo apt-get install -q curl
     
     echo 'GCC Version:'
     $CC -v
 
     echo 'Downloading AppImageTool...'
-    cd $APPIMAGE_PATH
-    wget "https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-$SYSTEM_ARCH.AppImage"
-    chmod a+x appimagetool-$SYSTEM_ARCH.AppImage
+    cd $HOME
+    wget "https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage"
+    chmod a+x appimagetool-x86_64.AppImage
   else
     gem install xcpretty
     gem install xcpretty-travis-formatter
 
-    cd $PACKAGER_PATH
+    cd $HOME
     curl -L -o Packages.dmg 'http://s.sudre.free.fr/Software/files/Packages.dmg'
     hdiutil mount Packages.dmg
     sudo installer -pkg /Volumes/Packages\ $PACKAGES_VERSION/Install\ Packages.pkg -target /
@@ -93,10 +102,10 @@ before_install:
 
 install:
 - |
-  cd $JUCE_PATH
+  cd $HOME
   git clone --depth=1 --branch=develop-local https://github.com/benkuper/JUCE.git JUCE
 
-  cd $JUCE_MODULES_PATH;
+  cd $TRAVIS_BUILD_DIR;
   mkdir "JUCE Modules";
   cd "JUCE Modules";
   git clone --depth=1 --branch=master https://github.com/benkuper/juce_organicui.git juce_organicui
@@ -105,26 +114,26 @@ install:
 script:
 - |
   if [ "$TRAVIS_OS_NAME" == "linux" ]; then
-    cd ~/build/benkuper/Chataigne/Builds/$BUILD_FOLDER
+    cd $TRAVIS_BUILD_DIR/Chataigne/Builds/$BUILD_FOLDER
     make -j2 CONFIG=$MAKECONF
   else
-    cd /Users/travis/build/benkuper
+    cd $TRAVIS_BUILD_DIR
     xcodebuild -project Chataigne/Builds/MacOSX/Chataigne.xcodeproj -configuration $MAKECONF -jobs 2 -verbose | xcpretty -f `xcpretty-travis-formatter`
   fi
 
 after_success:
 - |
   if [ "$TRAVIS_OS_NAME" == "linux" ]; then
-    cd ~/build/benkuper/Chataigne/Builds/$BUILD_FOLDER
-    
+    cd $TRAVIS_BUILD_DIR/Chataigne/Builds/$BUILD_FOLDER
+
     echo 'Packaging AppImage...'
     mkdir Chataigne.AppDir/usr/bin/
     cp build/Chataigne Chataigne.AppDir/usr/bin/
-    $APPIMAGE_PATH/appimagetool-$SYSTEM_ARCH.AppImage Chataigne.AppDir Chataigne-$TARGET_SYSTEM-$SUFFIX.AppImage
+    $HOME/appimagetool-x86_64.AppImage $APPIMAGE_RUNTIME Chataigne.AppDir Chataigne-$TARGET_SYSTEM-$SUFFIX.AppImage
     echo 'Uploading $SUFFIX ...'
-    curl -X POST -F 'appFile=@Chataigne-$TARGET_SYSTEM-$SUFFIX.AppImage' -F 'pass=$UPLOAD_PASS' $UPLOAD_URL
+    curl -X POST -F "appFile=@Chataigne-$TARGET_SYSTEM-$SUFFIX.AppImage" -F "pass=$UPLOAD_PASS" $UPLOAD_URL
   else
-    cd /Users/travis/build/benkuper/Chataigne/Package
+    cd $TRAVIS_BUILD_DIR/Chataigne/Package
     ls
     packagesbuild Chataigne.pkgproj
     mv Chataigne.pkg Chataigne-osx-$SUFFIX.pkg
