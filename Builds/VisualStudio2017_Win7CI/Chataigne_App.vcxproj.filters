@@ -8016,6 +8016,9 @@
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\manager\ui\BaseManagerUI.h">
       <Filter>JUCE Modules\juce_organicui\manager\ui</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\manager\ui\BaseManagerViewMiniPane.h">
+      <Filter>JUCE Modules\juce_organicui\manager\ui</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\manager\ui\BaseManagerViewUI.h">
       <Filter>JUCE Modules\juce_organicui\manager\ui</Filter>
     </ClInclude>

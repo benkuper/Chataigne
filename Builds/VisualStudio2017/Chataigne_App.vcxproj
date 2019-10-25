@@ -4034,6 +4034,7 @@
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\manager\ui\BaseItemUI.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\manager\ui\BaseManagerShapeShifterUI.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\manager\ui\BaseManagerUI.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\manager\ui\BaseManagerViewMiniPane.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\manager\ui\BaseManagerViewUI.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\manager\ui\GenericControllableItemEditor.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\manager\ui\GenericManagerEditor.h"/>
