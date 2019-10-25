@@ -15,6 +15,7 @@
 #include "CustomVariables/Preset/Morpher/ui/MorpherViewUI.h"
 #include "Common/Command/Template/ui/CommandTemplateManagerUI.h"
 #include "TimeMachine/ChataigneSequenceManager.h"
+#include "UI/WelcomeScreen.h"
 
 String getAppVersion();
 
@@ -48,6 +49,14 @@ void MainContentComponent::init()
 
 
 	OrganicMainContentComponent::init();
+
+	String lastVersion = getAppProperties().getUserSettings()->getValue("lastVersion", "");
+
+	if (lastVersion != getAppVersion())
+	{
+		WelcomeScreen w;
+		DialogWindow::showModalDialog("Welcome", &w, getTopLevelComponent(), Colours::black, true);
+	}
 
 
 }

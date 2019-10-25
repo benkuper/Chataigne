@@ -28,10 +28,11 @@ public:
 	public:
 		WebComp() {}
 		~WebComp() {}
+		ComponentAnimator ca;
 
-		bool pageAboutToLoad(const String& url) override { DBG("About to load : " << url); return true;  }
-		void pageFinishedLoading(const String& url) override { DBG("Finished loading : " << url); }
-		bool pageLoadHadNetworkError(const String& error) override { DBG("Error loading welcome : " << error); return true; }
+		bool pageAboutToLoad(const String& url) override;
+		void pageFinishedLoading(const String& url) override;
+		bool pageLoadHadNetworkError(const String& error) override;
 	};
 
 	WebComp webComp;
