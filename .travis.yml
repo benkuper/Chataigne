@@ -13,32 +13,30 @@ matrix:
       osx_image: xcode10.1
       compiler: clang
     - os: linux 
-      dist: xenial
-      group: latest
+      arch: amd64
+      dist: bionic
       sudo: required
-      services: docker
-      env: TARGET_SYSTEM=linux-x64 BUILD_FOLDER=LinuxMakefile TARGET_ARCH=x86_64
+      env: TARGET_SYSTEM=linux-x64 BUILD_FOLDER=LinuxMakefile 
     - os: linux
-      dist: xenial
-      group: latest
+      arch: amd64
+      dist: bionic
       sudo: required
-      services: docker
-      env: TARGET_SYSTEM=raspberry BUILD_FOLDER=Raspberry TARGET_ARCH=armhf
+      env: TARGET_SYSTEM=linux-armhf BUILD_FOLDER=Raspberry
 
 before_install:
 - |
   if [ -n "$TRAVIS_TAG" ]; then 
     if [ "$TRAVIS_TAG" == *b* ]; then 
-      echo "Beta version, set config to Release"; 
+      echo "Beta version, set config to Release"
       export MAKECONF=Release
       export SUFFIX=$TRAVIS_TAG
     else 
-      echo "Stable version, set config to Release"; 
+      echo "Stable version, set config to Release" 
       export MAKECONF=Release
       export SUFFIX=$TRAVIS_TAG
     fi
   else 
-    echo "No tag set, set config to Debug / bleeding"; 
+    echo "No tag set, set config to Debug / bleeding" 
     if [ "$TRAVIS_OS_NAME" == "linux" ]; then
       export MAKECONF=Debug
     else
@@ -51,167 +49,91 @@ before_install:
   echo "Target system : $TARGET_SYSTEM"
 
   if [ "$TRAVIS_OS_NAME" == "linux" ]; then
-    cd ..
-    pwd
-    docker run -d --name ubuntu --privileged -v $(pwd):/benkuper ubuntu:latest tail -f /dev/null
-    docker ps
-  else
-    gem install xcpretty
-    gem install xcpretty-travis-formatter
-    pwd
-    ls -d */
-    cd /Users/travis
-    git clone --depth=1 --branch=develop-local https://github.com/benkuper/JUCE.git JUCE
-    cd /Users/travis/build/benkuper
-    mkdir "JUCE Modules"
-    cd "JUCE Modules"
-    git clone --depth=1 --branch=master https://github.com/benkuper/juce_organicui.git juce_organicui
-    git clone --depth=1 --branch=master https://github.com/benkuper/juce_timeline.git juce_timeline
-    cd ..
-    pwd
-    ls -d */
-    curl -L -o Packages.dmg 'http://s.sudre.free.fr/Software/files/Packages.dmg'
-    hdiutil mount Packages.dmg
-    sudo installer -pkg /Volumes/Packages\ $PACKAGES_VERSION/Install\ Packages.pkg -target /
-    hdiutil detach /Volumes/Packages\ $PACKAGES_VERSION/
-    cd /Users/travis/build/benkuper
-  fi
-install:
-- |
-  if [ "$TRAVIS_OS_NAME" == "linux" ]; then
-    echo "Linux machine"
-    if [ $TARGET_SYSTEM == "raspberry" ]; then
-      export CXX="arm-linux-gnueabihf-g++ -v"
-      export CC=arm-linux-gnueabihf-gcc
-      export PKG_CONFIG_PATH=/usr/lib/arm-linux-gnueabihf/pkgconfig
+    if [ $TARGET_SYSTEM == "linux-armhf" ]; then
+      echo 'deb [arch=armhf] http://ports.ubuntu.com/ubuntu-ports bionic main universe' >> /etc/apt/sources.list
+      echo 'deb [arch=armhf] http://ports.ubuntu.com/ubuntu-ports bionic-updates main universe' >> /etc/apt/sources.list
+      sudo dpkg --add-architecture armhf
       
-      docker exec -t ubuntu bash -c "export DEBIAN_FRONTEND=noninteractive;
-      uname -a;
+      sudo apt-get update
+      echo "Installing armhf cross compilation tools"
+      sudo apt-get install -q g++-arm-linux-gnueabihf
 
-      echo 'Set package config path to  $PKG_CONFIG_PATH';
+      echo "Installing extra lib dependencies"
+      sudo apt-get install -q libgdk-pixbuf2.0-dev:armhf libpango1.0-dev:armhf libsoup2.4-dev:armhf libharfbuzz-dev:armhf libxml2-dev:armhf libicu-dev:armhf
 
-      apt update  -qq -y;
-      apt install -qq -y apt-utils;
-      apt install -qq -y software-properties-common;
-      add-apt-repository ppa:webkit-team/ppa -y;
-      add-apt-repository -y ppa:ubuntu-toolchain-r/test;
-      apt update -qq -y --fix-missing;
-      apt update -qq -y;
-      apt install -qq -y build-essential;
-      apt install -qq -y git curl wget zip unzip libfuse2;
-      apt install -qq -y make pkg-config;
+      echo "Downloading AppImage runtime for armhf"
+      cd $HOME
+      wget "https://github.com/AppImage/AppImageKit/releases/download/continuous/runtime-armhf"
+      export APPIMAGE_RUNTIME="--runtime-file $HOME/runtime-armhf"
       
-      echo 'Installing Raspberry cross-compile toolchain...';
-      echo 'deb [arch=armhf] http://ports.ubuntu.com/ubuntu-ports bionic main universe' >> /etc/apt/sources.list;
-      echo 'deb [arch=armhf] http://ports.ubuntu.com/ubuntu-ports bionic-updates main universe' >> /etc/apt/sources.list;
-      dpkg --add-architecture armhf;
-      
-      apt clean -qq -y;
-      apt update -qq -y;
-      apt upgrade -qq -y;
-
-      apt install -qq -y g++-arm-linux-gnueabihf;
-      apt install -qq -y libc6:armhf;
-      apt install -qq -y libc6-dev:armhf;
-      apt install -qq -y libfreetype6-dev:armhf libx11-dev:armhf libxinerama-dev:armhf libxrandr-dev:armhf libxcursor-dev:armhf mesa-common-dev:armhf libasound2-dev:armhf freeglut3-dev:armhf libxcomposite-dev:armhf libjack-dev:armhf libcurl4-openssl-dev:armhf ladspa-sdk:armhf;
-      apt install -qq -y libglib2.0-0:armhf libglib2.0-dev:armhf;
-      apt install -qq -y libgdk-pixbuf2.0-0:armhf libgdk-pixbuf2.0-dev:armhf;
-      apt install -qq -y libgtk-3-dev:armhf libwebkit2gtk-4.0-dev:armhf;
-      apt install -qq -y libbluetooth3:armhf;
-      apt install -qq -y libbluetooth-dev:armhf;
-      apt install -qq -y g++-arm-linux-gnueabihf;
-      
-      apt -qq -y -f install;
-      dpkg --configure -a;
-      apt -qq -y -f install;
-
-      echo 'Check CXX - CC : $CXX - $CC';
-      echo 'Check package config path $PKG_CONFIG_PATH';
-
-      cd ~;
-      pwd;
-      git clone --depth=1 --branch=develop-local https://github.com/benkuper/JUCE.git JUCE;
-      cd /benkuper;
-      mkdir 'JUCE Modules';
-      cd 'JUCE Modules';
-      git clone --depth=1 --branch=master https://github.com/benkuper/juce_organicui.git juce_organicui;
-      git clone --depth=1 --branch=master https://github.com/benkuper/juce_timeline.git juce_timeline"
-    else
-
-      docker exec -t ubuntu bash -c "export DEBIAN_FRONTEND=noninteractive;
-      uname -a;
-      apt-get install -qq software-properties-common
-      add-apt-repository ppa:webkit-team/ppa -y;
-      add-apt-repository -y ppa:ubuntu-toolchain-r/test;
-      apt-get update --fix-missing;
-      apt-get update -qq;
-      
-      echo 'Installing GCC...';
-      apt-get install -y g++-7 gcc-7;
-      gcc -v;
-      update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 90;
-      update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-7 90;
-      export CC=/usr/bin/gcc;
-      export CXX=/usr/bin/g++;
-      
-      apt-get install -qq git libfreetype6-dev libx11-dev libxinerama-dev libxrandr-dev libxcursor-dev libxcomposite-dev mesa-common-dev libasound2-dev freeglut3-dev libcurl4-gnutls-dev+ libasound2-dev libjack-dev libbluetooth-dev libgtk-3-dev libwebkit2gtk-4.0-dev curl wget zip unzip libfuse2;
-      
-      echo $CC;
-      echo $CXX;
-      echo 'GCC Version :';
-      gcc -v;
-      cd ~;
-      pwd;
-      git clone --depth=1 --branch=develop-local https://github.com/benkuper/JUCE.git JUCE;
-      cd /benkuper;
-      mkdir 'JUCE Modules';
-      cd 'JUCE Modules';
-      git clone --depth=1 --branch=master https://github.com/benkuper/juce_organicui.git juce_organicui
-      git clone --depth=1 --branch=master https://github.com/benkuper/juce_timeline.git juce_timeline"
-    fi
-  fi
-
-script:
-- |
-  if [ "$TRAVIS_OS_NAME" == "linux" ]; then
-    if [ $TARGET_SYSTEM == "raspberry" ]; then
       export CXX=arm-linux-gnueabihf-g++
       export CC=arm-linux-gnueabihf-gcc
       export PKG_CONFIG_PATH=/usr/lib/arm-linux-gnueabihf/pkgconfig
 
-      docker exec -t ubuntu bash -c "echo 'Building Chataigne for $TARGET_SYSTEM...';
-      cd /benkuper/Chataigne/Builds/$BUILD_FOLDER;
-      echo 'Check CXX - CC : $CXX - $CC';
-      echo 'Check package config path $PKG_CONFIG_PATH';
-      #disable make for rasp until it works
-      #make -j 8 CONFIG=$MAKECONF CXX=$CXX CC=$CC PKG_CONFIG_PATH=$PKG_CONFIG_PATH"
-    else
-      docker exec -t ubuntu bash -c "echo 'Building Chataigne for $TARGET_SYSTEM...';
-      cd /benkuper/Chataigne/Builds/$BUILD_FOLDER;
-      make -j 8 CONFIG=$MAKECONF"
+      # TARGET_ARCH is used in the Makefile
+      export TARGET_ARCH="-march=armv8-a" 
+
+      # DEP_ARCH is used later when downloading the dependencies
+      export DEP_ARCH="armhf"
     fi
 
+    sudo apt-get update
+    echo "Installing JUCE lib dependencies and extra tools"
+    sudo apt-get install -q libfreetype6-dev:$DEP_ARCH libx11-dev:$DEP_ARCH libxinerama-dev:$DEP_ARCH libxrandr-dev:$DEP_ARCH libxcursor-dev:$DEP_ARCH libxcomposite-dev:$DEP_ARCH mesa-common-dev:$DEP_ARCH libasound2-dev:$DEP_ARCH freeglut3-dev:$DEP_ARCH libcurl4-gnutls-dev:$DEP_ARCH libasound2-dev:$DEP_ARCH libjack-dev:$DEP_ARCH libbluetooth-dev:$DEP_ARCH libgtk-3-dev:$DEP_ARCH libwebkit2gtk-4.0-dev:$DEP_ARCH
+    sudo apt-get install -q curl
     
+    echo 'GCC Version:'
+    $CC -v
+
+    echo 'Downloading AppImageTool...'
+    cd $HOME
+    wget "https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage"
+    chmod a+x appimagetool-x86_64.AppImage
   else
-    xcodebuild -project Chataigne/Builds/MacOSX/Chataigne.xcodeproj -configuration $MAKECONF -jobs 8 -verbose | xcpretty -f `xcpretty-travis-formatter`
+    gem install xcpretty
+    gem install xcpretty-travis-formatter
+
+    cd $HOME
+    curl -L -o Packages.dmg 'http://s.sudre.free.fr/Software/files/Packages.dmg'
+    hdiutil mount Packages.dmg
+    sudo installer -pkg /Volumes/Packages\ $PACKAGES_VERSION/Install\ Packages.pkg -target /
+    hdiutil detach /Volumes/Packages\ $PACKAGES_VERSION/
+  fi
+
+install:
+- |
+  cd $HOME
+  git clone --depth=1 --branch=develop-local https://github.com/benkuper/JUCE.git JUCE
+
+  cd $TRAVIS_BUILD_DIR/..
+  mkdir "JUCE Modules"
+  cd "JUCE Modules"
+  git clone --depth=1 --branch=master https://github.com/benkuper/juce_organicui.git juce_organicui
+  git clone --depth=1 --branch=master https://github.com/benkuper/juce_timeline.git juce_timeline
+
+script:
+- |
+  if [ "$TRAVIS_OS_NAME" == "linux" ]; then
+    cd $TRAVIS_BUILD_DIR/Builds/$BUILD_FOLDER
+    make -j2 CONFIG=$MAKECONF
+  else
+    cd $TRAVIS_BUILD_DIR
+    xcodebuild -project Builds/MacOSX/Chataigne.xcodeproj -configuration $MAKECONF -jobs 2 -verbose | xcpretty -f `xcpretty-travis-formatter`
   fi
 
 after_success:
 - |
   if [ "$TRAVIS_OS_NAME" == "linux" ]; then
-    docker exec -t ubuntu bash -c "cd /benkuper/Chataigne/Builds/$BUILD_FOLDER;
-    pwd
-    echo 'Downloading AppImageTool...';
-    wget "https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-$TARGET_ARCH.AppImage";
-    chmod a+x appimagetool-$TARGET_ARCH.AppImage;
-    echo 'Packaging AppImage...';
-    mkdir Chataigne.AppDir/usr/bin/;
-    cp build/Chataigne Chataigne.AppDir/usr/bin/;
-    ./appimagetool-$TARGET_ARCH.AppImage Chataigne.AppDir Chataigne-$TARGET_SYSTEM-$SUFFIX.AppImage;
-    echo 'Uploading $SUFFIX ...';
-    curl -X POST -F 'appFile=@Chataigne-$TARGET_SYSTEM-$SUFFIX.AppImage' -F 'pass=$UPLOAD_PASS' $UPLOAD_URL;"
+    cd $TRAVIS_BUILD_DIR/Builds/$BUILD_FOLDER
+
+    echo 'Packaging AppImage...'
+    mkdir Chataigne.AppDir/usr/bin/
+    cp build/Chataigne Chataigne.AppDir/usr/bin/
+    $HOME/appimagetool-x86_64.AppImage $APPIMAGE_RUNTIME Chataigne.AppDir Chataigne-$TARGET_SYSTEM-$SUFFIX.AppImage
+    echo 'Uploading $SUFFIX ...'
+    curl -X POST -F "appFile=@Chataigne-$TARGET_SYSTEM-$SUFFIX.AppImage" -F "pass=$UPLOAD_PASS" $UPLOAD_URL
   else
-    cd /Users/travis/build/benkuper/Chataigne/Package
+    cd $TRAVIS_BUILD_DIR/Package
     ls
     packagesbuild Chataigne.pkgproj
     mv Chataigne.pkg Chataigne-osx-$SUFFIX.pkg
