@@ -97,7 +97,7 @@ void OSCModule::setupReceiver()
 		return;
 	}
 
-	DBG("Local port set to : " << localPort->intValue());
+	//DBG("Local port set to : " << localPort->intValue());
 	bool result = receiver.connect(localPort->intValue());
 
 	if (result)
@@ -247,12 +247,12 @@ void OSCModule::setupZeroConf()
 		
 		if (!hasInput) return;
 
-		DBG("ADVERTISE");
+		//DBG("ADVERTISE");
 		servus.announce(portToAdvertise, ("Chataigne - " + nameToAdvertise).toStdString());
 		
 		if (nameToAdvertise != niceName || localPort->intValue() != portToAdvertise || !hasInput)
 		{
-			DBG("Name or port changed during advertise, readvertising");
+			//DBG("Name or port changed during advertise, readvertising");
 		}
 	}
 	

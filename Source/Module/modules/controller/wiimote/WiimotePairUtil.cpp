@@ -119,8 +119,8 @@ int WiiPairUtil::pairWin(bool forceRepairing)
 			btdi.dwSize = sizeof(btdi);
 			srch.dwSize = sizeof(BLUETOOTH_DEVICE_SEARCH_PARAMS);
 
-			DBG("BluetoothGetRadioInfo " << String(BluetoothGetRadioInfo(hRadios[radio], &radioInfo)));
-			DBG("Radio " << radio << " (" << String(radioInfo.szName) << ") : " << FormatBTAddress(radioInfo.address));
+			//DBG("BluetoothGetRadioInfo " << String(BluetoothGetRadioInfo(hRadios[radio], &radioInfo)));
+			//DBG("Radio " << radio << " (" << String(radioInfo.szName) << ") : " << FormatBTAddress(radioInfo.address));
 	
 			srch.fReturnAuthenticated = TRUE;
 			srch.fReturnRemembered = TRUE;
@@ -130,7 +130,7 @@ int WiiPairUtil::pairWin(bool forceRepairing)
 			srch.cTimeoutMultiplier = 2;
 			srch.hRadio = hRadios[radio];
 
-			DBG("Scanning...");
+			//DBG("Scanning...");
 
 			hFind = BluetoothFindFirstDevice(&srch, &btdi);
 
@@ -138,17 +138,17 @@ int WiiPairUtil::pairWin(bool forceRepairing)
 			{
 				if (GetLastError() == ERROR_NO_MORE_ITEMS)
 				{
-					DBG("No bluetooth devices found.");
+					//DBG("No bluetooth devices found.");
 				} else
 				{
-					DBG("Error enumerating devices : " << String(GetLastError()));
+					//DBG("Error enumerating devices : " << String(GetLastError()));
 					return 0;
 				}
 			} else
 			{
 				do
 				{
-					DBG("Found: " << btdi.szName);
+					//DBG("Found: " << btdi.szName);
 
 					if (!wcscmp(btdi.szName, L"Nintendo RVL-WBC-01") || !wcscmp(btdi.szName, L"Nintendo RVL-CNT-01"))
 					{

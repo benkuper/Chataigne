@@ -94,13 +94,13 @@ void ChataigneSequence::updateTargetAudioLayer(ChataigneAudioLayer* excludeLayer
 	{
 		if (masterAudioLayer->audioModule == nullptr)
 		{
-			DBG("master is not null but has no audioModule, setting master to null and searching");
+			//DBG("master is not null but has no audioModule, setting master to null and searching");
 			masterAudioLayer = nullptr;
 			updateTargetAudioLayer();
 		}
 		else
 		{
-			DBG("master has changed its module");
+			//DBG("master has changed its module");
 			setMasterAudioLayer(masterAudioLayer); //force refresh
 		}
 	}

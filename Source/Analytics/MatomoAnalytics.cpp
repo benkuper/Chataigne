@@ -83,7 +83,7 @@ void MatomoAnalytics::run()
 
 	url = url.withParameters(optionsToLog);
 
-	DBG("Send to analytics " << url.toString(false) << ", params :\n > " << url.getParameterValues().joinIntoString("\n > "));
+	//DBG("Send to analytics " << url.toString(false) << ", params :\n > " << url.getParameterValues().joinIntoString("\n > "));
 	StringPairArray responseHeaders;
 	int statusCode = 0;
 	std::unique_ptr<InputStream> stream(url.createInputStream(true, nullptr, nullptr, String(),
@@ -101,8 +101,8 @@ void MatomoAnalytics::run()
 	if (stream != nullptr)
 	{
 		String content = stream->readEntireStreamAsString();
-		DBG("Got analytics data " << content);
-		DBG("Analytics sent : " << actionToLog);
+		//DBG("Got analytics data " << content);
+		//DBG("Analytics sent : " << actionToLog);
 	}
 	else
 	{
@@ -112,6 +112,6 @@ void MatomoAnalytics::run()
 
 void MatomoAnalytics::timerCallback()
 {
-	DBG("Send ping");
+	//DBG("Send ping");
 	log(PING);
 }
