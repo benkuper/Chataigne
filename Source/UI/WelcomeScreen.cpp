@@ -46,7 +46,7 @@ void WelcomeScreen::WebComp::setBaseURL(StringRef url)
 
 bool WelcomeScreen::WebComp::pageAboutToLoad(const String& url) {
 	DBG("About to load : " << url);  
-	if(url == baseURL) return true; 
+	if(url == baseURL || url == "about:blank") return true;
 
 	URL(url).launchInDefaultBrowser();
 	return false;
