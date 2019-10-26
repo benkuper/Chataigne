@@ -26,6 +26,8 @@ public:
 	enum LoadBehavior { KEEP, ACTIVE, NONACTIVE };
 	EnumParameter * loadActivationBehavior;
 
+	BoolParameter* checkTransitionsOnActivate;
+
 	//Transition
 	Array<StateTransition *> inTransitions;
 	Array<StateTransition *> outTransitions;

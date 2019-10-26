@@ -19,6 +19,8 @@ State::State() :
 	active = addBoolParameter("Active", "If active, the state's actions and mappings will be effective, otherwise this state won't do anything.", false);
 	loadActivationBehavior = addEnumParameter("On Load Behavior", "This is defining how the state is initializing when loading");
 	loadActivationBehavior->addOption("Restore last state", KEEP)->addOption("Activate", ACTIVE)->addOption("Deactivate", NONACTIVE);
+	checkTransitionsOnActivate = addBoolParameter("Check transitions on activate", "If checked, this will automatically check for already valid conditions on activate.\n \
+		Otherwise, already valid transition will need to be unvalidated and then validated again to be activated.", true);
 
 	addChildControllableContainer(&pm);
 
@@ -54,7 +56,6 @@ void State::onContainerParameterChangedInternal(Parameter *p)
 
 				if (enabled->boolValue() && active->boolValue())
 					pm.processAllMappings();
-
 			}
 			else if (enabled->boolValue())
 			{
@@ -66,6 +67,20 @@ void State::onContainerParameterChangedInternal(Parameter *p)
 
 					pm.checkAllActivateActions();
 					pm.processAllMappings();
+
+					if (checkTransitionsOnActivate->boolValue())
+					{
+						for (auto& t : outTransitions)
+						{
+							if (t->cdm.isValid->boolValue())
+							{
+								t->triggerOn->trigger();
+								break;
+							}
+						}
+					}
+
+
 				}
 				else
 				{
@@ -73,6 +88,7 @@ void State::onContainerParameterChangedInternal(Parameter *p)
 					stateListeners.call(&StateListener::stateActivationChanged, this);
 					pm.setForceDisabled(!active->boolValue() || !enabled->boolValue());
 				}
+
 			}
 		}
 	}
