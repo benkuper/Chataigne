@@ -8,9 +8,7 @@
   ==============================================================================
 */
 
-#ifndef STATETRANSITIONMANAGER_H_INCLUDED
-#define STATETRANSITIONMANAGER_H_INCLUDED
-
+#pragma once
 
 #include "StateTransition.h"
 
@@ -33,7 +31,3 @@ public:
 
 	StateTransition * getItemForSourceAndDest(State * source, State * dest);
 };
-
-
-
-#endif  // STATETRANSITIONMANAGER_H_INCLUDED

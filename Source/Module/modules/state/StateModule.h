@@ -8,8 +8,8 @@
   ==============================================================================
 */
 
-#ifndef STATEMODULE_H_INCLUDED
-#define STATEMODULE_H_INCLUDED
+#pragma once 
+
 
 #include "Module/Module.h"
 #include "commands/StateCommand.h"
@@ -29,7 +29,3 @@ public:
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(StateModule)
 };
-
-
-
-#endif  // STATEMODULE_H_INCLUDED

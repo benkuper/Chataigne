@@ -47,9 +47,6 @@
     <Filter Include="Chataigne\Source\Common\DMX\device">
       <UniqueIdentifier>{685DA80D-0562-85D5-6788-5A1BCC716520}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Chataigne\Source\Common\DMX\ui">
-      <UniqueIdentifier>{D93F3299-F41F-DB93-0BBE-A75A8F1DCE40}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Chataigne\Source\Common\DMX">
       <UniqueIdentifier>{4AF4C7E8-39F1-FA1E-A7FA-273A466A92A0}</UniqueIdentifier>
     </Filter>
@@ -352,9 +349,6 @@
     </Filter>
     <Filter Include="Chataigne\Source\Module\modules\osc\millumin">
       <UniqueIdentifier>{CC82672A-B4AE-A9EB-BAB9-B1158A2F9F78}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\osc\reaper\commands\ui">
-      <UniqueIdentifier>{52736AB6-0DC1-2E0C-E777-679C67D88884}</UniqueIdentifier>
     </Filter>
     <Filter Include="Chataigne\Source\Module\modules\osc\reaper\commands">
       <UniqueIdentifier>{87F601FE-E3C6-A23B-7C49-0797AA97A615}</UniqueIdentifier>
@@ -1261,22 +1255,7 @@
     <ClCompile Include="..\..\Source\Common\DMX\device\DMXSerialDevice.cpp">
       <Filter>Chataigne\Source\Common\DMX\device</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\Common\DMX\ui\DMXDashboard.cpp">
-      <Filter>Chataigne\Source\Common\DMX\ui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Common\DMX\ui\DMXStateManagerUI.cpp">
-      <Filter>Chataigne\Source\Common\DMX\ui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Common\DMX\ui\DMXStateUI.cpp">
-      <Filter>Chataigne\Source\Common\DMX\ui</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Source\Common\DMX\DMXManager.cpp">
-      <Filter>Chataigne\Source\Common\DMX</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Common\DMX\DMXState.cpp">
-      <Filter>Chataigne\Source\Common\DMX</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Common\DMX\DMXStateManager.cpp">
       <Filter>Chataigne\Source\Common\DMX</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Common\MIDI\ui\MIDIDeviceChooser.cpp">
@@ -1746,9 +1725,6 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\osc\millumin\MilluminModule.cpp">
       <Filter>Chataigne\Source\Module\modules\osc\millumin</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Module\modules\osc\reaper\commands\ui\ReaperTimeCommandUI.cpp">
-      <Filter>Chataigne\Source\Module\modules\osc\reaper\commands\ui</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\osc\reaper\commands\ReaperTimeCommand.cpp">
       <Filter>Chataigne\Source\Module\modules\osc\reaper\commands</Filter>
@@ -4836,22 +4812,7 @@
     <ClInclude Include="..\..\Source\Common\DMX\device\DMXSerialDevice.h">
       <Filter>Chataigne\Source\Common\DMX\device</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\Common\DMX\ui\DMXDashboard.h">
-      <Filter>Chataigne\Source\Common\DMX\ui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Common\DMX\ui\DMXStateManagerUI.h">
-      <Filter>Chataigne\Source\Common\DMX\ui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Common\DMX\ui\DMXStateUI.h">
-      <Filter>Chataigne\Source\Common\DMX\ui</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Source\Common\DMX\DMXManager.h">
-      <Filter>Chataigne\Source\Common\DMX</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Common\DMX\DMXState.h">
-      <Filter>Chataigne\Source\Common\DMX</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Common\DMX\DMXStateManager.h">
       <Filter>Chataigne\Source\Common\DMX</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\MIDI\ui\MIDIDeviceChooser.h">
@@ -5270,9 +5231,6 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\osc\millumin\MilluminModule.h">
       <Filter>Chataigne\Source\Module\modules\osc\millumin</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Module\modules\osc\reaper\commands\ui\ReaperTimeCommandUI.h">
-      <Filter>Chataigne\Source\Module\modules\osc\reaper\commands\ui</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\osc\reaper\commands\ReaperTimeCommand.h">
       <Filter>Chataigne\Source\Module\modules\osc\reaper\commands</Filter>

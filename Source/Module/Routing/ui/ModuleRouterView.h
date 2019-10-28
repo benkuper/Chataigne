@@ -8,8 +8,7 @@
   ==============================================================================
 */
 
-#ifndef MODULEROUTERVIEW_H_INCLUDED
-#define MODULEROUTERVIEW_H_INCLUDED
+#pragma once
 
 #include "../ModuleRouter.h"
 #include "Module/ui/ModuleChooserUI.h"
@@ -61,5 +60,3 @@ public:
 
 	static bool isModuleRoutable(Module * m) { return m->canHandleRouteValues; }
 };
-
-#endif  // MODULEROUTERVIEW_H_INCLUDED

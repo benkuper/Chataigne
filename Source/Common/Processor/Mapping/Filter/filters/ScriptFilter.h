@@ -8,8 +8,7 @@
   ==============================================================================
 */
 
-#ifndef SCRIPTFILTER_H_INCLUDED
-#define SCRIPTFILTER_H_INCLUDED
+#pragma once
 
 #include "../MappingFilter.h"
 
@@ -33,7 +32,3 @@ public:
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ScriptFilter)
 };
-
-
-
-#endif  // SCRIPTFILTER_H_INCLUDED

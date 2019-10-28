@@ -8,8 +8,7 @@
   ==============================================================================
 */
 
-#ifndef DMXOPENUSBDEVICE_H_INCLUDED
-#define DMXOPENUSBDEVICE_H_INCLUDED
+#pragma once
 
 #include "DMXSerialDevice.h"
 
@@ -26,7 +25,3 @@ public:
 	void sendDMXValuesSerialInternal() override;
 	
 };
-
-
-
-#endif  // DMXOPENUSBDEVICE_H_INCLUDED

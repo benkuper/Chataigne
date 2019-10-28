@@ -8,8 +8,7 @@
   ==============================================================================
 */
 
-#ifndef MAPPINGINPUTUI_H_INCLUDED
-#define MAPPINGINPUTUI_H_INCLUDED
+#pragma once
 
 #include "../MappingInput.h"
 
@@ -35,6 +34,3 @@ protected:
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MappingInputEditor)
 };
-
-
-#endif  // MAPPINGINPUTUI_H_INCLUDED

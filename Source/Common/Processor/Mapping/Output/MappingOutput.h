@@ -8,8 +8,7 @@
   ==============================================================================
 */
 
-#ifndef MAPPINGOUTPUT_H_INCLUDED
-#define MAPPINGOUTPUT_H_INCLUDED
+#pragma once
 
 #include "Common/Command/BaseCommandHandler.h"
 
@@ -28,5 +27,3 @@ public:
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MappingOutput)
 };
-
-#endif  // MAPPINGOUTPUT_H_INCLUDED

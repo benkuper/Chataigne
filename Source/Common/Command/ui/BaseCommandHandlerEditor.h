@@ -7,10 +7,7 @@
 
   ==============================================================================
 */
-
-#ifndef BASECOMMANDHANDLEREDITOR_H_INCLUDED
-#define BASECOMMANDHANDLEREDITOR_H_INCLUDED
-
+#pragma once
 
 #include "Common/Processor/Action/Consequence/Consequence.h"
 #include "CommandChooserUI.h"
@@ -38,6 +35,3 @@ public:
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(BaseCommandHandlerEditor)
 };
-
-
-#endif  // BASECOMMANDHANDLEREDITOR_H_INCLUDED

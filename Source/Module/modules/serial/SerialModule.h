@@ -8,8 +8,7 @@
   ==============================================================================
 */
 
-#ifndef SERIALMODULE_H_INCLUDED
-#define SERIALMODULE_H_INCLUDED
+#pragma once
 
 #include "../common/streaming/StreamingModule.h"
 #include "Common/Serial/SerialManager.h"
@@ -77,7 +76,3 @@ public:
 	virtual String getDefaultTypeString() const override { return "Serial"; }
 
 };
-
-
-
-#endif  // SERIALMODULE_H_INCLUDED

@@ -8,9 +8,7 @@
   ==============================================================================
 */
 
-#ifndef COMMANDFACTORY_H_INCLUDED
-#define COMMANDFACTORY_H_INCLUDED
-
+#pragma once
 
 #include "CommandDefinition.h"
 
@@ -21,6 +19,3 @@ class CommandFactory
 public:
 	static CommandDefinition * showMenuAndGetCommand(CommandContext context, Module * lockedModule = nullptr);
 };
-
-
-#endif  // COMMANDFACTORY_H_INCLUDED

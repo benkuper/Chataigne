@@ -8,9 +8,7 @@
   ==============================================================================
 */
 
-#ifndef WIIMOTEPAIRUTIL_H_INCLUDED
-#define WIIMOTEPAIRUTIL_H_INCLUDED
-
+#pragma once
 
 #include "JuceHeader.h"
 
@@ -48,6 +46,3 @@ public:
     static int pairMac(bool forceRepairing = false);
 #endif
 };
-
-
-#endif  // WIIMOTEPAIRUTIL_H_INCLUDED

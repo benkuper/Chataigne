@@ -202,25 +202,8 @@
             <FILE id="BQnYUa" name="DMXSerialDevice.h" compile="0" resource="0"
                   file="Source/Common/DMX/device/DMXSerialDevice.h"/>
           </GROUP>
-          <GROUP id="{708645ED-3AA3-AFCD-7298-82FFDF295F14}" name="ui">
-            <FILE id="dnYLdT" name="DMXDashboard.cpp" compile="1" resource="0"
-                  file="Source/Common/DMX/ui/DMXDashboard.cpp"/>
-            <FILE id="wrBXDu" name="DMXDashboard.h" compile="0" resource="0" file="Source/Common/DMX/ui/DMXDashboard.h"/>
-            <FILE id="WXmlo0" name="DMXStateManagerUI.cpp" compile="1" resource="0"
-                  file="Source/Common/DMX/ui/DMXStateManagerUI.cpp"/>
-            <FILE id="ng0NQQ" name="DMXStateManagerUI.h" compile="0" resource="0"
-                  file="Source/Common/DMX/ui/DMXStateManagerUI.h"/>
-            <FILE id="J1MZzM" name="DMXStateUI.cpp" compile="1" resource="0" file="Source/Common/DMX/ui/DMXStateUI.cpp"/>
-            <FILE id="pzd19w" name="DMXStateUI.h" compile="0" resource="0" file="Source/Common/DMX/ui/DMXStateUI.h"/>
-          </GROUP>
           <FILE id="qcXTQm" name="DMXManager.cpp" compile="1" resource="0" file="Source/Common/DMX/DMXManager.cpp"/>
           <FILE id="OIayX5" name="DMXManager.h" compile="0" resource="0" file="Source/Common/DMX/DMXManager.h"/>
-          <FILE id="UCF7gK" name="DMXState.cpp" compile="1" resource="0" file="Source/Common/DMX/DMXState.cpp"/>
-          <FILE id="iTjeeg" name="DMXState.h" compile="0" resource="0" file="Source/Common/DMX/DMXState.h"/>
-          <FILE id="zz4bk7" name="DMXStateManager.cpp" compile="1" resource="0"
-                file="Source/Common/DMX/DMXStateManager.cpp"/>
-          <FILE id="phHvGn" name="DMXStateManager.h" compile="0" resource="0"
-                file="Source/Common/DMX/DMXStateManager.h"/>
         </GROUP>
         <GROUP id="{00DB7CFA-CACA-0D02-4E20-E907A0900C31}" name="MIDI">
           <GROUP id="{6A517320-E014-4F0A-1B7F-E6E464B84224}" name="ui">
@@ -917,12 +900,6 @@
             </GROUP>
             <GROUP id="{88D89CC2-0F11-F9D4-467D-F7DCB753EB24}" name="reaper">
               <GROUP id="{D7999668-7E30-E1C3-9372-F0C5A8F8BEE3}" name="commands">
-                <GROUP id="{434F557F-9087-7B07-8D12-230D1D9A1EF6}" name="ui">
-                  <FILE id="sfonBE" name="ReaperTimeCommandUI.cpp" compile="1" resource="0"
-                        file="Source/Module/modules/osc/reaper/commands/ui/ReaperTimeCommandUI.cpp"/>
-                  <FILE id="MaqUus" name="ReaperTimeCommandUI.h" compile="0" resource="0"
-                        file="Source/Module/modules/osc/reaper/commands/ui/ReaperTimeCommandUI.h"/>
-                </GROUP>
                 <FILE id="r4pLqR" name="ReaperTimeCommand.cpp" compile="1" resource="0"
                       file="Source/Module/modules/osc/reaper/commands/ReaperTimeCommand.cpp"/>
                 <FILE id="rrTiVc" name="ReaperTimeCommand.h" compile="0" resource="0"

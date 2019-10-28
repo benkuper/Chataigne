@@ -8,9 +8,7 @@
   ==============================================================================
 */
 
-#ifndef MODULEROUTERMANAGER_H_INCLUDED
-#define MODULEROUTERMANAGER_H_INCLUDED
-
+#pragma once
 
 #include "ModuleRouter.h"
 
@@ -23,7 +21,3 @@ public:
 	ModuleRouterManager();
 	~ModuleRouterManager();
 };
-
-
-
-#endif  // MODULEROUTERMANAGER_H_INCLUDED

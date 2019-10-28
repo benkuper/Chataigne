@@ -8,8 +8,7 @@
   ==============================================================================
 */
 
-#ifndef MYOMODULE_H_INCLUDED
-#define MYOMODULE_H_INCLUDED
+#pragma once
 
 #include "JuceHeader.h"
 
@@ -53,5 +52,3 @@ public:
 };
 
 #endif
-
-#endif  // MYOMODULE_H_INCLUDED

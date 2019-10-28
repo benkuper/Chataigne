@@ -8,8 +8,7 @@
   ==============================================================================
 */
 
-#ifndef REAPERTIMECOMMAND_H_INCLUDED
-#define REAPERTIMECOMMAND_H_INCLUDED
+#pragma once
 
 #include "../../commands/OSCCommand.h"
 #include "../ReaperModule.h"
@@ -18,19 +17,15 @@ class ReaperTimeCommand :
 	public OSCCommand
 {
 public:
-	ReaperTimeCommand(ReaperModule * _module, CommandContext context, var params);
+	ReaperTimeCommand(ReaperModule* _module, CommandContext context, var params);
 	~ReaperTimeCommand();
 
-	ReaperModule * reaperModule;
-	BoolParameter * stopTimePlay;
-	FloatParameter * timeParam;
+	ReaperModule* reaperModule;
+	BoolParameter* stopTimePlay;
+	FloatParameter* timeParam;
 
 	void triggerInternal() override;
 
-	static ReaperTimeCommand * create(ControllableContainer * module, CommandContext context, var params) { return new ReaperTimeCommand((ReaperModule *)module, context, params); }
+	static ReaperTimeCommand* create(ControllableContainer* module, CommandContext context, var params) { return new ReaperTimeCommand((ReaperModule*)module, context, params); }
 
 };
-
-
-
-#endif  // REAPERTIMECOMMAND_H_INCLUDED

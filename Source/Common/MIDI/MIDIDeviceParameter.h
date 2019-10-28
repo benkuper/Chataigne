@@ -8,8 +8,7 @@
   ==============================================================================
 */
 
-#ifndef MIDIDEVICEPARAMETER_H_INCLUDED
-#define MIDIDEVICEPARAMETER_H_INCLUDED
+#pragma once
 
 #include "MIDIManager.h"
 
@@ -44,6 +43,3 @@ public:
 	void loadJSONDataInternal(var data) override;
 
 };
-
-
-#endif  // MIDIDEVICEPARAMETER_H_INCLUDED

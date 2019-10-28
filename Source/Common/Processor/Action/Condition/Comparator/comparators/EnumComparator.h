@@ -8,9 +8,7 @@
   ==============================================================================
 */
 
-#ifndef ENUMCOMPARATOR_H_INCLUDED
-#define ENUMCOMPARATOR_H_INCLUDED
-
+#pragma once
 
 #include "../BaseComparator.h"
 
@@ -31,8 +29,3 @@ public:
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(EnumComparator)
 };
-
-
-
-
-#endif  // ENUMCOMPARATOR_H_INCLUDED

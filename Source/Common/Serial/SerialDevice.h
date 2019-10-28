@@ -8,8 +8,7 @@
   ==============================================================================
 */
 
-#ifndef SERIALDEVICE_H_INCLUDED
-#define SERIALDEVICE_H_INCLUDED
+#pragma once
 
 #define SYNCHRONOUS_SERIAL_LISTENERS
 
@@ -125,9 +124,3 @@ public:
 	void addSerialDeviceListener(SerialDeviceListener* newListener);
 	void removeSerialDeviceListener(SerialDeviceListener* listener);
 };
-
-
-
-
-
-#endif  // SERIALDEVICE_H_INCLUDED

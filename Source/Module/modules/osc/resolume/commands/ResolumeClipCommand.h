@@ -8,8 +8,7 @@
   ==============================================================================
 */
 
-#ifndef RESOLUMECLIPCOMMAND_H_INCLUDED
-#define RESOLUMECLIPCOMMAND_H_INCLUDED
+#pragma once
 
 #include "ResolumeBaseCommand.h"
 
@@ -39,6 +38,3 @@ public:
 	}
 
 };
-
-
-#endif  // RESOLUMECLIPCOMMAND_H_INCLUDED

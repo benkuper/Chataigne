@@ -8,9 +8,7 @@
   ==============================================================================
 */
 
-#ifndef CONSEQUENCEMANAGER_H_INCLUDED
-#define CONSEQUENCEMANAGER_H_INCLUDED
-
+#pragma once
 
 #include "Consequence.h"
 
@@ -63,7 +61,3 @@ public:
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ConsequenceManager)
 
 };
-
-
-
-#endif  // CONSEQUENCEMANAGER_H_INCLUDED

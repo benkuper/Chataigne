@@ -8,8 +8,7 @@
   ==============================================================================
 */
 
-#ifndef LIVEOSCMODULE_H_INCLUDED
-#define LIVEOSCMODULE_H_INCLUDED
+#pragma once
 
 #include "../OSCModule.h"
 
@@ -37,7 +36,3 @@ public:
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(LiveOSCModule)
 };
-
-
-
-#endif  // LIVEOSCMODULE_H_INCLUDED

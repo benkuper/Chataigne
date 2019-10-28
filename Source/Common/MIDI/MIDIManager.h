@@ -8,8 +8,7 @@
   ==============================================================================
 */
 
-#ifndef MIDIMANAGER_H_INCLUDED
-#define MIDIMANAGER_H_INCLUDED
+#pragma once
 
 #include "MIDIDevice.h"
 
@@ -65,6 +64,3 @@ public:
 
 	JUCE_DECLARE_NON_COPYABLE(MIDIManager)
 };
-
-
-#endif  // MIDIMANAGER_H_INCLUDED

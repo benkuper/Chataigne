@@ -8,9 +8,7 @@
   ==============================================================================
 */
 
-#ifndef LIVEOSCCOMMANDBASE_H_INCLUDED
-#define LIVEOSCCOMMANDBASE_H_INCLUDED
-
+#pragma once
 
 #include "../../commands/OSCCommand.h"
 #include "../LiveOSCModule.h"
@@ -60,7 +58,3 @@ public:
 	static LiveOSCCommandBase * create(ControllableContainer * module, CommandContext context, var params) { return new LiveOSCCommandBase((LiveOSCModule *)module, context, params); }
 
 };
-
-
-
-#endif  // LIVEOSCCOMMANDBASE_H_INCLUDED

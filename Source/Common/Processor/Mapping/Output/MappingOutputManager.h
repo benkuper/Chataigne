@@ -8,9 +8,7 @@
   ==============================================================================
 */
 
-#ifndef MAPPINGOUTPUTMANAGER_H_INCLUDED
-#define MAPPINGOUTPUTMANAGER_H_INCLUDED
-
+#pragma once
 
 #include "MappingOutput.h"
 
@@ -54,8 +52,3 @@ public:
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MappingOutputManager)
 
 };
-
-
-
-
-#endif  // MAPPINGOUTPUTMANAGER_H_INCLUDED

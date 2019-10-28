@@ -8,8 +8,7 @@
   ==============================================================================
 */
 
-#ifndef DMXSERIALDEVICE_H_INCLUDED
-#define DMXSERIALDEVICE_H_INCLUDED
+#pragma once
 
 #include "DMXDevice.h"
 #include "Common/Serial/SerialManager.h"
@@ -52,7 +51,3 @@ public:
 	virtual void portRemoved(SerialDevice *) override;
 	virtual void serialDataReceived(const var &data) override;
 };
-
-
-
-#endif  // DMXSERIALDEVICE_H_INCLUDED

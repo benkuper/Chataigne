@@ -8,8 +8,7 @@
   ==============================================================================
 */
 
-#ifndef RESOLUMEMODULE_H_INCLUDED
-#define RESOLUMEMODULE_H_INCLUDED
+#pragma once
 
 #include "../OSCModule.h"
 
@@ -29,8 +28,3 @@ public:
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ResolumeModule)
 };
-
-
-
-
-#endif  // RESOLUMEMODULE_H_INCLUDED

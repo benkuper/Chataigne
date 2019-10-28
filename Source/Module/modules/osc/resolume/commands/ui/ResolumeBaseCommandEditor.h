@@ -8,8 +8,7 @@
   ==============================================================================
 */
 
-#ifndef RESOLUMEBASECOMMANDEDITOR_H_INCLUDED
-#define RESOLUMEBASECOMMANDEDITOR_H_INCLUDED
+#pragma once
 
 #include "../ResolumeBaseCommand.h"
 
@@ -25,7 +24,3 @@ public:
 	void controllableFeedbackUpdate(Controllable *c) override;
 
 };
-
-
-
-#endif  // RESOLUMEBASECOMMANDEDITOR_H_INCLUDED

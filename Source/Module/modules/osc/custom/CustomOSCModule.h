@@ -8,8 +8,7 @@
   ==============================================================================
 */
 
-#ifndef CUSTOMOSCMODULE_H_INCLUDED
-#define CUSTOMOSCMODULE_H_INCLUDED
+#pragma once
 
 #include "../OSCModule.h"
 
@@ -38,5 +37,3 @@ public:
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(CustomOSCModule)
 };
-
-#endif  // CUSTOMOSCMODULE_H_INCLUDED

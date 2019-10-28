@@ -8,9 +8,7 @@
   ==============================================================================
 */
 
-#ifndef LIVEOSCSCENECOMMAND_H_INCLUDED
-#define LIVEOSCSCENECOMMAND_H_INCLUDED
-
+#pragma once
 
 #include "../../commands/OSCCommand.h"
 #include "../LiveOSCModule.h"
@@ -35,9 +33,3 @@ public:
 	static LiveOSCSceneCommand * create(ControllableContainer * module, CommandContext context, var params) { return new LiveOSCSceneCommand((LiveOSCModule *)module, context, params); }
 
 };
-
-
-
-
-
-#endif  // LIVEOSCSCENECOMMAND_H_INCLUDED

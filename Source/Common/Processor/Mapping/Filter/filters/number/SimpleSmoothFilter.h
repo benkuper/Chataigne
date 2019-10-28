@@ -8,8 +8,7 @@
   ==============================================================================
 */
 
-#ifndef SIMPLESMOOTHFILTER_H_INCLUDED
-#define SIMPLESMOOTHFILTER_H_INCLUDED
+#pragma once
 
 #include "../../MappingFilter.h"
 
@@ -32,7 +31,3 @@ public:
 	String getTypeString() const override { return "Smooth"; }
 
 };
-
-
-
-#endif  // SIMPLESMOOTHFILTER_H_INCLUDED

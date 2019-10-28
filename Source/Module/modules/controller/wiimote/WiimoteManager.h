@@ -8,9 +8,7 @@
   ==============================================================================
 */
 
-
-#ifndef WIIMOTEMANAGER_H_INCLUDED
-#define WIIMOTEMANAGER_H_INCLUDED
+#pragma once
 
 #include "JuceHeader.h"
 #include "wiiuse.h"
@@ -131,7 +129,3 @@ public:
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(WiimoteManager)
 
 };
-
-
-
-#endif  // WIIMOTEMANAGER_H_INCLUDED

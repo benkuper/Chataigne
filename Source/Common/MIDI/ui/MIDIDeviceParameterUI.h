@@ -8,8 +8,7 @@
   ==============================================================================
 */
 
-#ifndef MIDIDEVICEPARAMETERUI_H_INCLUDED
-#define MIDIDEVICEPARAMETERUI_H_INCLUDED
+#pragma once
 
 #include "../MIDIDeviceParameter.h"
 #include "MIDIDeviceChooser.h"
@@ -32,5 +31,3 @@ public:
 	void midiDeviceInSelected(MIDIInputDevice * d) override;
 	void midiDeviceOutSelected(MIDIOutputDevice * d) override;
 };
-
-#endif  // MIDIDEVICEPARAMETERUI_H_INCLUDED

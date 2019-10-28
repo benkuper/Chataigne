@@ -8,9 +8,7 @@
   ==============================================================================
 */
 
-#ifndef CustomValuesCommandARGUMENTEDITOR_H_INCLUDED
-#define CustomValuesCommandARGUMENTEDITOR_H_INCLUDED
-
+#pragma once
 
 #include "../CustomValuesCommandArgument.h"
 
@@ -31,7 +29,3 @@ public:
 	void resizedInternalContent(Rectangle<int> &r) override;
 	void childBoundsChanged(Component *) override;
 };
-
-
-
-#endif  // CustomValuesCommandARGUMENTEDITOR_H_INCLUDED

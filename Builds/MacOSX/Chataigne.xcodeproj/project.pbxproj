@@ -189,29 +189,9 @@
 			isa = PBXBuildFile;
 			fileRef = 31DF86E3221ACBF249C401A8;
 		};
-		57280570F5A92FDFEE356979 = {
-			isa = PBXBuildFile;
-			fileRef = E7A9771682606E9757A2BBCC;
-		};
-		25B67E16B55DFB86B4C48FFB = {
-			isa = PBXBuildFile;
-			fileRef = 982FA4F15C8D2F436B3C737E;
-		};
-		AA9C68D605833D15E59FC94E = {
-			isa = PBXBuildFile;
-			fileRef = 7EC26DAC57D0B67BC95F29C6;
-		};
 		B12202FBA35A3441BBBD93BD = {
 			isa = PBXBuildFile;
 			fileRef = 4DE022C03AD2CDF75870B6DE;
-		};
-		4A68C69FC79ADAEFFD1FAE2A = {
-			isa = PBXBuildFile;
-			fileRef = 58BA4125EA54B95205612360;
-		};
-		EE85C66161A00A15F5D677A3 = {
-			isa = PBXBuildFile;
-			fileRef = 16425EC5EB0EDEC42F5DA432;
 		};
 		84983600C7220C19C40E1D14 = {
 			isa = PBXBuildFile;
@@ -836,10 +816,6 @@
 		1B07AB374680E39E449982A3 = {
 			isa = PBXBuildFile;
 			fileRef = 3449F147311F84BA64933833;
-		};
-		C67DBF78D2522B8F0A020D8B = {
-			isa = PBXBuildFile;
-			fileRef = 7A6DDE314D6B3E166B6F8D30;
 		};
 		80A986E298EE1F932DB0EAE6 = {
 			isa = PBXBuildFile;
@@ -1494,13 +1470,6 @@
 			path = ../../Source/Common/Processor/Action/Consequence/Consequence.h;
 			sourceTree = "SOURCE_ROOT";
 		};
-		0E1E985727BD8051F2F34C72 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = DMXStateManager.h;
-			path = ../../Source/Common/DMX/DMXStateManager.h;
-			sourceTree = "SOURCE_ROOT";
-		};
 		10B33E7F3EE7009BEA77D0AC = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -1583,13 +1552,6 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = ChataigneSequenceManager.h;
 			path = ../../Source/TimeMachine/ChataigneSequenceManager.h;
-			sourceTree = "SOURCE_ROOT";
-		};
-		16425EC5EB0EDEC42F5DA432 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = DMXStateManager.cpp;
-			path = ../../Source/Common/DMX/DMXStateManager.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		17733F84F51C6BC5BE25683A = {
@@ -1898,13 +1860,6 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = TCPServerConnectionManager.cpp;
 			path = ../../Source/Module/modules/tcp/tcpserver/TCPServerConnectionManager.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
-		2CD0330136549E24276EC4E6 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = DMXState.h;
-			path = ../../Source/Common/DMX/DMXState.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		2CE0AD628786F9216FE31597 = {
@@ -2299,13 +2254,6 @@
 			path = ../../Source/Module/modules/common/streaming/StreamingModule.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
-		443A6E00D2B9C1AFAB080D19 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = DMXStateManagerUI.h;
-			path = ../../Source/Common/DMX/ui/DMXStateManagerUI.h;
-			sourceTree = "SOURCE_ROOT";
-		};
 		45293A26D5C1BC84EF82F6AE = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -2628,13 +2576,6 @@
 			path = ../../Source/Common/Processor/ProcessorManager.h;
 			sourceTree = "SOURCE_ROOT";
 		};
-		53651DC87934A24263EB8C43 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = DMXStateUI.h;
-			path = ../../Source/Common/DMX/ui/DMXStateUI.h;
-			sourceTree = "SOURCE_ROOT";
-		};
 		53784EA2F05A99905184F791 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -2745,13 +2686,6 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = SerialDevice.h;
 			path = ../../Source/Common/Serial/SerialDevice.h;
-			sourceTree = "SOURCE_ROOT";
-		};
-		58BA4125EA54B95205612360 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = DMXState.cpp;
-			path = ../../Source/Common/DMX/DMXState.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		5965EF48040975A91F72C6EF = {
@@ -3244,13 +3178,6 @@
 			path = ../../Source/Common/Processor/Action/Condition/Comparator/comparators/BoolComparators.h;
 			sourceTree = "SOURCE_ROOT";
 		};
-		77A3D65A5C0BF95CC02F82A5 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = ReaperTimeCommandUI.h;
-			path = ../../Source/Module/modules/osc/reaper/commands/ui/ReaperTimeCommandUI.h;
-			sourceTree = "SOURCE_ROOT";
-		};
 		77FDC417ABF22A287F49034A = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -3300,13 +3227,6 @@
 			path = ../../Source/Module/modules/controller/gamepad/GamepadModule.h;
 			sourceTree = "SOURCE_ROOT";
 		};
-		7A6DDE314D6B3E166B6F8D30 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = ReaperTimeCommandUI.cpp;
-			path = ../../Source/Module/modules/osc/reaper/commands/ui/ReaperTimeCommandUI.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
 		7A91E8D798CAD8D2754205F1 = {
 			isa = PBXFileReference;
 			lastKnownFileType = image.png;
@@ -3340,13 +3260,6 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = PluginManager.cpp;
 			path = ../../Source/Common/Plugin/PluginManager.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
-		7EC26DAC57D0B67BC95F29C6 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = DMXStateUI.cpp;
-			path = ../../Source/Common/DMX/ui/DMXStateUI.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		7EC74A7B3F89CDBF4AE0DEA6 = {
@@ -3396,13 +3309,6 @@
 			lastKnownFileType = image.png;
 			name = Serial.png;
 			path = ../../Resources/Modules/Serial.png;
-			sourceTree = "SOURCE_ROOT";
-		};
-		84F5DBF407AF952C73614D85 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = DMXDashboard.h;
-			path = ../../Source/Common/DMX/ui/DMXDashboard.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		85D8FFDCE078F33306AB4713 = {
@@ -3732,13 +3638,6 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = ModuleRouterValue.h;
 			path = ../../Source/Module/Routing/ModuleRouterValue.h;
-			sourceTree = "SOURCE_ROOT";
-		};
-		982FA4F15C8D2F436B3C737E = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = DMXStateManagerUI.cpp;
-			path = ../../Source/Common/DMX/ui/DMXStateManagerUI.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		99532205E848C75B528FEB0D = {
@@ -5211,13 +5110,6 @@
 			path = ../../Source/Common/DMX/device/DMXDevice.h;
 			sourceTree = "SOURCE_ROOT";
 		};
-		E7A9771682606E9757A2BBCC = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = DMXDashboard.cpp;
-			path = ../../Source/Common/DMX/ui/DMXDashboard.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
 		E7CB9590B9D6627A2BD18C73 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -5829,30 +5721,12 @@
 			name = device;
 			sourceTree = "<group>";
 		};
-		DACD1E33FF9028F5DCE39968 = {
-			isa = PBXGroup;
-			children = (
-				E7A9771682606E9757A2BBCC,
-				84F5DBF407AF952C73614D85,
-				982FA4F15C8D2F436B3C737E,
-				443A6E00D2B9C1AFAB080D19,
-				7EC26DAC57D0B67BC95F29C6,
-				53651DC87934A24263EB8C43,
-			);
-			name = ui;
-			sourceTree = "<group>";
-		};
 		2F365699BD14F6406F50C73D = {
 			isa = PBXGroup;
 			children = (
 				672611DCE9EFBBA901CED0BB,
-				DACD1E33FF9028F5DCE39968,
 				4DE022C03AD2CDF75870B6DE,
 				352A68459BA7879D1CFB0A7A,
-				58BA4125EA54B95205612360,
-				2CD0330136549E24276EC4E6,
-				16425EC5EB0EDEC42F5DA432,
-				0E1E985727BD8051F2F34C72,
 			);
 			name = DMX;
 			sourceTree = "<group>";
@@ -6937,19 +6811,9 @@
 			name = millumin;
 			sourceTree = "<group>";
 		};
-		4AC8BCF7144675F66F5076EB = {
-			isa = PBXGroup;
-			children = (
-				7A6DDE314D6B3E166B6F8D30,
-				77A3D65A5C0BF95CC02F82A5,
-			);
-			name = ui;
-			sourceTree = "<group>";
-		};
 		C69AFA5760460915B33F4861 = {
 			isa = PBXGroup;
 			children = (
-				4AC8BCF7144675F66F5076EB,
 				D79093F70C3583A699ED2C52,
 				C03652534579A2AA472C2268,
 			);
@@ -7899,12 +7763,7 @@
 				3DA4FBFA38B39CDCD14B1EBC,
 				76D19EBD5C588EDCA9760015,
 				5465C4505FBE2C3F86F45419,
-				57280570F5A92FDFEE356979,
-				25B67E16B55DFB86B4C48FFB,
-				AA9C68D605833D15E59FC94E,
 				B12202FBA35A3441BBBD93BD,
-				4A68C69FC79ADAEFFD1FAE2A,
-				EE85C66161A00A15F5D677A3,
 				84983600C7220C19C40E1D14,
 				F90E0F3531558CCE006AB9C9,
 				A1E12D85C58B3A0D08EBD9F3,
@@ -8061,7 +7920,6 @@
 				7A23E84742F13B0CE0C2656B,
 				147B092FC4523DA8CCE8660B,
 				1B07AB374680E39E449982A3,
-				C67DBF78D2522B8F0A020D8B,
 				80A986E298EE1F932DB0EAE6,
 				2846831176AA026C116EE49D,
 				3DF77B025748B8A80B341145,

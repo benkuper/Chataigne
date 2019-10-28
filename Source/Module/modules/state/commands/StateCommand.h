@@ -8,8 +8,7 @@
   ==============================================================================
 */
 
-#ifndef STATECOMMAND_H_INCLUDED
-#define STATECOMMAND_H_INCLUDED
+#pragma once
 
 #include "Common/Command/BaseCommand.h"
 
@@ -42,7 +41,3 @@ public:
 	static BaseCommand * create(ControllableContainer * module, CommandContext context, var params) { return new StateCommand((StateModule *)module, context, params); }
 
 };
-
-
-
-#endif  // STATECOMMAND_H_INCLUDED

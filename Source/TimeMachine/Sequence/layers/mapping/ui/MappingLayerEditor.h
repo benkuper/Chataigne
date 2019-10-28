@@ -8,9 +8,7 @@
   ==============================================================================
 */
 
-#ifndef MAPPINGLAYEREDITOR_H_INCLUDED
-#define MAPPINGLAYEREDITOR_H_INCLUDED
-
+#pragma once
 
 #include "../MappingLayer.h"
 
@@ -26,7 +24,3 @@ public:
 
 	void resizedInternalContent(Rectangle<int> &r) override;
 };
-
-
-
-#endif  // MAPPINGLAYEREDITOR_H_INCLUDED

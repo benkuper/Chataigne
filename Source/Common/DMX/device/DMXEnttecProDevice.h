@@ -8,8 +8,7 @@
   ==============================================================================
 */
 
-#ifndef DMXENTTECPRODEVICE_H_INCLUDED
-#define DMXENTTECPRODEVICE_H_INCLUDED
+#pragma once
 
 #include "DMXSerialDevice.h"
 
@@ -50,7 +49,3 @@ public:
 	void processDMXPacket(Array<uint8> bytes);
 	void readDMXPacket(Array<uint8> bytes, int expectedDataLength);
 };
-
-
-
-#endif  // DMXENTTECPRODEVICE_H_INCLUDED

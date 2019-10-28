@@ -8,8 +8,7 @@
   ==============================================================================
 */
 
-#ifndef DMXMANAGER_H_INCLUDED
-#define DMXMANAGER_H_INCLUDED
+#pragma once
 
 #include "JuceHeader.h"
 
@@ -48,8 +47,3 @@ public:
 	// Inherited via Thread
 	virtual void run() override;
 };
-
-
-
-
-#endif  // DMXMANAGER_H_INCLUDED

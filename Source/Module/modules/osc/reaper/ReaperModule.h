@@ -8,8 +8,7 @@
   ==============================================================================
 */
 
-#ifndef REAPERMODULE_H_INCLUDED
-#define REAPERMODULE_H_INCLUDED
+#pragma once
 
 #include "../OSCModule.h"
 
@@ -25,7 +24,3 @@ public:
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ReaperModule)
 };
-
-
-
-#endif  // REAPERMODULE_H_INCLUDED

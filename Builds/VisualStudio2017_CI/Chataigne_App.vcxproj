@@ -178,12 +178,7 @@
     <ClCompile Include="..\..\Source\Common\DMX\device\DMXEnttecProDevice.cpp"/>
     <ClCompile Include="..\..\Source\Common\DMX\device\DMXOpenUSBDevice.cpp"/>
     <ClCompile Include="..\..\Source\Common\DMX\device\DMXSerialDevice.cpp"/>
-    <ClCompile Include="..\..\Source\Common\DMX\ui\DMXDashboard.cpp"/>
-    <ClCompile Include="..\..\Source\Common\DMX\ui\DMXStateManagerUI.cpp"/>
-    <ClCompile Include="..\..\Source\Common\DMX\ui\DMXStateUI.cpp"/>
     <ClCompile Include="..\..\Source\Common\DMX\DMXManager.cpp"/>
-    <ClCompile Include="..\..\Source\Common\DMX\DMXState.cpp"/>
-    <ClCompile Include="..\..\Source\Common\DMX\DMXStateManager.cpp"/>
     <ClCompile Include="..\..\Source\Common\MIDI\ui\MIDIDeviceChooser.cpp"/>
     <ClCompile Include="..\..\Source\Common\MIDI\ui\MIDIDeviceParameterUI.cpp"/>
     <ClCompile Include="..\..\Source\Common\MIDI\MIDIDevice.cpp"/>
@@ -337,7 +332,6 @@
     <ClCompile Include="..\..\Source\Module\modules\osc\live\commands\LiveOSCSceneCommand.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\osc\live\LiveOSCModule.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\osc\millumin\MilluminModule.cpp"/>
-    <ClCompile Include="..\..\Source\Module\modules\osc\reaper\commands\ui\ReaperTimeCommandUI.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\osc\reaper\commands\ReaperTimeCommand.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\osc\reaper\ReaperModule.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\osc\resolume\commands\ui\ResolumeBaseCommandEditor.cpp"/>
@@ -2975,12 +2969,7 @@
     <ClInclude Include="..\..\Source\Common\DMX\device\DMXEnttecProDevice.h"/>
     <ClInclude Include="..\..\Source\Common\DMX\device\DMXOpenUSBDevice.h"/>
     <ClInclude Include="..\..\Source\Common\DMX\device\DMXSerialDevice.h"/>
-    <ClInclude Include="..\..\Source\Common\DMX\ui\DMXDashboard.h"/>
-    <ClInclude Include="..\..\Source\Common\DMX\ui\DMXStateManagerUI.h"/>
-    <ClInclude Include="..\..\Source\Common\DMX\ui\DMXStateUI.h"/>
     <ClInclude Include="..\..\Source\Common\DMX\DMXManager.h"/>
-    <ClInclude Include="..\..\Source\Common\DMX\DMXState.h"/>
-    <ClInclude Include="..\..\Source\Common\DMX\DMXStateManager.h"/>
     <ClInclude Include="..\..\Source\Common\MIDI\ui\MIDIDeviceChooser.h"/>
     <ClInclude Include="..\..\Source\Common\MIDI\ui\MIDIDeviceParameterUI.h"/>
     <ClInclude Include="..\..\Source\Common\MIDI\MIDIDevice.h"/>
@@ -3120,7 +3109,6 @@
     <ClInclude Include="..\..\Source\Module\modules\osc\live\commands\LiveOSCSceneCommand.h"/>
     <ClInclude Include="..\..\Source\Module\modules\osc\live\LiveOSCModule.h"/>
     <ClInclude Include="..\..\Source\Module\modules\osc\millumin\MilluminModule.h"/>
-    <ClInclude Include="..\..\Source\Module\modules\osc\reaper\commands\ui\ReaperTimeCommandUI.h"/>
     <ClInclude Include="..\..\Source\Module\modules\osc\reaper\commands\ReaperTimeCommand.h"/>
     <ClInclude Include="..\..\Source\Module\modules\osc\reaper\ReaperModule.h"/>
     <ClInclude Include="..\..\Source\Module\modules\osc\resolume\commands\ui\ResolumeBaseCommandEditor.h"/>

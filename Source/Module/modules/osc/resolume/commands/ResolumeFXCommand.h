@@ -8,9 +8,7 @@
   ==============================================================================
 */
 
-#ifndef RESOLUMEFXCOMMAND_H_INCLUDED
-#define RESOLUMEFXCOMMAND_H_INCLUDED
-
+#pragma once
 
 #include "ResolumeBaseCommand.h"
 
@@ -49,8 +47,3 @@ public:
 	}
 
 };
-
-
-
-
-#endif  // RESOLUMEFXCOMMAND_H_INCLUDED

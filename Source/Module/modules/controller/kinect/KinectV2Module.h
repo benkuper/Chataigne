@@ -8,8 +8,7 @@
   ==============================================================================
 */
 
-#ifndef KINECTV2MODULE_H_INCLUDED
-#define KINECTV2MODULE_H_INCLUDED
+#pragma once
 
 #include "Module/Module.h"
 
@@ -59,7 +58,7 @@ public:
 	KinectV2Module();
 	~KinectV2Module();
 
-	IntParameter * numPersons;
+	IntParameter* numPersons;
 	OwnedArray<KinectPersonValues> personValues;
 
 	bool initKinect();
@@ -68,18 +67,18 @@ public:
 #if USE_KINECT
 	void processBody(int nBodyCount, IBody** ppBodies);
 #endif
-  
+
 
 	// Current Kinect
 #if USE_KINECT
-	IKinectSensor*          m_pKinectSensor;
-	ICoordinateMapper*      m_pCoordinateMapper;
+	IKinectSensor* m_pKinectSensor;
+	ICoordinateMapper* m_pCoordinateMapper;
 
 	// Body reader
-	IBodyFrameReader*       m_pBodyFrameReader;
+	IBodyFrameReader* m_pBodyFrameReader;
 #endif
 
-	static KinectV2Module * create() { return new KinectV2Module(); }
+	static KinectV2Module* create() { return new KinectV2Module(); }
 	virtual String getDefaultTypeString() const override { return "KinectV2"; }
 
 
@@ -87,7 +86,7 @@ public:
 	virtual void timerCallback() override;
 
 	template<class Interface>
-	inline void SafeRelease(Interface *& pInterfaceToRelease)
+	inline void SafeRelease(Interface*& pInterfaceToRelease)
 	{
 		if (pInterfaceToRelease != NULL)
 		{
@@ -97,5 +96,3 @@ public:
 	}
 
 };
-
-#endif  // KINECTV2MODULE_H_INCLUDED

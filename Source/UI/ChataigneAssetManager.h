@@ -8,8 +8,7 @@
   ==============================================================================
 */
 
-#ifndef CHATAIGNEASSETMANAGER_H_INCLUDED
-#define CHATAIGNEASSETMANAGER_H_INCLUDED
+#pragma once
 
 #include "JuceHeader.h"
 
@@ -43,7 +42,3 @@ public:
 	String getScriptTemplate(const String &templateRef);
 	String getScriptTemplateBundle(StringArray templateRefs);
 };
-
-
-
-#endif  // ASSETMANAGER_H_INCLUDED

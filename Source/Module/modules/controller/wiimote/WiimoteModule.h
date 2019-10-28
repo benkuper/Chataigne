@@ -9,8 +9,7 @@
 */
 
 
-#ifndef WIIMOTEMODULE_H_INCLUDED
-#define WIIMOTEMODULE_H_INCLUDED
+#pragma once
 
 #include "Module/Module.h"
 #include "WiimoteManager.h"
@@ -73,6 +72,3 @@ public:
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(WiimoteModule)
 
 };
-
-
-#endif  // WIIMOTEMODULE_H_INCLUDED

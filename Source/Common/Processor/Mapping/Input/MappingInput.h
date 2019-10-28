@@ -8,8 +8,7 @@
   ==============================================================================
 */
 
-#ifndef MAPPINGINPUT_H_INCLUDED
-#define MAPPINGINPUT_H_INCLUDED
+#pragma once
 
 #include "JuceHeader.h"
 
@@ -68,7 +67,3 @@ public:
 	void removeAsyncMappingInputListener(AsyncListener* listener) { mappingInputAsyncNotifier.removeListener(listener); }
 
 };
-
-
-
-#endif  // MAPPINGINPUT_H_INCLUDED

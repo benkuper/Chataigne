@@ -8,8 +8,7 @@
   ==============================================================================
 */
 
-#ifndef MODULEROUTERPANELVIEW_H_INCLUDED
-#define MODULEROUTERPANELVIEW_H_INCLUDED
+#pragma once
 
 #include "../ModuleRouterManager.h"
 #include "ModuleRouterView.h"
@@ -29,7 +28,3 @@ public:
 
 	void resized() override;
 };
-
-
-
-#endif  // MODULEROUTERPANELVIEW_H_INCLUDED

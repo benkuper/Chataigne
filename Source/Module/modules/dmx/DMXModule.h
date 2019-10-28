@@ -8,8 +8,7 @@
   ==============================================================================
 */
 
-#ifndef DMXMODULE_H_INCLUDED
-#define DMXMODULE_H_INCLUDED
+#pragma once
 
 #include "Module/Module.h"
 #include "Common/DMX/device/DMXDevice.h"
@@ -94,6 +93,3 @@ public:
 	void addDMXModuleListener(DMXModuleListener* newListener) { dmxModuleListeners.add(newListener); }
 	void removeDMXModuleListener(DMXModuleListener* listener) { dmxModuleListeners.remove(listener); }
 };
-
-
-#endif  // DMXMODULE_H_INCLUDED

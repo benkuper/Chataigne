@@ -8,9 +8,7 @@
   ==============================================================================
 */
 
-#ifndef GENERICCONTROLLABLECOMMAND_H_INCLUDED
-#define GENERICCONTROLLABLECOMMAND_H_INCLUDED
-
+#pragma once
 
 #include "Common/Command/BaseCommand.h"
 #include "../ChataigneGenericModule.h"
@@ -49,8 +47,3 @@ public:
 
 	//InspectableEditor * getEditor(bool isRoot) override;
 };
-
-
-
-
-#endif  // GENERICCONTROLLABLECOMMAND_H_INCLUDED

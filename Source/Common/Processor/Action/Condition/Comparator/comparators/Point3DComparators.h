@@ -8,8 +8,7 @@
   ==============================================================================
 */
 
-#ifndef POINT3DCOMPARATORS_H_INCLUDED
-#define POINT3DCOMPARATORS_H_INCLUDED
+#pragma once
 
 #include "../BaseComparator.h"
 
@@ -35,8 +34,3 @@ public:
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Point3DComparator)
 };
-
-
-
-
-#endif  // POINT3DCOMPARATORS_H_INCLUDED

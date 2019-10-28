@@ -8,9 +8,7 @@
   ==============================================================================
 */
 
-#ifndef STATEVIEWUI_H_INCLUDED
-#define STATEVIEWUI_H_INCLUDED
-
+#pragma once
 
 #include "../State.h"
 #include "Common/Processor/ui/ProcessorManagerUI.h"
@@ -62,5 +60,3 @@ public:
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(StateViewUI)
 };
-
-#endif  // STATEVIEWUI_H_INCLUDED

@@ -10,10 +10,8 @@
 
 #pragma once
 
-#ifndef PROCESSORMANAGER_H_INCLUDED
-#define PROCESSORMANAGER_H_INCLUDED
-
 #include "Processor.h"
+
 class Mapping;
 class Action;
 
@@ -43,5 +41,3 @@ public:
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ProcessorManager)
 
 };
-
-#endif  // PROCESSORMANAGER_H_INCLUDED

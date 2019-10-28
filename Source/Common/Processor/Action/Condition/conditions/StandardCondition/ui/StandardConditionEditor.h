@@ -8,8 +8,7 @@
   ==============================================================================
 */
 
-#ifndef StandardConditionEditor_H_INCLUDED
-#define StandardConditionEditor_H_INCLUDED
+#pragma once
 
 #include "../../../ui/ConditionEditor.h"
 #include "../StandardCondition.h"
@@ -35,8 +34,3 @@ public:
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(StandardConditionEditor)
 };
-
-
-
-
-#endif  // StandardConditionEditor_H_INCLUDED

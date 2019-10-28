@@ -8,8 +8,7 @@
   ==============================================================================
 */
 
-#ifndef CONDITIONMANAGER_H_INCLUDED
-#define CONDITIONMANAGER_H_INCLUDED
+#pragma once
 
 #include "Condition.h"
 
@@ -21,21 +20,21 @@ class ConditionManager :
 public:
 	juce_DeclareSingleton(ConditionManager, true)
 
-	ConditionManager(bool operatorOnSide = false);
+		ConditionManager(bool operatorOnSide = false);
 	~ConditionManager();
-	
-	Factory<Condition> factory;
-	Factory<Condition>::Definition * activateDef;
-	Factory<Condition>::Definition * deactivateDef;
 
-	BoolParameter * isValid;
+	Factory<Condition> factory;
+	Factory<Condition>::Definition* activateDef;
+	Factory<Condition>::Definition* deactivateDef;
+
+	BoolParameter* isValid;
 
 	enum ConditionOperator { AND, OR };
-	EnumParameter * conditionOperator;
+	EnumParameter* conditionOperator;
 	bool operatorOnSide;
 
-	FloatParameter * validationTime;
-	FloatParameter * validationProgress;
+	FloatParameter* validationTime;
+	FloatParameter* validationProgress;
 
 	bool validationWaiting;
 	double prevTimerTime;
@@ -43,8 +42,8 @@ public:
 
 	void setHasActivationDefinitions(bool value);
 
-	void addItemInternal(Condition *, var data) override;
-	void removeItemInternal(Condition *) override;
+	void addItemInternal(Condition*, var data) override;
+	void removeItemInternal(Condition*) override;
 
 	void setForceDisabled(bool value, bool force = false);
 
@@ -61,19 +60,19 @@ public:
 
 	void dispatchConditionValidationChanged();
 
-	void conditionValidationChanged(Condition *) override;
+	void conditionValidationChanged(Condition*) override;
 
-	void onContainerParameterChanged(Parameter *) override;
+	void onContainerParameterChanged(Parameter*) override;
 
 	void loadJSONDataInternal(var data) override;
 
-	InspectableEditor * getEditor(bool isRoot) override;
+	InspectableEditor* getEditor(bool isRoot) override;
 
 	class ConditionManagerListener
 	{
 	public:
 		virtual ~ConditionManagerListener() {}
-		virtual void conditionManagerValidationChanged(ConditionManager *) {}
+		virtual void conditionManagerValidationChanged(ConditionManager*) {}
 	};
 
 
@@ -88,6 +87,3 @@ public:
 		virtual void timerCallback() override;
 
 };
-
-
-#endif  // CONDITIONMANAGER_H_INCLUDED

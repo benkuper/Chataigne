@@ -8,8 +8,7 @@
   ==============================================================================
 */
 
-#ifndef INVERSEFILTER_H_INCLUDED
-#define INVERSEFILTER_H_INCLUDED
+#pragma once
 
 #include "../../MappingFilter.h"
 
@@ -27,7 +26,3 @@ public:
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(InverseFilter)
 };
-
-
-
-#endif  // INVERSEFILTER_H_INCLUDED

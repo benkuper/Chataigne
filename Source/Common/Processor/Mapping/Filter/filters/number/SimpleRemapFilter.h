@@ -8,8 +8,7 @@
   ==============================================================================
 */
 
-#ifndef SIMPLEREMAPFILTER_H_INCLUDED
-#define SIMPLEREMAPFILTER_H_INCLUDED
+#pragma once
 
 #include "../../MappingFilter.h"
 
@@ -36,7 +35,3 @@ public:
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(SimpleRemapFilter)
 };
-
-
-
-#endif  // SIMPLEREMAPFILTER_H_INCLUDED

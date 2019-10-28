@@ -8,8 +8,7 @@
   ==============================================================================
 */
 
-#ifndef COMMANDTARGETUI_H_INCLUDED
-#define COMMANDTARGETUI_H_INCLUDED
+#pragma once
 
 #include "Module/ModuleManager.h"
 
@@ -56,7 +55,3 @@ public:
 protected:
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(CommandChooserUI)
 };
-
-
-
-#endif  // COMMANDTARGETUI_H_INCLUDED

@@ -8,8 +8,7 @@
   ==============================================================================
 */
 
-#ifndef CONDITION_H_INCLUDED
-#define CONDITION_H_INCLUDED
+#pragma once
 
 #include "JuceHeader.h"
 #include "Comparator/BaseComparator.h"
@@ -64,7 +63,3 @@ public:
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Condition)
 };
-
-
-
-#endif  // CONDITION_H_INCLUDED

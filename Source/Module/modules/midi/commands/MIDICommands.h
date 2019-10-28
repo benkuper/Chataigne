@@ -8,8 +8,7 @@
   ==============================================================================
 */
 
-#ifndef MIDICOMMANDS_H_INCLUDED
-#define MIDICOMMANDS_H_INCLUDED
+#pragma once
 
 #include "Common/Command/BaseCommand.h"
 
@@ -78,7 +77,3 @@ public:
 	static MIDISysExCommand * create(ControllableContainer * module, CommandContext context, var params) { return new MIDISysExCommand((MIDIModule *)module, context, params); }
 
 };
-
-
-
-#endif  // MIDICOMMANDS_H_INCLUDED

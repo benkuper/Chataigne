@@ -8,8 +8,7 @@
   ==============================================================================
 */
 
-#ifndef MYODEVICE_H_INCLUDED
-#define MYODEVICE_H_INCLUDED
+#pragma once
 
 #include "JuceHeader.h"
 
@@ -49,5 +48,3 @@ public:
 
 
 #endif //JUCE_WINDOWS
-
-#endif  // MYO_H_INCLUDED 

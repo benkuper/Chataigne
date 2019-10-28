@@ -8,10 +8,7 @@
   ==============================================================================
 */
 
-#ifndef STATETRANSITIONMANAGERUI_H_INCLUDED
-#define STATETRANSITIONMANAGERUI_H_INCLUDED
-
-
+#pragma once
 
 #include "../../Transition/StateTransitionManager.h"
 #include "StateTransitionUI.h"
@@ -32,6 +29,3 @@ public :
 	StateTransitionUI * createUIForItem(StateTransition *) override;
 	void addItemUIInternal(StateTransitionUI * sui) override;
 };
-
-
-#endif  // STATETRANSITIONMANAGERUI_H_INCLUDED

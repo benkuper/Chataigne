@@ -8,8 +8,7 @@
   ==============================================================================
 */
 
-#ifndef DMXCOMMAND_H_INCLUDED
-#define DMXCOMMAND_H_INCLUDED
+#pragma once
 
 #include "Common/Command/BaseCommand.h"
 #include "../DMXModule.h"
@@ -52,7 +51,3 @@ public:
 
 	
 };
-
-
-
-#endif  // DMXCOMMAND_H_INCLUDED

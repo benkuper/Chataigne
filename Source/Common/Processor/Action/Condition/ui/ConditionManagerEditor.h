@@ -8,9 +8,7 @@
   ==============================================================================
 */
 
-#ifndef ConditionManagerEditor_H_INCLUDED
-#define ConditionManagerEditor_H_INCLUDED
-
+#pragma once
 
 #include "ConditionEditor.h"
 #include "../ConditionManager.h"
@@ -31,9 +29,3 @@ public:
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ConditionManagerEditor)
 };
-
-
-
-
-
-#endif  // ConditionManagerEditor_H_INCLUDED

@@ -10,10 +10,6 @@
 
 #pragma once
 
-#ifndef MODULEROUTERVALUEDITOR_H_INCLUDED
-#define MODULEROUTERVALUEDITOR_H_INCLUDED
-
-
 #include "../ModuleRouterValue.h"
 
 class ModuleRouterValueEditor : 
@@ -34,5 +30,3 @@ public:
 
 	void routeParamsChanged(ModuleRouterValue *) override;
 };
-
-#endif

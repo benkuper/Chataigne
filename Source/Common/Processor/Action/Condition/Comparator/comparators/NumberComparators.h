@@ -8,8 +8,7 @@
   ==============================================================================
 */
 
-#ifndef NUMBERCOMPARATORS_H_INCLUDED
-#define NUMBERCOMPARATORS_H_INCLUDED
+#pragma once
 
 #include "../BaseComparator.h"
 
@@ -63,5 +62,3 @@ public:
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(IntComparator)
 };
-
-#endif  // NUMBERCOMPARATORS_H_INCLUDED

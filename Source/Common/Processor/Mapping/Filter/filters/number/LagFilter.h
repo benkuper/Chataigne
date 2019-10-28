@@ -8,8 +8,7 @@
   ==============================================================================
 */
 
-#ifndef LAGFILTER_H_INCLUDED
-#define LAGFILTER_H_INCLUDED
+#pragma once
 
 #include "../../MappingFilter.h"
 
@@ -36,6 +35,3 @@ public:
 	virtual void timerCallback() override;
 
 };
-
-
-#endif  // LAGFILTER_H_INCLUDED

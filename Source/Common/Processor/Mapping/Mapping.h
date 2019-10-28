@@ -8,8 +8,7 @@
   ==============================================================================
 */
 
-#ifndef MAPPING_H_INCLUDED
-#define MAPPING_H_INCLUDED
+#pragma once
 
 #include "../Processor.h"
 #include "Input/MappingInput.h"
@@ -97,8 +96,3 @@ public:
 
 	
 };
-
-
-
-
-#endif  // MAPPING_H_INCLUDED

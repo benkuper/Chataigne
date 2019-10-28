@@ -8,8 +8,7 @@
   ==============================================================================
 */
 
-#ifndef MODULEEDITOR_H_INCLUDED
-#define MODULEEDITOR_H_INCLUDED
+#pragma once
 
 #include "../Module.h"
 #include "Common/Command/ui/BaseCommandHandlerEditor.h"
@@ -32,7 +31,3 @@ public:
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ModuleEditor)
 };
-
-
-
-#endif  // MODULEEDITOR_H_INCLUDED

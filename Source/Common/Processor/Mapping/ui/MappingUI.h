@@ -8,8 +8,7 @@
   ==============================================================================
 */
 
-#ifndef MAPPINGUI_H_INCLUDED
-#define MAPPINGUI_H_INCLUDED
+#pragma once
 
 #include "../Mapping.h"
 #include "../../ui/ProcessorUI.h"
@@ -39,8 +38,3 @@ public:
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MappingUI)
 };
-
-
-
-
-#endif  // MAPPINGUI_H_INCLUDED

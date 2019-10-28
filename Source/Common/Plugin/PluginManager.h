@@ -8,8 +8,7 @@
   ==============================================================================
 */
 
-#ifndef PLUGINMANAGER_H_INCLUDED
-#define PLUGINMANAGER_H_INCLUDED
+#pragma once
 
 #include "JuceHeader.h"
 
@@ -22,7 +21,3 @@ public:
 
 	void detectPlugins();
 };
-
-
-
-#endif  // PLUGINMANAGER_H_INCLUDED

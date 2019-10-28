@@ -8,8 +8,7 @@
   ==============================================================================
 */
 
-#ifndef MAPPINGFILTER_H_INCLUDED
-#define MAPPINGFILTER_H_INCLUDED
+#pragma once
 
 
 #include "JuceHeader.h"
@@ -85,8 +84,3 @@ public:
 private:
 	JUCE_DECLARE_WEAK_REFERENCEABLE(MappingFilter)
 };
-
-
-
-
-#endif  // MAPPINGFILTER_H_INCLUDED

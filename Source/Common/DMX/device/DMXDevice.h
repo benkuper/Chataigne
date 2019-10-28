@@ -7,9 +7,7 @@
 
   ==============================================================================
 */
-
-#ifndef DMXDEVICE_H_INCLUDED
-#define DMXDEVICE_H_INCLUDED
+#pragma once
 
 #include "../DMXManager.h"
 
@@ -69,7 +67,3 @@ public:
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(DMXDevice)
 
 };
-
-
-
-#endif  // DMXDEVICE_H_INCLUDED

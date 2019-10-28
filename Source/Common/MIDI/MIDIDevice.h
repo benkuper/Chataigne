@@ -8,8 +8,7 @@
   ==============================================================================
 */
 
-#ifndef MIDIDEVICE_H_INCLUDED
-#define MIDIDEVICE_H_INCLUDED
+#pragma once
 
 #include "JuceHeader.h"
 
@@ -83,7 +82,3 @@ public:
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MIDIOutputDevice)
 };
-
-
-
-#endif  // MIDIDEVICE_H_INCLUDED

@@ -8,8 +8,7 @@
   ==============================================================================
 */
 
-#ifndef STATETRANSITION_H_INCLUDED
-#define STATETRANSITION_H_INCLUDED
+#pragma once
 
 #include "Common/Processor/Action/Action.h"
 
@@ -33,5 +32,3 @@ public:
 	void onContainerTriggerTriggered(Trigger *) override;
 
 };
-
-#endif  // STATETRANSITION_H_INCLUDED

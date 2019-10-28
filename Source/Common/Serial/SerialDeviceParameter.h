@@ -8,8 +8,7 @@
   ==============================================================================
 */
 
-#ifndef SERIALDEVICEPARAMETER_H_INCLUDED
-#define SERIALDEVICEPARAMETER_H_INCLUDED
+#pragma once
 
 #include "SerialDevice.h"
 #include "SerialManager.h"
@@ -39,6 +38,3 @@ public:
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(SerialDeviceParameter)
 };
-
-
-#endif  // SERIALDEVICEPARAMETER_H_INCLUDED

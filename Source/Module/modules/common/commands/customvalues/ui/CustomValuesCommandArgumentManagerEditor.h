@@ -7,9 +7,7 @@
 
   ==============================================================================
 */
-
-#ifndef CustomValuesCommandARGUMENTMANAGEREDITOR_H_INCLUDED
-#define CustomValuesCommandARGUMENTMANAGEREDITOR_H_INCLUDED
+#pragma once
 
 #include "../CustomValuesCommandArgumentManager.h"
 
@@ -27,7 +25,3 @@ public:
 
 	virtual void showMenuAndAddItem(bool) override;
 };
-
-
-
-#endif  // CustomValuesCommandARGUMENTMANAGEREDITOR_H_INCLUDED

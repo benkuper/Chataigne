@@ -8,8 +8,7 @@
   ==============================================================================
 */
 
-#ifndef COMPARATORFACTORY_H_INCLUDED
-#define COMPARATORFACTORY_H_INCLUDED
+#pragma once
 
 #include "BaseComparator.h"
 #include "comparators/BoolComparators.h"
@@ -68,6 +67,3 @@ public:
 
 	
 };
-
-
-#endif  // COMPARATORFACTORY_H_INCLUDED

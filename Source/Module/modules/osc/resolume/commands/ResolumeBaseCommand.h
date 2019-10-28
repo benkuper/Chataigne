@@ -8,8 +8,7 @@
   ==============================================================================
 */
 
-#ifndef RESOLUMEBASECOMMAND_H_INCLUDED
-#define RESOLUMEBASECOMMAND_H_INCLUDED
+#pragma once
 
 #include "../../commands/OSCCommand.h"
 
@@ -47,5 +46,3 @@ public:
 	static BaseCommand * create(ControllableContainer * module, CommandContext context, var params) { return new ResolumeBaseCommand((ResolumeModule *)module, context, params); }
 
 };
-
-#endif  // RESOLUMEBASECOMMAND_H_INCLUDED

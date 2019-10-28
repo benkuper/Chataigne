@@ -8,8 +8,7 @@
   ==============================================================================
 */
 
-#ifndef BASECOMMAND_H_INCLUDED
-#define BASECOMMAND_H_INCLUDED
+#pragma once
 
 #include "Template/CommandTemplate.h"
 #include "CommandContext.h"
@@ -89,5 +88,3 @@ public:
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(BaseCommand)
 };
-
-#endif  // BASECOMMAND_H_INCLUDED

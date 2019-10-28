@@ -8,8 +8,7 @@
   ==============================================================================
 */
 
-#ifndef STATETRANSITIONUI_H_INCLUDED
-#define STATETRANSITIONUI_H_INCLUDED
+#pragma once
 
 #include "../StateTransition.h"
 #include "../../State/ui/StateViewUI.h"
@@ -45,6 +44,3 @@ public:
 	void itemUIViewPositionChanged(BaseItemMinimalUI<State>*) override;
 	void editorSelectionChanged(StateViewUI *) override;
 };
-
-
-#endif  // STATETRANSITIONUI_H_INCLUDED

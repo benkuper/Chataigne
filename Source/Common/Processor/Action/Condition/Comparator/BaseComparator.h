@@ -8,8 +8,7 @@
   ==============================================================================
 */
 
-#ifndef BASECOMPARATOR_H_INCLUDED
-#define BASECOMPARATOR_H_INCLUDED
+#pragma once
 
 #include "JuceHeader.h"
 
@@ -91,6 +90,3 @@ public:
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ParameterComparator)
 };
-
-
-#endif  // BASECOMPARATOR_H_INCLUDED

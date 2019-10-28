@@ -8,9 +8,7 @@
   ==============================================================================
 */
 
-#ifndef SERIALMANAGER_H_INCLUDED
-#define SERIALMANAGER_H_INCLUDED
-
+#pragma once
 
 #include "SerialDevice.h"
 
@@ -51,7 +49,3 @@ public:
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(SerialManager)
 };
-
-
-
-#endif  // SERIALMANAGER_H_INCLUDED

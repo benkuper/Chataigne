@@ -8,8 +8,7 @@
   ==============================================================================
 */
 
-#ifndef COMMANDDEFINITION_H_INCLUDED
-#define COMMANDDEFINITION_H_INCLUDED
+#pragma once
 
 #include "BaseCommand.h"
 #include "CommandContext.h"
@@ -43,6 +42,3 @@ public:
 
 	WeakReference<CommandDefinition>::Master masterReference;
 };
-
-
-#endif  // COMMANDDEFINITION_H_INCLUDED

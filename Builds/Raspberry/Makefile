@@ -95,12 +95,7 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/DMXEnttecProDevice_e054588b.o \
   $(JUCE_OBJDIR)/DMXOpenUSBDevice_ad4fdeff.o \
   $(JUCE_OBJDIR)/DMXSerialDevice_44a8d965.o \
-  $(JUCE_OBJDIR)/DMXDashboard_2d5d2a45.o \
-  $(JUCE_OBJDIR)/DMXStateManagerUI_7bd1c2a9.o \
-  $(JUCE_OBJDIR)/DMXStateUI_a98d2d16.o \
   $(JUCE_OBJDIR)/DMXManager_b583f7e3.o \
-  $(JUCE_OBJDIR)/DMXState_b401a707.o \
-  $(JUCE_OBJDIR)/DMXStateManager_90092730.o \
   $(JUCE_OBJDIR)/MIDIDeviceChooser_959781bc.o \
   $(JUCE_OBJDIR)/MIDIDeviceParameterUI_bf16f57e.o \
   $(JUCE_OBJDIR)/MIDIDevice_3c053f6a.o \
@@ -254,7 +249,6 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/LiveOSCSceneCommand_fb53785c.o \
   $(JUCE_OBJDIR)/LiveOSCModule_ae0bbb38.o \
   $(JUCE_OBJDIR)/MilluminModule_e03eaa89.o \
-  $(JUCE_OBJDIR)/ReaperTimeCommandUI_18f099cb.o \
   $(JUCE_OBJDIR)/ReaperTimeCommand_2fc352d6.o \
   $(JUCE_OBJDIR)/ReaperModule_95c95bc9.o \
   $(JUCE_OBJDIR)/ResolumeBaseCommandEditor_c6593aa0.o \
@@ -499,34 +493,9 @@ $(JUCE_OBJDIR)/DMXSerialDevice_44a8d965.o: ../../Source/Common/DMX/device/DMXSer
 	@echo "Compiling DMXSerialDevice.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
-$(JUCE_OBJDIR)/DMXDashboard_2d5d2a45.o: ../../Source/Common/DMX/ui/DMXDashboard.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling DMXDashboard.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/DMXStateManagerUI_7bd1c2a9.o: ../../Source/Common/DMX/ui/DMXStateManagerUI.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling DMXStateManagerUI.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/DMXStateUI_a98d2d16.o: ../../Source/Common/DMX/ui/DMXStateUI.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling DMXStateUI.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
 $(JUCE_OBJDIR)/DMXManager_b583f7e3.o: ../../Source/Common/DMX/DMXManager.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling DMXManager.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/DMXState_b401a707.o: ../../Source/Common/DMX/DMXState.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling DMXState.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/DMXStateManager_90092730.o: ../../Source/Common/DMX/DMXStateManager.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling DMXStateManager.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/MIDIDeviceChooser_959781bc.o: ../../Source/Common/MIDI/ui/MIDIDeviceChooser.cpp
@@ -1292,11 +1261,6 @@ $(JUCE_OBJDIR)/LiveOSCModule_ae0bbb38.o: ../../Source/Module/modules/osc/live/Li
 $(JUCE_OBJDIR)/MilluminModule_e03eaa89.o: ../../Source/Module/modules/osc/millumin/MilluminModule.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling MilluminModule.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/ReaperTimeCommandUI_18f099cb.o: ../../Source/Module/modules/osc/reaper/commands/ui/ReaperTimeCommandUI.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling ReaperTimeCommandUI.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/ReaperTimeCommand_2fc352d6.o: ../../Source/Module/modules/osc/reaper/commands/ReaperTimeCommand.cpp

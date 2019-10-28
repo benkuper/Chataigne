@@ -8,8 +8,7 @@
   ==============================================================================
 */
 
-#ifndef MYOMANAGER_H_INCLUDED
-#define MYOMANAGER_H_INCLUDED
+#pragma once
 
 #include "JuceHeader.h"
 
@@ -67,5 +66,3 @@ public:
 };
 
 #endif
-
-#endif  // MYOMANAGER_H_INCLUDED

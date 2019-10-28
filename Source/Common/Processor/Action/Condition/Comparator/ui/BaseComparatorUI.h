@@ -8,8 +8,7 @@
   ==============================================================================
 */
 
-#ifndef BASECOMPARATORUI_H_INCLUDED
-#define BASECOMPARATORUI_H_INCLUDED
+#pragma once
 
 #include "../BaseComparator.h"
 
@@ -31,8 +30,3 @@ public:
 
 	void newMessage(const Parameter::ParameterEvent &e) override;
 };
-
-
-
-
-#endif  // BASECOMPARATORUI_H_INCLUDED

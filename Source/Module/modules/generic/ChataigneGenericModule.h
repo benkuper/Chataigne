@@ -8,8 +8,7 @@
   ==============================================================================
 */
 
-#ifndef CHATAIGNEGENERICMODULE_H_INCLUDED
-#define CHATAIGNEGENERICMODULE_H_INCLUDED
+#pragma once
 
 #include "Module/Module.h"
 
@@ -22,7 +21,3 @@ public:
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ChataigneGenericModule)
 };
-
-
-
-#endif  // CHATAIGNEGENERICMODULE_H_INCLUDED

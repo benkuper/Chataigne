@@ -8,8 +8,7 @@
   ==============================================================================
 */
 
-#ifndef CUSTOMOSCCOMMAND_H_INCLUDED
-#define CUSTOMOSCCOMMAND_H_INCLUDED
+#pragma once
 
 #include "../../commands/OSCCommand.h"
 #include "../CustomOSCModule.h"
@@ -41,6 +40,3 @@ public:
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(CustomOSCCommand)
 };
-
-
-#endif  // CUSTOMOSCCOMMAND_H_INCLUDED
