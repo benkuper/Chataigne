@@ -67,8 +67,8 @@ Windows (x64) : [![Build status](https://ci.appveyor.com/api/projects/status/7ls
 Raspberry Pi (3B):  [![Build Status](https://travis-matrix-badges.herokuapp.com/repos/benkuper/Chataigne/branches/master/3)](https://travis-ci.org/benkuper/Chataigne)
 
 [![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](https://forthebadge.com)
-[![forthebadge](http://forthebadge.com/images/badges/gluten-free.svg)](http://forthebadge.com)
 [![forthebadge](https://forthebadge.com/images/badges/makes-people-smile.svg)](https://forthebadge.com)
+[![https://good-labs.github.io/greater-good-affirmation/assets/images/badge.svg](https://good-labs.github.io/greater-good-affirmation/assets/images/badge.svg)](https://good-labs.github.io/greater-good-affirmation)
 
 ## Libraries uses, references and other kudos
 
@@ -86,8 +86,13 @@ This list contains all the references to projects and libraries that Chataigne u
 ## Perhaps the most important
 
 I do this on my own free time, feel free to buy me a beer :)
+
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=KLQ6QBDF3ZL2W&lc=FR&item_name=Chataigne&item_number=chataigne%2dgithub&currency_code=EUR&bn=PP%2dDonationsBF%3adonate%2epng%3aNonHosted)
 
 Are you using Chataigne on a regular basis ? Then why not support me on Patreon, so I can have a more stable way to work on it !
+
+Choose your angel weapon :
+
+[![Click click click !](http://benjamin.kuperberg.fr/chataigne/user/images/github_sponsors.png)](https://github.com/sponsors/benkuper)
 
 <a href="https://www.patreon.com/bePatron?u=23293310"><img src="https://c5.patreon.com/external/logo/become_a_patron_button@2x.png" width="140"></a>
