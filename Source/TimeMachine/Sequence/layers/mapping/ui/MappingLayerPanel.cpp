@@ -34,8 +34,12 @@ MappingLayerPanel::MappingLayerPanel(MappingLayer * layer) :
 
 	mappingLayer->mapping->addAsyncMappingListener(this);
 
-	mappingOutputUI.reset(dynamic_cast<ParameterUI*>(mappingLayer->mapping->outputParam->createDefaultUI()));
-	if (mappingOutputUI != nullptr) addAndMakeVisible(mappingOutputUI.get());
+	if (mappingLayer->mapping->outputParam != nullptr)
+	{
+		mappingOutputUI.reset(dynamic_cast<ParameterUI*>(mappingLayer->mapping->outputParam->createDefaultUI()));
+		if (mappingOutputUI != nullptr) addAndMakeVisible(mappingOutputUI.get());
+	}
+	
 	resized();
 }
 
