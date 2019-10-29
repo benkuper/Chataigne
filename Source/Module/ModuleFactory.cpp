@@ -25,7 +25,6 @@
 #include "modules/oscquery/MadMapperModule.h"
 
 #include "modules/tcp/tcpclient/TCPClientModule.h"
-#include "modules/tcp/tcpclient/vlc/VLCModule.h"
 #include "modules/tcp/tcpclient/watchout/WatchoutModule.h"
 #include "modules/tcp/tcpclient/pjlink/PJLinkModule.h"
 
@@ -44,7 +43,6 @@
 #include "modules/controller/wiimote/WiimoteModule.h"
 #include "modules/controller/keyboard/KeyboardModule.h"
 #include "modules/controller/kinect/KinectV2Module.h"
-#include "modules/controller/myo/MyoModule.h"
 
 #include "modules/generators/metronome/MetronomeModule.h"
 #include "modules/generators/signal/SignalModule.h"
