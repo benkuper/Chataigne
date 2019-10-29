@@ -14,6 +14,7 @@ GuideFocusComponent::GuideFocusComponent() :
 	nextBT("NextBT")
 {
 	nextBT.addListener(this);
+	nextBT.setWantsKeyboardFocus(false);
 	addChildComponent(&nextBT);
 
 	setAlpha(0);
@@ -88,7 +89,7 @@ void GuideFocusComponent::paint(Graphics & g)
 
 	g.setColour(TEXT_COLOR);
 	g.setFont(40);
-	g.drawFittedText(text, getLocalBounds(), Justification::centred, 5);
+	g.drawFittedText(text, getLocalBounds().reduced(30), Justification::centred, 5);
 }
 
 void GuideFocusComponent::buttonClicked(Button* b)
