@@ -31,7 +31,7 @@ PowerPointModule::PowerPointModule() :
 #if JUCE_WINDOWS
 	installPowerPointPlugin();
 #else
-	setWarningMessage("This module only works on windows.");
+    setWarningMessage("This module only works on windows.");
 #endif
 }
 
