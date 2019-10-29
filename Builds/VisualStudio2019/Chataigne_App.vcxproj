@@ -285,9 +285,6 @@
     <ClCompile Include="..\..\Source\Module\modules\controller\joycon\JoyConModule.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\controller\keyboard\KeyboardModule.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\controller\kinect\KinectV2Module.cpp"/>
-    <ClCompile Include="..\..\Source\Module\modules\controller\myo\MyoDevice.cpp"/>
-    <ClCompile Include="..\..\Source\Module\modules\controller\myo\MyoManager.cpp"/>
-    <ClCompile Include="..\..\Source\Module\modules\controller\myo\MyoModule.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\controller\wiimote\lib\wiiuse\os_mac\os_mac.c"/>
     <ClCompile Include="..\..\Source\Module\modules\controller\wiimote\lib\wiiuse\classic.c"/>
     <ClCompile Include="..\..\Source\Module\modules\controller\wiimote\lib\wiiuse\dynamics.c"/>
@@ -358,7 +355,6 @@
     <ClCompile Include="..\..\Source\Module\modules\tcp\tcpserver\TCPServerConnectionManager.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\tcp\tcpserver\TCPServerModule.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\tcp\tcpclient\pjlink\PJLinkModule.cpp"/>
-    <ClCompile Include="..\..\Source\Module\modules\tcp\tcpclient\vlc\VLCModule.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\tcp\tcpclient\watchout\commands\WatchoutCommand.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\tcp\tcpclient\watchout\WatchoutModule.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\tcp\tcpclient\TCPClientModule.cpp"/>
@@ -3075,9 +3071,6 @@
     <ClInclude Include="..\..\Source\Module\modules\controller\joycon\JoyConModule.h"/>
     <ClInclude Include="..\..\Source\Module\modules\controller\keyboard\KeyboardModule.h"/>
     <ClInclude Include="..\..\Source\Module\modules\controller\kinect\KinectV2Module.h"/>
-    <ClInclude Include="..\..\Source\Module\modules\controller\myo\MyoDevice.h"/>
-    <ClInclude Include="..\..\Source\Module\modules\controller\myo\MyoManager.h"/>
-    <ClInclude Include="..\..\Source\Module\modules\controller\myo\MyoModule.h"/>
     <ClInclude Include="..\..\Source\Module\modules\controller\wiimote\WiimoteManager.h"/>
     <ClInclude Include="..\..\Source\Module\modules\controller\wiimote\WiimoteModule.h"/>
     <ClInclude Include="..\..\Source\Module\modules\controller\wiimote\WiimotePairUtil.h"/>
@@ -3135,7 +3128,6 @@
     <ClInclude Include="..\..\Source\Module\modules\tcp\tcpserver\TCPServerConnectionManager.h"/>
     <ClInclude Include="..\..\Source\Module\modules\tcp\tcpserver\TCPServerModule.h"/>
     <ClInclude Include="..\..\Source\Module\modules\tcp\tcpclient\pjlink\PJLinkModule.h"/>
-    <ClInclude Include="..\..\Source\Module\modules\tcp\tcpclient\vlc\VLCModule.h"/>
     <ClInclude Include="..\..\Source\Module\modules\tcp\tcpclient\watchout\commands\WatchoutCommand.h"/>
     <ClInclude Include="..\..\Source\Module\modules\tcp\tcpclient\watchout\WatchoutModule.h"/>
     <ClInclude Include="..\..\Source\Module\modules\tcp\tcpclient\TCPClientModule.h"/>

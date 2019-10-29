@@ -260,9 +260,6 @@
     <Filter Include="Chataigne\Source\Module\modules\controller\kinect">
       <UniqueIdentifier>{EDF23796-E85C-EDC5-54CD-172012129B52}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\controller\myo">
-      <UniqueIdentifier>{E7B6D7C5-1E02-6082-5469-4E80EF269BAB}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Chataigne\Source\Module\modules\controller\wiimote\lib\wiiuse\os_mac">
       <UniqueIdentifier>{378C310A-DB79-DA96-BE1D-8E8D2E1A8157}</UniqueIdentifier>
     </Filter>
@@ -415,9 +412,6 @@
     </Filter>
     <Filter Include="Chataigne\Source\Module\modules\tcp\tcpclient\pjlink">
       <UniqueIdentifier>{B80B7BA6-0750-C92D-1C5D-7FF9A07E0EC3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\tcp\tcpclient\vlc">
-      <UniqueIdentifier>{858313A8-3B6D-1359-83FD-EF40E1CA47E0}</UniqueIdentifier>
     </Filter>
     <Filter Include="Chataigne\Source\Module\modules\tcp\tcpclient\watchout\commands">
       <UniqueIdentifier>{8E798873-96AF-189B-A4B8-1882EA5CB2DA}</UniqueIdentifier>
@@ -1579,15 +1573,6 @@
     <ClCompile Include="..\..\Source\Module\modules\controller\kinect\KinectV2Module.cpp">
       <Filter>Chataigne\Source\Module\modules\controller\kinect</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\Module\modules\controller\myo\MyoDevice.cpp">
-      <Filter>Chataigne\Source\Module\modules\controller\myo</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Module\modules\controller\myo\MyoManager.cpp">
-      <Filter>Chataigne\Source\Module\modules\controller\myo</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Module\modules\controller\myo\MyoModule.cpp">
-      <Filter>Chataigne\Source\Module\modules\controller\myo</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\controller\wiimote\lib\wiiuse\os_mac\os_mac.c">
       <Filter>Chataigne\Source\Module\modules\controller\wiimote\lib\wiiuse\os_mac</Filter>
     </ClCompile>
@@ -1806,9 +1791,6 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\tcp\tcpclient\pjlink\PJLinkModule.cpp">
       <Filter>Chataigne\Source\Module\modules\tcp\tcpclient\pjlink</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Module\modules\tcp\tcpclient\vlc\VLCModule.cpp">
-      <Filter>Chataigne\Source\Module\modules\tcp\tcpclient\vlc</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\tcp\tcpclient\watchout\commands\WatchoutCommand.cpp">
       <Filter>Chataigne\Source\Module\modules\tcp\tcpclient\watchout\commands</Filter>
@@ -5133,15 +5115,6 @@
     <ClInclude Include="..\..\Source\Module\modules\controller\kinect\KinectV2Module.h">
       <Filter>Chataigne\Source\Module\modules\controller\kinect</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\Module\modules\controller\myo\MyoDevice.h">
-      <Filter>Chataigne\Source\Module\modules\controller\myo</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Module\modules\controller\myo\MyoManager.h">
-      <Filter>Chataigne\Source\Module\modules\controller\myo</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Module\modules\controller\myo\MyoModule.h">
-      <Filter>Chataigne\Source\Module\modules\controller\myo</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\controller\wiimote\WiimoteManager.h">
       <Filter>Chataigne\Source\Module\modules\controller\wiimote</Filter>
     </ClInclude>
@@ -5312,9 +5285,6 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\tcp\tcpclient\pjlink\PJLinkModule.h">
       <Filter>Chataigne\Source\Module\modules\tcp\tcpclient\pjlink</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Module\modules\tcp\tcpclient\vlc\VLCModule.h">
-      <Filter>Chataigne\Source\Module\modules\tcp\tcpclient\vlc</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\tcp\tcpclient\watchout\commands\WatchoutCommand.h">
       <Filter>Chataigne\Source\Module\modules\tcp\tcpclient\watchout\commands</Filter>

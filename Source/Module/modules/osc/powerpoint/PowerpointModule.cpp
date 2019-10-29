@@ -28,7 +28,11 @@ PowerPointModule::PowerPointModule() :
 	defManager->add(CommandDefinition::createDef(this, "", "Previous Slide", &OSCCommand::create, CommandContext::BOTH)->addParam("address", "/previous"));
 	defManager->add(CommandDefinition::createDef(this, "", "Go to Slide", &OSCCommand::create, CommandContext::BOTH)->addParam("address", "/page")->addParam("args", indexArgs));
 
+#if JUCE_WINDOWS
 	installPowerPointPlugin();
+#else
+	setWarningMessage("This module only works on windows.")
+#endif
 }
 
 PowerPointModule::~PowerPointModule()

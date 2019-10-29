@@ -89,17 +89,13 @@ ModuleFactory::ModuleFactory() {
 	moduleDefs.add(new ModuleDefinition("Software", "Millumin", &MilluminModule::create));
 	moduleDefs.add(new ModuleDefinition("Software", "Reaper", &ReaperModule::create));
 	moduleDefs.add(new ModuleDefinition("Software", "Resolume", &ResolumeModule::create));
-	//moduleDefs.add(new ModuleDefinition("Software", "VLC", &VLCModule::create));
 	moduleDefs.add(new ModuleDefinition("Software", "Watchout", &WatchoutModule::create));
 
 
-#if JUCE_WINDOWS
 	moduleDefs.add(new ModuleDefinition("Hardware", "KinectV2", &KinectV2Module::create));
 	moduleDefs.add(new ModuleDefinition("Hardware", "Gamepad", &GamepadModule::create));
 	moduleDefs.add(new ModuleDefinition("Hardware", "Joystick", &JoystickModule::create));
-	//moduleDefs.add(new ModuleDefinition("Hardware", "Myo", &MyoModule::create));
 	moduleDefs.add(new ModuleDefinition("Software", "PowerPoint", &PowerPointModule::create));
-#endif
 
 	moduleDefs.add(new ModuleDefinition("Generator", "Metronome", &MetronomeModule::create));
 	moduleDefs.add(new ModuleDefinition("Generator", "Signal", &SignalModule::create));

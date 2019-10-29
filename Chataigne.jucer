@@ -710,14 +710,6 @@
               <FILE id="gkYUw8" name="KinectV2Module.h" compile="0" resource="0"
                     file="Source/Module/modules/controller/kinect/KinectV2Module.h"/>
             </GROUP>
-            <GROUP id="{7CF2541F-097E-D32B-7682-C86600F9F999}" name="myo">
-              <FILE id="MqK4jo" name="MyoDevice.cpp" compile="1" resource="0" file="Source/Module/modules/controller/myo/MyoDevice.cpp"/>
-              <FILE id="M4OLjS" name="MyoDevice.h" compile="0" resource="0" file="Source/Module/modules/controller/myo/MyoDevice.h"/>
-              <FILE id="qHUV7r" name="MyoManager.cpp" compile="1" resource="0" file="Source/Module/modules/controller/myo/MyoManager.cpp"/>
-              <FILE id="Q9SGz1" name="MyoManager.h" compile="0" resource="0" file="Source/Module/modules/controller/myo/MyoManager.h"/>
-              <FILE id="SHDyQS" name="MyoModule.cpp" compile="1" resource="0" file="Source/Module/modules/controller/myo/MyoModule.cpp"/>
-              <FILE id="cOpTQZ" name="MyoModule.h" compile="0" resource="0" file="Source/Module/modules/controller/myo/MyoModule.h"/>
-            </GROUP>
             <GROUP id="{5C43D0FF-4039-779F-7FA4-032B36B34800}" name="wiimote">
               <GROUP id="{EB8DE141-947F-6061-BC9C-3DFD7641DEAA}" name="lib">
                 <GROUP id="{6B522148-E63B-E5F9-7369-556C4A6537CD}" name="wiiuse">
@@ -1033,10 +1025,6 @@
                 <FILE id="GN4KEU" name="PJLinkModule.cpp" compile="1" resource="0"
                       file="Source/Module/modules/tcp/tcpclient/pjlink/PJLinkModule.cpp"/>
                 <FILE id="WlzAAJ" name="PJLinkModule.h" compile="0" resource="0" file="Source/Module/modules/tcp/tcpclient/pjlink/PJLinkModule.h"/>
-              </GROUP>
-              <GROUP id="{F639EA72-C83B-4D1C-5845-0CAF12167F16}" name="vlc">
-                <FILE id="nZ39cN" name="VLCModule.cpp" compile="1" resource="0" file="Source/Module/modules/tcp/tcpclient/vlc/VLCModule.cpp"/>
-                <FILE id="wOBHSI" name="VLCModule.h" compile="0" resource="0" file="Source/Module/modules/tcp/tcpclient/vlc/VLCModule.h"/>
               </GROUP>
               <GROUP id="{9D17EC97-106B-0725-8345-5F980F75F41B}" name="watchout">
                 <GROUP id="{2737ADD7-CED7-52D1-1D60-B63B50947807}" name="commands">

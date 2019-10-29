@@ -621,18 +621,6 @@
 			isa = PBXBuildFile;
 			fileRef = F4A3071E9B164D64387DC016;
 		};
-		9AC3823C402FB61B801B2AC3 = {
-			isa = PBXBuildFile;
-			fileRef = 4E1502A270C713456D3EC085;
-		};
-		34A0B05B551A83DF57905DFF = {
-			isa = PBXBuildFile;
-			fileRef = AF5984A61C24DDE49D5F7151;
-		};
-		7A6695EA84C99B6B8E9E4DA9 = {
-			isa = PBXBuildFile;
-			fileRef = F76FE9D76E55DC2703F70799;
-		};
 		E850833D3B7F572FADCA4515 = {
 			isa = PBXBuildFile;
 			fileRef = 675E937850BD8296F6B752ED;
@@ -924,10 +912,6 @@
 		C59EAFBF08C2FCB87940EE60 = {
 			isa = PBXBuildFile;
 			fileRef = 1919D8FF97CC9BF35C683A94;
-		};
-		0E147308A3EB610FBBA8619B = {
-			isa = PBXBuildFile;
-			fileRef = 57E40F573658E6E60B479A6C;
 		};
 		31E8F3986C5AC02A1BFBFEDB = {
 			isa = PBXBuildFile;
@@ -1862,13 +1846,6 @@
 			path = ../../Source/Module/modules/tcp/tcpserver/TCPServerConnectionManager.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
-		2CE0AD628786F9216FE31597 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = MyoDevice.h;
-			path = ../../Source/Module/modules/controller/myo/MyoDevice.h;
-			sourceTree = "SOURCE_ROOT";
-		};
 		2D274CC0C6F2AAB6FECC9319 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -2268,13 +2245,6 @@
 			path = "../../JuceLibraryCode/include_juce_dsp.mm";
 			sourceTree = "SOURCE_ROOT";
 		};
-		457B541055574964947EF087 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = VLCModule.h;
-			path = ../../Source/Module/modules/tcp/tcpclient/vlc/VLCModule.h;
-			sourceTree = "SOURCE_ROOT";
-		};
 		462C8FB6859681D01FC1E7C6 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -2478,13 +2448,6 @@
 			path = ../../Resources/Modules/UDP.png;
 			sourceTree = "SOURCE_ROOT";
 		};
-		4E1502A270C713456D3EC085 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = MyoDevice.cpp;
-			path = ../../Source/Module/modules/controller/myo/MyoDevice.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
 		4EC002DAFB1BBDC9C03CD4D6 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -2665,13 +2628,6 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = MappingFilter.h;
 			path = ../../Source/Common/Processor/Mapping/Filter/MappingFilter.h;
-			sourceTree = "SOURCE_ROOT";
-		};
-		57E40F573658E6E60B479A6C = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = VLCModule.cpp;
-			path = ../../Source/Module/modules/tcp/tcpclient/vlc/VLCModule.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		5835F7B7E9A758B2CB9F0DA4 = {
@@ -4088,13 +4044,6 @@
 			path = ../../Source/Module/modules/osc/powerpoint/PowerpointModule.h;
 			sourceTree = "SOURCE_ROOT";
 		};
-		AF5984A61C24DDE49D5F7151 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = MyoManager.cpp;
-			path = ../../Source/Module/modules/controller/myo/MyoManager.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
 		AFBA95737F1FDA3F2473CCC3 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -4324,13 +4273,6 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = MappingFilterManager.cpp;
 			path = ../../Source/Common/Processor/Mapping/Filter/MappingFilterManager.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
-		BFCA478B58332328BE34CBAC = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = MyoManager.h;
-			path = ../../Source/Module/modules/controller/myo/MyoManager.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		C011CD17DA02C50BA1542AD8 = {
@@ -5243,13 +5185,6 @@
 			path = ../../Source/Common/MIDI/ui/MIDIDeviceChooser.h;
 			sourceTree = "SOURCE_ROOT";
 		};
-		F011A601BDA4798BDBF9008D = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = MyoModule.h;
-			path = ../../Source/Module/modules/controller/myo/MyoModule.h;
-			sourceTree = "SOURCE_ROOT";
-		};
 		F0125278582079E86238C74E = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -5361,13 +5296,6 @@
 			name = IOBluetooth.framework;
 			path = System/Library/Frameworks/IOBluetooth.framework;
 			sourceTree = SDKROOT;
-		};
-		F76FE9D76E55DC2703F70799 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = MyoModule.cpp;
-			path = ../../Source/Module/modules/controller/myo/MyoModule.cpp;
-			sourceTree = "SOURCE_ROOT";
 		};
 		F77776C3AB9DC4C71C47419E = {
 			isa = PBXFileReference;
@@ -6497,19 +6425,6 @@
 			name = kinect;
 			sourceTree = "<group>";
 		};
-		3875F7FA2697FA120D92A3D1 = {
-			isa = PBXGroup;
-			children = (
-				4E1502A270C713456D3EC085,
-				2CE0AD628786F9216FE31597,
-				AF5984A61C24DDE49D5F7151,
-				BFCA478B58332328BE34CBAC,
-				F76FE9D76E55DC2703F70799,
-				F011A601BDA4798BDBF9008D,
-			);
-			name = myo;
-			sourceTree = "<group>";
-		};
 		88ACA9F31134906F9DEDF23E = {
 			isa = PBXGroup;
 			children = (
@@ -6572,7 +6487,6 @@
 				5196179CA1A0DDE3AAF00F3C,
 				FDC3BCE022FBCF6F430EC94B,
 				DD353806E7A22359CB1D52C2,
-				3875F7FA2697FA120D92A3D1,
 				322A551738E8D1C0079D30DA,
 			);
 			name = controller;
@@ -7040,15 +6954,6 @@
 			name = pjlink;
 			sourceTree = "<group>";
 		};
-		8DB160CD8F95B5A25F21E2AC = {
-			isa = PBXGroup;
-			children = (
-				57E40F573658E6E60B479A6C,
-				457B541055574964947EF087,
-			);
-			name = vlc;
-			sourceTree = "<group>";
-		};
 		035D08FAEE485BCCF77369AC = {
 			isa = PBXGroup;
 			children = (
@@ -7072,7 +6977,6 @@
 			isa = PBXGroup;
 			children = (
 				B6AF022D168AE1F92B7959A1,
-				8DB160CD8F95B5A25F21E2AC,
 				E627E9076BC591A06A5F9D7D,
 				021E427BFA3E8B6BC6AC3D5A,
 				B58F472712F98039790C5BD8,
@@ -7871,9 +7775,6 @@
 				4C2D775E82C8238217DCB568,
 				324B449B4DC24BAEFCA1ED2A,
 				EC246C47CF365342F93FE894,
-				9AC3823C402FB61B801B2AC3,
-				34A0B05B551A83DF57905DFF,
-				7A6695EA84C99B6B8E9E4DA9,
 				E850833D3B7F572FADCA4515,
 				F62FACD4F5C6DBB79A747016,
 				4ACACCD0579323DDC1DBE7D9,
@@ -7947,7 +7848,6 @@
 				A660EAEA0519A545BF9E6323,
 				759B6E09C574DDA33F5CDEFC,
 				C59EAFBF08C2FCB87940EE60,
-				0E147308A3EB610FBBA8619B,
 				31E8F3986C5AC02A1BFBFEDB,
 				39E2B66DC6E1772B38F0677A,
 				30E97777747F251C9235E38A,

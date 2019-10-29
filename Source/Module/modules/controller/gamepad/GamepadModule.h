@@ -12,7 +12,6 @@
 
 #include "Module/Module.h"
 
-#if JUCE_WINDOWS
 
 #include "Common/InputSystem/InputSystemManager.h"
 
@@ -38,5 +37,3 @@ public:
 
 };
 
-
-#endif

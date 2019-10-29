@@ -203,9 +203,6 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/JoyConModule_1410c7f4.o \
   $(JUCE_OBJDIR)/KeyboardModule_965e79f4.o \
   $(JUCE_OBJDIR)/KinectV2Module_99832bf0.o \
-  $(JUCE_OBJDIR)/MyoDevice_cb8c0306.o \
-  $(JUCE_OBJDIR)/MyoManager_6eae647.o \
-  $(JUCE_OBJDIR)/MyoModule_691e901c.o \
   $(JUCE_OBJDIR)/os_mac_a23c8a30.o \
   $(JUCE_OBJDIR)/classic_e456a893.o \
   $(JUCE_OBJDIR)/dynamics_a64483fd.o \
@@ -276,7 +273,6 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/TCPServerConnectionManager_d34fdc90.o \
   $(JUCE_OBJDIR)/TCPServerModule_dab9835.o \
   $(JUCE_OBJDIR)/PJLinkModule_32fc4f28.o \
-  $(JUCE_OBJDIR)/VLCModule_6d70eb44.o \
   $(JUCE_OBJDIR)/WatchoutCommand_7f96a6c2.o \
   $(JUCE_OBJDIR)/WatchoutModule_12f7dcc8.o \
   $(JUCE_OBJDIR)/TCPClientModule_9b5f8345.o \
@@ -1033,21 +1029,6 @@ $(JUCE_OBJDIR)/KinectV2Module_99832bf0.o: ../../Source/Module/modules/controller
 	@echo "Compiling KinectV2Module.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
-$(JUCE_OBJDIR)/MyoDevice_cb8c0306.o: ../../Source/Module/modules/controller/myo/MyoDevice.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling MyoDevice.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/MyoManager_6eae647.o: ../../Source/Module/modules/controller/myo/MyoManager.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling MyoManager.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/MyoModule_691e901c.o: ../../Source/Module/modules/controller/myo/MyoModule.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling MyoModule.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
 $(JUCE_OBJDIR)/os_mac_a23c8a30.o: ../../Source/Module/modules/controller/wiimote/lib/wiiuse/os_mac/os_mac.c
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling os_mac.c"
@@ -1396,11 +1377,6 @@ $(JUCE_OBJDIR)/TCPServerModule_dab9835.o: ../../Source/Module/modules/tcp/tcpser
 $(JUCE_OBJDIR)/PJLinkModule_32fc4f28.o: ../../Source/Module/modules/tcp/tcpclient/pjlink/PJLinkModule.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling PJLinkModule.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/VLCModule_6d70eb44.o: ../../Source/Module/modules/tcp/tcpclient/vlc/VLCModule.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling VLCModule.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/WatchoutCommand_7f96a6c2.o: ../../Source/Module/modules/tcp/tcpclient/watchout/commands/WatchoutCommand.cpp
