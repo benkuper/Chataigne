@@ -1337,10 +1337,10 @@
                 extraLinkerFlags="-Wl,-rpath,&quot;lib&quot;" externalLibraries="bluetooth&#10;Servus&#10;curl&#10;artnet&#10;SDL2">
       <CONFIGURATIONS>
         <CONFIGURATION isDebug="1" name="Debug" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/libartnet/include&#10;../../External/sdl/include&#10;/usr/include/freetype2"
-                       libraryPath="../../External/servus/lib/raspberry&#10;../../External/libartnet/lib/raspberry&#10;../../External/sdl/lib/linux"
+                       libraryPath="../../External/servus/lib/raspberry&#10;../../External/libartnet/lib/raspberry&#10;../../External/sdl/lib/raspberry"
                        linuxArchitecture="-march=native"/>
         <CONFIGURATION isDebug="0" name="Release" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/libartnet/include&#10;../../External/sdl/include&#10;/usr/include/freetype2"
-                       libraryPath="../../External/servus/lib/raspberry&#10;../../External/libartnet/lib/raspberry&#10;../../External/sdl/lib/linux"
+                       libraryPath="../../External/servus/lib/raspberry&#10;../../External/libartnet/lib/raspberry&#10;../../External/sdl/lib/raspberry&#10;"
                        linuxArchitecture="-march=native"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
@@ -1370,7 +1370,7 @@
                 bigIcon="nVz6Li">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" isDebug="1" optimisation="1" targetName="Chataigne"
-                       headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/libartnet/include&#10;../../External/sdl/include"
+                       headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/libartnet/include&#10;../../External/sdl/include&#10;"
                        linuxArchitecture="-m64" libraryPath="../../External/servus/lib/linux&#10;../../External/libartnet/lib/linux&#10;../../External/sdl/lib/linux"/>
         <CONFIGURATION name="Release" optimisation="3" targetName="Chataigne" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/libartnet/include&#10;../../External/sdl/include"
                        linuxArchitecture="-m64" libraryPath="../../External/servus/lib/linux&#10;../../External/libartnet/lib/linux&#10;../../External/sdl/lib/linux"/>
