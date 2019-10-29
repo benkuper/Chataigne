@@ -14,7 +14,7 @@
 CustomValuesCommandArgumentManager::CustomValuesCommandArgumentManager(bool _mappingEnabled, bool templateMode) :
 	BaseManager("arguments"),
 	isBeingDestroyed(false),
-    mappingEnabled(_mappingEnabled),
+    mappingEnabled(_mappingEnabled),
     templateMode(templateMode),
     linkedTemplateManager(nullptr)
 {
