@@ -7444,9 +7444,10 @@
 					"\"../../External/servus/lib/osx/debug\"",
 					"\"../../External/libartnet/lib/osx\"",
 					"\"../../External/joycon/lib/osx\"",
+					"\"../../External/sdl/lib/osx\"",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
-				OTHER_LDFLAGS = "-lServus -lartnet -lhidapi -ljoytime-core -ljoytime-input-hidapi";
+				OTHER_LDFLAGS = "-lServus -lartnet -lhidapi -ljoytime-core -ljoytime-input-hidapi -lSDL";
 				PRODUCT_BUNDLE_IDENTIFIER = benkuper.Chataigne;
 				PRODUCT_NAME = "Chataigne";
 				USE_HEADERMAP = NO;
@@ -7503,10 +7504,11 @@
 					"\"../../External/servus/lib/osx/release\"",
 					"\"../../External/libartnet/lib/osx\"",
 					"\"../../External/joycon/lib/osx\"",
+					"\"../../External/sdl/lib/osx\"",
 				);
 				LLVM_LTO = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
-				OTHER_LDFLAGS = "-lServus -lartnet -lhidapi -ljoytime-core -ljoytime-input-hidapi";
+				OTHER_LDFLAGS = "-lServus -lartnet -lhidapi -ljoytime-core -ljoytime-input-hidapi -lSDL";
 				PRODUCT_BUNDLE_IDENTIFIER = benkuper.Chataigne;
 				PRODUCT_NAME = "Chataigne";
 				USE_HEADERMAP = NO;
