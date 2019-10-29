@@ -46,7 +46,8 @@ void ChataigneLogCommand::setValueInternal(var _value)
 	}
 	else
 	{
-		((StringParameter*)value)->setValue(_value.toString());
+		
+		((StringParameter*)value)->setValue(_value.isDouble() ? String((float)_value,3):_value.toString());
 	}
 }
 
@@ -70,7 +71,12 @@ void ChataigneLogCommand::triggerInternal()
 
 	case VALUE:
 	{
-		String vString = context == ACTION ? String(((TargetParameter*)value)->target != nullptr ? ((Parameter*)((TargetParameter*)value)->target.get())->stringValue() : "[not set]") : ((StringParameter*)value)->stringValue();
+		String vString = "[not set]";
+		Parameter* p = nullptr;
+		if (context == ACTION)  p = dynamic_cast<Parameter*>(((TargetParameter*)value)->target.get());
+		else p = value;
+		
+		if (p != nullptr) vString = p->type == Controllable::FLOAT ? String(p->floatValue(), 3) : p->stringValue();
 	
 		switch (lt)
 		{
