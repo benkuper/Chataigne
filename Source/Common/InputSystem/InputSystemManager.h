@@ -11,7 +11,6 @@
 #pragma once
 #include "JuceHeader.h"
 
-#if JUCE_WINDOWS
 #include "SDL.h"
 
 
@@ -19,7 +18,7 @@ class Joystick
 {
 public:
 	Joystick(SDL_Joystick * joystick);
-	~Joystick();
+	virtual ~Joystick();
 
 	SDL_Joystick * joystick;
 
@@ -36,7 +35,7 @@ class Gamepad
 {
 public:
 	Gamepad(SDL_GameController * gamepad);
-	~Gamepad();
+	virtual ~Gamepad();
 
 	SDL_GameController * gamepad;
 
@@ -167,6 +166,3 @@ public:
 	void addAsyncCoalescedInputListener(AsyncListener* newListener) { inputQueuedNotifier.addAsyncCoalescedListener(newListener); }
 	void removeAsyncInputListener(AsyncListener* listener) { inputQueuedNotifier.removeListener(listener); }
 };
-
-
-#endif
