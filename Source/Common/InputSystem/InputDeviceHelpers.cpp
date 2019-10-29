@@ -10,7 +10,6 @@
 
 #include "InputDeviceHelpers.h"
 
-#if  JUCE_WINDOWS
 
 JoystickParameterUI::JoystickParameterUI(JoystickParameter * p) :
 	ParameterUI(p),
@@ -159,5 +158,3 @@ void GamepadParameterUI::comboBoxChanged(ComboBox *)
 {
 	if (!parameter.wasObjectDeleted()) gamepadParam->setGamepad(getGamepad());
 }
-
-#endif
