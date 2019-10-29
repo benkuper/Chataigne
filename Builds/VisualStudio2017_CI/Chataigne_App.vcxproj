@@ -185,7 +185,6 @@
     <ClCompile Include="..\..\Source\Common\MIDI\MIDIDeviceParameter.cpp"/>
     <ClCompile Include="..\..\Source\Common\MIDI\MIDIManager.cpp"/>
     <ClCompile Include="..\..\Source\Common\MIDI\MTCSender.cpp"/>
-    <ClCompile Include="..\..\Source\Common\Plugin\PluginManager.cpp"/>
     <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\Comparator\comparators\BoolComparators.cpp"/>
     <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\Comparator\comparators\EnumComparator.cpp"/>
     <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\Comparator\comparators\NumberComparators.cpp"/>
@@ -2972,7 +2971,6 @@
     <ClInclude Include="..\..\Source\Common\MIDI\MIDIDeviceParameter.h"/>
     <ClInclude Include="..\..\Source\Common\MIDI\MIDIManager.h"/>
     <ClInclude Include="..\..\Source\Common\MIDI\MTCSender.h"/>
-    <ClInclude Include="..\..\Source\Common\Plugin\PluginManager.h"/>
     <ClInclude Include="..\..\Source\Common\Processor\Action\Condition\Comparator\comparators\BoolComparators.h"/>
     <ClInclude Include="..\..\Source\Common\Processor\Action\Condition\Comparator\comparators\EnumComparator.h"/>
     <ClInclude Include="..\..\Source\Common\Processor\Action\Condition\Comparator\comparators\NumberComparators.h"/>

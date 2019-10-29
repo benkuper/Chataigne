@@ -102,7 +102,6 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/MIDIDeviceParameter_f25cf8a9.o \
   $(JUCE_OBJDIR)/MIDIManager_a5993663.o \
   $(JUCE_OBJDIR)/MTCSender_7b4a4be8.o \
-  $(JUCE_OBJDIR)/PluginManager_69ed7623.o \
   $(JUCE_OBJDIR)/BoolComparators_9c68289d.o \
   $(JUCE_OBJDIR)/EnumComparator_a53f6ef7.o \
   $(JUCE_OBJDIR)/NumberComparators_25bd9d1e.o \
@@ -522,11 +521,6 @@ $(JUCE_OBJDIR)/MIDIManager_a5993663.o: ../../Source/Common/MIDI/MIDIManager.cpp
 $(JUCE_OBJDIR)/MTCSender_7b4a4be8.o: ../../Source/Common/MIDI/MTCSender.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling MTCSender.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/PluginManager_69ed7623.o: ../../Source/Common/Plugin/PluginManager.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling PluginManager.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/BoolComparators_9c68289d.o: ../../Source/Common/Processor/Action/Condition/Comparator/comparators/BoolComparators.cpp

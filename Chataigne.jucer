@@ -227,11 +227,6 @@
           <FILE id="lLH5id" name="MTCSender.cpp" compile="1" resource="0" file="Source/Common/MIDI/MTCSender.cpp"/>
           <FILE id="Y5NAoh" name="MTCSender.h" compile="0" resource="0" file="Source/Common/MIDI/MTCSender.h"/>
         </GROUP>
-        <GROUP id="{70631E35-1CB6-82B1-0572-78D8D2F56250}" name="Plugin">
-          <FILE id="JHMfXN" name="PluginManager.cpp" compile="1" resource="0"
-                file="Source/Common/Plugin/PluginManager.cpp"/>
-          <FILE id="ZqY81o" name="PluginManager.h" compile="0" resource="0" file="Source/Common/Plugin/PluginManager.h"/>
-        </GROUP>
         <GROUP id="{54EAB5D0-4FF9-8475-F580-32A4B6B32B16}" name="Processor">
           <GROUP id="{797800DA-0DCB-1B89-AF24-83A7716BB83C}" name="Action">
             <GROUP id="{769E1555-7F3A-B046-7FF9-5B14A6197BBD}" name="Condition">

@@ -217,10 +217,6 @@
 			isa = PBXBuildFile;
 			fileRef = CDC2689AEBE1AE73D05F0293;
 		};
-		5EF5066556C2A34119BF92FD = {
-			isa = PBXBuildFile;
-			fileRef = 7E6F4F9F8AC83A4B95C7AAE9;
-		};
 		9EA034F221797BE59DC09D6C = {
 			isa = PBXBuildFile;
 			fileRef = 8615CE9282DE48602A86E758;
@@ -1277,13 +1273,6 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = AboutWindow.h;
 			path = ../../Source/UI/AboutWindow.h;
-			sourceTree = "SOURCE_ROOT";
-		};
-		061EA5099A354EE0BA964BE7 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = PluginManager.h;
-			path = ../../Source/Common/Plugin/PluginManager.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		063AB806516476558D9F032C = {
@@ -3209,13 +3198,6 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = MappingInputEditor.h;
 			path = ../../Source/Common/Processor/Mapping/Input/ui/MappingInputEditor.h;
-			sourceTree = "SOURCE_ROOT";
-		};
-		7E6F4F9F8AC83A4B95C7AAE9 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = PluginManager.cpp;
-			path = ../../Source/Common/Plugin/PluginManager.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		7EC74A7B3F89CDBF4AE0DEA6 = {
@@ -5686,15 +5668,6 @@
 			name = MIDI;
 			sourceTree = "<group>";
 		};
-		4E8177D3732A336ED701CAA7 = {
-			isa = PBXGroup;
-			children = (
-				7E6F4F9F8AC83A4B95C7AAE9,
-				061EA5099A354EE0BA964BE7,
-			);
-			name = Plugin;
-			sourceTree = "<group>";
-		};
 		10DAA8CA1F89378CEF3C78F4 = {
 			isa = PBXGroup;
 			children = (
@@ -6080,7 +6053,6 @@
 				308900D44331CCF323509065,
 				2F365699BD14F6406F50C73D,
 				E3E3010FE0B76E426CECDA59,
-				4E8177D3732A336ED701CAA7,
 				109883A44DB3B3D0E7CFDDC1,
 				FFC06B4303699ADCB205967D,
 			);
@@ -7674,7 +7646,6 @@
 				9FFD82F750C3345EF22899A6,
 				A92916EA6FDDC5574A9C7FF9,
 				30A52645696FAF1864CC8297,
-				5EF5066556C2A34119BF92FD,
 				9EA034F221797BE59DC09D6C,
 				A7542A578E1E0D55254CC460,
 				C6C9451B74299C08F8D22C8F,
