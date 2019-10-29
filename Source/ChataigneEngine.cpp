@@ -28,11 +28,6 @@
 #include "TimeMachine/ChataigneSequenceManager.h"
 
 
-#if JUCE_WINDOWS
-#include "Module/modules/controller/myo/MyoManager.h"
-#endif
-
-
 ControllableContainer * getAppSettings();
 
 ChataigneEngine::ChataigneEngine() :
@@ -82,10 +77,7 @@ ChataigneEngine::~ChataigneEngine()
 	SerialManager::deleteInstance();
 	WiimoteManager::deleteInstance();
 
-#if JUCE_WINDOWS
 	InputSystemManager::deleteInstance();
-	MyoManager::deleteInstance();
-#endif
 
 	ChataigneAssetManager::deleteInstance();
 
