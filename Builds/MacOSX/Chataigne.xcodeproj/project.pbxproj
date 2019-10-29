@@ -7433,6 +7433,7 @@
 					"../../External/dnssd/include",
 					"../../External/libartnet/include",
 					"../../External/joycon/include",
+					"../../External/sdl/include",
 					"../../Source",
 					"$(inherited)",
 				);
@@ -7493,6 +7494,7 @@
 					"../../External/dnssd/include",
 					"../../External/libartnet/include",
 					"../../External/joycon/include",
+					"../../External/sdl/include",
 					"../../Source",
 					"$(inherited)",
 				);

@@ -14,9 +14,9 @@
 CustomValuesCommandArgumentManager::CustomValuesCommandArgumentManager(bool _mappingEnabled, bool templateMode) :
 	BaseManager("arguments"),
 	isBeingDestroyed(false),
+    mappingEnabled(_mappingEnabled),
     templateMode(templateMode),
-	linkedTemplateManager(nullptr),
-    mappingEnabled(_mappingEnabled)
+    linkedTemplateManager(nullptr)
 {
 	selectItemWhenCreated = false;
 	editorCanBeCollapsed = false;
