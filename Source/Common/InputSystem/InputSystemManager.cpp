@@ -10,7 +10,6 @@
 
 #include "InputSystemManager.h"
 
-#if JUCE_WINDOWS
 #include "InputDeviceHelpers.h"
 
 juce_ImplementSingleton(InputSystemManager)
@@ -425,5 +424,3 @@ ControllableUI * GamepadParameter::createDefaultUI(Controllable *)
 {
 	return new GamepadParameterUI(this);
 }
-
-#endif

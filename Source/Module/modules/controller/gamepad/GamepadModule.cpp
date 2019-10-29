@@ -10,7 +10,6 @@
 
 #include "GamepadModule.h"
 
-#if JUCE_WINDOWS
 
 GamepadModule::GamepadModule(const String & name) :
 	Module(name)
@@ -63,5 +62,3 @@ void GamepadModule::onControllableFeedbackUpdateInternal(ControllableContainer *
 		rebuildValues();
 	}
 }
-
-#endif

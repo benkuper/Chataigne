@@ -53,6 +53,10 @@
 			isa = PBXBuildFile;
 			fileRef = 2EF4541423C08B373926C946;
 		};
+		92BE03372C8379806DD57A5E = {
+			isa = PBXBuildFile;
+			fileRef = B2AE5AB8212F91ACEEB0E80E;
+		};
 		E6279834EBEDBB31676923B4 = {
 			isa = PBXBuildFile;
 			fileRef = F71AEFD7622D0B0B810D246E;
@@ -4093,6 +4097,13 @@
 			path = ../../Resources/Modules/PJLink.png;
 			sourceTree = "SOURCE_ROOT";
 		};
+		B2AE5AB8212F91ACEEB0E80E = {
+			isa = PBXFileReference;
+			lastKnownFileType = wrapper.framework;
+			name = ForceFeedback.framework;
+			path = System/Library/Frameworks/ForceFeedback.framework;
+			sourceTree = SDKROOT;
+		};
 		B3F9109E23EBCBBC1AD7FD5F = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -7365,6 +7376,7 @@
 				0C1C0CBF20BE5722919301E0,
 				8BD13F2A50FC3588DC036461,
 				2EF4541423C08B373926C946,
+				B2AE5AB8212F91ACEEB0E80E,
 				F71AEFD7622D0B0B810D246E,
 				7335A92ACDE20B14F02ADA97,
 				ACEC0AB4D367F7C1DA170CD9,
@@ -7448,7 +7460,7 @@
 					"\"../../External/sdl/lib/osx\"",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
-				OTHER_LDFLAGS = "-lServus -lartnet -lhidapi -ljoytime-core -ljoytime-input-hidapi -lSDL";
+				OTHER_LDFLAGS = "-lServus -lartnet -lhidapi -ljoytime-core -ljoytime-input-hidapi -lSDL2 -liconv";
 				PRODUCT_BUNDLE_IDENTIFIER = benkuper.Chataigne;
 				PRODUCT_NAME = "Chataigne";
 				USE_HEADERMAP = NO;
@@ -7510,7 +7522,7 @@
 				);
 				LLVM_LTO = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
-				OTHER_LDFLAGS = "-lServus -lartnet -lhidapi -ljoytime-core -ljoytime-input-hidapi -lSDL";
+				OTHER_LDFLAGS = "-lServus -lartnet -lhidapi -ljoytime-core -ljoytime-input-hidapi -lSDL2 -liconv";
 				PRODUCT_BUNDLE_IDENTIFIER = benkuper.Chataigne;
 				PRODUCT_NAME = "Chataigne";
 				USE_HEADERMAP = NO;
@@ -7937,6 +7949,7 @@
 				204F4BFB9638B83FDC0CC9CA,
 				6778D3B561B8796EC3F344CC,
 				5543461C198B589786255629,
+				92BE03372C8379806DD57A5E,
 				E6279834EBEDBB31676923B4,
 				D553CB88C72C0B51E97A4676,
 				382ACC3B858F0CF59BEA300D,

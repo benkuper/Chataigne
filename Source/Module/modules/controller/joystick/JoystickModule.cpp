@@ -10,8 +10,6 @@
 
 #include "JoystickModule.h"
 
-#if JUCE_WINDOWS
-
 JoystickModule::JoystickModule(const String & name) :
 	Module(name)
 {
@@ -65,4 +63,3 @@ void JoystickModule::onControllableFeedbackUpdateInternal(ControllableContainer 
 		rebuildValues();
 	}
 }
-#endif
