@@ -13,7 +13,8 @@
 #include "BaseGuide.h"
 
 class Guider :
-	public BaseGuide::GuideListener
+	public BaseGuide::GuideListener, 
+	public ComponentListener
 {
 public:
 	juce_DeclareSingleton(Guider, true)
@@ -30,4 +31,6 @@ public:
 	String getGuideName(int guideIndex);
 
 	void guideFinished() override;
+
+	void componentMovedOrResized (Component& component, bool wasMoved, bool wasResized) override;
 };
