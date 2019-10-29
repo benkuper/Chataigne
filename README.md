@@ -89,7 +89,7 @@ I do this on my own free time, feel free to buy me a beer :)
 
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=KLQ6QBDF3ZL2W&lc=FR&item_name=Chataigne&item_number=chataigne%2dgithub&currency_code=EUR&bn=PP%2dDonationsBF%3adonate%2epng%3aNonHosted)
 
-Are you using Chataigne on a regular basis ? Then why not support me on Patreon, so I can have a more stable way to work on it !
+Are you using Chataigne on a regular basis ? Then why not support me accordingly, so I can have a more stable way to work on it !
 
 Choose your angel weapon :
 
