@@ -31,6 +31,8 @@ OSModule::OSModule() :
 	osName = valuesCC.addStringParameter("OS Name", "Name of the OS", SystemStats::getOperatingSystemName());
 	moduleParams.hideInEditor = true;
 
+	ips = valuesCC.addStringParameter("IP", "IP that has been detected than most probable to be a LAN IP", NetworkHelpers::getLocalIP());
+
 	for (auto &c : valuesCC.controllables) c->isControllableFeedbackOnly = true;
 
 	setupIOConfiguration(false, true);

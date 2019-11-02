@@ -23,6 +23,7 @@ public:
 
 	EnumParameter * osType;
 	StringParameter * osName;
+	StringParameter* ips;
 
 	//Script
 	const Identifier launchAppId = "launchApp";
