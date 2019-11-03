@@ -1334,7 +1334,7 @@
       </MODULEPATHS>
     </XCODE_MAC>
     <LINUX_MAKE targetFolder="Builds/Raspberry" smallIcon="nVz6Li" bigIcon="nVz6Li"
-                extraLinkerFlags="-Wl,-rpath,&quot;lib&quot;" externalLibraries="bluetooth&#10;Servus&#10;curl&#10;artnet&#10;SDL2&#10;bcm_host">
+                extraLinkerFlags="-Wl,-rpath,&quot;lib&quot;" externalLibraries="bluetooth&#10;Servus&#10;curl&#10;artnet&#10;SDL2&#10;bcm_host&#10;vcos&#10;vchiq_arm">
       <CONFIGURATIONS>
         <CONFIGURATION isDebug="1" name="Debug" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/libartnet/include&#10;../../External/sdl/include&#10;/usr/include/freetype2"
                        libraryPath="../../External/servus/lib/raspberry&#10;../../External/libartnet/lib/raspberry&#10;../../External/sdl/lib/raspberry"
