@@ -214,6 +214,7 @@ void Module::setupModuleFromJSONData(var data)
 		script->filePath->customBasePath = data.getProperty("modulePath", "");
 		script->filePath->setControllableFeedbackOnly(true);
 		script->filePath->setValue(s.toString());
+		script->userCanDuplicate = false;
 	}
 
 	bool valuesAreEmpty = valuesCC.controllables.size() == 0 && valuesCC.controllableContainers.size() == 0;
