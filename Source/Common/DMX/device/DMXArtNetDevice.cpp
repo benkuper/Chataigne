@@ -68,11 +68,12 @@ void DMXArtNetDevice::setupReceiver()
 
 	if (ioNode != nullptr) artnet_destroy(ioNode);
 
-	ioNode = artnet_new(networkInterface->getValue().toString().isNotEmpty()? networkInterface->getValue().toString().toRawUTF8():NULL, false);// , true); ;
+	String interfaceString = networkInterface->getValue().toString();
+	ioNode = artnet_new(interfaceString.isNotEmpty() ? interfaceString.toRawUTF8() : NULL,2);
 
 	if (ioNode == nullptr)
 	{
-		LOGWARNING("Setup Artnet Node failed, please try with another network interface");
+		LOGWARNING("Setup Artnet Node failed on " << interfaceString << " : " << artnet_strerror());
 		return;
 	}
 
