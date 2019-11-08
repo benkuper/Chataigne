@@ -421,7 +421,7 @@ void OSCModule::onControllableFeedbackUpdateInternal(ControllableContainer * cc,
 
 	if (outputManager != nullptr && c == outputManager->enabled)
 	{
-		bool rv = receiveCC->enabled->boolValue();
+		bool rv = receiveCC != nullptr ? receiveCC->enabled->boolValue() : false;
 		bool sv = outputManager->enabled->boolValue();
 		for(auto &o : outputManager->items) o->setForceDisabled(!sv);
 		setupIOConfiguration(rv, sv);
@@ -429,7 +429,7 @@ void OSCModule::onControllableFeedbackUpdateInternal(ControllableContainer * cc,
 	}else if (receiveCC != nullptr && c == receiveCC->enabled)
 	{
 		bool rv = receiveCC->enabled->boolValue();
-		bool sv = outputManager->enabled->boolValue();
+		bool sv = outputManager != nullptr ? outputManager->enabled->boolValue() : false;
 		setupIOConfiguration(rv,sv);
 		localPort->setEnabled(rv);
 		if(!isCurrentlyLoadingData) setupReceiver();
