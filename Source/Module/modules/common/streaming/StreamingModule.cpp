@@ -392,7 +392,7 @@ void StreamingModule::sendMessage(const String & message)
 	if (!enabled->boolValue()) return;
 	if(!isReadyToSend())
 	{
-		if (logOutgoingData->boolValue()) NLOGWARNING(niceName, "Can't send message, TCP is not connected.");
+		if (logOutgoingData->boolValue()) NLOGWARNING(niceName, "Can't send message, output is not connected");
 		return;
 	}
 	
@@ -407,7 +407,7 @@ void StreamingModule::sendBytes(Array<uint8> bytes)
 	if (!enabled->boolValue()) return;
 	if(!isReadyToSend())
 	{
-		if (logOutgoingData->boolValue()) NLOGWARNING(niceName, "Can't send  data, TCP is not connected.");
+		if (logOutgoingData->boolValue()) NLOGWARNING(niceName, "Can't send  data, output is not connected.");
 		return;
 	}
 
