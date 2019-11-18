@@ -142,17 +142,14 @@ bool SerialDevice::isOpen() {
 #endif
 }
 
-int SerialDevice::writeString(String message, bool endLine)
+int SerialDevice::writeString(String message)
 {
 #if SERIALSUPPORT
 	if (!port->isOpen()) return 0;
 
-	//DBG("Write string : " << message << " -- endline ? " << String(endLine));
-	String m = message;
-	if (endLine) m += "\n";
 	try
 	{
-		return (int)port->write(m.toStdString());
+		return (int)port->write(message.toStdString());
 	}
 	catch (std::exception e)
 	{

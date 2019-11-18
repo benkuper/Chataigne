@@ -103,7 +103,7 @@ public:
 	bool isOpen();
 
 	//write functions
-	int writeString(String message, bool endLine = true);
+	int writeString(String message);
 	int writeBytes(Array<uint8_t> data);
 
 	virtual void dataReceived(const var &data) override;
