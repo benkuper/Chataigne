@@ -12,6 +12,7 @@
 
 #include "JuceHeader.h"
 #include "layers/audio/ChataigneAudioLayerListener.h"
+#include "Common/MIDI/MTCReceiver.h"
 
 class ChataigneAudioLayer;
 
@@ -22,7 +23,8 @@ class MIDIDeviceParameter;
 class ChataigneSequence :
 	public Sequence,
 	public SequenceLayerManager::ManagerListener,
-	public ChataigneAudioLayerListener
+	public ChataigneAudioLayerListener,
+	public MTCReceiver::MTCListener
 {
 public:
 	ChataigneSequence();
@@ -33,6 +35,7 @@ public:
 
 	MIDIDeviceParameter* midiSyncDevice;
 	std::unique_ptr<MTCSender> mtcSender;
+	std::unique_ptr<MTCReceiver> mtcReceiver;
 
 	Factory<SequenceLayer> layerFactory;
 
@@ -54,6 +57,9 @@ public:
 	virtual void onContainerTriggerTriggered(Trigger *) override;
 	virtual void onExternalParameterValueChanged(Parameter *) override;
 
+	virtual void mtcStarted() override;
+	virtual void mtcStopped() override;
+	virtual void mtcTimeUpdated(bool isFullFrame) override;
 
 	void loadJSONDataInternal(var data) override;
 

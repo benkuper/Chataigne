@@ -41,11 +41,11 @@ public:
 	public:
 		/** Destructor. */
 		virtual ~Listener() {}
-		virtual void midiDeviceInAdded(MIDIInputDevice * /*input*/) = 0;
-		virtual void midiDeviceOutAdded(MIDIOutputDevice * /*output*/) = 0;
+		virtual void midiDeviceInAdded(MIDIInputDevice* /*input*/) {}
+		virtual void midiDeviceOutAdded(MIDIOutputDevice* /*output*/) {}
 
-		virtual void midiDeviceInRemoved(MIDIInputDevice * /*input*/) = 0;
-		virtual void midiDeviceOutRemoved(MIDIOutputDevice * /*output*/) = 0;
+		virtual void midiDeviceInRemoved(MIDIInputDevice* /*input*/) {}
+		virtual void midiDeviceOutRemoved(MIDIOutputDevice* /*output*/) {}
 	};
 
 	ListenerList<Listener> listeners;

@@ -19,9 +19,7 @@ public:
     void setPosition(double position, bool fullFrame = false);
 	void setSpeedFactor(float speed);
 
-private:
 	MIDIOutputDevice* device;
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MTCSender)
 
 // Used only in separate thread!
 private:
@@ -57,4 +55,6 @@ private:
     int m_minute{0};
     int m_hour{0};
     int m_deviceIndex{-1};
+
+	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MTCSender)
 };

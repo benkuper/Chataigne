@@ -167,11 +167,23 @@ void ChataigneSequence::onContainerParameterChangedInternal(Parameter* p)
 
 	if (p == midiSyncDevice)
 	{
-		if (midiSyncDevice->outputDevice == nullptr) mtcSender.reset();
-		else
+		if ((mtcSender != nullptr && midiSyncDevice->outputDevice != mtcSender->device) || midiSyncDevice->outputDevice != nullptr)
 		{
-			mtcSender.reset(new MTCSender(midiSyncDevice->outputDevice));
-			mtcSender->setSpeedFactor(playSpeed->floatValue());
+			if (midiSyncDevice->outputDevice == nullptr) mtcSender.reset();
+			else
+			{
+				mtcSender.reset(new MTCSender(midiSyncDevice->outputDevice));
+				mtcSender->setSpeedFactor(playSpeed->floatValue());
+			}
+		}
+		
+		if ((mtcReceiver != nullptr && midiSyncDevice->inputDevice != mtcReceiver->device) || midiSyncDevice->inputDevice != nullptr)
+		{
+			if (midiSyncDevice->inputDevice == nullptr) mtcReceiver.reset();
+			{
+				mtcReceiver.reset(new MTCReceiver(midiSyncDevice->inputDevice));
+				mtcReceiver->addMTCListener(this);
+			}
 		}
 	}
 
@@ -189,6 +201,23 @@ void ChataigneSequence::onContainerTriggerTriggered(Trigger* t)
 void ChataigneSequence::onExternalParameterValueChanged(Parameter* p)
 {
 	if (masterAudioModule != nullptr && p == masterAudioModule->enabled) sequenceListeners.call(&SequenceListener::sequenceMasterAudioModuleChanged, this);
+}
+
+void ChataigneSequence::mtcStarted()
+{
+	isPlaying->setValue(true);
+}
+
+void ChataigneSequence::mtcStopped()
+{
+	isPlaying->setValue(false);
+}
+
+void ChataigneSequence::mtcTimeUpdated(bool isFullFrame)
+{
+	double time = mtcReceiver->getTime();
+	setCurrentTime(time, true, isFullFrame);
+
 }
 
 void ChataigneSequence::loadJSONDataInternal(var data)
