@@ -26,6 +26,7 @@ BaseCommandHandler::BaseCommandHandler(const String & name, CommandContext _cont
 BaseCommandHandler::~BaseCommandHandler()
 {
 	if (ModuleManager::getInstanceWithoutCreating() != nullptr) ModuleManager::getInstance()->removeBaseManagerListener(this);
+	if(command != nullptr && command->module != nullptr) command->module->templateManager->removeBaseManagerListener(this);
 	setCommand(nullptr);
 }
 
