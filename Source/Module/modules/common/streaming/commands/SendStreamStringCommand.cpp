@@ -27,7 +27,7 @@ SendStreamStringCommand::SendStreamStringCommand(StreamingModule* _module, Comma
 	switch (dataMode)
 	{
 	case STRING:
-		appendCR = addBoolParameter("Append CR", "Append \\r at the end of the message", true);
+		appendCR = addBoolParameter("Append CR", "Append \\r at the end of the message", false);
 		appendNL = addBoolParameter("Append NL", "Append \\n at the end of the message", true);
 
 		if (params.hasProperty("fixedValue"))
@@ -38,7 +38,7 @@ SendStreamStringCommand::SendStreamStringCommand(StreamingModule* _module, Comma
 
 		if (params.hasProperty("forceCR"))
 		{
-			appendCR->setValue(params.getProperty("forceCR", true));
+			appendCR->setValue(params.getProperty("forceCR", false));
 			appendCR->hideInEditor = true;
 		}
 
