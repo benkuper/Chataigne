@@ -152,7 +152,7 @@ void ChataigneSequence::addNewMappingLayerFromValues(Array<Point<float>> keys)
 	MappingLayer * layer = (MappingLayer *)layerManager->addItem(layerManager->factory.create("Mapping"));
 	jassert(layer != nullptr && layer->automations.size() > 0);
 
-	Array<Point<float>> simplifiedKeys = AutomationRecorder::getSimplifiedKeys(keys, .5f);
+	Array<Point<float>> simplifiedKeys = AutomationRecorder::getSimplifiedKeys(keys,.05f);
 	layer->automations[0]->addItems(simplifiedKeys, true, true, true);
 }
 
