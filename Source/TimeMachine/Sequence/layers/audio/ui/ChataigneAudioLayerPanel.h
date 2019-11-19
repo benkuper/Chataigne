@@ -32,6 +32,8 @@ public:
 	void selectedModuleChanged(ModuleChooserUI *, Module *) override;
 	void moduleListChanged(ModuleChooserUI *) override;
 
+	void mouseDown(const MouseEvent& e) override;
+
 	static bool isAudioModule(Module * m) { return dynamic_cast<AudioModule *>(m) != nullptr; }
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ChataigneAudioLayerPanel)

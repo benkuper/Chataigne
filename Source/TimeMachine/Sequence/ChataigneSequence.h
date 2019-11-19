@@ -53,6 +53,8 @@ public:
 	
     virtual bool timeIsDrivenByAudio() override;
 
+	void addNewMappingLayerFromValues(Array<Point<float>> keys);
+
 	virtual void onContainerParameterChangedInternal(Parameter *) override;
 	virtual void onContainerTriggerTriggered(Trigger *) override;
 	virtual void onExternalParameterValueChanged(Parameter *) override;

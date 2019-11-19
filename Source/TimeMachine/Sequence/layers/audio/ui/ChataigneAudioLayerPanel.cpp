@@ -59,3 +59,27 @@ void ChataigneAudioLayerPanel::moduleListChanged(ModuleChooserUI *)
 	moduleChooser.setModuleSelected(chataigneAudioLayer->audioModule, true);
 
 }
+
+void ChataigneAudioLayerPanel::mouseDown(const MouseEvent& e)
+{
+	AudioLayerPanel::mouseDown(e);
+
+	if (e.eventComponent == this)
+	{
+		PopupMenu p;
+		p.addItem(1, "Export Enveloppe to new mapping layer");
+		p.addItem(2, "Export Enveloppe to clipboard");
+
+		int result = p.show();
+		switch (result)
+		{
+		case 1:
+			chataigneAudioLayer->exportRMS(false, true);
+			break;
+
+		case 2:
+			chataigneAudioLayer->exportRMS(true, false);
+			break;
+		}
+	}
+}
