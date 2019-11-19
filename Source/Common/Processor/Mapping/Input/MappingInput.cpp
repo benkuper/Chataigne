@@ -63,7 +63,7 @@ void MappingInput::setInput(Parameter * _input)
 
 void MappingInput::onContainerParameterChanged(Parameter * p)
 {
-	if (p == inputTarget)
+	if (p == inputTarget && inputTarget->enabled)
 	{
 		setInput(inputTarget->target.wasObjectDeleted() ? nullptr : dynamic_cast<Parameter *>(inputTarget->target.get()));
 	}
