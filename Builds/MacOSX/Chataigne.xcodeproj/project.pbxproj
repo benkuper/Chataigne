@@ -217,6 +217,10 @@
 			isa = PBXBuildFile;
 			fileRef = A07AB46E1CB4B4698F148FC8;
 		};
+		CBAAB009668669B27E5D50C9 = {
+			isa = PBXBuildFile;
+			fileRef = 4774A813B7986981E14BF7C0;
+		};
 		30A52645696FAF1864CC8297 = {
 			isa = PBXBuildFile;
 			fileRef = CDC2689AEBE1AE73D05F0293;
@@ -2278,6 +2282,13 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = DMXModule.cpp;
 			path = ../../Source/Module/modules/dmx/DMXModule.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
+		4774A813B7986981E14BF7C0 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = MTCReceiver.cpp;
+			path = ../../Source/Common/MIDI/MTCReceiver.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		4791F606D65479BFEB06F778 = {
@@ -4730,6 +4741,13 @@
 			path = ../../Source/Module/modules/osc/resolume/ResolumeModule.h;
 			sourceTree = "SOURCE_ROOT";
 		};
+		D820B7269DFE5269CD8195F1 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = MTCReceiver.h;
+			path = ../../Source/Common/MIDI/MTCReceiver.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		D862BA10E224787BB6A887DD = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -5673,6 +5691,8 @@
 				5C12A4316D9EC6B2970870E9,
 				A07AB46E1CB4B4698F148FC8,
 				8F4E7615136F0F2BC4F13B36,
+				4774A813B7986981E14BF7C0,
+				D820B7269DFE5269CD8195F1,
 				CDC2689AEBE1AE73D05F0293,
 				4EF08030F4B5BF335BC0DDD8,
 			);
@@ -7395,8 +7415,8 @@
 					"_DEBUG=1",
 					"DEBUG=1",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
-					"JUCE_APP_VERSION=1.6.6",
-					"JUCE_APP_VERSION_HEX=0x10606",
+					"JUCE_APP_VERSION=1.7.0b1",
+					"JUCE_APP_VERSION_HEX=0x10700",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
 					"JucePlugin_Build_AU=0",
@@ -7455,8 +7475,8 @@
 					"_NDEBUG=1",
 					"NDEBUG=1",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
-					"JUCE_APP_VERSION=1.6.6",
-					"JUCE_APP_VERSION_HEX=0x10606",
+					"JUCE_APP_VERSION=1.7.0b1",
+					"JUCE_APP_VERSION_HEX=0x10700",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
 					"JucePlugin_Build_AU=0",
@@ -7661,6 +7681,7 @@
 				A1E12D85C58B3A0D08EBD9F3,
 				9FFD82F750C3345EF22899A6,
 				A92916EA6FDDC5574A9C7FF9,
+				CBAAB009668669B27E5D50C9,
 				30A52645696FAF1864CC8297,
 				9EA034F221797BE59DC09D6C,
 				A7542A578E1E0D55254CC460,
