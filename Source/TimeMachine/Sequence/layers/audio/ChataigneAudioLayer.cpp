@@ -151,7 +151,12 @@ void ChataigneAudioLayer::exportRMS(bool toClipboard, bool toNewMappingLayer)
 
 	
 
-	if(toClipboard) SystemClipboard::copyTextToClipboard(s);
+	if (toClipboard)
+	{
+		SystemClipboard::copyTextToClipboard(s);
+		NLOG(niceName, values.size() + " keys copied to clipboard");
+	}
+
 	if (toNewMappingLayer)
 	{
 		chataigneSequence->addNewMappingLayerFromValues(values);

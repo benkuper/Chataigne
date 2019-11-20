@@ -33,6 +33,8 @@ public:
 	void resizedInternalHeader(Rectangle<int> &r) override;
 	void resizedInternalContent(Rectangle<int> &r) override;
 
+	void mouseDown(const MouseEvent& e) override;
+
 	void newMessage(const Mapping::MappingEvent &e) override;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MappingLayerPanel)

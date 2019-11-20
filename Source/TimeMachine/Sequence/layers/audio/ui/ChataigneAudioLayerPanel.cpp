@@ -64,22 +64,26 @@ void ChataigneAudioLayerPanel::mouseDown(const MouseEvent& e)
 {
 	AudioLayerPanel::mouseDown(e);
 
-	if (e.eventComponent == this)
+	if (e.mods.isRightButtonDown())
 	{
-		PopupMenu p;
-		p.addItem(1, "Export Enveloppe to new mapping layer");
-		p.addItem(2, "Export Enveloppe to clipboard");
-
-		int result = p.show();
-		switch (result)
+		if (e.eventComponent == this)
 		{
-		case 1:
-			chataigneAudioLayer->exportRMS(false, true);
-			break;
+			PopupMenu p;
+			p.addItem(1, "Export Enveloppe to new mapping layer");
+			p.addItem(2, "Export Enveloppe to clipboard");
 
-		case 2:
-			chataigneAudioLayer->exportRMS(true, false);
-			break;
+			int result = p.show();
+			switch (result)
+			{
+			case 1:
+				chataigneAudioLayer->exportRMS(false, true);
+				break;
+
+			case 2:
+				chataigneAudioLayer->exportRMS(true, false);
+				break;
+			}
 		}
 	}
+	
 }

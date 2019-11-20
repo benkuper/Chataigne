@@ -78,6 +78,28 @@ void MappingLayerPanel::resizedInternalContent(Rectangle<int>& r)
 	if(automationInspector != nullptr) automationInspector->setBounds(cr);
 }
 
+void MappingLayerPanel::mouseDown(const MouseEvent& e)
+{
+	SequenceLayerPanel::mouseDown(e);
+
+	if (e.mods.isRightButtonDown())
+	{
+		if (e.eventComponent == this)
+		{
+			PopupMenu p;
+			p.addItem(1, "Export baked values to clipboard");
+
+			int result = p.show();
+			switch (result)
+			{
+			case 1:
+				mappingLayer->exportBakedValues();
+				break;
+			}
+		}
+	}
+}
+
 void MappingLayerPanel::newMessage(const Mapping::MappingEvent & e)
 {
 	switch (e.type)

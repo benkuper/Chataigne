@@ -255,6 +255,33 @@ void MappingLayer::loadJSONDataInternal(var data)
 	recorder.loadJSONData(data.getProperty("recorder", var()));
 }
 
+void MappingLayer::exportBakeValues()
+{
+	double t = 0;
+	double step = 1.0 / sequence->fps->floatValue();;
+	Array<Array<float>> values;
+	while (t <= sequence->totalTime->floatValue())
+	{
+		Array<float> v;
+		for (auto& a : automations) v.add(a->getValueForPosition(t));
+		t += step;
+	}
+
+	String s;
+	for (auto& va : values)
+	{
+		if(s.isNotEmpty()) s += "\n";
+
+		for (int i = 0; i < va.size(); i++)
+		{
+			s += (i > 0 ? "," : "") + String(va[i]);
+		}
+	}
+
+	SystemClipboard::copyTextToClipboard(s);
+	NLOG(niceName, values.size() + " keys copied to clipboard");
+}
+
 void MappingLayer::selectAll(bool addToSelection)
 {
 	if (mode->getValueDataAsEnum<Mode>() == MODE_COLOR)
