@@ -261,10 +261,12 @@ void MappingLayer::exportBakedValues(bool dataOnly)
 	double step = 1.0 / sequence->fps->floatValue();;
 	
 	Array<Array<float>> values;
+	bool colorMode = mode->getValueDataAsEnum<Mode>() == MODE_COLOR;
+
 	while (t <= sequence->totalTime->floatValue())
 	{
 		Array<float> v;
-		if (mode == MODE_COLOR)
+		if (colorMode)
 		{
 			Colour c = colorManager->getColorForPosition(t);
 			v.add(c.getFloatRed());
