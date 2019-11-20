@@ -38,7 +38,7 @@ public:
 
 	virtual float getVolumeFactor() override;
 
-	void exportRMS(bool toClipboard, bool toNewMappingLayer);
+	void exportRMS(bool toNewMappingLayer, bool toClipboard, bool dataOnly = false);
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;

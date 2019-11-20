@@ -104,7 +104,7 @@ float ChataigneAudioLayer::getVolumeFactor()
 	return AudioLayer::getVolumeFactor() * audioModule->outVolume->floatValue();
 }
 
-void ChataigneAudioLayer::exportRMS(bool toClipboard, bool toNewMappingLayer)
+void ChataigneAudioLayer::exportRMS(bool toNewMappingLayer, bool toClipboard, bool dataOnly)
 {
 	double frameLength = 1.0 / sequence->fps->intValue();
 	int numFrames = sequence->totalTime->floatValue() / frameLength;
@@ -146,15 +146,15 @@ void ChataigneAudioLayer::exportRMS(bool toClipboard, bool toNewMappingLayer)
 	for (int i = 0; i < values.size(); i++)
 	{
 		if (i > 0) s += "\n";
-		s += String(i)+","+String(values[i].x,3)+","+String(values[i].y, 3);
+		if (!dataOnly) s += String(i) + "\t" + String(values[i].x, 3) + "\t";
+		s+= String(values[i].y, 3);
 	}
 
-	
 
 	if (toClipboard)
 	{
 		SystemClipboard::copyTextToClipboard(s);
-		NLOG(niceName, values.size() + " keys copied to clipboard");
+		NLOG(niceName, values.size() <<  " keys copied to clipboard");
 	}
 
 	if (toNewMappingLayer)

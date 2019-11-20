@@ -88,12 +88,17 @@ void MappingLayerPanel::mouseDown(const MouseEvent& e)
 		{
 			PopupMenu p;
 			p.addItem(1, "Export baked values to clipboard");
+			p.addItem(2, "Export baked values to clipboard (data only)");
 
 			int result = p.show();
 			switch (result)
 			{
 			case 1:
-				mappingLayer->exportBakedValues();
+				mappingLayer->exportBakedValues(false);
+				break;
+
+			case 2:
+				mappingLayer->exportBakedValues(true);
 				break;
 			}
 		}

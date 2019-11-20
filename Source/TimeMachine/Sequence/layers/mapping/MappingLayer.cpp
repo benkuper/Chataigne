@@ -255,23 +255,40 @@ void MappingLayer::loadJSONDataInternal(var data)
 	recorder.loadJSONData(data.getProperty("recorder", var()));
 }
 
-void MappingLayer::exportBakedValues()
+void MappingLayer::exportBakedValues(bool dataOnly)
 {
 	double t = 0;
 	double step = 1.0 / sequence->fps->floatValue();;
+	
 	Array<Array<float>> values;
 	while (t <= sequence->totalTime->floatValue())
 	{
 		Array<float> v;
-		for (auto& a : automations) v.add(a->getValueForPosition(t));
+		if (mode == MODE_COLOR)
+		{
+			Colour c = colorManager->getColorForPosition(t);
+			v.add(c.getFloatRed());
+			v.add(c.getFloatGreen());
+			v.add(c.getFloatBlue());
+			v.add(c.getFloatAlpha());
+		}
+		else
+		{
+			for (auto& a : automations) v.add(a->getValueForPosition(t));
+		}
 		t += step;
+
+		values.add(v);
 	}
 
 	String s;
-	for (auto& va : values)
+	for (int iv = 0; iv < values.size(); iv++)
 	{
 		if(s.isNotEmpty()) s += "\n";
 
+		if(!dataOnly) s += String(iv) + "\t" + String(iv * step) + "\t";
+
+		Array<float> va = values[iv];
 		for (int i = 0; i < va.size(); i++)
 		{
 			s += (i > 0 ? "," : "") + String(va[i]);
@@ -279,7 +296,7 @@ void MappingLayer::exportBakedValues()
 	}
 
 	SystemClipboard::copyTextToClipboard(s);
-	NLOG(niceName, values.size() + " keys copied to clipboard");
+	NLOG(niceName, values.size() << " keys copied to clipboard");
 }
 
 void MappingLayer::selectAll(bool addToSelection)
