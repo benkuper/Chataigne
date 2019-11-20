@@ -255,7 +255,7 @@ void MappingLayer::loadJSONDataInternal(var data)
 	recorder.loadJSONData(data.getProperty("recorder", var()));
 }
 
-void MappingLayer::exportBakeValues()
+void MappingLayer::exportBakedValues()
 {
 	double t = 0;
 	double step = 1.0 / sequence->fps->floatValue();;

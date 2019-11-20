@@ -55,7 +55,7 @@ public:
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
 
-	virtual void exportBakeValues();
+	virtual void exportBakedValues();
 
 	virtual void selectAll(bool addToSelection = false) override;
 
