@@ -62,4 +62,8 @@ void JoystickModule::onControllableFeedbackUpdateInternal(ControllableContainer 
 	{
 		rebuildValues();
 	}
+	else if (cc == &valuesCC)
+	{
+		inActivityTrigger->trigger();
+	}
 }

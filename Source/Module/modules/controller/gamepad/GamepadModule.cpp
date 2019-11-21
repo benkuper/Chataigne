@@ -61,4 +61,9 @@ void GamepadModule::onControllableFeedbackUpdateInternal(ControllableContainer *
 	{
 		rebuildValues();
 	}
+	else if (cc == &gamepadParam->gamepad->axesCC || cc == &gamepadParam->gamepad->buttonsCC)
+	{
+		DBG("Game pad param changed");
+
+	}
 }
