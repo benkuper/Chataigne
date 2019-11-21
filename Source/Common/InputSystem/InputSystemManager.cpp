@@ -175,18 +175,24 @@ void InputSystemManager::run()
 				}
 			}
 
+			Array<Joystick*> joysticksToRemove;
 			for (auto &j : joysticks)
 			{
 				//check removed devices
-				if (!SDL_JoystickGetAttached(j->joystick)) removeJoystick(j);
+				
+				if (!SDL_JoystickGetAttached(j->joystick)) joysticksToRemove.add(j);
 			}
+
+			for (auto& j : joysticksToRemove) removeJoystick(j);
 			
+			Array<Gamepad*> gamepadsToRemove;
 			for (auto &g : gamepads)
 			{
 				//check removed devices
-				DBG("Check if device is opened : " << (int)SDL_GameControllerGetAttached(g->gamepad));
-				if (!SDL_GameControllerGetAttached(g->gamepad)) removeGamepad(g);
+				if (!SDL_GameControllerGetAttached(g->gamepad)) gamepadsToRemove.add(g);
 			}
+			for (auto& g : gamepadsToRemove) removeGamepad(g);
+
 			
 			lastCheckTime = Time::getApproximateMillisecondCounter();
 		}
