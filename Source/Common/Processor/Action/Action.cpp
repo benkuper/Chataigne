@@ -98,12 +98,12 @@ void Action::setHasOffConsequences(bool value)
 	}
 }
 
-void Action::updateDisables()
+void Action::updateDisables(bool force)
 {
 	Processor::updateDisables();
-	cdm.setForceDisabled(forceDisabled || !enabled->boolValue());
-	csmOn->setForceDisabled(forceDisabled || !enabled->boolValue());
-	if (hasOffConsequences) csmOff->setForceDisabled(forceDisabled || !enabled->boolValue());
+	cdm.setForceDisabled(forceDisabled || !enabled->boolValue(), force);
+	csmOn->setForceDisabled(forceDisabled || !enabled->boolValue(), force);
+	if (hasOffConsequences) csmOff->setForceDisabled(forceDisabled || !enabled->boolValue(), force);
 }
 
 var Action::getJSONData()

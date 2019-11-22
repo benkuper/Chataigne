@@ -86,6 +86,7 @@ void ConditionManager::setHasActivationDefinitions(bool value)
 
 void ConditionManager::addItemInternal(Condition * c, var data)
 {
+	c->setForceDisabled(forceDisabled);
 	c->addConditionListener(this);
 	conditionOperator->hideInEditor = items.size() <= 1;
 	validationTime->hideInEditor = items.size() == 0;
@@ -110,10 +111,12 @@ void ConditionManager::removeItemInternal(Condition * c)
 
 void ConditionManager::setForceDisabled(bool value, bool force)
 {
-	if (forceDisabled == value && !force) return;
+	if (forceDisabled == value && !force) return; 
 	forceDisabled = value;
 	if (forceDisabled) isValid->setValue(false);
-	for (auto &i : items) i->forceDisabled = value;
+	for (auto &i : items) i->setForceDisabled(value);
+
+	checkAllConditions();
 }
 
 void ConditionManager::checkAllConditions(bool emptyIsValid, bool dispatchOnlyOnValidationChange)
@@ -179,13 +182,6 @@ void ConditionManager::onContainerParameterChanged(Parameter * p)
 void ConditionManager::loadJSONDataInternal(var data)
 {
 	BaseManager::loadJSONDataInternal(data);
-
-	for (auto& c : items)
-	{
-		ActivationCondition* ac = dynamic_cast<ActivationCondition*>(c);
-		if (ac != nullptr && ac->type == ActivationCondition::ON_ACTIVATE) ac->isValid->setValue(!forceDisabled);
-	}
-
 	checkAllConditions();
 }
 

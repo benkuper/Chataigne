@@ -77,7 +77,7 @@ void ProcessorManager::checkAllActivateActions()
 		for (auto &c : a->cdm.items)
 		{
 			ActivationCondition * ac = dynamic_cast<ActivationCondition *>(c);
-			if(ac != nullptr) ac->isValid->setValue(ac->type == ActivationCondition::Type::ON_ACTIVATE, false, true);
+			if(ac != nullptr) ac->isValid->setValue(ac->type == ActivationCondition::Type::ON_ACTIVATE && !ac->forceDisabled, false, true);
 		}
 
 		/*
