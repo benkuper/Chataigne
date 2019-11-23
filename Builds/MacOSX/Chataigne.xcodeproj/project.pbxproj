@@ -605,6 +605,18 @@
 			isa = PBXBuildFile;
 			fileRef = EE7734BE83426C490017DACD;
 		};
+		2478FB086800DB0ACF02D31D = {
+			isa = PBXBuildFile;
+			fileRef = 37E289E87C093EDA2DD5E0A9;
+		};
+		51F7C0D07880B6F7C96E553D = {
+			isa = PBXBuildFile;
+			fileRef = 4117B7EBA8E2519477B13B03;
+		};
+		1B88D1493C688D73F12DFC15 = {
+			isa = PBXBuildFile;
+			fileRef = 829270114E6479B154663AFB;
+		};
 		5799B2059BFEDDAEFBFA0DBB = {
 			isa = PBXBuildFile;
 			fileRef = E4F8764330C0A93E8E182D22;
@@ -1787,6 +1799,13 @@
 			path = ../../Source/StateMachine/Transition/ui/StateTransitionManagerUI.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
+		25BEBD67D99D0F053109ECD4 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = StreamDeckManager.h;
+			path = ../../Source/Module/modules/controller/streamdeck/StreamDeckManager.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		25F87024F7686AF5C7769784 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -2053,6 +2072,13 @@
 			path = ../../Source/Module/modules/controller/wiimote/lib/wiiuse/events.c;
 			sourceTree = "SOURCE_ROOT";
 		};
+		37E289E87C093EDA2DD5E0A9 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = StreamDeck.cpp;
+			path = ../../Source/Module/modules/controller/streamdeck/StreamDeck.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		394CDA5516B2A8FB43FF8A6C = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -2142,6 +2168,13 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = Point2DComparators.cpp;
 			path = ../../Source/Common/Processor/Action/Condition/Comparator/comparators/Point2DComparators.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
+		4117B7EBA8E2519477B13B03 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = StreamDeckManager.cpp;
+			path = ../../Source/Module/modules/controller/streamdeck/StreamDeckManager.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		4122FC0A883E05DB2F0B99F8 = {
@@ -3096,6 +3129,13 @@
 			path = ../../Source/Module/Module.h;
 			sourceTree = "SOURCE_ROOT";
 		};
+		743E0CFF477957077A08AB44 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = StreamDeck.h;
+			path = ../../Source/Module/modules/controller/streamdeck/StreamDeck.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		7548D863C3CCA4FF27887C03 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -3248,6 +3288,13 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = "include_juce_analytics.cpp";
 			path = "../../JuceLibraryCode/include_juce_analytics.cpp";
+			sourceTree = "SOURCE_ROOT";
+		};
+		829270114E6479B154663AFB = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = StreamDeckModule.cpp;
+			path = ../../Source/Module/modules/controller/streamdeck/StreamDeckModule.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		830C08E624F7EF32DD46FE2B = {
@@ -4396,6 +4443,13 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = StateModule.cpp;
 			path = ../../Source/Module/modules/state/StateModule.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
+		C83B5CE21064E44E054924B8 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = StreamDeckModule.h;
+			path = ../../Source/Module/modules/controller/streamdeck/StreamDeckModule.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		C86A957BC44904609CAE5C07 = {
@@ -6383,6 +6437,19 @@
 			name = common;
 			sourceTree = "<group>";
 		};
+		F3330C384960BC2EFE9674FD = {
+			isa = PBXGroup;
+			children = (
+				37E289E87C093EDA2DD5E0A9,
+				743E0CFF477957077A08AB44,
+				4117B7EBA8E2519477B13B03,
+				25BEBD67D99D0F053109ECD4,
+				829270114E6479B154663AFB,
+				C83B5CE21064E44E054924B8,
+			);
+			name = streamdeck;
+			sourceTree = "<group>";
+		};
 		8F6EAC12C7E1A5C5DC92DA84 = {
 			isa = PBXGroup;
 			children = (
@@ -6485,6 +6552,7 @@
 		F8AE04C7094D4FF5D9786FDE = {
 			isa = PBXGroup;
 			children = (
+				F3330C384960BC2EFE9674FD,
 				8F6EAC12C7E1A5C5DC92DA84,
 				FE04D271FB3D733172FD0288,
 				5196179CA1A0DDE3AAF00F3C,
@@ -7438,6 +7506,7 @@
 					"../../External/libartnet/include",
 					"../../External/joycon/include",
 					"../../External/sdl/include",
+					"../../External/hidapi/include",
 					"../../Source",
 					"$(inherited)",
 				);
@@ -7499,6 +7568,7 @@
 					"../../External/libartnet/include",
 					"../../External/joycon/include",
 					"../../External/sdl/include",
+					"../../External/hidapi/include",
 					"../../Source",
 					"$(inherited)",
 				);
@@ -7778,6 +7848,9 @@
 				9A671E6CC2C86695A5BE4A84,
 				31362975C7078AE89FAD4322,
 				D24D9221F54DA1CD4E4E3900,
+				2478FB086800DB0ACF02D31D,
+				51F7C0D07880B6F7C96E553D,
+				1B88D1493C688D73F12DFC15,
 				5799B2059BFEDDAEFBFA0DBB,
 				6712C6C8DE23D03DD58C1ED7,
 				4C2D775E82C8238217DCB568,

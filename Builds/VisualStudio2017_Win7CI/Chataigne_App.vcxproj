@@ -47,12 +47,12 @@
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(Platform)\$(Configuration)\App\</IntDir>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Chataigne</TargetName>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</GenerateManifest>
-    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(LibraryPath);../../External/joycon/lib/win;../../External/servus/lib/win/x64/debug;../../External/dnssd/lib;../../External/sdl/lib/win;../../External/libartnet/lib/win/debug</LibraryPath>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(LibraryPath);../../External/joycon/lib/win;../../External/servus/lib/win/x64/debug;../../External/dnssd/lib;../../External/sdl/lib/win;../../External/libartnet/lib/win/debug;../../External/hidapi/lib/win/x64</LibraryPath>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\..\..\Binaries\Win7CI\App\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)\$(Configuration)\App\</IntDir>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Chataigne</TargetName>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</GenerateManifest>
-    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(LibraryPath);../../External/joycon/lib/win;../../External/servus/lib/win/x64/release;../../External/dnssd/lib;../../External/sdl/lib/win;../../External/libartnet/lib/win/release</LibraryPath>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(LibraryPath);../../External/joycon/lib/win;../../External/servus/lib/win/x64/release;../../External/dnssd/lib;../../External/sdl/lib/win;../../External/libartnet/lib/win/release;../../External/hidapi/lib/win/x64</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Midl>
@@ -65,7 +65,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <AdditionalIncludeDirectories>..\..\JuceLibraryCode;..\..\..\JUCE\modules;..\..\..\JUCE Modules;../../External/wiiuse;../../External/serial/include;../../External/asio;../../External/joycon/include;../../External/servus/include;../../External/dnssd/include;../../External/sdl/include;../../External/libartnet/include;../../Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\JuceLibraryCode;..\..\..\JUCE\modules;..\..\..\JUCE Modules;../../External/wiiuse;../../External/serial/include;../../External/asio;../../External/joycon/include;../../External/servus/include;../../External/dnssd/include;../../External/sdl/include;../../External/libartnet/include;../../External/hidapi/include;../../Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;DEBUG;_DEBUG;USE_KINECT=0;JUCER_VS2017_7EC6161C=1;JUCE_APP_VERSION=1.7.0d;JUCE_APP_VERSION_HEX=0x10700;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_RTAS=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
@@ -88,17 +88,17 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(IntDir)\Chataigne.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
-      <AdditionalLibraryDirectories>../../External/joycon/lib/win;../../External/servus/lib/win/x64/debug;../../External/dnssd/lib;../../External/sdl/lib/win;../../External/libartnet/lib/win/debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../../External/joycon/lib/win;../../External/servus/lib/win/x64/debug;../../External/dnssd/lib;../../External/sdl/lib/win;../../External/libartnet/lib/win/debug;../../External/hidapi/lib/win/x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <LargeAddressAware>true</LargeAddressAware>
-      <AdditionalDependencies>Setupapi.lib;hid.lib;joytime-core.lib;joytime-input-hidapi.lib;Servus.lib;dnssd.lib;SDL2.lib;libartnet.lib;iphlpapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Setupapi.lib;hid.lib;joytime-core.lib;joytime-input-hidapi.lib;Servus.lib;dnssd.lib;SDL2.lib;libartnet.lib;iphlpapi.lib;Setupapi.lib;hid.lib;hidapi_static.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Bscmake>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <OutputFile>$(IntDir)\Chataigne.bsc</OutputFile>
     </Bscmake>
     <Lib>
-      <AdditionalDependencies>Setupapi.lib;hid.lib;joytime-core.lib;joytime-input-hidapi.lib;Servus.lib;dnssd.lib;SDL2.lib;libartnet.lib;iphlpapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>../../External/joycon/lib/win;../../External/servus/lib/win/x64/debug;../../External/dnssd/lib;../../External/sdl/lib/win;../../External/libartnet/lib/win/debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>Setupapi.lib;hid.lib;joytime-core.lib;joytime-input-hidapi.lib;Servus.lib;dnssd.lib;SDL2.lib;libartnet.lib;iphlpapi.lib;Setupapi.lib;hid.lib;hidapi_static.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>../../External/joycon/lib/win;../../External/servus/lib/win/x64/debug;../../External/dnssd/lib;../../External/sdl/lib/win;../../External/libartnet/lib/win/debug;../../External/hidapi/lib/win/x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -111,7 +111,7 @@
     </Midl>
     <ClCompile>
       <Optimization>Full</Optimization>
-      <AdditionalIncludeDirectories>..\..\JuceLibraryCode;..\..\..\JUCE\modules;..\..\..\JUCE Modules;../../External/wiiuse;../../External/serial/include;../../External/asio;../../External/joycon/include;../../External/servus/include;../../External/dnssd/include;../../External/sdl/include;../../External/libartnet/include;../../Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\JuceLibraryCode;..\..\..\JUCE\modules;..\..\..\JUCE Modules;../../External/wiiuse;../../External/serial/include;../../External/asio;../../External/joycon/include;../../External/servus/include;../../External/dnssd/include;../../External/sdl/include;../../External/libartnet/include;../../External/hidapi/include;../../Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;NDEBUG;USE_KINECT=0;JUCER_VS2017_7EC6161C=1;JUCE_APP_VERSION=1.7.0d;JUCE_APP_VERSION_HEX=0x10700;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_RTAS=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
@@ -136,17 +136,17 @@
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <AdditionalLibraryDirectories>../../External/joycon/lib/win;../../External/servus/lib/win/x64/release;../../External/dnssd/lib;../../External/sdl/lib/win;../../External/libartnet/lib/win/release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../../External/joycon/lib/win;../../External/servus/lib/win/x64/release;../../External/dnssd/lib;../../External/sdl/lib/win;../../External/libartnet/lib/win/release;../../External/hidapi/lib/win/x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <LargeAddressAware>true</LargeAddressAware>
-      <AdditionalDependencies>Setupapi.lib;hid.lib;joytime-core.lib;joytime-input-hidapi.lib;Servus.lib;dnssd.lib;SDL2.lib;libartnet.lib;iphlpapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Setupapi.lib;hid.lib;joytime-core.lib;joytime-input-hidapi.lib;Servus.lib;dnssd.lib;SDL2.lib;libartnet.lib;iphlpapi.lib;Setupapi.lib;hid.lib;hidapi_static.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Bscmake>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <OutputFile>$(IntDir)\Chataigne.bsc</OutputFile>
     </Bscmake>
     <Lib>
-      <AdditionalDependencies>Setupapi.lib;hid.lib;joytime-core.lib;joytime-input-hidapi.lib;Servus.lib;dnssd.lib;SDL2.lib;libartnet.lib;iphlpapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>../../External/joycon/lib/win;../../External/servus/lib/win/x64/release;../../External/dnssd/lib;../../External/sdl/lib/win;../../External/libartnet/lib/win/release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>Setupapi.lib;hid.lib;joytime-core.lib;joytime-input-hidapi.lib;Servus.lib;dnssd.lib;SDL2.lib;libartnet.lib;iphlpapi.lib;Setupapi.lib;hid.lib;hidapi_static.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>../../External/joycon/lib/win;../../External/servus/lib/win/x64/release;../../External/dnssd/lib;../../External/sdl/lib/win;../../External/libartnet/lib/win/release;../../External/hidapi/lib/win/x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -280,6 +280,9 @@
     <ClCompile Include="..\..\Source\Module\modules\common\streaming\NetworkStreamingModule.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\common\streaming\StreamingModule.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\common\ui\EnablingNetworkControllableContainerEditor.cpp"/>
+    <ClCompile Include="..\..\Source\Module\modules\controller\streamdeck\StreamDeck.cpp"/>
+    <ClCompile Include="..\..\Source\Module\modules\controller\streamdeck\StreamDeckManager.cpp"/>
+    <ClCompile Include="..\..\Source\Module\modules\controller\streamdeck\StreamDeckModule.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\controller\joystick\JoystickModule.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\controller\gamepad\GamepadModule.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\controller\joycon\JoyConModule.cpp"/>
@@ -3066,6 +3069,9 @@
     <ClInclude Include="..\..\Source\Module\modules\common\streaming\NetworkStreamingModule.h"/>
     <ClInclude Include="..\..\Source\Module\modules\common\streaming\StreamingModule.h"/>
     <ClInclude Include="..\..\Source\Module\modules\common\ui\EnablingNetworkControllableContainerEditor.h"/>
+    <ClInclude Include="..\..\Source\Module\modules\controller\streamdeck\StreamDeck.h"/>
+    <ClInclude Include="..\..\Source\Module\modules\controller\streamdeck\StreamDeckManager.h"/>
+    <ClInclude Include="..\..\Source\Module\modules\controller\streamdeck\StreamDeckModule.h"/>
     <ClInclude Include="..\..\Source\Module\modules\controller\joystick\JoystickModule.h"/>
     <ClInclude Include="..\..\Source\Module\modules\controller\gamepad\GamepadModule.h"/>
     <ClInclude Include="..\..\Source\Module\modules\controller\joycon\JoyConModule.h"/>

@@ -21,6 +21,7 @@
 
 #include "Module/ModuleManager.h"
 #include "Module/modules/controller/wiimote/WiimoteManager.h"
+#include "Module/modules/controller/streamdeck/StreamDeckManager.h"
 #include "Module/Routing/ModuleRouterManager.h"
 #include "Module/Community/CommunityModuleManager.h"
 
@@ -78,6 +79,7 @@ ChataigneEngine::~ChataigneEngine()
 	WiimoteManager::deleteInstance();
 
 	InputSystemManager::deleteInstance();
+	StreamDeckManager::deleteInstance();
 
 	ChataigneAssetManager::deleteInstance();
 

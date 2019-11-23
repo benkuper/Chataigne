@@ -242,6 +242,9 @@
     <Filter Include="Chataigne\Source\Module\modules\common">
       <UniqueIdentifier>{E89D3705-9633-01AF-C6F5-82B057BCA7D4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\controller\streamdeck">
+      <UniqueIdentifier>{8B21480E-FB52-AD3C-6BC5-EACF9DDD9542}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Chataigne\Source\Module\modules\controller\joystick">
       <UniqueIdentifier>{6DA3C3D4-EC70-8927-8E2C-CFF5F088926D}</UniqueIdentifier>
     </Filter>
@@ -1554,6 +1557,15 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\common\ui\EnablingNetworkControllableContainerEditor.cpp">
       <Filter>Chataigne\Source\Module\modules\common\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Module\modules\controller\streamdeck\StreamDeck.cpp">
+      <Filter>Chataigne\Source\Module\modules\controller\streamdeck</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Module\modules\controller\streamdeck\StreamDeckManager.cpp">
+      <Filter>Chataigne\Source\Module\modules\controller\streamdeck</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Module\modules\controller\streamdeck\StreamDeckModule.cpp">
+      <Filter>Chataigne\Source\Module\modules\controller\streamdeck</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\controller\joystick\JoystickModule.cpp">
       <Filter>Chataigne\Source\Module\modules\controller\joystick</Filter>
@@ -5096,6 +5108,15 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\common\ui\EnablingNetworkControllableContainerEditor.h">
       <Filter>Chataigne\Source\Module\modules\common\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Module\modules\controller\streamdeck\StreamDeck.h">
+      <Filter>Chataigne\Source\Module\modules\controller\streamdeck</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Module\modules\controller\streamdeck\StreamDeckManager.h">
+      <Filter>Chataigne\Source\Module\modules\controller\streamdeck</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Module\modules\controller\streamdeck\StreamDeckModule.h">
+      <Filter>Chataigne\Source\Module\modules\controller\streamdeck</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\controller\joystick\JoystickModule.h">
       <Filter>Chataigne\Source\Module\modules\controller\joystick</Filter>

@@ -43,6 +43,7 @@
 #include "modules/controller/wiimote/WiimoteModule.h"
 #include "modules/controller/keyboard/KeyboardModule.h"
 #include "modules/controller/kinect/KinectV2Module.h"
+#include "modules/controller/streamdeck/StreamDeckModule.h"
 
 #include "modules/generators/metronome/MetronomeModule.h"
 #include "modules/generators/signal/SignalModule.h"
@@ -77,7 +78,10 @@ ModuleFactory::ModuleFactory() {
 	moduleDefs.add(new ModuleDefinition("Hardware", "Wiimote", &WiimoteModule::create));
 	moduleDefs.add(new ModuleDefinition("Hardware", "JoyCon", &JoyConModule::create));
 	moduleDefs.add(new ModuleDefinition("Hardware", "Keyboard", &KeyboardModule::create));
-
+	moduleDefs.add(new ModuleDefinition("Hardware", "KinectV2", &KinectV2Module::create));
+	moduleDefs.add(new ModuleDefinition("Hardware", "Gamepad", &GamepadModule::create));
+	moduleDefs.add(new ModuleDefinition("Hardware", "Joystick", &JoystickModule::create));
+	moduleDefs.add(new ModuleDefinition("Hardware", "Stream Deck", &StreamDeckModule::create));
 
 
 	moduleDefs.add(new ModuleDefinition("Software", "DLight", &DLightModule::create));
@@ -88,11 +92,6 @@ ModuleFactory::ModuleFactory() {
 	moduleDefs.add(new ModuleDefinition("Software", "Reaper", &ReaperModule::create));
 	moduleDefs.add(new ModuleDefinition("Software", "Resolume", &ResolumeModule::create));
 	moduleDefs.add(new ModuleDefinition("Software", "Watchout", &WatchoutModule::create));
-
-
-	moduleDefs.add(new ModuleDefinition("Hardware", "KinectV2", &KinectV2Module::create));
-	moduleDefs.add(new ModuleDefinition("Hardware", "Gamepad", &GamepadModule::create));
-	moduleDefs.add(new ModuleDefinition("Hardware", "Joystick", &JoystickModule::create));
 	moduleDefs.add(new ModuleDefinition("Software", "PowerPoint", &PowerPointModule::create));
 
 	moduleDefs.add(new ModuleDefinition("Generator", "Metronome", &MetronomeModule::create));
