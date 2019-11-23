@@ -14,7 +14,6 @@ ActivationCondition::ActivationCondition(var params) :
 	Condition(getTypeStringStatic((Type)(int)params.getProperty("type",ON_ACTIVATE))),
 	type((Type)(int)params.getProperty("type", ON_ACTIVATE))
 {
-	enabled->setValue(false);
 }
 
 ActivationCondition::~ActivationCondition()

@@ -13,27 +13,44 @@
 #include "JuceHeader.h"
 #include "hidapi.h"
 
+
+#define ICON_SIZE 72
+#define ICON_PIXELS ICON_SIZE*ICON_SIZE
+#define ICON_BYTES ICON_PIXELS * 3
+
+#define PACKET1_HEADER_SIZE 70
+#define PACKET1_PIXELS 2583   
+#define PACKET1_PIXELS_BYTES PACKET1_PIXELS * 3   
+
+#define PACKET2_HEADER_SIZE 16
+#define PACKET2_PIXELS 2601  
+#define PACKET2_PIXELS_BYTES PACKET2_PIXELS * 3   
+
+#define PACKET_SIZE 8191
+
 class StreamDeck :
 	public Thread
 {
 public:
 	StreamDeck(hid_device * device, String serialNumber);
-	~StreamDeck();
+	virtual ~StreamDeck();
 
 	hid_device* device;
 	String serialNumber;
 
 	int numButtons;
-	int imageSize;
 	Array<bool> buttonStates;
+
+	SpinLock writeLock;
 
 	void reset();
 	void setBrightness(float brightness);
 
-	void setColor(int buttonID, Colour color);
-	void setImage(int buttonID, Image image);
+	void setColor(int buttonID, Colour color, bool highlight);
+	void setImage(int buttonID, Image image, bool highlight);
+	void setImage(int buttonID, Image image, Colour tint, bool highlight);
 
-	void sendButtonImageData(int buttonID, MemoryBlock data);
+	void sendButtonImageData(int buttonID, const uint8_t * data);
 	void sendFeatureReport(const uint8_t* data, int length);
 
 	void run() override;
@@ -50,4 +67,21 @@ public:
 	ListenerList<StreamDeckListener> deviceListeners;
 	void addStreamDeckListener(StreamDeckListener* newListener) { deviceListeners.add(newListener); }
 	void removeStreamDeckListener(StreamDeckListener* listener) { deviceListeners.remove(listener); }
+
+
+private:
+
+	const uint8_t resetData[17]{ 0x0B, 0x63, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+	uint8_t brightnessData[17]{ 0x05, 0x55, 0xAA, 0xD1, 0x01, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+	
+	uint8_t page1Header[70]{
+			0x02, 0x01, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x42, 0x4D, 0xF6,
+				0x3C, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x36, 0x00, 0x00, 0x00, 0x28, 0x00, 0x00, 0x00, 0x48, 0x00, 0x00, 0x00,
+				0x48, 0x00, 0x00, 0x00, 0x01, 0x00, 0x18, 0x00, 0x00, 0x00, 0x00, 0x00, 0xC0, 0x3C, 0x00, 0x00, 0x13, 0x0E, 0x00,
+				0x00, 0x13, 0x0E, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	};
+
+	uint8_t page2Header[16]{
+			0x02, 0x01, 0x02, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	};
 };

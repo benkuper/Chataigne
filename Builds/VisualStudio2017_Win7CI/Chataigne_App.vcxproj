@@ -280,6 +280,7 @@
     <ClCompile Include="..\..\Source\Module\modules\common\streaming\NetworkStreamingModule.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\common\streaming\StreamingModule.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\common\ui\EnablingNetworkControllableContainerEditor.cpp"/>
+    <ClCompile Include="..\..\Source\Module\modules\controller\streamdeck\commands\StreamDeckCommand.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\controller\streamdeck\StreamDeck.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\controller\streamdeck\StreamDeckManager.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\controller\streamdeck\StreamDeckModule.cpp"/>
@@ -3069,6 +3070,7 @@
     <ClInclude Include="..\..\Source\Module\modules\common\streaming\NetworkStreamingModule.h"/>
     <ClInclude Include="..\..\Source\Module\modules\common\streaming\StreamingModule.h"/>
     <ClInclude Include="..\..\Source\Module\modules\common\ui\EnablingNetworkControllableContainerEditor.h"/>
+    <ClInclude Include="..\..\Source\Module\modules\controller\streamdeck\commands\StreamDeckCommand.h"/>
     <ClInclude Include="..\..\Source\Module\modules\controller\streamdeck\StreamDeck.h"/>
     <ClInclude Include="..\..\Source\Module\modules\controller\streamdeck\StreamDeckManager.h"/>
     <ClInclude Include="..\..\Source\Module\modules\controller\streamdeck\StreamDeckModule.h"/>

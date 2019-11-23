@@ -605,6 +605,10 @@
 			isa = PBXBuildFile;
 			fileRef = EE7734BE83426C490017DACD;
 		};
+		2E8F52C68A6542A832F8BC0A = {
+			isa = PBXBuildFile;
+			fileRef = FA28A6E3D992D8E5E14F097E;
+		};
 		2478FB086800DB0ACF02D31D = {
 			isa = PBXBuildFile;
 			fileRef = 37E289E87C093EDA2DD5E0A9;
@@ -1265,6 +1269,13 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = "include_juce_organicui2.cpp";
 			path = "../../JuceLibraryCode/include_juce_organicui2.cpp";
+			sourceTree = "SOURCE_ROOT";
+		};
+		03BEA098E001E6F85A88913C = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = StreamDeckCommand.h;
+			path = ../../Source/Module/modules/controller/streamdeck/commands/StreamDeckCommand.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		040F7315F50E852C0354EF84 = {
@@ -5404,6 +5415,13 @@
 			path = ../../Source/Common/Command/ui/CommandChooserUI.h;
 			sourceTree = "SOURCE_ROOT";
 		};
+		FA28A6E3D992D8E5E14F097E = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = StreamDeckCommand.cpp;
+			path = ../../Source/Module/modules/controller/streamdeck/commands/StreamDeckCommand.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		FA4C14B931E890BB595FF1AA = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -6437,9 +6455,19 @@
 			name = common;
 			sourceTree = "<group>";
 		};
+		DD1BA0B1F720D98F56FC561F = {
+			isa = PBXGroup;
+			children = (
+				FA28A6E3D992D8E5E14F097E,
+				03BEA098E001E6F85A88913C,
+			);
+			name = commands;
+			sourceTree = "<group>";
+		};
 		F3330C384960BC2EFE9674FD = {
 			isa = PBXGroup;
 			children = (
+				DD1BA0B1F720D98F56FC561F,
 				37E289E87C093EDA2DD5E0A9,
 				743E0CFF477957077A08AB44,
 				4117B7EBA8E2519477B13B03,
@@ -7848,6 +7876,7 @@
 				9A671E6CC2C86695A5BE4A84,
 				31362975C7078AE89FAD4322,
 				D24D9221F54DA1CD4E4E3900,
+				2E8F52C68A6542A832F8BC0A,
 				2478FB086800DB0ACF02D31D,
 				51F7C0D07880B6F7C96E553D,
 				1B88D1493C688D73F12DFC15,

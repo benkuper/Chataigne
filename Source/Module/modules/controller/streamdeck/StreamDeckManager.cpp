@@ -16,6 +16,7 @@ juce_ImplementSingleton(StreamDeckManager)
 StreamDeckManager::StreamDeckManager() :
 	queuedNotifier(100)
 {
+	checkDevices();
 	startTimerHz(1);
 }
 

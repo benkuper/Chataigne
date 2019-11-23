@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    StreamDeck.cpp
-    Created: 23 Nov 2019 2:48:28am
-    Author:  bkupe
+	StreamDeck.cpp
+	Created: 23 Nov 2019 2:48:28am
+	Author:  bkupe
 
   ==============================================================================
 */
@@ -15,8 +15,7 @@ StreamDeck::StreamDeck(hid_device* device, String serialNumber) :
 	Thread("StreamDeck"),
 	device(device),
 	serialNumber(serialNumber),
-	numButtons(15),
-	imageSize(72)
+	numButtons(15)
 {
 	hid_set_nonblocking(device, 1);
 	for (int i = 0; i < numButtons; i++) buttonStates.add(false);
@@ -33,28 +32,103 @@ StreamDeck::~StreamDeck()
 
 void StreamDeck::reset()
 {
-	const uint8_t resetData[17]{ 0x0B, 0x63, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 	sendFeatureReport(resetData, 17);
 }
 
 void StreamDeck::setBrightness(float brightness)
 {
-	const uint8_t brightnessData[17]{ 0x05, 0x55, 0xAA, 0xD1, 0x01, (uint8_t)(brightness * 111), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+	brightnessData[5] = (uint8_t)(brightness * 100);
 	sendFeatureReport(brightnessData, 17);
 }
 
-void StreamDeck::setColor(int buttonID, Colour color)
+void StreamDeck::setColor(int buttonID, Colour color, bool highlight)
 {
-	
+	if(highlight) color = color.brighter(1);
+	uint8_t r = color.getRed();
+	uint8_t g = color.getGreen();
+	uint8_t b = color.getBlue();
+	uint8_t data[ICON_BYTES];
+
+	for (int i = 0; i < ICON_PIXELS; i++)
+	{
+
+		data[i * 3] = b;
+		data[i * 3 + 1] = g;
+		data[i * 3 + 2] = r;
+	}
+
+
+	sendButtonImageData(buttonID, data);
 }
 
-void StreamDeck::setImage(int buttonID, Image image)
+void StreamDeck::setImage(int buttonID, Image image, bool highlight)
 {
-	
+	image = image.rescaled(ICON_SIZE, ICON_SIZE).convertedToFormat(Image::RGB);
+	Image iconImage(Image::RGB, ICON_SIZE, ICON_SIZE, true);
+
+	for (int tx = 0; tx < image.getWidth(); tx++)
+	{
+		for (int ty = 0; ty < image.getHeight(); ty++)
+		{
+			Colour ic = image.getPixelAt(image.getWidth() - tx, ty);
+			iconImage.setPixelAt(tx, ty, ic.brighter(highlight?1:0));
+		}
+	}
+
+	Image::BitmapData data(iconImage, Image::BitmapData::ReadWriteMode::readOnly);
+	sendButtonImageData(buttonID, data.data);
 }
 
-void StreamDeck::sendButtonImageData(int buttonID, MemoryBlock data)
+void StreamDeck::setImage(int buttonID, Image image, Colour tint, bool highlight)
 {
+	image = image.rescaled(ICON_SIZE, ICON_SIZE).convertedToFormat(Image::RGB);
+	Image iconImage(Image::RGB, ICON_SIZE, ICON_SIZE, true);
+	
+	for (int tx = 0; tx < image.getWidth(); tx++)
+	{
+		for (int ty = 0; ty < image.getHeight(); ty++)
+		{
+			Colour ic = image.getPixelAt(image.getWidth()-tx, ty);
+			ic = ic.withHue(tint.getHue()).withMultipliedBrightness(tint.getBrightness()).brighter(highlight?1:0);
+			iconImage.setPixelAt(tx, ty, ic);
+		}
+	}
+
+	Image::BitmapData data(iconImage, Image::BitmapData::ReadWriteMode::readOnly);
+	sendButtonImageData(buttonID, data.data);
+}
+
+
+void StreamDeck::sendButtonImageData(int buttonID, const uint8_t* data)
+{
+	if(Engine::mainEngine->isClearing) return;
+	writeLock.enter();
+
+	page1Header[5] = buttonID+1;
+	page2Header[5] = buttonID+1;
+
+	MemoryBlock packet1;
+	packet1.ensureSize(PACKET_SIZE, true);
+	packet1.copyFrom(page1Header, 0, PACKET1_HEADER_SIZE);
+	packet1.copyFrom(data, PACKET1_HEADER_SIZE, PACKET1_PIXELS_BYTES);
+
+	MemoryBlock packet2;
+	packet2.ensureSize(PACKET_SIZE, true);
+	packet2.copyFrom(page2Header, 0, PACKET2_HEADER_SIZE);
+	packet2.copyFrom(data + PACKET1_PIXELS_BYTES, PACKET2_HEADER_SIZE, PACKET2_PIXELS_BYTES);
+
+	DBG("Packet size : " << packet1.getSize());
+	try {
+
+		hid_write(device, (unsigned char*)packet1.getData(), PACKET_SIZE);
+		hid_write(device, (unsigned char*)packet2.getData(), PACKET_SIZE);
+	}
+	catch (std::exception e)
+	{
+		NLOGERROR("StreamDeck", "Error write image to device");
+	}
+
+	writeLock.exit();
 }
 
 void StreamDeck::sendFeatureReport(const uint8_t* data, int length)
@@ -107,7 +181,7 @@ void StreamDeck::run()
 			device = nullptr;
 			return;
 		}
-		
+
 		sleep(20);
 	}
 }

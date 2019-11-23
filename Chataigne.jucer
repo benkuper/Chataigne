@@ -680,6 +680,12 @@
           </GROUP>
           <GROUP id="{A597C064-C7DE-23AD-F74A-2E029F90FCEA}" name="controller">
             <GROUP id="{8F6890F4-73F1-C709-3041-54E6E08838F1}" name="streamdeck">
+              <GROUP id="{913B8A45-77B5-B711-04D5-75EC35D70E4C}" name="commands">
+                <FILE id="iVwQ3o" name="StreamDeckCommand.cpp" compile="1" resource="0"
+                      file="Source/Module/modules/controller/streamdeck/commands/StreamDeckCommand.cpp"/>
+                <FILE id="w8vTKb" name="StreamDeckCommand.h" compile="0" resource="0"
+                      file="Source/Module/modules/controller/streamdeck/commands/StreamDeckCommand.h"/>
+              </GROUP>
               <FILE id="d5RAM9" name="StreamDeck.cpp" compile="1" resource="0" file="Source/Module/modules/controller/streamdeck/StreamDeck.cpp"/>
               <FILE id="XnBZLE" name="StreamDeck.h" compile="0" resource="0" file="Source/Module/modules/controller/streamdeck/StreamDeck.h"/>
               <FILE id="UgZLTU" name="StreamDeckManager.cpp" compile="1" resource="0"

@@ -32,8 +32,6 @@ public:
 
 	StreamDeck* openDevice(hid_device_info* deviceInfo);
 
-	void flash();
-
 	virtual void timerCallback() override;
 
 	class StreamDeckManagerEvent

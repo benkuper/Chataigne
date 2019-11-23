@@ -26,6 +26,10 @@ public:
 	BoolParameter * isConnected;
 	StreamDeck* device;
 
+	Trigger* reset;
+	BoolParameter* colorizeImages;
+	BoolParameter* highlightPressedButtons;
+
 	FloatParameter* brightness;
 	ControllableContainer colorsCC;
 	Array<ColorParameter*> colors;
@@ -37,9 +41,8 @@ public:
 	void rebuildValues();
 
 	void setDevice(StreamDeck* newDevice);
+	void updateButton(int id);
 
-
-	// Inherited via StreamDeckListener
 	virtual void streamDeckButtonPressed(int button) override;
 	virtual void streamDeckButtonReleased(int button) override;
 
