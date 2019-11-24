@@ -23,8 +23,11 @@ public:
 	StreamDeckModule(const String& name = "StreamDeck");
 	~StreamDeckModule();
 
-	BoolParameter * isConnected;
+	BoolParameter* isConnected;
 	StreamDeck* device;
+
+	enum DeviceType { STANDARD = 15, MINI = 6, XL = 32 };
+	EnumParameter* deviceType;
 
 	Trigger* reset;
 	BoolParameter* colorizeImages;

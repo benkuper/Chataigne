@@ -14,11 +14,10 @@
 StreamDeck::StreamDeck(hid_device* device, String serialNumber) :
 	Thread("StreamDeck"),
 	device(device),
-	serialNumber(serialNumber),
-	numButtons(15)
+	serialNumber(serialNumber)
 {
 	hid_set_nonblocking(device, 1);
-	for (int i = 0; i < numButtons; i++) buttonStates.add(false);
+	for (int i = 0; i < STREAMDECK_MAX_BUTTONS; i++) buttonStates.add(false);
 
 	startThread();
 }
@@ -163,7 +162,7 @@ void StreamDeck::run()
 				if (data[0] == 1)
 				{
 					DBG("Data is button states");
-					for (int i = 1; i <= numButtons; i++) {
+					for (int i = 1; i <= STREAMDECK_MAX_BUTTONS; i++) {
 						bool state = data[i] > 0;
 						int buttonID = i - 1;
 						if (buttonStates[buttonID] != state)

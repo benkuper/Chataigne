@@ -28,6 +28,8 @@
 
 #define PACKET_SIZE 8191
 
+#define STREAMDECK_MAX_BUTTONS 32
+
 class StreamDeck :
 	public Thread
 {
@@ -38,7 +40,6 @@ public:
 	hid_device* device;
 	String serialNumber;
 
-	int numButtons;
 	Array<bool> buttonStates;
 
 	SpinLock writeLock;

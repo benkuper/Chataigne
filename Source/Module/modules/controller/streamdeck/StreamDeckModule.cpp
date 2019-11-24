@@ -29,6 +29,10 @@ StreamDeckModule::StreamDeckModule(const String& name) :
 	colorsCC.editorIsCollapsed = true;
 	imagesCC.editorIsCollapsed = true;
 
+
+	deviceType = moduleParams.addEnumParameter("Device type", "Type of the device");
+	deviceType->addOption("StreamDeck (15 buttons)", STANDARD)->addOption("StreamDeck XL (32 buttons)", XL)->addOption("StreamDeck Mini (6 buttons)", MINI);
+
 	brightness = moduleParams.addFloatParameter("Brightness", "Sets the brigthness of the deck's backlight", .75f, 0, 1);
 	
 	reset = moduleParams.addTrigger("Reset", "Resets the stream deck");
@@ -40,9 +44,10 @@ StreamDeckModule::StreamDeckModule(const String& name) :
 	defManager->add(CommandDefinition::createDef(this, "", "Set All", &StreamDeckCommand::create)->addParam("action", StreamDeckCommand::SET_ALL_COLOR));
 	defManager->add(CommandDefinition::createDef(this, "", "Set Brightness", &StreamDeckCommand::create)->addParam("action", StreamDeckCommand::SET_BRIGHTNESS));
 
+	rebuildValues();
+
 	setDevice(StreamDeckManager::getInstance()->devices.size() > 0 ? StreamDeckManager::getInstance()->devices[0] : nullptr);
 	StreamDeckManager::getInstance()->addAsyncManagerListener(this);
-
 }
 
 StreamDeckModule::~StreamDeckModule()
@@ -52,25 +57,27 @@ StreamDeckModule::~StreamDeckModule()
 }
 
 void StreamDeckModule::rebuildValues()
-{
-	if (device != nullptr && device->numButtons != buttonStates.size())
+{ 
+	int numButtons = (int)deviceType->getValueData();
+	
+	for (int i = buttonStates.size(); i < numButtons; i++)
 	{
-		valuesCC.clear();
-		colorsCC.clear();
-		imagesCC.clear();
-		buttonStates.clear();
-		colors.clear();
-		images.clear();
+		String userIndex = String(buttonStates.size() + 1);
+		buttonStates.add(valuesCC.addBoolParameter("Button " + userIndex, "Is button " + userIndex+ " pressed ?", false));
+		colors.add(colorsCC.addColorParameter("Image " + userIndex, "If not image, color for button " +userIndex, Colours::black));
+		images.add(imagesCC.addFileParameter("Image " + userIndex, "Image for button" + userIndex+ " (overrides color)"));
+	}
 
-		if (device != nullptr)
-		{
-			for (int i = 0; i < device->numButtons; i++)
-			{
-				buttonStates.add(valuesCC.addBoolParameter("Button " + String(i + 1), "Is button " + String(i + 1) + " pressed ?", false));
-				colors.add(colorsCC.addColorParameter("Image " + String(i + 1), "If not image, color for button " + String(i + 1), Colours::black));
-				images.add(imagesCC.addFileParameter("Image " + String(i + 1), "Image for button" + String(i + 1) + " (overrides color)"));
-			}
-		}
+	while (buttonStates.size() > numButtons)
+	{
+		buttonStates.remove(numButtons);
+		valuesCC.removeControllable(valuesCC.controllables[numButtons]);
+		
+		colors.remove(numButtons);
+		colorsCC.removeControllable(colorsCC.controllables[numButtons]);
+
+		images.remove(numButtons);
+		imagesCC.removeControllable(imagesCC.controllables[numButtons]);
 	}
 }
 
@@ -87,16 +94,10 @@ void StreamDeckModule::setDevice(StreamDeck* newDevice)
 	if (device != nullptr)
 	{
 		device->addStreamDeckListener(this);
-		
-	}
-
-	rebuildValues();
-
-	if (device != nullptr)
-	{
 		device->setBrightness(brightness->floatValue());
 
-		for (int i = 0; i < device->numButtons; i++) updateButton(i);
+		int numButtons = (int)deviceType->getValueData();
+		for (int i = 0; i < numButtons; i++) updateButton(i);
 	}
 
 	isConnected->setValue(device != nullptr);
@@ -106,6 +107,10 @@ void StreamDeckModule::setDevice(StreamDeck* newDevice)
 void StreamDeckModule::updateButton(int id)
 {
 	if (device == nullptr) return;
+
+	int numButtons = deviceType->getValueData();
+	if (id < 0 || id >= numButtons) return;
+
 	File f = images[id]->getFile();
 
 	if (f.existsAsFile())
@@ -153,6 +158,11 @@ void StreamDeckModule::streamDeckButtonReleased(int button)
 void StreamDeckModule::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c)
 {
 	Module::onControllableFeedbackUpdateInternal(cc, c);
+	
+	if (c == deviceType)
+	{
+		rebuildValues();
+	}
 
 	if (!enabled->boolValue()) return;
 	if (device == nullptr) return;
@@ -160,11 +170,13 @@ void StreamDeckModule::onControllableFeedbackUpdateInternal(ControllableContaine
 	if (c == reset)
 	{
 		device->reset();
-		for (int i = 0; i < device->numButtons; i++) updateButton(i);
+		int numButtons = (int)deviceType->getValueData();
+		for (int i = 0; i < numButtons; i++) updateButton(i);
 	}
 	else if (c == colorizeImages)
 	{
-		for (int i = 0; i < device->numButtons; i++) updateButton(i);
+		int numButtons = (int)deviceType->getValueData();
+		for (int i = 0; i < numButtons; i++) updateButton(i);
 	}
 	else if (c == brightness)
 	{
@@ -178,10 +190,8 @@ void StreamDeckModule::onControllableFeedbackUpdateInternal(ControllableContaine
 	else if (c->parentContainer == &imagesCC)
 	{
 		int id = images.indexOf((FileParameter*)c);
-		updateButton(id);	
+		updateButton(id);
 	}
-	
-
 }
 
 
