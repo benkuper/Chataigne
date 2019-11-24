@@ -20,6 +20,23 @@ Chataigne as been designed to fit both linear shows and realtime/interactive pro
 
 You can check the tutorials to better understand what and how you can use Chataigne for your projects.
 
+### Features
+  - Supports communication and synchronization of the following protocols :
+    - OSC
+    - MIDI
+    - DMX
+    - Serial
+    - UDP
+    - TCP
+    - HTTP
+    - PJLink 
+ - State Machine : Create both simple and complex real-time interactions and automations.
+ - Time Machine : Create sequence based animations and triggers
+ - Module Router : Easily route multiple values at once from one software to another, independant of the protocol
+ - Custom Variables : Store and manipulate values, use presets and interpolate group of values.
+ - Dashboard : Create your own UI and controls, customize colors and labels
+
+
 ## Using the software
 Compiled versions for Windows, Mac OSX and Linux are available at : http://benjamin.kuperberg.fr/chataigne/#download
 If beta versions are available, they will show up on this page.
