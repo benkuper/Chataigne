@@ -317,7 +317,6 @@
     <ClCompile Include="..\..\Source\Module\modules\generic\commands\GenericScriptCommand.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\generic\ChataigneGenericModule.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\midi\commands\MIDICommands.cpp"/>
-    <ClCompile Include="..\..\Source\Module\modules\midi\Launchpad\LaunchpadModule.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\midi\MIDIModule.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\oscquery\MadMapperModule.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\oscquery\generic\ui\OSCQueryModuleEditor.cpp"/>
@@ -3094,7 +3093,6 @@
     <ClInclude Include="..\..\Source\Module\modules\generic\commands\GenericScriptCommand.h"/>
     <ClInclude Include="..\..\Source\Module\modules\generic\ChataigneGenericModule.h"/>
     <ClInclude Include="..\..\Source\Module\modules\midi\commands\MIDICommands.h"/>
-    <ClInclude Include="..\..\Source\Module\modules\midi\Launchpad\LaunchpadModule.h"/>
     <ClInclude Include="..\..\Source\Module\modules\midi\MIDIModule.h"/>
     <ClInclude Include="..\..\Source\Module\modules\oscquery\MadMapperModule.h"/>
     <ClInclude Include="..\..\Source\Module\modules\oscquery\generic\ui\OSCQueryModuleEditor.h"/>
@@ -4147,9 +4145,13 @@
   <ItemGroup>
     <None Include="..\..\Resources\Modules\DLight.png"/>
     <None Include="..\..\Resources\Modules\DMX.png"/>
+    <None Include="..\..\Resources\Modules\Gamepad.png"/>
     <None Include="..\..\Resources\Modules\HeavyM.png"/>
     <None Include="..\..\Resources\Modules\HTTP.png"/>
+    <None Include="..\..\Resources\Modules\JoyCon.png"/>
+    <None Include="..\..\Resources\Modules\Joystick.png"/>
     <None Include="..\..\Resources\Modules\Keyboard.png"/>
+    <None Include="..\..\Resources\Modules\KinectV2.png"/>
     <None Include="..\..\Resources\Modules\LiveOSC2.png"/>
     <None Include="..\..\Resources\Modules\MadMapper.png"/>
     <None Include="..\..\Resources\Modules\Metronome.png"/>
@@ -4165,11 +4167,13 @@
     <None Include="..\..\Resources\Modules\Serial.png"/>
     <None Include="..\..\Resources\Modules\Signal.png"/>
     <None Include="..\..\Resources\Modules\Sound Card.png"/>
+    <None Include="..\..\Resources\Modules\Stream Deck.png"/>
     <None Include="..\..\Resources\Modules\TCP Client.png"/>
     <None Include="..\..\Resources\Modules\TCP Server.png"/>
     <None Include="..\..\Resources\Modules\Time.png"/>
     <None Include="..\..\Resources\Modules\UDP.png"/>
     <None Include="..\..\Resources\Modules\Watchout.png"/>
+    <None Include="..\..\Resources\Modules\Wiimote.png"/>
     <None Include="..\..\Resources\Templates\Scripts\commandScriptTemplate.js"/>
     <None Include="..\..\Resources\Templates\Scripts\conditionScriptTemplate.js"/>
     <None Include="..\..\Resources\Templates\Scripts\filterScriptTemplate.js"/>

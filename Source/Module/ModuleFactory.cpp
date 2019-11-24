@@ -31,7 +31,6 @@
 #include "modules/tcp/tcpserver/TCPServerModule.h"
 
 #include "modules/midi/MIDIModule.h"
-#include "modules/midi/Launchpad/LaunchpadModule.h"
 
 #include "modules/serial/SerialModule.h"
 #include "modules/udp/UDPModule.h"
@@ -74,7 +73,6 @@ ModuleFactory::ModuleFactory() {
 
 	moduleDefs.add(new ModuleDefinition("Hardware", "Sound Card", &AudioModule::create));
 
-	moduleDefs.add(new ModuleDefinition("Hardware", "Launchpad", &LaunchpadModule::create));
 	moduleDefs.add(new ModuleDefinition("Hardware", "Wiimote", &WiimoteModule::create));
 	moduleDefs.add(new ModuleDefinition("Hardware", "JoyCon", &JoyConModule::create));
 	moduleDefs.add(new ModuleDefinition("Hardware", "Keyboard", &KeyboardModule::create));

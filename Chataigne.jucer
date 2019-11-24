@@ -10,9 +10,13 @@
       <GROUP id="{400148EF-B215-CD72-18E1-183E2FCE16F3}" name="Modules">
         <FILE id="MPJkAm" name="DLight.png" compile="0" resource="1" file="Resources/Modules/DLight.png"/>
         <FILE id="kdkONp" name="DMX.png" compile="0" resource="1" file="Resources/Modules/DMX.png"/>
+        <FILE id="yfJH3x" name="Gamepad.png" compile="0" resource="1" file="Resources/Modules/Gamepad.png"/>
         <FILE id="I0DSTK" name="HeavyM.png" compile="0" resource="1" file="Resources/Modules/HeavyM.png"/>
         <FILE id="OrCxSg" name="HTTP.png" compile="0" resource="1" file="Resources/Modules/HTTP.png"/>
+        <FILE id="jWmnHY" name="JoyCon.png" compile="0" resource="1" file="Resources/Modules/JoyCon.png"/>
+        <FILE id="c0VYrw" name="Joystick.png" compile="0" resource="1" file="Resources/Modules/Joystick.png"/>
         <FILE id="lCZ3px" name="Keyboard.png" compile="0" resource="1" file="Resources/Modules/Keyboard.png"/>
+        <FILE id="E3etXD" name="KinectV2.png" compile="0" resource="1" file="Resources/Modules/KinectV2.png"/>
         <FILE id="k0DW1I" name="LiveOSC2.png" compile="0" resource="1" file="Resources/Modules/LiveOSC2.png"/>
         <FILE id="XESC79" name="MadMapper.png" compile="0" resource="1" file="Resources/Modules/MadMapper.png"/>
         <FILE id="Cwbr53" name="Metronome.png" compile="0" resource="1" file="Resources/Modules/Metronome.png"/>
@@ -28,11 +32,13 @@
         <FILE id="FUQUfm" name="Serial.png" compile="0" resource="1" file="Resources/Modules/Serial.png"/>
         <FILE id="Pjs5Ut" name="Signal.png" compile="0" resource="1" file="Resources/Modules/Signal.png"/>
         <FILE id="Pa5iXe" name="Sound Card.png" compile="0" resource="1" file="Resources/Modules/Sound Card.png"/>
+        <FILE id="CNldkC" name="Stream Deck.png" compile="0" resource="1" file="Resources/Modules/Stream Deck.png"/>
         <FILE id="VUSpt3" name="TCP Client.png" compile="0" resource="1" file="Resources/Modules/TCP Client.png"/>
         <FILE id="JHC4oG" name="TCP Server.png" compile="0" resource="1" file="Resources/Modules/TCP Server.png"/>
         <FILE id="WCdCQ8" name="Time.png" compile="0" resource="1" file="Resources/Modules/Time.png"/>
         <FILE id="Yc4byM" name="UDP.png" compile="0" resource="1" file="Resources/Modules/UDP.png"/>
         <FILE id="cODnxv" name="Watchout.png" compile="0" resource="1" file="Resources/Modules/Watchout.png"/>
+        <FILE id="gSXz9z" name="Wiimote.png" compile="0" resource="1" file="Resources/Modules/Wiimote.png"/>
       </GROUP>
       <GROUP id="{2B6637A1-A2F4-FF34-9B3E-D1D7E87E01F8}" name="Templates">
         <GROUP id="{053D51A3-B6CA-559C-CCC3-779F67848D87}" name="Scripts">
@@ -814,12 +820,6 @@
               <FILE id="b959uH" name="MIDICommands.cpp" compile="1" resource="0"
                     file="Source/Module/modules/midi/commands/MIDICommands.cpp"/>
               <FILE id="XXXL2t" name="MIDICommands.h" compile="0" resource="0" file="Source/Module/modules/midi/commands/MIDICommands.h"/>
-            </GROUP>
-            <GROUP id="{EC4AAFFE-0A29-00EE-1387-BD4F26B16B50}" name="Launchpad">
-              <FILE id="ayHbBk" name="LaunchpadModule.cpp" compile="1" resource="0"
-                    file="Source/Module/modules/midi/Launchpad/LaunchpadModule.cpp"/>
-              <FILE id="JD2TxJ" name="LaunchpadModule.h" compile="0" resource="0"
-                    file="Source/Module/modules/midi/Launchpad/LaunchpadModule.h"/>
             </GROUP>
             <FILE id="GmYxyc" name="MIDIModule.cpp" compile="1" resource="0" file="Source/Module/modules/midi/MIDIModule.cpp"/>
             <FILE id="dCkFW4" name="MIDIModule.h" compile="0" resource="0" file="Source/Module/modules/midi/MIDIModule.h"/>

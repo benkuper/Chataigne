@@ -14,14 +14,26 @@ namespace BinaryData
     extern const char*   DMX_png;
     const int            DMX_pngSize = 1298;
 
+    extern const char*   Gamepad_png;
+    const int            Gamepad_pngSize = 3840;
+
     extern const char*   HeavyM_png;
     const int            HeavyM_pngSize = 3533;
 
     extern const char*   HTTP_png;
     const int            HTTP_pngSize = 1102;
 
+    extern const char*   JoyCon_png;
+    const int            JoyCon_pngSize = 3212;
+
+    extern const char*   Joystick_png;
+    const int            Joystick_pngSize = 5538;
+
     extern const char*   Keyboard_png;
     const int            Keyboard_pngSize = 1860;
+
+    extern const char*   KinectV2_png;
+    const int            KinectV2_pngSize = 2254;
 
     extern const char*   LiveOSC2_png;
     const int            LiveOSC2_pngSize = 3172;
@@ -68,6 +80,9 @@ namespace BinaryData
     extern const char*   Sound_Card_png;
     const int            Sound_Card_pngSize = 1266;
 
+    extern const char*   Stream_Deck_png;
+    const int            Stream_Deck_pngSize = 2693;
+
     extern const char*   TCP_Client_png;
     const int            TCP_Client_pngSize = 2909;
 
@@ -82,6 +97,9 @@ namespace BinaryData
 
     extern const char*   Watchout_png;
     const int            Watchout_pngSize = 2380;
+
+    extern const char*   Wiimote_png;
+    const int            Wiimote_pngSize = 2124;
 
     extern const char*   commandScriptTemplate_js;
     const int            commandScriptTemplate_jsSize = 444;
@@ -159,7 +177,7 @@ namespace BinaryData
     const int            stripe_pngSize = 2043;
 
     // Number of elements in the namedResourceList and originalFileNames arrays.
-    const int namedResourceListSize = 50;
+    const int namedResourceListSize = 56;
 
     // Points to the start of a list of resource names.
     extern const char* namedResourceList[];

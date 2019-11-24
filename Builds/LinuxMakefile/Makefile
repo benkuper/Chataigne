@@ -234,7 +234,6 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/GenericScriptCommand_99bd8596.o \
   $(JUCE_OBJDIR)/ChataigneGenericModule_d6802829.o \
   $(JUCE_OBJDIR)/MIDICommands_121216e.o \
-  $(JUCE_OBJDIR)/LaunchpadModule_654c7bb.o \
   $(JUCE_OBJDIR)/MIDIModule_d3422ef9.o \
   $(JUCE_OBJDIR)/MadMapperModule_33fa8ca3.o \
   $(JUCE_OBJDIR)/OSCQueryModuleEditor_f12aa46b.o \
@@ -1186,11 +1185,6 @@ $(JUCE_OBJDIR)/ChataigneGenericModule_d6802829.o: ../../Source/Module/modules/ge
 $(JUCE_OBJDIR)/MIDICommands_121216e.o: ../../Source/Module/modules/midi/commands/MIDICommands.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling MIDICommands.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/LaunchpadModule_654c7bb.o: ../../Source/Module/modules/midi/Launchpad/LaunchpadModule.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling LaunchpadModule.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/MIDIModule_d3422ef9.o: ../../Source/Module/modules/midi/MIDIModule.cpp

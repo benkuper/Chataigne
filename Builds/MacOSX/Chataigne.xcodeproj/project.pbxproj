@@ -761,10 +761,6 @@
 			isa = PBXBuildFile;
 			fileRef = C0BFDCF118F92A603852B8EB;
 		};
-		61B19AD58450E773E66D0342 = {
-			isa = PBXBuildFile;
-			fileRef = EB2F2B9007A710D4B07ABEF8;
-		};
 		EBB25F3C554B4D3C4931FA0B = {
 			isa = PBXBuildFile;
 			fileRef = 0189433D1F58B3EFCB328C09;
@@ -1243,6 +1239,13 @@
 			path = ../../Source/Common/Processor/Action/Action.h;
 			sourceTree = "SOURCE_ROOT";
 		};
+		01AF4475609BC6E15C3754AA = {
+			isa = PBXFileReference;
+			lastKnownFileType = image.png;
+			name = "Stream Deck.png";
+			path = "../../Resources/Modules/Stream Deck.png";
+			sourceTree = "SOURCE_ROOT";
+		};
 		01FB0EC51EDF5579E6446D73 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -1474,6 +1477,13 @@
 			path = ../../Source/Common/Processor/Action/Consequence/Consequence.h;
 			sourceTree = "SOURCE_ROOT";
 		};
+		0E23FCDD33ADDAC7FAFF8BD6 = {
+			isa = PBXFileReference;
+			lastKnownFileType = image.png;
+			name = Gamepad.png;
+			path = ../../Resources/Modules/Gamepad.png;
+			sourceTree = "SOURCE_ROOT";
+		};
 		10B33E7F3EE7009BEA77D0AC = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -1613,6 +1623,13 @@
 			name = "juce_video";
 			path = "~/JUCE/modules/juce_video";
 			sourceTree = "<absolute>";
+		};
+		197076D5A22E98797D3FB07B = {
+			isa = PBXFileReference;
+			lastKnownFileType = image.png;
+			name = KinectV2.png;
+			path = ../../Resources/Modules/KinectV2.png;
+			sourceTree = "SOURCE_ROOT";
 		};
 		197C3A8890035B180289E60E = {
 			isa = PBXFileReference;
@@ -3602,6 +3619,13 @@
 			path = ../../Source/Common/Processor/Mapping/Filter/filters/number/CurveMapFilter.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
+		93E3633923505621F586C26E = {
+			isa = PBXFileReference;
+			lastKnownFileType = image.png;
+			name = Wiimote.png;
+			path = ../../Resources/Modules/Wiimote.png;
+			sourceTree = "SOURCE_ROOT";
+		};
 		95AEC1AF13540DDDA6F391C8 = {
 			isa = PBXFileReference;
 			lastKnownFileType = file;
@@ -4631,6 +4655,13 @@
 			path = ../../Source/StateMachine/State/ui/StateUI.h;
 			sourceTree = "SOURCE_ROOT";
 		};
+		D0E586C56C805B4A09C03550 = {
+			isa = PBXFileReference;
+			lastKnownFileType = image.png;
+			name = Joystick.png;
+			path = ../../Resources/Modules/Joystick.png;
+			sourceTree = "SOURCE_ROOT";
+		};
 		D0FA69340D3CAF9809B29B29 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -5163,13 +5194,6 @@
 			path = "../../Source/CustomVariables/Preset/Morpher/jc_voronoi.h";
 			sourceTree = "SOURCE_ROOT";
 		};
-		EB2F2B9007A710D4B07ABEF8 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = LaunchpadModule.cpp;
-			path = ../../Source/Module/modules/midi/Launchpad/LaunchpadModule.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
 		EBC87E462F16C039A00173C9 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -5268,6 +5292,13 @@
 			path = ../../Source/Common/Processor/Action/Consequence/Consequence.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
+		F14BD61EF6AB97B4C7433424 = {
+			isa = PBXFileReference;
+			lastKnownFileType = image.png;
+			name = JoyCon.png;
+			path = ../../Resources/Modules/JoyCon.png;
+			sourceTree = "SOURCE_ROOT";
+		};
 		F36349200785EF7B0D1E7329 = {
 			isa = PBXFileReference;
 			lastKnownFileType = wrapper.framework;
@@ -5308,13 +5339,6 @@
 			lastKnownFileType = sourcecode.c.c;
 			name = "os_nix.c";
 			path = "../../Source/Module/modules/controller/wiimote/lib/wiiuse/os_nix.c";
-			sourceTree = "SOURCE_ROOT";
-		};
-		F55BA3F57B4EEBB3B8A5134D = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = LaunchpadModule.h;
-			path = ../../Source/Module/modules/midi/Launchpad/LaunchpadModule.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		F56F22637845D7F122197D93 = {
@@ -5518,9 +5542,13 @@
 			children = (
 				5E64FD363DAEBC97B49C0E98,
 				068D5BDCBB49D14D8C13012E,
+				0E23FCDD33ADDAC7FAFF8BD6,
 				C60629FA5A98B14697D1DA4E,
 				119888D65DE05EACD18D1B11,
+				F14BD61EF6AB97B4C7433424,
+				D0E586C56C805B4A09C03550,
 				9C71210A77B55F5535E5EC03,
+				197076D5A22E98797D3FB07B,
 				0ADF29DB8E1BCCC58ACC8C91,
 				FDC68A7B4E5FD9E5DB23819F,
 				5A60F64718B023B15C6B6F70,
@@ -5536,11 +5564,13 @@
 				842C24D22B14BC2701DAA448,
 				5163443F8020E6D7801B6CC0,
 				35977A9DDCCE3222324C96F9,
+				01AF4475609BC6E15C3754AA,
 				5C13AE7A8B665A7EA4229092,
 				E19D6C3FD6EB1EF65F6461E2,
 				F5827D6B2391F3539343CE59,
 				4DFD263C9E82F18D49C8E12F,
 				AAA49AA961808130DB88D7E4,
+				93E3633923505621F586C26E,
 			);
 			name = Modules;
 			sourceTree = "<group>";
@@ -6672,20 +6702,10 @@
 			name = commands;
 			sourceTree = "<group>";
 		};
-		DEBAC57FB0C64A4D1A836F3E = {
-			isa = PBXGroup;
-			children = (
-				EB2F2B9007A710D4B07ABEF8,
-				F55BA3F57B4EEBB3B8A5134D,
-			);
-			name = Launchpad;
-			sourceTree = "<group>";
-		};
 		5076351BB7D36DE5CCE843F2 = {
 			isa = PBXGroup;
 			children = (
 				89FC8BBB5BD20C2CE5BF4067,
-				DEBAC57FB0C64A4D1A836F3E,
 				0189433D1F58B3EFCB328C09,
 				D90842DA76257F12F36E8DB1,
 			);
@@ -7915,7 +7935,6 @@
 				C03AC9D3AD95414049531873,
 				47B06F7D8CE1EF794F466906,
 				00F7943B39DC4F058928E693,
-				61B19AD58450E773E66D0342,
 				EBB25F3C554B4D3C4931FA0B,
 				DC5C05891313B026B5F2B5A8,
 				A0631088CC1340AA1E9A87A5,

@@ -302,9 +302,6 @@
     <Filter Include="Chataigne\Source\Module\modules\midi\commands">
       <UniqueIdentifier>{FE245321-8A8A-4EB7-F917-4E07C7165BAB}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\midi\Launchpad">
-      <UniqueIdentifier>{D723C8C1-E12B-D0E0-36FA-95A83108CC3E}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Chataigne\Source\Module\modules\midi">
       <UniqueIdentifier>{D2A91548-5F0F-89AA-05AF-BCC03494605C}</UniqueIdentifier>
     </Filter>
@@ -1677,9 +1674,6 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\midi\commands\MIDICommands.cpp">
       <Filter>Chataigne\Source\Module\modules\midi\commands</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Module\modules\midi\Launchpad\LaunchpadModule.cpp">
-      <Filter>Chataigne\Source\Module\modules\midi\Launchpad</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\midi\MIDIModule.cpp">
       <Filter>Chataigne\Source\Module\modules\midi</Filter>
@@ -5184,9 +5178,6 @@
     <ClInclude Include="..\..\Source\Module\modules\midi\commands\MIDICommands.h">
       <Filter>Chataigne\Source\Module\modules\midi\commands</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\Module\modules\midi\Launchpad\LaunchpadModule.h">
-      <Filter>Chataigne\Source\Module\modules\midi\Launchpad</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\midi\MIDIModule.h">
       <Filter>Chataigne\Source\Module\modules\midi</Filter>
     </ClInclude>
@@ -8339,13 +8330,25 @@
     <None Include="..\..\Resources\Modules\DMX.png">
       <Filter>Chataigne\Resources\Modules</Filter>
     </None>
+    <None Include="..\..\Resources\Modules\Gamepad.png">
+      <Filter>Chataigne\Resources\Modules</Filter>
+    </None>
     <None Include="..\..\Resources\Modules\HeavyM.png">
       <Filter>Chataigne\Resources\Modules</Filter>
     </None>
     <None Include="..\..\Resources\Modules\HTTP.png">
       <Filter>Chataigne\Resources\Modules</Filter>
     </None>
+    <None Include="..\..\Resources\Modules\JoyCon.png">
+      <Filter>Chataigne\Resources\Modules</Filter>
+    </None>
+    <None Include="..\..\Resources\Modules\Joystick.png">
+      <Filter>Chataigne\Resources\Modules</Filter>
+    </None>
     <None Include="..\..\Resources\Modules\Keyboard.png">
+      <Filter>Chataigne\Resources\Modules</Filter>
+    </None>
+    <None Include="..\..\Resources\Modules\KinectV2.png">
       <Filter>Chataigne\Resources\Modules</Filter>
     </None>
     <None Include="..\..\Resources\Modules\LiveOSC2.png">
@@ -8393,6 +8396,9 @@
     <None Include="..\..\Resources\Modules\Sound Card.png">
       <Filter>Chataigne\Resources\Modules</Filter>
     </None>
+    <None Include="..\..\Resources\Modules\Stream Deck.png">
+      <Filter>Chataigne\Resources\Modules</Filter>
+    </None>
     <None Include="..\..\Resources\Modules\TCP Client.png">
       <Filter>Chataigne\Resources\Modules</Filter>
     </None>
@@ -8406,6 +8412,9 @@
       <Filter>Chataigne\Resources\Modules</Filter>
     </None>
     <None Include="..\..\Resources\Modules\Watchout.png">
+      <Filter>Chataigne\Resources\Modules</Filter>
+    </None>
+    <None Include="..\..\Resources\Modules\Wiimote.png">
       <Filter>Chataigne\Resources\Modules</Filter>
     </None>
     <None Include="..\..\Resources\Templates\Scripts\commandScriptTemplate.js">
