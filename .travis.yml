@@ -79,7 +79,7 @@ before_install:
 
     sudo apt-get update
     echo "Installing JUCE lib dependencies and extra tools"
-    sudo apt-get install -q libfreetype6-dev:$DEP_ARCH libx11-dev:$DEP_ARCH libxinerama-dev:$DEP_ARCH libxrandr-dev:$DEP_ARCH libxcursor-dev:$DEP_ARCH libxcomposite-dev:$DEP_ARCH mesa-common-dev:$DEP_ARCH libasound2-dev:$DEP_ARCH freeglut3-dev:$DEP_ARCH libcurl4-gnutls-dev:$DEP_ARCH libasound2-dev:$DEP_ARCH libjack-dev:$DEP_ARCH libbluetooth-dev:$DEP_ARCH libgtk-3-dev:$DEP_ARCH libwebkit2gtk-4.0-dev:$DEP_ARCH libsdl2-dev:$DEP_ARCH  libfuse2:$DEP_ARCH libusb-1.0.0-dev:$DEP_ARCH
+    sudo apt-get install -q libfreetype6-dev:$DEP_ARCH libx11-dev:$DEP_ARCH libxinerama-dev:$DEP_ARCH libxrandr-dev:$DEP_ARCH libxcursor-dev:$DEP_ARCH libxcomposite-dev:$DEP_ARCH mesa-common-dev:$DEP_ARCH libasound2-dev:$DEP_ARCH freeglut3-dev:$DEP_ARCH libcurl4-gnutls-dev:$DEP_ARCH libasound2-dev:$DEP_ARCH libjack-dev:$DEP_ARCH libbluetooth-dev:$DEP_ARCH libgtk-3-dev:$DEP_ARCH libwebkit2gtk-4.0-dev:$DEP_ARCH libsdl2-dev:$DEP_ARCH  libfuse2:$DEP_ARCH libusb-1.0-0-dev:$DEP_ARCH
     sudo apt-get install -q curl
     
     echo 'GCC Version:'
