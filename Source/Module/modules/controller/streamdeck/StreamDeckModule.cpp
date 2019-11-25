@@ -23,6 +23,7 @@ StreamDeckModule::StreamDeckModule(const String& name) :
 	
 	isConnected = moduleParams.addBoolParameter("Is Connected", "Is a streamdeck connected ?", false);
 	isConnected->setControllableFeedbackOnly(true);
+	connectionFeedbackRef = isConnected;
 
 	moduleParams.addChildControllableContainer(&colorsCC);
 	moduleParams.addChildControllableContainer(&imagesCC);
