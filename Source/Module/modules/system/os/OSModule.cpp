@@ -49,11 +49,18 @@ OSModule::OSModule() :
 	defManager->add(CommandDefinition::createDef(this, "Window", "Set Window Parameters", &OSWindowCommand::create, CommandContext::ACTION));
 
 	scriptObject.setMethod(launchAppId, &OSModule::launchFileFromScript);
+
+	startTimer(5000);
 }
 
 OSModule::~OSModule()
 {
+	stopTimer();
+}
 
+void OSModule::updateIps()
+{
+	ips->setValue(NetworkHelpers::getLocalIP());
 }
 
 bool OSModule::launchFile(File f, String args)
@@ -86,4 +93,9 @@ var OSModule::launchFileFromScript(const var::NativeFunctionArgs& args)
 	bool result = m->launchFile(f, args.numArguments > 1 ? args.arguments[1].toString():"");
 
 	return result;
+}
+
+void OSModule::timerCallback()
+{
+	updateIps();
 }
