@@ -65,36 +65,67 @@ void StreamDeck::setImage(int buttonID, Image image, bool highlight)
 	image = image.rescaled(ICON_SIZE, ICON_SIZE).convertedToFormat(Image::RGB);
 	Image iconImage(Image::RGB, ICON_SIZE, ICON_SIZE, true);
 
+#if JUCE_MAC
+	uint8_t data[ICON_BYTES];
+#endif
+
 	for (int tx = 0; tx < image.getWidth(); tx++)
 	{
 		for (int ty = 0; ty < image.getHeight(); ty++)
 		{
-			Colour ic = image.getPixelAt(image.getWidth() - tx, ty);
-			iconImage.setPixelAt(tx, ty, ic.brighter(highlight?1:0));
+			Colour ic = image.getPixelAt(image.getWidth() - tx, ty).brighter(highlight ? 1 : 0);
+#if JUCE_MAC
+			int index = (ty = image.getWidth() + tx) * 3;
+			data[index] = ic.getRed();
+			data[index+1] = ic.getGreen();
+			data[index+2] = ic.getBlue();
+#else
+			iconImage.setPixelAt(tx, ty, ic);
+#endif
 		}
 	}
 
+#if JUCE_MAC
+	sendButtonImageData(buttonID, data);
+#else
 	Image::BitmapData data(iconImage, Image::BitmapData::ReadWriteMode::readOnly);
 	sendButtonImageData(buttonID, data.data);
+#endif
+
 }
 
 void StreamDeck::setImage(int buttonID, Image image, Colour tint, bool highlight)
 {
 	image = image.rescaled(ICON_SIZE, ICON_SIZE).convertedToFormat(Image::RGB);
 	Image iconImage(Image::RGB, ICON_SIZE, ICON_SIZE, true);
-	
+
+#if JUCE_MAC
+	uint8_t data[ICON_BYTES];
+#endif
+
 	for (int tx = 0; tx < image.getWidth(); tx++)
 	{
 		for (int ty = 0; ty < image.getHeight(); ty++)
 		{
 			Colour ic = image.getPixelAt(image.getWidth()-tx, ty);
 			ic = ic.withHue(tint.getHue()).withMultipliedBrightness(tint.getBrightness()).brighter(highlight?1:0);
+#if JUCE_MAC
+			int index = (ty = image.getWidth() + tx) * 3;
+			data[index] = ic.getRed();
+			data[index + 1] = ic.getGreen();
+			data[index + 2] = ic.getBlue();
+#else
 			iconImage.setPixelAt(tx, ty, ic);
+#endif
 		}
 	}
 
+#if JUCE_MAC
+	sendButtonImageData(buttonID, data);
+#else
 	Image::BitmapData data(iconImage, Image::BitmapData::ReadWriteMode::readOnly);
 	sendButtonImageData(buttonID, data.data);
+#endif
 }
 
 
