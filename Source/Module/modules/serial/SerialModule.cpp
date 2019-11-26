@@ -201,7 +201,6 @@ void SerialModule::setupModuleFromJSONData(var data)
 
 void SerialModule::portAdded(SerialDeviceInfo * info)
 {
-	if (!enabled->boolValue()) return;
 	if (port == nullptr && lastOpenedPortID == info->deviceID)
 	{
 		setCurrentPort(SerialManager::getInstance()->getPort(info));
