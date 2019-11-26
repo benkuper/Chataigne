@@ -11,7 +11,6 @@
 #pragma once
 
 #include "Module/Module.h"
-#include "Common/Serial/lib/cobs/cobs.h"
 
 class StreamingModule :
 	public Module

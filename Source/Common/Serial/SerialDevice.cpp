@@ -273,8 +273,8 @@ void SerialReadThread::run()
 					if (b == 0)
 					{
 						uint8_t decodedData[255];
-						size_t numDecoded = cobs_decode(byteBuffer.data(), byteBuffer.size(), decodedData); 
-						serialThreadListeners.call(&SerialThreadListener::dataReceived, var(decodedData, numDecoded));
+						size_t numDecoded = cobs_decode(byteBuffer.data(), byteBuffer.size(), decodedData);
+						serialThreadListeners.call(&SerialThreadListener::dataReceived, var(decodedData, numDecoded - 1));
 						byteBuffer.clear();
 					}
 				}				

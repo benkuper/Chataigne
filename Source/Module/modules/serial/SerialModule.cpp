@@ -92,7 +92,6 @@ void SerialModule::onControllableFeedbackUpdateInternal(ControllableContainer * 
 {
 	StreamingModule::onControllableFeedbackUpdateInternal(cc, c);
 
-	
 	if (c == baudRate)
 	{
 		portParam->openBaudRate = baudRate->intValue();
@@ -105,7 +104,18 @@ void SerialModule::onControllableFeedbackUpdateInternal(ControllableContainer * 
 	}
 	if (c == portParam)
 	{
-		 setCurrentPort(portParam->getDevice());
+		SerialDevice* newDevice = portParam->getDevice();
+		if (enabled->boolValue() || newDevice == nullptr)
+		{
+			SerialDevice* prevPort = port;
+			setCurrentPort(newDevice);
+
+			if (port == nullptr && prevPort != nullptr)
+			{
+				DBG("Manually set no ghost port");
+				lastOpenedPortID = ""; //forces no ghosting when user chose to manually disable port
+			}
+		}
 	}if (c == streamingType)
 	{
 		if (port != nullptr) port->setMode((SerialDevice::PortMode)(int)streamingType->getValueData());
@@ -191,7 +201,7 @@ void SerialModule::setupModuleFromJSONData(var data)
 
 void SerialModule::portAdded(SerialDeviceInfo * info)
 {
-	//DBG("SerialModule, portAdded >" << info->hardwareID << "< > " << lastOpenedPortID);
+	if (!enabled->boolValue()) return;
 	if (port == nullptr && lastOpenedPortID == info->deviceID)
 	{
 		setCurrentPort(SerialManager::getInstance()->getPort(info));

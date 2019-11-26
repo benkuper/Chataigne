@@ -10,6 +10,7 @@
 
 #include "NetworkStreamingModule.h"
 #include "../ui/EnablingNetworkControllableContainerEditor.h"
+#include "Common/Serial/lib/cobs/cobs.h"
 
 NetworkStreamingModule::NetworkStreamingModule(const String &name, bool canHaveInput, bool canHaveOutput, int defaultLocalPort, int defaultRemotePort) :
 	StreamingModule(name),
@@ -188,7 +189,7 @@ void NetworkStreamingModule::run()
 						{
 							uint8_t decodedData[255];
 							size_t numDecoded = cobs_decode(byteBuffer.getRawDataPointer() , byteBuffer.size(), decodedData);
-							processDataBytes(Array<uint8>(decodedData,(int)numDecoded));
+							processDataBytes(Array<uint8>(decodedData, (int)numDecoded - 1));
 							byteBuffer.clear();
 						}
 					}

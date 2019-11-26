@@ -14,6 +14,7 @@
 #include "commands/SendStreamValuesCommand.h"
 #include "commands/SendStreamStringValuesCommand.h"
 #include "UI/ChataigneAssetManager.h"
+#include "Common/Serial/lib/cobs/cobs.h"
 
 StreamingModule::StreamingModule(const String & name) :
 	Module(name)
@@ -413,8 +414,19 @@ void StreamingModule::sendBytes(Array<uint8> bytes)
 
 	if (streamingType->getValueDataAsEnum<StreamingType>() == COBS)
 	{
-		Array<uint8> sourceBytes = Array<uint8>(bytes);
-		cobs_encode(sourceBytes.getRawDataPointer(), bytes.size(), bytes.getRawDataPointer());
+		if (bytes.size() > 255)
+		{
+			NLOGWARNING(niceName, "Packet length cannot be more than 255 bytes with COBS encoding");
+			return;
+		}
+
+		int numBytes = bytes.size();
+		uint8_t data[255];
+		cobs_encode(bytes.getRawDataPointer(), numBytes , data);
+		bytes.clear();
+
+		for (int i = 0; i < numBytes+1;i++) bytes.add(data[i]);
+		bytes.add(0);
 	}
 
 	sendBytesInternal(bytes);
