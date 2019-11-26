@@ -147,7 +147,6 @@ void StreamDeck::sendButtonImageData(int buttonID, const uint8_t* data)
 	packet2.copyFrom(page2Header, 0, PACKET2_HEADER_SIZE);
 	packet2.copyFrom(data + PACKET1_PIXELS_BYTES, PACKET2_HEADER_SIZE, PACKET2_PIXELS_BYTES);
 
-	DBG("Packet size : " << packet1.getSize());
 	try {
 
 		hid_write(device, (unsigned char*)packet1.getData(), PACKET_SIZE);
@@ -189,10 +188,8 @@ void StreamDeck::run()
 			int numRead = hid_read(device, data, 1024);
 			if (numRead > 0)
 			{
-				DBG("Got data !");
 				if (data[0] == 1)
 				{
-					DBG("Data is button states");
 					for (int i = 1; i <= STREAMDECK_MAX_BUTTONS; i++) {
 						bool state = data[i] > 0;
 						int buttonID = i - 1;
