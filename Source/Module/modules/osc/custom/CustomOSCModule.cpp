@@ -43,7 +43,7 @@ void CustomOSCModule::processMessageInternal(const OSCMessage & msg)
 	{
 		for (int i = 0; i < msg.size(); i++) 
 		{
-			c = valuesCC.getControllableByName(cShortName+" "+String(i));
+			c = valuesCC.getControllableByName(cShortName+"_"+String(i));
 			Parameter * p = (Parameter *)c;
 			if (c != nullptr) //Args already exists
 			{
@@ -72,7 +72,7 @@ void CustomOSCModule::processMessageInternal(const OSCMessage & msg)
 
 				if (c != nullptr) //Args have been sucessfully created 
 				{
-					c->setCustomShortName(cShortName + " " + String(i)); //force safeName for search
+					c->setCustomShortName(cShortName + "_" + String(i)); //force safeName for search
 					c->isCustomizableByUser = true;
 					c->isRemovableByUser = true;
 					c->saveValueOnly = false;
