@@ -13,6 +13,8 @@
 #include "Module/Module.h"
 #include "StreamDeckManager.h"
 
+#define USE_FAKE_DEVICE 0
+
 class StreamDeckModule :
 	public Module,
 	public StreamDeckManager::AsyncListener,
@@ -41,6 +43,10 @@ public:
 
 	Array<BoolParameter*> buttonStates;
 
+#if USE_FAKE_DEVICE
+	StreamDeck fakeDevice;
+#endif
+
 	void rebuildValues();
 
 	void setDevice(StreamDeck* newDevice);
@@ -56,4 +62,3 @@ public:
 	static StreamDeckModule * create() { return new StreamDeckModule(); }
 	virtual String getDefaultTypeString() const override { return "Stream Deck"; }
 };
-

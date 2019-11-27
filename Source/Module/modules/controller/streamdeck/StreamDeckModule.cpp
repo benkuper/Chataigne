@@ -18,6 +18,10 @@ StreamDeckModule::StreamDeckModule(const String& name) :
 	colorsCC("Colors"),
 	imagesCC("Images"),
 	device(nullptr)
+
+#if USE_FAKE_DEVICE
+	, fakeDevice(nullptr, "fake")
+#endif
 {
 	setupIOConfiguration(true, true);
 	
@@ -47,7 +51,12 @@ StreamDeckModule::StreamDeckModule(const String& name) :
 
 	rebuildValues();
 
+#if USE_FAKE_DEVICE
+	setDevice(&fakeDevice);
+#else
 	setDevice(StreamDeckManager::getInstance()->devices.size() > 0 ? StreamDeckManager::getInstance()->devices[0] : nullptr);
+#endif
+
 	StreamDeckManager::getInstance()->addAsyncManagerListener(this);
 }
 
