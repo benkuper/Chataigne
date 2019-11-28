@@ -26,7 +26,7 @@ BaseCommandHandler::BaseCommandHandler(const String & name, CommandContext _cont
 BaseCommandHandler::~BaseCommandHandler()
 {
 	if (ModuleManager::getInstanceWithoutCreating() != nullptr) ModuleManager::getInstance()->removeBaseManagerListener(this);
-	if(command != nullptr && command->module != nullptr) command->module->templateManager->removeBaseManagerListener(this);
+	if(command != nullptr && command->module != nullptr && !command->module->isClearing) command->module->templateManager->removeBaseManagerListener(this);
 	setCommand(nullptr);
 }
 
@@ -186,7 +186,7 @@ void BaseCommandHandler::commandTemplateDestroyed()
 	{
 		ghostCommandData = command->getJSONData();
 		//DBG("Template destroyed, command data = "+JSON::toString(ghostCommandData));
-		command->module->templateManager->addBaseManagerListener(this);
+		if(command->module != nullptr && command->module->templateManager != nullptr) command->module->templateManager->addBaseManagerListener(this);
 		if (!Engine::mainEngine->isClearing && ModuleManager::getInstanceWithoutCreating() != nullptr) ModuleManager::getInstance()->addBaseManagerListener(this);
 	}
 	setCommand(nullptr);
