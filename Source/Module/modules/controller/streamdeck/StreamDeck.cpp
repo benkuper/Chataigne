@@ -78,9 +78,9 @@ void StreamDeck::setImage(int buttonID, Image image, bool highlight)
 			Colour ic = image.getPixelAt(image.getWidth() - tx, ty).brighter(highlight ? 1 : 0);
 #if JUCE_MAC
 			int index = (ty * image.getWidth() + tx) * 3;
-			data[index] = ic.getRed();
+			data[index] = ic.getBlue();
 			data[index+1] = ic.getGreen();
-			data[index+2] = ic.getBlue();
+			data[index+2] = ic.getRed();
 #else
 			iconImage.setPixelAt(tx, ty, ic);
 #endif
@@ -113,10 +113,10 @@ void StreamDeck::setImage(int buttonID, Image image, Colour tint, bool highlight
 			Colour ic = image.getPixelAt(image.getWidth()-tx, ty);
 			ic = ic.withHue(tint.getHue()).withMultipliedBrightness(tint.getBrightness()).brighter(highlight?1:0);
 #if JUCE_MAC
-			int index = (ty = image.getWidth() + tx) * 3;
-			data[index] = ic.getRed();
+			int index = (ty * image.getWidth() + tx) * 3;
+			data[index] = ic.getBlue();
 			data[index + 1] = ic.getGreen();
-			data[index + 2] = ic.getBlue();
+			data[index + 2] = ic.getRed();
 #else
 			iconImage.setPixelAt(tx, ty, ic);
 #endif
