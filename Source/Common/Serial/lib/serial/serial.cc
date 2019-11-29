@@ -418,3 +418,12 @@ bool Serial::getCD ()
 {
   return pimpl_->getCD ();
 }
+
+int Serial::getHandle()
+{
+#if !defined(_WIN32)
+  return pimpl_->getHandle();
+#else
+  return 0;
+#endif
+}

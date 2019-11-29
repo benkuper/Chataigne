@@ -645,6 +645,11 @@ public:
   bool
   getCD ();
 
+  /*! Returns system handle of the serial port */
+  int
+  getHandle();
+
+
 private:
   // Disable copy constructors
   Serial(const Serial&);

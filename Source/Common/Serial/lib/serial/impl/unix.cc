@@ -1055,4 +1055,10 @@ Serial::SerialImpl::writeUnlock ()
   }
 }
 
+int
+Serial::SerialImpl::getHandle() 
+{
+  return fd_;
+}
+
 #endif // !defined(_WIN32)

@@ -18,10 +18,7 @@ port(_port),
 info(_info),
 mode(_mode)
 {
-	DBG("NEW SERIAL DEVICE");
 	open();
-
-	
 }
 #else
 SerialDevice::SerialDevice(SerialDeviceInfo  * _info, PortMode _mode) :
