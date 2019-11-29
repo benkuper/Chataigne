@@ -10,7 +10,7 @@
 
 #include "DMXOpenUSBDevice.h"
 
-#if !JUCE_WINDOWS
+#if JUCE_LINUX
 	#include <sys/ioctl.h>
 	#include <asm/termbits.h>
 #endif
@@ -35,7 +35,7 @@ void DMXOpenUSBDevice::setPortConfig()
 	dmxPort->port->setDTR(false);
 	dmxPort->port->flush();
 
-#if !JUCE_WINDOWS
+#if JUCE_LINUX
 	#if defined(TCGETS2)
 	    int fd = dmxPort->port->getHandle();
 	    static const int rate = 250000;
