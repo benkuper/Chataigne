@@ -4185,6 +4185,7 @@
     <None Include="..\..\Resources\about.png"/>
     <None Include="..\..\Resources\add.png"/>
     <None Include="..\..\Resources\connected.png"/>
+    <None Include="..\..\Resources\crash.png"/>
     <None Include="..\..\Resources\default.chalayout"/>
     <None Include="..\..\Resources\disconnected.png"/>
     <None Include="..\..\Resources\icon.png"/>

@@ -65,6 +65,7 @@
       <FILE id="qDQaKu" name="about.png" compile="0" resource="1" file="Resources/about.png"/>
       <FILE id="fwyowN" name="add.png" compile="0" resource="1" file="Resources/add.png"/>
       <FILE id="KbrKp0" name="connected.png" compile="0" resource="1" file="Resources/connected.png"/>
+      <FILE id="LPTrA1" name="crash.png" compile="0" resource="1" file="Resources/crash.png"/>
       <FILE id="gZcS0r" name="default.chalayout" compile="0" resource="1"
             file="Resources/default.chalayout"/>
       <FILE id="kXP3Ci" name="disconnected.png" compile="0" resource="1"

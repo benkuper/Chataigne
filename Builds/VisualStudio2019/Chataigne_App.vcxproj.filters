@@ -8453,6 +8453,9 @@
     <None Include="..\..\Resources\connected.png">
       <Filter>Chataigne\Resources</Filter>
     </None>
+    <None Include="..\..\Resources\crash.png">
+      <Filter>Chataigne\Resources</Filter>
+    </None>
     <None Include="..\..\Resources\default.chalayout">
       <Filter>Chataigne\Resources</Filter>
     </None>

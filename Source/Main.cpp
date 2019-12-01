@@ -23,10 +23,10 @@ void ChataigneApplication::initialiseInternal(const String &)
 	AppUpdater::getInstance()->setURLs(URL("http://benjamin.kuperberg.fr/chataigne/releases/update.json"), "http://benjamin.kuperberg.fr/chataigne/user/data/", "Chataigne");
 	HelpBox::getInstance()->helpURL = URL("http://benjamin.kuperberg.fr/chataigne/docs/");
 	CrashDumpUploader::getInstance()->remoteURL = URL("http://benjamin.kuperberg.fr/chataigne/support/crash_report.php");
+	CrashDumpUploader::getInstance()->crashImage = ImageCache::getFromMemory(BinaryData::crash_png, BinaryData::crash_pngSize);
 
 	ShapeShifterManager::getInstance()->setDefaultFileData(BinaryData::default_chalayout);
 	ShapeShifterManager::getInstance()->setLayoutInformations("chalayout", "Chataigne/layouts");
-
 }
 
 
@@ -45,6 +45,7 @@ void ChataigneApplication::afterInit()
 		MatomoAnalytics::getInstance()->log(MatomoAnalytics::START, options);
 	}
 
+	//throw std::exception("This is a crash test"); //CRASH TEST
 }
 
 void ChataigneApplication::shutdown()

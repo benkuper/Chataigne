@@ -137,6 +137,9 @@ namespace BinaryData
     extern const char*   connected_png;
     const int            connected_pngSize = 3998;
 
+    extern const char*   crash_png;
+    const int            crash_pngSize = 64244;
+
     extern const char*   default_chalayout;
     const int            default_chalayoutSize = 3506;
 
@@ -177,7 +180,7 @@ namespace BinaryData
     const int            stripe_pngSize = 2043;
 
     // Number of elements in the namedResourceList and originalFileNames arrays.
-    const int namedResourceListSize = 56;
+    const int namedResourceListSize = 57;
 
     // Points to the start of a list of resource names.
     extern const char* namedResourceList[];

@@ -3871,6 +3871,13 @@
 			path = ../../Source/Module/modules/oscquery/generic/ui/OSCQueryModuleEditor.h;
 			sourceTree = "SOURCE_ROOT";
 		};
+		A58C745D1F37BDB174FAB845 = {
+			isa = PBXFileReference;
+			lastKnownFileType = image.png;
+			name = crash.png;
+			path = ../../Resources/crash.png;
+			sourceTree = "SOURCE_ROOT";
+		};
 		A60987F239C18CD85E333A80 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -5607,6 +5614,7 @@
 				D79CC2C49C8F65182898823E,
 				AC618D6B6BD7DB9CBEFD0818,
 				AB7FDE005232965FA032439C,
+				A58C745D1F37BDB174FAB845,
 				5FA54638369A3C34CEB7FE3C,
 				0E0B1252FBC81A8784FD87B5,
 				331643DFCB261592E0B722B9,
