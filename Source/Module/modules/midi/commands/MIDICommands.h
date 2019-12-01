@@ -35,7 +35,7 @@ public:
 	MIDINoteAndCCCommand(MIDIModule * module, CommandContext context, var params);
 	~MIDINoteAndCCCommand();
 
-	enum MessageType {NOTE_ON,NOTE_OFF,FULL_NOTE, CONTROLCHANGE, PROGRAMCHANGE};
+	enum MessageType {NOTE_ON,NOTE_OFF,FULL_NOTE, CONTROLCHANGE, PROGRAMCHANGE, PITCH_WHEEL};
 	enum MapTo { PITCH, VELOCITY };
 	MessageType type;
 
@@ -47,6 +47,7 @@ public:
 	FloatParameter * onTime;
 
 	BoolParameter * remap01To127;
+	int maxRemap;
 
 	void setValue(var value) override;
 	void triggerInternal() override;

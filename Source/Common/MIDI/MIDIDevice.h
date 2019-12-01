@@ -81,6 +81,7 @@ public:
 	void sendFullframeTimecode(int hours, int minutes, int seconds, int frames, MidiMessage::SmpteTimecodeType timecodeType);
 	void sendQuarterframe(int piece, int value);
 	void sendMidiMachineControlCommand(MidiMessage::MidiMachineControlCommand command);
+	void sendPitchWheel(int channel, int value);
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MIDIOutputDevice)
 };

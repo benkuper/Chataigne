@@ -63,6 +63,7 @@ public:
 	const Identifier sendCCId = "sendCC";
 	const Identifier sendSysexId = "sendSysex";
 	const Identifier sendProgramChangeId = "sendProgramChange";
+	const Identifier sendPitchWheelId = "sendPitchWheel";
 	
 	bool useGenericControls;
 
@@ -71,6 +72,7 @@ public:
 	virtual void sendControlChange(int channel, int number, int value);
 	virtual void sendSysex(Array<uint8> data);
 	virtual void sendProgramChange(int channel, int number);
+	virtual void sendPitchWheel(int channel, int value);
 	virtual void sendFullFrameTimecode(int hours, int minutes, int seconds, int frames, MidiMessage::SmpteTimecodeType timecodeType);
 
 	void sendMidiMachineControlCommand(MidiMessage::MidiMachineControlCommand command);
@@ -90,7 +92,8 @@ public:
 	static var sendNoteOffFromScript(const var::NativeFunctionArgs &args);
 	static var sendCCFromScript(const var::NativeFunctionArgs &args);
 	static var sendSysexFromScript(const var::NativeFunctionArgs& args);
-	static var sendProgramChangeFromScript(const var::NativeFunctionArgs &args);
+	static var sendProgramChangeFromScript(const var::NativeFunctionArgs& args);
+	static var sendPitchWheelFromScript(const var::NativeFunctionArgs &args);
 
 	void updateValue(const int &channel, const String &n, const int &val, const MIDIValueParameter::Type &type, const int &pitchOrNumber);
 

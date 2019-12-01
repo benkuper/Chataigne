@@ -32,6 +32,7 @@ MIDIModule::MIDIModule(const String & name, bool _useGenericControls) :
 		defManager->add(CommandDefinition::createDef(this, "", "Controller Change", &MIDINoteAndCCCommand::create)->addParam("type", (int)MIDINoteAndCCCommand::CONTROLCHANGE));
 		defManager->add(CommandDefinition::createDef(this, "", "Sysex Message", &MIDISysExCommand::create));
 		defManager->add(CommandDefinition::createDef(this, "", "Program Change", &MIDINoteAndCCCommand::create)->addParam("type", (int)MIDINoteAndCCCommand::PROGRAMCHANGE));;
+		defManager->add(CommandDefinition::createDef(this, "", "Pitch Wheel", &MIDINoteAndCCCommand::create)->addParam("type", (int)MIDINoteAndCCCommand::PITCH_WHEEL));;
 	}
 	
 	autoFeedback = moduleParams.addBoolParameter("Auto Feedback", "If checked, all changed values will be resent automatically to the outputs", false);
@@ -51,6 +52,7 @@ MIDIModule::MIDIModule(const String & name, bool _useGenericControls) :
 	scriptObject.setMethod(sendCCId, &MIDIModule::sendCCFromScript);
 	scriptObject.setMethod(sendSysexId, &MIDIModule::sendSysexFromScript);
 	scriptObject.setMethod(sendProgramChangeId, &MIDIModule::sendProgramChangeFromScript);
+	scriptObject.setMethod(sendPitchWheelId, &MIDIModule::sendPitchWheelFromScript);
 
 	scriptManager->scriptTemplate += ChataigneAssetManager::getInstance()->getScriptTemplate("midi");
 
@@ -102,6 +104,14 @@ void MIDIModule::sendProgramChange(int channel, int program)
 	if (logOutgoingData->boolValue()) NLOG(niceName, "Send ProgramChange " << program);
 	outActivityTrigger->trigger();
 	outputDevice->sendProgramChange(channel, program);
+}
+
+void MIDIModule::sendPitchWheel(int channel, int value)
+{
+	if (!enabled->boolValue()) return;
+	if (outputDevice == nullptr) return;
+	if (logOutgoingData->boolValue()) NLOG(niceName, "Send PitchWheel " << channel << ", " << value);
+	outputDevice->sendPitchWheel(channel, value);
 }
 
 void MIDIModule::sendSysex(Array<uint8> data)
@@ -345,6 +355,21 @@ var MIDIModule::sendProgramChangeFromScript(const var::NativeFunctionArgs& args)
 	}
 
 	m->sendProgramChange(args.arguments[0], args.arguments[1]);
+	return var();
+}
+
+var MIDIModule::sendPitchWheelFromScript(const var::NativeFunctionArgs& args)
+{
+	MIDIModule* m = getObjectFromJS<MIDIModule>(args);
+	if (!m->enabled->boolValue()) return var();
+
+	if (args.numArguments < 2)
+	{
+		NLOG(m->niceName, "Not enough arguments passed from script, got " << args.numArguments << ", expected 2");
+		return var();
+	}
+
+	m->sendPitchWheel(args.arguments[0], args.arguments[1]);
 	return var();
 }
 

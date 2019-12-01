@@ -170,3 +170,9 @@ void MIDIOutputDevice::sendMidiMachineControlCommand(MidiMessage::MidiMachineCon
 	device->sendMessageNow(MidiMessage::midiMachineControlCommand(command));
 }
 
+void MIDIOutputDevice::sendPitchWheel(int channel, int value)
+{
+	if (device == nullptr) return;
+	device->sendMessageNow(MidiMessage::pitchWheel(channel, value));
+}
+

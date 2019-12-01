@@ -26,7 +26,8 @@ MIDINoteAndCCCommand::MIDINoteAndCCCommand(MIDIModule * module, CommandContext c
 	MIDICommand(module, context, params),
 	velocity(nullptr),
 	onTime(nullptr),
-	remap01To127(nullptr)
+	remap01To127(nullptr),
+	maxRemap(127)
 {
 	channel = addIntParameter("Channel", "Channel for the note message", 1, 1, 16);
 	type = (MessageType)(int)params.getProperty("type", 0);
@@ -53,8 +54,12 @@ MIDINoteAndCCCommand::MIDINoteAndCCCommand(MIDIModule * module, CommandContext c
 	case PROGRAMCHANGE:
 		number = addIntParameter("Program", "The program to set", 0, 0, 127);
 		break;
-	}
 
+	case PITCH_WHEEL:
+		velocity = addIntParameter("Value", "The program to set", 0, 0, 16383);
+		int maxRemap = 16383;
+		break;
+	}
 
 
 	if (type == FULL_NOTE)
@@ -65,7 +70,7 @@ MIDINoteAndCCCommand::MIDINoteAndCCCommand(MIDIModule * module, CommandContext c
 
 	if (context == MAPPING)
 	{
-		remap01To127 = addBoolParameter("Remap to 0-127", "If checked, this will automatically remap values from 0-1 to 0-127", false);
+		remap01To127 = addBoolParameter("Remap to 0-"+String(maxRemap), "If checked, this will automatically remap values from 0-1 to 0-"+String(maxRemap), false);
 	}
 
 	if(velocity != nullptr) addTargetMappingParameterAt(velocity, 0);
@@ -78,7 +83,7 @@ MIDINoteAndCCCommand::~MIDINoteAndCCCommand()
 
 void MIDINoteAndCCCommand::setValue(var value)
 {
-	float mapFactor = (remap01To127 != nullptr && remap01To127->boolValue()) ? 127 : 1;
+	float mapFactor = (remap01To127 != nullptr && remap01To127->boolValue()) ? maxRemap : 1;
 	if (value.isArray()) value[0] = (float)value[0] * mapFactor;
 	else value = (float)value * mapFactor;
 	
@@ -89,7 +94,9 @@ void MIDINoteAndCCCommand::triggerInternal()
 {
 	MIDICommand::triggerInternal();
 
-	int pitch = (type == CONTROLCHANGE || type == PROGRAMCHANGE)? number->intValue() : (int)noteEnum->getValueData() + (octave->intValue() - (int)octave->minimumValue) * 12;
+	int pitch = 0;
+	if (type == CONTROLCHANGE || type == PROGRAMCHANGE) pitch = number->intValue();
+	else if(type == NOTE_ON || type == NOTE_OFF || type == FULL_NOTE) pitch = (int)noteEnum->getValueData() + (octave->intValue() - (int)octave->minimumValue) * 12;
 
 	switch(type)
 	{
@@ -112,6 +119,10 @@ void MIDINoteAndCCCommand::triggerInternal()
 
 	case PROGRAMCHANGE:
 		midiModule->sendProgramChange(channel->intValue(), pitch);
+		break;
+
+	case PITCH_WHEEL:
+		midiModule->sendPitchWheel(channel->intValue(), velocity->intValue());
 		break;
 
 	default:
