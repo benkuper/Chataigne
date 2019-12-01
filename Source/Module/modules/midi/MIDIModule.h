@@ -18,10 +18,10 @@ class MIDIValueParameter :
 	public IntParameter
 {
 public:
-	enum Type { NOTE_ON, NOTE_OFF, CONTROL_CHANGE, SYSEX };
+	enum Type { NOTE_ON, NOTE_OFF, CONTROL_CHANGE, SYSEX, PITCH_WHEEL };
 
 	MIDIValueParameter(const String &name, const String &description, int value, int channel, int pitchOrNumber, Type t) :
-		IntParameter(name, description, value, 0, 127),
+		IntParameter(name, description, value, 0, t == PITCH_WHEEL? 16383:127),
 		type(t),
 		channel(channel),
 		pitchOrNumber(pitchOrNumber)
@@ -56,6 +56,7 @@ public:
 	const Identifier noteOffEventId = "noteOffEvent";
 	const Identifier ccEventId = "ccEvent";
 	const Identifier sysexEventId = "sysExEvent";
+	const Identifier pitchWheelEventId = "pitchWheelEvent";
 
 	const Identifier sendNoteOnId = "sendNoteOn";
 	const Identifier sendNoteOffId = "sendNoteOff";
@@ -71,6 +72,7 @@ public:
 	virtual void sendSysex(Array<uint8> data);
 	virtual void sendProgramChange(int channel, int number);
 	virtual void sendFullFrameTimecode(int hours, int minutes, int seconds, int frames, MidiMessage::SmpteTimecodeType timecodeType);
+
 	void sendMidiMachineControlCommand(MidiMessage::MidiMachineControlCommand command);
 
 	void onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c) override;
@@ -81,6 +83,7 @@ public:
 	virtual void controlChangeReceived(const int &channel, const int &number, const int &value) override;
 	virtual void sysExReceived(const MidiMessage & msg) override;
 	virtual void fullFrameTimecodeReceived(const MidiMessage& msg) override;
+	virtual void pitchWheelReceived(const MidiMessage& msg, const int &channel, const int &value) override;
 
 	//Script
 	static var sendNoteOnFromScript(const var::NativeFunctionArgs &args);

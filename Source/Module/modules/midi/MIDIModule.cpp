@@ -259,6 +259,17 @@ void MIDIModule::fullFrameTimecodeReceived(const MidiMessage& msg)
 	NLOG(niceName, "Full frame timecode received : " << hours << ":" << minutes << ":" << seconds << "." << frames << " / " << timecodeType);
 }
 
+void MIDIModule::pitchWheelReceived(const MidiMessage& msg, const int &channel, const int &value)
+{
+	if (!enabled->boolValue()) return;
+	inActivityTrigger->trigger();
+	if (logIncomingData->boolValue()) NLOG(niceName, "Pitch wheel, channel : " << channel << ", value : " << value);
+
+	if (useGenericControls) updateValue(channel, "PitchWheel", value, MIDIValueParameter::PITCH_WHEEL, 0);
+
+	if (scriptManager->items.size() > 0) scriptManager->callFunctionOnAllItems(pitchWheelEventId, Array<var>(channel, value));
+}
+
 var MIDIModule::sendNoteOnFromScript(const var::NativeFunctionArgs & args)
 {
 	MIDIModule * m = getObjectFromJS<MIDIModule>(args);
