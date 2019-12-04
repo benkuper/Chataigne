@@ -57,7 +57,7 @@ MIDINoteAndCCCommand::MIDINoteAndCCCommand(MIDIModule * module, CommandContext c
 
 	case PITCH_WHEEL:
 		velocity = addIntParameter("Value", "The program to set", 0, 0, 16383);
-		int maxRemap = 16383;
+		maxRemap = velocity->maximumValue;
 		break;
 	}
 
