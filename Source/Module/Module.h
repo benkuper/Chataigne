@@ -51,6 +51,7 @@ public:
 	std::unique_ptr<CommandDefinition> scriptCommanDef;
 
 	String customType; //for custom modules;
+	var customModuleData; //for allowing loading data from custom module definition after file load
 
 	//Template
 	std::unique_ptr<CommandTemplateManager> templateManager;
@@ -113,8 +114,11 @@ public:
 	
 	var getJSONData() override;
 	void loadJSONDataItemInternal(var data) override;
+	void loadJSONDataInternal(var data) override; // needed for script loading after item load
 
 	virtual void setupModuleFromJSONData(var data); //Used for custom modules with a module.json definition, to automatically create parameters, command and values from this file.
+	virtual void setupScriptsFromJSONData(var data); //Used for custom modules, setup scripts in this function (either on creation or after load)
+
 	void loadDefaultsParameterValuesForContainer(var data, ControllableContainer * cc);
 	void createControllablesForContainer(var data, ControllableContainer * cc);
 

@@ -182,8 +182,15 @@ void Module::loadJSONDataItemInternal(var data)
 	templateManager->loadJSONData(data.getProperty("templates", var()), true);
 }
 
+void Module::loadJSONDataInternal(var data)
+{
+	BaseItem::loadJSONDataInternal(data);
+	setupScriptsFromJSONData(customModuleData); //needs to load after item loadJSON (scriptManager is clearing at load)
+}
+
 void Module::setupModuleFromJSONData(var data)
 {
+	customModuleData = data;
 	customType = data.getProperty("name","");
 	setNiceName(data.getProperty("name",""));
 
@@ -207,15 +214,8 @@ void Module::setupModuleFromJSONData(var data)
 
 	Array<WeakReference<Controllable>> valueList = getValueControllables();
 
-	Array<var> * scriptData = data.getProperty("scripts", var()).getArray();
-	for (auto &s : *scriptData)
-	{
-		Script * script = scriptManager->addItem(nullptr,var(),false);
-		script->filePath->customBasePath = data.getProperty("modulePath", "");
-		script->filePath->setControllableFeedbackOnly(true);
-		script->filePath->setValue(s.toString());
-		script->userCanDuplicate = false;
-	}
+	if (!isCurrentlyLoadingData) setupScriptsFromJSONData(data);
+	
 
 	bool valuesAreEmpty = valuesCC.controllables.size() == 0 && valuesCC.controllableContainers.size() == 0;
 	bool hInput = data.getProperty("hasInput", valuesAreEmpty ? false : hasInput);
@@ -240,6 +240,28 @@ void Module::setupModuleFromJSONData(var data)
 		}
 	}
 	setupIOConfiguration(hInput, hOutput);
+}
+
+void Module::setupScriptsFromJSONData(var data)
+{
+	if (!data.hasProperty("scripts")) return;
+
+	Array<var>* scriptData = data.getProperty("scripts", var()).getArray();
+
+	int index = 0;
+	for (auto& s : *scriptData)
+	{
+		Script* script = scriptManager->addItem(nullptr, var(), false);
+		scriptManager->setItemIndex(script, index);
+		script->filePath->customBasePath = data.getProperty("modulePath", "");
+		script->filePath->setControllableFeedbackOnly(true);
+		script->filePath->setValue(s.toString());
+		script->updateRate->setControllableFeedbackOnly(true);
+		script->isSavable = false;
+		script->userCanDuplicate = false;
+		script->userCanRemove = false;
+		index++;
+	}
 }
 
 void Module::loadDefaultsParameterValuesForContainer(var data, ControllableContainer * cc)
@@ -386,8 +408,6 @@ Controllable * Module::getControllableForJSONDefinition(const String &name, var 
 		{
 			c->description = d->getProperty("description").toString();
 		}
-
-		
 		
 	}
 
