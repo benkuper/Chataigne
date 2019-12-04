@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.6.9b1"
+<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.6.9b2"
               bundleIdentifier="benkuper.Chataigne" includeBinaryInAppConfig="1"
               jucerVersion="5.4.5" companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
               companyEmail="benjamin@kuperberg.fr" defines="" splashScreenColour="Dark"
@@ -1470,7 +1470,8 @@
     <MODULE id="juce_video" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
   </MODULES>
   <JUCEOPTIONS JUCE_ASIO="1" JUCE_WASAPI="1" JUCE_JACK="1" ORGANICUI_USE_SERVUS="1"
-               JUCE_ALLOW_SPECIAL_CHARS_IN_ADDRESS="1" TIMELINE_USE_SEQUENCEMANAGER_SINGLETON="0"/>
+               JUCE_ALLOW_SPECIAL_CHARS_IN_ADDRESS="1" TIMELINE_USE_SEQUENCEMANAGER_SINGLETON="0"
+               JUCE_USE_MP3AUDIOFORMAT="1" JUCE_USE_LAME_AUDIO_FORMAT="1" JUCE_USE_WINDOWS_MEDIA_FORMAT="1"/>
   <LIVE_SETTINGS>
     <WINDOWS/>
     <OSX/>

@@ -25,7 +25,7 @@ HeavyMModule::HeavyMModule() :
 
 	//SEQUENCE
 	var indexArgs = var();
-	groupIndexParams.append(ControllableUtil::createDataForParam(IntParameter::getTypeStringStatic(), "Index", "Index to select", 0, 0, 1000));
+	indexArgs.append(ControllableUtil::createDataForParam(IntParameter::getTypeStringStatic(), "Index", "Index to select", 0, 0, 1000));
 
 	var boolValueArgs = var();
 	var boolValueArg = ControllableUtil::createDataForParam(BoolParameter::getTypeStringStatic(), "Value", "Value for this command", true);

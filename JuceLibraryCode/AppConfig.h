@@ -131,15 +131,15 @@
 #endif
 
 #ifndef    JUCE_USE_MP3AUDIOFORMAT
- //#define JUCE_USE_MP3AUDIOFORMAT 0
+ #define   JUCE_USE_MP3AUDIOFORMAT 1
 #endif
 
 #ifndef    JUCE_USE_LAME_AUDIO_FORMAT
- //#define JUCE_USE_LAME_AUDIO_FORMAT 0
+ #define   JUCE_USE_LAME_AUDIO_FORMAT 1
 #endif
 
 #ifndef    JUCE_USE_WINDOWS_MEDIA_FORMAT
- //#define JUCE_USE_WINDOWS_MEDIA_FORMAT 1
+ #define   JUCE_USE_WINDOWS_MEDIA_FORMAT 1
 #endif
 
 //==============================================================================
