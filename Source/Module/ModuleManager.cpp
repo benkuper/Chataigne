@@ -90,7 +90,7 @@ Controllable * ModuleManager::showAllValuesAndGetControllable(bool showTriggers,
 		menu.addSubMenu(m->niceName, *vCC);
 	}
 
-	ControllableChooserPopupMenu engineMenu(Engine::mainEngine, showParameters, showTriggers, -100000);
+	ControllableChooserPopupMenu engineMenu(Engine::mainEngine, showParameters, showTriggers, -1000000);
 	menu.addSubMenu("Generic", engineMenu);
 	
 	int result = menu.show();
