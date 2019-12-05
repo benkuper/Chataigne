@@ -112,6 +112,7 @@ void MappingLayer::setupMappingForCurrentMode()
 		{
 			colorManager.reset(new GradientColorManager(sequence->totalTime->floatValue(), !isCurrentlyLoadingData));
 			colorManager->allowKeysOutside = false;
+			colorManager->hideInEditor = true;
 			addChildControllableContainer(colorManager.get());
 			colorManager->setLength(sequence->totalTime->floatValue());
 		}
