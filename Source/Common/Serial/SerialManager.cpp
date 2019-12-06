@@ -36,7 +36,9 @@ void SerialManager::updateDeviceList()
 	while (iter != devices_found.end())
 	{
 		serial::PortInfo device = *iter++;
-		newInfos.add(new SerialDeviceInfo(device.port, device.description, device.hardware_id));
+		SerialDeviceInfo * info = new SerialDeviceInfo(device.port, device.description, device.hardware_id);
+		if(info->pid ==  0 && info->vid == 0) continue;
+		newInfos.add(info);
 	}
 
 	//check added devices
