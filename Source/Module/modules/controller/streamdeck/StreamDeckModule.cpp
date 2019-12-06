@@ -62,7 +62,7 @@ StreamDeckModule::StreamDeckModule(const String& name) :
 
 StreamDeckModule::~StreamDeckModule()
 {
-	if(StreamDeckManager::getInstanceWithoutCreating() != nullptr) StreamDeckManager::getInstance()->addAsyncManagerListener(this);
+	if(StreamDeckManager::getInstanceWithoutCreating() != nullptr) StreamDeckManager::getInstance()->removeAsyncManagerListener(this);
 	setDevice(nullptr);
 }
 
