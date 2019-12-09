@@ -10,7 +10,6 @@
 
 #include "StreamDeck.h"
 
-
 StreamDeck::StreamDeck(hid_device* device, String serialNumber) :
 	Thread("StreamDeck"),
 	device(device),
