@@ -67,7 +67,7 @@ Chataigne is using a modified version of JUCE. So basically, you just need to :
   - For **Debug**, you can get a dependency pack there http://benjamin.kuperberg.fr/chataigne/user/data/Chataigne-win-x64-debug-dependencies.zip and do the same in the Binaries/Debug folder
  
 ### Linux running instructions ###
-  - Before running Chataigne, you will need to copy the lib folder from Chataigne.AppDir/usr/lib aside the Chataigne executable, i.e. in the build folder.
+  - Before running Chataigne, you just need to do a chmod a+x on the .AppImage file, or right-click on it and allow execution, then you're ready to play !  
   
 ## Troubleshooting
 
