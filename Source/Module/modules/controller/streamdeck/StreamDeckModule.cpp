@@ -141,11 +141,13 @@ void StreamDeckModule::updateButton(int id)
 
 void StreamDeckModule::streamDeckButtonPressed(int button)
 {
+	
 	if (logIncomingData->boolValue())
 	{
 		NLOG(niceName, "Button " + String(button + 1) + " pressed");
 	}
 
+	if (button >= buttonStates.size()) return;
 
 	inActivityTrigger->trigger();
 	buttonStates[button]->setValue(true);
@@ -159,6 +161,9 @@ void StreamDeckModule::streamDeckButtonReleased(int button)
 	{
 		NLOG(niceName, "Button " + String(button + 1) + " released");
 	}
+
+	if (button >= buttonStates.size()) return;
+
 
 	inActivityTrigger->trigger();
 	buttonStates[button]->setValue(false);
