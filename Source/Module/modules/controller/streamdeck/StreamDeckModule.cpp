@@ -57,12 +57,12 @@ StreamDeckModule::StreamDeckModule(const String& name) :
 	setDevice(StreamDeckManager::getInstance()->devices.size() > 0 ? StreamDeckManager::getInstance()->devices[0] : nullptr);
 #endif
 
-	StreamDeckManager::getInstance()->addAsyncManagerListener(this);
+	StreamDeckManager::getInstance()->addStreamDeckManagerListener(this);
 }
 
 StreamDeckModule::~StreamDeckModule()
 {
-	if(StreamDeckManager::getInstanceWithoutCreating() != nullptr) StreamDeckManager::getInstance()->removeAsyncManagerListener(this);
+	if(StreamDeckManager::getInstanceWithoutCreating() != nullptr) StreamDeckManager::getInstance()->removeStreamDeckManagerListener(this);
 	setDevice(nullptr);
 }
 
@@ -209,8 +209,18 @@ void StreamDeckModule::onControllableFeedbackUpdateInternal(ControllableContaine
 	}
 }
 
-
-void StreamDeckModule::newMessage(const StreamDeckManager::StreamDeckManagerEvent& e)
+void StreamDeckModule::deviceAdded(StreamDeck* d)
 {
-	setDevice(StreamDeckManager::getInstance()->devices.size() > 0 ? StreamDeckManager::getInstance()->devices[0] : nullptr);
+	if (device == nullptr)
+	{
+		setDevice(d);
+	}
+}
+
+void StreamDeckModule::deviceRemoved(StreamDeck* d)
+{
+	if (device == d || StreamDeckManager::getInstance()->devices.size() == 0)
+	{
+		setDevice(nullptr);
+	}
 }

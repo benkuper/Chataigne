@@ -34,6 +34,20 @@ public:
 
 	virtual void timerCallback() override;
 
+	class StreamDeckManagerListener
+	{
+	public:
+		virtual ~StreamDeckManagerListener() {}
+		virtual void deviceAdded(StreamDeck *) = 0;
+		virtual void deviceRemoved(StreamDeck *) = 0;
+
+	};
+
+	ListenerList<StreamDeckManagerListener> deviceManagerListeners;
+	void addStreamDeckManagerListener(StreamDeckManagerListener* newListener) { deviceManagerListeners.add(newListener); }
+	void removeStreamDeckManagerListener(StreamDeckManagerListener* listener) { deviceManagerListeners.remove(listener); }
+
+
 	class StreamDeckManagerEvent
 	{
 	public:

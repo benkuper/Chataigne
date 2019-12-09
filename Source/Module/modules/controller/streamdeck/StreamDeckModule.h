@@ -17,7 +17,7 @@
 
 class StreamDeckModule :
 	public Module,
-	public StreamDeckManager::AsyncListener,
+	public StreamDeckManager::StreamDeckManagerListener,
 	public StreamDeck::StreamDeckListener
 
 {
@@ -57,7 +57,8 @@ public:
 
 	void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) override;
 	
-	void newMessage(const StreamDeckManager::StreamDeckManagerEvent& e) override;
+	void deviceAdded(StreamDeck* d) override;
+	void deviceRemoved(StreamDeck * d) override;
 
 	static StreamDeckModule * create() { return new StreamDeckModule(); }
 	virtual String getDefaultTypeString() const override { return "Stream Deck"; }

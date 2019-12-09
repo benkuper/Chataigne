@@ -74,6 +74,7 @@ void StreamDeckManager::checkDevices()
 
 	for (auto& d : devicesToRemove)
 	{
+		deviceManagerListeners.call(&StreamDeckManagerListener::deviceRemoved, d);
 		devices.removeObject(d);
 		changed = true;
 	}
@@ -113,6 +114,7 @@ StreamDeck* StreamDeckManager::openDevice(hid_device_info* deviceInfo)
 
 	StreamDeck* cd = new StreamDeck(d, String(deviceInfo->serial_number));
 	devices.add(cd);
+	deviceManagerListeners.call(&StreamDeckManagerListener::deviceAdded, cd);
 	return cd;
 }
 
