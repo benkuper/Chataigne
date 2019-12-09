@@ -181,23 +181,26 @@ Parameter* ToColorFilter::setupParameterInternal(Parameter* sp)
 			filterParams.removeControllable(baseColor);
 			baseColor = nullptr;
 		}
+		
+	}
+	else if (baseColor == nullptr)
+	{
+		baseColor = filterParams.addColorParameter("Base Color", "Color to use to convert", Colours::red);
 	}
 
 	switch(transferType)
 	{
-	case DIRECT:
-		//retargetComponent->setEnabled(true);
-		//retargetComponent->addOption("RGB", RGB)->addOption("HSV", HSV);
-		break;
 
 	case TARGET:
 		retargetComponent->addOption("Hue", HUE)->addOption("Saturation", SAT)->addOption("Brightness", VAL);
 		retargetComponent->setValueWithData(HUE);
-		baseColor = filterParams.addColorParameter("Base Color", "Color to use to convert", Colours::red);
+		if(baseColor != nullptr) baseColor->hideInEditor = false;
 		break;
             
-        default:
-            break;
+    default:
+		if(baseColor != nullptr) baseColor->hideInEditor = true;
+        break;
+
 	}
 
 	return p;
