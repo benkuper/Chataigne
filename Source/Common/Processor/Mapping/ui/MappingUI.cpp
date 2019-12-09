@@ -58,6 +58,7 @@ void MappingUI::updateOutputParamUI()
 	if (mapping->outputParam != nullptr)
 	{
 		outputParamUI.reset(mapping->outputParam->createDefaultUI());
+		outputParamUI->showLabel = false;
 		addAndMakeVisible(outputParamUI.get());
 	}
 
