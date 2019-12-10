@@ -37,7 +37,9 @@ void SerialManager::updateDeviceList()
 	{
 		serial::PortInfo device = *iter++;
 		SerialDeviceInfo * info = new SerialDeviceInfo(device.port, device.description, device.hardware_id);
-		if(info->pid ==  0 && info->vid == 0) continue;
+#if JUCE_WINDOWS || JUCE_LINUX
+    if(info->pid ==  0 && info->vid == 0) continue;
+#endif
 		newInfos.add(info);
 	}
 
