@@ -465,6 +465,17 @@ void MappingLayer::sequencePlayStateChanged(Sequence *)
 			}
 		}
 	}
+	else if (colorManager != nullptr)
+	{
+		if (sequence->isPlaying->boolValue())
+		{
+			if (sendOnPlay->boolValue()) mapping->process(true);
+		}
+		else
+		{
+			if (sendOnStop->boolValue()) mapping->process(true);
+		}
+	}
 }
 
 void MappingLayer::sequenceLooped(Sequence *)
