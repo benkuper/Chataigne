@@ -473,7 +473,7 @@ void MappingLayer::sequencePlayStateChanged(Sequence *)
 		}
 		else
 		{
-			if (sendOnStop->boolValue()) mapping->process(true);nged 
+			if (sendOnStop->boolValue()) mapping->process(true); 
 		}
 	}
 }
