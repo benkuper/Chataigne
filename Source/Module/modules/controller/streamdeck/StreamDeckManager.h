@@ -22,7 +22,7 @@ public:
 	~StreamDeckManager();
 
 	const int vid = 4057;
-	const int pid = 96;
+	const int pid = 96;//apparently the new PID is 0x6D = 109, so we won't use it
 
 	OwnedArray<StreamDeck> devices;
 

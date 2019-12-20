@@ -90,14 +90,14 @@
       <SubSystem>Windows</SubSystem>
       <AdditionalLibraryDirectories>../../External/kinect/lib;../../External/joycon/lib/win;../../External/servus/lib/win/x64/debug;../../External/dnssd/lib;../../External/sdl/lib/win;../../External/libartnet/lib/win/debug;../../External/hidapi/lib/win/x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <LargeAddressAware>true</LargeAddressAware>
-      <AdditionalDependencies>Setupapi.lib;hid.lib;Kinect20.lib;joytime-core.lib;joytime-input-hidapi.lib;Servus.lib;dnssd.lib;SDL2.lib;libartnet.lib;iphlpapi.lib;Setupapi.lib;hid.lib;hidapi_static.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Setupapi.lib;hid.lib;Kinect20.lib;joytime-core.lib;joytime-input-hidapi.lib;Servus.lib;dnssd.lib;SDL2.lib;libartnet.lib;iphlpapi.lib;hid.lib;hidapi_static.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Bscmake>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <OutputFile>$(IntDir)\Chataigne.bsc</OutputFile>
     </Bscmake>
     <Lib>
-      <AdditionalDependencies>Setupapi.lib;hid.lib;Kinect20.lib;joytime-core.lib;joytime-input-hidapi.lib;Servus.lib;dnssd.lib;SDL2.lib;libartnet.lib;iphlpapi.lib;Setupapi.lib;hid.lib;hidapi_static.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Setupapi.lib;hid.lib;Kinect20.lib;joytime-core.lib;joytime-input-hidapi.lib;Servus.lib;dnssd.lib;SDL2.lib;libartnet.lib;iphlpapi.lib;hid.lib;hidapi_static.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>../../External/kinect/lib;../../External/joycon/lib/win;../../External/servus/lib/win/x64/debug;../../External/dnssd/lib;../../External/sdl/lib/win;../../External/libartnet/lib/win/debug;../../External/hidapi/lib/win/x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
@@ -139,14 +139,14 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <AdditionalLibraryDirectories>../../External/kinect/lib;../../External/joycon/lib/win;../../External/servus/lib/win/x64/release;../../External/dnssd/lib;../../External/sdl/lib/win;../../External/libartnet/lib/win/release;../../External/hidapi/lib/win/x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <LargeAddressAware>true</LargeAddressAware>
-      <AdditionalDependencies>Setupapi.lib;hid.lib;Kinect20.lib;joytime-core.lib;joytime-input-hidapi.lib;Servus.lib;dnssd.lib;SDL2.lib;libartnet.lib;iphlpapi.lib;Setupapi.lib;hid.lib;hidapi_static.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Setupapi.lib;hid.lib;Kinect20.lib;joytime-core.lib;joytime-input-hidapi.lib;Servus.lib;dnssd.lib;SDL2.lib;libartnet.lib;iphlpapi.lib;hid.lib;hidapi_static.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Bscmake>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <OutputFile>$(IntDir)\Chataigne.bsc</OutputFile>
     </Bscmake>
     <Lib>
-      <AdditionalDependencies>Setupapi.lib;hid.lib;Kinect20.lib;joytime-core.lib;joytime-input-hidapi.lib;Servus.lib;dnssd.lib;SDL2.lib;libartnet.lib;iphlpapi.lib;Setupapi.lib;hid.lib;hidapi_static.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Setupapi.lib;hid.lib;Kinect20.lib;joytime-core.lib;joytime-input-hidapi.lib;Servus.lib;dnssd.lib;SDL2.lib;libartnet.lib;iphlpapi.lib;hid.lib;hidapi_static.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>../../External/kinect/lib;../../External/joycon/lib/win;../../External/servus/lib/win/x64/release;../../External/dnssd/lib;../../External/sdl/lib/win;../../External/libartnet/lib/win/release;../../External/hidapi/lib/win/x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
