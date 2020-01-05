@@ -22,7 +22,7 @@ public:
 	SequenceCommand(SequenceModule * _module, CommandContext context, var params);
 	virtual ~SequenceCommand();
 
-	enum ActionType { PLAY_SEQUENCE, PAUSE_SEQUENCE, STOP_SEQUENCE, TOGGLE_SEQUENCE, ENABLE_LAYER, DISABLE_LAYER, TOGGLE_LAYER, SET_TIME, GOTO_CUE};
+	enum ActionType { PLAY_SEQUENCE, PAUSE_SEQUENCE, STOP_SEQUENCE, TOGGLE_SEQUENCE, ENABLE_LAYER, DISABLE_LAYER, TOGGLE_LAYER, SET_TIME, MOVE_TIME, GOTO_CUE};
 
 	ActionType actionType;
 	SequenceModule * sequenceModule;

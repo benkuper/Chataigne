@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    SequenceCommand.cpp
-    Created: 20 Feb 2017 2:12:09pm
-    Author:  Ben
+	SequenceCommand.cpp
+	Created: 20 Feb 2017 2:12:09pm
+	Author:  Ben
 
   ==============================================================================
 */
@@ -12,7 +12,7 @@
 #include "SequenceCommand.h"
 #include "TimeMachine/ChataigneSequenceManager.h"
 
-SequenceCommand::SequenceCommand(SequenceModule * _module, CommandContext context, var params) :
+SequenceCommand::SequenceCommand(SequenceModule* _module, CommandContext context, var params) :
 	BaseCommand(_module, context, params),
 	sequenceModule(_module)
 {
@@ -39,12 +39,13 @@ SequenceCommand::SequenceCommand(SequenceModule * _module, CommandContext contex
 		break;
 
 	case SET_TIME:
+	case MOVE_TIME:
 		target->customGetTargetContainerFunc = &ChataigneSequenceManager::showMenuAndGetSequenceStatic;
 
-		value = addFloatParameter("Time", "Target time to set", 0, 0, 3600);
+		value = addFloatParameter("Time", "Target time to set", 0, actionType == MOVE_TIME ? -3600 : 0, 3600);
 		value->defaultUI = FloatParameter::TIME;
 		addTargetMappingParameterAt(value, 0);
-		
+
 		playFromStart = addBoolParameter("Play", "If enabled, will force playing the sequence after setting the time", false);
 		break;
 
@@ -72,46 +73,51 @@ void SequenceCommand::triggerInternal()
 	switch (actionType)
 	{
 	case PLAY_SEQUENCE:
-		if (playFromStart->boolValue()) ((Sequence *)target->targetContainer.get())->stopTrigger->trigger();
-		((Sequence *)target->targetContainer.get())->playTrigger->trigger();
+		if (playFromStart->boolValue()) ((Sequence*)target->targetContainer.get())->stopTrigger->trigger();
+		((Sequence*)target->targetContainer.get())->playTrigger->trigger();
 		break;
 
 	case PAUSE_SEQUENCE:
-		((Sequence *)target->targetContainer.get())->pauseTrigger->trigger();
+		((Sequence*)target->targetContainer.get())->pauseTrigger->trigger();
 		break;
 
 	case STOP_SEQUENCE:
-		((Sequence *)target->targetContainer.get())->stopTrigger->trigger();
+		((Sequence*)target->targetContainer.get())->stopTrigger->trigger();
 		break;
 
 	case TOGGLE_SEQUENCE:
-		if (playFromStart->boolValue() && !((Sequence *)target->targetContainer.get())->isPlaying->boolValue()) ((Sequence *)target->targetContainer.get())->setCurrentTime(0);
-		((Sequence *)target->targetContainer.get())->togglePlayTrigger->trigger();
+		if (playFromStart->boolValue() && !((Sequence*)target->targetContainer.get())->isPlaying->boolValue()) ((Sequence*)target->targetContainer.get())->setCurrentTime(0);
+		((Sequence*)target->targetContainer.get())->togglePlayTrigger->trigger();
 		break;
-            
-    case ENABLE_LAYER:
-        ((SequenceLayer *)target->targetContainer.get())->enabled->setValue(true);
-        break;
-            
-    case DISABLE_LAYER:
-        ((SequenceLayer *)target->targetContainer.get())->enabled->setValue(false);
-        break;
+
+	case ENABLE_LAYER:
+		((SequenceLayer*)target->targetContainer.get())->enabled->setValue(true);
+		break;
+
+	case DISABLE_LAYER:
+		((SequenceLayer*)target->targetContainer.get())->enabled->setValue(false);
+		break;
 
 	case TOGGLE_LAYER:
-		((SequenceLayer *)target->targetContainer.get())->enabled->setValue(!((SequenceLayer *)target->targetContainer.get())->enabled->boolValue());
+		((SequenceLayer*)target->targetContainer.get())->enabled->setValue(!((SequenceLayer*)target->targetContainer.get())->enabled->boolValue());
 		break;
 
 	case SET_TIME:
-		((Sequence *)target->targetContainer.get())->setCurrentTime(value->floatValue(), true, true);
-		if(playFromStart->boolValue()) ((Sequence*)target->targetContainer.get())->playTrigger->trigger();
-		break;
+	case MOVE_TIME:
+	{
+		Sequence* s = (Sequence*)target->targetContainer.get();
+		float t = actionType == SET_TIME ? 0 : s->currentTime->floatValue();
+		s->setCurrentTime(t + value->floatValue(), true, true);
+		if (playFromStart->boolValue()) ((Sequence*)target->targetContainer.get())->playTrigger->trigger();
+	}
+	break;
 
 	case GOTO_CUE:
-		TimeCue * cue = dynamic_cast<TimeCue *>(target->targetContainer.get());
+		TimeCue* cue = dynamic_cast<TimeCue*>(target->targetContainer.get());
 		if (cue != nullptr)
 		{
-			Sequence * s = cue->getSequence();
-			s->setCurrentTime(cue->time->floatValue(), true, true); 
+			Sequence* s = cue->getSequence();
+			s->setCurrentTime(cue->time->floatValue(), true, true);
 			if (playFromStart->boolValue()) s->playTrigger->trigger();
 		}
 		break;
@@ -131,7 +137,7 @@ void SequenceCommand::loadJSONDataInternal(var data)
 void SequenceCommand::endLoadFile()
 {
 	//reset data we want to reload
-	target->setValue("",true);
+	target->setValue("", true);
 
 	loadJSONData(dataToLoad);
 	dataToLoad = var();
@@ -141,8 +147,8 @@ void SequenceCommand::endLoadFile()
 }
 
 
-BaseCommand * SequenceCommand::create(ControllableContainer * module, CommandContext context, var params) {
-	return new SequenceCommand((SequenceModule *)module, context, params);
+BaseCommand* SequenceCommand::create(ControllableContainer* module, CommandContext context, var params) {
+	return new SequenceCommand((SequenceModule*)module, context, params);
 }
 
 /*
