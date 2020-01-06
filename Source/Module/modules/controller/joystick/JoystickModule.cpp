@@ -11,11 +11,20 @@
 #include "JoystickModule.h"
 
 JoystickModule::JoystickModule(const String & name) :
-	Module(name)
+	Module(name),
+	calibCC("Calibration")
 {
 	setupIOConfiguration(true, false);
 	joystickParam = new JoystickParameter("Device", "The Joystick to connect to");
 	moduleParams.addParameter(joystickParam);
+	for (int i = 0; i < 4; i++)
+	{
+		axisOffset.add(calibCC.addFloatParameter("Axis "+String(i+1)+" Offset", "Offset if axis is not centered", 0, -1, 1));
+		axisDeadzone.add(calibCC.addFloatParameter("Axis " + String(i + 1) + " Dead zone", "Percentage of dead zone in the center to avoid noisy input", 0, 0, 1));
+	}
+
+	moduleParams.addChildControllableContainer(&calibCC);
+
 	InputSystemManager::getInstance()->addInputManagerListener(this);
 }
 
@@ -65,5 +74,19 @@ void JoystickModule::onControllableFeedbackUpdateInternal(ControllableContainer 
 	else if (cc == &valuesCC)
 	{
 		inActivityTrigger->trigger();
+	}
+	
+	if (c == joystickParam || c->parentContainer == &calibCC)
+	{
+		if (joystickParam->joystick != nullptr)
+		{
+			for (int i = 0; i < 4; i++)
+			{
+				joystickParam->joystick->axisOffset[i] = axisOffset[i]->floatValue();
+				joystickParam->joystick->axisDeadZone[i] = axisDeadzone[i]->floatValue();
+			}
+			joystickParam->joystick->update();
+			
+		}
 	}
 }

@@ -24,6 +24,10 @@ public:
 	~GamepadModule();
 
 	GamepadParameter * gamepadParam;
+
+	ControllableContainer calibCC;
+	Array<FloatParameter*> axisOffset;
+	Array<FloatParameter*> axisDeadzone;
 	
 	void rebuildValues();
 

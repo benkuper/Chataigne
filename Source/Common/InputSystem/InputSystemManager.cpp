@@ -220,6 +220,8 @@ Joystick::Joystick(SDL_Joystick * joystick) :
 	for (int i = 0; i <  numAxes; i++)
 	{
 		FloatParameter * f = axesCC.addFloatParameter("Axis " + String(i + 1), "", 0, -1, 1);
+		axisOffset[i] = 0;
+		axisDeadZone[i] = 0;
 		f->isControllableFeedbackOnly = true;
 	}
 
@@ -241,7 +243,14 @@ void Joystick::update()
 	int numAxes = SDL_JoystickNumAxes(joystick);
 	for (int i = 0; i < numAxes; i++)
 	{
-		((FloatParameter *)axesCC.controllables[i])->setValue(jmap<float>((float)SDL_JoystickGetAxis(joystick, i), INT16_MIN, INT16_MAX, -1, 1));
+		float axisValue = jmap<float>((float)SDL_JoystickGetAxis(joystick, i), INT16_MIN, INT16_MAX, -1, 1) + axisOffset[i];
+		if (fabs(axisValue) < axisDeadZone[i]) axisValue = 0;
+		else
+		{
+			if (axisValue > 0) axisValue = jmap<float>(axisValue, axisDeadZone[i], 1 + axisOffset[i], 0, 1);
+			else axisValue = jmap<float>(axisValue, -1 + axisOffset[i], -axisDeadZone[i], -1, 0);
+		}
+		((FloatParameter *)axesCC.controllables[i])->setValue(axisValue);
 	}
 
 	int numButtons = SDL_JoystickNumButtons(joystick);
@@ -263,6 +272,8 @@ Gamepad::Gamepad(SDL_GameController * gamepad) :
 
 		FloatParameter * f = axesCC.addFloatParameter(SDL_GameControllerGetStringForAxis(a), "", 0, -1, 1);
 		f->isControllableFeedbackOnly = true;
+		axisOffset[i] = 0;
+		axisDeadZone[i] = 0;
 	}
 
 	for (int i = 0; i < SDL_CONTROLLER_BUTTON_MAX; i++)
@@ -282,7 +293,14 @@ void Gamepad::update()
 {
 	for (int i = 0; i < SDL_CONTROLLER_AXIS_MAX; i++)
 	{
-		((FloatParameter *)axesCC.controllables[i])->setValue(jmap<float>((float)SDL_GameControllerGetAxis(gamepad, (SDL_GameControllerAxis)i), INT16_MIN, INT16_MAX, -1, 1)); 
+		float axisValue = jmap<float>((float)SDL_GameControllerGetAxis(gamepad, (SDL_GameControllerAxis)i), INT16_MIN, INT16_MAX, -1, 1) + axisOffset[i];
+		if (fabs(axisValue) < axisDeadZone[i]) axisValue = 0;
+		else
+		{
+			if (axisValue > 0) axisValue = jmap<float>(axisValue, axisDeadZone[i], 1+axisOffset[i], 0, 1);
+			else axisValue = jmap<float>(axisValue, -1 + axisOffset[i], -axisDeadZone[i], -1, 0);
+		}
+		((FloatParameter*)axesCC.controllables[i])->setValue(axisValue);
 	}
 
 	for (int i = 0; i < SDL_CONTROLLER_BUTTON_MAX; i++)

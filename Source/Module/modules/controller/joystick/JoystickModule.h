@@ -21,7 +21,11 @@ public:
 	JoystickModule(const String &name = "Joystick");
 	~JoystickModule();
 
-	JoystickParameter * joystickParam;
+	JoystickParameter* joystickParam;
+
+	ControllableContainer calibCC;
+	Array<FloatParameter *> axisOffset;
+	Array<FloatParameter *> axisDeadzone;
 
 	void rebuildValues();
 

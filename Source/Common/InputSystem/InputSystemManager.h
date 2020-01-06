@@ -25,8 +25,10 @@ public:
 	ControllableContainer axesCC;
 	ControllableContainer buttonsCC;
 
-	virtual void update();
+	float axisOffset[SDL_JOYSTICK_AXIS_MAX];
+	float axisDeadZone[SDL_JOYSTICK_AXIS_MAX];
 
+	virtual void update();
 
 	WeakReference<Joystick>::Master masterReference;
 };
@@ -41,6 +43,10 @@ public:
 
 	ControllableContainer axesCC;
 	ControllableContainer buttonsCC;
+
+
+	float axisOffset[SDL_JOYSTICK_AXIS_MAX];
+	float axisDeadZone[SDL_JOYSTICK_AXIS_MAX];
 
 	virtual void update();
 
