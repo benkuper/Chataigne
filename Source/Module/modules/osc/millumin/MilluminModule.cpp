@@ -145,6 +145,11 @@ MilluminModule::MilluminModule() :
 	timeArg.getDynamicObject()->setProperty("defaultUI", FloatParameter::TIME);
 	timeArgs.append(timeArg);
 
+	var speedArgs = var();
+	var speedArg = ControllableUtil::createDataForParam(FloatParameter::getTypeStringStatic(), "Value", "Target Value", 0);
+	speedArg.getDynamicObject()->setProperty("mappingIndex", 0);
+	speedArgs.append(speedArg);
+
 	var quartzParams = var();
 	quartzParams.append(ControllableUtil::createDataForParam(StringParameter::getTypeStringStatic(), "Layer Name", "Name of the Layer", "layerName"));
 	quartzParams.append(ControllableUtil::createDataForParam(StringParameter::getTypeStringStatic(), "Quartz Input Name", "Name of the Quartz Input", "myQuartzInput"));
@@ -158,5 +163,6 @@ MilluminModule::MilluminModule() :
 
 	defManager->add(CommandDefinition::createDef(this, "Media", "Time", &OSCCommand::create, CommandContext::BOTH)->addParam("address", "/millumin/layer:[layerName]/media/time")->addParam("params", layerNameParams)->addParam("args", timeArgs));
 	defManager->add(CommandDefinition::createDef(this, "Media", "Normalized Time", &OSCCommand::create, CommandContext::BOTH)->addParam("address", "/millumin/layer:[layerName]/media/normalizedTime")->addParam("params", layerNameParams)->addParam("args", floatValueArgs));
+	defManager->add(CommandDefinition::createDef(this, "Media", "Speed", &OSCCommand::create, CommandContext::BOTH)->addParam("address", "/millumin/layer:[layerName]/media/speed")->addParam("params", layerNameParams)->addParam("args", speedArgs));
 	defManager->add(CommandDefinition::createDef(this, "Media", "Quartz Input", &OSCCommand::create, CommandContext::BOTH)->addParam("address", "/millumin/layer:[layerName]/media/[quartzInputName]")->addParam("params", quartzParams)->addParam("args", floatValueArgs));
 }
