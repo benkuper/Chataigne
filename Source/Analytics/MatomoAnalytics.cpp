@@ -30,7 +30,6 @@ MatomoAnalytics::MatomoAnalytics() :
 	Random rand(Time::currentTimeMillis());
 	String id = String::toHexString(name.getCharPointer(),name.length()).replace(" ","").substring(0, 16);
 	while (id.length() < 16) id = "0" + id;
-	DBG("USER ID : " + id);
 	String lang = SystemStats::getUserLanguage() +"-"+ SystemStats::getUserRegion();
 
 #if JUCE_WINDOWS
