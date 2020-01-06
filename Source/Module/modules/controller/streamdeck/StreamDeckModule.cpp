@@ -106,6 +106,22 @@ void StreamDeckModule::setDevice(StreamDeck* newDevice)
 		device->addStreamDeckListener(this);
 		device->setBrightness(brightness->floatValue());
 
+		switch (device->model)
+		{
+		case StreamDeck::STANDARD_V1:
+		case StreamDeck::STANDARD_V2:
+			deviceType->setValueWithData(STANDARD);
+			break;
+
+		case StreamDeck::MINI:
+			deviceType->setValueWithData(MINI);
+			break;
+
+		case StreamDeck::XL:
+			deviceType->setValueWithData(XL);
+			break;
+		}
+
 		int numButtons = (int)deviceType->getValueData();
 		for (int i = 0; i < numButtons; i++) updateButton(i);
 	}

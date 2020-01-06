@@ -10,11 +10,84 @@
 
 #include "StreamDeck.h"
 
-StreamDeck::StreamDeck(hid_device* device, String serialNumber) :
+StreamDeck::StreamDeck(hid_device* device, String serialNumber, int pid) :
 	Thread("StreamDeck"),
 	device(device),
 	serialNumber(serialNumber)
 {
+	switch (pid)
+	{
+		case 0x60: 
+		{
+			model = STANDARD_V1;
+			resetData.add(0x0B, 0x63, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+			brightnessData.add(0x05, 0x55, 0xAA, 0xD1, 0x01, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+			page1Header.add(
+				0x02, 0x01, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x42, 0x4D, 0xF6,
+				0x3C, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x36, 0x00, 0x00, 0x00, 0x28, 0x00, 0x00, 0x00, 0x48, 0x00, 0x00, 0x00,
+				0x48, 0x00, 0x00, 0x00, 0x01, 0x00, 0x18, 0x00, 0x00, 0x00, 0x00, 0x00, 0xC0, 0x3C, 0x00, 0x00, 0x13, 0x0E, 0x00,
+				0x00, 0x13, 0x0E, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+			);
+
+			page2Header.add(0x02, 0x01, 0x02, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00);
+		
+			iconSize = 72;
+			keyDataOffset = 1;
+			invertX = true;
+		}
+		break;
+
+		case 0x6D:
+		{
+			model = STANDARD_V2;
+
+			resetData.add(0x03,
+				0x02, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+				0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+				0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+				0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00);
+
+			brightnessData.add(0x03, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+				0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+				0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+				0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00);
+
+			page1Header.add(
+				0x02, 0x07, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x42, 0x4D, 0xF6,
+				0x3C, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x36, 0x00, 0x00, 0x00, 0x28, 0x00, 0x00, 0x00, 0x48, 0x00, 0x00, 0x00,
+				0x48, 0x00, 0x00, 0x00, 0x01, 0x00, 0x18, 0x00, 0x00, 0x00, 0x00, 0x00, 0xC0, 0x3C, 0x00, 0x00, 0x13, 0x0E, 0x00,
+				0x00, 0x13, 0x0E, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+			);
+
+			page2Header.add(0x02, 0x01, 0x02, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00);
+			
+			iconSize = 72;
+			keyDataOffset = 4;
+			invertX = false;
+		}
+		break;
+
+
+		case 0x63:
+		{
+			model = MINI;
+			iconSize = 72;
+			keyDataOffset = 1;
+			invertX = false;
+		}
+		break;
+
+
+		case 0x6C:
+		{
+			model = XL;
+			iconSize = 96;
+			keyDataOffset = 4;
+			invertX = false;
+		}
+		break;
+	}
+
 	if(device != nullptr) hid_set_nonblocking(device, 1);
 	for (int i = 0; i < STREAMDECK_MAX_BUTTONS; i++) buttonStates.add(false);
 
@@ -30,13 +103,13 @@ StreamDeck::~StreamDeck()
 
 void StreamDeck::reset()
 {
-	sendFeatureReport(resetData, 17);
+	sendFeatureReport(resetData.getRawDataPointer(), resetData.size());
 }
 
 void StreamDeck::setBrightness(float brightness)
 {
-	brightnessData[5] = (uint8_t)(brightness * 100);
-	sendFeatureReport(brightnessData, 17);
+	brightnessData.set(5, (uint8_t)(brightness * 100));
+	sendFeatureReport(brightnessData.getRawDataPointer(), brightnessData.size());
 }
 
 void StreamDeck::setColor(int buttonID, Colour color, bool highlight)
@@ -45,24 +118,25 @@ void StreamDeck::setColor(int buttonID, Colour color, bool highlight)
 	uint8_t r = color.getRed();
 	uint8_t g = color.getGreen();
 	uint8_t b = color.getBlue();
-	uint8_t data[ICON_BYTES];
+	const int numPixels = iconSize * iconSize * 3;
+	Array<uint8_t> data(numPixels);
 
-	for (int i = 0; i < ICON_PIXELS; i++)
+	for (int i = 0; i < numPixels; i++)
 	{
 
-		data[i * 3] = b;
-		data[i * 3 + 1] = g;
-		data[i * 3 + 2] = r;
+		data.set(i * 3, b);
+		data.set(i * 3 + 1, g);
+		data.set(i * 3 + 2, r);
 	}
 
 
-	sendButtonImageData(buttonID, data);
+	sendButtonImageData(buttonID, data.getRawDataPointer());
 }
 
 void StreamDeck::setImage(int buttonID, Image image, bool highlight)
 {
-	image = image.rescaled(ICON_SIZE, ICON_SIZE);
-	Image iconImage(Image::RGB, ICON_SIZE, ICON_SIZE, true);
+	image = image.rescaled(iconSize, iconSize);
+	Image iconImage(Image::RGB, iconSize, iconSize, true);
 
 #if JUCE_MAC
 	uint8_t data[ICON_BYTES];
@@ -98,8 +172,8 @@ void StreamDeck::setImage(int buttonID, Image image, bool highlight)
 
 void StreamDeck::setImage(int buttonID, Image image, Colour tint, bool highlight)
 {
-	image = image.rescaled(ICON_SIZE, ICON_SIZE).convertedToFormat(Image::RGB);
-	Image iconImage(Image::RGB, ICON_SIZE, ICON_SIZE, true);
+	image = image.rescaled(iconSize, iconSize).convertedToFormat(Image::RGB);
+	Image iconImage(Image::RGB, iconSize, iconSize, true);
 
 #if JUCE_MAC
 	uint8_t data[ICON_BYTES];
@@ -134,35 +208,39 @@ void StreamDeck::setImage(int buttonID, Image image, Colour tint, bool highlight
 void StreamDeck::sendButtonImageData(int buttonID, const uint8_t* data)
 {
 	if(Engine::mainEngine->isClearing) return;
-	writeLock.enter();
-
-	page1Header[5] = buttonID+1;
-	page2Header[5] = buttonID+1;
-
-	MemoryBlock packet1;
-	packet1.ensureSize(PACKET_SIZE, true);
-	packet1.copyFrom(page1Header, 0, PACKET1_HEADER_SIZE);
-	packet1.copyFrom(data, PACKET1_HEADER_SIZE, PACKET1_PIXELS_BYTES);
-
-	MemoryBlock packet2;
-	packet2.ensureSize(PACKET_SIZE, true);
-	packet2.copyFrom(page2Header, 0, PACKET2_HEADER_SIZE);
-	packet2.copyFrom(data + PACKET1_PIXELS_BYTES, PACKET2_HEADER_SIZE, PACKET2_PIXELS_BYTES);
-
-
-	if (device != nullptr)
+	
+	if (model == STANDARD_V1)
 	{
-		try {
-			hid_write(device, (unsigned char*)packet1.getData(), PACKET_SIZE);
-			hid_write(device, (unsigned char*)packet2.getData(), PACKET_SIZE);
-		}
-		catch (std::exception e)
-		{
-			NLOGERROR("StreamDeck", "Error write image to device");
-		}
-	}
+		writeLock.enter();
 
-	writeLock.exit();
+		page1Header.set(5, buttonID + 1);
+		page2Header.set(5, buttonID + 1);
+
+		MemoryBlock packet1;
+		packet1.ensureSize(PACKET_SIZE, true);
+		packet1.copyFrom(page1Header.getRawDataPointer(), 0, PACKET1_HEADER_SIZE);
+		packet1.copyFrom(data, page1Header.size(), PACKET1_PIXELS_BYTES);
+
+		MemoryBlock packet2;
+		packet2.ensureSize(PACKET_SIZE, true);
+		packet2.copyFrom(page2Header.getRawDataPointer(), 0, PACKET2_HEADER_SIZE);
+		packet2.copyFrom(data + PACKET1_PIXELS_BYTES, PACKET2_HEADER_SIZE, PACKET2_PIXELS_BYTES);
+
+		if (device != nullptr)
+		{
+			try {
+				hid_write(device, (unsigned char*)packet1.getData(), PACKET_SIZE);
+				hid_write(device, (unsigned char*)packet2.getData(), PACKET_SIZE);
+			}
+			catch (std::exception e)
+			{
+				NLOGERROR("StreamDeck", "Error write image to device");
+			}
+		}
+
+		writeLock.exit();
+	}
+	
 }
 
 void StreamDeck::sendFeatureReport(const uint8_t* data, int length)

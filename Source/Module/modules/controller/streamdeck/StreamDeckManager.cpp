@@ -112,7 +112,7 @@ StreamDeck* StreamDeckManager::openDevice(hid_device_info* deviceInfo)
 
 	LOG("Stream Deck added : " << deviceInfo->product_string << " (" << deviceInfo->manufacturer_string << ") " << deviceInfo->serial_number << " : " << String::toHexString(deviceInfo->vendor_id) << ", " << String::toHexString(deviceInfo->product_id) << ", " << deviceInfo->product_string);
 
-	StreamDeck* cd = new StreamDeck(d, String(deviceInfo->serial_number));
+	StreamDeck* cd = new StreamDeck(d, String(deviceInfo->serial_number), deviceInfo->product_id);
 	devices.add(cd);
 	deviceManagerListeners.call(&StreamDeckManagerListener::deviceAdded, cd);
 	return cd;
