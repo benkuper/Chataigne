@@ -20,7 +20,8 @@ public:
 	PowerPointModule();
 	~PowerPointModule();
 
-	IntParameter * currentSlide;
+	IntParameter* currentSlide;
+	IntParameter * totalSlides;
 
 	File downloadedFile;
 	std::unique_ptr<URL::DownloadTask> downloadTask; 
@@ -28,6 +29,8 @@ public:
 
 	void progress(URL::DownloadTask *, int64 bytesDownloaded, int64 totalBytes) override;
 	void finished(URL::DownloadTask *, bool success) override;
+
+	void processMessageInternal(const OSCMessage& m) override;
 
 
 	static PowerPointModule * create() { return new PowerPointModule(); }

@@ -17,16 +17,16 @@ PowerPointModule::PowerPointModule() :
 	OSCModule(getDefaultTypeString(), 35551, 35550)
 {
 	currentSlide = valuesCC.addIntParameter("Current Slide", "The current slide", 0, 0, INT32_MAX);
-	currentSlide->setControllableFeedbackOnly(true);
+	totalSlides = valuesCC.addIntParameter("Total Slides", "The total number of slides", 0, 0, INT32_MAX);
 
 	var indexArgs = var();
-	var indexArg = ControllableUtil::createDataForParam(IntParameter::getTypeStringStatic(), "Slide Index", "Index of the slide", "", 0, INT32_MAX);
+	var indexArg = ControllableUtil::createDataForParam(IntParameter::getTypeStringStatic(), "Slide Index", "Index of the slide", "", 1, INT32_MAX);
 	indexArg.getDynamicObject()->setProperty("mappingIndex", 0);
 	indexArgs.append(indexArg);
 
 	defManager->add(CommandDefinition::createDef(this, "", "Next Slide", &OSCCommand::create, CommandContext::BOTH)->addParam("address", "/next"));
 	defManager->add(CommandDefinition::createDef(this, "", "Previous Slide", &OSCCommand::create, CommandContext::BOTH)->addParam("address", "/previous"));
-	defManager->add(CommandDefinition::createDef(this, "", "Go to Slide", &OSCCommand::create, CommandContext::BOTH)->addParam("address", "/page")->addParam("args", indexArgs));
+	defManager->add(CommandDefinition::createDef(this, "", "Go to Slide", &OSCCommand::create, CommandContext::BOTH)->addParam("address", "/slide")->addParam("args", indexArgs));
 
 #if JUCE_WINDOWS
 	installPowerPointPlugin();
@@ -101,4 +101,11 @@ void PowerPointModule::finished(URL::DownloadTask * task, bool success)
 
 	AlertWindow::showMessageBox(AlertWindow::InfoIcon, "Powerpoint plugin installed", "The powerpoint plugin has been installed, you can now use the Powerpoint plugin !");
 	getAppProperties().getUserSettings()->setValue("showPowerpointInstallPlugin", "0");
+}
+
+void PowerPointModule::processMessageInternal(const OSCMessage& m)
+{
+	String s = m.getAddressPattern().toString();
+	if (s == "/currentSlide") currentSlide->setValue(m[0].getInt32());
+	if (s == "/totalSlides") totalSlides->setValue(m[0].getInt32());
 }
