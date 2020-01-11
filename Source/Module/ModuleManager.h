@@ -33,9 +33,29 @@ public:
 	static Controllable* showAllValuesAndGetControllable(bool showTriggers, bool showParameters);
 	static bool checkControllableIsAValue(Controllable* c);
 
+	template <class T>
+	static Module* showAndGetModuleOfType()
+	{
+		PopupMenu menu;
+		Array<Module*> validModules;
+		for (auto& m : ModuleManager::getInstance()->items)
+		{
+			T* mt = dynamic_cast<T*>(m);
+			if (mt == nullptr) continue;
+			validModules.add(m);
+			menu.addItem(validModules.indexOf(m) + 1, m->niceName);
+		}
+
+		int result = menu.show();
+		if (result == 0) return nullptr;
+		
+		return validModules[result - 1];
+	}
+
 	//Command menu
 	PopupMenu getAllModulesCommandMenu(CommandContext context);
 	CommandDefinition* getCommandDefinitionForItemID(int itemID, Module* lockedModule);
+
 
 	Array<Module*> getModuleList(bool includeSpecialModules = true);
 

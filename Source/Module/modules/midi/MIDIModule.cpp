@@ -12,6 +12,7 @@
 #include "commands/MIDICommands.h"
 #include "Common/MIDI/MIDIManager.h"
 #include "UI/ChataigneAssetManager.h"
+#include "Module/ModuleManager.h"
 
 MIDIModule::MIDIModule(const String & name, bool _useGenericControls) :
 	Module(name),
@@ -61,6 +62,14 @@ MIDIModule::MIDIModule(const String & name, bool _useGenericControls) :
 	alwaysShowValues = true;
 
 	setupIOConfiguration(inputDevice != nullptr, outputDevice != nullptr);
+
+	if (hasInput)
+	{
+		thruManager.reset(new ControllableContainer("Pass-through"));
+		thruManager->userCanAddControllables = true;
+		thruManager->customUserCreateControllableFunc = &MIDIModule::createThruControllable;
+		moduleParams.addChildControllableContainer(thruManager.get());
+	}
 }
 
 MIDIModule::~MIDIModule()
@@ -210,6 +219,7 @@ void MIDIModule::noteOnReceived(const int & channel, const int & pitch, const in
 {
 	if (!enabled->boolValue()) return; 
 	inActivityTrigger->trigger();
+	
 	if (logIncomingData->boolValue())  NLOG(niceName, "Note On : " << channel << ", " << MIDIManager::getNoteName(pitch) << ", " << velocity);
 
 	if (useGenericControls) updateValue(channel, MIDIManager::getNoteName(pitch), velocity, MIDIValueParameter::NOTE_ON, pitch);
@@ -278,6 +288,27 @@ void MIDIModule::pitchWheelReceived(const MidiMessage& msg, const int &channel, 
 	if (useGenericControls) updateValue(channel, "PitchWheel", value, MIDIValueParameter::PITCH_WHEEL, 0);
 
 	if (scriptManager->items.size() > 0) scriptManager->callFunctionOnAllItems(pitchWheelEventId, Array<var>(channel, value));
+}
+
+void MIDIModule::midiMessageReceived(const MidiMessage& msg)
+{
+	if (thruManager != nullptr)
+	{
+		for (auto& c : thruManager->controllables)
+		{
+			if (TargetParameter* mt = (TargetParameter*)c)
+			{
+				if (!mt->enabled) continue;
+				if (MIDIModule * m = (MIDIModule*)(mt->targetContainer.get()))
+				{
+					if (m->midiParam->outputDevice != nullptr && m->midiParam->outputDevice->device != nullptr)
+					{
+						m->midiParam->outputDevice->device->sendMessageNow(msg);
+					}
+				}
+			}
+		}
+	}
 }
 
 var MIDIModule::sendNoteOnFromScript(const var::NativeFunctionArgs & args)
@@ -429,11 +460,37 @@ void MIDIModule::showMenuAndCreateValue(ControllableContainer * container)
 	}
 }
 
+void MIDIModule::createThruControllable(ControllableContainer* cc)
+{
+	TargetParameter* p = new TargetParameter("Output module", "Target module to send the raw data to", "");
+	p->targetType = TargetParameter::CONTAINER;
+	p->customGetTargetContainerFunc = &ModuleManager::showAndGetModuleOfType<MIDIModule>;
+	p->isRemovableByUser = true;
+	p->canBeDisabledByUser = true;
+	p->saveValueOnly = false;
+	cc->addParameter(p);
+}
+
 void MIDIModule::loadJSONDataInternal(var data)
 {
 	Module::loadJSONDataInternal(data);
 	valuesCC.orderControllablesAlphabetically();
 	setupIOConfiguration(inputDevice != nullptr || valuesCC.controllables.size() > 0, outputDevice != nullptr);
+
+	if (thruManager != nullptr)
+	{
+		//thruManager->loadJSONData(data.getProperty("thru", var()));
+		for (auto& c : thruManager->controllables)
+		{
+			if (TargetParameter* mt = dynamic_cast<TargetParameter*>(c))
+			{
+				mt->targetType = TargetParameter::CONTAINER;
+				mt->customGetTargetContainerFunc = &ModuleManager::showAndGetModuleOfType<MIDIModule>;
+				mt->isRemovableByUser = true;
+				mt->canBeDisabledByUser = true;
+			}
+		}
+	}
 }
 
 

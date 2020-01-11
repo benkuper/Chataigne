@@ -51,6 +51,8 @@ public:
 
 	BoolParameter * isConnected;
 
+	std::unique_ptr<ControllableContainer> thruManager;
+
 	//Script
 	const Identifier noteOnEventId = "noteOnEvent";
 	const Identifier noteOffEventId = "noteOffEvent";
@@ -87,6 +89,8 @@ public:
 	virtual void fullFrameTimecodeReceived(const MidiMessage& msg) override;
 	virtual void pitchWheelReceived(const MidiMessage& msg, const int &channel, const int &value) override;
 
+	virtual void midiMessageReceived(const MidiMessage& msg) override;
+
 	//Script
 	static var sendNoteOnFromScript(const var::NativeFunctionArgs &args);
 	static var sendNoteOffFromScript(const var::NativeFunctionArgs &args);
@@ -98,7 +102,8 @@ public:
 	void updateValue(const int &channel, const String &n, const int &val, const MIDIValueParameter::Type &type, const int &pitchOrNumber);
 
 	static void showMenuAndCreateValue(ControllableContainer * container);
-	
+	static void createThruControllable(ControllableContainer* cc);
+
 	//Routing
 	class MIDIRouteParams :
 		public RouteParams

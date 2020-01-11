@@ -13,6 +13,7 @@
 #include "UI/ChataigneAssetManager.h"
 #include "ui/OSCOutputEditor.h"
 #include "custom/commands/CustomOSCCommand.h"
+#include "Module/ModuleManager.h"
 
 OSCModule::OSCModule(const String & name, int defaultLocalPort, int defaultRemotePort, bool canHaveInput, bool canHaveOutput) :
 	Module(name),
@@ -41,6 +42,10 @@ OSCModule::OSCModule(const String & name, int defaultLocalPort, int defaultRemot
 		receiver.addListener(this);
 
 		if(!Engine::mainEngine->isLoadingFile) setupReceiver();
+
+		thruManager.reset(new ControllableContainer("Pass-through"));
+		thruManager->userCanAddControllables = true;
+		thruManager->customUserCreateControllableFunc = &OSCModule::createThruControllable;
 	} else
 	{
 		if (receiveCC != nullptr) moduleParams.removeChildControllableContainer(receiveCC.get());
@@ -66,6 +71,11 @@ OSCModule::OSCModule(const String & name, int defaultLocalPort, int defaultRemot
 	{
 		if (outputManager != nullptr) removeChildControllableContainer(outputManager.get());
 		outputManager = nullptr;
+	}
+
+	if (thruManager != nullptr)
+	{
+		moduleParams.addChildControllableContainer(thruManager.get());
 	}
 
 	//Script
@@ -173,6 +183,23 @@ void OSCModule::processMessage(const OSCMessage & msg)
 	}
 
 	inActivityTrigger->trigger();
+
+	if (thruManager != nullptr)
+	{
+		for (auto& c : thruManager->controllables)
+		{
+			if (TargetParameter* mt = (TargetParameter*)c)
+			{
+				if(!mt->enabled) continue;
+				if (OSCModule* m = (OSCModule*)(mt->targetContainer.get()))
+				{
+					m->sendOSC(msg);
+				}
+			}
+		}
+	}
+
+
 	processMessageInternal(msg);
 
 	if (scriptManager->items.size() > 0)
@@ -184,6 +211,7 @@ void OSCModule::processMessage(const OSCMessage & msg)
 		params.add(args);
 		scriptManager->callFunctionOnAllItems(oscEventId, params);
 	}
+
 }
 
 void OSCModule::setupModuleFromJSONData(var data)
@@ -294,6 +322,17 @@ var OSCModule::sendOSCFromScript(const var::NativeFunctionArgs & a)
 	return var();
 }
 
+void OSCModule::createThruControllable(ControllableContainer* cc)
+{
+	TargetParameter* p = new TargetParameter("Output module", "Target module to send the raw data to","");
+	p->targetType = TargetParameter::CONTAINER;
+	p->customGetTargetContainerFunc = &ModuleManager::showAndGetModuleOfType<OSCModule>;
+	p->isRemovableByUser = true;
+	p->canBeDisabledByUser = true;
+	p->saveValueOnly = false;
+	cc->addParameter(p);
+}
+
 
 OSCArgument OSCModule::varToArgument(const var & v)
 {
@@ -346,7 +385,7 @@ var OSCModule::argumentToVar(const OSCArgument & a)
 var OSCModule::getJSONData()
 {
 	var data = Module::getJSONData();
-	if (receiveCC != nullptr)
+	/*if (receiveCC != nullptr)
 	{
 		var inputData = receiveCC->getJSONData();
 		if (!inputData.isVoid()) data.getDynamicObject()->setProperty("input", inputData);
@@ -358,17 +397,38 @@ var OSCModule::getJSONData()
 		if (!outputsData.isVoid()) data.getDynamicObject()->setProperty("outputs", outputsData);
 	}
 
+	if (thruManager != nullptr)
+	{
+		var thruData = thruManager->getJSONData();
+		if (!thruData.isVoid()) data.getDynamicObject()->setProperty("thru", thruData);
+	}
+	*/
 	return data;
 }
 
 void OSCModule::loadJSONDataInternal(var data)
 {
 	Module::loadJSONDataInternal(data);
-	if (receiveCC != nullptr) receiveCC->loadJSONData(data.getProperty("input", var()));
+	//if (receiveCC != nullptr) receiveCC->loadJSONData(data.getProperty("input", var()));
 	if (outputManager != nullptr)
 	{
-		outputManager->loadJSONData(data.getProperty("outputs", var()));
+		//outputManager->loadJSONData(data.getProperty("outputs", var()));
 		setupSenders();
+	}
+
+	if (thruManager != nullptr)
+	{
+		//thruManager->loadJSONData(data.getProperty("thru", var()));
+		for (auto& c : thruManager->controllables)
+		{
+			if (TargetParameter* mt = dynamic_cast<TargetParameter *>(c))
+			{
+				mt->targetType = TargetParameter::CONTAINER;
+				mt->customGetTargetContainerFunc = &ModuleManager::showAndGetModuleOfType<OSCModule>;
+				mt->isRemovableByUser = true;
+				mt->canBeDisabledByUser = true;
+			}
+		}
 	}
 
 	if(!isThreadRunning()) startThread();

@@ -15,6 +15,7 @@
 #include "commands/SendStreamStringValuesCommand.h"
 #include "UI/ChataigneAssetManager.h"
 #include "Common/Serial/lib/cobs/cobs.h"
+#include "Module/ModuleManager.h"
 
 StreamingModule::StreamingModule(const String & name) :
 	Module(name)
@@ -42,8 +43,17 @@ StreamingModule::StreamingModule(const String & name) :
 	
 	scriptManager->scriptTemplate += ChataigneAssetManager::getInstance()->getScriptTemplate("streaming");
 
+
 	valuesCC.userCanAddControllables = true;
 	valuesCC.customUserCreateControllableFunc = &StreamingModule::showMenuAndCreateValue;
+
+	if (hasInput)
+	{
+		thruManager.reset(new ControllableContainer("Pass-through"));
+		thruManager->userCanAddControllables = true;
+		thruManager->customUserCreateControllableFunc = &StreamingModule::createThruControllable;
+		moduleParams.addChildControllableContainer(thruManager.get());
+	}
 }
 
 StreamingModule::~StreamingModule()
@@ -95,6 +105,23 @@ void StreamingModule::processDataLine(const String & msg)
 	if (!enabled->boolValue()) return;
 	if (logIncomingData->boolValue()) NLOG(niceName, "Message received : " << (msg.isNotEmpty() ? msg : "(Empty message)"));
 	inActivityTrigger->trigger();
+
+
+	if (thruManager != nullptr)
+	{
+		for (auto& c : thruManager->controllables)
+		{
+			if (TargetParameter* mt = (TargetParameter*)c)
+			{
+				if (!mt->enabled) continue;
+				if (StreamingModule * m = (StreamingModule*)(mt->targetContainer.get()))
+				{
+					m->sendMessage(msg);
+				}
+			}
+		}
+	}
+
 
 	const String message = msg.removeCharacters("\r\n");
 	if (message.isEmpty()) return;
@@ -274,6 +301,21 @@ void StreamingModule::processDataBytes(Array<uint8_t> data)
 	}
 
 	inActivityTrigger->trigger();
+
+	if (thruManager != nullptr)
+	{
+		for (auto& c : thruManager->controllables)
+		{
+			if (TargetParameter* mt = (TargetParameter*)c)
+			{
+				if (!mt->enabled) continue;
+				if (StreamingModule* m = (StreamingModule*)(mt->targetContainer.get()))
+				{
+					m->sendBytes(data);
+				}
+			}
+		}
+	}
 
 	processDataBytesInternal(data);
 
@@ -467,6 +509,17 @@ void StreamingModule::showMenuAndCreateValue(ControllableContainer * container)
 	}
 }
 
+void StreamingModule::createThruControllable(ControllableContainer* cc)
+{
+	TargetParameter* p = new TargetParameter("Output module", "Target module to send the raw data to", "");
+	p->targetType = TargetParameter::CONTAINER;
+	p->customGetTargetContainerFunc = &ModuleManager::showAndGetModuleOfType<StreamingModule>;
+	p->isRemovableByUser = true;
+	p->canBeDisabledByUser = true;
+	p->saveValueOnly = false;
+	cc->addParameter(p);
+}
+
 void StreamingModule::onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c)
 {
 	Module::onControllableFeedbackUpdateInternal(cc, c);
@@ -488,6 +541,21 @@ void StreamingModule::loadJSONDataInternal(var data)
 {
 	Module::loadJSONDataInternal(data);
 	for (auto& v : valuesCC.controllables) v->isCustomizableByUser = true;
+
+	if (thruManager != nullptr)
+	{
+		//thruManager->loadJSONData(data.getProperty("thru", var()));
+		for (auto& c : thruManager->controllables)
+		{
+			if (TargetParameter* mt = dynamic_cast<TargetParameter*>(c))
+			{
+				mt->targetType = TargetParameter::CONTAINER;
+				mt->customGetTargetContainerFunc = &ModuleManager::showAndGetModuleOfType<StreamingModule>;
+				mt->isRemovableByUser = true;
+				mt->canBeDisabledByUser = true;
+			}
+		}
+	}
 }
 
 var StreamingModule::sendStringFromScript(const var::NativeFunctionArgs & a)

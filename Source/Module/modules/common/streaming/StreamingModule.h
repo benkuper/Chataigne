@@ -27,6 +27,8 @@ public:
 	EnumParameter * messageStructure;
 	BoolParameter * firstValueIsTheName;
 
+	std::unique_ptr<ControllableContainer> thruManager;
+
 	const Identifier dataEventId = "dataReceived";
 	const Identifier sendId = "send";
 	const Identifier sendBytesId = "sendBytes";
@@ -46,6 +48,7 @@ public:
 	virtual void sendBytesInternal(Array<uint8> bytes) {}
 
 	static void showMenuAndCreateValue(ControllableContainer * container);
+	static void createThruControllable(ControllableContainer* cc);
 
 	virtual void onControllableFeedbackUpdateInternal(ControllableContainer *, Controllable * c) override;
 

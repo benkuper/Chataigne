@@ -62,6 +62,11 @@ NetworkStreamingModule::NetworkStreamingModule(const String &name, bool canHaveI
 		senderIsConnected = sendCC->addBoolParameter("Is Connected", "Will be active is sender is connected", false);
 		senderIsConnected->isControllableFeedbackOnly = true;
 	}
+
+	if (thruManager != nullptr)
+	{
+		moduleParams.controllableContainers.move(moduleParams.controllableContainers.indexOf(thruManager.get()), -1);
+	}
 }
 
 NetworkStreamingModule::~NetworkStreamingModule()

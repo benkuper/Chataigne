@@ -61,6 +61,7 @@ public:
 
 	std::unique_ptr<EnablingControllableContainer> receiveCC;
 	std::unique_ptr<BaseManager<OSCOutput>> outputManager;
+	std::unique_ptr<ControllableContainer> thruManager;
 
 	//Script
 	const Identifier oscEventId = "oscEvent";
@@ -89,6 +90,9 @@ public:
 
 	//Script
 	static var sendOSCFromScript(const var::NativeFunctionArgs &args);
+
+	//Thru
+	static void createThruControllable(ControllableContainer* cc);
 
 
 	static OSCArgument varToArgument(const var &v);
