@@ -137,5 +137,6 @@ after_success:
     ls
     packagesbuild Chataigne.pkgproj
     mv Chataigne.pkg Chataigne-osx-$SUFFIX.pkg
-    curl -T Chataigne-osx-$SUFFIX.pkg -u $FTP_USER:$FTP_PASSWORD --insecure ftp://ftp.kuperberg.fr/
+    echo 'Uploading $SUFFIX ...'
+    curl -X POST -F "appFile=@Chataigne-osx-$SUFFIX.pkg" -F "pass=$UPLOAD_PASS" $UPLOAD_URL
   fi
