@@ -32,6 +32,9 @@ GenericOSCQueryModule::GenericOSCQueryModule(const String & name, int defaultRem
 	remoteHost->autoTrim = true;
 	remoteHost->setEnabled(!useLocal->boolValue());
 	remotePort = sendCC->addIntParameter("Remote port", "Port on which the remote host is listening to", defaultRemotePort, 1, 65535);
+	remoteOSCPort = sendCC->addIntParameter("Custom OSC Port", "If enabled, this will override the port to send OSC to, default is sending to the OSCQuery port", defaultRemotePort, 1, 65535);
+	remoteOSCPort->canBeDisabledByUser = true;
+	remoteOSCPort->setEnabled(false);
 
 	defManager->add(CommandDefinition::createDef(this, "", "Set Value", &GenericOSCQueryCommand::create, CommandContext::BOTH));
 
@@ -58,7 +61,7 @@ void GenericOSCQueryModule::sendOSCMessage(OSCMessage m)
 
 	outActivityTrigger->trigger();
 
-	sender.sendToIPAddress(remoteHost->stringValue(), remotePort->intValue(), m);
+	sender.sendToIPAddress(remoteHost->stringValue(), remoteOSCPort->enabled?remoteOSCPort->intValue():remotePort->intValue(), m);
 }
 
 void GenericOSCQueryModule::sendOSCForControllable(Controllable * c)
@@ -98,8 +101,9 @@ void GenericOSCQueryModule::fillContainerFromData(ControllableContainer * cc, va
 		NamedValueSet nvSet = dataObject->getProperties(); 
 		for (auto & nv : nvSet)
 		{
-			int access = nv.value.getProperty("ACCESS", -1);
-			if (access == 0) //group
+			//int access = nv.value.getProperty("ACCESS", 1);
+			bool isGroup = /*access == 0 || */nv.value.hasProperty("CONTENTS");
+			if (isGroup) //group
 			{
 				String ccNiceName = nv.value.getProperty("DESCRIPTION", "");
 				if (ccNiceName.isEmpty()) ccNiceName = nv.name.toString();
@@ -112,7 +116,7 @@ void GenericOSCQueryModule::fillContainerFromData(ControllableContainer * cc, va
 
 				cc->addChildControllableContainer(childCC);
 			}
-			else if (access > 0) //parameter
+			else
 			{
 				Controllable * c = createControllableFromData(nv.name, nv.value);
 				if(c != nullptr) cc->addControllable(c);
@@ -192,7 +196,10 @@ void GenericOSCQueryModule::onControllableFeedbackUpdateInternal(ControllableCon
 {
 	Module::onControllableFeedbackUpdateInternal(cc, c);
 
-	if (c == syncTrigger || c == remoteHost || c == remotePort)
+	if (c == useLocal)
+	{
+		remoteHost->setEnabled(!useLocal->boolValue());
+	}else if (c == syncTrigger || c == remoteHost || c == remotePort)
 	{
 		syncData();
 	}

@@ -40,6 +40,7 @@ public:
 	BoolParameter * useLocal;
 	StringParameter * remoteHost;
 	IntParameter * remotePort;
+	IntParameter* remoteOSCPort;
 
 	OSCSender sender;
 
