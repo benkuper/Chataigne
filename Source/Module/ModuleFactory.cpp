@@ -135,7 +135,23 @@ void ModuleFactory::addCustomModules()
 
 		if (moduleName.isNotEmpty() && moduleType.isNotEmpty())
 		{
-			std::function<Module*()> createFunc;
+			
+			if (ModuleDefinition* sourceDef = getDefinitionForType(moduleType))
+			{
+				LOG("Found custom module : " << moduleMenuPath << ":" << moduleName);
+				ModuleDefinition* def = moduleDefs.add(new ModuleDefinition(moduleMenuPath, moduleName, sourceDef->createFunc));
+				customModulesDefMap.set(moduleName, def);
+				def->jsonData = moduleData;
+				def->moduleFolder = m;
+				def->isCustomModule = true;
+			}
+			else
+			{
+				LOGWARNING("Problem loading custom module : " << moduleName << " : Base module type not handled : " << moduleType);
+				continue;
+			}
+			
+			/*
 			if (moduleType == "Serial") createFunc = &SerialModule::create;
 			else if (moduleType == "OSC") createFunc = &CustomOSCModule::create;
 			else if (moduleType == "MIDI") createFunc = &MIDIModule::create;
@@ -146,13 +162,9 @@ void ModuleFactory::addCustomModules()
 				LOGWARNING("Problem loading custom module : " << moduleName << " : Base module type not handled : " << moduleType);
 				continue;
 			}
+			*/
 
-			LOG("Found custom module : " << moduleMenuPath << ":" << moduleName);
-			ModuleDefinition * def = moduleDefs.add(new ModuleDefinition(moduleMenuPath,moduleName, createFunc));
-			customModulesDefMap.set(moduleName, def);
-			def->jsonData = moduleData;
-			def->moduleFolder = m;
-			def->isCustomModule = true;
+			
 		}
 		
 	}
@@ -230,6 +242,16 @@ void ModuleFactory::buildPopupMenu()
 
 	menu.addSeparator();
 	menu.addItem(-1, "Get more modules...");
+}
+
+ModuleDefinition* ModuleFactory::getDefinitionForType(const String& moduleType)
+{
+	for (auto &m : moduleDefs)
+	{
+		if (m->moduleType == moduleType) return m;
+	}
+	
+	return nullptr;
 }
 
 File ModuleFactory::getCustomModulesFolder() const

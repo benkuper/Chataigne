@@ -41,6 +41,8 @@ public:
 
 	void buildPopupMenu();
 
+	ModuleDefinition* getDefinitionForType(const String& moduleType);
+
 	void addCustomModules();
 	void updateCustomModules();
 	var getCustomModuleInfo(StringRef moduleName);
