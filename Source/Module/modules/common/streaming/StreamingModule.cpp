@@ -116,7 +116,7 @@ void StreamingModule::processDataLine(const String & msg)
 				if (!mt->enabled) continue;
 				if (StreamingModule * m = (StreamingModule*)(mt->targetContainer.get()))
 				{
-					m->sendMessage(msg);
+					m->sendMessage(msg+"\n"); //add newline as it has been removed when parsing
 				}
 			}
 		}
