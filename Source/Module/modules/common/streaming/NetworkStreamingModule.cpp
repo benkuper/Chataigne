@@ -55,7 +55,7 @@ NetworkStreamingModule::NetworkStreamingModule(const String &name, bool canHaveI
 		remoteHost = sendCC->addStringParameter("Remote Host", "Remote Host to send to.", "127.0.0.1");
 		remoteHost->setEnabled(!useLocal->boolValue());
 		remoteHost->autoTrim = true;
-		remotePort = sendCC->addIntParameter("Remote port", "Port on which the remote host is listening to", defaultRemotePort, 1, 65535);
+		remotePort = sendCC->addIntParameter("Remote Port", "Port on which the remote host is listening to", defaultRemotePort, 1, 65535);
 
 		sendCC->warningResolveInspectable = this;
 		sendCC->showWarningInUI = true;
