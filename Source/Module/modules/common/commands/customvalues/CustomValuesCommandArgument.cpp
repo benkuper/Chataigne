@@ -121,7 +121,7 @@ void CustomValuesCommandArgument::updateParameterFromTemplate()
 		param->setControllableFeedbackOnly(!linkedTemplate->editable->boolValue());
 		if(linkedTemplate->param->hasRange()) param->setRange(linkedTemplate->param->minimumValue, linkedTemplate->param->maximumValue);
 
-		if (useForMapping != nullptr && linkedTemplate->useForMapping != nullptr && !useForMapping->isOverriden) useForMapping->setValue(linkedTemplate->useForMapping);
+		if (useForMapping != nullptr && linkedTemplate->useForMapping != nullptr && !useForMapping->isOverriden) useForMapping->setValue(linkedTemplate->useForMapping->boolValue());
 		
 		param->defaultValue = linkedTemplate->param->value;
 
