@@ -201,9 +201,11 @@ void Module::setupModuleFromJSONData(var data)
 	{
 		for (int i = 0; i < hideParamsList.size(); i++)
 		{
-			Controllable * c = moduleParams.getControllableByName(hideParamsList[i].toString(), true);
+			String pName = hideParamsList[i].toString();
+			if (!pName.startsWithChar('/')) pName = "/" + pName;
+			Controllable * c = moduleParams.getControllableForAddress(pName, true);
 			if (c != nullptr) c->hideInEditor = true;
-			ControllableContainer* cc = moduleParams.getControllableContainerByName(hideParamsList[i].toString(), true);
+			ControllableContainer* cc = moduleParams.getControllableContainerForAddress(pName, true);
 			if (cc != nullptr) cc->hideInEditor = true;
 		}
 	}
