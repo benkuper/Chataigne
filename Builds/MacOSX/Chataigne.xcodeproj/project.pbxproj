@@ -1456,13 +1456,6 @@
 			path = ../../Source/Analytics/MatomoAnalytics.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
-		0DD04E60A5E6174F61924D04 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = JuceHeader.h;
-			path = ../../JuceLibraryCode/JuceHeader.h;
-			sourceTree = "SOURCE_ROOT";
-		};
 		0E0B1252FBC81A8784FD87B5 = {
 			isa = PBXFileReference;
 			lastKnownFileType = image.png;
@@ -7463,7 +7456,6 @@
 				8AB58B2FA156DD075B892850,
 				4D147E8D071C0C93CB433813,
 				9EB5EECB134C6E74D074AB10,
-				0DD04E60A5E6174F61924D04,
 			);
 			name = "JUCE Library Code";
 			sourceTree = "<group>";
@@ -7539,7 +7531,7 @@
 					"_DEBUG=1",
 					"DEBUG=1",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
-					"JUCE_APP_VERSION=1.6.12b2",
+					"JUCE_APP_VERSION=1.6.12b3",
 					"JUCE_APP_VERSION_HEX=0x1060c",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
@@ -7600,7 +7592,7 @@
 					"_NDEBUG=1",
 					"NDEBUG=1",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
-					"JUCE_APP_VERSION=1.6.12b2",
+					"JUCE_APP_VERSION=1.6.12b3",
 					"JUCE_APP_VERSION_HEX=0x1060c",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
