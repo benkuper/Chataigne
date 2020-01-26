@@ -301,8 +301,9 @@ void Module::createControllablesForContainer(var data, ControllableContainer * c
 			
 			if (childCC == nullptr)
 			{
+				int index = p.value.getProperty("index", -1);
 				childCC = new ControllableContainer(p.name.toString());
-				cc->addChildControllableContainer(childCC);
+				cc->addChildControllableContainer(childCC, false, index);
 				customModuleContainers.add(childCC);
 			}
 
