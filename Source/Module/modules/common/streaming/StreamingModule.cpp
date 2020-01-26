@@ -106,7 +106,6 @@ void StreamingModule::processDataLine(const String & msg)
 	if (logIncomingData->boolValue()) NLOG(niceName, "Message received : " << (msg.isNotEmpty() ? msg : "(Empty message)"));
 	inActivityTrigger->trigger();
 
-
 	if (thruManager != nullptr)
 	{
 		for (auto& c : thruManager->controllables)
@@ -577,7 +576,7 @@ var StreamingModule::sendBytesFromScript(const var::NativeFunctionArgs & a)
 		{
 			Array<var> * aa = a.arguments[i].getArray();
 			for (auto &vaa : *aa) data.add((uint8)(int)vaa);
-		} else if (a.arguments[i].isInt() || a.arguments[i].isDouble())
+		} else if (a.arguments[i].isInt() || a.arguments[i].isDouble() || a.arguments[i].isInt64() || a.arguments[i].isBool())
 		{
 			data.add((uint8)(int)a.arguments[i]);
 		}
