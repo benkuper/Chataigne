@@ -1181,6 +1181,9 @@
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_core\threads\juce_TimeSliceThread.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_core\threads\juce_WaitableEvent.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_core\time\juce_PerformanceCounter.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
