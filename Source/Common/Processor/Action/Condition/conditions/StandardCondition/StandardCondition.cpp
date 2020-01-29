@@ -123,7 +123,7 @@ void StandardCondition::setSourceControllable(WeakReference<Controllable> c)
 void StandardCondition::onContainerParameterChangedInternal(Parameter * p)
 {
 	Condition::onContainerParameterChangedInternal(p);
-	if (p == sourceTarget)
+	if (p == sourceTarget && sourceTarget != nullptr)
 	{
 		setSourceControllable(sourceTarget->target);
 	}
