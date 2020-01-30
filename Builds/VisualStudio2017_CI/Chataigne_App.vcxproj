@@ -2739,48 +2739,6 @@
     <ClCompile Include="..\..\..\JUCE\modules\juce_osc\juce_osc.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode\BinaryData.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode\include_juce_audio_basics.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode\include_juce_audio_devices.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode\include_juce_audio_formats.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode\include_juce_audio_processors.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode\include_juce_core.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode\include_juce_cryptography.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode\include_juce_data_structures.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode\include_juce_events.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode\include_juce_graphics.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode\include_juce_gui_basics.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode\include_juce_gui_extra.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode\include_juce_opengl.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode\include_juce_video.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="..\..\Modules\juce_timeline\resources\BinaryData.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -4075,7 +4033,7 @@
     <ClInclude Include="..\..\Modules\juce_organicui\warning\ui\WarningTargetUI.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\warning\WarningReporter.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\warning\WarningTarget.h"/>
-    <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\juce_organicui.h"/>
+    <ClInclude Include="..\..\Modules\juce_organicui\juce_organicui.h"/>
     <ClInclude Include="..\..\..\JUCE\modules\juce_osc\osc\juce_OSCAddress.h"/>
     <ClInclude Include="..\..\..\JUCE\modules\juce_osc\osc\juce_OSCArgument.h"/>
     <ClInclude Include="..\..\..\JUCE\modules\juce_osc\osc\juce_OSCBundle.h"/>
@@ -4085,9 +4043,6 @@
     <ClInclude Include="..\..\..\JUCE\modules\juce_osc\osc\juce_OSCTimeTag.h"/>
     <ClInclude Include="..\..\..\JUCE\modules\juce_osc\osc\juce_OSCTypes.h"/>
     <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_osc\juce_osc.h"/>
-    <ClInclude Include="..\..\Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode\AppConfig.h"/>
-    <ClInclude Include="..\..\Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode\BinaryData.h"/>
-    <ClInclude Include="..\..\Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode\JuceHeader.h"/>
     <ClInclude Include="..\..\Modules\juce_timeline\resources\BinaryData.h"/>
     <ClInclude Include="..\..\Modules\juce_timeline\timeline\Sequence\Common\TimedLayerItem.h"/>
     <ClInclude Include="..\..\Modules\juce_timeline\timeline\Sequence\Cue\ui\TimeCueManagerUI.h"/>
@@ -4130,7 +4085,7 @@
     <ClInclude Include="..\..\Modules\juce_timeline\timeline\ui\TimeMachineView.h"/>
     <ClInclude Include="..\..\Modules\juce_timeline\timeline\SequenceManager.h"/>
     <ClInclude Include="..\..\Modules\juce_timeline\TimelineAppCommands.h"/>
-    <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\juce_timeline.h"/>
+    <ClInclude Include="..\..\Modules\juce_timeline\juce_timeline.h"/>
     <ClInclude Include="..\..\..\JUCE\modules\juce_video\capture\juce_CameraDevice.h"/>
     <ClInclude Include="..\..\..\JUCE\modules\juce_video\native\juce_android_CameraDevice.h"/>
     <ClInclude Include="..\..\..\JUCE\modules\juce_video\native\juce_android_Video.h"/>
@@ -4218,7 +4173,6 @@
     <None Include="..\..\..\JUCE\modules\juce_graphics\image_formats\pnglib\libpng_readme.txt"/>
     <None Include="..\..\Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\ReadMe.txt"/>
     <None Include="..\..\Modules\juce_organicui\README.md"/>
-    <None Include="..\..\Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode\ReadMe.txt"/>
     <None Include="..\..\Modules\juce_timeline\README.md"/>
     <None Include=".\icon.ico"/>
   </ItemGroup>
