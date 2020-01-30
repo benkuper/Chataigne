@@ -38,9 +38,18 @@ You can check the tutorials to better understand what and how you can use Chatai
 
 
 ## Using the software
+
 Compiled versions for Windows, Mac OSX and Linux are available at : http://benjamin.kuperberg.fr/chataigne/#download
+
 If beta versions are available, they will show up on this page.
+
 If you wish to test the latest features and commits, the bleeding-edge section is generated at each commit.
+
+## Getting Started
+
+You can start by checking the Amazing Chataigne Documentation, made with love ! https://chataigne-goldengeek.gitbook.io/chataigne/
+
+Also you can watch tutorials from the website and follow the interactive guide from withing the application.
 
 ## Building the software
 
