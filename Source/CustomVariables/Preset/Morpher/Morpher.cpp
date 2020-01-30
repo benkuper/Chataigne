@@ -23,6 +23,7 @@ Morpher::Morpher(CVPresetManager* presetManager) :
 {
 
 	showInspectorOnSelect = false;
+	editorIsCollapsed = true;
 
 	presetManager->addControllableContainerListener(this);
 	presetManager->addBaseManagerListener(this);
