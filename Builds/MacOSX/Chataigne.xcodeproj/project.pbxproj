@@ -2268,13 +2268,6 @@
 			path = ../../Source/Module/Routing/ModuleRouter.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
-		434101C3EDB8F153178FE4A5 = {
-			isa = PBXFileReference;
-			lastKnownFileType = file;
-			name = "juce_organicui";
-			path = "../../../JUCE Modules/juce_organicui";
-			sourceTree = "SOURCE_ROOT";
-		};
 		43FF3B8ECBF69AB0CED363AE = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -3507,6 +3500,13 @@
 			path = ../../JuceLibraryCode/BinaryData.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
+		8E3E93C35A0A71C64796898E = {
+			isa = PBXFileReference;
+			lastKnownFileType = file;
+			name = "juce_organicui";
+			path = "../../Modules/juce_organicui";
+			sourceTree = "SOURCE_ROOT";
+		};
 		8EFE304B0BBA3DFA624E0D0F = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -3624,13 +3624,6 @@
 			lastKnownFileType = image.png;
 			name = Wiimote.png;
 			path = ../../Resources/Modules/Wiimote.png;
-			sourceTree = "SOURCE_ROOT";
-		};
-		95AEC1AF13540DDDA6F391C8 = {
-			isa = PBXFileReference;
-			lastKnownFileType = file;
-			name = "juce_timeline";
-			path = "../../../JUCE Modules/juce_timeline";
 			sourceTree = "SOURCE_ROOT";
 		};
 		95CA364F04E46872816321FC = {
@@ -4814,6 +4807,13 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = CommunityModuleInfo.h;
 			path = ../../Source/Module/Community/CommunityModuleInfo.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		D6A300DAC1D2DD176F264EE8 = {
+			isa = PBXFileReference;
+			lastKnownFileType = file;
+			name = "juce_timeline";
+			path = "../../Modules/juce_timeline";
 			sourceTree = "SOURCE_ROOT";
 		};
 		D75B6A6DB57C7D3652AE5CE7 = {
@@ -7429,9 +7429,9 @@
 				32C9F3B10334451C423488F7,
 				551CE20C88E53A262028FEBA,
 				B041687DBC635A565CFE93F4,
-				434101C3EDB8F153178FE4A5,
+				8E3E93C35A0A71C64796898E,
 				13F1733B1CD06F34477459C0,
-				95AEC1AF13540DDDA6F391C8,
+				D6A300DAC1D2DD176F264EE8,
 				1963F1D3623E1F2A7122FEB0,
 			);
 			name = "JUCE Modules";
@@ -7539,7 +7539,7 @@
 					"_DEBUG=1",
 					"DEBUG=1",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
-					"JUCE_APP_VERSION=1.6.12b3",
+					"JUCE_APP_VERSION=1.6.12b4",
 					"JUCE_APP_VERSION_HEX=0x1060c",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
@@ -7554,7 +7554,7 @@
 				HEADER_SEARCH_PATHS = (
 					"../../JuceLibraryCode",
 					"$(HOME)/JUCE/modules",
-					"\"../../../JUCE Modules\"",
+					"../../Modules",
 					"../../External/wiiuse",
 					"../../External/serial/include",
 					"../../External/servus/include",
@@ -7600,7 +7600,7 @@
 					"_NDEBUG=1",
 					"NDEBUG=1",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
-					"JUCE_APP_VERSION=1.6.12b3",
+					"JUCE_APP_VERSION=1.6.12b4",
 					"JUCE_APP_VERSION_HEX=0x1060c",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
@@ -7616,7 +7616,7 @@
 				HEADER_SEARCH_PATHS = (
 					"../../JuceLibraryCode",
 					"$(HOME)/JUCE/modules",
-					"\"../../../JUCE Modules\"",
+					"../../Modules",
 					"../../External/wiiuse",
 					"../../External/serial/include",
 					"../../External/servus/include",
