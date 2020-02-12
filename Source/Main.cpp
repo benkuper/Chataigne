@@ -21,7 +21,7 @@ void ChataigneApplication::initialiseInternal(const String &)
 
 	//Call after engine init
 	AppUpdater::getInstance()->setURLs(URL("http://benjamin.kuperberg.fr/chataigne/releases/update.json"), "http://benjamin.kuperberg.fr/chataigne/user/data/", "Chataigne");
-	HelpBox::getInstance()->helpURL = URL("http://benjamin.kuperberg.fr/chataigne/docs/");
+	HelpBox::getInstance()->helpURL = URL("http://benjamin.kuperberg.fr/chataigne/help/");
 	CrashDumpUploader::getInstance()->remoteURL = URL("http://benjamin.kuperberg.fr/chataigne/support/crash_report.php");
 	CrashDumpUploader::getInstance()->crashImage = ImageCache::getFromMemory(BinaryData::crash_png, BinaryData::crash_pngSize);
 
