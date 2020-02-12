@@ -2,7 +2,7 @@
 
 <JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.6.12b4"
               bundleIdentifier="benkuper.Chataigne" includeBinaryInAppConfig="1"
-              jucerVersion="5.4.6" companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
+              jucerVersion="5.4.7" companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
               companyEmail="benjamin@kuperberg.fr" defines="" splashScreenColour="Dark"
               cppLanguageStandard="17" companyCopyright="Ben Kuper" headerPath="../../Source">
   <MAINGROUP id="EDDVhd" name="Chataigne">
@@ -874,7 +874,6 @@
                 <FILE id="j9kqDf" name="CustomOSCCommand.h" compile="0" resource="0"
                       file="Source/Module/modules/osc/custom/commands/CustomOSCCommand.h"/>
               </GROUP>
-              <GROUP id="{9250F3A5-C125-53BC-D4F9-C4F34175C990}" name="ui"/>
               <FILE id="zsmxfd" name="CustomOSCModule.cpp" compile="1" resource="0"
                     file="Source/Module/modules/osc/custom/CustomOSCModule.cpp"/>
               <FILE id="zBRcyQ" name="CustomOSCModule.h" compile="0" resource="0"
