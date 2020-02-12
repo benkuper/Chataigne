@@ -255,9 +255,9 @@ void DMXModule::showMenuAndCreateValue(ControllableContainer * container)
 DMXModule::DMXRouteParams::DMXRouteParams(Module * sourceModule, Controllable * c) :
 	mode16bit(nullptr),
 	channel(nullptr),
-	value(nullptr)
+	fullRange(nullptr)
 {
-	if (c->type == Controllable::FLOAT || c->type == Controllable::INT || c->type == Controllable::BOOL || c->type == Controllable::POINT2D || c->type == Controllable::POINT3D)
+	if (c->type == Controllable::FLOAT || c->type == Controllable::INT || c->type == Controllable::BOOL || c->type == Controllable::POINT2D || c->type == Controllable::POINT3D || c->type == Controllable::COLOR)
 	{
 		mode16bit = addEnumParameter("Mode", "Choosing the resolution and Byte order for this routing");
 		mode16bit->addOption("8-bit", BIT8)->addOption("16-bit MSB", MSB)->addOption("16-bit LSB", LSB);
@@ -279,7 +279,7 @@ void DMXModule::handleRoutedModuleValue(Controllable * c, RouteParams * p)
 
 	bool fullRange = rp->fullRange != nullptr ? rp->fullRange->boolValue() : false;
 	
-	DMXByteOrder byteOrder = rp->mode16bit->getValueDataAsEnum<DMXByteOrder>();
+	DMXByteOrder byteOrder = rp->mode16bit != nullptr ? rp->mode16bit->getValueDataAsEnum<DMXByteOrder>() : DMXByteOrder::BIT8;
 
 	switch (c->type)
 	{

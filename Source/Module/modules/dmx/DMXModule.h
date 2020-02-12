@@ -70,7 +70,6 @@ public:
 		EnumParameter * mode16bit;
 		BoolParameter * fullRange;
 		IntParameter * channel;
-		IntParameter * value;
 
 	};
 
