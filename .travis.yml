@@ -59,7 +59,7 @@ before_install:
       sudo apt-get install -q g++-arm-linux-gnueabihf
 
       echo "Installing extra lib dependencies"
-      sudo apt-get install -q libgdk-pixbuf2.0-dev:armhf libpango1.0-dev:armhf libsoup2.4-dev:armhf libharfbuzz-dev:armhf libxml2-dev:armhf libicu-dev:armhf libc6-dev:armhf
+      sudo apt-get install -q libgdk-pixbuf2.0-dev:armhf libpango1.0-dev:armhf libsoup2.4-dev:armhf libharfbuzz-dev:armhf libxml2-dev:armhf libicu-dev:armhf libc6-dev:armhf freeglut3-dev:armhf libglu1-mesa-dev:armhf libglu1-xorg-dev:armhf
 
       echo "Downloading AppImage runtime for armhf"
       cd $HOME
