@@ -11,6 +11,11 @@
 #include "StreamDeckManager.h"
 #include "hidapi.h"
 
+#include "models/StreamDeckMini.h"
+#include "models/StreamDeckV1.h"
+#include "models/StreamDeckV2.h"
+#include "models/StreamDeckXL.h"
+
 juce_ImplementSingleton(StreamDeckManager)
 
 StreamDeckManager::StreamDeckManager() :
@@ -112,7 +117,34 @@ StreamDeck* StreamDeckManager::openDevice(hid_device_info* deviceInfo)
 
 	LOG("Stream Deck added : " << deviceInfo->product_string << " (" << deviceInfo->manufacturer_string << ") " << deviceInfo->serial_number << " : " << String::toHexString(deviceInfo->vendor_id) << ", " << String::toHexString(deviceInfo->product_id) << ", " << deviceInfo->product_string);
 
-	StreamDeck* cd = new StreamDeck(d, String(deviceInfo->serial_number), deviceInfo->product_id);
+	StreamDeck* cd = nullptr;
+	
+	switch (deviceInfo->product_id)
+	{
+	case PID_MINI:
+		cd = new StreamDeckMini(d, String(deviceInfo->serial_number));
+		break;
+
+	case PID_V1:
+		cd = new StreamDeckV1(d, String(deviceInfo->serial_number));
+		break;
+
+	case PID_V2:
+		cd = new StreamDeckV2(d, String(deviceInfo->serial_number));
+		break;
+
+	case PID_XL:
+		cd = new StreamDeckXL(d, String(deviceInfo->serial_number));
+		break;
+
+	}
+
+	if (cd == nullptr)
+	{
+		LOGERROR("StreamDeck model not supported : " << (int)deviceInfo->product_id);
+		return nullptr;
+	}
+
 	devices.add(cd);
 	deviceManagerListeners.call(&StreamDeckManagerListener::deviceAdded, cd);
 	return cd;

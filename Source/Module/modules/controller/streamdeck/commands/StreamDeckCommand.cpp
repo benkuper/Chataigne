@@ -13,14 +13,16 @@
 StreamDeckCommand::StreamDeckCommand(StreamDeckModule* _module, CommandContext context, var params) :
 	BaseCommand(_module, context, params),
 	streamDeckModule(_module),
-	buttonID(nullptr),
+	row(nullptr),
+	column(nullptr),
 	valueParam(nullptr)
 {
 	action = (StreamDeckAction)(int)params.getProperty("action", SET_COLOR);
 
 	if (action == SET_COLOR || action == SET_IMAGE)
 	{
-		buttonID = addIntParameter("Button ID", "The button to set", 1, 1, streamDeckModule->deviceType->getValueData());
+		column = addIntParameter("Button ID", "The button to set", 1, 1, STREAMDECK_MAX_COLUMNS);
+		row = addIntParameter("Button ID", "The button to set", 1, 1, STREAMDECK_MAX_ROWS);
 	}
 
 	switch (action)
@@ -51,18 +53,21 @@ StreamDeckCommand::~StreamDeckCommand()
 
 void StreamDeckCommand::triggerInternal()
 {
+	int r = row != nullptr ? row->intValue() : 0;
+	int c = column != nullptr ? column->intValue() : 0;
+
 	switch (action)
 	{
 	case SET_COLOR:
-		if(streamDeckModule->colors.size() >= buttonID->intValue() -1) streamDeckModule->colors[buttonID->intValue() - 1]->setColor(((ColorParameter*)valueParam)->getColor());
+		streamDeckModule->setColor(r,c,((ColorParameter*)valueParam)->getColor());
 		break;
 
 	case SET_IMAGE:
-		if (streamDeckModule->images.size() >= buttonID->intValue() - 1) streamDeckModule->images[buttonID->intValue() - 1]->setValue(valueParam->stringValue());
+		streamDeckModule->setImage(r, c, valueParam->stringValue());
 		break;
 
 	case SET_ALL_COLOR:
-		for(auto &c : streamDeckModule->colors) c->setColor(((ColorParameter*)valueParam)->getColor());
+		streamDeckModule->setAllColor(((ColorParameter*)valueParam)->getColor());
 		break;
 
 	case SET_BRIGHTNESS:

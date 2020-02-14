@@ -281,6 +281,10 @@
     <ClCompile Include="..\..\Source\Module\modules\common\streaming\NetworkStreamingModule.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\common\streaming\StreamingModule.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\common\ui\EnablingNetworkControllableContainerEditor.cpp"/>
+    <ClCompile Include="..\..\Source\Module\modules\controller\streamdeck\models\StreamDeckMini.cpp"/>
+    <ClCompile Include="..\..\Source\Module\modules\controller\streamdeck\models\StreamDeckV1.cpp"/>
+    <ClCompile Include="..\..\Source\Module\modules\controller\streamdeck\models\StreamDeckV2.cpp"/>
+    <ClCompile Include="..\..\Source\Module\modules\controller\streamdeck\models\StreamDeckXL.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\controller\streamdeck\commands\StreamDeckCommand.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\controller\streamdeck\StreamDeck.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\controller\streamdeck\StreamDeckManager.cpp"/>
@@ -3028,6 +3032,10 @@
     <ClInclude Include="..\..\Source\Module\modules\common\streaming\NetworkStreamingModule.h"/>
     <ClInclude Include="..\..\Source\Module\modules\common\streaming\StreamingModule.h"/>
     <ClInclude Include="..\..\Source\Module\modules\common\ui\EnablingNetworkControllableContainerEditor.h"/>
+    <ClInclude Include="..\..\Source\Module\modules\controller\streamdeck\models\StreamDeckMini.h"/>
+    <ClInclude Include="..\..\Source\Module\modules\controller\streamdeck\models\StreamDeckV1.h"/>
+    <ClInclude Include="..\..\Source\Module\modules\controller\streamdeck\models\StreamDeckV2.h"/>
+    <ClInclude Include="..\..\Source\Module\modules\controller\streamdeck\models\StreamDeckXL.h"/>
     <ClInclude Include="..\..\Source\Module\modules\controller\streamdeck\commands\StreamDeckCommand.h"/>
     <ClInclude Include="..\..\Source\Module\modules\controller\streamdeck\StreamDeck.h"/>
     <ClInclude Include="..\..\Source\Module\modules\controller\streamdeck\StreamDeckManager.h"/>

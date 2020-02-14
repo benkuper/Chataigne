@@ -198,6 +198,10 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/NetworkStreamingModule_a6ae39cf.o \
   $(JUCE_OBJDIR)/StreamingModule_8e8f50a9.o \
   $(JUCE_OBJDIR)/EnablingNetworkControllableContainerEditor_5d799d9a.o \
+  $(JUCE_OBJDIR)/StreamDeckMini_4ac810b0.o \
+  $(JUCE_OBJDIR)/StreamDeckV1_857241d4.o \
+  $(JUCE_OBJDIR)/StreamDeckV2_85805955.o \
+  $(JUCE_OBJDIR)/StreamDeckXL_8a586dad.o \
   $(JUCE_OBJDIR)/StreamDeckCommand_bb7407fa.o \
   $(JUCE_OBJDIR)/StreamDeck_4e210288.o \
   $(JUCE_OBJDIR)/StreamDeckManager_8875088f.o \
@@ -1005,6 +1009,26 @@ $(JUCE_OBJDIR)/StreamingModule_8e8f50a9.o: ../../Source/Module/modules/common/st
 $(JUCE_OBJDIR)/EnablingNetworkControllableContainerEditor_5d799d9a.o: ../../Source/Module/modules/common/ui/EnablingNetworkControllableContainerEditor.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling EnablingNetworkControllableContainerEditor.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/StreamDeckMini_4ac810b0.o: ../../Source/Module/modules/controller/streamdeck/models/StreamDeckMini.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling StreamDeckMini.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/StreamDeckV1_857241d4.o: ../../Source/Module/modules/controller/streamdeck/models/StreamDeckV1.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling StreamDeckV1.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/StreamDeckV2_85805955.o: ../../Source/Module/modules/controller/streamdeck/models/StreamDeckV2.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling StreamDeckV2.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/StreamDeckXL_8a586dad.o: ../../Source/Module/modules/controller/streamdeck/models/StreamDeckXL.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling StreamDeckXL.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/StreamDeckCommand_bb7407fa.o: ../../Source/Module/modules/controller/streamdeck/commands/StreamDeckCommand.cpp

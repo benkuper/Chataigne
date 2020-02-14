@@ -242,6 +242,9 @@
     <Filter Include="Chataigne\Source\Module\modules\common">
       <UniqueIdentifier>{E89D3705-9633-01AF-C6F5-82B057BCA7D4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\controller\streamdeck\models">
+      <UniqueIdentifier>{F00E3B1C-8C88-549F-8FA8-ABAD74D43EDA}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Chataigne\Source\Module\modules\controller\streamdeck\commands">
       <UniqueIdentifier>{6543A1B2-0C74-404F-71A8-67E342B684E6}</UniqueIdentifier>
     </Filter>
@@ -1551,6 +1554,18 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\common\ui\EnablingNetworkControllableContainerEditor.cpp">
       <Filter>Chataigne\Source\Module\modules\common\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Module\modules\controller\streamdeck\models\StreamDeckMini.cpp">
+      <Filter>Chataigne\Source\Module\modules\controller\streamdeck\models</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Module\modules\controller\streamdeck\models\StreamDeckV1.cpp">
+      <Filter>Chataigne\Source\Module\modules\controller\streamdeck\models</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Module\modules\controller\streamdeck\models\StreamDeckV2.cpp">
+      <Filter>Chataigne\Source\Module\modules\controller\streamdeck\models</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Module\modules\controller\streamdeck\models\StreamDeckXL.cpp">
+      <Filter>Chataigne\Source\Module\modules\controller\streamdeck\models</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\controller\streamdeck\commands\StreamDeckCommand.cpp">
       <Filter>Chataigne\Source\Module\modules\controller\streamdeck\commands</Filter>
@@ -5021,6 +5036,18 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\common\ui\EnablingNetworkControllableContainerEditor.h">
       <Filter>Chataigne\Source\Module\modules\common\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Module\modules\controller\streamdeck\models\StreamDeckMini.h">
+      <Filter>Chataigne\Source\Module\modules\controller\streamdeck\models</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Module\modules\controller\streamdeck\models\StreamDeckV1.h">
+      <Filter>Chataigne\Source\Module\modules\controller\streamdeck\models</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Module\modules\controller\streamdeck\models\StreamDeckV2.h">
+      <Filter>Chataigne\Source\Module\modules\controller\streamdeck\models</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Module\modules\controller\streamdeck\models\StreamDeckXL.h">
+      <Filter>Chataigne\Source\Module\modules\controller\streamdeck\models</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\controller\streamdeck\commands\StreamDeckCommand.h">
       <Filter>Chataigne\Source\Module\modules\controller\streamdeck\commands</Filter>

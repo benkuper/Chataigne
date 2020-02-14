@@ -31,17 +31,21 @@ public:
 	enum DeviceType { STANDARD = 15, MINI = 6, XL = 32 };
 	EnumParameter* deviceType;
 
+	int numRows;
+	int numColumns;
+
 	Trigger* reset;
 	BoolParameter* colorizeImages;
 	BoolParameter* highlightPressedButtons;
 
 	FloatParameter* brightness;
 	ControllableContainer colorsCC;
-	Array<ColorParameter*> colors;
+	OwnedArray<Array<ColorParameter*>> colors;
 	ControllableContainer imagesCC;
-	Array<FileParameter*> images;
+	OwnedArray<Array<FileParameter*>> images;
 
-	Array<BoolParameter*> buttonStates;
+	Array<ControllableContainer*> buttonRowsCC;
+	OwnedArray<Array<BoolParameter*>> buttonStates;
 
 #if USE_FAKE_DEVICE
 	StreamDeck fakeDevice;
@@ -50,10 +54,14 @@ public:
 	void rebuildValues();
 
 	void setDevice(StreamDeck* newDevice);
-	void updateButton(int id);
+	void updateButton(int row, int column);
 
-	virtual void streamDeckButtonPressed(int button) override;
-	virtual void streamDeckButtonReleased(int button) override;
+	void setColor(int row, int column, const Colour& c);
+	void setAllColor(const Colour& c);
+	void setImage(int row, int column, const String& path);
+
+	virtual void streamDeckButtonPressed(int row, int column) override;
+	virtual void streamDeckButtonReleased(int row, int column) override;
 
 	void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) override;
 	

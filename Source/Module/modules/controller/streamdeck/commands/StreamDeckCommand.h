@@ -24,7 +24,8 @@ public:
 	StreamDeckAction action;
 	StreamDeckModule* streamDeckModule;
 
-	IntParameter* buttonID;
+	IntParameter* row;
+	IntParameter* column;
 	Parameter * valueParam;
 
 	void triggerInternal() override;

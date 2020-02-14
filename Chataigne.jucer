@@ -687,6 +687,21 @@
           </GROUP>
           <GROUP id="{A597C064-C7DE-23AD-F74A-2E029F90FCEA}" name="controller">
             <GROUP id="{8F6890F4-73F1-C709-3041-54E6E08838F1}" name="streamdeck">
+              <GROUP id="{5846E3A2-6CB1-A070-1811-E4E3C52C814C}" name="models">
+                <FILE id="lChxs5" name="StreamDeckMini.cpp" compile="1" resource="0"
+                      file="Source/Module/modules/controller/streamdeck/models/StreamDeckMini.cpp"/>
+                <FILE id="VxMi3I" name="StreamDeckMini.h" compile="0" resource="0"
+                      file="Source/Module/modules/controller/streamdeck/models/StreamDeckMini.h"/>
+                <FILE id="tnjUQM" name="StreamDeckV1.cpp" compile="1" resource="0"
+                      file="Source/Module/modules/controller/streamdeck/models/StreamDeckV1.cpp"/>
+                <FILE id="OimxR1" name="StreamDeckV1.h" compile="0" resource="0" file="Source/Module/modules/controller/streamdeck/models/StreamDeckV1.h"/>
+                <FILE id="JWHOlg" name="StreamDeckV2.cpp" compile="1" resource="0"
+                      file="Source/Module/modules/controller/streamdeck/models/StreamDeckV2.cpp"/>
+                <FILE id="HsPC1y" name="StreamDeckV2.h" compile="0" resource="0" file="Source/Module/modules/controller/streamdeck/models/StreamDeckV2.h"/>
+                <FILE id="sW7OAf" name="StreamDeckXL.cpp" compile="1" resource="0"
+                      file="Source/Module/modules/controller/streamdeck/models/StreamDeckXL.cpp"/>
+                <FILE id="yEI2V5" name="StreamDeckXL.h" compile="0" resource="0" file="Source/Module/modules/controller/streamdeck/models/StreamDeckXL.h"/>
+              </GROUP>
               <GROUP id="{913B8A45-77B5-B711-04D5-75EC35D70E4C}" name="commands">
                 <FILE id="iVwQ3o" name="StreamDeckCommand.cpp" compile="1" resource="0"
                       file="Source/Module/modules/controller/streamdeck/commands/StreamDeckCommand.cpp"/>

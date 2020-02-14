@@ -605,6 +605,22 @@
 			isa = PBXBuildFile;
 			fileRef = EE7734BE83426C490017DACD;
 		};
+		55B5CE8B2A46E8FA2BCBFFB7 = {
+			isa = PBXBuildFile;
+			fileRef = 79A8BC1C27053A422D07A1B6;
+		};
+		B3467E7152524D538FC5E575 = {
+			isa = PBXBuildFile;
+			fileRef = 917521599B52D2E67AA82FF6;
+		};
+		D23D6376125B65F2616D8BEC = {
+			isa = PBXBuildFile;
+			fileRef = C5C617A12B52E00D9C5A7EEC;
+		};
+		FC9BD8D7433DFAC3263A117A = {
+			isa = PBXBuildFile;
+			fileRef = 16BB5496F8FB2C6FEAC1BBA9;
+		};
 		2E8F52C68A6542A832F8BC0A = {
 			isa = PBXBuildFile;
 			fileRef = FA28A6E3D992D8E5E14F097E;
@@ -1484,6 +1500,13 @@
 			path = ../../Resources/Modules/Gamepad.png;
 			sourceTree = "SOURCE_ROOT";
 		};
+		0F7CC9EDAC51BF91B47A3687 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = StreamDeckV1.h;
+			path = ../../Source/Module/modules/controller/streamdeck/models/StreamDeckV1.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		10B33E7F3EE7009BEA77D0AC = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -1566,6 +1589,13 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = ChataigneSequenceManager.h;
 			path = ../../Source/TimeMachine/ChataigneSequenceManager.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		16BB5496F8FB2C6FEAC1BBA9 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = StreamDeckXL.cpp;
+			path = ../../Source/Module/modules/controller/streamdeck/models/StreamDeckXL.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		17733F84F51C6BC5BE25683A = {
@@ -2147,6 +2177,13 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = MappingUI.h;
 			path = ../../Source/Common/Processor/Mapping/ui/MappingUI.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		3D416A20B2A08146BAEDB7DD = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = StreamDeckXL.h;
+			path = ../../Source/Module/modules/controller/streamdeck/models/StreamDeckXL.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		3D79C9F6BD87A9B257C9AE04 = {
@@ -3227,6 +3264,13 @@
 			path = ../../Source/Common/Processor/Action/Consequence/ConsequenceManager.h;
 			sourceTree = "SOURCE_ROOT";
 		};
+		79A8BC1C27053A422D07A1B6 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = StreamDeckMini.cpp;
+			path = ../../Source/Module/modules/controller/streamdeck/models/StreamDeckMini.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		79C7DF572850E6FDA55CEC12 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -3570,6 +3614,13 @@
 			path = ../../Source/Module/modules/common/streaming/commands/SendStreamValuesCommand.h;
 			sourceTree = "SOURCE_ROOT";
 		};
+		917521599B52D2E67AA82FF6 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = StreamDeckV1.cpp;
+			path = ../../Source/Module/modules/controller/streamdeck/models/StreamDeckV1.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		917F8F23507E7AE42797E326 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -3778,6 +3829,13 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = ProcessorUI.h;
 			path = ../../Source/Common/Processor/ui/ProcessorUI.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		9FE6F22D2711DA748CC6C847 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = StreamDeckMini.h;
+			path = ../../Source/Module/modules/controller/streamdeck/models/StreamDeckMini.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		A07AB46E1CB4B4698F148FC8 = {
@@ -4382,6 +4440,13 @@
 			path = ../../Source/Module/modules/common/commands/customvalues/CustomValuesCommandArgument.h;
 			sourceTree = "SOURCE_ROOT";
 		};
+		C1D2BE99C657D67B5FB22423 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = StreamDeckV2.h;
+			path = ../../Source/Module/modules/controller/streamdeck/models/StreamDeckV2.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		C3DDE9B9D449A6FB26D1D354 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -4422,6 +4487,13 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = CommandDefinitionManager.cpp;
 			path = ../../Source/Common/Command/CommandDefinitionManager.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
+		C5C617A12B52E00D9C5A7EEC = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = StreamDeckV2.cpp;
+			path = ../../Source/Module/modules/controller/streamdeck/models/StreamDeckV2.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		C60629FA5A98B14697D1DA4E = {
@@ -6486,6 +6558,21 @@
 			name = common;
 			sourceTree = "<group>";
 		};
+		4E3A94968E02D9FF700B3781 = {
+			isa = PBXGroup;
+			children = (
+				79A8BC1C27053A422D07A1B6,
+				9FE6F22D2711DA748CC6C847,
+				917521599B52D2E67AA82FF6,
+				0F7CC9EDAC51BF91B47A3687,
+				C5C617A12B52E00D9C5A7EEC,
+				C1D2BE99C657D67B5FB22423,
+				16BB5496F8FB2C6FEAC1BBA9,
+				3D416A20B2A08146BAEDB7DD,
+			);
+			name = models;
+			sourceTree = "<group>";
+		};
 		DD1BA0B1F720D98F56FC561F = {
 			isa = PBXGroup;
 			children = (
@@ -6498,6 +6585,7 @@
 		F3330C384960BC2EFE9674FD = {
 			isa = PBXGroup;
 			children = (
+				4E3A94968E02D9FF700B3781,
 				DD1BA0B1F720D98F56FC561F,
 				37E289E87C093EDA2DD5E0A9,
 				743E0CFF477957077A08AB44,
@@ -7899,6 +7987,10 @@
 				9A671E6CC2C86695A5BE4A84,
 				31362975C7078AE89FAD4322,
 				D24D9221F54DA1CD4E4E3900,
+				55B5CE8B2A46E8FA2BCBFFB7,
+				B3467E7152524D538FC5E575,
+				D23D6376125B65F2616D8BEC,
+				FC9BD8D7433DFAC3263A117A,
 				2E8F52C68A6542A832F8BC0A,
 				2478FB086800DB0ACF02D31D,
 				51F7C0D07880B6F7C96E553D,

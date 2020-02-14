@@ -22,7 +22,8 @@ public:
 	~StreamDeckManager();
 
 	const int vid = 4057;
-	const int pid = 96;//apparently the new PID is 0x6D = 109, so we won't use it
+	
+	enum StreamDeckPID { PID_MINI = 0x63, PID_V1 = 0x60, PID_V2 = 0x6D, PID_XL = 0x6C};
 
 	OwnedArray<StreamDeck> devices;
 

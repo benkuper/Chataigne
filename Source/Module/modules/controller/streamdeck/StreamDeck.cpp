@@ -10,86 +10,23 @@
 
 #include "StreamDeck.h"
 
-StreamDeck::StreamDeck(hid_device* device, String serialNumber, int pid) :
+StreamDeck::StreamDeck(hid_device* device, String serialNumber, Model model, int numColumns, int numRows, bool invertX, int iconSize, int keyDataOffset) :
 	Thread("StreamDeck"),
+	model(model),
 	device(device),
-	serialNumber(serialNumber)
+	serialNumber(serialNumber),
+	numKeys(numRows* numColumns),
+	numRows(numRows),
+	numColumns(numColumns),
+	invertX(keyDataOffset),
+	iconSize(iconSize),
+	keyDataOffset(keyDataOffset),
+	imagePacketLength(0),
+	imageHeaderLength(0)
 {
-	switch (pid)
-	{
-		case 0x60: 
-		{
-			model = STANDARD_V1;
-			resetData.add(0x0B, 0x63, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-			brightnessData.add(0x05, 0x55, 0xAA, 0xD1, 0x01, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-			page1Header.add(
-				0x02, 0x01, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x42, 0x4D, 0xF6,
-				0x3C, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x36, 0x00, 0x00, 0x00, 0x28, 0x00, 0x00, 0x00, 0x48, 0x00, 0x00, 0x00,
-				0x48, 0x00, 0x00, 0x00, 0x01, 0x00, 0x18, 0x00, 0x00, 0x00, 0x00, 0x00, 0xC0, 0x3C, 0x00, 0x00, 0x13, 0x0E, 0x00,
-				0x00, 0x13, 0x0E, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-			);
-
-			page2Header.add(0x02, 0x01, 0x02, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00);
-		
-			iconSize = 72;
-			keyDataOffset = 1;
-			invertX = true;
-		}
-		break;
-
-		case 0x6D:
-		{
-			model = STANDARD_V2;
-
-			resetData.add(0x03,
-				0x02, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-				0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-				0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-				0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00);
-
-			brightnessData.add(0x03, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-				0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-				0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-				0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00);
-
-			page1Header.add(
-				0x02, 0x07, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x42, 0x4D, 0xF6,
-				0x3C, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x36, 0x00, 0x00, 0x00, 0x28, 0x00, 0x00, 0x00, 0x48, 0x00, 0x00, 0x00,
-				0x48, 0x00, 0x00, 0x00, 0x01, 0x00, 0x18, 0x00, 0x00, 0x00, 0x00, 0x00, 0xC0, 0x3C, 0x00, 0x00, 0x13, 0x0E, 0x00,
-				0x00, 0x13, 0x0E, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-			);
-
-			page2Header.add(0x02, 0x01, 0x02, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00);
-			
-			iconSize = 72;
-			keyDataOffset = 4;
-			invertX = false;
-		}
-		break;
-
-
-		case 0x63:
-		{
-			model = MINI;
-			iconSize = 72;
-			keyDataOffset = 1;
-			invertX = false;
-		}
-		break;
-
-
-		case 0x6C:
-		{
-			model = XL;
-			iconSize = 96;
-			keyDataOffset = 4;
-			invertX = false;
-		}
-		break;
-	}
 
 	if(device != nullptr) hid_set_nonblocking(device, 1);
-	for (int i = 0; i < STREAMDECK_MAX_BUTTONS; i++) buttonStates.add(false);
+	for (int i = 0; i < numKeys; i++) buttonStates.add(false);
 
 	startThread();
 }
@@ -108,139 +45,78 @@ void StreamDeck::reset()
 
 void StreamDeck::setBrightness(float brightness)
 {
-	brightnessData.set(5, (uint8_t)(brightness * 100));
+	setBrightnessInternal(brightness);
 	sendFeatureReport(brightnessData.getRawDataPointer(), brightnessData.size());
 }
 
-void StreamDeck::setColor(int buttonID, Colour color, bool highlight)
+void StreamDeck::setColor(int row, int column, Colour color, bool highlight)
 {
 	if(highlight) color = color.brighter(1);
-	uint8_t r = color.getRed();
-	uint8_t g = color.getGreen();
-	uint8_t b = color.getBlue();
-	const int numPixels = iconSize * iconSize * 3;
-	Array<uint8_t> data(numPixels);
-
-	for (int i = 0; i < numPixels; i++)
-	{
-
-		data.set(i * 3, b);
-		data.set(i * 3 + 1, g);
-		data.set(i * 3 + 2, r);
-	}
-
-
-	sendButtonImageData(buttonID, data.getRawDataPointer());
-}
-
-void StreamDeck::setImage(int buttonID, Image image, bool highlight)
-{
-	image = image.rescaled(iconSize, iconSize);
+	const int numPixels = iconSize * iconSize;
 	Image iconImage(Image::RGB, iconSize, iconSize, true);
-
-#if JUCE_MAC
-	uint8_t data[ICON_BYTES];
-#else
-	image = image.convertedToFormat(Image::RGB);
-#endif
-
-	for (int tx = 0; tx < image.getWidth(); tx++)
-	{
-		for (int ty = 0; ty < image.getHeight(); ty++)
-		{
-			Colour ic = image.getPixelAt(image.getWidth() - tx, ty).brighter(highlight ? 1 : 0);
-#if JUCE_MAC
-			int index = (ty * image.getWidth() + tx) * 3;
-			data[index] = ic.getBlue();
-			data[index+1] = ic.getGreen();
-			data[index+2] = ic.getRed();
-#else
-			iconImage.setPixelAt(tx, ty, ic);
-#endif
-		}
-	}
-
-#if JUCE_MAC
-	sendButtonImageData(buttonID, data);
-
-#else
-	Image::BitmapData data(iconImage, Image::BitmapData::ReadWriteMode::readOnly);
-	sendButtonImageData(buttonID, data.data);
-#endif
-
+	iconImage.clear(iconImage.getBounds(), color);
+	sendButtonImageData(row, column, iconImage);
 }
 
-void StreamDeck::setImage(int buttonID, Image image, Colour tint, bool highlight)
+void StreamDeck::setImage(int row, int column, Image image, bool highlight)
 {
-	image = image.rescaled(iconSize, iconSize).convertedToFormat(Image::RGB);
-	Image iconImage(Image::RGB, iconSize, iconSize, true);
-
-#if JUCE_MAC
-	uint8_t data[ICON_BYTES];
-#endif
-
-	for (int tx = 0; tx < image.getWidth(); tx++)
+	if (row == 0 && column == 0)
 	{
-		for (int ty = 0; ty < image.getHeight(); ty++)
-		{
-			Colour ic = image.getPixelAt(image.getWidth()-tx, ty);
-			ic = ic.withHue(tint.getHue()).withMultipliedBrightness(tint.getBrightness()).brighter(highlight?1:0);
-#if JUCE_MAC
-			int index = (ty * image.getWidth() + tx) * 3;
-			data[index] = ic.getBlue();
-			data[index + 1] = ic.getGreen();
-			data[index + 2] = ic.getRed();
-#else
-			iconImage.setPixelAt(tx, ty, ic);
-#endif
-		}
+		DBG("Here " << image.getWidth() << " /" << image.getHeight());
 	}
+	Image iconImage = image.rescaled(iconSize, iconSize).convertedToFormat(Image::RGB);
+	sendButtonImageData(row, column, iconImage);
+}
 
-#if JUCE_MAC
-	sendButtonImageData(buttonID, data);
-#else
-	Image::BitmapData data(iconImage, Image::BitmapData::ReadWriteMode::readOnly);
-	sendButtonImageData(buttonID, data.data);
-#endif
+void StreamDeck::setImage(int row, int column, Image image, Colour tint, bool highlight)
+{
+	Image iconImage(Image::RGB, iconSize, iconSize, true);
+	Graphics g(iconImage);
+	g.drawImage(image, g.getClipBounds().toFloat());
+	g.setColour(tint.withMultipliedAlpha(.5f));
+	g.fillAll();
+	sendButtonImageData(row, column, iconImage);
+}
+
+void StreamDeck::writeImageData(MemoryOutputStream& stream, Image& img)
+{
+	Image::BitmapData bitmapData(img, Image::BitmapData::ReadWriteMode::readOnly);
+	stream.write(bitmapData.data, getIconBytes());
 }
 
 
-void StreamDeck::sendButtonImageData(int buttonID, const uint8_t* data)
+void StreamDeck::sendButtonImageData(int row, int column, Image &img)
 {
 	if(Engine::mainEngine->isClearing) return;
 	
-	if (model == STANDARD_V1)
+	writeLock.enter();
+	MemoryOutputStream imageData;
+	writeImageData(imageData, img);
+
+	const int payload = imagePacketLength - imageHeaderLength;
+	int remainingBytes = imageData.getDataSize();
+
+	int buttonID = row * numColumns + column;
+	int byteOffset = 0;
+
+	for (int part = 0; remainingBytes > 0; part++) 
 	{
-		writeLock.enter();
+		MemoryOutputStream partStream;
+		
+		int numPartBytes = jmin(remainingBytes, payload);
 
-		page1Header.set(5, buttonID + 1);
-		page2Header.set(5, buttonID + 1);
+		writeImageDataHeader(partStream, buttonID, part, remainingBytes <= imagePacketLength, numPartBytes);
 
-		MemoryBlock packet1;
-		packet1.ensureSize(PACKET_SIZE, true);
-		packet1.copyFrom(page1Header.getRawDataPointer(), 0, PACKET1_HEADER_SIZE);
-		packet1.copyFrom(data, page1Header.size(), PACKET1_PIXELS_BYTES);
+		partStream.write((uint8*)imageData.getData() + byteOffset, numPartBytes);
+		partStream.writeRepeatedByte(0, imagePacketLength - partStream.getDataSize());
 
-		MemoryBlock packet2;
-		packet2.ensureSize(PACKET_SIZE, true);
-		packet2.copyFrom(page2Header.getRawDataPointer(), 0, PACKET2_HEADER_SIZE);
-		packet2.copyFrom(data + PACKET1_PIXELS_BYTES, PACKET2_HEADER_SIZE, PACKET2_PIXELS_BYTES);
+		hid_write(device, (unsigned char*)partStream.getData(), imagePacketLength);
 
-		if (device != nullptr)
-		{
-			try {
-				hid_write(device, (unsigned char*)packet1.getData(), PACKET_SIZE);
-				hid_write(device, (unsigned char*)packet2.getData(), PACKET_SIZE);
-			}
-			catch (std::exception e)
-			{
-				NLOGERROR("StreamDeck", "Error write image to device");
-			}
-		}
-
-		writeLock.exit();
+		byteOffset += numPartBytes;
+		remainingBytes -= numPartBytes;
 	}
-	
+
+	writeLock.exit();
 }
 
 void StreamDeck::sendFeatureReport(const uint8_t* data, int length)
@@ -277,13 +153,16 @@ void StreamDeck::run()
 			{
 				if (data[0] == 1)
 				{
-					for (int i = 1; i <= STREAMDECK_MAX_BUTTONS; i++) {
-						bool state = data[i] > 0;
-						int buttonID = i - 1;
-						if (buttonStates[buttonID] != state)
+					for (int i = 0; i < numKeys; i++)
+					{
+						bool state = data[i + keyDataOffset] > 0;
+
+						if (buttonStates[i] != state)
 						{
-							buttonStates.set(buttonID, state);
-							deviceListeners.call(state ? &StreamDeckListener::streamDeckButtonPressed : &StreamDeckListener::streamDeckButtonReleased, buttonID);
+							buttonStates.set(i, state);
+							int column = i % numColumns;
+							int row = floor(i*1.0f / numColumns);
+							deviceListeners.call(state ? &StreamDeckListener::streamDeckButtonPressed : &StreamDeckListener::streamDeckButtonReleased, row, column);
 						}
 					}
 				}

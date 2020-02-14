@@ -150,15 +150,15 @@ void MorpherViewUI::paintBackground(Graphics& g)
 			Path p;
 			while (e != nullptr)
 			{
-				Point<float> p1 = getPosInView(Point<float>(e->pos[0].x, e->pos[0].y));
-				Point<float> p2 = getPosInView(Point<float>(e->pos[1].x, e->pos[1].y));
+				Point<int> p1 = getPosInView(Point<float>(e->pos[0].x, e->pos[0].y));
+				Point<int> p2 = getPosInView(Point<float>(e->pos[1].x, e->pos[1].y));
 
 
 				if (p.getLength() == 0)
 				{
-					p.startNewSubPath(p1);
+					p.startNewSubPath(p1.toFloat());
 				}
-				p.lineTo(p2);
+				p.lineTo(p2.toFloat());
 
 				e = e->next;
 			}
@@ -175,8 +175,8 @@ void MorpherViewUI::paintBackground(Graphics& g)
 	g.setColour(Colours::white.withAlpha(morpher->bgOpacity->floatValue()));
 	float tw = morpher->bgScale->floatValue();
 	float th = bgImage.getHeight() * tw / bgImage.getWidth();
-	Rectangle<float> r = getBoundsInView(Rectangle<float>(-tw / 2, -th / 2, tw, th));
-	g.drawImage(bgImage, r);
+	Rectangle<int> r = getBoundsInView(Rectangle<float>(-tw / 2, -th / 2, tw, th));
+	g.drawImage(bgImage, r.toFloat());
 
 
 	if (morpher->blendMode == Morpher::VORONOI)
@@ -198,7 +198,7 @@ void MorpherViewUI::paintBackground(Graphics& g)
 				//MorphTarget * mt = manager->getEnabledTargetAtIndex(s.index);
 				//float d = mp.getDistanceFrom(Point<float>(s.p.x, s.p.y));
 
-				Point<float> mpVPos = getPosInView(mp);
+				Point<int> mpVPos = getPosInView(mp);
 
 
 				jcv_graphedge* edge = s.edges;
@@ -208,12 +208,12 @@ void MorpherViewUI::paintBackground(Graphics& g)
 				Array<float> edgeNeighbourDists;
 				Array<jcv_site*> neighbourSites;
 				Array<Line<float>> edgeLines;
-				Array<Point<float>> neighboursViewPoints;
-				Array<Point<float>> edgeViewPoints;
+				Array<Point<int>> neighboursViewPoints;
+				Array<Point<int>> edgeViewPoints;
 
 				g.setColour(Colours::white.withAlpha(.1f));
 
-				Point<float> sVPos = getPosInView(Point<float>(s.p.x, s.p.y));
+				Point<int> sVPos = getPosInView(Point<float>(s.p.x, s.p.y));
 				g.drawLine(mpVPos.x, mpVPos.y, sVPos.x, sVPos.y);
 
 				g.setColour(Colours::white.withAlpha(.6f));
@@ -246,9 +246,9 @@ void MorpherViewUI::paintBackground(Graphics& g)
 
 					edge = edge->next;
 
-					Point<float> nsVPos = getPosInView(Point<float>(ns->p.x, ns->p.y));
+					Point<int> nsVPos = getPosInView(Point<float>(ns->p.x, ns->p.y));
 					neighboursViewPoints.add(nsVPos);
-					Point<float> npVPos = getPosInView(np);
+					Point<int> npVPos = getPosInView(np);
 					edgeViewPoints.add(npVPos);
 
 					g.drawLine(mpVPos.x, mpVPos.y, nsVPos.x, nsVPos.y);
@@ -311,8 +311,8 @@ void MorpherViewUI::paintBackground(Graphics& g)
 		if (morpher->useAttraction->boolValue())
 		{
 			Point<float> mtp = morpher->mainTarget.viewUIPosition->getPoint();
-			Point<float> mp = getPosInView(mtp);
-			Point<float> tp = getPosInView(mtp + morpher->attractionDir);
+			Point<int> mp = getPosInView(mtp);
+			Point<int> tp = getPosInView(mtp + morpher->attractionDir);
 			g.setColour(Colours::yellow);
 			g.drawLine(mp.x, mp.y, tp.x, tp.y);
 			//g.fillEllipse(tp.x - 5, tp.y - 5, 10, 10);
@@ -334,14 +334,14 @@ void MorpherViewUI::setupBGImage()
 void MorpherViewUI::resized()
 {
 	BaseManagerViewUI::resized();
-	updateComponentViewPosition(&mainTargetUI, mainTargetUI.item->viewUIPosition->getPoint());
+	updateComponentViewPosition(&mainTargetUI, mainTargetUI.item->viewUIPosition->getPoint(), AffineTransform());
 }
 
 void MorpherViewUI::setViewZoom(float value)
 {
 	BaseManagerViewUI::setViewZoom(value);
 	mainTargetUI.setViewZoom(value);
-	updateComponentViewPosition(&mainTargetUI, mainTargetUI.item->viewUIPosition->getPoint());
+	updateComponentViewPosition(&mainTargetUI, mainTargetUI.item->viewUIPosition->getPoint(), AffineTransform());
 }
 
 void MorpherViewUI::mouseDown(const MouseEvent& e)
@@ -376,9 +376,9 @@ void MorpherViewUI::itemDragMove(const SourceDetails& details)
 
 	if (bui != nullptr && bui == &mainTargetUI)
 	{
-		Point<int> p = getPositionFromDrag(bui, details);
+		Point<float> p = getPositionFromDrag(bui, details);
 		bui->item->viewUIPosition->setUndoablePoint(bui->item->viewUIPosition->getPoint(), p.toFloat());
-		updateComponentViewPosition(bui, bui->item->viewUIPosition->getPoint());
+		updateComponentViewPosition(bui, bui->item->viewUIPosition->getPoint(), AffineTransform());
 		shouldRepaint = true;
 	}
 
@@ -393,9 +393,9 @@ void MorpherViewUI::itemDropped(const SourceDetails& details)
 	
 	if(bui != nullptr && bui == &mainTargetUI)
 	{
-		Point<int> p = getPositionFromDrag(bui, details); 
+		Point<float> p = getPositionFromDrag(bui, details); 
 		bui->item->viewUIPosition->setUndoablePoint(bui->item->viewUIPosition->getPoint(), p.toFloat());
-		updateComponentViewPosition(bui, bui->item->viewUIPosition->getPoint());
+		updateComponentViewPosition(bui, bui->item->viewUIPosition->getPoint(), AffineTransform());
 	}
 
 	BaseManagerViewUI::itemDropped(details);
@@ -425,7 +425,7 @@ void MorpherViewUI::controllableFeedbackUpdateAsync(Controllable* c)
 	{
 		if (!mainTargetUI.isMouseOverOrDragging(true))
 		{
-			updateComponentViewPosition(&mainTargetUI,mainTargetUI.item->viewUIPosition->getPoint().toFloat());
+			updateComponentViewPosition(&mainTargetUI,mainTargetUI.item->viewUIPosition->getPoint().toFloat(), AffineTransform());
 			shouldRepaint = true;
 		}
 	}
