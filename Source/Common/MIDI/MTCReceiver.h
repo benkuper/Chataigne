@@ -61,6 +61,7 @@ public:
 	class MTCListener
 	{
 	public:
+        virtual ~MTCListener() {}
 		virtual void mtcTimeUpdated(bool fromFullFrame) {}
 		virtual void mtcStarted() {}
 		virtual void mtcStopped() {}

@@ -29,7 +29,7 @@ public :
 	WeakReference<Joystick> getJoystick();
 
 	void rebuild();
-	void resized();
+    void resized() override;
 
 	void newMessage(const InputSystemManager::InputSystemEvent &e) override;
 
@@ -52,7 +52,7 @@ public:
 	WeakReference<Gamepad> getGamepad();
 
 	void rebuild();
-	void resized();
+    void resized() override;
 
 	void valueChanged(const var &) override;
 
