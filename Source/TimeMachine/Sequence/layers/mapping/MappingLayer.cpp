@@ -331,7 +331,7 @@ void MappingLayer::sequenceCurrentTimeChanged(Sequence *, float prevTime, bool e
 
 	if (sequence->isPlaying->boolValue())
 	{
-		if (automation->recorder->isRecording->boolValue())
+		if (automation->recorder != nullptr && automation->recorder->isRecording->boolValue())
 		{
 			if (prevTime < sequence->currentTime->floatValue())
 			{
