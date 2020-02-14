@@ -14,7 +14,8 @@
 String GenericScriptCommand::commandScriptTemplate = "";
 
 GenericScriptCommand::GenericScriptCommand(ChataigneGenericModule * _module, CommandContext context, var params) :
-	BaseCommand(_module, context, params)
+	BaseCommand(_module, context, params),
+	script(this, false)
 {
 	addChildControllableContainer(&script);
 
