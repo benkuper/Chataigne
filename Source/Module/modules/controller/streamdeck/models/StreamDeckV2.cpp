@@ -11,10 +11,8 @@
 #include "StreamDeckV2.h"
 
 StreamDeckV2::StreamDeckV2(hid_device* device, String serialNumber) :
-	StreamDeck(device, serialNumber, STANDARD_V2, 5, 3, true, 72, 4)
+	StreamDeck(device, serialNumber, STANDARD_V2, 5, 3, false, 72, 4)
 {
-	DBG("StreamDeck V2");
-
 	imagePacketLength = 1024;
 	imageHeaderLength = 8;
 

@@ -18,6 +18,5 @@ public:
 	StreamDeckMini(hid_device* device, String serialNumbe);
 	~StreamDeckMini();
 
-	// Inherited via StreamDeck
-	virtual void writeImageDataHeader(MemoryOutputStream& stream, int keyIndex, int partIndex, bool isLast, int bodyLength) override;
+	virtual void sendButtonImageData(int row, int column, Image& img) override;
 };
