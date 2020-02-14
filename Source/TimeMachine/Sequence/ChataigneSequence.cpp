@@ -150,10 +150,9 @@ bool ChataigneSequence::timeIsDrivenByAudio()
 void ChataigneSequence::addNewMappingLayerFromValues(Array<Point<float>> keys)
 {
 	MappingLayer * layer = (MappingLayer *)layerManager->addItem(layerManager->factory.create("Mapping"));
-	jassert(layer != nullptr && layer->automations.size() > 0);
 
 	Array<Point<float>> simplifiedKeys = AutomationRecorder::getSimplifiedKeys(keys,.05f);
-	layer->automations[0]->addItems(simplifiedKeys, true, true, true);
+	layer->automation->addItems(simplifiedKeys, true, true, true);
 }
 
 void ChataigneSequence::onContainerParameterChangedInternal(Parameter* p)
@@ -226,13 +225,4 @@ void ChataigneSequence::mtcTimeUpdated(bool isFullFrame)
 {
 	double time = mtcReceiver->getTime();
 	setCurrentTime(time, true, isFullFrame);
-
 }
-
-void ChataigneSequence::loadJSONDataInternal(var data)
-{
-	//CONVERSION RETROCOMPAT change layer type "Trigger" to "Action", to remove in next major version (1.7.0)
-	var layerData = data.getProperty("layerManager",var()).getProperty("items",var());
-	Sequence::loadJSONDataInternal(data);
-}
-

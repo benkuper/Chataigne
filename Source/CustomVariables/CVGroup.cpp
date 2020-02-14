@@ -167,20 +167,20 @@ void CVGroup::onControllableFeedbackUpdateInternal(ControllableContainer * cc, C
 var CVGroup::getJSONData()
 {
 	var data = BaseItem::getJSONData();
-	data.getDynamicObject()->setProperty("params", params.getJSONData());
-	data.getDynamicObject()->setProperty("variables", values.getJSONData());
-	data.getDynamicObject()->setProperty("presets", pm->getJSONData());
-	data.getDynamicObject()->setProperty("morpher", morpher->getJSONData());
+	data.getDynamicObject()->setProperty("params", params.getJSONData()); //keep "params" to avoid conflict with container's parameter
+	data.getDynamicObject()->setProperty(values.shortName, values.getJSONData());
+	data.getDynamicObject()->setProperty(pm->shortName, pm->getJSONData());
+	data.getDynamicObject()->setProperty(morpher->shortName, morpher->getJSONData());
 	return data;
 }
 
 void CVGroup::loadJSONDataInternal(var data)
 {
 	BaseItem::loadJSONDataInternal(data);
-	params.loadJSONData(data.getProperty("params", var()));
-	values.loadJSONData(data.getProperty("variables", var()));
-	pm->loadJSONData(data.getProperty("presets", var()));
-	morpher->loadJSONData(data.getProperty("morpher", var()));
+	params.loadJSONData(data.getProperty("params", var())); //keep "params" to avoid conflict with container's parameter
+	values.loadJSONData(data.getProperty(values.shortName , var()));
+	pm->loadJSONData(data.getProperty(pm->shortName, var()));
+	morpher->loadJSONData(data.getProperty(morpher->shortName, var()));
 
 	if (controlMode->getValueDataAsEnum<ControlMode>() != FREE)
 	{

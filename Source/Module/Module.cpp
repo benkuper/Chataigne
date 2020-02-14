@@ -165,21 +165,21 @@ void Module::onControllableFeedbackUpdateInternal(ControllableContainer * cc, Co
 var Module::getJSONData()
 {
 	var data = BaseItem::getJSONData();
-	data.getDynamicObject()->setProperty("params", moduleParams.getJSONData());
+	data.getDynamicObject()->setProperty("params", moduleParams.getJSONData()); //keep "params" to avoid conflict with container's parameter
 
 	var templateData = templateManager->getJSONData();
-	if (!templateData.isVoid() && templateData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty("templates", templateData);
+	if (!templateData.isVoid() && templateData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(templateManager->shortName, templateData);
 
-	if(includeValuesInSave) data.getDynamicObject()->setProperty("values", valuesCC.getJSONData());
+	if(includeValuesInSave) data.getDynamicObject()->setProperty(valuesCC.shortName, valuesCC.getJSONData());
 
 	return data;
 }
 
 void Module::loadJSONDataItemInternal(var data)
 {
-	if (includeValuesInSave) valuesCC.loadJSONData(data.getProperty("values", var()), true);
-	moduleParams.loadJSONData(data.getProperty("params", var()));
-	templateManager->loadJSONData(data.getProperty("templates", var()), true);
+	if (includeValuesInSave) valuesCC.loadJSONData(data.getProperty(valuesCC.shortName, var()), true);
+	moduleParams.loadJSONData(data.getProperty("params", var())); //keep "params" to avoid conflict with container's parameter
+	templateManager->loadJSONData(data.getProperty(templateManager->shortName , var()), true);
 }
 
 void Module::loadJSONDataInternal(var data)

@@ -285,17 +285,17 @@ var StateManager::getJSONData()
 	var data = BaseManager::getJSONData();
 
 	var tData = stm.getJSONData();
-	if (!tData.isVoid() && tData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty("transitions",tData);
+	if (!tData.isVoid() && tData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(stm.shortName,tData);
 	var cData = commentManager.getJSONData();
-	if (!cData.isVoid() && cData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty("comments", cData);
+	if (!cData.isVoid() && cData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(commentManager.shortName, cData);
 	return data;
 }
 
 void StateManager::loadJSONDataInternal(var data)
 {
 	BaseManager::loadJSONDataInternal(data);
-	stm.loadJSONData(data.getProperty("transitions", var()));
-	commentManager.loadJSONData(data.getProperty("comments", var()));
+	stm.loadJSONData(data.getProperty(stm.shortName, var()));
+	commentManager.loadJSONData(data.getProperty(commentManager.shortName, var()));
 
 	for (auto& s : items)
 	{

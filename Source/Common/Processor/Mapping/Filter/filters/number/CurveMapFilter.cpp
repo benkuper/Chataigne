@@ -47,13 +47,13 @@ void CurveMapFilter::onControllableFeedbackUpdateInternal(ControllableContainer 
 var CurveMapFilter::getJSONData()
 {
 	var data = MappingFilter::getJSONData();
-	data.getDynamicObject()->setProperty("curve", curve.getJSONData());
+	data.getDynamicObject()->setProperty(curve.shortName, curve.getJSONData());
 	return data;
 }
 
 void CurveMapFilter::loadJSONDataInternal(var data)
 {
 	MappingFilter::loadJSONDataInternal(data);
-	curve.loadJSONData(data.getProperty("curve", var()), true);
+	curve.loadJSONData(data.getProperty(curve.shortName, var()), true);
 }
 

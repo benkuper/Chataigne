@@ -63,13 +63,7 @@ public:
 	virtual void mtcStopped() override;
 	virtual void mtcTimeUpdated(bool isFullFrame) override;
 
-	void loadJSONDataInternal(var data) override;
-
-
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ChataigneSequence)
-
-
-
 };
 
 

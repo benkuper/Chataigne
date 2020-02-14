@@ -102,14 +102,14 @@ var State::getJSONData()
 {
 	var data = BaseItem::getJSONData();
 	var pData = pm.getJSONData();
-	if(!pData.isVoid() && pData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty("processors", pData);
+	if(!pData.isVoid() && pData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(pm.shortName, pData);
 	return data;
 }
 
 void State::loadJSONDataInternal(var data)
 {
 	BaseItem::loadJSONDataInternal(data);
-	pm.loadJSONData(data.getProperty("processors", var()));
+	pm.loadJSONData(data.getProperty(pm.shortName, var()));
 
 	LoadBehavior b = loadActivationBehavior->getValueDataAsEnum<LoadBehavior>();
 	if (b != KEEP) active->setValue(b == ACTIVE);

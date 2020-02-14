@@ -37,14 +37,14 @@ CVPreset::~CVPreset()
 var CVPreset::getJSONData()
 {
 	var data = MorphTarget::getJSONData();
-	data.getDynamicObject()->setProperty("values", values.getJSONData());
+	data.getDynamicObject()->setProperty(values.shortName, values.getJSONData());
 	return data;
 }
 
 void CVPreset::loadJSONDataInternal(var data)
 {
 	MorphTarget::loadJSONDataInternal(data);
-	values.loadJSONData(data.getProperty("values", var()),true);
+	values.loadJSONData(data.getProperty(values.shortName, var()),true);
 }
 
 var CVPreset::getValuesAsJSON()
