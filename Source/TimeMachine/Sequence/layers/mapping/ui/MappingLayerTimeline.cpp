@@ -30,34 +30,28 @@ void MappingLayerTimeline::setupUIForLayerMode()
 	if (colorManagerUI != nullptr)
 	{
 		removeChildComponent(colorManagerUI.get());
-		colorManagerUI = nullptr;
+		colorManagerUI.reset();
 	}
 
-	for(auto &aui :automationsUI) removeChildComponent(aui);
-	automationsUI.clear();
-
-	int index = 0;
-	for (auto &a : mappingLayer->automations)
+	if (automationUI != nullptr)
 	{
-		Colour c = Colours::white;
-		if (index == 0 && mappingLayer->automations.size() > 1) c = RED_COLOR;
-		if (index == 1) c = GREEN_COLOR;
-		if (index == 2) c = BLUE_COLOR;
-		AutomationUI * aui = new AutomationUI(a,c);
-		aui->autoSwitchMode = false;
-		aui->setViewMode(AutomationUI::VIEW);
-
-		addAndMakeVisible(aui);
-		automationsUI.add(aui);
-		index++;
+		removeChildComponent(automationUI.get());
+		automationUI.reset();
 	}
 
 
-	if (mappingLayer->mode->getValueDataAsEnum<MappingLayer::Mode>() == MappingLayer::MODE_COLOR)
+	if (mappingLayer->mode == MappingLayer::MODE_COLOR)
 	{
 		colorManagerUI.reset(new GradientColorManagerUI(mappingLayer->colorManager.get()));
 		addAndMakeVisible(colorManagerUI.get());
 		colorManagerUI->toBack();
+	}
+	else
+	{
+		automationUI.reset(new AutomationUI(mappingLayer->automation.get()));
+		automationUI->autoSwitchMode = false;
+		automationUI->setViewMode(AutomationUI::VIEW);
+		addAndMakeVisible(automationUI.get());
 	}
 
 	needle.toFront(false);
@@ -67,13 +61,13 @@ void MappingLayerTimeline::setupUIForLayerMode()
 
 void MappingLayerTimeline::updateContent()
 {
-	for (auto &aui : automationsUI) aui->setViewRange(item->sequence->viewStartTime->floatValue(), item->sequence->viewEndTime->floatValue());
+	if(automationUI != nullptr) automationUI->setViewRange(item->sequence->viewStartTime->floatValue(), item->sequence->viewEndTime->floatValue());
 	if (colorManagerUI != nullptr) colorManagerUI->setViewRange(item->sequence->viewStartTime->floatValue(), item->sequence->viewEndTime->floatValue());
 }
 
 void MappingLayerTimeline::resized()
 {
-	for (auto &aui : automationsUI) aui->setBounds(getLocalBounds());
+	if(automationUI != nullptr) automationUI->setBounds(getLocalBounds());
 	if (colorManagerUI != nullptr) colorManagerUI->setBounds(getLocalBounds());
 }
 
@@ -82,10 +76,7 @@ void MappingLayerTimeline::controllableFeedbackUpdateInternal(Controllable * c)
 {
 	SequenceLayerTimeline::controllableFeedbackUpdateInternal(c);
 
-	if (c == mappingLayer->mode)
-	{
-		setupUIForLayerMode();
-	} else if (c == mappingLayer->recorder.arm)
+	if (c == mappingLayer->recorder.arm)
 	{
 		needle.timeBarColor = mappingLayer->recorder.arm->boolValue() ? Colours::red : needle.defaultTimeBarColor;
 		repaint();
@@ -96,6 +87,6 @@ void MappingLayerTimeline::inspectableSelectionChanged(Inspectable * i)
 {
 	if (i == mappingLayer)
 	{
-		for (auto &aui : automationsUI) aui->setViewMode(mappingLayer->isSelected?AutomationUI::EDIT:AutomationUI::VIEW);
+		if(automationUI != nullptr) automationUI->setViewMode(mappingLayer->isSelected?AutomationUI::EDIT:AutomationUI::VIEW);
 	}
 }

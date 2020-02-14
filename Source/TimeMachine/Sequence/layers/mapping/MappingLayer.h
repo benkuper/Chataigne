@@ -20,12 +20,14 @@ class MappingLayer :
 	public SequenceLayer
 {
 public:
-	enum Mode { MODE_1D, MODE_2D, MODE_3D, MODE_COLOR };
-
+	
 	MappingLayer(Sequence* _sequence, var params);
 	~MappingLayer();
 
-	EnumParameter* mode;
+	enum Mode { MODE_1D, MODE_2D, MODE_3D, MODE_COLOR, MODE_MAX };
+	static String modeNames[MODE_MAX];
+
+	Mode mode;
 
 	BoolParameter* alwaysUpdate;
 	BoolParameter* sendOnPlay;
@@ -38,7 +40,7 @@ public:
 	Parameter* curveValue; //later : float / point2d / point3d / color (4d) for multi curve layer
 	//Parameter * mappedValue; //later : polymorph out from mapping, depending on filters
 
-	OwnedArray<Automation> automations; //later: automation Manager to allow for multi curve layer
+	std::unique_ptr<Automation> automation;
 	std::unique_ptr<GradientColorManager> colorManager;
 
 	AutomationRecorder recorder;
@@ -73,7 +75,9 @@ public:
 
 
 	static MappingLayer* create(Sequence* sequence, var params) { return new MappingLayer(sequence, params); }
-	virtual String getTypeString() const override { return "Mapping"; }
+	virtual String getTypeString() const override {
+		return modeNames[mode] ; 
+	}
 
 
 	virtual bool paste() override;

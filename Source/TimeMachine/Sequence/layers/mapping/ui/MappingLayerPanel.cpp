@@ -19,15 +19,15 @@ MappingLayerPanel::MappingLayerPanel(MappingLayer * layer) :
 	//modeUI = mappingLayer->mode->createUI();
 	//addAndMakeVisible(modeUI);
 
-	if (mappingLayer->automations.size() > 0)
+	if (mappingLayer->automation != nullptr)
 	{
-		snapUI.reset(mappingLayer->automations[0]->enableSnap->createImageToggle(ChataigneAssetManager::getInstance()->getToggleBTImage(ChataigneAssetManager::getInstance()->getSnapImage())));
+		snapUI.reset(mappingLayer->automation->enableSnap->createImageToggle(ChataigneAssetManager::getInstance()->getToggleBTImage(ChataigneAssetManager::getInstance()->getSnapImage())));
 		addAndMakeVisible(snapUI.get());
 
-		snapSensitivityUI.reset(mappingLayer->automations[0]->snapSensitivity->createSlider());
+		snapSensitivityUI.reset(mappingLayer->automation->snapSensitivity->createSlider());
 		addAndMakeVisible(snapSensitivityUI.get());
 
-		automationInspector.reset(new Inspector(mappingLayer->automations[0]->selectionManager));
+		automationInspector.reset(new Inspector(mappingLayer->automation->selectionManager));
 		automationInspector->showTextOnEmptyOrMulti = false;
 		addAndMakeVisible(automationInspector.get());
 	}

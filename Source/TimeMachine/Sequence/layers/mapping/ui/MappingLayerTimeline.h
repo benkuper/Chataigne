@@ -21,7 +21,7 @@ public:
 
 	MappingLayer * mappingLayer;
 
-	OwnedArray<AutomationUI> automationsUI;
+	std::unique_ptr<AutomationUI> automationUI;
 	std::unique_ptr<GradientColorManagerUI> colorManagerUI;
 
 	void setupUIForLayerMode();
