@@ -17,7 +17,8 @@ class CVPresetManager;
 
 class CVGroup :
 	public BaseItem,
-	public Morpher::MorpherListener
+	public Morpher::MorpherListener,
+	public Thread
 {
 public:
 	CVGroup(const String &name = "Group");
@@ -33,9 +34,15 @@ public:
 
 	std::unique_ptr<CVPresetManager> pm;
 	std::unique_ptr<Morpher> morpher;
+
+	//Animated interpolation
+	CVPreset* targetPreset;
+	Automation* interpolationAutomation;
+	float interpolationTime;
 	
 	void setValuesToPreset(CVPreset * preset);
 	void lerpPresets(CVPreset * p1, CVPreset * p2, float value);
+	void lerpToPreset(CVPreset* p, float time, Automation* curve);
 
 	void computeValues();
 	Array<float> getNormalizedPresetWeights();
@@ -46,4 +53,6 @@ public:
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
+
+	void run() override;
 };

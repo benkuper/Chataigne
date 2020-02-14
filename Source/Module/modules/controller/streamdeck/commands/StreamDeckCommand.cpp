@@ -53,8 +53,8 @@ StreamDeckCommand::~StreamDeckCommand()
 
 void StreamDeckCommand::triggerInternal()
 {
-	int r = row != nullptr ? row->intValue() : 0;
-	int c = column != nullptr ? column->intValue() : 0;
+	int r = row != nullptr ? row->intValue()-1 : 0;
+	int c = column != nullptr ? column->intValue()-1 : 0;
 
 	switch (action)
 	{

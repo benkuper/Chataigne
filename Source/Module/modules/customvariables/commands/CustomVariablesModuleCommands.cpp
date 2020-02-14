@@ -21,8 +21,12 @@ CVCommand::CVCommand(CustomVariablesModule * _module, CommandContext context, va
 	targetPreset2(nullptr),
 	presetFile(nullptr),
 	valueOperator(nullptr),
-	value(nullptr)
+	value(nullptr),
+	automation(nullptr),
+	time(nullptr)
 {
+	saveAndLoadRecursiveData = true;
+
 	type = (Type)(int)params.getProperty("type", 0);
 	manager = _module->manager;
 
@@ -44,7 +48,7 @@ CVCommand::CVCommand(CustomVariablesModule * _module, CommandContext context, va
 		value = addPoint2DParameter("Position", "The target position in the 2D interpolator");
 		addTargetMappingParameterAt(value, 0);
 
-	} else if (type == SET_PRESET || type == LERP_PRESETS || type == SET_PRESET_WEIGHT || type == SAVE_PRESET || type == LOAD_PRESET)
+	} else if (type == SET_PRESET || type == LERP_PRESETS || type == SET_PRESET_WEIGHT || type == SAVE_PRESET || type == LOAD_PRESET || type == GO_TO_PRESET)
 	{
 		targetPreset = addTargetParameter("Target Preset", "The Preset to get the values from and set the variables to", CVGroupManager::getInstance());
 		targetPreset->targetType = TargetParameter::CONTAINER;
@@ -53,6 +57,18 @@ CVCommand::CVCommand(CustomVariablesModule * _module, CommandContext context, va
 
 		switch (type)
 		{
+
+		case GO_TO_PRESET:
+			time = addFloatParameter("Interpolation time", "Time for the animation to go to the target preset", 1, 0);
+			time->defaultUI = FloatParameter::TIME;
+			automation = new Automation("Curve");
+			automation->addItem(0, 0, false);
+			automation->addItem(1, 1, false);
+			automation->items[0]->setEasing(Easing::BEZIER);
+			automation->showUIInEditor = true;
+			addChildControllableContainer(automation, true);
+			break;
+
 		case LERP_PRESETS:
 		{
 			targetPreset2 = addTargetParameter("Target Preset 2", "The second preset to use for the interpolation", CVGroupManager::getInstance());
@@ -211,6 +227,16 @@ void CVCommand::triggerInternal()
 		{
 			CVPreset * p = static_cast<CVPreset *>(targetPreset->targetContainer.get());
 			if (p != nullptr) p->group->setValuesToPreset(p);
+		}
+	}
+	break;
+
+	case GO_TO_PRESET:
+	{
+		if (targetPreset->targetContainer != nullptr)
+		{
+			CVPreset* p1 = static_cast<CVPreset*>(targetPreset->targetContainer.get());
+			p1->group->lerpToPreset(p1, time->floatValue(), automation);
 		}
 	}
 	break;

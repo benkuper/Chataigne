@@ -14,8 +14,11 @@
 
 CVGroup::CVGroup(const String & name) :
 	BaseItem(name),
+	Thread("CV Interpolation"),
 	params("Parameters"),
-	values("Variables",false,false,false)
+	values("Variables",false,false,false),
+	targetPreset(nullptr),
+	interpolationTime(0)
 {
 	itemDataType = "CVGroup";
 
@@ -42,6 +45,8 @@ Voronoi and Gradient Band (not implemented yet) also locks values but interpolat
 CVGroup::~CVGroup()
 {
 	morpher->removeMorpherListener(this);
+	signalThreadShouldExit();
+	waitForThreadToExit(100);
 }
 
 void CVGroup::setValuesToPreset(CVPreset * preset)
@@ -73,6 +78,18 @@ void CVGroup::lerpPresets(CVPreset * p1, CVPreset * p2, float weight)
 			p->setValue(lValue);
 		}
 	}
+}
+
+void CVGroup::lerpToPreset(CVPreset* p, float time, Automation* curve)
+{
+	signalThreadShouldExit();
+	waitForThreadToExit(100);
+
+	targetPreset = p;
+	interpolationAutomation = curve;
+	interpolationTime = time;
+
+	startThread();
 }
 
 
@@ -107,8 +124,6 @@ void CVGroup::computeValues()
             
         default:
             break;
-
-	
 	}
 	
 }
@@ -186,5 +201,36 @@ void CVGroup::loadJSONDataInternal(var data)
 	{
 		morpher->computeZones();
 		computeValues();
+	}
+}
+
+void CVGroup::run()
+{
+	if (targetPreset == nullptr || interpolationAutomation == nullptr || interpolationTime <= 0) return;
+
+	CVPreset p1(this);
+	CVPreset p2(this);
+	for (auto& v : p2.values.manager->items)
+	{
+		if(Parameter * p = dynamic_cast<Parameter *>(v->controllable)) p->resetValue();
+	}
+	p2.loadJSONData(targetPreset->getJSONData());
+
+	Automation a;
+	a.loadJSONData(interpolationAutomation->getJSONData());
+
+	float timeAtStart = Time::getMillisecondCounter() / 1000.0f;
+
+	while (!threadShouldExit())
+	{
+		float curTime = Time::getMillisecondCounter() / 1000.0f;
+		float rel = jlimit(0.f, 1.f, (curTime - timeAtStart) / interpolationTime);
+
+		float weight = interpolationAutomation->getValueForPosition(rel);
+		lerpPresets(&p1, &p2, weight);
+
+		if (rel == 1) return;
+
+		sleep(20); //50fps
 	}
 }

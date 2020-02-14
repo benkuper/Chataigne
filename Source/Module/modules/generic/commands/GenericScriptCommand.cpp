@@ -17,6 +17,8 @@ GenericScriptCommand::GenericScriptCommand(ChataigneGenericModule * _module, Com
 	BaseCommand(_module, context, params),
 	script(this, false)
 {
+	saveAndLoadRecursiveData = true;
+
 	addChildControllableContainer(&script);
 
 	if(commandScriptTemplate.isEmpty()) commandScriptTemplate = ChataigneAssetManager::getInstance()->getScriptTemplateBundle(StringArray("generic", "command"));
