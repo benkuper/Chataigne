@@ -60,20 +60,17 @@ void StreamDeck::setColor(int row, int column, Colour color, bool highlight)
 
 void StreamDeck::setImage(int row, int column, Image image, bool highlight)
 {
-	if (row == 0 && column == 0)
-	{
-		DBG("Here " << image.getWidth() << " /" << image.getHeight());
-	}
-	Image iconImage = image.rescaled(iconSize, iconSize).convertedToFormat(Image::RGB);
-	sendButtonImageData(row, column, iconImage);
+    setImage(row,column, image, Colours::black, highlight);
 }
 
 void StreamDeck::setImage(int row, int column, Image image, Colour tint, bool highlight)
 {
 	Image iconImage(Image::RGB, iconSize, iconSize, true);
 	Graphics g(iconImage);
+    g.setColour(Colours::black);
+    g.fillAll();
 	g.drawImage(image, g.getClipBounds().toFloat());
-	g.setColour(tint.withMultipliedAlpha(.5f));
+	g.setColour(tint.withMultipliedAlpha(.5f).brighter((float)highlight));
 	g.fillAll();
 	sendButtonImageData(row, column, iconImage);
 }
