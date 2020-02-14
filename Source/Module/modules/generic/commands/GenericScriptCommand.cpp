@@ -17,7 +17,6 @@ GenericScriptCommand::GenericScriptCommand(ChataigneGenericModule * _module, Com
 	BaseCommand(_module, context, params),
 	script(this, false)
 {
-	saveAndLoadRecursiveData = true;
 
 	addChildControllableContainer(&script);
 
@@ -39,6 +38,19 @@ void GenericScriptCommand::setValueInternal(var value)
 void GenericScriptCommand::triggerInternal()
 {
 	if(context != MAPPING) script.callFunction(triggerId, Array<var>());
+}
+
+var GenericScriptCommand::getJSONData()
+{
+	var data = BaseCommand::getJSONData();
+	data.getDynamicObject()->setProperty("script", script.getJSONData());
+	return data;
+}
+
+void GenericScriptCommand::loadJSONDataInternal(var data)
+{
+	BaseCommand::loadJSONDataInternal(data);
+	script.loadJSONData(data.getProperty("script", var()));
 }
 
 BaseCommand * GenericScriptCommand::create(ControllableContainer * module, CommandContext context, var params)

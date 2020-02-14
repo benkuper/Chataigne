@@ -29,5 +29,8 @@ public:
 	void setValueInternal(var value) override;
 	void triggerInternal() override;
 
+	var getJSONData() override;
+	void loadJSONDataInternal(var data) override;
+
 	static BaseCommand * create(ControllableContainer * module, CommandContext context, var params);
 };
