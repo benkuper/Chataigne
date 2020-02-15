@@ -54,11 +54,14 @@ Also you can watch tutorials from the website and follow the interactive guide f
 ## Building the software
 
 Chataigne is built on top of the JUCE frameworks. You can find more infos about it there : http://www.juce.com
-Chataigne is using a modified version of JUCE. So basically, you just need to :
+Chataigne is using a modified version of JUCE. So you first need to compile the Projucer from the modified version of JUCE instead of downloading JUCE :
+
   - Clone the develop-local branch from the JUCE git here : http://github.com/benkuper/JUCE 
   ```
   git clone --branch=develop-local http://github.com/benkuper/JUCE
   ```
+  - In the *JUCE/extras/Projucer/Builds* folder, choose the folder depending on you system, open the solution with your IDE or make in linux. You can then open the new Projucer app that you just built.
+  
   - Clone Chataigne with --recursive options to integrate organicUI and timeline modules
   ```
   git clone --recursive http://github.com/benkuper/Chataigne
