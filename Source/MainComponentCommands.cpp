@@ -190,7 +190,7 @@ bool MainContentComponent::perform(const InvocationInfo& info)
 		break;
 
 	case ChataigneCommandIDs::gotoDocs:
-		URL("https://chataigne-goldengeek.gitbook.io/chataigne/").launchInDefaultBrowser();
+		URL("https://benjamin.kuperberg.fr/chataigne/docs").launchInDefaultBrowser();
 		break;
 
 	case ChataigneCommandIDs::postGithubIssue:
