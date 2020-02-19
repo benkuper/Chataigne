@@ -91,7 +91,7 @@ void StreamDeck::sendButtonImageData(int row, int column, Image &img)
 	writeImageData(imageData, img);
 
 	const int payload = imagePacketLength - imageHeaderLength;
-	int remainingBytes = imageData.getDataSize();
+	int remainingBytes = (int)imageData.getDataSize();
 
 	int buttonID = row * numColumns + column;
 	int byteOffset = 0;
