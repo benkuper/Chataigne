@@ -110,6 +110,10 @@ DMXDevice * DMXDevice::create(Type type)
 		return new DMXEnttecProDevice();
 		break;
 
+	case ENTTEC_MK2:
+		return new DMXEnttecProDevice(); //tmp but seems to work for 1 universe
+		break;
+
 	case ARTNET:
 		return new DMXArtNetDevice();
 		break;
