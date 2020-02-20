@@ -110,3 +110,22 @@ ControllableContainer * CVGroupManager::showMenuAndGetPreset()
 
 	return nullptr;
 }
+
+ControllableContainer* CVGroupManager::showMenuAndGetGroup()
+{
+	PopupMenu menu;
+	int numItems = CVGroupManager::getInstance()->items.size();
+	for (int i = 0; i < numItems; i++)
+	{
+		menu.addItem(i + 1, CVGroupManager::getInstance()->items[i]->niceName);
+	}
+
+	int result = menu.show();
+
+	if (result > 0)
+	{
+		return  CVGroupManager::getInstance()->items[result - 1];
+	}
+
+	return nullptr;
+}

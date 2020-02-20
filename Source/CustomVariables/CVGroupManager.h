@@ -28,5 +28,6 @@ public:
 	//Input values menu
 	static ControllableContainer * showMenuAndGetContainer();
 	static Controllable * showMenuAndGetVariable(bool, bool);
-	static ControllableContainer * showMenuAndGetPreset();
+	static ControllableContainer* showMenuAndGetPreset();
+	static ControllableContainer * showMenuAndGetGroup();
 };

@@ -80,7 +80,7 @@ void CVGroup::lerpPresets(CVPreset * p1, CVPreset * p2, float weight)
 	}
 }
 
-void CVGroup::lerpToPreset(CVPreset* p, float time, Automation* curve)
+void CVGroup::goToPreset(CVPreset* p, float time, Automation* curve)
 {
 	signalThreadShouldExit();
 	waitForThreadToExit(100);
@@ -92,6 +92,11 @@ void CVGroup::lerpToPreset(CVPreset* p, float time, Automation* curve)
 	startThread();
 }
 
+void CVGroup::stopInterpolation()
+{
+	signalThreadShouldExit();
+	waitForThreadToExit(200);
+}
 
 void CVGroup::computeValues()
 {

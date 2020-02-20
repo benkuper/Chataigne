@@ -21,8 +21,10 @@ CustomVariablesModule::CustomVariablesModule(CVGroupManager * manager) :
 	defManager->add(CommandDefinition::createDef(this, "", "Set Value", &CVCommand::create, CommandContext::BOTH)->addParam("type", CVCommand::SET_VALUE));
 	defManager->add(CommandDefinition::createDef(this, "", "Set Preset", &CVCommand::create, CommandContext::ACTION)->addParam("type", CVCommand::SET_PRESET));
 	defManager->add(CommandDefinition::createDef(this, "", "Go to preset", &CVCommand::create, CommandContext::ACTION)->addParam("type", CVCommand::GO_TO_PRESET));
+	defManager->add(CommandDefinition::createDef(this, "", "Kill Go to preset", &CVCommand::create, CommandContext::ACTION)->addParam("type", CVCommand::KILL_GO_TO_PRESET));
 	defManager->add(CommandDefinition::createDef(this, "", "Interpolate presets", &CVCommand::create, CommandContext::BOTH)->addParam("type", CVCommand::LERP_PRESETS));
 	defManager->add(CommandDefinition::createDef(this, "", "Set Preset Weight", &CVCommand::create, CommandContext::BOTH)->addParam("type", CVCommand::SET_PRESET_WEIGHT));
+	defManager->add(CommandDefinition::createDef(this, "", "Set Morpher Target", &CVCommand::create, CommandContext::BOTH)->addParam("type", CVCommand::SET_2DTARGET));
 	defManager->add(CommandDefinition::createDef(this, "", "Load Preset from file", &CVCommand::create, CommandContext::ACTION)->addParam("type", CVCommand::LOAD_PRESET));
 	defManager->add(CommandDefinition::createDef(this, "", "Save Preset to file", &CVCommand::create, CommandContext::ACTION)->addParam("type", CVCommand::SAVE_PRESET));
 	//defManager->add(CommandDefinition::createDef(this,"", "Set Target Position", &CVCommand::create, CommandContext::BOTH)->addParam("type", CVCommand::SET_2DTARGET));

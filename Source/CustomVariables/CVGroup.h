@@ -42,7 +42,8 @@ public:
 	
 	void setValuesToPreset(CVPreset * preset);
 	void lerpPresets(CVPreset * p1, CVPreset * p2, float value);
-	void lerpToPreset(CVPreset* p, float time, Automation* curve);
+	void goToPreset(CVPreset* p, float time, Automation* curve);
+	void stopInterpolation();
 
 	void computeValues();
 	Array<float> getNormalizedPresetWeights();

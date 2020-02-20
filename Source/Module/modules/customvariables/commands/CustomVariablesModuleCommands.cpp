@@ -38,16 +38,18 @@ CVCommand::CVCommand(CustomVariablesModule * _module, CommandContext context, va
 		
 		valueOperator = addEnumParameter("Operator", "The operator to apply. If you simply want to set the value, leave at the = option.", false);
 		
-	} else if (type == SET_2DTARGET)
+	} else if (type == SET_2DTARGET || type == KILL_GO_TO_PRESET)
 	{
 		target = addTargetParameter("Target Group", "The group to target for this command", CVGroupManager::getInstance());
 		target->targetType = TargetParameter::CONTAINER;
-		target->defaultContainerTypeCheckFunc = &ContainerTypeChecker::checkType<CVGroup>;
-		target->maxDefaultSearchLevel = 1;
+		target->customGetTargetContainerFunc = &CVGroupManager::showMenuAndGetGroup;
 		target->showParentNameInEditor = false;
-		value = addPoint2DParameter("Position", "The target position in the 2D interpolator");
-		addTargetMappingParameterAt(value, 0);
 
+		if (type == SET_2DTARGET)
+		{
+			value = addPoint2DParameter("Position", "The target position in the 2D interpolator");
+			addTargetMappingParameterAt(value, 0);
+		}
 	} else if (type == SET_PRESET || type == LERP_PRESETS || type == SET_PRESET_WEIGHT || type == SAVE_PRESET || type == LOAD_PRESET || type == GO_TO_PRESET)
 	{
 		targetPreset = addTargetParameter("Target Preset", "The Preset to get the values from and set the variables to", CVGroupManager::getInstance());
@@ -236,7 +238,17 @@ void CVCommand::triggerInternal()
 		if (targetPreset->targetContainer != nullptr)
 		{
 			CVPreset* p1 = static_cast<CVPreset*>(targetPreset->targetContainer.get());
-			p1->group->lerpToPreset(p1, time->floatValue(), automation);
+			p1->group->goToPreset(p1, time->floatValue(), automation);
+		}
+	}
+	break;
+
+	case KILL_GO_TO_PRESET:
+	{
+		if (!target->targetContainer.wasObjectDeleted() && target->targetContainer != nullptr)
+		{
+			CVGroup* g = dynamic_cast<CVGroup*>(target->targetContainer.get());
+			g->stopInterpolation();
 		}
 	}
 	break;
@@ -270,7 +282,7 @@ void CVCommand::triggerInternal()
 
 	case SET_2DTARGET:
 	{
-		if (target->targetContainer != nullptr)
+		if (!target->targetContainer.wasObjectDeleted() && target->targetContainer != nullptr)
 		{
 			CVGroup * g = static_cast<CVGroup *>(target->targetContainer.get());
 			if (g != nullptr) g->targetPosition->setPoint(((Point2DParameter *)value)->getPoint());
