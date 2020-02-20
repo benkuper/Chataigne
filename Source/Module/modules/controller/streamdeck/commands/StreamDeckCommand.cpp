@@ -21,8 +21,8 @@ StreamDeckCommand::StreamDeckCommand(StreamDeckModule* _module, CommandContext c
 
 	if (action == SET_COLOR || action == SET_IMAGE)
 	{
-		column = addIntParameter("Button ID", "The button to set", 1, 1, STREAMDECK_MAX_COLUMNS);
-		row = addIntParameter("Button ID", "The button to set", 1, 1, STREAMDECK_MAX_ROWS);
+		column = addIntParameter("Column", "The column of the button to set", 1, 1, STREAMDECK_MAX_COLUMNS);
+		row = addIntParameter("Row", "The row of button to set", 1, 1, STREAMDECK_MAX_ROWS);
 	}
 
 	switch (action)
