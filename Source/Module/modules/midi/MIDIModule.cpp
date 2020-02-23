@@ -83,7 +83,7 @@ void MIDIModule::sendNoteOn(int channel, int pitch, int velocity)
 {
 	if (!enabled->boolValue()) return;
 	if (outputDevice == nullptr) return;
-	if (logOutgoingData->boolValue()) NLOG(niceName, "Send Note on " << MIDIManager::getNoteName(pitch) << ", " << velocity << ", " << channel);
+	if (logOutgoingData->boolValue()) NLOG(niceName, "Send Note on, channel : " << channel << ", pitch : " << MIDIManager::getNoteName(pitch) << ", velociy " << velocity);
 	outActivityTrigger->trigger();
 	outputDevice->sendNoteOn(channel, pitch, velocity);
 }
@@ -92,7 +92,7 @@ void MIDIModule::sendNoteOff(int channel, int pitch)
 {
 	if (!enabled->boolValue()) return;
 	if (outputDevice == nullptr) return;
-	if (logOutgoingData->boolValue()) NLOG(niceName, "Send Note off " << MIDIManager::getNoteName(pitch) << ", " << channel);
+	if (logOutgoingData->boolValue()) NLOG(niceName, "Send Note off, channel : " << channel << ", pitch");
 	outActivityTrigger->trigger();
 	outputDevice->sendNoteOff(channel, pitch);
 }
@@ -101,7 +101,7 @@ void MIDIModule::sendControlChange(int channel, int number, int value)
 {
 	if (!enabled->boolValue()) return;
 	if (outputDevice == nullptr) return;
-	if (logOutgoingData->boolValue()) NLOG(niceName, "Send Control Change " << number << ", " << value << ", " << channel);
+	if (logOutgoingData->boolValue()) NLOG(niceName, "Send Control Change, channel : " << channel << ", number : " << number << ", value " << value);
 	outActivityTrigger->trigger();
 	outputDevice->sendControlChange(channel, number, value);
 }
@@ -110,7 +110,7 @@ void MIDIModule::sendProgramChange(int channel, int program)
 {
 	if (!enabled->boolValue()) return;
 	if (outputDevice == nullptr) return;
-	if (logOutgoingData->boolValue()) NLOG(niceName, "Send ProgramChange " << program);
+	if (logOutgoingData->boolValue()) NLOG(niceName, "Send ProgramChange, channel : " << channel << ", program : " << program);
 	outActivityTrigger->trigger();
 	outputDevice->sendProgramChange(channel, program);
 }
@@ -119,7 +119,7 @@ void MIDIModule::sendPitchWheel(int channel, int value)
 {
 	if (!enabled->boolValue()) return;
 	if (outputDevice == nullptr) return;
-	if (logOutgoingData->boolValue()) NLOG(niceName, "Send PitchWheel " << channel << ", " << value);
+	if (logOutgoingData->boolValue()) NLOG(niceName, "Send PitchWheel channel : " << channel << ", value : " << value);
 	outputDevice->sendPitchWheel(channel, value);
 }
 
