@@ -2514,6 +2514,9 @@
     <ClCompile Include="..\..\Modules\juce_organicui\helpers\crypto\hmac\SHA1.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\helpers\OSCHelpers.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\helpers\StringUtil.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
