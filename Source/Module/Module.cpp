@@ -193,7 +193,8 @@ void Module::setupModuleFromJSONData(var data)
 	customModuleData = data;
 	customType = data.getProperty("name","");
 	setNiceName(data.getProperty("name",""));
-
+	
+	
 	loadDefaultsParameterValuesForContainer(data.getProperty("defaults", var()), &moduleParams);
 
 	var hideParamsList = data.getProperty("hideDefaultParameters",var());
@@ -212,6 +213,8 @@ void Module::setupModuleFromJSONData(var data)
 
 
 	createControllablesForContainer(data.getProperty("parameters", var()), &moduleParams);
+
+	alwaysShowValues = data.getProperty("alwaysShowValues", false);
 	createControllablesForContainer(data.getProperty("values", var()), &valuesCC);
 
 	Array<WeakReference<Controllable>> valueList = getValueControllables();
