@@ -47,7 +47,7 @@ public:
 		virtual void sysExReceived(const MidiMessage &/*msg*/) {}
 		virtual void fullFrameTimecodeReceived(const MidiMessage&/*msg*/) {}
 		virtual void quarterFrameTimecodeReceived(const MidiMessage&/*msg*/) {}
-		virtual void pitchWheelReceived(const MidiMessage &/*msg*/, const int &/*channel*/, const int &/*value*/){}
+		virtual void pitchWheelReceived(const int &/*channel*/, const int &/*value*/){}
 		virtual void midiMessageReceived(const MidiMessage& message) {}
 	};
 

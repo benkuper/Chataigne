@@ -132,3 +132,11 @@ void ModuleRouterValue::onExternalTriggerTriggered(Trigger * t)
 	if (!enabled->boolValue() || forceDisabled) return;
 	if(t == sourceValue) outModule->handleRoutedModuleValue(sourceValue, routeParams.get());
 }
+
+void ModuleRouterValue::childStructureChanged(ControllableContainer* cc)
+{
+	if (cc == routeParams.get())
+	{
+		valueListeners.call(&ValueListener::routeParamsChanged, this);
+	}
+}

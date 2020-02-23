@@ -23,15 +23,11 @@ CVGroup::CVGroup(const String & name) :
 	itemDataType = "CVGroup";
 
 	pm.reset(new CVPresetManager(this));
-	morpher.reset(new Morpher(pm.get()));
-	morpher->addMorpherListener(this);
+	
 
 	addChildControllableContainer(&params);
 	addChildControllableContainer(&values);
 	addChildControllableContainer(pm.get());
-	addChildControllableContainer(morpher.get());
-
-	
 
 	controlMode = params.addEnumParameter("Control Mode", "Defines how the variables are controlled.\n \
 Free mode lets you can change manually the values or tween them to preset values punctually.\n \
@@ -44,7 +40,7 @@ Voronoi and Gradient Band (not implemented yet) also locks values but interpolat
 
 CVGroup::~CVGroup()
 {
-	morpher->removeMorpherListener(this);
+	if(morpher != nullptr) morpher->removeMorpherListener(this);
 	signalThreadShouldExit();
 	waitForThreadToExit(100);
 }
@@ -168,8 +164,31 @@ void CVGroup::onControllableFeedbackUpdateInternal(ControllableContainer * cc, C
 	{
 		ControlMode cm = controlMode->getValueDataAsEnum<ControlMode>();
 		values.setForceItemsFeedbackOnly(cm != FREE);
-		targetPosition->setEnabled(cm == VORONOI || cm == GRADIENT_BAND);
-		morpher->blendMode = cm == VORONOI ? Morpher::VORONOI : Morpher::GRADIENT_BAND;
+
+		bool useMorpher = cm == VORONOI || cm == GRADIENT_BAND;
+
+		if (useMorpher)
+		{
+			if (morpher == nullptr)
+			{
+				morpher.reset(new Morpher(pm.get()));
+				morpher->addMorpherListener(this);
+				morpher->blendMode = cm == VORONOI ? Morpher::VORONOI : Morpher::GRADIENT_BAND;
+				addChildControllableContainer(morpher.get());
+			}
+		}
+		else
+		{
+			if (morpher != nullptr)
+			{
+				morpher->removeMorpherListener(this);
+				removeChildControllableContainer(morpher.get());
+				morpher.reset();
+			}
+		}
+		
+		targetPosition->setEnabled(useMorpher);
+		
 
 		if(cm != FREE) computeValues();
 
@@ -190,7 +209,7 @@ var CVGroup::getJSONData()
 	data.getDynamicObject()->setProperty("params", params.getJSONData()); //keep "params" to avoid conflict with container's parameter
 	data.getDynamicObject()->setProperty(values.shortName, values.getJSONData());
 	data.getDynamicObject()->setProperty(pm->shortName, pm->getJSONData());
-	data.getDynamicObject()->setProperty(morpher->shortName, morpher->getJSONData());
+	if(morpher != nullptr) data.getDynamicObject()->setProperty(morpher->shortName, morpher->getJSONData());
 	return data;
 }
 
@@ -200,11 +219,15 @@ void CVGroup::loadJSONDataInternal(var data)
 	params.loadJSONData(data.getProperty("params", var())); //keep "params" to avoid conflict with container's parameter
 	values.loadJSONData(data.getProperty(values.shortName , var()));
 	pm->loadJSONData(data.getProperty(pm->shortName, var()));
-	morpher->loadJSONData(data.getProperty(morpher->shortName, var()));
+	
+	if (morpher != nullptr)
+	{
+		morpher->loadJSONData(data.getProperty(morpher->shortName, var()));
+		morpher->computeZones();
+	}
 
 	if (controlMode->getValueDataAsEnum<ControlMode>() != FREE)
 	{
-		morpher->computeZones();
 		computeValues();
 	}
 }

@@ -23,10 +23,13 @@ CVPresetEditor::CVPresetEditor(CVPreset * preset, bool isRoot) :
 	addChildComponent(colorUI.get());
 	addChildComponent(attractionUI.get());
 
-	bool visible = preset->group->controlMode->getValueDataAsEnum<CVGroup::ControlMode>() != CVGroup::FREE;
-	weightUI->setVisible(visible);
-	colorUI->setVisible(visible);
-	attractionUI->setVisible(visible); 
+	CVGroup::ControlMode cm = preset->group->controlMode->getValueDataAsEnum<CVGroup::ControlMode>();
+	bool useMorpher = cm == CVGroup::VORONOI || cm == CVGroup::GRADIENT_BAND;
+	bool useWeights = useMorpher || cm == CVGroup::WEIGHTS;
+
+	weightUI->setVisible(useWeights);
+	colorUI->setVisible(useMorpher);
+	attractionUI->setVisible(useMorpher);
 	
 	preset->group->controlMode->addAsyncParameterListener(this);
 }
@@ -47,10 +50,13 @@ void CVPresetEditor::newMessage(const Parameter::ParameterEvent & e)
 {
 	if (e.parameter == preset->group->controlMode)
 	{
-		bool visible = preset->group->controlMode->getValueDataAsEnum<CVGroup::ControlMode>() != CVGroup::FREE;
-		weightUI->setVisible(visible);
-		colorUI->setVisible(visible);
-		attractionUI->setVisible(visible);
+		CVGroup::ControlMode cm = preset->group->controlMode->getValueDataAsEnum<CVGroup::ControlMode>();
+		bool useMorpher = cm == CVGroup::VORONOI || cm == CVGroup::GRADIENT_BAND;
+		bool useWeights = useMorpher || cm == CVGroup::WEIGHTS;
+		
+		weightUI->setVisible(useWeights);
+		colorUI->setVisible(useMorpher);
+		attractionUI->setVisible(useMorpher);
 		resized();
 	}
 }

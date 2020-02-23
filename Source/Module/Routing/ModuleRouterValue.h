@@ -39,6 +39,7 @@ public:
 	void onContainerParameterChangedInternal(Parameter * p) override;
 	void onExternalParameterValueChanged(Parameter * p) override;
 	void onExternalTriggerTriggered(Trigger * t) override;
+	void childStructureChanged(ControllableContainer* cc) override;
 	
 	
 	class ValueListener
