@@ -93,7 +93,7 @@ CVPreset* Morpher::getEnabledTargetAtIndex(int index)
 
 void Morpher::computeZones()
 {
-	voronoiLock.enter();
+	GenericScopedLock lock(voronoiLock);
 
 	Array<Point<float>> points = getNormalizedTargetPoints();
 
@@ -112,8 +112,6 @@ void Morpher::computeZones()
 
 	if (diagram->internal != nullptr && diagram->internal->memctx != nullptr) jcv_diagram_free(diagram.get());
 	jcv_diagram_generate(points.size(), jPoints.getRawDataPointer() , nullptr, diagram.get());
-
-	voronoiLock.exit();
 
 	computeWeights();
 }
