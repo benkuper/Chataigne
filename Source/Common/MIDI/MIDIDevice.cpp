@@ -72,7 +72,7 @@ void MIDIInputDevice::handleIncomingMidiMessage(MidiInput * source, const MidiMe
 	else if (message.isSysEx()) inputListeners.call(&MIDIInputListener::sysExReceived, message);
 	else if (message.isFullFrame()) inputListeners.call(&MIDIInputListener::fullFrameTimecodeReceived, message);
 	else if (message.isQuarterFrame()) inputListeners.call(&MIDIInputListener::quarterFrameTimecodeReceived, message);
-	else if (message.isPitchWheel()) inputListeners.call(&MIDIInputListener::pitchWheelReceived, message, message.getChannel(), message.getPitchWheelValue());
+	else if (message.isPitchWheel()) inputListeners.call(&MIDIInputListener::pitchWheelReceived, message.getChannel(), message.getPitchWheelValue());
 	else
 	{
 		DBG("Not handled : " << message.getDescription());

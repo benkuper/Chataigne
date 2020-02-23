@@ -87,7 +87,7 @@ public:
 	virtual void controlChangeReceived(const int &channel, const int &number, const int &value) override;
 	virtual void sysExReceived(const MidiMessage & msg) override;
 	virtual void fullFrameTimecodeReceived(const MidiMessage& msg) override;
-	virtual void pitchWheelReceived(const MidiMessage& msg, const int &channel, const int &value) override;
+	virtual void pitchWheelReceived(const int &channel, const int &value) override;
 
 	virtual void midiMessageReceived(const MidiMessage& msg) override;
 
@@ -114,10 +114,14 @@ public:
 		EnumParameter * type;
 		IntParameter * channel;
 		IntParameter * pitchOrNumber;
+
+		virtual void onContainerParameterChanged(Parameter * p) override;
+
 	};
 
 	virtual RouteParams * createRouteParamsForSourceValue(Module * sourceModule, Controllable * c, int /*index*/) override { return new MIDIRouteParams(sourceModule, c); }
 	virtual void handleRoutedModuleValue(Controllable * c, RouteParams * p) override;
+
 
 	void loadJSONDataInternal(var data) override;
 

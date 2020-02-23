@@ -279,7 +279,7 @@ void MIDIModule::fullFrameTimecodeReceived(const MidiMessage& msg)
 	NLOG(niceName, "Full frame timecode received : " << hours << ":" << minutes << ":" << seconds << "." << frames << " / " << timecodeType);
 }
 
-void MIDIModule::pitchWheelReceived(const MidiMessage& msg, const int &channel, const int &value)
+void MIDIModule::pitchWheelReceived(const int &channel, const int &value)
 {
 	if (!enabled->boolValue()) return;
 	inActivityTrigger->trigger();
@@ -434,16 +434,21 @@ void MIDIModule::showMenuAndCreateValue(ControllableContainer * container)
 	PopupMenu m;
 	m.addItem(1, "Add Note");
 	m.addItem(2, "Add Control Change");
+	m.addItem(3, "Add Pitch Wheel");
 
 	int mResult = m.show();
 	if (mResult == 0) return;
 	
-	String mType = mResult == 1 ? "Note" : "Control Change";
-	String mName = mResult == 1 ? "Pitch" : "Number";
+	String mType = mResult == 1 ? "Note" : mResult == 3 ? "Pitch Wheel" : "Control Change";
 
 	AlertWindow window("Add a "+mType, "Configure the parameters for this "+mType, AlertWindow::AlertIconType::NoIcon);
 	window.addTextEditor("channel", "1", "Channel (1-16)");
-	window.addTextEditor("pitch", "1", mName + "(1-127)");
+
+	if (mResult != 3)
+	{
+		String mName = mResult == 1 ? "Pitch" : "Number";
+		window.addTextEditor("pitch", "1", mName + "(1-127)");
+	}
 
 	window.addButton("OK", 1, KeyPress(KeyPress::returnKey));
 	window.addButton("Cancel", 0, KeyPress(KeyPress::escapeKey));
@@ -453,10 +458,17 @@ void MIDIModule::showMenuAndCreateValue(ControllableContainer * container)
 	if (result)
 	{
 		int channel = jlimit<int>(1, 16, window.getTextEditorContents("channel").getIntValue());
-		int pitch = jlimit<int>(1, 127, window.getTextEditorContents("pitch").getIntValue());
 
-		if (mResult == 1) module->noteOnReceived(channel, pitch, 0);
-		else module->controlChangeReceived(channel, pitch, 0);
+		if (mResult == 3)
+		{
+			module->pitchWheelReceived(channel, 0);
+		}
+		else
+		{
+			int pitch = jlimit<int>(1, 127, window.getTextEditorContents("pitch").getIntValue());
+			if (mResult == 1) module->noteOnReceived(channel, pitch, 0);
+			else module->controlChangeReceived(channel, pitch, 0);
+		}
 	}
 }
 
@@ -506,11 +518,36 @@ MIDIModule::MIDIRouteParams::MIDIRouteParams(Module * sourceModule, Controllable
 	}
 
 	type = addEnumParameter("Type", "The type of MIDI Command to route");
-	type->addOption("Control Change", MIDIManager::CONTROL_CHANGE)->addOption("Note On", MIDIManager::NOTE_ON)->addOption("Note Off", MIDIManager::NOTE_OFF);
+	type->addOption("Control Change", MIDIManager::CONTROL_CHANGE)->addOption("Note On", MIDIManager::NOTE_ON)->addOption("Note Off", MIDIManager::NOTE_OFF)->addOption("Pitch Wheel", MIDIManager::PITCH_WHEEL);
 	type->setValueWithData(MIDIManager::getInstance()->midiRouterDefaultType->getValueData());
 
 	channel = addIntParameter("Channel", "The Channel", 1, 1, 16);
-	pitchOrNumber = addIntParameter("Pitch / Number", "Pitch if type is a note, number if it is a controlChange", 0, 0, 127);
+
+	if (type->getValueDataAsEnum<MIDIManager::MIDIEventType>() != MIDIManager::PITCH_WHEEL)
+	{
+		pitchOrNumber = addIntParameter("Pitch / Number", "Pitch if type is a note, number if it is a controlChange", 0, 0, 127);
+	}
+}
+
+void MIDIModule::MIDIRouteParams::onContainerParameterChanged(Parameter  * p)
+{
+	RouteParams::onContainerParameterChanged(p);
+
+	if (p == type)
+	{
+		if (type->getValueDataAsEnum<MIDIManager::MIDIEventType>() != MIDIManager::PITCH_WHEEL)
+		{
+			if(pitchOrNumber == nullptr) pitchOrNumber = addIntParameter("Pitch / Number", "Pitch if type is a note, number if it is a controlChange", 0, 0, 127);
+		}
+		else
+		{
+			if (pitchOrNumber != nullptr)
+			{
+				removeControllable(pitchOrNumber);
+				pitchOrNumber = nullptr;
+			}
+		}
+	}
 }
 
 
@@ -537,6 +574,10 @@ void MIDIModule::handleRoutedModuleValue(Controllable * c, RouteParams * p)
 
 	case MIDIManager::CONTROL_CHANGE:
 		sendControlChange(mp->channel->intValue(), mp->pitchOrNumber->intValue(), value);
+		break;
+
+	case MIDIManager::PITCH_WHEEL:
+		sendPitchWheel(mp->channel->intValue(),value);
 		break;
 
 	default:
