@@ -244,7 +244,7 @@ void Joystick::update()
 	int numAxes = SDL_JoystickNumAxes(joystick);
 	if (axesCC.controllables.size() == numAxes)
 	{
-
+		GenericScopedLock lock(axesCC.controllables.getLock());
 		for (int i = 0; i < numAxes; i++)
 		{
 			float axisValue = jmap<float>((float)SDL_JoystickGetAxis(joystick, i), INT16_MIN, INT16_MAX, -1, 1) + axisOffset[i];
@@ -261,6 +261,7 @@ void Joystick::update()
 	int numButtons = SDL_JoystickNumButtons(joystick);
 	if (buttonsCC.controllables.size() == numButtons)
 	{
+		GenericScopedLock lock(buttonsCC.controllables.getLock());
 		for (int i = 0; i < numButtons; i++)
 		{
 			((BoolParameter*)buttonsCC.controllables[i])->setValue(SDL_JoystickGetButton(joystick, i) > 0);
@@ -302,6 +303,7 @@ void Gamepad::update()
 {
 	if (axesCC.controllables.size() == SDL_CONTROLLER_AXIS_MAX)
 	{
+		ScopedLock(axesCC.controllables.getLock());
 		for (int i = 0; i < SDL_CONTROLLER_AXIS_MAX; i++)
 		{
 			float axisValue = jmap<float>((float)SDL_GameControllerGetAxis(gamepad, (SDL_GameControllerAxis)i), INT16_MIN, INT16_MAX, -1, 1) + axisOffset[i];
@@ -317,10 +319,12 @@ void Gamepad::update()
 
 	if (buttonsCC.controllables.size() == SDL_CONTROLLER_BUTTON_MAX)
 	{
+		ScopedLock(buttonsCC.controllables.getLock());
 		for (int i = 0; i < SDL_CONTROLLER_BUTTON_MAX; i++)
 		{
 			((BoolParameter*)buttonsCC.controllables[i])->setValue(SDL_GameControllerGetButton(gamepad, (SDL_GameControllerButton)i) > 0);
 		}
+
 	}
 }
 
