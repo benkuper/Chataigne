@@ -273,60 +273,64 @@ DMXModule::DMXRouteParams::DMXRouteParams(Module * sourceModule, Controllable * 
 
 void DMXModule::handleRoutedModuleValue(Controllable * c, RouteParams * p)
 {
-	DMXRouteParams * rp = dynamic_cast<DMXRouteParams *>(p);
 	
-	Parameter * sp = c->type == Controllable::TRIGGER ? nullptr : dynamic_cast<Parameter *>(c);
+	if (p == nullptr || c == nullptr) return;
 
-	bool fullRange = rp->fullRange != nullptr ? rp->fullRange->boolValue() : false;
-	
-	DMXByteOrder byteOrder = rp->mode16bit != nullptr ? rp->mode16bit->getValueDataAsEnum<DMXByteOrder>() : DMXByteOrder::BIT8;
-
-	switch (c->type)
+	if (DMXRouteParams* rp = dynamic_cast<DMXRouteParams*>(p))
 	{
-	case Controllable::BOOL:
-	case Controllable::INT:
-	case Controllable::FLOAT:
-		if (byteOrder == BIT8) sendDMXValue(rp->channel->intValue(), fullRange?sp->getNormalizedValue()*255:(float)sp->getValue());
-		else send16BitDMXValue(rp->channel->intValue(), fullRange?sp->getNormalizedValue()*65535:(float)sp->getValue(), byteOrder);
+		Parameter* sp = c->type == Controllable::TRIGGER ? nullptr : dynamic_cast<Parameter*>(c);
+
+		bool fullRange = rp->fullRange != nullptr ? rp->fullRange->boolValue() : false;
+
+		DMXByteOrder byteOrder = rp->mode16bit != nullptr ? rp->mode16bit->getValueDataAsEnum<DMXByteOrder>() : DMXByteOrder::BIT8;
+
+		switch (c->type)
+		{
+		case Controllable::BOOL:
+		case Controllable::INT:
+		case Controllable::FLOAT:
+			if (byteOrder == BIT8) sendDMXValue(rp->channel->intValue(), fullRange ? sp->getNormalizedValue() * 255 : (float)sp->getValue());
+			else send16BitDMXValue(rp->channel->intValue(), fullRange ? sp->getNormalizedValue() * 65535 : (float)sp->getValue(), byteOrder);
+			break;
+
+		case Controllable::POINT2D:
+		{
+			Point<float> pp = ((Point2DParameter*)sp)->getPoint();
+			if (fullRange) pp *= byteOrder != BIT8 ? 65535 : 255;
+
+			Array<int> values;
+			values.add((int)pp.x, (int)pp.y);
+
+			if (byteOrder == BIT8) sendDMXValues(rp->channel->intValue(), values);
+			else send16BitDMXValues(rp->channel->intValue(), values, byteOrder);
+		}
 		break;
 
-	case Controllable::POINT2D:
-	{
-		Point<float> pp = ((Point2DParameter *)sp)->getPoint();
-		if (fullRange) pp *= byteOrder != BIT8 ? 65535 : 255;
+		case Controllable::POINT3D:
+		{
+			Vector3D<float> pp = ((Point3DParameter*)sp)->getVector();
+			if (fullRange) pp *= byteOrder != BIT8 ? 65535 : 255;
 
-		Array<int> values;
-		values.add((int)pp.x, (int)pp.y);
+			Array<int> values;
+			values.add((int)pp.x, (int)pp.y, (int)pp.z);
 
-		if (byteOrder == BIT8) sendDMXValues(rp->channel->intValue(), values);
-		else send16BitDMXValues(rp->channel->intValue(), values, byteOrder);
-	}
-	break;
+			if (byteOrder == BIT8) sendDMXValues(rp->channel->intValue(), values);
+			else send16BitDMXValues(rp->channel->intValue(), values, byteOrder);
+		}
+		break;
 
-	case Controllable::POINT3D:
-	{
-		Vector3D<float> pp = ((Point3DParameter *)sp)->getVector();
-		if (fullRange) pp *= byteOrder != BIT8 ? 65535 : 255;
+		case Controllable::COLOR:
+		{
+			Colour col = ((ColorParameter*)sp)->getColor();
+			Array<int> values;
+			values.add(col.getRed(), col.getGreen(), col.getBlue());
+			sendDMXValues(rp->channel->intValue(), values);
+		}
 
-		Array<int> values;
-		values.add((int)pp.x, (int)pp.y, (int)pp.z);
+		break;
 
-		if (byteOrder == BIT8) sendDMXValues(rp->channel->intValue(), values);
-		else send16BitDMXValues(rp->channel->intValue(), values, byteOrder);
-	}
-	break;
-
-	case Controllable::COLOR:
-	{
-		Colour col = ((ColorParameter *)sp)->getColor();
-		Array<int> values;
-		values.add(col.getRed(), col.getGreen(), col.getBlue());
-		sendDMXValues(rp->channel->intValue(), values);
-	}
-
-	break;
-            
-        default:
-            break;
+		default:
+			break;
+		}
 	}
 }
