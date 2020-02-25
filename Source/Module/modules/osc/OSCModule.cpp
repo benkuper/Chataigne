@@ -439,28 +439,33 @@ void OSCModule::loadJSONDataInternal(var data)
 
 void OSCModule::handleRoutedModuleValue(Controllable * c, RouteParams * p)
 {
-	OSCRouteParams * op = dynamic_cast<OSCRouteParams *>(p);
-	OSCMessage m(op->address->stringValue());
-	if (c->type != Controllable::TRIGGER)
+	if (OSCRouteParams* op = dynamic_cast<OSCRouteParams*>(p))
 	{
-		var v = dynamic_cast<Parameter *>(c)->getValue();
+		OSCMessage m(op->address->stringValue());
 
-		if (c->type == Parameter::COLOR)
+		if (c->type != Controllable::TRIGGER)
 		{
-			Colour col = ((ColorParameter*)p)->getColor();
-			m.addColour(OSCHelpers::getOSCColour(col));
-		}else
-		{
-			if (!v.isArray())  m.addArgument(varToArgument(v));
-		    else
+			var v = dynamic_cast<Parameter*>(c)->getValue();
+
+			if (c->type == Parameter::COLOR)
 			{
-				for (int i = 0; i < v.size(); i++) m.addArgument(varToArgument(v[i]));
+				Colour col = ((ColorParameter*)p)->getColor();
+				m.addColour(OSCHelpers::getOSCColour(col));
 			}
+			else
+			{
+				if (!v.isArray())  m.addArgument(varToArgument(v));
+				else
+				{
+					for (int i = 0; i < v.size(); i++) m.addArgument(varToArgument(v[i]));
+				}
+			}
+
 		}
-		
+
+		sendOSC(m);
 	}
 
-	sendOSC(m);
 }
 
 void OSCModule::onContainerParameterChangedInternal(Parameter * p)
