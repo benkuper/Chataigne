@@ -18,10 +18,8 @@ public:
 	TCPServerConnectionManager();
 	~TCPServerConnectionManager();
 
-	SpinLock connectionLock;
-
 	StreamingSocket receiver;
-	OwnedArray<StreamingSocket> connections; 
+	OwnedArray<StreamingSocket, CriticalSection> connections; 
 	int portToBind;
 
 	void setupReceiver(int port);

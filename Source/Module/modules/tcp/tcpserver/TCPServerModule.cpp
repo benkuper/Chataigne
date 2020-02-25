@@ -72,7 +72,7 @@ void TCPServerModule::sendMessageInternal(const String& message)
 
 	Array<StreamingSocket*> connectionsToRemove;
 
-	connectionManager.connectionLock.enter();
+	connectionManager.connections.getLock().enter();
 
 	for (auto& c : connectionManager.connections)
 	{
@@ -80,7 +80,7 @@ void TCPServerModule::sendMessageInternal(const String& message)
 		if (numBytes == -1) connectionsToRemove.add(c);
 	}
 
-	connectionManager.connectionLock.exit();
+	connectionManager.connections.getLock().exit();
 
 	for (auto& c : connectionsToRemove)
 	{
@@ -116,10 +116,12 @@ Array<uint8> TCPServerModule::readBytes()
 	
 	Array<StreamingSocket*> connectionsToRemove;
 
-	connectionManager.connectionLock.enter();
+	connectionManager.connections.getLock().enter();
 
 	for (auto& c : connectionManager.connections)
 	{
+		if (c == nullptr) continue;
+
 		uint8 bytes[2048];
 
 		int ready = c->waitUntilReady(true, 20);
@@ -143,7 +145,7 @@ Array<uint8> TCPServerModule::readBytes()
 		}
 	}
 
-	connectionManager.connectionLock.exit();
+	connectionManager.connections.getLock().exit();
 
 	for (auto& c : connectionsToRemove)
 	{
