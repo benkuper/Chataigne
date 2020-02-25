@@ -553,34 +553,38 @@ void MIDIModule::MIDIRouteParams::onContainerParameterChanged(Parameter  * p)
 
 void MIDIModule::handleRoutedModuleValue(Controllable * c, RouteParams * p)
 {
-	MIDIRouteParams * mp = dynamic_cast<MIDIRouteParams *>(p);
-	if (mp->type == nullptr) return;
+	if (c == nullptr || p == nullptr) return;
 
-	MIDIManager::MIDIEventType t = mp->type->getValueDataAsEnum<MIDIManager::MIDIEventType>();
-
-	int value = 127;
-	Parameter * sp = c->type == Controllable::TRIGGER ? nullptr : dynamic_cast<Parameter *>(c);
-	if (sp != nullptr) value = sp->getNormalizedValue() * 127;
-
-	switch (t)
+	if (MIDIRouteParams* mp = dynamic_cast<MIDIRouteParams*>(p))
 	{
-	case MIDIManager::NOTE_ON:
-		sendNoteOn(mp->channel->intValue(), mp->pitchOrNumber->intValue(), value);
-		break;
+		if (mp->type == nullptr) return;
 
-	case MIDIManager::NOTE_OFF:
-		sendNoteOff(mp->channel->intValue(), mp->pitchOrNumber->intValue());
-		break;
+		MIDIManager::MIDIEventType t = mp->type->getValueDataAsEnum<MIDIManager::MIDIEventType>();
 
-	case MIDIManager::CONTROL_CHANGE:
-		sendControlChange(mp->channel->intValue(), mp->pitchOrNumber->intValue(), value);
-		break;
+		int value = 127;
+		Parameter* sp = c->type == Controllable::TRIGGER ? nullptr : dynamic_cast<Parameter*>(c);
+		if (sp != nullptr) value = sp->getNormalizedValue() * 127;
 
-	case MIDIManager::PITCH_WHEEL:
-		sendPitchWheel(mp->channel->intValue(),value);
-		break;
+		switch (t)
+		{
+		case MIDIManager::NOTE_ON:
+			sendNoteOn(mp->channel->intValue(), mp->pitchOrNumber->intValue(), value);
+			break;
 
-	default:
-		break;
+		case MIDIManager::NOTE_OFF:
+			sendNoteOff(mp->channel->intValue(), mp->pitchOrNumber->intValue());
+			break;
+
+		case MIDIManager::CONTROL_CHANGE:
+			sendControlChange(mp->channel->intValue(), mp->pitchOrNumber->intValue(), value);
+			break;
+
+		case MIDIManager::PITCH_WHEEL:
+			sendPitchWheel(mp->channel->intValue(), value);
+			break;
+
+		default:
+			break;
+		}
 	}
 }
