@@ -108,7 +108,7 @@ void ModuleRouter::reloadSourceValues(bool keepData)
 	int index = 0;
 	for (auto& c : values)
 	{
-		if (c == nullptr || c.wasObjectDeleted()) return;
+		if (c == nullptr || c.wasObjectDeleted()) continue;
 		ModuleRouterValue* mrv = new ModuleRouterValue(c, index++);
 		sourceValues.addItem(mrv, var(), false);
 		mrv->forceDisabled = !enabled->boolValue();
