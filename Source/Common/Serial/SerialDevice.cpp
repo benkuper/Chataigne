@@ -226,7 +226,7 @@ void SerialReadThread::run()
 
 			case SerialDevice::PortMode::LINES:
 			{
-				while (port->port->available())
+				while (port->port->available() && port->mode == SerialDevice::PortMode::LINES)
 				{
 					std::string line = port->port->readline();
 					if(line.size() > 0) serialThreadListeners.call(&SerialThreadListener::dataReceived, var(line));
@@ -245,7 +245,7 @@ void SerialReadThread::run()
 
 			case SerialDevice::PortMode::DATA255:
 			{
-				while (port->port->available())
+				while (port->port->available() && port->mode == SerialDevice::PortMode::DATA255)
 				{
 					uint8_t b = port->port->read(1)[0];
 					if (b == 255)
@@ -263,7 +263,7 @@ void SerialReadThread::run()
 
 			case SerialDevice::PortMode::COBS:
 			{
-				while (port->port->available())
+				while (port->port->available() && port->mode == SerialDevice::PortMode::COBS)
 				{
 					uint8_t b = port->port->read(1)[0];
 					byteBuffer.push_back(b);
