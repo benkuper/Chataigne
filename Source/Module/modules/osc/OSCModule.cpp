@@ -441,29 +441,37 @@ void OSCModule::handleRoutedModuleValue(Controllable * c, RouteParams * p)
 {
 	if (OSCRouteParams* op = dynamic_cast<OSCRouteParams*>(p))
 	{
-		OSCMessage m(op->address->stringValue());
-
-		if (c->type != Controllable::TRIGGER)
+		try
 		{
-			var v = dynamic_cast<Parameter*>(c)->getValue();
 
-			if (c->type == Parameter::COLOR)
+			OSCMessage m(op->address->stringValue());
+
+			if (c->type != Controllable::TRIGGER)
 			{
-				Colour col = ((ColorParameter*)p)->getColor();
-				m.addColour(OSCHelpers::getOSCColour(col));
-			}
-			else
-			{
-				if (!v.isArray())  m.addArgument(varToArgument(v));
+				var v = dynamic_cast<Parameter*>(c)->getValue();
+
+				if (c->type == Parameter::COLOR)
+				{
+					Colour col = ((ColorParameter*)p)->getColor();
+					m.addColour(OSCHelpers::getOSCColour(col));
+				}
 				else
 				{
-					for (int i = 0; i < v.size(); i++) m.addArgument(varToArgument(v[i]));
+					if (!v.isArray())  m.addArgument(varToArgument(v));
+					else
+					{
+						for (int i = 0; i < v.size(); i++) m.addArgument(varToArgument(v[i]));
+					}
 				}
+
 			}
 
+			sendOSC(m);
 		}
-
-		sendOSC(m);
+		catch (const OSCFormatError&)
+		{
+			NLOG(niceName, "Address is invalid : " << op->address->stringValue());
+		}
 	}
 
 }
