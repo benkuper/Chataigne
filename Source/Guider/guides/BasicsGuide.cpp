@@ -246,6 +246,9 @@ void BasicsGuide::currentInspectableChanged(Inspector *)
 			GenericControllableContainerEditor * cce = dynamic_cast<GenericControllableContainerEditor *>(inspector->currentEditor.get());
 			if (cce != nullptr)
 			{
+				if (cme != nullptr) cme->removeContainerEditorListener(this);
+				if(csme != nullptr) csme->removeContainerEditorListener(this);
+
 				cme = dynamic_cast<GenericManagerEditor<Condition> *>(cce->getEditorForInspectable(&a->cdm));
 				csme = dynamic_cast<BaseCommandHandlerManagerEditor<Consequence> *>(cce->getEditorForInspectable(a->csmOn.get()));
 				cme->addContainerEditorListener(this);
