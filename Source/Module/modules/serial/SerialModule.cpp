@@ -171,8 +171,15 @@ void SerialModule::serialDataReceived(const var & data)
 	case SerialDevice::DATA255:
 	case SerialDevice::RAW:
 	case SerialDevice::COBS:
-		Array<uint8> bytes((const uint8_t *)data.getBinaryData()->getData(), (int)data.getBinaryData()->getSize());
-		processDataBytes(bytes);
+		if (data.isBinaryData() && data.getBinaryData() != nullptr)
+		{
+			Array<uint8> bytes((const uint8_t*)data.getBinaryData()->getData(), (int)data.getBinaryData()->getSize());
+			processDataBytes(bytes);
+		}
+		else
+		{
+			NLOGWARNING(niceName, "Wrong data type detected, skipping");
+		}
 	break;
 
 	}
