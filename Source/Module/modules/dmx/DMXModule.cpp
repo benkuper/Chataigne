@@ -212,6 +212,8 @@ void DMXModule::dmxDeviceDisconnected()
 
 void DMXModule::dmxDataInChanged(int channel, int value)
 {
+	if (isClearing) return;
+
 	if (logIncomingData->boolValue()) NLOG(niceName, "DMX In : " + String(channel) + " > " + String(value));
 	inActivityTrigger->trigger();
 
