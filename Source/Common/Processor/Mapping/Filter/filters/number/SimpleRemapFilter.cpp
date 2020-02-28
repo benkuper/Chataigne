@@ -11,7 +11,9 @@
 #include "SimpleRemapFilter.h"
 
 SimpleRemapFilter::SimpleRemapFilter(var params) :
-	MappingFilter(getTypeString(),params)
+	MappingFilter(getTypeString(),params),
+	targetIn(nullptr),
+	targetOut(nullptr)
 {
 	useCustomInputRange = filterParams.addBoolParameter("Use Custom Input Range", "If enabled, the input range will be set from the source input range", false);
 	
@@ -31,6 +33,8 @@ SimpleRemapFilter::~SimpleRemapFilter()
 
 void SimpleRemapFilter::processInternal()
 {
+	if (targetIn == nullptr || targetOut == nullptr) return;
+
 	if (targetOut->x == targetOut->y)
 	{
 		if (filteredParameter->isComplex())

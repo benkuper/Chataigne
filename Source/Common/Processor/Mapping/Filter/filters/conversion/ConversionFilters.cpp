@@ -13,7 +13,8 @@
 
 
 ConversionFilter::ConversionFilter(const String &name, var params, StringRef outTypeString) :
-	MappingFilter(name, params)
+	MappingFilter(name, params),
+	retargetComponent(nullptr)
 {
 	autoSetRange = false;
 	forceOutParameterType = outTypeString;
@@ -56,7 +57,7 @@ Parameter * ConversionFilter::setupParameterInternal(Parameter * source)
 
 void ConversionFilter::processInternal()
 {
-	if (filteredParameter == nullptr || sourceParam == nullptr) return;
+	if (filteredParameter == nullptr || sourceParam == nullptr || retargetComponent == nullptr) return;
 
 	switch (transferType)
 	{
