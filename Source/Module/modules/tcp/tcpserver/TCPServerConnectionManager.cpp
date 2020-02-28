@@ -36,6 +36,7 @@ void TCPServerConnectionManager::removeConnection(StreamingSocket* connection)
 	connectionManagerListeners.call(&ConnectionManagerListener::connectionRemoved, connection);
 	queuedNotifier.addMessage(new ConnectionManagerEvent(ConnectionManagerEvent::CONNECTIONS_CHANGED));
 
+	connection->close();
 	delete connection;
 }
 
