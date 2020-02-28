@@ -158,7 +158,7 @@ void MappingLayer::updateCurvesValues()
 
 void MappingLayer::stopRecorderAndAddKeys()
 {
-	if (automation != nullptr) return;
+	if (automation == nullptr) return;
 
 	Array<Point<float>> keys = automation->recorder->stopRecordingAndGetKeys(); 
 	if (keys.size() >= 2)
@@ -348,7 +348,7 @@ void MappingLayer::sequenceCurrentTimeChanged(Sequence *, float prevTime, bool e
 	if (alwaysUpdate->boolValue() || (sequence->isSeeking && sendOnSeek->boolValue()))
 	{
 		updateCurvesValues();
-		if(automation != nullptr && !automation->items.isEmpty()) mapping->process(true); //process only if not empty
+		if(mode == MODE_COLOR || (automation != nullptr && !automation->items.isEmpty())) mapping->process(true); //process only if not empty
 	}
 }
 
