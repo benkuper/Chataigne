@@ -65,7 +65,7 @@ void UDPModule::setupSender()
 	sender = nullptr;
 	if (sendCC == nullptr) return;
 	if (!sendCC->enabled->boolValue()) return;
-	sender.reset(new DatagramSocket());
+	sender.reset(new DatagramSocket(true));
 	senderIsConnected->setValue(true);
 }
 
