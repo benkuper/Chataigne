@@ -45,7 +45,7 @@
 									<key>GID</key>
 									<integer>80</integer>
 									<key>PATH</key>
-									<string>../Builds/MacOSX/build/Release/Chataigne.app</string>
+									<string>../Builds/MacOSX_CI/build/Release/Chataigne.app</string>
 									<key>PATH_TYPE</key>
 									<integer>1</integer>
 									<key>PERMISSIONS</key>
@@ -455,6 +455,8 @@
 				</dict>
 				<key>PAYLOAD_TYPE</key>
 				<integer>0</integer>
+				<key>PRESERVE_EXTENDED_ATTRIBUTES</key>
+				<false/>
 				<key>SHOW_INVISIBLE</key>
 				<false/>
 				<key>SPLIT_FORKS</key>
