@@ -25,6 +25,9 @@ CVPreset::CVPreset(CVGroup * group) :
 
 	showInspectorOnSelect = false;
 
+	CVGroup::ControlMode cm = group->controlMode->getValueDataAsEnum<CVGroup::ControlMode>();
+
+	weight->setControllableFeedbackOnly(cm == CVGroup::FREE || cm == CVGroup::WEIGHTS);
 
 	addChildControllableContainer(&values);
 	

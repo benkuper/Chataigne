@@ -22,6 +22,8 @@ Morpher::Morpher(CVPresetManager* presetManager) :
 	blendMode(VORONOI)
 {
 
+	diagram.reset(new jcv_diagram());
+
 	showInspectorOnSelect = false;
 	editorIsCollapsed = true;
 
@@ -38,7 +40,6 @@ Morpher::Morpher(CVPresetManager* presetManager) :
 	mainTarget.targetColor->setColor(Colours::white);
 	addChildControllableContainer(&mainTarget);
 
-	diagram.reset(new jcv_diagram());
 
 	bgImagePath = addFileParameter("Background Path", "", "");
 	bgImagePath->fileTypeFilter = "*.jpg; *.jpeg; *.png; *.bmp; *.tiff";
@@ -58,16 +59,23 @@ Morpher::Morpher(CVPresetManager* presetManager) :
 	attractionDecay = addFloatParameter("Attraction Decay", "Decay rate of the attraction on each target (1 = empty an attraction of 1 in 1s)", 0, 0, 10, false);
 
 	showDebug = addBoolParameter("Show Debug", "Draw debug information on voronoi weights", false);
+
+	computeZones();
 }
 
 Morpher::~Morpher()
 {
-	signalThreadShouldExit();
-	waitForThreadToExit(100);
+	for (auto& p : presetManager->items)
+	{
+		p->removeControllableContainerListener(this);
+	}
 
 	presetManager->removeBaseManagerListener(this);
 	presetManager->removeControllableContainerListener(this);
 
+	signalThreadShouldExit();
+	waitForThreadToExit(100);
+	
 	if (diagram->internal != nullptr && diagram->internal->memctx != nullptr) jcv_diagram_free(diagram.get());
 }
 

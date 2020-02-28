@@ -24,14 +24,17 @@ class MorpherViewUI;
 class MorpherPanel :
 	public ShapeShifterContentComponent,
 	public InspectableSelectionManager::Listener,
-	public Inspectable::InspectableListener
+	public Inspectable::InspectableListener,
+	public Parameter::AsyncListener
 {
 public:
 	MorpherPanel(StringRef contentName);
 	~MorpherPanel();
 
+	CVGroup* currentGroup;
 	std::unique_ptr<MorpherViewUI> currentMorpherUI;
-
+	
+	void setGroup(CVGroup* g);
 	void setMorpher(Morpher* m);
 
 	void paint(Graphics& g) override;
@@ -39,6 +42,7 @@ public:
 
 	void inspectablesSelectionChanged() override;
 	void inspectableDestroyed(Inspectable* i) override;
+	void newMessage(const Parameter::ParameterEvent& e) override;
 
 	static MorpherPanel* create(const String& contentName) { return new MorpherPanel(contentName); }
 };

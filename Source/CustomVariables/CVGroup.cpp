@@ -163,7 +163,7 @@ void CVGroup::onControllableFeedbackUpdateInternal(ControllableContainer * cc, C
 	if (c == controlMode)
 	{
 		ControlMode cm = controlMode->getValueDataAsEnum<ControlMode>();
-		values.setForceItemsFeedbackOnly(cm != FREE);
+		//values.setForceItemsFeedbackOnly(cm != FREE); //tmp comment to find a better way to have feedbackOnly but with range change possible. OR maybe leave it editable is ok ?
 
 		bool useMorpher = cm == VORONOI || cm == GRADIENT_BAND;
 
@@ -243,6 +243,10 @@ void CVGroup::run()
 		if(Parameter * p = dynamic_cast<Parameter *>(v->controllable)) p->resetValue();
 	}
 	p2.loadJSONData(targetPreset->getJSONData());
+	for (auto& v : p2.values.manager->items)
+	{
+		if (Parameter* p = dynamic_cast<Parameter*>(v->controllable)) p->isOverriden = true; //force use
+	}
 
 	Automation a;
 	a.loadJSONData(interpolationAutomation->getJSONData());

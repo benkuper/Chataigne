@@ -14,7 +14,8 @@
 
 MorpherPanel::MorpherPanel(StringRef contentName) :
 	ShapeShifterContentComponent(contentName),
-	currentMorpherUI(nullptr)
+	currentMorpherUI(nullptr),
+	currentGroup(nullptr)
 {
 	InspectableSelectionManager::mainSelectionManager->addSelectionListener(this);
 
@@ -24,8 +25,29 @@ MorpherPanel::MorpherPanel(StringRef contentName) :
 
 MorpherPanel::~MorpherPanel()
 {
-	setMorpher(nullptr);
+	setGroup(nullptr);
 	if(InspectableSelectionManager::mainSelectionManager != nullptr) InspectableSelectionManager::mainSelectionManager->removeSelectionListener(this);
+}
+
+void MorpherPanel::setGroup(CVGroup* g)
+{
+	if (currentGroup == g) return;
+	if (currentGroup != nullptr)
+	{
+		currentGroup->controlMode->removeAsyncParameterListener(this);
+	}
+
+	currentGroup = g;
+
+	if (currentGroup != nullptr)
+	{
+		currentGroup->controlMode->addAsyncParameterListener(this);
+		setMorpher(currentGroup->morpher.get());
+	}
+	else
+	{
+		setMorpher(nullptr);
+	}
 }
 
 void MorpherPanel::setMorpher(Morpher* m)
@@ -55,7 +77,7 @@ void MorpherPanel::paint(Graphics& g)
 	{
 		g.setColour(TEXTNAME_COLOR);
 		g.setFont(20);
-		g.drawText("Select a Custom Variable Group to edit its morpher", getLocalBounds().toFloat(), Justification::centred);
+		g.drawFittedText("Select a Custom Variable Group with 2D Voronoi mode\nto edit its morpher here.", getLocalBounds().reduced(20), Justification::centred,3);
 	}
 }
 
@@ -69,13 +91,25 @@ void MorpherPanel::resized()
 
 void MorpherPanel::inspectablesSelectionChanged()
 {
-	CVGroup * group = InspectableSelectionManager::mainSelectionManager->getInspectableAs<CVGroup>();
-	if (group != nullptr) setMorpher(group->morpher.get());
+	if (CVGroup* group = InspectableSelectionManager::mainSelectionManager->getInspectableAs<CVGroup>())
+	{
+		setGroup(group);
+	}
+	
 }
 
 void MorpherPanel::inspectableDestroyed(Inspectable* i)
 {
+	if (i == currentGroup) setGroup(nullptr);
 	if (currentMorpherUI != nullptr && i == currentMorpherUI->morpher) setMorpher(nullptr);
+}
+
+void MorpherPanel::newMessage(const Parameter::ParameterEvent& e)
+{
+	if (currentGroup != nullptr && e.parameter == currentGroup->controlMode)
+	{
+		setMorpher(currentGroup->morpher.get());
+	}
 }
 
 
