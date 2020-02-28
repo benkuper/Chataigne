@@ -116,7 +116,7 @@ script:
     make -j2 CONFIG=$MAKECONF
   else
     cd $TRAVIS_BUILD_DIR
-    xcodebuild -project Builds/MacOSX/Chataigne.xcodeproj -configuration $MAKECONF -jobs 2 -verbose | xcpretty -f `xcpretty-travis-formatter`
+    xcodebuild -project Builds/MacOSX_CI/Chataigne.xcodeproj -configuration $MAKECONF -jobs 2 -verbose | xcpretty -f `xcpretty-travis-formatter`
   fi
 
 after_success:
