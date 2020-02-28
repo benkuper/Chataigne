@@ -36,6 +36,9 @@ Module::Module(const String& name) :
 	showWarningInUI = true;
 
 	canInspectChildContainers = true;
+	
+	inActivityTrigger.reset(new Trigger("IN Activity", "Incoming Activity Signal"));
+	outActivityTrigger.reset(new Trigger("OUT Activity", "Outgoing Activity Signal"));
 
 	logIncomingData = addBoolParameter("Log Incoming", "Enable / Disable logging of incoming data for this module", false);
 	logIncomingData->hideInEditor = true;
@@ -44,15 +47,6 @@ Module::Module(const String& name) :
 	logOutgoingData = addBoolParameter("Log Outgoing", "Enable / Disable logging of outgoing data for this module", false);
 	logOutgoingData->hideInEditor = true;
 	logOutgoingData->hideInOutliner = true;
-
-	inActivityTrigger = addTrigger("IN Activity", "Incoming Activity Signal");
-	inActivityTrigger->hideInEditor = true;
-	inActivityTrigger->setControllableFeedbackOnly(true);
-
-	outActivityTrigger = addTrigger("OUT Activity", "Outgoing Activity Signal");
-	outActivityTrigger->hideInEditor = true;
-	outActivityTrigger->setControllableFeedbackOnly(true);
-
 	
 	moduleParams.saveAndLoadRecursiveData = true;
 	addChildControllableContainer(&moduleParams);

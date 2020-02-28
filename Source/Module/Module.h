@@ -35,8 +35,9 @@ public:
 	BoolParameter * logIncomingData;
 	BoolParameter * logOutgoingData;
 
-	Trigger * inActivityTrigger;
-	Trigger * outActivityTrigger;
+	//Do not include in hierarchy to avoid going crazy on those listeners
+	std::unique_ptr<Trigger> inActivityTrigger;
+	std::unique_ptr<Trigger> outActivityTrigger;
 
 	BoolParameter * connectionFeedbackRef;
 
