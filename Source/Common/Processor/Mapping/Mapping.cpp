@@ -25,7 +25,6 @@ Mapping::Mapping(bool canBeDisabled) :
 	continuousProcess->hideInEditor = true;
 
 	addChildControllableContainer(&input);
-	//addChildControllableContainer(&cdm);
 	addChildControllableContainer(&fm);
 	addChildControllableContainer(&om);
 
@@ -125,7 +124,6 @@ void Mapping::process(bool forceOutput)
 {
 	if ((canBeDisabled && !enabled->boolValue()) || forceDisabled) return;
 	if (input.inputReference == nullptr) return;
-	//if (!cdm.getIsValid(true)) return;
 
 	Parameter * filteredParam = fm.processFilters();
 	if (filteredParam == nullptr) return;
@@ -139,7 +137,6 @@ var Mapping::getJSONData()
 {
 	var data = BaseItem::getJSONData();
 	data.getDynamicObject()->setProperty("input", input.getJSONData());
-	//data.getDynamicObject()->setProperty("conditions", cdm.getJSONData());
 	data.getDynamicObject()->setProperty("filters", fm.getJSONData());
 	data.getDynamicObject()->setProperty("outputs", om.getJSONData());
 	return data;
@@ -149,7 +146,6 @@ void Mapping::loadJSONDataInternal(var data)
 {
 	Processor::loadJSONDataInternal(data);
 	input.loadJSONData(data.getProperty("input", var()));
-	//cdm.loadJSONData(data.getProperty("conditions", var()));
 	fm.loadJSONData(data.getProperty("filters", var()));
 	om.loadJSONData(data.getProperty("outputs", var()));
 

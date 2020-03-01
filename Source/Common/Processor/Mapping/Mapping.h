@@ -14,7 +14,6 @@
 #include "Input/MappingInput.h"
 #include "Filter/MappingFilterManager.h"
 #include "Output/MappingOutputManager.h"
-#include "../Action/Condition/ConditionManager.h"
 
 class Mapping :
 	public Processor,
@@ -29,7 +28,6 @@ public:
 	virtual ~Mapping();
 
 	MappingInput input;
-	//ConditionManager cdm;
 	MappingFilterManager fm;
 	MappingOutputManager om;
 
