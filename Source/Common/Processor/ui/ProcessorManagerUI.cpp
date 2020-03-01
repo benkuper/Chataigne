@@ -87,7 +87,8 @@ void ProcessorManagerUI::itemDropped(const SourceDetails & details)
 					if (mapp != nullptr)
 					{
 						Controllable * target = mappingInputMenu.getControllableForResult(result);
-						mapp->input.inputTarget->setValueFromTarget(target);
+						MappingInput* mi = mapp->im.addItem();
+						mi->inputTarget->setValueFromTarget(target);
 					}
 				}
 			}

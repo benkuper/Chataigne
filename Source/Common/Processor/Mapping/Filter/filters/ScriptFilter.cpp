@@ -30,13 +30,27 @@ ScriptFilter::~ScriptFilter()
 void ScriptFilter::processInternal()
 {
 	Array<var> args;
-	args.add(sourceParam->value);
-	args.add(sourceParam->minimumValue);
-	args.add(sourceParam->maximumValue);
+	var values;
+	var mins;
+	var maxs;
+	for (auto& sourceParam : sourceParams)
+	{
+		values.append(sourceParam->value);
+		mins.append(sourceParam->minimumValue);
+		maxs.append(sourceParam->maximumValue);;
+	}
+	args.add(values);
+	args.add(mins);
+	args.add(maxs);
+	
 
 	if (script.scriptEngine == nullptr) return;
 	var result = script.callFunction("filter", args);
-	filteredParameter->setValue(result);
+	if (filteredParameters.size() == 1 && !result.isArray()) filteredParameters[0]->setValue(result);
+	else if(result.isArray())
+	{
+		for (int i = 0; i < filteredParameters.size() && i < result.size();i++) filteredParameters[i]->setValue(result);
+	}
 }
 
 var ScriptFilter::getJSONData()

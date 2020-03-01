@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    MappingFilter.cpp
-    Created: 28 Oct 2016 8:08:53pm
-    Author:  bkupe
+	MappingFilter.cpp
+	Created: 28 Oct 2016 8:08:53pm
+	Author:  bkupe
 
   ==============================================================================
 */
@@ -11,10 +11,8 @@
 #include "MappingFilter.h"
 #include "ui/MappingFilterEditor.h"
 
-MappingFilter::MappingFilter(const String &name, var params) :
+MappingFilter::MappingFilter(const String& name, var params) :
 	BaseItem(name),
-	sourceParam(nullptr),
-	filteredParameter(nullptr),
 	filterParams("filterParams"),
 	forceOutParameterType(""),
 	needsContinuousProcess(false),
@@ -35,66 +33,93 @@ MappingFilter::~MappingFilter()
 	clearItem();
 }
 
-void MappingFilter::setupSource(Parameter * source)
+void MappingFilter::setupSources(Array<WeakReference<Parameter>> sources)
 {
-	if (sourceParam != nullptr)
+	if (isClearing) return;
+
+	for (auto& sourceParam : sourceParams)
 	{
-		sourceParam->removeParameterListener(this);
+		if (sourceParam != nullptr) sourceParam->removeParameterListener(this);
 	}
 
-	if (filteredParameter != nullptr)
+	for (auto& filteredParameter : filteredParameters)
 	{
-		filteredParameter->removeParameterListener(this);
-		removeControllable(filteredParameter.get());
+		if (filteredParameter != nullptr)
+		{
+			filteredParameter->removeParameterListener(this);
+			removeControllable(filteredParameter.get());
+		}
 	}
+
+	sourceParams = sources;
+
+	filteredParameters = setupParametersInternal(sources);
 	
-	sourceParam = source;
-
-	if (source != nullptr)
+	for(auto & source:sourceParams)
 	{
-		filteredParameter = setupParameterInternal(source);
 		source->addParameterListener(this);
-	} else
-	{
-		filteredParameter = nullptr;
 	}
 
-	if (filteredParameter != nullptr)
+	for (auto& filteredParameter : filteredParameters)
 	{
 		filteredParameter->isControllableFeedbackOnly = true;
 		filteredParameter->addParameterListener(this);
 		addParameter(filteredParameter);
 	}
-	
+
 	mappingFilterListeners.call(&FilterListener::filteredParamChanged, this);
 	mappingFilterAsyncNotifier.addMessage(new FilterEvent(FilterEvent::FILTER_PARAM_CHANGED, this));
 }
 
-Parameter * MappingFilter::setupParameterInternal(Parameter * source)
+Array<WeakReference<Parameter>> MappingFilter::setupParametersInternal(Array<WeakReference<Parameter>> sources)
 {
-	if (source == nullptr) return nullptr;
-	Parameter * p = (Parameter *) ControllableFactory::createControllable(forceOutParameterType.isNotEmpty()? forceOutParameterType :source->getTypeString());
-	p->setNiceName("Out");
-	if (p->value.size() == source->value.size())
+	Array<WeakReference<Parameter>> result;
+	if (isClearing) return result;
+
+	for (auto& source : sources)
 	{
-		if (source->hasRange()) p->setRange(source->minimumValue, source->maximumValue);
-		p->setValue(source->getValue());
+		if (source == nullptr || source.wasObjectDeleted()) continue;
+
+		Parameter* p = (Parameter*)ControllableFactory::createControllable(forceOutParameterType.isNotEmpty() ? forceOutParameterType : source->getTypeString());
+		p->setNiceName("Out");
+		if (p->value.size() == source->value.size())
+		{
+			if (source->hasRange()) p->setRange(source->minimumValue, source->maximumValue);
+			p->setValue(source->getValue());
+		}
+
+		p->hideInEditor = true;
+		result.add(p);
 	}
 
-	p->hideInEditor = true;
-	return p;
+	return result;
 }
 
-void MappingFilter::onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * p)
+bool MappingFilter::checkSourcesAreValid(Array<WeakReference<Parameter>> sources, bool checkIfDifferent)
+{
+	int numSources = sources.size();
+	int numFilteredParameters = filteredParameters.size();
+
+	if (numSources == 0 || numFilteredParameters == 0 || numSources != numFilteredParameters) return false;
+	for (int i = 0; i < numSources; i++)
+	{
+		if (sources[i] == nullptr || sources[i].wasObjectDeleted() || filteredParameters[i] == nullptr || filteredParameters[i].wasObjectDeleted()) return false;
+		if (checkIfDifferent && (sources[i].get() != filteredParameters[i].get())) return false;
+	}
+
+	return true;
+}
+
+void MappingFilter::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* p)
 {
 	if (cc == &filterParams)
 	{
-		filterParamChanged((Parameter *)p);
+		filterParamChanged((Parameter*)p);
 		mappingFilterAsyncNotifier.addMessage(new FilterEvent(FilterEvent::FILTER_PARAM_CHANGED, this));
 	}
 }
 
-void MappingFilter::onContainerParameterChangedInternal(Parameter *p)
+void MappingFilter::onContainerParameterChangedInternal(Parameter* p)
 {
 	if (p == enabled)
 	{
@@ -102,19 +127,22 @@ void MappingFilter::onContainerParameterChangedInternal(Parameter *p)
 	}
 }
 
-Parameter * MappingFilter::process(Parameter * source)
+Array<WeakReference<Parameter>> MappingFilter::process(Array<WeakReference<Parameter>> sources)
 {
-	if(!enabled->boolValue()) return source; //default or disabled does nothing
-	if (sourceParam == nullptr || filteredParameter == nullptr || filteredParameter.wasObjectDeleted() || source != sourceParam) return source;
-	
-	if (autoSetRange && (filteredParameter->minimumValue != sourceParam->minimumValue || filteredParameter->maximumValue != sourceParam->maximumValue))
+	if (!enabled->boolValue() || isClearing) return sources; //default or disabled does nothing
+	if(checkSourcesAreValid(sources ,true)) return sources;
+
+	int numSources = sources.size();
+	for (int i = 0; i < numSources; i++)
 	{
-		filteredParameter->setRange(sourceParam->minimumValue, sourceParam->maximumValue);
+		if (autoSetRange && (filteredParameters[i]->minimumValue != sourceParams[i]->minimumValue || filteredParameters[i]->maximumValue != sourceParams[i]->maximumValue))
+		{
+			filteredParameters[i]->setRange(sourceParams[i]->minimumValue, sourceParams[i]->maximumValue);
+		}
 	}
-
-	if (filteredParameter != nullptr) processInternal();  //avoid cross-thread crash
-
-	return filteredParameter;
+	
+	processInternal();  //avoid cross-thread crash
+	return filteredParameters;
 }
 
 void MappingFilter::clearItem()
@@ -123,11 +151,15 @@ void MappingFilter::clearItem()
 
 	//setupSource(nullptr);
 
-	if (!sourceParam.wasObjectDeleted() && sourceParam != nullptr)
+	for (auto& sourceParam : sourceParams)
 	{
-		sourceParam->removeParameterListener(this);
-		sourceParam = nullptr;
+		if (!sourceParam.wasObjectDeleted() && sourceParam != nullptr)
+		{
+			sourceParam->removeParameterListener(this);
+		}
 	}
+
+	sourceParams.clear();
 }
 
 var MappingFilter::getJSONData()
@@ -142,20 +174,26 @@ void MappingFilter::loadJSONDataInternal(var data)
 	BaseItem::loadJSONDataInternal(data);
 	filterParams.loadJSONData(data.getProperty("filterParams", var()));
 }
-InspectableEditor * MappingFilter::getEditor(bool isRoot)
+InspectableEditor* MappingFilter::getEditor(bool isRoot)
 {
 	return new MappingFilterEditor(this, isRoot);
 }
 
-void MappingFilter::parameterRangeChanged(Parameter *)
+void MappingFilter::parameterRangeChanged(Parameter * p)
 {
-	if (filteredParameter != nullptr 
-		&& autoSetRange 
-		&& (filteredParameter->minimumValue != sourceParam->minimumValue || filteredParameter->maximumValue != sourceParam->maximumValue)
-		&& filteredParameter->type == sourceParam->type
-		)
+	int pIndex = sourceParams.indexOf(p);
+	if (pIndex != -1 && filteredParameters.size() > pIndex)
 	{
-		filteredParameter->setRange(sourceParam->minimumValue, sourceParam->maximumValue);
+		if (Parameter* filteredParameter = filteredParameters[pIndex])
+		{
+			if (autoSetRange
+				&& (filteredParameter->minimumValue != p->minimumValue || filteredParameter->maximumValue != p->maximumValue)
+				&& filteredParameter->type == p->type)
+			{
+				filteredParameter->setRange(p->minimumValue, p->maximumValue);
+			}
+		}
 	}
+
 	mappingFilterListeners.call(&FilterListener::filteredParamRangeChanged, this);
 }

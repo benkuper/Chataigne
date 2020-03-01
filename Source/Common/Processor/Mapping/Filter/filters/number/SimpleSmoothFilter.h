@@ -11,7 +11,7 @@
 #pragma once
 
 #include "../../MappingFilter.h"
-
+/*
 class SimpleSmoothFilter :
 	public MappingFilter
 {
@@ -31,3 +31,4 @@ public:
 	String getTypeString() const override { return "Smooth"; }
 
 };
+*/

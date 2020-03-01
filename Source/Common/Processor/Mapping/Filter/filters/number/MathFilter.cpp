@@ -9,7 +9,7 @@
 */
 
 #include "MathFilter.h"
-
+/*
 MathFilter::MathFilter(var params) :
 	MappingFilter(getTypeString(),params),
 	operationValue(nullptr)
@@ -172,3 +172,4 @@ void MathFilter::loadJSONDataInternal(var data)
 	opValueData = data.getProperty("operationValue", var());
 	
 }
+*/

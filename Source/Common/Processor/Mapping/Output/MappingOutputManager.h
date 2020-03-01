@@ -20,13 +20,15 @@ public:
 	MappingOutputManager();
 	~MappingOutputManager();
 
-	Parameter * outParam;
+	Array<WeakReference<Parameter>> outParams;
 
-	void setValue(var value);
+	void setOutParams(Array<WeakReference<Parameter>> params);
+	bool checkParamsAreTheSame(Array<WeakReference<Parameter>> params);
 
-	void setOutParam(Parameter * p);
-
+	void updateOutputValues();
 	void updateOutputValue(MappingOutput * o);
+
+	var getMergedOutValue();
 
 	void addItemInternal(MappingOutput * o, var) override;
 	void removeItemInternal(MappingOutput * o) override;

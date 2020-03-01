@@ -10,6 +10,7 @@
 
 #include "CurveMapFilter.h"
 
+/*
 CurveMapFilter::CurveMapFilter(var params) :
 	MappingFilter(getTypeString(), params),
 	curve("Curve")
@@ -57,3 +58,4 @@ void CurveMapFilter::loadJSONDataInternal(var data)
 	curve.loadJSONData(data.getProperty(curve.shortName, var()), true);
 }
 
+*/

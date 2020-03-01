@@ -12,6 +12,7 @@
 
 #include "../../MappingFilter.h"
 
+/*
 class InverseFilter :
 	public MappingFilter
 {
@@ -26,3 +27,4 @@ public:
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(InverseFilter)
 };
+*/

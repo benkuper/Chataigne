@@ -10,6 +10,7 @@
 
 #include "InverseFilter.h"
 
+/*
 InverseFilter::InverseFilter(var params) :
 	MappingFilter(getTypeString(), params)
 {
@@ -60,3 +61,4 @@ void InverseFilter::processInternal()
 		filteredParameter->setValue(jmap<float>(sourceParam->getNormalizedValue(), sourceParam->maximumValue, sourceParam->minimumValue));
 	}
 }
+*/

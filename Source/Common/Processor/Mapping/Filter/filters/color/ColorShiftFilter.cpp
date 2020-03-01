@@ -9,7 +9,7 @@
 */
 
 #include "ColorShiftFilter.h"
-
+/*
 ColorShiftFilter::ColorShiftFilter(var params) :
 	MappingFilter(getTypeString(), params)
 {
@@ -80,3 +80,4 @@ void ColorShiftFilter::processInternal()
 		break;
 	}
 }
+*/

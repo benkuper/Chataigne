@@ -13,7 +13,6 @@
 
 Mapping::Mapping(bool canBeDisabled) :
 	Processor("Mapping", canBeDisabled),
-	outputParam(nullptr),
     processMode(VALUE_CHANGE),
     inputIsLocked(false),
     mappingAsyncNotifier(10)
@@ -24,12 +23,12 @@ Mapping::Mapping(bool canBeDisabled) :
 	continuousProcess = addBoolParameter("Continuous", "If enabled, the mapping will process continuously rather than only when parameter value has changed", false);
 	continuousProcess->hideInEditor = true;
 
-	addChildControllableContainer(&input);
+	addChildControllableContainer(&im);
 	addChildControllableContainer(&fm);
 	addChildControllableContainer(&om);
 
 	fm.addAsyncManagerListener(this);
-	input.addMappingInputListener(this);
+	im.addBaseManagerListener(this);
 
 	helpID = "Mapping";
 }
@@ -57,11 +56,11 @@ void Mapping::setProcessMode(ProcessMode mode)
 	}
 }
 
-void Mapping::lockInputTo(Parameter * lockParam)
+void Mapping::lockInputTo(Array<Parameter *> lockParams)
 {
-	inputIsLocked = lockParam != nullptr;
-	input.lockInput(lockParam);
-	input.hideInEditor = inputIsLocked;
+	inputIsLocked = lockParams.size() > 0;
+	im.lockInput(lockParams);
+	im.hideInEditor = inputIsLocked;
 }
 
 void Mapping::checkFiltersNeedContinuousProcess()
@@ -87,34 +86,58 @@ void Mapping::checkFiltersNeedContinuousProcess()
 
 void Mapping::updateMappingChain()
 {
+	if (isCurrentlyLoadingData) return;
+
 	checkFiltersNeedContinuousProcess();
-	Parameter * p = fm.getLastEnabledFilter() != nullptr ? fm.getLastEnabledFilter()->filteredParameter.get() : input.inputReference.get();
+	Array<WeakReference<Parameter>> processedParams = fm.getLastEnabledFilter() != nullptr ? fm.getLastEnabledFilter()->filteredParameters : im.getInputReferences();
 
-	if (outputParam == nullptr && p == nullptr) return;
-
-	if (outputParam == nullptr || p == nullptr || outputParam->type != p->type)
-	{		
-		if (outputParam != nullptr) removeControllable(outputParam);
-		outputParam = nullptr;
-
-		if (p != nullptr)
-		{ 
-			outputParam = ControllableFactory::createParameterFrom(p, false, true);
-			outputParam->setNiceName("Out value");
-			outputParam->setControllableFeedbackOnly(true);
-			outputParam->hideInEditor = true;
-		}
-
-		om.setOutParam(outputParam);
-		mappingAsyncNotifier.addMessage(new MappingEvent(MappingEvent::OUTPUT_TYPE_CHANGED, this));
-
-		if (outputParam != nullptr)
-		{
-			addParameter(outputParam);
-		}
-	} else
+	bool hasChanged = false;
+	while (outputParams.size() > processedParams.size())
 	{
-		if(outputParam != nullptr && p != nullptr) outputParam->setRange(p->minimumValue, p->maximumValue);
+		removeControllable(outputParams[outputParams.size() - 1].get());
+		outputParams.removeLast();
+		hasChanged = true;
+	}
+
+	for (int i = 0; i < processedParams.size(); i++)
+	{
+		if (processedParams[i] == nullptr)
+		{
+			if (outputParams.size() > i)
+			{
+				removeControllable(outputParams[i].get());
+				outputParams.set(i, nullptr);
+			}
+			
+			hasChanged = true;
+		}
+
+		if (i >= outputParams.size())
+		{
+			outputParams.add(nullptr);
+			hasChanged = true;
+		}
+
+		if(outputParams[i] == nullptr)
+		{
+			if (Parameter* outputParam = ControllableFactory::createParameterFrom(processedParams[i], false, true))
+			{
+				outputParam->setNiceName("Out value");
+				outputParam->setControllableFeedbackOnly(true);
+				outputParam->hideInEditor = true;
+				outputParams.set(i, outputParam);
+				addParameter(outputParam);
+				hasChanged = true;
+			}
+		}
+
+		outputParams[i]->setRange(processedParams[i]->minimumValue, processedParams[i]->maximumValue);
+	}
+
+	if (hasChanged)
+	{
+		om.setOutParams(outputParams);
+		mappingAsyncNotifier.addMessage(new MappingEvent(MappingEvent::OUTPUT_TYPE_CHANGED, this));
 	}
 
 	process();
@@ -123,20 +146,30 @@ void Mapping::updateMappingChain()
 void Mapping::process(bool forceOutput)
 {
 	if ((canBeDisabled && !enabled->boolValue()) || forceDisabled) return;
-	if (input.inputReference == nullptr) return;
+	if (im.items.size() == 0) return;
+	if (isCurrentlyLoadingData) return;
 
-	Parameter * filteredParam = fm.processFilters();
-	if (filteredParam == nullptr) return;
+	Array<WeakReference<Parameter>> filteredParams = fm.processFilters();
+	if (filteredParams.size() != outputParams.size())
+	{
+		updateMappingChain();
+		return;
+	}
 
-	if (outputParam == nullptr) updateMappingChain();
-	if (outputParam == nullptr) return;
-	outputParam->setValue(filteredParam->getValue(), false, processMode == MANUAL || forceOutput);
+	//updateMappingChain(); //should not need that here ? 
+
+	for (int i = 0; i < filteredParams.size(); i++)
+	{
+		outputParams[i]->setValue(filteredParams[i]->getValue(), false, processMode == MANUAL || forceOutput);
+	}
+
+	om.updateOutputValues();
 }
 
 var Mapping::getJSONData()
 {
 	var data = BaseItem::getJSONData();
-	data.getDynamicObject()->setProperty("input", input.getJSONData());
+	data.getDynamicObject()->setProperty("im", im.getJSONData());
 	data.getDynamicObject()->setProperty("filters", fm.getJSONData());
 	data.getDynamicObject()->setProperty("outputs", om.getJSONData());
 	return data;
@@ -145,20 +178,35 @@ var Mapping::getJSONData()
 void Mapping::loadJSONDataInternal(var data)
 {
 	Processor::loadJSONDataInternal(data);
-	input.loadJSONData(data.getProperty("input", var()));
+	im.loadJSONData(data.getProperty("im", var()));
 	fm.loadJSONData(data.getProperty("filters", var()));
 	om.loadJSONData(data.getProperty("outputs", var()));
 
-	fm.setupSource(input.inputReference);
+	fm.setupSources(im.getInputReferences());
 
 	updateMappingChain();
+}
+
+void Mapping::afterLoadJSONDataInternal()
+{
+	updateMappingChain();
+}
+
+void Mapping::itemAdded(MappingInput* item)
+{
+	item->addMappingInputListener(this);
+}
+
+void Mapping::itemRemoved(MappingInput* item)
+{
+	item->removeMappingInputListener(this);
 }
 
 void Mapping::inputReferenceChanged(MappingInput *)
 {
 	if (Engine::mainEngine->isClearing) return;
 
-	fm.setupSource(input.inputReference);
+	fm.setupSources(im.getInputReferences());
 	updateMappingChain();
 }
 
@@ -169,7 +217,8 @@ void Mapping::inputParameterValueChanged(MappingInput *)
 
 void Mapping::inputParameterRangeChanged(MappingInput *)
 {
-	if (fm.items.size() == 0) outputParam->setRange(input.inputReference->minimumValue, input.inputReference->maximumValue);
+	updateMappingChain();
+	//if (fm.items.size() == 0) outputParam->setRange(input.inputReference->minimumValue, input.inputReference->maximumValue);
 }
 
 void Mapping::onContainerParameterChangedInternal(Parameter * p)
@@ -179,10 +228,11 @@ void Mapping::onContainerParameterChangedInternal(Parameter * p)
 	{
 		if (continuousProcess->boolValue()) startTimerHz(30);
 		else stopTimer();
-	} else if (p == outputParam)
+	}/* else if (outputParams.contains(p))
 	{
-		om.setValue(outputParam->getValue());
-	} else if (p == enabled && enabled->boolValue() && !forceDisabled)
+		om.updateOutputValues();
+	}*/
+	else if (p == enabled && enabled->boolValue() && !forceDisabled)
 	{
 		process();
 	}
@@ -201,11 +251,14 @@ void Mapping::newMessage(const MappingFilterManager::ManagerEvent & e)
 
 void Mapping::filteredParamRangeChanged(MappingFilter * mf)
 {
+	updateMappingChain();
+	/*
 	if (mf == fm.getLastEnabledFilter())
 	{
 		//Last item
 		outputParam->setRange(mf->filteredParameter->minimumValue, mf->filteredParameter->maximumValue);
 	}
+	*/
 }
 
 void Mapping::newMessage(const MappingFilter::FilterEvent & e)
@@ -221,8 +274,8 @@ void Mapping::clearItem()
 	BaseItem::clearItem();
 
 	fm.removeAsyncManagerListener(this);
-	input.removeMappingInputListener(this); 
-	input.clear();
+	im.removeBaseManagerListener(this); 
+	im.clear();
 }
 
 ProcessorUI * Mapping::getUI()
@@ -239,7 +292,12 @@ void Mapping::timerCallback()
 void Mapping::highlightLinkedInspectables(bool value)
 {
 	Processor::highlightLinkedInspectables(value);
-	input.highlightLinkedInspectables(value);
+
+	for (auto& i : im.items)
+	{
+		i->highlightLinkedInspectables(value);
+	}
+
 	for (auto & o : om.items)
 	{
 		o->highlightLinkedInspectables(value);

@@ -26,10 +26,10 @@
 
 
 MappingFilterManager::MappingFilterManager() :
-	BaseManager<MappingFilter>("Filters"),
-	inputSourceParam(nullptr)
+	BaseManager<MappingFilter>("Filters")
 {
 	managerFactory = &factory;
+	/*
 	factory.defs.add(Factory<MappingFilter>::Definition::createDef("Remap", "Remap", &SimpleRemapFilter::create));
 	factory.defs.add(Factory<MappingFilter>::Definition::createDef("Remap", "Curve Map", &CurveMapFilter::create));
 	factory.defs.add(Factory<MappingFilter>::Definition::createDef("Remap", "Math", &MathFilter::create));
@@ -47,6 +47,7 @@ MappingFilterManager::MappingFilterManager() :
 	factory.defs.add(Factory<MappingFilter>::Definition::createDef("Time", "FPS", &LagFilter::create));
 
 	factory.defs.add(Factory<MappingFilter>::Definition::createDef("Color", "Color Shift", &ColorShiftFilter::create));
+	*/
 
 	factory.defs.add(Factory<MappingFilter>::Definition::createDef("", "Script", &ScriptFilter::create));
 
@@ -57,16 +58,16 @@ MappingFilterManager::~MappingFilterManager()
 {
 }
 
-void MappingFilterManager::setupSource(Parameter * source)
+void MappingFilterManager::setupSources(Array<WeakReference<Parameter>> sources)
 {
-	inputSourceParam = source;
+	inputSourceParams = sources;
 	if(!isCurrentlyLoadingData) rebuildFilterChain();
 }
 
 
-Parameter * MappingFilterManager::processFilters()
+Array<WeakReference<Parameter>> MappingFilterManager::processFilters()
 {
-	Parameter * fp = inputSourceParam;
+	Array<WeakReference<Parameter>> fp = inputSourceParams;
 	for (auto &f : items)
 	{
 		fp = f->process(fp);
@@ -77,14 +78,14 @@ Parameter * MappingFilterManager::processFilters()
 
 void MappingFilterManager::rebuildFilterChain()
 {
-	Parameter * fp = inputSourceParam;
+	Array<WeakReference<Parameter>> fp = inputSourceParams;
 	lastEnabledFilter = nullptr;
 	for (auto &f : items)
 	{
 		if (f->enabled->boolValue())
 		{
-			f->setupSource(fp);
-			fp = f->filteredParameter;
+			f->setupSources(fp);
+			fp = f->filteredParameters;
 			lastEnabledFilter = f;
 		}
 	}

@@ -9,7 +9,7 @@
 */
 
 #include "LagFilter.h"
-
+/*
 LagFilter::LagFilter(var params) :
 	MappingFilter(getTypeString())
 {
@@ -36,3 +36,4 @@ void LagFilter::timerCallback()
 	if (sourceParam == nullptr) return;
 	tempVal = sourceParam->value;
 }
+*/

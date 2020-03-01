@@ -9,7 +9,7 @@
 */
 
 #include "OffsetFilter.h"
-
+/*
 OffsetFilter::OffsetFilter(var params) :
 	MappingFilter(getTypeString(),params)
 {
@@ -40,3 +40,4 @@ void OffsetFilter::processInternal()
 		filteredParameter->setValue(sourceParam->floatValue() + offset->floatValue());
 	}
 }
+*/

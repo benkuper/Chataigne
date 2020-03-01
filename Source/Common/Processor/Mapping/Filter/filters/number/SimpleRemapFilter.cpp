@@ -9,7 +9,7 @@
 */
 
 #include "SimpleRemapFilter.h"
-
+/*
 SimpleRemapFilter::SimpleRemapFilter(var params) :
 	MappingFilter(getTypeString(),params),
 	targetIn(nullptr),
@@ -132,3 +132,4 @@ Parameter * SimpleRemapFilter::setupParameterInternal(Parameter * source)
 	p->setRange(jmin<float>(targetOut->x,targetOut->y), jmax<float>(targetOut->x, targetOut->y));
 	return p;
 }
+*/

@@ -10,7 +10,7 @@
 
 #include "ConversionFilters.h"
 
-
+/*
 
 ConversionFilter::ConversionFilter(const String &name, var params, StringRef outTypeString) :
 	MappingFilter(name, params),
@@ -259,3 +259,5 @@ void ToColorFilter::processInternal()
 
 	
 }
+
+*/

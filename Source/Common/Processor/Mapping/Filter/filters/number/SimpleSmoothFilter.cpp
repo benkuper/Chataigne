@@ -9,8 +9,7 @@
 */
 
 #include "SimpleSmoothFilter.h"
-
-
+/*
 SimpleSmoothFilter::SimpleSmoothFilter(var params) :
 	MappingFilter(getTypeString())
 {
@@ -55,5 +54,5 @@ void SimpleSmoothFilter::onControllableFeedbackUpdateInternal(ControllableContai
 		downSmooth->setEnabled(async->boolValue());
 	}
 }
-
+*/
 

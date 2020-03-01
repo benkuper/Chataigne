@@ -14,7 +14,6 @@
 
 MappingOutputManager::MappingOutputManager() :
 	BaseManager<MappingOutput>("Outputs"),
-	outParam(nullptr),
 	omAsyncNotifier(5)
 {
 	selectItemWhenCreated = false;
@@ -24,31 +23,61 @@ MappingOutputManager::~MappingOutputManager()
 {
 }
 
-void MappingOutputManager::setValue(var value)
-{
-	for (auto &o : items) o->setValue(value);
-}
 
-void MappingOutputManager::setOutParam(Parameter * p)
+void MappingOutputManager::setOutParams(Array<WeakReference<Parameter>> params)
 {
-	if (outParam == p) return;
-	outParam = p;
-	if(outParam != nullptr) for (auto &o : items) o->setOutputType(outParam->type);
+	if (checkParamsAreTheSame(params)) return;
+
+	outParams = params;
+	if(outParams.size() > 0) for (auto &o : items) o->setOutputType(outParams[0]->type); //better than this ? should handle all ?
 
 	omAsyncNotifier.addMessage(new OutputManagerEvent(OutputManagerEvent::OUTPUT_CHANGED));
 }
 
+bool MappingOutputManager::checkParamsAreTheSame(Array<WeakReference<Parameter>> params)
+{
+	if (params.size() != outParams.size()) return false;
+	for (int i = 0; i < outParams.size(); i++) if (outParams[i].get() != params[i].get()) return false;
+	return true;
+}
+
+void MappingOutputManager::updateOutputValues()
+{
+	var value = getMergedOutValue();
+	for (auto & i : items) i->setValue(value);
+}
+
 void MappingOutputManager::updateOutputValue(MappingOutput * o)
 {
-	if (outParam == nullptr) return;
+	if (outParams.size() == 0) return;
 	if (o == nullptr) return;
-	o->setValue(outParam->value);
+	o->setValue(getMergedOutValue());
+}
+
+var MappingOutputManager::getMergedOutValue()
+{
+	var value;
+	for (auto& o : outParams)
+	{
+		if (o.wasObjectDeleted()) continue;
+		var val = o->getValue();
+		if (!val.isArray()) value.append(val);
+		else
+		{
+			for (int i = 0; i < val.size(); i++)
+			{
+				value.append(val[i]);
+			}
+		}
+	}
+
+	return value;
 }
 
 void MappingOutputManager::addItemInternal(MappingOutput * o, var)
 {
 	o->addCommandHandlerListener(this);
-	if(outParam != nullptr) o->setOutputType(outParam->type);
+	if(outParams.size() > 0)o->setOutputType(outParams[0]->type);
 	updateOutputValue(o);
 }
 

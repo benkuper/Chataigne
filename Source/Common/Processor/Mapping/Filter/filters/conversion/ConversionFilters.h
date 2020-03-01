@@ -12,6 +12,7 @@
 
 #include "../../MappingFilter.h"
 
+/*
 class ConversionFilter :
 	public MappingFilter
 {
@@ -25,7 +26,7 @@ public:
 	enum TransferType { DIRECT, EXTRACT, TARGET};
 	TransferType transferType;
 
-	Parameter * setupParameterInternal(Parameter * sourceParam) override;
+	Array<WeakReference<Parameter>> setupParametersInternal(Array<WeakReference<Parameter>> sourceParams) override;
 	virtual void processInternal() override;
 	virtual var convertValue(var sourceValue) { return var(sourceValue); }
 };
@@ -129,3 +130,4 @@ public:
 	String getTypeString() const override { return "Convert To Color"; }
 
 };
+*/

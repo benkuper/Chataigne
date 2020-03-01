@@ -10,6 +10,7 @@
 
 #include "CropFilter.h"
 
+/*
 CropFilter::CropFilter(var params) :
 	MappingFilter(getTypeString(), params)
 {
@@ -65,3 +66,4 @@ Parameter * CropFilter::setupParameterInternal(Parameter * source)
 	}
 	return p;
 }
+*/

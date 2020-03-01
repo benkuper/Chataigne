@@ -48,16 +48,16 @@ void MappingUI::paint(Graphics & g)
 
 void MappingUI::updateOutputParamUI()
 {
-	if(outputParamUI != nullptr && mapping->outputParam != nullptr && outputParamUI->controllable == mapping->outputParam) return;
+	if(outputParamUI != nullptr && mapping->outputParams.size() > 0 && outputParamUI->controllable == mapping->outputParams[0]) return;
 
 	if (outputParamUI != nullptr)
 	{
 		removeChildComponent(outputParamUI.get());
 	}
 
-	if (mapping->outputParam != nullptr)
+	if (mapping->outputParams.size() > 0 && mapping->outputParams[0] != nullptr)
 	{
-		outputParamUI.reset(mapping->outputParam->createDefaultUI());
+		outputParamUI.reset(mapping->outputParams[0]->createDefaultUI());
 		outputParamUI->showLabel = false;
 		addAndMakeVisible(outputParamUI.get());
 	}
@@ -102,7 +102,8 @@ void MappingUI::itemDropped(const SourceDetails & details)
 			if (isInput)
 			{
 				Controllable * target = mappingInputMenu.getControllableForResult(result);
-				mapping->input.inputTarget->setValueFromTarget(target);
+				MappingInput* mi = mapping->im.addItem();
+				mi->inputTarget->setValueFromTarget(target);
 			}
 			else //command
 			{

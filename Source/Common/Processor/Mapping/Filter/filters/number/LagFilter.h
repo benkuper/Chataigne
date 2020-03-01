@@ -12,6 +12,8 @@
 
 #include "../../MappingFilter.h"
 
+
+/*
 class LagFilter :
 	public MappingFilter,
 	public Timer
@@ -35,3 +37,5 @@ public:
 	virtual void timerCallback() override;
 
 };
+
+*/

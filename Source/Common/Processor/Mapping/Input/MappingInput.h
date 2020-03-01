@@ -13,13 +13,11 @@
 #include "JuceHeader.h"
 
 class MappingInput :
-	public ControllableContainer
+	public BaseItem
 {
 public:
 	MappingInput();
 	~MappingInput();
-
-	
 
 	TargetParameter * inputTarget;
 	WeakReference<Parameter> inputReference;
@@ -27,7 +25,7 @@ public:
 	void lockInput(Parameter * input);
 	void setInput(Parameter * input);
 
-	void onContainerParameterChanged(Parameter * p) override;
+	void onContainerParameterChangedInternal(Parameter * p) override;
 	void onExternalParameterValueChanged(Parameter *p) override;
 
 	void parameterRangeChanged(Parameter * p) override;

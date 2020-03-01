@@ -12,6 +12,7 @@
 
 #include "../../MappingFilter.h"
 
+/*
 class MathFilter :
 	public MappingFilter
 {
@@ -44,3 +45,4 @@ public:
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MathFilter)
 };
+*/
