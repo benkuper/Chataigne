@@ -20,7 +20,7 @@ class ConditionManager :
 public:
 	juce_DeclareSingleton(ConditionManager, true)
 
-		ConditionManager(bool operatorOnSide = false);
+	ConditionManager();
 	~ConditionManager();
 
 	Factory<Condition> factory;
@@ -31,7 +31,6 @@ public:
 
 	enum ConditionOperator { AND, OR };
 	EnumParameter* conditionOperator;
-	bool operatorOnSide;
 
 	FloatParameter* validationTime;
 	FloatParameter* validationProgress;

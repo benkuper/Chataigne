@@ -18,11 +18,10 @@
 
 juce_ImplementSingleton(ConditionManager)
 
-ConditionManager::ConditionManager(bool _operatorOnSide) :
+ConditionManager::ConditionManager() :
 	BaseManager<Condition>("Conditions"),
 	activateDef(nullptr),
 	deactivateDef(nullptr),
-    operatorOnSide(_operatorOnSide),
     validationProgress(nullptr),
 	validationWaiting(false),
     prevTimerTime(0),
@@ -55,12 +54,12 @@ ConditionManager::ConditionManager(bool _operatorOnSide) :
 	validationProgress->setEnabled(false);
 	validationProgress->hideInEditor = true;
 	validationProgress->isSavable = false;
+
 }
 
 ConditionManager::~ConditionManager()
 {
 }
-
 
 void ConditionManager::setHasActivationDefinitions(bool value)
 {
