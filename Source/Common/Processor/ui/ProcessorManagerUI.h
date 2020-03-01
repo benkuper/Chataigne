@@ -23,7 +23,7 @@ public:
 	~ProcessorManagerUI();
 
 	void itemDropped(const SourceDetails &details) override;
-
+	virtual void addItemFromMenu(Processor * item, bool isFromAddButton, Point<int> mouseDownPos) override;
 	ProcessorUI * createUIForItem(Processor *) override;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ProcessorManagerUI)

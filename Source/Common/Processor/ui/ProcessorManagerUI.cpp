@@ -153,6 +153,15 @@ void ProcessorManagerUI::itemDropped(const SourceDetails & details)
 
 }
 
+void ProcessorManagerUI::addItemFromMenu(Processor* item, bool isFromAddButton, Point<int> mouseDownPos)
+{
+	BaseManagerUI::addItemFromMenu(item, isFromAddButton, mouseDownPos);
+	if (Action* a = dynamic_cast<Action*>(item))
+	{
+		a->cdm.addItem(new StandardCondition()); //add one condition by default if done through UI
+	}
+}
+
 ProcessorUI * ProcessorManagerUI::createUIForItem(Processor *p)
 {
 	return p->getUI();
