@@ -14,12 +14,16 @@
 
 SequenceCommand::SequenceCommand(SequenceModule* _module, CommandContext context, var params) :
 	BaseCommand(_module, context, params),
-	sequenceModule(_module)
+	sequenceModule(_module),
+	target(nullptr)
 {
-	target = addTargetParameter("Target", "Target for the command");
-	target->targetType = TargetParameter::CONTAINER;
-
 	actionType = (ActionType)(int)params.getProperty("type", PLAY_SEQUENCE);
+
+	if (actionType != STOP_ALL_SEQUENCES)
+	{
+		target = addTargetParameter("Target", "Target for the command");
+		target->targetType = TargetParameter::CONTAINER;
+	}
 
 	switch (actionType)
 	{
@@ -31,6 +35,7 @@ SequenceCommand::SequenceCommand(SequenceModule* _module, CommandContext context
 		target->showParentNameInEditor = false;
 		target->customGetTargetContainerFunc = &ChataigneSequenceManager::showMenuAndGetSequenceStatic;
 		break;
+
 
 	case DISABLE_LAYER:
 	case ENABLE_LAYER:
@@ -83,6 +88,10 @@ void SequenceCommand::triggerInternal()
 
 	case STOP_SEQUENCE:
 		((Sequence*)target->targetContainer.get())->stopTrigger->trigger();
+		break;
+
+	case STOP_ALL_SEQUENCES:
+		ChataigneSequenceManager::getInstance()->stopAllTrigger->trigger();
 		break;
 
 	case TOGGLE_SEQUENCE:
