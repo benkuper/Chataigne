@@ -16,7 +16,7 @@ class StandardCondition :
 	public Condition
 {
 public:
-	StandardCondition(var params);
+	StandardCondition(var params = var());
 	~StandardCondition();
 
 	TargetParameter * sourceTarget;
