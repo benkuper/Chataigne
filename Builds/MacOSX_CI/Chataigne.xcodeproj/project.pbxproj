@@ -373,6 +373,10 @@
 			isa = PBXBuildFile;
 			fileRef = C6146FC3CED0ECD9A064C9B9;
 		};
+		90E03455A714406EABD475B6 = {
+			isa = PBXBuildFile;
+			fileRef = E7D7453E8DFAB9DD5CAE351A;
+		};
 		FDB37E4517D95C090BA8BE7E = {
 			isa = PBXBuildFile;
 			fileRef = 0196897A6CE603D0F42453D4;
@@ -3712,6 +3716,13 @@
 			path = ../../Source/Module/Routing/ModuleRouterValue.h;
 			sourceTree = "SOURCE_ROOT";
 		};
+		97DCD8254DBD9DFCC1748B32 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = MappingInputManager.h;
+			path = ../../Source/Common/Processor/Mapping/Input/MappingInputManager.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		99532205E848C75B528FEB0D = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -5238,6 +5249,13 @@
 			path = ../../Source/Module/modules/http/HTTPModule.h;
 			sourceTree = "SOURCE_ROOT";
 		};
+		E7D7453E8DFAB9DD5CAE351A = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = MappingInputManager.cpp;
+			path = ../../Source/Common/Processor/Mapping/Input/MappingInputManager.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		E8A5F9A2228D5E3719F9F36B = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -6118,6 +6136,8 @@
 				C2E1D3E074C728CAF2B2E921,
 				C6146FC3CED0ECD9A064C9B9,
 				46737E6904653930EEBB8031,
+				E7D7453E8DFAB9DD5CAE351A,
+				97DCD8254DBD9DFCC1748B32,
 			);
 			name = Input;
 			sourceTree = "<group>";
@@ -7620,7 +7640,7 @@
 					"_DEBUG=1",
 					"DEBUG=1",
 					"JUCER_XCODE_MAC_2F3811D6=1",
-					"JUCE_APP_VERSION=1.6.13b3",
+					"JUCE_APP_VERSION=1.6.13b4",
 					"JUCE_APP_VERSION_HEX=0x1060d",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
@@ -7681,7 +7701,7 @@
 					"_NDEBUG=1",
 					"NDEBUG=1",
 					"JUCER_XCODE_MAC_2F3811D6=1",
-					"JUCE_APP_VERSION=1.6.13b3",
+					"JUCE_APP_VERSION=1.6.13b4",
 					"JUCE_APP_VERSION_HEX=0x1060d",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
@@ -7929,6 +7949,7 @@
 				A07CA7185B061D91F79BCFD2,
 				3F1359A0AFF213630A7B75E8,
 				C4EB08B8F89C1EF160E72A07,
+				90E03455A714406EABD475B6,
 				FDB37E4517D95C090BA8BE7E,
 				324EAD30760EA8E3881688A4,
 				354F03D3E4769822EA4BC06C,

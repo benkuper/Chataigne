@@ -1381,6 +1381,9 @@
     <ClCompile Include="..\..\Source\Common\Processor\Mapping\Input\MappingInput.cpp">
       <Filter>Chataigne\Source\Common\Processor\Mapping\Input</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Input\MappingInputManager.cpp">
+      <Filter>Chataigne\Source\Common\Processor\Mapping\Input</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Common\Processor\Mapping\Output\ui\MappingOutputManagerEditor.cpp">
       <Filter>Chataigne\Source\Common\Processor\Mapping\Output\ui</Filter>
     </ClCompile>
@@ -4870,6 +4873,9 @@
       <Filter>Chataigne\Source\Common\Processor\Mapping\Input\ui</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Input\MappingInput.h">
+      <Filter>Chataigne\Source\Common\Processor\Mapping\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\Processor\Mapping\Input\MappingInputManager.h">
       <Filter>Chataigne\Source\Common\Processor\Mapping\Input</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Output\ui\MappingOutputManagerEditor.h">

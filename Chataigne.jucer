@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.6.13b3"
+<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.6.13b4"
               bundleIdentifier="benkuper.Chataigne" includeBinaryInAppConfig="1"
               jucerVersion="5.4.7" companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
               companyEmail="benjamin@kuperberg.fr" defines="" splashScreenColour="Dark"
@@ -412,6 +412,10 @@
               <FILE id="VVDXZi" name="MappingInput.cpp" compile="1" resource="0"
                     file="Source/Common/Processor/Mapping/Input/MappingInput.cpp"/>
               <FILE id="LBLQTv" name="MappingInput.h" compile="0" resource="0" file="Source/Common/Processor/Mapping/Input/MappingInput.h"/>
+              <FILE id="yHiHYe" name="MappingInputManager.cpp" compile="1" resource="0"
+                    file="Source/Common/Processor/Mapping/Input/MappingInputManager.cpp"/>
+              <FILE id="RoPMB6" name="MappingInputManager.h" compile="0" resource="0"
+                    file="Source/Common/Processor/Mapping/Input/MappingInputManager.h"/>
             </GROUP>
             <GROUP id="{18518876-74C1-2B25-1A4A-02F7AB24FFB8}" name="Output">
               <GROUP id="{5C583B99-90CB-DA96-EC0A-625FC344B9E5}" name="ui">
