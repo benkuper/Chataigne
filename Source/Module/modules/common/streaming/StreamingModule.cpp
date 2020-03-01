@@ -560,15 +560,35 @@ void StreamingModule::loadJSONDataInternal(var data)
 var StreamingModule::sendStringFromScript(const var::NativeFunctionArgs & a)
 {
 	StreamingModule * m = getObjectFromJS<StreamingModule>(a);
-	if (a.numArguments == 0) return var();
-	m->sendMessage(a.arguments[0].toString());
+	if (checkNumArgs(m->niceName, a, 1)) return false;
+	if (a.arguments[0].isObject()) m->sendMessage(JSON::toString(a.arguments[0]));
+	else
+	{
+		String s = "";
+		for (int i = 0; i < a.numArguments; i++)
+		{
+			if (a.arguments[i].isArray() && a.arguments[i].size() > 0)
+			{
+				for (int j = 0; j < a.arguments[i].size(); j++)
+				{
+					s += (s.isNotEmpty() ? " " : "") + a.arguments[i][j].toString();
+				}
+			}
+			else
+			{
+				s += (s.isNotEmpty() ? " " : "") + a.arguments[i].toString();
+			}
+		}
+
+		m->sendMessage(s);
+	}
 	return var();
 }
 
 var StreamingModule::sendBytesFromScript(const var::NativeFunctionArgs & a)
 {
 	StreamingModule * m = getObjectFromJS<StreamingModule>(a);
-	if (a.numArguments == 0) return var();
+	if (checkNumArgs(m->niceName, a, 1)) return false;
 	Array<uint8> data;
 	for (int i = 0; i < a.numArguments; i++)
 	{
