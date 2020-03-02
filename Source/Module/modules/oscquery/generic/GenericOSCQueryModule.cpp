@@ -35,6 +35,9 @@ GenericOSCQueryModule::GenericOSCQueryModule(const String & name, int defaultRem
 	remoteOSCPort = sendCC->addIntParameter("Custom OSC Port", "If enabled, this will override the port to send OSC to, default is sending to the OSCQuery port", defaultRemotePort, 1, 65535);
 	remoteOSCPort->canBeDisabledByUser = true;
 	remoteOSCPort->setEnabled(false);
+	
+	//Script
+	scriptObject.setMethod("send", GenericOSCQueryModule::sendOSCFromScript);
 
 	defManager->add(CommandDefinition::createDef(this, "", "Set Value", &GenericOSCQueryCommand::create, CommandContext::BOTH));
 
@@ -80,6 +83,54 @@ void GenericOSCQueryModule::sendOSCForControllable(Controllable * c)
 		NLOGERROR(niceName, "Can't send to address " << s << " : " << e.description);
 	}
 
+}
+
+
+var GenericOSCQueryModule::sendOSCFromScript(const var::NativeFunctionArgs & a)
+{
+	GenericOSCQueryModule * m = getObjectFromJS<GenericOSCQueryModule>(a);
+	if (!m->enabled->boolValue()) return var();
+
+	if (a.numArguments == 0) return var();
+
+	try
+	{
+		OSCMessage msg(a.arguments[0].toString());
+
+		for (int i = 1; i < a.numArguments; i++)
+		{
+			if (a.arguments[i].isArray())
+			{
+				Array<var> * arr = a.arguments[i].getArray();
+				for (auto &aa : *arr) msg.addArgument(varToArgument(aa));
+			}
+			else
+			{
+				msg.addArgument(varToArgument(a.arguments[i]));
+			}
+		}
+
+		m->sendOSCMessage(msg);
+	}
+	catch (OSCFormatError &e)
+	{
+		NLOGERROR(m->niceName, "Error sending message : " << e.description);
+	}
+	
+
+	return var();
+}
+
+
+OSCArgument GenericOSCQueryModule::varToArgument(const var & v)
+{
+	if (v.isBool()) return OSCArgument(((bool)v) ? 1 : 0);
+	else if (v.isInt()) return OSCArgument((int)v);
+	else if (v.isInt64()) return OSCArgument((int)v);
+	else if (v.isDouble()) return OSCArgument((float)v);
+	else if (v.isString()) return OSCArgument(v.toString());
+	jassert(false);
+	return OSCArgument("error");
 }
 
 void GenericOSCQueryModule::syncData()

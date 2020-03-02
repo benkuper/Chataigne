@@ -51,6 +51,11 @@ public:
 
 	void sendOSCMessage(OSCMessage m);
 	void sendOSCForControllable(Controllable * c);
+	
+	//Script
+	static var sendOSCFromScript(const var::NativeFunctionArgs &args);
+	
+	static OSCArgument varToArgument(const var &v);
 
 	virtual void syncData();
 	virtual void createTreeFromData(var data);
