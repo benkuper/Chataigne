@@ -242,7 +242,7 @@ void OSCModule::setupSenders()
 
 void OSCModule::sendOSC(const OSCMessage & msg)
 {
-	if (outputManager == nullptr) return;
+	if (isClearing || outputManager == nullptr) return;
 	if (!enabled->boolValue()) return;
 
 	if (!outputManager->enabled->boolValue()) return;
