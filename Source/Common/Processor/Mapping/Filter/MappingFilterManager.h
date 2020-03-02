@@ -14,15 +14,19 @@
 
 class MappingFilterManager :
 	public BaseManager<MappingFilter>,
-	public MappingFilter::AsyncListener
+	public MappingFilter::FilterListener
 {
 public:
 	MappingFilterManager();
 	~MappingFilterManager();
 
 	Array<Parameter *> inputSourceParams;
+
 	bool setupSources(Array<Parameter *> sources);
-	bool rebuildFilterChain();
+	bool rebuildFilterChain(MappingFilter * afterThisFilter = nullptr);
+
+	void notifyNeedsRebuild(MappingFilter * afterThisFilter = nullptr);
+
 	WeakReference<MappingFilter> getLastEnabledFilter() { return lastEnabledFilter; }
 	Array<Parameter *> getLastFilteredParameters();
 
@@ -34,10 +38,26 @@ public:
 	
 	void setItemIndex(MappingFilter* item, int index) override;
 	void reorderItems() override;
-
-	void newMessage(const MappingFilter::FilterEvent &e) override;
+	
+	void filterStateChanged(MappingFilter* mf) override;
+	void filterNeedsProcess(MappingFilter* mf) override;
+	void filteredParamRangeChanged(MappingFilter* mf) override;
 
 	void loadJSONDataManagerInternal(var data) override;
+
+	class  FilterManagerListener
+	{
+	public:
+		/** Destructor. */
+		virtual ~FilterManagerListener() {}
+		virtual void filterManagerNeedsRebuild(MappingFilter* afterThisFilter) {}
+		virtual void filterManagerNeedsProcess() {}
+	};
+
+	ListenerList<FilterManagerListener> filterManagerListeners;
+	void addFilterManagerListener(FilterManagerListener* newListener) { filterManagerListeners.add(newListener); }
+	void removeFilterManagerListener(FilterManagerListener* listener) { filterManagerListeners.remove(listener); }
+
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MappingFilterManager)
 

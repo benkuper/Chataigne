@@ -16,7 +16,7 @@ MappingFilter::MappingFilter(const String& name, var params) :
 	filterParams("filterParams"),
 	needsContinuousProcess(false),
 	autoSetRange(true),
-	mappingFilterAsyncNotifier(10)
+	filterAsyncNotifier(10)
 {
 	isSelectable = false;
 
@@ -67,8 +67,7 @@ bool MappingFilter::setupSources(Array<Parameter *> sources)
 		filteredParameter->addParameterListener(this);
 	}
 
-	mappingFilterListeners.call(&FilterListener::filteredParamChanged, this);
-	mappingFilterAsyncNotifier.addMessage(new FilterEvent(FilterEvent::FILTER_PARAM_CHANGED, this));
+	return true;
 }
 
 bool MappingFilter::setupParametersInternal()
@@ -79,6 +78,7 @@ bool MappingFilter::setupParametersInternal()
 		filteredParameters.add(p);
 	}
 
+	filterAsyncNotifier.addMessage(new FilterEvent(FilterEvent::FILTER_REBUILT, this));
 	return true;
 }
 
@@ -92,22 +92,13 @@ void MappingFilter::onControllableFeedbackUpdateInternal(ControllableContainer* 
 	if (cc == &filterParams)
 	{
 		filterParamChanged((Parameter*)p);
-		mappingFilterAsyncNotifier.addMessage(new FilterEvent(FilterEvent::FILTER_PARAM_CHANGED, this));
-	}
-}
-
-void MappingFilter::onContainerParameterChangedInternal(Parameter* p)
-{
-	if (p == enabled)
-	{
-		mappingFilterAsyncNotifier.addMessage(new FilterEvent(FilterEvent::FILTER_STATE_CHANGED, this));
+		mappingFilterListeners.call(&FilterListener::filterNeedsProcess, this);
 	}
 }
 
 bool MappingFilter::process()
 {
 	if (!enabled->boolValue() || isClearing) return false; //default or disabled does nothing
-
 	return processInternal();  //avoid cross-thread crash
 }
 
@@ -115,23 +106,17 @@ bool MappingFilter::processInternal()
 {
 	for (int i = 0; i < sourceParams.size(); i++)
 	{
-		bool result = processSingleParameterInternal(i);
-		if (!result) return false;
-	}
+		if (!filterTypeFilters.isEmpty() && !filterTypeFilters.contains(sourceParams[i]->type)) continue;
 
+		if (autoSetRange && (  filteredParameters[i]->minimumValue != sourceParams[i]->minimumValue 
+							|| filteredParameters[i]->maximumValue != sourceParams[i]->maximumValue)) 
+			filteredParameters[i]->setRange(sourceParams[i]->minimumValue, sourceParams[i]->maximumValue);
+
+		processSingleParameterInternal(sourceParams[i], filteredParameters[i]);
+	}
 	return true;
 }
 
-bool MappingFilter::processSingleParameterInternal(int index)
-{
-	if (autoSetRange && (filteredParameters[index]->minimumValue != sourceParams[index]->minimumValue 
-						|| filteredParameters[index]->maximumValue != sourceParams[index]->maximumValue))
-	{
-		filteredParameters[index]->setRange(sourceParams[index]->minimumValue, sourceParams[index]->maximumValue);
-	}
-
-	return true;
-}
 
 void MappingFilter::clearItem()
 {

@@ -20,7 +20,7 @@ public:
 	MappingOutputManager();
 	~MappingOutputManager();
 
-	Array<Parameter *> outParams;
+	Array<WeakReference<Parameter>> outParams;
 
 	void setOutParams(Array<Parameter *> params);
 

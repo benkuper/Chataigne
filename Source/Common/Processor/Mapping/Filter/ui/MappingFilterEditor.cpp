@@ -51,20 +51,10 @@ void MappingFilterEditor::updateFilteredUI()
 	resized();
 }
 
-void MappingFilterEditor::newMessage(const MappingFilter::FilterEvent & e)
+void MappingFilterEditor::newMessage(const MappingFilter::FilterEvent& e)
 {
-	switch (e.type)
+	if (e.type == MappingFilter::FilterEvent::FILTER_REBUILT)
 	{
-	case MappingFilter::FilterEvent::FILTER_PARAM_CHANGED:
-		filteredParamChangedAsync(e.filter);
-		break;
-            
-        default:
-            break;
+		updateFilteredUI();
 	}
-}
-
-void MappingFilterEditor::filteredParamChangedAsync(MappingFilter *)
-{
-	updateFilteredUI();
 }

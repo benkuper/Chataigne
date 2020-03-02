@@ -23,6 +23,8 @@ public:
 	Array<Parameter *> sourceParams;
 	ControllableContainer filterParams;
 	
+	Array<Controllable::Type> filterTypeFilters; //if not empty, this will filter out the parameters passed to the processSingleParameterInternal function
+
 	OwnedArray<Parameter> filteredParameters; //not in hierarchy
 
 	bool needsContinuousProcess;
@@ -34,15 +36,10 @@ public:
 
 	bool process();
 	virtual bool processInternal();
-	virtual bool processSingleParameterInternal(int index);
+	virtual void processSingleParameterInternal(Parameter* source, Parameter* out) {}
 
-
-
-	void onControllableFeedbackUpdateInternal(ControllableContainer *, Controllable * p) override;
-	void onContainerParameterChangedInternal(Parameter *p) override;
+	virtual void onControllableFeedbackUpdateInternal(ControllableContainer *, Controllable * p) override;
 	virtual void filterParamChanged(Parameter * ) {};
-
-
 
 	virtual void clearItem() override;
 
@@ -58,7 +55,8 @@ public:
 	public:
 		/** Destructor. */
 		virtual ~FilterListener() {}
-		virtual void filteredParamChanged(MappingFilter *) {};
+		virtual void filterStateChanged(MappingFilter*) {}
+		virtual void filterNeedsProcess(MappingFilter *) {};
 		virtual void filteredParamRangeChanged(MappingFilter *) {}
 	};
 
@@ -68,18 +66,18 @@ public:
 
 	class FilterEvent {
 	public:
-		enum Type { FILTER_PARAM_CHANGED, FILTER_STATE_CHANGED };
-		FilterEvent(Type type, MappingFilter * i) : type(type), filter(i) {}
+		enum Type { FILTER_REBUILT };
+		FilterEvent(Type type, MappingFilter* f) : type(type), filter(f) {}
 		Type type;
 		MappingFilter * filter;
 	};
-	QueuedNotifier<FilterEvent> mappingFilterAsyncNotifier;
-	typedef QueuedNotifier<FilterEvent>::Listener AsyncListener;
 
+	QueuedNotifier<FilterEvent> filterAsyncNotifier;
+	typedef QueuedNotifier<FilterEvent>::Listener AsyncFilterListener;
 
-	void addAsyncFilterListener(AsyncListener* newListener) { mappingFilterAsyncNotifier.addListener(newListener); }
-	void addAsyncCoalescedFilterListener(AsyncListener* newListener) { mappingFilterAsyncNotifier.addAsyncCoalescedListener(newListener); }
-	void removeAsyncFilterListener(AsyncListener* listener) { mappingFilterAsyncNotifier.removeListener(listener); }
+	void addAsyncFilterListener(AsyncFilterListener* newListener) { filterAsyncNotifier.addListener(newListener); }
+	void addAsyncCoalescedFilterListener(AsyncFilterListener* newListener) { filterAsyncNotifier.addAsyncCoalescedListener(newListener); }
+	void removeAsyncFilterListener(AsyncFilterListener* listener) { filterAsyncNotifier.removeListener(listener); }
 
 
 	virtual String getTypeString() const override { jassert(false); return "[ERROR]"; }

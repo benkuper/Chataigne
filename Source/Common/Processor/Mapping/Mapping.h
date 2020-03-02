@@ -17,12 +17,10 @@
 
 class Mapping :
 	public Processor,
-	public MappingInputManager::ManagerListener,
 	public MappingInput::Listener,
-	public Timer,
-	public MappingFilterManager::BaseManager::AsyncListener,
-	public MappingFilter::FilterListener,
-	public MappingFilter::AsyncListener
+	public MappingInputManager::ManagerListener,
+	public MappingFilterManager::FilterManagerListener,
+	public Timer
 {
 public:
 	Mapping(bool canBeDisabled = true);
@@ -33,11 +31,13 @@ public:
 	MappingOutputManager om;
 
 	BoolParameter* continuousProcess;
-
 	ControllableContainer outCC;
 
 	enum ProcessMode { VALUE_CHANGE, MANUAL, TIMER };
 	ProcessMode processMode;
+
+	SpinLock mappingLock;
+	bool isRebuilding;
 
 	void setProcessMode(ProcessMode mode);
 
@@ -45,7 +45,7 @@ public:
 	void lockInputTo(Array<Parameter*> lockParam);
 	void checkFiltersNeedContinuousProcess();
 
-	void updateMappingChain(); //will host warnings and type change checks
+	void updateMappingChain(MappingFilter * afterThisFilter = nullptr); //will host warnings and type change checks
 
 	void process(bool forceOutput = false);
 
@@ -55,7 +55,7 @@ public:
 
 	void itemAdded(MappingInput*) override;
 	void itemRemoved(MappingInput*) override;
-	void itemsReordered() override;
+	void itemsReordered() override; //MappingInput
 
 	void inputReferenceChanged(MappingInput*) override;
 	void inputParameterValueChanged(MappingInput*) override;
@@ -63,16 +63,11 @@ public:
 
 	void onContainerParameterChangedInternal(Parameter*) override;
 
-	void newMessage(const MappingFilterManager::ManagerEvent& e) override;
-
-	void filteredParamRangeChanged(MappingFilter* mf) override;
-
-	void newMessage(const MappingFilter::FilterEvent& e) override;
+	void filterManagerNeedsRebuild(MappingFilter* afterThisFilter) override;
+	void filterManagerNeedsProcess() override;
 
 	virtual void clearItem() override;
-
 	virtual void timerCallback() override;
-
 	virtual void highlightLinkedInspectables(bool value) override;
 
 	ProcessorUI* getUI() override;

@@ -16,7 +16,8 @@ Mapping::Mapping(bool canBeDisabled) :
 	processMode(VALUE_CHANGE),
 	inputIsLocked(false),
 	mappingAsyncNotifier(10),
-	outCC("Out values")
+	outCC("Out values"),
+	isRebuilding(false)
 {
 	itemDataType = "Mapping";
 	type = MAPPING;
@@ -29,7 +30,7 @@ Mapping::Mapping(bool canBeDisabled) :
 	addChildControllableContainer(&om);
 	addChildControllableContainer(&outCC);
 
-	fm.addAsyncManagerListener(this);
+	fm.addFilterManagerListener(this);
 	im.addBaseManagerListener(this);
 
 	helpID = "Mapping";
@@ -86,19 +87,30 @@ void Mapping::checkFiltersNeedContinuousProcess()
 	continuousProcess->setValue(need);
 }
 
-void Mapping::updateMappingChain()
+void Mapping::updateMappingChain(MappingFilter * afterThisFilter)
 {
 	if (isCurrentlyLoadingData || isClearing) return;
-
-	fm.setupSources(im.getInputReferences());
-
-	Array<Parameter *> processedParams = fm.getLastFilteredParameters();
-	om.setOutParams(processedParams);
-
-	mappingAsyncNotifier.addMessage(new MappingEvent(MappingEvent::OUTPUT_TYPE_CHANGED, this));
+	if (isRebuilding) return;
 
 	stopTimer();
-	checkFiltersNeedContinuousProcess();
+	{
+		//enter in scope for lock
+		GenericScopedLock lock(mappingLock);
+		isRebuilding = true;
+
+		if(afterThisFilter == nullptr) fm.setupSources(im.getInputReferences()); //do the whole rebuild
+		else fm.rebuildFilterChain(afterThisFilter); //only ask to rebuild after the changed filter
+
+		Array<Parameter*> processedParams = fm.getLastFilteredParameters();
+		om.setOutParams(processedParams);
+
+		mappingAsyncNotifier.addMessage(new MappingEvent(MappingEvent::OUTPUT_TYPE_CHANGED, this));
+
+		checkFiltersNeedContinuousProcess();
+
+		isRebuilding = false;
+	}
+
 
 	process();
 }
@@ -109,8 +121,14 @@ void Mapping::process(bool forceOutput)
 	if (im.items.size() == 0) return;
 	if (isCurrentlyLoadingData) return;
 
+	DBG("[PROCESS] Enter lock");
+	GenericScopedLock lock(mappingLock);
+
 	Array<Parameter *> filteredParams = fm.processFilters();
 	om.updateOutputValues();
+
+	DBG("[PROCESS] Exit lock");
+
 }
 
 var Mapping::getJSONData()
@@ -184,35 +202,22 @@ void Mapping::onContainerParameterChangedInternal(Parameter * p)
 	}
 }
 
-void Mapping::newMessage(const MappingFilterManager::ManagerEvent & e)
+void Mapping::filterManagerNeedsRebuild(MappingFilter* afterThisFilter)
 {
-	if (e.type == MappingFilterManager::ManagerEvent::ITEM_ADDED)
-	{
-		e.getItem()->addMappingFilterListener(this);
-		e.getItem()->addAsyncFilterListener(this);
-	}
-
-	if(!isCurrentlyLoadingData) updateMappingChain();
+	updateMappingChain(afterThisFilter);
 }
 
-void Mapping::filteredParamRangeChanged(MappingFilter * mf)
+void Mapping::filterManagerNeedsProcess()
 {
-	updateMappingChain();
+	process();
 }
 
-void Mapping::newMessage(const MappingFilter::FilterEvent & e)
-{
-	if (e.type == MappingFilter::FilterEvent::FILTER_PARAM_CHANGED)
-	{
-		process();
-	}
-}
 
 void Mapping::clearItem()
 {
 	BaseItem::clearItem();
 
-	fm.removeAsyncManagerListener(this);
+	fm.removeFilterManagerListener(this);
 	im.removeBaseManagerListener(this); 
 	im.clear();
 }

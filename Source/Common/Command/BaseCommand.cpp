@@ -40,8 +40,6 @@ void BaseCommand::addTargetMappingParameterAt(WeakReference<Parameter> p, int in
 
 	if (index < 0) return;
 
-	LOG("Add target parameter at : " << index << " : " << p->niceName << " / " << p->parentContainer->niceName);
-
 	if (parameterToIndexMap.contains(p)) targetMappingParameters[parameterToIndexMap[p]]->removeAllInstancesOf(p);
 
 	if (!targetMappingParameters.contains(index))
@@ -56,26 +54,6 @@ void BaseCommand::addTargetMappingParameterAt(WeakReference<Parameter> p, int in
 	
 	p->setControllableFeedbackOnly(true); 
 	commandListeners.call(&CommandListener::commandContentChanged);
-
-
-	/*
-	if (index >= targetMappingParameters.size()) targetMappingParameters.resize(index + 1);
-	WeakReference<Parameter> oldP = targetMappingParameters[index];
-
-	if (oldP != nullptr && !oldP.wasObjectDeleted())
-	{
-		oldP->setControllableFeedbackOnly(false);
-	}
-
-	if (p.wasObjectDeleted()) targetMappingParameters.set(index, nullptr);
-	else targetMappingParameters.set(index, p);
-
-	if (p != nullptr && !p.wasObjectDeleted())
-	{
-		p->setControllableFeedbackOnly(true);
-		commandListeners.call(&CommandListener::commandContentChanged);
-	}
-	*/
 }
 
 void BaseCommand::removeTargetMappingParameter(WeakReference<Parameter> p)
@@ -394,7 +372,6 @@ void BaseCommand::loadJSONDataInternal(var data)
 			}
 		}
 	}
-
 }
 
 void BaseCommand::afterLoadJSONDataInternal()

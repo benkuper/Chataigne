@@ -14,7 +14,7 @@
 
 class MappingFilterEditor :
 	public BaseItemEditor,
-	public MappingFilter::AsyncListener
+	public MappingFilter::AsyncFilterListener
 {
 public:
 	MappingFilterEditor(MappingFilter* m, bool isRoot);
@@ -26,8 +26,6 @@ public:
 	void resizedInternalHeaderItemInternal(Rectangle<int>& r) override;
 
 	void updateFilteredUI();
-	virtual void filteredParamChangedAsync(MappingFilter*);
 
-protected:
-	void newMessage(const MappingFilter::FilterEvent& e) override;
+	virtual void newMessage(const MappingFilter::FilterEvent& e) override;
 };
