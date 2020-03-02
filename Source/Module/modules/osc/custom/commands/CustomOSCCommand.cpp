@@ -19,9 +19,7 @@ CustomOSCCommand::CustomOSCCommand(OSCModule * module, CommandContext context, v
 
 	removeChildControllableContainer(&argumentsContainer);
 	
-	customValuesManager.reset(new CustomValuesCommandArgumentManager(context == MAPPING));
-	addChildControllableContainer(customValuesManager.get());
-	customValuesManager->addArgumentManagerListener(this);
+	setUseCustomValues(true);
 }
 
 CustomOSCCommand::~CustomOSCCommand()
@@ -83,24 +81,6 @@ void CustomOSCCommand::triggerInternal()
 	{
 		NLOG("OSC", "Address is invalid :\n" << address->stringValue());
 		return;
-	}
-}
-
-void CustomOSCCommand::useForMappingChanged(CustomValuesCommandArgument *)
-{
-	if (context != MAPPING) return;
-
-	clearTargetMappingParameters();
-	int index = 0;
-    if(customValuesManager == nullptr) return;
-    
-	for (auto &a : customValuesManager->items)
-	{
-		if (a->useForMapping->boolValue())
-		{
-			addTargetMappingParameterAt(a->param, index);
-			index++;
-		}
 	}
 }
 

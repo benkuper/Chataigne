@@ -11,7 +11,7 @@
 #pragma once
 
 #include "../../MappingFilter.h"
-
+/*
 class ColorShiftFilter :
 	public MappingFilter
 {
@@ -24,7 +24,7 @@ public:
 	EnumParameter * mode;
 	FloatParameter * offset;
 
-	void processInternal() override;
+	bool processSingleParameterInternal(int index) override;
 
 	static ColorShiftFilter * create(var params) { return new ColorShiftFilter(params); }
 	virtual String getTypeString() const override { return "Color Shift"; }
@@ -32,3 +32,4 @@ public:
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ColorShiftFilter)
 };
 
+*/

@@ -34,9 +34,9 @@ MappingLayerPanel::MappingLayerPanel(MappingLayer * layer) :
 
 	mappingLayer->mapping->addAsyncMappingListener(this);
 
-	if (mappingLayer->mapping->outputParams.size() > 0 && mappingLayer->mapping->outputParams[0] != nullptr)
+	if (mappingLayer->mapping->om.outParams.size() > 0 && mappingLayer->mapping->om.outParams[0] != nullptr)
 	{
-		mappingOutputUI.reset(dynamic_cast<ParameterUI*>(mappingLayer->mapping->outputParams[0]->createDefaultUI()));
+		mappingOutputUI.reset(dynamic_cast<ParameterUI*>(mappingLayer->mapping->om.outParams[0]->createDefaultUI()));
 		if (mappingOutputUI != nullptr) addAndMakeVisible(mappingOutputUI.get());
 	}
 	
@@ -113,9 +113,9 @@ void MappingLayerPanel::newMessage(const Mapping::MappingEvent & e)
 		if (mappingOutputUI != nullptr)
 		{
 			removeChildComponent(mappingOutputUI.get());
-			if (mappingLayer->mapping->outputParams.size() > 0 && mappingLayer->mapping->outputParams[0] != nullptr)
+			if (mappingLayer->mapping->om.outParams.size() > 0 && mappingLayer->mapping->om.outParams[0] != nullptr)
 			{
-				mappingOutputUI.reset(dynamic_cast<ParameterUI*>(mappingLayer->mapping->outputParams[0]->createDefaultUI()));
+				mappingOutputUI.reset(dynamic_cast<ParameterUI*>(mappingLayer->mapping->om.outParams[0]->createDefaultUI()));
 			}
 
 			if (mappingOutputUI != nullptr) addAndMakeVisible(mappingOutputUI.get());

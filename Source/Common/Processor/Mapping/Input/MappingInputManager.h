@@ -20,5 +20,5 @@ public:
 
 	void lockInput(Array<Parameter*> input);
 
-	Array<WeakReference<Parameter>> getInputReferences();
+	Array<Parameter *> getInputReferences();
 };

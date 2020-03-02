@@ -20,12 +20,13 @@ public:
 	MappingFilterManager();
 	~MappingFilterManager();
 
-	Array<WeakReference<Parameter>> inputSourceParams;
-	void setupSources(Array<WeakReference<Parameter>> sources);
-	void rebuildFilterChain();
+	Array<Parameter *> inputSourceParams;
+	bool setupSources(Array<Parameter *> sources);
+	bool rebuildFilterChain();
 	WeakReference<MappingFilter> getLastEnabledFilter() { return lastEnabledFilter; }
+	Array<Parameter *> getLastFilteredParameters();
 
-	Array<WeakReference<Parameter>> processFilters();
+	Array<Parameter *> processFilters();
 	Factory<MappingFilter> factory;
 
 	void addItemInternal(MappingFilter * m, var data) override;

@@ -13,7 +13,7 @@
 
 OSCQueryModuleOutputEditor::OSCQueryModuleOutputEditor(OSCQueryOutput * output, bool isRoot) :
 	EnablingControllableContainerEditor(output, isRoot),
-	zeroconfMenu("Auto set...")
+	zeroconfMenu("Auto detect")
 {
 	addAndMakeVisible(&zeroconfMenu);
 	zeroconfMenu.addListener(this);

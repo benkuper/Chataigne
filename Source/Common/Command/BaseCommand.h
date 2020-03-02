@@ -19,7 +19,9 @@ class Module;
 class BaseCommand :
 	public ControllableContainer,
 	public Inspectable::InspectableListener,
-	public CommandTemplate::TemplateListener
+	public CommandTemplate::TemplateListener,
+	public CustomValuesCommandArgumentManager::ArgumentManagerListener,
+	public CustomValuesCommandArgumentManager::ManagerListener
 {
 public:
 	BaseCommand(Module * module, CommandContext context, var params);
@@ -42,6 +44,7 @@ public:
 	HashMap<int, Array<WeakReference<Parameter>> *> targetMappingParameters;
 	HashMap<Parameter *, int> parameterToIndexMap;
 
+
 	void addTargetMappingParameterAt(WeakReference<Parameter> p,int index);
 	void removeTargetMappingParameter(WeakReference<Parameter> p);
 	void clearTargetMappingParametersAt(int index);
@@ -51,6 +54,10 @@ public:
 	void updateParametersFromTemplate();
 	void updateParameterFromTemplate(CommandTemplateParameter * ctp);
 	virtual void setupTemplateParameters(CommandTemplate * ct);
+
+	void setUseCustomValues(bool value);
+	virtual void useForMappingChanged(CustomValuesCommandArgument*);
+	virtual void itemsReordered() override;
 
 	void templateParameterChanged(CommandTemplateParameter * ctp) override;
 	
@@ -67,9 +74,9 @@ public:
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
+	void  afterLoadJSONDataInternal() override;
 
 	static BaseCommand * create(ControllableContainer * module, CommandContext context, var params);
-
 
 	class CommandListener
 	{

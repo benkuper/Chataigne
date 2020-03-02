@@ -31,9 +31,9 @@ void MappingInputManager::lockInput(Array<Parameter*> input)
 	}
 }
 
-Array<WeakReference<Parameter>>MappingInputManager::getInputReferences()
+Array<Parameter *> MappingInputManager::getInputReferences()
 {
-	Array<WeakReference<Parameter>> result;
+	Array<Parameter *> result;
 	for (auto& i : items)
 	{
 		if (i == nullptr || i->inputReference == nullptr) continue;

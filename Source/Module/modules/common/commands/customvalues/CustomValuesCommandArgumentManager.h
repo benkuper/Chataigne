@@ -39,14 +39,14 @@ public:
 	CustomValuesCommandArgument * addItemFromData(var data, bool fromUndoableAction = false) override;
 
 	void autoRenameItems();
+	
 	void removeItemInternal(CustomValuesCommandArgument * i) override;
 
-
-	void useForMappingChanged(CustomValuesCommandArgument * i) override;
+	void useForMappingChanged(CustomValuesCommandArgument * i = nullptr) override;
 
 	void itemAdded(CustomValuesCommandArgument * i) override; //FROM TEMPLATE
 	void itemRemoved(CustomValuesCommandArgument * i) override; //FROM TEMPLATE
-
+	void itemsReordered() override;
 	void loadJSONDataInternal(var data) override;
 
 	InspectableEditor * getEditor(bool isRoot) override;

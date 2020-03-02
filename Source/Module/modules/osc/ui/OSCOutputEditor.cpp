@@ -13,7 +13,7 @@
 
 OSCOutputEditor::OSCOutputEditor(OSCOutput * output, bool isRoot) :
 	BaseItemEditor(output, isRoot),
-	zeroconfMenu("Auto set...")
+	zeroconfMenu("Auto detect")
 {
 	addAndMakeVisible(&zeroconfMenu);
 	zeroconfMenu.addListener(this);

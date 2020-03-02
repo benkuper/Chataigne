@@ -186,6 +186,11 @@ void CustomValuesCommandArgumentManager::itemRemoved(CustomValuesCommandArgument
 	}
 }
 
+void CustomValuesCommandArgumentManager::itemsReordered()
+{
+	useForMappingChanged();
+}
+
 void CustomValuesCommandArgumentManager::loadJSONDataInternal(var data)
 {
 	DBG("Load data, isVoid ? " << (int)data.isVoid() << " / " << JSON::toString(data));

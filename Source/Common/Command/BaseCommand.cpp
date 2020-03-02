@@ -40,6 +40,8 @@ void BaseCommand::addTargetMappingParameterAt(WeakReference<Parameter> p, int in
 
 	if (index < 0) return;
 
+	LOG("Add target parameter at : " << index << " : " << p->niceName << " / " << p->parentContainer->niceName);
+
 	if (parameterToIndexMap.contains(p)) targetMappingParameters[parameterToIndexMap[p]]->removeAllInstancesOf(p);
 
 	if (!targetMappingParameters.contains(index))
@@ -54,6 +56,7 @@ void BaseCommand::addTargetMappingParameterAt(WeakReference<Parameter> p, int in
 	
 	p->setControllableFeedbackOnly(true); 
 	commandListeners.call(&CommandListener::commandContentChanged);
+
 
 	/*
 	if (index >= targetMappingParameters.size()) targetMappingParameters.resize(index + 1);
@@ -200,6 +203,53 @@ void BaseCommand::setupTemplateParameters(CommandTemplate * ct)
 	}
 }
 
+void BaseCommand::setUseCustomValues(bool value)
+{
+	if (value)
+	{
+		if(customValuesManager == nullptr)
+		{
+			customValuesManager.reset(new CustomValuesCommandArgumentManager(true, false));
+			addChildControllableContainer(customValuesManager.get());
+			customValuesManager->addArgumentManagerListener(this);
+			customValuesManager->addBaseManagerListener(this);
+		}
+	}
+	else
+	{
+		if (customValuesManager != nullptr)
+		{
+			customValuesManager->removeArgumentManagerListener(this);
+			customValuesManager->removeBaseManagerListener(this);
+			removeChildControllableContainer(customValuesManager.get());
+			customValuesManager.reset();
+		}
+	}
+}
+
+void BaseCommand::useForMappingChanged(CustomValuesCommandArgument*)
+{
+	if (context != CommandContext::MAPPING) return;
+	if (customValuesManager == nullptr) return;
+	if (isCurrentlyLoadingData) return;
+
+	clearTargetMappingParameters();
+	int index = 0;
+	for (auto& item : customValuesManager->items)
+	{
+		if (item->useForMapping != nullptr && item->useForMapping->boolValue())
+		{
+			addTargetMappingParameterAt(item->param, index);
+			index += item->param->isComplex() ? item->param->value.size() : 1;
+		}
+	}
+}
+
+void BaseCommand::itemsReordered()
+{
+	useForMappingChanged(nullptr);
+}
+
 void BaseCommand::templateParameterChanged(CommandTemplateParameter * ctp)
 {
 	updateParameterFromTemplate(ctp);
@@ -249,8 +299,10 @@ void BaseCommand::setValue(var value)
 	} else
 	{
 		int maxSize = value.size();
-		for (int i = 0; i < maxSize; i++)
+		for (int i = 0; i < maxSize; )
 		{
+			int numValToIncrement = 1;
+
 			if (targetMappingParameters.contains(i) && targetMappingParameters[i] != nullptr)
 			{
 				Array<WeakReference<Parameter>> pList = *targetMappingParameters[i];
@@ -274,7 +326,7 @@ void BaseCommand::setValue(var value)
 							}
 						}
 						p->setValue(newVal);
-						i += newVal.size();
+						numValToIncrement = jmax(numValToIncrement, newVal.size());
 					}
 					else
 					{
@@ -282,6 +334,8 @@ void BaseCommand::setValue(var value)
 					}
 				}
 			}
+
+			i += numValToIncrement;
 		}
 	}
 
@@ -340,6 +394,12 @@ void BaseCommand::loadJSONDataInternal(var data)
 			}
 		}
 	}
+
+}
+
+void BaseCommand::afterLoadJSONDataInternal()
+{
+	useForMappingChanged(nullptr); //force rebuild targetMappings
 }
 
 BaseCommand * BaseCommand::create(ControllableContainer * module, CommandContext context, var params)

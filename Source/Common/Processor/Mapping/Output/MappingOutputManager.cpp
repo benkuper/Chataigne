@@ -24,22 +24,14 @@ MappingOutputManager::~MappingOutputManager()
 }
 
 
-void MappingOutputManager::setOutParams(Array<WeakReference<Parameter>> params)
+void MappingOutputManager::setOutParams(Array<Parameter *> params)
 {
-	if (checkParamsAreTheSame(params)) return;
-
 	outParams = params;
 	if(outParams.size() > 0) for (auto &o : items) o->setOutputType(outParams[0]->type); //better than this ? should handle all ?
 
 	omAsyncNotifier.addMessage(new OutputManagerEvent(OutputManagerEvent::OUTPUT_CHANGED));
 }
 
-bool MappingOutputManager::checkParamsAreTheSame(Array<WeakReference<Parameter>> params)
-{
-	if (params.size() != outParams.size()) return false;
-	for (int i = 0; i < outParams.size(); i++) if (outParams[i].get() != params[i].get()) return false;
-	return true;
-}
 
 void MappingOutputManager::updateOutputValues()
 {
@@ -59,7 +51,6 @@ var MappingOutputManager::getMergedOutValue()
 	var value;
 	for (auto& o : outParams)
 	{
-		if (o.wasObjectDeleted()) continue;
 		var val = o->getValue();
 		if (!val.isArray()) value.append(val);
 		else

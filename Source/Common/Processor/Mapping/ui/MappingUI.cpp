@@ -48,16 +48,16 @@ void MappingUI::paint(Graphics & g)
 
 void MappingUI::updateOutputParamUI()
 {
-	if(outputParamUI != nullptr && mapping->outputParams.size() > 0 && outputParamUI->controllable == mapping->outputParams[0]) return;
+	if(outputParamUI != nullptr && mapping->om.outParams.size() > 0 && outputParamUI->controllable == mapping->om.outParams[0]) return;
 
 	if (outputParamUI != nullptr)
 	{
 		removeChildComponent(outputParamUI.get());
 	}
 
-	if (mapping->outputParams.size() > 0 && mapping->outputParams[0] != nullptr)
+	if (mapping->om.outParams.size() > 0 && mapping->om.outParams[0] != nullptr)
 	{
-		outputParamUI.reset(mapping->outputParams[0]->createDefaultUI());
+		outputParamUI.reset(mapping->om.outParams[0]->createDefaultUI());
 		outputParamUI->showLabel = false;
 		addAndMakeVisible(outputParamUI.get());
 	}

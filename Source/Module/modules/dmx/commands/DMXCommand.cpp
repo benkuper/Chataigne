@@ -65,10 +65,8 @@ DMXCommand::DMXCommand(DMXModule* _module, CommandContext context, var params) :
 	case SET_CUSTOM:
 	{
 		channel = addIntParameter("Start Channel", "First DMX Channel", 1, 1, 512);
-		customValuesManager.reset(new CustomValuesCommandArgumentManager(context == MAPPING));
-		customValuesManager->allowedTypes.add(Controllable::INT); 
-		addChildControllableContainer(customValuesManager.get());
-		customValuesManager->addArgumentManagerListener(this);
+		setUseCustomValues(true);
+		customValuesManager->allowedTypes.add(Controllable::INT);
 		customValuesManager->addBaseManagerListener(this);
 	}
 	break;
@@ -194,23 +192,6 @@ void DMXCommand::loadJSONDataInternal(var data)
 {
 	BaseCommand::loadJSONDataInternal(data);
 	if(customValuesManager != nullptr) customValuesManager->loadJSONData(data.getProperty("customValues", var()), true);
-}
-
-void DMXCommand::useForMappingChanged(CustomValuesCommandArgument*)
-{
-	if (context != CommandContext::MAPPING) return;
-	if (customValuesManager == nullptr) return;
-
-	clearTargetMappingParameters();
-	int index = 0;
-	for (auto& item : customValuesManager->items)
-	{
-		if (item->useForMapping != nullptr && item->useForMapping->boolValue())
-		{
-			addTargetMappingParameterAt(item->param, index);
-			index++;
-		}
-	}
 }
 
 void DMXCommand::itemAdded(CustomValuesCommandArgument* a)

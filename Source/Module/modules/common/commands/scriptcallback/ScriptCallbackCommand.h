@@ -12,8 +12,7 @@
 #include "Module/Module.h"
 
 class ScriptCallbackCommand :
-	public BaseCommand,
-	public CustomValuesCommandArgumentManager::ArgumentManagerListener
+	public BaseCommand
 {
 public:
 	ScriptCallbackCommand(Module * module, CommandContext context, var params);
@@ -21,13 +20,10 @@ public:
 
 	EnumParameter* moduleMethods;
 
-	void useForMappingChanged(CustomValuesCommandArgument* a) override;
-	
 	void triggerInternal() override;
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
-
 
 
 	static ScriptCallbackCommand* create(ControllableContainer* c, CommandContext context, var params) { return new ScriptCallbackCommand((Module *)c, context, params); }

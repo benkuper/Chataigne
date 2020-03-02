@@ -58,37 +58,47 @@ MappingFilterManager::~MappingFilterManager()
 {
 }
 
-void MappingFilterManager::setupSources(Array<WeakReference<Parameter>> sources)
+bool MappingFilterManager::setupSources(Array<Parameter *> sources)
 {
+	if (isCurrentlyLoadingData) return false;
 	inputSourceParams = sources;
-	if(!isCurrentlyLoadingData) rebuildFilterChain();
+	return rebuildFilterChain();
 }
 
 
-Array<WeakReference<Parameter>> MappingFilterManager::processFilters()
+Array<Parameter *> MappingFilterManager::processFilters()
 {
-	Array<WeakReference<Parameter>> fp = inputSourceParams;
+	Array<Parameter *> fp = inputSourceParams;
 	for (auto &f : items)
 	{
-		fp = f->process(fp);
+		if (f->process()) fp = Array<Parameter *>(f->filteredParameters.getRawDataPointer(), f->filteredParameters
+			.size());
 	}
 	
 	return fp;
 }
 
-void MappingFilterManager::rebuildFilterChain()
+bool MappingFilterManager::rebuildFilterChain()
 {
-	Array<WeakReference<Parameter>> fp = inputSourceParams;
+	Array<Parameter *> fp = inputSourceParams;
 	lastEnabledFilter = nullptr;
 	for (auto &f : items)
 	{
 		if (f->enabled->boolValue())
 		{
-			f->setupSources(fp);
-			fp = f->filteredParameters;
+			if (!f->setupSources(fp)) return false;
+			fp = Array<Parameter *>(f->filteredParameters.getRawDataPointer(), f->filteredParameters.size());
 			lastEnabledFilter = f;
 		}
 	}
+
+	return true;
+}
+
+Array<Parameter *> MappingFilterManager::getLastFilteredParameters()
+{
+	if (lastEnabledFilter != nullptr) return Array<Parameter *>(lastEnabledFilter->filteredParameters.getRawDataPointer(), lastEnabledFilter->filteredParameters.size());
+	else return inputSourceParams;
 }
 
 void MappingFilterManager::addItemInternal(MappingFilter *f , var)

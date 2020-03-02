@@ -27,7 +27,7 @@ ScriptFilter::~ScriptFilter()
 {
 }
 
-void ScriptFilter::processInternal()
+bool ScriptFilter::processInternal()
 {
 	Array<var> args;
 	var values;
@@ -44,13 +44,16 @@ void ScriptFilter::processInternal()
 	args.add(maxs);
 	
 
-	if (script.scriptEngine == nullptr) return;
+	if (script.scriptEngine == nullptr) return false;
 	var result = script.callFunction("filter", args);
+
 	if (filteredParameters.size() == 1 && !result.isArray()) filteredParameters[0]->setValue(result);
 	else if(result.isArray())
 	{
 		for (int i = 0; i < filteredParameters.size() && i < result.size();i++) filteredParameters[i]->setValue(result);
 	}
+
+	return true;
 }
 
 var ScriptFilter::getJSONData()

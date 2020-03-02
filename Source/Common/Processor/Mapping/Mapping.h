@@ -34,7 +34,7 @@ public:
 
 	BoolParameter* continuousProcess;
 
-	Array<WeakReference<Parameter>> outputParams;
+	ControllableContainer outCC;
 
 	enum ProcessMode { VALUE_CHANGE, MANUAL, TIMER };
 	ProcessMode processMode;
@@ -55,6 +55,7 @@ public:
 
 	void itemAdded(MappingInput*) override;
 	void itemRemoved(MappingInput*) override;
+	void itemsReordered() override;
 
 	void inputReferenceChanged(MappingInput*) override;
 	void inputParameterValueChanged(MappingInput*) override;

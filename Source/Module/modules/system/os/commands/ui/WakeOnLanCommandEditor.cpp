@@ -13,7 +13,7 @@
 
 WakeOnLanCommandEditor::WakeOnLanCommandEditor(WakeOnLanCommand * wolCommand, bool isRoot) :
 	GenericControllableContainerEditor(wolCommand, isRoot),
-	zeroconfMenu("Auto set..."),
+	zeroconfMenu("Auto detect"),
     wolCommand(wolCommand)
 
 {

@@ -81,3 +81,4 @@ void ColorShiftFilter::processInternal()
 	}
 }
 */
+

@@ -16,7 +16,6 @@
 
 class DMXCommand :
 	public BaseCommand,
-	public CustomValuesCommandArgumentManager::ArgumentManagerListener,
 	public CustomValuesCommandArgumentManager::ManagerListener
 {
 public:
@@ -43,7 +42,6 @@ public:
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
-	void useForMappingChanged(CustomValuesCommandArgument* a) override;
 
 	void itemAdded(CustomValuesCommandArgument* a) override;
 

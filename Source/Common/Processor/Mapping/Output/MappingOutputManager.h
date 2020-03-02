@@ -20,10 +20,9 @@ public:
 	MappingOutputManager();
 	~MappingOutputManager();
 
-	Array<WeakReference<Parameter>> outParams;
+	Array<Parameter *> outParams;
 
-	void setOutParams(Array<WeakReference<Parameter>> params);
-	bool checkParamsAreTheSame(Array<WeakReference<Parameter>> params);
+	void setOutParams(Array<Parameter *> params);
 
 	void updateOutputValues();
 	void updateOutputValue(MappingOutput * o);

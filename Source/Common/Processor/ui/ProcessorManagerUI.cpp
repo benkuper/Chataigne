@@ -157,9 +157,14 @@ void ProcessorManagerUI::itemDropped(const SourceDetails & details)
 void ProcessorManagerUI::addItemFromMenu(Processor* item, bool isFromAddButton, Point<int> mouseDownPos)
 {
 	BaseManagerUI::addItemFromMenu(item, isFromAddButton, mouseDownPos);
+
 	if (Action* a = dynamic_cast<Action*>(item))
 	{
 		a->cdm.addItem(new StandardCondition()); //add one condition by default if done through UI
+	}
+	else if (Mapping* m = dynamic_cast<Mapping*>(item))
+	{
+		m->im.addItem(); //add one input by default if done through UI
 	}
 }
 

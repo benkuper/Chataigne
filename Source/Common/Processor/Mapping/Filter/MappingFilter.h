@@ -20,26 +20,29 @@ public:
 	MappingFilter(const String &name = "MappingFilter", var params = var());
 	virtual ~MappingFilter();
 
-	Array<WeakReference<Parameter>> sourceParams;
-	Array<WeakReference<Parameter>> filteredParameters;
+	Array<Parameter *> sourceParams;
 	ControllableContainer filterParams;
 	
-	String forceOutParameterType;
+	OwnedArray<Parameter> filteredParameters; //not in hierarchy
 
 	bool needsContinuousProcess;
 	bool autoSetRange; //if true, will check at process if ranges are differents between source and filtered, and if so, will reassign
 
-	void setupSources(Array<WeakReference<Parameter>> sources);
-	virtual Array<WeakReference<Parameter>> setupParametersInternal(Array<WeakReference<Parameter>> sources);
+	bool setupSources(Array<Parameter *> sources);
+	virtual bool setupParametersInternal();
+	virtual Parameter * setupSingleParameterInternal(Parameter * source);
 
-	bool checkSourcesAreValid(Array<WeakReference<Parameter>> sources, bool checkIfDifferent);
+	bool process();
+	virtual bool processInternal();
+	virtual bool processSingleParameterInternal(int index);
+
+
 
 	void onControllableFeedbackUpdateInternal(ControllableContainer *, Controllable * p) override;
 	void onContainerParameterChangedInternal(Parameter *p) override;
 	virtual void filterParamChanged(Parameter * ) {};
 
-	Array<WeakReference<Parameter>> process(Array<WeakReference<Parameter>> sources);
-	virtual void processInternal() {}
+
 
 	virtual void clearItem() override;
 
