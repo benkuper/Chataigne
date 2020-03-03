@@ -13,8 +13,7 @@
 #include "SendStreamValuesCommand.h"
 
 class SendStreamRawDataCommand :
-	public SendStreamValuesCommand,
-	public CustomValuesCommandArgumentManager::ManagerListener
+	public SendStreamValuesCommand
 {
 public:
 	SendStreamRawDataCommand(StreamingModule * _module, CommandContext context, var params);

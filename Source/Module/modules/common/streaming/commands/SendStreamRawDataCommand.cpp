@@ -23,7 +23,7 @@ SendStreamRawDataCommand::~SendStreamRawDataCommand()
 
 void SendStreamRawDataCommand::triggerInternal()
 {
-	StreamingCommand::triggerInternal();
+	StreamingCommand::triggerInternal(); //bypass StreamValueCommands to implement our own way
 
 	Array<uint8> data;
 	for (auto &i : customValuesManager->items) data.add(i->param->intValue());
@@ -32,6 +32,7 @@ void SendStreamRawDataCommand::triggerInternal()
 
 void SendStreamRawDataCommand::itemAdded(CustomValuesCommandArgument* item)
 {
+	SendStreamValuesCommand::itemAdded(item);
 	IntParameter* p = dynamic_cast<IntParameter*>(item->param);
 	if (p != nullptr)
 	{

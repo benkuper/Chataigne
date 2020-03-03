@@ -15,8 +15,7 @@
 #include "Module/modules/common/commands/customvalues/CustomValuesCommandArgumentManager.h"
 
 class DMXCommand :
-	public BaseCommand,
-	public CustomValuesCommandArgumentManager::ManagerListener
+	public BaseCommand
 {
 public:
 	enum DMXAction { SET_VALUE, SET_RANGE, COLOR, SET_VALUE_16BIT, BLACK_OUT, SET_ALL, SET_CUSTOM };

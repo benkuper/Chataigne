@@ -196,5 +196,6 @@ void DMXCommand::loadJSONDataInternal(var data)
 
 void DMXCommand::itemAdded(CustomValuesCommandArgument* a)
 {
+	BaseCommand::itemAdded(a);
 	a->param->setRange(0, 255);
 }
