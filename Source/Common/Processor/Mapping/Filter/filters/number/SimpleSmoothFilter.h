@@ -11,7 +11,7 @@
 #pragma once
 
 #include "../../MappingFilter.h"
-/*
+
 class SimpleSmoothFilter :
 	public MappingFilter
 {
@@ -23,12 +23,10 @@ public:
 	FloatParameter * smooth;
 	FloatParameter * downSmooth;
 
-	void processInternal() override;
+	void processSingleParameterInternal(Parameter * source, Parameter * out) override;
 
 	void onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c) override;
 
 	static SimpleSmoothFilter * create(var params) { return new SimpleSmoothFilter(params); }
 	String getTypeString() const override { return "Smooth"; }
-
 };
-*/

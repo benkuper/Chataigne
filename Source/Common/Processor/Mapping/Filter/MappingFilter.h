@@ -31,13 +31,14 @@ public:
 	bool autoSetRange; //if true, will check at process if ranges are differents between source and filtered, and if so, will reassign
 
 	bool setupSources(Array<Parameter *> sources);
-	virtual bool setupParametersInternal();
+	virtual void setupParametersInternal();
 	virtual Parameter * setupSingleParameterInternal(Parameter * source);
 
 	bool process();
 	virtual bool processInternal();
 	virtual void processSingleParameterInternal(Parameter* source, Parameter* out) {}
 
+	virtual void onContainerParameterChangedInternal(Parameter* p) override;
 	virtual void onControllableFeedbackUpdateInternal(ControllableContainer *, Controllable * p) override;
 	virtual void filterParamChanged(Parameter * ) {};
 

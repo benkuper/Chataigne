@@ -10,7 +10,7 @@
 
 #include "CurveMapFilter.h"
 
-/*
+
 CurveMapFilter::CurveMapFilter(var params) :
 	MappingFilter(getTypeString(), params),
 	curve("Curve")
@@ -26,17 +26,20 @@ CurveMapFilter::CurveMapFilter(var params) :
 	curve.hideEditorHeader = true;
 	filterParams.addChildControllableContainer(&curve);
 
-	forceOutParameterType = FloatParameter::getTypeStringStatic();
+
+	filterTypeFilters.add(Controllable::INT, Controllable::FLOAT);
 }
 
 CurveMapFilter::~CurveMapFilter()
 {
 }
 
-void CurveMapFilter::processInternal()
+void CurveMapFilter::processSingleParameterInternal(Parameter * source, Parameter * out)
 {
-	curve.position->setValue(sourceParam->getNormalizedValue());
-	filteredParameter->setNormalizedValue(curve.value->floatValue());
+	if(source == sourceParams.getFirst()) curve.position->setValue(source->getNormalizedValue());
+
+	if (source->hasRange()) out->setNormalizedValue(curve.getValueForPosition(source->getNormalizedValue()));
+	else out->setValue(source->getValue());
 }
 
 void CurveMapFilter::onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c)
@@ -57,5 +60,3 @@ void CurveMapFilter::loadJSONDataInternal(var data)
 	MappingFilter::loadJSONDataInternal(data);
 	curve.loadJSONData(data.getProperty(curve.shortName, var()), true);
 }
-
-*/

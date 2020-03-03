@@ -12,7 +12,7 @@
 
 #include "../../MappingFilter.h"
 
-/*
+
 class OffsetFilter :
 	public MappingFilter
 {
@@ -22,11 +22,11 @@ public:
 
 	FloatParameter * offset;
 
-	void processInternal() override;
+	void processSingleParameterInternal(Parameter * source, Parameter * out) override;
+	void filterParamChanged(Parameter* p) override;
 
 	static OffsetFilter * create(var params) { return new OffsetFilter(params); }
 	virtual String getTypeString() const override { return "Offset"; }
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(OffsetFilter)
 };
-*/

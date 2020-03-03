@@ -12,7 +12,6 @@
 
 #include "../../MappingFilter.h"
 
-/*
 class CurveMapFilter :
 	public MappingFilter
 {
@@ -22,7 +21,7 @@ public:
 
 	Automation curve;
 
-	void processInternal() override;
+	void processSingleParameterInternal(Parameter* source, Parameter* out) override;
 	
 	void onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c) override;
 
@@ -36,4 +35,3 @@ public:
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(CurveMapFilter)
 };
-*/

@@ -9,7 +9,7 @@
 */
 
 #include "ColorShiftFilter.h"
-/*
+
 ColorShiftFilter::ColorShiftFilter(var params) :
 	MappingFilter(getTypeString(), params)
 {
@@ -18,16 +18,16 @@ ColorShiftFilter::ColorShiftFilter(var params) :
 
 	offset = filterParams.addFloatParameter("Offset", "The offset to shift to the source value", .5f, -1, 1);
 
-	forceOutParameterType = ColorParameter::getTypeStringStatic();
+	filterTypeFilters.add(Controllable::COLOR);
 }
 
 ColorShiftFilter::~ColorShiftFilter()
 {
 }
 
-void ColorShiftFilter::processInternal()
+void ColorShiftFilter::processSingleParameterInternal(Parameter * source, Parameter * out)
 {
-	ColorParameter * tc = (ColorParameter *)filteredParameter.get();
+	ColorParameter* tc = (ColorParameter*)out;
 
 	if (tc == nullptr)
 	{
@@ -35,34 +35,13 @@ void ColorShiftFilter::processInternal()
 		return;
 	}
 	
-	if (sourceParam == nullptr)
+	if (source == nullptr)
 	{
 		DBG("ERROR HERE, source should not be null");
 		return;
 	}
 
-	Colour c = Colours::black;
-	if (sourceParam->type != Parameter::COLOR)
-	{
-		float h = 0;
-		float b = 1;
-		float s = 1;
-
-		if (sourceParam->isComplex())
-		{
-			h = sourceParam->value[0];
-			b = sourceParam->value[1];
-			s = sourceParam->value.size() >= 3?(float)sourceParam->value[2]:1;
-		} else
-		{
-			h = sourceParam->floatValue();
-		}
-
-		c = Colour::fromHSV(h, s, b, 1);
-	} else
-	{
-		c = ((ColorParameter *)sourceParam.get())->getColor();
-	}
+	Colour c = ((ColorParameter *)source)->getColor();
 
 	ShiftMode m = mode->getValueDataAsEnum<ShiftMode>();
 	switch (m)
@@ -80,5 +59,4 @@ void ColorShiftFilter::processInternal()
 		break;
 	}
 }
-*/
 

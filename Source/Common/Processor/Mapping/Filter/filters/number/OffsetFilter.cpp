@@ -9,35 +9,51 @@
 */
 
 #include "OffsetFilter.h"
-/*
+
 OffsetFilter::OffsetFilter(var params) :
 	MappingFilter(getTypeString(),params)
 {
 	autoSetRange = false;
 	offset = filterParams.addFloatParameter("Offset", "The amount of offset to apply", 0);
 	offset->isCustomizableByUser = true;
-	forceOutParameterType = FloatParameter::getTypeStringStatic();
+	
+	filterTypeFilters.add(Controllable::FLOAT, Controllable::INT);
 }
 
 OffsetFilter::~OffsetFilter()
 {
 }
 
-void OffsetFilter::processInternal()
+void OffsetFilter::processSingleParameterInternal(Parameter* source, Parameter* out)
 {
-	if (sourceParam->hasRange() && !sourceParam->value.isArray())
+	if (source->hasRange() && !source->value.isArray())
 	{
-		float tMin = (float)sourceParam->minimumValue + offset->floatValue();
-		float tMax = (float)sourceParam->maximumValue + offset->floatValue();
-		if (tMin != (float)filteredParameter->minimumValue || tMax != (float)filteredParameter->maximumValue)
-		{
-			filteredParameter->setRange(tMin, tMax);
-		}
-		filteredParameter->setNormalizedValue(sourceParam->getNormalizedValue());
+		
+		out->setNormalizedValue(source->getNormalizedValue());
 
 	} else
 	{
-		filteredParameter->setValue(sourceParam->floatValue() + offset->floatValue());
+		out->setValue(source->floatValue() + offset->floatValue());
 	}
 }
-*/
+
+void OffsetFilter::filterParamChanged(Parameter* fp)
+{
+	if (fp == offset)
+	{
+		for (int i=0;i<sourceParams.size();i++)
+		{
+			Parameter* p = filteredParameters[i];
+			if (!filterTypeFilters.contains(p->type)) continue;
+
+			float tMin = (float)sourceParams[i]->minimumValue + offset->floatValue();
+			float tMax = (float)sourceParams[i]->maximumValue + offset->floatValue();
+			if (tMin != (float)p->minimumValue || tMax != (float)p->maximumValue)
+			{
+				p->setRange(tMin, tMax);
+			}
+		}
+		
+	}
+	
+}

@@ -13,7 +13,7 @@
 #include "../../MappingFilter.h"
 
 
-/*
+
 class LagFilter :
 	public MappingFilter,
 	public Timer
@@ -22,20 +22,18 @@ public:
 	LagFilter(var params);
 	~LagFilter();
 
-	var tempVal;
+	HashMap<Parameter*, var> paramTempValueMap;
 	FloatParameter * frequency;
 
-	void processInternal() override;
+	void setupParametersInternal() override;
+	Parameter * setupSingleParameterInternal(Parameter * source) override;
+	void processSingleParameterInternal(Parameter * source, Parameter * out) override;
 
 	void filterParamChanged(Parameter * p) override;
 
 	static LagFilter * create(var params) { return new LagFilter(params); }
 	String getTypeString() const override { return "FPS"; }
 
-
-	// Inherited via Timer
 	virtual void timerCallback() override;
 
 };
-
-*/

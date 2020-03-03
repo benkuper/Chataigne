@@ -9,7 +9,8 @@
 */
 
 #include "MathFilter.h"
-/*
+
+
 MathFilter::MathFilter(var params) :
 	MappingFilter(getTypeString(),params),
 	operationValue(nullptr)
@@ -20,17 +21,21 @@ MathFilter::MathFilter(var params) :
 		->addOption("Floor", FLOOR)->addOption("Ceil", CEIL)->addOption("Round", ROUND);
 
 	autoSetRange = false;
+
+	filterTypeFilters.add(Controllable::FLOAT, Controllable::INT, Controllable::POINT2D, Controllable::POINT3D);
 }
 
 MathFilter::~MathFilter()
 {
 }
 
-Parameter * MathFilter::setupParameterInternal(Parameter * source)
+void MathFilter::setupParametersInternal()
 {
-	Parameter * p = MappingFilter::setupParameterInternal(source);
+	MappingFilter::setupParametersInternal();
 
-	if (operationValue == nullptr || operationValue->type != source->type)
+	if (sourceParams.size() == 0 || sourceParams[0] == nullptr) return;
+
+	if (operationValue == nullptr || operationValue->type != sourceParams[0]->type)
 	{
 		if (operationValue != nullptr)
 		{
@@ -38,22 +43,20 @@ Parameter * MathFilter::setupParameterInternal(Parameter * source)
 			filterParams.removeControllable(operationValue);
 		}
 
-		operationValue = (Parameter *)ControllableFactory::createControllable(source->getTypeString());
+		operationValue = (Parameter*)ControllableFactory::createControllable(sourceParams[0]->getTypeString());
 		operationValue->setNiceName("Value");
 		operationValue->loadJSONData(opValueData);
 		operationValue->isSavable = false;
 		filterParams.addParameter(operationValue);
 	}
-	
+
 	Operation o = operation->getValueDataAsEnum<Operation>();
 	operationValue->setEnabled(o != FLOOR && o != CEIL && o != ROUND);
-	
-	updateFilteredParamRange(p);
 
-	return p;
+	updateFilteredParamsRange();
 }
 
-void MathFilter::processInternal()
+void MathFilter::processSingleParameterInternal(Parameter * source, Parameter * out)
 {
 	Operation o = operation->getValueDataAsEnum<Operation>();
 	if (o != FLOOR && o != CEIL && o != ROUND)
@@ -66,54 +69,61 @@ void MathFilter::processInternal()
 	}
 
 	var val = var();
-	if (!sourceParam->isComplex())
+	if (!source->isComplex())
 	{
-		val = getProcessedValue(sourceParam->value);
+		val = getProcessedValue(source->value);
 	} else
 	{
-		for (int i = 0; i < sourceParam->value.size(); i++)
+		for (int i = 0; i < source->value.size(); i++)
 		{
-			val.append(getProcessedValue(sourceParam->value[i],i));
+			val.append(getProcessedValue(source->value[i],i));
 		}
 	}
 
-	filteredParameter->setValue(val);
+	source->setValue(val);
 }
 
-void MathFilter::updateFilteredParamRange(Parameter * p)
+void MathFilter::updateFilteredParamsRange()
 {
-	if (p == nullptr) p = filteredParameter;
-	if (p == nullptr) return;
-
-	if (sourceParam == nullptr) return;
-	if (!sourceParam->hasRange() || !filteredParamShouldHaveRange())
+	for (int i=0;i<filteredParameters.size();i++)
 	{
-		p->clearRange();
-		return;
-	}
+		Parameter* sourceParam = sourceParams[i];
+		if (sourceParam == nullptr) continue;
 
-	var newMin = var();
-	var newMax = var();
+		if (!filterTypeFilters.contains(sourceParam->type)) continue;
 
-	if (!sourceParam->isComplex())
-	{
-		
-		newMin = getProcessedValue(sourceParam->minimumValue);
-		newMax = jmax(getProcessedValue(sourceParam->maximumValue), (float)newMin + .001f);
-	} else
-	{
-		for (int i = 0; i < sourceParam->value.size(); i++)
+		Parameter* p = filteredParameters[i];
+		if (p == nullptr) continue;
+
+		if (!sourceParam->hasRange() || !filteredParamShouldHaveRange())
 		{
-			float nmin = getProcessedValue(sourceParam->minimumValue[i], i);
-			float nmax = getProcessedValue(sourceParam->maximumValue[i], i);
-
-			newMin.append(nmin);
-			newMax.append(jmax(nmax, nmin + .001f));
+			p->clearRange();
+			continue;
 		}
+
+		var newMin = var();
+		var newMax = var();
+
+		if (!sourceParam->isComplex())
+		{
+
+			newMin = getProcessedValue(sourceParam->minimumValue);
+			newMax = jmax(getProcessedValue(sourceParam->maximumValue), (float)newMin + .001f);
+		}
+		else
+		{
+			for (int i = 0; i < sourceParam->value.size(); i++)
+			{
+				float nmin = getProcessedValue(sourceParam->minimumValue[i], i);
+				float nmax = getProcessedValue(sourceParam->maximumValue[i], i);
+
+				newMin.append(nmin);
+				newMax.append(jmax(nmax, nmin + .001f));
+			}
+		}
+
+		p->setRange(newMin, newMax);
 	}
-
-	p->setRange(newMin, newMax);
-
 }
 
 void MathFilter::filterParamChanged(Parameter * p)
@@ -126,7 +136,7 @@ void MathFilter::filterParamChanged(Parameter * p)
 		operationValue->setEnabled(o != FLOOR && o != CEIL && o != ROUND);
 	}
 
-	if (p == operation || p == operationValue) updateFilteredParamRange();
+	if (p == operation || p == operationValue) updateFilteredParamsRange();
 }
 
 float MathFilter::getProcessedValue(float val, int index)
@@ -134,7 +144,7 @@ float MathFilter::getProcessedValue(float val, int index)
 	Operation o = operation->getValueDataAsEnum<Operation>();
 	
 	float oVal = 0;
-	if (operationValue != nullptr) oVal = (index == -1 && !operationValue->isComplex())? operationValue->floatValue() : (float)operationValue->value[index];
+	if (operationValue != nullptr) oVal = (index == -1 && !operationValue->isComplex())? operationValue->floatValue() : (float)operationValue->value[index%operationValue->value.size()];
 
 	if ((o == DIVIDE || o == MODULO) && oVal == 0) return 0;
 
@@ -172,4 +182,3 @@ void MathFilter::loadJSONDataInternal(var data)
 	opValueData = data.getProperty("operationValue", var());
 	
 }
-*/

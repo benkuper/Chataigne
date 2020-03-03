@@ -70,7 +70,7 @@ bool MappingFilter::setupSources(Array<Parameter *> sources)
 	return true;
 }
 
-bool MappingFilter::setupParametersInternal()
+void MappingFilter::setupParametersInternal()
 {
 	for (auto& source : sourceParams)
 	{
@@ -79,12 +79,16 @@ bool MappingFilter::setupParametersInternal()
 	}
 
 	filterAsyncNotifier.addMessage(new FilterEvent(FilterEvent::FILTER_REBUILT, this));
-	return true;
 }
 
 Parameter * MappingFilter::setupSingleParameterInternal(Parameter * source)
 {
 	return ControllableFactory::createParameterFrom(source, true, true);
+}
+
+void MappingFilter::onContainerParameterChangedInternal(Parameter* p)
+{
+	if (p == enabled) mappingFilterListeners.call(&FilterListener::filterStateChanged, this);
 }
 
 void MappingFilter::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* p)
@@ -106,7 +110,11 @@ bool MappingFilter::processInternal()
 {
 	for (int i = 0; i < sourceParams.size(); i++)
 	{
-		if (!filterTypeFilters.isEmpty() && !filterTypeFilters.contains(sourceParams[i]->type)) continue;
+		if (!filterTypeFilters.isEmpty() && !filterTypeFilters.contains(sourceParams[i]->type))
+		{
+			filteredParameters[i]->setValue(sourceParams[i]->getValue()); //direct transfer if not supposed to be taken
+			continue;
+		}
 
 		if (autoSetRange && (  filteredParameters[i]->minimumValue != sourceParams[i]->minimumValue 
 							|| filteredParameters[i]->maximumValue != sourceParams[i]->maximumValue)) 

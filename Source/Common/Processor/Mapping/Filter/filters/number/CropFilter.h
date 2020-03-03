@@ -12,7 +12,6 @@
 
 #include "../../MappingFilter.h"
 
-/*
 class CropFilter :
 	public MappingFilter
 {
@@ -23,16 +22,14 @@ public:
 	FloatParameter * targetMin;
 	FloatParameter * targetMax;
 
-	void processInternal() override;
+	Parameter* setupSingleParameterInternal(Parameter* source) override;
+	void processSingleParameterInternal(Parameter* source, Parameter* out) override;
 
 	void filterParamChanged(Parameter *) override;
 
-	Parameter * setupParameterInternal(Parameter * source) override;
 
 	static CropFilter * create(var params) { return new CropFilter(params); }
 	String getTypeString() const override { return "Crop"; }
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(CropFilter)
 };
-
-*/
