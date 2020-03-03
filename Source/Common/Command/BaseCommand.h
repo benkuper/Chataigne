@@ -56,7 +56,7 @@ public:
 	virtual void setupTemplateParameters(CommandTemplate * ct);
 
 	void setUseCustomValues(bool value);
-	virtual void useForMappingChanged(CustomValuesCommandArgument*);
+	virtual void useForMappingChanged(CustomValuesCommandArgument*) override;
 	virtual void itemsReordered() override;
 
 	void templateParameterChanged(CommandTemplateParameter * ctp) override;
