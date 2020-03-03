@@ -112,10 +112,10 @@ void MathFilter::updateFilteredParamsRange()
 		}
 		else
 		{
-			for (int i = 0; i < sourceParam->value.size(); i++)
+			for (int j = 0; j < sourceParam->value.size(); j++)
 			{
-				float nmin = getProcessedValue(sourceParam->minimumValue[i], i);
-				float nmax = getProcessedValue(sourceParam->maximumValue[i], i);
+				float nmin = getProcessedValue(sourceParam->minimumValue[j], j);
+				float nmax = getProcessedValue(sourceParam->maximumValue[j], j);
 
 				newMin.append(nmin);
 				newMax.append(jmax(nmax, nmin + .001f));
