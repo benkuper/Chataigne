@@ -11,7 +11,7 @@
 #pragma once
 
 #include "../../MappingFilter.h"
-
+ 
 /*
 class ConversionFilter :
 	public MappingFilter

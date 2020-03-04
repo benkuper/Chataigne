@@ -121,13 +121,13 @@ void Mapping::process(bool forceOutput)
 	if (im.items.size() == 0) return;
 	if (isCurrentlyLoadingData) return;
 
-	DBG("[PROCESS] Enter lock");
+	//DBG("[PROCESS] Enter lock");
 	GenericScopedLock lock(mappingLock);
 
 	Array<Parameter *> filteredParams = fm.processFilters();
 	om.updateOutputValues();
 
-	DBG("[PROCESS] Exit lock");
+	//DBG("[PROCESS] Exit lock");
 
 }
 

@@ -135,7 +135,16 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/OffsetFilter_df572fc9.o \
   $(JUCE_OBJDIR)/SimpleRemapFilter_f05c323b.o \
   $(JUCE_OBJDIR)/SimpleSmoothFilter_24b6ca36.o \
+  $(JUCE_OBJDIR)/ConversionConnector_71e92e4d.o \
+  $(JUCE_OBJDIR)/ConversionFilterEditor_b0e8298f.o \
+  $(JUCE_OBJDIR)/ConversionParamValueLinkUI_5b19779c.o \
+  $(JUCE_OBJDIR)/ConversionSourceParameterUI_48851562.o \
+  $(JUCE_OBJDIR)/ConvertedParameterManagerEditor_9c713179.o \
+  $(JUCE_OBJDIR)/ConvertedParameterEditor_8c18c098.o \
+  $(JUCE_OBJDIR)/ConversionFilter_a4c97adf.o \
   $(JUCE_OBJDIR)/ConversionFilters_f819eebe.o \
+  $(JUCE_OBJDIR)/ConvertedParameter_b1b41968.o \
+  $(JUCE_OBJDIR)/ConvertedParameterManager_c86475af.o \
   $(JUCE_OBJDIR)/ColorShiftFilter_9fafa455.o \
   $(JUCE_OBJDIR)/ScriptFilter_49f85c55.o \
   $(JUCE_OBJDIR)/MappingInputEditor_3aad72e6.o \
@@ -697,9 +706,54 @@ $(JUCE_OBJDIR)/SimpleSmoothFilter_24b6ca36.o: ../../Source/Common/Processor/Mapp
 	@echo "Compiling SimpleSmoothFilter.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
+$(JUCE_OBJDIR)/ConversionConnector_71e92e4d.o: ../../Source/Common/Processor/Mapping/Filter/filters/conversion/ui/ConversionConnector.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling ConversionConnector.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/ConversionFilterEditor_b0e8298f.o: ../../Source/Common/Processor/Mapping/Filter/filters/conversion/ui/ConversionFilterEditor.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling ConversionFilterEditor.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/ConversionParamValueLinkUI_5b19779c.o: ../../Source/Common/Processor/Mapping/Filter/filters/conversion/ui/ConversionParamValueLinkUI.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling ConversionParamValueLinkUI.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/ConversionSourceParameterUI_48851562.o: ../../Source/Common/Processor/Mapping/Filter/filters/conversion/ui/ConversionSourceParameterUI.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling ConversionSourceParameterUI.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/ConvertedParameterManagerEditor_9c713179.o: ../../Source/Common/Processor/Mapping/Filter/filters/conversion/ui/ConvertedParameterManagerEditor.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling ConvertedParameterManagerEditor.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/ConvertedParameterEditor_8c18c098.o: ../../Source/Common/Processor/Mapping/Filter/filters/conversion/ui/ConvertedParameterEditor.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling ConvertedParameterEditor.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/ConversionFilter_a4c97adf.o: ../../Source/Common/Processor/Mapping/Filter/filters/conversion/ConversionFilter.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling ConversionFilter.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
 $(JUCE_OBJDIR)/ConversionFilters_f819eebe.o: ../../Source/Common/Processor/Mapping/Filter/filters/conversion/ConversionFilters.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling ConversionFilters.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/ConvertedParameter_b1b41968.o: ../../Source/Common/Processor/Mapping/Filter/filters/conversion/ConvertedParameter.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling ConvertedParameter.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/ConvertedParameterManager_c86475af.o: ../../Source/Common/Processor/Mapping/Filter/filters/conversion/ConvertedParameterManager.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling ConvertedParameterManager.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/ColorShiftFilter_9fafa455.o: ../../Source/Common/Processor/Mapping/Filter/filters/color/ColorShiftFilter.cpp

@@ -49,10 +49,9 @@ bool MappingFilter::setupSources(Array<Parameter *> sources)
 		}
 	}
 
-	filteredParameters.clear();
 	sourceParams.clear();
 
-	sourceParams = sources;
+	sourceParams = Array<WeakReference<Parameter>>(sources.getRawDataPointer(), sources.size());
 	
 	for(auto & source:sourceParams)
 	{
@@ -67,23 +66,27 @@ bool MappingFilter::setupSources(Array<Parameter *> sources)
 		filteredParameter->addParameterListener(this);
 	}
 
+	filterAsyncNotifier.addMessage(new FilterEvent(FilterEvent::FILTER_REBUILT, this));
+
 	return true;
 }
 
 void MappingFilter::setupParametersInternal()
 {
+	filteredParameters.clear();
 	for (auto& source : sourceParams)
 	{
 		Parameter* p = setupSingleParameterInternal(source);
 		filteredParameters.add(p);
 	}
-
-	filterAsyncNotifier.addMessage(new FilterEvent(FilterEvent::FILTER_REBUILT, this));
 }
 
 Parameter * MappingFilter::setupSingleParameterInternal(Parameter * source)
 {
-	return ControllableFactory::createParameterFrom(source, true, true);
+	Parameter * p =  ControllableFactory::createParameterFrom(source, true, true);
+	p->isSavable = false;
+	p->setControllableFeedbackOnly(true);
+	return p;
 }
 
 void MappingFilter::onContainerParameterChangedInternal(Parameter* p)
@@ -110,13 +113,15 @@ bool MappingFilter::processInternal()
 {
 	for (int i = 0; i < sourceParams.size(); i++)
 	{
+		if (sourceParams[i].wasObjectDeleted()) continue;
+
 		if (!filterTypeFilters.isEmpty() && !filterTypeFilters.contains(sourceParams[i]->type))
 		{
 			filteredParameters[i]->setValue(sourceParams[i]->getValue()); //direct transfer if not supposed to be taken
 			continue;
 		}
 
-		if (autoSetRange && (  filteredParameters[i]->minimumValue != sourceParams[i]->minimumValue 
+		if (autoSetRange && filteredParameters.size() == sourceParams.size() && (  filteredParameters[i]->minimumValue != sourceParams[i]->minimumValue 
 							|| filteredParameters[i]->maximumValue != sourceParams[i]->maximumValue)) 
 			filteredParameters[i]->setRange(sourceParams[i]->minimumValue, sourceParams[i]->maximumValue);
 

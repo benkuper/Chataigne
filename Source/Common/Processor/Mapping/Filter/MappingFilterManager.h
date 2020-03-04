@@ -41,6 +41,7 @@ public:
 	
 	void filterStateChanged(MappingFilter* mf) override;
 	void filterNeedsProcess(MappingFilter* mf) override;
+	void filteredParamsChanged(MappingFilter* mf) override;
 	void filteredParamRangeChanged(MappingFilter* mf) override;
 
 	void loadJSONDataManagerInternal(var data) override;

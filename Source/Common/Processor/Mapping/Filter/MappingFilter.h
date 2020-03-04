@@ -20,7 +20,7 @@ public:
 	MappingFilter(const String &name = "MappingFilter", var params = var());
 	virtual ~MappingFilter();
 
-	Array<Parameter *> sourceParams;
+	Array<WeakReference<Parameter>> sourceParams;
 	ControllableContainer filterParams;
 	
 	Array<Controllable::Type> filterTypeFilters; //if not empty, this will filter out the parameters passed to the processSingleParameterInternal function
@@ -58,6 +58,7 @@ public:
 		virtual ~FilterListener() {}
 		virtual void filterStateChanged(MappingFilter*) {}
 		virtual void filterNeedsProcess(MappingFilter *) {};
+		virtual void filteredParamsChanged(MappingFilter*) {}
 		virtual void filteredParamRangeChanged(MappingFilter *) {}
 	};
 

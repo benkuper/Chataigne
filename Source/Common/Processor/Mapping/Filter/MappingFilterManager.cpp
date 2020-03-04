@@ -21,7 +21,7 @@
 #include "filters/number/MathFilter.h"
 #include "filters/number/OffsetFilter.h"
 
-#include "filters/conversion/ConversionFilters.h"
+#include "filters/conversion/ConversionFilter.h"
 
 #include "filters/color/ColorShiftFilter.h"
 
@@ -30,6 +30,7 @@ MappingFilterManager::MappingFilterManager() :
 	BaseManager<MappingFilter>("Filters")
 {
 	managerFactory = &factory;
+
 	factory.defs.add(Factory<MappingFilter>::Definition::createDef("Remap", "Remap", &SimpleRemapFilter::create));
 	factory.defs.add(Factory<MappingFilter>::Definition::createDef("Remap", "Curve Map", &CurveMapFilter::create));
 	factory.defs.add(Factory<MappingFilter>::Definition::createDef("Remap", "Math", &MathFilter::create));
@@ -49,7 +50,8 @@ MappingFilterManager::MappingFilterManager() :
 
 	factory.defs.add(Factory<MappingFilter>::Definition::createDef("Color", "Color Shift", &ColorShiftFilter::create));
 
-	//factory.defs.add(Factory<MappingFilter>::Definition::createDef("", "Script", &ScriptFilter::create));
+	factory.defs.add(Factory<MappingFilter>::Definition::createDef("", "Conversion", &ConversionFilter::create));
+	factory.defs.add(Factory<MappingFilter>::Definition::createDef("", "Script", &ScriptFilter::create));
 
 	selectItemWhenCreated = false;
 }
@@ -147,6 +149,11 @@ void MappingFilterManager::filterStateChanged(MappingFilter* mf)
 void MappingFilterManager::filterNeedsProcess(MappingFilter* mf)
 {
 	filterManagerListeners.call(&FilterManagerListener::filterManagerNeedsProcess);
+}
+
+void MappingFilterManager::filteredParamsChanged(MappingFilter* mf)
+{
+	notifyNeedsRebuild(mf);
 }
 
 void MappingFilterManager::filteredParamRangeChanged(MappingFilter* mf)
