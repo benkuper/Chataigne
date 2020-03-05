@@ -158,11 +158,13 @@ void Mapping::afterLoadJSONDataInternal()
 void Mapping::itemAdded(MappingInput* item)
 {
 	item->addMappingInputListener(this);
+	if(item->inputReference != nullptr) updateMappingChain();
 }
 
 void Mapping::itemRemoved(MappingInput* item)
 {
 	item->removeMappingInputListener(this);
+	updateMappingChain();
 }
 
 void Mapping::itemsReordered()

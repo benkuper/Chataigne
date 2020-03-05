@@ -48,7 +48,7 @@ MappingFilterManager::MappingFilterManager() :
 	factory.defs.add(Factory<MappingFilter>::Definition::createDef("Time", "Smooth", &SimpleSmoothFilter::create));
 	factory.defs.add(Factory<MappingFilter>::Definition::createDef("Time", "FPS", &LagFilter::create));
 
-	factory.defs.add(Factory<MappingFilter>::Definition::createDef("Color", "Color Shift", &ColorShiftFilter::create));
+	factory.defs.add(Factory<MappingFilter>::Definition::createDef("Color", ColorShiftFilter::getTypeStringStatic(), &ColorShiftFilter::create));
 
 	factory.defs.add(Factory<MappingFilter>::Definition::createDef("", "Conversion", &ConversionFilter::create));
 	factory.defs.add(Factory<MappingFilter>::Definition::createDef("", "Script", &ScriptFilter::create));

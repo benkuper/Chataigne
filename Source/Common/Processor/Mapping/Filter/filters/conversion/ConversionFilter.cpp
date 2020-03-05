@@ -23,6 +23,7 @@ ConversionFilter::ConversionFilter(var params) :
 
 ConversionFilter::~ConversionFilter() 
 {
+	links.clear();
 	cpm.removeBaseManagerListener(this);
 }
 
@@ -56,6 +57,8 @@ void ConversionFilter::itemRemoved(ConvertedParameter* cp)
 		links.removeObject(link);
 	}
 
+	conversionFilterAsyncNotifier.addMessage(new ConversionFilterEvent(ConversionFilterEvent::LINKS_UPDATED));
+
 	reorderFilterParameters();
 }
 
@@ -72,14 +75,17 @@ void ConversionFilter::reorderFilterParameters()
 }
 
 
-void ConversionFilter::createLink(int sourceIndex, int sourceValueIndex, ConvertedParameter* out, int outValueIndex)
+void ConversionFilter::createLink(WeakReference<Parameter> source, int sourceValueIndex, ConvertedParameter* out, int outValueIndex)
 {
+	jassert(sourceParams.indexOf(source) != -1);
+
 	ParamValueLink* link = getLinkForOut(out, outValueIndex);
 	if (link == nullptr) link = new ParamValueLink();
-	link->sourceIndex = sourceIndex;
+	link->sourceIndex = sourceParams.indexOf(source);
 	link->sourceValueIndex = sourceValueIndex;
 	link->out = out;
 	link->outValueIndex = outValueIndex;
+	links.add(link);
 
 	conversionFilterAsyncNotifier.addMessage(new ConversionFilterEvent(ConversionFilterEvent::LINKS_UPDATED));
 }
@@ -103,19 +109,19 @@ void ConversionFilter::setupParametersInternal()
 
 	//need here to reconnect links to new source parameters
 
-	//conversionFilterAsyncNotifier.addMessage(new ConversionFilterEvent(ConversionFilterEvent::LINKS_UPDATED));
+	conversionFilterAsyncNotifier.addMessage(new ConversionFilterEvent(ConversionFilterEvent::SOURCES_UPDATED));
 }
 
-void ConversionFilter::processSingleParameterInternal(Parameter* source, Parameter* out)
+void ConversionFilter::processSingleParameterInternal(Parameter* source, Parameter*)
 {
 	GenericScopedLock lock(links.getLock());
 	int sourceIndex = sourceParams.indexOf(source);
 	for (auto& link : links)
 	{
 		if (link->out == nullptr) continue;
-		if (link->sourceIndex != sourceIndex || link->out->outParamReference != out) continue;
+		if (link->sourceIndex != sourceIndex) continue;
 
-		link->out->setParamValueAtIndex(source->value[link->sourceValueIndex], link->outValueIndex);
+		link->out->setParamValueAtIndex(source->value.isArray()?source->value[link->sourceValueIndex]:source->value, link->outValueIndex);
 	}
 }
 

@@ -21,8 +21,9 @@ public:
 	ConversionFilter(var params);
 	~ConversionFilter();
 
-	struct ParamValueLink
+	class ParamValueLink
 	{
+	public:
 		int sourceIndex;
 		int sourceValueIndex;
 		ConvertedParameter* out;
@@ -38,7 +39,7 @@ public:
 
 	void reorderFilterParameters();
 
-	void createLink(int sourceIndex, int sourceValueIndex, ConvertedParameter* out, int outValueIndex);
+	void createLink(WeakReference<Parameter>, int sourceValueIndex, ConvertedParameter* out, int outValueIndex);
 	void removeLink(ParamValueLink * link);
 
 
@@ -52,7 +53,7 @@ public:
 
 	class ConversionFilterEvent {
 	public:
-		enum Type { LINKS_UPDATED };
+		enum Type { SOURCES_UPDATED, LINKS_UPDATED };
 		ConversionFilterEvent(Type type) : type(type) {}
 		Type type;
 	};

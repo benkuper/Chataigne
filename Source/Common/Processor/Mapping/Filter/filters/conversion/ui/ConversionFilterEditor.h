@@ -28,9 +28,16 @@ public:
 	ConvertedParameterManagerEditor cpmEditor;
 	OwnedArray<ConversionParamValueLinkUI> linksUI;
 
+	std::unique_ptr<ConversionParamValueLinkUI> editingLinkUI;
+
 	void resizedInternalContent(Rectangle<int> &r) override;
 
-	void rebuildUI();
+	void rebuildSourcesUI();
+	void rebuildLinksUI();
+
+	void mouseDown(const MouseEvent& e) override;
+	void mouseDrag(const MouseEvent& e) override;
+	void mouseUp(const MouseEvent& e) override;
 
 	void newMessage(const ConversionFilter::ConversionFilterEvent& e) override;
 };

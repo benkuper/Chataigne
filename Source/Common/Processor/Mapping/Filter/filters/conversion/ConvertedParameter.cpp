@@ -43,13 +43,13 @@ void ConvertedParameter::setParamValueAtIndex(var value, int index)
 	}
 	else
 	{
-		var outValue = outParamReference->getValue();
+		var outValue = outParamReference->getValue().clone();
 		jassert(outValue.isArray() && index < outParamReference->value.size());
 
 		if (conversionMode == nullptr)
 		{
 			outValue[index] = value;
-			outParamReference->setValue(index);
+			outParamReference->setValue(outValue);
 		}
 		else
 		{
@@ -58,7 +58,7 @@ void ConvertedParameter::setParamValueAtIndex(var value, int index)
 			{
 			case RGB:
 				outValue[index] = value;
-				outParamReference->setValue(index);
+				outParamReference->setValue(outValue);
 				break;
 
 			case HSV:

@@ -14,13 +14,6 @@ ConvertedParameterEditor::ConvertedParameterEditor(ConvertedParameter* cp, bool 
 	BaseItemEditor(cp, isRoot),
 	cp(cp)
 {
-	StringArray valueNames = cp->defaultParam->getValuesNames();
-	for (int i = 0; i < valueNames.size(); i++)
-	{
-		ConversionConnector* cc = new ConversionConnector(valueNames[i], i, false);
-		addAndMakeVisible(cc);
-		connectors.add(cc);
-	}
 
 	for (auto& e : childEditors)
 	{
@@ -34,6 +27,14 @@ ConvertedParameterEditor::ConvertedParameterEditor(ConvertedParameter* cp, bool 
 	{
 		outParamUI.reset((ParameterUI*)cp->outParamReference->createDefaultUI());
 		addAndMakeVisible(outParamUI.get());
+	}
+
+	StringArray valueNames = cp->defaultParam->getValuesNames();
+	for (int i = 0; i < valueNames.size(); i++)
+	{
+		ConversionConnector* cc = new ConversionConnector(valueNames[i], cp, i);
+		addAndMakeVisible(cc);
+		connectors.add(cc);
 	}
 
 	cp->addAsyncCPListener(this);
@@ -66,8 +67,8 @@ void ConvertedParameterEditor::resizedInternalContent(Rectangle<int>& r)
 	if (connectors.size() == 0 || getHeight() == 0) return;
 
 	const int connectorHeight = 12;
-	const int margin = 10;
-	const int minHeight = connectors.size() * connectorHeight + margin*2;
+	const int margin = 6;
+	const int minHeight = connectors.size() * connectorHeight + margin;
 
 	int top = r.getY();
 	Rectangle<int> cr = r.removeFromLeft(50);
@@ -78,9 +79,8 @@ void ConvertedParameterEditor::resizedInternalContent(Rectangle<int>& r)
 
 	for (int i = 0; i < connectors.size(); i++)
 	{
-		int th = connectors.size() == 1?cr.getHeight()/2:margin/2 + (cr.getHeight() - margin) * i * 1.0f / (connectors.size() - 1);
+		int th = connectors.size() == 1?cr.getHeight()/2:margin + (cr.getHeight() - margin*2) * i * 1.0f / (connectors.size() - 1);
 		connectors[i]->setBounds(Rectangle<int>(5, cr.getY() + th- connectorHeight /2, cr.getWidth(), connectorHeight));
-		connectors[i]->toFront(false);
 	}
 
 }

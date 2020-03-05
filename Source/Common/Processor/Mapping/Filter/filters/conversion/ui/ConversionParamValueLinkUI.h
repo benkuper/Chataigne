@@ -10,18 +10,28 @@
 
 #pragma once
 #include "../ConversionFilter.h"
+#include "ConversionConnector.h"
 
 class ConversionParamValueLinkUI :
 	public Component
 {
 public:
-	ConversionParamValueLinkUI(ConversionFilter::ParamValueLink* link);
+	ConversionParamValueLinkUI(ConversionConnector* sourceConnector = nullptr, ConversionConnector* outConnector = nullptr, ConversionFilter::ParamValueLink* link = nullptr);
 	~ConversionParamValueLinkUI();
 
 	ConversionFilter::ParamValueLink* link;
+	ConversionConnector* sourceConnector;
+	ConversionConnector* outConnector;
 
-	Component* sourceConnector;
-	Component* outConnector;
+	Path linkPath;
+	Path hitPath;
+
+	
+	void setSourceConnector(ConversionConnector* c);
+	void setOutConnector(ConversionConnector* c);
+
+	void buildHitPath();
 
 	void paint(Graphics& g) override;
+	bool hitTest(int x, int y) override;
 };

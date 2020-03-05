@@ -21,6 +21,10 @@ public:
 	~ConversionSourceParameterUI();
 
 	WeakReference<Parameter> source;
+	std::unique_ptr<ControllableUI> sourceUI;
 
 	OwnedArray<ConversionConnector> connectors;
+	
+	void paint(Graphics&) override;
+	void resized() override;
 };
