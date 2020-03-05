@@ -13,7 +13,7 @@
 
 WakeOnLanCommandEditor::WakeOnLanCommandEditor(WakeOnLanCommand * wolCommand, bool isRoot) :
 	GenericControllableContainerEditor(wolCommand, isRoot),
-	zeroconfMenu("Auto set..."),
+	zeroconfMenu("Auto detect"),
     wolCommand(wolCommand)
 
 {
@@ -27,7 +27,7 @@ WakeOnLanCommandEditor::~WakeOnLanCommandEditor()
 
 void WakeOnLanCommandEditor::resizedInternalHeader(Rectangle<int>& r)
 {
-	zeroconfMenu.setBounds(r.removeFromRight(60).reduced(1));
+	zeroconfMenu.setBounds(r.removeFromRight(60).reduced(2));
 	GenericControllableContainerEditor::resizedInternalHeader(r);
 }
 
