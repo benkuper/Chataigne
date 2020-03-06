@@ -560,7 +560,8 @@ void StreamingModule::loadJSONDataInternal(var data)
 var StreamingModule::sendStringFromScript(const var::NativeFunctionArgs & a)
 {
 	StreamingModule * m = getObjectFromJS<StreamingModule>(a);
-	if (checkNumArgs(m->niceName, a, 1)) return false;
+	if (!checkNumArgs(m->niceName, a, 1)) return false;
+
 	if (a.arguments[0].isObject()) m->sendMessage(JSON::toString(a.arguments[0]));
 	else
 	{
