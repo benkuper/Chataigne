@@ -90,6 +90,7 @@ public:
 
 	//Script
 	static var sendOSCFromScript(const var::NativeFunctionArgs &args);
+	static var sendToIPAddressFromScript(const var::NativeFunctionArgs &args);
 
 	//Thru
 	static void createThruControllable(ControllableContainer* cc);

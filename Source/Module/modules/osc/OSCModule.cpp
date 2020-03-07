@@ -80,6 +80,7 @@ OSCModule::OSCModule(const String & name, int defaultLocalPort, int defaultRemot
 
 	//Script
 	scriptObject.setMethod(sendOSCId, OSCModule::sendOSCFromScript);
+	scriptObject.setMethod("sendToIPandPort", OSCModule::sendToIPAddressFromScript);
 	scriptManager->scriptTemplate += ChataigneAssetManager::getInstance()->getScriptTemplate("osc");
 
 
@@ -318,6 +319,45 @@ var OSCModule::sendOSCFromScript(const var::NativeFunctionArgs & a)
 		NLOGERROR(m->niceName, "Error sending message : " << e.description);
 	}
 	
+
+	return var();
+}
+
+var OSCModule::sendToIPAddressFromScript(const var::NativeFunctionArgs & a)
+{
+	OSCModule * m = getObjectFromJS<OSCModule>(a);
+	if (!m->enabled->boolValue()) return var();
+	if (a.numArguments == 0) return var();
+	
+	String remoteHost = a.arguments[0].toString();
+	int remotePort = (int) a.arguments[1];
+	
+	OSCSender sender;
+	if (! sender.connect (remoteHost, remotePort)) return var();
+		
+	try
+	{
+		OSCMessage msg(a.arguments[2].toString());
+
+		for (int i = 3; i < a.numArguments; i++)
+		{
+			if (a.arguments[i].isArray())
+			{
+				Array<var> * arr = a.arguments[i].getArray();
+				for (auto &aa : *arr) msg.addArgument(varToArgument(aa));
+			}
+			else
+			{
+				msg.addArgument(varToArgument(a.arguments[i]));
+			}
+		}
+
+		sender.sendToIPAddress(remoteHost, remotePort, msg);
+	}
+	catch (OSCFormatError &e)
+	{
+		NLOGERROR(m->niceName, "Error sending message : " << e.description);
+	}
 
 	return var();
 }
