@@ -44,7 +44,7 @@ PJLinkModule::PJLinkModule() :
 
 }
 
-void PJLinkModule::sendMessageInternal(const String& message)
+void PJLinkModule::sendMessageInternal(const String& message, var)
 {
 	String encodedPass = MD5((passBytes + password->stringValue()).toUTF8()).toHexString();
 	String encodedMessage = password->stringValue().isEmpty() ? message : (encodedPass + message);
