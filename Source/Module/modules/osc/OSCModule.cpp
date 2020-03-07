@@ -80,7 +80,7 @@ OSCModule::OSCModule(const String & name, int defaultLocalPort, int defaultRemot
 
 	//Script
 	scriptObject.setMethod(sendOSCId, OSCModule::sendOSCFromScript);
-	scriptObject.setMethod("sendToIPandPort", OSCModule::sendToIPAddressFromScript);
+	scriptObject.setMethod("sendToIPAndPort", OSCModule::sendToIPAddressFromScript);
 	scriptManager->scriptTemplate += ChataigneAssetManager::getInstance()->getScriptTemplate("osc");
 
 
