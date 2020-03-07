@@ -42,10 +42,10 @@ public:
 	virtual void processDataBytes(Array<uint8> data);
 	virtual void processDataBytesInternal(Array<uint8> data) {}
 
-	virtual void sendMessage(const String &message);
-	virtual void sendMessageInternal(const String &message) {}
-	virtual void sendBytes(Array<uint8> bytes);
-	virtual void sendBytesInternal(Array<uint8> bytes) {}
+	virtual void sendMessage(const String &message, var params = var());
+	virtual void sendMessageInternal(const String &message, var params) {}
+	virtual void sendBytes(Array<uint8> bytes, var params = var());
+	virtual void sendBytesInternal(Array<uint8> bytes, var params) {}
 
 	static void showMenuAndCreateValue(ControllableContainer * container);
 	static void createThruControllable(ControllableContainer* cc);

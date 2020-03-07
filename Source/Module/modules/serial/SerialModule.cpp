@@ -131,13 +131,13 @@ bool SerialModule::isReadyToSend()
 
 	return true;
 }
-void SerialModule::sendMessageInternal(const String & message)
+void SerialModule::sendMessageInternal(const String & message, var)
 {
 	if (port == nullptr) return;
 	port->writeString(message);
 }
 
-void SerialModule::sendBytesInternal(Array<uint8> data)
+void SerialModule::sendBytesInternal(Array<uint8> data, var)
 {
 	if (port == nullptr) return;
 	port->writeBytes(data);

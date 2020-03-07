@@ -13,6 +13,9 @@
 UDPModule::UDPModule(const String & name, bool canHaveInput, bool canHaveOutput, int defaultLocalPort, int defaultRemotePort) :
 	NetworkStreamingModule(name, canHaveInput,canHaveOutput,defaultLocalPort,defaultRemotePort)
 {
+	scriptObject.setMethod("sendTo", &UDPModule::sendBytesToFromScript);
+	scriptObject.setMethod("sendMessageTo", &UDPModule::sendMessageToFromScript);
+
 	if (senderIsConnected != nullptr) senderIsConnected->hideInOutliner = true; //no need because UDP doesn't check remote client existance
 	if(!Engine::mainEngine->isLoadingFile) setupReceiver();
 	setupSender();
@@ -82,16 +85,18 @@ bool UDPModule::isReadyToSend()
 	return sender->waitUntilReady(false, 300) == 1;
 }
 
-void UDPModule::sendMessageInternal(const String & message)
+void UDPModule::sendMessageInternal(const String & message, var params)
 {
-	String targetHost = useLocal->boolValue() ? "127.0.0.1" : remoteHost->stringValue();
-	sender->write(targetHost, remotePort->intValue(),message.getCharPointer(), message.length());
+	String targetHost = params.getProperty("ip", useLocal->boolValue() ? "127.0.0.1" : remoteHost->stringValue());
+	int port = params.getProperty("port", remotePort->intValue());
+	sender->write(targetHost, port, message.getCharPointer(), message.length());
 }
 
-void UDPModule::sendBytesInternal(Array<uint8> data)
+void UDPModule::sendBytesInternal(Array<uint8> data, var params)
 {
-	String targetHost = useLocal->boolValue() ? "127.0.0.1" : remoteHost->stringValue();
-	sender->write(targetHost, remotePort->intValue(), data.getRawDataPointer(), data.size());
+	String targetHost = params.getProperty("ip", useLocal->boolValue() ? "127.0.0.1" : remoteHost->stringValue());
+	int port = params.getProperty("port", remotePort->intValue());
+	sender->write(targetHost, port, data.getRawDataPointer(), data.size());
 }
 
 Array<uint8> UDPModule::readBytes()
@@ -121,4 +126,44 @@ void UDPModule::clearInternal()
 {
 	if (receiver != nullptr) receiver->shutdown();
 	receiver = nullptr;
+}
+
+var UDPModule::sendMessageToFromScript(const var::NativeFunctionArgs& a)
+{
+	StreamingModule* m = getObjectFromJS<StreamingModule>(a);
+	if (checkNumArgs(m->niceName, a, 3)) return false;
+
+	var params(new DynamicObject());
+	params.getDynamicObject()->setProperty("ip", a.arguments[0].toString());
+	params.getDynamicObject()->setProperty("port", (int)a.arguments[1]);
+
+	m->sendMessage(a.arguments[2].toString(), params);
+
+	return var();
+}
+
+var UDPModule::sendBytesToFromScript(const var::NativeFunctionArgs& a)
+{
+	StreamingModule* m = getObjectFromJS<StreamingModule>(a);
+	if (checkNumArgs(m->niceName, a, 3)) return false;
+	Array<uint8> data;
+	for (int i = 2; i < a.numArguments; i++)
+	{
+		if (a.arguments[i].isArray())
+		{
+			Array<var>* aa = a.arguments[i].getArray();
+			for (auto& vaa : *aa) data.add((uint8)(int)vaa);
+		}
+		else if (a.arguments[i].isInt() || a.arguments[i].isDouble() || a.arguments[i].isInt64() || a.arguments[i].isBool())
+		{
+			data.add((uint8)(int)a.arguments[i]);
+		}
+	}
+
+	var params(new DynamicObject());
+	params.getDynamicObject()->setProperty("ip", a.arguments[0].toString());
+	params.getDynamicObject()->setProperty("port", (int)a.arguments[1]);
+	m->sendBytes(data,params);
+	return var();
+
 }
