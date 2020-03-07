@@ -79,11 +79,14 @@ OSCModule::OSCModule(const String & name, int defaultLocalPort, int defaultRemot
 	}
 
 	//Script
-	scriptObject.setMethod(sendOSCId, OSCModule::sendOSCFromScript);
+	scriptObject.setMethod("send", OSCModule::sendOSCFromScript);
+	scriptObject.setMethod("sendTo", OSCModule::sendOSCFromScript);
+
 	scriptManager->scriptTemplate += ChataigneAssetManager::getInstance()->getScriptTemplate("osc");
 
-
 	defManager->add(CommandDefinition::createDef(this, "", "Custom Message", &CustomOSCCommand::create));
+
+	genericSender.connect("0.0.0.0", 1);
 }
 
 OSCModule::~OSCModule()
@@ -240,7 +243,7 @@ void OSCModule::setupSenders()
 	for (auto &o : outputManager->items) o->setupSender();
 }
 
-void OSCModule::sendOSC(const OSCMessage & msg)
+void OSCModule::sendOSC(const OSCMessage & msg, String ip, int port)
 {
 	if (outputManager == nullptr) return;
 	if (!enabled->boolValue()) return;
@@ -257,7 +260,15 @@ void OSCModule::sendOSC(const OSCMessage & msg)
 	}
 
 	outActivityTrigger->trigger();
-	for (auto &o : outputManager->items) o->sendOSC(msg);
+
+	if (ip.isNotEmpty() && port > 0)
+	{
+		genericSender.sendToIPAddress(ip, port, msg);
+	}
+	else
+	{
+		for (auto& o : outputManager->items) o->sendOSC(msg);
+	}
 }
 
 void OSCModule::setupZeroConf()
@@ -292,7 +303,7 @@ var OSCModule::sendOSCFromScript(const var::NativeFunctionArgs & a)
 	OSCModule * m = getObjectFromJS<OSCModule>(a);
 	if (!m->enabled->boolValue()) return var();
 
-	if (a.numArguments == 0) return var();
+	if (!checkNumArgs(m->niceName, a, 2)) return var();
 
 	try
 	{
@@ -318,6 +329,40 @@ var OSCModule::sendOSCFromScript(const var::NativeFunctionArgs & a)
 		NLOGERROR(m->niceName, "Error sending message : " << e.description);
 	}
 	
+
+	return var();
+}
+
+var OSCModule::sendOSCToFromScript(const var::NativeFunctionArgs& a)
+{
+	OSCModule* m = getObjectFromJS<OSCModule>(a);
+	if (!m->enabled->boolValue()) return var();
+	if (!checkNumArgs(m->niceName, a, 4)) return var();
+
+	try
+	{
+		OSCMessage msg(a.arguments[2].toString());
+
+		for (int i = 3; i < a.numArguments; i++)
+		{
+			if (a.arguments[i].isArray())
+			{
+				Array<var>* arr = a.arguments[i].getArray();
+				for (auto& aa : *arr) msg.addArgument(varToArgument(aa));
+			}
+			else
+			{
+				msg.addArgument(varToArgument(a.arguments[i]));
+			}
+		}
+
+		m->sendOSC(msg, a.arguments[0], a.arguments[1]);
+	}
+	catch (OSCFormatError & e)
+	{
+		NLOGERROR(m->niceName, "Error sending message : " << e.description);
+	}
+
 
 	return var();
 }
