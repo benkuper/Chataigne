@@ -55,7 +55,8 @@ public:
 	IntParameter * localPort;
 	BoolParameter * isConnected;
 	OSCReceiver receiver;
-	
+	OSCSender genericSender;
+
 	//ZEROCONF
 	Servus servus;
 
@@ -65,7 +66,6 @@ public:
 
 	//Script
 	const Identifier oscEventId = "oscEvent";
-	const Identifier sendOSCId = "send";
 
 	//RECEIVE
 	virtual void setupReceiver();
@@ -83,14 +83,14 @@ public:
 
 	//SEND
 	virtual void setupSenders();
-	void sendOSC(const OSCMessage &msg);
+	void sendOSC(const OSCMessage& msg, String ip = "", int port = 0);
 
 	//ZEROCONF
 	void setupZeroConf();
 
 	//Script
-	static var sendOSCFromScript(const var::NativeFunctionArgs &args);
-	static var sendToIPAddressFromScript(const var::NativeFunctionArgs &args);
+	static var sendOSCFromScript(const var::NativeFunctionArgs& args);
+	static var sendOSCToFromScript(const var::NativeFunctionArgs &args);
 
 	//Thru
 	static void createThruControllable(ControllableContainer* cc);

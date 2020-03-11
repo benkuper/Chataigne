@@ -28,12 +28,16 @@ public:
 	virtual bool checkReceiverIsReady() override;
 	virtual bool isReadyToSend() override;
 
-	virtual void sendMessageInternal(const String &message) override;
-	virtual void sendBytesInternal(Array<uint8> data) override;
+	virtual void sendMessageInternal(const String &message, var params) override;
+	virtual void sendBytesInternal(Array<uint8> data, var params) override;
 
 	virtual Array<uint8> readBytes() override;
 
 	virtual void clearInternal() override;
+
+
+	static var sendMessageToFromScript(const var::NativeFunctionArgs& a);
+	static var sendBytesToFromScript(const var::NativeFunctionArgs& a);
 
 	static UDPModule * create() { return new UDPModule(); } 
 	virtual String getDefaultTypeString() const override { return "UDP"; }

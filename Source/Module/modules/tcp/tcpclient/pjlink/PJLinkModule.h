@@ -28,7 +28,7 @@ public:
 
 	String passBytes;
 
-	virtual void sendMessageInternal(const String& message) override;
+	virtual void sendMessageInternal(const String& message, var) override;
 
 	CommandDefinition * getBasePJCommand(const String &menu, const String &commandName, const String &command, CommandContext context = CommandContext::ACTION);
 
