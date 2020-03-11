@@ -80,7 +80,7 @@ OSCModule::OSCModule(const String & name, int defaultLocalPort, int defaultRemot
 
 	//Script
 	scriptObject.setMethod("send", OSCModule::sendOSCFromScript);
-	scriptObject.setMethod("sendTo", OSCModule::sendOSCFromScript);
+	scriptObject.setMethod("sendTo", OSCModule::sendOSCToFromScript);
 
 	scriptManager->scriptTemplate += ChataigneAssetManager::getInstance()->getScriptTemplate("osc");
 
@@ -303,7 +303,7 @@ var OSCModule::sendOSCFromScript(const var::NativeFunctionArgs & a)
 	OSCModule * m = getObjectFromJS<OSCModule>(a);
 	if (!m->enabled->boolValue()) return var();
 
-	if (!checkNumArgs(m->niceName, a, 2)) return var();
+	if (!checkNumArgs(m->niceName, a, 1)) return var();
 
 	try
 	{
@@ -337,7 +337,7 @@ var OSCModule::sendOSCToFromScript(const var::NativeFunctionArgs& a)
 {
 	OSCModule* m = getObjectFromJS<OSCModule>(a);
 	if (!m->enabled->boolValue()) return var();
-	if (!checkNumArgs(m->niceName, a, 4)) return var();
+	if (!checkNumArgs(m->niceName, a, 3)) return var();
 
 	try
 	{
