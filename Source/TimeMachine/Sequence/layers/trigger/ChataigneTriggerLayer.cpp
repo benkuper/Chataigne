@@ -14,7 +14,7 @@
 #include "ChataigneTimeTrigger.h"
 
 ChataigneTriggerLayer::ChataigneTriggerLayer(Sequence* _sequence, var params) :
-	TriggerLayer(_sequence, "Action", params)
+	TriggerLayer(_sequence, getTypeString(), params)
 {
 	helpID = "ChataigneTriggerLayer";
 	color->setColor(ACTION_COLOR.darker());
