@@ -25,6 +25,7 @@ namespace ChataigneCommandIDs
 	static const int postGithubIssue = 0x60004;
 	static const int donate = 0x60005;
 	static const int showWelcome = 0x60006;
+	static const int gotoChangelog = 0x60007;
 
 	static const int guideStart = 0x300; //up to 0x300 +100
 	static const int exitGuide = 0x399; 
@@ -66,6 +67,11 @@ void MainContentComponent::getCommandInfo(CommandID commandID, ApplicationComman
 		result.setInfo("Go to the Amazing Documentation", "", "Help", result.readOnlyInKeyEditor);
 		break;
 
+	case ChataigneCommandIDs::gotoChangelog:
+		result.setInfo("See the changelog", "", "Help", result.readOnlyInKeyEditor);
+		break;
+
+
 	case ChataigneCommandIDs::postGithubIssue:
 		result.setInfo("Post an issue on github", "", "Help", result.readOnlyInKeyEditor);
 		break;
@@ -104,6 +110,7 @@ void MainContentComponent::getAllCommands(Array<CommandID>& commands) {
 		ChataigneCommandIDs::gotoWebsite,
 		ChataigneCommandIDs::gotoForum,
 		ChataigneCommandIDs::gotoDocs,
+		ChataigneCommandIDs::gotoChangelog,
 		ChataigneCommandIDs::postGithubIssue,
 		ChataigneCommandIDs::goToCommunityModules,
 		ChataigneCommandIDs::reloadCustomModules,
@@ -128,6 +135,7 @@ PopupMenu MainContentComponent::getMenuForIndex(int topLevelMenuIndex, const Str
 		menu.addCommandItem(&getCommandManager(), ChataigneCommandIDs::gotoWebsite);
 		menu.addCommandItem(&getCommandManager(), ChataigneCommandIDs::gotoForum);
 		menu.addCommandItem(&getCommandManager(), ChataigneCommandIDs::gotoDocs);
+		menu.addCommandItem(&getCommandManager(), ChataigneCommandIDs::gotoChangelog);
 		menu.addCommandItem(&getCommandManager(), ChataigneCommandIDs::postGithubIssue);
 
 	}else if (menuName == "Guides")
@@ -191,6 +199,10 @@ bool MainContentComponent::perform(const InvocationInfo& info)
 
 	case ChataigneCommandIDs::gotoDocs:
 		URL("https://benjamin.kuperberg.fr/chataigne/docs").launchInDefaultBrowser();
+		break;
+
+	case ChataigneCommandIDs::gotoChangelog:
+		URL("https://benjamin.kuperberg.fr/chataigne/releases/update.json").launchInDefaultBrowser();
 		break;
 
 	case ChataigneCommandIDs::postGithubIssue:

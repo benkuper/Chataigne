@@ -66,7 +66,7 @@
       <Optimization>Disabled</Optimization>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <AdditionalIncludeDirectories>..\..\JuceLibraryCode;..\..\..\JUCE\modules;..\..\Modules;../../External/wiiuse;../../External/serial/include;../../External/asio;../../External/joycon/include;../../External/servus/include;../../External/dnssd/include;../../External/sdl/include;../../External/libartnet/include;../../External/hidapi/include;../../Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;DEBUG;_DEBUG;USE_KINECT=0;JUCER_VS2017_7EC6161C=1;JUCE_APP_VERSION=1.6.13b7;JUCE_APP_VERSION_HEX=0x1060d;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_RTAS=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;DEBUG;_DEBUG;USE_KINECT=0;JUCER_VS2017_7EC6161C=1;JUCE_APP_VERSION=1.6.13b8;JUCE_APP_VERSION_HEX=0x1060d;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_RTAS=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <PrecompiledHeader/>
@@ -112,7 +112,7 @@
     <ClCompile>
       <Optimization>Full</Optimization>
       <AdditionalIncludeDirectories>..\..\JuceLibraryCode;..\..\..\JUCE\modules;..\..\Modules;../../External/wiiuse;../../External/serial/include;../../External/asio;../../External/joycon/include;../../External/servus/include;../../External/dnssd/include;../../External/sdl/include;../../External/libartnet/include;../../External/hidapi/include;../../Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;NDEBUG;USE_KINECT=0;JUCER_VS2017_7EC6161C=1;JUCE_APP_VERSION=1.6.13b7;JUCE_APP_VERSION_HEX=0x1060d;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_RTAS=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;NDEBUG;USE_KINECT=0;JUCER_VS2017_7EC6161C=1;JUCE_APP_VERSION=1.6.13b8;JUCE_APP_VERSION_HEX=0x1060d;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_RTAS=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <PrecompiledHeader/>
@@ -280,6 +280,8 @@
     <ClCompile Include="..\..\Source\Module\modules\common\streaming\NetworkStreamingModule.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\common\streaming\StreamingModule.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\common\ui\EnablingNetworkControllableContainerEditor.cpp"/>
+    <ClCompile Include="..\..\Source\Module\modules\controller\mouse\commands\MouseModuleCommands.cpp"/>
+    <ClCompile Include="..\..\Source\Module\modules\controller\mouse\MouseModule.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\controller\streamdeck\models\StreamDeckMini.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\controller\streamdeck\models\StreamDeckV1.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\controller\streamdeck\models\StreamDeckV2.cpp"/>
@@ -291,6 +293,7 @@
     <ClCompile Include="..\..\Source\Module\modules\controller\joystick\JoystickModule.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\controller\gamepad\GamepadModule.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\controller\joycon\JoyConModule.cpp"/>
+    <ClCompile Include="..\..\Source\Module\modules\controller\keyboard\commands\KeyboardModuleCommands.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\controller\keyboard\KeyboardModule.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\controller\kinect\KinectV2Module.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\controller\wiimote\lib\wiiuse\os_mac\os_mac.c"/>
@@ -3034,6 +3037,8 @@
     <ClInclude Include="..\..\Source\Module\modules\common\streaming\NetworkStreamingModule.h"/>
     <ClInclude Include="..\..\Source\Module\modules\common\streaming\StreamingModule.h"/>
     <ClInclude Include="..\..\Source\Module\modules\common\ui\EnablingNetworkControllableContainerEditor.h"/>
+    <ClInclude Include="..\..\Source\Module\modules\controller\mouse\commands\MouseModuleCommands.h"/>
+    <ClInclude Include="..\..\Source\Module\modules\controller\mouse\MouseModule.h"/>
     <ClInclude Include="..\..\Source\Module\modules\controller\streamdeck\models\StreamDeckMini.h"/>
     <ClInclude Include="..\..\Source\Module\modules\controller\streamdeck\models\StreamDeckV1.h"/>
     <ClInclude Include="..\..\Source\Module\modules\controller\streamdeck\models\StreamDeckV2.h"/>
@@ -3045,6 +3050,7 @@
     <ClInclude Include="..\..\Source\Module\modules\controller\joystick\JoystickModule.h"/>
     <ClInclude Include="..\..\Source\Module\modules\controller\gamepad\GamepadModule.h"/>
     <ClInclude Include="..\..\Source\Module\modules\controller\joycon\JoyConModule.h"/>
+    <ClInclude Include="..\..\Source\Module\modules\controller\keyboard\commands\KeyboardModuleCommands.h"/>
     <ClInclude Include="..\..\Source\Module\modules\controller\keyboard\KeyboardModule.h"/>
     <ClInclude Include="..\..\Source\Module\modules\controller\kinect\KinectV2Module.h"/>
     <ClInclude Include="..\..\Source\Module\modules\controller\wiimote\WiimoteManager.h"/>

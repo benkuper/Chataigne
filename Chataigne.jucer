@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.6.13b7"
+<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.6.13b8"
               bundleIdentifier="benkuper.Chataigne" includeBinaryInAppConfig="1"
               jucerVersion="5.4.7" companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
               companyEmail="benjamin@kuperberg.fr" defines="" splashScreenColour="Dark"
@@ -686,6 +686,16 @@
             </GROUP>
           </GROUP>
           <GROUP id="{A597C064-C7DE-23AD-F74A-2E029F90FCEA}" name="controller">
+            <GROUP id="{188E8CA2-04CC-D878-F91F-A3EDE5E6A665}" name="mouse">
+              <GROUP id="{76214040-3E5D-6DDE-134B-66DC1FAC3DDD}" name="commands">
+                <FILE id="qKD2RO" name="MouseModuleCommands.cpp" compile="1" resource="0"
+                      file="Source/Module/modules/controller/mouse/commands/MouseModuleCommands.cpp"/>
+                <FILE id="LceN6H" name="MouseModuleCommands.h" compile="0" resource="0"
+                      file="Source/Module/modules/controller/mouse/commands/MouseModuleCommands.h"/>
+              </GROUP>
+              <FILE id="YSaYns" name="MouseModule.cpp" compile="1" resource="0" file="Source/Module/modules/controller/mouse/MouseModule.cpp"/>
+              <FILE id="pM3zML" name="MouseModule.h" compile="0" resource="0" file="Source/Module/modules/controller/mouse/MouseModule.h"/>
+            </GROUP>
             <GROUP id="{8F6890F4-73F1-C709-3041-54E6E08838F1}" name="streamdeck">
               <GROUP id="{5846E3A2-6CB1-A070-1811-E4E3C52C814C}" name="models">
                 <FILE id="lChxs5" name="StreamDeckMini.cpp" compile="1" resource="0"
@@ -736,6 +746,12 @@
               <FILE id="G3w16g" name="JoyConModule.h" compile="0" resource="0" file="Source/Module/modules/controller/joycon/JoyConModule.h"/>
             </GROUP>
             <GROUP id="{DD0E5C56-EE3B-3CF9-A333-D5778991DBAE}" name="keyboard">
+              <GROUP id="{860517DB-8700-72CA-E905-B3BC181BC7E1}" name="commands">
+                <FILE id="mJHtL3" name="KeyboardModuleCommands.cpp" compile="1" resource="0"
+                      file="Source/Module/modules/controller/keyboard/commands/KeyboardModuleCommands.cpp"/>
+                <FILE id="kfQ62u" name="KeyboardModuleCommands.h" compile="0" resource="0"
+                      file="Source/Module/modules/controller/keyboard/commands/KeyboardModuleCommands.h"/>
+              </GROUP>
               <FILE id="nudXpb" name="KeyboardModule.cpp" compile="1" resource="0"
                     file="Source/Module/modules/controller/keyboard/KeyboardModule.cpp"/>
               <FILE id="CYr9Wv" name="KeyboardModule.h" compile="0" resource="0"
