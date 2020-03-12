@@ -31,6 +31,7 @@ void TCPServerConnectionManager::setupReceiver(int port)
 
 void TCPServerConnectionManager::removeConnection(StreamingSocket* connection)
 {
+	if (connection == nullptr) return;
 	connections.removeObject(connection, false);
 
 	connectionManagerListeners.call(&ConnectionManagerListener::connectionRemoved, connection);
