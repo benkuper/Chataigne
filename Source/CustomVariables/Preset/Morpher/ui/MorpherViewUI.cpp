@@ -20,7 +20,7 @@ MorpherPanel::MorpherPanel(StringRef contentName) :
 	InspectableSelectionManager::mainSelectionManager->addSelectionListener(this);
 
 	CVGroup* group = InspectableSelectionManager::mainSelectionManager->getInspectableAs<CVGroup>();
-	if (group != nullptr) setMorpher(group->morpher.get());
+	setGroup(group);
 }
 
 MorpherPanel::~MorpherPanel()
@@ -35,6 +35,8 @@ void MorpherPanel::setGroup(CVGroup* g)
 	if (currentGroup != nullptr)
 	{
 		currentGroup->controlMode->removeAsyncParameterListener(this);
+		currentGroup->removeInspectableListener(this);
+
 	}
 
 	currentGroup = g;
@@ -42,6 +44,7 @@ void MorpherPanel::setGroup(CVGroup* g)
 	if (currentGroup != nullptr)
 	{
 		currentGroup->controlMode->addAsyncParameterListener(this);
+		currentGroup->addInspectableListener(this);
 		setMorpher(currentGroup->morpher.get());
 	}
 	else
@@ -100,7 +103,7 @@ void MorpherPanel::inspectablesSelectionChanged()
 
 void MorpherPanel::inspectableDestroyed(Inspectable* i)
 {
-	if (i == currentGroup) setGroup(nullptr);
+	if (i == currentGroup || i == currentGroup->morpher.get()) setGroup(nullptr);
 	if (currentMorpherUI != nullptr && i == currentMorpherUI->morpher) setMorpher(nullptr);
 }
 
