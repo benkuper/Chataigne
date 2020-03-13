@@ -102,31 +102,31 @@ namespace BinaryData
     const int            Wiimote_pngSize = 2124;
 
     extern const char*   commandScriptTemplate_js;
-    const int            commandScriptTemplate_jsSize = 427;
+    const int            commandScriptTemplate_jsSize = 444;
 
     extern const char*   conditionScriptTemplate_js;
-    const int            conditionScriptTemplate_jsSize = 5455;
+    const int            conditionScriptTemplate_jsSize = 5536;
 
     extern const char*   filterScriptTemplate_js;
-    const int            filterScriptTemplate_jsSize = 632;
+    const int            filterScriptTemplate_jsSize = 646;
 
     extern const char*   genericScriptTemplate_js;
-    const int            genericScriptTemplate_jsSize = 4671;
+    const int            genericScriptTemplate_jsSize = 4737;
 
     extern const char*   httpScriptTemplate_js;
-    const int            httpScriptTemplate_jsSize = 802;
+    const int            httpScriptTemplate_jsSize = 823;
 
     extern const char*   midiScriptTemplate_js;
-    const int            midiScriptTemplate_jsSize = 1232;
+    const int            midiScriptTemplate_jsSize = 1271;
 
     extern const char*   moduleScriptTemplate_js;
-    const int            moduleScriptTemplate_jsSize = 1379;
+    const int            moduleScriptTemplate_jsSize = 1415;
 
     extern const char*   oscScriptTemplate_js;
-    const int            oscScriptTemplate_jsSize = 775;
+    const int            oscScriptTemplate_jsSize = 798;
 
     extern const char*   streamingScriptTemplate_js;
-    const int            streamingScriptTemplate_jsSize = 1064;
+    const int            streamingScriptTemplate_jsSize = 1091;
 
     extern const char*   about_png;
     const int            about_pngSize = 36971;
