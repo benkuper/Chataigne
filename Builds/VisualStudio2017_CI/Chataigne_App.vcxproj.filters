@@ -8459,6 +8459,9 @@
     <None Include="..\..\Resources\stripe.png">
       <Filter>Chataigne\Resources</Filter>
     </None>
+    <None Include="..\..\Resources\tray_icon.png">
+      <Filter>Chataigne\Resources</Filter>
+    </None>
     <None Include="..\..\..\JUCE\modules\juce_audio_formats\codecs\flac\Flac Licence.txt">
       <Filter>JUCE Modules\juce_audio_formats\codecs\flac</Filter>
     </None>

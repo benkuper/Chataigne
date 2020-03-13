@@ -5047,6 +5047,13 @@
 			path = ../../Source/Module/modules/oscquery/generic/GenericOSCQueryCommand.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
+		DB8586997DF3708490DAEBB5 = {
+			isa = PBXFileReference;
+			lastKnownFileType = image.png;
+			name = "tray_icon.png";
+			path = "../../Resources/tray_icon.png";
+			sourceTree = "SOURCE_ROOT";
+		};
 		DBA7609C19925D70182B83C2 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -5761,6 +5768,7 @@
 				E3334C7CE4EE2A23F2323183,
 				0D9B10AF87FB00D8CF4E54A5,
 				2DDAE65EB5FF79ED1E458E52,
+				DB8586997DF3708490DAEBB5,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -7721,7 +7729,7 @@
 					"DEBUG=1",
 					"JUCE_SUPPORT_CARBON=1",
 					"JUCER_XCODE_MAC_2F3811D6=1",
-					"JUCE_APP_VERSION=1.6.13b8",
+					"JUCE_APP_VERSION=1.6.13b9",
 					"JUCE_APP_VERSION_HEX=0x1060d",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
@@ -7783,7 +7791,7 @@
 					"NDEBUG=1",
 					"JUCE_SUPPORT_CARBON=1",
 					"JUCER_XCODE_MAC_2F3811D6=1",
-					"JUCE_APP_VERSION=1.6.13b8",
+					"JUCE_APP_VERSION=1.6.13b9",
 					"JUCE_APP_VERSION_HEX=0x1060d",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
