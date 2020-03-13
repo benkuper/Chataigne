@@ -68,10 +68,16 @@ public:
 	ToStringFilter(var params);
 	~ToStringFilter() {}
 
+	enum Format { NUMBER, TIME };
+	EnumParameter* format;
 	IntParameter * numDecimals;
+	StringParameter* prefix;
+	StringParameter* suffix;
 	//IntParameter * numLeadingZeros;
 
 	var convertValue(var sourceValue) override;
+
+	void filterParamChanged(Parameter*) override;
 
 	static ToStringFilter * create(var params) { return new ToStringFilter(params); }
 	String getTypeString() const override { return "Convert To String"; }
