@@ -125,7 +125,7 @@ void ChataigneAudioLayer::exportRMS(bool toNewMappingLayer, bool toClipboard, bo
 			curClip = clip;
 			if (curClip != nullptr)
 			{
-				buffer.setSize(2, curClip->readerSource->getAudioFormatReader()->lengthInSamples, false, true);
+				buffer.setSize(2, (int)curClip->readerSource->getAudioFormatReader()->lengthInSamples, false, true);
 				curClip->readerSource->getAudioFormatReader()->read(&buffer, 0, buffer.getNumSamples(), 0, true, true);
 			}
 		}

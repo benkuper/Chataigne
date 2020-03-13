@@ -19,6 +19,15 @@
 #define MIDDLE_UP MOUSEEVENTF_MIDDLEUP
 #define RIGHT_DOWN MOUSEEVENTF_RIGHTDOWN
 #define RIGHT_UP MOUSEEVENTF_RIGHTUP
+#elif JUCE_MAC
+
+#include "MouseMacFunctions.h"
+#define LEFT_DOWN kCGEventLeftMouseDown
+#define LEFT_UP kCGEventLeftMouseUp
+#define MIDDLE_DOWN kCGEventOtherMouseDown
+#define MIDDLE_UP kCGEventOtherMouseUp
+#define RIGHT_DOWN kCGEventRightMouseDown
+#define RIGHT_UP kCGEventRightMouseUp
 #else
 #define LEFT_DOWN 0
 #define LEFT_UP 1
@@ -27,6 +36,7 @@
 #define RIGHT_DOWN 4
 #define RIGHT_UP 5
 #endif
+
 
 MouseModule::MouseModule() : 
 	Module(getTypeString())
@@ -75,6 +85,8 @@ void MouseModule::setCursorPosition(Point<float>& pos, bool isRelative)
 	}
 
 	Desktop::getInstance().getMainMouseSource().setScreenPosition(pos);
+
+    
 }
 
 void MouseModule::setButtonDown(int buttonID)
@@ -105,6 +117,9 @@ void MouseModule::sendButtonEvent(int buttonEvent)
 	Input.type = INPUT_MOUSE;
 	Input.mi.dwFlags = buttonEvent;
 	::SendInput(1, &Input, sizeof(INPUT));
+#elif JUCE_MAC
+    juce::Point<float> pos = Desktop::getInstance().getMainMouseSource().getScreenPosition();
+    mousemac::sendMouseEvent(buttonEvent, pos.x, pos.y);
 #endif
 }
 

@@ -693,6 +693,8 @@
                 <FILE id="LceN6H" name="MouseModuleCommands.h" compile="0" resource="0"
                       file="Source/Module/modules/controller/mouse/commands/MouseModuleCommands.h"/>
               </GROUP>
+              <FILE id="fsxmhm" name="MouseMacFunctions.h" compile="0" resource="0"
+                    file="Source/Module/modules/controller/mouse/MouseMacFunctions.h"/>
               <FILE id="YSaYns" name="MouseModule.cpp" compile="1" resource="0" file="Source/Module/modules/controller/mouse/MouseModule.cpp"/>
               <FILE id="pM3zML" name="MouseModule.h" compile="0" resource="0" file="Source/Module/modules/controller/mouse/MouseModule.h"/>
             </GROUP>
@@ -752,6 +754,8 @@
                 <FILE id="kfQ62u" name="KeyboardModuleCommands.h" compile="0" resource="0"
                       file="Source/Module/modules/controller/keyboard/commands/KeyboardModuleCommands.h"/>
               </GROUP>
+              <FILE id="HIGkaL" name="KeyboardMacFunctions.h" compile="0" resource="0"
+                    file="Source/Module/modules/controller/keyboard/KeyboardMacFunctions.h"/>
               <FILE id="nudXpb" name="KeyboardModule.cpp" compile="1" resource="0"
                     file="Source/Module/modules/controller/keyboard/KeyboardModule.cpp"/>
               <FILE id="CYr9Wv" name="KeyboardModule.h" compile="0" resource="0"
@@ -1318,7 +1322,8 @@
                extraFrameworks="IOBluetooth, ForceFeedback, IOKit" extraCompilerFlags=""
                documentExtensions="noisette" customPList="&lt;plist&gt;&#10;&lt;dict&gt;&#10;&lt;key&gt;NSAppTransportSecurity&lt;/key&gt;&#10;&#9;&lt;dict&gt;&#10;&#9;&#9;&lt;key&gt;NSAllowsArbitraryLoads&lt;/key&gt;&#10;&#9;&#9;&lt;true/&gt;&#10;&#9;&lt;/dict&gt;&#10;&lt;/dict&gt;&#10;&lt;/plist&gt;"
                externalLibraries="Servus&#10;artnet&#10;hidapi&#10;joytime-core&#10;joytime-input-hidapi&#10;SDL2&#10;iconv"
-               microphonePermissionNeeded="1" hardenedRuntimeOptions="com.apple.security.cs.allow-jit,com.apple.security.device.audio-input">
+               microphonePermissionNeeded="1" hardenedRuntimeOptions="com.apple.security.cs.allow-jit,com.apple.security.device.audio-input"
+               extraDefs="JUCE_SUPPORT_CARBON=1">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" isDebug="1" optimisation="1" targetName="Chataigne"
                        headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/libartnet/include&#10;../../External/joycon/include&#10;../../External/sdl/include&#10;../../External/hidapi/include"

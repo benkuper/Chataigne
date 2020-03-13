@@ -84,7 +84,9 @@ void MappingLayer::setupMappingForCurrentMode()
 		curveValue = new ColorParameter("Value", "Color value of the curve");
 		addParameter(curveValue);
 		break;
-	}
+    default:
+        break;
+}
 
 	if (automation != nullptr)
 	{
@@ -153,6 +155,9 @@ void MappingLayer::updateCurvesValues()
 		}
 	}
 	break;
+            
+        default:
+            break;
 	}
 }
 
@@ -178,6 +183,8 @@ String MappingLayer::getHelpID()
 	case MODE_3D:
 		return "AutomationLayer";
 		break;
+        default:
+            break;
 	}
 
 	return "UnknownLayer";

@@ -48,8 +48,11 @@ void MouseModuleCommands::triggerInternal()
 	switch (type)
 	{
 	case SET_CURSOR_POSITION:
-		mouseModule->setCursorPosition(position->getPoint(), isRelative->boolValue());
-		break;
+    {
+        Point<float> p = position->getPoint();
+        mouseModule->setCursorPosition(p, isRelative->boolValue());
+    }
+    break;
 
 	case BUTTON_DOWN:
 		mouseModule->setButtonDown((int)buttonID->getValueData());

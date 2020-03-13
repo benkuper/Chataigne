@@ -2240,6 +2240,13 @@
 			path = ../../Source/Common/Serial/lib/cobs/cobs.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
+		3F35FA52B76126D0BEC152CC = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = KeyboardMacFunctions.h;
+			path = ../../Source/Module/modules/controller/keyboard/KeyboardMacFunctions.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		3F49C5463CB01384FC57BD67 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -4352,6 +4359,13 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = BaseCommandHandlerEditor.h;
 			path = ../../Source/Common/Command/ui/BaseCommandHandlerEditor.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		B8FE3445D4EE03CAC3E113B6 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = MouseMacFunctions.h;
+			path = ../../Source/Module/modules/controller/mouse/MouseMacFunctions.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		B9A0D94EF384D7EF9357D66C = {
@@ -6625,6 +6639,7 @@
 			isa = PBXGroup;
 			children = (
 				03F7DF3A23CAABEB66C4BF3C,
+				B8FE3445D4EE03CAC3E113B6,
 				80749B405D075CEECFB28D3B,
 				0C38530C36FD7305A35DE178,
 			);
@@ -6710,6 +6725,7 @@
 			isa = PBXGroup;
 			children = (
 				0CB7FA3F8F9BFAA36B9564A9,
+				3F35FA52B76126D0BEC152CC,
 				53A5A48ED7FEF0F32D648EA3,
 				6DDE46B937874C068E754258,
 			);

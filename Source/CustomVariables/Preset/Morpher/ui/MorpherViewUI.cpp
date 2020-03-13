@@ -14,8 +14,9 @@
 
 MorpherPanel::MorpherPanel(StringRef contentName) :
 	ShapeShifterContentComponent(contentName),
-	currentMorpherUI(nullptr),
-	currentGroup(nullptr)
+	currentGroup(nullptr),
+    currentMorpherUI(nullptr)
+
 {
 	InspectableSelectionManager::mainSelectionManager->addSelectionListener(this);
 

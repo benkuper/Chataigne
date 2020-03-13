@@ -25,15 +25,15 @@ BaseCommandHandler::BaseCommandHandler(const String & name, CommandContext _cont
 
 BaseCommandHandler::~BaseCommandHandler()
 {
-	if (ModuleManager::getInstanceWithoutCreating() != nullptr) ModuleManager::getInstance()->removeBaseManagerListener(this);
-	if(command != nullptr && command->module != nullptr && !command->module->isClearing) command->module->templateManager->removeBaseManagerListener(this);
-	setCommand(nullptr);
+	
 }
 
 void BaseCommandHandler::clearItem()
 {
 	BaseItem::clearItem();
-	setCommand(nullptr);
+    if (ModuleManager::getInstanceWithoutCreating() != nullptr) ModuleManager::getInstance()->removeBaseManagerListener(this);
+    if(command != nullptr && command->module != nullptr && command->module->templateManager != nullptr && !command->module->isClearing) command->module->templateManager->removeBaseManagerListener(this);
+    setCommand(nullptr);
 }
 
 
@@ -194,6 +194,7 @@ void BaseCommandHandler::commandTemplateDestroyed()
 
 void BaseCommandHandler::inspectableDestroyed(Inspectable *)
 {
+    if(isClearing) return;
 	if (command != nullptr) ghostCommandData = command->getJSONData();
 	setCommand(nullptr);
 	if(!Engine::mainEngine->isClearing && ModuleManager::getInstanceWithoutCreating() != nullptr) ModuleManager::getInstance()->addBaseManagerListener(this);

@@ -256,8 +256,8 @@ void DMXModule::showMenuAndCreateValue(ControllableContainer * container)
 
 DMXModule::DMXRouteParams::DMXRouteParams(Module * sourceModule, Controllable * c) :
 	mode16bit(nullptr),
-	channel(nullptr),
-	fullRange(nullptr)
+	fullRange(nullptr),
+    channel(nullptr)
 {
 	if (c->type == Controllable::FLOAT || c->type == Controllable::INT || c->type == Controllable::BOOL || c->type == Controllable::POINT2D || c->type == Controllable::POINT3D || c->type == Controllable::COLOR)
 	{

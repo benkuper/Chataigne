@@ -20,10 +20,11 @@ CVCommand::CVCommand(CustomVariablesModule * _module, CommandContext context, va
 	targetPreset(nullptr),
 	targetPreset2(nullptr),
 	presetFile(nullptr),
-	valueOperator(nullptr),
-	value(nullptr),
-	automation(nullptr),
-	time(nullptr)
+	time(nullptr),
+    automation(nullptr),
+    valueOperator(nullptr),
+    value(nullptr)
+
 {
 	saveAndLoadRecursiveData = true;
 
