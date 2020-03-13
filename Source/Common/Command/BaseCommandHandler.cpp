@@ -25,7 +25,7 @@ BaseCommandHandler::BaseCommandHandler(const String & name, CommandContext _cont
 
 BaseCommandHandler::~BaseCommandHandler()
 {
-	
+	clearItem();
 }
 
 void BaseCommandHandler::clearItem()

@@ -74,6 +74,11 @@ Module::~Module()
 {
 }
 
+void Module::clearItem()
+{
+	if(templateManager != nullptr) templateManager->clear();
+}
+
 void Module::setupIOConfiguration(bool _hasInput, bool _hasOutput)
 {
 	if (_hasInput != hasInput) hasInput = _hasInput;

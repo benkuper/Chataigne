@@ -57,6 +57,8 @@ public:
 	//Template
 	std::unique_ptr<CommandTemplateManager> templateManager;
 
+	virtual void clearItem() override;
+
 	virtual void setupIOConfiguration(bool _hasInput, bool _hasOutput);
 
 	//ROUTING
