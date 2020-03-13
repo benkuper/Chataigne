@@ -68,7 +68,7 @@ MouseModule::~MouseModule()
 
 void MouseModule::clearItem()
 {
-	Desktop::getInstance().addGlobalMouseListener(this);
+	Desktop::getInstance().removeGlobalMouseListener(this);
 }
 
 void MouseModule::setCursorPosition(Point<float>& pos, bool isRelative)
