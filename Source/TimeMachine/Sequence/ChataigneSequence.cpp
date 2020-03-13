@@ -152,7 +152,7 @@ void ChataigneSequence::addNewMappingLayerFromValues(Array<Point<float>> keys)
 	MappingLayer * layer = (MappingLayer *)layerManager->addItem(layerManager->factory.create("Mapping"));
 
 	Array<Point<float>> simplifiedKeys = AutomationRecorder::getSimplifiedKeys(keys,.05f);
-	layer->automation->addItems(simplifiedKeys, true, true, true);
+	layer->automation->addItems(simplifiedKeys, true, true, Easing::BEZIER);
 }
 
 void ChataigneSequence::onContainerParameterChangedInternal(Parameter* p)
