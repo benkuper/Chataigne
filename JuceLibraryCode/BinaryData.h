@@ -50,6 +50,9 @@ namespace BinaryData
     extern const char*   Millumin_png;
     const int            Millumin_pngSize = 3457;
 
+    extern const char*   Mouse_png;
+    const int            Mouse_pngSize = 2911;
+
     extern const char*   OS_png;
     const int            OS_pngSize = 1669;
 
@@ -183,7 +186,7 @@ namespace BinaryData
     const int            tray_icon_pngSize = 3363;
 
     // Number of elements in the namedResourceList and originalFileNames arrays.
-    const int namedResourceListSize = 58;
+    const int namedResourceListSize = 59;
 
     // Points to the start of a list of resource names.
     extern const char* namedResourceList[];

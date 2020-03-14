@@ -4130,6 +4130,7 @@
     <None Include="..\..\Resources\Modules\Metronome.png"/>
     <None Include="..\..\Resources\Modules\MIDI.png"/>
     <None Include="..\..\Resources\Modules\Millumin.png"/>
+    <None Include="..\..\Resources\Modules\Mouse.png"/>
     <None Include="..\..\Resources\Modules\OS.png"/>
     <None Include="..\..\Resources\Modules\OSC.png"/>
     <None Include="..\..\Resources\Modules\OSCQuery.png"/>

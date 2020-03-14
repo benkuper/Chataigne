@@ -8330,6 +8330,9 @@
     <None Include="..\..\Resources\Modules\Millumin.png">
       <Filter>Chataigne\Resources\Modules</Filter>
     </None>
+    <None Include="..\..\Resources\Modules\Mouse.png">
+      <Filter>Chataigne\Resources\Modules</Filter>
+    </None>
     <None Include="..\..\Resources\Modules\OS.png">
       <Filter>Chataigne\Resources\Modules</Filter>
     </None>

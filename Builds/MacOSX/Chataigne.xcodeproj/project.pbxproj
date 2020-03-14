@@ -2982,6 +2982,13 @@
 			path = ../../Source/Common/InputSystem/InputSystemManager.h;
 			sourceTree = "SOURCE_ROOT";
 		};
+		6B60D0981196488A639E9EE9 = {
+			isa = PBXFileReference;
+			lastKnownFileType = image.png;
+			name = Mouse.png;
+			path = ../../Resources/Modules/Mouse.png;
+			sourceTree = "SOURCE_ROOT";
+		};
 		6B6CAC3FCD9D9BB003564213 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -5701,6 +5708,7 @@
 				5A60F64718B023B15C6B6F70,
 				E3D81D58A2F55922C54F1F18,
 				278F096FADEA555F2103718E,
+				6B60D0981196488A639E9EE9,
 				9D0A3612B3732B6D0B69FF7E,
 				5A09E732212BD7F0F838B951,
 				54D225421E0211F8F2E4EBFA,
