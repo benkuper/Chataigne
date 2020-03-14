@@ -25,7 +25,6 @@ Morpher::Morpher(CVPresetManager* presetManager) :
 	diagram.reset(new jcv_diagram());
 
 	showInspectorOnSelect = false;
-	editorIsCollapsed = true;
 
 	presetManager->addControllableContainerListener(this);
 	presetManager->addBaseManagerListener(this);
