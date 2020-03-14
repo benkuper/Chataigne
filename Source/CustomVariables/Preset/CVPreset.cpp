@@ -131,6 +131,7 @@ void GenericControllableManagerLinkedContainer::addValueFromItem(Parameter * sou
 	linkMap.set(p, source);
 	source->addControllableListener(this);
 	source->addParameterListener(this);
+	p->forceSaveValue = true;
 	syncItem(p, source);
 	addParameter(p);
 }
