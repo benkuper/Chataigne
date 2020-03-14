@@ -30,12 +30,14 @@ public:
 	CustomValuesCommandArgumentManager * linkedTemplateManager;
 	WeakReference<Inspectable> linkedTemplateManagerRef;
 
+	std::function<void(Parameter*, var)> createParamCallbackFunc;
+
 	void linkToTemplate(CustomValuesCommandArgumentManager * t);
 	void rebuildFromTemplate(bool clearData);
 
 	CustomValuesCommandArgument * addItemWithParam(Parameter * p, var data = var(), bool fromUndoableAction = false);
 	CustomValuesCommandArgument * addItemFromType(Parameter::Type type, var data = var(), bool fromUndoableAction = false);
-
+	Parameter * createParameterFromType(Parameter::Type type, var data = var(), int index = 0);
 	CustomValuesCommandArgument * addItemFromData(var data, bool fromUndoableAction = false) override;
 
 	void autoRenameItems();
