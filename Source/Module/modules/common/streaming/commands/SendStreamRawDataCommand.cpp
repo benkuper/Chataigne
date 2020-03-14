@@ -14,7 +14,7 @@ SendStreamRawDataCommand::SendStreamRawDataCommand(StreamingModule * _module, Co
 	SendStreamValuesCommand(_module,context, params)
 {
 	customValuesManager->allowedTypes.add(Controllable::INT);
-	customValuesManager->addBaseManagerListener(this);
+	customValuesManager->createParamCallbackFunc = std::bind(&SendStreamRawDataCommand::customValueCreated, this, std::placeholders::_1, std::placeholders::_2);
 }
 
 SendStreamRawDataCommand::~SendStreamRawDataCommand()
@@ -30,12 +30,11 @@ void SendStreamRawDataCommand::triggerInternal()
 	streamingModule->sendBytes(data);
 }
 
-void SendStreamRawDataCommand::itemAdded(CustomValuesCommandArgument* item)
+void SendStreamRawDataCommand::customValueCreated(Parameter * p, var data)
 {
-	IntParameter* p = dynamic_cast<IntParameter*>(item->param);
-	if (p != nullptr)
+	if (IntParameter* ip = dynamic_cast<IntParameter*>(p))
 	{
-		p->hexMode = true;
-		p->setRange(0, 255);
+		ip->hexMode = true;
+		ip->setRange(0, 255);
 	}
 }

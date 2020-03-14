@@ -13,8 +13,7 @@
 #include "SendStreamValuesCommand.h"
 
 class SendStreamRawDataCommand :
-	public SendStreamValuesCommand,
-	public CustomValuesCommandArgumentManager::ManagerListener
+	public SendStreamValuesCommand
 {
 public:
 	SendStreamRawDataCommand(StreamingModule * _module, CommandContext context, var params);
@@ -22,7 +21,7 @@ public:
 
 	void triggerInternal() override;
 
-	void itemAdded(CustomValuesCommandArgument* item) override;
+	void customValueCreated(Parameter * p, var data);
 
 	static SendStreamRawDataCommand * create(ControllableContainer * module, CommandContext context, var params) { return new SendStreamRawDataCommand((StreamingModule *)module, context, params); }
 };
