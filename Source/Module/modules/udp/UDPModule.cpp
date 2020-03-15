@@ -42,7 +42,7 @@ void UDPModule::setupReceiver()
 	receiverIsBound->setValue(receiver->getBoundPort() != -1);
 	if (receiverIsBound->boolValue())
 	{
-		receiver->setEnablePortReuse(true);
+		receiver->setEnablePortReuse(false);
 
 		NLOG(niceName, "UDP Receiver bound to port " << localPort->intValue());
 		localPort->clearWarning();
