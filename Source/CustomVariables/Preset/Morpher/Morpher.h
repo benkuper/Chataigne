@@ -39,6 +39,7 @@ public:
 	FloatParameter * attractionDecay;
 
 	MorphTarget mainTarget;
+	Point2DParameter* targetPosition;
 
 	Point<float> attractionDir;
 	int attractionSleepMS;

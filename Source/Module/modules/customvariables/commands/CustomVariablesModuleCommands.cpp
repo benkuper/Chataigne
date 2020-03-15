@@ -286,7 +286,7 @@ void CVCommand::triggerInternal()
 		if (!target->targetContainer.wasObjectDeleted() && target->targetContainer != nullptr)
 		{
 			CVGroup * g = static_cast<CVGroup *>(target->targetContainer.get());
-			if (g != nullptr) g->targetPosition->setPoint(((Point2DParameter *)value)->getPoint());
+			if (g != nullptr && g->morpher != nullptr) g->morpher->targetPosition->setPoint(((Point2DParameter *)value)->getPoint());
 		}
 	}
 	break;

@@ -35,7 +35,6 @@ Weights mode locks the values and interpolate them continuously depending on pre
 Voronoi and Gradient Band (not implemented yet) also locks values but interpolates them using 2D interpolators");
 	controlMode->addOption("Free", FREE)->addOption("Weights", WEIGHTS)->addOption("2D Voronoi", VORONOI);// ->addOption("Gradient Band", GRADIENT_BAND);
 
-	targetPosition = params.addPoint2DParameter("Target Position", "Use for 2D interpolator such as Voronoi or Gradient band", false);
 }
 
 CVGroup::~CVGroup()
@@ -186,8 +185,6 @@ void CVGroup::onControllableFeedbackUpdateInternal(ControllableContainer * cc, C
 				morpher.reset();
 			}
 		}
-		
-		targetPosition->setEnabled(useMorpher);
 		
 
 		if(cm != FREE) computeValues();

@@ -39,6 +39,7 @@ Morpher::Morpher(CVPresetManager* presetManager) :
 	mainTarget.targetColor->setColor(Colours::white);
 	addChildControllableContainer(&mainTarget);
 
+	targetPosition = addPoint2DParameter("Target Position", "Use for 2D interpolator such as Voronoi or Gradient band");
 
 	bgImagePath = addFileParameter("Background Path", "", "");
 	bgImagePath->fileTypeFilter = "*.jpg; *.jpeg; *.png; *.bmp; *.tiff";
@@ -322,7 +323,11 @@ void Morpher::itemRemoved(CVPreset* cvp)
 
 void Morpher::onContainerParameterChanged(Parameter* p)
 {
-	if (p == attractionUpdateRate)
+	if (p == targetPosition)
+	{
+		mainTarget.viewUIPosition->setPoint(targetPosition->getPoint());
+		computeWeights();
+	}else if (p == attractionUpdateRate)
 	{
 		attractionSleepMS = 1000 / attractionUpdateRate->intValue();
 	}
@@ -344,7 +349,7 @@ void Morpher::onControllableFeedbackUpdate(ControllableContainer*, Controllable*
 {
 	if (c == mainTarget.viewUIPosition)
 	{
-		computeWeights();
+		targetPosition->setPoint(mainTarget.viewUIPosition->getPoint());
 	}
 	else if (MorphTarget * cvp = c->getParentAs<MorphTarget>())
 	{

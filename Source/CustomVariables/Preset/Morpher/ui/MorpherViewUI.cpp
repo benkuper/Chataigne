@@ -130,6 +130,7 @@ MorpherViewUI::MorpherViewUI(Morpher* morpher) :
 
 	centerUIAroundPosition = true;
 	updatePositionOnDragMove = true;
+	useCheckersAsUnits = true;
 	
 	setupBGImage();
 	
