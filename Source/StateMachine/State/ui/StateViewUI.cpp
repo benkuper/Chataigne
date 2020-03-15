@@ -73,7 +73,9 @@ void StateViewUI::mouseDown(const MouseEvent & e)
 			if (e.originalComponent == &pmui) item->selectThis();
 		}else if (e.mods.isRightButtonDown())
 		{
-			if (e.originalComponent != &pmui)
+			if (e.originalComponent != &pmui 
+				&& e.originalComponent->findParentComponentOfClass<ProcessorManagerUI>() == nullptr
+				&& e.originalComponent != activeUI.get() && e.originalComponent != enabledBT.get())
 			{
 				PopupMenu p;
 				p.addItem(1, "Create Transition from here");

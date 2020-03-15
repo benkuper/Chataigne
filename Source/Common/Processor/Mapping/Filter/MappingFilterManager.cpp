@@ -29,6 +29,8 @@ MappingFilterManager::MappingFilterManager() :
 	BaseManager<MappingFilter>("Filters"),
 	inputSourceParam(nullptr)
 {
+	canBeCopiedAndPasted = true;
+
 	managerFactory = &factory;
 	factory.defs.add(Factory<MappingFilter>::Definition::createDef("Remap", "Remap", &SimpleRemapFilter::create));
 	factory.defs.add(Factory<MappingFilter>::Definition::createDef("Remap", "Curve Map", &CurveMapFilter::create));

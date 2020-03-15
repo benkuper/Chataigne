@@ -20,6 +20,7 @@ ConsequenceManager::ConsequenceManager(const String &name) :
 	forceDisabled(false)
 {
 	canBeDisabled = false;
+	canBeCopiedAndPasted = true;
 
 	selectItemWhenCreated = false;
 	triggerAll = addTrigger("Trigger All", "Trigger all the consequences in the manager");
