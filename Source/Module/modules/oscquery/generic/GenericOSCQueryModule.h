@@ -64,11 +64,34 @@ public:
 
 	virtual void onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c) override;
 
-	static GenericOSCQueryModule * create() { return new GenericOSCQueryModule(); }
-	virtual String getDefaultTypeString() const override { return "OSCQuery"; }
-
 
 	// Inherited via Thread
 	virtual void run() override;
+
+	//Routing
+	class OSCQueryRouteParams :
+		public RouteParams,
+		public Inspectable::InspectableListener
+	{
+	public:
+		OSCQueryRouteParams(GenericOSCQueryModule* outModule, Module* sourceModule, Controllable* c);
+		~OSCQueryRouteParams();
+
+		TargetParameter* target;
+		WeakReference<Controllable> cRef;
+
+		void setControllable(Controllable* c);
+
+		void onContainerParameterChanged(Parameter* p) override;
+
+		void inspectableDestroyed(Inspectable * i) override;
+	};
+
+	virtual RouteParams* createRouteParamsForSourceValue(Module* sourceModule, Controllable* c, int /*index*/) override { return new OSCQueryRouteParams(this, sourceModule, c); }
+	virtual void handleRoutedModuleValue(Controllable* c, RouteParams* p) override;
+	
+
+	static GenericOSCQueryModule* create() { return new GenericOSCQueryModule(); }
+	virtual String getDefaultTypeString() const override { return "OSCQuery"; }
 
 };
