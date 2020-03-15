@@ -185,47 +185,81 @@ Controllable * GenericOSCQueryModule::createControllableFromData(StringRef name,
 
 	const char type = data.getProperty("TYPE", "").toString()[0];
 	var range = data.hasProperty("RANGE") ? data.getProperty("RANGE", var())[0] : var();
-	var value = data.getProperty("VALUE", 0);
-	if(value.isArray()) value = value[0];
+	var value = data.getProperty("VALUE", var());
+
 
 	int access = data.getProperty("ACCESS", 3);
 
-	var minVal = range.getProperty("MIN", INT32_MIN);
-	var maxVal = range.getProperty("MAX", INT32_MAX);
+	if (!value.isArray() || !range.isArray())
+	{
+		NLOGWARNING(niceName, cNiceName << " : VALUE should be an array");
+		return nullptr;
+	}
+
+	var minVal;
+	var maxVal;
+	for (int i = 0; i < value.size(); i++)
+	{
+		minVal.append(range[i].getProperty("MIN", INT32_MIN));
+		maxVal.append(range[i].getProperty("MAX", INT32_MAX));
+	}
 
 	switch (type)
 	{
 	case 'N': c = new Trigger(cNiceName, cNiceName); break;
-	case 'i': c = new IntParameter(cNiceName, cNiceName, value, minVal, maxVal); break;
-	case 'f': c = new FloatParameter(cNiceName, cNiceName, value, minVal, maxVal); break;
+	case 'i': c = new IntParameter(cNiceName, cNiceName, value[0], minVal[0], maxVal[0]); break;
+	case 'f': c = new FloatParameter(cNiceName, cNiceName, value[0], minVal[0], maxVal[0]); break;
+	case 'ii':
+	case 'ff':
+		c = new Point2DParameter(cNiceName, cNiceName, value); break;
+		((Point2DParameter*)c)->setRange(minVal, maxVal);
+		break;
+
+	case 'iii':
+	case 'fff':
+		c = new Point3DParameter(cNiceName, cNiceName, value); break;
+		((Point3DParameter*)c)->setRange(minVal, maxVal);
+		break;
+
+	case 'ffff':
+	{
+		Colour col = Colour::fromFloatRGBA(value[0],value[1],value[2],value[3]);
+		c = new ColorParameter(cNiceName, cNiceName, col);
+	}
+	break;
+
+	case 'iiii':
+	{
+		Colour col = Colour::fromRGBA((int)value[0], (int)value[1], (int)value[2], (int)value[3]);
+		c = new ColorParameter(cNiceName, cNiceName, col);
+	}
+	break;
 
 	case 's':
 	{
-		if (range.isObject()) //enum
+		if (range[0].isObject()) //enum
 		{
-			var options = range.getProperty("VALS",var());
+			var options = range[0].getProperty("VALS",var());
 			
-			DBG(JSON::toString(range));
-
 			if (options.isArray())
 			{
 				EnumParameter * ep = new EnumParameter(cNiceName, cNiceName);
 				for (int i = 0; i < options.size(); i++) ep->addOption(options[i], options[i], false);
-				ep->setValue(value);
+				ep->setValue(value[0]);
 
 				c = ep;
 			}
 		}
 		else
 		{
-			c =  new StringParameter(cNiceName, cNiceName, value);
+			c =  new StringParameter(cNiceName, cNiceName, value[0]);
 		}
 	}
 	break;
 
 	case 'r':
 	{
-		Colour col = Colour::fromString(value.toString());
+		Colour col = Colour::fromString(value[0].toString());
 		Colour goodCol = Colour(col.getAlpha(), col.getRed(), col.getGreen(), col.getBlue()); //inverse RGBA > ARGB
 		c = new ColorParameter(cNiceName, cNiceName, goodCol);
 	}
