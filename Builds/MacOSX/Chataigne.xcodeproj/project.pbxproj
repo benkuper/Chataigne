@@ -645,6 +645,14 @@
 			isa = PBXBuildFile;
 			fileRef = EE7734BE83426C490017DACD;
 		};
+		5BE2644EF96F14CE740DB37D = {
+			isa = PBXBuildFile;
+			fileRef = DC0744DA4FB5C122CD443DAA;
+		};
+		A4D025BDF32166257C6DBF91 = {
+			isa = PBXBuildFile;
+			fileRef = 80749B405D075CEECFB28D3B;
+		};
 		55B5CE8B2A46E8FA2BCBFFB7 = {
 			isa = PBXBuildFile;
 			fileRef = 79A8BC1C27053A422D07A1B6;
@@ -688,6 +696,10 @@
 		4C2D775E82C8238217DCB568 = {
 			isa = PBXBuildFile;
 			fileRef = EE16135FACA08DECECFBE1D6;
+		};
+		64B59A643C477C03F3CA5746 = {
+			isa = PBXBuildFile;
+			fileRef = 7D61D964EC36006035F5BFB6;
 		};
 		324B449B4DC24BAEFCA1ED2A = {
 			isa = PBXBuildFile;
@@ -1484,6 +1496,13 @@
 			path = System/Library/Frameworks/CoreMedia.framework;
 			sourceTree = SDKROOT;
 		};
+		0C38530C36FD7305A35DE178 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = MouseModule.h;
+			path = ../../Source/Module/modules/controller/mouse/MouseModule.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		0C5AF857C59082628C2BDB1A = {
 			isa = PBXFileReference;
 			lastKnownFileType = file.js;
@@ -1946,6 +1965,13 @@
 			path = ../../Source/Common/Processor/Action/Condition/ConditionManager.h;
 			sourceTree = "SOURCE_ROOT";
 		};
+		2A69A873D95E3C38B47969AF = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = KeyboardModuleCommands.h;
+			path = ../../Source/Module/modules/controller/keyboard/commands/KeyboardModuleCommands.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		2BE3C41C55C2BFCAD0385D14 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -2280,6 +2306,13 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = cobs.cpp;
 			path = ../../Source/Common/Serial/lib/cobs/cobs.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
+		3F35FA52B76126D0BEC152CC = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = KeyboardMacFunctions.h;
+			path = ../../Source/Module/modules/controller/keyboard/KeyboardMacFunctions.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		3F49C5463CB01384FC57BD67 = {
@@ -3017,6 +3050,13 @@
 			path = ../../Source/Common/InputSystem/InputSystemManager.h;
 			sourceTree = "SOURCE_ROOT";
 		};
+		6B60D0981196488A639E9EE9 = {
+			isa = PBXFileReference;
+			lastKnownFileType = image.png;
+			name = Mouse.png;
+			path = ../../Resources/Modules/Mouse.png;
+			sourceTree = "SOURCE_ROOT";
+		};
 		6B6CAC3FCD9D9BB003564213 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -3416,6 +3456,13 @@
 			path = ../../Source/Module/modules/customvariables/commands/CustomVariablesModuleCommands.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
+		7D61D964EC36006035F5BFB6 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = KeyboardModuleCommands.cpp;
+			path = ../../Source/Module/modules/controller/keyboard/commands/KeyboardModuleCommands.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		7E23F49743D0C3C35F3B71C0 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -3449,6 +3496,13 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = ScriptCallbackCommand.h;
 			path = ../../Source/Module/modules/common/commands/scriptcallback/ScriptCallbackCommand.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		80749B405D075CEECFB28D3B = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = MouseModule.cpp;
+			path = ../../Source/Module/modules/controller/mouse/MouseModule.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		818E7F9708353CFDE88AEF66 = {
@@ -4165,6 +4219,13 @@
 			path = ../../Resources/Modules/Watchout.png;
 			sourceTree = "SOURCE_ROOT";
 		};
+		AAAD358C5DC0C1A5682C77E8 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = MouseModuleCommands.h;
+			path = ../../Source/Module/modules/controller/mouse/commands/MouseModuleCommands.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		AAA5F74DC5FAB65C96003095 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -4450,6 +4511,13 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = BaseCommandHandlerEditor.h;
 			path = ../../Source/Common/Command/ui/BaseCommandHandlerEditor.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		B8FE3445D4EE03CAC3E113B6 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = MouseMacFunctions.h;
+			path = ../../Source/Module/modules/controller/mouse/MouseMacFunctions.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		B9A0D94EF384D7EF9357D66C = {
@@ -5138,6 +5206,13 @@
 			path = ../../Source/Module/modules/oscquery/generic/GenericOSCQueryCommand.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
+		DB8586997DF3708490DAEBB5 = {
+			isa = PBXFileReference;
+			lastKnownFileType = image.png;
+			name = "tray_icon.png";
+			path = "../../Resources/tray_icon.png";
+			sourceTree = "SOURCE_ROOT";
+		};
 		DBA7609C19925D70182B83C2 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -5150,6 +5225,13 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = StateUI.cpp;
 			path = ../../Source/StateMachine/State/ui/StateUI.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
+		DC0744DA4FB5C122CD443DAA = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = MouseModuleCommands.cpp;
+			path = ../../Source/Module/modules/controller/mouse/commands/MouseModuleCommands.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		DC2596005E101A0DF8999D87 = {
@@ -5806,6 +5888,7 @@
 				5A60F64718B023B15C6B6F70,
 				E3D81D58A2F55922C54F1F18,
 				278F096FADEA555F2103718E,
+				6B60D0981196488A639E9EE9,
 				9D0A3612B3732B6D0B69FF7E,
 				5A09E732212BD7F0F838B951,
 				54D225421E0211F8F2E4EBFA,
@@ -5873,6 +5956,7 @@
 				E3334C7CE4EE2A23F2323183,
 				0D9B10AF87FB00D8CF4E54A5,
 				2DDAE65EB5FF79ED1E458E52,
+				DB8586997DF3708490DAEBB5,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -6766,6 +6850,26 @@
 			name = common;
 			sourceTree = "<group>";
 		};
+		03F7DF3A23CAABEB66C4BF3C = {
+			isa = PBXGroup;
+			children = (
+				DC0744DA4FB5C122CD443DAA,
+				AAAD358C5DC0C1A5682C77E8,
+			);
+			name = commands;
+			sourceTree = "<group>";
+		};
+		6FCADFA56546ADD440BAE600 = {
+			isa = PBXGroup;
+			children = (
+				03F7DF3A23CAABEB66C4BF3C,
+				B8FE3445D4EE03CAC3E113B6,
+				80749B405D075CEECFB28D3B,
+				0C38530C36FD7305A35DE178,
+			);
+			name = mouse;
+			sourceTree = "<group>";
+		};
 		4E3A94968E02D9FF700B3781 = {
 			isa = PBXGroup;
 			children = (
@@ -6832,9 +6936,20 @@
 			name = joycon;
 			sourceTree = "<group>";
 		};
+		0CB7FA3F8F9BFAA36B9564A9 = {
+			isa = PBXGroup;
+			children = (
+				7D61D964EC36006035F5BFB6,
+				2A69A873D95E3C38B47969AF,
+			);
+			name = commands;
+			sourceTree = "<group>";
+		};
 		FDC3BCE022FBCF6F430EC94B = {
 			isa = PBXGroup;
 			children = (
+				0CB7FA3F8F9BFAA36B9564A9,
+				3F35FA52B76126D0BEC152CC,
 				53A5A48ED7FEF0F32D648EA3,
 				6DDE46B937874C068E754258,
 			);
@@ -6907,6 +7022,7 @@
 		F8AE04C7094D4FF5D9786FDE = {
 			isa = PBXGroup;
 			children = (
+				6FCADFA56546ADD440BAE600,
 				F3330C384960BC2EFE9674FD,
 				8F6EAC12C7E1A5C5DC92DA84,
 				FE04D271FB3D733172FD0288,
@@ -7827,6 +7943,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"_DEBUG=1",
 					"DEBUG=1",
+					"JUCE_SUPPORT_CARBON=1",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
 					"JUCE_APP_VERSION=1.7.0b1",
 					"JUCE_APP_VERSION_HEX=0x10700",
@@ -7888,6 +8005,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"_NDEBUG=1",
 					"NDEBUG=1",
+					"JUCE_SUPPORT_CARBON=1",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
 					"JUCE_APP_VERSION=1.7.0b1",
 					"JUCE_APP_VERSION_HEX=0x10700",
@@ -8205,6 +8323,8 @@
 				9A671E6CC2C86695A5BE4A84,
 				31362975C7078AE89FAD4322,
 				D24D9221F54DA1CD4E4E3900,
+				5BE2644EF96F14CE740DB37D,
+				A4D025BDF32166257C6DBF91,
 				55B5CE8B2A46E8FA2BCBFFB7,
 				B3467E7152524D538FC5E575,
 				D23D6376125B65F2616D8BEC,
@@ -8216,6 +8336,7 @@
 				5799B2059BFEDDAEFBFA0DBB,
 				6712C6C8DE23D03DD58C1ED7,
 				4C2D775E82C8238217DCB568,
+				64B59A643C477C03F3CA5746,
 				324B449B4DC24BAEFCA1ED2A,
 				EC246C47CF365342F93FE894,
 				E850833D3B7F572FADCA4515,

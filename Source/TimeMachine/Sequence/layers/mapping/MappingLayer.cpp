@@ -27,7 +27,6 @@ MappingLayer::MappingLayer(Sequence *_sequence, var params) :
 	SequenceLayer(_sequence, modeNames[(Mode)(int)params.getProperty("mode", MODE_1D)]),
 	mode((Mode)(int)params.getProperty("mode", MODE_1D)),
 	curveValue(nullptr)
-
 {
 	
 	canInspectChildContainers = true;
@@ -84,7 +83,9 @@ void MappingLayer::setupMappingForCurrentMode()
 		curveValue = new ColorParameter("Value", "Color value of the curve");
 		addParameter(curveValue);
 		break;
-	}
+    default:
+        break;
+}
 
 	if (automation != nullptr)
 	{
@@ -153,6 +154,9 @@ void MappingLayer::updateCurvesValues()
 		}
 	}
 	break;
+            
+        default:
+            break;
 	}
 }
 
@@ -163,7 +167,7 @@ void MappingLayer::stopRecorderAndAddKeys()
 	Array<Point<float>> keys = automation->recorder->stopRecordingAndGetKeys(); 
 	if (keys.size() >= 2)
 	{
-		automation->addItems(keys, true, true);
+		automation->addItems(keys, true, true, automation->recorder->defaultEasing->getValueDataAsEnum<Easing::Type>());
 	}
 }
 
@@ -178,6 +182,8 @@ String MappingLayer::getHelpID()
 	case MODE_3D:
 		return "AutomationLayer";
 		break;
+        default:
+            break;
 	}
 
 	return "UnknownLayer";

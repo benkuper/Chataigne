@@ -72,9 +72,12 @@ void SequenceCommand::triggerInternal()
 {
 	BaseCommand::triggerInternal();
 
-	if (target->targetContainer == nullptr) return;
-	if (target->targetContainer.wasObjectDeleted()) return;
-
+	if (actionType != STOP_ALL_SEQUENCES)
+	{
+		if (target->targetContainer == nullptr) return;
+		if (target->targetContainer.wasObjectDeleted()) return;
+	}
+	
 	switch (actionType)
 	{
 	case PLAY_SEQUENCE:

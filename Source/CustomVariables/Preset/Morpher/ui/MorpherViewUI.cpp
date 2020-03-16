@@ -14,13 +14,14 @@
 
 MorpherPanel::MorpherPanel(StringRef contentName) :
 	ShapeShifterContentComponent(contentName),
-	currentMorpherUI(nullptr),
-	currentGroup(nullptr)
+	currentGroup(nullptr),
+    currentMorpherUI(nullptr)
+
 {
 	InspectableSelectionManager::mainSelectionManager->addSelectionListener(this);
 
 	CVGroup* group = InspectableSelectionManager::mainSelectionManager->getInspectableAs<CVGroup>();
-	if (group != nullptr) setMorpher(group->morpher.get());
+	setGroup(group);
 }
 
 MorpherPanel::~MorpherPanel()
@@ -36,6 +37,8 @@ void MorpherPanel::setGroup(CVGroup* g)
 	{
 		currentGroup->removeInspectableListener(this);
 		currentGroup->controlMode->removeAsyncParameterListener(this);
+		currentGroup->removeInspectableListener(this);
+
 	}
 
 	currentGroup = g;
@@ -44,6 +47,7 @@ void MorpherPanel::setGroup(CVGroup* g)
 	{
 		currentGroup->addInspectableListener(this);
 		currentGroup->controlMode->addAsyncParameterListener(this);
+		currentGroup->addInspectableListener(this);
 		setMorpher(currentGroup->morpher.get());
 	}
 	else
@@ -102,7 +106,7 @@ void MorpherPanel::inspectablesSelectionChanged()
 
 void MorpherPanel::inspectableDestroyed(Inspectable* i)
 {
-	if (i == currentGroup) setGroup(nullptr);
+	if (i == currentGroup || i == currentGroup->morpher.get()) setGroup(nullptr);
 	if (currentMorpherUI != nullptr && i == currentMorpherUI->morpher) setMorpher(nullptr);
 }
 
@@ -128,6 +132,7 @@ MorpherViewUI::MorpherViewUI(Morpher* morpher) :
 
 	centerUIAroundPosition = true;
 	updatePositionOnDragMove = true;
+	useCheckersAsUnits = true;
 	
 	setupBGImage();
 	

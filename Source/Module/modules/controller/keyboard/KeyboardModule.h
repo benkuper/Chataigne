@@ -11,6 +11,7 @@
 #pragma once
 
 #include "Module/Module.h"
+using namespace juce;
 
 class KeyboardModule :
 	public Module,
@@ -28,14 +29,14 @@ public:
 	BoolParameter * command;
 	BoolParameter * alt;
 
+	void sendKeyDown(int keyID);
+	void sendKeyUp(int keyID);
+	void sendKeyHit(int keyID, bool ctrlPressed, bool altPressed, bool shiftPressed);
+
+	virtual bool keyPressed(const KeyPress& key, Component* originatingComponent) override;
+	virtual bool keyStateChanged(bool isKeyDown, Component* originatingComponent) override;
+
 	static KeyboardModule * create() { return new KeyboardModule(); }
 	virtual String getDefaultTypeString() const override { return "Keyboard"; }
-
-
-	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(KeyboardModule)
-
-	// Inherited via KeyListener
-	virtual bool keyPressed(const KeyPress & key, Component * originatingComponent) override;
-	virtual bool keyStateChanged(bool isKeyDown, Component* originatingComponent) override;
 
 };

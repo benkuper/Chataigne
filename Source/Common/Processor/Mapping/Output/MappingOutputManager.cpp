@@ -16,6 +16,7 @@ MappingOutputManager::MappingOutputManager() :
 	BaseManager<MappingOutput>("Outputs"),
 	omAsyncNotifier(5)
 {
+	canBeCopiedAndPasted = true;
 	selectItemWhenCreated = false;
 }
 

@@ -47,7 +47,9 @@ public:
 		virtual void sysExReceived(const MidiMessage &/*msg*/) {}
 		virtual void fullFrameTimecodeReceived(const MidiMessage&/*msg*/) {}
 		virtual void quarterFrameTimecodeReceived(const MidiMessage&/*msg*/) {}
-		virtual void pitchWheelReceived(const int &/*channel*/, const int &/*value*/){}
+		virtual void pitchWheelReceived(const int&/*channel*/, const int&/*value*/) {}
+		virtual void channelPressureReceived(const int&/*channel*/, const int&/*value*/) {}
+		virtual void afterTouchReceived(const int &/*channel*/, const int & /*note*/, const int &/*value*/){}
 		virtual void midiMessageReceived(const MidiMessage& message) {}
 	};
 
@@ -83,6 +85,8 @@ public:
 	void sendQuarterframe(int piece, int value);
 	void sendMidiMachineControlCommand(MidiMessage::MidiMachineControlCommand command);
 	void sendPitchWheel(int channel, int value);
+	void sendChannelPressure(int channel, int value);
+	void sendAfterTouch(int channel, int note, int value);
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MIDIOutputDevice)
 };

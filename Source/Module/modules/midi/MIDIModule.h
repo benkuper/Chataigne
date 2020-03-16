@@ -18,7 +18,7 @@ class MIDIValueParameter :
 	public IntParameter
 {
 public:
-	enum Type { NOTE_ON, NOTE_OFF, CONTROL_CHANGE, SYSEX, PITCH_WHEEL };
+	enum Type { NOTE_ON, NOTE_OFF, CONTROL_CHANGE, SYSEX, PITCH_WHEEL, CHANNEL_PRESSURE, AFTER_TOUCH };
 
 	MIDIValueParameter(const String &name, const String &description, int value, int channel, int pitchOrNumber, Type t) :
 		IntParameter(name, description, value, 0, t == PITCH_WHEEL? 16383:127),
@@ -59,6 +59,8 @@ public:
 	const Identifier ccEventId = "ccEvent";
 	const Identifier sysexEventId = "sysExEvent";
 	const Identifier pitchWheelEventId = "pitchWheelEvent";
+	const Identifier channelPressureId = "channelPressureEvent";
+	const Identifier afterTouchId = "afterTouchEvent";
 
 	const Identifier sendNoteOnId = "sendNoteOn";
 	const Identifier sendNoteOffId = "sendNoteOff";
@@ -66,6 +68,8 @@ public:
 	const Identifier sendSysexId = "sendSysex";
 	const Identifier sendProgramChangeId = "sendProgramChange";
 	const Identifier sendPitchWheelId = "sendPitchWheel";
+	const Identifier sendChannelPressureId = "sendChannelPressure";
+	const Identifier sendAfterTouchId = "sendAfterTouch";
 	
 	bool useGenericControls;
 
@@ -75,6 +79,8 @@ public:
 	virtual void sendSysex(Array<uint8> data);
 	virtual void sendProgramChange(int channel, int number);
 	virtual void sendPitchWheel(int channel, int value);
+	virtual void sendChannelPressure(int channel, int value);
+	virtual void sendAfterTouch(int channel, int note, int value);
 	virtual void sendFullFrameTimecode(int hours, int minutes, int seconds, int frames, MidiMessage::SmpteTimecodeType timecodeType);
 
 	void sendMidiMachineControlCommand(MidiMessage::MidiMachineControlCommand command);
@@ -87,7 +93,9 @@ public:
 	virtual void controlChangeReceived(const int &channel, const int &number, const int &value) override;
 	virtual void sysExReceived(const MidiMessage & msg) override;
 	virtual void fullFrameTimecodeReceived(const MidiMessage& msg) override;
-	virtual void pitchWheelReceived(const int &channel, const int &value) override;
+	virtual void pitchWheelReceived(const int& channel, const int& value) override;
+	virtual void channelPressureReceived(const int& channel, const int& value) override;
+	virtual void afterTouchReceived(const int &channel, const int &note, const int &value) override;
 
 	virtual void midiMessageReceived(const MidiMessage& msg) override;
 
@@ -97,7 +105,9 @@ public:
 	static var sendCCFromScript(const var::NativeFunctionArgs &args);
 	static var sendSysexFromScript(const var::NativeFunctionArgs& args);
 	static var sendProgramChangeFromScript(const var::NativeFunctionArgs& args);
-	static var sendPitchWheelFromScript(const var::NativeFunctionArgs &args);
+	static var sendPitchWheelFromScript(const var::NativeFunctionArgs& args);
+	static var sendChannelPressureFromScript(const var::NativeFunctionArgs& args);
+	static var sendAfterTouchFromScript(const var::NativeFunctionArgs &args);
 
 	void updateValue(const int &channel, const String &n, const int &val, const MIDIValueParameter::Type &type, const int &pitchOrNumber);
 

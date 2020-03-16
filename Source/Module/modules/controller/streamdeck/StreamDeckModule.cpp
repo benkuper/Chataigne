@@ -14,13 +14,12 @@
 
 StreamDeckModule::StreamDeckModule(const String& name) :
 	Module(name),
-	isConnected(nullptr),
-	colorsCC("Colors"),
-	imagesCC("Images"),
-	device(nullptr),
-	numRows(0),
-	numColumns(0)
-
+    isConnected(nullptr),
+    device(nullptr),
+    numRows(0),
+    numColumns(0),
+    colorsCC("Colors"),
+	imagesCC("Images")
 #if USE_FAKE_DEVICE
 	, fakeDevice(nullptr, "fake")
 #endif

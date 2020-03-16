@@ -20,6 +20,8 @@ GenericOSCQueryModule::GenericOSCQueryModule(const String & name, int defaultRem
     remotePort(nullptr)
 {
 	alwaysShowValues = true;
+	canHandleRouteValues = true;
+
 	setupIOConfiguration(false, true);
 
 	syncTrigger = moduleParams.addTrigger("Sync Data", "Sync the data");
@@ -35,6 +37,9 @@ GenericOSCQueryModule::GenericOSCQueryModule(const String & name, int defaultRem
 	remoteOSCPort = sendCC->addIntParameter("Custom OSC Port", "If enabled, this will override the port to send OSC to, default is sending to the OSCQuery port", defaultRemotePort, 1, 65535);
 	remoteOSCPort->canBeDisabledByUser = true;
 	remoteOSCPort->setEnabled(false);
+	
+	//Script
+	scriptObject.setMethod("send", GenericOSCQueryModule::sendOSCFromScript);
 
 	defManager->add(CommandDefinition::createDef(this, "", "Set Value", &GenericOSCQueryCommand::create, CommandContext::BOTH));
 
@@ -79,7 +84,53 @@ void GenericOSCQueryModule::sendOSCForControllable(Controllable * c)
 	{
 		NLOGERROR(niceName, "Can't send to address " << s << " : " << e.description);
 	}
+}
 
+var GenericOSCQueryModule::sendOSCFromScript(const var::NativeFunctionArgs & a)
+{
+	GenericOSCQueryModule * m = getObjectFromJS<GenericOSCQueryModule>(a);
+	if (!m->enabled->boolValue()) return var();
+
+	if (a.numArguments == 0) return var();
+
+	try
+	{
+		OSCMessage msg(a.arguments[0].toString());
+
+		for (int i = 1; i < a.numArguments; i++)
+		{
+			if (a.arguments[i].isArray())
+			{
+				Array<var> * arr = a.arguments[i].getArray();
+				for (auto &aa : *arr) msg.addArgument(varToArgument(aa));
+			}
+			else
+			{
+				msg.addArgument(varToArgument(a.arguments[i]));
+			}
+		}
+
+		m->sendOSCMessage(msg);
+	}
+	catch (OSCFormatError &e)
+	{
+		NLOGERROR(m->niceName, "Error sending message : " << e.description);
+	}
+	
+
+	return var();
+}
+
+
+OSCArgument GenericOSCQueryModule::varToArgument(const var & v)
+{
+	if (v.isBool()) return OSCArgument(((bool)v) ? 1 : 0);
+	else if (v.isInt()) return OSCArgument((int)v);
+	else if (v.isInt64()) return OSCArgument((int)v);
+	else if (v.isDouble()) return OSCArgument((float)v);
+	else if (v.isString()) return OSCArgument(v.toString());
+	jassert(false);
+	return OSCArgument("error");
 }
 
 void GenericOSCQueryModule::syncData()
@@ -133,48 +184,82 @@ Controllable * GenericOSCQueryModule::createControllableFromData(StringRef name,
 	if (cNiceName.isEmpty()) cNiceName = name;
 
 	const char type = data.getProperty("TYPE", "").toString()[0];
-	var range = data.hasProperty("RANGE") ? data.getProperty("RANGE", var())[0] : var();
-	var value = data.getProperty("VALUE", 0);
-	if(value.isArray()) value = value[0];
-
+	var valRange = data.hasProperty("RANGE") ? data.getProperty("RANGE", var())[0] : var();
+	var val = data.getProperty("VALUE", var());
 	int access = data.getProperty("ACCESS", 3);
 
-	var minVal = range.getProperty("MIN", INT32_MIN);
-	var maxVal = range.getProperty("MAX", INT32_MAX);
+	var value;
+	var range;
+
+	if (val.isArray()) value = val;
+	else value.append(val);
+	if (valRange.isArray()) range = valRange;
+	else range.append(valRange);
+
+	var minVal;
+	var maxVal;
+	for (int i = 0; i < value.size(); i++)
+	{
+		minVal.append(range[i].getProperty("MIN", INT32_MIN));
+		maxVal.append(range[i].getProperty("MAX", INT32_MAX));
+	}
 
 	switch (type)
 	{
 	case 'N': c = new Trigger(cNiceName, cNiceName); break;
-	case 'i': c = new IntParameter(cNiceName, cNiceName, value, minVal, maxVal); break;
-	case 'f': c = new FloatParameter(cNiceName, cNiceName, value, minVal, maxVal); break;
+	case 'i': c = new IntParameter(cNiceName, cNiceName, value[0], minVal[0], maxVal[0]); break;
+	case 'f': c = new FloatParameter(cNiceName, cNiceName, value[0], minVal[0], maxVal[0]); break;
+	case 'ii':
+	case 'ff':
+		c = new Point2DParameter(cNiceName, cNiceName, value);
+		((Point2DParameter*)c)->setRange(minVal, maxVal);
+		break;
+
+	case 'iii':
+	case 'fff':
+		c = new Point3DParameter(cNiceName, cNiceName, value);
+		((Point3DParameter*)c)->setRange(minVal, maxVal);
+		break;
+
+	case 'ffff':
+	{
+		Colour col = Colour::fromFloatRGBA(value[0],value[1],value[2],value[3]);
+		c = new ColorParameter(cNiceName, cNiceName, col);
+	}
+	break;
+
+	case 'iiii':
+	{
+		Colour col = Colour::fromRGBA((int)value[0], (int)value[1], (int)value[2], (int)value[3]);
+		c = new ColorParameter(cNiceName, cNiceName, col);
+	}
+	break;
 
 	case 's':
 	{
-		if (range.isObject()) //enum
+		if (range[0].isObject()) //enum
 		{
-			var options = range.getProperty("VALS",var());
+			var options = range[0].getProperty("VALS",var());
 			
-			DBG(JSON::toString(range));
-
 			if (options.isArray())
 			{
 				EnumParameter * ep = new EnumParameter(cNiceName, cNiceName);
 				for (int i = 0; i < options.size(); i++) ep->addOption(options[i], options[i], false);
-				ep->setValue(value);
+				ep->setValue(value[0]);
 
 				c = ep;
 			}
 		}
 		else
 		{
-			c =  new StringParameter(cNiceName, cNiceName, value);
+			c =  new StringParameter(cNiceName, cNiceName, value[0]);
 		}
 	}
 	break;
 
 	case 'r':
 	{
-		Colour col = Colour::fromString(value.toString());
+		Colour col = Colour::fromString(value[0].toString());
 		Colour goodCol = Colour(col.getAlpha(), col.getRed(), col.getGreen(), col.getBlue()); //inverse RGBA > ARGB
 		c = new ColorParameter(cNiceName, cNiceName, goodCol);
 	}
@@ -252,6 +337,24 @@ void GenericOSCQueryModule::run()
 
 }
 
+void GenericOSCQueryModule::handleRoutedModuleValue(Controllable* c, RouteParams* p)
+{
+	
+	if (Parameter* sourceP = dynamic_cast<Parameter*>(c))
+	{
+		OSCQueryRouteParams* qp = (OSCQueryRouteParams*)p;
+		if (qp->cRef.wasObjectDeleted() || qp->cRef == nullptr) return;
+		
+		if (Parameter* outP = dynamic_cast<Parameter*>(qp->cRef.get()))
+		{
+			if (outP->value.isArray() == sourceP->value.isArray())
+			{
+				outP->setValue(sourceP->value);
+			}
+		}
+	}
+}
+
 
 OSCQueryOutput::OSCQueryOutput(GenericOSCQueryModule * module) :
 	EnablingControllableContainer("Output"),
@@ -267,4 +370,40 @@ OSCQueryOutput::~OSCQueryOutput()
 InspectableEditor * OSCQueryOutput::getEditor(bool isRoot)
 {
 	return new OSCQueryModuleOutputEditor(this, isRoot);
+}
+
+GenericOSCQueryModule::OSCQueryRouteParams::OSCQueryRouteParams(GenericOSCQueryModule* outModule, Module* sourceModule, Controllable* c)
+{
+	target = addTargetParameter("Target", "The target value to modify", &outModule->valuesCC);
+	target->showTriggers = false;
+}
+
+GenericOSCQueryModule::OSCQueryRouteParams::~OSCQueryRouteParams()
+{
+	setControllable(nullptr);
+}
+
+void GenericOSCQueryModule::OSCQueryRouteParams::setControllable(Controllable* c)
+{
+	if (!cRef.wasObjectDeleted() && cRef != nullptr)
+	{
+		cRef->removeInspectableListener(this);
+	}
+
+	cRef = c;
+
+	if (cRef != nullptr)
+	{
+		cRef->addInspectableListener(this);
+	}
+}
+
+void GenericOSCQueryModule::OSCQueryRouteParams::onContainerParameterChanged(Parameter* p)
+{
+	if (p == target) setControllable(target->target);
+}
+
+void GenericOSCQueryModule::OSCQueryRouteParams::inspectableDestroyed(Inspectable* i)
+{
+	if(i == cRef) setControllable(nullptr);
 }

@@ -429,7 +429,7 @@ void StreamingModule::processDataBytes(Array<uint8_t> data)
 	
 }
 
-void StreamingModule::sendMessage(const String & message)
+void StreamingModule::sendMessage(const String & message, var params)
 {
 	if (!enabled->boolValue()) return;
 	if(!isReadyToSend())
@@ -438,13 +438,13 @@ void StreamingModule::sendMessage(const String & message)
 		return;
 	}
 	
-	sendMessageInternal(message);
+	sendMessageInternal(message, params);
 	outActivityTrigger->trigger();
 	
 	if (logOutgoingData->boolValue()) NLOG(niceName, "Sending : " << message);
 }
 
-void StreamingModule::sendBytes(Array<uint8> bytes)
+void StreamingModule::sendBytes(Array<uint8> bytes, var params)
 {
 	if (!enabled->boolValue()) return;
 	if(!isReadyToSend())
@@ -470,7 +470,7 @@ void StreamingModule::sendBytes(Array<uint8> bytes)
 		bytes.add(0);
 	}
 
-	sendBytesInternal(bytes);
+	sendBytesInternal(bytes, params);
 	outActivityTrigger->trigger();
 
 	if (logOutgoingData->boolValue())
@@ -560,7 +560,8 @@ void StreamingModule::loadJSONDataInternal(var data)
 var StreamingModule::sendStringFromScript(const var::NativeFunctionArgs & a)
 {
 	StreamingModule * m = getObjectFromJS<StreamingModule>(a);
-	if (checkNumArgs(m->niceName, a, 1)) return false;
+	if (!checkNumArgs(m->niceName, a, 1)) return false;
+
 	if (a.arguments[0].isObject()) m->sendMessage(JSON::toString(a.arguments[0]));
 	else
 	{

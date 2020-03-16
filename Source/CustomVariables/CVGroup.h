@@ -28,7 +28,6 @@ public:
 
 	enum ControlMode { FREE, WEIGHTS, VORONOI, GRADIENT_BAND };
 	EnumParameter * controlMode;
-	Point2DParameter * targetPosition;
 
 	GenericControllableManager values;
 

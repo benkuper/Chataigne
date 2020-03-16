@@ -62,7 +62,7 @@ bool TCPServerModule::isReadyToSend()
 	return true;
 }
 
-void TCPServerModule::sendMessageInternal(const String& message)
+void TCPServerModule::sendMessageInternal(const String& message, var)
 {
 	if (connectionManager.connections.size() == 0)
 	{
@@ -90,7 +90,7 @@ void TCPServerModule::sendMessageInternal(const String& message)
 	}
 }
 
-void TCPServerModule::sendBytesInternal(Array<uint8> data)
+void TCPServerModule::sendBytesInternal(Array<uint8> data, var)
 {
 	if (connectionManager.connections.size() == 0)
 	{

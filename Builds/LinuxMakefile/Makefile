@@ -208,6 +208,8 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/NetworkStreamingModule_a6ae39cf.o \
   $(JUCE_OBJDIR)/StreamingModule_8e8f50a9.o \
   $(JUCE_OBJDIR)/EnablingNetworkControllableContainerEditor_5d799d9a.o \
+  $(JUCE_OBJDIR)/MouseModuleCommands_191ee0d.o \
+  $(JUCE_OBJDIR)/MouseModule_8daf6b60.o \
   $(JUCE_OBJDIR)/StreamDeckMini_4ac810b0.o \
   $(JUCE_OBJDIR)/StreamDeckV1_857241d4.o \
   $(JUCE_OBJDIR)/StreamDeckV2_85805955.o \
@@ -219,6 +221,7 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/JoystickModule_4129a194.o \
   $(JUCE_OBJDIR)/GamepadModule_fc770758.o \
   $(JUCE_OBJDIR)/JoyConModule_1410c7f4.o \
+  $(JUCE_OBJDIR)/KeyboardModuleCommands_aabffc2b.o \
   $(JUCE_OBJDIR)/KeyboardModule_965e79f4.o \
   $(JUCE_OBJDIR)/KinectV2Module_99832bf0.o \
   $(JUCE_OBJDIR)/os_mac_a23c8a30.o \
@@ -1071,6 +1074,16 @@ $(JUCE_OBJDIR)/EnablingNetworkControllableContainerEditor_5d799d9a.o: ../../Sour
 	@echo "Compiling EnablingNetworkControllableContainerEditor.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
+$(JUCE_OBJDIR)/MouseModuleCommands_191ee0d.o: ../../Source/Module/modules/controller/mouse/commands/MouseModuleCommands.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling MouseModuleCommands.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/MouseModule_8daf6b60.o: ../../Source/Module/modules/controller/mouse/MouseModule.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling MouseModule.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
 $(JUCE_OBJDIR)/StreamDeckMini_4ac810b0.o: ../../Source/Module/modules/controller/streamdeck/models/StreamDeckMini.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling StreamDeckMini.cpp"
@@ -1124,6 +1137,11 @@ $(JUCE_OBJDIR)/GamepadModule_fc770758.o: ../../Source/Module/modules/controller/
 $(JUCE_OBJDIR)/JoyConModule_1410c7f4.o: ../../Source/Module/modules/controller/joycon/JoyConModule.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling JoyConModule.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/KeyboardModuleCommands_aabffc2b.o: ../../Source/Module/modules/controller/keyboard/commands/KeyboardModuleCommands.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling KeyboardModuleCommands.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/KeyboardModule_965e79f4.o: ../../Source/Module/modules/controller/keyboard/KeyboardModule.cpp

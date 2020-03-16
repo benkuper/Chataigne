@@ -41,6 +41,7 @@
 #include "modules/controller/joystick/JoystickModule.h"
 #include "modules/controller/wiimote/WiimoteModule.h"
 #include "modules/controller/keyboard/KeyboardModule.h"
+#include "modules/controller/mouse/MouseModule.h"
 #include "modules/controller/kinect/KinectV2Module.h"
 #include "modules/controller/streamdeck/StreamDeckModule.h"
 
@@ -76,6 +77,7 @@ ModuleFactory::ModuleFactory() {
 	moduleDefs.add(new ModuleDefinition("Hardware", "Wiimote", &WiimoteModule::create));
 	moduleDefs.add(new ModuleDefinition("Hardware", "JoyCon", &JoyConModule::create));
 	moduleDefs.add(new ModuleDefinition("Hardware", "Keyboard", &KeyboardModule::create));
+	moduleDefs.add(new ModuleDefinition("Hardware", "Mouse", &MouseModule::create));
 	moduleDefs.add(new ModuleDefinition("Hardware", "KinectV2", &KinectV2Module::create));
 	moduleDefs.add(new ModuleDefinition("Hardware", "Gamepad", &GamepadModule::create));
 	moduleDefs.add(new ModuleDefinition("Hardware", "Joystick", &JoystickModule::create));

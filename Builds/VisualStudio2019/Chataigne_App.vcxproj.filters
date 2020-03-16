@@ -245,6 +245,12 @@
     <Filter Include="Chataigne\Source\Module\modules\common">
       <UniqueIdentifier>{E89D3705-9633-01AF-C6F5-82B057BCA7D4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\controller\mouse\commands">
+      <UniqueIdentifier>{4D1FEBF2-D35F-9CA0-374C-B54DA62A5B26}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\controller\mouse">
+      <UniqueIdentifier>{53F61727-BBC4-320F-66C4-A29BFB180864}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Chataigne\Source\Module\modules\controller\streamdeck\models">
       <UniqueIdentifier>{F00E3B1C-8C88-549F-8FA8-ABAD74D43EDA}</UniqueIdentifier>
     </Filter>
@@ -262,6 +268,9 @@
     </Filter>
     <Filter Include="Chataigne\Source\Module\modules\controller\joycon">
       <UniqueIdentifier>{B7484025-BCC7-9445-E7E5-A55499703E5D}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\controller\keyboard\commands">
+      <UniqueIdentifier>{3537B3BB-01F4-B0FF-4438-AF1930EA1211}</UniqueIdentifier>
     </Filter>
     <Filter Include="Chataigne\Source\Module\modules\controller\keyboard">
       <UniqueIdentifier>{8D6BE7B1-739F-EAF8-2F69-FE87443DCF82}</UniqueIdentifier>
@@ -1588,6 +1597,12 @@
     <ClCompile Include="..\..\Source\Module\modules\common\ui\EnablingNetworkControllableContainerEditor.cpp">
       <Filter>Chataigne\Source\Module\modules\common\ui</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Module\modules\controller\mouse\commands\MouseModuleCommands.cpp">
+      <Filter>Chataigne\Source\Module\modules\controller\mouse\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Module\modules\controller\mouse\MouseModule.cpp">
+      <Filter>Chataigne\Source\Module\modules\controller\mouse</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\controller\streamdeck\models\StreamDeckMini.cpp">
       <Filter>Chataigne\Source\Module\modules\controller\streamdeck\models</Filter>
     </ClCompile>
@@ -1620,6 +1635,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\controller\joycon\JoyConModule.cpp">
       <Filter>Chataigne\Source\Module\modules\controller\joycon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Module\modules\controller\keyboard\commands\KeyboardModuleCommands.cpp">
+      <Filter>Chataigne\Source\Module\modules\controller\keyboard\commands</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\controller\keyboard\KeyboardModule.cpp">
       <Filter>Chataigne\Source\Module\modules\controller\keyboard</Filter>
@@ -5103,6 +5121,15 @@
     <ClInclude Include="..\..\Source\Module\modules\common\ui\EnablingNetworkControllableContainerEditor.h">
       <Filter>Chataigne\Source\Module\modules\common\ui</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\Module\modules\controller\mouse\commands\MouseModuleCommands.h">
+      <Filter>Chataigne\Source\Module\modules\controller\mouse\commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Module\modules\controller\mouse\MouseMacFunctions.h">
+      <Filter>Chataigne\Source\Module\modules\controller\mouse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Module\modules\controller\mouse\MouseModule.h">
+      <Filter>Chataigne\Source\Module\modules\controller\mouse</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\controller\streamdeck\models\StreamDeckMini.h">
       <Filter>Chataigne\Source\Module\modules\controller\streamdeck\models</Filter>
     </ClInclude>
@@ -5135,6 +5162,12 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\controller\joycon\JoyConModule.h">
       <Filter>Chataigne\Source\Module\modules\controller\joycon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Module\modules\controller\keyboard\commands\KeyboardModuleCommands.h">
+      <Filter>Chataigne\Source\Module\modules\controller\keyboard\commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Module\modules\controller\keyboard\KeyboardMacFunctions.h">
+      <Filter>Chataigne\Source\Module\modules\controller\keyboard</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\controller\keyboard\KeyboardModule.h">
       <Filter>Chataigne\Source\Module\modules\controller\keyboard</Filter>
@@ -8360,6 +8393,9 @@
     <None Include="..\..\Resources\Modules\Millumin.png">
       <Filter>Chataigne\Resources\Modules</Filter>
     </None>
+    <None Include="..\..\Resources\Modules\Mouse.png">
+      <Filter>Chataigne\Resources\Modules</Filter>
+    </None>
     <None Include="..\..\Resources\Modules\OS.png">
       <Filter>Chataigne\Resources\Modules</Filter>
     </None>
@@ -8487,6 +8523,9 @@
       <Filter>Chataigne\Resources</Filter>
     </None>
     <None Include="..\..\Resources\stripe.png">
+      <Filter>Chataigne\Resources</Filter>
+    </None>
+    <None Include="..\..\Resources\tray_icon.png">
       <Filter>Chataigne\Resources</Filter>
     </None>
     <None Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_formats\codecs\flac\Flac Licence.txt">

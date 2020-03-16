@@ -51,7 +51,9 @@ WiimoteModule::WiimoteModule(const String & name) :
 	BoolParameter * bt_2 = valuesCC.addBoolParameter("Button 2", "Button 2", false);
 	BoolParameter * bt_h = valuesCC.addBoolParameter("Button Home", "Button Home", false);
 	BoolParameter * bt_mi = valuesCC.addBoolParameter("Button -", "Button -", false);
+	bt_mi->setCustomShortName("buttonMinus");
 	BoolParameter * bt_pl = valuesCC.addBoolParameter("Button +", "Button +", false);
+	bt_pl->setCustomShortName("buttonPlus"); //avoid autoShortName to mix up + and - as they're both converted to _ (needs fixing?)
 	BoolParameter * bt_up = valuesCC.addBoolParameter("Button Up", "Button Up", false);
 	BoolParameter * bt_do = valuesCC.addBoolParameter("Button Down", "Button Down", false);
 	BoolParameter * bt_le = valuesCC.addBoolParameter("Button Left", "Button Left", false);

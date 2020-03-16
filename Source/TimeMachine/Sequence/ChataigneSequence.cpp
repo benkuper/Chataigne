@@ -29,7 +29,7 @@ ChataigneSequence::ChataigneSequence() :
 	
 	layerManager->factory.defs.add(SequenceLayerManager::LayerDefinition::createDef("", "Trigger", &ChataigneTriggerLayer::create, this));
 	layerManager->factory.defs.add(SequenceLayerManager::LayerDefinition::createDef("", "Mapping", &MappingLayer::create, this)->addParam("mode", MappingLayer::MODE_1D));
-	layerManager->factory.defs.add(SequenceLayerManager::LayerDefinition::createDef("", "Audio", &ChataigneAudioLayer::create, this));
+	layerManager->factory.defs.add(SequenceLayerManager::LayerDefinition::createDef("", "Audio", &ChataigneAudioLayer::create, this, true));
 	layerManager->factory.defs.add(SequenceLayerManager::LayerDefinition::createDef("", "Color", &MappingLayer::create, this)->addParam("mode", MappingLayer::MODE_COLOR));
 
 	layerManager->addBaseManagerListener(this);
@@ -152,7 +152,7 @@ void ChataigneSequence::addNewMappingLayerFromValues(Array<Point<float>> keys)
 	MappingLayer * layer = (MappingLayer *)layerManager->addItem(layerManager->factory.create("Mapping"));
 
 	Array<Point<float>> simplifiedKeys = AutomationRecorder::getSimplifiedKeys(keys,.05f);
-	layer->automation->addItems(simplifiedKeys, true, true, true);
+	layer->automation->addItems(simplifiedKeys, true, true, Easing::BEZIER);
 }
 
 void ChataigneSequence::onContainerParameterChangedInternal(Parameter* p)

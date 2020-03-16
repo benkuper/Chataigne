@@ -16,7 +16,8 @@ CustomValuesCommandArgumentManager::CustomValuesCommandArgumentManager(bool _map
 	isBeingDestroyed(false),
     mappingEnabled(_mappingEnabled),
     templateMode(templateMode),
-    linkedTemplateManager(nullptr)
+    linkedTemplateManager(nullptr),
+	createParamCallbackFunc(nullptr)
 {
 	selectItemWhenCreated = false;
 	editorCanBeCollapsed = false;
@@ -87,9 +88,19 @@ CustomValuesCommandArgument * CustomValuesCommandArgumentManager::addItemWithPar
 
 CustomValuesCommandArgument * CustomValuesCommandArgumentManager::addItemFromType(Parameter::Type type, var data, bool fromUndoableAction)
 {
-	Parameter * p = nullptr;
+	Parameter* p = createParameterFromType(type, data, items.size());
+	if (p == nullptr) return nullptr;
 
-	String id = String(items.size() + 1);
+	return addItemWithParam(p, data, fromUndoableAction);
+}
+
+Parameter * CustomValuesCommandArgumentManager::createParameterFromType(Parameter::Type type, var data, int index)
+{
+	if (!linkedTemplateManagerRef.wasObjectDeleted() && linkedTemplateManager != nullptr) return linkedTemplateManager->createParameterFromType(type, data, index);
+
+	String id = String(index + 1);
+
+	Parameter* p = nullptr;
 
 	switch (type)
 	{
@@ -115,24 +126,25 @@ CustomValuesCommandArgument * CustomValuesCommandArgumentManager::addItemFromTyp
 		p = new Point3DParameter("#" + id, "Argument #" + id + ", type 3D");
 		break;
 
-        default:
-            break;
+	default:
+		break;
 	}
 
-	if (p != nullptr && linkedTemplateManager == nullptr)
-	{
-		p->isCustomizableByUser = true;
-	}
+	if(p != nullptr) p->isCustomizableByUser = true;
 
-	if (p == nullptr) return nullptr;
-	return addItemWithParam(p, data, fromUndoableAction);
+	if(createParamCallbackFunc != nullptr) createParamCallbackFunc(p, data);
+	
+	return p;
 }
 
-CustomValuesCommandArgument * CustomValuesCommandArgumentManager::addItemFromData(var data, bool fromUndoableAction)
+CustomValuesCommandArgument* CustomValuesCommandArgumentManager::addItemFromData(var data, bool fromUndoableAction)
 {
-	String s = data.getProperty("type", "");
-	if (s.isEmpty()) return nullptr;
-	Parameter * p = (Parameter *)ControllableFactory::createControllable(s);
+	Controllable::Type t = (Controllable::Type)Controllable::typeNames.indexOf(data.getProperty("type", ""));
+	return addItemFromType(t, data, fromUndoableAction);
+	
+	/*if (s.isEmpty()) return nullptr;
+
+	Parameter * p =  (Parameter *)ControllableFactory::createControllable(s);
 	if (p == nullptr)
 	{
 		LOG("Error loading custom argument !");
@@ -140,6 +152,7 @@ CustomValuesCommandArgument * CustomValuesCommandArgumentManager::addItemFromDat
 	}
 
  	return addItemWithParam(p, data, fromUndoableAction);
+	*/
 }
 
 void CustomValuesCommandArgumentManager::autoRenameItems()

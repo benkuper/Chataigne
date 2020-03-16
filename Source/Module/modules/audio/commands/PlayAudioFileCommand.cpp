@@ -50,8 +50,12 @@ PlayAudioFileCommand::PlayAudioFileCommand(AudioModule * _module, CommandContext
 
 PlayAudioFileCommand::~PlayAudioFileCommand()
 {
-	audioModule->removeAudioModuleListener(this);
-	audioModule->graph.removeNode(graphID);
+	if (audioModule != nullptr)
+	{
+		audioModule->removeAudioModuleListener(this);
+		audioModule->graph.removeNode(graphID);
+	}
+
 	currentProcessor->clear();
 	currentProcessor = nullptr;
 }

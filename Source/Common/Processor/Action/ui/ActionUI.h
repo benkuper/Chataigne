@@ -39,6 +39,9 @@ public:
 
 	void newMessage(const Action::ActionEvent &e) override;
 
+	virtual void addContextMenuItems(PopupMenu& p) override;
+	virtual void handleContextMenuResult(int result) override;
+
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ActionUI)
 };

@@ -290,6 +290,8 @@
     <ClCompile Include="..\..\Source\Module\modules\common\streaming\NetworkStreamingModule.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\common\streaming\StreamingModule.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\common\ui\EnablingNetworkControllableContainerEditor.cpp"/>
+    <ClCompile Include="..\..\Source\Module\modules\controller\mouse\commands\MouseModuleCommands.cpp"/>
+    <ClCompile Include="..\..\Source\Module\modules\controller\mouse\MouseModule.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\controller\streamdeck\models\StreamDeckMini.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\controller\streamdeck\models\StreamDeckV1.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\controller\streamdeck\models\StreamDeckV2.cpp"/>
@@ -301,6 +303,7 @@
     <ClCompile Include="..\..\Source\Module\modules\controller\joystick\JoystickModule.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\controller\gamepad\GamepadModule.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\controller\joycon\JoyConModule.cpp"/>
+    <ClCompile Include="..\..\Source\Module\modules\controller\keyboard\commands\KeyboardModuleCommands.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\controller\keyboard\KeyboardModule.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\controller\kinect\KinectV2Module.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\controller\wiimote\lib\wiiuse\os_mac\os_mac.c"/>
@@ -3054,6 +3057,9 @@
     <ClInclude Include="..\..\Source\Module\modules\common\streaming\NetworkStreamingModule.h"/>
     <ClInclude Include="..\..\Source\Module\modules\common\streaming\StreamingModule.h"/>
     <ClInclude Include="..\..\Source\Module\modules\common\ui\EnablingNetworkControllableContainerEditor.h"/>
+    <ClInclude Include="..\..\Source\Module\modules\controller\mouse\commands\MouseModuleCommands.h"/>
+    <ClInclude Include="..\..\Source\Module\modules\controller\mouse\MouseMacFunctions.h"/>
+    <ClInclude Include="..\..\Source\Module\modules\controller\mouse\MouseModule.h"/>
     <ClInclude Include="..\..\Source\Module\modules\controller\streamdeck\models\StreamDeckMini.h"/>
     <ClInclude Include="..\..\Source\Module\modules\controller\streamdeck\models\StreamDeckV1.h"/>
     <ClInclude Include="..\..\Source\Module\modules\controller\streamdeck\models\StreamDeckV2.h"/>
@@ -3065,6 +3071,8 @@
     <ClInclude Include="..\..\Source\Module\modules\controller\joystick\JoystickModule.h"/>
     <ClInclude Include="..\..\Source\Module\modules\controller\gamepad\GamepadModule.h"/>
     <ClInclude Include="..\..\Source\Module\modules\controller\joycon\JoyConModule.h"/>
+    <ClInclude Include="..\..\Source\Module\modules\controller\keyboard\commands\KeyboardModuleCommands.h"/>
+    <ClInclude Include="..\..\Source\Module\modules\controller\keyboard\KeyboardMacFunctions.h"/>
     <ClInclude Include="..\..\Source\Module\modules\controller\keyboard\KeyboardModule.h"/>
     <ClInclude Include="..\..\Source\Module\modules\controller\kinect\KinectV2Module.h"/>
     <ClInclude Include="..\..\Source\Module\modules\controller\wiimote\WiimoteManager.h"/>
@@ -4141,6 +4149,7 @@
     <None Include="..\..\Resources\Modules\Metronome.png"/>
     <None Include="..\..\Resources\Modules\MIDI.png"/>
     <None Include="..\..\Resources\Modules\Millumin.png"/>
+    <None Include="..\..\Resources\Modules\Mouse.png"/>
     <None Include="..\..\Resources\Modules\OS.png"/>
     <None Include="..\..\Resources\Modules\OSC.png"/>
     <None Include="..\..\Resources\Modules\OSCQuery.png"/>
@@ -4184,6 +4193,7 @@
     <None Include="..\..\Resources\snap.png"/>
     <None Include="..\..\Resources\stop.png"/>
     <None Include="..\..\Resources\stripe.png"/>
+    <None Include="..\..\Resources\tray_icon.png"/>
     <None Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_formats\codecs\flac\Flac Licence.txt"/>
     <None Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_formats\codecs\oggvorbis\Ogg Vorbis Licence.txt"/>
     <None Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_processors\format_types\VST3_SDK\base\LICENSE.txt"/>

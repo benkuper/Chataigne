@@ -17,8 +17,7 @@ MappingInput::MappingInput() :
 	inputReference(nullptr),
 	mappingInputAsyncNotifier(10)
 {
-	editorCanBeCollapsed = false;
-	showInspectorOnSelect = false;
+	canBeCopiedAndPasted = true;
 
 	nameCanBeChangedByUser = false;
 	inputTarget = addTargetParameter("Input Value", "Parameter to be the input");

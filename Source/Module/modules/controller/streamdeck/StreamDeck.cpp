@@ -52,7 +52,7 @@ void StreamDeck::setBrightness(float brightness)
 void StreamDeck::setColor(int row, int column, Colour color, bool highlight)
 {
 	if(highlight) color = color.brighter(1);
-	const int numPixels = iconSize * iconSize;
+	//const int numPixels = iconSize * iconSize;
 	Image iconImage(Image::RGB, iconSize, iconSize, true);
 	iconImage.clear(iconImage.getBounds(), color);
 	sendButtonImageData(row, column, iconImage);

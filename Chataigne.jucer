@@ -22,6 +22,7 @@
         <FILE id="Cwbr53" name="Metronome.png" compile="0" resource="1" file="Resources/Modules/Metronome.png"/>
         <FILE id="rV6E05" name="MIDI.png" compile="0" resource="1" file="Resources/Modules/MIDI.png"/>
         <FILE id="XUwKVr" name="Millumin.png" compile="0" resource="1" file="Resources/Modules/Millumin.png"/>
+        <FILE id="UjV2cF" name="Mouse.png" compile="0" resource="1" file="Resources/Modules/Mouse.png"/>
         <FILE id="i5QUZ4" name="OS.png" compile="0" resource="1" file="Resources/Modules/OS.png"/>
         <FILE id="CBoeF1" name="OSC.png" compile="0" resource="1" file="Resources/Modules/OSC.png"/>
         <FILE id="mQRViU" name="OSCQuery.png" compile="0" resource="1" file="Resources/Modules/OSCQuery.png"/>
@@ -81,6 +82,7 @@
       <FILE id="kly3dv" name="snap.png" compile="0" resource="1" file="Resources/snap.png"/>
       <FILE id="Umk8sJ" name="stop.png" compile="0" resource="1" file="Resources/stop.png"/>
       <FILE id="tF7PTq" name="stripe.png" compile="0" resource="1" file="Resources/stripe.png"/>
+      <FILE id="xbqvN3" name="tray_icon.png" compile="0" resource="1" file="Resources/tray_icon.png"/>
     </GROUP>
     <GROUP id="{31908E9E-F626-E2D6-1A6D-E188C9D72C25}" name="Source">
       <GROUP id="{F784235F-A65F-E1E7-A5F1-8414A8D681B3}" name="Guider">
@@ -728,6 +730,18 @@
             </GROUP>
           </GROUP>
           <GROUP id="{A597C064-C7DE-23AD-F74A-2E029F90FCEA}" name="controller">
+            <GROUP id="{188E8CA2-04CC-D878-F91F-A3EDE5E6A665}" name="mouse">
+              <GROUP id="{76214040-3E5D-6DDE-134B-66DC1FAC3DDD}" name="commands">
+                <FILE id="qKD2RO" name="MouseModuleCommands.cpp" compile="1" resource="0"
+                      file="Source/Module/modules/controller/mouse/commands/MouseModuleCommands.cpp"/>
+                <FILE id="LceN6H" name="MouseModuleCommands.h" compile="0" resource="0"
+                      file="Source/Module/modules/controller/mouse/commands/MouseModuleCommands.h"/>
+              </GROUP>
+              <FILE id="fsxmhm" name="MouseMacFunctions.h" compile="0" resource="0"
+                    file="Source/Module/modules/controller/mouse/MouseMacFunctions.h"/>
+              <FILE id="YSaYns" name="MouseModule.cpp" compile="1" resource="0" file="Source/Module/modules/controller/mouse/MouseModule.cpp"/>
+              <FILE id="pM3zML" name="MouseModule.h" compile="0" resource="0" file="Source/Module/modules/controller/mouse/MouseModule.h"/>
+            </GROUP>
             <GROUP id="{8F6890F4-73F1-C709-3041-54E6E08838F1}" name="streamdeck">
               <GROUP id="{5846E3A2-6CB1-A070-1811-E4E3C52C814C}" name="models">
                 <FILE id="lChxs5" name="StreamDeckMini.cpp" compile="1" resource="0"
@@ -778,6 +792,14 @@
               <FILE id="G3w16g" name="JoyConModule.h" compile="0" resource="0" file="Source/Module/modules/controller/joycon/JoyConModule.h"/>
             </GROUP>
             <GROUP id="{DD0E5C56-EE3B-3CF9-A333-D5778991DBAE}" name="keyboard">
+              <GROUP id="{860517DB-8700-72CA-E905-B3BC181BC7E1}" name="commands">
+                <FILE id="mJHtL3" name="KeyboardModuleCommands.cpp" compile="1" resource="0"
+                      file="Source/Module/modules/controller/keyboard/commands/KeyboardModuleCommands.cpp"/>
+                <FILE id="kfQ62u" name="KeyboardModuleCommands.h" compile="0" resource="0"
+                      file="Source/Module/modules/controller/keyboard/commands/KeyboardModuleCommands.h"/>
+              </GROUP>
+              <FILE id="HIGkaL" name="KeyboardMacFunctions.h" compile="0" resource="0"
+                    file="Source/Module/modules/controller/keyboard/KeyboardMacFunctions.h"/>
               <FILE id="nudXpb" name="KeyboardModule.cpp" compile="1" resource="0"
                     file="Source/Module/modules/controller/keyboard/KeyboardModule.cpp"/>
               <FILE id="CYr9Wv" name="KeyboardModule.h" compile="0" resource="0"
@@ -1344,7 +1366,8 @@
                extraFrameworks="IOBluetooth, ForceFeedback, IOKit" extraCompilerFlags=""
                documentExtensions="noisette" customPList="&lt;plist&gt;&#10;&lt;dict&gt;&#10;&lt;key&gt;NSAppTransportSecurity&lt;/key&gt;&#10;&#9;&lt;dict&gt;&#10;&#9;&#9;&lt;key&gt;NSAllowsArbitraryLoads&lt;/key&gt;&#10;&#9;&#9;&lt;true/&gt;&#10;&#9;&lt;/dict&gt;&#10;&lt;/dict&gt;&#10;&lt;/plist&gt;"
                externalLibraries="Servus&#10;artnet&#10;hidapi&#10;joytime-core&#10;joytime-input-hidapi&#10;SDL2&#10;iconv"
-               microphonePermissionNeeded="1" hardenedRuntimeOptions="com.apple.security.cs.allow-jit,com.apple.security.device.audio-input">
+               microphonePermissionNeeded="1" hardenedRuntimeOptions="com.apple.security.cs.allow-jit,com.apple.security.device.audio-input"
+               extraDefs="JUCE_SUPPORT_CARBON=1">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" isDebug="1" optimisation="1" targetName="Chataigne"
                        headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/libartnet/include&#10;../../External/joycon/include&#10;../../External/sdl/include&#10;../../External/hidapi/include"
@@ -1507,7 +1530,7 @@
                smallIcon="nVz6Li" bigIcon="nVz6Li" hardenedRuntimeOptions="com.apple.security.cs.allow-jit"
                customPList="&lt;plist&gt;&#10;&lt;dict&gt;&#10;&lt;key&gt;NSAppTransportSecurity&lt;/key&gt;&#10;&#9;&lt;dict&gt;&#10;&#9;&#9;&lt;key&gt;NSAllowsArbitraryLoads&lt;/key&gt;&#10;&#9;&#9;&lt;true/&gt;&#10;&#9;&lt;/dict&gt;&#10;&lt;/dict&gt;&#10;&lt;/plist&gt;"
                microphonePermissionNeeded="1" extraFrameworks="IOBluetooth, ForceFeedback, IOKit"
-               documentExtensions="noisette">
+               documentExtensions="noisette" extraDefs="JUCE_SUPPORT_CARBON=1">
       <CONFIGURATIONS>
         <CONFIGURATION isDebug="1" name="Debug" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/libartnet/include&#10;../../External/joycon/include&#10;../../External/sdl/include&#10;../../External/hidapi/include"
                        libraryPath="../../External/servus/lib/osx/debug&#10;../../External/libartnet/lib/osx&#10;../../External/joycon/lib/osx&#10;../../External/sdl/lib/osx"
@@ -1562,7 +1585,8 @@
   </MODULES>
   <JUCEOPTIONS JUCE_ASIO="1" JUCE_WASAPI="1" JUCE_JACK="1" ORGANICUI_USE_SERVUS="1"
                JUCE_ALLOW_SPECIAL_CHARS_IN_ADDRESS="1" TIMELINE_USE_SEQUENCEMANAGER_SINGLETON="0"
-               JUCE_USE_MP3AUDIOFORMAT="1" JUCE_USE_LAME_AUDIO_FORMAT="1" JUCE_USE_WINDOWS_MEDIA_FORMAT="1"/>
+               JUCE_USE_MP3AUDIOFORMAT="1" JUCE_USE_LAME_AUDIO_FORMAT="1" JUCE_USE_WINDOWS_MEDIA_FORMAT="1"
+               JUCE_ENABLE_BROADCAST_BY_DEFAULT="1" JUCE_EXCLUSIVE_BINDING_BY_DEFAULT="1"/>
   <LIVE_SETTINGS>
     <WINDOWS/>
     <OSX/>

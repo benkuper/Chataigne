@@ -38,8 +38,8 @@ public:
 	virtual void onControllableFeedbackUpdateInternal(ControllableContainer *, Controllable * c) override;
 
 	virtual bool isReadyToSend() override;
-	virtual void sendMessageInternal(const String &message) override;
-	virtual void sendBytesInternal(Array<uint8> data) override;
+	virtual void sendMessageInternal(const String &message, var) override;
+	virtual void sendBytesInternal(Array<uint8> data, var) override;
 
 
 	// Inherited via SerialDeviceListener

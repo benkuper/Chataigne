@@ -27,7 +27,8 @@ ConditionManager::ConditionManager() :
     prevTimerTime(0),
     forceDisabled(false)
 {
-	
+	canBeCopiedAndPasted = true;
+
 	managerFactory = &factory;
 	factory.defs.add(Factory<Condition>::Definition::createDef("", StandardCondition::getTypeStringStatic(), &StandardCondition::create));
 	factory.defs.add(Factory<Condition>::Definition::createDef("", ConditionGroup::getTypeStringStatic(), &ConditionGroup::create));

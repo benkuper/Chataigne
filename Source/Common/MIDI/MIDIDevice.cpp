@@ -73,6 +73,8 @@ void MIDIInputDevice::handleIncomingMidiMessage(MidiInput * source, const MidiMe
 	else if (message.isFullFrame()) inputListeners.call(&MIDIInputListener::fullFrameTimecodeReceived, message);
 	else if (message.isQuarterFrame()) inputListeners.call(&MIDIInputListener::quarterFrameTimecodeReceived, message);
 	else if (message.isPitchWheel()) inputListeners.call(&MIDIInputListener::pitchWheelReceived, message.getChannel(), message.getPitchWheelValue());
+	else if (message.isChannelPressure()) inputListeners.call(&MIDIInputListener::channelPressureReceived, message.getChannel(), message.getChannelPressureValue());
+	else if (message.isAftertouch()) inputListeners.call(&MIDIInputListener::afterTouchReceived, message.getChannel(), message.getNoteNumber(), message.getAfterTouchValue());
 	else
 	{
 		DBG("Not handled : " << message.getDescription());
@@ -178,3 +180,14 @@ void MIDIOutputDevice::sendPitchWheel(int channel, int value)
 	device->sendMessageNow(MidiMessage::pitchWheel(channel, value));
 }
 
+void MIDIOutputDevice::sendChannelPressure(int channel, int value)
+{
+	if (device == nullptr) return;
+	device->sendMessageNow(MidiMessage::channelPressureChange(channel, value));
+}
+
+void MIDIOutputDevice::sendAfterTouch(int channel, int note, int value)
+{
+	if (device == nullptr) return;
+	device->sendMessageNow(MidiMessage::aftertouchChange(channel, note, value));
+}

@@ -129,14 +129,44 @@ var ToIntFilter::convertValue(var sourceValue)
 ToStringFilter::ToStringFilter(var params) :
 	ConversionFilter(getTypeString(), params, StringParameter::getTypeStringStatic())
 {
-	//numLeadingZeros = filterParams.addIntParameter("Leadings zeros", "Number of leading zero to add in front of number if necessary", 0, 0, 10);
+	format = filterParams.addEnumParameter("Format", "The format of the string");
+	format->addOption("Number", NUMBER)->addOption("Time", TIME);
 	numDecimals = filterParams.addIntParameter("Number of Decimals", "Maximum number of decimals", 3, 0, 26);
+	prefix = filterParams.addStringParameter("Prefix", "Something prepended to the result", "");
+	suffix = filterParams.addStringParameter("Suffix", "Something appended  to the result", "");
 }
 
 var ToStringFilter::convertValue(var sourceValue)
 {
-	if (sourceValue.isString()) return sourceValue;
-	return String((float)sourceValue, numDecimals->intValue());
+	String result = prefix->stringValue();
+
+	if (!sourceValue.isArray())
+	{
+		if (sourceValue.isString()) result += sourceValue.toString();
+		else
+		{
+			Format f = format->getValueDataAsEnum<Format>();
+			switch (f)
+			{
+			case NUMBER:
+				result += String((float)sourceValue, numDecimals->intValue());
+				break;
+
+			case TIME:
+				result += StringUtil::valueToTimeString((float)sourceValue);
+				break;
+			}
+		}
+	}
+	
+	result += suffix->stringValue();
+	return result;
+}
+
+void ToStringFilter::filterParamChanged(Parameter * p)
+{
+	numDecimals->hideInEditor = format->getValueDataAsEnum<Format>() != NUMBER;
+	ConversionFilter::filterParamChanged(p);
 }
 
 ToPoint2DFilter::ToPoint2DFilter(var params) :

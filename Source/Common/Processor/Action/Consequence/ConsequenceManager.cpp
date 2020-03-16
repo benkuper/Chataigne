@@ -20,6 +20,7 @@ ConsequenceManager::ConsequenceManager(const String &name) :
 	forceDisabled(false)
 {
 	canBeDisabled = false;
+	canBeCopiedAndPasted = true;
 
 	selectItemWhenCreated = false;
 	triggerAll = addTrigger("Trigger All", "Trigger all the consequences in the manager");
@@ -27,6 +28,7 @@ ConsequenceManager::ConsequenceManager(const String &name) :
 
 	delay = addFloatParameter("Delay", "Delay the triggering of the commands", 0, 0);
 	delay->defaultUI = FloatParameter::TIME;
+	delay->hideInEditor = true;
 	stagger = addFloatParameter("Stagger", "If multiple consequences are there, delay between each consequence trigger", 0, 0);
 	stagger->defaultUI = FloatParameter::TIME;
 	stagger->hideInEditor = true;
@@ -68,12 +70,14 @@ void ConsequenceManager::addItemInternal(Consequence * c, var data)
 {
 	c->forceDisabled = forceDisabled;
 	triggerAll->hideInEditor = items.size() == 0;
+	delay->hideInEditor = items.size() == 0;
 	stagger->hideInEditor = items.size() < 2; 
 }
 
 void ConsequenceManager::removeItemInternal(Consequence *)
 {
 	triggerAll->hideInEditor = items.size() == 0;
+	delay->hideInEditor = items.size() == 0;
 	stagger->hideInEditor = items.size() < 2;
 }
 

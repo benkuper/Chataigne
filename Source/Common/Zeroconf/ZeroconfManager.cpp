@@ -31,7 +31,7 @@ ZeroconfManager::ZeroconfManager() :
 ZeroconfManager::~ZeroconfManager()
 {
 	signalThreadShouldExit();
-	waitForThreadToExit(2000);
+	waitForThreadToExit(5000);
 }
 
 void ZeroconfManager::addSearcher(StringRef name, StringRef serviceName)
@@ -96,6 +96,7 @@ ZeroconfManager::ServiceInfo * ZeroconfManager::showMenuAndGetService(StringRef 
 
 void ZeroconfManager::search()
 {
+    if(Engine::mainEngine->isClearing) return;
 	startThread();
 }
 
@@ -166,7 +167,9 @@ bool ZeroconfManager::ZeroconfSearcher::search()
 
 	for (auto &s : servicesArray)
 	{
-		String host = servus.get(s.toStdString(), "servus_host");
+        if (Thread::getCurrentThread()->threadShouldExit()) return false;
+        
+        String host = servus.get(s.toStdString(), "servus_host");
 		if (host.endsWithChar('.')) host = host.substring(0, host.length() - 1);
 
 		int port = String(servus.get(s.toStdString(), "servus_port")).getIntValue();

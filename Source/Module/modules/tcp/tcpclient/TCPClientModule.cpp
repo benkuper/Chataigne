@@ -99,7 +99,7 @@ bool TCPClientModule::isReadyToSend()
 	return senderIsConnected->boolValue();
 }
 
-void TCPClientModule::sendMessageInternal(const String & message)
+void TCPClientModule::sendMessageInternal(const String & message, var)
 {
 	int numBytes = sender.write(message.getCharPointer(), message.length());
 	if (numBytes == -1)
@@ -109,7 +109,7 @@ void TCPClientModule::sendMessageInternal(const String & message)
 	}
 }
 
-void TCPClientModule::sendBytesInternal(Array<uint8> data)
+void TCPClientModule::sendBytesInternal(Array<uint8> data, var)
 {
 	int numBytes = sender.write(data.getRawDataPointer(), data.size());
 	if (numBytes == -1)

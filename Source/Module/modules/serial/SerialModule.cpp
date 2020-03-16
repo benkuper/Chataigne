@@ -17,7 +17,7 @@ SerialModule::SerialModule(const String &name) :
 {
 	portParam = new SerialDeviceParameter("Port", "Serial Port to connect",true);
 	moduleParams.addParameter(portParam);
-	baudRate = moduleParams.addIntParameter("Baud Rate", "The connection speed. Common values are 9600, 57600, 115200", 9600, 9600, 1000000);
+	baudRate = moduleParams.addIntParameter("Baud Rate", "The connection speed. Common values are 9600, 57600, 115200", 115200, 9600, 1000000);
 	portParam->openBaudRate = baudRate->intValue();
 	
 	isConnected = moduleParams.addBoolParameter("Is Connected", "This is checked if a serial port is connected.", false);
@@ -131,13 +131,13 @@ bool SerialModule::isReadyToSend()
 
 	return true;
 }
-void SerialModule::sendMessageInternal(const String & message)
+void SerialModule::sendMessageInternal(const String & message, var)
 {
 	if (port == nullptr) return;
 	port->writeString(message);
 }
 
-void SerialModule::sendBytesInternal(Array<uint8> data)
+void SerialModule::sendBytesInternal(Array<uint8> data, var)
 {
 	if (port == nullptr) return;
 	port->writeBytes(data);
