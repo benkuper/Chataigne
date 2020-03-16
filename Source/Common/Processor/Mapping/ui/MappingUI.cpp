@@ -141,8 +141,8 @@ void MappingUI::newMessage(const Mapping::MappingEvent & e)
 
 void MappingUI::addContextMenuItems(PopupMenu& p)
 {
-	p.addItem(100, "Copy input");
-	p.addItem(101, "Paste input");
+	p.addItem(100, "Copy inputs");
+	p.addItem(101, "Paste inputs");
 
 	p.addItem(102, "Copy filters");
 	p.addItem(103, "Paste filters");
@@ -155,8 +155,8 @@ void MappingUI::handleContextMenuResult(int result)
 {
 	switch (result)
 	{
-		case 100: SystemClipboard::copyTextToClipboard(JSON::toString(mapping->input.getJSONData())); break;
-		case 101: mapping->input.loadJSONData(JSON::fromString(SystemClipboard::getTextFromClipboard())); break;
+		case 100: SystemClipboard::copyTextToClipboard(JSON::toString(mapping->im.getJSONData())); break;
+		case 101: mapping->im.loadJSONData(JSON::fromString(SystemClipboard::getTextFromClipboard())); break;
 		case 102: SystemClipboard::copyTextToClipboard(JSON::toString(mapping->fm.getJSONData())); break;
 		case 103: mapping->fm.loadJSONData(JSON::fromString(SystemClipboard::getTextFromClipboard())); break;
 		case 104: SystemClipboard::copyTextToClipboard(JSON::toString(mapping->om.getJSONData())); break;

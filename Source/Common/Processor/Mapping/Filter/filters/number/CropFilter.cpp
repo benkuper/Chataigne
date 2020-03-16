@@ -19,8 +19,6 @@ CropFilter::CropFilter(var params) :
 	targetMax = filterParams.addFloatParameter("Target Max", "New maximum for output", 1, 0, 1);
 	targetMin->defaultUI = FloatParameter::LABEL;
 	targetMax->defaultUI = FloatParameter::LABEL;
-	targetMin->autoAdaptRange = true;
-	targetMax->autoAdaptRange = true;
 	targetMin->isCustomizableByUser = false;
 	targetMax->isCustomizableByUser = false;
 

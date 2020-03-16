@@ -4219,18 +4219,18 @@
 			path = ../../Resources/Modules/Watchout.png;
 			sourceTree = "SOURCE_ROOT";
 		};
-		AAAD358C5DC0C1A5682C77E8 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = MouseModuleCommands.h;
-			path = ../../Source/Module/modules/controller/mouse/commands/MouseModuleCommands.h;
-			sourceTree = "SOURCE_ROOT";
-		};
 		AAA5F74DC5FAB65C96003095 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = ConvertedParameterEditor.h;
 			path = ../../Source/Common/Processor/Mapping/Filter/filters/conversion/ui/ConvertedParameterEditor.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		AAAD358C5DC0C1A5682C77E8 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = MouseModuleCommands.h;
+			path = ../../Source/Module/modules/controller/mouse/commands/MouseModuleCommands.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		AB0BB0296C9BACB012CC29B1 = {
