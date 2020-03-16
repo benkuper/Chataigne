@@ -32,8 +32,10 @@ MIDIModule::MIDIModule(const String & name, bool _useGenericControls) :
 		defManager->add(CommandDefinition::createDef(this, "", "Full Note", &MIDINoteAndCCCommand::create)->addParam("type", (int)MIDINoteAndCCCommand::FULL_NOTE));
 		defManager->add(CommandDefinition::createDef(this, "", "Controller Change", &MIDINoteAndCCCommand::create)->addParam("type", (int)MIDINoteAndCCCommand::CONTROLCHANGE));
 		defManager->add(CommandDefinition::createDef(this, "", "Sysex Message", &MIDISysExCommand::create));
-		defManager->add(CommandDefinition::createDef(this, "", "Program Change", &MIDINoteAndCCCommand::create)->addParam("type", (int)MIDINoteAndCCCommand::PROGRAMCHANGE));;
-		defManager->add(CommandDefinition::createDef(this, "", "Pitch Wheel", &MIDINoteAndCCCommand::create)->addParam("type", (int)MIDINoteAndCCCommand::PITCH_WHEEL));;
+		defManager->add(CommandDefinition::createDef(this, "", "Program Change", &MIDINoteAndCCCommand::create)->addParam("type", (int)MIDINoteAndCCCommand::PROGRAMCHANGE));
+		defManager->add(CommandDefinition::createDef(this, "", "Pitch Wheel", &MIDINoteAndCCCommand::create)->addParam("type", (int)MIDINoteAndCCCommand::PITCH_WHEEL));
+		defManager->add(CommandDefinition::createDef(this, "", "Channel Pressure", &MIDINoteAndCCCommand::create)->addParam("type", (int)MIDINoteAndCCCommand::CHANNEL_PRESSURE));
+		defManager->add(CommandDefinition::createDef(this, "", "After Touch", &MIDINoteAndCCCommand::create)->addParam("type", (int)MIDINoteAndCCCommand::AFTER_TOUCH));
 	}
 	
 	autoFeedback = moduleParams.addBoolParameter("Auto Feedback", "If checked, all changed values will be resent automatically to the outputs", false);
@@ -54,6 +56,8 @@ MIDIModule::MIDIModule(const String & name, bool _useGenericControls) :
 	scriptObject.setMethod(sendSysexId, &MIDIModule::sendSysexFromScript);
 	scriptObject.setMethod(sendProgramChangeId, &MIDIModule::sendProgramChangeFromScript);
 	scriptObject.setMethod(sendPitchWheelId, &MIDIModule::sendPitchWheelFromScript);
+	scriptObject.setMethod(sendChannelPressureId, &MIDIModule::sendChannelPressureFromScript);
+	scriptObject.setMethod(sendAfterTouchId, &MIDIModule::sendAfterTouchFromScript);
 
 	scriptManager->scriptTemplate += ChataigneAssetManager::getInstance()->getScriptTemplate("midi");
 
@@ -115,6 +119,15 @@ void MIDIModule::sendProgramChange(int channel, int program)
 	outputDevice->sendProgramChange(channel, program);
 }
 
+void MIDIModule::sendSysex(Array<uint8> data)
+{
+	if (!enabled->boolValue()) return;
+	if (outputDevice == nullptr) return;
+	if (logOutgoingData->boolValue()) NLOG(niceName, "Send Sysex " << data.size() << " bytes");
+	outActivityTrigger->trigger();
+	outputDevice->sendSysEx(data);
+}
+
 void MIDIModule::sendPitchWheel(int channel, int value)
 {
 	if (!enabled->boolValue()) return;
@@ -123,13 +136,20 @@ void MIDIModule::sendPitchWheel(int channel, int value)
 	outputDevice->sendPitchWheel(channel, value);
 }
 
-void MIDIModule::sendSysex(Array<uint8> data)
+void MIDIModule::sendChannelPressure(int channel, int value)
 {
 	if (!enabled->boolValue()) return;
 	if (outputDevice == nullptr) return;
-	if (logOutgoingData->boolValue()) NLOG(niceName, "Send Sysex " << data.size() << " bytes");
-	outActivityTrigger->trigger();
-	outputDevice->sendSysEx(data);
+	if (logOutgoingData->boolValue()) NLOG(niceName, "Send Channel Pressure channel : " << channel << ", value : " << value);
+	outputDevice->sendChannelPressure(channel, value);
+}
+
+void MIDIModule::sendAfterTouch(int channel, int note, int value)
+{
+	if (!enabled->boolValue()) return;
+	if (outputDevice == nullptr) return;
+	if (logOutgoingData->boolValue()) NLOG(niceName, "Send After touch channel : " << channel << ", note : " << note << ", value : " << value);
+	outputDevice->sendAfterTouch(channel, note, value);
 }
 
 void MIDIModule::sendFullFrameTimecode(int hours, int minutes, int seconds, int frames, MidiMessage::SmpteTimecodeType timecodeType)
@@ -290,6 +310,28 @@ void MIDIModule::pitchWheelReceived(const int &channel, const int &value)
 	if (scriptManager->items.size() > 0) scriptManager->callFunctionOnAllItems(pitchWheelEventId, Array<var>(channel, value));
 }
 
+void MIDIModule::channelPressureReceived(const int& channel, const int& value)
+{
+	if (!enabled->boolValue()) return;
+	inActivityTrigger->trigger();
+	if (logIncomingData->boolValue()) NLOG(niceName, "Channel Pressure, channel : " << channel << ", value : " << value);
+
+	if (useGenericControls) updateValue(channel, "ChannelPressure", value, MIDIValueParameter::CHANNEL_PRESSURE, 0);
+
+	if (scriptManager->items.size() > 0) scriptManager->callFunctionOnAllItems(channelPressureId, Array<var>(channel, value));
+}
+
+void MIDIModule::afterTouchReceived(const int& channel, const int& note, const int& value)
+{
+	if (!enabled->boolValue()) return;
+	inActivityTrigger->trigger();
+	if (logIncomingData->boolValue()) NLOG(niceName, "After Touch, channel : " << channel << ", note : " << note <<", value : " << value);
+
+	if (useGenericControls) updateValue(channel, "AfterTouch "+ MIDIManager::getNoteName(note), value, MIDIValueParameter::AFTER_TOUCH, note);
+
+	if (scriptManager->items.size() > 0) scriptManager->callFunctionOnAllItems(afterTouchId, Array<var>(channel, note, value));
+}
+
 void MIDIModule::midiMessageReceived(const MidiMessage& msg)
 {
 	if (thruManager != nullptr)
@@ -315,12 +357,8 @@ var MIDIModule::sendNoteOnFromScript(const var::NativeFunctionArgs & args)
 {
 	MIDIModule * m = getObjectFromJS<MIDIModule>(args);
 	if (!m->enabled->boolValue()) return var();
+	if (!checkNumArgs(m->niceName, args, 3)) return var();
 
-	if (args.numArguments < 3)
-	{
-		NLOG(m->niceName, "Not enough arguments passed from script, got " << args.numArguments << ", expected 3");
-		return var();
-	}
 
 	m->sendNoteOn(args.arguments[0], args.arguments[1], args.arguments[2]);
 	return var();
@@ -330,12 +368,8 @@ var MIDIModule::sendNoteOffFromScript(const var::NativeFunctionArgs & args)
 {
 	MIDIModule * m = getObjectFromJS<MIDIModule>(args);
 	if (!m->enabled->boolValue()) return var();
+	if (!checkNumArgs(m->niceName, args, 2)) return var();
 
-	if (args.numArguments < 2)
-	{
-		NLOG(m->niceName, "Not enough arguments passed from script, got " << args.numArguments << ", expected 2");
-		return var();
-	}
 
 	m->sendNoteOff(args.arguments[0], args.arguments[1]);
 	return var();
@@ -345,12 +379,7 @@ var MIDIModule::sendCCFromScript(const var::NativeFunctionArgs & args)
 {
 	MIDIModule * m = getObjectFromJS<MIDIModule>(args);
 	if (!m->enabled->boolValue()) return var();
-
-	if (args.numArguments < 3)
-	{
-		NLOG(m->niceName, "Not enough arguments passed from script, got " << args.numArguments << ", expected 3");
-		return var();
-	}
+	if (!checkNumArgs(m->niceName, args, 3)) return var();
 
 	m->sendControlChange(args.arguments[0], args.arguments[1], args.arguments[2]);
 	return var();
@@ -360,12 +389,7 @@ var MIDIModule::sendSysexFromScript(const var::NativeFunctionArgs & args)
 {
 	MIDIModule * m = getObjectFromJS<MIDIModule>(args);
 	if (!m->enabled->boolValue()) return var();
-
-	if (args.numArguments == 0)
-	{
-		NLOG(m->niceName, "Not enough arguments passed from script, got " << args.numArguments << ", expected at least 1");
-		return var();
-	}
+	if (!checkNumArgs(m->niceName, args, 1)) return var();
 
 	Array<uint8> data;
 	for (int i = 0; i < args.numArguments; i++) data.add((uint8)(int)args.arguments[i]);
@@ -378,12 +402,8 @@ var MIDIModule::sendProgramChangeFromScript(const var::NativeFunctionArgs& args)
 {
 	MIDIModule* m = getObjectFromJS<MIDIModule>(args);
 	if (!m->enabled->boolValue()) return var();
+	if (!checkNumArgs(m->niceName, args, 2)) return var();
 
-	if (args.numArguments < 2)
-	{
-		NLOG(m->niceName, "Not enough arguments passed from script, got " << args.numArguments << ", expected 2");
-		return var();
-	}
 
 	m->sendProgramChange(args.arguments[0], args.arguments[1]);
 	return var();
@@ -393,14 +413,29 @@ var MIDIModule::sendPitchWheelFromScript(const var::NativeFunctionArgs& args)
 {
 	MIDIModule* m = getObjectFromJS<MIDIModule>(args);
 	if (!m->enabled->boolValue()) return var();
+	if (!checkNumArgs(m->niceName, args, 2)) return var();
 
-	if (args.numArguments < 2)
-	{
-		NLOG(m->niceName, "Not enough arguments passed from script, got " << args.numArguments << ", expected 2");
-		return var();
-	}
 
 	m->sendPitchWheel(args.arguments[0], args.arguments[1]);
+	return var();
+}
+
+var MIDIModule::sendChannelPressureFromScript(const var::NativeFunctionArgs& args)
+{
+	MIDIModule* m = getObjectFromJS<MIDIModule>(args);
+	if (!m->enabled->boolValue()) return var();
+	if (!checkNumArgs(m->niceName, args, 2)) return var();
+	m->sendChannelPressure(args.arguments[0], args.arguments[1]);
+	return var();
+}
+
+var MIDIModule::sendAfterTouchFromScript(const var::NativeFunctionArgs& args)
+{
+	MIDIModule* m = getObjectFromJS<MIDIModule>(args);
+	if (!m->enabled->boolValue()) return var();
+	if (!checkNumArgs(m->niceName, args, 3)) return var();
+
+	m->sendAfterTouch(args.arguments[0], args.arguments[1], args.arguments[2]);
 	return var();
 }
 

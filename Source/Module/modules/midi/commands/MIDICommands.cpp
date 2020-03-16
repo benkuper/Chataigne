@@ -37,6 +37,7 @@ MIDINoteAndCCCommand::MIDINoteAndCCCommand(MIDIModule * module, CommandContext c
 	case NOTE_ON:
 	case NOTE_OFF:
 	case FULL_NOTE:
+	case AFTER_TOUCH:
 		noteEnum = addEnumParameter("Note", "Note from C to B");
 		for (int i = 0; i < 12; i++)
 		{
@@ -56,11 +57,14 @@ MIDINoteAndCCCommand::MIDINoteAndCCCommand(MIDIModule * module, CommandContext c
 		break;
 
 	case PITCH_WHEEL:
-		velocity = addIntParameter("Value", "The program to set", 0, 0, 16383);
+		velocity = addIntParameter("Value", "The value of the pitchWheel", 0, 0, 16383);
 		maxRemap = velocity->maximumValue;
 		break;
-	}
 
+	case CHANNEL_PRESSURE:
+		velocity = addIntParameter("Value", "The value of the channel pressure", 0, 0, 127);
+		break;
+	}
 
 	if (type == FULL_NOTE)
 	{
@@ -96,7 +100,7 @@ void MIDINoteAndCCCommand::triggerInternal()
 
 	int pitch = 0;
 	if (type == CONTROLCHANGE || type == PROGRAMCHANGE) pitch = number->intValue();
-	else if(type == NOTE_ON || type == NOTE_OFF || type == FULL_NOTE) pitch = (int)noteEnum->getValueData() + (octave->intValue() - (int)octave->minimumValue) * 12;
+	else if(type == NOTE_ON || type == NOTE_OFF || type == FULL_NOTE || type == AFTER_TOUCH) pitch = (int)noteEnum->getValueData() + (octave->intValue() - (int)octave->minimumValue) * 12;
 
 	switch(type)
 	{
@@ -123,6 +127,14 @@ void MIDINoteAndCCCommand::triggerInternal()
 
 	case PITCH_WHEEL:
 		midiModule->sendPitchWheel(channel->intValue(), velocity->intValue());
+		break;
+
+	case CHANNEL_PRESSURE:
+		midiModule->sendChannelPressure(channel->intValue(), velocity->intValue());
+		break;
+
+	case AFTER_TOUCH:
+		midiModule->sendAfterTouch(channel->intValue(), pitch, velocity->intValue());
 		break;
 
 	default:
