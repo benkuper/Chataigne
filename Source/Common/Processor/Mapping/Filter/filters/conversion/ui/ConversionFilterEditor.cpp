@@ -19,22 +19,27 @@ ConversionFilterEditor::ConversionFilterEditor(ConversionFilter* filter, bool is
 	addAndMakeVisible(&cpmEditor);
 
 	cf->addAsyncCoalescedConversionFilterListener(this);
+	cf->cpm.addAsyncManagerListener(this);
 	cpmEditor.addMouseListener(this,true);
-
+	
 	rebuildSourcesUI();
 	rebuildLinksUI();
 }
 
 ConversionFilterEditor::~ConversionFilterEditor()
 {
-	if (!inspectable.wasObjectDeleted()) cf->removeAsyncConversionFilterListener(this);
+	if (!inspectable.wasObjectDeleted())
+	{
+		cf->removeAsyncConversionFilterListener(this);
+		cf->cpm.removeAsyncManagerListener(this);
+	}
 }
 
 void ConversionFilterEditor::resizedInternalContent(Rectangle<int>& r)
 {
 	Rectangle<int> fullRect(r);
 
-	cpmEditor.setBounds(r.removeFromRight(jmin<int>(getWidth() / 2.5, 200)).withHeight(cpmEditor.getHeight()));
+	cpmEditor.setBounds(r.removeFromRight(jmin<int>(getWidth() / 2.5, 300)).withHeight(cpmEditor.getHeight()));
 
 	Rectangle<int> sr = r.removeFromLeft(getWidth() / 2.5);
 	for (auto& sui : sourcesUI)
@@ -43,12 +48,18 @@ void ConversionFilterEditor::resizedInternalContent(Rectangle<int>& r)
 		sr.translate(0, sui->getHeight() + 4);
 	}
 
-	for (auto& linkUI : linksUI)
 	{
-		Rectangle<int> lcr = getLocalArea(linkUI->sourceConnector, linkUI->sourceConnector->getLocalBounds());
-		Rectangle<int> lcr2 = getLocalArea(linkUI->outConnector, linkUI->outConnector->getLocalBounds());
+		GenericScopedLock lock(linksUI.getLock());
+		for (auto& linkUI : linksUI)
+		{
+			if (linkUI->sourceConnector.wasObjectDeleted() || linkUI->sourceConnector == nullptr 
+				|| linkUI->outConnector.wasObjectDeleted() || linkUI->outConnector == nullptr) continue;
 
-		linkUI->setBounds(lcr.getUnion(lcr2).expanded(10));
+			Rectangle<int> lcr = getLocalArea(linkUI->sourceConnector, linkUI->sourceConnector->getLocalBounds());
+			Rectangle<int> lcr2 = getLocalArea(linkUI->outConnector, linkUI->outConnector->getLocalBounds());
+
+			linkUI->setBounds(lcr.getUnion(lcr2).expanded(10));
+		}
 	}
 
 	r.setY(jmax(sr.getY(), cpmEditor.getBottom()));
@@ -66,8 +77,12 @@ void ConversionFilterEditor::rebuildSourcesUI()
 	for (auto& sui : sourcesUI) removeChildComponent(sui);
 	sourcesUI.clear();
 
-	for (auto& l : linksUI) removeChildComponent(l);
-	linksUI.clear();
+	{
+		GenericScopedLock lock(linksUI.getLock());
+		for (auto& l : linksUI) removeChildComponent(l);
+		linksUI.clear();
+	}
+	
 
 	for (auto& s : cf->sourceParams)
 	{
@@ -84,18 +99,22 @@ void ConversionFilterEditor::rebuildSourcesUI()
 
 void ConversionFilterEditor::rebuildLinksUI()
 {
-	for (auto& l : linksUI) removeChildComponent(l);
-	linksUI.clear();
-
-	for (auto& l : cf->links)
 	{
-		ConversionSourceParameterUI* sui = sourcesUI[l->sourceIndex];
-		ConvertedParameterEditor* cpe = (ConvertedParameterEditor *)cpmEditor.getEditorForInspectable(l->out);
-		jassert(sui != nullptr && cpe != nullptr && sui->connectors.size() > l->sourceValueIndex);
-		if (sui == nullptr) continue;
-		ConversionParamValueLinkUI* linkUI = new ConversionParamValueLinkUI(sui->connectors[l->sourceValueIndex], cpe->connectors[l->outValueIndex], l);
-		addAndMakeVisible(linkUI);
-		linksUI.add(linkUI);
+		GenericScopedLock lock(linksUI.getLock());
+
+		for (auto& l : linksUI) removeChildComponent(l);
+		linksUI.clear();
+
+		for (auto& l : cf->links)
+		{
+			ConversionSourceParameterUI* sui = sourcesUI[l->sourceIndex];
+			ConvertedParameterEditor* cpe = (ConvertedParameterEditor*)cpmEditor.getEditorForInspectable(l->out);
+			//jassert(sui != nullptr && cpe != nullptr && sui->connectors.size() > l->sourceValueIndex);
+			if (sui == nullptr) continue;
+			ConversionParamValueLinkUI* linkUI = new ConversionParamValueLinkUI(sui->connectors[l->sourceValueIndex], cpe->connectors[l->outValueIndex], l);
+			addAndMakeVisible(linkUI);
+			linksUI.add(linkUI);
+		}
 	}
 
 	resized();
@@ -195,4 +214,9 @@ void ConversionFilterEditor::newMessage(const ConversionFilter::ConversionFilter
 		rebuildLinksUI();
 		break;
 	}
+}
+
+void ConversionFilterEditor::newMessage(const ConvertedParameterManager::BManagerEvent& e)
+{
+	rebuildLinksUI();
 }

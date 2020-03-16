@@ -388,6 +388,10 @@
                         file="Source/Common/Processor/Mapping/Filter/filters/number/SimpleSmoothFilter.h"/>
                 </GROUP>
                 <GROUP id="{B7FF85C8-5933-B0A6-01EB-956029CA3808}" name="conversion">
+                  <FILE id="w9wUtl" name="ConversionParamValueLink.cpp" compile="1" resource="0"
+                        file="Source/Common/Processor/Mapping/Filter/filters/conversion/ConversionParamValueLink.cpp"/>
+                  <FILE id="zPkcSd" name="ConversionParamValueLink.h" compile="0" resource="0"
+                        file="Source/Common/Processor/Mapping/Filter/filters/conversion/ConversionParamValueLink.h"/>
                   <GROUP id="{6B530411-961A-9C18-896A-B66575488292}" name="ui">
                     <FILE id="W57rAV" name="ConversionConnector.cpp" compile="1" resource="0"
                           file="Source/Common/Processor/Mapping/Filter/filters/conversion/ui/ConversionConnector.cpp"/>
@@ -418,10 +422,10 @@
                         file="Source/Common/Processor/Mapping/Filter/filters/conversion/ConversionFilter.cpp"/>
                   <FILE id="LdTp5f" name="ConversionFilter.h" compile="0" resource="0"
                         file="Source/Common/Processor/Mapping/Filter/filters/conversion/ConversionFilter.h"/>
-                  <FILE id="SZe1T3" name="ConversionFilters.cpp" compile="1" resource="0"
-                        file="Source/Common/Processor/Mapping/Filter/filters/conversion/ConversionFilters.cpp"/>
-                  <FILE id="Labzbe" name="ConversionFilters.h" compile="0" resource="0"
-                        file="Source/Common/Processor/Mapping/Filter/filters/conversion/ConversionFilters.h"/>
+                  <FILE id="SZe1T3" name="SimpleConversionFilters.cpp" compile="1" resource="0"
+                        file="Source/Common/Processor/Mapping/Filter/filters/conversion/SimpleConversionFilters.cpp"/>
+                  <FILE id="Labzbe" name="SimpleConversionFilters.h" compile="0" resource="0"
+                        file="Source/Common/Processor/Mapping/Filter/filters/conversion/SimpleConversionFilters.h"/>
                   <FILE id="Z0hXDn" name="ConvertedParameter.cpp" compile="1" resource="0"
                         file="Source/Common/Processor/Mapping/Filter/filters/conversion/ConvertedParameter.cpp"/>
                   <FILE id="GdUkck" name="ConvertedParameter.h" compile="0" resource="0"

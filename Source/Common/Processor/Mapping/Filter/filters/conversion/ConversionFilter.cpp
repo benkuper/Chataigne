@@ -23,6 +23,12 @@ ConversionFilter::ConversionFilter(var params) :
 
 ConversionFilter::~ConversionFilter() 
 {
+	clearItem();
+}
+
+void ConversionFilter::clearItem()
+{
+	DBG("Clear item, links size : " << links.size());
 	links.clear();
 	cpm.removeBaseManagerListener(this);
 }
@@ -43,7 +49,7 @@ void ConversionFilter::itemRemoved(ConvertedParameter* cp)
 {
 	filteredParameters.removeObject(cp->outParamReference);
 	
-	Array<ParamValueLink*> linksToRemove;
+	Array<ConversionParamValueLink*> linksToRemove;
 	{
 		GenericScopedLock lock(links.getLock());
 		for (auto& link : links)
@@ -79,24 +85,48 @@ void ConversionFilter::createLink(WeakReference<Parameter> source, int sourceVal
 {
 	jassert(sourceParams.indexOf(source) != -1);
 
-	ParamValueLink* link = getLinkForOut(out, outValueIndex);
-	if (link == nullptr) link = new ParamValueLink();
-	link->sourceIndex = sourceParams.indexOf(source);
-	link->sourceValueIndex = sourceValueIndex;
-	link->out = out;
-	link->outValueIndex = outValueIndex;
-	links.add(link);
+	ConversionParamValueLink* link = getLinkForOut(out, outValueIndex);
+	if (link == nullptr)
+	{
+		link = new ConversionParamValueLink(sourceParams.indexOf(source), sourceValueIndex, out, outValueIndex);
+		link->addConversionLinkListener(this);
+		links.add(link);
+	}
+	else
+	{
+		link->sourceIndex = sourceParams.indexOf(source);
+		link->sourceValueIndex = sourceValueIndex;
+		link->out = out;
+		link->outValueIndex = outValueIndex;
+	}
 
 	conversionFilterAsyncNotifier.addMessage(new ConversionFilterEvent(ConversionFilterEvent::LINKS_UPDATED));
 }
 
-void ConversionFilter::removeLink(ParamValueLink * link)
+void ConversionFilter::removeLink(ConversionParamValueLink* link)
 {
 	links.removeObject(link);
 	conversionFilterAsyncNotifier.addMessage(new ConversionFilterEvent(ConversionFilterEvent::LINKS_UPDATED));
 }
 
-ConversionFilter::ParamValueLink* ConversionFilter::getLinkForOut(ConvertedParameter* out, int outValueIndex)
+void ConversionFilter::relinkGhostData()
+{
+	if (sourceParams.size() == 0 || !ghostLinksData.isArray()) return;
+
+	links.clear();
+	for (int i = 0; i < ghostLinksData.size(); i++)
+	{
+		var linkData = ghostLinksData[i];
+		if (ConvertedParameter* cp = cpm.getItemWithName(linkData.getProperty("out", "")))
+		{
+			createLink(sourceParams[linkData.getProperty("sourceIndex", 0)], linkData.getProperty("sourceValueIndex", 0), cp, linkData.getProperty("outValueIndex", 0));
+		}
+	}
+
+	ghostLinksData = var(); //Reset ghost data
+}
+
+ConversionParamValueLink* ConversionFilter::getLinkForOut(ConvertedParameter* out, int outValueIndex)
 {
 	GenericScopedLock lock(links.getLock());
 	for (auto& link : links) if (link->out == out && link->outValueIndex == outValueIndex) return link;
@@ -108,6 +138,8 @@ void ConversionFilter::setupParametersInternal()
 	//do not call parent, we have our own filteredParameterCreation implementation
 
 	//need here to reconnect links to new source parameters
+
+	relinkGhostData();
 
 	conversionFilterAsyncNotifier.addMessage(new ConversionFilterEvent(ConversionFilterEvent::SOURCES_UPDATED));
 }
@@ -125,10 +157,29 @@ void ConversionFilter::processSingleParameterInternal(Parameter* source, Paramet
 	}
 }
 
+void ConversionFilter::askForRemove(ConversionParamValueLink* link)
+{
+	removeLink(link);
+}
+
 var ConversionFilter::getJSONData()
 {
 	var data = MappingFilter::getJSONData();
 	data.getDynamicObject()->setProperty(cpm.shortName, cpm.getJSONData());
+	
+	var linkData;
+	for (auto& link : links)
+	{
+		var lData = var(new DynamicObject());
+		lData.getDynamicObject()->setProperty("sourceIndex", link->sourceIndex);
+		lData.getDynamicObject()->setProperty("sourceValueIndex", link->sourceValueIndex);
+		lData.getDynamicObject()->setProperty("out", link->out->shortName);
+		lData.getDynamicObject()->setProperty("outValueIndex", link->outValueIndex);
+		linkData.append(lData);
+	}
+
+	data.getDynamicObject()->setProperty("links", linkData);
+
 	return data;
 }
 
@@ -136,6 +187,9 @@ void ConversionFilter::loadJSONDataItemInternal(var data)
 {
 	MappingFilter::loadJSONDataItemInternal(data);
 	cpm.loadJSONData(data.getProperty(cpm.shortName, var()));
+
+	ghostLinksData = data.getProperty("links", var());
+	relinkGhostData();
 }
 
 InspectableEditor* ConversionFilter::getEditor(bool isRoot)

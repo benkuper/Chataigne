@@ -12,26 +12,23 @@
 
 #include "../../MappingFilter.h"
 #include "ConvertedParameterManager.h"
+#include "ConversionParamValueLink.h"
 
 class ConversionFilter :
 	public MappingFilter,
-	public ConvertedParameterManager::ManagerListener
+	public ConvertedParameterManager::ManagerListener,
+	public ConversionParamValueLink::ConversionLinkListener
 {
 public:
 	ConversionFilter(var params);
 	~ConversionFilter();
 
-	class ParamValueLink
-	{
-	public:
-		int sourceIndex;
-		int sourceValueIndex;
-		ConvertedParameter* out;
-		int outValueIndex;
-	};
-
 	ConvertedParameterManager cpm;
-	OwnedArray<ParamValueLink, CriticalSection> links;
+	OwnedArray<ConversionParamValueLink, CriticalSection> links;
+
+	var ghostLinksData; //for after loading
+
+	void clearItem() override;
 
 	void itemAdded(ConvertedParameter*) override;
 	void itemRemoved(ConvertedParameter*) override;
@@ -40,16 +37,20 @@ public:
 	void reorderFilterParameters();
 
 	void createLink(WeakReference<Parameter>, int sourceValueIndex, ConvertedParameter* out, int outValueIndex);
-	void removeLink(ParamValueLink * link);
+	void removeLink(ConversionParamValueLink* link);
 
+	void relinkGhostData();
 
-	ParamValueLink * getLinkForOut(ConvertedParameter* out, int outValueIndex);
+	ConversionParamValueLink* getLinkForOut(ConvertedParameter* out, int outValueIndex);
 
 	void setupParametersInternal() override;
 	void processSingleParameterInternal(Parameter * source, Parameter *out) override;
 
+	void askForRemove(ConversionParamValueLink* link) override;
+
 	var getJSONData() override;
 	void loadJSONDataItemInternal(var data) override;
+
 
 	class ConversionFilterEvent {
 	public:
@@ -68,7 +69,7 @@ public:
 
 	static ConversionFilter * create(var params) { return new ConversionFilter(params); }
 	String getTypeString() const override { return getTypeStringStatic(); }
-	static const String getTypeStringStatic() { return "Conversion"; }
+	static const String getTypeStringStatic() { return "Mega Converter"; }
 
 	InspectableEditor* getEditor(bool isRoot);
 };

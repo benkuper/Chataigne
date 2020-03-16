@@ -51,9 +51,12 @@ void SimpleRemapFilter::processSingleParameterInternal(Parameter * source, Param
 
 	if (useCustomInputRange->boolValue())
 	{
-		float targetValue = jmap(source->floatValue(), targetIn->x, targetIn->y, targetOut->x, targetOut->y);
-		if (targetOut->x > targetOut->y) targetValue = targetOut->y + (targetValue - targetOut->y) / (targetOut->x - targetOut->y);
-		out->setValue(targetValue);
+		if (targetIn->x != targetIn->y && targetOut->x != targetOut->y)
+		{
+			float targetValue = jmap(source->floatValue(), targetIn->x, targetIn->y, targetOut->x, targetOut->y);
+			if (targetOut->x > targetOut->y) targetValue = targetOut->y + (targetValue - targetOut->y) / (targetOut->x - targetOut->y);
+			out->setValue(targetValue);
+		}
 	}
 	else
 	{

@@ -217,6 +217,7 @@
     <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\OffsetFilter.cpp"/>
     <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\SimpleRemapFilter.cpp"/>
     <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\SimpleSmoothFilter.cpp"/>
+    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\conversion\ConversionParamValueLink.cpp"/>
     <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\conversion\ui\ConversionConnector.cpp"/>
     <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\conversion\ui\ConversionFilterEditor.cpp"/>
     <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\conversion\ui\ConversionParamValueLinkUI.cpp"/>
@@ -224,7 +225,7 @@
     <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\conversion\ui\ConvertedParameterManagerEditor.cpp"/>
     <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\conversion\ui\ConvertedParameterEditor.cpp"/>
     <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\conversion\ConversionFilter.cpp"/>
-    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\conversion\ConversionFilters.cpp"/>
+    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\conversion\SimpleConversionFilters.cpp"/>
     <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\conversion\ConvertedParameter.cpp"/>
     <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\conversion\ConvertedParameterManager.cpp"/>
     <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\color\ColorShiftFilter.cpp"/>
@@ -2986,6 +2987,7 @@
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\OffsetFilter.h"/>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\SimpleRemapFilter.h"/>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\SimpleSmoothFilter.h"/>
+    <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\conversion\ConversionParamValueLink.h"/>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\conversion\ui\ConversionConnector.h"/>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\conversion\ui\ConversionFilterEditor.h"/>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\conversion\ui\ConversionParamValueLinkUI.h"/>
@@ -2993,7 +2995,7 @@
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\conversion\ui\ConvertedParameterManagerEditor.h"/>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\conversion\ui\ConvertedParameterEditor.h"/>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\conversion\ConversionFilter.h"/>
-    <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\conversion\ConversionFilters.h"/>
+    <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\conversion\SimpleConversionFilters.h"/>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\conversion\ConvertedParameter.h"/>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\conversion\ConvertedParameterManager.h"/>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\color\ColorShiftFilter.h"/>

@@ -31,4 +31,5 @@ public:
 	void resizedInternalContent(Rectangle<int> &r) override;
 
 	void newMessage(const ConvertedParameter::CPEvent& e) override;
+
 };

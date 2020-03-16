@@ -33,6 +33,11 @@ ConversionSourceParameterUI::~ConversionSourceParameterUI()
 
 }
 
+void ConversionSourceParameterUI::mouseDown(const MouseEvent& e)
+{
+	//nothing, avoid default behaviour
+}
+
 void ConversionSourceParameterUI::paint(Graphics& g)
 {
 	g.setColour(NORMAL_COLOR);

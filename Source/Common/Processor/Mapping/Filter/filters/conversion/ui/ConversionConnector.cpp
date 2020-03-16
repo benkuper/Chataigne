@@ -31,7 +31,9 @@ ConversionConnector::ConversionConnector(StringRef label, ConvertedParameter * p
 
 ConversionConnector::~ConversionConnector()
 {
+	masterReference.clear();
 }
+
 void ConversionConnector::paint(Graphics& g)
 {
 	Rectangle<int> r = getLocalBounds();
@@ -45,7 +47,8 @@ void ConversionConnector::paint(Graphics& g)
 
 bool ConversionConnector::hitTest(int x, int y)
 {
-	return isSource ? x > getWidth() - getHeight() : x < getHeight(); //inside ellipse
+	return Component::hitTest(x, y);
+	//return isSource ? x > getWidth() - getHeight() : x < getHeight(); //inside ellipse
 }
 
 Point<int> ConversionConnector::getConnectorCenter()

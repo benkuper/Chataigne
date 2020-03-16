@@ -17,7 +17,8 @@
 
 class ConversionFilterEditor :
 	public MappingFilterEditor,
-	public ConversionFilter::AsyncConversionFilterListener
+	public ConversionFilter::AsyncConversionFilterListener,
+	public ConvertedParameterManager::AsyncListener
 {
 public:
 	ConversionFilterEditor(ConversionFilter* filter, bool isRoot);
@@ -26,7 +27,7 @@ public:
 
 	OwnedArray<ConversionSourceParameterUI> sourcesUI;
 	ConvertedParameterManagerEditor cpmEditor;
-	OwnedArray<ConversionParamValueLinkUI> linksUI;
+	OwnedArray<ConversionParamValueLinkUI, CriticalSection> linksUI;
 
 	std::unique_ptr<ConversionParamValueLinkUI> editingLinkUI;
 
@@ -40,4 +41,5 @@ public:
 	void mouseUp(const MouseEvent& e) override;
 
 	void newMessage(const ConversionFilter::ConversionFilterEvent& e) override;
+	void newMessage(const ConvertedParameterManager::BManagerEvent& e) override;
 };

@@ -24,6 +24,8 @@ public:
 	std::unique_ptr<ControllableUI> sourceUI;
 
 	OwnedArray<ConversionConnector> connectors;
+
+	void mouseDown(const MouseEvent &e) override; //avoid default behaviour
 	
 	void paint(Graphics&) override;
 	void resized() override;

@@ -26,6 +26,7 @@ ConvertedParameterEditor::ConvertedParameterEditor(ConvertedParameter* cp, bool 
 	if (cp->outParamReference != nullptr && !cp->outParamReference.wasObjectDeleted())
 	{
 		outParamUI.reset((ParameterUI*)cp->outParamReference->createDefaultUI());
+		outParamUI->showLabel = false;
 		addAndMakeVisible(outParamUI.get());
 	}
 
@@ -59,7 +60,7 @@ InspectableEditor* ConvertedParameterEditor::addEditorUI(ControllableContainer* 
 
 void ConvertedParameterEditor::resizedInternalHeaderItemInternal(Rectangle<int>& r)
 {
-	if(outParamUI != nullptr) outParamUI->setBounds(r.removeFromRight(60).reduced(2));
+	if(outParamUI != nullptr) outParamUI->setBounds(r.removeFromRight(jmin(r.getWidth()-50,200)).reduced(2));
 }
 
 void ConvertedParameterEditor::resizedInternalContent(Rectangle<int>& r)
@@ -93,6 +94,7 @@ void ConvertedParameterEditor::newMessage(const ConvertedParameter::CPEvent& e)
 		if (cp->outParamReference != nullptr && !cp->outParamReference.wasObjectDeleted())
 		{
 			outParamUI.reset((ParameterUI*)cp->outParamReference->createDefaultUI());
+			outParamUI->showLabel = false;
 			addAndMakeVisible(outParamUI.get());
 			resized();
 		}

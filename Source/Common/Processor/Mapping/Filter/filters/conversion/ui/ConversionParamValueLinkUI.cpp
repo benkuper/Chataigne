@@ -9,8 +9,7 @@
 */
 
 #include "ConversionParamValueLinkUI.h"
-
-ConversionParamValueLinkUI::ConversionParamValueLinkUI(ConversionConnector* sourceConnector, ConversionConnector* outConnector, ConversionFilter::ParamValueLink* link) :
+ConversionParamValueLinkUI::ConversionParamValueLinkUI(ConversionConnector* sourceConnector, ConversionConnector* outConnector, ConversionParamValueLink* link) :
 	Component("link"),
 	sourceConnector(sourceConnector),
 	outConnector(outConnector),
@@ -52,6 +51,18 @@ void ConversionParamValueLinkUI::setOutConnector(ConversionConnector* c)
 	{
 		outConnector->dropCandidate = true;
 		outConnector->repaint();
+	}
+}
+
+void ConversionParamValueLinkUI::mouseDown(const MouseEvent& e)
+{
+	if (e.mods.isRightButtonDown())
+	{
+		PopupMenu p;
+		p.addItem(1, "Remove connection");
+		int result = p.show();
+
+		if (result == 1) link->remove();
 	}
 }
 
@@ -98,6 +109,8 @@ void ConversionParamValueLinkUI::buildHitPath()
 			tp = points[i].getPointOnCircumference(margin, angle + float_Pi);
 			sp = points[i].getPointOnCircumference(margin, angle);
 		}
+
+		if (isnan(tp.x)) return;
 
 		firstPoints.add(tp);
 		secondPoints.insert(0, sp);

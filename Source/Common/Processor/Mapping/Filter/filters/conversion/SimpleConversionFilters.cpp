@@ -1,39 +1,38 @@
 /*
   ==============================================================================
 
-    ConversionFilters.cpp
+    SimpleConversionFilters.cpp
     Created: 17 Apr 2018 10:25:04am
     Author:  Ben
 
   ==============================================================================
 */
 
-#include "ConversionFilters.h"
+#include "SimpleConversionFilters.h"
 
-/*
-
-ConversionFilter::ConversionFilter(const String &name, var params, StringRef outTypeString) :
+SimpleConversionFilter::SimpleConversionFilter(const String &name, var params, StringRef outTypeString) :
 	MappingFilter(name, params),
-	retargetComponent(nullptr)
+	retargetComponent(nullptr),
+	outTypeString(outTypeString)
 {
 	autoSetRange = false;
-	forceOutParameterType = outTypeString;
 	retargetComponent = filterParams.addEnumParameter("Extract Component", "This is the component of the source parameter to extract");
 	retargetComponent->setCustomShortName("retargetComponent");
 	retargetComponent->forceSaveValue = true;
 }
 
-ConversionFilter::~ConversionFilter()
+SimpleConversionFilter::~SimpleConversionFilter()
 {
 }
 
-Parameter * ConversionFilter::setupParameterInternal(Parameter * source)
+Parameter* SimpleConversionFilter::setupSingleParameterInternal(Parameter* source)
 {
-	Parameter * p = MappingFilter::setupParameterInternal(source);
-	
+	Parameter* p = (Parameter *)ControllableFactory::getInstance()->createControllable(outTypeString);
+	p->setNiceName(source->niceName);
+
 	retargetComponent->clearOptions();
 
-	if (p->isComplex() == sourceParam->isComplex())
+	if (p->isComplex() == source->isComplex())
 	{
 		transferType = DIRECT;
 		retargetComponent->setEnabled(false);
@@ -43,7 +42,7 @@ Parameter * ConversionFilter::setupParameterInternal(Parameter * source)
 		retargetComponent->setEnabled(true);
 		transferType = p->isComplex() ? TARGET : EXTRACT;
 		retargetComponent->setNiceName(transferType == TARGET ? "Target Component" : "Extract Component");
-		Parameter * retargetP = transferType == TARGET ? p : sourceParam.get();
+		Parameter * retargetP = transferType == TARGET ? p : source;
 		StringArray valueNames = retargetP->getValuesNames();
 		for (int i = 0; i < valueNames.size(); i++)
 		{
@@ -55,38 +54,37 @@ Parameter * ConversionFilter::setupParameterInternal(Parameter * source)
 	return p;
 }
 
-void ConversionFilter::processInternal()
-{
-	if (filteredParameter == nullptr || sourceParam == nullptr || retargetComponent == nullptr) return;
 
+void SimpleConversionFilter::processSingleParameterInternal(Parameter* source, Parameter* out)
+{
 	switch (transferType)
 	{
 	case DIRECT:
 	{
-		if (!sourceParam->isComplex()) filteredParameter->setValue(convertValue(sourceParam->getValue()));
+		if (!source->isComplex()) out->setValue(convertValue(source, source->getValue()));
 		else
 		{
 			var val = var();
-			var sourceVal = sourceParam->getValue();
-			for (int i = 0; i < sourceParam->value.size() && i < filteredParameter->value.size(); i++) val.append(convertValue(sourceVal[i]));
-			while (val.size() < filteredParameter->value.size()) val.append(0);
-			filteredParameter->setValue(val);
+			var sourceVal = source->getValue();
+			for (int i = 0; i < source->value.size() && i < out->value.size(); i++) val.append(convertValue(source, sourceVal[i]));
+			while (val.size() < out->value.size()) val.append(0);
+			out->setValue(val);
 		}
 	}
 	break;
 
 	case EXTRACT: 
 	{
-		filteredParameter->setValue(convertValue(sourceParam->value[(int)retargetComponent->getValueData()]));
+		out->setValue(convertValue(source, source->value[(int)retargetComponent->getValueData()]));
 	}
 	break;
 
 	case TARGET:
 	{
 		var val = var();
-		for (int i = 0; i < filteredParameter->value.size(); i++) val.append(0);
-		val[(int)retargetComponent->getValueData()] = convertValue(sourceParam->getValue());
-		filteredParameter->setValue(val);
+		for (int i = 0; i < out->value.size(); i++) val.append(0);
+		val[(int)retargetComponent->getValueData()] = convertValue(source, source->getValue());
+		out->setValue(val);
 	}
 	break;
 	}
@@ -95,11 +93,11 @@ void ConversionFilter::processInternal()
 
 
 ToFloatFilter::ToFloatFilter(var params) :
-	ConversionFilter(getTypeString(), params, FloatParameter::getTypeStringStatic())
+	SimpleConversionFilter(getTypeString(), params, FloatParameter::getTypeStringStatic())
 {
 }
 
-var ToFloatFilter::convertValue(var sourceValue)
+var ToFloatFilter::convertValue(Parameter * source, var sourceValue)
 {
 	if (sourceValue.isString()) return sourceValue.toString().getFloatValue();
 	return (float)sourceValue;
@@ -107,27 +105,27 @@ var ToFloatFilter::convertValue(var sourceValue)
 
 
 ToIntFilter::ToIntFilter(var params) :
-	ConversionFilter(getTypeString(), params, IntParameter::getTypeStringStatic())
+	SimpleConversionFilter(getTypeString(), params, IntParameter::getTypeStringStatic())
 {
 	modeParam = addEnumParameter("Mode", "Conversion mode");
 	modeParam->addOption("Round", ROUND)->addOption("Floor", FLOOR)->addOption("Ceil", CEIL);
 }
 
-var ToIntFilter::convertValue(var sourceValue)
+var ToIntFilter::convertValue(Parameter * source, var sourceValue)
 {
 	Mode m = modeParam->getValueDataAsEnum<Mode>();
 	switch(m)
 	{
-	case ROUND: return roundf(sourceParam->floatValue());
-	case FLOOR: return floorf(sourceParam->floatValue()); 
-	case CEIL:  return ceilf(sourceParam->floatValue());
+	case ROUND: return roundf(source->floatValue());
+	case FLOOR: return floorf(source->floatValue()); 
+	case CEIL:  return ceilf(source->floatValue());
 	}
 
 	return 0;
 }
 
 ToStringFilter::ToStringFilter(var params) :
-	ConversionFilter(getTypeString(), params, StringParameter::getTypeStringStatic())
+	SimpleConversionFilter(getTypeString(), params, StringParameter::getTypeStringStatic())
 {
 	format = filterParams.addEnumParameter("Format", "The format of the string");
 	format->addOption("Number", NUMBER)->addOption("Time", TIME);
@@ -136,7 +134,7 @@ ToStringFilter::ToStringFilter(var params) :
 	suffix = filterParams.addStringParameter("Suffix", "Something appended  to the result", "");
 }
 
-var ToStringFilter::convertValue(var sourceValue)
+var ToStringFilter::convertValue(Parameter * source, var sourceValue)
 {
 	String result = prefix->stringValue();
 
@@ -166,33 +164,33 @@ var ToStringFilter::convertValue(var sourceValue)
 void ToStringFilter::filterParamChanged(Parameter * p)
 {
 	numDecimals->hideInEditor = format->getValueDataAsEnum<Format>() != NUMBER;
-	ConversionFilter::filterParamChanged(p);
+	SimpleConversionFilter::filterParamChanged(p);
 }
 
 ToPoint2DFilter::ToPoint2DFilter(var params) :
-	ConversionFilter(getTypeString(), params, Point2DParameter::getTypeStringStatic())
+	SimpleConversionFilter(getTypeString(), params, Point2DParameter::getTypeStringStatic())
 {
 }
 
-var ToPoint2DFilter::convertValue(var sourceValue)
+var ToPoint2DFilter::convertValue(Parameter * source, var sourceValue)
 {
 	if (sourceValue.isString()) return sourceValue.toString().getFloatValue();
 	return (float)sourceValue;
 }
 
 ToPoint3DFilter::ToPoint3DFilter(var params) :
-	ConversionFilter(getTypeString(), params, Point3DParameter::getTypeStringStatic())
+	SimpleConversionFilter(getTypeString(), params, Point3DParameter::getTypeStringStatic())
 {
 }
 
-var ToPoint3DFilter::convertValue(var sourceValue)
+var ToPoint3DFilter::convertValue(Parameter * source, var sourceValue)
 {
 	if (sourceValue.isString()) return sourceValue.toString().getFloatValue();
 	return (float)sourceValue;
 }
 
 ToColorFilter::ToColorFilter(var params) :
-	ConversionFilter(getTypeString(), params, ColorParameter::getTypeStringStatic()),
+	SimpleConversionFilter(getTypeString(), params, ColorParameter::getTypeStringStatic()),
 	baseColor(nullptr)
 {
 }
@@ -201,9 +199,9 @@ ToColorFilter::~ToColorFilter()
 {
 }
 
-Parameter* ToColorFilter::setupParameterInternal(Parameter* sp)
+Parameter* ToColorFilter::setupSingleParameterInternal(Parameter* sourceParam)
 {
-	Parameter* p = ConversionFilter::setupParameterInternal(sp);
+	Parameter* p = SimpleConversionFilter::setupSingleParameterInternal(sourceParam);
 	
 	if (transferType != TARGET)
 	{
@@ -237,7 +235,7 @@ Parameter* ToColorFilter::setupParameterInternal(Parameter* sp)
 	return p;
 }
 
-void ToColorFilter::processInternal()
+void ToColorFilter::processSingleParameterInternal(Parameter* source, Parameter* out)
 {
 	switch (transferType)
 	{
@@ -250,31 +248,31 @@ void ToColorFilter::processInternal()
 		{
 		case HUE:
 		{
-			Colour c = baseColor->getColor().withHue(sourceParam->value);
-			((ColorParameter*)filteredParameter.get())->setColor(c);
+			Colour c = baseColor->getColor().withHue(source->value);
+			((ColorParameter*)out)->setColor(c);
 		}
 		break;
 
 		case SAT:
 		{
-			Colour c = baseColor->getColor().withSaturation(sourceParam->value);
-			((ColorParameter*)filteredParameter.get())->setColor(c);
+			Colour c = baseColor->getColor().withSaturation(source->value);
+			((ColorParameter*)out)->setColor(c);
 		}
 		break;
 
 		case VAL:
 		{
-			Colour c = baseColor->getColor().withBrightness(sourceParam->value);
-			((ColorParameter*)filteredParameter.get())->setColor(c);
+			Colour c = baseColor->getColor().withBrightness(source->value);
+			((ColorParameter*)out)->setColor(c);
 		}
 		break;
 
 		default:
 		{
 			var val = var();
-			for (int i = 0; i < filteredParameter->value.size(); i++) val.append(baseColor->value[i]); //force alpha to 1
-			val[(int)retargetComponent->getValueData()] = convertValue(sourceParam->getValue());
-			filteredParameter->setValue(val);
+			for (int i = 0; i < out->value.size(); i++) val.append(baseColor->value[i]); //force alpha to 1
+			val[(int)retargetComponent->getValueData()] = convertValue(source, source->getValue());
+			out->setValue(val);
 		}
 		break;
 		}
@@ -283,11 +281,9 @@ void ToColorFilter::processInternal()
 	break;
 
 	default:
-		ConversionFilter::processInternal();
+		SimpleConversionFilter::processInternal();
 		break;
 	}
 
 	
 }
-
-*/

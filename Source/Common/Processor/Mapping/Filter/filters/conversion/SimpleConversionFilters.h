@@ -12,41 +12,42 @@
 
 #include "../../MappingFilter.h"
  
-/*
-class ConversionFilter :
+
+class SimpleConversionFilter :
 	public MappingFilter
 {
 public:
-	ConversionFilter(const String &name, var params, StringRef outTypeString);
-	virtual ~ConversionFilter();
+	SimpleConversionFilter(const String &name, var params, StringRef outTypeString);
+	virtual ~SimpleConversionFilter();
 
 	EnumParameter * retargetComponent;
-	var retargetValue; //ghosting
+	var retargetValues; //ghosting
+	String outTypeString;
 	
 	enum TransferType { DIRECT, EXTRACT, TARGET};
 	TransferType transferType;
 
-	Array<WeakReference<Parameter>> setupParametersInternal(Array<WeakReference<Parameter>> sourceParams) override;
-	virtual void processInternal() override;
-	virtual var convertValue(var sourceValue) { return var(sourceValue); }
+	virtual Parameter * setupSingleParameterInternal(Parameter* source) override;
+	virtual void processSingleParameterInternal(Parameter* source, Parameter* out) override;
+	virtual var convertValue(Parameter * source, var sourceValue) { return var(sourceValue) ; }
 };
 
 
 class ToFloatFilter :
-	public ConversionFilter
+	public SimpleConversionFilter
 {
 public:
 	ToFloatFilter(var params);
 	~ToFloatFilter() {}
 
-	var convertValue(var sourceValue) override;
+	var convertValue(Parameter * source, var sourceValue) override;
 
 	static ToFloatFilter * create(var params) { return new ToFloatFilter(params); }
 	String getTypeString() const override { return "Convert To Float"; }
 };
 
 class ToIntFilter :
-	public ConversionFilter
+	public SimpleConversionFilter
 {
 public:
 	ToIntFilter(var params);
@@ -55,7 +56,7 @@ public:
 	enum Mode { FLOOR, ROUND, CEIL };
 	EnumParameter * modeParam;
 
-	var convertValue(var sourceValue) override;
+	var convertValue(Parameter * source, var sourceValue) override;
 
 	static ToIntFilter * create(var params) { return new ToIntFilter(params); }
 	String getTypeString() const override { return "Convert To Integer"; }
@@ -63,7 +64,7 @@ public:
 };
 
 class ToStringFilter :
-	public ConversionFilter
+	public SimpleConversionFilter
 {
 public:
 	ToStringFilter(var params);
@@ -76,7 +77,7 @@ public:
 	StringParameter* suffix;
 	//IntParameter * numLeadingZeros;
 
-	var convertValue(var sourceValue) override;
+	var convertValue(Parameter * source, var sourceValue) override;
 
 	void filterParamChanged(Parameter*) override;
 
@@ -88,13 +89,13 @@ public:
 
 
 class ToPoint2DFilter :
-	public ConversionFilter
+	public SimpleConversionFilter
 {
 public:
 	ToPoint2DFilter(var params);
 	~ToPoint2DFilter() {}
 
-	var convertValue(var sourceValue) override;
+	var convertValue(Parameter * source, var sourceValue) override;
 
 	static ToPoint2DFilter * create(var params) { return new ToPoint2DFilter(params); }
 	String getTypeString() const override { return "Convert To Point2D"; }
@@ -103,13 +104,13 @@ public:
 
 
 class ToPoint3DFilter :
-	public ConversionFilter
+	public SimpleConversionFilter
 {
 public:
 	ToPoint3DFilter(var params);
 	~ToPoint3DFilter() {}
 
-	var convertValue(var sourceValue) override;
+	var convertValue(Parameter * source, var sourceValue) override;
 
 	static ToPoint3DFilter * create(var params) { return new ToPoint3DFilter(params); }
 	String getTypeString() const override { return "Convert To Point3D"; }
@@ -117,7 +118,7 @@ public:
 };
 
 class ToColorFilter :
-	public ConversionFilter
+	public SimpleConversionFilter
 {
 public:
 	ToColorFilter(var params);
@@ -128,12 +129,11 @@ public:
 
 	ColorParameter* baseColor;
 
-	Parameter* setupParameterInternal(Parameter* sourceParam) override;
-	void processInternal() override;
-	//var convertValue(var sourceValue) override;
+	Parameter* setupSingleParameterInternal(Parameter* sourceParam) override;
+	void processSingleParameterInternal(Parameter * source, Parameter * out) override;
+	//var convertValue(Parameter * source, var sourceValue) override;
 
 	static ToColorFilter* create(var params) { return new ToColorFilter(params); }
 	String getTypeString() const override { return "Convert To Color"; }
 
 };
-*/

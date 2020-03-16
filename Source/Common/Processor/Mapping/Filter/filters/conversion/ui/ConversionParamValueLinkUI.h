@@ -16,12 +16,12 @@ class ConversionParamValueLinkUI :
 	public Component
 {
 public:
-	ConversionParamValueLinkUI(ConversionConnector* sourceConnector = nullptr, ConversionConnector* outConnector = nullptr, ConversionFilter::ParamValueLink* link = nullptr);
+	ConversionParamValueLinkUI(ConversionConnector* sourceConnector = nullptr, ConversionConnector* outConnector = nullptr, ConversionParamValueLink* link = nullptr);
 	~ConversionParamValueLinkUI();
 
-	ConversionFilter::ParamValueLink* link;
-	ConversionConnector* sourceConnector;
-	ConversionConnector* outConnector;
+	ConversionParamValueLink* link;
+	WeakReference<ConversionConnector> sourceConnector;
+	WeakReference<ConversionConnector> outConnector;
 
 	Path linkPath;
 	Path hitPath;
@@ -29,6 +29,8 @@ public:
 	
 	void setSourceConnector(ConversionConnector* c);
 	void setOutConnector(ConversionConnector* c);
+
+	void mouseDown(const MouseEvent &e) override;
 
 	void buildHitPath();
 

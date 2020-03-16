@@ -33,4 +33,6 @@ public:
 	bool hitTest(int x, int y) override;
 
 	Point<int> getConnectorCenter();
+
+	WeakReference<ConversionConnector>::Master masterReference;
 };

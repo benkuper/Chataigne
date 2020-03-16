@@ -119,7 +119,7 @@ void Mapping::process(bool forceOutput)
 {
 	if ((canBeDisabled && !enabled->boolValue()) || forceDisabled) return;
 	if (im.items.size() == 0) return;
-	if (isCurrentlyLoadingData) return;
+	if (isCurrentlyLoadingData || isRebuilding) return;
 
 	//DBG("[PROCESS] Enter lock");
 	GenericScopedLock lock(mappingLock);
