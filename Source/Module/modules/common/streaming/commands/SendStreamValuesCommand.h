@@ -16,8 +16,7 @@
 #include "../../commands/customvalues/CustomValuesCommandArgumentManager.h"
 
 class SendStreamValuesCommand :
-	public StreamingCommand,
-	public CustomValuesCommandArgumentManager::ArgumentManagerListener
+	public StreamingCommand
 {
 public:
 	SendStreamValuesCommand(StreamingModule * output, CommandContext context, var params);
@@ -27,8 +26,6 @@ public:
 	void loadJSONDataInternal(var data) override;
 
 	void triggerInternal() override;
-
-	void useForMappingChanged(CustomValuesCommandArgument * a) override;
 
 	static SendStreamValuesCommand * create(ControllableContainer * module, CommandContext context, var params) { return new SendStreamValuesCommand((StreamingModule *)module, context, params); }
 

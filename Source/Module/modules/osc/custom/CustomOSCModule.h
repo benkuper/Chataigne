@@ -21,7 +21,6 @@ public:
 
 	BoolParameter * autoAdd;
 	BoolParameter * splitArgs;
-	BoolParameter * autoRange;
 	BoolParameter * autoFeedback;
 
 	void processMessageInternal(const OSCMessage &msg) override;

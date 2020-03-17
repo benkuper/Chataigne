@@ -14,7 +14,6 @@
 
 MappingOutputManager::MappingOutputManager() :
 	BaseManager<MappingOutput>("Outputs"),
-	outParam(nullptr),
 	omAsyncNotifier(5)
 {
 	canBeCopiedAndPasted = true;
@@ -25,31 +24,56 @@ MappingOutputManager::~MappingOutputManager()
 {
 }
 
-void MappingOutputManager::setValue(var value)
-{
-	for (auto &o : items) o->setValue(value);
-}
 
-void MappingOutputManager::setOutParam(Parameter * p)
+void MappingOutputManager::setOutParams(Array<Parameter *> params)
 {
-	if (outParam == p) return;
-	outParam = p;
-	if(outParam != nullptr) for (auto &o : items) o->setOutputType(outParam->type);
+	outParams = Array<WeakReference<Parameter>>(params.getRawDataPointer(), params.size());
+	if(outParams.size() > 0) for (auto &o : items) o->setOutputType(outParams[0]->type); //better than this ? should handle all ?
 
 	omAsyncNotifier.addMessage(new OutputManagerEvent(OutputManagerEvent::OUTPUT_CHANGED));
 }
 
+
+void MappingOutputManager::updateOutputValues()
+{
+	var value = getMergedOutValue();
+	if (value.isVoid()) return; //possible if parameters have been deleted in another thread during process
+
+	for (auto& i : items) i->setValue(value);
+}
+
 void MappingOutputManager::updateOutputValue(MappingOutput * o)
 {
-	if (outParam == nullptr) return;
+	if (outParams.size() == 0) return;
 	if (o == nullptr) return;
-	o->setValue(outParam->value);
+	o->setValue(getMergedOutValue());
+}
+
+var MappingOutputManager::getMergedOutValue()
+{
+	var value;
+	for (auto& o : outParams)
+	{
+		if (o.wasObjectDeleted()) return var();
+
+		var val = o->getValue();
+		if (!val.isArray()) value.append(val);
+		else
+		{
+			for (int i = 0; i < val.size(); i++)
+			{
+				value.append(val[i]);
+			}
+		}
+	}
+
+	return value;
 }
 
 void MappingOutputManager::addItemInternal(MappingOutput * o, var)
 {
 	o->addCommandHandlerListener(this);
-	if(outParam != nullptr) o->setOutputType(outParam->type);
+	if(outParams.size() > 0)o->setOutputType(outParams[0]->type);
 	updateOutputValue(o);
 }
 

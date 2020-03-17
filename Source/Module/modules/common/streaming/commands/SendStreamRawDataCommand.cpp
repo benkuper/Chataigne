@@ -23,7 +23,7 @@ SendStreamRawDataCommand::~SendStreamRawDataCommand()
 
 void SendStreamRawDataCommand::triggerInternal()
 {
-	StreamingCommand::triggerInternal();
+	StreamingCommand::triggerInternal(); //bypass StreamValueCommands to implement our own way
 
 	Array<uint8> data;
 	for (auto &i : customValuesManager->items) data.add(i->param->intValue());

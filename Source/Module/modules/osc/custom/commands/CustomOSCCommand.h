@@ -15,8 +15,7 @@
 #include "Module/modules/common/commands/customvalues/CustomValuesCommandArgumentManager.h"
 
 class CustomOSCCommand :
-	public OSCCommand,
-	public CustomValuesCommandArgumentManager::ArgumentManagerListener
+	public OSCCommand
 {
 public:
 	CustomOSCCommand(OSCModule * output, CommandContext context, var params);
@@ -28,7 +27,6 @@ public:
 	Array<Parameter *> wildCardParams;
 
 	void triggerInternal() override;
-	void useForMappingChanged(CustomValuesCommandArgument * a) override;
 
 	virtual void onContainerParameterChanged(Parameter * p) override;
 

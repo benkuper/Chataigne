@@ -35,6 +35,7 @@ void MorpherPanel::setGroup(CVGroup* g)
 	if (currentGroup == g) return;
 	if (currentGroup != nullptr)
 	{
+		currentGroup->removeInspectableListener(this);
 		currentGroup->controlMode->removeAsyncParameterListener(this);
 		currentGroup->removeInspectableListener(this);
 
@@ -44,6 +45,7 @@ void MorpherPanel::setGroup(CVGroup* g)
 
 	if (currentGroup != nullptr)
 	{
+		currentGroup->addInspectableListener(this);
 		currentGroup->controlMode->addAsyncParameterListener(this);
 		currentGroup->addInspectableListener(this);
 		setMorpher(currentGroup->morpher.get());

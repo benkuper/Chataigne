@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.6.13"
+<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.7.0b1"
               bundleIdentifier="benkuper.Chataigne" includeBinaryInAppConfig="1"
               jucerVersion="5.4.7" companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
               companyEmail="benjamin@kuperberg.fr" defines="" splashScreenColour="Dark"
@@ -388,10 +388,52 @@
                         file="Source/Common/Processor/Mapping/Filter/filters/number/SimpleSmoothFilter.h"/>
                 </GROUP>
                 <GROUP id="{B7FF85C8-5933-B0A6-01EB-956029CA3808}" name="conversion">
-                  <FILE id="SZe1T3" name="ConversionFilters.cpp" compile="1" resource="0"
-                        file="Source/Common/Processor/Mapping/Filter/filters/conversion/ConversionFilters.cpp"/>
-                  <FILE id="Labzbe" name="ConversionFilters.h" compile="0" resource="0"
-                        file="Source/Common/Processor/Mapping/Filter/filters/conversion/ConversionFilters.h"/>
+                  <FILE id="w9wUtl" name="ConversionParamValueLink.cpp" compile="1" resource="0"
+                        file="Source/Common/Processor/Mapping/Filter/filters/conversion/ConversionParamValueLink.cpp"/>
+                  <FILE id="zPkcSd" name="ConversionParamValueLink.h" compile="0" resource="0"
+                        file="Source/Common/Processor/Mapping/Filter/filters/conversion/ConversionParamValueLink.h"/>
+                  <GROUP id="{6B530411-961A-9C18-896A-B66575488292}" name="ui">
+                    <FILE id="W57rAV" name="ConversionConnector.cpp" compile="1" resource="0"
+                          file="Source/Common/Processor/Mapping/Filter/filters/conversion/ui/ConversionConnector.cpp"/>
+                    <FILE id="KdAm8w" name="ConversionConnector.h" compile="0" resource="0"
+                          file="Source/Common/Processor/Mapping/Filter/filters/conversion/ui/ConversionConnector.h"/>
+                    <FILE id="Bwd5rQ" name="ConversionFilterEditor.cpp" compile="1" resource="0"
+                          file="Source/Common/Processor/Mapping/Filter/filters/conversion/ui/ConversionFilterEditor.cpp"/>
+                    <FILE id="o6YOhn" name="ConversionFilterEditor.h" compile="0" resource="0"
+                          file="Source/Common/Processor/Mapping/Filter/filters/conversion/ui/ConversionFilterEditor.h"/>
+                    <FILE id="meZfAw" name="ConversionParamValueLinkUI.cpp" compile="1"
+                          resource="0" file="Source/Common/Processor/Mapping/Filter/filters/conversion/ui/ConversionParamValueLinkUI.cpp"/>
+                    <FILE id="Na5r3Z" name="ConversionParamValueLinkUI.h" compile="0" resource="0"
+                          file="Source/Common/Processor/Mapping/Filter/filters/conversion/ui/ConversionParamValueLinkUI.h"/>
+                    <FILE id="iH0MO8" name="ConversionSourceParameterUI.cpp" compile="1"
+                          resource="0" file="Source/Common/Processor/Mapping/Filter/filters/conversion/ui/ConversionSourceParameterUI.cpp"/>
+                    <FILE id="KbPQYt" name="ConversionSourceParameterUI.h" compile="0"
+                          resource="0" file="Source/Common/Processor/Mapping/Filter/filters/conversion/ui/ConversionSourceParameterUI.h"/>
+                    <FILE id="E0jy9V" name="ConvertedParameterManagerEditor.cpp" compile="1"
+                          resource="0" file="Source/Common/Processor/Mapping/Filter/filters/conversion/ui/ConvertedParameterManagerEditor.cpp"/>
+                    <FILE id="P5kWCb" name="ConvertedParameterManagerEditor.h" compile="0"
+                          resource="0" file="Source/Common/Processor/Mapping/Filter/filters/conversion/ui/ConvertedParameterManagerEditor.h"/>
+                    <FILE id="wFqFBd" name="ConvertedParameterEditor.cpp" compile="1" resource="0"
+                          file="Source/Common/Processor/Mapping/Filter/filters/conversion/ui/ConvertedParameterEditor.cpp"/>
+                    <FILE id="ZvPsh2" name="ConvertedParameterEditor.h" compile="0" resource="0"
+                          file="Source/Common/Processor/Mapping/Filter/filters/conversion/ui/ConvertedParameterEditor.h"/>
+                  </GROUP>
+                  <FILE id="yfRGUU" name="ConversionFilter.cpp" compile="1" resource="0"
+                        file="Source/Common/Processor/Mapping/Filter/filters/conversion/ConversionFilter.cpp"/>
+                  <FILE id="LdTp5f" name="ConversionFilter.h" compile="0" resource="0"
+                        file="Source/Common/Processor/Mapping/Filter/filters/conversion/ConversionFilter.h"/>
+                  <FILE id="SZe1T3" name="SimpleConversionFilters.cpp" compile="1" resource="0"
+                        file="Source/Common/Processor/Mapping/Filter/filters/conversion/SimpleConversionFilters.cpp"/>
+                  <FILE id="Labzbe" name="SimpleConversionFilters.h" compile="0" resource="0"
+                        file="Source/Common/Processor/Mapping/Filter/filters/conversion/SimpleConversionFilters.h"/>
+                  <FILE id="Z0hXDn" name="ConvertedParameter.cpp" compile="1" resource="0"
+                        file="Source/Common/Processor/Mapping/Filter/filters/conversion/ConvertedParameter.cpp"/>
+                  <FILE id="GdUkck" name="ConvertedParameter.h" compile="0" resource="0"
+                        file="Source/Common/Processor/Mapping/Filter/filters/conversion/ConvertedParameter.h"/>
+                  <FILE id="nMZCD8" name="ConvertedParameterManager.cpp" compile="1"
+                        resource="0" file="Source/Common/Processor/Mapping/Filter/filters/conversion/ConvertedParameterManager.cpp"/>
+                  <FILE id="KQtlli" name="ConvertedParameterManager.h" compile="0" resource="0"
+                        file="Source/Common/Processor/Mapping/Filter/filters/conversion/ConvertedParameterManager.h"/>
                 </GROUP>
                 <GROUP id="{DFEE3DF8-8874-CD04-277C-C8DED50DEBEA}" name="color">
                   <FILE id="eqC8n5" name="ColorShiftFilter.cpp" compile="1" resource="0"
@@ -414,6 +456,10 @@
               <FILE id="VVDXZi" name="MappingInput.cpp" compile="1" resource="0"
                     file="Source/Common/Processor/Mapping/Input/MappingInput.cpp"/>
               <FILE id="LBLQTv" name="MappingInput.h" compile="0" resource="0" file="Source/Common/Processor/Mapping/Input/MappingInput.h"/>
+              <FILE id="yHiHYe" name="MappingInputManager.cpp" compile="1" resource="0"
+                    file="Source/Common/Processor/Mapping/Input/MappingInputManager.cpp"/>
+              <FILE id="RoPMB6" name="MappingInputManager.h" compile="0" resource="0"
+                    file="Source/Common/Processor/Mapping/Input/MappingInputManager.h"/>
             </GROUP>
             <GROUP id="{18518876-74C1-2B25-1A4A-02F7AB24FFB8}" name="Output">
               <GROUP id="{5C583B99-90CB-DA96-EC0A-625FC344B9E5}" name="ui">

@@ -104,6 +104,9 @@
     <Filter Include="Chataigne\Source\Common\Processor\Mapping\Filter\filters\number">
       <UniqueIdentifier>{A2546497-8314-1FDA-2D15-28E04DA32C12}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Chataigne\Source\Common\Processor\Mapping\Filter\filters\conversion\ui">
+      <UniqueIdentifier>{FEE48D32-3554-BA27-E024-56B38306D7E3}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Chataigne\Source\Common\Processor\Mapping\Filter\filters\conversion">
       <UniqueIdentifier>{906B2572-F25F-8880-ACD2-AF970C81273B}</UniqueIdentifier>
     </Filter>
@@ -1375,7 +1378,37 @@
     <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\SimpleSmoothFilter.cpp">
       <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters\number</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\conversion\ConversionFilters.cpp">
+    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\conversion\ConversionParamValueLink.cpp">
+      <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters\conversion</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\conversion\ui\ConversionConnector.cpp">
+      <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters\conversion\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\conversion\ui\ConversionFilterEditor.cpp">
+      <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters\conversion\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\conversion\ui\ConversionParamValueLinkUI.cpp">
+      <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters\conversion\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\conversion\ui\ConversionSourceParameterUI.cpp">
+      <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters\conversion\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\conversion\ui\ConvertedParameterManagerEditor.cpp">
+      <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters\conversion\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\conversion\ui\ConvertedParameterEditor.cpp">
+      <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters\conversion\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\conversion\ConversionFilter.cpp">
+      <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters\conversion</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\conversion\SimpleConversionFilters.cpp">
+      <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters\conversion</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\conversion\ConvertedParameter.cpp">
+      <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters\conversion</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\conversion\ConvertedParameterManager.cpp">
       <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters\conversion</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\color\ColorShiftFilter.cpp">
@@ -1388,6 +1421,9 @@
       <Filter>Chataigne\Source\Common\Processor\Mapping\Input\ui</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Common\Processor\Mapping\Input\MappingInput.cpp">
+      <Filter>Chataigne\Source\Common\Processor\Mapping\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Input\MappingInputManager.cpp">
       <Filter>Chataigne\Source\Common\Processor\Mapping\Input</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Common\Processor\Mapping\Output\ui\MappingOutputManagerEditor.cpp">
@@ -4875,7 +4911,37 @@
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\SimpleSmoothFilter.h">
       <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters\number</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\conversion\ConversionFilters.h">
+    <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\conversion\ConversionParamValueLink.h">
+      <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters\conversion</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\conversion\ui\ConversionConnector.h">
+      <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters\conversion\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\conversion\ui\ConversionFilterEditor.h">
+      <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters\conversion\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\conversion\ui\ConversionParamValueLinkUI.h">
+      <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters\conversion\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\conversion\ui\ConversionSourceParameterUI.h">
+      <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters\conversion\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\conversion\ui\ConvertedParameterManagerEditor.h">
+      <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters\conversion\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\conversion\ui\ConvertedParameterEditor.h">
+      <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters\conversion\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\conversion\ConversionFilter.h">
+      <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters\conversion</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\conversion\SimpleConversionFilters.h">
+      <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters\conversion</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\conversion\ConvertedParameter.h">
+      <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters\conversion</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\conversion\ConvertedParameterManager.h">
       <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters\conversion</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\color\ColorShiftFilter.h">
@@ -4888,6 +4954,9 @@
       <Filter>Chataigne\Source\Common\Processor\Mapping\Input\ui</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Input\MappingInput.h">
+      <Filter>Chataigne\Source\Common\Processor\Mapping\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\Processor\Mapping\Input\MappingInputManager.h">
       <Filter>Chataigne\Source\Common\Processor\Mapping\Input</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Output\ui\MappingOutputManagerEditor.h">

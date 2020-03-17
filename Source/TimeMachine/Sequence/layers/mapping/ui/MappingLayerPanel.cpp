@@ -34,9 +34,9 @@ MappingLayerPanel::MappingLayerPanel(MappingLayer * layer) :
 
 	mappingLayer->mapping->addAsyncMappingListener(this);
 
-	if (mappingLayer->mapping->outputParam != nullptr)
+	if (mappingLayer->mapping->om.outParams.size() > 0 && mappingLayer->mapping->om.outParams[0] != nullptr)
 	{
-		mappingOutputUI.reset(dynamic_cast<ParameterUI*>(mappingLayer->mapping->outputParam->createDefaultUI()));
+		mappingOutputUI.reset(dynamic_cast<ParameterUI*>(mappingLayer->mapping->om.outParams[0]->createDefaultUI()));
 		if (mappingOutputUI != nullptr) addAndMakeVisible(mappingOutputUI.get());
 	}
 	
@@ -113,7 +113,11 @@ void MappingLayerPanel::newMessage(const Mapping::MappingEvent & e)
 		if (mappingOutputUI != nullptr)
 		{
 			removeChildComponent(mappingOutputUI.get());
-			mappingOutputUI.reset(dynamic_cast<ParameterUI*>(mappingLayer->mapping->outputParam->createDefaultUI()));
+			if (mappingLayer->mapping->om.outParams.size() > 0 && mappingLayer->mapping->om.outParams[0] != nullptr)
+			{
+				mappingOutputUI.reset(dynamic_cast<ParameterUI*>(mappingLayer->mapping->om.outParams[0]->createDefaultUI()));
+			}
+
 			if (mappingOutputUI != nullptr) addAndMakeVisible(mappingOutputUI.get());
 			resized();
 		}

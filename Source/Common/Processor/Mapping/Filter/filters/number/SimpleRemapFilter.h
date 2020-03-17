@@ -12,6 +12,7 @@
 
 #include "../../MappingFilter.h"
 
+
 class SimpleRemapFilter :
 	public MappingFilter
 {
@@ -23,12 +24,10 @@ public:
 	Point2DParameter * targetIn;
 	Point2DParameter * targetOut;
 
-
-	void processInternal() override;
+	Parameter * setupSingleParameterInternal(Parameter * source) override;
+	void processSingleParameterInternal(Parameter * source, Parameter * out) override;
 
 	void filterParamChanged(Parameter *) override;
-
-	Parameter * setupParameterInternal(Parameter * source) override;
 
 	static SimpleRemapFilter * create(var params) { return new SimpleRemapFilter(params); }
 	String getTypeString() const override { return "Remap"; }

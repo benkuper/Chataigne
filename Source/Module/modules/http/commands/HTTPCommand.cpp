@@ -22,9 +22,7 @@ HTTPCommand::HTTPCommand(HTTPModule * _module, CommandContext context, var param
 
 	address = addStringParameter("Address", "Address to append to the module's base address", "anything");
 
-	customValuesManager.reset(new CustomValuesCommandArgumentManager(context == MAPPING));
-	addChildControllableContainer(customValuesManager.get());
-	customValuesManager->addArgumentManagerListener(this);
+	setUseCustomValues(true);
 
 	extraHeaders = addStringParameter("Extra Headers", "HTTP headers to add to the request", "");
 	extraHeaders->multiline = true;
@@ -43,20 +41,4 @@ void HTTPCommand::triggerInternal()
 	StringPairArray headers;
 	
 	httpModule->sendRequest(address->stringValue(), method->getValueDataAsEnum<HTTPModule::RequestMethod>(), resultDataType->getValueDataAsEnum<HTTPModule::ResultDataType>(), requestParams, extraHeaders->stringValue());
-}
-
-void HTTPCommand::useForMappingChanged(CustomValuesCommandArgument *)
-{
-	if (context != CommandContext::MAPPING) return;
-
-	clearTargetMappingParameters();
-	int index = 0;
-	for (auto &a : customValuesManager->items)
-	{
-		if (a->useForMapping != nullptr && a->useForMapping->boolValue())
-		{
-			addTargetMappingParameterAt(a->param, index);
-			index++;
-		}
-	}
 }

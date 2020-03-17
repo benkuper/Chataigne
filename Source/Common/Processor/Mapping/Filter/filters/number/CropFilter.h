@@ -22,11 +22,11 @@ public:
 	FloatParameter * targetMin;
 	FloatParameter * targetMax;
 
-	void processInternal() override;
+	Parameter* setupSingleParameterInternal(Parameter* source) override;
+	void processSingleParameterInternal(Parameter* source, Parameter* out) override;
 
 	void filterParamChanged(Parameter *) override;
 
-	Parameter * setupParameterInternal(Parameter * source) override;
 
 	static CropFilter * create(var params) { return new CropFilter(params); }
 	String getTypeString() const override { return "Crop"; }

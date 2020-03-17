@@ -13,7 +13,7 @@
 #include "../MappingInput.h"
 
 class MappingInputEditor :
-	public GenericControllableContainerEditor,
+	public BaseItemEditor,
 	public MappingInput::AsyncListener
 {
 public:
@@ -25,7 +25,7 @@ public:
 	std::unique_ptr<ControllableUI> sourceFeedbackUI;
 
 	void updateSourceUI();
-	void resizedInternalHeader(Rectangle<int> &r) override;
+	void resizedInternalHeaderItemInternal(Rectangle<int> &r) override;
 
 	virtual void inputReferenceChangedAsync(MappingInput *);
 

@@ -10,6 +10,7 @@
 
 #include "CropFilter.h"
 
+
 CropFilter::CropFilter(var params) :
 	MappingFilter(getTypeString(), params)
 {
@@ -18,35 +19,21 @@ CropFilter::CropFilter(var params) :
 	targetMax = filterParams.addFloatParameter("Target Max", "New maximum for output", 1, 0, 1);
 	targetMin->defaultUI = FloatParameter::LABEL;
 	targetMax->defaultUI = FloatParameter::LABEL;
-	targetMin->autoAdaptRange = true;
-	targetMax->autoAdaptRange = true;
 	targetMin->isCustomizableByUser = false;
 	targetMax->isCustomizableByUser = false;
 
 	autoSetRange = false;
+
+	filterTypeFilters.add(Controllable::FLOAT, Controllable::INT);
 }
 
 CropFilter::~CropFilter()
 {
 }
 
-void CropFilter::processInternal()
+Parameter * CropFilter::setupSingleParameterInternal(Parameter * source)
 {
-	filteredParameter->setValue(sourceParam->value);
-}
-
-
-void CropFilter::filterParamChanged(Parameter * p)
-{
-	if (p == targetMin || p == targetMax)
-	{
-		if (filteredParameter != nullptr) filteredParameter->setRange(targetMin->floatValue(), jmax<float>(targetMax->floatValue(), targetMin->floatValue()));
-	}
-}
-
-Parameter * CropFilter::setupParameterInternal(Parameter * source)
-{
-	Parameter * p = MappingFilter::setupParameterInternal(source);
+	Parameter * p = MappingFilter::setupSingleParameterInternal(source);
 	if (p->isComplex())
 	{
 		var minVal;
@@ -64,4 +51,23 @@ Parameter * CropFilter::setupParameterInternal(Parameter * source)
 		p->setRange(targetMin->floatValue(), jmax<float>(targetMax->floatValue(), targetMin->floatValue()));
 	}
 	return p;
+}
+
+
+void CropFilter::processSingleParameterInternal(Parameter* source, Parameter* out)
+{
+	out->setValue(source->value);
+}
+
+void CropFilter::filterParamChanged(Parameter* p)
+{
+	if (p == targetMin || p == targetMax)
+	{
+		for (auto& fp : filteredParameters)
+		{
+			if (fp == nullptr) continue;
+			if (!filterTypeFilters.contains(fp->type)) continue;
+			 fp->setRange(targetMin->floatValue(), jmax<float>(targetMax->floatValue(), targetMin->floatValue()));
+		}
+	}
 }

@@ -10,20 +10,31 @@
 
 #include "InverseFilter.h"
 
+
 InverseFilter::InverseFilter(var params) :
 	MappingFilter(getTypeString(), params)
 {
 	editorCanBeCollapsed = false;
 	editorIsCollapsed = true;
+
+	filterTypeFilters.add(Controllable::FLOAT, Controllable::INT);
 }
 
 InverseFilter::~InverseFilter()
 {
 }
 
-void InverseFilter::processInternal()
+void InverseFilter::processSingleParameterInternal(Parameter * source, Parameter * out)
 {
-	if (sourceParam->isComplex())
+	if (!source->hasRange())
+	{
+		out->setValue(source->getValue());
+		return;
+	}
+
+	out->setValue(jmap<float>(source->getNormalizedValue(), source->maximumValue, source->minimumValue));
+	
+	/*if (sourceParam->isComplex())
 	{
 		var val;
 		int numValToInverse = sourceParam->type != Controllable::COLOR ? sourceParam->value.size() : 3; //do not invert alpha by default (may improve to have an option)
@@ -56,7 +67,6 @@ void InverseFilter::processInternal()
 
 	}
 	else
-	{
-		filteredParameter->setValue(jmap<float>(sourceParam->getNormalizedValue(), sourceParam->maximumValue, sourceParam->minimumValue));
-	}
+	{*/
+	//}
 }

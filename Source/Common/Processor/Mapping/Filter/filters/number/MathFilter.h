@@ -12,6 +12,7 @@
 
 #include "../../MappingFilter.h"
 
+
 class MathFilter :
 	public MappingFilter
 {
@@ -26,10 +27,10 @@ public:
 	
 	var opValueData; //for loading after setupParamInternal
 
-	Parameter * setupParameterInternal(Parameter * sourceParam) override;
-	void processInternal() override;
+	void setupParametersInternal() override;
+	void processSingleParameterInternal(Parameter *source, Parameter *out) override;
 
-	void updateFilteredParamRange(Parameter * p = nullptr);
+	void updateFilteredParamsRange();
 	void filterParamChanged(Parameter * p) override;
 
 	float getProcessedValue(float val, int index = -1);

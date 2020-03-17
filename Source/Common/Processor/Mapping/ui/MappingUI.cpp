@@ -48,16 +48,16 @@ void MappingUI::paint(Graphics & g)
 
 void MappingUI::updateOutputParamUI()
 {
-	if(outputParamUI != nullptr && mapping->outputParam != nullptr && outputParamUI->controllable == mapping->outputParam) return;
+	if(outputParamUI != nullptr && mapping->om.outParams.size() > 0 && outputParamUI->controllable == mapping->om.outParams[0]) return;
 
 	if (outputParamUI != nullptr)
 	{
 		removeChildComponent(outputParamUI.get());
 	}
 
-	if (mapping->outputParam != nullptr)
+	if (mapping->om.outParams.size() > 0 && mapping->om.outParams[0] != nullptr)
 	{
-		outputParamUI.reset(mapping->outputParam->createDefaultUI());
+		outputParamUI.reset(mapping->om.outParams[0]->createDefaultUI());
 		outputParamUI->showLabel = false;
 		addAndMakeVisible(outputParamUI.get());
 	}
@@ -102,7 +102,8 @@ void MappingUI::itemDropped(const SourceDetails & details)
 			if (isInput)
 			{
 				Controllable * target = mappingInputMenu.getControllableForResult(result);
-				mapping->input.inputTarget->setValueFromTarget(target);
+				MappingInput* mi = mapping->im.addItem();
+				mi->inputTarget->setValueFromTarget(target);
 			}
 			else //command
 			{
@@ -140,8 +141,8 @@ void MappingUI::newMessage(const Mapping::MappingEvent & e)
 
 void MappingUI::addContextMenuItems(PopupMenu& p)
 {
-	p.addItem(100, "Copy input");
-	p.addItem(101, "Paste input");
+	p.addItem(100, "Copy inputs");
+	p.addItem(101, "Paste inputs");
 
 	p.addItem(102, "Copy filters");
 	p.addItem(103, "Paste filters");
@@ -154,8 +155,8 @@ void MappingUI::handleContextMenuResult(int result)
 {
 	switch (result)
 	{
-		case 100: SystemClipboard::copyTextToClipboard(JSON::toString(mapping->input.getJSONData())); break;
-		case 101: mapping->input.loadJSONData(JSON::fromString(SystemClipboard::getTextFromClipboard())); break;
+		case 100: SystemClipboard::copyTextToClipboard(JSON::toString(mapping->im.getJSONData())); break;
+		case 101: mapping->im.loadJSONData(JSON::fromString(SystemClipboard::getTextFromClipboard())); break;
 		case 102: SystemClipboard::copyTextToClipboard(JSON::toString(mapping->fm.getJSONData())); break;
 		case 103: mapping->fm.loadJSONData(JSON::fromString(SystemClipboard::getTextFromClipboard())); break;
 		case 104: SystemClipboard::copyTextToClipboard(JSON::toString(mapping->om.getJSONData())); break;

@@ -10,6 +10,7 @@
 
 #include "LagFilter.h"
 
+
 LagFilter::LagFilter(var params) :
 	MappingFilter(getTypeString())
 {
@@ -21,9 +22,23 @@ LagFilter::~LagFilter()
 {
 }
 
-void LagFilter::processInternal()
+void LagFilter::setupParametersInternal()
 {
-	filteredParameter->setValue(tempVal);
+	paramTempValueMap.clear();
+	MappingFilter::setupParametersInternal();
+}
+
+Parameter* LagFilter::setupSingleParameterInternal(Parameter* source)
+{
+	var tmpVal = var(source->getValue()); //shoud maybe copy the values or is it enough ?
+	paramTempValueMap.set(source, tmpVal);
+	return MappingFilter::setupSingleParameterInternal(source);
+}
+
+void LagFilter::processSingleParameterInternal(Parameter* source, Parameter* out)
+{
+	if (!paramTempValueMap.contains(source)) return;
+	out->setValue(paramTempValueMap[source]);
 }
 
 void LagFilter::filterParamChanged(Parameter * p)
@@ -33,6 +48,9 @@ void LagFilter::filterParamChanged(Parameter * p)
 
 void LagFilter::timerCallback()
 {
-	if (sourceParam == nullptr) return;
-	tempVal = sourceParam->value;
+	for (auto& s : sourceParams)
+	{
+		if (s == nullptr) continue;
+		paramTempValueMap.set(s, var(s->value));
+	}
 }

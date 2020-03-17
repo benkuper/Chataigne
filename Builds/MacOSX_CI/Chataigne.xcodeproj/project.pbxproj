@@ -353,9 +353,49 @@
 			isa = PBXBuildFile;
 			fileRef = 9CB8705EAE553E539485DE5D;
 		};
-		A13EA422F34059C09BC21397 = {
+		4E9EC2BABDB2115B4DF0F91E = {
 			isa = PBXBuildFile;
-			fileRef = 6FD6F29457AABC7104BF8F4F;
+			fileRef = 9B0FE7E968406A8B38CDC2E8;
+		};
+		242D9F7FB01CA8DA76C3CE14 = {
+			isa = PBXBuildFile;
+			fileRef = EABFE337CDC445EABA98B7E3;
+		};
+		A0BDE6993AEA43DEBCAB3D96 = {
+			isa = PBXBuildFile;
+			fileRef = 72F45772616B27BCCDF4DEFC;
+		};
+		B9F9FA872D32A18306FC8A95 = {
+			isa = PBXBuildFile;
+			fileRef = 98F1316C32E887C2041FD8CE;
+		};
+		234D79A5DE6706ACD64756DA = {
+			isa = PBXBuildFile;
+			fileRef = 7A33EADEDCB3B4815709D2C4;
+		};
+		5E18C58F6FC6FCA1B03285F5 = {
+			isa = PBXBuildFile;
+			fileRef = 6DBB1A3C473C2388AD85BC2C;
+		};
+		B88BCA52ED0E49DC6DFE0316 = {
+			isa = PBXBuildFile;
+			fileRef = 8AE1282A37086871F6E2A21B;
+		};
+		AB18A41DB6E7687BA3A7B18A = {
+			isa = PBXBuildFile;
+			fileRef = 8E93C7D90650CE468073A0C1;
+		};
+		E42E9B625C5FB17C1A5006C2 = {
+			isa = PBXBuildFile;
+			fileRef = B253B745FAA7F0D0265B51AA;
+		};
+		CDDF5572258F283AC45F658B = {
+			isa = PBXBuildFile;
+			fileRef = 7BF5117D14F60545839C618F;
+		};
+		9AE198ADECF4CAAD52F74468 = {
+			isa = PBXBuildFile;
+			fileRef = 2ECFA22C565DB276D2C327CE;
 		};
 		F666A32120B8722EEBB43836 = {
 			isa = PBXBuildFile;
@@ -372,6 +412,10 @@
 		C4EB08B8F89C1EF160E72A07 = {
 			isa = PBXBuildFile;
 			fileRef = C6146FC3CED0ECD9A064C9B9;
+		};
+		90E03455A714406EABD475B6 = {
+			isa = PBXBuildFile;
+			fileRef = E7D7453E8DFAB9DD5CAE351A;
 		};
 		FDB37E4517D95C090BA8BE7E = {
 			isa = PBXBuildFile;
@@ -1638,6 +1682,13 @@
 			path = ../../Source/Module/ModuleManager.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
+		17B9F2E8CF397C3FA28A2550 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = ConvertedParameterManager.h;
+			path = ../../Source/Common/Processor/Mapping/Filter/filters/conversion/ConvertedParameterManager.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		18BEE3D308EBE1EB8F857535 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -1988,6 +2039,13 @@
 			path = ../../Source/Common/Processor/Mapping/Filter/filters/number/SimpleRemapFilter.h;
 			sourceTree = "SOURCE_ROOT";
 		};
+		2ECFA22C565DB276D2C327CE = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = ConvertedParameterManager.cpp;
+			path = ../../Source/Common/Processor/Mapping/Filter/filters/conversion/ConvertedParameterManager.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		2EF4541423C08B373926C946 = {
 			isa = PBXFileReference;
 			lastKnownFileType = wrapper.framework;
@@ -1995,11 +2053,25 @@
 			path = System/Library/Frameworks/DiscRecording.framework;
 			sourceTree = SDKROOT;
 		};
+		2F4F15F3B838C8ED91761D44 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = ConvertedParameter.h;
+			path = ../../Source/Common/Processor/Mapping/Filter/filters/conversion/ConvertedParameter.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		2FAC44CBAAC99F2D1B182674 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = MappingOutputManager.cpp;
 			path = ../../Source/Common/Processor/Mapping/Output/MappingOutputManager.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
+		3003594D522C89372E5FEB57 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = ConversionConnector.h;
+			path = ../../Source/Common/Processor/Mapping/Filter/filters/conversion/ui/ConversionConnector.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		306C379FA8EDF09052FE046B = {
@@ -3059,6 +3131,13 @@
 			path = ../../Source/Common/Command/Template/CommandTemplate.h;
 			sourceTree = "SOURCE_ROOT";
 		};
+		6DBB1A3C473C2388AD85BC2C = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = ConvertedParameterManagerEditor.cpp;
+			path = ../../Source/Common/Processor/Mapping/Filter/filters/conversion/ui/ConvertedParameterManagerEditor.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		6DDE46B937874C068E754258 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -3106,13 +3185,6 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = WatchoutModule.cpp;
 			path = ../../Source/Module/modules/tcp/tcpclient/watchout/WatchoutModule.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
-		6FD6F29457AABC7104BF8F4F = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = ConversionFilters.cpp;
-			path = ../../Source/Common/Processor/Mapping/Filter/filters/conversion/ConversionFilters.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		6FEECB9A5D65350A863900DC = {
@@ -3164,6 +3236,13 @@
 			path = ../../Source/Module/modules/controller/joystick/JoystickModule.h;
 			sourceTree = "SOURCE_ROOT";
 		};
+		719A771F1A0FFD9A6C5B1447 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = ConversionSourceParameterUI.h;
+			path = ../../Source/Common/Processor/Mapping/Filter/filters/conversion/ui/ConversionSourceParameterUI.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		720ADC555A7AB7B70987F6CE = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -3199,6 +3278,13 @@
 			path = ../../Source/Module/modules/common/commands/customvalues/CustomValuesCommandArgumentManager.h;
 			sourceTree = "SOURCE_ROOT";
 		};
+		72F45772616B27BCCDF4DEFC = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = ConversionFilterEditor.cpp;
+			path = ../../Source/Common/Processor/Mapping/Filter/filters/conversion/ui/ConversionFilterEditor.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		7335A92ACDE20B14F02ADA97 = {
 			isa = PBXFileReference;
 			lastKnownFileType = wrapper.framework;
@@ -3218,6 +3304,13 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = Module.h;
 			path = ../../Source/Module/Module.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		738E296A5EF0DA62F12E13C9 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = ConversionParamValueLink.h;
+			path = ../../Source/Common/Processor/Mapping/Filter/filters/conversion/ConversionParamValueLink.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		743E0CFF477957077A08AB44 = {
@@ -3267,6 +3360,13 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = BoolComparators.h;
 			path = ../../Source/Common/Processor/Action/Condition/Comparator/comparators/BoolComparators.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		77DA8C5F719F7C3B25B06C28 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = ConvertedParameterManagerEditor.h;
+			path = ../../Source/Common/Processor/Mapping/Filter/filters/conversion/ui/ConvertedParameterManagerEditor.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		77FDC417ABF22A287F49034A = {
@@ -3325,11 +3425,25 @@
 			path = ../../Source/Module/modules/controller/gamepad/GamepadModule.h;
 			sourceTree = "SOURCE_ROOT";
 		};
+		7A33EADEDCB3B4815709D2C4 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = ConversionSourceParameterUI.cpp;
+			path = ../../Source/Common/Processor/Mapping/Filter/filters/conversion/ui/ConversionSourceParameterUI.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		7A91E8D798CAD8D2754205F1 = {
 			isa = PBXFileReference;
 			lastKnownFileType = image.png;
 			name = Resolume.png;
 			path = ../../Resources/Modules/Resolume.png;
+			sourceTree = "SOURCE_ROOT";
+		};
+		7BF5117D14F60545839C618F = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = ConvertedParameter.cpp;
+			path = ../../Source/Common/Processor/Mapping/Filter/filters/conversion/ConvertedParameter.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		7CFE921B02AEF88DD2320245 = {
@@ -3521,6 +3635,13 @@
 			path = "../../JuceLibraryCode/include_juce_osc.cpp";
 			sourceTree = "SOURCE_ROOT";
 		};
+		8AE1282A37086871F6E2A21B = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = ConvertedParameterEditor.cpp;
+			path = ../../Source/Common/Processor/Mapping/Filter/filters/conversion/ui/ConvertedParameterEditor.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		8BCB6C9E9A0111F230FFFCD3 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -3596,6 +3717,13 @@
 			lastKnownFileType = file;
 			name = "juce_organicui";
 			path = "../../Modules/juce_organicui";
+			sourceTree = "SOURCE_ROOT";
+		};
+		8E93C7D90650CE468073A0C1 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = ConversionFilter.cpp;
+			path = ../../Source/Common/Processor/Mapping/Filter/filters/conversion/ConversionFilter.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		8EFE304B0BBA3DFA624E0D0F = {
@@ -3766,6 +3894,20 @@
 			path = ../../Source/Module/Routing/ModuleRouterValue.h;
 			sourceTree = "SOURCE_ROOT";
 		};
+		97DCD8254DBD9DFCC1748B32 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = MappingInputManager.h;
+			path = ../../Source/Common/Processor/Mapping/Input/MappingInputManager.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		98F1316C32E887C2041FD8CE = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = ConversionParamValueLinkUI.cpp;
+			path = ../../Source/Common/Processor/Mapping/Filter/filters/conversion/ui/ConversionParamValueLinkUI.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		99532205E848C75B528FEB0D = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -3785,6 +3927,13 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = Point2DComparators.h;
 			path = ../../Source/Common/Processor/Action/Condition/Comparator/comparators/Point2DComparators.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		9B0FE7E968406A8B38CDC2E8 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = ConversionParamValueLink.cpp;
+			path = ../../Source/Common/Processor/Mapping/Filter/filters/conversion/ConversionParamValueLink.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		9B29E5CBD782D3E4918B125D = {
@@ -3983,13 +4132,6 @@
 			path = ../../Source/MainComponent.h;
 			sourceTree = "SOURCE_ROOT";
 		};
-		A62A4D35995AAFB1B549BF2D = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = ConversionFilters.h;
-			path = ../../Source/Common/Processor/Mapping/Filter/filters/conversion/ConversionFilters.h;
-			sourceTree = "SOURCE_ROOT";
-		};
 		A73E903AE8660391CF8BAD95 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -4074,11 +4216,25 @@
 			path = ../../Source/Module/Routing/ModuleRouterManager.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
+		AA98076D35CE8DE50088BF5A = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = SimpleConversionFilters.h;
+			path = ../../Source/Common/Processor/Mapping/Filter/filters/conversion/SimpleConversionFilters.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		AAA49AA961808130DB88D7E4 = {
 			isa = PBXFileReference;
 			lastKnownFileType = image.png;
 			name = Watchout.png;
 			path = ../../Resources/Modules/Watchout.png;
+			sourceTree = "SOURCE_ROOT";
+		};
+		AAA5F74DC5FAB65C96003095 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = ConvertedParameterEditor.h;
+			path = ../../Source/Common/Processor/Mapping/Filter/filters/conversion/ui/ConvertedParameterEditor.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		AAAD358C5DC0C1A5682C77E8 = {
@@ -4282,6 +4438,13 @@
 			lastKnownFileType = image.png;
 			name = PJLink.png;
 			path = ../../Resources/Modules/PJLink.png;
+			sourceTree = "SOURCE_ROOT";
+		};
+		B253B745FAA7F0D0265B51AA = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = SimpleConversionFilters.cpp;
+			path = ../../Source/Common/Processor/Mapping/Filter/filters/conversion/SimpleConversionFilters.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		B2AE5AB8212F91ACEEB0E80E = {
@@ -4872,6 +5035,13 @@
 			path = ../../Source/Common/Processor/Action/Condition/Comparator/comparators/StringComparators.h;
 			sourceTree = "SOURCE_ROOT";
 		};
+		D3DEC6BA80AE0DBA98662134 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = ConversionFilter.h;
+			path = ../../Source/Common/Processor/Mapping/Filter/filters/conversion/ConversionFilter.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		D48876CB878C519D658F79FF = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -5320,6 +5490,13 @@
 			path = ../../Source/Module/modules/http/HTTPModule.h;
 			sourceTree = "SOURCE_ROOT";
 		};
+		E7D7453E8DFAB9DD5CAE351A = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = MappingInputManager.cpp;
+			path = ../../Source/Common/Processor/Mapping/Input/MappingInputManager.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		E8A5F9A2228D5E3719F9F36B = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -5339,6 +5516,13 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = ColorShiftFilter.h;
 			path = ../../Source/Common/Processor/Mapping/Filter/filters/color/ColorShiftFilter.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		EABFE337CDC445EABA98B7E3 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = ConversionConnector.cpp;
+			path = ../../Source/Common/Processor/Mapping/Filter/filters/conversion/ui/ConversionConnector.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		EAF33109C5A8A991D0758364 = {
@@ -5451,6 +5635,13 @@
 			lastKnownFileType = image.png;
 			name = JoyCon.png;
 			path = ../../Resources/Modules/JoyCon.png;
+			sourceTree = "SOURCE_ROOT";
+		};
+		F35462981F7C3D05330D2FFD = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = ConversionParamValueLinkUI.h;
+			path = ../../Source/Common/Processor/Mapping/Filter/filters/conversion/ui/ConversionParamValueLinkUI.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		F36349200785EF7B0D1E7329 = {
@@ -5640,6 +5831,13 @@
 			lastKnownFileType = image.png;
 			name = MadMapper.png;
 			path = ../../Resources/Modules/MadMapper.png;
+			sourceTree = "SOURCE_ROOT";
+		};
+		FDCDD219404A59B191A59200 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = ConversionFilterEditor.h;
+			path = ../../Source/Common/Processor/Mapping/Filter/filters/conversion/ui/ConversionFilterEditor.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		FE03035FDEBD5D1FC17DF1E5 = {
@@ -6144,11 +6342,39 @@
 			name = number;
 			sourceTree = "<group>";
 		};
+		4582B5B6C9398D7C13B0E4B3 = {
+			isa = PBXGroup;
+			children = (
+				EABFE337CDC445EABA98B7E3,
+				3003594D522C89372E5FEB57,
+				72F45772616B27BCCDF4DEFC,
+				FDCDD219404A59B191A59200,
+				98F1316C32E887C2041FD8CE,
+				F35462981F7C3D05330D2FFD,
+				7A33EADEDCB3B4815709D2C4,
+				719A771F1A0FFD9A6C5B1447,
+				6DBB1A3C473C2388AD85BC2C,
+				77DA8C5F719F7C3B25B06C28,
+				8AE1282A37086871F6E2A21B,
+				AAA5F74DC5FAB65C96003095,
+			);
+			name = ui;
+			sourceTree = "<group>";
+		};
 		4F59D1E1AEFE8D974F187BE6 = {
 			isa = PBXGroup;
 			children = (
-				6FD6F29457AABC7104BF8F4F,
-				A62A4D35995AAFB1B549BF2D,
+				9B0FE7E968406A8B38CDC2E8,
+				738E296A5EF0DA62F12E13C9,
+				4582B5B6C9398D7C13B0E4B3,
+				8E93C7D90650CE468073A0C1,
+				D3DEC6BA80AE0DBA98662134,
+				B253B745FAA7F0D0265B51AA,
+				AA98076D35CE8DE50088BF5A,
+				7BF5117D14F60545839C618F,
+				2F4F15F3B838C8ED91761D44,
+				2ECFA22C565DB276D2C327CE,
+				17B9F2E8CF397C3FA28A2550,
 			);
 			name = conversion;
 			sourceTree = "<group>";
@@ -6202,6 +6428,8 @@
 				C2E1D3E074C728CAF2B2E921,
 				C6146FC3CED0ECD9A064C9B9,
 				46737E6904653930EEBB8031,
+				E7D7453E8DFAB9DD5CAE351A,
+				97DCD8254DBD9DFCC1748B32,
 			);
 			name = Input;
 			sourceTree = "<group>";
@@ -7737,8 +7965,8 @@
 					"DEBUG=1",
 					"JUCE_SUPPORT_CARBON=1",
 					"JUCER_XCODE_MAC_2F3811D6=1",
-					"JUCE_APP_VERSION=1.6.13",
-					"JUCE_APP_VERSION_HEX=0x1060d",
+					"JUCE_APP_VERSION=1.7.0b1",
+					"JUCE_APP_VERSION_HEX=0x10700",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
 					"JucePlugin_Build_AU=0",
@@ -7799,8 +8027,8 @@
 					"NDEBUG=1",
 					"JUCE_SUPPORT_CARBON=1",
 					"JUCER_XCODE_MAC_2F3811D6=1",
-					"JUCE_APP_VERSION=1.6.13",
-					"JUCE_APP_VERSION_HEX=0x1060d",
+					"JUCE_APP_VERSION=1.7.0b1",
+					"JUCE_APP_VERSION_HEX=0x10700",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
 					"JucePlugin_Build_AU=0",
@@ -8042,11 +8270,22 @@
 				3B485009BC2E17F9C9F3F891,
 				055AACAE538AC013700E8ABA,
 				71A9993758979AABD4792AAE,
-				A13EA422F34059C09BC21397,
+				4E9EC2BABDB2115B4DF0F91E,
+				242D9F7FB01CA8DA76C3CE14,
+				A0BDE6993AEA43DEBCAB3D96,
+				B9F9FA872D32A18306FC8A95,
+				234D79A5DE6706ACD64756DA,
+				5E18C58F6FC6FCA1B03285F5,
+				B88BCA52ED0E49DC6DFE0316,
+				AB18A41DB6E7687BA3A7B18A,
+				E42E9B625C5FB17C1A5006C2,
+				CDDF5572258F283AC45F658B,
+				9AE198ADECF4CAAD52F74468,
 				F666A32120B8722EEBB43836,
 				A07CA7185B061D91F79BCFD2,
 				3F1359A0AFF213630A7B75E8,
 				C4EB08B8F89C1EF160E72A07,
+				90E03455A714406EABD475B6,
 				FDB37E4517D95C090BA8BE7E,
 				324EAD30760EA8E3881688A4,
 				354F03D3E4769822EA4BC06C,

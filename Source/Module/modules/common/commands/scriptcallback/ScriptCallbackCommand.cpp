@@ -36,32 +36,11 @@ ScriptCallbackCommand::ScriptCallbackCommand(Module* module, CommandContext cont
 		moduleMethods->addOption(m, m);
 	}
 
-	customValuesManager.reset(new CustomValuesCommandArgumentManager(true, false));
-	addChildControllableContainer(customValuesManager.get());
-	customValuesManager->addArgumentManagerListener(this);
+	setUseCustomValues(true);
 }
 
 ScriptCallbackCommand::~ScriptCallbackCommand()
 {
-}
-
-
-void ScriptCallbackCommand::useForMappingChanged(CustomValuesCommandArgument* )
-{
-	if (context != MAPPING) return;
-
-	clearTargetMappingParameters();
-	int index = 0;
-	if (customValuesManager == nullptr) return;
-
-	for (auto& a : customValuesManager->items)
-	{
-		if (a->useForMapping->boolValue())
-		{
-			addTargetMappingParameterAt(a->param, index);
-			index++;
-		}
-	}
 }
 
 void ScriptCallbackCommand::triggerInternal()

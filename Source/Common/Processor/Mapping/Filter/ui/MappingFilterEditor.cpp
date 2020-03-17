@@ -32,7 +32,7 @@ void MappingFilterEditor::resizedInternalHeaderItemInternal(Rectangle<int>& r)
 
 void MappingFilterEditor::updateFilteredUI()
 {
-	if (filteredUI != nullptr && filteredUI->parameter == filter->filteredParameter) return;
+	if (filteredUI != nullptr && filter->filteredParameters.size() > 0 && filteredUI->parameter == filter->filteredParameters[0]) return;
 
 	if (filteredUI != nullptr)
 	{
@@ -41,9 +41,9 @@ void MappingFilterEditor::updateFilteredUI()
 
 	filteredUI = nullptr;
 
-	if (filter->filteredParameter != nullptr)
+	if (filter->filteredParameters.size() > 0 && filter->filteredParameters[0] != nullptr)
 	{
-		filteredUI.reset((ParameterUI*)(filter->filteredParameter->createDefaultUI()));
+		filteredUI.reset((ParameterUI*)(filter->filteredParameters[0]->createDefaultUI()));
 		filteredUI->showLabel = false;
 		addAndMakeVisible(filteredUI.get());
 	}
@@ -51,20 +51,10 @@ void MappingFilterEditor::updateFilteredUI()
 	resized();
 }
 
-void MappingFilterEditor::newMessage(const MappingFilter::FilterEvent & e)
+void MappingFilterEditor::newMessage(const MappingFilter::FilterEvent& e)
 {
-	switch (e.type)
+	if (e.type == MappingFilter::FilterEvent::FILTER_REBUILT)
 	{
-	case MappingFilter::FilterEvent::FILTER_PARAM_CHANGED:
-		filteredParamChangedAsync(e.filter);
-		break;
-            
-        default:
-            break;
+		updateFilteredUI();
 	}
-}
-
-void MappingFilterEditor::filteredParamChangedAsync(MappingFilter *)
-{
-	updateFilteredUI();
 }

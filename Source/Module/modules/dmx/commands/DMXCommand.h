@@ -15,9 +15,7 @@
 #include "Module/modules/common/commands/customvalues/CustomValuesCommandArgumentManager.h"
 
 class DMXCommand :
-	public BaseCommand,
-	public CustomValuesCommandArgumentManager::ArgumentManagerListener,
-	public CustomValuesCommandArgumentManager::ManagerListener
+	public BaseCommand
 {
 public:
 	enum DMXAction { SET_VALUE, SET_RANGE, COLOR, SET_VALUE_16BIT, BLACK_OUT, SET_ALL, SET_CUSTOM };
@@ -43,7 +41,6 @@ public:
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
-	void useForMappingChanged(CustomValuesCommandArgument* a) override;
 
 	void itemAdded(CustomValuesCommandArgument* a) override;
 

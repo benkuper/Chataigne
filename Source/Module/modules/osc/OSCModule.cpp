@@ -245,7 +245,7 @@ void OSCModule::setupSenders()
 
 void OSCModule::sendOSC(const OSCMessage & msg, String ip, int port)
 {
-	if (outputManager == nullptr) return;
+	if (isClearing || outputManager == nullptr) return;
 	if (!enabled->boolValue()) return;
 
 	if (!outputManager->enabled->boolValue()) return;

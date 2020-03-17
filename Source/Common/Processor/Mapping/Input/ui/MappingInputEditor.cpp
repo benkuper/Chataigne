@@ -11,7 +11,7 @@
 #include "MappingInputEditor.h"
 
 MappingInputEditor::MappingInputEditor(MappingInput * _input, bool isRoot) :
-	GenericControllableContainerEditor(_input,isRoot),
+	BaseItemEditor(_input,isRoot),
 	input(_input)
 {
 	input->addAsyncMappingInputListener(this);
@@ -37,10 +37,10 @@ void MappingInputEditor::updateSourceUI()
 	resized();
 }
 
-void MappingInputEditor::resizedInternalHeader(Rectangle<int>& r)
+void MappingInputEditor::resizedInternalHeaderItemInternal(Rectangle<int>& r)
 {
 	if (sourceFeedbackUI != nullptr) sourceFeedbackUI->setBounds(r.removeFromRight(jmin(r.getWidth()-150,200)).reduced(2));
-	GenericControllableContainerEditor::resizedInternalHeader(r);
+	BaseItemEditor::resizedInternalHeaderItemInternal(r);
 }
 
 void MappingInputEditor::newMessage(const MappingInput::MappingInputEvent & e)

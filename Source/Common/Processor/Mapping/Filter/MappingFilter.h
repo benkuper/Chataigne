@@ -20,24 +20,27 @@ public:
 	MappingFilter(const String &name = "MappingFilter", var params = var());
 	virtual ~MappingFilter();
 
-	WeakReference<Parameter> sourceParam;
-	WeakReference<Parameter> filteredParameter;
+	Array<WeakReference<Parameter>> sourceParams;
 	ControllableContainer filterParams;
 	
-	String forceOutParameterType;
+	Array<Controllable::Type> filterTypeFilters; //if not empty, this will filter out the parameters passed to the processSingleParameterInternal function
+
+	OwnedArray<Parameter> filteredParameters; //not in hierarchy
 
 	bool needsContinuousProcess;
 	bool autoSetRange; //if true, will check at process if ranges are differents between source and filtered, and if so, will reassign
 
-	void setupSource(Parameter * source);
-	virtual Parameter * setupParameterInternal(Parameter * source);
+	bool setupSources(Array<Parameter *> sources);
+	virtual void setupParametersInternal();
+	virtual Parameter * setupSingleParameterInternal(Parameter * source);
 
-	void onControllableFeedbackUpdateInternal(ControllableContainer *, Controllable * p) override;
-	void onContainerParameterChangedInternal(Parameter *p) override;
+	bool process();
+	virtual bool processInternal();
+	virtual void processSingleParameterInternal(Parameter* source, Parameter* out) {}
+
+	virtual void onContainerParameterChangedInternal(Parameter* p) override;
+	virtual void onControllableFeedbackUpdateInternal(ControllableContainer *, Controllable * p) override;
 	virtual void filterParamChanged(Parameter * ) {};
-
-	Parameter * process(Parameter * source);
-	virtual void processInternal() {}
 
 	virtual void clearItem() override;
 
@@ -53,7 +56,9 @@ public:
 	public:
 		/** Destructor. */
 		virtual ~FilterListener() {}
-		virtual void filteredParamChanged(MappingFilter *) {};
+		virtual void filterStateChanged(MappingFilter*) {}
+		virtual void filterNeedsProcess(MappingFilter *) {};
+		virtual void filteredParamsChanged(MappingFilter*) {}
 		virtual void filteredParamRangeChanged(MappingFilter *) {}
 	};
 
@@ -63,18 +68,18 @@ public:
 
 	class FilterEvent {
 	public:
-		enum Type { FILTER_PARAM_CHANGED, FILTER_STATE_CHANGED };
-		FilterEvent(Type type, MappingFilter * i) : type(type), filter(i) {}
+		enum Type { FILTER_REBUILT };
+		FilterEvent(Type type, MappingFilter* f) : type(type), filter(f) {}
 		Type type;
 		MappingFilter * filter;
 	};
-	QueuedNotifier<FilterEvent> mappingFilterAsyncNotifier;
-	typedef QueuedNotifier<FilterEvent>::Listener AsyncListener;
 
+	QueuedNotifier<FilterEvent> filterAsyncNotifier;
+	typedef QueuedNotifier<FilterEvent>::Listener AsyncFilterListener;
 
-	void addAsyncFilterListener(AsyncListener* newListener) { mappingFilterAsyncNotifier.addListener(newListener); }
-	void addAsyncCoalescedFilterListener(AsyncListener* newListener) { mappingFilterAsyncNotifier.addAsyncCoalescedListener(newListener); }
-	void removeAsyncFilterListener(AsyncListener* listener) { mappingFilterAsyncNotifier.removeListener(listener); }
+	void addAsyncFilterListener(AsyncFilterListener* newListener) { filterAsyncNotifier.addListener(newListener); }
+	void addAsyncCoalescedFilterListener(AsyncFilterListener* newListener) { filterAsyncNotifier.addAsyncCoalescedListener(newListener); }
+	void removeAsyncFilterListener(AsyncFilterListener* listener) { filterAsyncNotifier.removeListener(listener); }
 
 
 	virtual String getTypeString() const override { jassert(false); return "[ERROR]"; }

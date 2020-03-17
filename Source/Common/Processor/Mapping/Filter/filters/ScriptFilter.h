@@ -22,7 +22,7 @@ public:
 	static String scriptTemplate;
 	Script script;
 
-	void processInternal() override;
+	bool processInternal() override;
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;

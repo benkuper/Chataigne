@@ -199,9 +199,13 @@ void CustomValuesCommandArgumentManager::itemRemoved(CustomValuesCommandArgument
 	}
 }
 
+void CustomValuesCommandArgumentManager::itemsReordered()
+{
+	useForMappingChanged();
+}
+
 void CustomValuesCommandArgumentManager::loadJSONDataInternal(var data)
 {
-	DBG("Load data, isVoid ? " << (int)data.isVoid() << " / " << JSON::toString(data));
 	if(linkedTemplateManager == nullptr || !data.isVoid()) BaseManager::loadJSONDataInternal(data);
 	rebuildFromTemplate(false); //cannot do without clearing, already cleared by parent method
 }

@@ -15,7 +15,8 @@ SendStreamValuesCommand::SendStreamValuesCommand(StreamingModule * module, Comma
 {
 	customValuesManager.reset(new CustomValuesCommandArgumentManager(context == MAPPING));
 	addChildControllableContainer(customValuesManager.get());
-	customValuesManager->addArgumentManagerListener(this);
+
+	setUseCustomValues(true);
 }
 
 SendStreamValuesCommand::~SendStreamValuesCommand()
@@ -81,20 +82,4 @@ void SendStreamValuesCommand::triggerInternal()
 
 	Array<uint8> bytes((uint8 *)data.getData(), (int)data.getDataSize());
 	streamingModule->sendBytes(bytes);
-}
-
-void SendStreamValuesCommand::useForMappingChanged(CustomValuesCommandArgument *)
-{
-	if (context != CommandContext::MAPPING) return;
-
-	clearTargetMappingParameters();
-	int index = 0;
-	for (auto &a : customValuesManager->items)
-	{
-		if (a->useForMapping != nullptr && a->useForMapping->boolValue())
-		{
-			addTargetMappingParameterAt(a->param, index);
-			index++;
-		}
-	}
 }
