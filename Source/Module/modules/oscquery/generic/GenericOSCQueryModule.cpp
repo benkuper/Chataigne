@@ -244,12 +244,14 @@ Controllable* GenericOSCQueryModule::createControllableFromData(StringRef name, 
 	}
 	else if (type == "ii" || type == "ff")
 	{
-		c = new Point2DParameter(cNiceName, cNiceName, value);
+		c = new Point2DParameter(cNiceName, cNiceName);
+		((Point2DParameter*)c)->setValue(value);
 		((Point2DParameter*)c)->setRange(minVal, maxVal);
 	}
 	else if (type == "iii" || type == "fff")
 	{
-		c = new Point3DParameter(cNiceName, cNiceName, value);
+		c = new Point3DParameter(cNiceName, cNiceName);
+		((Point3DParameter*)c)->setValue(value);
 		((Point3DParameter*)c)->setRange(minVal, maxVal);
 	}
 	else if (type == "ffff")
