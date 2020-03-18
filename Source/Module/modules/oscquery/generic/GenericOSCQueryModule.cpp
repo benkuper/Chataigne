@@ -230,42 +230,41 @@ Controllable* GenericOSCQueryModule::createControllableFromData(StringRef name, 
 		maxVal.append(range[i].getProperty("MAX", INT32_MAX));
 	}
 
-	if (type == "N")
+	if (type == "N" || type == "I")
 	{
 		c = new Trigger(cNiceName, cNiceName);
 	}
-	else if (type == "i")
+	else if (type == "i" || type == "h")
 	{
 		c = new IntParameter(cNiceName, cNiceName, value[0], minVal[0], maxVal[0]);
 	}
-	else if (type == "f")
+	else if (type == "f" || type == "d")
 	{
 		c = new FloatParameter(cNiceName, cNiceName, value[0], minVal[0], maxVal[0]);
 	}
-	else if (type == "ii" || type == "ff")
+	else if (type == "ii" || type == "ff"  || type == "hh"  || type == "dd")
 	{
 		c = new Point2DParameter(cNiceName, cNiceName);
 		((Point2DParameter*)c)->setValue(value);
 		((Point2DParameter*)c)->setRange(minVal, maxVal);
 	}
-	else if (type == "iii" || type == "fff")
+	else if (type == "iii" || type == "fff" || type == "hhh"  || type == "ddd")
 	{
 		c = new Point3DParameter(cNiceName, cNiceName);
 		((Point3DParameter*)c)->setValue(value);
 		((Point3DParameter*)c)->setRange(minVal, maxVal);
 	}
-	else if (type == "ffff")
+	else if (type == "ffff" || type == "dddd")
 	{
 		Colour col = Colour::fromFloatRGBA(value[0], value[1], value[2], value[3]);
 		c = new ColorParameter(cNiceName, cNiceName, col);
 	}
-	else if (type == "iiii")
-
+	else if (type == "iiii" || type == "hhhh")
 	{
 		Colour col = Colour::fromRGBA((int)value[0], (int)value[1], (int)value[2], (int)value[3]);
 		c = new ColorParameter(cNiceName, cNiceName, col);
 	}
-	else if (type == "s")
+	else if (type == "s" || type == "S"  || type == "c")
 	{
 		if (range[0].isObject()) //enum
 		{
