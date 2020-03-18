@@ -291,6 +291,10 @@ Controllable* GenericOSCQueryModule::createControllableFromData(StringRef name, 
 		Colour goodCol = Colour(col.getAlpha(), col.getRed(), col.getGreen(), col.getBlue()); //inverse RGBA > ARGB
 		c = new ColorParameter(cNiceName, cNiceName, goodCol);
 	}
+	else if (type == "T" || type == "F")
+	{
+		c = new BoolParameter(cNiceName, cNiceName, value[0]);
+	}
 
 
 
