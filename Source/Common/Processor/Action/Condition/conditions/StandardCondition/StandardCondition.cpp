@@ -77,7 +77,7 @@ void StandardCondition::setSourceControllable(WeakReference<Controllable> c)
 
 		comparator.reset(ComparatorFactory::createComparatorForControllable(sourceControllable));
 
-		comparator->hideInEditor = true;
+
 		addChildControllableContainer(comparator.get());
 
 		Module * m = ControllableUtil::findParentAs<Module>(sourceControllable);
@@ -95,6 +95,7 @@ void StandardCondition::setSourceControllable(WeakReference<Controllable> c)
 				else if (!oldData.isVoid()) comparator->loadJSONData(oldData);
 			}
 			
+			comparator->hideInEditor = true;
 			comparator->addComparatorListener(this);
 			comparator->compare();
 			
