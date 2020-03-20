@@ -16,7 +16,8 @@ Mapping::Mapping(bool canBeDisabled) :
 	processMode(VALUE_CHANGE),
 	inputIsLocked(false),
 	mappingAsyncNotifier(10),
-	isRebuilding(false)
+	isRebuilding(false),
+	isProcessing(false)
 {
 	itemDataType = "Mapping";
 	type = MAPPING;
@@ -117,13 +118,14 @@ void Mapping::process(bool forceOutput)
 {
 	if ((canBeDisabled && !enabled->boolValue()) || forceDisabled) return;
 	if (im.items.size() == 0) return;
-	if (isCurrentlyLoadingData || isRebuilding) return;
+	if (isCurrentlyLoadingData || isRebuilding || isProcessing) return;
 
 	//DBG("[PROCESS] Enter lock");
 	GenericScopedLock lock(mappingLock);
-
+	isProcessing = true;
 	Array<Parameter *> filteredParams = fm.processFilters();
 	om.updateOutputValues();
+	isProcessing = false;
 
 	//DBG("[PROCESS] Exit lock");
 

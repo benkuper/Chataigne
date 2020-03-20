@@ -37,6 +37,7 @@ public:
 
 	SpinLock mappingLock;
 	bool isRebuilding;
+	bool isProcessing;
 
 	void setProcessMode(ProcessMode mode);
 
