@@ -31,7 +31,6 @@ public:
 	MappingOutputManager om;
 
 	BoolParameter* continuousProcess;
-	ControllableContainer outCC;
 
 	enum ProcessMode { VALUE_CHANGE, MANUAL, TIMER };
 	ProcessMode processMode;

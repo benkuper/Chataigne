@@ -16,7 +16,6 @@ Mapping::Mapping(bool canBeDisabled) :
 	processMode(VALUE_CHANGE),
 	inputIsLocked(false),
 	mappingAsyncNotifier(10),
-	outCC("Out values"),
 	isRebuilding(false)
 {
 	itemDataType = "Mapping";
@@ -28,7 +27,6 @@ Mapping::Mapping(bool canBeDisabled) :
 	addChildControllableContainer(&im);
 	addChildControllableContainer(&fm);
 	addChildControllableContainer(&om);
-	addChildControllableContainer(&outCC);
 
 	fm.addFilterManagerListener(this);
 	im.addBaseManagerListener(this);
@@ -143,7 +141,7 @@ var Mapping::getJSONData()
 void Mapping::loadJSONDataInternal(var data)
 {
 	Processor::loadJSONDataInternal(data);
-	im.loadJSONData(data.getProperty("im", var()));
+	if(!inputIsLocked) im.loadJSONData(data.getProperty("im", var()));
 	fm.loadJSONData(data.getProperty("filters", var()));
 	om.loadJSONData(data.getProperty("outputs", var()));
 
