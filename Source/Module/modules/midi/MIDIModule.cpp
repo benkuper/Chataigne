@@ -123,7 +123,12 @@ void MIDIModule::sendSysex(Array<uint8> data)
 {
 	if (!enabled->boolValue()) return;
 	if (outputDevice == nullptr) return;
-	if (logOutgoingData->boolValue()) NLOG(niceName, "Send Sysex " << data.size() << " bytes");
+	if (logOutgoingData->boolValue())
+	{
+		String s = "Send Sysex " + String(data.size()) + " bytes : ";
+		for (int i = 0; i < data.size(); i++) s += "\n" + String(data[i]);
+		NLOG(niceName, s);
+	}
 	outActivityTrigger->trigger();
 	outputDevice->sendSysEx(data);
 }
@@ -413,10 +418,14 @@ var MIDIModule::sendSysexFromScript(const var::NativeFunctionArgs & args)
 	for (int i = 0; i < numArgs; i++)
 	{
 		const var * a = allArgs[i];
-		if(a->isInt() || a->isInt64() || a->isDouble() || a->isBool())data.add((uint8)(int)a);
+		if (a->isInt() || a->isInt64() || a->isDouble() || a->isBool())data.add((uint8)(int)*a);
 		else if (a->isString())
 		{
-			for (int j = 0; j < a->size(); j++) data.add((uint8)a->toString()[j]);
+			String s = a->toString();
+			for (int j = 0; j < s.length(); j++)
+			{
+				data.add((uint8)s[j]);
+			}
 		}
 	}
 	m->sendSysex(data);
