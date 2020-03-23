@@ -391,8 +391,34 @@ var MIDIModule::sendSysexFromScript(const var::NativeFunctionArgs & args)
 	if (!m->enabled->boolValue()) return var();
 	if (!checkNumArgs(m->niceName, args, 1)) return var();
 
+	Array<const var> allArgs;
+	for (int i = 0; i < args.numArguments; i++)
+	{
+		if (args.arguments[i].isArray())
+		{
+			for (int j = 0; j < args.arguments[i].size(); j++)
+			{
+				allArgs.add(args.arguments[i][j]);
+			}
+		}
+		else
+		{
+			allArgs.add(args.arguments[i]);
+		}
+	}
+
+	int numArgs = allArgs.size();
+
 	Array<uint8> data;
-	for (int i = 0; i < args.numArguments; i++) data.add((uint8)(int)args.arguments[i]);
+	for (int i = 0; i < numArgs; i++)
+	{
+		var a = allArgs[i];
+		if(a.isInt() || a.isInt64() || a.isDouble() || a.isBool())data.add((uint8)(int)a);
+		else if (a.isString())
+		{
+			for (int j = 0; j < a.size(); j++) data.add((uint8)a.toString()[j]);
+		}
+	}
 	m->sendSysex(data);
 
 	return var();
