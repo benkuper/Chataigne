@@ -48,7 +48,7 @@ void CommunityModuleInfo::installModule()
 	File df = getDownloadFilePath();
 	if (df.exists()) df.deleteFile();
 	downloadTask = nullptr;
-	downloadTask.reset(URL(downloadURL).downloadToFile(df, "", this));
+	downloadTask = URL(downloadURL).downloadToFile(df, "", this);
 	if (downloadTask == nullptr)
 	{
 		LOGERROR("Error trying to download module " + niceName);
