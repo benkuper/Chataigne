@@ -30,6 +30,17 @@ You can check the tutorials to better understand what and how you can use Chatai
     - TCP
     - HTTP
     - PJLink 
+ - Supports communication and synchronization of the following hardware :
+    - KinectV2 (Win only)
+    - StreamDeck
+    - Joystick
+    - Gamepad
+    - Mouse
+    - Keyboard
+    - Wiimote
+    - Joycon
+    - Sound card
+    
  - State Machine : Create both simple and complex real-time interactions and automations.
  - Time Machine : Create sequence based animations and triggers
  - Module Router : Easily route multiple values at once from one software to another, independant of the protocol
