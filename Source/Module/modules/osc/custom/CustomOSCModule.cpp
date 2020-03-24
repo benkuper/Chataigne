@@ -77,7 +77,6 @@ void CustomOSCModule::processMessageInternal(const OSCMessage & msg)
 					c->isRemovableByUser = true;
 					c->saveValueOnly = false;
 					//c->isControllableFeedbackOnly = true;
-					if (c->type != Controllable::TRIGGER) ((Parameter *)c)->autoAdaptRange = true;
 				}
 			}
 		}
@@ -88,7 +87,6 @@ void CustomOSCModule::processMessageInternal(const OSCMessage & msg)
 		
 		if (c != nullptr) //update existing controllable
 		{
-			if (c->type != Controllable::TRIGGER) ((Parameter *)c)->autoAdaptRange = true;
 
 			switch (c->type)
 			{
@@ -218,8 +216,6 @@ void CustomOSCModule::processMessageInternal(const OSCMessage & msg)
 			c->isRemovableByUser = true;
 			c->saveValueOnly = false;
 			//c->setControllableFeedbackOnly(true);
-
-			if (c->type != Controllable::TRIGGER && autoRange->boolValue()) ((Parameter *)c)->autoAdaptRange = true;
 
 			valuesCC.addControllable(c);
 			valuesCC.orderControllablesAlphabetically();
