@@ -20,15 +20,18 @@
 #define RIGHT_DOWN MOUSEEVENTF_RIGHTDOWN
 #define RIGHT_UP MOUSEEVENTF_RIGHTUP
 #elif JUCE_MAC
-
 #include "MouseMacFunctions.h"
+#if JUCE_SUPPORT_CARBON
 #define LEFT_DOWN kCGEventLeftMouseDown
 #define LEFT_UP kCGEventLeftMouseUp
 #define MIDDLE_DOWN kCGEventOtherMouseDown
 #define MIDDLE_UP kCGEventOtherMouseUp
 #define RIGHT_DOWN kCGEventRightMouseDown
 #define RIGHT_UP kCGEventRightMouseUp
-#else
+#endif
+#endif
+
+#ifndef LEFT_DOWN
 #define LEFT_DOWN 0
 #define LEFT_UP 1
 #define MIDDLE_DOWN 2
