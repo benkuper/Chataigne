@@ -13,9 +13,9 @@
 
 ConversionParamValueLinkUI::ConversionParamValueLinkUI(ConversionConnector* sourceConnector, ConversionConnector* outConnector, ConversionParamValueLink* link) :
 	Component("link"),
-	sourceConnector(sourceConnector),
-	outConnector(outConnector),
-	link(link)
+	link(link),
+    sourceConnector(sourceConnector),
+	outConnector(outConnector)
 {
 	setRepaintsOnMouseActivity(true);
 }

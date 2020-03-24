@@ -13,9 +13,9 @@
 
 ConvertedParameter::ConvertedParameter(var params) :
 	BaseItem(params.getProperty("type", ""), false),
-	conversionMode(nullptr),
 	outParamReference(nullptr),
-	cpAsyncNotifier(10)
+	conversionMode(nullptr),
+    cpAsyncNotifier(10)
 {
 	showInspectorOnSelect = false;
 	editorCanBeCollapsed = false;

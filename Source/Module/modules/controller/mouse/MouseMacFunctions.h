@@ -19,16 +19,20 @@
 namespace mousemac {
     
     void sendMouseEvent(int buttonEvent, float posX, float posY){
-         CGPoint pt;
+ #if JUCE_SUPPORT_CARBON
+        CGPoint pt;
         pt.x = posX;
         pt.y = posY;
         
         CGEventRef mouseDownEv = CGEventCreateMouseEvent (NULL,(CGEventType)buttonEvent,pt,kCGMouseButtonLeft);
         CGEventPost (kCGHIDEventTap, mouseDownEv);
+#endif
+        
     }
     
     void setMousePos(float posX, float posY)
     {
+ #if JUCE_SUPPORT_CARBON
         CGPoint pt;
         pt.x = posX;
         pt.y = posY;
@@ -43,5 +47,7 @@ namespace mousemac {
         // post the event and cleanup
         CGEventPost(kCGSessionEventTap, moveEvent);
         CFRelease(moveEvent);
+#endif
+        
     }
 }

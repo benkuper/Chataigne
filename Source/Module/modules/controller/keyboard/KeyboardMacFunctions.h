@@ -18,6 +18,7 @@
 namespace keyboardmac {
     
     void sendMacKeyEvent(int keyID, bool isDown){
+#if JUCE_SUPPORT_CARBON
         CGEventSourceRef source = CGEventSourceCreate( kCGEventSourceStateHIDSystemState );
 
         CGEventRef keyEvent = CGEventCreateKeyboardEvent( source, (CGKeyCode) keyID, isDown );
@@ -25,5 +26,6 @@ namespace keyboardmac {
         CFRelease( keyEvent );
 
         CFRelease( source );
+#endif
     }
 }

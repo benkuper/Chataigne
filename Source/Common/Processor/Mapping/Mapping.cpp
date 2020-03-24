@@ -14,10 +14,10 @@
 Mapping::Mapping(bool canBeDisabled) :
 	Processor("Mapping", canBeDisabled),
 	processMode(VALUE_CHANGE),
-	inputIsLocked(false),
-	mappingAsyncNotifier(10),
 	isRebuilding(false),
-	isProcessing(false)
+	isProcessing(false),
+    inputIsLocked(false),
+    mappingAsyncNotifier(10)
 {
 	itemDataType = "Mapping";
 	type = MAPPING;

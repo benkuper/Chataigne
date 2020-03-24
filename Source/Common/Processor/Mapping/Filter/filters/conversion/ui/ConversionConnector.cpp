@@ -12,12 +12,12 @@
 
 ConversionConnector::ConversionConnector(StringRef label, Parameter *param,  int valueIndex) :
 	Component("Connector" + label),
-	label(label),
-	param(param),
-	valueIndex(valueIndex),
 	isSource(true),
-	dropCandidate(false),
-	convertedParam(nullptr)
+    label(label),
+	param(param),
+	convertedParam(nullptr),
+    valueIndex(valueIndex),
+    dropCandidate(false)
 {
 	setRepaintsOnMouseActivity(true);
 }
