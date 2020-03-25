@@ -15,7 +15,7 @@ Point3DComparator::Point3DComparator(Controllable * c) :
 	p3dParam((Point3DParameter *)c)
 {
 	p3dRef = addPoint3DParameter("Reference", "Comparison Reference to check against source value", p3dParam->value);
-	p3dRef->setRange(p3dParam->minimumValue, p3dParam->maximumValue, true);
+	p3dRef->setRange(p3dParam->minimumValue, p3dParam->maximumValue);
 	p3dRef->setValue(p3dParam->value, false, true, true);
 	reference = p3dRef;
 
