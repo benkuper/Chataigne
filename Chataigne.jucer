@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.7.0b4"
+<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.7.0b5"
               bundleIdentifier="benkuper.Chataigne" includeBinaryInAppConfig="1"
               jucerVersion="5.4.7" companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
               companyEmail="benjamin@kuperberg.fr" defines="" splashScreenColour="Dark"
@@ -1279,6 +1279,56 @@
                     resource="0" file="Source/TimeMachine/Sequence/layers/audio/ChataigneAudioLayerListener.h"/>
             </GROUP>
             <GROUP id="{43CDA754-BA40-749C-1F35-8733A474B6F9}" name="mapping">
+              <GROUP id="{C7E90FCA-FCE6-0938-2459-5EDE9655B2E5}" name="automation">
+                <GROUP id="{497E0A64-276F-5258-B82E-3295818D25A0}" name="ui">
+                  <FILE id="vozDgK" name="AutomationMappingLayerPanel.cpp" compile="1"
+                        resource="0" file="Source/TimeMachine/Sequence/layers/mapping/automation/ui/AutomationMappingLayerPanel.cpp"/>
+                  <FILE id="XcbARi" name="AutomationMappingLayerPanel.h" compile="0"
+                        resource="0" file="Source/TimeMachine/Sequence/layers/mapping/automation/ui/AutomationMappingLayerPanel.h"/>
+                  <FILE id="uMSGxh" name="AutomationMappingLayerTimeline.cpp" compile="1"
+                        resource="0" file="Source/TimeMachine/Sequence/layers/mapping/automation/ui/AutomationMappingLayerTimeline.cpp"/>
+                  <FILE id="ZJbWsg" name="AutomationMappingLayerTimeline.h" compile="0"
+                        resource="0" file="Source/TimeMachine/Sequence/layers/mapping/automation/ui/AutomationMappingLayerTimeline.h"/>
+                </GROUP>
+                <GROUP id="{056AC38B-8A54-1798-4436-05495EAE3919}" name="1d">
+                  <FILE id="XDqpsx" name="Mapping1DLayer.cpp" compile="1" resource="0"
+                        file="Source/TimeMachine/Sequence/layers/mapping/automation/1d/Mapping1DLayer.cpp"/>
+                  <FILE id="FmxPuw" name="Mapping1DLayer.h" compile="0" resource="0"
+                        file="Source/TimeMachine/Sequence/layers/mapping/automation/1d/Mapping1DLayer.h"/>
+                </GROUP>
+                <GROUP id="{91044AED-92C4-815B-2BD7-B66B8E52C51C}" name="2d">
+                  <GROUP id="{64B3E1EF-FF8D-7F0B-77ED-95F1F08C504A}" name="ui">
+                    <FILE id="C4yyq5" name="Mapping2DLayerPanel.cpp" compile="1" resource="0"
+                          file="Source/TimeMachine/Sequence/layers/mapping/automation/2d/ui/Mapping2DLayerPanel.cpp"/>
+                    <FILE id="d3ovBS" name="Mapping2DLayerPanel.h" compile="0" resource="0"
+                          file="Source/TimeMachine/Sequence/layers/mapping/automation/2d/ui/Mapping2DLayerPanel.h"/>
+                    <FILE id="UBYpfW" name="Mapping2DLayerTimeline.cpp" compile="1" resource="0"
+                          file="Source/TimeMachine/Sequence/layers/mapping/automation/2d/ui/Mapping2DLayerTimeline.cpp"/>
+                    <FILE id="o0CzJ4" name="Mapping2DLayerTimeline.h" compile="0" resource="0"
+                          file="Source/TimeMachine/Sequence/layers/mapping/automation/2d/ui/Mapping2DLayerTimeline.h"/>
+                  </GROUP>
+                  <FILE id="RnHeRx" name="Mapping2DLayer.cpp" compile="1" resource="0"
+                        file="Source/TimeMachine/Sequence/layers/mapping/automation/2d/Mapping2DLayer.cpp"/>
+                  <FILE id="kA47dP" name="Mapping2DLayer.h" compile="0" resource="0"
+                        file="Source/TimeMachine/Sequence/layers/mapping/automation/2d/Mapping2DLayer.h"/>
+                </GROUP>
+                <FILE id="xOagnY" name="AutomationMappingLayer.cpp" compile="1" resource="0"
+                      file="Source/TimeMachine/Sequence/layers/mapping/automation/AutomationMappingLayer.cpp"/>
+                <FILE id="XxoCsa" name="AutomationMappingLayer.h" compile="0" resource="0"
+                      file="Source/TimeMachine/Sequence/layers/mapping/automation/AutomationMappingLayer.h"/>
+              </GROUP>
+              <GROUP id="{7CF7C72F-139D-BE32-4A80-D7F4965A04B1}" name="color">
+                <GROUP id="{10659B85-B7BE-82AF-88A1-AF33687EAFF5}" name="ui">
+                  <FILE id="ztmGRz" name="ColorMappingLayerTimeline.cpp" compile="1"
+                        resource="0" file="Source/TimeMachine/Sequence/layers/mapping/color/ui/ColorMappingLayerTimeline.cpp"/>
+                  <FILE id="oCwuj3" name="ColorMappingLayerTimeline.h" compile="0" resource="0"
+                        file="Source/TimeMachine/Sequence/layers/mapping/color/ui/ColorMappingLayerTimeline.h"/>
+                </GROUP>
+                <FILE id="c1F6G4" name="ColorMappingLayer.cpp" compile="1" resource="0"
+                      file="Source/TimeMachine/Sequence/layers/mapping/color/ColorMappingLayer.cpp"/>
+                <FILE id="SX0Awq" name="ColorMappingLayer.h" compile="0" resource="0"
+                      file="Source/TimeMachine/Sequence/layers/mapping/color/ColorMappingLayer.h"/>
+              </GROUP>
               <GROUP id="{071E6E14-B2B7-5D15-02BF-BCC713578CF2}" name="ui">
                 <FILE id="u3Ftks" name="MappingLayerEditor.cpp" compile="1" resource="0"
                       file="Source/TimeMachine/Sequence/layers/mapping/ui/MappingLayerEditor.cpp"/>

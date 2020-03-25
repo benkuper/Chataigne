@@ -485,6 +485,27 @@
     <Filter Include="Chataigne\Source\TimeMachine\Sequence\layers\audio">
       <UniqueIdentifier>{046A12D8-18CC-8C84-B146-4524DD67E17C}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Chataigne\Source\TimeMachine\Sequence\layers\mapping\automation\ui">
+      <UniqueIdentifier>{F4944C6A-8A86-D04D-C5E2-3C8E7504EF9F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\TimeMachine\Sequence\layers\mapping\automation\1d">
+      <UniqueIdentifier>{0D016051-030A-0577-7B7B-0436BB5D05B6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\TimeMachine\Sequence\layers\mapping\automation\2d\ui">
+      <UniqueIdentifier>{22099FDD-FB3B-7477-F82C-494D508B31BB}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\TimeMachine\Sequence\layers\mapping\automation\2d">
+      <UniqueIdentifier>{6668EC02-9944-F31B-C7A8-A9B328D0C123}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\TimeMachine\Sequence\layers\mapping\automation">
+      <UniqueIdentifier>{33A39A73-29A9-CE30-1174-C8B29B79FC33}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\TimeMachine\Sequence\layers\mapping\color\ui">
+      <UniqueIdentifier>{F0D3ADCC-F7FD-3DEA-C6B9-920413FE67BB}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\TimeMachine\Sequence\layers\mapping\color">
+      <UniqueIdentifier>{0B7EA867-1DB6-EA29-68A0-C60C46A90297}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Chataigne\Source\TimeMachine\Sequence\layers\mapping\ui">
       <UniqueIdentifier>{DF4E6218-ABE8-106D-C3CC-85579E284B7D}</UniqueIdentifier>
     </Filter>
@@ -937,6 +958,21 @@
     </Filter>
     <Filter Include="JUCE Modules\juce_organicui\app">
       <UniqueIdentifier>{713F9F29-C2A1-3D8F-4394-6A948FA0175D}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_organicui\automation\curve\curve2D\easing\ui">
+      <UniqueIdentifier>{0E5F94A6-BF2F-3A2F-6F75-556FAA34FCF5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_organicui\automation\curve\curve2D\easing">
+      <UniqueIdentifier>{A64CBF4B-AADA-FA1F-5FDC-CFF7E8DF556B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_organicui\automation\curve\curve2D\ui">
+      <UniqueIdentifier>{720CB5A6-80A1-C355-9DC3-FFF3D6860B58}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_organicui\automation\curve\curve2D">
+      <UniqueIdentifier>{7A9AC9C5-2D30-C866-66F4-ADFFFC8F654C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_organicui\automation\curve">
+      <UniqueIdentifier>{87824114-A534-681D-C5B1-F5DD42E13D60}</UniqueIdentifier>
     </Filter>
     <Filter Include="JUCE Modules\juce_organicui\automation\easing\ui">
       <UniqueIdentifier>{113BFDB2-6CD7-CBB1-E543-F27243786328}</UniqueIdentifier>
@@ -1962,6 +1998,33 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\TimeMachine\Sequence\layers\audio\ChataigneAudioLayer.cpp">
       <Filter>Chataigne\Source\TimeMachine\Sequence\layers\audio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\TimeMachine\Sequence\layers\mapping\automation\ui\AutomationMappingLayerPanel.cpp">
+      <Filter>Chataigne\Source\TimeMachine\Sequence\layers\mapping\automation\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\TimeMachine\Sequence\layers\mapping\automation\ui\AutomationMappingLayerTimeline.cpp">
+      <Filter>Chataigne\Source\TimeMachine\Sequence\layers\mapping\automation\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\TimeMachine\Sequence\layers\mapping\automation\1d\Mapping1DLayer.cpp">
+      <Filter>Chataigne\Source\TimeMachine\Sequence\layers\mapping\automation\1d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\TimeMachine\Sequence\layers\mapping\automation\2d\ui\Mapping2DLayerPanel.cpp">
+      <Filter>Chataigne\Source\TimeMachine\Sequence\layers\mapping\automation\2d\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\TimeMachine\Sequence\layers\mapping\automation\2d\ui\Mapping2DLayerTimeline.cpp">
+      <Filter>Chataigne\Source\TimeMachine\Sequence\layers\mapping\automation\2d\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\TimeMachine\Sequence\layers\mapping\automation\2d\Mapping2DLayer.cpp">
+      <Filter>Chataigne\Source\TimeMachine\Sequence\layers\mapping\automation\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\TimeMachine\Sequence\layers\mapping\automation\AutomationMappingLayer.cpp">
+      <Filter>Chataigne\Source\TimeMachine\Sequence\layers\mapping\automation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\TimeMachine\Sequence\layers\mapping\color\ui\ColorMappingLayerTimeline.cpp">
+      <Filter>Chataigne\Source\TimeMachine\Sequence\layers\mapping\color\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\TimeMachine\Sequence\layers\mapping\color\ColorMappingLayer.cpp">
+      <Filter>Chataigne\Source\TimeMachine\Sequence\layers\mapping\color</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\TimeMachine\Sequence\layers\mapping\ui\MappingLayerEditor.cpp">
       <Filter>Chataigne\Source\TimeMachine\Sequence\layers\mapping\ui</Filter>
@@ -3964,6 +4027,27 @@
     <ClCompile Include="..\..\Modules\juce_organicui\app\OrganicMainComponentCommands.cpp">
       <Filter>JUCE Modules\juce_organicui\app</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\automation\curve\curve2D\easing\ui\Easing2DUI.cpp">
+      <Filter>JUCE Modules\juce_organicui\automation\curve\curve2D\easing\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\automation\curve\curve2D\easing\Easing2D.cpp">
+      <Filter>JUCE Modules\juce_organicui\automation\curve\curve2D\easing</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\automation\curve\curve2D\ui\Curve2DEditor.cpp">
+      <Filter>JUCE Modules\juce_organicui\automation\curve\curve2D\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\automation\curve\curve2D\ui\Curve2DKeyUI.cpp">
+      <Filter>JUCE Modules\juce_organicui\automation\curve\curve2D\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\automation\curve\curve2D\ui\Curve2DUI.cpp">
+      <Filter>JUCE Modules\juce_organicui\automation\curve\curve2D\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\automation\curve\curve2D\Curve2D.cpp">
+      <Filter>JUCE Modules\juce_organicui\automation\curve\curve2D</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\automation\curve\curve2D\Curve2DKey.cpp">
+      <Filter>JUCE Modules\juce_organicui\automation\curve\curve2D</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\automation\easing\ui\EasingUI.cpp">
       <Filter>JUCE Modules\juce_organicui\automation\easing\ui</Filter>
     </ClCompile>
@@ -5453,6 +5537,33 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\TimeMachine\Sequence\layers\audio\ChataigneAudioLayerListener.h">
       <Filter>Chataigne\Source\TimeMachine\Sequence\layers\audio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\TimeMachine\Sequence\layers\mapping\automation\ui\AutomationMappingLayerPanel.h">
+      <Filter>Chataigne\Source\TimeMachine\Sequence\layers\mapping\automation\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\TimeMachine\Sequence\layers\mapping\automation\ui\AutomationMappingLayerTimeline.h">
+      <Filter>Chataigne\Source\TimeMachine\Sequence\layers\mapping\automation\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\TimeMachine\Sequence\layers\mapping\automation\1d\Mapping1DLayer.h">
+      <Filter>Chataigne\Source\TimeMachine\Sequence\layers\mapping\automation\1d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\TimeMachine\Sequence\layers\mapping\automation\2d\ui\Mapping2DLayerPanel.h">
+      <Filter>Chataigne\Source\TimeMachine\Sequence\layers\mapping\automation\2d\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\TimeMachine\Sequence\layers\mapping\automation\2d\ui\Mapping2DLayerTimeline.h">
+      <Filter>Chataigne\Source\TimeMachine\Sequence\layers\mapping\automation\2d\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\TimeMachine\Sequence\layers\mapping\automation\2d\Mapping2DLayer.h">
+      <Filter>Chataigne\Source\TimeMachine\Sequence\layers\mapping\automation\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\TimeMachine\Sequence\layers\mapping\automation\AutomationMappingLayer.h">
+      <Filter>Chataigne\Source\TimeMachine\Sequence\layers\mapping\automation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\TimeMachine\Sequence\layers\mapping\color\ui\ColorMappingLayerTimeline.h">
+      <Filter>Chataigne\Source\TimeMachine\Sequence\layers\mapping\color\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\TimeMachine\Sequence\layers\mapping\color\ColorMappingLayer.h">
+      <Filter>Chataigne\Source\TimeMachine\Sequence\layers\mapping\color</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\TimeMachine\Sequence\layers\mapping\ui\MappingLayerEditor.h">
       <Filter>Chataigne\Source\TimeMachine\Sequence\layers\mapping\ui</Filter>
@@ -7670,6 +7781,30 @@
     </ClInclude>
     <ClInclude Include="..\..\Modules\juce_organicui\app\OrganicMainComponent.h">
       <Filter>JUCE Modules\juce_organicui\app</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_organicui\automation\curve\curve2D\easing\ui\Easing2DUI.h">
+      <Filter>JUCE Modules\juce_organicui\automation\curve\curve2D\easing\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_organicui\automation\curve\curve2D\easing\bezier.h">
+      <Filter>JUCE Modules\juce_organicui\automation\curve\curve2D\easing</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_organicui\automation\curve\curve2D\easing\Easing2D.h">
+      <Filter>JUCE Modules\juce_organicui\automation\curve\curve2D\easing</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_organicui\automation\curve\curve2D\ui\Curve2DEditor.h">
+      <Filter>JUCE Modules\juce_organicui\automation\curve\curve2D\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_organicui\automation\curve\curve2D\ui\Curve2DKeyUI.h">
+      <Filter>JUCE Modules\juce_organicui\automation\curve\curve2D\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_organicui\automation\curve\curve2D\ui\Curve2DUI.h">
+      <Filter>JUCE Modules\juce_organicui\automation\curve\curve2D\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_organicui\automation\curve\curve2D\Curve2D.h">
+      <Filter>JUCE Modules\juce_organicui\automation\curve\curve2D</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_organicui\automation\curve\curve2D\Curve2DKey.h">
+      <Filter>JUCE Modules\juce_organicui\automation\curve\curve2D</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Modules\juce_organicui\automation\easing\ui\EasingUI.h">
       <Filter>JUCE Modules\juce_organicui\automation\easing\ui</Filter>

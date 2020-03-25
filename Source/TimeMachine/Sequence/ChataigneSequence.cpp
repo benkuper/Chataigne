@@ -16,6 +16,9 @@
 #include "Common/MIDI/MIDIDeviceParameter.h"
 
 #include "layers/trigger/ChataigneTriggerLayer.h"
+#include "layers/mapping/automation/1d/Mapping1DLayer.h"
+#include "layers/mapping/automation/2d/Mapping2DLayer.h"
+#include "layers/mapping/color/ColorMappingLayer.h"
 #include "layers/mapping/MappingLayer.h"
 #include "layers/audio/ChataigneAudioLayer.h"
 
@@ -28,9 +31,10 @@ ChataigneSequence::ChataigneSequence() :
 	addParameter(midiSyncDevice);
 	
 	layerManager->factory.defs.add(SequenceLayerManager::LayerDefinition::createDef("", "Trigger", &ChataigneTriggerLayer::create, this));
-	layerManager->factory.defs.add(SequenceLayerManager::LayerDefinition::createDef("", "Mapping", &MappingLayer::create, this)->addParam("mode", MappingLayer::MODE_1D));
+	layerManager->factory.defs.add(SequenceLayerManager::LayerDefinition::createDef("", Mapping1DLayer::getTypeStringStatic(), &Mapping1DLayer::create, this));
+	layerManager->factory.defs.add(SequenceLayerManager::LayerDefinition::createDef("", Mapping2DLayer::getTypeStringStatic(), &Mapping2DLayer::create, this));
 	layerManager->factory.defs.add(SequenceLayerManager::LayerDefinition::createDef("", "Audio", &ChataigneAudioLayer::create, this, true));
-	layerManager->factory.defs.add(SequenceLayerManager::LayerDefinition::createDef("", "Color", &MappingLayer::create, this)->addParam("mode", MappingLayer::MODE_COLOR));
+	layerManager->factory.defs.add(SequenceLayerManager::LayerDefinition::createDef("", ColorMappingLayer::getTypeStringStatic(), &ColorMappingLayer::create, this));
 
 	layerManager->addBaseManagerListener(this);
 }
@@ -149,7 +153,7 @@ bool ChataigneSequence::timeIsDrivenByAudio()
 
 void ChataigneSequence::addNewMappingLayerFromValues(Array<Point<float>> keys)
 {
-	MappingLayer * layer = (MappingLayer *)layerManager->addItem(layerManager->factory.create("Mapping"));
+	Mapping1DLayer * layer = (Mapping1DLayer *)layerManager->addItem(layerManager->factory.create("Mapping"));
 
 	Array<Point<float>> simplifiedKeys = AutomationRecorder::getSimplifiedKeys(keys,.05f);
 	layer->automation->addItems(simplifiedKeys, true, true, Easing::BEZIER);

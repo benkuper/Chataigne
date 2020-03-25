@@ -65,7 +65,7 @@
     <ClCompile>
       <Optimization>Full</Optimization>
       <AdditionalIncludeDirectories>..\..\JuceLibraryCode;D:\Softwares\JUCE\modules;..\..\Modules;../../External/wiiuse;../../External/serial/include;../../External/asio;../../External/kinect/include;../../External/joycon/include;../../External/servus/include;../../External/dnssd/include;../../External/sdl/include;../../External/libartnet/include;../../External/hidapi/include;../../Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;NDEBUG;USE_KINECT=1;JUCER_VS2019_78A5026=1;JUCE_APP_VERSION=1.7.0b4;JUCE_APP_VERSION_HEX=0x10700;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_RTAS=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;NDEBUG;USE_KINECT=1;JUCER_VS2019_78A5026=1;JUCE_APP_VERSION=1.7.0b5;JUCE_APP_VERSION_HEX=0x10700;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_RTAS=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <PrecompiledHeader/>
@@ -114,7 +114,7 @@
       <Optimization>Disabled</Optimization>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <AdditionalIncludeDirectories>..\..\JuceLibraryCode;D:\Softwares\JUCE\modules;..\..\Modules;../../External/wiiuse;../../External/serial/include;../../External/asio;../../External/kinect/include;../../External/joycon/include;../../External/servus/include;../../External/dnssd/include;../../External/ois/include;../../External/sdl/include;../../External/libartnet/include;../../External/hidapi/include;../../Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;DEBUG;_DEBUG;USE_KINECT=1;JUCER_VS2019_78A5026=1;JUCE_APP_VERSION=1.7.0b4;JUCE_APP_VERSION_HEX=0x10700;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_RTAS=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;DEBUG;_DEBUG;USE_KINECT=1;JUCER_VS2019_78A5026=1;JUCE_APP_VERSION=1.7.0b5;JUCE_APP_VERSION_HEX=0x10700;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_RTAS=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <PrecompiledHeader/>
@@ -409,6 +409,15 @@
     <ClCompile Include="..\..\Source\TimeMachine\Sequence\layers\trigger\ChataigneTimeTrigger.cpp"/>
     <ClCompile Include="..\..\Source\TimeMachine\Sequence\layers\audio\ui\ChataigneAudioLayerPanel.cpp"/>
     <ClCompile Include="..\..\Source\TimeMachine\Sequence\layers\audio\ChataigneAudioLayer.cpp"/>
+    <ClCompile Include="..\..\Source\TimeMachine\Sequence\layers\mapping\automation\ui\AutomationMappingLayerPanel.cpp"/>
+    <ClCompile Include="..\..\Source\TimeMachine\Sequence\layers\mapping\automation\ui\AutomationMappingLayerTimeline.cpp"/>
+    <ClCompile Include="..\..\Source\TimeMachine\Sequence\layers\mapping\automation\1d\Mapping1DLayer.cpp"/>
+    <ClCompile Include="..\..\Source\TimeMachine\Sequence\layers\mapping\automation\2d\ui\Mapping2DLayerPanel.cpp"/>
+    <ClCompile Include="..\..\Source\TimeMachine\Sequence\layers\mapping\automation\2d\ui\Mapping2DLayerTimeline.cpp"/>
+    <ClCompile Include="..\..\Source\TimeMachine\Sequence\layers\mapping\automation\2d\Mapping2DLayer.cpp"/>
+    <ClCompile Include="..\..\Source\TimeMachine\Sequence\layers\mapping\automation\AutomationMappingLayer.cpp"/>
+    <ClCompile Include="..\..\Source\TimeMachine\Sequence\layers\mapping\color\ui\ColorMappingLayerTimeline.cpp"/>
+    <ClCompile Include="..\..\Source\TimeMachine\Sequence\layers\mapping\color\ColorMappingLayer.cpp"/>
     <ClCompile Include="..\..\Source\TimeMachine\Sequence\layers\mapping\ui\MappingLayerEditor.cpp"/>
     <ClCompile Include="..\..\Source\TimeMachine\Sequence\layers\mapping\ui\MappingLayerPanel.cpp"/>
     <ClCompile Include="..\..\Source\TimeMachine\Sequence\layers\mapping\ui\MappingLayerTimeline.cpp"/>
@@ -2264,6 +2273,27 @@
     <ClCompile Include="..\..\Modules\juce_organicui\app\OrganicMainComponentCommands.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\automation\curve\curve2D\easing\ui\Easing2DUI.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\automation\curve\curve2D\easing\Easing2D.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\automation\curve\curve2D\ui\Curve2DEditor.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\automation\curve\curve2D\ui\Curve2DKeyUI.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\automation\curve\curve2D\ui\Curve2DUI.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\automation\curve\curve2D\Curve2D.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\automation\curve\curve2D\Curve2DKey.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\automation\easing\ui\EasingUI.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -3170,6 +3200,15 @@
     <ClInclude Include="..\..\Source\TimeMachine\Sequence\layers\audio\ui\ChataigneAudioLayerPanel.h"/>
     <ClInclude Include="..\..\Source\TimeMachine\Sequence\layers\audio\ChataigneAudioLayer.h"/>
     <ClInclude Include="..\..\Source\TimeMachine\Sequence\layers\audio\ChataigneAudioLayerListener.h"/>
+    <ClInclude Include="..\..\Source\TimeMachine\Sequence\layers\mapping\automation\ui\AutomationMappingLayerPanel.h"/>
+    <ClInclude Include="..\..\Source\TimeMachine\Sequence\layers\mapping\automation\ui\AutomationMappingLayerTimeline.h"/>
+    <ClInclude Include="..\..\Source\TimeMachine\Sequence\layers\mapping\automation\1d\Mapping1DLayer.h"/>
+    <ClInclude Include="..\..\Source\TimeMachine\Sequence\layers\mapping\automation\2d\ui\Mapping2DLayerPanel.h"/>
+    <ClInclude Include="..\..\Source\TimeMachine\Sequence\layers\mapping\automation\2d\ui\Mapping2DLayerTimeline.h"/>
+    <ClInclude Include="..\..\Source\TimeMachine\Sequence\layers\mapping\automation\2d\Mapping2DLayer.h"/>
+    <ClInclude Include="..\..\Source\TimeMachine\Sequence\layers\mapping\automation\AutomationMappingLayer.h"/>
+    <ClInclude Include="..\..\Source\TimeMachine\Sequence\layers\mapping\color\ui\ColorMappingLayerTimeline.h"/>
+    <ClInclude Include="..\..\Source\TimeMachine\Sequence\layers\mapping\color\ColorMappingLayer.h"/>
     <ClInclude Include="..\..\Source\TimeMachine\Sequence\layers\mapping\ui\MappingLayerEditor.h"/>
     <ClInclude Include="..\..\Source\TimeMachine\Sequence\layers\mapping\ui\MappingLayerPanel.h"/>
     <ClInclude Include="..\..\Source\TimeMachine\Sequence\layers\mapping\ui\MappingLayerTimeline.h"/>
@@ -3909,6 +3948,14 @@
     <ClInclude Include="..\..\Modules\juce_organicui\app\CrashHandler.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\app\OrganicApplication.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\app\OrganicMainComponent.h"/>
+    <ClInclude Include="..\..\Modules\juce_organicui\automation\curve\curve2D\easing\ui\Easing2DUI.h"/>
+    <ClInclude Include="..\..\Modules\juce_organicui\automation\curve\curve2D\easing\bezier.h"/>
+    <ClInclude Include="..\..\Modules\juce_organicui\automation\curve\curve2D\easing\Easing2D.h"/>
+    <ClInclude Include="..\..\Modules\juce_organicui\automation\curve\curve2D\ui\Curve2DEditor.h"/>
+    <ClInclude Include="..\..\Modules\juce_organicui\automation\curve\curve2D\ui\Curve2DKeyUI.h"/>
+    <ClInclude Include="..\..\Modules\juce_organicui\automation\curve\curve2D\ui\Curve2DUI.h"/>
+    <ClInclude Include="..\..\Modules\juce_organicui\automation\curve\curve2D\Curve2D.h"/>
+    <ClInclude Include="..\..\Modules\juce_organicui\automation\curve\curve2D\Curve2DKey.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\automation\easing\ui\EasingUI.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\automation\easing\Easing.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\automation\parameter\ui\ParameterAutomationEditor.h"/>

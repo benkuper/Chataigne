@@ -14,28 +14,18 @@
 #include "Common/Processor/Mapping/Mapping.h"
 
 class MappingLayerPanel :
-	public SequenceLayerPanel,
-	public Mapping::AsyncListener
+	public SequenceLayerPanel
 {
 public:
 	MappingLayerPanel(MappingLayer * layer);
 	~MappingLayerPanel();
 
 	MappingLayer * mappingLayer;
-	std::unique_ptr<EnumParameterUI> modeUI;
 
-	std::unique_ptr<BoolImageToggleUI> snapUI;
-	std::unique_ptr<FloatSliderUI> snapSensitivityUI;
 	std::unique_ptr<ParameterUI> mappingOutputUI;
 
-	std::unique_ptr<Inspector> automationInspector;
-
-	void resizedInternalHeader(Rectangle<int> &r) override;
 	void resizedInternalContent(Rectangle<int> &r) override;
+	virtual void resizedInternalPanelContent(Rectangle<int>& r) {};
 
 	void mouseDown(const MouseEvent& e) override;
-
-	void newMessage(const Mapping::MappingEvent &e) override;
-
-	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MappingLayerPanel)
 };

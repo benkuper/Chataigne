@@ -20,16 +20,13 @@
 #include "ui/MappingLayerTimeline.h"
 #include "ui/MappingLayerEditor.h"
 
-String MappingLayer::modeNames[] { "Mapping", "2D", "3D", "Color" };
-
-
-MappingLayer::MappingLayer(Sequence *_sequence, var params) :
-	SequenceLayer(_sequence, modeNames[(Mode)(int)params.getProperty("mode", MODE_1D)]),
-	mode((Mode)(int)params.getProperty("mode", MODE_1D)),
-	curveValue(nullptr)
+MappingLayer::MappingLayer(const String &name, Sequence *_sequence, var params) :
+	SequenceLayer(_sequence, name),
+	mappingInputSource(nullptr),
+	mappingInput(nullptr)
 {
-	
 	canInspectChildContainers = true;
+	saveAndLoadRecursiveData = true;
 	
 	mapping.reset(new Mapping(false));
 	mapping->editorIsCollapsed = false;
@@ -41,176 +38,37 @@ MappingLayer::MappingLayer(Sequence *_sequence, var params) :
 	sendOnStop = addBoolParameter("Send On Stop", " If checked, this will force the value to go through the mapping when sequence stops playing", true);
 	sendOnSeek = addBoolParameter("Send On Seek", " If checked, this will force the value to go through the mapping when jumping time", false);
 
-	recordSendMode = addEnumParameter("Record Send Mode", "Choose what to do when recording");
-	recordSendMode->addOption("Do not send", DONOTSEND)->addOption("Send original value", SEND_ORIGINAL)->addOption("Send new value", SEND_NEW);
-
-	addChildControllableContainer(&recorder);
 	addChildControllableContainer(mapping.get());
-	recorder.input->customGetTargetFunc = &ModuleManager::showAllValuesAndGetControllable;
-	recorder.input->customGetControllableLabelFunc = &Module::getTargetLabelForValueControllable;
-	recorder.input->customCheckAssignOnNextChangeFunc = &ModuleManager::checkControllableIsAValue;
-
+	
 	color->setColor(BG_COLOR.brighter(.1f));
 	
-	setupMappingForCurrentMode();
-	uiHeight->setValue(mode == MODE_COLOR?50:120);
 }
 
 MappingLayer::~MappingLayer()
 {
 }
 
-void MappingLayer::setupMappingForCurrentMode()
+void MappingLayer::setupMappingInputParameter(Parameter* source)
 {
-	if (curveValue != nullptr)
-	{
-		removeControllable(curveValue);
-	}
+	jassert(mappingInput == nullptr);
+	mappingInputSource = source;
+	mappingInput = ControllableFactory::createParameterFrom(source, true, true);
+	addParameter(mappingInput);
 
-	switch (mode)
-	{
-	case MODE_1D:
-		curveValue = addFloatParameter("Value", "Direct curve value of the curve at the current sequence time", 0, 0, 1);
-		break;
-	case MODE_2D:
-		curveValue = addPoint2DParameter("Value", "2D Value of the curves");
-		break;
-	case MODE_3D:
-		curveValue = addPoint3DParameter("Value", "3D Value of the curves");
-		break;
-
-	case MODE_COLOR:
-		curveValue = new ColorParameter("Value", "Color value of the curve");
-		addParameter(curveValue);
-		break;
-    default:
-        break;
+	mapping->lockInputTo(mappingInput);
+	updateMappingInputValue();
 }
 
-	if (automation != nullptr)
-	{
-		removeChildControllableContainer(automation.get());
-
-		automation.reset();
-	}
-
-	if (colorManager != nullptr)
-	{
-		removeChildControllableContainer(colorManager.get());
-		colorManager.reset();
-	}
-
-	if (mode == MODE_COLOR)
-	{
-		if (colorManager == nullptr)
-		{
-			colorManager.reset(new GradientColorManager(sequence->totalTime->floatValue(), !isCurrentlyLoadingData));
-			colorManager->allowKeysOutside = false;
-			colorManager->hideInEditor = true;
-			addChildControllableContainer(colorManager.get());
-			colorManager->setLength(sequence->totalTime->floatValue());
-		}
-	}
-	else
-	{
-		automation.reset(new Automation("Automation", &recorder)); //TODO implement new multiDimension automation here
-		automation->hideInEditor = true;
-		automation->length->setValue(sequence->totalTime->floatValue());
-		addChildControllableContainer(automation.get());
-	}
-
-
-	curveValue->isControllableFeedbackOnly = true;
-	mapping->lockInputTo(curveValue);
-
-	updateCurvesValues();
+void MappingLayer::updateMappingInputValue(bool forceOutput)
+{
+	if (!enabled->boolValue() || !sequence->enabled->boolValue()) return;
+	updateMappingInputValueInternal();
+	if (forceOutput || alwaysUpdate->boolValue()) mapping->process(true);
 }
 
-void MappingLayer::updateCurvesValues()
+void MappingLayer::updateMappingInputValueInternal()
 {
-	switch (mode)
-	{
-	case MODE_COLOR:
-		((ColorParameter*)curveValue)->setColor(colorManager->currentColor->getColor(), false);
-		break;
-
-	case MODE_1D:
-	{
-		if (recorder.isRecording->boolValue())
-		{
-			RecordSendMode m = recordSendMode->getValueDataAsEnum<RecordSendMode>();
-			if (m == SEND_ORIGINAL)
-			{
-				curveValue->setValue(automation->value->floatValue(), false);
-			}
-			else if (m == SEND_NEW)
-			{
-				if (recorder.keys.size() > 0) curveValue->setValue(recorder.keys[recorder.keys.size() - 1].y);
-			}
-		}
-		else
-		{
-			curveValue->setValue(automation->value->floatValue(), false);
-		}
-	}
-	break;
-            
-        default:
-            break;
-	}
-}
-
-void MappingLayer::stopRecorderAndAddKeys()
-{
-	if (automation == nullptr) return;
-
-	Array<Point<float>> keys = automation->recorder->stopRecordingAndGetKeys(); 
-	if (keys.size() >= 2)
-	{
-		automation->addItems(keys, true, true, automation->recorder->defaultEasing->getValueDataAsEnum<Easing::Type>());
-	}
-}
-
-String MappingLayer::getHelpID()
-{
-	switch (mode)
-	{
-	case MODE_COLOR: return "ColorLayer";  break;
-
-	case MODE_1D:
-	case MODE_2D:
-	case MODE_3D:
-		return "AutomationLayer";
-		break;
-        default:
-            break;
-	}
-
-	return "UnknownLayer";
-}
-
-var MappingLayer::getJSONData()
-{
-	var data = SequenceLayer::getJSONData();
-	data.getDynamicObject()->setProperty("mapping", mapping->getJSONData());
-	
-	if(automation != nullptr) data.getDynamicObject()->setProperty(automation->shortName, automation->getJSONData());
-	if (colorManager != nullptr) data.getDynamicObject()->setProperty(colorManager->shortName, colorManager->getJSONData());
-
-	var rData = recorder.getJSONData();
-	if(!rData.isVoid()) data.getDynamicObject()->setProperty("recorder", rData);
-
-	return data;
-}
-
-void MappingLayer::loadJSONDataInternal(var data)
-{
-	SequenceLayer::loadJSONDataInternal(data);
-	mapping->loadJSONData(data.getProperty("mapping", var()));
-	if(automation != nullptr) automation->loadJSONData(data.getProperty(automation->shortName, var()));
-	if (colorManager != nullptr) colorManager->loadJSONData(data.getProperty(colorManager->shortName, var()));
-
-	recorder.loadJSONData(data.getProperty("recorder", var()));
+	mappingInput->setValue(mappingInputSource->value);
 }
 
 void MappingLayer::exportBakedValues(bool dataOnly)
@@ -222,22 +80,17 @@ void MappingLayer::exportBakedValues(bool dataOnly)
 	
 	while (t <= sequence->totalTime->floatValue())
 	{
-		Array<float> v;
-		if (mode == MODE_COLOR)
+		Array<float> pValues;
+		var v = getValueAtPosition(t);
+		if (v.isArray())
 		{
-			Colour c = colorManager->getColorForPosition(t);
-			v.add(c.getFloatRed());
-			v.add(c.getFloatGreen());
-			v.add(c.getFloatBlue());
-			v.add(c.getFloatAlpha());
+			for (int i = 0; i < v.size(); i++) pValues.add(v[i]);
 		}
-		else
-		{
-			v.add(automation->getValueForPosition(t));
-		}
+		else pValues.add((float)v);
+
 		t += step;
 
-		values.add(v);
+		values.add(pValues);
 	}
 
 	String s;
@@ -258,29 +111,6 @@ void MappingLayer::exportBakedValues(bool dataOnly)
 	NLOG(niceName, values.size() << " keys copied to clipboard");
 }
 
-void MappingLayer::selectAll(bool addToSelection)
-{
-	if (mode == MODE_COLOR)
-	{
-		deselectThis(colorManager->items.size() == 0);
-		colorManager->askForSelectAllItems(addToSelection);
-	}
-	else if (automation != nullptr)
-	{
-		deselectThis(automation->items.size() == 0);
-		automation->askForSelectAllItems(addToSelection);
-	}
-}
-
-SequenceLayerPanel * MappingLayer::getPanel()
-{
-	return new MappingLayerPanel(this);
-}
-
-SequenceLayerTimeline * MappingLayer::getTimelineUI()
-{
-	return new MappingLayerTimeline(this);
-}
 
 void MappingLayer::onContainerParameterChangedInternal(Parameter * p)
 {
@@ -298,131 +128,28 @@ void MappingLayer::onContainerTriggerTriggered(Trigger * t)
 
 void MappingLayer::onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c)
 {
-	bool doUpdate = false;
-	if (mode == MODE_COLOR)
-	{
-		doUpdate = c == colorManager->currentColor;
-	} else
-	{
-		doUpdate = c == automation->value;
-	}
-
-	if(doUpdate) updateCurvesValues();
+	SequenceLayer::onControllableFeedbackUpdateInternal(cc, c);
+	if (c == mappingInputSource) updateMappingInputValue();
 }
 
-void MappingLayer::sequenceTotalTimeChanged(Sequence *)
-{
-	if (mode == MODE_COLOR)
-	{
-		colorManager->setLength(sequence->totalTime->floatValue());
-	}
-	else
-	{
-		automation->length->setValue(sequence->totalTime->floatValue());
-	}
-}
-
-void MappingLayer::sequenceCurrentTimeChanged(Sequence *, float prevTime, bool evaluateSkippedData)
+void MappingLayer::sequenceCurrentTimeChanged(Sequence * s, float prevTime, bool evaluateSkippedData)
 {
 	if (!enabled->boolValue() || !sequence->enabled->boolValue()) return;
 
-	if (mode == MODE_COLOR)
-	{
-		if (colorManager == nullptr) return;
-		colorManager->position->setValue(sequence->currentTime->floatValue());
-	}
-	else
-	{
-		if (automation == nullptr) return;
-		automation->position->setValue(sequence->currentTime->floatValue());
-	}
-
-	if (sequence->isPlaying->boolValue())
-	{
-		if (automation != nullptr && automation->recorder->isRecording->boolValue())
-		{
-			if (prevTime < sequence->currentTime->floatValue())
-			{
-				automation->recorder->addKeyAt(sequence->currentTime->floatValue());
-			} else
-			{
-				automation->recorder->startRecording();
-			}
-		}
-	}
+	sequenceCurrentTimeChangedInternal(s, prevTime, evaluateSkippedData);
 
 	if (alwaysUpdate->boolValue() || (sequence->isSeeking && sendOnSeek->boolValue()))
 	{
-		updateCurvesValues();
-		if(mode == MODE_COLOR || (automation != nullptr && !automation->items.isEmpty())) mapping->process(true); //process only if not empty
+		updateMappingInputValue(true);
 	}
 }
 
-void MappingLayer::sequencePlayStateChanged(Sequence *)
+void MappingLayer::sequencePlayStateChanged(Sequence * s)
 {
 	if (!enabled->boolValue() || !sequence->enabled->boolValue()) return;
 
-	if (mode == MODE_COLOR)
-	{
-		if (colorManager != nullptr)
-		{
-			if (sequence->isPlaying->boolValue())
-			{
-				if (sendOnPlay->boolValue()) mapping->process(true);
-			}
-			else
-			{
-				if (sendOnStop->boolValue()) mapping->process(true);
-			}
-		}
-	}else
-	{
-		if (automation != nullptr)
-		{
+	sequencePlayStateChangedInternal(s);
 
-			if (sequence->isPlaying->boolValue())
-			{
-				if (recorder.shouldRecord()) automation->recorder->startRecording();
-				if (sendOnPlay->boolValue())
-				{
-					updateCurvesValues();
-					if(!automation->items.isEmpty()) mapping->process(true);
-					
-				}
-			}
-			else
-			{
-				if (automation->recorder->isRecording->boolValue())
-				{
-					stopRecorderAndAddKeys();
-				}
-				if (sendOnStop->boolValue())
-				{
-					updateCurvesValues();
-					if (!automation->items.isEmpty()) mapping->process(true);
-				}
-			}
-		}
-	}
-}
-
-void MappingLayer::sequenceLooped(Sequence *)
-{
-	if (automation != nullptr && automation->recorder->isRecording->boolValue())
-	{
-		stopRecorderAndAddKeys();
-	}
-}
-
-bool MappingLayer::paste()
-{
-	var data = JSON::fromString(SystemClipboard::getTextFromClipboard());
-	String type = data.getProperty("itemType", "");
-	if (automation != nullptr && type == automation->itemDataType)
-	{
-		automation->askForPaste();
-		return true;
-	}
-
-	return SequenceLayer::paste();
+	bool updateAndProcess = (sequence->isPlaying->boolValue() && sendOnPlay->boolValue()) || (!sequence->isPlaying->boolValue() && sendOnStop->boolValue());
+	if (updateAndProcess) updateMappingInputValue(true);
 }

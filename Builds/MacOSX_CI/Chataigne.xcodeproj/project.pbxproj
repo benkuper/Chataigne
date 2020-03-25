@@ -1133,6 +1133,42 @@
 			isa = PBXBuildFile;
 			fileRef = 51FDE47C4EDEF58051AC4915;
 		};
+		68047C238C22AFA3C9951F17 = {
+			isa = PBXBuildFile;
+			fileRef = 838C8313674554E96077F76A;
+		};
+		614FA2B055B6DBB0F643DB9F = {
+			isa = PBXBuildFile;
+			fileRef = 13C16FF3A375B8FF066BC8A9;
+		};
+		28D1C51F73A294C64C058321 = {
+			isa = PBXBuildFile;
+			fileRef = 6787A095708C10EF10AECBF5;
+		};
+		02A9A1B3D1C1260853562E60 = {
+			isa = PBXBuildFile;
+			fileRef = 37FEFAEB18EF718BF7E845C1;
+		};
+		8EB9E88394A38A2E458A56EC = {
+			isa = PBXBuildFile;
+			fileRef = 8919F05F99FD49F984AA5964;
+		};
+		5925C213471AB2CC3095258A = {
+			isa = PBXBuildFile;
+			fileRef = 9FEA5A35D7C8519B991DB281;
+		};
+		18FE91B28B3B3A41A10A85E0 = {
+			isa = PBXBuildFile;
+			fileRef = 70999AAF45CB191693E06763;
+		};
+		A201892EA161EA6E54DF791E = {
+			isa = PBXBuildFile;
+			fileRef = 737E21C8DA88D5497CA535E5;
+		};
+		DAE8A77FA40F35CB2A2EB426 = {
+			isa = PBXBuildFile;
+			fileRef = 924F69042DF19AFE009C084A;
+		};
 		8B436EA80D2BE2C1724EC34B = {
 			isa = PBXBuildFile;
 			fileRef = FC76F2E50BCEC7920127A00D;
@@ -1521,6 +1557,13 @@
 			path = ../../Source/Common/Processor/Mapping/Filter/filters/number/OffsetFilter.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
+		0D583563EF3150154E0FA3C4 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = ColorMappingLayerTimeline.h;
+			path = ../../Source/TimeMachine/Sequence/layers/mapping/color/ui/ColorMappingLayerTimeline.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		0D9B10AF87FB00D8CF4E54A5 = {
 			isa = PBXFileReference;
 			lastKnownFileType = image.png;
@@ -1619,6 +1662,13 @@
 			path = ../../Source/StateMachine/State/State.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
+		13C16FF3A375B8FF066BC8A9 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = AutomationMappingLayerTimeline.cpp;
+			path = ../../Source/TimeMachine/Sequence/layers/mapping/automation/ui/AutomationMappingLayerTimeline.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		13F1733B1CD06F34477459C0 = {
 			isa = PBXFileReference;
 			lastKnownFileType = file;
@@ -1694,6 +1744,13 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = MappingOutputManager.h;
 			path = ../../Source/Common/Processor/Mapping/Output/MappingOutputManager.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		18C577D40DFB00A4DCA92D40 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = Mapping2DLayerTimeline.h;
+			path = ../../Source/TimeMachine/Sequence/layers/mapping/automation/2d/ui/Mapping2DLayerTimeline.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		1919D8FF97CC9BF35C683A94 = {
@@ -2151,6 +2208,13 @@
 			path = ../../Source/Common/Processor/Action/Condition/conditions/StandardCondition/ui/StandardConditionEditor.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
+		3485482C7A1B5DD51D9D80CD = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = Mapping2DLayerPanel.h;
+			path = ../../Source/TimeMachine/Sequence/layers/mapping/automation/2d/ui/Mapping2DLayerPanel.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		348E23A959123BF44DF9741C = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -2228,6 +2292,13 @@
 			path = ../../Source/Module/modules/controller/streamdeck/StreamDeck.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
+		37FEFAEB18EF718BF7E845C1 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = Mapping2DLayerPanel.cpp;
+			path = ../../Source/TimeMachine/Sequence/layers/mapping/automation/2d/ui/Mapping2DLayerPanel.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		394CDA5516B2A8FB43FF8A6C = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -2296,6 +2367,13 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = CommandDefinition.cpp;
 			path = ../../Source/Common/Command/CommandDefinition.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
+		3DE8625619E61534E4F97210 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = AutomationMappingLayerPanel.h;
+			path = ../../Source/TimeMachine/Sequence/layers/mapping/automation/ui/AutomationMappingLayerPanel.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		3E3642D43B646B4695474647 = {
@@ -3005,6 +3083,13 @@
 			path = ../../Source/Module/Community/CommunityModuleInfo.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
+		667CD2CBDF4795AAD86D5AE1 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = Mapping2DLayer.h;
+			path = ../../Source/TimeMachine/Sequence/layers/mapping/automation/2d/Mapping2DLayer.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		66A94D900181382D38807D43 = {
 			isa = PBXFileReference;
 			lastKnownFileType = image.png;
@@ -3024,6 +3109,13 @@
 			lastKnownFileType = sourcecode.c.c;
 			name = "os_mac.c";
 			path = "../../Source/Module/modules/controller/wiimote/lib/wiiuse/os_mac/os_mac.c";
+			sourceTree = "SOURCE_ROOT";
+		};
+		6787A095708C10EF10AECBF5 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = Mapping1DLayer.cpp;
+			path = ../../Source/TimeMachine/Sequence/layers/mapping/automation/1d/Mapping1DLayer.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		69DC77C2F77880760FAC313C = {
@@ -3194,6 +3286,13 @@
 			path = ../../Source/CustomVariables/Preset/CVPreset.h;
 			sourceTree = "SOURCE_ROOT";
 		};
+		70999AAF45CB191693E06763 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = AutomationMappingLayer.cpp;
+			path = ../../Source/TimeMachine/Sequence/layers/mapping/automation/AutomationMappingLayer.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		70C37DCEDA9A1240C101AFCC = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -3304,6 +3403,13 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = Module.h;
 			path = ../../Source/Module/Module.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		737E21C8DA88D5497CA535E5 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = ColorMappingLayerTimeline.cpp;
+			path = ../../Source/TimeMachine/Sequence/layers/mapping/color/ui/ColorMappingLayerTimeline.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		738E296A5EF0DA62F12E13C9 = {
@@ -3530,6 +3636,13 @@
 			path = ../../Source/Module/modules/audio/ui/AudioModuleHardwareEditor.h;
 			sourceTree = "SOURCE_ROOT";
 		};
+		838C8313674554E96077F76A = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = AutomationMappingLayerPanel.cpp;
+			path = ../../Source/TimeMachine/Sequence/layers/mapping/automation/ui/AutomationMappingLayerPanel.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		842C24D22B14BC2701DAA448 = {
 			isa = PBXFileReference;
 			lastKnownFileType = image.png;
@@ -3598,6 +3711,13 @@
 			lastKnownFileType = sourcecode.cpp.objcpp;
 			name = "include_juce_audio_basics.mm";
 			path = "../../JuceLibraryCode/include_juce_audio_basics.mm";
+			sourceTree = "SOURCE_ROOT";
+		};
+		8919F05F99FD49F984AA5964 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = Mapping2DLayerTimeline.cpp;
+			path = ../../Source/TimeMachine/Sequence/layers/mapping/automation/2d/ui/Mapping2DLayerTimeline.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		897F4323631CFAAAD468082A = {
@@ -3831,6 +3951,13 @@
 			path = ../../Source/Module/modules/audio/AudioModule.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
+		924F69042DF19AFE009C084A = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = ColorMappingLayer.cpp;
+			path = ../../Source/TimeMachine/Sequence/layers/mapping/color/ColorMappingLayer.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		939053390E079C53D7BB813C = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -4039,6 +4166,13 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = StreamDeckMini.h;
 			path = ../../Source/Module/modules/controller/streamdeck/models/StreamDeckMini.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		9FEA5A35D7C8519B991DB281 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = Mapping2DLayer.cpp;
+			path = ../../Source/TimeMachine/Sequence/layers/mapping/automation/2d/Mapping2DLayer.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		A07AB46E1CB4B4698F148FC8 = {
@@ -4389,6 +4523,13 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = PowerpointModule.h;
 			path = ../../Source/Module/modules/osc/powerpoint/PowerpointModule.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		AFA63ADA9DF83E578D4FC7E0 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = Mapping1DLayer.h;
+			path = ../../Source/TimeMachine/Sequence/layers/mapping/automation/1d/Mapping1DLayer.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		AFBA95737F1FDA3F2473CCC3 = {
@@ -5392,6 +5533,13 @@
 			path = ../../Resources/Modules/MIDI.png;
 			sourceTree = "SOURCE_ROOT";
 		};
+		E3DF6C843DEF80BF6E8B26E5 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = AutomationMappingLayerTimeline.h;
+			path = ../../Source/TimeMachine/Sequence/layers/mapping/automation/ui/AutomationMappingLayerTimeline.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		E3F9EFD72705ECB6CEE5F94E = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -5497,6 +5645,13 @@
 			path = ../../Source/Common/Processor/Mapping/Input/MappingInputManager.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
+		E885D06126DAC403F8C1E65A = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = AutomationMappingLayer.h;
+			path = ../../Source/TimeMachine/Sequence/layers/mapping/automation/AutomationMappingLayer.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		E8A5F9A2228D5E3719F9F36B = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -5530,6 +5685,13 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = "jc_voronoi.h";
 			path = "../../Source/CustomVariables/Preset/Morpher/jc_voronoi.h";
+			sourceTree = "SOURCE_ROOT";
+		};
+		EB2E1FDD7E057EFA862F8AB9 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = ColorMappingLayer.h;
+			path = ../../Source/TimeMachine/Sequence/layers/mapping/color/ColorMappingLayer.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		EBC87E462F16C039A00173C9 = {
@@ -7739,6 +7901,78 @@
 			name = audio;
 			sourceTree = "<group>";
 		};
+		4399A76234750612FB4F8405 = {
+			isa = PBXGroup;
+			children = (
+				838C8313674554E96077F76A,
+				3DE8625619E61534E4F97210,
+				13C16FF3A375B8FF066BC8A9,
+				E3DF6C843DEF80BF6E8B26E5,
+			);
+			name = ui;
+			sourceTree = "<group>";
+		};
+		F940931FF43908920E05E226 = {
+			isa = PBXGroup;
+			children = (
+				6787A095708C10EF10AECBF5,
+				AFA63ADA9DF83E578D4FC7E0,
+			);
+			name = 1d;
+			sourceTree = "<group>";
+		};
+		B9EAD53B0C8F0BE48BEC78B1 = {
+			isa = PBXGroup;
+			children = (
+				37FEFAEB18EF718BF7E845C1,
+				3485482C7A1B5DD51D9D80CD,
+				8919F05F99FD49F984AA5964,
+				18C577D40DFB00A4DCA92D40,
+			);
+			name = ui;
+			sourceTree = "<group>";
+		};
+		CDF008FC34E5C3E9D3C53120 = {
+			isa = PBXGroup;
+			children = (
+				B9EAD53B0C8F0BE48BEC78B1,
+				9FEA5A35D7C8519B991DB281,
+				667CD2CBDF4795AAD86D5AE1,
+			);
+			name = 2d;
+			sourceTree = "<group>";
+		};
+		81C6D7DFC44CABC1A1243E58 = {
+			isa = PBXGroup;
+			children = (
+				4399A76234750612FB4F8405,
+				F940931FF43908920E05E226,
+				CDF008FC34E5C3E9D3C53120,
+				70999AAF45CB191693E06763,
+				E885D06126DAC403F8C1E65A,
+			);
+			name = automation;
+			sourceTree = "<group>";
+		};
+		15A1683EC1D29585670C1E23 = {
+			isa = PBXGroup;
+			children = (
+				737E21C8DA88D5497CA535E5,
+				0D583563EF3150154E0FA3C4,
+			);
+			name = ui;
+			sourceTree = "<group>";
+		};
+		3CA1D5F48AED8B4EFCCA0DAB = {
+			isa = PBXGroup;
+			children = (
+				15A1683EC1D29585670C1E23,
+				924F69042DF19AFE009C084A,
+				EB2E1FDD7E057EFA862F8AB9,
+			);
+			name = color;
+			sourceTree = "<group>";
+		};
 		FF9538C2BD9C4A002CC77E89 = {
 			isa = PBXGroup;
 			children = (
@@ -7755,6 +7989,8 @@
 		7BA55BE1AFBABFDF0832D425 = {
 			isa = PBXGroup;
 			children = (
+				81C6D7DFC44CABC1A1243E58,
+				3CA1D5F48AED8B4EFCCA0DAB,
 				FF9538C2BD9C4A002CC77E89,
 				95CA364F04E46872816321FC,
 				CA392D20C778B856781D7F42,
@@ -7965,7 +8201,7 @@
 					"DEBUG=1",
 					"JUCE_SUPPORT_CARBON=0",
 					"JUCER_XCODE_MAC_2F3811D6=1",
-					"JUCE_APP_VERSION=1.7.0b4",
+					"JUCE_APP_VERSION=1.7.0b5",
 					"JUCE_APP_VERSION_HEX=0x10700",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
@@ -8027,7 +8263,7 @@
 					"NDEBUG=1",
 					"JUCE_SUPPORT_CARBON=0",
 					"JUCER_XCODE_MAC_2F3811D6=1",
-					"JUCE_APP_VERSION=1.7.0b4",
+					"JUCE_APP_VERSION=1.7.0b5",
 					"JUCE_APP_VERSION_HEX=0x10700",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
@@ -8465,6 +8701,15 @@
 				E65A3F5F00F9E9BBB4CB02DF,
 				7633BC0B9AD9E55D29B62A3A,
 				AB15FBD03761FD81F11EAA1A,
+				68047C238C22AFA3C9951F17,
+				614FA2B055B6DBB0F643DB9F,
+				28D1C51F73A294C64C058321,
+				02A9A1B3D1C1260853562E60,
+				8EB9E88394A38A2E458A56EC,
+				5925C213471AB2CC3095258A,
+				18FE91B28B3B3A41A10A85E0,
+				A201892EA161EA6E54DF791E,
+				DAE8A77FA40F35CB2A2EB426,
 				8B436EA80D2BE2C1724EC34B,
 				21F5C9B547EB024F64A9FE98,
 				9E75E08D180BA690D1F8E480,

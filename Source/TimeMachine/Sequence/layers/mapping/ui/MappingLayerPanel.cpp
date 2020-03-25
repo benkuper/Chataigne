@@ -16,24 +16,6 @@ MappingLayerPanel::MappingLayerPanel(MappingLayer * layer) :
 	mappingLayer(layer)
 {
 
-	//modeUI = mappingLayer->mode->createUI();
-	//addAndMakeVisible(modeUI);
-
-	if (mappingLayer->automation != nullptr)
-	{
-		snapUI.reset(mappingLayer->automation->enableSnap->createImageToggle(ChataigneAssetManager::getInstance()->getToggleBTImage(ChataigneAssetManager::getInstance()->getSnapImage())));
-		addAndMakeVisible(snapUI.get());
-
-		snapSensitivityUI.reset(mappingLayer->automation->snapSensitivity->createSlider());
-		addAndMakeVisible(snapSensitivityUI.get());
-
-		automationInspector.reset(new Inspector(mappingLayer->automation->selectionManager));
-		automationInspector->showTextOnEmptyOrMulti = false;
-		addAndMakeVisible(automationInspector.get());
-	}
-
-	mappingLayer->mapping->addAsyncMappingListener(this);
-
 	if (mappingLayer->mapping->om.outParams.size() > 0 && mappingLayer->mapping->om.outParams[0] != nullptr)
 	{
 		mappingOutputUI.reset(dynamic_cast<ParameterUI*>(mappingLayer->mapping->om.outParams[0]->createDefaultUI()));
@@ -45,37 +27,19 @@ MappingLayerPanel::MappingLayerPanel(MappingLayer * layer) :
 
 MappingLayerPanel::~MappingLayerPanel()
 {
-	if(!inspectable.wasObjectDeleted()) mappingLayer->mapping->removeAsyncMappingListener(this);
-}
-
-void MappingLayerPanel::resizedInternalHeader(Rectangle<int>& r)
-{
-	SequenceLayerPanel::resizedInternalHeader(r);
-	
 }
 
 void MappingLayerPanel::resizedInternalContent(Rectangle<int>& r)
 {
 	Rectangle<int> cr = r.reduced(2, 0);
 
-	if (snapUI != nullptr)
-	{
-		Rectangle<int> scr = cr.removeFromTop(20);
-		snapUI->setBounds(scr.removeFromLeft(scr.getHeight()));
-		scr.reduce(0, 2);
-		scr.removeFromLeft(10);
-		snapSensitivityUI->setBounds(scr);
-
-		cr.removeFromTop(2);
-	}
-
 	if (mappingOutputUI != nullptr)
 	{
 		mappingOutputUI->setBounds(cr.removeFromTop(14));
 		cr.removeFromTop(2);
 	}
-	
-	if(automationInspector != nullptr) automationInspector->setBounds(cr);
+
+	resizedInternalPanelContent(cr);
 }
 
 void MappingLayerPanel::mouseDown(const MouseEvent& e)
@@ -102,25 +66,5 @@ void MappingLayerPanel::mouseDown(const MouseEvent& e)
 				break;
 			}
 		}
-	}
-}
-
-void MappingLayerPanel::newMessage(const Mapping::MappingEvent & e)
-{
-	switch (e.type)
-	{
-	case Mapping::MappingEvent::OUTPUT_TYPE_CHANGED:
-		if (mappingOutputUI != nullptr)
-		{
-			removeChildComponent(mappingOutputUI.get());
-			if (mappingLayer->mapping->om.outParams.size() > 0 && mappingLayer->mapping->om.outParams[0] != nullptr)
-			{
-				mappingOutputUI.reset(dynamic_cast<ParameterUI*>(mappingLayer->mapping->om.outParams[0]->createDefaultUI()));
-			}
-
-			if (mappingOutputUI != nullptr) addAndMakeVisible(mappingOutputUI.get());
-			resized();
-		}
-		break;
 	}
 }

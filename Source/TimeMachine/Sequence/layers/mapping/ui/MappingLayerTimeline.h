@@ -16,22 +16,12 @@ class MappingLayerTimeline :
 	public SequenceLayerTimeline
 {
 public:
-	MappingLayerTimeline(MappingLayer * layer);
+	MappingLayerTimeline(MappingLayer * layer, Component * mainComponent);
 	~MappingLayerTimeline();
 
 	MappingLayer * mappingLayer;
 
-	std::unique_ptr<AutomationUI> automationUI;
-	std::unique_ptr<GradientColorManagerUI> colorManagerUI;
+	std::unique_ptr<Component> mainComponent;
 
-	void setupUIForLayerMode();
-
-	void updateContent() override;
 	void resized() override;
-
-	void controllableFeedbackUpdateInternal(Controllable * c) override;
-	void inspectableSelectionChanged(Inspectable * i) override;
-
-	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MappingLayerTimeline)
-
 };
