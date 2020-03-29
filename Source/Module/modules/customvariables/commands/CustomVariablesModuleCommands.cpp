@@ -68,7 +68,6 @@ CVCommand::CVCommand(CustomVariablesModule * _module, CommandContext context, va
 			automation->addKey(0, 0, false);
 			automation->addKey(1, 1, false);
 			automation->items[0]->setEasing(Easing::BEZIER);
-			automation->showUIInEditor = true;
 			addChildControllableContainer(automation, true);
 			break;
 

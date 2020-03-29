@@ -21,7 +21,6 @@ CurveMapFilter::CurveMapFilter(var params) :
 	curve.items[0]->easingType->setValueWithData(Easing::BEZIER);
 	curve.addKey(1, 1, false);
 	//curve.enableSnap->setValue(false);
-	curve.showUIInEditor = true;
 	curve.selectItemWhenCreated = false;
 	curve.hideEditorHeader = true;
 	filterParams.addChildControllableContainer(&curve);
