@@ -589,7 +589,8 @@ var StreamingModule::sendStringFromScript(const var::NativeFunctionArgs & a)
 var StreamingModule::sendBytesFromScript(const var::NativeFunctionArgs & a)
 {
 	StreamingModule * m = getObjectFromJS<StreamingModule>(a);
-	if (checkNumArgs(m->niceName, a, 1)) return false;
+	DBG(a.numArguments);
+	if (!checkNumArgs(m->niceName, a, 1)) return false;
 	Array<uint8> data;
 	for (int i = 0; i < a.numArguments; i++)
 	{
