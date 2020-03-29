@@ -67,8 +67,8 @@ void AutomationMappingLayer::stopRecorderAndAddKeys()
 {
     if (automation == nullptr) return;
 
-    Array<Point<float>> keys = automation->recorder->stopRecordingAndGetKeys();
-    if (keys.size() >= 2) automation->addItems(keys, true, true, automation->recorder->defaultEasing->getValueDataAsEnum<Easing::Type>());
+    Array<Point<float>> points = automation->recorder->stopRecordingAndGetKeys();
+    automation->addFromPointsAndSimplify(points, true, true);
 }
 
 void AutomationMappingLayer::selectAll(bool addToSelection)

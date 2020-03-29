@@ -36,14 +36,14 @@ Mapping2DLayer::~Mapping2DLayer()
 
 void Mapping2DLayer::addDefaultContent()
 {
-	automation->addItem(0, 0, false);
-	automation->addItem(sequence->totalTime->floatValue(), 1, false);
+	automation->addKey(0, 0, false);
+	automation->addKey(sequence->totalTime->floatValue(), 1, false);
 }
 
 
 var Mapping2DLayer::getValueAtPosition(float position)
 {
-	Point<float> p = curve.getValueAtNormalizedPosition(automation->getNormalizedValueForPosition(position));
+	Point<float> p = curve.getValueAtNormalizedPosition(automation->getNormalizedValueAtPosition(position));
 	var result;
 	result.append(p.x);
 	result.append(p.y);

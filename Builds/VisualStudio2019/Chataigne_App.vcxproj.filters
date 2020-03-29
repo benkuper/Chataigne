@@ -959,6 +959,15 @@
     <Filter Include="JUCE Modules\juce_organicui\app">
       <UniqueIdentifier>{713F9F29-C2A1-3D8F-4394-6A948FA0175D}</UniqueIdentifier>
     </Filter>
+    <Filter Include="JUCE Modules\juce_organicui\automation\common\fitting\intern">
+      <UniqueIdentifier>{129F2071-932D-39D0-7756-2F0D13FA6835}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_organicui\automation\common\fitting">
+      <UniqueIdentifier>{8AE703C8-A5A3-3D91-3F30-A248B4940027}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_organicui\automation\common">
+      <UniqueIdentifier>{F764810A-E5C3-9E62-C008-A1937E9CED3B}</UniqueIdentifier>
+    </Filter>
     <Filter Include="JUCE Modules\juce_organicui\automation\curve\curve2D\easing\ui">
       <UniqueIdentifier>{0E5F94A6-BF2F-3A2F-6F75-556FAA34FCF5}</UniqueIdentifier>
     </Filter>
@@ -4026,6 +4035,18 @@
     </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\app\OrganicMainComponentCommands.cpp">
       <Filter>JUCE Modules\juce_organicui\app</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\automation\common\fitting\intern\curve_fit_corners_detect.c">
+      <Filter>JUCE Modules\juce_organicui\automation\common\fitting\intern</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\automation\common\fitting\intern\curve_fit_cubic.c">
+      <Filter>JUCE Modules\juce_organicui\automation\common\fitting\intern</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\automation\common\fitting\intern\curve_fit_cubic_refit.c">
+      <Filter>JUCE Modules\juce_organicui\automation\common\fitting\intern</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\automation\common\fitting\intern\generic_heap.c">
+      <Filter>JUCE Modules\juce_organicui\automation\common\fitting\intern</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\automation\curve\curve2D\easing\ui\Easing2DUI.cpp">
       <Filter>JUCE Modules\juce_organicui\automation\curve\curve2D\easing\ui</Filter>
@@ -7788,11 +7809,23 @@
     <ClInclude Include="..\..\Modules\juce_organicui\app\OrganicMainComponent.h">
       <Filter>JUCE Modules\juce_organicui\app</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_organicui\automation\common\fitting\intern\curve_fit_inline.h">
+      <Filter>JUCE Modules\juce_organicui\automation\common\fitting\intern</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_organicui\automation\common\fitting\intern\generic_alloc_impl.h">
+      <Filter>JUCE Modules\juce_organicui\automation\common\fitting\intern</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_organicui\automation\common\fitting\intern\generic_heap.h">
+      <Filter>JUCE Modules\juce_organicui\automation\common\fitting\intern</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_organicui\automation\common\fitting\curve_fit_nd.h">
+      <Filter>JUCE Modules\juce_organicui\automation\common\fitting</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_organicui\automation\common\bezier.h">
+      <Filter>JUCE Modules\juce_organicui\automation\common</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Modules\juce_organicui\automation\curve\curve2D\easing\ui\Easing2DUI.h">
       <Filter>JUCE Modules\juce_organicui\automation\curve\curve2D\easing\ui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Modules\juce_organicui\automation\curve\curve2D\easing\bezier.h">
-      <Filter>JUCE Modules\juce_organicui\automation\curve\curve2D\easing</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Modules\juce_organicui\automation\curve\curve2D\easing\Easing2D.h">
       <Filter>JUCE Modules\juce_organicui\automation\curve\curve2D\easing</Filter>

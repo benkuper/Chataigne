@@ -154,9 +154,7 @@ bool ChataigneSequence::timeIsDrivenByAudio()
 void ChataigneSequence::addNewMappingLayerFromValues(Array<Point<float>> keys)
 {
 	Mapping1DLayer * layer = (Mapping1DLayer *)layerManager->addItem(layerManager->factory.create("Mapping"));
-
-	Array<Point<float>> simplifiedKeys = AutomationRecorder::getSimplifiedKeys(keys,.05f);
-	layer->automation->addItems(simplifiedKeys, true, true, Easing::BEZIER);
+	layer->automation->addFromPointsAndSimplify(keys, false);
 }
 
 void ChataigneSequence::onContainerParameterChangedInternal(Parameter* p)

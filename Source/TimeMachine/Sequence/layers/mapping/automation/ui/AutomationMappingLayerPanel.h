@@ -22,8 +22,8 @@ public:
 
 	AutomationMappingLayer* aml;
 
-	std::unique_ptr<BoolImageToggleUI> snapUI;
-	std::unique_ptr<FloatSliderUI> snapSensitivityUI;
+	//std::unique_ptr<BoolImageToggleUI> snapUI;
+	//std::unique_ptr<FloatSliderUI> snapSensitivityUI;
 
 	void resizedInternalPanelContent(Rectangle<int>& r) override;
 };

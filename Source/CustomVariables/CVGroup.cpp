@@ -255,7 +255,7 @@ void CVGroup::run()
 		float curTime = Time::getMillisecondCounter() / 1000.0f;
 		float rel = jlimit(0.f, 1.f, (curTime - timeAtStart) / interpolationTime);
 
-		float weight = interpolationAutomation->getValueForPosition(rel);
+		float weight = interpolationAutomation->getValueAtPosition(rel);
 		lerpPresets(&p1, &p2, weight);
 
 		if (rel == 1) return;

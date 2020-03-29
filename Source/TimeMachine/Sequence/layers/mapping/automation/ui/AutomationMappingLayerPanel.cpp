@@ -15,11 +15,11 @@ AutomationMappingLayerPanel::AutomationMappingLayerPanel(AutomationMappingLayer*
     MappingLayerPanel(layer),
     aml(layer)
 {
-    snapUI.reset(aml->automation->enableSnap->createImageToggle(ChataigneAssetManager::getInstance()->getToggleBTImage(ChataigneAssetManager::getInstance()->getSnapImage())));
-    addAndMakeVisible(snapUI.get());
+   // snapUI.reset(aml->automation->enableSnap->createImageToggle(ChataigneAssetManager::getInstance()->getToggleBTImage(ChataigneAssetManager::getInstance()->getSnapImage())));
+   // addAndMakeVisible(snapUI.get());
 
-    snapSensitivityUI.reset(aml->automation->snapSensitivity->createSlider());
-    addAndMakeVisible(snapSensitivityUI.get());
+  //  snapSensitivityUI.reset(aml->automation->snapSensitivity->createSlider());
+  //  addAndMakeVisible(snapSensitivityUI.get());
 }
 
 AutomationMappingLayerPanel::~AutomationMappingLayerPanel()
@@ -28,6 +28,7 @@ AutomationMappingLayerPanel::~AutomationMappingLayerPanel()
 
 void AutomationMappingLayerPanel::resizedInternalPanelContent(Rectangle<int>& r)
 {
+    /*
     if (snapUI != nullptr)
     {
         Rectangle<int> scr = r.removeFromTop(20);
@@ -38,4 +39,5 @@ void AutomationMappingLayerPanel::resizedInternalPanelContent(Rectangle<int>& r)
 
         r.removeFromTop(2);
     }
+    */
 }

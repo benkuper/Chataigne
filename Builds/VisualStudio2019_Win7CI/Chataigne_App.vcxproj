@@ -66,7 +66,7 @@
       <Optimization>Disabled</Optimization>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <AdditionalIncludeDirectories>..\..\JuceLibraryCode;..\..\..\JUCE\Modules;..\..\Modules;../../External/wiiuse;../../External/serial/include;../../External/asio;../../External/joycon/include;../../External/servus/include;../../External/dnssd/include;../../External/sdl/include;../../External/libartnet/include;../../External/hidapi/include;../../Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;DEBUG;_DEBUG;USE_KINECT=0;JUCER_VS2019_4E886FDA=1;JUCE_APP_VERSION=1.7.0b5;JUCE_APP_VERSION_HEX=0x10700;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_RTAS=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;DEBUG;_DEBUG;USE_KINECT=0;JUCER_VS2019_4E886FDA=1;JUCE_APP_VERSION=1.7.0b6;JUCE_APP_VERSION_HEX=0x10700;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_RTAS=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <PrecompiledHeader/>
@@ -113,7 +113,7 @@
     <ClCompile>
       <Optimization>Full</Optimization>
       <AdditionalIncludeDirectories>..\..\JuceLibraryCode;..\..\..\JUCE\Modules;..\..\Modules;../../External/wiiuse;../../External/serial/include;../../External/asio;../../External/joycon/include;../../External/servus/include;../../External/dnssd/include;../../External/sdl/include;../../External/libartnet/include;../../External/hidapi/include;../../Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;NDEBUG;USE_KINECT=0;JUCER_VS2019_4E886FDA=1;JUCE_APP_VERSION=1.7.0b5;JUCE_APP_VERSION_HEX=0x10700;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_RTAS=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;NDEBUG;USE_KINECT=0;JUCER_VS2019_4E886FDA=1;JUCE_APP_VERSION=1.7.0b6;JUCE_APP_VERSION_HEX=0x10700;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_RTAS=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <PrecompiledHeader/>
@@ -2275,6 +2275,18 @@
     <ClCompile Include="..\..\Modules\juce_organicui\app\OrganicMainComponentCommands.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\automation\common\fitting\intern\curve_fit_corners_detect.c">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\automation\common\fitting\intern\curve_fit_cubic.c">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\automation\common\fitting\intern\curve_fit_cubic_refit.c">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\automation\common\fitting\intern\generic_heap.c">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\automation\curve\curve2D\easing\ui\Easing2DUI.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -3954,8 +3966,12 @@
     <ClInclude Include="..\..\Modules\juce_organicui\app\CrashHandler.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\app\OrganicApplication.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\app\OrganicMainComponent.h"/>
+    <ClInclude Include="..\..\Modules\juce_organicui\automation\common\fitting\intern\curve_fit_inline.h"/>
+    <ClInclude Include="..\..\Modules\juce_organicui\automation\common\fitting\intern\generic_alloc_impl.h"/>
+    <ClInclude Include="..\..\Modules\juce_organicui\automation\common\fitting\intern\generic_heap.h"/>
+    <ClInclude Include="..\..\Modules\juce_organicui\automation\common\fitting\curve_fit_nd.h"/>
+    <ClInclude Include="..\..\Modules\juce_organicui\automation\common\bezier.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\automation\curve\curve2D\easing\ui\Easing2DUI.h"/>
-    <ClInclude Include="..\..\Modules\juce_organicui\automation\curve\curve2D\easing\bezier.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\automation\curve\curve2D\easing\Easing2D.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\automation\curve\curve2D\ui\Curve2DEditor.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\automation\curve\curve2D\ui\Curve2DKeyUI.h"/>

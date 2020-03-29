@@ -42,7 +42,7 @@ void Mapping2DTimeline::paint(Graphics& g)
 		{
 			float p = i * 1.0f / precision;
 			float t = getTimeForX(p * getWidth());
-			Point<float> pos = mappingLayer->curve.getValueAtNormalizedPosition(mappingLayer->automation->getValueForPosition(t));
+			Point<float> pos = mappingLayer->curve.getValueAtNormalizedPosition(mappingLayer->automation->getValueAtPosition(t));
 			Point<float> relPos = (pos - mappingLayer->curve.bounds.getPosition()) / Point<float>(mappingLayer->curve.bounds.getWidth(), mappingLayer->curve.bounds.getHeight());
 			xPath.lineTo(getXForTime(t), getHeight() * (1 - relPos.x));
 			yPath.lineTo(getXForTime(t), getHeight() * (1 - relPos.y));

@@ -17,10 +17,10 @@ CurveMapFilter::CurveMapFilter(var params) :
 {
 	curve.isSelectable = false;
 	curve.length->setValue(1);
-	curve.addItem(0, 0, false);
+	curve.addKey(0, 0, false);
 	curve.items[0]->easingType->setValueWithData(Easing::BEZIER);
-	curve.addItem(1, 1, false);
-	curve.enableSnap->setValue(false);
+	curve.addKey(1, 1, false);
+	//curve.enableSnap->setValue(false);
 	curve.showUIInEditor = true;
 	curve.selectItemWhenCreated = false;
 	curve.hideEditorHeader = true;
@@ -38,7 +38,7 @@ void CurveMapFilter::processSingleParameterInternal(Parameter * source, Paramete
 {
 	if(source == sourceParams.getFirst()) curve.position->setValue(source->getNormalizedValue());
 
-	if (source->hasRange()) out->setNormalizedValue(curve.getValueForPosition(source->getNormalizedValue()));
+	if (source->hasRange()) out->setNormalizedValue(curve.getValueAtPosition(source->getNormalizedValue()));
 	else out->setValue(source->getValue());
 }
 

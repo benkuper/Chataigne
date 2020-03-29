@@ -65,8 +65,8 @@ CVCommand::CVCommand(CustomVariablesModule * _module, CommandContext context, va
 			time = addFloatParameter("Interpolation time", "Time for the animation to go to the target preset", 1, 0);
 			time->defaultUI = FloatParameter::TIME;
 			automation = new Automation("Curve");
-			automation->addItem(0, 0, false);
-			automation->addItem(1, 1, false);
+			automation->addKey(0, 0, false);
+			automation->addKey(1, 1, false);
 			automation->items[0]->setEasing(Easing::BEZIER);
 			automation->showUIInEditor = true;
 			addChildControllableContainer(automation, true);
