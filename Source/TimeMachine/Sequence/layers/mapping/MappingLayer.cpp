@@ -52,7 +52,10 @@ void MappingLayer::setupMappingInputParameter(Parameter* source)
 {
 	jassert(mappingInput == nullptr);
 	mappingInputSource = source;
+	mappingInputSource->addParameterListener(this);
+
 	mappingInput = ControllableFactory::createParameterFrom(source, true, true);
+	mappingInput->setControllableFeedbackOnly(true);
 	addParameter(mappingInput);
 
 	mapping->lockInputTo(mappingInput);
@@ -130,6 +133,15 @@ void MappingLayer::onControllableFeedbackUpdateInternal(ControllableContainer * 
 {
 	SequenceLayer::onControllableFeedbackUpdateInternal(cc, c);
 	if (c == mappingInputSource) updateMappingInputValue();
+}
+
+void MappingLayer::onExternalParameterRangeChanged(Parameter* p)
+{
+	if (p == mappingInputSource)
+	{
+		if (mappingInputSource->hasRange()) mappingInput->setRange(mappingInputSource->minimumValue, mappingInputSource->maximumValue);
+		else mappingInput->clearRange();
+	}
 }
 
 void MappingLayer::sequenceCurrentTimeChanged(Sequence * s, float prevTime, bool evaluateSkippedData)

@@ -39,6 +39,7 @@ ChataigneEngine::ChataigneEngine() :
 	convertURL = "http://benjamin.kuperberg.fr/chataigne/releases/convert.php";
 	breakingChangesVersions.add("1.6.12b5");
 	breakingChangesVersions.add("1.7.0b1");
+	breakingChangesVersions.add("1.7.0b7");
 
 	//init here
 	Engine::mainEngine = this;

@@ -18,12 +18,7 @@ class AutomationMappingLayerPanel :
 {
 public:
 	AutomationMappingLayerPanel(AutomationMappingLayer* layer);
-	~AutomationMappingLayerPanel();
+	virtual ~AutomationMappingLayerPanel();
 
 	AutomationMappingLayer* aml;
-
-	//std::unique_ptr<BoolImageToggleUI> snapUI;
-	//std::unique_ptr<FloatSliderUI> snapSensitivityUI;
-
-	void resizedInternalPanelContent(Rectangle<int>& r) override;
 };

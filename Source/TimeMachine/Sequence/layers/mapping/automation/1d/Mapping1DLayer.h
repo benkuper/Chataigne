@@ -23,6 +23,7 @@ public:
 
     virtual var getValueAtPosition(float position) override;
 
+    SequenceLayerPanel* getPanel() override;
 
     virtual String getTypeString() const override { return getTypeStringStatic(); }
     static const String getTypeStringStatic() { return "Mapping"; }

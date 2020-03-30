@@ -488,6 +488,9 @@
     <Filter Include="Chataigne\Source\TimeMachine\Sequence\layers\mapping\automation\ui">
       <UniqueIdentifier>{F4944C6A-8A86-D04D-C5E2-3C8E7504EF9F}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Chataigne\Source\TimeMachine\Sequence\layers\mapping\automation\1d\ui">
+      <UniqueIdentifier>{79C79324-CEC3-80DE-C5C1-4192A251F48E}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Chataigne\Source\TimeMachine\Sequence\layers\mapping\automation\1d">
       <UniqueIdentifier>{0D016051-030A-0577-7B7B-0436BB5D05B6}</UniqueIdentifier>
     </Filter>
@@ -2013,6 +2016,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\TimeMachine\Sequence\layers\mapping\automation\ui\AutomationMappingLayerTimeline.cpp">
       <Filter>Chataigne\Source\TimeMachine\Sequence\layers\mapping\automation\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\TimeMachine\Sequence\layers\mapping\automation\1d\ui\Mapping1DLayerPanel.cpp">
+      <Filter>Chataigne\Source\TimeMachine\Sequence\layers\mapping\automation\1d\ui</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\TimeMachine\Sequence\layers\mapping\automation\1d\Mapping1DLayer.cpp">
       <Filter>Chataigne\Source\TimeMachine\Sequence\layers\mapping\automation\1d</Filter>
@@ -5570,6 +5576,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\TimeMachine\Sequence\layers\mapping\automation\ui\AutomationMappingLayerTimeline.h">
       <Filter>Chataigne\Source\TimeMachine\Sequence\layers\mapping\automation\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\TimeMachine\Sequence\layers\mapping\automation\1d\ui\Mapping1DLayerPanel.h">
+      <Filter>Chataigne\Source\TimeMachine\Sequence\layers\mapping\automation\1d\ui</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\TimeMachine\Sequence\layers\mapping\automation\1d\Mapping1DLayer.h">
       <Filter>Chataigne\Source\TimeMachine\Sequence\layers\mapping\automation\1d</Filter>

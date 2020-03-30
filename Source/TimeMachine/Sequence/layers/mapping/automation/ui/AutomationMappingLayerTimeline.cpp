@@ -16,9 +16,6 @@ AutomationMappingLayerTimeline::AutomationMappingLayerTimeline(AutomationMapping
 {
     automationUI = ((AutomationUI*)mainComponent.get());
     needle.timeBarColor = aml->recorder.arm->boolValue() ? Colours::red : needle.defaultTimeBarColor;
-
-   // automationUI->autoSwitchMode = false;
-    //automationUI->setViewMode(AutomationUI::VIEW);
 }
 
 AutomationMappingLayerTimeline::~AutomationMappingLayerTimeline()
@@ -29,6 +26,12 @@ void AutomationMappingLayerTimeline::updateContent()
 {
     MappingLayerTimeline::updateContent();
    automationUI->setViewRange(item->sequence->viewStartTime->floatValue(), item->sequence->viewEndTime->floatValue());
+}
+
+void AutomationMappingLayerTimeline::setSeekManipulationMode(bool isManipulating)
+{
+    MappingLayerTimeline::setSeekManipulationMode(isManipulating);
+    automationUI->setPreviewMode(isManipulating);
 }
 
 void AutomationMappingLayerTimeline::controllableFeedbackUpdateInternal(Controllable* c)

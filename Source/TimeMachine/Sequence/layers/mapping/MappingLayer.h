@@ -43,6 +43,7 @@ public:
 	virtual void onContainerParameterChangedInternal(Parameter* p) override;
 	virtual void onContainerTriggerTriggered(Trigger* t) override;
 	void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) override;
+	void onExternalParameterRangeChanged(Parameter* p) override;
 
 	void sequenceCurrentTimeChanged(Sequence*, float prevTime, bool evaluateSkippedData) override;
 	virtual void sequenceCurrentTimeChangedInternal(Sequence*, float prevTime, bool evaluateSkippedData) {};

@@ -24,6 +24,8 @@ public:
 
     virtual void updateContent() override;
 
+    virtual void setSeekManipulationMode(bool isManipulating) override;
+
     virtual void controllableFeedbackUpdateInternal(Controllable* c) override;
 
     virtual void inspectableSelectionChanged(Inspectable* i) override;

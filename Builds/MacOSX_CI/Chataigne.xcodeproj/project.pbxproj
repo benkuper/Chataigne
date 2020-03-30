@@ -1141,6 +1141,10 @@
 			isa = PBXBuildFile;
 			fileRef = 13C16FF3A375B8FF066BC8A9;
 		};
+		ED406D0C95C26B619C1226CD = {
+			isa = PBXBuildFile;
+			fileRef = BCFC0BB3E475D8AD41B05535;
+		};
 		28D1C51F73A294C64C058321 = {
 			isa = PBXBuildFile;
 			fileRef = 6787A095708C10EF10AECBF5;
@@ -2042,6 +2046,13 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = Main.h;
 			path = ../../Source/Main.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		2C044AD874B79A1418B10F82 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = Mapping1DLayerPanel.h;
+			path = ../../Source/TimeMachine/Sequence/layers/mapping/automation/1d/ui/Mapping1DLayerPanel.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		2C8F111514373C5BA8A33B7B = {
@@ -4730,6 +4741,13 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = ChataigneGenericModule.h;
 			path = ../../Source/Module/modules/generic/ChataigneGenericModule.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		BCFC0BB3E475D8AD41B05535 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = Mapping1DLayerPanel.cpp;
+			path = ../../Source/TimeMachine/Sequence/layers/mapping/automation/1d/ui/Mapping1DLayerPanel.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		BDA85DB254FB6555E7BC6680 = {
@@ -7923,9 +7941,19 @@
 			name = ui;
 			sourceTree = "<group>";
 		};
+		178C1D0A3DCB3C629AFE6610 = {
+			isa = PBXGroup;
+			children = (
+				BCFC0BB3E475D8AD41B05535,
+				2C044AD874B79A1418B10F82,
+			);
+			name = ui;
+			sourceTree = "<group>";
+		};
 		F940931FF43908920E05E226 = {
 			isa = PBXGroup;
 			children = (
+				178C1D0A3DCB3C629AFE6610,
 				6787A095708C10EF10AECBF5,
 				AFA63ADA9DF83E578D4FC7E0,
 			);
@@ -8213,7 +8241,7 @@
 					"DEBUG=1",
 					"JUCE_SUPPORT_CARBON=0",
 					"JUCER_XCODE_MAC_2F3811D6=1",
-					"JUCE_APP_VERSION=1.7.0b6",
+					"JUCE_APP_VERSION=1.7.0b7",
 					"JUCE_APP_VERSION_HEX=0x10700",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
@@ -8275,7 +8303,7 @@
 					"NDEBUG=1",
 					"JUCE_SUPPORT_CARBON=0",
 					"JUCER_XCODE_MAC_2F3811D6=1",
-					"JUCE_APP_VERSION=1.7.0b6",
+					"JUCE_APP_VERSION=1.7.0b7",
 					"JUCE_APP_VERSION_HEX=0x10700",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
@@ -8715,6 +8743,7 @@
 				AB15FBD03761FD81F11EAA1A,
 				68047C238C22AFA3C9951F17,
 				614FA2B055B6DBB0F643DB9F,
+				ED406D0C95C26B619C1226CD,
 				28D1C51F73A294C64C058321,
 				02A9A1B3D1C1260853562E60,
 				8EB9E88394A38A2E458A56EC,

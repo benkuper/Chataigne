@@ -22,7 +22,7 @@ public:
 
 	MappingLayer * mappingLayer;
 
-	std::unique_ptr<ParameterUI> mappingOutputUI;
+	std::unique_ptr<ControllableEditor> mappingOutputUI;
 
 	void resizedInternalContent(Rectangle<int> &r) override;
 	virtual void resizedInternalPanelContent(Rectangle<int>& r) {};

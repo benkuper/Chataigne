@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.7.0b6"
+<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.7.0b7"
               bundleIdentifier="benkuper.Chataigne" includeBinaryInAppConfig="1"
               jucerVersion="5.4.7" companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
               companyEmail="benjamin@kuperberg.fr" defines="" splashScreenColour="Dark"
@@ -1291,6 +1291,12 @@
                         resource="0" file="Source/TimeMachine/Sequence/layers/mapping/automation/ui/AutomationMappingLayerTimeline.h"/>
                 </GROUP>
                 <GROUP id="{056AC38B-8A54-1798-4436-05495EAE3919}" name="1d">
+                  <GROUP id="{1678B326-4AE4-9E40-F5C5-7BF9787912F9}" name="ui">
+                    <FILE id="jDAWVt" name="Mapping1DLayerPanel.cpp" compile="1" resource="0"
+                          file="Source/TimeMachine/Sequence/layers/mapping/automation/1d/ui/Mapping1DLayerPanel.cpp"/>
+                    <FILE id="PqMNVn" name="Mapping1DLayerPanel.h" compile="0" resource="0"
+                          file="Source/TimeMachine/Sequence/layers/mapping/automation/1d/ui/Mapping1DLayerPanel.h"/>
+                  </GROUP>
                   <FILE id="XDqpsx" name="Mapping1DLayer.cpp" compile="1" resource="0"
                         file="Source/TimeMachine/Sequence/layers/mapping/automation/1d/Mapping1DLayer.cpp"/>
                   <FILE id="FmxPuw" name="Mapping1DLayer.h" compile="0" resource="0"
