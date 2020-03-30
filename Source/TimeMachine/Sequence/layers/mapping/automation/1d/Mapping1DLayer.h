@@ -23,6 +23,8 @@ public:
 
     virtual var getValueAtPosition(float position) override;
 
+    virtual void stopRecorderAndAddKeys() override;
+
     SequenceLayerPanel* getPanel() override;
 
     virtual String getTypeString() const override { return getTypeStringStatic(); }

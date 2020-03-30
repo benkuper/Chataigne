@@ -23,5 +23,6 @@ public:
     Mapping1DLayer* ml;
     std::unique_ptr<ControllableEditor> valueRangeUI;
 
+
     void resizedInternalPanelContent(Rectangle<int>& r) override;
 };

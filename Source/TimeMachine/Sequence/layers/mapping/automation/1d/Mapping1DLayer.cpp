@@ -18,6 +18,10 @@ Mapping1DLayer::Mapping1DLayer(Sequence* s, var params) :
     helpID = "MappingLayer";
 
     addChildControllableContainer(&automation1D);
+    automation1D.recorder = &recorder;
+    recorder.input->typesFilter.add(FloatParameter::getTypeStringStatic());
+    recorder.input->typesFilter.add(IntParameter::getTypeStringStatic());
+    recorder.input->typesFilter.add(BoolParameter::getTypeStringStatic());
 
     setupAutomation(&automation1D);
     setupMappingInputParameter(automation1D.value);
@@ -30,6 +34,14 @@ Mapping1DLayer::~Mapping1DLayer()
 var Mapping1DLayer::getValueAtPosition(float position)
 {
     return automation1D.getValueAtPosition(position);
+}
+
+void Mapping1DLayer::stopRecorderAndAddKeys()
+{
+    Array<AutomationRecorder::RecordValue> recordedValues = automation->recorder->stopRecordingAndGetKeys();
+    Array<Point<float>> points;
+    for (auto& rv : recordedValues) points.add({ rv.time, (float)rv.value });
+    automation1D.addFromPointsAndSimplify(points, true, true);
 }
 
 SequenceLayerPanel* Mapping1DLayer::getPanel()

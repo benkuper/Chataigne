@@ -37,7 +37,6 @@ void AutomationMappingLayer::setupAutomation(Automation* a)
     jassert(automation == nullptr);
     automation = a;
     automation->hideInEditor = true;
-    automation->recorder = &recorder;
     automation->setLength(sequence->totalTime->floatValue(), true);
 }
 
@@ -56,19 +55,10 @@ void AutomationMappingLayer::updateMappingInputValueInternal()
         }
         else if (m == SEND_NEW)
         {
-            if (recorder.keys.size() > 0) mappingInput->setValue(recorder.keys[recorder.keys.size() - 1].y);
+            if (recorder.keys.size() > 0) mappingInput->setValue(recorder.keys[recorder.keys.size() - 1].value);
         }
     }
 
-}
-
-
-void AutomationMappingLayer::stopRecorderAndAddKeys()
-{
-    if (automation == nullptr) return;
-
-    Array<Point<float>> points = automation->recorder->stopRecordingAndGetKeys();
-    automation->addFromPointsAndSimplify(points, true, true);
 }
 
 void AutomationMappingLayer::selectAll(bool addToSelection)
@@ -83,10 +73,10 @@ void AutomationMappingLayer::sequenceCurrentTimeChangedInternal(Sequence* s, flo
 
     if (sequence->isPlaying->boolValue())
     {
-        if (automation->recorder->isRecording->boolValue())
+        if (recorder.isRecording->boolValue())
         {
-            if (prevTime < sequence->currentTime->floatValue()) automation->recorder->addKeyAt(sequence->currentTime->floatValue());
-            else  automation->recorder->startRecording();
+            if (prevTime < sequence->currentTime->floatValue()) recorder.addKeyAt(sequence->currentTime->floatValue());
+            else  recorder.startRecording();
         }
     }
 }
@@ -100,11 +90,11 @@ void AutomationMappingLayer::sequencePlayStateChangedInternal(Sequence* s)
 {
     if (sequence->isPlaying->boolValue())
     {
-        if (recorder.shouldRecord()) automation->recorder->startRecording();
+        if (recorder.shouldRecord()) recorder.startRecording();
     }
-    else
+    else if (recorder.isRecording->boolValue())
     {
-        if (automation->recorder->isRecording->boolValue()) stopRecorderAndAddKeys();
+        stopRecorderAndAddKeys();
     }
 }
 

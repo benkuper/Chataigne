@@ -20,5 +20,10 @@ public:
 	AutomationMappingLayerPanel(AutomationMappingLayer* layer);
 	virtual ~AutomationMappingLayerPanel();
 
+    std::unique_ptr<BoolToggleUI> armUI;
+
 	AutomationMappingLayer* aml;
+    
+
+    virtual void resizedInternalPanelContent(Rectangle<int>& r) override;
 };

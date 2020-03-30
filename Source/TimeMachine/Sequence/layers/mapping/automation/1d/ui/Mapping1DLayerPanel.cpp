@@ -25,5 +25,6 @@ Mapping1DLayerPanel::~Mapping1DLayerPanel()
 void Mapping1DLayerPanel::resizedInternalPanelContent(Rectangle<int>& r)
 {
     AutomationMappingLayerPanel::resizedInternalPanelContent(r);
-    valueRangeUI->setBounds(r.removeFromTop(16));
+    r.removeFromTop(2);
+    valueRangeUI->setBounds(r.removeFromTop(14));
 }

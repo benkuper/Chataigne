@@ -15,8 +15,17 @@ AutomationMappingLayerPanel::AutomationMappingLayerPanel(AutomationMappingLayer*
     MappingLayerPanel(layer),
     aml(layer)
 {
+    armUI.reset(aml->recorder.arm->createToggle());
+    addAndMakeVisible(armUI.get());
 }
 
 AutomationMappingLayerPanel::~AutomationMappingLayerPanel()
 {
+}
+
+void AutomationMappingLayerPanel::resizedInternalPanelContent(Rectangle<int>& r)
+{
+    MappingLayerPanel::resizedInternalPanelContent(r);
+    r.removeFromTop(2);
+    armUI->setBounds(r.removeFromTop(14));
 }

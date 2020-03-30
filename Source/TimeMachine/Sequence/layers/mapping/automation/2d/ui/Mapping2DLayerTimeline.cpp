@@ -14,6 +14,7 @@ Mapping2DTimeline::Mapping2DTimeline(Mapping2DLayer * layer) :
 	AutomationMappingLayerTimeline(layer),
 	mappingLayer(layer)
 {
+	automationUI->showNumberLines = false;
 }
 
 void Mapping2DTimeline::paint(Graphics& g)
