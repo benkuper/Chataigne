@@ -244,25 +244,34 @@ Controllable* GenericOSCQueryModule::createControllableFromData(StringRef name, 
 	}
 	else if (type == "ii" || type == "ff"  || type == "hh"  || type == "dd")
 	{
+        if(value.isVoid()) for(int i=0;i<2;i++) value.append(0);
 		c = new Point2DParameter(cNiceName, cNiceName);
 		((Point2DParameter*)c)->setValue(value);
 		((Point2DParameter*)c)->setRange(minVal, maxVal);
 	}
 	else if (type == "iii" || type == "fff" || type == "hhh"  || type == "ddd")
 	{
-		c = new Point3DParameter(cNiceName, cNiceName);
+		if(value.isVoid()) for(int i=0;i<3;i++) value.append(0);
+        c = new Point3DParameter(cNiceName, cNiceName);
 		((Point3DParameter*)c)->setValue(value);
 		((Point3DParameter*)c)->setRange(minVal, maxVal);
 	}
 	else if (type == "ffff" || type == "dddd")
 	{
-		Colour col = Colour::fromFloatRGBA(value[0], value[1], value[2], value[3]);
-		c = new ColorParameter(cNiceName, cNiceName, col);
+		if(value.isArray() && value.size() >= 4)
+        {
+            Colour col = Colour::fromFloatRGBA(value[0], value[1], value[2], value[3]);
+            c = new ColorParameter(cNiceName, cNiceName, col);
+        }
 	}
 	else if (type == "iiii" || type == "hhhh")
 	{
-		Colour col = Colour::fromRGBA((int)value[0], (int)value[1], (int)value[2], (int)value[3]);
-		c = new ColorParameter(cNiceName, cNiceName, col);
+        if(value.isArray() && value.size() >= 4)
+        {
+            Colour col = Colour::fromRGBA((int)value[0], (int)value[1], (int)value[2], (int)value[3]);
+            c = new ColorParameter(cNiceName, cNiceName, col);
+        }
+		
 	}
 	else if (type == "s" || type == "S"  || type == "c")
 	{
@@ -328,7 +337,7 @@ void GenericOSCQueryModule::onControllableFeedbackUpdateInternal(ControllableCon
 void GenericOSCQueryModule::run()
 {
 	if (useLocal == nullptr || remoteHost == nullptr || remotePort == nullptr) return;
-	URL url("http://" + (useLocal->boolValue() ? "127.0.0.1" : remoteHost->stringValue()) + ":" + remotePort->stringValue());
+	URL url("http://" + (useLocal->boolValue() ? "127.0.0.1" : remoteHost->stringValue()) + ":" + String(remotePort->intValue()));
 
 	StringPairArray responseHeaders;
 	int statusCode = 0;
