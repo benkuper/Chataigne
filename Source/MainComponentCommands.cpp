@@ -202,7 +202,7 @@ bool MainContentComponent::perform(const InvocationInfo& info)
 		break;
 
 	case ChataigneCommandIDs::gotoChangelog:
-		URL("https://benjamin.kuperberg.fr/chataigne/releases/update.json").launchInDefaultBrowser();
+		URL("https://benjamin.kuperberg.fr/chataigne/releases/changelog.html").launchInDefaultBrowser();
 		break;
 
 	case ChataigneCommandIDs::postGithubIssue:

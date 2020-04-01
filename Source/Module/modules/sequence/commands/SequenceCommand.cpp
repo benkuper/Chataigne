@@ -149,7 +149,7 @@ void SequenceCommand::loadJSONDataInternal(var data)
 void SequenceCommand::endLoadFile()
 {
 	//reset data we want to reload
-	target->setValue("", true);
+	if(target != nullptr) target->setValue("", true);
 
 	loadJSONData(dataToLoad);
 	dataToLoad = var();
