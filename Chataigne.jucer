@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.7.0b9"
+<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.7.0b10"
               bundleIdentifier="benkuper.Chataigne" includeBinaryInAppConfig="1"
               jucerVersion="5.4.7" companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
               companyEmail="benjamin@kuperberg.fr" defines="" splashScreenColour="Dark"
-              cppLanguageStandard="17" companyCopyright="Ben Kuper" headerPath="../../Source">
+              cppLanguageStandard="17" companyCopyright="Ben Kuper" headerPath="../../Source"
+              projectLineFeed="&#10;">
   <MAINGROUP id="EDDVhd" name="Chataigne">
     <GROUP id="{E61F6705-4C4B-3F04-F742-20CC91F590E4}" name="Resources">
       <GROUP id="{400148EF-B215-CD72-18E1-183E2FCE16F3}" name="Modules">
