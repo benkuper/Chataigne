@@ -85,7 +85,7 @@ MilluminModule::MilluminModule() :
 	yArg0.getDynamicObject()->setProperty("mappingIndex", 0);
 
 	var yArg1 = ControllableUtil::createDataForParam(IntParameter::getTypeStringStatic(), "Y", "Position Y", 0, -10000, 10000);
-	yArg0.getDynamicObject()->setProperty("mappingIndex", 1);
+	yArg1.getDynamicObject()->setProperty("mappingIndex", 1);
 
 	var xArgs = var();
 	xArgs.append(xArg);
