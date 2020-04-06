@@ -2008,6 +2008,9 @@
     <ClCompile Include="..\..\Source\TimeMachine\Sequence\layers\audio\ui\ChataigneAudioLayerPanel.cpp">
       <Filter>Chataigne\Source\TimeMachine\Sequence\layers\audio\ui</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\TimeMachine\Sequence\layers\audio\ui\ChataigneAudioLayerTimeline.cpp">
+      <Filter>Chataigne\Source\TimeMachine\Sequence\layers\audio\ui</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\TimeMachine\Sequence\layers\audio\ChataigneAudioLayer.cpp">
       <Filter>Chataigne\Source\TimeMachine\Sequence\layers\audio</Filter>
     </ClCompile>
@@ -5563,6 +5566,9 @@
       <Filter>Chataigne\Source\TimeMachine\Sequence\layers\trigger</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\TimeMachine\Sequence\layers\audio\ui\ChataigneAudioLayerPanel.h">
+      <Filter>Chataigne\Source\TimeMachine\Sequence\layers\audio\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\TimeMachine\Sequence\layers\audio\ui\ChataigneAudioLayerTimeline.h">
       <Filter>Chataigne\Source\TimeMachine\Sequence\layers\audio\ui</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\TimeMachine\Sequence\layers\audio\ChataigneAudioLayer.h">

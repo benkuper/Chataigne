@@ -1129,6 +1129,10 @@
 			isa = PBXBuildFile;
 			fileRef = 91F013D5F5CD4BC069CEF902;
 		};
+		02FB19FF8F88C4BC4B6936DB = {
+			isa = PBXBuildFile;
+			fileRef = 866C77B5B682D3B3DD7F0563;
+		};
 		AB15FBD03761FD81F11EAA1A = {
 			isa = PBXBuildFile;
 			fileRef = 51FDE47C4EDEF58051AC4915;
@@ -1997,6 +2001,13 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = DMXDevice.cpp;
 			path = ../../Source/Common/DMX/device/DMXDevice.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
+		26B8DFD37FED7C63E88E3D25 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = ChataigneAudioLayerTimeline.h;
+			path = ../../Source/TimeMachine/Sequence/layers/audio/ui/ChataigneAudioLayerTimeline.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		278F096FADEA555F2103718E = {
@@ -3699,6 +3710,13 @@
 			name = AVFoundation.framework;
 			path = System/Library/Frameworks/AVFoundation.framework;
 			sourceTree = SDKROOT;
+		};
+		866C77B5B682D3B3DD7F0563 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = ChataigneAudioLayerTimeline.cpp;
+			path = ../../Source/TimeMachine/Sequence/layers/audio/ui/ChataigneAudioLayerTimeline.cpp;
+			sourceTree = "SOURCE_ROOT";
 		};
 		8676DFC506B9817640312891 = {
 			isa = PBXFileReference;
@@ -7915,6 +7933,8 @@
 			children = (
 				91F013D5F5CD4BC069CEF902,
 				4882C84B587A01AB6A9177D0,
+				866C77B5B682D3B3DD7F0563,
+				26B8DFD37FED7C63E88E3D25,
 			);
 			name = ui;
 			sourceTree = "<group>";
@@ -8241,7 +8261,7 @@
 					"DEBUG=1",
 					"JUCE_SUPPORT_CARBON=0",
 					"JUCER_XCODE_MAC_2F3811D6=1",
-					"JUCE_APP_VERSION=1.7.0b10",
+					"JUCE_APP_VERSION=1.7.0b11",
 					"JUCE_APP_VERSION_HEX=0x10700",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
@@ -8303,7 +8323,7 @@
 					"NDEBUG=1",
 					"JUCE_SUPPORT_CARBON=0",
 					"JUCER_XCODE_MAC_2F3811D6=1",
-					"JUCE_APP_VERSION=1.7.0b10",
+					"JUCE_APP_VERSION=1.7.0b11",
 					"JUCE_APP_VERSION_HEX=0x10700",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
@@ -8740,6 +8760,7 @@
 				8699EC7762FB4BF7C4B7432F,
 				E65A3F5F00F9E9BBB4CB02DF,
 				7633BC0B9AD9E55D29B62A3A,
+				02FB19FF8F88C4BC4B6936DB,
 				AB15FBD03761FD81F11EAA1A,
 				68047C238C22AFA3C9951F17,
 				614FA2B055B6DBB0F643DB9F,

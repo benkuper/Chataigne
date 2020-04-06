@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.7.0b10"
+<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.7.0b11"
               bundleIdentifier="benkuper.Chataigne" includeBinaryInAppConfig="1"
               jucerVersion="5.4.7" companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
               companyEmail="benjamin@kuperberg.fr" defines="" splashScreenColour="Dark"
@@ -1271,6 +1271,10 @@
                       file="Source/TimeMachine/Sequence/layers/audio/ui/ChataigneAudioLayerPanel.cpp"/>
                 <FILE id="FwvBpL" name="ChataigneAudioLayerPanel.h" compile="0" resource="0"
                       file="Source/TimeMachine/Sequence/layers/audio/ui/ChataigneAudioLayerPanel.h"/>
+                <FILE id="ZOY2g4" name="ChataigneAudioLayerTimeline.cpp" compile="1"
+                      resource="0" file="Source/TimeMachine/Sequence/layers/audio/ui/ChataigneAudioLayerTimeline.cpp"/>
+                <FILE id="nWEmhp" name="ChataigneAudioLayerTimeline.h" compile="0"
+                      resource="0" file="Source/TimeMachine/Sequence/layers/audio/ui/ChataigneAudioLayerTimeline.h"/>
               </GROUP>
               <FILE id="crs36i" name="ChataigneAudioLayer.cpp" compile="1" resource="0"
                     file="Source/TimeMachine/Sequence/layers/audio/ChataigneAudioLayer.cpp"/>
