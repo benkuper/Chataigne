@@ -498,7 +498,10 @@ void OSCModule::handleRoutedModuleValue(Controllable * c, RouteParams * p)
 				if (c->type == Parameter::COLOR)
 				{
 					Colour col = ((ColorParameter*)c)->getColor();
-					m.addColour(OSCHelpers::getOSCColour(col));
+					m.addFloat32(col.getFloatRed());
+					m.addFloat32(col.getFloatGreen());
+					m.addFloat32(col.getFloatBlue());
+					m.addFloat32(col.getFloatAlpha());
 				}
 				else
 				{
