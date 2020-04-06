@@ -36,7 +36,7 @@ void MappingLayerPanel::resizedInternalContent(Rectangle<int>& r)
 
 	if (mappingOutputUI != nullptr)
 	{
-		mappingOutputUI->setBounds(cr.removeFromTop(14));
+		mappingOutputUI->setBounds(cr.removeFromTop(16));
 		cr.removeFromTop(2);
 	}
 

@@ -40,7 +40,7 @@ void AutomationMappingLayerTimeline::controllableFeedbackUpdateInternal(Controll
 
     if (c == aml->recorder.arm)
     {
-        needle.timeBarColor = aml->recorder.arm->boolValue() ? Colours::red : needle.defaultTimeBarColor;
+        needle.timeBarColor = aml->recorder.arm->boolValue() ? RED_COLOR : needle.defaultTimeBarColor;
         repaint();
     }
 }

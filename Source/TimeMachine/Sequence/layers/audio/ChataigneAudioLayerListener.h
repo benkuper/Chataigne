@@ -15,6 +15,6 @@ class ChataigneAudioLayer;
 class ChataigneAudioLayerListener
 {
 public:
-	virtual ~ChataigneAudioLayerListener() {}
-	virtual void targetAudioModuleChanged(ChataigneAudioLayer*) {}
+    virtual ~ChataigneAudioLayerListener() {}
+    virtual void targetAudioModuleChanged(ChataigneAudioLayer*) {}
 };

@@ -15,7 +15,7 @@
 #include "../../ChataigneSequence.h"
 #include "ChataigneAudioLayerListener.h"
 
-class AudioLayerProcessor;
+class ChataigneAudioLayerProcessor;
 
 class ChataigneAudioLayer :
 	public AudioLayer,
@@ -29,21 +29,31 @@ public:
 	AudioModule * audioModule;
 	ChataigneSequence* chataigneSequence;
 
+	//Recording
+	BoolParameter* arm;
+	BoolParameter * autoDisarm;
+	float timeAtStartRecord;
+
 	virtual void clearItem() override;
 
 	void setAudioModule(AudioModule * newModule);
+	AudioLayerProcessor* createAudioLayerProcessor() override;
 
 	void itemAdded(Module * m) override;
 	void itemRemoved(Module * m) override;
 
 	virtual float getVolumeFactor() override;
-
 	void exportRMS(bool toNewMappingLayer, bool toClipboard, bool dataOnly = false);
+
+
+	void sequenceCurrentTimeChanged(Sequence* s, float prevTime, bool evaluateSkippedData) override;
+	void sequencePlayStateChanged(Sequence* s) override;
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
 
-	virtual SequenceLayerPanel * getPanel() override;
+	virtual SequenceLayerPanel* getPanel() override;
+	virtual SequenceLayerTimeline* getTimelineUI() override;
 
 	static ChataigneAudioLayer * create(Sequence * sequence, var params) { return new ChataigneAudioLayer((ChataigneSequence *)sequence, params); }
 	virtual String getTypeString() const override { return "Audio"; }
@@ -55,4 +65,43 @@ public:
 
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ChataigneAudioLayer)
+};
+
+class ChataigneAudioLayerProcessor :
+	public AudioLayerProcessor
+{
+public:
+	ChataigneAudioLayerProcessor(ChataigneAudioLayer* layer);
+	~ChataigneAudioLayerProcessor();
+
+	ChataigneAudioLayer* cal;
+	int numInputChannels;
+
+	std::unique_ptr<AudioFormatWriter::ThreadedWriter> threadedWriter;
+	TimeSliceThread backgroundThread{ "Audio Recorder Thread" }; // the thread that will write our audio data to disk
+	CriticalSection writerLock;
+	std::atomic<AudioFormatWriter::ThreadedWriter*> activeWriter{ nullptr };
+
+	File recordingFile;
+
+	void startRecording();
+	void stopRecording();
+	bool isRecording() const;
+
+	virtual void prepareToPlay(double sampleRate, int maximumExpectedSamplesPerBlock) override;
+	virtual void releaseResources() override;
+	virtual void processBlock(AudioBuffer<float>& buffer, MidiBuffer& midiMessages) override;
+
+	class RecorderListener
+	{
+	public:
+		virtual void recordingStarted(int numChannels, int sampleRate) {}
+		virtual void recordingStopped() {}
+		virtual void recordingUpdated(AudioBuffer<float>& buffer, int numSamples) {}
+	};
+
+	ListenerList<RecorderListener> recorderListeners;
+	void addAudioRecorderListener(RecorderListener* newListener) { recorderListeners.add(newListener); }
+	void removeAudioRecorderListener(RecorderListener* listener) { recorderListeners.remove(listener); }
+
 };

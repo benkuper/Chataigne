@@ -10,13 +10,15 @@
 
 #include "ChataigneAudioLayer.h"
 #include "ui/ChataigneAudioLayerPanel.h"
+#include "ui/ChataigneAudioLayerTimeline.h"
 #include "../..//ChataigneSequence.h"
 
 
 ChataigneAudioLayer::ChataigneAudioLayer(ChataigneSequence* _sequence, var params) :
 	AudioLayer(_sequence, params),
 	audioModule(nullptr),
-	chataigneSequence(_sequence)
+	chataigneSequence(_sequence),
+	timeAtStartRecord(0)
 {
 	ModuleManager::getInstance()->addBaseManagerListener(this);
 	
@@ -46,6 +48,10 @@ ChataigneAudioLayer::ChataigneAudioLayer(ChataigneSequence* _sequence, var param
 		}
 	}
 
+	arm = addBoolParameter("Arm", "If checked, this will record audio and save it", false);
+	autoDisarm = addBoolParameter("Auto Disarm", "If checked, this will automatically set Arm to false when the sequence stops", false);
+
+	uiHeight->setValue(80);
 }
 
 ChataigneAudioLayer::~ChataigneAudioLayer()
@@ -82,6 +88,11 @@ void ChataigneAudioLayer::setAudioModule(AudioModule * newModule)
 	updateSelectedOutChannels();
 
 	audioLayerListeners.call(&ChataigneAudioLayerListener::targetAudioModuleChanged, this);
+}
+
+AudioLayerProcessor* ChataigneAudioLayer::createAudioLayerProcessor()
+{
+	return new ChataigneAudioLayerProcessor(this);
 }
 
 void ChataigneAudioLayer::itemAdded(Module * m)
@@ -163,6 +174,38 @@ void ChataigneAudioLayer::exportRMS(bool toNewMappingLayer, bool toClipboard, bo
 	}
 }
 
+void ChataigneAudioLayer::sequenceCurrentTimeChanged(Sequence* s, float prevTime, bool evaluateSkippedData)
+{
+	AudioLayer::sequenceCurrentTimeChanged(s, prevTime, evaluateSkippedData);
+}
+
+void ChataigneAudioLayer::sequencePlayStateChanged(Sequence* s)
+{
+	AudioLayer::sequencePlayStateChanged(s);
+	if (sequence->isPlaying->boolValue())
+	{
+		if (arm->boolValue() && currentProcessor != nullptr)
+		{
+			timeAtStartRecord = sequence->currentTime->floatValue(); 
+			((ChataigneAudioLayerProcessor *)currentProcessor)->startRecording(); 
+		}
+	}
+	else
+	{
+		if (ChataigneAudioLayerProcessor* cProc = (ChataigneAudioLayerProcessor*)currentProcessor)
+		{
+			if(cProc->isRecording())
+			{
+				cProc->stopRecording();
+				AudioLayerClip* clip = (AudioLayerClip*)clipManager.addBlockAt(timeAtStartRecord);
+				clip->filePath->setValue(cProc->recordingFile.getFullPathName());
+			}
+		}
+
+		if (autoDisarm->boolValue()) arm->setValue(false);
+	}
+}
+
 var ChataigneAudioLayer::getJSONData()
 {
 	var data = AudioLayer::getJSONData();
@@ -177,7 +220,118 @@ void ChataigneAudioLayer::loadJSONDataInternal(var data)
 	if (data.getDynamicObject()->hasProperty("audioModule")) setAudioModule(dynamic_cast<AudioModule*>(ModuleManager::getInstance()->getItemWithName(data.getProperty("audioModule", ""))));
 }
 
-SequenceLayerPanel * ChataigneAudioLayer::getPanel()
+SequenceLayerPanel* ChataigneAudioLayer::getPanel()
 {
 	return new ChataigneAudioLayerPanel(this);
+}
+
+SequenceLayerTimeline* ChataigneAudioLayer::getTimelineUI()
+{
+	return new ChataigneAudioLayerTimeline(this);
+}
+
+//==============================================================================
+
+ChataigneAudioLayerProcessor::ChataigneAudioLayerProcessor(ChataigneAudioLayer* layer) :
+	AudioLayerProcessor(layer),
+	cal(layer),
+	numInputChannels(0)
+{
+}
+
+ChataigneAudioLayerProcessor::~ChataigneAudioLayerProcessor()
+{
+}
+
+
+void ChataigneAudioLayerProcessor::startRecording()
+{
+	if (cal->currentGraph == nullptr) return;
+
+	stopRecording();
+
+	backgroundThread.startThread();
+
+	int sampleRate = cal->currentGraph->getSampleRate();
+	if (sampleRate > 0)
+	{
+		// Create an OutputStream to write to our destination file...
+		File f = Engine::mainEngine->getFile();
+		f = (f.exists() ? f.getParentDirectory() : File::getSpecialLocation(File::userDocumentsDirectory).getChildFile("Chataigne")).getChildFile("audio");
+		if (!f.exists()) f.createDirectory();
+
+		recordingFile = f.getNonexistentChildFile("recorded", ".wav", false);
+
+		if (auto fileStream = std::unique_ptr<FileOutputStream>(recordingFile.createOutputStream()))
+		{
+			// Now create a WAV writer object that writes to our output stream...
+			WavAudioFormat wavFormat;
+
+			if (auto writer = wavFormat.createWriterFor(fileStream.get(), sampleRate, 1, 16, {}, 0))
+			{
+				fileStream.release(); // (passes responsibility for deleting the stream to the writer object that is now using it)
+
+				// Now we'll create one of these helper objects which will act as a FIFO buffer, and will
+				// write the data to disk on our background thread.
+				threadedWriter.reset(new AudioFormatWriter::ThreadedWriter(writer, backgroundThread, 32768));
+
+				recorderListeners.call(&RecorderListener::recordingStarted, numInputChannels , getSampleRate());
+
+				// And now, swap over our active writer pointer so that the audio callback will start using it..
+				const ScopedLock sl(writerLock);
+				activeWriter = threadedWriter.get();
+			}
+		}
+	}
+}
+
+void ChataigneAudioLayerProcessor::stopRecording()
+{
+
+	// First, clear this pointer to stop the audio callback from using our writer object..
+	{
+		const ScopedLock sl(writerLock);
+		activeWriter = nullptr;
+	}
+
+	// Now we can delete the writer object. It's done in this order because the deletion could
+	// take a little time while remaining data gets flushed to disk, so it's best to avoid blocking
+	// the audio callback while this happens.
+	threadedWriter.reset();
+	
+	backgroundThread.stopThread(500);
+	
+	recorderListeners.call(&RecorderListener::recordingStopped);
+}
+
+bool ChataigneAudioLayerProcessor::isRecording() const
+{
+	return activeWriter.load() != nullptr;
+}
+
+void ChataigneAudioLayerProcessor::prepareToPlay(double sampleRate, int maximumExpectedSamplesPerBlock)
+{
+	AudioLayerProcessor::prepareToPlay(sampleRate, maximumExpectedSamplesPerBlock);
+}
+
+void ChataigneAudioLayerProcessor::releaseResources()
+{
+	AudioLayerProcessor::releaseResources();
+}
+
+void ChataigneAudioLayerProcessor::processBlock(AudioBuffer<float>& buffer, MidiBuffer& midiMessages)
+{
+	//Do before buffer is potentially cleared
+	numInputChannels = buffer.getNumChannels();
+	if (isRecording())
+	{
+		{
+			const GenericScopedLock sl(writerLock);
+			activeWriter.load()->write(buffer.getArrayOfReadPointers(), buffer.getNumSamples());
+		}
+
+		recorderListeners.call(&RecorderListener::recordingUpdated, buffer, buffer.getNumSamples());
+	}
+
+	AudioLayerProcessor::processBlock(buffer, midiMessages);
 }

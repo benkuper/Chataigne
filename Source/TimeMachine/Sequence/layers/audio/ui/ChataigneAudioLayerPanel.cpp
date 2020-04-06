@@ -24,6 +24,9 @@ ChataigneAudioLayerPanel::ChataigneAudioLayerPanel(ChataigneAudioLayer * layer) 
 	moduleChooser.addChooserListener(this);
 	moduleChooser.setModuleSelected(chataigneAudioLayer->audioModule,true);
 
+	armUI.reset(chataigneAudioLayer->arm->createToggle());
+	addAndMakeVisible(armUI.get());
+
 	addAndMakeVisible(&moduleChooser);
 
 	chataigneAudioLayer->addAudioLayerListener(this);
@@ -38,10 +41,15 @@ ChataigneAudioLayerPanel::~ChataigneAudioLayerPanel()
 void ChataigneAudioLayerPanel::resizedInternalContent(Rectangle<int>& r)
 {
 	SequenceLayerPanel::resizedInternalContent(r);  
-	Rectangle<int> gr = r.reduced(2).removeFromTop(16);
+	
+	armUI->setBounds(r.removeFromTop(14));
+	r.removeFromTop(2);
 
+	Rectangle<int> gr = r.reduced(2).removeFromTop(16);
 	moduleChooser.setBounds(gr.removeFromLeft(80));
+	r.removeFromTop(2);
 	enveloppeUI->setBounds(gr);
+	
 }
 
 void ChataigneAudioLayerPanel::targetAudioModuleChanged(ChataigneAudioLayer *)

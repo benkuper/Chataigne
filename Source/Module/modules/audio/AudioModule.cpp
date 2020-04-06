@@ -80,10 +80,10 @@ AudioModule::AudioModule(const String & name) :
 	graph.setPlayConfigDetails(0, 2, currentSampleRate, currentBufferSize);
 	graph.prepareToPlay(currentSampleRate, currentBufferSize);
 
-	//graph.addNode(new AudioProcessorGraph::AudioGraphIOProcessor(AudioProcessorGraph::AudioGraphIOProcessor::audioInputNode), 1);
-
-	std::unique_ptr<AudioProcessorGraph::AudioGraphIOProcessor> proc(new AudioProcessorGraph::AudioGraphIOProcessor(AudioProcessorGraph::AudioGraphIOProcessor::audioOutputNode));
-	graph.addNode(std::move(proc), AudioProcessorGraph::NodeID(2));
+	std::unique_ptr<AudioProcessorGraph::AudioGraphIOProcessor> procIn(new AudioProcessorGraph::AudioGraphIOProcessor(AudioProcessorGraph::AudioGraphIOProcessor::audioInputNode));
+	std::unique_ptr<AudioProcessorGraph::AudioGraphIOProcessor> procOut(new AudioProcessorGraph::AudioGraphIOProcessor(AudioProcessorGraph::AudioGraphIOProcessor::audioOutputNode));
+	graph.addNode(std::move(procIn), AudioProcessorGraph::NodeID(1));
+	graph.addNode(std::move(procOut), AudioProcessorGraph::NodeID(2));
 	
 	player.setProcessor(&graph);
 
@@ -197,7 +197,7 @@ void AudioModule::audioDeviceIOCallback(const float ** inputChannelData, int num
 	//DBG("audio callback");
 
 	for (int i = 0; i < numOutputChannels; i++) FloatVectorOperations::clear(outputChannelData[i], numSamples);
-
+	
 	if (!enabled->boolValue()) return;
 
 	for (int i = 0; i < numInputChannels; i++)
@@ -266,9 +266,10 @@ void AudioModule::changeListenerCallback(ChangeBroadcaster *)
 
 	
 
+	int numSelectedInputChannelsInSetup = setup.inputChannels.countNumberOfSetBits();
 	int numSelectedOutputChannelsInSetup = setup.outputChannels.countNumberOfSetBits();
 
-	graph.setPlayConfigDetails(0, numSelectedOutputChannelsInSetup, currentSampleRate, currentBufferSize);
+	graph.setPlayConfigDetails(numSelectedInputChannelsInSetup, numSelectedOutputChannelsInSetup, currentSampleRate, currentBufferSize);
 	graph.prepareToPlay(currentSampleRate, currentBufferSize);
 
 
