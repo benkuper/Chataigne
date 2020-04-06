@@ -164,7 +164,7 @@ void HTTPModule::createControllablesFromJSONResult(var data, ControllableContain
 				if (p.value.isBool()) newC = new BoolParameter(p.name.toString(), p.name.toString(), false);
 				else if (p.value.isDouble()) newC = new FloatParameter(p.name.toString(), p.name.toString(), 0);
 				else if (p.value.isInt()) newC = new IntParameter(p.name.toString(), p.name.toString(), 0);
-				else if (p.value.isString()) newC = new StringParameter(p.name.toString(), p.name.toString(), "");
+				else if (p.value.isString() || p.value.isVoid()) newC = new StringParameter(p.name.toString(), p.name.toString(), "");
 				else if (p.value.isArray())
 				{
 					if (p.value.size() == 1) newC = new FloatParameter(p.name.toString(), p.name.toString(), 0);
@@ -190,7 +190,7 @@ void HTTPModule::createControllablesFromJSONResult(var data, ControllableContain
 				else
 				{
 					Parameter* param = dynamic_cast<Parameter*>(newC);
-					if (param != nullptr) param->setValue(p.value, false, true);
+					if (param != nullptr) param->setValue(p.value.isVoid()?"":p.value, false, true);
 				}
 			}
 		}
@@ -202,8 +202,7 @@ void HTTPModule::onControllableFeedbackUpdateInternal(ControllableContainer*, Co
 {
 	if (c == clearValues)
 	{
-		for(auto & tc : valuesCC.controllables) valuesCC.removeControllable(tc);
-		for (auto& cc : valuesCC.controllableContainers) valuesCC.removeChildControllableContainer(cc);
+		valuesCC.clear();
 	}
 }
 
