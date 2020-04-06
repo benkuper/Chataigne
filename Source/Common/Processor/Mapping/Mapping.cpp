@@ -16,6 +16,7 @@ Mapping::Mapping(bool canBeDisabled) :
 	processMode(VALUE_CHANGE),
 	isRebuilding(false),
 	isProcessing(false),
+	shouldRebuildAfterProcess(false),
     inputIsLocked(false),
     mappingAsyncNotifier(10)
 {
@@ -91,7 +92,14 @@ void Mapping::updateMappingChain(MappingFilter * afterThisFilter)
 	if (isCurrentlyLoadingData || isClearing) return;
 	if (isRebuilding) return;
 
+	if (isProcessing)
+	{
+		shouldRebuildAfterProcess = true;
+		return;
+	}
+
 	stopTimer();
+
 	{
 		//enter in scope for lock
 		GenericScopedLock lock(mappingLock);
@@ -121,11 +129,19 @@ void Mapping::process(bool forceOutput)
 	if (isCurrentlyLoadingData || isRebuilding || isProcessing) return;
 
 	//DBG("[PROCESS] Enter lock");
-	GenericScopedLock lock(mappingLock);
-	isProcessing = true;
-	Array<Parameter *> filteredParams = fm.processFilters();
-	om.updateOutputValues();
-	isProcessing = false;
+	{
+		GenericScopedLock lock(mappingLock);
+		isProcessing = true;
+		Array<Parameter*> filteredParams = fm.processFilters();
+		om.updateOutputValues();
+		isProcessing = false;
+	}
+
+	if (shouldRebuildAfterProcess)
+	{
+		shouldRebuildAfterProcess = false;
+		updateMappingChain();
+	}
 
 	//DBG("[PROCESS] Exit lock");
 

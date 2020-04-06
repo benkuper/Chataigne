@@ -18,7 +18,8 @@ class CVPresetManager;
 class CVGroup :
 	public BaseItem,
 	public Morpher::MorpherListener,
-	public Thread
+	public Thread,
+	public Inspectable::InspectableListener
 {
 public:
 	CVGroup(const String &name = "Group");
@@ -37,6 +38,7 @@ public:
 	//Animated interpolation
 	CVPreset* targetPreset;
 	Automation* interpolationAutomation;
+	WeakReference<Inspectable> automationRef;
 	float interpolationTime;
 	
 	void setValuesToPreset(CVPreset * preset);
@@ -53,6 +55,8 @@ public:
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
+
+	void inspectableDestroyed(Inspectable* i) override;
 
 	void run() override;
 };

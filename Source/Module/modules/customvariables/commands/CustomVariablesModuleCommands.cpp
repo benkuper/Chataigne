@@ -64,10 +64,14 @@ CVCommand::CVCommand(CustomVariablesModule * _module, CommandContext context, va
 		case GO_TO_PRESET:
 			time = addFloatParameter("Interpolation time", "Time for the animation to go to the target preset", 1, 0);
 			time->defaultUI = FloatParameter::TIME;
-			automation = new Automation("Curve");
+			automation = new Automation();
+			automation->isSelectable = false;
+			automation->length->setValue(1);
 			automation->addKey(0, 0, false);
+			automation->items[0]->easingType->setValueWithData(Easing::BEZIER);
 			automation->addKey(1, 1, false);
-			automation->items[0]->setEasing(Easing::BEZIER);
+			automation->selectItemWhenCreated = false;
+			automation->hideEditorHeader = true;
 			addChildControllableContainer(automation, true);
 			break;
 

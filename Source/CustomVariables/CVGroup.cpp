@@ -18,7 +18,8 @@ CVGroup::CVGroup(const String & name) :
 	params("Parameters"),
 	values("Variables",false,false,false),
 	targetPreset(nullptr),
-	interpolationTime(0)
+	interpolationTime(0),
+	interpolationAutomation(nullptr)
 {
 	itemDataType = "CVGroup";
 
@@ -81,7 +82,11 @@ void CVGroup::goToPreset(CVPreset* p, float time, Automation* curve)
 	waitForThreadToExit(100);
 
 	targetPreset = p;
+	if (interpolationAutomation != nullptr) interpolationAutomation->removeInspectableListener(this);
 	interpolationAutomation = curve;
+	automationRef = curve;
+	if(interpolationAutomation != nullptr) interpolationAutomation->addInspectableListener(this);
+
 	interpolationTime = time;
 
 	startThread();
@@ -229,6 +234,15 @@ void CVGroup::loadJSONDataInternal(var data)
 	}
 }
 
+void CVGroup::inspectableDestroyed(Inspectable* i)
+{
+	if (i == interpolationAutomation)
+	{
+		signalThreadShouldExit();
+		waitForThreadToExit(1000);
+	}
+}
+
 void CVGroup::run()
 {
 	if (targetPreset == nullptr || interpolationAutomation == nullptr || interpolationTime <= 0) return;
@@ -250,7 +264,7 @@ void CVGroup::run()
 
 	float timeAtStart = Time::getMillisecondCounter() / 1000.0f;
 
-	while (!threadShouldExit())
+	while (!threadShouldExit() && !automationRef.wasObjectDeleted())
 	{
 		float curTime = Time::getMillisecondCounter() / 1000.0f;
 		float rel = jlimit(0.f, 1.f, (curTime - timeAtStart) / interpolationTime);
@@ -261,5 +275,12 @@ void CVGroup::run()
 		if (rel == 1) return;
 
 		sleep(20); //50fps
+	}
+
+	if (interpolationAutomation != nullptr)
+	{
+		interpolationAutomation->removeInspectableListener(this);
+		interpolationAutomation = nullptr;
+		automationRef = nullptr;
 	}
 }
