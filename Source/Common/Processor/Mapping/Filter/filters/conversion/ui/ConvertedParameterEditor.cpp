@@ -20,6 +20,7 @@ ConvertedParameterEditor::ConvertedParameterEditor(ConvertedParameter* cp, bool 
 		if (ControllableEditor* ce = dynamic_cast<ControllableEditor*>(e))
 		{
 			ce->setShowLabel(false);
+			ce->setVisible(!cp->areAllSlotsConnected());
 		}
 	}
 
@@ -30,7 +31,7 @@ ConvertedParameterEditor::ConvertedParameterEditor(ConvertedParameter* cp, bool 
 		addAndMakeVisible(outParamUI.get());
 	}
 
-	StringArray valueNames = cp->defaultParam->getValuesNames();
+	StringArray valueNames = cp->getValueNames();
 	for (int i = 0; i < valueNames.size(); i++)
 	{
 		ConversionConnector* cc = new ConversionConnector(valueNames[i], cp, i);
@@ -86,6 +87,20 @@ void ConvertedParameterEditor::resizedInternalContent(Rectangle<int>& r)
 
 }
 
+void ConvertedParameterEditor::controllableFeedbackUpdate(Controllable* c)
+{
+	BaseItemEditor::controllableFeedbackUpdate(c);
+	if (c == cp->conversionMode)
+	{
+		StringArray valueNames = cp->getValueNames();
+		for (int i = 0; i < connectors.size(); i++)
+		{
+			connectors[i]->label = valueNames[i];
+			connectors[i]->repaint();
+		}
+	}
+}
+
 void ConvertedParameterEditor::newMessage(const ConvertedParameter::CPEvent& e)
 {
 	if (e.type == ConvertedParameter::CPEvent::OUT_PARAM_CHANGED)
@@ -97,6 +112,16 @@ void ConvertedParameterEditor::newMessage(const ConvertedParameter::CPEvent& e)
 			outParamUI->showLabel = false;
 			addAndMakeVisible(outParamUI.get());
 			resized();
+		}
+	}
+	else if (e.type == ConvertedParameter::CPEvent::SLOT_CONNECTION_CHANGED)
+	{
+		for (auto& ce : childEditors)
+		{
+			if (ControllableEditor* cce = dynamic_cast<ControllableEditor*>(ce))
+			{
+				cce->setVisible(!cp->areAllSlotsConnected());
+			}
 		}
 	}
 

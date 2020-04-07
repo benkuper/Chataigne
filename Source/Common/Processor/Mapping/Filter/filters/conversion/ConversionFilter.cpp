@@ -100,11 +100,18 @@ void ConversionFilter::createLink(WeakReference<Parameter> source, int sourceVal
 		link->outValueIndex = outValueIndex;
 	}
 
+	out->connectSlot(outValueIndex);
+
 	conversionFilterAsyncNotifier.addMessage(new ConversionFilterEvent(ConversionFilterEvent::LINKS_UPDATED));
 }
 
 void ConversionFilter::removeLink(ConversionParamValueLink* link)
 {
+	if (link->out != nullptr && link->outValueIndex >= 0)
+	{
+		link->out->disconnectSlot(link->outValueIndex);
+	}
+
 	links.removeObject(link);
 	conversionFilterAsyncNotifier.addMessage(new ConversionFilterEvent(ConversionFilterEvent::LINKS_UPDATED));
 }

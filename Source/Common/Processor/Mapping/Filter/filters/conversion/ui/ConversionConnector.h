@@ -28,7 +28,6 @@ public:
 	int valueIndex;
 	bool dropCandidate;
 
-
 	void paint(Graphics& g) override;
 	bool hitTest(int x, int y) override;
 

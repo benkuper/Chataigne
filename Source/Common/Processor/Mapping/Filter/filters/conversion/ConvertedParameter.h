@@ -23,10 +23,19 @@ public:
 	WeakReference<Parameter> outParamReference;
 	EnumParameter* conversionMode;
 
+	Array<bool> connectedSlots;
+
+	bool areAllSlotsConnected() const;
+
+	void connectSlot(int index);
+	void disconnectSlot(int index);
+
 	void setParamValueAtIndex(var value, int index);
 	void onContainerParameterChangedInternal(Parameter* p) override;
 
 	void setOutParamReference(Parameter* p);
+
+	StringArray getValueNames() const;
 
 	String getTypeString() const override { return defaultParam->getTypeString(); }
 	static ConvertedParameter* create(var params) { return new ConvertedParameter(params); }
@@ -36,7 +45,7 @@ public:
 
 	class CPEvent {
 	public:
-		enum Type { OUT_PARAM_CHANGED };
+		enum Type { OUT_PARAM_CHANGED, SLOT_CONNECTION_CHANGED };
 		CPEvent(Type type) : type(type) {}
 		Type type;
 	};
