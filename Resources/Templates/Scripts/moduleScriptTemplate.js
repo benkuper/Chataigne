@@ -17,7 +17,7 @@ function moduleParameterChanged(param)
 		script.log("Module parameter changed : "+param.name+" > "+param.get());
 	}else 
 	{
-		script.log("Module parameter triggered : "+value.name);	
+		script.log("Module parameter triggered : "+param.name);	
 	}
 }
 

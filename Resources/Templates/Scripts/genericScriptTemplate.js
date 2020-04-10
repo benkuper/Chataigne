@@ -50,7 +50,7 @@ function scriptParameterChanged(param)
 	//You can use the script.log() function to show an information inside the logger panel. To be able to actuallt see it in the logger panel, you will have to turn on "Log" on this script.
 	script.log("Parameter changed : "+param.name); //All parameters have "name" property
 	if(param.is(myTrigger)) script.log("Trigger !"); //You can check if two variables are the reference to the same parameter or object with the method .is()
-	else if(param.is(myEnumParam)) script.log("Label = "+param.get()+", data = "+param.getData()); //The enum parameter has a special function getData() to get the data associated to the option
+	else if(param.is(myEnumParam)) script.log("Key = "+param.getKey()+", data = "+param.get()); //The enum parameter has a special function getKey() to get the key associated to the option. .get() will give you the data associated
 	else script.log("Value is "+param.get()); //All parameters have a get() method that will return their value
 }
 

@@ -100,7 +100,7 @@ void AutomationMappingLayer::sequencePlayStateChangedInternal(Sequence* s)
 
 void AutomationMappingLayer::sequenceLooped(Sequence* s)
 {
-    stopRecorderAndAddKeys();
+    if(recorder.isRecording->boolValue()) stopRecorderAndAddKeys();
 }
 
 bool AutomationMappingLayer::paste()

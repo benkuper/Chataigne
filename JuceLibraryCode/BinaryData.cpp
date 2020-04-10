@@ -1413,7 +1413,7 @@ static const unsigned char temp_binary_data_35[] =
 "\t//You can use the script.log() function to show an information inside the logger panel. To be able to actuallt see it in the logger panel, you will have to turn on \"Log\" on this script.\r\n"
 "\tscript.log(\"Parameter changed : \"+param.name); //All parameters have \"name\" property\r\n"
 "\tif(param.is(myTrigger)) script.log(\"Trigger !\"); //You can check if two variables are the reference to the same parameter or object with the method .is()\r\n"
-"\telse if(param.is(myEnumParam)) script.log(\"Label = \"+param.get()+\", data = \"+param.getData()); //The enum parameter has a special function getData() to get the data associated to the option\r\n"
+"\telse if(param.is(myEnumParam)) script.log(\"Key = \"+param.getKey()+\", data = \"+param.get()); //The enum parameter has a special function getKey() to get the key associated to the option. .get() will give you the data associated\r\n"
 "\telse script.log(\"Value is \"+param.get()); //All parameters have a get() method that will return their value\r\n"
 "}\r\n"
 "\r\n"
@@ -1470,6 +1470,9 @@ static const unsigned char temp_binary_data_37[] =
 "local.sendNoteOff(1, 12); //This will send a NoteOff Event on chanenl 1, pitch 12\r\n"
 "local.sendCC(3, 20, 65); //This will send a ControlChange on channel 3, number 20, value 65\r\n"
 "local.sendSysEx(15,20,115,10); //This will send 4 bytes as a SysEx message\r\n"
+"local.sendPitchWheel (3, 2000);\r\n"
+"local.sendChannelPressure (1, 67);\r\n"
+"local.sendAfterTouch (3, 20, 65);\r\n"
 "*/\r\n"
 "\r\n"
 "/*\r\n"
@@ -1492,6 +1495,13 @@ static const unsigned char temp_binary_data_37[] =
 "\tscript.log(\"ControlChange received \"+channel+\", \"+number+\", \"+value);\r\n"
 "}\r\n"
 "\r\n"
+"\r\n"
+"function ccEvent(channel, number, value)\r\n"
+"{\r\n"
+"\tscript.log(\"ControlChange received \"+channel+\", \"+number+\", \"+value);\r\n"
+"}\r\n"
+"\r\n"
+"\r\n"
 "function sysExEvent(data)\r\n"
 "{\r\n"
 "\tscript.log(\"Sysex Message received, \"+data.length+\" bytes :\");\r\n"
@@ -1499,6 +1509,21 @@ static const unsigned char temp_binary_data_37[] =
 "\t{\r\n"
 "\t\tscript.log(\" > \"+data[i]);\r\n"
 "\t}\r\n"
+"}\r\n"
+"\r\n"
+"function pitchWheelEvent(channel, value) \r\n"
+"{\r\n"
+"\tscript.log(\"PitchWheel received \"+channel+\", \"+value);\r\n"
+"}\r\n"
+"\r\n"
+"function channelPressureEvent(channel, value) \r\n"
+"{\r\n"
+"\tscript.log(\"Channel Pressure received \"+channel+\", \"+value);\r\n"
+"}\r\n"
+"\r\n"
+"function afterTouchEvent(channel, note, value) \r\n"
+"{\r\n"
+"\tscript.log(\"After Touch received \"+channel+\", \"+note+\", \"+value);\r\n"
 "}";
 
 const char* midiScriptTemplate_js = (const char*) temp_binary_data_37;
@@ -1524,7 +1549,7 @@ static const unsigned char temp_binary_data_38[] =
 "\t\tscript.log(\"Module parameter changed : \"+param.name+\" > \"+param.get());\r\n"
 "\t}else \r\n"
 "\t{\r\n"
-"\t\tscript.log(\"Module parameter triggered : \"+value.name);\t\r\n"
+"\t\tscript.log(\"Module parameter triggered : \"+param.name);\t\r\n"
 "\t}\r\n"
 "}\r\n"
 "\r\n"
@@ -4232,9 +4257,9 @@ const char* getNamedResource (const char* resourceNameUTF8, int& numBytes)
         case 0xdd901558:  numBytes = 444; return commandScriptTemplate_js;
         case 0x7fffe188:  numBytes = 5536; return conditionScriptTemplate_js;
         case 0x5c8768cb:  numBytes = 646; return filterScriptTemplate_js;
-        case 0xa23dd44c:  numBytes = 4737; return genericScriptTemplate_js;
+        case 0xa23dd44c:  numBytes = 4774; return genericScriptTemplate_js;
         case 0xf15eedbb:  numBytes = 823; return httpScriptTemplate_js;
-        case 0x01c43842:  numBytes = 1271; return midiScriptTemplate_js;
+        case 0x01c43842:  numBytes = 1853; return midiScriptTemplate_js;
         case 0xb21f5457:  numBytes = 1415; return moduleScriptTemplate_js;
         case 0x83ff2424:  numBytes = 798; return oscScriptTemplate_js;
         case 0xb2ba4d21:  numBytes = 1091; return streamingScriptTemplate_js;

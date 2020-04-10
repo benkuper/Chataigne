@@ -114,13 +114,13 @@ namespace BinaryData
     const int            filterScriptTemplate_jsSize = 646;
 
     extern const char*   genericScriptTemplate_js;
-    const int            genericScriptTemplate_jsSize = 4737;
+    const int            genericScriptTemplate_jsSize = 4774;
 
     extern const char*   httpScriptTemplate_js;
     const int            httpScriptTemplate_jsSize = 823;
 
     extern const char*   midiScriptTemplate_js;
-    const int            midiScriptTemplate_jsSize = 1271;
+    const int            midiScriptTemplate_jsSize = 1853;
 
     extern const char*   moduleScriptTemplate_js;
     const int            moduleScriptTemplate_jsSize = 1415;

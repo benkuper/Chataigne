@@ -4498,6 +4498,9 @@
     <ClCompile Include="..\..\Modules\juce_organicui\script\ui\ScriptEditor.cpp">
       <Filter>JUCE Modules\juce_organicui\script\ui</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\script\ui\ScriptManagerEditor.cpp">
+      <Filter>JUCE Modules\juce_organicui\script\ui</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\script\Script.cpp">
       <Filter>JUCE Modules\juce_organicui\script</Filter>
     </ClCompile>
@@ -8263,6 +8266,9 @@
       <Filter>JUCE Modules\juce_organicui\resources</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Modules\juce_organicui\script\ui\ScriptEditor.h">
+      <Filter>JUCE Modules\juce_organicui\script\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_organicui\script\ui\ScriptManagerEditor.h">
       <Filter>JUCE Modules\juce_organicui\script\ui</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Modules\juce_organicui\script\ExpressionListener.h">
