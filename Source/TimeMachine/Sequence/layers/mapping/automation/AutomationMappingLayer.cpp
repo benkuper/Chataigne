@@ -69,6 +69,7 @@ void AutomationMappingLayer::selectAll(bool addToSelection)
 
 void AutomationMappingLayer::sequenceCurrentTimeChangedInternal(Sequence* s, float prevTime, bool seeking)
 {
+    if (automation == nullptr) return;
     automation->position->setValue(s->currentTime->floatValue());
 
     if (sequence->isPlaying->boolValue())
@@ -83,7 +84,7 @@ void AutomationMappingLayer::sequenceCurrentTimeChangedInternal(Sequence* s, flo
 
 void AutomationMappingLayer::sequenceTotalTimeChanged(Sequence* s)
 {
-    automation->length->setValue(s->totalTime->floatValue());
+    automation->setLength(s->totalTime->floatValue());
 }
 
 void AutomationMappingLayer::sequencePlayStateChangedInternal(Sequence* s)
