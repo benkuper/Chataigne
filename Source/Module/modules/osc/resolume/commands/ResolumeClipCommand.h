@@ -28,6 +28,8 @@ public:
 	BoolParameter * randomClips;
 	Random clipRand;
 
+	void rebuildParametersInternal() override;
+
 	void onContainerParameterChanged(Parameter *) override;
 	void triggerInternal() override;
 

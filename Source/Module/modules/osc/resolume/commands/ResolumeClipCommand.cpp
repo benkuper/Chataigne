@@ -11,7 +11,7 @@
 #include "ResolumeClipCommand.h"
 
 ResolumeClipCommand::ResolumeClipCommand(ResolumeModule * _module, CommandContext context, var params) :
-	ResolumeBaseCommand(_module,context,params),
+	ResolumeBaseCommand(_module,context,params, true),
 	firstClip(nullptr),
 	lastClip(nullptr),
 	loopClips(nullptr),
@@ -20,22 +20,27 @@ ResolumeClipCommand::ResolumeClipCommand(ResolumeModule * _module, CommandContex
 	connectParam = argumentsContainer.addIntParameter("Connect", "", 1, 1, 1);
 	argumentsContainer.hideInEditor = true;
 
-	if (params.getProperty("multi", false))
-	{
-		clipParam->setControllableFeedbackOnly(true);
-		firstClip = addIntParameter("First Clip", "First Clip of the MultiClip", 1, 1,INT32_MAX);
-		lastClip = addIntParameter("Last Clip", "Last Clip of the MultiClip", 1, 1, INT32_MAX);
-		loopClips = addBoolParameter("Loop", "Loop when reached last clip", true);
-		randomClips = addBoolParameter("Random", "Random between first and last clip", false);
-	}
-
-	rebuildAddress();
+	rebuildParameters();
 }
 
 ResolumeClipCommand::~ResolumeClipCommand()
 {
 
 }
+
+void ResolumeClipCommand::rebuildParametersInternal()
+{
+	if (params.getProperty("multi", false))
+	{
+		clipParam->setControllableFeedbackOnly(true);
+		firstClip = addIntParameter("First Clip", "First Clip of the MultiClip", 1, 1);
+		lastClip = addIntParameter("Last Clip", "Last Clip of the MultiClip", 2, 2);
+		loopClips = addBoolParameter("Loop", "Loop when reached last clip", true);
+		randomClips = addBoolParameter("Random", "Random between first and last clip", false);
+	}
+}
+
+
 
 void ResolumeClipCommand::onContainerParameterChanged(Parameter * p)
 {
@@ -46,7 +51,7 @@ void ResolumeClipCommand::onContainerParameterChanged(Parameter * p)
 		loopClips->setEnabled(!randomClips->boolValue());
 	} else if (p == firstClip || p == lastClip)
 	{
-		if (p == firstClip) lastClip->setRange(firstClip->intValue(), 100);
+		if (p == firstClip) lastClip->setRange(firstClip->intValue()+1, INT32_MAX);
 		else if (p == lastClip) firstClip->setRange(1, lastClip->intValue());
 		if (firstClip->intValue() < lastClip->intValue())
 		{
@@ -55,7 +60,6 @@ void ResolumeClipCommand::onContainerParameterChanged(Parameter * p)
 		{
 			clipParam->setValue(firstClip->intValue());
 		}
-		
 	}
 }
 
