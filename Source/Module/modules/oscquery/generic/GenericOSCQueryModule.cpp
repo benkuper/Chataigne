@@ -283,7 +283,7 @@ Controllable* GenericOSCQueryModule::createControllableFromData(StringRef name, 
 			{
 				EnumParameter* ep = new EnumParameter(cNiceName, cNiceName);
 				for (int i = 0; i < options.size(); i++) ep->addOption(options[i], options[i], false);
-				ep->setValue(value[0]);
+				ep->setValueWithKey(value[0]);
 
 				c = ep;
 			}

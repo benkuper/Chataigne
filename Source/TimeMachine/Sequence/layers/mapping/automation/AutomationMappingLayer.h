@@ -25,6 +25,7 @@ public:
     EnumParameter* recordSendMode;
     AutomationRecorder recorder;
 
+   
     virtual void setupAutomation(Automation* a);
 
     virtual void updateMappingInputValueInternal();
