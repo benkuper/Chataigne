@@ -35,6 +35,7 @@ public:
 	const Identifier dataStructureEventId = "dataStructureEvent";
 
 	Trigger * syncTrigger;
+	BoolParameter* keepValuesOnSync;
 
 	std::unique_ptr<OSCQueryOutput> sendCC;
 	BoolParameter * useLocal;
@@ -44,10 +45,7 @@ public:
 
 	OSCSender sender;
 
-	SpinLock dataLock;
-	ValueTree dataTree;
-
-	OwnedArray<ControllableContainer> valuesContainers;
+	var treeData; //to keep on save
 
 	void sendOSCMessage(OSCMessage m);
 	void sendOSCForControllable(Controllable * c);
@@ -64,6 +62,9 @@ public:
 
 	virtual void onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c) override;
 
+
+	var getJSONData() override;
+	void loadJSONDataInternal(var data) override;
 
 	// Inherited via Thread
 	virtual void run() override;

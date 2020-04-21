@@ -31,6 +31,7 @@ Module::Module(const String& name) :
 	customType(""),
     canHandleRouteValues(false)
 
+
 {
 	itemDataType = "Module";
 	showWarningInUI = true;
@@ -52,6 +53,7 @@ Module::Module(const String& name) :
 	addChildControllableContainer(&moduleParams);
 	
 	addChildControllableContainer(&valuesCC);
+	valuesCC.saveAndLoadRecursiveData = true;
 	valuesCC.includeTriggersInSaveLoad = true;
 
 	defManager.reset(new CommandDefinitionManager());

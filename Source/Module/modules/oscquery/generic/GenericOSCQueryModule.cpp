@@ -22,8 +22,11 @@ GenericOSCQueryModule::GenericOSCQueryModule(const String& name, int defaultRemo
 	alwaysShowValues = true;
 	canHandleRouteValues = true;
 
+	includeValuesInSave = true;
+
 	setupIOConfiguration(false, true);
 
+	keepValuesOnSync = moduleParams.addBoolParameter("Keep Values On Sync", "If checked, this will force keeping the current values when syncing the OSCQuery remote data structure.", false);
 	syncTrigger = moduleParams.addTrigger("Sync Data", "Sync the data");
 
 	sendCC.reset(new OSCQueryOutput(this));
@@ -46,6 +49,8 @@ GenericOSCQueryModule::GenericOSCQueryModule(const String& name, int defaultRemo
 	sender.connect("0.0.0.0", 0);
 
 	syncTrigger->trigger();
+
+	
 
 	//Testing local file
 	/*File f = File::getSpecialLocation(File::userDesktopDirectory).getChildFile("oscquery.json");
@@ -160,8 +165,14 @@ void GenericOSCQueryModule::syncData()
 
 void GenericOSCQueryModule::createTreeFromData(var data)
 {
+	if (data.isVoid()) return;
+
+	var vData = valuesCC.getJSONData();
 	valuesCC.clear();
 	fillContainerFromData(&valuesCC, data);
+
+	if (!vData.isVoid() && keepValuesOnSync->boolValue()) valuesCC.loadJSONData(vData);
+	treeData = data;
 }
 
 void GenericOSCQueryModule::fillContainerFromData(ControllableContainer* cc, var data)
@@ -180,12 +191,12 @@ void GenericOSCQueryModule::fillContainerFromData(ControllableContainer* cc, var
 				if (ccNiceName.isEmpty()) ccNiceName = nv.name.toString();
 
 				ControllableContainer* childCC = new ControllableContainer(ccNiceName);
+				childCC->saveAndLoadRecursiveData = true;
 				childCC->setCustomShortName(nv.name.toString());
 				fillContainerFromData(childCC, nv.value);
-				valuesContainers.add(childCC);
 				childCC->editorIsCollapsed = true;
 
-				cc->addChildControllableContainer(childCC);
+				cc->addChildControllableContainer(childCC, true);
 			}
 			else
 			{
@@ -220,7 +231,7 @@ Controllable* GenericOSCQueryModule::createControllableFromData(StringRef name, 
 	{
 
 		DBG("Not the same : " << range.size() << " / " << value.size() << "\n" << data.toString());
-		NLOGWARNING(niceName, "RANGE and VALUE fields don't have the same size, skipping : " << cNiceName);
+		//NLOGWARNING(niceName, "RANGE and VALUE fields don't have the same size, skipping : " << cNiceName);
 	}
 	var minVal;
 	var maxVal;
@@ -332,6 +343,19 @@ void GenericOSCQueryModule::onControllableFeedbackUpdateInternal(ControllableCon
 	{
 		sendOSCForControllable(c);
 	}
+}
+
+var GenericOSCQueryModule::getJSONData()
+{
+	var data = Module::getJSONData();
+	data.getDynamicObject()->setProperty("treeData", treeData);
+	return data;
+}
+
+void GenericOSCQueryModule::loadJSONDataInternal(var data)
+{
+	createTreeFromData(data.getProperty("treeData",var()));
+	Module::loadJSONDataInternal(data);
 }
 
 void GenericOSCQueryModule::run()
