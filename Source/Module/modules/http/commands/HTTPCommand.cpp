@@ -15,7 +15,7 @@ HTTPCommand::HTTPCommand(HTTPModule * _module, CommandContext context, var param
 	httpModule(_module)
 {
 	method = addEnumParameter("Method", "Request Method");
-	method->addOption("GET", HTTPModule::GET)->addOption("POST", HTTPModule::POST);
+	for (int i = 0; i < HTTPModule::TYPE_MAX; i++) method->addOption(HTTPModule::requestMethodNames[i], (HTTPModule::RequestMethod)i);
 
 	resultDataType = addEnumParameter("Result Type", "The type of data to parse the received data");
 	resultDataType->addOption("Raw", HTTPModule::RAW)->addOption("JSON", HTTPModule::JSON);

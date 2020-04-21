@@ -26,11 +26,14 @@ public:
 
 	const Identifier sendGETId = "sendGET";
 	const Identifier sendPOSTId = "sendPOST";
+	const Identifier sendPUTId = "sendPUT";
+	const Identifier sendDELETEId = "sendDELETE";
 	const Identifier jsonDataTypeId = "json";
 	const Identifier rawDataTypeId = "raw";
 	const Identifier dataEventId = "dataEvent";
 
-	enum RequestMethod { GET, POST };
+	enum RequestMethod { GET, POST, PUT, PATCH, DELETE, TYPE_MAX};
+	static const String requestMethodNames[TYPE_MAX];
 	enum ResultDataType { RAW, JSON };
 
 
@@ -57,6 +60,8 @@ public:
 	void sendRequestFromScript(const var::NativeFunctionArgs& args, RequestMethod method);
 	static var sendGETFromScript(const var::NativeFunctionArgs& args);
 	static var sendPOSTFromScript(const var::NativeFunctionArgs& args);
+	static var sendPUTFromScript(const var::NativeFunctionArgs& args);
+	static var sendDELETEFromScript(const var::NativeFunctionArgs& args);
 
 	String getDefaultTypeString() const override { return "HTTP"; }
 	static HTTPModule * create() { return new HTTPModule(); }

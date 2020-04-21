@@ -12,6 +12,8 @@
 #include "commands/HTTPCommand.h"
 #include "UI/ChataigneAssetManager.h"
 
+const String HTTPModule::requestMethodNames[TYPE_MAX] { "GET", "POST","PUT", "PATCH", "DELETE" };
+
 HTTPModule::HTTPModule(const String &name) :
 	Module(name),
 	Thread("HTTPModule Requests")
@@ -29,6 +31,8 @@ HTTPModule::HTTPModule(const String &name) :
 	
 	scriptObject.setMethod(sendGETId, HTTPModule::sendGETFromScript);
 	scriptObject.setMethod(sendPOSTId, HTTPModule::sendPOSTFromScript);
+	scriptObject.setMethod(sendPOSTId, HTTPModule::sendPUTFromScript);
+	scriptObject.setMethod(sendPOSTId, HTTPModule::sendDELETEFromScript);
 	scriptManager->scriptTemplate += ChataigneAssetManager::getInstance()->getScriptTemplate("http");
 
 	startThread();
@@ -62,7 +66,7 @@ void HTTPModule::processRequest(Request * request)
 
 	std::unique_ptr<InputStream> stream(request->url.createInputStream(request->method == POST, nullptr, nullptr, request->extraHeaders,
 		2000, // timeout in millisecs
-		&responseHeaders, &statusCode));
+		&responseHeaders, &statusCode, 5, requestMethodNames[(int)request->method]));
 
 #if JUCE_WINDOWS
 	if (statusCode != 200 && !request->url.isLocalFile())
@@ -231,7 +235,7 @@ void HTTPModule::sendRequestFromScript(const var::NativeFunctionArgs& args, Requ
 			if (args.numArguments >= 3) extraHeaders = args.arguments[2].toString();
 		}
 	}
-	else if(method == POST)
+	else
 	{
 		for (int i = 2; i < args.numArguments; i += 2)
 		{
@@ -255,6 +259,20 @@ var HTTPModule::sendPOSTFromScript(const var::NativeFunctionArgs& args)
 {
 	HTTPModule* m = getObjectFromJS<HTTPModule>(args);
 	if (m != nullptr) m->sendRequestFromScript(args, POST);
+	return var();
+}
+
+var HTTPModule::sendPUTFromScript(const var::NativeFunctionArgs& args)
+{
+	HTTPModule* m = getObjectFromJS<HTTPModule>(args);
+	if (m != nullptr) m->sendRequestFromScript(args, PUT);
+	return var();
+}
+
+var HTTPModule::sendDELETEFromScript(const var::NativeFunctionArgs& args)
+{
+	HTTPModule* m = getObjectFromJS<HTTPModule>(args);
+	if (m != nullptr) m->sendRequestFromScript(args, DELETE);
 	return var();
 }
 
