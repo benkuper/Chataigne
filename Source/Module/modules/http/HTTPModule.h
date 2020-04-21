@@ -27,7 +27,9 @@ public:
 	const Identifier sendGETId = "sendGET";
 	const Identifier sendPOSTId = "sendPOST";
 	const Identifier sendPUTId = "sendPUT";
+	const Identifier sendPATCHId = "sendPATCH";
 	const Identifier sendDELETEId = "sendDELETE";
+
 	const Identifier jsonDataTypeId = "json";
 	const Identifier rawDataTypeId = "raw";
 	const Identifier dataEventId = "dataEvent";
@@ -61,6 +63,7 @@ public:
 	static var sendGETFromScript(const var::NativeFunctionArgs& args);
 	static var sendPOSTFromScript(const var::NativeFunctionArgs& args);
 	static var sendPUTFromScript(const var::NativeFunctionArgs& args);
+	static var sendPATCHFromScript(const var::NativeFunctionArgs& args);
 	static var sendDELETEFromScript(const var::NativeFunctionArgs& args);
 
 	String getDefaultTypeString() const override { return "HTTP"; }

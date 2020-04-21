@@ -31,8 +31,9 @@ HTTPModule::HTTPModule(const String &name) :
 	
 	scriptObject.setMethod(sendGETId, HTTPModule::sendGETFromScript);
 	scriptObject.setMethod(sendPOSTId, HTTPModule::sendPOSTFromScript);
-	scriptObject.setMethod(sendPOSTId, HTTPModule::sendPUTFromScript);
-	scriptObject.setMethod(sendPOSTId, HTTPModule::sendDELETEFromScript);
+	scriptObject.setMethod(sendPUTId, HTTPModule::sendPUTFromScript);
+	scriptObject.setMethod(sendPATCHId, HTTPModule::sendPATCHFromScript);
+	scriptObject.setMethod(sendDELETEId, HTTPModule::sendDELETEFromScript);
 	scriptManager->scriptTemplate += ChataigneAssetManager::getInstance()->getScriptTemplate("http");
 
 	startThread();
@@ -52,7 +53,7 @@ void HTTPModule::sendRequest(StringRef address, RequestMethod method, ResultData
 
 
 	outActivityTrigger->trigger();
-	if (logOutgoingData->boolValue())  NLOG(niceName, "Send " + String(method == GET?"GET":"POST") + " Request : " + url.toString(true));
+	if (logOutgoingData->boolValue())  NLOG(niceName, "Send " + requestMethodNames[(int)method] + " Request : " + url.toString(true));
 
 	requests.getLock().enter();
 	requests.add(new Request(url, method, dataType, extraHeaders));
@@ -266,6 +267,13 @@ var HTTPModule::sendPUTFromScript(const var::NativeFunctionArgs& args)
 {
 	HTTPModule* m = getObjectFromJS<HTTPModule>(args);
 	if (m != nullptr) m->sendRequestFromScript(args, PUT);
+	return var();
+}
+
+var HTTPModule::sendPATCHFromScript(const var::NativeFunctionArgs& args)
+{
+	HTTPModule* m = getObjectFromJS<HTTPModule>(args);
+	if (m != nullptr) m->sendRequestFromScript(args, PATCH);
 	return var();
 }
 
