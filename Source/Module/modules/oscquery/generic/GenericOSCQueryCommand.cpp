@@ -29,13 +29,16 @@ void GenericOSCQueryCommand::setupParamFromTarget()
 	{
 		removeControllable(valueParam.get());
 		removeTargetMappingParameter(valueParam);
+		if (valueGhostData.isVoid()) valueGhostData = valueParam->value;
 	}
 
 	valueParam = ControllableFactory::createParameterFrom(target->target, false, true);
 	if (valueParam != nullptr)
 	{
+		valueParam->setValue(valueGhostData);
 		addParameter(valueParam);
 		addTargetMappingParameterAt(valueParam, 0);
+		valueGhostData = var(); //reset ghostValue
 	}
 }
 
@@ -46,6 +49,19 @@ void GenericOSCQueryCommand::onContainerParameterChanged(Parameter * p)
 	{
 		setupParamFromTarget();
 	}
+}
+
+var GenericOSCQueryCommand::getJSONData()
+{
+	var data = BaseCommand::getJSONData();
+	if (valueParam != nullptr) data.getDynamicObject()->setProperty("ghostValue", valueParam->value);
+	return data;
+}
+
+void GenericOSCQueryCommand::loadJSONDataInternal(var data)
+{
+	BaseCommand::loadJSONDataInternal(data);
+	valueGhostData = data.getProperty("ghostValue", var());
 }
 
 void GenericOSCQueryCommand::triggerInternal()

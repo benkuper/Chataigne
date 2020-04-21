@@ -25,9 +25,14 @@ public:
 	TargetParameter * target;
 	WeakReference<Parameter> valueParam;
 
+	var valueGhostData; //when loading/reloading data
+
 	void setupParamFromTarget();
 
 	void onContainerParameterChanged(Parameter *) override;
+
+	var getJSONData() override;
+	void loadJSONDataInternal(var data) override;
 
 	void triggerInternal() override;
 
