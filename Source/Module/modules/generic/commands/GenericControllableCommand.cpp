@@ -31,6 +31,7 @@ void GenericControllableCommand::setValueParameter(Parameter * p)
 {
 	if (!value.wasObjectDeleted() && value != nullptr)
 	{
+		ghostValueData = value->getJSONData();
 		removeControllable(value.get());
 		clearTargetMappingParameters();
 	}
@@ -44,6 +45,8 @@ void GenericControllableCommand::setValueParameter(Parameter * p)
 	{
 		addTargetMappingParameterAt(value, 0);
 		addParameter(p);
+		if (!ghostValueData.isVoid()) value->loadJSONData(ghostValueData);
+		ghostValueData = var();
 	}
 }
 

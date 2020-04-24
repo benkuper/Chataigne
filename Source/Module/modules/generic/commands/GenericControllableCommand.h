@@ -29,16 +29,14 @@ public:
 	Action action;
 	TargetParameter * target;
 	WeakReference<Parameter> value;
-	
+	var dataToLoad;
+	var ghostValueData; // to keep when target is lost
 
 	void setValueParameter(Parameter * p);
 
 	virtual void triggerInternal() override;
 
 	void onContainerParameterChanged(Parameter *) override;
-
-
-	var dataToLoad;
 
 	virtual void loadJSONDataInternal(var data) override;
 	virtual void endLoadFile() override;
