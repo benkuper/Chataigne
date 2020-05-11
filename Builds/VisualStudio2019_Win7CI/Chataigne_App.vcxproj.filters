@@ -335,6 +335,9 @@
     <Filter Include="Chataigne\Source\Module\modules\oscquery">
       <UniqueIdentifier>{5E9A2258-4AEC-F20C-D8B5-0F4E051C8575}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\osc\qlab">
+      <UniqueIdentifier>{30393079-5F16-52B8-7A2A-86B1B0948721}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Chataigne\Source\Module\modules\osc\ui">
       <UniqueIdentifier>{28AC6DBD-3300-5E97-393F-F14972FA36C6}</UniqueIdentifier>
     </Filter>
@@ -1797,6 +1800,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\oscquery\generic\GenericOSCQueryModule.cpp">
       <Filter>Chataigne\Source\Module\modules\oscquery\generic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Module\modules\osc\qlab\QLabModule.cpp">
+      <Filter>Chataigne\Source\Module\modules\osc\qlab</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\osc\ui\OSCOutputEditor.cpp">
       <Filter>Chataigne\Source\Module\modules\osc\ui</Filter>
@@ -5358,6 +5364,9 @@
     <ClInclude Include="..\..\Source\Module\modules\oscquery\generic\GenericOSCQueryModule.h">
       <Filter>Chataigne\Source\Module\modules\oscquery\generic</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\Module\modules\osc\qlab\QLabModule.h">
+      <Filter>Chataigne\Source\Module\modules\osc\qlab</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\osc\ui\OSCOutputEditor.h">
       <Filter>Chataigne\Source\Module\modules\osc\ui</Filter>
     </ClInclude>
@@ -8607,6 +8616,9 @@
       <Filter>Chataigne\Resources\Modules</Filter>
     </None>
     <None Include="..\..\Resources\Modules\PowerPoint.png">
+      <Filter>Chataigne\Resources\Modules</Filter>
+    </None>
+    <None Include="..\..\Resources\Modules\QLab.png">
       <Filter>Chataigne\Resources\Modules</Filter>
     </None>
     <None Include="..\..\Resources\Modules\Reaper.png">

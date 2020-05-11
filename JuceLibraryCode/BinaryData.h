@@ -68,6 +68,9 @@ namespace BinaryData
     extern const char*   PowerPoint_png;
     const int            PowerPoint_pngSize = 2548;
 
+    extern const char*   QLab_png;
+    const int            QLab_pngSize = 3156;
+
     extern const char*   Reaper_png;
     const int            Reaper_pngSize = 3655;
 
@@ -186,7 +189,7 @@ namespace BinaryData
     const int            tray_icon_pngSize = 3363;
 
     // Number of elements in the namedResourceList and originalFileNames arrays.
-    const int namedResourceListSize = 59;
+    const int namedResourceListSize = 60;
 
     // Points to the start of a list of resource names.
     extern const char* namedResourceList[];

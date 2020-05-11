@@ -853,6 +853,10 @@
 			isa = PBXBuildFile;
 			fileRef = D1471EBF90391F73F895EB4B;
 		};
+		78DD155A285FEA96B966ACD4 = {
+			isa = PBXBuildFile;
+			fileRef = 4F83B5397387A9D6D179A881;
+		};
 		C61F054EF1FF46F1D32EC17B = {
 			isa = PBXBuildFile;
 			fileRef = B15587F80309F64EB05F1963;
@@ -1884,6 +1888,13 @@
 			path = ../../Resources/Templates/Scripts/moduleScriptTemplate.js;
 			sourceTree = "SOURCE_ROOT";
 		};
+		20B2101A94BA96900CED2A4B = {
+			isa = PBXFileReference;
+			lastKnownFileType = image.png;
+			name = QLab.png;
+			path = ../../Resources/Modules/QLab.png;
+			sourceTree = "SOURCE_ROOT";
+		};
 		20E319398349A41336586E9D = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.c;
@@ -2780,6 +2791,13 @@
 			path = ../../Source/Common/Serial/lib/serial/serial.cc;
 			sourceTree = "SOURCE_ROOT";
 		};
+		4F83B5397387A9D6D179A881 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = QLabModule.cpp;
+			path = ../../Source/Module/modules/osc/qlab/QLabModule.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		4FA5781315A5657F555CCE52 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -3044,6 +3062,13 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = ScriptFilter.cpp;
 			path = ../../Source/Common/Processor/Mapping/Filter/filters/ScriptFilter.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
+		619FE26D927D040CE08081F5 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = QLabModule.h;
+			path = ../../Source/Module/modules/osc/qlab/QLabModule.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		6289E76712F09C66C8822260 = {
@@ -6121,6 +6146,7 @@
 				54D225421E0211F8F2E4EBFA,
 				B1FD26BF556916851197C97B,
 				DF7E4C10AE96476C8D27E827,
+				20B2101A94BA96900CED2A4B,
 				70E1471749F3AF5353951EC5,
 				7A91E8D798CAD8D2754205F1,
 				842C24D22B14BC2701DAA448,
@@ -7401,6 +7427,15 @@
 			name = oscquery;
 			sourceTree = "<group>";
 		};
+		DEDB5E31916F2DAF5ACD55BC = {
+			isa = PBXGroup;
+			children = (
+				4F83B5397387A9D6D179A881,
+				619FE26D927D040CE08081F5,
+			);
+			name = qlab;
+			sourceTree = "<group>";
+		};
 		528E5CE6B15E37983B2CB3D5 = {
 			isa = PBXGroup;
 			children = (
@@ -7550,6 +7585,7 @@
 		23E6D3E862CD3447CA729721 = {
 			isa = PBXGroup;
 			children = (
+				DEDB5E31916F2DAF5ACD55BC,
 				528E5CE6B15E37983B2CB3D5,
 				6885BE82A9F609D9D0F8B5CB,
 				F79FC768261B1C21B6005566,
@@ -8261,7 +8297,7 @@
 					"DEBUG=1",
 					"JUCE_SUPPORT_CARBON=0",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
-					"JUCE_APP_VERSION=1.7.0b18",
+					"JUCE_APP_VERSION=1.7.0b19",
 					"JUCE_APP_VERSION_HEX=0x10700",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
@@ -8323,7 +8359,7 @@
 					"NDEBUG=1",
 					"JUCE_SUPPORT_CARBON=0",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
-					"JUCE_APP_VERSION=1.7.0b18",
+					"JUCE_APP_VERSION=1.7.0b19",
 					"JUCE_APP_VERSION_HEX=0x10700",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
@@ -8691,6 +8727,7 @@
 				A0631088CC1340AA1E9A87A5,
 				E4169B77D7C1CE95BE7BEF0E,
 				1E73C91ECDD1662DE063FC59,
+				78DD155A285FEA96B966ACD4,
 				C61F054EF1FF46F1D32EC17B,
 				F560A7641D963370FF460F6A,
 				83A709B1B63AB9D0B893E8FE,
