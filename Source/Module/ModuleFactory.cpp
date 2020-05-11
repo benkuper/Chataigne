@@ -88,13 +88,13 @@ ModuleFactory::ModuleFactory() {
 	moduleDefs.add(new ModuleDefinition("Software", "DLight", &DLightModule::create));
 	moduleDefs.add(new ModuleDefinition("Software", "HeavyM", &HeavyMModule::create));
 	moduleDefs.add(new ModuleDefinition("Software", "LiveOSC2", &LiveOSCModule::create));
-	moduleDefs.add(new ModuleDefinition("Software", MadMapperModule::getTypeStringStatic(), &MadMapperModule::create));
+	moduleDefs.add(new ModuleDefinition("Software", "MadMapper", &MadMapperModule::create));
 	moduleDefs.add(new ModuleDefinition("Software", "Millumin", &MilluminModule::create));
+	moduleDefs.add(new ModuleDefinition("Software", "QLab", &QLabModule::create));
 	moduleDefs.add(new ModuleDefinition("Software", "Reaper", &ReaperModule::create));
 	moduleDefs.add(new ModuleDefinition("Software", "Resolume", &ResolumeModule::create));
 	moduleDefs.add(new ModuleDefinition("Software", "Watchout", &WatchoutModule::create));
     moduleDefs.add(new ModuleDefinition("Software", "PowerPoint", &PowerPointModule::create));
-    moduleDefs.add(new ModuleDefinition("Software", "QLab", &QLabModule::create));
 
 	moduleDefs.add(new ModuleDefinition("Generator", "Metronome", &MetronomeModule::create));
 	moduleDefs.add(new ModuleDefinition("Generator", "Signal", &SignalModule::create));
