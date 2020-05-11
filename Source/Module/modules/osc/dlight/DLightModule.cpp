@@ -12,7 +12,7 @@
 #include "../commands/OSCCommand.h"
 
 DLightModule::DLightModule() :
-	OSCModule(getDefaultTypeString(),8000,8001,false,true)
+	OSCModule(getDefaultTypeString(),7001,7000,false,true)
 {
 
 	var floatValParam = var();

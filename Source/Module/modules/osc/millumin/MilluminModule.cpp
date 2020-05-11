@@ -12,7 +12,7 @@
 #include "../commands/OSCCommand.h"
 
 MilluminModule::MilluminModule() :
-	OSCModule(getDefaultTypeString(),false,true)
+	OSCModule(getDefaultTypeString(),8001,8000,false,true)
 {
 
 	//COLUMN

@@ -20,7 +20,6 @@ public:
 	~MadMapperModule();
 
 
-	String getTypeString() const override { return getTypeStringStatic();  }
-	static const String getTypeStringStatic() { return "MadMapper"; }
+	String getTypeString() const override { return "MadMapper";  }
 	static MadMapperModule * create() { return new MadMapperModule(); }
 };
