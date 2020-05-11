@@ -20,6 +20,7 @@
 #include "modules/osc/dlight/DLightModule.h"
 #include "modules/osc/powerpoint/PowerpointModule.h"
 #include "modules/osc/heavym/HeavyMModule.h"
+#include "modules/osc/qlab/QLabModule.h"
 
 #include "modules/oscquery/generic/GenericOSCQueryModule.h"
 #include "modules/oscquery/MadMapperModule.h"
@@ -92,7 +93,8 @@ ModuleFactory::ModuleFactory() {
 	moduleDefs.add(new ModuleDefinition("Software", "Reaper", &ReaperModule::create));
 	moduleDefs.add(new ModuleDefinition("Software", "Resolume", &ResolumeModule::create));
 	moduleDefs.add(new ModuleDefinition("Software", "Watchout", &WatchoutModule::create));
-	moduleDefs.add(new ModuleDefinition("Software", "PowerPoint", &PowerPointModule::create));
+    moduleDefs.add(new ModuleDefinition("Software", "PowerPoint", &PowerPointModule::create));
+    moduleDefs.add(new ModuleDefinition("Software", "QLab", &QLabModule::create));
 
 	moduleDefs.add(new ModuleDefinition("Generator", "Metronome", &MetronomeModule::create));
 	moduleDefs.add(new ModuleDefinition("Generator", "Signal", &SignalModule::create));

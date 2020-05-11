@@ -29,6 +29,7 @@
         <FILE id="mQRViU" name="OSCQuery.png" compile="0" resource="1" file="Resources/Modules/OSCQuery.png"/>
         <FILE id="hswQuk" name="PJLink.png" compile="0" resource="1" file="Resources/Modules/PJLink.png"/>
         <FILE id="Hlm2j3" name="PowerPoint.png" compile="0" resource="1" file="Resources/Modules/PowerPoint.png"/>
+        <FILE id="CIlbr7" name="QLab.png" compile="0" resource="1" file="Resources/Modules/QLab.png"/>
         <FILE id="ccXjD9" name="Reaper.png" compile="0" resource="1" file="Resources/Modules/Reaper.png"/>
         <FILE id="E4CDyf" name="Resolume.png" compile="0" resource="1" file="Resources/Modules/Resolume.png"/>
         <FILE id="FUQUfm" name="Serial.png" compile="0" resource="1" file="Resources/Modules/Serial.png"/>
@@ -936,6 +937,10 @@
             </GROUP>
           </GROUP>
           <GROUP id="{69C80207-6257-F263-BF16-4493C9A16861}" name="osc">
+            <GROUP id="{3B0A89A4-F322-A731-CDC9-D211F66D5BF2}" name="qlab">
+              <FILE id="L2Lu1J" name="QLabModule.cpp" compile="1" resource="0" file="Source/Module/modules/osc/qlab/QLabModule.cpp"/>
+              <FILE id="ObJuB7" name="QLabModule.h" compile="0" resource="0" file="Source/Module/modules/osc/qlab/QLabModule.h"/>
+            </GROUP>
             <GROUP id="{DD297107-6126-0DF6-97C5-7161A333CE96}" name="ui">
               <FILE id="UEXg8w" name="OSCOutputEditor.cpp" compile="1" resource="0"
                     file="Source/Module/modules/osc/ui/OSCOutputEditor.cpp"/>
