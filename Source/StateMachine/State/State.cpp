@@ -27,6 +27,7 @@ State::State() :
 	pm.setForceDisabled(true);
 
 	//set default value
+	viewUISize->setBounds(50, 50,1000,1000);
 	viewUISize->setPoint(250, 200);
 	viewUISize->defaultValue = viewUISize->value;
 	viewUISize->resetValue();
