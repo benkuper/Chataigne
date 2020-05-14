@@ -28,11 +28,15 @@ public:
 
 	//Script
 	const Identifier launchAppId = "launchApp";
+	const Identifier launchCommandId = "launchCommand";
 
 	void updateIps();
 
 	bool launchFile(File f, String args = "");
+	void launchCommand(const String& command, bool silentMode);
+
 	static var launchFileFromScript(const var::NativeFunctionArgs& args);
+	static var launchCommandFromScript(const var::NativeFunctionArgs& args);
 
 	void timerCallback() override;
 

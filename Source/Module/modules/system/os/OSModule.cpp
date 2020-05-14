@@ -49,6 +49,7 @@ OSModule::OSModule() :
 	defManager->add(CommandDefinition::createDef(this, "Window", "Set Window Parameters", &OSWindowCommand::create, CommandContext::ACTION));
 
 	scriptObject.setMethod(launchAppId, &OSModule::launchFileFromScript);
+	scriptObject.setMethod(launchCommandId, &OSModule::launchCommandFromScript);
 
 	startTimer(5000);
 }
@@ -82,17 +83,42 @@ bool OSModule::launchFile(File f, String args)
 	return result;
 }
 
+void OSModule::launchCommand(const String& command, bool silentMode)
+{
+	int result = 0;
+#if JUCE_WINDOWS
+	if (silentMode) WinExec(command.getCharPointer(), SW_HIDE);
+	else result = system(command.getCharPointer());
+#else
+	result = system(command.getCharPointer());
+#endif
+	if (logOutgoingData->boolValue()) NLOG(niceName, "Launching : " + command);
+	if (result != 0) NLOGERROR(niceName, "Error trying to launch command : " << command);
+	outActivityTrigger->trigger();
+}
+
 var OSModule::launchFileFromScript(const var::NativeFunctionArgs& args)
 {
 	OSModule* m = getObjectFromJS<OSModule>(args);
 	if (!m->enabled->boolValue()) return var();
 
-	if (args.numArguments == 0) return var();
+	if (!checkNumArgs(m->niceName, args, 1)) return var();
 
 	File f = File(args.arguments[0]);
 	bool result = m->launchFile(f, args.numArguments > 1 ? args.arguments[1].toString():"");
 
 	return result;
+}
+
+var OSModule::launchCommandFromScript(const var::NativeFunctionArgs& args)
+{
+	OSModule* m = getObjectFromJS<OSModule>(args);
+	if (!m->enabled->boolValue()) return var();
+
+	if (!checkNumArgs(m->niceName, args, 1)) return var();
+
+	m->launchCommand(args.arguments[0].toString(), args.numArguments > 1 ? (int)args.arguments[1] > 0:false);
+	return var();
 }
 
 void OSModule::timerCallback()

@@ -27,6 +27,8 @@ public:
 	enum ActionType { OPEN_FILE, LAUNCH_APP, KILL_APP, LAUNCH_COMMAND, LAUNCH_COMMAND_FILE };
 	ActionType actionType;
 
+	OSModule* osModule;
+
 	StringParameter * target;
 	StringParameter * launchOptions;
 	BoolParameter * killMode;
