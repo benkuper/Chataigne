@@ -215,6 +215,8 @@ void Module::setupModuleFromJSONData(var data)
 
 	createControllablesForContainer(data.getProperty("parameters", var()), &moduleParams);
 
+	moduleParams.hideInEditor = moduleParams.controllables.size() == 0 && moduleParams.controllableContainers.size() == 0;
+
 	alwaysShowValues = data.getProperty("alwaysShowValues", false);
 	createControllablesForContainer(data.getProperty("values", var()), &valuesCC);
 
