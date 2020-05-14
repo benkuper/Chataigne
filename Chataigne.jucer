@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.7.0b19"
+<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.7.0b20"
               bundleIdentifier="benkuper.Chataigne" includeBinaryInAppConfig="1"
               jucerVersion="5.4.7" companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
               companyEmail="benjamin@kuperberg.fr" defines="" splashScreenColour="Dark"
@@ -938,6 +938,12 @@
           </GROUP>
           <GROUP id="{69C80207-6257-F263-BF16-4493C9A16861}" name="osc">
             <GROUP id="{3B0A89A4-F322-A731-CDC9-D211F66D5BF2}" name="qlab">
+              <GROUP id="{A79B5A6E-717E-4B85-ABAE-9F423A9CEC03}" name="commands">
+                <FILE id="daffUV" name="QLabWorkspaceCommand.cpp" compile="1" resource="0"
+                      file="Source/Module/modules/osc/qlab/commands/QLabWorkspaceCommand.cpp"/>
+                <FILE id="msF4jb" name="QLabWorkspaceCommand.h" compile="0" resource="0"
+                      file="Source/Module/modules/osc/qlab/commands/QLabWorkspaceCommand.h"/>
+              </GROUP>
               <FILE id="L2Lu1J" name="QLabModule.cpp" compile="1" resource="0" file="Source/Module/modules/osc/qlab/QLabModule.cpp"/>
               <FILE id="ObJuB7" name="QLabModule.h" compile="0" resource="0" file="Source/Module/modules/osc/qlab/QLabModule.h"/>
             </GROUP>

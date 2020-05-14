@@ -66,7 +66,7 @@
       <Optimization>Disabled</Optimization>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <AdditionalIncludeDirectories>..\..\JuceLibraryCode;..\..\..\JUCE\Modules;..\..\Modules;../../External/wiiuse;../../External/serial/include;../../External/asio;../../External/joycon/include;../../External/servus/include;../../External/dnssd/include;../../External/sdl/include;../../External/libartnet/include;../../External/hidapi/include;../../Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;DEBUG;_DEBUG;USE_KINECT=0;JUCER_VS2019_4E886FDA=1;JUCE_APP_VERSION=1.7.0b19;JUCE_APP_VERSION_HEX=0x10700;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_RTAS=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;DEBUG;_DEBUG;USE_KINECT=0;JUCER_VS2019_4E886FDA=1;JUCE_APP_VERSION=1.7.0b20;JUCE_APP_VERSION_HEX=0x10700;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_RTAS=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <PrecompiledHeader/>
@@ -113,7 +113,7 @@
     <ClCompile>
       <Optimization>Full</Optimization>
       <AdditionalIncludeDirectories>..\..\JuceLibraryCode;..\..\..\JUCE\Modules;..\..\Modules;../../External/wiiuse;../../External/serial/include;../../External/asio;../../External/joycon/include;../../External/servus/include;../../External/dnssd/include;../../External/sdl/include;../../External/libartnet/include;../../External/hidapi/include;../../Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;NDEBUG;USE_KINECT=0;JUCER_VS2019_4E886FDA=1;JUCE_APP_VERSION=1.7.0b19;JUCE_APP_VERSION_HEX=0x10700;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_RTAS=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;NDEBUG;USE_KINECT=0;JUCER_VS2019_4E886FDA=1;JUCE_APP_VERSION=1.7.0b20;JUCE_APP_VERSION_HEX=0x10700;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_RTAS=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <PrecompiledHeader/>
@@ -341,6 +341,7 @@
     <ClCompile Include="..\..\Source\Module\modules\oscquery\generic\ui\OSCQueryModuleEditor.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\oscquery\generic\GenericOSCQueryCommand.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\oscquery\generic\GenericOSCQueryModule.cpp"/>
+    <ClCompile Include="..\..\Source\Module\modules\osc\qlab\commands\QLabWorkspaceCommand.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\osc\qlab\QLabModule.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\osc\ui\OSCOutputEditor.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\osc\heavym\HeavyMModule.cpp"/>
@@ -3150,6 +3151,7 @@
     <ClInclude Include="..\..\Source\Module\modules\oscquery\generic\ui\OSCQueryModuleEditor.h"/>
     <ClInclude Include="..\..\Source\Module\modules\oscquery\generic\GenericOSCQueryCommand.h"/>
     <ClInclude Include="..\..\Source\Module\modules\oscquery\generic\GenericOSCQueryModule.h"/>
+    <ClInclude Include="..\..\Source\Module\modules\osc\qlab\commands\QLabWorkspaceCommand.h"/>
     <ClInclude Include="..\..\Source\Module\modules\osc\qlab\QLabModule.h"/>
     <ClInclude Include="..\..\Source\Module\modules\osc\ui\OSCOutputEditor.h"/>
     <ClInclude Include="..\..\Source\Module\modules\osc\heavym\HeavyMModule.h"/>

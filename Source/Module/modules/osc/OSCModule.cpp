@@ -488,8 +488,7 @@ void OSCModule::handleRoutedModuleValue(Controllable * c, RouteParams * p)
 	{
 		try
 		{
-
-			OSCMessage m(op->address->stringValue());
+			OSCMessage m(getAddressForRoutedValue(c, op));
 
 			if (c->type != Controllable::TRIGGER)
 			{
@@ -522,6 +521,11 @@ void OSCModule::handleRoutedModuleValue(Controllable * c, RouteParams * p)
 		}
 	}
 
+}
+
+String OSCModule::getAddressForRoutedValue(Controllable*, OSCRouteParams* op)
+{
+	return op->address->stringValue();
 }
 
 void OSCModule::onContainerParameterChangedInternal(Parameter * p)

@@ -83,7 +83,7 @@ public:
 
 	//SEND
 	virtual void setupSenders();
-	void sendOSC(const OSCMessage& msg, String ip = "", int port = 0);
+	virtual void sendOSC(const OSCMessage& msg, String ip = "", int port = 0);
 
 	//ZEROCONF
 	void setupZeroConf();
@@ -117,6 +117,7 @@ public:
 
 	virtual RouteParams * createRouteParamsForSourceValue(Module * sourceModule, Controllable * c, int /*index*/) override { return new OSCRouteParams(sourceModule, c); }
 	virtual void handleRoutedModuleValue(Controllable * c, RouteParams * p) override;
+	virtual String getAddressForRoutedValue(Controllable* c, OSCRouteParams* op);
 
 	virtual void onContainerParameterChangedInternal(Parameter * p) override;
 	virtual void onContainerNiceNameChanged() override;

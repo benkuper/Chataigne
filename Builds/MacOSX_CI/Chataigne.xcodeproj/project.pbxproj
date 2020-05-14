@@ -853,6 +853,10 @@
 			isa = PBXBuildFile;
 			fileRef = D1471EBF90391F73F895EB4B;
 		};
+		47BBD5974EE28F711EB6ADD9 = {
+			isa = PBXBuildFile;
+			fileRef = 9966740636DADE2FEF173085;
+		};
 		78DD155A285FEA96B966ACD4 = {
 			isa = PBXBuildFile;
 			fileRef = 4F83B5397387A9D6D179A881;
@@ -1676,6 +1680,13 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = State.cpp;
 			path = ../../Source/StateMachine/State/State.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
+		1324A112A1CE733670690A95 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = QLabWorkspaceCommand.h;
+			path = ../../Source/Module/modules/osc/qlab/commands/QLabWorkspaceCommand.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		13C16FF3A375B8FF066BC8A9 = {
@@ -4098,6 +4109,13 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = KinectV2Module.h;
 			path = ../../Source/Module/modules/controller/kinect/KinectV2Module.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		9966740636DADE2FEF173085 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = QLabWorkspaceCommand.cpp;
+			path = ../../Source/Module/modules/osc/qlab/commands/QLabWorkspaceCommand.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		9A67BA2570C4D67ECE35F809 = {
@@ -7427,9 +7445,19 @@
 			name = oscquery;
 			sourceTree = "<group>";
 		};
+		5B891119AD99B31D5F7B2E48 = {
+			isa = PBXGroup;
+			children = (
+				9966740636DADE2FEF173085,
+				1324A112A1CE733670690A95,
+			);
+			name = commands;
+			sourceTree = "<group>";
+		};
 		DEDB5E31916F2DAF5ACD55BC = {
 			isa = PBXGroup;
 			children = (
+				5B891119AD99B31D5F7B2E48,
 				4F83B5397387A9D6D179A881,
 				619FE26D927D040CE08081F5,
 			);
@@ -8297,7 +8325,7 @@
 					"DEBUG=1",
 					"JUCE_SUPPORT_CARBON=0",
 					"JUCER_XCODE_MAC_2F3811D6=1",
-					"JUCE_APP_VERSION=1.7.0b19",
+					"JUCE_APP_VERSION=1.7.0b20",
 					"JUCE_APP_VERSION_HEX=0x10700",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
@@ -8359,7 +8387,7 @@
 					"NDEBUG=1",
 					"JUCE_SUPPORT_CARBON=0",
 					"JUCER_XCODE_MAC_2F3811D6=1",
-					"JUCE_APP_VERSION=1.7.0b19",
+					"JUCE_APP_VERSION=1.7.0b20",
 					"JUCE_APP_VERSION_HEX=0x10700",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
@@ -8727,6 +8755,7 @@
 				A0631088CC1340AA1E9A87A5,
 				E4169B77D7C1CE95BE7BEF0E,
 				1E73C91ECDD1662DE063FC59,
+				47BBD5974EE28F711EB6ADD9,
 				78DD155A285FEA96B966ACD4,
 				C61F054EF1FF46F1D32EC17B,
 				F560A7641D963370FF460F6A,

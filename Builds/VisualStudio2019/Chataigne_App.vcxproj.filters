@@ -335,6 +335,9 @@
     <Filter Include="Chataigne\Source\Module\modules\oscquery">
       <UniqueIdentifier>{5E9A2258-4AEC-F20C-D8B5-0F4E051C8575}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\osc\qlab\commands">
+      <UniqueIdentifier>{8EF05525-D045-3C38-5776-201A1AC56DA9}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Chataigne\Source\Module\modules\osc\qlab">
       <UniqueIdentifier>{30393079-5F16-52B8-7A2A-86B1B0948721}</UniqueIdentifier>
     </Filter>
@@ -1800,6 +1803,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\oscquery\generic\GenericOSCQueryModule.cpp">
       <Filter>Chataigne\Source\Module\modules\oscquery\generic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Module\modules\osc\qlab\commands\QLabWorkspaceCommand.cpp">
+      <Filter>Chataigne\Source\Module\modules\osc\qlab\commands</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\osc\qlab\QLabModule.cpp">
       <Filter>Chataigne\Source\Module\modules\osc\qlab</Filter>
@@ -5363,6 +5369,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\oscquery\generic\GenericOSCQueryModule.h">
       <Filter>Chataigne\Source\Module\modules\oscquery\generic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Module\modules\osc\qlab\commands\QLabWorkspaceCommand.h">
+      <Filter>Chataigne\Source\Module\modules\osc\qlab\commands</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\osc\qlab\QLabModule.h">
       <Filter>Chataigne\Source\Module\modules\osc\qlab</Filter>

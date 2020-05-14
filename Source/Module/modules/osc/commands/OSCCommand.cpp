@@ -35,7 +35,6 @@ OSCCommand::~OSCCommand()
 
 void OSCCommand::rebuildAddress()
 {
-	
 	String targetAddress(addressModel);
 
 	if (targetAddress.containsChar('['))
@@ -54,6 +53,8 @@ void OSCCommand::rebuildAddress()
 		}
 	}
 
+	rebuildAddressInternal(targetAddress);
+
 	address->setValue(targetAddress);
 }
 
@@ -71,8 +72,14 @@ void OSCCommand::buildArgsAndParamsFromData(var data)
 				p->saveValueOnly = false;
 				p->loadJSONData(a);
 				argumentsContainer.addParameter(p);
-				if (a.getDynamicObject()->hasProperty("mappingIndex")) addTargetMappingParameterAt(p, a.getProperty("mappingIndex", 0));
+				if (a.hasProperty("mappingIndex")) addTargetMappingParameterAt(p, a.getProperty("mappingIndex", 0));
 
+				if (p->type == Controllable::ENUM && a.hasProperty("options"))
+				{
+					EnumParameter* ep = (EnumParameter*)p;
+					NamedValueSet optionsData = a.getProperty("options",var()).getDynamicObject()->getProperties();
+					for (auto &o : optionsData) ep->addOption(o.name.toString(), o.value);
+				}
 			}
 		}
 
@@ -152,6 +159,10 @@ void OSCCommand::triggerInternal()
 				m.addFloat32(((Point3DParameter*)a)->x);
 				m.addFloat32(((Point3DParameter*)a)->y);
 				m.addFloat32(((Point3DParameter*)a)->z);
+				break;
+
+			case Controllable::ENUM:
+				m.addArgument(OSCHelpers::varToArgument(((EnumParameter *)a)->getValueData()));
 				break;
 
 			default:

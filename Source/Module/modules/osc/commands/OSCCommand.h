@@ -29,6 +29,8 @@ public:
 	bool rebuildAddressOnParamChanged;
 
 	virtual void rebuildAddress();
+	virtual void rebuildAddressInternal(String& targetAddress) {}
+
 	void buildArgsAndParamsFromData(var data);
 
 

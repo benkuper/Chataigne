@@ -18,6 +18,12 @@ public:
 	QLabModule();
 	~QLabModule() {}
 
+	StringParameter* workspaceID;
+
+	String getWorkspacePrefix() const;
+
+	String getAddressForRoutedValue(Controllable* c, OSCRouteParams* op) override;
+
 	static QLabModule * create() { return new QLabModule(); }
 	virtual String getDefaultTypeString() const override { return "QLab"; }
 
