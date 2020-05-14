@@ -15,7 +15,8 @@
 #include "commands/OSWindowCommand.h"
 
 OSModule::OSModule() :
-	Module(getDefaultTypeString())
+	Module(getDefaultTypeString()),
+	Thread("OS-ChildProcess")
 {
 
 	osType = valuesCC.addEnumParameter("OS Type", "Type of OS");
@@ -50,6 +51,7 @@ OSModule::OSModule() :
 
 	scriptObject.setMethod(launchAppId, &OSModule::launchFileFromScript);
 	scriptObject.setMethod(launchCommandId, &OSModule::launchCommandFromScript);
+	scriptObject.setMethod(launchProcessId, &OSModule::launchProcessFromScript);
 
 	startTimer(5000);
 }
@@ -57,6 +59,8 @@ OSModule::OSModule() :
 OSModule::~OSModule()
 {
 	stopTimer();
+	signalThreadShouldExit();
+	waitForThreadToExit(100);
 }
 
 void OSModule::updateIps()
@@ -97,6 +101,21 @@ void OSModule::launchCommand(const String& command, bool silentMode)
 	outActivityTrigger->trigger();
 }
 
+void OSModule::launchChildProcess(const String& command)
+{
+	signalThreadShouldExit();
+	waitForThreadToExit(100); 
+	commandToRun = command;
+	startThread();
+}
+
+String OSModule::launchChildProcessBlocking(const String& command)
+{
+	childProcess.reset(new ChildProcess());
+	if (commandToRun.isNotEmpty()) childProcess->start(commandToRun);
+	return childProcess->readAllProcessOutput();
+}
+
 var OSModule::launchFileFromScript(const var::NativeFunctionArgs& args)
 {
 	OSModule* m = getObjectFromJS<OSModule>(args);
@@ -121,7 +140,40 @@ var OSModule::launchCommandFromScript(const var::NativeFunctionArgs& args)
 	return var();
 }
 
+var OSModule::launchProcessFromScript(const var::NativeFunctionArgs& args)
+{
+	OSModule* m = getObjectFromJS<OSModule>(args);
+	if (!m->enabled->boolValue()) return var();
+
+	if (!checkNumArgs(m->niceName, args, 1)) return var();
+
+	if (args.numArguments > 1 && (int)args.arguments[1] > 0) return m->launchChildProcessBlocking(args.arguments[0].toString());
+	else m->launchChildProcess(args.arguments[0]);
+
+	return var();
+}
+
 void OSModule::timerCallback()
 {
 	updateIps();
+}
+
+void OSModule::run()
+{
+	if (childProcess != nullptr && childProcess->isRunning()) childProcess->kill();
+	childProcess.reset(new ChildProcess());
+	if(commandToRun.isNotEmpty()) childProcess->start(commandToRun);
+
+	char buffer[1024];
+	while (!threadShouldExit() && childProcess->isRunning())
+	{
+		int numRead = childProcess->readProcessOutput(buffer, 1024);
+		if (numRead > 0)
+		{
+			String s(buffer, numRead);
+			scriptManager->callFunctionOnAllItems("processDataReceived", s);
+		}
+	}
+
+	if(childProcess != nullptr && childProcess->isRunning()) childProcess->kill();
 }

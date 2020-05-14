@@ -14,7 +14,8 @@
 
 class OSModule :
 	public Module,
-	public Timer
+	public Timer,
+	public Thread
 {
 public:
 	OSModule();
@@ -29,18 +30,29 @@ public:
 	//Script
 	const Identifier launchAppId = "launchApp";
 	const Identifier launchCommandId = "launchCommand";
+	const Identifier launchProcessId = "launchProcess";
+
+	//child process
+	String commandToRun;
+	std::unique_ptr<ChildProcess> childProcess;
 
 	void updateIps();
 
 	bool launchFile(File f, String args = "");
 	void launchCommand(const String& command, bool silentMode);
+	void launchChildProcess(const String& command);
+	String launchChildProcessBlocking(const String& command);
 
 	static var launchFileFromScript(const var::NativeFunctionArgs& args);
 	static var launchCommandFromScript(const var::NativeFunctionArgs& args);
+	static var launchProcessFromScript(const var::NativeFunctionArgs& args);
 
 	void timerCallback() override;
 
+	void run() override;
+
 	virtual String getDefaultTypeString() const override { return "OS"; }
 	static OSModule * create() { return new OSModule(); }
+
 
 };
