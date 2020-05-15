@@ -1822,13 +1822,6 @@
 			path = ../../Source/Module/Community/CommunityModuleManager.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
-		1AEEEB0D0B4E406DA76434DE = {
-			isa = PBXFileReference;
-			lastKnownFileType = image.png;
-			name = padlock.png;
-			path = ../../Resources/padlock.png;
-			sourceTree = "SOURCE_ROOT";
-		};
 		1B9A73C8CB3C33D68C682295 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -6220,7 +6213,6 @@
 				AD11D16FF7B59083692E9F22,
 				ABE980A8C8A9E5C7E7344E09,
 				66A94D900181382D38807D43,
-				1AEEEB0D0B4E406DA76434DE,
 				EFDAED7A7D09C4AB1AF0BC5D,
 				897F4323631CFAAAD468082A,
 				4CD7424E98D53E826B1E9B0B,
@@ -8325,7 +8317,7 @@
 					"DEBUG=1",
 					"JUCE_SUPPORT_CARBON=0",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
-					"JUCE_APP_VERSION=1.7.0b20",
+					"JUCE_APP_VERSION=1.7.0b21",
 					"JUCE_APP_VERSION_HEX=0x10700",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
@@ -8387,7 +8379,7 @@
 					"NDEBUG=1",
 					"JUCE_SUPPORT_CARBON=0",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
-					"JUCE_APP_VERSION=1.7.0b20",
+					"JUCE_APP_VERSION=1.7.0b21",
 					"JUCE_APP_VERSION_HEX=0x10700",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",

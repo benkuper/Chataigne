@@ -58,6 +58,28 @@ void ColorMappingLayer::selectAll(bool addToSelection)
     colorManager.askForSelectAllItems(addToSelection);
 }
 
+Array<Inspectable*> ColorMappingLayer::selectAllItemsBetweenInternal(float start, float end)
+{
+    Array<Inspectable*> result;
+    result.addArray(colorManager.getItemsInTimespan(start, end));
+    return result;
+}
+
+Array<UndoableAction*> ColorMappingLayer::getRemoveAllItemsBetweenInternal(float start, float end)
+{
+    return colorManager.getRemoveItemsUndoableAction(colorManager.getItemsInTimespan(start, end));
+}
+
+Array<UndoableAction*> ColorMappingLayer::getInsertTimespanInternal(float start, float length)
+{
+    return colorManager.getMoveKeysBy(start, length);
+}
+
+Array<UndoableAction*> ColorMappingLayer::getRemoveTimespanInternal(float start, float end)
+{
+    return colorManager.getRemoveTimespan(start, end);
+}
+
 void ColorMappingLayer::sequenceCurrentTimeChanged(Sequence* s, float prevTime, bool seeking)
 {
     colorManager.position->setValue(sequence->currentTime->floatValue());

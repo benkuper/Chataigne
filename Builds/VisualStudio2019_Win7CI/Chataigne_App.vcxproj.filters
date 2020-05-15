@@ -8723,9 +8723,6 @@
     <None Include="..\..\Resources\out.png">
       <Filter>Chataigne\Resources</Filter>
     </None>
-    <None Include="..\..\Resources\padlock.png">
-      <Filter>Chataigne\Resources</Filter>
-    </None>
     <None Include="..\..\Resources\play.png">
       <Filter>Chataigne\Resources</Filter>
     </None>
