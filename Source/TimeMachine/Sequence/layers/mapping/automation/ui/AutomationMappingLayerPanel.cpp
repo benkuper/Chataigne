@@ -27,5 +27,5 @@ void AutomationMappingLayerPanel::resizedInternalPanelContent(Rectangle<int>& r)
 {
     MappingLayerPanel::resizedInternalPanelContent(r);
     r.removeFromTop(2);
-    armUI->setBounds(r.removeFromTop(14));
+    armUI->setBounds(r.removeFromTop(16).reduced(4, 0));
 }

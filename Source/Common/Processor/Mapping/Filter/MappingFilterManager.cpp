@@ -19,7 +19,6 @@
 #include "filters/number/LagFilter.h"
 #include "filters/number/CropFilter.h"
 #include "filters/number/MathFilter.h"
-#include "filters/number/OffsetFilter.h"
 
 #include "filters/conversion/ConversionFilter.h"
 #include "filters/conversion/SimpleConversionFilters.h"
@@ -39,8 +38,7 @@ MappingFilterManager::MappingFilterManager() :
 	factory.defs.add(Factory<MappingFilter>::Definition::createDef("Remap", "Math", &MathFilter::create));
 	factory.defs.add(Factory<MappingFilter>::Definition::createDef("Remap", "Inverse", &InverseFilter::create));
 	factory.defs.add(Factory<MappingFilter>::Definition::createDef("Remap", "Crop", &CropFilter::create));
-	factory.defs.add(Factory<MappingFilter>::Definition::createDef("Remap", "Offset", &OffsetFilter::create));
-	//
+	
 	factory.defs.add(Factory<MappingFilter>::Definition::createDef("Conversion", "Convert To Integer", &ToIntFilter::create));
 	factory.defs.add(Factory<MappingFilter>::Definition::createDef("Conversion", "Convert To Float", &ToFloatFilter::create));
 	factory.defs.add(Factory<MappingFilter>::Definition::createDef("Conversion", "Convert To String", &ToStringFilter::create));

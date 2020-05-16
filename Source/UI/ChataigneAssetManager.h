@@ -33,7 +33,6 @@ public:
 	Image getNextCueImage();
 	Image getSnapImage();
 	Image getAboutImage();
-	Image getLockImage();
 
 	ImageButton * getSetupBTImage(const Image & image);
 	ImageButton * getBTDoubleImage(const Image & onImage, const Image &offImage);

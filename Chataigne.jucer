@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.7.0b20"
+<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.7.0b21"
               bundleIdentifier="benkuper.Chataigne" includeBinaryInAppConfig="1"
               jucerVersion="5.4.7" companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
               companyEmail="benjamin@kuperberg.fr" defines="" splashScreenColour="Dark"
@@ -77,7 +77,6 @@
       <FILE id="WlJm0v" name="in.png" compile="0" resource="1" file="Resources/in.png"/>
       <FILE id="A952C8" name="nextcue.png" compile="0" resource="1" file="Resources/nextcue.png"/>
       <FILE id="NkuJtC" name="out.png" compile="0" resource="1" file="Resources/out.png"/>
-      <FILE id="mpY0b5" name="padlock.png" compile="0" resource="1" file="Resources/padlock.png"/>
       <FILE id="c9BYPH" name="play.png" compile="0" resource="1" file="Resources/play.png"/>
       <FILE id="S9TDqN" name="prevcue.png" compile="0" resource="1" file="Resources/prevcue.png"/>
       <FILE id="lg5eC9" name="smallstripe.png" compile="0" resource="1" file="Resources/smallstripe.png"/>
@@ -377,9 +376,6 @@
                   <FILE id="xLQBcB" name="LagFilter.h" compile="0" resource="0" file="Source/Common/Processor/Mapping/Filter/filters/number/LagFilter.h"/>
                   <FILE id="UXISiP" name="MathFilter.cpp" compile="1" resource="0" file="Source/Common/Processor/Mapping/Filter/filters/number/MathFilter.cpp"/>
                   <FILE id="BPKqhS" name="MathFilter.h" compile="0" resource="0" file="Source/Common/Processor/Mapping/Filter/filters/number/MathFilter.h"/>
-                  <FILE id="JgZZ0J" name="OffsetFilter.cpp" compile="1" resource="0"
-                        file="Source/Common/Processor/Mapping/Filter/filters/number/OffsetFilter.cpp"/>
-                  <FILE id="re34cq" name="OffsetFilter.h" compile="0" resource="0" file="Source/Common/Processor/Mapping/Filter/filters/number/OffsetFilter.h"/>
                   <FILE id="gYo8Qa" name="SimpleRemapFilter.cpp" compile="1" resource="0"
                         file="Source/Common/Processor/Mapping/Filter/filters/number/SimpleRemapFilter.cpp"/>
                   <FILE id="sx4EHQ" name="SimpleRemapFilter.h" compile="0" resource="0"

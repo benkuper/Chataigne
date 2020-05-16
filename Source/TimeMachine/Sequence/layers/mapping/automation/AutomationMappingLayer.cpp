@@ -67,6 +67,30 @@ void AutomationMappingLayer::selectAll(bool addToSelection)
     automation->askForSelectAllItems(addToSelection);
 }
 
+Array<Inspectable*> AutomationMappingLayer::selectAllItemsBetweenInternal(float start, float end)
+{
+    Array<Inspectable*> result;
+    Array<AutomationKey*> keys = automation->getKeysBetweenPositions(start, end);
+    result.addArray(keys);
+    return result;
+}
+
+Array<UndoableAction*> AutomationMappingLayer::getRemoveAllItemsBetweenInternal(float start, float end)
+{
+    return automation->getRemoveItemsUndoableAction(automation->getKeysBetweenPositions(start, end));
+}
+
+Array<UndoableAction*> AutomationMappingLayer::getInsertTimespanInternal(float start, float length)
+{
+    return automation->getMoveKeysBy(start, length);
+}
+
+Array<UndoableAction*> AutomationMappingLayer::getRemoveTimespanInternal(float start, float end)
+{
+    return automation->getRemoveTimespan(start, end);
+}
+
+
 void AutomationMappingLayer::sequenceCurrentTimeChangedInternal(Sequence* s, float prevTime, bool seeking)
 {
     if (automation == nullptr) return;

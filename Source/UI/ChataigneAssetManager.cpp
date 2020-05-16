@@ -65,10 +65,6 @@ Image ChataigneAssetManager::getAboutImage()
 	return ImageCache::getFromMemory(BinaryData::about_png, BinaryData::about_pngSize);
 }
 
-Image ChataigneAssetManager::getLockImage()
-{
-	return ImageCache::getFromMemory(BinaryData::padlock_png, BinaryData::padlock_pngSize);
-}
 
 ImageButton * ChataigneAssetManager::getSetupBTImage(const Image & image)
 {

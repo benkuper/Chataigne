@@ -341,10 +341,6 @@
 			isa = PBXBuildFile;
 			fileRef = 29D04BA49B995123DB200E5E;
 		};
-		3B485009BC2E17F9C9F3F891 = {
-			isa = PBXBuildFile;
-			fileRef = 0D4E4DD1A72C4AF6A613A8C5;
-		};
 		055AACAE538AC013700E8ABA = {
 			isa = PBXBuildFile;
 			fileRef = 53784EA2F05A99905184F791;
@@ -1570,13 +1566,6 @@
 			path = ../../Resources/Templates/Scripts/streamingScriptTemplate.js;
 			sourceTree = "SOURCE_ROOT";
 		};
-		0D4E4DD1A72C4AF6A613A8C5 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = OffsetFilter.cpp;
-			path = ../../Source/Common/Processor/Mapping/Filter/filters/number/OffsetFilter.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
 		0D583563EF3150154E0FA3C4 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -1820,13 +1809,6 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = CommunityModuleManager.cpp;
 			path = ../../Source/Module/Community/CommunityModuleManager.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
-		1AEEEB0D0B4E406DA76434DE = {
-			isa = PBXFileReference;
-			lastKnownFileType = image.png;
-			name = padlock.png;
-			path = ../../Resources/padlock.png;
 			sourceTree = "SOURCE_ROOT";
 		};
 		1B9A73C8CB3C33D68C682295 = {
@@ -4566,13 +4548,6 @@
 			path = ../../Source/Module/modules/serial/SerialModule.h;
 			sourceTree = "SOURCE_ROOT";
 		};
-		ADCBDA61AEBC12CB643E0EC2 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = OffsetFilter.h;
-			path = ../../Source/Common/Processor/Mapping/Filter/filters/number/OffsetFilter.h;
-			sourceTree = "SOURCE_ROOT";
-		};
 		AE434F9AEE0B3A6F07363076 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -6220,7 +6195,6 @@
 				AD11D16FF7B59083692E9F22,
 				ABE980A8C8A9E5C7E7344E09,
 				66A94D900181382D38807D43,
-				1AEEEB0D0B4E406DA76434DE,
 				EFDAED7A7D09C4AB1AF0BC5D,
 				897F4323631CFAAAD468082A,
 				4CD7424E98D53E826B1E9B0B,
@@ -6585,8 +6559,6 @@
 				E45ADC056D20AB660810AC6D,
 				29D04BA49B995123DB200E5E,
 				4AB737A3CFA4289120C76020,
-				0D4E4DD1A72C4AF6A613A8C5,
-				ADCBDA61AEBC12CB643E0EC2,
 				53784EA2F05A99905184F791,
 				2E93B8A7CF9DCDC3A41DEA0C,
 				9CB8705EAE553E539485DE5D,
@@ -8325,7 +8297,7 @@
 					"DEBUG=1",
 					"JUCE_SUPPORT_CARBON=0",
 					"JUCER_XCODE_MAC_2F3811D6=1",
-					"JUCE_APP_VERSION=1.7.0b20",
+					"JUCE_APP_VERSION=1.7.0b21",
 					"JUCE_APP_VERSION_HEX=0x10700",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
@@ -8387,7 +8359,7 @@
 					"NDEBUG=1",
 					"JUCE_SUPPORT_CARBON=0",
 					"JUCER_XCODE_MAC_2F3811D6=1",
-					"JUCE_APP_VERSION=1.7.0b20",
+					"JUCE_APP_VERSION=1.7.0b21",
 					"JUCE_APP_VERSION_HEX=0x10700",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
@@ -8627,7 +8599,6 @@
 				710FA670E1EE70E5ACF7763C,
 				5A5F001A3D9AA2F1C792C65A,
 				B24922D22994B14496B4D916,
-				3B485009BC2E17F9C9F3F891,
 				055AACAE538AC013700E8ABA,
 				71A9993758979AABD4792AAE,
 				4E9EC2BABDB2115B4DF0F91E,
