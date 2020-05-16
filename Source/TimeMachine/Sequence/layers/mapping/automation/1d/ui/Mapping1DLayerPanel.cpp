@@ -15,6 +15,7 @@ Mapping1DLayerPanel::Mapping1DLayerPanel(Mapping1DLayer* layer) :
     ml(layer)
 {
     valueRangeUI.reset((ControllableEditor *)ml->automation1D.valueRange->getEditor(false));
+    valueRangeUI->showLabel = true;
     addAndMakeVisible(valueRangeUI.get());
 
     rangeRemapUI.reset((ControllableEditor*)ml->automation1D.rangeRemapMode->getEditor(false));
@@ -28,8 +29,8 @@ Mapping1DLayerPanel::~Mapping1DLayerPanel()
 void Mapping1DLayerPanel::resizedInternalPanelContent(Rectangle<int>& r)
 {
     AutomationMappingLayerPanel::resizedInternalPanelContent(r);
-    r.removeFromTop(2);
-    valueRangeUI->setBounds(r.removeFromTop(14));
-    r.removeFromTop(2);
-    rangeRemapUI->setBounds(r.removeFromTop(14));
+    r.removeFromTop(8);
+    valueRangeUI->setBounds(r.removeFromTop(16).reduced(4, 0));
+    r.removeFromTop(8);
+    rangeRemapUI->setBounds(r.removeFromTop(16).reduced(4, 0));
 }
