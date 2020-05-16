@@ -132,7 +132,6 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/InverseFilter_3972b9f4.o \
   $(JUCE_OBJDIR)/LagFilter_b09a4156.o \
   $(JUCE_OBJDIR)/MathFilter_14041a3e.o \
-  $(JUCE_OBJDIR)/OffsetFilter_df572fc9.o \
   $(JUCE_OBJDIR)/SimpleRemapFilter_f05c323b.o \
   $(JUCE_OBJDIR)/SimpleSmoothFilter_24b6ca36.o \
   $(JUCE_OBJDIR)/ConversionParamValueLink_c54f9565.o \
@@ -707,11 +706,6 @@ $(JUCE_OBJDIR)/LagFilter_b09a4156.o: ../../Source/Common/Processor/Mapping/Filte
 $(JUCE_OBJDIR)/MathFilter_14041a3e.o: ../../Source/Common/Processor/Mapping/Filter/filters/number/MathFilter.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling MathFilter.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/OffsetFilter_df572fc9.o: ../../Source/Common/Processor/Mapping/Filter/filters/number/OffsetFilter.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling OffsetFilter.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/SimpleRemapFilter_f05c323b.o: ../../Source/Common/Processor/Mapping/Filter/filters/number/SimpleRemapFilter.cpp

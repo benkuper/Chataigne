@@ -25,6 +25,8 @@ SimpleRemapFilter::SimpleRemapFilter(var params) :
 	targetOut->isCustomizableByUser = false;
 	targetOut->setPoint(0, 1);
 
+	forceFloatOutput = filterParams.addBoolParameter("Force Float", "If checked, this will force transforming integer in floats", false);
+
 	filterTypeFilters.add(Controllable::FLOAT, Controllable::INT);
 	autoSetRange = false;
 }
@@ -35,7 +37,18 @@ SimpleRemapFilter::~SimpleRemapFilter()
 
 Parameter* SimpleRemapFilter::setupSingleParameterInternal(Parameter* source)
 {
-	Parameter* p = MappingFilter::setupSingleParameterInternal(source);
+	Parameter* p = nullptr;
+	if (forceFloatOutput->boolValue())
+	{
+		p = new FloatParameter(source->niceName, source->description, source->value, source->minimumValue, source->maximumValue);
+		p->isSavable = false;
+		p->setControllableFeedbackOnly(true);
+	}
+	else
+	{
+		p = MappingFilter::setupSingleParameterInternal(source);
+	}
+
 	if (!useCustomInputRange->isOverriden || !useCustomInputRange->boolValue()) useCustomInputRange->setValue(!source->hasRange());
 	p->setRange(jmin<float>(targetOut->x, targetOut->y), jmax<float>(targetOut->x, targetOut->y));
 	return p;
@@ -80,5 +93,11 @@ void SimpleRemapFilter::filterParamChanged(Parameter * p)
 		{
 			if(f->type == Controllable::FLOAT) f->setRange(jmin<float>(targetOut->x,targetOut->y), jmax<float>(targetOut->x, targetOut->y));
 		}
+	}
+	else if (p == forceFloatOutput)
+	{
+		setupParametersInternal();
+		mappingFilterListeners.call(&FilterListener::filteredParamsChanged, this);
+		filterAsyncNotifier.addMessage(new FilterEvent(FilterEvent::FILTER_REBUILT, this));
 	}
 }

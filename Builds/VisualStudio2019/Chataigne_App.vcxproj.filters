@@ -1420,9 +1420,6 @@
     <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\MathFilter.cpp">
       <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters\number</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\OffsetFilter.cpp">
-      <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters\number</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\SimpleRemapFilter.cpp">
       <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters\number</Filter>
     </ClCompile>
@@ -5032,9 +5029,6 @@
       <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters\number</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\MathFilter.h">
-      <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters\number</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\OffsetFilter.h">
       <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters\number</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\SimpleRemapFilter.h">

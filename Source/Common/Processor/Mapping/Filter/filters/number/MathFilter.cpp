@@ -80,7 +80,7 @@ void MathFilter::processSingleParameterInternal(Parameter * source, Parameter * 
 		}
 	}
 
-	source->setValue(val);
+	out->setValue(val);
 }
 
 void MathFilter::updateFilteredParamsRange()
@@ -103,23 +103,39 @@ void MathFilter::updateFilteredParamsRange()
 
 		var newMin = var();
 		var newMax = var();
-
-		if (!sourceParam->isComplex())
+		
+		Operation o = operation->getValueDataAsEnum<Operation>();
+		switch (o)
 		{
 
-			newMin = getProcessedValue(sourceParam->minimumValue);
-			newMax = jmax(getProcessedValue(sourceParam->maximumValue), (float)newMin + .001f);
-		}
-		else
+		case MODULO:
+			newMin = jmin(0.f, operationValue->floatValue());
+			newMax = jmax(0.f, operationValue->floatValue());
+			break;
+
+		default:
 		{
-			for (int j = 0; j < sourceParam->value.size(); j++)
+			if (!sourceParam->isComplex())
 			{
-				float nmin = getProcessedValue(sourceParam->minimumValue[j], j);
-				float nmax = getProcessedValue(sourceParam->maximumValue[j], j);
 
-				newMin.append(nmin);
-				newMax.append(jmax(nmax, nmin + .001f));
+				float nmin = getProcessedValue(sourceParam->minimumValue);
+				float nmax = getProcessedValue(sourceParam->maximumValue);
+				newMin = jmin(nmin, nmax);
+				newMax = jmax(nmin, nmax);
 			}
+			else
+			{
+				for (int j = 0; j < sourceParam->value.size(); j++)
+				{
+					float nmin = getProcessedValue(sourceParam->minimumValue[j], j);
+					float nmax = getProcessedValue(sourceParam->maximumValue[j], j);
+
+					newMin.append(jmin(nmin, nmax));
+					newMax.append(jmax(nmin, nmax));
+				}
+			}
+		}
+		break;
 		}
 
 		p->setRange(newMin, newMax);
@@ -166,7 +182,7 @@ float MathFilter::getProcessedValue(float val, int index)
 bool MathFilter::filteredParamShouldHaveRange()
 {
 	Operation o = operation->getValueDataAsEnum<Operation>();
-	return o != FLOOR && o != CEIL && o != ROUND && o != MODULO;
+	return o != FLOOR && o != CEIL && o != ROUND;
 }
 
 var MathFilter::getJSONData()

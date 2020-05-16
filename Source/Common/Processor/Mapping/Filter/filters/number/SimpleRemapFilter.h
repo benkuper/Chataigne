@@ -23,6 +23,7 @@ public:
 	BoolParameter * useCustomInputRange;
 	Point2DParameter * targetIn;
 	Point2DParameter * targetOut;
+	BoolParameter* forceFloatOutput;
 
 	Parameter * setupSingleParameterInternal(Parameter * source) override;
 	void processSingleParameterInternal(Parameter * source, Parameter * out) override;

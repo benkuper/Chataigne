@@ -376,9 +376,6 @@
                   <FILE id="xLQBcB" name="LagFilter.h" compile="0" resource="0" file="Source/Common/Processor/Mapping/Filter/filters/number/LagFilter.h"/>
                   <FILE id="UXISiP" name="MathFilter.cpp" compile="1" resource="0" file="Source/Common/Processor/Mapping/Filter/filters/number/MathFilter.cpp"/>
                   <FILE id="BPKqhS" name="MathFilter.h" compile="0" resource="0" file="Source/Common/Processor/Mapping/Filter/filters/number/MathFilter.h"/>
-                  <FILE id="JgZZ0J" name="OffsetFilter.cpp" compile="1" resource="0"
-                        file="Source/Common/Processor/Mapping/Filter/filters/number/OffsetFilter.cpp"/>
-                  <FILE id="re34cq" name="OffsetFilter.h" compile="0" resource="0" file="Source/Common/Processor/Mapping/Filter/filters/number/OffsetFilter.h"/>
                   <FILE id="gYo8Qa" name="SimpleRemapFilter.cpp" compile="1" resource="0"
                         file="Source/Common/Processor/Mapping/Filter/filters/number/SimpleRemapFilter.cpp"/>
                   <FILE id="sx4EHQ" name="SimpleRemapFilter.h" compile="0" resource="0"

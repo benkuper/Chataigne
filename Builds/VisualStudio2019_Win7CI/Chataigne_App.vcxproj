@@ -216,7 +216,6 @@
     <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\InverseFilter.cpp"/>
     <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\LagFilter.cpp"/>
     <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\MathFilter.cpp"/>
-    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\OffsetFilter.cpp"/>
     <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\SimpleRemapFilter.cpp"/>
     <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\SimpleSmoothFilter.cpp"/>
     <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\conversion\ConversionParamValueLink.cpp"/>
@@ -3039,7 +3038,6 @@
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\InverseFilter.h"/>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\LagFilter.h"/>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\MathFilter.h"/>
-    <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\OffsetFilter.h"/>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\SimpleRemapFilter.h"/>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\SimpleSmoothFilter.h"/>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\conversion\ConversionParamValueLink.h"/>
