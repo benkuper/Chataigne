@@ -35,7 +35,7 @@ QLabModule::QLabModule() :
     fileTargetArgs.append(ControllableUtil::createDataForParam(StringParameter::getTypeStringStatic(), "File Target Path", "Path to the cue target file", "/path/to/the/target.file"));
 
     var timeArgs = var();
-    var timeArg =  ControllableUtil::createDataForParam(FloatParameter::getTypeStringStatic(), "Time", "Time",  0., 0., MAXFLOAT);
+    var timeArg =  ControllableUtil::createDataForParam(FloatParameter::getTypeStringStatic(), "Time", "Time",  0., 0., INT32_MAX);
     timeArg.getDynamicObject()->setProperty("mappingIndex", 0);
     timeArg.getDynamicObject()->setProperty("defaultUI", FloatParameter::TIME);
     timeArgs.append(timeArg);
