@@ -155,6 +155,7 @@ MIDISysExCommand::MIDISysExCommand(MIDIModule * module, CommandContext context, 
 	MIDICommand(module, context, params),
 	dataContainer("Bytes")
 {
+	saveAndLoadRecursiveData = true;
 	numBytes = addIntParameter("Num bytes", "Number of bytes to send", 1, 1, 512);
 	addChildControllableContainer(&dataContainer);
 	updateBytesParams();
