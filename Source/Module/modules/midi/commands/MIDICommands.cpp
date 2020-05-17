@@ -174,7 +174,8 @@ void MIDISysExCommand::updateBytesParams()
 	while (dataContainer.controllables.size() < numBytes->intValue())
 	{
 		String index = String(dataContainer.controllables.size());
-		dataContainer.addIntParameter("#" + index, "Data for the byte #" + index, 0, 0, 255);
+		IntParameter * p = dataContainer.addIntParameter("#" + index, "Data for the byte #" + index, 0, 0, 255);
+		p->hexMode = true;
 	}
 
 }
