@@ -17,7 +17,6 @@ ChataigneTriggerLayer::ChataigneTriggerLayer(Sequence* _sequence, var params) :
 	TriggerLayer(_sequence, getTypeString(), params)
 {
 	helpID = "ChataigneTriggerLayer";
-	color->setColor(ACTION_COLOR.darker());
 	setManager(new ChataigneTriggerManager(this, _sequence));
 }
 
