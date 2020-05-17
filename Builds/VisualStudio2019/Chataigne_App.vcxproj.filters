@@ -1028,11 +1028,23 @@
     <Filter Include="JUCE Modules\juce_organicui\controllable\dashboard">
       <UniqueIdentifier>{35082EBD-0C03-9FC7-51FE-10F9A70F1F5E}</UniqueIdentifier>
     </Filter>
+    <Filter Include="JUCE Modules\juce_organicui\controllable\detective\ui">
+      <UniqueIdentifier>{16E012BF-C71F-78C0-3115-36C57D781B20}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_organicui\controllable\detective">
+      <UniqueIdentifier>{30B6B3C5-1146-BAB5-0344-E4476D77330E}</UniqueIdentifier>
+    </Filter>
     <Filter Include="JUCE Modules\juce_organicui\controllable\parameter\dashboard\ui">
       <UniqueIdentifier>{300D3F70-B324-481C-2302-15089971B7C0}</UniqueIdentifier>
     </Filter>
     <Filter Include="JUCE Modules\juce_organicui\controllable\parameter\dashboard">
       <UniqueIdentifier>{E333732D-0D82-ED3D-963B-6E7FD764787E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_organicui\controllable\parameter\detective\ui">
+      <UniqueIdentifier>{E10327CB-2F25-43A6-1E65-F59DE08B9E61}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_organicui\controllable\parameter\detective">
+      <UniqueIdentifier>{25814E19-2B26-BC90-3B89-943EAAE4EE44}</UniqueIdentifier>
     </Filter>
     <Filter Include="JUCE Modules\juce_organicui\controllable\parameter\gradient\ui">
       <UniqueIdentifier>{59B19CB2-CF22-F681-38D2-5345DC070B6A}</UniqueIdentifier>
@@ -4150,11 +4162,29 @@
     <ClCompile Include="..\..\Modules\juce_organicui\controllable\dashboard\DashboardTriggerItem.cpp">
       <Filter>JUCE Modules\juce_organicui\controllable\dashboard</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\controllable\detective\ui\ControllableDetectiveWatcherUI.cpp">
+      <Filter>JUCE Modules\juce_organicui\controllable\detective\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\controllable\detective\ui\DetectivePanel.cpp">
+      <Filter>JUCE Modules\juce_organicui\controllable\detective\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\controllable\detective\ControllableDetectiveWatcher.cpp">
+      <Filter>JUCE Modules\juce_organicui\controllable\detective</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\controllable\detective\Detective.cpp">
+      <Filter>JUCE Modules\juce_organicui\controllable\detective</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\controllable\parameter\dashboard\ui\DashboardParameterItemUI.cpp">
       <Filter>JUCE Modules\juce_organicui\controllable\parameter\dashboard\ui</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\controllable\parameter\dashboard\DashboardParameterItem.cpp">
       <Filter>JUCE Modules\juce_organicui\controllable\parameter\dashboard</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\controllable\parameter\detective\ui\ParameterDetectiveWatcherUI.cpp">
+      <Filter>JUCE Modules\juce_organicui\controllable\parameter\detective\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\controllable\parameter\detective\ParameterDetectiveWatcher.cpp">
+      <Filter>JUCE Modules\juce_organicui\controllable\parameter\detective</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\controllable\parameter\gradient\ui\GradientColorManagerEditor.cpp">
       <Filter>JUCE Modules\juce_organicui\controllable\parameter\gradient\ui</Filter>
@@ -7935,11 +7965,29 @@
     <ClInclude Include="..\..\Modules\juce_organicui\controllable\dashboard\DashboardTriggerItem.h">
       <Filter>JUCE Modules\juce_organicui\controllable\dashboard</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_organicui\controllable\detective\ui\ControllableDetectiveWatcherUI.h">
+      <Filter>JUCE Modules\juce_organicui\controllable\detective\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_organicui\controllable\detective\ui\DetectivePanel.h">
+      <Filter>JUCE Modules\juce_organicui\controllable\detective\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_organicui\controllable\detective\ControllableDetectiveWatcher.h">
+      <Filter>JUCE Modules\juce_organicui\controllable\detective</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_organicui\controllable\detective\Detective.h">
+      <Filter>JUCE Modules\juce_organicui\controllable\detective</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Modules\juce_organicui\controllable\parameter\dashboard\ui\DashboardParameterItemUI.h">
       <Filter>JUCE Modules\juce_organicui\controllable\parameter\dashboard\ui</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Modules\juce_organicui\controllable\parameter\dashboard\DashboardParameterItem.h">
       <Filter>JUCE Modules\juce_organicui\controllable\parameter\dashboard</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_organicui\controllable\parameter\detective\ui\ParameterDetectiveWatcherUI.h">
+      <Filter>JUCE Modules\juce_organicui\controllable\parameter\detective\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_organicui\controllable\parameter\detective\ParameterDetectiveWatcher.h">
+      <Filter>JUCE Modules\juce_organicui\controllable\parameter\detective</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Modules\juce_organicui\controllable\parameter\gradient\ui\GradientColorManagerEditor.h">
       <Filter>JUCE Modules\juce_organicui\controllable\parameter\gradient\ui</Filter>
