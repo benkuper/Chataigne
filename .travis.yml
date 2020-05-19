@@ -63,7 +63,7 @@ before_install:
 
       echo "Downloading AppImage runtime for armhf"
       cd $HOME
-      wget "https://github.com/AppImage/AppImageKit/releases/download/continuous/runtime-armhf"
+      wget "https://github.com/AppImage/AppImageKit/releases/download/12/runtime-armhf"
       export APPIMAGE_RUNTIME="--runtime-file $HOME/runtime-armhf"
       
       export CXX=arm-linux-gnueabihf-g++
@@ -87,7 +87,7 @@ before_install:
 
     echo 'Downloading AppImageTool...'
     cd $HOME
-    wget "https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage"
+    wget "https://github.com/AppImage/AppImageKit/releases/download/12/appimagetool-x86_64.AppImage"
     chmod a+x appimagetool-x86_64.AppImage
   else
     gem install xcpretty
