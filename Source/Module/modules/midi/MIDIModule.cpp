@@ -18,7 +18,8 @@ MIDIModule::MIDIModule(const String & name, bool _useGenericControls) :
 	Module(name),
 	inputDevice(nullptr),
 	outputDevice(nullptr),
-	useGenericControls(_useGenericControls)
+	useGenericControls(_useGenericControls),
+	manualAddMode(false)
 {
 	setupIOConfiguration(true, true);
 	canHandleRouteValues = true;
@@ -480,16 +481,17 @@ void MIDIModule::updateValue(const int & channel, const String & n, const int & 
 	Parameter * p = dynamic_cast<Parameter *>(valuesCC.getControllableByName(nWithChannel,true));
 	if (p == nullptr)
 	{
-		if (autoAdd->boolValue())
+		if (autoAdd->boolValue() || manualAddMode)
 		{
-			p = new MIDIValueParameter(nWithChannel, "Channel "+String(channel)+" : "+n, val, channel, pitchOrNumber, type);
+			p = new MIDIValueParameter(nWithChannel, "Channel "+String(channel)+" : "+n, 0, channel, pitchOrNumber, type);
+			p->setValue(val);
 			p->isRemovableByUser = true;
 			p->saveValueOnly = false;
 			valuesCC.addParameter(p);
 			valuesCC.orderControllablesAlphabetically();
 		}
 	}
-	else
+	else if(!manualAddMode)
 	{
 		p->setValue(val);
 	}
@@ -536,8 +538,11 @@ void MIDIModule::showMenuAndCreateValue(ControllableContainer * container)
 		else
 		{
 			int pitch = jlimit<int>(1, 127, window.getTextEditorContents("pitch").getIntValue());
+			
+			module->manualAddMode = true;
 			if (mResult == 1) module->noteOnReceived(channel, pitch, 0);
 			else module->controlChangeReceived(channel, pitch, 0);
+			module->manualAddMode = false;
 		}
 	}
 }

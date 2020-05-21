@@ -46,6 +46,8 @@ public:
 	BoolParameter * autoAdd;
 	BoolParameter * autoFeedback;
 
+	bool manualAddMode; //to allow manual add override
+
 	MIDIInputDevice * inputDevice;
 	MIDIOutputDevice * outputDevice;
 
