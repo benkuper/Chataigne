@@ -16,6 +16,8 @@ AutomationMappingLayerTimeline::AutomationMappingLayerTimeline(AutomationMapping
 {
     automationUI = ((AutomationUI*)mainComponent.get());
     needle.timeBarColor = aml->recorder.arm->boolValue() ? Colours::red : needle.defaultTimeBarColor;
+
+    autoSelectWithChildRespect = false;
 }
 
 AutomationMappingLayerTimeline::~AutomationMappingLayerTimeline()
