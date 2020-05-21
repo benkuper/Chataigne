@@ -13,7 +13,8 @@
 
 DMXModule::DMXModule() :
 	Module("DMX"),
-	dmxDevice(nullptr)
+	dmxDevice(nullptr),
+	manualAddMode(false)
 {
 	setupIOConfiguration(false, true);
 	valuesCC.editorIsCollapsed = true;
@@ -185,6 +186,21 @@ void DMXModule::loadJSONDataInternal(var data)
 	if (dmxDevice != nullptr && data.getDynamicObject()->hasProperty("device")) dmxDevice->loadJSONData(data.getProperty("device", ""));
 }
 
+void DMXModule::afterLoadJSONDataInternal()
+{
+	channelMap.clear();
+	for (auto & c : valuesCC.controllables)
+	{
+		if (c->type != Parameter::INT) continue;
+		int channel = c->shortName.substring(7).getIntValue();
+		if (channel > 0 && !channelMap.contains(channel))
+		{
+			channelMap.set(channel, (IntParameter*)c);
+			c->addInspectableListener(this);
+		}
+	}
+}
+
 void DMXModule::onContainerParameterChanged(Parameter* p)
 {
 	Module::onContainerParameterChanged(p);
@@ -220,18 +236,30 @@ void DMXModule::dmxDataInChanged(int channel, int value)
 	IntParameter * dVal = channelMap.contains(channel) ? channelMap[channel] : nullptr;
 	if (dVal == nullptr)
 	{
-		if (!autoAdd->boolValue()) return;
+		if (!autoAdd->boolValue() && !manualAddMode) return;
 
 		dVal = new IntParameter("Channel " + String(channel), "DMX Value for channel " + String(channel), 0, 0, 255);
+		dVal->setValue(value);
+
 		dVal->isRemovableByUser = true;
 		valuesCC.addParameter(dVal);
+		dVal->addInspectableListener(this);
 
 		//dVal->setControllableFeedbackOnly(true);
 		dVal->saveValueOnly = false;
 		channelMap.set(channel, dVal);
+		valuesCC.orderControllablesAlphabetically();
+	}
+	else if (!manualAddMode)
+	{
+		dVal->setValue(value);
 	}
 
-	dVal->setValue(value);
+}
+
+void DMXModule::inspectableDestroyed(Inspectable* i)
+{
+	if (channelMap.containsValue((IntParameter *)i)) channelMap.removeValue((IntParameter*)i);
 }
 
 void DMXModule::showMenuAndCreateValue(ControllableContainer * container)
@@ -250,7 +278,9 @@ void DMXModule::showMenuAndCreateValue(ControllableContainer * container)
 	if (result)
 	{
 		int channel = jlimit<int>(1, 512, window.getTextEditorContents("channel").getIntValue());
+		module->manualAddMode = true;
 		module->dmxDataInChanged(channel, 0);
+		module->manualAddMode = false;
 	}
 }
 
