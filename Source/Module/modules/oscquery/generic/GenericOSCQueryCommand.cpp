@@ -27,9 +27,9 @@ void GenericOSCQueryCommand::setupParamFromTarget()
 {
 	if (valueParam != nullptr && !valueParam.wasObjectDeleted())
 	{
+		if (valueGhostData.isVoid()) valueGhostData = valueParam->value;
 		removeControllable(valueParam.get());
 		removeTargetMappingParameter(valueParam);
-		if (valueGhostData.isVoid()) valueGhostData = valueParam->value;
 	}
 
 	valueParam = ControllableFactory::createParameterFrom(target->target, false, true);
