@@ -119,6 +119,11 @@ void ConditionManager::setForceDisabled(bool value, bool force)
 	checkAllConditions();
 }
 
+void ConditionManager::forceLeastPriority()
+{
+	for (auto& i : items) i->forceLeastPriority();
+}
+
 void ConditionManager::checkAllConditions(bool emptyIsValid, bool dispatchOnlyOnValidationChange)
 {
 	bool valid = false;

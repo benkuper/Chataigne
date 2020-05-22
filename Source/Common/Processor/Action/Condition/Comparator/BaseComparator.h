@@ -35,6 +35,9 @@ public:
 
 	virtual void compare() = 0; // to override
 
+
+	virtual void forceLeastPriority();
+
 	void onContainerParameterChanged(Parameter *) override;
 	void parameterRangeChanged(Parameter * p) override;
 

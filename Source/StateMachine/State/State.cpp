@@ -69,9 +69,9 @@ void State::onContainerParameterChangedInternal(Parameter *p)
 					pm.checkAllActivateActions();
 					pm.processAllMappings();
 
-					if (checkTransitionsOnActivate->boolValue())
+					for (auto& t : outTransitions)
 					{
-						for (auto& t : outTransitions)
+						if (checkTransitionsOnActivate->boolValue())
 						{
 							if (t->cdm.isValid->boolValue())
 							{
@@ -79,9 +79,9 @@ void State::onContainerParameterChangedInternal(Parameter *p)
 								break;
 							}
 						}
+
+						t->cdm.forceLeastPriority(); //make this state be the last advertised about input changes so there is no larsen when transitionning out
 					}
-
-
 				}
 				else
 				{

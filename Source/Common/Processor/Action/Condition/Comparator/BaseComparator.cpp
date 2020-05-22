@@ -55,6 +55,22 @@ void BaseComparator::addCompareOption(const String & name, const Identifier & fu
 	if (compareFunction->enumValues.size() == 1) compareFunction->setValue(name,false,true);
 }
 
+void BaseComparator::forceLeastPriority()
+{
+	if (source == nullptr) return;
+
+	if (source->type == Controllable::TRIGGER)
+	{
+		((Trigger*)source)->removeTriggerListener(this);
+		((Trigger*)source)->addTriggerListener(this);
+	}
+	else
+	{
+		((Parameter*)source)->removeParameterListener(this);
+		((Parameter*)source)->addParameterListener(this);
+	}
+}
+
 void BaseComparator::onContainerParameterChanged(Parameter * p)
 {
 	if (p == compareFunction)

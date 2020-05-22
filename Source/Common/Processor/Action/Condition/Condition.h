@@ -28,6 +28,8 @@ public:
 
 	virtual void setForceDisabled(bool value, bool force = false);
 
+	virtual void forceLeastPriority() {} //to override in child classes, to force its content to be processed in last, helping transitions to go the good way
+
 	class ConditionListener
 	{
 	public:

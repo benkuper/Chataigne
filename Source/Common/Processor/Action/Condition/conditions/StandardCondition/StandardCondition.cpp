@@ -55,8 +55,8 @@ void StandardCondition::setSourceControllable(WeakReference<Controllable> c)
 {
 	if (!sourceControllable.wasObjectDeleted() && sourceControllable != nullptr)
 	{
-		if (sourceControllable->type == Controllable::TRIGGER) ((Trigger *)sourceControllable.get())->removeTriggerListener(this);
-		else ((Parameter *)sourceControllable.get())->removeParameterListener(this);
+	//	if (sourceControllable->type == Controllable::TRIGGER) ((Trigger *)sourceControllable.get())->removeTriggerListener(this);
+//		else ((Parameter *)sourceControllable.get())->removeParameterListener(this);
 
 		Module * m = ControllableUtil::findParentAs<Module>(sourceControllable);
 		if(m != nullptr) unregisterLinkedInspectable(m);
@@ -149,5 +149,13 @@ InspectableEditor * StandardCondition::getEditor(bool isRoot)
 void StandardCondition::comparatorValidationChanged(BaseComparator *)
 {
 	isValid->setValue(comparator->isValid);
+}
+
+void StandardCondition::forceLeastPriority()
+{
+	if (comparator != nullptr)
+	{
+		comparator->forceLeastPriority();
+	}
 }
 
