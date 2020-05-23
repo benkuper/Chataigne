@@ -15,7 +15,6 @@ SendStreamValuesCommand::SendStreamValuesCommand(StreamingModule * module, Comma
 {
 	customValuesManager.reset(new CustomValuesCommandArgumentManager(context == MAPPING));
 	addChildControllableContainer(customValuesManager.get());
-
 	setUseCustomValues(true);
 }
 

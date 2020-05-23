@@ -189,9 +189,10 @@ void BaseCommand::setUseCustomValues(bool value)
 		{
 			customValuesManager.reset(new CustomValuesCommandArgumentManager(true, false));
 			addChildControllableContainer(customValuesManager.get());
-			customValuesManager->addArgumentManagerListener(this);
-			customValuesManager->addBaseManagerListener(this);
 		}
+
+		customValuesManager->addArgumentManagerListener(this);
+		customValuesManager->addBaseManagerListener(this);
 	}
 	else
 	{
