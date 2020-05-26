@@ -58,7 +58,6 @@ ChataigneEngine::ChataigneEngine() :
 	ZeroconfManager::getInstance()->addSearcher("Workstation", "_workstation._tcp.");
 
 	getAppSettings()->addChildControllableContainer(&defaultBehaviors);
-
 }
 
 ChataigneEngine::~ChataigneEngine()
