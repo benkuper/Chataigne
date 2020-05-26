@@ -81,6 +81,7 @@ OSCModule::OSCModule(const String & name, int defaultLocalPort, int defaultRemot
 	//Script
 	scriptObject.setMethod("send", OSCModule::sendOSCFromScript);
 	scriptObject.setMethod("sendTo", OSCModule::sendOSCToFromScript);
+	scriptObject.setMethod("match", OSCModule::matchOSCAddrFromScript);
 
 	scriptManager->scriptTemplate += ChataigneAssetManager::getInstance()->getScriptTemplate("osc");
 
@@ -363,6 +364,27 @@ var OSCModule::sendOSCToFromScript(const var::NativeFunctionArgs& a)
 		NLOGERROR(m->niceName, "Error sending message : " << e.description);
 	}
 
+
+	return var();
+}
+
+var OSCModule::matchOSCAddrFromScript(const var::NativeFunctionArgs & a)
+{
+	OSCModule* m = getObjectFromJS<OSCModule>(a);
+	if (!checkNumArgs(m->niceName, a, 2)) return var();
+
+	try
+	{
+		OSCAddress address(a.arguments[0].toString());
+		OSCAddressPattern pattern(a.arguments[1].toString());
+
+		return pattern.matches(address);
+	}
+	catch (OSCFormatError &e)
+	{
+		NLOGERROR(m->niceName, "match() function called with incorrect parameters: " << e.description);
+	}
+	
 
 	return var();
 }
