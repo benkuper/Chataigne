@@ -92,6 +92,7 @@ public:
 	static var sendOSCFromScript(const var::NativeFunctionArgs& args);
 	static var sendOSCToFromScript(const var::NativeFunctionArgs &args);
 	static var matchOSCAddrFromScript(const var::NativeFunctionArgs &args);
+	static var registerOSCCallbackFromScript(const var::NativeFunctionArgs &args);
 
 	//Thru
 	static void createThruControllable(ControllableContainer* cc);
@@ -131,4 +132,8 @@ public:
 	virtual void run() override;
 
 	//InspectableEditor * getEditor(bool isRoot) override;	
+
+private:
+	Array<std::tuple<OSCAddressPattern, Identifier>> scriptCallbacks;
+
 };

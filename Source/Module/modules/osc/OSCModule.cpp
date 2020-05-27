@@ -82,6 +82,7 @@ OSCModule::OSCModule(const String & name, int defaultLocalPort, int defaultRemot
 	scriptObject.setMethod("send", OSCModule::sendOSCFromScript);
 	scriptObject.setMethod("sendTo", OSCModule::sendOSCToFromScript);
 	scriptObject.setMethod("match", OSCModule::matchOSCAddrFromScript);
+	scriptObject.setMethod("register", OSCModule::registerOSCCallbackFromScript);
 
 	scriptManager->scriptTemplate += ChataigneAssetManager::getInstance()->getScriptTemplate("osc");
 
@@ -214,6 +215,10 @@ void OSCModule::processMessage(const OSCMessage & msg)
 		for (auto &a : msg) args.append(OSCModule::argumentToVar(a));
 		params.add(args);
 		scriptManager->callFunctionOnAllItems(oscEventId, params);
+
+		for (auto& entry : scriptCallbacks)
+			if (std::get<0>(entry).matches(msg.getAddressPattern().toString()))
+				scriptManager->callFunctionOnAllItems(std::get<1>(entry), params);
 	}
 
 }
@@ -385,6 +390,36 @@ var OSCModule::matchOSCAddrFromScript(const var::NativeFunctionArgs & a)
 		NLOGERROR(m->niceName, "match() function called with incorrect parameters: " << e.description);
 	}
 	
+
+	return var();
+}
+
+var OSCModule::registerOSCCallbackFromScript(const var::NativeFunctionArgs & a)
+{
+	OSCModule* m = getObjectFromJS<OSCModule>(a);
+	if (!checkNumArgs(m->niceName, a, 2)) return var();
+
+	try
+	{
+		OSCAddressPattern pattern(a.arguments[0].toString());
+
+		if (!Identifier::isValidIdentifier(a.arguments[1].toString()))
+		{
+			NLOGERROR(m->niceName, "register() function: invalid callback name " << a.arguments[1].toString());
+			return var();
+		}
+		Identifier callbackName(a.arguments[1].toString());
+
+		for (auto& i : m->scriptCallbacks)
+			if (pattern == std::get<0>(i) && callbackName == std::get<1>(i))
+				return var();
+
+		m->scriptCallbacks.add(std::make_tuple(pattern, callbackName));
+	}
+	catch (OSCFormatError &e)
+	{
+		NLOGERROR(m->niceName, "register() function: invalid pattern: " << e.description);
+	}
 
 	return var();
 }
