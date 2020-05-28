@@ -71,3 +71,4 @@ Builds/VisualStudio2017_Win7/
 
 *.AppImage
 
+.vscode
