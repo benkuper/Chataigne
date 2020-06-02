@@ -94,14 +94,16 @@ Array<UndoableAction*> AutomationMappingLayer::getRemoveTimespanInternal(float s
 void AutomationMappingLayer::sequenceCurrentTimeChangedInternal(Sequence* s, float prevTime, bool seeking)
 {
     if (automation == nullptr) return;
-    automation->position->setValue(s->currentTime->floatValue());
+
+    float curTime = sequence->currentTime->floatValue();
+    automation->position->setValue(curTime);
 
     if (sequence->isPlaying->boolValue())
     {
         if (recorder.isRecording->boolValue())
         {
-            if (prevTime < sequence->currentTime->floatValue()) recorder.addKeyAt(sequence->currentTime->floatValue());
-            else  recorder.startRecording();
+            if (sequence->currentTime->floatValue() < prevTime)  recorder.removeKeysAfter(curTime);
+            recorder.addKeyAt(curTime);
         }
     }
 }
