@@ -29,9 +29,30 @@ public:
 
 	~MIDIValueParameter() {}
 
+	var getJSONDataInternal() override
+	{
+		var data = IntParameter::getJSONDataInternal();
+		data.getDynamicObject()->setProperty("channel", channel);
+		data.getDynamicObject()->setProperty("pitchOrNumber", pitchOrNumber);
+		data.getDynamicObject()->setProperty("MIDIType", type);
+		return data;
+	}
+
+	void loadJSONDataInternal(var data) override
+	{
+		Parameter::loadJSONDataInternal(data);
+		channel = data.getProperty("channel", false);
+		pitchOrNumber = data.getProperty("pitchOrNumber", false);
+		type = static_cast<Type>((int)data.getProperty("MIDIType", false));
+	}
+
 	Type type;
 	int channel;
 	int pitchOrNumber;
+
+	static MIDIValueParameter * create() { return new MIDIValueParameter("New MIDI Value Parameter", "", 0, 0, 0, NOTE_ON); }
+	virtual String getTypeString() const override { return getTypeStringStatic(); }
+	static String getTypeStringStatic() { return "MIDI Value"; }
 };
 
 class MIDIModule :

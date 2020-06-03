@@ -15,6 +15,7 @@
 #include "CustomVariables/CVGroupManager.h"
 #include "Module/modules/customvariables/CustomVariablesModule.h"
 #include "ChataigneEngine.h"
+#include "Module/modules/midi/MIDIModule.h"
 
 juce_ImplementSingleton(ModuleManager)
 
@@ -24,6 +25,8 @@ ModuleManager::ModuleManager() :
 	itemDataType = "Module";
 	helpID = "Modules";
 	showInspectorOnSelect = false;
+
+	ControllableFactory::getInstance()->controllableDefs.add(new ControllableDefinition(MIDIValueParameter::getTypeStringStatic(), &MIDIValueParameter::create));
 }
 
 ModuleManager::~ModuleManager()
