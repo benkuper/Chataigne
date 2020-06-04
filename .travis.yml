@@ -38,7 +38,10 @@ before_install:
   else 
     echo "No tag set, set config to Debug / bleeding" 
     if [ "$TRAVIS_OS_NAME" == "linux" ]; then
-      export MAKECONF=Release
+      if [ $TARGET_SYSTEM == "linux-armhf" ]; then
+        export MAKECONF=Debug
+      else
+        export MAKECONF=Release
     else
       export MAKECONF=Release
     fi
