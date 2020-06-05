@@ -244,7 +244,7 @@ void MIDIModule::updateMIDIDevices()
 
 void MIDIModule::noteOnReceived(const int & channel, const int & pitch, const int & velocity)
 {
-	if (!enabled->boolValue()) return; 
+	if (!enabled->boolValue() && !manualAddMode) return; 
 	inActivityTrigger->trigger();
 	
 	if (logIncomingData->boolValue())  NLOG(niceName, "Note On : " << channel << ", " << MIDIManager::getNoteName(pitch) << ", " << velocity);
@@ -256,7 +256,7 @@ void MIDIModule::noteOnReceived(const int & channel, const int & pitch, const in
 
 void MIDIModule::noteOffReceived(const int & channel, const int & pitch, const int & velocity)
 {
-	if (!enabled->boolValue()) return; 
+	if (!enabled->boolValue() && !manualAddMode) return;
 	inActivityTrigger->trigger();
 	if (logIncomingData->boolValue()) NLOG(niceName, "Note Off : " << channel << ", " << MIDIManager::getNoteName(pitch) << ", " << velocity);
 
@@ -268,7 +268,7 @@ void MIDIModule::noteOffReceived(const int & channel, const int & pitch, const i
 
 void MIDIModule::controlChangeReceived(const int & channel, const int & number, const int & value)
 {
-	if (!enabled->boolValue()) return; 
+	if (!enabled->boolValue() && !manualAddMode) return;
 	inActivityTrigger->trigger();
 	if (logIncomingData->boolValue()) NLOG(niceName, "Control Change : " << channel << ", " << number << ", " << value);
 
@@ -280,8 +280,8 @@ void MIDIModule::controlChangeReceived(const int & channel, const int & number, 
 
 void MIDIModule::sysExReceived(const MidiMessage & msg)
 {
-	if (!enabled->boolValue()) return;
-	inActivityTrigger->trigger(); 
+	if (!enabled->boolValue() && !manualAddMode) return;
+	inActivityTrigger->trigger();
 
 	Array<uint8> data(msg.getSysExData(), msg.getSysExDataSize());
 
@@ -308,7 +308,7 @@ void MIDIModule::fullFrameTimecodeReceived(const MidiMessage& msg)
 
 void MIDIModule::pitchWheelReceived(const int &channel, const int &value)
 {
-	if (!enabled->boolValue()) return;
+	if (!enabled->boolValue() && !manualAddMode) return;
 	inActivityTrigger->trigger();
 	if (logIncomingData->boolValue()) NLOG(niceName, "Pitch wheel, channel : " << channel << ", value : " << value);
 
@@ -319,7 +319,7 @@ void MIDIModule::pitchWheelReceived(const int &channel, const int &value)
 
 void MIDIModule::channelPressureReceived(const int& channel, const int& value)
 {
-	if (!enabled->boolValue()) return;
+	if (!enabled->boolValue() && !manualAddMode) return;
 	inActivityTrigger->trigger();
 	if (logIncomingData->boolValue()) NLOG(niceName, "Channel Pressure, channel : " << channel << ", value : " << value);
 
@@ -330,7 +330,7 @@ void MIDIModule::channelPressureReceived(const int& channel, const int& value)
 
 void MIDIModule::afterTouchReceived(const int& channel, const int& note, const int& value)
 {
-	if (!enabled->boolValue()) return;
+	if (!enabled->boolValue() && !manualAddMode) return;
 	inActivityTrigger->trigger();
 	if (logIncomingData->boolValue()) NLOG(niceName, "After Touch, channel : " << channel << ", note : " << note <<", value : " << value);
 
