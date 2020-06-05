@@ -67,7 +67,7 @@ void SimpleRemapFilter::processSingleParameterInternal(Parameter * source, Param
 		if (targetIn->x != targetIn->y && targetOut->x != targetOut->y)
 		{
 			float targetValue = jmap(source->floatValue(), targetIn->x, targetIn->y, targetOut->x, targetOut->y);
-			if (targetOut->x > targetOut->y) targetValue = targetOut->y + (targetValue - targetOut->y) / (targetOut->x - targetOut->y);
+			//if (targetOut->x > targetOut->y) targetValue = targetOut->y + (targetValue - targetOut->y) / (targetOut->x - targetOut->y);
 			out->setValue(targetValue);
 		}
 	}
@@ -91,7 +91,7 @@ void SimpleRemapFilter::filterParamChanged(Parameter * p)
 	{
 		for(auto &f : filteredParameters)
 		{
-			if(f->type == Controllable::FLOAT) f->setRange(jmin<float>(targetOut->x,targetOut->y), jmax<float>(targetOut->x, targetOut->y));
+			if(f->type == Controllable::FLOAT || f->type == Controllable::INT) f->setRange(jmin<float>(targetOut->x,targetOut->y), jmax<float>(targetOut->x, targetOut->y));
 		}
 	}
 	else if (p == forceFloatOutput)
