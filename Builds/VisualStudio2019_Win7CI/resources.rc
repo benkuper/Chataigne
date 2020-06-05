@@ -1,5 +1,3 @@
-#pragma code_page(65001)
-
 #ifdef JUCE_USER_DEFINED_RC_FILE
  #include JUCE_USER_DEFINED_RC_FILE
 #else
@@ -9,7 +7,7 @@
 #include <windows.h>
 
 VS_VERSION_INFO VERSIONINFO
-FILEVERSION  1,7,0b25,0
+FILEVERSION  1,7,0b26,0
 BEGIN
   BLOCK "StringFileInfo"
   BEGIN
@@ -18,9 +16,9 @@ BEGIN
       VALUE "CompanyName",  "Ben Kuper\0"
       VALUE "LegalCopyright",  "Ben Kuper\0"
       VALUE "FileDescription",  "Chataigne\0"
-      VALUE "FileVersion",  "1.7.0b25\0"
+      VALUE "FileVersion",  "1.7.0b26\0"
       VALUE "ProductName",  "Chataigne\0"
-      VALUE "ProductVersion",  "1.7.0b25\0"
+      VALUE "ProductVersion",  "1.7.0b26\0"
     END
   END
 
