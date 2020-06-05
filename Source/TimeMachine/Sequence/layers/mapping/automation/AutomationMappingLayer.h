@@ -28,7 +28,7 @@ public:
    
     virtual void setupAutomation(Automation* a);
 
-    virtual void updateMappingInputValueInternal();
+    virtual void updateMappingInputValueInternal() override;
     virtual void stopRecorderAndAddKeys() {}
 
     void selectAll(bool addToSelection = false) override;

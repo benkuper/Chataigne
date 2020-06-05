@@ -16,10 +16,11 @@
 
 MIDIModule::MIDIModule(const String & name, bool _useGenericControls) :
 	Module(name),
-	inputDevice(nullptr),
+	manualAddMode(false),
+    inputDevice(nullptr),
 	outputDevice(nullptr),
-	useGenericControls(_useGenericControls),
-	manualAddMode(false)
+    useGenericControls(_useGenericControls)
+	
 {
 	setupIOConfiguration(true, true);
 	canHandleRouteValues = true;

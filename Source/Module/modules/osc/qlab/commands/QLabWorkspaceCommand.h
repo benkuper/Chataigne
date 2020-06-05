@@ -22,7 +22,7 @@ public:
 
     QLabModule * qlabModule;
     
-    void rebuildAddressInternal(String& targetAddress);
+    void rebuildAddressInternal(String& targetAddress) override;
 
     void onExternalParameterValueChanged(Parameter* p) override;
 

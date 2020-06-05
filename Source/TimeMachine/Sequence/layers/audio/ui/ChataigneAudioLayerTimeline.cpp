@@ -13,8 +13,9 @@
 ChataigneAudioLayerTimeline::ChataigneAudioLayerTimeline(ChataigneAudioLayer* layer) :
     AudioLayerTimeline(layer),
     cal(layer),
-    audioThumbnail(thumbnail.getAudioThumbnail()),
-    nextSampleNum(0)
+    nextSampleNum(0),
+    audioThumbnail(thumbnail.getAudioThumbnail())
+    
 {
     needle.timeBarColor = cal->arm->boolValue() ? RED_COLOR : needle.defaultTimeBarColor;
     if(ChataigneAudioLayerProcessor* calp = (ChataigneAudioLayerProcessor*)cal->currentProcessor) calp->addAudioRecorderListener(this);

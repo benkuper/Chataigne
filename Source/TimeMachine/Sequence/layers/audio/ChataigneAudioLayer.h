@@ -95,6 +95,7 @@ public:
 	class RecorderListener
 	{
 	public:
+        virtual ~RecorderListener() {}
 		virtual void recordingStarted(int numChannels, int sampleRate) {}
 		virtual void recordingStopped() {}
 		virtual void recordingUpdated(AudioBuffer<float>& buffer, int numSamples) {}

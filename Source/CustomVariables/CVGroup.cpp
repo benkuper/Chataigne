@@ -18,8 +18,8 @@ CVGroup::CVGroup(const String & name) :
 	params("Parameters"),
 	values("Variables",false,false,false),
 	targetPreset(nullptr),
-	interpolationTime(0),
-	interpolationAutomation(nullptr)
+	interpolationAutomation(nullptr),
+    interpolationTime(0)
 {
 	itemDataType = "CVGroup";
 
