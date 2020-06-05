@@ -228,12 +228,16 @@ void DMXModule::dmxDeviceDisconnected()
 
 void DMXModule::dmxDataInChanged(int channel, int value)
 {
-	if (isClearing) return;
+	if (isClearing || !enabled->boolValue()) return;
+	processDMXData(channel, value);
+}
 
+void DMXModule::processDMXData(int channel, int value)
+{
 	if (logIncomingData->boolValue()) NLOG(niceName, "DMX In : " + String(channel) + " > " + String(value));
 	inActivityTrigger->trigger();
 
-	IntParameter * dVal = channelMap.contains(channel) ? channelMap[channel] : nullptr;
+	IntParameter* dVal = channelMap.contains(channel) ? channelMap[channel] : nullptr;
 	if (dVal == nullptr)
 	{
 		if (!autoAdd->boolValue() && !manualAddMode) return;
@@ -254,7 +258,6 @@ void DMXModule::dmxDataInChanged(int channel, int value)
 	{
 		dVal->setValue(value);
 	}
-
 }
 
 void DMXModule::inspectableDestroyed(Inspectable* i)
@@ -279,7 +282,7 @@ void DMXModule::showMenuAndCreateValue(ControllableContainer * container)
 	{
 		int channel = jlimit<int>(1, 512, window.getTextEditorContents("channel").getIntValue());
 		module->manualAddMode = true;
-		module->dmxDataInChanged(channel, 0);
+		module->processDMXData(channel, 0);
 		module->manualAddMode = false;
 	}
 }

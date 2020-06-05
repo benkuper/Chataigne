@@ -62,6 +62,8 @@ public:
 
 	void dmxDataInChanged(int channel, int value) override;
 
+	void processDMXData(int channel, int value);
+
 	void inspectableDestroyed(Inspectable * i) override;
 
 	static void showMenuAndCreateValue(ControllableContainer * container);
