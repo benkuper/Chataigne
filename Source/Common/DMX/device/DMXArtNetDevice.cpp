@@ -10,6 +10,7 @@
 
 #include "DMXArtNetDevice.h"
 
+/*
 #if JUCE_WINDOWS
 #include <iphlpapi.h>
 #else
@@ -20,46 +21,59 @@
 #include <sys/socket.h>
 #include <netdb.h>
 #endif
+*/
 
 DMXArtNetDevice::DMXArtNetDevice() :
 	DMXDevice("ArtNet", ARTNET, true),
-	Thread("ArtNetReceive"),
-    nodeName(nullptr),
-    ioNode(nullptr),
-	discoverNode(nullptr),
-	numFoundNodes(0),
-    noServerCreation(false)
+	Thread("ArtNetReceive")
+	//nodeName(nullptr),
+	//ioNode(nullptr),
+	//discoverNode(nullptr),
+	//numFoundNodes(0),
+	//noServerCreation(false)
 {
-	networkInterface = addEnumParameter("Interface", "Interface to link the node to");
-	
+	//networkInterface = addEnumParameter("Interface", "Interface to link the node to");
+
+	/*
 	Array<NetworkInterface> interfaces = getAllInterfaces();
 	networkInterface->addOption("All (Default)", "")->addOption("Broadcast (255.255.255.255)", "255.255.255.255");
 	for (auto &i : interfaces)
 	{
 		networkInterface->addOption(i.interfaceName + " (" + i.ipAddress + ")", i.ipAddress, true);
 	}
-	
+	*/
+
+	localPort = addIntParameter("Local Port", "Local port to receive ArtNet data", 6454, 0, 65535);
+	remoteHost = addStringParameter("Remote Host", "IP to which send the Art-Net to", "127.0.0.1");
+	remotePort = addIntParameter("Remote Port", "Local port to receive ArtNet data", 6454, 0, 65535);
+
 	subnet = addIntParameter("Subnet", "The subnet to work in, from 0 to 15", 0, 0, 15);
 	universe = addIntParameter("Universe", "The Universe to work in, from 0 to 15", 0, 0, 15);
-	
+
+	/*
 	nodeName = addStringParameter("Node Name", "Name of the art-net node", "Chataigne ArtNet");
 
 	if (Engine::mainEngine->isLoadingFile) Engine::mainEngine->addEngineListener(this);
 	else setupReceiver();
+	*/
 
+	for (int i = 12; i < 530; i++) artnetPacket[i] = 0;
+
+	sender.bindToPort(0);
 }
 
 DMXArtNetDevice::~DMXArtNetDevice()
 {
 	if (Engine::mainEngine != nullptr) Engine::mainEngine->removeEngineListener(this);
-	if(ioNode != nullptr) artnet_destroy(ioNode);
-	if(discoverNode != nullptr) artnet_destroy(discoverNode);
+	//if(ioNode != nullptr) artnet_destroy(ioNode);
+	//if(discoverNode != nullptr) artnet_destroy(discoverNode);
 	signalThreadShouldExit();
 	waitForThreadToExit(200);
 }
 
 void DMXArtNetDevice::setupReceiver()
 {
+	/*
 	if (nodeName == nullptr) return;
 	if (noServerCreation) return;
 	if (Engine::mainEngine != nullptr && (Engine::mainEngine->isLoadingFile || Engine::mainEngine->isClearing)) return;
@@ -82,12 +96,12 @@ void DMXArtNetDevice::setupReceiver()
 	artnet_set_node_type(ioNode, artnet_node_type::ARTNET_NODE);
 
 	artnet_set_port_type(ioNode, 0, ARTNET_ENABLE_INPUT, ARTNET_PORT_DMX);
-	artnet_set_port_addr(ioNode, 0, ARTNET_INPUT_PORT, universe->intValue() /* universe */);
+	artnet_set_port_addr(ioNode, 0, ARTNET_INPUT_PORT, universe->intValue());
 	//artnet_set_subnet_addr(ioNode, 0);
 
 	artnet_set_port_type(ioNode, 1, ARTNET_ENABLE_OUTPUT, ARTNET_PORT_DMX);
 	artnet_set_port_addr(ioNode, 1, ARTNET_OUTPUT_PORT, universe->intValue());
-	
+
 	artnet_set_subnet_addr(ioNode, subnet->intValue());
 
 	artnet_set_dmx_handler(ioNode, &DMXArtNetDevice::artNetDMXReceiveHandler, this);
@@ -98,7 +112,7 @@ void DMXArtNetDevice::setupReceiver()
 	}
 
 	LOG("ArtNet Node created with name " << nodeName->stringValue());
-	
+
 	//ioNode = artnet_new(remoteHost->stringValue().toRawUTF8(), true);
 
 	//artnet_set_short_name(ioNode, StringUtil::toShortName(nodeName->stringValue()).toRawUTF8());
@@ -106,15 +120,16 @@ void DMXArtNetDevice::setupReceiver()
 	//artnet_set_node_type(discoverNode, ARTNET_RAW);
 
 	setConnected(true);
-	
+	*/
 }
 
 void DMXArtNetDevice::setupNode()
 {
+	/*
 	if (discoverNode != nullptr) artnet_destroy(discoverNode);
 
 	discoverNode = artnet_new(networkInterface->getValue().toString().isNotEmpty() ? networkInterface->getValue().toString().toRawUTF8() : NULL, true);
-	
+
 	if (discoverNode == nullptr)
 	{
 		//LOGWARNING("Node setup failed");
@@ -125,14 +140,16 @@ void DMXArtNetDevice::setupNode()
 	artnet_set_long_name(discoverNode, nodeName->stringValue().toRawUTF8());
 	artnet_set_node_type(discoverNode, ARTNET_SRV);
 	artnet_set_handler(discoverNode, ARTNET_REPLY_HANDLER, &DMXArtNetDevice::artNetReplyHandler, this);
-	
+
 
 
 	numFoundNodes = 0;
+	*/
 }
 
 void DMXArtNetDevice::discoverNodes()
 {
+	/*
 	if (discoverNode == nullptr)
 	{
 		//DBG("output node null");
@@ -150,16 +167,18 @@ void DMXArtNetDevice::discoverNodes()
 		//LOGWARNING("send poll failed\n");
 		return;
 	}
+	*/
 }
 
 void DMXArtNetDevice::sendDMXValue(int channel, int value)
 {
-	//	fullMessage[channel-1 + 18] = (uint8)value;
+	artnetPacket[channel-1 + 18] = (uint8)value;
 	DMXDevice::sendDMXValue(channel, value);
 }
 
 void DMXArtNetDevice::sendDMXRange(int startChannel, Array<int> values)
 {
+	
 	int numValues = values.size();
 	for (int i = 0; i < numValues; i++)
 	{
@@ -167,8 +186,9 @@ void DMXArtNetDevice::sendDMXRange(int startChannel, Array<int> values)
 		if (channel < 0) continue;
 		if (channel > 512) break;
 
-		//		fullMessage[channel - 1 + 18] = (uint8)(values[i]);
+		artnetPacket[channel - 1 + 18] = (uint8)(values[i]);
 	}
+	
 
 	DMXDevice::sendDMXRange(startChannel, values);
 
@@ -182,11 +202,21 @@ void DMXArtNetDevice::sendDMXValues()
 
 	  //sequence++;
 	  //artNetOut.write(nodeIP->stringValue(), nodePort->intValue(), fullMessage, NUM_CHANNELS + 18);
+	//artnet_send_dmx(ioNode, 0, 512, dmxDataOut);
 
+	sequenceNumber = (sequenceNumber + 1) % 256;
 
-	artnet_send_dmx(ioNode, 0, 512, dmxDataOut);
+	artnetPacket[12] = sequenceNumber;
+	artnetPacket[13] = 0;
+	artnetPacket[14] = subnet->intValue();
+	artnetPacket[15] = universe->intValue();
+	artnetPacket[16] = 2;
+	artnetPacket[17] = 0;
+
+	sender.write(remoteHost->stringValue(), remotePort->intValue(), artnetPacket, 530);
 }
 
+/*
 int DMXArtNetDevice::artNetReplyHandler(artnet_node node, void * pp, void * devicePtr)
 {
 	DMXArtNetDevice * device = (DMXArtNetDevice *)devicePtr;
@@ -216,10 +246,12 @@ int DMXArtNetDevice::artNetReplyHandler(artnet_node node, void * pp, void * devi
 		LOG(String::formatted("Output Addrs: 0x%02x, 0x%02x, 0x%02x, 0x%02x\n", ne->swout[0], ne->swout[1], ne->swout[2], ne->swout[3]));
 		LOG(String::formatted("----------------------------------\n"));
 	}
-	
+
 	return 0;
 }
+*/
 
+/*
 int DMXArtNetDevice::artNetDMXReceiveHandler(artnet_node node, int port, void * devicePtr)
 {
 	DMXArtNetDevice * device = (DMXArtNetDevice *)devicePtr;
@@ -230,7 +262,7 @@ int DMXArtNetDevice::artNetDMXReceiveHandler(artnet_node node, int port, void * 
 	}
 	int length = 0;
 	uint8_t *dmx = artnet_read_dmx(device->ioNode, port, &length);
-	
+
 	for (int i = 0; i < length; i++)
 	{
 		device->setDMXValueIn(i + 1, dmx[i]);
@@ -238,14 +270,15 @@ int DMXArtNetDevice::artNetDMXReceiveHandler(artnet_node node, int port, void * 
 
 	return 0;
 }
+*/
 
 void DMXArtNetDevice::endLoadFile()
 {
-	Engine::mainEngine->removeEngineListener(this); 
+	Engine::mainEngine->removeEngineListener(this);
 	setupReceiver();
 }
 
-
+/*
 Array<DMXArtNetDevice::NetworkInterface> DMXArtNetDevice::getAllInterfaces()
 {
 	Array<NetworkInterface> result;
@@ -256,9 +289,9 @@ Array<DMXArtNetDevice::NetworkInterface> DMXArtNetDevice::getAllInterfaces()
 	pAddresses = (IP_ADAPTER_ADDRESSES *)malloc(outBufLen);
 
 	DWORD addResult = addResult = GetAdaptersAddresses(AF_INET, GAA_FLAG_INCLUDE_PREFIX, NULL, pAddresses, &outBufLen);
-	
+
 	if (addResult == NO_ERROR) {
-		
+
 		PIP_ADAPTER_ADDRESSES a = pAddresses;
 
 		while (a) {
@@ -276,36 +309,38 @@ Array<DMXArtNetDevice::NetworkInterface> DMXArtNetDevice::getAllInterfaces()
 
 	if (pAddresses)  free(pAddresses);
 #else
-    struct ifaddrs *interfaces = NULL;
-    if (getifaddrs(&interfaces) == 0) {
-        for (struct ifaddrs *ifa = interfaces; ifa; ifa = ifa->ifa_next) {
-            char buf[128];
-            if (ifa->ifa_addr->sa_family == AF_INET) {
-                inet_ntop(AF_INET, (void *)&((struct sockaddr_in *)ifa->ifa_addr)->sin_addr,
-                          buf, sizeof(buf));
-            } else if (ifa->ifa_addr->sa_family == AF_INET6) {
-                continue;
-                //inet_ntop(AF_INET6, (void *)&((struct sockaddr_in6 *)ifa->ifa_addr)->sin6_addr,
-                 //         buf, sizeof(buf));
-            } else {
-                continue;
-            }
-            
-            //char host[NI_MAXHOST];
-            //getnameinfo(ifa->ifa_addr, sizeof(ifa->ifa_addr), host, sizeof(host), NULL, 0, 0);
-            
-            result.add({String(ifa->ifa_name),String(buf)});
-        }
-    }
-    freeifaddrs(interfaces);
+	struct ifaddrs *interfaces = NULL;
+	if (getifaddrs(&interfaces) == 0) {
+		for (struct ifaddrs *ifa = interfaces; ifa; ifa = ifa->ifa_next) {
+			char buf[128];
+			if (ifa->ifa_addr->sa_family == AF_INET) {
+				inet_ntop(AF_INET, (void *)&((struct sockaddr_in *)ifa->ifa_addr)->sin_addr,
+						  buf, sizeof(buf));
+			} else if (ifa->ifa_addr->sa_family == AF_INET6) {
+				continue;
+				//inet_ntop(AF_INET6, (void *)&((struct sockaddr_in6 *)ifa->ifa_addr)->sin6_addr,
+				 //         buf, sizeof(buf));
+			} else {
+				continue;
+			}
+
+			//char host[NI_MAXHOST];
+			//getnameinfo(ifa->ifa_addr, sizeof(ifa->ifa_addr), host, sizeof(host), NULL, 0, 0);
+
+			result.add({String(ifa->ifa_name),String(buf)});
+		}
+	}
+	freeifaddrs(interfaces);
 #endif
 
 	return result;
 }
+*/
 
-void DMXArtNetDevice::onContainerParameterChanged(Parameter * p)
+void DMXArtNetDevice::onContainerParameterChanged(Parameter* p)
 {
 	DMXDevice::onContainerParameterChanged(p);
+	/*
 	if (p == networkInterface || p == nodeName)
 	{
 		setupReceiver();
@@ -325,7 +360,7 @@ void DMXArtNetDevice::onContainerParameterChanged(Parameter * p)
 	{
 		if (ioNode != nullptr)
 		{
-			artnet_set_port_addr(ioNode, 0, ARTNET_INPUT_PORT, universe->intValue() /* universe */);
+			artnet_set_port_addr(ioNode, 0, ARTNET_INPUT_PORT, universe->intValue());
 			artnet_set_port_addr(ioNode, 1, ARTNET_OUTPUT_PORT, universe->intValue());
 		}
 	}
@@ -333,9 +368,10 @@ void DMXArtNetDevice::onContainerParameterChanged(Parameter * p)
 	{
 		if (ioNode != nullptr) artnet_set_subnet_addr(ioNode, subnet->intValue());
 	}
+	*/
 }
 
-void DMXArtNetDevice::onControllableFeedbackUpdate(ControllableContainer * cc, Controllable * c)
+void DMXArtNetDevice::onControllableFeedbackUpdate(ControllableContainer* cc, Controllable* c)
 {
 	DMXDevice::onControllableFeedbackUpdate(cc, c);
 }
@@ -347,7 +383,7 @@ void DMXArtNetDevice::run()
 
 	while (!threadShouldExit())
 	{
-		artnet_read(ioNode, 0);
+		//artnet_read(ioNode, 0);
 		sleep(25); //40fps
 	}
 }

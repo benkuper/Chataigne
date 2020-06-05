@@ -11,7 +11,7 @@
 #pragma once
 
 #include "DMXDevice.h"
-#include "artnet.h"
+//#include "artnet.h"
 
 #define OP_CODE 0x5000
 #define PROTOCOL_VERSION 14
@@ -26,17 +26,27 @@ public:
 	DMXArtNetDevice();
 	~DMXArtNetDevice();
 
-	EnumParameter * networkInterface;
+	//EnumParameter * networkInterface;
 	IntParameter* subnet;
 	IntParameter* universe;
-	StringParameter * nodeName;
+	//StringParameter * nodeName;
 
-	artnet_node ioNode;
-	artnet_node discoverNode;
+	IntParameter * localPort;
+	StringParameter* remoteHost;
+	IntParameter * remotePort;
 
-	int numFoundNodes;
+	DatagramSocket receiver;
+	DatagramSocket sender;
 
-	bool noServerCreation;
+	uint8 sequenceNumber;
+	char artnetPacket[530]{ 'A','r','t','-','N','e','t',0, 0x00, 0x50,  0, 14 };
+
+	//artnet_node ioNode;
+	//artnet_node discoverNode;
+
+	//int numFoundNodes;
+	//bool noServerCreation;
+
 
 	void setupReceiver();
 	void setupNode();
@@ -47,8 +57,8 @@ public:
 
 	void sendDMXValues() override;
 
-	static int artNetReplyHandler(artnet_node node, void * pp, void * devicePtr);
-	static int artNetDMXReceiveHandler(artnet_node node, int port, void * data);
+	//static int artNetReplyHandler(artnet_node node, void * pp, void * devicePtr);
+	//static int artNetDMXReceiveHandler(artnet_node node, int port, void * data);
 
 
 	void endLoadFile() override;
@@ -59,7 +69,7 @@ public:
 		String ipAddress;
 	};
 
-	Array<NetworkInterface> getAllInterfaces();
+	//Array<NetworkInterface> getAllInterfaces();
 
 	void onContainerParameterChanged(Parameter * p) override;
 	void onControllableFeedbackUpdate(ControllableContainer * cc, Controllable * c) override;
