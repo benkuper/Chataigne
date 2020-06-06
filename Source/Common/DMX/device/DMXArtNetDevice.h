@@ -11,11 +11,13 @@
 #pragma once
 
 #include "DMXDevice.h"
-//#include "artnet.h"
 
-#define OP_CODE 0x5000
+
+#define DMX_OPCODE 0x5000
 #define PROTOCOL_VERSION 14
 #define NUM_CHANNELS 512
+#define DMX_HEADER_LENGTH 18
+#define MAX_PACKET_LENGTH DMX_HEADER_LENGTH+NUM_CHANNELS
 
 class DMXArtNetDevice :
 	public DMXDevice,
@@ -35,44 +37,25 @@ public:
 	StringParameter* remoteHost;
 	IntParameter * remotePort;
 
-	DatagramSocket receiver;
+	std::unique_ptr<DatagramSocket> receiver;
 	DatagramSocket sender;
 
 	uint8 sequenceNumber;
-	char artnetPacket[530]{ 'A','r','t','-','N','e','t',0, 0x00, 0x50,  0, 14 };
-
-	//artnet_node ioNode;
-	//artnet_node discoverNode;
-
-	//int numFoundNodes;
-	//bool noServerCreation;
+	uint8 artnetPacket[MAX_PACKET_LENGTH]{ 'A','r','t','-','N','e','t',0, 0x00 , 0x50,  0, PROTOCOL_VERSION };
+	uint8 receiveBuffer[MAX_PACKET_LENGTH];
 
 
 	void setupReceiver();
-	void setupNode();
-	void discoverNodes();
 
 	void sendDMXValue(int channel, int value) override;
 	void sendDMXRange(int startChannel, Array<int> values) override;
 
 	void sendDMXValues() override;
 
-	//static int artNetReplyHandler(artnet_node node, void * pp, void * devicePtr);
-	//static int artNetDMXReceiveHandler(artnet_node node, int port, void * data);
-
-
 	void endLoadFile() override;
 
-	struct NetworkInterface
-	{
-		String interfaceName;
-		String ipAddress;
-	};
-
-	//Array<NetworkInterface> getAllInterfaces();
-
 	void onContainerParameterChanged(Parameter * p) override;
-	void onControllableFeedbackUpdate(ControllableContainer * cc, Controllable * c) override;
+	void onControllableStateChanged(Controllable* c) override;
 	
 	void run() override;
 };

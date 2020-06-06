@@ -15,6 +15,7 @@
 DMXEnttecProDevice::DMXEnttecProDevice() :
 	DMXSerialDevice("DMX Pro", ENTTEC_DMXPRO, true)
 {
+	enableReceive = addBoolParameter("Enable Receive", "If checked, will also receive data. This may affect the send rate when using a fixed rate.", false);
 }
 
 DMXEnttecProDevice::~DMXEnttecProDevice()
@@ -161,9 +162,6 @@ void DMXEnttecProDevice::readDMXPacket(Array<uint8> bytes, int expectedLength)
 		return;
 	}
 
-	for (int i = 0; i < expectedLength - 1; i++)
-	{
-		setDMXValueIn(i, bytes[DMXPRO_HEADER_LENGTH + i + 1]);
-	}
+	setDMXValuesIn(expectedLength - 1, bytes.getRawDataPointer() + DMXPRO_HEADER_LENGTH + 1);
 }
 

@@ -30,15 +30,14 @@ public:
 	uint8 dmxDataIn[512];
 	bool canReceive;
 
-	BoolParameter * fixedRate;
+	BoolParameter * alwaysSend;
 	IntParameter * targetRate;
-	BoolParameter* enableReceive;
 
 	void setConnected(bool value);
 
 	virtual void sendDMXValue(int channel, int value);
 	virtual void sendDMXRange(int startChannel, Array<int> values);
-	void setDMXValueIn(int channel, int value);
+	void setDMXValuesIn(int numChannels, uint8 * values);
 
 	virtual void sendDMXValues() = 0;
 
@@ -57,7 +56,7 @@ public:
 
 		virtual void dmxDeviceConnected() {}
 		virtual void dmxDeviceDisconnected() {}
-		virtual void dmxDataInChanged(int /*channel*/, int /*value*/) {}
+		virtual void dmxDataInChanged(int /*numChannels*/, uint8* /*values*/) {}
 	};
 
 	ListenerList<DMXDeviceListener> dmxDeviceListeners;

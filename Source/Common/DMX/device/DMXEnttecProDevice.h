@@ -34,6 +34,7 @@ public:
 	DMXEnttecProDevice();
 	~DMXEnttecProDevice();
 
+	BoolParameter* enableReceive;
 	Array<uint8> serialBuffer;
 
 	uint8 sendHeaderData[5]{ DMXPRO_START_MESSAGE,DMXPRO_SEND_LABEL,(DMXPRO_CHANNEL_COUNT+1) & 255,((DMXPRO_CHANNEL_COUNT+1) >> 8) & 255, DMXPRO_START_CODE};

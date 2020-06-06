@@ -15,8 +15,7 @@
 
 class DMXModule :
 	public Module,
-	public DMXDevice::DMXDeviceListener,
-	public Inspectable::InspectableListener
+	public DMXDevice::DMXDeviceListener
 {
 public:
 	DMXModule();
@@ -27,11 +26,8 @@ public:
 	EnumParameter * dmxType;
 	std::unique_ptr<DMXDevice> dmxDevice;
 	BoolParameter * dmxConnected;
-	BoolParameter * autoAdd;
 
-	bool manualAddMode;
-
-	HashMap<int, IntParameter *> channelMap;
+	Array<IntParameter *> channelValues;
 
 	//Script
 	const Identifier dmxEventId = "dmxEvent";
@@ -52,7 +48,6 @@ public:
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
-	void afterLoadJSONDataInternal() override;
 
 	void onContainerParameterChanged(Parameter* p) override;
 	void controllableFeedbackUpdate(ControllableContainer * cc, Controllable * c) override;
@@ -60,11 +55,7 @@ public:
 	void dmxDeviceConnected() override;
 	void dmxDeviceDisconnected() override;
 
-	void dmxDataInChanged(int channel, int value) override;
-
-	void processDMXData(int channel, int value);
-
-	void inspectableDestroyed(Inspectable * i) override;
+	void dmxDataInChanged(int numChannels, uint8 * values) override;
 
 	static void showMenuAndCreateValue(ControllableContainer * container);
 

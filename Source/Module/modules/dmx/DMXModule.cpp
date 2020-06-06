@@ -13,13 +13,11 @@
 
 DMXModule::DMXModule() :
 	Module("DMX"),
-	dmxDevice(nullptr),
-	manualAddMode(false)
+	dmxDevice(nullptr)
 {
 	setupIOConfiguration(false, true);
 	valuesCC.editorIsCollapsed = true;
 	canHandleRouteValues = true;
-	includeValuesInSave = true;
 
 	defManager->add(CommandDefinition::createDef(this, "", "Black out", &DMXCommand::create)->addParam("action", DMXCommand::BLACK_OUT));
 	defManager->add(CommandDefinition::createDef(this, "", "Set value", &DMXCommand::create)->addParam("action", DMXCommand::SET_VALUE));
@@ -34,22 +32,31 @@ DMXModule::DMXModule() :
 	dmxType->addOption("Open DMX", DMXDevice::OPENDMX)->addOption("Enttec DMX Pro", DMXDevice::ENTTEC_DMXPRO)->addOption("Enttec DMX MkII", DMXDevice::ENTTEC_MK2)->addOption("Art-Net", DMXDevice::ARTNET);
 	dmxType->setValueWithKey("Open DMX");
 
-	autoAdd = moduleParams.addBoolParameter("Auto Add", "If checked, this will automatically add values for changed channels", true);
-	autoAdd->hideInEditor = !hasInput;
+	//autoAdd = moduleParams.addBoolParameter("Auto Add", "If checked, this will automatically add values for changed channels", true);
+	//autoAdd->hideInEditor = !hasInput;
 
 	dmxConnected = moduleParams.addBoolParameter("Connected", "DMX is connected ?", false);
 	dmxConnected->isControllableFeedbackOnly = true;
 	dmxConnected->isSavable = false;
 	connectionFeedbackRef = dmxConnected;
 
-	valuesCC.userCanAddControllables = true;
-	valuesCC.customUserCreateControllableFunc = &DMXModule::showMenuAndCreateValue;
+	//valuesCC.userCanAddControllables = true;
+	//valuesCC.customUserCreateControllableFunc = &DMXModule::showMenuAndCreateValue;
 
 	setCurrentDMXDevice(DMXDevice::create((DMXDevice::Type)(int)dmxType->getValueData()));
 
 	//Script
 	scriptObject.setMethod(sendDMXId, DMXModule::sendDMXFromScript);
 	//scriptManager->scriptTemplate += ChataigneAssetManager::getInstance()->getScriptTemplate("osc");
+
+	for (int i = 0; i < 512; i++)
+	{
+		int channel = i + 1;
+		IntParameter * dVal = new IntParameter("Channel " + String(channel), "DMX Value for channel " + String(channel), 0, 0, 255);
+
+		valuesCC.addParameter(dVal);
+		channelValues.add(dVal);
+	}
 }
 
 DMXModule::~DMXModule()
@@ -80,7 +87,7 @@ void DMXModule::setCurrentDMXDevice(DMXDevice * d)
 	}
 
 	setupIOConfiguration(dmxDevice != nullptr && dmxDevice->canReceive, true);
-	autoAdd->hideInEditor = !hasInput;
+	//autoAdd->hideInEditor = !hasInput;
 
 	dmxModuleListeners.call(&DMXModuleListener::dmxDeviceChanged);
 }
@@ -186,20 +193,6 @@ void DMXModule::loadJSONDataInternal(var data)
 	if (dmxDevice != nullptr && data.getDynamicObject()->hasProperty("device")) dmxDevice->loadJSONData(data.getProperty("device", ""));
 }
 
-void DMXModule::afterLoadJSONDataInternal()
-{
-	channelMap.clear();
-	for (auto & c : valuesCC.controllables)
-	{
-		if (c->type != Parameter::INT) continue;
-		int channel = c->shortName.substring(7).getIntValue();
-		if (channel > 0 && !channelMap.contains(channel))
-		{
-			channelMap.set(channel, (IntParameter*)c);
-			c->addInspectableListener(this);
-		}
-	}
-}
 
 void DMXModule::onContainerParameterChanged(Parameter* p)
 {
@@ -226,48 +219,17 @@ void DMXModule::dmxDeviceDisconnected()
 	dmxConnected->setValue(false);
 }
 
-void DMXModule::dmxDataInChanged(int channel, int value)
+void DMXModule::dmxDataInChanged(int numChannels, uint8* values)
 {
 	if (isClearing || !enabled->boolValue()) return;
-	processDMXData(channel, value);
-}
-
-void DMXModule::processDMXData(int channel, int value)
-{
-	if (logIncomingData->boolValue()) NLOG(niceName, "DMX In : " + String(channel) + " > " + String(value));
+	if (logIncomingData->boolValue()) NLOG(niceName, "DMX In : " + String(numChannels) + " channels received.");
 	inActivityTrigger->trigger();
-
-	IntParameter* dVal = channelMap.contains(channel) ? channelMap[channel] : nullptr;
-	if (dVal == nullptr)
-	{
-		if (!autoAdd->boolValue() && !manualAddMode) return;
-
-		dVal = new IntParameter("Channel " + String(channel), "DMX Value for channel " + String(channel), 0, 0, 255);
-		dVal->setValue(value);
-
-		dVal->isRemovableByUser = true;
-		valuesCC.addParameter(dVal);
-		dVal->addInspectableListener(this);
-
-		//dVal->setControllableFeedbackOnly(true);
-		dVal->saveValueOnly = false;
-		channelMap.set(channel, dVal);
-		valuesCC.orderControllablesAlphabetically();
-	}
-	else if (!manualAddMode)
-	{
-		dVal->setValue(value);
-	}
-}
-
-void DMXModule::inspectableDestroyed(Inspectable* i)
-{
-	if (channelMap.containsValue((IntParameter *)i)) channelMap.removeValue((IntParameter*)i);
+	for (int i = 0; i < numChannels; i++) channelValues[i]->setValue(values[i]);
 }
 
 void DMXModule::showMenuAndCreateValue(ControllableContainer * container)
 {
-	DMXModule * module = dynamic_cast<DMXModule *>(container->parentContainer.get());
+/*	DMXModule * module = dynamic_cast<DMXModule *>(container->parentContainer.get());
 	if (module == nullptr) return;
 
 	AlertWindow window("Add a value", "Configure the parameters for value", AlertWindow::AlertIconType::NoIcon);
@@ -281,10 +243,9 @@ void DMXModule::showMenuAndCreateValue(ControllableContainer * container)
 	if (result)
 	{
 		int channel = jlimit<int>(1, 512, window.getTextEditorContents("channel").getIntValue());
-		module->manualAddMode = true;
-		module->processDMXData(channel, 0);
-		module->manualAddMode = false;
+		module->processDMXData(channel, 0, true);
 	}
+*/
 }
 
 DMXModule::DMXRouteParams::DMXRouteParams(Module * sourceModule, Controllable * c) :

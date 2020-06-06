@@ -27,14 +27,10 @@ DMXDevice::DMXDevice(const String& name, Type _type, bool canReceive) :
 	memset(dmxDataIn, 0, 512 * sizeof(uint8));
 
 
-	fixedRate = addBoolParameter("Use fixed send rate", "If checked, the device will always send the stored values to the constant rate set by the target rate parameter.\nIf you experience some lags, try unchecking this option.", true);
+	alwaysSend = addBoolParameter("Always Send", "If checked, the device will always send the stored values to the constant rate set by the target rate parameter.\nIf you experience some lags, try unchecking this option.", true);
 	targetRate = addIntParameter("Target send rate", "If fixed rate is checked, this is the frequency in Hz of the sending rate", 40, 1, 100);
 	
-	if (canReceive)
-	{
-		enableReceive = addBoolParameter("Enable Receive", "If checked, will also receive data. This may affect the send rate when using a fixed rate.", false);
-	}
-	if (fixedRate->boolValue()) startTimer(1000/targetRate->intValue());
+	if (alwaysSend->boolValue()) startTimer(1000/targetRate->intValue());
 }
 
 DMXDevice::~DMXDevice()
@@ -51,7 +47,7 @@ void DMXDevice::setConnected(bool value)
 	if (isConnected)
 	{
 		dmxDeviceListeners.call(&DMXDeviceListener::dmxDeviceConnected);
-		if (fixedRate->boolValue()) startTimer(1000/targetRate->intValue());
+		if (alwaysSend->boolValue()) startTimer(1000/targetRate->intValue());
 	} else
 	{
 		dmxDeviceListeners.call(&DMXDeviceListener::dmxDeviceDisconnected);
@@ -63,7 +59,7 @@ void DMXDevice::sendDMXValue(int channel, int value) //channel 1-512
 {
 	if (channel < 0 || channel > 512) return;
 	dmxDataOut[channel-1] = (uint8)value;
-	if (!fixedRate->boolValue()) sendDMXValues();
+	if (!alwaysSend->boolValue()) sendDMXValues();
 }
 
 void DMXDevice::sendDMXRange(int startChannel, Array<int> values)
@@ -78,18 +74,14 @@ void DMXDevice::sendDMXRange(int startChannel, Array<int> values)
 		dmxDataOut[channel - 1] = (uint8)(values[i]);
 	}
 
-	if (!fixedRate->boolValue()) sendDMXValues();
+	if (!alwaysSend->boolValue()) sendDMXValues();
 	
 }
 
-void DMXDevice::setDMXValueIn(int channel, int value) //channel 1-512
+void DMXDevice::setDMXValuesIn(int numChannels, uint8* values)
 {
-	if (channel > 512) return;
-	if(dmxDataIn[channel-1] == value) return;
-	
-	dmxDataIn[channel-1] = (uint8)value;
-	//notify
-	dmxDeviceListeners.call(&DMXDeviceListener::dmxDataInChanged, channel, value);
+	for (int i = 0; i < numChannels && i < 512; i++) dmxDataIn[i] = values[i];
+	dmxDeviceListeners.call(&DMXDeviceListener::dmxDataInChanged, numChannels, values);
 }
 
 
@@ -130,11 +122,11 @@ void DMXDevice::onContainerParameterChanged(Parameter * p)
 {
 	ControllableContainer::onContainerParameterChanged(p);
 
-	if (p == fixedRate || p == targetRate)
+	if (p == alwaysSend || p == targetRate)
 	{
-		if (p == fixedRate) targetRate->setEnabled(fixedRate->boolValue());
+		if (p == alwaysSend) targetRate->setEnabled(alwaysSend->boolValue());
 		
-		if (fixedRate->boolValue()) startTimer(1000/targetRate->intValue());
+		if (alwaysSend->boolValue()) startTimer(1000/targetRate->intValue());
 		else stopTimer();
 	}
 }
@@ -142,7 +134,7 @@ void DMXDevice::onContainerParameterChanged(Parameter * p)
 void DMXDevice::hiResTimerCallback()
 {
 	if (!enabled) return;
-	if (!fixedRate->boolValue()) return;
+	if (!alwaysSend->boolValue()) return;
 
 	sendDMXValues();
 }
