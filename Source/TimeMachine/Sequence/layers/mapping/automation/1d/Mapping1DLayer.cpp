@@ -14,10 +14,9 @@
 Mapping1DLayer::Mapping1DLayer(Sequence* s, var params) :
     AutomationMappingLayer(getTypeString(), s, params)
 {
-    itemDataType = "MappingLayer";
     helpID = "MappingLayer";
 
-    addChildControllableContainer(&automation1D);
+    addChildControllableContainer(&automation1D, false, 0);
     automation1D.recorder = &recorder;
     recorder.input->typesFilter.add(FloatParameter::getTypeStringStatic());
     recorder.input->typesFilter.add(IntParameter::getTypeStringStatic());

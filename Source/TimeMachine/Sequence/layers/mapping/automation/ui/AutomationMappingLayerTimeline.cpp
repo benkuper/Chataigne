@@ -17,7 +17,8 @@ AutomationMappingLayerTimeline::AutomationMappingLayerTimeline(AutomationMapping
     automationUI = ((AutomationUI*)mainComponent.get());
     needle.timeBarColor = aml->recorder.arm->boolValue() ? Colours::red : needle.defaultTimeBarColor;
 
-    autoSelectWithChildRespect = false;
+    autoDrawContourWhenSelected = false;
+    //autoSelectWithChildRespect = false;
 }
 
 AutomationMappingLayerTimeline::~AutomationMappingLayerTimeline()
@@ -50,4 +51,10 @@ void AutomationMappingLayerTimeline::controllableFeedbackUpdateInternal(Controll
 void AutomationMappingLayerTimeline::inspectableSelectionChanged(Inspectable* i)
 {
    // automationUI->setViewMode(mappingLayer->isSelected ? AutomationUI::EDIT : AutomationUI::VIEW);
+}
+
+void AutomationMappingLayerTimeline::addSelectableComponentsAndInspectables(Array<Component*>& selectables, Array<Inspectable*>& inspectables)
+{
+    if (automationUI == nullptr) return;
+    automationUI->addSelectableComponentsAndInspectables(selectables, inspectables);
 }

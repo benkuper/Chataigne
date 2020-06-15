@@ -30,4 +30,6 @@ public:
 
     virtual void inspectableSelectionChanged(Inspectable* i) override;
 
+    virtual void addSelectableComponentsAndInspectables(Array<Component*>& selectables, Array<Inspectable*>& inspectables) override;
+
 };

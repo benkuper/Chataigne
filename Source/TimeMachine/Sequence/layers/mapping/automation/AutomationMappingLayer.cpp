@@ -36,7 +36,7 @@ void AutomationMappingLayer::setupAutomation(Automation* a)
 {
     jassert(automation == nullptr);
     automation = a;
-    automation->hideInEditor = true;
+    //automation->hideInEditor = true;
     automation->setLength(sequence->totalTime->floatValue(), true);
 }
 

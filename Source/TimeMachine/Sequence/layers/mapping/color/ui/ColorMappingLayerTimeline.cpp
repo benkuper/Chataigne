@@ -25,3 +25,9 @@ void ColorMappingLayerTimeline::updateContent()
 {
 	colorManagerUI->setViewRange(item->sequence->viewStartTime->floatValue(), item->sequence->viewEndTime->floatValue());
 }
+
+void ColorMappingLayerTimeline::addSelectableComponentsAndInspectables(Array<Component*>& selectables, Array<Inspectable*>& inspectables)
+{
+	if (colorManagerUI == nullptr) return;
+	colorManagerUI->addSelectableComponentsAndInspectables(selectables, inspectables);
+}

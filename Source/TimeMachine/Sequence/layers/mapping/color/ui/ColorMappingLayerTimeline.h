@@ -24,4 +24,6 @@ public:
     GradientColorManagerUI* colorManagerUI;
 
     virtual void updateContent() override;
+
+    virtual void addSelectableComponentsAndInspectables(Array<Component*>& selectables, Array<Inspectable*>& inspectables) override;
 };

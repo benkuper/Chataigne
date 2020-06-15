@@ -16,7 +16,6 @@ ColorMappingLayer::ColorMappingLayer(Sequence* s, var params) :
     MappingLayer(getTypeString(), s, params),
     colorManager(sequence->totalTime->floatValue(),false, false)
 {
-    itemDataType = "ColorLayer";
     helpID = "ColorLayer";
 
     colorManager.allowKeysOutside = false;
