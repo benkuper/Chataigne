@@ -75,6 +75,20 @@ public:
 	virtual RouteParams * createRouteParamsForSourceValue(Module * sourceModule, Controllable * c, int /*index*/) override { return new DMXRouteParams(sourceModule, c); }
 	virtual void handleRoutedModuleValue(Controllable * c, RouteParams * p) override;
 
+
+	class DMXModuleRouterController :
+		public ModuleRouterController
+	{
+	public:
+		DMXModuleRouterController(ModuleRouter* router);
+
+		Trigger* autoSetChannels;
+
+		void triggerTriggered(Trigger* t) override;
+	};
+
+	ModuleRouterController* createModuleRouterController(ModuleRouter* router) override { return new DMXModuleRouterController(router); }
+
 	static DMXModule * create() { return new DMXModule(); }
 	virtual String getDefaultTypeString() const override { return "DMX"; }
 

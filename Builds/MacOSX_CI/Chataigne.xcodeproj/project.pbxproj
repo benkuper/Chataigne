@@ -1037,6 +1037,10 @@
 			isa = PBXBuildFile;
 			fileRef = 432EEB89D43DED4F54A7CCAD;
 		};
+		10860FBFF93187F0EA708C2F = {
+			isa = PBXBuildFile;
+			fileRef = 2E2BB6BBF1F891D2E38196C8;
+		};
 		B57E07CD28E5B42C4EA31E68 = {
 			isa = PBXBuildFile;
 			fileRef = AA881D5858A3809D2EE0A414;
@@ -2112,6 +2116,13 @@
 			path = ../../Source/Module/modules/system/os/OSModule.h;
 			sourceTree = "SOURCE_ROOT";
 		};
+		2E2BB6BBF1F891D2E38196C8 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = ModuleRouterController.cpp;
+			path = ../../Source/Module/Routing/ModuleRouterController.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		2E7534A1FF9877E7021A0027 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -2537,6 +2548,13 @@
 			lastKnownFileType = sourcecode.cpp.objcpp;
 			name = "include_juce_dsp.mm";
 			path = "../../JuceLibraryCode/include_juce_dsp.mm";
+			sourceTree = "SOURCE_ROOT";
+		};
+		4627DD7B737C5E8FF7A54B42 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = ModuleRouterController.h;
+			path = ../../Source/Module/Routing/ModuleRouterController.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		462C8FB6859681D01FC1E7C6 = {
@@ -7842,6 +7860,8 @@
 				D6DCC5B7D4DECDD47BFBDFEF,
 				432EEB89D43DED4F54A7CCAD,
 				28EFBBA8F54380644B9AFDF2,
+				2E2BB6BBF1F891D2E38196C8,
+				4627DD7B737C5E8FF7A54B42,
 				AA881D5858A3809D2EE0A414,
 				D8F5478F0053EE79D1E61739,
 				0BAD0628AAC8156B90AF64F7,
@@ -8773,6 +8793,7 @@
 				C283F46774EAFE500D229FE2,
 				FC90E2BE6646455563297244,
 				94A26CB486E34A1D05F00855,
+				10860FBFF93187F0EA708C2F,
 				B57E07CD28E5B42C4EA31E68,
 				3922354C0091CF8DE610202E,
 				3E3259EC931DAA0C715921AD,

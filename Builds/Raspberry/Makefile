@@ -303,6 +303,7 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/ModuleRouterValueEditor_7fd5857b.o \
   $(JUCE_OBJDIR)/ModuleRouterView_be67d052.o \
   $(JUCE_OBJDIR)/ModuleRouter_b990f562.o \
+  $(JUCE_OBJDIR)/ModuleRouterController_c6eb42de.o \
   $(JUCE_OBJDIR)/ModuleRouterManager_84510c75.o \
   $(JUCE_OBJDIR)/ModuleRouterValue_107f14f9.o \
   $(JUCE_OBJDIR)/ModuleChooserUI_a3310ecc.o \
@@ -1561,6 +1562,11 @@ $(JUCE_OBJDIR)/ModuleRouterView_be67d052.o: ../../Source/Module/Routing/ui/Modul
 $(JUCE_OBJDIR)/ModuleRouter_b990f562.o: ../../Source/Module/Routing/ModuleRouter.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling ModuleRouter.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/ModuleRouterController_c6eb42de.o: ../../Source/Module/Routing/ModuleRouterController.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling ModuleRouterController.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/ModuleRouterManager_84510c75.o: ../../Source/Module/Routing/ModuleRouterManager.cpp

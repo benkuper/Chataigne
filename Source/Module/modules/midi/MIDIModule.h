@@ -155,6 +155,21 @@ public:
 	virtual RouteParams * createRouteParamsForSourceValue(Module * sourceModule, Controllable * c, int /*index*/) override { return new MIDIRouteParams(sourceModule, c); }
 	virtual void handleRoutedModuleValue(Controllable * c, RouteParams * p) override;
 
+	class MIDIModuleRouterController :
+		public ModuleRouterController
+	{
+	public:
+		MIDIModuleRouterController(ModuleRouter* router);
+
+		Trigger* setAllCC;
+		Trigger* setAllNote;
+		Trigger* autoSetPitch;
+
+		void triggerTriggered(Trigger* t) override;
+	};
+
+	ModuleRouterController* createModuleRouterController(ModuleRouter* router) override { return new MIDIModuleRouterController(router); }
+
 
 	void loadJSONDataInternal(var data) override;
 

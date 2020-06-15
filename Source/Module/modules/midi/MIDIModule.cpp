@@ -13,6 +13,7 @@
 #include "Common/MIDI/MIDIManager.h"
 #include "UI/ChataigneAssetManager.h"
 #include "Module/ModuleManager.h"
+#include "Module/Routing/ModuleRouter.h"
 
 MIDIModule::MIDIModule(const String & name, bool _useGenericControls) :
 	Module(name),
@@ -661,6 +662,38 @@ void MIDIModule::handleRoutedModuleValue(Controllable * c, RouteParams * p)
 
 		default:
 			break;
+		}
+	}
+}
+
+MIDIModule::MIDIModuleRouterController::MIDIModuleRouterController(ModuleRouter* router) :
+	ModuleRouterController(router)
+{
+	setAllCC = addTrigger("Set All ControlChange", "Auto set all to control change");
+	setAllNote = addTrigger("Set All Notes", "Auto set all to notes");
+	autoSetPitch = addTrigger("Auto-set pitch", "Auto set all notes and controlChange to incrementing pitch/number");
+}
+
+void MIDIModule::MIDIModuleRouterController::triggerTriggered(Trigger* t)
+{
+	if (t == setAllCC || t == setAllNote)
+	{
+		MIDIManager::MIDIEventType midiType = t == setAllCC ? MIDIManager::CONTROL_CHANGE : MIDIManager::NOTE_ON;
+
+		for (auto& mrv : router->sourceValues.items)
+		{
+			if (MIDIRouteParams* dp = dynamic_cast<MIDIRouteParams*>(mrv->routeParams.get())) dp->type->setValueWithData(midiType);
+		}
+	}
+	else if (t == autoSetPitch)
+	{
+		int startIndex = 0;
+		for (auto& mrv : router->sourceValues.items)
+		{
+			if (MIDIRouteParams* dp = dynamic_cast<MIDIRouteParams*>(mrv->routeParams.get()))
+			{
+				if (dp->pitchOrNumber != nullptr) dp->pitchOrNumber->setValue(startIndex++);
+			}
 		}
 	}
 }

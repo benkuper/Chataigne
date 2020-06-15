@@ -13,12 +13,14 @@
 #include "JuceHeader.h"
 #include "Common/Command/CommandContext.h"
 #include  "Common/Command/CommandDefinitionManager.h"
+#include "Routing/ModuleRouterController.h"
 
 class ModuleCommandTester;
 class BaseCommandHandler;
 class CommandDefinition;
 class CommandTemplateManager;
 class ModuleUI;
+class ModuleRouter;
 
 class Module :
 	public BaseItem
@@ -112,6 +114,8 @@ public:
 
 	virtual RouteParams * createRouteParamsForSourceValue(Module * /*sourceModule*/, Controllable * /*c*/, int /*index*/) { jassert(false); return nullptr; }
 	virtual void handleRoutedModuleValue(Controllable * /*c*/, RouteParams * /*params*/) {} //used for routing, child classes that support routing must override
+
+	virtual ModuleRouterController* createModuleRouterController(ModuleRouter* router) { return nullptr; }
 
 	virtual void onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c) override;
 	

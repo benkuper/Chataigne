@@ -18,6 +18,7 @@
 #include "Common/Command/BaseCommandHandler.h"
 #include "ModuleCommandTester.h"
 #include "modules/common/commands/scriptcallback/ScriptCallbackCommand.h"
+#include "Routing/ModuleRouter.h"
 
 Module::Module(const String& name) :
 	BaseItem(name, true, true),

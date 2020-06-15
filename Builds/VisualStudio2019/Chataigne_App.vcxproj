@@ -386,6 +386,7 @@
     <ClCompile Include="..\..\Source\Module\Routing\ui\ModuleRouterValueEditor.cpp"/>
     <ClCompile Include="..\..\Source\Module\Routing\ui\ModuleRouterView.cpp"/>
     <ClCompile Include="..\..\Source\Module\Routing\ModuleRouter.cpp"/>
+    <ClCompile Include="..\..\Source\Module\Routing\ModuleRouterController.cpp"/>
     <ClCompile Include="..\..\Source\Module\Routing\ModuleRouterManager.cpp"/>
     <ClCompile Include="..\..\Source\Module\Routing\ModuleRouterValue.cpp"/>
     <ClCompile Include="..\..\Source\Module\ui\ModuleChooserUI.cpp"/>
@@ -3213,6 +3214,7 @@
     <ClInclude Include="..\..\Source\Module\Routing\ui\ModuleRouterValueEditor.h"/>
     <ClInclude Include="..\..\Source\Module\Routing\ui\ModuleRouterView.h"/>
     <ClInclude Include="..\..\Source\Module\Routing\ModuleRouter.h"/>
+    <ClInclude Include="..\..\Source\Module\Routing\ModuleRouterController.h"/>
     <ClInclude Include="..\..\Source\Module\Routing\ModuleRouterManager.h"/>
     <ClInclude Include="..\..\Source\Module\Routing\ModuleRouterValue.h"/>
     <ClInclude Include="..\..\Source\Module\ui\ModuleChooserUI.h"/>

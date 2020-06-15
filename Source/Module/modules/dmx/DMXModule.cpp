@@ -10,6 +10,7 @@
 
 #include "DMXModule.h"
 #include "commands/DMXCommand.h"
+#include "Module/Routing/ModuleRouter.h"
 
 DMXModule::DMXModule() :
 	Module("DMX"),
@@ -253,18 +254,18 @@ DMXModule::DMXRouteParams::DMXRouteParams(Module * sourceModule, Controllable * 
 	fullRange(nullptr),
     channel(nullptr)
 {
+	channel = addIntParameter("Channel", "The Channel", 1, 1, 512);
+	
+	if (c->type == Controllable::FLOAT || c->type == Controllable::BOOL || c->type == Controllable::POINT2D || c->type == Controllable::POINT3D)
+	{
+		fullRange = addBoolParameter("Full Range", "If checked, value will be remapped from 0-1 will to 0-255 (or 0-65535 in 16-bit mode)", true);
+	}
+	
 	if (c->type == Controllable::FLOAT || c->type == Controllable::INT || c->type == Controllable::BOOL || c->type == Controllable::POINT2D || c->type == Controllable::POINT3D || c->type == Controllable::COLOR)
 	{
 		mode16bit = addEnumParameter("Mode", "Choosing the resolution and Byte order for this routing");
 		mode16bit->addOption("8-bit", BIT8)->addOption("16-bit MSB", MSB)->addOption("16-bit LSB", LSB);
 	}
-
-	if (c->type == Controllable::FLOAT || c->type == Controllable::BOOL || c->type == Controllable::POINT2D || c->type == Controllable::POINT3D)
-	{
-		fullRange = addBoolParameter("Full Range", "If checked, value will be remapped from 0-1 will to 0-255 (or 0-65535 in 16-bit mode)", true);
-	}
-
-	channel = addIntParameter("Channel", "The Channel", 1, 1, 16);
 }
 
 void DMXModule::handleRoutedModuleValue(Controllable * c, RouteParams * p)
@@ -327,6 +328,27 @@ void DMXModule::handleRoutedModuleValue(Controllable * c, RouteParams * p)
 
 		default:
 			break;
+		}
+	}
+}
+
+DMXModule::DMXModuleRouterController::DMXModuleRouterController(ModuleRouter* router) :
+	ModuleRouterController(router)
+{
+	autoSetChannels = addTrigger("Auto-set channels", "Auto set channels");
+}
+
+void DMXModule::DMXModuleRouterController::triggerTriggered(Trigger* t)
+{
+	if (t == autoSetChannels)
+	{
+		int startChannel = 0;
+		for (auto& mrv : router->sourceValues.items)
+		{
+			if (DMXRouteParams* dp = dynamic_cast<DMXRouteParams*>(mrv->routeParams.get()))
+			{
+				dp->channel->setValue(startChannel++);
+			}
 		}
 	}
 }

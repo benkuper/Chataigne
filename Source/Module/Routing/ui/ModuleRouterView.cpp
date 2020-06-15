@@ -10,6 +10,7 @@
 
 #include "ModuleRouterView.h"
 #include "../ModuleRouterManager.h"
+#include "../ModuleRouterController.h"
 
 ModuleRouterView::ModuleRouterView() :
 	currentRouter(nullptr),
@@ -88,7 +89,7 @@ void ModuleRouterView::resized()
 	 
 	Rectangle<int> mr = r.removeFromTop(10);
 	Rectangle<int> outr = mr.removeFromRight(r.getWidth() / 2);
-	
+
 	sourceValueLabel.setBounds(mr.removeFromLeft(100));
 	feedbackLabel.setBounds(mr.removeFromLeft(100));
 	mr.removeFromLeft(20);
@@ -100,14 +101,19 @@ void ModuleRouterView::resized()
 
 	outParamsLabel.setBounds(outr);
 
+	r.removeFromTop(4);
+	
+	if (controllerUI != nullptr)
+	{
+		Rectangle<int> cr = r.removeFromTop(16);
+		cr.removeFromLeft(350);
+		controllerUI->setBounds(cr);
+	}
 
-	r.removeFromTop(20);
-	 
 	if (managerUI != nullptr)
 	{
 		managerUI->setBounds(r);
 	}
-	
 	
 }
 
@@ -161,8 +167,25 @@ void ModuleRouterView::setRouter(ModuleRouter * router)
 		destChooser.setModuleSelected(nullptr,true);
 	}
 
+	updateRouterControllerUI();
 	buildValueManagerUI();
 	resized();
+}
+
+void ModuleRouterView::updateRouterControllerUI()
+{
+	if (controllerUI != nullptr)
+	{
+		removeChildComponent(controllerUI.get());
+		controllerUI.reset();
+	}
+
+	if (currentRouter == nullptr || currentRouter->destModule == nullptr || currentRouter->routerController == nullptr) return;
+	
+	ModuleRouterControllerUI* rui = currentRouter->routerController->getUI();
+	if (rui == nullptr) rui = new ModuleRouterControllerUI(currentRouter->routerController);
+	addAndMakeVisible(rui);
+	controllerUI.reset(rui);
 }
 
 void ModuleRouterView::buildValueManagerUI()
@@ -185,7 +208,8 @@ void ModuleRouterView::sourceModuleChanged(ModuleRouter *)
 
 void ModuleRouterView::destModuleChanged(ModuleRouter *)
 {
-	//
+	updateRouterControllerUI();
+	resized();
 }
 
 void ModuleRouterView::inspectablesSelectionChanged()
@@ -217,5 +241,29 @@ void ModuleRouterView::selectedModuleChanged(ModuleChooserUI * c, Module * m)
 	{
 		if (c == &sourceChooser) currentRouter->setSourceModule(m);
 		else if (c == &destChooser) currentRouter->setDestModule(m);
+	}
+}
+
+ModuleRouterControllerUI::ModuleRouterControllerUI(ModuleRouterController* controller) :
+	Component("Controller"),
+	controller(controller)
+{
+	for (auto& c : controller->controllables)
+	{
+		if (c->hideInEditor) continue;
+
+		ControllableUI* cui = c->createDefaultUI();
+		controllerUIs.add(cui);
+		addAndMakeVisible(cui);
+	}
+}
+
+void ModuleRouterControllerUI::resized()
+{
+	Rectangle<int> r = getLocalBounds();
+	for (auto& cui : controllerUIs)
+	{
+		cui->setBounds(r.removeFromLeft(cui->getWidth()));
+		r.removeFromLeft(4);
 	}
 }

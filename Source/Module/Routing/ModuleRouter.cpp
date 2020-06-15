@@ -12,12 +12,14 @@
 #include "../ModuleManager.h"
 #include "CustomVariables/CVGroupManager.h"
 #include "Module/modules/customvariables/CustomVariablesModule.h"
+#include "ModuleRouterController.h"
 
 ModuleRouter::ModuleRouter() :
 	BaseItem("Router"),
 	sourceModule(nullptr),
 	destModule(nullptr),
-	sourceValues("Source Values")
+	sourceValues("Source Values"),
+	routerController(nullptr)
 {
 	sourceValues.userCanAddItemsManually = false;
 	selectAllValues = addTrigger("Select All", "Select all values for routing");
@@ -79,7 +81,6 @@ void ModuleRouter::setDestModule(Module * m)
 	}
 
 	destModule = m;
-
 	if (destModule != nullptr)
 	{
 		destModuleRef = destModule;
@@ -94,6 +95,10 @@ void ModuleRouter::setDestModule(Module * m)
 			mrv->forceDisabled = !enabled->boolValue();
 		}
 	}
+
+	if (routerController != nullptr) removeChildControllableContainer(routerController);
+	routerController = destModule != nullptr ? destModule->createModuleRouterController(this) : nullptr;
+	if (routerController != nullptr) addChildControllableContainer(routerController, true);
 
 	routerListeners.call(&RouterListener::destModuleChanged, this);
 }

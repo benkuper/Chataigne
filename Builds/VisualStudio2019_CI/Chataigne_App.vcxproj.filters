@@ -1954,6 +1954,9 @@
     <ClCompile Include="..\..\Source\Module\Routing\ModuleRouter.cpp">
       <Filter>Chataigne\Source\Module\Routing</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Module\Routing\ModuleRouterController.cpp">
+      <Filter>Chataigne\Source\Module\Routing</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Module\Routing\ModuleRouterManager.cpp">
       <Filter>Chataigne\Source\Module\Routing</Filter>
     </ClCompile>
@@ -5533,6 +5536,9 @@
       <Filter>Chataigne\Source\Module\Routing\ui</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\Routing\ModuleRouter.h">
+      <Filter>Chataigne\Source\Module\Routing</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Module\Routing\ModuleRouterController.h">
       <Filter>Chataigne\Source\Module\Routing</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\Routing\ModuleRouterManager.h">

@@ -14,6 +14,8 @@
 #include "Module/ui/ModuleChooserUI.h"
 #include "ModuleRouterValueEditor.h"
 
+class ModuleRouterControllerUI;
+
 class ModuleRouterView :
 	public Component,
 	public ModuleRouter::RouterListener,
@@ -31,7 +33,6 @@ public:
 	std::unique_ptr<TriggerButtonUI> selectAllTrigger;
 	std::unique_ptr<TriggerButtonUI> deselectAllTrigger;
 
-
 	ModuleChooserUI sourceChooser;
 	ModuleChooserUI destChooser;
 	Label sourceLabel;
@@ -46,6 +47,7 @@ public:
 	void resized() override;
 	void setRouter(ModuleRouter * router);
 	
+	void updateRouterControllerUI();
 	void buildValueManagerUI();
 
 	void sourceModuleChanged(ModuleRouter *) override;
@@ -59,4 +61,19 @@ public:
 	void selectedModuleChanged(ModuleChooserUI * c, Module * m) override;
 
 	static bool isModuleRoutable(Module * m) { return m->canHandleRouteValues; }
+
+	std::unique_ptr<ModuleRouterControllerUI> controllerUI;
+};
+
+class ModuleRouterControllerUI :
+	public Component
+{
+public:
+	ModuleRouterControllerUI(ModuleRouterController* controller);
+	virtual ~ModuleRouterControllerUI() {}
+
+	OwnedArray<ControllableUI> controllerUIs;
+	ModuleRouterController* controller;
+
+	void resized() override;
 };

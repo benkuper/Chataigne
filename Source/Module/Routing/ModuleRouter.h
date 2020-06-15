@@ -10,8 +10,9 @@
 
 #pragma once
 
-#include "Module/Module.h"
 #include "ModuleRouterValue.h"
+
+class ModuleRouterController;
 
 class ModuleRouter :
 	public BaseItem,
@@ -29,6 +30,7 @@ public:
 	WeakReference<Inspectable> destModuleRef;
 
 	BaseManager<ModuleRouterValue> sourceValues;
+	ModuleRouterController * routerController;
 
 	Trigger * selectAllValues;
 	Trigger * deselectAllValues;
@@ -37,7 +39,6 @@ public:
 	void setDestModule(Module * m);
 
 	void reloadSourceValues(bool keepData = true);
-
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
@@ -63,4 +64,5 @@ public:
 	ListenerList<RouterListener> routerListeners;
 	void addRouterListener(RouterListener* newListener) { routerListeners.add(newListener); }
 	void removeRouterListener(RouterListener* listener) { routerListeners.remove(listener); }
+
 };

@@ -1173,6 +1173,10 @@
           <FILE id="ioyDXp" name="ModuleRouter.cpp" compile="1" resource="0"
                 file="Source/Module/Routing/ModuleRouter.cpp"/>
           <FILE id="J9bush" name="ModuleRouter.h" compile="0" resource="0" file="Source/Module/Routing/ModuleRouter.h"/>
+          <FILE id="wdfupX" name="ModuleRouterController.cpp" compile="1" resource="0"
+                file="Source/Module/Routing/ModuleRouterController.cpp"/>
+          <FILE id="MfDLmy" name="ModuleRouterController.h" compile="0" resource="0"
+                file="Source/Module/Routing/ModuleRouterController.h"/>
           <FILE id="xy7cy8" name="ModuleRouterManager.cpp" compile="1" resource="0"
                 file="Source/Module/Routing/ModuleRouterManager.cpp"/>
           <FILE id="HickjO" name="ModuleRouterManager.h" compile="0" resource="0"
