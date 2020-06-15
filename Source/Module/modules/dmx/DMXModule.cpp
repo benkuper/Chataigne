@@ -225,7 +225,16 @@ void DMXModule::dmxDataInChanged(int numChannels, uint8* values)
 	if (isClearing || !enabled->boolValue()) return;
 	if (logIncomingData->boolValue()) NLOG(niceName, "DMX In : " + String(numChannels) + " channels received.");
 	inActivityTrigger->trigger();
-	for (int i = 0; i < numChannels; i++) channelValues[i]->setValue(values[i]);
+
+	var data;
+
+	for (int i = 0; i < numChannels; i++)
+	{
+		channelValues[i]->setValue(values[i]);
+		data.append(values[i]);
+	}
+
+	scriptManager->callFunctionOnAllItems(dmxEventId, Array<var>{data});
 }
 
 void DMXModule::showMenuAndCreateValue(ControllableContainer * container)
