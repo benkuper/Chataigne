@@ -43,29 +43,32 @@ void MappingLayerPanel::resizedInternalContent(Rectangle<int>& r)
 	resizedInternalPanelContent(cr);
 }
 
-void MappingLayerPanel::mouseDown(const MouseEvent& e)
+void MappingLayerPanel::addContextMenuItems(PopupMenu& p)
 {
-	SequenceLayerPanel::mouseDown(e);
+	SequenceLayerPanel::addContextMenuItems(p);
+	p.addItem(100, "Export baked values to clipboard");
+	p.addItem(101, "Export baked values to clipboard (data only)");
 
-	if (e.mods.isRightButtonDown())
+	p.addSeparator();
+
+	p.addItem(102, "Copy filters");
+	p.addItem(103, "Paste filters");
+
+	p.addItem(104, "Copy outputs");
+	p.addItem(105, "Paste outputs");
+}
+
+void MappingLayerPanel::handleContextMenuResult(int result)
+{
+	SequenceLayerPanel::handleContextMenuResult(result);
+	switch (result)
 	{
-		if (e.eventComponent == this)
-		{
-			PopupMenu p;
-			p.addItem(1, "Export baked values to clipboard");
-			p.addItem(2, "Export baked values to clipboard (data only)");
+	case 100: mappingLayer->exportBakedValues(false); break;
+	case 101: mappingLayer->exportBakedValues(true); break;
 
-			int result = p.show();
-			switch (result)
-			{
-			case 1:
-				mappingLayer->exportBakedValues(false);
-				break;
-
-			case 2:
-				mappingLayer->exportBakedValues(true);
-				break;
-			}
-		}
+	case 102: SystemClipboard::copyTextToClipboard(JSON::toString(mappingLayer->mapping->fm.getJSONData())); break;
+	case 103: mappingLayer->mapping->fm.loadJSONData(JSON::fromString(SystemClipboard::getTextFromClipboard())); break;
+	case 104: SystemClipboard::copyTextToClipboard(JSON::toString(mappingLayer->mapping->om.getJSONData())); break;
+	case 105: mappingLayer->mapping->om.loadJSONData(JSON::fromString(SystemClipboard::getTextFromClipboard())); break;
 	}
 }

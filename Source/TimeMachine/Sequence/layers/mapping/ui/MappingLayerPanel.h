@@ -24,8 +24,10 @@ public:
 
 	std::unique_ptr<ControllableEditor> mappingOutputUI;
 
+
 	void resizedInternalContent(Rectangle<int> &r) override;
 	virtual void resizedInternalPanelContent(Rectangle<int>& r) {};
 
-	void mouseDown(const MouseEvent& e) override;
+	virtual void addContextMenuItems(PopupMenu& p) override;
+	virtual void handleContextMenuResult(int result) override;
 };
