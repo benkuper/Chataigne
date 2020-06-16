@@ -54,6 +54,7 @@ var Mapping2DLayer::getValueAtPosition(float position)
 
 void Mapping2DLayer::stopRecorderAndAddKeys()
 {
+
 	Array<AutomationRecorder::RecordValue> recordedValues = recorder.stopRecordingAndGetKeys();
 
 	if (recordedValues.size() == 0) return;
@@ -76,6 +77,8 @@ void Mapping2DLayer::stopRecorderAndAddKeys()
 		prevP.setXY(p.x, p.y);
 	}
 
+	if (totalLength == 0) return;
+	
 	for (auto& p : positions) p.y /= totalLength;
 	curve.addFromPointsAndSimplify(points, true, times);
 	automation->addFromPointsAndSimplify(positions);
