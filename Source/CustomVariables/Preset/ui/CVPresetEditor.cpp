@@ -60,3 +60,29 @@ void CVPresetEditor::newMessage(const Parameter::ParameterEvent & e)
 		resized();
 	}
 }
+
+ParameterPresetEditor::ParameterPresetEditor(ParameterPreset* pp, bool isRoot) :
+	InspectableEditor(pp, isRoot),
+	pp(pp)
+{
+	pui.reset(pp->parameter->getEditor(false));
+	addAndMakeVisible(pui.get());
+
+	modeUI.reset(pp->interpolationMode->createDefaultUI());
+	addAndMakeVisible(modeUI.get());
+
+	setSize(100, 18);
+}
+
+ParameterPresetEditor::~ParameterPresetEditor()
+{
+
+}
+
+void ParameterPresetEditor::resized()
+{
+	Rectangle<int> r = getLocalBounds();
+	modeUI->setBounds(r.removeFromRight(80));
+	r.removeFromRight(8);
+	pui->setBounds(r);
+}

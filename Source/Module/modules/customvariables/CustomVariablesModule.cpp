@@ -27,7 +27,6 @@ CustomVariablesModule::CustomVariablesModule(CVGroupManager * manager) :
 	defManager->add(CommandDefinition::createDef(this, "", "Set Morpher Target", &CVCommand::create, CommandContext::BOTH)->addParam("type", CVCommand::SET_2DTARGET));
 	defManager->add(CommandDefinition::createDef(this, "", "Load Preset from file", &CVCommand::create, CommandContext::ACTION)->addParam("type", CVCommand::LOAD_PRESET));
 	defManager->add(CommandDefinition::createDef(this, "", "Save Preset to file", &CVCommand::create, CommandContext::ACTION)->addParam("type", CVCommand::SAVE_PRESET));
-	//defManager->add(CommandDefinition::createDef(this,"", "Set Target Position", &CVCommand::create, CommandContext::BOTH)->addParam("type", CVCommand::SET_2DTARGET));
 }
 
 CustomVariablesModule::~CustomVariablesModule()
@@ -37,7 +36,7 @@ CustomVariablesModule::~CustomVariablesModule()
 }
 
 
-GenericControllableManagerLinkedContainer * CustomVariablesModule::getValueCCForGroup(CVGroup * g)
+PresetParameterContainer* CustomVariablesModule::getValueCCForGroup(CVGroup * g)
 {
 	for (auto &cc : valuesContainers) if (cc->manager == &g->values) return cc;
 	return nullptr;
@@ -61,7 +60,7 @@ void CustomVariablesModule::clearItems()
 
 void CustomVariablesModule::itemAdded(CVGroup * g)
 {
-	GenericControllableManagerLinkedContainer * cc = new GenericControllableManagerLinkedContainer(g->niceName,&g->values,true);
+	PresetParameterContainer* cc = new PresetParameterContainer(g->niceName,&g->values,true);
 	valuesCC.addChildControllableContainer(cc);
 	g->addControllableContainerListener(this);
 	valuesContainers.add(cc);
@@ -71,7 +70,7 @@ void CustomVariablesModule::itemsAdded(Array<CVGroup*> groups)
 {
 	for (auto& g : groups)
 	{
-		GenericControllableManagerLinkedContainer* cc = new GenericControllableManagerLinkedContainer(g->niceName, &g->values, true);
+		PresetParameterContainer* cc = new PresetParameterContainer(g->niceName, &g->values, true);
 		valuesCC.addChildControllableContainer(cc);
 		g->addControllableContainerListener(this);
 		valuesContainers.add(cc);
@@ -80,7 +79,7 @@ void CustomVariablesModule::itemsAdded(Array<CVGroup*> groups)
 
 void CustomVariablesModule::itemRemoved(CVGroup * g)
 {
-	GenericControllableManagerLinkedContainer * cc = getValueCCForGroup(g);
+	PresetParameterContainer* cc = getValueCCForGroup(g);
 	if (cc == nullptr) return;
 	
 	valuesCC.removeChildControllableContainer(cc);
@@ -92,7 +91,7 @@ void CustomVariablesModule::itemsRemoved(Array<CVGroup*> groups)
 {
 	for (auto& g : groups)
 	{
-		GenericControllableManagerLinkedContainer* cc = getValueCCForGroup(g);
+		PresetParameterContainer* cc = getValueCCForGroup(g);
 		if (cc == nullptr) return;
 
 		valuesCC.removeChildControllableContainer(cc);
@@ -107,7 +106,7 @@ void CustomVariablesModule::childAddressChanged(ControllableContainer * cc)
 
 	CVGroup * g = dynamic_cast<CVGroup *>(cc);
 	if (g == nullptr) return;
-	GenericControllableManagerLinkedContainer * mlc = getValueCCForGroup(g);
+	PresetParameterContainer* mlc = getValueCCForGroup(g);
 	if (mlc == nullptr) return;
 	
 	mlc->setNiceName(g->niceName);

@@ -83,21 +83,23 @@ InspectableEditor * CVPreset::getEditor(bool isRoot)
 
 
 
-GenericControllableManagerLinkedContainer::GenericControllableManagerLinkedContainer(const String &name, GenericControllableManager * manager, bool keepValuesInSync) :
+PresetParameterContainer::PresetParameterContainer(const String &name, GenericControllableManager * manager, bool keepValuesInSync) :
 	ControllableContainer(name),
     manager(manager),
     keepValuesInSync(keepValuesInSync),
 	linkedComparator(manager)
 {
+	saveAndLoadRecursiveData = true;
+
 	manager->addBaseManagerListener(this);
 	resetAndBuildValues(keepValuesInSync);
 }
 
-GenericControllableManagerLinkedContainer::~GenericControllableManagerLinkedContainer()
+PresetParameterContainer::~PresetParameterContainer()
 {
 	manager->removeBaseManagerListener(this);
 
-	HashMap<Parameter *, Parameter *>::Iterator i(linkMap);
+	HashMap<ParameterPreset *, Parameter *>::Iterator i(linkMap);
 	while (i.next())
 	{
 		i.getValue()->removeControllableListener(this);
@@ -106,9 +108,9 @@ GenericControllableManagerLinkedContainer::~GenericControllableManagerLinkedCont
 
 }
 
-void GenericControllableManagerLinkedContainer::resetAndBuildValues(bool syncValues)
+void PresetParameterContainer::resetAndBuildValues(bool syncValues)
 {
-	HashMap<Parameter *, Parameter *>::Iterator i(linkMap);
+	HashMap<ParameterPreset *, Parameter *>::Iterator i(linkMap);
 	while (i.next())
 	{
 		i.getValue()->removeControllableListener(this);
@@ -122,93 +124,129 @@ void GenericControllableManagerLinkedContainer::resetAndBuildValues(bool syncVal
 	}
 }
 
-void GenericControllableManagerLinkedContainer::addValueFromItem(Parameter * source)
+void PresetParameterContainer::addValueFromItem(Parameter* source)
 {
 	if (source == nullptr) return;
 
-	Controllable * c = ControllableFactory::createControllable(source->getTypeString());
-	Parameter * p = dynamic_cast<Parameter *>(c);
-	linkMap.set(p, source);
+	Controllable* c = ControllableFactory::createControllable(source->getTypeString());
+	Parameter* p = dynamic_cast<Parameter*>(c);
+	ParameterPreset* pp = new ParameterPreset(p);
+	linkMap.set(pp, source);
 	source->addControllableListener(this);
 	source->addParameterListener(this);
 	p->forceSaveValue = true;
 	syncItem(p, source);
-	addParameter(p);
+
+	addChildControllableContainer(pp, true);
 }
 
-void GenericControllableManagerLinkedContainer::syncItem(Parameter * p, Parameter * source, bool syncValue)
+void PresetParameterContainer::syncItem(Parameter* p, Parameter* source, bool syncValue)
 {
 	p->setNiceName(source->niceName);
 	p->setRange(source->minimumValue, source->maximumValue);
 	if (syncValue) p->setValue(source->value);
 }
 
-void GenericControllableManagerLinkedContainer::syncItems(bool syncValues)
+void PresetParameterContainer::syncItems(bool syncValues)
 {
-	Array<WeakReference<Parameter>> pList = getAllParameters();
-	for (auto &p : pList)
+	for (auto& cc : controllableContainers)
 	{
-		syncItem(p, linkMap[p], syncValues);
+		if (ParameterPreset* pp = dynamic_cast<ParameterPreset *>(cc.get()))
+		{
+			syncItem(pp->parameter, linkMap[pp], syncValues);
+		}
 	}
 }
 
-void GenericControllableManagerLinkedContainer::itemAdded(GenericControllableItem * gci)
+void PresetParameterContainer::itemAdded(GenericControllableItem* gci)
 {
 	if (gci->controllable->type == Controllable::TRIGGER) return;
-	addValueFromItem(dynamic_cast<Parameter *>(gci->controllable));
+	addValueFromItem(dynamic_cast<Parameter*>(gci->controllable));
 }
 
-void GenericControllableManagerLinkedContainer::itemRemoved(GenericControllableItem * gci)
+void PresetParameterContainer::itemRemoved(GenericControllableItem* gci)
 {
 	if (gci->controllable->type == Controllable::TRIGGER) return;
-	Parameter * p = dynamic_cast<Parameter *>(getControllableByName(gci->niceName, true));
-	if (p != nullptr)
-	{ 
-		linkMap[p]->removeControllableListener(this);
-		linkMap[p]->removeParameterListener(this);
-		linkMap.remove(p);
-		removeControllable(p);
+	ParameterPreset* pp = dynamic_cast<ParameterPreset*>(getControllableContainerByName(gci->niceName, true));
+	if (pp != nullptr)
+	{
+		linkMap[pp]->removeControllableListener(this);
+		linkMap[pp]->removeParameterListener(this);
+		linkMap.remove(pp);
+
+		removeChildControllableContainer(pp);
 	}
 }
 
-void GenericControllableManagerLinkedContainer::itemsReordered()
+void PresetParameterContainer::itemsReordered()
 {
 	controllables.sort(linkedComparator);
 	controllableContainerListeners.call(&ControllableContainerListener::controllableContainerReordered, this);
 	queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerReordered, this));
 }
 
-void GenericControllableManagerLinkedContainer::parameterValueChanged(Parameter * source)
+void PresetParameterContainer::parameterValueChanged(Parameter* source)
 {
 	ControllableContainer::parameterValueChanged(source);
 	if (!keepValuesInSync) return;
-	Parameter * p = getParameterForSource(source);
-	if (p == nullptr) return;
-	p->setValue(source->value);
+	ParameterPreset* pp = getParameterPresetForSource(source);
+	if (pp == nullptr) return;
+	pp->parameter->setValue(source->value);
 }
 
-void GenericControllableManagerLinkedContainer::parameterRangeChanged(Parameter * source)
+void PresetParameterContainer::parameterRangeChanged(Parameter* source)
 {
 	ControllableContainer::parameterRangeChanged(source);
-	Parameter * p = getParameterForSource(source);
-	if (p == nullptr) return;
-	syncItem(p, source, keepValuesInSync);
+	ParameterPreset* pp = getParameterPresetForSource(source);
+	if (pp == nullptr) return;
+	syncItem(pp->parameter, source, keepValuesInSync);
 }
 
-void GenericControllableManagerLinkedContainer::controllableNameChanged(Controllable * sourceC)
+void PresetParameterContainer::controllableNameChanged(Controllable* sourceC)
 {
-	Parameter * source = dynamic_cast<Parameter *>(sourceC);
+	Parameter* source = dynamic_cast<Parameter*>(sourceC);
 	if (source == nullptr) return;
 
-	Parameter * p = getParameterForSource(source);
-	if (p == nullptr) return;
-	syncItem(p, source, keepValuesInSync);
+	ParameterPreset* pp = getParameterPresetForSource(source);
+	if (pp == nullptr) return;
+	syncItem(pp->parameter, source, keepValuesInSync);
 }
 
-Parameter * GenericControllableManagerLinkedContainer::getParameterForSource(Parameter * p)
+ParameterPreset * PresetParameterContainer::getParameterPresetForSource(Parameter * p)
 {
-	HashMap<Parameter *, Parameter *>::Iterator i(linkMap);
+	HashMap<ParameterPreset *, Parameter *>::Iterator i(linkMap);
 	while (i.next()) if (p == i.getValue()) return i.getKey();
 	return nullptr;
 }
 
+ParameterPreset::ParameterPreset(Parameter * p) :
+	ControllableContainer(p->niceName),
+	parameter(p)
+{
+	addParameter(p);
+	interpolationMode = addEnumParameter("Mode", "Interpolation mode, sets how interpolation is done");
+
+	switch (p->type)
+	{
+	case Parameter::BOOL:
+		break;
+	case Parameter::STRING:
+		break;
+
+	default:
+		interpolationMode->addOption("Interpolate", INTERPOLATE);
+		break;
+	}
+
+	interpolationMode->addOption("Keep Start", START)->addOption("Keep End", END);
+}
+
+ParameterPreset::~ParameterPreset()
+{
+
+}
+
+InspectableEditor* ParameterPreset::getEditor(bool isRoot)
+{
+	return new ParameterPresetEditor(this, isRoot);
+}

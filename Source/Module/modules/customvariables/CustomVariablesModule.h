@@ -13,7 +13,7 @@
 #include "CustomVariables/CVGroupManager.h"
 #include "../../Module.h"
 
-class GenericControllableManagerLinkedContainer;
+class PresetParameterContainer;
 
 class CustomVariablesModule :
 	public Module,
@@ -24,12 +24,11 @@ public:
 	~CustomVariablesModule();
 
 	CVGroupManager * manager;
-	OwnedArray<GenericControllableManagerLinkedContainer> valuesContainers;
+	OwnedArray<PresetParameterContainer> valuesContainers;
 
-	GenericControllableManagerLinkedContainer * getValueCCForGroup(CVGroup * c);
+	PresetParameterContainer* getValueCCForGroup(CVGroup * c);
 
 	void clearItems();
-
 
 	void itemAdded(CVGroup* g) override;
 	void itemsAdded(Array<CVGroup*> g) override;

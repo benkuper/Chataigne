@@ -15,16 +15,30 @@
 
 class CVGroup;
 
-class GenericControllableManagerLinkedContainer :
+class ParameterPreset :
+	public ControllableContainer
+{
+public:
+	ParameterPreset(Parameter * p);
+	~ParameterPreset();
+
+	Parameter* parameter;
+	enum InterpolationMode { START, END, INTERPOLATE };
+	EnumParameter* interpolationMode;
+
+	InspectableEditor* getEditor(bool isRoot) override;
+};
+
+class PresetParameterContainer :
 	public ControllableContainer,
 	public GenericControllableManager::ManagerListener
 {
 public:
-	GenericControllableManagerLinkedContainer(const String& name, GenericControllableManager* manager, bool keepValuesInSync);
-	~GenericControllableManagerLinkedContainer();
+	PresetParameterContainer(const String& name, GenericControllableManager* manager, bool keepValuesInSync);
+	~PresetParameterContainer();
 
 	GenericControllableManager* manager;
-	HashMap<Parameter*, Parameter*> linkMap;
+	HashMap<ParameterPreset*,  Parameter*> linkMap;
 
 	bool keepValuesInSync;
 
@@ -42,7 +56,7 @@ public:
 	void parameterRangeChanged(Parameter*) override;
 	void controllableNameChanged(Controllable*) override;
 
-	Parameter* getParameterForSource(Parameter* p);
+	ParameterPreset * getParameterPresetForSource(Parameter* p);
 
 	class LinkedComparator
 	{
@@ -70,7 +84,7 @@ public:
 	~CVPreset();
 
 	CVGroup* group;
-	GenericControllableManagerLinkedContainer values;
+	PresetParameterContainer values;
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;

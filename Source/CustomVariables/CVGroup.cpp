@@ -53,8 +53,8 @@ void CVGroup::setValuesToPreset(CVPreset * preset)
 	{
 		Parameter * p = dynamic_cast<Parameter *>(v->controllable);
 		if (p == nullptr) continue;
-		Parameter * pp = preset->values.getParameterForSource(p);
-		if (pp != nullptr) p->setValue(pp->value);
+		ParameterPreset * pp = preset->values.getParameterPresetForSource(p);
+		if (pp != nullptr) p->setValue(pp->parameter->value);
 	}
 }
 
@@ -66,12 +66,29 @@ void CVGroup::lerpPresets(CVPreset * p1, CVPreset * p2, float weight)
 	{
 		Parameter * p = dynamic_cast<Parameter *>(v->controllable);
 		if (p == nullptr) continue;
-		Parameter * pp1 = p1->values.getParameterForSource(p);
-		Parameter * pp2 = p2->values.getParameterForSource(p);
+		ParameterPreset * pp1 = p1->values.getParameterPresetForSource(p);
+		ParameterPreset * pp2 = p2->values.getParameterPresetForSource(p);
+
 		if (pp1 != nullptr && pp2 != nullptr)
 		{
-			var lValue = pp1->getLerpValueTo(pp2->value, weight);
-			p->setValue(lValue);
+			var tValue;
+			if (weight == 0) tValue = pp1->parameter->value;
+			else if (weight == 1) tValue = pp2->parameter->value;
+			else
+			{
+				ParameterPreset::InterpolationMode mode = pp2->interpolationMode->getValueDataAsEnum<ParameterPreset::InterpolationMode>();
+
+				if (mode == ParameterPreset::INTERPOLATE)
+				{
+					tValue = pp1->parameter->getLerpValueTo(pp2->parameter->value, weight);
+				}
+				else
+				{
+					tValue = (mode == ParameterPreset::START ? pp1 : pp2)->parameter->value;
+				}
+			}
+
+			p->setValue(tValue);
 		}
 	}
 }
@@ -119,8 +136,8 @@ void CVGroup::computeValues()
 			Parameter * vp = static_cast<Parameter *>(v->controllable);
 			for (auto &p : pm->items)
 			{
-				Parameter* sp = p->values.getParameterForSource(vp);
-				if(sp != nullptr) pValues.add(sp->value);
+				ParameterPreset * spp = p->values.getParameterPresetForSource(vp);
+				if(spp != nullptr) pValues.add(spp->parameter->value);
 			}
 
 			if(pValues.size() == weights.size()) vp->setWeightedValue(pValues, weights);

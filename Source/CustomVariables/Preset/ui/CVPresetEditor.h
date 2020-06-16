@@ -30,3 +30,18 @@ public:
 	void resizedInternalHeaderItemInternal(Rectangle<int> &r) override;
 	void newMessage(const Parameter::ParameterEvent &e) override;
 };
+
+class ParameterPresetEditor :
+	public InspectableEditor
+{
+public:
+	ParameterPresetEditor(ParameterPreset * pp, bool isRoot);
+	~ParameterPresetEditor();
+
+	ParameterPreset* pp;
+	std::unique_ptr<InspectableEditor> pui;
+	std::unique_ptr<ControllableUI> modeUI;
+
+	void resized() override;
+
+};
