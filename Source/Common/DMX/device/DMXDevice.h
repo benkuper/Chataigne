@@ -30,6 +30,9 @@ public:
 	uint8 dmxDataIn[512];
 	bool canReceive;
 
+	EnablingControllableContainer* inputCC;
+
+	EnablingControllableContainer* outputCC;
 	BoolParameter * alwaysSend;
 	IntParameter * targetRate;
 
@@ -45,7 +48,7 @@ public:
 	
 	static DMXDevice * create(Type type);
 
-	void onContainerParameterChanged(Parameter *p) override;
+	void onControllableFeedbackUpdate(ControllableContainer * cc, Controllable * c) override;
 
 	virtual void hiResTimerCallback() override;
 

@@ -29,13 +29,15 @@ public:
 	~DMXArtNetDevice();
 
 	//EnumParameter * networkInterface;
-	IntParameter* subnet;
-	IntParameter* universe;
+	IntParameter* localPort;
+	IntParameter* inputSubnet;
+	IntParameter* inputUniverse;
 	//StringParameter * nodeName;
 
-	IntParameter * localPort;
 	StringParameter* remoteHost;
 	IntParameter * remotePort;
+	IntParameter* outputSubnet;
+	IntParameter* outputUniverse;
 
 	std::unique_ptr<DatagramSocket> receiver;
 	DatagramSocket sender;
