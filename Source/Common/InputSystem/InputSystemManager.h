@@ -74,7 +74,7 @@ public:
 
 
 	// Inherited via Parameter
-	virtual ControllableUI * createDefaultUI(Controllable * targetControllable = nullptr) override;
+	virtual ControllableUI * createDefaultUI() override;
 
 };
 
@@ -99,7 +99,7 @@ public:
 	void loadJSONDataInternal(var data) override;
 
 	// Inherited via Parameter
-	virtual ControllableUI * createDefaultUI(Controllable * targetControllable = nullptr) override;
+	virtual ControllableUI * createDefaultUI() override;
 
 };
 

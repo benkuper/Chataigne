@@ -391,7 +391,7 @@ void JoystickParameter::loadJSONDataInternal(var data)
 	}
 }
 
-ControllableUI * JoystickParameter::createDefaultUI(Controllable *)
+ControllableUI * JoystickParameter::createDefaultUI()
 {
 	return new JoystickParameterUI(this);
 }
@@ -463,7 +463,7 @@ void GamepadParameter::loadJSONDataInternal(var data)
 	}
 }
 
-ControllableUI * GamepadParameter::createDefaultUI(Controllable *)
+ControllableUI * GamepadParameter::createDefaultUI()
 {
 	return new GamepadParameterUI(this);
 }

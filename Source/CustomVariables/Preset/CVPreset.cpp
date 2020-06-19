@@ -230,6 +230,7 @@ ParameterPreset::ParameterPreset(Parameter * p) :
 	{
 	case Parameter::BOOL:
 		break;
+
 	case Parameter::STRING:
 		break;
 
