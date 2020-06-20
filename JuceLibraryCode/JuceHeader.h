@@ -31,6 +31,7 @@
 #include <juce_opengl/juce_opengl.h>
 #include <juce_organicui/juce_organicui.h>
 #include <juce_osc/juce_osc.h>
+#include <juce_simpleweb/juce_simpleweb.h>
 #include <juce_timeline/juce_timeline.h>
 #include <juce_video/juce_video.h>
 
@@ -56,7 +57,7 @@ namespace ProjectInfo
 {
     const char* const  projectName    = "Chataigne";
     const char* const  companyName    = "Ben Kuper";
-    const char* const  versionString  = "1.7.0b29";
+    const char* const  versionString  = "1.7.0b30";
     const int          versionNumber  = 0x10700;
 }
 #endif

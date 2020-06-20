@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.7.0b29"
+<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.7.0b30"
               bundleIdentifier="benkuper.Chataigne" includeBinaryInAppConfig="1"
               jucerVersion="5.4.7" companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
               companyEmail="benjamin@kuperberg.fr" defines="" splashScreenColour="Dark"
@@ -852,6 +852,10 @@
             </GROUP>
           </GROUP>
           <GROUP id="{EDF4ADAF-A6E6-5AE0-4BD1-F931B7209F8B}" name="dmx">
+            <GROUP id="{69B4662D-C130-89C8-DA0B-1B6F04D71E02}" name="ui">
+              <FILE id="iGPlyP" name="DMXModuleUI.cpp" compile="1" resource="0" file="Source/Module/modules/dmx/ui/DMXModuleUI.cpp"/>
+              <FILE id="goClo4" name="DMXModuleUI.h" compile="0" resource="0" file="Source/Module/modules/dmx/ui/DMXModuleUI.h"/>
+            </GROUP>
             <GROUP id="{A202753D-C048-98A7-A8E3-8C78CCB509E3}" name="commands">
               <FILE id="AJX20W" name="DMXCommand.cpp" compile="1" resource="0" file="Source/Module/modules/dmx/commands/DMXCommand.cpp"/>
               <FILE id="Amd8dc" name="DMXCommand.h" compile="0" resource="0" file="Source/Module/modules/dmx/commands/DMXCommand.h"/>
@@ -1436,6 +1440,7 @@
         <MODULEPATH id="juce_dsp"/>
         <MODULEPATH id="juce_timeline" path="Modules"/>
         <MODULEPATH id="juce_audio_formats"/>
+        <MODULEPATH id="juce_simpleweb" path="Modules"/>
       </MODULEPATHS>
     </VS2019>
     <XCODE_MAC targetFolder="Builds/MacOSX" smallIcon="nVz6Li" bigIcon="nVz6Li"
@@ -1472,6 +1477,7 @@
         <MODULEPATH id="juce_dsp"/>
         <MODULEPATH id="juce_timeline" path="Modules"/>
         <MODULEPATH id="juce_audio_formats"/>
+        <MODULEPATH id="juce_simpleweb" path="Modules"/>
       </MODULEPATHS>
     </XCODE_MAC>
     <LINUX_MAKE targetFolder="Builds/Raspberry" smallIcon="nVz6Li" bigIcon="nVz6Li"
@@ -1505,6 +1511,7 @@
         <MODULEPATH id="juce_dsp" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_timeline" path="Modules"/>
         <MODULEPATH id="juce_audio_formats" path="~/JUCE/modules"/>
+        <MODULEPATH id="juce_simpleweb" path="Modules"/>
       </MODULEPATHS>
     </LINUX_MAKE>
     <LINUX_MAKE targetFolder="Builds/LinuxMakefile" externalLibraries="bluetooth&#10;Servus&#10;curl&#10;artnet&#10;SDL2&#10;usb-1.0&#10;hidapi-hidraw"
@@ -1537,6 +1544,7 @@
         <MODULEPATH id="juce_dsp" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_timeline" path="Modules"/>
         <MODULEPATH id="juce_audio_formats" path="~/JUCE/modules"/>
+        <MODULEPATH id="juce_simpleweb" path="Modules"/>
       </MODULEPATHS>
     </LINUX_MAKE>
     <VS2019 targetFolder="Builds/VisualStudio2019_CI" extraDefs="USE_KINECT=1"
@@ -1570,6 +1578,7 @@
         <MODULEPATH id="juce_audio_devices" path="../JUCE/Modules"/>
         <MODULEPATH id="juce_audio_basics" path="../JUCE/Modules"/>
         <MODULEPATH id="juce_analytics" path="../JUCE/Modules"/>
+        <MODULEPATH id="juce_simpleweb" path="Modules"/>
       </MODULEPATHS>
     </VS2019>
     <VS2019 targetFolder="Builds/VisualStudio2019_Win7CI" smallIcon="nVz6Li"
@@ -1603,6 +1612,7 @@
         <MODULEPATH id="juce_audio_devices" path="../JUCE/Modules"/>
         <MODULEPATH id="juce_audio_basics" path="../JUCE/Modules"/>
         <MODULEPATH id="juce_analytics" path="../JUCE/Modules"/>
+        <MODULEPATH id="juce_simpleweb" path="Modules"/>
       </MODULEPATHS>
     </VS2019>
     <XCODE_MAC targetFolder="Builds/MacOSX_CI" externalLibraries="Servus&#10;artnet&#10;hidapi&#10;joytime-core&#10;joytime-input-hidapi&#10;SDL2&#10;iconv"
@@ -1638,6 +1648,7 @@
         <MODULEPATH id="juce_audio_devices" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_audio_basics" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_analytics" path="~/JUCE/modules"/>
+        <MODULEPATH id="juce_simpleweb" path="Modules"/>
       </MODULEPATHS>
     </XCODE_MAC>
   </EXPORTFORMATS>
@@ -1659,13 +1670,15 @@
     <MODULE id="juce_opengl" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_organicui" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_osc" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_simpleweb" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_timeline" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_video" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
   </MODULES>
   <JUCEOPTIONS JUCE_ASIO="1" JUCE_WASAPI="1" JUCE_JACK="1" ORGANICUI_USE_SERVUS="1"
                JUCE_ALLOW_SPECIAL_CHARS_IN_ADDRESS="1" TIMELINE_USE_SEQUENCEMANAGER_SINGLETON="0"
                JUCE_USE_MP3AUDIOFORMAT="1" JUCE_USE_LAME_AUDIO_FORMAT="1" JUCE_USE_WINDOWS_MEDIA_FORMAT="1"
-               JUCE_ENABLE_BROADCAST_BY_DEFAULT="1" JUCE_EXCLUSIVE_BINDING_BY_DEFAULT="1"/>
+               JUCE_ENABLE_BROADCAST_BY_DEFAULT="1" JUCE_EXCLUSIVE_BINDING_BY_DEFAULT="1"
+               ORGANICUI_USE_WEBSERVER="1"/>
   <LIVE_SETTINGS>
     <WINDOWS/>
     <OSX/>

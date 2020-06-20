@@ -789,6 +789,10 @@
 			isa = PBXBuildFile;
 			fileRef = B52752D23217AA7EC926EAF6;
 		};
+		A656063A6401EB45C87961DB = {
+			isa = PBXBuildFile;
+			fileRef = 062D0D43531255FFF58B5230;
+		};
 		C9E307235285CDA40C24D9F3 = {
 			isa = PBXBuildFile;
 			fileRef = EC5B45EF4CC0C763AE3DB55F;
@@ -1317,6 +1321,10 @@
 			isa = PBXBuildFile;
 			fileRef = 8AB58B2FA156DD075B892850;
 		};
+		14B03BE884B82BE8EC264AE9 = {
+			isa = PBXBuildFile;
+			fileRef = A344ECDA05A5372A32341886;
+		};
 		6FB44A657258A9A5ACB8BE85 = {
 			isa = PBXBuildFile;
 			fileRef = 4D147E8D071C0C93CB433813;
@@ -1435,6 +1443,13 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = AboutWindow.h;
 			path = ../../Source/UI/AboutWindow.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		062D0D43531255FFF58B5230 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = DMXModuleUI.cpp;
+			path = ../../Source/Module/modules/dmx/ui/DMXModuleUI.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		063AB806516476558D9F032C = {
@@ -3201,6 +3216,13 @@
 			path = ../../Source/Common/Command/Template/ui/CommandTemplateManagerUI.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
+		6B49F91B2A3C9EC69F04FB2D = {
+			isa = PBXFileReference;
+			lastKnownFileType = file;
+			name = "juce_simpleweb";
+			path = "../../Modules/juce_simpleweb";
+			sourceTree = "SOURCE_ROOT";
+		};
 		6B4B5B0AA9784F3136EA4326 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -3768,6 +3790,13 @@
 			path = ../../Source/Common/MIDI/ui/MIDIDeviceChooser.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
+		8784735343A06617FB1D7D64 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = DMXModuleUI.h;
+			path = ../../Source/Module/modules/dmx/ui/DMXModuleUI.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		8802698D52924F5FAB243444 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.objcpp;
@@ -4305,6 +4334,13 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = CustomVariablesModule.h;
 			path = ../../Source/Module/modules/customvariables/CustomVariablesModule.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		A344ECDA05A5372A32341886 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = "include_juce_simpleweb.cpp";
+			path = "../../JuceLibraryCode/include_juce_simpleweb.cpp";
 			sourceTree = "SOURCE_ROOT";
 		};
 		A375FF401D9AB143A47EC093 = {
@@ -7297,6 +7333,15 @@
 			name = controller;
 			sourceTree = "<group>";
 		};
+		AF010264BB0BAC0C0AB80A3F = {
+			isa = PBXGroup;
+			children = (
+				062D0D43531255FFF58B5230,
+				8784735343A06617FB1D7D64,
+			);
+			name = ui;
+			sourceTree = "<group>";
+		};
 		614EDB32621AD4E20ECBA6E3 = {
 			isa = PBXGroup;
 			children = (
@@ -7309,6 +7354,7 @@
 		20A3A33F2667093FC95A2A55 = {
 			isa = PBXGroup;
 			children = (
+				AF010264BB0BAC0C0AB80A3F,
 				614EDB32621AD4E20ECBA6E3,
 				475B531BE155FABCB2DE5765,
 				B6A29DF2E614A624B07ADD6A,
@@ -8207,6 +8253,7 @@
 				B041687DBC635A565CFE93F4,
 				8E3E93C35A0A71C64796898E,
 				13F1733B1CD06F34477459C0,
+				6B49F91B2A3C9EC69F04FB2D,
 				D6A300DAC1D2DD176F264EE8,
 				1963F1D3623E1F2A7122FEB0,
 			);
@@ -8238,6 +8285,7 @@
 				03B34F65CD67AA62113F23C3,
 				CD28AA5204CAAB7963FC2387,
 				8AB58B2FA156DD075B892850,
+				A344ECDA05A5372A32341886,
 				4D147E8D071C0C93CB433813,
 				9EB5EECB134C6E74D074AB10,
 				0DD04E60A5E6174F61924D04,
@@ -8317,7 +8365,7 @@
 					"DEBUG=1",
 					"JUCE_SUPPORT_CARBON=0",
 					"JUCER_XCODE_MAC_2F3811D6=1",
-					"JUCE_APP_VERSION=1.7.0b29",
+					"JUCE_APP_VERSION=1.7.0b30",
 					"JUCE_APP_VERSION_HEX=0x10700",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
@@ -8379,7 +8427,7 @@
 					"NDEBUG=1",
 					"JUCE_SUPPORT_CARBON=0",
 					"JUCER_XCODE_MAC_2F3811D6=1",
-					"JUCE_APP_VERSION=1.7.0b29",
+					"JUCE_APP_VERSION=1.7.0b30",
 					"JUCE_APP_VERSION_HEX=0x10700",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
@@ -8731,6 +8779,7 @@
 				84B2CC0AB429161B0354E297,
 				173E7DC529BDA3B9E8566FE4,
 				67650024CA0380D61857A658,
+				A656063A6401EB45C87961DB,
 				C9E307235285CDA40C24D9F3,
 				A8F24E2C856C08B3352A81EC,
 				8CA4517F298BA2614C4054B7,
@@ -8863,6 +8912,7 @@
 				212B67A3534DE8B8475EFD36,
 				A13C813B7B915C202AE05F52,
 				A2C0DA5E1710F15AA0E3F840,
+				14B03BE884B82BE8EC264AE9,
 				6FB44A657258A9A5ACB8BE85,
 				BD9067271AF288F3D24C7A36,
 			);

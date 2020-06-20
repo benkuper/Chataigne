@@ -67,6 +67,7 @@
 #define JUCE_MODULE_AVAILABLE_juce_opengl                1
 #define JUCE_MODULE_AVAILABLE_juce_organicui             1
 #define JUCE_MODULE_AVAILABLE_juce_osc                   1
+#define JUCE_MODULE_AVAILABLE_juce_simpleweb             1
 #define JUCE_MODULE_AVAILABLE_juce_timeline              1
 #define JUCE_MODULE_AVAILABLE_juce_video                 1
 
@@ -311,6 +312,10 @@
 
 #ifndef    ORGANICUI_DEFAULT_REMOTECONTROL_PORT
  //#define ORGANICUI_DEFAULT_REMOTECONTROL_PORT 0
+#endif
+
+#ifndef    ORGANICUI_USE_WEBSERVER
+ #define   ORGANICUI_USE_WEBSERVER 1
 #endif
 
 //==============================================================================

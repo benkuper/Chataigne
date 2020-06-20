@@ -66,7 +66,7 @@
       <Optimization>Disabled</Optimization>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <AdditionalIncludeDirectories>..\..\JuceLibraryCode;..\..\..\JUCE\Modules;..\..\Modules;../../External/wiiuse;../../External/serial/include;../../External/asio;../../External/kinect/include;../../External/joycon/include;../../External/servus/include;../../External/dnssd/include;../../External/sdl/include;../../External/libartnet/include;../../External/hidapi/include;../../Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;DEBUG;_DEBUG;USE_KINECT=1;JUCER_VS2019_78A6631F=1;JUCE_APP_VERSION=1.7.0b29;JUCE_APP_VERSION_HEX=0x10700;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_RTAS=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;DEBUG;_DEBUG;USE_KINECT=1;JUCER_VS2019_78A6631F=1;JUCE_APP_VERSION=1.7.0b30;JUCE_APP_VERSION_HEX=0x10700;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_RTAS=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <PrecompiledHeader/>
@@ -114,7 +114,7 @@
       <Optimization>Full</Optimization>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <AdditionalIncludeDirectories>..\..\JuceLibraryCode;..\..\..\JUCE\Modules;..\..\Modules;../../External/wiiuse;../../External/serial/include;../../External/asio;../../External/kinect/include;../../External/joycon/include;../../External/servus/include;../../External/dnssd/include;../../External/sdl/include;../../External/libartnet/include;../../External/hidapi/include;../../Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;NDEBUG;USE_KINECT=1;JUCER_VS2019_78A6631F=1;JUCE_APP_VERSION=1.7.0b29;JUCE_APP_VERSION_HEX=0x10700;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_RTAS=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;NDEBUG;USE_KINECT=1;JUCER_VS2019_78A6631F=1;JUCE_APP_VERSION=1.7.0b30;JUCE_APP_VERSION_HEX=0x10700;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_RTAS=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <PrecompiledHeader/>
@@ -326,6 +326,7 @@
     <ClCompile Include="..\..\Source\Module\modules\controller\wiimote\WiimoteManager.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\controller\wiimote\WiimoteModule.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\controller\wiimote\WiimotePairUtil.cpp"/>
+    <ClCompile Include="..\..\Source\Module\modules\dmx\ui\DMXModuleUI.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\dmx\commands\DMXCommand.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\dmx\DMXModule.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\generators\metronome\MetronomeModule.cpp"/>
@@ -2832,6 +2833,927 @@
     <ClCompile Include="..\..\..\JUCE\Modules\juce_osc\juce_osc.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\impl\src.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\allocation\server.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\buffers\reference_counted.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\chat\chat_client.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\chat\chat_server.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\chat\posix_chat_client.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\echo\async_tcp_echo_server.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\echo\async_udp_echo_server.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\echo\blocking_tcp_echo_client.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\echo\blocking_tcp_echo_server.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\echo\blocking_udp_echo_client.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\echo\blocking_udp_echo_server.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\fork\daemon.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\fork\process_per_connection.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\http\client\async_client.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\http\client\sync_client.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\http\server\connection.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\http\server\connection_manager.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\http\server\main.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\http\server\mime_types.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\http\server\reply.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\http\server\request_handler.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\http\server\request_parser.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\http\server\server.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\http\server2\connection.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\http\server2\io_context_pool.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\http\server2\main.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\http\server2\mime_types.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\http\server2\reply.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\http\server2\request_handler.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\http\server2\request_parser.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\http\server2\server.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\http\server3\connection.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\http\server3\main.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\http\server3\mime_types.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\http\server3\reply.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\http\server3\request_handler.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\http\server3\request_parser.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\http\server3\server.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\http\server4\file_handler.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\http\server4\main.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\http\server4\mime_types.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\http\server4\reply.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\http\server4\request_parser.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\http\server4\server.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\icmp\ping.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\invocation\prioritised_handlers.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\iostreams\daytime_client.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\iostreams\daytime_server.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\iostreams\http_client.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\local\connect_pair.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\local\iostream_client.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\local\stream_client.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\local\stream_server.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\multicast\receiver.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\multicast\sender.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\nonblocking\third_party_lib.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\porthopper\client.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\porthopper\server.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\serialization\client.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\serialization\server.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\services\daytime_client.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\services\logger_service.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\socks4\sync_client.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\spawn\echo_server.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\spawn\parallel_grep.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\ssl\client.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\ssl\server.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\timeouts\async_tcp_client.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\timeouts\blocking_tcp_client.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\timeouts\blocking_token_tcp_client.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\timeouts\blocking_udp_client.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\timeouts\server.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\timers\time_t_timer.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\tutorial\daytime1\client.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\tutorial\daytime2\server.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\tutorial\daytime3\server.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\tutorial\daytime4\client.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\tutorial\daytime5\server.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\tutorial\daytime6\server.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\tutorial\daytime7\server.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\tutorial\timer1\timer.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\tutorial\timer2\timer.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\tutorial\timer3\timer.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\tutorial\timer4\timer.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\tutorial\timer5\timer.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\windows\transmit_file.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp11\allocation\server.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp11\buffers\reference_counted.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp11\chat\chat_client.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp11\chat\chat_server.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp11\echo\async_tcp_echo_server.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp11\echo\async_udp_echo_server.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp11\echo\blocking_tcp_echo_client.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp11\echo\blocking_tcp_echo_server.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp11\echo\blocking_udp_echo_client.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp11\echo\blocking_udp_echo_server.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp11\executors\actor.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp11\executors\bank_account_1.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp11\executors\bank_account_2.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp11\executors\fork_join.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp11\executors\pipeline.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp11\executors\priority_scheduler.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp11\fork\daemon.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp11\fork\process_per_connection.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp11\futures\daytime_client.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp11\handler_tracking\async_tcp_echo_server.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp11\http\server\connection.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp11\http\server\connection_manager.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp11\http\server\main.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp11\http\server\mime_types.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp11\http\server\reply.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp11\http\server\request_handler.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp11\http\server\request_parser.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp11\http\server\server.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp11\invocation\prioritised_handlers.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp11\iostreams\http_client.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp11\local\connect_pair.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp11\local\iostream_client.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp11\local\stream_client.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp11\local\stream_server.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp11\multicast\receiver.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp11\multicast\sender.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp11\nonblocking\third_party_lib.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp11\operations\composed_1.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp11\operations\composed_2.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp11\operations\composed_3.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp11\operations\composed_4.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp11\operations\composed_5.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp11\operations\composed_6.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp11\operations\composed_7.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp11\operations\composed_8.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp11\socks4\sync_client.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp11\spawn\echo_server.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp11\spawn\parallel_grep.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp11\ssl\client.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp11\ssl\server.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp11\timeouts\async_tcp_client.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp11\timeouts\blocking_tcp_client.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp11\timeouts\blocking_token_tcp_client.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp11\timeouts\blocking_udp_client.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp11\timeouts\server.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp11\timers\time_t_timer.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp14\echo\async_tcp_echo_server.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp14\echo\async_udp_echo_server.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp14\echo\blocking_tcp_echo_client.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp14\echo\blocking_tcp_echo_server.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp14\echo\blocking_udp_echo_client.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp14\echo\blocking_udp_echo_server.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp14\executors\actor.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp14\executors\async_1.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp14\executors\async_2.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp14\executors\bank_account_1.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp14\executors\bank_account_2.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp14\executors\fork_join.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp14\executors\pipeline.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp14\executors\priority_scheduler.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp14\iostreams\http_client.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp14\operations\composed_1.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp14\operations\composed_2.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp14\operations\composed_3.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp14\operations\composed_4.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp14\operations\composed_5.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp14\operations\composed_6.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp14\operations\composed_7.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp14\operations\composed_8.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp17\coroutines_ts\chat_server.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp17\coroutines_ts\echo_server.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp17\coroutines_ts\echo_server_with_default.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp17\coroutines_ts\range_based_for.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp17\coroutines_ts\refactored_echo_server.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\latency\tcp_client.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\latency\tcp_server.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\latency\udp_client.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\latency\udp_server.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\performance\client.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\performance\server.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\generic\basic_endpoint.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\generic\datagram_protocol.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\generic\raw_protocol.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\generic\seq_packet_protocol.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\generic\stream_protocol.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\ip\address.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\ip\address_v4.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\ip\address_v4_iterator.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\ip\address_v4_range.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\ip\address_v6.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\ip\address_v6_iterator.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\ip\address_v6_range.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\ip\basic_endpoint.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\ip\basic_resolver.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\ip\basic_resolver_entry.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\ip\basic_resolver_iterator.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\ip\basic_resolver_query.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\ip\host_name.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\ip\icmp.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\ip\multicast.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\ip\network_v4.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\ip\network_v6.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\ip\resolver_query_base.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\ip\tcp.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\ip\udp.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\ip\unicast.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\ip\v6_only.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\local\basic_endpoint.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\local\connect_pair.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\local\datagram_protocol.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\local\stream_protocol.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\posix\basic_descriptor.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\posix\basic_stream_descriptor.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\posix\descriptor.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\posix\descriptor_base.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\posix\stream_descriptor.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\ssl\context.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\ssl\context_base.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\ssl\error.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\ssl\host_name_verification.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\ssl\rfc2818_verification.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\ssl\stream.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\ssl\stream_base.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\ts\buffer.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\ts\executor.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\ts\internet.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\ts\io_context.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\ts\net.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\ts\netfwd.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\ts\socket.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\ts\timer.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\windows\basic_object_handle.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\windows\basic_overlapped_handle.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\windows\basic_random_access_handle.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\windows\basic_stream_handle.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\windows\object_handle.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\windows\overlapped_handle.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\windows\overlapped_ptr.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\windows\random_access_handle.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\windows\stream_handle.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\associated_allocator.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\associated_executor.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\async_result.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\awaitable.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\basic_datagram_socket.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\basic_deadline_timer.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\basic_raw_socket.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\basic_seq_packet_socket.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\basic_serial_port.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\basic_signal_set.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\basic_socket.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\basic_socket_acceptor.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\basic_stream_socket.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\basic_streambuf.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\basic_waitable_timer.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\bind_executor.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\buffer.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\buffered_read_stream.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\buffered_stream.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\buffered_write_stream.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\buffers_iterator.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\co_spawn.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\completion_condition.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\compose.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\connect.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\coroutine.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\deadline_timer.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\defer.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\detached.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\dispatch.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\error.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\execution_context.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\executor.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\executor_work_guard.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\high_resolution_timer.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\io_context.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\io_context_strand.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\is_read_buffered.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\is_write_buffered.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\packaged_task.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\placeholders.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\post.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\read.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\read_at.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\read_until.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\redirect_error.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\serial_port.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\serial_port_base.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\signal_set.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\socket_base.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\steady_timer.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\strand.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\streambuf.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\system_context.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\system_executor.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\system_timer.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\this_coro.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\thread.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\thread_pool.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\time_traits.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\use_awaitable.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\use_future.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\uses_executor.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\wait_traits.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\write.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\write_at.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\asio.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\src\asio_ssl.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\juce_simpleweb.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\simplewebsocket.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\Modules\juce_timeline\resources\BinaryData.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -2987,6 +3909,7 @@
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_organicui2.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_organicui3.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_osc.cpp"/>
+    <ClCompile Include="..\..\JuceLibraryCode\include_juce_simpleweb.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_timeline.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_video.cpp"/>
   </ItemGroup>
@@ -3153,6 +4076,7 @@
     <ClInclude Include="..\..\Source\Module\modules\controller\wiimote\WiimoteManager.h"/>
     <ClInclude Include="..\..\Source\Module\modules\controller\wiimote\WiimoteModule.h"/>
     <ClInclude Include="..\..\Source\Module\modules\controller\wiimote\WiimotePairUtil.h"/>
+    <ClInclude Include="..\..\Source\Module\modules\dmx\ui\DMXModuleUI.h"/>
     <ClInclude Include="..\..\Source\Module\modules\dmx\commands\DMXCommand.h"/>
     <ClInclude Include="..\..\Source\Module\modules\dmx\DMXModule.h"/>
     <ClInclude Include="..\..\Source\Module\modules\generators\metronome\MetronomeModule.h"/>
@@ -4186,6 +5110,497 @@
     <ClInclude Include="..\..\..\JUCE\Modules\juce_osc\osc\juce_OSCTimeTag.h"/>
     <ClInclude Include="..\..\..\JUCE\Modules\juce_osc\osc\juce_OSCTypes.h"/>
     <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_osc\juce_osc.h"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\impl\dev_poll_reactor.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\impl\epoll_reactor.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\impl\kqueue_reactor.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\impl\select_reactor.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\impl\service_registry.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\impl\strand_executor_service.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\impl\strand_service.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\impl\win_iocp_io_context.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\impl\winrt_timer_scheduler.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\array.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\array_fwd.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\assert.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\atomic_count.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\base_from_completion_cond.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\bind_handler.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\buffer_resize_guard.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\buffer_sequence_adapter.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\buffered_stream_storage.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\call_stack.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\chrono.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\chrono_time_traits.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\completion_handler.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\concurrency_hint.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\conditionally_enabled_event.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\conditionally_enabled_mutex.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\config.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\consuming_buffers.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\cstddef.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\cstdint.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\date_time_fwd.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\deadline_timer_service.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\dependent_type.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\descriptor_ops.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\descriptor_read_op.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\descriptor_write_op.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\dev_poll_reactor.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\epoll_reactor.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\event.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\eventfd_select_interrupter.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\executor_function.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\executor_op.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\fd_set_adapter.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\fenced_block.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\functional.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\future.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\gcc_arm_fenced_block.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\gcc_hppa_fenced_block.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\gcc_sync_fenced_block.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\gcc_x86_fenced_block.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\global.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\handler_alloc_helpers.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\handler_cont_helpers.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\handler_invoke_helpers.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\handler_tracking.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\handler_type_requirements.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\handler_work.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\hash_map.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\io_control.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\io_object_executor.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\io_object_impl.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\is_buffer_sequence.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\is_executor.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\keyword_tss_ptr.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\kqueue_reactor.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\limits.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\local_free_on_block_exit.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\macos_fenced_block.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\memory.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\mutex.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\non_const_lvalue.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\noncopyable.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\null_event.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\null_fenced_block.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\null_global.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\null_mutex.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\null_reactor.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\null_signal_blocker.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\null_socket_service.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\null_static_mutex.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\null_thread.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\null_tss_ptr.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\object_pool.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\old_win_sdk_compat.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\op_queue.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\operation.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\pipe_select_interrupter.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\pop_options.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\posix_event.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\posix_fd_set_adapter.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\posix_global.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\posix_mutex.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\posix_signal_blocker.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\posix_static_mutex.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\posix_thread.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\posix_tss_ptr.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\push_options.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\reactive_descriptor_service.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\reactive_null_buffers_op.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\reactive_serial_port_service.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\reactive_socket_accept_op.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\reactive_socket_connect_op.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\reactive_socket_recv_op.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\reactive_socket_recvfrom_op.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\reactive_socket_recvmsg_op.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\reactive_socket_send_op.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\reactive_socket_sendto_op.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\reactive_socket_service.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\reactive_socket_service_base.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\reactive_wait_op.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\reactor.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\reactor_fwd.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\reactor_op.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\reactor_op_queue.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\recycling_allocator.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\regex_fwd.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\resolve_endpoint_op.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\resolve_op.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\resolve_query_op.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\resolver_service.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\resolver_service_base.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\scheduler.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\scheduler_operation.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\scheduler_thread_info.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\scoped_lock.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\scoped_ptr.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\select_interrupter.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\select_reactor.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\service_registry.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\signal_blocker.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\signal_handler.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\signal_init.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\signal_op.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\signal_set_service.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\socket_holder.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\socket_ops.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\socket_option.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\socket_select_interrupter.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\socket_types.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\solaris_fenced_block.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\source_location.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\static_mutex.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\std_event.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\std_fenced_block.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\std_global.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\std_mutex.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\std_static_mutex.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\std_thread.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\strand_executor_service.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\strand_service.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\string_view.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\thread.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\thread_context.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\thread_group.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\thread_info_base.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\throw_error.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\throw_exception.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\timer_queue.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\timer_queue_base.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\timer_queue_ptime.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\timer_queue_set.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\timer_scheduler.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\timer_scheduler_fwd.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\tss_ptr.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\type_traits.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\variadic_templates.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\wait_handler.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\wait_op.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\win_event.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\win_fd_set_adapter.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\win_fenced_block.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\win_global.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\win_iocp_handle_read_op.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\win_iocp_handle_service.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\win_iocp_handle_write_op.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\win_iocp_io_context.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\win_iocp_null_buffers_op.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\win_iocp_operation.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\win_iocp_overlapped_op.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\win_iocp_overlapped_ptr.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\win_iocp_serial_port_service.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\win_iocp_socket_accept_op.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\win_iocp_socket_connect_op.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\win_iocp_socket_recv_op.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\win_iocp_socket_recvfrom_op.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\win_iocp_socket_recvmsg_op.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\win_iocp_socket_send_op.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\win_iocp_socket_service.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\win_iocp_socket_service_base.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\win_iocp_thread_info.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\win_iocp_wait_op.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\win_mutex.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\win_object_handle_service.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\win_static_mutex.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\win_thread.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\win_tss_ptr.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\winapp_thread.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\wince_thread.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\winrt_async_manager.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\winrt_async_op.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\winrt_resolve_op.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\winrt_resolver_service.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\winrt_socket_connect_op.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\winrt_socket_recv_op.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\winrt_socket_send_op.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\winrt_ssocket_service.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\winrt_ssocket_service_base.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\winrt_timer_scheduler.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\winrt_utils.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\winsock_init.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\work_dispatcher.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\wrapped_handler.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\generic\detail\endpoint.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\generic\basic_endpoint.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\generic\datagram_protocol.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\generic\raw_protocol.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\generic\seq_packet_protocol.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\generic\stream_protocol.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\impl\awaitable.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\impl\buffered_read_stream.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\impl\buffered_write_stream.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\impl\co_spawn.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\impl\compose.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\impl\connect.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\impl\defer.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\impl\detached.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\impl\dispatch.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\impl\execution_context.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\impl\executor.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\impl\io_context.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\impl\post.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\impl\read.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\impl\read_at.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\impl\read_until.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\impl\redirect_error.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\impl\serial_port_base.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\impl\spawn.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\impl\src.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\impl\system_context.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\impl\system_executor.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\impl\thread_pool.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\impl\use_awaitable.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\impl\use_future.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\impl\write.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\impl\write_at.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\ip\detail\endpoint.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\ip\detail\socket_option.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\ip\impl\address.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\ip\impl\address_v4.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\ip\impl\address_v6.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\ip\impl\basic_endpoint.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\ip\impl\network_v4.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\ip\impl\network_v6.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\ip\address.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\ip\address_v4.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\ip\address_v4_iterator.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\ip\address_v4_range.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\ip\address_v6.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\ip\address_v6_iterator.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\ip\address_v6_range.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\ip\bad_address_cast.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\ip\basic_endpoint.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\ip\basic_resolver.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\ip\basic_resolver_entry.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\ip\basic_resolver_iterator.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\ip\basic_resolver_query.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\ip\basic_resolver_results.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\ip\host_name.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\ip\icmp.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\ip\multicast.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\ip\network_v4.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\ip\network_v6.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\ip\resolver_base.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\ip\resolver_query_base.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\ip\tcp.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\ip\udp.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\ip\unicast.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\ip\v6_only.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\local\detail\endpoint.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\local\basic_endpoint.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\local\connect_pair.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\local\datagram_protocol.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\local\stream_protocol.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\posix\basic_descriptor.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\posix\basic_stream_descriptor.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\posix\descriptor.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\posix\descriptor_base.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\posix\stream_descriptor.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\ssl\detail\buffered_handshake_op.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\ssl\detail\engine.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\ssl\detail\handshake_op.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\ssl\detail\io.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\ssl\detail\openssl_init.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\ssl\detail\openssl_types.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\ssl\detail\password_callback.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\ssl\detail\read_op.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\ssl\detail\shutdown_op.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\ssl\detail\stream_core.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\ssl\detail\verify_callback.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\ssl\detail\write_op.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\ssl\impl\context.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\ssl\impl\src.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\ssl\context.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\ssl\context_base.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\ssl\error.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\ssl\host_name_verification.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\ssl\rfc2818_verification.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\ssl\stream.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\ssl\stream_base.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\ssl\verify_context.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\ssl\verify_mode.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\ts\buffer.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\ts\executor.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\ts\internet.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\ts\io_context.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\ts\net.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\ts\netfwd.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\ts\socket.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\ts\timer.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\windows\basic_object_handle.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\windows\basic_overlapped_handle.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\windows\basic_random_access_handle.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\windows\basic_stream_handle.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\windows\object_handle.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\windows\overlapped_handle.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\windows\overlapped_ptr.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\windows\random_access_handle.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\windows\stream_handle.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\associated_allocator.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\associated_executor.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\async_result.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\awaitable.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\basic_datagram_socket.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\basic_deadline_timer.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\basic_io_object.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\basic_raw_socket.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\basic_seq_packet_socket.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\basic_serial_port.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\basic_signal_set.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\basic_socket.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\basic_socket_acceptor.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\basic_socket_iostream.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\basic_socket_streambuf.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\basic_stream_socket.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\basic_streambuf.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\basic_streambuf_fwd.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\basic_waitable_timer.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\bind_executor.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\buffer.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\buffered_read_stream.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\buffered_read_stream_fwd.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\buffered_stream.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\buffered_stream_fwd.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\buffered_write_stream.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\buffered_write_stream_fwd.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\buffers_iterator.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\co_spawn.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\completion_condition.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\compose.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\connect.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\coroutine.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\deadline_timer.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\defer.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detached.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\dispatch.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\error.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\error_code.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\execution_context.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\executor.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\executor_work_guard.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\handler_alloc_hook.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\handler_continuation_hook.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\handler_invoke_hook.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\high_resolution_timer.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\io_context.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\io_context_strand.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\io_service.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\io_service_strand.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\is_executor.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\is_read_buffered.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\is_write_buffered.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\packaged_task.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\placeholders.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\post.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\read.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\read_at.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\read_until.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\redirect_error.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\serial_port.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\serial_port_base.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\signal_set.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\socket_base.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\spawn.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\ssl.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\steady_timer.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\strand.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\streambuf.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\system_context.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\system_error.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\system_executor.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\system_timer.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\this_coro.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\thread.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\thread_pool.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\time_traits.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\unyield.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\use_awaitable.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\use_future.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\uses_executor.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\version.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\wait_traits.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\write.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\write_at.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\yield.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\chat\chat_message.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\http\server\connection.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\http\server\connection_manager.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\http\server\header.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\http\server\mime_types.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\http\server\reply.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\http\server\request.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\http\server\request_handler.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\http\server\request_parser.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\http\server\server.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\http\server2\connection.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\http\server2\header.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\http\server2\io_context_pool.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\http\server2\mime_types.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\http\server2\reply.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\http\server2\request.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\http\server2\request_handler.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\http\server2\request_parser.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\http\server2\server.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\http\server3\connection.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\http\server3\header.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\http\server3\mime_types.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\http\server3\reply.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\http\server3\request.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\http\server3\request_handler.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\http\server3\request_parser.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\http\server3\server.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\http\server4\file_handler.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\http\server4\header.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\http\server4\mime_types.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\http\server4\reply.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\http\server4\request.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\http\server4\request_parser.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\http\server4\server.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\icmp\icmp_header.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\icmp\ipv4_header.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\porthopper\protocol.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\serialization\connection.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\serialization\stock.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\services\basic_logger.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\services\logger.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\services\logger_service.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\socks4\socks4.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp11\chat\chat_message.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp11\handler_tracking\custom_tracking.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp11\http\server\connection.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp11\http\server\connection_manager.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp11\http\server\header.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp11\http\server\mime_types.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp11\http\server\reply.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp11\http\server\request.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp11\http\server\request_handler.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp11\http\server\request_parser.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp11\http\server\server.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp11\socks4\socks4.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\latency\allocator.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\latency\high_res_clock.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\performance\handler_allocator.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\archetypes\async_ops.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\archetypes\async_result.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\archetypes\gettable_socket_option.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\archetypes\io_control_command.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\archetypes\settable_socket_option.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\src\tests\unit\unit_test.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\common\asio_compatibility.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\common\crypto.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\common\mutex.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\common\status_code.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\common\utility.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\webserver\client_http.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\webserver\server_http.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\webserver\status_code.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\websocket\client_ws.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\websocket\server_ws.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\MIMETypes.h"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\simplewebsocket.h"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\juce_simpleweb.h"/>
     <ClInclude Include="..\..\Modules\juce_timeline\resources\BinaryData.h"/>
     <ClInclude Include="..\..\Modules\juce_timeline\timeline\Sequence\Cue\ui\TimeCueManagerUI.h"/>
     <ClInclude Include="..\..\Modules\juce_timeline\timeline\Sequence\Cue\ui\TimeCueUI.h"/>
@@ -4317,6 +5732,14 @@
     <None Include="..\..\..\JUCE\Modules\juce_graphics\image_formats\pnglib\libpng_readme.txt"/>
     <None Include="..\..\Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\ReadMe.txt"/>
     <None Include="..\..\Modules\juce_organicui\README.md"/>
+    <None Include="..\..\Modules\juce_simpleweb\asio\asio\src\doc\boost_bind_dox.txt"/>
+    <None Include="..\..\Modules\juce_simpleweb\asio\asio\src\doc\noncopyable_dox.txt"/>
+    <None Include="..\..\Modules\juce_simpleweb\asio\asio\src\doc\std_exception_dox.txt"/>
+    <None Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\tutorial\daytime_dox.txt"/>
+    <None Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\tutorial\index_dox.txt"/>
+    <None Include="..\..\Modules\juce_simpleweb\asio\asio\src\examples\cpp03\tutorial\timer_dox.txt"/>
+    <None Include="..\..\Modules\juce_simpleweb\asio\asio\LICENSE_1_0.txt"/>
+    <None Include="..\..\Modules\juce_simpleweb\README.md"/>
     <None Include="..\..\Modules\juce_timeline\README.md"/>
     <None Include=".\icon.ico"/>
   </ItemGroup>
