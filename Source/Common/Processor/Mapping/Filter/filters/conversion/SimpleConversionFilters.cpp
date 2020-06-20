@@ -36,10 +36,12 @@ Parameter* SimpleConversionFilter::setupSingleParameterInternal(Parameter* sourc
 	{
 		transferType = DIRECT;
 		retargetComponent->setEnabled(false);
+		retargetComponent->hideInEditor = true;
 	}
 	else
 	{
 		retargetComponent->setEnabled(true);
+		retargetComponent->hideInEditor = false;
 		transferType = p->isComplex() ? TARGET : EXTRACT;
 		retargetComponent->setNiceName(transferType == TARGET ? "Target Component" : "Extract Component");
 		Parameter * retargetP = transferType == TARGET ? p : source;
@@ -286,4 +288,20 @@ void ToColorFilter::processSingleParameterInternal(Parameter* source, Parameter*
 	}
 
 	
+}
+
+ToBooleanFilter::ToBooleanFilter(var params) :
+	SimpleConversionFilter(getTypeString(), params, BoolParameter::getTypeStringStatic())
+{
+	toggleMode = addBoolParameter("Toggle Mode", "If checked, this will act as a toggle, and its value will be inverted when input value is 1", false);
+}
+
+void ToBooleanFilter::processSingleParameterInternal(Parameter* source, Parameter* out)
+{
+	bool val = (source->value.isString() ?source->value.toString().getFloatValue():source->floatValue()) >= 1;
+	if (toggleMode->boolValue())
+	{
+		if (val) out->setValue(!out->boolValue());
+	}
+	else out->setValue(val);
 }

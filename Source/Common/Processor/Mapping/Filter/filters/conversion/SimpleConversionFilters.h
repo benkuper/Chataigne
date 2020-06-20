@@ -32,6 +32,20 @@ public:
 	virtual var convertValue(Parameter * source, var sourceValue) { return var(sourceValue) ; }
 };
 
+class ToBooleanFilter :
+	public SimpleConversionFilter
+{
+public:
+	ToBooleanFilter(var params);
+	~ToBooleanFilter() {}
+
+	BoolParameter* toggleMode;
+
+	virtual void processSingleParameterInternal(Parameter* source, Parameter* out) override;
+
+	static ToBooleanFilter* create(var params) { return new ToBooleanFilter(params); }
+	String getTypeString() const override { return "Convert To Boolean"; }
+};
 
 class ToFloatFilter :
 	public SimpleConversionFilter
@@ -131,7 +145,6 @@ public:
 
 	Parameter* setupSingleParameterInternal(Parameter* sourceParam) override;
 	void processSingleParameterInternal(Parameter * source, Parameter * out) override;
-	//var convertValue(Parameter * source, var sourceValue) override;
 
 	static ToColorFilter* create(var params) { return new ToColorFilter(params); }
 	String getTypeString() const override { return "Convert To Color"; }
