@@ -18,7 +18,7 @@ SimpleSmoothFilter::SimpleSmoothFilter(var params) :
 	smooth = filterParams.addFloatParameter("Smoothing", "Smooth amount of the filter. 0=no smoothing, 1=max smoothing (value will not change at all)", .5f, 0, 1);
 	downSmooth = filterParams.addFloatParameter("Fall Smoothing", "If async, this is the smoothing when value is falling", .8f,0,1,false);
 
-	filterTypeFilters.add(Controllable::FLOAT, Controllable::INT, Controllable::COLOR, Controllable::POINT2D, Controllable::POINT3D);
+	filterTypeFilters.add(Controllable::BOOL, Controllable::FLOAT, Controllable::INT, Controllable::COLOR, Controllable::POINT2D, Controllable::POINT3D);
 }
 
 SimpleSmoothFilter::~SimpleSmoothFilter()
@@ -26,6 +26,22 @@ SimpleSmoothFilter::~SimpleSmoothFilter()
 }
 
 
+Parameter* SimpleSmoothFilter::setupSingleParameterInternal(Parameter* source)
+{
+	Parameter* p = nullptr;
+	if (source->type == Controllable::BOOL)
+	{
+		p = new FloatParameter(source->niceName, source->description, source->value, 0, 1);
+		p->isSavable = false;
+		p->setControllableFeedbackOnly(true);
+	}
+	else
+	{
+		p = MappingFilter::setupSingleParameterInternal(source);
+	}
+
+	return p;
+}
 
 void SimpleSmoothFilter::processSingleParameterInternal(Parameter* source, Parameter* out)
 {

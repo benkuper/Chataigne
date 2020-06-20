@@ -23,6 +23,7 @@ public:
 	FloatParameter * smooth;
 	FloatParameter * downSmooth;
 
+	Parameter* setupSingleParameterInternal(Parameter* source) override;
 	void processSingleParameterInternal(Parameter * source, Parameter * out) override;
 
 	void onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c) override;
