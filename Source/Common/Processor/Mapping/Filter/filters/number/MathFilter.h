@@ -21,9 +21,11 @@ public:
 	~MathFilter();
 
 	enum Operation { OFFSET, MULTIPLY, DIVIDE, MODULO, FLOOR, CEIL, ROUND };
-
+	enum RangeRemapMode { KEEP, AJDUST, FREE };
 	EnumParameter * operation;
 	Parameter * operationValue;
+
+	EnumParameter* rangeRemapMode;
 	
 	var opValueData; //for loading after setupParamInternal
 

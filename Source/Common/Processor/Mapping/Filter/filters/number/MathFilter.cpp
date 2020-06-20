@@ -21,6 +21,9 @@ MathFilter::MathFilter(var params) :
 		->addOption("Floor", FLOOR)->addOption("Ceil", CEIL)->addOption("Round", ROUND);
 
 	autoSetRange = false;
+	rangeRemapMode = filterParams.addEnumParameter("Range Remap Mode", "How to setup the output range.\nKeep will keep the input's range, adjust will ajdust automatically depending on the operator. \
+													\nFree will remove the range");
+	rangeRemapMode->addOption("Adjust", AJDUST)->addOption("Keep", KEEP)->addOption("Free", FREE);
 
 	filterTypeFilters.add(Controllable::FLOAT, Controllable::INT, Controllable::POINT2D, Controllable::POINT3D);
 }
@@ -52,6 +55,7 @@ void MathFilter::setupParametersInternal()
 
 	Operation o = operation->getValueDataAsEnum<Operation>();
 	operationValue->setEnabled(o != FLOOR && o != CEIL && o != ROUND);
+
 
 	updateFilteredParamsRange();
 }
@@ -95,11 +99,23 @@ void MathFilter::updateFilteredParamsRange()
 		Parameter* p = filteredParameters[i];
 		if (p == nullptr) continue;
 
-		if (!sourceParam->hasRange() || !filteredParamShouldHaveRange())
+		RangeRemapMode rm = rangeRemapMode->getValueDataAsEnum<RangeRemapMode>();
+
+		if (rm == FREE || !sourceParam->hasRange() || !filteredParamShouldHaveRange())
 		{
 			p->clearRange();
 			continue;
 		}
+
+		if (rm == KEEP)
+		{
+			p->setRange(sourceParam->minimumValue, sourceParam->maximumValue);
+			return;
+		}
+
+
+
+		//Only in RangeRemapMode::ADJUST
 
 		var newMin = var();
 		var newMax = var();
@@ -152,7 +168,12 @@ void MathFilter::filterParamChanged(Parameter * p)
 		operationValue->setEnabled(o != FLOOR && o != CEIL && o != ROUND);
 	}
 
-	if (p == operation || p == operationValue) updateFilteredParamsRange();
+	if (p == operation || p == operationValue || p == rangeRemapMode)
+	{
+		updateFilteredParamsRange();
+		mappingFilterListeners.call(&FilterListener::filteredParamRangeChanged, this);
+		if(p == rangeRemapMode) filterAsyncNotifier.addMessage(new FilterEvent(FilterEvent::FILTER_REBUILT, this));
+	}
 }
 
 float MathFilter::getProcessedValue(float val, int index)
