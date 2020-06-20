@@ -14,6 +14,10 @@
 
 #if JUCE_WINDOWS
 
+#ifndef _WIN32_WINNT
+#define _WIN32_WINNT 0x0601
+#endif
+
 #include <windows.h>
 #include <bthsdpdef.h>
 #include <bthdef.h>
@@ -21,6 +25,7 @@
 #include <strsafe.h>
 
 #pragma comment(lib, "Bthprops.lib")
+
 
 #elif JUCE_MAC
 
