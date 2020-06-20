@@ -34,7 +34,6 @@ ModuleUI::ModuleUI(Module * module) :
 		addAndMakeVisible(connectionFeedbackUI.get());
 	}
 
-
 	int numBytes = 0;
 	const char* iconData = BinaryData::getNamedResource((item->getTypeString().replace(" ", "_") + "_png").getCharPointer(), numBytes);;
 	if (iconData != nullptr)
@@ -51,9 +50,11 @@ ModuleUI::~ModuleUI()
 
 }
 
-void ModuleUI::resizedInternalHeader(Rectangle<int>& r)
+void ModuleUI::resizedHeader(Rectangle<int>& r)
 {
 	if (iconUI.getImage().isValid()) iconUI.setBounds(r.removeFromLeft(r.getHeight()).reduced(1));
+
+	BaseItemUI::resizedHeader(r);
 
 	outActivityUI->setBounds(r.removeFromRight(r.getHeight()));
 	inActivityUI->setBounds(r.removeFromRight(r.getHeight()));

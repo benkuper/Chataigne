@@ -28,7 +28,7 @@ WebSocketServerModuleUI::~WebSocketServerModuleUI()
 void WebSocketServerModuleUI::resizedInternalHeaderModule(Rectangle<int>& r)
 {
 	if (inspectable.wasObjectDeleted()) return;
-	connectionsLabel.setBounds(r.removeFromRight(60));
+	connectionsLabel.setBounds(r.removeFromLeft(60));
 }
 
 void WebSocketServerModuleUI::controllableFeedbackUpdateInternal(Controllable* c)

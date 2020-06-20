@@ -20,7 +20,7 @@ public:
 	ModuleUI(Module * module);
 	virtual ~ModuleUI();
 
-	virtual void resizedInternalHeader(Rectangle<int> &r) override;
+	virtual void resizedHeader(Rectangle<int> &r) override;
 	virtual void resizedInternalHeaderModule(Rectangle<int>& r) {}
 
 	std::unique_ptr<TriggerImageUI> inActivityUI;

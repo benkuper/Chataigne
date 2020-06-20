@@ -32,7 +32,12 @@ WebSocketServerModule::~WebSocketServerModule()
 
 void WebSocketServerModule::setupServer()
 {
-	server.reset();
+	if (server != nullptr)
+	{
+		server->stop();
+		server.reset();
+	}
+
 	if (isCurrentlyLoadingData) return;
 
 	isConnected->setValue(false);
