@@ -51,7 +51,7 @@ AudioModule::AudioModule(const String & name) :
 
 	note = noteCC.addEnumParameter("Note", "Detected note");
 	note->addOption("-", -1);
-	for (int i = 0; i < 12; i++) note->addOption(MIDIManager::getNoteName(i, false), i);
+	for (int i = 0; i < 12; ++i) note->addOption(MIDIManager::getNoteName(i, false), i);
 	
 	octave = noteCC.addIntParameter("Octave", "Detected octave", 0, 0, 10);
 	valuesCC.addChildControllableContainer(&noteCC);
@@ -111,7 +111,7 @@ AudioModule::~AudioModule()
 void AudioModule::updateSelectedMonitorChannels()
 {
 	selectedMonitorOutChannels.clear();
-	for (int i = 0; i < monitorOutChannels.size(); i++)
+	for (int i = 0; i < monitorOutChannels.size(); ++i)
 	{
 		if (monitorOutChannels[i]->boolValue())
 		{
@@ -196,11 +196,11 @@ void AudioModule::audioDeviceIOCallback(const float ** inputChannelData, int num
 {
 	//DBG("audio callback");
 
-	for (int i = 0; i < numOutputChannels; i++) FloatVectorOperations::clear(outputChannelData[i], numSamples);
+	for (int i = 0; i < numOutputChannels; ++i) FloatVectorOperations::clear(outputChannelData[i], numSamples);
 	
 	if (!enabled->boolValue()) return;
 
-	for (int i = 0; i < numInputChannels; i++)
+	for (int i = 0; i < numInputChannels; ++i)
 	{
 		if (i == 0) //take only the first channel for analysis (later, should be able to select which channel is used for analysis)
 		{
@@ -278,7 +278,7 @@ void AudioModule::changeListenerCallback(ChangeBroadcaster *)
 
 	int numChannels = graph.getMainBusNumOutputChannels();
 	AudioChannelSet channelSet = graph.getChannelLayoutOfBus(false, 0);
-	for (int i = 0; i < numChannels; i++)
+	for (int i = 0; i < numChannels; ++i)
 	{
 		String channelName = AudioChannelSet::getChannelTypeName(channelSet.getTypeOfChannel(i));
 		BoolParameter * b = monitorParams.addBoolParameter("Monitor Out : "+channelName, "If enabled, sends audio from this layer to this channel", i < selectedMonitorOutChannels.size());

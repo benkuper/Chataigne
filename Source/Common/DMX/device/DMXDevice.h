@@ -40,9 +40,10 @@ public:
 
 	virtual void sendDMXValue(int channel, int value);
 	virtual void sendDMXRange(int startChannel, Array<int> values);
-	void setDMXValuesIn(int numChannels, uint8 * values);
+	virtual void sendDMXValues();
+	virtual void sendDMXValuesInternal() = 0;
 
-	virtual void sendDMXValues() = 0;
+	void setDMXValuesIn(int numChannels, uint8* values);
 
 	virtual void clearDevice();
 	

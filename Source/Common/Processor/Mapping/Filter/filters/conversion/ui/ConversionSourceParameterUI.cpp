@@ -18,7 +18,7 @@ ConversionSourceParameterUI::ConversionSourceParameterUI(Parameter* source) :
 	addAndMakeVisible(sourceUI.get());
 
 	StringArray valueNames = source->getValuesNames();
-	for (int i = 0; i < valueNames.size(); i++)
+	for (int i = 0; i < valueNames.size(); ++i)
 	{
 		ConversionConnector* cc = new ConversionConnector(valueNames[i], source, i);
 		addAndMakeVisible(cc);
@@ -52,7 +52,7 @@ void ConversionSourceParameterUI::resized()
 	const int margin = 8;
 	const int connectorHeight = 12;
 
-	for (int i = 0; i < connectors.size(); i++)
+	for (int i = 0; i < connectors.size(); ++i)
 	{
 		int th = connectors.size() == 1 ? cr.getHeight() / 2 : margin / 2 + (cr.getHeight() - margin) * i * 1.0f / (connectors.size() - 1);
 		connectors[i]->setBounds(Rectangle<int>(cr.getX(), cr.getY() + th - connectorHeight / 2, cr.getWidth(), connectorHeight));

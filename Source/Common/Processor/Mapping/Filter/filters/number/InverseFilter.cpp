@@ -45,14 +45,14 @@ void InverseFilter::processSingleParameterInternal(Parameter * source, Parameter
 			return;
 		}
 
-		for (int i = 0; i < numValToInverse && i < sourceParam->value.size(); i++)
+		for (int i = 0; i < numValToInverse && i < sourceParam->value.size(); ++i)
 		{
 			DBG("sizes " << sourceParam->value.size() << " / " << sourceParam->minimumValue.size() << " / " << sourceParam->maximumValue.size());
 
 			float normVal = ((float)sourceParam->value[i] - (float)sourceParam->minimumValue[i]) / ((float)sourceParam->maximumValue[i] - (float)sourceParam->minimumValue[i]);
 			val.append(jmap<float>(normVal, sourceParam->maximumValue[i], sourceParam->minimumValue[i]));
 		}
-		for (int i = numValToInverse; i < sourceParam->value.size(); i++)
+		for (int i = numValToInverse; i < sourceParam->value.size(); ++i)
 		{
 			val.append(sourceParam->value[i]);
 		}
@@ -60,7 +60,7 @@ void InverseFilter::processSingleParameterInternal(Parameter * source, Parameter
 	
 		filteredParameter->setValue(val);
 
-		for (int i = 0; i < val.size(); i++)
+		for (int i = 0; i < val.size(); ++i)
 		{
 			DBG("Filtered Value " << i << " : " << (float)filteredParameter->value[i] << " / " << (float)val[i]);
 		}

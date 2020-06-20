@@ -111,7 +111,7 @@ bool MappingFilter::process()
 
 bool MappingFilter::processInternal()
 {
-	for (int i = 0; i < sourceParams.size(); i++)
+	for (int i = 0; i < sourceParams.size(); ++i)
 	{
 		if (sourceParams[i].wasObjectDeleted()) continue;
 

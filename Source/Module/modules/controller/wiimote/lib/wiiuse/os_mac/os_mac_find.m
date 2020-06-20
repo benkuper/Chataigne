@@ -150,7 +150,7 @@
 	// read found device information
 	NSArray* devices = [inquiry foundDevices];
 	NSUInteger i;
-	for(i = 0; i < [devices count]; i++) {
+	for(i = 0; i < [devices count]; ++i) {
 		IOBluetoothDevice* device = [devices objectAtIndex:i];
 		
 		// save the device in the wiimote structure

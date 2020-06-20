@@ -78,7 +78,7 @@ public:
             float actualCutoff = CUTOFF * highestAmplitude;
             
             int periodIndex = 0;
-            for (int i = 0; i < ampEstimates.size(); i++)
+            for (int i = 0; i < ampEstimates.size(); ++i)
             {
                 if (ampEstimates[i] >= actualCutoff)
                 {
@@ -197,7 +197,7 @@ private:
         for (tau = 0; tau < bufferSize; tau++) {
             float acf = 0;
             float divisorM = 0;
-            for (int i = 0; i < bufferSize - tau; i++) {
+            for (int i = 0; i < bufferSize - tau; ++i) {
                 acf += audioBuffer[i] * audioBuffer[i + tau];
                 divisorM += audioBuffer[i] * audioBuffer[i] + audioBuffer[i + tau] * audioBuffer[i + tau];
             }

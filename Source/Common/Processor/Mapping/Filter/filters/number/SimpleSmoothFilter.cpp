@@ -35,7 +35,7 @@ void SimpleSmoothFilter::processSingleParameterInternal(Parameter* source, Param
 	if (out->isComplex())
 	{
 		var val;
-		for (int i = 0; i < out->value.size(); i++)
+		for (int i = 0; i < out->value.size(); ++i)
 		{
 			float smoothVal = async->boolValue() ? (newVal[i] > oldVal[i] ? smooth->floatValue() : downSmooth->floatValue()) : smooth->floatValue();
 			val.append((float)oldVal[i] + ((float)newVal[i] - (float)oldVal[i]) * (1 - smoothVal));

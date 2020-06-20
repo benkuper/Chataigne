@@ -20,7 +20,7 @@ KeyboardModuleCommands::KeyboardModuleCommands(KeyboardModule* m, CommandContext
 	type = (Type)(int)params.getProperty("type", KEY_HIT);
 	
 	keyID = addEnumParameter("Key", "The key to hit");
-	for (int i = 0; i < 127; i++)
+	for (int i = 0; i < 127; ++i)
 	{
 		KeyPress p = KeyPress(i);
 		if (p.getTextDescription().isEmpty()) continue;

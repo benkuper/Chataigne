@@ -38,7 +38,7 @@ Parameter * CropFilter::setupSingleParameterInternal(Parameter * source)
 	{
 		var minVal;
 		var maxVal;
-		for (int i = 0; i < p->value.size(); i++)
+		for (int i = 0; i < p->value.size(); ++i)
 		{
 			minVal.append(targetMin->floatValue());
 			maxVal.append(jmax<float>(targetMax->floatValue(), targetMin->floatValue()));

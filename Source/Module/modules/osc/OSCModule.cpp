@@ -315,7 +315,7 @@ var OSCModule::sendOSCFromScript(const var::NativeFunctionArgs & a)
 	{
 		OSCMessage msg(a.arguments[0].toString());
 
-		for (int i = 1; i < a.numArguments; i++)
+		for (int i = 1; i < a.numArguments; ++i)
 		{
 			if (a.arguments[i].isArray())
 			{
@@ -349,7 +349,7 @@ var OSCModule::sendOSCToFromScript(const var::NativeFunctionArgs& a)
 	{
 		OSCMessage msg(a.arguments[2].toString());
 
-		for (int i = 3; i < a.numArguments; i++)
+		for (int i = 3; i < a.numArguments; ++i)
 		{
 			if (a.arguments[i].isArray())
 			{
@@ -564,7 +564,7 @@ void OSCModule::handleRoutedModuleValue(Controllable * c, RouteParams * p)
 					if (!v.isArray())  m.addArgument(varToArgument(v));
 					else
 					{
-						for (int i = 0; i < v.size(); i++) m.addArgument(varToArgument(v[i]));
+						for (int i = 0; i < v.size(); ++i) m.addArgument(varToArgument(v[i]));
 					}
 				}
 

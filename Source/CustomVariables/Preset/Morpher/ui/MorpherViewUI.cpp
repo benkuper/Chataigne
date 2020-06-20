@@ -178,7 +178,7 @@ void MorpherViewUI::paintBackground(Graphics& g)
 		if (morpher->diagram == nullptr || manager->items.size() == 0) break;
 
 		const jcv_site* sites = jcv_diagram_get_sites(morpher->diagram.get());
-		for (int i = 0; i < morpher->diagram->numsites; i++)
+		for (int i = 0; i < morpher->diagram->numsites; ++i)
 		{
 			jcv_site s = sites[i];
 			jcv_graphedge* e = s.edges;
@@ -302,7 +302,7 @@ void MorpherViewUI::paintBackground(Graphics& g)
 				g.setColour(Colours::white.withAlpha(.6f));
 
 
-				for (int i = 0; i < edges.size(); i++)
+				for (int i = 0; i < edges.size(); ++i)
 				{
 					//float edgeDist = edgeDists[i];
 					//float edgeNDist = edgeNeighbourDists[i];

@@ -32,7 +32,7 @@ ConvertedParameterEditor::ConvertedParameterEditor(ConvertedParameter* cp, bool 
 	}
 
 	StringArray valueNames = cp->getValueNames();
-	for (int i = 0; i < valueNames.size(); i++)
+	for (int i = 0; i < valueNames.size(); ++i)
 	{
 		ConversionConnector* cc = new ConversionConnector(valueNames[i], cp, i);
 		addAndMakeVisible(cc);
@@ -79,7 +79,7 @@ void ConvertedParameterEditor::resizedInternalContent(Rectangle<int>& r)
 	cr.setHeight(r.getY() - top);
 
 
-	for (int i = 0; i < connectors.size(); i++)
+	for (int i = 0; i < connectors.size(); ++i)
 	{
 		int th = connectors.size() == 1?cr.getHeight()/2:margin + (cr.getHeight() - margin*2) * i * 1.0f / (connectors.size() - 1);
 		connectors[i]->setBounds(Rectangle<int>(5, cr.getY() + th- connectorHeight /2, cr.getWidth(), connectorHeight));
@@ -93,7 +93,7 @@ void ConvertedParameterEditor::controllableFeedbackUpdate(Controllable* c)
 	if (c == cp->conversionMode)
 	{
 		StringArray valueNames = cp->getValueNames();
-		for (int i = 0; i < connectors.size(); i++)
+		for (int i = 0; i < connectors.size(); ++i)
 		{
 			connectors[i]->label = valueNames[i];
 			connectors[i]->repaint();

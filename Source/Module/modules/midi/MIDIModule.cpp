@@ -129,7 +129,7 @@ void MIDIModule::sendSysex(Array<uint8> data)
 	if (logOutgoingData->boolValue())
 	{
 		String s = "Send Sysex " + String(data.size()) + " bytes : ";
-		for (int i = 0; i < data.size(); i++) s += "\n" + String(data[i]);
+		for (int i = 0; i < data.size(); ++i) s += "\n" + String(data[i]);
 		NLOG(niceName, s);
 	}
 	outActivityTrigger->trigger();
@@ -289,7 +289,7 @@ void MIDIModule::sysExReceived(const MidiMessage & msg)
 	if (logIncomingData->boolValue())
 	{
 		String log = "Sysex received, " + String(data.size()) + " bytes";
-		for (int i = 0; i < data.size(); i++)
+		for (int i = 0; i < data.size(); ++i)
 		{
 			log += "\n" + String(data[i]);
 		}
@@ -400,7 +400,7 @@ var MIDIModule::sendSysexFromScript(const var::NativeFunctionArgs & args)
 	if (!checkNumArgs(m->niceName, args, 1)) return var();
 
 	Array<const var *> allArgs;
-	for (int i = 0; i < args.numArguments; i++)
+	for (int i = 0; i < args.numArguments; ++i)
 	{
 		if (args.arguments[i].isArray())
 		{
@@ -418,7 +418,7 @@ var MIDIModule::sendSysexFromScript(const var::NativeFunctionArgs & args)
 	int numArgs = allArgs.size();
 
 	Array<uint8> data;
-	for (int i = 0; i < numArgs; i++)
+	for (int i = 0; i < numArgs; ++i)
 	{
 		const var * a = allArgs[i];
 		if (a->isInt() || a->isInt64() || a->isDouble() || a->isBool())data.add((uint8)(int)*a);

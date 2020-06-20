@@ -32,7 +32,7 @@ ConvertedParameter::ConvertedParameter(var params) :
 	}
 
 	int numSlots = defaultParam->isComplex() ? defaultParam->value.size() : 1;
-	for (int i = 0; i < numSlots; i++) connectedSlots.add(false);
+	for (int i = 0; i < numSlots; ++i) connectedSlots.add(false);
 }
 
 bool ConvertedParameter::areAllSlotsConnected() const
@@ -134,7 +134,7 @@ void ConvertedParameter::onContainerParameterChangedInternal(Parameter* p)
 			else
 			{
 				var newVal;
-				for (int i = 0; i < defaultValue.size(); i++) newVal.append(connectedSlots[i] ? curValue[i] : defaultValue[i]);
+				for (int i = 0; i < defaultValue.size(); ++i) newVal.append(connectedSlots[i] ? curValue[i] : defaultValue[i]);
 				outParamReference->setValue(newVal);
 			}
 		}

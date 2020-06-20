@@ -118,7 +118,7 @@ void MainContentComponent::getAllCommands(Array<CommandID>& commands) {
 	};
 
 	commands.addArray(ids, numElementsInArray(ids));
-	for (int i = 0; i < Guider::getInstance()->factory.defs.size(); i++) commands.add(ChataigneCommandIDs::guideStart + i);
+	for (int i = 0; i < Guider::getInstance()->factory.defs.size(); ++i) commands.add(ChataigneCommandIDs::guideStart + i);
 }
 
 
@@ -140,7 +140,7 @@ PopupMenu MainContentComponent::getMenuForIndex(int topLevelMenuIndex, const Str
 
 	}else if (menuName == "Guides")
 	{
-		for (int i = 0; i < Guider::getInstance()->factory.defs.size(); i++)
+		for (int i = 0; i < Guider::getInstance()->factory.defs.size(); ++i)
 		{
 			menu.addCommandItem(&getCommandManager(), ChataigneCommandIDs::guideStart + i);
 		}

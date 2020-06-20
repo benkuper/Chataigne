@@ -70,13 +70,7 @@ void DMXSerialDevice::processIncomingData()
 	DBG("Incoming data, process function not overriden, doing nothing.");
 }
 
-void DMXSerialDevice::sendDMXValue(int channel, int value)
-{
-	DMXDevice::sendDMXValue(channel, value);
-}
-
-
-void DMXSerialDevice::sendDMXValues()
+void DMXSerialDevice::sendDMXValuesInternal()
 {
 	if (dmxPort != nullptr && dmxPort->port->isOpen())
 	{

@@ -244,7 +244,7 @@ void StreamingModule::processDataLine(const String & msg)
 	{
 		int numArgs = valuesString.size();
 
-		for (int i = 0; i < numArgs; i++)
+		for (int i = 0; i < numArgs; ++i)
 		{
 			Controllable* c = valuesCC.getControllableByName("Value " + String(i), true);
 
@@ -348,7 +348,7 @@ void StreamingModule::processDataBytes(Array<uint8_t> data)
 			}
 		}
 
-		for (int i = 0; i < numArgs; i++)
+		for (int i = 0; i < numArgs; ++i)
 		{
 			IntParameter * c = dynamic_cast<IntParameter *>(valuesCC.controllables[i]);
 			if (c != nullptr)
@@ -379,7 +379,7 @@ void StreamingModule::processDataBytes(Array<uint8_t> data)
 
 		}
 		
-		for (int i = 0; i < numArgs; i++)
+		for (int i = 0; i < numArgs; ++i)
 		{
 			FloatParameter * c = dynamic_cast<FloatParameter *>(valuesCC.controllables[i]);
 			if (c != nullptr)
@@ -411,7 +411,7 @@ void StreamingModule::processDataBytes(Array<uint8_t> data)
 		}
 		
 
-		for (int i = 0; i < numArgs; i++)
+		for (int i = 0; i < numArgs; ++i)
 		{
 			ColorParameter * c = dynamic_cast<ColorParameter *>(valuesCC.controllables[i]);
 			if (c != nullptr)
@@ -466,7 +466,7 @@ void StreamingModule::sendBytes(Array<uint8> bytes, var params)
 		cobs_encode(bytes.getRawDataPointer(), numBytes , data);
 		bytes.clear();
 
-		for (int i = 0; i < numBytes+1;i++) bytes.add(data[i]);
+		for (int i = 0; i < numBytes+1; ++i) bytes.add(data[i]);
 		bytes.add(0);
 	}
 
@@ -566,7 +566,7 @@ var StreamingModule::sendStringFromScript(const var::NativeFunctionArgs & a)
 	else
 	{
 		String s = "";
-		for (int i = 0; i < a.numArguments; i++)
+		for (int i = 0; i < a.numArguments; ++i)
 		{
 			if (a.arguments[i].isArray() && a.arguments[i].size() > 0)
 			{
@@ -592,7 +592,7 @@ var StreamingModule::sendBytesFromScript(const var::NativeFunctionArgs & a)
 	DBG(a.numArguments);
 	if (!checkNumArgs(m->niceName, a, 1)) return false;
 	Array<uint8> data;
-	for (int i = 0; i < a.numArguments; i++)
+	for (int i = 0; i < a.numArguments; ++i)
 	{
 		if (a.arguments[i].isArray())
 		{

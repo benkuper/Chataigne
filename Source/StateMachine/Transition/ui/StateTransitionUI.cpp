@@ -128,7 +128,7 @@ void StateTransitionUI::paint(Graphics & g)
 	float startDist = distOnPath - baseLength/2;
 	base.startNewSubPath(rectP.getPointAlongPath(startDist));
 	int precision = 4;
-	for (int i = 1; i <= precision; i++)
+	for (int i = 1; i <= precision; ++i)
 	{
 		base.lineTo(rectP.getPointAlongPath(startDist + i*baseLength / precision));
 	}

@@ -74,7 +74,7 @@ void DMXDevice::sendDMXValue(int channel, int value) //channel 1-512
 void DMXDevice::sendDMXRange(int startChannel, Array<int> values)
 {
 	int numValues = values.size();
-	for (int i = 0; i < numValues; i++)
+	for (int i = 0; i < numValues; ++i)
 	{
 		int channel = startChannel + i;
 		if (channel < 0) continue;
@@ -89,8 +89,14 @@ void DMXDevice::sendDMXRange(int startChannel, Array<int> values)
 
 void DMXDevice::setDMXValuesIn(int numChannels, uint8* values)
 {
-	for (int i = 0; i < numChannels && i < 512; i++) dmxDataIn[i] = values[i];
+	for (int i = 0; i < numChannels && i < 512; ++i) dmxDataIn[i] = values[i];
 	dmxDeviceListeners.call(&DMXDeviceListener::dmxDataInChanged, numChannels, values);
+}
+
+void DMXDevice::sendDMXValues()
+{
+	if (!outputCC->enabled->boolValue()) return;
+	sendDMXValuesInternal();
 }
 
 

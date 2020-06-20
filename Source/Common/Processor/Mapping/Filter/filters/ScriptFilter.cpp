@@ -50,7 +50,7 @@ bool ScriptFilter::processInternal()
 	if (filteredParameters.size() == 1 && !result.isArray()) filteredParameters[0]->setValue(result);
 	else if(result.isArray())
 	{
-		for (int i = 0; i < filteredParameters.size() && i < result.size();i++) filteredParameters[i]->setValue(result);
+		for (int i = 0; i < filteredParameters.size() && i < result.size(); ++i) filteredParameters[i]->setValue(result);
 	}
 
 	return true;

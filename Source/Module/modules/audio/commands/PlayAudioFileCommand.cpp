@@ -36,7 +36,7 @@ PlayAudioFileCommand::PlayAudioFileCommand(AudioModule * _module, CommandContext
 	int numChannels = audioModule->graph.getMainBusNumOutputChannels();
 	AudioChannelSet channelSet = audioModule->graph.getChannelLayoutOfBus(false, 0);
 
-	for (int i = 0; i < numChannels; i++)
+	for (int i = 0; i < numChannels; ++i)
 	{
 		String channelName = AudioChannelSet::getChannelTypeName(channelSet.getTypeOfChannel(i));
 		BoolParameter * b = channelsCC.addBoolParameter("Channel Out : " + channelName, "If enabled, sends audio from this layer to this channel", false);
@@ -69,7 +69,7 @@ void PlayAudioFileCommand::updateSelectedOutChannels()
 	audioModule->graph.disconnectNode(graphID);
 
 	numActiveOutputs = 0;
-	for (int i = 0; i < channelsCC.controllables.size(); i++) if (((BoolParameter *)channelsCC.controllables[i])->boolValue()) numActiveOutputs++;
+	for (int i = 0; i < channelsCC.controllables.size(); ++i) if (((BoolParameter *)channelsCC.controllables[i])->boolValue()) numActiveOutputs++;
 
 	currentProcessor->setPlayConfigDetails(0, numActiveOutputs, audioModule->currentSampleRate, audioModule->currentBufferSize);
 	currentProcessor->prepareToPlay(audioModule->currentSampleRate, audioModule->currentBufferSize);
@@ -78,7 +78,7 @@ void PlayAudioFileCommand::updateSelectedOutChannels()
 
 	
 	int index = 0;
-	for (int i = 0; i < channelsCC.controllables.size() ; i++)
+	for (int i = 0; i < channelsCC.controllables.size() ; ++i)
 	{
 		if (((BoolParameter *)channelsCC.controllables[i])->boolValue())
 		{

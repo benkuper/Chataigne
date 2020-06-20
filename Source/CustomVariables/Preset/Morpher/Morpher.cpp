@@ -133,7 +133,7 @@ int Morpher::getSiteIndexForPoint(Point<float> p)
 
 	float minDist = p.getDistanceFrom(Point<float>(sites[0].p.x, sites[0].p.y));
 	float index = 0;
-	for (int i = 1; i < diagram->numsites; i++)
+	for (int i = 1; i < diagram->numsites; ++i)
 	{
 		float dist = p.getDistanceFrom(Point<float>(sites[i].p.x, sites[i].p.y));
 
@@ -225,7 +225,7 @@ void Morpher::computeWeights()
 		//DBG("Num edges to test " << edges.size());
 
 		//Compute weight for each neighbour
-		for (int i = 0; i < edges.size(); i++)
+		for (int i = 0; i < edges.size(); ++i)
 		{
 			float edgeDist = edgeDists[i];
 			float edgeNDist = edgeNeighbourDists[i];

@@ -216,7 +216,7 @@ void ModuleFactory::buildPopupMenu()
 
 		int subMenuIndex = -1;
 
-		for (int i = 0; i < subMenus.size(); i++)
+		for (int i = 0; i < subMenus.size(); ++i)
 		{
 			if (subMenuNames[i] == d->menuPath)
 			{
@@ -242,7 +242,7 @@ void ModuleFactory::buildPopupMenu()
 		lastDefIsCustom.set(subMenuIndex, d->isCustomModule);
 	}
 
-	for (int i = 0; i < subMenus.size(); i++) menu.addSubMenu(subMenuNames[i], *subMenus[i]);
+	for (int i = 0; i < subMenus.size(); ++i) menu.addSubMenu(subMenuNames[i], *subMenus[i]);
 
 	menu.addSeparator();
 	menu.addItem(-1, "Get more modules...");

@@ -40,7 +40,7 @@ void CustomOSCModule::processMessageInternal(const OSCMessage & msg)
 
 	if(msg.size() > 1 && splitArgs->boolValue()) // Split args on multi type
 	{
-		for (int i = 0; i < msg.size(); i++) 
+		for (int i = 0; i < msg.size(); ++i) 
 		{
 			c = valuesCC.getControllableByName(cShortName+"_"+String(i));
 			Parameter * p = (Parameter *)c;

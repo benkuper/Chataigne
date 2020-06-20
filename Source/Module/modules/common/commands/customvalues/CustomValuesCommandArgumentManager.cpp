@@ -157,7 +157,7 @@ CustomValuesCommandArgument* CustomValuesCommandArgumentManager::addItemFromData
 
 void CustomValuesCommandArgumentManager::autoRenameItems()
 {
-	for (int i = 0; i < items.size(); i++)
+	for (int i = 0; i < items.size(); ++i)
 	{
 		if (items[i]->niceName.startsWithChar('#')) items[i]->setNiceName("#" + String(i + 1));
 	}

@@ -15,7 +15,7 @@ ColorShiftFilter::ColorShiftFilter(var params) :
 {
 
 	const String hsvNames[3] = { "Hue", "Saturation","Brightness" };
-	for (int i = 0; i < 3; i++)
+	for (int i = 0; i < 3; ++i)
 	{
 		hsvOffsets.add(filterParams.addFloatParameter(hsvNames[i], "The "+hsvNames[i]+" offset to shift to the source value", 0, -1, 1));
 	}

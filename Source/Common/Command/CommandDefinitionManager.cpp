@@ -61,7 +61,7 @@ void CommandDefinitionManager::addCommandsToMenu(PopupMenu * commandMenu, int ba
 		}
 
 		int subMenuIndex = -1;
-		for (int i = 0; i < subMenus.size(); i++)
+		for (int i = 0; i < subMenus.size(); ++i)
 		{
 			if (subMenuNames[i] == d->menuPath)
 			{
@@ -80,7 +80,7 @@ void CommandDefinitionManager::addCommandsToMenu(PopupMenu * commandMenu, int ba
 		subMenus[subMenuIndex]->addItem(itemID, d->commandType);
 	}
 
-	for (int i = 0; i < subMenus.size(); i++) commandMenu->addSubMenu(subMenuNames[i], *subMenus[i]);
+	for (int i = 0; i < subMenus.size(); ++i) commandMenu->addSubMenu(subMenuNames[i], *subMenus[i]);
 }
 
 CommandDefinition * CommandDefinitionManager::getCommandDefinitionFor(const String & menuPath, const String & moduleType)

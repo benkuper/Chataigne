@@ -31,7 +31,7 @@ ControllableContainer * CVGroupManager::showMenuAndGetContainer()
 	PopupMenu menu;
 	int numItems = CVGroupManager::getInstance()->items.size();
 	
-	for (int i = 0; i < numItems; i++)
+	for (int i = 0; i < numItems; ++i)
 	{
 		CVGroup * g = CVGroupManager::getInstance()->items[i];
 		menu.addItem(i + 1,g->niceName);
@@ -52,7 +52,7 @@ Controllable * CVGroupManager::showMenuAndGetVariable(bool, bool)
 	Array<Controllable *> controllableRefs;
 
 	int itemID = 1;
-	for (int i = 0; i < numItems; i++)
+	for (int i = 0; i < numItems; ++i)
 	{
 		CVGroup * g = CVGroupManager::getInstance()->items[i];
 
@@ -85,7 +85,7 @@ ControllableContainer * CVGroupManager::showMenuAndGetPreset()
 	Array<ControllableContainer *> presetRefs;
 
 	int itemID = 1;
-	for (int i = 0; i < numItems; i++)
+	for (int i = 0; i < numItems; ++i)
 	{
 		CVGroup * g = CVGroupManager::getInstance()->items[i];
 
@@ -115,7 +115,7 @@ ControllableContainer* CVGroupManager::showMenuAndGetGroup()
 {
 	PopupMenu menu;
 	int numItems = CVGroupManager::getInstance()->items.size();
-	for (int i = 0; i < numItems; i++)
+	for (int i = 0; i < numItems; ++i)
 	{
 		menu.addItem(i + 1, CVGroupManager::getInstance()->items[i]->niceName);
 	}

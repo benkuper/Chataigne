@@ -35,10 +35,9 @@ public:
 	virtual void setPortConfig() {}
 
 	virtual void processIncomingData();
-	virtual void sendDMXValue(int channel, int value) override;
 
 	virtual void initRunLoop() {}
-	virtual void sendDMXValues() override;
+	virtual void sendDMXValuesInternal() override;
 	virtual void sendDMXValuesSerialInternal() = 0;
 
 	virtual void onContainerParameterChanged(Parameter * p) override;

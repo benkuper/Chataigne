@@ -44,7 +44,7 @@ Parameter* SimpleConversionFilter::setupSingleParameterInternal(Parameter* sourc
 		retargetComponent->setNiceName(transferType == TARGET ? "Target Component" : "Extract Component");
 		Parameter * retargetP = transferType == TARGET ? p : source;
 		StringArray valueNames = retargetP->getValuesNames();
-		for (int i = 0; i < valueNames.size(); i++)
+		for (int i = 0; i < valueNames.size(); ++i)
 		{
 			retargetComponent->addOption(valueNames[i], i, false);
 		}
@@ -66,7 +66,7 @@ void SimpleConversionFilter::processSingleParameterInternal(Parameter* source, P
 		{
 			var val = var();
 			var sourceVal = source->getValue();
-			for (int i = 0; i < source->value.size() && i < out->value.size(); i++) val.append(convertValue(source, sourceVal[i]));
+			for (int i = 0; i < source->value.size() && i < out->value.size(); ++i) val.append(convertValue(source, sourceVal[i]));
 			while (val.size() < out->value.size()) val.append(0);
 			out->setValue(val);
 		}
@@ -82,7 +82,7 @@ void SimpleConversionFilter::processSingleParameterInternal(Parameter* source, P
 	case TARGET:
 	{
 		var val = var();
-		for (int i = 0; i < out->value.size(); i++) val.append(0);
+		for (int i = 0; i < out->value.size(); ++i) val.append(0);
 		val[(int)retargetComponent->getValueData()] = convertValue(source, source->getValue());
 		out->setValue(val);
 	}
@@ -270,7 +270,7 @@ void ToColorFilter::processSingleParameterInternal(Parameter* source, Parameter*
 		default:
 		{
 			var val = var();
-			for (int i = 0; i < out->value.size(); i++) val.append(baseColor->value[i]); //force alpha to 1
+			for (int i = 0; i < out->value.size(); ++i) val.append(baseColor->value[i]); //force alpha to 1
 			val[(int)retargetComponent->getValueData()] = convertValue(source, source->getValue());
 			out->setValue(val);
 		}

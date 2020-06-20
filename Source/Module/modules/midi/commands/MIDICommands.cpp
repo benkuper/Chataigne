@@ -39,7 +39,7 @@ MIDINoteAndCCCommand::MIDINoteAndCCCommand(MIDIModule * module, CommandContext c
 	case FULL_NOTE:
 	case AFTER_TOUCH:
 		noteEnum = addEnumParameter("Note", "Note from C to B");
-		for (int i = 0; i < 12; i++)
+		for (int i = 0; i < 12; ++i)
 		{
 			noteEnum->addOption(MidiMessage::getMidiNoteName(i, true, false, 5), i);
 		}

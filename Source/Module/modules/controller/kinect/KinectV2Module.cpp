@@ -19,7 +19,7 @@ KinectV2Module::KinectV2Module() :
 	numPersons = valuesCC.addIntParameter("Number of Persons", "Number of detected persons", 0, 0, 6);
 	numPersons->setControllableFeedbackOnly(true);
 
-	for (int i = 0; i < KINECT_MAX_PERSONS; i++)
+	for (int i = 0; i < KINECT_MAX_PERSONS; ++i)
 	{
 		KinectPersonValues * kpv = new KinectPersonValues(i + 1);
 		personValues.add(kpv);
@@ -147,7 +147,7 @@ void KinectV2Module::processBody(int nBodyCount, IBody ** ppBodies)
 
 	int numDetectedBodies = 0;
 
-	for (int i = 0; i < nBodyCount && i < KINECT_MAX_PERSONS; i++)
+	for (int i = 0; i < nBodyCount && i < KINECT_MAX_PERSONS; ++i)
 	{
 		IBody* b = ppBodies[i];
 		if (!b) continue;

@@ -15,7 +15,6 @@
 DMXEnttecProDevice::DMXEnttecProDevice() :
 	DMXSerialDevice("DMX Pro", ENTTEC_DMXPRO, true)
 {
-	enableReceive = addBoolParameter("Enable Receive", "If checked, will also receive data. This may affect the send rate when using a fixed rate.", false);
 }
 
 DMXEnttecProDevice::~DMXEnttecProDevice()
@@ -49,18 +48,18 @@ void DMXEnttecProDevice::sendDMXValuesSerialInternal()
 
 	/*
 	DBG("********");
-	for (int i = 0; i < 5; i++) DBG("Send DMX Header " << i << " : " << (int)sendHeaderData[i]);
-	for (int i = 0; i < 4; i++) DBG("Send DMX Data " << i <<  (int)dmxDataOut[i]);
+	for (int i = 0; i < 5; ++i) DBG("Send DMX Header " << i << " : " << (int)sendHeaderData[i]);
+	for (int i = 0; i < 4; ++i) DBG("Send DMX Data " << i <<  (int)dmxDataOut[i]);
 	*/
 
-	if(enableReceive->boolValue()) dmxPort->port->write(changeAlwaysData, 6); //to avoid blocking the dmxPro on send
+	if(inputCC->enabled->boolValue()) dmxPort->port->write(changeAlwaysData, 6); //to avoid blocking the dmxPro on send
 }
 
 
 
 void DMXEnttecProDevice::serialDataReceived(const var& data)
 {
-	if (!enableReceive->boolValue()) return;
+	if (!inputCC->enabled->boolValue()) return;
 
 	serialBuffer.addArray((const uint8_t*)data.getBinaryData()->getData(), (int)data.getBinaryData()->getSize());
 
@@ -81,7 +80,7 @@ Array<uint8> DMXEnttecProDevice::getDMXPacket(Array<uint8> bytes, int& endIndex)
 	if (bytes.size() < DMXPRO_HEADER_LENGTH + 1) return Array<uint8>(); //header + message_end 
 	int numBytes = bytes.size();
 
-	for (int i = 0; i < numBytes; i++)
+	for (int i = 0; i < numBytes; ++i)
 	{
 
 		if (bytes[i] == DMXPRO_START_MESSAGE)
@@ -92,7 +91,7 @@ Array<uint8> DMXEnttecProDevice::getDMXPacket(Array<uint8> bytes, int& endIndex)
 
 
 			//DBG("Checking endIndex should be " << endIndex << " / " << DMXPRO_END_MESSAGE);
-			//for (int i = 0; i < numBytes; i++) DBG(" > " << bytes[i]);
+			//for (int i = 0; i < numBytes; ++i) DBG(" > " << bytes[i]);
 
 			if (bytes[endIndex] == DMXPRO_END_MESSAGE)
 			{

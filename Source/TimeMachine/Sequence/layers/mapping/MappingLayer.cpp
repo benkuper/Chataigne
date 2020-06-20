@@ -87,7 +87,7 @@ void MappingLayer::exportBakedValues(bool dataOnly)
 		var v = getValueAtPosition(t);
 		if (v.isArray())
 		{
-			for (int i = 0; i < v.size(); i++) pValues.add(v[i]);
+			for (int i = 0; i < v.size(); ++i) pValues.add(v[i]);
 		}
 		else pValues.add((float)v);
 
@@ -104,7 +104,7 @@ void MappingLayer::exportBakedValues(bool dataOnly)
 		if(!dataOnly) s += String(iv) + "\t" + String(iv * step) + "\t";
 
 		Array<float> va = values[iv];
-		for (int i = 0; i < va.size(); i++)
+		for (int i = 0; i < va.size(); ++i)
 		{
 			s += (i > 0 ? "," : "") + String(va[i]);
 		}

@@ -37,7 +37,7 @@ void StreamDeckManager::checkDevices()
 	bool changed = false;
 	Array<String> foundSerials;
 
-	//for (int i = 0; i < TYPE_MAX; i++)
+	//for (int i = 0; i < TYPE_MAX; ++i)
 	//{
 	hid_device_info* deviceInfos = hid_enumerate(vid, 0); //force all PIDs since Streamdeck has changed them in the new products
 	hid_device_info* dInfo = deviceInfos;

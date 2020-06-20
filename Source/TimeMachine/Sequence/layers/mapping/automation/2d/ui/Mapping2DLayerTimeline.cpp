@@ -39,7 +39,7 @@ void Mapping2DTimeline::paint(Graphics& g)
 		yPath.startNewSubPath(0, getHeight());
 		int precision = getWidth()/3;
 	
-		for (int i = 0; i < precision; i++)
+		for (int i = 0; i < precision; ++i)
 		{
 			float p = i * 1.0f / precision;
 			float t = getTimeForX(p * getWidth());

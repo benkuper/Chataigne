@@ -274,7 +274,7 @@ void BasicsGuide::containerRebuilt(GenericControllableContainerEditor * editor)
 {
 	if (editor == cme && currentStep == ADD_CONDITION)
 	{
-		for (int i = 0; i < cme->manager->items.size(); i++)
+		for (int i = 0; i < cme->manager->items.size(); ++i)
 		{
 			ce = dynamic_cast<StandardConditionEditor *>(cme->getEditorForInspectable(cme->manager->items[i]));
 			if (ce != nullptr && condition == nullptr)
@@ -288,7 +288,7 @@ void BasicsGuide::containerRebuilt(GenericControllableContainerEditor * editor)
 		}
 	} else if (editor == csme && currentStep == ADD_CONSEQUENCE)
 	{
-		for (int i = 0; i < csme->manager->items.size(); i++)
+		for (int i = 0; i < csme->manager->items.size(); ++i)
 		{
 			cse = dynamic_cast<BaseCommandHandlerEditor *>(csme->getEditorForInspectable(csme->manager->items[i]));
 			if (cse != nullptr && audioFile == nullptr)

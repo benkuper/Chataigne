@@ -80,7 +80,7 @@ ZeroconfManager::ServiceInfo * ZeroconfManager::showMenuAndGetService(StringRef 
 	}
 	else
 	{
-		for (int i = 0; i < s->services.size(); i++)
+		for (int i = 0; i < s->services.size(); ++i)
 		{
 			ServiceInfo * info = s->services[i];
 			p.addItem(1 + i, info->name + " on " + info->host + " (" + info->ip + ":" + String(info->port) + ")");

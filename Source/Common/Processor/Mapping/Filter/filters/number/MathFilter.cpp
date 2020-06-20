@@ -74,7 +74,7 @@ void MathFilter::processSingleParameterInternal(Parameter * source, Parameter * 
 		val = getProcessedValue(source->value);
 	} else
 	{
-		for (int i = 0; i < source->value.size(); i++)
+		for (int i = 0; i < source->value.size(); ++i)
 		{
 			val.append(getProcessedValue(source->value[i],i));
 		}
@@ -85,7 +85,7 @@ void MathFilter::processSingleParameterInternal(Parameter * source, Parameter * 
 
 void MathFilter::updateFilteredParamsRange()
 {
-	for (int i=0;i<filteredParameters.size();i++)
+	for (int i=0;i<filteredParameters.size(); ++i)
 	{
 		Parameter* sourceParam = sourceParams[i];
 		if (sourceParam == nullptr) continue;

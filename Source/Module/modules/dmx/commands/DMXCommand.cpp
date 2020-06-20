@@ -26,7 +26,7 @@ DMXCommand::DMXCommand(DMXModule* _module, CommandContext context, var params) :
 	if (dmxAction == SET_VALUE_16BIT)
 	{
 		byteOrder = addEnumParameter("Byte Order", "Byte ordering, most devices use MSB");
-		byteOrder->addOption("MSB", DMXModule::MSB)->addOption("LSB", DMXModule::LSB);
+		byteOrder->addOption("MSB", DMXByteOrder::MSB)->addOption("LSB", DMXByteOrder::LSB);
 	}
 
 
@@ -93,7 +93,7 @@ void DMXCommand::setValue(var val)
 
 	if (val.isArray())
 	{
-		for (int i = 0; i < val.size(); i++)
+		for (int i = 0; i < val.size(); ++i)
 		{
 			//DBG("Value remap to " << i << " / " << (float)val[i]);
 			newVal.append(((float)val[i]) * mapFactor);
@@ -107,7 +107,7 @@ void DMXCommand::setValue(var val)
 	if (newVal.isArray())
 	{
 		//DBG("Val is array ");
-		//for(int i=0;i<newVal.size();i++) DBG("new val [" << i << "]/ " << (float)newVal[i]);
+		//for(int i=0;i<newVal.size();++i) DBG("new val [" << i << "]/ " << (float)newVal[i]);
 	}
 	BaseCommand::setValue(newVal);
 }
@@ -127,7 +127,7 @@ void DMXCommand::triggerInternal()
 	{
 		int v1 = value->intValue() & 0xFF;
 		int v2 = value->intValue() >> 8 & 0xFF;
-		bool msb = byteOrder->getValueDataAsEnum<DMXModule::DMXByteOrder>() == DMXModule::MSB;
+		bool msb = byteOrder->getValueDataAsEnum<DMXByteOrder>() == DMXByteOrder::MSB;
 		
 		int dmxV1 = msb ? v2 : v1;
 		int dmxV2 = msb ? v1 : v2;
@@ -164,7 +164,7 @@ void DMXCommand::triggerInternal()
 	case COLOR:
 	{
 		Array<int> values;
-		for (int i = 0; i < 3; i++) values.add((int)((float)colorParam->value[i] * 255));
+		for (int i = 0; i < 3; ++i) values.add((int)((float)colorParam->value[i] * 255));
 		dmxModule->sendDMXValues(channel->intValue(), values);
 	}
 	break;

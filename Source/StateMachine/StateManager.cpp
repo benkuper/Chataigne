@@ -175,7 +175,7 @@ State * StateManager::showMenuAndGetState()
 {
 	PopupMenu menu;
 	StateManager * sm = StateManager::getInstance();
-	for (int i = 0; i < sm->items.size(); i++)
+	for (int i = 0; i < sm->items.size(); ++i)
 	{
 		menu.addItem(1+i,sm->items[i]->niceName);
 	}
@@ -195,7 +195,7 @@ Action * StateManager::showMenuAndGetAction()
 {
 	PopupMenu menu;
 	StateManager * sm = StateManager::getInstance();
-	for (int i = 0; i < sm->items.size(); i++)
+	for (int i = 0; i < sm->items.size(); ++i)
 	{
 		PopupMenu sMenu;
 		int numValues = sm->items[i]->pm.items.size();
@@ -226,7 +226,7 @@ Mapping * StateManager::showMenuAndGetMapping()
 {
 	PopupMenu menu;
 	StateManager * sm = StateManager::getInstance();
-	for (int i = 0; i < sm->items.size(); i++)
+	for (int i = 0; i < sm->items.size(); ++i)
 	{
 		PopupMenu sMenu;
 		int numValues = sm->items[i]->pm.items.size();

@@ -65,7 +65,7 @@ void HTTPModule::processRequest(Request * request)
 	StringPairArray responseHeaders;
 	int statusCode = 0;
 
-	std::unique_ptr<InputStream> stream(request->url.createInputStream(request->method == POST, nullptr, nullptr, request->extraHeaders,
+	std::unique_ptr<InputStream> stream(request->url.createInputStream(request->method == METHOD_POST, nullptr, nullptr, request->extraHeaders,
 		2000, // timeout in millisecs
 		&responseHeaders, &statusCode, 5, requestMethodNames[(int)request->method]));
 
@@ -132,7 +132,7 @@ void HTTPModule::createControllablesFromJSONResult(var data, ControllableContain
 	{
 		if (p.value.isArray())
 		{
-			for (int i = 0; i < p.value.size(); i++)
+			for (int i = 0; i < p.value.size(); ++i)
 			{
 				ControllableContainer* cc = container->getControllableContainerByName(String(i), true);
 				if (cc == nullptr)
@@ -259,28 +259,28 @@ var HTTPModule::sendGETFromScript(const var::NativeFunctionArgs& args)
 var HTTPModule::sendPOSTFromScript(const var::NativeFunctionArgs& args)
 {
 	HTTPModule* m = getObjectFromJS<HTTPModule>(args);
-	if (m != nullptr) m->sendRequestFromScript(args, POST);
+	if (m != nullptr) m->sendRequestFromScript(args, METHOD_POST);
 	return var();
 }
 
 var HTTPModule::sendPUTFromScript(const var::NativeFunctionArgs& args)
 {
 	HTTPModule* m = getObjectFromJS<HTTPModule>(args);
-	if (m != nullptr) m->sendRequestFromScript(args, PUT);
+	if (m != nullptr) m->sendRequestFromScript(args, METHOD_PUT);
 	return var();
 }
 
 var HTTPModule::sendPATCHFromScript(const var::NativeFunctionArgs& args)
 {
 	HTTPModule* m = getObjectFromJS<HTTPModule>(args);
-	if (m != nullptr) m->sendRequestFromScript(args, PATCH);
+	if (m != nullptr) m->sendRequestFromScript(args, METHOD_PATCH);
 	return var();
 }
 
 var HTTPModule::sendDELETEFromScript(const var::NativeFunctionArgs& args)
 {
 	HTTPModule* m = getObjectFromJS<HTTPModule>(args);
-	if (m != nullptr) m->sendRequestFromScript(args, DELETE);
+	if (m != nullptr) m->sendRequestFromScript(args, METHOD_DELETE);
 	return var();
 }
 

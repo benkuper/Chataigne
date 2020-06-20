@@ -73,7 +73,7 @@ size_t cobs_decode(const uint8_t* input, size_t length, uint8_t* output)
 
 		read_index++;
 
-		for (i = 1; i < code; i++)
+		for (i = 1; i < code; ++i)
 		{
 			output[write_index++] = input[read_index++];
 		}

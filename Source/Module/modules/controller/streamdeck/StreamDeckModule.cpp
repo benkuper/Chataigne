@@ -106,7 +106,7 @@ void StreamDeckModule::rebuildValues()
 	}
 
 
-	for (int i = 0; i < numRows; i++)
+	for (int i = 0; i < numRows; ++i)
 	{
 		if (buttonStates.size() <= i)
 		{
@@ -187,7 +187,7 @@ void StreamDeckModule::setDevice(StreamDeck* newDevice)
 			break;
 		}
 
-		for (int i = 0; i < numRows; i++)
+		for (int i = 0; i < numRows; ++i)
 		{
 			for (int j = 0; j < numColumns; j++)
 			{
@@ -295,7 +295,7 @@ void StreamDeckModule::onControllableFeedbackUpdateInternal(ControllableContaine
 	{
 		if (c == reset) device->reset();
 
-		for (int i = 0; i < numRows; i++)
+		for (int i = 0; i < numRows; ++i)
 		{
 			for (int j = 0; j < numColumns; j++)
 			{

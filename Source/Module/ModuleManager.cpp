@@ -16,6 +16,7 @@
 #include "Module/modules/customvariables/CustomVariablesModule.h"
 #include "ChataigneEngine.h"
 #include "Module/modules/midi/MIDIModule.h"
+#include "Module/modules/dmx/DMXModule.h"
 
 juce_ImplementSingleton(ModuleManager)
 
@@ -27,6 +28,7 @@ ModuleManager::ModuleManager() :
 	showInspectorOnSelect = false;
 
 	ControllableFactory::getInstance()->controllableDefs.add(new ControllableDefinition(MIDIValueParameter::getTypeStringStatic(), &MIDIValueParameter::create));
+	ControllableFactory::getInstance()->controllableDefs.add(new ControllableDefinition(DMXValueParameter::getTypeStringStatic(), &DMXValueParameter::create));
 }
 
 ModuleManager::~ModuleManager()
@@ -48,7 +50,7 @@ Array<Module*> ModuleManager::addItemsFromData(var data, bool addToUndo)
 {
 	Array<Module *> itemsToAdd;
 	
-	for (int i = 0; i < data.size(); i++)
+	for (int i = 0; i < data.size(); ++i)
 	{
 		String moduleType = data[i].getProperty("type", "none");
 		if (moduleType.isEmpty()) return nullptr;
@@ -84,7 +86,7 @@ Controllable * ModuleManager::showAllValuesAndGetControllable(bool showTriggers,
 	const int maxValuesPerModule = 10000;
 	OwnedArray<ControllableChooserPopupMenu> moduleMenus;
 
-	for (int i = 0; i < numItems; i++)
+	for (int i = 0; i < numItems; ++i)
 	{
 		Module * m = mList[i];
 		ControllableChooserPopupMenu *vCC = new ControllableChooserPopupMenu(&m->valuesCC, showParameters, showTriggers, i* maxValuesPerModule);
@@ -138,7 +140,7 @@ bool ModuleManager::checkControllableIsAValue(Controllable * c)
 PopupMenu ModuleManager::getAllModulesCommandMenu(CommandContext context)
 {
 	PopupMenu menu;
-	for (int i = 0; i < items.size(); i++) menu.addSubMenu(items[i]->niceName, items[i]->getCommandMenu(i * 1000,context));
+	for (int i = 0; i < items.size(); ++i) menu.addSubMenu(items[i]->niceName, items[i]->getCommandMenu(i * 1000,context));
 	menu.addSeparator();
 	menu.addSubMenu(StateManager::getInstance()->module.niceName, StateManager::getInstance()->module.getCommandMenu(-1000, context));
 	menu.addSubMenu(ChataigneSequenceManager::getInstance()->module.niceName, ChataigneSequenceManager::getInstance()->module.getCommandMenu(-2000, context));

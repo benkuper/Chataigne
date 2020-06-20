@@ -155,7 +155,7 @@ void MouseModule::updateMouseInfos()
 	absolutePosition->setPoint(pos);
 
 	RectangleList<int> areas = Desktop::getInstance().getDisplays().getRectangleList(false);
-	for (int i = 0; i < areas.getNumRectangles(); i++)
+	for (int i = 0; i < areas.getNumRectangles(); ++i)
 	{
 		juce::Rectangle<int> r = areas.getRectangle(i);
 		if (r.contains(pos.toInt()))

@@ -147,7 +147,7 @@ var UDPModule::sendBytesToFromScript(const var::NativeFunctionArgs& a)
 	StreamingModule* m = getObjectFromJS<StreamingModule>(a);
 	if (checkNumArgs(m->niceName, a, 3)) return false;
 	Array<uint8> data;
-	for (int i = 2; i < a.numArguments; i++)
+	for (int i = 2; i < a.numArguments; ++i)
 	{
 		if (a.arguments[i].isArray())
 		{

@@ -40,7 +40,7 @@ void FFTAnalyzer::process(float* fftSamples, int numSamples)
 
 	int numGoodSamples = 0;
 	float totalCoef = 0;
-	for (int i = 0; i < numSamples; i++)
+	for (int i = 0; i < numSamples; ++i)
 	{
 		float pos = i * 1.0f / numSamples;
 		float dist = jmin<float>(fabsf(targetPos - pos) / maxDist, 1);

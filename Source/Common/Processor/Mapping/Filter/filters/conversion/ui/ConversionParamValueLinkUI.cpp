@@ -78,12 +78,12 @@ void ConversionParamValueLinkUI::buildHitPath()
 	const int margin = 5;
 
 	Array<Point<float>> points;
-	for (int i = 0; i < numPoints; i++)
+	for (int i = 0; i < numPoints; ++i)
 	{
 		points.add(linkPath.getPointAlongPath(linkPath.getLength() * i / (numPoints-1)));
 	}
 
-	for (int i = 0; i < numPoints; i++)
+	for (int i = 0; i < numPoints; ++i)
 	{
 		Point<float> tp;
 		Point<float> sp;
@@ -120,9 +120,9 @@ void ConversionParamValueLinkUI::buildHitPath()
 
 	hitPath.startNewSubPath(firstPoints[0]);
 
-	for (int i = 1; i < firstPoints.size(); i++) hitPath.lineTo(firstPoints[i]);
+	for (int i = 1; i < firstPoints.size(); ++i) hitPath.lineTo(firstPoints[i]);
 
-	for (int i = 0; i < secondPoints.size(); i++) hitPath.lineTo(secondPoints[i]);
+	for (int i = 0; i < secondPoints.size(); ++i) hitPath.lineTo(secondPoints[i]);
 
 	hitPath.closeSubPath();
 }

@@ -16,8 +16,7 @@ DMXArtNetDevice::DMXArtNetDevice() :
 	sender(true)
 {
 
-	localPort = inputCC->addIntParameter("Local Port", "Local port to receive ArtNet data. This needs to be enabled in order to receive data", 6454, 0, 65535, false);
-	localPort->canBeDisabledByUser = true;
+	localPort = inputCC->addIntParameter("Local Port", "Local port to receive ArtNet data. This needs to be enabled in order to receive data", 6454, 0, 65535);
 	inputSubnet = inputCC->addIntParameter("Subnet", "The subnet to receive from, from 0 to 15", 0, 0, 15);
 	inputUniverse = inputCC->addIntParameter("Universe", "The Universe to receive from, from 0 to 15", 0, 0, 15);
 
@@ -31,6 +30,8 @@ DMXArtNetDevice::DMXArtNetDevice() :
 	memset(artnetPacket + DMX_HEADER_LENGTH, 0, NUM_CHANNELS);
 	
 	sender.bindToPort(0);
+
+	setupReceiver();
 }
 
 DMXArtNetDevice::~DMXArtNetDevice()
@@ -46,7 +47,7 @@ void DMXArtNetDevice::setupReceiver()
 	setConnected(false);
 	if(receiver != nullptr) receiver->shutdown();
 
-	if (!localPort->enabled)
+	if (!inputCC->enabled->boolValue())
 	{
 		clearWarning();
 		return;
@@ -78,9 +79,8 @@ void DMXArtNetDevice::sendDMXValue(int channel, int value)
 
 void DMXArtNetDevice::sendDMXRange(int startChannel, Array<int> values)
 {
-	
 	int numValues = values.size();
-	for (int i = 0; i < numValues; i++)
+	for (int i = 0; i < numValues; ++i)
 	{
 		int channel = startChannel + i;
 		if (channel < 0) continue;
@@ -94,7 +94,7 @@ void DMXArtNetDevice::sendDMXRange(int startChannel, Array<int> values)
 
 }
 
-void DMXArtNetDevice::sendDMXValues()
+void DMXArtNetDevice::sendDMXValuesInternal()
 {
 	sequenceNumber = (sequenceNumber + 1) % 256;
 
@@ -113,18 +113,11 @@ void DMXArtNetDevice::endLoadFile()
 	setupReceiver();
 }
 
-void DMXArtNetDevice::onContainerParameterChanged(Parameter* p)
+void DMXArtNetDevice::onControllableFeedbackUpdate(ControllableContainer* cc, Controllable* c)
 {
-	DMXDevice::onContainerParameterChanged(p);
-	if (p == localPort) setupReceiver();
+	DMXDevice::onControllableFeedbackUpdate(cc, c);
+	if (c == inputCC->enabled || c == localPort) setupReceiver();
 }
-
-void DMXArtNetDevice::onControllableStateChanged(Controllable* c)
-{
-	DMXDevice::onControllableStateChanged(c);
-	if (c == localPort) setupReceiver();
-}
-
 
 void DMXArtNetDevice::run()
 {
@@ -136,7 +129,7 @@ void DMXArtNetDevice::run()
 		
 		if (bytesRead > 0)
 		{
-			for (uint8 i = 0; i < 8; i++)
+			for (uint8 i = 0; i < 8; ++i)
 			{
 				if (receiveBuffer[i] != artnetPacket[i])
 				{

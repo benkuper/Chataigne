@@ -11,6 +11,7 @@
 #include "DMXModule.h"
 #include "commands/DMXCommand.h"
 #include "Module/Routing/ModuleRouter.h"
+#include "ui/DMXModuleUI.h"
 
 DMXModule::DMXModule() :
 	Module("DMX"),
@@ -33,9 +34,6 @@ DMXModule::DMXModule() :
 	dmxType->addOption("Open DMX", DMXDevice::OPENDMX)->addOption("Enttec DMX Pro", DMXDevice::ENTTEC_DMXPRO)->addOption("Enttec DMX MkII", DMXDevice::ENTTEC_MK2)->addOption("Art-Net", DMXDevice::ARTNET);
 	dmxType->setValueWithKey("Open DMX");
 
-	//autoAdd = moduleParams.addBoolParameter("Auto Add", "If checked, this will automatically add values for changed channels", true);
-	//autoAdd->hideInEditor = !hasInput;
-
 	dmxConnected = moduleParams.addBoolParameter("Connected", "DMX is connected ?", false);
 	dmxConnected->isControllableFeedbackOnly = true;
 	dmxConnected->isSavable = false;
@@ -48,12 +46,11 @@ DMXModule::DMXModule() :
 
 	//Script
 	scriptObject.setMethod(sendDMXId, DMXModule::sendDMXFromScript);
-	//scriptManager->scriptTemplate += ChataigneAssetManager::getInstance()->getScriptTemplate("osc");
 
-	for (int i = 0; i < 512; i++)
+	for (int i = 0; i < 512; ++i)
 	{
 		int channel = i + 1;
-		IntParameter * dVal = new IntParameter("Channel " + String(channel), "DMX Value for channel " + String(channel), 0, 0, 255);
+		DMXValueParameter* dVal = new DMXValueParameter("Channel " + String(channel), "DMX Value for channel " + String(channel), channel, 0, DMXByteOrder::BIT8);
 
 		valuesCC.addParameter(dVal);
 		channelValues.add(dVal);
@@ -85,10 +82,9 @@ void DMXModule::setCurrentDMXDevice(DMXDevice * d)
 		dmxDevice->enabled = enabled->boolValue();
 		dmxDevice->addDMXDeviceListener(this);
 		moduleParams.addChildControllableContainer(dmxDevice.get());
+		setupIOConfiguration(dmxDevice->canReceive && dmxDevice->inputCC->enabled->boolValue(), dmxDevice->outputCC->enabled->boolValue());
 	}
 
-	setupIOConfiguration(dmxDevice != nullptr && dmxDevice->canReceive, true);
-	//autoAdd->hideInEditor = !hasInput;
 
 	dmxModuleListeners.call(&DMXModuleListener::dmxDeviceChanged);
 }
@@ -139,7 +135,7 @@ void DMXModule::send16BitDMXValues(int startChannel, Array<int> values, DMXByteO
 	Array<int> dmxValues;
 	int numValues = values.size();
 	dmxValues.resize(numValues * 2);
-	for (int i = 0; i < numValues; i++)
+	for (int i = 0; i < numValues; ++i)
 	{
 		int value = values[i];
 		dmxValues.set(i * 2, byteOrder == MSB ? (value >> 8) & 0xFF : value & 0xFF);
@@ -158,7 +154,7 @@ var DMXModule::sendDMXFromScript(const var::NativeFunctionArgs& args)
 
 	int startChannel = args.arguments[0];
 	Array<int> values;
-	for (int i = 1; i < args.numArguments; i++)
+	for (int i = 1; i < args.numArguments; ++i)
 	{
 		if (args.arguments[i].isArray())
 		{
@@ -185,6 +181,20 @@ var DMXModule::getJSONData()
 {
 	var data = Module::getJSONData();
 	if (dmxDevice != nullptr) data.getDynamicObject()->setProperty("device", dmxDevice->getJSONData());
+	
+	var channelTypes;
+	for (auto& v : channelValues)
+	{
+		if (v->type != DMXByteOrder::BIT8)
+		{
+			var vData(new DynamicObject());
+			vData.getDynamicObject()->setProperty("channel", v->channel);
+			vData.getDynamicObject()->setProperty("type",(int)v->type);
+			channelTypes.append(vData);
+		}
+	}
+	if(channelTypes.size() > 0) data.getDynamicObject()->setProperty("dmxChannelTypes", channelTypes);
+
 	return data;
 }
 
@@ -192,6 +202,13 @@ void DMXModule::loadJSONDataInternal(var data)
 {
 	Module::loadJSONDataInternal(data);
 	if (dmxDevice != nullptr && data.getDynamicObject()->hasProperty("device")) dmxDevice->loadJSONData(data.getProperty("device", ""));
+
+	var channelTypes = data.getProperty("dmxChannelTypes", var());
+	for (int i = 0; i < channelTypes.size(); ++i)
+	{
+		channelValues[(int)channelTypes[i].getProperty("channel", 1) - 1]->setType((DMXByteOrder)(int)channelTypes[i].getProperty("type", 0));
+	}
+
 }
 
 
@@ -208,6 +225,13 @@ void DMXModule::controllableFeedbackUpdate(ControllableContainer * cc, Controlla
 {
 	Module::controllableFeedbackUpdate(cc, c);
 	if (c == dmxType) setCurrentDMXDevice(DMXDevice::create((DMXDevice::Type)(int)dmxType->getValueData()));
+	else if (dmxDevice != nullptr)
+	{
+		if (c == dmxDevice->outputCC->enabled || (dmxDevice->canReceive && (c == dmxDevice->inputCC->enabled)))
+		{
+			setupIOConfiguration(dmxDevice->canReceive && dmxDevice->inputCC->enabled->boolValue(), dmxDevice->outputCC->enabled->boolValue());
+		}
+	}
 }
 
 void DMXModule::dmxDeviceConnected()
@@ -228,35 +252,22 @@ void DMXModule::dmxDataInChanged(int numChannels, uint8* values)
 
 	var data;
 
-	for (int i = 0; i < numChannels; i++)
+	for (int i = 0; i < numChannels; ++i)
 	{
-		channelValues[i]->setValue(values[i]);
-		data.append(values[i]);
+		DMXValueParameter* vp = channelValues[i];
+		if(vp->type == DMXByteOrder::BIT8) vp->setValue(values[i]);
+		else if (i < numChannels - 1)
+		{
+			vp->setValueFrom2Channels(values[i], values[i+1]);
+			i++;
+		}
+
+		data.append(vp->getValue());
 	}
 
 	scriptManager->callFunctionOnAllItems(dmxEventId, Array<var>{data});
 }
 
-void DMXModule::showMenuAndCreateValue(ControllableContainer * container)
-{
-/*	DMXModule * module = dynamic_cast<DMXModule *>(container->parentContainer.get());
-	if (module == nullptr) return;
-
-	AlertWindow window("Add a value", "Configure the parameters for value", AlertWindow::AlertIconType::NoIcon);
-	window.addTextEditor("channel", "1", "Channel (1-512)");
-
-	window.addButton("OK", 1, KeyPress(KeyPress::returnKey));
-	window.addButton("Cancel", 0, KeyPress(KeyPress::escapeKey));
-
-	int result = window.runModalLoop();
-
-	if (result)
-	{
-		int channel = jlimit<int>(1, 512, window.getTextEditorContents("channel").getIntValue());
-		module->processDMXData(channel, 0, true);
-	}
-*/
-}
 
 DMXModule::DMXRouteParams::DMXRouteParams(Module * sourceModule, Controllable * c) :
 	mode16bit(nullptr),
@@ -360,4 +371,9 @@ void DMXModule::DMXModuleRouterController::triggerTriggered(Trigger* t)
 			}
 		}
 	}
+}
+
+ControllableUI * DMXValueParameter::createDefaultUI()
+{
+	return new DMXValueParameterUI(this);
 }

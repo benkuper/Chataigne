@@ -48,7 +48,7 @@ void SendStreamStringValuesCommand::triggerInternal()
 		if (p->value.isArray())
 		{
 			
-			for (int i = 0; i < p->value.size(); i++)
+			for (int i = 0; i < p->value.size(); ++i)
 			{
 				if (i > 0) ss += separator->stringValue();
 				ss += String((float)p->value[i], 0);

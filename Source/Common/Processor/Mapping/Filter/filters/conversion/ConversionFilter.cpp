@@ -75,7 +75,7 @@ void ConversionFilter::itemsReordered()
 
 void ConversionFilter::reorderFilterParameters()
 {
-	for (int i = 0; i < cpm.items.size(); i++) filteredParameters.set(i, cpm.items[i]->outParamReference, false);
+	for (int i = 0; i < cpm.items.size(); ++i) filteredParameters.set(i, cpm.items[i]->outParamReference, false);
 	mappingFilterListeners.call(&FilterListener::filteredParamsChanged, this);
 	filterAsyncNotifier.addMessage(new FilterEvent(FilterEvent::FILTER_REBUILT, this));
 }
@@ -121,7 +121,7 @@ void ConversionFilter::relinkGhostData()
 	if (sourceParams.size() == 0 || !ghostLinksData.isArray()) return;
 
 	links.clear();
-	for (int i = 0; i < ghostLinksData.size(); i++)
+	for (int i = 0; i < ghostLinksData.size(); ++i)
 	{
 		var linkData = ghostLinksData[i];
 		if (ConvertedParameter* cp = cpm.getItemWithName(linkData.getProperty("out", "")))

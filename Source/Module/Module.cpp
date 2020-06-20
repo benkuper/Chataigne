@@ -202,7 +202,7 @@ void Module::setupModuleFromJSONData(var data)
 	var hideParamsList = data.getProperty("hideDefaultParameters",var());
 	if (hideParamsList.isArray())
 	{
-		for (int i = 0; i < hideParamsList.size(); i++)
+		for (int i = 0; i < hideParamsList.size(); ++i)
 		{
 			String pName = hideParamsList[i].toString();
 			if (!pName.startsWithChar('/')) pName = "/" + pName;

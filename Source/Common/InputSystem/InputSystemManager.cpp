@@ -100,7 +100,7 @@ Joystick * InputSystemManager::getJoystickForID(SDL_JoystickGUID id)
 	{
 		SDL_JoystickGUID guid = SDL_JoystickGetGUID(j->joystick);
 		bool isTheSame = true; 
-		for (int i = 0; i < 16; i++) if (guid.data[i] != id.data[i]) isTheSame = false;;
+		for (int i = 0; i < 16; ++i) if (guid.data[i] != id.data[i]) isTheSame = false;;
 		if(isTheSame) return j;
 	}
 	joysticks.getLock().exit();
@@ -114,7 +114,7 @@ Gamepad * InputSystemManager::getGamepadForID(SDL_JoystickGUID id)
 	{
 		SDL_JoystickGUID guid = SDL_JoystickGetGUID(SDL_GameControllerGetJoystick(g->gamepad));
 		bool isTheSame = true;
-		for (int i = 0; i < 16; i++) if (guid.data[i] != id.data[i]) isTheSame = false;
+		for (int i = 0; i < 16; ++i) if (guid.data[i] != id.data[i]) isTheSame = false;
 		if(isTheSame) return g;
 	}
 
@@ -150,7 +150,7 @@ void InputSystemManager::run()
 			joysticks.getLock().enter();
 			gamepads.getLock().enter();
 
-			for (int i = 0; i < numDevices; i++)
+			for (int i = 0; i < numDevices; ++i)
 			{
 				if (SDL_IsGameController(i))
 				{
@@ -218,7 +218,7 @@ Joystick::Joystick(SDL_Joystick * joystick) :
 	buttonsCC("Buttons")
 {
 	int numAxes = SDL_JoystickNumAxes(joystick);
-	for (int i = 0; i <  numAxes; i++)
+	for (int i = 0; i <  numAxes; ++i)
 	{
 		FloatParameter * f = axesCC.addFloatParameter("Axis " + String(i + 1), "", 0, -1, 1);
 		axisOffset[i] = 0;
@@ -227,7 +227,7 @@ Joystick::Joystick(SDL_Joystick * joystick) :
 	}
 
 	int numButtons = SDL_JoystickNumButtons(joystick);
-	for (int i = 0; i < numButtons; i++)
+	for (int i = 0; i < numButtons; ++i)
 	{
 		BoolParameter * b = buttonsCC.addBoolParameter("Button " + String(i + 1), "", false);
 		b->isControllableFeedbackOnly = true;
@@ -245,7 +245,7 @@ void Joystick::update()
 	if (axesCC.controllables.size() == numAxes)
 	{
 		GenericScopedLock lock(axesCC.controllables.getLock());
-		for (int i = 0; i < numAxes; i++)
+		for (int i = 0; i < numAxes; ++i)
 		{
 			float axisValue = jmap<float>((float)SDL_JoystickGetAxis(joystick, i), INT16_MIN, INT16_MAX, -1, 1) + axisOffset[i];
 			if (fabs(axisValue) < axisDeadZone[i]) axisValue = 0;
@@ -262,7 +262,7 @@ void Joystick::update()
 	if (buttonsCC.controllables.size() == numButtons)
 	{
 		GenericScopedLock lock(buttonsCC.controllables.getLock());
-		for (int i = 0; i < numButtons; i++)
+		for (int i = 0; i < numButtons; ++i)
 		{
 			((BoolParameter*)buttonsCC.controllables[i])->setValue(SDL_JoystickGetButton(joystick, i) > 0);
 		}
@@ -276,7 +276,7 @@ Gamepad::Gamepad(SDL_GameController * gamepad) :
 	axesCC("Axes"),
 	buttonsCC("Buttons")
 {
-	for (int i = 0; i < SDL_CONTROLLER_AXIS_MAX; i++)
+	for (int i = 0; i < SDL_CONTROLLER_AXIS_MAX; ++i)
 	{
 		SDL_GameControllerAxis a = (SDL_GameControllerAxis)i;
 
@@ -286,7 +286,7 @@ Gamepad::Gamepad(SDL_GameController * gamepad) :
 		axisDeadZone[i] = 0;
 	}
 
-	for (int i = 0; i < SDL_CONTROLLER_BUTTON_MAX; i++)
+	for (int i = 0; i < SDL_CONTROLLER_BUTTON_MAX; ++i)
 	{
 		SDL_GameControllerButton b = (SDL_GameControllerButton)i;
 		BoolParameter * bp = buttonsCC.addBoolParameter(SDL_GameControllerGetStringForButton(b), "", false);
@@ -304,7 +304,7 @@ void Gamepad::update()
 	if (axesCC.controllables.size() == SDL_CONTROLLER_AXIS_MAX)
 	{
 		ScopedLock(axesCC.controllables.getLock());
-		for (int i = 0; i < SDL_CONTROLLER_AXIS_MAX; i++)
+		for (int i = 0; i < SDL_CONTROLLER_AXIS_MAX; ++i)
 		{
 			float axisValue = jmap<float>((float)SDL_GameControllerGetAxis(gamepad, (SDL_GameControllerAxis)i), INT16_MIN, INT16_MAX, -1, 1) + axisOffset[i];
 			if (fabs(axisValue) < axisDeadZone[i]) axisValue = 0;
@@ -320,7 +320,7 @@ void Gamepad::update()
 	if (buttonsCC.controllables.size() == SDL_CONTROLLER_BUTTON_MAX)
 	{
 		ScopedLock(buttonsCC.controllables.getLock());
-		for (int i = 0; i < SDL_CONTROLLER_BUTTON_MAX; i++)
+		for (int i = 0; i < SDL_CONTROLLER_BUTTON_MAX; ++i)
 		{
 			((BoolParameter*)buttonsCC.controllables[i])->setValue(SDL_GameControllerGetButton(gamepad, (SDL_GameControllerButton)i) > 0);
 		}
@@ -358,13 +358,13 @@ void JoystickParameter::setJoystick(Joystick * j)
 		var val;
 		ghostID = SDL_JoystickGetGUID(joystick->joystick);
 		ghostName = SDL_JoystickName(joystick->joystick);
-		for (int i = 0; i < 16; i++) val.append((int)ghostID.data[i]);
+		for (int i = 0; i < 16; ++i) val.append((int)ghostID.data[i]);
 		setValue(val, false, true); //Can be the same name, force here
 
 	} else
 	{
 		var val;
-		for (int i = 0; i < 16; i++) val.append(0);
+		for (int i = 0; i < 16; ++i) val.append(0);
 		setValue(val, false, true);
 	}
 }
@@ -380,7 +380,7 @@ void JoystickParameter::loadJSONDataInternal(var data)
 {
 	if (data.isArray())
 	{
-		for (int i = 0; i < 16; i++) ghostID.data[i] = (uint8_t)(int)data[i];
+		for (int i = 0; i < 16; ++i) ghostID.data[i] = (uint8_t)(int)data[i];
 		setJoystick(InputSystemManager::getInstance()->getJoystickForID(ghostID));
 	}
 
@@ -430,13 +430,13 @@ void GamepadParameter::setGamepad(Gamepad * j)
 		var val;
 		ghostID = SDL_JoystickGetGUID(SDL_GameControllerGetJoystick(gamepad->gamepad));
 		ghostName = SDL_GameControllerName(gamepad->gamepad);
-		for (int i = 0; i < 16; i++) val.append((int)ghostID.data[i]);
+		for (int i = 0; i < 16; ++i) val.append((int)ghostID.data[i]);
 		setValue(val, false, true);
 
 	} else
 	{
 		var val;
-		for (int i = 0; i < 16; i++) val.append(0);
+		for (int i = 0; i < 16; ++i) val.append(0);
 		setValue(val,false,true);
 	}
 }
@@ -452,7 +452,7 @@ void GamepadParameter::loadJSONDataInternal(var data)
 {
 	if (data.isArray())
 	{
-		for (int i = 0; i < 16; i++) ghostID.data[i] = (uint8_t)(int)data[i];
+		for (int i = 0; i < 16; ++i) ghostID.data[i] = (uint8_t)(int)data[i];
 		setGamepad(InputSystemManager::getInstance()->getGamepadForID(ghostID));
 	}
 

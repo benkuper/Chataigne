@@ -93,7 +93,7 @@ void GenericOSCQueryModule::sendOSCForControllable(Controllable* c)
 			Parameter* p = (Parameter*)c;
 			if (p->value.isArray() && p->type != Controllable::COLOR)
 			{
-				for (int i = 0; i < p->value.size(); i++)
+				for (int i = 0; i < p->value.size(); ++i)
 				{
 					m.addArgument(OSCHelpers::varToArgument(p->value[i]));
 				}
@@ -122,7 +122,7 @@ var GenericOSCQueryModule::sendOSCFromScript(const var::NativeFunctionArgs& a)
 	{
 		OSCMessage msg(a.arguments[0].toString());
 
-		for (int i = 1; i < a.numArguments; i++)
+		for (int i = 1; i < a.numArguments; ++i)
 		{
 			if (a.arguments[i].isArray())
 			{
@@ -235,7 +235,7 @@ Controllable* GenericOSCQueryModule::createControllableFromData(StringRef name, 
 	}
 	var minVal;
 	var maxVal;
-	for (int i = 0; i < range.size(); i++)
+	for (int i = 0; i < range.size(); ++i)
 	{
 		minVal.append(range[i].getProperty("MIN", INT32_MIN));
 		maxVal.append(range[i].getProperty("MAX", INT32_MAX));
@@ -255,14 +255,14 @@ Controllable* GenericOSCQueryModule::createControllableFromData(StringRef name, 
 	}
 	else if (type == "ii" || type == "ff"  || type == "hh"  || type == "dd")
 	{
-        if(value.isVoid()) for(int i=0;i<2;i++) value.append(0);
+        if(value.isVoid()) for(int i=0;i<2; ++i) value.append(0);
 		c = new Point2DParameter(cNiceName, cNiceName);
 		((Point2DParameter*)c)->setValue(value);
 		((Point2DParameter*)c)->setRange(minVal, maxVal);
 	}
-	else if (type == "iii" || type == "fff" || type == "hhh"  || type == "ddd")
+	else if (type == "iii" || type == "fff" || type == "hhh" || type == "ddd")
 	{
-		if(value.isVoid()) for(int i=0;i<3;i++) value.append(0);
+		if (value.isVoid()) for (int i = 0; i < 3; ++i) value.append(0);
         c = new Point3DParameter(cNiceName, cNiceName);
 		((Point3DParameter*)c)->setValue(value);
 		((Point3DParameter*)c)->setRange(minVal, maxVal);
@@ -293,7 +293,7 @@ Controllable* GenericOSCQueryModule::createControllableFromData(StringRef name, 
 			if (options.isArray())
 			{
 				EnumParameter* ep = new EnumParameter(cNiceName, cNiceName);
-				for (int i = 0; i < options.size(); i++) ep->addOption(options[i], options[i], false);
+				for (int i = 0; i < options.size(); ++i) ep->addOption(options[i], options[i], false);
 				ep->setValueWithKey(value[0]);
 
 				c = ep;

@@ -21,7 +21,9 @@
 #endif
 
 #if USE_KINECT
+#define NOBITMAP
 #include "Kinect.h"
+#undef NOBITMAP
 #endif
 
 #define KINECT_MAX_PERSONS 6 //defined in SDK

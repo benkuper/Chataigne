@@ -17,7 +17,7 @@ JoystickModule::JoystickModule(const String & name) :
 	setupIOConfiguration(true, false);
 	joystickParam = new JoystickParameter("Device", "The Joystick to connect to");
 	moduleParams.addParameter(joystickParam);
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < 4; ++i)
 	{
 		axisOffset.add(calibCC.addFloatParameter("Axis "+String(i+1)+" Offset", "Offset if axis is not centered", 0, -1, 1));
 		axisDeadzone.add(calibCC.addFloatParameter("Axis " + String(i + 1) + " Dead zone", "Percentage of dead zone in the center to avoid noisy input", 0, 0, 1));
@@ -80,7 +80,7 @@ void JoystickModule::onControllableFeedbackUpdateInternal(ControllableContainer 
 	{
 		if (joystickParam->joystick != nullptr)
 		{
-			for (int i = 0; i < 4; i++)
+			for (int i = 0; i < 4; ++i)
 			{
 				joystickParam->joystick->axisOffset[i] = axisOffset[i]->floatValue();
 				joystickParam->joystick->axisDeadZone[i] = axisDeadzone[i]->floatValue();

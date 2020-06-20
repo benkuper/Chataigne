@@ -26,7 +26,7 @@ StreamDeck::StreamDeck(hid_device* device, String serialNumber, Model model, int
 {
 
 	if(device != nullptr) hid_set_nonblocking(device, 1);
-	for (int i = 0; i < numKeys; i++) buttonStates.add(false);
+	for (int i = 0; i < numKeys; ++i) buttonStates.add(false);
 
 	startThread();
 }
@@ -150,7 +150,7 @@ void StreamDeck::run()
 			{
 				if (data[0] == 1)
 				{
-					for (int i = 0; i < numKeys; i++)
+					for (int i = 0; i < numKeys; ++i)
 					{
 						bool state = data[i + keyDataOffset] > 0;
 

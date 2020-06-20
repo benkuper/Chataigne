@@ -125,7 +125,7 @@ void ChataigneAudioLayer::exportRMS(bool toNewMappingLayer, bool toClipboard, bo
 	AudioSampleBuffer buffer;
 	AudioLayerClip* curClip = nullptr;
 
-	for (int i = 0; i < numFrames; i++)
+	for (int i = 0; i < numFrames; ++i)
 	{
 		float t = i * frameLength;
 		float value = 0;
@@ -154,7 +154,7 @@ void ChataigneAudioLayer::exportRMS(bool toNewMappingLayer, bool toClipboard, bo
 	}
 ;
 	String s = "";
-	for (int i = 0; i < values.size(); i++)
+	for (int i = 0; i < values.size(); ++i)
 	{
 		if (i > 0) s += "\n";
 		if (!dataOnly) s += String(i) + "\t" + String(values[i].x, 3) + "\t";

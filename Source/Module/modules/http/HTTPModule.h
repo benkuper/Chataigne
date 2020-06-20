@@ -34,7 +34,7 @@ public:
 	const Identifier rawDataTypeId = "raw";
 	const Identifier dataEventId = "dataEvent";
 
-	enum RequestMethod { GET, POST, PUT, PATCH, DELETE, TYPE_MAX};
+	enum RequestMethod { GET, METHOD_POST, METHOD_PUT, METHOD_PATCH, METHOD_DELETE, TYPE_MAX};
 	static const String requestMethodNames[TYPE_MAX];
 	enum ResultDataType { RAW, JSON };
 

@@ -19,7 +19,7 @@ GamepadModule::GamepadModule(const String & name) :
 	gamepadParam = new GamepadParameter("Device", "The Gamepad to connect to");
 	moduleParams.addParameter(gamepadParam);
 
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < 4; ++i)
 	{
 		axisOffset.add(calibCC.addFloatParameter("Axis " + String(i + 1) + " Offset", "Offset if axis is not centered", 0, -1, 1));
 		axisDeadzone.add(calibCC.addFloatParameter("Axis " + String(i + 1) + " Dead zone", "Percentage of dead zone in the center to avoid noisy input", 0, 0, 1));
@@ -80,7 +80,7 @@ void GamepadModule::onControllableFeedbackUpdateInternal(ControllableContainer *
 	{
 		if (gamepadParam->gamepad != nullptr)
 		{
-			for (int i = 0; i < 4; i++)
+			for (int i = 0; i < 4; ++i)
 			{
 				gamepadParam->gamepad->axisOffset[i] = axisOffset[i]->floatValue();
 				gamepadParam->gamepad->axisDeadZone[i] = axisDeadzone[i]->floatValue();

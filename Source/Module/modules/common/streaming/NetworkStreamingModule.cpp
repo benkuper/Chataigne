@@ -153,7 +153,7 @@ void NetworkStreamingModule::run()
 						stringBuffer.append(String::fromUTF8((char *)bytes.getRawDataPointer(), numBytes), numBytes);
 						StringArray sa;
 						sa.addTokens(stringBuffer, "\r\n", "\"");
-						for (int i = 0; i < sa.size() - 1; i++) processDataLine(sa[i]);
+						for (int i = 0; i < sa.size() - 1; ++i) processDataLine(sa[i]);
 						stringBuffer = sa[sa.size() - 1];
 					}
 				}
@@ -167,7 +167,7 @@ void NetworkStreamingModule::run()
 
 				case DATA255:
 				{
-					for (int i = 0; i < numBytes; i++)
+					for (int i = 0; i < numBytes; ++i)
 					{
 						uint8 b = bytes[i];
 						if (b == 255)
@@ -185,7 +185,7 @@ void NetworkStreamingModule::run()
 
 				case COBS:
 				{
-					for (int i = 0; i < numBytes; i++)
+					for (int i = 0; i < numBytes; ++i)
 					{
 						uint8_t b = bytes[i];
 						byteBuffer.add(bytes[i]);

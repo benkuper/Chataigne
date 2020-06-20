@@ -80,7 +80,7 @@ void WiimoteManager::reconnect(bool autoPairIfNotFound)
 	}
 #endif
 
-	for (int i = 0; i < numConnected; i++)
+	for (int i = 0; i < numConnected; ++i)
 	{
 		addWiimote(devices[i]);
 	}
@@ -179,7 +179,7 @@ void Wiimote::update()
 	switch (device->event)
 	{
 	case WIIUSE_EVENT_TYPE::WIIUSE_EVENT:
-		for (int i = 0; i < NUM_WIIMOTE_BUTTONS; i++) setButton(i, device->btns >> i & 1);
+		for (int i = 0; i < NUM_WIIMOTE_BUTTONS; ++i) setButton(i, device->btns >> i & 1);
 
 		setAccel(device->gforce.x,device->gforce.y,device->gforce.z,device->accel.x, device->accel.y, device->accel.z);
 		setYPR(device->orient.yaw/180, -device->orient.pitch/90, device->orient.roll/180);

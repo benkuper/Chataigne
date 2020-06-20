@@ -52,12 +52,11 @@ public:
 	void sendDMXValue(int channel, int value) override;
 	void sendDMXRange(int startChannel, Array<int> values) override;
 
-	void sendDMXValues() override;
+	void sendDMXValuesInternal() override;
 
 	void endLoadFile() override;
 
-	void onContainerParameterChanged(Parameter * p) override;
-	void onControllableStateChanged(Controllable* c) override;
+	void onControllableFeedbackUpdate(ControllableContainer * cc, Controllable * c) override;
 	
 	void run() override;
 };

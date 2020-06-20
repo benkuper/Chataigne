@@ -13,6 +13,66 @@
 #include "Module/Module.h"
 #include "Common/DMX/device/DMXDevice.h"
 
+enum DMXByteOrder { BIT8, MSB, LSB };
+
+class DMXValueParameter :
+	public IntParameter
+{
+public:
+	DMXValueParameter(const String &name, const String &description, int channel, int value, const DMXByteOrder t) :
+		IntParameter(name, description, value, 0, t == BIT8 ? 255 : 65535),
+		type(t),
+		channel(channel)
+	{
+	
+	}
+
+	~DMXValueParameter() {}
+
+	var getJSONDataInternal() override
+	{
+		var data = IntParameter::getJSONDataInternal();
+		data.getDynamicObject()->setProperty("channel", channel);
+		data.getDynamicObject()->setProperty("DMXType", type);
+		return data;
+	}
+
+	void loadJSONDataInternal(var data) override
+	{
+		Parameter::loadJSONDataInternal(data);
+		channel = data.getProperty("channel", false);
+		setType(static_cast<DMXByteOrder>((int)data.getProperty("DMXType", BIT8)));
+	}
+
+	void setType(DMXByteOrder t)
+	{
+		type = t;
+
+		if (type != BIT8) isOverriden = true;
+		setRange(0, t == BIT8 ? 255 : 65535);
+		
+		notifyStateChanged();
+	}
+
+	void setValueFrom2Channels(int channel1, int channel2)
+	{
+		setValue(type == MSB ? ((channel1 << 8) + channel2) : ((channel2 << 8) + channel1));
+		DBG("Set values from channels " << channel1 << ", " << channel2 << " : " << (int)value);
+
+	}
+	
+
+	DMXByteOrder type;
+	int channel;
+
+	ControllableUI * createDefaultUI() override;
+
+	static DMXValueParameter* create() { return new DMXValueParameter("DMX Value Parameter", "", 0 , 1, BIT8); }
+	virtual String getTypeString() const override { return getTypeStringStatic(); }
+	static String getTypeStringStatic() { return "MIDI Value"; }
+};
+
+
 class DMXModule :
 	public Module,
 	public DMXDevice::DMXDeviceListener
@@ -21,13 +81,12 @@ public:
 	DMXModule();
 	~DMXModule();
 
-	enum DMXByteOrder { BIT8, MSB, LSB };
 
 	EnumParameter * dmxType;
 	std::unique_ptr<DMXDevice> dmxDevice;
 	BoolParameter * dmxConnected;
 
-	Array<IntParameter *> channelValues;
+	Array<DMXValueParameter *> channelValues;
 
 	//Script
 	const Identifier dmxEventId = "dmxEvent";
@@ -56,8 +115,6 @@ public:
 	void dmxDeviceDisconnected() override;
 
 	void dmxDataInChanged(int numChannels, uint8 * values) override;
-
-	static void showMenuAndCreateValue(ControllableContainer * container);
 
 	class DMXRouteParams :
 		public RouteParams

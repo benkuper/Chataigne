@@ -1365,7 +1365,7 @@ void jcv_diagram_generate_useralloc( int num_points, const jcv_point* points, co
 	qsort(internal->sites, (size_t)num_points, sizeof(jcv_site), jcv_point_cmp);
 
 	int offset = 0;
-	for (int i = 0; i < num_points; i++)
+	for (int i = 0; i < num_points; ++i)
 	{
 		const jcv_site* s = &internal->sites[i];
 		// Remove duplicates, to avoid anomalies

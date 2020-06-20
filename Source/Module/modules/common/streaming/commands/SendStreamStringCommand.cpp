@@ -80,7 +80,7 @@ void SendStreamStringCommand::setValue(var value)
 		mappedValues.resize(value.isArray() ? value.size() : 1);
 		if (value.isArray())
 		{
-			for (int i = 0; i < value.size(); i++) mappedValues.set(i, (int)value[i]);
+			for (int i = 0; i < value.size(); ++i) mappedValues.set(i, (int)value[i]);
 		}
 		else
 		{

@@ -43,7 +43,7 @@ void CommunityModuleManager::run()
 	
 	if (!defs.isArray()) return;
 
-	for (int i = 0; i < defs.size(); i++)
+	for (int i = 0; i < defs.size(); ++i)
 	{
 		String defURL = defs[i].toString();
 		if (defURL.isEmpty()) continue;

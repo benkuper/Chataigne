@@ -60,7 +60,7 @@ var MappingOutputManager::getMergedOutValue()
 		if (!val.isArray()) value.append(val);
 		else
 		{
-			for (int i = 0; i < val.size(); i++)
+			for (int i = 0; i < val.size(); ++i)
 			{
 				value.append(val[i]);
 			}

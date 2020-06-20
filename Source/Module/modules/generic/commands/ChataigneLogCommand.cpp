@@ -41,7 +41,7 @@ void ChataigneLogCommand::setValueInternal(var _value)
 	if (_value.isArray() && _value.size() > 0)
 	{
 		String s = _value[0].toString();
-		for (int i = 1; i < _value.size(); i++) s += ", " + _value[i].toString();
+		for (int i = 1; i < _value.size(); ++i) s += ", " + _value[i].toString();
 		((StringParameter*)value)->setValue(s);
 	}
 	else

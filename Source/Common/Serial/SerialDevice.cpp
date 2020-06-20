@@ -238,7 +238,7 @@ void SerialReadThread::run()
 			{
 				std::vector<uint8_t> data;
 				port->port->read(data,numBytes);
-				//for (int i = 0; i < data.size(); i++) DBG("Data " << data[i]);
+				//for (int i = 0; i < data.size(); ++i) DBG("Data " << data[i]);
 				serialThreadListeners.call(&SerialThreadListener::dataReceived, var(data.data(),numBytes));
 			}
 			break;

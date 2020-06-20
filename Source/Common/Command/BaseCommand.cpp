@@ -270,7 +270,7 @@ void BaseCommand::setValue(var value)
 
 					var newVal;
 					newVal.append(value);
-					for (int i = 1; i < p->value.size(); i++) newVal.append(p->value[i]);
+					for (int i = 1; i < p->value.size(); ++i) newVal.append(p->value[i]);
 					p->setValue(newVal);
 				}
 			}
@@ -364,7 +364,7 @@ void BaseCommand::loadJSONDataInternal(var data)
 				int index = m.name.toString().getIntValue();
 				if (index < 0) continue;
 				if (!m.value.isArray()) continue;
-				for (int i = 0; i < m.value.size(); i++)
+				for (int i = 0; i < m.value.size(); ++i)
 				{
 					Parameter * p = dynamic_cast<Parameter *>(getControllableForAddress(m.value[i].toString()));
 					if (p == nullptr) continue;
