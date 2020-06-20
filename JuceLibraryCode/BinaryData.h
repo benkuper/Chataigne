@@ -182,11 +182,14 @@ namespace BinaryData
     extern const char*   stripe_png;
     const int            stripe_pngSize = 2043;
 
+    extern const char*   toggle_png;
+    const int            toggle_pngSize = 664;
+
     extern const char*   tray_icon_png;
     const int            tray_icon_pngSize = 3363;
 
     // Number of elements in the namedResourceList and originalFileNames arrays.
-    const int namedResourceListSize = 59;
+    const int namedResourceListSize = 60;
 
     // Points to the start of a list of resource names.
     extern const char* namedResourceList[];

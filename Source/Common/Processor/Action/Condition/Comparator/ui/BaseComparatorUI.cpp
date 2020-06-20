@@ -15,9 +15,11 @@ BaseComparatorUI::BaseComparatorUI(BaseComparator * _comparator) :
 {
 	compareFuncUI.reset(comparator->compareFunction->createUI());
 	alwaysTriggerUI.reset(comparator->alwaysTrigger->createToggle());
+	toggleModeUI.reset(comparator->toggleMode->createImageToggle(AssetManager::getInstance()->getToggleBTImage(ImageCache::getFromMemory(BinaryData::toggle_png, BinaryData::toggle_pngSize))));
 	
 	addAndMakeVisible(compareFuncUI.get());
 	addAndMakeVisible(alwaysTriggerUI.get());
+	addAndMakeVisible(toggleModeUI.get());
 
 	if (!comparator.wasObjectDeleted() && comparator->reference != nullptr) //null if comparator is trigger
 	{
@@ -50,6 +52,9 @@ void BaseComparatorUI::resized()
 	{
 		Rectangle<int> r = getLocalBounds().reduced(2, 0);
 		
+		toggleModeUI->setBounds(r.removeFromLeft(16).withHeight(16));
+		r.removeFromLeft(2);
+
 		compareFuncUI->setBounds(r.removeFromLeft(80).withHeight(16)); 
 		r.removeFromLeft(2);
 
@@ -62,7 +67,6 @@ void BaseComparatorUI::resized()
 	{
 		setSize(getWidth(), compareFuncUI->getBottom()); 
 	}
-
 }
 
 void BaseComparatorUI::newMessage(const Parameter::ParameterEvent & e)

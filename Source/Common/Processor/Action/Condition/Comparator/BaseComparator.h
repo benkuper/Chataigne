@@ -22,12 +22,14 @@ public:
 	virtual ~BaseComparator();
 
 	bool isValid;
+	bool rawIsValid; //for toggle behaviour
 	void setValid(bool value);
 
 	Controllable * source;
 	Controllable * reference;
 	EnumParameter * compareFunction;
 	BoolParameter * alwaysTrigger;
+	BoolParameter* toggleMode;
 
 	Identifier currentFunctionId;
 

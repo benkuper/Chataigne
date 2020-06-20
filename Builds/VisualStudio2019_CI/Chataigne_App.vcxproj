@@ -5716,6 +5716,7 @@
     <None Include="..\..\Resources\snap.png"/>
     <None Include="..\..\Resources\stop.png"/>
     <None Include="..\..\Resources\stripe.png"/>
+    <None Include="..\..\Resources\toggle.png"/>
     <None Include="..\..\Resources\tray_icon.png"/>
     <None Include="..\..\..\JUCE\Modules\juce_audio_formats\codecs\flac\Flac Licence.txt"/>
     <None Include="..\..\..\JUCE\Modules\juce_audio_formats\codecs\oggvorbis\Ogg Vorbis Licence.txt"/>

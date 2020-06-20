@@ -11519,6 +11519,9 @@
     <None Include="..\..\Resources\stripe.png">
       <Filter>Chataigne\Resources</Filter>
     </None>
+    <None Include="..\..\Resources\toggle.png">
+      <Filter>Chataigne\Resources</Filter>
+    </None>
     <None Include="..\..\Resources\tray_icon.png">
       <Filter>Chataigne\Resources</Filter>
     </None>

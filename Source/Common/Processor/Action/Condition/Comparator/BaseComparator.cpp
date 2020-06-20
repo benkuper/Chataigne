@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    BaseComparator.cpp
-    Created: 2 Nov 2016 8:54:51pm
-    Author:  bkupe
+	BaseComparator.cpp
+	Created: 2 Nov 2016 8:54:51pm
+	Author:  bkupe
 
   ==============================================================================
 */
@@ -11,9 +11,10 @@
 #include "BaseComparator.h"
 #include "ui/BaseComparatorUI.h"
 
-BaseComparator::BaseComparator(Controllable * _source) :
+BaseComparator::BaseComparator(Controllable* _source) :
 	ControllableContainer("Comparator"),
 	isValid(false),
+	rawIsValid(false),
 	source(_source),
 	reference(nullptr)
 {
@@ -21,31 +22,34 @@ BaseComparator::BaseComparator(Controllable * _source) :
 	compareFunction->hideInEditor = true;
 	compareFunction->hideInOutliner = true;
 
-	Parameter * p = dynamic_cast<Parameter *>(source);
-	if (p != nullptr)
-	{
-		p->addParameterListener(this);
-	}
+	if (Parameter* p = dynamic_cast<Parameter*>(source)) p->addParameterListener(this);
 
+	toggleMode = addBoolParameter("Toggle Mode", "If checked, this will make a validation alternate between validated and invalidated, useful to transform straight values into toggles", false);
 	alwaysTrigger = addBoolParameter("Always Trigger", "If NOT checked the comparator notifies only when VALIDITY changes. If checked, the comparator notifies everytime the comparator is checked, meaning everytime the value is changed.",false);
 }
 
 BaseComparator::~BaseComparator()
 {
 	masterReference.clear();
-
-	Parameter * p = dynamic_cast<Parameter *>(source);
-	if (p != nullptr)
-	{
-		p->removeParameterListener(this);
-	}
+	if (Parameter* p = dynamic_cast<Parameter*>(source)) p->removeParameterListener(this);
 }
 
 void BaseComparator::setValid(bool value)
 {
-	if (isValid == value && !alwaysTrigger->boolValue()) return;
+	if (toggleMode->boolValue())
+	{
+		if (rawIsValid == value) return;
+		rawIsValid = value;
+		
+		if (!rawIsValid) return;
+		isValid = !isValid;
+	}
+	else
+	{
+		if (isValid == value && !alwaysTrigger->boolValue()) return;
+		isValid = value;
+	}
 
-	isValid = value;
 	comparatorListeners.call(&ComparatorListener::comparatorValidationChanged, this);
 }
 

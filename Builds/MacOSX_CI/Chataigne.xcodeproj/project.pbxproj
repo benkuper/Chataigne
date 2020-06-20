@@ -1473,6 +1473,13 @@
 			path = ../../Resources/Modules/DMX.png;
 			sourceTree = "SOURCE_ROOT";
 		};
+		06F785352F491874191E0CF1 = {
+			isa = PBXFileReference;
+			lastKnownFileType = image.png;
+			name = toggle.png;
+			path = ../../Resources/toggle.png;
+			sourceTree = "SOURCE_ROOT";
+		};
 		0737D4DC75687E6B61669785 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -6255,6 +6262,7 @@
 				E3334C7CE4EE2A23F2323183,
 				0D9B10AF87FB00D8CF4E54A5,
 				2DDAE65EB5FF79ED1E458E52,
+				06F785352F491874191E0CF1,
 				DB8586997DF3708490DAEBB5,
 			);
 			name = Resources;

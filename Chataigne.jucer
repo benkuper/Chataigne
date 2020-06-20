@@ -83,6 +83,7 @@
       <FILE id="kly3dv" name="snap.png" compile="0" resource="1" file="Resources/snap.png"/>
       <FILE id="Umk8sJ" name="stop.png" compile="0" resource="1" file="Resources/stop.png"/>
       <FILE id="tF7PTq" name="stripe.png" compile="0" resource="1" file="Resources/stripe.png"/>
+      <FILE id="eQFMO2" name="toggle.png" compile="0" resource="1" file="Resources/toggle.png"/>
       <FILE id="xbqvN3" name="tray_icon.png" compile="0" resource="1" file="Resources/tray_icon.png"/>
     </GROUP>
     <GROUP id="{31908E9E-F626-E2D6-1A6D-E188C9D72C25}" name="Source">
