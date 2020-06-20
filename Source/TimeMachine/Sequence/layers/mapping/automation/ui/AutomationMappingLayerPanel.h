@@ -24,6 +24,5 @@ public:
 
 	AutomationMappingLayer* aml;
     
-
     virtual void resizedInternalPanelContent(Rectangle<int>& r) override;
 };

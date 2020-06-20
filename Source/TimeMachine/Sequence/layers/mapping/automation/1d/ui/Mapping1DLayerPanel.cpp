@@ -20,6 +20,9 @@ Mapping1DLayerPanel::Mapping1DLayerPanel(Mapping1DLayer* layer) :
 
     rangeRemapUI.reset((ControllableEditor*)ml->automation1D.rangeRemapMode->getEditor(false));
     addAndMakeVisible(rangeRemapUI.get());
+
+    contentComponents.add(valueRangeUI.get());
+    contentComponents.add(rangeRemapUI.get());
 }
 
 Mapping1DLayerPanel::~Mapping1DLayerPanel()

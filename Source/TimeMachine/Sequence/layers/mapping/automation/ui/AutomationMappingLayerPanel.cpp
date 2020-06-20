@@ -17,6 +17,8 @@ AutomationMappingLayerPanel::AutomationMappingLayerPanel(AutomationMappingLayer*
 {
     armUI.reset(aml->recorder.arm->createToggle());
     addAndMakeVisible(armUI.get());
+
+    contentComponents.add(armUI.get());
 }
 
 AutomationMappingLayerPanel::~AutomationMappingLayerPanel()

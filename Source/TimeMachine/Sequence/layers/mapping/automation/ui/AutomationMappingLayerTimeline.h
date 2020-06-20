@@ -25,6 +25,7 @@ public:
     virtual void updateContent() override;
 
     virtual void setSeekManipulationMode(bool isManipulating) override;
+    virtual void updateMiniModeUI() override;
 
     virtual void controllableFeedbackUpdateInternal(Controllable* c) override;
 

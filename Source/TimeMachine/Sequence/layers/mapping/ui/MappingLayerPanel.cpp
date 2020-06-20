@@ -30,17 +30,31 @@ MappingLayerPanel::~MappingLayerPanel()
 {
 }
 
+void MappingLayerPanel::resizedInternalHeader(Rectangle<int>& r)
+{
+	SequenceLayerPanel::resizedInternalHeader(r);
+
+	if (item->miniMode->boolValue())
+	{
+		mappingOutputUI->setBounds(r);
+	}
+}
+
 void MappingLayerPanel::resizedInternalContent(Rectangle<int>& r)
 {
 	Rectangle<int> cr = r.reduced(2, 0);
 
-	if (mappingOutputUI != nullptr)
+	if (!item->miniMode->boolValue())
 	{
-		mappingOutputUI->setBounds(cr.removeFromTop(16));
-		cr.removeFromTop(2);
-	}
+		if (mappingOutputUI != nullptr)
+		{
+			mappingOutputUI->setBounds(cr.removeFromTop(16));
+			cr.removeFromTop(2);
+		}
 
-	resizedInternalPanelContent(cr);
+		resizedInternalPanelContent(cr);
+	}
+	
 }
 
 void MappingLayerPanel::addContextMenuItems(PopupMenu& p)

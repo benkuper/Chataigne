@@ -564,7 +564,7 @@ void StreamingModule::createControllablesFromJSONResult(var data, ControllableCo
 		else if (p.value.isObject())
 		{
 			ControllableContainer* cc = container->getControllableContainerByName(p.name.toString(), true);
-			if (cc == nullptr & autoAdd->boolValue())
+			if (cc == nullptr && autoAdd->boolValue())
 			{
 				cc = new ControllableContainer(p.name.toString());
 				container->addChildControllableContainer(cc, true);

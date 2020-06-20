@@ -34,7 +34,13 @@ void AutomationMappingLayerTimeline::updateContent()
 void AutomationMappingLayerTimeline::setSeekManipulationMode(bool isManipulating)
 {
     MappingLayerTimeline::setSeekManipulationMode(isManipulating);
-    automationUI->setPreviewMode(isManipulating);
+    automationUI->setPreviewMode(isManipulating || aml->miniMode->boolValue());
+}
+
+void AutomationMappingLayerTimeline::updateMiniModeUI()
+{
+    MappingLayerTimeline::updateMiniModeUI();
+    automationUI->setPreviewMode(aml->miniMode->boolValue());
 }
 
 void AutomationMappingLayerTimeline::controllableFeedbackUpdateInternal(Controllable* c)

@@ -27,6 +27,9 @@ ChataigneAudioLayerPanel::ChataigneAudioLayerPanel(ChataigneAudioLayer * layer) 
 	armUI.reset(chataigneAudioLayer->arm->createToggle());
 	addAndMakeVisible(armUI.get());
 
+	contentComponents.add(&moduleChooser);
+	contentComponents.add(armUI.get());
+
 	addAndMakeVisible(&moduleChooser);
 
 	chataigneAudioLayer->addAudioLayerListener(this);

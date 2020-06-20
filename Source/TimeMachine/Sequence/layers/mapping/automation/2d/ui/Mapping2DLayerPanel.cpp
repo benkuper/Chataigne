@@ -28,7 +28,7 @@ void Mapping2DLayerPanel::resizedInternalPanelContent(Rectangle<int>& r)
 {
     AutomationMappingLayerPanel::resizedInternalPanelContent(r);
     r.removeFromTop(2);
-    keySyncUI->setBounds(r.removeFromTop(14));
+    keySyncUI->setBounds(r.removeFromTop(16).reduced(4, 0));
     r.removeFromTop(2);
     curveUI.setBounds(r);
 }
