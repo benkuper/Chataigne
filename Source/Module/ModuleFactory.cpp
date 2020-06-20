@@ -52,6 +52,9 @@
 #include "modules/system/time/TimeModule.h"
 #include "modules/system//os/OSModule.h"
 
+#include "modules/websocket/WebSocketClientModule.h"
+#include "modules/websocket/WebSocketServerModule.h"
+
 #include "modules/audio/AudioModule.h"
 
 #include "Community/CommunityModuleManager.h"
@@ -70,6 +73,8 @@ ModuleFactory::ModuleFactory() {
 	moduleDefs.add(new ModuleDefinition("Protocol", "TCP Client", &TCPClientModule::create));
 	moduleDefs.add(new ModuleDefinition("Protocol", "TCP Server", &TCPServerModule::create));
 	moduleDefs.add(new ModuleDefinition("Protocol", "HTTP", &HTTPModule::create));
+	moduleDefs.add(new ModuleDefinition("Protocol", "WebSocket Client", &WebSocketClientModule::create));
+	moduleDefs.add(new ModuleDefinition("Protocol", "WebSocket Server", &WebSocketServerModule::create));
 	moduleDefs.add(new ModuleDefinition("Protocol", "PJLink", &PJLinkModule::create));
 	
 

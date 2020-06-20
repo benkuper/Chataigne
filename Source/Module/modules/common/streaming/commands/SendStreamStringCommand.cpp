@@ -22,6 +22,7 @@ SendStreamStringCommand::SendStreamStringCommand(StreamingModule* _module, Comma
 	}
 
 	valueParam = addStringParameter("Value", "Value to send via TCP", "example");
+	valueParam->multiline = true;
 
 	dataMode = (DataMode)(int)params.getProperty("mode", DataMode::STRING);
 	switch (dataMode)
@@ -58,7 +59,6 @@ SendStreamStringCommand::SendStreamStringCommand(StreamingModule* _module, Comma
 
 	case HEX:
 		valueParam->defaultUI = StringParameter::TEXT;
-		valueParam->multiline = true;
 		break;
 	}
 

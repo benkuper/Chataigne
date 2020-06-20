@@ -97,6 +97,9 @@ void StreamingModule::buildMessageStructureOptions()
 		messageStructure->addOption("1 value per byte", RAW_1BYTE)->addOption("4x4 (floats)", RAW_FLOATS)->addOption("4x4 (RGBA colors)", RAW_COLORS);
 	}
 	break;
+
+	default:
+		break;
 	}
 }
 
@@ -429,6 +432,15 @@ void StreamingModule::processDataBytes(Array<uint8_t> data)
 	
 }
 
+void StreamingModule::processDataJSON(const var& data)
+{
+	if (!enabled->boolValue()) return;
+	if (logIncomingData->boolValue()) NLOG(niceName, "JSON received : " << (data.isVoid() ? JSON::toString(data) : "(Invalid JSON)"));
+	inActivityTrigger->trigger();
+
+	createControllablesForContainer(data, &valuesCC);
+}
+
 void StreamingModule::sendMessage(const String & message, var params)
 {
 	if (!enabled->boolValue()) return;
@@ -517,6 +529,91 @@ void StreamingModule::createThruControllable(ControllableContainer* cc)
 	p->canBeDisabledByUser = true;
 	p->saveValueOnly = false;
 	cc->addParameter(p);
+}
+
+void StreamingModule::createControllablesFromJSONResult(var data, ControllableContainer* container)
+{
+	if (!data.isObject()) return;
+
+	DynamicObject* dataObject = data.getDynamicObject();
+	if (dataObject == nullptr) return;
+
+	NamedValueSet props = dataObject->getProperties();
+
+	for (auto& p : props)
+	{
+		if (p.value.isArray())
+		{
+			for (int i = 0; i < p.value.size(); ++i)
+			{
+				ControllableContainer* cc = container->getControllableContainerByName(String(i), true);
+				if (cc == nullptr && autoAdd->boolValue())
+				{
+
+					cc = new ControllableContainer(String(i));
+					container->addChildControllableContainer(cc, true);
+					cc->userCanAddControllables = true;
+					cc->saveAndLoadRecursiveData = true;
+					cc->saveAndLoadName = true;
+				}
+
+				if(cc != nullptr) createControllablesFromJSONResult(p.value[i], cc);
+			}
+
+		}
+		else if (p.value.isObject())
+		{
+			ControllableContainer* cc = container->getControllableContainerByName(p.name.toString(), true);
+			if (cc == nullptr & autoAdd->boolValue())
+			{
+				cc = new ControllableContainer(p.name.toString());
+				container->addChildControllableContainer(cc, true);
+				cc->userCanAddControllables = true;
+				cc->saveAndLoadRecursiveData = true;
+				cc->saveAndLoadName = true;
+			}
+
+			if(cc != nullptr) createControllablesFromJSONResult(p.value, cc);
+		}
+		else
+		{
+			Controllable* newC = container->getControllableByName(p.name.toString(), true);
+			if (newC == nullptr && autoAdd->boolValue())
+			{
+				if (p.value.isBool()) newC = new BoolParameter(p.name.toString(), p.name.toString(), false);
+				else if (p.value.isDouble()) newC = new FloatParameter(p.name.toString(), p.name.toString(), 0);
+				else if (p.value.isInt()) newC = new IntParameter(p.name.toString(), p.name.toString(), 0);
+				else if (p.value.isString() || p.value.isVoid()) newC = new StringParameter(p.name.toString(), p.name.toString(), "");
+				else if (p.value.isArray())
+				{
+					if (p.value.size() == 1) newC = new FloatParameter(p.name.toString(), p.name.toString(), 0);
+					else if (p.value.size() == 2) newC = new Point2DParameter(p.name.toString(), p.name.toString());
+					else if (p.value.size() == 3) newC = new Point3DParameter(p.name.toString(), p.name.toString());
+					else if (p.value.size() == 3) newC = new ColorParameter(p.name.toString(), p.name.toString());
+				}
+
+
+				if (newC != nullptr)
+				{
+					newC->isCustomizableByUser = true;
+					newC->isRemovableByUser = true;
+					newC->isSavable = true;
+					newC->saveValueOnly = false;
+					container->addControllable(newC);
+				}
+			}
+
+			if (newC != nullptr)
+			{
+				if (newC->type == Controllable::TRIGGER && (int)p.value != 0) ((Trigger*)newC)->trigger();
+				else
+				{
+					Parameter* param = dynamic_cast<Parameter*>(newC);
+					if (param != nullptr) param->setValue(p.value.isVoid() ? "" : p.value, false, true);
+				}
+			}
+		}
+	}
 }
 
 void StreamingModule::onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c)

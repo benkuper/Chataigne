@@ -19,7 +19,7 @@ public:
 	StreamingModule(const String &name = "Streaming");
 	virtual ~StreamingModule();
 
-	enum StreamingType { LINES, DATA255, RAW, COBS };
+	enum StreamingType { LINES, DATA255, RAW, COBS, TYPE_JSON };
 	enum MessageStructure { LINES_SPACE, LINES_TAB, LINES_COMMA, LINES_COLON, LINES_SEMICOLON, LINES_EQUALS, NO_SEPARATION, RAW_1BYTE, RAW_FLOATS, RAW_COLORS};
 	EnumParameter * streamingType;
 
@@ -41,6 +41,10 @@ public:
 	virtual void processDataLineInternal(const String &message) {}
 	virtual void processDataBytes(Array<uint8> data);
 	virtual void processDataBytesInternal(Array<uint8> data) {}
+	virtual void processDataJSON(const var &data);
+	virtual void processDataJSONInternal(const var& message) {}
+
+	void createControllablesFromJSONResult(var data, ControllableContainer* container);
 
 	virtual void sendMessage(const String &message, var params = var());
 	virtual void sendMessageInternal(const String &message, var params) {}

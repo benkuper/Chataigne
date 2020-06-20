@@ -104,6 +104,12 @@ namespace BinaryData
     extern const char*   Watchout_png;
     const int            Watchout_pngSize = 2380;
 
+    extern const char*   WebSocket_Client_png;
+    const int            WebSocket_Client_pngSize = 3542;
+
+    extern const char*   WebSocket_Server_png;
+    const int            WebSocket_Server_pngSize = 3517;
+
     extern const char*   Wiimote_png;
     const int            Wiimote_pngSize = 2124;
 
@@ -189,7 +195,7 @@ namespace BinaryData
     const int            tray_icon_pngSize = 3363;
 
     // Number of elements in the namedResourceList and originalFileNames arrays.
-    const int namedResourceListSize = 60;
+    const int namedResourceListSize = 62;
 
     // Points to the start of a list of resource names.
     extern const char* namedResourceList[];

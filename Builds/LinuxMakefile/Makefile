@@ -183,6 +183,9 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/CommunityModuleInfoEditor_122ae75f.o \
   $(JUCE_OBJDIR)/CommunityModuleInfo_23b085c3.o \
   $(JUCE_OBJDIR)/CommunityModuleManager_e575a282.o \
+  $(JUCE_OBJDIR)/WebSocketServerModuleUI_2743a483.o \
+  $(JUCE_OBJDIR)/WebSocketClientModule_5755214.o \
+  $(JUCE_OBJDIR)/WebSocketServerModule_20a978c.o \
   $(JUCE_OBJDIR)/CustomVariablesModuleCommands_edf5eec8.o \
   $(JUCE_OBJDIR)/CustomVariablesModule_cdc46d67.o \
   $(JUCE_OBJDIR)/FFTAnalyzerEditor_79640ae4.o \
@@ -963,6 +966,21 @@ $(JUCE_OBJDIR)/CommunityModuleInfo_23b085c3.o: ../../Source/Module/Community/Com
 $(JUCE_OBJDIR)/CommunityModuleManager_e575a282.o: ../../Source/Module/Community/CommunityModuleManager.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling CommunityModuleManager.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/WebSocketServerModuleUI_2743a483.o: ../../Source/Module/modules/websocket/ui/WebSocketServerModuleUI.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling WebSocketServerModuleUI.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/WebSocketClientModule_5755214.o: ../../Source/Module/modules/websocket/WebSocketClientModule.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling WebSocketClientModule.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/WebSocketServerModule_20a978c.o: ../../Source/Module/modules/websocket/WebSocketServerModule.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling WebSocketServerModule.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/CustomVariablesModuleCommands_edf5eec8.o: ../../Source/Module/modules/customvariables/commands/CustomVariablesModuleCommands.cpp

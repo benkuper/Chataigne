@@ -545,6 +545,18 @@
 			isa = PBXBuildFile;
 			fileRef = 1991D78FED2DCE9A56B1220B;
 		};
+		B4AA1B8F7AA272C47E1F6973 = {
+			isa = PBXBuildFile;
+			fileRef = 4EFF7F0D3D5495F0DB25BD91;
+		};
+		CA66D6C35412C59D22850AFC = {
+			isa = PBXBuildFile;
+			fileRef = E91A8E434241E4DDFB355A23;
+		};
+		98D844B72F78FDA97EA6E92B = {
+			isa = PBXBuildFile;
+			fileRef = BA3FE442D9608F2B1BF24E08;
+		};
 		AF70A4DC7FA481F5FB0C54CD = {
 			isa = PBXBuildFile;
 			fileRef = 7D1B09D24AF2AA1A035C862F;
@@ -2225,6 +2237,13 @@
 			path = ../../Source/Common/DMX/device/DMXSerialDevice.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
+		3284BC58968CCABCFCEDABCF = {
+			isa = PBXFileReference;
+			lastKnownFileType = image.png;
+			name = "WebSocket Client.png";
+			path = "../../Resources/Modules/WebSocket Client.png";
+			sourceTree = "SOURCE_ROOT";
+		};
 		32C9F3B10334451C423488F7 = {
 			isa = PBXFileReference;
 			lastKnownFileType = file;
@@ -2799,6 +2818,13 @@
 			path = ../../Source/Common/MIDI/MTCSender.h;
 			sourceTree = "SOURCE_ROOT";
 		};
+		4EFF7F0D3D5495F0DB25BD91 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = WebSocketServerModuleUI.cpp;
+			path = ../../Source/Module/modules/websocket/ui/WebSocketServerModuleUI.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		4F10DF2F3EFBC622492B19ED = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -2937,6 +2963,13 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = TCPServerModuleUI.cpp;
 			path = ../../Source/Module/modules/tcp/tcpserver/ui/TCPServerModuleUI.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
+		54DCAE1A042E1A631A2B3D2D = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = WebSocketServerModule.h;
+			path = ../../Source/Module/modules/websocket/WebSocketServerModule.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		55061C5BEAC3CA82CAED15A2 = {
@@ -3672,6 +3705,13 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = State.h;
 			path = ../../Source/StateMachine/State/State.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		7EF44A7D56C18CA1D1576DAC = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = WebSocketClientModule.h;
+			path = ../../Source/Module/modules/websocket/WebSocketClientModule.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		7F19D3E7ECD40C602632DC55 = {
@@ -4780,6 +4820,13 @@
 			path = ../../Source/Common/Serial/SerialDeviceParameter.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
+		BA3FE442D9608F2B1BF24E08 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = WebSocketServerModule.cpp;
+			path = ../../Source/Module/modules/websocket/WebSocketServerModule.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		BA79F5BFDEDF0D5BBEC70225 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -4792,6 +4839,13 @@
 			lastKnownFileType = file.icns;
 			name = Icon.icns;
 			path = Icon.icns;
+			sourceTree = "SOURCE_ROOT";
+		};
+		BAF1C0C9C9976B3ADA02AB86 = {
+			isa = PBXFileReference;
+			lastKnownFileType = image.png;
+			name = "WebSocket Server.png";
+			path = "../../Resources/Modules/WebSocket Server.png";
 			sourceTree = "SOURCE_ROOT";
 		};
 		BB9A76CC34F4448EFA6E5EF3 = {
@@ -5606,6 +5660,13 @@
 			path = ../../Source/Module/modules/generic/commands/ChataigneLogCommand.h;
 			sourceTree = "SOURCE_ROOT";
 		};
+		E296E51ECCF351063B8CB8C6 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = WebSocketServerModuleUI.h;
+			path = ../../Source/Module/modules/websocket/ui/WebSocketServerModuleUI.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		E2E597186A12CD91B5651747 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -5765,6 +5826,13 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = WelcomeScreen.cpp;
 			path = ../../Source/UI/WelcomeScreen.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
+		E91A8E434241E4DDFB355A23 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = WebSocketClientModule.cpp;
+			path = ../../Source/Module/modules/websocket/WebSocketClientModule.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		E92288FB21A7A81372B50E88 = {
@@ -6194,6 +6262,8 @@
 				F5827D6B2391F3539343CE59,
 				4DFD263C9E82F18D49C8E12F,
 				AAA49AA961808130DB88D7E4,
+				3284BC58968CCABCFCEDABCF,
+				BAF1C0C9C9976B3ADA02AB86,
 				93E3633923505621F586C26E,
 			);
 			name = Modules;
@@ -6935,6 +7005,27 @@
 				B103D96B57924C72E6439E7D,
 			);
 			name = Community;
+			sourceTree = "<group>";
+		};
+		57CB97A6E93A771F08EAC49C = {
+			isa = PBXGroup;
+			children = (
+				4EFF7F0D3D5495F0DB25BD91,
+				E296E51ECCF351063B8CB8C6,
+			);
+			name = ui;
+			sourceTree = "<group>";
+		};
+		2B67D178F31F9FA0EC4E16ED = {
+			isa = PBXGroup;
+			children = (
+				57CB97A6E93A771F08EAC49C,
+				E91A8E434241E4DDFB355A23,
+				7EF44A7D56C18CA1D1576DAC,
+				BA3FE442D9608F2B1BF24E08,
+				54DCAE1A042E1A631A2B3D2D,
+			);
+			name = websocket;
 			sourceTree = "<group>";
 		};
 		DB7058BCF02647886242628A = {
@@ -7856,6 +7947,7 @@
 		4665BC8668EBFB6331EA2AD6 = {
 			isa = PBXGroup;
 			children = (
+				2B67D178F31F9FA0EC4E16ED,
 				7846CCD04F250DEB860CAC7B,
 				9E1DD129C66F6E811ADD96CD,
 				12C8B5AA077D6DBB00FB91A0,
@@ -8706,6 +8798,9 @@
 				9505054C06127A07DB62A014,
 				63C5D4EE57DB9E83CFADD764,
 				2A5DED7FA17BE4A5FD0BA5A8,
+				B4AA1B8F7AA272C47E1F6973,
+				CA66D6C35412C59D22850AFC,
+				98D844B72F78FDA97EA6E92B,
 				AF70A4DC7FA481F5FB0C54CD,
 				6088775CFABC552F51407DEF,
 				A6300AF2899170A1D0A50D12,

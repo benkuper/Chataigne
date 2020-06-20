@@ -268,6 +268,9 @@
     <ClCompile Include="..\..\Source\Module\Community\ui\CommunityModuleInfoEditor.cpp"/>
     <ClCompile Include="..\..\Source\Module\Community\CommunityModuleInfo.cpp"/>
     <ClCompile Include="..\..\Source\Module\Community\CommunityModuleManager.cpp"/>
+    <ClCompile Include="..\..\Source\Module\modules\websocket\ui\WebSocketServerModuleUI.cpp"/>
+    <ClCompile Include="..\..\Source\Module\modules\websocket\WebSocketClientModule.cpp"/>
+    <ClCompile Include="..\..\Source\Module\modules\websocket\WebSocketServerModule.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\customvariables\commands\CustomVariablesModuleCommands.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\customvariables\CustomVariablesModule.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\audio\analysis\ui\FFTAnalyzerEditor.cpp"/>
@@ -2827,7 +2830,10 @@
     <ClCompile Include="..\..\Modules\juce_simpleweb\juce_simpleweb.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\Modules\juce_simpleweb\SimpleWebSocket.cpp">
+    <ClCompile Include="..\..\Modules\juce_simpleweb\SimpleWebSocketClient.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\SimpleWebSocketServer.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\Modules\juce_timeline\resources\BinaryData.cpp">
@@ -3102,6 +3108,9 @@
     <ClInclude Include="..\..\Source\Module\Community\ui\CommunityModuleInfoEditor.h"/>
     <ClInclude Include="..\..\Source\Module\Community\CommunityModuleInfo.h"/>
     <ClInclude Include="..\..\Source\Module\Community\CommunityModuleManager.h"/>
+    <ClInclude Include="..\..\Source\Module\modules\websocket\ui\WebSocketServerModuleUI.h"/>
+    <ClInclude Include="..\..\Source\Module\modules\websocket\WebSocketClientModule.h"/>
+    <ClInclude Include="..\..\Source\Module\modules\websocket\WebSocketServerModule.h"/>
     <ClInclude Include="..\..\Source\Module\modules\customvariables\commands\CustomVariablesModuleCommands.h"/>
     <ClInclude Include="..\..\Source\Module\modules\customvariables\CustomVariablesModule.h"/>
     <ClInclude Include="..\..\Source\Module\modules\audio\analysis\ui\FFTAnalyzerEditor.h"/>
@@ -4605,7 +4614,8 @@
     <ClInclude Include="..\..\Modules\juce_simpleweb\websocket\client_ws.hpp"/>
     <ClInclude Include="..\..\Modules\juce_simpleweb\websocket\server_ws.hpp"/>
     <ClInclude Include="..\..\Modules\juce_simpleweb\MIMETypes.h"/>
-    <ClInclude Include="..\..\Modules\juce_simpleweb\SimpleWebSocket.h"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\SimpleWebSocketClient.h"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\SimpleWebSocketServer.h"/>
     <ClInclude Include="..\..\Modules\juce_simpleweb\juce_simpleweb.h"/>
     <ClInclude Include="..\..\Modules\juce_timeline\resources\BinaryData.h"/>
     <ClInclude Include="..\..\Modules\juce_timeline\timeline\Sequence\Cue\ui\TimeCueManagerUI.h"/>
@@ -4696,6 +4706,8 @@
     <None Include="..\..\Resources\Modules\Time.png"/>
     <None Include="..\..\Resources\Modules\UDP.png"/>
     <None Include="..\..\Resources\Modules\Watchout.png"/>
+    <None Include="..\..\Resources\Modules\WebSocket Client.png"/>
+    <None Include="..\..\Resources\Modules\WebSocket Server.png"/>
     <None Include="..\..\Resources\Modules\Wiimote.png"/>
     <None Include="..\..\Resources\Templates\Scripts\commandScriptTemplate.js"/>
     <None Include="..\..\Resources\Templates\Scripts\conditionScriptTemplate.js"/>
@@ -4739,6 +4751,7 @@
     <None Include="..\..\..\JUCE\Modules\juce_graphics\image_formats\pnglib\libpng_readme.txt"/>
     <None Include="..\..\Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\ReadMe.txt"/>
     <None Include="..\..\Modules\juce_organicui\README.md"/>
+    <None Include="..\..\Modules\juce_simpleweb\asio\README.md"/>
     <None Include="..\..\Modules\juce_simpleweb\README.md"/>
     <None Include="..\..\Modules\juce_timeline\README.md"/>
     <None Include=".\icon.ico"/>

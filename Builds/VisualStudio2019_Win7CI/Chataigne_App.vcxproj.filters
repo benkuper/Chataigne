@@ -188,6 +188,12 @@
     <Filter Include="Chataigne\Source\Module\Community">
       <UniqueIdentifier>{6CEFF08B-E267-C21D-34E5-C8EAE64F596A}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\websocket\ui">
+      <UniqueIdentifier>{B293CBA1-C418-03EF-CF1A-854113923B86}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\websocket">
+      <UniqueIdentifier>{EA25999D-66A4-5EDD-BB18-B7CFA3EB36BC}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Chataigne\Source\Module\modules\customvariables\commands">
       <UniqueIdentifier>{4C9511D9-D1B4-B5A7-5772-0E1D38BEF264}</UniqueIdentifier>
     </Filter>
@@ -1650,6 +1656,15 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Module\Community\CommunityModuleManager.cpp">
       <Filter>Chataigne\Source\Module\Community</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Module\modules\websocket\ui\WebSocketServerModuleUI.cpp">
+      <Filter>Chataigne\Source\Module\modules\websocket\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Module\modules\websocket\WebSocketClientModule.cpp">
+      <Filter>Chataigne\Source\Module\modules\websocket</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Module\modules\websocket\WebSocketServerModule.cpp">
+      <Filter>Chataigne\Source\Module\modules\websocket</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\customvariables\commands\CustomVariablesModuleCommands.cpp">
       <Filter>Chataigne\Source\Module\modules\customvariables\commands</Filter>
@@ -4720,7 +4735,10 @@
     <ClCompile Include="..\..\Modules\juce_simpleweb\juce_simpleweb.cpp">
       <Filter>JUCE Modules\juce_simpleweb</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Modules\juce_simpleweb\SimpleWebSocket.cpp">
+    <ClCompile Include="..\..\Modules\juce_simpleweb\SimpleWebSocketClient.cpp">
+      <Filter>JUCE Modules\juce_simpleweb</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\SimpleWebSocketServer.cpp">
       <Filter>JUCE Modules\juce_simpleweb</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Modules\juce_timeline\resources\BinaryData.cpp">
@@ -5267,6 +5285,15 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\Community\CommunityModuleManager.h">
       <Filter>Chataigne\Source\Module\Community</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Module\modules\websocket\ui\WebSocketServerModuleUI.h">
+      <Filter>Chataigne\Source\Module\modules\websocket\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Module\modules\websocket\WebSocketClientModule.h">
+      <Filter>Chataigne\Source\Module\modules\websocket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Module\modules\websocket\WebSocketServerModule.h">
+      <Filter>Chataigne\Source\Module\modules\websocket</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\customvariables\commands\CustomVariablesModuleCommands.h">
       <Filter>Chataigne\Source\Module\modules\customvariables\commands</Filter>
@@ -9777,7 +9804,10 @@
     <ClInclude Include="..\..\Modules\juce_simpleweb\MIMETypes.h">
       <Filter>JUCE Modules\juce_simpleweb</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Modules\juce_simpleweb\SimpleWebSocket.h">
+    <ClInclude Include="..\..\Modules\juce_simpleweb\SimpleWebSocketClient.h">
+      <Filter>JUCE Modules\juce_simpleweb</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\SimpleWebSocketServer.h">
       <Filter>JUCE Modules\juce_simpleweb</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Modules\juce_simpleweb\juce_simpleweb.h">
@@ -10046,6 +10076,12 @@
     <None Include="..\..\Resources\Modules\Watchout.png">
       <Filter>Chataigne\Resources\Modules</Filter>
     </None>
+    <None Include="..\..\Resources\Modules\WebSocket Client.png">
+      <Filter>Chataigne\Resources\Modules</Filter>
+    </None>
+    <None Include="..\..\Resources\Modules\WebSocket Server.png">
+      <Filter>Chataigne\Resources\Modules</Filter>
+    </None>
     <None Include="..\..\Resources\Modules\Wiimote.png">
       <Filter>Chataigne\Resources\Modules</Filter>
     </None>
@@ -10174,6 +10210,9 @@
     </None>
     <None Include="..\..\Modules\juce_organicui\README.md">
       <Filter>JUCE Modules\juce_organicui</Filter>
+    </None>
+    <None Include="..\..\Modules\juce_simpleweb\asio\README.md">
+      <Filter>JUCE Modules\juce_simpleweb\asio</Filter>
     </None>
     <None Include="..\..\Modules\juce_simpleweb\README.md">
       <Filter>JUCE Modules\juce_simpleweb</Filter>

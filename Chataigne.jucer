@@ -41,6 +41,10 @@
         <FILE id="WCdCQ8" name="Time.png" compile="0" resource="1" file="Resources/Modules/Time.png"/>
         <FILE id="Yc4byM" name="UDP.png" compile="0" resource="1" file="Resources/Modules/UDP.png"/>
         <FILE id="cODnxv" name="Watchout.png" compile="0" resource="1" file="Resources/Modules/Watchout.png"/>
+        <FILE id="Fu3uo5" name="WebSocket Client.png" compile="0" resource="1"
+              file="Resources/Modules/WebSocket Client.png"/>
+        <FILE id="fvj8UB" name="WebSocket Server.png" compile="0" resource="1"
+              file="Resources/Modules/WebSocket Server.png"/>
         <FILE id="gSXz9z" name="Wiimote.png" compile="0" resource="1" file="Resources/Modules/Wiimote.png"/>
       </GROUP>
       <GROUP id="{2B6637A1-A2F4-FF34-9B3E-D1D7E87E01F8}" name="Templates">
@@ -596,6 +600,22 @@
                 file="Source/Module/Community/CommunityModuleManager.h"/>
         </GROUP>
         <GROUP id="{6A9D374B-2C22-DB11-15C8-CA446252E36A}" name="modules">
+          <GROUP id="{82D5E4C7-8C1C-9378-EEE7-C988DD90549E}" name="websocket">
+            <GROUP id="{4FA7479C-2A94-C90F-41FE-7D5B84A26E65}" name="ui">
+              <FILE id="XUeIev" name="WebSocketServerModuleUI.cpp" compile="1" resource="0"
+                    file="Source/Module/modules/websocket/ui/WebSocketServerModuleUI.cpp"/>
+              <FILE id="VYJFr2" name="WebSocketServerModuleUI.h" compile="0" resource="0"
+                    file="Source/Module/modules/websocket/ui/WebSocketServerModuleUI.h"/>
+            </GROUP>
+            <FILE id="hmZuQg" name="WebSocketClientModule.cpp" compile="1" resource="0"
+                  file="Source/Module/modules/websocket/WebSocketClientModule.cpp"/>
+            <FILE id="ak7RaZ" name="WebSocketClientModule.h" compile="0" resource="0"
+                  file="Source/Module/modules/websocket/WebSocketClientModule.h"/>
+            <FILE id="EPOMFm" name="WebSocketServerModule.cpp" compile="1" resource="0"
+                  file="Source/Module/modules/websocket/WebSocketServerModule.cpp"/>
+            <FILE id="hfMYYs" name="WebSocketServerModule.h" compile="0" resource="0"
+                  file="Source/Module/modules/websocket/WebSocketServerModule.h"/>
+          </GROUP>
           <GROUP id="{1845D9E2-AABC-AF10-DF83-FE7DD092D098}" name="customvariables">
             <GROUP id="{E384A9A3-5D10-939D-8450-418396EF3123}" name="commands">
               <FILE id="flaypv" name="CustomVariablesModuleCommands.cpp" compile="1"

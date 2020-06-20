@@ -146,6 +146,18 @@ void NetworkStreamingModule::run()
 				switch (m)
 				{
 
+				case TYPE_JSON:
+				{
+					stringBuffer.append(String::fromUTF8((char*)bytes.getRawDataPointer(), numBytes), numBytes);
+					var data = JSON::parse(stringBuffer);
+					if (!data.isVoid())
+					{
+						processDataJSON(stringBuffer);
+						stringBuffer = "";
+					}
+				}
+				break;
+
 				case LINES:
 				{
 					if (CharPointer_UTF8::isValidString((char *)bytes.getRawDataPointer(), numBytes))

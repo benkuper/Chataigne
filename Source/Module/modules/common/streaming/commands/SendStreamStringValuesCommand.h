@@ -19,7 +19,10 @@ public:
 	SendStreamStringValuesCommand(StreamingModule * output, CommandContext context, var params);
 	~SendStreamStringValuesCommand();
 
+	StringParameter* prefix;
 	StringParameter * separator;
+	StringParameter* suffix;
+
 	BoolParameter * appendCR;
 	BoolParameter * appendNL;
 

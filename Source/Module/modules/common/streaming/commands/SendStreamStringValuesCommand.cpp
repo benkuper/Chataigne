@@ -13,7 +13,9 @@
 SendStreamStringValuesCommand::SendStreamStringValuesCommand(StreamingModule * output, CommandContext context, var params) :
 	SendStreamValuesCommand(output,context,params)
 {
-	separator = addStringParameter("Separator","The string that separate each values"," ");
+	prefix = addStringParameter("Prefix", "This will be prepended to the final string", "");
+	separator = addStringParameter("Separator", "The string that separate each values", ",");
+	suffix = addStringParameter("Separator","This will be appended to the final string, but before NL and CR if selected","");
 
 	appendCR = addBoolParameter("Append CR", "Append \\r at the end of the message", false);
 	if (params.hasProperty("forceCR"))
@@ -37,7 +39,7 @@ SendStreamStringValuesCommand::~SendStreamStringValuesCommand()
 void SendStreamStringValuesCommand::triggerInternal()
 {
 	if (streamingModule == nullptr) return;
-	String s = "";
+	String s = prefix->stringValue();
 	for (auto &a : customValuesManager->items)
 	{
 		if (s.length() > 0) s += separator->stringValue();
@@ -61,7 +63,9 @@ void SendStreamStringValuesCommand::triggerInternal()
 		s += ss;
 	}
 
+	s += suffix->stringValue();
 	if (appendCR->boolValue()) s += "\r";
 	if (appendNL->boolValue()) s += "\n";
+
 	streamingModule->sendMessage(s);
 }
