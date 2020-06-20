@@ -1,17 +1,18 @@
 /*
   ==============================================================================
 
-    WebSocketClientModule.cpp
-    Created: 20 Jun 2020 3:09:11pm
-    Author:  bkupe
+	WebSocketClientModule.cpp
+	Created: 20 Jun 2020 3:09:11pm
+	Author:  bkupe
 
   ==============================================================================
 */
 
 #include "WebSocketClientModule.h"
 
-WebSocketClientModule::WebSocketClientModule(const String& name, const String &defaultServerPath) :
-	StreamingModule(name)
+WebSocketClientModule::WebSocketClientModule(const String& name, const String& defaultServerPath) :
+	StreamingModule(name),
+	connectFirstTry(true)
 {
 	serverPath = moduleParams.addStringParameter("Server Path", "Path to the server, meaning ip:port/path", defaultServerPath);
 	isConnected = moduleParams.addBoolParameter("Connected", "Is the socket sucessfully bound and listening", false);
@@ -27,7 +28,7 @@ WebSocketClientModule::~WebSocketClientModule()
 
 void WebSocketClientModule::setupClient()
 {
-	if(client != nullptr) client->stop();
+	if (client != nullptr) client->stop();
 	client.reset();
 	if (isCurrentlyLoadingData) return;
 
@@ -62,26 +63,21 @@ void WebSocketClientModule::connectionOpened()
 
 void WebSocketClientModule::connectionClosed(int status, const String& reason)
 {
-	if (!enabled->boolValue()) NLOG(niceName, "Connection closed");
+	NLOG(niceName, "Connection closed");
 	isConnected->setValue(false);
 }
 
 void WebSocketClientModule::connectionError(const String& errorMessage)
 {
-	if(!enabled->boolValue()) NLOGERROR(niceName, "Connection error");
+	if (enabled->boolValue() && connectFirstTry) NLOGERROR(niceName, "Connection error " << errorMessage);
 	isConnected->setValue(false);
 
 }
 
 void WebSocketClientModule::messageReceived(const String& message)
 {
-	if (logIncomingData->boolValue())
-	{
-		NLOG(niceName, "Message received :\n" << message);
-	}
-
 	StreamingType t = streamingType->getValueDataAsEnum<StreamingType>();
-	switch(t)
+	switch (t)
 	{
 	case LINES:
 	{
@@ -89,11 +85,16 @@ void WebSocketClientModule::messageReceived(const String& message)
 		sa.addTokens(message, "\n", "\"");
 		for (auto& s : sa) processDataLine(s);
 	}
-		break;
+	break;
 
 	case TYPE_JSON:
-		processDataJSON(JSON::fromString(message));
-		break;
+	{
+		var result;
+		Result r = JSON::parse(message, result);
+		if (r.failed()) NLOGWARNING(niceName, "Error parsing message :\n" << r.getErrorMessage());
+		processDataJSON(result);
+	}
+	break;
 
 	default:
 		DBG("Not handled");
@@ -112,6 +113,7 @@ void WebSocketClientModule::onContainerParameterChangedInternal(Parameter* p)
 			NLOG(niceName, "Disabling module, closing server.");
 		}
 
+		connectFirstTry = true;
 		setupClient();
 	}
 }
@@ -121,6 +123,28 @@ void WebSocketClientModule::onControllableFeedbackUpdateInternal(ControllableCon
 	StreamingModule::onControllableFeedbackUpdateInternal(cc, c);
 
 	if (c == serverPath) setupClient();
+	else if (c == isConnected)
+	{
+
+		if (isConnected->boolValue())
+		{
+			stopTimer();
+		}
+		else
+		{
+			connectFirstTry = true;
+			startTimer(1000);
+		}
+	}
+}
+
+void WebSocketClientModule::timerCallback()
+{
+	if (!isConnected->boolValue())
+	{
+		setupClient();
+		connectFirstTry = false;
+	}
 }
 
 

@@ -36,6 +36,7 @@ void WebSocketServerModule::setupServer()
 	if (isCurrentlyLoadingData) return;
 
 	isConnected->setValue(false);
+	numClients->intValue();
 
 	if (!enabled->intValue()) return;
 
@@ -65,40 +66,25 @@ void WebSocketServerModule::sendBytesInternal(Array<uint8> data, var)
 
 void WebSocketServerModule::connectionOpened(const String& connectionId)
 {
-	if (logIncomingData->boolValue())
-	{
-		NLOG(niceName, "Connection opened from : " << connectionId);
-	}
-
+	NLOG(niceName, "Connection opened from : " << connectionId);
 	numClients->setValue(server->getNumActiveConnections());
 }
 
 void WebSocketServerModule::connectionClosed(const String& connectionId, int status, const String& reason)
 {
-	if (logIncomingData->boolValue())
-	{
-		NLOG(niceName, "Connection closed from : " << connectionId);
-	}
+	NLOG(niceName, "Connection closed from : " << connectionId);
 	numClients->setValue(server->getNumActiveConnections());
 }
 
 void WebSocketServerModule::connectionError(const String& connectionId, const String& errorMessage)
 {
-	if (logIncomingData->boolValue())
-	{
-		NLOGERROR(niceName, "Connection error from : " << connectionId);
-	}
+	if (enabled->boolValue()) NLOGERROR(niceName, "Connection error from : " << connectionId << " : " << errorMessage);
 	
 	numClients->setValue(server->getNumActiveConnections());
 }
 
 void WebSocketServerModule::messageReceived(const String& connectionId, const String& message)
 {
-	if (logIncomingData->boolValue())
-	{
-		NLOG(niceName, "Message received from : " << connectionId << " :\n" << message);
-	}
-
 	StreamingType t = streamingType->getValueDataAsEnum<StreamingType>();
 	switch (t)
 	{

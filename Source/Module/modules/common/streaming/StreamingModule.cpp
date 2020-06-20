@@ -25,7 +25,7 @@ StreamingModule::StreamingModule(const String & name) :
 	canHandleRouteValues = hasOutput;
 
 	streamingType = moduleParams.addEnumParameter("Protocol", "Protocol for treating the incoming data");
-	streamingType->addOption("Lines", LINES)->addOption("Raw", RAW)->addOption("Data255", DATA255)->addOption("COBS", COBS);
+	streamingType->addOption("Lines", LINES)->addOption("Raw", RAW)->addOption("Data255", DATA255)->addOption("COBS", COBS)->addOption("JSON", TYPE_JSON);
 
 	autoAdd = moduleParams.addBoolParameter("Auto Add", "If checked, incoming data will be parsed depending on the Message Structure parameter, and if eligible will be added as values", true);
 	messageStructure = moduleParams.addEnumParameter("Message Structure", "The expected structure of a message, determining how it should be interpreted to auto create values from it");
@@ -438,7 +438,7 @@ void StreamingModule::processDataJSON(const var& data)
 	if (logIncomingData->boolValue()) NLOG(niceName, "JSON received : " << (data.isVoid() ? JSON::toString(data) : "(Invalid JSON)"));
 	inActivityTrigger->trigger();
 
-	createControllablesForContainer(data, &valuesCC);
+	createControllablesFromJSONResult(data, &valuesCC);
 }
 
 void StreamingModule::sendMessage(const String & message, var params)

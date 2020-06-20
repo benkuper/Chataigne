@@ -17,7 +17,8 @@
 
 class WebSocketClientModule :
 	public StreamingModule,
-	public SimpleWebSocketClient::Listener
+	public SimpleWebSocketClient::Listener,
+	public Timer
 
 {
 public:
@@ -26,6 +27,7 @@ public:
 
 	StringParameter* serverPath;
 	BoolParameter* isConnected;
+	bool connectFirstTry;
 
 	std::unique_ptr<SimpleWebSocketClient> client;
 
@@ -42,10 +44,10 @@ public:
 
 	void messageReceived(const String& message) override;
 
-
 	void onContainerParameterChangedInternal(Parameter* p) override;
 	void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) override;
 
+	void timerCallback() override;
 
 	ModuleUI* getModuleUI() override;
 
