@@ -13,6 +13,7 @@
 
 Mapping::Mapping(bool canBeDisabled) :
 	Processor("Mapping", canBeDisabled),
+	Thread("Mapping"),
 	processMode(VALUE_CHANGE),
 	isRebuilding(false),
 	isProcessing(false),
@@ -38,6 +39,7 @@ Mapping::Mapping(bool canBeDisabled) :
 
 Mapping::~Mapping()
 {
+	stopThread(100);
 	clearItem();
 }
 
@@ -98,7 +100,7 @@ void Mapping::updateMappingChain(MappingFilter * afterThisFilter)
 		return;
 	}
 
-	stopTimer();
+	continuousProcess->setValue(false);
 
 	{
 		//enter in scope for lock
@@ -211,8 +213,8 @@ void Mapping::onContainerParameterChangedInternal(Parameter * p)
 	BaseItem::onContainerParameterChangedInternal(p);
 	if (p == continuousProcess)
 	{
-		if (continuousProcess->boolValue()) startTimerHz(30);
-		else stopTimer();
+		if (continuousProcess->boolValue()) startThread();
+		else stopThread(100);
 	}
 	else if (p == enabled && enabled->boolValue() && !forceDisabled)
 	{
@@ -240,15 +242,19 @@ void Mapping::clearItem()
 	im.clear();
 }
 
+void Mapping::run()
+{
+	while (!threadShouldExit())
+	{
+		sleep(20); //50hz
+		if ((canBeDisabled && !enabled->boolValue()) || forceDisabled) continue;
+		process();
+	}
+}
+
 ProcessorUI * Mapping::getUI()
 {
 	return new MappingUI(this);
-}
-
-void Mapping::timerCallback()
-{
-	if ((canBeDisabled && !enabled->boolValue()) || forceDisabled) return;
-	process();
 }
 
 void Mapping::highlightLinkedInspectables(bool value)

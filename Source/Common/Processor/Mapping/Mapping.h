@@ -20,7 +20,7 @@ class Mapping :
 	public MappingInput::Listener,
 	public MappingInputManager::ManagerListener,
 	public MappingFilterManager::FilterManagerListener,
-	public Timer
+	public Thread
 {
 public:
 	Mapping(bool canBeDisabled = true);
@@ -68,7 +68,7 @@ public:
 	void filterManagerNeedsProcess() override;
 
 	virtual void clearItem() override;
-	virtual void timerCallback() override;
+	virtual void run() override;
 	virtual void highlightLinkedInspectables(bool value) override;
 
 	ProcessorUI* getUI() override;

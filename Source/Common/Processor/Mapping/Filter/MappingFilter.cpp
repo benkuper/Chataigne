@@ -167,6 +167,9 @@ InspectableEditor* MappingFilter::getEditor(bool isRoot)
 void MappingFilter::parameterRangeChanged(Parameter * p)
 {
 	int pIndex = sourceParams.indexOf(p);
+
+	bool changed = false;
+
 	if (pIndex != -1 && filteredParameters.size() > pIndex)
 	{
 		if (Parameter* filteredParameter = filteredParameters[pIndex])
@@ -176,9 +179,13 @@ void MappingFilter::parameterRangeChanged(Parameter * p)
 				&& filteredParameter->type == p->type)
 			{
 				filteredParameter->setRange(p->minimumValue, p->maximumValue);
+				changed = true;
 			}
 		}
 	}
 
-	mappingFilterListeners.call(&FilterListener::filteredParamRangeChanged, this);
+	if (changed)
+	{
+		mappingFilterListeners.call(&FilterListener::filteredParamRangeChanged, this);
+	}
 }
