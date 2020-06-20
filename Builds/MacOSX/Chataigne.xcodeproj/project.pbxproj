@@ -1245,10 +1245,6 @@
 			isa = PBXBuildFile;
 			fileRef = 8E161399DEC1EED4622B6EE6;
 		};
-		5041976C53D21B56E8B678C5 = {
-			isa = PBXBuildFile;
-			fileRef = 818E7F9708353CFDE88AEF66;
-		};
 		4482F1AEF42497B7CD326C97 = {
 			isa = PBXBuildFile;
 			fileRef = 8883C7CD4CC4127DC5FA03FE;
@@ -3706,13 +3702,6 @@
 			path = ../../Source/Module/modules/controller/mouse/MouseModule.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
-		818E7F9708353CFDE88AEF66 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = "include_juce_analytics.cpp";
-			path = "../../JuceLibraryCode/include_juce_analytics.cpp";
-			sourceTree = "SOURCE_ROOT";
-		};
 		829270114E6479B154663AFB = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -3901,13 +3890,6 @@
 			name = ConditionManagerEditor.h;
 			path = ../../Source/Common/Processor/Action/Condition/ui/ConditionManagerEditor.h;
 			sourceTree = "SOURCE_ROOT";
-		};
-		8C702CE054081E2F7FBEF4B7 = {
-			isa = PBXFileReference;
-			lastKnownFileType = file;
-			name = "juce_analytics";
-			path = "~/JUCE/modules/juce_analytics";
-			sourceTree = "<absolute>";
 		};
 		8D12442FA5A06DC1B43331FF = {
 			isa = PBXFileReference;
@@ -8244,7 +8226,6 @@
 		BB9E045D62346673C5E1636E = {
 			isa = PBXGroup;
 			children = (
-				8C702CE054081E2F7FBEF4B7,
 				0BE94AE80289ACC54E4C2915,
 				ABFB516A504EA44816966560,
 				AEE94AD7E1C97D1DE72EF414,
@@ -8274,7 +8255,6 @@
 				C69FF11E58565E652FFE63EB,
 				8E161399DEC1EED4622B6EE6,
 				4A2E002198407598BE5F2D27,
-				818E7F9708353CFDE88AEF66,
 				8883C7CD4CC4127DC5FA03FE,
 				BC6F1B625EFCC97D0A8A1558,
 				A375FF401D9AB143A47EC093,
@@ -8901,7 +8881,6 @@
 				717D84B8FAE1A6D4EEF64DF7,
 				E5BCE37F04545290585BD411,
 				CCD9A22929C0C3B17DBDECFC,
-				5041976C53D21B56E8B678C5,
 				4482F1AEF42497B7CD326C97,
 				24C5EB1BCD88A7B29DDAAB00,
 				85E25915D57CB69541CADBC8,

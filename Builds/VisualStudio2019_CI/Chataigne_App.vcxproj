@@ -439,18 +439,6 @@
     <ClCompile Include="..\..\Source\Main.cpp"/>
     <ClCompile Include="..\..\Source\MainComponent.cpp"/>
     <ClCompile Include="..\..\Source\MainComponentCommands.cpp"/>
-    <ClCompile Include="..\..\..\JUCE\Modules\juce_analytics\analytics\juce_Analytics.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\JUCE\Modules\juce_analytics\analytics\juce_ButtonTracker.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\JUCE\Modules\juce_analytics\destinations\juce_ThreadedAnalyticsDestination.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\JUCE\Modules\juce_analytics\juce_analytics.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="..\..\..\JUCE\Modules\juce_audio_basics\buffers\juce_AudioChannelSet.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -3751,7 +3739,7 @@
     <ClCompile Include="..\..\Modules\juce_simpleweb\juce_simpleweb.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\Modules\juce_simpleweb\simplewebsocket.cpp">
+    <ClCompile Include="..\..\Modules\juce_simpleweb\SimpleWebSocket.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\Modules\juce_timeline\resources\BinaryData.cpp">
@@ -3890,7 +3878,6 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\JuceLibraryCode\BinaryData.cpp"/>
-    <ClCompile Include="..\..\JuceLibraryCode\include_juce_analytics.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_audio_basics.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_audio_devices.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_audio_formats.cpp"/>
@@ -4190,11 +4177,6 @@
     <ClInclude Include="..\..\Source\ChataigneEngine.h"/>
     <ClInclude Include="..\..\Source\Main.h"/>
     <ClInclude Include="..\..\Source\MainComponent.h"/>
-    <ClInclude Include="..\..\..\JUCE\Modules\juce_analytics\analytics\juce_Analytics.h"/>
-    <ClInclude Include="..\..\..\JUCE\Modules\juce_analytics\analytics\juce_ButtonTracker.h"/>
-    <ClInclude Include="..\..\..\JUCE\Modules\juce_analytics\destinations\juce_AnalyticsDestination.h"/>
-    <ClInclude Include="..\..\..\JUCE\Modules\juce_analytics\destinations\juce_ThreadedAnalyticsDestination.h"/>
-    <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_analytics\juce_analytics.h"/>
     <ClInclude Include="..\..\..\JUCE\Modules\juce_audio_basics\audio_play_head\juce_AudioPlayHead.h"/>
     <ClInclude Include="..\..\..\JUCE\Modules\juce_audio_basics\buffers\juce_AudioChannelSet.h"/>
     <ClInclude Include="..\..\..\JUCE\Modules\juce_audio_basics\buffers\juce_AudioDataConverters.h"/>
@@ -5599,7 +5581,7 @@
     <ClInclude Include="..\..\Modules\juce_simpleweb\websocket\client_ws.hpp"/>
     <ClInclude Include="..\..\Modules\juce_simpleweb\websocket\server_ws.hpp"/>
     <ClInclude Include="..\..\Modules\juce_simpleweb\MIMETypes.h"/>
-    <ClInclude Include="..\..\Modules\juce_simpleweb\simplewebsocket.h"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\SimpleWebSocket.h"/>
     <ClInclude Include="..\..\Modules\juce_simpleweb\juce_simpleweb.h"/>
     <ClInclude Include="..\..\Modules\juce_timeline\resources\BinaryData.h"/>
     <ClInclude Include="..\..\Modules\juce_timeline\timeline\Sequence\Cue\ui\TimeCueManagerUI.h"/>
