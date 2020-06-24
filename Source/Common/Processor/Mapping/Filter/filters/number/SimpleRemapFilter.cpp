@@ -27,7 +27,7 @@ SimpleRemapFilter::SimpleRemapFilter(var params) :
 
 	forceFloatOutput = filterParams.addBoolParameter("Force Float", "If checked, this will force transforming integer in floats", false);
 
-	filterTypeFilters.add(Controllable::FLOAT, Controllable::INT);
+	filterTypeFilters.add(Controllable::FLOAT, Controllable::INT, Controllable::BOOL);
 	autoSetRange = false;
 }
 
@@ -56,7 +56,7 @@ Parameter* SimpleRemapFilter::setupSingleParameterInternal(Parameter* source)
 
 void SimpleRemapFilter::processSingleParameterInternal(Parameter * source, Parameter *out)
 {
-	if (targetIn == nullptr || targetOut == nullptr) return;
+	if (targetIn == nullptr || targetOut == nullptr || out == nullptr) return;
 	
 	float sourceVal = source->floatValue();
 	float targetVal = sourceVal;
