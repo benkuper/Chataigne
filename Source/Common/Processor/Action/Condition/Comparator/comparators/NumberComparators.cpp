@@ -20,7 +20,7 @@ FloatComparator::FloatComparator(Controllable * c) :
 	floatRef->setValue(floatParam->floatValue(), false, true, true);
 
 	addCompareOption("=", equalsId);
-	addCompareOption("!=", equalsId);
+	addCompareOption("!=", differentId);
 	addCompareOption(">", greaterId);
 	addCompareOption("<", lessId);
 	addCompareOption(">=", greaterOrEqualId);
