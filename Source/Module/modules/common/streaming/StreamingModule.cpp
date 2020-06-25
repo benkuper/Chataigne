@@ -106,8 +106,6 @@ void StreamingModule::buildMessageStructureOptions()
 void StreamingModule::processDataLine(const String & msg)
 {
 	if (!enabled->boolValue()) return;
-	if (logIncomingData->boolValue()) NLOG(niceName, "Message received : " << (msg.isNotEmpty() ? msg : "(Empty message)"));
-	inActivityTrigger->trigger();
 
 	if (thruManager != nullptr)
 	{
@@ -126,6 +124,11 @@ void StreamingModule::processDataLine(const String & msg)
 
 
 	const String message = msg.removeCharacters("\r\n");
+
+	inActivityTrigger->trigger();
+
+	if (logIncomingData->boolValue()) NLOG(niceName, "Message received : " << (message.isNotEmpty() ? message : "(Empty message)"));
+	
 	if (message.isEmpty()) return;
 
 	processDataLineInternal(message);
