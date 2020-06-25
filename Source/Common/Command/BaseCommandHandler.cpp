@@ -105,9 +105,11 @@ void BaseCommandHandler::setCommand(CommandDefinition * commandDef)
 	}
 
 
-	commandHandlerListeners.call(&CommandHandlerListener::commandChanged, this);
-
-	if(!isClearing) handlerNotifier.addMessage(new CommandHandlerEvent(CommandHandlerEvent::COMMAND_CHANGED, this));
+	if (!isClearing)
+	{
+		commandHandlerListeners.call(&CommandHandlerListener::commandChanged, this);
+		handlerNotifier.addMessage(new CommandHandlerEvent(CommandHandlerEvent::COMMAND_CHANGED, this));
+	}
 
 	if (Engine::mainEngine != nullptr && !Engine::mainEngine->isLoadingFile && !Engine::mainEngine->isClearing) Engine::mainEngine->changed();
 }
