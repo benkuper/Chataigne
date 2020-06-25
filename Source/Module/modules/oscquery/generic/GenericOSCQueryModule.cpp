@@ -229,7 +229,6 @@ Controllable* GenericOSCQueryModule::createControllableFromData(StringRef name, 
 
 	if (range.size() != value.size())
 	{
-
 		DBG("Not the same : " << range.size() << " / " << value.size() << "\n" << data.toString());
 		//NLOGWARNING(niceName, "RANGE and VALUE fields don't have the same size, skipping : " << cNiceName);
 	}
@@ -257,32 +256,25 @@ Controllable* GenericOSCQueryModule::createControllableFromData(StringRef name, 
 	{
         if(value.isVoid()) for(int i=0;i<2; ++i) value.append(0);
 		c = new Point2DParameter(cNiceName, cNiceName);
-		((Point2DParameter*)c)->setValue(value);
-		((Point2DParameter*)c)->setRange(minVal, maxVal);
+		if (value.size() >= 2) ((Point2DParameter*)c)->setValue(value);
+		if (range.size() >= 2) ((Point2DParameter*)c)->setRange(minVal, maxVal);
 	}
 	else if (type == "iii" || type == "fff" || type == "hhh" || type == "ddd")
 	{
 		if (value.isVoid()) for (int i = 0; i < 3; ++i) value.append(0);
         c = new Point3DParameter(cNiceName, cNiceName);
-		((Point3DParameter*)c)->setValue(value);
-		((Point3DParameter*)c)->setRange(minVal, maxVal);
+		if(value.size() >= 3) ((Point3DParameter*)c)->setValue(value);
+		if(range.size() >= 3) ((Point3DParameter*)c)->setRange(minVal, maxVal);
 	}
 	else if (type == "ffff" || type == "dddd")
 	{
-		if(value.isArray() && value.size() >= 4)
-        {
-            Colour col = Colour::fromFloatRGBA(value[0], value[1], value[2], value[3]);
-            c = new ColorParameter(cNiceName, cNiceName, col);
-        }
+		Colour col = value.size() >= 4 ? Colour::fromFloatRGBA(value[0], value[1], value[2], value[3]) : Colours::black;
+        c = new ColorParameter(cNiceName, cNiceName, col);
 	}
 	else if (type == "iiii" || type == "hhhh")
 	{
-        if(value.isArray() && value.size() >= 4)
-        {
-            Colour col = Colour::fromRGBA((int)value[0], (int)value[1], (int)value[2], (int)value[3]);
-            c = new ColorParameter(cNiceName, cNiceName, col);
-        }
-		
+		Colour col = value.size() >= 4 ? Colour::fromRGBA((int)value[0], (int)value[1], (int)value[2], (int)value[3]) : Colours::black;
+        c = new ColorParameter(cNiceName, cNiceName, col);
 	}
 	else if (type == "s" || type == "S"  || type == "c")
 	{
@@ -321,7 +313,6 @@ Controllable* GenericOSCQueryModule::createControllableFromData(StringRef name, 
 	{
 		c->setCustomShortName(name);
 		if (access == 1) c->setControllableFeedbackOnly(true);
-
 	}
 
 	return c;
