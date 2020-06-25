@@ -15,6 +15,7 @@ ColorMappingLayerTimeline::ColorMappingLayerTimeline(ColorMappingLayer* layer) :
 	cml(layer)
 {
 	colorManagerUI = ((GradientColorManagerUI*)mainComponent.get());
+	updateMiniModeUI();
 }
 
 ColorMappingLayerTimeline::~ColorMappingLayerTimeline()
@@ -24,6 +25,11 @@ ColorMappingLayerTimeline::~ColorMappingLayerTimeline()
 void ColorMappingLayerTimeline::updateContent()
 {
 	colorManagerUI->setViewRange(item->sequence->viewStartTime->floatValue(), item->sequence->viewEndTime->floatValue());
+}
+
+void ColorMappingLayerTimeline::updateMiniModeUI()
+{
+	colorManagerUI->setMiniMode(item->miniMode->boolValue());
 }
 
 void ColorMappingLayerTimeline::addSelectableComponentsAndInspectables(Array<Component*>& selectables, Array<Inspectable*>& inspectables)

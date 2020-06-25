@@ -19,6 +19,8 @@ AutomationMappingLayerTimeline::AutomationMappingLayerTimeline(AutomationMapping
 
     autoDrawContourWhenSelected = false;
     //autoSelectWithChildRespect = false;
+
+    updateMiniModeUI();
 }
 
 AutomationMappingLayerTimeline::~AutomationMappingLayerTimeline()
