@@ -28,6 +28,8 @@ public:
 	
 	void setCollapsed(bool value, bool force = false, bool animate = true, bool doNotRebuild = false) override;
 
+	void resetAndBuild() override;
+
 	void resizedInternalHeaderItemInternal(Rectangle<int> &r) override;
 	void resizedInternalContent(Rectangle<int> &r) override;
 	void updateUI() override;

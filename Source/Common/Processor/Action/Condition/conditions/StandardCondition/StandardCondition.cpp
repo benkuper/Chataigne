@@ -78,13 +78,14 @@ void StandardCondition::setSourceControllable(WeakReference<Controllable> c)
 		comparator.reset(ComparatorFactory::createComparatorForControllable(sourceControllable));
 
 
-		addChildControllableContainer(comparator.get());
 
 		Module * m = ControllableUtil::findParentAs<Module>(sourceControllable);
 		if (m != nullptr) registerLinkedInspectable(m);
 
 		if (comparator != nullptr)
 		{
+			addChildControllableContainer(comparator.get());
+
 			if (!isCurrentlyLoadingData)
 			{
 				if (!loadingComparatorData.isVoid())

@@ -32,8 +32,14 @@ void StandardConditionEditor::setCollapsed(bool value, bool force, bool animate,
 	ConditionEditor::setCollapsed(value, force, animate, doNotRebuild);
 
 	targetUI->setVisible(!standardCondition->editorIsCollapsed);
-	if (sourceFeedbackUI != nullptr)	sourceFeedbackUI->setVisible(!standardCondition->editorIsCollapsed);
+	//if (sourceFeedbackUI != nullptr)	sourceFeedbackUI->setVisible(!standardCondition->editorIsCollapsed);
 	if (comparatorUI != nullptr) comparatorUI->setVisible(!standardCondition->editorIsCollapsed);
+}
+
+void StandardConditionEditor::resetAndBuild()
+{
+	// do nothing
+	DBG("Here reset and build");
 }
 
 void StandardConditionEditor::resizedInternalHeaderItemInternal(Rectangle<int> & r)
@@ -71,8 +77,7 @@ void StandardConditionEditor::updateUI()
 	{
 		sourceFeedbackUI.reset(standardCondition->sourceControllable->createDefaultUI());
 		//sourceFeedbackUI->setForceFeedbackOnly(true);
-		addChildComponent(sourceFeedbackUI.get());
-		sourceFeedbackUI->setVisible(!standardCondition->editorIsCollapsed);
+		addAndMakeVisible(sourceFeedbackUI.get());
 	}
 
 	if (comparatorUI != nullptr)
