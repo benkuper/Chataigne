@@ -32,7 +32,6 @@ void BaseCommandHandler::clearItem()
 {
 	BaseItem::clearItem();
     if (ModuleManager::getInstanceWithoutCreating() != nullptr) ModuleManager::getInstance()->removeBaseManagerListener(this);
-    if(command != nullptr && command->module != nullptr && command->module->templateManager != nullptr && !command->module->isClearing) command->module->templateManager->removeBaseManagerListener(this);
     setCommand(nullptr);
 }
 
@@ -53,8 +52,16 @@ void BaseCommandHandler::setCommand(CommandDefinition * commandDef)
 		prevCommandData = command->getJSONData();
 
 		command->removeCommandListener(this);
-		command->module->removeInspectableListener(this);
+		if (command->module != nullptr)
+		{
+			command->module->removeInspectableListener(this);
 
+			if (command->module->templateManager != nullptr && !command->module->isClearing)
+			{
+				command->module->templateManager->removeBaseManagerListener(this);
+			}
+
+		}
 		unregisterLinkedInspectable(command->module);
 	}
 
@@ -185,7 +192,7 @@ void BaseCommandHandler::commandContentChanged()
 
 void BaseCommandHandler::commandTemplateDestroyed()
 {
-	if (command != nullptr)
+	if (command != nullptr && !Engine::mainEngine->isClearing)
 	{
 		ghostCommandData = command->getJSONData();
 		//DBG("Template destroyed, command data = "+JSON::toString(ghostCommandData));
@@ -197,7 +204,7 @@ void BaseCommandHandler::commandTemplateDestroyed()
 
 void BaseCommandHandler::inspectableDestroyed(Inspectable *)
 {
-    if(isClearing) return;
+    if(isClearing || Engine::mainEngine->isClearing) return;
 	if (command != nullptr) ghostCommandData = command->getJSONData();
 	setCommand(nullptr);
 	if(!Engine::mainEngine->isClearing && ModuleManager::getInstanceWithoutCreating() != nullptr) ModuleManager::getInstance()->addBaseManagerListener(this);
