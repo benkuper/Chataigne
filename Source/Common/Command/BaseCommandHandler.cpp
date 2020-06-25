@@ -89,9 +89,9 @@ void BaseCommandHandler::setCommand(CommandDefinition * commandDef)
 
 		if (ModuleManager::getInstanceWithoutCreating() != nullptr) ModuleManager::getInstance()->removeBaseManagerListener(this);
 	}
-	else
+	else if(ghostModuleName.isNotEmpty() && ghostCommandName.isNotEmpty())
 	{
-		if (!Engine::mainEngine->isClearing)
+		if (!Engine::mainEngine->isClearing && !isClearing)
 		{
 			setWarningMessage("Command not found : " + ghostModuleName + ":" + ghostCommandName);
 		}
@@ -99,7 +99,8 @@ void BaseCommandHandler::setCommand(CommandDefinition * commandDef)
 
 
 	commandHandlerListeners.call(&CommandHandlerListener::commandChanged, this);
-	handlerNotifier.addMessage(new CommandHandlerEvent(CommandHandlerEvent::COMMAND_CHANGED, this));
+
+	if(!isClearing) handlerNotifier.addMessage(new CommandHandlerEvent(CommandHandlerEvent::COMMAND_CHANGED, this));
 
 	if (Engine::mainEngine != nullptr && !Engine::mainEngine->isLoadingFile && !Engine::mainEngine->isClearing) Engine::mainEngine->changed();
 }

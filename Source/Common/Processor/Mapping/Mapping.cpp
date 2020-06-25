@@ -128,7 +128,7 @@ void Mapping::process(bool forceOutput)
 {
 	if ((canBeDisabled && !enabled->boolValue()) || forceDisabled) return;
 	if (im.items.size() == 0) return;
-	if (isCurrentlyLoadingData || isRebuilding || isProcessing) return;
+	if (isCurrentlyLoadingData || isRebuilding || isProcessing || isClearing) return;
 
 	//DBG("[PROCESS] Enter lock");
 	{
@@ -224,11 +224,13 @@ void Mapping::onContainerParameterChangedInternal(Parameter * p)
 
 void Mapping::filterManagerNeedsRebuild(MappingFilter* afterThisFilter)
 {
+	if (isClearing) return;
 	updateMappingChain(afterThisFilter);
 }
 
 void Mapping::filterManagerNeedsProcess()
 {
+	if (isClearing) return;
 	process();
 }
 
