@@ -25,6 +25,12 @@ MappingOutputManager::~MappingOutputManager()
 }
 
 
+void MappingOutputManager::clear()
+{
+	for (auto& o : items) o->removeCommandHandlerListener(this);
+	BaseManager::clear();
+}
+
 void MappingOutputManager::setOutParams(Array<Parameter *> params)
 {
 	outParams = Array<WeakReference<Parameter>>(params.getRawDataPointer(), params.size());

@@ -186,6 +186,7 @@ void BaseCommandHandler::onContainerTriggerTriggered(Trigger * t)
 
 void BaseCommandHandler::commandContentChanged()
 {
+	if (isClearing) return;
 	commandHandlerListeners.call(&CommandHandlerListener::commandUpdated, this);
 	handlerNotifier.addMessage(new CommandHandlerEvent(CommandHandlerEvent::COMMAND_UPDATED, this));
 }
@@ -193,6 +194,7 @@ void BaseCommandHandler::commandContentChanged()
 void BaseCommandHandler::commandTemplateDestroyed()
 {
 	if (command != nullptr && !Engine::mainEngine->isClearing)
+
 	{
 		ghostCommandData = command->getJSONData();
 		//DBG("Template destroyed, command data = "+JSON::toString(ghostCommandData));

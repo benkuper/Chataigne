@@ -22,6 +22,8 @@ public:
 
 	Array<WeakReference<Parameter>> outParams;
 
+	void clear() override;
+
 	void setOutParams(Array<Parameter *> params);
 
 	void updateOutputValues();
