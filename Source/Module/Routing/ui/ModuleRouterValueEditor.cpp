@@ -54,9 +54,9 @@ void ModuleRouterValueEditor::buildRouteParamsUI()
 	resized();
 }
 
-
-void ModuleRouterValueEditor::resizedInternalHeader(Rectangle<int>& r)
+void ModuleRouterValueEditor::resizedHeader(Rectangle<int>& r)
 {
+	BaseItemUI::resizedHeader(r.removeFromLeft(100));
 
 	Rectangle<int> rr = r.removeFromRight(r.getWidth() - 350);
 	Rectangle<int> tr = r.removeFromRight(r.getWidth() - 100);

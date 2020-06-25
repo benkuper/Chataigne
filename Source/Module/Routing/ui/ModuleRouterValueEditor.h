@@ -26,7 +26,7 @@ public:
 
 	void buildRouteParamsUI();
 
-	void resizedInternalHeader(Rectangle<int> &r) override;
+	void resizedHeader(Rectangle<int> &r) override;
 
 	void routeParamsChanged(ModuleRouterValue *) override;
 };
