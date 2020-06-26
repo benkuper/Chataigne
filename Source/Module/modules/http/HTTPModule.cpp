@@ -238,7 +238,7 @@ void HTTPModule::sendRequestFromScript(const var::NativeFunctionArgs& args, Requ
 	}
 	else
 	{
-		for (int i = 2; i < args.numArguments; i += 2)
+		for (int i = 1; i < args.numArguments; i += 2)
 		{
 			if (i >= args.numArguments - 1) break;
 			requestParams.set(args.arguments[i], args.arguments[i + 1]);
