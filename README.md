@@ -101,6 +101,10 @@ Chataigne is using a modified version of JUCE. So you first need to compile the 
 If you have any issue regarding the software, you can post an issue on github (preferred for code-related problems and features),
 there is also the official forum here : http://benjamin.kuperberg.fr/chataigne/forum more suited for questions, wishes and user-level issues.
 
+Chataigne is now on Discord, join and meet the community !
+
+![Chataigne on discord](https://discordapp.com/api/guilds/697400442027769998/widget.png?style=banner2)
+
 ## The Badge Zone
 Linux (x64):  [![Build Status](https://travis-matrix-badges.herokuapp.com/repos/benkuper/Chataigne/branches/master/2)](https://travis-ci.org/benkuper/Chataigne)
 
@@ -109,6 +113,7 @@ MacOS : [![Build Status](https://travis-matrix-badges.herokuapp.com/repos/benkup
 Windows (x64) : [![Build status](https://ci.appveyor.com/api/projects/status/7lskg35ttnsv99cq?svg=true)](https://ci.appveyor.com/project/benkuper/chataigne)
 
 Raspberry Pi (3B):  [![Build Status](https://travis-matrix-badges.herokuapp.com/repos/benkuper/Chataigne/branches/master/3)](https://travis-ci.org/benkuper/Chataigne)
+
 
 [![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](https://forthebadge.com)
 [![forthebadge](https://forthebadge.com/images/badges/makes-people-smile.svg)](https://forthebadge.com)
