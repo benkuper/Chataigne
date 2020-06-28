@@ -38,6 +38,7 @@ public:
 	~PresetParameterContainer();
 
 	GenericControllableManager* manager;
+	//OwnedArray<ParameterPreset> presets;
 	HashMap<ParameterPreset*,  Parameter*> linkMap;
 
 	bool keepValuesInSync;
@@ -45,7 +46,7 @@ public:
 	void resetAndBuildValues(bool syncValues = true);
 
 	void addValueFromItem(Parameter* source);
-	void syncItem(Parameter* p, Parameter* source, bool syncValue = true);
+	void syncItem(ParameterPreset* preset, bool syncValue = true);
 	void syncItems(bool syncValues);
 
 	void itemAdded(GenericControllableItem*) override;
@@ -57,6 +58,9 @@ public:
 	void controllableNameChanged(Controllable*) override;
 
 	ParameterPreset * getParameterPresetForSource(Parameter* p);
+
+	//var getJSONData() override;
+	void loadJSONData(var data, bool createIfNotThere = false) override;
 
 	class LinkedComparator
 	{

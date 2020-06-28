@@ -118,6 +118,7 @@ void PresetParameterContainer::resetAndBuildValues(bool syncValues)
 	}
 
 	clear();
+
 	for (auto &gci : manager->items)
 	{
 		addValueFromItem(dynamic_cast<Parameter *>(gci->controllable));
@@ -135,15 +136,20 @@ void PresetParameterContainer::addValueFromItem(Parameter* source)
 	source->addControllableListener(this);
 	source->addParameterListener(this);
 	p->forceSaveValue = true;
-	syncItem(p, source);
-
+	syncItem(pp);
 	addChildControllableContainer(pp, true);
 }
 
-void PresetParameterContainer::syncItem(Parameter* p, Parameter* source, bool syncValue)
+void PresetParameterContainer::syncItem(ParameterPreset* preset, bool syncValue)
 {
+	Parameter* p = preset->parameter;
+	Parameter* source = linkMap[preset];
+
+	preset->setNiceName(source->niceName);
+
 	p->setNiceName(source->niceName);
 	p->setRange(source->minimumValue, source->maximumValue);
+
 	if (syncValue) p->setValue(source->value);
 }
 
@@ -151,10 +157,7 @@ void PresetParameterContainer::syncItems(bool syncValues)
 {
 	for (auto& cc : controllableContainers)
 	{
-		if (ParameterPreset* pp = dynamic_cast<ParameterPreset *>(cc.get()))
-		{
-			syncItem(pp->parameter, linkMap[pp], syncValues);
-		}
+		if (ParameterPreset* pp = dynamic_cast<ParameterPreset *>(cc.get())) syncItem(pp, syncValues);
 	}
 }
 
@@ -199,7 +202,7 @@ void PresetParameterContainer::parameterRangeChanged(Parameter* source)
 	ControllableContainer::parameterRangeChanged(source);
 	ParameterPreset* pp = getParameterPresetForSource(source);
 	if (pp == nullptr) return;
-	syncItem(pp->parameter, source, keepValuesInSync);
+	syncItem(pp, keepValuesInSync);
 }
 
 void PresetParameterContainer::controllableNameChanged(Controllable* sourceC)
@@ -209,7 +212,7 @@ void PresetParameterContainer::controllableNameChanged(Controllable* sourceC)
 
 	ParameterPreset* pp = getParameterPresetForSource(source);
 	if (pp == nullptr) return;
-	syncItem(pp->parameter, source, keepValuesInSync);
+	syncItem(pp, keepValuesInSync);
 }
 
 ParameterPreset * PresetParameterContainer::getParameterPresetForSource(Parameter * p)
@@ -217,6 +220,12 @@ ParameterPreset * PresetParameterContainer::getParameterPresetForSource(Paramete
 	HashMap<ParameterPreset *, Parameter *>::Iterator i(linkMap);
 	while (i.next()) if (p == i.getValue()) return i.getKey();
 	return nullptr;
+}
+
+void PresetParameterContainer::loadJSONData(var data, bool createIfNotThere)
+{
+	resetAndBuildValues();	
+	ControllableContainer::loadJSONData(data, createIfNotThere);
 }
 
 ParameterPreset::ParameterPreset(Parameter * p) :
@@ -244,7 +253,6 @@ ParameterPreset::ParameterPreset(Parameter * p) :
 
 ParameterPreset::~ParameterPreset()
 {
-
 }
 
 InspectableEditor* ParameterPreset::getEditor(bool isRoot)
