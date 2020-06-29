@@ -22,7 +22,6 @@ public:
 	~ModuleManagerUI();
 
 	ModuleUI* createUIForItem(Module* item) override;
-	void showMenuAndAddItem(bool ,Point<int>) override;
 
 	static ModuleManagerUI * create(const String &contentName) { return new ModuleManagerUI(contentName, ModuleManager::getInstance()); }
 

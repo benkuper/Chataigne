@@ -12,34 +12,30 @@
 
 #include "Module.h"
 
-class ModuleDefinition
+class ModuleDefinition :
+	public FactoryDefinition<Module, std::function<Module* ()>>
 {
 public:
-	String menuPath;
-	String moduleType;
+	ModuleDefinition(const String& menuPath, const String& type, std::function<Module* ()> createFunc, var customModuleData = var(), bool isCustomModule = false);
+	
 	File moduleFolder; //for customModules
-	var jsonData;
+	var customModuleData;
 	bool isCustomModule;
-	std::function<Module*()> createFunc;
-	Image icon;
 
-	ModuleDefinition(const String& menuPath, const String& type, std::function<Module* ()> createFunc, var jsonData = var(), bool isCustomModule = false);
+	Module* create() override;
 };
 
-class ModuleFactory
+class ModuleFactory :
+	public Factory<Module>
 {
 public:
-	juce_DeclareSingleton(ModuleFactory, true);
-
-	OwnedArray<ModuleDefinition> moduleDefs;
 	HashMap<String, ModuleDefinition *> customModulesDefMap;
-
-	PopupMenu menu;
 
 	ModuleFactory();
 	~ModuleFactory() {}
 
-	void buildPopupMenu();
+	void buildPopupMenu() override;
+	Module * createFromMenuResult(int result) override;
 
 	ModuleDefinition* getDefinitionForType(const String& moduleType);
 
@@ -49,8 +45,5 @@ public:
 	File getFolderForCustomModule(StringRef moduleName) const;
 	File getCustomModulesFolder() const;
 
-	static Module* showCreateMenu();
-	static Module * createModule(const String &moduleType);
-
-	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ModuleFactory)
+	Module* create(BaseFactoryDefinition<Module> * def) override;
 };

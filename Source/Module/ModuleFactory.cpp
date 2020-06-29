@@ -59,53 +59,50 @@
 
 #include "Community/CommunityModuleManager.h"
 
-
-juce_ImplementSingleton(ModuleFactory)
-
 ModuleFactory::ModuleFactory() {
 	
-	moduleDefs.add(new ModuleDefinition("Protocol", "OSC", &CustomOSCModule::create));
-	moduleDefs.add(new ModuleDefinition("Protocol", "OSCQuery", &GenericOSCQueryModule::create));
-	moduleDefs.add(new ModuleDefinition("Protocol", "MIDI", &MIDIModule::create));
-	moduleDefs.add(new ModuleDefinition("Protocol", "DMX", &DMXModule::create));
-	moduleDefs.add(new ModuleDefinition("Protocol", "Serial", &SerialModule::create));
-	moduleDefs.add(new ModuleDefinition("Protocol", "UDP", &UDPModule::create));  
-	moduleDefs.add(new ModuleDefinition("Protocol", "TCP Client", &TCPClientModule::create));
-	moduleDefs.add(new ModuleDefinition("Protocol", "TCP Server", &TCPServerModule::create));
-	moduleDefs.add(new ModuleDefinition("Protocol", "HTTP", &HTTPModule::create));
-	moduleDefs.add(new ModuleDefinition("Protocol", "WebSocket Client", &WebSocketClientModule::create));
-	moduleDefs.add(new ModuleDefinition("Protocol", "WebSocket Server", &WebSocketServerModule::create));
-	moduleDefs.add(new ModuleDefinition("Protocol", "PJLink", &PJLinkModule::create));
+	defs.add(new ModuleDefinition("Protocol", "OSC", &CustomOSCModule::create));
+	defs.add(new ModuleDefinition("Protocol", "OSCQuery", &GenericOSCQueryModule::create));
+	defs.add(new ModuleDefinition("Protocol", "MIDI", &MIDIModule::create));
+	defs.add(new ModuleDefinition("Protocol", "DMX", &DMXModule::create));
+	defs.add(new ModuleDefinition("Protocol", "Serial", &SerialModule::create));
+	defs.add(new ModuleDefinition("Protocol", "UDP", &UDPModule::create));  
+	defs.add(new ModuleDefinition("Protocol", "TCP Client", &TCPClientModule::create));
+	defs.add(new ModuleDefinition("Protocol", "TCP Server", &TCPServerModule::create));
+	defs.add(new ModuleDefinition("Protocol", "HTTP", &HTTPModule::create));
+	defs.add(new ModuleDefinition("Protocol", "WebSocket Client", &WebSocketClientModule::create));
+	defs.add(new ModuleDefinition("Protocol", "WebSocket Server", &WebSocketServerModule::create));
+	defs.add(new ModuleDefinition("Protocol", "PJLink", &PJLinkModule::create));
 	
 
-	moduleDefs.add(new ModuleDefinition("Hardware", "Sound Card", &AudioModule::create));
+	defs.add(new ModuleDefinition("Hardware", "Sound Card", &AudioModule::create));
 
-	moduleDefs.add(new ModuleDefinition("Hardware", "Wiimote", &WiimoteModule::create));
-	moduleDefs.add(new ModuleDefinition("Hardware", "JoyCon", &JoyConModule::create));
-	moduleDefs.add(new ModuleDefinition("Hardware", "Keyboard", &KeyboardModule::create));
-	moduleDefs.add(new ModuleDefinition("Hardware", "Mouse", &MouseModule::create));
-	moduleDefs.add(new ModuleDefinition("Hardware", "KinectV2", &KinectV2Module::create));
-	moduleDefs.add(new ModuleDefinition("Hardware", "Gamepad", &GamepadModule::create));
-	moduleDefs.add(new ModuleDefinition("Hardware", "Joystick", &JoystickModule::create));
-	moduleDefs.add(new ModuleDefinition("Hardware", "Stream Deck", &StreamDeckModule::create));
+	defs.add(new ModuleDefinition("Hardware", "Wiimote", &WiimoteModule::create));
+	defs.add(new ModuleDefinition("Hardware", "JoyCon", &JoyConModule::create));
+	defs.add(new ModuleDefinition("Hardware", "Keyboard", &KeyboardModule::create));
+	defs.add(new ModuleDefinition("Hardware", "Mouse", &MouseModule::create));
+	defs.add(new ModuleDefinition("Hardware", "KinectV2", &KinectV2Module::create));
+	defs.add(new ModuleDefinition("Hardware", "Gamepad", &GamepadModule::create));
+	defs.add(new ModuleDefinition("Hardware", "Joystick", &JoystickModule::create));
+	defs.add(new ModuleDefinition("Hardware", "Stream Deck", &StreamDeckModule::create));
 
 
-	moduleDefs.add(new ModuleDefinition("Software", "DLight", &DLightModule::create));
-	moduleDefs.add(new ModuleDefinition("Software", "HeavyM", &HeavyMModule::create));
-	moduleDefs.add(new ModuleDefinition("Software", "LiveOSC2", &LiveOSCModule::create));
-	moduleDefs.add(new ModuleDefinition("Software", "MadMapper", &MadMapperModule::create));
-	moduleDefs.add(new ModuleDefinition("Software", "Millumin", &MilluminModule::create));
-	moduleDefs.add(new ModuleDefinition("Software", "QLab", &QLabModule::create));
-	moduleDefs.add(new ModuleDefinition("Software", "Reaper", &ReaperModule::create));
-	moduleDefs.add(new ModuleDefinition("Software", "Resolume", &ResolumeModule::create));
-	moduleDefs.add(new ModuleDefinition("Software", "Watchout", &WatchoutModule::create));
-    moduleDefs.add(new ModuleDefinition("Software", "PowerPoint", &PowerPointModule::create));
+	defs.add(new ModuleDefinition("Software", "DLight", &DLightModule::create));
+	defs.add(new ModuleDefinition("Software", "HeavyM", &HeavyMModule::create));
+	defs.add(new ModuleDefinition("Software", "LiveOSC2", &LiveOSCModule::create));
+	defs.add(new ModuleDefinition("Software", "MadMapper", &MadMapperModule::create));
+	defs.add(new ModuleDefinition("Software", "Millumin", &MilluminModule::create));
+	defs.add(new ModuleDefinition("Software", "QLab", &QLabModule::create));
+	defs.add(new ModuleDefinition("Software", "Reaper", &ReaperModule::create));
+	defs.add(new ModuleDefinition("Software", "Resolume", &ResolumeModule::create));
+	defs.add(new ModuleDefinition("Software", "Watchout", &WatchoutModule::create));
+    defs.add(new ModuleDefinition("Software", "PowerPoint", &PowerPointModule::create));
 
-	moduleDefs.add(new ModuleDefinition("Generator", "Metronome", &MetronomeModule::create));
-	moduleDefs.add(new ModuleDefinition("Generator", "Signal", &SignalModule::create));
+	defs.add(new ModuleDefinition("Generator", "Metronome", &MetronomeModule::create));
+	defs.add(new ModuleDefinition("Generator", "Signal", &SignalModule::create));
 	
-	moduleDefs.add(new ModuleDefinition("System", "Time", &TimeModule::create));
-	moduleDefs.add(new ModuleDefinition("System", "OS", &OSModule::create));
+	defs.add(new ModuleDefinition("System", "Time", &TimeModule::create));
+	defs.add(new ModuleDefinition("System", "OS", &OSModule::create));
 
 	addCustomModules();
 	buildPopupMenu();
@@ -148,9 +145,10 @@ void ModuleFactory::addCustomModules()
 			if (ModuleDefinition* sourceDef = getDefinitionForType(moduleType))
 			{
 				LOG("Found custom module : " << moduleMenuPath << ":" << moduleName);
-				ModuleDefinition* def = moduleDefs.add(new ModuleDefinition(moduleMenuPath, moduleName, sourceDef->createFunc));
+				ModuleDefinition* def = new ModuleDefinition(moduleMenuPath, moduleName, sourceDef->createFunc);
+				defs.add(def);
 				customModulesDefMap.set(moduleName, def);
-				def->jsonData = moduleData;
+				def->customModuleData = moduleData;
 				def->moduleFolder = m;
 				def->isCustomModule = true;
 			}
@@ -159,21 +157,6 @@ void ModuleFactory::addCustomModules()
 				LOGWARNING("Problem loading custom module : " << moduleName << " : Base module type not handled : " << moduleType);
 				continue;
 			}
-			
-			/*
-			if (moduleType == "Serial") createFunc = &SerialModule::create;
-			else if (moduleType == "OSC") createFunc = &CustomOSCModule::create;
-			else if (moduleType == "MIDI") createFunc = &MIDIModule::create;
-			else if (moduleType == "UDP") createFunc = &UDPModule::create;
-			else if (moduleType == "HTTP") createFunc = &HTTPModule::create;
-			else
-			{
-				LOGWARNING("Problem loading custom module : " << moduleName << " : Base module type not handled : " << moduleType);
-				continue;
-			}
-			*/
-
-			
 		}
 		
 	}
@@ -181,7 +164,7 @@ void ModuleFactory::addCustomModules()
 
 void ModuleFactory::updateCustomModules()
 {
-	for (HashMap<String, ModuleDefinition *>::Iterator i(customModulesDefMap); i.next();) moduleDefs.removeObject(i.getValue());
+	for (HashMap<String, ModuleDefinition *>::Iterator i(customModulesDefMap); i.next();) defs.removeObject(i.getValue());
 	customModulesDefMap.clear();
 	addCustomModules();
 	buildPopupMenu();
@@ -190,7 +173,7 @@ void ModuleFactory::updateCustomModules()
 var ModuleFactory::getCustomModuleInfo(StringRef moduleName)
 {
 	if (!customModulesDefMap.contains(moduleName)) return var();
-	return customModulesDefMap[moduleName]->jsonData;
+	return customModulesDefMap[moduleName]->customModuleData;
 }
 
 File ModuleFactory::getFolderForCustomModule(StringRef moduleName) const
@@ -209,13 +192,14 @@ void ModuleFactory::buildPopupMenu()
 	Array<String> subMenuNames;
 	Array<bool> lastDefIsCustom;
 
-	for (auto &d : moduleDefs)
+	for (auto &d : defs)
 	{
-		int itemID = moduleDefs.indexOf(d) + 1;//start at 1 for menu
+		ModuleDefinition* md = static_cast<ModuleDefinition*>(d);
+		int itemID = defs.indexOf(d) + 1;//start at 1 for menu
 
-		if (d->menuPath.isEmpty())
+		if (md->menuPath.isEmpty())
 		{
-			menu.addItem(itemID, d->moduleType, true, false, d->icon);
+			menu.addItem(itemID, md->type, true, false, md->icon);
 			continue;
 		}
 
@@ -223,7 +207,7 @@ void ModuleFactory::buildPopupMenu()
 
 		for (int i = 0; i < subMenus.size(); ++i)
 		{
-			if (subMenuNames[i] == d->menuPath)
+			if (subMenuNames[i] == md->menuPath)
 			{
 				subMenuIndex = i;
 				break;
@@ -231,20 +215,21 @@ void ModuleFactory::buildPopupMenu()
 		}
 		if (subMenuIndex == -1)
 		{
-			subMenuNames.add(d->menuPath);
+			subMenuNames.add(md->menuPath);
 			lastDefIsCustom.add(false);
 			subMenus.add(new PopupMenu());
 			subMenuIndex = subMenus.size() - 1;
 		}
 
-		if (d->isCustomModule && !lastDefIsCustom[subMenuIndex])
+
+		if (md->isCustomModule && !lastDefIsCustom[subMenuIndex])
 		{
 			if(subMenus[subMenuIndex]->getNumItems() > 0) subMenus[subMenuIndex]->addSeparator();
 			subMenus[subMenuIndex]->addSectionHeader("Community Modules");
 		}
 
-		subMenus[subMenuIndex]->addItem(itemID, d->moduleType, true, false, d->icon); 
-		lastDefIsCustom.set(subMenuIndex, d->isCustomModule);
+		subMenus[subMenuIndex]->addItem(itemID, md->type, true, false, md->icon); 
+		lastDefIsCustom.set(subMenuIndex, md->isCustomModule);
 	}
 
 	for (int i = 0; i < subMenus.size(); ++i) menu.addSubMenu(subMenuNames[i], *subMenus[i]);
@@ -253,11 +238,22 @@ void ModuleFactory::buildPopupMenu()
 	menu.addItem(-1, "Get more modules...");
 }
 
+Module* ModuleFactory::createFromMenuResult(int result)
+{
+	if (result == -1)
+	{
+		CommunityModuleManager::getInstance()->selectThis();
+		return nullptr;
+	}
+
+	return Factory::createFromMenuResult(result);
+}
+
 ModuleDefinition* ModuleFactory::getDefinitionForType(const String& moduleType)
 {
-	for (auto &m : moduleDefs)
+	for (auto &m : defs)
 	{
-		if (m->moduleType == moduleType) return m;
+		if (m->type == moduleType) return static_cast<ModuleDefinition *>(m);
 	}
 	
 	return nullptr;
@@ -268,50 +264,33 @@ File ModuleFactory::getCustomModulesFolder() const
 	return File::getSpecialLocation(File::SpecialLocationType::userDocumentsDirectory).getChildFile("Chataigne/modules");
 }
 
-Module * ModuleFactory::showCreateMenu()
+Module* ModuleFactory::create(BaseFactoryDefinition<Module>* def)
 {
-	int result = getInstance()->menu.show();
-	if (result == 0) return nullptr;
-	if (result == -1)
-	{
-		CommunityModuleManager::getInstance()->selectThis();
-		return nullptr;
-	}
+	Module * m = Factory::create(def);
+	if (m == nullptr) return nullptr;
 
-	ModuleDefinition * d = getInstance()->moduleDefs[result - 1];//result 0 is no result
-	Module * m = d->createFunc();
-	if (!d->jsonData.isVoid())
+	if (ModuleDefinition* md = dynamic_cast<ModuleDefinition*>(def))
 	{
-		m->setupModuleFromJSONData(d->jsonData);
+		if (!md->customModuleData.isVoid()) m->setupModuleFromJSONData(md->customModuleData);
 	}
 
 	return m;
 }
 
-Module * ModuleFactory::createModule(const String & moduleType)
-{
-	for (auto &d : getInstance()->moduleDefs)
-	{
-		if (d->moduleType == moduleType)
-		{
-			Module * m = d->createFunc();
-			if (!d->jsonData.isVoid()) m->setupModuleFromJSONData(d->jsonData);
-			return m;
-		}
-	}
-	return nullptr;
-}
 
 
-
-ModuleDefinition::ModuleDefinition(const String& menuPath, const String& type, std::function<Module* ()> createFunc, var jsonData, bool isCustomModule) :
-	menuPath(menuPath),
-	moduleType(type),
-	jsonData(jsonData),
-	isCustomModule(isCustomModule),
-	createFunc(createFunc)
+//DEFINITION
+ModuleDefinition::ModuleDefinition(const String& menuPath, const String& type, std::function<Module* ()> createFunc, var customModuleData, bool isCustomModule) :
+	FactoryDefinition(menuPath, type, createFunc),
+	customModuleData(customModuleData),
+	isCustomModule(isCustomModule)
 {
 	int numBytes = 0;
 	const char* iconData = BinaryData::getNamedResource((type.replace(" ", "_") + "_png").getCharPointer(), numBytes);
-	if (iconData != nullptr) icon = ImageCache::getFromMemory(iconData, numBytes);
+	if (iconData != nullptr) addIcon(ImageCache::getFromMemory(iconData, numBytes));
+}
+
+Module* ModuleDefinition::create()
+{
+	return createFunc();
 }

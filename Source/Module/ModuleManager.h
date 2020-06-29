@@ -11,7 +11,7 @@
 #pragma once
 
 #include "Module.h"
-
+#include "ModuleFactory.h"
 
 class ModuleManager :
 	public BaseManager<Module>
@@ -19,11 +19,10 @@ class ModuleManager :
 public:
 	juce_DeclareSingleton(ModuleManager, true)
 
-		ModuleManager();
+	ModuleManager();
 	~ModuleManager();
 
-	virtual Module* addItemFromData(var data, bool addToUndo = false) override;
-	virtual Array<Module*> addItemsFromData(var data, bool addToUndo = false) override;
+	ModuleFactory factory;
 
 	Module* getModuleWithName(const String& moduleName);
 

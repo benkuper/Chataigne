@@ -10,7 +10,7 @@
 
 #include "CommunityModuleInfo.h"
 #include "ui/CommunityModuleInfoEditor.h"
-#include "Module/ModuleFactory.h"
+#include "Module/ModuleManager.h"
 
 CommunityModuleInfo::CommunityModuleInfo(StringRef name, var onlineData) :
 	BaseItem(name, false)
@@ -64,10 +64,10 @@ File CommunityModuleInfo::getDownloadFilePath()
 
 void CommunityModuleInfo::updateLocalData()
 {
-	var localData = ModuleFactory::getInstance()->getCustomModuleInfo(niceName);
+	var localData = ModuleManager::getInstance()->factory.getCustomModuleInfo(niceName);
 	
 	localVersion = localData.getProperty("version", "Unknown");
-	localModuleFolder = ModuleFactory::getInstance()->getFolderForCustomModule(niceName);
+	localModuleFolder = ModuleManager::getInstance()->factory.getFolderForCustomModule(niceName);
 
 	installTriger->setEnabled(onlineVersion != localVersion);
 
@@ -87,7 +87,7 @@ void CommunityModuleInfo::onContainerTriggerTriggered(Trigger * t)
 		{
 			DBG("Local folder exists ? " << localModuleFolder.getFullPathName() << " : " << (int)localModuleFolder.exists());
 			if (localModuleFolder.exists()) localModuleFolder.deleteRecursively();
-			ModuleFactory::getInstance()->updateCustomModules();
+			ModuleManager::getInstance()->factory.updateCustomModules();
 
 			updateLocalData();
 		}
@@ -104,15 +104,15 @@ void CommunityModuleInfo::finished(URL::DownloadTask * task, bool success)
 	}
 
 	File moduleFile = getDownloadFilePath();
-	File modulesDir = ModuleFactory::getInstance()->getCustomModulesFolder();
+	File modulesDir = ModuleManager::getInstance()->factory.getCustomModulesFolder();
 
 	if (localModuleFolder.exists()) localModuleFolder.deleteRecursively();
 
 	ZipFile zip(moduleFile);
 	zip.uncompressTo(modulesDir);
 
-	ModuleFactory::getInstance()->updateCustomModules();
-	localModuleFolder = ModuleFactory::getInstance()->getFolderForCustomModule(niceName);
+	ModuleManager::getInstance()->factory.updateCustomModules();
+	localModuleFolder = ModuleManager::getInstance()->factory.getFolderForCustomModule(niceName);
 	
 	updateLocalData();
 }

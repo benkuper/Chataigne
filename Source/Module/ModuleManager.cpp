@@ -9,7 +9,6 @@
 */
 
 #include "ModuleManager.h"
-#include "ModuleFactory.h"
 #include "StateMachine/StateManager.h"
 #include "TimeMachine/ChataigneSequenceManager.h"
 #include "CustomVariables/CVGroupManager.h"
@@ -26,6 +25,7 @@ ModuleManager::ModuleManager() :
 	itemDataType = "Module";
 	helpID = "Modules";
 	showInspectorOnSelect = false;
+	managerFactory = &factory;
 
 	ControllableFactory::getInstance()->controllableDefs.add(new ControllableDefinition(MIDIValueParameter::getTypeStringStatic(), &MIDIValueParameter::create));
 	ControllableFactory::getInstance()->controllableDefs.add(new ControllableDefinition(DMXValueParameter::getTypeStringStatic(), &DMXValueParameter::create));
@@ -33,32 +33,6 @@ ModuleManager::ModuleManager() :
 
 ModuleManager::~ModuleManager()
 {
-	ModuleFactory::deleteInstance();
-}
-
-Module * ModuleManager::addItemFromData(var data, bool addToUndo)
-{
-	String moduleType = data.getProperty("type", "none");
-	if (moduleType.isEmpty()) return nullptr;
-	Module * i = ModuleFactory::getInstance()->createModule(moduleType);
-	if (i != nullptr) return addItem(i, data, addToUndo);
-	
-	return nullptr;
-}
-
-Array<Module*> ModuleManager::addItemsFromData(var data, bool addToUndo)
-{
-	Array<Module *> itemsToAdd;
-	
-	for (int i = 0; i < data.size(); ++i)
-	{
-		String moduleType = data[i].getProperty("type", "none");
-		if (moduleType.isEmpty()) return nullptr;
-		Module* mi = ModuleFactory::getInstance()->createModule(moduleType);
-		if (mi != nullptr) itemsToAdd.add(mi);
-	}
-
-	return addItems(itemsToAdd, data, addToUndo);
 }
 
 Module * ModuleManager::getModuleWithName(const String & moduleName)
