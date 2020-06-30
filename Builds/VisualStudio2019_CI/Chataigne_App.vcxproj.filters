@@ -10706,6 +10706,7 @@
     <None Include=".\icon.ico">
       <Filter>JUCE Library Code</Filter>
     </None>
+    <None Include="packages.config"/>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include=".\resources.rc">

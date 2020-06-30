@@ -65,6 +65,7 @@ Builds/CodeBlocksLinux/*\.cbp
 
 Builds/VisualStudio2017/\.vs/
 Builds/VisualStudio2019/\.vs/
+Builds/VisualStudio2019/packages/
 Builds/VisualStudio2017_Win7/
 
 *.exe
@@ -72,3 +73,4 @@ Builds/VisualStudio2017_Win7/
 *.AppImage
 
 .vscode
+
