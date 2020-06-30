@@ -203,8 +203,10 @@ void HTTPModule::createControllablesFromJSONResult(var data, ControllableContain
 }
 
 
-void HTTPModule::onControllableFeedbackUpdateInternal(ControllableContainer*, Controllable* c)
+void HTTPModule::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c)
 {
+    Module::controllableFeedbackUpdateInternal(cc, c);
+    
 	if (c == clearValues)
 	{
 		valuesCC.clear();
