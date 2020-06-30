@@ -43,7 +43,7 @@ You can check the tutorials to better understand what and how you can use Chatai
     - Joycon
     - Sound card
     
-   - Pre-configured modules for controlling softwares :
+  - Pre-configured modules for controlling softwares :
     - Resolume
     - Madmapper
     - Millumin
