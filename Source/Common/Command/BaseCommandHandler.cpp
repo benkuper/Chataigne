@@ -67,14 +67,13 @@ void BaseCommandHandler::setCommand(CommandDefinition * commandDef)
 
 
 	commandDefinition = commandDef;
-	if (commandDef != nullptr) command.reset(commandDef->create(context));
+	if (commandDef != nullptr && !Engine::mainEngine->isClearing && !isClearing) command.reset(commandDef->create(context));
 	else command.reset();
 
 	if (command != nullptr)
 	{
 		addChildControllableContainer(command.get());
 
-		
 		/*if(!prevCommandData.isVoid()) command->loadPreviousCommandData(prevCommandData); //keep as much as similar parameter possible
 		else */ 
 		if (!ghostCommandData.isVoid()) command->loadJSONData(ghostCommandData);
@@ -89,7 +88,7 @@ void BaseCommandHandler::setCommand(CommandDefinition * commandDef)
 		command->module->addInspectableListener(this);
 		command->module->templateManager->removeBaseManagerListener(this);
 
-		if (!Engine::mainEngine->isClearing) clearWarning();
+		 clearWarning();
 
 		registerLinkedInspectable(command->module);
 
@@ -105,7 +104,7 @@ void BaseCommandHandler::setCommand(CommandDefinition * commandDef)
 	}
 
 
-	if (!isClearing)
+	if (!isClearing && !Engine::mainEngine->isClearing)
 	{
 		commandHandlerListeners.call(&CommandHandlerListener::commandChanged, this);
 		handlerNotifier.addMessage(new CommandHandlerEvent(CommandHandlerEvent::COMMAND_CHANGED, this));
@@ -208,10 +207,9 @@ void BaseCommandHandler::commandTemplateDestroyed()
 
 void BaseCommandHandler::inspectableDestroyed(Inspectable *)
 {
-    if(isClearing || Engine::mainEngine->isClearing) return;
 	if (command != nullptr) ghostCommandData = command->getJSONData();
 	setCommand(nullptr);
-	if(!Engine::mainEngine->isClearing && ModuleManager::getInstanceWithoutCreating() != nullptr) ModuleManager::getInstance()->addBaseManagerListener(this);
+	if(!isClearing && !Engine::mainEngine->isClearing && ModuleManager::getInstanceWithoutCreating() != nullptr) ModuleManager::getInstance()->addBaseManagerListener(this);
 }
 
 void BaseCommandHandler::itemAdded(Module * m)
