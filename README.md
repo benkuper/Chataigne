@@ -29,7 +29,9 @@ You can check the tutorials to better understand what and how you can use Chatai
     - UDP
     - TCP
     - HTTP
+    - WebSockets
     - PJLink 
+    
   - Supports communication and synchronization of the following hardware :
     - KinectV2 (Win only)
     - StreamDeck
@@ -40,6 +42,18 @@ You can check the tutorials to better understand what and how you can use Chatai
     - Wiimote
     - Joycon
     - Sound card
+    
+   - Pre-configured modules for controlling softwares :
+    - Resolume
+    - Madmapper
+    - Millumin
+    - QLab
+    - HeavyM
+    - D::Light
+    - Reaper
+    - Ableton Live
+    - Powerpoint
+    - Watchout
     
  - State Machine : Create both simple and complex real-time interactions and automations.
  - Time Machine : Create sequence based animations and triggers
