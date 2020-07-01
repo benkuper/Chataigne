@@ -12,23 +12,32 @@
 #include "commands/HTTPCommand.h"
 #include "UI/ChataigneAssetManager.h"
 
-const String HTTPModule::requestMethodNames[TYPE_MAX] { "GET", "POST","PUT", "PATCH", "DELETE" };
+const String HTTPModule::requestMethodNames[TYPE_MAX]{ "GET", "POST","PUT", "PATCH", "DELETE" };
 
-HTTPModule::HTTPModule(const String &name) :
+HTTPModule::HTTPModule(const String& name) :
 	Module(name),
-	Thread("HTTPModule Requests")
+	Thread("HTTPModule Requests"),
+	authenticationCC("Authentication")
 {
-	includeValuesInSave = true; 
-	
+	includeValuesInSave = true;
+
 	baseAddress = moduleParams.addStringParameter("Base Address", "The base adress to prepend to command addresses", "https://httpbin.org/");
 	autoAdd = moduleParams.addBoolParameter("Auto add", "If checked, will try to add values depending on received data and expected data type", true);
+	protocol = moduleParams.addEnumParameter("Protocol", "The type of content to expect when receiving data");
+	protocol->addOption("Raw", RAW)->addOption("JSON", JSON)->addOption("XML", XML);
+
+	username = authenticationCC.addStringParameter("Username", "If using authentication, this is the username to use for the authentication", "");
+	pass = authenticationCC.addStringParameter("Password", "If using authentication, this is the password to use for the authentication", "");
+	authenticationCC.enabled->setValue(false);
+	moduleParams.addChildControllableContainer(&authenticationCC);
+
 	clearValues = moduleParams.addTrigger("Clear values", "When triggered, this will remove all stored values in this module");
 
 	valuesCC.userCanAddControllables = true;
 	valuesCC.saveAndLoadRecursiveData = true;
 
 	defManager->add(CommandDefinition::createDef(this, "", "Request", &HTTPCommand::create, CommandContext::BOTH));
-	
+
 	scriptObject.setMethod(sendGETId, HTTPModule::sendGETFromScript);
 	scriptObject.setMethod(sendPOSTId, HTTPModule::sendPOSTFromScript);
 	scriptObject.setMethod(sendPUTId, HTTPModule::sendPUTFromScript);
@@ -51,6 +60,7 @@ void HTTPModule::sendRequest(StringRef address, RequestMethod method, ResultData
 	String urlString = baseAddress->stringValue() + address;
 	URL url = URL(urlString).withParameters(params);
 
+	if (authHeader.isNotEmpty()) extraHeaders += "\r\n" + authHeader;
 
 	outActivityTrigger->trigger();
 	if (logOutgoingData->boolValue())  NLOG(niceName, "Send " + requestMethodNames[(int)method] + " Request : " + url.toString(true));
@@ -60,8 +70,10 @@ void HTTPModule::sendRequest(StringRef address, RequestMethod method, ResultData
 	requests.getLock().exit();
 }
 
-void HTTPModule::processRequest(Request * request)
+void HTTPModule::processRequest(Request* request)
 {
+	GenericScopedLock rLock(requests.getLock());
+	
 	StringPairArray responseHeaders;
 	int statusCode = 0;
 
@@ -81,11 +93,13 @@ void HTTPModule::processRequest(Request * request)
 	{
 		String content = stream->readEntireStreamAsString();
 		if (logIncomingData->boolValue()) NLOG(niceName, "Request status code : " << statusCode << ", content :\n" << content);
-		
+
 		inActivityTrigger->trigger();
 		Array<var> args;
-		
-		switch (request->resultDataType)
+
+		ResultDataType rt = request->resultDataType == DEFAULT ? protocol->getValueDataAsEnum<ResultDataType>() : request->resultDataType;
+
+		switch (rt)
 		{
 		case RAW:
 			args.add(content);
@@ -105,14 +119,23 @@ void HTTPModule::processRequest(Request * request)
 				NLOGERROR(niceName, "Error parsing JSON content, data is badly formatted");
 			}
 		}
+
+		case XML:
+		{
+			std::unique_ptr<XmlElement> doc = XmlDocument::parse(content);
+			if (autoAdd->boolValue()) createControllablesFromXMLResult(doc.get(), &valuesCC);
+		}
+
 		break;
 		}
 
 		args.add(request->url.toString(true));
+
 		scriptManager->callFunctionOnAllItems(dataEventId, args);
 
-		
-	} else
+
+	}
+	else
 	{
 		if (logIncomingData->boolValue()) NLOGWARNING(niceName, "Error with request, status code : " << statusCode << ", url : " << request->url.toString(true));
 	}
@@ -146,8 +169,9 @@ void HTTPModule::createControllablesFromJSONResult(var data, ControllableContain
 
 				createControllablesFromJSONResult(p.value[i], cc);
 			}
-			
-		}else if (p.value.isObject())
+
+		}
+		else if (p.value.isObject())
 		{
 			ControllableContainer* cc = container->getControllableContainerByName(p.name.toString(), true);
 			if (cc == nullptr)
@@ -163,7 +187,7 @@ void HTTPModule::createControllablesFromJSONResult(var data, ControllableContain
 		}
 		else
 		{
-			Controllable * newC = container->getControllableByName(p.name.toString(), true);
+			Controllable* newC = container->getControllableByName(p.name.toString(), true);
 			if (newC == nullptr)
 			{
 				if (p.value.isBool()) newC = new BoolParameter(p.name.toString(), p.name.toString(), false);
@@ -195,9 +219,73 @@ void HTTPModule::createControllablesFromJSONResult(var data, ControllableContain
 				else
 				{
 					Parameter* param = dynamic_cast<Parameter*>(newC);
-					if (param != nullptr) param->setValue(p.value.isVoid()?"":p.value, false, true);
+					if (param != nullptr) param->setValue(p.value.isVoid() ? "" : p.value, false, true);
 				}
 			}
+		}
+	}
+}
+
+void HTTPModule::createControllablesFromXMLResult(XmlElement* data, ControllableContainer* container)
+{
+	int numChildren = data->getNumChildElements();
+	for (int i = 0; i < numChildren; i++)
+	{
+		XmlElement* e = data->getChildElement(i);
+		String eName = e->getTagName();
+
+		if(e->getNumChildElements() == 1 && e->getFirstChildElement()->isTextElement())
+		{
+			String t = e->getFirstChildElement()->getText();
+
+			Parameter* p = dynamic_cast<Parameter*>(container->getControllableByName(eName, true));
+
+			if (p == nullptr && autoAdd->boolValue())
+			{
+
+				if (t == "false" || t == "true")
+				{
+					p = new BoolParameter(eName, eName, false);
+				}if (t.getFloatValue() == 0 && !t.containsChar('0'))
+				{
+					p = new StringParameter(eName, eName, "");
+				}
+				else
+				{
+					p = new FloatParameter(eName, eName, 0);
+				}
+
+				if (p != nullptr)
+				{
+					container->addParameter(p);
+				}
+			}
+
+			if (p != nullptr)
+			{
+				switch (p->type)
+				{
+				case Parameter::BOOL: p->setValue(t == "true");
+				case Parameter::FLOAT:
+				case Parameter::INT:
+					p->setValue(t.getFloatValue());
+					break;
+				case Parameter::STRING: p->setValue(t);
+
+				default:
+					break;
+				}
+			}
+		}
+		else
+		{
+			ControllableContainer* cc = container->getControllableContainerByName(eName, true); 
+			if (cc == nullptr && autoAdd->boolValue())
+			{
+				cc = new ControllableContainer(eName);
+				container->addChildControllableContainer(cc, true);
+			}
+			if(cc != nullptr) createControllablesFromXMLResult(e, cc);
 		}
 	}
 }
@@ -205,11 +293,15 @@ void HTTPModule::createControllablesFromJSONResult(var data, ControllableContain
 
 void HTTPModule::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c)
 {
-    Module::onControllableFeedbackUpdateInternal(cc, c);
-    
+	Module::onControllableFeedbackUpdateInternal(cc, c);
+
 	if (c == clearValues)
 	{
 		valuesCC.clear();
+	}
+	else if (c == authenticationCC.enabled || c == username || c == pass)
+	{
+		authHeader = authenticationCC.enabled->boolValue() ? ("Authorization: Basic " + Base64::toBase64(username->stringValue() + ":" + pass->stringValue())) : "";
 	}
 }
 
@@ -223,7 +315,7 @@ void HTTPModule::sendRequestFromScript(const var::NativeFunctionArgs& args, Requ
 		return;
 	}
 
-	ResultDataType dataType = ResultDataType::RAW;
+	ResultDataType dataType = ResultDataType::DEFAULT;
 
 	String extraHeaders = "";
 	StringPairArray requestParams;
@@ -246,7 +338,7 @@ void HTTPModule::sendRequestFromScript(const var::NativeFunctionArgs& args, Requ
 			requestParams.set(args.arguments[i], args.arguments[i + 1]);
 		}
 	}
-	
+
 	sendRequest(args.arguments[0].toString(), method, dataType, requestParams, extraHeaders);
 	return;
 }
@@ -292,7 +384,7 @@ void HTTPModule::run()
 	{
 		requests.getLock().enter();
 
-		for (auto &r : requests) processRequest(r);
+		for (auto& r : requests) processRequest(r);
 		requests.clear();
 		requests.getLock().exit();
 		sleep(10);

@@ -20,9 +20,19 @@ public:
 	HTTPModule(const String& name = "HTTP");
 	~HTTPModule();
 
+	enum ResultDataType { RAW, JSON, XML, DEFAULT };
+	
 	StringParameter * baseAddress;
 	BoolParameter* autoAdd;
+	EnumParameter* protocol;
+
+	EnablingControllableContainer authenticationCC;
+	StringParameter* username;
+	StringParameter* pass;
+	String authHeader;
+
 	Trigger* clearValues;
+
 
 	const Identifier sendGETId = "sendGET";
 	const Identifier sendPOSTId = "sendPOST";
@@ -36,14 +46,13 @@ public:
 
 	enum RequestMethod { GET, METHOD_POST, METHOD_PUT, METHOD_PATCH, METHOD_DELETE, TYPE_MAX};
 	static const String requestMethodNames[TYPE_MAX];
-	enum ResultDataType { RAW, JSON };
 
 
 	void sendRequest(StringRef address, RequestMethod method, ResultDataType dataType = ResultDataType::RAW, StringPairArray params = StringPairArray(), String extraHeaders = String());
 
 	struct Request
 	{
-		Request(URL u, RequestMethod m, ResultDataType dataType = ResultDataType::RAW, String extraHeaders = String()) : url(u), method(m), resultDataType(dataType), extraHeaders(extraHeaders){}
+		Request(URL u, RequestMethod m, ResultDataType dataType = ResultDataType::DEFAULT, String extraHeaders = String()) : url(u), method(m), resultDataType(dataType), extraHeaders(extraHeaders){}
 
 		URL url;
 		RequestMethod method;
@@ -56,6 +65,7 @@ public:
 	void processRequest(Request * request);
 
 	void createControllablesFromJSONResult(var data, ControllableContainer* container);
+	void createControllablesFromXMLResult(XmlElement * data, ControllableContainer* container);
 	void onControllableFeedbackUpdateInternal(ControllableContainer*, Controllable* c) override;
 
 	//Script
