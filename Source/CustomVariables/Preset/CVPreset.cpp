@@ -80,9 +80,6 @@ InspectableEditor * CVPreset::getEditor(bool isRoot)
 	return new CVPresetEditor(this, isRoot);
 }
 
-
-
-
 PresetParameterContainer::PresetParameterContainer(const String &name, GenericControllableManager * manager, bool keepValuesInSync) :
 	ControllableContainer(name),
     manager(manager),
@@ -105,6 +102,7 @@ PresetParameterContainer::~PresetParameterContainer()
 		i.getValue()->removeControllableListener(this);
 		i.getValue()->removeParameterListener(this);
 	}
+	linkMap.clear();
 
 }
 
@@ -118,6 +116,7 @@ void PresetParameterContainer::resetAndBuildValues(bool syncValues)
 	}
 
 	clear();
+	linkMap.clear();
 
 	for (auto &gci : manager->items)
 	{

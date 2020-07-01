@@ -277,6 +277,8 @@ void CVGroup::run()
 	}
 
 	Automation a;
+	a.isSelectable = false;
+	a.hideInEditor = true;
 	a.loadJSONData(interpolationAutomation->getJSONData());
 
 	float timeAtStart = Time::getMillisecondCounter() / 1000.0f;
