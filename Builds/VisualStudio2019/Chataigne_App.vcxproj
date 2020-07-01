@@ -5040,14 +5040,10 @@
     <None Include="..\..\Modules\juce_simpleweb\README.md"/>
     <None Include="..\..\Modules\juce_timeline\README.md"/>
     <None Include=".\icon.ico"/>
-    <None Include="packages.config"/>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include=".\resources.rc"/>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets"/>
-  <ImportGroup Label="ExtensionTargets">
-    <Import Project="packages\Microsoft.Web.WebView2.0.9.488\build\native\Microsoft.Web.WebView2.targets"
-            Condition="Exists('packages\Microsoft.Web.WebView2.0.9.488\build\native\Microsoft.Web.WebView2.targets')"/>
-  </ImportGroup>
+  <ImportGroup Label="ExtensionTargets"/>
 </Project>
