@@ -110,7 +110,7 @@ void BaseCommand::clearTargetMappingParameters()
 
 void BaseCommand::linkToTemplate(CommandTemplate * ct)
 {
-	if (linkedTemplate != nullptr && !templateRef.wasObjectDeleted())
+	if (linkedTemplate != nullptr && !templateRef.wasObjectDeleted() && !linkedTemplate->isClearing)
 	{
 		linkedTemplate->removeInspectableListener(this);
 		linkedTemplate->removeCommandTemplateListener(this);
