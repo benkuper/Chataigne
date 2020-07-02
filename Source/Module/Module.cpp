@@ -75,10 +75,13 @@ Module::Module(const String& name) :
 
 Module::~Module()
 {
+	clearItem();
 }
 
 void Module::clearItem()
 {
+	BaseItem::clearItem();
+
 	if(templateManager != nullptr) templateManager->clear();
 }
 
