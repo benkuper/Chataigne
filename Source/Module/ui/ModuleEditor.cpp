@@ -27,7 +27,8 @@ ModuleEditor::ModuleEditor(Module * _module, bool isRoot) :
 
 ModuleEditor::~ModuleEditor()
 {
-    module->removeModuleListener(this);
+    if (!module->isClearing)
+        module->removeModuleListener(this);
 }
 
 void ModuleEditor::resizedInternalHeaderItemInternal(Rectangle<int>& r)

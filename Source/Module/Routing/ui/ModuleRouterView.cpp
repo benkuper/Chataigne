@@ -122,8 +122,11 @@ void ModuleRouterView::setRouter(ModuleRouter * router)
 	if (currentRouter == router) return;
 	if (currentRouter != nullptr)
 	{
-		currentRouter->removeRouterListener(this);
-		currentRouter->removeInspectableListener(this);
+		if (!currentRouter->isClearing)
+		{
+			currentRouter->removeRouterListener(this);
+			currentRouter->removeInspectableListener(this);
+		}
 
 		removeChildComponent(selectAllTrigger.get());
 		selectAllTrigger.reset();
