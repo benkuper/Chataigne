@@ -30,8 +30,6 @@ StateViewUI::StateViewUI(State * state) :
 	drawEmptyDragIcon = true;
 
 	setContentSize(item->viewUISize->x, item->viewUISize->y);
-	updateMiniModeUI();
-	resized();
 }
 	
 

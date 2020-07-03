@@ -18,6 +18,9 @@ Mapping2DLayerPanel::Mapping2DLayerPanel(Mapping2DLayer* layer) :
     keySyncUI.reset(mappingLayer->curve.keySyncMode->createToggle());
     addAndMakeVisible(keySyncUI.get());
     addAndMakeVisible(&curveUI);
+
+    contentComponents.add(keySyncUI.get());
+    contentComponents.add(&curveUI);
 }
 
 Mapping2DLayerPanel::~Mapping2DLayerPanel()
