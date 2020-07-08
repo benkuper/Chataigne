@@ -119,21 +119,31 @@ void HTTPModule::processRequest(Request* request)
 				NLOGERROR(niceName, "Error parsing JSON content, data is badly formatted");
 			}
 		}
+		break;
 
 		case XML:
 		{
-			std::unique_ptr<XmlElement> doc = XmlDocument::parse(content);
-			if (autoAdd->boolValue()) createControllablesFromXMLResult(doc.get(), &valuesCC);
+			if (autoAdd->boolValue())
+			{
+				std::unique_ptr<XmlElement> doc = XmlDocument::parse(content);
+				if (doc != nullptr)
+				{
+					createControllablesFromXMLResult(doc.get(), &valuesCC);
+				}
+				else
+				{
+					NLOGERROR(niceName, "Content is not legit XML !");
+				}
+			}
+
+			args.add(content);
 		}
 
 		break;
 		}
 
 		args.add(request->url.toString(true));
-
 		scriptManager->callFunctionOnAllItems(dataEventId, args);
-
-
 	}
 	else
 	{
@@ -228,6 +238,8 @@ void HTTPModule::createControllablesFromJSONResult(var data, ControllableContain
 
 void HTTPModule::createControllablesFromXMLResult(XmlElement* data, ControllableContainer* container)
 {
+	if (data == nullptr) return;
+
 	int numChildren = data->getNumChildElements();
 	for (int i = 0; i < numChildren; i++)
 	{
