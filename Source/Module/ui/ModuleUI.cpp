@@ -34,11 +34,24 @@ ModuleUI::ModuleUI(Module * module) :
 		addAndMakeVisible(connectionFeedbackUI.get());
 	}
 
-	int numBytes = 0;
-	const char* iconData = BinaryData::getNamedResource((item->getTypeString().replace(" ", "_") + "_png").getCharPointer(), numBytes);;
-	if (iconData != nullptr)
+
+	Image iconImg;
+
+	if (item->customIconPath.existsAsFile())
 	{
-		iconUI.setImage(ImageCache::getFromMemory(iconData, numBytes));
+		iconImg = ImageCache::getFromFile(item->customIconPath);
+	}
+	else
+	{
+		int numBytes = 0;
+		const char* iconData = BinaryData::getNamedResource((item->getTypeString().replace(" ", "_") + "_png").getCharPointer(), numBytes);;
+		if (iconData != nullptr) iconImg = ImageCache::getFromMemory(iconData, numBytes);
+	}
+
+	
+	if(iconImg.isValid())
+	{
+		iconUI.setImage(iconImg);
 		addAndMakeVisible(iconUI);
 		iconUI.setInterceptsMouseClicks(false, false);
 	}

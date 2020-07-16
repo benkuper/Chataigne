@@ -151,6 +151,9 @@ void ModuleFactory::addCustomModules()
 				def->customModuleData = moduleData;
 				def->moduleFolder = m;
 				def->isCustomModule = true;
+
+				Image img = ImageCache::getFromFile(m.getChildFile("icon.png"));
+				if (img.isValid()) def->addIcon(img);
 			}
 			else
 			{

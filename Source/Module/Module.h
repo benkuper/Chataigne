@@ -55,6 +55,7 @@ public:
 
 	String customType; //for custom modules;
 	var customModuleData; //for allowing loading data from custom module definition after file load
+	File customIconPath;
 
 	//Template
 	std::unique_ptr<CommandTemplateManager> templateManager;

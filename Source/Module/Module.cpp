@@ -216,6 +216,7 @@ void Module::setupModuleFromJSONData(var data)
 		}
 	}
 
+	customIconPath = File(data.getProperty("modulePath", "")).getChildFile("icon.png");
 
 	createControllablesForContainer(data.getProperty("parameters", var()), &moduleParams);
 
