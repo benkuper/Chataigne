@@ -121,7 +121,7 @@ void CVCommand::updateOperatorOptions()
 	{
 	case Controllable::FLOAT:
 	case Controllable::INT:
-		valueOperator->addOption("Add", ADD, false)->addOption("Inverse", INVERSE, false)->addOption("Subtract", SUBTRACT, false)->addOption("Multiply", MULTIPLY, false)->addOption("Divide", DIVIDE, false);
+		valueOperator->addOption("Add", ADD)->addOption("Inverse", INVERSE)->addOption("Subtract", SUBTRACT)->addOption("Multiply", MULTIPLY)->addOption("Divide", DIVIDE)->addOption("Max", MAX)->addOption("Min", MIN);
 		break;
 
 	case Controllable::BOOL:
@@ -220,6 +220,14 @@ void CVCommand::triggerInternal()
 
 				case DIVIDE:
 					p->setValue(p->floatValue() / value->floatValue());
+					break;
+
+				case MAX:
+					p->setValue(std::max(p->floatValue(),value->floatValue()));
+					break;
+
+				case MIN:
+					p->setValue(std::min(p->floatValue(), value->floatValue()));
 					break;
 				}
 			}

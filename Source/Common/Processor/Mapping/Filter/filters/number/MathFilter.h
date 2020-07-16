@@ -20,7 +20,7 @@ public:
 	MathFilter(var params);
 	~MathFilter();
 
-	enum Operation { OFFSET, MULTIPLY, DIVIDE, MODULO, FLOOR, CEIL, ROUND };
+	enum Operation { OFFSET, MULTIPLY, DIVIDE, MODULO, FLOOR, CEIL, ROUND, MAX, MIN };
 	enum RangeRemapMode { KEEP, AJDUST, FREE };
 	EnumParameter * operation;
 	Parameter * operationValue;

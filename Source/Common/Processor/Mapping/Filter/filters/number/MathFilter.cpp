@@ -18,7 +18,7 @@ MathFilter::MathFilter(var params) :
 	operation = filterParams.addEnumParameter("Operation", "The operation to use for this filter");
 	operation->addOption("Offset", OFFSET)
 		->addOption("Multiply", MULTIPLY)->addOption("Divide", DIVIDE)->addOption("Modulo", MODULO)
-		->addOption("Floor", FLOOR)->addOption("Ceil", CEIL)->addOption("Round", ROUND);
+		->addOption("Floor", FLOOR)->addOption("Ceil", CEIL)->addOption("Round", ROUND)->addOption("Max",MAX)->addOption("Min",MIN);
 
 	autoSetRange = false;
 	rangeRemapMode = filterParams.addEnumParameter("Range Remap Mode", "How to setup the output range.\nKeep will keep the input's range, adjust will ajdust automatically depending on the operator. \
@@ -62,15 +62,7 @@ void MathFilter::setupParametersInternal()
 
 void MathFilter::processSingleParameterInternal(Parameter * source, Parameter * out)
 {
-	Operation o = operation->getValueDataAsEnum<Operation>();
-	if (o != FLOOR && o != CEIL && o != ROUND)
-	{
-		if (operationValue == nullptr)
-		{
-			DBG("ERROR should not be here operationValue is null");
-			return;
-		}
-	}
+	//Operation o = operation->getValueDataAsEnum<Operation>();
 
 	var val = var();
 	if (!source->isComplex())
@@ -112,7 +104,6 @@ void MathFilter::updateFilteredParamsRange()
 			p->setRange(sourceParam->minimumValue, sourceParam->maximumValue);
 			return;
 		}
-
 
 
 		//Only in RangeRemapMode::ADJUST
@@ -168,7 +159,8 @@ void MathFilter::filterParamChanged(Parameter * p)
 		operationValue->setEnabled(o != FLOOR && o != CEIL && o != ROUND);
 	}
 
-	if (p == operation || p == operationValue || p == rangeRemapMode)
+	RangeRemapMode rm = rangeRemapMode->getValueDataAsEnum<RangeRemapMode>();
+	if (p == operation || (p == operationValue && rm == RangeRemapMode::AJDUST)|| p == rangeRemapMode)
 	{
 		updateFilteredParamsRange();
 		mappingFilterListeners.call(&FilterListener::filteredParamRangeChanged, this);
@@ -195,6 +187,8 @@ float MathFilter::getProcessedValue(float val, int index)
 		case FLOOR: return floorf(val);
 		case CEIL: return ceilf(val);
 		case ROUND: return roundToInt(val);
+		case MAX: return std::max(oVal, val);
+		case MIN: return std::min(oVal, val);
 	}
 
 	return val;

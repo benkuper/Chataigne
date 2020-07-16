@@ -36,7 +36,7 @@ public:
 	FloatParameter* time;
 	Automation* automation;
 	
-	enum Operator { EQUAL, INVERSE, ADD, SUBTRACT, MULTIPLY, DIVIDE };
+	enum Operator { EQUAL, INVERSE, ADD, SUBTRACT, MULTIPLY, DIVIDE, MAX, MIN };
 	EnumParameter * valueOperator; 
 	Parameter * value;
 	var ghostValueData;
