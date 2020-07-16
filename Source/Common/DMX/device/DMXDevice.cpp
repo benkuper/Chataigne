@@ -23,6 +23,8 @@ DMXDevice::DMXDevice(const String& name, Type _type, bool canReceive) :
 	inputCC(nullptr),
 	outputCC(nullptr)
 {
+	saveAndLoadRecursiveData = true;
+
 	DMXManager::getInstance()->addDMXManagerListener(this);
 
 	memset(dmxDataOut, 0, 512 * sizeof(uint8));
