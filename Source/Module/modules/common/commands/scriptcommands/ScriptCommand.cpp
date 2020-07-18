@@ -98,7 +98,6 @@ void ScriptCommand::createControllablesForContainer(var data, ControllableContai
 			{
 				Parameter * param = (Parameter *)c;
 				scriptParams.add(param);
-				if (p.value.hasProperty("useForMapping")) addTargetMappingParameterAt(param, p.value.getProperty("mappingIndex", 0));
 
 				if (p.value.hasProperty("dependency"))
 				{
@@ -121,6 +120,9 @@ void ScriptCommand::createControllablesForContainer(var data, ControllableContai
 						LOGWARNING("Dependency definition is not complete, requires source, value, check and action");
 					}
 				}
+
+				//only this should be here, the rest should be common
+				if (p.value.hasProperty("useForMapping")) addTargetMappingParameterAt(param, p.value.getProperty("mappingIndex", targetMappingParameters.size()));
 			}
 		}
 	}
@@ -171,9 +173,19 @@ Controllable * ScriptCommand::getControllableForJSONDefinition(const String &nam
 		}
 	}
 
-	if (c->type != Controllable::TRIGGER && def.getProperty("useForMapping", false))
+	if (d->hasProperty("readOnly"))
 	{
-		addTargetMappingParameterAt((Parameter *)c, targetMappingParameters.size());
+		c->setControllableFeedbackOnly(d->getProperty("readOnly"));
+	}
+
+	if (d->hasProperty("shortName"))
+	{
+		c->setCustomShortName(d->getProperty("shortName").toString());
+	}
+
+	if (d->hasProperty("description"))
+	{
+		c->description = d->getProperty("description").toString();
 	}
 
 	return c;
