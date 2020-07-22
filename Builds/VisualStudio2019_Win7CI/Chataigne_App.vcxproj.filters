@@ -2065,7 +2065,13 @@
     <ClCompile Include="..\..\Source\Module\modules\gpio\commands\GPIOCommands.cpp">
       <Filter>Chataigne\Source\Module\modules\gpio\commands</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Module\modules\gpio\pigpio\command.c">
+      <Filter>Chataigne\Source\Module\modules\gpio\pigpio</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\gpio\pigpio\pigpio.c">
+      <Filter>Chataigne\Source\Module\modules\gpio\pigpio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Module\modules\gpio\pigpio\pigs.c">
       <Filter>Chataigne\Source\Module\modules\gpio\pigpio</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\gpio\GPIOModule.cpp">
@@ -5880,7 +5886,13 @@
     <ClInclude Include="..\..\Source\Module\modules\gpio\commands\GPIOCommands.h">
       <Filter>Chataigne\Source\Module\modules\gpio\commands</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\Module\modules\gpio\pigpio\command.h">
+      <Filter>Chataigne\Source\Module\modules\gpio\pigpio</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\gpio\pigpio\pigpio.h">
+      <Filter>Chataigne\Source\Module\modules\gpio\pigpio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Module\modules\gpio\pigpio\pigs.h">
       <Filter>Chataigne\Source\Module\modules\gpio\pigpio</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\gpio\GPIOModule.h">
@@ -10480,9 +10492,6 @@
       <Filter>JUCE Library Code</Filter>
     </ClInclude>
     <ClInclude Include="..\..\JuceLibraryCode\BinaryData.h">
-      <Filter>JUCE Library Code</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\JuceLibraryCode\JuceHeader.h">
       <Filter>JUCE Library Code</Filter>
     </ClInclude>
   </ItemGroup>

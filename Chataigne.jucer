@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.7.5b4"
+<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.7.5b5"
               bundleIdentifier="benkuper.Chataigne" includeBinaryInAppConfig="1"
               companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
               companyEmail="benjamin@kuperberg.fr" defines="" splashScreenColour="Dark"
@@ -1170,8 +1170,12 @@
               <FILE id="LoBh0H" name="GPIOCommands.h" compile="0" resource="0" file="Source/Module/modules/gpio/commands/GPIOCommands.h"/>
             </GROUP>
             <GROUP id="{7B5E3E04-8EDE-0C67-646E-0C0431F577F3}" name="pigpio">
+              <FILE id="bsQNw1" name="command.c" compile="1" resource="0" file="Source/Module/modules/gpio/pigpio/command.c"/>
+              <FILE id="o02GiJ" name="command.h" compile="0" resource="0" file="Source/Module/modules/gpio/pigpio/command.h"/>
               <FILE id="LsucgL" name="pigpio.c" compile="1" resource="0" file="Source/Module/modules/gpio/pigpio/pigpio.c"/>
               <FILE id="cJkWSq" name="pigpio.h" compile="0" resource="0" file="Source/Module/modules/gpio/pigpio/pigpio.h"/>
+              <FILE id="aNiTCL" name="pigs.c" compile="1" resource="0" file="Source/Module/modules/gpio/pigpio/pigs.c"/>
+              <FILE id="d6e5Xf" name="pigs.h" compile="0" resource="0" file="Source/Module/modules/gpio/pigpio/pigs.h"/>
             </GROUP>
             <FILE id="r5gPbq" name="GPIOModule.cpp" compile="1" resource="0" file="Source/Module/modules/gpio/GPIOModule.cpp"/>
             <FILE id="vShhSX" name="GPIOModule.h" compile="0" resource="0" file="Source/Module/modules/gpio/GPIOModule.h"/>

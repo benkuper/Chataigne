@@ -1029,9 +1029,17 @@
 			isa = PBXBuildFile;
 			fileRef = A48ADB0BCE07CA8C68387D27;
 		};
+		0B13BF87D171A99EA87757C1 = {
+			isa = PBXBuildFile;
+			fileRef = 9820E02666CCFA688707B1F4;
+		};
 		73EEDC57D3D78D60970F77CB = {
 			isa = PBXBuildFile;
 			fileRef = BC14EC6636D09A4F7D7524D3;
+		};
+		882B0C9478391E4572A9F233 = {
+			isa = PBXBuildFile;
+			fileRef = 733D9DEAEDA2881C0C2486B6;
 		};
 		87175776616B175D8093B992 = {
 			isa = PBXBuildFile;
@@ -1631,13 +1639,6 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = MatomoAnalytics.cpp;
 			path = ../../Source/Analytics/MatomoAnalytics.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
-		0DD04E60A5E6174F61924D04 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = JuceHeader.h;
-			path = ../../JuceLibraryCode/JuceHeader.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		0E0B1252FBC81A8784FD87B5 = {
@@ -2459,6 +2460,13 @@
 			path = ../../Source/Module/modules/state/commands/StateCommand.h;
 			sourceTree = "SOURCE_ROOT";
 		};
+		3D81068DABB02093CC93BC51 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = pigs.h;
+			path = ../../Source/Module/modules/gpio/pigpio/pigs.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		3D90E555D6F95A32AA9FF9E7 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -3124,6 +3132,13 @@
 			path = ../../Source/Module/modules/audio/analysis/ui/FFTAnalyzerManagerEditor.h;
 			sourceTree = "SOURCE_ROOT";
 		};
+		5DA0E15C8037F3E9BD9F306C = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = command.h;
+			path = ../../Source/Module/modules/gpio/pigpio/command.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		5DACFADA47B796E8671A31A1 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -3543,6 +3558,13 @@
 			name = IOKit.framework;
 			path = System/Library/Frameworks/IOKit.framework;
 			sourceTree = SDKROOT;
+		};
+		733D9DEAEDA2881C0C2486B6 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.c;
+			name = pigs.c;
+			path = ../../Source/Module/modules/gpio/pigpio/pigs.c;
+			sourceTree = "SOURCE_ROOT";
 		};
 		7347A5FBEE965521C1AFC6A2 = {
 			isa = PBXFileReference;
@@ -4193,6 +4215,13 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = MappingInputManager.h;
 			path = ../../Source/Common/Processor/Mapping/Input/MappingInputManager.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		9820E02666CCFA688707B1F4 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.c;
+			name = command.c;
+			path = ../../Source/Module/modules/gpio/pigpio/command.c;
 			sourceTree = "SOURCE_ROOT";
 		};
 		98F1316C32E887C2041FD8CE = {
@@ -7989,8 +8018,12 @@
 		977C418EACB018EC20201AA6 = {
 			isa = PBXGroup;
 			children = (
+				9820E02666CCFA688707B1F4,
+				5DA0E15C8037F3E9BD9F306C,
 				BC14EC6636D09A4F7D7524D3,
 				826AAFA086B63446290F4909,
+				733D9DEAEDA2881C0C2486B6,
+				3D81068DABB02093CC93BC51,
 			);
 			name = pigpio;
 			sourceTree = "<group>";
@@ -8452,7 +8485,6 @@
 				A344ECDA05A5372A32341886,
 				4D147E8D071C0C93CB433813,
 				9EB5EECB134C6E74D074AB10,
-				0DD04E60A5E6174F61924D04,
 			);
 			name = "JUCE Library Code";
 			sourceTree = "<group>";
@@ -8529,7 +8561,7 @@
 					"DEBUG=1",
 					"JUCE_SUPPORT_CARBON=0",
 					"JUCER_XCODE_MAC_2F3811D6=1",
-					"JUCE_APP_VERSION=1.7.5b4",
+					"JUCE_APP_VERSION=1.7.5b5",
 					"JUCE_APP_VERSION_HEX=0x10705",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
@@ -8591,7 +8623,7 @@
 					"NDEBUG=1",
 					"JUCE_SUPPORT_CARBON=0",
 					"JUCER_XCODE_MAC_2F3811D6=1",
-					"JUCE_APP_VERSION=1.7.5b4",
+					"JUCE_APP_VERSION=1.7.5b5",
 					"JUCE_APP_VERSION_HEX=0x10705",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
@@ -9001,7 +9033,9 @@
 				30E97777747F251C9235E38A,
 				88CDCEA94B9AE6F3ADF56372,
 				B6A68CD3935A7812035E778A,
+				0B13BF87D171A99EA87757C1,
 				73EEDC57D3D78D60970F77CB,
+				882B0C9478391E4572A9F233,
 				87175776616B175D8093B992,
 				B4AA1B8F7AA272C47E1F6973,
 				CA66D6C35412C59D22850AFC,
