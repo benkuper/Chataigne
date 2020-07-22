@@ -46,7 +46,7 @@ public:
 
     void run() override;
 
-    String getDefaultTypeString() { return "GPIO"; }
+    String getDefaultTypeString() const override { return "GPIO"; }
 
     static GPIOModule* create() { return new GPIOModule(); }
 };

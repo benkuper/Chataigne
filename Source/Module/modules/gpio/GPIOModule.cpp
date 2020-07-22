@@ -12,7 +12,7 @@
 #include "commands//GPIOCommands.h"
 
 GPIOModule::GPIOModule() :
-    Module("GPIO"),
+    Module(getTypeString()),
     Thread("GPIO"),
     gpioModes("GPIO Modes")
 {
