@@ -12,10 +12,12 @@
 #include "commands//GPIOCommands.h"
 
 GPIOModule::GPIOModule() :
-    Module(getTypeString()),
+    Module("GPIO"),
     Thread("GPIO"),
     gpioModes("GPIO Modes")
 {
+    setupIOConfiguration(true, true);
+
     for (int i = 0; i < GPIO_MAX_PINS; i++)
     {
         EnumParameter* p = gpioModes.addEnumParameter("GPIO "+String(i)+" Mode", "Mode for the GPIO on pin "+String(i));
@@ -31,8 +33,8 @@ GPIOModule::GPIOModule() :
 
     moduleParams.addChildControllableContainer(&gpioModes);
 
-    defManager->add(CommandDefinition::createDef(this, "", "Set Digital", &GPIOCommand::create, CommandContext::MAPPING)->addParam("action", "setDigital"));
-    defManager->add(CommandDefinition::createDef(this, "", "Set Analog", &GPIOCommand::create, CommandContext::MAPPING)->addParam("action", "setDigital"));
+    defManager->add(CommandDefinition::createDef(this, "", "Set Digital", &GPIOCommand::create, CommandContext::BOTH)->addParam("action", GPIOCommand::SET_DIGITAL));
+    defManager->add(CommandDefinition::createDef(this, "", "Set Analog", &GPIOCommand::create, CommandContext::BOTH)->addParam("action", GPIOCommand::SET_PWM));
     
     startThread();
 }
