@@ -13,7 +13,7 @@
 #include "../../Module.h"
 
 //tmp
-#define __arm__
+//#define __arm__
 
 #ifdef __arm__
 #define GPIO_SUPPORT
@@ -24,16 +24,27 @@
 #endif
 
 class GPIOModule :
-    public Module
+    public Module,
+    public Thread
 {
 public:
     GPIOModule(var params);
     virtual ~GPIOModule();
 
+    enum GPIOMode { OUTPUT = 0, INPUT = 1, ALT0 = 4, ALT1 = 5, ALT2 = 6, ALT3 = 7, ALT4 = 3, ALT5 = 2, GPIO_MODE_MAX = 8};
+
+
     ControllableContainer gpioModes;
     Array<EnumParameter*> gpioModeParams;
 
     Array<Parameter*> gpioInputParams;
+
+    void setDigitalValue(int pin, bool value);
+    void setPWMValue(int pin, float value);
+
+    void onContainerParameterChanged(Parameter* p) override;
+
+    void run() override;
 
     String getDefaultTypeString() { return "GPIO"; }
 
