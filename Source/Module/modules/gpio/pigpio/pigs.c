@@ -29,6 +29,7 @@ For more information, please refer to <http://unlicense.org/>
 This version is for pigpio version 69+
 */
 
+#pragma warning(disable:4206)
 #ifdef __arm__
 
 #include <stdio.h>
