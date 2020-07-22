@@ -57,26 +57,16 @@ void WakeOnLanCommand::triggerInternal()
 		return;
 	}
 
-	uint8 ffBytes[6] = { 0xFF,0xFF,0xFF,0xFF,0xFF,0xFF };
-	const uint8 *macBytes = mac.getBytes();
+	int result = WakeOnLan::wake(&mac);
 
-	const int packetSize = 6 + 16 * 6;
-	uint8 packet[packetSize];
-
-	for (int i = 0; i < 6; ++i) packet[i] = ffBytes[i];
-
-	for (int i = 0; i < 16; ++i)
+	if (result != -1)
 	{
-		for (int j = 0; j < 6; j++)
-		{
-			int index = 6 + i * 6 + j;
-			packet[index] = macBytes[j];
-		}
+		if (module->logOutgoingData->boolValue()) LOG("Wake On Lan sent to " << mac.toString());
 	}
-
-	DatagramSocket s(true);
-	s.bindToPort(0);
-	s.write(IPAddress::broadcast().toString(), 9, packet, packetSize);
+	else
+	{
+		LOGERROR("Error sending Wake On Lan to " + mac.toString());
+	}
 
 	osModule->outActivityTrigger->trigger();
 }
