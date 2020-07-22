@@ -29,6 +29,8 @@ For more information, please refer to <http://unlicense.org/>
 This version is for pigpio version 70+
 */
 
+#ifdef __arm__
+
 #include <stdio.h>
 #include <string.h>
 #include <stdarg.h>
@@ -1420,3 +1422,4 @@ int cmdParseScript(char *script, cmdScript_t *s, int diags)
    return status;
 }
 
+#endif

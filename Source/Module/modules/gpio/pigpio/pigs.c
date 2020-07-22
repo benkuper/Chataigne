@@ -29,6 +29,8 @@ For more information, please refer to <http://unlicense.org/>
 This version is for pigpio version 69+
 */
 
+#ifdef __arm__
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdarg.h>
@@ -392,3 +394,4 @@ int main(int argc , char *argv[])
    return status;
 }
 
+#endif

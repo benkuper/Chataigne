@@ -29,6 +29,8 @@ For more information, please refer to <http://unlicense.org/>
 This version is for pigpio version 70+
 */
 
+#ifdef __arm__
+
 #ifndef COMMAND_H
 #define COMMAND_H
 
@@ -122,3 +124,6 @@ char *cmdStr(void);
 
 #endif
 
+
+
+#endif //__arm__

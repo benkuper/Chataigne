@@ -29,6 +29,9 @@ For more information, please refer to <http://unlicense.org/>
 This version is for pigpio version 67+
 */
 
+#ifdef __arm__
+
+
 #ifndef PIGS_H
 #define PIGS_H
 
@@ -39,3 +42,5 @@ This version is for pigpio version 67+
 
 #endif
 
+
+#endif // __arm__
