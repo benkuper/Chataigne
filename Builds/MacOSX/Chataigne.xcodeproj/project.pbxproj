@@ -1571,6 +1571,13 @@
 			path = ../../Resources/Modules/LiveOSC2.png;
 			sourceTree = "SOURCE_ROOT";
 		};
+		0B44735E419DA142D27A72AC = {
+			isa = PBXFileReference;
+			lastKnownFileType = file.cext;
+			name = custom.cext;
+			path = ../../Source/Module/modules/gpio/pigpio/custom.cext;
+			sourceTree = "SOURCE_ROOT";
+		};
 		0B881AF2739B8F5059F7B142 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -8027,6 +8034,7 @@
 			children = (
 				9820E02666CCFA688707B1F4,
 				5DA0E15C8037F3E9BD9F306C,
+				0B44735E419DA142D27A72AC,
 				BC14EC6636D09A4F7D7524D3,
 				826AAFA086B63446290F4909,
 				733D9DEAEDA2881C0C2486B6,

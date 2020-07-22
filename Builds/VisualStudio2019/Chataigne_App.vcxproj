@@ -5032,6 +5032,7 @@
     <None Include="..\..\Resources\stripe.png"/>
     <None Include="..\..\Resources\toggle.png"/>
     <None Include="..\..\Resources\tray_icon.png"/>
+    <None Include="..\..\Source\Module\modules\gpio\pigpio\custom.cext"/>
     <None Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_devices\native\oboe\CMakeLists.txt"/>
     <None Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_devices\native\oboe\readme.md"/>
     <None Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_formats\codecs\flac\Flac Licence.txt"/>

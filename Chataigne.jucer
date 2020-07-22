@@ -1172,6 +1172,7 @@
             <GROUP id="{7B5E3E04-8EDE-0C67-646E-0C0431F577F3}" name="pigpio">
               <FILE id="bsQNw1" name="command.c" compile="1" resource="0" file="Source/Module/modules/gpio/pigpio/command.c"/>
               <FILE id="o02GiJ" name="command.h" compile="0" resource="0" file="Source/Module/modules/gpio/pigpio/command.h"/>
+              <FILE id="omBALx" name="custom.cext" compile="0" resource="1" file="Source/Module/modules/gpio/pigpio/custom.cext"/>
               <FILE id="LsucgL" name="pigpio.c" compile="1" resource="0" file="Source/Module/modules/gpio/pigpio/pigpio.c"/>
               <FILE id="cJkWSq" name="pigpio.h" compile="0" resource="0" file="Source/Module/modules/gpio/pigpio/pigpio.h"/>
               <FILE id="aNiTCL" name="pigs.c" compile="1" resource="0" file="Source/Module/modules/gpio/pigpio/pigs.c"/>
