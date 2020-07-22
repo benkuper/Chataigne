@@ -188,12 +188,6 @@
     <Filter Include="Chataigne\Source\Module\Community">
       <UniqueIdentifier>{6CEFF08B-E267-C21D-34E5-C8EAE64F596A}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\websocket\ui">
-      <UniqueIdentifier>{B293CBA1-C418-03EF-CF1A-854113923B86}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\websocket">
-      <UniqueIdentifier>{EA25999D-66A4-5EDD-BB18-B7CFA3EB36BC}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Chataigne\Source\Module\modules\customvariables\commands">
       <UniqueIdentifier>{4C9511D9-D1B4-B5A7-5772-0E1D38BEF264}</UniqueIdentifier>
     </Filter>
@@ -457,6 +451,21 @@
     </Filter>
     <Filter Include="Chataigne\Source\Module\modules\udp">
       <UniqueIdentifier>{6D2BD981-3B8E-BC72-8448-9F8849751B24}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\gpio\commands">
+      <UniqueIdentifier>{8FA46653-8D35-2561-2678-6C2C5C4A06DA}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\gpio\pigpio">
+      <UniqueIdentifier>{94621B05-5239-FC4B-AA05-303A72C20012}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\gpio">
+      <UniqueIdentifier>{95883558-2B5B-67E4-B81C-3AFA9E47F7AF}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\websocket\ui">
+      <UniqueIdentifier>{B293CBA1-C418-03EF-CF1A-854113923B86}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\websocket">
+      <UniqueIdentifier>{EA25999D-66A4-5EDD-BB18-B7CFA3EB36BC}</UniqueIdentifier>
     </Filter>
     <Filter Include="Chataigne\Source\Module\modules">
       <UniqueIdentifier>{D7F7F39A-4E59-4771-7398-B7FF6ED8DCB9}</UniqueIdentifier>
@@ -1693,15 +1702,6 @@
     <ClCompile Include="..\..\Source\Module\Community\CommunityModuleManager.cpp">
       <Filter>Chataigne\Source\Module\Community</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\Module\modules\websocket\ui\WebSocketServerModuleUI.cpp">
-      <Filter>Chataigne\Source\Module\modules\websocket\ui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Module\modules\websocket\WebSocketClientModule.cpp">
-      <Filter>Chataigne\Source\Module\modules\websocket</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Module\modules\websocket\WebSocketServerModule.cpp">
-      <Filter>Chataigne\Source\Module\modules\websocket</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\customvariables\commands\CustomVariablesModuleCommands.cpp">
       <Filter>Chataigne\Source\Module\modules\customvariables\commands</Filter>
     </ClCompile>
@@ -2061,6 +2061,24 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\udp\UDPModule.cpp">
       <Filter>Chataigne\Source\Module\modules\udp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Module\modules\gpio\commands\GPIOCommands.cpp">
+      <Filter>Chataigne\Source\Module\modules\gpio\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Module\modules\gpio\pigpio\pigpio.c">
+      <Filter>Chataigne\Source\Module\modules\gpio\pigpio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Module\modules\gpio\GPIOModule.cpp">
+      <Filter>Chataigne\Source\Module\modules\gpio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Module\modules\websocket\ui\WebSocketServerModuleUI.cpp">
+      <Filter>Chataigne\Source\Module\modules\websocket\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Module\modules\websocket\WebSocketClientModule.cpp">
+      <Filter>Chataigne\Source\Module\modules\websocket</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Module\modules\websocket\WebSocketServerModule.cpp">
+      <Filter>Chataigne\Source\Module\modules\websocket</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Module\Routing\ui\ModuleRouterPanelView.cpp">
       <Filter>Chataigne\Source\Module\Routing\ui</Filter>
@@ -4705,6 +4723,9 @@
     <ClCompile Include="..\..\Modules\juce_organicui\helpers\StringUtil.cpp">
       <Filter>JUCE Modules\juce_organicui\helpers</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\helpers\WakeOnLan.cpp">
+      <Filter>JUCE Modules\juce_organicui\helpers</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\inspectable\dashboard\ui\DashboardInspectableItemUI.cpp">
       <Filter>JUCE Modules\juce_organicui\inspectable\dashboard\ui</Filter>
     </ClCompile>
@@ -5529,15 +5550,6 @@
     <ClInclude Include="..\..\Source\Module\Community\CommunityModuleManager.h">
       <Filter>Chataigne\Source\Module\Community</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\Module\modules\websocket\ui\WebSocketServerModuleUI.h">
-      <Filter>Chataigne\Source\Module\modules\websocket\ui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Module\modules\websocket\WebSocketClientModule.h">
-      <Filter>Chataigne\Source\Module\modules\websocket</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Module\modules\websocket\WebSocketServerModule.h">
-      <Filter>Chataigne\Source\Module\modules\websocket</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\customvariables\commands\CustomVariablesModuleCommands.h">
       <Filter>Chataigne\Source\Module\modules\customvariables\commands</Filter>
     </ClInclude>
@@ -5864,6 +5876,24 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\udp\UDPModule.h">
       <Filter>Chataigne\Source\Module\modules\udp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Module\modules\gpio\commands\GPIOCommands.h">
+      <Filter>Chataigne\Source\Module\modules\gpio\commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Module\modules\gpio\pigpio\pigpio.h">
+      <Filter>Chataigne\Source\Module\modules\gpio\pigpio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Module\modules\gpio\GPIOModule.h">
+      <Filter>Chataigne\Source\Module\modules\gpio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Module\modules\websocket\ui\WebSocketServerModuleUI.h">
+      <Filter>Chataigne\Source\Module\modules\websocket\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Module\modules\websocket\WebSocketClientModule.h">
+      <Filter>Chataigne\Source\Module\modules\websocket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Module\modules\websocket\WebSocketServerModule.h">
+      <Filter>Chataigne\Source\Module\modules\websocket</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\Routing\ui\ModuleRouterPanelView.h">
       <Filter>Chataigne\Source\Module\Routing\ui</Filter>

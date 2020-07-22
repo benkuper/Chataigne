@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.7.5b3"
+<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.7.5b4"
               bundleIdentifier="benkuper.Chataigne" includeBinaryInAppConfig="1"
               companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
               companyEmail="benjamin@kuperberg.fr" defines="" splashScreenColour="Dark"
@@ -600,22 +600,6 @@
                 file="Source/Module/Community/CommunityModuleManager.h"/>
         </GROUP>
         <GROUP id="{6A9D374B-2C22-DB11-15C8-CA446252E36A}" name="modules">
-          <GROUP id="{82D5E4C7-8C1C-9378-EEE7-C988DD90549E}" name="websocket">
-            <GROUP id="{4FA7479C-2A94-C90F-41FE-7D5B84A26E65}" name="ui">
-              <FILE id="XUeIev" name="WebSocketServerModuleUI.cpp" compile="1" resource="0"
-                    file="Source/Module/modules/websocket/ui/WebSocketServerModuleUI.cpp"/>
-              <FILE id="VYJFr2" name="WebSocketServerModuleUI.h" compile="0" resource="0"
-                    file="Source/Module/modules/websocket/ui/WebSocketServerModuleUI.h"/>
-            </GROUP>
-            <FILE id="hmZuQg" name="WebSocketClientModule.cpp" compile="1" resource="0"
-                  file="Source/Module/modules/websocket/WebSocketClientModule.cpp"/>
-            <FILE id="ak7RaZ" name="WebSocketClientModule.h" compile="0" resource="0"
-                  file="Source/Module/modules/websocket/WebSocketClientModule.h"/>
-            <FILE id="EPOMFm" name="WebSocketServerModule.cpp" compile="1" resource="0"
-                  file="Source/Module/modules/websocket/WebSocketServerModule.cpp"/>
-            <FILE id="hfMYYs" name="WebSocketServerModule.h" compile="0" resource="0"
-                  file="Source/Module/modules/websocket/WebSocketServerModule.h"/>
-          </GROUP>
           <GROUP id="{1845D9E2-AABC-AF10-DF83-FE7DD092D098}" name="customvariables">
             <GROUP id="{E384A9A3-5D10-939D-8450-418396EF3123}" name="commands">
               <FILE id="flaypv" name="CustomVariablesModuleCommands.cpp" compile="1"
@@ -1178,6 +1162,35 @@
           <GROUP id="{7D2E89CA-CA8A-BD26-BC58-F2AE92B13C90}" name="udp">
             <FILE id="uUdZAS" name="UDPModule.cpp" compile="1" resource="0" file="Source/Module/modules/udp/UDPModule.cpp"/>
             <FILE id="LfgisU" name="UDPModule.h" compile="0" resource="0" file="Source/Module/modules/udp/UDPModule.h"/>
+          </GROUP>
+          <GROUP id="{7E905842-BBAC-896D-3E86-DAE3BBB297BC}" name="gpio">
+            <GROUP id="{3B0DBB9B-E6BE-6589-44DE-B6980C1711CF}" name="commands">
+              <FILE id="NLMSFw" name="GPIOCommands.cpp" compile="1" resource="0"
+                    file="Source/Module/modules/gpio/commands/GPIOCommands.cpp"/>
+              <FILE id="LoBh0H" name="GPIOCommands.h" compile="0" resource="0" file="Source/Module/modules/gpio/commands/GPIOCommands.h"/>
+            </GROUP>
+            <GROUP id="{7B5E3E04-8EDE-0C67-646E-0C0431F577F3}" name="pigpio">
+              <FILE id="LsucgL" name="pigpio.c" compile="1" resource="0" file="Source/Module/modules/gpio/pigpio/pigpio.c"/>
+              <FILE id="cJkWSq" name="pigpio.h" compile="0" resource="0" file="Source/Module/modules/gpio/pigpio/pigpio.h"/>
+            </GROUP>
+            <FILE id="r5gPbq" name="GPIOModule.cpp" compile="1" resource="0" file="Source/Module/modules/gpio/GPIOModule.cpp"/>
+            <FILE id="vShhSX" name="GPIOModule.h" compile="0" resource="0" file="Source/Module/modules/gpio/GPIOModule.h"/>
+          </GROUP>
+          <GROUP id="{82D5E4C7-8C1C-9378-EEE7-C988DD90549E}" name="websocket">
+            <GROUP id="{4FA7479C-2A94-C90F-41FE-7D5B84A26E65}" name="ui">
+              <FILE id="XUeIev" name="WebSocketServerModuleUI.cpp" compile="1" resource="0"
+                    file="Source/Module/modules/websocket/ui/WebSocketServerModuleUI.cpp"/>
+              <FILE id="VYJFr2" name="WebSocketServerModuleUI.h" compile="0" resource="0"
+                    file="Source/Module/modules/websocket/ui/WebSocketServerModuleUI.h"/>
+            </GROUP>
+            <FILE id="hmZuQg" name="WebSocketClientModule.cpp" compile="1" resource="0"
+                  file="Source/Module/modules/websocket/WebSocketClientModule.cpp"/>
+            <FILE id="ak7RaZ" name="WebSocketClientModule.h" compile="0" resource="0"
+                  file="Source/Module/modules/websocket/WebSocketClientModule.h"/>
+            <FILE id="EPOMFm" name="WebSocketServerModule.cpp" compile="1" resource="0"
+                  file="Source/Module/modules/websocket/WebSocketServerModule.cpp"/>
+            <FILE id="hfMYYs" name="WebSocketServerModule.h" compile="0" resource="0"
+                  file="Source/Module/modules/websocket/WebSocketServerModule.h"/>
           </GROUP>
         </GROUP>
         <GROUP id="{B44A4903-3CA1-862E-68D6-9486E9CB25F1}" name="Routing">

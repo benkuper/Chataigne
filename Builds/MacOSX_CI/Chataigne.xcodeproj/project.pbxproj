@@ -545,18 +545,6 @@
 			isa = PBXBuildFile;
 			fileRef = 1991D78FED2DCE9A56B1220B;
 		};
-		B4AA1B8F7AA272C47E1F6973 = {
-			isa = PBXBuildFile;
-			fileRef = 4EFF7F0D3D5495F0DB25BD91;
-		};
-		CA66D6C35412C59D22850AFC = {
-			isa = PBXBuildFile;
-			fileRef = E91A8E434241E4DDFB355A23;
-		};
-		98D844B72F78FDA97EA6E92B = {
-			isa = PBXBuildFile;
-			fileRef = BA3FE442D9608F2B1BF24E08;
-		};
 		AF70A4DC7FA481F5FB0C54CD = {
 			isa = PBXBuildFile;
 			fileRef = 7D1B09D24AF2AA1A035C862F;
@@ -1036,6 +1024,30 @@
 		88CDCEA94B9AE6F3ADF56372 = {
 			isa = PBXBuildFile;
 			fileRef = 2D5CCA1C4264DD472237CA04;
+		};
+		B6A68CD3935A7812035E778A = {
+			isa = PBXBuildFile;
+			fileRef = A48ADB0BCE07CA8C68387D27;
+		};
+		73EEDC57D3D78D60970F77CB = {
+			isa = PBXBuildFile;
+			fileRef = BC14EC6636D09A4F7D7524D3;
+		};
+		87175776616B175D8093B992 = {
+			isa = PBXBuildFile;
+			fileRef = 222768EED0BC479A58D02617;
+		};
+		B4AA1B8F7AA272C47E1F6973 = {
+			isa = PBXBuildFile;
+			fileRef = 4EFF7F0D3D5495F0DB25BD91;
+		};
+		CA66D6C35412C59D22850AFC = {
+			isa = PBXBuildFile;
+			fileRef = E91A8E434241E4DDFB355A23;
+		};
+		98D844B72F78FDA97EA6E92B = {
+			isa = PBXBuildFile;
+			fileRef = BA3FE442D9608F2B1BF24E08;
 		};
 		10F29E1523D25CF4900175AA = {
 			isa = PBXBuildFile;
@@ -1978,6 +1990,13 @@
 			path = ../../Source/Common/Processor/Mapping/Filter/filters/number/SimpleSmoothFilter.h;
 			sourceTree = "SOURCE_ROOT";
 		};
+		222768EED0BC479A58D02617 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = GPIOModule.cpp;
+			path = ../../Source/Module/modules/gpio/GPIOModule.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		22FB58EDF9E50359B62B0489 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -2482,6 +2501,13 @@
 			path = ../../Source/Module/modules/system/os/commands/ui/WakeOnLanCommandEditor.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
+		4068BB40DCE6688B3437FB45 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = GPIOCommands.h;
+			path = ../../Source/Module/modules/gpio/commands/GPIOCommands.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		406FDBCD428D2C569FAD1B54 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -2557,6 +2583,13 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = ModuleRouter.cpp;
 			path = ../../Source/Module/Routing/ModuleRouter.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
+		43BF5ADDAC099D6B0F796965 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = GPIOModule.h;
+			path = ../../Source/Module/modules/gpio/GPIOModule.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		43FF3B8ECBF69AB0CED363AE = {
@@ -3742,6 +3775,13 @@
 			path = ../../Source/Module/modules/controller/mouse/MouseModule.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
+		826AAFA086B63446290F4909 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = pigpio.h;
+			path = ../../Source/Module/modules/gpio/pigpio/pigpio.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		829270114E6479B154663AFB = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -4393,6 +4433,13 @@
 			path = ../../Source/Module/modules/oscquery/generic/ui/OSCQueryModuleEditor.h;
 			sourceTree = "SOURCE_ROOT";
 		};
+		A48ADB0BCE07CA8C68387D27 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = GPIOCommands.cpp;
+			path = ../../Source/Module/modules/gpio/commands/GPIOCommands.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		A58C745D1F37BDB174FAB845 = {
 			isa = PBXFileReference;
 			lastKnownFileType = image.png;
@@ -4860,6 +4907,13 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = StateViewUI.h;
 			path = ../../Source/StateMachine/State/ui/StateViewUI.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		BC14EC6636D09A4F7D7524D3 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.c;
+			name = pigpio.c;
+			path = ../../Source/Module/modules/gpio/pigpio/pigpio.c;
 			sourceTree = "SOURCE_ROOT";
 		};
 		BC6F1B625EFCC97D0A8A1558 = {
@@ -7007,27 +7061,6 @@
 			name = Community;
 			sourceTree = "<group>";
 		};
-		57CB97A6E93A771F08EAC49C = {
-			isa = PBXGroup;
-			children = (
-				4EFF7F0D3D5495F0DB25BD91,
-				E296E51ECCF351063B8CB8C6,
-			);
-			name = ui;
-			sourceTree = "<group>";
-		};
-		2B67D178F31F9FA0EC4E16ED = {
-			isa = PBXGroup;
-			children = (
-				57CB97A6E93A771F08EAC49C,
-				E91A8E434241E4DDFB355A23,
-				7EF44A7D56C18CA1D1576DAC,
-				BA3FE442D9608F2B1BF24E08,
-				54DCAE1A042E1A631A2B3D2D,
-			);
-			name = websocket;
-			sourceTree = "<group>";
-		};
 		DB7058BCF02647886242628A = {
 			isa = PBXGroup;
 			children = (
@@ -7944,10 +7977,59 @@
 			name = udp;
 			sourceTree = "<group>";
 		};
+		FF673A4A296A364A7EEB2077 = {
+			isa = PBXGroup;
+			children = (
+				A48ADB0BCE07CA8C68387D27,
+				4068BB40DCE6688B3437FB45,
+			);
+			name = commands;
+			sourceTree = "<group>";
+		};
+		977C418EACB018EC20201AA6 = {
+			isa = PBXGroup;
+			children = (
+				BC14EC6636D09A4F7D7524D3,
+				826AAFA086B63446290F4909,
+			);
+			name = pigpio;
+			sourceTree = "<group>";
+		};
+		B2BF6743726B234DE2E0490E = {
+			isa = PBXGroup;
+			children = (
+				FF673A4A296A364A7EEB2077,
+				977C418EACB018EC20201AA6,
+				222768EED0BC479A58D02617,
+				43BF5ADDAC099D6B0F796965,
+			);
+			name = gpio;
+			sourceTree = "<group>";
+		};
+		57CB97A6E93A771F08EAC49C = {
+			isa = PBXGroup;
+			children = (
+				4EFF7F0D3D5495F0DB25BD91,
+				E296E51ECCF351063B8CB8C6,
+			);
+			name = ui;
+			sourceTree = "<group>";
+		};
+		2B67D178F31F9FA0EC4E16ED = {
+			isa = PBXGroup;
+			children = (
+				57CB97A6E93A771F08EAC49C,
+				E91A8E434241E4DDFB355A23,
+				7EF44A7D56C18CA1D1576DAC,
+				BA3FE442D9608F2B1BF24E08,
+				54DCAE1A042E1A631A2B3D2D,
+			);
+			name = websocket;
+			sourceTree = "<group>";
+		};
 		4665BC8668EBFB6331EA2AD6 = {
 			isa = PBXGroup;
 			children = (
-				2B67D178F31F9FA0EC4E16ED,
 				7846CCD04F250DEB860CAC7B,
 				9E1DD129C66F6E811ADD96CD,
 				12C8B5AA077D6DBB00FB91A0,
@@ -7965,6 +8047,8 @@
 				D80815E6CA298099BA8E524C,
 				30D6E5F603110E42C1ABDBF9,
 				15ABF350156E6F47D7D40597,
+				B2BF6743726B234DE2E0490E,
+				2B67D178F31F9FA0EC4E16ED,
 			);
 			name = modules;
 			sourceTree = "<group>";
@@ -8445,7 +8529,7 @@
 					"DEBUG=1",
 					"JUCE_SUPPORT_CARBON=0",
 					"JUCER_XCODE_MAC_2F3811D6=1",
-					"JUCE_APP_VERSION=1.7.5b3",
+					"JUCE_APP_VERSION=1.7.5b4",
 					"JUCE_APP_VERSION_HEX=0x10705",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
@@ -8507,7 +8591,7 @@
 					"NDEBUG=1",
 					"JUCE_SUPPORT_CARBON=0",
 					"JUCER_XCODE_MAC_2F3811D6=1",
-					"JUCE_APP_VERSION=1.7.5b3",
+					"JUCE_APP_VERSION=1.7.5b4",
 					"JUCE_APP_VERSION_HEX=0x10705",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
@@ -8796,9 +8880,6 @@
 				9505054C06127A07DB62A014,
 				63C5D4EE57DB9E83CFADD764,
 				2A5DED7FA17BE4A5FD0BA5A8,
-				B4AA1B8F7AA272C47E1F6973,
-				CA66D6C35412C59D22850AFC,
-				98D844B72F78FDA97EA6E92B,
 				AF70A4DC7FA481F5FB0C54CD,
 				6088775CFABC552F51407DEF,
 				A6300AF2899170A1D0A50D12,
@@ -8919,6 +9000,12 @@
 				39E2B66DC6E1772B38F0677A,
 				30E97777747F251C9235E38A,
 				88CDCEA94B9AE6F3ADF56372,
+				B6A68CD3935A7812035E778A,
+				73EEDC57D3D78D60970F77CB,
+				87175776616B175D8093B992,
+				B4AA1B8F7AA272C47E1F6973,
+				CA66D6C35412C59D22850AFC,
+				98D844B72F78FDA97EA6E92B,
 				10F29E1523D25CF4900175AA,
 				C283F46774EAFE500D229FE2,
 				FC90E2BE6646455563297244,

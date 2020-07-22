@@ -66,7 +66,7 @@
       <Optimization>Full</Optimization>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <AdditionalIncludeDirectories>..\..\JuceLibraryCode;D:\Softwares\JUCE\modules;..\..\Modules;../../External/wiiuse;../../External/serial/include;../../External/asio;../../External/kinect/include;../../External/joycon/include;../../External/servus/include;../../External/dnssd/include;../../External/sdl/include;../../External/libartnet/include;../../External/hidapi/include;../../Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;NDEBUG;USE_KINECT=1;JUCER_VS2019_78A5026=1;JUCE_APP_VERSION=1.7.5b3;JUCE_APP_VERSION_HEX=0x10705;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_RTAS=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;NDEBUG;USE_KINECT=1;JUCER_VS2019_78A5026=1;JUCE_APP_VERSION=1.7.5b4;JUCE_APP_VERSION_HEX=0x10705;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_RTAS=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <PrecompiledHeader/>
@@ -115,7 +115,7 @@
       <Optimization>Disabled</Optimization>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <AdditionalIncludeDirectories>..\..\JuceLibraryCode;D:\Softwares\JUCE\modules;..\..\Modules;../../External/wiiuse;../../External/serial/include;../../External/asio;../../External/kinect/include;../../External/joycon/include;../../External/servus/include;../../External/dnssd/include;../../External/ois/include;../../External/sdl/include;../../External/libartnet/include;../../External/hidapi/include;../../Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;DEBUG;_DEBUG;USE_KINECT=1;JUCER_VS2019_78A5026=1;JUCE_APP_VERSION=1.7.5b3;JUCE_APP_VERSION_HEX=0x10705;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_RTAS=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;DEBUG;_DEBUG;USE_KINECT=1;JUCER_VS2019_78A5026=1;JUCE_APP_VERSION=1.7.5b4;JUCE_APP_VERSION_HEX=0x10705;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_RTAS=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <PrecompiledHeader/>
@@ -266,9 +266,6 @@
     <ClCompile Include="..\..\Source\Module\Community\ui\CommunityModuleInfoEditor.cpp"/>
     <ClCompile Include="..\..\Source\Module\Community\CommunityModuleInfo.cpp"/>
     <ClCompile Include="..\..\Source\Module\Community\CommunityModuleManager.cpp"/>
-    <ClCompile Include="..\..\Source\Module\modules\websocket\ui\WebSocketServerModuleUI.cpp"/>
-    <ClCompile Include="..\..\Source\Module\modules\websocket\WebSocketClientModule.cpp"/>
-    <ClCompile Include="..\..\Source\Module\modules\websocket\WebSocketServerModule.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\customvariables\commands\CustomVariablesModuleCommands.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\customvariables\CustomVariablesModule.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\audio\analysis\ui\FFTAnalyzerEditor.cpp"/>
@@ -386,6 +383,12 @@
     <ClCompile Include="..\..\Source\Module\modules\tcp\tcpclient\watchout\WatchoutModule.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\tcp\tcpclient\TCPClientModule.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\udp\UDPModule.cpp"/>
+    <ClCompile Include="..\..\Source\Module\modules\gpio\commands\GPIOCommands.cpp"/>
+    <ClCompile Include="..\..\Source\Module\modules\gpio\pigpio\pigpio.c"/>
+    <ClCompile Include="..\..\Source\Module\modules\gpio\GPIOModule.cpp"/>
+    <ClCompile Include="..\..\Source\Module\modules\websocket\ui\WebSocketServerModuleUI.cpp"/>
+    <ClCompile Include="..\..\Source\Module\modules\websocket\WebSocketClientModule.cpp"/>
+    <ClCompile Include="..\..\Source\Module\modules\websocket\WebSocketServerModule.cpp"/>
     <ClCompile Include="..\..\Source\Module\Routing\ui\ModuleRouterPanelView.cpp"/>
     <ClCompile Include="..\..\Source\Module\Routing\ui\ModuleRouterValueEditor.cpp"/>
     <ClCompile Include="..\..\Source\Module\Routing\ui\ModuleRouterView.cpp"/>
@@ -2801,6 +2804,9 @@
     <ClCompile Include="..\..\Modules\juce_organicui\helpers\StringUtil.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\helpers\WakeOnLan.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\inspectable\dashboard\ui\DashboardInspectableItemUI.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -3313,9 +3319,6 @@
     <ClInclude Include="..\..\Source\Module\Community\ui\CommunityModuleInfoEditor.h"/>
     <ClInclude Include="..\..\Source\Module\Community\CommunityModuleInfo.h"/>
     <ClInclude Include="..\..\Source\Module\Community\CommunityModuleManager.h"/>
-    <ClInclude Include="..\..\Source\Module\modules\websocket\ui\WebSocketServerModuleUI.h"/>
-    <ClInclude Include="..\..\Source\Module\modules\websocket\WebSocketClientModule.h"/>
-    <ClInclude Include="..\..\Source\Module\modules\websocket\WebSocketServerModule.h"/>
     <ClInclude Include="..\..\Source\Module\modules\customvariables\commands\CustomVariablesModuleCommands.h"/>
     <ClInclude Include="..\..\Source\Module\modules\customvariables\CustomVariablesModule.h"/>
     <ClInclude Include="..\..\Source\Module\modules\audio\analysis\ui\FFTAnalyzerEditor.h"/>
@@ -3425,6 +3428,12 @@
     <ClInclude Include="..\..\Source\Module\modules\tcp\tcpclient\watchout\WatchoutModule.h"/>
     <ClInclude Include="..\..\Source\Module\modules\tcp\tcpclient\TCPClientModule.h"/>
     <ClInclude Include="..\..\Source\Module\modules\udp\UDPModule.h"/>
+    <ClInclude Include="..\..\Source\Module\modules\gpio\commands\GPIOCommands.h"/>
+    <ClInclude Include="..\..\Source\Module\modules\gpio\pigpio\pigpio.h"/>
+    <ClInclude Include="..\..\Source\Module\modules\gpio\GPIOModule.h"/>
+    <ClInclude Include="..\..\Source\Module\modules\websocket\ui\WebSocketServerModuleUI.h"/>
+    <ClInclude Include="..\..\Source\Module\modules\websocket\WebSocketClientModule.h"/>
+    <ClInclude Include="..\..\Source\Module\modules\websocket\WebSocketServerModule.h"/>
     <ClInclude Include="..\..\Source\Module\Routing\ui\ModuleRouterPanelView.h"/>
     <ClInclude Include="..\..\Source\Module\Routing\ui\ModuleRouterValueEditor.h"/>
     <ClInclude Include="..\..\Source\Module\Routing\ui\ModuleRouterView.h"/>

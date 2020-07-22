@@ -35,7 +35,7 @@ ifeq ($(CONFIG),Debug)
     TARGET_ARCH := -march=native
   endif
 
-  JUCE_CPPFLAGS := $(DEPFLAGS) "-DLINUX=1" "-DDEBUG=1" "-D_DEBUG=1" "-DJUCER_LINUX_MAKE_9C1B7400=1" "-DJUCE_APP_VERSION=1.7.5b3" "-DJUCE_APP_VERSION_HEX=0x10705" $(shell pkg-config --cflags alsa freetype2 libcurl webkit2gtk-4.0 gtk+-x11-3.0) -pthread -I../../JuceLibraryCode -I$(HOME)/JUCE/modules -I../../Modules -I../../External/wiiuse -I../../External/serial/include -I../../External/servus/include -I../../External/dnssd/include -I../../External/libartnet/include -I../../External/sdl/include -I/usr/include/freetype2 -I../../External/hidapi/include -I../../External/libusb/include/libusb-1.0 -I../../Source $(CPPFLAGS)
+  JUCE_CPPFLAGS := $(DEPFLAGS) "-DLINUX=1" "-DDEBUG=1" "-D_DEBUG=1" "-DJUCER_LINUX_MAKE_9C1B7400=1" "-DJUCE_APP_VERSION=1.7.5b4" "-DJUCE_APP_VERSION_HEX=0x10705" $(shell pkg-config --cflags alsa freetype2 libcurl webkit2gtk-4.0 gtk+-x11-3.0) -pthread -I../../JuceLibraryCode -I$(HOME)/JUCE/modules -I../../Modules -I../../External/wiiuse -I../../External/serial/include -I../../External/servus/include -I../../External/dnssd/include -I../../External/libartnet/include -I../../External/sdl/include -I/usr/include/freetype2 -I../../External/hidapi/include -I../../External/libusb/include/libusb-1.0 -I../../Source $(CPPFLAGS)
   JUCE_CPPFLAGS_APP :=  "-DJucePlugin_Build_VST=0" "-DJucePlugin_Build_VST3=0" "-DJucePlugin_Build_AU=0" "-DJucePlugin_Build_AUv3=0" "-DJucePlugin_Build_RTAS=0" "-DJucePlugin_Build_AAX=0" "-DJucePlugin_Build_Standalone=0" "-DJucePlugin_Build_Unity=0"
   JUCE_TARGET_APP := Chataigne
 
@@ -56,7 +56,7 @@ ifeq ($(CONFIG),Release)
     TARGET_ARCH := -march=native
   endif
 
-  JUCE_CPPFLAGS := $(DEPFLAGS) "-DLINUX=1" "-DNDEBUG=1" "-DJUCER_LINUX_MAKE_9C1B7400=1" "-DJUCE_APP_VERSION=1.7.5b3" "-DJUCE_APP_VERSION_HEX=0x10705" $(shell pkg-config --cflags alsa freetype2 libcurl webkit2gtk-4.0 gtk+-x11-3.0) -pthread -I../../JuceLibraryCode -I$(HOME)/JUCE/modules -I../../Modules -I../../External/wiiuse -I../../External/serial/include -I../../External/servus/include -I../../External/dnssd/include -I../../External/libartnet/include -I../../External/sdl/include -I/usr/include/freetype2 -I../../External/hidapi/include -I../../External/libusb/include/libusb-1.0 -I../../Source $(CPPFLAGS)
+  JUCE_CPPFLAGS := $(DEPFLAGS) "-DLINUX=1" "-DNDEBUG=1" "-DJUCER_LINUX_MAKE_9C1B7400=1" "-DJUCE_APP_VERSION=1.7.5b4" "-DJUCE_APP_VERSION_HEX=0x10705" $(shell pkg-config --cflags alsa freetype2 libcurl webkit2gtk-4.0 gtk+-x11-3.0) -pthread -I../../JuceLibraryCode -I$(HOME)/JUCE/modules -I../../Modules -I../../External/wiiuse -I../../External/serial/include -I../../External/servus/include -I../../External/dnssd/include -I../../External/libartnet/include -I../../External/sdl/include -I/usr/include/freetype2 -I../../External/hidapi/include -I../../External/libusb/include/libusb-1.0 -I../../Source $(CPPFLAGS)
   JUCE_CPPFLAGS_APP :=  "-DJucePlugin_Build_VST=0" "-DJucePlugin_Build_VST3=0" "-DJucePlugin_Build_AU=0" "-DJucePlugin_Build_AUv3=0" "-DJucePlugin_Build_RTAS=0" "-DJucePlugin_Build_AAX=0" "-DJucePlugin_Build_Standalone=0" "-DJucePlugin_Build_Unity=0"
   JUCE_TARGET_APP := Chataigne
 
@@ -183,9 +183,6 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/CommunityModuleInfoEditor_122ae75f.o \
   $(JUCE_OBJDIR)/CommunityModuleInfo_23b085c3.o \
   $(JUCE_OBJDIR)/CommunityModuleManager_e575a282.o \
-  $(JUCE_OBJDIR)/WebSocketServerModuleUI_2743a483.o \
-  $(JUCE_OBJDIR)/WebSocketClientModule_5755214.o \
-  $(JUCE_OBJDIR)/WebSocketServerModule_20a978c.o \
   $(JUCE_OBJDIR)/CustomVariablesModuleCommands_edf5eec8.o \
   $(JUCE_OBJDIR)/CustomVariablesModule_cdc46d67.o \
   $(JUCE_OBJDIR)/FFTAnalyzerEditor_79640ae4.o \
@@ -303,6 +300,12 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/WatchoutModule_12f7dcc8.o \
   $(JUCE_OBJDIR)/TCPClientModule_9b5f8345.o \
   $(JUCE_OBJDIR)/UDPModule_4d12fb3d.o \
+  $(JUCE_OBJDIR)/GPIOCommands_563bb04a.o \
+  $(JUCE_OBJDIR)/pigpio_c63733db.o \
+  $(JUCE_OBJDIR)/GPIOModule_1c347bb9.o \
+  $(JUCE_OBJDIR)/WebSocketServerModuleUI_2743a483.o \
+  $(JUCE_OBJDIR)/WebSocketClientModule_5755214.o \
+  $(JUCE_OBJDIR)/WebSocketServerModule_20a978c.o \
   $(JUCE_OBJDIR)/ModuleRouterPanelView_3de9a86.o \
   $(JUCE_OBJDIR)/ModuleRouterValueEditor_7fd5857b.o \
   $(JUCE_OBJDIR)/ModuleRouterView_be67d052.o \
@@ -968,21 +971,6 @@ $(JUCE_OBJDIR)/CommunityModuleManager_e575a282.o: ../../Source/Module/Community/
 	@echo "Compiling CommunityModuleManager.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
-$(JUCE_OBJDIR)/WebSocketServerModuleUI_2743a483.o: ../../Source/Module/modules/websocket/ui/WebSocketServerModuleUI.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling WebSocketServerModuleUI.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/WebSocketClientModule_5755214.o: ../../Source/Module/modules/websocket/WebSocketClientModule.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling WebSocketClientModule.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/WebSocketServerModule_20a978c.o: ../../Source/Module/modules/websocket/WebSocketServerModule.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling WebSocketServerModule.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
 $(JUCE_OBJDIR)/CustomVariablesModuleCommands_edf5eec8.o: ../../Source/Module/modules/customvariables/commands/CustomVariablesModuleCommands.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling CustomVariablesModuleCommands.cpp"
@@ -1566,6 +1554,36 @@ $(JUCE_OBJDIR)/TCPClientModule_9b5f8345.o: ../../Source/Module/modules/tcp/tcpcl
 $(JUCE_OBJDIR)/UDPModule_4d12fb3d.o: ../../Source/Module/modules/udp/UDPModule.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling UDPModule.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/GPIOCommands_563bb04a.o: ../../Source/Module/modules/gpio/commands/GPIOCommands.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling GPIOCommands.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/pigpio_c63733db.o: ../../Source/Module/modules/gpio/pigpio/pigpio.c
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling pigpio.c"
+	$(V_AT)$(CC) $(JUCE_CFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/GPIOModule_1c347bb9.o: ../../Source/Module/modules/gpio/GPIOModule.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling GPIOModule.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/WebSocketServerModuleUI_2743a483.o: ../../Source/Module/modules/websocket/ui/WebSocketServerModuleUI.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling WebSocketServerModuleUI.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/WebSocketClientModule_5755214.o: ../../Source/Module/modules/websocket/WebSocketClientModule.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling WebSocketClientModule.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/WebSocketServerModule_20a978c.o: ../../Source/Module/modules/websocket/WebSocketServerModule.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling WebSocketServerModule.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/ModuleRouterPanelView_3de9a86.o: ../../Source/Module/Routing/ui/ModuleRouterPanelView.cpp
