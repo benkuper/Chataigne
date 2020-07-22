@@ -28,7 +28,7 @@ class GPIOModule :
     public Thread
 {
 public:
-    GPIOModule(var params);
+    GPIOModule();
     virtual ~GPIOModule();
 
     enum GPIOMode { OUTPUT = 0, INPUT = 1, ALT0 = 4, ALT1 = 5, ALT2 = 6, ALT3 = 7, ALT4 = 3, ALT5 = 2, GPIO_MODE_MAX = 8};

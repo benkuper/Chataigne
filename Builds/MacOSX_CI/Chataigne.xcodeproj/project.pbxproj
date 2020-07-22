@@ -1641,6 +1641,13 @@
 			path = ../../Source/Analytics/MatomoAnalytics.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
+		0DD04E60A5E6174F61924D04 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = JuceHeader.h;
+			path = ../../JuceLibraryCode/JuceHeader.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		0E0B1252FBC81A8784FD87B5 = {
 			isa = PBXFileReference;
 			lastKnownFileType = image.png;
@@ -8485,6 +8492,7 @@
 				A344ECDA05A5372A32341886,
 				4D147E8D071C0C93CB433813,
 				9EB5EECB134C6E74D074AB10,
+				0DD04E60A5E6174F61924D04,
 			);
 			name = "JUCE Library Code";
 			sourceTree = "<group>";
