@@ -34,7 +34,7 @@ GPIOModule::GPIOModule() :
     moduleParams.addChildControllableContainer(&gpioModes);
 
     defManager->add(CommandDefinition::createDef(this, "", "Set Digital", &GPIOCommand::create, CommandContext::BOTH)->addParam("action", GPIOCommand::SET_DIGITAL));
-    defManager->add(CommandDefinition::createDef(this, "", "Set Analog", &GPIOCommand::create, CommandContext::BOTH)->addParam("action", GPIOCommand::SET_PWM));
+    defManager->add(CommandDefinition::createDef(this, "", "Set PWM", &GPIOCommand::create, CommandContext::BOTH)->addParam("action", GPIOCommand::SET_PWM));
     
     startThread();
 }
