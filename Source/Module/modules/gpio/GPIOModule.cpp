@@ -11,7 +11,7 @@
 #include "GPIOModule.h"
 #include "commands//GPIOCommands.h"
 
-GPIOModule::GPIOModule(var params) :
+GPIOModule::GPIOModule() :
     Module("GPIO"),
     Thread("GPIO"),
     gpioModes("GPIO Modes")

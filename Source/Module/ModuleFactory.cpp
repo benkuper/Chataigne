@@ -46,6 +46,8 @@
 #include "modules/controller/kinect/KinectV2Module.h"
 #include "modules/controller/streamdeck/StreamDeckModule.h"
 
+#include "modules/gpio/GPIOModule.h"
+
 #include "modules/generators/metronome/MetronomeModule.h"
 #include "modules/generators/signal/SignalModule.h"
 
@@ -85,6 +87,7 @@ ModuleFactory::ModuleFactory() {
 	defs.add(new ModuleDefinition("Hardware", "Gamepad", &GamepadModule::create));
 	defs.add(new ModuleDefinition("Hardware", "Joystick", &JoystickModule::create));
 	defs.add(new ModuleDefinition("Hardware", "Stream Deck", &StreamDeckModule::create));
+	defs.add(new ModuleDefinition("Hardware", "GPIO", &GPIOModule::create));
 
 
 	defs.add(new ModuleDefinition("Software", "DLight", &DLightModule::create));

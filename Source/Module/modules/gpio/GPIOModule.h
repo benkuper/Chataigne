@@ -48,5 +48,5 @@ public:
 
     String getDefaultTypeString() { return "GPIO"; }
 
-    static GPIOModule* create(var params) { return new GPIOModule(params); }
+    static GPIOModule* create() { return new GPIOModule(); }
 };
