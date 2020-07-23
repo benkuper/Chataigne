@@ -1175,8 +1175,6 @@
               <FILE id="omBALx" name="custom.cext" compile="0" resource="1" file="Source/Module/modules/gpio/pigpio/custom.cext"/>
               <FILE id="LsucgL" name="pigpio.c" compile="1" resource="0" file="Source/Module/modules/gpio/pigpio/pigpio.c"/>
               <FILE id="cJkWSq" name="pigpio.h" compile="0" resource="0" file="Source/Module/modules/gpio/pigpio/pigpio.h"/>
-              <FILE id="aNiTCL" name="pigs.c" compile="1" resource="0" file="Source/Module/modules/gpio/pigpio/pigs.c"/>
-              <FILE id="d6e5Xf" name="pigs.h" compile="0" resource="0" file="Source/Module/modules/gpio/pigpio/pigs.h"/>
             </GROUP>
             <FILE id="r5gPbq" name="GPIOModule.cpp" compile="1" resource="0" file="Source/Module/modules/gpio/GPIOModule.cpp"/>
             <FILE id="vShhSX" name="GPIOModule.h" compile="0" resource="0" file="Source/Module/modules/gpio/GPIOModule.h"/>

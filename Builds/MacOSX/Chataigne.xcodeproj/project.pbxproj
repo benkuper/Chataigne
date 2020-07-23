@@ -1037,10 +1037,6 @@
 			isa = PBXBuildFile;
 			fileRef = BC14EC6636D09A4F7D7524D3;
 		};
-		882B0C9478391E4572A9F233 = {
-			isa = PBXBuildFile;
-			fileRef = 733D9DEAEDA2881C0C2486B6;
-		};
 		87175776616B175D8093B992 = {
 			isa = PBXBuildFile;
 			fileRef = 222768EED0BC479A58D02617;
@@ -2474,13 +2470,6 @@
 			path = ../../Source/Module/modules/state/commands/StateCommand.h;
 			sourceTree = "SOURCE_ROOT";
 		};
-		3D81068DABB02093CC93BC51 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = pigs.h;
-			path = ../../Source/Module/modules/gpio/pigpio/pigs.h;
-			sourceTree = "SOURCE_ROOT";
-		};
 		3D90E555D6F95A32AA9FF9E7 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -3572,13 +3561,6 @@
 			name = IOKit.framework;
 			path = System/Library/Frameworks/IOKit.framework;
 			sourceTree = SDKROOT;
-		};
-		733D9DEAEDA2881C0C2486B6 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.c;
-			name = pigs.c;
-			path = ../../Source/Module/modules/gpio/pigpio/pigs.c;
-			sourceTree = "SOURCE_ROOT";
 		};
 		7347A5FBEE965521C1AFC6A2 = {
 			isa = PBXFileReference;
@@ -8037,8 +8019,6 @@
 				0B44735E419DA142D27A72AC,
 				BC14EC6636D09A4F7D7524D3,
 				826AAFA086B63446290F4909,
-				733D9DEAEDA2881C0C2486B6,
-				3D81068DABB02093CC93BC51,
 			);
 			name = pigpio;
 			sourceTree = "<group>";
@@ -9051,7 +9031,6 @@
 				B6A68CD3935A7812035E778A,
 				0B13BF87D171A99EA87757C1,
 				73EEDC57D3D78D60970F77CB,
-				882B0C9478391E4572A9F233,
 				87175776616B175D8093B992,
 				B4AA1B8F7AA272C47E1F6973,
 				CA66D6C35412C59D22850AFC,

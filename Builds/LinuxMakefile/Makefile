@@ -303,7 +303,6 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/GPIOCommands_563bb04a.o \
   $(JUCE_OBJDIR)/command_20531fa2.o \
   $(JUCE_OBJDIR)/pigpio_c63733db.o \
-  $(JUCE_OBJDIR)/pigs_e5d57378.o \
   $(JUCE_OBJDIR)/GPIOModule_1c347bb9.o \
   $(JUCE_OBJDIR)/WebSocketServerModuleUI_2743a483.o \
   $(JUCE_OBJDIR)/WebSocketClientModule_5755214.o \
@@ -1571,11 +1570,6 @@ $(JUCE_OBJDIR)/command_20531fa2.o: ../../Source/Module/modules/gpio/pigpio/comma
 $(JUCE_OBJDIR)/pigpio_c63733db.o: ../../Source/Module/modules/gpio/pigpio/pigpio.c
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling pigpio.c"
-	$(V_AT)$(CC) $(JUCE_CFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/pigs_e5d57378.o: ../../Source/Module/modules/gpio/pigpio/pigs.c
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling pigs.c"
 	$(V_AT)$(CC) $(JUCE_CFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/GPIOModule_1c347bb9.o: ../../Source/Module/modules/gpio/GPIOModule.cpp

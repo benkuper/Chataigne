@@ -386,7 +386,6 @@
     <ClCompile Include="..\..\Source\Module\modules\gpio\commands\GPIOCommands.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\gpio\pigpio\command.c"/>
     <ClCompile Include="..\..\Source\Module\modules\gpio\pigpio\pigpio.c"/>
-    <ClCompile Include="..\..\Source\Module\modules\gpio\pigpio\pigs.c"/>
     <ClCompile Include="..\..\Source\Module\modules\gpio\GPIOModule.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\websocket\ui\WebSocketServerModuleUI.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\websocket\WebSocketClientModule.cpp"/>
@@ -3433,7 +3432,6 @@
     <ClInclude Include="..\..\Source\Module\modules\gpio\commands\GPIOCommands.h"/>
     <ClInclude Include="..\..\Source\Module\modules\gpio\pigpio\command.h"/>
     <ClInclude Include="..\..\Source\Module\modules\gpio\pigpio\pigpio.h"/>
-    <ClInclude Include="..\..\Source\Module\modules\gpio\pigpio\pigs.h"/>
     <ClInclude Include="..\..\Source\Module\modules\gpio\GPIOModule.h"/>
     <ClInclude Include="..\..\Source\Module\modules\websocket\ui\WebSocketServerModuleUI.h"/>
     <ClInclude Include="..\..\Source\Module\modules\websocket\WebSocketClientModule.h"/>

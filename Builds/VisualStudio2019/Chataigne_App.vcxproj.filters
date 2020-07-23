@@ -2071,9 +2071,6 @@
     <ClCompile Include="..\..\Source\Module\modules\gpio\pigpio\pigpio.c">
       <Filter>Chataigne\Source\Module\modules\gpio\pigpio</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\Module\modules\gpio\pigpio\pigs.c">
-      <Filter>Chataigne\Source\Module\modules\gpio\pigpio</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\gpio\GPIOModule.cpp">
       <Filter>Chataigne\Source\Module\modules\gpio</Filter>
     </ClCompile>
@@ -5890,9 +5887,6 @@
       <Filter>Chataigne\Source\Module\modules\gpio\pigpio</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\gpio\pigpio\pigpio.h">
-      <Filter>Chataigne\Source\Module\modules\gpio\pigpio</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Module\modules\gpio\pigpio\pigs.h">
       <Filter>Chataigne\Source\Module\modules\gpio\pigpio</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\gpio\GPIOModule.h">
