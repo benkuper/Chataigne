@@ -17,8 +17,11 @@ ResolumeClipCommand::ResolumeClipCommand(ResolumeModule * _module, CommandContex
 	loopClips(nullptr),
 	randomClips(nullptr)
 {
-	connectParam = argumentsContainer.addIntParameter("Connect", "", 1, 1, 1);
+	connectParam = argumentsContainer.addIntParameter("Connect", "", 1, 0, 1);
+	connectParam->setControllableFeedbackOnly(true);
 	argumentsContainer.hideInEditor = true;
+
+	needsOnOff = params.getProperty("needsOnOff", false);
 
 	rebuildParameters();
 }
@@ -67,6 +70,13 @@ void ResolumeClipCommand::triggerInternal()
 {
 	ResolumeBaseCommand::triggerInternal();
 
+	if (needsOnOff)
+	{
+		connectParam->setValue(0);
+		ResolumeBaseCommand::triggerInternal();
+		connectParam->setValue(1);
+	}
+
 	if (firstClip != nullptr)
 	{
 		int targetClip = randomClips->boolValue() ? clipRand.nextInt(Range<int>(firstClip->intValue(),lastClip->intValue()+1)) : clipParam->intValue() + 1;
@@ -76,4 +86,6 @@ void ResolumeClipCommand::triggerInternal()
 		}
 		clipParam->setValue(targetClip);
 	}
+
+
 }
