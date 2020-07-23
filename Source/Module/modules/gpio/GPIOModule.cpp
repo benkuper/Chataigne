@@ -75,7 +75,7 @@ void GPIOModule::setPWMValue(int pin, float value)
 {
     if (!enabled->boolValue()) return;
 
-    int finalValue = (int)(value * 1024);
+    int finalValue = (int)(value * 255);
 #ifdef GPIO_SUPPORT
     gpioPWM(pin, finalValue);
 #endif
@@ -103,7 +103,7 @@ void GPIOModule::run()
         //read
         for (int i = 0; i < GPIO_MAX_PINS; i++)
         {
-            bool isInput = gpioModeParams[i]->getValueDataAsEnum<GPIOMode>() == GPIOMode::OUTPUT;
+            bool isInput = gpioModeParams[i]->getValueDataAsEnum<GPIOMode>() == GPIOMode::INPUT;
             if (!isInput) continue;
             int value = gpioRead(i);
 
