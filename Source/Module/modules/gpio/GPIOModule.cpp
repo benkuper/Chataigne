@@ -36,12 +36,27 @@ GPIOModule::GPIOModule() :
     defManager->add(CommandDefinition::createDef(this, "", "Set Digital", &GPIOCommand::create, CommandContext::BOTH)->addParam("action", GPIOCommand::SET_DIGITAL));
     defManager->add(CommandDefinition::createDef(this, "", "Set PWM", &GPIOCommand::create, CommandContext::BOTH)->addParam("action", GPIOCommand::SET_PWM));
     
+#ifdef GPIO_SUPPORT
+    if (gpioInitialise() < 0)
+    {
+        LOGERROR("Error initializing GPIO");
+    }
+    else
+    {
+        LOG("GPIO is initialized");
+    }
+#endif
+
     startThread();
 }
 
 GPIOModule::~GPIOModule()
 {
     stopThread(1000);
+
+#ifdef GPIO_SUPPORT
+    gpioTerminate();
+#endif
 }
 
 void GPIOModule::setDigitalValue(int pin, bool value)
