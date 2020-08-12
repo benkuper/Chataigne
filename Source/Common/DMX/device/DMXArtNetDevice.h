@@ -30,12 +30,14 @@ public:
 
 	//EnumParameter * networkInterface;
 	IntParameter* localPort;
+	IntParameter* inputNet;
 	IntParameter* inputSubnet;
 	IntParameter* inputUniverse;
 	//StringParameter * nodeName;
 
 	StringParameter* remoteHost;
 	IntParameter * remotePort;
+	IntParameter* outputNet;
 	IntParameter* outputSubnet;
 	IntParameter* outputUniverse;
 
