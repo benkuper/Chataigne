@@ -61,7 +61,7 @@ void ScriptCommandEditor::valueTypeChanged()
 
 InspectableEditor * ScriptCommandEditor::getEditorUIForControllable(Controllable * c)
 {
-	if (scriptCommand->context != MAPPING || c->type == Controllable::TRIGGER || c->type == Controllable::ENUM || c->type == Controllable::TARGET) return GenericControllableContainerEditor::getEditorUIForControllable(c);
+	if (scriptCommand->context != MAPPING || c->type == Controllable::TRIGGER || c->type == Controllable::TARGET) return GenericControllableContainerEditor::getEditorUIForControllable(c);
 	
 	Parameter * p = (Parameter *)c;
 	MappableParameterEditor * mpe = new MappableParameterEditor(p, false);
