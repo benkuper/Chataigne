@@ -344,6 +344,10 @@
  #define   JUCE_EXCLUSIVE_BINDING_BY_DEFAULT 1
 #endif
 
+#ifndef    JUCE_IP_AND_PORT_DETECTION
+ //#define JUCE_IP_AND_PORT_DETECTION 0
+#endif
+
 //==============================================================================
 // juce_timeline flags:
 
