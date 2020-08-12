@@ -17,13 +17,13 @@ DMXArtNetDevice::DMXArtNetDevice() :
 {
 
 	localPort = inputCC->addIntParameter("Local Port", "Local port to receive ArtNet data. This needs to be enabled in order to receive data", 6454, 0, 65535);
-	inputNet = inputCC->addIntParameter("Subnet", "The net to receive from, from 0 to 15", 0, 0, 127);
+	inputNet = inputCC->addIntParameter("Net", "The net to receive from, from 0 to 15", 0, 0, 127);
 	inputSubnet = inputCC->addIntParameter("Subnet", "The subnet to receive from, from 0 to 15", 0, 0, 15);
 	inputUniverse = inputCC->addIntParameter("Universe", "The Universe to receive from, from 0 to 15", 0, 0, 15);
 
 	remoteHost = outputCC->addStringParameter("Remote Host", "IP to which send the Art-Net to", "127.0.0.1");
 	remotePort = outputCC->addIntParameter("Remote Port", "Local port to receive ArtNet data", 6454, 0, 65535);
-	outputNet = outputCC->addIntParameter("Subnet", "The net to send to, from 0 to 15", 0, 0, 127);
+	outputNet = outputCC->addIntParameter("Net", "The net to send to, from 0 to 15", 0, 0, 127);
 	outputSubnet = outputCC->addIntParameter("Subnet", "The subnet to send to, from 0 to 15", 0, 0, 15);
 	outputUniverse = outputCC->addIntParameter("Universe", "The Universe to send to, from 0 to 15", 0, 0, 15);
 
@@ -102,8 +102,8 @@ void DMXArtNetDevice::sendDMXValuesInternal()
 
 	artnetPacket[12] = sequenceNumber;
 	artnetPacket[13] = 0;
-	artnetPacket[14] = outputNet->intValue();
-	artnetPacket[15] = (outputSubnet->intValue() << 4) | outputUniverse->intValue();
+	artnetPacket[14] = (outputSubnet->intValue() << 4) | outputUniverse->intValue();
+	artnetPacket[15] = outputNet->intValue();
 	artnetPacket[16] = 2;
 	artnetPacket[17] = 0;
 
@@ -145,9 +145,10 @@ void DMXArtNetDevice::run()
 			if (opcode == DMX_OPCODE)
 			{
 				//int sequence = artnetPacket[12];
-				int net = artnetPacket[14];
-				int subnet = (artnetPacket[15] >> 4) & 0x7F;
-				int universe = artnetPacket[15] & 0x7F;
+
+				int universe = artnetPacket[14] & 0xF;
+				int subnet = (artnetPacket[14] >> 4) & 0xF;
+				int net = artnetPacket[15] & 0x7F;
 
 				if (net == inputNet->intValue() && subnet == inputSubnet->intValue() && universe == inputUniverse->intValue())
 				{
