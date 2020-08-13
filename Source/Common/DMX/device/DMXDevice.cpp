@@ -58,11 +58,9 @@ void DMXDevice::setConnected(bool value)
 	if (isConnected)
 	{
 		dmxDeviceListeners.call(&DMXDeviceListener::dmxDeviceConnected);
-		if (alwaysSend->boolValue()) startTimer(1000/targetRate->intValue());
 	} else
 	{
 		dmxDeviceListeners.call(&DMXDeviceListener::dmxDeviceDisconnected);
-		stopTimer();
 	}
 }
 
