@@ -15,7 +15,8 @@
 using namespace servus;
 
 class OSCOutput :
-	public BaseItem
+	public BaseItem,
+	public Thread
 {
 public:
 	OSCOutput();
@@ -28,16 +29,21 @@ public:
 	BoolParameter * useLocal;
 	StringParameter * remoteHost;
 	IntParameter * remotePort;
-	OSCSender sender;
 
 	void setForceDisabled(bool value);
 
 	virtual void setupSender();
 	void sendOSC(const OSCMessage & m);
 
+	virtual void run() override;
+
 	void onContainerParameterChangedInternal(Parameter * p) override;
 
 	virtual InspectableEditor * getEditor(bool isRoot) override;
+
+private:
+	OSCSender sender;
+	std::queue<OSCMessage> messageQueue;
 };
 
 class OSCModule :
