@@ -680,9 +680,10 @@ OSCModule::OSCRouteParams::OSCRouteParams(Module * sourceModule, Controllable * 
 ///// OSC OUTPUT
 
 OSCOutput::OSCOutput() :
-	 BaseItem("OSC Output"),
+	BaseItem("OSC Output"),
 	forceDisabled(false),
-	senderIsConnected(false)
+	senderIsConnected(false),
+	Thread("OSC output")
 {
 	isSelectable = false;
 
@@ -697,6 +698,9 @@ OSCOutput::OSCOutput() :
 
 OSCOutput::~OSCOutput()
 {
+	signalThreadShouldExit();
+	waitForThreadToExit(1000);
+	stopThread(1000);
 }
 
 void OSCOutput::setForceDisabled(bool value)
@@ -714,6 +718,10 @@ void OSCOutput::onContainerParameterChangedInternal(Parameter * p)
 		if(!Engine::mainEngine->isLoadingFile) setupSender();
 		if (p == useLocal) remoteHost->setEnabled(!useLocal->boolValue());
 	}
+	else if (p == enabled)
+	{
+		if(!Engine::mainEngine->isLoadingFile) setupSender();
+	}
 }
 
 InspectableEditor * OSCOutput::getEditor(bool isRoot)
@@ -723,25 +731,66 @@ InspectableEditor * OSCOutput::getEditor(bool isRoot)
 
 void OSCOutput::setupSender()
 {
+	signalThreadShouldExit();
+	notify();
+	waitForThreadToExit(1000);
+
+	senderIsConnected = false;
 	sender.disconnect();
+
+	if (isThreadRunning())
+	{
+		stopThread(1000);
+			// Clear queue
+		while (!messageQueue.empty())
+			messageQueue.pop();
+	}
+
 	if (!enabled->boolValue() || forceDisabled || Engine::mainEngine->isClearing) return;
 
 	String targetHost = useLocal->boolValue() ? "127.0.0.1" : remoteHost->stringValue();
 	senderIsConnected = sender.connect(targetHost, remotePort->intValue());
 	if (senderIsConnected)
 	{ 
+		startThread();
+
 		NLOG(niceName, "Now sending to " + remoteHost->stringValue() + ":" + remotePort->stringValue());
 		clearWarning();
-	} else
+	}
+	else
 	{
 		NLOGWARNING(niceName, "Could not connect to " << remoteHost->stringValue() << ":" + remotePort->stringValue());
 		setWarningMessage("Could not connect to " + remoteHost->stringValue() + ":" + remotePort->stringValue());
 	}
-	
 }
 
 void OSCOutput::sendOSC(const OSCMessage & m)
 {
 	if (!enabled->boolValue() || forceDisabled || !senderIsConnected) return;
-	sender.send(m);
+	messageQueue.push(m);
+	notify();
+}
+
+void OSCOutput::run()
+{
+	while (!Engine::mainEngine->isClearing && !threadShouldExit())
+	{
+		if (!messageQueue.empty())
+		{
+			OSCMessage m = messageQueue.front();
+			if (senderIsConnected)
+			{
+				sender.send(m);
+				messageQueue.pop();
+			}
+		}
+		else
+		{
+			wait(200);
+		}
+	}
+	
+	// Clear queue
+	while (!messageQueue.empty())
+		messageQueue.pop();
 }
