@@ -741,7 +741,8 @@ void OSCOutput::setupSender()
 	if (isThreadRunning())
 	{
 		stopThread(1000);
-			// Clear queue
+		// Clear queue
+		const ScopedLock sl(queueLock);
 		while (!messageQueue.empty())
 			messageQueue.pop();
 	}
@@ -767,7 +768,11 @@ void OSCOutput::setupSender()
 void OSCOutput::sendOSC(const OSCMessage & m)
 {
 	if (!enabled->boolValue() || forceDisabled || !senderIsConnected) return;
-	messageQueue.push(m);
+	
+	{
+		const ScopedLock sl(queueLock);
+		messageQueue.push(std::make_unique<OSCMessage>(m));
+	}
 	notify();
 }
 
@@ -775,22 +780,25 @@ void OSCOutput::run()
 {
 	while (!Engine::mainEngine->isClearing && !threadShouldExit())
 	{
-		if (!messageQueue.empty())
+		std::unique_ptr<OSCMessage> msgToSend;
+
 		{
-			OSCMessage m = messageQueue.front();
-			if (senderIsConnected)
+			const ScopedLock sl(queueLock);
+			if (!messageQueue.empty())
 			{
-				sender.send(m);
+				msgToSend = std::move(messageQueue.front());
 				messageQueue.pop();
 			}
 		}
+		
+		if (msgToSend)
+			sender.send(*msgToSend);
 		else
-		{
-			wait(200);
-		}
+			wait(1000); // notify() is called when a message is added to the queue
 	}
 	
 	// Clear queue
+	const ScopedLock sl(queueLock);
 	while (!messageQueue.empty())
 		messageQueue.pop();
 }

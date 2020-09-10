@@ -43,7 +43,8 @@ public:
 
 private:
 	OSCSender sender;
-	std::queue<OSCMessage> messageQueue;
+	std::queue<std::unique_ptr<OSCMessage>> messageQueue;
+	CriticalSection queueLock;
 };
 
 class OSCModule :
