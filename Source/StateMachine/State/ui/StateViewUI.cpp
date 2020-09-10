@@ -21,15 +21,12 @@ StateViewUI::StateViewUI(State * state) :
 
 	pmui.addManagerUIListener(this);
 
-	if (!item->miniMode->boolValue())
-	{
-		addAndMakeVisible(&pmui);
-	}
+	addAndMakeVisible(&pmui);
 
 	autoHideWhenDragging = false;
 	drawEmptyDragIcon = true;
 
-	setContentSize(item->viewUISize->x, item->viewUISize->y);
+	updateMiniModeUI();
 }
 	
 
