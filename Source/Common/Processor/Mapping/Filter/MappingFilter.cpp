@@ -113,7 +113,7 @@ bool MappingFilter::processInternal()
 {
 	for (int i = 0; i < sourceParams.size(); ++i)
 	{
-		if (sourceParams[i].wasObjectDeleted()) continue;
+		if (sourceParams[i].wasObjectDeleted() || filterParameters[i] == nullptr) continue;
 
 		if (!filterTypeFilters.isEmpty() && !filterTypeFilters.contains(sourceParams[i]->type))
 		{
