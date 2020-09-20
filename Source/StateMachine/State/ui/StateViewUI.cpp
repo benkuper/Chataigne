@@ -20,8 +20,8 @@ StateViewUI::StateViewUI(State * state) :
 	addAndMakeVisible(activeUI.get());
 
 	pmui.addManagerUIListener(this);
-
 	addAndMakeVisible(&pmui);
+	contentComponents.add(&pmui);
 
 	autoHideWhenDragging = false;
 	drawEmptyDragIcon = true;
@@ -39,15 +39,6 @@ void StateViewUI::setTransitionReceptionMode(TransitionReceptionMode value)
 	transitionReceptionMode = value;
 	pmui.setEnabled(transitionReceptionMode == NONE);
 	setRepaintsOnMouseActivity(transitionReceptionMode != NONE);
-}
-
-void StateViewUI::updateMiniModeUI()
-{
-	BaseItemUI::updateMiniModeUI();
-
-	if (item->miniMode->boolValue()) removeChildComponent(&pmui);
-	else addAndMakeVisible(&pmui);
-	
 }
 
 void StateViewUI::mouseDown(const MouseEvent & e)
@@ -91,6 +82,18 @@ void StateViewUI::mouseDown(const MouseEvent & e)
 		}
 
 	}	
+}
+
+void StateViewUI::mouseDoubleClick(const MouseEvent& e)
+{
+	BaseItemUI::mouseDoubleClick(e);
+
+	if (e.originalComponent != &pmui
+		&& e.originalComponent->findParentComponentOfClass<ProcessorManagerUI>() == nullptr
+		&& e.originalComponent != activeUI.get() && e.originalComponent != enabledBT.get())
+	{
+		item->miniMode->setValue(!item->miniMode->boolValue());
+	}
 }
 
 

@@ -30,9 +30,8 @@ public:
 
 	void setTransitionReceptionMode(TransitionReceptionMode value);
 
-	void updateMiniModeUI() override;
-
 	void mouseDown(const MouseEvent &e) override;
+	void mouseDoubleClick(const MouseEvent& e) override;
 
 	void paint(Graphics &g) override;
 	void paintOverChildren(Graphics &g) override;
