@@ -47,7 +47,7 @@ SequenceCommand::SequenceCommand(SequenceModule* _module, CommandContext context
 	case MOVE_TIME:
 		target->customGetTargetContainerFunc = &ChataigneSequenceManager::showMenuAndGetSequenceStatic;
 
-		value = addFloatParameter("Time", "Target time to set", 0, actionType == MOVE_TIME ? -3600 : 0, 3600);
+		value = addFloatParameter("Time", "Target time to set", 0);
 		value->defaultUI = FloatParameter::TIME;
 		addTargetMappingParameterAt(value, 0);
 
