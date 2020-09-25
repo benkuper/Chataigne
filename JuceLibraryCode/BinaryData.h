@@ -120,7 +120,7 @@ namespace BinaryData
     const int            conditionScriptTemplate_jsSize = 5536;
 
     extern const char*   filterScriptTemplate_js;
-    const int            filterScriptTemplate_jsSize = 646;
+    const int            filterScriptTemplate_jsSize = 736;
 
     extern const char*   genericScriptTemplate_js;
     const int            genericScriptTemplate_jsSize = 4774;

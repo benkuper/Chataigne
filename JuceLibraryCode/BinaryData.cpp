@@ -1509,10 +1509,11 @@ static const unsigned char temp_binary_data_37[] =
 "/*\r\n"
 " This function will be called each time the filter is processed, and expects a return value.\r\n"
 " This function only exists because the script is in a filter\r\n"
+" The \"inputValue\" argument is an array of all the values that are being mapped.\r\n"
 "*/\r\n"
 "function filter(inputValue, min, max)\r\n"
 "{\r\n"
-"\tvar result = inputValue * myFloatParam.get(); //Basic multiplication of the input value by the script parameter myFloatParam\r\n"
+"\tvar result = inputValue[0] * myFloatParam.get(); //Basic multiplication of the first input value by the script parameter myFloatParam\r\n"
 "\treturn result;\r\n"
 "}";
 
@@ -4479,7 +4480,7 @@ const char* getNamedResource (const char* resourceNameUTF8, int& numBytes)
         case 0x924bc834:  numBytes = 2124; return Wiimote_png;
         case 0xdd901558:  numBytes = 444; return commandScriptTemplate_js;
         case 0x7fffe188:  numBytes = 5536; return conditionScriptTemplate_js;
-        case 0x5c8768cb:  numBytes = 646; return filterScriptTemplate_js;
+        case 0x5c8768cb:  numBytes = 736; return filterScriptTemplate_js;
         case 0xa23dd44c:  numBytes = 4774; return genericScriptTemplate_js;
         case 0xf15eedbb:  numBytes = 823; return httpScriptTemplate_js;
         case 0x01c43842:  numBytes = 1853; return midiScriptTemplate_js;
