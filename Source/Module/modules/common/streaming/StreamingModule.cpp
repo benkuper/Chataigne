@@ -499,7 +499,7 @@ void StreamingModule::sendBytes(Array<uint8> bytes, var params)
 void StreamingModule::showMenuAndCreateValue(ControllableContainer * container)
 {
 	StringArray filters = ControllableFactory::getTypesWithout(StringArray(EnumParameter::getTypeStringStatic(), TargetParameter::getTypeStringStatic(), FileParameter::getTypeStringStatic()));
-	Controllable * c = ControllableFactory::showFilteredCreateMenu(filters);
+	Controllable * c = ControllableFactory::showFilteredCreateMenu(filters, true);
 	if (c == nullptr) return;
 
 	AlertWindow window("Add a value", "Configure the parameters for this value", AlertWindow::AlertIconType::NoIcon);

@@ -27,8 +27,8 @@ ModuleManager::ModuleManager() :
 	showInspectorOnSelect = false;
 	managerFactory = &factory;
 
-	ControllableFactory::getInstance()->controllableDefs.add(new ControllableDefinition(MIDIValueParameter::getTypeStringStatic(), &MIDIValueParameter::create));
-	ControllableFactory::getInstance()->controllableDefs.add(new ControllableDefinition(DMXValueParameter::getTypeStringStatic(), &DMXValueParameter::create));
+	ControllableFactory::getInstance()->controllableDefs.add(new ControllableDefinition(MIDIValueParameter::getTypeStringStatic(), &MIDIValueParameter::create, true));
+	ControllableFactory::getInstance()->controllableDefs.add(new ControllableDefinition(DMXValueParameter::getTypeStringStatic(), &DMXValueParameter::create, true));
 }
 
 ModuleManager::~ModuleManager()

@@ -69,7 +69,7 @@ public:
 
 	static DMXValueParameter* create() { return new DMXValueParameter("DMX Value Parameter", "", 0 , 1, BIT8); }
 	virtual String getTypeString() const override { return getTypeStringStatic(); }
-	static String getTypeStringStatic() { return "MIDI Value"; }
+	static String getTypeStringStatic() { return "DMX Value"; }
 };
 
 
