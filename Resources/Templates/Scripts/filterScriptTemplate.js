@@ -7,9 +7,10 @@
 /*
  This function will be called each time the filter is processed, and expects a return value.
  This function only exists because the script is in a filter
+ The "inputValue" argument is an array of all the values that are being mapped.
 */
 function filter(inputValue, min, max)
 {
-	var result = inputValue * myFloatParam.get(); //Basic multiplication of the input value by the script parameter myFloatParam
+	var result = inputValue[0] * myFloatParam.get(); //Basic multiplication of the first input value by the script parameter myFloatParam
 	return result;
 }
