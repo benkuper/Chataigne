@@ -8577,7 +8577,6 @@
 					"../../External/serial/include",
 					"../../External/servus/include",
 					"../../External/dnssd/include",
-					"../../External/libartnet/include",
 					"../../External/joycon/include",
 					"../../External/sdl/include",
 					"../../External/hidapi/include",
@@ -8590,7 +8589,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"../../External/servus/lib/osx/debug\"",
-					"\"../../External/libartnet/lib/osx\"",
 					"\"../../External/joycon/lib/osx\"",
 					"\"../../External/sdl/lib/osx\"",
 				);
@@ -8639,7 +8637,6 @@
 					"../../External/serial/include",
 					"../../External/servus/include",
 					"../../External/dnssd/include",
-					"../../External/libartnet/include",
 					"../../External/joycon/include",
 					"../../External/sdl/include",
 					"../../External/hidapi/include",
@@ -8652,7 +8649,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"../../External/servus/lib/osx/release\"",
-					"\"../../External/libartnet/lib/osx\"",
 					"\"../../External/joycon/lib/osx\"",
 					"\"../../External/sdl/lib/osx\"",
 				);
