@@ -1447,7 +1447,7 @@
   </MAINGROUP>
   <EXPORTFORMATS>
     <VS2019 targetFolder="Builds/VisualStudio2019" extraDefs="USE_KINECT=1"
-            externalLibraries="Setupapi.lib&#10;hid.lib&#10;Kinect20.lib&#10;joytime-core.lib&#10;joytime-input-hidapi.lib&#10;Servus.lib&#10;dnssd.lib&#10;SDL2.lib&#10;libartnet.lib&#10;iphlpapi.lib&#10;hid.lib&#10;hidapi_static.lib"
+            externalLibraries="Setupapi.lib&#10;hid.lib&#10;Kinect20.lib&#10;joytime-core.lib&#10;joytime-input-hidapi.lib&#10;Servus.lib&#10;dnssd.lib&#10;SDL2.lib&#10;iphlpapi.lib&#10;hid.lib&#10;hidapi_static.lib"
             smallIcon="nVz6Li" bigIcon="nVz6Li">
       <CONFIGURATIONS>
         <CONFIGURATION isDebug="0" name="Release" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/asio&#10;../../External/kinect/include&#10;../../External/joycon/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/sdl/include&#10;../../External/hidapi/include"
@@ -1482,7 +1482,7 @@
     <XCODE_MAC targetFolder="Builds/MacOSX" smallIcon="nVz6Li" bigIcon="nVz6Li"
                extraFrameworks="IOBluetooth, ForceFeedback, IOKit" extraCompilerFlags=""
                documentExtensions="noisette" customPList="&lt;plist&gt;&#10;&lt;dict&gt;&#10;&lt;key&gt;NSAppTransportSecurity&lt;/key&gt;&#10;&#9;&lt;dict&gt;&#10;&#9;&#9;&lt;key&gt;NSAllowsArbitraryLoads&lt;/key&gt;&#10;&#9;&#9;&lt;true/&gt;&#10;&#9;&lt;/dict&gt;&#10;&lt;/dict&gt;&#10;&lt;/plist&gt;"
-               externalLibraries="Servus&#10;artnet&#10;hidapi&#10;joytime-core&#10;joytime-input-hidapi&#10;SDL2&#10;iconv"
+               externalLibraries="Servus&#10;hidapi&#10;joytime-core&#10;joytime-input-hidapi&#10;SDL2&#10;iconv"
                microphonePermissionNeeded="1" hardenedRuntimeOptions="com.apple.security.cs.allow-jit,com.apple.security.device.audio-input"
                extraDefs="JUCE_SUPPORT_CARBON=0">
       <CONFIGURATIONS>
@@ -1517,7 +1517,7 @@
     </XCODE_MAC>
     <LINUX_MAKE targetFolder="Builds/Raspberry" smallIcon="nVz6Li" bigIcon="nVz6Li"
                 extraLinkerFlags="-Wl,-rpath,&quot;lib&quot;&#10;-Wl,--as-needed"
-                externalLibraries="bluetooth&#10;Servus&#10;curl&#10;artnet&#10;SDL2&#10;usb-1.0&#10;hidapi-hidraw">
+                externalLibraries="bluetooth&#10;Servus&#10;curl&#10;SDL2&#10;usb-1.0&#10;hidapi-hidraw">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/sdl/include&#10;/usr/include/freetype2&#10;../../External/hidapi/include&#10;../../External/libusb/include/libusb-1.0"
                        libraryPath="../../External/servus/lib/raspberry&#10;../../External/sdl/lib/raspberry&#10;/usr/lib/arm-linux-gnueabihf"
@@ -1548,7 +1548,7 @@
         <MODULEPATH id="juce_simpleweb" path="Modules"/>
       </MODULEPATHS>
     </LINUX_MAKE>
-    <LINUX_MAKE targetFolder="Builds/LinuxMakefile" externalLibraries="bluetooth&#10;Servus&#10;curl&#10;artnet&#10;SDL2&#10;usb-1.0&#10;hidapi-hidraw"
+    <LINUX_MAKE targetFolder="Builds/LinuxMakefile" externalLibraries="bluetooth&#10;Servus&#10;curl&#10;SDL2&#10;usb-1.0&#10;hidapi-hidraw"
                 extraLinkerFlags="-Wl,-rpath,&quot;lib&quot;&#10;-Wl,--as-needed"
                 smallIcon="nVz6Li" bigIcon="nVz6Li">
       <CONFIGURATIONS>
@@ -1581,7 +1581,7 @@
       </MODULEPATHS>
     </LINUX_MAKE>
     <VS2019 targetFolder="Builds/VisualStudio2019_CI" extraDefs="USE_KINECT=1"
-            extraCompilerFlags="/Zm1000" externalLibraries="Setupapi.lib&#10;hid.lib&#10;Kinect20.lib&#10;joytime-core.lib&#10;joytime-input-hidapi.lib&#10;Servus.lib&#10;dnssd.lib&#10;SDL2.lib&#10;libartnet.lib&#10;iphlpapi.lib&#10;hid.lib&#10;hidapi_static.lib"
+            extraCompilerFlags="/Zm1000" externalLibraries="Setupapi.lib&#10;hid.lib&#10;Kinect20.lib&#10;joytime-core.lib&#10;joytime-input-hidapi.lib&#10;Servus.lib&#10;dnssd.lib&#10;SDL2.lib&#10;iphlpapi.lib&#10;hid.lib&#10;hidapi_static.lib"
             smallIcon="nVz6Li" bigIcon="nVz6Li">
       <CONFIGURATIONS>
         <CONFIGURATION isDebug="1" name="Debug" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/asio&#10;../../External/kinect/include&#10;../../External/joycon/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/sdl/include&#10;../../External/hidapi/include"
@@ -1614,7 +1614,7 @@
       </MODULEPATHS>
     </VS2019>
     <VS2019 targetFolder="Builds/VisualStudio2019_Win7CI" smallIcon="nVz6Li"
-            bigIcon="nVz6Li" extraCompilerFlags="/Zm1000" externalLibraries="Setupapi.lib&#10;hid.lib&#10;joytime-core.lib&#10;joytime-input-hidapi.lib&#10;Servus.lib&#10;dnssd.lib&#10;SDL2.lib&#10;libartnet.lib&#10;iphlpapi.lib&#10;hid.lib&#10;hidapi_static.lib"
+            bigIcon="nVz6Li" extraCompilerFlags="/Zm1000" externalLibraries="Setupapi.lib&#10;hid.lib&#10;joytime-core.lib&#10;joytime-input-hidapi.lib&#10;Servus.lib&#10;dnssd.lib&#10;SDL2.lib&#10;iphlpapi.lib&#10;hid.lib&#10;hidapi_static.lib"
             extraDefs="USE_KINECT=0">
       <CONFIGURATIONS>
         <CONFIGURATION isDebug="1" name="Debug" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/asio&#10;../../External/joycon/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/sdl/include&#10;../../External/hidapi/include"
@@ -1646,7 +1646,7 @@
         <MODULEPATH id="juce_simpleweb" path="Modules"/>
       </MODULEPATHS>
     </VS2019>
-    <XCODE_MAC targetFolder="Builds/MacOSX_CI" externalLibraries="Servus&#10;artnet&#10;hidapi&#10;joytime-core&#10;joytime-input-hidapi&#10;SDL2&#10;iconv"
+    <XCODE_MAC targetFolder="Builds/MacOSX_CI" externalLibraries="Servus&#10;hidapi&#10;joytime-core&#10;joytime-input-hidapi&#10;SDL2&#10;iconv"
                smallIcon="nVz6Li" bigIcon="nVz6Li" hardenedRuntimeOptions="com.apple.security.cs.allow-jit"
                customPList="&lt;plist&gt;&#10;&lt;dict&gt;&#10;&lt;key&gt;NSAppTransportSecurity&lt;/key&gt;&#10;&#9;&lt;dict&gt;&#10;&#9;&#9;&lt;key&gt;NSAllowsArbitraryLoads&lt;/key&gt;&#10;&#9;&#9;&lt;true/&gt;&#10;&#9;&lt;/dict&gt;&#10;&lt;/dict&gt;&#10;&lt;/plist&gt;"
                microphonePermissionNeeded="1" extraFrameworks="IOBluetooth, ForceFeedback, IOKit"
