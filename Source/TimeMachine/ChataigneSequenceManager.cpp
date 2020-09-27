@@ -44,3 +44,8 @@ TimeCue* ChataigneSequenceManager::showMenuAndGetCueStatic()
 {
 	return getInstance()->showMenuAndGetCue();
 }
+
+AudioLayer* ChataigneSequenceManager::showMenuAndGetAudioLayerStatic()
+{
+	return getInstance()->showMenuAndGetAudioLayer();
+}

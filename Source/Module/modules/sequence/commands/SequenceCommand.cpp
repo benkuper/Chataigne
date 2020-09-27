@@ -19,10 +19,20 @@ SequenceCommand::SequenceCommand(SequenceModule* _module, CommandContext context
 {
 	actionType = (ActionType)(int)params.getProperty("type", PLAY_SEQUENCE);
 
-	if (actionType != STOP_ALL_SEQUENCES)
+	if (actionType != STOP_ALL_SEQUENCES && actionType != PLAY_MULTI_SEQUENCES)
 	{
 		target = addTargetParameter("Target", "Target for the command");
 		target->targetType = TargetParameter::CONTAINER;
+	}
+
+	if (actionType == PLAY_MULTI_SEQUENCES)
+	{
+		resetIncrement = addTrigger("Reset", "This will reset the increment to 0");
+		minIndex = addIntParameter("Min Index", "This is the index of the first sequence that will play", 0, 0);
+		maxIndex = addIntParameter("Max Index", "This is the index of the last sequence that will play", 10, 0);
+		currentSequenceIndex = addIntParameter("Sequence Index", "This is the index of the sequence that will play on trigger", 0, 0);
+		playFromStart = addBoolParameter("Play From Start", "If enabled, when the command is triggered, will position the time at 0 before playing", false);
+		loopMulti = addBoolParameter("Loop", "If enabled, this will go back to the min index", false);
 	}
 
 	switch (actionType)
@@ -72,7 +82,7 @@ void SequenceCommand::triggerInternal()
 {
 	BaseCommand::triggerInternal();
 
-	if (actionType != STOP_ALL_SEQUENCES)
+	if (actionType != STOP_ALL_SEQUENCES && actionType != PLAY_MULTI_SEQUENCES)
 	{
 		if (target->targetContainer == nullptr) return;
 		if (target->targetContainer.wasObjectDeleted()) return;
@@ -80,10 +90,32 @@ void SequenceCommand::triggerInternal()
 	
 	switch (actionType)
 	{
+
 	case PLAY_SEQUENCE:
 		if (playFromStart->boolValue()) ((Sequence*)target->targetContainer.get())->stopTrigger->trigger();
 		((Sequence*)target->targetContainer.get())->playTrigger->trigger();
 		break;
+
+	case PLAY_MULTI_SEQUENCES:
+	{
+
+		int numSequences = ChataigneSequenceManager::getInstance()->items.size();
+		if (currentSequenceIndex->intValue() < numSequences)
+		{
+			Sequence* s = ChataigneSequenceManager::getInstance()->items[currentSequenceIndex->intValue()];
+			if (playFromStart->boolValue()) s->stopTrigger->trigger();
+			s->playTrigger->trigger();
+			int targetIndex = currentSequenceIndex->intValue() + 1;
+			if (targetIndex > maxIndex->intValue() && loopMulti->boolValue()) targetIndex = minIndex->intValue();
+			currentSequenceIndex->setValue(targetIndex);
+		}
+		else
+		{
+			NLOGWARNING(niceName, "Sequence #" << currentSequenceIndex->intValue() << "doesn't exist");
+			if (loopMulti->boolValue()) currentSequenceIndex->setValue(minIndex->intValue());
+		}
+	}
+	break;
 
 	case PAUSE_SEQUENCE:
 		((Sequence*)target->targetContainer.get())->pauseTrigger->trigger();
@@ -133,6 +165,21 @@ void SequenceCommand::triggerInternal()
 			if (playFromStart->boolValue()) s->playTrigger->trigger();
 		}
 		break;
+	}
+}
+
+void SequenceCommand::onContainerTriggerTriggered(Trigger* t)
+{
+	BaseCommand::onContainerTriggerTriggered(t);
+	if (t == resetIncrement) currentSequenceIndex->setValue(minIndex->intValue());
+}
+
+void SequenceCommand::onContainerParameterChanged(Parameter* p)
+{
+	BaseCommand::onContainerParameterChanged(p);
+	if (p == minIndex || p == maxIndex)
+	{
+		currentSequenceIndex->setRange(minIndex->intValue(), maxIndex->intValue());
 	}
 }
 

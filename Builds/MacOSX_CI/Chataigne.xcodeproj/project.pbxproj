@@ -937,6 +937,10 @@
 			isa = PBXBuildFile;
 			fileRef = 769CB47E8FAA18350633224B;
 		};
+		09EAD5EC68D4D19F3A2CE07A = {
+			isa = PBXBuildFile;
+			fileRef = 4F4CD5D9A170370658E12C6D;
+		};
 		287D0616A5ED3653F9B0743F = {
 			isa = PBXBuildFile;
 			fileRef = 769C484D3D325152FE333C47;
@@ -2888,6 +2892,13 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = serial.cc;
 			path = ../../Source/Common/Serial/lib/serial/serial.cc;
+			sourceTree = "SOURCE_ROOT";
+		};
+		4F4CD5D9A170370658E12C6D = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = SequenceAudioCommand.cpp;
+			path = ../../Source/Module/modules/sequence/commands/SequenceAudioCommand.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		4F83B5397387A9D6D179A881 = {
@@ -5424,6 +5435,13 @@
 			path = ../../Source/Common/Processor/Mapping/Filter/filters/conversion/ConversionFilter.h;
 			sourceTree = "SOURCE_ROOT";
 		};
+		D421B301030F2561699DB88F = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = SequenceAudioCommand.h;
+			path = ../../Source/Module/modules/sequence/commands/SequenceAudioCommand.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		D48876CB878C519D658F79FF = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -7808,6 +7826,8 @@
 		6196469C67FBEC39720B46B7 = {
 			isa = PBXGroup;
 			children = (
+				4F4CD5D9A170370658E12C6D,
+				D421B301030F2561699DB88F,
 				769C484D3D325152FE333C47,
 				CFE4F3C8D5417D715DDE367A,
 			);
@@ -8557,7 +8577,7 @@
 					"DEBUG=1",
 					"JUCE_SUPPORT_CARBON=0",
 					"JUCER_XCODE_MAC_2F3811D6=1",
-					"JUCE_APP_VERSION=1.7.5b10",
+					"JUCE_APP_VERSION=1.7.5b11",
 					"JUCE_APP_VERSION_HEX=0x10705",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
@@ -8617,7 +8637,7 @@
 					"NDEBUG=1",
 					"JUCE_SUPPORT_CARBON=0",
 					"JUCER_XCODE_MAC_2F3811D6=1",
-					"JUCE_APP_VERSION=1.7.5b10",
+					"JUCE_APP_VERSION=1.7.5b11",
 					"JUCE_APP_VERSION_HEX=0x10705",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
@@ -9002,6 +9022,7 @@
 				CCF1403556BE920327DEF89C,
 				7C9E9B4FC85F84D2FDB08390,
 				117991AF65E7BA6903F22375,
+				09EAD5EC68D4D19F3A2CE07A,
 				287D0616A5ED3653F9B0743F,
 				DCF8C45E09E57916B14096CC,
 				0BF78235DB06A8BBE2919FC8,

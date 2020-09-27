@@ -108,10 +108,6 @@ var ChataigneEngine::getJSONData()
 {
 	var data = Engine::getJSONData();
 
-	//save here
-	var pData = ProjectSettings::getInstance()->getJSONData();
-	if(!pData.isVoid() && pData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty("projectSettings", pData);
-
 	var mData = ModuleManager::getInstance()->getJSONData();
 	if(!mData.isVoid() && mData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(ModuleManager::getInstance()->shortName, mData);
 
@@ -132,19 +128,11 @@ var ChataigneEngine::getJSONData()
 
 void ChataigneEngine::loadJSONDataInternalEngine(var data, ProgressTask * loadingTask)
 {	
-	ProgressTask * projectTask = loadingTask->addTask("Project");
 	ProgressTask * moduleTask = loadingTask->addTask("Modules");
 	ProgressTask * cvTask = loadingTask->addTask("Custom Variables");
 	ProgressTask * stateTask = loadingTask->addTask("States");
 	ProgressTask * sequenceTask = loadingTask->addTask("Sequences");
 	ProgressTask * routerTask = loadingTask->addTask("Router");
-
-
-	//load here
-	projectTask->start();
-	ProjectSettings::getInstance()->loadJSONData(data.getProperty("projectSettings", var()));
-	projectTask->setProgress(1);
-	projectTask->end();
 
 	moduleTask->start();
 	ModuleManager::getInstance()->loadJSONData(data.getProperty(ModuleManager::getInstance()->shortName,var()));

@@ -32,6 +32,7 @@ public:
 	static Sequence* showMenuAndGetSequenceStatic();
 	static SequenceLayer* showmMenuAndGetLayerStatic();
 	static TimeCue* showMenuAndGetCueStatic();
+	static AudioLayer* showMenuAndGetAudioLayerStatic();
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ChataigneSequenceManager)
 };

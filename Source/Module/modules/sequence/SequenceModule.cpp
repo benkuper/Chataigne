@@ -9,12 +9,14 @@
 */
 
 #include "TimeMachine/ChataigneSequenceManager.h"
+#include "commands/SequenceAudioCommand.h"
 
 SequenceModule::SequenceModule(ChataigneSequenceManager * _manager) :
 	Module("Sequences"),
 	manager(_manager)
 {
-	defManager->add(createBaseDefinition("Playback","Play Sequence", CommandContext::ACTION,SequenceCommand::PLAY_SEQUENCE));
+	defManager->add(createBaseDefinition("Playback", "Play Sequence", CommandContext::ACTION, SequenceCommand::PLAY_SEQUENCE));
+	defManager->add(createBaseDefinition("Playback","Play Multi Sequences", CommandContext::ACTION,SequenceCommand::PLAY_MULTI_SEQUENCES));
 	defManager->add(createBaseDefinition("Playback", "Pause Sequence", CommandContext::ACTION,SequenceCommand::PAUSE_SEQUENCE));
 	defManager->add(createBaseDefinition("Playback", "Stop Sequence", CommandContext::ACTION, SequenceCommand::STOP_SEQUENCE));
 	defManager->add(createBaseDefinition("Playback", "Stop All Sequences", CommandContext::ACTION,SequenceCommand::STOP_ALL_SEQUENCES));
@@ -25,6 +27,7 @@ SequenceModule::SequenceModule(ChataigneSequenceManager * _manager) :
 	defManager->add(createBaseDefinition("Layer", "Enable Layer",CommandContext::ACTION, SequenceCommand::ENABLE_LAYER));
 	defManager->add(createBaseDefinition("Layer", "Disable layer", CommandContext::ACTION, SequenceCommand::DISABLE_LAYER));
 	defManager->add(createBaseDefinition("Layer", "Toggle layer", CommandContext::ACTION, SequenceCommand::TOGGLE_LAYER));
+	defManager->add(CommandDefinition::createDef(this, "Audio","Set Layer Volume", &SequenceAudioCommand::create, CommandContext::BOTH)->addParam("type", SequenceAudioCommand::SET_VOLUME));
 }
 
 SequenceModule::~SequenceModule()

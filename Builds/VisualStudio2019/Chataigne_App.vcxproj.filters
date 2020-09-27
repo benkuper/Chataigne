@@ -1996,6 +1996,9 @@
     <ClCompile Include="..\..\Source\Module\modules\osc\OSCModule.cpp">
       <Filter>Chataigne\Source\Module\modules\osc</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Module\modules\sequence\commands\SequenceAudioCommand.cpp">
+      <Filter>Chataigne\Source\Module\modules\sequence\commands</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\sequence\commands\SequenceCommand.cpp">
       <Filter>Chataigne\Source\Module\modules\sequence\commands</Filter>
     </ClCompile>
@@ -5816,6 +5819,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\osc\OSCModule.h">
       <Filter>Chataigne\Source\Module\modules\osc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Module\modules\sequence\commands\SequenceAudioCommand.h">
+      <Filter>Chataigne\Source\Module\modules\sequence\commands</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\sequence\commands\SequenceCommand.h">
       <Filter>Chataigne\Source\Module\modules\sequence\commands</Filter>

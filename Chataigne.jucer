@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.7.5b10"
+<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.7.5b11"
               bundleIdentifier="benkuper.Chataigne" includeBinaryInAppConfig="1"
               companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
               companyEmail="benjamin@kuperberg.fr" defines="" splashScreenColour="Dark"
@@ -1053,6 +1053,10 @@
           </GROUP>
           <GROUP id="{6854EEF3-7B84-E51F-E79E-0915F38F4484}" name="sequence">
             <GROUP id="{831BBAD9-461B-0A0D-14AD-A205FE1C3A70}" name="commands">
+              <FILE id="u8PCjB" name="SequenceAudioCommand.cpp" compile="1" resource="0"
+                    file="Source/Module/modules/sequence/commands/SequenceAudioCommand.cpp"/>
+              <FILE id="WQaXdN" name="SequenceAudioCommand.h" compile="0" resource="0"
+                    file="Source/Module/modules/sequence/commands/SequenceAudioCommand.h"/>
               <FILE id="M0EFJg" name="SequenceCommand.cpp" compile="1" resource="0"
                     file="Source/Module/modules/sequence/commands/SequenceCommand.cpp"/>
               <FILE id="hl2hJX" name="SequenceCommand.h" compile="0" resource="0"
