@@ -200,8 +200,15 @@ void InputSystemManager::run()
 		SDL_JoystickUpdate();
 		SDL_GameControllerUpdate();
 
-		for (auto &j : joysticks) j->update();
-		for (auto &g : gamepads) g->update();
+		for (auto& j : joysticks)
+		{
+			if (j != nullptr) j->update();
+		}
+
+		for (auto& g : gamepads)
+		{
+			if (g != nullptr) g->update();
+		}
 
 		joysticks.getLock().exit();
 		gamepads.getLock().exit();
@@ -335,7 +342,11 @@ JoystickParameter::JoystickParameter(const String &name, const String &descripti
 	Parameter(Controllable::CUSTOM, name, description, var(), var(), var()),
 	joystick(nullptr)
 {
-
+	for (int i = 0; i < 16; i++)
+	{
+		value.append(0);
+		defaultValue.append(0);
+	}
 }
 
 JoystickParameter::~JoystickParameter()
@@ -406,7 +417,11 @@ GamepadParameter::GamepadParameter(const String &name, const String &description
 	Parameter(Controllable::CUSTOM, name, description, var(), var(), var()),
 	gamepad(nullptr)
 {
-
+	for (int i = 0; i < 16; i++)
+	{
+		value.append(0);
+		defaultValue.append(0);
+	}
 }
 
 GamepadParameter::~GamepadParameter()
