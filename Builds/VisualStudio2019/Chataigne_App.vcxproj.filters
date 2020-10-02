@@ -1960,9 +1960,6 @@
     <ClCompile Include="..\..\Source\Module\modules\osc\live\commands\LiveOSCCommandBase.cpp">
       <Filter>Chataigne\Source\Module\modules\osc\live\commands</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\Module\modules\osc\live\commands\LiveOSCSceneCommand.cpp">
-      <Filter>Chataigne\Source\Module\modules\osc\live\commands</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\osc\live\LiveOSCModule.cpp">
       <Filter>Chataigne\Source\Module\modules\osc\live</Filter>
     </ClCompile>
@@ -5782,9 +5779,6 @@
       <Filter>Chataigne\Source\Module\modules\osc\dlight</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\osc\live\commands\LiveOSCCommandBase.h">
-      <Filter>Chataigne\Source\Module\modules\osc\live\commands</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Module\modules\osc\live\commands\LiveOSCSceneCommand.h">
       <Filter>Chataigne\Source\Module\modules\osc\live\commands</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\osc\live\LiveOSCModule.h">
@@ -10505,6 +10499,9 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\Resources\Modules\Ableton Live.png">
+      <Filter>Chataigne\Resources\Modules</Filter>
+    </None>
     <None Include="..\..\Resources\Modules\DLight.png">
       <Filter>Chataigne\Resources\Modules</Filter>
     </None>
@@ -10530,9 +10527,6 @@
       <Filter>Chataigne\Resources\Modules</Filter>
     </None>
     <None Include="..\..\Resources\Modules\KinectV2.png">
-      <Filter>Chataigne\Resources\Modules</Filter>
-    </None>
-    <None Include="..\..\Resources\Modules\LiveOSC2.png">
       <Filter>Chataigne\Resources\Modules</Filter>
     </None>
     <None Include="..\..\Resources\Modules\MadMapper.png">

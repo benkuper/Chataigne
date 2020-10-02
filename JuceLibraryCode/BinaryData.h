@@ -8,6 +8,9 @@
 
 namespace BinaryData
 {
+    extern const char*   Ableton_Live_png;
+    const int            Ableton_Live_pngSize = 3172;
+
     extern const char*   DLight_png;
     const int            DLight_pngSize = 3180;
 
@@ -34,9 +37,6 @@ namespace BinaryData
 
     extern const char*   KinectV2_png;
     const int            KinectV2_pngSize = 2254;
-
-    extern const char*   LiveOSC2_png;
-    const int            LiveOSC2_pngSize = 3172;
 
     extern const char*   MadMapper_png;
     const int            MadMapper_pngSize = 3783;

@@ -350,7 +350,6 @@
     <ClCompile Include="..\..\Source\Module\modules\osc\custom\CustomOSCModule.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\osc\dlight\DLightModule.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\osc\live\commands\LiveOSCCommandBase.cpp"/>
-    <ClCompile Include="..\..\Source\Module\modules\osc\live\commands\LiveOSCSceneCommand.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\osc\live\LiveOSCModule.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\osc\millumin\MilluminModule.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\osc\reaper\commands\ReaperTimeCommand.cpp"/>
@@ -3400,7 +3399,6 @@
     <ClInclude Include="..\..\Source\Module\modules\osc\custom\CustomOSCModule.h"/>
     <ClInclude Include="..\..\Source\Module\modules\osc\dlight\DLightModule.h"/>
     <ClInclude Include="..\..\Source\Module\modules\osc\live\commands\LiveOSCCommandBase.h"/>
-    <ClInclude Include="..\..\Source\Module\modules\osc\live\commands\LiveOSCSceneCommand.h"/>
     <ClInclude Include="..\..\Source\Module\modules\osc\live\LiveOSCModule.h"/>
     <ClInclude Include="..\..\Source\Module\modules\osc\millumin\MilluminModule.h"/>
     <ClInclude Include="..\..\Source\Module\modules\osc\reaper\commands\ReaperTimeCommand.h"/>
@@ -4975,6 +4973,7 @@
     <ClInclude Include="..\..\JuceLibraryCode\JuceHeader.h"/>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\Resources\Modules\Ableton Live.png"/>
     <None Include="..\..\Resources\Modules\DLight.png"/>
     <None Include="..\..\Resources\Modules\DMX.png"/>
     <None Include="..\..\Resources\Modules\Gamepad.png"/>
@@ -4984,7 +4983,6 @@
     <None Include="..\..\Resources\Modules\Joystick.png"/>
     <None Include="..\..\Resources\Modules\Keyboard.png"/>
     <None Include="..\..\Resources\Modules\KinectV2.png"/>
-    <None Include="..\..\Resources\Modules\LiveOSC2.png"/>
     <None Include="..\..\Resources\Modules\MadMapper.png"/>
     <None Include="..\..\Resources\Modules\Metronome.png"/>
     <None Include="..\..\Resources\Modules\MIDI.png"/>

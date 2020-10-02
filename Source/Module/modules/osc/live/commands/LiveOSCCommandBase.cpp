@@ -12,95 +12,48 @@
 
 
 
-LiveOSCCommandBase::LiveOSCCommandBase(LiveOSCModule * _module, CommandContext context, var params) :
+LiveOSCCommandBase::LiveOSCCommandBase(LiveOSCModule* _module, CommandContext context, var params) :
 	OSCCommand(_module, context, params),
 	liveModule(_module),
-	trackTarget(nullptr),
 	trackID(nullptr),
+	clipID(nullptr),
+	deviceID(nullptr),
+	paramID(nullptr),
 	value(nullptr)
 {
-	type = (ActionType)(int)params.getProperty("type", MUTE);
 
-	float minVal = 0;
-	float maxVal = 1;
+	addressModel = params.getProperty("addressModel", "");
 
-	switch (type)
-	{
-	case ARM: liveCommand = "arm"; valueType = BOOL; break;
-	case MUTE: liveCommand = "mute"; valueType = BOOL; break;
-	case PAN: liveCommand = "panning"; valueType = FLOAT; minVal = -1; maxVal = 1; break;
-	case SOLO: liveCommand = "solo"; valueType = BOOL; break;
-	case VOLUME: liveCommand = "volume"; valueType = FLOAT; break;
-	case SEND: liveCommand = "send"; valueType = FLOAT; maxVal = 127; break;
-	case TRACK_STOP: liveCommand = "stop"; valueType = NONE; break;
-	case CLIP_PLAY: liveCommand = "play"; valueType = NONE; break;
-	case CLIP_STOP: liveCommand = "stop"; valueType = NONE; break;
-	case DEVICE_ENABLE: liveCommand = "device/param"; valueType = BOOL; break;
-	case DEVICE_PARAM: liveCommand = "device/param"; valueType = FLOAT; maxVal = 127; break;
-	}
-
-	if (type != CLIP_PLAY && type != CLIP_STOP)
-	{
-		trackTarget = addEnumParameter("Target", "Type of target : Master, Return or Track");
-		if (type != MUTE && type != ARM && type != SOLO) trackTarget->addOption("Master", "master");
-		trackTarget->addOption("Track", "track");
-		if (type != ARM) trackTarget->addOption("Return", "return");
-
-		if (type == ARM) trackTarget->hideInEditor = true;
-	}
-
-	trackID = argumentsContainer.addIntParameter("Track", "Index of the target track", 0, 0, 1000);
-	if (trackTarget != nullptr) trackID->setEnabled(trackTarget->getValueData().toString() != "master");
-
+	Controllable::Type type = (Controllable::Type)(int)params.getProperty("type", Controllable::TRIGGER);
 	
-	if (type == DEVICE_ENABLE || type == DEVICE_PARAM)
+	if (type != Controllable::Type::TRIGGER)
 	{
-		deviceID = argumentsContainer.addIntParameter("Device", "Index of the target device", 0, 0, 255);
-		parameterID = argumentsContainer.addIntParameter("Parameter", "Index of the target parameter", 1, 0, 255);
-		if (type == DEVICE_ENABLE) 
+		value = (Parameter*)ControllableFactory::createControllable(Controllable::typeNames[type]);
+		value->setNiceName("Value");
+		value->setRange(params.getProperty("min", INT32_MIN), params.getProperty("max", INT32_MAX));
+		if (params.hasProperty("default"))
 		{
-			parameterID->setValue(0);
-			parameterID->hideInEditor = true;
+			value->defaultValue = params.getProperty("default", value->value);
+			value->resetValue();
 		}
 
-	} else if (type == CLIP_PLAY || type == CLIP_STOP)
-	{
-		clipID = argumentsContainer.addIntParameter("Clip", "Index of the clip in the track", 0, 0, 255);
-	} else if (type == SEND)
-	{
-		sendID = argumentsContainer.addIntParameter("Send", "Index of the send in the track", 0, 0, 255);
+		if (params.hasProperty("ui")) ((FloatParameter*)value)->defaultUI = (FloatParameter::UIType)(int)params.getProperty("ui", ((FloatParameter*)value)->defaultUI);
+
+		argumentsContainer.addControllable(value);
+
+		addTargetMappingParameterAt(value, 0);
 	}
+	
+	if (addressModel.contains("[scene]")) paramID = addIntParameter("Scene", "Index of the scene, 0 is first scene", 0, 0);
+	if (addressModel.contains("[track]")) trackID = addIntParameter("Track", "Index of the target track, 0 is first track", 0, 0);
+	if (addressModel.contains("[clip]")) clipID = addIntParameter("Clip", "Index of the clip, 0 is first clip", 0, 0);
+	if (addressModel.contains("[device]")) clipID = addIntParameter("Device", "Index of the device in the track, 0 is first device", 0, 0);
+	if (addressModel.contains("[parameter]")) paramID = addIntParameter("Parameter", "Index of the clip, 0 is first clip", 0, 0);
 
-
-	switch (valueType)
-	{
-	case NONE:	break;
-	case FLOAT: value = argumentsContainer.addFloatParameter("Value", "Value", 0, minVal, maxVal); break;
-	case BOOL: value = argumentsContainer.addBoolParameter("Value", "Value", false); break;
-	}
-
-	if(value != nullptr) addTargetMappingParameterAt(value, 0);
 	rebuildAddressOnParamChanged = true;
 	rebuildAddress();
 }
 
 LiveOSCCommandBase::~LiveOSCCommandBase()
 {
-}
-
-void LiveOSCCommandBase::rebuildAddress()
-{
-	if (type == CLIP_STOP || type == CLIP_PLAY) addressModel = "/live/clip/" + liveCommand;
-	else addressModel = "/live/" + trackTarget->getValueData().toString() + "/" + liveCommand;
-	OSCCommand::rebuildAddress();
-}
-
-void LiveOSCCommandBase::onContainerParameterChanged(Parameter * p)
-{
-	OSCCommand::onContainerParameterChanged(p);
-	if (p == trackTarget)
-	{
-
-		if (trackTarget != nullptr) trackID->setEnabled(trackTarget->getValueData().toString() != "master");
- 	}
 }

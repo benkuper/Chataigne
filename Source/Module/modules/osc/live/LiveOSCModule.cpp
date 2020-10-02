@@ -9,46 +9,55 @@
 */
 
 #include "LiveOSCModule.h"
-#include "commands/LiveOSCSceneCommand.h"
 #include "commands/LiveOSCCommandBase.h"
-
 LiveOSCModule::LiveOSCModule() :
-	OSCModule(getDefaultTypeString(), 9000, 9001, false, true)
+	OSCModule(getDefaultTypeString(), 11001, 11000, false, true)
 {
-	defManager->add(CommandDefinition::createDef(this, "General", "Play", &OSCCommand::create, CommandContext::ACTION)->addParam("address", "/live/play"));
-	defManager->add(CommandDefinition::createDef(this, "General", "Continue", &OSCCommand::create, CommandContext::ACTION)->addParam("address", "/live/play/continue"));
-	defManager->add(CommandDefinition::createDef(this, "General", "Stop", &OSCCommand::create, CommandContext::ACTION)->addParam("address", "/live/stop"));
+	downloadMaxPatch = addTrigger("Download Max Patch", "This is necessary to make this plugin run. Just download the zip file, unzip it wherever you want and import the OSCControl.amxd into Live's master track (or any track actually.");
 
-	var floatValueArgs = var();
-	var floatArg = ControllableUtil::createDataForParam(FloatParameter::getTypeStringStatic(), "Tempo", "Target Tempo", 0, 20,999);
-	floatArg.getDynamicObject()->setProperty("mappingIndex", 0);
-	floatValueArgs.append(floatArg);
-	defManager->add(CommandDefinition::createDef(this, "General", "Set Tempo", &OSCCommand::create, CommandContext::BOTH)->addParam("address", "/live/tempo")->addParam("args", floatValueArgs));
+	defManager->add(CommandDefinition::createDef(this, "General", "Play", &LiveOSCCommandBase::create, CommandContext::ACTION)->addParam("addressModel", "/live_set/start_playing"));
+	defManager->add(CommandDefinition::createDef(this, "General", "Stop", &LiveOSCCommandBase::create, CommandContext::ACTION)->addParam("addressModel", "/live_set/stop_playing"));
+	defManager->add(CommandDefinition::createDef(this, "General", "Stop All Clips", &LiveOSCCommandBase::create, CommandContext::ACTION)->addParam("addressModel", "/live_set/stop_all_clips"));
+	defManager->add(CommandDefinition::createDef(this, "General", "Continue", &LiveOSCCommandBase::create, CommandContext::ACTION)->addParam("addressModel", "/live_set/continue_playing"));
+
+	defManager->add(CommandDefinition::createDef(this, "General", "Set Time", &LiveOSCCommandBase::create, CommandContext::BOTH)
+		->addParam("addressModel", "/live_set/current_song_time")->addParam("type", Controllable::FLOAT)->addParam("ui", FloatParameter::UIType::TIME)->addParam("min",0));
+
+	defManager->add(CommandDefinition::createDef(this, "General", "Set Tempo", &LiveOSCCommandBase::create, CommandContext::BOTH)->addParam("addressModel", "/live_set/tempo")->addParam("type", Controllable::FLOAT)->addParam("min", 20)->addParam("max", 999)->addParam("default", 120));
+	defManager->add(CommandDefinition::createDef(this, "General", "Tap Tempo", &LiveOSCCommandBase::create, CommandContext::ACTION)->addParam("addressModel", "/live_set/tap_tempo"));
+
+	defManager->add(CommandDefinition::createDef(this, "General", "Master Volume", &LiveOSCCommandBase::create, CommandContext::BOTH)
+		->addParam("addressModel", "/live_set/master_track/mixer_device/volume/value")->addParam("type", Controllable::FLOAT)->addParam("min", 0)->addParam("max", 1)->addParam("default", 0.85f));
+
+	defManager->add(CommandDefinition::createDef(this, "Scene", "Play Scene", &LiveOSCCommandBase::create, CommandContext::BOTH)->addParam("addressModel", "/live_set/scenes/[scene]/fire"));
+
+	defManager->add(CommandDefinition::createDef(this, "Track", "Set Volume", &LiveOSCCommandBase::create, CommandContext::BOTH)
+		->addParam("addressModel", "/live_set/tracks/[track]/mixer_device/volume/value")->addParam("type",Controllable::FLOAT)->addParam("min", 0)->addParam("max", 1)->addParam("default",0.85f));
+
+	defManager->add(CommandDefinition::createDef(this, "Track", "Set Pan", &LiveOSCCommandBase::create, CommandContext::BOTH)
+		->addParam("addressModel", "/live_set/tracks/[track]/mixer_device/panning/value")->addParam("type", Controllable::FLOAT)->addParam("min", -1)->addParam("max", 1)); 
 	
-	floatValueArgs = var();
-	floatArg = ControllableUtil::createDataForParam(FloatParameter::getTypeStringStatic(), "Time", "Target Time", 0, 0, 600);
-	floatArg.getDynamicObject()->setProperty("mappingIndex", 0);
-	floatValueArgs.append(floatArg); 
-	defManager->add(CommandDefinition::createDef(this, "General", "Set Time", &OSCCommand::create, CommandContext::BOTH)->addParam("address", "/live/time")->addParam("args",floatValueArgs));
-	defManager->add(CommandDefinition::createDef(this, "Scene", "Play Scene", &LiveOSCSceneCommand::create, CommandContext::ACTION));
+	defManager->add(CommandDefinition::createDef(this, "Track", "Set Mute", &LiveOSCCommandBase::create, CommandContext::BOTH)->addParam("addressModel", "/live_set/tracks/[track]/mute")->addParam("type",Controllable::BOOL));
+	defManager->add(CommandDefinition::createDef(this, "Track", "Set Armed", &LiveOSCCommandBase::create, CommandContext::BOTH)->addParam("addressModel", "/live_set/tracks/[track]/arm")->addParam("type",Controllable::BOOL));
+	
+	defManager->add(CommandDefinition::createDef(this, "Track", "Set Solo", &LiveOSCCommandBase::create, CommandContext::BOTH)->addParam("addressModel", "/live_set/tracks/[track]/solo")->addParam("type",Controllable::BOOL));
+	//defManager->add(CommandDefinition::createDef(this, "Track", "Set Send", &LiveOSCCommandBase::create, CommandContext::BOTH)->addParam("type",Controllable::FLOAT));
+	defManager->add(CommandDefinition::createDef(this, "Track", "Stop Track Clips", &LiveOSCCommandBase::create, CommandContext::ACTION)->addParam("addressModel", "/live_set/tracks/[track]/stop_all_clips"));
 
-	defManager->add(CommandDefinition::createDef(this, "Track", "Set Volume", &LiveOSCCommandBase::create, CommandContext::BOTH)->addParam("type", LiveOSCCommandBase::VOLUME));
-	defManager->add(CommandDefinition::createDef(this, "Track", "Set Mute", &LiveOSCCommandBase::create, CommandContext::BOTH)->addParam("type", LiveOSCCommandBase::MUTE));
-	defManager->add(CommandDefinition::createDef(this, "Track", "Set Armed", &LiveOSCCommandBase::create, CommandContext::BOTH)->addParam("type", LiveOSCCommandBase::ARM));
-	defManager->add(CommandDefinition::createDef(this, "Track", "Set Pan", &LiveOSCCommandBase::create, CommandContext::BOTH)->addParam("type", LiveOSCCommandBase::PAN));
-	defManager->add(CommandDefinition::createDef(this, "Track", "Set Solo", &LiveOSCCommandBase::create, CommandContext::BOTH)->addParam("type", LiveOSCCommandBase::SOLO));
-	defManager->add(CommandDefinition::createDef(this, "Track", "Set Send", &LiveOSCCommandBase::create, CommandContext::BOTH)->addParam("type", LiveOSCCommandBase::SEND));
-	defManager->add(CommandDefinition::createDef(this, "Track", "Stop", &LiveOSCCommandBase::create, CommandContext::ACTION)->addParam("type", LiveOSCCommandBase::TRACK_STOP));
+	defManager->add(CommandDefinition::createDef(this, "Device", "Set Enabled", &LiveOSCCommandBase::create, CommandContext::BOTH)->addParam("addressModel", "/live_set/tracks/[track]/devices/[device]/parameters/0/value")->addParam("type", Controllable::BOOL));
 
-	defManager->add(CommandDefinition::createDef(this, "Device", "Set Enabled", &LiveOSCCommandBase::create, CommandContext::BOTH)->addParam("type", LiveOSCCommandBase::DEVICE_ENABLE));
-	defManager->add(CommandDefinition::createDef(this, "Device", "Set Parameter", &LiveOSCCommandBase::create, CommandContext::BOTH)->addParam("type", LiveOSCCommandBase::DEVICE_PARAM));
+	defManager->add(CommandDefinition::createDef(this, "Device", "Set Parameter", &LiveOSCCommandBase::create, CommandContext::BOTH)->addParam("addressModel", "/live_set/tracks/[track]/devices/[device]/parameters/[parameter]/value")->addParam("type", Controllable::FLOAT));
 
-	defManager->add(CommandDefinition::createDef(this, "Clip", "Play Clip", &LiveOSCCommandBase::create, CommandContext::ACTION)->addParam("type", LiveOSCCommandBase::CLIP_PLAY));
-	defManager->add(CommandDefinition::createDef(this, "Clip", "Stop Clip", &LiveOSCCommandBase::create, CommandContext::ACTION)->addParam("type", LiveOSCCommandBase::CLIP_STOP));
-
-	detectAndInstallLivePlugin();
+	//detectAndInstallLivePlugin();
 }
 
+void LiveOSCModule::onContainerTriggerTriggered(Trigger* t)
+{
+	OSCModule::onContainerTriggerTriggered(t);
+	if (t == downloadMaxPatch) URL("http://benjamin.kuperberg.fr/download/LiveOSCControl.zip").launchInDefaultBrowser();
+}
+
+/*
 void LiveOSCModule::detectAndInstallLivePlugin()
 {
 #if JUCE_WINDOWS || JUCE_MAC
@@ -150,3 +159,5 @@ void LiveOSCModule::finished(URL::DownloadTask * task, bool success)
 You will need to restart Ableton Live and select \"LiveOSC2\" as a Control Surface in Ableton Live Preferences (MIDI menu)\nEnjoy !");
 
 }
+
+*/

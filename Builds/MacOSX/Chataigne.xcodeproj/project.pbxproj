@@ -889,10 +889,6 @@
 			isa = PBXBuildFile;
 			fileRef = 962762E51A968A3E21612F7C;
 		};
-		7A23E84742F13B0CE0C2656B = {
-			isa = PBXBuildFile;
-			fileRef = DE651F1FAF554A8B2ED7BCC3;
-		};
 		147B092FC4523DA8CCE8660B = {
 			isa = PBXBuildFile;
 			fileRef = 43FF3B8ECBF69AB0CED363AE;
@@ -1562,13 +1558,6 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = CommandChooserUI.cpp;
 			path = ../../Source/Common/Command/ui/CommandChooserUI.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
-		0ADF29DB8E1BCCC58ACC8C91 = {
-			isa = PBXFileReference;
-			lastKnownFileType = image.png;
-			name = LiveOSC2.png;
-			path = ../../Resources/Modules/LiveOSC2.png;
 			sourceTree = "SOURCE_ROOT";
 		};
 		0B44735E419DA142D27A72AC = {
@@ -3342,6 +3331,13 @@
 			path = ../../Source/TimeMachine/Sequence/layers/trigger/ChataigneTimeTrigger.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
+		6C76365E6A0B310E2734B571 = {
+			isa = PBXFileReference;
+			lastKnownFileType = image.png;
+			name = "Ableton Live.png";
+			path = "../../Resources/Modules/Ableton Live.png";
+			sourceTree = "SOURCE_ROOT";
+		};
 		6CA54F330A265B66584BC7CC = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -4131,13 +4127,6 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = ChataigneAudioLayerPanel.cpp;
 			path = ../../Source/TimeMachine/Sequence/layers/audio/ui/ChataigneAudioLayerPanel.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
-		91FAD120CB39BF7A50BB6C51 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = LiveOSCSceneCommand.h;
-			path = ../../Source/Module/modules/osc/live/commands/LiveOSCSceneCommand.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		923AE5135E5069CB080C5867 = {
@@ -5680,13 +5669,6 @@
 			path = ../../Source/Module/modules/audio/analysis/FFTAnalyzerManager.h;
 			sourceTree = "SOURCE_ROOT";
 		};
-		DE651F1FAF554A8B2ED7BCC3 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = LiveOSCSceneCommand.cpp;
-			path = ../../Source/Module/modules/osc/live/commands/LiveOSCSceneCommand.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
 		DF7E4C10AE96476C8D27E827 = {
 			isa = PBXFileReference;
 			lastKnownFileType = image.png;
@@ -6327,6 +6309,7 @@
 		566A82CF510CED74A78A0074 = {
 			isa = PBXGroup;
 			children = (
+				6C76365E6A0B310E2734B571,
 				5E64FD363DAEBC97B49C0E98,
 				068D5BDCBB49D14D8C13012E,
 				0E23FCDD33ADDAC7FAFF8BD6,
@@ -6336,7 +6319,6 @@
 				D0E586C56C805B4A09C03550,
 				9C71210A77B55F5535E5EC03,
 				197076D5A22E98797D3FB07B,
-				0ADF29DB8E1BCCC58ACC8C91,
 				FDC68A7B4E5FD9E5DB23819F,
 				5A60F64718B023B15C6B6F70,
 				E3D81D58A2F55922C54F1F18,
@@ -7717,8 +7699,6 @@
 			children = (
 				962762E51A968A3E21612F7C,
 				C8F7B577E4F08EE149D8F1F8,
-				DE651F1FAF554A8B2ED7BCC3,
-				91FAD120CB39BF7A50BB6C51,
 			);
 			name = commands;
 			sourceTree = "<group>";
@@ -9014,7 +8994,6 @@
 				432D4FBB8351895E8F052B35,
 				C1BCE60D5F5E774244518F42,
 				A928BF61DC14B8809AC2962C,
-				7A23E84742F13B0CE0C2656B,
 				147B092FC4523DA8CCE8660B,
 				1B07AB374680E39E449982A3,
 				80A986E298EE1F932DB0EAE6,

@@ -92,7 +92,7 @@ ModuleFactory::ModuleFactory() {
 
 	defs.add(new ModuleDefinition("Software", "DLight", &DLightModule::create));
 	defs.add(new ModuleDefinition("Software", "HeavyM", &HeavyMModule::create));
-	defs.add(new ModuleDefinition("Software", "LiveOSC2", &LiveOSCModule::create));
+	defs.add(new ModuleDefinition("Software", "Ableton Live", &LiveOSCModule::create));
 	defs.add(new ModuleDefinition("Software", "MadMapper", &MadMapperModule::create));
 	defs.add(new ModuleDefinition("Software", "Millumin", &MilluminModule::create));
 	defs.add(new ModuleDefinition("Software", "QLab", &QLabModule::create));

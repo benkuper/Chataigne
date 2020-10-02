@@ -266,7 +266,6 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/CustomOSCModule_1d5ea018.o \
   $(JUCE_OBJDIR)/DLightModule_37bf0649.o \
   $(JUCE_OBJDIR)/LiveOSCCommandBase_2512fc69.o \
-  $(JUCE_OBJDIR)/LiveOSCSceneCommand_fb53785c.o \
   $(JUCE_OBJDIR)/LiveOSCModule_ae0bbb38.o \
   $(JUCE_OBJDIR)/MilluminModule_e03eaa89.o \
   $(JUCE_OBJDIR)/ReaperTimeCommand_2fc352d6.o \
@@ -1386,11 +1385,6 @@ $(JUCE_OBJDIR)/DLightModule_37bf0649.o: ../../Source/Module/modules/osc/dlight/D
 $(JUCE_OBJDIR)/LiveOSCCommandBase_2512fc69.o: ../../Source/Module/modules/osc/live/commands/LiveOSCCommandBase.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling LiveOSCCommandBase.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/LiveOSCSceneCommand_fb53785c.o: ../../Source/Module/modules/osc/live/commands/LiveOSCSceneCommand.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling LiveOSCSceneCommand.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/LiveOSCModule_ae0bbb38.o: ../../Source/Module/modules/osc/live/LiveOSCModule.cpp

@@ -9,6 +9,8 @@
   <MAINGROUP id="EDDVhd" name="Chataigne">
     <GROUP id="{E61F6705-4C4B-3F04-F742-20CC91F590E4}" name="Resources">
       <GROUP id="{400148EF-B215-CD72-18E1-183E2FCE16F3}" name="Modules">
+        <FILE id="jnGyRW" name="Ableton Live.png" compile="0" resource="1"
+              file="Resources/Modules/Ableton Live.png"/>
         <FILE id="MPJkAm" name="DLight.png" compile="0" resource="1" file="Resources/Modules/DLight.png"/>
         <FILE id="kdkONp" name="DMX.png" compile="0" resource="1" file="Resources/Modules/DMX.png"/>
         <FILE id="yfJH3x" name="Gamepad.png" compile="0" resource="1" file="Resources/Modules/Gamepad.png"/>
@@ -18,7 +20,6 @@
         <FILE id="c0VYrw" name="Joystick.png" compile="0" resource="1" file="Resources/Modules/Joystick.png"/>
         <FILE id="lCZ3px" name="Keyboard.png" compile="0" resource="1" file="Resources/Modules/Keyboard.png"/>
         <FILE id="E3etXD" name="KinectV2.png" compile="0" resource="1" file="Resources/Modules/KinectV2.png"/>
-        <FILE id="k0DW1I" name="LiveOSC2.png" compile="0" resource="1" file="Resources/Modules/LiveOSC2.png"/>
         <FILE id="XESC79" name="MadMapper.png" compile="0" resource="1" file="Resources/Modules/MadMapper.png"/>
         <FILE id="Cwbr53" name="Metronome.png" compile="0" resource="1" file="Resources/Modules/Metronome.png"/>
         <FILE id="rV6E05" name="MIDI.png" compile="0" resource="1" file="Resources/Modules/MIDI.png"/>
@@ -990,10 +991,6 @@
                       file="Source/Module/modules/osc/live/commands/LiveOSCCommandBase.cpp"/>
                 <FILE id="LfOKnf" name="LiveOSCCommandBase.h" compile="0" resource="0"
                       file="Source/Module/modules/osc/live/commands/LiveOSCCommandBase.h"/>
-                <FILE id="nQ2dQ1" name="LiveOSCSceneCommand.cpp" compile="1" resource="0"
-                      file="Source/Module/modules/osc/live/commands/LiveOSCSceneCommand.cpp"/>
-                <FILE id="ZSlakC" name="LiveOSCSceneCommand.h" compile="0" resource="0"
-                      file="Source/Module/modules/osc/live/commands/LiveOSCSceneCommand.h"/>
               </GROUP>
               <FILE id="ruPiq3" name="LiveOSCModule.cpp" compile="1" resource="0"
                     file="Source/Module/modules/osc/live/LiveOSCModule.cpp"/>

@@ -20,40 +20,18 @@ public:
 	LiveOSCCommandBase(LiveOSCModule * _module, CommandContext context, var params);
 	~LiveOSCCommandBase();
 
-	LiveOSCModule * liveModule;
+	LiveOSCModule* liveModule; 
+	String addressModelBase;
 
-	enum ActionType {ARM, MUTE, PAN, SOLO, VOLUME, SEND, TRACK_STOP, CLIP_PLAY, CLIP_STOP, DEVICE_ENABLE, DEVICE_PARAM};
-	ActionType type;
+	IntParameter* sceneID;
+	IntParameter* trackID;
+	IntParameter* clipID;
+	IntParameter* deviceID;
+	IntParameter* paramID;
 
-	enum ValueType {NONE, FLOAT, BOOL };
-	ValueType valueType;
+	Parameter* value;
+	Parameter* arg;
 
-	String liveCommand;
-
-	//Target
-	EnumParameter * trackTarget;
-
-	//Track / Return
-	IntParameter * trackID;
-
-	//Clip
-	IntParameter * clipID;
-
-	//Device
-	IntParameter * deviceID;
-
-	//Send
-	IntParameter * sendID;
-
-	//Parameter
-	IntParameter * parameterID;
-
-	//Values
-	Parameter * value;
-
-	void rebuildAddress() override;
-
-	void onContainerParameterChanged(Parameter * p) override;
 
 	static LiveOSCCommandBase * create(ControllableContainer * module, CommandContext context, var params) { return new LiveOSCCommandBase((LiveOSCModule *)module, context, params); }
 
