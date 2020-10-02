@@ -15,6 +15,7 @@
 DMXEnttecProDevice::DMXEnttecProDevice() :
 	DMXSerialDevice("DMX Pro", ENTTEC_DMXPRO, true)
 {
+    inputCC->enabled->setValue(false);
 }
 
 DMXEnttecProDevice::~DMXEnttecProDevice()
