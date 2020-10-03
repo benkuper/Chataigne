@@ -35,7 +35,7 @@ void GenericOSCQueryCommand::setupParamFromTarget()
 	valueParam = ControllableFactory::createParameterFrom(target->target, false, true);
 	if (valueParam != nullptr)
 	{
-		valueParam->setValue(valueGhostData);
+		if (!valueGhostData.isVoid()) valueParam->setValue(valueGhostData);
 		addParameter(valueParam);
 		addTargetMappingParameterAt(valueParam, 0);
 		valueGhostData = var(); //reset ghostValue
