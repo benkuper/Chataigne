@@ -24,6 +24,8 @@ ModuleRouter::ModuleRouter() :
 	sourceValues.userCanAddItemsManually = false;
 	selectAllValues = addTrigger("Select All", "Select all values for routing");
 	deselectAllValues = addTrigger("Deselect All", "Deselect all values");
+
+	addChildControllableContainer(&sourceValues);
 }
 
 ModuleRouter::~ModuleRouter()
