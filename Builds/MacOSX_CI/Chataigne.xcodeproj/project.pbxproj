@@ -8557,7 +8557,7 @@
 					"DEBUG=1",
 					"JUCE_SUPPORT_CARBON=0",
 					"JUCER_XCODE_MAC_2F3811D6=1",
-					"JUCE_APP_VERSION=1.7.5b11",
+					"JUCE_APP_VERSION=1.7.5b12",
 					"JUCE_APP_VERSION_HEX=0x10705",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
@@ -8593,10 +8593,24 @@
 					"\"../../External/sdl/lib/osx\"",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MTL_HEADER_SEARCH_PATHS = (
+					"../../JuceLibraryCode",
+					"$(HOME)/JUCE/modules",
+					"../../Modules",
+					"../../External/wiiuse",
+					"../../External/serial/include",
+					"../../External/servus/include",
+					"../../External/dnssd/include",
+					"../../External/joycon/include",
+					"../../External/sdl/include",
+					"../../External/hidapi/include",
+					"../../Source",
+				);
 				OTHER_LDFLAGS = "-lServus -lhidapi -ljoytime-core -ljoytime-input-hidapi -lSDL2 -liconv";
 				PRODUCT_BUNDLE_IDENTIFIER = benkuper.Chataigne;
 				PRODUCT_NAME = "Chataigne";
 				USE_HEADERMAP = NO;
+				VALID_ARCHS = "i386 x86_64 arm64 arm64e";
 			};
 			name = Debug;
 		};
@@ -8617,7 +8631,7 @@
 					"NDEBUG=1",
 					"JUCE_SUPPORT_CARBON=0",
 					"JUCER_XCODE_MAC_2F3811D6=1",
-					"JUCE_APP_VERSION=1.7.5b11",
+					"JUCE_APP_VERSION=1.7.5b12",
 					"JUCE_APP_VERSION_HEX=0x10705",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
@@ -8654,10 +8668,24 @@
 				);
 				LLVM_LTO = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MTL_HEADER_SEARCH_PATHS = (
+					"../../JuceLibraryCode",
+					"$(HOME)/JUCE/modules",
+					"../../Modules",
+					"../../External/wiiuse",
+					"../../External/serial/include",
+					"../../External/servus/include",
+					"../../External/dnssd/include",
+					"../../External/joycon/include",
+					"../../External/sdl/include",
+					"../../External/hidapi/include",
+					"../../Source",
+				);
 				OTHER_LDFLAGS = "-lServus -lhidapi -ljoytime-core -ljoytime-input-hidapi -lSDL2 -liconv";
 				PRODUCT_BUNDLE_IDENTIFIER = benkuper.Chataigne;
 				PRODUCT_NAME = "Chataigne";
 				USE_HEADERMAP = NO;
+				VALID_ARCHS = "i386 x86_64 arm64 arm64e";
 			};
 			name = Release;
 		};
@@ -9152,7 +9180,7 @@
 		CFE62146BE7CC7A0837B591F = {
 			isa = PBXProject;
 			buildConfigurationList = 3B0D3344B40620C12AA6A54C;
-			attributes = { LastUpgradeCheck = 1100; ORGANIZATIONNAME = "Ben Kuper"; TargetAttributes = { DD2989001B2BF710FEA75ED3 = { SystemCapabilities = {com.apple.ApplicationGroups.iOS = { enabled = 0; }; com.apple.InAppPurchase = { enabled = 0; }; com.apple.InterAppAudio = { enabled = 0; }; com.apple.Push = { enabled = 0; }; com.apple.Sandbox = { enabled = 0; }; com.apple.HardenedRuntime = { enabled = 0; }; }; }; }; };
+			attributes = { LastUpgradeCheck = 1200; ORGANIZATIONNAME = "Ben Kuper"; TargetAttributes = { DD2989001B2BF710FEA75ED3 = { SystemCapabilities = {com.apple.ApplicationGroups.iOS = { enabled = 0; }; com.apple.InAppPurchase = { enabled = 0; }; com.apple.InterAppAudio = { enabled = 0; }; com.apple.Push = { enabled = 0; }; com.apple.Sandbox = { enabled = 0; }; com.apple.HardenedRuntime = { enabled = 0; }; }; }; }; };
 			compatibilityVersion = "Xcode 3.2";
 			hasScannedForEncodings = 0;
 			mainGroup = 23E340667277B00F1D02C3F0;
