@@ -151,6 +151,16 @@ void ConversionFilter::setupParametersInternal()
 	conversionFilterAsyncNotifier.addMessage(new ConversionFilterEvent(ConversionFilterEvent::SOURCES_UPDATED));
 }
 
+bool ConversionFilter::processInternal()
+{
+	for (auto& s : sourceParams)
+	{
+		processSingleParameterInternal(s, nullptr); //don't care about output as they are recreated
+	}
+
+	return true;
+}
+
 void ConversionFilter::processSingleParameterInternal(Parameter* source, Parameter*)
 {
 	GenericScopedLock lock(links.getLock());

@@ -44,6 +44,7 @@ public:
 	ConversionParamValueLink* getLinkForOut(ConvertedParameter* out, int outValueIndex);
 
 	void setupParametersInternal() override;
+	bool processInternal() override;
 	void processSingleParameterInternal(Parameter * source, Parameter *out) override;
 
 	void askForRemove(ConversionParamValueLink* link) override;
