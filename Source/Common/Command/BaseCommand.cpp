@@ -149,7 +149,8 @@ void BaseCommand::updateParameterFromTemplate(CommandTemplateParameter * ctp)
 {
 	if (ctp == nullptr) return;
 
-	Parameter * p = getParameterByName(ctp->parameter->shortName);
+	String addr = ctp->getControlAddress(&linkedTemplate->paramsContainer);
+	Parameter* p = dynamic_cast<Parameter*>(getControllableForAddress(addr));
 	jassert(p != nullptr);
 	p->setControllableFeedbackOnly(!ctp->editable->boolValue());
 
@@ -163,6 +164,7 @@ void BaseCommand::updateParameterFromTemplate(CommandTemplateParameter * ctp)
 void BaseCommand::setupTemplateParameters(CommandTemplate * ct)
 {
 	ct->paramsContainer.clear();
+	
 	Array<WeakReference<Parameter>> allParams = getAllParameters();
 	for (auto &p : allParams)
 	{
@@ -170,6 +172,23 @@ void BaseCommand::setupTemplateParameters(CommandTemplate * ct)
 		CommandTemplateParameter * ctp = new CommandTemplateParameter(p);
 		ct->paramsContainer.addChildControllableContainer(ctp);
 		ct->templateParams.add(ctp);
+	}
+
+	
+	for (auto& cc : controllableContainers)
+	{
+		if (cc == customValuesManager.get()) continue;
+		ControllableContainer* cct = new ControllableContainer(cc->niceName);
+		ct->paramsContainer.addChildControllableContainer(cct, true);
+		
+		Array<WeakReference<Parameter>> allParams = cc->getAllParameters();
+		for (auto& p : allParams)
+		{
+			if (!p->enabled || p->isControllableFeedbackOnly || p->hideInEditor) continue;
+			CommandTemplateParameter* ctp = new CommandTemplateParameter(p);
+			cct->addChildControllableContainer(ctp);
+			ct->templateParams.add(ctp);
+		}
 	}
 
 	if (customValuesManager != nullptr)
