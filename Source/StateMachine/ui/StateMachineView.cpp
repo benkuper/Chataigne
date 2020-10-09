@@ -34,6 +34,7 @@ StateMachineView::StateMachineView(const String &contentName, StateManager * _ma
 	
 	commentManagerUI.reset(new CommentManagerViewUI(&manager->commentManager));
 	commentManagerUI->canZoom = true;
+	commentManagerUI->addExistingItems();
 	addAndMakeVisible(commentManagerUI.get(), 0);
 
 	updatePositionOnDragMove = true;
