@@ -16,6 +16,7 @@ CVGroupManagerUI::CVGroupManagerUI(const String & contentName) :
 	addItemText = "Add Custom Variable Group";
 	noItemText = "You can manage you own variables by first creating a group here.";
 	
+	setShowSearchBar(true);
 	addExistingItems();
 }
 

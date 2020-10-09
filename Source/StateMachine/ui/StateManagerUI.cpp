@@ -16,6 +16,7 @@ StateManagerUI::StateManagerUI(const String &contentName, StateManager * _manage
 	addItemText = "Add State";
 	noItemText = "Add interaction by creating a State";
 
+	setShowSearchBar(true);
 	addExistingItems();
 }
 
