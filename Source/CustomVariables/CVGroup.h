@@ -36,13 +36,17 @@ public:
 	std::unique_ptr<Morpher> morpher;
 
 	//Animated interpolation
+	Automation defaultInterpolation;
+
 	CVPreset* targetPreset;
 	Automation* interpolationAutomation;
 	WeakReference<Inspectable> automationRef;
 	float interpolationTime;
 	
 	void setValuesToPreset(CVPreset * preset);
-	void lerpPresets(CVPreset * p1, CVPreset * p2, float value);
+	void lerpPresets(CVPreset * p1, CVPreset * p2, float weight);
+	void lerpPresets(Array<var> sourceValues, CVPreset* endPreset, float weight);
+
 	void goToPreset(CVPreset* p, float time, Automation* curve);
 	void stopInterpolation();
 

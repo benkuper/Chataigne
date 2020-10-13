@@ -24,6 +24,9 @@ public:
 	std::unique_ptr<ColorParameterUI> colorUI;
 	std::unique_ptr<FloatSliderUI> attractionUI;
 
+	std::unique_ptr<ControllableUI> timeUI;
+	std::unique_ptr<TriggerButtonUI> triggerUI;
+
 	CVPreset * preset;
 	
 

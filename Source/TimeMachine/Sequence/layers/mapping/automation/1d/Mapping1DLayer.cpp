@@ -23,6 +23,7 @@ Mapping1DLayer::Mapping1DLayer(Sequence* s, var params) :
     recorder.input->typesFilter.add(BoolParameter::getTypeStringStatic());
 
     setupAutomation(&automation1D);
+    automation1D.hideInEditor = true;
     setupMappingInputParameter(automation1D.value);
 }
 

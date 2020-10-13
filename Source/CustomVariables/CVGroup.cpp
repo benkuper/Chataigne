@@ -18,6 +18,7 @@ CVGroup::CVGroup(const String & name) :
 	params("Parameters"),
 	values("Variables",false,false,false),
 	targetPreset(nullptr),
+	defaultInterpolation("Default Preset Interpolation"),
 	interpolationAutomation(nullptr),
     interpolationTime(0)
 {
@@ -29,13 +30,22 @@ CVGroup::CVGroup(const String & name) :
 	addChildControllableContainer(&params);
 	addChildControllableContainer(&values);
 	addChildControllableContainer(pm.get());
-
+	
 	controlMode = params.addEnumParameter("Control Mode", "Defines how the variables are controlled.\n \
 Free mode lets you can change manually the values or tween them to preset values punctually.\n \
 Weights mode locks the values and interpolate them continuously depending on preset weights.\n \
 Voronoi and Gradient Band (not implemented yet) also locks values but interpolates them using 2D interpolators");
 	controlMode->addOption("Free", FREE)->addOption("Weights", WEIGHTS)->addOption("2D Voronoi", VORONOI);// ->addOption("Gradient Band", GRADIENT_BAND);
 
+	defaultInterpolation.isSelectable = false;
+	defaultInterpolation.length->setValue(1);
+	defaultInterpolation.addKey(0, 0, false);
+	defaultInterpolation.items[0]->easingType->setValueWithData(Easing::BEZIER);
+	defaultInterpolation.addKey(1, 1, false);
+	defaultInterpolation.selectItemWhenCreated = false;
+	defaultInterpolation.editorIsCollapsed = true;
+	defaultInterpolation.editorCanBeCollapsed = true;
+	addChildControllableContainer(&defaultInterpolation);
 }
 
 CVGroup::~CVGroup()
@@ -71,21 +81,51 @@ void CVGroup::lerpPresets(CVPreset * p1, CVPreset * p2, float weight)
 
 		if (pp1 != nullptr && pp2 != nullptr)
 		{
+			ParameterPreset::InterpolationMode mode = pp2->interpolationMode->getValueDataAsEnum<ParameterPreset::InterpolationMode>();
+			
+			if (mode == ParameterPreset::NONE) continue;
+			
 			var tValue;
 			if (weight == 0) tValue = pp1->parameter->value;
 			else if (weight == 1) tValue = pp2->parameter->value;
 			else
 			{
-				ParameterPreset::InterpolationMode mode = pp2->interpolationMode->getValueDataAsEnum<ParameterPreset::InterpolationMode>();
+				if (mode == ParameterPreset::INTERPOLATE) tValue = pp1->parameter->getLerpValueTo(pp2->parameter->value, weight);
+				else tValue = (mode == ParameterPreset::CHANGE_AT_END ? pp1 : pp2)->parameter->value;
+			}
 
-				if (mode == ParameterPreset::INTERPOLATE)
-				{
-					tValue = pp1->parameter->getLerpValueTo(pp2->parameter->value, weight);
-				}
-				else
-				{
-					tValue = (mode == ParameterPreset::START ? pp1 : pp2)->parameter->value;
-				}
+			p->setValue(tValue);
+		}
+	}
+}
+
+void CVGroup::lerpPresets(Array<var> sourceValues, CVPreset* endPreset, float weight)
+{
+	int numValues = values.items.size();
+
+	jassert(sourceValues.size() == numValues);
+	if (endPreset == nullptr) return;
+
+	for (int i = 0; i < numValues; i++)
+	{
+		Parameter* p = dynamic_cast<Parameter*>(values.items[i]->controllable);
+		if (p == nullptr) continue;
+		var startValue = sourceValues[i];
+		ParameterPreset* endParam = endPreset->values.getParameterPresetForSource(p);
+
+		if (endParam != nullptr)
+		{
+			ParameterPreset::InterpolationMode mode = endParam->interpolationMode->getValueDataAsEnum<ParameterPreset::InterpolationMode>();
+
+			if (mode == ParameterPreset::NONE) continue;
+
+			var tValue;
+			if (weight == 0) tValue =  startValue;
+			else if (weight == 1) tValue = endParam->parameter->value;
+			else
+			{
+				if (mode == ParameterPreset::INTERPOLATE) tValue = endParam->parameter->getLerpValueTo(startValue, 1-weight);
+				else tValue = mode == ParameterPreset::CHANGE_AT_END ? startValue : endParam->parameter->value;
 			}
 
 			p->setValue(tValue);
@@ -264,12 +304,11 @@ void CVGroup::run()
 {
 	if (targetPreset == nullptr || interpolationAutomation == nullptr || interpolationTime <= 0) return;
 
-	CVPreset p1(this);
+
+	Array<var> sourceValues;
+	for (auto& v : values.items) sourceValues.add(((Parameter*)v->controllable)->value);
+
 	CVPreset p2(this);
-	for (auto& v : p2.values.manager->items)
-	{
-		if(Parameter * p = dynamic_cast<Parameter *>(v->controllable)) p->resetValue();
-	}
 	p2.loadJSONData(targetPreset->getJSONData());
 	for (auto& v : p2.values.manager->items)
 	{
@@ -289,9 +328,9 @@ void CVGroup::run()
 		float rel = jlimit(0.f, 1.f, (curTime - timeAtStart) / interpolationTime);
 
 		float weight = interpolationAutomation->getValueAtPosition(rel);
-		lerpPresets(&p1, &p2, weight);
+		lerpPresets(sourceValues, &p2, weight);
 
-		if (rel == 1) return;
+		if (rel == 1) break;
 
 		sleep(20); //50fps
 	}

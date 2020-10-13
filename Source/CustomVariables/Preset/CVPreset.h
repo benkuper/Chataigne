@@ -23,7 +23,8 @@ public:
 	~ParameterPreset();
 
 	Parameter* parameter;
-	enum InterpolationMode { START, END, INTERPOLATE };
+
+	enum InterpolationMode { CHANGE_AT_END, CHANGE_AT_START, INTERPOLATE, NONE};
 	EnumParameter* interpolationMode;
 
 	InspectableEditor* getEditor(bool isRoot) override;
@@ -88,6 +89,9 @@ public:
 	~CVPreset();
 
 	CVGroup* group;
+	FloatParameter* defaultLoadTime;
+	Trigger* loadTrigger;
+
 	PresetParameterContainer values;
 
 	var getJSONData() override;
@@ -95,6 +99,8 @@ public:
 
 	var getValuesAsJSON();
 	void loadValuesFromJSON(var data);
+
+	void onContainerTriggerTriggered(Trigger* t) override;
 
 	InspectableEditor* getEditor(bool isRoot) override;
 };

@@ -19,6 +19,12 @@ CVPreset::CVPreset(CVGroup * group) :
 {
 	jassert(group != nullptr);
 
+	defaultLoadTime = addFloatParameter("Default Load Time", "The time to use by default when loading this preset", 1, 0);
+	defaultLoadTime->defaultUI = FloatParameter::TIME;
+	defaultLoadTime->hideInEditor = true;
+
+	loadTrigger = addTrigger("Load", "Load this preset with the default time and the default interpolation curve");
+	loadTrigger->hideInEditor = true;
 
 	values.hideEditorHeader = true;
 	values.editorCanBeCollapsed = false;
@@ -28,7 +34,7 @@ CVPreset::CVPreset(CVGroup * group) :
 	CVGroup::ControlMode cm = group->controlMode->getValueDataAsEnum<CVGroup::ControlMode>();
 
 	weight->setControllableFeedbackOnly(cm == CVGroup::FREE || cm == CVGroup::WEIGHTS);
-
+	
 	addChildControllableContainer(&values);
 	
 }
@@ -73,6 +79,12 @@ void CVPreset::loadValuesFromJSON(var data)
 		Parameter* p = values.getParameterByName(nv.name.toString());
 		if (p != nullptr) p->setValue(nv.value);
 	}
+}
+
+void CVPreset::onContainerTriggerTriggered(Trigger* t)
+{
+	MorphTarget::onContainerTriggerTriggered(t);
+	if (t == loadTrigger) group->goToPreset(this, defaultLoadTime->floatValue(), &group->defaultInterpolation);
 }
 
 InspectableEditor * CVPreset::getEditor(bool isRoot)
@@ -247,7 +259,7 @@ ParameterPreset::ParameterPreset(Parameter * p) :
 		break;
 	}
 
-	interpolationMode->addOption("Keep Start", START)->addOption("Keep End", END);
+	interpolationMode->addOption("Change at start", CHANGE_AT_START)->addOption("Change at end", CHANGE_AT_END)->addOption("None", NONE);
 }
 
 ParameterPreset::~ParameterPreset()

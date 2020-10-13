@@ -64,14 +64,19 @@ CVCommand::CVCommand(CustomVariablesModule * _module, CommandContext context, va
 		case GO_TO_PRESET:
 			time = addFloatParameter("Interpolation time", "Time for the animation to go to the target preset", 1, 0);
 			time->defaultUI = FloatParameter::TIME;
-			automation = new Automation();
+			time->canBeDisabledByUser = true;
+
+			automation = new Automation("Interpolation Curve");
 			automation->isSelectable = false;
 			automation->length->setValue(1);
 			automation->addKey(0, 0, false);
 			automation->items[0]->easingType->setValueWithData(Easing::BEZIER);
 			automation->addKey(1, 1, false);
 			automation->selectItemWhenCreated = false;
-			automation->hideEditorHeader = true;
+			automation->editorIsCollapsed = true;
+			automation->editorCanBeCollapsed = true;
+			automation->setCanBeDisabled(true);
+			automation->enabled->setValue(false);
 			addChildControllableContainer(automation, true);
 			break;
 
@@ -250,7 +255,7 @@ void CVCommand::triggerInternal()
 		if (targetPreset->targetContainer != nullptr)
 		{
 			CVPreset* p1 = static_cast<CVPreset*>(targetPreset->targetContainer.get());
-			p1->group->goToPreset(p1, time->floatValue(), automation);
+			p1->group->goToPreset(p1, time->enabled?time->floatValue():p1->defaultLoadTime->floatValue(), automation->enabled->boolValue()?automation:&p1->group->defaultInterpolation);
 		}
 	}
 	break;
