@@ -20,7 +20,7 @@ State::State() :
 	loadActivationBehavior = addEnumParameter("On Load Behavior", "This is defining how the state is initializing when loading");
 	loadActivationBehavior->addOption("Restore last state", KEEP)->addOption("Activate", ACTIVE)->addOption("Deactivate", NONACTIVE);
 	checkTransitionsOnActivate = addBoolParameter("Check transitions on activate", "If checked, this will automatically check for already valid conditions on activate.\n \
-		Otherwise, already valid transition will need to be unvalidated and then validated again to be activated.", true);
+		Otherwise, already valid transition will need to be unvalidated and then validated again to be activated.", false);
 
 	addChildControllableContainer(&pm);
 
@@ -69,8 +69,11 @@ void State::onContainerParameterChangedInternal(Parameter *p)
 					pm.checkAllActivateActions();
 					pm.processAllMappings();
 
+
 					for (auto& t : outTransitions)
 					{
+						t->forceCheck(false); //force setting the valid state even if listeners will trigger it after (avoir listener-order bugs)
+
 						if (checkTransitionsOnActivate->boolValue())
 						{
 							if (t->cdm.isValid->boolValue())
@@ -80,7 +83,6 @@ void State::onContainerParameterChangedInternal(Parameter *p)
 							}
 						}
 
-						t->cdm.forceLeastPriority(); //make this state be the last advertised about input changes so there is no larsen when transitionning out
 					}
 				}
 				else

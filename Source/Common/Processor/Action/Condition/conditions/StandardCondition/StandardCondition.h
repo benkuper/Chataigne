@@ -31,7 +31,7 @@ public:
 	void setSourceControllable(WeakReference<Controllable> c);
 	void comparatorValidationChanged(BaseComparator *) override;
 
-	void forceLeastPriority() override;
+	void forceCheck() override;
 
 	void onContainerParameterChangedInternal(Parameter * p) override;
 	void onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c) override;

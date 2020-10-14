@@ -16,7 +16,7 @@ CVGroup::CVGroup(const String & name) :
 	BaseItem(name),
 	Thread("CV Interpolation"),
 	params("Parameters"),
-	values("Variables",false,false,false),
+	values("Variables",false, false, true, true),
 	targetPreset(nullptr),
 	defaultInterpolation("Default Preset Interpolation"),
 	interpolationAutomation(nullptr),

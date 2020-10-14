@@ -152,11 +152,11 @@ void StandardCondition::comparatorValidationChanged(BaseComparator *)
 	isValid->setValue(comparator->isValid);
 }
 
-void StandardCondition::forceLeastPriority()
+void StandardCondition::forceCheck()
 {
 	if (comparator != nullptr)
 	{
-		comparator->forceLeastPriority();
+		comparator->forceCheck();
 	}
 }
 

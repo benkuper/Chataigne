@@ -20,6 +20,7 @@ Action::Action(const String & name, var params) :
 	hasOffConsequences(false),
     triggerOn(nullptr),
     triggerOff(nullptr),
+	forceChecking(false),
     actionAsyncNotifier(10)
 {
 	helpID = "Action"; 
@@ -106,6 +107,13 @@ void Action::updateDisables(bool force)
 	if (hasOffConsequences) csmOff->setForceDisabled(forceDisabled || !enabled->boolValue(), force);
 }
 
+void Action::forceCheck(bool triggerIfChanged)
+{
+	if (!triggerIfChanged) forceChecking = true;
+	cdm.forceCheck();
+	forceChecking = false;
+}
+
 var Action::getJSONData()
 {
 	var data = Processor::getJSONData();
@@ -152,12 +160,16 @@ void Action::onContainerTriggerTriggered(Trigger * t)
 
 	if (!enabled->boolValue() || forceDisabled) return;
 
-	if (t == triggerOn)
+	if (!forceChecking)
 	{
-		csmOn->triggerAll->trigger();
-	} else if (t == triggerOff)
-	{
-		if(hasOffConsequences) csmOff->triggerAll->trigger();
+		if (t == triggerOn)
+		{
+			csmOn->triggerAll->trigger();
+		}
+		else if (t == triggerOff)
+		{
+			if (hasOffConsequences) csmOff->triggerAll->trigger();
+		}
 	}
 }
 

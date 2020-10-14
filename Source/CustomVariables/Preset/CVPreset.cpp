@@ -159,9 +159,27 @@ void PresetParameterContainer::syncItem(ParameterPreset* preset, bool syncValue)
 	preset->setNiceName(source->niceName);
 
 	p->setNiceName(source->niceName);
-	p->setRange(source->minimumValue, source->maximumValue);
 
-	if (syncValue) p->setValue(source->value);
+	if (source->hasRange()) p->setRange(source->minimumValue, source->maximumValue);
+	else p->clearRange();
+
+	if (p->type == Parameter::ENUM)
+	{
+		EnumParameter* es = (EnumParameter*)source;
+		EnumParameter* ep = (EnumParameter*)p;
+		if (es->enumValues.size() != ep->enumValues.size())
+		{
+			String key = ep->getValueKey();
+			for (auto& ev : es->enumValues) ep->addOption(ev->key, ev->value, false);
+			ep->setValueWithKey(key);
+		}
+	}
+
+	if (syncValue)
+	{
+		if (p->type != Parameter::ENUM) p->setValue(source->value);
+		else ((EnumParameter*)p)->setValueWithKey(((EnumParameter*)source)->getValueKey());
+	}
 }
 
 void PresetParameterContainer::syncItems(bool syncValues)

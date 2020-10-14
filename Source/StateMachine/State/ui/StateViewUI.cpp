@@ -96,6 +96,11 @@ void StateViewUI::mouseDoubleClick(const MouseEvent& e)
 	}
 }
 
+bool StateViewUI::isUsingMouseWheel()
+{
+	return pmui.viewport.getVerticalScrollBar().isVisible();// < pmui.container.getHeight();
+}
+
 
 void StateViewUI::paint(Graphics & g)
 {

@@ -83,6 +83,7 @@ void ConversionFilter::reorderFilterParameters()
 
 void ConversionFilter::createLink(WeakReference<Parameter> source, int sourceValueIndex, ConvertedParameter* out, int outValueIndex)
 {
+	if (source == nullptr) return;
 	jassert(sourceParams.indexOf(source) != -1);
 
 	ConversionParamValueLink* link = getLinkForOut(out, outValueIndex);

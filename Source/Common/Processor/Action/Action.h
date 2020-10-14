@@ -40,11 +40,16 @@ public:
 	Trigger * triggerOn;
 	Trigger * triggerOff;
 
+	//to allow for checking before conditions sending it, to overcome listener-order problems
+	bool forceChecking;
+
 	void updateConditionRoles();
 
 	void setHasOffConsequences(bool value);
 
     virtual void updateDisables(bool force = false) override;
+
+	void forceCheck(bool triggerIfChanged);
 
 	var getJSONData() override;
 	void loadJSONDataItemInternal(var data) override;

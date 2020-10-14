@@ -161,6 +161,8 @@ void GenericControllableManagerLinkedContainer::addValueFromItem(Parameter* sour
 
 	Controllable* c = ControllableFactory::createControllable(source->getTypeString());
 	Parameter* p = dynamic_cast<Parameter*>(c);
+
+
 	linkMap.set(p, source);
 	source->addControllableListener(this);
 	source->addParameterListener(this);
@@ -172,8 +174,27 @@ void GenericControllableManagerLinkedContainer::addValueFromItem(Parameter* sour
 void GenericControllableManagerLinkedContainer::syncItem(Parameter* p, Parameter* source, bool syncValue)
 {
 	p->setNiceName(source->niceName);
-	p->setRange(source->minimumValue, source->maximumValue);
-	if (syncValue) p->setValue(source->value);
+
+	if (source->hasRange()) p->setRange(source->minimumValue, source->maximumValue);
+	else p->clearRange();
+
+	if (p->type == Parameter::ENUM)
+	{
+		EnumParameter* es = (EnumParameter*)source;
+		EnumParameter* ep = (EnumParameter*)p;
+		if (es->enumValues.size() != ep->enumValues.size())
+		{
+			String key = ep->getValueKey();
+			for (auto& ev : es->enumValues) ep->addOption(ev->key, ev->value, false);
+			ep->setValueWithKey(key);
+		}
+	}
+
+	if (syncValue)
+	{
+		if (p->type != Parameter::ENUM) p->setValue(source->value);
+		else ((EnumParameter*)p)->setValueWithKey(((EnumParameter*)source)->getValueKey());
+	}
 }
 
 void GenericControllableManagerLinkedContainer::syncItems(bool syncValues)

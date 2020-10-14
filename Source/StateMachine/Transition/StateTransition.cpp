@@ -58,6 +58,8 @@ void StateTransition::loadJSONDataInternal(var data)
 
 void StateTransition::onContainerTriggerTriggered(Trigger * t)
 {
+	if (forceChecking) return;
+
 	if (t == triggerOn)
 	{
 		if (sourceState->active->boolValue())

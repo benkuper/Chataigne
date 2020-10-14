@@ -283,14 +283,23 @@ void BaseCommand::setValue(var value)
 			{
 				if (p == nullptr || p.wasObjectDeleted()) continue;
 
-				if (!p->value.isArray()) p->setValue(value);
+				if (p->type == Controllable::ENUM)
+				{
+					EnumParameter* ep = (EnumParameter*)p.get();
+					int index = jlimit(0, ep->enumValues.size() -1, (int)value);
+					ep->setValueWithKey(ep->enumValues[index]->key);
+				}
 				else
 				{
+					if (!p->value.isArray()) p->setValue(value);
+					else
+					{
 
-					var newVal;
-					newVal.append(value);
-					for (int i = 1; i < p->value.size(); ++i) newVal.append(p->value[i]);
-					p->setValue(newVal);
+						var newVal;
+						newVal.append(value);
+						for (int i = 1; i < p->value.size(); ++i) newVal.append(p->value[i]);
+						p->setValue(newVal);
+					}
 				}
 			}
 		}
@@ -309,7 +318,14 @@ void BaseCommand::setValue(var value)
 				{
 					if (p == nullptr || p.wasObjectDeleted()) continue;
 
-					if (p->value.isArray())
+
+					if (p->type == Controllable::ENUM)
+					{
+						EnumParameter* ep = (EnumParameter*)p.get();
+						int index = jlimit(0, ep->enumValues.size() - 1, (int)value[i]);
+						ep->setValueWithKey(ep->enumValues[index]->key);
+
+					}else if (p->value.isArray())
 					{
 						var newVal;
 						for (int j = 0; j < p->value.size(); j++)

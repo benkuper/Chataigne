@@ -33,6 +33,8 @@ public:
 	void mouseDown(const MouseEvent &e) override;
 	void mouseDoubleClick(const MouseEvent& e) override;
 
+	bool isUsingMouseWheel() override;
+
 	void paint(Graphics &g) override;
 	void paintOverChildren(Graphics &g) override;
 
