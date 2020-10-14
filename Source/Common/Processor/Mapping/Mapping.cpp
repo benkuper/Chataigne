@@ -15,6 +15,7 @@ Mapping::Mapping(bool canBeDisabled) :
 	Processor("Mapping", canBeDisabled),
 	Thread("Mapping"),
 	processMode(VALUE_CHANGE),
+	outValuesCC("Out Values"),
 	isRebuilding(false),
 	isProcessing(false),
 	shouldRebuildAfterProcess(false),
@@ -30,6 +31,7 @@ Mapping::Mapping(bool canBeDisabled) :
 	addChildControllableContainer(&im);
 	addChildControllableContainer(&fm);
 	addChildControllableContainer(&om);
+	addChildControllableContainer(&outValuesCC);
 
 	fm.addFilterManagerListener(this);
 	im.addBaseManagerListener(this);
@@ -111,7 +113,19 @@ void Mapping::updateMappingChain(MappingFilter * afterThisFilter)
 		else fm.rebuildFilterChain(afterThisFilter); //only ask to rebuild after the changed filter
 
 		Array<Parameter*> processedParams = fm.getLastFilteredParameters();
-		om.setOutParams(processedParams);
+
+		outValuesCC.clear();
+		Array<Parameter*> outP;
+		for (auto& sp : processedParams)
+		{
+			Parameter* p = ControllableFactory::createParameterFrom(sp, false, false);
+			outP.add(p);
+			outValuesCC.addParameter(p);
+			p->setNiceName("Out " + String(outP.size()));
+			p->setValue(sp->value);
+		}
+
+		om.setOutParams(outP);
 
 		mappingAsyncNotifier.addMessage(new MappingEvent(MappingEvent::OUTPUT_TYPE_CHANGED, this));
 
@@ -135,6 +149,14 @@ void Mapping::process(bool forceOutput)
 		GenericScopedLock lock(mappingLock);
 		isProcessing = true;
 		Array<Parameter*> filteredParams = fm.processFilters();
+
+		for (int i = 0; i < filteredParams.size(); i++)
+		{
+			Parameter* p = (Parameter*)outValuesCC.controllables[i];
+			if (p->type == Parameter::ENUM) ((EnumParameter*)p)->setValueWithKey(((EnumParameter*)filteredParams[i])->getValueKey());
+			else p->setValue(filteredParams[i]->value);
+		}
+
 		om.updateOutputValues();
 		isProcessing = false;
 	}

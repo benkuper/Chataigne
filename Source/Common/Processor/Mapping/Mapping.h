@@ -30,6 +30,8 @@ public:
 	MappingFilterManager fm;
 	MappingOutputManager om;
 
+	ControllableContainer outValuesCC;
+
 	BoolParameter* continuousProcess;
 
 	enum ProcessMode { VALUE_CHANGE, MANUAL, TIMER };
