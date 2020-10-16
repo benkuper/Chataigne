@@ -32,6 +32,7 @@ GamepadModule::GamepadModule(const String & name) :
 
 GamepadModule::~GamepadModule()
 {
+	gamepadParam->setGamepad(nullptr);
 	if(InputSystemManager::getInstanceWithoutCreating() != nullptr) InputSystemManager::getInstance()->removeInputManagerListener(this);
 }
 

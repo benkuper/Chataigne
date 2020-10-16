@@ -31,7 +31,7 @@ JoystickParameterUI::~JoystickParameterUI()
 
 WeakReference<Joystick> JoystickParameterUI::getJoystick()
 {
-	return joysticks[chooser.getSelectedId()-1];
+	return chooser.getSelectedId() > 0 ? joysticks[chooser.getSelectedId() - 1] : nullptr;
 }
 
 void JoystickParameterUI::rebuild()
@@ -40,6 +40,7 @@ void JoystickParameterUI::rebuild()
 
 	chooser.clear(dontSendNotification);
 	chooser.setTextWhenNothingSelected(joystickParam->ghostName.isNotEmpty() ? joystickParam->ghostName + " disconnected" : "Select a joystick");
+	chooser.addItem("Not connected", -2);
 
 	if (InputSystemManager::getInstance()->joysticks.size() == 0) return;
 
@@ -78,7 +79,15 @@ void JoystickParameterUI::newMessage(const InputSystemManager::InputSystemEvent 
 
 void JoystickParameterUI::comboBoxChanged(ComboBox *)
 {
-	if (!parameter.wasObjectDeleted()) joystickParam->setJoystick(getJoystick());
+	if (!parameter.wasObjectDeleted())
+	{
+		if (chooser.getSelectedId() == -2)
+		{
+			joystickParam->ghostID = SDL_JoystickGUID();
+			joystickParam->ghostName = "";
+		}
+		if (!parameter.wasObjectDeleted()) joystickParam->setJoystick(getJoystick());
+	}
 }
 
 
@@ -103,7 +112,7 @@ GamepadParameterUI::~GamepadParameterUI()
 
 WeakReference<Gamepad> GamepadParameterUI::getGamepad()
 {
-	return gamepads[chooser.getSelectedId()-1];
+	return chooser.getSelectedId() > 0 ? gamepads[chooser.getSelectedId() - 1] : nullptr;
 }
 
 void GamepadParameterUI::rebuild()
@@ -112,6 +121,7 @@ void GamepadParameterUI::rebuild()
 
 	chooser.clear(dontSendNotification);
 	chooser.setTextWhenNothingSelected(gamepadParam->ghostName.isNotEmpty()?gamepadParam->ghostName+" disconnected":"Select a gamepad");
+	chooser.addItem("Not connected", -2);
 
 	if (InputSystemManager::getInstance()->gamepads.size() == 0) return;
 
@@ -154,7 +164,15 @@ void GamepadParameterUI::newMessage(const InputSystemManager::InputSystemEvent &
 	}
 }
 
-void GamepadParameterUI::comboBoxChanged(ComboBox *)
+void GamepadParameterUI::comboBoxChanged(ComboBox * c)
 {
-	if (!parameter.wasObjectDeleted()) gamepadParam->setGamepad(getGamepad());
+	if (!parameter.wasObjectDeleted())
+	{
+		if (chooser.getSelectedId() == -2)
+		{
+			gamepadParam->ghostID = SDL_JoystickGUID();
+			gamepadParam->ghostName = "";
+		}
+		gamepadParam->setGamepad(getGamepad());
+	}
 }

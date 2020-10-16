@@ -30,6 +30,7 @@ JoystickModule::JoystickModule(const String & name) :
 
 JoystickModule::~JoystickModule()
 {
+	joystickParam->setJoystick(nullptr);
 	if (InputSystemManager::getInstanceWithoutCreating() != nullptr) InputSystemManager::getInstance()->removeInputManagerListener(this);
 }
 
