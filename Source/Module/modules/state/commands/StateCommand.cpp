@@ -89,8 +89,11 @@ void StateCommand::triggerInternal()
 		break;
 
 	case SET_TOGGLE_STATE:
-		((StandardCondition*)target->targetContainer.get())->isValid->setValue(enableVal->boolValue());
-		break;
+	{
+		BaseComparator* bc = (((StandardCondition*)target->targetContainer.get())->comparator.get());
+		if(bc != nullptr) bc->forceToggleState(enableVal->boolValue());
+	}
+	break;
 
 	case SET_MAPPING_ENABLED:
 		((Mapping *)target->targetContainer.get())->enabled->setValue(enableVal->boolValue());

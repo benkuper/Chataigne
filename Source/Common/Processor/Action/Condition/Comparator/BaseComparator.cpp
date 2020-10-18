@@ -53,6 +53,13 @@ void BaseComparator::setValid(bool value)
 	comparatorListeners.call(&ComparatorListener::comparatorValidationChanged, this);
 }
 
+void BaseComparator::forceToggleState(bool value)
+{
+	isValid = value;
+	rawIsValid = value;
+	comparatorListeners.call(&ComparatorListener::comparatorValidationChanged, this);
+}
+
 void BaseComparator::addCompareOption(const String & name, const Identifier & func)
 {
 	compareFunction->addOption(name, var(func.toString()));

@@ -25,6 +25,8 @@ public:
 	bool rawIsValid; //for toggle behaviour
 	void setValid(bool value);
 
+	void forceToggleState(bool value);
+
 	Controllable * source;
 	Controllable * reference;
 	EnumParameter * compareFunction;
