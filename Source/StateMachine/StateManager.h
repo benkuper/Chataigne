@@ -13,7 +13,10 @@
 #include "State/State.h"
 #include "Transition/StateTransitionManager.h"
 #include "Module/modules/state/StateModule.h"
-#include "Common/Processor/Mapping/Mapping.h"
+
+class Action;
+class Mapping;
+class StandardCondition;
 
 class StateManager :
 	public BaseManager<State>,
@@ -54,11 +57,9 @@ public:
 	void itemsRemoved(Array<StateTransition*> s) override;
 
 	static State * showMenuAndGetState();
-	State * getStateForItemID(int itemID);
 	static Action * showMenuAndGetAction();
-	Action * getActionForItemID(int itemID);
 	static Mapping * showMenuAndGetMapping();
-	Mapping * getMappingForItemID(int itemID);
+	static StandardCondition * showMenuAndGetToggleCondition();
 
 
 	Array<State *> getLinkedStates(State * s, Array<State *> * statesToAvoid = nullptr);

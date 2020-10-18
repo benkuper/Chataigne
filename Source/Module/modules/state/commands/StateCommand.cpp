@@ -10,39 +10,47 @@
 
 #include "StateCommand.h"
 #include "StateMachine/StateManager.h"
+#include "Common/Processor/Action/Condition/conditions/StandardCondition/StandardCondition.h"
 
 StateCommand::StateCommand(StateModule * _module, CommandContext context, var params) :
 	BaseCommand(_module,context,params),
-	stateModule(_module)
+	stateModule(_module),
+	enableVal(nullptr)
 {
 	target = addTargetParameter("Target", "Target for the command");
 	target->targetType = TargetParameter::CONTAINER;
-	actionType = (ActionType)(int)params.getProperty("type", ACTIVATE_STATE);
+	actionType = (ActionType)(int)params.getProperty("type", SET_STATE_ACTIVATION);
 
 	switch (actionType)
 	{
-	case ACTIVATE_STATE:
-	case DEACTIVATE_STATE:
+	case SET_STATE_ACTIVATION:
 	case TOGGLE_STATE:
 		target->customGetTargetContainerFunc = &StateManager::showMenuAndGetState;
 		target->defaultParentLabelLevel = 0;
 		break;
 
 	case TRIGGER_ACTION:
-	case ENABLE_ACTION:
-	case DISABLE_ACTION:
+	case SET_ACTION_ENABLED:
 	case TOGGLE_ACTION:
 		target->customGetTargetContainerFunc = &StateManager::showMenuAndGetAction;
 		target->defaultParentLabelLevel = 1;
 		break;
 
-	case ENABLE_MAPPING:
-	case DISABLE_MAPPING:
+	case SET_TOGGLE_STATE:
+		target->customGetTargetContainerFunc = &StateManager::showMenuAndGetToggleCondition;
+		target->defaultParentLabelLevel = 2;
+		break;
+
+	case SET_MAPPING_ENABLED:
 	case TOGGLE_MAPPING:
 		target->customGetTargetContainerFunc = &StateManager::showMenuAndGetMapping;
 		target->defaultParentLabelLevel = 1;
 		break;
+	}
 
+	if (actionType == SET_STATE_ACTIVATION || actionType == SET_ACTION_ENABLED || actionType == SET_TOGGLE_STATE || actionType == SET_MAPPING_ENABLED)
+	{
+		enableVal = addBoolParameter("Value", "The activation / enable state to set this element to.", true);
 	}
 }
 
@@ -59,12 +67,8 @@ void StateCommand::triggerInternal()
 	
 	switch (actionType)
 	{
-	case ACTIVATE_STATE:
-		((State *)target->targetContainer.get())->active->setValue(true);
-		break;
-
-	case DEACTIVATE_STATE:
-		((State *)target->targetContainer.get())->active->setValue(false);
+	case SET_STATE_ACTIVATION:
+		((State *)target->targetContainer.get())->active->setValue(enableVal->boolValue());
 		break;
 
 	case TOGGLE_STATE:
@@ -75,24 +79,20 @@ void StateCommand::triggerInternal()
 		((Action *)target->targetContainer.get())->triggerOn->trigger();
 		break;
 
-	case ENABLE_ACTION:
-		((Action *)target->targetContainer.get())->enabled->setValue(true);
-		break;
-
-	case DISABLE_ACTION:
-		((Action *)target->targetContainer.get())->enabled->setValue(false);
+	case SET_ACTION_ENABLED:
+		((Action *)target->targetContainer.get())->enabled->setValue(enableVal->boolValue());
 		break;
 
 	case TOGGLE_ACTION:
 		((Action *)target->targetContainer.get())->enabled->setValue(!((Action *)target->targetContainer.get())->enabled->boolValue());
 		break;
 
-	case ENABLE_MAPPING:
-		((Mapping *)target->targetContainer.get())->enabled->setValue(true);
+	case SET_TOGGLE_STATE:
+		((StandardCondition*)target->targetContainer.get())->isValid->setValue(enableVal->boolValue());
 		break;
 
-	case DISABLE_MAPPING:
-		((Mapping *)target->targetContainer.get())->enabled->setValue(false);
+	case SET_MAPPING_ENABLED:
+		((Mapping *)target->targetContainer.get())->enabled->setValue(enableVal->boolValue());
 		break;
 
 	case TOGGLE_MAPPING:

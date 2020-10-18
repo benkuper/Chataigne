@@ -22,12 +22,13 @@ public:
 	StateCommand(StateModule * _module, CommandContext context, var params);
 	virtual ~StateCommand();
 
-	enum ActionType { ACTIVATE_STATE, DEACTIVATE_STATE, TOGGLE_STATE, TRIGGER_ACTION, ENABLE_ACTION, DISABLE_ACTION, TOGGLE_ACTION, ENABLE_MAPPING, DISABLE_MAPPING, TOGGLE_MAPPING };
+	enum ActionType { SET_STATE_ACTIVATION, TOGGLE_STATE, TRIGGER_ACTION, SET_ACTION_ENABLED, TOGGLE_ACTION, SET_TOGGLE_STATE, SET_MAPPING_ENABLED, TOGGLE_MAPPING };
 
 	ActionType actionType;
 	StateModule * stateModule;
 
 	TargetParameter * target;
+	BoolParameter* enableVal;
 
 	void triggerInternal() override;
 

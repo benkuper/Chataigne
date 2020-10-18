@@ -9,6 +9,9 @@
 */
 
 #include "StateManager.h"
+#include "Common/Processor/Action/Action.h"
+#include "Common/Processor/Mapping/Mapping.h"
+#include "Common/Processor/Action/Condition/conditions/StandardCondition/StandardCondition.h"
 
 juce_ImplementSingleton(StateManager)
 
@@ -181,78 +184,100 @@ State * StateManager::showMenuAndGetState()
 	}
 
 	int result = menu.show();
-	return sm->getStateForItemID(result);
-}
-
-
-State * StateManager::getStateForItemID(int itemID)
-{
-	if (itemID <= 0 || itemID > items.size()) return nullptr;
-	return items[itemID-1];
+	if (result <= 0) return nullptr;
+	return sm->items[result - 1];
 }
 
 Action * StateManager::showMenuAndGetAction()
 {
 	PopupMenu menu;
 	StateManager * sm = StateManager::getInstance();
-	for (int i = 0; i < sm->items.size(); ++i)
+
+	Array<Action*> actions;
+
+	for (auto & s : sm->items)
 	{
 		PopupMenu sMenu;
-		int numValues = sm->items[i]->pm.items.size();
-		for (int j = 0; j < numValues; j++)
+		for (auto & p : s->pm.items)
 		{
-			if (sm->items[i]->pm.items[j]->type == Processor::ACTION)
+			if (p->type == Processor::ACTION)
 			{
-				Action * c = (Action *)(sm->items[i]->pm.items[j]);
-				sMenu.addItem(i * 1000 + j + 1, c->niceName);
+				actions.add((Action*)p);
+				sMenu.addItem(actions.size(), p->niceName);
 			}
 		}
-		menu.addSubMenu(sm->items[i]->niceName, sMenu);
+		menu.addSubMenu(s->niceName, sMenu);
 	}
 
 	int result = menu.show();
-	return sm->getActionForItemID(result);
-}
-
-Action * StateManager::getActionForItemID(int itemID)
-{
-	if (itemID <= 0) return nullptr;
-	int stateIndex = (int)floor((itemID - 1) / 1000);
-	int actionIndex = (itemID - 1) % 1000;
-	return (Action *)(items[stateIndex]->pm.items[actionIndex]);
+	if (result <= 0) return nullptr;
+	return actions[result-1];
 }
 
 Mapping * StateManager::showMenuAndGetMapping()
 {
 	PopupMenu menu;
-	StateManager * sm = StateManager::getInstance();
-	for (int i = 0; i < sm->items.size(); ++i)
+	StateManager* sm = StateManager::getInstance();
+
+	Array<Mapping*> mappings;
+
+	for (auto& s : sm->items)
 	{
 		PopupMenu sMenu;
-		int numValues = sm->items[i]->pm.items.size();
-		for (int j = 0; j < numValues; j++)
+		for (auto& p : s->pm.items)
 		{
-			if (sm->items[i]->pm.items[j]->type == Processor::MAPPING)
+			if (p->type == Processor::MAPPING)
 			{
-				Mapping * c = (Mapping *)(sm->items[i]->pm.items[j]);
-				sMenu.addItem(i * 1000 + j + 1, c->niceName);
+				mappings.add((Mapping*)p);
+				sMenu.addItem(mappings.size(), p->niceName);
 			}
-			
 		}
-		menu.addSubMenu(sm->items[i]->niceName, sMenu);
+		menu.addSubMenu(s->niceName, sMenu);
 	}
 
 	int result = menu.show();
-	return sm->getMappingForItemID(result);
+	if (result <= 0) return nullptr;
+	return mappings[result - 1];
 }
 
-Mapping * StateManager::getMappingForItemID(int itemID)
+StandardCondition* StateManager::showMenuAndGetToggleCondition()
 {
-	if (itemID <= 0) return nullptr;
-	int stateIndex = (int)floor((itemID - 1) / 1000);
-	int mappingIndex = (itemID - 1) % 1000;
-	return (Mapping *)(items[stateIndex]->pm.items[mappingIndex]);
+	PopupMenu menu;
+	StateManager* sm = StateManager::getInstance();
+
+	Array<StandardCondition*> conditions;
+
+	for (auto& s : sm->items)
+	{
+		PopupMenu sMenu;
+		for (auto& p : s->pm.items)
+		{
+			if (p->type == Processor::ACTION)
+			{
+				Action* a = (Action*)p;
+				PopupMenu aMenu;
+				for (auto& c : a->cdm.items)
+				{
+					if (StandardCondition* sc = dynamic_cast<StandardCondition*>(c))
+					{
+						if (sc->comparator != nullptr && sc->comparator->toggleMode->boolValue())
+						{
+							conditions.add(sc);
+							aMenu.addItem(conditions.size(), sc->niceName);
+						}
+					}
+				}
+				sMenu.addSubMenu(a->niceName,  aMenu);
+			}
+		}
+		menu.addSubMenu(s->niceName, sMenu);
+	}
+
+	int result = menu.show();
+	if (result <= 0) return nullptr;
+	return conditions[result - 1];
 }
+
 
 Array<State *> StateManager::getLinkedStates(State * s, Array<State *> * statesToAvoid)
 {
