@@ -15,6 +15,7 @@
 #include "Common/Processor/Action/Consequence/Consequence.h"
 #include "CustomVariables/CVGroup.h"
 #include "../Action/Condition/conditions/StandardCondition/StandardCondition.h"
+#include "Common/Processor/Mapping/Mapping.h"
 
 ProcessorManagerUI::ProcessorManagerUI(ProcessorManager * _manager) :
 	BaseManagerUI("Processors", _manager)
