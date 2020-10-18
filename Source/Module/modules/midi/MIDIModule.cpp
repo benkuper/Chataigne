@@ -23,7 +23,6 @@ MIDIModule::MIDIModule(const String & name, bool _useGenericControls) :
     useGenericControls(_useGenericControls)
 	
 {
-	setupIOConfiguration(true, true);
 	canHandleRouteValues = true;
 	includeValuesInSave = true;
 
@@ -68,15 +67,13 @@ MIDIModule::MIDIModule(const String & name, bool _useGenericControls) :
 	valuesCC.customUserCreateControllableFunc = &MIDIModule::showMenuAndCreateValue;
 	alwaysShowValues = true;
 
-	setupIOConfiguration(inputDevice != nullptr, outputDevice != nullptr);
 
-	if (hasInput)
-	{
-		thruManager.reset(new ControllableContainer("Pass-through"));
-		thruManager->userCanAddControllables = true;
-		thruManager->customUserCreateControllableFunc = &MIDIModule::createThruControllable;
-		moduleParams.addChildControllableContainer(thruManager.get());
-	}
+	thruManager.reset(new ControllableContainer("Pass-through"));
+	thruManager->userCanAddControllables = true;
+	thruManager->customUserCreateControllableFunc = &MIDIModule::createThruControllable;
+	moduleParams.addChildControllableContainer(thruManager.get());	
+	
+	setupIOConfiguration(inputDevice != nullptr, outputDevice != nullptr);
 }
 
 MIDIModule::~MIDIModule()
