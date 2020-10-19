@@ -23,7 +23,9 @@
 MappingLayer::MappingLayer(const String &name, Sequence *_sequence, var params) :
 	SequenceLayer(_sequence, name),
 	mappingInputSource(nullptr),
-	mappingInput(nullptr)
+	mappingInput(nullptr),
+	alwaysUpdate(nullptr),
+	sendOnSeek(nullptr)
 {
 	canInspectChildContainers = true;
 	saveAndLoadRecursiveData = true;
@@ -146,7 +148,7 @@ void MappingLayer::onExternalParameterRangeChanged(Parameter* p)
 
 void MappingLayer::sequenceCurrentTimeChanged(Sequence * s, float prevTime, bool evaluateSkippedData)
 {
-	if (!enabled->boolValue() || !sequence->enabled->boolValue()) return;
+	if (!enabled->boolValue() || !sequence->enabled->boolValue() || alwaysUpdate == nullptr || sendOnSeek == nullptr) return;
 
 	sequenceCurrentTimeChangedInternal(s, prevTime, evaluateSkippedData);
 
