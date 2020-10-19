@@ -33,6 +33,7 @@ CustomValuesCommandArgument::CustomValuesCommandArgument(const String &name, Par
 	
 	param->forceSaveValue = true;
 	param->saveValueOnly = !templateMode;
+	param->forceSaveRange = true;
 	
 	if (templateMode)
 	{
@@ -62,11 +63,7 @@ CustomValuesCommandArgument::~CustomValuesCommandArgument()
 var CustomValuesCommandArgument::getJSONData()
 {
 	var data = BaseItem::getJSONData();
-	if (param->isOverriden)
-	{
-		
-		data.getDynamicObject()->setProperty("param", param->getJSONData());
-	}
+	data.getDynamicObject()->setProperty("param", param->getJSONData());
 	return data;
 }
 
