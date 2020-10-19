@@ -24,12 +24,30 @@ public:
 	ZeroconfManager();
 	~ZeroconfManager();
 
-	struct ServiceInfo
+	class ServiceInfo
 	{
+	public:
+		ServiceInfo(StringRef name, StringRef host, StringRef ip, int port, const HashMap<String, String>& _keys);
+
 		String name;
 		String host;
 		String ip;
 		int port;
+		HashMap<String, String> keys;
+
+		void setKeys(const HashMap<String, String>& _keys)
+		{
+			keys.clear();
+			HashMap<String, String>::Iterator i(_keys);
+			while (i.next()) keys.set(i.getKey(), i.getValue());
+		}
+
+		void addKey(String key, String value) { keys.set(key, value); }
+		String getKey(String key) { return keys.contains(key) ? keys[key] : ""; }
+
+
+		JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ServiceInfo)
+
 	};
 
 	class ZeroconfSearcher
@@ -44,17 +62,29 @@ public:
 		OwnedArray<ServiceInfo> services;
 
 		bool search();
-		String getIPForHostAndPort(String host, int port);
 
 		ServiceInfo * getService(StringRef name, StringRef host, int port);
-		void addService(StringRef name, StringRef host, StringRef ip, int port);
+		void addService(StringRef name, StringRef host, StringRef ip, int port, const HashMap<String, String> & keys = HashMap<String, String>());
 		void removeService(ServiceInfo * service);
-		void updateService(ServiceInfo * service, StringRef host, StringRef ip, int port);
+		void updateService(ServiceInfo * service, StringRef host, StringRef ip, int port, const HashMap<String, String>  &keys = HashMap<String, String>());
+
+		class SearcherListener
+		{
+		public:
+			virtual ~SearcherListener() {}
+			virtual void serviceAdded(ServiceInfo* service) {};
+			virtual void serviceUpdated(ServiceInfo* service) {};
+			virtual void serviceRemoved(ServiceInfo* service) {};
+		};
+
+		ListenerList<SearcherListener> listeners;
+		void addSearcherListener(SearcherListener* newListener) { listeners.add(newListener); }
+		void removeSearcherListener(SearcherListener* listener) { listeners.remove(listener); }
 	};
 
 	OwnedArray<ZeroconfSearcher, CriticalSection> searchers;
 
-	void addSearcher(StringRef name, StringRef serviceName);
+	ZeroconfSearcher * addSearcher(StringRef name, StringRef serviceName);
 	void removeSearcher(StringRef name);
 
 	ZeroconfSearcher * getSearcher(StringRef name);
