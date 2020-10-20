@@ -30,8 +30,9 @@ ZeroconfManager::ZeroconfManager() :
 
 ZeroconfManager::~ZeroconfManager()
 {
+	for (auto& s : searchers) s->servus.endBrowsing();
 	signalThreadShouldExit();
-	waitForThreadToExit(5000);
+	waitForThreadToExit(3000);
 }
 
 ZeroconfManager::ZeroconfSearcher* ZeroconfManager::addSearcher(StringRef name, StringRef serviceName)
@@ -118,7 +119,11 @@ void ZeroconfManager::run()
 	bool changed = false;
 
 	searchers.getLock().enter();
-	for (auto& se : searchers)  changed |= se->search();
+	for (auto& se : searchers)
+	{
+		if (threadShouldExit()) return;
+		changed |= se->search();
+	}
 	searchers.getLock().exit();
 
 	if (changed) zeroconfAsyncNotifier.addMessage(new ZeroconfEvent(ZeroconfEvent::SERVICES_CHANGED));
@@ -143,6 +148,7 @@ bool ZeroconfManager::ZeroconfSearcher::search()
 	Strings instances = servus.discover(Servus::Interface::IF_ALL, 200);
 	bool changed = false;
 
+	if (Thread::getCurrentThread()->threadShouldExit()) return false;
 
 	StringArray servicesArray;
 	for (auto& s : instances)  servicesArray.add(s);
