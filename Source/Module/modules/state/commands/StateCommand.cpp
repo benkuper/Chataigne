@@ -52,6 +52,7 @@ StateCommand::StateCommand(StateModule * _module, CommandContext context, var pa
 	if (actionType == SET_STATE_ACTIVATION || actionType == SET_ACTION_ENABLED || actionType == SET_TOGGLE_STATE || actionType == SET_MAPPING_ENABLED)
 	{
 		enableVal = addBoolParameter("Value", "The activation / enable state to set this element to.", true);
+		addTargetMappingParameterAt(enableVal, 0);
 	}
 }
 

@@ -18,15 +18,15 @@ StateModule::StateModule(StateManager * _manager) :
 	Module("State Machine"),
 	manager(_manager)
 {
-	defManager->add(getBaseStateCommand("State", "Set State Activation", CommandContext::ACTION, StateCommand::SET_STATE_ACTIVATION));
+	defManager->add(getBaseStateCommand("State", "Set State Activation", CommandContext::BOTH, StateCommand::SET_STATE_ACTIVATION));
 	defManager->add(getBaseStateCommand("State", "Toggle State", CommandContext::ACTION, StateCommand::TOGGLE_STATE));
 
 	defManager->add(getBaseStateCommand("Action", "Trigger Action", CommandContext::ACTION, StateCommand::TRIGGER_ACTION));
-	defManager->add(getBaseStateCommand("Action", "Set Action Enabled", CommandContext::ACTION, StateCommand::SET_ACTION_ENABLED));
+	defManager->add(getBaseStateCommand("Action", "Set Action Enabled", CommandContext::BOTH, StateCommand::SET_ACTION_ENABLED));
 	defManager->add(getBaseStateCommand("Action", "Toggle Action", CommandContext::ACTION, StateCommand::TOGGLE_ACTION));
-	defManager->add(getBaseStateCommand("Action", "Set Condition Toggle State", CommandContext::ACTION, StateCommand::SET_TOGGLE_STATE));
+	defManager->add(getBaseStateCommand("Action", "Set Condition Toggle State", CommandContext::BOTH, StateCommand::SET_TOGGLE_STATE));
 
-	defManager->add(getBaseStateCommand("Mapping", "Set Mapping Enabled", CommandContext::ACTION, StateCommand::SET_MAPPING_ENABLED));
+	defManager->add(getBaseStateCommand("Mapping", "Set Mapping Enabled", CommandContext::BOTH, StateCommand::SET_MAPPING_ENABLED));
 	defManager->add(getBaseStateCommand("Mapping", "Toggle Mapping", CommandContext::ACTION, StateCommand::TOGGLE_MAPPING));
 }
 
