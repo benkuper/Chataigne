@@ -45,10 +45,10 @@ void MathFilter::setupParametersInternal()
 			opValueData = operationValue->getJSONData();
 			filterParams.removeControllable(operationValue);
 		}
-		bool sameType = operationValue != nullptr && sourceParams[0]->type == operationValue->type;
+		bool loadLastData = (operationValue == nullptr && opValueData.isObject()) || sourceParams[0]->type == operationValue->type;
 		operationValue = (Parameter*)ControllableFactory::createControllable(sourceParams[0]->getTypeString());
 		operationValue->setNiceName("Value");
-		if(sameType) operationValue->loadJSONData(opValueData);
+		if(loadLastData) operationValue->loadJSONData(opValueData);
 		operationValue->isSavable = false;
 		filterParams.addParameter(operationValue);
 	}
@@ -173,7 +173,17 @@ float MathFilter::getProcessedValue(float val, int index)
 	Operation o = operation->getValueDataAsEnum<Operation>();
 	
 	float oVal = 0;
-	if (operationValue != nullptr && operationValue->value.size() > 0) oVal = (index == -1 && !operationValue->isComplex())? operationValue->floatValue() : (float)operationValue->value[index%operationValue->value.size()];
+	if (operationValue != nullptr)
+	{
+		if (!operationValue->isComplex())
+		{
+			oVal = operationValue->floatValue();
+		}
+		else
+		{
+			oVal = (float)operationValue->value[(index + operationValue->value.size()) % operationValue->value.size()];
+		}
+	}
 
 	if ((o == DIVIDE || o == MODULO) && oVal == 0) return 0;
 
@@ -209,7 +219,6 @@ var MathFilter::getJSONData()
 
 void MathFilter::loadJSONDataInternal(var data)
 {
-	MappingFilter::loadJSONDataInternal(data);
 	opValueData = data.getProperty("operationValue", var());
-	
+	MappingFilter::loadJSONDataInternal(data);
 }
