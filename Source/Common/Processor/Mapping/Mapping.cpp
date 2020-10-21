@@ -31,6 +31,8 @@ Mapping::Mapping(bool canBeDisabled) :
 	addChildControllableContainer(&im);
 	addChildControllableContainer(&fm);
 	addChildControllableContainer(&om);
+	
+	outValuesCC.hideInEditor = true;
 	addChildControllableContainer(&outValuesCC);
 
 	fm.addFilterManagerListener(this);
