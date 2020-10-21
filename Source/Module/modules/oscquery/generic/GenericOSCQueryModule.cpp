@@ -419,10 +419,10 @@ void GenericOSCQueryModule::dataReceived(const MemoryBlock& data)
 {
 	if (logIncomingData->boolValue())
 	{
-		NLOG(niceName, "Websocket data received : " << data.getSize() << " bytes");
+		NLOG(niceName, "Websocket data received : " << (int)data.getSize() << " bytes");
 	}
 
-	OSCPacketParser parser(data.getData(), data.getSize());
+	OSCPacketParser parser(data.getData(), (int)data.getSize());
 	OSCMessage m = parser.readMessage();
 	if (m.isEmpty())
 	{
