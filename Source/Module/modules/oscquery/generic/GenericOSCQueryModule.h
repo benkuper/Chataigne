@@ -12,6 +12,19 @@
 
 #include "Module/Module.h"
 
+
+class GenericOSCQueryValueContainer :
+	public ControllableContainer
+{
+public:
+	GenericOSCQueryValueContainer(const String &name);
+	~GenericOSCQueryValueContainer();
+
+	BoolParameter* enableListen;
+
+	InspectableEditor* getEditor(bool isRoot) override;
+};
+
 class GenericOSCQueryModule;
 class OSCQueryOutput :
 	public EnablingControllableContainer
@@ -26,6 +39,7 @@ public:
 
 class GenericOSCQueryModule :
 	public Module,
+	public SimpleWebSocketClient::Listener,
 	public Thread
 {
 public:
@@ -36,6 +50,7 @@ public:
 
 	Trigger * syncTrigger;
 	BoolParameter* keepValuesOnSync;
+	StringParameter* serverName;
 
 	std::unique_ptr<OSCQueryOutput> sendCC;
 	BoolParameter * useLocal;
@@ -44,8 +59,14 @@ public:
 	IntParameter* remoteOSCPort;
 
 	OSCSender sender;
+	std::unique_ptr<SimpleWebSocketClient> wsClient;
+	bool hasListenExtension;
+	Array<String> enableListenGhostData;
 
 	var treeData; //to keep on save
+
+
+	void setupWSClient();
 
 	void sendOSCMessage(OSCMessage m);
 	void sendOSCForControllable(Controllable * c);
@@ -60,7 +81,16 @@ public:
 	virtual void fillContainerFromData(ControllableContainer * cc, var data);
 	virtual Controllable * createControllableFromData(StringRef name, var data);
 
+	void updateListenToContainer(GenericOSCQueryValueContainer* gcc);
+
 	virtual void onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c) override;
+
+	void connectionOpened() override;
+	void connectionClosed(int status, const String& reason) override;
+	void connectionError(const String& errorMessage) override;
+	
+	void dataReceived(const MemoryBlock& data) override;
+	void messageReceived(const String& message) override;
 
 
 	var getJSONData() override;
@@ -68,6 +98,8 @@ public:
 
 	// Inherited via Thread
 	virtual void run() override;
+	virtual void requestHostInfo();
+	virtual void requestStructure();
 
 	//Routing
 	class OSCQueryRouteParams :

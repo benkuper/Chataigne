@@ -46,3 +46,21 @@ void OSCQueryModuleOutputEditor::buttonClicked(Button * b)
 	EnablingControllableContainerEditor::buttonClicked(b);
 	if (b == &zeroconfMenu) showMenuAndSetupOutput();
 }
+
+GenericOSCQueryValueContainerEditor::GenericOSCQueryValueContainerEditor(GenericOSCQueryValueContainer* cc, bool isRoot) :
+	GenericControllableContainerEditor(cc, isRoot)
+{
+	enableListenUI.reset(cc->enableListen->createToggle());
+	addAndMakeVisible(enableListenUI.get());
+}
+
+GenericOSCQueryValueContainerEditor::~GenericOSCQueryValueContainerEditor()
+{
+}
+
+void GenericOSCQueryValueContainerEditor::resizedInternalHeader(Rectangle<int>& r)
+{
+	GenericControllableContainerEditor::resizedInternalHeader(r);
+	enableListenUI->setVisible(container->controllables.size() > 1);
+	enableListenUI->setBounds(r.removeFromRight(100).reduced(3));
+}

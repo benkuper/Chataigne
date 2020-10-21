@@ -45,7 +45,7 @@ void MathFilter::setupParametersInternal()
 			opValueData = operationValue->getJSONData();
 			filterParams.removeControllable(operationValue);
 		}
-		bool loadLastData = (operationValue == nullptr && opValueData.isObject()) || sourceParams[0]->type == operationValue->type;
+		bool loadLastData = (operationValue == nullptr && opValueData.isObject()) || (operationValue != nullptr && sourceParams[0]->type == operationValue->type);
 		operationValue = (Parameter*)ControllableFactory::createControllable(sourceParams[0]->getTypeString());
 		operationValue->setNiceName("Value");
 		if(loadLastData) operationValue->loadJSONData(opValueData);

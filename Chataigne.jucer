@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.7.5b18"
+<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.7.5b19"
               bundleIdentifier="benkuper.Chataigne" includeBinaryInAppConfig="1"
               companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
               companyEmail="benjamin@kuperberg.fr" defines="" splashScreenColour="Dark"
@@ -924,6 +924,8 @@
                     file="Source/Module/modules/oscquery/MadMapperModule.h"/>
             </GROUP>
             <GROUP id="{AB2CCFAF-5B6F-0D08-58C1-933226EB65A5}" name="generic">
+              <FILE id="WFK0RF" name="OSCInputHelper.h" compile="0" resource="0"
+                    file="Source/Module/modules/oscquery/generic/OSCInputHelper.h"/>
               <GROUP id="{9FBFA086-D182-6172-C899-66C4DC7A1422}" name="ui">
                 <FILE id="rmWrBv" name="OSCQueryModuleEditor.cpp" compile="1" resource="0"
                       file="Source/Module/modules/oscquery/generic/ui/OSCQueryModuleEditor.cpp"/>

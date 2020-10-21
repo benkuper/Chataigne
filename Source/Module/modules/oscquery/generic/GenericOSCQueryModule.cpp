@@ -11,27 +11,31 @@
 #include "GenericOSCQueryModule.h"
 #include "ui/OSCQueryModuleEditor.h"
 #include "GenericOSCQueryCommand.h"
+#include "OSCInputHelper.h"
 
 GenericOSCQueryModule::GenericOSCQueryModule(const String& name, int defaultRemotePort) :
 	Module(name),
 	Thread("OSCQuery"),
 	useLocal(nullptr),
 	remoteHost(nullptr),
-	remotePort(nullptr)
+	remotePort(nullptr),
+	hasListenExtension(false)
 {
 	alwaysShowValues = true;
 	canHandleRouteValues = true;
 
 	includeValuesInSave = true;
 
-	setupIOConfiguration(false, true);
+	setupIOConfiguration(true, true);
 
 	keepValuesOnSync = moduleParams.addBoolParameter("Keep Values On Sync", "If checked, this will force keeping the current values when syncing the OSCQuery remote data structure.", false);
 	syncTrigger = moduleParams.addTrigger("Sync Data", "Sync the data");
+	serverName = moduleParams.addStringParameter("Server Name", "The name of the OSCQuery server, if provided", "");
+	serverName->setControllableFeedbackOnly(true);
 
 	sendCC.reset(new OSCQueryOutput(this));
 	moduleParams.addChildControllableContainer(sendCC.get());
-
+	
 	useLocal = sendCC->addBoolParameter("Local", "Send to Local IP (127.0.0.1). Allow to quickly switch between local and remote IP.", true);
 	remoteHost = sendCC->addStringParameter("Remote Host", "Remote Host to send to.", "127.0.0.1");
 	remoteHost->autoTrim = true;
@@ -49,20 +53,25 @@ GenericOSCQueryModule::GenericOSCQueryModule(const String& name, int defaultRemo
 	sender.connect("0.0.0.0", 0);
 
 	syncTrigger->trigger();
-
-	
-
-	//Testing local file
-	/*File f = File::getSpecialLocation(File::userDesktopDirectory).getChildFile("oscquery.json");
-	var data = JSON::parse(f);
-	fillContainerFromData(&valuesCC, data);
-	*/
 }
 
 GenericOSCQueryModule::~GenericOSCQueryModule()
 {
 	signalThreadShouldExit();
 	waitForThreadToExit(2000);
+}
+
+void GenericOSCQueryModule::setupWSClient()
+{
+	if (wsClient != nullptr) wsClient->stop();
+	wsClient.reset();
+	if (isCurrentlyLoadingData) return;
+
+	if (!enabled->intValue() || !hasListenExtension) return;
+	NLOG(niceName, "Server has LISTEN extension, setting up websocket");
+	wsClient.reset(new SimpleWebSocketClient());
+	wsClient->addWebSocketListener(this);
+	wsClient->start(remoteHost->stringValue()+":"+remotePort->stringValue()+"/");
 }
 
 void GenericOSCQueryModule::sendOSCMessage(OSCMessage m)
@@ -161,16 +170,26 @@ OSCArgument GenericOSCQueryModule::varToArgument(const var& v)
 void GenericOSCQueryModule::syncData()
 {
 	startThread();
+	setupWSClient();
 }
 
 void GenericOSCQueryModule::createTreeFromData(var data)
 {
 	if (data.isVoid()) return;
 
+	enableListenGhostData.clear();
+	Array<WeakReference<ControllableContainer>> containers = valuesCC.getAllContainers(true);
+	for (auto& cc : containers)
+	{
+		if (GenericOSCQueryValueContainer* gcc = dynamic_cast<GenericOSCQueryValueContainer*>(cc.get()))
+		{
+			if (gcc->enableListen->boolValue()) enableListenGhostData.add(gcc->getControlAddress(&valuesCC));
+		}
+	}
+
 	var vData = valuesCC.getJSONData();
 	valuesCC.clear();
 	fillContainerFromData(&valuesCC, data);
-
 	if (!vData.isVoid() && keepValuesOnSync->boolValue()) valuesCC.loadJSONData(vData);
 	treeData = data;
 }
@@ -190,7 +209,7 @@ void GenericOSCQueryModule::fillContainerFromData(ControllableContainer* cc, var
 				String ccNiceName = nv.value.getProperty("DESCRIPTION", "");
 				if (ccNiceName.isEmpty()) ccNiceName = nv.name.toString();
 
-				ControllableContainer* childCC = new ControllableContainer(ccNiceName);
+				GenericOSCQueryValueContainer* childCC = new GenericOSCQueryValueContainer(ccNiceName);
 				childCC->saveAndLoadRecursiveData = true;
 				childCC->setCustomShortName(nv.name.toString());
 				fillContainerFromData(childCC, nv.value);
@@ -229,7 +248,7 @@ Controllable* GenericOSCQueryModule::createControllableFromData(StringRef name, 
 
 	if (range.size() != value.size())
 	{
-		DBG("Not the same : " << range.size() << " / " << value.size() << "\n" << data.toString());
+		//DBG("Not the same : " << range.size() << " / " << value.size() << "\n" << data.toString());
 		//NLOGWARNING(niceName, "RANGE and VALUE fields don't have the same size, skipping : " << cNiceName);
 	}
 	var minVal;
@@ -307,8 +326,6 @@ Controllable* GenericOSCQueryModule::createControllableFromData(StringRef name, 
 		c = new BoolParameter(cNiceName, cNiceName, value[0]);
 	}
 
-
-
 	if (c != nullptr)
 	{
 		c->setCustomShortName(name);
@@ -318,21 +335,108 @@ Controllable* GenericOSCQueryModule::createControllableFromData(StringRef name, 
 	return c;
 }
 
+void GenericOSCQueryModule::updateListenToContainer(GenericOSCQueryValueContainer* gcc)
+{
+	if (!enabled->boolValue() || !hasListenExtension || isCurrentlyLoadingData) return;
+	if (wsClient == nullptr || !wsClient->isConnected)
+	{
+		NLOGWARNING(niceName, "Websocket not connected, can't LISTEN");
+		return;
+	}
+
+	String command = gcc->enableListen->boolValue() ? "LISTEN" : "IGNORE";
+	Array<WeakReference<Parameter>> params = gcc->getAllParameters();
+	
+	var o(new DynamicObject());
+	o.getDynamicObject()->setProperty("COMMAND", command);
+	
+	for (auto& p : params)
+	{
+		if (p == gcc->enableListen) continue;
+		String addr = p->getControlAddress(&valuesCC);
+		o.getDynamicObject()->setProperty("DATA", addr);
+		wsClient->send(JSON::toString(o, true));
+	}
+
+}
+
 void GenericOSCQueryModule::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c)
 {
 	Module::onControllableFeedbackUpdateInternal(cc, c);
-
+	
 	if (c == useLocal)
 	{
 		remoteHost->setEnabled(!useLocal->boolValue());
 	}
-	else if (c == syncTrigger || c == remoteHost || c == remotePort)
+	else if (c == enabled || c == syncTrigger || c == remoteHost || c == remotePort)
 	{
 		syncData();
 	}
 	else if (cc == &valuesCC)
 	{
-		sendOSCForControllable(c);
+		if (GenericOSCQueryValueContainer* gcc = c->getParentAs<GenericOSCQueryValueContainer>())
+		{
+			if (c == gcc->enableListen)
+			{
+				updateListenToContainer(gcc);
+			}
+			else
+			{
+				sendOSCForControllable(c);
+			}
+		}
+		else
+		{
+			sendOSCForControllable(c);
+		}
+	}
+}
+
+void GenericOSCQueryModule::connectionOpened()
+{
+	NLOG(niceName, "Websocket connection is opened, let's get bi, baby !");
+
+	for(auto & addr : enableListenGhostData)
+	{
+		if (GenericOSCQueryValueContainer* gcc = dynamic_cast<GenericOSCQueryValueContainer*>(valuesCC.getControllableContainerForAddress(addr)))
+		{
+			gcc->enableListen->setValue(true);
+		}
+	}
+}
+
+void GenericOSCQueryModule::connectionClosed(int status, const String& reason)
+{
+	NLOG(niceName, "Websocket connection is closed, let's get bi, baby !");
+}
+
+void GenericOSCQueryModule::connectionError(const String& errorMessage)
+{
+	if (enabled->boolValue()) NLOGERROR(niceName, "Connection error " << errorMessage);
+}
+
+void GenericOSCQueryModule::dataReceived(const MemoryBlock& data)
+{
+	if (logIncomingData->boolValue())
+	{
+		NLOG(niceName, "Websocket data received : " << data.getSize() << " bytes");
+	}
+
+	OSCPacketParser parser(data.getData(), data.getSize());
+	OSCMessage m = parser.readMessage();
+	if (m.isEmpty())
+	{
+		LOGERROR("Empty message");
+		return;
+	}
+	OSCHelpers::findControllableAndHandleMessage(&valuesCC, m);
+}
+
+void GenericOSCQueryModule::messageReceived(const String& message)
+{
+	if (logIncomingData->boolValue())
+	{
+		NLOG(niceName, "Websocket message received : " << message);
 	}
 }
 
@@ -352,8 +456,15 @@ void GenericOSCQueryModule::loadJSONDataInternal(var data)
 void GenericOSCQueryModule::run()
 {
 	if (useLocal == nullptr || remoteHost == nullptr || remotePort == nullptr) return;
-	URL url("http://" + (useLocal->boolValue() ? "127.0.0.1" : remoteHost->stringValue()) + ":" + String(remotePort->intValue()));
 
+	requestHostInfo();
+	requestStructure();
+
+}
+
+void GenericOSCQueryModule::requestHostInfo()
+{
+	URL url("http://" + (useLocal->boolValue() ? "127.0.0.1" : remoteHost->stringValue()) + ":" + String(remotePort->intValue())+"?HOST_INFO");
 	StringPairArray responseHeaders;
 	int statusCode = 0;
 	std::unique_ptr<InputStream> stream(url.createInputStream(false, nullptr, nullptr, String(),
@@ -362,7 +473,52 @@ void GenericOSCQueryModule::run()
 #if JUCE_WINDOWS
 	if (statusCode != 200)
 	{
-		NLOGWARNING(niceName, "Failed to connect, status code = " + String(statusCode));
+		NLOGWARNING(niceName, "Failed to request HOST_INFO, status code = " + String(statusCode));
+		return;
+	}
+#endif
+
+	if (stream != nullptr)
+	{
+		String content = stream->readEntireStreamAsString();
+		if (logIncomingData->boolValue()) NLOG(niceName, "Request status code : " << statusCode << ", content :\n" << content);
+
+		inActivityTrigger->trigger();
+
+		var data = JSON::parse(content);
+		if (data.isObject())
+		{
+			if (logIncomingData->boolValue()) NLOG(niceName, "Received HOST_INFO :\n" << JSON::toString(data));
+
+			int oscPort = data.getProperty("OSC_PORT", remotePort->intValue());
+			if (oscPort != remotePort->intValue())
+			{
+				NLOG(niceName, "OSC_PORT is different from remotePort, setting custom OSC Port to " << oscPort);
+				remoteOSCPort->setEnabled(true);
+				remoteOSCPort->setValue(oscPort);
+			}
+
+			hasListenExtension =  data.getProperty("EXTENSIONS",var()).getProperty("LISTEN", false);
+		}
+	}
+	else
+	{
+		if (logIncomingData->boolValue()) NLOGWARNING(niceName, "Error with host info request, status code : " << statusCode << ", url : " << url.toString(true));
+	}
+}
+
+void GenericOSCQueryModule::requestStructure()
+{
+	URL url("http://" + (useLocal->boolValue() ? "127.0.0.1" : remoteHost->stringValue()) + ":" + String(remotePort->intValue()));
+	StringPairArray responseHeaders;
+	int statusCode = 0;
+	std::unique_ptr<InputStream> stream(url.createInputStream(false, nullptr, nullptr, String(),
+		2000, // timeout in millisecs
+		&responseHeaders, &statusCode));
+#if JUCE_WINDOWS
+	if (statusCode != 200)
+	{
+		NLOGWARNING(niceName, "Failed to request Structure, status code = " + String(statusCode));
 		return;
 	}
 #endif
@@ -378,6 +534,8 @@ void GenericOSCQueryModule::run()
 		var data = JSON::parse(content);
 		if (data.isObject())
 		{
+			//if (logIncomingData->boolValue()) NLOG(niceName, "Received structure :\n" << JSON::toString(data));
+
 			createTreeFromData(data);
 
 			Array<var> args;
@@ -389,7 +547,6 @@ void GenericOSCQueryModule::run()
 	{
 		if (logIncomingData->boolValue()) NLOGWARNING(niceName, "Error with request, status code : " << statusCode << ", url : " << url.toString(true));
 	}
-
 }
 
 void GenericOSCQueryModule::handleRoutedModuleValue(Controllable* c, RouteParams* p)
@@ -461,4 +618,20 @@ void GenericOSCQueryModule::OSCQueryRouteParams::onContainerParameterChanged(Par
 void GenericOSCQueryModule::OSCQueryRouteParams::inspectableDestroyed(Inspectable* i)
 {
 	if (i == cRef) setControllable(nullptr);
+}
+
+GenericOSCQueryValueContainer::GenericOSCQueryValueContainer(const String &name) :
+	ControllableContainer(name)
+{
+	enableListen = addBoolParameter("Enable Listen", "This will activate listening to this container", false);
+	enableListen->hideInEditor = true;
+}
+
+GenericOSCQueryValueContainer::~GenericOSCQueryValueContainer()
+{
+}
+
+InspectableEditor* GenericOSCQueryValueContainer::getEditor(bool isRoot)
+{
+	return new GenericOSCQueryValueContainerEditor(this, isRoot);
 }

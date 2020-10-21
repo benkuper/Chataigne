@@ -13,6 +13,18 @@
 #include "../GenericOSCQueryModule.h"
 #include "Module/ui/ModuleEditor.h"
 
+class GenericOSCQueryValueContainerEditor :
+	public GenericControllableContainerEditor
+{
+public:
+	GenericOSCQueryValueContainerEditor(GenericOSCQueryValueContainer* cc, bool isRoot);
+	~GenericOSCQueryValueContainerEditor();
+
+	std::unique_ptr<BoolToggleUI> enableListenUI;
+
+	void resizedInternalHeader(Rectangle<int>& r) override;
+};
+
 class OSCQueryModuleOutputEditor :
 	public EnablingControllableContainerEditor
 {
