@@ -51,18 +51,18 @@ public:
 	Trigger * syncTrigger;
 	BoolParameter* keepValuesOnSync;
 	StringParameter* serverName;
+	Trigger* listenAllTrigger;
 
 	std::unique_ptr<OSCQueryOutput> sendCC;
 	BoolParameter * useLocal;
 	StringParameter * remoteHost;
 	IntParameter * remotePort;
 	IntParameter* remoteOSCPort;
+	
 
 	OSCSender sender;
 	std::unique_ptr<SimpleWebSocketClient> wsClient;
 	bool hasListenExtension;
-	Array<String> enableListenGhostData;
-
 	var treeData; //to keep on save
 
 
@@ -95,6 +95,7 @@ public:
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
+	void afterLoadJSONDataInternal() override;
 
 	// Inherited via Thread
 	virtual void run() override;

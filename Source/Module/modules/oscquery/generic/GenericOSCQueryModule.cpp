@@ -32,6 +32,7 @@ GenericOSCQueryModule::GenericOSCQueryModule(const String& name, int defaultRemo
 	syncTrigger = moduleParams.addTrigger("Sync Data", "Sync the data");
 	serverName = moduleParams.addStringParameter("Server Name", "The name of the OSCQuery server, if provided", "");
 	serverName->setControllableFeedbackOnly(true);
+	listenAllTrigger = moduleParams.addTrigger("Listen to all", "This will automatically enable listen to all containers");
 
 	sendCC.reset(new OSCQueryOutput(this));
 	moduleParams.addChildControllableContainer(sendCC.get());
@@ -52,11 +53,11 @@ GenericOSCQueryModule::GenericOSCQueryModule(const String& name, int defaultRemo
 
 	sender.connect("0.0.0.0", 0);
 
-	syncTrigger->trigger();
 }
 
 GenericOSCQueryModule::~GenericOSCQueryModule()
 {
+	if (wsClient != nullptr) wsClient->stop(); 
 	signalThreadShouldExit();
 	waitForThreadToExit(2000);
 }
@@ -169,28 +170,57 @@ OSCArgument GenericOSCQueryModule::varToArgument(const var& v)
 
 void GenericOSCQueryModule::syncData()
 {
+	if (isCurrentlyLoadingData) return;
+
 	startThread();
-	setupWSClient();
 }
 
 void GenericOSCQueryModule::createTreeFromData(var data)
 {
 	if (data.isVoid()) return;
 
-	enableListenGhostData.clear();
+	Array<String> enableListenContainers;
+	Array<String> expandedContainers;
 	Array<WeakReference<ControllableContainer>> containers = valuesCC.getAllContainers(true);
-	for (auto& cc : containers)
+
+	if (!keepValuesOnSync->boolValue())
 	{
-		if (GenericOSCQueryValueContainer* gcc = dynamic_cast<GenericOSCQueryValueContainer*>(cc.get()))
+		for (auto& cc : containers)
 		{
-			if (gcc->enableListen->boolValue()) enableListenGhostData.add(gcc->getControlAddress(&valuesCC));
+			if (GenericOSCQueryValueContainer* gcc = dynamic_cast<GenericOSCQueryValueContainer*>(cc.get()))
+			{
+				if (gcc->enableListen->boolValue()) enableListenContainers.add(gcc->getControlAddress(&valuesCC));
+				if (!gcc->editorIsCollapsed) expandedContainers.add(gcc->getControlAddress(&valuesCC));
+			}
 		}
 	}
 
 	var vData = valuesCC.getJSONData();
 	valuesCC.clear();
 	fillContainerFromData(&valuesCC, data);
-	if (!vData.isVoid() && keepValuesOnSync->boolValue()) valuesCC.loadJSONData(vData);
+	if (keepValuesOnSync->boolValue())
+	{
+		if(!vData.isVoid()) valuesCC.loadJSONData(vData);
+	}
+	else
+	{
+		for (auto& addr : enableListenContainers)
+		{
+			if (GenericOSCQueryValueContainer* gcc = dynamic_cast<GenericOSCQueryValueContainer*>(valuesCC.getControllableContainerForAddress(addr)))
+			{
+				gcc->enableListen->setValue(true);
+			}
+		}
+
+		for (auto& addr : expandedContainers)
+		{
+			if (ControllableContainer * cc = valuesCC.getControllableContainerForAddress(addr))
+			{
+				cc->editorIsCollapsed = false;
+			}
+		}
+	}
+
 	treeData = data;
 }
 
@@ -390,24 +420,27 @@ void GenericOSCQueryModule::onControllableFeedbackUpdateInternal(ControllableCon
 			sendOSCForControllable(c);
 		}
 	}
+	else if (c == listenAllTrigger)
+	{
+		if (hasListenExtension)
+		{
+			Array<WeakReference<ControllableContainer>> containers = valuesCC.getAllContainers(true);
+			for (auto& cc : containers)
+			{
+				if (GenericOSCQueryValueContainer* gcc = dynamic_cast<GenericOSCQueryValueContainer*>(cc.get())) gcc->enableListen->setValue(true);
+			}
+		}
+	}
 }
 
 void GenericOSCQueryModule::connectionOpened()
 {
 	NLOG(niceName, "Websocket connection is opened, let's get bi, baby !");
-
-	for(auto & addr : enableListenGhostData)
-	{
-		if (GenericOSCQueryValueContainer* gcc = dynamic_cast<GenericOSCQueryValueContainer*>(valuesCC.getControllableContainerForAddress(addr)))
-		{
-			gcc->enableListen->setValue(true);
-		}
-	}
 }
 
 void GenericOSCQueryModule::connectionClosed(int status, const String& reason)
 {
-	NLOG(niceName, "Websocket connection is closed, let's get bi, baby !");
+	NLOG(niceName, "Websocket connection is closed, bye bye!");
 }
 
 void GenericOSCQueryModule::connectionError(const String& errorMessage)
@@ -421,6 +454,8 @@ void GenericOSCQueryModule::dataReceived(const MemoryBlock& data)
 	{
 		NLOG(niceName, "Websocket data received : " << (int)data.getSize() << " bytes");
 	}
+
+	inActivityTrigger->trigger();
 
 	OSCPacketParser parser(data.getData(), (int)data.getSize());
 	OSCMessage m = parser.readMessage();
@@ -438,6 +473,9 @@ void GenericOSCQueryModule::messageReceived(const String& message)
 	{
 		NLOG(niceName, "Websocket message received : " << message);
 	}
+
+	inActivityTrigger->trigger();
+
 }
 
 var GenericOSCQueryModule::getJSONData()
@@ -453,9 +491,17 @@ void GenericOSCQueryModule::loadJSONDataInternal(var data)
 	Module::loadJSONDataInternal(data);
 }
 
+void GenericOSCQueryModule::afterLoadJSONDataInternal()
+{
+	Module::afterLoadJSONDataInternal();
+	syncData();
+}
+
 void GenericOSCQueryModule::run()
 {
 	if (useLocal == nullptr || remoteHost == nullptr || remotePort == nullptr) return;
+
+	sleep(100); //safety
 
 	requestHostInfo();
 	requestStructure();
@@ -499,6 +545,7 @@ void GenericOSCQueryModule::requestHostInfo()
 			}
 
 			hasListenExtension =  data.getProperty("EXTENSIONS",var()).getProperty("LISTEN", false);
+			setupWSClient();
 		}
 	}
 	else
@@ -623,7 +670,7 @@ void GenericOSCQueryModule::OSCQueryRouteParams::inspectableDestroyed(Inspectabl
 GenericOSCQueryValueContainer::GenericOSCQueryValueContainer(const String &name) :
 	ControllableContainer(name)
 {
-	enableListen = addBoolParameter("Enable Listen", "This will activate listening to this container", false);
+	enableListen = addBoolParameter("Listen", "This will activate listening to this container", false);
 	enableListen->hideInEditor = true;
 }
 
