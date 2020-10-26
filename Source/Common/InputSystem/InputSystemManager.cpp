@@ -207,7 +207,7 @@ void InputSystemManager::run()
 		gamepads.getLock().exit();
 
 
-		sleep(10); //100fps
+		sleep(20); //50fps
 	}
 	
 }
