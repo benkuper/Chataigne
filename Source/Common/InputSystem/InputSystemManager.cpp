@@ -141,8 +141,6 @@ void InputSystemManager::run()
 		{
 			int numDevices = SDL_NumJoysticks();
 			
-			
-
 			for (int i = 0; i < numDevices; ++i)
 			{
 				if (SDL_IsGameController(i))
@@ -193,7 +191,7 @@ void InputSystemManager::run()
 		SDL_JoystickUpdate();
 		SDL_GameControllerUpdate();
 
-		gamepads.getLock().enter();
+		joysticks.getLock().enter();
 		for (auto& j : joysticks)
 		{
 			if (j != nullptr) j->update();
@@ -201,7 +199,7 @@ void InputSystemManager::run()
 		joysticks.getLock().exit();
 
 
-		joysticks.getLock().enter();
+		gamepads.getLock().enter();
 		for (auto& g : gamepads)
 		{
 			if (g != nullptr) g->update();
