@@ -20,30 +20,74 @@ CustomOSCModule::CustomOSCModule() :
 
 	autoAdd = moduleParams.addBoolParameter("Auto Add", "Add automatically any message that is received\nand try to create the corresponding value depending on the message content.", true);
 	splitArgs = moduleParams.addBoolParameter("Split Arguments", "If checked, a message with multiple arguments will be exploded in multliple values", false);
+	useHierarchy = moduleParams.addBoolParameter("Use Hierarchy", "If checked, incoming messages will be sorted in nested containers instead of 1-level", false);
 	autoFeedback = moduleParams.addBoolParameter("Auto Feedback", "If checked, all changed values will be automatically sent back to the outputs", false);
 
 	valuesCC.userCanAddControllables = true;
 	valuesCC.customUserCreateControllableFunc = &CustomOSCModule::showMenuAndCreateValue;
-	
-	
 }
 
 void CustomOSCModule::processMessageInternal(const OSCMessage & msg)
 {
 	if (autoAdd == nullptr) return;
 
+
+	String cNiceName = msg.getAddressPattern().toString();
+	String cShortName = cNiceName.replaceCharacters("/", "_");
+	Controllable* c = nullptr;
+	ControllableContainer* cParentContainer = &valuesCC;
+
+	if (useHierarchy->boolValue())
+	{
+		StringArray addSplit;
+		addSplit.addTokens(msg.getAddressPattern().toString(), "/", "");
+		addSplit.remove(0);
+		cNiceName = addSplit[addSplit.size() - 1];
+		cShortName = cNiceName;
+
+		addSplit.remove(addSplit.size() - 1);
+
+		if (addSplit.size() > 0)
+		{
+			cParentContainer = valuesCC.getControllableContainerForAddress(addSplit);
+			if (cParentContainer == nullptr)
+			{
+				if (autoAdd->boolValue())
+				{
+					cParentContainer = &valuesCC;
+					for (auto& s : addSplit)
+					{
+						ControllableContainer* cc = cParentContainer->getControllableContainerByName(s);
+						if (cc == nullptr)
+						{
+							cc = new ControllableContainer(s);
+							cc->saveAndLoadRecursiveData = true;
+							cc->isRemovableByUser = true;
+							cc->includeTriggersInSaveLoad = true;
+							cParentContainer->addChildControllableContainer(cc, true);
+							cParentContainer = cc;
+						}
+					}
+				}
+				else
+				{
+					return; //container not found, do nothing
+				}
+			}
+		}
+	}
+
+	//jassert(cParentContainer != nullptr);
+
 	//first we remove slashes to allow for simple controllableContainer search
-	const String cNiceName = msg.getAddressPattern().toString();
-	const String cShortName = cNiceName.replaceCharacters("/", "_");
-	Controllable * c = nullptr;
 
 
 	if(msg.size() > 1 && splitArgs->boolValue()) // Split args on multi type
 	{
 		for (int i = 0; i < msg.size(); ++i) 
 		{
-			c = valuesCC.getControllableByName(cShortName+"_"+String(i));
-			Parameter * p = (Parameter *)c;
+			c = cParentContainer->getControllableByName(cShortName+"_"+String(i));
+			Parameter* p = (Parameter*)c;
 			if (c != nullptr) //Args already exists
 			{
 				switch (c->type)
@@ -60,11 +104,11 @@ void CustomOSCModule::processMessageInternal(const OSCMessage & msg)
 				String argIAddress = cNiceName + " " + String(i);
 				if (msg[i].isInt32())
 				{
-					c = valuesCC.addIntParameter(argIAddress, "", msg[i].getInt32());
+					c = cParentContainer->addIntParameter(argIAddress, "", msg[i].getInt32());
 				} else if (msg[i].isFloat32())
 				{
-					c = valuesCC.addFloatParameter(argIAddress, "", msg[i].getFloat32());
-				} else if (msg[i].isString()) c = valuesCC.addStringParameter(argIAddress, "", msg[i].getString());
+					c = cParentContainer->addFloatParameter(argIAddress, "", msg[i].getFloat32());
+				} else if (msg[i].isString()) c = cParentContainer->addStringParameter(argIAddress, "", msg[i].getString());
 
 
 				if (c != nullptr) //Args have been sucessfully created 
@@ -78,7 +122,7 @@ void CustomOSCModule::processMessageInternal(const OSCMessage & msg)
 		}
 	} else //Standard handling of incoming messages
 	{
-		c = valuesCC.getControllableByName(cShortName);
+		c = cParentContainer->getControllableByName(cShortName);
 
 		
 		if (c != nullptr) //update existing controllable
@@ -131,7 +175,6 @@ void CustomOSCModule::processMessageInternal(const OSCMessage & msg)
 			}
 		}
 	}
-
 
 
 	//ADDING VALUE
@@ -209,8 +252,8 @@ void CustomOSCModule::processMessageInternal(const OSCMessage & msg)
 			c->saveValueOnly = false;
 			//c->setControllableFeedbackOnly(true);
 
-			valuesCC.addControllable(c);
-			valuesCC.orderControllablesAlphabetically();
+			cParentContainer->addControllable(c);
+			cParentContainer->sortControllables();
 		}
 	}
 }

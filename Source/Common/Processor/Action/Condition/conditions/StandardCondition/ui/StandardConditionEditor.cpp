@@ -39,7 +39,7 @@ void StandardConditionEditor::setCollapsed(bool value, bool force, bool animate,
 void StandardConditionEditor::resetAndBuild()
 {
 	// do nothing
-	DBG("Here reset and build");
+	//DBG("Here reset and build");
 }
 
 void StandardConditionEditor::resizedInternalHeaderItemInternal(Rectangle<int> & r)

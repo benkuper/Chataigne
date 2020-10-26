@@ -15,14 +15,17 @@
 #include "Module/ModuleManager.h"
 #include "Module/Routing/ModuleRouter.h"
 
+MIDIValueComparator MIDIModule::midiValueComparator;
+
 MIDIModule::MIDIModule(const String & name, bool _useGenericControls) :
 	Module(name),
 	manualAddMode(false),
     inputDevice(nullptr),
 	outputDevice(nullptr),
     useGenericControls(_useGenericControls)
-	
 {
+	valuesCC.customControllableComparator = &MIDIModule::midiValueComparator;
+
 	canHandleRouteValues = true;
 	includeValuesInSave = true;
 
@@ -40,6 +43,7 @@ MIDIModule::MIDIModule(const String & name, bool _useGenericControls) :
 		defManager->add(CommandDefinition::createDef(this, "", "After Touch", &MIDINoteAndCCCommand::create)->addParam("type", (int)MIDINoteAndCCCommand::AFTER_TOUCH));
 	}
 	
+	useHierarchy = moduleParams.addBoolParameter("Use Hierarchy", "If checked, incoming messages will be sorted in nested containers instead of 1-level", false);
 	autoFeedback = moduleParams.addBoolParameter("Auto Feedback", "If checked, all changed values will be resent automatically to the outputs", false);
 
 	midiParam = new MIDIDeviceParameter("Devices");
@@ -476,18 +480,70 @@ var MIDIModule::sendAfterTouchFromScript(const var::NativeFunctionArgs& args)
 
 void MIDIModule::updateValue(const int & channel, const String & n, const int & val, const MIDIValueParameter::Type & type, const int & pitchOrNumber)
 {
-	const String nWithChannel = "[" + String(channel) + "] " + n;
-	Parameter * p = dynamic_cast<Parameter *>(valuesCC.getControllableByName(nWithChannel,true));
+	ControllableContainer* cParentContainer = &valuesCC;
+
+	String pName = n;
+
+	if (useHierarchy->boolValue())
+	{
+		ControllableContainer* channelContainer = valuesCC.getControllableContainerByName("Channel " + String(channel), true);
+		if (channelContainer == nullptr)
+		{
+			if (!autoAdd->boolValue()) return;
+
+			channelContainer = new ControllableContainer("Channel " + String(channel));
+			channelContainer->saveAndLoadRecursiveData = true;
+			channelContainer->isRemovableByUser = true;
+			valuesCC.addChildControllableContainer(channelContainer, true);
+		}
+
+		String typeName;
+		switch (type)
+		{
+		case MIDIValueParameter::NOTE_ON:
+		case MIDIValueParameter::NOTE_OFF:
+			typeName = "Notes";
+			break;
+
+		case MIDIValueParameter::CONTROL_CHANGE:
+			typeName = "Control Change";
+			break;
+
+		default:
+			typeName = "Other";
+		}
+
+		ControllableContainer* typeContainer = channelContainer->getControllableContainerByName(typeName, true);
+		if (typeContainer == nullptr)
+		{
+			if (!autoAdd->boolValue()) return;
+
+			typeContainer = new ControllableContainer(typeName);
+			typeContainer->saveAndLoadRecursiveData = true;
+			typeContainer->isRemovableByUser = true;
+			typeContainer->customControllableComparator = &MIDIModule::midiValueComparator;
+			channelContainer->addChildControllableContainer(typeContainer, true);
+		}
+
+		cParentContainer = typeContainer;
+	}
+	else
+	{
+		pName = "[" + String(channel) + "] " + n;
+	}
+	
+	Parameter * p = dynamic_cast<Parameter *>(cParentContainer->getControllableByName(pName,true));
+
 	if (p == nullptr)
 	{
 		if (autoAdd->boolValue() || manualAddMode)
 		{
-			p = new MIDIValueParameter(nWithChannel, "Channel "+String(channel)+" : "+n, 0, channel, pitchOrNumber, type);
+			p = new MIDIValueParameter(pName, "Channel "+String(channel)+" : "+n, 0, channel, pitchOrNumber, type);
 			p->setValue(val);
 			p->isRemovableByUser = true;
 			p->saveValueOnly = false;
-			valuesCC.addParameter(p);
-			valuesCC.orderControllablesAlphabetically();
+			cParentContainer->addParameter(p);
+			cParentContainer->sortControllables();
 		}
 	}
 	else if(!manualAddMode)
@@ -560,7 +616,7 @@ void MIDIModule::createThruControllable(ControllableContainer* cc)
 void MIDIModule::loadJSONDataInternal(var data)
 {
 	Module::loadJSONDataInternal(data);
-	valuesCC.orderControllablesAlphabetically();
+	valuesCC.sortControllables();
 	setupIOConfiguration(inputDevice != nullptr || valuesCC.controllables.size() > 0, outputDevice != nullptr);
 
 	if (thruManager != nullptr)
@@ -693,4 +749,18 @@ void MIDIModule::MIDIModuleRouterController::triggerTriggered(Trigger* t)
 			}
 		}
 	}
+}
+
+int MIDIValueComparator::compareElements(Controllable* c1, Controllable* c2)
+{
+	MIDIValueParameter* m1 = dynamic_cast<MIDIValueParameter*>(c1);
+	MIDIValueParameter* m2 = dynamic_cast<MIDIValueParameter*>(c2);
+	if (m1 == nullptr || m2 == nullptr) return 0;
+	
+	int v1 = m1->channel * 10000 + m1->type * 1000 + m1->pitchOrNumber;
+	int v2 = m2->channel * 10000 + m2->type * 1000 + m2->pitchOrNumber;
+
+	if (v1 > v2) return 1;
+	else if (v1 < v2) return -1;
+	return 0;
 }

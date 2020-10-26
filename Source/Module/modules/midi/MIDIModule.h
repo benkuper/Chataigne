@@ -14,11 +14,19 @@
 #include "Common/MIDI/MIDIManager.h"
 #include "Common/MIDI/MIDIDeviceParameter.h"
 
+class MIDIValueComparator :
+	public ControllableComparator
+{
+public:
+	MIDIValueComparator() {}
+	int compareElements(Controllable* c1, Controllable* c2) override;
+};
+
 class MIDIValueParameter :
 	public IntParameter
 {
 public:
-	enum Type { NOTE_ON, NOTE_OFF, CONTROL_CHANGE, SYSEX, PITCH_WHEEL, CHANNEL_PRESSURE, AFTER_TOUCH };
+	enum Type { NOTE_ON, NOTE_OFF, CONTROL_CHANGE, SYSEX, PITCH_WHEEL, CHANNEL_PRESSURE, AFTER_TOUCH, TYPE_MAX };
 
 	MIDIValueParameter(const String &name, const String &description, int value, int channel, int pitchOrNumber, Type t) :
 		IntParameter(name, description, value, 0, t == PITCH_WHEEL? 16383:127),
@@ -66,6 +74,7 @@ public:
 	MIDIDeviceParameter * midiParam;
 	BoolParameter * autoAdd;
 	BoolParameter * autoFeedback;
+	BoolParameter* useHierarchy;
 
 	bool manualAddMode; //to allow manual add override
 
@@ -75,6 +84,8 @@ public:
 	BoolParameter * isConnected;
 
 	std::unique_ptr<ControllableContainer> thruManager;
+
+	static MIDIValueComparator midiValueComparator;
 
 	//Script
 	const Identifier noteOnEventId = "noteOnEvent";
