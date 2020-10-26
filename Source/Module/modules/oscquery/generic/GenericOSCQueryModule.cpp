@@ -217,6 +217,7 @@ void GenericOSCQueryModule::createTreeFromData(var data)
 			if (ControllableContainer * cc = valuesCC.getControllableContainerForAddress(addr))
 			{
 				cc->editorIsCollapsed = false;
+				cc->queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerCollapsedChanged, cc)); //should move to a setCollapsed from ControllableContainer.cpp
 			}
 		}
 	}
