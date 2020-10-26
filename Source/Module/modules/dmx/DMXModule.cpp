@@ -83,7 +83,7 @@ void DMXModule::setCurrentDMXDevice(DMXDevice * d)
 		dmxDevice->addDMXDeviceListener(this);
 		moduleParams.addChildControllableContainer(dmxDevice.get());
 		setupIOConfiguration(dmxDevice->canReceive && dmxDevice->inputCC->enabled->boolValue(), dmxDevice->outputCC->enabled->boolValue());
-		dmxConnected->setValue(true);
+		dmxConnected->setValue(dmxDevice->isConnected);
 	}
 
 
