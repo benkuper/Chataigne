@@ -34,10 +34,7 @@ ColorMappingLayer::~ColorMappingLayer()
 
 void ColorMappingLayer::addDefaultContent()
 {
-    colorManager.addColorAt(sequence->totalTime->floatValue() / 5, Colours::green);
-    colorManager.addColorAt(sequence->totalTime->floatValue() * 2 / 5, Colours::yellow);
-    colorManager.addColorAt(sequence->totalTime->floatValue() * 3 / 5, Colours::red)->interpolation->setValueWithData(GradientColor::NONE);
-    colorManager.addColorAt(sequence->totalTime->floatValue() * 4 / 5, Colours::blue);
+    colorManager.addColorAt(0, Colours::red);
 }
 
 var ColorMappingLayer::getValueAtPosition(float position)
