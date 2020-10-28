@@ -79,6 +79,19 @@ Array<UndoableAction*> ColorMappingLayer::getRemoveTimespanInternal(float start,
     return colorManager.getRemoveTimespan(start, end);
 }
 
+bool ColorMappingLayer::paste()
+{
+    var data = JSON::fromString(SystemClipboard::getTextFromClipboard());
+    String type = data.getProperty("itemType", "");
+    if (type == colorManager.itemDataType)
+    {
+        colorManager.askForPaste();
+        return true;
+    }
+
+    return SequenceLayer::paste();
+}
+
 void ColorMappingLayer::sequenceCurrentTimeChanged(Sequence* s, float prevTime, bool seeking)
 {
     colorManager.position->setValue(sequence->currentTime->floatValue());

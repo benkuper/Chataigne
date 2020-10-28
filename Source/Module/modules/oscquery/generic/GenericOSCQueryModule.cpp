@@ -537,6 +537,8 @@ void GenericOSCQueryModule::requestHostInfo()
 		{
 			if (logIncomingData->boolValue()) NLOG(niceName, "Received HOST_INFO :\n" << JSON::toString(data));
 
+			serverName->setValue(data.getProperty("NAME", ""));
+
 			int oscPort = data.getProperty("OSC_PORT", remotePort->intValue());
 			if (oscPort != remotePort->intValue())
 			{

@@ -32,9 +32,11 @@ public:
     Array<UndoableAction*>  getInsertTimespanInternal(float start, float length) override;
     Array<UndoableAction*>  getRemoveTimespanInternal(float start, float end) override;
 
+    virtual bool paste() override;
+
+
     virtual void sequenceCurrentTimeChanged(Sequence* s, float prevTime, bool seeking) override;
     virtual void sequenceTotalTimeChanged(Sequence* s) override;
-
 
     SequenceLayerPanel* getPanel() override;
     SequenceLayerTimeline* getTimelineUI() override;
