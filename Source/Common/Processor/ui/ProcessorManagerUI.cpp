@@ -52,8 +52,8 @@ void ProcessorManagerUI::itemDropped(const SourceDetails & details)
 
 		PopupMenu pm;
 
-		ControllableChooserPopupMenu actionInputMenu(&mui->item->valuesCC, true, true, 0);
-		ControllableChooserPopupMenu mappingInputMenu(&mui->item->valuesCC, true, false, 10000);
+		ControllableChooserPopupMenu actionInputMenu(&mui->item->valuesCC, 0);
+		ControllableChooserPopupMenu mappingInputMenu(&mui->item->valuesCC, 10000, -1, StringArray(), StringArray(Trigger::getTypeStringStatic()));
 
 		PopupMenu actionCommandMenu = mui->item->getCommandMenu(20000, CommandContext::ACTION);
 		PopupMenu mappingCommandMenu = mui->item->getCommandMenu(30000, CommandContext::MAPPING);

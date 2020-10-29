@@ -58,6 +58,7 @@ void Mapping2DLayer::stopRecorderAndAddKeys()
 	Array<AutomationRecorder::RecordValue> recordedValues = recorder.stopRecordingAndGetKeys();
 
 	if (recordedValues.size() == 0) return;
+	if (recordedValues[0].value.isArray()) return;
 
 	Array<Point<float>> points;
 	Array<float> times;

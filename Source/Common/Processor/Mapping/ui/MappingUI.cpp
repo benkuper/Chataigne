@@ -87,7 +87,7 @@ void MappingUI::itemDropped(const SourceDetails & details)
 		ModuleUI * mui = dynamic_cast<ModuleUI *>(details.sourceComponent.get());
 
 		PopupMenu pm;
-		ControllableChooserPopupMenu mappingInputMenu(&mui->item->valuesCC, true, false, 10000);
+		ControllableChooserPopupMenu mappingInputMenu(&mui->item->valuesCC, 10000, -1, StringArray(), StringArray(Trigger::getTypeStringStatic()));
 		PopupMenu mappingCommandMenu = mui->item->getCommandMenu(20000, CommandContext::MAPPING);
 
 		pm.addSubMenu("Input", mappingInputMenu);

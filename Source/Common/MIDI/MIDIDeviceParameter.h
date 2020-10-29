@@ -42,4 +42,6 @@ public:
 
 	void loadJSONDataInternal(var data) override;
 
+	String getTypeString() const override { return "MIDIDevice"; }
+
 };

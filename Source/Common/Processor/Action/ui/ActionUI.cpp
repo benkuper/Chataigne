@@ -116,7 +116,7 @@ void ActionUI::itemDropped(const SourceDetails & details)
 		ModuleUI * mui = dynamic_cast<ModuleUI *>(details.sourceComponent.get());
 
 		PopupMenu pm;
-		ControllableChooserPopupMenu actionInputMenu(&mui->item->valuesCC, true, true, 0);
+		ControllableChooserPopupMenu actionInputMenu(&mui->item->valuesCC, 0);
 
 		PopupMenu actionCommandMenuTrue = mui->item->getCommandMenu(20000, CommandContext::ACTION);
 		PopupMenu actionCommandMenuFalse = mui->item->getCommandMenu(30000, CommandContext::ACTION);

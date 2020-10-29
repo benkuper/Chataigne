@@ -45,7 +45,7 @@ ControllableContainer * CVGroupManager::showMenuAndGetContainer()
 	return nullptr;
 }
 
-Controllable * CVGroupManager::showMenuAndGetVariable(bool, bool)
+Controllable * CVGroupManager::showMenuAndGetVariable(const StringArray & typeFilters, const StringArray & excludeTypeFilters)
 {
 	PopupMenu menu;
 	int numItems = CVGroupManager::getInstance()->items.size();

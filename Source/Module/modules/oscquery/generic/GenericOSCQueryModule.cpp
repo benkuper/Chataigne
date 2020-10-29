@@ -637,7 +637,7 @@ InspectableEditor* OSCQueryOutput::getEditor(bool isRoot)
 GenericOSCQueryModule::OSCQueryRouteParams::OSCQueryRouteParams(GenericOSCQueryModule* outModule, Module* sourceModule, Controllable* c)
 {
 	target = addTargetParameter("Target", "The target value to modify", &outModule->valuesCC);
-	target->showTriggers = false;
+	target->excludeTypesFilter.add(Trigger::getTypeStringStatic());
 }
 
 GenericOSCQueryModule::OSCQueryRouteParams::~OSCQueryRouteParams()

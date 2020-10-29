@@ -50,7 +50,7 @@ void ModuleManager::addItemInternal(Module * module, var data)
 	module->templateManager->setupDefinitionsFromModule();
 }
 
-Controllable * ModuleManager::showAllValuesAndGetControllable(bool showTriggers, bool showParameters)
+Controllable * ModuleManager::showAllValuesAndGetControllable(const StringArray & typeFilters, const StringArray& excludeTypeFilters)
 {
 	PopupMenu menu;
 	
@@ -63,13 +63,13 @@ Controllable * ModuleManager::showAllValuesAndGetControllable(bool showTriggers,
 	for (int i = 0; i < numItems; ++i)
 	{
 		Module * m = mList[i];
-		ControllableChooserPopupMenu *vCC = new ControllableChooserPopupMenu(&m->valuesCC, showParameters, showTriggers, i* maxValuesPerModule);
+		ControllableChooserPopupMenu *vCC = new ControllableChooserPopupMenu(&m->valuesCC, i* maxValuesPerModule, -1, typeFilters, excludeTypeFilters);
 		moduleMenus.add(vCC);
 		if (i == ModuleManager::getInstance()->items.size()) menu.addSeparator(); // Separator between user created module and special modules
 		menu.addSubMenu(m->niceName, *vCC);
 	}
 
-	ControllableChooserPopupMenu engineMenu(Engine::mainEngine, showParameters, showTriggers, -1000000);
+	ControllableChooserPopupMenu engineMenu(Engine::mainEngine, -1000000, -1, typeFilters, excludeTypeFilters);
 	menu.addSubMenu("Generic", engineMenu);
 	
 	int result = menu.show();

@@ -29,7 +29,7 @@ public:
 	void addItemInternal(Module* module, var data) override;
 
 	//Input values menu
-	static Controllable* showAllValuesAndGetControllable(bool showTriggers, bool showParameters);
+	static Controllable* showAllValuesAndGetControllable(const StringArray & typeFilters, const StringArray & excludeTypeFilters);
 	static bool checkControllableIsAValue(Controllable* c);
 
 	template <class T>

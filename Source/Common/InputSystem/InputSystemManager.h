@@ -76,6 +76,7 @@ public:
 	// Inherited via Parameter
 	virtual ControllableUI * createDefaultUI() override;
 
+	String getTypeString() const override { return "JoystickParam"; }
 };
 
 
@@ -101,6 +102,7 @@ public:
 	// Inherited via Parameter
 	virtual ControllableUI * createDefaultUI() override;
 
+	String getTypeString() const override { return "GamepadParam"; }
 };
 
 

@@ -19,8 +19,9 @@ GenericControllableCommand::GenericControllableCommand(ChataigneGenericModule * 
 
 	target->targetType = TargetParameter::CONTROLLABLE;
 	action = (Action)(int)params.getProperty("action", SET_VALUE);
-	target->showTriggers = action == TRIGGER;
-	target->showParameters = action == SET_VALUE;
+
+	if (action == TRIGGER) target->typesFilter.add(Trigger::getTypeStringStatic());
+	else if(action == SET_VALUE) target->excludeTypesFilter.add(Trigger::getTypeStringStatic());
 }
 
 GenericControllableCommand::~GenericControllableCommand()

@@ -21,7 +21,8 @@ MappingInput::MappingInput() :
 
 	nameCanBeChangedByUser = false;
 	inputTarget = addTargetParameter("Input Value", "Parameter to be the input");
-	inputTarget->showTriggers = false;
+	inputTarget->excludeTypesFilter.add(Trigger::getTypeStringStatic());
+
 	inputTarget->customGetTargetFunc = &ModuleManager::getInstance()->showAllValuesAndGetControllable;
 	inputTarget->customGetControllableLabelFunc = &Module::getTargetLabelForValueControllable; 
 	inputTarget->customCheckAssignOnNextChangeFunc = &ModuleManager::checkControllableIsAValue;

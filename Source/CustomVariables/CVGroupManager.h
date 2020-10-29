@@ -27,7 +27,7 @@ public:
 
 	//Input values menu
 	static ControllableContainer * showMenuAndGetContainer();
-	static Controllable * showMenuAndGetVariable(bool, bool);
+	static Controllable * showMenuAndGetVariable(const StringArray& typeFilters, const StringArray& excludeTypeFilters);
 	static ControllableContainer* showMenuAndGetPreset();
 	static ControllableContainer * showMenuAndGetGroup();
 };
