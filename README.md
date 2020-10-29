@@ -23,6 +23,7 @@ You can check the tutorials to better understand what and how you can use Chatai
 ### Features
   - Supports communication and synchronization of the following protocols :
     - OSC
+    - OSCQuery
     - MIDI
     - DMX
     - Serial
@@ -30,10 +31,10 @@ You can check the tutorials to better understand what and how you can use Chatai
     - TCP
     - HTTP
     - WebSockets
-    - PJLink 
+    - PJLink
     
   - Supports communication and synchronization of the following hardware :
-    - KinectV2 (Win only)
+    - KinectV2 (Windows only)
     - StreamDeck
     - Joystick
     - Gamepad
@@ -42,6 +43,8 @@ You can check the tutorials to better understand what and how you can use Chatai
     - Wiimote
     - Joycon
     - Sound card
+    - StreamDeck
+    - GPIO (Raspberry only)
     
   - Pre-configured modules for controlling softwares :
     - Resolume
@@ -51,16 +54,18 @@ You can check the tutorials to better understand what and how you can use Chatai
     - HeavyM
     - D::Light
     - Reaper
-    - Ableton Live
+    - Ableton Live (through a M4L patch)
     - Powerpoint
     - Watchout
     
  - State Machine : Create both simple and complex real-time interactions and automations.
- - Time Machine : Create sequence based animations and triggers
+ - Time Machine : Create sequence based value and colors animations, trigger events, play audio...
  - Module Router : Easily route multiple values at once from one software to another, independant of the protocol
  - Custom Variables : Store and manipulate values, use presets and interpolate group of values.
- - Dashboard : Create your own UI and controls, customize colors and labels
-
+ - Dashboard : Create your own UI and controls, customize colors and labels and control it from a web interface
+ - Detective : Analyse the evolution of a parameter in time to fully understand what's going on
+ - Outliner : See in one place the whole hierarchy of your session
+ 
 
 ## Using the software
 
