@@ -61,6 +61,7 @@ void CustomOSCModule::processMessageInternal(const OSCMessage & msg)
 						if (cc == nullptr)
 						{
 							cc = new ControllableContainer(s);
+							cc->setCustomShortName(s);
 							cc->saveAndLoadRecursiveData = true;
 							cc->isRemovableByUser = true;
 							cc->includeTriggersInSaveLoad = true;
@@ -269,7 +270,8 @@ void CustomOSCModule::onControllableFeedbackUpdateInternal(ControllableContainer
 		{
 			try
 			{
-				OSCMessage m(c->niceName);
+				String cAddress = useHierarchy->boolValue()?c->getControlAddress(&valuesCC):c->niceName;
+				OSCMessage m(cAddress);
 				if (c->type == Controllable::TRIGGER) sendOSC(m);
 				else
 				{
