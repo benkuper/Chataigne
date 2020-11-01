@@ -154,9 +154,11 @@ void Mapping::process(bool forceOutput)
 
 		for (int i = 0; i < filteredParams.size(); i++)
 		{
-			Parameter* p = (Parameter*)outValuesCC.controllables[i];
-			if (p->type == Parameter::ENUM) ((EnumParameter*)p)->setValueWithKey(((EnumParameter*)filteredParams[i])->getValueKey());
-			else p->setValue(filteredParams[i]->value);
+			if (Parameter* p = (Parameter*)outValuesCC.controllables[i])
+			{
+				if (p->type == Parameter::ENUM) ((EnumParameter*)p)->setValueWithKey(((EnumParameter*)filteredParams[i])->getValueKey());
+				else p->setValue(filteredParams[i]->value);
+			}
 		}
 
 		om.updateOutputValues();
