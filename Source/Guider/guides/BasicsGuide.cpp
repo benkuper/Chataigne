@@ -41,7 +41,7 @@ void BasicsGuide::initInternal()
 
 	if (inspectorUI != nullptr)
 	{
-		inspector = &inspectorUI->inspector;
+		inspector = inspectorUI->inspector.get();
 		inspector->addInspectorListener(this);
 	}
 }
