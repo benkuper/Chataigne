@@ -43,8 +43,8 @@ void KeyboardModuleCommands::triggerInternal()
 {
 	switch (type)
 	{
-	case KEY_DOWN: keyboardModule->sendKeyDown(keyID->getValueData());
-	case KEY_UP: keyboardModule->sendKeyUp(keyID->getValueData());
-	case KEY_HIT: keyboardModule->sendKeyHit(keyID->getValueData(), ctrlPressed->boolValue(), altPressed->boolValue(), shiftPressed->boolValue());
+	case KEY_DOWN: keyboardModule->sendKeyDown(keyID->getValueData()); break;
+	case KEY_UP: keyboardModule->sendKeyUp(keyID->getValueData()); break;
+	case KEY_HIT: keyboardModule->sendKeyHit(keyID->getValueData(), ctrlPressed->boolValue(), altPressed->boolValue(), shiftPressed->boolValue()); break;
 	}
 }
