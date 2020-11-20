@@ -84,7 +84,7 @@ jobs:
           if [ "${{ env.TargetSystem }}" == "linux-armhf" ]; 
           then
             echo "::set-output name=buildFolder::Raspberry"
-            echo "::set-output name=appImageRuntime::--runtime-file $HOME/runtime-armhf"
+            echo "::set-output name=appImageRuntime::--runtime-file $GITHUB_WORKSPACE/runtime-armhf"
           else
             echo "::set-output name=buildFolder::LinuxMakefile"
           fi
@@ -121,7 +121,7 @@ jobs:
             sudo apt-get install -q libgdk-pixbuf2.0-dev:armhf libpango1.0-dev:armhf libsoup2.4-dev:armhf libharfbuzz-dev:armhf libxml2-dev:armhf libicu-dev:armhf libc6-dev:armhf libxft-dev:armhf
 
             echo "Downloading AppImage runtime for armhf"
-            cd $HOME
+            cd $GITHUB_WORKSPACE
             wget "https://github.com/AppImage/AppImageKit/releases/download/12/runtime-armhf"
             
             export CXX=arm-linux-gnueabihf-g++
@@ -144,20 +144,20 @@ jobs:
           $CC -v
 
           echo 'Downloading AppImageTool...'
-          cd $HOME
+          cd $GITHUB_WORKSPACE
           wget "https://github.com/AppImage/AppImageKit/releases/download/12/appimagetool-x86_64.AppImage"
           chmod a+x appimagetool-x86_64.AppImage
 
       - name: Build
         run: |
-          cd $HOME/Builds/${{ steps.set_variables.outputs.Raspberry }}
+          cd $GITHUB_WORKSPACE/Builds/${{ steps.set_variables.outputs.Raspberry }}
           make -j2 CONFIG=Release
 
       - name: Create AppImage
         run: |
           mkdir Chataigne.AppDir/usr/bin/
           cp build/Chataigne Chataigne.AppDir/usr/bin/
-          $HOME/appimagetool-x86_64.AppImage ${{ steps.set_variables.outputs.appImageRuntime }} Chataigne.AppDir Chataigne-${{ env.TargetSystem }}-${{ steps.set_variables.outputs.suffix }}.AppImage
+          $GITHUB_WORKSPACE/appimagetool-x86_64.AppImage ${{ steps.set_variables.outputs.appImageRuntime }} Chataigne.AppDir Chataigne-${{ env.TargetSystem }}-${{ steps.set_variables.outputs.suffix }}.AppImage
     
       - name: Upload
         uses: wei/curl@v1
