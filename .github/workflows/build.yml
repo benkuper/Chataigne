@@ -54,6 +54,7 @@ jobs:
 
       - name: Create Package
         run:  |
+          ls -R Builds/MacOSX_CI/
           cd Package
           packagesbuild ${{ env.ProjectName }}.pkgproj \
           mv ${{ env.ProjectName }}.pkg ${{ env.ProjectName }}-osx-${{ steps.set_variables.outputs.suffix }}.pkg
