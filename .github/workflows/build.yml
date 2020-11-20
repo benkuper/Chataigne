@@ -81,7 +81,7 @@ jobs:
             echo "::set-output name=suffix::bleedingedge"
           fi
 
-          if [ ${{ env.TargetSystem }} == "linux-armhf" ]; 
+          if [ "${{ env.TargetSystem }}" == "linux-armhf" ]; 
           then
             echo "::set-output name=buildFolder::Raspberry"
             echo "::set-output name=appImageRuntime::--runtime-file $HOME/runtime-armhf"
@@ -107,7 +107,7 @@ jobs:
           export CC=gcc
 
           echo "Target system : ${{ env.TargetSystem }}"
-          if [ ${{ env.TargetSystem }} == "linux-armhf" ]; 
+          if [ "${{ env.TargetSystem }}" == "linux-armhf" ]; 
           then
             echo 'deb [arch=armhf] http://ports.ubuntu.com/ubuntu-ports bionic main universe' >> /etc/apt/sources.list
             echo 'deb [arch=armhf] http://ports.ubuntu.com/ubuntu-ports bionic-updates main universe' >> /etc/apt/sources.list
@@ -133,7 +133,6 @@ jobs:
 
             # DEP_ARCH is used later when downloading the dependencies
             export DEP_ARCH="armhf"
-          else
           fi
 
           sudo apt-get update
