@@ -3,7 +3,6 @@ on: [push]
 env:
   ProjectName: Chataigne
   PackagesVersion: 1.2.9
-  SkipBuild: false
 
 jobs:
   osx:
@@ -49,7 +48,6 @@ jobs:
           jobs: 2
           action: build
           use-xcpretty: true
-        if: env.SkipBuild == false
 
       - name: Create Package
         run:  |
