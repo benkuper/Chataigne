@@ -64,6 +64,9 @@ jobs:
           args: -X POST -F "appFile=@Chataigne-osx-${{ steps.set_suffix.outputs.suffix }}.pkg" -F "pass=${{ secrets.UPLOADPASS }}" ${{ secrets.UPLOADURL }}
 
   linux:
+    name: Linux
+    runs-on: ubuntu-latest
+    
     steps:
       - name: Set Suffix
         id: set_suffix
