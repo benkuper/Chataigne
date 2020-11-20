@@ -50,7 +50,7 @@ jobs:
           jobs: 2
           action: build
           use-xcpretty: true
-        if: ${{ env.NoBuild }} == false
+        if: env.NoBuild == false
 
       - name: Create Package
         run:  |
