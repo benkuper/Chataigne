@@ -11,7 +11,7 @@ jobs:
 
     steps:
       - name: Set Suffix
-        id: set_suffix
+        id: set_variables
         run: |
           if [[ $GITHUB_REF == *"refs/tags/"* ]]
           then
@@ -56,20 +56,22 @@ jobs:
         run:  |
           cd Package
           packagesbuild ${{ env.ProjectName }}.pkgproj \
-          mv ${{ env.ProjectName }}.pkg ${{ env.ProjectName }}-osx-${{ steps.set_suffix.outputs.suffix }}.pkg
+          mv ${{ env.ProjectName }}.pkg ${{ env.ProjectName }}-osx-${{ steps.set_variables.outputs.suffix }}.pkg
 
       - name: Upload
         uses: wei/curl@v1
         with:
-          args: -X POST -F "appFile=@Chataigne-osx-${{ steps.set_suffix.outputs.suffix }}.pkg" -F "pass=${{ secrets.UPLOADPASS }}" ${{ secrets.UPLOADURL }}
+          args: -X POST -F "appFile=@Chataigne-osx-${{ steps.set_variables.outputs.suffix }}.pkg" -F "pass=${{ secrets.UPLOADPASS }}" ${{ secrets.UPLOADURL }}
 
   linux:
     name: Linux
     runs-on: ubuntu-latest
-    
+    env:
+      TargetSystem: linux-x64
+
     steps:
-      - name: Set Suffix
-        id: set_suffix
+      - name: Set Variables
+        id: set_variables
         run: |
           if [[ $GITHUB_REF == *"refs/tags/"* ]]
           then
@@ -77,6 +79,14 @@ jobs:
             echo "::set-output name=suffix::${GITHUB_REF#refs/tags/}"
           else
             echo "::set-output name=suffix::bleedingedge"
+          fi
+
+          if [ ${{ env.TargetSystem }} == "linux-armhf" ]; 
+          then
+            echo "::set-output name=buildFolder::Raspberry"
+            echo "::set-output name=appImageRuntime::--runtime-file $HOME/runtime-armhf"
+          else
+            echo "::set-output name=buildFolder::LinuxMakefile"
           fi
 
       - name: Checkout repo
@@ -93,8 +103,12 @@ jobs:
 
       - name: Installing dependencies
         run: |
+          export CXX=g++
+          export CC=gcc
+
           echo "Target system : ${{ env.TargetSystem }}"
-          if [ ${{ env.TargetSystem }} == "linux-armhf" ]; then
+          if [ ${{ env.TargetSystem }} == "linux-armhf" ]; 
+          then
             echo 'deb [arch=armhf] http://ports.ubuntu.com/ubuntu-ports bionic main universe' >> /etc/apt/sources.list
             echo 'deb [arch=armhf] http://ports.ubuntu.com/ubuntu-ports bionic-updates main universe' >> /etc/apt/sources.list
             sudo dpkg --add-architecture armhf
@@ -109,7 +123,6 @@ jobs:
             echo "Downloading AppImage runtime for armhf"
             cd $HOME
             wget "https://github.com/AppImage/AppImageKit/releases/download/12/runtime-armhf"
-            export APPIMAGE_RUNTIME="--runtime-file $HOME/runtime-armhf"
             
             export CXX=arm-linux-gnueabihf-g++
             export CC=arm-linux-gnueabihf-gcc
@@ -120,7 +133,9 @@ jobs:
 
             # DEP_ARCH is used later when downloading the dependencies
             export DEP_ARCH="armhf"
+          else
           fi
+
           sudo apt-get update
           echo "Installing JUCE lib dependencies and extra tools"
           sudo apt-get install -q libfreetype6-dev:$DEP_ARCH libx11-dev:$DEP_ARCH libxinerama-dev:$DEP_ARCH libxrandr-dev:$DEP_ARCH libxcursor-dev:$DEP_ARCH libxcomposite-dev:$DEP_ARCH mesa-common-dev:$DEP_ARCH libasound2-dev:$DEP_ARCH freeglut3-dev:$DEP_ARCH libcurl4-gnutls-dev:$DEP_ARCH libasound2-dev:$DEP_ARCH libjack-dev:$DEP_ARCH libbluetooth-dev:$DEP_ARCH libgtk-3-dev:$DEP_ARCH libwebkit2gtk-4.0-dev:$DEP_ARCH libsdl2-dev:$DEP_ARCH  libfuse2:$DEP_ARCH libusb-1.0-0-dev:$DEP_ARCH libhidapi-dev:$DEP_ARCH
@@ -136,16 +151,16 @@ jobs:
 
       - name: Build
         run: |
-          cd $TRAVIS_BUILD_DIR/Builds/$BUILD_FOLDER
+          cd $HOME/Builds/${{ steps.set_variables.outputs.Raspberry }}
           make -j2 CONFIG=Release
 
-      - name: Build
+      - name: Create AppImage
         run: |
           mkdir Chataigne.AppDir/usr/bin/
           cp build/Chataigne Chataigne.AppDir/usr/bin/
-          $HOME/appimagetool-x86_64.AppImage $APPIMAGE_RUNTIME Chataigne.AppDir Chataigne-${{ env.TargetSystem }}-${{ steps.set_suffix.outputs.suffix }}.AppImage
+          $HOME/appimagetool-x86_64.AppImage ${{ steps.set_variables.outputs.appImageRuntime }} Chataigne.AppDir Chataigne-${{ env.TargetSystem }}-${{ steps.set_variables.outputs.suffix }}.AppImage
     
       - name: Upload
         uses: wei/curl@v1
         with:
-          args: -X POST -F "appFile=@Chataigne-${{ env.TargetSystem }}-${{ steps.set_suffix.outputs.suffix }}.AppImage" -F "pass=${{ secrets.UPLOADPASS }}" ${{ secrets.UPLOADURL }}
+          args: -X POST -F "appFile=@Chataigne-${{ env.TargetSystem }}-${{ steps.set_variables.outputs.suffix }}.AppImage" -F "pass=${{ secrets.UPLOADPASS }}" ${{ secrets.UPLOADURL }}
