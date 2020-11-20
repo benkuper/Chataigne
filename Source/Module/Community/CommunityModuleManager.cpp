@@ -25,7 +25,7 @@ CommunityModuleManager::CommunityModuleManager() :
 
 CommunityModuleManager::~CommunityModuleManager()
 {
-	stopThread(2000);
+	stopThread(5000);
 }
 
 void CommunityModuleManager::run()
