@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    SequenceAudioCommand.cpp
-    Created: 27 Sep 2020 10:57:00am
-    Author:  bkupe
+	SequenceAudioCommand.cpp
+	Created: 27 Sep 2020 10:57:00am
+	Author:  bkupe
 
   ==============================================================================
 */
@@ -12,7 +12,7 @@
 #include "../SequenceModule.h"
 #include "TimeMachine/ChataigneSequenceManager.h"
 
-SequenceAudioCommand::SequenceAudioCommand(SequenceModule* _module, CommandContext context, var params) : 
+SequenceAudioCommand::SequenceAudioCommand(SequenceModule* _module, CommandContext context, var params) :
 	BaseCommand(_module, context, params),
 	sequenceModule(_module),
 	value(nullptr)
@@ -21,7 +21,7 @@ SequenceAudioCommand::SequenceAudioCommand(SequenceModule* _module, CommandConte
 
 	target = addTargetParameter("Target", "Target for the command");
 	target->targetType = TargetParameter::CONTAINER;
-	
+
 	target->customGetTargetContainerFunc = &ChataigneSequenceManager::showMenuAndGetAudioLayerStatic;
 
 	time = addFloatParameter("Time", "Target time to set", 0);
@@ -44,7 +44,7 @@ SequenceAudioCommand::SequenceAudioCommand(SequenceModule* _module, CommandConte
 		break;
 	}
 
-	addTargetMappingParameterAt(value, 0);
+	if (value != nullptr) addTargetMappingParameterAt(value, 0);
 
 	stopAtFinish = addBoolParameter("Stop at Finish", "If enabled, will stop the sequence when finished", false);
 }
@@ -55,13 +55,18 @@ SequenceAudioCommand::~SequenceAudioCommand()
 
 void SequenceAudioCommand::triggerInternal()
 {
-	switch (actionType) 
+	switch (actionType)
 	{
 	case SET_VOLUME:
-		((AudioLayer*)target->targetContainer.get())->setVolume(value->floatValue(), time->floatValue(), automation, stopAtFinish->boolValue());
-		break;
+	{
+		if (AudioLayer* al = ((AudioLayer*)target->targetContainer.get()))
+		{
+			al->setVolume(value->floatValue(), time->floatValue(), automation, stopAtFinish->boolValue());
+		}
 	}
-	
+	break;
+	}
+
 }
 
 void SequenceAudioCommand::loadJSONDataInternal(var data)
