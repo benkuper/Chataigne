@@ -53,7 +53,7 @@ jobs:
 
       - name: Create Package
         run:  |
-          cd Packages
+          cd Package
           packagesbuild ${{ env.ProjectName }}.pkgproj \
           mv ${{ env.ProjectName }}.pkg ${{ env.ProjectName }}-osx-${{ steps.set_suffix.outputs.suffix }}.pkg
 
