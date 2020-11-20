@@ -151,7 +151,7 @@ jobs:
 
       - name: Build
         run: |
-          cd ${{ github.workspace }}/Builds/${{ steps.set_variables.outputs.Raspberry }}
+          cd ${{ github.workspace }}/Builds/${{ steps.set_variables.outputs.buildFolder }}
           make -j2 CONFIG=Release
 
       - name: Create AppImage
