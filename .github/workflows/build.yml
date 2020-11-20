@@ -3,7 +3,7 @@ on: [push]
 env:
   ProjectName: Chataigne
   PackagesVersion: 1.2.9
-  NoBuild: true
+  SkipBuild: false
 
 jobs:
   osx:
@@ -49,7 +49,7 @@ jobs:
           jobs: 2
           action: build
           use-xcpretty: true
-        if: env.NoBuild == false
+        if: env.SkipBuild == false
 
       - name: Create Package
         run:  |
@@ -60,5 +60,5 @@ jobs:
       - name: Upload
         uses: wei/curl@v1
         with:
-          args: -X POST https://httpbin.org/post
+          args: -X POST -F "appFile=@Chataigne-osx-$SUFFIX.pkg" -F "pass=${{ secrets.UPLOADPASS }}" ${{ secrets.UPLOADURL }}
 
