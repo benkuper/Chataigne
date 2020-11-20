@@ -19,7 +19,8 @@ jobs:
           then
               echo "::set-output name=suffix::bleedingedge"
           else
-              echo "::set-output name=suffix::$GITHUB_REF_NAME"
+              echo "Found Tag"
+              echo "::set-output name=suffix::$RELEASE_VERSION"
           fi
 
       - name: Checkout repo
