@@ -1,0 +1,64 @@
+on: [push]
+
+env:
+  ProjectName: Chataigne
+  PackagesVersion: 1.2.9
+  NoBuild: true
+
+jobs:
+  osx:
+    name: OSX
+    runs-on: macos-latest
+
+    steps:
+      - name: Set Suffix
+        id: set_suffix
+        run: |
+          echo "RELEASE_VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+          if [ -n "$RELEASE_VERSION"]
+          then
+              echo "::set-output name=suffix::bleedingedge"
+          else
+              echo "::set-output name=suffix::$GITHUB_REF_NAME"
+          fi
+
+      - name: Checkout repo
+        uses: actions/checkout@v2
+        with:
+          submodules: 'recursive'
+
+      - name: Download Packages 
+        run: |
+          curl -L -o Packages.dmg 'http://s.sudre.free.fr/Software/files/Packages.dmg'
+          hdiutil mount Packages.dmg
+          sudo installer -pkg "/Volumes/Packages ${{ env.PackagesVersion }}/Install Packages.pkg" -target /
+          hdiutil detach "/Volumes/Packages ${{ env.PackagesVersion }}/"
+          
+      - name: Checkout JUCE
+        uses: actions/checkout@v2
+        with:
+          repository: benkuper/JUCE
+          ref: develop-local
+          path: JUCE
+
+      - name: Build
+        uses: sersoft-gmbh/xcodebuild-action@v1.3
+        with:
+          project: Builds/MacOSX_CI/${{ env.ProjectName }}.xcodeproj
+          destination: platform=macOS
+          jobs: 2
+          action: build
+          use-xcpretty: true
+        if: ${{ env.NoBuild }} == false
+
+      - name: Create Package
+        run:  |
+          cd Packages
+          packagesbuild ${{ env.ProjectName }}.pkgproj \
+          mv ${{ env.ProjectName }}.pkg ${{ env.ProjectName }}-osx-${{ steps.set_suffix.outputs.suffix }}.pkg
+
+      - name: Upload
+        uses: wei/curl@v1
+        with:
+          args: -X POST https://httpbin.org/post
+
