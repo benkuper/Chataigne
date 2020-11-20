@@ -59,7 +59,7 @@ ChataigneEngine::ChataigneEngine() :
 	ZeroconfManager::getInstance()->addSearcher("OSC", "_osc._udp.");
 	ZeroconfManager::getInstance()->addSearcher("OSCQuery", "_oscjson._tcp.");
 	ZeroconfManager::getInstance()->addSearcher("Workstation", "_workstation._tcp.");
-
+	
 	getAppSettings()->addChildControllableContainer(&defaultBehaviors);
 }
 
