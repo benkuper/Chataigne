@@ -24,4 +24,6 @@ public:
 	void run() override;
 
 	var getJSONDataForURL(URL url);
+
+	static bool openStreamProgressCallback(void* context, int /*bytesSent*/, int /*totalBytes*/);
 };

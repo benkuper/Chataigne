@@ -25,7 +25,7 @@ CommunityModuleManager::CommunityModuleManager() :
 
 CommunityModuleManager::~CommunityModuleManager()
 {
-	waitForThreadToExit(4000);
+	stopThread(2000);
 }
 
 void CommunityModuleManager::run()
@@ -33,6 +33,8 @@ void CommunityModuleManager::run()
 	sleep(500);
 	var data = getJSONDataForURL(URL("http://benjamin.kuperberg.fr/chataigne/releases/modules.json"));
 	
+	if (threadShouldExit()) return;
+
 	if (!data.isObject())
 	{
 		LOGWARNING("Error fetching community modules, wrong data format.");
@@ -45,6 +47,8 @@ void CommunityModuleManager::run()
 
 	for (int i = 0; i < defs.size(); ++i)
 	{
+		if (threadShouldExit()) return;
+
 		String defURL = defs[i].toString();
 		if (defURL.isEmpty()) continue;
 
@@ -72,11 +76,15 @@ void CommunityModuleManager::run()
 var CommunityModuleManager::getJSONDataForURL(URL url)
 {
 	
+
 	StringPairArray responseHeaders;
 	int statusCode = 0;
-	std::unique_ptr<InputStream> stream(url.createInputStream(false, nullptr, nullptr, String(),
+	std::unique_ptr<InputStream> stream(url.createInputStream(false, openStreamProgressCallback, this, String(),
 		2000, // timeout in millisecs
 		&responseHeaders, &statusCode));
+
+	if (threadShouldExit()) return var();
+
 #if JUCE_WINDOWS
 	if (statusCode != 200)
 	{
@@ -94,4 +102,10 @@ var CommunityModuleManager::getJSONDataForURL(URL url)
 	}
 
 	return var();
+}
+
+bool CommunityModuleManager::openStreamProgressCallback(void* context, int, int)
+{
+	auto thread = static_cast<Thread*> (context);
+	return !thread->threadShouldExit();
 }
