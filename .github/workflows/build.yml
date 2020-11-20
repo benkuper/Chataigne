@@ -50,6 +50,7 @@ jobs:
           destination: platform=macOS
           jobs: 2
           action: build
+          configuration: Release
           use-xcpretty: true
 
       - name: Create Package
@@ -156,6 +157,7 @@ jobs:
 
       - name: Create AppImage
         run: |
+          cd ${{ github.workspace }}/Builds/${{ steps.set_variables.outputs.buildFolder }}
           mkdir Chataigne.AppDir/usr/bin/
           cp build/Chataigne Chataigne.AppDir/usr/bin/
           ${{ github.workspace }}/appimagetool-x86_64.AppImage ${{ steps.set_variables.outputs.appImageRuntime }} Chataigne.AppDir Chataigne-${{ env.TargetSystem }}-${{ steps.set_variables.outputs.suffix }}.AppImage
@@ -163,4 +165,4 @@ jobs:
       - name: Upload
         uses: wei/curl@v1
         with:
-          args: -X POST -F "appFile=@Chataigne-${{ env.TargetSystem }}-${{ steps.set_variables.outputs.suffix }}.AppImage" -F "pass=${{ secrets.UPLOADPASS }}" ${{ secrets.UPLOADURL }}
+          args: -X POST -F "appFile=@${{ github.workspace }}/Builds/${{ steps.set_variables.outputs.buildFolder }}/Chataigne-${{ env.TargetSystem }}-${{ steps.set_variables.outputs.suffix }}.AppImage" -F "pass=${{ secrets.UPLOADPASS }}" ${{ secrets.UPLOADURL }}
