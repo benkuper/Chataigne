@@ -1,0 +1,165 @@
+on: [push]
+
+env:
+  ProjectName: Chataigne
+  PackagesVersion: 1.2.9
+
+jobs:
+  osx:
+    name: OSX
+    runs-on: macos-latest
+
+    steps:
+      - name: Set Suffix
+        id: set_variables
+        run: |
+          if [[ $GITHUB_REF == *"refs/tags/"* ]]
+          then
+            echo "Found Tag : ${GITHUB_REF#refs/tags/}"
+            echo "::set-output name=suffix::${GITHUB_REF#refs/tags/}"
+          else
+            echo "::set-output name=suffix::bleedingedge"
+          fi
+
+      - name: Checkout repo
+        uses: actions/checkout@v2
+        with:
+          submodules: 'recursive'
+
+      - name: Checkout JUCE
+        uses: actions/checkout@v2
+        with:
+          repository: benkuper/JUCE
+          ref: develop-local
+          path: JUCE
+
+
+      - name: Download Packages 
+        run: |
+          curl -L -o Packages.dmg 'http://s.sudre.free.fr/Software/files/Packages.dmg'
+          hdiutil mount Packages.dmg
+          sudo installer -pkg "/Volumes/Packages ${{ env.PackagesVersion }}/Install Packages.pkg" -target /
+          hdiutil detach "/Volumes/Packages ${{ env.PackagesVersion }}/"
+
+      - name: Build
+        uses: sersoft-gmbh/xcodebuild-action@v1.3
+        with:
+          project: Builds/MacOSX_CI/${{ env.ProjectName }}.xcodeproj
+          destination: platform=macOS
+          jobs: 2
+          action: build
+          configuration: Release
+          use-xcpretty: true
+
+      - name: Create Package
+        run:  |
+          packagesbuild ${{ env.ProjectName }}.pkgproj
+          mv ${{ env.ProjectName }}.pkg ${{ env.ProjectName }}-osx-${{ steps.set_variables.outputs.suffix }}.pkg
+        working-directory: ./Package
+
+      - name: Upload
+        run:  |
+          curl -X POST -F "appFile=@${{ env.ProjectName }}-osx-${{ steps.set_variables.outputs.suffix }}.pkg" -F "pass=${{ secrets.UPLOADPASS }}" ${{ secrets.UPLOADURL }}
+        working-directory: ./Package
+
+  linux:
+    name: Linux
+    runs-on: ubuntu-latest
+    env:
+      TargetSystem: linux-x64
+
+    steps:
+      - name: Set Variables
+        id: set_variables
+        run: |
+          if [[ $GITHUB_REF == *"refs/tags/"* ]]
+          then
+            echo "Found Tag : ${GITHUB_REF#refs/tags/}"
+            echo "::set-output name=suffix::${GITHUB_REF#refs/tags/}"
+          else
+            echo "::set-output name=suffix::bleedingedge"
+          fi
+
+          if [ "${{ env.TargetSystem }}" == "linux-armhf" ]; 
+          then
+            echo "::set-output name=buildFolder::Raspberry"
+            echo "::set-output name=appImageRuntime::--runtime-file ${{ github.workspace }}/runtime-armhf"
+          else
+            echo "::set-output name=buildFolder::LinuxMakefile"
+          fi
+
+      - name: Checkout repo
+        uses: actions/checkout@v2
+        with:
+          submodules: 'recursive'
+
+      - name: Checkout JUCE
+        uses: actions/checkout@v2
+        with:
+          repository: benkuper/JUCE
+          ref: develop-local
+          path: JUCE
+
+      - name: Installing dependencies
+        run: |
+          export CXX=g++
+          export CC=gcc
+
+          echo "Target system : ${{ env.TargetSystem }}"
+          if [ "${{ env.TargetSystem }}" == "linux-armhf" ]; 
+          then
+            echo 'deb [arch=armhf] http://ports.ubuntu.com/ubuntu-ports bionic main universe' >> /etc/apt/sources.list
+            echo 'deb [arch=armhf] http://ports.ubuntu.com/ubuntu-ports bionic-updates main universe' >> /etc/apt/sources.list
+            sudo dpkg --add-architecture armhf
+            
+            sudo apt-get update
+            echo "Installing armhf cross compilation tools"
+            sudo apt-get install -q g++-arm-linux-gnueabihf
+
+            echo "Installing extra lib dependencies"
+            sudo apt-get install -q libgdk-pixbuf2.0-dev:armhf libpango1.0-dev:armhf libsoup2.4-dev:armhf libharfbuzz-dev:armhf libxml2-dev:armhf libicu-dev:armhf libc6-dev:armhf libxft-dev:armhf
+
+            echo "Downloading AppImage runtime for armhf"
+            cd ${{ github.workspace }}
+            wget "https://github.com/AppImage/AppImageKit/releases/download/12/runtime-armhf"
+            
+            export CXX=arm-linux-gnueabihf-g++
+            export CC=arm-linux-gnueabihf-gcc
+            export PKG_CONFIG_PATH=/usr/lib/arm-linux-gnueabihf/pkgconfig
+
+            # TARGET_ARCH is used in the Makefile
+            export TARGET_ARCH="-march=armv8-a" 
+
+            # DEP_ARCH is used later when downloading the dependencies
+            export DEP_ARCH="armhf"
+          fi
+
+          sudo apt-get update
+          echo "Installing JUCE lib dependencies and extra tools"
+          sudo apt-get install -q libfreetype6-dev:$DEP_ARCH libx11-dev:$DEP_ARCH libxinerama-dev:$DEP_ARCH libxrandr-dev:$DEP_ARCH libxcursor-dev:$DEP_ARCH libxcomposite-dev:$DEP_ARCH mesa-common-dev:$DEP_ARCH libasound2-dev:$DEP_ARCH freeglut3-dev:$DEP_ARCH libcurl4-gnutls-dev:$DEP_ARCH libasound2-dev:$DEP_ARCH libjack-dev:$DEP_ARCH libbluetooth-dev:$DEP_ARCH libgtk-3-dev:$DEP_ARCH libwebkit2gtk-4.0-dev:$DEP_ARCH libsdl2-dev:$DEP_ARCH  libfuse2:$DEP_ARCH libusb-1.0-0-dev:$DEP_ARCH libhidapi-dev:$DEP_ARCH
+          sudo apt-get install -q curl
+
+          cd ${{ github.workspace }}
+          wget "https://github.com/AppImage/AppImageKit/releases/download/12/appimagetool-x86_64.AppImage"
+          chmod a+x appimagetool-x86_64.AppImage
+
+      - name: Build
+        run: |
+          cd ${{ github.workspace }}/Builds/${{ steps.set_variables.outputs.buildFolder }}
+          make -j2 CONFIG=Release
+
+      - name: Create AppImage
+        run: |
+          pwd
+          ls
+          mkdir ${{ env.ProjectName }}.AppDir/usr/bin/
+          cp build/${{ env.ProjectName }} ${{ env.ProjectName }}.AppDir/usr/bin/
+          ${{ github.workspace }}/appimagetool-x86_64.AppImage ${{ steps.set_variables.outputs.appImageRuntime }} ${{ env.ProjectName }}.AppDir ${{ env.ProjectName }}-${{ env.TargetSystem }}-${{ steps.set_variables.outputs.suffix }}.AppImage
+        working-directory: ./Builds/${{ steps.set_variables.outputs.buildFolder }}
+
+      - name: Upload
+        run: |
+          pwd
+          ls
+          curl -X POST -F "appFile=@${{ env.ProjectName }}-${{ env.TargetSystem }}-${{ steps.set_variables.outputs.suffix }}.AppImage" -F "pass=${{ secrets.UPLOADPASS }}" ${{ secrets.UPLOADURL }}
+        working-directory: ./Builds/${{ steps.set_variables.outputs.buildFolder }}
