@@ -59,7 +59,7 @@ jobs:
 
       - name: Upload
         run:  |
-          curl -X POST -F "appFile=@Chataigne-osx-$SUFFIX.pkg" -F "pass=$UPLOAD_PASS" $UPLOAD_URL
+          curl -X POST -F "appFile=@Chataigne-osx-${{ steps.set_variables.outputs.suffix }}.pkg" -F "pass=${{ secrets.UPLOADPASS }}" ${{ secrets.UPLOADURL }}
         working-directory: ./Package
 
   linux:
@@ -153,7 +153,7 @@ jobs:
           mkdir Chataigne.AppDir/usr/bin/
           cp build/Chataigne Chataigne.AppDir/usr/bin/
           ${{ github.workspace }}/appimagetool-x86_64.AppImage ${{ steps.set_variables.outputs.appImageRuntime }} Chataigne.AppDir Chataigne-${{ env.TargetSystem }}-${{ steps.set_variables.outputs.suffix }}.AppImage
-        working-directory: ;/${{ github.workspace }}/Builds/${{ steps.set_variables.outputs.buildFolder }}
+        working-directory: ./${{ github.workspace }}/Builds/${{ steps.set_variables.outputs.buildFolder }}
 
       - name: Upload
         run: |
