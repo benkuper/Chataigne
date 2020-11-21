@@ -53,17 +53,13 @@ jobs:
 
       - name: Create Package
         run:  |
-          packagesbuild ${{ env.ProjectName }}.pkgproj \
+          packagesbuild ${{ env.ProjectName }}.pkgproj
           mv ${{ env.ProjectName }}.pkg ${{ env.ProjectName }}-osx-${{ steps.set_variables.outputs.suffix }}.pkg
-          pwd
-          ls -l
         working-directory: ./Package
 
       - name: Upload
         run:  |
-          pwd
-          ls -l
-          curl -X POST -F "appFile=@Chataigne-osx-${{ steps.set_variables.outputs.suffix }}.pkg" -F "pass=${{ secrets.UPLOADPASS }}" ${{ secrets.UPLOADURL }}
+          curl -X POST -F "appFile=@${{ env.ProjectName }}-osx-${{ steps.set_variables.outputs.suffix }}.pkg" -F "pass=${{ secrets.UPLOADPASS }}" ${{ secrets.UPLOADURL }}
         working-directory: ./Package
 
   linux:
@@ -156,14 +152,14 @@ jobs:
         run: |
           pwd
           ls
-          mkdir Chataigne.AppDir/usr/bin/
-          cp build/Chataigne Chataigne.AppDir/usr/bin/
-          ${{ github.workspace }}/appimagetool-x86_64.AppImage ${{ steps.set_variables.outputs.appImageRuntime }} Chataigne.AppDir Chataigne-${{ env.TargetSystem }}-${{ steps.set_variables.outputs.suffix }}.AppImage
+          mkdir ${{ env.ProjectName }}.AppDir/usr/bin/
+          cp build/${{ env.ProjectName }} ${{ env.ProjectName }}.AppDir/usr/bin/
+          ${{ github.workspace }}/appimagetool-x86_64.AppImage ${{ steps.set_variables.outputs.appImageRuntime }} ${{ env.ProjectName }}.AppDir ${{ env.ProjectName }}-${{ env.TargetSystem }}-${{ steps.set_variables.outputs.suffix }}.AppImage
         working-directory: ./Builds/${{ steps.set_variables.outputs.buildFolder }}
 
       - name: Upload
         run: |
           pwd
           ls
-          curl -X POST -F "appFile=@Chataigne-${{ env.TargetSystem }}-${{ steps.set_variables.outputs.suffix }}.AppImage" -F "pass=${{ secrets.UPLOADPASS }}" ${{ secrets.UPLOADURL }}
+          curl -X POST -F "appFile=@${{ env.ProjectName }}-${{ env.TargetSystem }}-${{ steps.set_variables.outputs.suffix }}.AppImage" -F "pass=${{ secrets.UPLOADPASS }}" ${{ secrets.UPLOADURL }}
         working-directory: ./Builds/${{ steps.set_variables.outputs.buildFolder }}
