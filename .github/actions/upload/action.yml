@@ -1,8 +1,11 @@
 name: 'Upload'
 description: 'Upload package to server'
 inputs:
-  secrets: 
-    description: 'Dict that contains the UPLOADURL and UPLOADPASS secrets'
+  url: 
+    description: 'Upload URL'
+    required: true
+  pass:
+    description: 'Upload password'
     required: true
   pkg-name:
     description: 'Name of the file to upload'
@@ -11,5 +14,5 @@ inputs:
 runs:
   using: "composite"
   steps: 
-    - run: curl -X POST -F "appFile=@${{ inputs.pkg-name }}" -F "pass=${{ inputs.secrets.UPLOADPASS }}" ${{ inputs.secrets.UPLOADURL }}
+    - run: curl -X POST -F "appFile=@${{ inputs.pkg-name }}" -F "pass=${{ inputs.pass }}" ${{ inputs.url }}
       shell: bash

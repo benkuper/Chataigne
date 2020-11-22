@@ -58,8 +58,8 @@ jobs:
         uses: ./.github/actions/upload
         with:
           pkg-name: ./Package/${{ steps.create_package.pkg-name }}
-          secrets: ${{ secrets }}
-
+          url: ${{ secrets.UPLOADURL }}
+          pass: ${{ secrets.UPLOADPASS }}
   linux:
     name: Linux
     runs-on: ubuntu-18.04
@@ -156,4 +156,5 @@ jobs:
         uses: ./.github/actions/upload
         with:
           pkg-name: ./Builds/${{ matrix.buildFolder }}/${{ steps.create_package.pkg-name }}
-          secrets: ${{ secrets }}
+          url: ${{ secrets.UPLOADURL }}
+          pass: ${{ secrets.UPLOADPASS }}
