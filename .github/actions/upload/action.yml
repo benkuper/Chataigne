@@ -1,0 +1,12 @@
+name: 'Upload'
+description: 'Upload package to server'
+inputs:
+  pkg-name:
+    description: 'Name of the file to upload'
+    required: true
+
+runs:
+  using: "composite"
+  steps: 
+    - run: curl -X POST -F "appFile=@${{ inputs.pkg-name }}" -F "pass=${{ secrets.UPLOADPASS }}" ${{ secrets.UPLOADURL }}
+      shell: bash

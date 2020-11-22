@@ -12,14 +12,9 @@ jobs:
     steps:
       - name: Set Suffix
         id: set_variables
-        run: |
-          if [[ $GITHUB_REF == *"refs/tags/"* ]]
-          then
-            echo "Found Tag : ${GITHUB_REF#refs/tags/}"
-            echo "::set-output name=suffix::${GITHUB_REF#refs/tags/}"
-          else
-            echo "::set-output name=suffix::bleedingedge"
-          fi
+        uses: ./.github/actions/set-suffix
+        with:
+          os: 'osx'
 
       - name: Checkout repo
         uses: actions/checkout@v2
@@ -32,7 +27,6 @@ jobs:
           repository: benkuper/JUCE
           ref: develop-local
           path: JUCE
-
 
       - name: Download Packages 
         run: |
@@ -52,19 +46,23 @@ jobs:
           use-xcpretty: true
 
       - name: Create Package
+        id: create_package
         run:  |
           packagesbuild ${{ env.ProjectName }}.pkgproj
-          mv ${{ env.ProjectName }}.pkg ${{ env.ProjectName }}-osx-${{ steps.set_variables.outputs.suffix }}.pkg
+          PKGNAME=${{ env.ProjectName }}-${{ steps.set_variables.outputs.suffix }}.pkg
+          mv ${{ env.ProjectName }}.pkg $PKGNAME
+          echo "::set-output name=pkg-name::$PKGNAME"
         working-directory: ./Package
 
       - name: Upload
-        run:  |
-          curl -X POST -F "appFile=@${{ env.ProjectName }}-osx-${{ steps.set_variables.outputs.suffix }}.pkg" -F "pass=${{ secrets.UPLOADPASS }}" ${{ secrets.UPLOADURL }}
+        uses: ./.github/actions/upload
+        with:
+          pkg-name: ${{ steps.create_package.pkg-name }}
         working-directory: ./Package
 
   linux:
     name: Linux
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
     env:
       TargetSystem: linux-x64
 

@@ -1,0 +1,24 @@
+name: 'Set Suffix'
+description: 'Set app version suffix'
+inputs:
+  os:
+    description: 'OS designator'
+    required: true
+outputs:
+  suffix:
+    description: 'Suffix for the compiled version'
+    value: ${{ steps.main.outputs.suffix }}
+
+runs:
+  using: "composite"
+  steps: 
+    - id: main
+      run: |
+        if [[ $GITHUB_REF == *"refs/tags/"* ]]
+        then
+          echo "Found Tag : ${GITHUB_REF#refs/tags/}"
+          echo "::set-output name=suffix::${{ inputs.os }}-${GITHUB_REF#refs/tags/}"
+        else
+          echo "::set-output name=suffix::${{ inputs.os }}-bleedingedge"
+        fi
+      shell: bash
