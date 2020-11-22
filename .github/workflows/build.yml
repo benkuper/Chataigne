@@ -129,6 +129,9 @@ jobs:
           wget "https://github.com/AppImage/AppImageKit/releases/download/12/appimagetool-x86_64.AppImage"
           chmod a+x appimagetool-x86_64.AppImage
 
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
+
       - name: Build
         run: |
           if [ "${{ matrix.arch }}" == "linux-armhf" ]; 
