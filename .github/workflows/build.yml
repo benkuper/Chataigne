@@ -10,12 +10,6 @@ jobs:
     runs-on: macos-latest
 
     steps:
-      - name: Set Suffix
-        id: set_variables
-        uses: ./.github/actions/set-suffix
-        with:
-          os: 'osx'
-
       - name: Checkout repo
         uses: actions/checkout@v2
         with:
@@ -27,6 +21,12 @@ jobs:
           repository: benkuper/JUCE
           ref: develop-local
           path: JUCE
+
+      - name: Set Suffix
+        id: set_variables
+        uses: ./.github/actions/set-suffix
+        with:
+          os: 'osx'
 
       - name: Download Packages 
         run: |
