@@ -60,6 +60,7 @@ jobs:
           pkg-name: ./Package/${{ steps.create_package.outputs.pkg-name }}
           url: ${{ secrets.UPLOADURL }}
           pass: ${{ secrets.UPLOADPASS }}
+          
   linux:
     name: Linux
     runs-on: ubuntu-18.04
@@ -109,7 +110,7 @@ jobs:
             sudo apt-get install -qy g++-arm-linux-gnueabihf
 
             echo "Installing extra lib dependencies"
-            sudo apt-get install -qy libgdk-pixbuf2.0-dev:armhf libpango1.0-dev:armhf libsoup2.4-dev:armhf libharfbuzz-dev:armhf libxml2-dev:armhf libicu-dev:armhf libc6-dev:armhf libxft-dev:armhf linux-libc-dev:armhf libsoup2.4-1:armhf gir1.2-soup-2.4:armhf libgssapi-krb5-2:armhf libbluetooth3:armhf 
+            sudo apt-get install -qyf libgdk-pixbuf2.0-dev:armhf libpango1.0-dev:armhf libsoup2.4-dev:armhf libharfbuzz-dev:armhf libxml2-dev:armhf libicu-dev:armhf libc6-dev:armhf libxft-dev:armhf
 
             echo "Downloading AppImage runtime for armhf"
             cd ${{ github.workspace }}
@@ -122,7 +123,7 @@ jobs:
 
           sudo apt-get update
           echo "Installing JUCE lib dependencies and extra tools"
-          sudo apt-get install -qy libfreetype6-dev:$DEP_ARCH libx11-dev:$DEP_ARCH libxinerama-dev:$DEP_ARCH libxrandr-dev:$DEP_ARCH libxcursor-dev:$DEP_ARCH libxcomposite-dev:$DEP_ARCH mesa-common-dev:$DEP_ARCH libasound2-dev:$DEP_ARCH freeglut3-dev:$DEP_ARCH libcurl4-gnutls-dev:$DEP_ARCH libasound2-dev:$DEP_ARCH libjack-dev:$DEP_ARCH libbluetooth-dev:$DEP_ARCH libgtk-3-dev:$DEP_ARCH libwebkit2gtk-4.0-dev:$DEP_ARCH libsdl2-dev:$DEP_ARCH  libfuse2:$DEP_ARCH libusb-1.0-0-dev:$DEP_ARCH libhidapi-dev:$DEP_ARCH
+          sudo apt-get install -qyf libfreetype6-dev:$DEP_ARCH libx11-dev:$DEP_ARCH libxinerama-dev:$DEP_ARCH libxrandr-dev:$DEP_ARCH libxcursor-dev:$DEP_ARCH libxcomposite-dev:$DEP_ARCH mesa-common-dev:$DEP_ARCH libasound2-dev:$DEP_ARCH freeglut3-dev:$DEP_ARCH libcurl4-gnutls-dev:$DEP_ARCH libasound2-dev:$DEP_ARCH libjack-dev:$DEP_ARCH libbluetooth-dev:$DEP_ARCH libgtk-3-dev:$DEP_ARCH libwebkit2gtk-4.0-dev:$DEP_ARCH libsdl2-dev:$DEP_ARCH  libfuse2:$DEP_ARCH libusb-1.0-0-dev:$DEP_ARCH libhidapi-dev:$DEP_ARCH
           sudo apt-get install -qy curl
 
           cd ${{ github.workspace }}
