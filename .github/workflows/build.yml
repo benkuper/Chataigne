@@ -58,6 +58,7 @@ jobs:
         uses: ./.github/actions/upload
         with:
           pkg-name: ./Package/${{ steps.create_package.pkg-name }}
+          secrets: ${{ secrets }}
 
   linux:
     name: Linux

@@ -1,6 +1,9 @@
 name: 'Upload'
 description: 'Upload package to server'
 inputs:
+  secrets: 
+    description: 'Dict that contains the UPLOADURL and UPLOADPASS secrets'
+    required: true
   pkg-name:
     description: 'Name of the file to upload'
     required: true
