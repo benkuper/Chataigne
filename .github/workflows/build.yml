@@ -101,6 +101,7 @@ jobs:
           then
             echo 'deb [arch=armhf] http://ports.ubuntu.com/ubuntu-ports bionic main universe' | sudo tee -a /etc/apt/sources.list
             echo 'deb [arch=armhf] http://ports.ubuntu.com/ubuntu-ports bionic-updates main universe' | sudo tee -a /etc/apt/sources.list
+            echo 'deb [arch=armhf] http://ports.ubuntu.com/ubuntu-ports bionic-security main universe' | sudo tee -a /etc/apt/sources.list
             sudo dpkg --add-architecture armhf
             
             sudo apt-get update
