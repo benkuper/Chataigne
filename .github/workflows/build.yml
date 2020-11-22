@@ -92,6 +92,9 @@ jobs:
         with:
           os: ${{ matrix.arch }}
 
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
+        
       - name: Installing dependencies
         id: install_deps
         shell: bash {0} # Opt out of fail-fast behavior (necessary to ignore fetch errors)
@@ -128,9 +131,6 @@ jobs:
           cd ${{ github.workspace }}
           wget "https://github.com/AppImage/AppImageKit/releases/download/12/appimagetool-x86_64.AppImage"
           chmod a+x appimagetool-x86_64.AppImage
-
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
 
       - name: Build
         run: |
