@@ -92,9 +92,6 @@ jobs:
         with:
           os: ${{ matrix.arch }}
 
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
-
       - name: Installing dependencies
         id: install_deps
         shell: bash {0} # Opt out of fail-fast behavior (necessary to ignore fetch errors)
