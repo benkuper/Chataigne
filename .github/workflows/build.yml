@@ -112,7 +112,7 @@ jobs:
             sudo apt-get install -qy g++-arm-linux-gnueabihf
 
             echo "Installing extra lib dependencies"
-            sudo apt-get install -qy libgdk-pixbuf2.0-dev:armhf libpango1.0-dev:armhf libsoup2.4-dev:armhf libharfbuzz-dev:armhf libxml2-dev:armhf libicu-dev:armhf libc6-dev:armhf libxft-dev:armhf linux-libc-dev:armhf libsoup2.4-1:armhf gir1.2-soup-2.4:armhf
+            sudo apt-get install -qy libgdk-pixbuf2.0-dev:armhf libpango1.0-dev:armhf libsoup2.4-dev:armhf libharfbuzz-dev:armhf libxml2-dev:armhf libicu-dev:armhf libc6-dev:armhf libxft-dev:armhf linux-libc-dev:armhf libsoup2.4-1:armhf gir1.2-soup-2.4:armhf libgssapi-krb5-2:armhf libbluetooth3:armhf 
 
             echo "Downloading AppImage runtime for armhf"
             cd ${{ github.workspace }}
