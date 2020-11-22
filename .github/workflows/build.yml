@@ -63,29 +63,18 @@ jobs:
   linux:
     name: Linux
     runs-on: ubuntu-18.04
-    env:
-      TargetSystem: linux-x64
+    strategy:
+      matrix:
+        include:
+        - arch: linux-x64
+          buildFolder: "LinuxMakefile"
+
+        - arch: linux-armhf
+          buildFolder: "Raspberry"
+
+        arch: [linux-x64, linux-armhf]
 
     steps:
-      - name: Set Variables
-        id: set_variables
-        run: |
-          if [[ $GITHUB_REF == *"refs/tags/"* ]]
-          then
-            echo "Found Tag : ${GITHUB_REF#refs/tags/}"
-            echo "::set-output name=suffix::${GITHUB_REF#refs/tags/}"
-          else
-            echo "::set-output name=suffix::bleedingedge"
-          fi
-
-          if [ "${{ env.TargetSystem }}" == "linux-armhf" ]; 
-          then
-            echo "::set-output name=buildFolder::Raspberry"
-            echo "::set-output name=appImageRuntime::--runtime-file ${{ github.workspace }}/runtime-armhf"
-          else
-            echo "::set-output name=buildFolder::LinuxMakefile"
-          fi
-
       - name: Checkout repo
         uses: actions/checkout@v2
         with:
@@ -98,13 +87,17 @@ jobs:
           ref: develop-local
           path: JUCE
 
-      - name: Installing dependencies
-        run: |
-          export CXX=g++
-          export CC=gcc
+      - name: Set Suffix
+        id: set_variables
+        uses: ./.github/actions/set-suffix
+        with:
+          os: ${{ matrix.arch }}
 
-          echo "Target system : ${{ env.TargetSystem }}"
-          if [ "${{ env.TargetSystem }}" == "linux-armhf" ]; 
+      - name: Installing dependencies
+        id: install_deps
+        run: |
+          echo "Target system architecture: ${{ matrix.arch }}"
+          if [ "${{ matrix.arch }}" == "linux-armhf" ]; 
           then
             echo 'deb [arch=armhf] http://ports.ubuntu.com/ubuntu-ports bionic main universe' >> /etc/apt/sources.list
             echo 'deb [arch=armhf] http://ports.ubuntu.com/ubuntu-ports bionic-updates main universe' >> /etc/apt/sources.list
@@ -120,16 +113,10 @@ jobs:
             echo "Downloading AppImage runtime for armhf"
             cd ${{ github.workspace }}
             wget "https://github.com/AppImage/AppImageKit/releases/download/12/runtime-armhf"
-            
-            export CXX=arm-linux-gnueabihf-g++
-            export CC=arm-linux-gnueabihf-gcc
-            export PKG_CONFIG_PATH=/usr/lib/arm-linux-gnueabihf/pkgconfig
-
-            # TARGET_ARCH is used in the Makefile
-            export TARGET_ARCH="-march=armv8-a" 
+            echo "::set-output name=appImageRuntime::--runtime-file ${{ github.workspace }}/runtime-armhf"
 
             # DEP_ARCH is used later when downloading the dependencies
-            export DEP_ARCH="armhf"
+            DEP_ARCH="armhf"
           fi
 
           sudo apt-get update
@@ -143,21 +130,30 @@ jobs:
 
       - name: Build
         run: |
-          cd ${{ github.workspace }}/Builds/${{ steps.set_variables.outputs.buildFolder }}
+          if [ "${{ matrix.arch }}" == "linux-armhf" ]; 
+          then
+            export CXX=arm-linux-gnueabihf-g++
+            export CC=arm-linux-gnueabihf-gcc
+            export PKG_CONFIG_PATH=/usr/lib/arm-linux-gnueabihf/pkgconfig
+            export TARGET_ARCH="-march=armv8-a" # TARGET_ARCH is used in the Makefile
+          fi
+
+          cd ${{ github.workspace }}/Builds/${{ matrix.BuildFolder }}
           make -j2 CONFIG=Release
 
       - name: Create AppImage
+        id: create_package
         run: |
-          pwd
-          ls
           mkdir ${{ env.ProjectName }}.AppDir/usr/bin/
           cp build/${{ env.ProjectName }} ${{ env.ProjectName }}.AppDir/usr/bin/
-          ${{ github.workspace }}/appimagetool-x86_64.AppImage ${{ steps.set_variables.outputs.appImageRuntime }} ${{ env.ProjectName }}.AppDir ${{ env.ProjectName }}-${{ env.TargetSystem }}-${{ steps.set_variables.outputs.suffix }}.AppImage
-        working-directory: ./Builds/${{ steps.set_variables.outputs.buildFolder }}
+
+          PKGNAME=${{ env.ProjectName }}-${{ steps.set_variables.outputs.suffix }}.AppImage
+          echo "::set-output name=pkg-name::$PKGNAME"
+          ${{ github.workspace }}/appimagetool-x86_64.AppImage ${{ steps.install_deps.outputs.appImageRuntime }} ${{ env.ProjectName }}.AppDir $PKGNAME
+        working-directory: ./Builds/${{ matrix.buildFolder }}
 
       - name: Upload
-        run: |
-          pwd
-          ls
-          curl -X POST -F "appFile=@${{ env.ProjectName }}-${{ env.TargetSystem }}-${{ steps.set_variables.outputs.suffix }}.AppImage" -F "pass=${{ secrets.UPLOADPASS }}" ${{ secrets.UPLOADURL }}
-        working-directory: ./Builds/${{ steps.set_variables.outputs.buildFolder }}
+        uses: ./.github/actions/upload
+        with:
+          pkg-name: ./Builds/${{ matrix.buildFolder }}/${{ steps.create_package.pkg-name }}
+          secrets: ${{ secrets }}
