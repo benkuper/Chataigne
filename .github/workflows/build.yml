@@ -71,8 +71,7 @@ jobs:
 
         - arch: linux-armhf
           buildFolder: "Raspberry"
-
-        arch: [linux-x64, linux-armhf]
+      fail-fast: false
 
     steps:
       - name: Checkout repo
