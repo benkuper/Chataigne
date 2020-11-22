@@ -57,8 +57,7 @@ jobs:
       - name: Upload
         uses: ./.github/actions/upload
         with:
-          pkg-name: ${{ steps.create_package.pkg-name }}
-        working-directory: ./Package
+          pkg-name: ./Package/${{ steps.create_package.pkg-name }}
 
   linux:
     name: Linux
