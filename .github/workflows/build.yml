@@ -95,6 +95,7 @@ jobs:
 
       - name: Installing dependencies
         id: install_deps
+        shell: bash {0} # Opt out of fail-fast behavior
         run: |
           echo "Target system architecture: ${{ matrix.arch }}"
           if [ "${{ matrix.arch }}" == "linux-armhf" ]; 
@@ -103,7 +104,7 @@ jobs:
             echo 'deb [arch=armhf] http://ports.ubuntu.com/ubuntu-ports bionic-updates main universe' | sudo tee -a /etc/apt/sources.list
             sudo dpkg --add-architecture armhf
             
-            sudo apt-get update -qm
+            sudo apt-get update
             echo "Installing armhf cross compilation tools"
             sudo apt-get install -q g++-arm-linux-gnueabihf
 
