@@ -99,8 +99,8 @@ jobs:
           echo "Target system architecture: ${{ matrix.arch }}"
           if [ "${{ matrix.arch }}" == "linux-armhf" ]; 
           then
-            sudo echo 'deb [arch=armhf] http://ports.ubuntu.com/ubuntu-ports bionic main universe' >> /etc/apt/sources.list
-            sudo echo 'deb [arch=armhf] http://ports.ubuntu.com/ubuntu-ports bionic-updates main universe' >> /etc/apt/sources.list
+            echo 'deb [arch=armhf] http://ports.ubuntu.com/ubuntu-ports bionic main universe' | sudo tee -a /etc/apt/sources.list
+            echo 'deb [arch=armhf] http://ports.ubuntu.com/ubuntu-ports bionic-updates main universe' | sudo tee -a /etc/apt/sources.list
             sudo dpkg --add-architecture armhf
             
             sudo apt-get update
