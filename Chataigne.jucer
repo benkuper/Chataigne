@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.7.7b1"
+<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.7.7b2"
               bundleIdentifier="benkuper.Chataigne" includeBinaryInAppConfig="1"
               companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
-              companyEmail="benjamin@kuperberg.fr" defines="" splashScreenColour="Dark"
-              cppLanguageStandard="17" companyCopyright="Ben Kuper" headerPath="../../Source"
-              projectLineFeed="&#10;" jucerFormatVersion="1">
+              companyEmail="benjamin@kuperberg.fr" defines="VST_LOGGING=0&#10;"
+              splashScreenColour="Dark" cppLanguageStandard="17" companyCopyright="Ben Kuper"
+              headerPath="../../Source" projectLineFeed="&#10;" jucerFormatVersion="1">
   <MAINGROUP id="EDDVhd" name="Chataigne">
     <GROUP id="{E61F6705-4C4B-3F04-F742-20CC91F590E4}" name="Resources">
       <GROUP id="{400148EF-B215-CD72-18E1-183E2FCE16F3}" name="Modules">
@@ -1518,44 +1518,11 @@
         <MODULEPATH id="juce_simpleweb" path="Modules"/>
       </MODULEPATHS>
     </XCODE_MAC>
-    <LINUX_MAKE targetFolder="Builds/Raspberry" smallIcon="nVz6Li" bigIcon="nVz6Li"
-                extraLinkerFlags="-Wl,-rpath,&quot;lib&quot;&#10;-Wl,--as-needed"
-                externalLibraries="bluetooth&#10;Servus&#10;curl&#10;SDL2&#10;usb-1.0&#10;hidapi-hidraw">
-      <CONFIGURATIONS>
-        <CONFIGURATION name="Debug" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/sdl/include&#10;/usr/include/freetype2&#10;../../External/hidapi/include&#10;../../External/libusb/include/libusb-1.0"
-                       libraryPath="../../External/servus/lib/raspberry&#10;../../External/sdl/lib/raspberry&#10;/usr/lib/arm-linux-gnueabihf"
-                       linuxArchitecture="-march=native" optimisation="3" isDebug="1"/>
-        <CONFIGURATION name="Release" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/sdl/include&#10;/usr/include/freetype2&#10;../../External/hidapi/include&#10;../../External/libusb/include/libusb-1.0"
-                       libraryPath="../../External/servus/lib/raspberry&#10;../../External/sdl/lib/raspberry&#10;/usr/lib/arm-linux-gnueabihf&#10;"
-                       linuxArchitecture="-march=native"/>
-      </CONFIGURATIONS>
-      <MODULEPATHS>
-        <MODULEPATH id="juce_video" path="JUCE/modules"/>
-        <MODULEPATH id="juce_osc" path="JUCE/modules"/>
-        <MODULEPATH id="juce_organicui" path="Modules"/>
-        <MODULEPATH id="juce_opengl" path="JUCE/modules"/>
-        <MODULEPATH id="juce_gui_extra" path="JUCE/modules"/>
-        <MODULEPATH id="juce_gui_basics" path="JUCE/modules"/>
-        <MODULEPATH id="juce_graphics" path="JUCE/modules"/>
-        <MODULEPATH id="juce_events" path="JUCE/modules"/>
-        <MODULEPATH id="juce_data_structures" path="JUCE/modules"/>
-        <MODULEPATH id="juce_cryptography" path="JUCE/modules"/>
-        <MODULEPATH id="juce_core" path="JUCE/modules"/>
-        <MODULEPATH id="juce_audio_utils" path="JUCE/modules"/>
-        <MODULEPATH id="juce_audio_processors" path="JUCE/modules"/>
-        <MODULEPATH id="juce_audio_devices" path="JUCE/modules"/>
-        <MODULEPATH id="juce_audio_basics" path="JUCE/modules"/>
-        <MODULEPATH id="juce_dsp" path="JUCE/modules"/>
-        <MODULEPATH id="juce_timeline" path="Modules"/>
-        <MODULEPATH id="juce_audio_formats" path="JUCE/modules"/>
-        <MODULEPATH id="juce_simpleweb" path="Modules"/>
-      </MODULEPATHS>
-    </LINUX_MAKE>
     <LINUX_MAKE targetFolder="Builds/LinuxMakefile" externalLibraries="bluetooth&#10;Servus&#10;curl&#10;SDL2&#10;usb-1.0&#10;hidapi-hidraw"
                 extraLinkerFlags="-Wl,-rpath,&quot;lib&quot;&#10;-Wl,--as-needed"
                 smallIcon="nVz6Li" bigIcon="nVz6Li">
       <CONFIGURATIONS>
-        <CONFIGURATION name="Debug" optimisation="3" targetName="Chataigne" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/sdl/include&#10;../../External/hidapi/include&#10;../../External/hidapi/include&#10;../../External/libusb/include/libusb-1.0&#10;"
+        <CONFIGURATION name="Debug" optimisation="3" targetName="Chataigne" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/sdl/include&#10;../../External/hidapi/include&#10;../../External/libusb/include/libusb-1.0&#10;"
                        linuxArchitecture="-m64" libraryPath="../../External/servus/lib/linux&#10;../../External/sdl/lib/linux&#10;/usr/lib/x86_64-linux-gnu/"
                        isDebug="1"/>
         <CONFIGURATION name="Release" optimisation="3" targetName="Chataigne" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/sdl/include&#10;../../External/hidapi/include&#10;../../External/libusb/include/libusb-1.0"
@@ -1684,6 +1651,39 @@
         <MODULEPATH id="juce_simpleweb" path="Modules"/>
       </MODULEPATHS>
     </XCODE_MAC>
+    <LINUX_MAKE targetFolder="Builds/Raspberry" smallIcon="nVz6Li" bigIcon="nVz6Li"
+                extraLinkerFlags="-Wl,-rpath,&quot;lib&quot;&#10;-Wl,--as-needed"
+                externalLibraries="bluetooth&#10;Servus&#10;curl&#10;SDL2&#10;usb-1.0&#10;hidapi-hidraw">
+      <CONFIGURATIONS>
+        <CONFIGURATION name="Debug" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/sdl/include&#10;/usr/include/freetype2&#10;../../External/hidapi/include&#10;../../External/libusb/include/libusb-1.0"
+                       libraryPath="../../External/servus/lib/raspberry&#10;../../External/sdl/lib/raspberry&#10;/usr/lib/arm-linux-gnueabihf"
+                       linuxArchitecture="-march=native" optimisation="3" isDebug="1"/>
+        <CONFIGURATION name="Release" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/sdl/include&#10;/usr/include/freetype2&#10;../../External/hidapi/include&#10;../../External/libusb/include/libusb-1.0"
+                       libraryPath="../../External/servus/lib/raspberry&#10;../../External/sdl/lib/raspberry&#10;/usr/lib/arm-linux-gnueabihf&#10;"
+                       linuxArchitecture="-march=native"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_video" path="JUCE/modules"/>
+        <MODULEPATH id="juce_osc" path="JUCE/modules"/>
+        <MODULEPATH id="juce_organicui" path="Modules"/>
+        <MODULEPATH id="juce_opengl" path="JUCE/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="JUCE/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="JUCE/modules"/>
+        <MODULEPATH id="juce_graphics" path="JUCE/modules"/>
+        <MODULEPATH id="juce_events" path="JUCE/modules"/>
+        <MODULEPATH id="juce_data_structures" path="JUCE/modules"/>
+        <MODULEPATH id="juce_cryptography" path="JUCE/modules"/>
+        <MODULEPATH id="juce_core" path="JUCE/modules"/>
+        <MODULEPATH id="juce_audio_utils" path="JUCE/modules"/>
+        <MODULEPATH id="juce_audio_processors" path="JUCE/modules"/>
+        <MODULEPATH id="juce_audio_devices" path="JUCE/modules"/>
+        <MODULEPATH id="juce_audio_basics" path="JUCE/modules"/>
+        <MODULEPATH id="juce_dsp" path="JUCE/modules"/>
+        <MODULEPATH id="juce_timeline" path="Modules"/>
+        <MODULEPATH id="juce_audio_formats" path="JUCE/modules"/>
+        <MODULEPATH id="juce_simpleweb" path="Modules"/>
+      </MODULEPATHS>
+    </LINUX_MAKE>
   </EXPORTFORMATS>
   <MODULES>
     <MODULE id="juce_audio_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
