@@ -83,8 +83,11 @@ void MouseModule::setCursorPosition(Point<float>& pos, bool isRelative)
 	MessageManagerLock mmLock;
 	if (isRelative)
 	{
-		juce::Rectangle<int> r = Desktop::getInstance().getDisplays().getMainDisplay().totalArea;;
-		pos *= Point<float>((float)r.getWidth(), (float)r.getHeight());
+		if (const Displays::Display* d = Desktop::getInstance().getDisplays().getPrimaryDisplay())
+		{
+			juce::Rectangle<int> r = d->totalArea;
+			pos *= Point<float>((float)r.getWidth(), (float)r.getHeight());
+		}
 	}
 
 	Desktop::getInstance().getMainMouseSource().setScreenPosition(pos);
