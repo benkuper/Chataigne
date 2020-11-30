@@ -735,7 +735,10 @@ void MIDIModule::MIDIModuleRouterController::triggerTriggered(Trigger* t)
 
 		for (auto& mrv : router->sourceValues.items)
 		{
-			if (MIDIRouteParams* dp = dynamic_cast<MIDIRouteParams*>(mrv->routeParams.get())) dp->type->setValueWithData(midiType);
+			if (MIDIRouteParams* dp = dynamic_cast<MIDIRouteParams*>(mrv->routeParams.get()))
+			{
+				if (dp->type != nullptr) dp->type->setValueWithData(midiType); //only MIDIRouteParams with type
+			}
 		}
 	}
 	else if (t == autoSetPitch)
