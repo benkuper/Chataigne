@@ -1,0 +1,171 @@
+on: [push]
+
+env:
+  ProjectName: Chataigne
+  PackagesVersion: 1.2.9
+
+jobs:
+  osx:
+    name: OSX
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+        with:
+          submodules: 'recursive'
+
+      - name: Checkout JUCE
+        uses: actions/checkout@v2
+        with:
+          repository: benkuper/JUCE
+          ref: develop-local
+          path: JUCE
+
+      - name: Set Suffix
+        id: set_variables
+        uses: ./.github/actions/set-suffix
+        with:
+          os: 'osx'
+
+      - name: Download Packages 
+        run: |
+          curl -L -o Packages.dmg 'http://s.sudre.free.fr/Software/files/Packages.dmg'
+          hdiutil mount Packages.dmg
+          sudo installer -pkg "/Volumes/Packages ${{ env.PackagesVersion }}/Install Packages.pkg" -target /
+          hdiutil detach "/Volumes/Packages ${{ env.PackagesVersion }}/"
+
+      - name: Build
+        uses: sersoft-gmbh/xcodebuild-action@v1.3
+        with:
+          project: Builds/MacOSX_CI/${{ env.ProjectName }}.xcodeproj
+          destination: platform=macOS
+          jobs: 2
+          action: build
+          configuration: Release
+          use-xcpretty: true
+
+      - name: Create Package
+        id: create_package
+        run:  |
+          packagesbuild ${{ env.ProjectName }}.pkgproj
+          PKGNAME=${{ env.ProjectName }}-${{ steps.set_variables.outputs.suffix }}.pkg
+          mv ${{ env.ProjectName }}.pkg $PKGNAME
+          echo "::set-output name=pkg-name::$PKGNAME"
+        working-directory: ./Package
+
+      - name: Upload
+        uses: ./.github/actions/upload
+        with:
+          pkg-name: ./Package/${{ steps.create_package.outputs.pkg-name }}
+          url: ${{ secrets.UPLOADURL }}
+          pass: ${{ secrets.UPLOADPASS }}
+          
+  linux:
+    name: Linux
+    runs-on: ubuntu-18.04
+    strategy:
+      matrix:
+        include:
+        - arch: linux-x64
+          buildFolder: "LinuxMakefile"
+
+        - arch: linux-armhf
+          buildFolder: "Raspberry"
+      fail-fast: false
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+        with:
+          submodules: 'recursive'
+
+      - name: Checkout JUCE
+        uses: actions/checkout@v2
+        with:
+          repository: benkuper/JUCE
+          ref: develop-local
+          path: JUCE
+
+      - name: Set Suffix
+        id: set_variables
+        uses: ./.github/actions/set-suffix
+        with:
+          os: ${{ matrix.arch }}
+
+      - name: Installing dependencies
+        id: install_deps
+        #shell: bash {0} # Opt out of fail-fast behavior (necessary to ignore fetch errors)
+        run: |
+          echo "Target system architecture: ${{ matrix.arch }}"
+          if [ "${{ matrix.arch }}" == "linux-armhf" ]; 
+          then
+            sudo tee /etc/apt/sources.list << END
+          deb [arch=amd64] http://us.archive.ubuntu.com/ubuntu/ bionic main restricted universe multiverse
+          deb [arch=amd64] http://us.archive.ubuntu.com/ubuntu/ bionic-updates main restricted universe multiverse
+          deb [arch=amd64] http://us.archive.ubuntu.com/ubuntu/ bionic-backports main restricted universe multiverse
+          deb [arch=amd64] http://security.ubuntu.com/ubuntu bionic-security main restricted universe multiverse
+
+          deb [arch=armhf] http://ports.ubuntu.com/ubuntu-ports/ bionic main restricted universe multiverse
+          deb [arch=armhf] http://ports.ubuntu.com/ubuntu-ports/ bionic-updates main restricted universe multiverse
+          deb [arch=armhf] http://ports.ubuntu.com/ubuntu-ports/ bionic-backports main restricted universe multiverse
+          deb [arch=armhf] http://ports.ubuntu.com/ubuntu-ports/ bionic-security main restricted universe multiverse
+          END
+
+            sudo dpkg --add-architecture armhf
+            
+            sudo apt-get update
+            echo "Installing armhf cross compilation tools"
+            sudo apt-get install -qy g++-arm-linux-gnueabihf
+
+            echo "Installing extra lib dependencies"
+            sudo apt-get install -qyf libgdk-pixbuf2.0-dev:armhf libpango1.0-dev:armhf libsoup2.4-dev:armhf libharfbuzz-dev:armhf libxml2-dev:armhf libicu-dev:armhf libc6-dev:armhf libxft-dev:armhf
+
+            echo "Downloading AppImage runtime for armhf"
+            cd ${{ github.workspace }}
+            wget "https://github.com/AppImage/AppImageKit/releases/download/12/runtime-armhf"
+            echo "::set-output name=appImageRuntime::--runtime-file ${{ github.workspace }}/runtime-armhf"
+
+            # DEP_ARCH is used later when downloading the dependencies
+            DEP_ARCH="armhf"
+          fi
+
+          sudo apt-get update
+          echo "Installing JUCE lib dependencies and extra tools"
+          sudo apt-get install -qyf libfreetype6-dev:$DEP_ARCH libx11-dev:$DEP_ARCH libxinerama-dev:$DEP_ARCH libxrandr-dev:$DEP_ARCH libxcursor-dev:$DEP_ARCH libxcomposite-dev:$DEP_ARCH mesa-common-dev:$DEP_ARCH libasound2-dev:$DEP_ARCH freeglut3-dev:$DEP_ARCH libcurl4-gnutls-dev:$DEP_ARCH libasound2-dev:$DEP_ARCH libjack-dev:$DEP_ARCH libbluetooth-dev:$DEP_ARCH libgtk-3-dev:$DEP_ARCH libwebkit2gtk-4.0-dev:$DEP_ARCH libsdl2-dev:$DEP_ARCH  libfuse2:$DEP_ARCH libusb-1.0-0-dev:$DEP_ARCH libhidapi-dev:$DEP_ARCH
+          sudo apt-get install -qy curl
+
+          cd ${{ github.workspace }}
+          wget "https://github.com/AppImage/AppImageKit/releases/download/12/appimagetool-x86_64.AppImage"
+          chmod a+x appimagetool-x86_64.AppImage
+
+      - name: Build
+        run: |
+          if [ "${{ matrix.arch }}" == "linux-armhf" ]; 
+          then
+            export CXX=arm-linux-gnueabihf-g++
+            export CC=arm-linux-gnueabihf-gcc
+            export PKG_CONFIG_PATH=/usr/lib/arm-linux-gnueabihf/pkgconfig
+            export TARGET_ARCH="-march=armv8-a" # TARGET_ARCH is used in the Makefile
+          fi
+
+          cd ${{ github.workspace }}/Builds/${{ matrix.BuildFolder }}
+          make -j2 CONFIG=Release
+
+      - name: Create AppImage
+        id: create_package
+        run: |
+          mkdir ${{ env.ProjectName }}.AppDir/usr/bin/
+          cp build/${{ env.ProjectName }} ${{ env.ProjectName }}.AppDir/usr/bin/
+
+          PKGNAME=${{ env.ProjectName }}-${{ steps.set_variables.outputs.suffix }}.AppImage
+          echo "::set-output name=pkg-name::$PKGNAME"
+          ${{ github.workspace }}/appimagetool-x86_64.AppImage ${{ steps.install_deps.outputs.appImageRuntime }} ${{ env.ProjectName }}.AppDir $PKGNAME
+        working-directory: ./Builds/${{ matrix.buildFolder }}
+
+      - name: Upload
+        uses: ./.github/actions/upload
+        with:
+          pkg-name: ./Builds/${{ matrix.buildFolder }}/${{ steps.create_package.outputs.pkg-name }}
+          url: ${{ secrets.UPLOADURL }}
+          pass: ${{ secrets.UPLOADPASS }}
