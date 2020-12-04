@@ -8631,7 +8631,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = benkuper.Chataigne;
 				PRODUCT_NAME = "Chataigne";
 				USE_HEADERMAP = NO;
-				VALID_ARCHS = "i386 x86_64 arm64 arm64e";
+				VALID_ARCHS = "x86_64";
 			};
 			name = Debug;
 		};
@@ -8707,7 +8707,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = benkuper.Chataigne;
 				PRODUCT_NAME = "Chataigne";
 				USE_HEADERMAP = NO;
-				VALID_ARCHS = "i386 x86_64 arm64 arm64e";
+				VALID_ARCHS = "x86_64";
 			};
 			name = Release;
 		};
