@@ -25,7 +25,7 @@ public:
 	ModuleChooserUI moduleChooser;
 	ChataigneAudioLayer * chataigneAudioLayer;
 
-	std::unique_ptr<BoolToggleUI> armUI;
+	//std::unique_ptr<BoolToggleUI> armUI;
 
 
 	void resizedInternalContent(Rectangle<int> &r) override;

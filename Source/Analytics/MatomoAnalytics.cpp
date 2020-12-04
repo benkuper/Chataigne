@@ -22,11 +22,15 @@ MatomoAnalytics::MatomoAnalytics() :
 	
 	String name = SystemStats::getFullUserName();
 	String osName = SystemStats::getOperatingSystemName();
+	
+	String res = "Unknown";
 
-	Rectangle<int> r = Desktop::getInstance().getDisplays().getMainDisplay().totalArea;
-
-	String res = String(r.getWidth()) + "x" + String(r.getHeight());
-
+	if (const Displays::Display* d = Desktop::getInstance().getDisplays().getPrimaryDisplay())
+	{
+		Rectangle<int> r = d->totalArea;
+		res = String(r.getWidth()) + "x" + String(r.getHeight());
+	}
+	
 	Random rand(Time::currentTimeMillis());
 	String id = String::toHexString(name.getCharPointer(),name.length()).replace(" ","").substring(0, 16);
 	while (id.length() < 16) id = "0" + id;

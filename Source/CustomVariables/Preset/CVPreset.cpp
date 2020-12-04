@@ -272,6 +272,15 @@ ParameterPreset::ParameterPreset(Parameter * p) :
 	case Parameter::STRING:
 		break;
 
+	case Parameter::ENUM:
+		break;
+
+	case Parameter::TARGET:
+		break;
+
+	case Parameter::CUSTOM:
+		break;
+
 	default:
 		interpolationMode->addOption("Interpolate", INTERPOLATE);
 		break;

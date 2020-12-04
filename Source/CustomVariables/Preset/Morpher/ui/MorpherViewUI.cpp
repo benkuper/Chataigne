@@ -41,6 +41,11 @@ void MorpherPanel::setGroup(CVGroup* g)
 
 	}
 
+	if (g != nullptr)
+	{
+		if (g->morpher == nullptr) g = nullptr;
+	}
+
 	currentGroup = g;
 
 	if (currentGroup != nullptr)

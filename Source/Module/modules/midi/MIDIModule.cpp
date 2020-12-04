@@ -562,6 +562,8 @@ void MIDIModule::showMenuAndCreateValue(ControllableContainer * container)
 	m.addItem(1, "Add Note");
 	m.addItem(2, "Add Control Change");
 	m.addItem(3, "Add Pitch Wheel");
+	m.addItem(4, "Add Channel Pressure");
+	m.addItem(5, "Add After Touch");
 
 	int mResult = m.show();
 	if (mResult == 0) return;
@@ -571,7 +573,7 @@ void MIDIModule::showMenuAndCreateValue(ControllableContainer * container)
 	AlertWindow window("Add a "+mType, "Configure the parameters for this "+mType, AlertWindow::AlertIconType::NoIcon);
 	window.addTextEditor("channel", "1", "Channel (1-16)");
 
-	if (mResult != 3)
+	if (mResult != 3 && mResult != 4)
 	{
 		String mName = mResult == 1 ? "Pitch" : "Number";
 		window.addTextEditor("pitch", "1", mName + "(1-127)");
@@ -589,6 +591,14 @@ void MIDIModule::showMenuAndCreateValue(ControllableContainer * container)
 		if (mResult == 3)
 		{
 			module->pitchWheelReceived(channel, 0);
+		}
+		else if (mResult == 4)
+		{
+			module->channelPressureReceived(channel, 0);
+		}
+		else if (mResult == 5)
+		{
+			module->afterTouchReceived(channel, window.getTextEditorContents("pitch").getIntValue(), 0);
 		}
 		else
 		{

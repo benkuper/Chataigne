@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.7.7b2"
+<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.7.7b3"
               bundleIdentifier="benkuper.Chataigne" includeBinaryInAppConfig="1"
               companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
               companyEmail="benjamin@kuperberg.fr" defines="VST_LOGGING=0&#10;"
@@ -1487,7 +1487,7 @@
                documentExtensions="noisette" customPList="&lt;plist&gt;&#10;&lt;dict&gt;&#10;&lt;key&gt;NSAppTransportSecurity&lt;/key&gt;&#10;&#9;&lt;dict&gt;&#10;&#9;&#9;&lt;key&gt;NSAllowsArbitraryLoads&lt;/key&gt;&#10;&#9;&#9;&lt;true/&gt;&#10;&#9;&lt;/dict&gt;&#10;&lt;/dict&gt;&#10;&lt;/plist&gt;"
                externalLibraries="Servus&#10;hidapi&#10;joytime-core&#10;joytime-input-hidapi&#10;SDL2&#10;iconv"
                microphonePermissionNeeded="1" hardenedRuntimeOptions="com.apple.security.cs.allow-jit,com.apple.security.device.audio-input"
-               extraDefs="JUCE_SUPPORT_CARBON=0">
+               extraDefs="JUCE_SUPPORT_CARBON=0" xcodeValidArchs="x86_64">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" isDebug="1" optimisation="1" targetName="Chataigne"
                        headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/libartnet/include&#10;../../External/joycon/include&#10;../../External/sdl/include&#10;../../External/hidapi/include"

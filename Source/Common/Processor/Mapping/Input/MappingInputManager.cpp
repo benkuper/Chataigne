@@ -26,7 +26,7 @@ void MappingInputManager::lockInput(Array<Parameter*> input)
 	for (auto& i : input)
 	{
 		if (i == nullptr)  continue;
-		MappingInput* mi = addItem();
+		MappingInput* mi = addItem(nullptr, var(), false);
 		mi->lockInput(i);
 	}
 }

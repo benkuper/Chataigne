@@ -57,6 +57,10 @@
 			isa = PBXBuildFile;
 			fileRef = B2AE5AB8212F91ACEEB0E80E;
 		};
+		285D2029969E543B47F6A98A = {
+			isa = PBXBuildFile;
+			fileRef = C8FEC9E8524F5DBA4DC10D47;
+		};
 		E6279834EBEDBB31676923B4 = {
 			isa = PBXBuildFile;
 			fileRef = F71AEFD7622D0B0B810D246E;
@@ -5172,6 +5176,13 @@
 			path = ../../Source/Module/modules/osc/live/commands/LiveOSCCommandBase.h;
 			sourceTree = "SOURCE_ROOT";
 		};
+		C8FEC9E8524F5DBA4DC10D47 = {
+			isa = PBXFileReference;
+			lastKnownFileType = wrapper.framework;
+			name = Foundation.framework;
+			path = System/Library/Frameworks/Foundation.framework;
+			sourceTree = SDKROOT;
+		};
 		C95C470933856CCB6E5E6CC4 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.c;
@@ -8518,6 +8529,7 @@
 				8BD13F2A50FC3588DC036461,
 				2EF4541423C08B373926C946,
 				B2AE5AB8212F91ACEEB0E80E,
+				C8FEC9E8524F5DBA4DC10D47,
 				F71AEFD7622D0B0B810D246E,
 				7335A92ACDE20B14F02ADA97,
 				ACEC0AB4D367F7C1DA170CD9,
@@ -8566,7 +8578,7 @@
 					"VST_LOGGING=0",
 					"JUCE_SUPPORT_CARBON=0",
 					"JUCER_XCODE_MAC_2F3811D6=1",
-					"JUCE_APP_VERSION=1.7.7b2",
+					"JUCE_APP_VERSION=1.7.7b3",
 					"JUCE_APP_VERSION_HEX=0x10707",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
@@ -8641,7 +8653,7 @@
 					"VST_LOGGING=0",
 					"JUCE_SUPPORT_CARBON=0",
 					"JUCER_XCODE_MAC_2F3811D6=1",
-					"JUCE_APP_VERSION=1.7.7b2",
+					"JUCE_APP_VERSION=1.7.7b3",
 					"JUCE_APP_VERSION_HEX=0x10707",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
@@ -9164,6 +9176,7 @@
 				6778D3B561B8796EC3F344CC,
 				5543461C198B589786255629,
 				92BE03372C8379806DD57A5E,
+				285D2029969E543B47F6A98A,
 				E6279834EBEDBB31676923B4,
 				D553CB88C72C0B51E97A4676,
 				382ACC3B858F0CF59BEA300D,

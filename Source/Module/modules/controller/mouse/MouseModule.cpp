@@ -91,8 +91,6 @@ void MouseModule::setCursorPosition(Point<float>& pos, bool isRelative)
 	}
 
 	Desktop::getInstance().getMainMouseSource().setScreenPosition(pos);
-
-    
 }
 
 void MouseModule::setButtonDown(int buttonID)

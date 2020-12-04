@@ -11,7 +11,7 @@
 #include "StateViewUI.h"
 
 StateViewUI::StateViewUI(State * state) :
-	BaseItemUI(state, Direction::ALL),
+	BaseItemUI(state, Direction::ALL, true),
 	pmui(&state->pm),
 	transitionReceptionMode(NONE)
 {
@@ -43,7 +43,7 @@ void StateViewUI::setTransitionReceptionMode(TransitionReceptionMode value)
 
 void StateViewUI::mouseDown(const MouseEvent & e)
 {
-	BaseItemUI<State>::mouseDown(e);
+	BaseItemUI::mouseDown(e);
 
 	if (transitionReceptionMode == START)
 	{
@@ -88,9 +88,7 @@ void StateViewUI::mouseDoubleClick(const MouseEvent& e)
 {
 	BaseItemUI::mouseDoubleClick(e);
 
-	if (e.originalComponent != &pmui
-		&& e.originalComponent->findParentComponentOfClass<ProcessorManagerUI>() == nullptr
-		&& e.originalComponent != activeUI.get() && e.originalComponent != enabledBT.get())
+	if (e.originalComponent == this)
 	{
 		item->miniMode->setValue(!item->miniMode->boolValue());
 	}
