@@ -541,6 +541,8 @@ void OSCModule::loadJSONDataInternal(var data)
 
 void OSCModule::handleRoutedModuleValue(Controllable * c, RouteParams * p)
 {
+	if (c == nullptr || p == nullptr) return;
+
 	if (OSCRouteParams* op = dynamic_cast<OSCRouteParams*>(p))
 	{
 		try
@@ -553,11 +555,7 @@ void OSCModule::handleRoutedModuleValue(Controllable * c, RouteParams * p)
 
 				if (c->type == Parameter::COLOR)
 				{
-					Colour col = ((ColorParameter*)c)->getColor();
-					m.addFloat32(col.getFloatRed());
-					m.addFloat32(col.getFloatGreen());
-					m.addFloat32(col.getFloatBlue());
-					m.addFloat32(col.getFloatAlpha());
+					m.addArgument(OSCHelpers::getOSCColour(((ColorParameter*)c)->getColor()));
 				}
 				else
 				{
