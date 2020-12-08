@@ -15,7 +15,7 @@ BaseComparatorUI::BaseComparatorUI(BaseComparator * _comparator) :
 {
 	compareFuncUI.reset(comparator->compareFunction->createUI());
 	alwaysTriggerUI.reset(comparator->alwaysTrigger->createToggle());
-	toggleModeUI.reset(comparator->toggleMode->createImageToggle(AssetManager::getInstance()->getToggleBTImage(ImageCache::getFromMemory(BinaryData::toggle_png, BinaryData::toggle_pngSize))));
+	toggleModeUI.reset(comparator->toggleMode->createToggle(ImageCache::getFromMemory(BinaryData::toggle_png, BinaryData::toggle_pngSize)));
 	
 	addAndMakeVisible(toggleModeUI.get());
 

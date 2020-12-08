@@ -30,7 +30,7 @@ ModuleUI::ModuleUI(Module * module) :
 
 	if (module->connectionFeedbackRef != nullptr)
 	{
-		connectionFeedbackUI.reset(module->connectionFeedbackRef->createImageToggle(ChataigneAssetManager::getInstance()->getBTDoubleImage(ChataigneAssetManager::getInstance()->getConnectedImage(), ChataigneAssetManager::getInstance()->getDisconnectedImage())));
+		connectionFeedbackUI.reset(module->connectionFeedbackRef->createToggle(ChataigneAssetManager::getInstance()->getConnectedImage(), ChataigneAssetManager::getInstance()->getDisconnectedImage()));
 		addAndMakeVisible(connectionFeedbackUI.get());
 	}
 

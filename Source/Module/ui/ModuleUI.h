@@ -27,7 +27,7 @@ public:
 	std::unique_ptr<TriggerImageUI> outActivityUI;
 	ImageComponent iconUI;
 
-	std::unique_ptr<BoolImageToggleUI> connectionFeedbackUI;
+	std::unique_ptr<BoolToggleUI> connectionFeedbackUI;
 
 	void moduleIOConfigurationChanged() override;
 
