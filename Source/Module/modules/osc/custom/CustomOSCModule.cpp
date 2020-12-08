@@ -271,6 +271,12 @@ void CustomOSCModule::onControllableFeedbackUpdateInternal(ControllableContainer
 			try
 			{
 				String cAddress = useHierarchy->boolValue()?c->getControlAddress(&valuesCC):c->niceName;
+				if (!cAddress.startsWith("/"))
+				{
+					//Not an osc address, not sending
+					return;
+				}
+
 				OSCMessage m(cAddress);
 				if (c->type == Controllable::TRIGGER) sendOSC(m);
 				else
