@@ -35,10 +35,13 @@ Parameter* LagFilter::setupSingleParameterInternal(Parameter* source)
 	return MappingFilter::setupSingleParameterInternal(source);
 }
 
-void LagFilter::processSingleParameterInternal(Parameter* source, Parameter* out)
+bool LagFilter::processSingleParameterInternal(Parameter* source, Parameter* out)
 {
-	if (!paramTempValueMap.contains(source)) return;
+	if (!paramTempValueMap.contains(source)) return false;
+	if (paramTempValueMap[source] == out->getValue()) return false;
+	
 	out->setValue(paramTempValueMap[source]);
+	return true;
 }
 
 void LagFilter::filterParamChanged(Parameter * p)

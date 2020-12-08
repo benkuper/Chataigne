@@ -27,11 +27,10 @@ public:
 
 	void setupParametersInternal() override;
 	Parameter * setupSingleParameterInternal(Parameter * source) override;
-	void processSingleParameterInternal(Parameter * source, Parameter * out) override;
+	bool processSingleParameterInternal(Parameter * source, Parameter * out) override;
 
 	void filterParamChanged(Parameter * p) override;
 
-	static LagFilter * create(var params) { return new LagFilter(params); }
 	String getTypeString() const override { return "FPS"; }
 
 	virtual void timerCallback() override;

@@ -60,7 +60,7 @@ void MathFilter::setupParametersInternal()
 	updateFilteredParamsRange();
 }
 
-void MathFilter::processSingleParameterInternal(Parameter * source, Parameter * out)
+bool MathFilter::processSingleParameterInternal(Parameter * source, Parameter * out)
 {
 	//Operation o = operation->getValueDataAsEnum<Operation>();
 
@@ -77,6 +77,7 @@ void MathFilter::processSingleParameterInternal(Parameter * source, Parameter * 
 	}
 
 	out->setValue(val);
+	return true;
 }
 
 void MathFilter::updateFilteredParamsRange()

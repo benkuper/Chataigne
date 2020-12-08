@@ -13,7 +13,8 @@
 SimpleSmoothFilter::SimpleSmoothFilter(var params) :
 	MappingFilter(getTypeString())
 {
-	needsContinuousProcess = true;
+	processOnSameValue = true;
+
 	async = filterParams.addBoolParameter("Asynchronous", "If enabled, you can have different rising smooth and falling smoothing values", false);
 	smooth = filterParams.addFloatParameter("Smoothing", "Smooth amount of the filter. 0=no smoothing, 1=max smoothing (value will not change at all)", .5f, 0, 1);
 	downSmooth = filterParams.addFloatParameter("Fall Smoothing", "If async, this is the smoothing when value is falling", .8f,0,1,false);
@@ -43,10 +44,12 @@ Parameter* SimpleSmoothFilter::setupSingleParameterInternal(Parameter* source)
 	return p;
 }
 
-void SimpleSmoothFilter::processSingleParameterInternal(Parameter* source, Parameter* out)
+bool SimpleSmoothFilter::processSingleParameterInternal(Parameter* source, Parameter* out)
 {
 	var oldVal = out->getValue();
 	var newVal = source->getValue();
+
+	if(source->checkValueIsTheSame(oldVal, newVal)) return false;
 
 	if (out->isComplex())
 	{
@@ -54,7 +57,9 @@ void SimpleSmoothFilter::processSingleParameterInternal(Parameter* source, Param
 		for (int i = 0; i < out->value.size(); ++i)
 		{
 			float smoothVal = async->boolValue() ? (newVal[i] > oldVal[i] ? smooth->floatValue() : downSmooth->floatValue()) : smooth->floatValue();
-			val.append((float)oldVal[i] + ((float)newVal[i] - (float)oldVal[i]) * (1 - smoothVal));
+			float targetVal = (float)oldVal[i] + ((float)newVal[i] - (float)oldVal[i]) * (1 - smoothVal);
+			if (fabsf(targetVal - (float)newVal[i]) < precision) val.append(newVal[i]);
+			else val.append(targetVal);
 		}
 
 		out->setValue(val);
@@ -62,8 +67,12 @@ void SimpleSmoothFilter::processSingleParameterInternal(Parameter* source, Param
 	else
 	{
 		float smoothVal = async->boolValue() ? (newVal > oldVal ? smooth->floatValue() : downSmooth->floatValue()) : smooth->floatValue();
-		out->setValue((float)oldVal + ((float)newVal - (float)oldVal) * (1 - smoothVal));
+		float targetVal = (float)oldVal + ((float)newVal - (float)oldVal) * (1 - smoothVal);
+		if (fabsf(targetVal - (float)newVal) < precision) out->setValue(newVal);
+		else out->setValue(targetVal);
 	}
+
+	return true;
 }
 
 void SimpleSmoothFilter::onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c)

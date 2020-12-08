@@ -15,6 +15,7 @@ Mapping::Mapping(bool canBeDisabled) :
 	Processor("Mapping", canBeDisabled),
 	Thread("Mapping"),
 	processMode(VALUE_CHANGE),
+	mappingParams("Parameters"),
 	outValuesCC("Out Values"),
 	isRebuilding(false),
 	isProcessing(false),
@@ -25,10 +26,11 @@ Mapping::Mapping(bool canBeDisabled) :
 	itemDataType = "Mapping";
 	type = MAPPING;
 	
-	continuousProcess = addBoolParameter("Continuous", "If enabled, the mapping will process continuously rather than only when parameter value has changed", false);
-	continuousProcess->hideInEditor = true;
+	updateRate = mappingParams.addIntParameter("Update rate", "This is the update rate at which the mapping is processing. This is used only when continuous filters like Smooth and Damping are presents", 50, 1, 500, false);
+	//updateRate->canBeDisabledByUser = true;
 
 	addChildControllableContainer(&im);
+	addChildControllableContainer(&mappingParams);
 	addChildControllableContainer(&fm);
 	addChildControllableContainer(&om);
 	
@@ -56,6 +58,7 @@ void Mapping::setProcessMode(ProcessMode mode)
 	{
 	case VALUE_CHANGE:
 		break;
+
 	case MANUAL:
 		break;
 
@@ -74,7 +77,6 @@ void Mapping::lockInputTo(Array<Parameter *> lockParams)
 
 void Mapping::checkFiltersNeedContinuousProcess()
 {
-
 	bool need = false;
 	if (processMode == TIMER) need = true;
 	
@@ -82,7 +84,7 @@ void Mapping::checkFiltersNeedContinuousProcess()
 	{
 		for (auto &f : fm.items)
 		{
-			if (f->needsContinuousProcess)
+			if (f->processOnSameValue)
 			{
 				need = true;
 				break;
@@ -90,7 +92,7 @@ void Mapping::checkFiltersNeedContinuousProcess()
 		}
 	}
 
-	continuousProcess->setValue(need);
+	updateRate->setEnabled(need);
 }
 
 void Mapping::updateMappingChain(MappingFilter * afterThisFilter)
@@ -103,8 +105,6 @@ void Mapping::updateMappingChain(MappingFilter * afterThisFilter)
 		shouldRebuildAfterProcess = true;
 		return;
 	}
-
-	continuousProcess->setValue(false);
 
 	{
 		//enter in scope for lock
@@ -123,6 +123,7 @@ void Mapping::updateMappingChain(MappingFilter * afterThisFilter)
 			Parameter* p = ControllableFactory::createParameterFrom(sp, false, false);
 			outP.add(p);
 			outValuesCC.addParameter(p);
+			p->setControllableFeedbackOnly(true);
 			p->setNiceName("Out " + String(outP.size()));
 			p->setValue(sp->value);
 		}
@@ -149,19 +150,25 @@ void Mapping::process(bool forceOutput)
 	//DBG("[PROCESS] Enter lock");
 	{
 		GenericScopedLock lock(mappingLock);
+		ScopedLock filterLock(fm.filterLock);
+		
 		isProcessing = true;
-		Array<Parameter*> filteredParams = fm.processFilters();
+		bool filterResult = fm.processFilters();
 
-		for (int i = 0; i < filteredParams.size(); i++)
+		if (filterResult)
 		{
-			if (Parameter* p = (Parameter*)outValuesCC.controllables[i])
+			for (int i = 0; i < fm.filteredParameters.size(); i++)
 			{
-				if (p->type == Parameter::ENUM) ((EnumParameter*)p)->setValueWithKey(((EnumParameter*)filteredParams[i])->getValueKey());
-				else p->setValue(filteredParams[i]->value);
+				Parameter* fp = fm.filteredParameters[i];
+				if (Parameter* p = (Parameter*)outValuesCC.controllables[i])
+				{
+					if (p->type == Parameter::ENUM) ((EnumParameter*)p)->setValueWithKey(((EnumParameter*)fp)->getValueKey());
+					else p->setValue(fp->value);
+				}
 			}
+			om.updateOutputValues();
 		}
-
-		om.updateOutputValues();
+		
 		isProcessing = false;
 	}
 
@@ -177,8 +184,9 @@ void Mapping::process(bool forceOutput)
 
 var Mapping::getJSONData()
 {
-	var data = BaseItem::getJSONData();
+	var data = Processor::getJSONData();
 	data.getDynamicObject()->setProperty("im", im.getJSONData());
+	data.getDynamicObject()->setProperty("params", mappingParams.getJSONData()); //keep "params" to avoid conflict with ControllableContainer "parameters" object
 	data.getDynamicObject()->setProperty("filters", fm.getJSONData());
 	data.getDynamicObject()->setProperty("outputs", om.getJSONData());
 	return data;
@@ -188,6 +196,7 @@ void Mapping::loadJSONDataInternal(var data)
 {
 	Processor::loadJSONDataInternal(data);
 	if(!inputIsLocked) im.loadJSONData(data.getProperty("im", var()));
+	mappingParams.loadJSONData(data.getProperty("params", var()));
 	fm.loadJSONData(data.getProperty("filters", var()));
 	om.loadJSONData(data.getProperty("outputs", var()));
 
@@ -236,15 +245,28 @@ void Mapping::inputParameterRangeChanged(MappingInput *)
 
 void Mapping::onContainerParameterChangedInternal(Parameter * p)
 {
-	BaseItem::onContainerParameterChangedInternal(p);
-	if (p == continuousProcess)
+	Processor::onContainerParameterChangedInternal(p);
+	if (p == enabled)
 	{
-		if (continuousProcess->boolValue()) startThread();
-		else stopThread(100);
+		if (enabled->boolValue() && !forceDisabled && !enabled->boolValue())
+		{
+			if (updateRate->enabled) startThread();
+			process();
+		}
+		else
+		{
+			stopThread(1000);
+		}
 	}
-	else if (p == enabled && enabled->boolValue() && !forceDisabled)
+}
+
+void Mapping::onControllableStateChanged(Controllable* c)
+{
+	Processor::onControllableStateChanged(c);
+	if (c == updateRate)
 	{
-		process();
+		if (updateRate->enabled && enabled->boolValue()) startThread();
+		else stopThread(1000);
 	}
 }
 
@@ -263,7 +285,7 @@ void Mapping::filterManagerNeedsProcess()
 
 void Mapping::clearItem()
 {
-	BaseItem::clearItem();
+	Processor::clearItem();
 
 	fm.removeFilterManagerListener(this);
 	im.removeBaseManagerListener(this); 
@@ -272,11 +294,24 @@ void Mapping::clearItem()
 
 void Mapping::run()
 {
+	uint32 millis;
+
 	while (!threadShouldExit())
 	{
-		sleep(20); //50hz
 		if ((canBeDisabled && !enabled->boolValue()) || forceDisabled) continue;
+		
+		millis = Time::getMillisecondCounter();
+		
 		process();
+
+		uint32 newMillis = Time::getMillisecondCounter();
+
+		uint32 rateMillis = 1000 / updateRate->intValue();
+
+		uint32 millisToWait = rateMillis - jmax<uint32>(newMillis - millis, 0);
+		millis = newMillis;
+		
+		if(millisToWait > 0) sleep(millisToWait);
 	}
 }
 

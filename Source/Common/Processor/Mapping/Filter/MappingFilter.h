@@ -24,10 +24,10 @@ public:
 	ControllableContainer filterParams;
 	
 	Array<Controllable::Type> filterTypeFilters; //if not empty, this will filter out the parameters passed to the processSingleParameterInternal function
-
 	OwnedArray<Parameter> filteredParameters; //not in hierarchy
+	var previousValues; //for checking
 
-	bool needsContinuousProcess;
+	bool processOnSameValue; //disabling this allows for fast checking and stopping if source and dest values are the same
 	bool autoSetRange; //if true, will check at process if ranges are differents between source and filtered, and if so, will reassign
 
 	bool setupSources(Array<Parameter *> sources);
@@ -36,7 +36,7 @@ public:
 
 	bool process();
 	virtual bool processInternal();
-	virtual void processSingleParameterInternal(Parameter* source, Parameter* out) {}
+	virtual bool processSingleParameterInternal(Parameter* source, Parameter* out) { return false; }
 
 	virtual void onContainerParameterChangedInternal(Parameter* p) override;
 	virtual void onControllableFeedbackUpdateInternal(ControllableContainer *, Controllable * p) override;

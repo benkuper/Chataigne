@@ -30,7 +30,7 @@ public:
 	var opValueData; //for loading after setupParamInternal
 
 	void setupParametersInternal() override;
-	void processSingleParameterInternal(Parameter *source, Parameter *out) override;
+	bool processSingleParameterInternal(Parameter *source, Parameter *out) override;
 
 	void updateFilteredParamsRange();
 	void filterParamChanged(Parameter * p) override;
@@ -42,7 +42,6 @@ public:
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
 
-	static MathFilter * create(var params) { return new MathFilter(params); }
 	virtual String getTypeString() const override { return "Math"; }
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MathFilter)

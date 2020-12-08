@@ -54,9 +54,10 @@ Parameter * CropFilter::setupSingleParameterInternal(Parameter * source)
 }
 
 
-void CropFilter::processSingleParameterInternal(Parameter* source, Parameter* out)
+bool CropFilter::processSingleParameterInternal(Parameter* source, Parameter* out)
 {
 	out->setValue(source->value);
+	return true;
 }
 
 void CropFilter::filterParamChanged(Parameter* p)

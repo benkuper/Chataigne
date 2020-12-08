@@ -16,6 +16,7 @@
 #include "filters/number/CurveMapFilter.h"
 #include "filters/number/InverseFilter.h"
 #include "filters/number/SimpleSmoothFilter.h"
+#include "filters/number/DampingFilter.h"
 #include "filters/number/LagFilter.h"
 #include "filters/number/CropFilter.h"
 #include "filters/number/MathFilter.h"
@@ -33,27 +34,28 @@ MappingFilterManager::MappingFilterManager() :
 
 	managerFactory = &factory;
 
-	factory.defs.add(Factory<MappingFilter>::Definition::createDef("Remap", "Remap", &SimpleRemapFilter::create));
-	factory.defs.add(Factory<MappingFilter>::Definition::createDef("Remap", "Curve Map", &CurveMapFilter::create));
-	factory.defs.add(Factory<MappingFilter>::Definition::createDef("Remap", "Math", &MathFilter::create));
-	factory.defs.add(Factory<MappingFilter>::Definition::createDef("Remap", "Inverse", &InverseFilter::create));
-	factory.defs.add(Factory<MappingFilter>::Definition::createDef("Remap", "Crop", &CropFilter::create));
-	
-	factory.defs.add(Factory<MappingFilter>::Definition::createDef("Conversion", "Convert To Integer", &ToIntFilter::create));
-	factory.defs.add(Factory<MappingFilter>::Definition::createDef("Conversion", "Convert To Float", &ToFloatFilter::create));
-	factory.defs.add(Factory<MappingFilter>::Definition::createDef("Conversion", "Convert To Boolean", &ToBooleanFilter::create));
-	factory.defs.add(Factory<MappingFilter>::Definition::createDef("Conversion", "Convert To String", &ToStringFilter::create));
-	factory.defs.add(Factory<MappingFilter>::Definition::createDef("Conversion", "Convert To Point2D", &ToPoint2DFilter::create));
-	factory.defs.add(Factory<MappingFilter>::Definition::createDef("Conversion", "Convert To Point3D", &ToPoint3DFilter::create));
-	factory.defs.add(Factory<MappingFilter>::Definition::createDef("Conversion", "Convert To Color", &ToColorFilter::create));
-	factory.defs.add(Factory<MappingFilter>::Definition::createDef("Conversion", ConversionFilter::getTypeStringStatic(), &ConversionFilter::create));
+	factory.defs.add(Factory<MappingFilter>::Definition::createDef<SimpleRemapFilter>("Remap", "Remap"));
+	factory.defs.add(Factory<MappingFilter>::Definition::createDef<CurveMapFilter>("Remap", "Curve Map"));
+	factory.defs.add(Factory<MappingFilter>::Definition::createDef<MathFilter>("Remap", "Math"));
+	factory.defs.add(Factory<MappingFilter>::Definition::createDef<InverseFilter>("Remap", "Inverse"));
+	factory.defs.add(Factory<MappingFilter>::Definition::createDef<CropFilter>("Remap", "Crop"));
 
-	factory.defs.add(Factory<MappingFilter>::Definition::createDef("Time", "Smooth", &SimpleSmoothFilter::create));
-	factory.defs.add(Factory<MappingFilter>::Definition::createDef("Time", "FPS", &LagFilter::create));
+	factory.defs.add(Factory<MappingFilter>::Definition::createDef<ToIntFilter>("Conversion", "Convert To Integer"));
+	factory.defs.add(Factory<MappingFilter>::Definition::createDef<ToFloatFilter>("Conversion", "Convert To Float"));
+	factory.defs.add(Factory<MappingFilter>::Definition::createDef<ToBooleanFilter>("Conversion", "Convert To Boolean"));
+	factory.defs.add(Factory<MappingFilter>::Definition::createDef<ToStringFilter>("Conversion", "Convert To String"));
+	factory.defs.add(Factory<MappingFilter>::Definition::createDef<ToPoint2DFilter>("Conversion", "Convert To Point2D"));
+	factory.defs.add(Factory<MappingFilter>::Definition::createDef<ToPoint3DFilter>("Conversion", "Convert To Point3D"));
+	factory.defs.add(Factory<MappingFilter>::Definition::createDef<ToColorFilter>("Conversion", "Convert To Color"));
+	factory.defs.add(Factory<MappingFilter>::Definition::createDef<ConversionFilter>("Conversion", ConversionFilter::getTypeStringStatic()));
 
-	factory.defs.add(Factory<MappingFilter>::Definition::createDef("Color", ColorShiftFilter::getTypeStringStatic(), &ColorShiftFilter::create));
+	factory.defs.add(Factory<MappingFilter>::Definition::createDef<SimpleSmoothFilter>("Time", "Smooth"));
+	factory.defs.add(Factory<MappingFilter>::Definition::createDef<DampingFilter>("Time", "Damping"));
+		factory.defs.add(Factory<MappingFilter>::Definition::createDef<LagFilter>("Time", "FPS"));
 
-	factory.defs.add(Factory<MappingFilter>::Definition::createDef("", "Script", &ScriptFilter::create));
+	factory.defs.add(Factory<MappingFilter>::Definition::createDef<ColorShiftFilter>("Color", ColorShiftFilter::getTypeStringStatic()));
+
+	factory.defs.add(Factory<MappingFilter>::Definition::createDef<ScriptFilter>("", "Script"));
 
 	selectItemWhenCreated = false;
 }
@@ -71,15 +73,26 @@ bool MappingFilterManager::setupSources(Array<Parameter *> sources)
 }
 
 
-Array<Parameter *> MappingFilterManager::processFilters()
+bool MappingFilterManager::processFilters()
 {
+	if (items.size() == 0)
+	{
+		filteredParameters = Array<Parameter*>(inputSourceParams.getRawDataPointer(), inputSourceParams.size());
+		return true;
+	}
+
 	Array<Parameter *> fp = inputSourceParams;
+	bool hasChanged = false;
+
 	for (auto &f : items)
 	{
-		if (f->process()) fp = Array<Parameter *>(f->filteredParameters.getRawDataPointer(), f->filteredParameters.size());
+		hasChanged |= f->process();
+		fp = Array<Parameter *>(f->filteredParameters.getRawDataPointer(), f->filteredParameters.size());
 	}
 	
-	return fp;
+	filteredParameters = fp;
+
+	return hasChanged;
 }
 
 bool MappingFilterManager::rebuildFilterChain(MappingFilter * afterThisFilter)
@@ -121,12 +134,14 @@ Array<Parameter *> MappingFilterManager::getLastFilteredParameters()
 
 void MappingFilterManager::addItemInternal(MappingFilter *f , var)
 {
+	ScopedLock lock(filterLock); //avoid removing while serving
 	notifyNeedsRebuild();
 	f->addMappingFilterListener(this);
 }
 
 void MappingFilterManager::removeItemInternal(MappingFilter * f)
 {
+	ScopedLock lock(filterLock); //avoid removing while serving
 	f->removeMappingFilterListener(this);
 	notifyNeedsRebuild();
 }

@@ -20,9 +20,8 @@ public:
 	InverseFilter(var params);
 	~InverseFilter(); 
 
-	void processSingleParameterInternal(Parameter * source, Parameter * out) override;
+	bool processSingleParameterInternal(Parameter * source, Parameter * out) override;
 	
-	static InverseFilter * create(var params) { return new InverseFilter(params); }
 	virtual String getTypeString() const override { return "Inverse"; }
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(InverseFilter)

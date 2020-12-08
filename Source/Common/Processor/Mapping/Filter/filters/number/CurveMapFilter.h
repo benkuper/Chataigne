@@ -21,7 +21,7 @@ public:
 
 	Automation curve;
 
-	void processSingleParameterInternal(Parameter* source, Parameter* out) override;
+	bool processSingleParameterInternal(Parameter* source, Parameter* out) override;
 	
 	void onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c) override;
 
@@ -30,7 +30,6 @@ public:
 
 	//InspectableEditor * getEditor(bool isRoot) override;
 
-	static CurveMapFilter * create(var params) { return new CurveMapFilter(params); }
 	String getTypeString() const override { return "Curve Map"; }
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(CurveMapFilter)

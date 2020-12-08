@@ -28,7 +28,7 @@ public:
 	TransferType transferType;
 
 	virtual Parameter * setupSingleParameterInternal(Parameter* source) override;
-	virtual void processSingleParameterInternal(Parameter* source, Parameter* out) override;
+	virtual bool processSingleParameterInternal(Parameter* source, Parameter* out) override;
 	virtual var convertValue(Parameter * source, var sourceValue) { return var(sourceValue) ; }
 };
 
@@ -41,7 +41,7 @@ public:
 
 	BoolParameter* toggleMode;
 
-	virtual void processSingleParameterInternal(Parameter* source, Parameter* out) override;
+	virtual bool processSingleParameterInternal(Parameter* source, Parameter* out) override;
 
 	static ToBooleanFilter* create(var params) { return new ToBooleanFilter(params); }
 	String getTypeString() const override { return "Convert To Boolean"; }
@@ -144,7 +144,7 @@ public:
 	ColorParameter* baseColor;
 
 	Parameter* setupSingleParameterInternal(Parameter* sourceParam) override;
-	void processSingleParameterInternal(Parameter * source, Parameter * out) override;
+	bool processSingleParameterInternal(Parameter * source, Parameter * out) override;
 
 	static ToColorFilter* create(var params) { return new ToColorFilter(params); }
 	String getTypeString() const override { return "Convert To Color"; }

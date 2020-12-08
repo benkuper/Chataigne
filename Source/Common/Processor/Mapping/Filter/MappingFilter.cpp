@@ -14,7 +14,7 @@
 MappingFilter::MappingFilter(const String& name, var params) :
 	BaseItem(name),
 	filterParams("filterParams"),
-	needsContinuousProcess(false),
+	processOnSameValue(false),
 	autoSetRange(true),
 	filterAsyncNotifier(10)
 {
@@ -30,7 +30,7 @@ MappingFilter::~MappingFilter()
 	clearItem();
 }
 
-bool MappingFilter::setupSources(Array<Parameter *> sources)
+bool MappingFilter::setupSources(Array<Parameter*> sources)
 {
 	if (isClearing) return false;
 	for (auto& source : sources) if (source == nullptr) return false; //check that all sources are valid
@@ -50,10 +50,10 @@ bool MappingFilter::setupSources(Array<Parameter *> sources)
 	}
 
 	sourceParams.clear();
-
+	previousValues = var();
 	sourceParams = Array<WeakReference<Parameter>>(sources.getRawDataPointer(), sources.size());
-	
-	for(auto & source:sourceParams)
+
+	for (auto& source : sourceParams)
 	{
 		source->addParameterListener(this);
 	}
@@ -81,9 +81,9 @@ void MappingFilter::setupParametersInternal()
 	}
 }
 
-Parameter * MappingFilter::setupSingleParameterInternal(Parameter * source)
+Parameter* MappingFilter::setupSingleParameterInternal(Parameter* source)
 {
-	Parameter * p =  ControllableFactory::createParameterFrom(source, true, true);
+	Parameter* p = ControllableFactory::createParameterFrom(source, true, true);
 	p->isSavable = false;
 	p->setControllableFeedbackOnly(true);
 	return p;
@@ -106,11 +106,35 @@ void MappingFilter::onControllableFeedbackUpdateInternal(ControllableContainer* 
 bool MappingFilter::process()
 {
 	if (!enabled->boolValue() || isClearing) return false; //default or disabled does nothing
+	if (!processOnSameValue)
+	{
+		if (sourceParams.size() == previousValues.size())
+		{
+			bool hasChanged = false;
+			for (int i = 0; i < sourceParams.size(); i++)
+			{
+				if (sourceParams[i].wasObjectDeleted()) break;
+
+				hasChanged |= !sourceParams[i]->checkValueIsTheSame(sourceParams[i]->getValue(), previousValues[i]);
+				previousValues[i] = sourceParams[i]->getValue().clone();
+			}
+
+			if (!hasChanged) return false;
+		}
+		else
+		{
+			previousValues = var();
+			for (int i = 0; i < sourceParams.size(); i++) previousValues.append(sourceParams[i]->getValue().clone());
+		}
+		
+	}
+
 	return processInternal();  //avoid cross-thread crash
 }
 
 bool MappingFilter::processInternal()
 {
+	bool hasChanged = false;
 	for (int i = 0; i < sourceParams.size(); ++i)
 	{
 		if (sourceParams[i].wasObjectDeleted() || filteredParameters[i] == nullptr) continue;
@@ -121,13 +145,16 @@ bool MappingFilter::processInternal()
 			continue;
 		}
 
-		if (autoSetRange && filteredParameters.size() == sourceParams.size() && (  filteredParameters[i]->minimumValue != sourceParams[i]->minimumValue 
-							|| filteredParameters[i]->maximumValue != sourceParams[i]->maximumValue)) 
+		if (autoSetRange && filteredParameters.size() == sourceParams.size() && (filteredParameters[i]->minimumValue != sourceParams[i]->minimumValue
+			|| filteredParameters[i]->maximumValue != sourceParams[i]->maximumValue))
+		{
 			filteredParameters[i]->setRange(sourceParams[i]->minimumValue, sourceParams[i]->maximumValue);
+		}
 
-		processSingleParameterInternal(sourceParams[i], filteredParameters[i]);
+		hasChanged |= processSingleParameterInternal(sourceParams[i], filteredParameters[i]);
 	}
-	return true;
+
+	return hasChanged;
 }
 
 
@@ -164,7 +191,7 @@ InspectableEditor* MappingFilter::getEditor(bool isRoot)
 	return new MappingFilterEditor(this, isRoot);
 }
 
-void MappingFilter::parameterRangeChanged(Parameter * p)
+void MappingFilter::parameterRangeChanged(Parameter* p)
 {
 	int pIndex = sourceParams.indexOf(p);
 

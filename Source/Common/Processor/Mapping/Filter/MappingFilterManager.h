@@ -21,6 +21,8 @@ public:
 	~MappingFilterManager();
 
 	Array<Parameter *> inputSourceParams;
+	Array<Parameter*> filteredParameters;
+	CriticalSection filterLock;
 
 	bool setupSources(Array<Parameter *> sources);
 	bool rebuildFilterChain(MappingFilter * afterThisFilter = nullptr);
@@ -30,7 +32,7 @@ public:
 	WeakReference<MappingFilter> getLastEnabledFilter() { return lastEnabledFilter; }
 	Array<Parameter *> getLastFilteredParameters();
 
-	Array<Parameter *> processFilters();
+	bool processFilters();
 	Factory<MappingFilter> factory;
 
 	void addItemInternal(MappingFilter * m, var data) override;

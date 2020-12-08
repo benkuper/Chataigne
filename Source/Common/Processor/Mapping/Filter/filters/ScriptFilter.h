@@ -27,7 +27,6 @@ public:
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
 
-	static ScriptFilter * create(var params) { return new ScriptFilter(params); }
 	virtual String getTypeString() const override { return "Script"; }
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ScriptFilter)

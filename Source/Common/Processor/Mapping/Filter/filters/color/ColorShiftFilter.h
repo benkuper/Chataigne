@@ -21,7 +21,7 @@ public:
 
 	Array<FloatParameter*> hsvOffsets;
 
-	void processSingleParameterInternal(Parameter* source, Parameter* out) override;
+	bool processSingleParameterInternal(Parameter* source, Parameter* out) override;
 
 	static ColorShiftFilter * create(var params) { return new ColorShiftFilter(params); }
 	virtual String getTypeString() const override { return getTypeStringStatic(); }

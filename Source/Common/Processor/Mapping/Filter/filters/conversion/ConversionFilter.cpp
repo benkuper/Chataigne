@@ -162,7 +162,7 @@ bool ConversionFilter::processInternal()
 	return true;
 }
 
-void ConversionFilter::processSingleParameterInternal(Parameter* source, Parameter*)
+bool ConversionFilter::processSingleParameterInternal(Parameter* source, Parameter*)
 {
 	GenericScopedLock lock(links.getLock());
 	int sourceIndex = sourceParams.indexOf(source);
@@ -173,6 +173,8 @@ void ConversionFilter::processSingleParameterInternal(Parameter* source, Paramet
 
 		link->out->setParamValueAtIndex(source->value.isArray()?source->value[link->sourceValueIndex]:source->value, link->outValueIndex);
 	}
+
+	return true;
 }
 
 void ConversionFilter::askForRemove(ConversionParamValueLink* link)

@@ -57,7 +57,7 @@ Parameter* SimpleConversionFilter::setupSingleParameterInternal(Parameter* sourc
 }
 
 
-void SimpleConversionFilter::processSingleParameterInternal(Parameter* source, Parameter* out)
+bool SimpleConversionFilter::processSingleParameterInternal(Parameter* source, Parameter* out)
 {
 	switch (transferType)
 	{
@@ -89,7 +89,12 @@ void SimpleConversionFilter::processSingleParameterInternal(Parameter* source, P
 		out->setValue(val);
 	}
 	break;
+
+	default:
+		return false;
 	}
+
+	return true;
 }
 
 
@@ -237,7 +242,7 @@ Parameter* ToColorFilter::setupSingleParameterInternal(Parameter* sourceParam)
 	return p;
 }
 
-void ToColorFilter::processSingleParameterInternal(Parameter* source, Parameter* out)
+bool ToColorFilter::processSingleParameterInternal(Parameter* source, Parameter* out)
 {
 	switch (transferType)
 	{
@@ -283,11 +288,11 @@ void ToColorFilter::processSingleParameterInternal(Parameter* source, Parameter*
 	break;
 
 	default:
-		SimpleConversionFilter::processInternal();
+		return SimpleConversionFilter::processInternal();
 		break;
 	}
 
-	
+	return true;
 }
 
 ToBooleanFilter::ToBooleanFilter(var params) :
@@ -296,7 +301,7 @@ ToBooleanFilter::ToBooleanFilter(var params) :
 	toggleMode = addBoolParameter("Toggle Mode", "If checked, this will act as a toggle, and its value will be inverted when input value is 1", false);
 }
 
-void ToBooleanFilter::processSingleParameterInternal(Parameter* source, Parameter* out)
+bool ToBooleanFilter::processSingleParameterInternal(Parameter* source, Parameter* out)
 {
 	bool val = (source->value.isString() ?source->value.toString().getFloatValue():source->floatValue()) >= 1;
 	if (toggleMode->boolValue())
@@ -304,4 +309,6 @@ void ToBooleanFilter::processSingleParameterInternal(Parameter* source, Paramete
 		if (val) out->setValue(!out->boolValue());
 	}
 	else out->setValue(val);
+
+	return true;
 }

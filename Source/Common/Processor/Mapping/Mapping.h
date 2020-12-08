@@ -27,12 +27,12 @@ public:
 	virtual ~Mapping();
 
 	MappingInputManager im;
+	ControllableContainer mappingParams;
 	MappingFilterManager fm;
 	MappingOutputManager om;
-
 	ControllableContainer outValuesCC;
 
-	BoolParameter* continuousProcess;
+	IntParameter* updateRate;
 
 	enum ProcessMode { VALUE_CHANGE, MANUAL, TIMER };
 	ProcessMode processMode;
@@ -64,7 +64,8 @@ public:
 	void inputParameterValueChanged(MappingInput*) override;
 	void inputParameterRangeChanged(MappingInput*) override;
 
-	void onContainerParameterChangedInternal(Parameter*) override;
+	void onContainerParameterChangedInternal(Parameter* p) override;
+	void onControllableStateChanged(Controllable* c) override;
 
 	void filterManagerNeedsRebuild(MappingFilter* afterThisFilter) override;
 	void filterManagerNeedsProcess() override;

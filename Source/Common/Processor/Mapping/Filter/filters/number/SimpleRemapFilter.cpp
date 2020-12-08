@@ -54,9 +54,9 @@ Parameter* SimpleRemapFilter::setupSingleParameterInternal(Parameter* source)
 	return p;
 }
 
-void SimpleRemapFilter::processSingleParameterInternal(Parameter * source, Parameter *out)
+bool SimpleRemapFilter::processSingleParameterInternal(Parameter * source, Parameter *out)
 {
-	if (targetIn == nullptr || targetOut == nullptr || out == nullptr) return;
+	if (targetIn == nullptr || targetOut == nullptr || out == nullptr) return false;
 	
 	float sourceVal = source->floatValue();
 	float targetVal = sourceVal;
@@ -77,6 +77,8 @@ void SimpleRemapFilter::processSingleParameterInternal(Parameter * source, Param
 		if (targetOut->x > targetOut->y) targetNValue = 1 - targetNValue;
 		out->setNormalizedValue(targetNValue);
 	}
+
+	return true;
 }
 
 
