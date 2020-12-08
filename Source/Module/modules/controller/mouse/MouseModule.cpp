@@ -109,6 +109,7 @@ void MouseModule::setButtonUp(int buttonID)
 
 void MouseModule::setButtonClick(int buttonID)
 {
+	if (!enabled->boolValue()) return;
 	setButtonDown(buttonID);
 	setButtonUp(buttonID);
 }
@@ -144,10 +145,20 @@ void MouseModule::mouseUp(const MouseEvent& e)
 	rightButtonDown->setValue(false);
 }
 
+void MouseModule::onContainerParameterChangedInternal(Parameter* p)
+{
+	Module::onContainerParameterChangedInternal(p);
+	if (p == enabled)
+	{
+		if (enabled->boolValue()) startTimerHz(updateRate->intValue());
+		else stopTimer();
+	}
+}
+
 void MouseModule::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c)
 {
 	Module::onControllableFeedbackUpdateInternal(cc, c);
-	if (c == updateRate) startTimerHz(updateRate->intValue());
+	if (c == updateRate && enabled->boolValue()) startTimerHz(updateRate->intValue());
 }
 
 void MouseModule::updateMouseInfos()

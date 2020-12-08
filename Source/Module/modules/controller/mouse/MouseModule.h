@@ -45,6 +45,8 @@ public:
 	void mouseDown(const MouseEvent& e) override;
 	void mouseUp(const MouseEvent& e) override;
 
+	void onContainerParameterChangedInternal(Parameter* p) override;
+
 	void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) override;
 	
 	void updateMouseInfos();
