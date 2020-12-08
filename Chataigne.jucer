@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.7.7b3"
+<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.7.7b4"
               bundleIdentifier="benkuper.Chataigne" includeBinaryInAppConfig="1"
               companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
               companyEmail="benjamin@kuperberg.fr" defines="VST_LOGGING=0&#10;"
@@ -375,6 +375,9 @@
                         file="Source/Common/Processor/Mapping/Filter/filters/number/CurveMapFilter.cpp"/>
                   <FILE id="qVB2H4" name="CurveMapFilter.h" compile="0" resource="0"
                         file="Source/Common/Processor/Mapping/Filter/filters/number/CurveMapFilter.h"/>
+                  <FILE id="mtaOQc" name="DampingFilter.cpp" compile="1" resource="0"
+                        file="Source/Common/Processor/Mapping/Filter/filters/number/DampingFilter.cpp"/>
+                  <FILE id="JEpS02" name="DampingFilter.h" compile="0" resource="0" file="Source/Common/Processor/Mapping/Filter/filters/number/DampingFilter.h"/>
                   <FILE id="DuqCwD" name="InverseFilter.cpp" compile="1" resource="0"
                         file="Source/Common/Processor/Mapping/Filter/filters/number/InverseFilter.cpp"/>
                   <FILE id="rlXidx" name="InverseFilter.h" compile="0" resource="0" file="Source/Common/Processor/Mapping/Filter/filters/number/InverseFilter.h"/>

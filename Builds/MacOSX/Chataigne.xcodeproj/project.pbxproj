@@ -333,6 +333,10 @@
 			isa = PBXBuildFile;
 			fileRef = 93D205C2FA1058AA0F5FD66F;
 		};
+		11990C27A005FF3EB6FE95E0 = {
+			isa = PBXBuildFile;
+			fileRef = 7CC48BF5AC5A35CF1B60C67F;
+		};
 		710FA670E1EE70E5ACF7763C = {
 			isa = PBXBuildFile;
 			fileRef = 8F80D77F9012D15293997784;
@@ -3734,6 +3738,13 @@
 			path = ../../Source/Common/Processor/Mapping/Filter/filters/conversion/ConvertedParameter.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
+		7CC48BF5AC5A35CF1B60C67F = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = DampingFilter.cpp;
+			path = ../../Source/Common/Processor/Mapping/Filter/filters/number/DampingFilter.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		7CFE921B02AEF88DD2320245 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -5883,6 +5894,13 @@
 			path = ../../Source/Common/Processor/Action/Condition/Comparator/comparators/StringComparators.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
+		E7513C7B304255F7E208D7EF = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = DampingFilter.h;
+			path = ../../Source/Common/Processor/Mapping/Filter/filters/number/DampingFilter.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		E760AE782F147B81967ED0B3 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -6764,6 +6782,8 @@
 				B3F9109E23EBCBBC1AD7FD5F,
 				93D205C2FA1058AA0F5FD66F,
 				6D5261F2E7952B94DBFD7FD7,
+				7CC48BF5AC5A35CF1B60C67F,
+				E7513C7B304255F7E208D7EF,
 				8F80D77F9012D15293997784,
 				197C3A8890035B180289E60E,
 				17733F84F51C6BC5BE25683A,
@@ -8578,7 +8598,7 @@
 					"VST_LOGGING=0",
 					"JUCE_SUPPORT_CARBON=0",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
-					"JUCE_APP_VERSION=1.7.7b3",
+					"JUCE_APP_VERSION=1.7.7b4",
 					"JUCE_APP_VERSION_HEX=0x10707",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
@@ -8656,7 +8676,7 @@
 					"VST_LOGGING=0",
 					"JUCE_SUPPORT_CARBON=0",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
-					"JUCE_APP_VERSION=1.7.7b3",
+					"JUCE_APP_VERSION=1.7.7b4",
 					"JUCE_APP_VERSION_HEX=0x10707",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
@@ -8906,6 +8926,7 @@
 				CD63ECC155516890AB267937,
 				1DF997E7A7FD4B5C7788819A,
 				94A72979CDDEE1E189DB7305,
+				11990C27A005FF3EB6FE95E0,
 				710FA670E1EE70E5ACF7763C,
 				5A5F001A3D9AA2F1C792C65A,
 				B24922D22994B14496B4D916,

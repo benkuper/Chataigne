@@ -1540,6 +1540,9 @@
     <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\CurveMapFilter.cpp">
       <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters\number</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\DampingFilter.cpp">
+      <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters\number</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\InverseFilter.cpp">
       <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters\number</Filter>
     </ClCompile>
@@ -4546,9 +4549,6 @@
     <ClCompile Include="..\..\Modules\juce_organicui\controllable\parameter\ui\BetterStepper.cpp">
       <Filter>JUCE Modules\juce_organicui\controllable\parameter\ui</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Modules\juce_organicui\controllable\parameter\ui\BoolImageToggleUI.cpp">
-      <Filter>JUCE Modules\juce_organicui\controllable\parameter\ui</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\controllable\parameter\ui\BoolToggleUI.cpp">
       <Filter>JUCE Modules\juce_organicui\controllable\parameter\ui</Filter>
     </ClCompile>
@@ -5407,6 +5407,9 @@
       <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters\number</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\CurveMapFilter.h">
+      <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters\number</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\DampingFilter.h">
       <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters\number</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\InverseFilter.h">
@@ -8617,9 +8620,6 @@
       <Filter>JUCE Modules\juce_organicui\controllable\parameter\gradient</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Modules\juce_organicui\controllable\parameter\ui\BetterStepper.h">
-      <Filter>JUCE Modules\juce_organicui\controllable\parameter\ui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Modules\juce_organicui\controllable\parameter\ui\BoolImageToggleUI.h">
       <Filter>JUCE Modules\juce_organicui\controllable\parameter\ui</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Modules\juce_organicui\controllable\parameter\ui\BoolToggleUI.h">
