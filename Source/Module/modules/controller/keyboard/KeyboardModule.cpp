@@ -11,6 +11,7 @@
 #include "KeyboardModule.h"
 #include "commands/KeyboardModuleCommands.h"
 
+OrganicApplication::MainWindow* getMainWindow();
 
 #if JUCE_WINDOWS
 #include <windows.h>
@@ -34,9 +35,9 @@ KeyboardModule::KeyboardModule() :
 {
 	setupIOConfiguration(true, true);
 
-	window = TopLevelWindow::getActiveTopLevelWindow();
+	window = getMainWindow();
 	if(window != nullptr) window->addKeyListener(this);
-	
+
 	lastKey = valuesCC.addStringParameter("Last Key", "Last Key pressed", "");
 	ctrl = valuesCC.addBoolParameter("Ctrl", "Is Control down ?", false);
 	shift = valuesCC.addBoolParameter("Shift", "Is shift down ?", false);
@@ -103,6 +104,8 @@ void KeyboardModule::sendKeyUp(int keyID)
 
 void KeyboardModule::sendKeyHit(int keyID, bool ctrlPressed, bool altPressed, bool shiftPressed)
 {
+	if (!enabled->boolValue()) return;
+
 	if (ctrlPressed) sendKeyDown(KEY_CTRL);
 	if (altPressed) sendKeyDown(KEY_ALT);
 	if (shiftPressed) sendKeyDown(KEY_SHIFT);
@@ -113,10 +116,14 @@ void KeyboardModule::sendKeyHit(int keyID, bool ctrlPressed, bool altPressed, bo
 	if (ctrlPressed) sendKeyUp(KEY_CTRL);
 	if (altPressed) sendKeyUp(KEY_ALT);
 	if (shiftPressed) sendKeyUp(KEY_SHIFT);
+
+	outActivityTrigger->trigger();
 }
 
 bool KeyboardModule::keyPressed(const KeyPress & key, juce::Component * originatingComponent)
 {
+	if (!enabled->boolValue()) return false;
+	
 	char k = (char)key.getKeyCode();
 	String ks = String::fromUTF8(&k, 1);
 	lastKey->setValue(ks.toLowerCase());
@@ -126,11 +133,15 @@ bool KeyboardModule::keyPressed(const KeyPress & key, juce::Component * originat
 	command->setValue(key.getModifiers().isCommandDown());
 	alt->setValue(key.getModifiers().isAltDown());
 
+	inActivityTrigger->trigger();
+
 	return false;
 }
 
 bool KeyboardModule::keyStateChanged(bool isKeyDown, juce::Component * originatingComponent)
 {
+	if (!enabled->boolValue()) return false;
+
 	if (!isKeyDown)
 	{
 		lastKey->setValue("");
@@ -138,6 +149,7 @@ bool KeyboardModule::keyStateChanged(bool isKeyDown, juce::Component * originati
 		shift->setValue(false);
 		command->setValue(false);
 		alt->setValue(false);
+		inActivityTrigger->trigger();
 	}
 	return false;
 }
