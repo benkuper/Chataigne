@@ -1,4 +1,4 @@
-name: 'Set Suffix'
+name: 'Set Variables'
 description: 'Set app version suffix'
 inputs:
   os:
@@ -9,6 +9,14 @@ outputs:
     description: 'Suffix for the compiled version'
     value: ${{ steps.main.outputs.suffix }}
 
+  config:
+    description: 'Config to use (Win only)'
+    value: ${{ steps.main.outputs.config }}
+
+  dep:
+    description: 'Dependency file suffix'
+    value: ${{ steps.main.outputs.dep }}
+
 runs:
   using: "composite"
   steps: 
@@ -18,7 +26,11 @@ runs:
         then
           echo "Found Tag : ${GITHUB_REF#refs/tags/}"
           echo "::set-output name=suffix::${{ inputs.os }}-${GITHUB_REF#refs/tags/}"
+          echo "::set-output name=config::Release"
+          echo "::set-output name=dep::release"
         else
           echo "::set-output name=suffix::${{ inputs.os }}-bleedingedge"
+          echo "::set-output name=config::Debug"
+          echo "::set-output name=dep::debug"
         fi
       shell: bash

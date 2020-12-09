@@ -5,6 +5,69 @@ env:
   PackagesVersion: 1.2.9
 
 jobs:
+  windows:
+    name: Windows
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        include:
+        - arch: win-x64
+          buildFolder: "VisualStudio2019_CI"
+
+        - arch: win7-x64
+          buildFolder: "VisualStudio2019_Win7CI"
+
+      fail-fast: false
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+        with:
+          submodules: 'recursive'
+
+      - name: Checkout JUCE
+        uses: actions/checkout@v2
+        with:
+          repository: benkuper/JUCE
+          ref: develop-local
+          path: JUCE
+
+      - name: Set Variables
+        id: set_variables
+        uses: ./.github/actions/set-suffix
+        with:
+          os: ${{ matrix.arch }}
+
+      - name: Add msbuild to PATH
+        uses: microsoft/setup-msbuild@v1.0.2
+
+      - name: Force 64-bit Linker
+        shell: powershell
+        run: |
+          cmd.exe /c "call `"C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat`" && set > %temp%\vcvars.txt"
+          Get-Content "$env:temp\vcvars.txt" | Foreach-Object { if ($_ -match "^(.*?)=(.*)$") { Set-Content "env:\$($matches[1])" $matches[2] }}
+    
+      - name: Build
+        run:  msbuild "Builds/VisualStudio2019_CI/${{ env.ProjectName }}.sln" /m /verbosity:normal /p:Configuration=${{ steps.set_variables.outputs.config }}
+
+      - name: Create Package
+        id: create_package
+        shell: powershell
+        run: |
+          Set-Variable -Name "PKGNAME" -Value "${{ env.ProjectName }}-${{ steps.set_variables.outputs.suffix }}"
+          Invoke-WebRequest "${{ secrets.DEPDIRURL }}${{ env.ProjectName }}-win-x64-${{ steps.set_variables.outputs.dep }}-dependencies.zip" -OutFile ./deps.zip
+          7z e deps.zip -aoa
+          &"C:/Program Files (x86)/Inno Setup 6/ISCC.exe" "${{ github.workspace }}/install.iss" /O. /F$PKGNAME
+          echo "::set-output name=pkg-name::$PKGNAME.exe"
+        working-directory: ./Binaries/CI/App
+
+      - name: Upload
+        uses: ./.github/actions/upload
+        with:
+          pkg-name: ./Binaries/CI/App/${{ steps.create_package.outputs.pkg-name }}
+          url: ${{ secrets.UPLOADURL }}
+          pass: ${{ secrets.UPLOADPASS }}
+
   osx:
     name: OSX
     runs-on: macos-latest
