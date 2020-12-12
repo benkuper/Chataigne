@@ -4972,6 +4972,9 @@
     <ClCompile Include="..\..\Modules\juce_organicui\juce_organicui3.cpp">
       <Filter>JUCE Modules\juce_organicui</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\juce_organicui4.cpp">
+      <Filter>JUCE Modules\juce_organicui</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\JUCE\modules\juce_osc\osc\juce_OSCAddress.cpp">
       <Filter>JUCE Modules\juce_osc\osc</Filter>
     </ClCompile>
@@ -5201,6 +5204,9 @@
       <Filter>JUCE Library Code</Filter>
     </ClCompile>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_organicui3.cpp">
+      <Filter>JUCE Library Code</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\JuceLibraryCode\include_juce_organicui4.cpp">
       <Filter>JUCE Library Code</Filter>
     </ClCompile>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_osc.cpp">

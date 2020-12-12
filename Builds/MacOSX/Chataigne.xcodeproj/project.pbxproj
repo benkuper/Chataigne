@@ -1349,6 +1349,10 @@
 			isa = PBXBuildFile;
 			fileRef = CD28AA5204CAAB7963FC2387;
 		};
+		B6614E8CDCC9AE8C59BF4C65 = {
+			isa = PBXBuildFile;
+			fileRef = 23DDF3B6DEC463FC8B8F1644;
+		};
 		A2C0DA5E1710F15AA0E3F840 = {
 			isa = PBXBuildFile;
 			fileRef = 8AB58B2FA156DD075B892850;
@@ -2028,6 +2032,13 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = StateTransitionManager.h;
 			path = ../../Source/StateMachine/Transition/StateTransitionManager.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		23DDF3B6DEC463FC8B8F1644 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = "include_juce_organicui4.cpp";
+			path = "../../JuceLibraryCode/include_juce_organicui4.cpp";
 			sourceTree = "SOURCE_ROOT";
 		};
 		2433A5E863F516036AD53E1A = {
@@ -8515,6 +8526,7 @@
 				066DA60AFB60B8BE77E819E7,
 				03B34F65CD67AA62113F23C3,
 				CD28AA5204CAAB7963FC2387,
+				23DDF3B6DEC463FC8B8F1644,
 				8AB58B2FA156DD075B892850,
 				A344ECDA05A5372A32341886,
 				4D147E8D071C0C93CB433813,
@@ -9180,6 +9192,7 @@
 				2270C7A2C18C1C8F04F83D18,
 				212B67A3534DE8B8475EFD36,
 				A13C813B7B915C202AE05F52,
+				B6614E8CDCC9AE8C59BF4C65,
 				A2C0DA5E1710F15AA0E3F840,
 				14B03BE884B82BE8EC264AE9,
 				6FB44A657258A9A5ACB8BE85,
