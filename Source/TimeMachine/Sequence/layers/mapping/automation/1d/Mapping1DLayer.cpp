@@ -11,6 +11,9 @@
 #include "Mapping1DLayer.h"
 #include "ui/Mapping1DLayerPanel.h"
 
+#include "Module/modules/midi/MIDIModule.h"
+#include "Module/modules/dmx/DMXModule.h"
+
 Mapping1DLayer::Mapping1DLayer(Sequence* s, var params) :
     AutomationMappingLayer(getTypeString(), s, params)
 {
@@ -21,6 +24,10 @@ Mapping1DLayer::Mapping1DLayer(Sequence* s, var params) :
     recorder.input->typesFilter.add(FloatParameter::getTypeStringStatic());
     recorder.input->typesFilter.add(IntParameter::getTypeStringStatic());
     recorder.input->typesFilter.add(BoolParameter::getTypeStringStatic());
+
+    //maybe need to find a way that those values are automatically recognized because they derive from IntParameter
+    recorder.input->typesFilter.add(MIDIValueParameter::getTypeStringStatic());
+    recorder.input->typesFilter.add(DMXValueParameter::getTypeStringStatic());
 
     setupAutomation(&automation1D);
     automation1D.hideInEditor = true;
