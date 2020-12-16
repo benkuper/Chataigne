@@ -244,6 +244,19 @@ Parameter* ToColorFilter::setupSingleParameterInternal(Parameter* sourceParam)
 
 bool ToColorFilter::processSingleParameterInternal(Parameter* source, Parameter* out)
 {
+	if (source->value.isArray())
+	{
+		if (source->value.size() >= 3)
+		{
+			Colour c = Colour::fromFloatRGBA(source->value[0], source->value[1], source->value[2], source->value.size() > 3 ? source->value[3] : 1);
+			((ColorParameter*)out)->setColor(c);
+			return true;
+		}
+
+		return false; //don't process
+	}
+
+	//single value
 	switch (transferType)
 	{
 
