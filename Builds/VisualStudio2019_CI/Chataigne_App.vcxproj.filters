@@ -56,6 +56,9 @@
     <Filter Include="Chataigne\Source\Common\MIDI">
       <UniqueIdentifier>{75043559-B023-5E51-A43F-22A6CA1A1042}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Chataigne\Source\Common\Processor\Iterator">
+      <UniqueIdentifier>{E04C5B21-F841-A1B3-1F49-1CE77DDEC383}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Chataigne\Source\Common\Processor\Action\Condition\Comparator\comparators">
       <UniqueIdentifier>{45FC7432-5127-2E4B-6223-4D77842666B2}</UniqueIdentifier>
     </Filter>
@@ -1461,6 +1464,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Common\MIDI\MTCSender.cpp">
       <Filter>Chataigne\Source\Common\MIDI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Iterator\Iterator.cpp">
+      <Filter>Chataigne\Source\Common\Processor\Iterator</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\Comparator\comparators\BoolComparators.cpp">
       <Filter>Chataigne\Source\Common\Processor\Action\Condition\Comparator\comparators</Filter>
@@ -5333,6 +5339,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\MIDI\MTCSender.h">
       <Filter>Chataigne\Source\Common\MIDI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\Processor\Iterator\Iterator.h">
+      <Filter>Chataigne\Source\Common\Processor\Iterator</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\Processor\Action\Condition\Comparator\comparators\BoolComparators.h">
       <Filter>Chataigne\Source\Common\Processor\Action\Condition\Comparator\comparators</Filter>

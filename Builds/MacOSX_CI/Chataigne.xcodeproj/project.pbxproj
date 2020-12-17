@@ -229,6 +229,10 @@
 			isa = PBXBuildFile;
 			fileRef = CDC2689AEBE1AE73D05F0293;
 		};
+		75F833E01D899D07E846C976 = {
+			isa = PBXBuildFile;
+			fileRef = 5395F3FD854FACA47F4928C1;
+		};
 		9EA034F221797BE59DC09D6C = {
 			isa = PBXBuildFile;
 			fileRef = 8615CE9282DE48602A86E758;
@@ -2510,6 +2514,13 @@
 			path = ../../Source/Common/Serial/lib/cobs/cobs.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
+		3F32D02C02FC9DB848F7450E = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = Iterator.h;
+			path = ../../Source/Common/Processor/Iterator/Iterator.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		3F35FA52B76126D0BEC152CC = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -2991,6 +3002,13 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = PJLinkModule.h;
 			path = ../../Source/Module/modules/tcp/tcpclient/pjlink/PJLinkModule.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		5395F3FD854FACA47F4928C1 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = Iterator.cpp;
+			path = ../../Source/Common/Processor/Iterator/Iterator.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		53A5A48ED7FEF0F32D648EA3 = {
@@ -6623,6 +6641,15 @@
 			name = MIDI;
 			sourceTree = "<group>";
 		};
+		3E916ACF9C0A1491F3EEB7C3 = {
+			isa = PBXGroup;
+			children = (
+				5395F3FD854FACA47F4928C1,
+				3F32D02C02FC9DB848F7450E,
+			);
+			name = Iterator;
+			sourceTree = "<group>";
+		};
 		10DAA8CA1F89378CEF3C78F4 = {
 			isa = PBXGroup;
 			children = (
@@ -6958,6 +6985,7 @@
 		109883A44DB3B3D0E7CFDDC1 = {
 			isa = PBXGroup;
 			children = (
+				3E916ACF9C0A1491F3EEB7C3,
 				C1A8603D6A956D2A18C29E57,
 				BB7805C2D91C2B4DC0139955,
 				680589ADB94B76D12C63A536,
@@ -8610,7 +8638,7 @@
 					"VST_LOGGING=0",
 					"JUCE_SUPPORT_CARBON=0",
 					"JUCER_XCODE_MAC_2F3811D6=1",
-					"JUCE_APP_VERSION=1.7.7b5",
+					"JUCE_APP_VERSION=1.7.7b6",
 					"JUCE_APP_VERSION_HEX=0x10707",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
@@ -8685,7 +8713,7 @@
 					"VST_LOGGING=0",
 					"JUCE_SUPPORT_CARBON=0",
 					"JUCER_XCODE_MAC_2F3811D6=1",
-					"JUCE_APP_VERSION=1.7.7b5",
+					"JUCE_APP_VERSION=1.7.7b6",
 					"JUCE_APP_VERSION_HEX=0x10707",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
@@ -8906,6 +8934,7 @@
 				A92916EA6FDDC5574A9C7FF9,
 				CBAAB009668669B27E5D50C9,
 				30A52645696FAF1864CC8297,
+				75F833E01D899D07E846C976,
 				9EA034F221797BE59DC09D6C,
 				A7542A578E1E0D55254CC460,
 				C6C9451B74299C08F8D22C8F,

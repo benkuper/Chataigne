@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.7.7b5"
+<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.7.7b6"
               bundleIdentifier="benkuper.Chataigne" includeBinaryInAppConfig="1"
               companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
               companyEmail="benjamin@kuperberg.fr" defines="VST_LOGGING=0&#10;"
@@ -246,6 +246,10 @@
           <FILE id="Y5NAoh" name="MTCSender.h" compile="0" resource="0" file="Source/Common/MIDI/MTCSender.h"/>
         </GROUP>
         <GROUP id="{54EAB5D0-4FF9-8475-F580-32A4B6B32B16}" name="Processor">
+          <GROUP id="{245178D5-0374-3FC0-2E4B-231DA0517087}" name="Iterator">
+            <FILE id="HKWkqm" name="Iterator.cpp" compile="1" resource="0" file="Source/Common/Processor/Iterator/Iterator.cpp"/>
+            <FILE id="yrinqN" name="Iterator.h" compile="0" resource="0" file="Source/Common/Processor/Iterator/Iterator.h"/>
+          </GROUP>
           <GROUP id="{797800DA-0DCB-1B89-AF24-83A7716BB83C}" name="Action">
             <GROUP id="{769E1555-7F3A-B046-7FF9-5B14A6197BBD}" name="Condition">
               <GROUP id="{B168FE5B-E463-8457-D620-EA993DA00F90}" name="Comparator">
