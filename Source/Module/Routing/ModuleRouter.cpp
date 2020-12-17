@@ -46,6 +46,7 @@ void ModuleRouter::setSourceModule(Module * m)
 		sourceModule->valuesCC.removeAsyncContainerListener(this);
 		sourceModule->removeInspectableListener(this);
 		sourceModule->removeControllableContainerListener(this);
+		sourceModuleRef = nullptr;
 		sourceValues.clear();
 	}
 	
@@ -80,6 +81,7 @@ void ModuleRouter::setDestModule(Module * m)
 	if (!destModuleRef.wasObjectDeleted() && destModule != nullptr)
 	{
 		destModule->removeInspectableListener(this);
+		destModuleRef = nullptr;
 	}
 
 	destModule = m;
@@ -108,8 +110,9 @@ void ModuleRouter::setDestModule(Module * m)
 void ModuleRouter::reloadSourceValues(bool keepData)
 {
 	var prevData = sourceValues.getJSONData();
-
 	sourceValues.clear();
+
+	if (sourceModuleRef.wasObjectDeleted() || destModuleRef.wasObjectDeleted()) return;
 
 	Array<WeakReference<Controllable>> values = sourceModule->valuesCC.getAllControllables(true);
 	int index = 0;
@@ -123,7 +126,6 @@ void ModuleRouter::reloadSourceValues(bool keepData)
 	}
 
 	if (keepData) sourceValues.loadItemsData(prevData);
-
 }
 
 
@@ -155,25 +157,6 @@ void ModuleRouter::loadJSONDataInternal(var data)
 
 void ModuleRouter::newMessage(const ContainerAsyncEvent & e)
 {
-	/*
-	if (e.type == ContainerAsyncEvent::ControllableAdded)
-	{
-		if (sourceModule->valuesCC.containsControllable(e.targetControllable))
-		{
-			ModuleRouterValue * mrv = new ModuleRouterValue(e.targetControllable, sourceValues.items.size());
-			sourceValues.addItem(mrv, var(), false);
-			mrv->setSourceAndOutModule(sourceModule, destModule);
-		}
-	} else if (e.type == ContainerAsyncEvent::ControllableRemoved)
-	{
-		if (sourceModule->valuesCC.containsControllable(e.targetControllable))
-		{
-			ModuleRouterValue * v = getRouterValueForControllable(e.targetControllable);
-			if (v == nullptr) return;
-			sourceValues.removeItem(v, false);
-		}
-	}*/
-
 	if (e.type == e.ChildStructureChanged)
 	{
 		if (!Engine::mainEngine->isLoadingFile && !isCurrentlyLoadingData && !Engine::mainEngine->isClearing)
