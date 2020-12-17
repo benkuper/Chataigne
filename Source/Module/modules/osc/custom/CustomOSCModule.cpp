@@ -14,7 +14,9 @@
 
 CustomOSCModule::CustomOSCModule() :
 	OSCModule("OSC"),
-	autoAdd(nullptr)
+	autoAdd(nullptr),
+	useHierarchy(nullptr),
+	autoFeedback(nullptr)
 {
 	includeValuesInSave = true;
 
@@ -29,7 +31,7 @@ CustomOSCModule::CustomOSCModule() :
 
 void CustomOSCModule::processMessageInternal(const OSCMessage & msg)
 {
-	if (autoAdd == nullptr) return;
+	if (autoAdd == nullptr || useHierarchy == nullptr || autoFeedback == nullptr) return;
 
 
 	String cNiceName = msg.getAddressPattern().toString();

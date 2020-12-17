@@ -93,6 +93,8 @@ OSCModule::OSCModule(const String & name, int defaultLocalPort, int defaultRemot
 
 OSCModule::~OSCModule()
 {
+	receiver.disconnect();
+
 	if (isThreadRunning())
 	{
 		signalThreadShouldExit();
