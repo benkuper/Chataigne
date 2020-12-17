@@ -19,7 +19,8 @@ class CVGroup :
 	public BaseItem,
 	public Morpher::MorpherListener,
 	public Thread,
-	public Inspectable::InspectableListener
+	public Inspectable::InspectableListener,
+	public GenericControllableManager::ManagerListener
 {
 public:
 	CVGroup(const String &name = "Group");
@@ -42,6 +43,9 @@ public:
 	Automation* interpolationAutomation;
 	WeakReference<Inspectable> automationRef;
 	float interpolationTime;
+
+	void itemAdded(GenericControllableItem* item) override;
+	void itemsAdded(Array<GenericControllableItem*> item) override;
 	
 	void setValuesToPreset(CVPreset * preset);
 	void lerpPresets(CVPreset * p1, CVPreset * p2, float weight);

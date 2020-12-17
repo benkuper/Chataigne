@@ -46,6 +46,8 @@ Voronoi and Gradient Band (not implemented yet) also locks values but interpolat
 	defaultInterpolation.editorIsCollapsed = true;
 	defaultInterpolation.editorCanBeCollapsed = true;
 	addChildControllableContainer(&defaultInterpolation);
+
+	values.addBaseManagerListener(this);
 }
 
 CVGroup::~CVGroup()
@@ -53,6 +55,16 @@ CVGroup::~CVGroup()
 	if(morpher != nullptr) morpher->removeMorpherListener(this);
 	signalThreadShouldExit();
 	waitForThreadToExit(100);
+}
+
+void CVGroup::itemAdded(GenericControllableItem* item)
+{
+	item->controllable->userCanSetReadOnly = true;
+}
+
+void CVGroup::itemsAdded(Array<GenericControllableItem*> items)
+{
+	for (auto& i : items) i->controllable->userCanSetReadOnly = true;
 }
 
 void CVGroup::setValuesToPreset(CVPreset * preset)
