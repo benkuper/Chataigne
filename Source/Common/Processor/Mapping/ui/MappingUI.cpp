@@ -48,7 +48,9 @@ void MappingUI::paint(Graphics & g)
 
 void MappingUI::updateOutputParamUI()
 {
-	if(outputParamUI != nullptr && mapping->om.outParams.size() > 0 && outputParamUI->controllable == mapping->om.outParams[0]) return;
+	if (inspectable == nullptr || inspectable.wasObjectDeleted()) return;
+
+	if (outputParamUI != nullptr && mapping->om.outParams.size() > 0 && outputParamUI->controllable == mapping->om.outParams[0]) return;
 
 	if (outputParamUI != nullptr)
 	{
