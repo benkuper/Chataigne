@@ -85,7 +85,7 @@ void Mapping2DLayer::stopRecorderAndAddKeys()
 		p.y /= totalLength;
 	}
 	curve.addFromPointsAndSimplify(points, true, times);
-	automation->addFromPointsAndSimplify(positions);
+	automation->addFromPointsAndSimplifyBezier(positions);
 }
 
 SequenceLayerPanel* Mapping2DLayer::getPanel()

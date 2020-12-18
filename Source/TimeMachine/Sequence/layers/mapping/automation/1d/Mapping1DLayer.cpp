@@ -48,7 +48,11 @@ void Mapping1DLayer::stopRecorderAndAddKeys()
     Array<AutomationRecorder::RecordValue> recordedValues = recorder.stopRecordingAndGetKeys();
     Array<Point<float>> points;
     for (auto& rv : recordedValues) points.add({ rv.time, (float)rv.value });
-    automation1D.addFromPointsAndSimplify(points, true, true);
+    AutomationRecorder::SimplificationMethod sm = recorder.simplificationMethod->getValueDataAsEnum<AutomationRecorder::SimplificationMethod>();
+    if (sm == AutomationRecorder::SIMPL_BEZIER) automation1D.addFromPointsAndSimplifyBezier(points, true, true);
+    if (sm == AutomationRecorder::SIMPL_LINEAR) automation1D.addFromPointsAndSimplifyLinear(points, recorder.simplificationTolerance->floatValue(), true, true);
+    if (sm == AutomationRecorder::SIMPL_LINEAR_INTERACTIVE) automation1D.launchInteractiveSimplification(points);
+
 }
 
 SequenceLayerPanel* Mapping1DLayer::getPanel()
