@@ -13,17 +13,19 @@
 
 #include "Action/Action.h"
 #include "Mapping/Mapping.h"
+#include "Iterator/Iterator.h"
 #include "Action/Condition/conditions/ActivationCondition/ActivationCondition.h"
 
-ProcessorManager::ProcessorManager(const String &name) :
+ProcessorManager::ProcessorManager(const String &name, bool canHaveIterators) :
 	BaseManager<Processor>(name),
 	forceDisabled(false)
 {
 	itemDataType = "Processor"; 
 
 	managerFactory = &factory;
-	factory.defs.add(Factory<Processor>::Definition::createDef("", "Action", &Action::create));
-	factory.defs.add(Factory<Processor>::Definition::createDef("", "Mapping", &Mapping::create));
+	factory.defs.add(Factory<Processor>::Definition::createDef<Action>("", "Action"));
+	factory.defs.add(Factory<Processor>::Definition::createDef<Mapping>("", "Mapping"));
+	if(canHaveIterators) factory.defs.add(Factory<Processor>::Definition::createDef<IteratorProcessor>("", "Iterator"));
 
 }
 

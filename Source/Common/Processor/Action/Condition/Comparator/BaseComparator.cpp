@@ -11,53 +11,85 @@
 #include "BaseComparator.h"
 #include "ui/BaseComparatorUI.h"
 
-BaseComparator::BaseComparator(Controllable* _source) :
+BaseComparator::BaseComparator(Array<WeakReference<Controllable>> _sources) :
 	ControllableContainer("Comparator"),
-	isValid(false),
-	rawIsValid(false),
-	source(_source),
 	reference(nullptr)
 {
 	compareFunction = addEnumParameter("Comparison Function", "Decides what function checks the activeness of the condition");
 	compareFunction->hideInEditor = true;
 	compareFunction->hideInOutliner = true;
 
-	if (Parameter* p = dynamic_cast<Parameter*>(source)) p->addParameterListener(this);
-
+	setSources(_sources);
+	
 	toggleMode = addBoolParameter("Toggle Mode", "If checked, this will make a validation alternate between validated and invalidated, useful to transform straight values into toggles", false);
 	alwaysTrigger = addBoolParameter("Always Trigger", "If NOT checked the comparator notifies only when VALIDITY changes. If checked, the comparator notifies everytime the comparator is checked, meaning everytime the value is changed.",false);
 }
 
+
 BaseComparator::~BaseComparator()
 {
 	masterReference.clear();
-	if (Parameter* p = dynamic_cast<Parameter*>(source)) p->removeParameterListener(this);
+	for (auto& s : sources)
+	{
+		if (s.wasObjectDeleted()) continue;
+		if (Parameter* p = dynamic_cast<Parameter*>(s.get())) p->removeParameterListener(this);
+	}
 }
 
-void BaseComparator::setValid(bool value)
+void BaseComparator::setValid(int iterationIndex, bool value)
 {
 	if (toggleMode->boolValue())
 	{
-		if (rawIsValid == value) return;
-		rawIsValid = value;
+		if (rawIsValids[iterationIndex] == value) return;
+		rawIsValids.set(iterationIndex, value);
 		
-		if (!rawIsValid) return;
-		isValid = !isValid;
+		if (!rawIsValids[iterationIndex]) return;
+		isValids.set(iterationIndex, !isValids[iterationIndex]);
 	}
 	else
 	{
-		if (isValid == value && !alwaysTrigger->boolValue()) return;
-		isValid = value;
+		if (isValids[iterationIndex] == value && !alwaysTrigger->boolValue()) return;
+		isValids.set(iterationIndex, value);
 	}
 
-	comparatorListeners.call(&ComparatorListener::comparatorValidationChanged, this);
+	comparatorListeners.call(&ComparatorListener::comparatorValidationChanged, this, iterationIndex);
 }
 
 void BaseComparator::forceToggleState(bool value)
 {
-	isValid = value;
-	rawIsValid = value;
-	comparatorListeners.call(&ComparatorListener::comparatorValidationChanged, this);
+	for (int i = 0; i < sources.size(); i++)
+	{
+		isValids.set(i,value);
+		rawIsValids.set(i,value);
+		comparatorListeners.call(&ComparatorListener::comparatorValidationChanged, this, i);
+	}
+}
+
+void BaseComparator::setSources(Array<WeakReference<Controllable>> newSources)
+{
+	int count = sources.size();
+
+	if (newSources.size() == sources.size()) return;
+
+	for (auto& s : sources)
+	{
+		if (s.wasObjectDeleted()) continue;
+		if (Parameter* p = dynamic_cast<Parameter*>(sources[sources.size() - 1].get())) p->removeParameterListener(this);
+	}
+
+	sources.clear();
+	isValids.clear();
+	rawIsValids.clear();
+
+	for (auto& s : newSources)
+	{
+		if (s.wasObjectDeleted()) continue;
+		if (Parameter* p = dynamic_cast<Parameter*>(sources[sources.size() - 1].get())) p->addParameterListener(this);
+		sources.add(s);
+
+		isValids.add(false);
+		rawIsValids.add(false);
+	}
 }
 
 void BaseComparator::addCompareOption(const String & name, const Identifier & func)
@@ -68,7 +100,7 @@ void BaseComparator::addCompareOption(const String & name, const Identifier & fu
 
 void BaseComparator::forceCheck()
 {
-	compare();
+	for (int i = 0; i < sources.size();i++) compare(i);
 }
 
 void BaseComparator::onContainerParameterChanged(Parameter * p)
@@ -78,19 +110,22 @@ void BaseComparator::onContainerParameterChanged(Parameter * p)
 		if (compareFunction->getValueData().toString().isNotEmpty())
 		{
 			currentFunctionId = compareFunction->getValueData().toString();
-			if(!isCurrentlyLoadingData) compare();
+			if (!isCurrentlyLoadingData)
+			{
+				for (int i = 0; i < sources.size(); i++) compare(i);
+			}
 		}
 	} else if (p == reference)
 	{
-		compare();
+		for (int i = 0; i < sources.size(); i++) compare(i);
 	}
 }
 
 void BaseComparator::parameterRangeChanged(Parameter * p)
 {
-	if (p == source)
+	if(sources.size() > 0 && p == sources[0])
 	{
-		Parameter * sp = dynamic_cast<Parameter *>(source);
+		Parameter * sp = dynamic_cast<Parameter *>(p);
 		Parameter * rp = dynamic_cast<Parameter *>(reference);
 		if (rp != nullptr) rp->setRange(sp->minimumValue, sp->maximumValue);
 	} else
@@ -106,43 +141,56 @@ BaseComparatorUI * BaseComparator::createUI()
 }
 
 
-TriggerComparator::TriggerComparator(Controllable * source) :
-	BaseComparator(source),
-	sourceTrigger((Trigger *)source)
+TriggerComparator::TriggerComparator(Array<WeakReference<Controllable>> sources) :
+	BaseComparator(sources)
 {
 	addCompareOption("Triggered", triggeredId);
-	sourceTrigger->addTriggerListener(this);
+
+	for (auto& s : sources)
+	{
+		((Trigger *)s.get())->addTriggerListener(this);
+	}
 }
 
 TriggerComparator::~TriggerComparator()
 {
-	sourceTrigger->removeTriggerListener(this);
+	for (auto& s : sourceTriggers)
+	{
+		if(!s.wasObjectDeleted()) s->removeTriggerListener(this);
+	}
 }
 
-void TriggerComparator::compare()
+void TriggerComparator::compare(int iterationIndex)
 {
-	setValid(true);
-	setValid(false);
+	setValid(iterationIndex, true);
+	setValid(iterationIndex, false);
 }
 
-void TriggerComparator::triggerTriggered(Trigger * t) { 
-	if(t == sourceTrigger) compare(); 
+void TriggerComparator::triggerTriggered(Trigger * t) 
+{ 
+	if (sourceTriggers.contains(t)) compare(sourceTriggers.indexOf(t));
 	else BaseComparator::triggerTriggered(t);
 }
 
-ParameterComparator::ParameterComparator(Controllable * source) :
-	BaseComparator(source),
-	sourceParameter((Parameter *)source)
+ParameterComparator::ParameterComparator(Array<WeakReference<Controllable>> sources) :
+	BaseComparator(sources)
 {
-	sourceParameter->addParameterListener(this);
+	for (auto& s : sources)
+	{
+		sourceParameters.add((Parameter*)s.get());
+		((Parameter *)s.get())->addParameterListener(this);
+	}
 }
 
 ParameterComparator::~ParameterComparator()
 {
-    if(!sourceParameter.wasObjectDeleted()) sourceParameter->removeParameterListener(this);
+	for (auto& s : sourceParameters)
+	{
+		if (!s.wasObjectDeleted()) s->removeParameterListener(this);
+	}
 }
 
 void ParameterComparator::onExternalParameterValueChanged(Parameter * p)
 {
-	if (p == sourceParameter) compare();
+	if (sourceParameters.contains(p)) compare(sourceParameters.indexOf(p));
 }

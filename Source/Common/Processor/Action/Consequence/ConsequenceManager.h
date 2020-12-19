@@ -23,8 +23,7 @@ public:
 	ConsequenceManager(const String &name = "Consequences");
 	~ConsequenceManager();
 	
-
-	Trigger * triggerAll;
+	Array<Trigger *> triggerAlls;
 	FloatParameter * delay;
 	FloatParameter * stagger;
 
@@ -33,6 +32,10 @@ public:
 	//delay and stagger
 	uint32 timeAtRun;
 	int triggerIndex;
+
+	//iteration
+	int iterationCount;
+	void setIterationCount(int count);
 
 	void setForceDisabled(bool value, bool force = false);
 

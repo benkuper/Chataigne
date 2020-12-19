@@ -25,7 +25,6 @@ public:
 
 	std::unique_ptr<ControllableUI> outputParamUI;
 	
-
 	void paint(Graphics &g) override;
 
 	void updateOutputParamUI();

@@ -11,12 +11,13 @@
 #include "StringComparators.h"
 
 
-StringComparator::StringComparator(Controllable * c) :
-	ParameterComparator(c),
-	stringParam((StringParameter *)c)
+StringComparator::StringComparator(Array<WeakReference<Controllable>> sources) :
+	ParameterComparator(sources)
 {
-	stringRef = addStringParameter("Reference", "Comparison Reference to check against source value", stringParam->stringValue());
-	stringRef->setValue(stringParam->stringValue(), false, true, true);
+	stringParams.addArray(sources);
+
+	stringRef = addStringParameter("Reference", "Comparison Reference to check against source value", stringParams[0]->stringValue());
+	stringRef->setValue(stringParams[0]->stringValue(), false, true, true);
 	reference = stringRef;
 
 	addCompareOption("=", equalsId);
@@ -30,11 +31,11 @@ StringComparator::~StringComparator()
 {
 }
 
-void StringComparator::compare()
+void StringComparator::compare(int iterationIndex)
 {
-	if (currentFunctionId == equalsId)				setValid(stringParam->stringValue() == stringRef->stringValue());
-	else if (currentFunctionId == differentId)		setValid(stringParam->stringValue() != stringRef->stringValue());
-	else if (currentFunctionId == containsId)		setValid(stringParam->stringValue().contains(stringRef->stringValue()));
-	else if (currentFunctionId == startsWith)		setValid(stringParam->stringValue().startsWith(stringRef->stringValue()));
-	else if (currentFunctionId == endsWidth)		setValid(stringParam->stringValue().endsWith(stringRef->stringValue()));
+	if (currentFunctionId == equalsId)				setValid(iterationIndex, stringParams[iterationIndex]->stringValue() == stringRef->stringValue());
+	else if (currentFunctionId == differentId)		setValid(iterationIndex, stringParams[iterationIndex]->stringValue() != stringRef->stringValue());
+	else if (currentFunctionId == containsId)		setValid(iterationIndex, stringParams[iterationIndex]->stringValue().contains(stringRef->stringValue()));
+	else if (currentFunctionId == startsWith)		setValid(iterationIndex, stringParams[iterationIndex]->stringValue().startsWith(stringRef->stringValue()));
+	else if (currentFunctionId == endsWidth)		setValid(iterationIndex, stringParams[iterationIndex]->stringValue().endsWith(stringRef->stringValue()));
 }

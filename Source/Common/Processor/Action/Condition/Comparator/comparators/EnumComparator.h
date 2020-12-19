@@ -16,16 +16,16 @@ class EnumComparator :
 	public ParameterComparator
 {
 public:
-	EnumComparator(Controllable * c);
+	EnumComparator(Array<WeakReference<Controllable>> sources);
 	virtual ~EnumComparator();
 
 	const Identifier equalsId = "=";
 	const Identifier differentId = "!=";
 
-	EnumParameter * enumParam;
+	Array<EnumParameter *> enumParams;
 	EnumParameter * enumRef;
 
-	virtual void compare() override;
+	virtual void compare(int iterationIndex) override;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(EnumComparator)
 };

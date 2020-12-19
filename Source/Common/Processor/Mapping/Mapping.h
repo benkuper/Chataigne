@@ -91,7 +91,6 @@ public:
 	void removeAsyncMappingListener(AsyncListener* listener) { mappingAsyncNotifier.removeListener(listener); }
 
 
-	static Mapping* create(var) { return new Mapping(); }
 	String getTypeString() const override { return "Mapping"; };
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Mapping)

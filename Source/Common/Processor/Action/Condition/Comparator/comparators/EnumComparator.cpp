@@ -11,19 +11,19 @@
 #include "EnumComparator.h"
 
 
-EnumComparator::EnumComparator(Controllable * c) :
-	ParameterComparator(c),
-	enumParam((EnumParameter *)c)
+EnumComparator::EnumComparator(Array<WeakReference<Controllable>> sources) :
+	ParameterComparator(sources)
 {
-	
+	enumParams.addArray(sources);
+
 	enumRef = addEnumParameter("Reference", "Comparison Reference to check against source value");
 	
-	for (auto &ev : enumParam->enumValues) enumRef->addOption(ev->key, ev->value);
+	for (auto &ev : enumParams[0]->enumValues) enumRef->addOption(ev->key, ev->value);
 
 	addCompareOption("=", equalsId);
 	addCompareOption("!=", equalsId);
 
-	enumRef->setValue(enumParam->value, false, true, true);
+	enumRef->setValue(enumParams[0]->value, false, true, true);
 
 	reference = enumRef;
 
@@ -33,8 +33,8 @@ EnumComparator::~EnumComparator()
 {
 }
 
-void EnumComparator::compare()
+void EnumComparator::compare(int iterationIndex)
 {
-	if (currentFunctionId == equalsId) setValid(enumParam->getValueData() == enumRef->getValueData());
-	if (currentFunctionId == differentId) setValid(enumParam->getValueData() != enumRef->getValueData());
+	if (currentFunctionId == equalsId) setValid(iterationIndex, enumParams[iterationIndex]->getValueData() == enumRef->getValueData());
+	if (currentFunctionId == differentId) setValid(iterationIndex, enumParams[iterationIndex]->getValueData() != enumRef->getValueData());
 }

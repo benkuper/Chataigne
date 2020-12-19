@@ -103,6 +103,9 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/MIDIManager_a5993663.o \
   $(JUCE_OBJDIR)/MTCReceiver_b0ff4722.o \
   $(JUCE_OBJDIR)/MTCSender_7b4a4be8.o \
+  $(JUCE_OBJDIR)/IteratorUI_4e732dfe.o \
+  $(JUCE_OBJDIR)/IteratorList_4990ba1e.o \
+  $(JUCE_OBJDIR)/IteratorListManager_7729bc39.o \
   $(JUCE_OBJDIR)/Iterator_74f350f7.o \
   $(JUCE_OBJDIR)/BoolComparators_9c68289d.o \
   $(JUCE_OBJDIR)/EnumComparator_a53f6ef7.o \
@@ -112,6 +115,7 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/StringComparators_61def56.o \
   $(JUCE_OBJDIR)/BaseComparatorUI_a3309572.o \
   $(JUCE_OBJDIR)/BaseComparator_c76f1d55.o \
+  $(JUCE_OBJDIR)/IterativeCondition_76b9168d.o \
   $(JUCE_OBJDIR)/ActivationCondition_54e1de99.o \
   $(JUCE_OBJDIR)/ConditionGroup_1310754d.o \
   $(JUCE_OBJDIR)/StandardConditionEditor_d7753ad.o \
@@ -575,6 +579,21 @@ $(JUCE_OBJDIR)/MTCSender_7b4a4be8.o: ../../Source/Common/MIDI/MTCSender.cpp
 	@echo "Compiling MTCSender.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
+$(JUCE_OBJDIR)/IteratorUI_4e732dfe.o: ../../Source/Common/Processor/Iterator/ui/IteratorUI.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling IteratorUI.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/IteratorList_4990ba1e.o: ../../Source/Common/Processor/Iterator/list/IteratorList.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling IteratorList.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/IteratorListManager_7729bc39.o: ../../Source/Common/Processor/Iterator/list/IteratorListManager.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling IteratorListManager.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
 $(JUCE_OBJDIR)/Iterator_74f350f7.o: ../../Source/Common/Processor/Iterator/Iterator.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling Iterator.cpp"
@@ -618,6 +637,11 @@ $(JUCE_OBJDIR)/BaseComparatorUI_a3309572.o: ../../Source/Common/Processor/Action
 $(JUCE_OBJDIR)/BaseComparator_c76f1d55.o: ../../Source/Common/Processor/Action/Condition/Comparator/BaseComparator.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling BaseComparator.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/IterativeCondition_76b9168d.o: ../../Source/Common/Processor/Action/Condition/conditions/IterativeCondition/IterativeCondition.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling IterativeCondition.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/ActivationCondition_54e1de99.o: ../../Source/Common/Processor/Action/Condition/conditions/ActivationCondition/ActivationCondition.cpp

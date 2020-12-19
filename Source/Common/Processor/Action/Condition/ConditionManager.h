@@ -15,7 +15,7 @@
 class ConditionManager :
 	public BaseManager<Condition>,
 	public Condition::ConditionListener,
-	public Timer
+	public MultiTimer
 {
 public:
 	juce_DeclareSingleton(ConditionManager, true)
@@ -26,18 +26,24 @@ public:
 	Factory<Condition> factory;
 	Factory<Condition>::Definition* activateDef;
 	Factory<Condition>::Definition* deactivateDef;
-
-	BoolParameter* isValid;
+	Factory<Condition>::Definition* iterativeDef;
 
 	enum ConditionOperator { AND, OR };
 	EnumParameter* conditionOperator;
 
 	FloatParameter* validationTime;
-	FloatParameter* validationProgress;
 
-	bool validationWaiting;
-	double prevTimerTime;
+	Array<BoolParameter *> isValids;
+	Array<FloatParameter *> validationProgresses;
+	Array<bool> validationWaitings;
+	Array<double> prevTimerTimes;
+
 	bool forceDisabled;
+
+	//iterative
+	int iterationCount;
+
+	void setIterationCount(int count);
 
 	void setHasActivationDefinitions(bool value);
 
@@ -48,24 +54,25 @@ public:
 
 	void forceCheck(); 
 
-	void checkAllConditions(bool emptyIsValid = false, bool dispatchOnlyOnValidationChange = true);
+	void checkAllConditions(int iterationIndex, bool emptyIsValid = false, bool dispatchOnlyOnValidationChange = true);
 
-	bool areAllConditionsValid(bool emptyIsValid = false);
-	bool isAtLeastOneConditionValid(bool emptyIsValid = false);
+	bool areAllConditionsValid(int iterationIndex, bool emptyIsValid = false);
+	bool isAtLeastOneConditionValid(int iterationIndex, bool emptyIsValid = false);
 
 	int getNumEnabledConditions();
-	int getNumValidConditions();
+	int getNumValidConditions(int iterationIndex);
 
-	bool getIsValid(bool emptyIsValid);
-
+	bool getIsValid(int iterationIndex, bool emptyIsValid);
 
 	void dispatchConditionValidationChanged();
 
-	void conditionValidationChanged(Condition*) override;
+	void conditionValidationChanged(Condition*, const IterativeContext& context) override;
 
 	void onContainerParameterChanged(Parameter*) override;
 
-	void loadJSONDataInternal(var data) override;
+	virtual void timerCallback(int id) override;
+
+	void afterLoadJSONDataInternal() override;
 
 	InspectableEditor* getEditor(bool isRoot) override;
 
@@ -73,18 +80,11 @@ public:
 	{
 	public:
 		virtual ~ConditionManagerListener() {}
-		virtual void conditionManagerValidationChanged(ConditionManager*) {}
+		virtual void conditionManagerValidationChanged(ConditionManager*, const IterativeContext &context) {}
 	};
 
 
 	ListenerList<ConditionManagerListener> conditionManagerListeners;
 	void addConditionManagerListener(ConditionManagerListener* newListener) { conditionManagerListeners.add(newListener); }
 	void removeConditionManagerListener(ConditionManagerListener* listener) { conditionManagerListeners.remove(listener); }
-
-	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ConditionManager)
-
-
-		// Inherited via Timer
-		virtual void timerCallback() override;
-
 };

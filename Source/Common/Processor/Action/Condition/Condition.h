@@ -10,8 +10,8 @@
 
 #pragma once
 
-#include "JuceHeader.h"
 #include "Comparator/BaseComparator.h"
+#include "conditions/IterativeCondition/IterativeCondition.h"
 
 class Condition :
 	public BaseItem,
@@ -22,19 +22,21 @@ public:
 	virtual ~Condition();
 
 	bool forceDisabled;
+	Array<BoolParameter *> isValids; //this could be simplified for non-iterative condition
 
-	BoolParameter * isValid;
+	int iterationCount;
+
+	void setIterationCount(int count);
+
 	virtual void onContainerParameterChangedInternal(Parameter *) override;
-
 	virtual void setForceDisabled(bool value, bool force = false);
-
 	virtual void forceCheck() {}
 
 	class ConditionListener
 	{
 	public:
 		virtual ~ConditionListener() {}
-		virtual void conditionValidationChanged(Condition *) {}
+		virtual void conditionValidationChanged(Condition *, const IterativeContext &context) {}
 		virtual void conditionSourceChanged(Condition *) {}
 	};
 
@@ -46,10 +48,12 @@ public:
 	class ConditionEvent {
 	public:
 		enum Type { VALIDATION_CHANGED, SOURCE_CHANGED };
-		ConditionEvent(Type type, Condition * c) : type(type), condition(c) {}
+		ConditionEvent(Type type, Condition* c, const IterativeContext& context = { -1 }) : type(type), condition(c), context(context) {}
 		Type type;
 		Condition * condition;
+		IterativeContext context;
 	};
+
 	QueuedNotifier<ConditionEvent> conditionAsyncNotifier;
 	typedef QueuedNotifier<ConditionEvent>::Listener AsyncListener;
 

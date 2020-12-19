@@ -17,14 +17,14 @@ juce_ImplementSingleton(ConsequenceManager)
 ConsequenceManager::ConsequenceManager(const String &name) :
 	BaseManager<Consequence>(name),
 	Thread("consequences"),
-	forceDisabled(false)
+	forceDisabled(false),
+	iterationCount(0)
 {
 	canBeDisabled = false;
 	canBeCopiedAndPasted = true;
 
 	selectItemWhenCreated = false;
-	triggerAll = addTrigger("Trigger All", "Trigger all the consequences in the manager");
-	triggerAll->hideInEditor = true;
+	
 
 	delay = addFloatParameter("Delay", "Delay the triggering of the commands", 0, 0);
 	delay->defaultUI = FloatParameter::TIME;
@@ -40,22 +40,47 @@ ConsequenceManager::~ConsequenceManager()
 	waitForThreadToExit(1000);
 }
 
+void ConsequenceManager::setIterationCount(int count)
+{
+	if (iterationCount == count) return;
+	iterationCount = count;
+
+	while (iterationCount < triggerAlls.size())
+	{
+		removeControllable(triggerAlls[triggerAlls.size() - 1]);
+		triggerAlls.removeLast();
+	}
+
+	while (iterationCount > triggerAlls.size())
+	{
+		Trigger * triggerAll = addTrigger("Trigger All", "Trigger all the consequences in the manager");
+		triggerAll->hideInEditor = true;
+		triggerAlls.add(triggerAll);
+	}
+}
+
 void ConsequenceManager::setForceDisabled(bool value, bool force)
 {
 	if (forceDisabled == value && !force) return;
 	forceDisabled = value;
-	triggerAll->setEnabled(!forceDisabled);
+	for(auto & t : triggerAlls) t->setEnabled(!forceDisabled);
 	for (auto &i : items) i->forceDisabled = value;
 }
 
 void ConsequenceManager::onContainerTriggerTriggered(Trigger * t)
 {
 	if (forceDisabled) return;
-	if (t == triggerAll)
+	if (triggerAlls.contains(t))
 	{
 		if (items.size() > 0)
 		{
-			if (delay->floatValue() == 0 && stagger->floatValue() == 0) for (auto &c : items) c->trigger->trigger();
+			if (delay->floatValue() == 0 && stagger->floatValue() == 0)
+			{
+				for (auto& c : items)
+				{
+					c->trigger->trigger(); //ITERATIONWIP TODO : find a way to isolate the iteration index here (multiple triggers in consequences ?)
+				}
+			}
 			else
 			{
 				timeAtRun = Time::getMillisecondCounter();
@@ -69,14 +94,14 @@ void ConsequenceManager::onContainerTriggerTriggered(Trigger * t)
 void ConsequenceManager::addItemInternal(Consequence * c, var data)
 {
 	c->forceDisabled = forceDisabled;
-	triggerAll->hideInEditor = items.size() == 0;
+	//triggerAll->hideInEditor = items.size() == 0;
 	delay->hideInEditor = items.size() == 0;
 	stagger->hideInEditor = items.size() < 2; 
 }
 
 void ConsequenceManager::removeItemInternal(Consequence *)
 {
-	triggerAll->hideInEditor = items.size() == 0;
+	//triggerAll->hideInEditor = items.size() == 0;
 	delay->hideInEditor = items.size() == 0;
 	stagger->hideInEditor = items.size() < 2;
 }

@@ -19,7 +19,7 @@ class ProcessorManager :
 	public BaseManager<Processor>
 {
 public:
-	ProcessorManager(const String &name);
+	ProcessorManager(const String &name, bool canHaveIterators = true);
 	~ProcessorManager();
 
 	bool forceDisabled;

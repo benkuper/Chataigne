@@ -18,16 +18,18 @@ class BaseComparator :
 	public ControllableContainer
 {
 public:
-	BaseComparator(Controllable * source);
+	BaseComparator(Array<WeakReference<Controllable>> sources);
+
 	virtual ~BaseComparator();
 
-	bool isValid;
-	bool rawIsValid; //for toggle behaviour
-	void setValid(bool value);
+	Array<bool> isValids;
+	Array<bool> rawIsValids; //for toggle behaviour
+
+	void setValid(int iterationIndex, bool value);
 
 	void forceToggleState(bool value);
 
-	Controllable * source;
+	Array<WeakReference<Controllable>> sources;
 	Controllable * reference;
 	EnumParameter * compareFunction;
 	BoolParameter * alwaysTrigger;
@@ -35,10 +37,11 @@ public:
 
 	Identifier currentFunctionId;
 
+	void setSources(Array<WeakReference<Controllable>> newSources);
+
 	void addCompareOption(const String &name, const Identifier &func);
 
-	virtual void compare() = 0; // to override
-
+	virtual void compare(int iterationIndex) = 0; // to override
 
 	virtual void forceCheck();
 
@@ -49,7 +52,7 @@ public:
 	{
 	public:
 		virtual ~ComparatorListener() {}
-		virtual void comparatorValidationChanged(BaseComparator *) {}
+		virtual void comparatorValidationChanged(BaseComparator *, int iterationIndex) {}
 	};
 
 	ListenerList<ComparatorListener> comparatorListeners;
@@ -67,14 +70,14 @@ class TriggerComparator :
 	public BaseComparator
 {
 public:
-	TriggerComparator(Controllable *source);
+	TriggerComparator(Array<WeakReference<Controllable>> sources);
 	virtual ~TriggerComparator();
 
 	const Identifier triggeredId = "triggered";
 
-	Trigger * sourceTrigger;
+	Array<WeakReference<Trigger>> sourceTriggers;
 
-	virtual void compare() override;
+	virtual void compare(int iterationIndex) override;
 
 	void triggerTriggered(Trigger *) override;
 
@@ -85,10 +88,10 @@ class ParameterComparator :
 	public BaseComparator
 {
 public:
-	ParameterComparator(Controllable *source);
+	ParameterComparator(Array<WeakReference<Controllable>> sources);
 	virtual ~ParameterComparator();
 
-	WeakReference<Parameter> sourceParameter;
+	Array<WeakReference<Parameter>> sourceParameters;
 
 	const Identifier valueChangeId = "valueChange";
 	const Identifier always = "always";

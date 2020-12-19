@@ -16,21 +16,20 @@ class Point3DComparator :
 	public ParameterComparator
 {
 public:
-	Point3DComparator(Controllable * c);
+	Point3DComparator(Array<WeakReference<Controllable>> sources);
 	virtual ~Point3DComparator();
 
 	const Identifier equalsId = "=";
-	const Identifier distGreaterId = "dist>";
-	const Identifier distLessId = "dist<";
-	const Identifier magnGreaterId = "magn>";
-	const Identifier magnLessId = "magn>";
+	const Identifier distGreaterId = "d>";
+	const Identifier distLessId = "d<";
+	const Identifier magnGreaterId = "m>";
+	const Identifier magnLessId = "m<";
 
-
-	Point3DParameter * p3dParam;
+	Array<Point3DParameter *> p3dParams;
 	Point3DParameter * p3dRef;
 	FloatParameter * valParam;
 
-	virtual void compare() override;
+	virtual void compare(int iterationIndex) override;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Point3DComparator)
 };

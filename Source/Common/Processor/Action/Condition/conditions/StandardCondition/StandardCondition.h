@@ -20,7 +20,7 @@ public:
 	~StandardCondition();
 
 	TargetParameter * sourceTarget;
-	WeakReference<Controllable> sourceControllable;
+	Array<WeakReference<Controllable>> sourceControllables;
 	std::unique_ptr<BaseComparator> comparator;
 
 	var loadingComparatorData; //for dynamically created parameter, allows to reload comparator data after these are created
@@ -28,8 +28,8 @@ public:
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
 
-	void setSourceControllable(WeakReference<Controllable> c);
-	void comparatorValidationChanged(BaseComparator *) override;
+	void setSourceControllables(Array<WeakReference<Controllable>> newSources);
+	void comparatorValidationChanged(BaseComparator *, int iterationIndex) override;
 
 	void forceCheck() override;
 
@@ -40,7 +40,5 @@ public:
 
 	String getTypeString() const override { return StandardCondition::getTypeStringStatic(); }
 	static String getTypeStringStatic() { return "From Input Value"; }
-	static StandardCondition * create(var params) { return new StandardCondition(params); }
-
 };
 

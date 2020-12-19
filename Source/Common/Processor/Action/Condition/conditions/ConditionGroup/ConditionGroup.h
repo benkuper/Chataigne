@@ -31,7 +31,5 @@ public:
 
 
 	String getTypeString() const override { return ConditionGroup::getTypeStringStatic(); }
-	static String getTypeStringStatic() { return "Group"; }
-	static ConditionGroup * create(var params) { return new ConditionGroup(params); }
-};
+	static String getTypeStringStatic() { return "Group"; }};
 

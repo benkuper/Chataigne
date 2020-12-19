@@ -14,7 +14,7 @@
 #include "Module/ModuleManager.h"
 
 StandardCondition::StandardCondition(var params) :
-	Condition(StandardCondition::getTypeStringStatic(),params)
+	Condition(getTypeString(),params)
 {
 	sourceTarget = addTargetParameter("Input Value", "Element that will be the source to check if condition is active or not"); 
 	sourceTarget->customGetTargetFunc = &ModuleManager::showAllValuesAndGetControllable;
@@ -25,7 +25,7 @@ StandardCondition::StandardCondition(var params) :
 
 StandardCondition::~StandardCondition()
 {
-	setSourceControllable(nullptr);
+	setSourceControllables(Array<WeakReference<Controllable>>());
 }
 
 
@@ -42,7 +42,7 @@ void StandardCondition::loadJSONDataInternal(var data)
 	if (comparator != nullptr)
 	{
 		comparator->loadJSONData(data.getProperty("comparator", var()));
-		isValid->alwaysNotify = comparator->alwaysTrigger->boolValue();
+		for (auto& v : isValids) v->alwaysNotify = comparator->alwaysTrigger->boolValue();
 	}
 	else if (Engine::mainEngine->isLoadingFile)
 	{
@@ -51,21 +51,20 @@ void StandardCondition::loadJSONDataInternal(var data)
 }
 
 
-void StandardCondition::setSourceControllable(WeakReference<Controllable> c)
+void StandardCondition::setSourceControllables(Array<WeakReference<Controllable>> newSources)
 {
-	if (!sourceControllable.wasObjectDeleted() && sourceControllable != nullptr)
+	for (auto& sc : sourceControllables)
 	{
-	//	if (sourceControllable->type == Controllable::TRIGGER) ((Trigger *)sourceControllable.get())->removeTriggerListener(this);
-//		else ((Parameter *)sourceControllable.get())->removeParameterListener(this);
-
-		Module * m = ControllableUtil::findParentAs<Module>(sourceControllable);
-		if(m != nullptr) unregisterLinkedInspectable(m);
+		if (!sc.wasObjectDeleted() && sc != nullptr)
+		{
+			Module* m = ControllableUtil::findParentAs<Module>(sc);
+			if (m != nullptr) unregisterLinkedInspectable(m);
+		}
 	}
 
-	sourceControllable = c;
+	sourceControllables = newSources;
 
-
-	if (sourceControllable != nullptr)
+	if (sourceControllables.size()  > 0)
 	{
 		var oldData = var();
 		if (comparator != nullptr) oldData = comparator->getJSONData();
@@ -75,12 +74,13 @@ void StandardCondition::setSourceControllable(WeakReference<Controllable> c)
 			removeChildControllableContainer(comparator.get());
 		}
 
-		comparator.reset(ComparatorFactory::createComparatorForControllable(sourceControllable));
+		comparator.reset(ComparatorFactory::createComparatorForControllable(sourceControllables));
 
-
-
-		Module * m = ControllableUtil::findParentAs<Module>(sourceControllable);
-		if (m != nullptr) registerLinkedInspectable(m);
+		for (auto& sc : sourceControllables)
+		{
+			Module* m = ControllableUtil::findParentAs<Module>(sc);
+			if (m != nullptr) registerLinkedInspectable(m);
+		}
 
 		if (comparator != nullptr)
 		{
@@ -98,10 +98,14 @@ void StandardCondition::setSourceControllable(WeakReference<Controllable> c)
 			
 			comparator->hideInEditor = true;
 			comparator->addComparatorListener(this);
-			comparator->compare();
 			
-			isValid->alwaysNotify = comparator->alwaysTrigger->boolValue();
-			isValid->setValue(comparator->isValid);
+			for (int i = 0; i < iterationCount; i++)
+			{
+				comparator->compare(i);
+
+				isValids[i]->alwaysNotify = comparator->alwaysTrigger->boolValue();
+				isValids[i]->setValue(comparator->isValids[i]);
+			}
 
 		}
 	} else
@@ -125,9 +129,10 @@ void StandardCondition::setSourceControllable(WeakReference<Controllable> c)
 void StandardCondition::onContainerParameterChangedInternal(Parameter * p)
 {
 	Condition::onContainerParameterChangedInternal(p);
+
 	if (p == sourceTarget && sourceTarget != nullptr)
 	{
-		setSourceControllable(sourceTarget->target);
+		setSourceControllables(sourceTarget->target);
 	}
 }
 
@@ -137,7 +142,7 @@ void StandardCondition::onControllableFeedbackUpdateInternal(ControllableContain
 
 	if (comparator != nullptr && c == comparator->alwaysTrigger)
 	{
-		isValid->alwaysNotify = comparator->alwaysTrigger->boolValue();
+		for(auto & v : isValids) v->alwaysNotify = comparator->alwaysTrigger->boolValue();
 	}
 }
 
@@ -147,9 +152,13 @@ InspectableEditor * StandardCondition::getEditor(bool isRoot)
 }
 
 
-void StandardCondition::comparatorValidationChanged(BaseComparator *)
+void StandardCondition::setSourceControllables(Array<WeakReference<Controllable>> newSources)
 {
-	isValid->setValue(comparator->isValid);
+}
+
+void StandardCondition::comparatorValidationChanged(BaseComparator*, int iterationIndex)
+{
+	isValids[iterationIndex]->setValue(comparator->isValids[iterationIndex]);
 }
 
 void StandardCondition::forceCheck()

@@ -22,7 +22,7 @@ class Action :
 	public EngineListener
 {
 public:
-	Action(const String &name = "Action", var params = var());
+	Action(var params = var());
 	virtual ~Action();
 
 	enum Role {ACTIVATE, DEACTIVATE};
@@ -37,16 +37,21 @@ public:
 	std::unique_ptr<ConsequenceManager> csmOn;
 	std::unique_ptr<ConsequenceManager> csmOff;
 
-	Trigger * triggerOn;
-	Trigger * triggerOff;
+	Array<Trigger*> triggerOns; //if not iterative, there will be only one element in this
+	Array<Trigger*> triggerOffs;
+
+	//iterative
+	int iterationCount;
 
 	//to allow for checking before conditions sending it, to overcome listener-order problems
 	bool forceChecking;
 
+	void setIterationCount(int count);
+
+	void updateTriggerSetup();
+
 	void updateConditionRoles();
-
 	void setHasOffConsequences(bool value);
-
     virtual void updateDisables(bool force = false) override;
 
 	void forceCheck(bool triggerIfChanged);
@@ -59,7 +64,7 @@ public:
 	void onContainerTriggerTriggered(Trigger *) override;
 	void controllableFeedbackUpdate(ControllableContainer * cc, Controllable * c) override;
 	
-	void conditionManagerValidationChanged(ConditionManager *) override;
+	void conditionManagerValidationChanged(ConditionManager *, const IterativeContext & context) override;
 
 	void itemAdded(Condition *) override;
 	void itemRemoved(Condition *) override;
@@ -98,9 +103,7 @@ public:
 	void removeAsyncActionListener(AsyncListener* listener) { actionAsyncNotifier.removeListener(listener); }
 
 
-	static Action * create(var params) { return new Action("Action", params); }
 	String getTypeString() const override { return "Action"; };
-
 	//InspectableEditor * getEditor(bool /*isRoot*/) override;
 
 

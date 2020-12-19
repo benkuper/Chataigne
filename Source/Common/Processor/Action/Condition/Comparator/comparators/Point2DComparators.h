@@ -16,21 +16,21 @@ class Point2DComparator :
 	public ParameterComparator
 {
 public:
-	Point2DComparator(Controllable * c);
+	Point2DComparator(Array<WeakReference<Controllable>> sources);
 	virtual ~Point2DComparator();
 
 	const Identifier equalsId = "=";
-	const Identifier distGreaterId = "dist>";
-	const Identifier distLessId = "dist<";
-	const Identifier magnGreaterId = "magn>";
-	const Identifier magnLessId = "magn>";
+	const Identifier distGreaterId = "d>";
+	const Identifier distLessId = "d<";
+	const Identifier magnGreaterId = "m>";
+	const Identifier magnLessId = "m<";
 
 
-	Point2DParameter * p2dParam;
+	Array<Point2DParameter *> p2dParams;
 	Point2DParameter * p2dRef;
 	FloatParameter * valParam;
 
-	virtual void compare() override;
+	virtual void compare(int iterationIndex) override;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Point2DComparator)
 };

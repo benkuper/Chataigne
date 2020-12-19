@@ -16,7 +16,7 @@ class StringComparator :
 	public ParameterComparator
 {
 public:
-	StringComparator(Controllable *c);
+	StringComparator(Array<WeakReference<Controllable>> sources);
 	virtual ~StringComparator();
 
 	const Identifier equalsId = "=";
@@ -25,10 +25,10 @@ public:
 	const Identifier startsWith = "startsWith";
 	const Identifier endsWidth = "endsWidth";
 
-	StringParameter * stringParam;
+	Array<StringParameter *> stringParams;
 	StringParameter * stringRef;
 
-	virtual void compare() override;
+	virtual void compare(int iterationIndex) override;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(StringComparator)
 };

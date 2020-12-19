@@ -19,11 +19,10 @@ class ProcessorUI :
 	public Timer
 {
 public:
-	ProcessorUI(Processor *);
+	ProcessorUI(Processor *, bool showMiniModeBT = false);
 	virtual ~ProcessorUI();
 
 	Colour baseBGColor;
-	bool baseSaturation;
 
 	bool shouldRepaint;
 

@@ -21,40 +21,42 @@
 class ComparatorFactory
 {
 public:
-	static BaseComparator * createComparatorForControllable(Controllable * c)
+	static BaseComparator * createComparatorForControllable(Array<WeakReference<Controllable>> sources)
 	{
-		switch (c->type)
+		jassert(sources.size() > 0);
+
+		switch (sources[0]->type)
 		{
 		case Controllable::TRIGGER:
-			return new TriggerComparator(c);
+			return new TriggerComparator(sources);
 			break;
 
 		case Controllable::BOOL:
-			return new BoolComparator(c);
+			return new BoolComparator(sources);
 			break;
 
 		case Controllable::INT:
-			return new IntComparator(c);
+			return new IntComparator(sources);
 			break;
 
 		case Controllable::FLOAT:
-			return new FloatComparator(c);
+			return new FloatComparator(sources);
 			break;
 
 		case Controllable::STRING:
-			return new StringComparator(c);
+			return new StringComparator(sources);
 			break;
 
 		case Controllable::ENUM:
-			return new EnumComparator(c);
+			return new EnumComparator(sources);
 			break;
 
 		case Controllable::POINT2D:
-			return new Point2DComparator(c);
+			return new Point2DComparator(sources);
 			break;
 
 		case Controllable::POINT3D:
-			return new Point3DComparator(c);
+			return new Point3DComparator(sources);
 			break;
 			
 		default:

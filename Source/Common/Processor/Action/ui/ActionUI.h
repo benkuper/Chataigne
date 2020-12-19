@@ -18,10 +18,10 @@ class ActionUI :
 	public Action::AsyncListener
 {
 public:
-	ActionUI(Action *);
+	ActionUI(BaseAction *);
 	virtual ~ActionUI();
 
-	Action * action;
+	BaseAction* action;
 
 	std::unique_ptr<TriggerButtonUI> triggerAllUI;
 	std::unique_ptr<FloatSliderUI> progressionUI;

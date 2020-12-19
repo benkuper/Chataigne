@@ -13,13 +13,12 @@
 #include "Condition/conditions/ActivationCondition/ActivationCondition.h"
 #include "Condition/conditions/StandardCondition/StandardCondition.h"
 
-Action::Action(const String & name, var params) :
-	Processor(params.getProperty("name", name)),
+Action::Action(var params) :
+	Processor(getTypeString()),
     autoTriggerWhenAllConditionAreActives(true),
     forceNoOffConsequences(false),
 	hasOffConsequences(false),
-    triggerOn(nullptr),
-    triggerOff(nullptr),
+	iterationCount(0),
 	forceChecking(false),
     actionAsyncNotifier(10)
 {
@@ -27,9 +26,8 @@ Action::Action(const String & name, var params) :
 	itemDataType = "Action";
 	type = ACTION;
 
-	triggerOn = addTrigger("Trigger Validate", "Triggers the action");
-	triggerOn->hideInEditor = true;
-
+	setIterationCount(1);
+	
 	cdm.setHasActivationDefinitions(params.getProperty("hasActivationDefinitions",true));
 	cdm.addConditionManagerListener(this);
 	cdm.addBaseManagerListener(this);
@@ -46,6 +44,51 @@ Action::Action(const String & name, var params) :
 
 Action::~Action()
 {
+}
+
+void Action::setIterationCount(int count)
+{
+	if (iterationCount == count) return;
+	iterationCount = count;
+
+	updateTriggerSetup();
+
+	cdm.setIterationCount(count);
+}
+
+void Action::updateTriggerSetup()
+{
+	while (iterationCount < triggerOns.size())
+	{
+		removeControllable(triggerOns[triggerOns.size() - 1]);
+		triggerOns.removeLast();
+	}
+
+	while (iterationCount > triggerOns.size())
+	{
+		String id = String(triggerOns.size() + 1);
+		Trigger* t = addTrigger("Trigger On #" + id, "Triggers the Consequence:TRUE of an action. If this is inside an iterator, this will trigger the action for the indice #" + id);
+		t->hideInEditor = true;
+		triggerOns.add(t);
+	}
+
+
+	if (hasOffConsequences)
+	{
+		while (iterationCount > triggerOffs.size())
+		{
+			removeControllable(triggerOffs[triggerOffs.size() - 1]);
+			triggerOffs.removeLast();
+		}
+
+		if (hasOffConsequences)
+		{
+			String id = String(triggerOffs.size() + 1);
+			Trigger* t = addTrigger("Trigger Off #" + id, "Triggers the Consequence:FALSE of an action. If this is inside an iterator, this will trigger the action for the indice #" + id);
+			t->hideInEditor = true;
+			triggerOffs.add(t);
+		}
+	}
 }
 
 void Action::updateConditionRoles()
@@ -83,20 +126,13 @@ void Action::setHasOffConsequences(bool value)
 			csmOff.reset(new ConsequenceManager("Consequences : FALSE"));
 			addChildControllableContainer(csmOff.get());
 		}
-
-		if(triggerOff == nullptr)
-		{
-			triggerOff = addTrigger("Trigger Invalidate", "Triggers the action");
-			triggerOff->hideInEditor = true;
-		}
-
 	} else
 	{
 		removeChildControllableContainer(csmOff.get());
 		csmOff = nullptr;
-		removeControllable(triggerOff);
-		triggerOff = nullptr;
 	}
+
+	updateTriggerSetup();
 }
 
 void Action::updateDisables(bool force)
@@ -140,7 +176,13 @@ void Action::loadJSONDataItemInternal(var data)
 void Action::endLoadFile()
 {
 	Engine::mainEngine->removeEngineListener(this);
-	if (actionRoles.contains(Role::ACTIVATE) && cdm.getIsValid(false)) triggerOn->trigger();
+	if (actionRoles.contains(Role::ACTIVATE))
+	{
+		for (int i = 0; i < iterationCount; i++)
+		{
+			if (cdm.getIsValid(i, false)) triggerOns[i]->trigger();
+		}
+	}
 }
 
 void Action::onContainerParameterChangedInternal(Parameter * p)
@@ -162,13 +204,13 @@ void Action::onContainerTriggerTriggered(Trigger * t)
 
 	if (!forceChecking)
 	{
-		if (t == triggerOn)
+		if (triggerOns.contains(t))
 		{
-			csmOn->triggerAll->trigger();
+			csmOn->triggerAlls[triggerOns.indexOf(t)]->trigger();
 		}
-		else if (t == triggerOff)
+		else if (triggerOffs.contains(t))
 		{
-			if (hasOffConsequences) csmOff->triggerAll->trigger();
+			if (hasOffConsequences) csmOff->triggerAlls[triggerOffs.indexOf(t)]->trigger();
 		}
 	}
 }
@@ -184,16 +226,19 @@ void Action::controllableFeedbackUpdate(ControllableContainer * cc, Controllable
 	}
 }
 
-void Action::conditionManagerValidationChanged(ConditionManager *)
+void Action::conditionManagerValidationChanged(ConditionManager *, const IterativeContext &context)
 {
 	if (autoTriggerWhenAllConditionAreActives)
 	{
-		if (cdm.isValid->boolValue())
+		if (cdm.isValids[context.indexInList]->boolValue())
 		{
-			triggerOn->trigger(); //force trigger from onContainerTriggerTriggered, for derivating child classes
+			if(context.indexInList < triggerOns.size()) triggerOns[context.indexInList]->trigger(); //force trigger from onContainerTriggerTriggered, for derivating child classes
 		} else
 		{
-			if (hasOffConsequences) triggerOff->trigger();
+			if (hasOffConsequences)
+			{
+				if (context.indexInList < triggerOffs.size()) triggerOffs[context.indexInList]->trigger();
+			}
 		}
 	}
 

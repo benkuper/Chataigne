@@ -16,16 +16,16 @@ class BoolComparator :
 	public ParameterComparator
 {
 public:
-	BoolComparator(Controllable * c);
+	BoolComparator(Array<WeakReference<Controllable>> sources);
 	virtual ~BoolComparator();
 
 	const Identifier equalsId = "=";
 	const Identifier differentId = "!=";
 
-	BoolParameter * boolParam;
+	Array<BoolParameter *> boolParams;
 	BoolParameter * boolRef;
 
-	virtual void compare() override;
+	virtual void compare(int iterationIndex) override;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(BoolComparator)
 };

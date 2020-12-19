@@ -189,6 +189,9 @@
     <ClCompile Include="..\..\Source\Common\MIDI\MIDIManager.cpp"/>
     <ClCompile Include="..\..\Source\Common\MIDI\MTCReceiver.cpp"/>
     <ClCompile Include="..\..\Source\Common\MIDI\MTCSender.cpp"/>
+    <ClCompile Include="..\..\Source\Common\Processor\Iterator\ui\IteratorUI.cpp"/>
+    <ClCompile Include="..\..\Source\Common\Processor\Iterator\list\IteratorList.cpp"/>
+    <ClCompile Include="..\..\Source\Common\Processor\Iterator\list\IteratorListManager.cpp"/>
     <ClCompile Include="..\..\Source\Common\Processor\Iterator\Iterator.cpp"/>
     <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\Comparator\comparators\BoolComparators.cpp"/>
     <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\Comparator\comparators\EnumComparator.cpp"/>
@@ -198,6 +201,7 @@
     <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\Comparator\comparators\StringComparators.cpp"/>
     <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\Comparator\ui\BaseComparatorUI.cpp"/>
     <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\Comparator\BaseComparator.cpp"/>
+    <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\conditions\IterativeCondition\IterativeCondition.cpp"/>
     <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\conditions\ActivationCondition\ActivationCondition.cpp"/>
     <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\conditions\ConditionGroup\ConditionGroup.cpp"/>
     <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\conditions\StandardCondition\ui\StandardConditionEditor.cpp"/>
@@ -3253,6 +3257,9 @@
     <ClInclude Include="..\..\Source\Common\MIDI\MIDIManager.h"/>
     <ClInclude Include="..\..\Source\Common\MIDI\MTCReceiver.h"/>
     <ClInclude Include="..\..\Source\Common\MIDI\MTCSender.h"/>
+    <ClInclude Include="..\..\Source\Common\Processor\Iterator\ui\IteratorUI.h"/>
+    <ClInclude Include="..\..\Source\Common\Processor\Iterator\list\IteratorList.h"/>
+    <ClInclude Include="..\..\Source\Common\Processor\Iterator\list\IteratorListManager.h"/>
     <ClInclude Include="..\..\Source\Common\Processor\Iterator\Iterator.h"/>
     <ClInclude Include="..\..\Source\Common\Processor\Action\Condition\Comparator\comparators\BoolComparators.h"/>
     <ClInclude Include="..\..\Source\Common\Processor\Action\Condition\Comparator\comparators\EnumComparator.h"/>
@@ -3263,6 +3270,7 @@
     <ClInclude Include="..\..\Source\Common\Processor\Action\Condition\Comparator\ui\BaseComparatorUI.h"/>
     <ClInclude Include="..\..\Source\Common\Processor\Action\Condition\Comparator\BaseComparator.h"/>
     <ClInclude Include="..\..\Source\Common\Processor\Action\Condition\Comparator\ComparatorFactory.h"/>
+    <ClInclude Include="..\..\Source\Common\Processor\Action\Condition\conditions\IterativeCondition\IterativeCondition.h"/>
     <ClInclude Include="..\..\Source\Common\Processor\Action\Condition\conditions\ActivationCondition\ActivationCondition.h"/>
     <ClInclude Include="..\..\Source\Common\Processor\Action\Condition\conditions\ConditionGroup\ConditionGroup.h"/>
     <ClInclude Include="..\..\Source\Common\Processor\Action\Condition\conditions\StandardCondition\ui\StandardConditionEditor.h"/>

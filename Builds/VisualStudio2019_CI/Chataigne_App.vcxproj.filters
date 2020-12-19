@@ -56,6 +56,12 @@
     <Filter Include="Chataigne\Source\Common\MIDI">
       <UniqueIdentifier>{75043559-B023-5E51-A43F-22A6CA1A1042}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Chataigne\Source\Common\Processor\Iterator\ui">
+      <UniqueIdentifier>{5DB8AF44-FA4D-000A-972C-DF45D67DFE19}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Common\Processor\Iterator\List">
+      <UniqueIdentifier>{0E4381E2-C50B-3091-F6AA-C171E1A229E0}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Chataigne\Source\Common\Processor\Iterator">
       <UniqueIdentifier>{E04C5B21-F841-A1B3-1F49-1CE77DDEC383}</UniqueIdentifier>
     </Filter>
@@ -67,6 +73,9 @@
     </Filter>
     <Filter Include="Chataigne\Source\Common\Processor\Action\Condition\Comparator">
       <UniqueIdentifier>{2E92D529-5073-D829-4394-DE87597251DF}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Common\Processor\Action\Condition\conditions\IterativeCondition">
+      <UniqueIdentifier>{C442BCF6-C996-70E8-AA2D-45245377B3D0}</UniqueIdentifier>
     </Filter>
     <Filter Include="Chataigne\Source\Common\Processor\Action\Condition\conditions\ActivationCondition">
       <UniqueIdentifier>{D8DA1A28-055B-3ADC-1082-1CCF339BC5AE}</UniqueIdentifier>
@@ -1465,6 +1474,15 @@
     <ClCompile Include="..\..\Source\Common\MIDI\MTCSender.cpp">
       <Filter>Chataigne\Source\Common\MIDI</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Iterator\ui\IteratorUI.cpp">
+      <Filter>Chataigne\Source\Common\Processor\Iterator\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Iterator\list\IteratorList.cpp">
+      <Filter>Chataigne\Source\Common\Processor\Iterator\List</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Iterator\list\IteratorListManager.cpp">
+      <Filter>Chataigne\Source\Common\Processor\Iterator\List</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Common\Processor\Iterator\Iterator.cpp">
       <Filter>Chataigne\Source\Common\Processor\Iterator</Filter>
     </ClCompile>
@@ -1491,6 +1509,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\Comparator\BaseComparator.cpp">
       <Filter>Chataigne\Source\Common\Processor\Action\Condition\Comparator</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\conditions\IterativeCondition\IterativeCondition.cpp">
+      <Filter>Chataigne\Source\Common\Processor\Action\Condition\conditions\IterativeCondition</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\conditions\ActivationCondition\ActivationCondition.cpp">
       <Filter>Chataigne\Source\Common\Processor\Action\Condition\conditions\ActivationCondition</Filter>
@@ -5340,6 +5361,15 @@
     <ClInclude Include="..\..\Source\Common\MIDI\MTCSender.h">
       <Filter>Chataigne\Source\Common\MIDI</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\Common\Processor\Iterator\ui\IteratorUI.h">
+      <Filter>Chataigne\Source\Common\Processor\Iterator\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\Processor\Iterator\list\IteratorList.h">
+      <Filter>Chataigne\Source\Common\Processor\Iterator\List</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\Processor\Iterator\list\IteratorListManager.h">
+      <Filter>Chataigne\Source\Common\Processor\Iterator\List</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\Common\Processor\Iterator\Iterator.h">
       <Filter>Chataigne\Source\Common\Processor\Iterator</Filter>
     </ClInclude>
@@ -5369,6 +5399,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\Processor\Action\Condition\Comparator\ComparatorFactory.h">
       <Filter>Chataigne\Source\Common\Processor\Action\Condition\Comparator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\Processor\Action\Condition\conditions\IterativeCondition\IterativeCondition.h">
+      <Filter>Chataigne\Source\Common\Processor\Action\Condition\conditions\IterativeCondition</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\Processor\Action\Condition\conditions\ActivationCondition\ActivationCondition.h">
       <Filter>Chataigne\Source\Common\Processor\Action\Condition\conditions\ActivationCondition</Filter>

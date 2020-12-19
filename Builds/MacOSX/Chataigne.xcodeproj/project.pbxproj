@@ -229,6 +229,18 @@
 			isa = PBXBuildFile;
 			fileRef = CDC2689AEBE1AE73D05F0293;
 		};
+		586110609483A0D9573231E0 = {
+			isa = PBXBuildFile;
+			fileRef = F1852CDDF0E31350A9D4B1E2;
+		};
+		4A10B1487B06CCF88C3598DD = {
+			isa = PBXBuildFile;
+			fileRef = E2E9388F240C746C07952D5A;
+		};
+		D2625AEF6D08B6CCB799B01B = {
+			isa = PBXBuildFile;
+			fileRef = 469532CEF838F61824A7BF28;
+		};
 		75F833E01D899D07E846C976 = {
 			isa = PBXBuildFile;
 			fileRef = 5395F3FD854FACA47F4928C1;
@@ -264,6 +276,10 @@
 		F0816EE9C5028A0E7F0877E9 = {
 			isa = PBXBuildFile;
 			fileRef = 70EA23BFB947EAC9B1D89E45;
+		};
+		77B80F7EC0C9FD924136EA49 = {
+			isa = PBXBuildFile;
+			fileRef = 3B15ED8A841A34A34177A788;
 		};
 		972E4D94083013070236DC28 = {
 			isa = PBXBuildFile;
@@ -1905,6 +1921,13 @@
 			path = ../../Source/Common/Processor/Mapping/Output/MappingOutput.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
+		1CADC64D8C3E9B37D2177B74 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = IteratorList.h;
+			path = ../../Source/Common/Processor/Iterator/list/IteratorList.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		1D3EEDB3310C60C71DD26A0C = {
 			isa = PBXFileReference;
 			lastKnownFileType = text.plist.xml;
@@ -1980,6 +2003,13 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = NumberComparators.h;
 			path = ../../Source/Common/Processor/Action/Condition/Comparator/comparators/NumberComparators.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		219F8EE239F1D0B2F9613BC9 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = IteratorUI.h;
+			path = ../../Source/Common/Processor/Iterator/ui/IteratorUI.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		21B481A8DC404DA4DE54E100 = {
@@ -2458,6 +2488,13 @@
 			path = "~/JUCE/modules/juce_dsp";
 			sourceTree = "<absolute>";
 		};
+		3B15ED8A841A34A34177A788 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = IterativeCondition.cpp;
+			path = ../../Source/Common/Processor/Action/Condition/conditions/IterativeCondition/IterativeCondition.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		3B99BE9C316E5F04AC3CD1DB = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -2680,6 +2717,13 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = MappingInput.h;
 			path = ../../Source/Common/Processor/Mapping/Input/MappingInput.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		469532CEF838F61824A7BF28 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = IteratorListManager.cpp;
+			path = ../../Source/Common/Processor/Iterator/list/IteratorListManager.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		46F2EDE77746DD3B70BA3157 = {
@@ -3086,6 +3130,13 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = MappingFilter.h;
 			path = ../../Source/Common/Processor/Mapping/Filter/MappingFilter.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		57D3945295D2C5CBB0764FB7 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = IterativeCondition.h;
+			path = ../../Source/Common/Processor/Action/Condition/conditions/IterativeCondition/IterativeCondition.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		5835F7B7E9A758B2CB9F0DA4 = {
@@ -3758,6 +3809,13 @@
 			lastKnownFileType = image.png;
 			name = Resolume.png;
 			path = ../../Resources/Modules/Resolume.png;
+			sourceTree = "SOURCE_ROOT";
+		};
+		7B45FAF9B6FA231FE4CEDD2F = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = IteratorListManager.h;
+			path = ../../Source/Common/Processor/Iterator/list/IteratorListManager.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		7BF5117D14F60545839C618F = {
@@ -5811,6 +5869,13 @@
 			path = ../../Source/Common/Processor/Mapping/Output/MappingOutput.h;
 			sourceTree = "SOURCE_ROOT";
 		};
+		E2E9388F240C746C07952D5A = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = IteratorList.cpp;
+			path = ../../Source/Common/Processor/Iterator/list/IteratorList.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		E3334C7CE4EE2A23F2323183 = {
 			isa = PBXFileReference;
 			lastKnownFileType = image.png;
@@ -6117,6 +6182,13 @@
 			lastKnownFileType = image.png;
 			name = JoyCon.png;
 			path = ../../Resources/Modules/JoyCon.png;
+			sourceTree = "SOURCE_ROOT";
+		};
+		F1852CDDF0E31350A9D4B1E2 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = IteratorUI.cpp;
+			path = ../../Source/Common/Processor/Iterator/ui/IteratorUI.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		F35462981F7C3D05330D2FFD = {
@@ -6641,9 +6713,31 @@
 			name = MIDI;
 			sourceTree = "<group>";
 		};
+		3D02A4CEBACCA8F632CFD2E4 = {
+			isa = PBXGroup;
+			children = (
+				F1852CDDF0E31350A9D4B1E2,
+				219F8EE239F1D0B2F9613BC9,
+			);
+			name = ui;
+			sourceTree = "<group>";
+		};
+		FBAE47C768C23AD0EA3AC3A7 = {
+			isa = PBXGroup;
+			children = (
+				E2E9388F240C746C07952D5A,
+				1CADC64D8C3E9B37D2177B74,
+				469532CEF838F61824A7BF28,
+				7B45FAF9B6FA231FE4CEDD2F,
+			);
+			name = List;
+			sourceTree = "<group>";
+		};
 		3E916ACF9C0A1491F3EEB7C3 = {
 			isa = PBXGroup;
 			children = (
+				3D02A4CEBACCA8F632CFD2E4,
+				FBAE47C768C23AD0EA3AC3A7,
 				5395F3FD854FACA47F4928C1,
 				3F32D02C02FC9DB848F7450E,
 			);
@@ -6688,6 +6782,15 @@
 				E4066D46816B019713D3760E,
 			);
 			name = Comparator;
+			sourceTree = "<group>";
+		};
+		D1BCDB2DBBF96D2152E33E58 = {
+			isa = PBXGroup;
+			children = (
+				3B15ED8A841A34A34177A788,
+				57D3945295D2C5CBB0764FB7,
+			);
+			name = IterativeCondition;
 			sourceTree = "<group>";
 		};
 		D6FB4773F3AE25F3A9B6374B = {
@@ -6739,6 +6842,7 @@
 		9BE8DAE593848F8E1C48119E = {
 			isa = PBXGroup;
 			children = (
+				D1BCDB2DBBF96D2152E33E58,
 				D6FB4773F3AE25F3A9B6374B,
 				D4FB3E50FB755F0202DF8DD7,
 				9F6067AE0BCC3B27E2C692F1,
@@ -8940,6 +9044,9 @@
 				A92916EA6FDDC5574A9C7FF9,
 				CBAAB009668669B27E5D50C9,
 				30A52645696FAF1864CC8297,
+				586110609483A0D9573231E0,
+				4A10B1487B06CCF88C3598DD,
+				D2625AEF6D08B6CCB799B01B,
 				75F833E01D899D07E846C976,
 				9EA034F221797BE59DC09D6C,
 				A7542A578E1E0D55254CC460,
@@ -8949,6 +9056,7 @@
 				80755DB16043AE05F5401021,
 				76A437FEDA0343206FF9B855,
 				F0816EE9C5028A0E7F0877E9,
+				77B80F7EC0C9FD924136EA49,
 				972E4D94083013070236DC28,
 				87A24FDB0DE73C9A89BCE819,
 				DAD053BF92E02EE5CFDE059B,

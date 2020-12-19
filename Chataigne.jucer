@@ -247,6 +247,20 @@
         </GROUP>
         <GROUP id="{54EAB5D0-4FF9-8475-F580-32A4B6B32B16}" name="Processor">
           <GROUP id="{245178D5-0374-3FC0-2E4B-231DA0517087}" name="Iterator">
+            <GROUP id="{44BFE30B-359C-1245-32D8-A3F7765A03CC}" name="ui">
+              <FILE id="MsZZII" name="IteratorUI.cpp" compile="1" resource="0" file="Source/Common/Processor/Iterator/ui/IteratorUI.cpp"/>
+              <FILE id="QkrCSe" name="IteratorUI.h" compile="0" resource="0" file="Source/Common/Processor/Iterator/ui/IteratorUI.h"/>
+            </GROUP>
+            <GROUP id="{11646DEA-209B-4B32-9D67-67274562059A}" name="List">
+              <GROUP id="{785C9576-59E9-6D83-4C06-F80C9E833242}" name="lists"/>
+              <FILE id="gP8RLg" name="IteratorList.cpp" compile="1" resource="0"
+                    file="Source/Common/Processor/Iterator/list/IteratorList.cpp"/>
+              <FILE id="dBwP4p" name="IteratorList.h" compile="0" resource="0" file="Source/Common/Processor/Iterator/list/IteratorList.h"/>
+              <FILE id="h4ETdJ" name="IteratorListManager.cpp" compile="1" resource="0"
+                    file="Source/Common/Processor/Iterator/list/IteratorListManager.cpp"/>
+              <FILE id="oI0C4B" name="IteratorListManager.h" compile="0" resource="0"
+                    file="Source/Common/Processor/Iterator/list/IteratorListManager.h"/>
+            </GROUP>
             <FILE id="HKWkqm" name="Iterator.cpp" compile="1" resource="0" file="Source/Common/Processor/Iterator/Iterator.cpp"/>
             <FILE id="yrinqN" name="Iterator.h" compile="0" resource="0" file="Source/Common/Processor/Iterator/Iterator.h"/>
           </GROUP>
@@ -293,6 +307,12 @@
                       file="Source/Common/Processor/Action/Condition/Comparator/ComparatorFactory.h"/>
               </GROUP>
               <GROUP id="{D6ADE71C-FE26-85F8-193D-108C1D0EF059}" name="conditions">
+                <GROUP id="{3401077A-E12F-45BD-4F18-E9CD6465CC4C}" name="IterativeCondition">
+                  <FILE id="khx3CF" name="IterativeCondition.cpp" compile="1" resource="0"
+                        file="Source/Common/Processor/Action/Condition/conditions/IterativeCondition/IterativeCondition.cpp"/>
+                  <FILE id="SxecDX" name="IterativeCondition.h" compile="0" resource="0"
+                        file="Source/Common/Processor/Action/Condition/conditions/IterativeCondition/IterativeCondition.h"/>
+                </GROUP>
                 <GROUP id="{42D35307-D62F-0CDA-D315-E549DE0408B4}" name="ActivationCondition">
                   <FILE id="P4Tgf2" name="ActivationCondition.cpp" compile="1" resource="0"
                         file="Source/Common/Processor/Action/Condition/conditions/ActivationCondition/ActivationCondition.cpp"/>

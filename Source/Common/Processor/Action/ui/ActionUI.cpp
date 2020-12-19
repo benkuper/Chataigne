@@ -16,7 +16,7 @@
 #include "CustomVariables/CVGroup.h"
 #include "../Condition/conditions/StandardCondition/StandardCondition.h"
 
-ActionUI::ActionUI(Action * _action) :
+ActionUI::ActionUI(BaseAction * _action) :
 	ProcessorUI(_action),
 	action(_action)
 {
@@ -33,7 +33,6 @@ ActionUI::ActionUI(Action * _action) :
 	addChildComponent(progressionUI.get());
 	progressionUI->setVisible(action->cdm.validationProgress->enabled);
 
-	baseSaturation = .4f;
 	updateBGColor();
 }
 

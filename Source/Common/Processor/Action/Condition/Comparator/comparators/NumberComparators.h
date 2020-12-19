@@ -18,7 +18,7 @@ class FloatComparator :
 	public ParameterComparator
 {
 public:
-	FloatComparator(Controllable * c);
+	FloatComparator(Array<WeakReference<Controllable>> sources);
 	virtual ~FloatComparator();
 
 	const Identifier equalsId = "=";
@@ -29,10 +29,10 @@ public:
 	const Identifier lessOrEqualId = "<=";
 	const Identifier inRangeId = "range";
 
-	FloatParameter * floatParam;
+	Array<FloatParameter *> floatParams;
 	FloatParameter * floatRef;
 
-	virtual void compare() override;
+	virtual void compare(int iterationIndex) override;
 
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(FloatComparator)
@@ -43,7 +43,7 @@ class IntComparator :
 	public ParameterComparator
 {
 public:
-	IntComparator(Controllable *c);
+	IntComparator(Array<WeakReference<Controllable>> sources);
 	virtual ~IntComparator();
 
 	const Identifier equalsId = "=";
@@ -54,10 +54,10 @@ public:
 	const Identifier lessOrEqualId = "<=";
 	const Identifier inRangeId = "range";
 
-	IntParameter * intParam;
+	Array<IntParameter *> intParams;
 	IntParameter *  intRef;
 
-	virtual void compare() override; 
+	virtual void compare(int iterationIndex) override; 
 
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(IntComparator)
