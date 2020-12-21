@@ -31,6 +31,7 @@ public:
 	EnumParameter* conditionOperator;
 
 	FloatParameter* validationTime;
+	FloatParameter* validationProgressFeedback;
 
 	Array<bool> isValids;
 	Array<float> validationProgresses;

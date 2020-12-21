@@ -14,8 +14,8 @@
 #include "Module/ModuleManager.h"
 
 StandardCondition::StandardCondition(var params, IteratorProcessor* processor) :
-	Condition(getTypeString(), params, processor),
-	iteratorListMode(params.getProperty("listMode",false))
+	Condition(getTypeStringStatic(params.getProperty("listMode", false)), params, processor),
+	iteratorListMode(params.getProperty("listMode", false))
 {
 	sourceTarget = addTargetParameter("Input Value", "Element that will be the source to check if condition is active or not"); 
 
@@ -38,7 +38,10 @@ StandardCondition::StandardCondition(var params, IteratorProcessor* processor) :
 	sourceTarget->hideInEditor = true;
 
 	toggleMode = addBoolParameter("Toggle Mode", "If checked, this will make a validation alternate between validated and invalidated, useful to transform straight values into toggles", false);
+	toggleMode->hideInEditor = true;
+
 	alwaysTrigger = addBoolParameter("Always Trigger", "If NOT checked the comparator notifies only when VALIDITY changes. If checked, the comparator notifies everytime the comparator is checked, meaning everytime the value is changed.", false);
+	alwaysTrigger->hideInEditor = true;
 }
 
 StandardCondition::~StandardCondition()
@@ -124,15 +127,15 @@ void StandardCondition::updateSourceControllablesFromTarget()
 	Array<WeakReference<Controllable>> newSources;
 	if (!iteratorListMode)
 	{
-		if (BaseIteratorList* list = dynamic_cast<BaseIteratorList*>(sourceTarget->targetContainer.get())) newSources.addArray(list->list);
+		if (sourceTarget->target != nullptr && !sourceTarget->target.wasObjectDeleted()) newSources.add(sourceTarget->target);
 	}
 	else
 	{
-		if (sourceTarget->target != nullptr && !sourceTarget->target.wasObjectDeleted()) newSources.add(sourceTarget->target);
+		if (BaseIteratorList* list = dynamic_cast<BaseIteratorList*>(sourceTarget->targetContainer.get())) newSources.addArray(list->list);
 	}
 
 	bool rebuildComparator = true;
-	if ((sourceControllables.size() > 0 && newSources.size() > 0) && sourceControllables[0] != newSources[0]) rebuildComparator = false;
+	if ((sourceControllables.size() > 0 && newSources.size() > 0) && sourceControllables[0] == newSources[0]) rebuildComparator = false;
 	
 	sourceControllables = newSources;
 
@@ -208,6 +211,14 @@ void StandardCondition::onContainerParameterChangedInternal(Parameter * p)
 	}
 }
 
+void StandardCondition::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c)
+{
+	Condition::onControllableFeedbackUpdateInternal(cc, c);
+	if (comparator != nullptr && c == comparator->reference)
+	{
+		for (int i = 0; i < getIterationCount(); i++) checkComparator(i);
+	}
+}
 
 void StandardCondition::onExternalParameterValueChanged(Parameter* p)
 {

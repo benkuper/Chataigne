@@ -61,24 +61,24 @@ void StandardConditionEditor::resizedInternalHeaderItemInternal(Rectangle<int> &
 
 void StandardConditionEditor::resizedInternalContent(Rectangle<int> & r)
 {
-	ConditionEditor::resizedInternalContent(r);
+	//ConditionEditor::resizedInternalContent(r);
 
 	Rectangle<int> sr = r.withHeight(16).reduced(2, 0);
 	targetUI->setBounds(sr);
 	r.translate(0, 18);
 
-	toggleModeUI->setBounds(r.removeFromLeft(16).withHeight(16));
-	r.removeFromLeft(2);
-	alwaysTriggerUI->setBounds(r.removeFromRight(95).reduced(0, 1));
-	r.removeFromRight(4);
+	int ch = comparatorUI != nullptr ? comparatorUI->getHeight() : 16;
+	Rectangle<int> cr = r.withHeight(ch);
+	
+	toggleModeUI->setBounds(cr.removeFromLeft(16).withHeight(16));
+	cr.removeFromLeft(2);
 
-	if (comparatorUI != nullptr)
-	{
-		comparatorUI->setBounds(r.withHeight(comparatorUI->getHeight()));
-		r.translate(0, comparatorUI->getHeight());
-	}
+	alwaysTriggerUI->setBounds(cr.removeFromRight(95).withHeight(16));
+	cr.removeFromRight(2);
 
-	r.translate(0, 2);
+	if (comparatorUI != nullptr) comparatorUI->setBounds(cr);
+
+	r.translate(0, ch + 2);
 	r.setHeight(0);
 }
 

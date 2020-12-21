@@ -32,6 +32,4 @@ public:
 	void newMessage(const Condition::ConditionEvent &e) override;
 
 	void childBoundsChanged(Component *) override;
-
-	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ConditionEditor)
 };

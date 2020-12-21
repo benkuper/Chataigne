@@ -163,7 +163,7 @@ void ProcessorManagerUI::addItemFromMenu(Processor* item, bool isFromAddButton, 
 
 	if (Action* a = dynamic_cast<Action*>(item))
 	{
-		a->cdm.addItem(new StandardCondition()); //add one condition by default if done through UI
+		a->cdm.addItem(a->cdm.factory.create(StandardCondition::getTypeStringStatic(a->isIterative()))); //add one condition by default if done through UI
 	}
 	else if (Mapping* m = dynamic_cast<Mapping*>(item))
 	{

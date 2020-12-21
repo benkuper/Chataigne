@@ -43,9 +43,9 @@ void IteratorUI::updateProcessorManagerBounds()
     if (inspectable.wasObjectDeleted() || item->miniMode->boolValue()) return;
     int th = getHeightWithoutContent() + processorManagerUI.headerSize + processorManagerUI.getContentHeight();
 
+    if (th != getHeight()) 
     item->listUISize->setValue(th);
-    
-    if(th != getHeight()) setSize(getWidth(), th);
+    setSize(getWidth(), th);
 }
 
 void IteratorUI::itemUIAdded(ProcessorUI* pui)

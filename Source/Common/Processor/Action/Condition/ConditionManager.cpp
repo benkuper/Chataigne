@@ -25,6 +25,7 @@ ConditionManager::ConditionManager(IteratorProcessor * iterator) :
 	conditionManagerAsyncNotifier(10)
 {
 	canBeCopiedAndPasted = true;
+	selectItemWhenCreated = false;
 
 	managerFactory = &factory;
 	factory.defs.add(IterativeTargetDefinition<Condition>::createDef<StandardCondition>("", StandardCondition::getTypeStringStatic(false), iterator));
@@ -32,13 +33,10 @@ ConditionManager::ConditionManager(IteratorProcessor * iterator) :
 	factory.defs.add(IterativeTargetDefinition<Condition>::createDef<ScriptCondition>("", ScriptCondition::getTypeStringStatic(), iterator));
 	if (isIterative()) factory.defs.add(IterativeTargetDefinition<Condition>::createDef<StandardCondition>("", StandardCondition::getTypeStringStatic(true), iterator)->addParam("listMode",true));
 	
-
-	/*
 	validationTime = addFloatParameter("Validation Time", "If greater than 0, the conditions will be validated only if they remain valid for this amount of time", 0, 0, (float)INT32_MAX);
-	validationTime->hideInEditor = true;
 	validationTime->defaultUI = FloatParameter::TIME;
-	*/
-	selectItemWhenCreated = false;
+	validationProgressFeedback = addFloatParameter("Validation Progress", "The feedback of the progress if validation time is more than 0", 0, 0, 1, false);
+	validationProgressFeedback->setControllableFeedbackOnly(true);
 	
 	conditionOperator = addEnumParameter("Operator", "Operator for this manager, will decides how the conditions are validated");
 	conditionOperator->addOption("AND", ConditionOperator::AND);
@@ -130,6 +128,7 @@ void ConditionManager::setValid(int iterationIndex, bool value, bool dispatchOnl
 void ConditionManager::setValidationProgress(int iterationIndex, float value)
 {
 	validationProgresses.set(iterationIndex, value);
+	if (!isIterative()) validationProgressFeedback->setValue(value);
 }
 
 void ConditionManager::forceCheck()
@@ -165,7 +164,7 @@ void ConditionManager::checkAllConditions(int iterationIndex, bool emptyIsValid,
 			stopTimer(iterationIndex);
 		} else
 		{
-			prevTimerTimes.set(iterationIndex, Time::getHighResolutionTicks());
+			prevTimerTimes.set(iterationIndex, Time::getMillisecondCounterHiRes() / 1000.0);
 			startTimer(iterationIndex, 20);
 		}
 	}
@@ -184,6 +183,10 @@ void ConditionManager::onContainerParameterChanged(Parameter * p)
 	{
 		for (int i = 0; i < getIterationCount(); i++) checkAllConditions(i);
 	}
+	else if (p == validationTime)
+	{
+		validationProgressFeedback->setEnabled(validationTime->floatValue() > 0);
+	}
 }
 
 void ConditionManager::timerCallback(int id)
@@ -195,11 +198,13 @@ void ConditionManager::timerCallback(int id)
 		return;
 	}
 
-	double curTime = Time::getMillisecondCounterHiRes();
-	setValidationProgress(id, validationProgresses[id] + (curTime - prevTimerTimes[id])/1000.f);
+	double curTime = Time::getMillisecondCounterHiRes() / 1000.0;
+	float diffProgress = (curTime - prevTimerTimes[id]) / validationTime->floatValue();
+	float progress = validationProgresses[id] + diffProgress;
+	setValidationProgress(id, progress);
 	prevTimerTimes.set(id, curTime);
 
-	if (validationProgresses[id] >= validationTime->floatValue())
+	if (validationProgresses[id] >= 1)
 	{
 		setValid(id, true);
 		stopTimer(id);

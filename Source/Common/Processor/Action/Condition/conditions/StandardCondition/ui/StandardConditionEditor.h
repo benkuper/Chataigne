@@ -29,16 +29,12 @@ public:
 	std::unique_ptr<InspectableEditor> targetUI;
 	std::unique_ptr<ControllableUI> sourceFeedbackUI;
 	std::unique_ptr<BaseComparatorUI> comparatorUI;
-
-
 	
 	void setCollapsed(bool value, bool force = false, bool animate = true, bool doNotRebuild = false) override;
 
 	void resetAndBuild() override;
-
 	void resizedInternalHeaderItemInternal(Rectangle<int> &r) override;
 	void resizedInternalContent(Rectangle<int> &r) override;
 	void updateUI() override;
 
-	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(StandardConditionEditor)
 };
