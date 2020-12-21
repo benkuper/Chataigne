@@ -266,53 +266,7 @@
           </GROUP>
           <GROUP id="{797800DA-0DCB-1B89-AF24-83A7716BB83C}" name="Action">
             <GROUP id="{769E1555-7F3A-B046-7FF9-5B14A6197BBD}" name="Condition">
-              <GROUP id="{B168FE5B-E463-8457-D620-EA993DA00F90}" name="Comparator">
-                <GROUP id="{E0F1A125-84A7-ED5C-8D6A-735A660A6079}" name="comparators">
-                  <FILE id="q7FHha" name="BoolComparators.cpp" compile="1" resource="0"
-                        file="Source/Common/Processor/Action/Condition/Comparator/comparators/BoolComparators.cpp"/>
-                  <FILE id="yjUuu4" name="BoolComparators.h" compile="0" resource="0"
-                        file="Source/Common/Processor/Action/Condition/Comparator/comparators/BoolComparators.h"/>
-                  <FILE id="OJiIeG" name="EnumComparator.cpp" compile="1" resource="0"
-                        file="Source/Common/Processor/Action/Condition/Comparator/comparators/EnumComparator.cpp"/>
-                  <FILE id="fFCDRP" name="EnumComparator.h" compile="0" resource="0"
-                        file="Source/Common/Processor/Action/Condition/Comparator/comparators/EnumComparator.h"/>
-                  <FILE id="yLXY7L" name="NumberComparators.cpp" compile="1" resource="0"
-                        file="Source/Common/Processor/Action/Condition/Comparator/comparators/NumberComparators.cpp"/>
-                  <FILE id="qH8bFU" name="NumberComparators.h" compile="0" resource="0"
-                        file="Source/Common/Processor/Action/Condition/Comparator/comparators/NumberComparators.h"/>
-                  <FILE id="bBa7ux" name="Point2DComparators.cpp" compile="1" resource="0"
-                        file="Source/Common/Processor/Action/Condition/Comparator/comparators/Point2DComparators.cpp"/>
-                  <FILE id="DQH0CH" name="Point2DComparators.h" compile="0" resource="0"
-                        file="Source/Common/Processor/Action/Condition/Comparator/comparators/Point2DComparators.h"/>
-                  <FILE id="Oo4DcQ" name="Point3DComparators.cpp" compile="1" resource="0"
-                        file="Source/Common/Processor/Action/Condition/Comparator/comparators/Point3DComparators.cpp"/>
-                  <FILE id="W6B8O5" name="Point3DComparators.h" compile="0" resource="0"
-                        file="Source/Common/Processor/Action/Condition/Comparator/comparators/Point3DComparators.h"/>
-                  <FILE id="oSjTip" name="StringComparators.cpp" compile="1" resource="0"
-                        file="Source/Common/Processor/Action/Condition/Comparator/comparators/StringComparators.cpp"/>
-                  <FILE id="HJKmTP" name="StringComparators.h" compile="0" resource="0"
-                        file="Source/Common/Processor/Action/Condition/Comparator/comparators/StringComparators.h"/>
-                </GROUP>
-                <GROUP id="{CA3D4989-B1DE-2DAA-5075-B24D325812D1}" name="ui">
-                  <FILE id="UFhdkz" name="BaseComparatorUI.cpp" compile="1" resource="0"
-                        file="Source/Common/Processor/Action/Condition/Comparator/ui/BaseComparatorUI.cpp"/>
-                  <FILE id="yeWcfC" name="BaseComparatorUI.h" compile="0" resource="0"
-                        file="Source/Common/Processor/Action/Condition/Comparator/ui/BaseComparatorUI.h"/>
-                </GROUP>
-                <FILE id="NAz3tN" name="BaseComparator.cpp" compile="1" resource="0"
-                      file="Source/Common/Processor/Action/Condition/Comparator/BaseComparator.cpp"/>
-                <FILE id="V6MtRX" name="BaseComparator.h" compile="0" resource="0"
-                      file="Source/Common/Processor/Action/Condition/Comparator/BaseComparator.h"/>
-                <FILE id="A0Ginr" name="ComparatorFactory.h" compile="0" resource="0"
-                      file="Source/Common/Processor/Action/Condition/Comparator/ComparatorFactory.h"/>
-              </GROUP>
               <GROUP id="{D6ADE71C-FE26-85F8-193D-108C1D0EF059}" name="conditions">
-                <GROUP id="{3401077A-E12F-45BD-4F18-E9CD6465CC4C}" name="IterativeCondition">
-                  <FILE id="khx3CF" name="IterativeCondition.cpp" compile="1" resource="0"
-                        file="Source/Common/Processor/Action/Condition/conditions/IterativeCondition/IterativeCondition.cpp"/>
-                  <FILE id="SxecDX" name="IterativeCondition.h" compile="0" resource="0"
-                        file="Source/Common/Processor/Action/Condition/conditions/IterativeCondition/IterativeCondition.h"/>
-                </GROUP>
                 <GROUP id="{42D35307-D62F-0CDA-D315-E549DE0408B4}" name="ActivationCondition">
                   <FILE id="P4Tgf2" name="ActivationCondition.cpp" compile="1" resource="0"
                         file="Source/Common/Processor/Action/Condition/conditions/ActivationCondition/ActivationCondition.cpp"/>
@@ -326,6 +280,47 @@
                         file="Source/Common/Processor/Action/Condition/conditions/ConditionGroup/ConditionGroup.h"/>
                 </GROUP>
                 <GROUP id="{66C7CAB4-ECBE-9B4A-BDC2-588579156B34}" name="StandardCondition">
+                  <GROUP id="{C8D12288-D22A-C0C6-A355-F71600F89B11}" name="Comparator">
+                    <GROUP id="{12601B6C-B3F5-D6FC-6431-C0FFE301F403}" name="comparators">
+                      <FILE id="TAENO5" name="BoolComparators.cpp" compile="1" resource="0"
+                            file="Source/Common/Processor/Action/Condition/conditions/StandardCondition/Comparator/comparators/BoolComparators.cpp"/>
+                      <FILE id="g4mE8v" name="BoolComparators.h" compile="0" resource="0"
+                            file="Source/Common/Processor/Action/Condition/conditions/StandardCondition/Comparator/comparators/BoolComparators.h"/>
+                      <FILE id="nh7Dm0" name="EnumComparator.cpp" compile="1" resource="0"
+                            file="Source/Common/Processor/Action/Condition/conditions/StandardCondition/Comparator/comparators/EnumComparator.cpp"/>
+                      <FILE id="suyZrQ" name="EnumComparator.h" compile="0" resource="0"
+                            file="Source/Common/Processor/Action/Condition/conditions/StandardCondition/Comparator/comparators/EnumComparator.h"/>
+                      <FILE id="WMZv9b" name="NumberComparators.cpp" compile="1" resource="0"
+                            file="Source/Common/Processor/Action/Condition/conditions/StandardCondition/Comparator/comparators/NumberComparators.cpp"/>
+                      <FILE id="GhOoEO" name="NumberComparators.h" compile="0" resource="0"
+                            file="Source/Common/Processor/Action/Condition/conditions/StandardCondition/Comparator/comparators/NumberComparators.h"/>
+                      <FILE id="funHMs" name="Point2DComparators.cpp" compile="1" resource="0"
+                            file="Source/Common/Processor/Action/Condition/conditions/StandardCondition/Comparator/comparators/Point2DComparators.cpp"/>
+                      <FILE id="G9n7S6" name="Point2DComparators.h" compile="0" resource="0"
+                            file="Source/Common/Processor/Action/Condition/conditions/StandardCondition/Comparator/comparators/Point2DComparators.h"/>
+                      <FILE id="APSdts" name="Point3DComparators.cpp" compile="1" resource="0"
+                            file="Source/Common/Processor/Action/Condition/conditions/StandardCondition/Comparator/comparators/Point3DComparators.cpp"/>
+                      <FILE id="MVmAs5" name="Point3DComparators.h" compile="0" resource="0"
+                            file="Source/Common/Processor/Action/Condition/conditions/StandardCondition/Comparator/comparators/Point3DComparators.h"/>
+                      <FILE id="W852LF" name="StringComparators.cpp" compile="1" resource="0"
+                            file="Source/Common/Processor/Action/Condition/conditions/StandardCondition/Comparator/comparators/StringComparators.cpp"/>
+                      <FILE id="cd4fCM" name="StringComparators.h" compile="0" resource="0"
+                            file="Source/Common/Processor/Action/Condition/conditions/StandardCondition/Comparator/comparators/StringComparators.h"/>
+                    </GROUP>
+                    <GROUP id="{A6F4E61F-3D38-2F5B-95E9-A37BF3E349DA}" name="ui">
+                      <FILE id="M2pFyb" name="BaseComparatorUI.cpp" compile="1" resource="0"
+                            file="Source/Common/Processor/Action/Condition/conditions/StandardCondition/Comparator/ui/BaseComparatorUI.cpp"/>
+                      <FILE id="TWaOQd" name="BaseComparatorUI.h" compile="0" resource="0"
+                            file="Source/Common/Processor/Action/Condition/conditions/StandardCondition/Comparator/ui/BaseComparatorUI.h"/>
+                    </GROUP>
+                    <FILE id="CxzeDd" name="BaseComparator.cpp" compile="1" resource="0"
+                          file="Source/Common/Processor/Action/Condition/conditions/StandardCondition/Comparator/BaseComparator.cpp"/>
+                    <FILE id="lyNEhA" name="BaseComparator.h" compile="0" resource="0"
+                          file="Source/Common/Processor/Action/Condition/conditions/StandardCondition/Comparator/BaseComparator.h"/>
+                    <FILE id="fcKo76" name="ComparatorFactory.h" compile="0" resource="0"
+                          file="Source/Common/Processor/Action/Condition/conditions/StandardCondition/Comparator/ComparatorFactory.h"/>
+                  </GROUP>
+                  <GROUP id="{B168FE5B-E463-8457-D620-EA993DA00F90}" name="Comparator"/>
                   <GROUP id="{DC79D7C6-CCCD-5C7E-3154-0F96DD36AA58}" name="ui">
                     <FILE id="uSUoXy" name="StandardConditionEditor.cpp" compile="1" resource="0"
                           file="Source/Common/Processor/Action/Condition/conditions/StandardCondition/ui/StandardConditionEditor.cpp"/>

@@ -13,20 +13,19 @@
 
 #include "Action/Action.h"
 #include "Mapping/Mapping.h"
-#include "Iterator/Iterator.h"
 #include "Action/Condition/conditions/ActivationCondition/ActivationCondition.h"
+#include "Iterator/Iterator.h"
 
-ProcessorManager::ProcessorManager(const String &name, bool canHaveIterators) :
+ProcessorManager::ProcessorManager(const String &name, IteratorProcessor * iterator) :
 	BaseManager<Processor>(name),
 	forceDisabled(false)
 {
 	itemDataType = "Processor"; 
 
 	managerFactory = &factory;
-	factory.defs.add(Factory<Processor>::Definition::createDef<Action>("", "Action"));
-	factory.defs.add(Factory<Processor>::Definition::createDef<Mapping>("", "Mapping"));
-	if(canHaveIterators) factory.defs.add(Factory<Processor>::Definition::createDef<IteratorProcessor>("", "Iterator"));
-
+	factory.defs.add(IterativeTargetDefinition<Processor>::createDef<Action>("", "Action", iterator));
+	factory.defs.add(IterativeTargetDefinition<Processor>::createDef<Mapping>("", "Mapping", iterator));
+	if(iterator == nullptr) factory.defs.add(Factory<Processor>::Definition::createDef<IteratorProcessor>("", "Iterator"));
 }
 
 ProcessorManager::~ProcessorManager()
@@ -79,7 +78,11 @@ void ProcessorManager::checkAllActivateActions()
 		for (auto &c : a->cdm.items)
 		{
 			ActivationCondition * ac = dynamic_cast<ActivationCondition *>(c);
-			if(ac != nullptr) ac->isValid->setValue(ac->type == ActivationCondition::Type::ON_ACTIVATE && !ac->forceDisabled, false, true);
+			if (ac != nullptr)
+			{
+				bool valid = ac->type == ActivationCondition::Type::ON_ACTIVATE && !ac->forceDisabled;
+				for(int i = 0;i<ac->getIterationCount();i++) ac->setValid(i, valid, false);
+			}
 		}
 
 		/*
@@ -100,7 +103,10 @@ void ProcessorManager::checkAllDeactivateActions()
 		for (auto &c : a->cdm.items)
 		{
 			ActivationCondition * ac = dynamic_cast<ActivationCondition *>(c);
-			if (ac != nullptr) ac->isValid->setValue(ac->type == ActivationCondition::Type::ON_DEACTIVATE);
+			if (ac != nullptr)
+			{
+				for (int i = 0; i < ac->getIterationCount(); i++) ac->setValid(i, ac->type == ActivationCondition::Type::ON_DEACTIVATE);
+			}
 		}
 
 		/*

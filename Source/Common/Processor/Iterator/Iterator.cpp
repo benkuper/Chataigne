@@ -14,7 +14,7 @@
 IteratorProcessor::IteratorProcessor(var params) :
     Processor(getTypeString()),
     listManager(this),
-    processorManager("Processors", false)
+    processorManager("Processors", this)
 {
     count = addIntParameter("Count", "The number of items for each list of this iterator", 1, 0);
 
@@ -36,6 +36,7 @@ void IteratorProcessor::onContainerParameterChangedInternal(Parameter* p)
     if (p == count)
     {
         for (auto& l : listManager.items) l->setSize(count->intValue());
+        iteratorListeners.call(&IteratorListener::iteratorCountChanged);
     }
 }
 
@@ -56,4 +57,25 @@ BaseIteratorList* IteratorProcessor::showAndGetList()
 ProcessorUI* IteratorProcessor::getUI()
 {
     return new IteratorUI(this);
+}
+
+IterativeTarget::IterativeTarget(IteratorProcessor* it) :
+    iterator(it)
+{
+    if(iterator != nullptr) iterator->addIteratorListener(this);
+}
+
+IterativeTarget::~IterativeTarget()
+{
+    if(iterator != nullptr) iterator->removeIteratorListener(this);
+}
+
+bool IterativeTarget::isIterative() const
+{
+    return iterator != nullptr;
+}
+
+int IterativeTarget::getIterationCount() const
+{
+    return isIterative() ? iterator->count->intValue() : 1;
 }

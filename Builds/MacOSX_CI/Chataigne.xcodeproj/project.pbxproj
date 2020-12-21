@@ -245,42 +245,6 @@
 			isa = PBXBuildFile;
 			fileRef = 5395F3FD854FACA47F4928C1;
 		};
-		9EA034F221797BE59DC09D6C = {
-			isa = PBXBuildFile;
-			fileRef = 8615CE9282DE48602A86E758;
-		};
-		A7542A578E1E0D55254CC460 = {
-			isa = PBXBuildFile;
-			fileRef = 2E7534A1FF9877E7021A0027;
-		};
-		C6C9451B74299C08F8D22C8F = {
-			isa = PBXBuildFile;
-			fileRef = 720ADC555A7AB7B70987F6CE;
-		};
-		EB93CFF743035E318811B9AA = {
-			isa = PBXBuildFile;
-			fileRef = 406FDBCD428D2C569FAD1B54;
-		};
-		4E3797250F9F1C8F0BED3DB8 = {
-			isa = PBXBuildFile;
-			fileRef = AC05E07AD24466AF65669CF6;
-		};
-		80755DB16043AE05F5401021 = {
-			isa = PBXBuildFile;
-			fileRef = E68E0A177B0FFCF75AE44AB9;
-		};
-		76A437FEDA0343206FF9B855 = {
-			isa = PBXBuildFile;
-			fileRef = E059640D32B2F34315B8E93C;
-		};
-		F0816EE9C5028A0E7F0877E9 = {
-			isa = PBXBuildFile;
-			fileRef = 70EA23BFB947EAC9B1D89E45;
-		};
-		77B80F7EC0C9FD924136EA49 = {
-			isa = PBXBuildFile;
-			fileRef = 3B15ED8A841A34A34177A788;
-		};
 		972E4D94083013070236DC28 = {
 			isa = PBXBuildFile;
 			fileRef = E001D75A29B5AF290246E897;
@@ -288,6 +252,38 @@
 		87A24FDB0DE73C9A89BCE819 = {
 			isa = PBXBuildFile;
 			fileRef = 2DB904F30B9817E2F6723B8D;
+		};
+		DBD06A217FD230EAF92D7196 = {
+			isa = PBXBuildFile;
+			fileRef = D32E5B5AFECC5A49EDCBB54F;
+		};
+		12E8AA715EBA96516854D8F4 = {
+			isa = PBXBuildFile;
+			fileRef = 34349D7B20D357A0B5E78362;
+		};
+		5D1A758AA8F65E4AA6D56AFC = {
+			isa = PBXBuildFile;
+			fileRef = 3217E99161A613C57EACAB97;
+		};
+		9B908AFE9D4F065B4167BA20 = {
+			isa = PBXBuildFile;
+			fileRef = 4F27DA34B3C269ADD32E731A;
+		};
+		4DA240DBF3A698E115FC96A2 = {
+			isa = PBXBuildFile;
+			fileRef = CF04D613489A49CB8D6C417F;
+		};
+		74EFCC60E027ED822E686A70 = {
+			isa = PBXBuildFile;
+			fileRef = 3E3600D05834B9A27434CB9C;
+		};
+		D46CC7F486FCC492F919E114 = {
+			isa = PBXBuildFile;
+			fileRef = DB828084FAA4E440E44D4934;
+		};
+		5E118C2B6B5CA71B79CFCA69 = {
+			isa = PBXBuildFile;
+			fileRef = 6F4FA4C593D7CA4F9DAD5E13;
 		};
 		DAD053BF92E02EE5CFDE059B = {
 			isa = PBXBuildFile;
@@ -2005,11 +2001,11 @@
 			path = ../../Source/CustomVariables/Preset/ui/CVPresetEditor.h;
 			sourceTree = "SOURCE_ROOT";
 		};
-		215623034BD5C45437BE3842 = {
+		21789ADA3C217B8CDD9FC431 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
-			name = NumberComparators.h;
-			path = ../../Source/Common/Processor/Action/Condition/Comparator/comparators/NumberComparators.h;
+			name = EnumComparator.h;
+			path = ../../Source/Common/Processor/Action/Condition/conditions/StandardCondition/Comparator/comparators/EnumComparator.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		219F8EE239F1D0B2F9613BC9 = {
@@ -2236,13 +2232,6 @@
 			path = ../../Source/Module/Routing/ModuleRouterController.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
-		2E7534A1FF9877E7021A0027 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = EnumComparator.cpp;
-			path = ../../Source/Common/Processor/Action/Condition/Comparator/comparators/EnumComparator.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
 		2E93B8A7CF9DCDC3A41DEA0C = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -2320,6 +2309,13 @@
 			path = ../../Source/Common/DMX/device/DMXSerialDevice.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
+		3217E99161A613C57EACAB97 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = NumberComparators.cpp;
+			path = ../../Source/Common/Processor/Action/Condition/conditions/StandardCondition/Comparator/comparators/NumberComparators.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		3284BC58968CCABCFCEDABCF = {
 			isa = PBXFileReference;
 			lastKnownFileType = image.png;
@@ -2346,6 +2342,20 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = ModuleManagerUI.cpp;
 			path = ../../Source/Module/ui/ModuleManagerUI.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
+		33D9600902F5AF063F3C00C3 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = Point3DComparators.h;
+			path = ../../Source/Common/Processor/Action/Condition/conditions/StandardCondition/Comparator/comparators/Point3DComparators.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		34349D7B20D357A0B5E78362 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = EnumComparator.cpp;
+			path = ../../Source/Common/Processor/Action/Condition/conditions/StandardCondition/Comparator/comparators/EnumComparator.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		3449F147311F84BA64933833 = {
@@ -2488,13 +2498,6 @@
 			path = ../../Source/Common/Command/BaseCommand.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
-		3B15ED8A841A34A34177A788 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = IterativeCondition.cpp;
-			path = ../../Source/Common/Processor/Action/Condition/conditions/IterativeCondition/IterativeCondition.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
 		3B99BE9C316E5F04AC3CD1DB = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -2537,6 +2540,13 @@
 			path = ../../Source/TimeMachine/Sequence/layers/mapping/automation/ui/AutomationMappingLayerPanel.h;
 			sourceTree = "SOURCE_ROOT";
 		};
+		3E3600D05834B9A27434CB9C = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = StringComparators.cpp;
+			path = ../../Source/Common/Processor/Action/Condition/conditions/StandardCondition/Comparator/comparators/StringComparators.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		3E3642D43B646B4695474647 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -2577,13 +2587,6 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = GPIOCommands.h;
 			path = ../../Source/Module/modules/gpio/commands/GPIOCommands.h;
-			sourceTree = "SOURCE_ROOT";
-		};
-		406FDBCD428D2C569FAD1B54 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = Point2DComparators.cpp;
-			path = ../../Source/Common/Processor/Action/Condition/Comparator/comparators/Point2DComparators.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		4117B7EBA8E2519477B13B03 = {
@@ -2943,6 +2946,13 @@
 			path = ../../Source/Module/modules/audio/libs/pitch/PitchMPM.h;
 			sourceTree = "SOURCE_ROOT";
 		};
+		4F27DA34B3C269ADD32E731A = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = Point2DComparators.cpp;
+			path = ../../Source/Common/Processor/Action/Condition/conditions/StandardCondition/Comparator/comparators/Point2DComparators.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		4F2E249D01F2B4C825A1629B = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -3132,13 +3142,6 @@
 			path = ../../Source/Common/Processor/Mapping/Filter/MappingFilter.h;
 			sourceTree = "SOURCE_ROOT";
 		};
-		57D3945295D2C5CBB0764FB7 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = IterativeCondition.h;
-			path = ../../Source/Common/Processor/Action/Condition/conditions/IterativeCondition/IterativeCondition.h;
-			sourceTree = "SOURCE_ROOT";
-		};
 		5835F7B7E9A758B2CB9F0DA4 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -3300,13 +3303,6 @@
 			path = ../../Source/Module/Community/ui/CommunityModuleInfoEditor.h;
 			sourceTree = "SOURCE_ROOT";
 		};
-		640D6840DF6EA26FE8E882D8 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = BaseComparatorUI.h;
-			path = ../../Source/Common/Processor/Action/Condition/Comparator/ui/BaseComparatorUI.h;
-			sourceTree = "SOURCE_ROOT";
-		};
 		64731A5930462AB9DB5DDE0D = {
 			isa = PBXFileReference;
 			lastKnownFileType = wrapper.framework;
@@ -3361,6 +3357,13 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = Mapping1DLayer.cpp;
 			path = ../../Source/TimeMachine/Sequence/layers/mapping/automation/1d/Mapping1DLayer.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
+		69BF96CC842FD476DD1F3946 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = StringComparators.h;
+			path = ../../Source/Common/Processor/Action/Condition/conditions/StandardCondition/Comparator/comparators/StringComparators.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		69DC77C2F77880760FAC313C = {
@@ -3524,6 +3527,13 @@
 			path = ../../Source/Module/modules/controller/wiimote/WiimoteModule.h;
 			sourceTree = "SOURCE_ROOT";
 		};
+		6F4FA4C593D7CA4F9DAD5E13 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = BaseComparator.cpp;
+			path = ../../Source/Common/Processor/Action/Condition/conditions/StandardCondition/Comparator/BaseComparator.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		6FCB47468FB24ECFF51A90D2 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -3566,13 +3576,6 @@
 			path = ../../Source/Module/Routing/ui/ModuleRouterView.h;
 			sourceTree = "SOURCE_ROOT";
 		};
-		70EA23BFB947EAC9B1D89E45 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = BaseComparator.cpp;
-			path = ../../Source/Common/Processor/Action/Condition/Comparator/BaseComparator.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
 		712B39A79176F387DC023DCF = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -3592,13 +3595,6 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = ConversionSourceParameterUI.h;
 			path = ../../Source/Common/Processor/Mapping/Filter/filters/conversion/ui/ConversionSourceParameterUI.h;
-			sourceTree = "SOURCE_ROOT";
-		};
-		720ADC555A7AB7B70987F6CE = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = NumberComparators.cpp;
-			path = ../../Source/Common/Processor/Action/Condition/Comparator/comparators/NumberComparators.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		722557AC1AA50559314AAC74 = {
@@ -3713,13 +3709,6 @@
 			path = ../../Source/CustomVariables/Preset/CVPreset.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
-		7739D64FD51CB727503E34F8 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = BoolComparators.h;
-			path = ../../Source/Common/Processor/Action/Condition/Comparator/comparators/BoolComparators.h;
-			sourceTree = "SOURCE_ROOT";
-		};
 		77DA8C5F719F7C3B25B06C28 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -3746,6 +3735,13 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = ConsequenceManager.cpp;
 			path = ../../Source/Common/Processor/Action/Consequence/ConsequenceManager.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
+		789BEEB77C5B2E458CCC99A5 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = ComparatorFactory.h;
+			path = ../../Source/Common/Processor/Action/Condition/conditions/StandardCondition/Comparator/ComparatorFactory.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		78B240F53429613DC1AD4C8F = {
@@ -3853,6 +3849,13 @@
 			path = ../../Source/Common/Processor/Mapping/Input/ui/MappingInputEditor.h;
 			sourceTree = "SOURCE_ROOT";
 		};
+		7E423C10368C86FD21EB64E8 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = BaseComparator.h;
+			path = ../../Source/Common/Processor/Action/Condition/conditions/StandardCondition/Comparator/BaseComparator.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		7EC74A7B3F89CDBF4AE0DEA6 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -3951,13 +3954,6 @@
 			path = ../../Source/TimeMachine/Sequence/layers/mapping/ui/MappingLayerPanel.h;
 			sourceTree = "SOURCE_ROOT";
 		};
-		8615CE9282DE48602A86E758 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = BoolComparators.cpp;
-			path = ../../Source/Common/Processor/Action/Condition/Comparator/comparators/BoolComparators.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
 		864BCF10F9B195B54E362857 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -4049,6 +4045,13 @@
 			path = ../../Source/Module/modules/controller/joycon/JoyConModule.h;
 			sourceTree = "SOURCE_ROOT";
 		};
+		8A98F2CA8C30E39E84364E56 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = BaseComparatorUI.h;
+			path = ../../Source/Common/Processor/Action/Condition/conditions/StandardCondition/Comparator/ui/BaseComparatorUI.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		8AB58B2FA156DD075B892850 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -4138,6 +4141,13 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = ConversionFilter.cpp;
 			path = ../../Source/Common/Processor/Mapping/Filter/filters/conversion/ConversionFilter.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
+		8EB292748351756688228DCB = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = Point2DComparators.h;
+			path = ../../Source/Common/Processor/Action/Condition/conditions/StandardCondition/Comparator/comparators/Point2DComparators.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		8EFE304B0BBA3DFA624E0D0F = {
@@ -4350,13 +4360,6 @@
 			path = ../../Source/Module/modules/osc/OSCModule.h;
 			sourceTree = "SOURCE_ROOT";
 		};
-		9ACC617DB853FAC2002E87B7 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = Point2DComparators.h;
-			path = ../../Source/Common/Processor/Action/Condition/Comparator/comparators/Point2DComparators.h;
-			sourceTree = "SOURCE_ROOT";
-		};
 		9B0FE7E968406A8B38CDC2E8 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -4509,13 +4512,6 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = ModuleRouterPanelView.cpp;
 			path = ../../Source/Module/Routing/ui/ModuleRouterPanelView.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
-		A21339CDFA808ECC229E2449 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = BaseComparator.h;
-			path = ../../Source/Common/Processor/Action/Condition/Comparator/BaseComparator.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		A25CA35206B001BEC52F35AE = {
@@ -4726,13 +4722,6 @@
 			lastKnownFileType = image.png;
 			name = nextcue.png;
 			path = ../../Resources/nextcue.png;
-			sourceTree = "SOURCE_ROOT";
-		};
-		AC05E07AD24466AF65669CF6 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = Point3DComparators.cpp;
-			path = ../../Source/Common/Processor/Action/Condition/Comparator/comparators/Point3DComparators.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		AC2CF94957A35C1F57DCE049 = {
@@ -5407,6 +5396,13 @@
 			path = ../../Source/Module/modules/osc/dlight/DLightModule.h;
 			sourceTree = "SOURCE_ROOT";
 		};
+		CF04D613489A49CB8D6C417F = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = Point3DComparators.cpp;
+			path = ../../Source/Common/Processor/Action/Condition/conditions/StandardCondition/Comparator/comparators/Point3DComparators.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		CFDFDA098CB0A28A21BB937C = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -5512,6 +5508,13 @@
 			path = ../../Source/Module/modules/osc/reaper/ReaperModule.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
+		D32E5B5AFECC5A49EDCBB54F = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = BoolComparators.cpp;
+			path = ../../Source/Common/Processor/Action/Condition/conditions/StandardCondition/Comparator/comparators/BoolComparators.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		D3545F13218A5853095E8156 = {
 			isa = PBXFileReference;
 			lastKnownFileType = file;
@@ -5524,13 +5527,6 @@
 			lastKnownFileType = file.js;
 			name = httpScriptTemplate.js;
 			path = ../../Resources/Templates/Scripts/httpScriptTemplate.js;
-			sourceTree = "SOURCE_ROOT";
-		};
-		D3AC6DB8F537535B3BF2A807 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = StringComparators.h;
-			path = ../../Source/Common/Processor/Action/Condition/Comparator/comparators/StringComparators.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		D3DEC6BA80AE0DBA98662134 = {
@@ -5601,6 +5597,13 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = ResolumeBaseCommandEditor.cpp;
 			path = ../../Source/Module/modules/osc/resolume/commands/ui/ResolumeBaseCommandEditor.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
+		D5A2ED2C3B119393DD165E8F = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = BoolComparators.h;
+			path = ../../Source/Common/Processor/Action/Condition/conditions/StandardCondition/Comparator/comparators/BoolComparators.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		D5E756812D837539E1D68243 = {
@@ -5722,18 +5725,18 @@
 			path = ../../Source/UI/ChataigneAssetManager.h;
 			sourceTree = "SOURCE_ROOT";
 		};
-		DA9367F242B3EFFDA25E471D = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = EnumComparator.h;
-			path = ../../Source/Common/Processor/Action/Condition/Comparator/comparators/EnumComparator.h;
-			sourceTree = "SOURCE_ROOT";
-		};
 		DB0E4F2C9CE337746D9A4530 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = GenericOSCQueryCommand.cpp;
 			path = ../../Source/Module/modules/oscquery/generic/GenericOSCQueryCommand.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
+		DB828084FAA4E440E44D4934 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = BaseComparatorUI.cpp;
+			path = ../../Source/Common/Processor/Action/Condition/conditions/StandardCondition/Comparator/ui/BaseComparatorUI.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		DB8586997DF3708490DAEBB5 = {
@@ -5804,13 +5807,6 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = ActivationCondition.cpp;
 			path = ../../Source/Common/Processor/Action/Condition/conditions/ActivationCondition/ActivationCondition.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
-		E059640D32B2F34315B8E93C = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = BaseComparatorUI.cpp;
-			path = ../../Source/Common/Processor/Action/Condition/Comparator/ui/BaseComparatorUI.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		E0DAA85E4ED4F51B9EFB98B8 = {
@@ -5918,13 +5914,6 @@
 			path = ../../Source/Common/Command/Template/CommandTemplateParameter.h;
 			sourceTree = "SOURCE_ROOT";
 		};
-		E4066D46816B019713D3760E = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = ComparatorFactory.h;
-			path = ../../Source/Common/Processor/Action/Condition/Comparator/ComparatorFactory.h;
-			sourceTree = "SOURCE_ROOT";
-		};
 		E438ED5BB04E38ED75524C33 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -5981,13 +5970,6 @@
 			path = ../../Source/CustomVariables/CVGroupManager.h;
 			sourceTree = "SOURCE_ROOT";
 		};
-		E68E0A177B0FFCF75AE44AB9 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = StringComparators.cpp;
-			path = ../../Source/Common/Processor/Action/Condition/Comparator/comparators/StringComparators.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
 		E7513C7B304255F7E208D7EF = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -6042,13 +6024,6 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = WebSocketClientModule.cpp;
 			path = ../../Source/Module/modules/websocket/WebSocketClientModule.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
-		E92288FB21A7A81372B50E88 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = Point3DComparators.h;
-			path = ../../Source/Common/Processor/Action/Condition/Comparator/comparators/Point3DComparators.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		E9DC14E295FEC8CF62406CB1 = {
@@ -6336,6 +6311,13 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = CommandChooserUI.h;
 			path = ../../Source/Common/Command/ui/CommandChooserUI.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		F99233D6C8A37D46D317C05B = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = NumberComparators.h;
+			path = ../../Source/Common/Processor/Action/Condition/conditions/StandardCondition/Comparator/comparators/NumberComparators.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		FA28A6E3D992D8E5E14F097E = {
@@ -6744,55 +6726,6 @@
 			name = Iterator;
 			sourceTree = "<group>";
 		};
-		10DAA8CA1F89378CEF3C78F4 = {
-			isa = PBXGroup;
-			children = (
-				8615CE9282DE48602A86E758,
-				7739D64FD51CB727503E34F8,
-				2E7534A1FF9877E7021A0027,
-				DA9367F242B3EFFDA25E471D,
-				720ADC555A7AB7B70987F6CE,
-				215623034BD5C45437BE3842,
-				406FDBCD428D2C569FAD1B54,
-				9ACC617DB853FAC2002E87B7,
-				AC05E07AD24466AF65669CF6,
-				E92288FB21A7A81372B50E88,
-				E68E0A177B0FFCF75AE44AB9,
-				D3AC6DB8F537535B3BF2A807,
-			);
-			name = comparators;
-			sourceTree = "<group>";
-		};
-		E3CB9078B2FF4E377A4F7BCB = {
-			isa = PBXGroup;
-			children = (
-				E059640D32B2F34315B8E93C,
-				640D6840DF6EA26FE8E882D8,
-			);
-			name = ui;
-			sourceTree = "<group>";
-		};
-		C78C654108363A1B906511B0 = {
-			isa = PBXGroup;
-			children = (
-				10DAA8CA1F89378CEF3C78F4,
-				E3CB9078B2FF4E377A4F7BCB,
-				70EA23BFB947EAC9B1D89E45,
-				A21339CDFA808ECC229E2449,
-				E4066D46816B019713D3760E,
-			);
-			name = Comparator;
-			sourceTree = "<group>";
-		};
-		D1BCDB2DBBF96D2152E33E58 = {
-			isa = PBXGroup;
-			children = (
-				3B15ED8A841A34A34177A788,
-				57D3945295D2C5CBB0764FB7,
-			);
-			name = IterativeCondition;
-			sourceTree = "<group>";
-		};
 		D6FB4773F3AE25F3A9B6374B = {
 			isa = PBXGroup;
 			children = (
@@ -6811,6 +6744,46 @@
 			name = ConditionGroup;
 			sourceTree = "<group>";
 		};
+		A7E3CADA5D35CC067840AB97 = {
+			isa = PBXGroup;
+			children = (
+				D32E5B5AFECC5A49EDCBB54F,
+				D5A2ED2C3B119393DD165E8F,
+				34349D7B20D357A0B5E78362,
+				21789ADA3C217B8CDD9FC431,
+				3217E99161A613C57EACAB97,
+				F99233D6C8A37D46D317C05B,
+				4F27DA34B3C269ADD32E731A,
+				8EB292748351756688228DCB,
+				CF04D613489A49CB8D6C417F,
+				33D9600902F5AF063F3C00C3,
+				3E3600D05834B9A27434CB9C,
+				69BF96CC842FD476DD1F3946,
+			);
+			name = comparators;
+			sourceTree = "<group>";
+		};
+		0216B7244FE763CC02B8DA2B = {
+			isa = PBXGroup;
+			children = (
+				DB828084FAA4E440E44D4934,
+				8A98F2CA8C30E39E84364E56,
+			);
+			name = ui;
+			sourceTree = "<group>";
+		};
+		CEE7FE7CB95766E3BA8168BF = {
+			isa = PBXGroup;
+			children = (
+				A7E3CADA5D35CC067840AB97,
+				0216B7244FE763CC02B8DA2B,
+				6F4FA4C593D7CA4F9DAD5E13,
+				7E423C10368C86FD21EB64E8,
+				789BEEB77C5B2E458CCC99A5,
+			);
+			name = Comparator;
+			sourceTree = "<group>";
+		};
 		A571F900983BC0FE3C6D4676 = {
 			isa = PBXGroup;
 			children = (
@@ -6823,6 +6796,7 @@
 		9F6067AE0BCC3B27E2C692F1 = {
 			isa = PBXGroup;
 			children = (
+				CEE7FE7CB95766E3BA8168BF,
 				A571F900983BC0FE3C6D4676,
 				A8E384B682BC530A73A99320,
 				ECF928D2BDF6F13D732C3A81,
@@ -6842,7 +6816,6 @@
 		9BE8DAE593848F8E1C48119E = {
 			isa = PBXGroup;
 			children = (
-				D1BCDB2DBBF96D2152E33E58,
 				D6FB4773F3AE25F3A9B6374B,
 				D4FB3E50FB755F0202DF8DD7,
 				9F6067AE0BCC3B27E2C692F1,
@@ -6865,7 +6838,6 @@
 		3B7AA45E11E1DC3F10505FD6 = {
 			isa = PBXGroup;
 			children = (
-				C78C654108363A1B906511B0,
 				9BE8DAE593848F8E1C48119E,
 				73ECC3E2EAA90645EE2A258C,
 				B7BBA4821B4CAD95A467E9DE,
@@ -9042,17 +9014,16 @@
 				4A10B1487B06CCF88C3598DD,
 				D2625AEF6D08B6CCB799B01B,
 				75F833E01D899D07E846C976,
-				9EA034F221797BE59DC09D6C,
-				A7542A578E1E0D55254CC460,
-				C6C9451B74299C08F8D22C8F,
-				EB93CFF743035E318811B9AA,
-				4E3797250F9F1C8F0BED3DB8,
-				80755DB16043AE05F5401021,
-				76A437FEDA0343206FF9B855,
-				F0816EE9C5028A0E7F0877E9,
-				77B80F7EC0C9FD924136EA49,
 				972E4D94083013070236DC28,
 				87A24FDB0DE73C9A89BCE819,
+				DBD06A217FD230EAF92D7196,
+				12E8AA715EBA96516854D8F4,
+				5D1A758AA8F65E4AA6D56AFC,
+				9B908AFE9D4F065B4167BA20,
+				4DA240DBF3A698E115FC96A2,
+				74EFCC60E027ED822E686A70,
+				D46CC7F486FCC492F919E114,
+				5E118C2B6B5CA71B79CFCA69,
 				DAD053BF92E02EE5CFDE059B,
 				712A655B2D9D9C4892313AEE,
 				85238CB5E81983C1842CF136,

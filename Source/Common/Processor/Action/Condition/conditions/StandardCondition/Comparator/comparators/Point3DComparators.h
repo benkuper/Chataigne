@@ -13,10 +13,10 @@
 #include "../BaseComparator.h"
 
 class Point3DComparator :
-	public ParameterComparator
+	public BaseComparator
 {
 public:
-	Point3DComparator(Array<WeakReference<Controllable>> sources);
+	Point3DComparator(Parameter * sourceParam);
 	virtual ~Point3DComparator();
 
 	const Identifier equalsId = "=";
@@ -25,11 +25,8 @@ public:
 	const Identifier magnGreaterId = "m>";
 	const Identifier magnLessId = "m<";
 
-	Array<Point3DParameter *> p3dParams;
 	Point3DParameter * p3dRef;
 	FloatParameter * valParam;
 
-	virtual void compare(int iterationIndex) override;
-
-	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Point3DComparator)
+	virtual bool compare(Parameter * sourceParam) override;
 };

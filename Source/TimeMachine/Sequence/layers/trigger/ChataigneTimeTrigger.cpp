@@ -31,7 +31,7 @@ void ChataigneTimeTrigger::onContainerParameterChangedInternal(Parameter* p)
 
 void ChataigneTimeTrigger::triggerInternal()
 {
-	csm.triggerAll->trigger();
+	csm.triggerAll(/*iterationIndex*/);
 }
 
 var ChataigneTimeTrigger::getJSONData()

@@ -13,10 +13,10 @@
 #include "../BaseComparator.h"
 
 class StringComparator :
-	public ParameterComparator
+	public BaseComparator
 {
 public:
-	StringComparator(Array<WeakReference<Controllable>> sources);
+	StringComparator(Parameter * sourceParam);
 	virtual ~StringComparator();
 
 	const Identifier equalsId = "=";
@@ -25,10 +25,5 @@ public:
 	const Identifier startsWith = "startsWith";
 	const Identifier endsWidth = "endsWidth";
 
-	Array<StringParameter *> stringParams;
-	StringParameter * stringRef;
-
-	virtual void compare(int iterationIndex) override;
-
-	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(StringComparator)
+	virtual bool compare(Parameter *sourceParam) override;
 };

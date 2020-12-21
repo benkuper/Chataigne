@@ -17,7 +17,7 @@ class ScriptCondition :
 	public Condition
 {
 public:
-	ScriptCondition(var params);
+	ScriptCondition(var params, IteratorProcessor* processor = nullptr);
 	~ScriptCondition();
 	
 	static String conditionTemplate;

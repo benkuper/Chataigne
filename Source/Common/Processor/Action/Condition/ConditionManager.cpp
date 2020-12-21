@@ -14,31 +14,30 @@
 #include "conditions/ConditionGroup/ConditionGroup.h"
 #include "conditions/ScriptCondition/ScriptCondition.h"
 #include "conditions/ActivationCondition/ActivationCondition.h"
-#include "conditions/IterativeCondition/IterativeCondition.h"
 #include "Common/Processor/Action/Action.h"
 
-juce_ImplementSingleton(ConditionManager)
-
-ConditionManager::ConditionManager() :
+ConditionManager::ConditionManager(IteratorProcessor * iterator) :
+	IterativeTarget(iterator),
 	BaseManager<Condition>("Conditions"),
 	activateDef(nullptr),
 	deactivateDef(nullptr),
-	iterativeDef(nullptr),
     forceDisabled(false),
-	iterationCount(0)
+	conditionManagerAsyncNotifier(10)
 {
 	canBeCopiedAndPasted = true;
 
 	managerFactory = &factory;
-	factory.defs.add(Factory<Condition>::Definition::createDef<StandardCondition>("", StandardCondition::getTypeStringStatic()));
-	factory.defs.add(Factory<Condition>::Definition::createDef<ConditionGroup>("", ConditionGroup::getTypeStringStatic()));
-	factory.defs.add(Factory<Condition>::Definition::createDef<ScriptCondition>("", ScriptCondition::getTypeStringStatic()));
+	factory.defs.add(IterativeTargetDefinition<Condition>::createDef<StandardCondition>("", StandardCondition::getTypeStringStatic(false), iterator));
+	factory.defs.add(IterativeTargetDefinition<Condition>::createDef<ConditionGroup>("", ConditionGroup::getTypeStringStatic(), iterator));
+	factory.defs.add(IterativeTargetDefinition<Condition>::createDef<ScriptCondition>("", ScriptCondition::getTypeStringStatic(), iterator));
+	if (isIterative()) factory.defs.add(IterativeTargetDefinition<Condition>::createDef<StandardCondition>("", StandardCondition::getTypeStringStatic(true), iterator)->addParam("listMode",true));
+	
 
-
+	/*
 	validationTime = addFloatParameter("Validation Time", "If greater than 0, the conditions will be validated only if they remain valid for this amount of time", 0, 0, (float)INT32_MAX);
 	validationTime->hideInEditor = true;
 	validationTime->defaultUI = FloatParameter::TIME;
-
+	*/
 	selectItemWhenCreated = false;
 	
 	conditionOperator = addEnumParameter("Operator", "Operator for this manager, will decides how the conditions are validated");
@@ -51,64 +50,16 @@ ConditionManager::~ConditionManager()
 {
 }
 
-void ConditionManager::setIterationCount(int count)
+void ConditionManager::iteratorCountChanged()
 {
-	if (iterationCount == count) return;
+	isValids.resize(getIterationCount());
+	validationProgresses.resize(getIterationCount());
 
-	iterationCount = count;
-
-	while (iterationCount < isValids.size())
-	{
-		removeControllable(isValids[isValids.size() - 1]);
-		isValids.removeLast();
-		removeControllable(validationProgresses[validationProgresses.size() - 1]);
-		validationProgresses.removeLast();
-
-		validationWaitings.removeLast();
-		prevTimerTimes.removeLast();
-	}
-
-	while (iterationCount > isValids.size())
-	{
-		BoolParameter * isValid = addBoolParameter("Is Valid", "Indicates if all the conditions are valid. If so, the consequences are triggered one time, at the moment the action becomes valid.", false);
-		isValid->isControllableFeedbackOnly = true;
-		isValid->hideInEditor = true;
-		isValid->isSavable = false;
-		isValids.add(isValid);
-
-		FloatParameter * validationProgress = addFloatParameter("Progress", "Validation time progress", 0, 0, validationTime->floatValue());
-		validationProgress->setControllableFeedbackOnly(true);
-		validationProgress->setEnabled(false);
-		validationProgress->hideInEditor = true;
-		validationProgress->isSavable = false;
-		validationProgresses.add(validationProgress);
-
-		validationWaitings.add(false);
-		prevTimerTimes.add(0);
-	}
-
-	if (iterationCount  > 0) validationProgresses[0]->hideInEditor = iterationCount > 0;
-
-	for (auto& i : items) i->setIterationCount(iterationCount);
-	
-	if (iterationCount > 1)
-	{
-		if (iterativeDef == nullptr)
-		{
-			iterativeDef = Factory<Condition>::Definition::createDef<IterativeCondition>("", IterativeCondition::getTypeStringStatic());
-			factory.defs.add(iterativeDef);
-			factory.buildPopupMenu();
-		}
-		
-	}
-	else if(iterativeDef != nullptr)
-	{
-		factory.defs.removeObject(iterativeDef);
-		iterativeDef = nullptr;
-		factory.buildPopupMenu();
-	}
-
+	isValids.fill(false);
+	validationProgresses.fill(0);
 }
+
+
 
 void ConditionManager::setHasActivationDefinitions(bool value)
 {
@@ -151,7 +102,7 @@ void ConditionManager::removeItemInternal(Condition * c)
 	conditionOperator->hideInEditor = items.size() <= 1;
 	if (!Engine::mainEngine->isLoadingFile && !Engine::mainEngine->isClearing)
 	{
-		for (int i = 0; i < iterationCount; i++) checkAllConditions(i);
+		for (int i = 0; i < getIterationCount(); i++) checkAllConditions(i);
 	}
 }
 
@@ -161,12 +112,24 @@ void ConditionManager::setForceDisabled(bool value, bool force)
 	forceDisabled = value;
 	if (forceDisabled)
 	{
-		for (auto& v : isValids) v->setValue(false);
+		isValids.fill(false);
 	}
 
 	for (auto &i : items) i->setForceDisabled(value);
 
-	for (int i = 0; i < iterationCount; i++) checkAllConditions(i);
+	for (int i = 0; i < getIterationCount(); i++) checkAllConditions(i);
+}
+
+void ConditionManager::setValid(int iterationIndex, bool value, bool dispatchOnlyOnValidationChange)
+{
+	if (isValids[iterationIndex] == value && dispatchOnlyOnValidationChange) return;
+	isValids.set(iterationIndex, value);
+	dispatchConditionValidationChanged(iterationIndex);
+}
+
+void ConditionManager::setValidationProgress(int iterationIndex, float value)
+{
+	validationProgresses.set(iterationIndex, value);
 }
 
 void ConditionManager::forceCheck()
@@ -176,8 +139,6 @@ void ConditionManager::forceCheck()
 
 void ConditionManager::checkAllConditions(int iterationIndex, bool emptyIsValid, bool dispatchOnlyOnValidationChange)
 {
-	jassert(iterationIndex > iterationCount);
-
 	bool valid = false;
 	ConditionOperator op = (ConditionOperator)(int)conditionOperator->getValueData();
 	switch (op)
@@ -193,25 +154,17 @@ void ConditionManager::checkAllConditions(int iterationIndex, bool emptyIsValid,
 
 	if (validationTime->floatValue() == 0)
 	{
-		if (valid != isValids[iterationIndex]->boolValue() || dispatchOnlyOnValidationChange)
-		{
-			isValids[iterationIndex]->setValue(valid);
-			dispatchConditionValidationChanged();
-		}
+		setValid(iterationIndex, valid, dispatchOnlyOnValidationChange);
 	}else if (valid != validationWaitings[iterationIndex])
 	{
 		validationWaitings.set(iterationIndex, valid);
-
-		validationProgresses[iterationIndex]->setValue(0);
-		isValids[iterationIndex]->setValue(false);
-
+		setValidationProgress(iterationIndex, 0);
+		setValid(iterationIndex, false);
 		if(!valid)
 		{
 			stopTimer(iterationIndex);
-			dispatchConditionValidationChanged();
 		} else
 		{
-
 			prevTimerTimes.set(iterationIndex, Time::getHighResolutionTicks());
 			startTimer(iterationIndex, 20);
 		}
@@ -220,23 +173,16 @@ void ConditionManager::checkAllConditions(int iterationIndex, bool emptyIsValid,
 
 
 
-void ConditionManager::conditionValidationChanged(Condition*, const IterativeContext& context)
+void ConditionManager::conditionValidationChanged(Condition*, int iterationIndex)
 {
-	checkAllConditions(context.indexInList);
+	checkAllConditions(iterationIndex);
 }
 
 void ConditionManager::onContainerParameterChanged(Parameter * p)
 {
-	if (p == validationTime)
+	if (p == conditionOperator)
 	{
-		for (int i = 0; i < iterationCount; i++)
-		{
-			validationProgresses[i]->setEnabled(validationTime->floatValue() > 0);
-			validationProgresses[i]->setRange(0, validationTime->floatValue());
-		}
-	} else if (p == conditionOperator)
-	{
-		for (int i = 0; i < iterationCount; i++) checkAllConditions(i);
+		for (int i = 0; i < getIterationCount(); i++) checkAllConditions(i);
 	}
 }
 
@@ -244,28 +190,25 @@ void ConditionManager::timerCallback(int id)
 {
 	if (validationTime->floatValue() == 0)
 	{
-		isValids[id]->setValue(true);
-		dispatchConditionValidationChanged();
+		setValid(id, true);
 		stopTimer(id);
 		return;
 	}
 
 	double curTime = Time::getMillisecondCounterHiRes();
-	validationProgresses[id]->setValue(validationProgresses[id]->floatValue() + (curTime - prevTimerTimes[id])/1000.f);
+	setValidationProgress(id, validationProgresses[id] + (curTime - prevTimerTimes[id])/1000.f);
 	prevTimerTimes.set(id, curTime);
 
-
-	if (validationProgresses[id]->floatValue() >= validationTime->floatValue())
+	if (validationProgresses[id] >= validationTime->floatValue())
 	{
-		isValids[id]->setValue(true);
-		dispatchConditionValidationChanged();
+		setValid(id, true);
 		stopTimer(id);
 	}
 }
 
 void ConditionManager::afterLoadJSONDataInternal()
 {
-	for (int i = 0; i < iterationCount; i++) checkAllConditions(i);
+	for (int i = 0; i < getIterationCount(); i++) checkAllConditions(i);
 }
 
 bool ConditionManager::areAllConditionsValid(int iterationIndex, bool emptyIsValid)
@@ -276,7 +219,7 @@ bool ConditionManager::areAllConditionsValid(int iterationIndex, bool emptyIsVal
 	for (auto &c : items)
 	{
 		if (!c->enabled->boolValue()) continue;
-		if (!c->isValids[iterationIndex]->boolValue()) return false;
+		if (!c->getIsValid(iterationIndex)) return false;
 		conditionsChecked++;
 	}
 
@@ -292,7 +235,7 @@ bool ConditionManager::isAtLeastOneConditionValid(int iterationIndex, bool empty
 	for (auto &c : items)
 	{
 		if (!c->enabled->boolValue()) continue;
-		if (c->isValids[iterationIndex]->boolValue()) return true;
+		if (c->getIsValid(iterationIndex)) return true;
 		conditionsChecked++;
 	}
 
@@ -316,19 +259,20 @@ int ConditionManager::getNumValidConditions(int iterationIndex)
 	for (auto &c : items)
 	{
 		if (!c->enabled->boolValue()) continue;
-		if (c->isValids[iterationIndex]->boolValue()) result++;
+		if (c->getIsValid(iterationIndex)) result++;
 	}
 	return result;
 }
 
 bool ConditionManager::getIsValid(int iterationIndex, bool emptyIsValid)
 {
-	return isValids[iterationIndex]->boolValue() || (emptyIsValid && items.size() == 0);
+	return isValids[iterationIndex] || (emptyIsValid && items.size() == 0);
 }
 
-void ConditionManager::dispatchConditionValidationChanged()
+void ConditionManager::dispatchConditionValidationChanged(int iterationIndex)
 {
-	conditionManagerListeners.call(&ConditionManagerListener::conditionManagerValidationChanged, this);
+	conditionManagerListeners.call(&ConditionManagerListener::conditionManagerValidationChanged, this, iterationIndex);
+	conditionManagerAsyncNotifier.addMessage(new ConditionManagerEvent(ConditionManagerEvent::VALIDATION_CHANGED, this, iterationIndex));
 }
 
 

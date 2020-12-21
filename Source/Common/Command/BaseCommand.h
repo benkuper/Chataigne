@@ -13,10 +13,12 @@
 #include "Template/CommandTemplate.h"
 #include "CommandContext.h"
 #include "Module/modules/common/commands/customvalues/CustomValuesCommandArgumentManager.h"
+#include "Common/Processor/Iterator/Iterator.h"
 
 class Module;
 
 class BaseCommand :
+	public IterativeTarget,
 	public ControllableContainer,
 	public Inspectable::InspectableListener,
 	public CommandTemplate::TemplateListener,
@@ -24,7 +26,7 @@ class BaseCommand :
 	public CustomValuesCommandArgumentManager::ManagerListener
 {
 public:
-	BaseCommand(Module * module, CommandContext context, var params);
+	BaseCommand(Module * module, CommandContext context, var params, IteratorProcessor * iterator = nullptr);
 	virtual ~BaseCommand();
 
 	CommandContext context;
@@ -44,7 +46,6 @@ public:
 	HashMap<int, Array<WeakReference<Parameter>> *> targetMappingParameters;
 	HashMap<Parameter *, int> parameterToIndexMap;
 
-
 	void addTargetMappingParameterAt(WeakReference<Parameter> p,int index);
 	void removeTargetMappingParameter(WeakReference<Parameter> p);
 	void clearTargetMappingParametersAt(int index);
@@ -62,7 +63,7 @@ public:
 	void templateParameterChanged(CommandTemplateParameter * ctp) override;
 	
 	virtual void setMappingValueType(Controllable::Type type);
-    virtual void trigger(); //for trigger, will check validity of module
+    virtual void trigger(int iterationIndex = 0); //for trigger, will check validity of module
     virtual void triggerInternal() {} // to be overriden
 	virtual void setValue(var value); //for mapping context
 	virtual void setValueInternal(var value) {}

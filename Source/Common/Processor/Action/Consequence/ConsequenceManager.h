@@ -11,31 +11,24 @@
 #pragma once
 
 #include "Consequence.h"
+#include "../../Iterator/Iterator.h"
 
 class ConsequenceManager :
 	public BaseManager<Consequence>,
-	public Consequence::ConsequenceListener,
-	public Thread
+	public IterativeTarget,
+	public Consequence::ConsequenceListener
 {
 public:
-	juce_DeclareSingleton(ConsequenceManager, true)
-
-	ConsequenceManager(const String &name = "Consequences");
+	ConsequenceManager(const String &name = "Consequences", IteratorProcessor * iterator = nullptr);
 	~ConsequenceManager();
 	
-	Array<Trigger *> triggerAlls;
 	FloatParameter * delay;
 	FloatParameter * stagger;
 
 	bool forceDisabled;
 
-	//delay and stagger
-	uint32 timeAtRun;
-	int triggerIndex;
-
 	//iteration
-	int iterationCount;
-	void setIterationCount(int count);
+	void triggerAll(int iterationIndex = 0);
 
 	void setForceDisabled(bool value, bool force = false);
 
@@ -43,7 +36,25 @@ public:
 	void addItemInternal(Consequence *, var data) override;
 	void removeItemInternal(Consequence *) override;
 
-	void run() override;
+
+	class StaggerLauncher :
+		public Thread
+	{
+	public:
+		StaggerLauncher(ConsequenceManager * csm, int iterationIndex);
+		~StaggerLauncher();
+
+		ConsequenceManager* csm;
+		int iterationIndex;
+
+		uint32 timeAtRun;
+		int triggerIndex;
+
+		void run() override;
+	};
+	OwnedArray<StaggerLauncher> staggerLaunchers;
+
+	void launcherFinished(StaggerLauncher * launcher);
 
 	InspectableEditor * getEditor(bool isRoot) override; 
 

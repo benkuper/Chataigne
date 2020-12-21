@@ -79,7 +79,7 @@ void ProcessorManagerUI::itemDropped(const SourceDetails & details)
 					Action * a = dynamic_cast<Action *>(manager->addItem(manager->factory.create("Action")));
 					if (a != nullptr)
 					{
-						StandardCondition * c = dynamic_cast<StandardCondition *>(a->cdm.addItem(a->cdm.factory.create(StandardCondition::getTypeStringStatic())));
+						StandardCondition * c = dynamic_cast<StandardCondition *>(a->cdm.addItem(a->cdm.factory.create(StandardCondition::getTypeStringStatic(false))));
 						Controllable * target = actionInputMenu.getControllableForResult(result);
 						if (c != nullptr) c->sourceTarget->setValueFromTarget(target);
 					}

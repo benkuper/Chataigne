@@ -16,7 +16,7 @@ class ActivationCondition :
 	public Condition
 {
 public:
-	ActivationCondition(var params);
+	ActivationCondition(var params = var(), IteratorProcessor * processor = nullptr);
 	~ActivationCondition();
 
 	enum Type { ON_ACTIVATE, ON_DEACTIVATE };

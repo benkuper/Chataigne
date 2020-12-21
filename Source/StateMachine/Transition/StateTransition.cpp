@@ -56,17 +56,14 @@ void StateTransition::loadJSONDataInternal(var data)
 	if (destState != nullptr) destState->inTransitions.add(this);
 }
 
-void StateTransition::onContainerTriggerTriggered(Trigger * t)
+void StateTransition::triggerConsequences(bool triggerTrue, int iterationIndex)
 {
-	if (forceChecking) return;
+	Action::triggerConsequences(triggerTrue, iterationIndex);
 
-	if (t == triggerOn)
+	if (forceChecking) return;
+	if (triggerTrue && sourceState->active->boolValue())
 	{
-		if (sourceState->active->boolValue())
-		{
-			Action::onContainerTriggerTriggered(t);
-			sourceState->active->setValue(false); //first deactivate this one just in case the dest state instantly reactivates this one...
-			destState->active->setValue(true);
-		}
+		sourceState->active->setValue(false); //first deactivate this one just in case the dest state instantly reactivates this one...
+		destState->active->setValue(true);
 	}
 }

@@ -12,15 +12,15 @@
 #include "CommandFactory.h"
 #include "ui/BaseCommandHandlerEditor.h"
 
-BaseCommandHandler::BaseCommandHandler(const String & name, CommandContext _context, Module * _lockedModule) :
+BaseCommandHandler::BaseCommandHandler(const String & name, CommandContext _context, Module * _lockedModule, IteratorProcessor * iterator) :
 	BaseItem(name),
+	IterativeTarget(iterator),
 	context(_context),
 	lockedModule(_lockedModule),
 	handlerNotifier(5)
 {
-	trigger = addTrigger("Trigger", "Trigger this consequence");
-	trigger->hideInEditor = true;
-
+	//trigger = addTrigger("Trigger", "Trigger this consequence");
+	//trigger->hideInEditor = true;
 }
 
 BaseCommandHandler::~BaseCommandHandler()
@@ -36,9 +36,9 @@ void BaseCommandHandler::clearItem()
 }
 
 
-void BaseCommandHandler::triggerCommand()
+void BaseCommandHandler::triggerCommand(int iterationIndex)
 {
-	if (command != nullptr) command->trigger();
+	if (command != nullptr) command->trigger(iterationIndex);
 }
 
 void BaseCommandHandler::setCommand(CommandDefinition * commandDef)
@@ -174,14 +174,6 @@ void BaseCommandHandler::loadJSONDataInternal(var data)
 	else
 	{
 		clearWarning();
-	}
-}
-
-void BaseCommandHandler::onContainerTriggerTriggered(Trigger * t)
-{
-	if (t == trigger)
-	{
-		triggerCommand();
 	}
 }
 

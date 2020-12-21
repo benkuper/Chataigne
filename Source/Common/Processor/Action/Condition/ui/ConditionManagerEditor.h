@@ -14,7 +14,8 @@
 #include "../ConditionManager.h"
 
 class ConditionManagerEditor :
-	public GenericManagerEditor<Condition>
+	public GenericManagerEditor<Condition>,
+	public ConditionManager::AsyncListener
 {
 public:
 	ConditionManagerEditor(ConditionManager *_manager, bool isRoot);
@@ -25,7 +26,6 @@ public:
 	void itemAddedAsync(Condition *) override;
 	void itemRemovedAsync(Condition *) override;
 
-	void controllableFeedbackUpdate(Controllable * c) override;
+	void newMessage(const ConditionManager::ConditionManagerEvent& e) override;
 
-	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ConditionManagerEditor)
 };

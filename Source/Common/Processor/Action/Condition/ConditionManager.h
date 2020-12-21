@@ -11,39 +11,35 @@
 #pragma once
 
 #include "Condition.h"
+#include "../../Iterator/Iterator.h"
 
 class ConditionManager :
+	public IterativeTarget,
 	public BaseManager<Condition>,
 	public Condition::ConditionListener,
 	public MultiTimer
 {
 public:
-	juce_DeclareSingleton(ConditionManager, true)
-
-	ConditionManager();
+	ConditionManager(IteratorProcessor* iterator);
 	~ConditionManager();
 
 	Factory<Condition> factory;
 	Factory<Condition>::Definition* activateDef;
 	Factory<Condition>::Definition* deactivateDef;
-	Factory<Condition>::Definition* iterativeDef;
 
 	enum ConditionOperator { AND, OR };
 	EnumParameter* conditionOperator;
 
 	FloatParameter* validationTime;
 
-	Array<BoolParameter *> isValids;
-	Array<FloatParameter *> validationProgresses;
+	Array<bool> isValids;
+	Array<float> validationProgresses;
 	Array<bool> validationWaitings;
 	Array<double> prevTimerTimes;
 
 	bool forceDisabled;
 
-	//iterative
-	int iterationCount;
-
-	void setIterationCount(int count);
+	void iteratorCountChanged() override;
 
 	void setHasActivationDefinitions(bool value);
 
@@ -52,7 +48,10 @@ public:
 
 	void setForceDisabled(bool value, bool force = false);
 
-	void forceCheck(); 
+	void setValid(int iterationIndex, bool value, bool dispatchOnlyOnValidationChange = true);
+	void setValidationProgress(int iterationIndex, float value);
+
+	void forceCheck();
 
 	void checkAllConditions(int iterationIndex, bool emptyIsValid = false, bool dispatchOnlyOnValidationChange = true);
 
@@ -60,13 +59,13 @@ public:
 	bool isAtLeastOneConditionValid(int iterationIndex, bool emptyIsValid = false);
 
 	int getNumEnabledConditions();
-	int getNumValidConditions(int iterationIndex);
+	int getNumValidConditions(int iterationIndex = 0);
 
-	bool getIsValid(int iterationIndex, bool emptyIsValid);
+	bool getIsValid(int iterationIndex = 0, bool emptyIsValid = false);
 
-	void dispatchConditionValidationChanged();
+	void dispatchConditionValidationChanged(int iterationIndex);
 
-	void conditionValidationChanged(Condition*, const IterativeContext& context) override;
+	void conditionValidationChanged(Condition*, int iterationIndex) override;
 
 	void onContainerParameterChanged(Parameter*) override;
 
@@ -80,11 +79,28 @@ public:
 	{
 	public:
 		virtual ~ConditionManagerListener() {}
-		virtual void conditionManagerValidationChanged(ConditionManager*, const IterativeContext &context) {}
+		virtual void conditionManagerValidationChanged(ConditionManager*, int iterationIndex) {}
 	};
 
 
 	ListenerList<ConditionManagerListener> conditionManagerListeners;
 	void addConditionManagerListener(ConditionManagerListener* newListener) { conditionManagerListeners.add(newListener); }
 	void removeConditionManagerListener(ConditionManagerListener* listener) { conditionManagerListeners.remove(listener); }
+	
+
+	class ConditionManagerEvent {
+	public:
+		enum Type { VALIDATION_CHANGED };
+		ConditionManagerEvent(Type type, ConditionManager* cdm, int iterationIndex = -1) : type(type), conditionManager(cdm), iterationIndex(iterationIndex) {}
+		Type type;
+		ConditionManager* conditionManager;
+		int iterationIndex;
+	};
+
+	QueuedNotifier<ConditionManagerEvent> conditionManagerAsyncNotifier;
+	typedef QueuedNotifier<ConditionManagerEvent>::Listener AsyncListener;
+
+	void addAsyncConditionManagerListener(AsyncListener* newListener) { conditionManagerAsyncNotifier.addListener(newListener); }
+	void addAsyncCoalescedConditionManagerListener(AsyncListener* newListener) { conditionManagerAsyncNotifier.addAsyncCoalescedListener(newListener); }
+	void removeAsyncConditionManagerListener(AsyncListener* listener) { conditionManagerAsyncNotifier.removeListener(listener); }
 };

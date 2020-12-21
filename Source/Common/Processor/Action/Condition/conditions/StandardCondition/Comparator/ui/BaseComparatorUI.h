@@ -20,10 +20,9 @@ public:
 	BaseComparatorUI(BaseComparator * comparator);
 	virtual ~BaseComparatorUI();
 
-	WeakReference<BaseComparator> comparator;
+	BaseComparator * comparator;
+	WeakReference<Inspectable> comparatorRef;
 
-	std::unique_ptr<BoolToggleUI> alwaysTriggerUI;
-	std::unique_ptr<BoolToggleUI> toggleModeUI;
 	std::unique_ptr<EnumParameterUI> compareFuncUI;
 
 	std::unique_ptr<ControllableEditor> refEditor;

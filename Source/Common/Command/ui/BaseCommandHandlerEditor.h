@@ -24,7 +24,7 @@ public:
 	BaseCommandHandler * handler;
 
 	CommandChooserUI chooser;
-	std::unique_ptr<TriggerButtonUI> triggerBT;
+	//std::unique_ptr<TriggerButtonUI> triggerBT;
 
 	void resizedInternalHeaderItemInternal(Rectangle<int> &r) override;
 

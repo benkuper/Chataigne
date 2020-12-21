@@ -107,17 +107,16 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/IteratorList_4990ba1e.o \
   $(JUCE_OBJDIR)/IteratorListManager_7729bc39.o \
   $(JUCE_OBJDIR)/Iterator_74f350f7.o \
-  $(JUCE_OBJDIR)/BoolComparators_9c68289d.o \
-  $(JUCE_OBJDIR)/EnumComparator_a53f6ef7.o \
-  $(JUCE_OBJDIR)/NumberComparators_25bd9d1e.o \
-  $(JUCE_OBJDIR)/Point2DComparators_4dbb4bdb.o \
-  $(JUCE_OBJDIR)/Point3DComparators_9e6529dc.o \
-  $(JUCE_OBJDIR)/StringComparators_61def56.o \
-  $(JUCE_OBJDIR)/BaseComparatorUI_a3309572.o \
-  $(JUCE_OBJDIR)/BaseComparator_c76f1d55.o \
-  $(JUCE_OBJDIR)/IterativeCondition_76b9168d.o \
   $(JUCE_OBJDIR)/ActivationCondition_54e1de99.o \
   $(JUCE_OBJDIR)/ConditionGroup_1310754d.o \
+  $(JUCE_OBJDIR)/BoolComparators_c6fc0805.o \
+  $(JUCE_OBJDIR)/EnumComparator_227e028f.o \
+  $(JUCE_OBJDIR)/NumberComparators_fad74286.o \
+  $(JUCE_OBJDIR)/Point2DComparators_1bd65373.o \
+  $(JUCE_OBJDIR)/Point3DComparators_6c803174.o \
+  $(JUCE_OBJDIR)/StringComparators_db3794be.o \
+  $(JUCE_OBJDIR)/BaseComparatorUI_2cae5cda.o \
+  $(JUCE_OBJDIR)/BaseComparator_ebfc54ed.o \
   $(JUCE_OBJDIR)/StandardConditionEditor_d7753ad.o \
   $(JUCE_OBJDIR)/StandardCondition_9fb607cb.o \
   $(JUCE_OBJDIR)/ScriptCondition_eadfe96f.o \
@@ -599,51 +598,6 @@ $(JUCE_OBJDIR)/Iterator_74f350f7.o: ../../Source/Common/Processor/Iterator/Itera
 	@echo "Compiling Iterator.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
-$(JUCE_OBJDIR)/BoolComparators_9c68289d.o: ../../Source/Common/Processor/Action/Condition/Comparator/comparators/BoolComparators.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling BoolComparators.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/EnumComparator_a53f6ef7.o: ../../Source/Common/Processor/Action/Condition/Comparator/comparators/EnumComparator.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling EnumComparator.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/NumberComparators_25bd9d1e.o: ../../Source/Common/Processor/Action/Condition/Comparator/comparators/NumberComparators.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling NumberComparators.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/Point2DComparators_4dbb4bdb.o: ../../Source/Common/Processor/Action/Condition/Comparator/comparators/Point2DComparators.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling Point2DComparators.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/Point3DComparators_9e6529dc.o: ../../Source/Common/Processor/Action/Condition/Comparator/comparators/Point3DComparators.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling Point3DComparators.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/StringComparators_61def56.o: ../../Source/Common/Processor/Action/Condition/Comparator/comparators/StringComparators.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling StringComparators.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/BaseComparatorUI_a3309572.o: ../../Source/Common/Processor/Action/Condition/Comparator/ui/BaseComparatorUI.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling BaseComparatorUI.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/BaseComparator_c76f1d55.o: ../../Source/Common/Processor/Action/Condition/Comparator/BaseComparator.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling BaseComparator.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/IterativeCondition_76b9168d.o: ../../Source/Common/Processor/Action/Condition/conditions/IterativeCondition/IterativeCondition.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling IterativeCondition.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
 $(JUCE_OBJDIR)/ActivationCondition_54e1de99.o: ../../Source/Common/Processor/Action/Condition/conditions/ActivationCondition/ActivationCondition.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling ActivationCondition.cpp"
@@ -652,6 +606,46 @@ $(JUCE_OBJDIR)/ActivationCondition_54e1de99.o: ../../Source/Common/Processor/Act
 $(JUCE_OBJDIR)/ConditionGroup_1310754d.o: ../../Source/Common/Processor/Action/Condition/conditions/ConditionGroup/ConditionGroup.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling ConditionGroup.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/BoolComparators_c6fc0805.o: ../../Source/Common/Processor/Action/Condition/conditions/StandardCondition/Comparator/comparators/BoolComparators.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling BoolComparators.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/EnumComparator_227e028f.o: ../../Source/Common/Processor/Action/Condition/conditions/StandardCondition/Comparator/comparators/EnumComparator.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling EnumComparator.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/NumberComparators_fad74286.o: ../../Source/Common/Processor/Action/Condition/conditions/StandardCondition/Comparator/comparators/NumberComparators.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling NumberComparators.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/Point2DComparators_1bd65373.o: ../../Source/Common/Processor/Action/Condition/conditions/StandardCondition/Comparator/comparators/Point2DComparators.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling Point2DComparators.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/Point3DComparators_6c803174.o: ../../Source/Common/Processor/Action/Condition/conditions/StandardCondition/Comparator/comparators/Point3DComparators.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling Point3DComparators.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/StringComparators_db3794be.o: ../../Source/Common/Processor/Action/Condition/conditions/StandardCondition/Comparator/comparators/StringComparators.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling StringComparators.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/BaseComparatorUI_2cae5cda.o: ../../Source/Common/Processor/Action/Condition/conditions/StandardCondition/Comparator/ui/BaseComparatorUI.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling BaseComparatorUI.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/BaseComparator_ebfc54ed.o: ../../Source/Common/Processor/Action/Condition/conditions/StandardCondition/Comparator/BaseComparator.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling BaseComparator.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/StandardConditionEditor_d7753ad.o: ../../Source/Common/Processor/Action/Condition/conditions/StandardCondition/ui/StandardConditionEditor.cpp

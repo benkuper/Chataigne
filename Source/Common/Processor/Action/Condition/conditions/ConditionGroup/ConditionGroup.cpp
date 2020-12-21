@@ -10,8 +10,9 @@
 
 #include "ConditionGroup.h"
 
-ConditionGroup::ConditionGroup(var params) :
-	Condition(ConditionGroup::getTypeStringStatic(), params)
+ConditionGroup::ConditionGroup(var params, IteratorProcessor* iterator) :
+	Condition(ConditionGroup::getTypeStringStatic(), params, iterator),
+	manager(iterator)
 {
 	addChildControllableContainer(&manager);
 	manager.addConditionManagerListener(this);
@@ -21,9 +22,9 @@ ConditionGroup::~ConditionGroup()
 {
 }
 
-void ConditionGroup::conditionManagerValidationChanged(ConditionManager *)
+void ConditionGroup::conditionManagerValidationChanged(ConditionManager *, int iterationIndex)
 {
-	isValid->setValue(manager.isValid->boolValue());
+	setValid(iterationIndex, manager.getIsValid(iterationIndex, false));
 }
 
 var ConditionGroup::getJSONData()

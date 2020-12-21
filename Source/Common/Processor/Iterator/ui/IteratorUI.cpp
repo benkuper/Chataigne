@@ -42,8 +42,10 @@ void IteratorUI::updateProcessorManagerBounds()
 {
     if (inspectable.wasObjectDeleted() || item->miniMode->boolValue()) return;
     int th = getHeightWithoutContent() + processorManagerUI.headerSize + processorManagerUI.getContentHeight();
+
     item->listUISize->setValue(th);
-    setSize(getWidth(), th);
+    
+    if(th != getHeight()) setSize(getWidth(), th);
 }
 
 void IteratorUI::itemUIAdded(ProcessorUI* pui)
@@ -58,5 +60,6 @@ void IteratorUI::itemUIRemoved(ProcessorUI* pui)
 
 void IteratorUI::childBoundsChanged(Component* c)
 {
-    updateProcessorManagerBounds();
+    DBG("Child bounds changed : " << getWidth() << " / " << getHeight() << " // " << processorManagerUI.getWidth() << " / " << processorManagerUI.getHeight());
+    //updateProcessorManagerBounds();
 }

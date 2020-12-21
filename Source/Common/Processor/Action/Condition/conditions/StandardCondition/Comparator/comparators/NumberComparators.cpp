@@ -10,15 +10,19 @@
 
 #include "NumberComparators.h"
 
-FloatComparator::FloatComparator(Array<WeakReference<Controllable>> sources) :
-	ParameterComparator(sources)
+NumberComparator::NumberComparator(Parameter * sourceParam)
 {
-	floatParams.addArray(sources);
-
-	floatRef = addFloatParameter("Reference", "Comparison Reference to check against source value", floatParams[0]->floatValue(), floatParams[0]->minimumValue, floatParams[0]->maximumValue);
-	floatRef->defaultUI = floatParams[0]->defaultUI;
-	reference = floatRef;
-	floatRef->setValue(floatParams[0]->floatValue(), false, true, true);
+	if (FloatParameter * fp = dynamic_cast<FloatParameter *>(sourceParam))
+	{
+		reference = addFloatParameter("Reference", "Comparison Reference to check against source value", sourceParam->floatValue(), sourceParam->minimumValue, sourceParam->maximumValue);
+		((FloatParameter *)reference)->defaultUI = ((FloatParameter *)sourceParam)->defaultUI;
+	}
+	else if (IntParameter* ip = dynamic_cast<IntParameter*>(sourceParam))
+	{
+		reference = addIntParameter("Reference", "Comparison Reference to check against source value", sourceParam->intValue(), sourceParam->minimumValue, sourceParam->maximumValue);
+	}
+	
+	reference->setValue(sourceParam->floatValue(), false, true, true);
 
 	addCompareOption("=", equalsId);
 	addCompareOption("!=", differentId);
@@ -26,28 +30,25 @@ FloatComparator::FloatComparator(Array<WeakReference<Controllable>> sources) :
 	addCompareOption("<", lessId);
 	addCompareOption(">=", greaterOrEqualId);
 	addCompareOption("<=", lessOrEqualId);
-	addCompareOption("~", inRangeId);
-	
+	//addCompareOption("~", inRangeId);
 }
 
-FloatComparator::~FloatComparator()
+NumberComparator::~NumberComparator()
 {
 }
 
-void FloatComparator::compare(int iterationIndex)
+bool NumberComparator::compare(Parameter* sourceParam)
 {
-	if (reference == nullptr) return;
-
-	if (currentFunctionId == equalsId)				setValid(iterationIndex, floatParams[iterationIndex]->floatValue() == floatRef->floatValue());
-	else if (currentFunctionId == differentId)		setValid(iterationIndex, floatParams[iterationIndex]->floatValue() != floatRef->floatValue());
-	else if (currentFunctionId == greaterId)		setValid(iterationIndex, floatParams[iterationIndex]->floatValue() > floatRef->floatValue());
-	else if (currentFunctionId == lessId)			setValid(iterationIndex, floatParams[iterationIndex]->floatValue() < floatRef->floatValue());
-	else if (currentFunctionId == greaterOrEqualId)	setValid(iterationIndex, floatParams[iterationIndex]->floatValue() >= floatRef->floatValue());
-	else if (currentFunctionId == lessOrEqualId)	setValid(iterationIndex, floatParams[iterationIndex]->floatValue() <= floatRef->floatValue());
-	else if (currentFunctionId == inRangeId)		setValid(iterationIndex, false); //not implemented, need RangeParameter
+	if (currentFunctionId == equalsId)				return sourceParam->floatValue() == reference->floatValue();
+	else if (currentFunctionId == differentId)		return sourceParam->floatValue() != reference->floatValue();
+	else if (currentFunctionId == greaterId)		return sourceParam->floatValue() > reference->floatValue();
+	else if (currentFunctionId == lessId)			return sourceParam->floatValue() < reference->floatValue();
+	else if (currentFunctionId == greaterOrEqualId)	return sourceParam->floatValue() >= reference->floatValue();
+	else if (currentFunctionId == lessOrEqualId)	return sourceParam->floatValue() <= reference->floatValue();
+	else if (currentFunctionId == inRangeId)		return false; //not implemented, need RangeParameter
 }
 
-
+/*
 IntComparator::IntComparator(Array<WeakReference<Controllable>> sources) :
 	ParameterComparator(sources)
 {
@@ -80,4 +81,4 @@ void IntComparator::compare(int iterationIndex)
 	else if (currentFunctionId == lessOrEqualId)	setValid(iterationIndex, intParams[iterationIndex]->floatValue() <= intRef->floatValue());
 	else if (currentFunctionId == inRangeId)		setValid(iterationIndex, false); //not implemented, need RangeParameter
 }
-
+*/

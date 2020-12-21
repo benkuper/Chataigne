@@ -16,14 +16,12 @@ class Consequence :
 	public BaseCommandHandler
 {
 public:
-	Consequence();
+	Consequence(IteratorProcessor * iterator = nullptr);
 	virtual ~Consequence();
 
 	bool forceDisabled;
 	
-	virtual void triggerCommand() override;
-
-	//InspectableEditor * getEditor(bool isRoot) override;
+	virtual void triggerCommand(int iterationIndex = 0) override;
 
 	class ConsequenceListener
 	{

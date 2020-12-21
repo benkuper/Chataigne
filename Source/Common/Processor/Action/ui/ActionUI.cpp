@@ -16,7 +16,7 @@
 #include "CustomVariables/CVGroup.h"
 #include "../Condition/conditions/StandardCondition/StandardCondition.h"
 
-ActionUI::ActionUI(BaseAction * _action) :
+ActionUI::ActionUI(Action* _action) :
 	ProcessorUI(_action),
 	action(_action)
 {
@@ -25,13 +25,13 @@ ActionUI::ActionUI(BaseAction * _action) :
 
 	action->addAsyncActionListener(this);
 
-	triggerAllUI.reset(action->csmOn->triggerAll->createButtonUI());
-	addAndMakeVisible(triggerAllUI.get());
+	//triggerAllUI.reset(action->csmOn->triggerAll->createButtonUI());
+	//addAndMakeVisible(triggerAllUI.get());
 
-	progressionUI.reset(action->cdm.validationProgress->createSlider());
-	progressionUI->showValue = false;
-	addChildComponent(progressionUI.get());
-	progressionUI->setVisible(action->cdm.validationProgress->enabled);
+	//progressionUI.reset(action->cdm.validationProgress->createSlider());
+	//progressionUI->showValue = false;
+	//addChildComponent(progressionUI.get());
+	//progressionUI->setVisible(action->cdm.validationProgress->enabled);
 
 	updateBGColor();
 }
@@ -70,31 +70,30 @@ void ActionUI::controllableFeedbackUpdateInternal(Controllable * c)
 	ProcessorUI::controllableFeedbackUpdateInternal(c);
 	if (c == action->cdm.validationTime)
 	{
-		bool v = action->cdm.validationProgress->enabled;
-		if (progressionUI->isVisible() != v)
-		{
-			progressionUI->setVisible(v);
-			resized();
-		}
+		//bool v = action->cdm.validationTime->floatValue() > 0;
+		//if (progressionUI->isVisible() != v)
+		//{
+		//	progressionUI->setVisible(v);
+		//	resized();
+		//}
 	}
 }
 
 void ActionUI::resizedInternalHeader(Rectangle<int>& r)
 {
 	BaseItemUI::resizedInternalHeader(r);
-	//validUI->setBounds(r.removeFromRight(headerHeight));
-	//r.removeFromRight(2);
-	triggerAllUI->setBounds(r.removeFromRight(70));
-	if (progressionUI->isVisible())
-	{
-		progressionUI->setBounds(r.removeFromRight(40).reduced(2, 6));
-	}
+
+	//triggerAllUI->setBounds(r.removeFromRight(70));
+	//if (progressionUI->isVisible())
+	//{
+	//	progressionUI->setBounds(r.removeFromRight(40).reduced(2, 6));
+	//}
 }
 
 void ActionUI::paintOverChildren(Graphics & g)
 {
 	BaseItemUI::paintOverChildren(g);
-	if (action->cdm.isValid->boolValue() && action->actionRoles.size() == 0) //no special roles like activate or deactivate
+	if (action->cdm.getIsValid() && action->actionRoles.size() == 0) //no special roles like activate or deactivate
 	{
 		g.setColour(GREEN_COLOR);
 		g.drawRoundedRectangle(getMainBounds().toFloat(), rounderCornerSize, 2);
@@ -132,7 +131,7 @@ void ActionUI::itemDropped(const SourceDetails & details)
 
 			if (isInput)
 			{
-				StandardCondition * c = dynamic_cast<StandardCondition *>(action->cdm.addItem(action->cdm.factory.create(StandardCondition::getTypeStringStatic())));
+				StandardCondition * c = dynamic_cast<StandardCondition *>(action->cdm.addItem(action->cdm.factory.create(StandardCondition::getTypeStringStatic(false))));
 				Controllable * target = actionInputMenu.getControllableForResult(result);
 				if (c != nullptr) c->sourceTarget->setValueFromTarget(target);
 			}

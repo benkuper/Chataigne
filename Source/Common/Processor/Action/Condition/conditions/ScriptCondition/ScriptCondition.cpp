@@ -13,8 +13,8 @@
 
 String ScriptCondition::conditionTemplate = "";
 
-ScriptCondition::ScriptCondition(var params) :
-	Condition(ScriptCondition::getTypeStringStatic(), params),
+ScriptCondition::ScriptCondition(var params,IteratorProcessor * processor) :
+	Condition(ScriptCondition::getTypeStringStatic(), params, processor),
 	script(this,false)
 {
 	scriptObject.setMethod("setValid", ScriptCondition::setValidFromScript);
@@ -36,7 +36,17 @@ var ScriptCondition::setValidFromScript(const var::NativeFunctionArgs & a)
 	ScriptCondition * s = getObjectFromJS<ScriptCondition>(a);
 	if (!s->enabled->boolValue()) return var();
 
-	s->isValid->setValue((bool)a.arguments[0]);
+	if (!checkNumArgs(s->niceName, a, 1)) return var();
+
+	if (a.numArguments == 1)
+	{
+		for (int i = 0; i < s->getIterationCount(); i++) s->setValid(i, (bool)a.arguments[0]);
+	}
+	else
+	{
+		s->setValid((int)a.arguments[0], (bool)a.arguments[1]);
+	}
+
 	return var();
 }
 

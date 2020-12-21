@@ -12,8 +12,9 @@
 #include "Template/CommandTemplateManager.h"
 #include "Module/Module.h"
 
-BaseCommand::BaseCommand(Module * _module, CommandContext _context, var _params) :
+BaseCommand::BaseCommand(Module * _module, CommandContext _context, var _params, IteratorProcessor * iterator) :
 	ControllableContainer("Command"),
+	IterativeTarget(iterator),
 	context(_context),
 	module(_module),
     moduleRef(_module),
@@ -23,7 +24,6 @@ BaseCommand::BaseCommand(Module * _module, CommandContext _context, var _params)
 	customValuesManager(nullptr)
 {
 	hideEditorHeader = true;
-
 }
 
 BaseCommand::~BaseCommand()
@@ -258,10 +258,9 @@ void BaseCommand::setMappingValueType(Controllable::Type type)
 	if (valueType == type) return;
 	valueType = type;
 	commandListeners.call(&CommandListener::valueTypeChanged);
-	
 }
 
-void BaseCommand::trigger()
+void BaseCommand::trigger(int iterationIndex)
 {
     if(moduleRef.wasObjectDeleted())
     {

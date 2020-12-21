@@ -78,7 +78,7 @@ void StateCommand::triggerInternal()
 		break;
 
 	case TRIGGER_ACTION:
-		((Action *)target->targetContainer.get())->triggerOn->trigger();
+		((Action *)target->targetContainer.get())->triggerConsequences(true);
 		break;
 
 	case SET_ACTION_ENABLED:
@@ -91,8 +91,7 @@ void StateCommand::triggerInternal()
 
 	case SET_TOGGLE_STATE:
 	{
-		BaseComparator* bc = (((StandardCondition*)target->targetContainer.get())->comparator.get());
-		if(bc != nullptr) bc->forceToggleState(enableVal->boolValue());
+		(((StandardCondition*)target->targetContainer.get())->forceToggleState(enableVal->boolValue()));
 	}
 	break;
 

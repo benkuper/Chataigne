@@ -14,12 +14,13 @@
 
 class Mapping;
 class Action;
+class IteratorProcessor;
 
 class ProcessorManager :
 	public BaseManager<Processor>
 {
 public:
-	ProcessorManager(const String &name, bool canHaveIterators = true);
+	ProcessorManager(const String &name, IteratorProcessor * iterator = nullptr);
 	~ProcessorManager();
 
 	bool forceDisabled;

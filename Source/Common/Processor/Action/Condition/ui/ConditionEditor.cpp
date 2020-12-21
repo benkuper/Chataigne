@@ -28,7 +28,7 @@ ConditionEditor::~ConditionEditor()
 
 void ConditionEditor::paintOverChildren(Graphics & g)
 {
-	if (condition->isValid->boolValue())
+	if (condition->getIsValid())
 	{
 		g.setColour(condition->enabled->boolValue() ? GREEN_COLOR : LIGHTCONTOUR_COLOR);
 		g.drawRoundedRectangle(getLocalBounds().toFloat(), 2, 2);

@@ -13,16 +13,18 @@
 #include "../Processor.h"
 #include "Condition/ConditionManager.h"
 #include "Consequence/ConsequenceManager.h"
+#include "../Iterator/Iterator.h"
 
 class Action :
 	public Processor,
+	public IterativeTarget,
 	public ConditionManager::ConditionManagerListener,
 	public ConditionManager::ManagerListener,
 	public Condition::ConditionListener,
 	public EngineListener
 {
 public:
-	Action(var params = var());
+	Action(var params = var(), IteratorProcessor * it = nullptr);
 	virtual ~Action();
 
 	enum Role {ACTIVATE, DEACTIVATE};
@@ -37,18 +39,10 @@ public:
 	std::unique_ptr<ConsequenceManager> csmOn;
 	std::unique_ptr<ConsequenceManager> csmOff;
 
-	Array<Trigger*> triggerOns; //if not iterative, there will be only one element in this
-	Array<Trigger*> triggerOffs;
-
-	//iterative
-	int iterationCount;
+	//Trigger* manualTriggerOn; //if not iterative, there will be only one element in this
 
 	//to allow for checking before conditions sending it, to overcome listener-order problems
 	bool forceChecking;
-
-	void setIterationCount(int count);
-
-	void updateTriggerSetup();
 
 	void updateConditionRoles();
 	void setHasOffConsequences(bool value);
@@ -56,15 +50,17 @@ public:
 
 	void forceCheck(bool triggerIfChanged);
 
+	virtual void triggerConsequences(bool triggerTrue, int iterationIndex = 0);
+
 	var getJSONData() override;
 	void loadJSONDataItemInternal(var data) override;
 	void endLoadFile() override;
 
 	void onContainerParameterChangedInternal(Parameter * p) override;
-	void onContainerTriggerTriggered(Trigger *) override;
 	void controllableFeedbackUpdate(ControllableContainer * cc, Controllable * c) override;
 	
-	void conditionManagerValidationChanged(ConditionManager *, const IterativeContext & context) override;
+
+	void conditionManagerValidationChanged(ConditionManager *, int iterationIndex) override;
 
 	void itemAdded(Condition *) override;
 	void itemRemoved(Condition *) override;

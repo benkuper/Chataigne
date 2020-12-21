@@ -9,14 +9,13 @@
 */
 
 #include "Condition.h"
-#include "Comparator/ComparatorFactory.h"
 #include "ui/ConditionEditor.h"
 #include "Module/ModuleManager.h"
 
-Condition::Condition(const String& n, var /*params*/) :
+Condition::Condition(const String& n, var params, IteratorProcessor * iterator) :
 	BaseItem(n),
+	IterativeTarget(iterator),
 	forceDisabled(false),
-	iterationCount(0),
 	conditionAsyncNotifier(30)
 {
 	isSelectable = false;
@@ -26,41 +25,32 @@ Condition::~Condition()
 {
 }
 
-void Condition::setIterationCount(int count)
+void Condition::iteratorCountChanged()
 {
-	if (iterationCount == count) return;
+	isValids.resize(getIterationCount());
+	isValids.fill(false);
+}
 
-	while (iterationCount < isValids.size())
-	{
-		removeControllable(isValids[isValids.size() - 1]);
-		isValids.removeLast();
-	}
+bool Condition::getIsValid(int iterationIndex)
+{
+	return isValids[iterationIndex];
+}
 
-	while (iterationCount > isValids.size())
-	{
-		BoolParameter * isValid = addBoolParameter("Is Valid", "Where the condition passed the test or not.", false);
-		isValid->setControllableFeedbackOnly(true);
-		isValid->hideInEditor = true;
-		isValid->isSavable = false;
-		isValids.add(isValid);
-	}
+void Condition::setValid(int iterationIndex, bool value, bool dispatchOnChangeOnly)
+{
+	if (isValids[iterationIndex] == value && dispatchOnChangeOnly) return;
+	isValids.set(iterationIndex, value);
+
+	conditionListeners.call(&ConditionListener::conditionValidationChanged, this, iterationIndex);
+	conditionAsyncNotifier.addMessage(new ConditionEvent(ConditionEvent::VALIDATION_CHANGED, this, iterationIndex));
 }
 
 void Condition::onContainerParameterChangedInternal(Parameter * p)
 {
 	BaseItem::onContainerParameterChangedInternal(p);
-
-	if (isValids.contains((BoolParameter *)p))
+	if (p == enabled)
 	{
-		if (!forceDisabled)
-		{
-			IterativeContext context = { isValids.indexOf((BoolParameter*)p) };
-			conditionListeners.call(&ConditionListener::conditionValidationChanged, this, context);
-			conditionAsyncNotifier.addMessage(new ConditionEvent(ConditionEvent::VALIDATION_CHANGED, this, context));
-		}
-	}else if (p == enabled)
-	{
-		for (int i = 0; i < iterationCount; i++) isValids[i]->setValue(false);
+		for (int i = 0; i < getIterationCount(); i++) setValid(i, false);
 	}
 }
 
@@ -68,7 +58,6 @@ void Condition::setForceDisabled(bool value, bool force)
 {
 	if (forceDisabled == value && !force) return;
 	forceDisabled = value;
-	for (int i = 0; i < iterationCount; i++) isValids[i]->setEnabled(!forceDisabled);
 }
 
 InspectableEditor * Condition::getEditor(bool isRoot)

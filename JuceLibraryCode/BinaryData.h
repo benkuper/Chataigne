@@ -195,7 +195,7 @@ namespace BinaryData
     const int            tray_icon_pngSize = 3363;
 
     extern const char*   custom_cext;
-    const int            custom_cextSize = 1111;
+    const int            custom_cextSize = 1165;
 
     // Number of elements in the namedResourceList and originalFileNames arrays.
     const int namedResourceListSize = 63;

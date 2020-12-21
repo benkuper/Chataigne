@@ -10,8 +10,8 @@
 
 #include "Consequence.h"
 
-Consequence::Consequence() :
-	BaseCommandHandler("Consequence",CommandContext::ACTION),
+Consequence::Consequence(IteratorProcessor * iterator) :
+	BaseCommandHandler("Consequence",CommandContext::ACTION, nullptr, iterator),
 	forceDisabled(false)
 {
 	
@@ -23,7 +23,7 @@ Consequence::~Consequence()
 
 }
 
-void Consequence::triggerCommand()
+void Consequence::triggerCommand(int iterationIndex)
 {
 	if (!enabled->boolValue() || forceDisabled) return;
 	BaseCommandHandler::triggerCommand();

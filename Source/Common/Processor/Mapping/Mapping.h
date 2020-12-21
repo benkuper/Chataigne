@@ -17,13 +17,14 @@
 
 class Mapping :
 	public Processor,
+	public IterativeTarget,
 	public MappingInput::Listener,
 	public MappingInputManager::ManagerListener,
 	public MappingFilterManager::FilterManagerListener,
 	public Thread
 {
 public:
-	Mapping(bool canBeDisabled = true);
+	Mapping(var params = var(), IteratorProcessor * iterator = nullptr, bool canBeDisabled = true);
 	virtual ~Mapping();
 
 	MappingInputManager im;
@@ -76,24 +77,7 @@ public:
 
 	ProcessorUI* getUI() override;
 
-	class MappingEvent {
-	public:
-		enum Type { OUTPUT_TYPE_CHANGED };
-		MappingEvent(Type type, Mapping* m) : type(type), mapping(m) {}
-		Type type;
-		Mapping* mapping;
-	};
-	QueuedNotifier<MappingEvent> mappingAsyncNotifier;
-	typedef QueuedNotifier<MappingEvent>::Listener AsyncListener;
-
-	void addAsyncMappingListener(AsyncListener* newListener) { mappingAsyncNotifier.addListener(newListener); }
-	void addAsyncCoalescedMappingListener(AsyncListener* newListener) { mappingAsyncNotifier.addAsyncCoalescedListener(newListener); }
-	void removeAsyncMappingListener(AsyncListener* listener) { mappingAsyncNotifier.removeListener(listener); }
-
+	DECLARE_ASYNC_EVENT(Mapping, Mapping, mapping, { OUTPUT_TYPE_CHANGED } )
 
 	String getTypeString() const override { return "Mapping"; };
-
-	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Mapping)
-
-
 };

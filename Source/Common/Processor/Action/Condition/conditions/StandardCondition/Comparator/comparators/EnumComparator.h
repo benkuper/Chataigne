@@ -13,19 +13,16 @@
 #include "../BaseComparator.h"
 
 class EnumComparator :
-	public ParameterComparator
+	public BaseComparator
 {
 public:
-	EnumComparator(Array<WeakReference<Controllable>> sources);
+	EnumComparator(Parameter * sourceParam);
 	virtual ~EnumComparator();
 
 	const Identifier equalsId = "=";
 	const Identifier differentId = "!=";
 
-	Array<EnumParameter *> enumParams;
 	EnumParameter * enumRef;
 
-	virtual void compare(int iterationIndex) override;
-
-	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(EnumComparator)
+	virtual bool compare(Parameter* sourceParam) override;
 };

@@ -11,8 +11,9 @@
 #include "Mapping.h"
 #include "ui/MappingUI.h"
 
-Mapping::Mapping(bool canBeDisabled) :
+Mapping::Mapping(var params, IteratorProcessor * iterator, bool canBeDisabled) :
 	Processor("Mapping", canBeDisabled),
+	IterativeTarget(iterator),
 	Thread("Mapping"),
 	processMode(VALUE_CHANGE),
 	mappingParams("Parameters"),
@@ -21,7 +22,7 @@ Mapping::Mapping(bool canBeDisabled) :
 	isProcessing(false),
 	shouldRebuildAfterProcess(false),
     inputIsLocked(false),
-    mappingAsyncNotifier(10)
+    mappingNotifier(10)
 {
 	itemDataType = "Mapping";
 	type = MAPPING;
@@ -42,6 +43,7 @@ Mapping::Mapping(bool canBeDisabled) :
 
 	helpID = "Mapping";
 }
+
 
 Mapping::~Mapping()
 {
@@ -130,7 +132,7 @@ void Mapping::updateMappingChain(MappingFilter * afterThisFilter)
 
 		om.setOutParams(outP);
 
-		mappingAsyncNotifier.addMessage(new MappingEvent(MappingEvent::OUTPUT_TYPE_CHANGED, this));
+		mappingNotifier.addMessage(new MappingEvent(MappingEvent::OUTPUT_TYPE_CHANGED, this));
 
 		checkFiltersNeedContinuousProcess();
 

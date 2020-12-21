@@ -17,6 +17,13 @@ StandardConditionEditor::StandardConditionEditor(StandardCondition* _condition, 
 	targetUI.reset(standardCondition->sourceTarget->getEditor(false));
 	addChildComponent(targetUI.get());
 
+	alwaysTriggerUI.reset(standardCondition->alwaysTrigger->createToggle());
+	addAndMakeVisible(alwaysTriggerUI.get());
+	
+	toggleModeUI.reset(standardCondition->toggleMode->createToggle(ImageCache::getFromMemory(BinaryData::toggle_png, BinaryData::toggle_pngSize)));
+
+	addAndMakeVisible(toggleModeUI.get());
+
 	targetUI->setVisible(!standardCondition->editorIsCollapsed);
 
 	setSize(100, 50);
@@ -60,6 +67,11 @@ void StandardConditionEditor::resizedInternalContent(Rectangle<int> & r)
 	targetUI->setBounds(sr);
 	r.translate(0, 18);
 
+	toggleModeUI->setBounds(r.removeFromLeft(16).withHeight(16));
+	r.removeFromLeft(2);
+	alwaysTriggerUI->setBounds(r.removeFromRight(95).reduced(0, 1));
+	r.removeFromRight(4);
+
 	if (comparatorUI != nullptr)
 	{
 		comparatorUI->setBounds(r.withHeight(comparatorUI->getHeight()));
@@ -73,9 +85,9 @@ void StandardConditionEditor::resizedInternalContent(Rectangle<int> & r)
 void StandardConditionEditor::updateUI()
 {
 	if (sourceFeedbackUI != nullptr) removeChildComponent(sourceFeedbackUI.get());
-	if (standardCondition->sourceControllable != nullptr)
+	if (standardCondition->sourceControllables.size() > 0 && standardCondition->sourceControllables[0] != nullptr)
 	{
-		sourceFeedbackUI.reset(standardCondition->sourceControllable->createDefaultUI());
+		sourceFeedbackUI.reset(standardCondition->sourceControllables[0]->createDefaultUI());
 		//sourceFeedbackUI->setForceFeedbackOnly(true);
 		addAndMakeVisible(sourceFeedbackUI.get());
 	}

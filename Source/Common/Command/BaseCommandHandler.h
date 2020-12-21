@@ -17,13 +17,14 @@
 
 class BaseCommandHandler :
 	public BaseItem,
+	public IterativeTarget,
 	public Inspectable::InspectableListener,
 	public BaseCommand::CommandListener,
 	public ModuleManager::ManagerListener,
 	public CommandTemplateManager::ManagerListener
 {
 public:
-	BaseCommandHandler(const String &name = "BaseCommandHandler", CommandContext context = CommandContext::ACTION, Module * lockedModule = nullptr);
+	BaseCommandHandler(const String &name = "BaseCommandHandler", CommandContext context = CommandContext::ACTION, Module * lockedModule = nullptr, IteratorProcessor * iterator = nullptr);
 	virtual ~BaseCommandHandler();
 
 	virtual void clearItem() override;
@@ -33,7 +34,6 @@ public:
 	WeakReference<CommandDefinition> commandDefinition;
 
 	Module * lockedModule;
-	Trigger * trigger;
 
 	//ghosting
 	String ghostModuleName;
@@ -41,7 +41,7 @@ public:
 	String ghostCommandName;
 	var ghostCommandData;
 
-	virtual void triggerCommand(); //to override and call back for checking (e.g. enable in Consequence)
+	virtual void triggerCommand(int iterationIndex = 0); //to override and call back for checking (e.g. enable in Consequence)
 
 	virtual void setCommand(CommandDefinition *);
 
@@ -49,8 +49,6 @@ public:
 	void loadJSONDataInternal(var data) override;
 
 	InspectableEditor * getEditor(bool isRoot) override;
-
-	void onContainerTriggerTriggered(Trigger *) override;
 
 	void commandContentChanged() override; //from BaseCommand
 	void commandTemplateDestroyed() override;

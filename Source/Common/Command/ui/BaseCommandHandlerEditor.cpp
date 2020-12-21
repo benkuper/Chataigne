@@ -25,8 +25,8 @@ BaseCommandHandlerEditor::BaseCommandHandlerEditor(BaseCommandHandler * _handler
 	addAndMakeVisible(&chooser);
 	handler->addAsyncCommandHandlerListener(this);
 
-	triggerBT.reset(handler->trigger->createButtonUI());
-	addAndMakeVisible(triggerBT.get());
+	//triggerBT.reset(handler->trigger->createButtonUI());
+	//addAndMakeVisible(triggerBT.get());
 	setSize(10, 40);
 	
 	updateChooserLabel();
@@ -43,7 +43,7 @@ BaseCommandHandlerEditor::~BaseCommandHandlerEditor()
 
 void BaseCommandHandlerEditor::resizedInternalHeaderItemInternal(Rectangle<int>& r)
 {
-	triggerBT->setBounds(r.removeFromRight(50).reduced(2));
+	//triggerBT->setBounds(r.removeFromRight(50).reduced(2));
 	chooser.setBounds(r.removeFromRight(150));
 }
 

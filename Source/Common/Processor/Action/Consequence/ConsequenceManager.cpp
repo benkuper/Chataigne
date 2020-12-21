@@ -12,19 +12,16 @@
 #include "Common/Command/ui/BaseCommandHandlerManagerEditor.h"
 
 
-juce_ImplementSingleton(ConsequenceManager)
-
-ConsequenceManager::ConsequenceManager(const String &name) :
+ConsequenceManager::ConsequenceManager(const String& name, IteratorProcessor* iterator) :
+	IterativeTarget(iterator),
 	BaseManager<Consequence>(name),
-	Thread("consequences"),
-	forceDisabled(false),
-	iterationCount(0)
+	forceDisabled(false)
 {
 	canBeDisabled = false;
 	canBeCopiedAndPasted = true;
 
 	selectItemWhenCreated = false;
-	
+
 
 	delay = addFloatParameter("Delay", "Delay the triggering of the commands", 0, 0);
 	delay->defaultUI = FloatParameter::TIME;
@@ -36,26 +33,24 @@ ConsequenceManager::ConsequenceManager(const String &name) :
 
 ConsequenceManager::~ConsequenceManager()
 {
-	signalThreadShouldExit();
-	waitForThreadToExit(1000);
+	
 }
 
-void ConsequenceManager::setIterationCount(int count)
+void ConsequenceManager::triggerAll(int iterationIndex)
 {
-	if (iterationCount == count) return;
-	iterationCount = count;
-
-	while (iterationCount < triggerAlls.size())
+	if (items.size() > 0)
 	{
-		removeControllable(triggerAlls[triggerAlls.size() - 1]);
-		triggerAlls.removeLast();
-	}
-
-	while (iterationCount > triggerAlls.size())
-	{
-		Trigger * triggerAll = addTrigger("Trigger All", "Trigger all the consequences in the manager");
-		triggerAll->hideInEditor = true;
-		triggerAlls.add(triggerAll);
+		if (delay->floatValue() == 0 && stagger->floatValue() == 0)
+		{
+			for (auto& c : items)
+			{
+				c->triggerCommand(iterationIndex);
+			}
+		}
+		else
+		{
+			staggerLaunchers.add(new StaggerLauncher(this, iterationIndex));
+		}
 	}
 }
 
@@ -63,77 +58,77 @@ void ConsequenceManager::setForceDisabled(bool value, bool force)
 {
 	if (forceDisabled == value && !force) return;
 	forceDisabled = value;
-	for(auto & t : triggerAlls) t->setEnabled(!forceDisabled);
-	for (auto &i : items) i->forceDisabled = value;
+	for (auto& i : items) i->forceDisabled = value;
 }
 
-void ConsequenceManager::onContainerTriggerTriggered(Trigger * t)
+void ConsequenceManager::onContainerTriggerTriggered(Trigger* t)
 {
 	if (forceDisabled) return;
-	if (triggerAlls.contains(t))
-	{
-		if (items.size() > 0)
-		{
-			if (delay->floatValue() == 0 && stagger->floatValue() == 0)
-			{
-				for (auto& c : items)
-				{
-					c->trigger->trigger(); //ITERATIONWIP TODO : find a way to isolate the iteration index here (multiple triggers in consequences ?)
-				}
-			}
-			else
-			{
-				timeAtRun = Time::getMillisecondCounter();
-				triggerIndex = 0;
-				startThread();
-			}
-		}
-	}
+	//for manual trigger eventually
+	BaseManager::onContainerTriggerTriggered(t);
 }
 
-void ConsequenceManager::addItemInternal(Consequence * c, var data)
+void ConsequenceManager::addItemInternal(Consequence* c, var data)
 {
 	c->forceDisabled = forceDisabled;
 	//triggerAll->hideInEditor = items.size() == 0;
 	delay->hideInEditor = items.size() == 0;
-	stagger->hideInEditor = items.size() < 2; 
+	stagger->hideInEditor = items.size() < 2;
 }
 
-void ConsequenceManager::removeItemInternal(Consequence *)
+void ConsequenceManager::removeItemInternal(Consequence*)
 {
 	//triggerAll->hideInEditor = items.size() == 0;
 	delay->hideInEditor = items.size() == 0;
 	stagger->hideInEditor = items.size() < 2;
 }
 
-void ConsequenceManager::run()
+void ConsequenceManager::launcherFinished(StaggerLauncher* launcher)
+{
+	staggerLaunchers.removeObject(launcher);
+}
+
+InspectableEditor* ConsequenceManager::getEditor(bool isRoot)
+{
+	return new BaseCommandHandlerManagerEditor<Consequence>(this, CommandContext::ACTION, isRoot);
+}
+
+ConsequenceManager::StaggerLauncher::StaggerLauncher(ConsequenceManager* csm, int iterationIndex) :
+	Thread("Stagger Launcher"),
+	csm(csm),
+	iterationIndex(iterationIndex)
+{
+	startThread();
+}
+
+ConsequenceManager::StaggerLauncher::~StaggerLauncher()
+{
+	stopThread(100);
+}
+
+void ConsequenceManager::StaggerLauncher::run()
 {
 	timeAtRun = Time::getMillisecondCounter();
 	triggerIndex = 0;
 
-	uint32 d = (uint32)(delay->floatValue() * 1000);
-	uint32 s = (uint32)(stagger->floatValue() * 1000);
+	uint32 d = (uint32)(csm->delay->floatValue() * 1000);
+	uint32 s = (uint32)(csm->stagger->floatValue() * 1000);
 
-	uint32 curTime = timeAtRun; 
+	uint32 curTime = timeAtRun;
 
-	while(triggerIndex < items.size())
+	while (triggerIndex < csm->items.size())
 	{
 		uint32 nextTriggerTime = timeAtRun + d + s * triggerIndex;
 		while (nextTriggerTime > curTime)
 		{
 			if (threadShouldExit()) return;
-			sleep(jmin<uint32>(nextTriggerTime-curTime, 20));
+			sleep(jmin<uint32>(nextTriggerTime - curTime, 20));
 			curTime = Time::getMillisecondCounter();
 			nextTriggerTime = timeAtRun + d + s * triggerIndex;
 		}
 
-		if (triggerIndex >= items.size()) return; 
-		items[triggerIndex]->trigger->trigger();
+		if (triggerIndex >= csm->items.size()) return;
+		csm->items[triggerIndex]->triggerCommand(iterationIndex);
 		triggerIndex++;
 	}
-}
-
-InspectableEditor * ConsequenceManager::getEditor(bool isRoot)
-{
-	return new BaseCommandHandlerManagerEditor<Consequence>(this, CommandContext::ACTION, isRoot);
 }

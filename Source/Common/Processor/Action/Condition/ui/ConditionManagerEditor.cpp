@@ -14,12 +14,15 @@ ConditionManagerEditor::ConditionManagerEditor(ConditionManager * _manager, bool
 	GenericManagerEditor<Condition>(_manager, isRoot),
 	conditionManager(_manager)
 {
-	contourColor = conditionManager->isValid->boolValue() ? GREEN_COLOR : BG_COLOR.brighter(.3f);
+	contourColor = conditionManager->getIsValid() ? GREEN_COLOR : BG_COLOR.brighter(.3f);
 	repaint();
+
+	conditionManager->addAsyncConditionManagerListener(this);
 }
 
 ConditionManagerEditor::~ConditionManagerEditor()
 {
+	if(!inspectable.wasObjectDeleted()) conditionManager->removeAsyncConditionManagerListener(this);
 }
 
 
@@ -33,11 +36,11 @@ void ConditionManagerEditor::itemRemovedAsync(Condition *)
 	if (manager->items.size() <= 1) resetAndBuild();
 }
 
-void ConditionManagerEditor::controllableFeedbackUpdate(Controllable * c)
+void ConditionManagerEditor::newMessage(const ConditionManager::ConditionManagerEvent& e)
 {
-	if (c == conditionManager->isValid)
+	if (e.type == e.VALIDATION_CHANGED)
 	{
-		contourColor = conditionManager->isValid->boolValue() ? GREEN_COLOR : BG_COLOR.brighter(.3f);
+		contourColor = conditionManager->getIsValid(e.iterationIndex) ? GREEN_COLOR : BG_COLOR.brighter(.3f);
 		repaint();
 	}
 }

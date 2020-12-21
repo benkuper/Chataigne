@@ -10,23 +10,23 @@
 
 #pragma once
 
-#include "Comparator/BaseComparator.h"
-#include "conditions/IterativeCondition/IterativeCondition.h"
+#include "../../Iterator/Iterator.h"
 
 class Condition :
 	public BaseItem,
-	public BaseComparator::ComparatorListener
+	public IterativeTarget
 {
 public:
-	Condition(const String &name = "Condition", var params = var());
+	Condition(const String &name = "Condition", var params = var(), IteratorProcessor * = nullptr);
 	virtual ~Condition();
 
 	bool forceDisabled;
-	Array<BoolParameter *> isValids; //this could be simplified for non-iterative condition
+	Array<bool> isValids; //this could be simplified for non-iterative condition
 
-	int iterationCount;
+	virtual void iteratorCountChanged();
 
-	void setIterationCount(int count);
+	bool getIsValid(int iterationIndex = 0);
+	virtual void setValid(int iterationIndex, bool value, bool dispatchOnChangeOnly = true);
 
 	virtual void onContainerParameterChangedInternal(Parameter *) override;
 	virtual void setForceDisabled(bool value, bool force = false);
@@ -36,7 +36,7 @@ public:
 	{
 	public:
 		virtual ~ConditionListener() {}
-		virtual void conditionValidationChanged(Condition *, const IterativeContext &context) {}
+		virtual void conditionValidationChanged(Condition *, int iterationIndex) {}
 		virtual void conditionSourceChanged(Condition *) {}
 	};
 
@@ -48,20 +48,18 @@ public:
 	class ConditionEvent {
 	public:
 		enum Type { VALIDATION_CHANGED, SOURCE_CHANGED };
-		ConditionEvent(Type type, Condition* c, const IterativeContext& context = { -1 }) : type(type), condition(c), context(context) {}
+		ConditionEvent(Type type, Condition* c, int iterationIndex = -1) : type(type), condition(c), iterationIndex(iterationIndex) {}
 		Type type;
 		Condition * condition;
-		IterativeContext context;
+		int iterationIndex;
 	};
 
 	QueuedNotifier<ConditionEvent> conditionAsyncNotifier;
 	typedef QueuedNotifier<ConditionEvent>::Listener AsyncListener;
 
-
 	void addAsyncConditionListener(AsyncListener* newListener) { conditionAsyncNotifier.addListener(newListener); }
 	void addAsyncCoalescedConditionListener(AsyncListener* newListener) { conditionAsyncNotifier.addAsyncCoalescedListener(newListener); }
 	void removeAsyncConditionListener(AsyncListener* listener) { conditionAsyncNotifier.removeListener(listener); }
-
 
 	virtual String getTypeString() const override { jassert(false); return "error"; }
 

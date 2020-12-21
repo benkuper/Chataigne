@@ -11,34 +11,52 @@
 #pragma once
 
 #include "../../Condition.h"
+#include "Comparator/BaseComparator.h"
 
 class StandardCondition :
 	public Condition
 {
 public:
-	StandardCondition(var params = var());
+	StandardCondition(var params = var(), IteratorProcessor* processor = nullptr);
 	~StandardCondition();
+
+	bool iteratorListMode;
 
 	TargetParameter * sourceTarget;
 	Array<WeakReference<Controllable>> sourceControllables;
-	std::unique_ptr<BaseComparator> comparator;
+	HashMap<Controllable*, int> sourceIndexMap;
 
+	std::unique_ptr<BaseComparator> comparator;
 	var loadingComparatorData; //for dynamically created parameter, allows to reload comparator data after these are created
+
+	BoolParameter* alwaysTrigger;
+	BoolParameter* toggleMode;
+
+	Array<bool> rawIsValids; //for toggle behaviour
+
+	void clearItem() override;
+
+	void iteratorCountChanged() override;
+
+	virtual void setValid(int iterationIndex, bool value, bool dispatchOnChangeOnly = true);
+	void forceToggleState(bool value);
+
+	void updateSourceControllablesFromTarget();
+
+	void checkComparator(int iterationIndex);
+
+	void onContainerParameterChangedInternal(Parameter * p) override;
+
+	void onExternalParameterValueChanged(Parameter* p) override;
+	void onExternalParameterRangeChanged(Parameter* p) override;
+	void onExternalTriggerTriggered(Trigger* t) override;
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
 
-	void setSourceControllables(Array<WeakReference<Controllable>> newSources);
-	void comparatorValidationChanged(BaseComparator *, int iterationIndex) override;
-
-	void forceCheck() override;
-
-	void onContainerParameterChangedInternal(Parameter * p) override;
-	void onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c) override;
-
 	InspectableEditor * getEditor(bool isRoot) override;
 
-	String getTypeString() const override { return StandardCondition::getTypeStringStatic(); }
-	static String getTypeStringStatic() { return "From Input Value"; }
+	String getTypeString() const override { return getTypeStringStatic(iteratorListMode); }
+	static String getTypeStringStatic(bool listMode) { return listMode ? "From Iterator List" : "From Input Value"; }
 };
 

@@ -76,9 +76,9 @@ void State::onContainerParameterChangedInternal(Parameter *p)
 
 						if (checkTransitionsOnActivate->boolValue())
 						{
-							if (t->cdm.isValid->boolValue())
+							if (t->cdm.getIsValid())
 							{
-								t->triggerOn->trigger();
+								t->triggerConsequences(true);
 								break;
 							}
 						}

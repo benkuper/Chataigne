@@ -18,13 +18,13 @@ class ActionUI :
 	public Action::AsyncListener
 {
 public:
-	ActionUI(BaseAction *);
+	ActionUI(Action *);
 	virtual ~ActionUI();
 
-	BaseAction* action;
+	Action* action;
 
-	std::unique_ptr<TriggerButtonUI> triggerAllUI;
-	std::unique_ptr<FloatSliderUI> progressionUI;
+	//std::unique_ptr<TriggerButtonUI> triggerAllUI;
+	//std::unique_ptr<FloatSliderUI> progressionUI;
 
 	void paint(Graphics &g) override;
 
