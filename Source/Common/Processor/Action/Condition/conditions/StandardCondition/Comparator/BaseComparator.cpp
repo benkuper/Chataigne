@@ -41,7 +41,10 @@ void BaseComparator::updateReferenceRange(Parameter* sourceParam)
 
 void BaseComparator::onContainerParameterChanged(Parameter * p)
 {
-	if (p == compareFunction) currentFunctionId = compareFunction->getValueData().toString();
+	if (p == compareFunction)
+	{
+		currentFunctionId = compareFunction->getValueData().toString();
+	}
 	ControllableContainer::onContainerParameterChanged(p);
 }
 
