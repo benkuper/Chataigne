@@ -91,6 +91,11 @@ void StandardCondition::checkComparator(int iterationIndex)
 	}
 }
 
+void StandardCondition::forceCheck()
+{
+	checkComparator(0);
+}
+
 void StandardCondition::forceToggleState(bool value)
 {
 	rawIsValids.fill(value);
@@ -214,9 +219,10 @@ void StandardCondition::onContainerParameterChangedInternal(Parameter * p)
 void StandardCondition::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c)
 {
 	Condition::onControllableFeedbackUpdateInternal(cc, c);
-	if (comparator != nullptr && c == comparator->reference)
+
+	if (comparator != nullptr && c == comparator->reference || c == comparator->compareFunction)
 	{
-		for (int i = 0; i < getIterationCount(); i++) checkComparator(i);
+		if(!isCurrentlyLoadingData) for (int i = 0; i < getIterationCount(); i++) checkComparator(i);
 	}
 }
 

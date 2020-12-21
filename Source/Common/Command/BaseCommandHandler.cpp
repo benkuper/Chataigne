@@ -17,10 +17,14 @@ BaseCommandHandler::BaseCommandHandler(const String & name, CommandContext _cont
 	IterativeTarget(iterator),
 	context(_context),
 	lockedModule(_lockedModule),
+	trigger(nullptr),
 	handlerNotifier(5)
 {
-	//trigger = addTrigger("Trigger", "Trigger this consequence");
-	//trigger->hideInEditor = true;
+	if (!isIterative())
+	{
+		trigger = addTrigger("Trigger", "Trigger this consequence");
+		trigger->hideInEditor = true;
+	}
 }
 
 BaseCommandHandler::~BaseCommandHandler()
@@ -195,6 +199,12 @@ void BaseCommandHandler::commandTemplateDestroyed()
 		if (!Engine::mainEngine->isClearing && ModuleManager::getInstanceWithoutCreating() != nullptr) ModuleManager::getInstance()->addBaseManagerListener(this);
 	}
 	setCommand(nullptr);
+}
+
+void BaseCommandHandler::onContainerTriggerTriggered(Trigger* t)
+{
+	BaseItem::onContainerTriggerTriggered(t);
+	if (t == trigger) triggerCommand(); //should have some sort of "current iteration" here
 }
 
 void BaseCommandHandler::inspectableDestroyed(Inspectable *)

@@ -25,13 +25,19 @@ ActionUI::ActionUI(Action* _action) :
 
 	action->addAsyncActionListener(this);
 
-	//triggerAllUI.reset(action->csmOn->triggerAll->createButtonUI());
-	//addAndMakeVisible(triggerAllUI.get());
-
-	//progressionUI.reset(action->cdm.validationProgress->createSlider());
-	//progressionUI->showValue = false;
-	//addChildComponent(progressionUI.get());
-	//progressionUI->setVisible(action->cdm.validationProgress->enabled);
+	if (action->triggerOn != nullptr)
+	{
+		triggerAllUI.reset(action->triggerOn->createButtonUI());
+		addAndMakeVisible(triggerAllUI.get());
+	}
+	
+	if (action->cdm.validationProgressFeedback != nullptr)
+	{
+		progressionUI.reset(action->cdm.validationProgressFeedback->createSlider());
+		progressionUI->showValue = false;
+		addChildComponent(progressionUI.get());
+		progressionUI->setVisible(action->cdm.validationTime->floatValue() > 0);
+	}
 
 	updateBGColor();
 }
@@ -68,14 +74,14 @@ void ActionUI::updateBGColor()
 void ActionUI::controllableFeedbackUpdateInternal(Controllable * c)
 {
 	ProcessorUI::controllableFeedbackUpdateInternal(c);
-	if (c == action->cdm.validationTime)
+	if (c == action->cdm.validationTime && progressionUI != nullptr)
 	{
-		//bool v = action->cdm.validationTime->floatValue() > 0;
-		//if (progressionUI->isVisible() != v)
-		//{
-		//	progressionUI->setVisible(v);
-		//	resized();
-		//}
+		bool v = action->cdm.validationTime->floatValue() > 0;
+		if (progressionUI->isVisible() != v)
+		{
+			progressionUI->setVisible(v);
+			resized();
+		}
 	}
 }
 
@@ -83,11 +89,11 @@ void ActionUI::resizedInternalHeader(Rectangle<int>& r)
 {
 	BaseItemUI::resizedInternalHeader(r);
 
-	//triggerAllUI->setBounds(r.removeFromRight(70));
-	//if (progressionUI->isVisible())
-	//{
-	//	progressionUI->setBounds(r.removeFromRight(40).reduced(2, 6));
-	//}
+	if(triggerAllUI != nullptr) triggerAllUI->setBounds(r.removeFromRight(70));
+	if (progressionUI != nullptr && progressionUI->isVisible())
+	{
+		progressionUI->setBounds(r.removeFromRight(40).reduced(2, 6));
+	}
 }
 
 void ActionUI::paintOverChildren(Graphics & g)

@@ -39,7 +39,7 @@ public:
 	std::unique_ptr<ConsequenceManager> csmOn;
 	std::unique_ptr<ConsequenceManager> csmOff;
 
-	//Trigger* manualTriggerOn; //if not iterative, there will be only one element in this
+	Trigger* triggerOn; //if not iterative, there will be only one element in this
 
 	//to allow for checking before conditions sending it, to overcome listener-order problems
 	bool forceChecking;
@@ -56,9 +56,9 @@ public:
 	void loadJSONDataItemInternal(var data) override;
 	void endLoadFile() override;
 
+	void onContainerTriggerTriggered(Trigger* t) override;
 	void onContainerParameterChangedInternal(Parameter * p) override;
 	void controllableFeedbackUpdate(ControllableContainer * cc, Controllable * c) override;
-	
 
 	void conditionManagerValidationChanged(ConditionManager *, int iterationIndex) override;
 

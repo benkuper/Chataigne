@@ -19,6 +19,7 @@ Action::Action(var params, IteratorProcessor * iterator) :
     autoTriggerWhenAllConditionAreActives(true),
     forceNoOffConsequences(false),
 	hasOffConsequences(false),
+	triggerOn(nullptr),
 	cdm(iterator),
 	forceChecking(false),
     actionAsyncNotifier(10)
@@ -27,7 +28,11 @@ Action::Action(var params, IteratorProcessor * iterator) :
 	itemDataType = "Action";
 	type = ACTION;
 
-	//manualTriggerOn = addTrigger("Trigger", "This will trigger as if the conditions have been validated, and trigger all the Consequences:TRUE");
+	if (!isIterative())
+	{
+		triggerOn = addTrigger("Trigger", "This will trigger as if the conditions have been validated, and trigger all the Consequences:TRUE");
+		triggerOn->hideInEditor = true;
+	}
 
 	cdm.setHasActivationDefinitions(params.getProperty("hasActivationDefinitions",true));
 	cdm.addConditionManagerListener(this);
@@ -148,12 +153,25 @@ void Action::endLoadFile()
 	}
 }
 
+void Action::onContainerTriggerTriggered(Trigger* t)
+{
+	Processor::onContainerTriggerTriggered(t);
+
+	if (t == triggerOn)
+	{
+		if(enabled->boolValue()) triggerConsequences(true);
+	}
+}
+
+
 void Action::onContainerParameterChangedInternal(Parameter * p)
 {
 	Processor::onContainerParameterChangedInternal(p);
 
 	if (p == enabled)
 	{
+		if(triggerOn != nullptr) triggerOn->setEnabled(enabled->boolValue());
+		
 		actionListeners.call(&Action::ActionListener::actionEnableChanged, this);
 		actionAsyncNotifier.addMessage(new ActionEvent(ActionEvent::ENABLED_CHANGED, this));
 	}
@@ -173,6 +191,8 @@ void Action::controllableFeedbackUpdate(ControllableContainer * cc, Controllable
 
 void Action::conditionManagerValidationChanged(ConditionManager *, int iterationIndex)
 {
+	if (forceChecking) return;
+
 	if (autoTriggerWhenAllConditionAreActives)
 	{
 		if (cdm.getIsValid(iterationIndex, false)) triggerConsequences(true, iterationIndex); //force trigger from onContainerTriggerTriggered, for derivating child classes
@@ -209,3 +229,4 @@ ProcessorUI * Action::getUI()
 {
 	return new ActionUI(this);
 }
+

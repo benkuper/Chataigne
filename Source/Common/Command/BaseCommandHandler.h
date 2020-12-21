@@ -34,6 +34,7 @@ public:
 	WeakReference<CommandDefinition> commandDefinition;
 
 	Module * lockedModule;
+	Trigger* trigger;
 
 	//ghosting
 	String ghostModuleName;
@@ -42,7 +43,7 @@ public:
 	var ghostCommandData;
 
 	virtual void triggerCommand(int iterationIndex = 0); //to override and call back for checking (e.g. enable in Consequence)
-
+	
 	virtual void setCommand(CommandDefinition *);
 
 	var getJSONData() override;
@@ -53,6 +54,7 @@ public:
 	void commandContentChanged() override; //from BaseCommand
 	void commandTemplateDestroyed() override;
 
+	virtual void onContainerTriggerTriggered(Trigger* t) override;
 	virtual void inspectableDestroyed(Inspectable *) override;
 
 	void itemAdded(Module * m) override;

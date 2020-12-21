@@ -45,6 +45,8 @@ public:
 
 	void checkComparator(int iterationIndex);
 
+	void forceCheck() override;
+
 	void onContainerParameterChangedInternal(Parameter * p) override;
 	void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) override;
 

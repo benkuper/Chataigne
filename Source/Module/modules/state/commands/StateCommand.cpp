@@ -78,7 +78,7 @@ void StateCommand::triggerInternal()
 		break;
 
 	case TRIGGER_ACTION:
-		((Action *)target->targetContainer.get())->triggerConsequences(true);
+		if(((Action*)target->targetContainer.get())->triggerOn != nullptr) ((Action*)target->targetContainer.get())->triggerOn->trigger();
 		break;
 
 	case SET_ACTION_ENABLED:
