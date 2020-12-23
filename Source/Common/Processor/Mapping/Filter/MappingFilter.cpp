@@ -16,6 +16,7 @@ MappingFilter::MappingFilter(const String& name, var params) :
 	filterParams("filterParams"),
 	processOnSameValue(false),
 	autoSetRange(true),
+	filterParamsAreDirty(false),
 	filterAsyncNotifier(10)
 {
 	isSelectable = false;
@@ -98,6 +99,7 @@ void MappingFilter::onControllableFeedbackUpdateInternal(ControllableContainer* 
 {
 	if (cc == &filterParams)
 	{
+		filterParamsAreDirty = true;
 		filterParamChanged((Parameter*)p);
 		mappingFilterListeners.call(&FilterListener::filterNeedsProcess, this);
 	}
@@ -106,7 +108,7 @@ void MappingFilter::onControllableFeedbackUpdateInternal(ControllableContainer* 
 bool MappingFilter::process()
 {
 	if (!enabled->boolValue() || isClearing) return false; //default or disabled does nothing
-	if (!processOnSameValue)
+	if (!processOnSameValue && !filterParamsAreDirty)
 	{
 		if (sourceParams.size() == previousValues.size())
 		{
@@ -129,7 +131,10 @@ bool MappingFilter::process()
 		
 	}
 
-	return processInternal();  //avoid cross-thread crash
+	bool result = processInternal();  //avoid cross-thread crash
+	filterParamsAreDirty = false;
+
+	return result;
 }
 
 bool MappingFilter::processInternal()
@@ -213,6 +218,7 @@ void MappingFilter::parameterRangeChanged(Parameter* p)
 
 	if (changed)
 	{
+		filterParamsAreDirty = true;
 		mappingFilterListeners.call(&FilterListener::filteredParamRangeChanged, this);
 	}
 }

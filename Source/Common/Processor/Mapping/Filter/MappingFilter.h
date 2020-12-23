@@ -30,6 +30,8 @@ public:
 	bool processOnSameValue; //disabling this allows for fast checking and stopping if source and dest values are the same
 	bool autoSetRange; //if true, will check at process if ranges are differents between source and filtered, and if so, will reassign
 
+	bool filterParamsAreDirty; //This is use to force processing even if input has not changed when a filterParam has been changed
+
 	bool setupSources(Array<Parameter *> sources);
 	virtual void setupParametersInternal();
 	virtual Parameter * setupSingleParameterInternal(Parameter * source);
