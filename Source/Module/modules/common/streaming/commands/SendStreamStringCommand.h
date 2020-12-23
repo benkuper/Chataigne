@@ -16,7 +16,7 @@ class SendStreamStringCommand :
 	public StreamingCommand
 {
 public:
-	SendStreamStringCommand(StreamingModule * _module, CommandContext context, var params);
+	SendStreamStringCommand(StreamingModule * _module, CommandContext context, var params, IteratorProcessor* iterator = nullptr);
 	~SendStreamStringCommand();
 
 	enum DataMode { STRING, HEX };
@@ -33,6 +33,6 @@ public:
 	void setValue(var value) override;
 	void triggerInternal() override;
 
-	static SendStreamStringCommand * create(ControllableContainer * module, CommandContext context, var params) { return new SendStreamStringCommand((StreamingModule *)module, context, params); }
+	static SendStreamStringCommand * create(ControllableContainer * module, CommandContext context, var params, IteratorProcessor * iterator) { return new SendStreamStringCommand((StreamingModule *)module, context, params, iterator); }
 
 };

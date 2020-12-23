@@ -19,7 +19,7 @@ class SequenceAudioCommand :
 	public EngineListener
 {
 public:
-	SequenceAudioCommand(SequenceModule* _module, CommandContext context, var params);
+	SequenceAudioCommand(SequenceModule* _module, CommandContext context, var params, IteratorProcessor * iterator = nullptr);
 	virtual ~SequenceAudioCommand();
 
 	enum ActionType { SET_VOLUME };
@@ -40,5 +40,5 @@ public:
 	virtual void loadJSONDataInternal(var data) override;
 	virtual void endLoadFile() override;
 
-	static BaseCommand* create(ControllableContainer* module, CommandContext context, var params);
+	static BaseCommand* create(ControllableContainer* module, CommandContext context, var params, IteratorProcessor * iterator = nullptr);
 };

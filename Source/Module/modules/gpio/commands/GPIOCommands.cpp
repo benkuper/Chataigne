@@ -11,8 +11,8 @@
 #include "GPIOCommands.h"
 #include "../GPIOModule.h"
 
-GPIOCommand::GPIOCommand(GPIOModule* m, CommandContext context, var params) :
-    BaseCommand(m, context, params),
+GPIOCommand::GPIOCommand(GPIOModule* m, CommandContext context, var params, IteratorProcessor* iterator) :
+    BaseCommand(m, context, params, iterator),
     gpioModule(m),
     valueParam(nullptr)
 {
@@ -34,7 +34,7 @@ GPIOCommand::GPIOCommand(GPIOModule* m, CommandContext context, var params) :
 
     if (valueParam != nullptr)
     {
-        addTargetMappingParameterAt(valueParam, 0);
+        //addTargetMappingParameterAt(valueParam, 0);
     }
 }
 

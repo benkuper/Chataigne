@@ -16,7 +16,7 @@ class SendStreamStringValuesCommand :
 	public SendStreamValuesCommand
 {
 public:
-	SendStreamStringValuesCommand(StreamingModule * output, CommandContext context, var params);
+	SendStreamStringValuesCommand(StreamingModule * output, CommandContext context, var params, IteratorProcessor* iterator = nullptr);
 	~SendStreamStringValuesCommand();
 
 	StringParameter* prefix;
@@ -28,6 +28,6 @@ public:
 
 	void triggerInternal() override;
 
-	static SendStreamStringValuesCommand * create(ControllableContainer * module, CommandContext context, var params) { return new SendStreamStringValuesCommand((StreamingModule *)module, context, params); }
+	static SendStreamStringValuesCommand * create(ControllableContainer * module, CommandContext context, var params, IteratorProcessor * iterator) { return new SendStreamStringValuesCommand((StreamingModule *)module, context, params, iterator); }
 
 };

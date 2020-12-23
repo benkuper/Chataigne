@@ -16,7 +16,7 @@ class ResolumeClipCommand :
 	public ResolumeBaseCommand
 {
 public:
-	ResolumeClipCommand(ResolumeModule * _module, CommandContext context, var params);
+	ResolumeClipCommand(ResolumeModule * _module, CommandContext context, var params, IteratorProcessor * iterator = nullptr);
 	~ResolumeClipCommand();
 
 	IntParameter * connectParam;
@@ -36,9 +36,9 @@ public:
 	void triggerInternal() override;
 
 
-	static BaseCommand * create(ControllableContainer * module, CommandContext context, var params) { 
+	static BaseCommand * create(ControllableContainer * module, CommandContext context, var params, IteratorProcessor * iterator) { 
 		params.getDynamicObject()->setProperty("multiLevel", false);
-		return new ResolumeClipCommand((ResolumeModule *)module, context, params); 
+		return new ResolumeClipCommand((ResolumeModule *)module, context, params, iterator); 
 	}
 
 };

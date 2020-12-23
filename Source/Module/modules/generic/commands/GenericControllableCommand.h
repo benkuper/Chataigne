@@ -21,7 +21,7 @@ public:
 
 	enum Action { SET_VALUE, TRIGGER};
 	
-	GenericControllableCommand(ChataigneGenericModule * _module, CommandContext context, var params);
+	GenericControllableCommand(ChataigneGenericModule * _module, CommandContext context, var params, IteratorProcessor* iterator = nullptr);
 	virtual ~GenericControllableCommand();
 	
 	ChataigneGenericModule * sequenceModule;
@@ -41,7 +41,7 @@ public:
 	virtual void loadJSONDataInternal(var data) override;
 	virtual void endLoadFile() override;
 
-	static BaseCommand * create(ControllableContainer * module, CommandContext context, var params);
+	static BaseCommand * create(ControllableContainer * module, CommandContext context, var params, IteratorProcessor * iterator = nullptr);
 
 	//InspectableEditor * getEditor(bool isRoot) override;
 };

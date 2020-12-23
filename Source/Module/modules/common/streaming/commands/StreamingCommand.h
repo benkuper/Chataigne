@@ -17,7 +17,7 @@ class StreamingCommand :
 	public BaseCommand
 {
 public:
-	StreamingCommand(StreamingModule * _module, CommandContext context, var params);
+	StreamingCommand(StreamingModule * _module, CommandContext context, var params, IteratorProcessor* iterator = nullptr);
 	~StreamingCommand();
 
 	StreamingModule * streamingModule;

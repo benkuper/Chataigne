@@ -10,7 +10,7 @@
 
 #include "WatchoutCommand.h"
 
-WatchoutCommand::WatchoutCommand(WatchoutModule * _module, CommandContext context, var params) :
+WatchoutCommand::WatchoutCommand(WatchoutModule * _module, CommandContext context, var params, IteratorProcessor * iterator) :
 	SendStreamStringCommand(_module,context,params),
 	wModule(_module)
 {

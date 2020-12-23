@@ -10,8 +10,8 @@
 
 #include "CustomOSCCommand.h"
 
-CustomOSCCommand::CustomOSCCommand(OSCModule * module, CommandContext context, var params) :
-	OSCCommand(module, context, params),
+CustomOSCCommand::CustomOSCCommand(OSCModule * module, CommandContext context, var params, IteratorProcessor * iterator) :
+	OSCCommand(module, context, params, iterator),
 	wildcardsContainer("Address Parameters")
 {
 	address->setControllableFeedbackOnly(false);

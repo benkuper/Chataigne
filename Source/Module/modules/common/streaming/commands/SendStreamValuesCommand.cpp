@@ -10,8 +10,8 @@
 
 #include "SendStreamValuesCommand.h"
 
-SendStreamValuesCommand::SendStreamValuesCommand(StreamingModule * module, CommandContext context, var params) :
-	StreamingCommand(module, context, params)
+SendStreamValuesCommand::SendStreamValuesCommand(StreamingModule * module, CommandContext context, var params, IteratorProcessor* iterator) :
+	StreamingCommand(module, context, params, iterator)
 {
 	customValuesManager.reset(new CustomValuesCommandArgumentManager(context == MAPPING));
 	addChildControllableContainer(customValuesManager.get());

@@ -42,4 +42,5 @@ bool Point3DComparator::compare(Parameter *sourceParam)
 	else if (currentFunctionId == distLessId)		return (p - r).length() < valParam->floatValue();
 	else if (currentFunctionId == magnGreaterId)	return p.length() > valParam->floatValue();
 	else if (currentFunctionId == magnLessId)		return p.length() < valParam->floatValue();	
+	return false;
 }

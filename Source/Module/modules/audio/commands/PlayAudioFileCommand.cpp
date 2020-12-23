@@ -10,7 +10,7 @@
 
 #include "PlayAudioFileCommand.h"
 
-PlayAudioFileCommand::PlayAudioFileCommand(AudioModule * _module, CommandContext context, var params) :
+PlayAudioFileCommand::PlayAudioFileCommand(AudioModule * _module, CommandContext context, var params, IteratorProcessor * iterator) :
 	BaseCommand(_module, context, params),
 	audioModule(_module),
     channelRemapAudioSource(&transportSource, false),
@@ -18,9 +18,7 @@ PlayAudioFileCommand::PlayAudioFileCommand(AudioModule * _module, CommandContext
     channelsCC("Selected channels"),
 	numFileChannels(2),
     numActiveOutputs(2)
-
 {
-
 	audioFile = addFileParameter("Audio file", "The Audio file to play");
 	audioFile->fileTypeFilter = "*.wav;*.mp3;*.aiff";
 
@@ -142,7 +140,6 @@ void PlayAudioFileCommand::triggerInternal()
 	transportSource.start();
 	audioModule->outActivityTrigger->trigger();
 }
-
 
 // PROCESSOR
 

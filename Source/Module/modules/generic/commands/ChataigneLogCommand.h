@@ -16,7 +16,7 @@ class ChataigneLogCommand :
 	public BaseCommand
 {
 public:
-	ChataigneLogCommand(ChataigneGenericModule * _module, CommandContext context, var params);
+	ChataigneLogCommand(ChataigneGenericModule * _module, CommandContext context, var params, IteratorProcessor* iterator = nullptr);
 	~ChataigneLogCommand();
 
 	enum Type { MESSAGE, VALUE };
@@ -31,5 +31,5 @@ public:
 	void setValueInternal(var value) override;
 	void triggerInternal() override;
 
-	static BaseCommand * create(ControllableContainer * module, CommandContext context, var params);
+	static BaseCommand * create(ControllableContainer * module, CommandContext context, var params, IteratorProcessor * iterator = nullptr);
 };

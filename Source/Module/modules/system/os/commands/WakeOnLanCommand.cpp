@@ -11,7 +11,7 @@
 #include "WakeOnLanCommand.h"
 #include "ui/WakeOnLanCommandEditor.h"
 
-WakeOnLanCommand::WakeOnLanCommand(OSModule * _module, CommandContext context, var params) :
+WakeOnLanCommand::WakeOnLanCommand(OSModule * _module, CommandContext context, var params, IteratorProcessor * iterator) :
 	BaseCommand(_module, context, params),
 	osModule(_module)
 {

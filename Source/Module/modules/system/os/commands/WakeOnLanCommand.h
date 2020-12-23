@@ -17,7 +17,7 @@ class WakeOnLanCommand :
 	public BaseCommand
 {
 public:
-	WakeOnLanCommand(OSModule * _module, CommandContext context, var params);
+	WakeOnLanCommand(OSModule * _module, CommandContext context, var params, IteratorProcessor * iterator = nullptr);
 	~WakeOnLanCommand();
 
 	OSModule * osModule;
@@ -33,6 +33,6 @@ public:
 
 	InspectableEditor * getEditor(bool isRoot) override;
 
-	static WakeOnLanCommand * create(ControllableContainer * module, CommandContext context, var params) { return new WakeOnLanCommand((OSModule *)module, context, params); }
+	static WakeOnLanCommand * create(ControllableContainer * module, CommandContext context, var params, IteratorProcessor * iterator) { return new WakeOnLanCommand((OSModule *)module, context, params, iterator); }
 
 };

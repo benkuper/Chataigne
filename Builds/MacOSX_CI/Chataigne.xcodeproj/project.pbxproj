@@ -109,6 +109,18 @@
 			isa = PBXBuildFile;
 			fileRef = 0DBBCDD0D6FD50D57235BDA4;
 		};
+		9B5065AA8C19C8DF58253515 = {
+			isa = PBXBuildFile;
+			fileRef = 24B8EBDE4FCE8C5E4A4A84F5;
+		};
+		F33BCC64C79731220481C79E = {
+			isa = PBXBuildFile;
+			fileRef = AF0466EDEFE0688A67F54DC0;
+		};
+		41036DAC07D5075CB3AD6D33 = {
+			isa = PBXBuildFile;
+			fileRef = EA1E97F19E0B43C7EC126720;
+		};
 		6648A28A780225272E677EAE = {
 			isa = PBXBuildFile;
 			fileRef = 7548D863C3CCA4FF27887C03;
@@ -120,6 +132,18 @@
 		D5BA72E6B1F43C42CFDDCE35 = {
 			isa = PBXBuildFile;
 			fileRef = B68AA40E425DF28AFA78226B;
+		};
+		C53EC68EE6E92AEF571264BD = {
+			isa = PBXBuildFile;
+			fileRef = C94E20BA7D14FD8E8452D1BD;
+		};
+		93ECA58744F8B5DD181D35F4 = {
+			isa = PBXBuildFile;
+			fileRef = CDE9EF9B0E1277DC6C2D8577;
+		};
+		790E2F2473AB0C25A1DBB84C = {
+			isa = PBXBuildFile;
+			fileRef = 0A7A0D9E8AEA99B5AC15A4F5;
 		};
 		FC96057BA4D7B3D6EB200D36 = {
 			isa = PBXBuildFile;
@@ -168,14 +192,6 @@
 		63A1E335EDCF9ECBCA9D56C3 = {
 			isa = PBXBuildFile;
 			fileRef = 960087F9A23AE3C81E1156E0;
-		};
-		93ECA58744F8B5DD181D35F4 = {
-			isa = PBXBuildFile;
-			fileRef = CDE9EF9B0E1277DC6C2D8577;
-		};
-		790E2F2473AB0C25A1DBB84C = {
-			isa = PBXBuildFile;
-			fileRef = 0A7A0D9E8AEA99B5AC15A4F5;
 		};
 		D4ACEE92E1FBE0531FE9C8FD = {
 			isa = PBXBuildFile;
@@ -2085,6 +2101,13 @@
 			path = ../../Source/Module/modules/controller/wiimote/lib/wiiuse/wiiuse.c;
 			sourceTree = "SOURCE_ROOT";
 		};
+		24B8EBDE4FCE8C5E4A4A84F5 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = LinkableParameterEditor.cpp;
+			path = ../../Source/Common/ParameterLink/ui/LinkableParameterEditor.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		25816611130784FF4DA89AFD = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -2433,6 +2456,13 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = ResolumeModule.cpp;
 			path = ../../Source/Module/modules/osc/resolume/ResolumeModule.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
+		3767FF2B18D7FB318CF5C1A0 = {
+			isa = PBXFileReference;
+			lastKnownFileType = image.png;
+			name = link.png;
+			path = ../../Resources/link.png;
 			sourceTree = "SOURCE_ROOT";
 		};
 		378FBC82648FC26CBEC330A9 = {
@@ -3835,6 +3865,13 @@
 			path = ../../Source/Module/modules/customvariables/commands/CustomVariablesModuleCommands.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
+		7D43A9E8A3FA6786D8D869FD = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = BaseCommandEditor.h;
+			path = ../../Source/Common/Command/ui/BaseCommandEditor.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		7D61D964EC36006035F5BFB6 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -3938,6 +3975,13 @@
 			lastKnownFileType = image.png;
 			name = Serial.png;
 			path = ../../Resources/Modules/Serial.png;
+			sourceTree = "SOURCE_ROOT";
+		};
+		8511A85FD311534234B4EC5C = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = ParameterLinkUI.h;
+			path = ../../Source/Common/ParameterLink/ui/ParameterLinkUI.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		85D8FFDCE078F33306AB4713 = {
@@ -4759,6 +4803,13 @@
 			path = ../../Source/Common/Command/CommandDefinition.h;
 			sourceTree = "SOURCE_ROOT";
 		};
+		ACAA1EB404E595C49D3FA35A = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = ParameterLink.h;
+			path = ../../Source/Common/ParameterLink/ParameterLink.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		ACEC0AB4D367F7C1DA170CD9 = {
 			isa = PBXFileReference;
 			lastKnownFileType = wrapper.framework;
@@ -4799,6 +4850,13 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = SendStreamStringCommand.cpp;
 			path = ../../Source/Module/modules/common/streaming/commands/SendStreamStringCommand.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
+		AF0466EDEFE0688A67F54DC0 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = ParameterLinkUI.cpp;
+			path = ../../Source/Common/ParameterLink/ui/ParameterLinkUI.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		AF52F768B78BA08E716F431A = {
@@ -5269,6 +5327,13 @@
 			name = Foundation.framework;
 			path = System/Library/Frameworks/Foundation.framework;
 			sourceTree = SDKROOT;
+		};
+		C94E20BA7D14FD8E8452D1BD = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = BaseCommandEditor.cpp;
+			path = ../../Source/Common/Command/ui/BaseCommandEditor.cpp;
+			sourceTree = "SOURCE_ROOT";
 		};
 		C95C470933856CCB6E5E6CC4 = {
 			isa = PBXFileReference;
@@ -5935,6 +6000,13 @@
 			path = ../../Source/Guider/GuideComponents.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
+		E45FB289FAE0B1C007DC9C96 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = LinkableParameterEditor.h;
+			path = ../../Source/Common/ParameterLink/ui/LinkableParameterEditor.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		E49476A81DB93D0B8094E56F = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -6031,6 +6103,13 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = ColorShiftFilter.h;
 			path = ../../Source/Common/Processor/Mapping/Filter/filters/color/ColorShiftFilter.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		EA1E97F19E0B43C7EC126720 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = ParameterLink.cpp;
+			path = ../../Source/Common/ParameterLink/ParameterLink.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		EABFE337CDC445EABA98B7E3 = {
@@ -6504,6 +6583,7 @@
 				0E0B1252FBC81A8784FD87B5,
 				331643DFCB261592E0B722B9,
 				AD11D16FF7B59083692E9F22,
+				3767FF2B18D7FB318CF5C1A0,
 				ABE980A8C8A9E5C7E7344E09,
 				66A94D900181382D38807D43,
 				EFDAED7A7D09C4AB1AF0BC5D,
@@ -6550,6 +6630,27 @@
 			name = Analytics;
 			sourceTree = "<group>";
 		};
+		A0AA2B21FFC8012969774832 = {
+			isa = PBXGroup;
+			children = (
+				24B8EBDE4FCE8C5E4A4A84F5,
+				E45FB289FAE0B1C007DC9C96,
+				AF0466EDEFE0688A67F54DC0,
+				8511A85FD311534234B4EC5C,
+			);
+			name = ui;
+			sourceTree = "<group>";
+		};
+		1FCC00570A4B118869231CF0 = {
+			isa = PBXGroup;
+			children = (
+				A0AA2B21FFC8012969774832,
+				EA1E97F19E0B43C7EC126720,
+				ACAA1EB404E595C49D3FA35A,
+			);
+			name = ParameterLink;
+			sourceTree = "<group>";
+		};
 		474351C538FC2A3059893B3E = {
 			isa = PBXGroup;
 			children = (
@@ -6576,6 +6677,20 @@
 				6B4B5B0AA9784F3136EA4326,
 			);
 			name = InputSystem;
+			sourceTree = "<group>";
+		};
+		AA3DEB38832446780B66F822 = {
+			isa = PBXGroup;
+			children = (
+				C94E20BA7D14FD8E8452D1BD,
+				7D43A9E8A3FA6786D8D869FD,
+				CDE9EF9B0E1277DC6C2D8577,
+				B84FB7144270D3572B5D9239,
+				FF75DCCDA969DCD9F36F840C,
+				0A7A0D9E8AEA99B5AC15A4F5,
+				F85193CCD2CCA1D72CDCA8D7,
+			);
+			name = ui;
 			sourceTree = "<group>";
 		};
 		9468DCF8AB612DCE2D6575E3 = {
@@ -6607,23 +6722,12 @@
 			name = Template;
 			sourceTree = "<group>";
 		};
-		AA3DEB38832446780B66F822 = {
-			isa = PBXGroup;
-			children = (
-				CDE9EF9B0E1277DC6C2D8577,
-				B84FB7144270D3572B5D9239,
-				FF75DCCDA969DCD9F36F840C,
-				0A7A0D9E8AEA99B5AC15A4F5,
-				F85193CCD2CCA1D72CDCA8D7,
-			);
-			name = ui;
-			sourceTree = "<group>";
-		};
 		308900D44331CCF323509065 = {
 			isa = PBXGroup;
 			children = (
-				F7022045E94B4F2C938FE983,
+				AA3DEB38832446780B66F822,
 				198522C2EAE1DBF87F07B849,
+				F7022045E94B4F2C938FE983,
 				3AC806252CA37C8378A72618,
 				BEB54714E4B90120D22D47D6,
 				394CDA5516B2A8FB43FF8A6C,
@@ -6634,7 +6738,6 @@
 				51E48B2FB3F206E53D1D792C,
 				960087F9A23AE3C81E1156E0,
 				D186E23672CC910C8904260B,
-				AA3DEB38832446780B66F822,
 			);
 			name = Command;
 			sourceTree = "<group>";
@@ -7137,6 +7240,7 @@
 		77E313CFAABA49104A328F3F = {
 			isa = PBXGroup;
 			children = (
+				1FCC00570A4B118869231CF0,
 				474351C538FC2A3059893B3E,
 				908BCEF32D152BB480771FFD,
 				308900D44331CCF323509065,
@@ -8980,9 +9084,15 @@
 				A9F417BBCFA13B702734002D,
 				A377485D00E6BD3B63525CE2,
 				2880570A24D66CE182245D76,
+				9B5065AA8C19C8DF58253515,
+				F33BCC64C79731220481C79E,
+				41036DAC07D5075CB3AD6D33,
 				6648A28A780225272E677EAE,
 				43E1EC2D9919CC1742754AA5,
 				D5BA72E6B1F43C42CFDDCE35,
+				C53EC68EE6E92AEF571264BD,
+				93ECA58744F8B5DD181D35F4,
+				790E2F2473AB0C25A1DBB84C,
 				FC96057BA4D7B3D6EB200D36,
 				0816AC57CC5C0DAE9EBFAC02,
 				A697B6FF5E6F510842584121,
@@ -8995,8 +9105,6 @@
 				F4C9EDCD0ABB0CE562499E78,
 				8231BCBE66CA875D6775BD47,
 				63A1E335EDCF9ECBCA9D56C3,
-				93ECA58744F8B5DD181D35F4,
-				790E2F2473AB0C25A1DBB84C,
 				D4ACEE92E1FBE0531FE9C8FD,
 				0DB67D6BBD4F5810FF0ADBC9,
 				3DA4FBFA38B39CDCD14B1EBC,

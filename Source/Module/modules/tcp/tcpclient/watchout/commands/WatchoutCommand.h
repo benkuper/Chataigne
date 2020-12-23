@@ -17,7 +17,7 @@ class WatchoutCommand :
 	public SendStreamStringCommand
 {
 public:
-	WatchoutCommand(WatchoutModule * _module, CommandContext context, var params);
+	WatchoutCommand(WatchoutModule * _module, CommandContext context, var params, IteratorProcessor * iterator = nullptr);
 	~WatchoutCommand();
 
 	WatchoutModule * wModule;
@@ -26,6 +26,6 @@ public:
 
 	void triggerInternal() override;
 
-	static WatchoutCommand * create(ControllableContainer * module, CommandContext context, var params) { return new WatchoutCommand((WatchoutModule *)module, context, params); }
+	static WatchoutCommand * create(ControllableContainer * module, CommandContext context, var params, IteratorProcessor * iterator) { return new WatchoutCommand((WatchoutModule *)module, context, params, iterator); }
 
 };

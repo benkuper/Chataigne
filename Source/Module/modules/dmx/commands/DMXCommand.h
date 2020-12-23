@@ -20,7 +20,7 @@ class DMXCommand :
 public:
 	enum DMXAction { SET_VALUE, SET_RANGE, COLOR, SET_VALUE_16BIT, BLACK_OUT, SET_ALL, SET_CUSTOM };
 
-	DMXCommand(DMXModule * _module, CommandContext context, var params);
+	DMXCommand(DMXModule * _module, CommandContext context, var params, IteratorProcessor* iterator = nullptr);
 	~DMXCommand();
 
 	DMXAction dmxAction;
@@ -44,7 +44,7 @@ public:
 
 	void itemAdded(CustomValuesCommandArgument* a) override;
 
-	static BaseCommand * create(ControllableContainer * module, CommandContext context, var params) { return new DMXCommand((DMXModule *)module, context, params); }
+	static BaseCommand * create(ControllableContainer * module, CommandContext context, var params, IteratorProcessor * iterator) { return new DMXCommand((DMXModule *)module, context, params, iterator); }
 
 	
 };

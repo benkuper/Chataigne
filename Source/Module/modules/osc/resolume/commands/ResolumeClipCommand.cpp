@@ -10,8 +10,8 @@
 
 #include "ResolumeClipCommand.h"
 
-ResolumeClipCommand::ResolumeClipCommand(ResolumeModule * _module, CommandContext context, var params) :
-	ResolumeBaseCommand(_module,context,params, true),
+ResolumeClipCommand::ResolumeClipCommand(ResolumeModule * _module, CommandContext context, var params, IteratorProcessor * iterator) :
+	ResolumeBaseCommand(_module,context,params, iterator, true),
 	firstClip(nullptr),
 	lastClip(nullptr),
 	loopClips(nullptr),

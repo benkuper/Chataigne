@@ -10,7 +10,7 @@
 
 #include "GenericOSCQueryCommand.h"
 
-GenericOSCQueryCommand::GenericOSCQueryCommand(GenericOSCQueryModule * oscQueryModule, CommandContext context, var params) :
+GenericOSCQueryCommand::GenericOSCQueryCommand(GenericOSCQueryModule * oscQuerymodule, CommandContext context, var params, IteratorProcessor * iterator) :
 	BaseCommand(oscQueryModule, context, params),
 	oscQueryModule(oscQueryModule),
 	valueParam(nullptr)
@@ -29,7 +29,7 @@ void GenericOSCQueryCommand::setupParamFromTarget()
 	{
 		if (valueGhostData.isVoid()) valueGhostData = valueParam->value;
 		removeControllable(valueParam.get());
-		removeTargetMappingParameter(valueParam);
+		//removeTargetMappingParameter(valueParam);
 	}
 
 	valueParam = ControllableFactory::createParameterFrom(target->target, false, true);
@@ -37,7 +37,7 @@ void GenericOSCQueryCommand::setupParamFromTarget()
 	{
 		if (!valueGhostData.isVoid()) valueParam->setValue(valueGhostData);
 		addParameter(valueParam);
-		addTargetMappingParameterAt(valueParam, 0);
+		//addTargetMappingParameterAt(valueParam, 0);
 		valueGhostData = var(); //reset ghostValue
 	}
 }

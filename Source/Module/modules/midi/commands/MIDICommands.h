@@ -18,12 +18,12 @@ class MIDICommand :
 	public BaseCommand
 {
 public:
-	MIDICommand(MIDIModule * module, CommandContext context, var params);
+	MIDICommand(MIDIModule * module, CommandContext context, var params, IteratorProcessor * iterator = nullptr);
 	virtual ~MIDICommand();
 
 	MIDIModule *  midiModule;
 
-	static BaseCommand * create(ControllableContainer * module, CommandContext context, var params) { return new MIDICommand((MIDIModule *)module, context, params); }
+	static BaseCommand * create(ControllableContainer * module, CommandContext context, var params, IteratorProcessor * iterator) { return new MIDICommand((MIDIModule *)module, context, params, iterator); }
 };
 
 
@@ -32,7 +32,7 @@ class MIDINoteAndCCCommand :
 	public Timer
 {
 public:
-	MIDINoteAndCCCommand(MIDIModule * module, CommandContext context, var params);
+	MIDINoteAndCCCommand(MIDIModule * module, CommandContext context, var params, IteratorProcessor * iterator = nullptr);
 	~MIDINoteAndCCCommand();
 
 	enum MessageType {NOTE_ON,NOTE_OFF,FULL_NOTE, CONTROLCHANGE, PROGRAMCHANGE, PITCH_WHEEL, CHANNEL_PRESSURE, AFTER_TOUCH};
@@ -52,7 +52,7 @@ public:
 	void setValue(var value) override;
 	void triggerInternal() override;
 
-	static MIDINoteAndCCCommand * create(ControllableContainer * module, CommandContext context, var params) { return new MIDINoteAndCCCommand((MIDIModule *)module, context, params); }
+	static MIDINoteAndCCCommand * create(ControllableContainer * module, CommandContext context, var params, IteratorProcessor * iterator) { return new MIDINoteAndCCCommand((MIDIModule *)module, context, params, iterator); }
 
 
 	// Inherited via Timer
@@ -64,7 +64,7 @@ class MIDISysExCommand :
 	public MIDICommand
 {
 public:
-	MIDISysExCommand(MIDIModule *, CommandContext context, var params);
+	MIDISysExCommand(MIDIModule * module, CommandContext context, var params, IteratorProcessor * iterator = nullptr);
 	~MIDISysExCommand();
 
 	IntParameter * numBytes;
@@ -75,6 +75,6 @@ public:
 	void onContainerParameterChangedAsync(Parameter * p, const var &param) override;
 	void triggerInternal() override;
 
-	static MIDISysExCommand * create(ControllableContainer * module, CommandContext context, var params) { return new MIDISysExCommand((MIDIModule *)module, context, params); }
+	static MIDISysExCommand * create(ControllableContainer * module, CommandContext context, var params, IteratorProcessor * iterator) { return new MIDISysExCommand((MIDIModule *)module, context, params, iterator); }
 
 };

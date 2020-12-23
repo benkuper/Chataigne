@@ -17,7 +17,7 @@ class GenericOSCQueryCommand :
 	public BaseCommand
 {
 public:
-	GenericOSCQueryCommand(GenericOSCQueryModule * module, CommandContext context, var params);
+	GenericOSCQueryCommand(GenericOSCQueryModule * module, CommandContext context, var params, IteratorProcessor * iterator = nullptr);
 	~GenericOSCQueryCommand();
 
 	GenericOSCQueryModule * oscQueryModule;
@@ -36,5 +36,5 @@ public:
 
 	void triggerInternal() override;
 
-	static GenericOSCQueryCommand * create(ControllableContainer * module, CommandContext context, var params) { return new GenericOSCQueryCommand((GenericOSCQueryModule *)module, context, params); }
+	static GenericOSCQueryCommand * create(ControllableContainer * module, CommandContext context, var params, IteratorProcessor * iterator) { return new GenericOSCQueryCommand((GenericOSCQueryModule *)module, context, params, iterator); }
 };

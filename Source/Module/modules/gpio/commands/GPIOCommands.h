@@ -18,7 +18,7 @@ class GPIOCommand :
     public BaseCommand
 {
 public:
-    GPIOCommand(GPIOModule* m, CommandContext context, var params);
+    GPIOCommand(GPIOModule* m, CommandContext context, var params, IteratorProcessor* iterator = nullptr);
     ~GPIOCommand();
 
     GPIOModule* gpioModule;
@@ -31,5 +31,5 @@ public:
 
     void triggerInternal() override;
     
-    static GPIOCommand* create(ControllableContainer * cc, CommandContext context, var params) { return new GPIOCommand((GPIOModule *)cc, context, params); }
+    static GPIOCommand* create(ControllableContainer * cc, CommandContext context, var params, IteratorProcessor * iterator = nullptr) { return new GPIOCommand((GPIOModule *)cc, context, params, iterator); }
 };

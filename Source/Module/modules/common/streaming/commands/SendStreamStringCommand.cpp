@@ -10,8 +10,8 @@
 
 #include "SendStreamStringCommand.h"
 
-SendStreamStringCommand::SendStreamStringCommand(StreamingModule* _module, CommandContext context, var params) :
-	StreamingCommand(_module, context, params),
+SendStreamStringCommand::SendStreamStringCommand(StreamingModule* _module, CommandContext context, var params, IteratorProcessor* iterator) :
+	StreamingCommand(_module, context, params, iterator),
 	appendCR(nullptr),
 	appendNL(nullptr),
     prefix(nullptr)
@@ -52,7 +52,7 @@ SendStreamStringCommand::SendStreamStringCommand(StreamingModule* _module, Comma
 
 		if (context == CommandContext::MAPPING)
 		{
-			addTargetMappingParameterAt(valueParam, 0);
+			//addTargetMappingParameterAt(valueParam, 0);
 		}
 
 		break;

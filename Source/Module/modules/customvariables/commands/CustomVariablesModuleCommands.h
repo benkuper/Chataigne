@@ -19,7 +19,7 @@ class CVCommand :
 	public BaseCommand
 {
 public:
-	CVCommand(CustomVariablesModule * _module, CommandContext context, var params);
+	CVCommand(CustomVariablesModule * _module, CommandContext context, var params, IteratorProcessor* iterator = nullptr);
 	virtual ~CVCommand();
 
 	CVGroupManager * manager;
@@ -46,5 +46,5 @@ public:
 	void onContainerParameterChanged(Parameter * p) override;
 	void triggerInternal() override;
 
-	static BaseCommand * create(ControllableContainer * module, CommandContext context, var params);
+	static BaseCommand * create(ControllableContainer * module, CommandContext context, var params, IteratorProcessor * iterator = nullptr);
 };

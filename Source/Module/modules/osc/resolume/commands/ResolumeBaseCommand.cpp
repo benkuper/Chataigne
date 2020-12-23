@@ -12,8 +12,8 @@
 #include "../ResolumeModule.h"
 #include "ui/ResolumeBaseCommandEditor.h"
 
-ResolumeBaseCommand::ResolumeBaseCommand(ResolumeModule * _module, CommandContext context, var params, bool customRebuild) :
-	OSCCommand(_module, context, params),
+ResolumeBaseCommand::ResolumeBaseCommand(ResolumeModule * _module, CommandContext context, var params, IteratorProcessor * iterator, bool customRebuild) :
+	OSCCommand(_module, context, params, iterator),
 	resolumeModule(_module),
 	customRebuild(customRebuild)
 {

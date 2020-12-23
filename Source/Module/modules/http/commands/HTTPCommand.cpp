@@ -10,8 +10,8 @@
 
 #include "HTTPCommand.h"
 
-HTTPCommand::HTTPCommand(HTTPModule * _module, CommandContext context, var params) :
-	BaseCommand(_module, context, params),
+HTTPCommand::HTTPCommand(HTTPModule * _module, CommandContext context, var params, IteratorProcessor* iterator) :
+	BaseCommand(_module, context, params, iterator),
 	httpModule(_module)
 {
 	method = addEnumParameter("Method", "Request Method");

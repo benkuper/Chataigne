@@ -36,6 +36,11 @@ ConsequenceManager::~ConsequenceManager()
 	
 }
 
+Consequence* ConsequenceManager::createItem()
+{
+	return new Consequence(iterator);
+}
+
 void ConsequenceManager::triggerAll(int iterationIndex)
 {
 	if (items.size() > 0)

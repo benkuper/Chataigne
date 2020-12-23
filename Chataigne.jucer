@@ -80,6 +80,7 @@
             file="Resources/disconnected.png"/>
       <FILE id="nVz6Li" name="icon.png" compile="0" resource="1" file="Resources/icon.png"/>
       <FILE id="WlJm0v" name="in.png" compile="0" resource="1" file="Resources/in.png"/>
+      <FILE id="uTFbYC" name="link.png" compile="0" resource="1" file="Resources/link.png"/>
       <FILE id="A952C8" name="nextcue.png" compile="0" resource="1" file="Resources/nextcue.png"/>
       <FILE id="NkuJtC" name="out.png" compile="0" resource="1" file="Resources/out.png"/>
       <FILE id="c9BYPH" name="play.png" compile="0" resource="1" file="Resources/play.png"/>
@@ -113,6 +114,21 @@
               file="Source/Analytics/MatomoAnalytics.h"/>
       </GROUP>
       <GROUP id="{6C7DFFF7-D47E-97B5-FE74-27F24C7A349F}" name="Common">
+        <GROUP id="{AEA2EA11-5F83-3667-AEAB-0100A58E13D4}" name="ParameterLink">
+          <GROUP id="{FCEF77D8-67E9-75D4-5AED-A5132D3F6C5A}" name="ui">
+            <FILE id="zV6kqB" name="LinkableParameterEditor.cpp" compile="1" resource="0"
+                  file="Source/Common/ParameterLink/ui/LinkableParameterEditor.cpp"/>
+            <FILE id="MoKWyK" name="LinkableParameterEditor.h" compile="0" resource="0"
+                  file="Source/Common/ParameterLink/ui/LinkableParameterEditor.h"/>
+            <FILE id="ptKC9G" name="ParameterLinkUI.cpp" compile="1" resource="0"
+                  file="Source/Common/ParameterLink/ui/ParameterLinkUI.cpp"/>
+            <FILE id="jzI0J2" name="ParameterLinkUI.h" compile="0" resource="0"
+                  file="Source/Common/ParameterLink/ui/ParameterLinkUI.h"/>
+          </GROUP>
+          <FILE id="rzK5WT" name="ParameterLink.cpp" compile="1" resource="0"
+                file="Source/Common/ParameterLink/ParameterLink.cpp"/>
+          <FILE id="u94kgP" name="ParameterLink.h" compile="0" resource="0" file="Source/Common/ParameterLink/ParameterLink.h"/>
+        </GROUP>
         <GROUP id="{1B487EA1-C305-46F0-D55D-17FDE1399960}" name="Zeroconf">
           <FILE id="r5sscj" name="ZeroconfManager.cpp" compile="1" resource="0"
                 file="Source/Common/Zeroconf/ZeroconfManager.cpp"/>
@@ -132,8 +148,22 @@
                 file="Source/Common/InputSystem/InputSystemManager.h"/>
         </GROUP>
         <GROUP id="{E7C8AAFC-E2FA-90D0-859B-423BC528A52F}" name="Command">
-          <FILE id="KxsRZB" name="CommandContext.h" compile="0" resource="0"
-                file="Source/Common/Command/CommandContext.h"/>
+          <GROUP id="{D2DBE4AC-35AB-8D3A-FE4E-BF5B8540D68E}" name="ui">
+            <FILE id="Zp6xMX" name="BaseCommandEditor.cpp" compile="1" resource="0"
+                  file="Source/Common/Command/ui/BaseCommandEditor.cpp"/>
+            <FILE id="A0ZnVl" name="BaseCommandEditor.h" compile="0" resource="0"
+                  file="Source/Common/Command/ui/BaseCommandEditor.h"/>
+            <FILE id="XrccXC" name="BaseCommandHandlerEditor.cpp" compile="1" resource="0"
+                  file="Source/Common/Command/ui/BaseCommandHandlerEditor.cpp"/>
+            <FILE id="GyHKok" name="BaseCommandHandlerEditor.h" compile="0" resource="0"
+                  file="Source/Common/Command/ui/BaseCommandHandlerEditor.h"/>
+            <FILE id="RpsBmd" name="BaseCommandHandlerManagerEditor.h" compile="0"
+                  resource="0" file="Source/Common/Command/ui/BaseCommandHandlerManagerEditor.h"/>
+            <FILE id="ckzvDO" name="CommandChooserUI.cpp" compile="1" resource="0"
+                  file="Source/Common/Command/ui/CommandChooserUI.cpp"/>
+            <FILE id="bYSMNS" name="CommandChooserUI.h" compile="0" resource="0"
+                  file="Source/Common/Command/ui/CommandChooserUI.h"/>
+          </GROUP>
           <GROUP id="{AE92A138-8B95-9F91-4BDE-879E255DDF34}" name="Template">
             <GROUP id="{900A49A5-4A27-E57C-BCA9-E4F6C4DA5B93}" name="ui">
               <FILE id="WfqHIA" name="CommandTemplateEditor.cpp" compile="1" resource="0"
@@ -166,6 +196,8 @@
             <FILE id="sSNOyi" name="CommandTemplateParameter.h" compile="0" resource="0"
                   file="Source/Common/Command/Template/CommandTemplateParameter.h"/>
           </GROUP>
+          <FILE id="KxsRZB" name="CommandContext.h" compile="0" resource="0"
+                file="Source/Common/Command/CommandContext.h"/>
           <FILE id="NlN3XS" name="BaseCommand.cpp" compile="1" resource="0" file="Source/Common/Command/BaseCommand.cpp"/>
           <FILE id="f5gUen" name="BaseCommand.h" compile="0" resource="0" file="Source/Common/Command/BaseCommand.h"/>
           <FILE id="ZuWANL" name="BaseCommandHandler.cpp" compile="1" resource="0"
@@ -184,18 +216,6 @@
                 file="Source/Common/Command/CommandFactory.cpp"/>
           <FILE id="BhG3To" name="CommandFactory.h" compile="0" resource="0"
                 file="Source/Common/Command/CommandFactory.h"/>
-          <GROUP id="{D2DBE4AC-35AB-8D3A-FE4E-BF5B8540D68E}" name="ui">
-            <FILE id="XrccXC" name="BaseCommandHandlerEditor.cpp" compile="1" resource="0"
-                  file="Source/Common/Command/ui/BaseCommandHandlerEditor.cpp"/>
-            <FILE id="GyHKok" name="BaseCommandHandlerEditor.h" compile="0" resource="0"
-                  file="Source/Common/Command/ui/BaseCommandHandlerEditor.h"/>
-            <FILE id="RpsBmd" name="BaseCommandHandlerManagerEditor.h" compile="0"
-                  resource="0" file="Source/Common/Command/ui/BaseCommandHandlerManagerEditor.h"/>
-            <FILE id="ckzvDO" name="CommandChooserUI.cpp" compile="1" resource="0"
-                  file="Source/Common/Command/ui/CommandChooserUI.cpp"/>
-            <FILE id="bYSMNS" name="CommandChooserUI.h" compile="0" resource="0"
-                  file="Source/Common/Command/ui/CommandChooserUI.h"/>
-          </GROUP>
         </GROUP>
         <GROUP id="{672CD9A6-0B3A-28B4-B3F7-2C0B1183CBBB}" name="DMX">
           <GROUP id="{E9C61B40-A648-980E-2FF5-28709FE98F53}" name="device">

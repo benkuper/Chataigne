@@ -17,7 +17,7 @@ class ReaperTimeCommand :
 	public OSCCommand
 {
 public:
-	ReaperTimeCommand(ReaperModule* _module, CommandContext context, var params);
+	ReaperTimeCommand(ReaperModule* _module, CommandContext context, var params, IteratorProcessor * iterator = nullptr);
 	~ReaperTimeCommand();
 
 	ReaperModule* reaperModule;
@@ -26,6 +26,6 @@ public:
 
 	void triggerInternal() override;
 
-	static ReaperTimeCommand* create(ControllableContainer* module, CommandContext context, var params) { return new ReaperTimeCommand((ReaperModule*)module, context, params); }
+	static ReaperTimeCommand* create(ControllableContainer* module, CommandContext context, var params, IteratorProcessor * iterator) { return new ReaperTimeCommand((ReaperModule*)module, context, params, iterator); }
 
 };

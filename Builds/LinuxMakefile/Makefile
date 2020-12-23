@@ -73,9 +73,15 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/GuideComponents_1e634f02.o \
   $(JUCE_OBJDIR)/Guider_52ec0c30.o \
   $(JUCE_OBJDIR)/MatomoAnalytics_a3cfd84d.o \
+  $(JUCE_OBJDIR)/LinkableParameterEditor_ed91bbd8.o \
+  $(JUCE_OBJDIR)/ParameterLinkUI_2c55cfed.o \
+  $(JUCE_OBJDIR)/ParameterLink_e54bbf1c.o \
   $(JUCE_OBJDIR)/ZeroconfManager_68129d03.o \
   $(JUCE_OBJDIR)/InputDeviceHelpers_f77a7a0.o \
   $(JUCE_OBJDIR)/InputSystemManager_a791f74f.o \
+  $(JUCE_OBJDIR)/BaseCommandEditor_eeffa8d5.o \
+  $(JUCE_OBJDIR)/BaseCommandHandlerEditor_d6f421f9.o \
+  $(JUCE_OBJDIR)/CommandChooserUI_dcc0e740.o \
   $(JUCE_OBJDIR)/CommandTemplateEditor_5399b8ad.o \
   $(JUCE_OBJDIR)/CommandTemplateManagerUI_dc305a4b.o \
   $(JUCE_OBJDIR)/CommandTemplateParameterEditor_a7196f80.o \
@@ -88,8 +94,6 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/CommandDefinition_7c3c255f.o \
   $(JUCE_OBJDIR)/CommandDefinitionManager_7c0c55d8.o \
   $(JUCE_OBJDIR)/CommandFactory_3a72e748.o \
-  $(JUCE_OBJDIR)/BaseCommandHandlerEditor_d6f421f9.o \
-  $(JUCE_OBJDIR)/CommandChooserUI_dcc0e740.o \
   $(JUCE_OBJDIR)/DMXArtNetDevice_5a61b42b.o \
   $(JUCE_OBJDIR)/DMXDevice_462f8cd1.o \
   $(JUCE_OBJDIR)/DMXEnttecProDevice_e054588b.o \
@@ -428,6 +432,21 @@ $(JUCE_OBJDIR)/MatomoAnalytics_a3cfd84d.o: ../../Source/Analytics/MatomoAnalytic
 	@echo "Compiling MatomoAnalytics.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
+$(JUCE_OBJDIR)/LinkableParameterEditor_ed91bbd8.o: ../../Source/Common/ParameterLink/ui/LinkableParameterEditor.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling LinkableParameterEditor.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/ParameterLinkUI_2c55cfed.o: ../../Source/Common/ParameterLink/ui/ParameterLinkUI.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling ParameterLinkUI.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/ParameterLink_e54bbf1c.o: ../../Source/Common/ParameterLink/ParameterLink.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling ParameterLink.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
 $(JUCE_OBJDIR)/ZeroconfManager_68129d03.o: ../../Source/Common/Zeroconf/ZeroconfManager.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling ZeroconfManager.cpp"
@@ -441,6 +460,21 @@ $(JUCE_OBJDIR)/InputDeviceHelpers_f77a7a0.o: ../../Source/Common/InputSystem/Inp
 $(JUCE_OBJDIR)/InputSystemManager_a791f74f.o: ../../Source/Common/InputSystem/InputSystemManager.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling InputSystemManager.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/BaseCommandEditor_eeffa8d5.o: ../../Source/Common/Command/ui/BaseCommandEditor.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling BaseCommandEditor.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/BaseCommandHandlerEditor_d6f421f9.o: ../../Source/Common/Command/ui/BaseCommandHandlerEditor.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling BaseCommandHandlerEditor.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/CommandChooserUI_dcc0e740.o: ../../Source/Common/Command/ui/CommandChooserUI.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling CommandChooserUI.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/CommandTemplateEditor_5399b8ad.o: ../../Source/Common/Command/Template/ui/CommandTemplateEditor.cpp
@@ -501,16 +535,6 @@ $(JUCE_OBJDIR)/CommandDefinitionManager_7c0c55d8.o: ../../Source/Common/Command/
 $(JUCE_OBJDIR)/CommandFactory_3a72e748.o: ../../Source/Common/Command/CommandFactory.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling CommandFactory.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/BaseCommandHandlerEditor_d6f421f9.o: ../../Source/Common/Command/ui/BaseCommandHandlerEditor.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling BaseCommandHandlerEditor.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/CommandChooserUI_dcc0e740.o: ../../Source/Common/Command/ui/CommandChooserUI.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling CommandChooserUI.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/DMXArtNetDevice_5a61b42b.o: ../../Source/Common/DMX/device/DMXArtNetDevice.cpp

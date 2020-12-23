@@ -71,7 +71,7 @@ void BaseCommandHandler::setCommand(CommandDefinition * commandDef)
 
 
 	commandDefinition = commandDef;
-	if (commandDef != nullptr && !Engine::mainEngine->isClearing && !isClearing) command.reset(commandDef->create(context));
+	if (commandDef != nullptr && !Engine::mainEngine->isClearing && !isClearing) command.reset(commandDef->create(context, iterator));
 	else command.reset();
 
 	if (command != nullptr)

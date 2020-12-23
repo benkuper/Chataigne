@@ -46,6 +46,7 @@ bool NumberComparator::compare(Parameter* sourceParam)
 	else if (currentFunctionId == greaterOrEqualId)	return sourceParam->floatValue() >= reference->floatValue();
 	else if (currentFunctionId == lessOrEqualId)	return sourceParam->floatValue() <= reference->floatValue();
 	else if (currentFunctionId == inRangeId)		return false; //not implemented, need RangeParameter
+	return false;
 }
 
 /*

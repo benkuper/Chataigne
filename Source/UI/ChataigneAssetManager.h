@@ -22,6 +22,8 @@ public:
 	Image smallStripeImage;
 	Image stripeImage;
 
+	Image linkOnImage;
+
 	Image getInImage();
 	Image getOutImage();
 	Image getConnectedImage();

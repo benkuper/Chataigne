@@ -27,7 +27,8 @@ public:
 
 	bool forceDisabled;
 
-	//iteration
+	Consequence* createItem() override;
+
 	void triggerAll(int iterationIndex = 0);
 
 	void setForceDisabled(bool value, bool force = false);

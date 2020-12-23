@@ -34,4 +34,5 @@ bool StringComparator::compare(Parameter *sourceParam)
 	else if (currentFunctionId == containsId)		return sourceParam->stringValue().contains(reference->stringValue());
 	else if (currentFunctionId == startsWith)		return sourceParam->stringValue().startsWith(reference->stringValue());
 	else if (currentFunctionId == endsWidth)		return sourceParam->stringValue().endsWith(reference->stringValue());
+	return false;
 }

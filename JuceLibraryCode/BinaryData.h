@@ -164,6 +164,9 @@ namespace BinaryData
     extern const char*   in_png;
     const int            in_pngSize = 3754;
 
+    extern const char*   link_png;
+    const int            link_pngSize = 2754;
+
     extern const char*   nextcue_png;
     const int            nextcue_pngSize = 2624;
 
@@ -198,7 +201,7 @@ namespace BinaryData
     const int            custom_cextSize = 1165;
 
     // Number of elements in the namedResourceList and originalFileNames arrays.
-    const int namedResourceListSize = 63;
+    const int namedResourceListSize = 64;
 
     // Points to the start of a list of resource names.
     extern const char* namedResourceList[];

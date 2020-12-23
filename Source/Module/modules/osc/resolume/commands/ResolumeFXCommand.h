@@ -16,7 +16,7 @@ class ResolumeFXCommand :
 	public ResolumeBaseCommand
 {
 public:
-	ResolumeFXCommand(ResolumeModule * _module, CommandContext context, var params);
+	ResolumeFXCommand(ResolumeModule * _module, CommandContext context, var params, IteratorProcessor * iterator = nullptr);
 	~ResolumeFXCommand();
 
 	String fxType;
@@ -40,10 +40,10 @@ public:
 
 	void setupValueParam();
 	
-	static BaseCommand * create(ControllableContainer * module, CommandContext context, var params) { 
+	static BaseCommand * create(ControllableContainer * module, CommandContext context, var params, IteratorProcessor * iterator) { 
 		params.getDynamicObject()->setProperty("multiLevel", true);
 		params.getDynamicObject()->setProperty("restrictToFX", true);
-		return new ResolumeFXCommand((ResolumeModule *)module, context, params);
+		return new ResolumeFXCommand((ResolumeModule *)module, context, params, iterator);
 	}
 
 };

@@ -10,7 +10,7 @@
 
 #include "OSPowerCommand.h"
 
-OSPowerCommand::OSPowerCommand(OSModule * _module, CommandContext context, var params) :
+OSPowerCommand::OSPowerCommand(OSModule * _module, CommandContext context, var params, IteratorProcessor * iterator) :
 	BaseCommand(_module, context, params)
 {
 	actionType = (ActionType)(int)params.getProperty("type", SHUTDOWN);

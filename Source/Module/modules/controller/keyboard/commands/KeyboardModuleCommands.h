@@ -17,7 +17,7 @@ class KeyboardModuleCommands :
 	public BaseCommand
 {
 public:
-	KeyboardModuleCommands(KeyboardModule* m, CommandContext context, var params);
+	KeyboardModuleCommands(KeyboardModule* m, CommandContext context, var params, IteratorProcessor * iterator = nullptr);
 	~KeyboardModuleCommands();
 
 	KeyboardModule* keyboardModule;
@@ -32,6 +32,6 @@ public:
 
 	void triggerInternal() override;
 
-	static BaseCommand* create(ControllableContainer* module, CommandContext context, var params) { return new KeyboardModuleCommands((KeyboardModule*)module, context, params); }
+	static BaseCommand* create(ControllableContainer* module, CommandContext context, var params, IteratorProcessor * iterator) { return new KeyboardModuleCommands((KeyboardModule*)module, context, params, iterator); }
 
 };

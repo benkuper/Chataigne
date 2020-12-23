@@ -15,7 +15,7 @@
 #include <Tlhelp32.h>
 #endif
 
-OSExecCommand::OSExecCommand(OSModule* _module, CommandContext context, var params) :
+OSExecCommand::OSExecCommand(OSModule* _module, CommandContext context, var params, IteratorProcessor * iterator) :
 	BaseCommand(_module, context, params),
 	osModule(_module),
 	launchOptions(nullptr),

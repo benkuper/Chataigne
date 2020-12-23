@@ -20,7 +20,7 @@ class PlayAudioFileCommand :
 	public AudioModule::AudioModuleListener
 {
 public:
-	PlayAudioFileCommand(AudioModule * _module, CommandContext context, var params);
+	PlayAudioFileCommand(AudioModule * _module, CommandContext context, var params, IteratorProcessor* iterator);
 	~PlayAudioFileCommand();
 
 	AudioModule * audioModule;
@@ -53,7 +53,7 @@ public:
 
 	void triggerInternal() override;
 
-	static BaseCommand * create(ControllableContainer * module, CommandContext context, var params) { return new PlayAudioFileCommand((AudioModule *)module, context, params); }
+	static BaseCommand * create(ControllableContainer * module, CommandContext context, var params, IteratorProcessor * iterator) { return new PlayAudioFileCommand((AudioModule *)module, context, params, iterator); }
 };
 
 

@@ -10,8 +10,8 @@
 
 #include "SendStreamStringValuesCommand.h"
 
-SendStreamStringValuesCommand::SendStreamStringValuesCommand(StreamingModule * output, CommandContext context, var params) :
-	SendStreamValuesCommand(output,context,params)
+SendStreamStringValuesCommand::SendStreamStringValuesCommand(StreamingModule * output, CommandContext context, var params, IteratorProcessor* iterator) :
+	SendStreamValuesCommand(output,context,params, iterator)
 {
 	prefix = addStringParameter("Prefix", "This will be prepended to the final string", "");
 	separator = addStringParameter("Separator", "The string that separate each values", ",");

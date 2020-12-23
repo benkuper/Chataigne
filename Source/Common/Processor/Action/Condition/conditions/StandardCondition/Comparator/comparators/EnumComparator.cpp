@@ -33,4 +33,5 @@ bool EnumComparator::compare(Parameter* sourceParam)
 {
 	if (currentFunctionId == equalsId) return ((EnumParameter*)sourceParam)->getValueData() == enumRef->getValueData();
 	if (currentFunctionId == differentId) return ((EnumParameter *)sourceParam)->getValueData() != enumRef->getValueData();
+	return false;
 }

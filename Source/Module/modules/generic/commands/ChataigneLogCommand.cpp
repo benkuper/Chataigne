@@ -10,8 +10,8 @@
 
 #include "ChataigneLogCommand.h"
 
-ChataigneLogCommand::ChataigneLogCommand(ChataigneGenericModule* _module, CommandContext context, var params) :
-	BaseCommand(_module, context, params),
+ChataigneLogCommand::ChataigneLogCommand(ChataigneGenericModule* _module, CommandContext context, var params, IteratorProcessor* iterator) :
+	BaseCommand(_module, context, params, iterator),
 	value(nullptr)
 {
 	type = (Type)(int)(params.getProperty("type", MESSAGE));
@@ -90,8 +90,8 @@ void ChataigneLogCommand::triggerInternal()
 	}
 }
 
-BaseCommand* ChataigneLogCommand::create(ControllableContainer * module, CommandContext context, var params)
+BaseCommand* ChataigneLogCommand::create(ControllableContainer * module, CommandContext context, var params, IteratorProcessor * iterator)
 {
-	return new ChataigneLogCommand((ChataigneGenericModule*)module, context, params);
+	return new ChataigneLogCommand((ChataigneGenericModule*)module, context, params, iterator);
 
 }

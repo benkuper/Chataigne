@@ -10,8 +10,8 @@
 
 #include "StreamDeckCommand.h"
 
-StreamDeckCommand::StreamDeckCommand(StreamDeckModule* _module, CommandContext context, var params) :
-	BaseCommand(_module, context, params),
+StreamDeckCommand::StreamDeckCommand(StreamDeckModule* _module, CommandContext context, var params, IteratorProcessor* iterator) :
+	BaseCommand(_module, context, params, iterator),
 	streamDeckModule(_module),
 	row(nullptr),
 	column(nullptr),
@@ -43,7 +43,7 @@ StreamDeckCommand::StreamDeckCommand(StreamDeckModule* _module, CommandContext c
 
 	}
 
-	addTargetMappingParameterAt(valueParam, 0);
+	//addTargetMappingParameterAt(valueParam, 0);
 }
 
 StreamDeckCommand::~StreamDeckCommand()

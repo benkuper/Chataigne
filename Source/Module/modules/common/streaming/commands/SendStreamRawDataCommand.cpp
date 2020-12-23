@@ -10,8 +10,8 @@
 
 #include "SendStreamRawDataCommand.h"
 
-SendStreamRawDataCommand::SendStreamRawDataCommand(StreamingModule * _module, CommandContext context, var params) :
-	SendStreamValuesCommand(_module,context, params)
+SendStreamRawDataCommand::SendStreamRawDataCommand(StreamingModule* _module, CommandContext context, var params, IteratorProcessor* iterator) :
+	SendStreamValuesCommand(_module, context, params, iterator)
 {
 	customValuesManager->allowedTypes.add(Controllable::INT);
 	customValuesManager->createParamCallbackFunc = std::bind(&SendStreamRawDataCommand::customValueCreated, this, std::placeholders::_1, std::placeholders::_2);

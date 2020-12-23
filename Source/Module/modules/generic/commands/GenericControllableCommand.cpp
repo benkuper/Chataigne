@@ -11,8 +11,8 @@
 #include "GenericControllableCommand.h"
 
 
-GenericControllableCommand::GenericControllableCommand(ChataigneGenericModule * _module, CommandContext context, var params) :
-	BaseCommand(_module, context, params),
+GenericControllableCommand::GenericControllableCommand(ChataigneGenericModule * _module, CommandContext context, var params, IteratorProcessor* iterator) :
+	BaseCommand(_module, context, params, iterator),
 	value(nullptr)
 {
 	target = addTargetParameter("Target", "Target to set the value");
@@ -34,7 +34,7 @@ void GenericControllableCommand::setValueParameter(Parameter * p)
 	{
 		ghostValueData = value->getJSONData();
 		removeControllable(value.get());
-		clearTargetMappingParameters();
+		//clearTargetMappingParameters();
 	}
 
 	Parameter * tp = dynamic_cast<Parameter *>(target->target.get());
@@ -44,7 +44,7 @@ void GenericControllableCommand::setValueParameter(Parameter * p)
 
 	if (value != nullptr)
 	{
-		addTargetMappingParameterAt(value, 0);
+		//addTargetMappingParameterAt(value, 0);
 		addParameter(p);
 		if (!ghostValueData.isVoid()) value->loadJSONData(ghostValueData);
 		ghostValueData = var();
@@ -125,7 +125,7 @@ void GenericControllableCommand::endLoadFile()
 	Engine::mainEngine->removeEngineListener(this);
 }
 
-BaseCommand * GenericControllableCommand::create(ControllableContainer * module, CommandContext context, var params)
+BaseCommand * GenericControllableCommand::create(ControllableContainer * module, CommandContext context, var params, IteratorProcessor * iterator)
 {
-	return new GenericControllableCommand((ChataigneGenericModule *)module, context, params);
+	return new GenericControllableCommand((ChataigneGenericModule *)module, context, params, iterator);
 }

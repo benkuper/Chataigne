@@ -11,14 +11,14 @@
 #include "ScriptCommand.h"
 #include "ui/ScriptCommandEditor.h"
 
-ScriptCommand::ScriptCommand(Module * module, CommandContext context, var data) :
-	BaseCommand(module, context, data)
+ScriptCommand::ScriptCommand(Module * module, CommandContext context, var params, IteratorProcessor* iterator) :
+	BaseCommand(module, context, params, iterator)
 {
 	saveAndLoadTargetMappings = true;
 	saveAndLoadRecursiveData = true;
 
 	//load params here
-	var commandData = data.getProperty("commandData", var());
+	var commandData = params.getProperty("commandData", var());
 	
 	if (!commandData.isVoid())
 	{
@@ -122,7 +122,7 @@ void ScriptCommand::createControllablesForContainer(var data, ControllableContai
 				}
 
 				//only this should be here, the rest should be common
-				if (p.value.hasProperty("useForMapping")) addTargetMappingParameterAt(param, p.value.getProperty("mappingIndex", targetMappingParameters.size()));
+				//if (p.value.hasProperty("useForMapping")) addTargetMappingParameterAt(param, p.value.getProperty("mappingIndex", targetMappingParameters.size()));
 			}
 		}
 	}
@@ -204,10 +204,10 @@ void ScriptCommand::triggerInternal()
 	if (module != nullptr) module->scriptManager->callFunctionOnAllItems(callback, args);
 }
 
-InspectableEditor * ScriptCommand::getEditor(bool isRoot)
-{
-	return new ScriptCommandEditor(this, isRoot);
-}
+//InspectableEditor * ScriptCommand::getEditor(bool isRoot)
+//{
+//	return new ScriptCommandEditor(this, isRoot);
+//}
 
 
 

@@ -10,9 +10,9 @@
 
 #include "MouseModuleCommands.h"
 
-MouseModuleCommands::MouseModuleCommands(MouseModule* m, CommandContext context, var params) :
-	BaseCommand(m, context, params),
-	mouseModule(m),
+MouseModuleCommands::MouseModuleCommands(MouseModule* _module, CommandContext context, var params, IteratorProcessor* iterator) :
+	BaseCommand(_module, context, params, iterator),
+	mouseModule(_module),
 	position(nullptr),
 	buttonID(nullptr),
 	isRelative(nullptr)
@@ -23,7 +23,7 @@ MouseModuleCommands::MouseModuleCommands(MouseModule* m, CommandContext context,
 	case SET_CURSOR_POSITION:
 	{
 		position = addPoint2DParameter("Position", "The target position of the mouse to set");
-		addTargetMappingParameterAt(position, 0);
+		//addTargetMappingParameterAt(position, 0);
 		isRelative = addBoolParameter("Relative", "If checked, the 0-1 space will be converted to the screen space", false);
 	}
 	break;

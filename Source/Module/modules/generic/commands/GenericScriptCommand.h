@@ -17,7 +17,7 @@ class GenericScriptCommand :
 	public BaseCommand
 {
 public:
-	GenericScriptCommand(ChataigneGenericModule * _module, CommandContext context, var params);
+	GenericScriptCommand(ChataigneGenericModule * _module, CommandContext context, var params, IteratorProcessor* iterator = nullptr);
 	~GenericScriptCommand();
 
 	static String commandScriptTemplate;
@@ -32,5 +32,5 @@ public:
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
 
-	static BaseCommand * create(ControllableContainer * module, CommandContext context, var params);
+	static BaseCommand * create(ControllableContainer * module, CommandContext context, var params, IteratorProcessor * iterator = nullptr);
 };

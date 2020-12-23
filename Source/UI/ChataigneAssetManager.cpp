@@ -6,6 +6,8 @@ ChataigneAssetManager::ChataigneAssetManager()
 {
 	smallStripeImage = ImageCache::getFromMemory(BinaryData::smallstripe_png, BinaryData::smallstripe_pngSize);
 	stripeImage = ImageCache::getFromMemory(BinaryData::stripe_png, BinaryData::stripe_pngSize);
+
+	linkOnImage = ImageCache::getFromMemory(BinaryData::link_png, BinaryData::link_pngSize);
 }
 
 ChataigneAssetManager::~ChataigneAssetManager()

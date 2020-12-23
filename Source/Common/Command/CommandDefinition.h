@@ -12,8 +12,9 @@
 
 #include "BaseCommand.h"
 #include "CommandContext.h"
+#include "Common/Processor/Iterator/Iterator.h"
 
-typedef std::function<BaseCommand*(ControllableContainer *, CommandContext, var params)> CreateCommandFunc;
+typedef std::function<BaseCommand*(ControllableContainer *, CommandContext, var params, IteratorProcessor * iterator)> CreateCommandFunc;
 
 class CommandDefinition
 {
@@ -35,7 +36,7 @@ public:
 		CommandContext context,
 		CreateCommandFunc createFunc);
 
-	BaseCommand * create(CommandContext context);
+	BaseCommand * create(CommandContext context, IteratorProcessor * iterator = nullptr);
 
 	static CommandDefinition * createDef(ControllableContainer * container, const String &menuPath, const String &type, CreateCommandFunc createFunc, CommandContext context = CommandContext::BOTH);
 	CommandDefinition * addParam(const String &paramName, var value);

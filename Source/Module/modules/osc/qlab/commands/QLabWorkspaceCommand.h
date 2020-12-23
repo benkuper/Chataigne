@@ -17,7 +17,7 @@ class QLabWorkspaceCommand :
     public OSCCommand
 {
 public:
-    QLabWorkspaceCommand(QLabModule* m, CommandContext context, var params);
+    QLabWorkspaceCommand(QLabModule* m, CommandContext context, var params, IteratorProcessor * iterator = nullptr);
     ~QLabWorkspaceCommand();
 
     QLabModule * qlabModule;
@@ -26,5 +26,5 @@ public:
 
     void onExternalParameterValueChanged(Parameter* p) override;
 
-    static BaseCommand* create(ControllableContainer* module, CommandContext context, var params) { return new QLabWorkspaceCommand((QLabModule*)module, context, params); }
+    static BaseCommand* create(ControllableContainer* module, CommandContext context, var params, IteratorProcessor * iterator) { return new QLabWorkspaceCommand((QLabModule*)module, context, params, iterator); }
 };

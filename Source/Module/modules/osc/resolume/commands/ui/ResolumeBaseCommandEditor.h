@@ -11,9 +11,10 @@
 #pragma once
 
 #include "../ResolumeBaseCommand.h"
+#include "Common/Command/ui/BaseCommandEditor.h"
 
 class ResolumeBaseCommandEditor :
-	public GenericControllableContainerEditor
+	public BaseCommandEditor
 {
 public:
 	ResolumeBaseCommandEditor(ResolumeBaseCommand * _command, bool isRoot);

@@ -12,7 +12,7 @@
 
 
 
-LiveOSCCommandBase::LiveOSCCommandBase(LiveOSCModule* _module, CommandContext context, var params) :
+LiveOSCCommandBase::LiveOSCCommandBase(LiveOSCModule* _module, CommandContext context, var params, IteratorProcessor * iterator) :
 	OSCCommand(_module, context, params),
 	liveModule(_module),
 	trackID(nullptr),
@@ -41,7 +41,7 @@ LiveOSCCommandBase::LiveOSCCommandBase(LiveOSCModule* _module, CommandContext co
 
 		argumentsContainer.addControllable(value);
 
-		addTargetMappingParameterAt(value, 0);
+		//addTargetMappingParameterAt(value, 0);
 	}
 	
 	if (addressModel.contains("[scene]")) paramID = addIntParameter("Scene", "Index of the scene, 0 is first scene", 0, 0);

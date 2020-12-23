@@ -13,7 +13,7 @@
 #include "Common/Processor/Action/Condition/conditions/StandardCondition/StandardCondition.h"
 #include "Common/Processor/Mapping/Mapping.h"
 
-StateCommand::StateCommand(StateModule * _module, CommandContext context, var params) :
+StateCommand::StateCommand(StateModule * _module, CommandContext context, var params, IteratorProcessor * iterator) :
 	BaseCommand(_module,context,params),
 	stateModule(_module),
 	enableVal(nullptr)
@@ -52,7 +52,7 @@ StateCommand::StateCommand(StateModule * _module, CommandContext context, var pa
 	if (actionType == SET_STATE_ACTIVATION || actionType == SET_ACTION_ENABLED || actionType == SET_TOGGLE_STATE || actionType == SET_MAPPING_ENABLED)
 	{
 		enableVal = addBoolParameter("Value", "The activation / enable state to set this element to.", true);
-		addTargetMappingParameterAt(enableVal, 0);
+		//addTargetMappingParameterAt(enableVal, 0);
 	}
 }
 

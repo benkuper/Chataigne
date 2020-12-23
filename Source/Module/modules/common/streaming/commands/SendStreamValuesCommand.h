@@ -19,7 +19,7 @@ class SendStreamValuesCommand :
 	public StreamingCommand
 {
 public:
-	SendStreamValuesCommand(StreamingModule * output, CommandContext context, var params);
+	SendStreamValuesCommand(StreamingModule * output, CommandContext context, var params, IteratorProcessor* iterator = nullptr);
 	~SendStreamValuesCommand();
 
 	var getJSONData() override;
@@ -27,6 +27,6 @@ public:
 
 	void triggerInternal() override;
 
-	static SendStreamValuesCommand * create(ControllableContainer * module, CommandContext context, var params) { return new SendStreamValuesCommand((StreamingModule *)module, context, params); }
+	static SendStreamValuesCommand * create(ControllableContainer * module, CommandContext context, var params, IteratorProcessor * iterator) { return new SendStreamValuesCommand((StreamingModule *)module, context, params, iterator); }
 
 };

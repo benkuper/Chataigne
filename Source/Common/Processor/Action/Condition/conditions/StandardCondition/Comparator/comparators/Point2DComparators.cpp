@@ -40,4 +40,5 @@ bool Point2DComparator::compare(Parameter* sourceParam)
 	else if (currentFunctionId == distLessId)		return p.getDistanceFrom(r) > valParam->floatValue();
 	else if (currentFunctionId == magnGreaterId)	return p.getDistanceFromOrigin() >valParam->floatValue();
 	else if (currentFunctionId == magnLessId)		return p.getDistanceFromOrigin() < valParam->floatValue();
+	return false;
 }

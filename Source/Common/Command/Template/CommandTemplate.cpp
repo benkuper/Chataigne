@@ -95,16 +95,16 @@ void CommandTemplate::generateParametersFromDefinition(CommandDefinition * def)
 	}
 
 	paramsContainer.clear();
-	std::unique_ptr<BaseCommand> c(def->create(CommandContext::ACTION));
+	std::unique_ptr<BaseCommand> c(def->create(CommandContext::ACTION, nullptr));
 
 	c->setupTemplateParameters(this);
 	c->clear();
 }
 
-BaseCommand * CommandTemplate::createCommand(Module * m, CommandContext context, var params)
+BaseCommand * CommandTemplate::createCommand(Module * m, CommandContext context, var params, IteratorProcessor * iterator)
 {
 	//HERE must find a solution to create the different commands
-	BaseCommand * b = sourceDef->create(context);
+	BaseCommand * b = sourceDef->create(context, iterator);
 	b->linkToTemplate(this);
 	return b;
 }

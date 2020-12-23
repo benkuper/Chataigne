@@ -22,7 +22,7 @@ class OSWindowCommand :
 	public Thread
 {
 public:
-	OSWindowCommand(OSModule* _module, CommandContext context, var params);
+	OSWindowCommand(OSModule* _module, CommandContext context, var params, IteratorProcessor * iterator = nullptr);
 	~OSWindowCommand();
 
 	enum FilterType { CONTAINS, STARTS_WITH, ENDS_WITH, EXACT_MATCH };
@@ -43,5 +43,5 @@ public:
 
 	void run() override;
 
-	static OSWindowCommand* create(ControllableContainer* module, CommandContext context, var params) { return new OSWindowCommand((OSModule*)module, context, params); }
+	static OSWindowCommand* create(ControllableContainer* module, CommandContext context, var params, IteratorProcessor * iterator) { return new OSWindowCommand((OSModule*)module, context, params, iterator); }
 };

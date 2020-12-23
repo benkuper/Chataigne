@@ -18,7 +18,7 @@ class ResolumeBaseCommand :
 	public OSCCommand
 {
 public:
-	ResolumeBaseCommand(ResolumeModule * _module, CommandContext context, var params, bool customRebuild = false);
+	ResolumeBaseCommand(ResolumeModule * _module, CommandContext context, var params, IteratorProcessor * iterator = nullptr, bool customRebuild = false);
 	virtual ~ResolumeBaseCommand();
 
 	enum Level { COMPOSITION, LAYER, CLIP, COLUMN, SELECTED_CLIP, SELECTED_LAYER, DECK };
@@ -43,6 +43,6 @@ public:
 
 	InspectableEditor * getEditor(bool isRoot) override;
 
-	static BaseCommand * create(ControllableContainer * module, CommandContext context, var params) { return new ResolumeBaseCommand((ResolumeModule *)module, context, params); }
+	static BaseCommand * create(ControllableContainer * module, CommandContext context, var params, IteratorProcessor * iterator) { return new ResolumeBaseCommand((ResolumeModule *)module, context, params, iterator); }
 
 };

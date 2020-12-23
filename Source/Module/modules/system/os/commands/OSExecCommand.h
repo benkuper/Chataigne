@@ -21,7 +21,7 @@ class OSExecCommand :
 	public BaseCommand
 {
 public:
-	OSExecCommand(OSModule * _module, CommandContext context, var params);
+	OSExecCommand(OSModule * _module, CommandContext context, var params, IteratorProcessor * iterator = nullptr);
 	~OSExecCommand();
 
 	enum ActionType { OPEN_FILE, LAUNCH_APP, KILL_APP, LAUNCH_COMMAND, LAUNCH_COMMAND_FILE };
@@ -38,6 +38,6 @@ public:
 
 	void killProcess(const String &name);
 
-	static OSExecCommand * create(ControllableContainer * module, CommandContext context, var params) { return new OSExecCommand((OSModule *)module, context, params); }
+	static OSExecCommand * create(ControllableContainer * module, CommandContext context, var params, IteratorProcessor * iterator) { return new OSExecCommand((OSModule *)module, context, params, iterator); }
 
 };

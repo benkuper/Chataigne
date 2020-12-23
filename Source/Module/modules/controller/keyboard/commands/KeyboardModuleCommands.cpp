@@ -10,9 +10,9 @@
 
 #include "KeyboardModuleCommands.h"
 
-KeyboardModuleCommands::KeyboardModuleCommands(KeyboardModule* m, CommandContext context, var params) :
-	BaseCommand(m, context, params),
-	keyboardModule(m),
+KeyboardModuleCommands::KeyboardModuleCommands(KeyboardModule* _module, CommandContext context, var params, IteratorProcessor* iterator) :
+	BaseCommand(_module, context, params, iterator),
+	keyboardModule(_module),
 	ctrlPressed(nullptr),
 	altPressed(nullptr),
 	shiftPressed(nullptr)

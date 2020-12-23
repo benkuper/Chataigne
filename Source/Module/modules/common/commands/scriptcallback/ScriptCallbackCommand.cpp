@@ -10,8 +10,8 @@
 
 #include "ScriptCallbackCommand.h"
 
-ScriptCallbackCommand::ScriptCallbackCommand(Module* module, CommandContext context, var params) :
-	BaseCommand(module, context, params)
+ScriptCallbackCommand::ScriptCallbackCommand(Module* module, CommandContext context, var params, IteratorProcessor* iterator) :
+	BaseCommand(module, context, params, iterator)
 {
 	moduleMethods = addEnumParameter("Callback", "The function to trigger when the command is triggered");
 	

@@ -11,8 +11,8 @@
 #include "MIDICommands.h"
 #include "../MIDIModule.h"
 
-MIDICommand::MIDICommand(MIDIModule * module, CommandContext context, var params) :
-	BaseCommand(module,context,params),
+MIDICommand::MIDICommand(MIDIModule * module, CommandContext context, var params, IteratorProcessor * iterator) :
+	BaseCommand(module, context, params, iterator),
 	midiModule(module)
 {
 	
@@ -22,8 +22,8 @@ MIDICommand::~MIDICommand()
 {
 }
 
-MIDINoteAndCCCommand::MIDINoteAndCCCommand(MIDIModule * module, CommandContext context, var params) :
-	MIDICommand(module, context, params),
+MIDINoteAndCCCommand::MIDINoteAndCCCommand(MIDIModule * module, CommandContext context, var params, IteratorProcessor * iterator) :
+	MIDICommand(module, context, params, iterator),
 	velocity(nullptr),
 	onTime(nullptr),
 	remap01To127(nullptr),
@@ -77,7 +77,7 @@ MIDINoteAndCCCommand::MIDINoteAndCCCommand(MIDIModule * module, CommandContext c
 		remap01To127 = addBoolParameter("Remap to 0-"+String(maxRemap), "If checked, this will automatically remap values from 0-1 to 0-"+String(maxRemap), false);
 	}
 
-	if(velocity != nullptr) addTargetMappingParameterAt(velocity, 0);
+	//if(velocity != nullptr) addTargetMappingParameterAt(velocity, 0);
 }
 
 MIDINoteAndCCCommand::~MIDINoteAndCCCommand()
@@ -151,8 +151,8 @@ void MIDINoteAndCCCommand::timerCallback()
 }
 
 
-MIDISysExCommand::MIDISysExCommand(MIDIModule * module, CommandContext context, var params) :
-	MIDICommand(module, context, params),
+MIDISysExCommand::MIDISysExCommand(MIDIModule * module, CommandContext context, var params, IteratorProcessor * iterator) :
+	MIDICommand(module, context, params, iterator),
 	dataContainer("Bytes")
 {
 	saveAndLoadRecursiveData = true;

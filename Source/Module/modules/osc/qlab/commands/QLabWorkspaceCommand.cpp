@@ -10,8 +10,8 @@
 
 #include "QLabWorkspaceCommand.h"
 
-QLabWorkspaceCommand::QLabWorkspaceCommand(QLabModule* m, CommandContext context, var params) :
-    OSCCommand(m, context, params),
+QLabWorkspaceCommand::QLabWorkspaceCommand(QLabModule* m, CommandContext context, var params, IteratorProcessor * iterator) :
+    OSCCommand(m, context, params, iterator),
     qlabModule(m)
 {
     qlabModule->workspaceID->addParameterListener(this);

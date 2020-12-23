@@ -65,7 +65,7 @@ class IterativeTargetDefinition :
 {
 public:
     IterativeTargetDefinition(StringRef menu, StringRef type, std::function<T* (var, IteratorProcessor*)> func, IteratorProcessor* iterator) :
-        FactoryParametricDefinition(menu, type, func),
+        FactoryParametricDefinition<T, std::function<T* (var, IteratorProcessor*)>>(menu, type, func),
         iterator(iterator)
     {
     }

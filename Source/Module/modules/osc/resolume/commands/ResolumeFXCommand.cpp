@@ -11,8 +11,8 @@
 #include "ResolumeFXCommand.h"
 #include "../ResolumeModule.h"
 
-ResolumeFXCommand::ResolumeFXCommand(ResolumeModule * _module, CommandContext context, var params) :
-	ResolumeBaseCommand(_module,context,params, true),
+ResolumeFXCommand::ResolumeFXCommand(ResolumeModule * _module, CommandContext context, var params, IteratorProcessor * iterator) :
+	ResolumeBaseCommand(_module,context,params, iterator, true),
     nameParam(nullptr),
     fxIndexParam(nullptr),
     valueParam(nullptr),
@@ -199,5 +199,5 @@ void ResolumeFXCommand::setupValueParam()
 		}
 	}
 
-	if(valueParam != nullptr) addTargetMappingParameterAt(valueParam, 0);
+	//if(valueParam != nullptr) addTargetMappingParameterAt(valueParam, 0);
 }

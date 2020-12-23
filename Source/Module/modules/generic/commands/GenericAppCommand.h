@@ -17,7 +17,7 @@ class GenericAppCommand :
 	public BaseCommand
 {
 public:
-	GenericAppCommand(ChataigneGenericModule* _module, CommandContext context, var params);
+	GenericAppCommand(ChataigneGenericModule* _module, CommandContext context, var params, IteratorProcessor * iterator = nullptr);
 	~GenericAppCommand();
 
 	enum Type { NEW_SESSION, OPEN_SESSION, CLOSE_APP };
@@ -27,5 +27,5 @@ public:
 
 	void triggerInternal() override;
 
-	static BaseCommand* create(ControllableContainer* module, CommandContext context, var params);
+	static BaseCommand* create(ControllableContainer* module, CommandContext context, var params, IteratorProcessor * iterator = nullptr);
 };

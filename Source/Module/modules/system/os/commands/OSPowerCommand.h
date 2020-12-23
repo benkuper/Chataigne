@@ -16,7 +16,7 @@ class OSPowerCommand :
 	public BaseCommand
 {
 public:
-	OSPowerCommand(OSModule * _module, CommandContext context, var params);
+	OSPowerCommand(OSModule * _module, CommandContext context, var params, IteratorProcessor * iterator = nullptr);
 	~OSPowerCommand();
 
 	enum ActionType { SHUTDOWN, REBOOT };
@@ -24,6 +24,6 @@ public:
 
 	void triggerInternal() override;
 
-	static OSPowerCommand * create(ControllableContainer * module, CommandContext context, var params) { return new OSPowerCommand((OSModule *)module, context, params); }
+	static OSPowerCommand * create(ControllableContainer * module, CommandContext context, var params, IteratorProcessor * iterator) { return new OSPowerCommand((OSModule *)module, context, params, iterator); }
 
 };

@@ -17,7 +17,7 @@ class ScriptCommand :
 	public BaseCommand
 {
 public:
-	ScriptCommand(Module * module, CommandContext context, var data);
+	ScriptCommand(Module * module, CommandContext context, var data, IteratorProcessor* iterator = nullptr);
 	~ScriptCommand();
 
 	OwnedArray<ControllableContainer> paramContainers;
@@ -58,7 +58,7 @@ public:
 
 	void triggerInternal() override;
 
-	static BaseCommand * create(ControllableContainer * module, CommandContext context, var params)  { return new ScriptCommand((Module *)module, context, params); }
+	static BaseCommand * create(ControllableContainer * module, CommandContext context, var params, IteratorProcessor * iterator)  { return new ScriptCommand((Module *)module, context, params, iterator); }
 
-	InspectableEditor * getEditor(bool isRoot) override;
+	//InspectableEditor * getEditor(bool isRoot) override;
 };

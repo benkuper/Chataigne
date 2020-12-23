@@ -14,6 +14,7 @@
 #include "CommandContext.h"
 #include "Module/modules/common/commands/customvalues/CustomValuesCommandArgumentManager.h"
 #include "Common/Processor/Iterator/Iterator.h"
+#include "Common/ParameterLink/ParameterLink.h"
 
 class Module;
 
@@ -22,7 +23,7 @@ class BaseCommand :
 	public ControllableContainer,
 	public Inspectable::InspectableListener,
 	public CommandTemplate::TemplateListener,
-	public CustomValuesCommandArgumentManager::ArgumentManagerListener,
+	//public CustomValuesCommandArgumentManager::ArgumentManagerListener,
 	public CustomValuesCommandArgumentManager::ManagerListener
 {
 public:
@@ -37,19 +38,19 @@ public:
 	Controllable::Type valueType;
 	bool saveAndLoadTargetMappings;
 
+	bool paramsCanBeLinked;
+
 	//Template
 	CommandTemplate * linkedTemplate;
 	WeakReference<Inspectable> templateRef;
 	std::unique_ptr<CustomValuesCommandArgumentManager> customValuesManager;
 
-	OwnedArray<Array<WeakReference<Parameter>>> mappingParametersArray;
-	HashMap<int, Array<WeakReference<Parameter>> *> targetMappingParameters;
-	HashMap<Parameter *, int> parameterToIndexMap;
+	OwnedArray<ParameterLink> paramLinks;
+	HashMap<Parameter*, ParameterLink*> paramLinkMap;;
+	HashMap<ParameterLink *, Parameter *> linkParamMap;
 
-	void addTargetMappingParameterAt(WeakReference<Parameter> p,int index);
-	void removeTargetMappingParameter(WeakReference<Parameter> p);
-	void clearTargetMappingParametersAt(int index);
-	void clearTargetMappingParameters();
+	void onControllableAdded(Controllable * c) override;
+	void onControllableRemoved(Controllable * c) override;
 
 	void linkToTemplate(CommandTemplate * ct);
 	void updateParametersFromTemplate();
@@ -57,7 +58,7 @@ public:
 	virtual void setupTemplateParameters(CommandTemplate * ct);
 
 	void setUseCustomValues(bool value);
-	virtual void useForMappingChanged(CustomValuesCommandArgument*) override;
+	//virtual void useForMappingChanged(CustomValuesCommandArgument*) override;
 	virtual void itemsReordered() override;
 
 	void templateParameterChanged(CommandTemplateParameter * ctp) override;
@@ -68,6 +69,9 @@ public:
 	virtual void setValue(var value); //for mapping context
 	virtual void setValueInternal(var value) {}
 
+	virtual ParameterLink* getLinkedParam(Parameter* p);
+	virtual var getLinkedParamValue(Parameter* p);
+
 	virtual void loadPreviousCommandData(var data) { } //default behavior is nothing, can override that to trying hot swap of commands
 	
 	void inspectableDestroyed(Inspectable * i) override;
@@ -77,7 +81,7 @@ public:
 	void loadJSONDataInternal(var data) override;
 	void  afterLoadJSONDataInternal() override;
 
-	static BaseCommand * create(ControllableContainer * module, CommandContext context, var params);
+	static BaseCommand * create(ControllableContainer * module, CommandContext context, var params, IteratorProcessor * iterator = nullptr);
 
 	class CommandListener
 	{
@@ -93,6 +97,7 @@ public:
 	void removeCommandListener(CommandListener* listener) { commandListeners.remove(listener); }
 
 
+	InspectableEditor* getEditor(bool isRoot) override;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(BaseCommand)
 };

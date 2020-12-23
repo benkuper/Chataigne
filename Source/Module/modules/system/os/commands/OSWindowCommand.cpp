@@ -12,7 +12,7 @@
 
 #pragma warning(disable:4804)
 
-OSWindowCommand::OSWindowCommand(OSModule* _module, CommandContext context, var params) :
+OSWindowCommand::OSWindowCommand(OSModule* _module, CommandContext context, var params, IteratorProcessor * iterator) :
 	BaseCommand(_module, context, params),
 	Thread("OS WindowCommand"),
 	focusFilter(nullptr),

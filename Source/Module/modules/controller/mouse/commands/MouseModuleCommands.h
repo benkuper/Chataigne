@@ -16,7 +16,7 @@ class MouseModuleCommands :
 	public BaseCommand
 {
 public:
-	MouseModuleCommands(MouseModule* m, CommandContext context, var params);
+	MouseModuleCommands(MouseModule* m, CommandContext context, var params, IteratorProcessor* iterator = nullptr);
 	~MouseModuleCommands();
 
 	MouseModule* mouseModule;
@@ -30,6 +30,6 @@ public:
 
 	void triggerInternal() override;
 
-	static BaseCommand* create(ControllableContainer* module, CommandContext context, var params) { return new MouseModuleCommands((MouseModule*)module, context, params); }
+	static BaseCommand* create(ControllableContainer* module, CommandContext context, var params, IteratorProcessor * iterator) { return new MouseModuleCommands((MouseModule*)module, context, params, iterator); }
 
 };

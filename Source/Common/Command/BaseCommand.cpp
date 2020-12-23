@@ -11,6 +11,7 @@
 #include "BaseCommand.h"
 #include "Template/CommandTemplateManager.h"
 #include "Module/Module.h"
+#include "ui/BaseCommandEditor.h"
 
 BaseCommand::BaseCommand(Module * _module, CommandContext _context, var _params, IteratorProcessor * iterator) :
 	ControllableContainer("Command"),
@@ -23,89 +24,46 @@ BaseCommand::BaseCommand(Module * _module, CommandContext _context, var _params,
 	linkedTemplate(nullptr),
 	customValuesManager(nullptr)
 {
+	paramsCanBeLinked = isIterative() || context == MAPPING;
 	hideEditorHeader = true;
 }
 
 BaseCommand::~BaseCommand()
 {
-	targetMappingParameters.clear();
-	parameterToIndexMap.clear(); 
-	mappingParametersArray.clear();
+	paramLinkMap.clear();
+	paramLinkMap.clear();
+	paramLinks.clear();
 	linkToTemplate(nullptr);
 }
 
-void BaseCommand::addTargetMappingParameterAt(WeakReference<Parameter> p, int index)
+
+void BaseCommand::onControllableAdded(Controllable* c)
 {
-	if (context != CommandContext::MAPPING) return;
-
-	if (index < 0) return;
-
-	if (parameterToIndexMap.contains(p)) targetMappingParameters[parameterToIndexMap[p]]->removeAllInstancesOf(p);
-
-	if (!targetMappingParameters.contains(index))
+	if (Parameter* p = dynamic_cast<Parameter*>(c))
 	{
-		Array<WeakReference<Parameter>> * arr = new Array<WeakReference<Parameter>>();
-		mappingParametersArray.add(arr);
-		targetMappingParameters.set(index, arr);
-	}
+		ParameterLink* pLink = new ParameterLink(p, iterator);
+		paramLinks.add(pLink);
+		paramLinkMap.set(p, pLink);
+		linkParamMap.set(pLink, p);
 
-	targetMappingParameters[index]->addIfNotAlreadyThere(p);
-	parameterToIndexMap.set(p, index);
-	
-	p->setControllableFeedbackOnly(true); 
-	commandListeners.call(&CommandListener::commandContentChanged);
+		commandListeners.call(&CommandListener::commandContentChanged);
+	}
 }
 
-void BaseCommand::removeTargetMappingParameter(WeakReference<Parameter> p)
+void BaseCommand::onControllableRemoved(Controllable* c)
 {
-	if (!parameterToIndexMap.contains(p)) return;
-	if (!targetMappingParameters.contains(parameterToIndexMap[p])) return;
-	Array<WeakReference<Parameter>> * arr = targetMappingParameters[parameterToIndexMap[p]];
-	arr->removeAllInstancesOf(p);
-	
-	if (targetMappingParameters[parameterToIndexMap[p]]->size() == 0)
+	if (Parameter* p = dynamic_cast<Parameter*>(c))
 	{
-		mappingParametersArray.removeObject(arr);
-		targetMappingParameters.remove(parameterToIndexMap[p]);
-	}
-
-	p->setControllableFeedbackOnly(false);
-	parameterToIndexMap.remove(p);
-
-	commandListeners.call(&CommandListener::commandContentChanged);
-}
-
-void BaseCommand::clearTargetMappingParametersAt(int index)
-{
-	if (!targetMappingParameters.contains(index)) return;
-	for (auto &p : *targetMappingParameters[index])
-	{
-		parameterToIndexMap.remove(p);
-		targetMappingParameters.remove(parameterToIndexMap[p]);
-		p->setControllableFeedbackOnly(false);
-	}
-
-	mappingParametersArray.removeObject(targetMappingParameters[index]);
-	targetMappingParameters.remove(index);
-
-	commandListeners.call(&CommandListener::commandContentChanged);
-}
-
-void BaseCommand::clearTargetMappingParameters()
-{
-	for (auto &arp : mappingParametersArray)
-	{
-		for (auto &p : *arp)
+		if (paramLinkMap.contains(p))
 		{
-			if(p.wasObjectDeleted()) continue;
-			p->setControllableFeedbackOnly(false);
+			ParameterLink* pLink = paramLinkMap[p];
+			linkParamMap.remove(pLink);
+			paramLinkMap.remove(p);
+			paramLinks.removeObject(pLink);
+
+			commandListeners.call(&CommandListener::commandContentChanged);
 		}
 	}
-
-	targetMappingParameters.clear();
-	parameterToIndexMap.clear();
-
-	commandListeners.call(&CommandListener::commandContentChanged);
 }
 
 void BaseCommand::linkToTemplate(CommandTemplate * ct)
@@ -210,14 +168,14 @@ void BaseCommand::setUseCustomValues(bool value)
 			addChildControllableContainer(customValuesManager.get());
 		}
 
-		customValuesManager->addArgumentManagerListener(this);
+		//customValuesManager->addArgumentManagerListener(this);
 		customValuesManager->addBaseManagerListener(this);
 	}
 	else
 	{
 		if (customValuesManager != nullptr)
 		{
-			customValuesManager->removeArgumentManagerListener(this);
+			//customValuesManager->removeArgumentManagerListener(this);
 			customValuesManager->removeBaseManagerListener(this);
 			removeChildControllableContainer(customValuesManager.get());
 			customValuesManager.reset();
@@ -225,6 +183,7 @@ void BaseCommand::setUseCustomValues(bool value)
 	}
 }
 
+/*
 void BaseCommand::useForMappingChanged(CustomValuesCommandArgument*)
 {
 	if (context != CommandContext::MAPPING) return;
@@ -242,10 +201,11 @@ void BaseCommand::useForMappingChanged(CustomValuesCommandArgument*)
 		}
 	}
 }
+*/
 
 void BaseCommand::itemsReordered()
 {
-	useForMappingChanged(nullptr);
+	//useForMappingChanged(nullptr);
 }
 
 void BaseCommand::templateParameterChanged(CommandTemplateParameter * ctp)
@@ -273,6 +233,9 @@ void BaseCommand::trigger(int iterationIndex)
 
 void BaseCommand::setValue(var value)
 {
+	for (auto& pLink : paramLinks) pLink->updateMappingInputValue(value);
+
+	/*
 	if (!value.isArray())
 	{
 		if (targetMappingParameters.contains(0) && targetMappingParameters[0] != nullptr)
@@ -351,10 +314,22 @@ void BaseCommand::setValue(var value)
 			i += numValToIncrement;
 		}
 	}
+	*/
 
 	setValueInternal(value);
-
 	trigger();
+}
+
+ParameterLink* BaseCommand::getLinkedParam(Parameter* p)
+{
+	jassert(paramLinkMap.contains(p));
+	return paramLinkMap[p];
+}
+
+var BaseCommand::getLinkedParamValue(Parameter* p)
+{
+	jassert(paramLinkMap.contains(p));
+	return paramLinkMap[p]->getLinkedValue();
 }
 
 void BaseCommand::inspectableDestroyed(Inspectable * i)
@@ -369,6 +344,15 @@ var BaseCommand::getJSONData()
 {
 	var data = ControllableContainer::getJSONData();
 
+	var pLinkData(new DynamicObject());
+	for (auto& pLink : paramLinks)
+	{
+		if(pLink->linkType != pLink->NONE) pLinkData.getDynamicObject()->setProperty(pLink->parameter->shortName, pLink->getJSONData());
+	}
+
+	data.getDynamicObject()->setProperty("paramLinks", pLinkData);
+
+	/*
 	if (saveAndLoadTargetMappings && context == MAPPING && targetMappingParameters.size() > 0)
 	{
 		var tmData = var(new DynamicObject());
@@ -381,12 +365,17 @@ var BaseCommand::getJSONData()
 
 		data.getDynamicObject()->setProperty("targetMappings", tmData);
 	}
+	*/
 
 	return data;
 }
 
 void BaseCommand::loadJSONDataInternal(var data)
 {
+	var pLinksData = data.getProperty("paramLinks",var());
+	for (auto& pLink : paramLinks) pLink->loadJSONData(pLinksData.getProperty(pLink->parameter->shortName, var()));
+	
+	/*
 	if (saveAndLoadTargetMappings && context == MAPPING)
 	{
 		var tmData = data.getProperty("targetMappings", var());
@@ -407,14 +396,15 @@ void BaseCommand::loadJSONDataInternal(var data)
 			}
 		}
 	}
+	*/
 }
 
 void BaseCommand::afterLoadJSONDataInternal()
 {
-	useForMappingChanged(nullptr); //force rebuild targetMappings
+	//useForMappingChanged(nullptr); //force rebuild targetMappings
 }
 
-BaseCommand * BaseCommand::create(ControllableContainer * module, CommandContext context, var params)
+BaseCommand * BaseCommand::create(ControllableContainer * module, CommandContext context, var params, IteratorProcessor * iterator)
 {
 	Module * m = dynamic_cast<Module *>(module);
 	jassert(m != nullptr);
@@ -425,5 +415,10 @@ BaseCommand * BaseCommand::create(ControllableContainer * module, CommandContext
 		return nullptr;
 	}
 
-	return commandTemplate->createCommand(m, context, params);
+	return commandTemplate->createCommand(m, context, params, iterator);
+}
+
+InspectableEditor* BaseCommand::getEditor(bool isRoot)
+{
+	return new BaseCommandEditor(this, isRoot);
 }

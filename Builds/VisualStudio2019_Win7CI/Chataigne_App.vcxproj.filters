@@ -23,6 +23,12 @@
     <Filter Include="Chataigne\Source\Analytics">
       <UniqueIdentifier>{BFFB54F9-F042-7395-56B9-D0358B5F6ED9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Chataigne\Source\Common\ParameterLink\ui">
+      <UniqueIdentifier>{B4968552-51CA-9537-7B55-FA767839D08E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Common\ParameterLink">
+      <UniqueIdentifier>{7F6C32C9-CE4B-FC53-479A-9E79D9E96EA3}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Chataigne\Source\Common\Zeroconf">
       <UniqueIdentifier>{C4DDA41D-2632-9CB5-32F2-C49815C7E269}</UniqueIdentifier>
     </Filter>
@@ -32,14 +38,14 @@
     <Filter Include="Chataigne\Source\Common\InputSystem">
       <UniqueIdentifier>{2B092B7F-E42F-F28A-4047-78487812BEA9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Chataigne\Source\Common\Command\ui">
+      <UniqueIdentifier>{9DC719BC-0221-FA4E-5A0E-C23170388D98}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Chataigne\Source\Common\Command\Template\ui">
       <UniqueIdentifier>{F2CAF67C-41CA-7457-88E2-3F0457E78267}</UniqueIdentifier>
     </Filter>
     <Filter Include="Chataigne\Source\Common\Command\Template">
       <UniqueIdentifier>{19F60CF8-3745-EAD2-B8B1-1E040BF0EA15}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Common\Command\ui">
-      <UniqueIdentifier>{9DC719BC-0221-FA4E-5A0E-C23170388D98}</UniqueIdentifier>
     </Filter>
     <Filter Include="Chataigne\Source\Common\Command">
       <UniqueIdentifier>{BE242EEE-600F-3A0A-D733-68EE1CD456DD}</UniqueIdentifier>
@@ -1381,6 +1387,15 @@
     <ClCompile Include="..\..\Source\Analytics\MatomoAnalytics.cpp">
       <Filter>Chataigne\Source\Analytics</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Common\ParameterLink\ui\LinkableParameterEditor.cpp">
+      <Filter>Chataigne\Source\Common\ParameterLink\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\ParameterLink\ui\ParameterLinkUI.cpp">
+      <Filter>Chataigne\Source\Common\ParameterLink\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\ParameterLink\ParameterLink.cpp">
+      <Filter>Chataigne\Source\Common\ParameterLink</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Common\Zeroconf\ZeroconfManager.cpp">
       <Filter>Chataigne\Source\Common\Zeroconf</Filter>
     </ClCompile>
@@ -1389,6 +1404,15 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Common\InputSystem\InputSystemManager.cpp">
       <Filter>Chataigne\Source\Common\InputSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Command\ui\BaseCommandEditor.cpp">
+      <Filter>Chataigne\Source\Common\Command\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Command\ui\BaseCommandHandlerEditor.cpp">
+      <Filter>Chataigne\Source\Common\Command\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Command\ui\CommandChooserUI.cpp">
+      <Filter>Chataigne\Source\Common\Command\ui</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Common\Command\Template\ui\CommandTemplateEditor.cpp">
       <Filter>Chataigne\Source\Common\Command\Template\ui</Filter>
@@ -1425,12 +1449,6 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Common\Command\CommandFactory.cpp">
       <Filter>Chataigne\Source\Common\Command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Common\Command\ui\BaseCommandHandlerEditor.cpp">
-      <Filter>Chataigne\Source\Common\Command\ui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Common\Command\ui\CommandChooserUI.cpp">
-      <Filter>Chataigne\Source\Common\Command\ui</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Common\DMX\device\DMXArtNetDevice.cpp">
       <Filter>Chataigne\Source\Common\DMX\device</Filter>
@@ -5259,6 +5277,15 @@
     <ClInclude Include="..\..\Source\Analytics\MatomoAnalytics.h">
       <Filter>Chataigne\Source\Analytics</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\Common\ParameterLink\ui\LinkableParameterEditor.h">
+      <Filter>Chataigne\Source\Common\ParameterLink\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\ParameterLink\ui\ParameterLinkUI.h">
+      <Filter>Chataigne\Source\Common\ParameterLink\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\ParameterLink\ParameterLink.h">
+      <Filter>Chataigne\Source\Common\ParameterLink</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\Common\Zeroconf\ZeroconfManager.h">
       <Filter>Chataigne\Source\Common\Zeroconf</Filter>
     </ClInclude>
@@ -5268,8 +5295,17 @@
     <ClInclude Include="..\..\Source\Common\InputSystem\InputSystemManager.h">
       <Filter>Chataigne\Source\Common\InputSystem</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\Common\Command\CommandContext.h">
-      <Filter>Chataigne\Source\Common\Command</Filter>
+    <ClInclude Include="..\..\Source\Common\Command\ui\BaseCommandEditor.h">
+      <Filter>Chataigne\Source\Common\Command\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\Command\ui\BaseCommandHandlerEditor.h">
+      <Filter>Chataigne\Source\Common\Command\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\Command\ui\BaseCommandHandlerManagerEditor.h">
+      <Filter>Chataigne\Source\Common\Command\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\Command\ui\CommandChooserUI.h">
+      <Filter>Chataigne\Source\Common\Command\ui</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\Command\Template\ui\CommandTemplateEditor.h">
       <Filter>Chataigne\Source\Common\Command\Template\ui</Filter>
@@ -5292,6 +5328,9 @@
     <ClInclude Include="..\..\Source\Common\Command\Template\CommandTemplateParameter.h">
       <Filter>Chataigne\Source\Common\Command\Template</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\Common\Command\CommandContext.h">
+      <Filter>Chataigne\Source\Common\Command</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\Common\Command\BaseCommand.h">
       <Filter>Chataigne\Source\Common\Command</Filter>
     </ClInclude>
@@ -5306,15 +5345,6 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\Command\CommandFactory.h">
       <Filter>Chataigne\Source\Common\Command</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Common\Command\ui\BaseCommandHandlerEditor.h">
-      <Filter>Chataigne\Source\Common\Command\ui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Common\Command\ui\BaseCommandHandlerManagerEditor.h">
-      <Filter>Chataigne\Source\Common\Command\ui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Common\Command\ui\CommandChooserUI.h">
-      <Filter>Chataigne\Source\Common\Command\ui</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\DMX\device\DMXArtNetDevice.h">
       <Filter>Chataigne\Source\Common\DMX\device</Filter>
@@ -10698,6 +10728,9 @@
       <Filter>Chataigne\Resources</Filter>
     </None>
     <None Include="..\..\Resources\in.png">
+      <Filter>Chataigne\Resources</Filter>
+    </None>
+    <None Include="..\..\Resources\link.png">
       <Filter>Chataigne\Resources</Filter>
     </None>
     <None Include="..\..\Resources\nextcue.png">

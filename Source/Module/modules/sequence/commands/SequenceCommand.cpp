@@ -12,7 +12,7 @@
 #include "SequenceCommand.h"
 #include "TimeMachine/ChataigneSequenceManager.h"
 
-SequenceCommand::SequenceCommand(SequenceModule* _module, CommandContext context, var params) :
+SequenceCommand::SequenceCommand(SequenceModule* _module, CommandContext context, var params, IteratorProcessor * iterator) :
 	BaseCommand(_module, context, params),
 	sequenceModule(_module),
 	target(nullptr)
@@ -59,7 +59,7 @@ SequenceCommand::SequenceCommand(SequenceModule* _module, CommandContext context
 
 		value = addFloatParameter("Time", "Target time to set", 0);
 		value->defaultUI = FloatParameter::TIME;
-		addTargetMappingParameterAt(value, 0);
+		//addTargetMappingParameterAt(value, 0);
 
 		playFromStart = addBoolParameter("Play", "If enabled, will force playing the sequence after setting the time", false);
 		break;
@@ -206,8 +206,8 @@ void SequenceCommand::endLoadFile()
 }
 
 
-BaseCommand* SequenceCommand::create(ControllableContainer* module, CommandContext context, var params) {
-	return new SequenceCommand((SequenceModule*)module, context, params);
+BaseCommand* SequenceCommand::create(ControllableContainer* module, CommandContext context, var params, IteratorProcessor * iterator) {
+	return new SequenceCommand((SequenceModule*)module, context, params, iterator);
 }
 
 /*

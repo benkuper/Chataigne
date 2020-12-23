@@ -15,7 +15,7 @@ class ScriptCallbackCommand :
 	public BaseCommand
 {
 public:
-	ScriptCallbackCommand(Module * module, CommandContext context, var params);
+	ScriptCallbackCommand(Module * module, CommandContext context, var params, IteratorProcessor * iterator = nullptr);
 	~ScriptCallbackCommand();
 
 	EnumParameter* moduleMethods;
@@ -26,5 +26,5 @@ public:
 	void loadJSONDataInternal(var data) override;
 
 
-	static ScriptCallbackCommand* create(ControllableContainer* c, CommandContext context, var params) { return new ScriptCallbackCommand((Module *)c, context, params); }
+	static ScriptCallbackCommand* create(ControllableContainer* c, CommandContext context, var params, IteratorProcessor * iterator = nullptr) { return new ScriptCallbackCommand((Module *)c, context, params, iterator); }
 };

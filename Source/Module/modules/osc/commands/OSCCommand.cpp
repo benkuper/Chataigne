@@ -11,8 +11,8 @@
 #include "OSCCommand.h"
 #include "../OSCModule.h"
 
-OSCCommand::OSCCommand(OSCModule * _module, CommandContext context, var params) :
-	BaseCommand(_module, context, params),
+OSCCommand::OSCCommand(OSCModule * _module, CommandContext context, var params, IteratorProcessor * iterator) :
+	BaseCommand(_module, context, params, iterator),
 	oscModule(_module),
 	argumentsContainer("Arguments")
 {
@@ -72,7 +72,7 @@ void OSCCommand::buildArgsAndParamsFromData(var data)
 				p->saveValueOnly = false;
 				p->loadJSONData(a);
 				argumentsContainer.addParameter(p);
-				if (a.hasProperty("mappingIndex")) addTargetMappingParameterAt(p, a.getProperty("mappingIndex", 0));
+				//if (a.hasProperty("mappingIndex")) addTargetMappingParameterAt(p, a.getProperty("mappingIndex", 0));
 
 				if (p->type == Controllable::ENUM && a.hasProperty("options"))
 				{

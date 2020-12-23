@@ -18,7 +18,7 @@ class OSCCommand :
 	public BaseCommand
 {
 public:
-	OSCCommand(OSCModule * _module, CommandContext context, var params);
+	OSCCommand(OSCModule * _module, CommandContext context, var params, IteratorProcessor * iterator = nullptr);
 	virtual ~OSCCommand();
 
 	OSCModule * oscModule;
@@ -41,7 +41,7 @@ public:
 
 	void triggerInternal() override;
 
-	static BaseCommand * create(ControllableContainer * module, CommandContext context, var params) { return new OSCCommand((OSCModule *)module, context, params); }
+	static BaseCommand * create(ControllableContainer * module, CommandContext context, var params, IteratorProcessor * iterator) { return new OSCCommand((OSCModule *)module, context, params, iterator); }
 
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(OSCCommand)

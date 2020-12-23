@@ -13,8 +13,8 @@
 
 String GenericScriptCommand::commandScriptTemplate = "";
 
-GenericScriptCommand::GenericScriptCommand(ChataigneGenericModule * _module, CommandContext context, var params) :
-	BaseCommand(_module, context, params),
+GenericScriptCommand::GenericScriptCommand(ChataigneGenericModule * _module, CommandContext context, var params, IteratorProcessor* iterator) :
+	BaseCommand(_module, context, params, iterator),
 	script(this, false)
 {
 
@@ -53,9 +53,9 @@ void GenericScriptCommand::loadJSONDataInternal(var data)
 	script.loadJSONData(data.getProperty("script", var()));
 }
 
-BaseCommand * GenericScriptCommand::create(ControllableContainer * module, CommandContext context, var params)
+BaseCommand * GenericScriptCommand::create(ControllableContainer * module, CommandContext context, var params, IteratorProcessor * iterator)
 {
-	return new GenericScriptCommand((ChataigneGenericModule *)module, context, params);
+	return new GenericScriptCommand((ChataigneGenericModule *)module, context, params, iterator);
 
 }
 
