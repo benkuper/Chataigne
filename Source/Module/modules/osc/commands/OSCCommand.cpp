@@ -127,7 +127,7 @@ void OSCCommand::triggerInternal(int iterationIndex)
 {
 	if (oscModule == nullptr) return;
 
-	BaseCommand::triggerInternal(int iterationIndex);
+	BaseCommand::triggerInternal(iterationIndex);
 
 	try
 	{

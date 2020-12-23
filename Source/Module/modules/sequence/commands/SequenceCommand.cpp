@@ -80,7 +80,7 @@ SequenceCommand::~SequenceCommand()
 
 void SequenceCommand::triggerInternal(int iterationIndex)
 {
-	BaseCommand::triggerInternal(int iterationIndex);
+	BaseCommand::triggerInternal(iterationIndex);
 
 	if (actionType != STOP_ALL_SEQUENCES && actionType != PLAY_MULTI_SEQUENCES)
 	{

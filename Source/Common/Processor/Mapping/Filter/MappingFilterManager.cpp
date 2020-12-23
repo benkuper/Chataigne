@@ -27,7 +27,7 @@
 #include "filters/color/ColorShiftFilter.h"
 
 
-MappingFilterManager::MappingFilterManager(IteratorProcessor * itertor) :
+MappingFilterManager::MappingFilterManager(IteratorProcessor * iterator) :
 	BaseManager<MappingFilter>("Filters"),
 	IterativeTarget(iterator)
 {

@@ -143,11 +143,11 @@ void ConditionManager::checkAllConditions(int iterationIndex, bool emptyIsValid,
 	switch (op)
 	{
 	case ConditionOperator::AND:
-		valid = areAllConditionsValid(emptyIsValid);
+		valid = areAllConditionsValid(iterationIndex, emptyIsValid);
 		break;
 
 	case ConditionOperator::OR:
-		valid = isAtLeastOneConditionValid(emptyIsValid);
+		valid = isAtLeastOneConditionValid(iterationIndex, emptyIsValid);
 		break;
 	}
 

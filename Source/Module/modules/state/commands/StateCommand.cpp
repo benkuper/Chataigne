@@ -62,7 +62,7 @@ StateCommand::~StateCommand()
 
 void StateCommand::triggerInternal(int iterationIndex)
 {
-	BaseCommand::triggerInternal(int iterationIndex);
+	BaseCommand::triggerInternal(iterationIndex);
 
 	if (target->targetContainer == nullptr) return; 
 	if (target->targetContainer.wasObjectDeleted()) return;

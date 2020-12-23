@@ -85,13 +85,13 @@ MIDINoteAndCCCommand::~MIDINoteAndCCCommand()
 
 }
 
-void MIDINoteAndCCCommand::setValue(var value)
+void MIDINoteAndCCCommand::setValue(var value, int iterationIndex)
 {
 	float mapFactor = (remap01To127 != nullptr && remap01To127->boolValue()) ? maxRemap : 1;
 	if (value.isArray()) value[0] = (float)value[0] * mapFactor;
 	else value = (float)value * mapFactor;
 	
-	MIDICommand::setValue(value);
+	MIDICommand::setValue(value, iterationIndex);
 }
 
 void MIDINoteAndCCCommand::triggerInternal(int iterationIndex)

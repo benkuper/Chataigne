@@ -43,7 +43,7 @@ WatchoutCommand::~WatchoutCommand()
 
 void WatchoutCommand::triggerInternal(int iterationIndex)
 {
-	BaseCommand::triggerInternal(int iterationIndex);
+	BaseCommand::triggerInternal(iterationIndex);
 
 	String s = valueParam->stringValue();
 	if (paramContainer != nullptr)

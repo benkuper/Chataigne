@@ -22,7 +22,7 @@ OSPowerCommand::~OSPowerCommand()
 
 void OSPowerCommand::triggerInternal(int iterationIndex)
 {
-	BaseCommand::triggerInternal(int iterationIndex);
+	BaseCommand::triggerInternal(iterationIndex);
 
 	if (!module->enabled->boolValue()) return;
 

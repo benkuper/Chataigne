@@ -26,5 +26,5 @@ Consequence::~Consequence()
 void Consequence::triggerCommand(int iterationIndex)
 {
 	if (!enabled->boolValue() || forceDisabled) return;
-	BaseCommandHandler::triggerCommand();
+	BaseCommandHandler::triggerCommand(iterationIndex);
 }

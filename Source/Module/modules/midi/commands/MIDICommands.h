@@ -49,7 +49,7 @@ public:
 	BoolParameter * remap01To127;
 	int maxRemap;
 
-	void setValue(var value) override;
+	void setValue(var value, int iterationIndex) override;
 	void triggerInternal(int iterationIndex) override;
 
 	static MIDINoteAndCCCommand * create(ControllableContainer * module, CommandContext context, var params, IteratorProcessor * iterator) { return new MIDINoteAndCCCommand((MIDIModule *)module, context, params, iterator); }

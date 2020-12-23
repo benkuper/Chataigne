@@ -55,15 +55,16 @@ void ChataigneLogCommand::triggerInternal(int iterationIndex)
 {
 	LogType lt = logType->getValueDataAsEnum<LogType>();
 
+	String msg = getLinkedValue(message, iterationIndex);
+
 	switch (type)
 	{
 	case MESSAGE:
-
 		switch (lt)
 		{
-		case INFO: LOG(message->stringValue()); break;
-		case WARNING: LOGWARNING(message->stringValue()); break;
-		case ERROR: LOGERROR(message->stringValue()); break;
+		case INFO: LOG(msg); break;
+		case WARNING: LOGWARNING(msg); break;
+		case ERROR: LOGERROR(msg); break;
 
 		}
 
@@ -80,9 +81,9 @@ void ChataigneLogCommand::triggerInternal(int iterationIndex)
 	
 		switch (lt)
 		{
-		case INFO: LOG(message->stringValue() + " " + vString); break;
-		case WARNING: LOGWARNING(message->stringValue() + " " + vString);; break;
-		case ERROR: LOGERROR(message->stringValue() + " " + vString); break;
+		case INFO: LOG(msg + " " + vString); break;
+		case WARNING: LOGWARNING(msg + " " + vString);; break;
+		case ERROR: LOGERROR(msg + " " + vString); break;
 
 		}
 	}

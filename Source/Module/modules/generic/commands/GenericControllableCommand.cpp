@@ -54,7 +54,7 @@ void GenericControllableCommand::setValueParameter(Parameter * p)
 
 void GenericControllableCommand::triggerInternal(int iterationIndex)
 {
-	BaseCommand::triggerInternal(int iterationIndex);
+	BaseCommand::triggerInternal(iterationIndex);
 
 	if (target->target == nullptr) return;
 

@@ -51,7 +51,13 @@ var ParameterLink::getLinkedValue(int iterationIndex)
     case MAPPING_INPUT:
         return mappingValues[iterationIndex];
         break;
+
+    case ITERATOR_LIST:
+        if (list != nullptr) return ((Parameter*)list->list[iterationIndex])->getValue();
+        break;
     }
+
+    return parameter->getValue();
 }
 
 void ParameterLink::updateMappingInputValue(var value, int iterationIndex)
