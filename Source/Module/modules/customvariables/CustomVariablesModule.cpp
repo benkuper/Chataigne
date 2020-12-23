@@ -166,6 +166,7 @@ void GenericControllableManagerLinkedContainer::addValueFromItem(Parameter* sour
 	linkMap.set(p, source);
 	source->addControllableListener(this);
 	source->addParameterListener(this);
+	if (source->type == source->ENUM) ((EnumParameter*)source)->addEnumParameterListener(this);
 	p->forceSaveValue = true;
 	syncItem(p, source);
 	addParameter(p);
@@ -184,6 +185,7 @@ void GenericControllableManagerLinkedContainer::syncItem(Parameter* p, Parameter
 		EnumParameter* ep = (EnumParameter*)p;
 		if (es->enumValues.size() != ep->enumValues.size())
 		{
+			ep->clearOptions();
 			String key = ep->getValueKey();
 			for (auto& ev : es->enumValues) ep->addOption(ev->key, ev->value, false);
 			ep->setValueWithKey(key);
@@ -220,6 +222,7 @@ void GenericControllableManagerLinkedContainer::itemRemoved(GenericControllableI
 	{
 		linkMap[p]->removeControllableListener(this);
 		linkMap[p]->removeParameterListener(this);
+		if (linkMap[p]->type == linkMap[p]->ENUM) ((EnumParameter*)linkMap[p])->removeEnumParameterListener(this);
 		linkMap.remove(p);
 		removeControllable(p);
 	}
@@ -230,6 +233,18 @@ void GenericControllableManagerLinkedContainer::itemsReordered()
 	controllables.sort(linkedComparator);
 	controllableContainerListeners.call(&ControllableContainerListener::controllableContainerReordered, this);
 	queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerReordered, this));
+}
+
+void GenericControllableManagerLinkedContainer::enumOptionAdded(EnumParameter* source, const String&)
+{
+	Parameter* p = getParameterForSource(source); 
+	syncItem(p, source);
+}
+
+void GenericControllableManagerLinkedContainer::enumOptionRemoved(EnumParameter* source, const String&)
+{
+	Parameter* p = getParameterForSource(source);
+	syncItem(p, source);
 }
 
 void GenericControllableManagerLinkedContainer::parameterValueChanged(Parameter* source)

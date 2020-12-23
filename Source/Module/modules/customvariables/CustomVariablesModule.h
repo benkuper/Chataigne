@@ -42,7 +42,8 @@ public:
 
 class GenericControllableManagerLinkedContainer :
 	public ControllableContainer,
-	public GenericControllableManager::ManagerListener
+	public GenericControllableManager::ManagerListener,
+	public EnumParameter::Listener
 {
 public:
 	GenericControllableManagerLinkedContainer(const String& name, GenericControllableManager* manager, bool keepValuesInSync);
@@ -62,6 +63,8 @@ public:
 	void itemAdded(GenericControllableItem*) override;
 	void itemRemoved(GenericControllableItem*) override;
 	void itemsReordered() override;
+	void enumOptionAdded(EnumParameter* source, const String&) override;
+	void enumOptionRemoved(EnumParameter * source, const String &) override;
 
 	void parameterValueChanged(Parameter*) override;
 	void parameterRangeChanged(Parameter*) override;
