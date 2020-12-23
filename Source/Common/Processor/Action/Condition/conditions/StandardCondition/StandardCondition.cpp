@@ -79,6 +79,8 @@ void StandardCondition::setValid(int iterationIndex, bool value, bool dispatchOn
 
 void StandardCondition::checkComparator(int iterationIndex)
 {
+	if (isCurrentlyLoadingData) return;
+
 	Controllable* c = sourceControllables[iterationIndex].get();
 
 	if (c->type == Controllable::TRIGGER) {
@@ -93,7 +95,7 @@ void StandardCondition::checkComparator(int iterationIndex)
 
 void StandardCondition::forceCheck()
 {
-	checkComparator(0);
+	for (int i = 0; i < getIterationCount(); i++) checkComparator(i);
 }
 
 void StandardCondition::forceToggleState(bool value)
@@ -265,6 +267,12 @@ void StandardCondition::loadJSONDataInternal(var data)
 	{
 		loadingComparatorData = data.getProperty("comparator", var());
 	}
+}
+
+void StandardCondition::afterLoadJSONDataInternal()
+{
+	Condition::afterLoadJSONDataInternal();
+	for (int i = 0; i < getIterationCount(); i++) checkComparator(i);
 }
 
 

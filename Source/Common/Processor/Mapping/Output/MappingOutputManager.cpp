@@ -32,6 +32,11 @@ void MappingOutputManager::clear()
 	BaseManager::clear();
 }
 
+MappingOutput* MappingOutputManager::createItem()
+{
+	return new MappingOutput(iterator);
+}
+
 void MappingOutputManager::setOutParams(Array<Parameter *> params)
 {
 	outParams = Array<WeakReference<Parameter>>(params.getRawDataPointer(), params.size());

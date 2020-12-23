@@ -25,6 +25,8 @@ public:
 
 	void clear() override;
 
+	MappingOutput* createItem() override;
+
 	void setOutParams(Array<Parameter *> params);
 
 	void updateOutputValues(int iterationIndex);

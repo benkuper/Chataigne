@@ -39,7 +39,7 @@ ChataigneLogCommand::~ChataigneLogCommand()
 
 void ChataigneLogCommand::setValueInternal(var _value, int iterationIndex)
 {
-	if (_value.isArray() && _value.size() > 0)
+	/*if (_value.isArray() && _value.size() > 0)
 	{
 		String s = _value[0].toString();
 		for (int i = 1; i < _value.size(); ++i) s += ", " + _value[i].toString();
@@ -49,6 +49,7 @@ void ChataigneLogCommand::setValueInternal(var _value, int iterationIndex)
 	{
 		((StringParameter*)value)->setValue(_value.isDouble() ? String((float)_value,3):_value.toString());
 	}
+	*/
 }
 
 void ChataigneLogCommand::triggerInternal(int iterationIndex)
@@ -72,19 +73,17 @@ void ChataigneLogCommand::triggerInternal(int iterationIndex)
 
 	case VALUE:
 	{
-		String vString = "[not set]";
-		Parameter* p = nullptr;
-		if (context == ACTION)  p = dynamic_cast<Parameter*>(((TargetParameter*)value)->target.get());
-		else p = value;
+		var val = "[not set]";
+		if (context == ACTION) val = dynamic_cast<Parameter*>(((TargetParameter*)value)->target.get())->value;
+		else val = getLinkedValue(value, iterationIndex);
 		
-		if (p != nullptr) vString = p->type == Controllable::FLOAT ? String(p->floatValue(), 3) : p->stringValue();
-	
+		String vString = value->type == Controllable::FLOAT ? String((float)val, 3) : val.toString();
+		
 		switch (lt)
 		{
 		case INFO: LOG(msg + " " + vString); break;
 		case WARNING: LOGWARNING(msg + " " + vString);; break;
 		case ERROR: LOGERROR(msg + " " + vString); break;
-
 		}
 	}
 	break;

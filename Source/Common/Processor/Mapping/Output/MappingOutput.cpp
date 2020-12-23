@@ -12,8 +12,8 @@
 #include "Common/Command/BaseCommand.h"
  
 
-MappingOutput::MappingOutput() :
-	BaseCommandHandler("MappingOutput",CommandContext::MAPPING)
+MappingOutput::MappingOutput(IteratorProcessor * iterator) :
+	BaseCommandHandler("MappingOutput",CommandContext::MAPPING, nullptr, iterator)
 {
 	isSelectable = false;
 }

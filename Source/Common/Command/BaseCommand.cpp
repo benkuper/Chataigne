@@ -13,12 +13,12 @@
 #include "Module/Module.h"
 #include "ui/BaseCommandEditor.h"
 
-BaseCommand::BaseCommand(Module * _module, CommandContext _context, var _params, IteratorProcessor * iterator) :
+BaseCommand::BaseCommand(Module* _module, CommandContext _context, var _params, IteratorProcessor* iterator) :
 	ControllableContainer("Command"),
 	IterativeTarget(iterator),
 	context(_context),
 	module(_module),
-    moduleRef(_module),
+	moduleRef(_module),
 	params(_params),
 	saveAndLoadTargetMappings(false),
 	linkedTemplate(nullptr),
@@ -71,7 +71,7 @@ bool BaseCommand::isControllableMappable(Controllable* c)
 	return c->type != c->TRIGGER || c->type != c->ENUM || c->type != c->CUSTOM;
 }
 
-void BaseCommand::linkToTemplate(CommandTemplate * ct)
+void BaseCommand::linkToTemplate(CommandTemplate* ct)
 {
 	if (linkedTemplate != nullptr && !templateRef.wasObjectDeleted() && !linkedTemplate->isClearing)
 	{
@@ -96,9 +96,9 @@ void BaseCommand::updateParametersFromTemplate()
 {
 	if (linkedTemplate == nullptr) return;
 
-	for (auto & pc : linkedTemplate->paramsContainer.controllableContainers)
+	for (auto& pc : linkedTemplate->paramsContainer.controllableContainers)
 	{
-		CommandTemplateParameter * ctp = dynamic_cast<CommandTemplateParameter *>(pc.get());
+		CommandTemplateParameter* ctp = dynamic_cast<CommandTemplateParameter*>(pc.get());
 		updateParameterFromTemplate(ctp);
 	}
 
@@ -108,7 +108,7 @@ void BaseCommand::updateParametersFromTemplate()
 	}
 }
 
-void BaseCommand::updateParameterFromTemplate(CommandTemplateParameter * ctp)
+void BaseCommand::updateParameterFromTemplate(CommandTemplateParameter* ctp)
 {
 	if (ctp == nullptr) return;
 
@@ -124,26 +124,26 @@ void BaseCommand::updateParameterFromTemplate(CommandTemplateParameter * ctp)
 	}
 }
 
-void BaseCommand::setupTemplateParameters(CommandTemplate * ct)
+void BaseCommand::setupTemplateParameters(CommandTemplate* ct)
 {
 	ct->paramsContainer.clear();
-	
+
 	Array<WeakReference<Parameter>> allParams = getAllParameters();
-	for (auto &p : allParams)
+	for (auto& p : allParams)
 	{
 		if (!p->enabled || p->isControllableFeedbackOnly || p->hideInEditor) continue;
-		CommandTemplateParameter * ctp = new CommandTemplateParameter(p);
+		CommandTemplateParameter* ctp = new CommandTemplateParameter(p);
 		ct->paramsContainer.addChildControllableContainer(ctp);
 		ct->templateParams.add(ctp);
 	}
 
-	
+
 	for (auto& cc : controllableContainers)
 	{
 		if (cc == customValuesManager.get()) continue;
 		ControllableContainer* cct = new ControllableContainer(cc->niceName);
 		ct->paramsContainer.addChildControllableContainer(cct, true);
-		
+
 		Array<WeakReference<Parameter>> allParams = cc->getAllParameters();
 		for (auto& p : allParams)
 		{
@@ -167,7 +167,7 @@ void BaseCommand::setUseCustomValues(bool value)
 {
 	if (value)
 	{
-		if(customValuesManager == nullptr)
+		if (customValuesManager == nullptr)
 		{
 			customValuesManager.reset(new CustomValuesCommandArgumentManager(true, false));
 			addChildControllableContainer(customValuesManager.get());
@@ -213,7 +213,7 @@ void BaseCommand::itemsReordered()
 	//useForMappingChanged(nullptr);
 }
 
-void BaseCommand::templateParameterChanged(CommandTemplateParameter * ctp)
+void BaseCommand::templateParameterChanged(CommandTemplateParameter* ctp)
 {
 	updateParameterFromTemplate(ctp);
 }
@@ -227,100 +227,18 @@ void BaseCommand::setMappingValueType(Controllable::Type type)
 
 void BaseCommand::trigger(int iterationIndex)
 {
-    if(moduleRef.wasObjectDeleted())
-    {
-        DBG("Module removed, not processing that");
-        return;
-    }
-    
-    triggerInternal(iterationIndex);
+	if (moduleRef.wasObjectDeleted())
+	{
+		DBG("Module removed, not processing that");
+		return;
+	}
+
+	triggerInternal(iterationIndex);
 }
 
 void BaseCommand::setValue(var value, int iterationIndex)
 {
 	for (auto& pLink : paramLinks) pLink->updateMappingInputValue(value, iterationIndex);
-
-	/*
-	if (!value.isArray())
-	{
-		if (targetMappingParameters.contains(0) && targetMappingParameters[0] != nullptr)
-		{
-			Array<WeakReference<Parameter>> pList = *targetMappingParameters[0];
-			for (auto &p : pList)
-			{
-				if (p == nullptr || p.wasObjectDeleted()) continue;
-
-				if (p->type == Controllable::ENUM)
-				{
-					EnumParameter* ep = (EnumParameter*)p.get();
-					int index = jlimit(0, ep->enumValues.size() -1, (int)value);
-					ep->setValueWithKey(ep->enumValues[index]->key);
-				}
-				else
-				{
-					if (!p->value.isArray()) p->setValue(value);
-					else
-					{
-
-						var newVal;
-						newVal.append(value);
-						for (int i = 1; i < p->value.size(); ++i) newVal.append(p->value[i]);
-						p->setValue(newVal);
-					}
-				}
-			}
-		}
-	} else
-	{
-		int maxSize = value.size();
-		for (int i = 0; i < maxSize; )
-		{
-			int numValToIncrement = 1;
-
-			if (targetMappingParameters.contains(i) && targetMappingParameters[i] != nullptr)
-			{
-				Array<WeakReference<Parameter>> pList = *targetMappingParameters[i];
-
-				for (auto &p : pList)
-				{
-					if (p == nullptr || p.wasObjectDeleted()) continue;
-
-
-					if (p->type == Controllable::ENUM)
-					{
-						EnumParameter* ep = (EnumParameter*)p.get();
-						int index = jlimit(0, ep->enumValues.size() - 1, (int)value[i]);
-						ep->setValueWithKey(ep->enumValues[index]->key);
-
-					}else if (p->value.isArray())
-					{
-						var newVal;
-						for (int j = 0; j < p->value.size(); j++)
-						{
-							if (i + j < maxSize)
-							{
-								newVal.append(value[i + j]);
-							}
-							else
-							{
-								newVal.append(p->value[j]);
-							}
-						}
-						p->setValue(newVal);
-						numValToIncrement = jmax(numValToIncrement, newVal.size());
-					}
-					else
-					{
-						p->setValue(value[i]);
-					}
-				}
-			}
-
-			i += numValToIncrement;
-		}
-	}
-	*/
-
 	setValueInternal(value, iterationIndex);
 	trigger(iterationIndex);
 }
@@ -345,7 +263,7 @@ void BaseCommand::linkParamToMappingIndex(Parameter* p, int mappingIndex)
 	}
 }
 
-void BaseCommand::inspectableDestroyed(Inspectable * i)
+void BaseCommand::inspectableDestroyed(Inspectable* i)
 {
 	if (i == templateRef)
 	{
@@ -360,7 +278,7 @@ var BaseCommand::getJSONData()
 	var pLinkData(new DynamicObject());
 	for (auto& pLink : paramLinks)
 	{
-		if(pLink->linkType != pLink->NONE) pLinkData.getDynamicObject()->setProperty(pLink->parameter->shortName, pLink->getJSONData());
+		if (pLink->linkType != pLink->NONE) pLinkData.getDynamicObject()->setProperty(pLink->parameter->shortName, pLink->getJSONData());
 	}
 
 	data.getDynamicObject()->setProperty("paramLinks", pLinkData);
@@ -385,9 +303,9 @@ var BaseCommand::getJSONData()
 
 void BaseCommand::loadJSONDataInternal(var data)
 {
-	var pLinksData = data.getProperty("paramLinks",var());
+	var pLinksData = data.getProperty("paramLinks", var());
 	for (auto& pLink : paramLinks) pLink->loadJSONData(pLinksData.getProperty(pLink->parameter->shortName, var()));
-	
+
 	/*
 	if (saveAndLoadTargetMappings && context == MAPPING)
 	{
@@ -417,11 +335,11 @@ void BaseCommand::afterLoadJSONDataInternal()
 	//useForMappingChanged(nullptr); //force rebuild targetMappings
 }
 
-BaseCommand * BaseCommand::create(ControllableContainer * module, CommandContext context, var params, IteratorProcessor * iterator)
+BaseCommand* BaseCommand::create(ControllableContainer* module, CommandContext context, var params, IteratorProcessor* iterator)
 {
-	Module * m = dynamic_cast<Module *>(module);
+	Module* m = dynamic_cast<Module*>(module);
 	jassert(m != nullptr);
-	CommandTemplate * commandTemplate = m->templateManager->getItemWithName(params.getProperty("template",""));
+	CommandTemplate* commandTemplate = m->templateManager->getItemWithName(params.getProperty("template", ""));
 	if (commandTemplate == nullptr)
 	{
 		LOGERROR("Template not found : " << params.getProperty("template", "").toString());

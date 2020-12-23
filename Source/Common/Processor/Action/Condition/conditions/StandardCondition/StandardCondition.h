@@ -56,6 +56,7 @@ public:
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
+	void afterLoadJSONDataInternal() override;
 
 	InspectableEditor * getEditor(bool isRoot) override;
 

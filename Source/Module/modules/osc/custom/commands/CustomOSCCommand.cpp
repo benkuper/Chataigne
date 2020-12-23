@@ -34,11 +34,11 @@ void CustomOSCCommand::triggerInternal(int iterationIndex)
 	
 	BaseCommand::triggerInternal(iterationIndex);
 
-	String addString = address->stringValue();
+	String addrString = getLinkedValue(address, iterationIndex);
 	
 	try
 	{
-		OSCMessage m(address->stringValue());
+		OSCMessage m(addrString);
 
 		for (auto &a : customValuesManager->items)
 		{

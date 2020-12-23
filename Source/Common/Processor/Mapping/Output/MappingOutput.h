@@ -16,7 +16,7 @@ class MappingOutput :
 	public BaseCommandHandler
 {
 public:
-	MappingOutput();
+	MappingOutput(IteratorProcessor * iterator = nullptr);
 	virtual ~MappingOutput();
 
 	Controllable::Type outputType;

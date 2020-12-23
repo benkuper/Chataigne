@@ -29,6 +29,10 @@ public:
 
     Array<var> mappingValues;
 
+    //
+    bool replacementHasMappingInputToken;
+    String replacementString;
+
     void iteratorCountChanged() override;
 
     void setLinkType(LinkType type);
@@ -36,8 +40,10 @@ public:
     var getLinkedValue(int iterationIndex = 0);
     void updateMappingInputValue(var value, int iterationIndex);
 
+    String getReplacementString(int iterationIndex);
+
     var getInputMappingValue(var value);
-    
+
     var getJSONData();
     void loadJSONData(var data);
 };

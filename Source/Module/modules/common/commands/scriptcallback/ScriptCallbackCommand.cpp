@@ -48,8 +48,7 @@ void ScriptCallbackCommand::triggerInternal(int iterationIndex)
 	Array<var> args;
 	for (auto& i : customValuesManager->items) args.add(i->param->value);
 	String mName = moduleMethods->getValueData().toString();
-
-	module->scriptManager->callFunctionOnAllItems(mName, args);
+	if(mName.isNotEmpty()) module->scriptManager->callFunctionOnAllItems(mName, args);
 }
 
 var ScriptCallbackCommand::getJSONData()
