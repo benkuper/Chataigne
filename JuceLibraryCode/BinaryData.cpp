@@ -4492,11 +4492,7 @@ static const unsigned char temp_binary_data_62[] =
 const char* tray_icon_png = (const char*) temp_binary_data_62;
 
 //================== custom.cext ==================
-<<<<<<< HEAD
 static const unsigned char temp_binary_data_63[] =
-=======
-static const unsigned char temp_binary_data_62[] =
->>>>>>> master
 "/*\r\n"
 "This version is for pigpio version 26+\r\n"
 "\r\n"
