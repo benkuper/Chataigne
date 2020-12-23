@@ -228,7 +228,7 @@ void BaseCommand::trigger(int iterationIndex)
         return;
     }
     
-    triggerInternal();
+    triggerInternal(iterationIndex);
 }
 
 void BaseCommand::setValue(var value)
@@ -326,10 +326,9 @@ ParameterLink* BaseCommand::getLinkedParam(Parameter* p)
 	return paramLinkMap[p];
 }
 
-var BaseCommand::getLinkedParamValue(Parameter* p)
+var BaseCommand::getLinkedValue(Parameter* p, int iterationIndex)
 {
-	jassert(paramLinkMap.contains(p));
-	return paramLinkMap[p]->getLinkedValue();
+	return getLinkedParam(p)->getLinkedValue(iterationIndex);
 }
 
 void BaseCommand::inspectableDestroyed(Inspectable * i)

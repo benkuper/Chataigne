@@ -65,12 +65,12 @@ public:
 	
 	virtual void setMappingValueType(Controllable::Type type);
     virtual void trigger(int iterationIndex = 0); //for trigger, will check validity of module
-    virtual void triggerInternal() {} // to be overriden
+    virtual void triggerInternal(int iterationIndex) {} // to be overriden
 	virtual void setValue(var value); //for mapping context
 	virtual void setValueInternal(var value) {}
 
 	virtual ParameterLink* getLinkedParam(Parameter* p);
-	virtual var getLinkedParamValue(Parameter* p);
+	virtual var getLinkedValue(Parameter* p, int iterationIndex);
 
 	virtual void loadPreviousCommandData(var data) { } //default behavior is nothing, can override that to trying hot swap of commands
 	

@@ -27,11 +27,17 @@ public:
     int mappingValueIndex;
     BaseIteratorList* list;
 
+    Array<var> mappingValues;
+
+    void iteratorCountChanged() override;
+
     void setLinkType(LinkType type);
 
-    var getLinkedValue();
-    void updateMappingInputValue(var value);
+    var getLinkedValue(int iterationIndex = 0);
+    void updateMappingInputValue(var value, int iterationIndex);
 
+    var getInputMappingValue(var value);
+    
     var getJSONData();
     void loadJSONData(var data);
 };

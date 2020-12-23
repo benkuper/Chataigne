@@ -23,6 +23,12 @@ ParameterLink::~ParameterLink()
 {
 }
 
+void ParameterLink::iteratorCountChanged()
+{
+    mappingValues.resize(getIterationCount());
+    mappingValues.fill(parameter->getValue().clone());
+}
+
 void ParameterLink::setLinkType(LinkType type)
 {
     if (type == linkType) return;
@@ -30,40 +36,57 @@ void ParameterLink::setLinkType(LinkType type)
     parameter->setControllableFeedbackOnly(linkType != NONE);
 }
 
-var ParameterLink::getLinkedValue()
+var ParameterLink::getLinkedValue(int iterationIndex)
 {
-    return var();
+    switch (linkType)
+    {
+    case NONE:
+        return parameter->getValue();
+        break;
+
+    case INDEX: return iterationIndex + 1;
+    case INDEX_ZERO: return iterationIndex;
+        break;
+
+    case MAPPING_INPUT:
+        return mappingValues[iterationIndex];
+        break;
+    }
 }
 
-void ParameterLink::updateMappingInputValue(var value)
+void ParameterLink::updateMappingInputValue(var value, int iterationIndex)
 {
-    if (!isIterative() || linkType != MAPPING_INPUT) return;
-    
+    if (linkType != MAPPING_INPUT) return;
+
+    var linkedInputValue = getInputMappingValue(value);
+    mappingValues.set(iterationIndex, value);
+    if (!isIterative()) parameter->setValue(linkedInputValue);
+}
+
+var ParameterLink::getInputMappingValue(var value)
+{
+    var result = parameter->value.clone();
     if (!value.isArray())
     {
-        if (!parameter->value.isArray())  parameter->setValue(value);
-        else
+        if (parameter->value.isArray())
         {
-            var val = parameter->value.clone();
-            val[0] = value;
-            parameter->setValue(val);
+            result[0] = value;
         }
     }
-    else if(mappingValueIndex < value.size())
+    else if (mappingValueIndex < value.size())
     {
-        if (!parameter->value.isArray()) parameter->setValue(value[mappingValueIndex]);
+        if (!parameter->value.isArray()) result = value[mappingValueIndex];
         else
         {
-            var val = parameter->value.clone();
             for (int i = 0; i < parameter->value.size(); i++)
             {
                 int index = mappingValueIndex + i;
-                if (index < value.size()) val[i] = value[index];
+                if (index < value.size()) result[i] = value[index];
             }
-            parameter->setValue(val);
         }
     }
-    
+
+    return result;
 }
 
 var ParameterLink::getJSONData()

@@ -94,9 +94,9 @@ void MIDINoteAndCCCommand::setValue(var value)
 	MIDICommand::setValue(value);
 }
 
-void MIDINoteAndCCCommand::triggerInternal()
+void MIDINoteAndCCCommand::triggerInternal(int iterationIndex)
 {
-	MIDICommand::triggerInternal();
+	MIDICommand::triggerInternal(iterationIndex);
 
 	int pitch = 0;
 	if (type == CONTROLCHANGE || type == PROGRAMCHANGE) pitch = number->intValue();
@@ -189,9 +189,9 @@ void MIDISysExCommand::onContainerParameterChangedAsync(Parameter * p, const var
 	}
 }
 
-void MIDISysExCommand::triggerInternal()
+void MIDISysExCommand::triggerInternal(int iterationIndex)
 {
-	MIDICommand::triggerInternal();
+	MIDICommand::triggerInternal(iterationIndex);
 
 	Array<uint8> data;
 	for (auto &c : dataContainer.controllables) data.add(((IntParameter *)c)->intValue());
