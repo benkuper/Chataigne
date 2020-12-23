@@ -248,7 +248,7 @@ bool ToColorFilter::processSingleParameterInternal(Parameter* source, Parameter*
 	{
 		if (source->value.size() >= 3)
 		{
-			Colour c = Colour::fromFloatRGBA(source->value[0], source->value[1], source->value[2], source->value.size() > 3 ? source->value[3] : 1);
+			Colour c = Colour::fromFloatRGBA((float)source->value[0], (float)source->value[1], (float)source->value[2], source->value.size() > 3 ? (float)source->value[3] : 1.0f);
 			((ColorParameter*)out)->setColor(c);
 			return true;
 		}
