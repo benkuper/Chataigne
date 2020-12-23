@@ -1390,9 +1390,6 @@
     <ClCompile Include="..\..\Source\Common\ParameterLink\ui\LinkableParameterEditor.cpp">
       <Filter>Chataigne\Source\Common\ParameterLink\ui</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\Common\ParameterLink\ui\ParameterLinkUI.cpp">
-      <Filter>Chataigne\Source\Common\ParameterLink\ui</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Source\Common\ParameterLink\ParameterLink.cpp">
       <Filter>Chataigne\Source\Common\ParameterLink</Filter>
     </ClCompile>
@@ -5278,9 +5275,6 @@
       <Filter>Chataigne\Source\Analytics</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\ParameterLink\ui\LinkableParameterEditor.h">
-      <Filter>Chataigne\Source\Common\ParameterLink\ui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Common\ParameterLink\ui\ParameterLinkUI.h">
       <Filter>Chataigne\Source\Common\ParameterLink\ui</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\ParameterLink\ParameterLink.h">

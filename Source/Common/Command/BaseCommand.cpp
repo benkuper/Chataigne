@@ -66,6 +66,11 @@ void BaseCommand::onControllableRemoved(Controllable* c)
 	}
 }
 
+bool BaseCommand::isControllableMappable(Controllable* c)
+{
+	return c->type != c->TRIGGER || c->type != c->ENUM || c->type != c->CUSTOM;
+}
+
 void BaseCommand::linkToTemplate(CommandTemplate * ct)
 {
 	if (linkedTemplate != nullptr && !templateRef.wasObjectDeleted() && !linkedTemplate->isClearing)
@@ -231,9 +236,9 @@ void BaseCommand::trigger(int iterationIndex)
     triggerInternal(iterationIndex);
 }
 
-void BaseCommand::setValue(var value)
+void BaseCommand::setValue(var value, int iterationIndex)
 {
-	for (auto& pLink : paramLinks) pLink->updateMappingInputValue(value);
+	for (auto& pLink : paramLinks) pLink->updateMappingInputValue(value, iterationIndex);
 
 	/*
 	if (!value.isArray())
@@ -316,8 +321,8 @@ void BaseCommand::setValue(var value)
 	}
 	*/
 
-	setValueInternal(value);
-	trigger();
+	setValueInternal(value, iterationIndex);
+	trigger(iterationIndex);
 }
 
 ParameterLink* BaseCommand::getLinkedParam(Parameter* p)
@@ -329,6 +334,15 @@ ParameterLink* BaseCommand::getLinkedParam(Parameter* p)
 var BaseCommand::getLinkedValue(Parameter* p, int iterationIndex)
 {
 	return getLinkedParam(p)->getLinkedValue(iterationIndex);
+}
+
+void BaseCommand::linkParamToMappingIndex(Parameter* p, int mappingIndex)
+{
+	if (ParameterLink* pLink = getLinkedParam(p))
+	{
+		pLink->setLinkType(pLink->MAPPING_INPUT);
+		pLink->mappingValueIndex = mappingIndex;
+	}
 }
 
 void BaseCommand::inspectableDestroyed(Inspectable * i)

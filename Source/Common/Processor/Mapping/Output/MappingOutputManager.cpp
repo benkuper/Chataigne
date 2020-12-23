@@ -12,8 +12,9 @@
 #include "Common/Command/ui/BaseCommandHandlerManagerEditor.h"
 #include "ui/MappingOutputManagerEditor.h"
 
-MappingOutputManager::MappingOutputManager() :
+MappingOutputManager::MappingOutputManager(IteratorProcessor * iterator) :
 	BaseManager<MappingOutput>("Outputs"),
+	IterativeTarget(iterator),
 	omAsyncNotifier(5)
 {
 	canBeCopiedAndPasted = true;
@@ -40,19 +41,19 @@ void MappingOutputManager::setOutParams(Array<Parameter *> params)
 }
 
 
-void MappingOutputManager::updateOutputValues()
+void MappingOutputManager::updateOutputValues(int iterationIndex)
 {
 	var value = getMergedOutValue();
 	if (value.isVoid()) return; //possible if parameters have been deleted in another thread during process
 
-	for (auto& i : items) i->setValue(value);
+	for (auto& i : items) i->setValue(value, iterationIndex);
 }
 
-void MappingOutputManager::updateOutputValue(MappingOutput * o)
+void MappingOutputManager::updateOutputValue(MappingOutput * o, int iterationIndex)
 {
 	if (outParams.size() == 0) return;
 	if (o == nullptr) return;
-	o->setValue(getMergedOutValue());
+	o->setValue(getMergedOutValue(), iterationIndex);
 }
 
 var MappingOutputManager::getMergedOutValue()
@@ -80,7 +81,7 @@ void MappingOutputManager::addItemInternal(MappingOutput * o, var)
 {
 	o->addCommandHandlerListener(this);
 	if(outParams.size() > 0)o->setOutputType(outParams[0]->type);
-	updateOutputValue(o);
+	for (int i = 0; i < getIterationCount(); i++) updateOutputValue(o, i);
 }
 
 void MappingOutputManager::removeItemInternal(MappingOutput * o)
@@ -90,12 +91,12 @@ void MappingOutputManager::removeItemInternal(MappingOutput * o)
 
 void MappingOutputManager::commandChanged(BaseCommandHandler * h)
 {
-	updateOutputValue(dynamic_cast<MappingOutput *>(h));
+	for (int i = 0; i < getIterationCount(); i++) updateOutputValue(dynamic_cast<MappingOutput *>(h), i);
 }
 
 void MappingOutputManager::commandUpdated(BaseCommandHandler * h)
 {
-	updateOutputValue(dynamic_cast<MappingOutput *>(h));
+	for (int i = 0; i < getIterationCount(); i++) updateOutputValue(dynamic_cast<MappingOutput *>(h), i);
 }
 
 InspectableEditor * MappingOutputManager::getEditor(bool isRoot)

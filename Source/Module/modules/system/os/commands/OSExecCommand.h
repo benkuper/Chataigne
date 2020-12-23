@@ -34,7 +34,7 @@ public:
 	BoolParameter * killMode;
 	BoolParameter* silentMode;
 
-	void triggerInternal() override;
+	void triggerInternal(int iterationIndex) override;
 
 	void killProcess(const String &name);
 

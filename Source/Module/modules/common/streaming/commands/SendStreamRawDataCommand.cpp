@@ -21,9 +21,9 @@ SendStreamRawDataCommand::~SendStreamRawDataCommand()
 {
 }
 
-void SendStreamRawDataCommand::triggerInternal()
+void SendStreamRawDataCommand::triggerInternal(int iterationIndex)
 {
-	StreamingCommand::triggerInternal(); //bypass StreamValueCommands to implement our own way
+	StreamingCommand::triggerInternal(iterationIndex); //bypass StreamValueCommands to implement our own way
 
 	Array<uint8> data;
 	for (auto &i : customValuesManager->items) data.add(i->param->intValue());

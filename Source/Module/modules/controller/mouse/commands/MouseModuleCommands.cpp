@@ -43,7 +43,7 @@ MouseModuleCommands::~MouseModuleCommands()
 {
 }
 
-void MouseModuleCommands::triggerInternal()
+void MouseModuleCommands::triggerInternal(int iterationIndex)
 {
 	switch (type)
 	{

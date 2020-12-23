@@ -17,6 +17,9 @@ Mapping::Mapping(var params, IteratorProcessor * iterator, bool canBeDisabled) :
 	Thread("Mapping"),
 	processMode(VALUE_CHANGE),
 	mappingParams("Parameters"),
+	im(iterator),
+	fm(iterator),
+	om(iterator),
 	outValuesCC("Out Values"),
 	isRebuilding(false),
 	isProcessing(false),
@@ -143,7 +146,7 @@ void Mapping::updateMappingChain(MappingFilter * afterThisFilter)
 	process();
 }
 
-void Mapping::process(bool forceOutput)
+void Mapping::process(bool forceOutput, int iterationIndex)
 {
 	if ((canBeDisabled && !enabled->boolValue()) || forceDisabled) return;
 	if (im.items.size() == 0) return;
@@ -168,7 +171,7 @@ void Mapping::process(bool forceOutput)
 					else p->setValue(fp->value);
 				}
 			}
-			om.updateOutputValues();
+			om.updateOutputValues(iterationIndex); //Iterator WIP should here be function of iterationIndex
 		}
 		
 		isProcessing = false;
@@ -253,7 +256,7 @@ void Mapping::onContainerParameterChangedInternal(Parameter * p)
 		if (enabled->boolValue() && !forceDisabled && !enabled->boolValue())
 		{
 			if (updateRate->enabled) startThread();
-			process();
+			for (int i = 0; i < getIterationCount(); i++) process(false, i);
 		}
 		else
 		{
@@ -304,7 +307,7 @@ void Mapping::run()
 		
 		millis = Time::getMillisecondCounter();
 		
-		process();
+		for (int i = 0; i < getIterationCount(); i++) process(false, i);
 
 		uint32 newMillis = Time::getMillisecondCounter();
 

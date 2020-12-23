@@ -84,7 +84,7 @@ DMXCommand::~DMXCommand()
 
 }
 
-void DMXCommand::setValue(var val)
+void DMXCommand::setValue(var val, int iterationIndex)
 {
 	//DBG("Value val " << (int)val.isArray() << " / " << val.size()) ;
 
@@ -109,12 +109,12 @@ void DMXCommand::setValue(var val)
 		//DBG("Val is array ");
 		//for(int i=0;i<newVal.size();++i) DBG("new val [" << i << "]/ " << (float)newVal[i]);
 	}
-	BaseCommand::setValue(newVal);
+	BaseCommand::setValue(newVal, iterationIndex);
 }
 
-void DMXCommand::triggerInternal()
+void DMXCommand::triggerInternal(int iterationIndex)
 {
-	BaseCommand::triggerInternal();
+	BaseCommand::triggerInternal(iterationIndex);
 
 	switch (dmxAction) 
 	{

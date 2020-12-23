@@ -28,6 +28,7 @@ ChataigneLogCommand::ChataigneLogCommand(ChataigneGenericModule* _module, Comman
 		{
 			value = addStringParameter("Value", "The value that will be logged", "[notset]");
 			value->setControllableFeedbackOnly(true);
+			linkParamToMappingIndex(value, 0);
 		}
 	}
 }
@@ -36,7 +37,7 @@ ChataigneLogCommand::~ChataigneLogCommand()
 {
 }
 
-void ChataigneLogCommand::setValueInternal(var _value)
+void ChataigneLogCommand::setValueInternal(var _value, int iterationIndex)
 {
 	if (_value.isArray() && _value.size() > 0)
 	{
@@ -46,12 +47,11 @@ void ChataigneLogCommand::setValueInternal(var _value)
 	}
 	else
 	{
-		
 		((StringParameter*)value)->setValue(_value.isDouble() ? String((float)_value,3):_value.toString());
 	}
 }
 
-void ChataigneLogCommand::triggerInternal()
+void ChataigneLogCommand::triggerInternal(int iterationIndex)
 {
 	LogType lt = logType->getValueDataAsEnum<LogType>();
 

@@ -59,9 +59,9 @@ OSExecCommand::~OSExecCommand()
 {
 }
 
-void OSExecCommand::triggerInternal()
+void OSExecCommand::triggerInternal(int iterationIndex)
 {
-	BaseCommand::triggerInternal();
+	BaseCommand::triggerInternal(int iterationIndex);
 
 	if (!module->enabled->boolValue()) return;
 

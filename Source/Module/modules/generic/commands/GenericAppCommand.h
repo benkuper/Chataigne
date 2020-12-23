@@ -25,7 +25,7 @@ public:
 
 	FileParameter* file;
 
-	void triggerInternal() override;
+	void triggerInternal(int iterationIndex) override;
 
 	static BaseCommand* create(ControllableContainer* module, CommandContext context, var params, IteratorProcessor * iterator = nullptr);
 };

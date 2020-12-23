@@ -29,7 +29,7 @@ public:
     IntParameter* pin;
     Parameter* valueParam;
 
-    void triggerInternal() override;
+    void triggerInternal(int iterationIndex) override;
     
     static GPIOCommand* create(ControllableContainer * cc, CommandContext context, var params, IteratorProcessor * iterator = nullptr) { return new GPIOCommand((GPIOModule *)cc, context, params, iterator); }
 };

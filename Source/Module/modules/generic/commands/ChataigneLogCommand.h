@@ -28,8 +28,8 @@ public:
 	EnumParameter* logType;
 	Parameter * value;
 
-	void setValueInternal(var value) override;
-	void triggerInternal() override;
+	void setValueInternal(var value, int iterationIndex) override;
+	void triggerInternal(int iterationIndex) override;
 
 	static BaseCommand * create(ControllableContainer * module, CommandContext context, var params, IteratorProcessor * iterator = nullptr);
 };

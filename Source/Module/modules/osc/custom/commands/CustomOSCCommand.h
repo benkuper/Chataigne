@@ -26,7 +26,7 @@ public:
 	CustomValuesCommandArgumentManager wildcardsContainer;
 	Array<Parameter *> wildCardParams;
 
-	void triggerInternal() override;
+	void triggerInternal(int iterationIndex) override;
 
 	virtual void onContainerParameterChanged(Parameter * p) override;
 

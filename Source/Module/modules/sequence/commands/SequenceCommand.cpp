@@ -78,9 +78,9 @@ SequenceCommand::~SequenceCommand()
 {
 }
 
-void SequenceCommand::triggerInternal()
+void SequenceCommand::triggerInternal(int iterationIndex)
 {
-	BaseCommand::triggerInternal();
+	BaseCommand::triggerInternal(int iterationIndex);
 
 	if (actionType != STOP_ALL_SEQUENCES && actionType != PLAY_MULTI_SEQUENCES)
 	{

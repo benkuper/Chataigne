@@ -30,8 +30,8 @@ public:
 	
 	Array<uint8> mappedValues;
 
-	void setValue(var value) override;
-	void triggerInternal() override;
+	void setValue(var value, int iterationIndex) override;
+	void triggerInternal(int iterationIndex) override;
 
 	static SendStreamStringCommand * create(ControllableContainer * module, CommandContext context, var params, IteratorProcessor * iterator) { return new SendStreamStringCommand((StreamingModule *)module, context, params, iterator); }
 

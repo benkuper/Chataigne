@@ -34,7 +34,7 @@ public:
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
 
-	void triggerInternal() override;
+	void triggerInternal(int iterationIndex) override;
 
 	static GenericOSCQueryCommand * create(ControllableContainer * module, CommandContext context, var params, IteratorProcessor * iterator) { return new GenericOSCQueryCommand((GenericOSCQueryModule *)module, context, params, iterator); }
 };

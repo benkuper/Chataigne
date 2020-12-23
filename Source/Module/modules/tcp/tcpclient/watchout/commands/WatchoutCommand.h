@@ -24,7 +24,7 @@ public:
 
 	std::unique_ptr<ControllableContainer> paramContainer;
 
-	void triggerInternal() override;
+	void triggerInternal(int iterationIndex) override;
 
 	static WatchoutCommand * create(ControllableContainer * module, CommandContext context, var params, IteratorProcessor * iterator) { return new WatchoutCommand((WatchoutModule *)module, context, params, iterator); }
 

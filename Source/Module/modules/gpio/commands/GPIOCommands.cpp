@@ -42,7 +42,7 @@ GPIOCommand::~GPIOCommand()
 {
 }
 
-void GPIOCommand::triggerInternal()
+void GPIOCommand::triggerInternal(int iterationIndex)
 {
     switch (action)
     {

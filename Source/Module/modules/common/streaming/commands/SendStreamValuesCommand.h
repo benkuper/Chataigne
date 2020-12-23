@@ -25,7 +25,7 @@ public:
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
 
-	void triggerInternal() override;
+	void triggerInternal(int iterationIndex) override;
 
 	static SendStreamValuesCommand * create(ControllableContainer * module, CommandContext context, var params, IteratorProcessor * iterator) { return new SendStreamValuesCommand((StreamingModule *)module, context, params, iterator); }
 

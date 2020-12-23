@@ -69,7 +69,7 @@ SendStreamStringCommand::~SendStreamStringCommand()
 {
 }
 
-void SendStreamStringCommand::setValue(var value)
+void SendStreamStringCommand::setValue(var value, int iterationIndex)
 {
 	switch (dataMode)
 	{
@@ -89,10 +89,10 @@ void SendStreamStringCommand::setValue(var value)
 		break;
 	}
 
-	StreamingCommand::setValue(value);
+	StreamingCommand::setValue(value, iterationIndex);
 }
 
-void SendStreamStringCommand::triggerInternal()
+void SendStreamStringCommand::triggerInternal(int iterationIndex)
 {
 	switch (dataMode)
 	{

@@ -35,8 +35,8 @@ public:
 
 	BoolParameter * remap01To255;
 
-	void setValue(var value) override;
-	void triggerInternal() override;
+	void setValue(var value, int iterationIndex) override;
+	void triggerInternal(int iterationIndex) override;
 
 
 	var getJSONData() override;

@@ -35,7 +35,7 @@ public:
 	Point2DParameter* windowPos;
 	Point2DParameter* windowSize;
 
-	void triggerInternal() override;
+	void triggerInternal(int iterationIndex) override;
 
 #if JUCE_WINDOWS
 	static BOOL CALLBACK enumWindowCallback(HWND hWnd, LPARAM lparam);

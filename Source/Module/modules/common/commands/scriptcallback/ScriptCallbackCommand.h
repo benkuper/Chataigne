@@ -20,7 +20,7 @@ public:
 
 	EnumParameter* moduleMethods;
 
-	void triggerInternal() override;
+	void triggerInternal(int iterationIndex) override;
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;

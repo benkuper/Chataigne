@@ -113,10 +113,6 @@
 			isa = PBXBuildFile;
 			fileRef = 24B8EBDE4FCE8C5E4A4A84F5;
 		};
-		F33BCC64C79731220481C79E = {
-			isa = PBXBuildFile;
-			fileRef = AF0466EDEFE0688A67F54DC0;
-		};
 		41036DAC07D5075CB3AD6D33 = {
 			isa = PBXBuildFile;
 			fileRef = EA1E97F19E0B43C7EC126720;
@@ -3977,13 +3973,6 @@
 			path = ../../Resources/Modules/Serial.png;
 			sourceTree = "SOURCE_ROOT";
 		};
-		8511A85FD311534234B4EC5C = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = ParameterLinkUI.h;
-			path = ../../Source/Common/ParameterLink/ui/ParameterLinkUI.h;
-			sourceTree = "SOURCE_ROOT";
-		};
 		85D8FFDCE078F33306AB4713 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -4865,13 +4854,6 @@
 			name = "juce_audio_formats";
 			path = "~/JUCE/modules/juce_audio_formats";
 			sourceTree = "<absolute>";
-		};
-		AF0466EDEFE0688A67F54DC0 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = ParameterLinkUI.cpp;
-			path = ../../Source/Common/ParameterLink/ui/ParameterLinkUI.cpp;
-			sourceTree = "SOURCE_ROOT";
 		};
 		AF52F768B78BA08E716F431A = {
 			isa = PBXFileReference;
@@ -6635,8 +6617,6 @@
 			children = (
 				24B8EBDE4FCE8C5E4A4A84F5,
 				E45FB289FAE0B1C007DC9C96,
-				AF0466EDEFE0688A67F54DC0,
-				8511A85FD311534234B4EC5C,
 			);
 			name = ui;
 			sourceTree = "<group>";
@@ -9091,7 +9071,6 @@
 				A377485D00E6BD3B63525CE2,
 				2880570A24D66CE182245D76,
 				9B5065AA8C19C8DF58253515,
-				F33BCC64C79731220481C79E,
 				41036DAC07D5075CB3AD6D33,
 				6648A28A780225272E677EAE,
 				43E1EC2D9919CC1742754AA5,

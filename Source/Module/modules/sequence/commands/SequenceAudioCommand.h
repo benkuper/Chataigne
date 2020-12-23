@@ -35,7 +35,7 @@ public:
 
 	var dataToLoad;
 
-	virtual void triggerInternal() override;
+	virtual void triggerInternal(int iterationIndex) override;
 
 	virtual void loadJSONDataInternal(var data) override;
 	virtual void endLoadFile() override;

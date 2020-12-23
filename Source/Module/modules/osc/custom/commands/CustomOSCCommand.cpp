@@ -28,11 +28,11 @@ CustomOSCCommand::~CustomOSCCommand()
 }
 
 
-void CustomOSCCommand::triggerInternal()
+void CustomOSCCommand::triggerInternal(int iterationIndex)
 {
 	if (oscModule == nullptr) return;
 	
-	BaseCommand::triggerInternal();
+	BaseCommand::triggerInternal(int iterationIndex);
 
 	String addString = address->stringValue();
 	

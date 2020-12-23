@@ -41,9 +41,9 @@ WatchoutCommand::~WatchoutCommand()
 {
 }
 
-void WatchoutCommand::triggerInternal()
+void WatchoutCommand::triggerInternal(int iterationIndex)
 {
-	BaseCommand::triggerInternal();
+	BaseCommand::triggerInternal(int iterationIndex);
 
 	String s = valueParam->stringValue();
 	if (paramContainer != nullptr)

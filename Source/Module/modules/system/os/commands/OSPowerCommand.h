@@ -22,7 +22,7 @@ public:
 	enum ActionType { SHUTDOWN, REBOOT };
 	ActionType actionType;
 
-	void triggerInternal() override;
+	void triggerInternal(int iterationIndex) override;
 
 	static OSPowerCommand * create(ControllableContainer * module, CommandContext context, var params, IteratorProcessor * iterator) { return new OSPowerCommand((OSModule *)module, context, params, iterator); }
 

@@ -50,7 +50,7 @@ public:
 	int maxRemap;
 
 	void setValue(var value) override;
-	void triggerInternal() override;
+	void triggerInternal(int iterationIndex) override;
 
 	static MIDINoteAndCCCommand * create(ControllableContainer * module, CommandContext context, var params, IteratorProcessor * iterator) { return new MIDINoteAndCCCommand((MIDIModule *)module, context, params, iterator); }
 
@@ -73,7 +73,7 @@ public:
 
 	void updateBytesParams();
 	void onContainerParameterChangedAsync(Parameter * p, const var &param) override;
-	void triggerInternal() override;
+	void triggerInternal(int iterationIndex) override;
 
 	static MIDISysExCommand * create(ControllableContainer * module, CommandContext context, var params, IteratorProcessor * iterator) { return new MIDISysExCommand((MIDIModule *)module, context, params, iterator); }
 

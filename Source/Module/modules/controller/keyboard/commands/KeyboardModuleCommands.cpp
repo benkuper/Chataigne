@@ -39,7 +39,7 @@ KeyboardModuleCommands::~KeyboardModuleCommands()
 {
 }
 
-void KeyboardModuleCommands::triggerInternal()
+void KeyboardModuleCommands::triggerInternal(int iterationIndex)
 {
 	switch (type)
 	{

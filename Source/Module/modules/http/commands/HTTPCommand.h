@@ -28,7 +28,7 @@ public:
 
 	StringParameter* extraHeaders;
 
-	void triggerInternal() override;
+	void triggerInternal(int iterationIndex) override;
 
 	static BaseCommand * create(ControllableContainer * module, CommandContext context, var params, IteratorProcessor * iterator) { return new HTTPCommand((HTTPModule *)module, context, params, iterator); }
 };

@@ -33,7 +33,7 @@ HTTPCommand::~HTTPCommand()
 }
 
 
-void HTTPCommand::triggerInternal()
+void HTTPCommand::triggerInternal(int iterationIndex)
 {
 	StringPairArray requestParams;
 	for (auto &p : customValuesManager->items) requestParams.set(p->niceName, p->param->stringValue());

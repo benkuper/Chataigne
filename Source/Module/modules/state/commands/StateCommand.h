@@ -30,7 +30,7 @@ public:
 	TargetParameter * target;
 	BoolParameter* enableVal;
 
-	void triggerInternal() override;
+	void triggerInternal(int iterationIndex) override;
 
 
 	//Delayed loading mechanism to ensure all content is created for right targeting

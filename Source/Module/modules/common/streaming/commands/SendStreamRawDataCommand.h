@@ -19,7 +19,7 @@ public:
 	SendStreamRawDataCommand(StreamingModule * _module, CommandContext context, var params, IteratorProcessor* iterator = nullptr);
 	~SendStreamRawDataCommand();
 
-	void triggerInternal() override;
+	void triggerInternal(int iterationIndex) override;
 
 	void customValueCreated(Parameter * p, var data);
 

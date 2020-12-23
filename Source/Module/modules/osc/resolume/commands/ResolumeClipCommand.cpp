@@ -66,14 +66,14 @@ void ResolumeClipCommand::onContainerParameterChanged(Parameter * p)
 	}
 }
 
-void ResolumeClipCommand::triggerInternal()
+void ResolumeClipCommand::triggerInternal(int iterationIndex)
 {
-	ResolumeBaseCommand::triggerInternal();
+	ResolumeBaseCommand::triggerInternal(int iterationIndex);
 
 	if (needsOnOff)
 	{
 		connectParam->setValue(0);
-		ResolumeBaseCommand::triggerInternal();
+		ResolumeBaseCommand::triggerInternal(int iterationIndex);
 		connectParam->setValue(1);
 	}
 

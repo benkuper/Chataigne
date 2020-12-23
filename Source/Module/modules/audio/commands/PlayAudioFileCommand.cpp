@@ -133,7 +133,7 @@ void PlayAudioFileCommand::onControllableFeedbackUpdate(ControllableContainer * 
 	}
 }
 
-void PlayAudioFileCommand::triggerInternal()
+void PlayAudioFileCommand::triggerInternal(int iterationIndex)
 {
 	if (readerSource.get() == nullptr) return;
 	transportSource.setPosition(0);

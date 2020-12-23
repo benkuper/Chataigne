@@ -29,7 +29,7 @@ public:
 	void generateMacFromString();
 
 	void onContainerParameterChanged(Parameter * p) override;
-	void triggerInternal() override;
+	void triggerInternal(int iterationIndex) override;
 
 	InspectableEditor * getEditor(bool isRoot) override;
 

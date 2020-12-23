@@ -120,10 +120,6 @@
                   file="Source/Common/ParameterLink/ui/LinkableParameterEditor.cpp"/>
             <FILE id="MoKWyK" name="LinkableParameterEditor.h" compile="0" resource="0"
                   file="Source/Common/ParameterLink/ui/LinkableParameterEditor.h"/>
-            <FILE id="ptKC9G" name="ParameterLinkUI.cpp" compile="1" resource="0"
-                  file="Source/Common/ParameterLink/ui/ParameterLinkUI.cpp"/>
-            <FILE id="jzI0J2" name="ParameterLinkUI.h" compile="0" resource="0"
-                  file="Source/Common/ParameterLink/ui/ParameterLinkUI.h"/>
           </GROUP>
           <FILE id="rzK5WT" name="ParameterLink.cpp" compile="1" resource="0"
                 file="Source/Common/ParameterLink/ParameterLink.cpp"/>

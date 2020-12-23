@@ -188,7 +188,7 @@ void CVCommand::onContainerParameterChanged(Parameter * p)
 	}
 }
 
-void CVCommand::triggerInternal()
+void CVCommand::triggerInternal(int iterationIndex)
 {
 	switch (type)
 	{

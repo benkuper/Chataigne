@@ -34,7 +34,7 @@ public:
 
 	void setValueParameter(Parameter * p);
 
-	virtual void triggerInternal() override;
+	virtual void triggerInternal(int iterationIndex) override;
 
 	void onContainerParameterChanged(Parameter *) override;
 

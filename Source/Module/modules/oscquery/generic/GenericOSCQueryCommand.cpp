@@ -64,7 +64,7 @@ void GenericOSCQueryCommand::loadJSONDataInternal(var data)
 	valueGhostData = data.getProperty("ghostValue", var());
 }
 
-void GenericOSCQueryCommand::triggerInternal()
+void GenericOSCQueryCommand::triggerInternal(int iterationIndex)
 {
 	if (target->target.wasObjectDeleted() || target->target == nullptr) return;
 	if(valueParam != nullptr) ((Parameter *)target->target.get())->setValue(valueParam->getValue());

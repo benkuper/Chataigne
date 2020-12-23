@@ -27,7 +27,7 @@ GenericAppCommand::~GenericAppCommand()
 {
 }
 
-void GenericAppCommand::triggerInternal()
+void GenericAppCommand::triggerInternal(int iterationIndex)
 {
 	switch (type)
 	{

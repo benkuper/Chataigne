@@ -24,7 +24,7 @@ public:
 	BoolParameter* stopTimePlay;
 	FloatParameter* timeParam;
 
-	void triggerInternal() override;
+	void triggerInternal(int iterationIndex) override;
 
 	static ReaperTimeCommand* create(ControllableContainer* module, CommandContext context, var params, IteratorProcessor * iterator) { return new ReaperTimeCommand((ReaperModule*)module, context, params, iterator); }
 

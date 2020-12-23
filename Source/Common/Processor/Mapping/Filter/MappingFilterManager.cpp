@@ -27,8 +27,9 @@
 #include "filters/color/ColorShiftFilter.h"
 
 
-MappingFilterManager::MappingFilterManager() :
-	BaseManager<MappingFilter>("Filters")
+MappingFilterManager::MappingFilterManager(IteratorProcessor * itertor) :
+	BaseManager<MappingFilter>("Filters"),
+	IterativeTarget(iterator)
 {
 	canBeCopiedAndPasted = true;
 
@@ -176,7 +177,6 @@ void MappingFilterManager::filteredParamsChanged(MappingFilter* mf)
 void MappingFilterManager::filteredParamRangeChanged(MappingFilter* mf)
 {
 	notifyNeedsRebuild(mf);
-
 }
 
 void MappingFilterManager::loadJSONDataManagerInternal(var data)

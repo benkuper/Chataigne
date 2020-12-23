@@ -33,7 +33,7 @@ public:
 	void rebuildParametersInternal() override;
 
 	void onContainerParameterChanged(Parameter *) override;
-	void triggerInternal() override;
+	void triggerInternal(int iterationIndex) override;
 
 
 	static BaseCommand * create(ControllableContainer * module, CommandContext context, var params, IteratorProcessor * iterator) { 

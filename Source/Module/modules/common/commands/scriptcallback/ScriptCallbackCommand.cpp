@@ -43,7 +43,7 @@ ScriptCallbackCommand::~ScriptCallbackCommand()
 {
 }
 
-void ScriptCallbackCommand::triggerInternal()
+void ScriptCallbackCommand::triggerInternal(int iterationIndex)
 {
 	Array<var> args;
 	for (auto& i : customValuesManager->items) args.add(i->param->value);

@@ -10,12 +10,14 @@
 
 #pragma once
 #include "MappingInput.h"
+#include "Common/Processor/Iterator/Iterator.h"
 
 class MappingInputManager :
-	public BaseManager<MappingInput>
+	public BaseManager<MappingInput>,
+	public IterativeTarget
 {
 public:
-	MappingInputManager();
+	MappingInputManager(IteratorProcessor * iterator = nullptr);
 	~MappingInputManager();
 
 	void lockInput(Array<Parameter*> input);

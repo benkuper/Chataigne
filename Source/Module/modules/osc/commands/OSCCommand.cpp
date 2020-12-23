@@ -123,11 +123,11 @@ void OSCCommand::onContainerParameterChanged(Parameter * p)
 	}
 }
 
-void OSCCommand::triggerInternal()
+void OSCCommand::triggerInternal(int iterationIndex)
 {
 	if (oscModule == nullptr) return;
 
-	BaseCommand::triggerInternal();
+	BaseCommand::triggerInternal(int iterationIndex);
 
 	try
 	{

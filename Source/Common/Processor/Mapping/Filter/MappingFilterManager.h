@@ -11,13 +11,15 @@
 #pragma once
 
 #include "MappingFilter.h"
+#include "Common/Processor/Iterator/Iterator.h"
 
 class MappingFilterManager :
 	public BaseManager<MappingFilter>,
+	public IterativeTarget,
 	public MappingFilter::FilterListener
 {
 public:
-	MappingFilterManager();
+	MappingFilterManager(IteratorProcessor * iterator = nullptr);
 	~MappingFilterManager();
 
 	Array<Parameter *> inputSourceParams;

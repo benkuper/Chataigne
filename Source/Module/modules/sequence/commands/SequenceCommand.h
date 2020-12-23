@@ -41,7 +41,7 @@ public:
 	var dataToLoad;
 
 
-	virtual void triggerInternal() override;
+	virtual void triggerInternal(int iterationIndex) override;
 
 	virtual void onContainerTriggerTriggered(Trigger* t) override;
 	virtual void onContainerParameterChanged(Parameter* p) override;

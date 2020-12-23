@@ -52,6 +52,8 @@ public:
 	void onControllableAdded(Controllable * c) override;
 	void onControllableRemoved(Controllable * c) override;
 
+	bool isControllableMappable(Controllable* c);
+
 	void linkToTemplate(CommandTemplate * ct);
 	void updateParametersFromTemplate();
 	void updateParameterFromTemplate(CommandTemplateParameter * ctp);
@@ -66,11 +68,12 @@ public:
 	virtual void setMappingValueType(Controllable::Type type);
     virtual void trigger(int iterationIndex = 0); //for trigger, will check validity of module
     virtual void triggerInternal(int iterationIndex) {} // to be overriden
-	virtual void setValue(var value); //for mapping context
-	virtual void setValueInternal(var value) {}
+	virtual void setValue(var value, int iterationIndex); //for mapping context
+	virtual void setValueInternal(var value, int iterationIndex) {}
 
 	virtual ParameterLink* getLinkedParam(Parameter* p);
 	virtual var getLinkedValue(Parameter* p, int iterationIndex);
+	void linkParamToMappingIndex(Parameter* p, int mappingIndex);
 
 	virtual void loadPreviousCommandData(var data) { } //default behavior is nothing, can override that to trying hot swap of commands
 	

@@ -162,7 +162,6 @@
     <ClCompile Include="..\..\Source\Guider\Guider.cpp"/>
     <ClCompile Include="..\..\Source\Analytics\MatomoAnalytics.cpp"/>
     <ClCompile Include="..\..\Source\Common\ParameterLink\ui\LinkableParameterEditor.cpp"/>
-    <ClCompile Include="..\..\Source\Common\ParameterLink\ui\ParameterLinkUI.cpp"/>
     <ClCompile Include="..\..\Source\Common\ParameterLink\ParameterLink.cpp"/>
     <ClCompile Include="..\..\Source\Common\Zeroconf\ZeroconfManager.cpp"/>
     <ClCompile Include="..\..\Source\Common\InputSystem\InputDeviceHelpers.cpp"/>
@@ -3231,7 +3230,6 @@
     <ClInclude Include="..\..\Source\Guider\Guider.h"/>
     <ClInclude Include="..\..\Source\Analytics\MatomoAnalytics.h"/>
     <ClInclude Include="..\..\Source\Common\ParameterLink\ui\LinkableParameterEditor.h"/>
-    <ClInclude Include="..\..\Source\Common\ParameterLink\ui\ParameterLinkUI.h"/>
     <ClInclude Include="..\..\Source\Common\ParameterLink\ParameterLink.h"/>
     <ClInclude Include="..\..\Source\Common\Zeroconf\ZeroconfManager.h"/>
     <ClInclude Include="..\..\Source\Common\InputSystem\InputDeviceHelpers.h"/>

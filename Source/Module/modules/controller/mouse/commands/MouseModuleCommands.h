@@ -28,7 +28,7 @@ public:
 	EnumParameter* buttonID;
 	BoolParameter* isRelative;
 
-	void triggerInternal() override;
+	void triggerInternal(int iterationIndex) override;
 
 	static BaseCommand* create(ControllableContainer* module, CommandContext context, var params, IteratorProcessor * iterator) { return new MouseModuleCommands((MouseModule*)module, context, params, iterator); }
 

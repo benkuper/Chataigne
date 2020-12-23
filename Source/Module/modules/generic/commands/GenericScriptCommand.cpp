@@ -28,14 +28,14 @@ GenericScriptCommand::~GenericScriptCommand()
 {
 }
 
-void GenericScriptCommand::setValueInternal(var value)
+void GenericScriptCommand::setValueInternal(var value, int iterationIndex)
 {
 	Array<var> values;
 	values.add(value);
 	script.callFunction(setValueId, values);
 }
 
-void GenericScriptCommand::triggerInternal()
+void GenericScriptCommand::triggerInternal(int iterationIndex)
 {
 	if(context != MAPPING) script.callFunction(triggerId, Array<var>());
 }

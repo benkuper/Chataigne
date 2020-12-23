@@ -10,8 +10,9 @@
 
 #include "MappingInputManager.h"
 
-MappingInputManager::MappingInputManager() :
-	BaseManager("Inputs")
+MappingInputManager::MappingInputManager(IteratorProcessor * iterator) :
+	BaseManager("Inputs"),
+	IterativeTarget(iterator)
 {
 	selectItemWhenCreated = false;
 }

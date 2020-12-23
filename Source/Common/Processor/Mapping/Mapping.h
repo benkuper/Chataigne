@@ -51,7 +51,7 @@ public:
 
 	void updateMappingChain(MappingFilter * afterThisFilter = nullptr); //will host warnings and type change checks
 
-	void process(bool forceOutput = false);
+	void process(bool forceOutput = false, int iterationIndex = 0);
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;

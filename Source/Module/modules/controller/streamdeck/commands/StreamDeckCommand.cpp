@@ -51,7 +51,7 @@ StreamDeckCommand::~StreamDeckCommand()
 }
 
 
-void StreamDeckCommand::triggerInternal()
+void StreamDeckCommand::triggerInternal(int iterationIndex)
 {
 	int r = row != nullptr ? row->intValue()-1 : 0;
 	int c = column != nullptr ? column->intValue()-1 : 0;

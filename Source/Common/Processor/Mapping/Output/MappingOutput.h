@@ -23,7 +23,7 @@ public:
 	virtual void setOutputType(Controllable::Type type);
 	virtual void setCommand(CommandDefinition * cd) override;
 
-	void setValue(var value);
+	void setValue(var value, int iterationIndex);
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MappingOutput)
 };

@@ -74,7 +74,6 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/Guider_52ec0c30.o \
   $(JUCE_OBJDIR)/MatomoAnalytics_a3cfd84d.o \
   $(JUCE_OBJDIR)/LinkableParameterEditor_ed91bbd8.o \
-  $(JUCE_OBJDIR)/ParameterLinkUI_2c55cfed.o \
   $(JUCE_OBJDIR)/ParameterLink_e54bbf1c.o \
   $(JUCE_OBJDIR)/ZeroconfManager_68129d03.o \
   $(JUCE_OBJDIR)/InputDeviceHelpers_f77a7a0.o \
@@ -435,11 +434,6 @@ $(JUCE_OBJDIR)/MatomoAnalytics_a3cfd84d.o: ../../Source/Analytics/MatomoAnalytic
 $(JUCE_OBJDIR)/LinkableParameterEditor_ed91bbd8.o: ../../Source/Common/ParameterLink/ui/LinkableParameterEditor.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling LinkableParameterEditor.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/ParameterLinkUI_2c55cfed.o: ../../Source/Common/ParameterLink/ui/ParameterLinkUI.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling ParameterLinkUI.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/ParameterLink_e54bbf1c.o: ../../Source/Common/ParameterLink/ParameterLink.cpp

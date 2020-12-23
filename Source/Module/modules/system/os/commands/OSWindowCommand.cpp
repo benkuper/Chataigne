@@ -41,7 +41,7 @@ OSWindowCommand::~OSWindowCommand()
 	waitForThreadToExit(500);
 }
 
-void OSWindowCommand::triggerInternal()
+void OSWindowCommand::triggerInternal(int iterationIndex)
 {
 	if (isThreadRunning())
 	{

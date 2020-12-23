@@ -23,6 +23,7 @@ IteratorListManager::IteratorListManager(IteratorProcessor* it) :
     factory.defs.add(Factory<BaseIteratorList>::Definition::createDef<IteratorList<Point2DParameter>>("", Point2DParameter::getTypeStringStatic()));
     factory.defs.add(Factory<BaseIteratorList>::Definition::createDef<IteratorList<Point3DParameter>>("", Point3DParameter::getTypeStringStatic()));
     factory.defs.add(Factory<BaseIteratorList>::Definition::createDef<IteratorList<TargetParameter>>("", TargetParameter::getTypeStringStatic()));
+    factory.defs.add(Factory<BaseIteratorList>::Definition::createDef<IteratorList<FileParameter>>("", FileParameter::getTypeStringStatic()));
 
     managerFactory = &factory;
 }

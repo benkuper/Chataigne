@@ -53,7 +53,7 @@ SequenceAudioCommand::~SequenceAudioCommand()
 {
 }
 
-void SequenceAudioCommand::triggerInternal()
+void SequenceAudioCommand::triggerInternal(int iterationIndex)
 {
 	switch (actionType)
 	{
