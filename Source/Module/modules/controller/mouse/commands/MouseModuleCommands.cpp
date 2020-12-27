@@ -49,21 +49,22 @@ void MouseModuleCommands::triggerInternal(int iterationIndex)
 	{
 	case SET_CURSOR_POSITION:
     {
-        Point<float> p = position->getPoint();
-        mouseModule->setCursorPosition(p, isRelative->boolValue());
+		var pVal = getLinkedValue(position, iterationIndex);
+		Point<float> p(pVal[0], pVal[1]);
+		mouseModule->setCursorPosition(p, getLinkedValue(isRelative, iterationIndex));
     }
     break;
 
 	case BUTTON_DOWN:
-		mouseModule->setButtonDown((int)buttonID->getValueData());
+		mouseModule->setButtonDown(getLinkedValue(buttonID, iterationIndex));
 		break;
 
 	case BUTTON_UP:
-		mouseModule->setButtonUp((int)buttonID->getValueData());
+		mouseModule->setButtonUp(getLinkedValue(buttonID, iterationIndex));
 		break;
 
 	case BUTTON_CLICK:
-		mouseModule->setButtonClick((int)buttonID->getValueData());
+		mouseModule->setButtonClick(getLinkedValue(buttonID, iterationIndex));
 		break;
 	}
 }

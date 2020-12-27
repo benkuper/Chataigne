@@ -45,6 +45,6 @@ void KeyboardModuleCommands::triggerInternal(int iterationIndex)
 	{
 	case KEY_DOWN: keyboardModule->sendKeyDown(keyID->getValueData()); break;
 	case KEY_UP: keyboardModule->sendKeyUp(keyID->getValueData()); break;
-	case KEY_HIT: keyboardModule->sendKeyHit(keyID->getValueData(), ctrlPressed->boolValue(), altPressed->boolValue(), shiftPressed->boolValue()); break;
+	case KEY_HIT: keyboardModule->sendKeyHit(keyID->getValueData(), getLinkedValue(ctrlPressed, iterationIndex), getLinkedValue(altPressed, iterationIndex), getLinkedValue(shiftPressed, iterationIndex)); break;
 	}
 }

@@ -94,24 +94,24 @@ void SendStreamStringCommand::setValue(var value, int iterationIndex)
 
 void SendStreamStringCommand::triggerInternal(int iterationIndex)
 {
+	String valString = getLinkedValue(valueParam, iterationIndex).toString();
+
 	switch (dataMode)
 	{
 	case STRING:
 	{
-		String m = valueParam->stringValue();
+		if (prefix != nullptr) valString = getLinkedValue(prefix, iterationIndex).toString() + valString;
+		if (appendCR != nullptr && appendCR->boolValue()) valString += "\r";
+		if (appendNL != nullptr && appendNL->boolValue()) valString += "\n";
 
-		if (prefix != nullptr) m = prefix->stringValue() + m;
-		if (appendCR != nullptr && appendCR->boolValue()) m += "\r";
-		if (appendNL != nullptr && appendNL->boolValue()) m += "\n";
-
-		streamingModule->sendMessage(m);
+		streamingModule->sendMessage(valString);
 	}
 	break;
 
 	case HEX:
 	{
 		StringArray hexValues;
-		hexValues.addTokens(valueParam->stringValue(), " ");
+		hexValues.addTokens(valString, " ");
 		Array<uint8> values;
 		for (auto& v : hexValues)
 		{

@@ -120,20 +120,21 @@ void DMXCommand::triggerInternal(int iterationIndex)
 	{
 
 	case SET_VALUE:
-		dmxModule->sendDMXValue(channel->intValue(), value->intValue());
+		dmxModule->sendDMXValue(getLinkedValue(channel, iterationIndex), getLinkedValue(value, iterationIndex));
 		break;
 
 	case SET_VALUE_16BIT:
 	{
-		int v1 = value->intValue() & 0xFF;
-		int v2 = value->intValue() >> 8 & 0xFF;
+		int val = getLinkedValue(value, iterationIndex);
+		int v1 = val & 0xFF;
+		int v2 = val >> 8 & 0xFF;
 		bool msb = byteOrder->getValueDataAsEnum<DMXByteOrder>() == DMXByteOrder::MSB;
 		
 		int dmxV1 = msb ? v2 : v1;
 		int dmxV2 = msb ? v1 : v2;
 
 		Array<int> values(dmxV1, dmxV2);
-		dmxModule->sendDMXValues(channel->intValue(), values);
+		dmxModule->sendDMXValues(getLinkedValue(channel, iterationIndex), values);
 	}
 	break;
 
@@ -141,10 +142,10 @@ void DMXCommand::triggerInternal(int iterationIndex)
 	case SET_ALL:
 	{
 		Array<int> values;
-		int numValues = dmxAction == SET_ALL ? 512 : jmax(channel2->intValue() - channel->intValue() + 1,0);
-		int startChannel = dmxAction == SET_ALL ? 1 : channel->intValue();
+		int numValues = dmxAction == SET_ALL ? 512 : jmax((int)getLinkedValue(channel, iterationIndex) - (int)getLinkedValue(channel, iterationIndex) + 1,0);
+		int startChannel = dmxAction == SET_ALL ? 1 : getLinkedValue(channel, iterationIndex);
 		values.resize(numValues);
-		values.fill(value->intValue());
+		values.fill(getLinkedValue(value, iterationIndex));
 		dmxModule->sendDMXValues(startChannel, values);
 	}
 	break;
@@ -154,18 +155,19 @@ void DMXCommand::triggerInternal(int iterationIndex)
 		Array<int> values;
 		for (auto& i : customValuesManager->items)
 		{
-			values.add(i->param->intValue());
+			values.add(i->getLinkedValue(iterationIndex));
 		}
-		dmxModule->sendDMXValues(channel->intValue(), values);
+		dmxModule->sendDMXValues(getLinkedValue(channel, iterationIndex), values);
 	}
 	break;
 
 
 	case COLOR:
 	{
+		var val = getLinkedValue(colorParam, iterationIndex);
 		Array<int> values;
-		for (int i = 0; i < 3; ++i) values.add((int)((float)colorParam->value[i] * 255));
-		dmxModule->sendDMXValues(channel->intValue(), values);
+		for (int i = 0; i < 3; ++i) values.add((int)((float)val[i] * 255));
+		dmxModule->sendDMXValues(getLinkedValue(channel, iterationIndex), values);
 	}
 	break;
 
@@ -177,8 +179,6 @@ void DMXCommand::triggerInternal(int iterationIndex)
 		dmxModule->sendDMXValues(1, values);
 	}
 	break;
-
-	
 	}
 }
 

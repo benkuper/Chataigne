@@ -37,21 +37,6 @@ ChataigneLogCommand::~ChataigneLogCommand()
 {
 }
 
-void ChataigneLogCommand::setValueInternal(var _value, int iterationIndex)
-{
-	/*if (_value.isArray() && _value.size() > 0)
-	{
-		String s = _value[0].toString();
-		for (int i = 1; i < _value.size(); ++i) s += ", " + _value[i].toString();
-		((StringParameter*)value)->setValue(s);
-	}
-	else
-	{
-		((StringParameter*)value)->setValue(_value.isDouble() ? String((float)_value,3):_value.toString());
-	}
-	*/
-}
-
 void ChataigneLogCommand::triggerInternal(int iterationIndex)
 {
 	LogType lt = logType->getValueDataAsEnum<LogType>();
@@ -66,7 +51,6 @@ void ChataigneLogCommand::triggerInternal(int iterationIndex)
 		case INFO: LOG(msg); break;
 		case WARNING: LOGWARNING(msg); break;
 		case ERROR: LOGERROR(msg); break;
-
 		}
 
 		break;

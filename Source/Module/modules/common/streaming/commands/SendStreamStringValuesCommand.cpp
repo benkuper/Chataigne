@@ -40,30 +40,32 @@ void SendStreamStringValuesCommand::triggerInternal(int iterationIndex)
 {
 	if (streamingModule == nullptr) return;
 	String s = "";
+	String sepStr = getLinkedValue(separator, iterationIndex);
+
 	for (auto &a : customValuesManager->items)
 	{
-		if (s.length() > 0) s += separator->stringValue();
-		Parameter * p = a->param;
-		if (p == nullptr) continue;
+		if (s.length() > 0) s += sepStr;
+		
+		var val = a->getLinkedValue(iterationIndex);
+		if (val.isVoid()) continue;
 		String ss = "";
 
-		if (p->value.isArray())
+		if (val.isArray())
 		{
-			
-			for (int i = 0; i < p->value.size(); ++i)
+			for (int i = 0; i < val.size(); ++i)
 			{
-				if (i > 0) ss += separator->stringValue();
-				ss += String((float)p->value[i], 0);
+				if (i > 0) ss += sepStr;
+				ss += String((float)val[i], 0);
 			}
 		} else
 		{
-			ss += p->stringValue();
+			ss += val.toString();
 		}
 
 		s += ss;
 	}
 
-	s = prefix->stringValue() + s + suffix->stringValue();
+	s = prefix->stringValue() + s + getLinkedValue(suffix, iterationIndex);
 	if (appendCR->boolValue()) s += "\r";
 	if (appendNL->boolValue()) s += "\n";
 

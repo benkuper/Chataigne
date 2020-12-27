@@ -46,36 +46,19 @@ void SendStreamValuesCommand::triggerInternal(int iterationIndex)
 	{
 		Parameter * p = a->param;
 		if (p == nullptr) continue;
+		
+		var val = a->getLinkedValue(iterationIndex);
+
 		switch (p->type)
 		{
-		case Controllable::BOOL: data.writeBool(p->boolValue());
-		case Controllable::INT: data.writeInt(p->intValue()); break;
-		case Controllable::FLOAT: data.writeFloat(p->floatValue()); break;
-		case Controllable::STRING: data.writeString(p->stringValue()); break;
-		case Controllable::POINT2D:
-			data.writeFloat(((Point2DParameter *)p)->x);
-			data.writeFloat(((Point2DParameter *)p)->y);
-			break;
-		case Controllable::POINT3D:
-			data.writeFloat(((Point3DParameter *)p)->x);
-			data.writeFloat(((Point3DParameter *)p)->y);
-			data.writeFloat(((Point3DParameter *)p)->z);
-			break;
-
-		case Controllable::COLOR:
-		{
-			Colour c = ((ColorParameter*)p)->getColor();
-			data.writeFloat(c.getFloatRed());
-			data.writeFloat(c.getFloatGreen());
-			data.writeFloat(c.getFloatBlue());
-			data.writeFloat(c.getFloatAlpha());
-		}
-			break;
+		case Controllable::BOOL: data.writeBool(val);
+		case Controllable::INT: data.writeInt(val); break;
+		case Controllable::FLOAT: data.writeFloat(val); break;
+		case Controllable::STRING: data.writeString(val); break;
 
 		default:
-			//not handle
+			if (val.isArray()) for (int i = 0; i < val.size(); i++) data.writeFloat(val[i]);
 			break;
-
 		}
 	}
 

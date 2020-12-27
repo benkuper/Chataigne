@@ -47,11 +47,11 @@ void GPIOCommand::triggerInternal(int iterationIndex)
     switch (action)
     {
     case SET_DIGITAL:
-        gpioModule->setDigitalValue(pin->intValue(), valueParam->boolValue());
+        gpioModule->setDigitalValue(getLinkedValue(pin, iterationIndex), getLinkedValue(valueParam, iterationIndex));
         break;
 
     case SET_PWM:
-        gpioModule->setPWMValue(pin->intValue(), valueParam->floatValue());
+        gpioModule->setPWMValue(getLinkedValue(pin, iterationIndex), getLinkedValue(valueParam, iterationIndex));
         break;
     }
 }

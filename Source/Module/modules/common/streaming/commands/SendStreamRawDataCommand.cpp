@@ -26,7 +26,7 @@ void SendStreamRawDataCommand::triggerInternal(int iterationIndex)
 	StreamingCommand::triggerInternal(iterationIndex); //bypass StreamValueCommands to implement our own way
 
 	Array<uint8> data;
-	for (auto &i : customValuesManager->items) data.add(i->param->intValue());
+	for (auto &i : customValuesManager->items) data.add((int) i->getLinkedValue(iterationIndex));
 	streamingModule->sendBytes(data);
 }
 

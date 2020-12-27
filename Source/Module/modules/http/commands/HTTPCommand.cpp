@@ -36,9 +36,9 @@ HTTPCommand::~HTTPCommand()
 void HTTPCommand::triggerInternal(int iterationIndex)
 {
 	StringPairArray requestParams;
-	for (auto &p : customValuesManager->items) requestParams.set(p->niceName, p->param->stringValue());
+	for (auto &p : customValuesManager->items) requestParams.set(p->niceName, p->getLinkedValue(iterationIndex));
 	
 	StringPairArray headers;
 	
-	httpModule->sendRequest(address->stringValue(), method->getValueDataAsEnum<HTTPModule::RequestMethod>(), resultDataType->getValueDataAsEnum<HTTPModule::ResultDataType>(), requestParams, extraHeaders->stringValue());
+	httpModule->sendRequest(getLinkedValue(address, iterationIndex).toString(), method->getValueDataAsEnum<HTTPModule::RequestMethod>(), resultDataType->getValueDataAsEnum<HTTPModule::ResultDataType>(), requestParams, getLinkedValue(extraHeaders, iterationIndex).toString());
 }

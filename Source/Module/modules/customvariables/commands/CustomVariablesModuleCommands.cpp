@@ -198,40 +198,42 @@ void CVCommand::triggerInternal(int iterationIndex)
 			Parameter * p = static_cast<Parameter *>(target->target.get());
 			if (p != nullptr)
 			{
+				var val = getLinkedValue(value, iterationIndex);
+
 				Operator o = valueOperator->getValueDataAsEnum<Operator>();
 
 				switch (o)
 				{
 				case EQUAL:
-					p->setValue(value->value);
+					p->setValue((float)val);
 					break;
 
 				case INVERSE:
-					p->setNormalizedValue(1 - p->getNormalizedValue());
+					p->setNormalizedValue(1 - (float)val / ((float)p->maximumValue - (float)p->minimumValue));
 					break;
 
 				case ADD:
-					p->setValue(p->floatValue() + value->floatValue());
+					p->setValue(p->floatValue() + (float)val);
 					break;
 
 				case SUBTRACT:
-					p->setValue(p->floatValue() - value->floatValue());
+					p->setValue(p->floatValue() - (float)val);
 					break;
 
 				case MULTIPLY:
-					p->setValue(p->floatValue() * value->floatValue());
+					p->setValue(p->floatValue() * (float)val);
 					break;
 
 				case DIVIDE:
-					p->setValue(p->floatValue() / value->floatValue());
+					p->setValue(p->floatValue() / (float)val);
 					break;
 
 				case MAX:
-					p->setValue(std::max(p->floatValue(),value->floatValue()));
+					p->setValue(std::max(p->floatValue(),(float)val));
 					break;
 
 				case MIN:
-					p->setValue(std::min(p->floatValue(), value->floatValue()));
+					p->setValue(std::min(p->floatValue(), (float)val));
 					break;
 				}
 			}
@@ -291,7 +293,7 @@ void CVCommand::triggerInternal(int iterationIndex)
 		if (targetPreset->targetContainer != nullptr)
 		{
 			CVPreset * p = static_cast<CVPreset *>(targetPreset->targetContainer.get());
-			if (p != nullptr) p->weight->setValue(value->floatValue());
+			if (p != nullptr) p->weight->setValue(getLinkedValue(value, iterationIndex));
 		}
 	}
 	break;
@@ -301,7 +303,9 @@ void CVCommand::triggerInternal(int iterationIndex)
 		if (!target->targetContainer.wasObjectDeleted() && target->targetContainer != nullptr)
 		{
 			CVGroup * g = static_cast<CVGroup *>(target->targetContainer.get());
-			if (g != nullptr && g->morpher != nullptr) g->morpher->targetPosition->setPoint(((Point2DParameter *)value)->getPoint());
+			var val = getLinkedValue(value, iterationIndex);
+			Point<float> f(val[0], val[1]);
+			if (g != nullptr && g->morpher != nullptr) g->morpher->targetPosition->setPoint(f);
 		}
 	}
 	break;

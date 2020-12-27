@@ -128,10 +128,11 @@ void OSCCommand::triggerInternal(int iterationIndex)
 	if (oscModule == nullptr) return;
 
 	BaseCommand::triggerInternal(iterationIndex);
-
+	String addrString = getLinkedValue(address, iterationIndex);
+	
 	try
 	{
-		OSCMessage m(address->stringValue());
+		OSCMessage m(addrString);
 
 		for (auto& a : argumentsContainer.controllables)
 		{
@@ -139,36 +140,36 @@ void OSCCommand::triggerInternal(int iterationIndex)
 
 			Parameter* p = static_cast<Parameter*>(a);
 			if (p == nullptr) continue;
+
+			var val = getLinkedValue(p, iterationIndex);
+
 			switch (p->type)
 			{
-			case Controllable::BOOL: m.addInt32(p->boolValue() ? 1 : 0); break;
-			case Controllable::INT: m.addInt32(p->intValue()); break;
-			case Controllable::FLOAT: m.addFloat32(p->floatValue()); break;
-			case Controllable::STRING: m.addString(p->stringValue()); break;
+			case Controllable::BOOL: m.addInt32(val ? 1 : 0); break;
+			case Controllable::INT: m.addInt32(val); break;
+			case Controllable::FLOAT: m.addFloat32(val); break;
+			case Controllable::STRING: m.addString(val); break;
+
 			case Controllable::COLOR:
 			{
-				Colour c = ((ColorParameter*)p)->getColor();
+				Colour c = Colour::fromFloatRGBA(val[0], val[1], val[2], val[3]);
 				m.addColour(OSCHelpers::getOSCColour(c));
 			}
 			break;
-			case Controllable::POINT2D:
-				m.addFloat32(((Point2DParameter*)a)->x);
-				m.addFloat32(((Point2DParameter*)a)->y);
-				break;
-			case Controllable::POINT3D:
-				m.addFloat32(((Point3DParameter*)a)->x);
-				m.addFloat32(((Point3DParameter*)a)->y);
-				m.addFloat32(((Point3DParameter*)a)->z);
-				break;
 
 			case Controllable::ENUM:
-				m.addArgument(OSCHelpers::varToArgument(((EnumParameter *)a)->getValueData()));
+				m.addArgument(OSCHelpers::varToArgument(((EnumParameter*)a)->getValueData()));
 				break;
 
 			default:
-				//not handle
+				if (val.isArray())
+				{
+					for (int i = 0; i < val.size(); i++)
+					{
+						m.addFloat32(val[i]);
+					}
+				}
 				break;
-
 			}
 		}
 
@@ -176,6 +177,6 @@ void OSCCommand::triggerInternal(int iterationIndex)
 	}
 	catch (OSCFormatError& e)
 	{
-		LOGERROR("Can't send to address " << address->stringValue() << " : " << e.description);
+		LOGERROR("Can't send to address " << addrString << " : " << e.description);
 	}
 }

@@ -99,42 +99,45 @@ void MIDINoteAndCCCommand::triggerInternal(int iterationIndex)
 	MIDICommand::triggerInternal(iterationIndex);
 
 	int pitch = 0;
-	if (type == CONTROLCHANGE || type == PROGRAMCHANGE) pitch = number->intValue();
-	else if(type == NOTE_ON || type == NOTE_OFF || type == FULL_NOTE || type == AFTER_TOUCH) pitch = (int)noteEnum->getValueData() + (octave->intValue() - (int)octave->minimumValue) * 12;
+	if (type == CONTROLCHANGE || type == PROGRAMCHANGE) pitch = getLinkedValue(number, iterationIndex);
+	else if(type == NOTE_ON || type == NOTE_OFF || type == FULL_NOTE || type == AFTER_TOUCH) pitch = (int)noteEnum->getValueData() + ((int)getLinkedValue(octave, iterationIndex) - (int)octave->minimumValue) * 12;
+
+	int chanVal = channel != nullptr ? getLinkedValue(channel, iterationIndex) : 0;
+	int velVal = velocity != nullptr ? getLinkedValue(velocity, iterationIndex) : 0;
 
 	switch(type)
 	{
 	case NOTE_ON:
-		midiModule->sendNoteOn(channel->intValue(), pitch, velocity->intValue());
+		midiModule->sendNoteOn(chanVal, pitch, velVal);
 		break;
 
 	case NOTE_OFF:
-		midiModule->sendNoteOff(channel->intValue(), pitch);
+		midiModule->sendNoteOff(chanVal, pitch);
 		break;
 
 	case FULL_NOTE:
-		midiModule->sendNoteOn(channel->intValue(), pitch, velocity->intValue());
+		midiModule->sendNoteOn(chanVal, pitch, velVal);
 		startTimer(onTime->floatValue() * 1000);
 		break;
 
 	case CONTROLCHANGE:
-		midiModule->sendControlChange(channel->intValue(), pitch, velocity->intValue());
+		midiModule->sendControlChange(chanVal, pitch, velVal);
 		break;
 
 	case PROGRAMCHANGE:
-		midiModule->sendProgramChange(channel->intValue(), pitch);
+		midiModule->sendProgramChange(chanVal, pitch);
 		break;
 
 	case PITCH_WHEEL:
-		midiModule->sendPitchWheel(channel->intValue(), velocity->intValue());
+		midiModule->sendPitchWheel(chanVal, velVal);
 		break;
 
 	case CHANNEL_PRESSURE:
-		midiModule->sendChannelPressure(channel->intValue(), velocity->intValue());
+		midiModule->sendChannelPressure(chanVal, velVal);
 		break;
 
 	case AFTER_TOUCH:
-		midiModule->sendAfterTouch(channel->intValue(), pitch, velocity->intValue());
+		midiModule->sendAfterTouch(chanVal, pitch, velVal);
 		break;
 
 	default:

@@ -46,7 +46,7 @@ ScriptCallbackCommand::~ScriptCallbackCommand()
 void ScriptCallbackCommand::triggerInternal(int iterationIndex)
 {
 	Array<var> args;
-	for (auto& i : customValuesManager->items) args.add(i->param->value);
+	for (auto& i : customValuesManager->items) args.add(i->getLinkedValue(iterationIndex));
 	String mName = moduleMethods->getValueData().toString();
 	if(mName.isNotEmpty()) module->scriptManager->callFunctionOnAllItems(mName, args);
 }
