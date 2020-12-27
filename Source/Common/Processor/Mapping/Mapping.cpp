@@ -148,7 +148,7 @@ void Mapping::updateMappingChain(MappingFilter * afterThisFilter)
 
 void Mapping::process(bool forceOutput, int iterationIndex)
 {
-	if ((canBeDisabled && !enabled->boolValue()) || forceDisabled) return;
+	if ((canBeDisabled && (enabled != nullptr && !enabled->boolValue())) || forceDisabled) return;
 	if (im.items.size() == 0) return;
 	if (isCurrentlyLoadingData || isRebuilding || isProcessing || isClearing) return;
 
@@ -164,13 +164,16 @@ void Mapping::process(bool forceOutput, int iterationIndex)
 		{
 			for (int i = 0; i < fm.filteredParameters.size(); i++)
 			{
-				Parameter* fp = fm.filteredParameters[i];
-				if (Parameter* p = (Parameter*)outValuesCC.controllables[i])
+				if (Parameter* fp = fm.filteredParameters[i])
 				{
-					if (p->type == Parameter::ENUM) ((EnumParameter*)p)->setValueWithKey(((EnumParameter*)fp)->getValueKey());
-					else p->setValue(fp->value);
+					if (Parameter* p = (Parameter*)outValuesCC.controllables[i])
+					{
+						if (p->type == Parameter::ENUM) ((EnumParameter*)p)->setValueWithKey(((EnumParameter*)fp)->getValueKey());
+						else p->setValue(fp->value);
+					}
 				}
 			}
+
 			om.updateOutputValues(iterationIndex); //Iterator WIP should here be function of iterationIndex
 		}
 		

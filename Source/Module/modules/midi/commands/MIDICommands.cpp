@@ -77,7 +77,7 @@ MIDINoteAndCCCommand::MIDINoteAndCCCommand(MIDIModule * module, CommandContext c
 		remap01To127 = addBoolParameter("Remap to 0-"+String(maxRemap), "If checked, this will automatically remap values from 0-1 to 0-"+String(maxRemap), false);
 	}
 
-	//if(velocity != nullptr) addTargetMappingParameterAt(velocity, 0);
+	if(velocity != nullptr) linkParamToMappingIndex(velocity, 0);
 }
 
 MIDINoteAndCCCommand::~MIDINoteAndCCCommand()

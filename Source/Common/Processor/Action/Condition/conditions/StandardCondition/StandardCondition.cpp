@@ -81,15 +81,16 @@ void StandardCondition::checkComparator(int iterationIndex)
 {
 	if (isCurrentlyLoadingData) return;
 
-	Controllable* c = sourceControllables[iterationIndex].get();
-
-	if (c->type == Controllable::TRIGGER) {
-		setValid(iterationIndex, true);
-		setValid(iterationIndex, false);
-	}
-	else
+	if (Controllable* c = sourceControllables[iterationIndex].get())
 	{
-		setValid(iterationIndex, comparator->compare((Parameter*)c));
+		if (c->type == Controllable::TRIGGER) {
+			setValid(iterationIndex, true);
+			setValid(iterationIndex, false);
+		}
+		else
+		{
+			setValid(iterationIndex, comparator->compare((Parameter*)c));
+		}
 	}
 }
 

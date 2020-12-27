@@ -11,8 +11,9 @@
 #include "CustomValuesCommandArgumentManager.h"
 #include "ui/CustomValuesCommandArgumentManagerEditor.h"
 
-CustomValuesCommandArgumentManager::CustomValuesCommandArgumentManager(bool _mappingEnabled, bool templateMode) :
+CustomValuesCommandArgumentManager::CustomValuesCommandArgumentManager(bool _mappingEnabled, bool templateMode, IteratorProcessor * iterator) :
 	BaseManager("arguments"),
+	IterativeTarget(iterator),
 	isBeingDestroyed(false),
     mappingEnabled(_mappingEnabled),
     templateMode(templateMode),
@@ -77,12 +78,24 @@ void CustomValuesCommandArgumentManager::rebuildFromTemplate(bool clearItems)
 	hideInEditor = items.size() == 0;
 }
 
+void CustomValuesCommandArgumentManager::addItemInternal(CustomValuesCommandArgument* item, var data)
+{
+	if (!isCurrentlyLoadingData)
+	{
+		if(linkedTemplateManager == nullptr && mappingEnabled && items.size() == 1)
+		{
+			item->paramLink->mappingValueIndex = 0;
+			item->paramLink->setLinkType(ParameterLink::MAPPING_INPUT);
+		}
+	}
+}
+
 CustomValuesCommandArgument * CustomValuesCommandArgumentManager::addItemWithParam(Parameter * p, var data, bool fromUndoableAction)
 {
-	CustomValuesCommandArgument * a = new CustomValuesCommandArgument("#" + String(items.size() + 1), p,mappingEnabled,templateMode);
-	a->addArgumentListener(this);
+	CustomValuesCommandArgument* a = new CustomValuesCommandArgument("#" + String(items.size() + 1), p, mappingEnabled, templateMode, iterator);
+	//a->addArgumentListener(this);
 	addItem(a, data, fromUndoableAction);
-	if (!Engine::mainEngine->isLoadingFile && linkedTemplateManager == nullptr && mappingEnabled && items.size() == 1) a->useForMapping->setValue(true); 
+
 	return a;
 }
 
@@ -166,14 +179,7 @@ void CustomValuesCommandArgumentManager::autoRenameItems()
 void CustomValuesCommandArgumentManager::removeItemInternal(CustomValuesCommandArgument * i)
 {
 	autoRenameItems();
-	useForMappingChanged(i);
 }
-
-void CustomValuesCommandArgumentManager::useForMappingChanged(CustomValuesCommandArgument * i)
-{
-	argumentManagerListeners.call(&ArgumentManagerListener::useForMappingChanged, i);
-}
-
 
 void CustomValuesCommandArgumentManager::itemAdded(CustomValuesCommandArgument * i)
 {
@@ -197,11 +203,6 @@ void CustomValuesCommandArgumentManager::itemRemoved(CustomValuesCommandArgument
 		if (linkedTemplateManager != nullptr && linkedTemplateManager->isBeingDestroyed) itemToRemove->linkToTemplate(nullptr); //do not sync on template destroy so we can keep ghost data
 		else removeItem(itemToRemove, false);
 	}
-}
-
-void CustomValuesCommandArgumentManager::itemsReordered()
-{
-	useForMappingChanged();
 }
 
 void CustomValuesCommandArgumentManager::loadJSONDataInternal(var data)

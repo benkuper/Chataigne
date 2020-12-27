@@ -10,22 +10,25 @@
 
 #pragma once
 
-#include "JuceHeader.h"
+#include "Common/Processor/Iterator/Iterator.h"
+#include "Common/ParameterLink/ParameterLink.h"
 
 class CustomValuesCommandArgument :
-	public BaseItem
+	public BaseItem,
+	public IterativeTarget
 {
 public:
-	CustomValuesCommandArgument(const String &name = "arg", Parameter * p = nullptr, bool mappingEnabled = false, bool templateMode  = false); 
+	CustomValuesCommandArgument(const String& name = "arg", Parameter* p = nullptr, bool mappingEnabled = false, bool templateMode = false, IteratorProcessor * iterator = nullptr);
 	~CustomValuesCommandArgument();
 
 	Parameter * param;
 	BoolParameter * editable;
-	BoolParameter * useForMapping;
 
 	bool mappingEnabled;
 	bool templateMode;
-	
+
+	std::unique_ptr<ParameterLink> paramLink;
+
 	CustomValuesCommandArgument * linkedTemplate;
 	WeakReference<Inspectable *> linkedTemplateRef;
 
@@ -33,27 +36,15 @@ public:
 
 	void updateParameterFromTemplate();
 
-	void onContainerParameterChangedInternal(Parameter * p) override;
 	void onExternalParameterValueChanged(Parameter * p) override;
 	void onExternalParameterRangeChanged(Parameter* p) override;
 
+	var getLinkedValue(int iterationIndex);
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
 
 	virtual String getTypeString() const override;
-
-	class  ArgumentListener
-	{
-	public:
-		/** Destructor. */
-		virtual ~ArgumentListener() {}
-		virtual void useForMappingChanged(CustomValuesCommandArgument *) {};
-	};
-
-	ListenerList<ArgumentListener> argumentListeners;
-	void addArgumentListener(ArgumentListener* newListener) { argumentListeners.add(newListener); }
-	void removeArgumentListener(ArgumentListener* listener) { argumentListeners.remove(listener); }
 
 	InspectableEditor * getEditor(bool isRoot) override;
 

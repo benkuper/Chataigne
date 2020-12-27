@@ -34,7 +34,6 @@ void GenericControllableCommand::setValueParameter(Parameter * p)
 	{
 		ghostValueData = value->getJSONData();
 		removeControllable(value.get());
-		//clearTargetMappingParameters();
 	}
 
 	Parameter * tp = dynamic_cast<Parameter *>(target->target.get());
@@ -44,7 +43,7 @@ void GenericControllableCommand::setValueParameter(Parameter * p)
 
 	if (value != nullptr)
 	{
-		//addTargetMappingParameterAt(value, 0);
+		linkParamToMappingIndex(value, 0);
 		addParameter(p);
 		if (!ghostValueData.isVoid()) value->loadJSONData(ghostValueData);
 		ghostValueData = var();

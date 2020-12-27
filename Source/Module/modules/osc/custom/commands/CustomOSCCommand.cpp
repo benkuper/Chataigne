@@ -24,7 +24,7 @@ CustomOSCCommand::CustomOSCCommand(OSCModule * module, CommandContext context, v
 
 CustomOSCCommand::~CustomOSCCommand()
 {
-	masterReference.clear();
+	//masterReference.clear();
 }
 
 
@@ -43,31 +43,33 @@ void CustomOSCCommand::triggerInternal(int iterationIndex)
 		for (auto &a : customValuesManager->items)
 		{
 			Parameter * p = a->param;
+			var pVal = a->getLinkedValue(iterationIndex);
+
 			if (p == nullptr) continue;
 			switch (p->type)
 			{
-			case Controllable::BOOL: m.addInt32(p->boolValue() ? 1 : 0); break;
-			case Controllable::INT: m.addInt32(p->intValue()); break;
-			case Controllable::FLOAT: m.addFloat32(p->floatValue()); break;
-			case Controllable::STRING: m.addString(p->stringValue()); break;
+			case Controllable::BOOL: m.addInt32(pVal ? 1 : 0); break;
+			case Controllable::INT: m.addInt32((int)pVal); break;
+			case Controllable::FLOAT: m.addFloat32((float)pVal); break;
+			case Controllable::STRING: m.addString(pVal.toString()); break;
 			case Controllable::COLOR:
 			{
-			Colour c = ((ColorParameter *)p)->getColor();
-			m.addFloat32(c.getFloatRed());
-			m.addFloat32(c.getFloatGreen());
-			m.addFloat32(c.getFloatBlue());
-			m.addFloat32(c.getFloatAlpha());
+				Colour c = Colour::fromFloatRGBA(pVal[0], pVal[1], pVal[2], pVal[3]);
+				m.addFloat32(c.getFloatRed());
+				m.addFloat32(c.getFloatGreen());
+				m.addFloat32(c.getFloatBlue());
+				m.addFloat32(c.getFloatAlpha());
 			}
 			break;
 
 			case Controllable::POINT2D:
-				m.addFloat32(((Point2DParameter *)p)->x);
-				m.addFloat32(((Point2DParameter *)p)->y);
+				m.addFloat32(pVal[0]);
+				m.addFloat32(pVal[1]);
 				break;
 			case Controllable::POINT3D:
-				m.addFloat32(((Point3DParameter *)p)->x);
-				m.addFloat32(((Point3DParameter *)p)->y);
-				m.addFloat32(((Point3DParameter *)p)->z);
+				m.addFloat32(pVal[0]);
+				m.addFloat32(pVal[1]);
+				m.addFloat32(pVal[2]);
 				break;
 
 			default:
@@ -79,7 +81,7 @@ void CustomOSCCommand::triggerInternal(int iterationIndex)
         oscModule->sendOSC(m);
 	}catch (const OSCFormatError &)
 	{
-		NLOG("OSC", "Address is invalid :\n" << address->stringValue());
+		NLOG("OSC", "Address is invalid :\n" << addrString);
 		return;
 	}
 }

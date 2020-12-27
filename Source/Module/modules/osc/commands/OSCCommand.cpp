@@ -72,7 +72,7 @@ void OSCCommand::buildArgsAndParamsFromData(var data)
 				p->saveValueOnly = false;
 				p->loadJSONData(a);
 				argumentsContainer.addParameter(p);
-				//if (a.hasProperty("mappingIndex")) addTargetMappingParameterAt(p, a.getProperty("mappingIndex", 0));
+				if (a.hasProperty("mappingIndex")) linkParamToMappingIndex(p, a.getProperty("mappingIndex", 0));
 
 				if (p->type == Controllable::ENUM && a.hasProperty("options"))
 				{

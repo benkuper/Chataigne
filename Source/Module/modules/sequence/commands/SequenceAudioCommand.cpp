@@ -44,7 +44,7 @@ SequenceAudioCommand::SequenceAudioCommand(SequenceModule* _module, CommandConte
 		break;
 	}
 
-	//if (value != nullptr) addTargetMappingParameterAt(value, 0);
+	if (value != nullptr) linkParamToMappingIndex(value, 0);
 
 	stopAtFinish = addBoolParameter("Stop at Finish", "If enabled, will stop the sequence when finished", false);
 }

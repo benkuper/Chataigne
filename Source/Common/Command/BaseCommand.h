@@ -23,7 +23,6 @@ class BaseCommand :
 	public ControllableContainer,
 	public Inspectable::InspectableListener,
 	public CommandTemplate::TemplateListener,
-	//public CustomValuesCommandArgumentManager::ArgumentManagerListener,
 	public CustomValuesCommandArgumentManager::ManagerListener
 {
 public:
@@ -60,8 +59,6 @@ public:
 	virtual void setupTemplateParameters(CommandTemplate * ct);
 
 	void setUseCustomValues(bool value);
-	//virtual void useForMappingChanged(CustomValuesCommandArgument*) override;
-	virtual void itemsReordered() override;
 
 	void templateParameterChanged(CommandTemplateParameter * ctp) override;
 	
@@ -75,6 +72,8 @@ public:
 	virtual var getLinkedValue(Parameter* p, int iterationIndex);
 	void linkParamToMappingIndex(Parameter* p, int mappingIndex);
 
+	virtual var getLinkedCustomArgumentValueAt(int argIndex, int iterationIndex);
+
 	virtual void loadPreviousCommandData(var data) { } //default behavior is nothing, can override that to trying hot swap of commands
 	
 	void inspectableDestroyed(Inspectable * i) override;
@@ -82,7 +81,6 @@ public:
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
-	void  afterLoadJSONDataInternal() override;
 
 	static BaseCommand * create(ControllableContainer * module, CommandContext context, var params, IteratorProcessor * iterator = nullptr);
 

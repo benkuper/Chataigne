@@ -120,9 +120,6 @@ void ScriptCommand::createControllablesForContainer(var data, ControllableContai
 						LOGWARNING("Dependency definition is not complete, requires source, value, check and action");
 					}
 				}
-
-				//only this should be here, the rest should be common
-				//if (p.value.hasProperty("useForMapping")) addTargetMappingParameterAt(param, p.value.getProperty("mappingIndex", targetMappingParameters.size()));
 			}
 		}
 	}

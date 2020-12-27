@@ -43,7 +43,7 @@ StreamDeckCommand::StreamDeckCommand(StreamDeckModule* _module, CommandContext c
 
 	}
 
-	//addTargetMappingParameterAt(valueParam, 0);
+	linkParamToMappingIndex(valueParam, 0);
 }
 
 StreamDeckCommand::~StreamDeckCommand()

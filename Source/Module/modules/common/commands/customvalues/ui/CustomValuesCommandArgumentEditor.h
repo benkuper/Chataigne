@@ -11,6 +11,7 @@
 #pragma once
 
 #include "../CustomValuesCommandArgument.h"
+#include "Common/ParameterLink/ui/LinkableParameterEditor.h"
 
 class CustomValuesCommandArgumentEditor :
 	public BaseItemEditor
@@ -21,11 +22,10 @@ public:
 
 	CustomValuesCommandArgument * arg;
 
-	std::unique_ptr<ParameterEditor> paramUI;
-	std::unique_ptr<BoolToggleUI> useInMappingUI;
+	std::unique_ptr<InspectableEditor> paramUI;
 	std::unique_ptr<BoolToggleUI> editableUI;
 
-	void resizedInternalHeaderItemInternal(Rectangle<int> &r) override;
+	void resizedInternalHeader(Rectangle<int> &r) override;
 	void resizedInternalContent(Rectangle<int> &r) override;
 	void childBoundsChanged(Component *) override;
 };

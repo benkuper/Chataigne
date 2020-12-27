@@ -29,7 +29,6 @@ void GenericOSCQueryCommand::setupParamFromTarget()
 	{
 		if (valueGhostData.isVoid()) valueGhostData = valueParam->value;
 		removeControllable(valueParam.get());
-		//removeTargetMappingParameter(valueParam);
 	}
 
 	valueParam = ControllableFactory::createParameterFrom(target->target, false, true);
@@ -37,7 +36,7 @@ void GenericOSCQueryCommand::setupParamFromTarget()
 	{
 		if (!valueGhostData.isVoid()) valueParam->setValue(valueGhostData);
 		addParameter(valueParam);
-		//addTargetMappingParameterAt(valueParam, 0);
+		linkParamToMappingIndex(valueParam, 0);
 		valueGhostData = var(); //reset ghostValue
 	}
 }

@@ -52,7 +52,7 @@ SendStreamStringCommand::SendStreamStringCommand(StreamingModule* _module, Comma
 
 		if (context == CommandContext::MAPPING)
 		{
-			//addTargetMappingParameterAt(valueParam, 0);
+			linkParamToMappingIndex(valueParam, 0);
 		}
 
 		break;

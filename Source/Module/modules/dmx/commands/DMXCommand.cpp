@@ -37,21 +37,21 @@ DMXCommand::DMXCommand(DMXModule* _module, CommandContext context, var params, I
 	case SET_VALUE_16BIT:
 		channel = addIntParameter("Channel", "DMX Channel", 1, 1, 512);
 		value = addIntParameter("Value", "DMX Value", 0, 0, dmxAction == SET_VALUE_16BIT ? 65535 : 255);
-		//addTargetMappingParameterAt(value, 0);
+		linkParamToMappingIndex(value, 0);
 		break;
 
 	case SET_RANGE:
 		channel = addIntParameter("Start Channel", "First DMX Channel", 1, 1, 512);
 		channel2 = addIntParameter("End Channel", "Last DMX Channel (inclusive)", 4, 1, 512);
 		value = addIntParameter("Value", "DMX Value", 0, 0, 255);
-		//addTargetMappingParameterAt(value, 0);
+		linkParamToMappingIndex(value, 0);
 		break;
 
 	case COLOR:
 		channel = addIntParameter("Start Channel", "DMX Channel", 1, 1, 512);
 		colorParam = new ColorParameter("Color", "DMX Color");
 		addParameter(colorParam);
-		//addTargetMappingParameterAt(colorParam, 0);
+		linkParamToMappingIndex(colorParam, 0);
 		break;
 
 	case BLACK_OUT:
@@ -59,7 +59,7 @@ DMXCommand::DMXCommand(DMXModule* _module, CommandContext context, var params, I
 
 	case SET_ALL:
 		value = addIntParameter("Value", "DMX Value", 0, 0, dmxAction == SET_VALUE_16BIT ? 65535 : 255);
-		//addTargetMappingParameterAt(value, 0); 
+		linkParamToMappingIndex(value, 0);
 		break;
 
 	case SET_CUSTOM:

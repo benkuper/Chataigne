@@ -157,7 +157,7 @@ void BaseCommand::setupTemplateParameters(CommandTemplate* ct)
 	if (customValuesManager != nullptr)
 	{
 		//create customValuesTemplateManager
-		ct->customValuesManager.reset(new CustomValuesCommandArgumentManager(true, true));
+		ct->customValuesManager.reset(new CustomValuesCommandArgumentManager(context == MAPPING, true, iterator));
 		ct->customValuesManager->allowedTypes.addArray(customValuesManager->allowedTypes);
 		ct->addChildControllableContainer(ct->customValuesManager.get());
 	}
@@ -169,48 +169,21 @@ void BaseCommand::setUseCustomValues(bool value)
 	{
 		if (customValuesManager == nullptr)
 		{
-			customValuesManager.reset(new CustomValuesCommandArgumentManager(true, false));
+			customValuesManager.reset(new CustomValuesCommandArgumentManager(context == MAPPING, false, iterator));
+			customValuesManager->addBaseManagerListener(this);
 			addChildControllableContainer(customValuesManager.get());
 		}
 
-		//customValuesManager->addArgumentManagerListener(this);
-		customValuesManager->addBaseManagerListener(this);
 	}
 	else
 	{
 		if (customValuesManager != nullptr)
 		{
-			//customValuesManager->removeArgumentManagerListener(this);
-			customValuesManager->removeBaseManagerListener(this);
 			removeChildControllableContainer(customValuesManager.get());
+			customValuesManager->removeBaseManagerListener(this);
 			customValuesManager.reset();
 		}
 	}
-}
-
-/*
-void BaseCommand::useForMappingChanged(CustomValuesCommandArgument*)
-{
-	if (context != CommandContext::MAPPING) return;
-	if (customValuesManager == nullptr) return;
-	if (isCurrentlyLoadingData) return;
-
-	clearTargetMappingParameters();
-	int index = 0;
-	for (auto& item : customValuesManager->items)
-	{
-		if (item->useForMapping != nullptr && item->useForMapping->boolValue())
-		{
-			addTargetMappingParameterAt(item->param, index);
-			index += item->param->isComplex() ? item->param->value.size() : 1;
-		}
-	}
-}
-*/
-
-void BaseCommand::itemsReordered()
-{
-	//useForMappingChanged(nullptr);
 }
 
 void BaseCommand::templateParameterChanged(CommandTemplateParameter* ctp)
@@ -239,6 +212,13 @@ void BaseCommand::trigger(int iterationIndex)
 void BaseCommand::setValue(var value, int iterationIndex)
 {
 	for (auto& pLink : paramLinks) pLink->updateMappingInputValue(value, iterationIndex);
+	if (customValuesManager != nullptr)
+	{
+		for (auto& cv : customValuesManager->items)
+		{
+			if (cv->paramLink != nullptr) cv->paramLink->updateMappingInputValue(value, iterationIndex);
+		}
+	}
 	setValueInternal(value, iterationIndex);
 	trigger(iterationIndex);
 }
@@ -263,6 +243,13 @@ void BaseCommand::linkParamToMappingIndex(Parameter* p, int mappingIndex)
 	}
 }
 
+var BaseCommand::getLinkedCustomArgumentValueAt(int argIndex, int iterationIndex)
+{
+	if (customValuesManager == nullptr) return var();
+	if (argIndex < 0 || argIndex >= customValuesManager->items.size()) return var();
+	return customValuesManager->items[argIndex]->getLinkedValue(iterationIndex);
+}
+
 void BaseCommand::inspectableDestroyed(Inspectable* i)
 {
 	if (i == templateRef)
@@ -283,21 +270,6 @@ var BaseCommand::getJSONData()
 
 	data.getDynamicObject()->setProperty("paramLinks", pLinkData);
 
-	/*
-	if (saveAndLoadTargetMappings && context == MAPPING && targetMappingParameters.size() > 0)
-	{
-		var tmData = var(new DynamicObject());
-		for (HashMap<int, Array<WeakReference<Parameter>> *>::Iterator i(targetMappingParameters); i.next();)
-		{
-			var mData = var();
-			for (auto &p : *i.getValue()) mData.append(p->getControlAddress(this));
-			tmData.getDynamicObject()->setProperty(String(i.getKey()), mData);
-		}
-
-		data.getDynamicObject()->setProperty("targetMappings", tmData);
-	}
-	*/
-
 	return data;
 }
 
@@ -305,34 +277,6 @@ void BaseCommand::loadJSONDataInternal(var data)
 {
 	var pLinksData = data.getProperty("paramLinks", var());
 	for (auto& pLink : paramLinks) pLink->loadJSONData(pLinksData.getProperty(pLink->parameter->shortName, var()));
-
-	/*
-	if (saveAndLoadTargetMappings && context == MAPPING)
-	{
-		var tmData = data.getProperty("targetMappings", var());
-		if (tmData.isObject())
-		{
-			NamedValueSet mList = tmData.getDynamicObject()->getProperties();
-			for (auto &m : mList)
-			{
-				int index = m.name.toString().getIntValue();
-				if (index < 0) continue;
-				if (!m.value.isArray()) continue;
-				for (int i = 0; i < m.value.size(); ++i)
-				{
-					Parameter * p = dynamic_cast<Parameter *>(getControllableForAddress(m.value[i].toString()));
-					if (p == nullptr) continue;
-					addTargetMappingParameterAt(p, index);
-				}
-			}
-		}
-	}
-	*/
-}
-
-void BaseCommand::afterLoadJSONDataInternal()
-{
-	//useForMappingChanged(nullptr); //force rebuild targetMappings
 }
 
 BaseCommand* BaseCommand::create(ControllableContainer* module, CommandContext context, var params, IteratorProcessor* iterator)

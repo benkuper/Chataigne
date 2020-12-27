@@ -116,6 +116,7 @@ CommandTemplate::~CommandTemplate()
 
 void CommandTemplate::onContainerParameterChangedInternal(Parameter * p)
 {
+	BaseItem::onContainerParameterChangedInternal(p);
 	/*
 	if (p == addressParam || p == addressIsEditable)
 	{

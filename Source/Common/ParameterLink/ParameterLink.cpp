@@ -16,7 +16,8 @@ ParameterLink::ParameterLink(WeakReference<Parameter> p, IteratorProcessor * ite
     linkType(NONE),
     mappingValueIndex(0),
     list(nullptr),
-    replacementHasMappingInputToken(false)
+    replacementHasMappingInputToken(false),
+    paramLinkNotifier(5)
 {
 }
 
@@ -35,6 +36,8 @@ void ParameterLink::setLinkType(LinkType type)
     if (type == linkType) return;
     linkType = type;
     parameter->setControllableFeedbackOnly(linkType != NONE);
+
+    paramLinkNotifier.addMessage(new ParameterLinkEvent(ParameterLinkEvent::LINK_UPDATED, this));
 }
 
 var ParameterLink::getLinkedValue(int iterationIndex)

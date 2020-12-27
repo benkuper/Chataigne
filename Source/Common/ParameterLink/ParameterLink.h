@@ -46,4 +46,6 @@ public:
 
     var getJSONData();
     void loadJSONData(var data);
+
+    DECLARE_ASYNC_EVENT(ParameterLink, ParameterLink, paramLink, { LINK_UPDATED })
 };

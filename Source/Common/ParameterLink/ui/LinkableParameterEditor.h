@@ -13,7 +13,8 @@
 
 class LinkableParameterEditor :
     public InspectableEditor,
-    public Button::Listener
+    public Button::Listener,
+    public ParameterLink::AsyncListener
 {
 public:
     LinkableParameterEditor(ParameterLink* pLink, bool showMappingOptions);
@@ -31,5 +32,7 @@ public:
     void resized() override;
     void buttonClicked(Button* b) override;
     void childBoundsChanged(Component* c) override;
+
+    void newMessage(const ParameterLink::ParameterLinkEvent& e) override;
 
 };

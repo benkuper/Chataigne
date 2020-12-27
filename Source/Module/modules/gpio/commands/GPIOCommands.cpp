@@ -34,7 +34,7 @@ GPIOCommand::GPIOCommand(GPIOModule* m, CommandContext context, var params, Iter
 
     if (valueParam != nullptr)
     {
-        //addTargetMappingParameterAt(valueParam, 0);
+        linkParamToMappingIndex(valueParam, 0);
     }
 }
 

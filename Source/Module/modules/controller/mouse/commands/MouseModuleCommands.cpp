@@ -23,7 +23,7 @@ MouseModuleCommands::MouseModuleCommands(MouseModule* _module, CommandContext co
 	case SET_CURSOR_POSITION:
 	{
 		position = addPoint2DParameter("Position", "The target position of the mouse to set");
-		//addTargetMappingParameterAt(position, 0);
+		linkParamToMappingIndex(position, 0);
 		isRelative = addBoolParameter("Relative", "If checked, the 0-1 space will be converted to the screen space", false);
 	}
 	break;

@@ -16,8 +16,11 @@ LinkableParameterEditor::LinkableParameterEditor(ParameterLink* pLink, bool show
     link(pLink),
     showMappingOptions(showMappingOptions)
 {
+    link->addAsyncParameterLinkListener(this);
+
     linkBT.reset(AssetManager::getInstance()->getToggleBTImage(ChataigneAssetManager::getInstance()->linkOnImage));
     linkBT->addListener(this);
+    linkBT->setToggleState(link->linkType != link->NONE, dontSendNotification);
     addAndMakeVisible(linkBT.get());
 
     paramEditor.reset((ParameterEditor *)pLink->parameter->getEditor(false));
@@ -28,12 +31,13 @@ LinkableParameterEditor::LinkableParameterEditor(ParameterLink* pLink, bool show
 
 LinkableParameterEditor::~LinkableParameterEditor()
 {
+    if (!inspectable.wasObjectDeleted()) link->removeAsyncParameterLinkListener(this);
 }
 
 void LinkableParameterEditor::resized()
 {
     Rectangle<int> r = getLocalBounds();
-    int ts = jmin(r.getHeight(), 24);
+    int ts = jmin(r.getHeight(), 20);
     linkBT->setBounds(r.removeFromRight(ts).withHeight(ts).reduced(2));
     linkBT->setToggleState(link->linkType != link->NONE, dontSendNotification);
     paramEditor->setBounds(r);
@@ -101,11 +105,9 @@ void LinkableParameterEditor::buttonClicked(Button* b)
             }
             else
             {
-                link->setLinkType(link->MAPPING_INPUT);
                 link->mappingValueIndex = result - 1;
+                link->setLinkType(link->MAPPING_INPUT);
             }
-
-            linkBT->setToggleState(link->linkType != link->NONE, dontSendNotification);
         }
 
     }
@@ -114,4 +116,9 @@ void LinkableParameterEditor::buttonClicked(Button* b)
 void LinkableParameterEditor::childBoundsChanged(Component* c)
 {
     if (c == paramEditor.get()) setSize(getWidth(), paramEditor->getHeight());
+}
+
+void LinkableParameterEditor::newMessage(const ParameterLink::ParameterLinkEvent& e)
+{
+    linkBT->setToggleState(link->linkType != link->NONE, dontSendNotification);
 }

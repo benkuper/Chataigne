@@ -59,7 +59,7 @@ SequenceCommand::SequenceCommand(SequenceModule* _module, CommandContext context
 
 		value = addFloatParameter("Time", "Target time to set", 0);
 		value->defaultUI = FloatParameter::TIME;
-		//addTargetMappingParameterAt(value, 0);
+		linkParamToMappingIndex(value, 0);
 
 		playFromStart = addBoolParameter("Play", "If enabled, will force playing the sequence after setting the time", false);
 		break;
