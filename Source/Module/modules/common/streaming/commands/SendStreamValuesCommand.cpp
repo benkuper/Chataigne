@@ -10,8 +10,8 @@
 
 #include "SendStreamValuesCommand.h"
 
-SendStreamValuesCommand::SendStreamValuesCommand(StreamingModule * module, CommandContext context, var params, IteratorProcessor* iterator) :
-	StreamingCommand(module, context, params, iterator)
+SendStreamValuesCommand::SendStreamValuesCommand(StreamingModule * module, CommandContext context, var params, Multiplex* multiplex) :
+	StreamingCommand(module, context, params, multiplex)
 {
 	customValuesManager.reset(new CustomValuesCommandArgumentManager(context == MAPPING));
 	addChildControllableContainer(customValuesManager.get());
@@ -36,7 +36,7 @@ void SendStreamValuesCommand::loadJSONDataInternal(var data)
 	customValuesManager->loadJSONData(data.getProperty("argManager", var()), true);
 }
 
-void SendStreamValuesCommand::triggerInternal(int iterationIndex)
+void SendStreamValuesCommand::triggerInternal(int multiplexIndex)
 {
 	if (streamingModule == nullptr) return;
 	
@@ -47,7 +47,7 @@ void SendStreamValuesCommand::triggerInternal(int iterationIndex)
 		Parameter * p = a->param;
 		if (p == nullptr) continue;
 		
-		var val = a->getLinkedValue(iterationIndex);
+		var val = a->getLinkedValue(multiplexIndex);
 
 		switch (p->type)
 		{

@@ -12,7 +12,7 @@
 #include "../SequenceModule.h"
 #include "TimeMachine/ChataigneSequenceManager.h"
 
-SequenceAudioCommand::SequenceAudioCommand(SequenceModule* _module, CommandContext context, var params, IteratorProcessor * iterator) :
+SequenceAudioCommand::SequenceAudioCommand(SequenceModule* _module, CommandContext context, var params, Multiplex * multiplex) :
 	BaseCommand(_module, context, params),
 	sequenceModule(_module),
 	value(nullptr)
@@ -53,7 +53,7 @@ SequenceAudioCommand::~SequenceAudioCommand()
 {
 }
 
-void SequenceAudioCommand::triggerInternal(int iterationIndex)
+void SequenceAudioCommand::triggerInternal(int multiplexIndex)
 {
 	switch (actionType)
 	{
@@ -90,7 +90,7 @@ void SequenceAudioCommand::endLoadFile()
 	Engine::mainEngine->removeEngineListener(this);
 }
 
-BaseCommand* SequenceAudioCommand::create(ControllableContainer* module, CommandContext context, var params, IteratorProcessor * iterator)
+BaseCommand* SequenceAudioCommand::create(ControllableContainer* module, CommandContext context, var params, Multiplex * multiplex)
 {
-	return new SequenceAudioCommand((SequenceModule*)module, context, params, iterator);
+	return new SequenceAudioCommand((SequenceModule*)module, context, params, multiplex);
 }

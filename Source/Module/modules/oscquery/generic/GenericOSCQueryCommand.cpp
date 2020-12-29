@@ -10,7 +10,7 @@
 
 #include "GenericOSCQueryCommand.h"
 
-GenericOSCQueryCommand::GenericOSCQueryCommand(GenericOSCQueryModule * oscQuerymodule, CommandContext context, var params, IteratorProcessor * iterator) :
+GenericOSCQueryCommand::GenericOSCQueryCommand(GenericOSCQueryModule * oscQuerymodule, CommandContext context, var params, Multiplex * multiplex) :
 	BaseCommand(oscQueryModule, context, params),
 	oscQueryModule(oscQueryModule),
 	valueParam(nullptr)
@@ -63,7 +63,7 @@ void GenericOSCQueryCommand::loadJSONDataInternal(var data)
 	valueGhostData = data.getProperty("ghostValue", var());
 }
 
-void GenericOSCQueryCommand::triggerInternal(int iterationIndex)
+void GenericOSCQueryCommand::triggerInternal(int multiplexIndex)
 {
 	if (target->target.wasObjectDeleted() || target->target == nullptr) return;
 	if(valueParam != nullptr) ((Parameter *)target->target.get())->setValue(valueParam->getValue());

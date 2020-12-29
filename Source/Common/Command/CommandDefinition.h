@@ -12,9 +12,9 @@
 
 #include "BaseCommand.h"
 #include "CommandContext.h"
-#include "Common/Processor/Iterator/Iterator.h"
+#include "Common/Processor/Multiplex/Multiplex.h"
 
-typedef std::function<BaseCommand*(ControllableContainer *, CommandContext, var params, IteratorProcessor * iterator)> CreateCommandFunc;
+typedef std::function<BaseCommand*(ControllableContainer *, CommandContext, var params, Multiplex * multiplex)> CreateCommandFunc;
 
 class CommandDefinition
 {
@@ -36,7 +36,7 @@ public:
 		CommandContext context,
 		CreateCommandFunc createFunc);
 
-	BaseCommand * create(CommandContext context, IteratorProcessor * iterator = nullptr);
+	BaseCommand * create(CommandContext context, Multiplex * multiplex = nullptr);
 
 	static CommandDefinition * createDef(ControllableContainer * container, const String &menuPath, const String &type, CreateCommandFunc createFunc, CommandContext context = CommandContext::BOTH);
 	CommandDefinition * addParam(const String &paramName, var value);

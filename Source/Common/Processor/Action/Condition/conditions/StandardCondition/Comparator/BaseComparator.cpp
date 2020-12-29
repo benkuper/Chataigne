@@ -74,10 +74,10 @@ TriggerComparator::~TriggerComparator()
 	}
 }
 
-void TriggerComparator::compare(int iterationIndex)
+void TriggerComparator::compare(int multiplexIndex)
 {
-	setValid(iterationIndex, true);
-	setValid(iterationIndex, false);
+	setValid(multiplexIndex, true);
+	setValid(multiplexIndex, false);
 }
 
 void TriggerComparator::triggerTriggered(Trigger * t) 

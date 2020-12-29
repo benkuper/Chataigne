@@ -11,14 +11,15 @@
 #include "OSCCommand.h"
 #include "../OSCModule.h"
 
-OSCCommand::OSCCommand(OSCModule * _module, CommandContext context, var params, IteratorProcessor * iterator) :
-	BaseCommand(_module, context, params, iterator),
+OSCCommand::OSCCommand(OSCModule * _module, CommandContext context, var params, Multiplex * multiplex) :
+	BaseCommand(_module, context, params, multiplex),
 	oscModule(_module),
 	argumentsContainer("Arguments")
 {
 	address = addStringParameter("Address", "Adress of the OSC Message (e.g. /example)", params.getProperty("address", "/example"));
 	address->setControllableFeedbackOnly(true);
 	address->isSavable = false;
+	argumentsContainer.addControllableContainerListener(this);
 	addChildControllableContainer(&argumentsContainer);
 
 	addressModel = address->stringValue();
@@ -34,6 +35,11 @@ OSCCommand::~OSCCommand()
 }
 
 void OSCCommand::rebuildAddress()
+{
+	address->setValue(getTargetAddress());
+}
+
+String OSCCommand::getTargetAddress(int multiplexIndex)
 {
 	String targetAddress(addressModel);
 
@@ -53,9 +59,7 @@ void OSCCommand::rebuildAddress()
 		}
 	}
 
-	rebuildAddressInternal(targetAddress);
-
-	address->setValue(targetAddress);
+	return getTargetAddressInternal(targetAddress, multiplexIndex);
 }
 
 void OSCCommand::buildArgsAndParamsFromData(var data)
@@ -115,20 +119,28 @@ void OSCCommand::loadJSONDataInternal(var data)
 	argumentsContainer.loadJSONData(data.getProperty("arguments", var()), true);
 }
 
+void OSCCommand::controllableAdded(Controllable* c)
+{
+	if (c->parentContainer == &argumentsContainer)
+	{
+		onControllableAdded(c);
+	}
+}
+
 void OSCCommand::onContainerParameterChanged(Parameter * p)
 {
 	if (p != address && rebuildAddressOnParamChanged)
 	{
-		rebuildAddress();
+		 rebuildAddress();
 	}
 }
 
-void OSCCommand::triggerInternal(int iterationIndex)
+void OSCCommand::triggerInternal(int multiplexIndex)
 {
 	if (oscModule == nullptr) return;
 
-	BaseCommand::triggerInternal(iterationIndex);
-	String addrString = getLinkedValue(address, iterationIndex);
+	BaseCommand::triggerInternal(multiplexIndex);
+	String addrString = isMultiplexed() ? getTargetAddress() : getLinkedValue(address, multiplexIndex); //forces iteratives to reevalute the address
 	
 	try
 	{
@@ -141,7 +153,7 @@ void OSCCommand::triggerInternal(int iterationIndex)
 			Parameter* p = static_cast<Parameter*>(a);
 			if (p == nullptr) continue;
 
-			var val = getLinkedValue(p, iterationIndex);
+			var val = getLinkedValue(p, multiplexIndex);
 
 			switch (p->type)
 			{

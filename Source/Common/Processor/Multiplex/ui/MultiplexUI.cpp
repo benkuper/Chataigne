@@ -1,19 +1,19 @@
 /*
   ==============================================================================
 
-    IteratorUI.cpp
+    MultiplexUI.cpp
     Created: 19 Dec 2020 12:12:43pm
     Author:  bkupe
 
   ==============================================================================
 */
 
-#include "IteratorUI.h"
+#include "MultiplexUI.h"
 
-IteratorUI::IteratorUI(IteratorProcessor* it) :
-    ProcessorUI(it, true),
-    iterator(it),
-    processorManagerUI(&iterator->processorManager, false)
+MultiplexUI::MultiplexUI(Multiplex* mp) :
+    ProcessorUI(mp, true),
+    multiplex(mp),
+    processorManagerUI(&multiplex->processorManager, false)
 {
     addAndMakeVisible(&processorManagerUI);
     contentComponents.add(&processorManagerUI);
@@ -27,18 +27,18 @@ IteratorUI::IteratorUI(IteratorProcessor* it) :
     updateProcessorManagerBounds();
 }
 
-IteratorUI::~IteratorUI()
+MultiplexUI::~MultiplexUI()
 {
 }
 
-void IteratorUI::resizedInternalContent(Rectangle<int>& r)
+void MultiplexUI::resizedInternalContent(Rectangle<int>& r)
 {
     if (inspectable.wasObjectDeleted() || item->miniMode->boolValue()) return;
     r.setHeight(jmax(processorManagerUI.headerSize, processorManagerUI.getHeight()));
     processorManagerUI.setBounds(r);
 }
 
-void IteratorUI::updateProcessorManagerBounds()
+void MultiplexUI::updateProcessorManagerBounds()
 {
     if (inspectable.wasObjectDeleted() || item->miniMode->boolValue()) return;
     int th = getHeightWithoutContent() + processorManagerUI.getHeight();
@@ -49,17 +49,17 @@ void IteratorUI::updateProcessorManagerBounds()
     }
 }
 
-void IteratorUI::itemUIAdded(ProcessorUI* pui)
+void MultiplexUI::itemUIAdded(ProcessorUI* pui)
 {
     //updateProcessorManagerBounds();
 }
 
-void IteratorUI::itemUIRemoved(ProcessorUI* pui)
+void MultiplexUI::itemUIRemoved(ProcessorUI* pui)
 {
     //updateProcessorManagerBounds();
 }
 
-void IteratorUI::childBoundsChanged(Component* c)
+void MultiplexUI::childBoundsChanged(Component* c)
 {
     updateProcessorManagerBounds();
 }

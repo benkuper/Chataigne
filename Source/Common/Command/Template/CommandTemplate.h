@@ -14,7 +14,7 @@
 #include "../CommandContext.h"
 #include "CommandTemplateParameter.h"
 
-class IteratorProcessor;
+class Multiplex;
 class BaseCommand;
 class Module;
 class CommandDefinition;
@@ -39,7 +39,7 @@ public:
 
 	void generateParametersFromDefinition(CommandDefinition * def);
 
-	BaseCommand * createCommand(Module * m, CommandContext context, var params, IteratorProcessor * iterator = nullptr);
+	BaseCommand * createCommand(Module * m, CommandContext context, var params, Multiplex * multiplex = nullptr);
 
 	void onContainerParameterChangedInternal(Parameter * p) override;
 	void onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c) override;

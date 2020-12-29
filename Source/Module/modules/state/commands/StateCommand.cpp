@@ -13,7 +13,7 @@
 #include "Common/Processor/Action/Condition/conditions/StandardCondition/StandardCondition.h"
 #include "Common/Processor/Mapping/Mapping.h"
 
-StateCommand::StateCommand(StateModule * _module, CommandContext context, var params, IteratorProcessor * iterator) :
+StateCommand::StateCommand(StateModule * _module, CommandContext context, var params, Multiplex * multiplex) :
 	BaseCommand(_module,context,params),
 	stateModule(_module),
 	enableVal(nullptr)
@@ -60,9 +60,9 @@ StateCommand::~StateCommand()
 {
 }
 
-void StateCommand::triggerInternal(int iterationIndex)
+void StateCommand::triggerInternal(int multiplexIndex)
 {
-	BaseCommand::triggerInternal(iterationIndex);
+	BaseCommand::triggerInternal(multiplexIndex);
 
 	if (target->targetContainer == nullptr) return; 
 	if (target->targetContainer.wasObjectDeleted()) return;

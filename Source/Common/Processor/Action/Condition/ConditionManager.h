@@ -11,16 +11,16 @@
 #pragma once
 
 #include "Condition.h"
-#include "../../Iterator/Iterator.h"
+#include "../../Multiplex/Multiplex.h"
 
 class ConditionManager :
-	public IterativeTarget,
+	public MultiplexTarget,
 	public BaseManager<Condition>,
 	public Condition::ConditionListener,
 	public MultiTimer
 {
 public:
-	ConditionManager(IteratorProcessor* iterator);
+	ConditionManager(Multiplex* multiplex);
 	~ConditionManager();
 
 	Factory<Condition> factory;
@@ -40,7 +40,7 @@ public:
 
 	bool forceDisabled;
 
-	void iteratorCountChanged() override;
+	void multiplexCountChanged() override;
 
 	void setHasActivationDefinitions(bool value);
 
@@ -49,24 +49,24 @@ public:
 
 	void setForceDisabled(bool value, bool force = false);
 
-	void setValid(int iterationIndex, bool value, bool dispatchOnlyOnValidationChange = true);
-	void setValidationProgress(int iterationIndex, float value);
+	void setValid(int multiplexIndex, bool value, bool dispatchOnlyOnValidationChange = true);
+	void setValidationProgress(int multiplexIndex, float value);
 
 	void forceCheck();
 
-	void checkAllConditions(int iterationIndex, bool emptyIsValid = false, bool dispatchOnlyOnValidationChange = true);
+	void checkAllConditions(int multiplexIndex, bool emptyIsValid = false, bool dispatchOnlyOnValidationChange = true);
 
-	bool areAllConditionsValid(int iterationIndex, bool emptyIsValid = false);
-	bool isAtLeastOneConditionValid(int iterationIndex, bool emptyIsValid = false);
+	bool areAllConditionsValid(int multiplexIndex, bool emptyIsValid = false);
+	bool isAtLeastOneConditionValid(int multiplexIndex, bool emptyIsValid = false);
 
 	int getNumEnabledConditions();
-	int getNumValidConditions(int iterationIndex = 0);
+	int getNumValidConditions(int multiplexIndex = 0);
 
-	bool getIsValid(int iterationIndex = 0, bool emptyIsValid = false);
+	bool getIsValid(int multiplexIndex = 0, bool emptyIsValid = false);
 
-	void dispatchConditionValidationChanged(int iterationIndex);
+	void dispatchConditionValidationChanged(int multiplexIndex);
 
-	void conditionValidationChanged(Condition*, int iterationIndex) override;
+	void conditionValidationChanged(Condition*, int multiplexIndex) override;
 
 	void onContainerParameterChanged(Parameter*) override;
 
@@ -80,7 +80,7 @@ public:
 	{
 	public:
 		virtual ~ConditionManagerListener() {}
-		virtual void conditionManagerValidationChanged(ConditionManager*, int iterationIndex) {}
+		virtual void conditionManagerValidationChanged(ConditionManager*, int multiplexIndex) {}
 	};
 
 
@@ -92,10 +92,10 @@ public:
 	class ConditionManagerEvent {
 	public:
 		enum Type { VALIDATION_CHANGED };
-		ConditionManagerEvent(Type type, ConditionManager* cdm, int iterationIndex = -1) : type(type), conditionManager(cdm), iterationIndex(iterationIndex) {}
+		ConditionManagerEvent(Type type, ConditionManager* cdm, int multiplexIndex = -1) : type(type), conditionManager(cdm), multiplexIndex(multiplexIndex) {}
 		Type type;
 		ConditionManager* conditionManager;
-		int iterationIndex;
+		int multiplexIndex;
 	};
 
 	QueuedNotifier<ConditionManagerEvent> conditionManagerAsyncNotifier;

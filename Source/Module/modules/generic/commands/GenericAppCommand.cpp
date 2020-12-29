@@ -11,7 +11,7 @@
 #include "GenericAppCommand.h"
 
 
-GenericAppCommand::GenericAppCommand(ChataigneGenericModule* _module, CommandContext context, var params, IteratorProcessor * iterator) :
+GenericAppCommand::GenericAppCommand(ChataigneGenericModule* _module, CommandContext context, var params, Multiplex * multiplex) :
 	BaseCommand(_module, context, params)
 {
 	type = (Type)(int)(params.getProperty("type", NEW_SESSION));
@@ -27,7 +27,7 @@ GenericAppCommand::~GenericAppCommand()
 {
 }
 
-void GenericAppCommand::triggerInternal(int iterationIndex)
+void GenericAppCommand::triggerInternal(int multiplexIndex)
 {
 	switch (type)
 	{
@@ -61,8 +61,8 @@ void GenericAppCommand::triggerInternal(int iterationIndex)
 	}
 }
 
-BaseCommand* GenericAppCommand::create(ControllableContainer * module, CommandContext context, var params, IteratorProcessor * iterator)
+BaseCommand* GenericAppCommand::create(ControllableContainer * module, CommandContext context, var params, Multiplex * multiplex)
 {
-	return new GenericAppCommand((ChataigneGenericModule*)module, context, params, iterator);
+	return new GenericAppCommand((ChataigneGenericModule*)module, context, params, multiplex);
 
 }

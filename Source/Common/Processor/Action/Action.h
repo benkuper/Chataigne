@@ -13,18 +13,18 @@
 #include "../Processor.h"
 #include "Condition/ConditionManager.h"
 #include "Consequence/ConsequenceManager.h"
-#include "../Iterator/Iterator.h"
+#include "../Multiplex/Multiplex.h"
 
 class Action :
 	public Processor,
-	public IterativeTarget,
+	public MultiplexTarget,
 	public ConditionManager::ConditionManagerListener,
 	public ConditionManager::ManagerListener,
 	public Condition::ConditionListener,
 	public EngineListener
 {
 public:
-	Action(var params = var(), IteratorProcessor * it = nullptr);
+	Action(var params = var(), Multiplex * it = nullptr);
 	virtual ~Action();
 
 	enum Role {ACTIVATE, DEACTIVATE};
@@ -50,7 +50,7 @@ public:
 
 	void forceCheck(bool triggerIfChanged);
 
-	virtual void triggerConsequences(bool triggerTrue, int iterationIndex = 0);
+	virtual void triggerConsequences(bool triggerTrue, int multiplexIndex = 0);
 
 	var getJSONData() override;
 	void loadJSONDataItemInternal(var data) override;
@@ -60,7 +60,7 @@ public:
 	void onContainerParameterChangedInternal(Parameter * p) override;
 	void controllableFeedbackUpdate(ControllableContainer * cc, Controllable * c) override;
 
-	void conditionManagerValidationChanged(ConditionManager *, int iterationIndex) override;
+	void conditionManagerValidationChanged(ConditionManager *, int multiplexIndex) override;
 
 	void itemAdded(Condition *) override;
 	void itemRemoved(Condition *) override;

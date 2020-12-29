@@ -10,15 +10,15 @@
 
 #pragma once
 
-#include "Common/Processor/Iterator/Iterator.h"
+#include "Common/Processor/Multiplex/Multiplex.h"
 #include "Common/ParameterLink/ParameterLink.h"
 
 class CustomValuesCommandArgument :
 	public BaseItem,
-	public IterativeTarget
+	public MultiplexTarget
 {
 public:
-	CustomValuesCommandArgument(const String& name = "arg", Parameter* p = nullptr, bool mappingEnabled = false, bool templateMode = false, IteratorProcessor * iterator = nullptr);
+	CustomValuesCommandArgument(const String& name = "arg", Parameter* p = nullptr, bool mappingEnabled = false, bool templateMode = false, Multiplex * multiplex = nullptr);
 	~CustomValuesCommandArgument();
 
 	Parameter * param;
@@ -39,7 +39,7 @@ public:
 	void onExternalParameterValueChanged(Parameter * p) override;
 	void onExternalParameterRangeChanged(Parameter* p) override;
 
-	var getLinkedValue(int iterationIndex);
+	var getLinkedValue(int multiplexIndex);
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;

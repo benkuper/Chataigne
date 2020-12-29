@@ -12,8 +12,8 @@
 #include "Common/Command/BaseCommand.h"
  
 
-MappingOutput::MappingOutput(IteratorProcessor * iterator) :
-	BaseCommandHandler("MappingOutput",CommandContext::MAPPING, nullptr, iterator)
+MappingOutput::MappingOutput(Multiplex * multiplex) :
+	BaseCommandHandler("MappingOutput",CommandContext::MAPPING, nullptr, multiplex)
 {
 	isSelectable = false;
 }
@@ -34,8 +34,8 @@ void MappingOutput::setCommand(CommandDefinition * cd)
 	if (command != nullptr && command->context == CommandContext::MAPPING) command->setMappingValueType(outputType);
 }
 
-void MappingOutput::setValue(var value, int iterationIndex)
+void MappingOutput::setValue(var value, int multiplexIndex)
 {
 	if (!enabled->boolValue()) return;
-	if(command != nullptr) command->setValue(value, iterationIndex);
+	if(command != nullptr) command->setValue(value, multiplexIndex);
 }

@@ -40,7 +40,7 @@ void ConditionManagerEditor::newMessage(const ConditionManager::ConditionManager
 {
 	if (e.type == e.VALIDATION_CHANGED)
 	{
-		contourColor = conditionManager->getIsValid(e.iterationIndex) ? GREEN_COLOR : BG_COLOR.brighter(.3f);
+		contourColor = conditionManager->getIsValid(e.multiplexIndex) ? GREEN_COLOR : BG_COLOR.brighter(.3f);
 		repaint();
 	}
 }

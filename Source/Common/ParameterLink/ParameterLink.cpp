@@ -10,8 +10,8 @@
 
 #include "ParameterLink.h"
 
-ParameterLink::ParameterLink(WeakReference<Parameter> p, IteratorProcessor * iterator) :
-    IterativeTarget(iterator),
+ParameterLink::ParameterLink(WeakReference<Parameter> p, Multiplex * multiplex) :
+    MultiplexTarget(multiplex),
     parameter(p),
     linkType(NONE),
     mappingValueIndex(0),
@@ -25,9 +25,9 @@ ParameterLink::~ParameterLink()
 {
 }
 
-void ParameterLink::iteratorCountChanged()
+void ParameterLink::multiplexCountChanged()
 {
-    mappingValues.resize(getIterationCount());
+    mappingValues.resize(getMultiplexCount());
     mappingValues.fill(parameter->getValue().clone());
 }
 
@@ -40,42 +40,42 @@ void ParameterLink::setLinkType(LinkType type)
     paramLinkNotifier.addMessage(new ParameterLinkEvent(ParameterLinkEvent::LINK_UPDATED, this));
 }
 
-var ParameterLink::getLinkedValue(int iterationIndex)
+var ParameterLink::getLinkedValue(int multiplexIndex)
 {
     switch (linkType)
     {
     case NONE:
-        if (parameter->type == parameter->STRING) return getReplacementString(iterationIndex);
+        if (parameter->type == parameter->STRING) return getReplacementString(multiplexIndex);
         return parameter->getValue();
         break;
 
-    case INDEX: return iterationIndex + 1;
-    case INDEX_ZERO: return iterationIndex;
+    case INDEX: return multiplexIndex + 1;
+    case INDEX_ZERO: return multiplexIndex;
         break;
 
     case MAPPING_INPUT:
-        return (mappingValueIndex < mappingValues[iterationIndex].size()) ? mappingValues[iterationIndex][mappingValueIndex] : 0;
+        return parameter->getCroppedValue((mappingValueIndex < mappingValues[multiplexIndex].size()) ? mappingValues[multiplexIndex][mappingValueIndex] : 0);
         break;
 
-    case ITERATOR_LIST:
-        if (list != nullptr) return ((Parameter*)list->list[iterationIndex])->getValue();
+    case MULTIPLEX_LIST:
+        if (list != nullptr) return parameter->getCroppedValue(((Parameter*)list->list[multiplexIndex])->getValue());
         break;
     }
 
     return parameter->getValue();
 }
 
-void ParameterLink::updateMappingInputValue(var value, int iterationIndex)
+void ParameterLink::updateMappingInputValue(var value, int multiplexIndex)
 {
     if (linkType != MAPPING_INPUT && !replacementHasMappingInputToken) return;
 
     var linkedInputValue = getInputMappingValue(value);
-    mappingValues.set(iterationIndex, value);
+    mappingValues.set(multiplexIndex, value);
 
-    if (linkType == MAPPING_INPUT && !isIterative()) parameter->setValue(linkedInputValue);
+    if (linkType == MAPPING_INPUT && !isMultiplexed()) parameter->setValue(linkedInputValue);
 }
 
-String ParameterLink::getReplacementString(int iterationIndex)
+String ParameterLink::getReplacementString(int multiplexIndex)
 {
     replacementHasMappingInputToken = false;
     if (parameter->type != parameter->STRING) return parameter->stringValue();
@@ -98,8 +98,8 @@ String ParameterLink::getReplacementString(int iterationIndex)
 
         result += parameter->stringValue().substring(lastPos, m.position());
 
-        if (matchStr == "{index}")  result += String(iterationIndex + 1);
-        else if (matchStr == "{index0}")  result += String(iterationIndex);
+        if (matchStr == "{index}")  result += String(multiplexIndex + 1);
+        else if (matchStr == "{index0}")  result += String(multiplexIndex);
         else
         {
             StringArray dotSplit;
@@ -108,11 +108,11 @@ String ParameterLink::getReplacementString(int iterationIndex)
             {
                 if (dotSplit[0] == "list")
                 {
-                    if (isIterative())
+                    if (isMultiplexed())
                     {
-                        if (BaseIteratorList* list = iterator->listManager.getItemWithName(dotSplit[1]))
+                        if (BaseMultiplexList* list = multiplex->listManager.getItemWithName(dotSplit[1]))
                         {
-                            if (Parameter* lp = dynamic_cast<Parameter*>(list->list[iterationIndex]))
+                            if (Parameter* lp = dynamic_cast<Parameter*>(list->list[multiplexIndex]))
                             {
                                 result += lp->stringValue();
                             }
@@ -127,7 +127,7 @@ String ParameterLink::getReplacementString(int iterationIndex)
                 {
                     replacementHasMappingInputToken = true;
                     int valueIndex = dotSplit[1].getIntValue();
-                    if (mappingValues.size() > 0 && valueIndex < mappingValues[iterationIndex].size()) result += mappingValues[iterationIndex][valueIndex].toString();
+                    if (mappingValues.size() > 0 && valueIndex < mappingValues[multiplexIndex].size()) result += mappingValues[multiplexIndex][valueIndex].toString();
                     else result += "0"; //default stuff..
                 }
                 else
@@ -180,7 +180,7 @@ var ParameterLink::getJSONData()
     var data(new DynamicObject());
     data.getDynamicObject()->setProperty("linkType", linkType);
     if (linkType == MAPPING_INPUT) data.getDynamicObject()->setProperty("mappingValueIndex", mappingValueIndex);
-    else if (linkType == ITERATOR_LIST) data.getDynamicObject()->setProperty("list", list->shortName);
+    else if (linkType == MULTIPLEX_LIST) data.getDynamicObject()->setProperty("list", list->shortName);
     return data;
 }
 
@@ -190,5 +190,5 @@ void ParameterLink::loadJSONData(var data)
 
     setLinkType((LinkType)(int)data.getProperty("linkType", NONE));
     if (linkType == MAPPING_INPUT) mappingValueIndex = data.getProperty("mappingValueIndex", 0);
-    else if (linkType == ITERATOR_LIST) list = iterator->listManager.getItemWithName(data.getProperty("list", ""));
+    else if (linkType == MULTIPLEX_LIST) list = multiplex->listManager.getItemWithName(data.getProperty("list", ""));
 }

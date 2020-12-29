@@ -12,7 +12,7 @@
 #include "SequenceCommand.h"
 #include "TimeMachine/ChataigneSequenceManager.h"
 
-SequenceCommand::SequenceCommand(SequenceModule* _module, CommandContext context, var params, IteratorProcessor * iterator) :
+SequenceCommand::SequenceCommand(SequenceModule* _module, CommandContext context, var params, Multiplex * multiplex) :
 	BaseCommand(_module, context, params),
 	sequenceModule(_module),
 	target(nullptr)
@@ -78,9 +78,9 @@ SequenceCommand::~SequenceCommand()
 {
 }
 
-void SequenceCommand::triggerInternal(int iterationIndex)
+void SequenceCommand::triggerInternal(int multiplexIndex)
 {
-	BaseCommand::triggerInternal(iterationIndex);
+	BaseCommand::triggerInternal(multiplexIndex);
 
 	if (actionType != STOP_ALL_SEQUENCES && actionType != PLAY_MULTI_SEQUENCES)
 	{
@@ -206,8 +206,8 @@ void SequenceCommand::endLoadFile()
 }
 
 
-BaseCommand* SequenceCommand::create(ControllableContainer* module, CommandContext context, var params, IteratorProcessor * iterator) {
-	return new SequenceCommand((SequenceModule*)module, context, params, iterator);
+BaseCommand* SequenceCommand::create(ControllableContainer* module, CommandContext context, var params, Multiplex * multiplex) {
+	return new SequenceCommand((SequenceModule*)module, context, params, multiplex);
 }
 
 /*

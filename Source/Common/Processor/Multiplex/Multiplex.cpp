@@ -1,22 +1,22 @@
 /*
   ==============================================================================
 
-    Iterator.cpp
+    Multiplex.cpp
     Created: 17 Dec 2020 5:12:36pm
     Author:  bkupe
 
   ==============================================================================
 */
 
-#include "Iterator.h"
-#include "ui/IteratorUI.h"
+#include "Multiplex.h"
+#include "ui/MultiplexUI.h"
 
-IteratorProcessor::IteratorProcessor(var params) :
+Multiplex::Multiplex(var params) :
     Processor(getTypeString()),
     listManager(this),
     processorManager("Processors", this)
 {
-    count = addIntParameter("Count", "The number of items for each list of this iterator", 1, 0);
+    count = addIntParameter("Count", "The number of items for each list of this multiplex", 1, 0);
 
     addChildControllableContainer(&listManager);
 
@@ -26,26 +26,26 @@ IteratorProcessor::IteratorProcessor(var params) :
     saveAndLoadRecursiveData = true;
 }
 
-IteratorProcessor::~IteratorProcessor()
+Multiplex::~Multiplex()
 {
 }
 
-void IteratorProcessor::onContainerParameterChangedInternal(Parameter* p)
+void Multiplex::onContainerParameterChangedInternal(Parameter* p)
 {
     Processor::onContainerParameterChangedInternal(p);
     if (p == count)
     {
         for (auto& l : listManager.items) l->setSize(count->intValue());
-        iteratorListeners.call(&IteratorListener::iteratorCountChanged);
+        multiplexListeners.call(&MultiplexListener::multiplexCountChanged);
     }
 }
 
-void IteratorProcessor::updateDisables(bool force)
+void Multiplex::updateDisables(bool force)
 {
     processorManager.setForceDisabled(!enabled->boolValue() || forceDisabled);
 }
 
-BaseIteratorList* IteratorProcessor::showAndGetList()
+BaseMultiplexList* Multiplex::showAndGetList()
 {
     PopupMenu p;
     for (int i = 0; i < listManager.items.size(); i++) p.addItem(i + 1, listManager.items[i]->niceName);
@@ -54,28 +54,28 @@ BaseIteratorList* IteratorProcessor::showAndGetList()
     return nullptr;
 }
 
-ProcessorUI* IteratorProcessor::getUI()
+ProcessorUI* Multiplex::getUI()
 {
-    return new IteratorUI(this);
+    return new MultiplexUI(this);
 }
 
-IterativeTarget::IterativeTarget(IteratorProcessor* it) :
-    iterator(it)
+MultiplexTarget::MultiplexTarget(Multiplex* mp) :
+    multiplex(mp)
 {
-    if(iterator != nullptr) iterator->addIteratorListener(this);
+    if(multiplex != nullptr) multiplex->addMultiplexListener(this);
 }
 
-IterativeTarget::~IterativeTarget()
+MultiplexTarget::~MultiplexTarget()
 {
-    if(iterator != nullptr) iterator->removeIteratorListener(this);
+    if(multiplex != nullptr) multiplex->removeMultiplexListener(this);
 }
 
-bool IterativeTarget::isIterative() const
+bool MultiplexTarget::isMultiplexed() const
 {
-    return iterator != nullptr;
+    return multiplex != nullptr;
 }
 
-int IterativeTarget::getIterationCount() const
+int MultiplexTarget::getMultiplexCount() const
 {
-    return isIterative() ? iterator->count->intValue() : 1;
+    return isMultiplexed() ? multiplex->count->intValue() : 1;
 }

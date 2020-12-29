@@ -11,8 +11,8 @@
 #include "GenericControllableCommand.h"
 
 
-GenericControllableCommand::GenericControllableCommand(ChataigneGenericModule* _module, CommandContext context, var params, IteratorProcessor* iterator) :
-	BaseCommand(_module, context, params, iterator),
+GenericControllableCommand::GenericControllableCommand(ChataigneGenericModule* _module, CommandContext context, var params, Multiplex* multiplex) :
+	BaseCommand(_module, context, params, multiplex),
 	value(nullptr)
 {
 	target = addTargetParameter("Target", "Target to set the value");
@@ -43,17 +43,18 @@ void GenericControllableCommand::setValueParameter(Parameter* p)
 
 	if (value != nullptr)
 	{
-		linkParamToMappingIndex(value, 0);
-		addParameter(p);
+		addParameter(value);
 		if (!ghostValueData.isVoid()) value->loadJSONData(ghostValueData);
 		ghostValueData = var();
+
+		linkParamToMappingIndex(value, 0);
 	}
 }
 
 
-void GenericControllableCommand::triggerInternal(int iterationIndex)
+void GenericControllableCommand::triggerInternal(int multiplexIndex)
 {
-	BaseCommand::triggerInternal(iterationIndex);
+	BaseCommand::triggerInternal(multiplexIndex);
 
 	if (target->target == nullptr) return;
 
@@ -61,7 +62,7 @@ void GenericControllableCommand::triggerInternal(int iterationIndex)
 	{
 		if (value == nullptr) return;
 		Parameter* p = static_cast<Parameter*>(target->target.get());
-		p->setValue(getLinkedValue(value, iterationIndex));
+		p->setValue(getLinkedValue(value, multiplexIndex));
 	}
 	else if (action == TRIGGER)
 	{
@@ -126,7 +127,7 @@ void GenericControllableCommand::endLoadFile()
 	Engine::mainEngine->removeEngineListener(this);
 }
 
-BaseCommand* GenericControllableCommand::create(ControllableContainer* module, CommandContext context, var params, IteratorProcessor* iterator)
+BaseCommand* GenericControllableCommand::create(ControllableContainer* module, CommandContext context, var params, Multiplex* multiplex)
 {
-	return new GenericControllableCommand((ChataigneGenericModule*)module, context, params, iterator);
+	return new GenericControllableCommand((ChataigneGenericModule*)module, context, params, multiplex);
 }

@@ -11,20 +11,26 @@
 #include "BaseCommandEditor.h"
 #include "Common/ParameterLink/ui/LinkableParameterEditor.h"
 
-BaseCommandEditor::BaseCommandEditor(BaseCommand* command, bool isRoot) :
-    GenericControllableContainerEditor(command, isRoot, false),
+BaseCommandContainerEditor::BaseCommandContainerEditor(BaseCommand* command, ControllableContainer * container, bool isRoot) :
+    GenericControllableContainerEditor(container, isRoot, false),
     baseCommand(command)
 {
     resetAndBuild(); //force here to use the overriden getEditorUI function
 }
 
-BaseCommandEditor::~BaseCommandEditor()
+BaseCommandContainerEditor::~BaseCommandContainerEditor()
 {
 }
 
-InspectableEditor* BaseCommandEditor::getEditorUIForControllable(Controllable* c)
-{
-    if(!baseCommand->paramsCanBeLinked || c->type == c->TRIGGER) return  GenericControllableContainerEditor::getEditorUIForControllable(c);
 
-    return new LinkableParameterEditor(baseCommand->paramLinkMap[(Parameter *)c], baseCommand->context == CommandContext::MAPPING);
+InspectableEditor* BaseCommandContainerEditor::getEditorUIForControllable(Controllable* c)
+{
+    if (!baseCommand->paramsCanBeLinked || c->type == c->TRIGGER) return  GenericControllableContainerEditor::getEditorUIForControllable(c);
+    return new LinkableParameterEditor(baseCommand->paramLinkMap[(Parameter*)c], baseCommand->context == CommandContext::MAPPING);
+}
+
+InspectableEditor* BaseCommandContainerEditor::getEditorUIForContainer(ControllableContainer* cc)
+{
+    if(cc != baseCommand->customValuesManager.get()) return new BaseCommandContainerEditor(baseCommand, cc, false);
+    return GenericControllableContainerEditor::getEditorUIForContainer(cc);
 }

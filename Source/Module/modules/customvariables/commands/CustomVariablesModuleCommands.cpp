@@ -14,8 +14,8 @@
 #include "CustomVariables/CVGroupManager.h"
 #include "CustomVariables/Preset/CVPresetManager.h"
 
-CVCommand::CVCommand(CustomVariablesModule * _module, CommandContext context, var params, IteratorProcessor* iterator) :
-	BaseCommand(_module, context, params, iterator),
+CVCommand::CVCommand(CustomVariablesModule * _module, CommandContext context, var params, Multiplex* multiplex) :
+	BaseCommand(_module, context, params, multiplex),
 	target(nullptr),
 	targetPreset(nullptr),
 	targetPreset2(nullptr),
@@ -187,7 +187,7 @@ void CVCommand::onContainerParameterChanged(Parameter * p)
 	}
 }
 
-void CVCommand::triggerInternal(int iterationIndex)
+void CVCommand::triggerInternal(int multiplexIndex)
 {
 	switch (type)
 	{
@@ -198,7 +198,7 @@ void CVCommand::triggerInternal(int iterationIndex)
 			Parameter * p = static_cast<Parameter *>(target->target.get());
 			if (p != nullptr)
 			{
-				var val = getLinkedValue(value, iterationIndex);
+				var val = getLinkedValue(value, multiplexIndex);
 
 				Operator o = valueOperator->getValueDataAsEnum<Operator>();
 
@@ -293,7 +293,7 @@ void CVCommand::triggerInternal(int iterationIndex)
 		if (targetPreset->targetContainer != nullptr)
 		{
 			CVPreset * p = static_cast<CVPreset *>(targetPreset->targetContainer.get());
-			if (p != nullptr) p->weight->setValue(getLinkedValue(value, iterationIndex));
+			if (p != nullptr) p->weight->setValue(getLinkedValue(value, multiplexIndex));
 		}
 	}
 	break;
@@ -303,7 +303,7 @@ void CVCommand::triggerInternal(int iterationIndex)
 		if (!target->targetContainer.wasObjectDeleted() && target->targetContainer != nullptr)
 		{
 			CVGroup * g = static_cast<CVGroup *>(target->targetContainer.get());
-			var val = getLinkedValue(value, iterationIndex);
+			var val = getLinkedValue(value, multiplexIndex);
 			Point<float> f(val[0], val[1]);
 			if (g != nullptr && g->morpher != nullptr) g->morpher->targetPosition->setPoint(f);
 		}
@@ -350,7 +350,7 @@ void CVCommand::triggerInternal(int iterationIndex)
 
 }
 
-BaseCommand * CVCommand::create(ControllableContainer * module, CommandContext context, var params, IteratorProcessor * iterator)
+BaseCommand * CVCommand::create(ControllableContainer * module, CommandContext context, var params, Multiplex * multiplex)
 {
-	return new CVCommand((CustomVariablesModule *)module, context, params, iterator);
+	return new CVCommand((CustomVariablesModule *)module, context, params, multiplex);
 }

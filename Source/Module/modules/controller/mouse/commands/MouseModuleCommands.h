@@ -16,7 +16,7 @@ class MouseModuleCommands :
 	public BaseCommand
 {
 public:
-	MouseModuleCommands(MouseModule* m, CommandContext context, var params, IteratorProcessor* iterator = nullptr);
+	MouseModuleCommands(MouseModule* m, CommandContext context, var params, Multiplex* multiplex = nullptr);
 	~MouseModuleCommands();
 
 	MouseModule* mouseModule;
@@ -28,8 +28,8 @@ public:
 	EnumParameter* buttonID;
 	BoolParameter* isRelative;
 
-	void triggerInternal(int iterationIndex) override;
+	void triggerInternal(int multiplexIndex) override;
 
-	static BaseCommand* create(ControllableContainer* module, CommandContext context, var params, IteratorProcessor * iterator) { return new MouseModuleCommands((MouseModule*)module, context, params, iterator); }
+	static BaseCommand* create(ControllableContainer* module, CommandContext context, var params, Multiplex * multiplex) { return new MouseModuleCommands((MouseModule*)module, context, params, multiplex); }
 
 };

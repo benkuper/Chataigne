@@ -10,8 +10,8 @@
 
 #include "ScriptCallbackCommand.h"
 
-ScriptCallbackCommand::ScriptCallbackCommand(Module* module, CommandContext context, var params, IteratorProcessor* iterator) :
-	BaseCommand(module, context, params, iterator)
+ScriptCallbackCommand::ScriptCallbackCommand(Module* module, CommandContext context, var params, Multiplex* multiplex) :
+	BaseCommand(module, context, params, multiplex)
 {
 	moduleMethods = addEnumParameter("Callback", "The function to trigger when the command is triggered");
 	
@@ -43,10 +43,10 @@ ScriptCallbackCommand::~ScriptCallbackCommand()
 {
 }
 
-void ScriptCallbackCommand::triggerInternal(int iterationIndex)
+void ScriptCallbackCommand::triggerInternal(int multiplexIndex)
 {
 	Array<var> args;
-	for (auto& i : customValuesManager->items) args.add(i->getLinkedValue(iterationIndex));
+	for (auto& i : customValuesManager->items) args.add(i->getLinkedValue(multiplexIndex));
 	String mName = moduleMethods->getValueData().toString();
 	if(mName.isNotEmpty()) module->scriptManager->callFunctionOnAllItems(mName, args);
 }

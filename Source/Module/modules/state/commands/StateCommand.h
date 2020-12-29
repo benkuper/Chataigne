@@ -19,7 +19,7 @@ class StateCommand :
 	public EngineListener
 {
 public:
-	StateCommand(StateModule * _module, CommandContext context, var params, IteratorProcessor * iterator = nullptr);
+	StateCommand(StateModule * _module, CommandContext context, var params, Multiplex * multiplex = nullptr);
 	virtual ~StateCommand();
 
 	enum ActionType { SET_STATE_ACTIVATION, TOGGLE_STATE, TRIGGER_ACTION, SET_ACTION_ENABLED, TOGGLE_ACTION, SET_TOGGLE_STATE, SET_MAPPING_ENABLED, TOGGLE_MAPPING };
@@ -30,7 +30,7 @@ public:
 	TargetParameter * target;
 	BoolParameter* enableVal;
 
-	void triggerInternal(int iterationIndex) override;
+	void triggerInternal(int multiplexIndex) override;
 
 
 	//Delayed loading mechanism to ensure all content is created for right targeting
@@ -39,6 +39,6 @@ public:
 	void loadJSONDataInternal(var data) override;
 	void endLoadFile() override;
 
-	static BaseCommand * create(ControllableContainer * module, CommandContext context, var params, IteratorProcessor * iterator) { return new StateCommand((StateModule *)module, context, params, iterator); }
+	static BaseCommand * create(ControllableContainer * module, CommandContext context, var params, Multiplex * multiplex) { return new StateCommand((StateModule *)module, context, params, multiplex); }
 
 };

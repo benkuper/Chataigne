@@ -10,7 +10,7 @@
 
 #include "WatchoutCommand.h"
 
-WatchoutCommand::WatchoutCommand(WatchoutModule * _module, CommandContext context, var params, IteratorProcessor * iterator) :
+WatchoutCommand::WatchoutCommand(WatchoutModule * _module, CommandContext context, var params, Multiplex * multiplex) :
 	SendStreamStringCommand(_module,context,params),
 	wModule(_module)
 {
@@ -41,9 +41,9 @@ WatchoutCommand::~WatchoutCommand()
 {
 }
 
-void WatchoutCommand::triggerInternal(int iterationIndex)
+void WatchoutCommand::triggerInternal(int multiplexIndex)
 {
-	BaseCommand::triggerInternal(iterationIndex);
+	BaseCommand::triggerInternal(multiplexIndex);
 
 	String s = valueParam->stringValue();
 	if (paramContainer != nullptr)

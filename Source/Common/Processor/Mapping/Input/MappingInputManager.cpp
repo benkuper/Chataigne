@@ -10,10 +10,15 @@
 
 #include "MappingInputManager.h"
 
-MappingInputManager::MappingInputManager(IteratorProcessor * iterator) :
+MappingInputManager::MappingInputManager(Multiplex * multiplex) :
 	BaseManager("Inputs"),
-	IterativeTarget(iterator)
+	MultiplexTarget(multiplex)
 {
+	factory.defs.add(MultiplexTargetDefinition<MappingInput>::createDef<MappingInput>("", MappingInput::getTypeStringStatic(false), multiplex));
+	if (isMultiplexed()) factory.defs.add(MultiplexTargetDefinition<MappingInput>::createDef<MappingInput>("", MappingInput::getTypeStringStatic(true), multiplex)->addParam("listMode", true));
+
+	managerFactory = &factory;
+
 	selectItemWhenCreated = false;
 }
 
@@ -32,13 +37,14 @@ void MappingInputManager::lockInput(Array<Parameter*> input)
 	}
 }
 
-Array<Parameter *> MappingInputManager::getInputReferences()
+Array<Parameter *> MappingInputManager::getInputReferences(int multiplexIndex)
 {
 	Array<Parameter *> result;
 	for (auto& i : items)
 	{
-		if (i == nullptr || i->inputReference == nullptr) continue;
-		result.add(i->inputReference);
+		Parameter* ref = i->getInputAt(multiplexIndex);
+		if (i == nullptr || ref == nullptr) continue;
+		result.add(ref);
 	}
 	return result;
 }

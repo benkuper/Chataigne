@@ -66,27 +66,27 @@ void LinkableParameterEditor::buttonClicked(Button* b)
 
 
 
-        if (link->isIterative())
+        if (link->isMultiplexed())
         {
 
             PopupMenu itMenu;
             
             bool ticked = link->linkType == link->INDEX_ZERO || link->linkType == link->INDEX;
 
-            itMenu.addItem(-2, "Index (0-" + String(link->getIterationCount() - 1)+")", true, link->linkType == link->INDEX_ZERO);
-            itMenu.addItem(-3, "Index (1-" + String(link->getIterationCount()) + ")", true, link->linkType == link->INDEX);
+            itMenu.addItem(-2, "Index (0-" + String(link->getMultiplexCount() - 1)+")", true, link->linkType == link->INDEX_ZERO);
+            itMenu.addItem(-3, "Index (1-" + String(link->getMultiplexCount()) + ")", true, link->linkType == link->INDEX);
             itMenu.addSeparator();
 
-            for (int i = 0; i < link->iterator->listManager.items.size(); i++)
+            for (int i = 0; i < link->multiplex->listManager.items.size(); i++)
             {
-                BaseIteratorList* bli = link->iterator->listManager.items[i];
-                bool t = link->linkType == link->ITERATOR_LIST && link->list == bli;
+                BaseMultiplexList* bli = link->multiplex->listManager.items[i];
+                bool t = link->linkType == link->MULTIPLEX_LIST && link->list == bli;
                 ticked |= t;
 
                 itMenu.addItem(1000 + i, "List : " + bli->niceName, true, t);
             }
 
-            p.addSubMenu("From Iterator", itMenu, true, Image(), ticked);
+            p.addSubMenu("From Multiplex", itMenu, true, Image(), ticked);
         }
 
         p.addSeparator();
@@ -100,8 +100,8 @@ void LinkableParameterEditor::buttonClicked(Button* b)
             else if (result == -3) link->setLinkType(link->INDEX);
             else if (result >= 1000)
             {
-                link->setLinkType(link->ITERATOR_LIST);
-                link->list = link->iterator->listManager.items[result - 1000];
+                link->setLinkType(link->MULTIPLEX_LIST);
+                link->list = link->multiplex->listManager.items[result - 1000];
             }
             else
             {

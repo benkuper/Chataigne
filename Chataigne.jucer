@@ -262,24 +262,6 @@
           <FILE id="Y5NAoh" name="MTCSender.h" compile="0" resource="0" file="Source/Common/MIDI/MTCSender.h"/>
         </GROUP>
         <GROUP id="{54EAB5D0-4FF9-8475-F580-32A4B6B32B16}" name="Processor">
-          <GROUP id="{245178D5-0374-3FC0-2E4B-231DA0517087}" name="Iterator">
-            <GROUP id="{44BFE30B-359C-1245-32D8-A3F7765A03CC}" name="ui">
-              <FILE id="MsZZII" name="IteratorUI.cpp" compile="1" resource="0" file="Source/Common/Processor/Iterator/ui/IteratorUI.cpp"/>
-              <FILE id="QkrCSe" name="IteratorUI.h" compile="0" resource="0" file="Source/Common/Processor/Iterator/ui/IteratorUI.h"/>
-            </GROUP>
-            <GROUP id="{11646DEA-209B-4B32-9D67-67274562059A}" name="List">
-              <GROUP id="{785C9576-59E9-6D83-4C06-F80C9E833242}" name="lists"/>
-              <FILE id="gP8RLg" name="IteratorList.cpp" compile="1" resource="0"
-                    file="Source/Common/Processor/Iterator/list/IteratorList.cpp"/>
-              <FILE id="dBwP4p" name="IteratorList.h" compile="0" resource="0" file="Source/Common/Processor/Iterator/list/IteratorList.h"/>
-              <FILE id="h4ETdJ" name="IteratorListManager.cpp" compile="1" resource="0"
-                    file="Source/Common/Processor/Iterator/list/IteratorListManager.cpp"/>
-              <FILE id="oI0C4B" name="IteratorListManager.h" compile="0" resource="0"
-                    file="Source/Common/Processor/Iterator/list/IteratorListManager.h"/>
-            </GROUP>
-            <FILE id="HKWkqm" name="Iterator.cpp" compile="1" resource="0" file="Source/Common/Processor/Iterator/Iterator.cpp"/>
-            <FILE id="yrinqN" name="Iterator.h" compile="0" resource="0" file="Source/Common/Processor/Iterator/Iterator.h"/>
-          </GROUP>
           <GROUP id="{797800DA-0DCB-1B89-AF24-83A7716BB83C}" name="Action">
             <GROUP id="{769E1555-7F3A-B046-7FF9-5B14A6197BBD}" name="Condition">
               <GROUP id="{D6ADE71C-FE26-85F8-193D-108C1D0EF059}" name="conditions">
@@ -524,6 +506,23 @@
             </GROUP>
             <FILE id="XsW28N" name="Mapping.cpp" compile="1" resource="0" file="Source/Common/Processor/Mapping/Mapping.cpp"/>
             <FILE id="qHCHwN" name="Mapping.h" compile="0" resource="0" file="Source/Common/Processor/Mapping/Mapping.h"/>
+          </GROUP>
+          <GROUP id="{A5F6C593-CA3D-ABF9-1432-8CA293DE3A8B}" name="Multiplex">
+            <GROUP id="{A2CE8EB2-0ECD-FE86-203D-F6A0934CC417}" name="List">
+              <FILE id="wcuzhM" name="MultiplexList.cpp" compile="1" resource="0"
+                    file="Source/Common/Processor/Multiplex/List/MultiplexList.cpp"/>
+              <FILE id="ICTUSp" name="MultiplexList.h" compile="0" resource="0" file="Source/Common/Processor/Multiplex/List/MultiplexList.h"/>
+              <FILE id="WdJGxN" name="MultiplexListManager.cpp" compile="1" resource="0"
+                    file="Source/Common/Processor/Multiplex/List/MultiplexListManager.cpp"/>
+              <FILE id="JmWxbm" name="MultiplexListManager.h" compile="0" resource="0"
+                    file="Source/Common/Processor/Multiplex/List/MultiplexListManager.h"/>
+            </GROUP>
+            <GROUP id="{DA958D91-9B9E-C86C-A580-A597DC805289}" name="ui">
+              <FILE id="PjPHfi" name="MultiplexUI.cpp" compile="1" resource="0" file="Source/Common/Processor/Multiplex/ui/MultiplexUI.cpp"/>
+              <FILE id="nn2lSf" name="MultiplexUI.h" compile="0" resource="0" file="Source/Common/Processor/Multiplex/ui/MultiplexUI.h"/>
+            </GROUP>
+            <FILE id="BzC8dH" name="Multiplex.cpp" compile="1" resource="0" file="Source/Common/Processor/Multiplex/Multiplex.cpp"/>
+            <FILE id="wDyFUR" name="Multiplex.h" compile="0" resource="0" file="Source/Common/Processor/Multiplex/Multiplex.h"/>
           </GROUP>
           <GROUP id="{B34D98CD-7C22-FD41-B7C0-EDB8332AB5ED}" name="ui">
             <FILE id="CEnZk7" name="ProcessorManagerUI.cpp" compile="1" resource="0"

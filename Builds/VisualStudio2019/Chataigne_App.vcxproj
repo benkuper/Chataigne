@@ -192,10 +192,6 @@
     <ClCompile Include="..\..\Source\Common\MIDI\MIDIManager.cpp"/>
     <ClCompile Include="..\..\Source\Common\MIDI\MTCReceiver.cpp"/>
     <ClCompile Include="..\..\Source\Common\MIDI\MTCSender.cpp"/>
-    <ClCompile Include="..\..\Source\Common\Processor\Iterator\ui\IteratorUI.cpp"/>
-    <ClCompile Include="..\..\Source\Common\Processor\Iterator\list\IteratorList.cpp"/>
-    <ClCompile Include="..\..\Source\Common\Processor\Iterator\list\IteratorListManager.cpp"/>
-    <ClCompile Include="..\..\Source\Common\Processor\Iterator\Iterator.cpp"/>
     <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\conditions\ActivationCondition\ActivationCondition.cpp"/>
     <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\conditions\ConditionGroup\ConditionGroup.cpp"/>
     <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\conditions\StandardCondition\Comparator\comparators\BoolComparators.cpp"/>
@@ -249,6 +245,10 @@
     <ClCompile Include="..\..\Source\Common\Processor\Mapping\Output\MappingOutputManager.cpp"/>
     <ClCompile Include="..\..\Source\Common\Processor\Mapping\ui\MappingUI.cpp"/>
     <ClCompile Include="..\..\Source\Common\Processor\Mapping\Mapping.cpp"/>
+    <ClCompile Include="..\..\Source\Common\Processor\Multiplex\List\MultiplexList.cpp"/>
+    <ClCompile Include="..\..\Source\Common\Processor\Multiplex\List\MultiplexListManager.cpp"/>
+    <ClCompile Include="..\..\Source\Common\Processor\Multiplex\ui\MultiplexUI.cpp"/>
+    <ClCompile Include="..\..\Source\Common\Processor\Multiplex\Multiplex.cpp"/>
     <ClCompile Include="..\..\Source\Common\Processor\ui\ProcessorManagerUI.cpp"/>
     <ClCompile Include="..\..\Source\Common\Processor\ui\ProcessorUI.cpp"/>
     <ClCompile Include="..\..\Source\Common\Processor\Processor.cpp"/>
@@ -3262,10 +3262,6 @@
     <ClInclude Include="..\..\Source\Common\MIDI\MIDIManager.h"/>
     <ClInclude Include="..\..\Source\Common\MIDI\MTCReceiver.h"/>
     <ClInclude Include="..\..\Source\Common\MIDI\MTCSender.h"/>
-    <ClInclude Include="..\..\Source\Common\Processor\Iterator\ui\IteratorUI.h"/>
-    <ClInclude Include="..\..\Source\Common\Processor\Iterator\list\IteratorList.h"/>
-    <ClInclude Include="..\..\Source\Common\Processor\Iterator\list\IteratorListManager.h"/>
-    <ClInclude Include="..\..\Source\Common\Processor\Iterator\Iterator.h"/>
     <ClInclude Include="..\..\Source\Common\Processor\Action\Condition\conditions\ActivationCondition\ActivationCondition.h"/>
     <ClInclude Include="..\..\Source\Common\Processor\Action\Condition\conditions\ConditionGroup\ConditionGroup.h"/>
     <ClInclude Include="..\..\Source\Common\Processor\Action\Condition\conditions\StandardCondition\Comparator\comparators\BoolComparators.h"/>
@@ -3320,6 +3316,10 @@
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Output\MappingOutputManager.h"/>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\ui\MappingUI.h"/>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Mapping.h"/>
+    <ClInclude Include="..\..\Source\Common\Processor\Multiplex\List\MultiplexList.h"/>
+    <ClInclude Include="..\..\Source\Common\Processor\Multiplex\List\MultiplexListManager.h"/>
+    <ClInclude Include="..\..\Source\Common\Processor\Multiplex\ui\MultiplexUI.h"/>
+    <ClInclude Include="..\..\Source\Common\Processor\Multiplex\Multiplex.h"/>
     <ClInclude Include="..\..\Source\Common\Processor\ui\ProcessorManagerUI.h"/>
     <ClInclude Include="..\..\Source\Common\Processor\ui\ProcessorUI.h"/>
     <ClInclude Include="..\..\Source\Common\Processor\Processor.h"/>

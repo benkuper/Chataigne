@@ -10,8 +10,8 @@
 
 #include "KeyboardModuleCommands.h"
 
-KeyboardModuleCommands::KeyboardModuleCommands(KeyboardModule* _module, CommandContext context, var params, IteratorProcessor* iterator) :
-	BaseCommand(_module, context, params, iterator),
+KeyboardModuleCommands::KeyboardModuleCommands(KeyboardModule* _module, CommandContext context, var params, Multiplex* multiplex) :
+	BaseCommand(_module, context, params, multiplex),
 	keyboardModule(_module),
 	ctrlPressed(nullptr),
 	altPressed(nullptr),
@@ -39,12 +39,12 @@ KeyboardModuleCommands::~KeyboardModuleCommands()
 {
 }
 
-void KeyboardModuleCommands::triggerInternal(int iterationIndex)
+void KeyboardModuleCommands::triggerInternal(int multiplexIndex)
 {
 	switch (type)
 	{
 	case KEY_DOWN: keyboardModule->sendKeyDown(keyID->getValueData()); break;
 	case KEY_UP: keyboardModule->sendKeyUp(keyID->getValueData()); break;
-	case KEY_HIT: keyboardModule->sendKeyHit(keyID->getValueData(), getLinkedValue(ctrlPressed, iterationIndex), getLinkedValue(altPressed, iterationIndex), getLinkedValue(shiftPressed, iterationIndex)); break;
+	case KEY_HIT: keyboardModule->sendKeyHit(keyID->getValueData(), getLinkedValue(ctrlPressed, multiplexIndex), getLinkedValue(altPressed, multiplexIndex), getLinkedValue(shiftPressed, multiplexIndex)); break;
 	}
 }

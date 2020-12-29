@@ -17,14 +17,14 @@
 
 class BaseCommandHandler :
 	public BaseItem,
-	public IterativeTarget,
+	public MultiplexTarget,
 	public Inspectable::InspectableListener,
 	public BaseCommand::CommandListener,
 	public ModuleManager::ManagerListener,
 	public CommandTemplateManager::ManagerListener
 {
 public:
-	BaseCommandHandler(const String &name = "BaseCommandHandler", CommandContext context = CommandContext::ACTION, Module * lockedModule = nullptr, IteratorProcessor * iterator = nullptr);
+	BaseCommandHandler(const String &name = "BaseCommandHandler", CommandContext context = CommandContext::ACTION, Module * lockedModule = nullptr, Multiplex * multiplex = nullptr);
 	virtual ~BaseCommandHandler();
 
 	virtual void clearItem() override;
@@ -42,7 +42,7 @@ public:
 	String ghostCommandName;
 	var ghostCommandData;
 
-	virtual void triggerCommand(int iterationIndex = 0); //to override and call back for checking (e.g. enable in Consequence)
+	virtual void triggerCommand(int multiplexIndex = 0); //to override and call back for checking (e.g. enable in Consequence)
 	
 	virtual void setCommand(CommandDefinition *);
 

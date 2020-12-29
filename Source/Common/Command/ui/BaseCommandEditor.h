@@ -11,16 +11,15 @@
 #pragma once
 #include "../BaseCommand.h"
 
-class BaseCommandEditor :
+class BaseCommandContainerEditor :
 	public GenericControllableContainerEditor,
 	public BaseCommand::CommandListener
 {
 public:
-	BaseCommandEditor(BaseCommand* command, bool isRoot);
-	~BaseCommandEditor();
+	BaseCommandContainerEditor(BaseCommand* command, ControllableContainer * container, bool isRoot);
+	~BaseCommandContainerEditor();
 
 	BaseCommand* baseCommand;
-
-	virtual InspectableEditor* getEditorUIForControllable(Controllable* c) override;
-
+	virtual InspectableEditor* getEditorUIForControllable(Controllable * c) override;
+	virtual InspectableEditor* getEditorUIForContainer(ControllableContainer* cc) override;
 };

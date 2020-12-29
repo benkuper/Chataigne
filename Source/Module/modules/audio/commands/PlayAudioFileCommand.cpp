@@ -10,7 +10,7 @@
 
 #include "PlayAudioFileCommand.h"
 
-PlayAudioFileCommand::PlayAudioFileCommand(AudioModule * _module, CommandContext context, var params, IteratorProcessor * iterator) :
+PlayAudioFileCommand::PlayAudioFileCommand(AudioModule * _module, CommandContext context, var params, Multiplex * multiplex) :
 	BaseCommand(_module, context, params),
 	audioModule(_module),
     channelRemapAudioSource(&transportSource, false),
@@ -133,7 +133,7 @@ void PlayAudioFileCommand::onControllableFeedbackUpdate(ControllableContainer * 
 	}
 }
 
-void PlayAudioFileCommand::triggerInternal(int iterationIndex)
+void PlayAudioFileCommand::triggerInternal(int multiplexIndex)
 {
 	if (readerSource.get() == nullptr) return;
 	transportSource.setPosition(0);

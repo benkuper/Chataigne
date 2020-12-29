@@ -11,8 +11,8 @@
 #include "ScriptCommand.h"
 #include "ui/ScriptCommandEditor.h"
 
-ScriptCommand::ScriptCommand(Module * module, CommandContext context, var params, IteratorProcessor* iterator) :
-	BaseCommand(module, context, params, iterator)
+ScriptCommand::ScriptCommand(Module * module, CommandContext context, var params, Multiplex* multiplex) :
+	BaseCommand(module, context, params, multiplex)
 {
 	saveAndLoadTargetMappings = true;
 	saveAndLoadRecursiveData = true;
@@ -188,7 +188,7 @@ Controllable * ScriptCommand::getControllableForJSONDefinition(const String &nam
 	return c;
 }
 
-void ScriptCommand::triggerInternal(int iterationIndex)
+void ScriptCommand::triggerInternal(int multiplexIndex)
 {
 	Array<var> args;
 	for (auto &p : scriptParams)

@@ -10,17 +10,19 @@
 
 #pragma once
 #include "MappingInput.h"
-#include "Common/Processor/Iterator/Iterator.h"
+#include "Common/Processor/Multiplex/Multiplex.h"
 
 class MappingInputManager :
 	public BaseManager<MappingInput>,
-	public IterativeTarget
+	public MultiplexTarget
 {
 public:
-	MappingInputManager(IteratorProcessor * iterator = nullptr);
+	MappingInputManager(Multiplex * multiplex = nullptr);
 	~MappingInputManager();
+
+	Factory<MappingInput> factory;
 
 	void lockInput(Array<Parameter*> input);
 
-	Array<Parameter *> getInputReferences();
+	Array<Parameter *> getInputReferences(int multiplexIndex = 0);
 };

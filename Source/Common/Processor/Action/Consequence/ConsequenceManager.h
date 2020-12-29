@@ -11,15 +11,15 @@
 #pragma once
 
 #include "Consequence.h"
-#include "../../Iterator/Iterator.h"
+#include "../../Multiplex/Multiplex.h"
 
 class ConsequenceManager :
 	public BaseManager<Consequence>,
-	public IterativeTarget,
+	public MultiplexTarget,
 	public Consequence::ConsequenceListener
 {
 public:
-	ConsequenceManager(const String &name = "Consequences", IteratorProcessor * iterator = nullptr);
+	ConsequenceManager(const String &name = "Consequences", Multiplex * multiplex = nullptr);
 	~ConsequenceManager();
 	
 	FloatParameter * delay;
@@ -29,7 +29,7 @@ public:
 
 	Consequence* createItem() override;
 
-	void triggerAll(int iterationIndex = 0);
+	void triggerAll(int multiplexIndex = 0);
 
 	void setForceDisabled(bool value, bool force = false);
 
@@ -42,11 +42,11 @@ public:
 		public Thread
 	{
 	public:
-		StaggerLauncher(ConsequenceManager * csm, int iterationIndex);
+		StaggerLauncher(ConsequenceManager * csm, int multiplexIndex);
 		~StaggerLauncher();
 
 		ConsequenceManager* csm;
-		int iterationIndex;
+		int multiplexIndex;
 
 		uint32 timeAtRun;
 		int triggerIndex;

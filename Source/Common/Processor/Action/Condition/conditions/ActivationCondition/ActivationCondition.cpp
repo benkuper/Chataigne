@@ -10,8 +10,8 @@
 
 #include "ActivationCondition.h"
 
-ActivationCondition::ActivationCondition(var params, IteratorProcessor* iterator) :
-	Condition(getTypeStringStatic((Type)(int)params.getProperty("type",ON_ACTIVATE)), params, iterator),
+ActivationCondition::ActivationCondition(var params, Multiplex* multiplex) :
+	Condition(getTypeStringStatic((Type)(int)params.getProperty("type",ON_ACTIVATE)), params, multiplex),
 	type((Type)(int)params.getProperty("type", ON_ACTIVATE))
 {
 }

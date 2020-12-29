@@ -14,11 +14,11 @@
 
 class MappingOutputManager :
 	public BaseManager<MappingOutput>,
-	public IterativeTarget,
+	public MultiplexTarget,
 	public BaseCommandHandler::CommandHandlerListener
 {
 public:
-	MappingOutputManager(IteratorProcessor * iterator = nullptr);
+	MappingOutputManager(Multiplex * multiplex = nullptr);
 	~MappingOutputManager();
 
 	Array<WeakReference<Parameter>> outParams;
@@ -29,8 +29,8 @@ public:
 
 	void setOutParams(Array<Parameter *> params);
 
-	void updateOutputValues(int iterationIndex);
-	void updateOutputValue(MappingOutput * o, int iterationIndex);
+	void updateOutputValues(int multiplexIndex);
+	void updateOutputValue(MappingOutput * o, int multiplexIndex);
 
 	var getMergedOutValue();
 

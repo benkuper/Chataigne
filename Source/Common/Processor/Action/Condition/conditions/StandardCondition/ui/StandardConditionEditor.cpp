@@ -85,9 +85,10 @@ void StandardConditionEditor::resizedInternalContent(Rectangle<int> & r)
 void StandardConditionEditor::updateUI()
 {
 	if (sourceFeedbackUI != nullptr) removeChildComponent(sourceFeedbackUI.get());
-	if (standardCondition->sourceControllables.size() > 0 && standardCondition->sourceControllables[0] != nullptr)
+
+	if (Controllable * c = standardCondition->getSourceControllableAt(0))
 	{
-		sourceFeedbackUI.reset(standardCondition->sourceControllables[0]->createDefaultUI());
+		sourceFeedbackUI.reset(c->createDefaultUI());
 		//sourceFeedbackUI->setForceFeedbackOnly(true);
 		addAndMakeVisible(sourceFeedbackUI.get());
 	}

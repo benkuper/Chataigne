@@ -13,20 +13,20 @@
 #include "Template/CommandTemplate.h"
 #include "CommandContext.h"
 #include "Module/modules/common/commands/customvalues/CustomValuesCommandArgumentManager.h"
-#include "Common/Processor/Iterator/Iterator.h"
+#include "Common/Processor/Multiplex/Multiplex.h"
 #include "Common/ParameterLink/ParameterLink.h"
 
 class Module;
 
 class BaseCommand :
-	public IterativeTarget,
+	public MultiplexTarget,
 	public ControllableContainer,
 	public Inspectable::InspectableListener,
 	public CommandTemplate::TemplateListener,
 	public CustomValuesCommandArgumentManager::ManagerListener
 {
 public:
-	BaseCommand(Module * module, CommandContext context, var params, IteratorProcessor * iterator = nullptr);
+	BaseCommand(Module * module, CommandContext context, var params, Multiplex * multiplex = nullptr);
 	virtual ~BaseCommand();
 
 	CommandContext context;
@@ -63,16 +63,16 @@ public:
 	void templateParameterChanged(CommandTemplateParameter * ctp) override;
 	
 	virtual void setMappingValueType(Controllable::Type type);
-    virtual void trigger(int iterationIndex = 0); //for trigger, will check validity of module
-    virtual void triggerInternal(int iterationIndex) {} // to be overriden
-	virtual void setValue(var value, int iterationIndex); //for mapping context
-	virtual void setValueInternal(var value, int iterationIndex) {}
+    virtual void trigger(int multiplexIndex = 0); //for trigger, will check validity of module
+    virtual void triggerInternal(int multiplexIndex) {} // to be overriden
+	virtual void setValue(var value, int multiplexIndex); //for mapping context
+	virtual void setValueInternal(var value, int multiplexIndex) {}
 
 	virtual ParameterLink* getLinkedParam(Parameter* p);
-	virtual var getLinkedValue(Parameter* p, int iterationIndex);
+	virtual var getLinkedValue(Parameter* p, int multiplexIndex);
 	void linkParamToMappingIndex(Parameter* p, int mappingIndex);
 
-	virtual var getLinkedCustomArgumentValueAt(int argIndex, int iterationIndex);
+	virtual var getLinkedCustomArgumentValueAt(int argIndex, int multiplexIndex);
 
 	virtual void loadPreviousCommandData(var data) { } //default behavior is nothing, can override that to trying hot swap of commands
 	
@@ -82,7 +82,7 @@ public:
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
 
-	static BaseCommand * create(ControllableContainer * module, CommandContext context, var params, IteratorProcessor * iterator = nullptr);
+	static BaseCommand * create(ControllableContainer * module, CommandContext context, var params, Multiplex * multiplex = nullptr);
 
 	class CommandListener
 	{

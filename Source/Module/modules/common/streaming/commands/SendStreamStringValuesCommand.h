@@ -16,7 +16,7 @@ class SendStreamStringValuesCommand :
 	public SendStreamValuesCommand
 {
 public:
-	SendStreamStringValuesCommand(StreamingModule * output, CommandContext context, var params, IteratorProcessor* iterator = nullptr);
+	SendStreamStringValuesCommand(StreamingModule * output, CommandContext context, var params, Multiplex* multiplex = nullptr);
 	~SendStreamStringValuesCommand();
 
 	StringParameter* prefix;
@@ -26,8 +26,8 @@ public:
 	BoolParameter * appendCR;
 	BoolParameter * appendNL;
 
-	void triggerInternal(int iterationIndex) override;
+	void triggerInternal(int multiplexIndex) override;
 
-	static SendStreamStringValuesCommand * create(ControllableContainer * module, CommandContext context, var params, IteratorProcessor * iterator) { return new SendStreamStringValuesCommand((StreamingModule *)module, context, params, iterator); }
+	static SendStreamStringValuesCommand * create(ControllableContainer * module, CommandContext context, var params, Multiplex * multiplex) { return new SendStreamStringValuesCommand((StreamingModule *)module, context, params, multiplex); }
 
 };

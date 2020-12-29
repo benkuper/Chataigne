@@ -20,7 +20,7 @@ class DMXCommand :
 public:
 	enum DMXAction { SET_VALUE, SET_RANGE, COLOR, SET_VALUE_16BIT, BLACK_OUT, SET_ALL, SET_CUSTOM };
 
-	DMXCommand(DMXModule * _module, CommandContext context, var params, IteratorProcessor* iterator = nullptr);
+	DMXCommand(DMXModule * _module, CommandContext context, var params, Multiplex* multiplex = nullptr);
 	~DMXCommand();
 
 	DMXAction dmxAction;
@@ -35,8 +35,8 @@ public:
 
 	BoolParameter * remap01To255;
 
-	void setValue(var value, int iterationIndex) override;
-	void triggerInternal(int iterationIndex) override;
+	void setValue(var value, int multiplexIndex) override;
+	void triggerInternal(int multiplexIndex) override;
 
 
 	var getJSONData() override;
@@ -44,7 +44,7 @@ public:
 
 	void itemAdded(CustomValuesCommandArgument* a) override;
 
-	static BaseCommand * create(ControllableContainer * module, CommandContext context, var params, IteratorProcessor * iterator) { return new DMXCommand((DMXModule *)module, context, params, iterator); }
+	static BaseCommand * create(ControllableContainer * module, CommandContext context, var params, Multiplex * multiplex) { return new DMXCommand((DMXModule *)module, context, params, multiplex); }
 
 	
 };

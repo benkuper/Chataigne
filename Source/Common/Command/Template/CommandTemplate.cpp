@@ -101,10 +101,10 @@ void CommandTemplate::generateParametersFromDefinition(CommandDefinition * def)
 	c->clear();
 }
 
-BaseCommand * CommandTemplate::createCommand(Module * m, CommandContext context, var params, IteratorProcessor * iterator)
+BaseCommand * CommandTemplate::createCommand(Module * m, CommandContext context, var params, Multiplex * multiplex)
 {
 	//HERE must find a solution to create the different commands
-	BaseCommand * b = sourceDef->create(context, iterator);
+	BaseCommand * b = sourceDef->create(context, multiplex);
 	b->linkToTemplate(this);
 	return b;
 }

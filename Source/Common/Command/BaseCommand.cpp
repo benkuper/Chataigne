@@ -13,9 +13,9 @@
 #include "Module/Module.h"
 #include "ui/BaseCommandEditor.h"
 
-BaseCommand::BaseCommand(Module* _module, CommandContext _context, var _params, IteratorProcessor* iterator) :
+BaseCommand::BaseCommand(Module* _module, CommandContext _context, var _params, Multiplex* multiplex) :
 	ControllableContainer("Command"),
-	IterativeTarget(iterator),
+	MultiplexTarget(multiplex),
 	context(_context),
 	module(_module),
 	moduleRef(_module),
@@ -24,7 +24,7 @@ BaseCommand::BaseCommand(Module* _module, CommandContext _context, var _params, 
 	linkedTemplate(nullptr),
 	customValuesManager(nullptr)
 {
-	paramsCanBeLinked = isIterative() || context == MAPPING;
+	paramsCanBeLinked = isMultiplexed() || context == MAPPING;
 	hideEditorHeader = true;
 }
 
@@ -41,7 +41,7 @@ void BaseCommand::onControllableAdded(Controllable* c)
 {
 	if (Parameter* p = dynamic_cast<Parameter*>(c))
 	{
-		ParameterLink* pLink = new ParameterLink(p, iterator);
+		ParameterLink* pLink = new ParameterLink(p, multiplex);
 		paramLinks.add(pLink);
 		paramLinkMap.set(p, pLink);
 		linkParamMap.set(pLink, p);
@@ -157,7 +157,7 @@ void BaseCommand::setupTemplateParameters(CommandTemplate* ct)
 	if (customValuesManager != nullptr)
 	{
 		//create customValuesTemplateManager
-		ct->customValuesManager.reset(new CustomValuesCommandArgumentManager(context == MAPPING, true, iterator));
+		ct->customValuesManager.reset(new CustomValuesCommandArgumentManager(context == MAPPING, true, multiplex));
 		ct->customValuesManager->allowedTypes.addArray(customValuesManager->allowedTypes);
 		ct->addChildControllableContainer(ct->customValuesManager.get());
 	}
@@ -169,7 +169,7 @@ void BaseCommand::setUseCustomValues(bool value)
 	{
 		if (customValuesManager == nullptr)
 		{
-			customValuesManager.reset(new CustomValuesCommandArgumentManager(context == MAPPING, false, iterator));
+			customValuesManager.reset(new CustomValuesCommandArgumentManager(context == MAPPING, false, multiplex));
 			customValuesManager->addBaseManagerListener(this);
 			addChildControllableContainer(customValuesManager.get());
 		}
@@ -198,7 +198,7 @@ void BaseCommand::setMappingValueType(Controllable::Type type)
 	commandListeners.call(&CommandListener::valueTypeChanged);
 }
 
-void BaseCommand::trigger(int iterationIndex)
+void BaseCommand::trigger(int multiplexIndex)
 {
 	if (moduleRef.wasObjectDeleted())
 	{
@@ -206,21 +206,21 @@ void BaseCommand::trigger(int iterationIndex)
 		return;
 	}
 
-	triggerInternal(iterationIndex);
+	triggerInternal(multiplexIndex);
 }
 
-void BaseCommand::setValue(var value, int iterationIndex)
+void BaseCommand::setValue(var value, int multiplexIndex)
 {
-	for (auto& pLink : paramLinks) pLink->updateMappingInputValue(value, iterationIndex);
+	for (auto& pLink : paramLinks) pLink->updateMappingInputValue(value, multiplexIndex);
 	if (customValuesManager != nullptr)
 	{
 		for (auto& cv : customValuesManager->items)
 		{
-			if (cv->paramLink != nullptr) cv->paramLink->updateMappingInputValue(value, iterationIndex);
+			if (cv->paramLink != nullptr) cv->paramLink->updateMappingInputValue(value, multiplexIndex);
 		}
 	}
-	setValueInternal(value, iterationIndex);
-	trigger(iterationIndex);
+	setValueInternal(value, multiplexIndex);
+	trigger(multiplexIndex);
 }
 
 ParameterLink* BaseCommand::getLinkedParam(Parameter* p)
@@ -229,13 +229,15 @@ ParameterLink* BaseCommand::getLinkedParam(Parameter* p)
 	return paramLinkMap[p];
 }
 
-var BaseCommand::getLinkedValue(Parameter* p, int iterationIndex)
+var BaseCommand::getLinkedValue(Parameter* p, int multiplexIndex)
 {
-	return getLinkedParam(p)->getLinkedValue(iterationIndex);
+	return getLinkedParam(p)->getLinkedValue(multiplexIndex);
 }
 
 void BaseCommand::linkParamToMappingIndex(Parameter* p, int mappingIndex)
 {
+	if (context != MAPPING) return;
+
 	if (ParameterLink* pLink = getLinkedParam(p))
 	{
 		pLink->setLinkType(pLink->MAPPING_INPUT);
@@ -243,11 +245,11 @@ void BaseCommand::linkParamToMappingIndex(Parameter* p, int mappingIndex)
 	}
 }
 
-var BaseCommand::getLinkedCustomArgumentValueAt(int argIndex, int iterationIndex)
+var BaseCommand::getLinkedCustomArgumentValueAt(int argIndex, int multiplexIndex)
 {
 	if (customValuesManager == nullptr) return var();
 	if (argIndex < 0 || argIndex >= customValuesManager->items.size()) return var();
-	return customValuesManager->items[argIndex]->getLinkedValue(iterationIndex);
+	return customValuesManager->items[argIndex]->getLinkedValue(multiplexIndex);
 }
 
 void BaseCommand::inspectableDestroyed(Inspectable* i)
@@ -279,7 +281,7 @@ void BaseCommand::loadJSONDataInternal(var data)
 	for (auto& pLink : paramLinks) pLink->loadJSONData(pLinksData.getProperty(pLink->parameter->shortName, var()));
 }
 
-BaseCommand* BaseCommand::create(ControllableContainer* module, CommandContext context, var params, IteratorProcessor* iterator)
+BaseCommand* BaseCommand::create(ControllableContainer* module, CommandContext context, var params, Multiplex* multiplex)
 {
 	Module* m = dynamic_cast<Module*>(module);
 	jassert(m != nullptr);
@@ -290,10 +292,10 @@ BaseCommand* BaseCommand::create(ControllableContainer* module, CommandContext c
 		return nullptr;
 	}
 
-	return commandTemplate->createCommand(m, context, params, iterator);
+	return commandTemplate->createCommand(m, context, params, multiplex);
 }
 
 InspectableEditor* BaseCommand::getEditor(bool isRoot)
 {
-	return new BaseCommandEditor(this, isRoot);
+	return new BaseCommandContainerEditor(this, this, isRoot);
 }

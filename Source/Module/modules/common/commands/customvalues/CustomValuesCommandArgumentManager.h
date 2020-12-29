@@ -11,15 +11,15 @@
 #pragma once
 
 #include "CustomValuesCommandArgument.h"
-#include "Common/Processor/Iterator/Iterator.h"
+#include "Common/Processor/Multiplex/Multiplex.h"
 
 class CustomValuesCommandArgumentManager :
 	public BaseManager<CustomValuesCommandArgument>,
-	public IterativeTarget,
+	public MultiplexTarget,
 	public BaseManager<CustomValuesCommandArgument>::ManagerListener
 {
 public:
-	CustomValuesCommandArgumentManager(bool _mappingEnabled, bool templateMode = false, IteratorProcessor * iterator = nullptr);
+	CustomValuesCommandArgumentManager(bool _mappingEnabled, bool templateMode = false, Multiplex * multiplex = nullptr);
 	~CustomValuesCommandArgumentManager();
 
 	bool isBeingDestroyed; //to keep track for templates, do not sync on destroy, so we can keep a ghost

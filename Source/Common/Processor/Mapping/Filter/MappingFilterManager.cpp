@@ -27,9 +27,9 @@
 #include "filters/color/ColorShiftFilter.h"
 
 
-MappingFilterManager::MappingFilterManager(IteratorProcessor * iterator) :
+MappingFilterManager::MappingFilterManager(Multiplex * multiplex) :
 	BaseManager<MappingFilter>("Filters"),
-	IterativeTarget(iterator)
+	MultiplexTarget(multiplex)
 {
 	canBeCopiedAndPasted = true;
 
@@ -74,7 +74,7 @@ bool MappingFilterManager::setupSources(Array<Parameter *> sources)
 }
 
 
-bool MappingFilterManager::processFilters()
+bool MappingFilterManager::processFilters(int multiplexIndex)
 {
 	if (items.size() == 0)
 	{

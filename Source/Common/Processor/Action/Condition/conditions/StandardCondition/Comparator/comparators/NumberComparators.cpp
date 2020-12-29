@@ -72,14 +72,14 @@ IntComparator::~IntComparator()
 {
 }
 
-void IntComparator::compare(int iterationIndex)
+void IntComparator::compare(int multiplexIndex)
 {
-	if (currentFunctionId == equalsId)				setValid(iterationIndex, intParams[iterationIndex]->floatValue() == intRef->floatValue());
-	if (currentFunctionId == differentId)			setValid(iterationIndex, intParams[iterationIndex]->floatValue() != intRef->floatValue());
-	else if (currentFunctionId == greaterId)		setValid(iterationIndex, intParams[iterationIndex]->floatValue() > intRef->floatValue());
-	else if (currentFunctionId == lessId)			setValid(iterationIndex, intParams[iterationIndex]->floatValue() < intRef->floatValue());
-	else if (currentFunctionId == greaterOrEqualId)	setValid(iterationIndex, intParams[iterationIndex]->floatValue() >= intRef->floatValue());
-	else if (currentFunctionId == lessOrEqualId)	setValid(iterationIndex, intParams[iterationIndex]->floatValue() <= intRef->floatValue());
-	else if (currentFunctionId == inRangeId)		setValid(iterationIndex, false); //not implemented, need RangeParameter
+	if (currentFunctionId == equalsId)				setValid(multiplexIndex, intParams[multiplexIndex]->floatValue() == intRef->floatValue());
+	if (currentFunctionId == differentId)			setValid(multiplexIndex, intParams[multiplexIndex]->floatValue() != intRef->floatValue());
+	else if (currentFunctionId == greaterId)		setValid(multiplexIndex, intParams[multiplexIndex]->floatValue() > intRef->floatValue());
+	else if (currentFunctionId == lessId)			setValid(multiplexIndex, intParams[multiplexIndex]->floatValue() < intRef->floatValue());
+	else if (currentFunctionId == greaterOrEqualId)	setValid(multiplexIndex, intParams[multiplexIndex]->floatValue() >= intRef->floatValue());
+	else if (currentFunctionId == lessOrEqualId)	setValid(multiplexIndex, intParams[multiplexIndex]->floatValue() <= intRef->floatValue());
+	else if (currentFunctionId == inRangeId)		setValid(multiplexIndex, false); //not implemented, need RangeParameter
 }
 */

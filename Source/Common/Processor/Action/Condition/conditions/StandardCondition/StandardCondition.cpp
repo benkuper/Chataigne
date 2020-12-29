@@ -13,18 +13,19 @@
 #include "ui/StandardConditionEditor.h"
 #include "Module/ModuleManager.h"
 
-StandardCondition::StandardCondition(var params, IteratorProcessor* processor) :
+StandardCondition::StandardCondition(var params, Multiplex* processor) :
 	Condition(getTypeStringStatic(params.getProperty("listMode", false)), params, processor),
-	iteratorListMode(params.getProperty("listMode", false))
+	multiplexListMode(params.getProperty("listMode", false)),
+	sourceList(nullptr)
 {
-	sourceTarget = addTargetParameter("Input Value", "Element that will be the source to check if condition is active or not"); 
+	sourceTarget = addTargetParameter("Input Value", "Element that will be the source to check if condition is active or not");
 
-	if (iteratorListMode)
+	if (multiplexListMode)
 	{
 		sourceTarget->targetType = TargetParameter::CONTAINER;
-		sourceTarget->setRootContainer(&iterator->listManager);
+		sourceTarget->setRootContainer(&multiplex->listManager);
 
-		std::function<ControllableContainer* ()> getListFunc = std::bind(&IteratorProcessor::showAndGetList, iterator);
+		std::function<ControllableContainer* ()> getListFunc = std::bind(&Multiplex::showAndGetList, multiplex);
 		sourceTarget->customGetTargetContainerFunc = getListFunc;
 		sourceTarget->showParentNameInEditor = false;
 	}
@@ -34,7 +35,7 @@ StandardCondition::StandardCondition(var params, IteratorProcessor* processor) :
 		sourceTarget->customGetControllableLabelFunc = &Module::getTargetLabelForValueControllable;
 		sourceTarget->customCheckAssignOnNextChangeFunc = &ModuleManager::checkControllableIsAValue;
 	}
-	
+
 	sourceTarget->hideInEditor = true;
 
 	toggleMode = addBoolParameter("Toggle Mode", "If checked, this will make a validation alternate between validated and invalidated, useful to transform straight values into toggles", false);
@@ -51,112 +52,78 @@ StandardCondition::~StandardCondition()
 void StandardCondition::clearItem()
 {
 	BaseItem::clearItem();
-	updateSourceControllablesFromTarget();
+	if (sourceList != nullptr) sourceList->removeListListener(this);
+	if (sourceControllable != nullptr)
+	{
+		if (sourceControllable->type == Controllable::TRIGGER) ((Trigger*)sourceControllable.get())->removeTriggerListener(this);
+		else ((Parameter *)sourceControllable.get())->removeParameterListener(this);
+	}
 }
 
-void StandardCondition::iteratorCountChanged()
+void StandardCondition::multiplexCountChanged()
 {
-	Condition::iteratorCountChanged();
+	Condition::multiplexCountChanged();
 	rawIsValids.fill(false);
 	forceToggleState(false);
 }
 
-void StandardCondition::setValid(int iterationIndex, bool value, bool dispatchOnChangeOnly)
+void StandardCondition::setValid(int multiplexIndex, bool value, bool dispatchOnChangeOnly)
 {
 	if (toggleMode->boolValue())
 	{
-		if (rawIsValids[iterationIndex] == value) return;
-		rawIsValids.set(iterationIndex, value);
+		if (rawIsValids[multiplexIndex] == value) return;
+		rawIsValids.set(multiplexIndex, value);
 
-		if (rawIsValids[iterationIndex]) Condition::setValid(iterationIndex, !getIsValid(iterationIndex));
+		if (rawIsValids[multiplexIndex]) Condition::setValid(multiplexIndex, !getIsValid(multiplexIndex));
 	}
 	else
 	{
-		Condition::setValid(iterationIndex, value, dispatchOnChangeOnly && !alwaysTrigger->boolValue());
+		Condition::setValid(multiplexIndex, value, dispatchOnChangeOnly && !alwaysTrigger->boolValue());
 	}
 }
 
 
-void StandardCondition::checkComparator(int iterationIndex)
+void StandardCondition::updateSourceFromTarget()
 {
-	if (isCurrentlyLoadingData) return;
-
-	if (Controllable* c = sourceControllables[iterationIndex].get())
+	if (multiplexListMode)
 	{
-		if (c->type == Controllable::TRIGGER) {
-			setValid(iterationIndex, true);
-			setValid(iterationIndex, false);
-		}
-		else
+		if (sourceList != nullptr)
 		{
-			setValid(iterationIndex, comparator->compare((Parameter*)c));
+			sourceList->removeListListener(this);
 		}
-	}
-}
 
-void StandardCondition::forceCheck()
-{
-	for (int i = 0; i < getIterationCount(); i++) checkComparator(i);
-}
-
-void StandardCondition::forceToggleState(bool value)
-{
-	rawIsValids.fill(value);
-	for (int i = 0; i < getIterationCount(); i++)
-	{
-		Condition::setValid(i, value); //bypass standard condition to avoid toggle, and force dispatch
-	}
-}
-
-void StandardCondition::updateSourceControllablesFromTarget()
-{
-	/*
-	for (auto& sc : sourceControllables)
-	{
-		if (!sc.wasObjectDeleted() && sc != nullptr)
+		sourceList = dynamic_cast<BaseMultiplexList*>(sourceTarget->targetContainer.get());
+		
+		if (sourceList != nullptr)
 		{
-			Module* m = ControllableUtil::findParentAs<Module>(sc);
-			if (m != nullptr) unregisterLinkedInspectable(m);
+			sourceList->addListListener(this);
 		}
-	}
-	*/
-
-	for (auto& sc : sourceControllables)
-	{
-		if (Parameter* sp = dynamic_cast<Parameter*>(sc.get())) sp->removeParameterListener(this);
-		else if (Trigger* st = dynamic_cast<Trigger*>(sc.get())) st->removeTriggerListener(this);
-	}
-	
-	sourceIndexMap.clear();
-
-
-	if (isClearing) return;
-
-	Array<WeakReference<Controllable>> newSources;
-	if (!iteratorListMode)
-	{
-		if (sourceTarget->target != nullptr && !sourceTarget->target.wasObjectDeleted()) newSources.add(sourceTarget->target);
 	}
 	else
 	{
-		if (BaseIteratorList* list = dynamic_cast<BaseIteratorList*>(sourceTarget->targetContainer.get())) newSources.addArray(list->list);
+		if (sourceControllable != nullptr)
+		{
+			if (sourceControllable->type == Controllable::TRIGGER) ((Trigger*)sourceControllable.get())->removeTriggerListener(this);
+			else ((Parameter*)sourceControllable.get())->removeParameterListener(this);
+		}
+
+		sourceControllable = sourceTarget->target;
+
+		if (sourceControllable != nullptr)
+		{
+			if (sourceControllable->type == Controllable::TRIGGER) ((Trigger*)sourceControllable.get())->addTriggerListener(this);
+			else ((Parameter*)sourceControllable.get())->addParameterListener(this);
+		}
 	}
 
-	bool rebuildComparator = true;
-	if ((sourceControllables.size() > 0 && newSources.size() > 0) && sourceControllables[0] == newSources[0]) rebuildComparator = false;
-	
-	sourceControllables = newSources;
+	updateComparatorFromSource();
+}
 
-	int index = 0;
-	for (auto& sc : sourceControllables)
+void StandardCondition::updateComparatorFromSource()
+{
+	if (Controllable* c = getSourceControllableAt(0))
 	{
-		if (Parameter* sp = dynamic_cast<Parameter*>(sc.get())) sp->addParameterListener(this);
-		else if (Trigger* st = dynamic_cast<Trigger*>(sc.get())) st->addTriggerListener(this);
-		sourceIndexMap.set(sc.get(), index++);
-	}
-
-	if (sourceControllables.size()  > 0)
-	{
+		bool rebuildComparator = comparator == nullptr || c->type != comparator->reference->type;
 		if (rebuildComparator)
 		{
 			var oldData = var();
@@ -167,15 +134,7 @@ void StandardCondition::updateSourceControllablesFromTarget()
 				comparator.reset();
 			}
 
-			if (sourceControllables[0]->type != Controllable::TRIGGER) comparator.reset(ComparatorFactory::createComparatorForControllable((Parameter*)sourceControllables[0].get()));
-
-			/*
-			for (auto& sc : sourceControllables)
-			{
-				Module* m = ControllableUtil::findParentAs<Module>(sc);
-				if (m != nullptr) registerLinkedInspectable(m);
-			}
-			*/
+			if (c->type != Controllable::TRIGGER) comparator.reset(ComparatorFactory::createComparatorForControllable((Parameter*)c));
 
 			if (comparator != nullptr)
 			{
@@ -186,16 +145,20 @@ void StandardCondition::updateSourceControllablesFromTarget()
 					if (!loadingComparatorData.isVoid())
 					{
 						comparator->loadJSONData(loadingComparatorData);
-						//loadingComparatorData = var();
 					}
 					else if (!oldData.isVoid()) comparator->loadJSONData(oldData);
 				}
 
 				comparator->hideInEditor = true;
-				for (int i = 0; i < getIterationCount(); i++) checkComparator(i);
+				for (int i = 0; i < getMultiplexCount(); i++) checkComparator(i);
 			}
 		}
-	} else
+		else if (comparator != nullptr)
+		{
+			comparator->updateReferenceRange((Parameter*)c);
+		}
+	}
+	else
 	{
 		if (comparator != nullptr)
 		{
@@ -209,13 +172,61 @@ void StandardCondition::updateSourceControllablesFromTarget()
 	conditionAsyncNotifier.addMessage(new ConditionEvent(ConditionEvent::SOURCE_CHANGED, this));
 }
 
-void StandardCondition::onContainerParameterChangedInternal(Parameter * p)
+Controllable* StandardCondition::getSourceControllableAt(int multiplexIndex)
+{
+	if (multiplexListMode) return sourceList != nullptr ? sourceList->getTargetControllableAt(multiplexIndex) : nullptr;
+	else return sourceControllable;
+}
+
+void StandardCondition::checkComparator(int multiplexIndex)
+{
+	if (isCurrentlyLoadingData) return;
+
+	if (Controllable* c = getSourceControllableAt(multiplexIndex))
+	{
+		if (c->type == Controllable::TRIGGER) {
+			setValid(multiplexIndex, true);
+			setValid(multiplexIndex, false);
+		}
+		else
+		{
+			setValid(multiplexIndex, comparator->compare((Parameter*)c));
+		}
+	}
+}
+
+void StandardCondition::forceCheck()
+{
+	for (int i = 0; i < getMultiplexCount(); i++) checkComparator(i);
+}
+
+void StandardCondition::forceToggleState(bool value)
+{
+	rawIsValids.fill(value);
+	for (int i = 0; i < getMultiplexCount(); i++)
+	{
+		Condition::setValid(i, value); //bypass standard condition to avoid toggle, and force dispatch
+	}
+}
+
+void StandardCondition::listReferenceUpdated()
+{
+	updateComparatorFromSource();
+}
+
+void StandardCondition::listItemUpdated(int multiplexIndex)
+{
+	checkComparator(multiplexIndex);
+}
+
+
+void StandardCondition::onContainerParameterChangedInternal(Parameter* p)
 {
 	Condition::onContainerParameterChangedInternal(p);
 
 	if (p == sourceTarget && sourceTarget != nullptr)
 	{
-		updateSourceControllablesFromTarget();
+		updateSourceFromTarget();
 	}
 }
 
@@ -225,29 +236,23 @@ void StandardCondition::onControllableFeedbackUpdateInternal(ControllableContain
 
 	if (comparator != nullptr && c == comparator->reference || c == comparator->compareFunction)
 	{
-		if(!isCurrentlyLoadingData) for (int i = 0; i < getIterationCount(); i++) checkComparator(i);
+		if (!isCurrentlyLoadingData) for (int i = 0; i < getMultiplexCount(); i++) checkComparator(i);
 	}
 }
 
 void StandardCondition::onExternalParameterValueChanged(Parameter* p)
 {
-	if (sourceIndexMap.contains(p)) checkComparator(sourceIndexMap[p]);
-	else Condition::onExternalParameterValueChanged(p);
+	if(!multiplexListMode) checkComparator(0);
 }
 
 void StandardCondition::onExternalParameterRangeChanged(Parameter* p)
 {
-	if (sourceIndexMap.contains(p) && sourceIndexMap[p] == 0)
-	{
-		if (comparator != nullptr) comparator->updateReferenceRange(p);
-	}
-	else Condition::onExternalParameterRangeChanged(p);
+	if (!multiplexListMode && p == sourceControllable && comparator != nullptr) comparator->updateReferenceRange(p);
 }
 
 void StandardCondition::onExternalTriggerTriggered(Trigger* t)
 {
-	if (sourceIndexMap.contains(t)) checkComparator(sourceIndexMap[t]);
-	else Condition::onExternalTriggerTriggered(t);
+	if (!multiplexListMode) checkComparator(0);
 }
 
 var StandardCondition::getJSONData()
@@ -273,12 +278,12 @@ void StandardCondition::loadJSONDataInternal(var data)
 void StandardCondition::afterLoadJSONDataInternal()
 {
 	Condition::afterLoadJSONDataInternal();
-	for (int i = 0; i < getIterationCount(); i++) checkComparator(i);
+	for (int i = 0; i < getMultiplexCount(); i++) checkComparator(i);
 }
 
 
 
-InspectableEditor * StandardCondition::getEditor(bool isRoot)
+InspectableEditor* StandardCondition::getEditor(bool isRoot)
 {
 	return new StandardConditionEditor(this, isRoot);
 }

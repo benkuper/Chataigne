@@ -18,12 +18,12 @@ class ConditionGroup :
 	public ConditionManager::ConditionManagerListener
 {
 public:
-	ConditionGroup(var params = var(), IteratorProcessor* iterator = nullptr);
+	ConditionGroup(var params = var(), Multiplex* multiplex = nullptr);
 	~ConditionGroup();
 
 	ConditionManager manager;
 
-	void conditionManagerValidationChanged(ConditionManager *, int iterationIndex) override;
+	void conditionManagerValidationChanged(ConditionManager *, int multiplexIndex) override;
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;

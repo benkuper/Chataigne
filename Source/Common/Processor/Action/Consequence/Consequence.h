@@ -16,12 +16,12 @@ class Consequence :
 	public BaseCommandHandler
 {
 public:
-	Consequence(IteratorProcessor * iterator = nullptr);
+	Consequence(Multiplex * multiplex = nullptr);
 	virtual ~Consequence();
 
 	bool forceDisabled;
 	
-	virtual void triggerCommand(int iterationIndex = 0) override;
+	virtual void triggerCommand(int multiplexIndex = 0) override;
 
 	class ConsequenceListener
 	{

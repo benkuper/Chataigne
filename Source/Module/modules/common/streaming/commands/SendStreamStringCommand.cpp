@@ -10,8 +10,8 @@
 
 #include "SendStreamStringCommand.h"
 
-SendStreamStringCommand::SendStreamStringCommand(StreamingModule* _module, CommandContext context, var params, IteratorProcessor* iterator) :
-	StreamingCommand(_module, context, params, iterator),
+SendStreamStringCommand::SendStreamStringCommand(StreamingModule* _module, CommandContext context, var params, Multiplex* multiplex) :
+	StreamingCommand(_module, context, params, multiplex),
 	appendCR(nullptr),
 	appendNL(nullptr),
     prefix(nullptr)
@@ -69,7 +69,7 @@ SendStreamStringCommand::~SendStreamStringCommand()
 {
 }
 
-void SendStreamStringCommand::setValue(var value, int iterationIndex)
+void SendStreamStringCommand::setValue(var value, int multiplexIndex)
 {
 	switch (dataMode)
 	{
@@ -89,18 +89,18 @@ void SendStreamStringCommand::setValue(var value, int iterationIndex)
 		break;
 	}
 
-	StreamingCommand::setValue(value, iterationIndex);
+	StreamingCommand::setValue(value, multiplexIndex);
 }
 
-void SendStreamStringCommand::triggerInternal(int iterationIndex)
+void SendStreamStringCommand::triggerInternal(int multiplexIndex)
 {
-	String valString = getLinkedValue(valueParam, iterationIndex).toString();
+	String valString = getLinkedValue(valueParam, multiplexIndex).toString();
 
 	switch (dataMode)
 	{
 	case STRING:
 	{
-		if (prefix != nullptr) valString = getLinkedValue(prefix, iterationIndex).toString() + valString;
+		if (prefix != nullptr) valString = getLinkedValue(prefix, multiplexIndex).toString() + valString;
 		if (appendCR != nullptr && appendCR->boolValue()) valString += "\r";
 		if (appendNL != nullptr && appendNL->boolValue()) valString += "\n";
 

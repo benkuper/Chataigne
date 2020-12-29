@@ -10,8 +10,8 @@
 
 #include "MouseModuleCommands.h"
 
-MouseModuleCommands::MouseModuleCommands(MouseModule* _module, CommandContext context, var params, IteratorProcessor* iterator) :
-	BaseCommand(_module, context, params, iterator),
+MouseModuleCommands::MouseModuleCommands(MouseModule* _module, CommandContext context, var params, Multiplex* multiplex) :
+	BaseCommand(_module, context, params, multiplex),
 	mouseModule(_module),
 	position(nullptr),
 	buttonID(nullptr),
@@ -43,28 +43,28 @@ MouseModuleCommands::~MouseModuleCommands()
 {
 }
 
-void MouseModuleCommands::triggerInternal(int iterationIndex)
+void MouseModuleCommands::triggerInternal(int multiplexIndex)
 {
 	switch (type)
 	{
 	case SET_CURSOR_POSITION:
     {
-		var pVal = getLinkedValue(position, iterationIndex);
+		var pVal = getLinkedValue(position, multiplexIndex);
 		Point<float> p(pVal[0], pVal[1]);
-		mouseModule->setCursorPosition(p, getLinkedValue(isRelative, iterationIndex));
+		mouseModule->setCursorPosition(p, getLinkedValue(isRelative, multiplexIndex));
     }
     break;
 
 	case BUTTON_DOWN:
-		mouseModule->setButtonDown(getLinkedValue(buttonID, iterationIndex));
+		mouseModule->setButtonDown(getLinkedValue(buttonID, multiplexIndex));
 		break;
 
 	case BUTTON_UP:
-		mouseModule->setButtonUp(getLinkedValue(buttonID, iterationIndex));
+		mouseModule->setButtonUp(getLinkedValue(buttonID, multiplexIndex));
 		break;
 
 	case BUTTON_CLICK:
-		mouseModule->setButtonClick(getLinkedValue(buttonID, iterationIndex));
+		mouseModule->setButtonClick(getLinkedValue(buttonID, multiplexIndex));
 		break;
 	}
 }

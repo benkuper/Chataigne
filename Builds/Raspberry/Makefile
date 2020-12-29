@@ -106,10 +106,6 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/MIDIManager_a5993663.o \
   $(JUCE_OBJDIR)/MTCReceiver_b0ff4722.o \
   $(JUCE_OBJDIR)/MTCSender_7b4a4be8.o \
-  $(JUCE_OBJDIR)/IteratorUI_4e732dfe.o \
-  $(JUCE_OBJDIR)/IteratorList_4990ba1e.o \
-  $(JUCE_OBJDIR)/IteratorListManager_7729bc39.o \
-  $(JUCE_OBJDIR)/Iterator_74f350f7.o \
   $(JUCE_OBJDIR)/ActivationCondition_54e1de99.o \
   $(JUCE_OBJDIR)/ConditionGroup_1310754d.o \
   $(JUCE_OBJDIR)/BoolComparators_c6fc0805.o \
@@ -163,6 +159,10 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/MappingOutputManager_b8813ef3.o \
   $(JUCE_OBJDIR)/MappingUI_939edaca.o \
   $(JUCE_OBJDIR)/Mapping_78a2fa15.o \
+  $(JUCE_OBJDIR)/MultiplexList_4959b89e.o \
+  $(JUCE_OBJDIR)/MultiplexListManager_17d6db9.o \
+  $(JUCE_OBJDIR)/MultiplexUI_6808bd0a.o \
+  $(JUCE_OBJDIR)/Multiplex_737cd189.o \
   $(JUCE_OBJDIR)/ProcessorManagerUI_f8839312.o \
   $(JUCE_OBJDIR)/ProcessorUI_b6bd10cd.o \
   $(JUCE_OBJDIR)/Processor_e39625fa.o \
@@ -596,26 +596,6 @@ $(JUCE_OBJDIR)/MTCSender_7b4a4be8.o: ../../Source/Common/MIDI/MTCSender.cpp
 	@echo "Compiling MTCSender.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
-$(JUCE_OBJDIR)/IteratorUI_4e732dfe.o: ../../Source/Common/Processor/Iterator/ui/IteratorUI.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling IteratorUI.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/IteratorList_4990ba1e.o: ../../Source/Common/Processor/Iterator/list/IteratorList.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling IteratorList.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/IteratorListManager_7729bc39.o: ../../Source/Common/Processor/Iterator/list/IteratorListManager.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling IteratorListManager.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/Iterator_74f350f7.o: ../../Source/Common/Processor/Iterator/Iterator.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling Iterator.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
 $(JUCE_OBJDIR)/ActivationCondition_54e1de99.o: ../../Source/Common/Processor/Action/Condition/conditions/ActivationCondition/ActivationCondition.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling ActivationCondition.cpp"
@@ -879,6 +859,26 @@ $(JUCE_OBJDIR)/MappingUI_939edaca.o: ../../Source/Common/Processor/Mapping/ui/Ma
 $(JUCE_OBJDIR)/Mapping_78a2fa15.o: ../../Source/Common/Processor/Mapping/Mapping.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling Mapping.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/MultiplexList_4959b89e.o: ../../Source/Common/Processor/Multiplex/List/MultiplexList.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling MultiplexList.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/MultiplexListManager_17d6db9.o: ../../Source/Common/Processor/Multiplex/List/MultiplexListManager.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling MultiplexListManager.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/MultiplexUI_6808bd0a.o: ../../Source/Common/Processor/Multiplex/ui/MultiplexUI.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling MultiplexUI.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/Multiplex_737cd189.o: ../../Source/Common/Processor/Multiplex/Multiplex.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling Multiplex.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/ProcessorManagerUI_f8839312.o: ../../Source/Common/Processor/ui/ProcessorManagerUI.cpp

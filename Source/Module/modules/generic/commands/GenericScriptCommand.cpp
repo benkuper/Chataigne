@@ -13,8 +13,8 @@
 
 String GenericScriptCommand::commandScriptTemplate = "";
 
-GenericScriptCommand::GenericScriptCommand(ChataigneGenericModule * _module, CommandContext context, var params, IteratorProcessor* iterator) :
-	BaseCommand(_module, context, params, iterator),
+GenericScriptCommand::GenericScriptCommand(ChataigneGenericModule * _module, CommandContext context, var params, Multiplex* multiplex) :
+	BaseCommand(_module, context, params, multiplex),
 	script(this, false)
 {
 
@@ -28,14 +28,14 @@ GenericScriptCommand::~GenericScriptCommand()
 {
 }
 
-void GenericScriptCommand::setValueInternal(var value, int iterationIndex)
+void GenericScriptCommand::setValueInternal(var value, int multiplexIndex)
 {
 	Array<var> values;
 	values.add(value);
 	script.callFunction(setValueId, values);
 }
 
-void GenericScriptCommand::triggerInternal(int iterationIndex)
+void GenericScriptCommand::triggerInternal(int multiplexIndex)
 {
 	if(context != MAPPING) script.callFunction(triggerId, Array<var>());
 }
@@ -53,9 +53,9 @@ void GenericScriptCommand::loadJSONDataInternal(var data)
 	script.loadJSONData(data.getProperty("script", var()));
 }
 
-BaseCommand * GenericScriptCommand::create(ControllableContainer * module, CommandContext context, var params, IteratorProcessor * iterator)
+BaseCommand * GenericScriptCommand::create(ControllableContainer * module, CommandContext context, var params, Multiplex * multiplex)
 {
-	return new GenericScriptCommand((ChataigneGenericModule *)module, context, params, iterator);
+	return new GenericScriptCommand((ChataigneGenericModule *)module, context, params, multiplex);
 
 }
 

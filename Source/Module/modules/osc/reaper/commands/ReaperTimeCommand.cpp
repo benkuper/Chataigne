@@ -10,7 +10,7 @@
 
 #include "ReaperTimeCommand.h"
 
-ReaperTimeCommand::ReaperTimeCommand(ReaperModule * _module, CommandContext context, var params, IteratorProcessor * iterator) :
+ReaperTimeCommand::ReaperTimeCommand(ReaperModule * _module, CommandContext context, var params, Multiplex * multiplex) :
 	OSCCommand(_module,context,params),
 	reaperModule(_module)
 {
@@ -25,10 +25,10 @@ ReaperTimeCommand::~ReaperTimeCommand()
 {
 }
 
-void ReaperTimeCommand::triggerInternal(int iterationIndex)
+void ReaperTimeCommand::triggerInternal(int multiplexIndex)
 {
 	if (stopTimePlay->boolValue()) oscModule->sendOSC(OSCMessage("/stop"));
-	OSCCommand::triggerInternal(iterationIndex);
+	OSCCommand::triggerInternal(multiplexIndex);
 	if (stopTimePlay->boolValue()) oscModule->sendOSC(OSCMessage("/play"));
 	
 }

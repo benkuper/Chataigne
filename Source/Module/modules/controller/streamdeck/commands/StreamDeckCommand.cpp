@@ -10,8 +10,8 @@
 
 #include "StreamDeckCommand.h"
 
-StreamDeckCommand::StreamDeckCommand(StreamDeckModule* _module, CommandContext context, var params, IteratorProcessor* iterator) :
-	BaseCommand(_module, context, params, iterator),
+StreamDeckCommand::StreamDeckCommand(StreamDeckModule* _module, CommandContext context, var params, Multiplex* multiplex) :
+	BaseCommand(_module, context, params, multiplex),
 	streamDeckModule(_module),
 	row(nullptr),
 	column(nullptr),
@@ -51,12 +51,12 @@ StreamDeckCommand::~StreamDeckCommand()
 }
 
 
-void StreamDeckCommand::triggerInternal(int iterationIndex)
+void StreamDeckCommand::triggerInternal(int multiplexIndex)
 {
 	int r = row != nullptr ? row->intValue()-1 : 0;
 	int c = column != nullptr ? column->intValue()-1 : 0;
 
-	var val = getLinkedValue(valueParam, iterationIndex);
+	var val = getLinkedValue(valueParam, multiplexIndex);
 
 	switch (action)
 	{

@@ -14,7 +14,7 @@
 #include "Common/Command/ui/BaseCommandEditor.h"
 
 class ResolumeBaseCommandEditor :
-	public BaseCommandEditor
+	public BaseCommandContainerEditor
 {
 public:
 	ResolumeBaseCommandEditor(ResolumeBaseCommand * _command, bool isRoot);

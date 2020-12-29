@@ -10,8 +10,8 @@
 
 #include "DMXCommand.h"
 
-DMXCommand::DMXCommand(DMXModule* _module, CommandContext context, var params, IteratorProcessor* iterator) :
-	BaseCommand(_module, context, params, iterator),
+DMXCommand::DMXCommand(DMXModule* _module, CommandContext context, var params, Multiplex* multiplex) :
+	BaseCommand(_module, context, params, multiplex),
 	dmxModule(_module),
 	byteOrder(nullptr),
 	channel(nullptr),
@@ -84,7 +84,7 @@ DMXCommand::~DMXCommand()
 
 }
 
-void DMXCommand::setValue(var val, int iterationIndex)
+void DMXCommand::setValue(var val, int multiplexIndex)
 {
 	//DBG("Value val " << (int)val.isArray() << " / " << val.size()) ;
 
@@ -109,23 +109,23 @@ void DMXCommand::setValue(var val, int iterationIndex)
 		//DBG("Val is array ");
 		//for(int i=0;i<newVal.size();++i) DBG("new val [" << i << "]/ " << (float)newVal[i]);
 	}
-	BaseCommand::setValue(newVal, iterationIndex);
+	BaseCommand::setValue(newVal, multiplexIndex);
 }
 
-void DMXCommand::triggerInternal(int iterationIndex)
+void DMXCommand::triggerInternal(int multiplexIndex)
 {
-	BaseCommand::triggerInternal(iterationIndex);
+	BaseCommand::triggerInternal(multiplexIndex);
 
 	switch (dmxAction) 
 	{
 
 	case SET_VALUE:
-		dmxModule->sendDMXValue(getLinkedValue(channel, iterationIndex), getLinkedValue(value, iterationIndex));
+		dmxModule->sendDMXValue(getLinkedValue(channel, multiplexIndex), getLinkedValue(value, multiplexIndex));
 		break;
 
 	case SET_VALUE_16BIT:
 	{
-		int val = getLinkedValue(value, iterationIndex);
+		int val = getLinkedValue(value, multiplexIndex);
 		int v1 = val & 0xFF;
 		int v2 = val >> 8 & 0xFF;
 		bool msb = byteOrder->getValueDataAsEnum<DMXByteOrder>() == DMXByteOrder::MSB;
@@ -134,7 +134,7 @@ void DMXCommand::triggerInternal(int iterationIndex)
 		int dmxV2 = msb ? v1 : v2;
 
 		Array<int> values(dmxV1, dmxV2);
-		dmxModule->sendDMXValues(getLinkedValue(channel, iterationIndex), values);
+		dmxModule->sendDMXValues(getLinkedValue(channel, multiplexIndex), values);
 	}
 	break;
 
@@ -142,10 +142,10 @@ void DMXCommand::triggerInternal(int iterationIndex)
 	case SET_ALL:
 	{
 		Array<int> values;
-		int numValues = dmxAction == SET_ALL ? 512 : jmax((int)getLinkedValue(channel, iterationIndex) - (int)getLinkedValue(channel, iterationIndex) + 1,0);
-		int startChannel = dmxAction == SET_ALL ? 1 : getLinkedValue(channel, iterationIndex);
+		int numValues = dmxAction == SET_ALL ? 512 : jmax((int)getLinkedValue(channel, multiplexIndex) - (int)getLinkedValue(channel, multiplexIndex) + 1,0);
+		int startChannel = dmxAction == SET_ALL ? 1 : getLinkedValue(channel, multiplexIndex);
 		values.resize(numValues);
-		values.fill(getLinkedValue(value, iterationIndex));
+		values.fill(getLinkedValue(value, multiplexIndex));
 		dmxModule->sendDMXValues(startChannel, values);
 	}
 	break;
@@ -155,19 +155,19 @@ void DMXCommand::triggerInternal(int iterationIndex)
 		Array<int> values;
 		for (auto& i : customValuesManager->items)
 		{
-			values.add(i->getLinkedValue(iterationIndex));
+			values.add(i->getLinkedValue(multiplexIndex));
 		}
-		dmxModule->sendDMXValues(getLinkedValue(channel, iterationIndex), values);
+		dmxModule->sendDMXValues(getLinkedValue(channel, multiplexIndex), values);
 	}
 	break;
 
 
 	case COLOR:
 	{
-		var val = getLinkedValue(colorParam, iterationIndex);
+		var val = getLinkedValue(colorParam, multiplexIndex);
 		Array<int> values;
 		for (int i = 0; i < 3; ++i) values.add((int)((float)val[i] * 255));
-		dmxModule->sendDMXValues(getLinkedValue(channel, iterationIndex), values);
+		dmxModule->sendDMXValues(getLinkedValue(channel, multiplexIndex), values);
 	}
 	break;
 

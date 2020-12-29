@@ -12,37 +12,40 @@
 #include "ui/ConditionEditor.h"
 #include "Module/ModuleManager.h"
 
-Condition::Condition(const String& n, var params, IteratorProcessor * iterator) :
+Condition::Condition(const String& n, var params, Multiplex * multiplex) :
 	BaseItem(n),
-	IterativeTarget(iterator),
+	MultiplexTarget(multiplex),
 	forceDisabled(false),
 	conditionAsyncNotifier(30)
 {
 	isSelectable = false;
+
+	isValids.resize(getMultiplexCount());
+	isValids.fill(false);
 }
 
 Condition::~Condition()
 {
 }
 
-void Condition::iteratorCountChanged()
+void Condition::multiplexCountChanged()
 {
-	isValids.resize(getIterationCount());
+	isValids.resize(getMultiplexCount());
 	isValids.fill(false);
 }
 
-bool Condition::getIsValid(int iterationIndex)
+bool Condition::getIsValid(int multiplexIndex)
 {
-	return isValids[iterationIndex];
+	return isValids[multiplexIndex];
 }
 
-void Condition::setValid(int iterationIndex, bool value, bool dispatchOnChangeOnly)
+void Condition::setValid(int multiplexIndex, bool value, bool dispatchOnChangeOnly)
 {
-	if (isValids[iterationIndex] == value && dispatchOnChangeOnly) return;
-	isValids.set(iterationIndex, value);
+	if (isValids[multiplexIndex] == value && dispatchOnChangeOnly) return;
+	isValids.set(multiplexIndex, value);
 
-	conditionListeners.call(&ConditionListener::conditionValidationChanged, this, iterationIndex);
-	conditionAsyncNotifier.addMessage(new ConditionEvent(ConditionEvent::VALIDATION_CHANGED, this, iterationIndex));
+	conditionListeners.call(&ConditionListener::conditionValidationChanged, this, multiplexIndex);
+	conditionAsyncNotifier.addMessage(new ConditionEvent(ConditionEvent::VALIDATION_CHANGED, this, multiplexIndex));
 }
 
 void Condition::onContainerParameterChangedInternal(Parameter * p)
@@ -50,7 +53,7 @@ void Condition::onContainerParameterChangedInternal(Parameter * p)
 	BaseItem::onContainerParameterChangedInternal(p);
 	if (p == enabled)
 	{
-		for (int i = 0; i < getIterationCount(); i++) setValid(i, false);
+		for (int i = 0; i < getMultiplexCount(); i++) setValid(i, false);
 	}
 }
 

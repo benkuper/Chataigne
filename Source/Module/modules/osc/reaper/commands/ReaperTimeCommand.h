@@ -17,15 +17,15 @@ class ReaperTimeCommand :
 	public OSCCommand
 {
 public:
-	ReaperTimeCommand(ReaperModule* _module, CommandContext context, var params, IteratorProcessor * iterator = nullptr);
+	ReaperTimeCommand(ReaperModule* _module, CommandContext context, var params, Multiplex * multiplex = nullptr);
 	~ReaperTimeCommand();
 
 	ReaperModule* reaperModule;
 	BoolParameter* stopTimePlay;
 	FloatParameter* timeParam;
 
-	void triggerInternal(int iterationIndex) override;
+	void triggerInternal(int multiplexIndex) override;
 
-	static ReaperTimeCommand* create(ControllableContainer* module, CommandContext context, var params, IteratorProcessor * iterator) { return new ReaperTimeCommand((ReaperModule*)module, context, params, iterator); }
+	static ReaperTimeCommand* create(ControllableContainer* module, CommandContext context, var params, Multiplex * multiplex) { return new ReaperTimeCommand((ReaperModule*)module, context, params, multiplex); }
 
 };

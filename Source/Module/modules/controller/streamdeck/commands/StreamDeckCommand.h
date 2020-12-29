@@ -18,7 +18,7 @@ class StreamDeckCommand :
 public:
 	enum StreamDeckAction { SET_COLOR, SET_IMAGE, SET_ALL_COLOR, SET_BRIGHTNESS};
 
-	StreamDeckCommand(StreamDeckModule* _module, CommandContext context, var params, IteratorProcessor* iterator = nullptr);
+	StreamDeckCommand(StreamDeckModule* _module, CommandContext context, var params, Multiplex* multiplex = nullptr);
 	~StreamDeckCommand();
 
 	StreamDeckAction action;
@@ -28,9 +28,9 @@ public:
 	IntParameter* column;
 	Parameter * valueParam;
 
-	void triggerInternal(int iterationIndex) override;
+	void triggerInternal(int multiplexIndex) override;
 
-	static BaseCommand* create(ControllableContainer* module, CommandContext context, var params, IteratorProcessor * iterator) { return new StreamDeckCommand((StreamDeckModule*)module, context, params, iterator); }
+	static BaseCommand* create(ControllableContainer* module, CommandContext context, var params, Multiplex * multiplex) { return new StreamDeckCommand((StreamDeckModule*)module, context, params, multiplex); }
 
 
 };

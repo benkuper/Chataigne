@@ -14,17 +14,21 @@
 #include "Comparator/BaseComparator.h"
 
 class StandardCondition :
-	public Condition
+	public Condition,
+	public BaseMultiplexList::ListListener
 {
 public:
-	StandardCondition(var params = var(), IteratorProcessor* processor = nullptr);
+	StandardCondition(var params = var(), Multiplex* processor = nullptr);
 	~StandardCondition();
 
-	bool iteratorListMode;
+	bool multiplexListMode;
 
 	TargetParameter * sourceTarget;
-	Array<WeakReference<Controllable>> sourceControllables;
-	HashMap<Controllable*, int> sourceIndexMap;
+	WeakReference<Controllable> sourceControllable; //for non-multiplex conditions
+	BaseMultiplexList* sourceList;
+
+	///Array<WeakReference<Controllable>> sourceControllables;
+	//HashMap<Controllable*, int> sourceIndexMap;
 
 	std::unique_ptr<BaseComparator> comparator;
 	var loadingComparatorData; //for dynamically created parameter, allows to reload comparator data after these are created
@@ -36,14 +40,21 @@ public:
 
 	void clearItem() override;
 
-	void iteratorCountChanged() override;
+	void multiplexCountChanged() override;
 
-	virtual void setValid(int iterationIndex, bool value, bool dispatchOnChangeOnly = true);
+	virtual void setValid(int multiplexIndex, bool value, bool dispatchOnChangeOnly = true);
 	void forceToggleState(bool value);
 
-	void updateSourceControllablesFromTarget();
+	void listReferenceUpdated() override;
+	void listItemUpdated(int multiplexIndex) override;
+	//void updateSourceControllablesFromTarget();
 
-	void checkComparator(int iterationIndex);
+	void updateSourceFromTarget();
+	void updateComparatorFromSource();
+
+	Controllable* getSourceControllableAt(int multiplexIndex);
+
+	void checkComparator(int multiplexIndex);
 
 	void forceCheck() override;
 
@@ -60,7 +71,7 @@ public:
 
 	InspectableEditor * getEditor(bool isRoot) override;
 
-	String getTypeString() const override { return getTypeStringStatic(iteratorListMode); }
-	static String getTypeStringStatic(bool listMode) { return listMode ? "From Iterator List" : "From Input Value"; }
+	String getTypeString() const override { return getTypeStringStatic(multiplexListMode); }
+	static String getTypeStringStatic(bool listMode) { return listMode ? "From Multiplex List" : "From Input Value"; }
 };
 

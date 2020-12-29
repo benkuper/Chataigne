@@ -16,7 +16,7 @@ class ChataigneLogCommand :
 	public BaseCommand
 {
 public:
-	ChataigneLogCommand(ChataigneGenericModule * _module, CommandContext context, var params, IteratorProcessor* iterator = nullptr);
+	ChataigneLogCommand(ChataigneGenericModule * _module, CommandContext context, var params, Multiplex* multiplex = nullptr);
 	~ChataigneLogCommand();
 
 	enum Type { MESSAGE, VALUE };
@@ -28,7 +28,7 @@ public:
 	EnumParameter* logType;
 	Parameter * value;
 
-	void triggerInternal(int iterationIndex) override;
+	void triggerInternal(int multiplexIndex) override;
 
-	static BaseCommand * create(ControllableContainer * module, CommandContext context, var params, IteratorProcessor * iterator = nullptr);
+	static BaseCommand * create(ControllableContainer * module, CommandContext context, var params, Multiplex * multiplex = nullptr);
 };

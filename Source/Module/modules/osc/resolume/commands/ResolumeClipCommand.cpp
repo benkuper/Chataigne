@@ -10,8 +10,8 @@
 
 #include "ResolumeClipCommand.h"
 
-ResolumeClipCommand::ResolumeClipCommand(ResolumeModule * _module, CommandContext context, var params, IteratorProcessor * iterator) :
-	ResolumeBaseCommand(_module,context,params, iterator, true),
+ResolumeClipCommand::ResolumeClipCommand(ResolumeModule * _module, CommandContext context, var params, Multiplex * multiplex) :
+	ResolumeBaseCommand(_module,context,params, multiplex, true),
 	firstClip(nullptr),
 	lastClip(nullptr),
 	loopClips(nullptr),
@@ -66,14 +66,14 @@ void ResolumeClipCommand::onContainerParameterChanged(Parameter * p)
 	}
 }
 
-void ResolumeClipCommand::triggerInternal(int iterationIndex)
+void ResolumeClipCommand::triggerInternal(int multiplexIndex)
 {
-	ResolumeBaseCommand::triggerInternal(iterationIndex);
+	ResolumeBaseCommand::triggerInternal(multiplexIndex);
 
 	if (needsOnOff)
 	{
 		connectParam->setValue(0);
-		ResolumeBaseCommand::triggerInternal(iterationIndex);
+		ResolumeBaseCommand::triggerInternal(multiplexIndex);
 		connectParam->setValue(1);
 	}
 

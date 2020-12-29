@@ -17,14 +17,14 @@
 
 class Mapping :
 	public Processor,
-	public IterativeTarget,
+	public MultiplexTarget,
 	public MappingInput::Listener,
 	public MappingInputManager::ManagerListener,
 	public MappingFilterManager::FilterManagerListener,
 	public Thread
 {
 public:
-	Mapping(var params = var(), IteratorProcessor * iterator = nullptr, bool canBeDisabled = true);
+	Mapping(var params = var(), Multiplex * multiplex = nullptr, bool canBeDisabled = true);
 	virtual ~Mapping();
 
 	MappingInputManager im;
@@ -51,7 +51,7 @@ public:
 
 	void updateMappingChain(MappingFilter * afterThisFilter = nullptr); //will host warnings and type change checks
 
-	void process(bool forceOutput = false, int iterationIndex = 0);
+	void process(bool forceOutput = false, int multiplexIndex = 0);
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
@@ -62,7 +62,7 @@ public:
 	void itemsReordered() override; //MappingInput
 
 	void inputReferenceChanged(MappingInput*) override;
-	void inputParameterValueChanged(MappingInput*) override;
+	void inputParameterValueChanged(MappingInput*, int multiplexIndex) override;
 	void inputParameterRangeChanged(MappingInput*) override;
 
 	void onContainerParameterChangedInternal(Parameter* p) override;

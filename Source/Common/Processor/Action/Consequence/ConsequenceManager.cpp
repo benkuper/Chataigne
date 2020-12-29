@@ -12,8 +12,8 @@
 #include "Common/Command/ui/BaseCommandHandlerManagerEditor.h"
 
 
-ConsequenceManager::ConsequenceManager(const String& name, IteratorProcessor* iterator) :
-	IterativeTarget(iterator),
+ConsequenceManager::ConsequenceManager(const String& name, Multiplex* multiplex) :
+	MultiplexTarget(multiplex),
 	BaseManager<Consequence>(name),
 	forceDisabled(false)
 {
@@ -38,10 +38,10 @@ ConsequenceManager::~ConsequenceManager()
 
 Consequence* ConsequenceManager::createItem()
 {
-	return new Consequence(iterator);
+	return new Consequence(multiplex);
 }
 
-void ConsequenceManager::triggerAll(int iterationIndex)
+void ConsequenceManager::triggerAll(int multiplexIndex)
 {
 	if (items.size() > 0)
 	{
@@ -49,12 +49,12 @@ void ConsequenceManager::triggerAll(int iterationIndex)
 		{
 			for (auto& c : items)
 			{
-				c->triggerCommand(iterationIndex);
+				c->triggerCommand(multiplexIndex);
 			}
 		}
 		else
 		{
-			staggerLaunchers.add(new StaggerLauncher(this, iterationIndex));
+			staggerLaunchers.add(new StaggerLauncher(this, multiplexIndex));
 		}
 	}
 }
@@ -98,10 +98,10 @@ InspectableEditor* ConsequenceManager::getEditor(bool isRoot)
 	return new BaseCommandHandlerManagerEditor<Consequence>(this, CommandContext::ACTION, isRoot);
 }
 
-ConsequenceManager::StaggerLauncher::StaggerLauncher(ConsequenceManager* csm, int iterationIndex) :
+ConsequenceManager::StaggerLauncher::StaggerLauncher(ConsequenceManager* csm, int multiplexIndex) :
 	Thread("Stagger Launcher"),
 	csm(csm),
-	iterationIndex(iterationIndex)
+	multiplexIndex(multiplexIndex)
 {
 	startThread();
 }
@@ -133,7 +133,7 @@ void ConsequenceManager::StaggerLauncher::run()
 		}
 
 		if (triggerIndex >= csm->items.size()) return;
-		csm->items[triggerIndex]->triggerCommand(iterationIndex);
+		csm->items[triggerIndex]->triggerCommand(multiplexIndex);
 		triggerIndex++;
 	}
 }

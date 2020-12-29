@@ -17,14 +17,14 @@ class QLabWorkspaceCommand :
     public OSCCommand
 {
 public:
-    QLabWorkspaceCommand(QLabModule* m, CommandContext context, var params, IteratorProcessor * iterator = nullptr);
+    QLabWorkspaceCommand(QLabModule* m, CommandContext context, var params, Multiplex * multiplex = nullptr);
     ~QLabWorkspaceCommand();
 
     QLabModule * qlabModule;
     
-    void rebuildAddressInternal(String& targetAddress) override;
+    String getTargetAddressInternal(const String& targetAddress, int multiplexIndex = 0) override;
 
     void onExternalParameterValueChanged(Parameter* p) override;
 
-    static BaseCommand* create(ControllableContainer* module, CommandContext context, var params, IteratorProcessor * iterator) { return new QLabWorkspaceCommand((QLabModule*)module, context, params, iterator); }
+    static BaseCommand* create(ControllableContainer* module, CommandContext context, var params, Multiplex * multiplex) { return new QLabWorkspaceCommand((QLabModule*)module, context, params, multiplex); }
 };

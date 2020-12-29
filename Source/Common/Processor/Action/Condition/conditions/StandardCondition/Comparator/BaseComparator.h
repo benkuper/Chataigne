@@ -47,7 +47,7 @@ public:
 
 	Array<WeakReference<Trigger>> sourceTriggers;
 
-	virtual bool compare(var value, int iterationIndex) override;
+	virtual bool compare(var value, int multiplexIndex) override;
 
 	void triggerTriggered(Trigger *) override;
 

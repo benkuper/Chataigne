@@ -14,18 +14,19 @@
 #include "Action/Action.h"
 #include "Mapping/Mapping.h"
 #include "Action/Condition/conditions/ActivationCondition/ActivationCondition.h"
-#include "Iterator/Iterator.h"
+#include "Multiplex/Multiplex.h"
 
-ProcessorManager::ProcessorManager(const String &name, IteratorProcessor * iterator) :
+ProcessorManager::ProcessorManager(const String &name, Multiplex * multiplex) :
 	BaseManager<Processor>(name),
 	forceDisabled(false)
 {
+	isSelectable = false;
 	itemDataType = "Processor"; 
 
 	managerFactory = &factory;
-	factory.defs.add(IterativeTargetDefinition<Processor>::createDef<Action>("", "Action", iterator));
-	factory.defs.add(IterativeTargetDefinition<Processor>::createDef<Mapping>("", "Mapping", iterator));
-	if(iterator == nullptr) factory.defs.add(Factory<Processor>::Definition::createDef<IteratorProcessor>("", "Iterator"));
+	factory.defs.add(MultiplexTargetDefinition<Processor>::createDef<Action>("", "Action", multiplex));
+	factory.defs.add(MultiplexTargetDefinition<Processor>::createDef<Mapping>("", "Mapping", multiplex));
+	if(multiplex == nullptr) factory.defs.add(Factory<Processor>::Definition::createDef<Multiplex>("", "Multiplex"));
 }
 
 ProcessorManager::~ProcessorManager()
@@ -81,7 +82,7 @@ void ProcessorManager::checkAllActivateActions()
 			if (ac != nullptr)
 			{
 				bool valid = ac->type == ActivationCondition::Type::ON_ACTIVATE && !ac->forceDisabled;
-				for(int i = 0;i<ac->getIterationCount();i++) ac->setValid(i, valid, false);
+				for(int i = 0;i<ac->getMultiplexCount();i++) ac->setValid(i, valid, false);
 			}
 		}
 
@@ -105,7 +106,7 @@ void ProcessorManager::checkAllDeactivateActions()
 			ActivationCondition * ac = dynamic_cast<ActivationCondition *>(c);
 			if (ac != nullptr)
 			{
-				for (int i = 0; i < ac->getIterationCount(); i++) ac->setValid(i, ac->type == ActivationCondition::Type::ON_DEACTIVATE);
+				for (int i = 0; i < ac->getMultiplexCount(); i++) ac->setValid(i, ac->type == ActivationCondition::Type::ON_DEACTIVATE);
 			}
 		}
 

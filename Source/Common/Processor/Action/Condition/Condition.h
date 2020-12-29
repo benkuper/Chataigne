@@ -10,23 +10,23 @@
 
 #pragma once
 
-#include "../../Iterator/Iterator.h"
+#include "../../Multiplex/Multiplex.h"
 
 class Condition :
 	public BaseItem,
-	public IterativeTarget
+	public MultiplexTarget
 {
 public:
-	Condition(const String &name = "Condition", var params = var(), IteratorProcessor * = nullptr);
+	Condition(const String &name = "Condition", var params = var(), Multiplex * = nullptr);
 	virtual ~Condition();
 
 	bool forceDisabled;
 	Array<bool> isValids; //this could be simplified for non-iterative condition
 
-	virtual void iteratorCountChanged();
+	virtual void multiplexCountChanged();
 
-	bool getIsValid(int iterationIndex = 0);
-	virtual void setValid(int iterationIndex, bool value, bool dispatchOnChangeOnly = true);
+	bool getIsValid(int multiplexIndex = 0);
+	virtual void setValid(int multiplexIndex, bool value, bool dispatchOnChangeOnly = true);
 
 	virtual void onContainerParameterChangedInternal(Parameter *) override;
 	virtual void setForceDisabled(bool value, bool force = false);
@@ -36,7 +36,7 @@ public:
 	{
 	public:
 		virtual ~ConditionListener() {}
-		virtual void conditionValidationChanged(Condition *, int iterationIndex) {}
+		virtual void conditionValidationChanged(Condition *, int multiplexIndex) {}
 		virtual void conditionSourceChanged(Condition *) {}
 	};
 
@@ -48,10 +48,10 @@ public:
 	class ConditionEvent {
 	public:
 		enum Type { VALIDATION_CHANGED, SOURCE_CHANGED };
-		ConditionEvent(Type type, Condition* c, int iterationIndex = -1) : type(type), condition(c), iterationIndex(iterationIndex) {}
+		ConditionEvent(Type type, Condition* c, int multiplexIndex = -1) : type(type), condition(c), multiplexIndex(multiplexIndex) {}
 		Type type;
 		Condition * condition;
-		int iterationIndex;
+		int multiplexIndex;
 	};
 
 	QueuedNotifier<ConditionEvent> conditionAsyncNotifier;

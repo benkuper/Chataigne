@@ -11,15 +11,15 @@
 #pragma once
 
 #include "MappingFilter.h"
-#include "Common/Processor/Iterator/Iterator.h"
+#include "Common/Processor/Multiplex/Multiplex.h"
 
 class MappingFilterManager :
 	public BaseManager<MappingFilter>,
-	public IterativeTarget,
+	public MultiplexTarget,
 	public MappingFilter::FilterListener
 {
 public:
-	MappingFilterManager(IteratorProcessor * iterator = nullptr);
+	MappingFilterManager(Multiplex * multiplex = nullptr);
 	~MappingFilterManager();
 
 	Array<Parameter *> inputSourceParams;
@@ -34,7 +34,7 @@ public:
 	WeakReference<MappingFilter> getLastEnabledFilter() { return lastEnabledFilter; }
 	Array<Parameter *> getLastFilteredParameters();
 
-	bool processFilters();
+	bool processFilters(int multiplexIndex = 0);
 	Factory<MappingFilter> factory;
 
 	void addItemInternal(MappingFilter * m, var data) override;

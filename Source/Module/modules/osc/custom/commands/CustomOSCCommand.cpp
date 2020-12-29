@@ -10,8 +10,8 @@
 
 #include "CustomOSCCommand.h"
 
-CustomOSCCommand::CustomOSCCommand(OSCModule * module, CommandContext context, var params, IteratorProcessor * iterator) :
-	OSCCommand(module, context, params, iterator),
+CustomOSCCommand::CustomOSCCommand(OSCModule * module, CommandContext context, var params, Multiplex * multiplex) :
+	OSCCommand(module, context, params, multiplex),
 	wildcardsContainer("Address Parameters")
 {
 	address->setControllableFeedbackOnly(false);
@@ -28,13 +28,13 @@ CustomOSCCommand::~CustomOSCCommand()
 }
 
 
-void CustomOSCCommand::triggerInternal(int iterationIndex)
+void CustomOSCCommand::triggerInternal(int multiplexIndex)
 {
 	if (oscModule == nullptr) return;
 	
-	BaseCommand::triggerInternal(iterationIndex);
+	BaseCommand::triggerInternal(multiplexIndex);
 
-	String addrString = getLinkedValue(address, iterationIndex);
+	String addrString = getLinkedValue(address, multiplexIndex);
 	
 	try
 	{
@@ -43,7 +43,7 @@ void CustomOSCCommand::triggerInternal(int iterationIndex)
 		for (auto &a : customValuesManager->items)
 		{
 			Parameter * p = a->param;
-			var pVal = a->getLinkedValue(iterationIndex);
+			var pVal = a->getLinkedValue(multiplexIndex);
 
 			if (p == nullptr) continue;
 			switch (p->type)

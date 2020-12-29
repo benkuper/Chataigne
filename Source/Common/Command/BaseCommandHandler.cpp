@@ -12,15 +12,15 @@
 #include "CommandFactory.h"
 #include "ui/BaseCommandHandlerEditor.h"
 
-BaseCommandHandler::BaseCommandHandler(const String & name, CommandContext _context, Module * _lockedModule, IteratorProcessor * iterator) :
+BaseCommandHandler::BaseCommandHandler(const String & name, CommandContext _context, Module * _lockedModule, Multiplex * multiplex) :
 	BaseItem(name),
-	IterativeTarget(iterator),
+	MultiplexTarget(multiplex),
 	context(_context),
 	lockedModule(_lockedModule),
 	trigger(nullptr),
 	handlerNotifier(5)
 {
-	if (!isIterative())
+	if (!isMultiplexed())
 	{
 		trigger = addTrigger("Trigger", "Trigger this consequence");
 		trigger->hideInEditor = true;
@@ -40,9 +40,9 @@ void BaseCommandHandler::clearItem()
 }
 
 
-void BaseCommandHandler::triggerCommand(int iterationIndex)
+void BaseCommandHandler::triggerCommand(int multiplexIndex)
 {
-	if (command != nullptr) command->trigger(iterationIndex);
+	if (command != nullptr) command->trigger(multiplexIndex);
 }
 
 void BaseCommandHandler::setCommand(CommandDefinition * commandDef)
@@ -71,7 +71,7 @@ void BaseCommandHandler::setCommand(CommandDefinition * commandDef)
 
 
 	commandDefinition = commandDef;
-	if (commandDef != nullptr && !Engine::mainEngine->isClearing && !isClearing) command.reset(commandDef->create(context, iterator));
+	if (commandDef != nullptr && !Engine::mainEngine->isClearing && !isClearing) command.reset(commandDef->create(context, multiplex));
 	else command.reset();
 
 	if (command != nullptr)

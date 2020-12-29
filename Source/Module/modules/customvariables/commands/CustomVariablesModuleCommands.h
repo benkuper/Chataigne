@@ -19,7 +19,7 @@ class CVCommand :
 	public BaseCommand
 {
 public:
-	CVCommand(CustomVariablesModule * _module, CommandContext context, var params, IteratorProcessor* iterator = nullptr);
+	CVCommand(CustomVariablesModule * _module, CommandContext context, var params, Multiplex* multiplex = nullptr);
 	virtual ~CVCommand();
 
 	CVGroupManager * manager;
@@ -44,7 +44,7 @@ public:
 	void updateOperatorOptions();
 
 	void onContainerParameterChanged(Parameter * p) override;
-	void triggerInternal(int iterationIndex) override;
+	void triggerInternal(int multiplexIndex) override;
 
-	static BaseCommand * create(ControllableContainer * module, CommandContext context, var params, IteratorProcessor * iterator = nullptr);
+	static BaseCommand * create(ControllableContainer * module, CommandContext context, var params, Multiplex * multiplex = nullptr);
 };

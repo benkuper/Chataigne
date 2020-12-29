@@ -10,8 +10,8 @@
 
 #include "Consequence.h"
 
-Consequence::Consequence(IteratorProcessor * iterator) :
-	BaseCommandHandler("Consequence",CommandContext::ACTION, nullptr, iterator),
+Consequence::Consequence(Multiplex * multiplex) :
+	BaseCommandHandler("Consequence",CommandContext::ACTION, nullptr, multiplex),
 	forceDisabled(false)
 {
 	
@@ -23,8 +23,8 @@ Consequence::~Consequence()
 
 }
 
-void Consequence::triggerCommand(int iterationIndex)
+void Consequence::triggerCommand(int multiplexIndex)
 {
 	if (!enabled->boolValue() || forceDisabled) return;
-	BaseCommandHandler::triggerCommand(iterationIndex);
+	BaseCommandHandler::triggerCommand(multiplexIndex);
 }

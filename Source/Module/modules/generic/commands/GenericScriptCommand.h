@@ -17,7 +17,7 @@ class GenericScriptCommand :
 	public BaseCommand
 {
 public:
-	GenericScriptCommand(ChataigneGenericModule * _module, CommandContext context, var params, IteratorProcessor* iterator = nullptr);
+	GenericScriptCommand(ChataigneGenericModule * _module, CommandContext context, var params, Multiplex* multiplex = nullptr);
 	~GenericScriptCommand();
 
 	static String commandScriptTemplate;
@@ -26,11 +26,11 @@ public:
 	const Identifier setValueId = "setValue";
 	const Identifier triggerId = "trigger";
 
-	void setValueInternal(var value, int iterationIndex) override;
-	void triggerInternal(int iterationIndex) override;
+	void setValueInternal(var value, int multiplexIndex) override;
+	void triggerInternal(int multiplexIndex) override;
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
 
-	static BaseCommand * create(ControllableContainer * module, CommandContext context, var params, IteratorProcessor * iterator = nullptr);
+	static BaseCommand * create(ControllableContainer * module, CommandContext context, var params, Multiplex * multiplex = nullptr);
 };

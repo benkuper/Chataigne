@@ -10,8 +10,8 @@
 
 #include "SendStreamStringValuesCommand.h"
 
-SendStreamStringValuesCommand::SendStreamStringValuesCommand(StreamingModule * output, CommandContext context, var params, IteratorProcessor* iterator) :
-	SendStreamValuesCommand(output,context,params, iterator)
+SendStreamStringValuesCommand::SendStreamStringValuesCommand(StreamingModule * output, CommandContext context, var params, Multiplex* multiplex) :
+	SendStreamValuesCommand(output,context,params, multiplex)
 {
 	prefix = addStringParameter("Prefix", "This will be prepended to the final string", "");
 	separator = addStringParameter("Separator", "The string that separate each values", ",");
@@ -36,17 +36,17 @@ SendStreamStringValuesCommand::~SendStreamStringValuesCommand()
 {
 }
 
-void SendStreamStringValuesCommand::triggerInternal(int iterationIndex)
+void SendStreamStringValuesCommand::triggerInternal(int multiplexIndex)
 {
 	if (streamingModule == nullptr) return;
 	String s = "";
-	String sepStr = getLinkedValue(separator, iterationIndex);
+	String sepStr = getLinkedValue(separator, multiplexIndex);
 
 	for (auto &a : customValuesManager->items)
 	{
 		if (s.length() > 0) s += sepStr;
 		
-		var val = a->getLinkedValue(iterationIndex);
+		var val = a->getLinkedValue(multiplexIndex);
 		if (val.isVoid()) continue;
 		String ss = "";
 
@@ -65,7 +65,7 @@ void SendStreamStringValuesCommand::triggerInternal(int iterationIndex)
 		s += ss;
 	}
 
-	s = prefix->stringValue() + s + getLinkedValue(suffix, iterationIndex);
+	s = prefix->stringValue() + s + getLinkedValue(suffix, multiplexIndex);
 	if (appendCR->boolValue()) s += "\r";
 	if (appendNL->boolValue()) s += "\n";
 

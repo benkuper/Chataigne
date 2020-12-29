@@ -11,8 +11,8 @@
 #include "GPIOCommands.h"
 #include "../GPIOModule.h"
 
-GPIOCommand::GPIOCommand(GPIOModule* m, CommandContext context, var params, IteratorProcessor* iterator) :
-    BaseCommand(m, context, params, iterator),
+GPIOCommand::GPIOCommand(GPIOModule* m, CommandContext context, var params, Multiplex* multiplex) :
+    BaseCommand(m, context, params, multiplex),
     gpioModule(m),
     valueParam(nullptr)
 {
@@ -42,16 +42,16 @@ GPIOCommand::~GPIOCommand()
 {
 }
 
-void GPIOCommand::triggerInternal(int iterationIndex)
+void GPIOCommand::triggerInternal(int multiplexIndex)
 {
     switch (action)
     {
     case SET_DIGITAL:
-        gpioModule->setDigitalValue(getLinkedValue(pin, iterationIndex), getLinkedValue(valueParam, iterationIndex));
+        gpioModule->setDigitalValue(getLinkedValue(pin, multiplexIndex), getLinkedValue(valueParam, multiplexIndex));
         break;
 
     case SET_PWM:
-        gpioModule->setPWMValue(getLinkedValue(pin, iterationIndex), getLinkedValue(valueParam, iterationIndex));
+        gpioModule->setPWMValue(getLinkedValue(pin, multiplexIndex), getLinkedValue(valueParam, multiplexIndex));
         break;
     }
 }

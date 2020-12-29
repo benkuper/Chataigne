@@ -16,8 +16,8 @@
 #include "conditions/ActivationCondition/ActivationCondition.h"
 #include "Common/Processor/Action/Action.h"
 
-ConditionManager::ConditionManager(IteratorProcessor * iterator) :
-	IterativeTarget(iterator),
+ConditionManager::ConditionManager(Multiplex * multiplex) :
+	MultiplexTarget(multiplex),
 	BaseManager<Condition>("Conditions"),
 	activateDef(nullptr),
 	deactivateDef(nullptr),
@@ -28,10 +28,11 @@ ConditionManager::ConditionManager(IteratorProcessor * iterator) :
 	selectItemWhenCreated = false;
 
 	managerFactory = &factory;
-	factory.defs.add(IterativeTargetDefinition<Condition>::createDef<StandardCondition>("", StandardCondition::getTypeStringStatic(false), iterator));
-	factory.defs.add(IterativeTargetDefinition<Condition>::createDef<ConditionGroup>("", ConditionGroup::getTypeStringStatic(), iterator));
-	factory.defs.add(IterativeTargetDefinition<Condition>::createDef<ScriptCondition>("", ScriptCondition::getTypeStringStatic(), iterator));
-	if (isIterative()) factory.defs.add(IterativeTargetDefinition<Condition>::createDef<StandardCondition>("", StandardCondition::getTypeStringStatic(true), iterator)->addParam("listMode",true));
+	factory.defs.add(MultiplexTargetDefinition<Condition>::createDef<StandardCondition>("", StandardCondition::getTypeStringStatic(false), multiplex));
+	if (isMultiplexed()) factory.defs.add(MultiplexTargetDefinition<Condition>::createDef<StandardCondition>("", StandardCondition::getTypeStringStatic(true), multiplex)->addParam("listMode", true));
+
+	factory.defs.add(MultiplexTargetDefinition<Condition>::createDef<ConditionGroup>("", ConditionGroup::getTypeStringStatic(), multiplex));
+	factory.defs.add(MultiplexTargetDefinition<Condition>::createDef<ScriptCondition>("", ScriptCondition::getTypeStringStatic(), multiplex));
 	
 	validationTime = addFloatParameter("Validation Time", "If greater than 0, the conditions will be validated only if they remain valid for this amount of time", 0, 0, (float)INT32_MAX);
 	validationTime->defaultUI = FloatParameter::TIME;
@@ -48,10 +49,10 @@ ConditionManager::~ConditionManager()
 {
 }
 
-void ConditionManager::iteratorCountChanged()
+void ConditionManager::multiplexCountChanged()
 {
-	isValids.resize(getIterationCount());
-	validationProgresses.resize(getIterationCount());
+	isValids.resize(getMultiplexCount());
+	validationProgresses.resize(getMultiplexCount());
 
 	isValids.fill(false);
 	validationProgresses.fill(0);
@@ -100,7 +101,7 @@ void ConditionManager::removeItemInternal(Condition * c)
 	conditionOperator->hideInEditor = items.size() <= 1;
 	if (!Engine::mainEngine->isLoadingFile && !Engine::mainEngine->isClearing)
 	{
-		for (int i = 0; i < getIterationCount(); i++) checkAllConditions(i);
+		for (int i = 0; i < getMultiplexCount(); i++) checkAllConditions(i);
 	}
 }
 
@@ -115,20 +116,20 @@ void ConditionManager::setForceDisabled(bool value, bool force)
 
 	for (auto &i : items) i->setForceDisabled(value);
 
-	for (int i = 0; i < getIterationCount(); i++) checkAllConditions(i);
+	for (int i = 0; i < getMultiplexCount(); i++) checkAllConditions(i);
 }
 
-void ConditionManager::setValid(int iterationIndex, bool value, bool dispatchOnlyOnValidationChange)
+void ConditionManager::setValid(int multiplexIndex, bool value, bool dispatchOnlyOnValidationChange)
 {
-	if (isValids[iterationIndex] == value && dispatchOnlyOnValidationChange) return;
-	isValids.set(iterationIndex, value);
-	dispatchConditionValidationChanged(iterationIndex);
+	if (isValids[multiplexIndex] == value && dispatchOnlyOnValidationChange) return;
+	isValids.set(multiplexIndex, value);
+	dispatchConditionValidationChanged(multiplexIndex);
 }
 
-void ConditionManager::setValidationProgress(int iterationIndex, float value)
+void ConditionManager::setValidationProgress(int multiplexIndex, float value)
 {
-	validationProgresses.set(iterationIndex, value);
-	if (!isIterative()) validationProgressFeedback->setValue(value);
+	validationProgresses.set(multiplexIndex, value);
+	if (!isMultiplexed()) validationProgressFeedback->setValue(value);
 }
 
 void ConditionManager::forceCheck()
@@ -136,52 +137,52 @@ void ConditionManager::forceCheck()
 	for (auto& i : items) i->forceCheck();
 }
 
-void ConditionManager::checkAllConditions(int iterationIndex, bool emptyIsValid, bool dispatchOnlyOnValidationChange)
+void ConditionManager::checkAllConditions(int multiplexIndex, bool emptyIsValid, bool dispatchOnlyOnValidationChange)
 {
 	bool valid = false;
 	ConditionOperator op = (ConditionOperator)(int)conditionOperator->getValueData();
 	switch (op)
 	{
 	case ConditionOperator::AND:
-		valid = areAllConditionsValid(iterationIndex, emptyIsValid);
+		valid = areAllConditionsValid(multiplexIndex, emptyIsValid);
 		break;
 
 	case ConditionOperator::OR:
-		valid = isAtLeastOneConditionValid(iterationIndex, emptyIsValid);
+		valid = isAtLeastOneConditionValid(multiplexIndex, emptyIsValid);
 		break;
 	}
 
 	if (validationTime->floatValue() == 0)
 	{
-		setValid(iterationIndex, valid, dispatchOnlyOnValidationChange);
-	}else if (valid != validationWaitings[iterationIndex])
+		setValid(multiplexIndex, valid, dispatchOnlyOnValidationChange);
+	}else if (valid != validationWaitings[multiplexIndex])
 	{
-		validationWaitings.set(iterationIndex, valid);
-		setValidationProgress(iterationIndex, 0);
-		setValid(iterationIndex, false);
+		validationWaitings.set(multiplexIndex, valid);
+		setValidationProgress(multiplexIndex, 0);
+		setValid(multiplexIndex, false);
 		if(!valid)
 		{
-			stopTimer(iterationIndex);
+			stopTimer(multiplexIndex);
 		} else
 		{
-			prevTimerTimes.set(iterationIndex, Time::getMillisecondCounterHiRes() / 1000.0);
-			startTimer(iterationIndex, 20);
+			prevTimerTimes.set(multiplexIndex, Time::getMillisecondCounterHiRes() / 1000.0);
+			startTimer(multiplexIndex, 20);
 		}
 	}
 }
 
 
 
-void ConditionManager::conditionValidationChanged(Condition*, int iterationIndex)
+void ConditionManager::conditionValidationChanged(Condition*, int multiplexIndex)
 {
-	checkAllConditions(iterationIndex);
+	checkAllConditions(multiplexIndex);
 }
 
 void ConditionManager::onContainerParameterChanged(Parameter * p)
 {
 	if (p == conditionOperator)
 	{
-		for (int i = 0; i < getIterationCount(); i++) checkAllConditions(i);
+		for (int i = 0; i < getMultiplexCount(); i++) checkAllConditions(i);
 	}
 	else if (p == validationTime)
 	{
@@ -213,10 +214,10 @@ void ConditionManager::timerCallback(int id)
 
 void ConditionManager::afterLoadJSONDataInternal()
 {
-	for (int i = 0; i < getIterationCount(); i++) checkAllConditions(i);
+	for (int i = 0; i < getMultiplexCount(); i++) checkAllConditions(i);
 }
 
-bool ConditionManager::areAllConditionsValid(int iterationIndex, bool emptyIsValid)
+bool ConditionManager::areAllConditionsValid(int multiplexIndex, bool emptyIsValid)
 {
 	if (items.size() == 0) return emptyIsValid;
 
@@ -224,7 +225,7 @@ bool ConditionManager::areAllConditionsValid(int iterationIndex, bool emptyIsVal
 	for (auto &c : items)
 	{
 		if (!c->enabled->boolValue()) continue;
-		if (!c->getIsValid(iterationIndex)) return false;
+		if (!c->getIsValid(multiplexIndex)) return false;
 		conditionsChecked++;
 	}
 
@@ -232,7 +233,7 @@ bool ConditionManager::areAllConditionsValid(int iterationIndex, bool emptyIsVal
 	return true;
 }
 
-bool ConditionManager::isAtLeastOneConditionValid(int iterationIndex, bool emptyIsValid)
+bool ConditionManager::isAtLeastOneConditionValid(int multiplexIndex, bool emptyIsValid)
 {
 	if (items.size() == 0) return emptyIsValid;
 
@@ -240,7 +241,7 @@ bool ConditionManager::isAtLeastOneConditionValid(int iterationIndex, bool empty
 	for (auto &c : items)
 	{
 		if (!c->enabled->boolValue()) continue;
-		if (c->getIsValid(iterationIndex)) return true;
+		if (c->getIsValid(multiplexIndex)) return true;
 		conditionsChecked++;
 	}
 
@@ -258,26 +259,26 @@ int ConditionManager::getNumEnabledConditions()
 	return result;
 }
 
-int ConditionManager::getNumValidConditions(int iterationIndex)
+int ConditionManager::getNumValidConditions(int multiplexIndex)
 {
 	int result = 0;
 	for (auto &c : items)
 	{
 		if (!c->enabled->boolValue()) continue;
-		if (c->getIsValid(iterationIndex)) result++;
+		if (c->getIsValid(multiplexIndex)) result++;
 	}
 	return result;
 }
 
-bool ConditionManager::getIsValid(int iterationIndex, bool emptyIsValid)
+bool ConditionManager::getIsValid(int multiplexIndex, bool emptyIsValid)
 {
-	return isValids[iterationIndex] || (emptyIsValid && items.size() == 0);
+	return isValids[multiplexIndex] || (emptyIsValid && items.size() == 0);
 }
 
-void ConditionManager::dispatchConditionValidationChanged(int iterationIndex)
+void ConditionManager::dispatchConditionValidationChanged(int multiplexIndex)
 {
-	conditionManagerListeners.call(&ConditionManagerListener::conditionManagerValidationChanged, this, iterationIndex);
-	conditionManagerAsyncNotifier.addMessage(new ConditionManagerEvent(ConditionManagerEvent::VALIDATION_CHANGED, this, iterationIndex));
+	conditionManagerListeners.call(&ConditionManagerListener::conditionManagerValidationChanged, this, multiplexIndex);
+	conditionManagerAsyncNotifier.addMessage(new ConditionManagerEvent(ConditionManagerEvent::VALIDATION_CHANGED, this, multiplexIndex));
 }
 
 

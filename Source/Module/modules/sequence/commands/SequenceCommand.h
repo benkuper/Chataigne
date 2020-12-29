@@ -19,7 +19,7 @@ class SequenceCommand :
 	public EngineListener
 {
 public:
-	SequenceCommand(SequenceModule * _module, CommandContext context, var params, IteratorProcessor * iterator = nullptr);
+	SequenceCommand(SequenceModule * _module, CommandContext context, var params, Multiplex * multiplex = nullptr);
 	virtual ~SequenceCommand();
 
 	enum ActionType { PLAY_SEQUENCE, PLAY_MULTI_SEQUENCES, PAUSE_SEQUENCE, STOP_SEQUENCE, STOP_ALL_SEQUENCES, TOGGLE_SEQUENCE, ENABLE_LAYER, DISABLE_LAYER, TOGGLE_LAYER, SET_TIME, MOVE_TIME, GOTO_CUE};
@@ -41,7 +41,7 @@ public:
 	var dataToLoad;
 
 
-	virtual void triggerInternal(int iterationIndex) override;
+	virtual void triggerInternal(int multiplexIndex) override;
 
 	virtual void onContainerTriggerTriggered(Trigger* t) override;
 	virtual void onContainerParameterChanged(Parameter* p) override;
@@ -49,5 +49,5 @@ public:
 	virtual void loadJSONDataInternal(var data) override;
 	virtual void endLoadFile() override;
 
-	static BaseCommand * create(ControllableContainer * module, CommandContext context, var params, IteratorProcessor * iterator = nullptr);
+	static BaseCommand * create(ControllableContainer * module, CommandContext context, var params, Multiplex * multiplex = nullptr);
 };

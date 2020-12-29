@@ -11,8 +11,8 @@
 #include "MIDICommands.h"
 #include "../MIDIModule.h"
 
-MIDICommand::MIDICommand(MIDIModule * module, CommandContext context, var params, IteratorProcessor * iterator) :
-	BaseCommand(module, context, params, iterator),
+MIDICommand::MIDICommand(MIDIModule * module, CommandContext context, var params, Multiplex * multiplex) :
+	BaseCommand(module, context, params, multiplex),
 	midiModule(module)
 {
 	
@@ -22,8 +22,8 @@ MIDICommand::~MIDICommand()
 {
 }
 
-MIDINoteAndCCCommand::MIDINoteAndCCCommand(MIDIModule * module, CommandContext context, var params, IteratorProcessor * iterator) :
-	MIDICommand(module, context, params, iterator),
+MIDINoteAndCCCommand::MIDINoteAndCCCommand(MIDIModule * module, CommandContext context, var params, Multiplex * multiplex) :
+	MIDICommand(module, context, params, multiplex),
 	velocity(nullptr),
 	onTime(nullptr),
 	remap01To127(nullptr),
@@ -85,25 +85,25 @@ MIDINoteAndCCCommand::~MIDINoteAndCCCommand()
 
 }
 
-void MIDINoteAndCCCommand::setValue(var value, int iterationIndex)
+void MIDINoteAndCCCommand::setValue(var value, int multiplexIndex)
 {
 	float mapFactor = (remap01To127 != nullptr && remap01To127->boolValue()) ? maxRemap : 1;
 	if (value.isArray()) value[0] = (float)value[0] * mapFactor;
 	else value = (float)value * mapFactor;
 	
-	MIDICommand::setValue(value, iterationIndex);
+	MIDICommand::setValue(value, multiplexIndex);
 }
 
-void MIDINoteAndCCCommand::triggerInternal(int iterationIndex)
+void MIDINoteAndCCCommand::triggerInternal(int multiplexIndex)
 {
-	MIDICommand::triggerInternal(iterationIndex);
+	MIDICommand::triggerInternal(multiplexIndex);
 
 	int pitch = 0;
-	if (type == CONTROLCHANGE || type == PROGRAMCHANGE) pitch = getLinkedValue(number, iterationIndex);
-	else if(type == NOTE_ON || type == NOTE_OFF || type == FULL_NOTE || type == AFTER_TOUCH) pitch = (int)noteEnum->getValueData() + ((int)getLinkedValue(octave, iterationIndex) - (int)octave->minimumValue) * 12;
+	if (type == CONTROLCHANGE || type == PROGRAMCHANGE) pitch = getLinkedValue(number, multiplexIndex);
+	else if(type == NOTE_ON || type == NOTE_OFF || type == FULL_NOTE || type == AFTER_TOUCH) pitch = (int)noteEnum->getValueData() + ((int)getLinkedValue(octave, multiplexIndex) - (int)octave->minimumValue) * 12;
 
-	int chanVal = channel != nullptr ? getLinkedValue(channel, iterationIndex) : 0;
-	int velVal = velocity != nullptr ? getLinkedValue(velocity, iterationIndex) : 0;
+	int chanVal = channel != nullptr ? getLinkedValue(channel, multiplexIndex) : 0;
+	int velVal = velocity != nullptr ? getLinkedValue(velocity, multiplexIndex) : 0;
 
 	switch(type)
 	{
@@ -154,8 +154,8 @@ void MIDINoteAndCCCommand::timerCallback()
 }
 
 
-MIDISysExCommand::MIDISysExCommand(MIDIModule * module, CommandContext context, var params, IteratorProcessor * iterator) :
-	MIDICommand(module, context, params, iterator),
+MIDISysExCommand::MIDISysExCommand(MIDIModule * module, CommandContext context, var params, Multiplex * multiplex) :
+	MIDICommand(module, context, params, multiplex),
 	dataContainer("Bytes")
 {
 	saveAndLoadRecursiveData = true;
@@ -192,9 +192,9 @@ void MIDISysExCommand::onContainerParameterChangedAsync(Parameter * p, const var
 	}
 }
 
-void MIDISysExCommand::triggerInternal(int iterationIndex)
+void MIDISysExCommand::triggerInternal(int multiplexIndex)
 {
-	MIDICommand::triggerInternal(iterationIndex);
+	MIDICommand::triggerInternal(multiplexIndex);
 
 	Array<uint8> data;
 	for (auto &c : dataContainer.controllables) data.add(((IntParameter *)c)->intValue());

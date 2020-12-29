@@ -11,9 +11,9 @@
 #include "CustomValuesCommandArgumentManager.h"
 #include "ui/CustomValuesCommandArgumentManagerEditor.h"
 
-CustomValuesCommandArgumentManager::CustomValuesCommandArgumentManager(bool _mappingEnabled, bool templateMode, IteratorProcessor * iterator) :
+CustomValuesCommandArgumentManager::CustomValuesCommandArgumentManager(bool _mappingEnabled, bool templateMode, Multiplex * multiplex) :
 	BaseManager("arguments"),
-	IterativeTarget(iterator),
+	MultiplexTarget(multiplex),
 	isBeingDestroyed(false),
     mappingEnabled(_mappingEnabled),
     templateMode(templateMode),
@@ -92,7 +92,7 @@ void CustomValuesCommandArgumentManager::addItemInternal(CustomValuesCommandArgu
 
 CustomValuesCommandArgument * CustomValuesCommandArgumentManager::addItemWithParam(Parameter * p, var data, bool fromUndoableAction)
 {
-	CustomValuesCommandArgument* a = new CustomValuesCommandArgument("#" + String(items.size() + 1), p, mappingEnabled, templateMode, iterator);
+	CustomValuesCommandArgument* a = new CustomValuesCommandArgument("#" + String(items.size() + 1), p, mappingEnabled, templateMode, multiplex);
 	//a->addArgumentListener(this);
 	addItem(a, data, fromUndoableAction);
 

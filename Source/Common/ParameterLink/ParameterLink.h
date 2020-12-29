@@ -9,23 +9,23 @@
 */
 
 #pragma once
-#include "../Processor/Iterator/Iterator.h"
+#include "../Processor/Multiplex/Multiplex.h"
 
 class ParameterLink :
-    public IterativeTarget,
+    public MultiplexTarget,
     public Inspectable::InspectableListener
 {
 public:
-    enum LinkType {NONE, MAPPING_INPUT, ITERATOR_LIST, INDEX, INDEX_ZERO };
+    enum LinkType {NONE, MAPPING_INPUT, MULTIPLEX_LIST, INDEX, INDEX_ZERO };
     
-    ParameterLink(WeakReference<Parameter> p, IteratorProcessor * iterator = nullptr);
+    ParameterLink(WeakReference<Parameter> p, Multiplex * multiplex = nullptr);
     ~ParameterLink();
 
     LinkType linkType;
     WeakReference<Parameter> parameter;
 
     int mappingValueIndex;
-    BaseIteratorList* list;
+    BaseMultiplexList* list;
 
     Array<var> mappingValues;
 
@@ -33,14 +33,14 @@ public:
     bool replacementHasMappingInputToken;
     String replacementString;
 
-    void iteratorCountChanged() override;
+    void multiplexCountChanged() override;
 
     void setLinkType(LinkType type);
 
-    var getLinkedValue(int iterationIndex = 0);
-    void updateMappingInputValue(var value, int iterationIndex);
+    var getLinkedValue(int multiplexIndex = 0);
+    void updateMappingInputValue(var value, int multiplexIndex);
 
-    String getReplacementString(int iterationIndex);
+    String getReplacementString(int multiplexIndex);
 
     var getInputMappingValue(var value);
 

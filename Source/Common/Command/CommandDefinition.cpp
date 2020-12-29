@@ -32,9 +32,9 @@ void CommandDefinition::setup(ControllableContainer * _container, const String &
 }
 
 
-BaseCommand * CommandDefinition::create(CommandContext _context, IteratorProcessor * iterator)
+BaseCommand * CommandDefinition::create(CommandContext _context, Multiplex * multiplex)
 {
-	BaseCommand * c = createFunc(container, _context, params, iterator);
+	BaseCommand * c = createFunc(container, _context, params, multiplex);
 	return c;
 }
 

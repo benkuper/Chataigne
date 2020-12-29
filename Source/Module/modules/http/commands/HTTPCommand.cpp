@@ -10,8 +10,8 @@
 
 #include "HTTPCommand.h"
 
-HTTPCommand::HTTPCommand(HTTPModule * _module, CommandContext context, var params, IteratorProcessor* iterator) :
-	BaseCommand(_module, context, params, iterator),
+HTTPCommand::HTTPCommand(HTTPModule * _module, CommandContext context, var params, Multiplex* multiplex) :
+	BaseCommand(_module, context, params, multiplex),
 	httpModule(_module)
 {
 	method = addEnumParameter("Method", "Request Method");
@@ -33,12 +33,12 @@ HTTPCommand::~HTTPCommand()
 }
 
 
-void HTTPCommand::triggerInternal(int iterationIndex)
+void HTTPCommand::triggerInternal(int multiplexIndex)
 {
 	StringPairArray requestParams;
-	for (auto &p : customValuesManager->items) requestParams.set(p->niceName, p->getLinkedValue(iterationIndex));
+	for (auto &p : customValuesManager->items) requestParams.set(p->niceName, p->getLinkedValue(multiplexIndex));
 	
 	StringPairArray headers;
 	
-	httpModule->sendRequest(getLinkedValue(address, iterationIndex).toString(), method->getValueDataAsEnum<HTTPModule::RequestMethod>(), resultDataType->getValueDataAsEnum<HTTPModule::ResultDataType>(), requestParams, getLinkedValue(extraHeaders, iterationIndex).toString());
+	httpModule->sendRequest(getLinkedValue(address, multiplexIndex).toString(), method->getValueDataAsEnum<HTTPModule::RequestMethod>(), resultDataType->getValueDataAsEnum<HTTPModule::ResultDataType>(), requestParams, getLinkedValue(extraHeaders, multiplexIndex).toString());
 }

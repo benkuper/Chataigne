@@ -1,7 +1,7 @@
 /*
   ==============================================================================
 
-    IteratorUI.h
+    MultiplexUI.h
     Created: 19 Dec 2020 12:12:43pm
     Author:  bkupe
 
@@ -10,18 +10,18 @@
 
 #pragma once
 
-#include "../Iterator.h"
+#include "../Multiplex.h"
 #include "../../ui/ProcessorManagerUI.h"
 
-class IteratorUI :
+class MultiplexUI :
 	public ProcessorUI,
 	public ProcessorManagerUI::ManagerUIListener
 {
 public:
-	IteratorUI(IteratorProcessor * it);
-	virtual ~IteratorUI();
+	MultiplexUI(Multiplex * it);
+	virtual ~MultiplexUI();
 
-	IteratorProcessor* iterator;
+	Multiplex* multiplex;
 	ProcessorManagerUI processorManagerUI;
 
 	void resizedInternalContent(Rectangle<int>& r) override;

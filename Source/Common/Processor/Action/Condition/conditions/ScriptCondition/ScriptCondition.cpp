@@ -13,7 +13,7 @@
 
 String ScriptCondition::conditionTemplate = "";
 
-ScriptCondition::ScriptCondition(var params,IteratorProcessor * processor) :
+ScriptCondition::ScriptCondition(var params,Multiplex * processor) :
 	Condition(ScriptCondition::getTypeStringStatic(), params, processor),
 	script(this,false)
 {
@@ -40,7 +40,7 @@ var ScriptCondition::setValidFromScript(const var::NativeFunctionArgs & a)
 
 	if (a.numArguments == 1)
 	{
-		for (int i = 0; i < s->getIterationCount(); i++) s->setValid(i, (bool)a.arguments[0]);
+		for (int i = 0; i < s->getMultiplexCount(); i++) s->setValid(i, (bool)a.arguments[0]);
 	}
 	else
 	{

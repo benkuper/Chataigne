@@ -11,9 +11,9 @@
 #include "CustomValuesCommandArgument.h"
 #include "ui/CustomValuesCommandArgumentEditor.h"
 
-CustomValuesCommandArgument::CustomValuesCommandArgument(const String &name, Parameter * _p, bool _mappingEnabled, bool templateMode, IteratorProcessor * iterator) :
+CustomValuesCommandArgument::CustomValuesCommandArgument(const String &name, Parameter * _p, bool _mappingEnabled, bool templateMode, Multiplex * multiplex) :
 	BaseItem(name, false),
-	IterativeTarget(iterator),
+	MultiplexTarget(multiplex),
 	param(_p),
 	editable(nullptr),
     mappingEnabled(_mappingEnabled),
@@ -41,9 +41,9 @@ CustomValuesCommandArgument::CustomValuesCommandArgument(const String &name, Par
 	}
 
 	//argumentName = addStringParameter("Argument name", "Name for the argument", "Arg");
-	if (mappingEnabled || isIterative())
+	if (mappingEnabled || isMultiplexed())
 	{
-		paramLink.reset(new ParameterLink(param, iterator));
+		paramLink.reset(new ParameterLink(param, multiplex));
 	}
 
 	param->hideInEditor = true;
@@ -142,10 +142,10 @@ void CustomValuesCommandArgument::onExternalParameterRangeChanged(Parameter* p)
 	if (p->parentContainer == linkedTemplate) updateParameterFromTemplate();
 }
 
-var CustomValuesCommandArgument::getLinkedValue(int iterationIndex)
+var CustomValuesCommandArgument::getLinkedValue(int multiplexIndex)
 {
 	if (paramLink == nullptr) return param->getValue();
-	return paramLink->getLinkedValue(iterationIndex);
+	return paramLink->getLinkedValue(multiplexIndex);
 }
 
 String CustomValuesCommandArgument::getTypeString() const

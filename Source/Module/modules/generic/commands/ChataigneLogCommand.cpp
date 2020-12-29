@@ -10,8 +10,8 @@
 
 #include "ChataigneLogCommand.h"
 
-ChataigneLogCommand::ChataigneLogCommand(ChataigneGenericModule* _module, CommandContext context, var params, IteratorProcessor* iterator) :
-	BaseCommand(_module, context, params, iterator),
+ChataigneLogCommand::ChataigneLogCommand(ChataigneGenericModule* _module, CommandContext context, var params, Multiplex* multiplex) :
+	BaseCommand(_module, context, params, multiplex),
 	value(nullptr)
 {
 	type = (Type)(int)(params.getProperty("type", MESSAGE));
@@ -37,11 +37,11 @@ ChataigneLogCommand::~ChataigneLogCommand()
 {
 }
 
-void ChataigneLogCommand::triggerInternal(int iterationIndex)
+void ChataigneLogCommand::triggerInternal(int multiplexIndex)
 {
 	LogType lt = logType->getValueDataAsEnum<LogType>();
 
-	String msg = getLinkedValue(message, iterationIndex);
+	String msg = getLinkedValue(message, multiplexIndex);
 
 	switch (type)
 	{
@@ -59,7 +59,7 @@ void ChataigneLogCommand::triggerInternal(int iterationIndex)
 	{
 		var val = "[not set]";
 		if (context == ACTION) val = dynamic_cast<Parameter*>(((TargetParameter*)value)->target.get())->value;
-		else val = getLinkedValue(value, iterationIndex);
+		else val = getLinkedValue(value, multiplexIndex);
 		
 		String vString = value->type == Controllable::FLOAT ? String((float)val, 3) : val.toString();
 		
@@ -74,8 +74,8 @@ void ChataigneLogCommand::triggerInternal(int iterationIndex)
 	}
 }
 
-BaseCommand* ChataigneLogCommand::create(ControllableContainer * module, CommandContext context, var params, IteratorProcessor * iterator)
+BaseCommand* ChataigneLogCommand::create(ControllableContainer * module, CommandContext context, var params, Multiplex * multiplex)
 {
-	return new ChataigneLogCommand((ChataigneGenericModule*)module, context, params, iterator);
+	return new ChataigneLogCommand((ChataigneGenericModule*)module, context, params, multiplex);
 
 }

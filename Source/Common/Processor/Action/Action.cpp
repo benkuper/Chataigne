@@ -13,14 +13,14 @@
 #include "Condition/conditions/ActivationCondition/ActivationCondition.h"
 #include "Condition/conditions/StandardCondition/StandardCondition.h"
 
-Action::Action(var params, IteratorProcessor * iterator) :
+Action::Action(var params, Multiplex * multiplex) :
 	Processor(getTypeString()),
-	IterativeTarget(iterator),
+	MultiplexTarget(multiplex),
     autoTriggerWhenAllConditionAreActives(true),
     forceNoOffConsequences(false),
 	hasOffConsequences(false),
 	triggerOn(nullptr),
-	cdm(iterator),
+	cdm(multiplex),
 	forceChecking(false),
     actionAsyncNotifier(10)
 {
@@ -28,7 +28,7 @@ Action::Action(var params, IteratorProcessor * iterator) :
 	itemDataType = "Action";
 	type = ACTION;
 
-	if (!isIterative())
+	if (!isMultiplexed())
 	{
 		triggerOn = addTrigger("Trigger", "This will trigger as if the conditions have been validated, and trigger all the Consequences:TRUE");
 		triggerOn->hideInEditor = true;
@@ -39,7 +39,7 @@ Action::Action(var params, IteratorProcessor * iterator) :
 	cdm.addBaseManagerListener(this);
 	addChildControllableContainer(&cdm);
 
-	csmOn.reset(new ConsequenceManager("Consequences : TRUE", iterator));
+	csmOn.reset(new ConsequenceManager("Consequences : TRUE", multiplex));
 
 	addChildControllableContainer(csmOn.get());
 
@@ -84,7 +84,7 @@ void Action::setHasOffConsequences(bool value)
 	{
 		if (csmOff == nullptr)
 		{
-			csmOff.reset(new ConsequenceManager("Consequences : FALSE", iterator));
+			csmOff.reset(new ConsequenceManager("Consequences : FALSE", multiplex));
 			addChildControllableContainer(csmOff.get());
 		}
 	} else
@@ -110,14 +110,14 @@ void Action::forceCheck(bool triggerIfChanged)
 }
 
 
-void Action::triggerConsequences(bool triggerTrue, int iterationIndex)
+void Action::triggerConsequences(bool triggerTrue, int multiplexIndex)
 {
 	if (!enabled->boolValue() || forceDisabled) return;
 
 	if (!forceChecking)
 	{
-		if (triggerTrue) csmOn->triggerAll(iterationIndex);
-		else csmOff->triggerAll(iterationIndex);
+		if (triggerTrue) csmOn->triggerAll(multiplexIndex);
+		else csmOff->triggerAll(multiplexIndex);
 	}
 }
 
@@ -149,7 +149,7 @@ void Action::endLoadFile()
 	Engine::mainEngine->removeEngineListener(this);
 	if (actionRoles.contains(Role::ACTIVATE))
 	{
-		for (int i = 0; i < getIterationCount(); i++) if (cdm.getIsValid(i, false)) triggerConsequences(true, i);
+		for (int i = 0; i < getMultiplexCount(); i++) if (cdm.getIsValid(i, false)) triggerConsequences(true, i);
 	}
 }
 
@@ -189,14 +189,14 @@ void Action::controllableFeedbackUpdate(ControllableContainer * cc, Controllable
 	}
 }
 
-void Action::conditionManagerValidationChanged(ConditionManager *, int iterationIndex)
+void Action::conditionManagerValidationChanged(ConditionManager *, int multiplexIndex)
 {
 	if (forceChecking) return;
 
 	if (autoTriggerWhenAllConditionAreActives)
 	{
-		if (cdm.getIsValid(iterationIndex, false)) triggerConsequences(true, iterationIndex); //force trigger from onContainerTriggerTriggered, for derivating child classes
-		else if (hasOffConsequences) triggerConsequences(false, iterationIndex);
+		if (cdm.getIsValid(multiplexIndex, false)) triggerConsequences(true, multiplexIndex); //force trigger from onContainerTriggerTriggered, for derivating child classes
+		else if (hasOffConsequences) triggerConsequences(false, multiplexIndex);
 	}
 
 	actionListeners.call(&ActionListener::actionValidationChanged, this);

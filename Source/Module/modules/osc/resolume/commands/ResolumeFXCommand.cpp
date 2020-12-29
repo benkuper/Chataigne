@@ -11,8 +11,8 @@
 #include "ResolumeFXCommand.h"
 #include "../ResolumeModule.h"
 
-ResolumeFXCommand::ResolumeFXCommand(ResolumeModule * _module, CommandContext context, var params, IteratorProcessor * iterator) :
-	ResolumeBaseCommand(_module,context,params, iterator, true),
+ResolumeFXCommand::ResolumeFXCommand(ResolumeModule * _module, CommandContext context, var params, Multiplex * multiplex) :
+	ResolumeBaseCommand(_module,context,params, multiplex, true),
     nameParam(nullptr),
     fxIndexParam(nullptr),
     valueParam(nullptr),
@@ -111,15 +111,15 @@ void ResolumeFXCommand::rebuildParametersInternal()
 	setupValueParam();
 }
 
-void ResolumeFXCommand::rebuildAddress()
+String ResolumeFXCommand::getTargetAddress(int multiplexIndex)
 {
 	float resolumeVersion = (float)resolumeModule->version->getValueData();
 
-	String nameParamValue = nameParam != nullptr ? nameParam->getValueData().toString() : "";
+	String nameParamValue = nameParam != nullptr ? getLinkedValue(nameParam, multiplexIndex) : "";
 	
 	if (resolumeVersion == 5)
 	{
-		String paramId = indexParam == nullptr ? "[error]": indexParam->stringValue();
+		String paramId = indexParam == nullptr ? "[error]": getLinkedValue(indexParam, multiplexIndex);
 
 		if (fxType == "video")
 		{
@@ -127,15 +127,15 @@ void ResolumeFXCommand::rebuildAddress()
 			else addressSuffix = "video/" + nameParamValue;
 		}
 		else if (fxType == "audio") addressSuffix = "audio/" + nameParamValue;
-		else if (fxType == "videofx") addressSuffix = "video/effect" + fxIndexParam->stringValue() + "/param" + paramId;
-		else if (fxType == "vst") addressSuffix = "audio/effect" + fxIndexParam->stringValue() + "/param" + paramId;
+		else if (fxType == "videofx") addressSuffix = "video/effect" + getLinkedValue(fxIndexParam, multiplexIndex).toString() + "/param" + paramId;
+		else if (fxType == "vst") addressSuffix = "audio/effect" + getLinkedValue(fxIndexParam, multiplexIndex).toString() + "/param" + paramId;
 		else if (fxType == "source") addressSuffix = "video/param" + paramId;
 		 
 		addressSuffix += "/values";
 	} else //Resolume 6+
 	{
-		String fxn = fxName != nullptr ? fxName->stringValue().toLowerCase().replace(" ", "") : "";
-		String fxpn = fxParamName != nullptr ? fxParamName->stringValue().toLowerCase().replace(" ", "") : "";
+		String fxn = fxName != nullptr ? getLinkedValue(fxName, multiplexIndex).toString().toLowerCase().replace(" ", "") : "";
+		String fxpn = fxParamName != nullptr ? getLinkedValue(fxParamName, multiplexIndex).toString().toLowerCase().replace(" ", "") : "";
 		String sourceName = resolumeVersion == 6 ? "params" : fxn;
 		String effectSeparator = "/effect/";
 		if (fxpn == "opacity") effectSeparator = "/";
@@ -152,9 +152,7 @@ void ResolumeFXCommand::rebuildAddress()
 		else if (fxType == "source") addressSuffix = "video/source/"+sourceName+"/" + fxpn;
 	}
 	
-	//setupValueParam();
-
-	ResolumeBaseCommand::rebuildAddress();
+	return ResolumeBaseCommand::getTargetAddress(multiplexIndex);
 }
 
 void ResolumeFXCommand::onContainerParameterChanged(Parameter * p)

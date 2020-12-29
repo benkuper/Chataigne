@@ -18,7 +18,7 @@ class CustomOSCCommand :
 	public OSCCommand
 {
 public:
-	CustomOSCCommand(OSCModule * module, CommandContext context, var params, IteratorProcessor * iterator = nullptr);
+	CustomOSCCommand(OSCModule * module, CommandContext context, var params, Multiplex * multiplex = nullptr);
 	~CustomOSCCommand();
 	
 	var lastValue;
@@ -26,14 +26,14 @@ public:
 	CustomValuesCommandArgumentManager wildcardsContainer;
 	Array<Parameter *> wildCardParams;
 
-	void triggerInternal(int iterationIndex) override;
+	void triggerInternal(int multiplexIndex) override;
 
 	virtual void onContainerParameterChanged(Parameter * p) override;
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
 
-	static CustomOSCCommand * create(ControllableContainer * module, CommandContext context, var params, IteratorProcessor * iterator) { return new CustomOSCCommand((CustomOSCModule *)module, context, params, iterator); }
+	static CustomOSCCommand * create(ControllableContainer * module, CommandContext context, var params, Multiplex * multiplex) { return new CustomOSCCommand((CustomOSCModule *)module, context, params, multiplex); }
 
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(CustomOSCCommand)
