@@ -65,7 +65,7 @@ void SendStreamStringValuesCommand::triggerInternal(int multiplexIndex)
 		s += ss;
 	}
 
-	s = prefix->stringValue() + s + getLinkedValue(suffix, multiplexIndex);
+	s = prefix->stringValue() + s + getLinkedValue(suffix, multiplexIndex).toString();
 	if (appendCR->boolValue()) s += "\r";
 	if (appendNL->boolValue()) s += "\n";
 
