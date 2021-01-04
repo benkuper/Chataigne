@@ -142,10 +142,11 @@ void DMXCommand::triggerInternal(int multiplexIndex)
 	case SET_ALL:
 	{
 		Array<int> values;
-		int numValues = dmxAction == SET_ALL ? 512 : jmax((int)getLinkedValue(channel, multiplexIndex) - (int)getLinkedValue(channel, multiplexIndex) + 1,0);
-		int startChannel = dmxAction == SET_ALL ? 1 : getLinkedValue(channel, multiplexIndex);
+		int chVal = (int)getLinkedValue(channel, multiplexIndex);
+		int numValues = dmxAction == SET_ALL ? 512 : jmax((int)getLinkedValue(channel2, multiplexIndex) - chVal + 1, 0);
+		int startChannel = dmxAction == SET_ALL ? 1 : chVal;
 		values.resize(numValues);
-		values.fill(getLinkedValue(value, multiplexIndex));
+		values.fill((int)getLinkedValue(value, multiplexIndex));
 		dmxModule->sendDMXValues(startChannel, values);
 	}
 	break;
