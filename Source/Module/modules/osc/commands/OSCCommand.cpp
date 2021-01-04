@@ -140,7 +140,7 @@ void OSCCommand::triggerInternal(int multiplexIndex)
 	if (oscModule == nullptr) return;
 
 	BaseCommand::triggerInternal(multiplexIndex);
-	String addrString = isMultiplexed() ? getTargetAddress() : getLinkedValue(address, multiplexIndex); //forces iteratives to reevalute the address
+	String addrString = isMultiplexed() ? getTargetAddress() : getLinkedValue(address, multiplexIndex).toString(); //forces iteratives to reevalute the address
 	
 	try
 	{

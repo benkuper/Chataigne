@@ -115,11 +115,11 @@ String ResolumeFXCommand::getTargetAddress(int multiplexIndex)
 {
 	float resolumeVersion = (float)resolumeModule->version->getValueData();
 
-	String nameParamValue = nameParam != nullptr ? getLinkedValue(nameParam, multiplexIndex) : "";
+	String nameParamValue = nameParam != nullptr ? getLinkedValue(nameParam, multiplexIndex).toString() : "";
 	
 	if (resolumeVersion == 5)
 	{
-		String paramId = indexParam == nullptr ? "[error]": getLinkedValue(indexParam, multiplexIndex);
+		String paramId = indexParam == nullptr ? "[error]": getLinkedValue(indexParam, multiplexIndex).toString();
 
 		if (fxType == "video")
 		{
