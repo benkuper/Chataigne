@@ -16,14 +16,14 @@ class MappingOutput :
 	public BaseCommandHandler
 {
 public:
-	MappingOutput();
+	MappingOutput(Multiplex * multiplex = nullptr);
 	virtual ~MappingOutput();
 
 	Controllable::Type outputType;
 	virtual void setOutputType(Controllable::Type type);
 	virtual void setCommand(CommandDefinition * cd) override;
 
-	void setValue(var value);
+	void setValue(var value, int multiplexIndex);
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MappingOutput)
 };

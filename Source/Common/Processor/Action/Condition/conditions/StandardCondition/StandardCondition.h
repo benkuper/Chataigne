@@ -11,36 +11,67 @@
 #pragma once
 
 #include "../../Condition.h"
+#include "Comparator/BaseComparator.h"
 
 class StandardCondition :
-	public Condition
+	public Condition,
+	public BaseMultiplexList::ListListener
 {
 public:
-	StandardCondition(var params = var());
+	StandardCondition(var params = var(), Multiplex* processor = nullptr);
 	~StandardCondition();
 
-	TargetParameter * sourceTarget;
-	WeakReference<Controllable> sourceControllable;
-	std::unique_ptr<BaseComparator> comparator;
+	bool multiplexListMode;
 
+	TargetParameter * sourceTarget;
+	WeakReference<Controllable> sourceControllable; //for non-multiplex conditions
+	BaseMultiplexList* sourceList;
+
+	///Array<WeakReference<Controllable>> sourceControllables;
+	//HashMap<Controllable*, int> sourceIndexMap;
+
+	std::unique_ptr<BaseComparator> comparator;
 	var loadingComparatorData; //for dynamically created parameter, allows to reload comparator data after these are created
 
-	var getJSONData() override;
-	void loadJSONDataInternal(var data) override;
+	BoolParameter* alwaysTrigger;
+	BoolParameter* toggleMode;
 
-	void setSourceControllable(WeakReference<Controllable> c);
-	void comparatorValidationChanged(BaseComparator *) override;
+	Array<bool> rawIsValids; //for toggle behaviour
+
+	void clearItem() override;
+
+	void multiplexCountChanged() override;
+
+	virtual void setValid(int multiplexIndex, bool value, bool dispatchOnChangeOnly = true);
+	void forceToggleState(bool value);
+
+	void listReferenceUpdated() override;
+	void listItemUpdated(int multiplexIndex) override;
+	//void updateSourceControllablesFromTarget();
+
+	void updateSourceFromTarget();
+	void updateComparatorFromSource();
+
+	Controllable* getSourceControllableAt(int multiplexIndex);
+
+	void checkComparator(int multiplexIndex);
 
 	void forceCheck() override;
 
 	void onContainerParameterChangedInternal(Parameter * p) override;
-	void onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c) override;
+	void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) override;
+
+	void onExternalParameterValueChanged(Parameter* p) override;
+	void onExternalParameterRangeChanged(Parameter* p) override;
+	void onExternalTriggerTriggered(Trigger* t) override;
+
+	var getJSONData() override;
+	void loadJSONDataInternal(var data) override;
+	void afterLoadJSONDataInternal() override;
 
 	InspectableEditor * getEditor(bool isRoot) override;
 
-	String getTypeString() const override { return StandardCondition::getTypeStringStatic(); }
-	static String getTypeStringStatic() { return "From Input Value"; }
-	static StandardCondition * create(var params) { return new StandardCondition(params); }
-
+	String getTypeString() const override { return getTypeStringStatic(multiplexListMode); }
+	static String getTypeStringStatic(bool listMode) { return listMode ? "From Multiplex List" : "From Input Value"; }
 };
 

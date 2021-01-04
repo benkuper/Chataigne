@@ -35,7 +35,7 @@ void ModuleCommandTester::onControllableFeedbackUpdateInternal(ControllableConta
 
 	if (cc == command.get() && autoTrigger->boolValue())
 	{
-		trigger->trigger();
+		triggerCommand();
 	}
 }
 

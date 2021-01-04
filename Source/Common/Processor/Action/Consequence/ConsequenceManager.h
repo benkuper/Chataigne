@@ -11,28 +11,25 @@
 #pragma once
 
 #include "Consequence.h"
+#include "../../Multiplex/Multiplex.h"
 
 class ConsequenceManager :
 	public BaseManager<Consequence>,
-	public Consequence::ConsequenceListener,
-	public Thread
+	public MultiplexTarget,
+	public Consequence::ConsequenceListener
 {
 public:
-	juce_DeclareSingleton(ConsequenceManager, true)
-
-	ConsequenceManager(const String &name = "Consequences");
+	ConsequenceManager(const String &name = "Consequences", Multiplex * multiplex = nullptr);
 	~ConsequenceManager();
 	
-
-	Trigger * triggerAll;
 	FloatParameter * delay;
 	FloatParameter * stagger;
 
 	bool forceDisabled;
 
-	//delay and stagger
-	uint32 timeAtRun;
-	int triggerIndex;
+	Consequence* createItem() override;
+
+	void triggerAll(int multiplexIndex = 0);
 
 	void setForceDisabled(bool value, bool force = false);
 
@@ -40,7 +37,25 @@ public:
 	void addItemInternal(Consequence *, var data) override;
 	void removeItemInternal(Consequence *) override;
 
-	void run() override;
+
+	class StaggerLauncher :
+		public Thread
+	{
+	public:
+		StaggerLauncher(ConsequenceManager * csm, int multiplexIndex);
+		~StaggerLauncher();
+
+		ConsequenceManager* csm;
+		int multiplexIndex;
+
+		uint32 timeAtRun;
+		int triggerIndex;
+
+		void run() override;
+	};
+	OwnedArray<StaggerLauncher> staggerLaunchers;
+
+	void launcherFinished(StaggerLauncher * launcher);
 
 	InspectableEditor * getEditor(bool isRoot) override; 
 

@@ -10,8 +10,8 @@
 
 #include "Consequence.h"
 
-Consequence::Consequence() :
-	BaseCommandHandler("Consequence",CommandContext::ACTION),
+Consequence::Consequence(Multiplex * multiplex) :
+	BaseCommandHandler("Consequence",CommandContext::ACTION, nullptr, multiplex),
 	forceDisabled(false)
 {
 	
@@ -23,8 +23,8 @@ Consequence::~Consequence()
 
 }
 
-void Consequence::triggerCommand()
+void Consequence::triggerCommand(int multiplexIndex)
 {
 	if (!enabled->boolValue() || forceDisabled) return;
-	BaseCommandHandler::triggerCommand();
+	BaseCommandHandler::triggerCommand(multiplexIndex);
 }

@@ -260,7 +260,7 @@ StandardCondition* StateManager::showMenuAndGetToggleCondition()
 				{
 					if (StandardCondition* sc = dynamic_cast<StandardCondition*>(c))
 					{
-						if (sc->comparator != nullptr && sc->comparator->toggleMode->boolValue())
+						if (sc->comparator != nullptr && sc->toggleMode->boolValue())
 						{
 							conditions.add(sc);
 							aMenu.addItem(conditions.size(), sc->niceName);

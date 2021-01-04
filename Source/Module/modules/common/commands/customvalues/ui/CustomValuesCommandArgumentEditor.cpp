@@ -14,24 +14,25 @@ CustomValuesCommandArgumentEditor::CustomValuesCommandArgumentEditor(CustomValue
 	BaseItemEditor(a, isRoot),
 	arg(a)
 {
-	
 	if (arg->editable != nullptr)
 	{
 		editableUI.reset(arg->editable->createToggle());
 		addAndMakeVisible(editableUI.get());
 	}
 
-	if (arg->mappingEnabled)
+	if (arg->paramLink != nullptr)
 	{
-		useInMappingUI.reset(arg->useForMapping->createToggle());
-		addAndMakeVisible(useInMappingUI.get());
+		paramUI.reset(new LinkableParameterEditor(arg->paramLink.get(), arg->mappingEnabled));
+		((LinkableParameterEditor*)paramUI.get())->paramEditor->setShowLabel(false);
 	}
-
-	paramUI.reset(static_cast<ParameterEditor*>(arg->param->getEditor(false)));
+	else
+	{
+		paramUI.reset(arg->param->getEditor(false));
+		((ParameterEditor*)paramUI.get())->setShowLabel(false);
+	}
+	
 	addAndMakeVisible(paramUI.get());
-	paramUI->setShowLabel(false);
-
-	headerHeight = 16;
+	headerHeight = paramUI->getHeight() + 4;
 	resetAndBuild();
 }
 
@@ -40,18 +41,18 @@ CustomValuesCommandArgumentEditor::~CustomValuesCommandArgumentEditor()
 }
 
 
-void CustomValuesCommandArgumentEditor::resizedInternalHeaderItemInternal(Rectangle<int>& r)
+void CustomValuesCommandArgumentEditor::resizedInternalHeader(Rectangle<int>& r)
 {
-	if (arg->mappingEnabled)
-	{
-		useInMappingUI->setBounds(r.removeFromRight(100).reduced(2));
-		r.removeFromRight(2);
-	}
+	BaseItemEditor::resizedInternalHeader(r);
 
 	if (editableUI != nullptr)
 	{
 		editableUI->setBounds(r.removeFromRight(80).reduced(2));
 		r.removeFromRight(2);
+	}
+	else
+	{
+		if (paramUI != nullptr) paramUI->setBounds(r.reduced(2));
 	}
 }
 
@@ -59,7 +60,7 @@ void CustomValuesCommandArgumentEditor::resizedInternalContent(Rectangle<int>& r
 {
 	BaseItemEditor::resizedInternalContent(r);
 
-	if (paramUI != nullptr)
+	if (editableUI != nullptr && paramUI != nullptr)
 	{
 		paramUI->setBounds(r.withHeight(paramUI->getHeight()));
 		r.translate(0, paramUI->getHeight() + 2);
@@ -70,7 +71,11 @@ void CustomValuesCommandArgumentEditor::childBoundsChanged(Component * child)
 {
 	if (child == paramUI.get())
 	{
-		resized();
+		if (headerHeight != paramUI->getHeight() + 4)
+		{
+			headerHeight = paramUI->getHeight() + 4;
+			resized();
+		}
 	}
 }
 

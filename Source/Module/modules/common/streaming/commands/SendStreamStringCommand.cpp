@@ -10,8 +10,8 @@
 
 #include "SendStreamStringCommand.h"
 
-SendStreamStringCommand::SendStreamStringCommand(StreamingModule* _module, CommandContext context, var params) :
-	StreamingCommand(_module, context, params),
+SendStreamStringCommand::SendStreamStringCommand(StreamingModule* _module, CommandContext context, var params, Multiplex* multiplex) :
+	StreamingCommand(_module, context, params, multiplex),
 	appendCR(nullptr),
 	appendNL(nullptr),
     prefix(nullptr)
@@ -52,7 +52,7 @@ SendStreamStringCommand::SendStreamStringCommand(StreamingModule* _module, Comma
 
 		if (context == CommandContext::MAPPING)
 		{
-			addTargetMappingParameterAt(valueParam, 0);
+			linkParamToMappingIndex(valueParam, 0);
 		}
 
 		break;
@@ -69,7 +69,7 @@ SendStreamStringCommand::~SendStreamStringCommand()
 {
 }
 
-void SendStreamStringCommand::setValue(var value)
+void SendStreamStringCommand::setValue(var value, int multiplexIndex)
 {
 	switch (dataMode)
 	{
@@ -89,29 +89,29 @@ void SendStreamStringCommand::setValue(var value)
 		break;
 	}
 
-	StreamingCommand::setValue(value);
+	StreamingCommand::setValue(value, multiplexIndex);
 }
 
-void SendStreamStringCommand::triggerInternal()
+void SendStreamStringCommand::triggerInternal(int multiplexIndex)
 {
+	String valString = getLinkedValue(valueParam, multiplexIndex).toString();
+
 	switch (dataMode)
 	{
 	case STRING:
 	{
-		String m = valueParam->stringValue();
+		if (prefix != nullptr) valString = getLinkedValue(prefix, multiplexIndex).toString() + valString;
+		if (appendCR != nullptr && appendCR->boolValue()) valString += "\r";
+		if (appendNL != nullptr && appendNL->boolValue()) valString += "\n";
 
-		if (prefix != nullptr) m = prefix->stringValue() + m;
-		if (appendCR != nullptr && appendCR->boolValue()) m += "\r";
-		if (appendNL != nullptr && appendNL->boolValue()) m += "\n";
-
-		streamingModule->sendMessage(m);
+		streamingModule->sendMessage(valString);
 	}
 	break;
 
 	case HEX:
 	{
 		StringArray hexValues;
-		hexValues.addTokens(valueParam->stringValue(), " ");
+		hexValues.addTokens(valString, " ");
 		Array<uint8> values;
 		for (auto& v : hexValues)
 		{

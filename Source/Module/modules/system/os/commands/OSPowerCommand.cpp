@@ -10,7 +10,7 @@
 
 #include "OSPowerCommand.h"
 
-OSPowerCommand::OSPowerCommand(OSModule * _module, CommandContext context, var params) :
+OSPowerCommand::OSPowerCommand(OSModule * _module, CommandContext context, var params, Multiplex * multiplex) :
 	BaseCommand(_module, context, params)
 {
 	actionType = (ActionType)(int)params.getProperty("type", SHUTDOWN);
@@ -20,9 +20,9 @@ OSPowerCommand::~OSPowerCommand()
 {
 }
 
-void OSPowerCommand::triggerInternal()
+void OSPowerCommand::triggerInternal(int multiplexIndex)
 {
-	BaseCommand::triggerInternal();
+	BaseCommand::triggerInternal(multiplexIndex);
 
 	if (!module->enabled->boolValue()) return;
 

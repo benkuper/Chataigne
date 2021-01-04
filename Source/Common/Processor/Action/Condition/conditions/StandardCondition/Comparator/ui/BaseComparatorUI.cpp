@@ -11,15 +11,12 @@
 #include "BaseComparatorUI.h"
 
 BaseComparatorUI::BaseComparatorUI(BaseComparator * _comparator) :
-	comparator(_comparator)
+	comparator(_comparator),
+	comparatorRef(_comparator)
 {
 	compareFuncUI.reset(comparator->compareFunction->createUI());
-	alwaysTriggerUI.reset(comparator->alwaysTrigger->createToggle());
-	toggleModeUI.reset(comparator->toggleMode->createToggle(ImageCache::getFromMemory(BinaryData::toggle_png, BinaryData::toggle_pngSize)));
-	
-	addAndMakeVisible(toggleModeUI.get());
 
-	if (!comparator.wasObjectDeleted() && comparator->reference != nullptr) //null if comparator is trigger
+	if (comparator != nullptr && comparator->reference != nullptr) //null if comparator is trigger
 	{
 		refEditor.reset((ControllableEditor*)comparator->reference->getEditor(false));
 		refEditor->setShowLabel(false);
@@ -29,7 +26,6 @@ BaseComparatorUI::BaseComparatorUI(BaseComparator * _comparator) :
 			p->addAsyncParameterListener(this);
 		}
 
-		addAndMakeVisible(alwaysTriggerUI.get());
 		addAndMakeVisible(compareFuncUI.get());
 		addAndMakeVisible(refEditor.get());
 	}
@@ -39,7 +35,7 @@ BaseComparatorUI::BaseComparatorUI(BaseComparator * _comparator) :
 
 BaseComparatorUI::~BaseComparatorUI() 
 {
-	if (!comparator.wasObjectDeleted() && comparator->reference != nullptr && comparator->reference->type != Controllable::TRIGGER)
+	if (!comparatorRef.wasObjectDeleted() && comparator->reference != nullptr && comparator->reference->type != Controllable::TRIGGER)
 	{
 		Parameter * p = dynamic_cast<Parameter *>(comparator->reference);
 		p->removeAsyncParameterListener(this);
@@ -48,19 +44,12 @@ BaseComparatorUI::~BaseComparatorUI()
 
 void BaseComparatorUI::resized()
 {
-	
 	Rectangle<int> r = getLocalBounds().reduced(2, 0);
-		
-	toggleModeUI->setBounds(r.removeFromLeft(16).withHeight(16));
-	r.removeFromLeft(2);
 
 	if (refEditor != nullptr)
 	{
 		compareFuncUI->setBounds(r.removeFromLeft(80).withHeight(16));
 		r.removeFromLeft(2);
-
-		alwaysTriggerUI->setBounds(r.removeFromRight(95).reduced(0, 1));
-		r.removeFromRight(4);
 
 		refEditor->setBounds(r.withHeight(refEditor->getHeight()));
 		setSize(getWidth(), refEditor->getBottom());

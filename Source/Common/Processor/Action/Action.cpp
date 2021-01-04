@@ -13,13 +13,14 @@
 #include "Condition/conditions/ActivationCondition/ActivationCondition.h"
 #include "Condition/conditions/StandardCondition/StandardCondition.h"
 
-Action::Action(const String & name, var params) :
-	Processor(params.getProperty("name", name)),
+Action::Action(var params, Multiplex * multiplex) :
+	Processor(getTypeString()),
+	MultiplexTarget(multiplex),
     autoTriggerWhenAllConditionAreActives(true),
     forceNoOffConsequences(false),
 	hasOffConsequences(false),
-    triggerOn(nullptr),
-    triggerOff(nullptr),
+	triggerOn(nullptr),
+	cdm(multiplex),
 	forceChecking(false),
     actionAsyncNotifier(10)
 {
@@ -27,15 +28,18 @@ Action::Action(const String & name, var params) :
 	itemDataType = "Action";
 	type = ACTION;
 
-	triggerOn = addTrigger("Trigger Validate", "Triggers the action");
-	triggerOn->hideInEditor = true;
+	if (!isMultiplexed())
+	{
+		triggerOn = addTrigger("Trigger", "This will trigger as if the conditions have been validated, and trigger all the Consequences:TRUE");
+		triggerOn->hideInEditor = true;
+	}
 
 	cdm.setHasActivationDefinitions(params.getProperty("hasActivationDefinitions",true));
 	cdm.addConditionManagerListener(this);
 	cdm.addBaseManagerListener(this);
 	addChildControllableContainer(&cdm);
 
-	csmOn.reset(new ConsequenceManager("Consequences : TRUE"));
+	csmOn.reset(new ConsequenceManager("Consequences : TRUE", multiplex));
 
 	addChildControllableContainer(csmOn.get());
 
@@ -80,22 +84,13 @@ void Action::setHasOffConsequences(bool value)
 	{
 		if (csmOff == nullptr)
 		{
-			csmOff.reset(new ConsequenceManager("Consequences : FALSE"));
+			csmOff.reset(new ConsequenceManager("Consequences : FALSE", multiplex));
 			addChildControllableContainer(csmOff.get());
 		}
-
-		if(triggerOff == nullptr)
-		{
-			triggerOff = addTrigger("Trigger Invalidate", "Triggers the action");
-			triggerOff->hideInEditor = true;
-		}
-
 	} else
 	{
 		removeChildControllableContainer(csmOff.get());
 		csmOff = nullptr;
-		removeControllable(triggerOff);
-		triggerOff = nullptr;
 	}
 }
 
@@ -112,6 +107,18 @@ void Action::forceCheck(bool triggerIfChanged)
 	if (!triggerIfChanged) forceChecking = true;
 	cdm.forceCheck();
 	forceChecking = false;
+}
+
+
+void Action::triggerConsequences(bool triggerTrue, int multiplexIndex)
+{
+	if (!enabled->boolValue() || forceDisabled) return;
+
+	if (!forceChecking)
+	{
+		if (triggerTrue) csmOn->triggerAll(multiplexIndex);
+		else csmOff->triggerAll(multiplexIndex);
+	}
 }
 
 var Action::getJSONData()
@@ -140,8 +147,22 @@ void Action::loadJSONDataItemInternal(var data)
 void Action::endLoadFile()
 {
 	Engine::mainEngine->removeEngineListener(this);
-	if (actionRoles.contains(Role::ACTIVATE) && cdm.getIsValid(false)) triggerOn->trigger();
+	if (actionRoles.contains(Role::ACTIVATE))
+	{
+		for (int i = 0; i < getMultiplexCount(); i++) if (cdm.getIsValid(i, false)) triggerConsequences(true, i);
+	}
 }
+
+void Action::onContainerTriggerTriggered(Trigger* t)
+{
+	Processor::onContainerTriggerTriggered(t);
+
+	if (t == triggerOn)
+	{
+		if(enabled->boolValue()) triggerConsequences(true);
+	}
+}
+
 
 void Action::onContainerParameterChangedInternal(Parameter * p)
 {
@@ -149,29 +170,13 @@ void Action::onContainerParameterChangedInternal(Parameter * p)
 
 	if (p == enabled)
 	{
+		if(triggerOn != nullptr) triggerOn->setEnabled(enabled->boolValue());
+		
 		actionListeners.call(&Action::ActionListener::actionEnableChanged, this);
 		actionAsyncNotifier.addMessage(new ActionEvent(ActionEvent::ENABLED_CHANGED, this));
 	}
 }
 
-void Action::onContainerTriggerTriggered(Trigger * t)
-{
-	Processor::onContainerTriggerTriggered(t);
-
-	if (!enabled->boolValue() || forceDisabled) return;
-
-	if (!forceChecking)
-	{
-		if (t == triggerOn)
-		{
-			csmOn->triggerAll->trigger();
-		}
-		else if (t == triggerOff)
-		{
-			if (hasOffConsequences) csmOff->triggerAll->trigger();
-		}
-	}
-}
 
 void Action::controllableFeedbackUpdate(ControllableContainer * cc, Controllable * c)
 {
@@ -184,17 +189,14 @@ void Action::controllableFeedbackUpdate(ControllableContainer * cc, Controllable
 	}
 }
 
-void Action::conditionManagerValidationChanged(ConditionManager *)
+void Action::conditionManagerValidationChanged(ConditionManager *, int multiplexIndex)
 {
+	if (forceChecking) return;
+
 	if (autoTriggerWhenAllConditionAreActives)
 	{
-		if (cdm.isValid->boolValue())
-		{
-			triggerOn->trigger(); //force trigger from onContainerTriggerTriggered, for derivating child classes
-		} else
-		{
-			if (hasOffConsequences) triggerOff->trigger();
-		}
+		if (cdm.getIsValid(multiplexIndex, false)) triggerConsequences(true, multiplexIndex); //force trigger from onContainerTriggerTriggered, for derivating child classes
+		else if (hasOffConsequences) triggerConsequences(false, multiplexIndex);
 	}
 
 	actionListeners.call(&ActionListener::actionValidationChanged, this);
@@ -227,3 +229,4 @@ ProcessorUI * Action::getUI()
 {
 	return new ActionUI(this);
 }
+

@@ -11,7 +11,8 @@
 #pragma once
 
 #include "Module.h"
-#include "ModuleFactory.h"
+
+class ModuleFactory;
 
 class ModuleManager :
 	public BaseManager<Module>
@@ -22,7 +23,7 @@ public:
 	ModuleManager();
 	~ModuleManager();
 
-	ModuleFactory factory;
+	std::unique_ptr<ModuleFactory> factory;
 
 	Module* getModuleWithName(const String& moduleName);
 

@@ -10,8 +10,8 @@
 
 #include "StreamingCommand.h"
 
-StreamingCommand::StreamingCommand(StreamingModule * _module, CommandContext context, var params) :
-	BaseCommand(_module, context, params),
+StreamingCommand::StreamingCommand(StreamingModule * _module, CommandContext context, var params, Multiplex* multiplex) :
+	BaseCommand(_module, context, params, multiplex),
 	streamingModule(_module)
 {
 

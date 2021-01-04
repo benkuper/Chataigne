@@ -14,20 +14,23 @@
 
 class MappingOutputManager :
 	public BaseManager<MappingOutput>,
+	public MultiplexTarget,
 	public BaseCommandHandler::CommandHandlerListener
 {
 public:
-	MappingOutputManager();
+	MappingOutputManager(Multiplex * multiplex = nullptr);
 	~MappingOutputManager();
 
 	Array<WeakReference<Parameter>> outParams;
 
 	void clear() override;
 
+	MappingOutput* createItem() override;
+
 	void setOutParams(Array<Parameter *> params);
 
-	void updateOutputValues();
-	void updateOutputValue(MappingOutput * o);
+	void updateOutputValues(int multiplexIndex);
+	void updateOutputValue(MappingOutput * o, int multiplexIndex);
 
 	var getMergedOutValue();
 

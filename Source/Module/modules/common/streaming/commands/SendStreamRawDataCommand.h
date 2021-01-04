@@ -16,12 +16,12 @@ class SendStreamRawDataCommand :
 	public SendStreamValuesCommand
 {
 public:
-	SendStreamRawDataCommand(StreamingModule * _module, CommandContext context, var params);
+	SendStreamRawDataCommand(StreamingModule * _module, CommandContext context, var params, Multiplex* multiplex = nullptr);
 	~SendStreamRawDataCommand();
 
-	void triggerInternal() override;
+	void triggerInternal(int multiplexIndex) override;
 
 	void customValueCreated(Parameter * p, var data);
 
-	static SendStreamRawDataCommand * create(ControllableContainer * module, CommandContext context, var params) { return new SendStreamRawDataCommand((StreamingModule *)module, context, params); }
+	static SendStreamRawDataCommand * create(ControllableContainer * module, CommandContext context, var params, Multiplex * multiplex) { return new SendStreamRawDataCommand((StreamingModule *)module, context, params, multiplex); }
 };

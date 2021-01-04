@@ -11,8 +11,8 @@
 #include "MIDICommands.h"
 #include "../MIDIModule.h"
 
-MIDICommand::MIDICommand(MIDIModule * module, CommandContext context, var params) :
-	BaseCommand(module,context,params),
+MIDICommand::MIDICommand(MIDIModule * module, CommandContext context, var params, Multiplex * multiplex) :
+	BaseCommand(module, context, params, multiplex),
 	midiModule(module)
 {
 	
@@ -22,8 +22,8 @@ MIDICommand::~MIDICommand()
 {
 }
 
-MIDINoteAndCCCommand::MIDINoteAndCCCommand(MIDIModule * module, CommandContext context, var params) :
-	MIDICommand(module, context, params),
+MIDINoteAndCCCommand::MIDINoteAndCCCommand(MIDIModule * module, CommandContext context, var params, Multiplex * multiplex) :
+	MIDICommand(module, context, params, multiplex),
 	velocity(nullptr),
 	onTime(nullptr),
 	remap01To127(nullptr),
@@ -77,7 +77,7 @@ MIDINoteAndCCCommand::MIDINoteAndCCCommand(MIDIModule * module, CommandContext c
 		remap01To127 = addBoolParameter("Remap to 0-"+String(maxRemap), "If checked, this will automatically remap values from 0-1 to 0-"+String(maxRemap), false);
 	}
 
-	if(velocity != nullptr) addTargetMappingParameterAt(velocity, 0);
+	if(velocity != nullptr) linkParamToMappingIndex(velocity, 0);
 }
 
 MIDINoteAndCCCommand::~MIDINoteAndCCCommand()
@@ -85,56 +85,59 @@ MIDINoteAndCCCommand::~MIDINoteAndCCCommand()
 
 }
 
-void MIDINoteAndCCCommand::setValue(var value)
+void MIDINoteAndCCCommand::setValue(var value, int multiplexIndex)
 {
 	float mapFactor = (remap01To127 != nullptr && remap01To127->boolValue()) ? maxRemap : 1;
 	if (value.isArray()) value[0] = (float)value[0] * mapFactor;
 	else value = (float)value * mapFactor;
 	
-	MIDICommand::setValue(value);
+	MIDICommand::setValue(value, multiplexIndex);
 }
 
-void MIDINoteAndCCCommand::triggerInternal()
+void MIDINoteAndCCCommand::triggerInternal(int multiplexIndex)
 {
-	MIDICommand::triggerInternal();
+	MIDICommand::triggerInternal(multiplexIndex);
 
 	int pitch = 0;
-	if (type == CONTROLCHANGE || type == PROGRAMCHANGE) pitch = number->intValue();
-	else if(type == NOTE_ON || type == NOTE_OFF || type == FULL_NOTE || type == AFTER_TOUCH) pitch = (int)noteEnum->getValueData() + (octave->intValue() - (int)octave->minimumValue) * 12;
+	if (type == CONTROLCHANGE || type == PROGRAMCHANGE) pitch = getLinkedValue(number, multiplexIndex);
+	else if(type == NOTE_ON || type == NOTE_OFF || type == FULL_NOTE || type == AFTER_TOUCH) pitch = (int)noteEnum->getValueData() + ((int)getLinkedValue(octave, multiplexIndex) - (int)octave->minimumValue) * 12;
+
+	int chanVal = channel != nullptr ? getLinkedValue(channel, multiplexIndex) : 0;
+	int velVal = velocity != nullptr ? getLinkedValue(velocity, multiplexIndex) : 0;
 
 	switch(type)
 	{
 	case NOTE_ON:
-		midiModule->sendNoteOn(channel->intValue(), pitch, velocity->intValue());
+		midiModule->sendNoteOn(chanVal, pitch, velVal);
 		break;
 
 	case NOTE_OFF:
-		midiModule->sendNoteOff(channel->intValue(), pitch);
+		midiModule->sendNoteOff(chanVal, pitch);
 		break;
 
 	case FULL_NOTE:
-		midiModule->sendNoteOn(channel->intValue(), pitch, velocity->intValue());
+		midiModule->sendNoteOn(chanVal, pitch, velVal);
 		startTimer(onTime->floatValue() * 1000);
 		break;
 
 	case CONTROLCHANGE:
-		midiModule->sendControlChange(channel->intValue(), pitch, velocity->intValue());
+		midiModule->sendControlChange(chanVal, pitch, velVal);
 		break;
 
 	case PROGRAMCHANGE:
-		midiModule->sendProgramChange(channel->intValue(), pitch);
+		midiModule->sendProgramChange(chanVal, pitch);
 		break;
 
 	case PITCH_WHEEL:
-		midiModule->sendPitchWheel(channel->intValue(), velocity->intValue());
+		midiModule->sendPitchWheel(chanVal, velVal);
 		break;
 
 	case CHANNEL_PRESSURE:
-		midiModule->sendChannelPressure(channel->intValue(), velocity->intValue());
+		midiModule->sendChannelPressure(chanVal, velVal);
 		break;
 
 	case AFTER_TOUCH:
-		midiModule->sendAfterTouch(channel->intValue(), pitch, velocity->intValue());
+		midiModule->sendAfterTouch(chanVal, pitch, velVal);
 		break;
 
 	default:
@@ -151,8 +154,8 @@ void MIDINoteAndCCCommand::timerCallback()
 }
 
 
-MIDISysExCommand::MIDISysExCommand(MIDIModule * module, CommandContext context, var params) :
-	MIDICommand(module, context, params),
+MIDISysExCommand::MIDISysExCommand(MIDIModule * module, CommandContext context, var params, Multiplex * multiplex) :
+	MIDICommand(module, context, params, multiplex),
 	dataContainer("Bytes")
 {
 	saveAndLoadRecursiveData = true;
@@ -189,9 +192,9 @@ void MIDISysExCommand::onContainerParameterChangedAsync(Parameter * p, const var
 	}
 }
 
-void MIDISysExCommand::triggerInternal()
+void MIDISysExCommand::triggerInternal(int multiplexIndex)
 {
-	MIDICommand::triggerInternal();
+	MIDICommand::triggerInternal(multiplexIndex);
 
 	Array<uint8> data;
 	for (auto &c : dataContainer.controllables) data.add(((IntParameter *)c)->intValue());

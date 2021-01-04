@@ -17,6 +17,13 @@ StandardConditionEditor::StandardConditionEditor(StandardCondition* _condition, 
 	targetUI.reset(standardCondition->sourceTarget->getEditor(false));
 	addChildComponent(targetUI.get());
 
+	alwaysTriggerUI.reset(standardCondition->alwaysTrigger->createToggle());
+	addAndMakeVisible(alwaysTriggerUI.get());
+	
+	toggleModeUI.reset(standardCondition->toggleMode->createToggle(ImageCache::getFromMemory(BinaryData::toggle_png, BinaryData::toggle_pngSize)));
+
+	addAndMakeVisible(toggleModeUI.get());
+
 	targetUI->setVisible(!standardCondition->editorIsCollapsed);
 
 	setSize(100, 50);
@@ -54,28 +61,34 @@ void StandardConditionEditor::resizedInternalHeaderItemInternal(Rectangle<int> &
 
 void StandardConditionEditor::resizedInternalContent(Rectangle<int> & r)
 {
-	ConditionEditor::resizedInternalContent(r);
+	//ConditionEditor::resizedInternalContent(r);
 
 	Rectangle<int> sr = r.withHeight(16).reduced(2, 0);
 	targetUI->setBounds(sr);
 	r.translate(0, 18);
 
-	if (comparatorUI != nullptr)
-	{
-		comparatorUI->setBounds(r.withHeight(comparatorUI->getHeight()));
-		r.translate(0, comparatorUI->getHeight());
-	}
+	int ch = comparatorUI != nullptr ? comparatorUI->getHeight() : 16;
+	Rectangle<int> cr = r.withHeight(ch);
+	
+	toggleModeUI->setBounds(cr.removeFromLeft(16).withHeight(16));
+	cr.removeFromLeft(2);
 
-	r.translate(0, 2);
+	alwaysTriggerUI->setBounds(cr.removeFromRight(95).withHeight(16));
+	cr.removeFromRight(2);
+
+	if (comparatorUI != nullptr) comparatorUI->setBounds(cr);
+
+	r.translate(0, ch + 2);
 	r.setHeight(0);
 }
 
 void StandardConditionEditor::updateUI()
 {
 	if (sourceFeedbackUI != nullptr) removeChildComponent(sourceFeedbackUI.get());
-	if (standardCondition->sourceControllable != nullptr)
+
+	if (Controllable * c = standardCondition->getSourceControllableAt(0))
 	{
-		sourceFeedbackUI.reset(standardCondition->sourceControllable->createDefaultUI());
+		sourceFeedbackUI.reset(c->createDefaultUI());
 		//sourceFeedbackUI->setForceFeedbackOnly(true);
 		addAndMakeVisible(sourceFeedbackUI.get());
 	}

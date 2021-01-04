@@ -18,7 +18,7 @@ class GPIOCommand :
     public BaseCommand
 {
 public:
-    GPIOCommand(GPIOModule* m, CommandContext context, var params);
+    GPIOCommand(GPIOModule* m, CommandContext context, var params, Multiplex* multiplex = nullptr);
     ~GPIOCommand();
 
     GPIOModule* gpioModule;
@@ -29,7 +29,7 @@ public:
     IntParameter* pin;
     Parameter* valueParam;
 
-    void triggerInternal() override;
+    void triggerInternal(int multiplexIndex) override;
     
-    static GPIOCommand* create(ControllableContainer * cc, CommandContext context, var params) { return new GPIOCommand((GPIOModule *)cc, context, params); }
+    static GPIOCommand* create(ControllableContainer * cc, CommandContext context, var params, Multiplex * multiplex = nullptr) { return new GPIOCommand((GPIOModule *)cc, context, params, multiplex); }
 };

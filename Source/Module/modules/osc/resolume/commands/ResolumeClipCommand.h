@@ -16,7 +16,7 @@ class ResolumeClipCommand :
 	public ResolumeBaseCommand
 {
 public:
-	ResolumeClipCommand(ResolumeModule * _module, CommandContext context, var params);
+	ResolumeClipCommand(ResolumeModule * _module, CommandContext context, var params, Multiplex * multiplex = nullptr);
 	~ResolumeClipCommand();
 
 	IntParameter * connectParam;
@@ -33,12 +33,12 @@ public:
 	void rebuildParametersInternal() override;
 
 	void onContainerParameterChanged(Parameter *) override;
-	void triggerInternal() override;
+	void triggerInternal(int multiplexIndex) override;
 
 
-	static BaseCommand * create(ControllableContainer * module, CommandContext context, var params) { 
+	static BaseCommand * create(ControllableContainer * module, CommandContext context, var params, Multiplex * multiplex) { 
 		params.getDynamicObject()->setProperty("multiLevel", false);
-		return new ResolumeClipCommand((ResolumeModule *)module, context, params); 
+		return new ResolumeClipCommand((ResolumeModule *)module, context, params, multiplex); 
 	}
 
 };

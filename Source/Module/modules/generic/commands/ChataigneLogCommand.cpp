@@ -10,8 +10,8 @@
 
 #include "ChataigneLogCommand.h"
 
-ChataigneLogCommand::ChataigneLogCommand(ChataigneGenericModule* _module, CommandContext context, var params) :
-	BaseCommand(_module, context, params),
+ChataigneLogCommand::ChataigneLogCommand(ChataigneGenericModule* _module, CommandContext context, var params, Multiplex* multiplex) :
+	BaseCommand(_module, context, params, multiplex),
 	value(nullptr)
 {
 	type = (Type)(int)(params.getProperty("type", MESSAGE));
@@ -28,6 +28,7 @@ ChataigneLogCommand::ChataigneLogCommand(ChataigneGenericModule* _module, Comman
 		{
 			value = addStringParameter("Value", "The value that will be logged", "[notset]");
 			value->setControllableFeedbackOnly(true);
+			linkParamToMappingIndex(value, 0);
 		}
 	}
 }
@@ -36,62 +37,45 @@ ChataigneLogCommand::~ChataigneLogCommand()
 {
 }
 
-void ChataigneLogCommand::setValueInternal(var _value)
-{
-	if (_value.isArray() && _value.size() > 0)
-	{
-		String s = _value[0].toString();
-		for (int i = 1; i < _value.size(); ++i) s += ", " + _value[i].toString();
-		((StringParameter*)value)->setValue(s);
-	}
-	else
-	{
-		
-		((StringParameter*)value)->setValue(_value.isDouble() ? String((float)_value,3):_value.toString());
-	}
-}
-
-void ChataigneLogCommand::triggerInternal()
+void ChataigneLogCommand::triggerInternal(int multiplexIndex)
 {
 	LogType lt = logType->getValueDataAsEnum<LogType>();
+
+	String msg = getLinkedValue(message, multiplexIndex);
 
 	switch (type)
 	{
 	case MESSAGE:
-
 		switch (lt)
 		{
-		case INFO: LOG(message->stringValue()); break;
-		case WARNING: LOGWARNING(message->stringValue()); break;
-		case ERROR: LOGERROR(message->stringValue()); break;
-
+		case INFO: LOG(msg); break;
+		case WARNING: LOGWARNING(msg); break;
+		case ERROR: LOGERROR(msg); break;
 		}
 
 		break;
 
 	case VALUE:
 	{
-		String vString = "[not set]";
-		Parameter* p = nullptr;
-		if (context == ACTION)  p = dynamic_cast<Parameter*>(((TargetParameter*)value)->target.get());
-		else p = value;
+		var val = "[not set]";
+		if (context == ACTION) val = dynamic_cast<Parameter*>(((TargetParameter*)value)->target.get())->value;
+		else val = getLinkedValue(value, multiplexIndex);
 		
-		if (p != nullptr) vString = p->type == Controllable::FLOAT ? String(p->floatValue(), 3) : p->stringValue();
-	
+		String vString = value->type == Controllable::FLOAT ? String((float)val, 3) : val.toString();
+		
 		switch (lt)
 		{
-		case INFO: LOG(message->stringValue() + " " + vString); break;
-		case WARNING: LOGWARNING(message->stringValue() + " " + vString);; break;
-		case ERROR: LOGERROR(message->stringValue() + " " + vString); break;
-
+		case INFO: LOG(msg + " " + vString); break;
+		case WARNING: LOGWARNING(msg + " " + vString);; break;
+		case ERROR: LOGERROR(msg + " " + vString); break;
 		}
 	}
 	break;
 	}
 }
 
-BaseCommand* ChataigneLogCommand::create(ControllableContainer * module, CommandContext context, var params)
+BaseCommand* ChataigneLogCommand::create(ControllableContainer * module, CommandContext context, var params, Multiplex * multiplex)
 {
-	return new ChataigneLogCommand((ChataigneGenericModule*)module, context, params);
+	return new ChataigneLogCommand((ChataigneGenericModule*)module, context, params, multiplex);
 
 }

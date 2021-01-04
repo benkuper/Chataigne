@@ -17,7 +17,7 @@ class ScriptCondition :
 	public Condition
 {
 public:
-	ScriptCondition(var params);
+	ScriptCondition(var params, Multiplex* processor = nullptr);
 	~ScriptCondition();
 	
 	static String conditionTemplate;
@@ -31,7 +31,5 @@ public:
 
 	String getTypeString() const override { return ScriptCondition::getTypeStringStatic(); }
 	static String getTypeStringStatic() { return "Script"; }
-	static ScriptCondition * create(var params) { return new ScriptCondition(params); }
-
 };
 

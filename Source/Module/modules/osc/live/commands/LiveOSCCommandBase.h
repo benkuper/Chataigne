@@ -17,7 +17,7 @@ class LiveOSCCommandBase :
 	public OSCCommand
 {
 public:
-	LiveOSCCommandBase(LiveOSCModule * _module, CommandContext context, var params);
+	LiveOSCCommandBase(LiveOSCModule * _module, CommandContext context, var params, Multiplex * multiplex = nullptr);
 	~LiveOSCCommandBase();
 
 	LiveOSCModule* liveModule; 
@@ -33,6 +33,6 @@ public:
 	Parameter* arg;
 
 
-	static LiveOSCCommandBase * create(ControllableContainer * module, CommandContext context, var params) { return new LiveOSCCommandBase((LiveOSCModule *)module, context, params); }
+	static LiveOSCCommandBase * create(ControllableContainer * module, CommandContext context, var params, Multiplex * multiplex) { return new LiveOSCCommandBase((LiveOSCModule *)module, context, params, multiplex); }
 
 };

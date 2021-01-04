@@ -19,7 +19,7 @@ class ProcessorManagerUI :
 {
 public:
 
-	ProcessorManagerUI(ProcessorManager *_manager);
+	ProcessorManagerUI(ProcessorManager *_manager, bool useViewport = true);
 	~ProcessorManagerUI();
 
 	void itemDropped(const SourceDetails &details) override;

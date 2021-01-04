@@ -12,7 +12,7 @@
 
 #pragma warning(disable:4804)
 
-OSWindowCommand::OSWindowCommand(OSModule* _module, CommandContext context, var params) :
+OSWindowCommand::OSWindowCommand(OSModule* _module, CommandContext context, var params, Multiplex * multiplex) :
 	BaseCommand(_module, context, params),
 	Thread("OS WindowCommand"),
 	focusFilter(nullptr),
@@ -41,7 +41,7 @@ OSWindowCommand::~OSWindowCommand()
 	waitForThreadToExit(500);
 }
 
-void OSWindowCommand::triggerInternal()
+void OSWindowCommand::triggerInternal(int multiplexIndex)
 {
 	if (isThreadRunning())
 	{

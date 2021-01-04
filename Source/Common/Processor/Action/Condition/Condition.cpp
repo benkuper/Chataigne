@@ -9,40 +9,51 @@
 */
 
 #include "Condition.h"
-#include "Comparator/ComparatorFactory.h"
 #include "ui/ConditionEditor.h"
 #include "Module/ModuleManager.h"
 
-Condition::Condition(const String &n, var /*params*/) :
+Condition::Condition(const String& n, var params, Multiplex * multiplex) :
 	BaseItem(n),
-    forceDisabled(false),
-	conditionAsyncNotifier(10)
+	MultiplexTarget(multiplex),
+	forceDisabled(false),
+	conditionAsyncNotifier(30)
 {
 	isSelectable = false;
-	isValid = addBoolParameter("Is Valid", "Where the condition passed the test or not.", false);
-	isValid->setControllableFeedbackOnly(true);
-	isValid->hideInEditor = true;
-	isValid->isSavable = false;
+
+	isValids.resize(getMultiplexCount());
+	isValids.fill(false);
 }
 
 Condition::~Condition()
 {
 }
 
+void Condition::multiplexCountChanged()
+{
+	isValids.resize(getMultiplexCount());
+	isValids.fill(false);
+}
+
+bool Condition::getIsValid(int multiplexIndex)
+{
+	return isValids[multiplexIndex];
+}
+
+void Condition::setValid(int multiplexIndex, bool value, bool dispatchOnChangeOnly)
+{
+	if (isValids[multiplexIndex] == value && dispatchOnChangeOnly) return;
+	isValids.set(multiplexIndex, value);
+
+	conditionListeners.call(&ConditionListener::conditionValidationChanged, this, multiplexIndex);
+	conditionAsyncNotifier.addMessage(new ConditionEvent(ConditionEvent::VALIDATION_CHANGED, this, multiplexIndex));
+}
+
 void Condition::onContainerParameterChangedInternal(Parameter * p)
 {
 	BaseItem::onContainerParameterChangedInternal(p);
-
-	if (p == isValid)
+	if (p == enabled)
 	{
-		if (!forceDisabled)
-		{
-			conditionListeners.call(&ConditionListener::conditionValidationChanged, this);
-			conditionAsyncNotifier.addMessage(new ConditionEvent(ConditionEvent::VALIDATION_CHANGED,this));
-		}
-	}else if (p == enabled)
-	{
-		isValid->setValue(false);
+		for (int i = 0; i < getMultiplexCount(); i++) setValid(i, false);
 	}
 }
 
@@ -50,7 +61,6 @@ void Condition::setForceDisabled(bool value, bool force)
 {
 	if (forceDisabled == value && !force) return;
 	forceDisabled = value;
-	isValid->setEnabled(!forceDisabled);
 }
 
 InspectableEditor * Condition::getEditor(bool isRoot)

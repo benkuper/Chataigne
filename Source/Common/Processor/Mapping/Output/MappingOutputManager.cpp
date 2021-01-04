@@ -12,8 +12,9 @@
 #include "Common/Command/ui/BaseCommandHandlerManagerEditor.h"
 #include "ui/MappingOutputManagerEditor.h"
 
-MappingOutputManager::MappingOutputManager() :
+MappingOutputManager::MappingOutputManager(Multiplex * multiplex) :
 	BaseManager<MappingOutput>("Outputs"),
+	MultiplexTarget(multiplex),
 	omAsyncNotifier(5)
 {
 	canBeCopiedAndPasted = true;
@@ -31,6 +32,11 @@ void MappingOutputManager::clear()
 	BaseManager::clear();
 }
 
+MappingOutput* MappingOutputManager::createItem()
+{
+	return new MappingOutput(multiplex);
+}
+
 void MappingOutputManager::setOutParams(Array<Parameter *> params)
 {
 	outParams = Array<WeakReference<Parameter>>(params.getRawDataPointer(), params.size());
@@ -40,19 +46,19 @@ void MappingOutputManager::setOutParams(Array<Parameter *> params)
 }
 
 
-void MappingOutputManager::updateOutputValues()
+void MappingOutputManager::updateOutputValues(int multiplexIndex)
 {
 	var value = getMergedOutValue();
 	if (value.isVoid()) return; //possible if parameters have been deleted in another thread during process
 
-	for (auto& i : items) i->setValue(value);
+	for (auto& i : items) i->setValue(value, multiplexIndex);
 }
 
-void MappingOutputManager::updateOutputValue(MappingOutput * o)
+void MappingOutputManager::updateOutputValue(MappingOutput * o, int multiplexIndex)
 {
 	if (outParams.size() == 0) return;
 	if (o == nullptr) return;
-	o->setValue(getMergedOutValue());
+	o->setValue(getMergedOutValue(), multiplexIndex);
 }
 
 var MappingOutputManager::getMergedOutValue()
@@ -80,7 +86,7 @@ void MappingOutputManager::addItemInternal(MappingOutput * o, var)
 {
 	o->addCommandHandlerListener(this);
 	if(outParams.size() > 0)o->setOutputType(outParams[0]->type);
-	updateOutputValue(o);
+	for (int i = 0; i < getMultiplexCount(); i++) updateOutputValue(o, i);
 }
 
 void MappingOutputManager::removeItemInternal(MappingOutput * o)
@@ -90,12 +96,12 @@ void MappingOutputManager::removeItemInternal(MappingOutput * o)
 
 void MappingOutputManager::commandChanged(BaseCommandHandler * h)
 {
-	updateOutputValue(dynamic_cast<MappingOutput *>(h));
+	for (int i = 0; i < getMultiplexCount(); i++) updateOutputValue(dynamic_cast<MappingOutput *>(h), i);
 }
 
 void MappingOutputManager::commandUpdated(BaseCommandHandler * h)
 {
-	updateOutputValue(dynamic_cast<MappingOutput *>(h));
+	for (int i = 0; i < getMultiplexCount(); i++) updateOutputValue(dynamic_cast<MappingOutput *>(h), i);
 }
 
 InspectableEditor * MappingOutputManager::getEditor(bool isRoot)

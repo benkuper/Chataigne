@@ -11,11 +11,11 @@
 #include "CustomValuesCommandArgument.h"
 #include "ui/CustomValuesCommandArgumentEditor.h"
 
-CustomValuesCommandArgument::CustomValuesCommandArgument(const String &name, Parameter * _p, bool _mappingEnabled, bool templateMode) :
+CustomValuesCommandArgument::CustomValuesCommandArgument(const String &name, Parameter * _p, bool _mappingEnabled, bool templateMode, Multiplex * multiplex) :
 	BaseItem(name, false),
+	MultiplexTarget(multiplex),
 	param(_p),
 	editable(nullptr),
-    useForMapping(nullptr),
     mappingEnabled(_mappingEnabled),
 	templateMode(templateMode),
 	linkedTemplate(nullptr)
@@ -23,7 +23,6 @@ CustomValuesCommandArgument::CustomValuesCommandArgument(const String &name, Par
 	editorCanBeCollapsed = false;
 
 	isSelectable = false;
-	
 	
 	jassert(param != nullptr);
 	param->isSavable = false; // save manually
@@ -42,16 +41,12 @@ CustomValuesCommandArgument::CustomValuesCommandArgument(const String &name, Par
 	}
 
 	//argumentName = addStringParameter("Argument name", "Name for the argument", "Arg");
-	if (mappingEnabled)
+	if (mappingEnabled || isMultiplexed())
 	{
-		useForMapping = addBoolParameter("Use for mapping", "Check this to automatically set its value when used in a mapping flow.", false);
-		useForMapping->hideInEditor = true;
-		useForMapping->forceSaveValue = true;
+		paramLink.reset(new ParameterLink(param, multiplex));
 	}
 
 	param->hideInEditor = true;
-
-
 }
 
 CustomValuesCommandArgument::~CustomValuesCommandArgument()
@@ -64,16 +59,16 @@ var CustomValuesCommandArgument::getJSONData()
 {
 	var data = BaseItem::getJSONData();
 	data.getDynamicObject()->setProperty("param", param->getJSONData());
+	if(paramLink != nullptr) data.getDynamicObject()->setProperty("paramLink", paramLink->getJSONData());
 	return data;
 }
 
 void CustomValuesCommandArgument::loadJSONDataInternal(var data)
 {
 	BaseItem::loadJSONDataInternal(data);
-	if (data.getDynamicObject()->hasProperty("param"))
-	{
-		param->loadJSONData(data.getProperty("param", var()));
-	}
+	param->loadJSONData(data.getProperty("param", var()));
+	if(paramLink != nullptr) paramLink->loadJSONData(data.getProperty("paramLink", var()));
+
 }
 
 void CustomValuesCommandArgument::linkToTemplate(CustomValuesCommandArgument * t)
@@ -82,7 +77,6 @@ void CustomValuesCommandArgument::linkToTemplate(CustomValuesCommandArgument * t
 	{
 		linkedTemplate->param->removeParameterListener(this);
 		linkedTemplate->editable->removeParameterListener(this);
-		linkedTemplate->useForMapping->removeParameterListener(this);
 		linkedTemplate = nullptr;
 	}
 
@@ -92,7 +86,6 @@ void CustomValuesCommandArgument::linkToTemplate(CustomValuesCommandArgument * t
 	{
 		linkedTemplate->param->addParameterListener(this);
 		linkedTemplate->editable->addParameterListener(this);
-		linkedTemplate->useForMapping->addParameterListener(this);
 		if (!templateMode) updateParameterFromTemplate();
 	}
 	
@@ -118,10 +111,11 @@ void CustomValuesCommandArgument::updateParameterFromTemplate()
 		param->setControllableFeedbackOnly(!linkedTemplate->editable->boolValue());
 		if(linkedTemplate->param->hasRange()) param->setRange(linkedTemplate->param->minimumValue, linkedTemplate->param->maximumValue);
 
-		if (useForMapping != nullptr && linkedTemplate->useForMapping != nullptr && !useForMapping->isOverriden) useForMapping->setValue(linkedTemplate->useForMapping->boolValue());
+		if (paramLink != nullptr && linkedTemplate->paramLink != nullptr) paramLink->loadJSONData(linkedTemplate->paramLink->getJSONData());
+
+		//if (useForMapping != nullptr && linkedTemplate->useForMapping != nullptr && !useForMapping->isOverriden) useForMapping->setValue(linkedTemplate->useForMapping->boolValue());
 		
 		param->defaultValue = linkedTemplate->param->value;
-
 
 		if (param->isControllableFeedbackOnly || !param->isOverriden)
 		{
@@ -138,14 +132,6 @@ void CustomValuesCommandArgument::updateParameterFromTemplate()
 	}
 }
 
-void CustomValuesCommandArgument::onContainerParameterChangedInternal(Parameter * p)
-{
-	if (p == useForMapping)
-	{
-		argumentListeners.call(&ArgumentListener::useForMappingChanged, this);
-	}
-}
-
 void CustomValuesCommandArgument::onExternalParameterValueChanged(Parameter * p)
 {
 	if (p->parentContainer == linkedTemplate) updateParameterFromTemplate();
@@ -154,6 +140,12 @@ void CustomValuesCommandArgument::onExternalParameterValueChanged(Parameter * p)
 void CustomValuesCommandArgument::onExternalParameterRangeChanged(Parameter* p)
 {
 	if (p->parentContainer == linkedTemplate) updateParameterFromTemplate();
+}
+
+var CustomValuesCommandArgument::getLinkedValue(int multiplexIndex)
+{
+	if (paramLink == nullptr) return param->getValue();
+	return paramLink->getLinkedValue(multiplexIndex);
 }
 
 String CustomValuesCommandArgument::getTypeString() const

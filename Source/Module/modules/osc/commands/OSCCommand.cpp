@@ -11,14 +11,15 @@
 #include "OSCCommand.h"
 #include "../OSCModule.h"
 
-OSCCommand::OSCCommand(OSCModule * _module, CommandContext context, var params) :
-	BaseCommand(_module, context, params),
+OSCCommand::OSCCommand(OSCModule * _module, CommandContext context, var params, Multiplex * multiplex) :
+	BaseCommand(_module, context, params, multiplex),
 	oscModule(_module),
 	argumentsContainer("Arguments")
 {
 	address = addStringParameter("Address", "Adress of the OSC Message (e.g. /example)", params.getProperty("address", "/example"));
 	address->setControllableFeedbackOnly(true);
 	address->isSavable = false;
+	argumentsContainer.addControllableContainerListener(this);
 	addChildControllableContainer(&argumentsContainer);
 
 	addressModel = address->stringValue();
@@ -34,6 +35,11 @@ OSCCommand::~OSCCommand()
 }
 
 void OSCCommand::rebuildAddress()
+{
+	address->setValue(getTargetAddress());
+}
+
+String OSCCommand::getTargetAddress(int multiplexIndex)
 {
 	String targetAddress(addressModel);
 
@@ -53,9 +59,7 @@ void OSCCommand::rebuildAddress()
 		}
 	}
 
-	rebuildAddressInternal(targetAddress);
-
-	address->setValue(targetAddress);
+	return getTargetAddressInternal(targetAddress, multiplexIndex);
 }
 
 void OSCCommand::buildArgsAndParamsFromData(var data)
@@ -72,7 +76,7 @@ void OSCCommand::buildArgsAndParamsFromData(var data)
 				p->saveValueOnly = false;
 				p->loadJSONData(a);
 				argumentsContainer.addParameter(p);
-				if (a.hasProperty("mappingIndex")) addTargetMappingParameterAt(p, a.getProperty("mappingIndex", 0));
+				if (a.hasProperty("mappingIndex")) linkParamToMappingIndex(p, a.getProperty("mappingIndex", 0));
 
 				if (p->type == Controllable::ENUM && a.hasProperty("options"))
 				{
@@ -115,23 +119,32 @@ void OSCCommand::loadJSONDataInternal(var data)
 	argumentsContainer.loadJSONData(data.getProperty("arguments", var()), true);
 }
 
+void OSCCommand::controllableAdded(Controllable* c)
+{
+	if (c->parentContainer == &argumentsContainer)
+	{
+		onControllableAdded(c);
+	}
+}
+
 void OSCCommand::onContainerParameterChanged(Parameter * p)
 {
 	if (p != address && rebuildAddressOnParamChanged)
 	{
-		rebuildAddress();
+		 rebuildAddress();
 	}
 }
 
-void OSCCommand::triggerInternal()
+void OSCCommand::triggerInternal(int multiplexIndex)
 {
 	if (oscModule == nullptr) return;
 
-	BaseCommand::triggerInternal();
-
+	BaseCommand::triggerInternal(multiplexIndex);
+	String addrString = isMultiplexed() ? getTargetAddress() : getLinkedValue(address, multiplexIndex); //forces iteratives to reevalute the address
+	
 	try
 	{
-		OSCMessage m(address->stringValue());
+		OSCMessage m(addrString);
 
 		for (auto& a : argumentsContainer.controllables)
 		{
@@ -139,36 +152,36 @@ void OSCCommand::triggerInternal()
 
 			Parameter* p = static_cast<Parameter*>(a);
 			if (p == nullptr) continue;
+
+			var val = getLinkedValue(p, multiplexIndex);
+
 			switch (p->type)
 			{
-			case Controllable::BOOL: m.addInt32(p->boolValue() ? 1 : 0); break;
-			case Controllable::INT: m.addInt32(p->intValue()); break;
-			case Controllable::FLOAT: m.addFloat32(p->floatValue()); break;
-			case Controllable::STRING: m.addString(p->stringValue()); break;
+			case Controllable::BOOL: m.addInt32(val ? 1 : 0); break;
+			case Controllable::INT: m.addInt32(val); break;
+			case Controllable::FLOAT: m.addFloat32(val); break;
+			case Controllable::STRING: m.addString(val); break;
+
 			case Controllable::COLOR:
 			{
-				Colour c = ((ColorParameter*)p)->getColor();
+				Colour c = Colour::fromFloatRGBA(val[0], val[1], val[2], val[3]);
 				m.addColour(OSCHelpers::getOSCColour(c));
 			}
 			break;
-			case Controllable::POINT2D:
-				m.addFloat32(((Point2DParameter*)a)->x);
-				m.addFloat32(((Point2DParameter*)a)->y);
-				break;
-			case Controllable::POINT3D:
-				m.addFloat32(((Point3DParameter*)a)->x);
-				m.addFloat32(((Point3DParameter*)a)->y);
-				m.addFloat32(((Point3DParameter*)a)->z);
-				break;
 
 			case Controllable::ENUM:
-				m.addArgument(OSCHelpers::varToArgument(((EnumParameter *)a)->getValueData()));
+				m.addArgument(OSCHelpers::varToArgument(((EnumParameter*)a)->getValueData()));
 				break;
 
 			default:
-				//not handle
+				if (val.isArray())
+				{
+					for (int i = 0; i < val.size(); i++)
+					{
+						m.addFloat32(val[i]);
+					}
+				}
 				break;
-
 			}
 		}
 
@@ -176,6 +189,6 @@ void OSCCommand::triggerInternal()
 	}
 	catch (OSCFormatError& e)
 	{
-		LOGERROR("Can't send to address " << address->stringValue() << " : " << e.description);
+		LOGERROR("Can't send to address " << addrString << " : " << e.description);
 	}
 }

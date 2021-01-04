@@ -13,19 +13,14 @@
 #include "../BaseComparator.h"
 
 class BoolComparator :
-	public ParameterComparator
+	public BaseComparator
 {
 public:
-	BoolComparator(Controllable * c);
+	BoolComparator(Parameter * sourceParam);
 	virtual ~BoolComparator();
 
 	const Identifier equalsId = "=";
 	const Identifier differentId = "!=";
 
-	BoolParameter * boolParam;
-	BoolParameter * boolRef;
-
-	virtual void compare() override;
-
-	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(BoolComparator)
+	virtual bool compare(Parameter * sourceParam) override;
 };

@@ -11,17 +11,21 @@
 #include "Mapping.h"
 #include "ui/MappingUI.h"
 
-Mapping::Mapping(bool canBeDisabled) :
+Mapping::Mapping(var params, Multiplex * multiplex, bool canBeDisabled) :
 	Processor("Mapping", canBeDisabled),
+	MultiplexTarget(multiplex),
 	Thread("Mapping"),
 	processMode(VALUE_CHANGE),
 	mappingParams("Parameters"),
+	im(multiplex),
+	fm(multiplex),
+	om(multiplex),
 	outValuesCC("Out Values"),
 	isRebuilding(false),
 	isProcessing(false),
 	shouldRebuildAfterProcess(false),
     inputIsLocked(false),
-    mappingAsyncNotifier(10)
+    mappingNotifier(10)
 {
 	itemDataType = "Mapping";
 	type = MAPPING;
@@ -42,6 +46,7 @@ Mapping::Mapping(bool canBeDisabled) :
 
 	helpID = "Mapping";
 }
+
 
 Mapping::~Mapping()
 {
@@ -111,7 +116,7 @@ void Mapping::updateMappingChain(MappingFilter * afterThisFilter)
 		GenericScopedLock lock(mappingLock);
 		isRebuilding = true;
 
-		if(afterThisFilter == nullptr) fm.setupSources(im.getInputReferences()); //do the whole rebuild
+		if(afterThisFilter == nullptr) fm.setupSources(im.getInputReferences(0)); //do the whole rebuild
 		else fm.rebuildFilterChain(afterThisFilter); //only ask to rebuild after the changed filter
 
 		Array<Parameter*> processedParams = fm.getLastFilteredParameters();
@@ -130,7 +135,7 @@ void Mapping::updateMappingChain(MappingFilter * afterThisFilter)
 
 		om.setOutParams(outP);
 
-		mappingAsyncNotifier.addMessage(new MappingEvent(MappingEvent::OUTPUT_TYPE_CHANGED, this));
+		mappingNotifier.addMessage(new MappingEvent(MappingEvent::OUTPUT_TYPE_CHANGED, this));
 
 		checkFiltersNeedContinuousProcess();
 
@@ -141,9 +146,9 @@ void Mapping::updateMappingChain(MappingFilter * afterThisFilter)
 	process();
 }
 
-void Mapping::process(bool forceOutput)
+void Mapping::process(bool forceOutput, int multiplexIndex)
 {
-	if ((canBeDisabled && !enabled->boolValue()) || forceDisabled) return;
+	if ((canBeDisabled && (enabled != nullptr && !enabled->boolValue())) || forceDisabled) return;
 	if (im.items.size() == 0) return;
 	if (isCurrentlyLoadingData || isRebuilding || isProcessing || isClearing) return;
 
@@ -153,20 +158,23 @@ void Mapping::process(bool forceOutput)
 		ScopedLock filterLock(fm.filterLock);
 		
 		isProcessing = true;
-		bool filterResult = fm.processFilters();
+		bool filterResult = fm.processFilters(multiplexIndex);
 
 		if (filterResult)
 		{
 			for (int i = 0; i < fm.filteredParameters.size(); i++)
 			{
-				Parameter* fp = fm.filteredParameters[i];
-				if (Parameter* p = (Parameter*)outValuesCC.controllables[i])
+				if (Parameter* fp = fm.filteredParameters[i])
 				{
-					if (p->type == Parameter::ENUM) ((EnumParameter*)p)->setValueWithKey(((EnumParameter*)fp)->getValueKey());
-					else p->setValue(fp->value);
+					if (Parameter* p = (Parameter*)outValuesCC.controllables[i])
+					{
+						if (p->type == Parameter::ENUM) ((EnumParameter*)p)->setValueWithKey(((EnumParameter*)fp)->getValueKey());
+						else p->setValue(fp->value);
+					}
 				}
 			}
-			om.updateOutputValues();
+
+			om.updateOutputValues(multiplexIndex);
 		}
 		
 		isProcessing = false;
@@ -232,15 +240,24 @@ void Mapping::inputReferenceChanged(MappingInput *)
 	updateMappingChain();
 }
 
-void Mapping::inputParameterValueChanged(MappingInput *)
+void Mapping::inputParameterValueChanged(MappingInput *, int multiplexIndex)
 {
-	if(processMode == VALUE_CHANGE) process();
+	if (processMode == VALUE_CHANGE)
+	{
+		if (multiplexIndex == -1)
+		{
+			for (int i = 0; i < getMultiplexCount(); i++) process(false, i); //process all if value updated from a non-iterative input
+		}
+		else
+		{
+			process(false, multiplexIndex);
+		}
+	}
 }
 
 void Mapping::inputParameterRangeChanged(MappingInput *)
 {
 	updateMappingChain();
-	//if (fm.items.size() == 0) outputParam->setRange(input.inputReference->minimumValue, input.inputReference->maximumValue);
 }
 
 void Mapping::onContainerParameterChangedInternal(Parameter * p)
@@ -251,7 +268,7 @@ void Mapping::onContainerParameterChangedInternal(Parameter * p)
 		if (enabled->boolValue() && !forceDisabled && !enabled->boolValue())
 		{
 			if (updateRate->enabled) startThread();
-			process();
+			for (int i = 0; i < getMultiplexCount(); i++) process(false, i);
 		}
 		else
 		{
@@ -302,7 +319,7 @@ void Mapping::run()
 		
 		millis = Time::getMillisecondCounter();
 		
-		process();
+		for (int i = 0; i < getMultiplexCount(); i++) process(false, i);
 
 		uint32 newMillis = Time::getMillisecondCounter();
 

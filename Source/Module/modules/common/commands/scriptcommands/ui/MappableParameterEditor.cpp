@@ -9,7 +9,7 @@
 */
 
 #include "MappableParameterEditor.h"
-
+/*
 MappableParameterEditor::MappableParameterEditor(Parameter * p, bool isRoot) :
 	InspectableEditor(p, isRoot),
 	useForMapping("Use For Mapping", "If checked, this will be used in mappings", false),
@@ -110,3 +110,4 @@ void MappableParameterEditor::childBoundsChanged(Component * c)
 	InspectableEditor::childBoundsChanged(c); 
 	if (c == paramEditor.get()) setSize(getWidth(), paramEditor->getHeight());
 }
+*/

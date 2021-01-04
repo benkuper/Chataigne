@@ -17,7 +17,7 @@ class KeyboardModuleCommands :
 	public BaseCommand
 {
 public:
-	KeyboardModuleCommands(KeyboardModule* m, CommandContext context, var params);
+	KeyboardModuleCommands(KeyboardModule* m, CommandContext context, var params, Multiplex * multiplex = nullptr);
 	~KeyboardModuleCommands();
 
 	KeyboardModule* keyboardModule;
@@ -30,8 +30,8 @@ public:
 	BoolParameter* altPressed;
 	BoolParameter* shiftPressed;
 
-	void triggerInternal() override;
+	void triggerInternal(int multiplexIndex) override;
 
-	static BaseCommand* create(ControllableContainer* module, CommandContext context, var params) { return new KeyboardModuleCommands((KeyboardModule*)module, context, params); }
+	static BaseCommand* create(ControllableContainer* module, CommandContext context, var params, Multiplex * multiplex) { return new KeyboardModuleCommands((KeyboardModule*)module, context, params, multiplex); }
 
 };

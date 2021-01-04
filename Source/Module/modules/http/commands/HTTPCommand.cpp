@@ -10,8 +10,8 @@
 
 #include "HTTPCommand.h"
 
-HTTPCommand::HTTPCommand(HTTPModule * _module, CommandContext context, var params) :
-	BaseCommand(_module, context, params),
+HTTPCommand::HTTPCommand(HTTPModule * _module, CommandContext context, var params, Multiplex* multiplex) :
+	BaseCommand(_module, context, params, multiplex),
 	httpModule(_module)
 {
 	method = addEnumParameter("Method", "Request Method");
@@ -33,12 +33,12 @@ HTTPCommand::~HTTPCommand()
 }
 
 
-void HTTPCommand::triggerInternal()
+void HTTPCommand::triggerInternal(int multiplexIndex)
 {
 	StringPairArray requestParams;
-	for (auto &p : customValuesManager->items) requestParams.set(p->niceName, p->param->stringValue());
+	for (auto &p : customValuesManager->items) requestParams.set(p->niceName, p->getLinkedValue(multiplexIndex));
 	
 	StringPairArray headers;
 	
-	httpModule->sendRequest(address->stringValue(), method->getValueDataAsEnum<HTTPModule::RequestMethod>(), resultDataType->getValueDataAsEnum<HTTPModule::ResultDataType>(), requestParams, extraHeaders->stringValue());
+	httpModule->sendRequest(getLinkedValue(address, multiplexIndex).toString(), method->getValueDataAsEnum<HTTPModule::RequestMethod>(), resultDataType->getValueDataAsEnum<HTTPModule::ResultDataType>(), requestParams, getLinkedValue(extraHeaders, multiplexIndex).toString());
 }

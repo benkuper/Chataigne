@@ -21,18 +21,20 @@ public:
 	File moduleFolder; //for customModules
 	var customModuleData;
 	bool isCustomModule;
+	bool isLocalModule;
 
 	Module* create() override;
 };
 
 class ModuleFactory :
-	public Factory<Module>
+	public Factory<Module>,
+	public EngineListener
 {
 public:
-	HashMap<String, ModuleDefinition *> customModulesDefMap;
+	HashMap<String, ModuleDefinition*> customModulesDefMap;
 
 	ModuleFactory();
-	~ModuleFactory() {}
+	~ModuleFactory();
 
 	void buildPopupMenu() override;
 	Module * createFromMenuResult(int result) override;
@@ -40,10 +42,14 @@ public:
 	ModuleDefinition* getDefinitionForType(const String& moduleType);
 
 	void addCustomModules();
+	void addCustomModulesInFolder(File folder, bool isLocal);
 	void updateCustomModules();
 	var getCustomModuleInfo(StringRef moduleName);
 	File getFolderForCustomModule(StringRef moduleName) const;
 	File getCustomModulesFolder() const;
 
 	Module* create(BaseFactoryDefinition<Module> * def) override;
+
+	void startLoadFile() override;
+
 };

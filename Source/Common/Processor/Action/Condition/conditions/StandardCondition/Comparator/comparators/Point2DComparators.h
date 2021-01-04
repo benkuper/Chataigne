@@ -13,24 +13,20 @@
 #include "../BaseComparator.h"
 
 class Point2DComparator :
-	public ParameterComparator
+	public BaseComparator
 {
 public:
-	Point2DComparator(Controllable * c);
+	Point2DComparator(Parameter * sourceParam);
 	virtual ~Point2DComparator();
 
 	const Identifier equalsId = "=";
-	const Identifier distGreaterId = "dist>";
-	const Identifier distLessId = "dist<";
-	const Identifier magnGreaterId = "magn>";
-	const Identifier magnLessId = "magn>";
+	const Identifier distGreaterId = "d>";
+	const Identifier distLessId = "d<";
+	const Identifier magnGreaterId = "m>";
+	const Identifier magnLessId = "m<";
 
-
-	Point2DParameter * p2dParam;
 	Point2DParameter * p2dRef;
 	FloatParameter * valParam;
 
-	virtual void compare() override;
-
-	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Point2DComparator)
+	virtual bool compare(Parameter * sourceParam) override;
 };

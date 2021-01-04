@@ -21,40 +21,33 @@
 class ComparatorFactory
 {
 public:
-	static BaseComparator * createComparatorForControllable(Controllable * c)
+	static BaseComparator * createComparatorForControllable(Parameter * sourceParam)
 	{
-		switch (c->type)
+		switch (sourceParam->type)
 		{
-		case Controllable::TRIGGER:
-			return new TriggerComparator(c);
-			break;
-
 		case Controllable::BOOL:
-			return new BoolComparator(c);
-			break;
-
-		case Controllable::INT:
-			return new IntComparator(c);
+			return new BoolComparator(sourceParam);
 			break;
 
 		case Controllable::FLOAT:
-			return new FloatComparator(c);
+		case Controllable::INT:
+			return new NumberComparator(sourceParam);
 			break;
 
 		case Controllable::STRING:
-			return new StringComparator(c);
+			return new StringComparator(sourceParam);
 			break;
 
 		case Controllable::ENUM:
-			return new EnumComparator(c);
+			return new EnumComparator(sourceParam);
 			break;
 
 		case Controllable::POINT2D:
-			return new Point2DComparator(c);
+			return new Point2DComparator(sourceParam);
 			break;
 
 		case Controllable::POINT3D:
-			return new Point3DComparator(c);
+			return new Point3DComparator(sourceParam);
 			break;
 			
 		default:

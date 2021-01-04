@@ -21,7 +21,7 @@ public:
 	ActionUI(Action *);
 	virtual ~ActionUI();
 
-	Action * action;
+	Action* action;
 
 	std::unique_ptr<TriggerButtonUI> triggerAllUI;
 	std::unique_ptr<FloatSliderUI> progressionUI;

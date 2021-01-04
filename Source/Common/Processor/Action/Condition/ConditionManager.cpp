@@ -16,51 +16,49 @@
 #include "conditions/ActivationCondition/ActivationCondition.h"
 #include "Common/Processor/Action/Action.h"
 
-juce_ImplementSingleton(ConditionManager)
-
-ConditionManager::ConditionManager() :
+ConditionManager::ConditionManager(Multiplex * multiplex) :
+	MultiplexTarget(multiplex),
 	BaseManager<Condition>("Conditions"),
 	activateDef(nullptr),
 	deactivateDef(nullptr),
-    validationProgress(nullptr),
-	validationWaiting(false),
-    prevTimerTime(0),
-    forceDisabled(false)
+    forceDisabled(false),
+	conditionManagerAsyncNotifier(10)
 {
 	canBeCopiedAndPasted = true;
-
-	managerFactory = &factory;
-	factory.defs.add(Factory<Condition>::Definition::createDef("", StandardCondition::getTypeStringStatic(), &StandardCondition::create));
-	factory.defs.add(Factory<Condition>::Definition::createDef("", ConditionGroup::getTypeStringStatic(), &ConditionGroup::create));
-	factory.defs.add(Factory<Condition>::Definition::createDef("", ScriptCondition::getTypeStringStatic(), &ScriptCondition::create));
-	
 	selectItemWhenCreated = false;
 
-	isValid = addBoolParameter("Is Valid","Indicates if all the conditions are valid. If so, the consequences are triggered one time, at the moment the action becomes valid.",false);
-	isValid->isControllableFeedbackOnly = true;
-	isValid->hideInEditor = true;
-	isValid->isSavable = false;
+	managerFactory = &factory;
+	factory.defs.add(MultiplexTargetDefinition<Condition>::createDef<StandardCondition>("", StandardCondition::getTypeStringStatic(false), multiplex));
+	if (isMultiplexed()) factory.defs.add(MultiplexTargetDefinition<Condition>::createDef<StandardCondition>("", StandardCondition::getTypeStringStatic(true), multiplex)->addParam("listMode", true));
 
+	factory.defs.add(MultiplexTargetDefinition<Condition>::createDef<ConditionGroup>("", ConditionGroup::getTypeStringStatic(), multiplex));
+	factory.defs.add(MultiplexTargetDefinition<Condition>::createDef<ScriptCondition>("", ScriptCondition::getTypeStringStatic(), multiplex));
+	
+	validationTime = addFloatParameter("Validation Time", "If greater than 0, the conditions will be validated only if they remain valid for this amount of time", 0, 0, (float)INT32_MAX);
+	validationTime->defaultUI = FloatParameter::TIME;
+	validationProgressFeedback = addFloatParameter("Validation Progress", "The feedback of the progress if validation time is more than 0", 0, 0, 1, false);
+	validationProgressFeedback->setControllableFeedbackOnly(true);
+	
 	conditionOperator = addEnumParameter("Operator", "Operator for this manager, will decides how the conditions are validated");
 	conditionOperator->addOption("AND", ConditionOperator::AND);
 	conditionOperator->addOption("OR", ConditionOperator::OR);
 	conditionOperator->hideInEditor = true;
-
-	validationTime = addFloatParameter("Validation Time", "If greater than 0, the conditions will be validated only if they remain valid for this amount of time", 0, 0, (float)INT32_MAX);
-	validationTime->hideInEditor = true;
-	validationTime->defaultUI = FloatParameter::TIME;
-
-	validationProgress = addFloatParameter("Progress", "Validation time progress", 0, 0, validationTime->floatValue());
-	validationProgress->setControllableFeedbackOnly(true);
-	validationProgress->setEnabled(false);
-	validationProgress->hideInEditor = true;
-	validationProgress->isSavable = false;
-
 }
 
 ConditionManager::~ConditionManager()
 {
 }
+
+void ConditionManager::multiplexCountChanged()
+{
+	isValids.resize(getMultiplexCount());
+	validationProgresses.resize(getMultiplexCount());
+
+	isValids.fill(false);
+	validationProgresses.fill(0);
+}
+
+
 
 void ConditionManager::setHasActivationDefinitions(bool value)
 {
@@ -68,8 +66,8 @@ void ConditionManager::setHasActivationDefinitions(bool value)
 	{
 		if (activateDef == nullptr && deactivateDef == nullptr)
 		{
-			activateDef = (Factory<Condition>::Definition *)Factory<Condition>::Definition::createDef("", ActivationCondition::getTypeStringStatic(ActivationCondition::ON_ACTIVATE), &ActivationCondition::create)->addParam("type", ActivationCondition::ON_ACTIVATE);
-			deactivateDef = (Factory<Condition>::Definition *)Factory<Condition>::Definition::createDef("", ActivationCondition::getTypeStringStatic(ActivationCondition::ON_DEACTIVATE), &ActivationCondition::create)->addParam("type", ActivationCondition::ON_DEACTIVATE);
+			activateDef = (Factory<Condition>::Definition *)Factory<Condition>::Definition::createDef<ActivationCondition>("", ActivationCondition::getTypeStringStatic(ActivationCondition::ON_ACTIVATE))->addParam("type", ActivationCondition::ON_ACTIVATE);
+			deactivateDef = (Factory<Condition>::Definition *)Factory<Condition>::Definition::createDef<ActivationCondition>("", ActivationCondition::getTypeStringStatic(ActivationCondition::ON_DEACTIVATE))->addParam("type", ActivationCondition::ON_DEACTIVATE);
 			factory.defs.add(activateDef);
 			factory.defs.add(deactivateDef);
 			factory.buildPopupMenu();
@@ -89,9 +87,6 @@ void ConditionManager::addItemInternal(Condition * c, var data)
 	c->setForceDisabled(forceDisabled);
 	c->addConditionListener(this);
 	conditionOperator->hideInEditor = items.size() <= 1;
-	validationTime->hideInEditor = items.size() == 0;
-	validationProgress->hideInEditor = items.size() == 0;
-	
 	StandardCondition* sc = dynamic_cast<StandardCondition*>(c);
 	if (sc != nullptr)
 	{
@@ -104,19 +99,37 @@ void ConditionManager::removeItemInternal(Condition * c)
 {
 	c->removeConditionListener(this);
 	conditionOperator->hideInEditor = items.size() <= 1;
-	validationTime->hideInEditor = items.size() == 0;
-	validationProgress->hideInEditor = items.size() == 0;
-	if(!Engine::mainEngine->isLoadingFile && !Engine::mainEngine->isClearing) checkAllConditions();
+	if (!Engine::mainEngine->isLoadingFile && !Engine::mainEngine->isClearing)
+	{
+		for (int i = 0; i < getMultiplexCount(); i++) checkAllConditions(i);
+	}
 }
 
 void ConditionManager::setForceDisabled(bool value, bool force)
 {
 	if (forceDisabled == value && !force) return; 
 	forceDisabled = value;
-	if (forceDisabled) isValid->setValue(false);
+	if (forceDisabled)
+	{
+		isValids.fill(false);
+	}
+
 	for (auto &i : items) i->setForceDisabled(value);
 
-	checkAllConditions();
+	for (int i = 0; i < getMultiplexCount(); i++) checkAllConditions(i);
+}
+
+void ConditionManager::setValid(int multiplexIndex, bool value, bool dispatchOnlyOnValidationChange)
+{
+	if (isValids[multiplexIndex] == value && dispatchOnlyOnValidationChange) return;
+	isValids.set(multiplexIndex, value);
+	dispatchConditionValidationChanged(multiplexIndex);
+}
+
+void ConditionManager::setValidationProgress(int multiplexIndex, float value)
+{
+	validationProgresses.set(multiplexIndex, value);
+	if (!isMultiplexed()) validationProgressFeedback->setValue(value);
 }
 
 void ConditionManager::forceCheck()
@@ -124,102 +137,87 @@ void ConditionManager::forceCheck()
 	for (auto& i : items) i->forceCheck();
 }
 
-void ConditionManager::checkAllConditions(bool emptyIsValid, bool dispatchOnlyOnValidationChange)
+void ConditionManager::checkAllConditions(int multiplexIndex, bool emptyIsValid, bool dispatchOnlyOnValidationChange)
 {
 	bool valid = false;
 	ConditionOperator op = (ConditionOperator)(int)conditionOperator->getValueData();
 	switch (op)
 	{
 	case ConditionOperator::AND:
-		valid = areAllConditionsValid(emptyIsValid);
+		valid = areAllConditionsValid(multiplexIndex, emptyIsValid);
 		break;
 
 	case ConditionOperator::OR:
-		valid = isAtLeastOneConditionValid(emptyIsValid);
+		valid = isAtLeastOneConditionValid(multiplexIndex, emptyIsValid);
 		break;
 	}
 
 	if (validationTime->floatValue() == 0)
 	{
-		if (valid != isValid->boolValue() || dispatchOnlyOnValidationChange)
-		{
-			isValid->setValue(valid);
-			dispatchConditionValidationChanged();
-		}
-	}else if (valid != validationWaiting)
+		setValid(multiplexIndex, valid, dispatchOnlyOnValidationChange);
+	}else if (valid != validationWaitings[multiplexIndex])
 	{
-		validationWaiting = valid;
-
-		validationProgress->setValue(0);
-		isValid->setValue(false);
-
+		validationWaitings.set(multiplexIndex, valid);
+		setValidationProgress(multiplexIndex, 0);
+		setValid(multiplexIndex, false);
 		if(!valid)
 		{
-			stopTimer();
-			dispatchConditionValidationChanged();
+			stopTimer(multiplexIndex);
 		} else
 		{
-
-			prevTimerTime = Time::getHighResolutionTicks();
-			startTimer(20);
+			prevTimerTimes.set(multiplexIndex, Time::getMillisecondCounterHiRes() / 1000.0);
+			startTimer(multiplexIndex, 20);
 		}
 	}
 }
 
 
-void ConditionManager::conditionValidationChanged(Condition *)
+
+void ConditionManager::conditionValidationChanged(Condition*, int multiplexIndex)
 {
-	checkAllConditions();
+	checkAllConditions(multiplexIndex);
 }
 
 void ConditionManager::onContainerParameterChanged(Parameter * p)
 {
-	if (p == validationTime)
+	if (p == conditionOperator)
 	{
-		validationProgress->setEnabled(validationTime->floatValue() > 0);
-		validationProgress->setRange(0, validationTime->floatValue());
-	} else if (p == conditionOperator)
+		for (int i = 0; i < getMultiplexCount(); i++) checkAllConditions(i);
+	}
+	else if (p == validationTime)
 	{
-		checkAllConditions();
+		validationProgressFeedback->setEnabled(validationTime->floatValue() > 0);
 	}
 }
 
-void ConditionManager::loadJSONDataInternal(var data)
-{
-	BaseManager::loadJSONDataInternal(data);
-	checkAllConditions();
-}
-
-
-InspectableEditor * ConditionManager::getEditor(bool isRoot)
-{
-	return new ConditionManagerEditor(this, isRoot);
-}
-
-void ConditionManager::timerCallback()
+void ConditionManager::timerCallback(int id)
 {
 	if (validationTime->floatValue() == 0)
 	{
-		isValid->setValue(true);
-		dispatchConditionValidationChanged();
-		stopTimer();
+		setValid(id, true);
+		stopTimer(id);
 		return;
 	}
 
-	double curTime = Time::getMillisecondCounterHiRes();
-	validationProgress->setValue(validationProgress->floatValue() + (curTime - prevTimerTime)/1000.f);
-	prevTimerTime = curTime;
+	double curTime = Time::getMillisecondCounterHiRes() / 1000.0;
+	float diffProgress = (curTime - prevTimerTimes[id]) / validationTime->floatValue();
+	float progress = validationProgresses[id] + diffProgress;
+	setValidationProgress(id, progress);
+	prevTimerTimes.set(id, curTime);
 
-
-	if (validationProgress->floatValue() >= validationTime->floatValue())
+	if (validationProgresses[id] >= 1)
 	{
-		isValid->setValue(true);
-		dispatchConditionValidationChanged();
-		stopTimer();
+		setValid(id, true);
+		stopTimer(id);
 	}
 }
 
-bool ConditionManager::areAllConditionsValid(bool emptyIsValid)
+void ConditionManager::afterLoadJSONDataInternal()
+{
+	for (int i = 0; i < getMultiplexCount(); i++) checkAllConditions(i);
+}
+
+bool ConditionManager::areAllConditionsValid(int multiplexIndex, bool emptyIsValid)
 {
 	if (items.size() == 0) return emptyIsValid;
 
@@ -227,7 +225,7 @@ bool ConditionManager::areAllConditionsValid(bool emptyIsValid)
 	for (auto &c : items)
 	{
 		if (!c->enabled->boolValue()) continue;
-		if (!c->isValid->boolValue()) return false;
+		if (!c->getIsValid(multiplexIndex)) return false;
 		conditionsChecked++;
 	}
 
@@ -235,7 +233,7 @@ bool ConditionManager::areAllConditionsValid(bool emptyIsValid)
 	return true;
 }
 
-bool ConditionManager::isAtLeastOneConditionValid(bool emptyIsValid)
+bool ConditionManager::isAtLeastOneConditionValid(int multiplexIndex, bool emptyIsValid)
 {
 	if (items.size() == 0) return emptyIsValid;
 
@@ -243,7 +241,7 @@ bool ConditionManager::isAtLeastOneConditionValid(bool emptyIsValid)
 	for (auto &c : items)
 	{
 		if (!c->enabled->boolValue()) continue;
-		if (c->isValid->boolValue()) return true;
+		if (c->getIsValid(multiplexIndex)) return true;
 		conditionsChecked++;
 	}
 
@@ -261,23 +259,30 @@ int ConditionManager::getNumEnabledConditions()
 	return result;
 }
 
-int ConditionManager::getNumValidConditions()
+int ConditionManager::getNumValidConditions(int multiplexIndex)
 {
 	int result = 0;
 	for (auto &c : items)
 	{
 		if (!c->enabled->boolValue()) continue;
-		if (c->isValid->boolValue()) result++;
+		if (c->getIsValid(multiplexIndex)) result++;
 	}
 	return result;
 }
 
-bool ConditionManager::getIsValid(bool emptyIsValid)
+bool ConditionManager::getIsValid(int multiplexIndex, bool emptyIsValid)
 {
-	return isValid->boolValue() || (emptyIsValid && items.size() == 0);
+	return isValids[multiplexIndex] || (emptyIsValid && items.size() == 0);
 }
 
-void ConditionManager::dispatchConditionValidationChanged()
+void ConditionManager::dispatchConditionValidationChanged(int multiplexIndex)
 {
-	conditionManagerListeners.call(&ConditionManagerListener::conditionManagerValidationChanged, this);
+	conditionManagerListeners.call(&ConditionManagerListener::conditionManagerValidationChanged, this, multiplexIndex);
+	conditionManagerAsyncNotifier.addMessage(new ConditionManagerEvent(ConditionManagerEvent::VALIDATION_CHANGED, this, multiplexIndex));
+}
+
+
+InspectableEditor* ConditionManager::getEditor(bool isRoot)
+{
+	return new ConditionManagerEditor(this, isRoot);
 }

@@ -7,7 +7,7 @@
 
   ==============================================================================
 */
-
+/*
 #pragma once
 
 #include "JuceHeader.h"
@@ -47,3 +47,4 @@ public:
 	void addMappableListener(MappableListener* newListener) { mappableListeners.add(newListener); }
 	void removeMappableListener(MappableListener* listener) { mappableListeners.remove(listener); }
 };
+*/

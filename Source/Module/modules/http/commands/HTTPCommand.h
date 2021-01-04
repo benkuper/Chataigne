@@ -16,7 +16,7 @@ class HTTPCommand :
 	public BaseCommand
 {
 public:
-	HTTPCommand(HTTPModule * _module, CommandContext context, var params);
+	HTTPCommand(HTTPModule * _module, CommandContext context, var params, Multiplex* multiplex = nullptr);
 	~HTTPCommand();
 
 	HTTPModule * httpModule;
@@ -28,7 +28,7 @@ public:
 
 	StringParameter* extraHeaders;
 
-	void triggerInternal() override;
+	void triggerInternal(int multiplexIndex) override;
 
-	static BaseCommand * create(ControllableContainer * module, CommandContext context, var params) { return new HTTPCommand((HTTPModule *)module, context, params); }
+	static BaseCommand * create(ControllableContainer * module, CommandContext context, var params, Multiplex * multiplex) { return new HTTPCommand((HTTPModule *)module, context, params, multiplex); }
 };

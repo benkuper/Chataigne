@@ -23,6 +23,12 @@
     <Filter Include="Chataigne\Source\Analytics">
       <UniqueIdentifier>{BFFB54F9-F042-7395-56B9-D0358B5F6ED9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Chataigne\Source\Common\ParameterLink\ui">
+      <UniqueIdentifier>{B4968552-51CA-9537-7B55-FA767839D08E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Common\ParameterLink">
+      <UniqueIdentifier>{7F6C32C9-CE4B-FC53-479A-9E79D9E96EA3}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Chataigne\Source\Common\Zeroconf">
       <UniqueIdentifier>{C4DDA41D-2632-9CB5-32F2-C49815C7E269}</UniqueIdentifier>
     </Filter>
@@ -32,14 +38,14 @@
     <Filter Include="Chataigne\Source\Common\InputSystem">
       <UniqueIdentifier>{2B092B7F-E42F-F28A-4047-78487812BEA9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Chataigne\Source\Common\Command\ui">
+      <UniqueIdentifier>{9DC719BC-0221-FA4E-5A0E-C23170388D98}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Chataigne\Source\Common\Command\Template\ui">
       <UniqueIdentifier>{F2CAF67C-41CA-7457-88E2-3F0457E78267}</UniqueIdentifier>
     </Filter>
     <Filter Include="Chataigne\Source\Common\Command\Template">
       <UniqueIdentifier>{19F60CF8-3745-EAD2-B8B1-1E040BF0EA15}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Common\Command\ui">
-      <UniqueIdentifier>{9DC719BC-0221-FA4E-5A0E-C23170388D98}</UniqueIdentifier>
     </Filter>
     <Filter Include="Chataigne\Source\Common\Command">
       <UniqueIdentifier>{BE242EEE-600F-3A0A-D733-68EE1CD456DD}</UniqueIdentifier>
@@ -56,23 +62,20 @@
     <Filter Include="Chataigne\Source\Common\MIDI">
       <UniqueIdentifier>{75043559-B023-5E51-A43F-22A6CA1A1042}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Chataigne\Source\Common\Processor\Iterator">
-      <UniqueIdentifier>{E04C5B21-F841-A1B3-1F49-1CE77DDEC383}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Common\Processor\Action\Condition\Comparator\comparators">
-      <UniqueIdentifier>{45FC7432-5127-2E4B-6223-4D77842666B2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Common\Processor\Action\Condition\Comparator\ui">
-      <UniqueIdentifier>{9444FDCD-AE11-C9BF-2C3C-69C87F287802}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Common\Processor\Action\Condition\Comparator">
-      <UniqueIdentifier>{2E92D529-5073-D829-4394-DE87597251DF}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Chataigne\Source\Common\Processor\Action\Condition\conditions\ActivationCondition">
       <UniqueIdentifier>{D8DA1A28-055B-3ADC-1082-1CCF339BC5AE}</UniqueIdentifier>
     </Filter>
     <Filter Include="Chataigne\Source\Common\Processor\Action\Condition\conditions\ConditionGroup">
       <UniqueIdentifier>{A9A8EF18-90B7-7A62-4A57-A8968F8194E4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Common\Processor\Action\Condition\conditions\StandardCondition\Comparator\comparators">
+      <UniqueIdentifier>{9CEBF41D-8F75-6899-4603-C814EC2E78A3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Common\Processor\Action\Condition\conditions\StandardCondition\Comparator\ui">
+      <UniqueIdentifier>{28A455C3-7F41-FA76-B05C-6DBC4B6F1753}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Common\Processor\Action\Condition\conditions\StandardCondition\Comparator">
+      <UniqueIdentifier>{3D8513F8-D8C0-2DBD-1AD5-A35AF8CB76DB}</UniqueIdentifier>
     </Filter>
     <Filter Include="Chataigne\Source\Common\Processor\Action\Condition\conditions\StandardCondition\ui">
       <UniqueIdentifier>{3DE1FCE3-D076-6436-C7C6-E3699322D389}</UniqueIdentifier>
@@ -139,6 +142,15 @@
     </Filter>
     <Filter Include="Chataigne\Source\Common\Processor\Mapping">
       <UniqueIdentifier>{FDD41FA8-0139-F79C-B5C2-E8AFC2FC755B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Common\Processor\Multiplex\List">
+      <UniqueIdentifier>{40D5DA42-C090-A9AE-1457-0BBB9B36FE04}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Common\Processor\Multiplex\ui">
+      <UniqueIdentifier>{140877D6-1288-7508-5FD7-0E8DA6674CD4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Common\Processor\Multiplex">
+      <UniqueIdentifier>{FF7D1011-833A-D670-7738-AAA71F48C064}</UniqueIdentifier>
     </Filter>
     <Filter Include="Chataigne\Source\Common\Processor\ui">
       <UniqueIdentifier>{E1D16535-5536-28DD-A17C-9065376F6E1B}</UniqueIdentifier>
@@ -1375,6 +1387,12 @@
     <ClCompile Include="..\..\Source\Analytics\MatomoAnalytics.cpp">
       <Filter>Chataigne\Source\Analytics</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Common\ParameterLink\ui\LinkableParameterEditor.cpp">
+      <Filter>Chataigne\Source\Common\ParameterLink\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\ParameterLink\ParameterLink.cpp">
+      <Filter>Chataigne\Source\Common\ParameterLink</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Common\Zeroconf\ZeroconfManager.cpp">
       <Filter>Chataigne\Source\Common\Zeroconf</Filter>
     </ClCompile>
@@ -1383,6 +1401,15 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Common\InputSystem\InputSystemManager.cpp">
       <Filter>Chataigne\Source\Common\InputSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Command\ui\BaseCommandEditor.cpp">
+      <Filter>Chataigne\Source\Common\Command\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Command\ui\BaseCommandHandlerEditor.cpp">
+      <Filter>Chataigne\Source\Common\Command\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Command\ui\CommandChooserUI.cpp">
+      <Filter>Chataigne\Source\Common\Command\ui</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Common\Command\Template\ui\CommandTemplateEditor.cpp">
       <Filter>Chataigne\Source\Common\Command\Template\ui</Filter>
@@ -1419,12 +1446,6 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Common\Command\CommandFactory.cpp">
       <Filter>Chataigne\Source\Common\Command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Common\Command\ui\BaseCommandHandlerEditor.cpp">
-      <Filter>Chataigne\Source\Common\Command\ui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Common\Command\ui\CommandChooserUI.cpp">
-      <Filter>Chataigne\Source\Common\Command\ui</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Common\DMX\device\DMXArtNetDevice.cpp">
       <Filter>Chataigne\Source\Common\DMX\device</Filter>
@@ -1465,38 +1486,35 @@
     <ClCompile Include="..\..\Source\Common\MIDI\MTCSender.cpp">
       <Filter>Chataigne\Source\Common\MIDI</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\Common\Processor\Iterator\Iterator.cpp">
-      <Filter>Chataigne\Source\Common\Processor\Iterator</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\Comparator\comparators\BoolComparators.cpp">
-      <Filter>Chataigne\Source\Common\Processor\Action\Condition\Comparator\comparators</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\Comparator\comparators\EnumComparator.cpp">
-      <Filter>Chataigne\Source\Common\Processor\Action\Condition\Comparator\comparators</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\Comparator\comparators\NumberComparators.cpp">
-      <Filter>Chataigne\Source\Common\Processor\Action\Condition\Comparator\comparators</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\Comparator\comparators\Point2DComparators.cpp">
-      <Filter>Chataigne\Source\Common\Processor\Action\Condition\Comparator\comparators</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\Comparator\comparators\Point3DComparators.cpp">
-      <Filter>Chataigne\Source\Common\Processor\Action\Condition\Comparator\comparators</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\Comparator\comparators\StringComparators.cpp">
-      <Filter>Chataigne\Source\Common\Processor\Action\Condition\Comparator\comparators</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\Comparator\ui\BaseComparatorUI.cpp">
-      <Filter>Chataigne\Source\Common\Processor\Action\Condition\Comparator\ui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\Comparator\BaseComparator.cpp">
-      <Filter>Chataigne\Source\Common\Processor\Action\Condition\Comparator</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\conditions\ActivationCondition\ActivationCondition.cpp">
       <Filter>Chataigne\Source\Common\Processor\Action\Condition\conditions\ActivationCondition</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\conditions\ConditionGroup\ConditionGroup.cpp">
       <Filter>Chataigne\Source\Common\Processor\Action\Condition\conditions\ConditionGroup</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\conditions\StandardCondition\Comparator\comparators\BoolComparators.cpp">
+      <Filter>Chataigne\Source\Common\Processor\Action\Condition\conditions\StandardCondition\Comparator\comparators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\conditions\StandardCondition\Comparator\comparators\EnumComparator.cpp">
+      <Filter>Chataigne\Source\Common\Processor\Action\Condition\conditions\StandardCondition\Comparator\comparators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\conditions\StandardCondition\Comparator\comparators\NumberComparators.cpp">
+      <Filter>Chataigne\Source\Common\Processor\Action\Condition\conditions\StandardCondition\Comparator\comparators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\conditions\StandardCondition\Comparator\comparators\Point2DComparators.cpp">
+      <Filter>Chataigne\Source\Common\Processor\Action\Condition\conditions\StandardCondition\Comparator\comparators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\conditions\StandardCondition\Comparator\comparators\Point3DComparators.cpp">
+      <Filter>Chataigne\Source\Common\Processor\Action\Condition\conditions\StandardCondition\Comparator\comparators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\conditions\StandardCondition\Comparator\comparators\StringComparators.cpp">
+      <Filter>Chataigne\Source\Common\Processor\Action\Condition\conditions\StandardCondition\Comparator\comparators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\conditions\StandardCondition\Comparator\ui\BaseComparatorUI.cpp">
+      <Filter>Chataigne\Source\Common\Processor\Action\Condition\conditions\StandardCondition\Comparator\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\conditions\StandardCondition\Comparator\BaseComparator.cpp">
+      <Filter>Chataigne\Source\Common\Processor\Action\Condition\conditions\StandardCondition\Comparator</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\conditions\StandardCondition\ui\StandardConditionEditor.cpp">
       <Filter>Chataigne\Source\Common\Processor\Action\Condition\conditions\StandardCondition\ui</Filter>
@@ -1626,6 +1644,18 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Common\Processor\Mapping\Mapping.cpp">
       <Filter>Chataigne\Source\Common\Processor\Mapping</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Multiplex\List\MultiplexList.cpp">
+      <Filter>Chataigne\Source\Common\Processor\Multiplex\List</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Multiplex\List\MultiplexListManager.cpp">
+      <Filter>Chataigne\Source\Common\Processor\Multiplex\List</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Multiplex\ui\MultiplexUI.cpp">
+      <Filter>Chataigne\Source\Common\Processor\Multiplex\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Multiplex\Multiplex.cpp">
+      <Filter>Chataigne\Source\Common\Processor\Multiplex</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Common\Processor\ui\ProcessorManagerUI.cpp">
       <Filter>Chataigne\Source\Common\Processor\ui</Filter>
@@ -5244,6 +5274,12 @@
     <ClInclude Include="..\..\Source\Analytics\MatomoAnalytics.h">
       <Filter>Chataigne\Source\Analytics</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\Common\ParameterLink\ui\LinkableParameterEditor.h">
+      <Filter>Chataigne\Source\Common\ParameterLink\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\ParameterLink\ParameterLink.h">
+      <Filter>Chataigne\Source\Common\ParameterLink</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\Common\Zeroconf\ZeroconfManager.h">
       <Filter>Chataigne\Source\Common\Zeroconf</Filter>
     </ClInclude>
@@ -5253,8 +5289,17 @@
     <ClInclude Include="..\..\Source\Common\InputSystem\InputSystemManager.h">
       <Filter>Chataigne\Source\Common\InputSystem</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\Common\Command\CommandContext.h">
-      <Filter>Chataigne\Source\Common\Command</Filter>
+    <ClInclude Include="..\..\Source\Common\Command\ui\BaseCommandEditor.h">
+      <Filter>Chataigne\Source\Common\Command\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\Command\ui\BaseCommandHandlerEditor.h">
+      <Filter>Chataigne\Source\Common\Command\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\Command\ui\BaseCommandHandlerManagerEditor.h">
+      <Filter>Chataigne\Source\Common\Command\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\Command\ui\CommandChooserUI.h">
+      <Filter>Chataigne\Source\Common\Command\ui</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\Command\Template\ui\CommandTemplateEditor.h">
       <Filter>Chataigne\Source\Common\Command\Template\ui</Filter>
@@ -5277,6 +5322,9 @@
     <ClInclude Include="..\..\Source\Common\Command\Template\CommandTemplateParameter.h">
       <Filter>Chataigne\Source\Common\Command\Template</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\Common\Command\CommandContext.h">
+      <Filter>Chataigne\Source\Common\Command</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\Common\Command\BaseCommand.h">
       <Filter>Chataigne\Source\Common\Command</Filter>
     </ClInclude>
@@ -5291,15 +5339,6 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\Command\CommandFactory.h">
       <Filter>Chataigne\Source\Common\Command</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Common\Command\ui\BaseCommandHandlerEditor.h">
-      <Filter>Chataigne\Source\Common\Command\ui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Common\Command\ui\BaseCommandHandlerManagerEditor.h">
-      <Filter>Chataigne\Source\Common\Command\ui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Common\Command\ui\CommandChooserUI.h">
-      <Filter>Chataigne\Source\Common\Command\ui</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\DMX\device\DMXArtNetDevice.h">
       <Filter>Chataigne\Source\Common\DMX\device</Filter>
@@ -5340,41 +5379,38 @@
     <ClInclude Include="..\..\Source\Common\MIDI\MTCSender.h">
       <Filter>Chataigne\Source\Common\MIDI</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\Common\Processor\Iterator\Iterator.h">
-      <Filter>Chataigne\Source\Common\Processor\Iterator</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Common\Processor\Action\Condition\Comparator\comparators\BoolComparators.h">
-      <Filter>Chataigne\Source\Common\Processor\Action\Condition\Comparator\comparators</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Common\Processor\Action\Condition\Comparator\comparators\EnumComparator.h">
-      <Filter>Chataigne\Source\Common\Processor\Action\Condition\Comparator\comparators</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Common\Processor\Action\Condition\Comparator\comparators\NumberComparators.h">
-      <Filter>Chataigne\Source\Common\Processor\Action\Condition\Comparator\comparators</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Common\Processor\Action\Condition\Comparator\comparators\Point2DComparators.h">
-      <Filter>Chataigne\Source\Common\Processor\Action\Condition\Comparator\comparators</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Common\Processor\Action\Condition\Comparator\comparators\Point3DComparators.h">
-      <Filter>Chataigne\Source\Common\Processor\Action\Condition\Comparator\comparators</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Common\Processor\Action\Condition\Comparator\comparators\StringComparators.h">
-      <Filter>Chataigne\Source\Common\Processor\Action\Condition\Comparator\comparators</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Common\Processor\Action\Condition\Comparator\ui\BaseComparatorUI.h">
-      <Filter>Chataigne\Source\Common\Processor\Action\Condition\Comparator\ui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Common\Processor\Action\Condition\Comparator\BaseComparator.h">
-      <Filter>Chataigne\Source\Common\Processor\Action\Condition\Comparator</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Common\Processor\Action\Condition\Comparator\ComparatorFactory.h">
-      <Filter>Chataigne\Source\Common\Processor\Action\Condition\Comparator</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Source\Common\Processor\Action\Condition\conditions\ActivationCondition\ActivationCondition.h">
       <Filter>Chataigne\Source\Common\Processor\Action\Condition\conditions\ActivationCondition</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\Processor\Action\Condition\conditions\ConditionGroup\ConditionGroup.h">
       <Filter>Chataigne\Source\Common\Processor\Action\Condition\conditions\ConditionGroup</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\Processor\Action\Condition\conditions\StandardCondition\Comparator\comparators\BoolComparators.h">
+      <Filter>Chataigne\Source\Common\Processor\Action\Condition\conditions\StandardCondition\Comparator\comparators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\Processor\Action\Condition\conditions\StandardCondition\Comparator\comparators\EnumComparator.h">
+      <Filter>Chataigne\Source\Common\Processor\Action\Condition\conditions\StandardCondition\Comparator\comparators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\Processor\Action\Condition\conditions\StandardCondition\Comparator\comparators\NumberComparators.h">
+      <Filter>Chataigne\Source\Common\Processor\Action\Condition\conditions\StandardCondition\Comparator\comparators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\Processor\Action\Condition\conditions\StandardCondition\Comparator\comparators\Point2DComparators.h">
+      <Filter>Chataigne\Source\Common\Processor\Action\Condition\conditions\StandardCondition\Comparator\comparators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\Processor\Action\Condition\conditions\StandardCondition\Comparator\comparators\Point3DComparators.h">
+      <Filter>Chataigne\Source\Common\Processor\Action\Condition\conditions\StandardCondition\Comparator\comparators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\Processor\Action\Condition\conditions\StandardCondition\Comparator\comparators\StringComparators.h">
+      <Filter>Chataigne\Source\Common\Processor\Action\Condition\conditions\StandardCondition\Comparator\comparators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\Processor\Action\Condition\conditions\StandardCondition\Comparator\ui\BaseComparatorUI.h">
+      <Filter>Chataigne\Source\Common\Processor\Action\Condition\conditions\StandardCondition\Comparator\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\Processor\Action\Condition\conditions\StandardCondition\Comparator\BaseComparator.h">
+      <Filter>Chataigne\Source\Common\Processor\Action\Condition\conditions\StandardCondition\Comparator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\Processor\Action\Condition\conditions\StandardCondition\Comparator\ComparatorFactory.h">
+      <Filter>Chataigne\Source\Common\Processor\Action\Condition\conditions\StandardCondition\Comparator</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\Processor\Action\Condition\conditions\StandardCondition\ui\StandardConditionEditor.h">
       <Filter>Chataigne\Source\Common\Processor\Action\Condition\conditions\StandardCondition\ui</Filter>
@@ -5504,6 +5540,18 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Mapping.h">
       <Filter>Chataigne\Source\Common\Processor\Mapping</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\Processor\Multiplex\List\MultiplexList.h">
+      <Filter>Chataigne\Source\Common\Processor\Multiplex\List</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\Processor\Multiplex\List\MultiplexListManager.h">
+      <Filter>Chataigne\Source\Common\Processor\Multiplex\List</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\Processor\Multiplex\ui\MultiplexUI.h">
+      <Filter>Chataigne\Source\Common\Processor\Multiplex\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\Processor\Multiplex\Multiplex.h">
+      <Filter>Chataigne\Source\Common\Processor\Multiplex</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\Processor\ui\ProcessorManagerUI.h">
       <Filter>Chataigne\Source\Common\Processor\ui</Filter>
@@ -10674,6 +10722,9 @@
       <Filter>Chataigne\Resources</Filter>
     </None>
     <None Include="..\..\Resources\in.png">
+      <Filter>Chataigne\Resources</Filter>
+    </None>
+    <None Include="..\..\Resources\link.png">
       <Filter>Chataigne\Resources</Filter>
     </None>
     <None Include="..\..\Resources\nextcue.png">

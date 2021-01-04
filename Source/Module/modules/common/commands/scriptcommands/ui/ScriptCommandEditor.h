@@ -12,7 +12,7 @@
 
 #include "../ScriptCommand.h"
 #include "MappableParameterEditor.h"
-
+/*
 class ScriptCommandEditor :
 	public GenericControllableContainerEditor,
 	public MappableParameterEditor::MappableListener,
@@ -32,4 +32,4 @@ public:
 	virtual InspectableEditor * getEditorUIForControllable(Controllable * c) override;
 	virtual void removeEditorUI(InspectableEditor * i, bool resize = false) override;
 
-};
+};*/

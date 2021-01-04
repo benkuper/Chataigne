@@ -17,7 +17,7 @@ class WakeOnLanCommand :
 	public BaseCommand
 {
 public:
-	WakeOnLanCommand(OSModule * _module, CommandContext context, var params);
+	WakeOnLanCommand(OSModule * _module, CommandContext context, var params, Multiplex * multiplex = nullptr);
 	~WakeOnLanCommand();
 
 	OSModule * osModule;
@@ -29,10 +29,10 @@ public:
 	void generateMacFromString();
 
 	void onContainerParameterChanged(Parameter * p) override;
-	void triggerInternal() override;
+	void triggerInternal(int multiplexIndex) override;
 
 	InspectableEditor * getEditor(bool isRoot) override;
 
-	static WakeOnLanCommand * create(ControllableContainer * module, CommandContext context, var params) { return new WakeOnLanCommand((OSModule *)module, context, params); }
+	static WakeOnLanCommand * create(ControllableContainer * module, CommandContext context, var params, Multiplex * multiplex) { return new WakeOnLanCommand((OSModule *)module, context, params, multiplex); }
 
 };

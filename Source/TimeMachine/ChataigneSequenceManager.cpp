@@ -49,3 +49,8 @@ AudioLayer* ChataigneSequenceManager::showMenuAndGetAudioLayerStatic()
 {
 	return getInstance()->showMenuAndGetAudioLayer();
 }
+
+TimeTrigger* ChataigneSequenceManager::showMenuAndGetTriggerStatic()
+{
+	return getInstance()->showMenuAndGetTrigger();
+}

@@ -31,22 +31,7 @@ public:
 	virtual void setForceDisabled(bool value, bool force = false);
 	virtual void updateDisables(bool force = false) {}
 
+	DECLARE_ASYNC_EVENT(Processor, Processor, processor, { FORCE_DISABLED_CHANGED })
 
-	class ProcessorEvent {
-	public:
-		enum Type { FORCE_DISABLED_CHANGED };
-		ProcessorEvent(Type type, Processor * p) : type(type), processor(p) {}
-		Type type;
-		Processor * processor;
-	};
-	QueuedNotifier<ProcessorEvent> processorAsyncNotifier;
-	typedef QueuedNotifier<ProcessorEvent>::Listener AsyncListener;
-
-
-	void addAsyncProcessorListener(AsyncListener* newListener) { processorAsyncNotifier.addListener(newListener); }
-	void addAsyncCoalescedProcessorListener(AsyncListener* newListener) { processorAsyncNotifier.addAsyncCoalescedListener(newListener); }
-	void removeAsyncProcessorListener(AsyncListener* listener) { processorAsyncNotifier.removeListener(listener); }
-
-	//UI
 	virtual ProcessorUI * getUI();
 };

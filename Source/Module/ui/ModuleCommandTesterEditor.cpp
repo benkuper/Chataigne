@@ -25,7 +25,7 @@ ModuleCommandTesterEditor::~ModuleCommandTesterEditor()
 void ModuleCommandTesterEditor::resizedInternalHeaderItemInternal(Rectangle<int>& r)
 {
 	//BaseItem::resizedInternalHeaderItemInternal(r);
-	triggerBT->setBounds(r.removeFromRight(50).reduced(2));
+	//triggerBT->setBounds(r.removeFromRight(50).reduced(2));
 	autoTriggerUI->setBounds(r.removeFromRight(80).reduced(3));
 	chooser.setBounds(r.removeFromRight(150));
 }

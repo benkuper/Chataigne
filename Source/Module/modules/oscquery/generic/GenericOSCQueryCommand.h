@@ -17,7 +17,7 @@ class GenericOSCQueryCommand :
 	public BaseCommand
 {
 public:
-	GenericOSCQueryCommand(GenericOSCQueryModule * module, CommandContext context, var params);
+	GenericOSCQueryCommand(GenericOSCQueryModule * module, CommandContext context, var params, Multiplex * multiplex = nullptr);
 	~GenericOSCQueryCommand();
 
 	GenericOSCQueryModule * oscQueryModule;
@@ -34,7 +34,7 @@ public:
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
 
-	void triggerInternal() override;
+	void triggerInternal(int multiplexIndex) override;
 
-	static GenericOSCQueryCommand * create(ControllableContainer * module, CommandContext context, var params) { return new GenericOSCQueryCommand((GenericOSCQueryModule *)module, context, params); }
+	static GenericOSCQueryCommand * create(ControllableContainer * module, CommandContext context, var params, Multiplex * multiplex) { return new GenericOSCQueryCommand((GenericOSCQueryModule *)module, context, params, multiplex); }
 };

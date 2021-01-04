@@ -12,8 +12,8 @@
 #include "../ResolumeModule.h"
 #include "ui/ResolumeBaseCommandEditor.h"
 
-ResolumeBaseCommand::ResolumeBaseCommand(ResolumeModule * _module, CommandContext context, var params, bool customRebuild) :
-	OSCCommand(_module, context, params),
+ResolumeBaseCommand::ResolumeBaseCommand(ResolumeModule * _module, CommandContext context, var params, Multiplex * multiplex, bool customRebuild) :
+	OSCCommand(_module, context, params, multiplex),
 	resolumeModule(_module),
 	customRebuild(customRebuild)
 {
@@ -91,46 +91,48 @@ void ResolumeBaseCommand::rebuildParameters()
 	rebuildAddress();
 }
 
-void ResolumeBaseCommand::rebuildAddress()
+String ResolumeBaseCommand::getTargetAddress(int multiplexIndex)
 {
-	Level level = (Level)(int)levelParam->getValueData();
+	String result;
 
+	Level level = (Level)(int)levelParam->getValueData();
 	int resolumeVersion = (int)resolumeModule->version->getValueData();
 
 	switch (level)
 	{
 	case COMPOSITION:
-		address->setValue("/composition/" + addressSuffix);
+		result = "/composition/" + addressSuffix;
 		break;
 	case LAYER:
-		if (resolumeVersion >= 6) address->setValue("/composition/layers/" + layerParam->stringValue() + "/" + addressSuffix);
-		else address->setValue("/layer" + layerParam->stringValue() + "/" + addressSuffix);
+		if (resolumeVersion >= 6) result = "/composition/layers/" + getLinkedValue(layerParam, multiplexIndex).toString() + "/" + addressSuffix;
+		else result = "/layer" + getLinkedValue(layerParam, multiplexIndex).toString() + "/" + addressSuffix;
 		break;
 	case CLIP:
-		if (resolumeVersion >= 6) address->setValue("/composition/layers/" + layerParam->stringValue() + "/clips/" + clipParam->stringValue() + "/" + addressSuffix);
-		else address->setValue("/layer" + layerParam->stringValue() + "/clip" + clipParam->stringValue() + "/" + addressSuffix);
+		if (resolumeVersion >= 6) result = "/composition/layers/" + getLinkedValue(layerParam, multiplexIndex).toString() + "/clips/" + getLinkedValue(clipParam, multiplexIndex).toString() + "/" + addressSuffix;
+		else result = "/layer" + getLinkedValue(layerParam, multiplexIndex).toString() + "/clip" + getLinkedValue(clipParam, multiplexIndex).toString() + "/" + addressSuffix;
 		break;
 	case COLUMN:
-		if (resolumeVersion >= 6) address->setValue("/composition/columns/" + clipParam->stringValue() + "/" + addressSuffix);
-		else address->setValue("/track" + clipParam->stringValue() + "/" + addressSuffix);
+		if (resolumeVersion >= 6) result = "/composition/columns/" + getLinkedValue(clipParam, multiplexIndex).toString() + "/" + addressSuffix;
+		else result = "/track" + getLinkedValue(clipParam, multiplexIndex).toString() + "/" + addressSuffix;
 		break;
 
 	case SELECTED_CLIP:
-		if (resolumeVersion >= 6) address->setValue("/composition/selectedclip/" + addressSuffix);
-		else address->setValue("/selectedclip/" + addressSuffix);
+		if (resolumeVersion >= 6) result = "/composition/selectedclip/" + addressSuffix;
+		else result = "/selectedclip/" + addressSuffix;
 		break;
 
 	case SELECTED_LAYER:
-		if (resolumeVersion >= 6) address->setValue("/composition/selectedlayer/" + addressSuffix);
-		else address->setValue("/selectedlayer/" + addressSuffix);
+		if (resolumeVersion >= 6) result = "/composition/selectedlayer/" + addressSuffix;
+		else result = "/selectedlayer/" + addressSuffix;
 		break;
 
 	case DECK:
-		if (resolumeVersion >= 6) address->setValue("/composition/decks/" + clipParam->stringValue() + "/" + addressSuffix);
-		else address->setValue("/deck/" + clipParam->stringValue() + "/" + addressSuffix);
+		if (resolumeVersion >= 6) result = "/composition/decks/" + getLinkedValue(clipParam, multiplexIndex).toString() + "/" + addressSuffix;
+		else result = "/deck/" + getLinkedValue(clipParam, multiplexIndex).toString() + "/" + addressSuffix;
 		break;
 	}
 
+	return result;
 }
 
 void ResolumeBaseCommand::onContainerParameterChanged(Parameter * p)

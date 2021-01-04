@@ -31,8 +31,6 @@ Module::Module(const String& name) :
 	includeValuesInSave(false),
 	customType(""),
     canHandleRouteValues(false)
-
-
 {
 	itemDataType = "Module";
 	showWarningInUI = true;

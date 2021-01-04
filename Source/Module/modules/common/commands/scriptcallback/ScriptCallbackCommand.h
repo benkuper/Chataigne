@@ -15,16 +15,16 @@ class ScriptCallbackCommand :
 	public BaseCommand
 {
 public:
-	ScriptCallbackCommand(Module * module, CommandContext context, var params);
+	ScriptCallbackCommand(Module * module, CommandContext context, var params, Multiplex * multiplex = nullptr);
 	~ScriptCallbackCommand();
 
 	EnumParameter* moduleMethods;
 
-	void triggerInternal() override;
+	void triggerInternal(int multiplexIndex) override;
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
 
 
-	static ScriptCallbackCommand* create(ControllableContainer* c, CommandContext context, var params) { return new ScriptCallbackCommand((Module *)c, context, params); }
+	static ScriptCallbackCommand* create(ControllableContainer* c, CommandContext context, var params, Multiplex * multiplex = nullptr) { return new ScriptCallbackCommand((Module *)c, context, params, multiplex); }
 };

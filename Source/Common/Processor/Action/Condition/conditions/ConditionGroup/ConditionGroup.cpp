@@ -10,8 +10,9 @@
 
 #include "ConditionGroup.h"
 
-ConditionGroup::ConditionGroup(var params) :
-	Condition(ConditionGroup::getTypeStringStatic(), params)
+ConditionGroup::ConditionGroup(var params, Multiplex* multiplex) :
+	Condition(ConditionGroup::getTypeStringStatic(), params, multiplex),
+	manager(multiplex)
 {
 	addChildControllableContainer(&manager);
 	manager.addConditionManagerListener(this);
@@ -21,9 +22,9 @@ ConditionGroup::~ConditionGroup()
 {
 }
 
-void ConditionGroup::conditionManagerValidationChanged(ConditionManager *)
+void ConditionGroup::conditionManagerValidationChanged(ConditionManager *, int multiplexIndex)
 {
-	isValid->setValue(manager.isValid->boolValue());
+	setValid(multiplexIndex, manager.getIsValid(multiplexIndex, false));
 }
 
 var ConditionGroup::getJSONData()

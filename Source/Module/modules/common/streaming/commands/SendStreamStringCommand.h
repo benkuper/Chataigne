@@ -16,7 +16,7 @@ class SendStreamStringCommand :
 	public StreamingCommand
 {
 public:
-	SendStreamStringCommand(StreamingModule * _module, CommandContext context, var params);
+	SendStreamStringCommand(StreamingModule * _module, CommandContext context, var params, Multiplex* multiplex = nullptr);
 	~SendStreamStringCommand();
 
 	enum DataMode { STRING, HEX };
@@ -30,9 +30,9 @@ public:
 	
 	Array<uint8> mappedValues;
 
-	void setValue(var value) override;
-	void triggerInternal() override;
+	void setValue(var value, int multiplexIndex) override;
+	void triggerInternal(int multiplexIndex) override;
 
-	static SendStreamStringCommand * create(ControllableContainer * module, CommandContext context, var params) { return new SendStreamStringCommand((StreamingModule *)module, context, params); }
+	static SendStreamStringCommand * create(ControllableContainer * module, CommandContext context, var params, Multiplex * multiplex) { return new SendStreamStringCommand((StreamingModule *)module, context, params, multiplex); }
 
 };

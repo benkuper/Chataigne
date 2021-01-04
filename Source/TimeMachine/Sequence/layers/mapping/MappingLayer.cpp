@@ -30,7 +30,7 @@ MappingLayer::MappingLayer(const String &name, Sequence *_sequence, var params) 
 	canInspectChildContainers = true;
 	saveAndLoadRecursiveData = true;
 	
-	mapping.reset(new Mapping(false));
+	mapping.reset(new Mapping(var(), nullptr, false));
 	mapping->editorIsCollapsed = false;
 	mapping->editorCanBeCollapsed = false;
 	mapping->hideEditorHeader = true;

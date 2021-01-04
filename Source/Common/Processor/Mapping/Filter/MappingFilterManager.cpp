@@ -27,8 +27,9 @@
 #include "filters/color/ColorShiftFilter.h"
 
 
-MappingFilterManager::MappingFilterManager() :
-	BaseManager<MappingFilter>("Filters")
+MappingFilterManager::MappingFilterManager(Multiplex * multiplex) :
+	BaseManager<MappingFilter>("Filters"),
+	MultiplexTarget(multiplex)
 {
 	canBeCopiedAndPasted = true;
 
@@ -73,7 +74,7 @@ bool MappingFilterManager::setupSources(Array<Parameter *> sources)
 }
 
 
-bool MappingFilterManager::processFilters()
+bool MappingFilterManager::processFilters(int multiplexIndex)
 {
 	if (items.size() == 0)
 	{
@@ -176,7 +177,6 @@ void MappingFilterManager::filteredParamsChanged(MappingFilter* mf)
 void MappingFilterManager::filteredParamRangeChanged(MappingFilter* mf)
 {
 	notifyNeedsRebuild(mf);
-
 }
 
 void MappingFilterManager::loadJSONDataManagerInternal(var data)

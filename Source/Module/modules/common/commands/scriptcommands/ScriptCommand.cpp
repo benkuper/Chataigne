@@ -11,14 +11,14 @@
 #include "ScriptCommand.h"
 #include "ui/ScriptCommandEditor.h"
 
-ScriptCommand::ScriptCommand(Module * module, CommandContext context, var data) :
-	BaseCommand(module, context, data)
+ScriptCommand::ScriptCommand(Module * module, CommandContext context, var params, Multiplex* multiplex) :
+	BaseCommand(module, context, params, multiplex)
 {
 	saveAndLoadTargetMappings = true;
 	saveAndLoadRecursiveData = true;
 
 	//load params here
-	var commandData = data.getProperty("commandData", var());
+	var commandData = params.getProperty("commandData", var());
 	
 	if (!commandData.isVoid())
 	{
@@ -120,9 +120,6 @@ void ScriptCommand::createControllablesForContainer(var data, ControllableContai
 						LOGWARNING("Dependency definition is not complete, requires source, value, check and action");
 					}
 				}
-
-				//only this should be here, the rest should be common
-				if (p.value.hasProperty("useForMapping")) addTargetMappingParameterAt(param, p.value.getProperty("mappingIndex", targetMappingParameters.size()));
 			}
 		}
 	}
@@ -191,7 +188,7 @@ Controllable * ScriptCommand::getControllableForJSONDefinition(const String &nam
 	return c;
 }
 
-void ScriptCommand::triggerInternal()
+void ScriptCommand::triggerInternal(int multiplexIndex)
 {
 	Array<var> args;
 	for (auto &p : scriptParams)
@@ -204,10 +201,10 @@ void ScriptCommand::triggerInternal()
 	if (module != nullptr) module->scriptManager->callFunctionOnAllItems(callback, args);
 }
 
-InspectableEditor * ScriptCommand::getEditor(bool isRoot)
-{
-	return new ScriptCommandEditor(this, isRoot);
-}
+//InspectableEditor * ScriptCommand::getEditor(bool isRoot)
+//{
+//	return new ScriptCommandEditor(this, isRoot);
+//}
 
 
 

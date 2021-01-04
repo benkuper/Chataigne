@@ -15,7 +15,7 @@
 #include <Tlhelp32.h>
 #endif
 
-OSExecCommand::OSExecCommand(OSModule* _module, CommandContext context, var params) :
+OSExecCommand::OSExecCommand(OSModule* _module, CommandContext context, var params, Multiplex * multiplex) :
 	BaseCommand(_module, context, params),
 	osModule(_module),
 	launchOptions(nullptr),
@@ -59,9 +59,9 @@ OSExecCommand::~OSExecCommand()
 {
 }
 
-void OSExecCommand::triggerInternal()
+void OSExecCommand::triggerInternal(int multiplexIndex)
 {
-	BaseCommand::triggerInternal();
+	BaseCommand::triggerInternal(multiplexIndex);
 
 	if (!module->enabled->boolValue()) return;
 

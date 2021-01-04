@@ -18,20 +18,16 @@ class ConditionGroup :
 	public ConditionManager::ConditionManagerListener
 {
 public:
-	ConditionGroup(var params);
+	ConditionGroup(var params = var(), Multiplex* multiplex = nullptr);
 	~ConditionGroup();
 
 	ConditionManager manager;
 
-	void conditionManagerValidationChanged(ConditionManager *) override;
-
+	void conditionManagerValidationChanged(ConditionManager *, int multiplexIndex) override;
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
 
-
 	String getTypeString() const override { return ConditionGroup::getTypeStringStatic(); }
-	static String getTypeStringStatic() { return "Group"; }
-	static ConditionGroup * create(var params) { return new ConditionGroup(params); }
-};
+	static String getTypeStringStatic() { return "Group"; }};
 

@@ -10,8 +10,8 @@
 
 #include "QLabWorkspaceCommand.h"
 
-QLabWorkspaceCommand::QLabWorkspaceCommand(QLabModule* m, CommandContext context, var params) :
-    OSCCommand(m, context, params),
+QLabWorkspaceCommand::QLabWorkspaceCommand(QLabModule* m, CommandContext context, var params, Multiplex * multiplex) :
+    OSCCommand(m, context, params, multiplex),
     qlabModule(m)
 {
     qlabModule->workspaceID->addParameterListener(this);
@@ -22,10 +22,12 @@ QLabWorkspaceCommand::~QLabWorkspaceCommand()
     if (!moduleRef.wasObjectDeleted()) qlabModule->workspaceID->removeParameterListener(this);
 }
 
-void QLabWorkspaceCommand::rebuildAddressInternal(String& targetAddress)
+String QLabWorkspaceCommand::getTargetAddressInternal(const String& targetAddress, int multiplexIndex)
 {
-    if (!moduleRef.wasObjectDeleted()) targetAddress = qlabModule->getWorkspacePrefix() + targetAddress;
+    if (!moduleRef.wasObjectDeleted()) return qlabModule->getWorkspacePrefix() + targetAddress;
+    return targetAddress;
 }
+
 
 void QLabWorkspaceCommand::onExternalParameterValueChanged(Parameter* p)
 {

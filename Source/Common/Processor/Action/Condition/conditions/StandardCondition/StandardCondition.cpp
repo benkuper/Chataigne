@@ -9,25 +9,251 @@
 */
 
 #include "StandardCondition.h"
-#include "../../Comparator/ComparatorFactory.h"
+#include "Comparator/ComparatorFactory.h"
 #include "ui/StandardConditionEditor.h"
 #include "Module/ModuleManager.h"
 
-StandardCondition::StandardCondition(var params) :
-	Condition(StandardCondition::getTypeStringStatic(),params)
+StandardCondition::StandardCondition(var params, Multiplex* processor) :
+	Condition(getTypeStringStatic(params.getProperty("listMode", false)), params, processor),
+	multiplexListMode(params.getProperty("listMode", false)),
+	sourceList(nullptr)
 {
-	sourceTarget = addTargetParameter("Input Value", "Element that will be the source to check if condition is active or not"); 
-	sourceTarget->customGetTargetFunc = &ModuleManager::showAllValuesAndGetControllable;
-	sourceTarget->customGetControllableLabelFunc = &Module::getTargetLabelForValueControllable;
-	sourceTarget->customCheckAssignOnNextChangeFunc = &ModuleManager::checkControllableIsAValue;
+	sourceTarget = addTargetParameter("Input Value", "Element that will be the source to check if condition is active or not");
+
+	if (multiplexListMode)
+	{
+		sourceTarget->targetType = TargetParameter::CONTAINER;
+		sourceTarget->setRootContainer(&multiplex->listManager);
+
+		std::function<ControllableContainer* ()> getListFunc = std::bind(&Multiplex::showAndGetList, multiplex);
+		sourceTarget->customGetTargetContainerFunc = getListFunc;
+		sourceTarget->showParentNameInEditor = false;
+	}
+	else
+	{
+		sourceTarget->customGetTargetFunc = &ModuleManager::showAllValuesAndGetControllable;
+		sourceTarget->customGetControllableLabelFunc = &Module::getTargetLabelForValueControllable;
+		sourceTarget->customCheckAssignOnNextChangeFunc = &ModuleManager::checkControllableIsAValue;
+	}
+
 	sourceTarget->hideInEditor = true;
+
+	toggleMode = addBoolParameter("Toggle Mode", "If checked, this will make a validation alternate between validated and invalidated, useful to transform straight values into toggles", false);
+	toggleMode->hideInEditor = true;
+
+	alwaysTrigger = addBoolParameter("Always Trigger", "If NOT checked the comparator notifies only when VALIDITY changes. If checked, the comparator notifies everytime the comparator is checked, meaning everytime the value is changed.", false);
+	alwaysTrigger->hideInEditor = true;
 }
 
 StandardCondition::~StandardCondition()
 {
-	setSourceControllable(nullptr);
 }
 
+void StandardCondition::clearItem()
+{
+	BaseItem::clearItem();
+	if (sourceList != nullptr) sourceList->removeListListener(this);
+	if (sourceControllable != nullptr)
+	{
+		if (sourceControllable->type == Controllable::TRIGGER) ((Trigger*)sourceControllable.get())->removeTriggerListener(this);
+		else ((Parameter *)sourceControllable.get())->removeParameterListener(this);
+	}
+}
+
+void StandardCondition::multiplexCountChanged()
+{
+	Condition::multiplexCountChanged();
+	rawIsValids.fill(false);
+	forceToggleState(false);
+}
+
+void StandardCondition::setValid(int multiplexIndex, bool value, bool dispatchOnChangeOnly)
+{
+	if (toggleMode->boolValue())
+	{
+		if (rawIsValids[multiplexIndex] == value) return;
+		rawIsValids.set(multiplexIndex, value);
+
+		if (rawIsValids[multiplexIndex]) Condition::setValid(multiplexIndex, !getIsValid(multiplexIndex));
+	}
+	else
+	{
+		Condition::setValid(multiplexIndex, value, dispatchOnChangeOnly && !alwaysTrigger->boolValue());
+	}
+}
+
+
+void StandardCondition::updateSourceFromTarget()
+{
+	if (multiplexListMode)
+	{
+		if (sourceList != nullptr)
+		{
+			sourceList->removeListListener(this);
+		}
+
+		sourceList = dynamic_cast<BaseMultiplexList*>(sourceTarget->targetContainer.get());
+		
+		if (sourceList != nullptr)
+		{
+			sourceList->addListListener(this);
+		}
+	}
+	else
+	{
+		if (sourceControllable != nullptr)
+		{
+			if (sourceControllable->type == Controllable::TRIGGER) ((Trigger*)sourceControllable.get())->removeTriggerListener(this);
+			else ((Parameter*)sourceControllable.get())->removeParameterListener(this);
+		}
+
+		sourceControllable = sourceTarget->target;
+
+		if (sourceControllable != nullptr)
+		{
+			if (sourceControllable->type == Controllable::TRIGGER) ((Trigger*)sourceControllable.get())->addTriggerListener(this);
+			else ((Parameter*)sourceControllable.get())->addParameterListener(this);
+		}
+	}
+
+	updateComparatorFromSource();
+}
+
+void StandardCondition::updateComparatorFromSource()
+{
+	if (Controllable* c = getSourceControllableAt(0))
+	{
+		bool rebuildComparator = comparator == nullptr || c->type != comparator->reference->type;
+		if (rebuildComparator)
+		{
+			var oldData = var();
+			if (comparator != nullptr) oldData = comparator->getJSONData();
+			if (comparator != nullptr)
+			{
+				removeChildControllableContainer(comparator.get());
+				comparator.reset();
+			}
+
+			if (c->type != Controllable::TRIGGER) comparator.reset(ComparatorFactory::createComparatorForControllable((Parameter*)c));
+
+			if (comparator != nullptr)
+			{
+				addChildControllableContainer(comparator.get());
+
+				if (!isCurrentlyLoadingData)
+				{
+					if (!loadingComparatorData.isVoid())
+					{
+						comparator->loadJSONData(loadingComparatorData);
+					}
+					else if (!oldData.isVoid()) comparator->loadJSONData(oldData);
+				}
+
+				comparator->hideInEditor = true;
+				for (int i = 0; i < getMultiplexCount(); i++) checkComparator(i);
+			}
+		}
+		else if (comparator != nullptr)
+		{
+			comparator->updateReferenceRange((Parameter*)c);
+		}
+	}
+	else
+	{
+		if (comparator != nullptr)
+		{
+			loadingComparatorData = comparator->getJSONData();
+			removeChildControllableContainer(comparator.get());
+			comparator.reset();
+		}
+	}
+
+	conditionListeners.call(&ConditionListener::conditionSourceChanged, this);
+	conditionAsyncNotifier.addMessage(new ConditionEvent(ConditionEvent::SOURCE_CHANGED, this));
+}
+
+Controllable* StandardCondition::getSourceControllableAt(int multiplexIndex)
+{
+	if (multiplexListMode) return sourceList != nullptr ? sourceList->getTargetControllableAt(multiplexIndex) : nullptr;
+	else return sourceControllable;
+}
+
+void StandardCondition::checkComparator(int multiplexIndex)
+{
+	if (isCurrentlyLoadingData) return;
+
+	if (Controllable* c = getSourceControllableAt(multiplexIndex))
+	{
+		if (c->type == Controllable::TRIGGER) {
+			setValid(multiplexIndex, true);
+			setValid(multiplexIndex, false);
+		}
+		else
+		{
+			setValid(multiplexIndex, comparator->compare((Parameter*)c));
+		}
+	}
+}
+
+void StandardCondition::forceCheck()
+{
+	for (int i = 0; i < getMultiplexCount(); i++) checkComparator(i);
+}
+
+void StandardCondition::forceToggleState(bool value)
+{
+	rawIsValids.fill(value);
+	for (int i = 0; i < getMultiplexCount(); i++)
+	{
+		Condition::setValid(i, value); //bypass standard condition to avoid toggle, and force dispatch
+	}
+}
+
+void StandardCondition::listReferenceUpdated()
+{
+	updateComparatorFromSource();
+}
+
+void StandardCondition::listItemUpdated(int multiplexIndex)
+{
+	checkComparator(multiplexIndex);
+}
+
+
+void StandardCondition::onContainerParameterChangedInternal(Parameter* p)
+{
+	Condition::onContainerParameterChangedInternal(p);
+
+	if (p == sourceTarget && sourceTarget != nullptr)
+	{
+		updateSourceFromTarget();
+	}
+}
+
+void StandardCondition::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c)
+{
+	Condition::onControllableFeedbackUpdateInternal(cc, c);
+
+	if (comparator != nullptr && c == comparator->reference || c == comparator->compareFunction)
+	{
+		if (!isCurrentlyLoadingData) for (int i = 0; i < getMultiplexCount(); i++) checkComparator(i);
+	}
+}
+
+void StandardCondition::onExternalParameterValueChanged(Parameter* p)
+{
+	if(!multiplexListMode) checkComparator(0);
+}
+
+void StandardCondition::onExternalParameterRangeChanged(Parameter* p)
+{
+	if (!multiplexListMode && p == sourceControllable && comparator != nullptr) comparator->updateReferenceRange(p);
+}
+
+void StandardCondition::onExternalTriggerTriggered(Trigger* t)
+{
+	if (!multiplexListMode) checkComparator(0);
+}
 
 var StandardCondition::getJSONData()
 {
@@ -42,7 +268,6 @@ void StandardCondition::loadJSONDataInternal(var data)
 	if (comparator != nullptr)
 	{
 		comparator->loadJSONData(data.getProperty("comparator", var()));
-		isValid->alwaysNotify = comparator->alwaysTrigger->boolValue();
 	}
 	else if (Engine::mainEngine->isLoadingFile)
 	{
@@ -50,113 +275,15 @@ void StandardCondition::loadJSONDataInternal(var data)
 	}
 }
 
-
-void StandardCondition::setSourceControllable(WeakReference<Controllable> c)
+void StandardCondition::afterLoadJSONDataInternal()
 {
-	if (!sourceControllable.wasObjectDeleted() && sourceControllable != nullptr)
-	{
-	//	if (sourceControllable->type == Controllable::TRIGGER) ((Trigger *)sourceControllable.get())->removeTriggerListener(this);
-//		else ((Parameter *)sourceControllable.get())->removeParameterListener(this);
-
-		Module * m = ControllableUtil::findParentAs<Module>(sourceControllable);
-		if(m != nullptr) unregisterLinkedInspectable(m);
-	}
-
-	sourceControllable = c;
-
-
-	if (sourceControllable != nullptr)
-	{
-		var oldData = var();
-		if (comparator != nullptr) oldData = comparator->getJSONData();
-		
-		if (comparator != nullptr)
-		{
-			removeChildControllableContainer(comparator.get());
-		}
-
-		comparator.reset(ComparatorFactory::createComparatorForControllable(sourceControllable));
-
-
-
-		Module * m = ControllableUtil::findParentAs<Module>(sourceControllable);
-		if (m != nullptr) registerLinkedInspectable(m);
-
-		if (comparator != nullptr)
-		{
-			addChildControllableContainer(comparator.get());
-
-			if (!isCurrentlyLoadingData)
-			{
-				if (!loadingComparatorData.isVoid())
-				{
-					comparator->loadJSONData(loadingComparatorData);
-					//loadingComparatorData = var();
-				}
-				else if (!oldData.isVoid()) comparator->loadJSONData(oldData);
-			}
-			
-			comparator->hideInEditor = true;
-			comparator->addComparatorListener(this);
-			comparator->compare();
-			
-			isValid->alwaysNotify = comparator->alwaysTrigger->boolValue();
-			isValid->setValue(comparator->isValid);
-
-		}
-	} else
-	{
-		if (comparator != nullptr)
-		{
-			loadingComparatorData = comparator->getJSONData();
-			comparator->removeComparatorListener(this);
-			removeChildControllableContainer(comparator.get());
-			comparator = nullptr;
-			
-		}
-	}
-
-	conditionListeners.call(&ConditionListener::conditionSourceChanged, this);
-	conditionAsyncNotifier.addMessage(new ConditionEvent(ConditionEvent::SOURCE_CHANGED, this));
-
-	
+	Condition::afterLoadJSONDataInternal();
+	for (int i = 0; i < getMultiplexCount(); i++) checkComparator(i);
 }
 
-void StandardCondition::onContainerParameterChangedInternal(Parameter * p)
-{
-	Condition::onContainerParameterChangedInternal(p);
-	if (p == sourceTarget && sourceTarget != nullptr)
-	{
-		setSourceControllable(sourceTarget->target);
-	}
-}
 
-void StandardCondition::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c)
-{
-	Condition::onControllableFeedbackUpdateInternal(cc, c);
 
-	if (comparator != nullptr && c == comparator->alwaysTrigger)
-	{
-		isValid->alwaysNotify = comparator->alwaysTrigger->boolValue();
-	}
-}
-
-InspectableEditor * StandardCondition::getEditor(bool isRoot)
+InspectableEditor* StandardCondition::getEditor(bool isRoot)
 {
 	return new StandardConditionEditor(this, isRoot);
 }
-
-
-void StandardCondition::comparatorValidationChanged(BaseComparator *)
-{
-	isValid->setValue(comparator->isValid);
-}
-
-void StandardCondition::forceCheck()
-{
-	if (comparator != nullptr)
-	{
-		comparator->forceCheck();
-	}
-}
-

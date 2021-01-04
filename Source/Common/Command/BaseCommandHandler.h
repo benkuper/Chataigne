@@ -17,13 +17,14 @@
 
 class BaseCommandHandler :
 	public BaseItem,
+	public MultiplexTarget,
 	public Inspectable::InspectableListener,
 	public BaseCommand::CommandListener,
 	public ModuleManager::ManagerListener,
 	public CommandTemplateManager::ManagerListener
 {
 public:
-	BaseCommandHandler(const String &name = "BaseCommandHandler", CommandContext context = CommandContext::ACTION, Module * lockedModule = nullptr);
+	BaseCommandHandler(const String &name = "BaseCommandHandler", CommandContext context = CommandContext::ACTION, Module * lockedModule = nullptr, Multiplex * multiplex = nullptr);
 	virtual ~BaseCommandHandler();
 
 	virtual void clearItem() override;
@@ -33,7 +34,7 @@ public:
 	WeakReference<CommandDefinition> commandDefinition;
 
 	Module * lockedModule;
-	Trigger * trigger;
+	Trigger* trigger;
 
 	//ghosting
 	String ghostModuleName;
@@ -41,8 +42,8 @@ public:
 	String ghostCommandName;
 	var ghostCommandData;
 
-	virtual void triggerCommand(); //to override and call back for checking (e.g. enable in Consequence)
-
+	virtual void triggerCommand(int multiplexIndex = 0); //to override and call back for checking (e.g. enable in Consequence)
+	
 	virtual void setCommand(CommandDefinition *);
 
 	var getJSONData() override;
@@ -50,11 +51,10 @@ public:
 
 	InspectableEditor * getEditor(bool isRoot) override;
 
-	void onContainerTriggerTriggered(Trigger *) override;
-
 	void commandContentChanged() override; //from BaseCommand
 	void commandTemplateDestroyed() override;
 
+	virtual void onContainerTriggerTriggered(Trigger* t) override;
 	virtual void inspectableDestroyed(Inspectable *) override;
 
 	void itemAdded(Module * m) override;

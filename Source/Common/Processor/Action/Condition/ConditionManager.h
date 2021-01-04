@@ -11,33 +11,36 @@
 #pragma once
 
 #include "Condition.h"
+#include "../../Multiplex/Multiplex.h"
 
 class ConditionManager :
+	public MultiplexTarget,
 	public BaseManager<Condition>,
 	public Condition::ConditionListener,
-	public Timer
+	public MultiTimer
 {
 public:
-	juce_DeclareSingleton(ConditionManager, true)
-
-	ConditionManager();
+	ConditionManager(Multiplex* multiplex);
 	~ConditionManager();
 
 	Factory<Condition> factory;
 	Factory<Condition>::Definition* activateDef;
 	Factory<Condition>::Definition* deactivateDef;
 
-	BoolParameter* isValid;
-
 	enum ConditionOperator { AND, OR };
 	EnumParameter* conditionOperator;
 
 	FloatParameter* validationTime;
-	FloatParameter* validationProgress;
+	FloatParameter* validationProgressFeedback;
 
-	bool validationWaiting;
-	double prevTimerTime;
+	Array<bool> isValids;
+	Array<float> validationProgresses;
+	Array<bool> validationWaitings;
+	Array<double> prevTimerTimes;
+
 	bool forceDisabled;
+
+	void multiplexCountChanged() override;
 
 	void setHasActivationDefinitions(bool value);
 
@@ -46,26 +49,30 @@ public:
 
 	void setForceDisabled(bool value, bool force = false);
 
-	void forceCheck(); 
+	void setValid(int multiplexIndex, bool value, bool dispatchOnlyOnValidationChange = true);
+	void setValidationProgress(int multiplexIndex, float value);
 
-	void checkAllConditions(bool emptyIsValid = false, bool dispatchOnlyOnValidationChange = true);
+	void forceCheck();
 
-	bool areAllConditionsValid(bool emptyIsValid = false);
-	bool isAtLeastOneConditionValid(bool emptyIsValid = false);
+	void checkAllConditions(int multiplexIndex, bool emptyIsValid = false, bool dispatchOnlyOnValidationChange = true);
+
+	bool areAllConditionsValid(int multiplexIndex, bool emptyIsValid = false);
+	bool isAtLeastOneConditionValid(int multiplexIndex, bool emptyIsValid = false);
 
 	int getNumEnabledConditions();
-	int getNumValidConditions();
+	int getNumValidConditions(int multiplexIndex = 0);
 
-	bool getIsValid(bool emptyIsValid);
+	bool getIsValid(int multiplexIndex = 0, bool emptyIsValid = false);
 
+	void dispatchConditionValidationChanged(int multiplexIndex);
 
-	void dispatchConditionValidationChanged();
-
-	void conditionValidationChanged(Condition*) override;
+	void conditionValidationChanged(Condition*, int multiplexIndex) override;
 
 	void onContainerParameterChanged(Parameter*) override;
 
-	void loadJSONDataInternal(var data) override;
+	virtual void timerCallback(int id) override;
+
+	void afterLoadJSONDataInternal() override;
 
 	InspectableEditor* getEditor(bool isRoot) override;
 
@@ -73,18 +80,28 @@ public:
 	{
 	public:
 		virtual ~ConditionManagerListener() {}
-		virtual void conditionManagerValidationChanged(ConditionManager*) {}
+		virtual void conditionManagerValidationChanged(ConditionManager*, int multiplexIndex) {}
 	};
 
 
 	ListenerList<ConditionManagerListener> conditionManagerListeners;
 	void addConditionManagerListener(ConditionManagerListener* newListener) { conditionManagerListeners.add(newListener); }
 	void removeConditionManagerListener(ConditionManagerListener* listener) { conditionManagerListeners.remove(listener); }
+	
 
-	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ConditionManager)
+	class ConditionManagerEvent {
+	public:
+		enum Type { VALIDATION_CHANGED };
+		ConditionManagerEvent(Type type, ConditionManager* cdm, int multiplexIndex = -1) : type(type), conditionManager(cdm), multiplexIndex(multiplexIndex) {}
+		Type type;
+		ConditionManager* conditionManager;
+		int multiplexIndex;
+	};
 
+	QueuedNotifier<ConditionManagerEvent> conditionManagerAsyncNotifier;
+	typedef QueuedNotifier<ConditionManagerEvent>::Listener AsyncListener;
 
-		// Inherited via Timer
-		virtual void timerCallback() override;
-
+	void addAsyncConditionManagerListener(AsyncListener* newListener) { conditionManagerAsyncNotifier.addListener(newListener); }
+	void addAsyncCoalescedConditionManagerListener(AsyncListener* newListener) { conditionManagerAsyncNotifier.addAsyncCoalescedListener(newListener); }
+	void removeAsyncConditionManagerListener(AsyncListener* listener) { conditionManagerAsyncNotifier.removeListener(listener); }
 };

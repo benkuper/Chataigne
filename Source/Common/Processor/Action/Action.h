@@ -13,16 +13,18 @@
 #include "../Processor.h"
 #include "Condition/ConditionManager.h"
 #include "Consequence/ConsequenceManager.h"
+#include "../Multiplex/Multiplex.h"
 
 class Action :
 	public Processor,
+	public MultiplexTarget,
 	public ConditionManager::ConditionManagerListener,
 	public ConditionManager::ManagerListener,
 	public Condition::ConditionListener,
 	public EngineListener
 {
 public:
-	Action(const String &name = "Action", var params = var());
+	Action(var params = var(), Multiplex * it = nullptr);
 	virtual ~Action();
 
 	enum Role {ACTIVATE, DEACTIVATE};
@@ -37,29 +39,28 @@ public:
 	std::unique_ptr<ConsequenceManager> csmOn;
 	std::unique_ptr<ConsequenceManager> csmOff;
 
-	Trigger * triggerOn;
-	Trigger * triggerOff;
+	Trigger* triggerOn; //if not iterative, there will be only one element in this
 
 	//to allow for checking before conditions sending it, to overcome listener-order problems
 	bool forceChecking;
 
 	void updateConditionRoles();
-
 	void setHasOffConsequences(bool value);
-
     virtual void updateDisables(bool force = false) override;
 
 	void forceCheck(bool triggerIfChanged);
+
+	virtual void triggerConsequences(bool triggerTrue, int multiplexIndex = 0);
 
 	var getJSONData() override;
 	void loadJSONDataItemInternal(var data) override;
 	void endLoadFile() override;
 
+	void onContainerTriggerTriggered(Trigger* t) override;
 	void onContainerParameterChangedInternal(Parameter * p) override;
-	void onContainerTriggerTriggered(Trigger *) override;
 	void controllableFeedbackUpdate(ControllableContainer * cc, Controllable * c) override;
-	
-	void conditionManagerValidationChanged(ConditionManager *) override;
+
+	void conditionManagerValidationChanged(ConditionManager *, int multiplexIndex) override;
 
 	void itemAdded(Condition *) override;
 	void itemRemoved(Condition *) override;
@@ -98,9 +99,7 @@ public:
 	void removeAsyncActionListener(AsyncListener* listener) { actionAsyncNotifier.removeListener(listener); }
 
 
-	static Action * create(var params) { return new Action("Action", params); }
 	String getTypeString() const override { return "Action"; };
-
 	//InspectableEditor * getEditor(bool /*isRoot*/) override;
 
 

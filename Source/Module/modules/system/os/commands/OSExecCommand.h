@@ -21,7 +21,7 @@ class OSExecCommand :
 	public BaseCommand
 {
 public:
-	OSExecCommand(OSModule * _module, CommandContext context, var params);
+	OSExecCommand(OSModule * _module, CommandContext context, var params, Multiplex * multiplex = nullptr);
 	~OSExecCommand();
 
 	enum ActionType { OPEN_FILE, LAUNCH_APP, KILL_APP, LAUNCH_COMMAND, LAUNCH_COMMAND_FILE };
@@ -34,10 +34,10 @@ public:
 	BoolParameter * killMode;
 	BoolParameter* silentMode;
 
-	void triggerInternal() override;
+	void triggerInternal(int multiplexIndex) override;
 
 	void killProcess(const String &name);
 
-	static OSExecCommand * create(ControllableContainer * module, CommandContext context, var params) { return new OSExecCommand((OSModule *)module, context, params); }
+	static OSExecCommand * create(ControllableContainer * module, CommandContext context, var params, Multiplex * multiplex) { return new OSExecCommand((OSModule *)module, context, params, multiplex); }
 
 };

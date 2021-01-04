@@ -10,9 +10,9 @@
 
 #include "MouseModuleCommands.h"
 
-MouseModuleCommands::MouseModuleCommands(MouseModule* m, CommandContext context, var params) :
-	BaseCommand(m, context, params),
-	mouseModule(m),
+MouseModuleCommands::MouseModuleCommands(MouseModule* _module, CommandContext context, var params, Multiplex* multiplex) :
+	BaseCommand(_module, context, params, multiplex),
+	mouseModule(_module),
 	position(nullptr),
 	buttonID(nullptr),
 	isRelative(nullptr)
@@ -23,7 +23,7 @@ MouseModuleCommands::MouseModuleCommands(MouseModule* m, CommandContext context,
 	case SET_CURSOR_POSITION:
 	{
 		position = addPoint2DParameter("Position", "The target position of the mouse to set");
-		addTargetMappingParameterAt(position, 0);
+		linkParamToMappingIndex(position, 0);
 		isRelative = addBoolParameter("Relative", "If checked, the 0-1 space will be converted to the screen space", false);
 	}
 	break;
@@ -43,27 +43,28 @@ MouseModuleCommands::~MouseModuleCommands()
 {
 }
 
-void MouseModuleCommands::triggerInternal()
+void MouseModuleCommands::triggerInternal(int multiplexIndex)
 {
 	switch (type)
 	{
 	case SET_CURSOR_POSITION:
     {
-        Point<float> p = position->getPoint();
-        mouseModule->setCursorPosition(p, isRelative->boolValue());
+		var pVal = getLinkedValue(position, multiplexIndex);
+		Point<float> p(pVal[0], pVal[1]);
+		mouseModule->setCursorPosition(p, getLinkedValue(isRelative, multiplexIndex));
     }
     break;
 
 	case BUTTON_DOWN:
-		mouseModule->setButtonDown((int)buttonID->getValueData());
+		mouseModule->setButtonDown(getLinkedValue(buttonID, multiplexIndex));
 		break;
 
 	case BUTTON_UP:
-		mouseModule->setButtonUp((int)buttonID->getValueData());
+		mouseModule->setButtonUp(getLinkedValue(buttonID, multiplexIndex));
 		break;
 
 	case BUTTON_CLICK:
-		mouseModule->setButtonClick((int)buttonID->getValueData());
+		mouseModule->setButtonClick(getLinkedValue(buttonID, multiplexIndex));
 		break;
 	}
 }

@@ -17,13 +17,14 @@
 
 class Mapping :
 	public Processor,
+	public MultiplexTarget,
 	public MappingInput::Listener,
 	public MappingInputManager::ManagerListener,
 	public MappingFilterManager::FilterManagerListener,
 	public Thread
 {
 public:
-	Mapping(bool canBeDisabled = true);
+	Mapping(var params = var(), Multiplex * multiplex = nullptr, bool canBeDisabled = true);
 	virtual ~Mapping();
 
 	MappingInputManager im;
@@ -50,7 +51,7 @@ public:
 
 	void updateMappingChain(MappingFilter * afterThisFilter = nullptr); //will host warnings and type change checks
 
-	void process(bool forceOutput = false);
+	void process(bool forceOutput = false, int multiplexIndex = 0);
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
@@ -61,7 +62,7 @@ public:
 	void itemsReordered() override; //MappingInput
 
 	void inputReferenceChanged(MappingInput*) override;
-	void inputParameterValueChanged(MappingInput*) override;
+	void inputParameterValueChanged(MappingInput*, int multiplexIndex) override;
 	void inputParameterRangeChanged(MappingInput*) override;
 
 	void onContainerParameterChangedInternal(Parameter* p) override;
@@ -76,25 +77,7 @@ public:
 
 	ProcessorUI* getUI() override;
 
-	class MappingEvent {
-	public:
-		enum Type { OUTPUT_TYPE_CHANGED };
-		MappingEvent(Type type, Mapping* m) : type(type), mapping(m) {}
-		Type type;
-		Mapping* mapping;
-	};
-	QueuedNotifier<MappingEvent> mappingAsyncNotifier;
-	typedef QueuedNotifier<MappingEvent>::Listener AsyncListener;
+	DECLARE_ASYNC_EVENT(Mapping, Mapping, mapping, { OUTPUT_TYPE_CHANGED } )
 
-	void addAsyncMappingListener(AsyncListener* newListener) { mappingAsyncNotifier.addListener(newListener); }
-	void addAsyncCoalescedMappingListener(AsyncListener* newListener) { mappingAsyncNotifier.addAsyncCoalescedListener(newListener); }
-	void removeAsyncMappingListener(AsyncListener* listener) { mappingAsyncNotifier.removeListener(listener); }
-
-
-	static Mapping* create(var) { return new Mapping(); }
 	String getTypeString() const override { return "Mapping"; };
-
-	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Mapping)
-
-
 };

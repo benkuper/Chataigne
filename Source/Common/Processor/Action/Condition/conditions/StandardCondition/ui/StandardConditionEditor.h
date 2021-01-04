@@ -12,7 +12,7 @@
 
 #include "../../../ui/ConditionEditor.h"
 #include "../StandardCondition.h"
-#include "../../../Comparator/ui/BaseComparatorUI.h"
+#include "../Comparator/ui/BaseComparatorUI.h"
 
 class StandardConditionEditor :
 	public ConditionEditor
@@ -22,6 +22,10 @@ public:
 	virtual ~StandardConditionEditor();
 
 	StandardCondition * standardCondition;
+
+	std::unique_ptr<BoolToggleUI> alwaysTriggerUI;
+	std::unique_ptr<BoolToggleUI> toggleModeUI;
+
 	std::unique_ptr<InspectableEditor> targetUI;
 	std::unique_ptr<ControllableUI> sourceFeedbackUI;
 	std::unique_ptr<BaseComparatorUI> comparatorUI;
@@ -29,10 +33,8 @@ public:
 	void setCollapsed(bool value, bool force = false, bool animate = true, bool doNotRebuild = false) override;
 
 	void resetAndBuild() override;
-
 	void resizedInternalHeaderItemInternal(Rectangle<int> &r) override;
 	void resizedInternalContent(Rectangle<int> &r) override;
 	void updateUI() override;
 
-	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(StandardConditionEditor)
 };

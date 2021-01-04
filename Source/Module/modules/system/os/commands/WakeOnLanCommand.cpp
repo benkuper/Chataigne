@@ -11,7 +11,7 @@
 #include "WakeOnLanCommand.h"
 #include "ui/WakeOnLanCommandEditor.h"
 
-WakeOnLanCommand::WakeOnLanCommand(OSModule * _module, CommandContext context, var params) :
+WakeOnLanCommand::WakeOnLanCommand(OSModule * _module, CommandContext context, var params, Multiplex * multiplex) :
 	BaseCommand(_module, context, params),
 	osModule(_module)
 {
@@ -47,7 +47,7 @@ void WakeOnLanCommand::onContainerParameterChanged(Parameter * p)
 	}
 }
 
-void WakeOnLanCommand::triggerInternal()
+void WakeOnLanCommand::triggerInternal(int multiplexIndex)
 {
 	if (!module->enabled->boolValue()) return;
 

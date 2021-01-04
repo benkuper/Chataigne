@@ -13,7 +13,7 @@
 #include "Common/Processor/Action/Condition/conditions/StandardCondition/StandardCondition.h"
 #include "Common/Processor/Mapping/Mapping.h"
 
-StateCommand::StateCommand(StateModule * _module, CommandContext context, var params) :
+StateCommand::StateCommand(StateModule * _module, CommandContext context, var params, Multiplex * multiplex) :
 	BaseCommand(_module,context,params),
 	stateModule(_module),
 	enableVal(nullptr)
@@ -52,7 +52,7 @@ StateCommand::StateCommand(StateModule * _module, CommandContext context, var pa
 	if (actionType == SET_STATE_ACTIVATION || actionType == SET_ACTION_ENABLED || actionType == SET_TOGGLE_STATE || actionType == SET_MAPPING_ENABLED)
 	{
 		enableVal = addBoolParameter("Value", "The activation / enable state to set this element to.", true);
-		addTargetMappingParameterAt(enableVal, 0);
+		linkParamToMappingIndex(enableVal, 0);
 	}
 }
 
@@ -60,9 +60,9 @@ StateCommand::~StateCommand()
 {
 }
 
-void StateCommand::triggerInternal()
+void StateCommand::triggerInternal(int multiplexIndex)
 {
-	BaseCommand::triggerInternal();
+	BaseCommand::triggerInternal(multiplexIndex);
 
 	if (target->targetContainer == nullptr) return; 
 	if (target->targetContainer.wasObjectDeleted()) return;
@@ -78,7 +78,7 @@ void StateCommand::triggerInternal()
 		break;
 
 	case TRIGGER_ACTION:
-		((Action *)target->targetContainer.get())->triggerOn->trigger();
+		if(((Action*)target->targetContainer.get())->triggerOn != nullptr) ((Action*)target->targetContainer.get())->triggerOn->trigger();
 		break;
 
 	case SET_ACTION_ENABLED:
@@ -91,8 +91,7 @@ void StateCommand::triggerInternal()
 
 	case SET_TOGGLE_STATE:
 	{
-		BaseComparator* bc = (((StandardCondition*)target->targetContainer.get())->comparator.get());
-		if(bc != nullptr) bc->forceToggleState(enableVal->boolValue());
+		(((StandardCondition*)target->targetContainer.get())->forceToggleState(enableVal->boolValue()));
 	}
 	break;
 

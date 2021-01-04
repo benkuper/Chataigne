@@ -17,15 +17,15 @@ class WatchoutCommand :
 	public SendStreamStringCommand
 {
 public:
-	WatchoutCommand(WatchoutModule * _module, CommandContext context, var params);
+	WatchoutCommand(WatchoutModule * _module, CommandContext context, var params, Multiplex * multiplex = nullptr);
 	~WatchoutCommand();
 
 	WatchoutModule * wModule;
 
 	std::unique_ptr<ControllableContainer> paramContainer;
 
-	void triggerInternal() override;
+	void triggerInternal(int multiplexIndex) override;
 
-	static WatchoutCommand * create(ControllableContainer * module, CommandContext context, var params) { return new WatchoutCommand((WatchoutModule *)module, context, params); }
+	static WatchoutCommand * create(ControllableContainer * module, CommandContext context, var params, Multiplex * multiplex) { return new WatchoutCommand((WatchoutModule *)module, context, params, multiplex); }
 
 };

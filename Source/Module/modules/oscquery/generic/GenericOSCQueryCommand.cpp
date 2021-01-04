@@ -10,7 +10,7 @@
 
 #include "GenericOSCQueryCommand.h"
 
-GenericOSCQueryCommand::GenericOSCQueryCommand(GenericOSCQueryModule * oscQueryModule, CommandContext context, var params) :
+GenericOSCQueryCommand::GenericOSCQueryCommand(GenericOSCQueryModule * oscQuerymodule, CommandContext context, var params, Multiplex * multiplex) :
 	BaseCommand(oscQueryModule, context, params),
 	oscQueryModule(oscQueryModule),
 	valueParam(nullptr)
@@ -29,7 +29,6 @@ void GenericOSCQueryCommand::setupParamFromTarget()
 	{
 		if (valueGhostData.isVoid()) valueGhostData = valueParam->value;
 		removeControllable(valueParam.get());
-		removeTargetMappingParameter(valueParam);
 	}
 
 	valueParam = ControllableFactory::createParameterFrom(target->target, false, true);
@@ -37,7 +36,7 @@ void GenericOSCQueryCommand::setupParamFromTarget()
 	{
 		if (!valueGhostData.isVoid()) valueParam->setValue(valueGhostData);
 		addParameter(valueParam);
-		addTargetMappingParameterAt(valueParam, 0);
+		linkParamToMappingIndex(valueParam, 0);
 		valueGhostData = var(); //reset ghostValue
 	}
 }
@@ -64,7 +63,7 @@ void GenericOSCQueryCommand::loadJSONDataInternal(var data)
 	valueGhostData = data.getProperty("ghostValue", var());
 }
 
-void GenericOSCQueryCommand::triggerInternal()
+void GenericOSCQueryCommand::triggerInternal(int multiplexIndex)
 {
 	if (target->target.wasObjectDeleted() || target->target == nullptr) return;
 	if(valueParam != nullptr) ((Parameter *)target->target.get())->setValue(valueParam->getValue());

@@ -12,15 +12,19 @@
 #include "CommandFactory.h"
 #include "ui/BaseCommandHandlerEditor.h"
 
-BaseCommandHandler::BaseCommandHandler(const String & name, CommandContext _context, Module * _lockedModule) :
+BaseCommandHandler::BaseCommandHandler(const String & name, CommandContext _context, Module * _lockedModule, Multiplex * multiplex) :
 	BaseItem(name),
+	MultiplexTarget(multiplex),
 	context(_context),
 	lockedModule(_lockedModule),
+	trigger(nullptr),
 	handlerNotifier(5)
 {
-	trigger = addTrigger("Trigger", "Trigger this consequence");
-	trigger->hideInEditor = true;
-
+	if (!isMultiplexed())
+	{
+		trigger = addTrigger("Trigger", "Trigger this consequence");
+		trigger->hideInEditor = true;
+	}
 }
 
 BaseCommandHandler::~BaseCommandHandler()
@@ -36,9 +40,9 @@ void BaseCommandHandler::clearItem()
 }
 
 
-void BaseCommandHandler::triggerCommand()
+void BaseCommandHandler::triggerCommand(int multiplexIndex)
 {
-	if (command != nullptr) command->trigger();
+	if (command != nullptr) command->trigger(multiplexIndex);
 }
 
 void BaseCommandHandler::setCommand(CommandDefinition * commandDef)
@@ -67,7 +71,7 @@ void BaseCommandHandler::setCommand(CommandDefinition * commandDef)
 
 
 	commandDefinition = commandDef;
-	if (commandDef != nullptr && !Engine::mainEngine->isClearing && !isClearing) command.reset(commandDef->create(context));
+	if (commandDef != nullptr && !Engine::mainEngine->isClearing && !isClearing) command.reset(commandDef->create(context, multiplex));
 	else command.reset();
 
 	if (command != nullptr)
@@ -177,14 +181,6 @@ void BaseCommandHandler::loadJSONDataInternal(var data)
 	}
 }
 
-void BaseCommandHandler::onContainerTriggerTriggered(Trigger * t)
-{
-	if (t == trigger)
-	{
-		triggerCommand();
-	}
-}
-
 void BaseCommandHandler::commandContentChanged()
 {
 	if (isClearing) return;
@@ -203,6 +199,12 @@ void BaseCommandHandler::commandTemplateDestroyed()
 		if (!Engine::mainEngine->isClearing && ModuleManager::getInstanceWithoutCreating() != nullptr) ModuleManager::getInstance()->addBaseManagerListener(this);
 	}
 	setCommand(nullptr);
+}
+
+void BaseCommandHandler::onContainerTriggerTriggered(Trigger* t)
+{
+	BaseItem::onContainerTriggerTriggered(t);
+	if (t == trigger) triggerCommand(); //should have some sort of "current iteration" here
 }
 
 void BaseCommandHandler::inspectableDestroyed(Inspectable *)

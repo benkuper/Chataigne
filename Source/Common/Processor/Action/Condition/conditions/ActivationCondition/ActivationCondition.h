@@ -16,7 +16,7 @@ class ActivationCondition :
 	public Condition
 {
 public:
-	ActivationCondition(var params);
+	ActivationCondition(var params = var(), Multiplex * processor = nullptr);
 	~ActivationCondition();
 
 	enum Type { ON_ACTIVATE, ON_DEACTIVATE };
@@ -29,6 +29,4 @@ public:
 
 	String getTypeString() const override { return ActivationCondition::getTypeStringStatic(type); }
 	static String getTypeStringStatic(Type type) { return type == ON_ACTIVATE?"On Activate":"On Deactivate"; }
-	static ActivationCondition * create(var params) { return new ActivationCondition(params); }
-
 };

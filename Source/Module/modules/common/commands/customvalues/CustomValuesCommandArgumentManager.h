@@ -11,14 +11,15 @@
 #pragma once
 
 #include "CustomValuesCommandArgument.h"
+#include "Common/Processor/Multiplex/Multiplex.h"
 
 class CustomValuesCommandArgumentManager :
 	public BaseManager<CustomValuesCommandArgument>,
-	public CustomValuesCommandArgument::ArgumentListener,
+	public MultiplexTarget,
 	public BaseManager<CustomValuesCommandArgument>::ManagerListener
 {
 public:
-	CustomValuesCommandArgumentManager(bool _mappingEnabled, bool templateMode = false);
+	CustomValuesCommandArgumentManager(bool _mappingEnabled, bool templateMode = false, Multiplex * multiplex = nullptr);
 	~CustomValuesCommandArgumentManager();
 
 	bool isBeingDestroyed; //to keep track for templates, do not sync on destroy, so we can keep a ghost
@@ -32,8 +33,11 @@ public:
 
 	std::function<void(Parameter*, var)> createParamCallbackFunc;
 
+
 	void linkToTemplate(CustomValuesCommandArgumentManager * t);
 	void rebuildFromTemplate(bool clearData);
+
+	void addItemInternal(CustomValuesCommandArgument* item, var data) override;
 
 	CustomValuesCommandArgument * addItemWithParam(Parameter * p, var data = var(), bool fromUndoableAction = false);
 	CustomValuesCommandArgument * addItemFromType(Parameter::Type type, var data = var(), bool fromUndoableAction = false);
@@ -44,26 +48,9 @@ public:
 	
 	void removeItemInternal(CustomValuesCommandArgument * i) override;
 
-	void useForMappingChanged(CustomValuesCommandArgument * i = nullptr) override;
-
 	void itemAdded(CustomValuesCommandArgument * i) override; //FROM TEMPLATE
 	void itemRemoved(CustomValuesCommandArgument * i) override; //FROM TEMPLATE
-	void itemsReordered() override;
 	void loadJSONDataInternal(var data) override;
 
 	InspectableEditor * getEditor(bool isRoot) override;
-
-	class  ArgumentManagerListener
-	{
-	public:
-		/** Destructor. */
-		virtual ~ArgumentManagerListener() {}
-		virtual void useForMappingChanged(CustomValuesCommandArgument *) {};
-	};
-
-	ListenerList<ArgumentManagerListener> argumentManagerListeners;
-	void addArgumentManagerListener(ArgumentManagerListener* newListener) { argumentManagerListeners.add(newListener); }
-	void removeArgumentManagerListener(ArgumentManagerListener* listener) { argumentManagerListeners.remove(listener); }
-
-
 };

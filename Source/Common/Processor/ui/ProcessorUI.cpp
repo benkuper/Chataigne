@@ -10,10 +10,9 @@
 
 #include "ProcessorUI.h"
 
-ProcessorUI::ProcessorUI(Processor * processor) :
-	BaseItemUI<Processor>(processor),
+ProcessorUI::ProcessorUI(Processor * processor, bool showMiniModeBT) :
+	BaseItemUI<Processor>(processor, NONE, showMiniModeBT),
 	baseBGColor(PANEL_COLOR),
-	baseSaturation(1),
 	shouldRepaint(true)
 {
 	item->addAsyncProcessorListener(this);
@@ -27,7 +26,8 @@ ProcessorUI::~ProcessorUI()
 
 void ProcessorUI::updateBGColor()
 {
-	bgColor = baseBGColor.withSaturation(item->forceDisabled?.2f:baseSaturation);
+	bgColor = baseBGColor;
+	if(item->forceDisabled) bgColor = bgColor.withSaturation(bgColor.getSaturation()*.2f);
 	shouldRepaint = true;
 }
 

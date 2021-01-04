@@ -29,6 +29,5 @@ public:
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
 
-	void onContainerTriggerTriggered(Trigger *) override;
-
+	void triggerConsequences(bool triggerTrue, int iterationIndex = 0);
 };

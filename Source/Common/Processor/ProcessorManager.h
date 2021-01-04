@@ -14,12 +14,13 @@
 
 class Mapping;
 class Action;
+class Multiplex;
 
 class ProcessorManager :
 	public BaseManager<Processor>
 {
 public:
-	ProcessorManager(const String &name);
+	ProcessorManager(const String &name, Multiplex * multiplex = nullptr);
 	~ProcessorManager();
 
 	bool forceDisabled;

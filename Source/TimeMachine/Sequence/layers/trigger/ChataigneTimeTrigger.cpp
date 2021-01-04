@@ -23,6 +23,7 @@ ChataigneTimeTrigger::~ChataigneTimeTrigger()
 void ChataigneTimeTrigger::onContainerParameterChangedInternal(Parameter* p)
 {
 	TimeTrigger::onContainerParameterChangedInternal(p);
+
 	if (p == enabled)
 	{
 		csm.setForceDisabled(!enabled->boolValue());
@@ -31,7 +32,7 @@ void ChataigneTimeTrigger::onContainerParameterChangedInternal(Parameter* p)
 
 void ChataigneTimeTrigger::triggerInternal()
 {
-	csm.triggerAll->trigger();
+	csm.triggerAll();
 }
 
 var ChataigneTimeTrigger::getJSONData()

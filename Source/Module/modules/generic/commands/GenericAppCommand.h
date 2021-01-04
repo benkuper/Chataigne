@@ -17,7 +17,7 @@ class GenericAppCommand :
 	public BaseCommand
 {
 public:
-	GenericAppCommand(ChataigneGenericModule* _module, CommandContext context, var params);
+	GenericAppCommand(ChataigneGenericModule* _module, CommandContext context, var params, Multiplex * multiplex = nullptr);
 	~GenericAppCommand();
 
 	enum Type { NEW_SESSION, OPEN_SESSION, CLOSE_APP };
@@ -25,7 +25,7 @@ public:
 
 	FileParameter* file;
 
-	void triggerInternal() override;
+	void triggerInternal(int multiplexIndex) override;
 
-	static BaseCommand* create(ControllableContainer* module, CommandContext context, var params);
+	static BaseCommand* create(ControllableContainer* module, CommandContext context, var params, Multiplex * multiplex = nullptr);
 };

@@ -16,14 +16,12 @@ class Consequence :
 	public BaseCommandHandler
 {
 public:
-	Consequence();
+	Consequence(Multiplex * multiplex = nullptr);
 	virtual ~Consequence();
 
 	bool forceDisabled;
 	
-	virtual void triggerCommand() override;
-
-	//InspectableEditor * getEditor(bool isRoot) override;
+	virtual void triggerCommand(int multiplexIndex = 0) override;
 
 	class ConsequenceListener
 	{

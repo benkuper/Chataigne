@@ -17,11 +17,13 @@
 #include "../Action/Condition/conditions/StandardCondition/StandardCondition.h"
 #include "Common/Processor/Mapping/Mapping.h"
 
-ProcessorManagerUI::ProcessorManagerUI(ProcessorManager * _manager) :
-	BaseManagerUI("Processors", _manager)
+ProcessorManagerUI::ProcessorManagerUI(ProcessorManager * _manager, bool useViewport) :
+	BaseManagerUI("Processors", _manager, useViewport)
 {
 	drawContour = false; 
 	
+	setShowSearchBar(true);
+
 	acceptedDropTypes.add("Action");
 	acceptedDropTypes.add("Mapping");
 	acceptedDropTypes.add("Module");
@@ -77,7 +79,7 @@ void ProcessorManagerUI::itemDropped(const SourceDetails & details)
 					Action * a = dynamic_cast<Action *>(manager->addItem(manager->factory.create("Action")));
 					if (a != nullptr)
 					{
-						StandardCondition * c = dynamic_cast<StandardCondition *>(a->cdm.addItem(a->cdm.factory.create(StandardCondition::getTypeStringStatic())));
+						StandardCondition * c = dynamic_cast<StandardCondition *>(a->cdm.addItem(a->cdm.factory.create(StandardCondition::getTypeStringStatic(false))));
 						Controllable * target = actionInputMenu.getControllableForResult(result);
 						if (c != nullptr) c->sourceTarget->setValueFromTarget(target);
 					}
@@ -161,11 +163,11 @@ void ProcessorManagerUI::addItemFromMenu(Processor* item, bool isFromAddButton, 
 
 	if (Action* a = dynamic_cast<Action*>(item))
 	{
-		a->cdm.addItem(new StandardCondition()); //add one condition by default if done through UI
+		a->cdm.addItem(a->cdm.factory.create(StandardCondition::getTypeStringStatic(a->isMultiplexed()))); //add one condition by default if done through UI
 	}
 	else if (Mapping* m = dynamic_cast<Mapping*>(item))
 	{
-		m->im.addItem(); //add one input by default if done through UI
+		m->im.addItem(m->im.factory.create(MappingInput::getTypeStringStatic(m->isMultiplexed()))); //add one input by default if done through UI
 	}
 }
 

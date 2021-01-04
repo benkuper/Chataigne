@@ -9,7 +9,7 @@
 */
 
 #include "ScriptCommandEditor.h"
-
+/*
 ScriptCommandEditor::ScriptCommandEditor(ScriptCommand * sc, bool isRoot) :
 	GenericControllableContainerEditor(sc, isRoot,false),
 	scriptCommand(sc)
@@ -85,3 +85,4 @@ void ScriptCommandEditor::removeEditorUI(InspectableEditor * i, bool resize)
 	if (mpe != nullptr) mpe->removeMappableListener(this);
 	GenericControllableContainerEditor::removeEditorUI(i);
 }
+*/

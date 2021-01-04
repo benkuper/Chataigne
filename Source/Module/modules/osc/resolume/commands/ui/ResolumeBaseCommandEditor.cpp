@@ -11,7 +11,7 @@
 #include "ResolumeBaseCommandEditor.h"
 
 ResolumeBaseCommandEditor::ResolumeBaseCommandEditor(ResolumeBaseCommand * _command, bool isRoot) :
-	GenericControllableContainerEditor(_command,isRoot),
+	BaseCommandContainerEditor(_command, _command,isRoot),
 	resolumeCommand(_command)
 {
 

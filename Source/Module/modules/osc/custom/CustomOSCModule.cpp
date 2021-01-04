@@ -56,10 +56,11 @@ void CustomOSCModule::processMessageInternal(const OSCMessage & msg)
 			{
 				if (autoAdd->boolValue())
 				{
-					cParentContainer = &valuesCC;
+					ControllableContainer* childContainer = &valuesCC;
+					
 					for (auto& s : addSplit)
 					{
-						ControllableContainer* cc = cParentContainer->getControllableContainerByName(s);
+						ControllableContainer* cc = childContainer->getControllableContainerByName(s);
 						if (cc == nullptr)
 						{
 							cc = new ControllableContainer(s);
@@ -67,10 +68,13 @@ void CustomOSCModule::processMessageInternal(const OSCMessage & msg)
 							cc->saveAndLoadRecursiveData = true;
 							cc->isRemovableByUser = true;
 							cc->includeTriggersInSaveLoad = true;
-							cParentContainer->addChildControllableContainer(cc, true);
-							cParentContainer = cc;
+							childContainer->addChildControllableContainer(cc, true);
 						}
+
+						childContainer = cc;
 					}
+
+					cParentContainer = childContainer;
 				}
 				else
 				{
@@ -80,8 +84,8 @@ void CustomOSCModule::processMessageInternal(const OSCMessage & msg)
 		}
 	}
 
-	//jassert(cParentContainer != nullptr);
 
+	//jassert(cParentContainer != nullptr);
 	//first we remove slashes to allow for simple controllableContainer search
 
 
@@ -126,7 +130,6 @@ void CustomOSCModule::processMessageInternal(const OSCMessage & msg)
 	} else //Standard handling of incoming messages
 	{
 		c = cParentContainer->getControllableByName(cShortName);
-
 		
 		if (c != nullptr) //update existing controllable
 		{

@@ -11,8 +11,8 @@
 #include "GenericControllableCommand.h"
 
 
-GenericControllableCommand::GenericControllableCommand(ChataigneGenericModule * _module, CommandContext context, var params) :
-	BaseCommand(_module, context, params),
+GenericControllableCommand::GenericControllableCommand(ChataigneGenericModule* _module, CommandContext context, var params, Multiplex* multiplex) :
+	BaseCommand(_module, context, params, multiplex),
 	value(nullptr)
 {
 	target = addTargetParameter("Target", "Target to set the value");
@@ -21,59 +21,60 @@ GenericControllableCommand::GenericControllableCommand(ChataigneGenericModule * 
 	action = (Action)(int)params.getProperty("action", SET_VALUE);
 
 	if (action == TRIGGER) target->typesFilter.add(Trigger::getTypeStringStatic());
-	else if(action == SET_VALUE) target->excludeTypesFilter.add(Trigger::getTypeStringStatic());
+	else if (action == SET_VALUE) target->excludeTypesFilter.add(Trigger::getTypeStringStatic());
 }
 
 GenericControllableCommand::~GenericControllableCommand()
 {
 }
 
-void GenericControllableCommand::setValueParameter(Parameter * p)
+void GenericControllableCommand::setValueParameter(Parameter* p)
 {
 	if (!value.wasObjectDeleted() && value != nullptr)
 	{
 		ghostValueData = value->getJSONData();
 		removeControllable(value.get());
-		clearTargetMappingParameters();
 	}
 
-	Parameter * tp = dynamic_cast<Parameter *>(target->target.get());
+	Parameter* tp = dynamic_cast<Parameter*>(target->target.get());
 	if (tp == nullptr) return;
 
 	value = p;
 
 	if (value != nullptr)
 	{
-		addTargetMappingParameterAt(value, 0);
-		addParameter(p);
+		addParameter(value);
 		if (!ghostValueData.isVoid()) value->loadJSONData(ghostValueData);
 		ghostValueData = var();
+
+		linkParamToMappingIndex(value, 0);
 	}
 }
 
 
-void GenericControllableCommand::triggerInternal()
+void GenericControllableCommand::triggerInternal(int multiplexIndex)
 {
-	BaseCommand::triggerInternal();
+	BaseCommand::triggerInternal(multiplexIndex);
 
 	if (target->target == nullptr) return;
 
 	if (action == SET_VALUE)
 	{
 		if (value == nullptr) return;
-		Parameter * p = static_cast<Parameter *>(target->target.get());
-		p->setValue(value->getValue());
-	} else if (action == TRIGGER)
+		Parameter* p = static_cast<Parameter*>(target->target.get());
+		p->setValue(getLinkedValue(value, multiplexIndex));
+	}
+	else if (action == TRIGGER)
 	{
-		Trigger * t = static_cast<Trigger *>(target->target.get());
+		Trigger* t = static_cast<Trigger*>(target->target.get());
 		t->trigger();
 	}
-	
 
-	
+
+
 }
 
-void GenericControllableCommand::onContainerParameterChanged(Parameter * p)
+void GenericControllableCommand::onContainerParameterChanged(Parameter* p)
 {
 	if (p == target)
 	{
@@ -85,21 +86,21 @@ void GenericControllableCommand::onContainerParameterChanged(Parameter * p)
 				if (target->target->type == Controllable::TRIGGER) setValueParameter(nullptr);
 				else
 				{
-					Controllable * c = ControllableFactory::createParameterFrom(target->target);
+					Controllable* c = ControllableFactory::createParameterFrom(target->target);
 					if (c == nullptr)
 					{
 						DBG("Should not be null here");
 						jassertfalse;
 					}
-						
+
 					c->setNiceName("Value");
-					Parameter * tp = dynamic_cast<Parameter *>(c);
+					Parameter* tp = dynamic_cast<Parameter*>(c);
 					setValueParameter(tp);
 				}
 
 			}
 		}
-		
+
 	}
 }
 
@@ -110,7 +111,8 @@ void GenericControllableCommand::loadJSONDataInternal(var data)
 		//DBG("Engine is loading, waiting after load");
 		Engine::mainEngine->addEngineListener(this);
 		dataToLoad = data;
-	} else BaseCommand::loadJSONDataInternal(data);
+	}
+	else BaseCommand::loadJSONDataInternal(data);
 }
 
 void GenericControllableCommand::endLoadFile()
@@ -125,7 +127,7 @@ void GenericControllableCommand::endLoadFile()
 	Engine::mainEngine->removeEngineListener(this);
 }
 
-BaseCommand * GenericControllableCommand::create(ControllableContainer * module, CommandContext context, var params)
+BaseCommand* GenericControllableCommand::create(ControllableContainer* module, CommandContext context, var params, Multiplex* multiplex)
 {
-	return new GenericControllableCommand((ChataigneGenericModule *)module, context, params);
+	return new GenericControllableCommand((ChataigneGenericModule*)module, context, params, multiplex);
 }

@@ -17,7 +17,7 @@ class ScriptCommand :
 	public BaseCommand
 {
 public:
-	ScriptCommand(Module * module, CommandContext context, var data);
+	ScriptCommand(Module * module, CommandContext context, var data, Multiplex* multiplex = nullptr);
 	~ScriptCommand();
 
 	OwnedArray<ControllableContainer> paramContainers;
@@ -56,9 +56,9 @@ public:
 	void createControllablesForContainer (var data, ControllableContainer * cc);
 	Controllable * getControllableForJSONDefinition(const String &name, var def);
 
-	void triggerInternal() override;
+	void triggerInternal(int multiplexIndex) override;
 
-	static BaseCommand * create(ControllableContainer * module, CommandContext context, var params)  { return new ScriptCommand((Module *)module, context, params); }
+	static BaseCommand * create(ControllableContainer * module, CommandContext context, var params, Multiplex * multiplex)  { return new ScriptCommand((Module *)module, context, params, multiplex); }
 
-	InspectableEditor * getEditor(bool isRoot) override;
+	//InspectableEditor * getEditor(bool isRoot) override;
 };

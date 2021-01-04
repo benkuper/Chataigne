@@ -11,8 +11,8 @@
 #include "GPIOCommands.h"
 #include "../GPIOModule.h"
 
-GPIOCommand::GPIOCommand(GPIOModule* m, CommandContext context, var params) :
-    BaseCommand(m, context, params),
+GPIOCommand::GPIOCommand(GPIOModule* m, CommandContext context, var params, Multiplex* multiplex) :
+    BaseCommand(m, context, params, multiplex),
     gpioModule(m),
     valueParam(nullptr)
 {
@@ -34,7 +34,7 @@ GPIOCommand::GPIOCommand(GPIOModule* m, CommandContext context, var params) :
 
     if (valueParam != nullptr)
     {
-        addTargetMappingParameterAt(valueParam, 0);
+        linkParamToMappingIndex(valueParam, 0);
     }
 }
 
@@ -42,16 +42,16 @@ GPIOCommand::~GPIOCommand()
 {
 }
 
-void GPIOCommand::triggerInternal()
+void GPIOCommand::triggerInternal(int multiplexIndex)
 {
     switch (action)
     {
     case SET_DIGITAL:
-        gpioModule->setDigitalValue(pin->intValue(), valueParam->boolValue());
+        gpioModule->setDigitalValue(getLinkedValue(pin, multiplexIndex), getLinkedValue(valueParam, multiplexIndex));
         break;
 
     case SET_PWM:
-        gpioModule->setPWMValue(pin->intValue(), valueParam->floatValue());
+        gpioModule->setPWMValue(getLinkedValue(pin, multiplexIndex), getLinkedValue(valueParam, multiplexIndex));
         break;
     }
 }

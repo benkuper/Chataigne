@@ -12,7 +12,7 @@
 #include "../SequenceModule.h"
 #include "TimeMachine/ChataigneSequenceManager.h"
 
-SequenceAudioCommand::SequenceAudioCommand(SequenceModule* _module, CommandContext context, var params) :
+SequenceAudioCommand::SequenceAudioCommand(SequenceModule* _module, CommandContext context, var params, Multiplex * multiplex) :
 	BaseCommand(_module, context, params),
 	sequenceModule(_module),
 	value(nullptr)
@@ -44,7 +44,7 @@ SequenceAudioCommand::SequenceAudioCommand(SequenceModule* _module, CommandConte
 		break;
 	}
 
-	if (value != nullptr) addTargetMappingParameterAt(value, 0);
+	if (value != nullptr) linkParamToMappingIndex(value, 0);
 
 	stopAtFinish = addBoolParameter("Stop at Finish", "If enabled, will stop the sequence when finished", false);
 }
@@ -53,7 +53,7 @@ SequenceAudioCommand::~SequenceAudioCommand()
 {
 }
 
-void SequenceAudioCommand::triggerInternal()
+void SequenceAudioCommand::triggerInternal(int multiplexIndex)
 {
 	switch (actionType)
 	{
@@ -90,7 +90,7 @@ void SequenceAudioCommand::endLoadFile()
 	Engine::mainEngine->removeEngineListener(this);
 }
 
-BaseCommand* SequenceAudioCommand::create(ControllableContainer* module, CommandContext context, var params)
+BaseCommand* SequenceAudioCommand::create(ControllableContainer* module, CommandContext context, var params, Multiplex * multiplex)
 {
-	return new SequenceAudioCommand((SequenceModule*)module, context, params);
+	return new SequenceAudioCommand((SequenceModule*)module, context, params, multiplex);
 }

@@ -10,31 +10,33 @@
 
 #pragma once
 
-#include "JuceHeader.h"
-#include "Comparator/BaseComparator.h"
+#include "../../Multiplex/Multiplex.h"
 
 class Condition :
 	public BaseItem,
-	public BaseComparator::ComparatorListener
+	public MultiplexTarget
 {
 public:
-	Condition(const String &name = "Condition", var params = var());
+	Condition(const String &name = "Condition", var params = var(), Multiplex * = nullptr);
 	virtual ~Condition();
 
 	bool forceDisabled;
+	Array<bool> isValids; //this could be simplified for non-iterative condition
 
-	BoolParameter * isValid;
+	virtual void multiplexCountChanged();
+
+	bool getIsValid(int multiplexIndex = 0);
+	virtual void setValid(int multiplexIndex, bool value, bool dispatchOnChangeOnly = true);
+
 	virtual void onContainerParameterChangedInternal(Parameter *) override;
-
 	virtual void setForceDisabled(bool value, bool force = false);
-
 	virtual void forceCheck() {}
 
 	class ConditionListener
 	{
 	public:
 		virtual ~ConditionListener() {}
-		virtual void conditionValidationChanged(Condition *) {}
+		virtual void conditionValidationChanged(Condition *, int multiplexIndex) {}
 		virtual void conditionSourceChanged(Condition *) {}
 	};
 
@@ -46,18 +48,18 @@ public:
 	class ConditionEvent {
 	public:
 		enum Type { VALIDATION_CHANGED, SOURCE_CHANGED };
-		ConditionEvent(Type type, Condition * c) : type(type), condition(c) {}
+		ConditionEvent(Type type, Condition* c, int multiplexIndex = -1) : type(type), condition(c), multiplexIndex(multiplexIndex) {}
 		Type type;
 		Condition * condition;
+		int multiplexIndex;
 	};
+
 	QueuedNotifier<ConditionEvent> conditionAsyncNotifier;
 	typedef QueuedNotifier<ConditionEvent>::Listener AsyncListener;
-
 
 	void addAsyncConditionListener(AsyncListener* newListener) { conditionAsyncNotifier.addListener(newListener); }
 	void addAsyncCoalescedConditionListener(AsyncListener* newListener) { conditionAsyncNotifier.addAsyncCoalescedListener(newListener); }
 	void removeAsyncConditionListener(AsyncListener* listener) { conditionAsyncNotifier.removeListener(listener); }
-
 
 	virtual String getTypeString() const override { jassert(false); return "error"; }
 
