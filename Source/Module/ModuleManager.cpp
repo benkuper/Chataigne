@@ -9,6 +9,8 @@
 */
 
 #include "ModuleManager.h"
+#include "ModuleFactory.h"
+
 #include "StateMachine/StateManager.h"
 #include "TimeMachine/ChataigneSequenceManager.h"
 #include "CustomVariables/CVGroupManager.h"
@@ -25,7 +27,9 @@ ModuleManager::ModuleManager() :
 	itemDataType = "Module";
 	helpID = "Modules";
 	showInspectorOnSelect = false;
-	managerFactory = &factory;
+
+	factory.reset(new ModuleFactory());
+	managerFactory = factory.get();
 
 	ControllableFactory::getInstance()->controllableDefs.add(new ControllableDefinition(MIDIValueParameter::getTypeStringStatic(), &MIDIValueParameter::create, true));
 	ControllableFactory::getInstance()->controllableDefs.add(new ControllableDefinition(DMXValueParameter::getTypeStringStatic(), &DMXValueParameter::create, true));

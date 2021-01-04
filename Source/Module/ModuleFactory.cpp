@@ -109,17 +109,34 @@ ModuleFactory::ModuleFactory() {
 
 	addCustomModules();
 	buildPopupMenu();
+
+	Engine::mainEngine->addEngineListener(this);
+}
+
+ModuleFactory::~ModuleFactory()
+{
+	if (Engine::mainEngine != nullptr) Engine::mainEngine->removeEngineListener(this);
 }
 
 void ModuleFactory::addCustomModules()
 {
-	Array<File> modulesList;
-
 	File modulesFolder = getCustomModulesFolder();
 	modulesFolder.createDirectory();
+	addCustomModulesInFolder(modulesFolder, false);
+	
+	File f = Engine::mainEngine->getFile();
+	if (f.existsAsFile())
+	{
+		File mf = Engine::mainEngine->getFile().getParentDirectory().getChildFile("modules");
+		if (mf.isDirectory()) addCustomModulesInFolder(mf, true);
+	}
+}
 
-	modulesFolder.findChildFiles(modulesList, File::findDirectories, false);
-	for (auto &m : modulesList)
+void ModuleFactory::addCustomModulesInFolder(File folder, bool isLocal)
+{
+	Array<File> modulesList;
+	folder.findChildFiles(modulesList, File::findDirectories, false);
+	for (auto& m : modulesList)
 	{
 		File moduleFile = m.getChildFile("module.json");
 		if (!moduleFile.existsAsFile())
@@ -137,23 +154,25 @@ void ModuleFactory::addCustomModules()
 		}
 
 		moduleData.getDynamicObject()->setProperty("modulePath", m.getFullPathName());
-		
+
 		String moduleName = moduleData.getProperty("name", "");
 		String moduleType = moduleData.getProperty("type", "");
 		String moduleMenuPath = moduleData.getProperty("path", "");
 
 		if (moduleName.isNotEmpty() && moduleType.isNotEmpty())
 		{
-			
+
 			if (ModuleDefinition* sourceDef = getDefinitionForType(moduleType))
 			{
-				LOG("Found custom module : " << moduleMenuPath << ":" << moduleName);
+				LOG("Found custom module : " << moduleMenuPath << ":" << moduleName << (isLocal ? " (local)" : ""));
+
 				ModuleDefinition* def = new ModuleDefinition(moduleMenuPath, moduleName, sourceDef->createFunc);
 				defs.add(def);
 				customModulesDefMap.set(moduleName, def);
 				def->customModuleData = moduleData;
 				def->moduleFolder = m;
 				def->isCustomModule = true;
+				def->isLocalModule = isLocal;
 
 				Image img = ImageCache::getFromFile(m.getChildFile("icon.png"));
 				if (img.isValid()) def->addIcon(img);
@@ -164,7 +183,6 @@ void ModuleFactory::addCustomModules()
 				continue;
 			}
 		}
-		
 	}
 }
 
@@ -234,7 +252,9 @@ void ModuleFactory::buildPopupMenu()
 			subMenus[subMenuIndex]->addSectionHeader("Community Modules");
 		}
 
-		subMenus[subMenuIndex]->addItem(itemID, md->type, true, false, md->icon); 
+		String label = md->type;
+		if (md->isLocalModule) label += " (local)";
+		subMenus[subMenuIndex]->addItem(itemID, label, true, false, md->icon);
 		lastDefIsCustom.set(subMenuIndex, md->isCustomModule);
 	}
 
@@ -283,13 +303,18 @@ Module* ModuleFactory::create(BaseFactoryDefinition<Module>* def)
 	return m;
 }
 
+void ModuleFactory::startLoadFile()
+{
+	updateCustomModules();
+}
 
 
 //DEFINITION
 ModuleDefinition::ModuleDefinition(const String& menuPath, const String& type, std::function<Module* ()> createFunc, var customModuleData, bool isCustomModule) :
 	FactoryDefinition(menuPath, type, createFunc),
 	customModuleData(customModuleData),
-	isCustomModule(isCustomModule)
+	isCustomModule(isCustomModule),
+	isLocalModule(false)
 {
 	int numBytes = 0;
 	const char* iconData = BinaryData::getNamedResource((type.replace(" ", "_") + "_png").getCharPointer(), numBytes);

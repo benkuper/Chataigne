@@ -11,6 +11,7 @@
 #include "CommunityModuleInfo.h"
 #include "ui/CommunityModuleInfoEditor.h"
 #include "Module/ModuleManager.h"
+#include "Module/ModuleFactory.h"
 
 CommunityModuleInfo::CommunityModuleInfo(StringRef name, var onlineData) :
 	BaseItem(name, false)
@@ -18,6 +19,7 @@ CommunityModuleInfo::CommunityModuleInfo(StringRef name, var onlineData) :
 	nameCanBeChangedByUser = false;
 	userCanRemove = false;
 	canBeReorderedInEditor = false;
+	editorIsCollapsed = true;
 
 	installTriger = addTrigger("Install", "Install or Update this module");
 	uninstallTrigger = addTrigger("Uninstall", "Uninstall this module");	
@@ -64,10 +66,10 @@ File CommunityModuleInfo::getDownloadFilePath()
 
 void CommunityModuleInfo::updateLocalData()
 {
-	var localData = ModuleManager::getInstance()->factory.getCustomModuleInfo(niceName);
+	var localData = ModuleManager::getInstance()->factory->getCustomModuleInfo(niceName);
 	
 	localVersion = localData.getProperty("version", "Unknown");
-	localModuleFolder = ModuleManager::getInstance()->factory.getFolderForCustomModule(niceName);
+	localModuleFolder = ModuleManager::getInstance()->factory->getFolderForCustomModule(niceName);
 
 	installTriger->setEnabled(onlineVersion != localVersion);
 
@@ -85,9 +87,8 @@ void CommunityModuleInfo::onContainerTriggerTriggered(Trigger * t)
 		int result = AlertWindow::showOkCancelBox(AlertWindow::QuestionIcon, "Remove custom module", "Are you sure you want to remove this custom module ?", "Yes", "No");
 		if (result)
 		{
-			DBG("Local folder exists ? " << localModuleFolder.getFullPathName() << " : " << (int)localModuleFolder.exists());
 			if (localModuleFolder.exists()) localModuleFolder.deleteRecursively();
-			ModuleManager::getInstance()->factory.updateCustomModules();
+			ModuleManager::getInstance()->factory->updateCustomModules();
 
 			updateLocalData();
 		}
@@ -104,15 +105,15 @@ void CommunityModuleInfo::finished(URL::DownloadTask * task, bool success)
 	}
 
 	File moduleFile = getDownloadFilePath();
-	File modulesDir = ModuleManager::getInstance()->factory.getCustomModulesFolder();
+	File modulesDir = ModuleManager::getInstance()->factory->getCustomModulesFolder();
 
 	if (localModuleFolder.exists()) localModuleFolder.deleteRecursively();
 
 	ZipFile zip(moduleFile);
 	zip.uncompressTo(modulesDir);
 
-	ModuleManager::getInstance()->factory.updateCustomModules();
-	localModuleFolder = ModuleManager::getInstance()->factory.getFolderForCustomModule(niceName);
+	ModuleManager::getInstance()->factory->updateCustomModules();
+	localModuleFolder = ModuleManager::getInstance()->factory->getFolderForCustomModule(niceName);
 	
 	updateLocalData();
 }

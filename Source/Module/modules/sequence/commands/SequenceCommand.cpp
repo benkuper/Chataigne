@@ -12,7 +12,7 @@
 #include "SequenceCommand.h"
 #include "TimeMachine/ChataigneSequenceManager.h"
 
-SequenceCommand::SequenceCommand(SequenceModule* _module, CommandContext context, var params, Multiplex * multiplex) :
+SequenceCommand::SequenceCommand(SequenceModule* _module, CommandContext context, var params, Multiplex* multiplex) :
 	BaseCommand(_module, context, params),
 	sequenceModule(_module),
 	target(nullptr)
@@ -58,7 +58,7 @@ SequenceCommand::SequenceCommand(SequenceModule* _module, CommandContext context
 		target->customGetTargetContainerFunc = &ChataigneSequenceManager::showMenuAndGetSequenceStatic;
 
 		value = addFloatParameter("Time", "Target time to set", 0);
-		value->defaultUI = FloatParameter::TIME;
+		((FloatParameter*)value)->defaultUI = FloatParameter::TIME;
 		linkParamToMappingIndex(value, 0);
 
 		playFromStart = addBoolParameter("Play", "If enabled, will force playing the sequence after setting the time", false);
@@ -67,6 +67,11 @@ SequenceCommand::SequenceCommand(SequenceModule* _module, CommandContext context
 	case GOTO_CUE:
 		target->customGetTargetContainerFunc = &ChataigneSequenceManager::showMenuAndGetCueStatic;
 		playFromStart = addBoolParameter("Play", "If enabled, will force playing the sequence after setting the time to the cue", false);
+		break;
+
+	case SET_TRIGGER_ENABLED:
+		target->customGetTargetContainerFunc = &ChataigneSequenceManager::showMenuAndGetTriggerStatic;
+		value = addBoolParameter("Value", "The enable state to set this trigger", true);
 		break;
 
 	default:
@@ -87,7 +92,7 @@ void SequenceCommand::triggerInternal(int multiplexIndex)
 		if (target->targetContainer == nullptr) return;
 		if (target->targetContainer.wasObjectDeleted()) return;
 	}
-	
+
 	switch (actionType)
 	{
 
@@ -98,7 +103,6 @@ void SequenceCommand::triggerInternal(int multiplexIndex)
 
 	case PLAY_MULTI_SEQUENCES:
 	{
-
 		int numSequences = ChataigneSequenceManager::getInstance()->items.size();
 		if (currentSequenceIndex->intValue() < numSequences)
 		{
@@ -151,18 +155,24 @@ void SequenceCommand::triggerInternal(int multiplexIndex)
 	{
 		Sequence* s = (Sequence*)target->targetContainer.get();
 		float t = actionType == SET_TIME ? 0 : s->currentTime->floatValue();
-		s->setCurrentTime(t + value->floatValue(), true, true);
+		s->setCurrentTime(t + (float)getLinkedValue(value, multiplexIndex), true, true);
 		if (playFromStart->boolValue()) ((Sequence*)target->targetContainer.get())->playTrigger->trigger();
 	}
 	break;
 
 	case GOTO_CUE:
-		TimeCue* cue = dynamic_cast<TimeCue*>(target->targetContainer.get());
-		if (cue != nullptr)
+		if (TimeCue* cue = dynamic_cast<TimeCue*>(target->targetContainer.get()))
 		{
 			Sequence* s = cue->getSequence();
 			s->setCurrentTime(cue->time->floatValue(), true, true);
 			if (playFromStart->boolValue()) s->playTrigger->trigger();
+		}
+		break;
+
+	case SET_TRIGGER_ENABLED:
+		if (TimeTrigger* tt = dynamic_cast<TimeTrigger*>(target->targetContainer.get()))
+		{
+			tt->enabled->setValue(getLinkedValue(value, multiplexIndex));
 		}
 		break;
 	}
@@ -196,7 +206,7 @@ void SequenceCommand::loadJSONDataInternal(var data)
 void SequenceCommand::endLoadFile()
 {
 	//reset data we want to reload
-	if(target != nullptr) target->setValue("", true);
+	if (target != nullptr) target->setValue("", true);
 
 	loadJSONData(dataToLoad);
 	dataToLoad = var();
@@ -206,7 +216,7 @@ void SequenceCommand::endLoadFile()
 }
 
 
-BaseCommand* SequenceCommand::create(ControllableContainer* module, CommandContext context, var params, Multiplex * multiplex) {
+BaseCommand* SequenceCommand::create(ControllableContainer* module, CommandContext context, var params, Multiplex* multiplex) {
 	return new SequenceCommand((SequenceModule*)module, context, params, multiplex);
 }
 

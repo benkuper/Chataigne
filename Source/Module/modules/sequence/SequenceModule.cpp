@@ -27,7 +27,8 @@ SequenceModule::SequenceModule(ChataigneSequenceManager * _manager) :
 	defManager->add(createBaseDefinition("Layer", "Enable Layer",CommandContext::ACTION, SequenceCommand::ENABLE_LAYER));
 	defManager->add(createBaseDefinition("Layer", "Disable layer", CommandContext::ACTION, SequenceCommand::DISABLE_LAYER));
 	defManager->add(createBaseDefinition("Layer", "Toggle layer", CommandContext::ACTION, SequenceCommand::TOGGLE_LAYER));
-	defManager->add(CommandDefinition::createDef(this, "Audio","Set Layer Volume", &SequenceAudioCommand::create, CommandContext::BOTH)->addParam("type", SequenceAudioCommand::SET_VOLUME));
+	defManager->add(CommandDefinition::createDef(this, "Audio", "Set Layer Volume", &SequenceAudioCommand::create, CommandContext::BOTH)->addParam("type", SequenceAudioCommand::SET_VOLUME));
+	defManager->add(CommandDefinition::createDef(this, "Trigger","Set Trigger Enable", &SequenceCommand::create, CommandContext::BOTH)->addParam("type", SequenceCommand::SET_TRIGGER_ENABLED));
 }
 
 SequenceModule::~SequenceModule()

@@ -22,7 +22,7 @@ public:
 	SequenceCommand(SequenceModule * _module, CommandContext context, var params, Multiplex * multiplex = nullptr);
 	virtual ~SequenceCommand();
 
-	enum ActionType { PLAY_SEQUENCE, PLAY_MULTI_SEQUENCES, PAUSE_SEQUENCE, STOP_SEQUENCE, STOP_ALL_SEQUENCES, TOGGLE_SEQUENCE, ENABLE_LAYER, DISABLE_LAYER, TOGGLE_LAYER, SET_TIME, MOVE_TIME, GOTO_CUE};
+	enum ActionType { PLAY_SEQUENCE, PLAY_MULTI_SEQUENCES, PAUSE_SEQUENCE, STOP_SEQUENCE, STOP_ALL_SEQUENCES, TOGGLE_SEQUENCE, ENABLE_LAYER, DISABLE_LAYER, TOGGLE_LAYER, SET_TIME, MOVE_TIME, GOTO_CUE, SET_TRIGGER_ENABLED };
 
 	ActionType actionType;
 	SequenceModule * sequenceModule;
@@ -36,7 +36,7 @@ public:
 	Trigger* resetIncrement;
 
 	TargetParameter * target;
-	FloatParameter * value;
+	Parameter * value;
 
 	var dataToLoad;
 

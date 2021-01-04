@@ -15,6 +15,7 @@
 #include "Guider/Guider.h"
 #include "Module/Community/CommunityModuleManager.h"
 #include "Module/ModuleManager.h"
+#include "Module/ModuleFactory.h"
 
 namespace ChataigneCommandIDs
 {
@@ -215,7 +216,7 @@ bool MainContentComponent::perform(const InvocationInfo& info)
 		break;
 
 	case ChataigneCommandIDs::reloadCustomModules:
-		ModuleManager::getInstance()->factory.updateCustomModules();
+		ModuleManager::getInstance()->factory->updateCustomModules();
 		break;
 
 	case ChataigneCommandIDs::exitGuide:

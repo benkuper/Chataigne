@@ -23,6 +23,7 @@ ChataigneTimeTrigger::~ChataigneTimeTrigger()
 void ChataigneTimeTrigger::onContainerParameterChangedInternal(Parameter* p)
 {
 	TimeTrigger::onContainerParameterChangedInternal(p);
+
 	if (p == enabled)
 	{
 		csm.setForceDisabled(!enabled->boolValue());
