@@ -102,8 +102,8 @@ void MIDINoteAndCCCommand::triggerInternal(int multiplexIndex)
 	if (type == CONTROLCHANGE || type == PROGRAMCHANGE) pitch = getLinkedValue(number, multiplexIndex);
 	else if(type == NOTE_ON || type == NOTE_OFF || type == FULL_NOTE || type == AFTER_TOUCH) pitch = (int)noteEnum->getValueData() + ((int)getLinkedValue(octave, multiplexIndex) - (int)octave->minimumValue) * 12;
 
-	int chanVal = channel != nullptr ? getLinkedValue(channel, multiplexIndex) : 0;
-	int velVal = velocity != nullptr ? getLinkedValue(velocity, multiplexIndex) : 0;
+	int chanVal = channel != nullptr ? (int)getLinkedValue(channel, multiplexIndex) : 0;
+	int velVal = velocity != nullptr ? (int)getLinkedValue(velocity, multiplexIndex) : 0;
 
 	switch(type)
 	{
