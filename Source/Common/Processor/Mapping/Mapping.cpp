@@ -315,15 +315,20 @@ void Mapping::run()
 
 	while (!threadShouldExit())
 	{
-		if ((canBeDisabled && !enabled->boolValue()) || forceDisabled) continue;
+		uint32 rateMillis = 1000 / updateRate->intValue();
 		
+		if ((canBeDisabled && !enabled->boolValue()) || forceDisabled)
+		{
+			sleep(rateMillis);
+			continue;
+		}
+
 		millis = Time::getMillisecondCounter();
 		
 		for (int i = 0; i < getMultiplexCount(); i++) process(false, i);
 
 		uint32 newMillis = Time::getMillisecondCounter();
 
-		uint32 rateMillis = 1000 / updateRate->intValue();
 
 		uint32 millisToWait = rateMillis - jmax<uint32>(newMillis - millis, 0);
 		millis = newMillis;
