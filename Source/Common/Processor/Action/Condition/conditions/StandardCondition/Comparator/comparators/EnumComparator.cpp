@@ -18,7 +18,7 @@ EnumComparator::EnumComparator(Parameter * sourceParam)
 	for (auto &ev : ep->enumValues) enumRef->addOption(ev->key, ev->value);
 
 	addCompareOption("=", equalsId);
-	addCompareOption("!=", equalsId);
+	addCompareOption("!=", differentId);
 
 	enumRef->setValue(ep->value, false, true, true);
 
