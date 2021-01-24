@@ -58,7 +58,6 @@ void MTCReceiver::fullFrameTimecodeReceived(const MidiMessage& m)
 	case MidiMessage::fps30drop: divider = 29.997;
 	}
 
-	
 	mtcListeners.call(&MTCListener::mtcTimeUpdated, true);
 
 }
@@ -94,7 +93,7 @@ void MTCReceiver::quarterFrameTimecodeReceived(const MidiMessage& m)
 			mtcListeners.call(&MTCListener::mtcStarted);
 		}
 
-		startTimer((1000/divider)*2);
+		startTimerHz(divider /  5);
 	}
 
 	mtcListeners.call(&MTCListener::mtcTimeUpdated, false);

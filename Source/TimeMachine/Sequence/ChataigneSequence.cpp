@@ -196,7 +196,6 @@ void ChataigneSequence::onContainerParameterChangedInternal(Parameter* p)
 			}
 		}
 	}
-
 }
 
 void ChataigneSequence::onContainerTriggerTriggered(Trigger* t)
@@ -215,16 +214,19 @@ void ChataigneSequence::onExternalParameterValueChanged(Parameter* p)
 
 void ChataigneSequence::mtcStarted()
 {
-	isPlaying->setValue(true);
+	playTrigger->trigger();
 }
 
 void ChataigneSequence::mtcStopped()
 {
-	isPlaying->setValue(false);
+	stopTrigger->trigger();
 }
 
 void ChataigneSequence::mtcTimeUpdated(bool isFullFrame)
 {
+	if (mtcReceiver == nullptr) return;
+
 	double time = mtcReceiver->getTime();
-	setCurrentTime(time, true, isFullFrame);
+	double diff = fabsf(currentTime->floatValue() - mtcReceiver->getTime());
+	setCurrentTime(time, diff > 0.1, isFullFrame && !mtcReceiver->isPlaying);
 }
