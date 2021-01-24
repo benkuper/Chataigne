@@ -8811,17 +8811,17 @@
 				);
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				HEADER_SEARCH_PATHS = (
-					"../../JuceLibraryCode",
-					"../../JUCE/modules",
-					"../../Modules",
-					"../../External/wiiuse",
-					"../../External/serial/include",
-					"../../External/servus/include",
-					"../../External/dnssd/include",
-					"../../External/joycon/include",
-					"../../External/sdl/include",
-					"../../External/hidapi/include",
-					"../../Source",
+					"$(SRCROOT)/../../JuceLibraryCode",
+					"$(SRCROOT)/../../JUCE/modules",
+					"$(SRCROOT)/../../Modules",
+					"$(SRCROOT)/../../External/wiiuse",
+					"$(SRCROOT)/../../External/serial/include",
+					"$(SRCROOT)/../../External/servus/include",
+					"$(SRCROOT)/../../External/dnssd/include",
+					"$(SRCROOT)/../../External/joycon/include",
+					"$(SRCROOT)/../../External/sdl/include",
+					"$(SRCROOT)/../../External/hidapi/include",
+					"$(SRCROOT)/../../Source",
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = Info-App.plist;
@@ -8835,22 +8835,23 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				MTL_HEADER_SEARCH_PATHS = (
-					"../../JuceLibraryCode",
-					"../../JUCE/modules",
-					"../../Modules",
-					"../../External/wiiuse",
-					"../../External/serial/include",
-					"../../External/servus/include",
-					"../../External/dnssd/include",
-					"../../External/joycon/include",
-					"../../External/sdl/include",
-					"../../External/hidapi/include",
-					"../../Source",
+					"$(SRCROOT)/../../JuceLibraryCode",
+					"$(SRCROOT)/../../JUCE/modules",
+					"$(SRCROOT)/../../Modules",
+					"$(SRCROOT)/../../External/wiiuse",
+					"$(SRCROOT)/../../External/serial/include",
+					"$(SRCROOT)/../../External/servus/include",
+					"$(SRCROOT)/../../External/dnssd/include",
+					"$(SRCROOT)/../../External/joycon/include",
+					"$(SRCROOT)/../../External/sdl/include",
+					"$(SRCROOT)/../../External/hidapi/include",
+					"$(SRCROOT)/../../Source",
 				);
 				OTHER_LDFLAGS = "-lServus -lhidapi -ljoytime-core -ljoytime-input-hidapi -lSDL2 -liconv";
 				PRODUCT_BUNDLE_IDENTIFIER = benkuper.Chataigne;
 				PRODUCT_NAME = "Chataigne";
 				USE_HEADERMAP = NO;
+				VALIDATE_WORKSPACE_SKIPPED_SDK_FRAMEWORKS = OpenGL;
 				VALID_ARCHS = "x86_64";
 			};
 			name = Debug;
@@ -8886,17 +8887,17 @@
 				);
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				HEADER_SEARCH_PATHS = (
-					"../../JuceLibraryCode",
-					"../../JUCE/modules",
-					"../../Modules",
-					"../../External/wiiuse",
-					"../../External/serial/include",
-					"../../External/servus/include",
-					"../../External/dnssd/include",
-					"../../External/joycon/include",
-					"../../External/sdl/include",
-					"../../External/hidapi/include",
-					"../../Source",
+					"$(SRCROOT)/../../JuceLibraryCode",
+					"$(SRCROOT)/../../JUCE/modules",
+					"$(SRCROOT)/../../Modules",
+					"$(SRCROOT)/../../External/wiiuse",
+					"$(SRCROOT)/../../External/serial/include",
+					"$(SRCROOT)/../../External/servus/include",
+					"$(SRCROOT)/../../External/dnssd/include",
+					"$(SRCROOT)/../../External/joycon/include",
+					"$(SRCROOT)/../../External/sdl/include",
+					"$(SRCROOT)/../../External/hidapi/include",
+					"$(SRCROOT)/../../Source",
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = Info-App.plist;
@@ -8911,22 +8912,23 @@
 				LLVM_LTO = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				MTL_HEADER_SEARCH_PATHS = (
-					"../../JuceLibraryCode",
-					"../../JUCE/modules",
-					"../../Modules",
-					"../../External/wiiuse",
-					"../../External/serial/include",
-					"../../External/servus/include",
-					"../../External/dnssd/include",
-					"../../External/joycon/include",
-					"../../External/sdl/include",
-					"../../External/hidapi/include",
-					"../../Source",
+					"$(SRCROOT)/../../JuceLibraryCode",
+					"$(SRCROOT)/../../JUCE/modules",
+					"$(SRCROOT)/../../Modules",
+					"$(SRCROOT)/../../External/wiiuse",
+					"$(SRCROOT)/../../External/serial/include",
+					"$(SRCROOT)/../../External/servus/include",
+					"$(SRCROOT)/../../External/dnssd/include",
+					"$(SRCROOT)/../../External/joycon/include",
+					"$(SRCROOT)/../../External/sdl/include",
+					"$(SRCROOT)/../../External/hidapi/include",
+					"$(SRCROOT)/../../Source",
 				);
 				OTHER_LDFLAGS = "-lServus -lhidapi -ljoytime-core -ljoytime-input-hidapi -lSDL2 -liconv";
 				PRODUCT_BUNDLE_IDENTIFIER = benkuper.Chataigne;
 				PRODUCT_NAME = "Chataigne";
 				USE_HEADERMAP = NO;
+				VALIDATE_WORKSPACE_SKIPPED_SDK_FRAMEWORKS = OpenGL;
 				VALID_ARCHS = "x86_64";
 			};
 			name = Release;
@@ -9432,7 +9434,7 @@
 		CFE62146BE7CC7A0837B591F = {
 			isa = PBXProject;
 			buildConfigurationList = 3B0D3344B40620C12AA6A54C;
-			attributes = { LastUpgradeCheck = 1200; ORGANIZATIONNAME = "Ben Kuper"; TargetAttributes = { DD2989001B2BF710FEA75ED3 = { SystemCapabilities = {com.apple.ApplicationGroups.iOS = { enabled = 0; }; com.apple.InAppPurchase = { enabled = 0; }; com.apple.InterAppAudio = { enabled = 0; }; com.apple.Push = { enabled = 0; }; com.apple.Sandbox = { enabled = 0; }; com.apple.HardenedRuntime = { enabled = 0; }; }; }; }; };
+			attributes = { LastUpgradeCheck = 1230; ORGANIZATIONNAME = "Ben Kuper"; TargetAttributes = { DD2989001B2BF710FEA75ED3 = { SystemCapabilities = {com.apple.ApplicationGroups.iOS = { enabled = 0; }; com.apple.InAppPurchase = { enabled = 0; }; com.apple.InterAppAudio = { enabled = 0; }; com.apple.Push = { enabled = 0; }; com.apple.Sandbox = { enabled = 0; }; com.apple.HardenedRuntime = { enabled = 0; }; }; }; }; };
 			compatibilityVersion = "Xcode 3.2";
 			hasScannedForEncodings = 0;
 			mainGroup = 23E340667277B00F1D02C3F0;
