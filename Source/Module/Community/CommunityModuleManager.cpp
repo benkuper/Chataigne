@@ -31,7 +31,7 @@ CommunityModuleManager::~CommunityModuleManager()
 void CommunityModuleManager::run()
 {
 	sleep(500);
-	var data = getJSONDataForURL(URL("http://benjamin.kuperberg.fr/chataigne/releases/modules.json"));
+	var data = getJSONDataForURL(URL("https://benjamin.kuperberg.fr/chataigne/releases/modules.json"));
 	
 	if (threadShouldExit()) return;
 
@@ -93,19 +93,21 @@ var CommunityModuleManager::getJSONDataForURL(URL url)
 	}
 #endif
 
-
+    
 	if (stream != nullptr)
 	{
 		String content = stream->readEntireStreamAsString();
 		var data = JSON::parse(content);
 		return data;
-	}
+    }else{
+        DBG("Error with url request : " << statusCode);
+    }
 
 	return var();
 }
 
 bool CommunityModuleManager::openStreamProgressCallback(void* context, int, int)
 {
-	auto thread = static_cast<Thread*> (context);
+	auto thread = (CommunityModuleManager *)context;
 	return !thread->threadShouldExit();
 }
