@@ -187,7 +187,7 @@ void Mapping::process(bool forceOutput, int multiplexIndex)
 		{
 			Array<Parameter*> filteredParameters = fm.getLastFilteredParameters(multiplexIndex);
 
-			ControllableContainer* outCC = isMultiplexed() ? outValuesCC.controllableContainers[multiplexIndex] : &outValuesCC;
+			ControllableContainer* outCC = isMultiplexed() ? outValuesCC.controllableContainers[multiplexIndex].get() : &outValuesCC;
 			for (int i = 0; i < filteredParameters.size(); i++)
 			{
 				if (Parameter* fp = filteredParameters[i])
