@@ -24,9 +24,9 @@ ConvertedParameterEditor::ConvertedParameterEditor(ConvertedParameter* cp, bool 
 		}
 	}
 
-	if (cp->outParamReference != nullptr && !cp->outParamReference.wasObjectDeleted())
+	if (cp->outParamReferences[0] != nullptr && !cp->outParamReferences[0].wasObjectDeleted())
 	{
-		outParamUI.reset((ParameterUI*)cp->outParamReference->createDefaultUI());
+		outParamUI.reset((ParameterUI*)cp->outParamReferences[0]->createDefaultUI());
 		outParamUI->showLabel = false;
 		addAndMakeVisible(outParamUI.get());
 	}
@@ -106,9 +106,9 @@ void ConvertedParameterEditor::newMessage(const ConvertedParameter::CPEvent& e)
 	if (e.type == ConvertedParameter::CPEvent::OUT_PARAM_CHANGED)
 	{
 		if (outParamUI != nullptr) removeChildComponent(outParamUI.get());
-		if (cp->outParamReference != nullptr && !cp->outParamReference.wasObjectDeleted())
+		if (cp->outParamReferences[0] != nullptr && !cp->outParamReferences[0].wasObjectDeleted())
 		{
-			outParamUI.reset((ParameterUI*)cp->outParamReference->createDefaultUI());
+			outParamUI.reset((ParameterUI*)cp->outParamReferences[0]->createDefaultUI());
 			outParamUI->showLabel = false;
 			addAndMakeVisible(outParamUI.get());
 			resized();

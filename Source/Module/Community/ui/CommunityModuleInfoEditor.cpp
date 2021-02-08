@@ -35,17 +35,19 @@ CommunityModuleInfoEditor::CommunityModuleInfoEditor(CommunityModuleInfo * cmi, 
 	versionsLabel.setFont(12);
 	versionsLabel.setJustificationType(Justification::centredRight);
 
-	addAndMakeVisible(&description);
-	addAndMakeVisible(&urlLabel);
-	addAndMakeVisible(&versionsLabel);
-
 	
 	installBT.reset(cmi->installTriger->createButtonUI());
-	addAndMakeVisible(installBT.get());
-		
 	uninstallBT.reset(cmi->uninstallTrigger->createButtonUI());
-	addAndMakeVisible(uninstallBT.get());
-		
+
+	if (!container->editorIsCollapsed)
+	{
+		addAndMakeVisible(installBT.get());
+		addAndMakeVisible(uninstallBT.get());
+		addAndMakeVisible(&description);
+		addAndMakeVisible(&urlLabel);
+		addAndMakeVisible(&versionsLabel);
+	}
+	
 	updateVersionUI();
 
 	setSize(150, 80);
@@ -53,6 +55,30 @@ CommunityModuleInfoEditor::CommunityModuleInfoEditor(CommunityModuleInfo * cmi, 
 
 CommunityModuleInfoEditor::~CommunityModuleInfoEditor()
 {
+}
+
+void CommunityModuleInfoEditor::setCollapsed(bool value, bool force, bool animate, bool doNotRebuild)
+{
+	
+	GenericControllableContainerEditor::setCollapsed(value, force, animate, doNotRebuild);
+	
+	if (container->editorIsCollapsed)
+	{
+		removeChildComponent(installBT.get());
+		removeChildComponent(uninstallBT.get());
+		removeChildComponent(&description);
+		removeChildComponent(&urlLabel);
+		removeChildComponent(&versionsLabel);
+	}
+	else
+	{
+		addAndMakeVisible(installBT.get());
+		addAndMakeVisible(uninstallBT.get());
+		addAndMakeVisible(&description);
+		addAndMakeVisible(&urlLabel);
+		addAndMakeVisible(&versionsLabel);
+	}
+	
 }
 
 void CommunityModuleInfoEditor::updateVersionUI()
@@ -110,4 +136,6 @@ void CommunityModuleInfoEditor::mouseDown(const MouseEvent & e)
 	{
 		URL(cmi->url).launchInDefaultBrowser();
 	}
+
+	GenericControllableContainerEditor::mouseDown(e);
 }

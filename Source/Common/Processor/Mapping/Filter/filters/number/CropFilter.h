@@ -16,17 +16,16 @@ class CropFilter :
 	public MappingFilter
 {
 public:
-	CropFilter(var params);
+	CropFilter(var params, Multiplex * multiplex);
 	~CropFilter();
 
 	FloatParameter * targetMin;
 	FloatParameter * targetMax;
 
-	Parameter* setupSingleParameterInternal(Parameter* source) override;
-	bool processSingleParameterInternal(Parameter* source, Parameter* out) override;
+	Parameter* setupSingleParameterInternal(Parameter* source, int multiplexIndex) override;
+	bool processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex) override;
 
 	void filterParamChanged(Parameter *) override;
-
 
 	String getTypeString() const override { return "Crop"; }
 

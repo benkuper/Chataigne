@@ -50,8 +50,10 @@ public:
 	void checkFiltersNeedContinuousProcess();
 
 	void updateMappingChain(MappingFilter * afterThisFilter = nullptr); //will host warnings and type change checks
+	virtual void multiplexCountChanged() override;
 
 	void process(bool forceOutput = false, int multiplexIndex = 0);
+
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;

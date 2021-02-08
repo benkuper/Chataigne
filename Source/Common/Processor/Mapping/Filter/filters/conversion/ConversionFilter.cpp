@@ -11,8 +11,8 @@
 #include "ConversionFilter.h"
 #include "ui/ConversionFilterEditor.h"
 
-ConversionFilter::ConversionFilter(var params) :
-	MappingFilter(getTypeString(), params),
+ConversionFilter::ConversionFilter(var params, Multiplex * multiplex) :
+	MappingFilter(getTypeString(), params, multiplex),
 	conversionFilterAsyncNotifier(10)
 {
 	autoSetRange = false;
@@ -35,19 +35,27 @@ void ConversionFilter::clearItem()
 
 void ConversionFilter::itemAdded(ConvertedParameter* cp)
 {
-	Parameter* p = ControllableFactory::createParameterFrom(cp->defaultParam, false, true);
-	p->setNiceName("Out " + p->getTypeString());
-	cp->setOutParamReference(p);
-	p->setControllableFeedbackOnly(true);
-	p->isSavable = false;
-	filteredParameters.add(p);
+	for (int i = 0; i < filteredParameters.size(); i++)
+	{
+		Parameter* p = ControllableFactory::createParameterFrom(cp->defaultParam, false, true);
+		p->setNiceName("Out " + p->getTypeString());
+		cp->setOutParamReference(p, i);
+		p->setControllableFeedbackOnly(true);
+		p->isSavable = false;
+
+		filteredParameters[i]->add(p); 
+	}
+	
 	reorderFilterParameters();
 }
 
 
 void ConversionFilter::itemRemoved(ConvertedParameter* cp)
 {
-	filteredParameters.removeObject(cp->outParamReference);
+	for (int i=0;i<filteredParameters.size();i++)
+	{
+		filteredParameters[i]->removeObject(cp->outParamReferences[i]);
+	}
 	
 	Array<ConversionParamValueLink*> linksToRemove;
 	{
@@ -75,11 +83,17 @@ void ConversionFilter::itemsReordered()
 
 void ConversionFilter::reorderFilterParameters()
 {
-	for (int i = 0; i < cpm.items.size(); ++i) filteredParameters.set(i, cpm.items[i]->outParamReference, false);
-	mappingFilterListeners.call(&FilterListener::filteredParamsChanged, this);
-	filterAsyncNotifier.addMessage(new FilterEvent(FilterEvent::FILTER_REBUILT, this));
-}
+	for (int mi = 0; mi < filteredParameters.size(); mi++)
+	{
+		for (int i = 0; i < cpm.items.size(); ++i)
+		{
+			filteredParameters[mi]->set(i, cpm.items[i]->outParamReferences[mi], false);
+		}
 
+		mappingFilterListeners.call(&FilterListener::filteredParamsChanged, this);
+		filterAsyncNotifier.addMessage(new FilterEvent(FilterEvent::FILTER_REBUILT, this));
+	}
+}
 
 void ConversionFilter::createLink(WeakReference<Parameter> source, int sourceValueIndex, ConvertedParameter* out, int outValueIndex)
 {
@@ -127,7 +141,8 @@ void ConversionFilter::relinkGhostData()
 		var linkData = ghostLinksData[i];
 		if (ConvertedParameter* cp = cpm.getItemWithName(linkData.getProperty("out", "")))
 		{
-			createLink(sourceParams[linkData.getProperty("sourceIndex", 0)], linkData.getProperty("sourceValueIndex", 0), cp, linkData.getProperty("outValueIndex", 0));
+			//Multiplex refactor, right now only making this work with [0]
+			createLink(sourceParams[0][linkData.getProperty("sourceIndex", 0)], linkData.getProperty("sourceValueIndex", 0), cp, linkData.getProperty("outValueIndex", 0));
 		}
 	}
 
@@ -141,7 +156,7 @@ ConversionParamValueLink* ConversionFilter::getLinkForOut(ConvertedParameter* ou
 	return nullptr;
 }
 
-void ConversionFilter::setupParametersInternal()
+void ConversionFilter::setupParametersInternal(int multiplexIndex)
 {
 	//do not call parent, we have our own filteredParameterCreation implementation
 
@@ -152,26 +167,21 @@ void ConversionFilter::setupParametersInternal()
 	conversionFilterAsyncNotifier.addMessage(new ConversionFilterEvent(ConversionFilterEvent::SOURCES_UPDATED));
 }
 
-bool ConversionFilter::processInternal()
-{
-	for (auto& s : sourceParams)
-	{
-		processSingleParameterInternal(s, nullptr); //don't care about output as they are recreated
-	}
-
-	return true;
-}
-
-bool ConversionFilter::processSingleParameterInternal(Parameter* source, Parameter*)
+bool ConversionFilter::processInternal(Array<Parameter *> inputs, int multiplexIndex)
 {
 	GenericScopedLock lock(links.getLock());
-	int sourceIndex = sourceParams.indexOf(source);
-	for (auto& link : links)
+	int index = 0;
+	for (int i = 0; i < inputs.size(); i++)
 	{
-		if (link->out == nullptr) continue;
-		if (link->sourceIndex != sourceIndex) continue;
+		for (auto& link : links)
+		{
+			if (link->out == nullptr) continue;
+			if (link->sourceIndex != i) continue;
 
-		link->out->setParamValueAtIndex(source->value.isArray()?source->value[link->sourceValueIndex]:source->value, link->outValueIndex);
+			link->out->setParamValueAtIndex(inputs[i]->value.isArray() ? inputs[i]->value[link->sourceValueIndex] : inputs[i]->value, link->outValueIndex, multiplexIndex);
+		}
+
+		index++;
 	}
 
 	return true;

@@ -16,9 +16,9 @@ MappingLayerPanel::MappingLayerPanel(MappingLayer * layer) :
 	mappingLayer(layer)
 {
 
-	if (mappingLayer->mapping->om.outParams.size() > 0 && mappingLayer->mapping->om.outParams[0] != nullptr)
+	if (mappingLayer->mapping->om.outParams.size() > 0 && mappingLayer->mapping->om.outParams[0][0] != nullptr)
 	{
-		mappingOutputUI.reset(dynamic_cast<ControllableEditor*>(mappingLayer->mapping->om.outParams[0]->getEditor(false)));
+		mappingOutputUI.reset(dynamic_cast<ControllableEditor*>(mappingLayer->mapping->om.outParams[0][0]->getEditor(false)));
 		mappingOutputUI->setShowLabel(false);
 		if (mappingOutputUI != nullptr) addAndMakeVisible(mappingOutputUI.get());
 	}

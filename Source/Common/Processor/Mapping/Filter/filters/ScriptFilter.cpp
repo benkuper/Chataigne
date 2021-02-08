@@ -13,8 +13,8 @@
 
 String ScriptFilter::scriptTemplate = "";
 
-ScriptFilter::ScriptFilter(var params) :
-	MappingFilter(getTypeString(),params)
+ScriptFilter::ScriptFilter(var params, Multiplex* multiplex) :
+	MappingFilter(getTypeString(),params, multiplex)
 {
 	filterParams.addChildControllableContainer(&script);
 
@@ -27,35 +27,36 @@ ScriptFilter::~ScriptFilter()
 {
 }
 
-bool ScriptFilter::processInternal()
+bool ScriptFilter::processInternal(Array<Parameter*> inputs, int multiplexIndex)
 {
 	Array<var> args;
 	var values;
 	var mins;
 	var maxs;
-	for (auto& sourceParam : sourceParams)
+	for (auto& input : inputs)
 	{
-		values.append(sourceParam->value);
-		mins.append(sourceParam->minimumValue);
-		maxs.append(sourceParam->maximumValue);;
+		values.append(input->value);
+		mins.append(input->minimumValue);
+		maxs.append(input->maximumValue);
 	}
 	args.add(values);
 	args.add(mins);
 	args.add(maxs);
-	
+	args.add(multiplexIndex);
 
 	if (script.scriptEngine == nullptr) return false;
 	var result = script.callFunction("filter", args);
 
-	if (!result.isArray() || result.size() != sourceParams.size())
+	if (!result.isArray() || result.size() != inputs.size())
 	{
 		NLOGWARNING(niceName, "Script filter() result must an array of same size as number of inputs.");
 		return false;
 	}
 
-	for (int i = 0; i < filteredParameters.size(); ++i)
+
+	for (int i = 0; i < filteredParameters[multiplexIndex]->size(); ++i)
 	{
-		filteredParameters[i]->setValue(result[i]);
+		filteredParameters[multiplexIndex]->getUnchecked(i)->setValue(result[i]);
 	}
 
 	return true;

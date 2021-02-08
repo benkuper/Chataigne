@@ -11,8 +11,8 @@
 #include "MathFilter.h"
 
 
-MathFilter::MathFilter(var params) :
-	MappingFilter(getTypeString(),params),
+MathFilter::MathFilter(var params, Multiplex* multiplex) :
+	MappingFilter(getTypeString(), params, multiplex),
 	operationValue(nullptr)
 {
 	operation = filterParams.addEnumParameter("Operation", "The operation to use for this filter");
@@ -32,21 +32,24 @@ MathFilter::~MathFilter()
 {
 }
 
-void MathFilter::setupParametersInternal()
+void MathFilter::setupParametersInternal(int multiplexIndex)
 {
-	MappingFilter::setupParametersInternal();
+	MappingFilter::setupParametersInternal(multiplexIndex);
 
-	if (sourceParams.size() == 0 || sourceParams[0] == nullptr) return;
+	if (multiplexIndex != 0) return; //only setup depending on first value
 
-	if (operationValue == nullptr || operationValue->type != sourceParams[0]->type)
+	Array<WeakReference<Parameter>> mSourceParams = sourceParams[multiplexIndex];
+	if (mSourceParams.size() == 0 || mSourceParams[0] == nullptr) return;
+
+	if (operationValue == nullptr || operationValue->type != mSourceParams[0]->type)
 	{
 		if (operationValue != nullptr)
 		{
 			opValueData = operationValue->getJSONData();
 			filterParams.removeControllable(operationValue);
 		}
-		bool loadLastData = (operationValue == nullptr && opValueData.isObject()) || (operationValue != nullptr && sourceParams[0]->type == operationValue->type);
-		operationValue = (Parameter*)ControllableFactory::createControllable(sourceParams[0]->getTypeString());
+		bool loadLastData = (operationValue == nullptr && opValueData.isObject()) || (operationValue != nullptr && mSourceParams[0]->type == operationValue->type);
+		operationValue = (Parameter*)ControllableFactory::createControllable(mSourceParams[0]->getTypeString());
 		operationValue->setNiceName("Value");
 		if(loadLastData) operationValue->loadJSONData(opValueData);
 		operationValue->isSavable = false;
@@ -60,7 +63,7 @@ void MathFilter::setupParametersInternal()
 	updateFilteredParamsRange();
 }
 
-bool MathFilter::processSingleParameterInternal(Parameter * source, Parameter * out)
+bool MathFilter::processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex)
 {
 	//Operation o = operation->getValueDataAsEnum<Operation>();
 
@@ -82,14 +85,14 @@ bool MathFilter::processSingleParameterInternal(Parameter * source, Parameter * 
 
 void MathFilter::updateFilteredParamsRange()
 {
-	for (int i=0;i<filteredParameters.size(); ++i)
+	for (int i = 0; i < filteredParameters[0]->size(); ++i)
 	{
-		Parameter* sourceParam = sourceParams[i];
+		Parameter* sourceParam = sourceParams[0][i];
 		if (sourceParam == nullptr) continue;
 
 		if (!filterTypeFilters.contains(sourceParam->type)) continue;
 
-		Parameter* p = filteredParameters[i];
+		Parameter* p = filteredParameters[0]->getUnchecked(i);
 		if (p == nullptr) continue;
 
 		RangeRemapMode rm = rangeRemapMode->getValueDataAsEnum<RangeRemapMode>();

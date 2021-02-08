@@ -116,24 +116,38 @@ void Mapping::updateMappingChain(MappingFilter * afterThisFilter)
 		GenericScopedLock lock(mappingLock);
 		isRebuilding = true;
 
-		if(afterThisFilter == nullptr) fm.setupSources(im.getInputReferences(0)); //do the whole rebuild
-		else fm.rebuildFilterChain(afterThisFilter); //only ask to rebuild after the changed filter
-
-		Array<Parameter*> processedParams = fm.getLastFilteredParameters();
-
 		outValuesCC.clear();
-		Array<Parameter*> outP;
-		for (auto& sp : processedParams)
+
+		for (int i = 0; i < getMultiplexCount(); i++)
 		{
-			Parameter* p = ControllableFactory::createParameterFrom(sp, false, false);
-			outP.add(p);
-			outValuesCC.addParameter(p);
-			p->setControllableFeedbackOnly(true);
-			p->setNiceName("Out " + String(outP.size()));
-			p->setValue(sp->value);
+			if (afterThisFilter == nullptr) fm.setupSources(im.getInputReferences(i), i); //do the whole rebuild
+			else fm.rebuildFilterChain(afterThisFilter); //only ask to rebuild after the changed filter
+
+			Array<Parameter*> processedParams = fm.getLastFilteredParameters(i);
+
+			ControllableContainer* outCC = &outValuesCC;
+
+			if (isMultiplexed())
+			{
+				ControllableContainer* multiplexOutCC = new ControllableContainer("Index "+String(i + 1));
+				outValuesCC.addChildControllableContainer(multiplexOutCC, true);
+				outCC = multiplexOutCC;
+			}
+
+			Array<Parameter*> mOutParams;
+			for (auto& sp : processedParams)
+			{
+				Parameter* p = ControllableFactory::createParameterFrom(sp, false, false);
+				mOutParams.add(p);
+				outCC->addParameter(p);
+				p->setControllableFeedbackOnly(true);
+				p->setNiceName("Out " + String(mOutParams.size()));
+				p->setValue(sp->value);
+			}
+
+			om.setOutParams(mOutParams, i);
 		}
 
-		om.setOutParams(outP);
 
 		mappingNotifier.addMessage(new MappingEvent(MappingEvent::OUTPUT_TYPE_CHANGED, this));
 
@@ -146,6 +160,11 @@ void Mapping::updateMappingChain(MappingFilter * afterThisFilter)
 	process();
 }
 
+void Mapping::multiplexCountChanged()
+{
+	updateMappingChain();
+}
+
 void Mapping::process(bool forceOutput, int multiplexIndex)
 {
 	if ((canBeDisabled && (enabled != nullptr && !enabled->boolValue())) || forceDisabled) return;
@@ -153,20 +172,27 @@ void Mapping::process(bool forceOutput, int multiplexIndex)
 	if (isCurrentlyLoadingData || isRebuilding || isProcessing || isClearing) return;
 
 	//DBG("[PROCESS] Enter lock");
+
 	{
 		GenericScopedLock lock(mappingLock);
 		ScopedLock filterLock(fm.filterLock);
 		
 		isProcessing = true;
-		bool filterResult = fm.processFilters(multiplexIndex);
+
+		Array<Parameter*> inputs = im.getInputReferences(multiplexIndex);
+		bool filterResult = fm.processFilters(inputs, multiplexIndex);
+
 
 		if (filterResult)
 		{
-			for (int i = 0; i < fm.filteredParameters.size(); i++)
+			Array<Parameter*> filteredParameters = fm.getLastFilteredParameters(multiplexIndex);
+
+			ControllableContainer* outCC = isMultiplexed() ? outValuesCC.controllableContainers[multiplexIndex] : &outValuesCC;
+			for (int i = 0; i < filteredParameters.size(); i++)
 			{
-				if (Parameter* fp = fm.filteredParameters[i])
+				if (Parameter* fp = filteredParameters[i])
 				{
-					if (Parameter* p = (Parameter*)outValuesCC.controllables[i])
+					if (Parameter* p = (Parameter*)outCC->controllables[i])
 					{
 						if (p->type == Parameter::ENUM) ((EnumParameter*)p)->setValueWithKey(((EnumParameter*)fp)->getValueKey());
 						else p->setValue(fp->value);
@@ -265,7 +291,7 @@ void Mapping::onContainerParameterChangedInternal(Parameter * p)
 	Processor::onContainerParameterChangedInternal(p);
 	if (p == enabled)
 	{
-		if (enabled->boolValue() && !forceDisabled && !enabled->boolValue())
+		if (enabled->boolValue() && !forceDisabled)
 		{
 			if (updateRate->enabled) startThread();
 			for (int i = 0; i < getMultiplexCount(); i++) process(false, i);

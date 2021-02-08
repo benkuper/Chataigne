@@ -45,8 +45,9 @@ public:
 	std::unique_ptr<CustomValuesCommandArgumentManager> customValuesManager;
 
 	OwnedArray<ParameterLink> paramLinks;
-	HashMap<Parameter*, ParameterLink*> paramLinkMap;;
+	HashMap<Parameter*, ParameterLink*> paramLinkMap;
 	HashMap<ParameterLink *, Parameter *> linkParamMap;
+	StringArray inputNames;
 
 	void onControllableAdded(Controllable * c) override;
 	void onControllableRemoved(Controllable * c) override;
@@ -71,6 +72,8 @@ public:
 	virtual ParameterLink* getLinkedParam(Parameter* p);
 	virtual var getLinkedValue(Parameter* p, int multiplexIndex);
 	void linkParamToMappingIndex(Parameter* p, int mappingIndex);
+
+	void setInputNamesFromParams(Array<WeakReference<Parameter>> outParams);
 
 	virtual var getLinkedCustomArgumentValueAt(int argIndex, int multiplexIndex);
 

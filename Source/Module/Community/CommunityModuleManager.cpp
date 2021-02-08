@@ -10,6 +10,7 @@
 
 #include "CommunityModuleManager.h"
 #include "Module/ModuleFactory.h"
+#include "Module/ModuleManager.h"
 
 juce_ImplementSingleton(CommunityModuleManager)
 
@@ -71,6 +72,23 @@ void CommunityModuleManager::run()
 		addItem(m, var(), false);
 	}
 	
+	LOG("Finished fetching Community modules.");
+	ModuleManager::getInstance()->factory->updateCustomModules(false);
+
+	bool showUpdate = false;
+	for (auto& i : items)
+	{
+		if (i->onlineVersion > i->localVersion)
+		{
+			showUpdate = true;
+			break;
+		}
+	}
+
+	if (showUpdate)
+	{
+		LOG("Some Community Modules have an update available. Quick quick, check it out !");
+	}
 }
 
 var CommunityModuleManager::getJSONDataForURL(URL url)
@@ -104,6 +122,12 @@ var CommunityModuleManager::getJSONDataForURL(URL url)
     }
 
 	return var();
+}
+
+CommunityModuleInfo* CommunityModuleManager::getModuleInfoForFolder(const File &folder)
+{
+	for (auto& i : items) if (i->localModuleFolder == folder) return i;
+	return nullptr;
 }
 
 bool CommunityModuleManager::openStreamProgressCallback(void* context, int, int)

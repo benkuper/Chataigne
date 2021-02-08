@@ -11,8 +11,8 @@
 #include "CurveMapFilter.h"
 
 
-CurveMapFilter::CurveMapFilter(var params) :
-	MappingFilter(getTypeString(), params),
+CurveMapFilter::CurveMapFilter(var params, Multiplex* multiplex) :
+	MappingFilter(getTypeString(), params, multiplex),
 	curve("Curve")
 {
 	curve.isSelectable = false;
@@ -33,9 +33,9 @@ CurveMapFilter::~CurveMapFilter()
 {
 }
 
-bool CurveMapFilter::processSingleParameterInternal(Parameter * source, Parameter * out)
+bool CurveMapFilter::processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex)
 {
-	if(source == sourceParams.getFirst()) curve.position->setValue(source->getNormalizedValue());
+	if(multiplexIndex == 0 && source == sourceParams[0].getFirst()) curve.position->setValue(source->getNormalizedValue());
 
 	if (source->hasRange()) out->setNormalizedValue(curve.getValueAtPosition(source->getNormalizedValue()));
 	else out->setValue(source->getValue());

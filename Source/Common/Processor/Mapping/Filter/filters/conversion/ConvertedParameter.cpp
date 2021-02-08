@@ -13,7 +13,6 @@
 
 ConvertedParameter::ConvertedParameter(var params) :
 	BaseItem(params.getProperty("type", ""), false),
-	outParamReference(nullptr),
 	conversionMode(nullptr),
     cpAsyncNotifier(10)
 {
@@ -53,24 +52,27 @@ void ConvertedParameter::disconnectSlot(int index)
 	cpAsyncNotifier.addMessage(new CPEvent(CPEvent::SLOT_CONNECTION_CHANGED));
 }
 
-void ConvertedParameter::setParamValueAtIndex(var value, int index)
+void ConvertedParameter::setParamValueAtIndex(var value, int index, int multiplexIndex)
 {
-	jassert(!outParamReference.wasObjectDeleted());
+	outParamReferences.ensureStorageAllocated(multiplexIndex + 1);
 
-	if (!outParamReference->isComplex())
+	WeakReference<Parameter> mParamReference = outParamReferences[multiplexIndex];
+	jassert(!mParamReference.wasObjectDeleted());
+
+	if (!mParamReference->isComplex())
 	{
 		jassert(index == 0);
-		outParamReference->setValue(value);
+		mParamReference->setValue(value);
 	}
 	else
 	{
-		var outValue = outParamReference->getValue().clone();
-		jassert(outValue.isArray() && index < outParamReference->value.size());
+		var outValue = mParamReference->getValue().clone();
+		jassert(outValue.isArray() && index < mParamReference->value.size());
 
 		if (conversionMode == nullptr)
 		{
 			outValue[index] = value;
-			outParamReference->setValue(outValue);
+			mParamReference->setValue(outValue);
 		}
 		else
 		{
@@ -79,14 +81,14 @@ void ConvertedParameter::setParamValueAtIndex(var value, int index)
 			{
 			case RGB:
 				outValue[index] = value;
-				outParamReference->setValue(outValue);
+				mParamReference->setValue(outValue);
 				break;
 
 			case HSV:
 			{
 				float val = value.isString() ? value.toString().getFloatValue() : (float)value;
 				
-				ColorParameter* cp = (ColorParameter*)outParamReference.get();
+				ColorParameter* cp = (ColorParameter*)mParamReference.get();
 				Colour refColor =  cp->getColor();
 
 				Colour resultColor = ((ColorParameter*)defaultParam)->getColor();
@@ -111,39 +113,42 @@ void ConvertedParameter::onContainerParameterChangedInternal(Parameter* p)
 {
 	if (p == defaultParam)
 	{
-		if (!areAllSlotsConnected() && outParamReference != nullptr && !outParamReference.wasObjectDeleted())
+		for (auto& outParamReference : outParamReferences)
 		{
-			var defaultValue = defaultParam->getValue();
-			var curValue = outParamReference->getValue();
+			if (!areAllSlotsConnected() && outParamReference != nullptr && !outParamReference.wasObjectDeleted())
+			{
+				var defaultValue = defaultParam->getValue();
+				var curValue = outParamReference->getValue();
 
-			if (!defaultValue.isArray())
-			{
-				outParamReference->setValue(p->getValue()); //Todo : notify conversion filter (listener from here ?) to regenerate the good value from sources
-			}
-			else if (conversionMode != nullptr && conversionMode->getValueDataAsEnum<ConversionMode>() == HSV)
-			{
-				ColorParameter* cp = (ColorParameter*)outParamReference.get();
-				Colour refColor = cp->getColor();
-				Colour resultColor = ((ColorParameter*)defaultParam)->getColor();
-				if (connectedSlots[0]) resultColor = resultColor.withHue(refColor.getHue());
-				if (connectedSlots[1]) resultColor = resultColor.withSaturation(refColor.getSaturation());
-				if (connectedSlots[2]) resultColor = resultColor.withBrightness(refColor.getBrightness());
-				if (connectedSlots[3]) resultColor = resultColor.withAlpha(refColor.getFloatAlpha());
-				cp->setColor(resultColor);
-			}
-			else
-			{
-				var newVal;
-				for (int i = 0; i < defaultValue.size(); ++i) newVal.append(connectedSlots[i] ? curValue[i] : defaultValue[i]);
-				outParamReference->setValue(newVal);
+				if (!defaultValue.isArray())
+				{
+					outParamReference->setValue(p->getValue()); //Todo : notify conversion filter (listener from here ?) to regenerate the good value from sources
+				}
+				else if (conversionMode != nullptr && conversionMode->getValueDataAsEnum<ConversionMode>() == HSV)
+				{
+					ColorParameter* cp = (ColorParameter*)outParamReference.get();
+					Colour refColor = cp->getColor();
+					Colour resultColor = ((ColorParameter*)defaultParam)->getColor();
+					if (connectedSlots[0]) resultColor = resultColor.withHue(refColor.getHue());
+					if (connectedSlots[1]) resultColor = resultColor.withSaturation(refColor.getSaturation());
+					if (connectedSlots[2]) resultColor = resultColor.withBrightness(refColor.getBrightness());
+					if (connectedSlots[3]) resultColor = resultColor.withAlpha(refColor.getFloatAlpha());
+					cp->setColor(resultColor);
+				}
+				else
+				{
+					var newVal;
+					for (int i = 0; i < defaultValue.size(); ++i) newVal.append(connectedSlots[i] ? curValue[i] : defaultValue[i]);
+					outParamReference->setValue(newVal);
+				}
 			}
 		}
 	}
 }
 
-void ConvertedParameter::setOutParamReference(Parameter* p)
+void ConvertedParameter::setOutParamReference(Parameter* p, int multiplexIndex)
 {
-	outParamReference = p;
+	outParamReferences.set(multiplexIndex, p);
 	cpAsyncNotifier.addMessage(new CPEvent(CPEvent::OUT_PARAM_CHANGED));
 }
 

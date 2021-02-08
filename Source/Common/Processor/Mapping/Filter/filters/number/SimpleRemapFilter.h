@@ -17,7 +17,7 @@ class SimpleRemapFilter :
 	public MappingFilter
 {
 public:
-	SimpleRemapFilter(var params);
+	SimpleRemapFilter(var params, Multiplex* multiplex);
 	~SimpleRemapFilter();
 
 	BoolParameter * useCustomInputRange;
@@ -25,8 +25,8 @@ public:
 	Point2DParameter * targetOut;
 	BoolParameter* forceFloatOutput;
 
-	Parameter * setupSingleParameterInternal(Parameter * source) override;
-	bool processSingleParameterInternal(Parameter * source, Parameter * out) override;
+	Parameter * setupSingleParameterInternal(Parameter * source, int multiplexIndex) override;
+	bool processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex) override;
 
 	void filterParamChanged(Parameter *) override;
 

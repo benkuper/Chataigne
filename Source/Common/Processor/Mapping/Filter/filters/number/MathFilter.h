@@ -17,7 +17,7 @@ class MathFilter :
 	public MappingFilter
 {
 public:
-	MathFilter(var params);
+	MathFilter(var params, Multiplex* multiplex);
 	~MathFilter();
 
 	enum Operation { OFFSET, MULTIPLY, DIVIDE, MODULO, FLOOR, CEIL, ROUND, MAX, MIN };
@@ -29,8 +29,8 @@ public:
 	
 	var opValueData; //for loading after setupParamInternal
 
-	void setupParametersInternal() override;
-	bool processSingleParameterInternal(Parameter *source, Parameter *out) override;
+	void setupParametersInternal(int multiplexIndex) override;
+	bool processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex) override;
 
 	void updateFilteredParamsRange();
 	void filterParamChanged(Parameter * p) override;

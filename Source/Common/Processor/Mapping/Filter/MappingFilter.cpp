@@ -11,8 +11,9 @@
 #include "MappingFilter.h"
 #include "ui/MappingFilterEditor.h"
 
-MappingFilter::MappingFilter(const String& name, var params) :
+MappingFilter::MappingFilter(const String& name, var params, Multiplex* multiplex) :
 	BaseItem(name),
+	MultiplexTarget(multiplex),
 	filterParams("filterParams"),
 	processOnSameValue(false),
 	autoSetRange(true),
@@ -31,17 +32,26 @@ MappingFilter::~MappingFilter()
 	clearItem();
 }
 
-bool MappingFilter::setupSources(Array<Parameter*> sources)
+bool MappingFilter::setupSources(Array<Parameter*> sources, int multiplexIndex)
 {
 	if (isClearing) return false;
+
+
 	for (auto& source : sources) if (source == nullptr) return false; //check that all sources are valid
 
-	for (auto& sourceParam : sourceParams)
+	sourceParams.ensureStorageAllocated(multiplexIndex+1);
+
+	Array<WeakReference<Parameter>> mSourceParams = sourceParams[multiplexIndex];
+	for (auto& sourceParam : mSourceParams)
 	{
 		if (sourceParam != nullptr) sourceParam->removeParameterListener(this);
 	}
 
-	for (auto& filteredParameter : filteredParameters)
+	filteredParameters.ensureStorageAllocated(multiplexIndex+1);
+
+	if (filteredParameters[multiplexIndex] == nullptr) filteredParameters.set(multiplexIndex, new OwnedArray<Parameter>());
+
+	for (auto& filteredParameter : *filteredParameters[multiplexIndex])
 	{
 		if (filteredParameter != nullptr)
 		{
@@ -50,18 +60,20 @@ bool MappingFilter::setupSources(Array<Parameter*> sources)
 		}
 	}
 
-	sourceParams.clear();
+	sourceParams[multiplexIndex].clear();
 	previousValues = var();
-	sourceParams = Array<WeakReference<Parameter>>(sources.getRawDataPointer(), sources.size());
 
-	for (auto& source : sourceParams)
+	sourceParams.set(multiplexIndex, Array<WeakReference<Parameter>>(sources.getRawDataPointer(), sources.size()));
+
+	for (auto& source : mSourceParams)
 	{
 		source->addParameterListener(this);
 	}
 
-	setupParametersInternal();
 
-	for (auto& filteredParameter : filteredParameters)
+	setupParametersInternal(multiplexIndex);
+
+	for (auto& filteredParameter : *filteredParameters[multiplexIndex])
 	{
 		filteredParameter->isControllableFeedbackOnly = true;
 		filteredParameter->addParameterListener(this);
@@ -72,17 +84,25 @@ bool MappingFilter::setupSources(Array<Parameter*> sources)
 	return true;
 }
 
-void MappingFilter::setupParametersInternal()
+void MappingFilter::setupParametersInternal(int multiplexIndex)
 {
-	filteredParameters.clear();
-	for (auto& source : sourceParams)
+	filteredParameters[multiplexIndex]->clear();
+
+	if (multiplexIndex == -1)
 	{
-		Parameter* p = setupSingleParameterInternal(source);
-		filteredParameters.add(p);
+		for (int i = 0; i < getMultiplexCount(); i++) setupParametersInternal(i);
+		return;
+	}
+
+
+	for (auto& source : sourceParams[multiplexIndex])
+	{
+		Parameter* p = setupSingleParameterInternal(source, multiplexIndex);
+		filteredParameters[multiplexIndex]->add(p);
 	}
 }
 
-Parameter* MappingFilter::setupSingleParameterInternal(Parameter* source)
+Parameter* MappingFilter::setupSingleParameterInternal(Parameter* source, int multiplexIndex)
 {
 	Parameter* p = ControllableFactory::createParameterFrom(source, true, true);
 	p->isSavable = false;
@@ -105,20 +125,23 @@ void MappingFilter::onControllableFeedbackUpdateInternal(ControllableContainer* 
 	}
 }
 
-bool MappingFilter::process()
+
+
+bool MappingFilter::process(Array<Parameter*> inputs, int multiplexIndex)
 {
 	if (!enabled->boolValue() || isClearing) return false; //default or disabled does nothing
+
 	if (!processOnSameValue && !filterParamsAreDirty)
 	{
-		if (sourceParams.size() == previousValues.size())
+		if (inputs.size() == previousValues.size())
 		{
 			bool hasChanged = false;
 			for (int i = 0; i < sourceParams.size(); i++)
 			{
-				if (sourceParams[i].wasObjectDeleted()) break;
+				//if (inputs[i].wasObjectDeleted()) break; //multiplex refactor : should put that back ?
 
-				hasChanged |= !sourceParams[i]->checkValueIsTheSame(sourceParams[i]->getValue(), previousValues[i]);
-				previousValues[i] = sourceParams[i]->getValue().clone();
+				hasChanged |= !inputs[i]->checkValueIsTheSame(inputs[i]->getValue(), previousValues[i]);
+				previousValues[i] = inputs[i]->getValue().clone();
 			}
 
 			if (!hasChanged) return false;
@@ -126,37 +149,42 @@ bool MappingFilter::process()
 		else
 		{
 			previousValues = var();
-			for (int i = 0; i < sourceParams.size(); i++) previousValues.append(sourceParams[i]->getValue().clone());
+			for (int i = 0; i < inputs.size(); i++) previousValues.append(inputs[i]->getValue().clone());
 		}
-		
+
 	}
 
-	bool result = processInternal();  //avoid cross-thread crash
+	bool result = processInternal(inputs, multiplexIndex);  //avoid cross-thread crash
 	filterParamsAreDirty = false;
 
 	return result;
 }
 
-bool MappingFilter::processInternal()
+bool MappingFilter::processInternal(Array<Parameter*> inputs, int multiplexIndex)
 {
 	bool hasChanged = false;
-	for (int i = 0; i < sourceParams.size(); ++i)
-	{
-		if (sourceParams[i].wasObjectDeleted() || filteredParameters[i] == nullptr) continue;
+	Array<WeakReference<Parameter>> mSourceParams = sourceParams[multiplexIndex];
+	OwnedArray<Parameter>* mFilteredParams = filteredParameters[multiplexIndex];
 
-		if (!filterTypeFilters.isEmpty() && !filterTypeFilters.contains(sourceParams[i]->type))
+	for (int i = 0; i < inputs.size() && i < mFilteredParams->size(); ++i)
+	{
+		if (/*inputs[i].wasObjectDeleted() || */ mFilteredParams->getUnchecked(i) == nullptr) continue;
+
+		Parameter* fParam = mFilteredParams->getUnchecked(i);
+
+		if (!filterTypeFilters.isEmpty() && !filterTypeFilters.contains(mSourceParams[i]->type))
 		{
-			filteredParameters[i]->setValue(sourceParams[i]->getValue()); //direct transfer if not supposed to be taken
+			fParam->setValue(inputs[i]->getValue()); //direct transfer if not supposed to be taken
 			continue;
 		}
 
-		if (autoSetRange && filteredParameters.size() == sourceParams.size() && (filteredParameters[i]->minimumValue != sourceParams[i]->minimumValue
-			|| filteredParameters[i]->maximumValue != sourceParams[i]->maximumValue))
+		if (autoSetRange && filteredParameters.size() == inputs.size() && (fParam->minimumValue != inputs[i]->minimumValue
+			|| fParam->maximumValue != inputs[i]->maximumValue))
 		{
-			filteredParameters[i]->setRange(sourceParams[i]->minimumValue, sourceParams[i]->maximumValue);
+			fParam->setRange(inputs[i]->minimumValue, inputs[i]->maximumValue);
 		}
 
-		hasChanged |= processSingleParameterInternal(sourceParams[i], filteredParameters[i]);
+		hasChanged |= processSingleParameterInternal(inputs[i], fParam, multiplexIndex);
 	}
 
 	return hasChanged;
@@ -167,11 +195,14 @@ void MappingFilter::clearItem()
 {
 	BaseItem::clearItem();
 
-	for (auto& sourceParam : sourceParams)
+	for (auto& mSourceParams : sourceParams)
 	{
-		if (sourceParam != nullptr)
+		for (auto& sourceParam : mSourceParams)
 		{
-			sourceParam->removeParameterListener(this);
+			if (sourceParam != nullptr)
+			{
+				sourceParam->removeParameterListener(this);
+			}
 		}
 	}
 
@@ -198,27 +229,30 @@ InspectableEditor* MappingFilter::getEditor(bool isRoot)
 
 void MappingFilter::parameterRangeChanged(Parameter* p)
 {
-	int pIndex = sourceParams.indexOf(p);
-
-	bool changed = false;
-
-	if (pIndex != -1 && filteredParameters.size() > pIndex)
+	for (int i = 0; i < sourceParams.size(); i++) //iterate on all multiplexes
 	{
-		if (Parameter* filteredParameter = filteredParameters[pIndex])
+		int pIndex = sourceParams[i].indexOf(p);
+
+		bool changed = false;
+
+		if (pIndex != -1 && filteredParameters.size() > pIndex)
 		{
-			if (autoSetRange
-				&& (filteredParameter->minimumValue != p->minimumValue || filteredParameter->maximumValue != p->maximumValue)
-				&& filteredParameter->type == p->type)
+			if (Parameter* filteredParameter = filteredParameters[i]->getUnchecked(pIndex))
 			{
-				filteredParameter->setRange(p->minimumValue, p->maximumValue);
-				changed = true;
+				if (autoSetRange
+					&& (filteredParameter->minimumValue != p->minimumValue || filteredParameter->maximumValue != p->maximumValue)
+					&& filteredParameter->type == p->type)
+				{
+					filteredParameter->setRange(p->minimumValue, p->maximumValue);
+					changed = true;
+				}
 			}
 		}
-	}
 
-	if (changed)
-	{
-		filterParamsAreDirty = true;
-		mappingFilterListeners.call(&FilterListener::filteredParamRangeChanged, this);
+		if (changed)
+		{
+			filterParamsAreDirty = true;
+			mappingFilterListeners.call(&FilterListener::filteredParamRangeChanged, this);
+		}
 	}
 }

@@ -17,10 +17,10 @@ class InverseFilter :
 	public MappingFilter
 {
 public:
-	InverseFilter(var params);
+	InverseFilter(var params, Multiplex* multiplex);
 	~InverseFilter(); 
 
-	bool processSingleParameterInternal(Parameter * source, Parameter * out) override;
+	bool processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex) override;
 	
 	virtual String getTypeString() const override { return "Inverse"; }
 

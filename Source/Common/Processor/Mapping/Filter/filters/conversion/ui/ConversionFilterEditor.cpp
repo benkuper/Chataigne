@@ -82,9 +82,9 @@ void ConversionFilterEditor::rebuildSourcesUI()
 		for (auto& l : linksUI) removeChildComponent(l);
 		linksUI.clear();
 	}
-	
 
-	for (auto& s : cf->sourceParams)
+
+	for (auto& s : cf->sourceParams[0])
 	{
 		ConversionSourceParameterUI* sui = new ConversionSourceParameterUI(s);
 		sui->addMouseListener(this, true);

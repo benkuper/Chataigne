@@ -11,8 +11,8 @@
 #include "SimpleRemapFilter.h"
 
 
-SimpleRemapFilter::SimpleRemapFilter(var params) :
-	MappingFilter(getTypeString(),params),
+SimpleRemapFilter::SimpleRemapFilter(var params, Multiplex* multiplex) :
+	MappingFilter(getTypeString(), params, multiplex),
 	targetIn(nullptr),
 	targetOut(nullptr)
 {
@@ -35,7 +35,7 @@ SimpleRemapFilter::~SimpleRemapFilter()
 {
 }
 
-Parameter* SimpleRemapFilter::setupSingleParameterInternal(Parameter* source)
+Parameter* SimpleRemapFilter::setupSingleParameterInternal(Parameter* source, int multiplexIndex)
 {
 	Parameter* p = nullptr;
 	if (forceFloatOutput->boolValue())
@@ -46,7 +46,7 @@ Parameter* SimpleRemapFilter::setupSingleParameterInternal(Parameter* source)
 	}
 	else
 	{
-		p = MappingFilter::setupSingleParameterInternal(source);
+		p = MappingFilter::setupSingleParameterInternal(source, multiplexIndex);
 	}
 
 	if (!useCustomInputRange->isOverriden || !useCustomInputRange->boolValue()) useCustomInputRange->setValue(!source->hasRange());
@@ -54,7 +54,7 @@ Parameter* SimpleRemapFilter::setupSingleParameterInternal(Parameter* source)
 	return p;
 }
 
-bool SimpleRemapFilter::processSingleParameterInternal(Parameter * source, Parameter *out)
+bool SimpleRemapFilter::processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex)
 {
 	if (targetIn == nullptr || targetOut == nullptr || out == nullptr) return false;
 	
@@ -91,14 +91,17 @@ void SimpleRemapFilter::filterParamChanged(Parameter * p)
 
 	}else if (p == targetOut)
 	{
-		for(auto &f : filteredParameters)
+		for(auto &mFilteredParams : filteredParameters)
 		{
-			if(f->type == Controllable::FLOAT || f->type == Controllable::INT) f->setRange(jmin<float>(targetOut->x,targetOut->y), jmax<float>(targetOut->x, targetOut->y));
+			for (auto& f : *mFilteredParams)
+			{
+				if (f->type == Controllable::FLOAT || f->type == Controllable::INT) f->setRange(jmin<float>(targetOut->x, targetOut->y), jmax<float>(targetOut->x, targetOut->y));
+			}
 		}
 	}
 	else if (p == forceFloatOutput)
 	{
-		setupParametersInternal();
+		setupParametersInternal(-1);
 		mappingFilterListeners.call(&FilterListener::filteredParamsChanged, this);
 		filterAsyncNotifier.addMessage(new FilterEvent(FilterEvent::FILTER_REBUILT, this));
 	}

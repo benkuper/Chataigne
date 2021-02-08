@@ -10,8 +10,8 @@
 
 #include "DampingFilter.h"
 
-DampingFilter::DampingFilter(var params) :
-	MappingFilter(getTypeString())
+DampingFilter::DampingFilter(var params, Multiplex* multiplex) :
+	MappingFilter(getTypeString(), params, multiplex)
 {
 	processOnSameValue = true;
 
@@ -29,13 +29,13 @@ DampingFilter::~DampingFilter()
 }
 
 
-void DampingFilter::setupParametersInternal()
+void DampingFilter::setupParametersInternal(int multiplexIndex)
 {
 	previousSpeedsMap.clear();
-	MappingFilter::setupParametersInternal();
+	MappingFilter::setupParametersInternal(multiplexIndex);
 }
 
-Parameter* DampingFilter::setupSingleParameterInternal(Parameter* source)
+Parameter* DampingFilter::setupSingleParameterInternal(Parameter* source, int multiplexIndex)
 {
 	Parameter* p = nullptr;
 	if (source->type == Controllable::BOOL)
@@ -46,7 +46,7 @@ Parameter* DampingFilter::setupSingleParameterInternal(Parameter* source)
 	}
 	else
 	{
-		p = MappingFilter::setupSingleParameterInternal(source);
+		p = MappingFilter::setupSingleParameterInternal(source, multiplexIndex);
 	}
 
 	if (!source->isComplex())
@@ -59,10 +59,11 @@ Parameter* DampingFilter::setupSingleParameterInternal(Parameter* source)
 		for (int i = 0; i < source->value.size(); i++) s.append(0);
 		previousSpeedsMap.set(source, s);
 	}
+
 	return p;
 }
 
-bool DampingFilter::processSingleParameterInternal(Parameter* source, Parameter* out)
+bool DampingFilter::processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex)
 {
 	if (!previousSpeedsMap.contains(source)) return false;
 

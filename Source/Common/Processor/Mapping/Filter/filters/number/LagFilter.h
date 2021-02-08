@@ -19,15 +19,15 @@ class LagFilter :
 	public Timer
 {
 public:
-	LagFilter(var params);
+	LagFilter(var params, Multiplex* multiplex);
 	~LagFilter();
 
 	HashMap<Parameter*, var> paramTempValueMap;
 	FloatParameter * frequency;
 
-	void setupParametersInternal() override;
-	Parameter * setupSingleParameterInternal(Parameter * source) override;
-	bool processSingleParameterInternal(Parameter * source, Parameter * out) override;
+	void setupParametersInternal(int multiplexIndex) override;
+	Parameter * setupSingleParameterInternal(Parameter * source, int multiplexIndex) override;
+	bool processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex) override;
 
 	void filterParamChanged(Parameter * p) override;
 

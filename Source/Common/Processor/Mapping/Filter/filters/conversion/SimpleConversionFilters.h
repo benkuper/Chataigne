@@ -17,7 +17,7 @@ class SimpleConversionFilter :
 	public MappingFilter
 {
 public:
-	SimpleConversionFilter(const String &name, var params, StringRef outTypeString);
+	SimpleConversionFilter(const String &name, var params, StringRef outTypeString, Multiplex* multiplex);
 	virtual ~SimpleConversionFilter();
 
 	EnumParameter * retargetComponent;
@@ -27,8 +27,8 @@ public:
 	enum TransferType { DIRECT, EXTRACT, TARGET};
 	TransferType transferType;
 
-	virtual Parameter * setupSingleParameterInternal(Parameter* source) override;
-	virtual bool processSingleParameterInternal(Parameter* source, Parameter* out) override;
+	virtual Parameter* setupSingleParameterInternal(Parameter* source, int multiplexIndex) override;
+	virtual bool processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex) override;
 	virtual var convertValue(Parameter * source, var sourceValue) { return var(sourceValue) ; }
 };
 
@@ -36,14 +36,13 @@ class ToBooleanFilter :
 	public SimpleConversionFilter
 {
 public:
-	ToBooleanFilter(var params);
+	ToBooleanFilter(var params, Multiplex* multiplex);
 	~ToBooleanFilter() {}
 
 	BoolParameter* toggleMode;
 
-	virtual bool processSingleParameterInternal(Parameter* source, Parameter* out) override;
+	virtual bool processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex) override;
 
-	static ToBooleanFilter* create(var params) { return new ToBooleanFilter(params); }
 	String getTypeString() const override { return "Convert To Boolean"; }
 };
 
@@ -51,12 +50,11 @@ class ToFloatFilter :
 	public SimpleConversionFilter
 {
 public:
-	ToFloatFilter(var params);
+	ToFloatFilter(var params, Multiplex* multiplex);
 	~ToFloatFilter() {}
 
 	var convertValue(Parameter * source, var sourceValue) override;
 
-	static ToFloatFilter * create(var params) { return new ToFloatFilter(params); }
 	String getTypeString() const override { return "Convert To Float"; }
 };
 
@@ -64,7 +62,7 @@ class ToIntFilter :
 	public SimpleConversionFilter
 {
 public:
-	ToIntFilter(var params);
+	ToIntFilter(var params, Multiplex* multiplex);
 	~ToIntFilter() {}
 
 	enum Mode { FLOOR, ROUND, CEIL };
@@ -72,7 +70,6 @@ public:
 
 	var convertValue(Parameter * source, var sourceValue) override;
 
-	static ToIntFilter * create(var params) { return new ToIntFilter(params); }
 	String getTypeString() const override { return "Convert To Integer"; }
 
 };
@@ -81,7 +78,7 @@ class ToStringFilter :
 	public SimpleConversionFilter
 {
 public:
-	ToStringFilter(var params);
+	ToStringFilter(var params, Multiplex* multiplex);
 	~ToStringFilter() {}
 
 	enum Format { NUMBER, TIME };
@@ -95,9 +92,7 @@ public:
 
 	void filterParamChanged(Parameter*) override;
 
-	static ToStringFilter * create(var params) { return new ToStringFilter(params); }
 	String getTypeString() const override { return "Convert To String"; }
-
 };
 
 
@@ -106,12 +101,11 @@ class ToPoint2DFilter :
 	public SimpleConversionFilter
 {
 public:
-	ToPoint2DFilter(var params);
+	ToPoint2DFilter(var params, Multiplex* multiplex);
 	~ToPoint2DFilter() {}
 
 	var convertValue(Parameter * source, var sourceValue) override;
 
-	static ToPoint2DFilter * create(var params) { return new ToPoint2DFilter(params); }
 	String getTypeString() const override { return "Convert To Point2D"; }
 
 };
@@ -121,12 +115,11 @@ class ToPoint3DFilter :
 	public SimpleConversionFilter
 {
 public:
-	ToPoint3DFilter(var params);
+	ToPoint3DFilter(var params, Multiplex* multiplex);
 	~ToPoint3DFilter() {}
 
 	var convertValue(Parameter * source, var sourceValue) override;
 
-	static ToPoint3DFilter * create(var params) { return new ToPoint3DFilter(params); }
 	String getTypeString() const override { return "Convert To Point3D"; }
 
 };
@@ -135,7 +128,7 @@ class ToColorFilter :
 	public SimpleConversionFilter
 {
 public:
-	ToColorFilter(var params);
+	ToColorFilter(var params, Multiplex* multiplex);
 	~ToColorFilter();
 
 
@@ -143,10 +136,9 @@ public:
 
 	ColorParameter* baseColor;
 
-	Parameter* setupSingleParameterInternal(Parameter* sourceParam) override;
-	bool processSingleParameterInternal(Parameter * source, Parameter * out) override;
+	Parameter* setupSingleParameterInternal(Parameter* sourceParam, int multiplexIndex) override;
+	bool processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex) override;
 
-	static ToColorFilter* create(var params) { return new ToColorFilter(params); }
 	String getTypeString() const override { return "Convert To Color"; }
 
 };

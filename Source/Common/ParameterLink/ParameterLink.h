@@ -28,8 +28,8 @@ public:
     BaseMultiplexList* list;
 
     Array<var> mappingValues;
+    StringArray inputValueNames; //this is also reference to how many mapping inputs are available
 
-    //
     bool replacementHasMappingInputToken;
     String replacementString;
 

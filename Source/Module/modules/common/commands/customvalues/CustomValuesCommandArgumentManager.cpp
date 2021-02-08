@@ -76,19 +76,28 @@ void CustomValuesCommandArgumentManager::rebuildFromTemplate(bool clearItems)
 	}
 
 	hideInEditor = items.size() == 0;
+
 }
 
 void CustomValuesCommandArgumentManager::addItemInternal(CustomValuesCommandArgument* item, var data)
 {
 	if (!isCurrentlyLoadingData)
 	{
-		if(linkedTemplateManager == nullptr && mappingEnabled && items.size() == 1)
+		if (linkedTemplateManager == nullptr && mappingEnabled && items.size() == 1)
 		{
 			item->paramLink->mappingValueIndex = 0;
 			item->paramLink->setLinkType(ParameterLink::MAPPING_INPUT);
 		}
 	}
+
+	item->paramLink->inputValueNames = inputNames;
 }
+
+void CustomValuesCommandArgumentManager::removeItemInternal(CustomValuesCommandArgument* i)
+{
+	autoRenameItems();
+}
+
 
 CustomValuesCommandArgument * CustomValuesCommandArgumentManager::addItemWithParam(Parameter * p, var data, bool fromUndoableAction)
 {
@@ -176,9 +185,10 @@ void CustomValuesCommandArgumentManager::autoRenameItems()
 	}
 }
 
-void CustomValuesCommandArgumentManager::removeItemInternal(CustomValuesCommandArgument * i)
+void CustomValuesCommandArgumentManager::setInputNames(StringArray _inputNames)
 {
-	autoRenameItems();
+	inputNames = _inputNames;
+	for (auto& i : items) i->paramLink->inputValueNames = inputNames;
 }
 
 void CustomValuesCommandArgumentManager::itemAdded(CustomValuesCommandArgument * i)

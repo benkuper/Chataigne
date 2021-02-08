@@ -16,12 +16,12 @@ class CurveMapFilter :
 	public MappingFilter
 {
 public:
-	CurveMapFilter(var params);
+	CurveMapFilter(var params, Multiplex* multiplex);
 	~CurveMapFilter();
 
 	Automation curve;
 
-	bool processSingleParameterInternal(Parameter* source, Parameter* out) override;
+	bool processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex) override;
 	
 	void onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c) override;
 

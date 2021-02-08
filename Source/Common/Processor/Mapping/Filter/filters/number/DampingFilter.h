@@ -16,7 +16,7 @@ class DampingFilter :
 	public MappingFilter
 {
 public:
-	DampingFilter(var params);
+	DampingFilter(var params, Multiplex* multiplex);
 	~DampingFilter();
 
 	FloatParameter* force;
@@ -27,9 +27,9 @@ public:
 	double timeAtLastUpdate;
 	const float precision = .00001f;
 
-	void setupParametersInternal() override;
-	Parameter* setupSingleParameterInternal(Parameter* source) override;
-	bool processSingleParameterInternal(Parameter* source, Parameter* out) override;
+	void setupParametersInternal(int multiplexIndex) override;
+	Parameter* setupSingleParameterInternal(Parameter* source, int multiplexIndex) override;
+	bool processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex) override;
 
 	String getTypeString() const override { return "Damping"; }
 };

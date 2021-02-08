@@ -11,8 +11,8 @@
 #include "LagFilter.h"
 
 
-LagFilter::LagFilter(var params) :
-	MappingFilter(getTypeString())
+LagFilter::LagFilter(var params, Multiplex* multiplex) :
+	MappingFilter(getTypeString(), params, multiplex)
 {
 	frequency = filterParams.addFloatParameter("Frequency", "Lag frequency in Hz", 5, .01f, 50);
 	startTimerHz(frequency->floatValue());
@@ -22,20 +22,20 @@ LagFilter::~LagFilter()
 {
 }
 
-void LagFilter::setupParametersInternal()
+void LagFilter::setupParametersInternal(int multiplexIndex)
 {
 	paramTempValueMap.clear();
-	MappingFilter::setupParametersInternal();
+	MappingFilter::setupParametersInternal(multiplexIndex);
 }
 
-Parameter* LagFilter::setupSingleParameterInternal(Parameter* source)
+Parameter* LagFilter::setupSingleParameterInternal(Parameter* source, int multiplexIndex)
 {
 	var tmpVal = var(source->getValue()); //shoud maybe copy the values or is it enough ?
 	paramTempValueMap.set(source, tmpVal);
-	return MappingFilter::setupSingleParameterInternal(source);
+	return MappingFilter::setupSingleParameterInternal(source, multiplexIndex);
 }
 
-bool LagFilter::processSingleParameterInternal(Parameter* source, Parameter* out)
+bool LagFilter::processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex)
 {
 	if (!paramTempValueMap.contains(source)) return false;
 	if (paramTempValueMap[source] == out->getValue()) return false;
@@ -51,9 +51,12 @@ void LagFilter::filterParamChanged(Parameter * p)
 
 void LagFilter::timerCallback()
 {
-	for (auto& s : sourceParams)
+	for (auto& mSourceParams : sourceParams)
 	{
-		if (s == nullptr) continue;
-		paramTempValueMap.set(s, var(s->value));
+		for (auto& s : mSourceParams)
+		{
+			if (s == nullptr) continue;
+			paramTempValueMap.set(s, var(s->value));
+		}
 	}
 }

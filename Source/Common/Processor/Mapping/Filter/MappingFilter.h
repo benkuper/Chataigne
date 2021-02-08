@@ -11,20 +11,24 @@
 #pragma once
 
 
-#include "JuceHeader.h"
+#include "Common/Processor/Multiplex/Multiplex.h"
 
 class MappingFilter :
-	public BaseItem
+	public BaseItem,
+	public MultiplexTarget
 {
 public:
-	MappingFilter(const String &name = "MappingFilter", var params = var());
+	MappingFilter(const String &name = "MappingFilter", var params = var(), Multiplex* multiplex = nullptr);
 	virtual ~MappingFilter();
 
-	Array<WeakReference<Parameter>> sourceParams;
+
 	ControllableContainer filterParams;
 	
 	Array<Controllable::Type> filterTypeFilters; //if not empty, this will filter out the parameters passed to the processSingleParameterInternal function
-	OwnedArray<Parameter> filteredParameters; //not in hierarchy
+
+	Array<Array<WeakReference<Parameter>>> sourceParams;
+	OwnedArray<OwnedArray<Parameter>> filteredParameters; //not in hierarchy, first dimension is multiplex
+
 	var previousValues; //for checking
 
 	bool processOnSameValue; //disabling this allows for fast checking and stopping if source and dest values are the same
@@ -32,17 +36,18 @@ public:
 
 	bool filterParamsAreDirty; //This is use to force processing even if input has not changed when a filterParam has been changed
 
-	bool setupSources(Array<Parameter *> sources);
-	virtual void setupParametersInternal();
-	virtual Parameter * setupSingleParameterInternal(Parameter * source);
+	bool setupSources(Array<Parameter *> sources, int multiplexIndex);
+	virtual void setupParametersInternal(int mutiplexIndex);
+	virtual Parameter * setupSingleParameterInternal(Parameter * source, int multiplexIndex);
 
-	bool process();
-	virtual bool processInternal();
-	virtual bool processSingleParameterInternal(Parameter* source, Parameter* out) { return false; }
+	bool process(Array<Parameter*> inputs, int multiplexIndex);
+	virtual bool processInternal(Array<Parameter*> inputs, int multiplexIndex);
+	virtual bool processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex) { return false; }
 
 	virtual void onContainerParameterChangedInternal(Parameter* p) override;
 	virtual void onControllableFeedbackUpdateInternal(ControllableContainer *, Controllable * p) override;
 	virtual void filterParamChanged(Parameter * ) {};
+
 
 	virtual void clearItem() override;
 

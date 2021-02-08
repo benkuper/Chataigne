@@ -22,20 +22,20 @@ public:
 	MappingFilterManager(Multiplex * multiplex = nullptr);
 	~MappingFilterManager();
 
-	Array<Parameter *> inputSourceParams;
-	Array<Parameter*> filteredParameters;
+	HashMap<int, Array<Parameter*>> multiplexInputSourceMap;
+	HashMap<int, Array<Parameter*>> filteredParamMap;
 	CriticalSection filterLock;
 
-	bool setupSources(Array<Parameter *> sources);
-	bool rebuildFilterChain(MappingFilter * afterThisFilter = nullptr);
+	Factory<MappingFilter> factory;
 
+	bool setupSources(Array<Parameter *> sources, int multiplexIndex);
+	bool rebuildFilterChain(MappingFilter * afterThisFilter = nullptr, int multiplexIndex = -1);
 	void notifyNeedsRebuild(MappingFilter * afterThisFilter = nullptr);
 
 	WeakReference<MappingFilter> getLastEnabledFilter() { return lastEnabledFilter; }
-	Array<Parameter *> getLastFilteredParameters();
+	Array<Parameter *> getLastFilteredParameters(int multiplexIndex);
 
-	bool processFilters(int multiplexIndex = 0);
-	Factory<MappingFilter> factory;
+	bool processFilters(Array<Parameter *> inputs, int multiplexIndex = 0);
 
 	void addItemInternal(MappingFilter * m, var data) override;
 	void removeItemInternal(MappingFilter *) override;

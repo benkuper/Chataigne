@@ -22,6 +22,7 @@ public:
 	var customModuleData;
 	bool isCustomModule;
 	bool isLocalModule;
+	bool newVersionAvailable;
 
 	Module* create() override;
 };
@@ -41,9 +42,9 @@ public:
 
 	ModuleDefinition* getDefinitionForType(const String& moduleType);
 
-	void addCustomModules();
-	void addCustomModulesInFolder(File folder, bool isLocal);
-	void updateCustomModules();
+	void addCustomModules(bool log = true);
+	void addCustomModulesInFolder(File folder, bool isLocal, bool log = true);
+	void updateCustomModules(bool log = true);
 	var getCustomModuleInfo(StringRef moduleName);
 	File getFolderForCustomModule(StringRef moduleName) const;
 	File getCustomModulesFolder() const;

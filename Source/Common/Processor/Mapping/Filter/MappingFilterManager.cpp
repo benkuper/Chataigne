@@ -35,28 +35,32 @@ MappingFilterManager::MappingFilterManager(Multiplex * multiplex) :
 
 	managerFactory = &factory;
 
-	factory.defs.add(Factory<MappingFilter>::Definition::createDef<SimpleRemapFilter>("Remap", "Remap"));
-	factory.defs.add(Factory<MappingFilter>::Definition::createDef<CurveMapFilter>("Remap", "Curve Map"));
-	factory.defs.add(Factory<MappingFilter>::Definition::createDef<MathFilter>("Remap", "Math"));
-	factory.defs.add(Factory<MappingFilter>::Definition::createDef<InverseFilter>("Remap", "Inverse"));
-	factory.defs.add(Factory<MappingFilter>::Definition::createDef<CropFilter>("Remap", "Crop"));
+	factory.defs.add(MultiplexTargetDefinition<MappingFilter>::createDef<SimpleRemapFilter>("Remap", "Remap", multiplex));
+	factory.defs.add(MultiplexTargetDefinition<MappingFilter>::createDef<CurveMapFilter>("Remap", "Curve Map", multiplex));
+	factory.defs.add(MultiplexTargetDefinition<MappingFilter>::createDef<MathFilter>("Remap", "Math", multiplex));
+	factory.defs.add(MultiplexTargetDefinition<MappingFilter>::createDef<InverseFilter>("Remap", "Inverse", multiplex));
+	factory.defs.add(MultiplexTargetDefinition<MappingFilter>::createDef<CropFilter>("Remap", "Crop", multiplex));
 
-	factory.defs.add(Factory<MappingFilter>::Definition::createDef<ToIntFilter>("Conversion", "Convert To Integer"));
-	factory.defs.add(Factory<MappingFilter>::Definition::createDef<ToFloatFilter>("Conversion", "Convert To Float"));
-	factory.defs.add(Factory<MappingFilter>::Definition::createDef<ToBooleanFilter>("Conversion", "Convert To Boolean"));
-	factory.defs.add(Factory<MappingFilter>::Definition::createDef<ToStringFilter>("Conversion", "Convert To String"));
-	factory.defs.add(Factory<MappingFilter>::Definition::createDef<ToPoint2DFilter>("Conversion", "Convert To Point2D"));
-	factory.defs.add(Factory<MappingFilter>::Definition::createDef<ToPoint3DFilter>("Conversion", "Convert To Point3D"));
-	factory.defs.add(Factory<MappingFilter>::Definition::createDef<ToColorFilter>("Conversion", "Convert To Color"));
-	factory.defs.add(Factory<MappingFilter>::Definition::createDef<ConversionFilter>("Conversion", ConversionFilter::getTypeStringStatic()));
+	factory.defs.add(MultiplexTargetDefinition<MappingFilter>::createDef<ToIntFilter>("Conversion", "Convert To Integer", multiplex));
+	factory.defs.add(MultiplexTargetDefinition<MappingFilter>::createDef<ToFloatFilter>("Conversion", "Convert To Float", multiplex));
+	factory.defs.add(MultiplexTargetDefinition<MappingFilter>::createDef<ToBooleanFilter>("Conversion", "Convert To Boolean", multiplex));
+	factory.defs.add(MultiplexTargetDefinition<MappingFilter>::createDef<ToStringFilter>("Conversion", "Convert To String", multiplex));
+	factory.defs.add(MultiplexTargetDefinition<MappingFilter>::createDef<ToPoint2DFilter>("Conversion", "Convert To Point2D", multiplex));
+	factory.defs.add(MultiplexTargetDefinition<MappingFilter>::createDef<ToPoint3DFilter>("Conversion", "Convert To Point3D", multiplex));
+	factory.defs.add(MultiplexTargetDefinition<MappingFilter>::createDef<ToColorFilter>("Conversion", "Convert To Color", multiplex));
 
-	factory.defs.add(Factory<MappingFilter>::Definition::createDef<SimpleSmoothFilter>("Time", "Smooth"));
-	factory.defs.add(Factory<MappingFilter>::Definition::createDef<DampingFilter>("Time", "Damping"));
-		factory.defs.add(Factory<MappingFilter>::Definition::createDef<LagFilter>("Time", "FPS"));
+	if (!isMultiplexed()) //Right now, filters that have different in <> out parameter layout are not supported in multiplex
+	{
+		factory.defs.add(MultiplexTargetDefinition<MappingFilter>::createDef<ConversionFilter>("Conversion", ConversionFilter::getTypeStringStatic(), multiplex));
+	}
+		
+	factory.defs.add(MultiplexTargetDefinition<MappingFilter>::createDef<SimpleSmoothFilter>("Time", "Smooth", multiplex));
+	factory.defs.add(MultiplexTargetDefinition<MappingFilter>::createDef<DampingFilter>("Time", "Damping", multiplex));
+	factory.defs.add(MultiplexTargetDefinition<MappingFilter>::createDef<LagFilter>("Time", "FPS", multiplex));
 
-	factory.defs.add(Factory<MappingFilter>::Definition::createDef<ColorShiftFilter>("Color", ColorShiftFilter::getTypeStringStatic()));
+	factory.defs.add(MultiplexTargetDefinition<MappingFilter>::createDef<ColorShiftFilter>("Color", ColorShiftFilter::getTypeStringStatic(), multiplex));
 
-	factory.defs.add(Factory<MappingFilter>::Definition::createDef<ScriptFilter>("", "Script"));
+	factory.defs.add(MultiplexTargetDefinition<MappingFilter>::createDef<ScriptFilter>("", "Script", multiplex));
 
 	selectItemWhenCreated = false;
 }
@@ -65,40 +69,46 @@ MappingFilterManager::~MappingFilterManager()
 {
 }
 
-bool MappingFilterManager::setupSources(Array<Parameter *> sources)
+bool MappingFilterManager::setupSources(Array<Parameter *> sources, int multiplexIndex)
 {
 	if (isCurrentlyLoadingData) return false;
 	
-	inputSourceParams = sources;
-	return rebuildFilterChain();
+	multiplexInputSourceMap.set(multiplexIndex, sources);
+
+	filteredParamMap.set(multiplexIndex, sources);
+
+	return rebuildFilterChain(nullptr, multiplexIndex);
 }
 
 
-bool MappingFilterManager::processFilters(int multiplexIndex)
+bool MappingFilterManager::processFilters(Array<Parameter *> inputs, int multiplexIndex)
 {
-	if (items.size() == 0)
+	if (getLastEnabledFilter() == nullptr)
 	{
-		filteredParameters = Array<Parameter*>(inputSourceParams.getRawDataPointer(), inputSourceParams.size());
+		filteredParamMap.set(multiplexIndex, inputs);// Array<Parameter*>(multiplexInputSourceMap[multiplexIndex].getRawDataPointer(), multiplexInputSourceMap[multiplexIndex].size());
 		return true;
 	}
 
-	Array<Parameter *> fp = inputSourceParams;
+
+	jassert(inputs.size() == multiplexInputSourceMap[multiplexIndex].size());
+
+	Array<Parameter *> fp = inputs;
 	bool hasChanged = false;
 
 	for (auto &f : items)
 	{
-		hasChanged |= f->process();
-		fp = Array<Parameter *>(f->filteredParameters.getRawDataPointer(), f->filteredParameters.size());
+		hasChanged |= f->process(inputs, multiplexIndex);
+		fp = Array<Parameter *>(f->filteredParameters[multiplexIndex]->getRawDataPointer(), f->filteredParameters[multiplexIndex]->size());
 	}
 	
-	filteredParameters = fp;
+	filteredParamMap.set(multiplexIndex, fp);
 
 	return hasChanged;
 }
 
-bool MappingFilterManager::rebuildFilterChain(MappingFilter * afterThisFilter)
+bool MappingFilterManager::rebuildFilterChain(MappingFilter * afterThisFilter, int multiplexIndex)
 {
-	Array<Parameter *> fp = inputSourceParams;
+	Array<Parameter *> fp = multiplexInputSourceMap[multiplexIndex];
 	lastEnabledFilter = nullptr;
 	bool foundFilter = afterThisFilter == nullptr?true:false;
 	for (auto& f : items)
@@ -110,11 +120,11 @@ bool MappingFilterManager::rebuildFilterChain(MappingFilter * afterThisFilter)
 			if (!foundFilter) continue;
 			if (!f->enabled->boolValue()) continue;
 
-			bool setupResult = f->setupSources(fp);
+			bool setupResult = f->setupSources(fp, multiplexIndex);
 			if (!setupResult) continue;
 		}
 		
-		fp = Array<Parameter*>(f->filteredParameters.getRawDataPointer(), f->filteredParameters.size());
+		fp = Array<Parameter*>(f->filteredParameters[multiplexIndex]->getRawDataPointer(), f->filteredParameters[multiplexIndex]->size());
 		lastEnabledFilter = f;
 	}
 
@@ -127,10 +137,12 @@ void MappingFilterManager::notifyNeedsRebuild(MappingFilter* afterThisFilter)
 	filterManagerListeners.call(&FilterManagerListener::filterManagerNeedsRebuild, afterThisFilter);
 }
 
-Array<Parameter *> MappingFilterManager::getLastFilteredParameters()
+Array<Parameter *> MappingFilterManager::getLastFilteredParameters(int multiplexIndex)
 {
-	if (lastEnabledFilter != nullptr) return Array<Parameter *>(lastEnabledFilter->filteredParameters.getRawDataPointer(), lastEnabledFilter->filteredParameters.size());
-	else return inputSourceParams;
+	return filteredParamMap[multiplexIndex];
+	
+	//if (lastEnabledFilter != nullptr) return Array<Parameter *>(lastEnabledFilter->filteredParameters[multiplexIndex]->getRawDataPointer(), lastEnabledFilter->filteredParameters[multiplexIndex]->size());
+	//else return multiplexInputSourceMap[multiplexIndex];
 }
 
 void MappingFilterManager::addItemInternal(MappingFilter *f , var)

@@ -20,7 +20,7 @@ public:
 	enum ConversionMode { RGB, HSV };
 
 	Parameter* defaultParam;
-	WeakReference<Parameter> outParamReference;
+	Array<WeakReference<Parameter>> outParamReferences;
 	EnumParameter* conversionMode;
 
 	Array<bool> connectedSlots;
@@ -30,10 +30,10 @@ public:
 	void connectSlot(int index);
 	void disconnectSlot(int index);
 
-	void setParamValueAtIndex(var value, int index);
+	void setParamValueAtIndex(var value, int index, int multiplexIndex);
 	void onContainerParameterChangedInternal(Parameter* p) override;
 
-	void setOutParamReference(Parameter* p);
+	void setOutParamReference(Parameter* p, int multiplexIndex);
 
 	StringArray getValueNames() const;
 

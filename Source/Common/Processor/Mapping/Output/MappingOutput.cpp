@@ -22,16 +22,30 @@ MappingOutput::~MappingOutput()
 {
 }
 
-void MappingOutput::setOutputType(Controllable::Type type)
+void MappingOutput::setOutParams(Array<WeakReference<Parameter>> mOutParams, int multiplexIndex)
 {
-	outputType = type;
-	if (command != nullptr && command->context == CommandContext::MAPPING) command->setMappingValueType(outputType);
+	outParams.ensureStorageAllocated(multiplexIndex + 1);
+	outParams.set(multiplexIndex, mOutParams);
+	
+	updateCommandOutParams();
+}
+
+void MappingOutput::updateCommandOutParams()
+{
+	if (command != nullptr)
+	{
+		command->setInputNamesFromParams(outParams[0]);
+		if (outParams.size() > 0)command->setMappingValueType(outParams[0][0]->type);
+	}
 }
 
 void MappingOutput::setCommand(CommandDefinition * cd)
 {
 	BaseCommandHandler::setCommand(cd);
-	if (command != nullptr && command->context == CommandContext::MAPPING) command->setMappingValueType(outputType);
+	if (command != nullptr && command->context == CommandContext::MAPPING)
+	{
+		updateCommandOutParams();
+	}
 }
 
 void MappingOutput::setValue(var value, int multiplexIndex)

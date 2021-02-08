@@ -50,20 +50,24 @@ void MappingUI::updateOutputParamUI()
 {
 	if (inspectable == nullptr || inspectable.wasObjectDeleted()) return;
 
-	if (outputParamUI != nullptr && mapping->om.outParams.size() > 0 && outputParamUI->controllable == mapping->om.outParams[0]) return;
-
 	if (outputParamUI != nullptr)
 	{
 		removeChildComponent(outputParamUI.get());
 	}
-
-	if (mapping->om.outParams.size() > 0 && mapping->om.outParams[0] != nullptr)
+	
+	if (mapping->om.outParams.size() > 0)
 	{
-		outputParamUI.reset(mapping->om.outParams[0]->createDefaultUI());
-		outputParamUI->showLabel = false;
-		addAndMakeVisible(outputParamUI.get());
-	}
 
+		//if (outputParamUI != nullptr && mapping->om.outParams.size() > 0 && outputParamUI->controllable == mapping->om.outParams[0][0]) return;
+		
+
+		if (mapping->om.outParams.size() > 0 && mapping->om.outParams[0].size() > 0 && mapping->om.outParams[0][0] != nullptr)
+		{
+			outputParamUI.reset(mapping->om.outParams[0][0]->createDefaultUI());
+			outputParamUI->showLabel = false;
+			addAndMakeVisible(outputParamUI.get());
+		}
+	}
 	resized();
 }
 

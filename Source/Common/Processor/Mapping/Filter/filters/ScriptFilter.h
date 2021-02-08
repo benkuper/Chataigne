@@ -16,13 +16,13 @@ class ScriptFilter :
 	public MappingFilter
 {
 public:
-	ScriptFilter(var params);
+	ScriptFilter(var params, Multiplex* multiplex);
 	~ScriptFilter();
 
 	static String scriptTemplate;
 	Script script;
 
-	bool processInternal() override;
+	bool processInternal(Array<Parameter *> inputs, int multiplexIndex) override;
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;

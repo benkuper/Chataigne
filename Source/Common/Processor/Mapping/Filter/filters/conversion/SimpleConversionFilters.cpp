@@ -10,8 +10,8 @@
 
 #include "SimpleConversionFilters.h"
 
-SimpleConversionFilter::SimpleConversionFilter(const String &name, var params, StringRef outTypeString) :
-	MappingFilter(name, params),
+SimpleConversionFilter::SimpleConversionFilter(const String &name, var params, StringRef outTypeString, Multiplex* multiplex) :
+	MappingFilter(name, params, multiplex),
 	retargetComponent(nullptr),
 	outTypeString(outTypeString)
 {
@@ -25,10 +25,14 @@ SimpleConversionFilter::~SimpleConversionFilter()
 {
 }
 
-Parameter* SimpleConversionFilter::setupSingleParameterInternal(Parameter* source)
+Parameter* SimpleConversionFilter::setupSingleParameterInternal(Parameter* source, int multiplexIndex)
 {
+
+
 	Parameter* p = (Parameter *)ControllableFactory::getInstance()->createControllable(outTypeString);
 	p->setNiceName(source->niceName);
+
+	if (multiplexIndex != 0) return p; //only setup for 1st if multiplex multiplex
 
 	retargetComponent->clearOptions();
 
@@ -57,7 +61,7 @@ Parameter* SimpleConversionFilter::setupSingleParameterInternal(Parameter* sourc
 }
 
 
-bool SimpleConversionFilter::processSingleParameterInternal(Parameter* source, Parameter* out)
+bool SimpleConversionFilter::processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex)
 {
 	switch (transferType)
 	{
@@ -99,8 +103,8 @@ bool SimpleConversionFilter::processSingleParameterInternal(Parameter* source, P
 
 
 
-ToFloatFilter::ToFloatFilter(var params) :
-	SimpleConversionFilter(getTypeString(), params, FloatParameter::getTypeStringStatic())
+ToFloatFilter::ToFloatFilter(var params, Multiplex* multiplex) :
+	SimpleConversionFilter(getTypeString(), params, FloatParameter::getTypeStringStatic(), multiplex)
 {
 }
 
@@ -111,8 +115,8 @@ var ToFloatFilter::convertValue(Parameter * source, var sourceValue)
 }
 
 
-ToIntFilter::ToIntFilter(var params) :
-	SimpleConversionFilter(getTypeString(), params, IntParameter::getTypeStringStatic())
+ToIntFilter::ToIntFilter(var params, Multiplex* multiplex) :
+	SimpleConversionFilter(getTypeString(), params, IntParameter::getTypeStringStatic(), multiplex)
 {
 	modeParam = addEnumParameter("Mode", "Conversion mode");
 	modeParam->addOption("Round", ROUND)->addOption("Floor", FLOOR)->addOption("Ceil", CEIL);
@@ -131,8 +135,8 @@ var ToIntFilter::convertValue(Parameter * source, var sourceValue)
 	return 0;
 }
 
-ToStringFilter::ToStringFilter(var params) :
-	SimpleConversionFilter(getTypeString(), params, StringParameter::getTypeStringStatic())
+ToStringFilter::ToStringFilter(var params, Multiplex* multiplex) :
+	SimpleConversionFilter(getTypeString(), params, StringParameter::getTypeStringStatic(), multiplex)
 {
 	format = filterParams.addEnumParameter("Format", "The format of the string");
 	format->addOption("Number", NUMBER)->addOption("Time", TIME);
@@ -174,8 +178,8 @@ void ToStringFilter::filterParamChanged(Parameter * p)
 	SimpleConversionFilter::filterParamChanged(p);
 }
 
-ToPoint2DFilter::ToPoint2DFilter(var params) :
-	SimpleConversionFilter(getTypeString(), params, Point2DParameter::getTypeStringStatic())
+ToPoint2DFilter::ToPoint2DFilter(var params, Multiplex* multiplex) :
+	SimpleConversionFilter(getTypeString(), params, Point2DParameter::getTypeStringStatic(), multiplex)
 {
 }
 
@@ -185,8 +189,8 @@ var ToPoint2DFilter::convertValue(Parameter * source, var sourceValue)
 	return (float)sourceValue;
 }
 
-ToPoint3DFilter::ToPoint3DFilter(var params) :
-	SimpleConversionFilter(getTypeString(), params, Point3DParameter::getTypeStringStatic())
+ToPoint3DFilter::ToPoint3DFilter(var params, Multiplex* multiplex) :
+	SimpleConversionFilter(getTypeString(), params, Point3DParameter::getTypeStringStatic(), multiplex)
 {
 }
 
@@ -196,8 +200,8 @@ var ToPoint3DFilter::convertValue(Parameter * source, var sourceValue)
 	return (float)sourceValue;
 }
 
-ToColorFilter::ToColorFilter(var params) :
-	SimpleConversionFilter(getTypeString(), params, ColorParameter::getTypeStringStatic()),
+ToColorFilter::ToColorFilter(var params, Multiplex* multiplex) :
+	SimpleConversionFilter(getTypeString(), params, ColorParameter::getTypeStringStatic(), multiplex),
 	baseColor(nullptr)
 {
 }
@@ -206,10 +210,13 @@ ToColorFilter::~ToColorFilter()
 {
 }
 
-Parameter* ToColorFilter::setupSingleParameterInternal(Parameter* sourceParam)
+Parameter* ToColorFilter::setupSingleParameterInternal(Parameter* sourceParam, int multiplexIndex)
 {
-	Parameter* p = SimpleConversionFilter::setupSingleParameterInternal(sourceParam);
-	
+	Parameter* p = SimpleConversionFilter::setupSingleParameterInternal(sourceParam, multiplexIndex);
+
+	if (multiplexIndex != 0) return p; //only setup for 1st if multiplex
+
+
 	if (transferType != TARGET)
 	{
 		if (baseColor != nullptr)
@@ -242,7 +249,7 @@ Parameter* ToColorFilter::setupSingleParameterInternal(Parameter* sourceParam)
 	return p;
 }
 
-bool ToColorFilter::processSingleParameterInternal(Parameter* source, Parameter* out)
+bool ToColorFilter::processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex)
 {
 	if (source->value.isArray())
 	{
@@ -301,20 +308,20 @@ bool ToColorFilter::processSingleParameterInternal(Parameter* source, Parameter*
 	break;
 
 	default:
-		return SimpleConversionFilter::processInternal();
+		return SimpleConversionFilter::processSingleParameterInternal(source, out, multiplexIndex);
 		break;
 	}
 
 	return true;
 }
 
-ToBooleanFilter::ToBooleanFilter(var params) :
-	SimpleConversionFilter(getTypeString(), params, BoolParameter::getTypeStringStatic())
+ToBooleanFilter::ToBooleanFilter(var params, Multiplex* multiplex) :
+	SimpleConversionFilter(getTypeString(), params, BoolParameter::getTypeStringStatic(), multiplex)
 {
 	toggleMode = addBoolParameter("Toggle Mode", "If checked, this will act as a toggle, and its value will be inverted when input value is 1", false);
 }
 
-bool ToBooleanFilter::processSingleParameterInternal(Parameter* source, Parameter* out)
+bool ToBooleanFilter::processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex)
 {
 	bool val = (source->value.isString() ?source->value.toString().getFloatValue():source->floatValue()) >= 1;
 	if (toggleMode->boolValue())

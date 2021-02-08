@@ -19,8 +19,11 @@ public:
 	MappingOutput(Multiplex * multiplex = nullptr);
 	virtual ~MappingOutput();
 
-	Controllable::Type outputType;
-	virtual void setOutputType(Controllable::Type type);
+	Array<Array<WeakReference<Parameter>>> outParams;
+
+	virtual void setOutParams(Array<WeakReference<Parameter>> outParams, int multiplexIndex);
+	void updateCommandOutParams();
+
 	virtual void setCommand(CommandDefinition * cd) override;
 
 	void setValue(var value, int multiplexIndex);

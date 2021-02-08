@@ -16,7 +16,7 @@ class SimpleSmoothFilter :
 	public MappingFilter
 {
 public:
-	SimpleSmoothFilter(var params);
+	SimpleSmoothFilter(var params, Multiplex* multiplex);
 	~SimpleSmoothFilter();
 
 	BoolParameter * async;
@@ -25,8 +25,8 @@ public:
 
 	const float precision = .00001f;
 
-	Parameter* setupSingleParameterInternal(Parameter* source) override;
-	bool processSingleParameterInternal(Parameter * source, Parameter * out) override;
+	Parameter* setupSingleParameterInternal(Parameter* source, int multiplexIndex) override;
+	bool processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex) override;
 
 	void onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c) override;
 

@@ -20,7 +20,7 @@ class ConversionFilter :
 	public ConversionParamValueLink::ConversionLinkListener
 {
 public:
-	ConversionFilter(var params);
+	ConversionFilter(var params, Multiplex* multiplex);
 	~ConversionFilter();
 
 	ConvertedParameterManager cpm;
@@ -43,9 +43,8 @@ public:
 
 	ConversionParamValueLink* getLinkForOut(ConvertedParameter* out, int outValueIndex);
 
-	void setupParametersInternal() override;
-	bool processInternal() override;
-	bool processSingleParameterInternal(Parameter * source, Parameter *out) override;
+	void setupParametersInternal(int multiplexIndex) override;
+	bool processInternal(Array<Parameter *> inputs, int multiplexIndex) override;
 
 	void askForRemove(ConversionParamValueLink* link) override;
 
@@ -68,7 +67,6 @@ public:
 	void removeAsyncConversionFilterListener(AsyncConversionFilterListener* listener) { conversionFilterAsyncNotifier.removeListener(listener); }
 
 
-	static ConversionFilter * create(var params) { return new ConversionFilter(params); }
 	String getTypeString() const override { return getTypeStringStatic(); }
 	static const String getTypeStringStatic() { return "Mega Converter"; }
 

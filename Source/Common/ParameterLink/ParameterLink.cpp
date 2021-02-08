@@ -55,8 +55,20 @@ var ParameterLink::getLinkedValue(int multiplexIndex)
 
     case MAPPING_INPUT:
     {
-        var val = 0;
-        if (mappingValueIndex < mappingValues[multiplexIndex].size()) val = mappingValues[multiplexIndex][mappingValueIndex];
+        var val;
+        if (parameter->isComplex())
+        {
+            for (int i = 0; i < parameter->value.size(); i++)
+            {
+                if (mappingValueIndex + i < mappingValues[multiplexIndex].size()) val.append(mappingValues[multiplexIndex][mappingValueIndex + i]);
+                else val.append(0); //default
+            }
+        }
+        else
+        {
+            if (mappingValueIndex < mappingValues[multiplexIndex].size()) val = mappingValues[multiplexIndex][mappingValueIndex];
+        }
+
         return parameter->getCroppedValue(val);
     }
     break;

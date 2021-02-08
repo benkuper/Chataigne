@@ -19,6 +19,7 @@ CommunityModuleInfo::CommunityModuleInfo(StringRef name, var onlineData) :
 	nameCanBeChangedByUser = false;
 	userCanRemove = false;
 	canBeReorderedInEditor = false;
+	editorCanBeCollapsed = true;
 	editorIsCollapsed = true;
 
 	installTriger = addTrigger("Install", "Install or Update this module");

@@ -11,8 +11,8 @@
 #include "CropFilter.h"
 
 
-CropFilter::CropFilter(var params) :
-	MappingFilter(getTypeString(), params)
+CropFilter::CropFilter(var params, Multiplex * multiplex) :
+	MappingFilter(getTypeString(), params, multiplex)
 {
 
 	targetMin = filterParams.addFloatParameter("Target Min", "New minimum for output", 0, 0, 1);
@@ -31,9 +31,9 @@ CropFilter::~CropFilter()
 {
 }
 
-Parameter * CropFilter::setupSingleParameterInternal(Parameter * source)
+Parameter * CropFilter::setupSingleParameterInternal(Parameter * source, int multiplexIndex)
 {
-	Parameter * p = MappingFilter::setupSingleParameterInternal(source);
+	Parameter * p = MappingFilter::setupSingleParameterInternal(source, multiplexIndex);
 	if (p->isComplex())
 	{
 		var minVal;
@@ -54,7 +54,7 @@ Parameter * CropFilter::setupSingleParameterInternal(Parameter * source)
 }
 
 
-bool CropFilter::processSingleParameterInternal(Parameter* source, Parameter* out)
+bool CropFilter::processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex)
 {
 	out->setValue(source->value);
 	return true;
@@ -64,11 +64,15 @@ void CropFilter::filterParamChanged(Parameter* p)
 {
 	if (p == targetMin || p == targetMax)
 	{
-		for (auto& fp : filteredParameters)
+		for (auto& mFilteredParams : filteredParameters)
 		{
-			if (fp == nullptr) continue;
-			if (!filterTypeFilters.contains(fp->type)) continue;
-			 fp->setRange(targetMin->floatValue(), jmax<float>(targetMax->floatValue(), targetMin->floatValue()));
+			for (auto& fp : *mFilteredParams)
+			{
+				if (fp == nullptr) continue;
+				if (!filterTypeFilters.contains(fp->type)) continue;
+				fp->setRange(targetMin->floatValue(), jmax<float>(targetMax->floatValue(), targetMin->floatValue()));
+			}
+			
 		}
 	}
 }

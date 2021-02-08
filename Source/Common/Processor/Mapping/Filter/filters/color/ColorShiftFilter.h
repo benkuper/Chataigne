@@ -16,14 +16,13 @@ class ColorShiftFilter :
 	public MappingFilter
 {
 public:
-	ColorShiftFilter(var params);
+	ColorShiftFilter(var params, Multiplex* multiplex);
 	~ColorShiftFilter();
 
 	Array<FloatParameter*> hsvOffsets;
 
-	bool processSingleParameterInternal(Parameter* source, Parameter* out) override;
+	bool processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex) override;
 
-	static ColorShiftFilter * create(var params) { return new ColorShiftFilter(params); }
 	virtual String getTypeString() const override { return getTypeStringStatic(); }
 	static const String getTypeStringStatic() { return "HSV Adjust"; }
 

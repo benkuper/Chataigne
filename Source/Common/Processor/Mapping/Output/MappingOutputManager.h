@@ -21,18 +21,18 @@ public:
 	MappingOutputManager(Multiplex * multiplex = nullptr);
 	~MappingOutputManager();
 
-	Array<WeakReference<Parameter>> outParams;
+	Array<Array<WeakReference<Parameter>>> outParams;
 
 	void clear() override;
 
 	MappingOutput* createItem() override;
 
-	void setOutParams(Array<Parameter *> params);
+	void setOutParams(Array<Parameter *> params, int multiplexIndex);
 
 	void updateOutputValues(int multiplexIndex);
 	void updateOutputValue(MappingOutput * o, int multiplexIndex);
 
-	var getMergedOutValue();
+	var getMergedOutValue(int multiplexIndex);
 
 	void addItemInternal(MappingOutput * o, var) override;
 	void removeItemInternal(MappingOutput * o) override;

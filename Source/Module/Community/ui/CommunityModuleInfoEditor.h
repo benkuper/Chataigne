@@ -27,6 +27,8 @@ public:
 	std::unique_ptr<TriggerButtonUI> uninstallBT;
 
 
+	void setCollapsed(bool  value, bool force = false, bool animate = true, bool doNotRebuild = false) override;
+
 	void resetAndBuild() override {} //do nothing
 
 	void updateVersionUI();

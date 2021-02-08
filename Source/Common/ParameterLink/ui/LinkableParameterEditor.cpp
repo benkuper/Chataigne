@@ -20,7 +20,7 @@ LinkableParameterEditor::LinkableParameterEditor(ParameterLink* pLink, bool show
 
     linkBT.reset(AssetManager::getInstance()->getToggleBTImage(ChataigneAssetManager::getInstance()->linkOnImage));
     linkBT->addListener(this);
-    linkBT->setToggleState(link->linkType != link->NONE, dontSendNotification);
+    //linkBT->setToggleState(link->linkType != link->NONE, dontSendNotification);
     addAndMakeVisible(linkBT.get());
 
     paramEditor.reset((ParameterEditor *)pLink->parameter->getEditor(false));
@@ -34,12 +34,39 @@ LinkableParameterEditor::~LinkableParameterEditor()
     if (!inspectable.wasObjectDeleted()) link->removeAsyncParameterLinkListener(this);
 }
 
+void LinkableParameterEditor::paint(Graphics& g)
+{
+    Colour c = NORMAL_COLOR;
+    switch (link->linkType)
+    {
+    case ParameterLink::NONE:
+        break;
+
+    case ParameterLink::MAPPING_INPUT:
+        c = BLUE_COLOR.withBrightness(.7f);
+        break;
+
+    case ParameterLink::MULTIPLEX_LIST:
+        c = GREEN_COLOR.withBrightness(.7f);
+        break;
+
+    case ParameterLink::INDEX:
+    case ParameterLink::INDEX_ZERO:
+        c = YELLOW_COLOR.withBrightness(.7f);
+        break;
+    }
+
+    g.setColour(c);
+    g.fillEllipse(btRect.toFloat());
+}
+
 void LinkableParameterEditor::resized()
 {
     Rectangle<int> r = getLocalBounds();
     int ts = jmin(r.getHeight(), 20);
-    linkBT->setBounds(r.removeFromRight(ts).withHeight(ts).reduced(2));
-    linkBT->setToggleState(link->linkType != link->NONE, dontSendNotification);
+    btRect = r.removeFromRight(ts).withHeight(ts).reduced(2);
+    linkBT->setBounds(btRect);
+    //linkBT->setToggleState(link->linkType != link->NONE, dontSendNotification);
     paramEditor->setBounds(r);
 }
 
@@ -54,17 +81,15 @@ void LinkableParameterEditor::buttonClicked(Button* b)
             PopupMenu mappingMenu;
             bool ticked = false;
 
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < link->inputValueNames.size(); i++)
             {
                 bool t = link->linkType == link->MAPPING_INPUT && link->mappingValueIndex == i;
                 ticked |= t;
-                mappingMenu.addItem(1 + i, "Value " + String(i + 1), true, t);
+                mappingMenu.addItem(1 + i, "Value " + String(i + 1)+" : "+link->inputValueNames[i], true, t);
             }
 
             p.addSubMenu("From Mapping Input", mappingMenu, true, Image(), ticked);
         }
-
-
 
         if (link->isMultiplexed())
         {
@@ -115,10 +140,15 @@ void LinkableParameterEditor::buttonClicked(Button* b)
 
 void LinkableParameterEditor::childBoundsChanged(Component* c)
 {
-    if (c == paramEditor.get()) setSize(getWidth(), paramEditor->getHeight());
+    if (c == paramEditor.get())
+    {
+        setSize(getWidth(), paramEditor->getHeight());
+        repaint();
+    }
 }
 
 void LinkableParameterEditor::newMessage(const ParameterLink::ParameterLinkEvent& e)
 {
-    linkBT->setToggleState(link->linkType != link->NONE, dontSendNotification);
+    //linkBT->setToggleState(link->linkType != link->NONE, dontSendNotification);
+    repaint();
 }

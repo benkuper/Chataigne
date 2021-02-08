@@ -42,6 +42,8 @@ void BaseCommand::onControllableAdded(Controllable* c)
 	if (Parameter* p = dynamic_cast<Parameter*>(c))
 	{
 		ParameterLink* pLink = new ParameterLink(p, multiplex);
+		pLink->inputValueNames = inputNames;
+
 		paramLinks.add(pLink);
 		paramLinkMap.set(p, pLink);
 		linkParamMap.set(pLink, p);
@@ -243,6 +245,27 @@ void BaseCommand::linkParamToMappingIndex(Parameter* p, int mappingIndex)
 		pLink->setLinkType(pLink->MAPPING_INPUT);
 		pLink->mappingValueIndex = mappingIndex;
 	}
+}
+
+void BaseCommand::setInputNamesFromParams(Array<WeakReference<Parameter>> outParams)
+{
+	inputNames.clear();
+	for (int i = 0; i < outParams.size(); i++)
+	{
+		String tString = outParams[i]->getTypeString();
+		if (outParams[i]->isComplex())
+		{
+			StringArray valueNames = outParams[i]->getValuesNames();
+			for (auto& vName : valueNames) inputNames.add(tString + " (" + vName + ")");
+		}
+		else
+		{
+			inputNames.add(tString);
+		}
+	}
+	
+	for (auto& pLink : paramLinks) pLink->inputValueNames = inputNames;
+	if (customValuesManager != nullptr) customValuesManager->setInputNames(inputNames);
 }
 
 var BaseCommand::getLinkedCustomArgumentValueAt(int argIndex, int multiplexIndex)

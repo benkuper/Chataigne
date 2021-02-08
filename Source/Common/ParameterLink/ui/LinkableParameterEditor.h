@@ -20,15 +20,18 @@ public:
     LinkableParameterEditor(ParameterLink* pLink, bool showMappingOptions);
     ~LinkableParameterEditor();
 
-    static Image linkOnImage;
-    static Image linkOffImage;
+    static Image linkImage;
 
     bool showMappingOptions;
+
 
     ParameterLink* link;
     std::unique_ptr<ParameterEditor> paramEditor;
     std::unique_ptr<ImageButton> linkBT;
 
+    Rectangle<int> btRect;
+
+    void paint(Graphics& g) override;
     void resized() override;
     void buttonClicked(Button* b) override;
     void childBoundsChanged(Component* c) override;

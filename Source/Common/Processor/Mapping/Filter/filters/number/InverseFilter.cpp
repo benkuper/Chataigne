@@ -11,8 +11,8 @@
 #include "InverseFilter.h"
 
 
-InverseFilter::InverseFilter(var params) :
-	MappingFilter(getTypeString(), params)
+InverseFilter::InverseFilter(var params, Multiplex* multiplex) :
+	MappingFilter(getTypeString(), params, multiplex)
 {
 	editorCanBeCollapsed = false;
 	editorIsCollapsed = true;
@@ -24,7 +24,7 @@ InverseFilter::~InverseFilter()
 {
 }
 
-bool InverseFilter::processSingleParameterInternal(Parameter * source, Parameter * out)
+bool InverseFilter::processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex)
 {
 	if (!source->hasRange())
 	{

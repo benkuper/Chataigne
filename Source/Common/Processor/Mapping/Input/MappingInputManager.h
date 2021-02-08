@@ -22,6 +22,7 @@ public:
 
 	Factory<MappingInput> factory;
 
+
 	void lockInput(Array<Parameter*> input);
 
 	Array<Parameter *> getInputReferences(int multiplexIndex = 0);

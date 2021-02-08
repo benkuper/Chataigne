@@ -31,9 +31,9 @@ void MappingOutputManagerEditor::updateOutputUI()
 		outUI = nullptr;
 	}
 
-	if (outputManager->outParams.size() > 0 && outputManager->outParams[0] != nullptr)
+	if (outputManager->outParams[0].size() > 0 && outputManager->outParams[0][0] != nullptr)
 	{
-		outUI.reset((ParameterUI*)outputManager->outParams[0]->createDefaultUI());
+		outUI.reset((ParameterUI*)outputManager->outParams[0][0]->createDefaultUI());
 		outUI->showLabel = false;
 		addAndMakeVisible(outUI.get());
 	}

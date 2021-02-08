@@ -33,11 +33,13 @@ public:
 
 	std::function<void(Parameter*, var)> createParamCallbackFunc;
 
+	StringArray inputNames;
 
 	void linkToTemplate(CustomValuesCommandArgumentManager * t);
 	void rebuildFromTemplate(bool clearData);
 
 	void addItemInternal(CustomValuesCommandArgument* item, var data) override;
+	void removeItemInternal(CustomValuesCommandArgument* i) override;
 
 	CustomValuesCommandArgument * addItemWithParam(Parameter * p, var data = var(), bool fromUndoableAction = false);
 	CustomValuesCommandArgument * addItemFromType(Parameter::Type type, var data = var(), bool fromUndoableAction = false);
@@ -45,12 +47,14 @@ public:
 	CustomValuesCommandArgument * addItemFromData(var data, bool fromUndoableAction = false) override;
 
 	void autoRenameItems();
+
+	void setInputNames(StringArray inputNames);
 	
-	void removeItemInternal(CustomValuesCommandArgument * i) override;
 
 	void itemAdded(CustomValuesCommandArgument * i) override; //FROM TEMPLATE
 	void itemRemoved(CustomValuesCommandArgument * i) override; //FROM TEMPLATE
 	void loadJSONDataInternal(var data) override;
+
 
 	InspectableEditor * getEditor(bool isRoot) override;
 };

@@ -10,8 +10,8 @@
 
 #include "ColorShiftFilter.h"
 
-ColorShiftFilter::ColorShiftFilter(var params) :
-	MappingFilter(getTypeString(), params)
+ColorShiftFilter::ColorShiftFilter(var params, Multiplex * multiplex) :
+	MappingFilter(getTypeString(), params, multiplex)
 {
 
 	const String hsvNames[3] = { "Hue", "Saturation","Brightness" };
@@ -27,9 +27,12 @@ ColorShiftFilter::~ColorShiftFilter()
 {
 }
 
-bool ColorShiftFilter::processSingleParameterInternal(Parameter * source, Parameter * out)
+bool ColorShiftFilter::processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex)
 {
-	ColorParameter* tc = (ColorParameter*)out;
+	ColorParameter* tc = dynamic_cast<ColorParameter*>(out);
+
+	jassert(tc != nullptr);
+	if (tc == nullptr) return false;
 
 	float hue, sat, bri;
 	Colour c = ((ColorParameter*)source)->getColor();

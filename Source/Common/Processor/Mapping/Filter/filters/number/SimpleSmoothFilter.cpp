@@ -10,8 +10,8 @@
 
 #include "SimpleSmoothFilter.h"
 
-SimpleSmoothFilter::SimpleSmoothFilter(var params) :
-	MappingFilter(getTypeString())
+SimpleSmoothFilter::SimpleSmoothFilter(var params, Multiplex* multiplex) :
+	MappingFilter(getTypeString(),params, multiplex)
 {
 	processOnSameValue = true;
 
@@ -27,7 +27,7 @@ SimpleSmoothFilter::~SimpleSmoothFilter()
 }
 
 
-Parameter* SimpleSmoothFilter::setupSingleParameterInternal(Parameter* source)
+Parameter* SimpleSmoothFilter::setupSingleParameterInternal(Parameter* source, int multiplexIndex)
 {
 	Parameter* p = nullptr;
 	if (source->type == Controllable::BOOL)
@@ -38,23 +38,24 @@ Parameter* SimpleSmoothFilter::setupSingleParameterInternal(Parameter* source)
 	}
 	else
 	{
-		p = MappingFilter::setupSingleParameterInternal(source);
+		p = MappingFilter::setupSingleParameterInternal(source, multiplexIndex);
 	}
 
 	return p;
 }
 
-bool SimpleSmoothFilter::processSingleParameterInternal(Parameter* source, Parameter* out)
+bool SimpleSmoothFilter::processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex)
 {
 	var oldVal = out->getValue();
 	var newVal = source->getValue();
 
 	if(source->checkValueIsTheSame(oldVal, newVal)) return false;
 
+	var val;
+
 	if (out->isComplex())
 	{
-		var val;
-		for (int i = 0; i < out->value.size(); ++i)
+		for (int i = 0; i < oldVal.size(); ++i)
 		{
 			float smoothVal = async->boolValue() ? (newVal[i] > oldVal[i] ? smooth->floatValue() : downSmooth->floatValue()) : smooth->floatValue();
 			float targetVal = (float)oldVal[i] + ((float)newVal[i] - (float)oldVal[i]) * (1 - smoothVal);
@@ -62,15 +63,17 @@ bool SimpleSmoothFilter::processSingleParameterInternal(Parameter* source, Param
 			else val.append(targetVal);
 		}
 
-		out->setValue(val);
 	}
 	else
 	{
 		float smoothVal = async->boolValue() ? (newVal > oldVal ? smooth->floatValue() : downSmooth->floatValue()) : smooth->floatValue();
 		float targetVal = (float)oldVal + ((float)newVal - (float)oldVal) * (1 - smoothVal);
-		if (fabsf(targetVal - (float)newVal) < precision) out->setValue(newVal);
-		else out->setValue(targetVal);
+		
+		if (fabsf(targetVal - (float)newVal) < precision) val = newVal;
+		else val = targetVal;
 	}
+
+	out->setValue(val);
 
 	return true;
 }

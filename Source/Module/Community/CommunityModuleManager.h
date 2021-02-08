@@ -25,5 +25,7 @@ public:
 
 	var getJSONDataForURL(URL url);
 
+	CommunityModuleInfo* getModuleInfoForFolder(const File & folder);
+
 	static bool openStreamProgressCallback(void* context, int /*bytesSent*/, int /*totalBytes*/);
 };

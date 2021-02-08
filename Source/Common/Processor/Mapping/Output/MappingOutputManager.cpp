@@ -37,10 +37,11 @@ MappingOutput* MappingOutputManager::createItem()
 	return new MappingOutput(multiplex);
 }
 
-void MappingOutputManager::setOutParams(Array<Parameter *> params)
+void MappingOutputManager::setOutParams(Array<Parameter *> params, int multiplexIndex)
 {
-	outParams = Array<WeakReference<Parameter>>(params.getRawDataPointer(), params.size());
-	if(outParams.size() > 0) for (auto &o : items) o->setOutputType(outParams[0]->type); //better than this ? should handle all ?
+	outParams.ensureStorageAllocated(multiplexIndex + 1);
+	outParams.set(multiplexIndex, Array<WeakReference<Parameter>>(params.getRawDataPointer(), params.size()));
+	if(outParams.size() > 0) for (auto &o : items) o->setOutParams(outParams[multiplexIndex], multiplexIndex); //better than this ? should handle all ?
 
 	omAsyncNotifier.addMessage(new OutputManagerEvent(OutputManagerEvent::OUTPUT_CHANGED));
 }
@@ -48,7 +49,7 @@ void MappingOutputManager::setOutParams(Array<Parameter *> params)
 
 void MappingOutputManager::updateOutputValues(int multiplexIndex)
 {
-	var value = getMergedOutValue();
+	var value = getMergedOutValue(multiplexIndex);
 	if (value.isVoid()) return; //possible if parameters have been deleted in another thread during process
 
 	for (auto& i : items) i->setValue(value, multiplexIndex);
@@ -58,13 +59,13 @@ void MappingOutputManager::updateOutputValue(MappingOutput * o, int multiplexInd
 {
 	if (outParams.size() == 0) return;
 	if (o == nullptr) return;
-	o->setValue(getMergedOutValue(), multiplexIndex);
+	o->setValue(getMergedOutValue(multiplexIndex), multiplexIndex);
 }
 
-var MappingOutputManager::getMergedOutValue()
+var MappingOutputManager::getMergedOutValue(int multiplexIndex)
 {
 	var value;
-	for (auto& o : outParams)
+	for (auto& o : outParams[multiplexIndex])
 	{
 		if (o.wasObjectDeleted()) return var();
 
@@ -85,7 +86,12 @@ var MappingOutputManager::getMergedOutValue()
 void MappingOutputManager::addItemInternal(MappingOutput * o, var)
 {
 	o->addCommandHandlerListener(this);
-	if(outParams.size() > 0)o->setOutputType(outParams[0]->type);
+
+	if (outParams.size() > 0)
+	{
+		for (int i = 0; i < outParams.size(); i++) o->setOutParams(outParams[i], i);
+	}
+
 	for (int i = 0; i < getMultiplexCount(); i++) updateOutputValue(o, i);
 }
 
