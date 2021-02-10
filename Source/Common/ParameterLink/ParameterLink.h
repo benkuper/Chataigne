@@ -79,6 +79,19 @@ public:
 
     virtual ParameterLink* getLinkedParam(Parameter* p);
     virtual var getLinkedValue(Parameter* p, int multiplexIndex);
+
+
+    template<class T>
+    T* getLinkedTargetContainerAs(TargetParameter * target, int multiplexIndex)
+    {
+        if (paramsCanBeLinked)
+        {
+            if (ParameterLink* pl = getLinkedParam(target)) return dynamic_cast<T*>(pl->getLinkedTargetContainer(multiplexIndex).get());
+        }
+
+        return dynamic_cast<T*>(target->targetContainer.get());
+    }
+
     virtual void linkParamToMappingIndex(Parameter* p, int mappingIndex);
 
     virtual void setInputNamesFromParams(Array<WeakReference<Parameter>> outParams);

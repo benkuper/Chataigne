@@ -32,16 +32,6 @@ public:
 
 	void triggerInternal(int multiplexIndex) override;
 
-	template<class T>
-	T* getTargetAs(int multiplexIndex)
-	{
-		if (ParameterLink* pl = getLinkedParam(target))
-		{
-			return dynamic_cast<T*>(pl->getLinkedTargetContainer(multiplexIndex).get());
-		}
-
-		return nullptr;
-	}
 	//Delayed loading mechanism to ensure all content is created for right targeting
 	var dataToLoad;
 

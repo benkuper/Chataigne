@@ -31,7 +31,8 @@ void GenericOSCQueryCommand::setupParamFromTarget()
 		removeControllable(valueParam.get());
 	}
 
-	Controllable* c = getLinkedParam(target)->getLinkedTarget(0); //if multiplexed, get the first element
+	getLinkedParam(target)
+	Controllable* c = ->getLinkedTarget(0); //if multiplexed, get the first element
 
 	valueParam = ControllableFactory::createParameterFrom(c, false, true);
 

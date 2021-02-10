@@ -64,41 +64,41 @@ void StateCommand::triggerInternal(int multiplexIndex)
 {
 	BaseCommand::triggerInternal(multiplexIndex);
 
-	if (getLinkedParam(target)->getLinkedTargetContainer(multiplexIndex) == nullptr) return;
+	if (getLinkedTargetContainerAs<ControllableContainer>(target, multiplexIndex) == nullptr) return;
 	//if (target->targetContainer.wasObjectDeleted()) return;
 
 	switch (actionType)
 	{
 	case SET_STATE_ACTIVATION:
-		if (State* s = getTargetAs<State>(multiplexIndex)) s->active->setValue(enableVal->boolValue());
+		if (State* s = getLinkedTargetContainerAs<State>(target, multiplexIndex)) s->active->setValue(enableVal->boolValue());
 		break;
 
 	case TOGGLE_STATE:
-		if (State* s = getTargetAs<State>(multiplexIndex)) s->active->setValue(!s->active->boolValue());
+		if (State* s = getLinkedTargetContainerAs<State>(target, multiplexIndex)) s->active->setValue(!s->active->boolValue());
 		break;
 
 	case TRIGGER_ACTION:
-		if (Action* a = getTargetAs<Action>(multiplexIndex)) if (a->triggerOn != nullptr) a->triggerOn->trigger();
+		if (Action* a = getLinkedTargetContainerAs<Action>(target, multiplexIndex)) if (a->triggerOn != nullptr) a->triggerOn->trigger();
 		break;
 
 	case SET_ACTION_ENABLED:
-		if (Action* a = getTargetAs<Action>(multiplexIndex)) a->enabled->setValue(enableVal->boolValue());
+		if (Action* a = getLinkedTargetContainerAs<Action>(target, multiplexIndex)) a->enabled->setValue(enableVal->boolValue());
 		break;
 
 	case TOGGLE_ACTION:
-		if (Action* a = getTargetAs<Action>(multiplexIndex)) a->enabled->setValue(!a->enabled->boolValue());
+		if (Action* a = getLinkedTargetContainerAs<Action>(target, multiplexIndex)) a->enabled->setValue(!a->enabled->boolValue());
 		break;
 
 	case SET_TOGGLE_STATE:
-		if (StandardCondition* cd = getTargetAs<StandardCondition>(multiplexIndex)) cd->forceToggleState(enableVal->boolValue());
+		if (StandardCondition* cd = getLinkedTargetContainerAs<StandardCondition>(target, multiplexIndex)) cd->forceToggleState(enableVal->boolValue());
 		break;
 
 	case SET_MAPPING_ENABLED:
-		if (Mapping* m = getTargetAs<Mapping>(multiplexIndex)) m->enabled->setValue(enableVal->boolValue());
+		if (Mapping* m = getLinkedTargetContainerAs<Mapping>(target, multiplexIndex)) m->enabled->setValue(enableVal->boolValue());
 		break;
 
 	case TOGGLE_MAPPING:
-		if (Mapping* m = getTargetAs<Mapping>(multiplexIndex)) m->enabled->setValue(!m->enabled->boolValue());
+		if (Mapping* m = getLinkedTargetContainerAs<Mapping>(target, multiplexIndex)) m->enabled->setValue(!m->enabled->boolValue());
 		break;
 	}
 }

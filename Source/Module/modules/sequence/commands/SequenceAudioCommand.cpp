@@ -59,7 +59,7 @@ void SequenceAudioCommand::triggerInternal(int multiplexIndex)
 	{
 	case SET_VOLUME:
 	{
-		if (AudioLayer* al = getTargetAs<AudioLayer>(multiplexIndex))
+		if (AudioLayer* al = getLinkedTargetContainerAs<AudioLayer>(target, multiplexIndex))
 		{
 			al->setVolume((float)getLinkedValue(value, multiplexIndex), (float)getLinkedValue(time, multiplexIndex), automation, (int)getLinkedValue(stopAtFinish,multiplexIndex));
 		}

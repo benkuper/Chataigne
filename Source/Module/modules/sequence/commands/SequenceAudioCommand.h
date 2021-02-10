@@ -37,17 +37,6 @@ public:
 
 	virtual void triggerInternal(int multiplexIndex) override;
 
-	template<class T>
-	T* getTargetAs(int multiplexIndex)
-	{
-		if (ParameterLink* pl = getLinkedParam(target))
-		{
-			return dynamic_cast<T*>(pl->getLinkedTargetContainer(multiplexIndex).get());
-		}
-
-		return nullptr;
-	}
-
 	virtual void loadJSONDataInternal(var data) override;
 	virtual void endLoadFile() override;
 

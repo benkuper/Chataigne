@@ -19,7 +19,7 @@ SequenceCommand::SequenceCommand(SequenceModule* _module, CommandContext context
 {
 	actionType = (ActionType)(int)params.getProperty("type", PLAY_SEQUENCE);
 
-	if (actionType != STOP_ALL_SEQUENCES && actionType != PLAY_MULTI_SEQUENCES)
+	if (actionType != STOP_ALL_SEQUENCES && actionType != PLAY_MULTI_SEQUENCES && actionType != PLAY_SEQUENCE_AT)
 	{
 		target = addTargetParameter("Target", "Target for the command");
 		target->targetType = TargetParameter::CONTAINER;
@@ -37,9 +37,17 @@ SequenceCommand::SequenceCommand(SequenceModule* _module, CommandContext context
 		loopMulti = addBoolParameter("Loop", "If enabled, this will go back to the min index", false);
 	}
 
+	if (actionType == PLAY_SEQUENCE_AT)
+	{
+		currentSequenceIndex = addIntParameter("Sequence Index", "This is the index of the sequence that will play on trigger", 0, 0);
+	}
+
 	switch (actionType)
 	{
+
+
 	case PLAY_SEQUENCE:
+	case PLAY_SEQUENCE_AT:
 	case TOGGLE_SEQUENCE:
 		playFromStart = addBoolParameter("Play From Start", "If enabled, when the command is triggered, will position the time at 0 before playing", false);
 	case STOP_SEQUENCE:
@@ -91,7 +99,7 @@ void SequenceCommand::triggerInternal(int multiplexIndex)
 
 	if (actionType != STOP_ALL_SEQUENCES && actionType != PLAY_MULTI_SEQUENCES)
 	{
-		if (getLinkedParam(target)->getLinkedTargetContainer(multiplexIndex) == nullptr) return;
+		if (getLinkedTargetContainerAs<ControllableContainer>(target, multiplexIndex) == nullptr) return;
 		//if (target->targetContainer.wasObjectDeleted()) return;
 	}
 
@@ -100,10 +108,24 @@ void SequenceCommand::triggerInternal(int multiplexIndex)
 
 	case PLAY_SEQUENCE:
 	{
-		if (Sequence* s = getTargetAs<Sequence>(multiplexIndex))
+		if (Sequence* s = getLinkedTargetContainerAs<Sequence>(target, multiplexIndex))
 		{
 			if (playFromStart->boolValue()) s->stopTrigger->trigger();
 			s->playTrigger->trigger();
+		}
+	}
+	break;
+
+	case PLAY_SEQUENCE_AT:
+	{
+		int index = getLinkedValue(currentSequenceIndex, multiplexIndex);
+		if (index >= 0 && index < ChataigneSequenceManager::getInstance()->items.size())
+		{
+			if (Sequence* s = ChataigneSequenceManager::getInstance()->items[index])
+			{
+				if (playFromStart->boolValue()) s->stopTrigger->trigger();
+				s->playTrigger->trigger();
+			}
 		}
 	}
 	break;
@@ -114,7 +136,7 @@ void SequenceCommand::triggerInternal(int multiplexIndex)
 		if (currentSequenceIndex->intValue() < numSequences)
 		{
 			Sequence* s = ChataigneSequenceManager::getInstance()->items[currentSequenceIndex->intValue()];
-			
+
 			if (playFromStart->boolValue()) s->stopTrigger->trigger();
 			s->playTrigger->trigger();
 
@@ -132,11 +154,11 @@ void SequenceCommand::triggerInternal(int multiplexIndex)
 	break;
 
 	case PAUSE_SEQUENCE:
-		if(Sequence * s = getTargetAs<Sequence>(multiplexIndex)) s->pauseTrigger->trigger();
+		if (Sequence* s = getLinkedTargetContainerAs<Sequence>(target, multiplexIndex)) s->pauseTrigger->trigger();
 		break;
 
 	case STOP_SEQUENCE:
-		if (Sequence* s = getTargetAs<Sequence>(multiplexIndex)) s->stopTrigger->trigger();
+		if (Sequence* s = getLinkedTargetContainerAs<Sequence>(target, multiplexIndex)) s->stopTrigger->trigger();
 		break;
 
 	case STOP_ALL_SEQUENCES:
@@ -144,7 +166,7 @@ void SequenceCommand::triggerInternal(int multiplexIndex)
 		break;
 
 	case TOGGLE_SEQUENCE:
-		if (Sequence* s = getTargetAs<Sequence>(multiplexIndex))
+		if (Sequence* s = getLinkedTargetContainerAs<Sequence>(target, multiplexIndex))
 		{
 			if (playFromStart->boolValue() && !s->isPlaying->boolValue()) s->setCurrentTime(0);
 			s->togglePlayTrigger->trigger();
@@ -152,21 +174,21 @@ void SequenceCommand::triggerInternal(int multiplexIndex)
 		break;
 
 	case ENABLE_LAYER:
-		if (SequenceLayer * layer = getTargetAs<SequenceLayer>(multiplexIndex)) layer->enabled->setValue(true);
+		if (SequenceLayer* layer = getLinkedTargetContainerAs<SequenceLayer>(target, multiplexIndex)) layer->enabled->setValue(true);
 		break;
 
 	case DISABLE_LAYER:
-		if (SequenceLayer* layer = getTargetAs<SequenceLayer>(multiplexIndex)) layer->enabled->setValue(false);
+		if (SequenceLayer* layer = getLinkedTargetContainerAs<SequenceLayer>(target, multiplexIndex)) layer->enabled->setValue(false);
 		break;
 
 	case TOGGLE_LAYER:
-		if (SequenceLayer* layer = getTargetAs<SequenceLayer>(multiplexIndex)) layer->enabled->setValue(!layer->enabled->boolValue());
+		if (SequenceLayer* layer = getLinkedTargetContainerAs<SequenceLayer>(target, multiplexIndex)) layer->enabled->setValue(!layer->enabled->boolValue());
 		break;
 
 	case SET_TIME:
 	case MOVE_TIME:
 	{
-		if (Sequence* s = getTargetAs<Sequence>(multiplexIndex))
+		if (Sequence* s = getLinkedTargetContainerAs<Sequence>(target, multiplexIndex))
 		{
 			float t = actionType == SET_TIME ? 0 : s->currentTime->floatValue();
 			s->setCurrentTime(t + (float)getLinkedValue(value, multiplexIndex), true, true);
@@ -176,7 +198,7 @@ void SequenceCommand::triggerInternal(int multiplexIndex)
 	break;
 
 	case GOTO_CUE:
-		if (TimeCue* cue = getTargetAs<TimeCue>(multiplexIndex))
+		if (TimeCue* cue = getLinkedTargetContainerAs<TimeCue>(target, multiplexIndex))
 		{
 			Sequence* s = cue->getSequence();
 			s->setCurrentTime(cue->time->floatValue(), true, true);
@@ -185,7 +207,7 @@ void SequenceCommand::triggerInternal(int multiplexIndex)
 		break;
 
 	case SET_TRIGGER_ENABLED:
-		if (TimeTrigger* tt = getTargetAs<TimeTrigger>(multiplexIndex))
+		if (TimeTrigger* tt = getLinkedTargetContainerAs<TimeTrigger>(target, multiplexIndex))
 		{
 			tt->enabled->setValue(getLinkedValue(value, multiplexIndex));
 		}

@@ -16,6 +16,7 @@ SequenceModule::SequenceModule(ChataigneSequenceManager * _manager) :
 	manager(_manager)
 {
 	defManager->add(createBaseDefinition("Playback", "Play Sequence", CommandContext::ACTION, SequenceCommand::PLAY_SEQUENCE));
+	defManager->add(createBaseDefinition("Playback", "Play Sequence At Index", CommandContext::ACTION, SequenceCommand::PLAY_SEQUENCE_AT));
 	defManager->add(createBaseDefinition("Playback","Play Multi Sequences", CommandContext::ACTION,SequenceCommand::PLAY_MULTI_SEQUENCES));
 	defManager->add(createBaseDefinition("Playback", "Pause Sequence", CommandContext::ACTION,SequenceCommand::PAUSE_SEQUENCE));
 	defManager->add(createBaseDefinition("Playback", "Stop Sequence", CommandContext::ACTION, SequenceCommand::STOP_SEQUENCE));

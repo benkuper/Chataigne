@@ -22,7 +22,7 @@ public:
 	SequenceCommand(SequenceModule * _module, CommandContext context, var params, Multiplex * multiplex = nullptr);
 	virtual ~SequenceCommand();
 
-	enum ActionType { PLAY_SEQUENCE, PLAY_MULTI_SEQUENCES, PAUSE_SEQUENCE, STOP_SEQUENCE, STOP_ALL_SEQUENCES, TOGGLE_SEQUENCE, ENABLE_LAYER, DISABLE_LAYER, TOGGLE_LAYER, SET_TIME, MOVE_TIME, GOTO_CUE, SET_TRIGGER_ENABLED };
+	enum ActionType { PLAY_SEQUENCE, PLAY_SEQUENCE_AT, PLAY_MULTI_SEQUENCES, PAUSE_SEQUENCE, STOP_SEQUENCE, STOP_ALL_SEQUENCES, TOGGLE_SEQUENCE, ENABLE_LAYER, DISABLE_LAYER, TOGGLE_LAYER, SET_TIME, MOVE_TIME, GOTO_CUE, SET_TRIGGER_ENABLED };
 
 	ActionType actionType;
 	SequenceModule * sequenceModule;
@@ -48,17 +48,6 @@ public:
 
 	virtual void loadJSONDataInternal(var data) override;
 	virtual void endLoadFile() override;
-
-	template<class T>
-	T* getTargetAs(int multiplexIndex)
-	{
-		if (ParameterLink* pl = getLinkedParam(target))
-		{
-			return dynamic_cast<T*>(pl->getLinkedTargetContainer(multiplexIndex).get());
-		}
-		
-		return nullptr;
-	}
 
 	static BaseCommand * create(ControllableContainer * module, CommandContext context, var params, Multiplex * multiplex = nullptr);
 };
