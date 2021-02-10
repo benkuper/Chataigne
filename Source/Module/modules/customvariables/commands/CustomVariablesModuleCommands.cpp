@@ -193,9 +193,12 @@ void CVCommand::triggerInternal(int multiplexIndex)
 	{
 	case SET_VALUE:
 	{
-		if (target->target != nullptr && value != nullptr)
+		Controllable* c = getLinkedParam(target)->getLinkedTarget(multiplexIndex);
+
+		if (c != nullptr && value != nullptr)
 		{
-			Parameter * p = static_cast<Parameter *>(target->target.get());
+			Parameter * p = static_cast<Parameter *>(c);
+
 			if (p != nullptr)
 			{
 				var val = getLinkedValue(value, multiplexIndex);

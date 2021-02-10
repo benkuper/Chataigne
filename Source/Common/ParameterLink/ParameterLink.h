@@ -41,6 +41,11 @@ public:
     void setLinkType(LinkType type);
 
     var getLinkedValue(int multiplexIndex = 0);
+
+    //For target parameters
+    WeakReference<Controllable> getLinkedTarget(int multiplexIndex);
+    WeakReference<ControllableContainer> getLinkedTargetContainer(int multiplexIndex);
+
     void updateMappingInputValue(var value, int multiplexIndex);
 
     String getReplacementString(int multiplexIndex);

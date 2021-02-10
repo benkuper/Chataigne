@@ -58,7 +58,13 @@ void ChataigneLogCommand::triggerInternal(int multiplexIndex)
 	case VALUE:
 	{
 		var val = "[not set]";
-		if (context == ACTION) val = dynamic_cast<Parameter*>(((TargetParameter*)value)->target.get())->value;
+		if (context == ACTION)
+		{
+			if (Parameter* p = dynamic_cast<Parameter*>(getLinkedParam(value)->getLinkedTarget(multiplexIndex).get()))
+			{
+				val = p->getValue();
+			}
+		}
 		else val = getLinkedValue(value, multiplexIndex);
 		
 		String vString = value->type == Controllable::FLOAT ? String((float)val, 3) : val.toString();

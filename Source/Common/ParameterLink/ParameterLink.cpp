@@ -86,12 +86,45 @@ var ParameterLink::getLinkedValue(int multiplexIndex)
     break;
 
     case MULTIPLEX_LIST:
-        if (list != nullptr) return parameter->getCroppedValue(((Parameter*)list->list[multiplexIndex])->getValue());
+        if (list != nullptr)
+        {
+            if (Parameter* p = dynamic_cast<Parameter*>(list->list[multiplexIndex]))
+            {
+                return parameter->getCroppedValue(p->getValue());
+            }
+        }
         break;
     }
 
     return parameter->getValue();
 }
+
+WeakReference<Controllable> ParameterLink::getLinkedTarget(int multiplexIndex)
+{
+    if (!isLinkable) return false;
+
+    if(linkType == MULTIPLEX_LIST && list != nullptr) 
+    {
+        if (TargetParameter* p = dynamic_cast<TargetParameter*>(list->list[multiplexIndex])) return p->target;
+    }
+
+    if(parameter->type == Parameter::TARGET) return ((TargetParameter *)parameter.get())->target;
+    return nullptr;
+}
+
+WeakReference<ControllableContainer> ParameterLink::getLinkedTargetContainer(int multiplexIndex)
+{
+    if (!isLinkable) return false;
+
+    if (linkType == MULTIPLEX_LIST && list != nullptr)
+    {
+        if (TargetParameter* p = dynamic_cast<TargetParameter*>(list->list[multiplexIndex])) return p->targetContainer;
+    }
+
+    if (parameter->type == Parameter::TARGET) return ((TargetParameter*)parameter.get())->targetContainer;
+    return nullptr;
+}
+
 
 void ParameterLink::updateMappingInputValue(var value, int multiplexIndex)
 {

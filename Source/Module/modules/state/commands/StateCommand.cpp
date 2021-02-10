@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    StateCommand.cpp
-    Created: 20 Feb 2017 2:12:36pm
-    Author:  Ben
+	StateCommand.cpp
+	Created: 20 Feb 2017 2:12:36pm
+	Author:  Ben
 
   ==============================================================================
 */
@@ -13,8 +13,8 @@
 #include "Common/Processor/Action/Condition/conditions/StandardCondition/StandardCondition.h"
 #include "Common/Processor/Mapping/Mapping.h"
 
-StateCommand::StateCommand(StateModule * _module, CommandContext context, var params, Multiplex * multiplex) :
-	BaseCommand(_module,context,params),
+StateCommand::StateCommand(StateModule* _module, CommandContext context, var params, Multiplex* multiplex) :
+	BaseCommand(_module, context, params),
 	stateModule(_module),
 	enableVal(nullptr)
 {
@@ -64,43 +64,41 @@ void StateCommand::triggerInternal(int multiplexIndex)
 {
 	BaseCommand::triggerInternal(multiplexIndex);
 
-	if (target->targetContainer == nullptr) return; 
-	if (target->targetContainer.wasObjectDeleted()) return;
-	
+	if (getLinkedParam(target)->getLinkedTargetContainer(multiplexIndex) == nullptr) return;
+	//if (target->targetContainer.wasObjectDeleted()) return;
+
 	switch (actionType)
 	{
 	case SET_STATE_ACTIVATION:
-		((State *)target->targetContainer.get())->active->setValue(enableVal->boolValue());
+		if (State* s = getTargetAs<State>(multiplexIndex)) s->active->setValue(enableVal->boolValue());
 		break;
 
 	case TOGGLE_STATE:
-		((State *)target->targetContainer.get())->active->setValue(!((State *)target->targetContainer.get())->active->boolValue());
+		if (State* s = getTargetAs<State>(multiplexIndex)) s->active->setValue(!s->active->boolValue());
 		break;
 
 	case TRIGGER_ACTION:
-		if(((Action*)target->targetContainer.get())->triggerOn != nullptr) ((Action*)target->targetContainer.get())->triggerOn->trigger();
+		if (Action* a = getTargetAs<Action>(multiplexIndex)) if (a->triggerOn != nullptr) a->triggerOn->trigger();
 		break;
 
 	case SET_ACTION_ENABLED:
-		((Action *)target->targetContainer.get())->enabled->setValue(enableVal->boolValue());
+		if (Action* a = getTargetAs<Action>(multiplexIndex)) a->enabled->setValue(enableVal->boolValue());
 		break;
 
 	case TOGGLE_ACTION:
-		((Action *)target->targetContainer.get())->enabled->setValue(!((Action *)target->targetContainer.get())->enabled->boolValue());
+		if (Action* a = getTargetAs<Action>(multiplexIndex)) a->enabled->setValue(!a->enabled->boolValue());
 		break;
 
 	case SET_TOGGLE_STATE:
-	{
-		(((StandardCondition*)target->targetContainer.get())->forceToggleState(enableVal->boolValue()));
-	}
-	break;
+		if (StandardCondition* cd = getTargetAs<StandardCondition>(multiplexIndex)) cd->forceToggleState(enableVal->boolValue());
+		break;
 
 	case SET_MAPPING_ENABLED:
-		((Mapping *)target->targetContainer.get())->enabled->setValue(enableVal->boolValue());
+		if (Mapping* m = getTargetAs<Mapping>(multiplexIndex)) m->enabled->setValue(enableVal->boolValue());
 		break;
 
 	case TOGGLE_MAPPING:
-		((Mapping *)target->targetContainer.get())->enabled->setValue(!((Mapping *)target->targetContainer.get())->enabled->boolValue());
+		if (Mapping* m = getTargetAs<Mapping>(multiplexIndex)) m->enabled->setValue(!m->enabled->boolValue());
 		break;
 	}
 }

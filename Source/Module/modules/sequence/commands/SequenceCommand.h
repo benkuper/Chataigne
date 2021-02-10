@@ -49,5 +49,16 @@ public:
 	virtual void loadJSONDataInternal(var data) override;
 	virtual void endLoadFile() override;
 
+	template<class T>
+	T* getTargetAs(int multiplexIndex)
+	{
+		if (ParameterLink* pl = getLinkedParam(target))
+		{
+			return dynamic_cast<T*>(pl->getLinkedTargetContainer());
+		}
+		
+		return nullptr;
+	}
+
 	static BaseCommand * create(ControllableContainer * module, CommandContext context, var params, Multiplex * multiplex = nullptr);
 };

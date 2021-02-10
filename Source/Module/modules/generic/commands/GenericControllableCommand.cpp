@@ -56,22 +56,20 @@ void GenericControllableCommand::triggerInternal(int multiplexIndex)
 {
 	BaseCommand::triggerInternal(multiplexIndex);
 
-	if (target->target == nullptr) return;
+	Controllable* c = getLinkedParam(target)->getLinkedTarget(multiplexIndex);
+
+	if (c == nullptr) return;
 
 	if (action == SET_VALUE)
 	{
 		if (value == nullptr) return;
-		Parameter* p = static_cast<Parameter*>(target->target.get());
-		p->setValue(getLinkedValue(value, multiplexIndex));
+
+		if (c->type != TRIGGER) ((Parameter *)c)->setValue(getLinkedValue(value, multiplexIndex));
 	}
 	else if (action == TRIGGER)
 	{
-		Trigger* t = static_cast<Trigger*>(target->target.get());
-		t->trigger();
+		if (c->type == TRIGGER) ((Trigger*)c)->trigger();
 	}
-
-
-
 }
 
 void GenericControllableCommand::onContainerParameterChanged(Parameter* p)
@@ -80,13 +78,15 @@ void GenericControllableCommand::onContainerParameterChanged(Parameter* p)
 	{
 		if (action == SET_VALUE)
 		{
-			if (target->target == nullptr) setValueParameter(nullptr);
+			Controllable* c = getLinkedParam(target)->getLinkedTarget(0); //check first item if multiplex and linked to a list
+
+			if (c == nullptr) setValueParameter(nullptr);
 			else
 			{
-				if (target->target->type == Controllable::TRIGGER) setValueParameter(nullptr);
+				if (c->type == Controllable::TRIGGER) setValueParameter(nullptr);
 				else
 				{
-					Controllable* c = ControllableFactory::createParameterFrom(target->target);
+					Controllable* tc = ControllableFactory::createParameterFrom(c);
 					if (c == nullptr)
 					{
 						DBG("Should not be null here");
@@ -94,7 +94,7 @@ void GenericControllableCommand::onContainerParameterChanged(Parameter* p)
 					}
 
 					c->setNiceName("Value");
-					Parameter* tp = dynamic_cast<Parameter*>(c);
+					Parameter* tp = dynamic_cast<Parameter*>(tc);
 					setValueParameter(tp);
 				}
 

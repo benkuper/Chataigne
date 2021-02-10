@@ -31,7 +31,10 @@ void GenericOSCQueryCommand::setupParamFromTarget()
 		removeControllable(valueParam.get());
 	}
 
-	valueParam = ControllableFactory::createParameterFrom(target->target, false, true);
+	Controllable* c = getLinkedParam(target)->getLinkedTarget(0); //if multiplexed, get the first element
+
+	valueParam = ControllableFactory::createParameterFrom(c, false, true);
+
 	if (valueParam != nullptr)
 	{
 		if (!valueGhostData.isVoid()) valueParam->setValue(valueGhostData);
@@ -65,7 +68,11 @@ void GenericOSCQueryCommand::loadJSONDataInternal(var data)
 
 void GenericOSCQueryCommand::triggerInternal(int multiplexIndex)
 {
-	if (target->target.wasObjectDeleted() || target->target == nullptr) return;
-	if(valueParam != nullptr) ((Parameter *)target->target.get())->setValue(valueParam->getValue());
-	else if (target->target->type == Controllable::TRIGGER) ((Trigger *)target->target.get())->trigger();
+	if (Controllable* c = getLinkedParam(target)->getLinkedTarget(multiplexIndex))
+	{
+		//if (target->target.wasObjectDeleted() || target->target == nullptr) return;
+		if (c->type == Controllable::TRIGGER) ((Trigger*)c)->trigger();
+		else if (valueParam != nullptr) ((Parameter*)c)->setValue(getLinkedValue(valueParam, multiplexIndex));
+	}
+
 }
