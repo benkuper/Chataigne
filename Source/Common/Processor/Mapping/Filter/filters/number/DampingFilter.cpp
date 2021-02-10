@@ -80,8 +80,8 @@ bool DampingFilter::processSingleParameterInternal(Parameter* source, Parameter*
 
 	double deltaTime = jmax<double>(curTime - timeAtLastUpdate, 0);
 
-	float forceVal = force->floatValue() * 100;
-	float frictionVal = friction->floatValue() * 100;
+	float forceVal = (float)filterParams.getLinkedValue(force, multiplexIndex) * 100;
+	float frictionVal = (float)filterParams.getLinkedValue(friction, multiplexIndex) * 100;
 
 	if (!source->isComplex())
 	{

@@ -22,8 +22,8 @@ public:
 	MappingFilterManager(Multiplex * multiplex = nullptr);
 	~MappingFilterManager();
 
-	HashMap<int, Array<Parameter*>> multiplexInputSourceMap;
-	HashMap<int, Array<Parameter*>> filteredParamMap;
+	Array<Array<Parameter*>> inputSources;
+	Array<Array<Parameter*>> filteredParameters;
 	CriticalSection filterLock;
 
 	Factory<MappingFilter> factory;

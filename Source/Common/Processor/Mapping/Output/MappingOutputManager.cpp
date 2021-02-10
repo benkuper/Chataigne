@@ -110,6 +110,11 @@ void MappingOutputManager::commandUpdated(BaseCommandHandler * h)
 	for (int i = 0; i < getMultiplexCount(); i++) updateOutputValue(dynamic_cast<MappingOutput *>(h), i);
 }
 
+void MappingOutputManager::multiplexPreviewIndexChanged()
+{
+	omAsyncNotifier.addMessage(new OutputManagerEvent(OutputManagerEvent::OUTPUT_CHANGED));
+}
+
 InspectableEditor * MappingOutputManager::getEditor(bool isRoot)
 {
 	return new MappingOutputManagerEditor(this, isRoot);

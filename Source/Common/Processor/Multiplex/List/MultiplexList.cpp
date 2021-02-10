@@ -42,7 +42,7 @@ void BaseMultiplexList::updateControllablesSetup()
     while (list.size() < listSize)
     {
         Controllable* c = ControllableFactory::createControllable(getTypeString());
-        
+        c->isCustomizableByUser = true;
         c->setNiceName("#" + String(list.size() + 1));
         list.add(c);
         addControllable(c);

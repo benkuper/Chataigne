@@ -40,6 +40,8 @@ public:
 	void commandChanged(BaseCommandHandler * h) override;
 	void commandUpdated(BaseCommandHandler * h) override;
 
+	void multiplexPreviewIndexChanged() override;
+
 	InspectableEditor * getEditor(bool isRoot) override;
 
 	class OutputManagerEvent {

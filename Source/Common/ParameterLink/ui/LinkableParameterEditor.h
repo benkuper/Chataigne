@@ -36,6 +36,22 @@ public:
     void buttonClicked(Button* b) override;
     void childBoundsChanged(Component* c) override;
 
+    String getLinkLabel() const;
+
     void newMessage(const ParameterLink::ParameterLinkEvent& e) override;
 
+};
+
+class ParamLinkContainerEditor :
+    public GenericControllableContainerEditor
+{
+public:
+    ParamLinkContainerEditor(ParamLinkContainer* container, bool isRoot, bool showLinkEditor, bool showMappingOptions, bool buildAtCreation = true);
+    ~ParamLinkContainerEditor();
+
+    ParamLinkContainer* paramLinkContainer;
+    bool showLinkEditor;
+    bool showMappingOptions;
+
+    virtual InspectableEditor* getEditorUIForControllable(Controllable* c) override;
 };

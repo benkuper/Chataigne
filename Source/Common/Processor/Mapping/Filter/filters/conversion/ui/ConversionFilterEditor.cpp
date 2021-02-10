@@ -84,7 +84,8 @@ void ConversionFilterEditor::rebuildSourcesUI()
 	}
 
 
-	for (auto& s : cf->sourceParams[0])
+	Array<WeakReference<Parameter>> previewSourceParams = cf->sourceParams[cf->getPreviewIndex()];
+	for (auto& s : previewSourceParams)
 	{
 		ConversionSourceParameterUI* sui = new ConversionSourceParameterUI(s);
 		sui->addMouseListener(this, true);
@@ -193,7 +194,9 @@ void ConversionFilterEditor::mouseUp(const MouseEvent& e)
 		{
 			if (editingLinkUI->sourceConnector != nullptr && editingLinkUI->outConnector != nullptr)
 			{
-				cf->createLink(editingLinkUI->sourceConnector->param, editingLinkUI->sourceConnector->valueIndex,
+				WeakReference<Parameter> sourceP = editingLinkUI->sourceConnector->param;
+				int sourceIndex = cf->sourceParams[cf->getPreviewIndex()].indexOf(sourceP); //check index in array of the preview index because this is the one we show
+				cf->createLink(sourceIndex, editingLinkUI->sourceConnector->valueIndex,
 					editingLinkUI->outConnector->convertedParam, editingLinkUI->outConnector->valueIndex);
 			}
 			removeChildComponent(editingLinkUI.get());

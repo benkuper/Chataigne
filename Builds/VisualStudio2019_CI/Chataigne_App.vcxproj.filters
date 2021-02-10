@@ -233,9 +233,6 @@
     <Filter Include="Chataigne\Source\Module\modules\common\commands\scriptcallback">
       <UniqueIdentifier>{2525C801-18A9-BF46-016E-85DAC6F543DA}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\common\commands\scriptcommands\ui">
-      <UniqueIdentifier>{42750FD9-B90F-5EAD-BB92-644AD5E68761}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Chataigne\Source\Module\modules\common\commands\scriptcommands">
       <UniqueIdentifier>{53B20FE0-4E29-FA6A-BC6A-DBB1AD8A5AAD}</UniqueIdentifier>
     </Filter>
@@ -1773,12 +1770,6 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\common\commands\scriptcallback\ScriptCallbackCommand.cpp">
       <Filter>Chataigne\Source\Module\modules\common\commands\scriptcallback</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Module\modules\common\commands\scriptcommands\ui\MappableParameterEditor.cpp">
-      <Filter>Chataigne\Source\Module\modules\common\commands\scriptcommands\ui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Module\modules\common\commands\scriptcommands\ui\ScriptCommandEditor.cpp">
-      <Filter>Chataigne\Source\Module\modules\common\commands\scriptcommands\ui</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\common\commands\scriptcommands\ScriptCommand.cpp">
       <Filter>Chataigne\Source\Module\modules\common\commands\scriptcommands</Filter>
@@ -5684,12 +5675,6 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\common\commands\scriptcallback\ScriptCallbackCommand.h">
       <Filter>Chataigne\Source\Module\modules\common\commands\scriptcallback</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Module\modules\common\commands\scriptcommands\ui\MappableParameterEditor.h">
-      <Filter>Chataigne\Source\Module\modules\common\commands\scriptcommands\ui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Module\modules\common\commands\scriptcommands\ui\ScriptCommandEditor.h">
-      <Filter>Chataigne\Source\Module\modules\common\commands\scriptcommands\ui</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\common\commands\scriptcommands\ScriptCommand.h">
       <Filter>Chataigne\Source\Module\modules\common\commands\scriptcommands</Filter>

@@ -14,14 +14,16 @@
 MappingFilter::MappingFilter(const String& name, var params, Multiplex* multiplex) :
 	BaseItem(name),
 	MultiplexTarget(multiplex),
-	filterParams("filterParams"),
+	filterParams("filterParams", multiplex),
 	processOnSameValue(false),
 	autoSetRange(true),
 	filterParamsAreDirty(false),
 	filterAsyncNotifier(10)
 {
-	isSelectable = false;
 
+	isSelectable = false;
+	
+	filterParams.paramsCanBeLinked = isMultiplexed();
 	filterParams.hideEditorHeader = true;
 	addChildControllableContainer(&filterParams);
 	filterParams.addControllableContainerListener(this);
@@ -86,7 +88,6 @@ bool MappingFilter::setupSources(Array<Parameter*> sources, int multiplexIndex)
 
 void MappingFilter::setupParametersInternal(int multiplexIndex)
 {
-	filteredParameters[multiplexIndex]->clear();
 
 	if (multiplexIndex == -1)
 	{
@@ -94,6 +95,7 @@ void MappingFilter::setupParametersInternal(int multiplexIndex)
 		return;
 	}
 
+	filteredParameters[multiplexIndex]->clear();
 
 	for (auto& source : sourceParams[multiplexIndex])
 	{
@@ -125,18 +127,17 @@ void MappingFilter::onControllableFeedbackUpdateInternal(ControllableContainer* 
 	}
 }
 
-
-
 bool MappingFilter::process(Array<Parameter*> inputs, int multiplexIndex)
 {
 	if (!enabled->boolValue() || isClearing) return false; //default or disabled does nothing
 
+
 	if (!processOnSameValue && !filterParamsAreDirty)
 	{
-		if (inputs.size() == previousValues.size())
+		if (inputs.size() == previousValues.size() && previousValues.isArray())
 		{
 			bool hasChanged = false;
-			for (int i = 0; i < sourceParams.size(); i++)
+			for (int i = 0; i < inputs.size(); i++)
 			{
 				//if (inputs[i].wasObjectDeleted()) break; //multiplex refactor : should put that back ?
 
@@ -190,6 +191,11 @@ bool MappingFilter::processInternal(Array<Parameter*> inputs, int multiplexIndex
 	return hasChanged;
 }
 
+
+void MappingFilter::multiplexPreviewIndexChanged()
+{
+	filterAsyncNotifier.addMessage(new FilterEvent(FilterEvent::FILTER_REBUILT, this));
+}
 
 void MappingFilter::clearItem()
 {

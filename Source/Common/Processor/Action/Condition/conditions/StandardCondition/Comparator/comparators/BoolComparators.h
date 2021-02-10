@@ -16,11 +16,11 @@ class BoolComparator :
 	public BaseComparator
 {
 public:
-	BoolComparator(Parameter * sourceParam);
+	BoolComparator(Parameter * sourceParam, Multiplex * multiplex);
 	virtual ~BoolComparator();
 
 	const Identifier equalsId = "=";
 	const Identifier differentId = "!=";
 
-	virtual bool compare(Parameter * sourceParam) override;
+	virtual bool compare(Parameter* sourceParam, int multiplexIndex = 0) override;
 };

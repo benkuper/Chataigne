@@ -11,25 +11,32 @@
 #pragma once
 
 #include "JuceHeader.h"
-
+#include "Common/ParameterLink/ParameterLink.h"
 class BaseComparatorUI;
 
 class BaseComparator :
-	public ControllableContainer
+	public ControllableContainer,
+	public MultiplexTarget
 {
 public:
-	BaseComparator();
-
+	BaseComparator(Multiplex * multiplex);
 	virtual ~BaseComparator();
 
 	Parameter* reference;
+	std::unique_ptr<ParameterLink> refLink;
+
 	EnumParameter* compareFunction;
 	Identifier currentFunctionId;
+	
+	void setReferenceParam(Parameter*); //go through this to have automatic link for multiplex
 
 	void addCompareOption(const String& name, const Identifier& func);
 	void updateReferenceRange(Parameter* sourceParam);
 
-	virtual bool compare(Parameter* sourceParam) = 0; // to override
+	var getJSONData() override;
+	void loadJSONDataInternal(var data) override;
+
+	virtual bool compare(Parameter* sourceParam, int multiplexIndex = 0) = 0; // to override
 
 	void onContainerParameterChanged(Parameter*) override;
 	virtual BaseComparatorUI * createUI();

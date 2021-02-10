@@ -16,7 +16,7 @@ class EnumComparator :
 	public BaseComparator
 {
 public:
-	EnumComparator(Parameter * sourceParam);
+	EnumComparator(Parameter * sourceParam, Multiplex* multiplex);
 	virtual ~EnumComparator();
 
 	const Identifier equalsId = "=";
@@ -24,5 +24,5 @@ public:
 
 	EnumParameter * enumRef;
 
-	virtual bool compare(Parameter* sourceParam) override;
+	virtual bool compare(Parameter* sourceParam, int multiplexIndex = 0) override;
 };

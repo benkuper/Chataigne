@@ -23,8 +23,11 @@ LinkableParameterEditor::LinkableParameterEditor(ParameterLink* pLink, bool show
     //linkBT->setToggleState(link->linkType != link->NONE, dontSendNotification);
     addAndMakeVisible(linkBT.get());
 
+    
     paramEditor.reset((ParameterEditor *)pLink->parameter->getEditor(false));
-    addAndMakeVisible(paramEditor.get());
+  
+    bool visible = link->linkType == link->NONE || !link->isMultiplexed();
+    if(visible ) addAndMakeVisible(paramEditor.get());
 
     setSize(100, paramEditor->getHeight());
 }
@@ -36,7 +39,9 @@ LinkableParameterEditor::~LinkableParameterEditor()
 
 void LinkableParameterEditor::paint(Graphics& g)
 {
+   
     Colour c = NORMAL_COLOR;
+
     switch (link->linkType)
     {
     case ParameterLink::NONE:
@@ -55,6 +60,15 @@ void LinkableParameterEditor::paint(Graphics& g)
         c = YELLOW_COLOR.withBrightness(.7f);
         break;
     }
+
+    if (!paramEditor->isShowing())
+    {
+        g.setColour(c.darker(.6f));
+        g.fillRect(paramEditor->getBounds());
+        g.setColour(c.brighter(.5f));
+        g.drawFittedText(getLinkLabel(), paramEditor->getBounds().reduced(1), Justification::centred, 1);
+    }
+
 
     g.setColour(c);
     g.fillEllipse(btRect.toFloat());
@@ -147,8 +161,52 @@ void LinkableParameterEditor::childBoundsChanged(Component* c)
     }
 }
 
+String LinkableParameterEditor::getLinkLabel() const
+{
+    String s = "";
+
+    switch (link->linkType)
+    {
+    case ParameterLink::MAPPING_INPUT: s = "Input #" + String(link->mappingValueIndex + 1) + " : "+ link->mappingValues[link->mappingValueIndex].toString(); break;
+    case ParameterLink::MULTIPLEX_LIST: 
+        s = "List " + (link->list != nullptr ? link->list->niceName : "");
+        if (Parameter * c = dynamic_cast<Parameter *>(link->list->getTargetControllableAt(link->getPreviewIndex()))) s += " : " + c->stringValue();
+        break;
+    
+    case ParameterLink::INDEX: s = "Index 1-" + String(link->getMultiplexCount()) +" : "+String(link->getPreviewIndex()+1); break;
+    case ParameterLink::INDEX_ZERO: s = "Index 0-" + String(link->getMultiplexCount() - 1) + " : " + String(link->getPreviewIndex()); break;
+    default:
+        break;
+    }
+    
+    return s;
+}
+
 void LinkableParameterEditor::newMessage(const ParameterLink::ParameterLinkEvent& e)
 {
     //linkBT->setToggleState(link->linkType != link->NONE, dontSendNotification);
+    bool visible = link->linkType == link->NONE || !link->isMultiplexed();
+    if (visible) addAndMakeVisible(paramEditor.get());
+    else removeChildComponent(paramEditor.get());
+
     repaint();
+}
+ 
+ParamLinkContainerEditor::ParamLinkContainerEditor(ParamLinkContainer* container, bool isRoot, bool showLinkEditor, bool showMappingOptions, bool buildAtCreation) :
+    GenericControllableContainerEditor(container, isRoot, false),
+    paramLinkContainer(container),
+    showLinkEditor(showLinkEditor),
+    showMappingOptions(showMappingOptions)
+{
+    if (buildAtCreation) resetAndBuild(); //force here to use the overriden getEditorUI function
+}
+
+ParamLinkContainerEditor::~ParamLinkContainerEditor()
+{
+}
+
+InspectableEditor* ParamLinkContainerEditor::getEditorUIForControllable(Controllable* c)
+{
+    if (c->type == c->TRIGGER  || !showLinkEditor) return  GenericControllableContainerEditor::getEditorUIForControllable(c);
+    return new LinkableParameterEditor(paramLinkContainer->paramLinkMap[(Parameter*)c], showMappingOptions);
 }

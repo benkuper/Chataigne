@@ -32,18 +32,22 @@ void MappingFilterEditor::resizedInternalHeaderItemInternal(Rectangle<int>& r)
 
 void MappingFilterEditor::updateFilteredUI()
 {
-	if (filteredUI != nullptr && filter->filteredParameters[0]->size() > 0 && filteredUI->parameter == filter->filteredParameters[0]->getUnchecked(0)) return;
+	int pi = filter->getPreviewIndex();
+	OwnedArray<Parameter>* fParams = filter->filteredParameters[pi];
+	Parameter* targetParam = fParams != nullptr && fParams->size() > 0 ? fParams->getUnchecked(0) : nullptr;
+
+	if (filteredUI != nullptr && filteredUI->parameter == targetParam) return;
 
 	if (filteredUI != nullptr)
 	{
 		removeChildComponent(filteredUI.get());
 	}
 
-	filteredUI = nullptr;
+	filteredUI.reset();
 
-	if (filter->filteredParameters.size() > 0 && filter->filteredParameters[0] != nullptr)
+	if (targetParam != nullptr)
 	{
-		filteredUI.reset((ParameterUI*)(filter->filteredParameters[0]->getUnchecked(0)->createDefaultUI()));
+		filteredUI.reset((ParameterUI*)(targetParam->createDefaultUI()));
 		filteredUI->showLabel = false;
 		addAndMakeVisible(filteredUI.get());
 	}

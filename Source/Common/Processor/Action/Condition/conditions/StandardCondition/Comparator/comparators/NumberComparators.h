@@ -16,7 +16,7 @@ class NumberComparator :
 	public BaseComparator
 {
 public:
-	NumberComparator(Parameter * sourceParam);
+	NumberComparator(Parameter * sourceParam, Multiplex* multiplex);
 	virtual ~NumberComparator();
 
 	const Identifier equalsId = "=";
@@ -29,5 +29,5 @@ public:
 
 	Parameter * refParam;
 
-	virtual bool compare(Parameter * sourceParam) override;
+	virtual bool compare(Parameter* sourceParam, int multiplexIndex = 0) override;
 };

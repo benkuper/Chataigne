@@ -35,7 +35,11 @@ void MappingOutput::updateCommandOutParams()
 	if (command != nullptr)
 	{
 		command->setInputNamesFromParams(outParams[0]);
-		if (outParams.size() > 0)command->setMappingValueType(outParams[0][0]->type);
+
+		if (outParams[0].size() > 0)
+		{
+			if(outParams[0][0] != nullptr) command->setMappingValueType(outParams[0][0]->type);
+		}
 	}
 }
 

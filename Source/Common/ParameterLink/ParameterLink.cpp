@@ -9,9 +9,11 @@
 */
 
 #include "ParameterLink.h"
+#include "ui/LinkableParameterEditor.h"
 
 ParameterLink::ParameterLink(WeakReference<Parameter> p, Multiplex * multiplex) :
     MultiplexTarget(multiplex),
+    isLinkable(true),
     parameter(p),
     linkType(NONE),
     mappingValueIndex(0),
@@ -29,6 +31,14 @@ void ParameterLink::multiplexCountChanged()
 {
     mappingValues.resize(getMultiplexCount());
     mappingValues.fill(parameter->getValue().clone());
+
+    paramLinkNotifier.addMessage(new ParameterLinkEvent(ParameterLinkEvent::LINK_UPDATED, this));
+
+}
+
+void ParameterLink::multiplexPreviewIndexChanged()
+{
+    paramLinkNotifier.addMessage(new ParameterLinkEvent(ParameterLinkEvent::LINK_UPDATED, this));
 }
 
 void ParameterLink::setLinkType(LinkType type)
@@ -42,6 +52,8 @@ void ParameterLink::setLinkType(LinkType type)
 
 var ParameterLink::getLinkedValue(int multiplexIndex)
 {
+    if (!isLinkable) return parameter->getValue();
+
     switch (linkType)
     {
     case NONE:
@@ -142,7 +154,7 @@ String ParameterLink::getReplacementString(int multiplexIndex)
                 else if (dotSplit[0] == "input")
                 {
                     replacementHasMappingInputToken = true;
-                    int valueIndex = dotSplit[1].getIntValue();
+                    int valueIndex = dotSplit[1].getIntValue() - 1; //1-based to be compliant with UI naming
                     if (mappingValues.size() > 0 && valueIndex < mappingValues[multiplexIndex].size()) result += mappingValues[multiplexIndex][valueIndex].toString();
                     else result += "0"; //default stuff..
                 }
@@ -168,6 +180,9 @@ String ParameterLink::getReplacementString(int multiplexIndex)
 var ParameterLink::getInputMappingValue(var value)
 {
     var result = parameter->value.clone();
+
+    if (!isLinkable) return result;
+
     if (!value.isArray())
     {
         if (parameter->value.isArray())
@@ -194,17 +209,142 @@ var ParameterLink::getInputMappingValue(var value)
 var ParameterLink::getJSONData()
 {
     var data(new DynamicObject());
-    data.getDynamicObject()->setProperty("linkType", linkType);
-    if (linkType == MAPPING_INPUT) data.getDynamicObject()->setProperty("mappingValueIndex", mappingValueIndex);
-    else if (linkType == MULTIPLEX_LIST) data.getDynamicObject()->setProperty("list", list->shortName);
+    if (isLinkable)
+    {
+        data.getDynamicObject()->setProperty("linkType", linkType);
+        if (linkType == MAPPING_INPUT) data.getDynamicObject()->setProperty("mappingValueIndex", mappingValueIndex);
+        else if (linkType == MULTIPLEX_LIST) data.getDynamicObject()->setProperty("list", list->shortName);
+    }
+
     return data;
 }
 
 void ParameterLink::loadJSONData(var data)
 {
-    if (!data.isObject()) return;
+    if (!data.isObject() || !isLinkable) return;
 
     setLinkType((LinkType)(int)data.getProperty("linkType", NONE));
     if (linkType == MAPPING_INPUT) mappingValueIndex = data.getProperty("mappingValueIndex", 0);
     else if (linkType == MULTIPLEX_LIST) list = multiplex->listManager.getItemWithName(data.getProperty("list", ""));
+}
+
+
+
+ParamLinkContainer::ParamLinkContainer(const String& name, Multiplex * multiplex) :
+    ControllableContainer(name),
+    MultiplexTarget(multiplex),
+    paramsCanBeLinked(true)
+{
+
+}
+
+ParamLinkContainer::~ParamLinkContainer()
+{
+    paramLinkMap.clear();
+    paramLinks.clear();
+}
+
+void ParamLinkContainer::onControllableAdded(Controllable* c)
+{
+    if (!paramsCanBeLinked) return;
+
+    if (Parameter* p = dynamic_cast<Parameter*>(c))
+    {
+        ParameterLink* pLink = new ParameterLink(p, multiplex);
+        pLink->inputValueNames = inputNames;
+
+        paramLinks.add(pLink);
+        paramLinkMap.set(p, pLink);
+        linkParamMap.set(pLink, p);
+    }
+}
+
+void ParamLinkContainer::onControllableRemoved(Controllable* c)
+{
+    if (!paramsCanBeLinked) return;
+    if (Parameter* p = dynamic_cast<Parameter*>(c))
+    {
+        if (paramLinkMap.contains(p))
+        {
+            ParameterLink* pLink = paramLinkMap[p];
+            linkParamMap.remove(pLink);
+            paramLinkMap.remove(p);
+            paramLinks.removeObject(pLink);
+
+        }
+    }
+}
+
+ParameterLink* ParamLinkContainer::getLinkedParam(Parameter* p)
+{
+    jassert(paramLinkMap.contains(p));
+    return paramLinkMap[p];
+}
+
+var ParamLinkContainer::getLinkedValue(Parameter* p, int multiplexIndex)
+{
+    if (!paramsCanBeLinked) return p->getValue();
+    return getLinkedParam(p)->getLinkedValue(multiplexIndex);
+}
+
+
+void ParamLinkContainer::linkParamToMappingIndex(Parameter* p, int mappingIndex)
+{
+    if (!paramsCanBeLinked) return;
+
+    if (ParameterLink* pLink = getLinkedParam(p))
+    {
+        pLink->setLinkType(pLink->MAPPING_INPUT);
+        pLink->mappingValueIndex = mappingIndex;
+    }
+}
+
+void ParamLinkContainer::setInputNamesFromParams(Array<WeakReference<Parameter>> outParams)
+{
+    if (!paramsCanBeLinked) return;
+
+    inputNames.clear();
+    for (int i = 0; i < outParams.size(); i++)
+    {
+        String tString = outParams[i]->getTypeString();
+        if (outParams[i]->isComplex())
+        {
+            StringArray valueNames = outParams[i]->getValuesNames();
+            for (auto& vName : valueNames) inputNames.add(tString + " (" + vName + ")");
+        }
+        else
+        {
+            inputNames.add(tString);
+        }
+    }
+
+    for (auto& pLink : paramLinks) pLink->inputValueNames = inputNames;
+}
+
+var ParamLinkContainer::getJSONData()
+{
+    var data = ControllableContainer::getJSONData();
+
+    var pLinkData(new DynamicObject());
+    for (auto& pLink : paramLinks)
+    {
+        if (pLink->linkType != pLink->NONE) pLinkData.getDynamicObject()->setProperty(pLink->parameter->shortName, pLink->getJSONData());
+    }
+
+    data.getDynamicObject()->setProperty("paramLinks", pLinkData);
+
+    return data;
+}
+
+void ParamLinkContainer::loadJSONDataInternal(var data)
+{
+    var pLinksData = data.getProperty("paramLinks", var());
+    for (auto& pLink : paramLinks) pLink->loadJSONData(pLinksData.getProperty(pLink->parameter->shortName, var()));
+}
+
+InspectableEditor* ParamLinkContainer::getEditor(bool isRoot)
+{
+    if (!paramsCanBeLinked) return new GenericControllableContainerEditor(this, isRoot);
+
+    return new ParamLinkContainerEditor(this, isRoot, paramsCanBeLinked, true);
 }

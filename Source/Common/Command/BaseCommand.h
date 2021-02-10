@@ -19,8 +19,7 @@
 class Module;
 
 class BaseCommand :
-	public MultiplexTarget,
-	public ControllableContainer,
+	public ParamLinkContainer,
 	public Inspectable::InspectableListener,
 	public CommandTemplate::TemplateListener,
 	public CustomValuesCommandArgumentManager::ManagerListener
@@ -37,17 +36,10 @@ public:
 	Controllable::Type valueType;
 	bool saveAndLoadTargetMappings;
 
-	bool paramsCanBeLinked;
-
 	//Template
 	CommandTemplate * linkedTemplate;
 	WeakReference<Inspectable> templateRef;
 	std::unique_ptr<CustomValuesCommandArgumentManager> customValuesManager;
-
-	OwnedArray<ParameterLink> paramLinks;
-	HashMap<Parameter*, ParameterLink*> paramLinkMap;
-	HashMap<ParameterLink *, Parameter *> linkParamMap;
-	StringArray inputNames;
 
 	void onControllableAdded(Controllable * c) override;
 	void onControllableRemoved(Controllable * c) override;
@@ -69,11 +61,7 @@ public:
 	virtual void setValue(var value, int multiplexIndex); //for mapping context
 	virtual void setValueInternal(var value, int multiplexIndex) {}
 
-	virtual ParameterLink* getLinkedParam(Parameter* p);
-	virtual var getLinkedValue(Parameter* p, int multiplexIndex);
-	void linkParamToMappingIndex(Parameter* p, int mappingIndex);
-
-	void setInputNamesFromParams(Array<WeakReference<Parameter>> outParams);
+	virtual void setInputNamesFromParams(Array<WeakReference<Parameter>> outParams) override;
 
 	virtual var getLinkedCustomArgumentValueAt(int argIndex, int multiplexIndex);
 
@@ -81,9 +69,6 @@ public:
 	
 	void inspectableDestroyed(Inspectable * i) override;
 
-
-	var getJSONData() override;
-	void loadJSONDataInternal(var data) override;
 
 	static BaseCommand * create(ControllableContainer * module, CommandContext context, var params, Multiplex * multiplex = nullptr);
 

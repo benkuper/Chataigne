@@ -21,6 +21,8 @@ public:
     ParameterLink(WeakReference<Parameter> p, Multiplex * multiplex = nullptr);
     ~ParameterLink();
 
+    bool isLinkable;
+
     LinkType linkType;
     WeakReference<Parameter> parameter;
 
@@ -34,6 +36,7 @@ public:
     String replacementString;
 
     void multiplexCountChanged() override;
+    void multiplexPreviewIndexChanged() override;
 
     void setLinkType(LinkType type);
 
@@ -48,4 +51,35 @@ public:
     void loadJSONData(var data);
 
     DECLARE_ASYNC_EVENT(ParameterLink, ParameterLink, paramLink, { LINK_UPDATED })
+};
+
+
+class ParamLinkContainer :
+    public ControllableContainer,
+    public MultiplexTarget
+{
+public:
+    ParamLinkContainer(const String& name, Multiplex * multiplex);
+    ~ParamLinkContainer();
+
+    OwnedArray<ParameterLink> paramLinks;
+    HashMap<Parameter*, ParameterLink*> paramLinkMap;
+    HashMap<ParameterLink*, Parameter*> linkParamMap;
+    StringArray inputNames;
+
+    bool paramsCanBeLinked;
+
+    virtual void onControllableAdded(Controllable* c) override;
+    virtual void onControllableRemoved(Controllable* c) override;
+
+    virtual ParameterLink* getLinkedParam(Parameter* p);
+    virtual var getLinkedValue(Parameter* p, int multiplexIndex);
+    virtual void linkParamToMappingIndex(Parameter* p, int mappingIndex);
+
+    virtual void setInputNamesFromParams(Array<WeakReference<Parameter>> outParams);
+
+    virtual var getJSONData() override;
+    virtual void loadJSONDataInternal(var data) override;
+
+    virtual InspectableEditor* getEditor(bool isRoot);
 };

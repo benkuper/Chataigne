@@ -36,7 +36,7 @@ public:
 
 	void reorderFilterParameters();
 
-	void createLink(WeakReference<Parameter>, int sourceValueIndex, ConvertedParameter* out, int outValueIndex);
+	void createLink(int sourceIndex, int sourceValueIndex, ConvertedParameter* out, int outValueIndex);
 	void removeLink(ConversionParamValueLink* link);
 
 	void relinkGhostData();

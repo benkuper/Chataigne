@@ -25,6 +25,7 @@ public:
 	String label;
 	WeakReference<Parameter> param;
 	ConvertedParameter * convertedParam;
+
 	int valueIndex;
 	bool dropCandidate;
 

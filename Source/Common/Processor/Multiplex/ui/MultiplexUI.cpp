@@ -20,6 +20,10 @@ MultiplexUI::MultiplexUI(Multiplex* mp) :
     processorManagerUI.noItemText = "";
 
     //itemLabel.setColour(itemLabel.textColourId, BG_COLOR);
+
+    previewUI.reset(multiplex->previewIndex->createStepper());
+    addAndMakeVisible(previewUI.get());
+
     baseBGColor = Colours::deepskyblue.darker().withSaturation(.4f);
     updateBGColor();
 
@@ -29,6 +33,12 @@ MultiplexUI::MultiplexUI(Multiplex* mp) :
 
 MultiplexUI::~MultiplexUI()
 {
+}
+
+void MultiplexUI::resizedInternalHeader(Rectangle<int>& r)
+{
+    ProcessorUI::resizedInternalHeader(r);
+    previewUI->setBounds(r.removeFromRight(60).reduced(1));
 }
 
 void MultiplexUI::resizedInternalContent(Rectangle<int>& r)

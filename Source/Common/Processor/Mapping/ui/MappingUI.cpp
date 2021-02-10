@@ -60,14 +60,19 @@ void MappingUI::updateOutputParamUI()
 
 		//if (outputParamUI != nullptr && mapping->om.outParams.size() > 0 && outputParamUI->controllable == mapping->om.outParams[0][0]) return;
 		
-
-		if (mapping->om.outParams.size() > 0 && mapping->om.outParams[0].size() > 0 && mapping->om.outParams[0][0] != nullptr)
+		int pi = mapping->getPreviewIndex();
+		if (mapping->om.outParams.size() > pi)
 		{
-			outputParamUI.reset(mapping->om.outParams[0][0]->createDefaultUI());
-			outputParamUI->showLabel = false;
-			addAndMakeVisible(outputParamUI.get());
+			Array<WeakReference<Parameter>> outs = mapping->om.outParams[pi];
+			if (outs.size() > 0 && outs[0] != nullptr)
+			{
+				outputParamUI.reset(outs[0]->createDefaultUI());
+				outputParamUI->showLabel = false;
+				addAndMakeVisible(outputParamUI.get());
+			}
 		}
 	}
+	
 	resized();
 }
 

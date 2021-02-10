@@ -121,7 +121,7 @@ void Mapping::updateMappingChain(MappingFilter * afterThisFilter)
 		for (int i = 0; i < getMultiplexCount(); i++)
 		{
 			if (afterThisFilter == nullptr) fm.setupSources(im.getInputReferences(i), i); //do the whole rebuild
-			else fm.rebuildFilterChain(afterThisFilter); //only ask to rebuild after the changed filter
+			else fm.rebuildFilterChain(afterThisFilter, i); //only ask to rebuild after the changed filter
 
 			Array<Parameter*> processedParams = fm.getLastFilteredParameters(i);
 
@@ -163,6 +163,11 @@ void Mapping::updateMappingChain(MappingFilter * afterThisFilter)
 void Mapping::multiplexCountChanged()
 {
 	updateMappingChain();
+}
+
+void Mapping::multiplexPreviewIndexChanged()
+{
+	mappingNotifier.addMessage(new MappingEvent(MappingEvent::OUTPUT_TYPE_CHANGED, this)); //force updating output to update the good index
 }
 
 void Mapping::process(bool forceOutput, int multiplexIndex)

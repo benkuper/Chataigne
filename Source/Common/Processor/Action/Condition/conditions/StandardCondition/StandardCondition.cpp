@@ -134,7 +134,7 @@ void StandardCondition::updateComparatorFromSource()
 				comparator.reset();
 			}
 
-			if (c->type != Controllable::TRIGGER) comparator.reset(ComparatorFactory::createComparatorForControllable((Parameter*)c));
+			if (c->type != Controllable::TRIGGER) comparator.reset(ComparatorFactory::createComparatorForControllable((Parameter*)c, multiplex));
 
 			if (comparator != nullptr)
 			{
@@ -190,7 +190,7 @@ void StandardCondition::checkComparator(int multiplexIndex)
 		}
 		else
 		{
-			setValid(multiplexIndex, comparator->compare((Parameter*)c));
+			setValid(multiplexIndex, comparator->compare((Parameter*)c, multiplexIndex));
 		}
 	}
 }
@@ -242,7 +242,10 @@ void StandardCondition::onControllableFeedbackUpdateInternal(ControllableContain
 
 void StandardCondition::onExternalParameterValueChanged(Parameter* p)
 {
-	if(!multiplexListMode) checkComparator(0);
+	if (!multiplexListMode)
+	{
+		for (int i = 0; i < getMultiplexCount(); i++) checkComparator(i);
+	}
 }
 
 void StandardCondition::onExternalParameterRangeChanged(Parameter* p)
@@ -252,7 +255,11 @@ void StandardCondition::onExternalParameterRangeChanged(Parameter* p)
 
 void StandardCondition::onExternalTriggerTriggered(Trigger* t)
 {
-	if (!multiplexListMode) checkComparator(0);
+	if (!multiplexListMode)
+	{
+		for (int i = 0; i < getMultiplexCount(); i++) checkComparator(i);
+
+	}
 }
 
 var StandardCondition::getJSONData()

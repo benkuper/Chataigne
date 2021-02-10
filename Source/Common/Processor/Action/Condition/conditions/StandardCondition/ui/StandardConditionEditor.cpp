@@ -18,11 +18,11 @@ StandardConditionEditor::StandardConditionEditor(StandardCondition* _condition, 
 	addChildComponent(targetUI.get());
 
 	alwaysTriggerUI.reset(standardCondition->alwaysTrigger->createToggle());
-	addAndMakeVisible(alwaysTriggerUI.get());
-	
+	addChildComponent(alwaysTriggerUI.get());
+
 	toggleModeUI.reset(standardCondition->toggleMode->createToggle(ImageCache::getFromMemory(BinaryData::toggle_png, BinaryData::toggle_pngSize)));
 
-	addAndMakeVisible(toggleModeUI.get());
+	addChildComponent(toggleModeUI.get());
 
 	targetUI->setVisible(!standardCondition->editorIsCollapsed);
 
@@ -39,6 +39,9 @@ void StandardConditionEditor::setCollapsed(bool value, bool force, bool animate,
 	ConditionEditor::setCollapsed(value, force, animate, doNotRebuild);
 
 	targetUI->setVisible(!standardCondition->editorIsCollapsed);
+	alwaysTriggerUI->setVisible(!standardCondition->editorIsCollapsed);
+	toggleModeUI->setVisible(!standardCondition->editorIsCollapsed);
+
 	//if (sourceFeedbackUI != nullptr)	sourceFeedbackUI->setVisible(!standardCondition->editorIsCollapsed);
 	if (comparatorUI != nullptr) comparatorUI->setVisible(!standardCondition->editorIsCollapsed);
 }

@@ -24,6 +24,9 @@ public:
 	Multiplex* multiplex;
 	ProcessorManagerUI processorManagerUI;
 
+	std::unique_ptr<IntStepperUI> previewUI;
+
+	void resizedInternalHeader(Rectangle<int>& r) override;
 	void resizedInternalContent(Rectangle<int>& r) override;
 
 	void updateProcessorManagerBounds();

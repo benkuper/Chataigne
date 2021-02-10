@@ -41,6 +41,7 @@ CustomValuesCommandArgument::CustomValuesCommandArgument(const String &name, Par
 	}
 
 	//argumentName = addStringParameter("Argument name", "Name for the argument", "Arg");
+
 	if (mappingEnabled || isMultiplexed())
 	{
 		paramLink.reset(new ParameterLink(param, multiplex));

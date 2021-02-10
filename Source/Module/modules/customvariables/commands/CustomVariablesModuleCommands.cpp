@@ -205,7 +205,7 @@ void CVCommand::triggerInternal(int multiplexIndex)
 				switch (o)
 				{
 				case EQUAL:
-					p->setValue((float)val);
+					p->setValue(val);
 					break;
 
 				case INVERSE:

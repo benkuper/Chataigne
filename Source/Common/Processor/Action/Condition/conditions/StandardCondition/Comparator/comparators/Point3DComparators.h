@@ -16,17 +16,18 @@ class Point3DComparator :
 	public BaseComparator
 {
 public:
-	Point3DComparator(Parameter * sourceParam);
+	Point3DComparator(Parameter * sourceParam, Multiplex* multiplex);
 	virtual ~Point3DComparator();
 
 	const Identifier equalsId = "=";
-	const Identifier distGreaterId = "d>";
-	const Identifier distLessId = "d<";
 	const Identifier magnGreaterId = "m>";
 	const Identifier magnLessId = "m<";
 
-	Point3DParameter * p3dRef;
-	FloatParameter * valParam;
+	Parameter* sourceParam;
 
-	virtual bool compare(Parameter * sourceParam) override;
+	void onContainerParameterChanged(Parameter* p) override;
+	void updateReferenceParam();
+
+
+	virtual bool compare(Parameter* sourceParam, int multiplexIndex = 0) override;
 };

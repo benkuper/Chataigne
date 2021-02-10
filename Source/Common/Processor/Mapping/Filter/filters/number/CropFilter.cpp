@@ -33,6 +33,9 @@ CropFilter::~CropFilter()
 
 Parameter * CropFilter::setupSingleParameterInternal(Parameter * source, int multiplexIndex)
 {
+	float tMin = filterParams.getLinkedValue(targetMin, multiplexIndex);
+	float tMax = filterParams.getLinkedValue(targetMax, multiplexIndex);
+
 	Parameter * p = MappingFilter::setupSingleParameterInternal(source, multiplexIndex);
 	if (p->isComplex())
 	{
@@ -40,15 +43,15 @@ Parameter * CropFilter::setupSingleParameterInternal(Parameter * source, int mul
 		var maxVal;
 		for (int i = 0; i < p->value.size(); ++i)
 		{
-			minVal.append(targetMin->floatValue());
-			maxVal.append(jmax<float>(targetMax->floatValue(), targetMin->floatValue()));
+			minVal.append(tMin);
+			maxVal.append(jmax<float>(tMax, tMin));
 		}
 
 		p->setRange(minVal, maxVal);
 	}
 	else
 	{
-		p->setRange(targetMin->floatValue(), jmax<float>(targetMax->floatValue(), targetMin->floatValue()));
+		p->setRange(tMin, jmax<float>(tMax, tMin));
 	}
 	return p;
 }

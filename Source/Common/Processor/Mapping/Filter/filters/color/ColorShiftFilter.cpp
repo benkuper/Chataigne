@@ -37,9 +37,11 @@ bool ColorShiftFilter::processSingleParameterInternal(Parameter* source, Paramet
 	float hue, sat, bri;
 	Colour c = ((ColorParameter*)source)->getColor();
 	c.getHSB(hue, sat, bri);
-	hue += hsvOffsets[0]->floatValue();
-	sat += hsvOffsets[1]->floatValue();
-	bri += hsvOffsets[2]->floatValue();
+
+	hue += (float)filterParams.getLinkedValue(hsvOffsets[0], multiplexIndex);
+	sat += (float)filterParams.getLinkedValue(hsvOffsets[1], multiplexIndex);
+	bri += (float)filterParams.getLinkedValue(hsvOffsets[2], multiplexIndex);
+
 	tc->setColor(Colour::fromHSV(hue, sat, bri, c.getFloatAlpha()));
 
 	return true;

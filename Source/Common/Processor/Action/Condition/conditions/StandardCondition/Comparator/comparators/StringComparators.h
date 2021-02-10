@@ -16,7 +16,7 @@ class StringComparator :
 	public BaseComparator
 {
 public:
-	StringComparator(Parameter * sourceParam);
+	StringComparator(Parameter * sourceParam, Multiplex * multiplex);
 	virtual ~StringComparator();
 
 	const Identifier equalsId = "=";
@@ -25,5 +25,5 @@ public:
 	const Identifier startsWith = "startsWith";
 	const Identifier endsWidth = "endsWidth";
 
-	virtual bool compare(Parameter *sourceParam) override;
+	virtual bool compare(Parameter* sourceParam, int multiplexIndex) override;
 };

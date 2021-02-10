@@ -289,8 +289,6 @@
     <ClCompile Include="..\..\Source\Module\modules\audio\ui\AudioModuleHardwareEditor.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\audio\AudioModule.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\common\commands\scriptcallback\ScriptCallbackCommand.cpp"/>
-    <ClCompile Include="..\..\Source\Module\modules\common\commands\scriptcommands\ui\MappableParameterEditor.cpp"/>
-    <ClCompile Include="..\..\Source\Module\modules\common\commands\scriptcommands\ui\ScriptCommandEditor.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\common\commands\scriptcommands\ScriptCommand.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\common\commands\customvalues\ui\CustomValuesCommandArgumentEditor.cpp"/>
     <ClCompile Include="..\..\Source\Module\modules\common\commands\customvalues\ui\CustomValuesCommandArgumentManagerEditor.cpp"/>
@@ -3376,8 +3374,6 @@
     <ClInclude Include="..\..\Source\Module\modules\audio\ui\AudioModuleHardwareEditor.h"/>
     <ClInclude Include="..\..\Source\Module\modules\audio\AudioModule.h"/>
     <ClInclude Include="..\..\Source\Module\modules\common\commands\scriptcallback\ScriptCallbackCommand.h"/>
-    <ClInclude Include="..\..\Source\Module\modules\common\commands\scriptcommands\ui\MappableParameterEditor.h"/>
-    <ClInclude Include="..\..\Source\Module\modules\common\commands\scriptcommands\ui\ScriptCommandEditor.h"/>
     <ClInclude Include="..\..\Source\Module\modules\common\commands\scriptcommands\ScriptCommand.h"/>
     <ClInclude Include="..\..\Source\Module\modules\common\commands\customvalues\ui\CustomValuesCommandArgumentEditor.h"/>
     <ClInclude Include="..\..\Source\Module\modules\common\commands\customvalues\ui\CustomValuesCommandArgumentManagerEditor.h"/>

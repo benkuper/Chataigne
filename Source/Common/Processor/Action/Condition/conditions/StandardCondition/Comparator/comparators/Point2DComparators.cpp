@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    Point2DComparators.cpp
-    Created: 2 Nov 2016 8:58:14pm
-    Author:  bkupe
+	Point2DComparators.cpp
+	Created: 2 Nov 2016 8:58:14pm
+	Author:  bkupe
 
   ==============================================================================
 */
@@ -11,34 +11,66 @@
 #include "Point2DComparators.h"
 
 
-Point2DComparator::Point2DComparator(Parameter * sourceParam)
+Point2DComparator::Point2DComparator(Parameter* sourceParam, Multiplex* multiplex) :
+	BaseComparator(multiplex),
+	sourceParam(sourceParam)
 {
-	p2dRef = addPoint2DParameter("Reference", "Comparison Reference to check against source value");
-	p2dRef->setRange(sourceParam->minimumValue, sourceParam->maximumValue);
-	p2dRef->setValue(sourceParam->value, false, true, true);
-	reference = p2dRef;
-
-	valParam = addFloatParameter("Reference 2", "Depending on the comparison function, will act as reference for distance, magniture or other value reference to check against.", 0);
-	
 	addCompareOption("=", equalsId);
-	addCompareOption("Distance >", distGreaterId);
-	addCompareOption("Distance <", distLessId);
 	addCompareOption("Magnitude >", magnGreaterId);
 	addCompareOption("Magnitude <", magnLessId);
+
+	updateReferenceParam();
 }
 
 Point2DComparator::~Point2DComparator()
 {
 }
 
-bool Point2DComparator::compare(Parameter* sourceParam)
+void Point2DComparator::onContainerParameterChanged(Parameter* p)
 {
-	Point<float> p = ((Point2DParameter *)sourceParam)->getPoint();
-	Point<float> r = p2dRef->getPoint();
-	if (currentFunctionId == equalsId)				return p == r;
-	else if (currentFunctionId == distGreaterId)	return p.getDistanceFrom(r) > valParam->floatValue();
-	else if (currentFunctionId == distLessId)		return p.getDistanceFrom(r) > valParam->floatValue();
-	else if (currentFunctionId == magnGreaterId)	return p.getDistanceFromOrigin() >valParam->floatValue();
-	else if (currentFunctionId == magnLessId)		return p.getDistanceFromOrigin() < valParam->floatValue();
+	if (p == compareFunction)
+	{
+		updateReferenceParam();
+	}
+
+	BaseComparator::onContainerParameterChanged(p);
+}
+
+void Point2DComparator::updateReferenceParam()
+{
+	if (reference != nullptr)
+	{
+		removeControllable(reference);
+		reference = nullptr;
+	}
+
+	if (currentFunctionId == equalsId)
+	{
+		if (reference == nullptr || reference->type != Parameter::POINT2D)
+		{
+
+			setReferenceParam(new Point2DParameter("Reference", "Comparison Reference to check against source value"));
+			reference->setRange(sourceParam->minimumValue, sourceParam->maximumValue);
+			reference->setValue(sourceParam->value, false, true, true);
+		}
+	}
+	else
+	{
+		if (reference == nullptr || reference->type != Parameter::FLOAT)
+		{
+			setReferenceParam(new FloatParameter("Reference", "Comparison Reference to check against source value", 0, 0));
+		}
+	}
+
+}
+
+bool Point2DComparator::compare(Parameter* sourceParam, int multiplexIndex)
+{
+	Point<float> p = ((Point2DParameter*)sourceParam)->getPoint();
+	var value = isMultiplexed() ? refLink->getLinkedValue(multiplexIndex) : reference->getValue();
+
+	if (currentFunctionId == equalsId)				return p == Point<float>(value[0], value[1]);
+	else if (currentFunctionId == magnGreaterId)	return p.getDistanceFromOrigin() > (float)value;
+	else if (currentFunctionId == magnLessId)		return p.getDistanceFromOrigin() < (float)value;
 	return false;
 }

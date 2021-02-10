@@ -31,9 +31,13 @@ void MappingOutputManagerEditor::updateOutputUI()
 		outUI = nullptr;
 	}
 
-	if (outputManager->outParams[0].size() > 0 && outputManager->outParams[0][0] != nullptr)
+
+	int pi = outputManager->getPreviewIndex();
+	Array<WeakReference<Parameter>> outParams = outputManager->outParams[pi];
+
+	if (outParams.size() > 0 && outParams[0] != nullptr)
 	{
-		outUI.reset((ParameterUI*)outputManager->outParams[0][0]->createDefaultUI());
+		outUI.reset((ParameterUI *)outParams[0]->createDefaultUI());
 		outUI->showLabel = false;
 		addAndMakeVisible(outUI.get());
 	}

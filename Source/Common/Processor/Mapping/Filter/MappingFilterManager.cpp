@@ -49,10 +49,7 @@ MappingFilterManager::MappingFilterManager(Multiplex * multiplex) :
 	factory.defs.add(MultiplexTargetDefinition<MappingFilter>::createDef<ToPoint3DFilter>("Conversion", "Convert To Point3D", multiplex));
 	factory.defs.add(MultiplexTargetDefinition<MappingFilter>::createDef<ToColorFilter>("Conversion", "Convert To Color", multiplex));
 
-	if (!isMultiplexed()) //Right now, filters that have different in <> out parameter layout are not supported in multiplex
-	{
-		factory.defs.add(MultiplexTargetDefinition<MappingFilter>::createDef<ConversionFilter>("Conversion", ConversionFilter::getTypeStringStatic(), multiplex));
-	}
+	factory.defs.add(MultiplexTargetDefinition<MappingFilter>::createDef<ConversionFilter>("Conversion", ConversionFilter::getTypeStringStatic(), multiplex));
 		
 	factory.defs.add(MultiplexTargetDefinition<MappingFilter>::createDef<SimpleSmoothFilter>("Time", "Smooth", multiplex));
 	factory.defs.add(MultiplexTargetDefinition<MappingFilter>::createDef<DampingFilter>("Time", "Damping", multiplex));
@@ -73,9 +70,8 @@ bool MappingFilterManager::setupSources(Array<Parameter *> sources, int multiple
 {
 	if (isCurrentlyLoadingData) return false;
 	
-	multiplexInputSourceMap.set(multiplexIndex, sources);
-
-	filteredParamMap.set(multiplexIndex, sources);
+	inputSources.set(multiplexIndex, sources);
+	filteredParameters.set(multiplexIndex, sources);
 
 	return rebuildFilterChain(nullptr, multiplexIndex);
 }
@@ -85,12 +81,12 @@ bool MappingFilterManager::processFilters(Array<Parameter *> inputs, int multipl
 {
 	if (getLastEnabledFilter() == nullptr)
 	{
-		filteredParamMap.set(multiplexIndex, inputs);// Array<Parameter*>(multiplexInputSourceMap[multiplexIndex].getRawDataPointer(), multiplexInputSourceMap[multiplexIndex].size());
+		filteredParameters.set(multiplexIndex, inputs);// Array<Parameter*>(multiplexInputSourceMap[multiplexIndex].getRawDataPointer(), multiplexInputSourceMap[multiplexIndex].size());
 		return true;
 	}
 
 
-	jassert(inputs.size() == multiplexInputSourceMap[multiplexIndex].size());
+	jassert(inputs.size() == inputSources[multiplexIndex].size());
 
 	Array<Parameter *> fp = inputs;
 	bool hasChanged = false;
@@ -101,14 +97,14 @@ bool MappingFilterManager::processFilters(Array<Parameter *> inputs, int multipl
 		fp = Array<Parameter *>(f->filteredParameters[multiplexIndex]->getRawDataPointer(), f->filteredParameters[multiplexIndex]->size());
 	}
 	
-	filteredParamMap.set(multiplexIndex, fp);
+	filteredParameters.set(multiplexIndex, fp);
 
 	return hasChanged;
 }
 
 bool MappingFilterManager::rebuildFilterChain(MappingFilter * afterThisFilter, int multiplexIndex)
 {
-	Array<Parameter *> fp = multiplexInputSourceMap[multiplexIndex];
+	Array<Parameter *> fp = inputSources[multiplexIndex];
 	lastEnabledFilter = nullptr;
 	bool foundFilter = afterThisFilter == nullptr?true:false;
 	for (auto& f : items)
@@ -124,9 +120,12 @@ bool MappingFilterManager::rebuildFilterChain(MappingFilter * afterThisFilter, i
 			if (!setupResult) continue;
 		}
 		
-		fp = Array<Parameter*>(f->filteredParameters[multiplexIndex]->getRawDataPointer(), f->filteredParameters[multiplexIndex]->size());
+		OwnedArray<Parameter>* fParams = f->filteredParameters[multiplexIndex];
+		fp = Array<Parameter*>(fParams->getRawDataPointer(), fParams->size());
 		lastEnabledFilter = f;
 	}
+
+	filteredParameters.set(multiplexIndex, fp);
 
 	return true;
 }
@@ -139,7 +138,7 @@ void MappingFilterManager::notifyNeedsRebuild(MappingFilter* afterThisFilter)
 
 Array<Parameter *> MappingFilterManager::getLastFilteredParameters(int multiplexIndex)
 {
-	return filteredParamMap[multiplexIndex];
+	return filteredParameters[multiplexIndex];
 	
 	//if (lastEnabledFilter != nullptr) return Array<Parameter *>(lastEnabledFilter->filteredParameters[multiplexIndex]->getRawDataPointer(), lastEnabledFilter->filteredParameters[multiplexIndex]->size());
 	//else return multiplexInputSourceMap[multiplexIndex];

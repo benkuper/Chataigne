@@ -700,16 +700,7 @@
                       file="Source/Module/modules/common/commands/scriptcallback/ScriptCallbackCommand.h"/>
               </GROUP>
               <GROUP id="{B061FF30-9D17-6208-8F0E-14FF411E0ACD}" name="scriptcommands">
-                <GROUP id="{93968D0B-6B90-7857-AA1F-30385F5B26FE}" name="ui">
-                  <FILE id="YM9AVa" name="MappableParameterEditor.cpp" compile="1" resource="0"
-                        file="Source/Module/modules/common/commands/scriptcommands/ui/MappableParameterEditor.cpp"/>
-                  <FILE id="S8Bqwk" name="MappableParameterEditor.h" compile="0" resource="0"
-                        file="Source/Module/modules/common/commands/scriptcommands/ui/MappableParameterEditor.h"/>
-                  <FILE id="YJRuVq" name="ScriptCommandEditor.cpp" compile="1" resource="0"
-                        file="Source/Module/modules/common/commands/scriptcommands/ui/ScriptCommandEditor.cpp"/>
-                  <FILE id="yomVta" name="ScriptCommandEditor.h" compile="0" resource="0"
-                        file="Source/Module/modules/common/commands/scriptcommands/ui/ScriptCommandEditor.h"/>
-                </GROUP>
+                <GROUP id="{93968D0B-6B90-7857-AA1F-30385F5B26FE}" name="ui"/>
                 <FILE id="Zh93Yg" name="ScriptCommand.cpp" compile="1" resource="0"
                       file="Source/Module/modules/common/commands/scriptcommands/ScriptCommand.cpp"/>
                 <FILE id="TyysmI" name="ScriptCommand.h" compile="0" resource="0" file="Source/Module/modules/common/commands/scriptcommands/ScriptCommand.h"/>

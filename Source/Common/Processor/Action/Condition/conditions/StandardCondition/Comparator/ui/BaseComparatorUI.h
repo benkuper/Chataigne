@@ -11,6 +11,7 @@
 #pragma once
 
 #include "../BaseComparator.h"
+#include "Common/ParameterLink/ui/LinkableParameterEditor.h"
 
 class BaseComparatorUI :
 	public Component,
@@ -25,7 +26,8 @@ public:
 
 	std::unique_ptr<EnumParameterUI> compareFuncUI;
 
-	std::unique_ptr<ControllableEditor> refEditor;
+	std::unique_ptr<InspectableEditor> refEditor;
+
 	void resized() override;
 
 	void newMessage(const Parameter::ParameterEvent &e) override;

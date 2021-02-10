@@ -11,9 +11,10 @@
 #include "StringComparators.h"
 
 
-StringComparator::StringComparator(Parameter *sourceParam)
+StringComparator::StringComparator(Parameter *sourceParam, Multiplex* multiplex) :
+	BaseComparator(multiplex)
 {
-	reference = addStringParameter("Reference", "Comparison Reference to check against source value", sourceParam->stringValue());
+	setReferenceParam(new StringParameter("Reference", "Comparison Reference to check against source value", sourceParam->stringValue()));
 	reference->setValue(sourceParam->stringValue(), false, true, true);
 
 	addCompareOption("=", equalsId);
@@ -27,12 +28,14 @@ StringComparator::~StringComparator()
 {
 }
 
-bool StringComparator::compare(Parameter *sourceParam)
+bool StringComparator::compare(Parameter* sourceParam, int multiplexIndex)
 {
-	if (currentFunctionId == equalsId)				return sourceParam->stringValue() == reference->stringValue();
-	else if (currentFunctionId == differentId)		return sourceParam->stringValue() != reference->stringValue();
-	else if (currentFunctionId == containsId)		return sourceParam->stringValue().contains(reference->stringValue());
-	else if (currentFunctionId == startsWith)		return sourceParam->stringValue().startsWith(reference->stringValue());
-	else if (currentFunctionId == endsWidth)		return sourceParam->stringValue().endsWith(reference->stringValue());
+	String value = isMultiplexed() ? refLink->getLinkedValue(multiplexIndex) : reference->getValue();
+
+	if (currentFunctionId == equalsId)				return sourceParam->stringValue() == value;
+	else if (currentFunctionId == differentId)		return sourceParam->stringValue() != value;
+	else if (currentFunctionId == containsId)		return sourceParam->stringValue().contains(value);
+	else if (currentFunctionId == startsWith)		return sourceParam->stringValue().startsWith(value);
+	else if (currentFunctionId == endsWidth)		return sourceParam->stringValue().endsWith(value);
 	return false;
 }

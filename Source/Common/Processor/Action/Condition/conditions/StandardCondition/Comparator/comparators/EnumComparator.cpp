@@ -11,10 +11,12 @@
 #include "EnumComparator.h"
 
 
-EnumComparator::EnumComparator(Parameter * sourceParam)
+EnumComparator::EnumComparator(Parameter * sourceParam, Multiplex* multiplex) :
+	BaseComparator(multiplex)
 {
 	EnumParameter* ep = (EnumParameter *)sourceParam;
-	enumRef = addEnumParameter("Reference", "Comparison Reference to check against source value");
+
+	setReferenceParam(new EnumParameter("Reference", "Comparison Reference to check against source value"));
 	for (auto &ev : ep->enumValues) enumRef->addOption(ev->key, ev->value);
 
 	addCompareOption("=", equalsId);
@@ -29,9 +31,10 @@ EnumComparator::~EnumComparator()
 {
 }
 
-bool EnumComparator::compare(Parameter* sourceParam)
+bool EnumComparator::compare(Parameter* sourceParam, int multiplexIndex)
 {
-	if (currentFunctionId == equalsId) return ((EnumParameter*)sourceParam)->getValueData() == enumRef->getValueData();
-	if (currentFunctionId == differentId) return ((EnumParameter *)sourceParam)->getValueData() != enumRef->getValueData();
+	var value = isMultiplexed() ? refLink->getLinkedValue(multiplexIndex) : enumRef->getValueData();
+	if (currentFunctionId == equalsId) return ((EnumParameter*)sourceParam)->getValueData() == value;
+	if (currentFunctionId == differentId) return ((EnumParameter *)sourceParam)->getValueData() != value;
 	return false;
 }

@@ -621,14 +621,6 @@
 			isa = PBXBuildFile;
 			fileRef = 4EC002DAFB1BBDC9C03CD4D6;
 		};
-		C83A2D0BD025D7F6C8AECA11 = {
-			isa = PBXBuildFile;
-			fileRef = 4ACCC8CEBA85463BA443B321;
-		};
-		F7CAB0F82333CA983C5984DD = {
-			isa = PBXBuildFile;
-			fileRef = AFBA95737F1FDA3F2473CCC3;
-		};
 		3BDB9330B75641F168BCEB29 = {
 			isa = PBXBuildFile;
 			fileRef = 50F4C9323D195AD213E37F98;
@@ -1740,13 +1732,6 @@
 			path = ../../Resources/Modules/HTTP.png;
 			sourceTree = "SOURCE_ROOT";
 		};
-		11A71D9DDC2F42D6EDE44421 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = MappableParameterEditor.h;
-			path = ../../Source/Module/modules/common/commands/scriptcommands/ui/MappableParameterEditor.h;
-			sourceTree = "SOURCE_ROOT";
-		};
 		126E6696F8B855707269C2AF = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -2846,13 +2831,6 @@
 			path = ../../Source/Common/Processor/Mapping/Filter/filters/number/MathFilter.h;
 			sourceTree = "SOURCE_ROOT";
 		};
-		4ACCC8CEBA85463BA443B321 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = MappableParameterEditor.cpp;
-			path = ../../Source/Module/modules/common/commands/scriptcommands/ui/MappableParameterEditor.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
 		4B2FCE14DFEE6D63E46D08B9 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -3831,13 +3809,6 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = DampingFilter.cpp;
 			path = ../../Source/Common/Processor/Mapping/Filter/filters/number/DampingFilter.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
-		7CFE921B02AEF88DD2320245 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = ScriptCommandEditor.h;
-			path = ../../Source/Module/modules/common/commands/scriptcommands/ui/ScriptCommandEditor.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		7D1B09D24AF2AA1A035C862F = {
@@ -4867,13 +4838,6 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = Mapping1DLayer.h;
 			path = ../../Source/TimeMachine/Sequence/layers/mapping/automation/1d/Mapping1DLayer.h;
-			sourceTree = "SOURCE_ROOT";
-		};
-		AFBA95737F1FDA3F2473CCC3 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = ScriptCommandEditor.cpp;
-			path = ../../Source/Module/modules/common/commands/scriptcommands/ui/ScriptCommandEditor.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		AFDAEB70EAEA484C53D8F1B0 = {
@@ -7423,21 +7387,9 @@
 			name = scriptcallback;
 			sourceTree = "<group>";
 		};
-		FA530EB4601FEACE8CACDBCD = {
-			isa = PBXGroup;
-			children = (
-				4ACCC8CEBA85463BA443B321,
-				11A71D9DDC2F42D6EDE44421,
-				AFBA95737F1FDA3F2473CCC3,
-				7CFE921B02AEF88DD2320245,
-			);
-			name = ui;
-			sourceTree = "<group>";
-		};
 		3722458946AD3C9232F47376 = {
 			isa = PBXGroup;
 			children = (
-				FA530EB4601FEACE8CACDBCD,
 				50F4C9323D195AD213E37F98,
 				F7A729825ED8862FA99EC2B3,
 			);
@@ -9200,8 +9152,6 @@
 				FDCA90E38FC8A70DA5C9B59E,
 				38943F372FE48254AA4E7025,
 				38B081F77C4704EC79C5466F,
-				C83A2D0BD025D7F6C8AECA11,
-				F7CAB0F82333CA983C5984DD,
 				3BDB9330B75641F168BCEB29,
 				1E7BAD0D9759D453D9A7BD2A,
 				C7FD34F61596D993BF7D753E,

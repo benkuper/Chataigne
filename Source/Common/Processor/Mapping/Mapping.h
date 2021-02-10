@@ -51,6 +51,7 @@ public:
 
 	void updateMappingChain(MappingFilter * afterThisFilter = nullptr); //will host warnings and type change checks
 	virtual void multiplexCountChanged() override;
+	virtual void multiplexPreviewIndexChanged() override;
 
 	void process(bool forceOutput = false, int multiplexIndex = 0);
 

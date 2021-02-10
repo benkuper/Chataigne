@@ -18,8 +18,16 @@ BaseComparatorUI::BaseComparatorUI(BaseComparator * _comparator) :
 
 	if (comparator != nullptr && comparator->reference != nullptr) //null if comparator is trigger
 	{
-		refEditor.reset((ControllableEditor*)comparator->reference->getEditor(false));
-		refEditor->setShowLabel(false);
+		if (comparator->refLink != nullptr)
+		{
+			refEditor.reset(new LinkableParameterEditor(comparator->refLink.get(), false));
+		}
+		else
+		{
+			refEditor.reset((ControllableEditor*)comparator->reference->getEditor(false));
+			((ControllableEditor*)refEditor.get())->setShowLabel(false);
+		}
+
 		if (comparator->reference->type != Controllable::TRIGGER)
 		{
 			Parameter * p = dynamic_cast<Parameter *>(comparator->reference);

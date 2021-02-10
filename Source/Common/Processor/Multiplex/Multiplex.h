@@ -21,6 +21,8 @@ public:
     ~Multiplex();
 
     IntParameter* count;
+    IntParameter* previewIndex;
+
     MultiplexListManager listManager;
     ProcessorManager processorManager;
 
@@ -36,6 +38,7 @@ public:
     public:
         virtual ~MultiplexListener() {}
         virtual void multiplexCountChanged() {}
+        virtual void multiplexPreviewIndexChanged() {}
     };
 
     ListenerList<MultiplexListener> multiplexListeners;
@@ -57,6 +60,7 @@ public:
 
     bool isMultiplexed() const;
     int getMultiplexCount() const;
+    int getPreviewIndex() const;
 };
 
 

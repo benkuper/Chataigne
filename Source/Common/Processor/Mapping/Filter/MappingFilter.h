@@ -12,6 +12,7 @@
 
 
 #include "Common/Processor/Multiplex/Multiplex.h"
+#include "Common/ParameterLink/ParameterLink.h"
 
 class MappingFilter :
 	public BaseItem,
@@ -21,8 +22,7 @@ public:
 	MappingFilter(const String &name = "MappingFilter", var params = var(), Multiplex* multiplex = nullptr);
 	virtual ~MappingFilter();
 
-
-	ControllableContainer filterParams;
+	ParamLinkContainer filterParams;
 	
 	Array<Controllable::Type> filterTypeFilters; //if not empty, this will filter out the parameters passed to the processSingleParameterInternal function
 
@@ -48,6 +48,7 @@ public:
 	virtual void onControllableFeedbackUpdateInternal(ControllableContainer *, Controllable * p) override;
 	virtual void filterParamChanged(Parameter * ) {};
 
+	void multiplexPreviewIndexChanged() override;
 
 	virtual void clearItem() override;
 
@@ -96,3 +97,4 @@ public:
 private:
 	JUCE_DECLARE_WEAK_REFERENCEABLE(MappingFilter)
 };
+

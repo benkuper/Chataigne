@@ -53,11 +53,15 @@ bool SimpleSmoothFilter::processSingleParameterInternal(Parameter* source, Param
 
 	var val;
 
+	float upSmoothVal = filterParams.getLinkedValue(smooth, multiplexIndex);
+	bool asyncVal = ((bool)filterParams.getLinkedValue(async, multiplexIndex));
+	float downSmoothVal = asyncVal ? filterParams.getLinkedValue(downSmooth, multiplexIndex) : upSmoothVal;
+
 	if (out->isComplex())
 	{
 		for (int i = 0; i < oldVal.size(); ++i)
 		{
-			float smoothVal = async->boolValue() ? (newVal[i] > oldVal[i] ? smooth->floatValue() : downSmooth->floatValue()) : smooth->floatValue();
+			float smoothVal = (newVal[i] > oldVal[i]) ? upSmoothVal : downSmoothVal;
 			float targetVal = (float)oldVal[i] + ((float)newVal[i] - (float)oldVal[i]) * (1 - smoothVal);
 			if (fabsf(targetVal - (float)newVal[i]) < precision) val.append(newVal[i]);
 			else val.append(targetVal);
@@ -66,7 +70,7 @@ bool SimpleSmoothFilter::processSingleParameterInternal(Parameter* source, Param
 	}
 	else
 	{
-		float smoothVal = async->boolValue() ? (newVal > oldVal ? smooth->floatValue() : downSmooth->floatValue()) : smooth->floatValue();
+		float smoothVal = (newVal > oldVal) ? upSmoothVal : downSmoothVal;
 		float targetVal = (float)oldVal + ((float)newVal - (float)oldVal) * (1 - smoothVal);
 		
 		if (fabsf(targetVal - (float)newVal) < precision) val = newVal;

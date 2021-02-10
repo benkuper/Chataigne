@@ -14,8 +14,7 @@
 #include "ui/BaseCommandEditor.h"
 
 BaseCommand::BaseCommand(Module* _module, CommandContext _context, var _params, Multiplex* multiplex) :
-	ControllableContainer("Command"),
-	MultiplexTarget(multiplex),
+	ParamLinkContainer("Command", multiplex),
 	context(_context),
 	module(_module),
 	moduleRef(_module),
@@ -30,42 +29,21 @@ BaseCommand::BaseCommand(Module* _module, CommandContext _context, var _params, 
 
 BaseCommand::~BaseCommand()
 {
-	paramLinkMap.clear();
-	paramLinkMap.clear();
-	paramLinks.clear();
 	linkToTemplate(nullptr);
 }
 
 
 void BaseCommand::onControllableAdded(Controllable* c)
 {
-	if (Parameter* p = dynamic_cast<Parameter*>(c))
-	{
-		ParameterLink* pLink = new ParameterLink(p, multiplex);
-		pLink->inputValueNames = inputNames;
-
-		paramLinks.add(pLink);
-		paramLinkMap.set(p, pLink);
-		linkParamMap.set(pLink, p);
-
-		commandListeners.call(&CommandListener::commandContentChanged);
-	}
+	ParamLinkContainer::onControllableAdded(c);
+	commandListeners.call(&CommandListener::commandContentChanged);
 }
 
 void BaseCommand::onControllableRemoved(Controllable* c)
 {
-	if (Parameter* p = dynamic_cast<Parameter*>(c))
-	{
-		if (paramLinkMap.contains(p))
-		{
-			ParameterLink* pLink = paramLinkMap[p];
-			linkParamMap.remove(pLink);
-			paramLinkMap.remove(p);
-			paramLinks.removeObject(pLink);
-
-			commandListeners.call(&CommandListener::commandContentChanged);
-		}
-	}
+	ParamLinkContainer::onControllableRemoved(c);
+	commandListeners.call(&CommandListener::commandContentChanged);
+	
 }
 
 bool BaseCommand::isControllableMappable(Controllable* c)
@@ -118,6 +96,15 @@ void BaseCommand::updateParameterFromTemplate(CommandTemplateParameter* ctp)
 	Parameter* p = dynamic_cast<Parameter*>(getControllableForAddress(addr));
 	jassert(p != nullptr);
 	p->setControllableFeedbackOnly(!ctp->editable->boolValue());
+
+	if (!ctp->editable->boolValue())
+	{
+		if (ParameterLink* pl = getLinkedParam(p))
+		{
+			pl->isLinkable = false;
+			pl->setLinkType(pl->NONE);
+		}
+	}
 
 	p->defaultValue = ctp->parameter->value;
 	if (p->isControllableFeedbackOnly || !p->isOverriden)
@@ -225,46 +212,10 @@ void BaseCommand::setValue(var value, int multiplexIndex)
 	trigger(multiplexIndex);
 }
 
-ParameterLink* BaseCommand::getLinkedParam(Parameter* p)
-{
-	jassert(paramLinkMap.contains(p));
-	return paramLinkMap[p];
-}
-
-var BaseCommand::getLinkedValue(Parameter* p, int multiplexIndex)
-{
-	return getLinkedParam(p)->getLinkedValue(multiplexIndex);
-}
-
-void BaseCommand::linkParamToMappingIndex(Parameter* p, int mappingIndex)
-{
-	if (context != MAPPING) return;
-
-	if (ParameterLink* pLink = getLinkedParam(p))
-	{
-		pLink->setLinkType(pLink->MAPPING_INPUT);
-		pLink->mappingValueIndex = mappingIndex;
-	}
-}
 
 void BaseCommand::setInputNamesFromParams(Array<WeakReference<Parameter>> outParams)
 {
-	inputNames.clear();
-	for (int i = 0; i < outParams.size(); i++)
-	{
-		String tString = outParams[i]->getTypeString();
-		if (outParams[i]->isComplex())
-		{
-			StringArray valueNames = outParams[i]->getValuesNames();
-			for (auto& vName : valueNames) inputNames.add(tString + " (" + vName + ")");
-		}
-		else
-		{
-			inputNames.add(tString);
-		}
-	}
-	
-	for (auto& pLink : paramLinks) pLink->inputValueNames = inputNames;
+	ParamLinkContainer::setInputNamesFromParams(outParams);
 	if (customValuesManager != nullptr) customValuesManager->setInputNames(inputNames);
 }
 
@@ -281,27 +232,6 @@ void BaseCommand::inspectableDestroyed(Inspectable* i)
 	{
 		commandListeners.call(&CommandListener::commandTemplateDestroyed);// linkToTemplate(nullptr);
 	}
-}
-
-var BaseCommand::getJSONData()
-{
-	var data = ControllableContainer::getJSONData();
-
-	var pLinkData(new DynamicObject());
-	for (auto& pLink : paramLinks)
-	{
-		if (pLink->linkType != pLink->NONE) pLinkData.getDynamicObject()->setProperty(pLink->parameter->shortName, pLink->getJSONData());
-	}
-
-	data.getDynamicObject()->setProperty("paramLinks", pLinkData);
-
-	return data;
-}
-
-void BaseCommand::loadJSONDataInternal(var data)
-{
-	var pLinksData = data.getProperty("paramLinks", var());
-	for (auto& pLink : paramLinks) pLink->loadJSONData(pLinksData.getProperty(pLink->parameter->shortName, var()));
 }
 
 BaseCommand* BaseCommand::create(ControllableContainer* module, CommandContext context, var params, Multiplex* multiplex)

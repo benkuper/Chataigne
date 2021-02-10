@@ -9,7 +9,6 @@
 */
 
 #include "ScriptCommand.h"
-#include "ui/ScriptCommandEditor.h"
 
 ScriptCommand::ScriptCommand(Module * module, CommandContext context, var params, Multiplex* multiplex) :
 	BaseCommand(module, context, params, multiplex)
@@ -200,11 +199,6 @@ void ScriptCommand::triggerInternal(int multiplexIndex)
 
 	if (module != nullptr) module->scriptManager->callFunctionOnAllItems(callback, args);
 }
-
-//InspectableEditor * ScriptCommand::getEditor(bool isRoot)
-//{
-//	return new ScriptCommandEditor(this, isRoot);
-//}
 
 
 

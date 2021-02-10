@@ -60,21 +60,25 @@ bool SimpleRemapFilter::processSingleParameterInternal(Parameter* source, Parame
 	
 	float sourceVal = source->floatValue();
 	float targetVal = sourceVal;
-	if (targetOut->x == targetOut->y) targetVal = targetOut->x;
+
+	var tOut = filterParams.getLinkedValue(targetOut, multiplexIndex);
+	var tIn = filterParams.getLinkedValue(targetIn, multiplexIndex);
+
+	if (tOut[0] == tOut[1]) targetVal = tOut[0];
 
 	if (useCustomInputRange->boolValue())
 	{
-		if (targetIn->x != targetIn->y && targetOut->x != targetOut->y)
+		if (tIn[0] != tIn[1] && tOut[0] != tOut[1])
 		{
-			float targetValue = jmap(source->floatValue(), targetIn->x, targetIn->y, targetOut->x, targetOut->y);
-			//if (targetOut->x > targetOut->y) targetValue = targetOut->y + (targetValue - targetOut->y) / (targetOut->x - targetOut->y);
+			float targetValue = jmap(source->floatValue(), (float)tIn[0], (float)tIn[1], (float)tOut[0], (float)tOut[1]);
+			//if (tOut[0] > tOut[1]) targetValue = tOut[1] + (targetValue - targetOut->y) / (tOut[0] - targetOut->y);
 			out->setValue(targetValue);
 		}
 	}
 	else
 	{
 		float targetNValue = source->getNormalizedValue();
-		if (targetOut->x > targetOut->y) targetNValue = 1 - targetNValue;
+		if ((float)tOut[0] > (float)tOut[1]) targetNValue = 1 - targetNValue;
 		out->setNormalizedValue(targetNValue);
 	}
 

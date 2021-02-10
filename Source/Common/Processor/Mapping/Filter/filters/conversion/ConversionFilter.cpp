@@ -19,6 +19,8 @@ ConversionFilter::ConversionFilter(var params, Multiplex * multiplex) :
 
 	cpm.addBaseManagerListener(this);
 	addChildControllableContainer(&cpm);
+
+	while (filteredParameters.size() < getMultiplexCount()) filteredParameters.add(new OwnedArray<Parameter>());
 }
 
 ConversionFilter::~ConversionFilter() 
@@ -95,21 +97,20 @@ void ConversionFilter::reorderFilterParameters()
 	}
 }
 
-void ConversionFilter::createLink(WeakReference<Parameter> source, int sourceValueIndex, ConvertedParameter* out, int outValueIndex)
+void ConversionFilter::createLink(int sourceIndex, int sourceValueIndex, ConvertedParameter* out, int outValueIndex)
 {
-	if (source == nullptr) return;
-	jassert(sourceParams.indexOf(source) != -1);
+	jassert(sourceIndex != -1);
 
 	ConversionParamValueLink* link = getLinkForOut(out, outValueIndex);
 	if (link == nullptr)
 	{
-		link = new ConversionParamValueLink(sourceParams.indexOf(source), sourceValueIndex, out, outValueIndex);
+		link = new ConversionParamValueLink(sourceIndex, sourceValueIndex, out, outValueIndex);
 		link->addConversionLinkListener(this);
 		links.add(link);
 	}
 	else
 	{
-		link->sourceIndex = sourceParams.indexOf(source);
+		link->sourceIndex = sourceIndex;
 		link->sourceValueIndex = sourceValueIndex;
 		link->out = out;
 		link->outValueIndex = outValueIndex;
@@ -141,8 +142,7 @@ void ConversionFilter::relinkGhostData()
 		var linkData = ghostLinksData[i];
 		if (ConvertedParameter* cp = cpm.getItemWithName(linkData.getProperty("out", "")))
 		{
-			//Multiplex refactor, right now only making this work with [0]
-			createLink(sourceParams[0][linkData.getProperty("sourceIndex", 0)], linkData.getProperty("sourceValueIndex", 0), cp, linkData.getProperty("outValueIndex", 0));
+			createLink(linkData.getProperty("sourceIndex", 0), linkData.getProperty("sourceValueIndex", 0), cp, linkData.getProperty("outValueIndex", 0));
 		}
 	}
 
@@ -159,6 +159,8 @@ ConversionParamValueLink* ConversionFilter::getLinkForOut(ConvertedParameter* ou
 void ConversionFilter::setupParametersInternal(int multiplexIndex)
 {
 	//do not call parent, we have our own filteredParameterCreation implementation
+
+	while (filteredParameters.size() < getMultiplexCount()) filteredParameters.add(new OwnedArray<Parameter>());
 
 	//need here to reconnect links to new source parameters
 

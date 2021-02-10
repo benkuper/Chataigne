@@ -16,17 +16,17 @@ class Point2DComparator :
 	public BaseComparator
 {
 public:
-	Point2DComparator(Parameter * sourceParam);
+	Point2DComparator(Parameter * sourceParam, Multiplex* multiplex);
 	virtual ~Point2DComparator();
 
 	const Identifier equalsId = "=";
-	const Identifier distGreaterId = "d>";
-	const Identifier distLessId = "d<";
 	const Identifier magnGreaterId = "m>";
 	const Identifier magnLessId = "m<";
 
-	Point2DParameter * p2dRef;
-	FloatParameter * valParam;
+	Parameter* sourceParam;
 
-	virtual bool compare(Parameter * sourceParam) override;
+	void onContainerParameterChanged(Parameter* p) override;
+	void updateReferenceParam();
+
+	virtual bool compare(Parameter* sourceParam, int multiplexIndex = 0) override;
 };

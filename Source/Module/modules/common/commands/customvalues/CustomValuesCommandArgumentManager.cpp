@@ -81,16 +81,24 @@ void CustomValuesCommandArgumentManager::rebuildFromTemplate(bool clearItems)
 
 void CustomValuesCommandArgumentManager::addItemInternal(CustomValuesCommandArgument* item, var data)
 {
-	if (!isCurrentlyLoadingData)
+	autoRenameItems();
+	
+	if (mappingEnabled)
 	{
-		if (linkedTemplateManager == nullptr && mappingEnabled && items.size() == 1)
+		if (!isCurrentlyLoadingData)
 		{
-			item->paramLink->mappingValueIndex = 0;
-			item->paramLink->setLinkType(ParameterLink::MAPPING_INPUT);
+			if (linkedTemplateManager == nullptr && mappingEnabled && items.size() == 1)
+			{
+				if (item->paramLink != nullptr)
+				{
+					item->paramLink->mappingValueIndex = 0;
+					item->paramLink->setLinkType(ParameterLink::MAPPING_INPUT);
+				}
+			}
 		}
-	}
 
-	item->paramLink->inputValueNames = inputNames;
+		item->paramLink->inputValueNames = inputNames;
+	}
 }
 
 void CustomValuesCommandArgumentManager::removeItemInternal(CustomValuesCommandArgument* i)
@@ -187,6 +195,7 @@ void CustomValuesCommandArgumentManager::autoRenameItems()
 
 void CustomValuesCommandArgumentManager::setInputNames(StringArray _inputNames)
 {
+	if (!mappingEnabled) return;
 	inputNames = _inputNames;
 	for (auto& i : items) i->paramLink->inputValueNames = inputNames;
 }
