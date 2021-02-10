@@ -54,7 +54,7 @@ public:
 	{
 		if (ParameterLink* pl = getLinkedParam(target))
 		{
-			return dynamic_cast<T*>(pl->getLinkedTargetContainer());
+			return dynamic_cast<T*>(pl->getLinkedTargetContainer(multiplexIndex).get());
 		}
 		
 		return nullptr;
