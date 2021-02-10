@@ -122,7 +122,7 @@ there is also the official forum here : http://benjamin.kuperberg.fr/chataigne/f
 
 Chataigne is now on Discord, join and meet the community !
 
-![Chataigne on discord](https://discordapp.com/api/guilds/697400442027769998/widget.png?style=banner2)
+[![Chataigne on discord](https://discordapp.com/api/guilds/697400442027769998/widget.png?style=banner2)](https://discord.gg/wYNB3rK)
 
 ## The Badge Zone
 Linux (x64):  [![Build Status](https://travis-matrix-badges.herokuapp.com/repos/benkuper/Chataigne/branches/master/2)](https://travis-ci.org/benkuper/Chataigne)
