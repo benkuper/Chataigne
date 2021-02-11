@@ -14,7 +14,7 @@
 #include "Common/Processor/Mapping/Mapping.h"
 
 StateCommand::StateCommand(StateModule* _module, CommandContext context, var params, Multiplex* multiplex) :
-	BaseCommand(_module, context, params),
+	BaseCommand(_module, context, params, multiplex),
 	stateModule(_module),
 	enableVal(nullptr)
 {

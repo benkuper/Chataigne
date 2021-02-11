@@ -13,7 +13,7 @@
 #pragma warning(disable:4804)
 
 OSWindowCommand::OSWindowCommand(OSModule* _module, CommandContext context, var params, Multiplex * multiplex) :
-	BaseCommand(_module, context, params),
+	BaseCommand(_module, context, params, multiplex),
 	Thread("OS WindowCommand"),
 	focusFilter(nullptr),
 	onTop(nullptr), decoration(nullptr), windowPos(nullptr), windowSize(nullptr)

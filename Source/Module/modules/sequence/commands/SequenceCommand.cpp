@@ -13,7 +13,7 @@
 #include "TimeMachine/ChataigneSequenceManager.h"
 
 SequenceCommand::SequenceCommand(SequenceModule* _module, CommandContext context, var params, Multiplex* multiplex) :
-	BaseCommand(_module, context, params),
+	BaseCommand(_module, context, params, multiplex),
 	sequenceModule(_module),
 	target(nullptr)
 {

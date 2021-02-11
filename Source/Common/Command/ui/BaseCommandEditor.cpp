@@ -27,5 +27,5 @@ InspectableEditor* BaseCommandContainerEditor::getEditorUIForContainer(Controlla
     if (Script* s = dynamic_cast<Script*>(cc)) return GenericControllableContainerEditor::getEditorUIForContainer(cc);
     else if(cc == baseCommand->customValuesManager.get()) return GenericControllableContainerEditor::getEditorUIForContainer(cc);
 
-    return new BaseCommandContainerEditor(baseCommand, cc, false);
+    return ParamLinkContainerEditor::getEditorUIForContainer(cc);
 }

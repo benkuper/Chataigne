@@ -16,7 +16,7 @@
 #endif
 
 OSExecCommand::OSExecCommand(OSModule* _module, CommandContext context, var params, Multiplex * multiplex) :
-	BaseCommand(_module, context, params),
+	BaseCommand(_module, context, params, multiplex),
 	osModule(_module),
 	launchOptions(nullptr),
 	silentMode(nullptr)

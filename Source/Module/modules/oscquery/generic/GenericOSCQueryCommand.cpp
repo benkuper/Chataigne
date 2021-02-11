@@ -11,7 +11,7 @@
 #include "GenericOSCQueryCommand.h"
 
 GenericOSCQueryCommand::GenericOSCQueryCommand(GenericOSCQueryModule * oscQuerymodule, CommandContext context, var params, Multiplex * multiplex) :
-	BaseCommand(oscQueryModule, context, params),
+	BaseCommand(oscQueryModule, context, params, multiplex),
 	oscQueryModule(oscQueryModule),
 	valueParam(nullptr)
 {
@@ -31,8 +31,7 @@ void GenericOSCQueryCommand::setupParamFromTarget()
 		removeControllable(valueParam.get());
 	}
 
-	getLinkedParam(target)
-	Controllable* c = ->getLinkedTarget(0); //if multiplexed, get the first element
+	Controllable* c = paramsCanBeLinked ? getLinkedParam(target)->getLinkedTarget(0) : target->target.get(); //if multiplexed, get the first element
 
 	valueParam = ControllableFactory::createParameterFrom(c, false, true);
 

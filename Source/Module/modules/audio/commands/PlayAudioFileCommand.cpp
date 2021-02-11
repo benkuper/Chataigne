@@ -11,7 +11,7 @@
 #include "PlayAudioFileCommand.h"
 
 PlayAudioFileCommand::PlayAudioFileCommand(AudioModule * _module, CommandContext context, var params, Multiplex * multiplex) :
-	BaseCommand(_module, context, params),
+	BaseCommand(_module, context, params, multiplex),
 	audioModule(_module),
     channelRemapAudioSource(&transportSource, false),
     fileSampleRate(44100),

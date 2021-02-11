@@ -12,7 +12,7 @@
 
 
 GenericAppCommand::GenericAppCommand(ChataigneGenericModule* _module, CommandContext context, var params, Multiplex * multiplex) :
-	BaseCommand(_module, context, params)
+	BaseCommand(_module, context, params, multiplex)
 {
 	type = (Type)(int)(params.getProperty("type", NEW_SESSION));
 

@@ -12,7 +12,7 @@
 #include "ui/WakeOnLanCommandEditor.h"
 
 WakeOnLanCommand::WakeOnLanCommand(OSModule * _module, CommandContext context, var params, Multiplex * multiplex) :
-	BaseCommand(_module, context, params),
+	BaseCommand(_module, context, params, multiplex),
 	osModule(_module)
 {
 	macAddress = addStringParameter("MAC Address", "Mac address in the format FF:FF:FF:FF:FF:FF", "00:00:00:00:00:00");
