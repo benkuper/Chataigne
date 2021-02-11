@@ -46,7 +46,7 @@ class ParamLinkContainerEditor :
     public GenericControllableContainerEditor
 {
 public:
-    ParamLinkContainerEditor(ParamLinkContainer* container, bool isRoot, bool showLinkEditor, bool showMappingOptions, bool buildAtCreation = true);
+    ParamLinkContainerEditor(ParamLinkContainer* container, bool isRoot, bool buildAtCreation = true);
     ~ParamLinkContainerEditor();
 
     ParamLinkContainer* paramLinkContainer;

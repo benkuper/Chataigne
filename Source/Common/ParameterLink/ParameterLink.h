@@ -73,6 +73,7 @@ public:
     StringArray inputNames;
 
     bool paramsCanBeLinked;
+    bool canLinkToMapping;
 
     virtual void onControllableAdded(Controllable* c) override;
     virtual void onControllableRemoved(Controllable* c) override;

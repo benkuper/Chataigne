@@ -24,6 +24,8 @@ BaseCommand::BaseCommand(Module* _module, CommandContext _context, var _params, 
 	customValuesManager(nullptr)
 {
 	paramsCanBeLinked = isMultiplexed() || context == MAPPING;
+	canLinkToMapping = context == MAPPING;
+
 	hideEditorHeader = true;
 }
 

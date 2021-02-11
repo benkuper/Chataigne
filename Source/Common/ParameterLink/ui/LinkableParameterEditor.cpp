@@ -192,11 +192,11 @@ void LinkableParameterEditor::newMessage(const ParameterLink::ParameterLinkEvent
     repaint();
 }
  
-ParamLinkContainerEditor::ParamLinkContainerEditor(ParamLinkContainer* container, bool isRoot, bool showLinkEditor, bool showMappingOptions, bool buildAtCreation) :
+ParamLinkContainerEditor::ParamLinkContainerEditor(ParamLinkContainer* container, bool isRoot, bool buildAtCreation) :
     GenericControllableContainerEditor(container, isRoot, false),
     paramLinkContainer(container),
-    showLinkEditor(showLinkEditor),
-    showMappingOptions(showMappingOptions)
+    showLinkEditor(container->paramsCanBeLinked),
+    showMappingOptions(container->canLinkToMapping)
 {
     if (buildAtCreation) resetAndBuild(); //force here to use the overriden getEditorUI function
 }

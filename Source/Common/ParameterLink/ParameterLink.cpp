@@ -266,7 +266,8 @@ void ParameterLink::loadJSONData(var data)
 ParamLinkContainer::ParamLinkContainer(const String& name, Multiplex * multiplex) :
     ControllableContainer(name),
     MultiplexTarget(multiplex),
-    paramsCanBeLinked(true)
+    paramsCanBeLinked(true),
+    canLinkToMapping(true)
 {
 
 }
@@ -323,7 +324,7 @@ var ParamLinkContainer::getLinkedValue(Parameter* p, int multiplexIndex)
 
 void ParamLinkContainer::linkParamToMappingIndex(Parameter* p, int mappingIndex)
 {
-    if (!paramsCanBeLinked) return;
+    if (!paramsCanBeLinked || !canLinkToMapping) return;
 
     if (ParameterLink* pLink = getLinkedParam(p))
     {
@@ -334,7 +335,7 @@ void ParamLinkContainer::linkParamToMappingIndex(Parameter* p, int mappingIndex)
 
 void ParamLinkContainer::setInputNamesFromParams(Array<WeakReference<Parameter>> outParams)
 {
-    if (!paramsCanBeLinked) return;
+    if (!paramsCanBeLinked || !canLinkToMapping) return;
 
     inputNames.clear();
     for (int i = 0; i < outParams.size(); i++)
@@ -379,5 +380,5 @@ InspectableEditor* ParamLinkContainer::getEditor(bool isRoot)
 {
     if (!paramsCanBeLinked) return new GenericControllableContainerEditor(this, isRoot);
 
-    return new ParamLinkContainerEditor(this, isRoot, paramsCanBeLinked, true);
+    return new ParamLinkContainerEditor(this, isRoot, true);
 }

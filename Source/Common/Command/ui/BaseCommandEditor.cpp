@@ -12,7 +12,7 @@
 #include "Common/ParameterLink/ui/LinkableParameterEditor.h"
 
 BaseCommandContainerEditor::BaseCommandContainerEditor(BaseCommand* command, ControllableContainer * container, bool isRoot) :
-    ParamLinkContainerEditor(command, isRoot, command->paramsCanBeLinked, command->context == CommandContext::MAPPING, false),
+    ParamLinkContainerEditor(command, isRoot, false),
     baseCommand(command)
 {
     resetAndBuild(); //force here to use the overriden getEditorUI function
