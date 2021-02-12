@@ -38,6 +38,8 @@ void AutomationMappingLayer::setupAutomation(Automation* a)
     automation = a;
     //automation->hideInEditor = true;
     automation->setLength(sequence->totalTime->floatValue(), true);
+    automation->length->setControllableFeedbackOnly(true); //force not saving and not changing from user
+    automation->length->isSavable = false;
 }
 
 void AutomationMappingLayer::updateMappingInputValueInternal()

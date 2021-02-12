@@ -26,6 +26,8 @@ Mapping2DLayer::Mapping2DLayer(Sequence* s, var params) :
 	recorder.input->typesFilter.add(Point2DParameter::getTypeStringStatic());
 
 	setupAutomation((Automation*)curve.position->automation->automationContainer);
+	((ParameterNumberAutomation*)curve.position->automation.get())->length->isSavable = false;
+	((ParameterNumberAutomation*)curve.position->automation.get())->setLength(automation->length->floatValue());
 	setupMappingInputParameter(curve.value);
 
 
