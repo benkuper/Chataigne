@@ -262,9 +262,9 @@ var ParameterLink::getJSONData()
 
 void ParameterLink::loadJSONData(var data)
 {
-    if (!data.isObject() || !isLinkable) return;
-
     setLinkType((LinkType)(int)data.getProperty("linkType", NONE));
+
+    if (!data.isObject() || !isLinkable)  return;
     if (linkType == MAPPING_INPUT) mappingValueIndex = data.getProperty("mappingValueIndex", 0);
     else if (linkType == MULTIPLEX_LIST) list = multiplex->listManager.getItemWithName(data.getProperty("list", ""));
 }
