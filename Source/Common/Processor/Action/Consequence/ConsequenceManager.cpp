@@ -127,7 +127,7 @@ void ConsequenceManager::StaggerLauncher::run()
 		while (nextTriggerTime > curTime)
 		{
 			if (threadShouldExit()) return;
-			sleep(jmin<uint32>(nextTriggerTime - curTime, 20));
+			wait(jmin<uint32>(nextTriggerTime - curTime, 20));
 			curTime = Time::getMillisecondCounter();
 			nextTriggerTime = timeAtRun + d + s * triggerIndex;
 		}
