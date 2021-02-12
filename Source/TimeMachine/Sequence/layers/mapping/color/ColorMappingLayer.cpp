@@ -21,6 +21,9 @@ ColorMappingLayer::ColorMappingLayer(Sequence* s, var params) :
     colorManager.allowKeysOutside = false;
     colorManager.hideInEditor = true;
     colorManager.setLength(sequence->totalTime->floatValue());
+    colorManager.length->setControllableFeedbackOnly(true);
+    colorManager.length->isSavable = false;
+
     addChildControllableContainer(&colorManager);
 
     setupMappingInputParameter(colorManager.currentColor);
