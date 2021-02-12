@@ -31,8 +31,7 @@ ZeroconfManager::ZeroconfManager() :
 ZeroconfManager::~ZeroconfManager()
 {
 	for (auto& s : searchers) s->servus.endBrowsing();
-	signalThreadShouldExit();
-	waitForThreadToExit(3000);
+	stopThread(3000);
 }
 
 ZeroconfManager::ZeroconfSearcher* ZeroconfManager::addSearcher(StringRef name, StringRef serviceName)
@@ -114,7 +113,7 @@ void ZeroconfManager::timerCallback()
 
 void ZeroconfManager::run()
 {
-	sleep(300);
+	wait(300);
 
 	bool changed = false;
 

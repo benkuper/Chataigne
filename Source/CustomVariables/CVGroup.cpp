@@ -53,8 +53,7 @@ Voronoi and Gradient Band (not implemented yet) also locks values but interpolat
 CVGroup::~CVGroup()
 {
 	if(morpher != nullptr) morpher->removeMorpherListener(this);
-	signalThreadShouldExit();
-	waitForThreadToExit(100);
+	stopThread(100);
 }
 
 void CVGroup::itemAdded(GenericControllableItem* item)
@@ -147,8 +146,7 @@ void CVGroup::lerpPresets(Array<var> sourceValues, CVPreset* endPreset, float we
 
 void CVGroup::goToPreset(CVPreset* p, float time, Automation* curve)
 {
-	signalThreadShouldExit();
-	waitForThreadToExit(100);
+	stopThread(100);
 
 	targetPreset = p;
 	if (interpolationAutomation != nullptr) interpolationAutomation->removeInspectableListener(this);
@@ -163,8 +161,7 @@ void CVGroup::goToPreset(CVPreset* p, float time, Automation* curve)
 
 void CVGroup::stopInterpolation()
 {
-	signalThreadShouldExit();
-	waitForThreadToExit(200);
+	stopThread(200);
 }
 
 void CVGroup::computeValues()
@@ -307,8 +304,7 @@ void CVGroup::inspectableDestroyed(Inspectable* i)
 {
 	if (i == interpolationAutomation)
 	{
-		signalThreadShouldExit();
-		waitForThreadToExit(1000);
+		stopThread(1000);
 	}
 }
 
@@ -344,7 +340,7 @@ void CVGroup::run()
 
 		if (rel == 1) break;
 
-		sleep(20); //50fps
+		wait(20); //50fps
 	}
 
 	if (interpolationAutomation != nullptr)

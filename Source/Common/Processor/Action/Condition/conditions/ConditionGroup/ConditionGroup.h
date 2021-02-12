@@ -23,7 +23,7 @@ public:
 
 	ConditionManager manager;
 
-	void conditionManagerValidationChanged(ConditionManager *, int multiplexIndex) override;
+	void conditionManagerValidationChanged(ConditionManager *, int multiplexIndex, bool dispatchOnChangeOnly) override;
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;

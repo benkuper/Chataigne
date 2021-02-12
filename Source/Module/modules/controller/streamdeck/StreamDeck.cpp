@@ -33,9 +33,7 @@ StreamDeck::StreamDeck(hid_device* device, String serialNumber, Model model, int
 
 StreamDeck::~StreamDeck()
 {
-	signalThreadShouldExit();
-	waitForThreadToExit(500);
-	stopThread(100);
+	stopThread(500);
 }
 
 void StreamDeck::reset()
@@ -172,6 +170,6 @@ void StreamDeck::run()
 			return;
 		}
 
-		sleep(20);
+		wait(20);
 	}
 }

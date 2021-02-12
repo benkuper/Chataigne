@@ -17,8 +17,7 @@ MTCSender::MTCSender(MIDIOutputDevice* device) :
 
 MTCSender::~MTCSender()
 {
-	signalThreadShouldExit();
-	waitForThreadToExit(10);
+	stopThread(10);
 }
 
 void MTCSender::setDevice(MIDIOutputDevice * newDevice)
@@ -42,8 +41,7 @@ void MTCSender::pause()
 {
 	if (isThreadRunning())
 	{
-		signalThreadShouldExit();
-		waitForThreadToExit(10);
+		stopThread(10);
 	}
     else
         startThread();
@@ -51,8 +49,7 @@ void MTCSender::pause()
 
 void MTCSender::stop()
 {
-	signalThreadShouldExit();
-	waitForThreadToExit(10);
+	stopThread(10);
 }
 
 void MTCSender::setPosition(double position, bool fullFrame)

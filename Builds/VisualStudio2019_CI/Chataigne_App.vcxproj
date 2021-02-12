@@ -3128,6 +3128,27 @@
     <ClCompile Include="..\..\Modules\juce_timeline\timeline\Sequence\Layer\layers\Block\LayerBlockManager.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_timeline\timeline\Sequence\Layer\layers\SequenceBlock\ui\SequenceBlockLayerPanel.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_timeline\timeline\Sequence\Layer\layers\SequenceBlock\ui\SequenceBlockLayerTimeline.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_timeline\timeline\Sequence\Layer\layers\SequenceBlock\ui\SequenceBlockManagerUI.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_timeline\timeline\Sequence\Layer\layers\SequenceBlock\ui\SequenceBlockUI.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_timeline\timeline\Sequence\Layer\layers\SequenceBlock\SequenceBlock.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_timeline\timeline\Sequence\Layer\layers\SequenceBlock\SequenceBlockLayer.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_timeline\timeline\Sequence\Layer\layers\SequenceBlock\SequenceBlockManager.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\Modules\juce_timeline\timeline\Sequence\Layer\layers\Trigger\ui\TimeTriggerManagerUI.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -4986,6 +5007,13 @@
     <ClInclude Include="..\..\Modules\juce_timeline\timeline\Sequence\Layer\layers\Block\ui\LayerBlockUI.h"/>
     <ClInclude Include="..\..\Modules\juce_timeline\timeline\Sequence\Layer\layers\Block\LayerBlock.h"/>
     <ClInclude Include="..\..\Modules\juce_timeline\timeline\Sequence\Layer\layers\Block\LayerBlockManager.h"/>
+    <ClInclude Include="..\..\Modules\juce_timeline\timeline\Sequence\Layer\layers\SequenceBlock\ui\SequenceBlockLayerPanel.h"/>
+    <ClInclude Include="..\..\Modules\juce_timeline\timeline\Sequence\Layer\layers\SequenceBlock\ui\SequenceBlockLayerTimeline.h"/>
+    <ClInclude Include="..\..\Modules\juce_timeline\timeline\Sequence\Layer\layers\SequenceBlock\ui\SequenceBlockManagerUI.h"/>
+    <ClInclude Include="..\..\Modules\juce_timeline\timeline\Sequence\Layer\layers\SequenceBlock\ui\SequenceBlockUI.h"/>
+    <ClInclude Include="..\..\Modules\juce_timeline\timeline\Sequence\Layer\layers\SequenceBlock\SequenceBlock.h"/>
+    <ClInclude Include="..\..\Modules\juce_timeline\timeline\Sequence\Layer\layers\SequenceBlock\SequenceBlockLayer.h"/>
+    <ClInclude Include="..\..\Modules\juce_timeline\timeline\Sequence\Layer\layers\SequenceBlock\SequenceBlockManager.h"/>
     <ClInclude Include="..\..\Modules\juce_timeline\timeline\Sequence\Layer\layers\Trigger\ui\TimeTriggerManagerUI.h"/>
     <ClInclude Include="..\..\Modules\juce_timeline\timeline\Sequence\Layer\layers\Trigger\ui\TimeTriggerMultiTransformer.h"/>
     <ClInclude Include="..\..\Modules\juce_timeline\timeline\Sequence\Layer\layers\Trigger\ui\TimeTriggerUI.h"/>

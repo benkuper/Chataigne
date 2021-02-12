@@ -29,7 +29,7 @@ public:
 
 class MIDINoteAndCCCommand :
 	public MIDICommand,
-	public Timer
+	public HighResolutionTimer
 {
 public:
 	MIDINoteAndCCCommand(MIDIModule * module, CommandContext context, var params, Multiplex * multiplex = nullptr);
@@ -52,11 +52,10 @@ public:
 	void setValue(var value, int multiplexIndex) override;
 	void triggerInternal(int multiplexIndex) override;
 
+	virtual void hiResTimerCallback() override;
+
+
 	static MIDINoteAndCCCommand * create(ControllableContainer * module, CommandContext context, var params, Multiplex * multiplex) { return new MIDINoteAndCCCommand((MIDIModule *)module, context, params, multiplex); }
-
-
-	// Inherited via Timer
-	virtual void timerCallback() override;
 
 };
 

@@ -48,8 +48,7 @@ void TCPServerConnectionManager::close()
 		receiver.close();
 		while (connections.size() > 0) removeConnection(connections[0]);
 	}
-	signalThreadShouldExit();
-	waitForThreadToExit(100);
+	stopThread(100);
 }
 
 void TCPServerConnectionManager::run()

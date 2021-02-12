@@ -56,7 +56,7 @@ void GenericControllableCommand::triggerInternal(int multiplexIndex)
 {
 	BaseCommand::triggerInternal(multiplexIndex);
 
-	Controllable* c = getLinkedParam(target)->getLinkedTarget(multiplexIndex);
+	Controllable* c = getLinkedTargetAs<Controllable>(target, multiplexIndex);
 
 	if (c == nullptr) return;
 
@@ -78,7 +78,7 @@ void GenericControllableCommand::onContainerParameterChanged(Parameter* p)
 	{
 		if (action == SET_VALUE)
 		{
-			Controllable* c = getLinkedParam(target)->getLinkedTarget(0); //check first item if multiplex and linked to a list
+			Controllable* c = getLinkedTargetAs<Controllable>(target, 0); //check first item if multiplex and linked to a list
 
 			if (c == nullptr) setValueParameter(nullptr);
 			else

@@ -58,20 +58,19 @@ MatomoAnalytics::MatomoAnalytics() :
 MatomoAnalytics::~MatomoAnalytics()
 {
 	stopTimer();
-	signalThreadShouldExit();
-	waitForThreadToExit(2000);
+	stopThread(2000);
 }
 
 void MatomoAnalytics::log(AnalyticsAction action, StringPairArray options)
 {
-	waitForThreadToExit(1000);
+	stopThread(1000);
 	actionIsPing = action == STOP || action == PING;
 	log(actionNames[action]);
 }
 
 void MatomoAnalytics::log(StringRef actionName, StringPairArray options)
 {
-	waitForThreadToExit(1000);
+	stopThread(1000);
 	actionToLog = actionName;
 	optionsToLog = options;
 	startThread();

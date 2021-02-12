@@ -36,7 +36,7 @@ public:
 	{
 	public:
 		virtual ~ConditionListener() {}
-		virtual void conditionValidationChanged(Condition *, int multiplexIndex) {}
+		virtual void conditionValidationChanged(Condition *, int multiplexIndex, bool dispatchOnChangeOnly) {}
 		virtual void conditionSourceChanged(Condition *) {}
 	};
 

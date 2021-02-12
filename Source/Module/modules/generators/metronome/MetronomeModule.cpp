@@ -11,54 +11,72 @@
 #include "MetronomeModule.h"
 
 MetronomeModule::MetronomeModule() :
-	Module(getTypeString())
+	Module(getTypeString()),
+	Thread("Metronome")
 {
 	setupIOConfiguration(true, false);
 
 	frequency = moduleParams.addFloatParameter("Frequency", "Frequency of the timer, in Hz (the greater the value, the faster the tempo)", 1, 0.0001f, 100);
-	onTime = moduleParams.addFloatParameter("ON Time", "Amount of time the metronome stays valid when triggered", .5f, 0, 1);
+	onTime = moduleParams.addFloatParameter("ON Time", "Relative amount of time the metronome stays valid (depending on the frequency) when triggered", .5f, 0, 1);
 	random = moduleParams.addFloatParameter("Randomness", "Amount of randomness in each call", 0, 0, 1);
 
 	tick = valuesCC.addBoolParameter("Tick", "When the metronome is ticking", false);
-	startTimer(0, 1000.0f / frequency->floatValue());
 
 	for (auto &c : valuesCC.controllables) c->isControllableFeedbackOnly = true;
+
+	startThread();
 }
 
 MetronomeModule::~MetronomeModule()
 {
+	stopThread(1000);
 }
 
 void MetronomeModule::onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c)
 {
 	Module::onControllableFeedbackUpdateInternal(cc, c);
 
-	if (c == frequency)
+	if (c == frequency || c == random)
 	{
-		if (isTimerRunning(0)) stopTimer(0);
-		startTimer(0, 1000.0f / frequency->floatValue());
+		notify(); //forces the thread to update
 	}
 }
 
-void MetronomeModule::timerCallback(int timerID)
+void MetronomeModule::run()
 {
 	if (!enabled->boolValue()) return;
-	if (timerID == 0)
+
+	Random r;
+	while (!threadShouldExit())
 	{
+		float freq = frequency->floatValue();
+		if(random->floatValue() > 0) freq += (r.nextFloat() * 2 - 1) * random->floatValue();
+
+		//on phase
+		int msBeforeON  = Time::getMillisecondCounter();
 		tick->setValue(true);
 		inActivityTrigger->trigger();
-		float nextTime = 1000 / frequency->floatValue();
-		
-		if (random->floatValue() > 0)
+		int msONDiff = Time::getMillisecondCounter() - msBeforeON;
+
+		int msToOff = (1000 / freq) * onTime->floatValue();
+
+		int realMSToOff = msToOff - msONDiff;
+
+		if (realMSToOff > 0)
 		{
-			nextTime = (1 - rnd.nextFloat()*random->floatValue())*nextTime;
-			startTimer(0, nextTime);
+			bool hasBeenSignalled = wait(realMSToOff);
+			if (hasBeenSignalled) continue;
 		}
 
-		startTimer(1, onTime->floatValue() * nextTime);
-	} else if (timerID == 1)
-	{
+		//off phase
+		int msBeforeOFF = Time::getMillisecondCounter();
 		tick->setValue(false);
-		stopTimer(1);
+		int msOFFDiff = Time::getMillisecondCounter() - msBeforeOFF;
+
+		int msToOn = (1000 / freq) * (1 - onTime->floatValue());
+		int realMSToOn = msToOn - msOFFDiff;
+
+		if (realMSToOn > 0) wait(realMSToOn);
 	}
+	
 }

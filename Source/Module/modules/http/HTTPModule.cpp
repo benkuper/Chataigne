@@ -50,8 +50,7 @@ HTTPModule::HTTPModule(const String& name) :
 
 HTTPModule::~HTTPModule()
 {
-	signalThreadShouldExit();
-	waitForThreadToExit(3000);
+	stopThread(3000);
 }
 
 void HTTPModule::sendRequest(StringRef address, RequestMethod method, ResultDataType dataType, StringPairArray params, String extraHeaders)
@@ -399,6 +398,6 @@ void HTTPModule::run()
 		for (auto& r : requests) processRequest(r);
 		requests.clear();
 		requests.getLock().exit();
-		sleep(10);
+		wait(10);
 	}
 }

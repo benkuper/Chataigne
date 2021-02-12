@@ -64,9 +64,9 @@ public:
 
 	bool getIsValid(int multiplexIndex = 0, bool emptyIsValid = false);
 
-	void dispatchConditionValidationChanged(int multiplexIndex);
+	void dispatchConditionValidationChanged(int multiplexIndex, bool dispatchOnChangeOnly);
 
-	void conditionValidationChanged(Condition*, int multiplexIndex) override;
+	void conditionValidationChanged(Condition*, int multiplexIndex, bool dispatchOnChangeOnly) override;
 
 	void onContainerParameterChanged(Parameter*) override;
 
@@ -80,7 +80,7 @@ public:
 	{
 	public:
 		virtual ~ConditionManagerListener() {}
-		virtual void conditionManagerValidationChanged(ConditionManager*, int multiplexIndex) {}
+		virtual void conditionManagerValidationChanged(ConditionManager*, int multiplexIndex, bool dispatchOnChangeOnly) {}
 	};
 
 

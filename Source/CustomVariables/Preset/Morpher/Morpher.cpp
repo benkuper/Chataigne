@@ -73,8 +73,7 @@ Morpher::~Morpher()
 	presetManager->removeBaseManagerListener(this);
 	presetManager->removeControllableContainerListener(this);
 
-	signalThreadShouldExit();
-	waitForThreadToExit(100);
+	stopThread(100);
 	
 	if (diagram->internal != nullptr && diagram->internal->memctx != nullptr) jcv_diagram_free(diagram.get());
 }
@@ -339,8 +338,7 @@ void Morpher::onContainerParameterChanged(Parameter* p)
 		if (useAttraction->boolValue()) startThread();
 		else
 		{
-			signalThreadShouldExit();
-			waitForThreadToExit(100);
+			stopThread(100);
 		}
 	}
 }
@@ -386,6 +384,6 @@ void Morpher::run()
 		}
 
 		computeWeights();
-		sleep(attractionSleepMS);
+		wait(attractionSleepMS);
 	}
 }

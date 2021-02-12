@@ -13,7 +13,7 @@
 
 class MetronomeModule :
 	public Module,
-	public MultiTimer
+	public Thread
 {
 public:
 	MetronomeModule();
@@ -27,10 +27,9 @@ public:
 
 	void onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c) override;
 
+	virtual void run() override;
+
 	String getTypeString() const override { return "Metronome"; }
 	static MetronomeModule * create() { return new MetronomeModule(); }
 
-
-	// Inherited via Timer
-	virtual void timerCallback(int timerID) override;
 };

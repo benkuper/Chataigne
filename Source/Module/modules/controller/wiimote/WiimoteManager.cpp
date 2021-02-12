@@ -26,8 +26,7 @@ WiimoteManager::WiimoteManager() :
 WiimoteManager::~WiimoteManager()
 {
 	WiiPairUtil::shouldStop = true;
-	signalThreadShouldExit();
-	while (isThreadRunning());
+	stopThread(2000);
 	wiiuse_cleanup(devices, MAX_WIIMOTES);
 
 }
@@ -124,7 +123,7 @@ void WiimoteManager::run()
 			reinitWiimotes = true;
 			i = 0;
 		}
-		sleep(10);
+		wait(10);
 	}
 }
 

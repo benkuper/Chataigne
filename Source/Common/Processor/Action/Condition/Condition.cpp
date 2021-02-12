@@ -44,7 +44,7 @@ void Condition::setValid(int multiplexIndex, bool value, bool dispatchOnChangeOn
 	if (isValids[multiplexIndex] == value && dispatchOnChangeOnly) return;
 	isValids.set(multiplexIndex, value);
 
-	conditionListeners.call(&ConditionListener::conditionValidationChanged, this, multiplexIndex);
+	conditionListeners.call(&ConditionListener::conditionValidationChanged, this, multiplexIndex, dispatchOnChangeOnly);
 	conditionAsyncNotifier.addMessage(new ConditionEvent(ConditionEvent::VALIDATION_CHANGED, this, multiplexIndex));
 }
 

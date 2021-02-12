@@ -101,7 +101,11 @@ var ParameterLink::getLinkedValue(int multiplexIndex)
 
 WeakReference<Controllable> ParameterLink::getLinkedTarget(int multiplexIndex)
 {
-    if (!isLinkable) return false;
+    if (!isLinkable)
+    {
+        if (parameter->type == Parameter::TARGET) return ((TargetParameter*)parameter.get())->target;
+        return nullptr;
+    };
 
     if(linkType == MULTIPLEX_LIST && list != nullptr) 
     {
@@ -114,7 +118,11 @@ WeakReference<Controllable> ParameterLink::getLinkedTarget(int multiplexIndex)
 
 WeakReference<ControllableContainer> ParameterLink::getLinkedTargetContainer(int multiplexIndex)
 {
-    if (!isLinkable) return false;
+    if (!isLinkable)
+    {
+        if (parameter->type == Parameter::TARGET) return ((TargetParameter*)parameter.get())->targetContainer;
+        return nullptr;
+    };
 
     if (linkType == MULTIPLEX_LIST && list != nullptr)
     {

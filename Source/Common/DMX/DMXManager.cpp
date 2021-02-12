@@ -22,9 +22,7 @@ DMXManager::DMXManager() :
 
 DMXManager::~DMXManager()
 {
-
-	signalThreadShouldExit();
-	while (isThreadRunning());
+	stopThread(1000);
 }
 
 void DMXManager::checkForArtNetDevices()
@@ -56,7 +54,7 @@ void DMXManager::run()
 		{
 
 		}
-		sleep(20);
+		wait(20);
 	}
 	
 }

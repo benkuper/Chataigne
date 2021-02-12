@@ -33,8 +33,7 @@ InputSystemManager::InputSystemManager() :
 
 InputSystemManager::~InputSystemManager()
 {
-	signalThreadShouldExit();
-	waitForThreadToExit(1000);
+	stopThread(1000);
 	SDL_Quit();
 }
 
@@ -133,7 +132,7 @@ void InputSystemManager::run()
 	{
 		if (Engine::mainEngine->isClearing || Engine::mainEngine->isLoadingFile)
 		{
-			sleep(20);
+			wait(20);
 			continue;
 		}
 
@@ -207,7 +206,7 @@ void InputSystemManager::run()
 		gamepads.getLock().exit();
 
 
-		sleep(20); //50fps
+		wait(20); //50fps
 	}
 	
 }

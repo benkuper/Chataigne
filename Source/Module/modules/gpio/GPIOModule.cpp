@@ -115,7 +115,7 @@ void GPIOModule::run()
             }
         }
 
-        sleep(10); //around 100fps
+        wait(10); //around 100fps
     }
 #endif
 }

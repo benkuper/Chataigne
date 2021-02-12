@@ -15,11 +15,14 @@ LagFilter::LagFilter(var params, Multiplex* multiplex) :
 	MappingFilter(getTypeString(), params, multiplex)
 {
 	frequency = filterParams.addFloatParameter("Frequency", "Lag frequency in Hz", 5, .01f, 50);
-	startTimerHz(frequency->floatValue());
+	startTimer(1000 / frequency->floatValue());
+
+	processOnSameValue = true;
 }
 
 LagFilter::~LagFilter()
 {
+
 }
 
 void LagFilter::setupParametersInternal(int multiplexIndex)
@@ -46,10 +49,10 @@ bool LagFilter::processSingleParameterInternal(Parameter* source, Parameter* out
 
 void LagFilter::filterParamChanged(Parameter * p)
 {
-	if(p == frequency) startTimerHz(frequency->floatValue());
+	if(p == frequency) startTimer(1000 / frequency->floatValue());
 }
 
-void LagFilter::timerCallback()
+void LagFilter::hiResTimerCallback()
 {
 	for (auto& mSourceParams : sourceParams)
 	{

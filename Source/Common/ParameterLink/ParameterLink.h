@@ -83,6 +83,17 @@ public:
 
 
     template<class T>
+    T* getLinkedTargetAs(TargetParameter* target, int multiplexIndex)
+    {
+        if (paramsCanBeLinked)
+        {
+            if (ParameterLink* pl = getLinkedParam(target)) return dynamic_cast<T*>(pl->getLinkedTarget(multiplexIndex).get());
+        }
+
+        return dynamic_cast<T*>(target->target.get());
+    }
+
+    template<class T>
     T* getLinkedTargetContainerAs(TargetParameter * target, int multiplexIndex)
     {
         if (paramsCanBeLinked)

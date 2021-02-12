@@ -16,7 +16,7 @@
 
 class LagFilter :
 	public MappingFilter,
-	public Timer
+	public HighResolutionTimer
 {
 public:
 	LagFilter(var params, Multiplex* multiplex);
@@ -33,6 +33,6 @@ public:
 
 	String getTypeString() const override { return "FPS"; }
 
-	virtual void timerCallback() override;
+	virtual void hiResTimerCallback() override;
 
 };

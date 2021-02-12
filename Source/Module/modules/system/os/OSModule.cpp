@@ -59,8 +59,7 @@ OSModule::OSModule() :
 OSModule::~OSModule()
 {
 	stopTimer();
-	signalThreadShouldExit();
-	waitForThreadToExit(100);
+	stopThread(100);
 }
 
 void OSModule::updateIps()
@@ -103,8 +102,7 @@ void OSModule::launchCommand(const String& command, bool silentMode)
 
 void OSModule::launchChildProcess(const String& command)
 {
-	signalThreadShouldExit();
-	waitForThreadToExit(100); 
+	stopThread(100); 
 	commandToRun = command;
 	startThread();
 }

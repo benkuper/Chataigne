@@ -61,5 +61,4 @@ void TimeModule::timerCallback()
 	dayTime->setValue(time.getHours()*3600 + time.getMinutes()*60 + time.getSeconds());
 
 	inActivityTrigger->trigger();
-
 }

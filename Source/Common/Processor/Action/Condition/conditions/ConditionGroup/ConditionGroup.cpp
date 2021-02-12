@@ -22,9 +22,9 @@ ConditionGroup::~ConditionGroup()
 {
 }
 
-void ConditionGroup::conditionManagerValidationChanged(ConditionManager *, int multiplexIndex)
+void ConditionGroup::conditionManagerValidationChanged(ConditionManager *, int multiplexIndex, bool dispatchOnChangeOnly)
 {
-	setValid(multiplexIndex, manager.getIsValid(multiplexIndex, false));
+	setValid(multiplexIndex, manager.getIsValid(multiplexIndex, false), dispatchOnChangeOnly);
 }
 
 var ConditionGroup::getJSONData()

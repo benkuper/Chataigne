@@ -123,7 +123,7 @@ void ConditionManager::setValid(int multiplexIndex, bool value, bool dispatchOnl
 {
 	if (isValids[multiplexIndex] == value && dispatchOnlyOnValidationChange) return;
 	isValids.set(multiplexIndex, value);
-	dispatchConditionValidationChanged(multiplexIndex);
+	dispatchConditionValidationChanged(multiplexIndex, dispatchOnlyOnValidationChange);
 }
 
 void ConditionManager::setValidationProgress(int multiplexIndex, float value)
@@ -173,9 +173,9 @@ void ConditionManager::checkAllConditions(int multiplexIndex, bool emptyIsValid,
 
 
 
-void ConditionManager::conditionValidationChanged(Condition*, int multiplexIndex)
+void ConditionManager::conditionValidationChanged(Condition* c, int multiplexIndex, bool dispatchOnChangeOnly)
 {
-	checkAllConditions(multiplexIndex);
+	checkAllConditions(multiplexIndex, false, dispatchOnChangeOnly);
 }
 
 void ConditionManager::onContainerParameterChanged(Parameter * p)
@@ -275,9 +275,9 @@ bool ConditionManager::getIsValid(int multiplexIndex, bool emptyIsValid)
 	return isValids[multiplexIndex] || (emptyIsValid && items.size() == 0);
 }
 
-void ConditionManager::dispatchConditionValidationChanged(int multiplexIndex)
+void ConditionManager::dispatchConditionValidationChanged(int multiplexIndex, bool dispatchOnlyOnValidationChange)
 {
-	conditionManagerListeners.call(&ConditionManagerListener::conditionManagerValidationChanged, this, multiplexIndex);
+	conditionManagerListeners.call(&ConditionManagerListener::conditionManagerValidationChanged, this, multiplexIndex, dispatchOnlyOnValidationChange);
 	conditionManagerAsyncNotifier.addMessage(new ConditionManagerEvent(ConditionManagerEvent::VALIDATION_CHANGED, this, multiplexIndex));
 }
 

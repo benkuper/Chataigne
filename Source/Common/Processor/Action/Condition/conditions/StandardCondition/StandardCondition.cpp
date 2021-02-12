@@ -188,7 +188,7 @@ void StandardCondition::checkComparator(int multiplexIndex)
 			setValid(multiplexIndex, true);
 			setValid(multiplexIndex, false);
 		}
-		else
+		else if(comparator != nullptr)
 		{
 			setValid(multiplexIndex, comparator->compare((Parameter*)c, multiplexIndex));
 		}

@@ -39,8 +39,7 @@ DMXArtNetDevice::DMXArtNetDevice() :
 DMXArtNetDevice::~DMXArtNetDevice()
 {
 	if (Engine::mainEngine != nullptr) Engine::mainEngine->removeEngineListener(this);
-	signalThreadShouldExit();
-	waitForThreadToExit(200);
+	stopThread(200);
 }
 
 void DMXArtNetDevice::setupReceiver()
@@ -163,7 +162,7 @@ void DMXArtNetDevice::run()
 		}
 		else
 		{
-			sleep(10); //100fps
+			wait(10); //100fps
 		}
 	}
 }

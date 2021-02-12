@@ -37,16 +37,14 @@ OSWindowCommand::OSWindowCommand(OSModule* _module, CommandContext context, var 
 
 OSWindowCommand::~OSWindowCommand()
 {
-	signalThreadShouldExit();
-	waitForThreadToExit(500);
+	stopThread(500);
 }
 
 void OSWindowCommand::triggerInternal(int multiplexIndex)
 {
 	if (isThreadRunning())
 	{
-		signalThreadShouldExit();
-		waitForThreadToExit(500);
+		stopThread(500);
 	}
 
 	startThread();

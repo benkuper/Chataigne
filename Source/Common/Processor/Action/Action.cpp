@@ -28,11 +28,8 @@ Action::Action(var params, Multiplex * multiplex) :
 	itemDataType = "Action";
 	type = ACTION;
 
-	if (!isMultiplexed())
-	{
-		triggerOn = addTrigger("Trigger", "This will trigger as if the conditions have been validated, and trigger all the Consequences:TRUE");
-		triggerOn->hideInEditor = true;
-	}
+	triggerOn = addTrigger("Trigger", "This will trigger as if the conditions have been validated, and trigger all the Consequences:TRUE");
+	triggerOn->hideInEditor = true;
 
 	cdm.setHasActivationDefinitions(params.getProperty("hasActivationDefinitions",true));
 	cdm.addConditionManagerListener(this);
@@ -159,7 +156,7 @@ void Action::onContainerTriggerTriggered(Trigger* t)
 
 	if (t == triggerOn)
 	{
-		if(enabled->boolValue()) triggerConsequences(true);
+		if(enabled->boolValue()) triggerConsequences(true, getPreviewIndex());
 	}
 }
 
@@ -189,7 +186,7 @@ void Action::controllableFeedbackUpdate(ControllableContainer * cc, Controllable
 	}
 }
 
-void Action::conditionManagerValidationChanged(ConditionManager *, int multiplexIndex)
+void Action::conditionManagerValidationChanged(ConditionManager *, int multiplexIndex, bool dispatchOnChangeOnly)
 {
 	if (forceChecking) return;
 
@@ -225,8 +222,14 @@ void Action::highlightLinkedInspectables(bool value)
 	if (csmOff != nullptr) for (auto & cs : csmOff->items) cs->highlightLinkedInspectables(value);
 }
 
+
+void Action::multiplexPreviewIndexChanged()
+{
+	actionAsyncNotifier.addMessage(new ActionEvent(ActionEvent::ActionEvent::MULTIPLEX_PREVIEW_CHANGED, this));
+}
+
+
 ProcessorUI * Action::getUI()
 {
 	return new ActionUI(this);
 }
-

@@ -146,7 +146,7 @@ void MIDINoteAndCCCommand::triggerInternal(int multiplexIndex)
 	}
 }
 
-void MIDINoteAndCCCommand::timerCallback()
+void MIDINoteAndCCCommand::hiResTimerCallback()
 {
 	stopTimer();
 	int pitch = (int)noteEnum->getValueData() + (octave->intValue() - (int)octave->minimumValue) * 12;

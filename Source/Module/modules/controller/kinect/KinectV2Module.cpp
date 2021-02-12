@@ -11,7 +11,8 @@
 #include "KinectV2Module.h"
 
 KinectV2Module::KinectV2Module() :
-	Module("Kinect V2")
+	Module("Kinect V2"),
+	Thread("Kinect V2")
 {
 	setupIOConfiguration(true, false);
 	moduleParams.hideInEditor = true;
@@ -30,13 +31,13 @@ KinectV2Module::KinectV2Module() :
 	bool initResult = initKinect();
 	if (!initResult) return;
 
-	startTimer(20); //50 fps 
+	startThread();
 
 }
 
 KinectV2Module::~KinectV2Module()
 {
-	stopTimer();
+	stopThread(1000);
 
 #if USE_KINECT
 	SafeRelease(m_pBodyFrameReader);
@@ -202,9 +203,13 @@ void KinectV2Module::processBody(int nBodyCount, IBody ** ppBodies)
 }
 #endif
 
-void KinectV2Module::timerCallback()
+void KinectV2Module::run()
 {
-	updateKinect();
+	while (!threadShouldExit())
+	{
+		updateKinect();
+		wait(30); // ~30 fps, same as kinect feedback
+	}
 }
 
 KinectPersonValues::KinectPersonValues(int id) :

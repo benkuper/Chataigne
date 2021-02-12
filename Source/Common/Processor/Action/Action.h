@@ -52,20 +52,22 @@ public:
 
 	virtual void triggerConsequences(bool triggerTrue, int multiplexIndex = 0);
 
-	var getJSONData() override;
-	void loadJSONDataItemInternal(var data) override;
-	void endLoadFile() override;
+	void multiplexPreviewIndexChanged() override;
 
 	void onContainerTriggerTriggered(Trigger* t) override;
 	void onContainerParameterChangedInternal(Parameter * p) override;
 	void controllableFeedbackUpdate(ControllableContainer * cc, Controllable * c) override;
 
-	void conditionManagerValidationChanged(ConditionManager *, int multiplexIndex) override;
+	void conditionManagerValidationChanged(ConditionManager *, int multiplexIndex, bool dispatchOnChangeOnly) override;
 
 	void itemAdded(Condition *) override;
 	void itemRemoved(Condition *) override;
 
 	virtual void highlightLinkedInspectables(bool value) override;
+
+	var getJSONData() override;
+	void loadJSONDataItemInternal(var data) override;
+	void endLoadFile() override;
 
 	ProcessorUI * getUI() override;
 
@@ -85,7 +87,7 @@ public:
 
 	class ActionEvent {
 	public:
-		enum Type { ENABLED_CHANGED, ROLE_CHANGED, VALIDATION_CHANGED };
+		enum Type { ENABLED_CHANGED, ROLE_CHANGED, VALIDATION_CHANGED, MULTIPLEX_PREVIEW_CHANGED };
 		ActionEvent(Type type, Action * c) : type(type), action(c) {}
 		Type type;
 		Action * action;

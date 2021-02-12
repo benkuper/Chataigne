@@ -43,7 +43,6 @@ void SerialDevice::setMode(PortMode _mode)
 
 	if (_mode == LINES) //must restart to make sure thread is not hanging in readLine
 	{
-		thread.signalThreadShouldExit();
 		thread.stopThread(1000);
 		thread.startThread();
 	}
@@ -112,8 +111,7 @@ void SerialDevice::close()
 		thread.removeAsyncSerialListener(this);
 #endif
 
-		thread.signalThreadShouldExit();
-		while (thread.isThreadRunning());
+		thread.stopThread(1000);
 
 		try
 		{
@@ -196,8 +194,7 @@ SerialReadThread::SerialReadThread(String name, SerialDevice * _port) :
 
 SerialReadThread::~SerialReadThread()
 {
-	signalThreadShouldExit();
-	while (isThreadRunning());
+	stopThread(1000);
 }
 
 void SerialReadThread::run()

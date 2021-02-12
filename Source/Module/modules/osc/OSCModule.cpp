@@ -97,9 +97,7 @@ OSCModule::~OSCModule()
 
 	if (isThreadRunning())
 	{
-		signalThreadShouldExit();
-		waitForThreadToExit(1000);
-		stopThread(100);
+		stopThread(1000);
 	}
 }
 
@@ -698,8 +696,6 @@ OSCOutput::OSCOutput() :
 
 OSCOutput::~OSCOutput()
 {
-	signalThreadShouldExit();
-	waitForThreadToExit(1000);
 	stopThread(1000);
 }
 
@@ -731,13 +727,6 @@ InspectableEditor * OSCOutput::getEditor(bool isRoot)
 
 void OSCOutput::setupSender()
 {
-	signalThreadShouldExit();
-	notify();
-	waitForThreadToExit(1000);
-
-	senderIsConnected = false;
-	sender.disconnect();
-
 	if (isThreadRunning())
 	{
 		stopThread(1000);
@@ -746,6 +735,9 @@ void OSCOutput::setupSender()
 		while (!messageQueue.empty())
 			messageQueue.pop();
 	}
+
+	senderIsConnected = false;
+	sender.disconnect();
 
 	if (!enabled->boolValue() || forceDisabled || Engine::mainEngine->isClearing) return;
 

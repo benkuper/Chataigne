@@ -25,6 +25,8 @@ StandardConditionEditor::StandardConditionEditor(StandardCondition* _condition, 
 	addChildComponent(toggleModeUI.get());
 
 	targetUI->setVisible(!standardCondition->editorIsCollapsed);
+	alwaysTriggerUI->setVisible(!standardCondition->editorIsCollapsed);
+	toggleModeUI->setVisible(!standardCondition->editorIsCollapsed);
 
 	setSize(100, 50);
 	updateUI();

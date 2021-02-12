@@ -76,7 +76,6 @@ JoyConModule::JoyConModule() :
 
 JoyConModule::~JoyConModule()
 {
-	signalThreadShouldExit();
 	stopThread(1000);
 }
 
@@ -203,7 +202,7 @@ void JoyConModule::run()
 	while (!threadShouldExit())
 	{
 		for (auto &controller : controllers) updateController(controller);
-		sleep(15);
+		wait(15);
 	}
 
 	controllers.clear();

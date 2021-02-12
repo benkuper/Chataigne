@@ -28,9 +28,10 @@ ActionUI::ActionUI(Action* _action) :
 	if (action->triggerOn != nullptr)
 	{
 		triggerAllUI.reset(action->triggerOn->createButtonUI());
+		if (action->isMultiplexed()) triggerAllUI->customLabel = "Trigger (" + String(action->getPreviewIndex() + 1) + ")";
 		addAndMakeVisible(triggerAllUI.get());
 	}
-	
+
 	if (action->cdm.validationProgressFeedback != nullptr)
 	{
 		progressionUI.reset(action->cdm.validationProgressFeedback->createSlider());
@@ -47,7 +48,7 @@ ActionUI::~ActionUI()
 	if (!inspectable.wasObjectDeleted()) action->removeAsyncActionListener(this);
 }
 
-void ActionUI::paint(Graphics & g)
+void ActionUI::paint(Graphics& g)
 {
 	BaseItemUI::paint(g);
 
@@ -71,7 +72,7 @@ void ActionUI::updateBGColor()
 	ProcessorUI::updateBGColor();
 }
 
-void ActionUI::controllableFeedbackUpdateInternal(Controllable * c)
+void ActionUI::controllableFeedbackUpdateInternal(Controllable* c)
 {
 	ProcessorUI::controllableFeedbackUpdateInternal(c);
 	if (c == action->cdm.validationTime && progressionUI != nullptr)
@@ -89,14 +90,14 @@ void ActionUI::resizedInternalHeader(Rectangle<int>& r)
 {
 	BaseItemUI::resizedInternalHeader(r);
 
-	if(triggerAllUI != nullptr) triggerAllUI->setBounds(r.removeFromRight(70));
+	if (triggerAllUI != nullptr) triggerAllUI->setBounds(r.removeFromRight(70));
 	if (progressionUI != nullptr && progressionUI->isVisible())
 	{
 		progressionUI->setBounds(r.removeFromRight(40).reduced(2, 6));
 	}
 }
 
-void ActionUI::paintOverChildren(Graphics & g)
+void ActionUI::paintOverChildren(Graphics& g)
 {
 	BaseItemUI::paintOverChildren(g);
 	if (action->cdm.getIsValid() && action->actionRoles.size() == 0) //no special roles like activate or deactivate
@@ -106,18 +107,18 @@ void ActionUI::paintOverChildren(Graphics & g)
 	}
 }
 
-void ActionUI::itemDropped(const SourceDetails & details)
+void ActionUI::itemDropped(const SourceDetails& details)
 {
 	BaseItemUI::itemDropped(details);
 
 	String dataType = details.description.getProperty("dataType", "");
-	CommandDefinition * def = nullptr;
+	CommandDefinition* def = nullptr;
 	bool isInput = false;
 	bool isConsequenceTrue = true;
 
 	if (dataType == "Module")
 	{
-		ModuleUI * mui = dynamic_cast<ModuleUI *>(details.sourceComponent.get());
+		ModuleUI* mui = dynamic_cast<ModuleUI*>(details.sourceComponent.get());
 
 		PopupMenu pm;
 		ControllableChooserPopupMenu actionInputMenu(&mui->item->valuesCC, 0);
@@ -137,14 +138,14 @@ void ActionUI::itemDropped(const SourceDetails & details)
 
 			if (isInput)
 			{
-				StandardCondition * c = dynamic_cast<StandardCondition *>(action->cdm.addItem(action->cdm.factory.create(StandardCondition::getTypeStringStatic(false))));
-				Controllable * target = actionInputMenu.getControllableForResult(result);
+				StandardCondition* c = dynamic_cast<StandardCondition*>(action->cdm.addItem(action->cdm.factory.create(StandardCondition::getTypeStringStatic(false))));
+				Controllable* target = actionInputMenu.getControllableForResult(result);
 				if (c != nullptr) c->sourceTarget->setValueFromTarget(target);
 			}
 			else //command
 			{
 				isConsequenceTrue = result > 20000 && result < 30000;
-				def = mui->item->getCommandDefinitionForItemID(result - 1 - (isConsequenceTrue?20000:30000));
+				def = mui->item->getCommandDefinitionForItemID(result - 1 - (isConsequenceTrue ? 20000 : 30000));
 			}
 		}
 	}
@@ -159,10 +160,10 @@ void ActionUI::itemDropped(const SourceDetails & details)
 		{
 			isConsequenceTrue = result == 1;
 
-			BaseItemUI<CommandTemplate> * tui = dynamic_cast<BaseItemUI<CommandTemplate> *>(details.sourceComponent.get());
+			BaseItemUI<CommandTemplate>* tui = dynamic_cast<BaseItemUI<CommandTemplate> *>(details.sourceComponent.get());
 			if (tui != nullptr)
 			{
-				CommandTemplateManager * ctm = dynamic_cast<CommandTemplateManager *>(tui->item->parentContainer.get());
+				CommandTemplateManager* ctm = dynamic_cast<CommandTemplateManager*>(tui->item->parentContainer.get());
 				if (ctm != nullptr) def = ctm->defManager.getCommandDefinitionFor(ctm->menuName, tui->item->niceName);
 			}
 		}
@@ -170,12 +171,12 @@ void ActionUI::itemDropped(const SourceDetails & details)
 
 	if (!isInput && def != nullptr)
 	{
-		Consequence * c = isConsequenceTrue ? action->csmOn->addItem() : action->csmOff->addItem();
-		if(c != nullptr) c->setCommand(def);
+		Consequence* c = isConsequenceTrue ? action->csmOn->addItem() : action->csmOff->addItem();
+		if (c != nullptr) c->setCommand(def);
 	}
 }
 
-void ActionUI::newMessage(const Action::ActionEvent & e)
+void ActionUI::newMessage(const Action::ActionEvent& e)
 {
 	switch (e.type)
 	{
@@ -188,6 +189,14 @@ void ActionUI::newMessage(const Action::ActionEvent & e)
 
 	case Action::ActionEvent::VALIDATION_CHANGED:
 		if (action->actionRoles.size() == 0) shouldRepaint = true;
+		break;
+
+	case Action::ActionEvent::MULTIPLEX_PREVIEW_CHANGED:
+		if (action->isMultiplexed())
+		{
+			triggerAllUI->customLabel = "Trigger (" + String(action->getPreviewIndex() + 1) + ")";
+			triggerAllUI->repaint();
+		}
 		break;
 
 	}
@@ -211,15 +220,15 @@ void ActionUI::addContextMenuItems(PopupMenu& p)
 	}
 }
 
-void ActionUI::handleContextMenuResult (int result)
+void ActionUI::handleContextMenuResult(int result)
 {
 	switch (result)
 	{
-		case 100: SystemClipboard::copyTextToClipboard(JSON::toString(action->cdm.getJSONData())); break;
-		case 101: action->cdm.loadJSONData(JSON::fromString(SystemClipboard::getTextFromClipboard())); break;
-		case 102: SystemClipboard::copyTextToClipboard(JSON::toString(action->csmOn->getJSONData())); break;
-		case 103: action->csmOn->loadJSONData(JSON::fromString(SystemClipboard::getTextFromClipboard())); break;
-		case 104: SystemClipboard::copyTextToClipboard(JSON::toString(action->csmOff->getJSONData())); break;
-		case 105: action->csmOff->loadJSONData(JSON::fromString(SystemClipboard::getTextFromClipboard())); break;
+	case 100: SystemClipboard::copyTextToClipboard(JSON::toString(action->cdm.getJSONData())); break;
+	case 101: action->cdm.loadJSONData(JSON::fromString(SystemClipboard::getTextFromClipboard())); break;
+	case 102: SystemClipboard::copyTextToClipboard(JSON::toString(action->csmOn->getJSONData())); break;
+	case 103: action->csmOn->loadJSONData(JSON::fromString(SystemClipboard::getTextFromClipboard())); break;
+	case 104: SystemClipboard::copyTextToClipboard(JSON::toString(action->csmOff->getJSONData())); break;
+	case 105: action->csmOff->loadJSONData(JSON::fromString(SystemClipboard::getTextFromClipboard())); break;
 	}
 }

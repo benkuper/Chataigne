@@ -21,6 +21,7 @@
 #include "layers/mapping/color/ColorMappingLayer.h"
 #include "layers/mapping/MappingLayer.h"
 #include "layers/audio/ChataigneAudioLayer.h"
+#include "../ChataigneSequenceManager.h"
 
 ChataigneSequence::ChataigneSequence() :
 	Sequence(),
@@ -35,7 +36,8 @@ ChataigneSequence::ChataigneSequence() :
 	layerManager->factory.defs.add(SequenceLayerManager::LayerDefinition::createDef("", Mapping2DLayer::getTypeStringStatic(), &Mapping2DLayer::create, this));
 	layerManager->factory.defs.add(SequenceLayerManager::LayerDefinition::createDef("", "Audio", &ChataigneAudioLayer::create, this, true));
 	layerManager->factory.defs.add(SequenceLayerManager::LayerDefinition::createDef("", ColorMappingLayer::getTypeStringStatic(), &ColorMappingLayer::create, this));
-
+	layerManager->factory.defs.add(SequenceLayerManager::LayerDefinition::createDef("", "Sequences", &SequenceBlockLayer::create, this)->addParam("manager",ChataigneSequenceManager::getInstance()->getControlAddress()));
+	 
 	layerManager->addBaseManagerListener(this);
 }
 

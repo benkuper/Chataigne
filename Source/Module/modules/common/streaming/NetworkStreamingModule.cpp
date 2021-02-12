@@ -77,8 +77,7 @@ NetworkStreamingModule::~NetworkStreamingModule()
 
 void NetworkStreamingModule::clearThread()
 {
-	signalThreadShouldExit();
-	waitForThreadToExit(1000);
+	stopThread(1000);
 }
 
 void NetworkStreamingModule::onContainerParameterChangedInternal(Parameter* p)
@@ -132,7 +131,7 @@ void NetworkStreamingModule::run()
 
 	while (!threadShouldExit())
 	{
-		sleep(1000 / receiveFrequency->intValue());
+		wait(1000 / receiveFrequency->intValue());
 
 		if (checkReceiverIsReady())
 		{

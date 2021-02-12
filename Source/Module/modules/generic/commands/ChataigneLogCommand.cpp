@@ -60,7 +60,7 @@ void ChataigneLogCommand::triggerInternal(int multiplexIndex)
 		var val = "[not set]";
 		if (context == ACTION)
 		{
-			if (Parameter* p = dynamic_cast<Parameter*>(getLinkedParam(value)->getLinkedTarget(multiplexIndex).get()))
+			if (Parameter* p =  getLinkedTargetAs<Parameter>((TargetParameter *)value, multiplexIndex))
 			{
 				val = p->getValue();
 			}

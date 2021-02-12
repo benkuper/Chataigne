@@ -54,7 +54,7 @@ public:
 
 class KinectV2Module :
 	public Module,
-	public Timer
+	public Thread
 {
 public:
 	KinectV2Module();
@@ -84,8 +84,7 @@ public:
 	virtual String getDefaultTypeString() const override { return "KinectV2"; }
 
 
-	// Inherited via Timer
-	virtual void timerCallback() override;
+	virtual void run() override;
 
 	template<class Interface>
 	inline void SafeRelease(Interface*& pInterfaceToRelease)

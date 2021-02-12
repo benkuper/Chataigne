@@ -350,7 +350,7 @@ void Mapping::run()
 		
 		if ((canBeDisabled && !enabled->boolValue()) || forceDisabled)
 		{
-			sleep(rateMillis);
+			wait(rateMillis);
 			continue;
 		}
 
@@ -364,7 +364,7 @@ void Mapping::run()
 		uint32 millisToWait = rateMillis - jmax<uint32>(newMillis - millis, 0);
 		millis = newMillis;
 		
-		if(millisToWait > 0) sleep(millisToWait);
+		if(millisToWait > 0) wait(millisToWait);
 	}
 }
 

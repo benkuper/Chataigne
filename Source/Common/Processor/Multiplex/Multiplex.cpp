@@ -88,5 +88,5 @@ int MultiplexTarget::getMultiplexCount() const
 
 int MultiplexTarget::getPreviewIndex() const
 {
-    return multiplex == nullptr ? 0 : multiplex->previewIndex->intValue() - 1;
+    return isMultiplexed() ? multiplex->previewIndex->intValue() - 1 : 0;
 }

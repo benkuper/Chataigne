@@ -57,9 +57,8 @@ GenericOSCQueryModule::GenericOSCQueryModule(const String& name, int defaultRemo
 
 GenericOSCQueryModule::~GenericOSCQueryModule()
 {
-	if (wsClient != nullptr) wsClient->stop(); 
-	signalThreadShouldExit();
-	waitForThreadToExit(2000);
+	if (wsClient != nullptr) wsClient->stop();
+	stopThread(2000);
 }
 
 void GenericOSCQueryModule::setupWSClient()
@@ -502,7 +501,7 @@ void GenericOSCQueryModule::run()
 {
 	if (useLocal == nullptr || remoteHost == nullptr || remotePort == nullptr) return;
 
-	sleep(100); //safety
+	wait(100); //safety
 
 	requestHostInfo();
 	requestStructure();
