@@ -277,9 +277,9 @@ DMXModule::DMXRouteParams::DMXRouteParams(Module * sourceModule, Controllable * 
 {
 	channel = addIntParameter("Channel", "The Channel", 1, 1, 512);
 	
-	if (c->type == Controllable::FLOAT || c->type == Controllable::BOOL || c->type == Controllable::POINT2D || c->type == Controllable::POINT3D)
+	if (c->type == Controllable::FLOAT || c->type == Controllable::BOOL || c->type == Controllable::INT || c->type == Controllable::POINT2D || c->type == Controllable::POINT3D)
 	{
-		fullRange = addBoolParameter("Full Range", "If checked, value will be remapped from 0-1 will to 0-255 (or 0-65535 in 16-bit mode)", true);
+		fullRange = addBoolParameter("Full Range", "If checked, value will be remapped from 0-1 will to 0-255 (or 0-65535 in 16-bit mode)", ((Parameter *)c)->hasRange());
 	}
 	
 	if (c->type == Controllable::FLOAT || c->type == Controllable::INT || c->type == Controllable::BOOL || c->type == Controllable::POINT2D || c->type == Controllable::POINT3D || c->type == Controllable::COLOR)
@@ -302,16 +302,22 @@ void DMXModule::handleRoutedModuleValue(Controllable * c, RouteParams * p)
 
 		DMXByteOrder byteOrder = rp->mode16bit != nullptr ? rp->mode16bit->getValueDataAsEnum<DMXByteOrder>() : DMXByteOrder::BIT8;
 
+		if (sp == nullptr) return;
+
 		switch (c->type)
 		{
-		case Controllable::BOOL:
-		case Controllable::INT:
-		case Controllable::FLOAT:
-			if (byteOrder == BIT8) sendDMXValue(rp->channel->intValue(), fullRange ? sp->getNormalizedValue() * 255 : (float)sp->getValue());
-			else send16BitDMXValue(rp->channel->intValue(), fullRange ? sp->getNormalizedValue() * 65535 : (float)sp->getValue(), byteOrder);
-			break;
+		case Parameter::BOOL:
+		case Parameter::INT:
+		case Parameter::FLOAT:
+		{
+			int value = (sp->hasRange() ? sp->getNormalizedValue() : sp->floatValue()) * (fullRange ? (byteOrder == BIT8 ? 255 : 65535) : 1);
 
-		case Controllable::POINT2D:
+			if (byteOrder == BIT8) sendDMXValue(rp->channel->intValue(), value);
+			else send16BitDMXValue(rp->channel->intValue(), value, byteOrder);
+		}
+		break;
+
+		case Parameter::POINT2D:
 		{
 			Point<float> pp = ((Point2DParameter*)sp)->getPoint();
 			if (fullRange) pp *= byteOrder != BIT8 ? 65535 : 255;
@@ -324,7 +330,7 @@ void DMXModule::handleRoutedModuleValue(Controllable * c, RouteParams * p)
 		}
 		break;
 
-		case Controllable::POINT3D:
+		case Parameter::POINT3D:
 		{
 			Vector3D<float> pp = ((Point3DParameter*)sp)->getVector();
 			if (fullRange) pp *= byteOrder != BIT8 ? 65535 : 255;
@@ -337,7 +343,7 @@ void DMXModule::handleRoutedModuleValue(Controllable * c, RouteParams * p)
 		}
 		break;
 
-		case Controllable::COLOR:
+		case Parameter::COLOR:
 		{
 			Colour col = ((ColorParameter*)sp)->getColor();
 			Array<int> values;
