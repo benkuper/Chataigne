@@ -35,7 +35,6 @@ OSCModule::OSCModule(const String & name, int defaultLocalPort, int defaultRemot
 		moduleParams.addChildControllableContainer(receiveCC.get());
 
 		localPort = receiveCC->addIntParameter("Local Port", "Local Port to bind to receive OSC Messages", defaultLocalPort, 1024, 65535);
-		localPort->hideInOutliner = true;
 		localPort->warningResolveInspectable = this;
 
 		receiver.registerFormatErrorHandler(&OSCHelpers::logOSCFormatError);
