@@ -1292,6 +1292,9 @@
     <ClCompile Include="..\..\JUCE\modules\juce_core\native\juce_posix_NamedPipe.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\JUCE\modules\juce_core\native\juce_wasm_SystemStats.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\JUCE\modules\juce_core\native\juce_win32_Files.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
