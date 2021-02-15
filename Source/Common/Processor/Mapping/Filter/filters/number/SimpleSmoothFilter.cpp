@@ -55,7 +55,7 @@ bool SimpleSmoothFilter::processSingleParameterInternal(Parameter* source, Param
 
 	float upSmoothVal = filterParams.getLinkedValue(smooth, multiplexIndex);
 	bool asyncVal = ((bool)filterParams.getLinkedValue(async, multiplexIndex));
-	float downSmoothVal = asyncVal ? filterParams.getLinkedValue(downSmooth, multiplexIndex) : upSmoothVal;
+	float downSmoothVal = asyncVal ? (float)filterParams.getLinkedValue(downSmooth, multiplexIndex) : upSmoothVal;
 
 	if (out->isComplex())
 	{

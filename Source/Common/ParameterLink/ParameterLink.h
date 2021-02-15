@@ -111,5 +111,5 @@ public:
     virtual var getJSONData() override;
     virtual void loadJSONDataInternal(var data) override;
 
-    virtual InspectableEditor* getEditor(bool isRoot);
+    virtual InspectableEditor* getEditor(bool isRoot) override;
 };
