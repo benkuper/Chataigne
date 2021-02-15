@@ -40,7 +40,7 @@ NumberComparator::~NumberComparator()
 
 bool NumberComparator::compare(Parameter* sourceParam, int multiplexIndex)
 {
-	float value = isMultiplexed() ? refLink->getLinkedValue(multiplexIndex) : reference->getValue();
+	float value = isMultiplexed() ? (float)refLink->getLinkedValue(multiplexIndex) : reference->getValue();
 	if (currentFunctionId == equalsId)				return sourceParam->floatValue() == value;
 	else if (currentFunctionId == differentId)		return sourceParam->floatValue() != value;
 	else if (currentFunctionId == greaterId)		return sourceParam->floatValue() > value;

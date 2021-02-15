@@ -30,7 +30,7 @@ StringComparator::~StringComparator()
 
 bool StringComparator::compare(Parameter* sourceParam, int multiplexIndex)
 {
-	String value = isMultiplexed() ? refLink->getLinkedValue(multiplexIndex) : reference->getValue();
+	String value = isMultiplexed() ? refLink->getLinkedValue(multiplexIndex).toString() : reference->stringValue();
 
 	if (currentFunctionId == equalsId)				return sourceParam->stringValue() == value;
 	else if (currentFunctionId == differentId)		return sourceParam->stringValue() != value;
