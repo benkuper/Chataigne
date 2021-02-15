@@ -29,7 +29,7 @@
 #include "TimeMachine/ChataigneSequenceManager.h"
 
 
-ControllableContainer * getAppSettings();
+ControllableContainer* getAppSettings();
 
 ChataigneEngine::ChataigneEngine() :
 	Engine("Chataigne", ".noisette"),
@@ -52,7 +52,7 @@ ChataigneEngine::ChataigneEngine() :
 	addChildControllableContainer(ChataigneSequenceManager::getInstance());
 	addChildControllableContainer(ModuleRouterManager::getInstance());
 	addChildControllableContainer(CVGroupManager::getInstance());
-	
+
 	MIDIManager::getInstance(); //Trigger constructor, declare settings
 
 	CommunityModuleManager::getInstance(); //Trigger constructor, declare settings
@@ -60,7 +60,7 @@ ChataigneEngine::ChataigneEngine() :
 	ZeroconfManager::getInstance()->addSearcher("OSC", "_osc._udp.");
 	ZeroconfManager::getInstance()->addSearcher("OSCQuery", "_oscjson._tcp.");
 	ZeroconfManager::getInstance()->addSearcher("Workstation", "_workstation._tcp.");
-	
+
 	getAppSettings()->addChildControllableContainer(&defaultBehaviors);
 }
 
@@ -111,33 +111,33 @@ var ChataigneEngine::getJSONData()
 	var data = Engine::getJSONData();
 
 	var mData = ModuleManager::getInstance()->getJSONData();
-	if(!mData.isVoid() && mData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(ModuleManager::getInstance()->shortName, mData);
+	if (!mData.isVoid() && mData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(ModuleManager::getInstance()->shortName, mData);
 
 	var cvData = CVGroupManager::getInstance()->getJSONData();
 	if (!cvData.isVoid() && cvData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(CVGroupManager::getInstance()->shortName, cvData);
 
 	var sData = StateManager::getInstance()->getJSONData();
-	if(!sData.isVoid() && sData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(StateManager::getInstance()->shortName, sData);
+	if (!sData.isVoid() && sData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(StateManager::getInstance()->shortName, sData);
 
 	var seqData = ChataigneSequenceManager::getInstance()->getJSONData();
-	if(!seqData.isVoid() && seqData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(ChataigneSequenceManager::getInstance()->shortName, seqData);
+	if (!seqData.isVoid() && seqData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(ChataigneSequenceManager::getInstance()->shortName, seqData);
 
 	var rData = ModuleRouterManager::getInstance()->getJSONData();
-	if(!rData.isVoid() && rData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(ModuleRouterManager::getInstance()->shortName, rData);
+	if (!rData.isVoid() && rData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(ModuleRouterManager::getInstance()->shortName, rData);
 
 	return data;
 }
 
-void ChataigneEngine::loadJSONDataInternalEngine(var data, ProgressTask * loadingTask)
-{	
-	ProgressTask * moduleTask = loadingTask->addTask("Modules");
-	ProgressTask * cvTask = loadingTask->addTask("Custom Variables");
-	ProgressTask * stateTask = loadingTask->addTask("States");
-	ProgressTask * sequenceTask = loadingTask->addTask("Sequences");
-	ProgressTask * routerTask = loadingTask->addTask("Router");
+void ChataigneEngine::loadJSONDataInternalEngine(var data, ProgressTask* loadingTask)
+{
+	ProgressTask* moduleTask = loadingTask->addTask("Modules");
+	ProgressTask* cvTask = loadingTask->addTask("Custom Variables");
+	ProgressTask* stateTask = loadingTask->addTask("States");
+	ProgressTask* sequenceTask = loadingTask->addTask("Sequences");
+	ProgressTask* routerTask = loadingTask->addTask("Router");
 
 	moduleTask->start();
-	ModuleManager::getInstance()->loadJSONData(data.getProperty(ModuleManager::getInstance()->shortName,var()));
+	ModuleManager::getInstance()->loadJSONData(data.getProperty(ModuleManager::getInstance()->shortName, var()));
 	moduleTask->setProgress(1);
 	moduleTask->end();
 
@@ -147,28 +147,28 @@ void ChataigneEngine::loadJSONDataInternalEngine(var data, ProgressTask * loadin
 	cvTask->end();
 
 	stateTask->start();
-	StateManager::getInstance()->loadJSONData(data.getProperty(StateManager::getInstance()->shortName,var()));
+	StateManager::getInstance()->loadJSONData(data.getProperty(StateManager::getInstance()->shortName, var()));
 	stateTask->setProgress(1);
 	stateTask->end();
 
 	sequenceTask->start();
-	ChataigneSequenceManager::getInstance()->loadJSONData(data.getProperty(ChataigneSequenceManager::getInstance()->shortName,var()));
+	ChataigneSequenceManager::getInstance()->loadJSONData(data.getProperty(ChataigneSequenceManager::getInstance()->shortName, var()));
 	sequenceTask->setProgress(1);
 	sequenceTask->end();
-	
+
 	routerTask->start();
-	ModuleRouterManager::getInstance()->loadJSONData(data.getProperty(ModuleRouterManager::getInstance()->shortName,var()));
+	ModuleRouterManager::getInstance()->loadJSONData(data.getProperty(ModuleRouterManager::getInstance()->shortName, var()));
 	routerTask->setProgress(1);
 	routerTask->end();
 
 }
 
-void ChataigneEngine::childStructureChanged(ControllableContainer * cc)
+void ChataigneEngine::childStructureChanged(ControllableContainer* cc)
 {
 	Engine::childStructureChanged(cc);
 }
 
-void ChataigneEngine::controllableFeedbackUpdate(ControllableContainer * cc, Controllable * c)
+void ChataigneEngine::controllableFeedbackUpdate(ControllableContainer* cc, Controllable* c)
 {
 	if (isClearing || isLoadingFile) return;
 }
@@ -176,6 +176,46 @@ void ChataigneEngine::controllableFeedbackUpdate(ControllableContainer * cc, Con
 void ChataigneEngine::handleAsyncUpdate()
 {
 	Engine::handleAsyncUpdate();
+}
+
+void ChataigneEngine::importSelection(File f)
+{
+	if (!f.existsAsFile())
+	{
+		FileChooser fc("Load a LilNut", File::getSpecialLocation(File::userDocumentsDirectory).getChildFile(ProjectInfo::projectName), "*.lilnut");
+		if (!fc.browseForFileToOpen()) return;
+		f = fc.getResult();
+	}
+
+	var data = JSON::parse(f);
+
+	if (!data.isObject()) return;
+
+	ModuleManager::getInstance()->addItemsFromData(data.getProperty(ModuleManager::getInstance()->shortName,var()));
+	CVGroupManager::getInstance()->addItemsFromData(data.getProperty(CVGroupManager::getInstance()->shortName,var()));
+	StateManager::getInstance()->addItemsFromData(data.getProperty(StateManager::getInstance()->shortName,var()));
+	ChataigneSequenceManager::getInstance()->addItemsFromData(data.getProperty(ChataigneSequenceManager::getInstance()->shortName,var()));
+	ModuleRouterManager::getInstance()->addItemsFromData(data.getProperty(ModuleRouterManager::getInstance()->shortName,var()));
+}
+
+void ChataigneEngine::exportSelection()
+{
+	var data(new DynamicObject());
+
+	data.getDynamicObject()->setProperty(ModuleManager::getInstance()->shortName, ModuleManager::getInstance()->getExportSelectionData());
+	data.getDynamicObject()->setProperty(CVGroupManager::getInstance()->shortName, CVGroupManager::getInstance()->getExportSelectionData());
+	data.getDynamicObject()->setProperty(StateManager::getInstance()->shortName, StateManager::getInstance()->getExportSelectionData());
+	data.getDynamicObject()->setProperty(ChataigneSequenceManager::getInstance()->shortName, ChataigneSequenceManager::getInstance()->getExportSelectionData());
+	data.getDynamicObject()->setProperty(ModuleRouterManager::getInstance()->shortName, ModuleRouterManager::getInstance()->getExportSelectionData());
+
+	String s = JSON::toString(data);
+
+	FileChooser fc("Save a LilNut", File::getSpecialLocation(File::userDocumentsDirectory).getChildFile(ProjectInfo::projectName), "*.lilnut");
+	if (fc.browseForFileToSave(true))
+	{
+		File f=  fc.getResult();
+		f.replaceWithText(s);
+	}
 }
 
 String ChataigneEngine::getMinimumRequiredFileVersion()

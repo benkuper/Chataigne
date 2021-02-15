@@ -10,6 +10,8 @@
 
 #include "GenericAppCommand.h"
 
+static OrganicApplication& getApp() { return *dynamic_cast<OrganicApplication*>(JUCEApplication::getInstance()); }
+
 
 GenericAppCommand::GenericAppCommand(ChataigneGenericModule* _module, CommandContext context, var params, Multiplex * multiplex) :
 	BaseCommand(_module, context, params, multiplex)
@@ -54,8 +56,32 @@ void GenericAppCommand::triggerInternal(int multiplexIndex)
 
 	case CLOSE_APP:
 	{
-		MessageManagerLock mmLock;
-		OrganicApplication::quit();
+		MessageManager::callAsync([]() { OrganicApplication::quit(); });
+	}
+
+	case MINIMIZE:
+	{
+		MessageManager::callAsync([]() { getApp().mainWindow->setMinimised(true); });
+		break;
+	}
+
+	case MAXIMIZE:
+	{
+		MessageManager::callAsync([]() { getApp().mainWindow->setMinimised(false); });
+		break;
+	}
+
+	case CLOSE_TO_TRAY:
+	{
+		MessageManager::callAsync([]() { getApp().mainWindow->closeToTray(); });
+		break;
+	}
+	break;
+
+	case OPEN_FROM_TRAY:
+	{
+		MessageManager::callAsync([]() { getApp().mainWindow->openFromTray(); });
+		break;
 	}
 	break;
 	}

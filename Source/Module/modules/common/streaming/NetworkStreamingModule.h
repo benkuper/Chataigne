@@ -50,6 +50,7 @@ public:
 
 	virtual void initThread() {}
 	virtual void run() override;
-	
+	virtual void runInternal() {}
+
 	virtual String getDefaultTypeString() const override { return "NetworkStreaming"; }
 };

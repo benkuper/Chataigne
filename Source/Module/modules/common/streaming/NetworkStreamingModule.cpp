@@ -133,6 +133,8 @@ void NetworkStreamingModule::run()
 	{
 		wait(1000 / receiveFrequency->intValue());
 
+		runInternal();
+
 		if (checkReceiverIsReady())
 		{
 			try

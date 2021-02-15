@@ -16,7 +16,6 @@ UDPModule::UDPModule(const String & name, bool canHaveInput, bool canHaveOutput,
 	scriptObject.setMethod("sendTo", &UDPModule::sendBytesToFromScript);
 	scriptObject.setMethod("sendMessageTo", &UDPModule::sendMessageToFromScript);
 
-	if (senderIsConnected != nullptr) senderIsConnected->hideInOutliner = true; //no need because UDP doesn't check remote client existance
 	if(!Engine::mainEngine->isLoadingFile) setupReceiver();
 	setupSender();
 }

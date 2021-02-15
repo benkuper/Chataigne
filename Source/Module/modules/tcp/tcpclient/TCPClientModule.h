@@ -13,8 +13,7 @@
 #include "../../common/streaming/NetworkStreamingModule.h"
 
 class TCPClientModule :
-	public NetworkStreamingModule,
-	public Timer
+	public NetworkStreamingModule
 {
 public:
 	TCPClientModule(const String &name = "TCP Client", int defaultRemotePort = 5001);
@@ -36,9 +35,9 @@ public:
 	
 	virtual void clearInternal() override;
 
+	virtual void runInternal() override;
+
 	static TCPClientModule * create() { return new TCPClientModule(); }
 	virtual String getDefaultTypeString() const override { return "TCP Client"; }
 
-	// Inherited via Timer
-	virtual void timerCallback() override;
 };

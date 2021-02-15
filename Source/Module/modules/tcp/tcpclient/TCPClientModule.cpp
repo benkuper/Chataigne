@@ -22,7 +22,6 @@ TCPClientModule::TCPClientModule(const String & name, int defaultRemotePort) :
 		setupSender();
 	}
 
-	startTimerHz(1);
 }
 
 TCPClientModule::~TCPClientModule()
@@ -34,16 +33,14 @@ void TCPClientModule::setupSender()
 	clearThread();
 	clearInternal();
 	
-	if (!enabled->boolValue()) return;
-	if (isCurrentlyLoadingData) return;
-	if (sendCC == nullptr) return;
-	if (!sendCC->enabled->boolValue())
+	if (!enabled->boolValue() || isCurrentlyLoadingData ||
+		sendCC == nullptr || !sendCC->enabled->boolValue() || 
+		(Engine::mainEngine != nullptr && Engine::mainEngine->isClearing))
 	{
-		sendCC->clearWarning();
+		if(!sendCC->enabled->boolValue()) sendCC->clearWarning();
+		//stopThread(1000);
 		return;
 	}
-
-	if (Engine::mainEngine != nullptr && Engine::mainEngine->isClearing) return;
 
 	startThread();
 }
@@ -54,30 +51,37 @@ void TCPClientModule::initThread()
 
 	if (!enabled->boolValue()) return;
 
-	String targetHost = useLocal->boolValue() ? "127.0.0.1" : remoteHost->stringValue();
-	bool result = sender.connect(targetHost, remotePort->intValue(), 200);
-	if(result) NLOG(niceName, "Sender bound to port " << sender.getBoundPort());
-	senderIsConnected->setValue(result);
+	DBG("Init Thread");
 
-	if (result)
+	while (!senderIsConnected->boolValue())
 	{
-		NLOG(niceName, "Client is connected to " << remoteHost->stringValue() << ":" << remotePort->intValue());
-		sendCC->clearWarning();
-		startThread();
-	}
-	else
-	{
-		String s = "Could not connect to " + remoteHost->stringValue() + ":" + remotePort->stringValue();
-		if(getWarningMessage().isEmpty()) NLOGERROR(niceName, s);
-		sendCC->setWarningMessage(s);
-	}
+		String targetHost = useLocal->boolValue() ? "127.0.0.1" : remoteHost->stringValue();
+		bool result = sender.connect(targetHost, remotePort->intValue(), 200);
+		if (result) NLOG(niceName, "Sender bound to port " << sender.getBoundPort());
+		senderIsConnected->setValue(result);
 
+		if (result)
+		{
+			NLOG(niceName, "Client is connected to " << remoteHost->stringValue() << ":" << remotePort->intValue());
+			sendCC->clearWarning();
+		}
+		else
+		{
+			String s = "Could not connect to " + remoteHost->stringValue() + ":" + remotePort->stringValue();
+			if (getWarningMessage().isEmpty()) NLOGERROR(niceName, s);
+			sendCC->setWarningMessage(s);
+		}
+	}
 }
 
 void TCPClientModule::clearThread()
 {
 	NetworkStreamingModule::clearThread();
-	if (sender.isConnected()) sender.close();
+	if (sender.isConnected())
+	{
+		sender.close();
+		senderIsConnected->setValue(false);
+	}
 }
 
 bool TCPClientModule::checkReceiverIsReady()
@@ -135,12 +139,19 @@ Array<uint8> TCPClientModule::readBytes()
 
 void TCPClientModule::clearInternal()
 {
-	if (sender.isConnected()) sender.close();
+	if (sender.isConnected())
+	{
+		sender.close();
+		senderIsConnected->setValue(false);
+	}
 }
 
-
-void TCPClientModule::timerCallback()
+void TCPClientModule::runInternal()
 {
-	if (!sender.isConnected()) senderIsConnected->setValue(false);
-	if(!senderIsConnected->boolValue()) setupSender();
+	if (!sender.isConnected() || !senderIsConnected->boolValue())
+	{
+		senderIsConnected->setValue(false);
+		wait(1000);
+		initThread();
+	}
 }

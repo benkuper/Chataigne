@@ -18,7 +18,6 @@ BaseComparator::BaseComparator(Multiplex * multiplex) :
 {
 	compareFunction = addEnumParameter("Comparison Function", "Decides what function checks the activeness of the condition");
 	compareFunction->hideInEditor = true;
-	compareFunction->hideInOutliner = true;
 }
 
 

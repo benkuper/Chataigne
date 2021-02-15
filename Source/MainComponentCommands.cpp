@@ -16,6 +16,7 @@
 #include "Module/Community/CommunityModuleManager.h"
 #include "Module/ModuleManager.h"
 #include "Module/ModuleFactory.h"
+#include "ChataigneEngine.h"
 
 namespace ChataigneCommandIDs
 {
@@ -32,6 +33,8 @@ namespace ChataigneCommandIDs
 	static const int exitGuide = 0x399; 
 	static const int goToCommunityModules = 0x500;
 	static const int reloadCustomModules = 0x501;
+	static const int exportSelection = 0x800;
+	static const int importSelection = 0x801;
 	
 }
 
@@ -91,6 +94,17 @@ void MainContentComponent::getCommandInfo(CommandID commandID, ApplicationComman
 		result.setActive(Guider::getInstance()->guide != nullptr);
 		break;
 
+	case ChataigneCommandIDs::exportSelection:
+		result.setInfo("Export Selection", "This will export the current selection as *.lilnut file that can be later imported", "File", result.readOnlyInKeyEditor);
+		result.addDefaultKeypress(KeyPress::createFromDescription("s").getKeyCode(), ModifierKeys::altModifier);
+		result.setActive(InspectableSelectionManager::mainSelectionManager->currentInspectables.size() > 0);
+		break;
+
+	case ChataigneCommandIDs::importSelection:
+		result.setInfo("Import...", "This will import a *.lilnut file and add it to the current noisette", "File", result.readOnlyInKeyEditor);
+		result.addDefaultKeypress(KeyPress::createFromDescription("o").getKeyCode(), ModifierKeys::altModifier);
+		break;
+
 	default:
 		OrganicMainContentComponent::getCommandInfo(commandID, result);
 		break;
@@ -113,6 +127,8 @@ void MainContentComponent::getAllCommands(Array<CommandID>& commands) {
 		ChataigneCommandIDs::gotoDocs,
 		ChataigneCommandIDs::gotoChangelog,
 		ChataigneCommandIDs::postGithubIssue,
+		ChataigneCommandIDs::importSelection,
+		ChataigneCommandIDs::exportSelection,
 		ChataigneCommandIDs::goToCommunityModules,
 		ChataigneCommandIDs::reloadCustomModules,
 		ChataigneCommandIDs::exitGuide,
@@ -155,6 +171,9 @@ PopupMenu MainContentComponent::getMenuForIndex(int topLevelMenuIndex, const Str
 
 void MainContentComponent::fillFileMenuInternal(PopupMenu & menu)
 {
+	menu.addCommandItem(&getCommandManager(), ChataigneCommandIDs::importSelection);
+	menu.addCommandItem(&getCommandManager(), ChataigneCommandIDs::exportSelection);
+	menu.addSeparator();
 	menu.addCommandItem(&getCommandManager(), ChataigneCommandIDs::goToCommunityModules);
 	menu.addCommandItem(&getCommandManager(), ChataigneCommandIDs::reloadCustomModules);
 }
@@ -222,6 +241,18 @@ bool MainContentComponent::perform(const InvocationInfo& info)
 	case ChataigneCommandIDs::exitGuide:
 		Guider::getInstance()->setCurrentGuide(nullptr);
 		break;
+
+	case ChataigneCommandIDs::exportSelection:
+	{
+		((ChataigneEngine*)Engine::mainEngine)->exportSelection();
+	}
+	break;
+
+	case ChataigneCommandIDs::importSelection:
+	{
+		((ChataigneEngine*)Engine::mainEngine)->importSelection();
+	}
+	break;
 
 	default:
 		return OrganicMainContentComponent::perform(info);

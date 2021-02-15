@@ -36,6 +36,9 @@ public:
 	void controllableFeedbackUpdate(ControllableContainer * cc, Controllable * c) override;
 
 	void handleAsyncUpdate() override;
+
+	void importSelection(File f = File());
+	void exportSelection();
 		
 	String getMinimumRequiredFileVersion() override;
 
