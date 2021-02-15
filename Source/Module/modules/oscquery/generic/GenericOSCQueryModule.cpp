@@ -11,7 +11,6 @@
 #include "GenericOSCQueryModule.h"
 #include "ui/OSCQueryModuleEditor.h"
 #include "GenericOSCQueryCommand.h"
-#include "OSCInputHelper.h"
 
 GenericOSCQueryModule::GenericOSCQueryModule(const String& name, int defaultRemotePort) :
 	Module(name),

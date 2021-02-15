@@ -952,8 +952,6 @@
                     file="Source/Module/modules/oscquery/MadMapperModule.h"/>
             </GROUP>
             <GROUP id="{AB2CCFAF-5B6F-0D08-58C1-933226EB65A5}" name="generic">
-              <FILE id="WFK0RF" name="OSCInputHelper.h" compile="0" resource="0"
-                    file="Source/Module/modules/oscquery/generic/OSCInputHelper.h"/>
               <GROUP id="{9FBFA086-D182-6172-C899-66C4DC7A1422}" name="ui">
                 <FILE id="rmWrBv" name="OSCQueryModuleEditor.cpp" compile="1" resource="0"
                       file="Source/Module/modules/oscquery/generic/ui/OSCQueryModuleEditor.cpp"/>

@@ -3442,7 +3442,6 @@
     <ClInclude Include="..\..\Source\Module\modules\midi\commands\MIDICommands.h"/>
     <ClInclude Include="..\..\Source\Module\modules\midi\MIDIModule.h"/>
     <ClInclude Include="..\..\Source\Module\modules\oscquery\MadMapperModule.h"/>
-    <ClInclude Include="..\..\Source\Module\modules\oscquery\generic\OSCInputHelper.h"/>
     <ClInclude Include="..\..\Source\Module\modules\oscquery\generic\ui\OSCQueryModuleEditor.h"/>
     <ClInclude Include="..\..\Source\Module\modules\oscquery\generic\GenericOSCQueryCommand.h"/>
     <ClInclude Include="..\..\Source\Module\modules\oscquery\generic\GenericOSCQueryModule.h"/>

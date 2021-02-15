@@ -5127,13 +5127,6 @@
 			path = ../../Source/Module/modules/common/commands/customvalues/CustomValuesCommandArgument.h;
 			sourceTree = "SOURCE_ROOT";
 		};
-		C11CA2362884B1023868E2CC = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = OSCInputHelper.h;
-			path = ../../Source/Module/modules/oscquery/generic/OSCInputHelper.h;
-			sourceTree = "SOURCE_ROOT";
-		};
 		C1D2BE99C657D67B5FB22423 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -7792,7 +7785,6 @@
 		BA0164422D299F0C63359319 = {
 			isa = PBXGroup;
 			children = (
-				C11CA2362884B1023868E2CC,
 				2E1D03E73F15222A2D1BE092,
 				171CC556D6E69BAF83FF74F4,
 				D1471EBF90391F73F895EB4B,

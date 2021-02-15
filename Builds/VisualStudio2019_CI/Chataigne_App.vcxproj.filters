@@ -5847,9 +5847,6 @@
     <ClInclude Include="..\..\Source\Module\modules\oscquery\MadMapperModule.h">
       <Filter>Chataigne\Source\Module\modules\oscquery\madmapper</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\Module\modules\oscquery\generic\OSCInputHelper.h">
-      <Filter>Chataigne\Source\Module\modules\oscquery\generic</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\oscquery\generic\ui\OSCQueryModuleEditor.h">
       <Filter>Chataigne\Source\Module\modules\oscquery\generic\ui</Filter>
     </ClInclude>
