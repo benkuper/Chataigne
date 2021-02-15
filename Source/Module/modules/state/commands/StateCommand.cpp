@@ -16,7 +16,7 @@
 StateCommand::StateCommand(StateModule* _module, CommandContext context, var params, Multiplex* multiplex) :
 	BaseCommand(_module, context, params, multiplex),
 	stateModule(_module),
-	enableVal(nullptr)
+	val(nullptr)
 {
 	target = addTargetParameter("Target", "Target for the command");
 	target->targetType = TargetParameter::CONTAINER;
@@ -33,6 +33,7 @@ StateCommand::StateCommand(StateModule* _module, CommandContext context, var par
 	case TRIGGER_ACTION:
 	case SET_ACTION_ENABLED:
 	case TOGGLE_ACTION:
+	case SET_SEQUENTIAL_CONDITION_INDEX:
 		target->customGetTargetContainerFunc = &StateManager::showMenuAndGetAction;
 		target->defaultParentLabelLevel = 1;
 		break;
@@ -51,8 +52,13 @@ StateCommand::StateCommand(StateModule* _module, CommandContext context, var par
 
 	if (actionType == SET_STATE_ACTIVATION || actionType == SET_ACTION_ENABLED || actionType == SET_TOGGLE_STATE || actionType == SET_MAPPING_ENABLED)
 	{
-		enableVal = addBoolParameter("Value", "The activation / enable state to set this element to.", true);
-		linkParamToMappingIndex(enableVal, 0);
+		val = addBoolParameter("Value", "The activation / enable state to set this element to.", true);
+		linkParamToMappingIndex(val, 0);
+	}
+	else if (actionType == SET_SEQUENTIAL_CONDITION_INDEX)
+	{
+		val = addIntParameter("Value", "The activation / enable state to set this element to.", 0, 0);
+		linkParamToMappingIndex(val, 0);
 	}
 }
 
@@ -70,7 +76,7 @@ void StateCommand::triggerInternal(int multiplexIndex)
 	switch (actionType)
 	{
 	case SET_STATE_ACTIVATION:
-		if (State* s = getLinkedTargetContainerAs<State>(target, multiplexIndex)) s->active->setValue(enableVal->boolValue());
+		if (State* s = getLinkedTargetContainerAs<State>(target, multiplexIndex)) s->active->setValue(val->boolValue());
 		break;
 
 	case TOGGLE_STATE:
@@ -82,19 +88,23 @@ void StateCommand::triggerInternal(int multiplexIndex)
 		break;
 
 	case SET_ACTION_ENABLED:
-		if (Action* a = getLinkedTargetContainerAs<Action>(target, multiplexIndex)) a->enabled->setValue(enableVal->boolValue());
+		if (Action* a = getLinkedTargetContainerAs<Action>(target, multiplexIndex)) a->enabled->setValue(val->boolValue());
 		break;
 
 	case TOGGLE_ACTION:
 		if (Action* a = getLinkedTargetContainerAs<Action>(target, multiplexIndex)) a->enabled->setValue(!a->enabled->boolValue());
 		break;
 
+	case SET_SEQUENTIAL_CONDITION_INDEX:
+		if (Action* a = getLinkedTargetContainerAs<Action>(target, multiplexIndex)) a->cdm.setSequentialConditionIndices(val->intValue());
+		break;
+
 	case SET_TOGGLE_STATE:
-		if (StandardCondition* cd = getLinkedTargetContainerAs<StandardCondition>(target, multiplexIndex)) cd->forceToggleState(enableVal->boolValue());
+		if (StandardCondition* cd = getLinkedTargetContainerAs<StandardCondition>(target, multiplexIndex)) cd->forceToggleState(val->boolValue());
 		break;
 
 	case SET_MAPPING_ENABLED:
-		if (Mapping* m = getLinkedTargetContainerAs<Mapping>(target, multiplexIndex)) m->enabled->setValue(enableVal->boolValue());
+		if (Mapping* m = getLinkedTargetContainerAs<Mapping>(target, multiplexIndex)) m->enabled->setValue(val->boolValue());
 		break;
 
 	case TOGGLE_MAPPING:

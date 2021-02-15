@@ -21,7 +21,7 @@ public:
 	virtual ~ConditionEditor();
 
 	Condition * condition;
-
+	bool isCurrentInSequential;
 
 	virtual void paintOverChildren(Graphics &g) override;
 	virtual void updateUI() {}

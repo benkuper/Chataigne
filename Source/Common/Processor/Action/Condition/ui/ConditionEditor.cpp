@@ -12,7 +12,8 @@
 
 ConditionEditor::ConditionEditor(Condition * _condition, bool isRoot) :
 	BaseItemEditor(_condition, isRoot),
-	condition(_condition)
+	condition(_condition),
+	isCurrentInSequential(false)
 {
 	condition->addAsyncConditionListener(this);
 	repaint();
@@ -28,9 +29,9 @@ ConditionEditor::~ConditionEditor()
 
 void ConditionEditor::paintOverChildren(Graphics & g)
 {
-	if (condition->getIsValid())
+	if (condition->getIsValid() || isCurrentInSequential)
 	{
-		g.setColour(condition->enabled->boolValue() ? GREEN_COLOR : LIGHTCONTOUR_COLOR);
+		g.setColour(condition->enabled->boolValue() ? (isCurrentInSequential? BLUE_COLOR : GREEN_COLOR) : LIGHTCONTOUR_COLOR);
 		g.drawRoundedRectangle(getLocalBounds().toFloat(), 2, 2);
 	}
 }

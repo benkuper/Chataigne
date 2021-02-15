@@ -22,13 +22,13 @@ public:
 	StateCommand(StateModule * _module, CommandContext context, var params, Multiplex * multiplex = nullptr);
 	virtual ~StateCommand();
 
-	enum ActionType { SET_STATE_ACTIVATION, TOGGLE_STATE, TRIGGER_ACTION, SET_ACTION_ENABLED, TOGGLE_ACTION, SET_TOGGLE_STATE, SET_MAPPING_ENABLED, TOGGLE_MAPPING };
+	enum ActionType { SET_STATE_ACTIVATION, TOGGLE_STATE, TRIGGER_ACTION, SET_ACTION_ENABLED, TOGGLE_ACTION, SET_TOGGLE_STATE, SET_MAPPING_ENABLED, TOGGLE_MAPPING, SET_SEQUENTIAL_CONDITION_INDEX };
 
 	ActionType actionType;
 	StateModule * stateModule;
 
 	TargetParameter * target;
-	BoolParameter* enableVal;
+	Parameter * val;
 
 	void triggerInternal(int multiplexIndex) override;
 

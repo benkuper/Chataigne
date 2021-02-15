@@ -25,6 +25,7 @@ StateModule::StateModule(StateManager * _manager) :
 	defManager->add(getBaseStateCommand("Action", "Set Action Enabled", CommandContext::BOTH, StateCommand::SET_ACTION_ENABLED));
 	defManager->add(getBaseStateCommand("Action", "Toggle Action", CommandContext::ACTION, StateCommand::TOGGLE_ACTION));
 	defManager->add(getBaseStateCommand("Action", "Set Condition Toggle State", CommandContext::BOTH, StateCommand::SET_TOGGLE_STATE));
+	defManager->add(getBaseStateCommand("Action", "Set Sequential Condition Index", CommandContext::BOTH, StateCommand::SET_SEQUENTIAL_CONDITION_INDEX));
 
 	defManager->add(getBaseStateCommand("Mapping", "Set Mapping Enabled", CommandContext::BOTH, StateCommand::SET_MAPPING_ENABLED));
 	defManager->add(getBaseStateCommand("Mapping", "Toggle Mapping", CommandContext::ACTION, StateCommand::TOGGLE_MAPPING));

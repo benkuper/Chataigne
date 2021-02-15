@@ -23,8 +23,12 @@ public:
 
 	ConditionManager * conditionManager;
 
+	void updateSequentialUI();
+
 	void itemAddedAsync(Condition *) override;
 	void itemRemovedAsync(Condition *) override;
+
+	void resetAndBuild() override;
 
 	void newMessage(const ConditionManager::ConditionManagerEvent& e) override;
 

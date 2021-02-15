@@ -23,7 +23,6 @@ NetworkStreamingModule::NetworkStreamingModule(const String &name, bool canHaveI
 {
 	setupIOConfiguration(canHaveInput, canHaveOutput);
 
-
 	//Receive
 	receiveFrequency = new IntParameter("Receive Frequency", "The frequency at which to receive data, only change it if you need much high frequency", 100, 1, 1000);
 	

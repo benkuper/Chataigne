@@ -27,8 +27,9 @@ public:
 	Factory<Condition>::Definition* activateDef;
 	Factory<Condition>::Definition* deactivateDef;
 
-	enum ConditionOperator { AND, OR };
+	enum ConditionOperator { AND, OR, SEQUENTIAL };
 	EnumParameter* conditionOperator;
+	Array<int> sequentialConditionIndices;
 
 	FloatParameter* validationTime;
 	FloatParameter* validationProgressFeedback;
@@ -52,9 +53,11 @@ public:
 	void setValid(int multiplexIndex, bool value, bool dispatchOnlyOnValidationChange = true);
 	void setValidationProgress(int multiplexIndex, float value);
 
+	void setSequentialConditionIndices(int index, int multiplexIndex = -1);
+
 	void forceCheck();
 
-	void checkAllConditions(int multiplexIndex, bool emptyIsValid = false, bool dispatchOnlyOnValidationChange = true);
+	void checkAllConditions(int multiplexIndex, bool emptyIsValid = false, bool dispatchOnlyOnValidationChange = true, int sourceConditionIndex = -1);
 
 	bool areAllConditionsValid(int multiplexIndex, bool emptyIsValid = false);
 	bool isAtLeastOneConditionValid(int multiplexIndex, bool emptyIsValid = false);
@@ -91,7 +94,7 @@ public:
 
 	class ConditionManagerEvent {
 	public:
-		enum Type { VALIDATION_CHANGED };
+		enum Type { VALIDATION_CHANGED, SEQUENTIAL_CONDITION_INDEX_CHANGED };
 		ConditionManagerEvent(Type type, ConditionManager* cdm, int multiplexIndex = -1) : type(type), conditionManager(cdm), multiplexIndex(multiplexIndex) {}
 		Type type;
 		ConditionManager* conditionManager;

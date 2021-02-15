@@ -27,6 +27,10 @@ ConditionManager::ConditionManager(Multiplex * multiplex) :
 	canBeCopiedAndPasted = true;
 	selectItemWhenCreated = false;
 
+	isValids.resize(getMultiplexCount());
+	validationProgresses.resize(getMultiplexCount());
+	sequentialConditionIndices.resize(getMultiplexCount());
+
 	managerFactory = &factory;
 	factory.defs.add(MultiplexTargetDefinition<Condition>::createDef<StandardCondition>("", StandardCondition::getTypeStringStatic(false), multiplex));
 	if (isMultiplexed()) factory.defs.add(MultiplexTargetDefinition<Condition>::createDef<StandardCondition>("", StandardCondition::getTypeStringStatic(true), multiplex)->addParam("listMode", true));
@@ -39,10 +43,15 @@ ConditionManager::ConditionManager(Multiplex * multiplex) :
 	validationProgressFeedback = addFloatParameter("Validation Progress", "The feedback of the progress if validation time is more than 0", 0, 0, 1, false);
 	validationProgressFeedback->setControllableFeedbackOnly(true);
 	
-	conditionOperator = addEnumParameter("Operator", "Operator for this manager, will decides how the conditions are validated");
+	conditionOperator = addEnumParameter("Operator", "Operator for this manager, will decides how the conditions are validated.\nAND will need all conditions to be true. \
+OR will need at least one condition to be true. \
+SEQUENTIAL will check the first, and when it gets validated, will check the next one,  etc. and then loop back to the first \
+");
 	conditionOperator->addOption("AND", ConditionOperator::AND);
 	conditionOperator->addOption("OR", ConditionOperator::OR);
+	conditionOperator->addOption("SEQUENTIAL", ConditionOperator::SEQUENTIAL);
 	conditionOperator->hideInEditor = true;
+
 }
 
 ConditionManager::~ConditionManager()
@@ -53,12 +62,12 @@ void ConditionManager::multiplexCountChanged()
 {
 	isValids.resize(getMultiplexCount());
 	validationProgresses.resize(getMultiplexCount());
+	sequentialConditionIndices.resize(getMultiplexCount());
 
 	isValids.fill(false);
 	validationProgresses.fill(0);
+	sequentialConditionIndices.fill(0);
 }
-
-
 
 void ConditionManager::setHasActivationDefinitions(bool value)
 {
@@ -99,6 +108,11 @@ void ConditionManager::removeItemInternal(Condition * c)
 {
 	c->removeConditionListener(this);
 	conditionOperator->hideInEditor = items.size() <= 1;
+	
+	sequentialConditionIndices.fill(0);
+	conditionManagerAsyncNotifier.addMessage(new ConditionManagerEvent(ConditionManagerEvent::SEQUENTIAL_CONDITION_INDEX_CHANGED, this));
+
+
 	if (!Engine::mainEngine->isLoadingFile && !Engine::mainEngine->isClearing)
 	{
 		for (int i = 0; i < getMultiplexCount(); i++) checkAllConditions(i);
@@ -123,7 +137,25 @@ void ConditionManager::setValid(int multiplexIndex, bool value, bool dispatchOnl
 {
 	if (isValids[multiplexIndex] == value && dispatchOnlyOnValidationChange) return;
 	isValids.set(multiplexIndex, value);
+
 	dispatchConditionValidationChanged(multiplexIndex, dispatchOnlyOnValidationChange);
+	
+	if (isValids[multiplexIndex] && conditionOperator->getValueDataAsEnum<ConditionOperator>() == SEQUENTIAL)
+	{
+		int nextIndex = sequentialConditionIndices[multiplexIndex] + 1;
+		while (nextIndex < items.size())
+		{
+			if (items[nextIndex]->enabled->boolValue()) break;
+			nextIndex++;
+		}
+
+		if(nextIndex == items.size()) nextIndex = 0;
+
+		setSequentialConditionIndices(nextIndex, multiplexIndex);
+		setValid(multiplexIndex, false);
+	}
+
+
 }
 
 void ConditionManager::setValidationProgress(int multiplexIndex, float value)
@@ -132,12 +164,20 @@ void ConditionManager::setValidationProgress(int multiplexIndex, float value)
 	if (!isMultiplexed()) validationProgressFeedback->setValue(value);
 }
 
+void ConditionManager::setSequentialConditionIndices(int index, int multiplexIndex)
+{
+	if (multiplexIndex != -1) sequentialConditionIndices.set(multiplexIndex, index);
+	else sequentialConditionIndices.fill(index);
+
+	conditionManagerAsyncNotifier.addMessage(new ConditionManagerEvent(ConditionManagerEvent::SEQUENTIAL_CONDITION_INDEX_CHANGED, this));
+}
+
 void ConditionManager::forceCheck()
 {
 	for (auto& i : items) i->forceCheck();
 }
 
-void ConditionManager::checkAllConditions(int multiplexIndex, bool emptyIsValid, bool dispatchOnlyOnValidationChange)
+void ConditionManager::checkAllConditions(int multiplexIndex, bool emptyIsValid, bool dispatchOnlyOnValidationChange, int sourceConditionIndex)
 {
 	bool valid = false;
 	ConditionOperator op = (ConditionOperator)(int)conditionOperator->getValueData();
@@ -150,6 +190,15 @@ void ConditionManager::checkAllConditions(int multiplexIndex, bool emptyIsValid,
 	case ConditionOperator::OR:
 		valid = isAtLeastOneConditionValid(multiplexIndex, emptyIsValid);
 		break;
+
+	case ConditionOperator::SEQUENTIAL:
+		if (items.size() == 0) valid = emptyIsValid;
+		else if(sourceConditionIndex == sequentialConditionIndices[multiplexIndex])
+		{
+			jassert(sequentialConditionIndices[multiplexIndex] < items.size() && items[sequentialConditionIndices[multiplexIndex]]->enabled->boolValue()); //just loop, shoult not happen
+			valid = items[sequentialConditionIndices[multiplexIndex]]->getIsValid(multiplexIndex);
+		}
+		
 	}
 
 	if (validationTime->floatValue() == 0)
@@ -175,14 +224,19 @@ void ConditionManager::checkAllConditions(int multiplexIndex, bool emptyIsValid,
 
 void ConditionManager::conditionValidationChanged(Condition* c, int multiplexIndex, bool dispatchOnChangeOnly)
 {
-	checkAllConditions(multiplexIndex, false, dispatchOnChangeOnly);
+	checkAllConditions(multiplexIndex, false, dispatchOnChangeOnly, items.indexOf(c));
 }
 
 void ConditionManager::onContainerParameterChanged(Parameter * p)
 {
 	if (p == conditionOperator)
 	{
-		for (int i = 0; i < getMultiplexCount(); i++) checkAllConditions(i);
+		setSequentialConditionIndices(0);
+
+		for (int i = 0; i < getMultiplexCount(); i++)
+		{
+			checkAllConditions(i);
+		}
 	}
 	else if (p == validationTime)
 	{
