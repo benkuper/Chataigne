@@ -4516,6 +4516,7 @@
     <ClInclude Include="..\..\Modules\juce_organicui\outliner\Outliner.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\progress\ui\ProgressWindow.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\progress\ProgressNotifier.h"/>
+    <ClInclude Include="..\..\Modules\juce_organicui\remotecontrol\OSCInputHelper.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\remotecontrol\OSCRemoteControl.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\AppConfig.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\BinaryData.h"/>
