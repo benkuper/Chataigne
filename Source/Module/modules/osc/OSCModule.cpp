@@ -678,9 +678,9 @@ OSCModule::OSCRouteParams::OSCRouteParams(Module * sourceModule, Controllable * 
 
 OSCOutput::OSCOutput() :
 	BaseItem("OSC Output"),
-	Thread("OSC output")
+	Thread("OSC output"),
 	forceDisabled(false),
-	senderIsConnected(false),
+	senderIsConnected(false)
 {
 	isSelectable = false;
 
