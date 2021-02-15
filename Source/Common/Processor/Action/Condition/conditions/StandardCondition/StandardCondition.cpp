@@ -234,7 +234,7 @@ void StandardCondition::onControllableFeedbackUpdateInternal(ControllableContain
 {
 	Condition::onControllableFeedbackUpdateInternal(cc, c);
 
-	if (comparator != nullptr && c == comparator->reference || c == comparator->compareFunction)
+	if (comparator != nullptr && (c == comparator->reference || c == comparator->compareFunction))
 	{
 		if (!isCurrentlyLoadingData) for (int i = 0; i < getMultiplexCount(); i++) checkComparator(i);
 	}

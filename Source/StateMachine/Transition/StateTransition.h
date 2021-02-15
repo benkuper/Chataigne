@@ -29,5 +29,5 @@ public:
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
 
-	void triggerConsequences(bool triggerTrue, int iterationIndex = 0);
+	void triggerConsequences(bool triggerTrue, int iterationIndex = 0) override;
 };

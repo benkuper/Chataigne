@@ -42,7 +42,7 @@ public:
 
 	void multiplexCountChanged() override;
 
-	virtual void setValid(int multiplexIndex, bool value, bool dispatchOnChangeOnly = true);
+	virtual void setValid(int multiplexIndex, bool value, bool dispatchOnChangeOnly = true) override;
 	void forceToggleState(bool value);
 
 	void listReferenceUpdated() override;

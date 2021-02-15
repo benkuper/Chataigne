@@ -23,7 +23,7 @@ public:
 	bool forceDisabled;
 	Array<bool> isValids; //this could be simplified for non-iterative condition
 
-	virtual void multiplexCountChanged();
+	virtual void multiplexCountChanged() override;
 
 	bool getIsValid(int multiplexIndex = 0);
 	virtual void setValid(int multiplexIndex, bool value, bool dispatchOnChangeOnly = true);

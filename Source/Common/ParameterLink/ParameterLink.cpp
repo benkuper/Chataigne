@@ -14,8 +14,8 @@
 ParameterLink::ParameterLink(WeakReference<Parameter> p, Multiplex * multiplex) :
     MultiplexTarget(multiplex),
     isLinkable(true),
-    parameter(p),
     linkType(NONE),
+    parameter(p),
     mappingValueIndex(0),
     list(nullptr),
     replacementHasMappingInputToken(false),
@@ -165,7 +165,7 @@ String ParameterLink::getReplacementString(int multiplexIndex)
         std::smatch m = *i;
         String matchStr(m.str());
 
-        result += parameter->stringValue().substring(lastPos, m.position());
+        result += parameter->stringValue().substring(lastPos, (int)m.position());
 
         if (matchStr == "{index}")  result += String(multiplexIndex + 1);
         else if (matchStr == "{index0}")  result += String(multiplexIndex);
@@ -210,7 +210,7 @@ String ParameterLink::getReplacementString(int multiplexIndex)
             }
         }
 
-        lastPos = m.position() + matchStr.length();
+        lastPos = (int)m.position() + matchStr.length();
     }
 
     result += parameter->stringValue().substring(lastPos);
