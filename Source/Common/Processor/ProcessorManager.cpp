@@ -55,7 +55,8 @@ Array<Action*> ProcessorManager::getAllActions()
 	Array<Action*> result;
 	for (auto & i : items)
 	{
-		if (i->type == Processor::ACTION) result.add(static_cast<Action *>(i));
+		if (i == nullptr) continue;
+		if (i->type == Processor::ACTION) result.add(dynamic_cast<Action *>(i));
 	}
 	return result;
 }

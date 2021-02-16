@@ -48,7 +48,7 @@ void State::onContainerParameterChangedInternal(Parameter *p)
 {
 	if (p == active || p == enabled)
 	{		
-		if (!Engine::mainEngine->isLoadingFile)
+		if (!isCurrentlyLoadingData)
 		{
 			if (p == enabled)
 			{

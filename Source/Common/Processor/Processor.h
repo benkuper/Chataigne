@@ -18,7 +18,7 @@ class Processor :
 	public BaseItem
 {
 public:
-	enum ProcessorType { ACTION, MAPPING };
+	enum ProcessorType { ACTION, MAPPING, MULTIPLEX };
 	
 	Processor(const String &name = "Processor", bool canBeDisabled = true);
 	virtual ~Processor();
