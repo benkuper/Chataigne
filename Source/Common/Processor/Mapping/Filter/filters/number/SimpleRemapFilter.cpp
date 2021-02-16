@@ -54,9 +54,9 @@ Parameter* SimpleRemapFilter::setupSingleParameterInternal(Parameter* source, in
 	return p;
 }
 
-bool SimpleRemapFilter::processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex)
+MappingFilter::ProcessResult  SimpleRemapFilter::processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex)
 {
-	if (targetIn == nullptr || targetOut == nullptr || out == nullptr) return false;
+	if (targetIn == nullptr || targetOut == nullptr || out == nullptr) return STOP_HERE;
 	
 	float sourceVal = source->floatValue();
 	float targetVal = sourceVal;
@@ -82,7 +82,7 @@ bool SimpleRemapFilter::processSingleParameterInternal(Parameter* source, Parame
 		out->setNormalizedValue(targetNValue);
 	}
 
-	return true;
+	return CHANGED;
 }
 
 
@@ -102,6 +102,8 @@ void SimpleRemapFilter::filterParamChanged(Parameter * p)
 				if (f->type == Controllable::FLOAT || f->type == Controllable::INT) f->setRange(jmin<float>(targetOut->x, targetOut->y), jmax<float>(targetOut->x, targetOut->y));
 			}
 		}
+
+		mappingFilterListeners.call(&FilterListener::filteredParamRangeChanged, this);
 	}
 	else if (p == forceFloatOutput)
 	{

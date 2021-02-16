@@ -51,7 +51,6 @@ SEQUENTIAL will check the first, and when it gets validated, will check the next
 	conditionOperator->addOption("OR", ConditionOperator::OR);
 	conditionOperator->addOption("SEQUENTIAL", ConditionOperator::SEQUENTIAL);
 	conditionOperator->hideInEditor = true;
-
 }
 
 ConditionManager::~ConditionManager()
@@ -326,7 +325,7 @@ int ConditionManager::getNumValidConditions(int multiplexIndex)
 
 bool ConditionManager::getIsValid(int multiplexIndex, bool emptyIsValid)
 {
-	return isValids[multiplexIndex] || (emptyIsValid && items.size() == 0);
+	return multiplexIndex >= 0 && isValids[multiplexIndex] || (emptyIsValid && items.size() == 0);
 }
 
 void ConditionManager::dispatchConditionValidationChanged(int multiplexIndex, bool dispatchOnlyOnValidationChange)

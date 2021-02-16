@@ -29,7 +29,7 @@ public:
 
 	void setupParametersInternal(int multiplexIndex) override;
 	Parameter* setupSingleParameterInternal(Parameter* source, int multiplexIndex) override;
-	bool processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex) override;
+	ProcessResult processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex) override;
 
 	String getTypeString() const override { return "Damping"; }
 };

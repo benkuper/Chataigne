@@ -35,7 +35,7 @@ public:
 	WeakReference<MappingFilter> getLastEnabledFilter() { return lastEnabledFilter; }
 	Array<Parameter *> getLastFilteredParameters(int multiplexIndex);
 
-	bool processFilters(Array<Parameter *> inputs, int multiplexIndex = 0);
+	MappingFilter::ProcessResult processFilters(Array<Parameter *> inputs, int multiplexIndex = 0);
 
 	void addItemInternal(MappingFilter * m, var data) override;
 	void removeItemInternal(MappingFilter *) override;

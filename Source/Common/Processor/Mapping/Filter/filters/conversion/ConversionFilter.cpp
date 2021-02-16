@@ -169,9 +169,10 @@ void ConversionFilter::setupParametersInternal(int multiplexIndex)
 	conversionFilterAsyncNotifier.addMessage(new ConversionFilterEvent(ConversionFilterEvent::SOURCES_UPDATED));
 }
 
-bool ConversionFilter::processInternal(Array<Parameter *> inputs, int multiplexIndex)
+MappingFilter::ProcessResult ConversionFilter::processInternal(Array<Parameter *> inputs, int multiplexIndex)
 {
 	GenericScopedLock lock(links.getLock());
+
 	int index = 0;
 	for (int i = 0; i < inputs.size(); i++)
 	{
@@ -186,7 +187,7 @@ bool ConversionFilter::processInternal(Array<Parameter *> inputs, int multiplexI
 		index++;
 	}
 
-	return true;
+	return CHANGED;
 }
 
 void ConversionFilter::askForRemove(ConversionParamValueLink* link)

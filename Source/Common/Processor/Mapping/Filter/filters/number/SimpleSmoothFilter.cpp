@@ -44,12 +44,12 @@ Parameter* SimpleSmoothFilter::setupSingleParameterInternal(Parameter* source, i
 	return p;
 }
 
-bool SimpleSmoothFilter::processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex)
+MappingFilter::ProcessResult SimpleSmoothFilter::processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex)
 {
 	var oldVal = out->getValue();
 	var newVal = source->getValue();
 
-	if(source->checkValueIsTheSame(oldVal, newVal)) return false;
+	if(source->checkValueIsTheSame(oldVal, newVal)) return UNCHANGED;
 
 	var val;
 
@@ -79,7 +79,7 @@ bool SimpleSmoothFilter::processSingleParameterInternal(Parameter* source, Param
 
 	out->setValue(val);
 
-	return true;
+	return CHANGED;
 }
 
 void SimpleSmoothFilter::onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c)

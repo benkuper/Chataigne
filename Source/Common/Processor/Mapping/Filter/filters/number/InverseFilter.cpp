@@ -24,16 +24,16 @@ InverseFilter::~InverseFilter()
 {
 }
 
-bool InverseFilter::processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex)
+MappingFilter::ProcessResult InverseFilter::processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex)
 {
 	if (!source->hasRange())
 	{
 		out->setValue(source->getValue());
-		return true;
+		return CHANGED;
 	}
 
 	if (source->type == source->BOOL) out->setValue(!source->boolValue());
 	else out->setValue(jmap<float>(source->getNormalizedValue(), source->maximumValue, source->minimumValue));
 	
-	return true;
+	return CHANGED;
 }

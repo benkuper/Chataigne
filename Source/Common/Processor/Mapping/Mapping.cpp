@@ -29,12 +29,17 @@ Mapping::Mapping(var params, Multiplex * multiplex, bool canBeDisabled) :
 {
 	itemDataType = "Mapping";
 	type = MAPPING;
-	
+
+	sendOnOutputChangeOnly = mappingParams.addBoolParameter("Send On Output Change Only", "This decides whether the Mapping Outputs are always triggered on source change, or only when a value's filtered output has changed.", false);
 	updateRate = mappingParams.addIntParameter("Update rate", "This is the update rate at which the mapping is processing. This is used only when continuous filters like Smooth and Damping are presents", 50, 1, 500, false);
 	//updateRate->canBeDisabledByUser = true;
 
+
 	addChildControllableContainer(&im);
+
 	addChildControllableContainer(&mappingParams);
+	mappingParams.editorIsCollapsed = true;
+
 	addChildControllableContainer(&fm);
 	addChildControllableContainer(&om);
 	
@@ -177,7 +182,6 @@ void Mapping::process(bool forceOutput, int multiplexIndex)
 	if (isCurrentlyLoadingData || isRebuilding || isProcessing || isClearing) return;
 
 	//DBG("[PROCESS] Enter lock");
-
 	{
 		GenericScopedLock lock(mappingLock);
 		ScopedLock filterLock(fm.filterLock);
@@ -185,10 +189,10 @@ void Mapping::process(bool forceOutput, int multiplexIndex)
 		isProcessing = true;
 
 		Array<Parameter*> inputs = im.getInputReferences(multiplexIndex);
-		bool filterResult = fm.processFilters(inputs, multiplexIndex);
+		MappingFilter::ProcessResult filterResult = fm.processFilters(inputs, multiplexIndex);
 
 
-		if (filterResult)
+		if (filterResult == MappingFilter::CHANGED || (filterResult == MappingFilter::UNCHANGED && !sendOnOutputChangeOnly->boolValue()))
 		{
 			Array<Parameter*> filteredParameters = fm.getLastFilteredParameters(multiplexIndex);
 

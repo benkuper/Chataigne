@@ -38,13 +38,13 @@ Parameter* LagFilter::setupSingleParameterInternal(Parameter* source, int multip
 	return MappingFilter::setupSingleParameterInternal(source, multiplexIndex);
 }
 
-bool LagFilter::processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex)
+MappingFilter::ProcessResult  LagFilter::processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex)
 {
-	if (!paramTempValueMap.contains(source)) return false;
-	if (paramTempValueMap[source] == out->getValue()) return false;
+	if (!paramTempValueMap.contains(source)) return UNCHANGED;
+	if (paramTempValueMap[source] == out->getValue()) return UNCHANGED;
 	
 	out->setValue(paramTempValueMap[source]);
-	return true;
+	return CHANGED;
 }
 
 void LagFilter::filterParamChanged(Parameter * p)

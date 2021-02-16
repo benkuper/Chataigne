@@ -57,10 +57,10 @@ Parameter * CropFilter::setupSingleParameterInternal(Parameter * source, int mul
 }
 
 
-bool CropFilter::processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex)
+MappingFilter::ProcessResult CropFilter::processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex)
 {
 	out->setValue(source->value);
-	return true;
+	return CHANGED;
 }
 
 void CropFilter::filterParamChanged(Parameter* p)

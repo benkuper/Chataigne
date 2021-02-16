@@ -22,6 +22,8 @@ public:
 	MappingFilter(const String &name = "MappingFilter", var params = var(), Multiplex* multiplex = nullptr);
 	virtual ~MappingFilter();
 
+
+	enum ProcessResult { CHANGED, UNCHANGED, STOP_HERE };
 	ParamLinkContainer filterParams;
 	
 	Array<Controllable::Type> filterTypeFilters; //if not empty, this will filter out the parameters passed to the processSingleParameterInternal function
@@ -40,9 +42,9 @@ public:
 	virtual void setupParametersInternal(int mutiplexIndex);
 	virtual Parameter * setupSingleParameterInternal(Parameter * source, int multiplexIndex);
 
-	bool process(Array<Parameter*> inputs, int multiplexIndex);
-	virtual bool processInternal(Array<Parameter*> inputs, int multiplexIndex);
-	virtual bool processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex) { return false; }
+	ProcessResult process(Array<Parameter*> inputs, int multiplexIndex);
+	virtual ProcessResult processInternal(Array<Parameter*> inputs, int multiplexIndex);
+	virtual ProcessResult processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex) { return UNCHANGED; }
 
 	virtual void onContainerParameterChangedInternal(Parameter* p) override;
 	virtual void onControllableFeedbackUpdateInternal(ControllableContainer *, Controllable * p) override;

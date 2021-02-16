@@ -30,7 +30,7 @@ public:
 	var opValueData; //for loading after setupParamInternal
 
 	void setupParametersInternal(int multiplexIndex) override;
-	bool processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex) override;
+	ProcessResult processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex) override;
 
 	void updateFilteredParamsRange();
 	void filterParamChanged(Parameter * p) override;

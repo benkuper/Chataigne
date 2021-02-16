@@ -21,7 +21,7 @@ public:
 
 	Automation curve;
 
-	bool processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex) override;
+	ProcessResult processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex) override;
 	
 	void onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c) override;
 

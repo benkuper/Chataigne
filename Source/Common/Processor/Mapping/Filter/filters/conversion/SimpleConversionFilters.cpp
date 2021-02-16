@@ -27,9 +27,8 @@ SimpleConversionFilter::~SimpleConversionFilter()
 
 Parameter* SimpleConversionFilter::setupSingleParameterInternal(Parameter* source, int multiplexIndex)
 {
-
-
 	Parameter* p = (Parameter *)ControllableFactory::getInstance()->createControllable(outTypeString);
+	if (source->hasRange() && p->canHaveRange) p->setRange(source->minimumValue, source->maximumValue);
 	p->setNiceName(source->niceName);
 
 	if (multiplexIndex != 0) return p; //only setup for 1st if multiplex multiplex
@@ -61,7 +60,7 @@ Parameter* SimpleConversionFilter::setupSingleParameterInternal(Parameter* sourc
 }
 
 
-bool SimpleConversionFilter::processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex)
+MappingFilter::ProcessResult SimpleConversionFilter::processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex)
 {
 	switch (transferType)
 	{
@@ -95,10 +94,10 @@ bool SimpleConversionFilter::processSingleParameterInternal(Parameter* source, P
 	break;
 
 	default:
-		return false;
+		return UNCHANGED;
 	}
 
-	return true;
+	return CHANGED;
 }
 
 
@@ -249,7 +248,7 @@ Parameter* ToColorFilter::setupSingleParameterInternal(Parameter* sourceParam, i
 	return p;
 }
 
-bool ToColorFilter::processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex)
+MappingFilter::ProcessResult ToColorFilter::processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex)
 {
 	if (source->value.isArray())
 	{
@@ -257,10 +256,10 @@ bool ToColorFilter::processSingleParameterInternal(Parameter* source, Parameter*
 		{
 			Colour c = Colour::fromFloatRGBA((float)source->value[0], (float)source->value[1], (float)source->value[2], source->value.size() > 3 ? (float)source->value[3] : 1.0f);
 			((ColorParameter*)out)->setColor(c);
-			return true;
+			return CHANGED;
 		}
 
-		return false; //don't process
+		return UNCHANGED; //don't process
 	}
 
 	//single value
@@ -312,7 +311,7 @@ bool ToColorFilter::processSingleParameterInternal(Parameter* source, Parameter*
 		break;
 	}
 
-	return true;
+	return CHANGED;
 }
 
 ToBooleanFilter::ToBooleanFilter(var params, Multiplex* multiplex) :
@@ -321,7 +320,7 @@ ToBooleanFilter::ToBooleanFilter(var params, Multiplex* multiplex) :
 	toggleMode = addBoolParameter("Toggle Mode", "If checked, this will act as a toggle, and its value will be inverted when input value is 1", false);
 }
 
-bool ToBooleanFilter::processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex)
+MappingFilter::ProcessResult ToBooleanFilter::processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex)
 {
 	bool val = (source->value.isString() ?source->value.toString().getFloatValue():source->floatValue()) >= 1;
 	if (toggleMode->boolValue())
@@ -330,5 +329,5 @@ bool ToBooleanFilter::processSingleParameterInternal(Parameter* source, Paramete
 	}
 	else out->setValue(val);
 
-	return true;
+	return CHANGED;
 }

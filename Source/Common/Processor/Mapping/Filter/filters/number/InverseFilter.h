@@ -20,7 +20,7 @@ public:
 	InverseFilter(var params, Multiplex* multiplex);
 	~InverseFilter(); 
 
-	bool processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex) override;
+	ProcessResult processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex) override;
 	
 	virtual String getTypeString() const override { return "Inverse"; }
 

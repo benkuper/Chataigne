@@ -22,7 +22,7 @@ public:
 	static String scriptTemplate;
 	Script script;
 
-	bool processInternal(Array<Parameter *> inputs, int multiplexIndex) override;
+	ProcessResult processInternal(Array<Parameter *> inputs, int multiplexIndex) override;
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;

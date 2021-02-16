@@ -23,7 +23,7 @@ public:
 	FloatParameter * targetMax;
 
 	Parameter* setupSingleParameterInternal(Parameter* source, int multiplexIndex) override;
-	bool processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex) override;
+	ProcessResult processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex) override;
 
 	void filterParamChanged(Parameter *) override;
 

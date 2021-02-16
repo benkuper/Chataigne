@@ -27,7 +27,7 @@ ScriptFilter::~ScriptFilter()
 {
 }
 
-bool ScriptFilter::processInternal(Array<Parameter*> inputs, int multiplexIndex)
+MappingFilter::ProcessResult  ScriptFilter::processInternal(Array<Parameter*> inputs, int multiplexIndex)
 {
 	Array<var> args;
 	var values;
@@ -44,13 +44,15 @@ bool ScriptFilter::processInternal(Array<Parameter*> inputs, int multiplexIndex)
 	args.add(maxs);
 	args.add(multiplexIndex);
 
-	if (script.scriptEngine == nullptr) return false;
+	if (script.scriptEngine == nullptr) return UNCHANGED;
 	var result = script.callFunction("filter", args);
+
+	if (result.isBool() && (bool)result == false) return STOP_HERE;
 
 	if (!result.isArray() || result.size() != inputs.size())
 	{
 		NLOGWARNING(niceName, "Script filter() result must an array of same size as number of inputs.");
-		return false;
+		return UNCHANGED;
 	}
 
 
@@ -59,7 +61,7 @@ bool ScriptFilter::processInternal(Array<Parameter*> inputs, int multiplexIndex)
 		filteredParameters[multiplexIndex]->getUnchecked(i)->setValue(result[i]);
 	}
 
-	return true;
+	return CHANGED;
 }
 
 var ScriptFilter::getJSONData()

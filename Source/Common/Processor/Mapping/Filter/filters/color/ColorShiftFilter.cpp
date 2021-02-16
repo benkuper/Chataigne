@@ -27,12 +27,12 @@ ColorShiftFilter::~ColorShiftFilter()
 {
 }
 
-bool ColorShiftFilter::processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex)
+MappingFilter::ProcessResult ColorShiftFilter::processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex)
 {
 	ColorParameter* tc = dynamic_cast<ColorParameter*>(out);
 
 	jassert(tc != nullptr);
-	if (tc == nullptr) return false;
+	if (tc == nullptr) return UNCHANGED;
 
 	float hue, sat, bri;
 	Colour c = ((ColorParameter*)source)->getColor();
@@ -44,6 +44,6 @@ bool ColorShiftFilter::processSingleParameterInternal(Parameter* source, Paramet
 
 	tc->setColor(Colour::fromHSV(hue, sat, bri, c.getFloatAlpha()));
 
-	return true;
+	return CHANGED;
 }
 

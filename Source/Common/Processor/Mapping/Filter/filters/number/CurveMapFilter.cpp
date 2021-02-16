@@ -33,14 +33,14 @@ CurveMapFilter::~CurveMapFilter()
 {
 }
 
-bool CurveMapFilter::processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex)
+MappingFilter::ProcessResult CurveMapFilter::processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex)
 {
 	if(multiplexIndex == 0 && source == sourceParams[0].getFirst()) curve.position->setValue(source->getNormalizedValue());
 
 	if (source->hasRange()) out->setNormalizedValue(curve.getValueAtPosition(source->getNormalizedValue()));
 	else out->setValue(source->getValue());
 
-	return true;
+	return CHANGED;
 }
 
 void CurveMapFilter::onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c)

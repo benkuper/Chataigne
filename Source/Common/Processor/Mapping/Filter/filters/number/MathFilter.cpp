@@ -63,7 +63,7 @@ void MathFilter::setupParametersInternal(int multiplexIndex)
 	updateFilteredParamsRange();
 }
 
-bool MathFilter::processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex)
+MappingFilter::ProcessResult  MathFilter::processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex)
 {
 	//Operation o = operation->getValueDataAsEnum<Operation>();
 
@@ -80,7 +80,7 @@ bool MathFilter::processSingleParameterInternal(Parameter* source, Parameter* ou
 	}
 
 	out->setValue(val);
-	return true;
+	return CHANGED;
 }
 
 void MathFilter::updateFilteredParamsRange()

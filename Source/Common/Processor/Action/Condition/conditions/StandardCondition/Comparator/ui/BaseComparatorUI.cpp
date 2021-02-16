@@ -20,7 +20,7 @@ BaseComparatorUI::BaseComparatorUI(BaseComparator * _comparator) :
 	{
 		if (comparator->refLink != nullptr)
 		{
-			refEditor.reset(new LinkableParameterEditor(comparator->refLink.get(), false));
+			refEditor.reset(new LinkableParameterEditor(comparator->refLink.get(), comparator->refLink->inputValueNames.size() > 0));
 		}
 		else
 		{

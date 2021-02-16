@@ -21,7 +21,7 @@ public:
 
 	Array<FloatParameter*> hsvOffsets;
 
-	bool processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex) override;
+	ProcessResult processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex) override;
 
 	virtual String getTypeString() const override { return getTypeStringStatic(); }
 	static const String getTypeStringStatic() { return "HSV Adjust"; }

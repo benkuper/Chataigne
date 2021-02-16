@@ -66,6 +66,7 @@ bool MappingFilter::setupSources(Array<Parameter*> sources, int multiplexIndex)
 	previousValues = var();
 
 	sourceParams.set(multiplexIndex, Array<WeakReference<Parameter>>(sources.getRawDataPointer(), sources.size()));
+	mSourceParams = sourceParams[multiplexIndex];
 
 	for (auto& source : mSourceParams)
 	{
@@ -127,10 +128,10 @@ void MappingFilter::onControllableFeedbackUpdateInternal(ControllableContainer* 
 	}
 }
 
-bool MappingFilter::process(Array<Parameter*> inputs, int multiplexIndex)
+MappingFilter::ProcessResult MappingFilter::process(Array<Parameter*> inputs, int multiplexIndex)
 {
-	if (!enabled->boolValue() || isClearing) return false; //default or disabled does nothing
-
+	if (!enabled->boolValue()) return UNCHANGED; //default or disabled does nothing
+	if (isClearing) return STOP_HERE;
 
 	if (!processOnSameValue && !filterParamsAreDirty)
 	{
@@ -145,7 +146,7 @@ bool MappingFilter::process(Array<Parameter*> inputs, int multiplexIndex)
 				previousValues[i] = inputs[i]->getValue().clone();
 			}
 
-			if (!hasChanged) return false;
+			if (!hasChanged) return UNCHANGED;
 		}
 		else
 		{
@@ -155,17 +156,19 @@ bool MappingFilter::process(Array<Parameter*> inputs, int multiplexIndex)
 
 	}
 
-	bool result = processInternal(inputs, multiplexIndex);  //avoid cross-thread crash
+	ProcessResult result = processInternal(inputs, multiplexIndex);  //avoid cross-thread crash
 	filterParamsAreDirty = false;
 
 	return result;
 }
 
-bool MappingFilter::processInternal(Array<Parameter*> inputs, int multiplexIndex)
+MappingFilter::ProcessResult  MappingFilter::processInternal(Array<Parameter*> inputs, int multiplexIndex)
 {
-	bool hasChanged = false;
+	ProcessResult result = UNCHANGED;
 	Array<WeakReference<Parameter>> mSourceParams = sourceParams[multiplexIndex];
 	OwnedArray<Parameter>* mFilteredParams = filteredParameters[multiplexIndex];
+
+	if (mFilteredParams == nullptr) return STOP_HERE;
 
 	for (int i = 0; i < inputs.size() && i < mFilteredParams->size(); ++i)
 	{
@@ -185,10 +188,12 @@ bool MappingFilter::processInternal(Array<Parameter*> inputs, int multiplexIndex
 			fParam->setRange(inputs[i]->minimumValue, inputs[i]->maximumValue);
 		}
 
-		hasChanged |= processSingleParameterInternal(inputs[i], fParam, multiplexIndex);
+		ProcessResult r = processSingleParameterInternal(inputs[i], fParam, multiplexIndex);
+		if (r == STOP_HERE) return STOP_HERE;
+		else if (r == CHANGED) result = CHANGED;
 	}
 
-	return hasChanged;
+	return result;
 }
 
 
@@ -241,7 +246,7 @@ void MappingFilter::parameterRangeChanged(Parameter* p)
 
 		bool changed = false;
 
-		if (pIndex != -1 && filteredParameters.size() > pIndex)
+		if (pIndex != -1 && filteredParameters[i]->size() > pIndex)
 		{
 			if (Parameter* filteredParameter = filteredParameters[i]->getUnchecked(pIndex))
 			{

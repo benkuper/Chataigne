@@ -12,6 +12,7 @@
 
 SignalModule::SignalModule() :
 	Module(getTypeString()),
+	Thread("Signal"),
 	progression(0)
 {
 	setupIOConfiguration(true, false);
@@ -29,11 +30,22 @@ SignalModule::SignalModule() :
 
 	for (auto &c : valuesCC.controllables) c->isControllableFeedbackOnly = true;
 
-	startTimer(0,1000.0f/refreshRate->floatValue());
+	startThread();
 }
 
 SignalModule::~SignalModule()
 {
+	stopThread(1000);
+}
+
+void SignalModule::onContainerParameterChangedInternal(Parameter* p)
+{
+	Module::onContainerParameterChangedInternal(p);
+	if (p == enabled)
+	{
+		if (enabled->boolValue()) startThread();
+		else stopThread(1000);
+	}
 }
 
 void SignalModule::onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c)
@@ -43,26 +55,31 @@ void SignalModule::onControllableFeedbackUpdateInternal(ControllableContainer * 
 	if (c == amplitude || c == offset)
 	{
 		value->setRange(offset->floatValue(), amplitude->floatValue() + offset->floatValue());
-	}else if (c == refreshRate)
-	{
-		startTimer(0, 1000.0f / refreshRate->floatValue());
 	}else if(c == type)	
 	{
 		octaves->setEnabled(type->getValueDataAsEnum<SignalType>() == PERLIN);
 	}
 }
 
-void SignalModule::timerCallback(int timerID)
+void SignalModule::run()
 {
+
 	if (!enabled->boolValue()) return;
 
-	if (timerID == 0)
+	int lastUpdateMS = Time::getMillisecondCounter();
+
+	while(!threadShouldExit())
 	{
+		int curTime = Time::getMillisecondCounter();
+
 		SignalType t = type->getValueDataAsEnum<SignalType>();
 
 		float val = 0;
-		progression = progression + getTimerInterval(0)*frequency->floatValue() / 1000.0f;
+		
+		int msDiff = curTime - lastUpdateMS;
+		progression += msDiff * frequency->floatValue() / 1000.0f;
 
+		lastUpdateMS = curTime;
 
 		switch (t)
 		{
@@ -83,11 +100,12 @@ void SignalModule::timerCallback(int timerID)
 			break;
 		}
 
-
-
 		value->setNormalizedValue(val);
 		inActivityTrigger->trigger();
-	}
 
-	
+		int waitMS = 1000.0f / refreshRate->floatValue();
+		int afterProcessDiff = Time::getMillisecondCounter() - curTime;
+		int realMSToWait = jmax(0, waitMS - afterProcessDiff);
+		wait(realMSToWait);
+	}
 }

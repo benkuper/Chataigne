@@ -63,9 +63,9 @@ Parameter* DampingFilter::setupSingleParameterInternal(Parameter* source, int mu
 	return p;
 }
 
-bool DampingFilter::processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex)
+MappingFilter::ProcessResult DampingFilter::processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex)
 {
-	if (!previousSpeedsMap.contains(source)) return false;
+	if (!previousSpeedsMap.contains(source)) return UNCHANGED;
 
 	var oldVal = out->getValue();
 	var newVal = source->getValue();
@@ -75,7 +75,7 @@ bool DampingFilter::processSingleParameterInternal(Parameter* source, Parameter*
 	if (source->checkValueIsTheSame(oldVal, newVal))
 	{
 		timeAtLastUpdate = curTime;
-		return false;
+		return UNCHANGED;
 	}
 
 	double deltaTime = jmax<double>(curTime - timeAtLastUpdate, 0);
@@ -128,5 +128,5 @@ bool DampingFilter::processSingleParameterInternal(Parameter* source, Parameter*
 
 	timeAtLastUpdate = curTime;
 
-	return true;
+	return CHANGED;
 }

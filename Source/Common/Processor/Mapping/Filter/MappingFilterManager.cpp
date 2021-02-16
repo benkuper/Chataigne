@@ -10,6 +10,7 @@
 
 #include "MappingFilterManager.h"
 
+#include "filters/condition/ConditionFilter.h"
 #include "filters/ScriptFilter.h"
 
 #include "filters/number/SimpleRemapFilter.h"
@@ -57,6 +58,7 @@ MappingFilterManager::MappingFilterManager(Multiplex * multiplex) :
 
 	factory.defs.add(MultiplexTargetDefinition<MappingFilter>::createDef<ColorShiftFilter>("Color", ColorShiftFilter::getTypeStringStatic(), multiplex));
 
+	factory.defs.add(MultiplexTargetDefinition<MappingFilter>::createDef<ConditionFilter>("", "Condition", multiplex));
 	factory.defs.add(MultiplexTargetDefinition<MappingFilter>::createDef<ScriptFilter>("", "Script", multiplex));
 
 	selectItemWhenCreated = false;
@@ -77,29 +79,33 @@ bool MappingFilterManager::setupSources(Array<Parameter *> sources, int multiple
 }
 
 
-bool MappingFilterManager::processFilters(Array<Parameter *> inputs, int multiplexIndex)
+MappingFilter::ProcessResult MappingFilterManager::processFilters(Array<Parameter *> inputs, int multiplexIndex)
 {
 	if (getLastEnabledFilter() == nullptr)
 	{
 		filteredParameters.set(multiplexIndex, inputs);// Array<Parameter*>(multiplexInputSourceMap[multiplexIndex].getRawDataPointer(), multiplexInputSourceMap[multiplexIndex].size());
-		return true;
+		return MappingFilter::CHANGED;
 	}
 
 
 	jassert(inputs.size() == inputSources[multiplexIndex].size());
 
 	Array<Parameter *> fp = inputs;
-	bool hasChanged = false;
+	MappingFilter::ProcessResult result = MappingFilter::UNCHANGED;
 
 	for (auto &f : items)
 	{
-		hasChanged |= f->process(inputs, multiplexIndex);
+		MappingFilter::ProcessResult r = f->process(fp, multiplexIndex);
+		if (r == MappingFilter::STOP_HERE) return MappingFilter::STOP_HERE;
+		else if (r == MappingFilter::CHANGED) result = MappingFilter::CHANGED;
+
+		if (f->filteredParameters[multiplexIndex] == nullptr) return MappingFilter::STOP_HERE;
 		fp = Array<Parameter *>(f->filteredParameters[multiplexIndex]->getRawDataPointer(), f->filteredParameters[multiplexIndex]->size());
 	}
 	
 	filteredParameters.set(multiplexIndex, fp);
 
-	return hasChanged;
+	return result;
 }
 
 bool MappingFilterManager::rebuildFilterChain(MappingFilter * afterThisFilter, int multiplexIndex)
@@ -109,8 +115,12 @@ bool MappingFilterManager::rebuildFilterChain(MappingFilter * afterThisFilter, i
 	bool foundFilter = afterThisFilter == nullptr?true:false;
 	for (auto& f : items)
 	{
-		
-		if (f == afterThisFilter) foundFilter = true;
+		if (f == afterThisFilter)
+		{
+			foundFilter = true;
+			OwnedArray<Parameter>* fParams = f->filteredParameters[multiplexIndex];
+			fp = Array<Parameter*>(fParams->getRawDataPointer(), fParams->size());
+		}
 		else
 		{
 			if (!foundFilter) continue;

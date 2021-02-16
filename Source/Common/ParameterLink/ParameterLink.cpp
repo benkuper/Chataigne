@@ -269,6 +269,24 @@ void ParameterLink::loadJSONData(var data)
     else if (linkType == MULTIPLEX_LIST) list = multiplex->listManager.getItemWithName(data.getProperty("list", ""));
 }
 
+void ParameterLink::setInputNamesFromParams(Array<Parameter *> params)
+{
+    inputValueNames.clear();
+    for (int i = 0; i < params.size(); i++)
+    {
+        String tString = params[i]->getTypeString();
+        if (params[i]->isComplex())
+        {
+            StringArray valueNames = params[i]->getValuesNames();
+            for (auto& vName : valueNames) inputValueNames.add(tString + " (" + vName + ")");
+        }
+        else
+        {
+            inputValueNames.add(tString);
+        }
+    }
+}
+
 
 
 ParamLinkContainer::ParamLinkContainer(const String& name, Multiplex * multiplex) :

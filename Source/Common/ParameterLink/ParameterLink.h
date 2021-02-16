@@ -48,6 +48,8 @@ public:
 
     void updateMappingInputValue(var value, int multiplexIndex);
 
+    void setInputNamesFromParams(Array<Parameter*> params);
+    
     String getReplacementString(int multiplexIndex);
 
     var getInputMappingValue(var value);

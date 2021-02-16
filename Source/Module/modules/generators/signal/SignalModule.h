@@ -17,7 +17,7 @@ using namespace siv;
 
 class SignalModule :
 	public Module,
-	public MultiTimer
+	public Thread
 {
 public:
 	SignalModule();
@@ -41,11 +41,12 @@ public:
 	IntParameter * octaves;
 	PerlinNoise perlin;
 
+	void onContainerParameterChangedInternal(Parameter* p) override;
 	void onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c) override;
 
 	String getTypeString() const override { return "Signal"; }
 	static SignalModule * create() { return new SignalModule(); }
 
 	// Inherited via Timer
-	virtual void timerCallback(int timerID) override;
+	virtual void run() override;
 };

@@ -14,6 +14,7 @@
 #include "Input/MappingInputManager.h"
 #include "Filter/MappingFilterManager.h"
 #include "Output/MappingOutputManager.h"
+#include "../Action/Condition/ConditionManager.h"
 
 class Mapping :
 	public Processor,
@@ -34,6 +35,7 @@ public:
 	ControllableContainer outValuesCC;
 
 	IntParameter* updateRate;
+	BoolParameter* sendOnOutputChangeOnly;
 
 	enum ProcessMode { VALUE_CHANGE, MANUAL, TIMER };
 	ProcessMode processMode;
