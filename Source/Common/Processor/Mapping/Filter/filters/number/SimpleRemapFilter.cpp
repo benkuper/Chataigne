@@ -107,7 +107,8 @@ void SimpleRemapFilter::filterParamChanged(Parameter * p)
 	}
 	else if (p == forceFloatOutput)
 	{
-		setupParametersInternal(-1);
+		if(!isCurrentlyLoadingData) setupParametersInternal(-1);
+
 		mappingFilterListeners.call(&FilterListener::filteredParamsChanged, this);
 		filterAsyncNotifier.addMessage(new FilterEvent(FilterEvent::FILTER_REBUILT, this));
 	}

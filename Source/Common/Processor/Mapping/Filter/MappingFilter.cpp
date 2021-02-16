@@ -89,6 +89,7 @@ bool MappingFilter::setupSources(Array<Parameter*> sources, int multiplexIndex)
 
 void MappingFilter::setupParametersInternal(int multiplexIndex)
 {
+	if (filteredParameters.size() == 0) return;
 
 	if (multiplexIndex == -1)
 	{
