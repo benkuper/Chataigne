@@ -208,7 +208,7 @@ void Mapping::process(bool forceOutput, int multiplexIndex)
 				}
 			}
 
-			om.updateOutputValues(multiplexIndex);
+			om.updateOutputValues(multiplexIndex, sendOnOutputChangeOnly->boolValue());
 		}
 		
 		isProcessing = false;

@@ -22,6 +22,7 @@ public:
 	~MappingOutputManager();
 
 	Array<Array<WeakReference<Parameter>>> outParams;
+	var prevMergedValue;
 
 	void clear() override;
 
@@ -29,7 +30,7 @@ public:
 
 	void setOutParams(Array<Parameter *> params, int multiplexIndex);
 
-	void updateOutputValues(int multiplexIndex);
+	void updateOutputValues(int multiplexIndex, bool sendOnOutputChangedOnly = false);
 	void updateOutputValue(MappingOutput * o, int multiplexIndex);
 
 	var getMergedOutValue(int multiplexIndex);

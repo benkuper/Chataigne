@@ -190,6 +190,7 @@ MappingFilter::ProcessResult  MappingFilter::processInternal(Array<Parameter*> i
 		}
 
 		ProcessResult r = processSingleParameterInternal(inputs[i], fParam, multiplexIndex);
+
 		if (r == STOP_HERE) return STOP_HERE;
 		else if (r == CHANGED) result = CHANGED;
 	}

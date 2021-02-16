@@ -47,12 +47,14 @@ void MappingOutputManager::setOutParams(Array<Parameter *> params, int multiplex
 }
 
 
-void MappingOutputManager::updateOutputValues(int multiplexIndex)
+void MappingOutputManager::updateOutputValues(int multiplexIndex, bool sendOnOutputChangedOnly)
 {
 	var value = getMergedOutValue(multiplexIndex);
 	if (value.isVoid()) return; //possible if parameters have been deleted in another thread during process
+	if (sendOnOutputChangedOnly && value == prevMergedValue) return;
 
 	for (auto& i : items) i->setValue(value, multiplexIndex);
+	prevMergedValue = value;
 }
 
 void MappingOutputManager::updateOutputValue(MappingOutput * o, int multiplexIndex)
