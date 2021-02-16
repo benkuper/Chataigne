@@ -22,6 +22,7 @@ ConditionManager::ConditionManager(Multiplex * multiplex) :
 	activateDef(nullptr),
 	deactivateDef(nullptr),
     forceDisabled(false),
+	isCheckingOtherConditionsWithSameSource(false),
 	conditionManagerAsyncNotifier(10)
 {
 	canBeCopiedAndPasted = true;
@@ -228,6 +229,22 @@ void ConditionManager::checkAllConditions(int multiplexIndex, bool emptyIsValid,
 
 void ConditionManager::conditionValidationChanged(Condition* c, int multiplexIndex, bool dispatchOnChangeOnly)
 {
+	if (isCheckingOtherConditionsWithSameSource) return;
+
+	if (StandardCondition* sc = dynamic_cast<StandardCondition*>(c))
+	{
+		isCheckingOtherConditionsWithSameSource = true;
+		for (auto& i : items)
+		{
+			if (i == c) continue;
+			if (StandardCondition* otherSC = dynamic_cast<StandardCondition*>(i))
+			{
+				if (sc->sourceControllable == otherSC->sourceControllable) otherSC->checkComparator(multiplexIndex);
+			}
+		}
+		isCheckingOtherConditionsWithSameSource = false;
+	}
+	
 	checkAllConditions(multiplexIndex, false, dispatchOnChangeOnly, items.indexOf(c));
 }
 
