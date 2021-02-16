@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.8.0b1"
+<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.8.0b2"
               bundleIdentifier="benkuper.Chataigne" includeBinaryInAppConfig="1"
               companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
               companyEmail="benjamin@kuperberg.fr" defines="VST_LOGGING=0&#10;"
@@ -385,6 +385,12 @@
                       file="Source/Common/Processor/Mapping/Filter/ui/MappingFilterEditor.h"/>
               </GROUP>
               <GROUP id="{B0B4810E-8573-A36C-4561-1CE52F06C6BA}" name="filters">
+                <GROUP id="{7C59F6A9-B755-9603-7A6A-F6FC3C3AA26B}" name="condition">
+                  <FILE id="gZv1Gy" name="ConditionFilter.cpp" compile="1" resource="0"
+                        file="Source/Common/Processor/Mapping/Filter/filters/condition/ConditionFilter.cpp"/>
+                  <FILE id="WygfDl" name="ConditionFilter.h" compile="0" resource="0"
+                        file="Source/Common/Processor/Mapping/Filter/filters/condition/ConditionFilter.h"/>
+                </GROUP>
                 <GROUP id="{641D0121-A8E2-C0FE-FB59-BF396A67A40C}" name="number">
                   <FILE id="A56EOa" name="CropFilter.cpp" compile="1" resource="0" file="Source/Common/Processor/Mapping/Filter/filters/number/CropFilter.cpp"/>
                   <FILE id="Y1uilS" name="CropFilter.h" compile="0" resource="0" file="Source/Common/Processor/Mapping/Filter/filters/number/CropFilter.h"/>

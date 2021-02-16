@@ -35,7 +35,7 @@ ifeq ($(CONFIG),Debug)
     TARGET_ARCH := -m64
   endif
 
-  JUCE_CPPFLAGS := $(DEPFLAGS) "-DLINUX=1" "-DDEBUG=1" "-D_DEBUG=1" "-DVST_LOGGING=0" "-DJUCER_LINUX_MAKE_6D53C8B4=1" "-DJUCE_APP_VERSION=1.8.0b1" "-DJUCE_APP_VERSION_HEX=0x10800" $(shell pkg-config --cflags alsa freetype2 libcurl webkit2gtk-4.0 gtk+-x11-3.0) -pthread -I../../JuceLibraryCode -I../../JUCE/modules -I../../Modules -I../../External/wiiuse -I../../External/serial/include -I../../External/servus/include -I../../External/dnssd/include -I../../External/sdl/include -I../../External/hidapi/include -I../../External/libusb/include/libusb-1.0 -I../../Source $(CPPFLAGS)
+  JUCE_CPPFLAGS := $(DEPFLAGS) "-DLINUX=1" "-DDEBUG=1" "-D_DEBUG=1" "-DVST_LOGGING=0" "-DJUCER_LINUX_MAKE_6D53C8B4=1" "-DJUCE_APP_VERSION=1.8.0b2" "-DJUCE_APP_VERSION_HEX=0x10800" $(shell pkg-config --cflags alsa freetype2 libcurl webkit2gtk-4.0 gtk+-x11-3.0) -pthread -I../../JuceLibraryCode -I../../JUCE/modules -I../../Modules -I../../External/wiiuse -I../../External/serial/include -I../../External/servus/include -I../../External/dnssd/include -I../../External/sdl/include -I../../External/hidapi/include -I../../External/libusb/include/libusb-1.0 -I../../Source $(CPPFLAGS)
   JUCE_CPPFLAGS_APP :=  "-DJucePlugin_Build_VST=0" "-DJucePlugin_Build_VST3=0" "-DJucePlugin_Build_AU=0" "-DJucePlugin_Build_AUv3=0" "-DJucePlugin_Build_RTAS=0" "-DJucePlugin_Build_AAX=0" "-DJucePlugin_Build_Standalone=0" "-DJucePlugin_Build_Unity=0"
   JUCE_TARGET_APP := Chataigne
 
@@ -56,7 +56,7 @@ ifeq ($(CONFIG),Release)
     TARGET_ARCH := -m64
   endif
 
-  JUCE_CPPFLAGS := $(DEPFLAGS) "-DLINUX=1" "-DNDEBUG=1" "-DVST_LOGGING=0" "-DJUCER_LINUX_MAKE_6D53C8B4=1" "-DJUCE_APP_VERSION=1.8.0b1" "-DJUCE_APP_VERSION_HEX=0x10800" $(shell pkg-config --cflags alsa freetype2 libcurl webkit2gtk-4.0 gtk+-x11-3.0) -pthread -I../../JuceLibraryCode -I../../JUCE/modules -I../../Modules -I../../External/wiiuse -I../../External/serial/include -I../../External/servus/include -I../../External/dnssd/include -I../../External/sdl/include -I../../External/hidapi/include -I../../External/libusb/include/libusb-1.0 -I../../Source $(CPPFLAGS)
+  JUCE_CPPFLAGS := $(DEPFLAGS) "-DLINUX=1" "-DNDEBUG=1" "-DVST_LOGGING=0" "-DJUCER_LINUX_MAKE_6D53C8B4=1" "-DJUCE_APP_VERSION=1.8.0b2" "-DJUCE_APP_VERSION_HEX=0x10800" $(shell pkg-config --cflags alsa freetype2 libcurl webkit2gtk-4.0 gtk+-x11-3.0) -pthread -I../../JuceLibraryCode -I../../JUCE/modules -I../../Modules -I../../External/wiiuse -I../../External/serial/include -I../../External/servus/include -I../../External/dnssd/include -I../../External/sdl/include -I../../External/hidapi/include -I../../External/libusb/include/libusb-1.0 -I../../Source $(CPPFLAGS)
   JUCE_CPPFLAGS_APP :=  "-DJucePlugin_Build_VST=0" "-DJucePlugin_Build_VST3=0" "-DJucePlugin_Build_AU=0" "-DJucePlugin_Build_AUv3=0" "-DJucePlugin_Build_RTAS=0" "-DJucePlugin_Build_AAX=0" "-DJucePlugin_Build_Standalone=0" "-DJucePlugin_Build_Unity=0"
   JUCE_TARGET_APP := Chataigne
 
@@ -130,6 +130,7 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/MappingFilter_806fb652.o \
   $(JUCE_OBJDIR)/MappingFilterManager_2c745d85.o \
   $(JUCE_OBJDIR)/MappingFilterEditor_f7157696.o \
+  $(JUCE_OBJDIR)/ConditionFilter_63f5eed7.o \
   $(JUCE_OBJDIR)/CropFilter_98bb03c6.o \
   $(JUCE_OBJDIR)/CurveMapFilter_1384ae63.o \
   $(JUCE_OBJDIR)/DampingFilter_5e3ffd46.o \
@@ -712,6 +713,11 @@ $(JUCE_OBJDIR)/MappingFilterManager_2c745d85.o: ../../Source/Common/Processor/Ma
 $(JUCE_OBJDIR)/MappingFilterEditor_f7157696.o: ../../Source/Common/Processor/Mapping/Filter/ui/MappingFilterEditor.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling MappingFilterEditor.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/ConditionFilter_63f5eed7.o: ../../Source/Common/Processor/Mapping/Filter/filters/condition/ConditionFilter.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling ConditionFilter.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/CropFilter_98bb03c6.o: ../../Source/Common/Processor/Mapping/Filter/filters/number/CropFilter.cpp
