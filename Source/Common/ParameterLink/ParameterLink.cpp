@@ -344,7 +344,8 @@ ParameterLink* ParamLinkContainer::getLinkedParam(Parameter* p)
 var ParamLinkContainer::getLinkedValue(Parameter* p, int multiplexIndex)
 {
     if (!paramsCanBeLinked) return p->getValue();
-    return getLinkedParam(p)->getLinkedValue(multiplexIndex);
+    if (ParameterLink* pLink = getLinkedParam(p)) return pLink->getLinkedValue(multiplexIndex);
+    return p->getValue();
 }
 
 
