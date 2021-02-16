@@ -293,7 +293,8 @@ ParamLinkContainer::ParamLinkContainer(const String& name, Multiplex * multiplex
     ControllableContainer(name),
     MultiplexTarget(multiplex),
     paramsCanBeLinked(true),
-    canLinkToMapping(true)
+    canLinkToMapping(true),
+    ghostData(new DynamicObject())
 {
 
 }
@@ -333,6 +334,7 @@ void ParamLinkContainer::onControllableRemoved(Controllable* c)
         {
             if (ParameterLink* pLink = paramLinkMap[p])
             {
+                if (ghostData.isVoid()) ghostData = new DynamicObject();
                 ghostData.getDynamicObject()->setProperty(pLink->parameter->shortName, pLink->getJSONData());
                 linkParamMap.remove(pLink);
                 paramLinkMap.remove(p);
