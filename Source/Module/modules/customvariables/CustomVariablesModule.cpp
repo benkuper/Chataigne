@@ -247,14 +247,23 @@ void GenericControllableManagerLinkedContainer::enumOptionRemoved(EnumParameter*
 	syncItem(p, source);
 }
 
-void GenericControllableManagerLinkedContainer::parameterValueChanged(Parameter* source)
+
+void GenericControllableManagerLinkedContainer::onContainerParameterChanged(Parameter* p)
 {
-	ControllableContainer::parameterValueChanged(source);
+	ControllableContainer::onContainerParameterChanged(p);
 	if (!keepValuesInSync) return;
-	Parameter* p = getParameterForSource(source);
-	if (p == nullptr) return;
-	p->setValue(source->value);
+
+	if (Parameter* tp = getSourceForParameter(p)) tp->setValue(p->value);
 }
+
+void GenericControllableManagerLinkedContainer::onExternalParameterValueChanged(Parameter* p)
+{
+	ControllableContainer::onExternalParameterValueChanged(p);
+	if (!keepValuesInSync) return;
+
+	if (Parameter* tp = getParameterForSource(p)) tp->setValue(p->value);
+}
+
 
 void GenericControllableManagerLinkedContainer::parameterRangeChanged(Parameter* source)
 {
@@ -279,5 +288,10 @@ Parameter* GenericControllableManagerLinkedContainer::getParameterForSource(Para
 	HashMap<Parameter*, Parameter*>::Iterator i(linkMap);
 	while (i.next()) if (p == i.getValue()) return i.getKey();
 	return nullptr;
+}
+
+Parameter* GenericControllableManagerLinkedContainer::getSourceForParameter(Parameter* p)
+{
+	return linkMap.contains(p) ? linkMap[p] : nullptr;
 }
 

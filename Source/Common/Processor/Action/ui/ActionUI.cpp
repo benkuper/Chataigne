@@ -100,7 +100,7 @@ void ActionUI::resizedInternalHeader(Rectangle<int>& r)
 void ActionUI::paintOverChildren(Graphics& g)
 {
 	BaseItemUI::paintOverChildren(g);
-	if (action->cdm.getIsValid() && action->actionRoles.size() == 0) //no special roles like activate or deactivate
+	if (action->cdm.getIsValid(action->getPreviewIndex()) && action->actionRoles.size() == 0) //no special roles like activate or deactivate
 	{
 		g.setColour(GREEN_COLOR);
 		g.drawRoundedRectangle(getMainBounds().toFloat(), rounderCornerSize, 2);
@@ -196,6 +196,8 @@ void ActionUI::newMessage(const Action::ActionEvent& e)
 		{
 			triggerAllUI->customLabel = "Trigger (" + String(action->getPreviewIndex() + 1) + ")";
 			triggerAllUI->repaint();
+
+			repaint();
 		}
 		break;
 

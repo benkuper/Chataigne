@@ -316,6 +316,11 @@ void ParamLinkContainer::onControllableAdded(Controllable* c)
         paramLinks.add(pLink);
         paramLinkMap.set(p, pLink);
         linkParamMap.set(pLink, p);
+        
+        if (ghostData.hasProperty(pLink->parameter->shortName))
+        {
+            pLink->loadJSONData(ghostData.getProperty(pLink->parameter->shortName, var()));
+        }
     }
 }
 
@@ -326,11 +331,13 @@ void ParamLinkContainer::onControllableRemoved(Controllable* c)
     {
         if (paramLinkMap.contains(p))
         {
-            ParameterLink* pLink = paramLinkMap[p];
-            linkParamMap.remove(pLink);
-            paramLinkMap.remove(p);
-            paramLinks.removeObject(pLink);
-
+            if (ParameterLink* pLink = paramLinkMap[p])
+            {
+                ghostData.getDynamicObject()->setProperty(pLink->parameter->shortName, pLink->getJSONData());
+                linkParamMap.remove(pLink);
+                paramLinkMap.remove(p);
+                paramLinks.removeObject(pLink);
+            }
         }
     }
 }
@@ -399,8 +406,15 @@ var ParamLinkContainer::getJSONData()
 
 void ParamLinkContainer::loadJSONDataInternal(var data)
 {
-    var pLinksData = data.getProperty("paramLinks", var());
-    for (auto& pLink : paramLinks) pLink->loadJSONData(pLinksData.getProperty(pLink->parameter->shortName, var()));
+    ghostData = data.getProperty("paramLinks", var()).clone();
+    for (auto& pLink : paramLinks)
+    {
+        if (ghostData.hasProperty(pLink->parameter->shortName))
+        {
+            pLink->loadJSONData(ghostData.getProperty(pLink->parameter->shortName, var()));
+            ghostData.getDynamicObject()->removeProperty(pLink->parameter->shortName);
+        }
+    }
 }
 
 InspectableEditor* ParamLinkContainer::getEditor(bool isRoot)

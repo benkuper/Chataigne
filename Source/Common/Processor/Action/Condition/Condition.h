@@ -24,6 +24,7 @@ public:
 	Array<bool> isValids; //this could be simplified for non-iterative condition
 
 	virtual void multiplexCountChanged() override;
+	virtual void multiplexPreviewIndexChanged() override;
 
 	bool getIsValid(int multiplexIndex = 0);
 	virtual void setValid(int multiplexIndex, bool value, bool dispatchOnChangeOnly = true);
@@ -47,7 +48,7 @@ public:
 
 	class ConditionEvent {
 	public:
-		enum Type { VALIDATION_CHANGED, SOURCE_CHANGED };
+		enum Type { VALIDATION_CHANGED, SOURCE_CHANGED, MULTIPLEX_PREVIEW_CHANGED };
 		ConditionEvent(Type type, Condition* c, int multiplexIndex = -1) : type(type), condition(c), multiplexIndex(multiplexIndex) {}
 		Type type;
 		Condition * condition;

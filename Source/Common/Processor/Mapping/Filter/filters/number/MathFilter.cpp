@@ -70,12 +70,12 @@ MappingFilter::ProcessResult  MathFilter::processSingleParameterInternal(Paramet
 	var val = var();
 	if (!source->isComplex())
 	{
-		val = getProcessedValue(source->value);
+		val = getProcessedValue(source->value, -1, multiplexIndex);
 	} else
 	{
 		for (int i = 0; i < source->value.size(); ++i)
 		{
-			val.append(getProcessedValue(source->value[i],i));
+			val.append(getProcessedValue(source->value[i], i, multiplexIndex));
 		}
 	}
 
@@ -129,8 +129,8 @@ void MathFilter::updateFilteredParamsRange()
 			if (!sourceParam->isComplex())
 			{
 
-				float nmin = getProcessedValue(sourceParam->minimumValue);
-				float nmax = getProcessedValue(sourceParam->maximumValue);
+				float nmin = getProcessedValue(sourceParam->minimumValue, -1, 0);
+				float nmax = getProcessedValue(sourceParam->maximumValue, -1, 0);
 				newMin = jmin(nmin, nmax);
 				newMax = jmax(nmin, nmax);
 			}
@@ -138,8 +138,8 @@ void MathFilter::updateFilteredParamsRange()
 			{
 				for (int j = 0; j < sourceParam->value.size(); j++)
 				{
-					float nmin = getProcessedValue(sourceParam->minimumValue[j], j);
-					float nmax = getProcessedValue(sourceParam->maximumValue[j], j);
+					float nmin = getProcessedValue(sourceParam->minimumValue[j], j, 0);
+					float nmax = getProcessedValue(sourceParam->maximumValue[j], j, 0);
 
 					newMin.append(jmin(nmin, nmax));
 					newMax.append(jmax(nmin, nmax));
@@ -172,7 +172,7 @@ void MathFilter::filterParamChanged(Parameter * p)
 	}
 }
 
-float MathFilter::getProcessedValue(float val, int index)
+float MathFilter::getProcessedValue(float val, int index, int multiplexIndex)
 {
 	Operation o = operation->getValueDataAsEnum<Operation>();
 	
@@ -181,7 +181,7 @@ float MathFilter::getProcessedValue(float val, int index)
 	{
 		if (!operationValue->isComplex())
 		{
-			oVal = operationValue->floatValue();
+			oVal = filterParams.getLinkedValue(operationValue, multiplexIndex);
 		}
 		else
 		{

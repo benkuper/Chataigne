@@ -34,6 +34,11 @@ void Condition::multiplexCountChanged()
 	isValids.fill(false);
 }
 
+void Condition::multiplexPreviewIndexChanged()
+{
+	conditionAsyncNotifier.addMessage(new ConditionEvent(ConditionEvent::MULTIPLEX_PREVIEW_CHANGED, this));
+}
+
 bool Condition::getIsValid(int multiplexIndex)
 {
 	return isValids[multiplexIndex];

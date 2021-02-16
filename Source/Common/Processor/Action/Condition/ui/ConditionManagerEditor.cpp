@@ -14,7 +14,7 @@ ConditionManagerEditor::ConditionManagerEditor(ConditionManager * _manager, bool
 	GenericManagerEditor<Condition>(_manager, isRoot),
 	conditionManager(_manager)
 {
-	contourColor = conditionManager->getIsValid() ? GREEN_COLOR : BG_COLOR.brighter(.3f);
+	contourColor = conditionManager->getIsValid(conditionManager->getPreviewIndex()) ? GREEN_COLOR : BG_COLOR.brighter(.3f);
 
 	bool isSequential = conditionManager->conditionOperator->getValueDataAsEnum<ConditionManager::ConditionOperator>() == ConditionManager::SEQUENTIAL;
 	if (isSequential) updateSequentialUI();
@@ -63,9 +63,10 @@ void ConditionManagerEditor::resetAndBuild()
 
 void ConditionManagerEditor::newMessage(const ConditionManager::ConditionManagerEvent& e)
 {
-	if (e.type == e.VALIDATION_CHANGED)
+	if ((e.type == e.VALIDATION_CHANGED && e.multiplexIndex == conditionManager->getPreviewIndex())
+		|| e.type == e.MULTIPLEX_PREVIEW_CHANGED)
 	{
-		contourColor = conditionManager->getIsValid(e.multiplexIndex) ? GREEN_COLOR : BG_COLOR.brighter(.3f);
+		contourColor = conditionManager->getIsValid(conditionManager->getPreviewIndex()) ? GREEN_COLOR : BG_COLOR.brighter(.3f);
 		repaint();
 	}
 	else if (e.type == e.SEQUENTIAL_CONDITION_INDEX_CHANGED)

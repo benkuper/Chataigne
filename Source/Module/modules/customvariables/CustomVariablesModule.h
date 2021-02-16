@@ -66,11 +66,13 @@ public:
 	void enumOptionAdded(EnumParameter* source, const String&) override;
 	void enumOptionRemoved(EnumParameter * source, const String &) override;
 
-	void parameterValueChanged(Parameter*) override;
+	void onContainerParameterChanged(Parameter* p) override;
+	void onExternalParameterValueChanged(Parameter * p) override;
 	void parameterRangeChanged(Parameter*) override;
 	void controllableNameChanged(Controllable*) override;
 
 	Parameter* getParameterForSource(Parameter* p);
+	Parameter* getSourceForParameter(Parameter* p);
 
 	class LinkedComparator
 	{

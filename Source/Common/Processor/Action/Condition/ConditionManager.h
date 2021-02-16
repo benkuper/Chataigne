@@ -42,6 +42,7 @@ public:
 	bool forceDisabled;
 
 	void multiplexCountChanged() override;
+	void multiplexPreviewIndexChanged() override;
 
 	void setHasActivationDefinitions(bool value);
 
@@ -94,7 +95,7 @@ public:
 
 	class ConditionManagerEvent {
 	public:
-		enum Type { VALIDATION_CHANGED, SEQUENTIAL_CONDITION_INDEX_CHANGED };
+		enum Type { VALIDATION_CHANGED, SEQUENTIAL_CONDITION_INDEX_CHANGED, MULTIPLEX_PREVIEW_CHANGED };
 		ConditionManagerEvent(Type type, ConditionManager* cdm, int multiplexIndex = -1) : type(type), conditionManager(cdm), multiplexIndex(multiplexIndex) {}
 		Type type;
 		ConditionManager* conditionManager;

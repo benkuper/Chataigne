@@ -167,7 +167,10 @@ String LinkableParameterEditor::getLinkLabel() const
 
     switch (link->linkType)
     {
-    case ParameterLink::MAPPING_INPUT: s = "Input #" + String(link->mappingValueIndex + 1) + " : "+ link->mappingValues[link->mappingValueIndex].toString(); break;
+    case ParameterLink::MAPPING_INPUT: 
+        s = "Input #" + String(link->mappingValueIndex + 1) + " : " + (link->mappingValues.size() == 0 ? "[notset]" : link->mappingValues[link->getPreviewIndex()][link->mappingValueIndex].toString());
+        break;
+
     case ParameterLink::MULTIPLEX_LIST: 
         s = "List " + (link->list != nullptr ? link->list->niceName : "");
         if (Parameter * c = dynamic_cast<Parameter *>(link->list->getTargetControllableAt(link->getPreviewIndex()))) s += " : " + c->stringValue();

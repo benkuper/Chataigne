@@ -33,7 +33,10 @@ void GenericControllableCommand::setValueParameter(Parameter* p)
 	if (!value.wasObjectDeleted() && value != nullptr)
 	{
 		ghostValueData = value->getJSONData();
-		removeControllable(value.get());
+		Parameter* tmpVal = value.get();
+		value = nullptr; //force to be null here so when removeControllable triggers contentChanged, the triggerInternal will not use it
+
+		removeControllable(tmpVal);
 	}
 
 	Parameter* tp = dynamic_cast<Parameter*>(target->target.get());
@@ -57,8 +60,9 @@ void GenericControllableCommand::triggerInternal(int multiplexIndex)
 	BaseCommand::triggerInternal(multiplexIndex);
 
 	Controllable* c = getLinkedTargetAs<Controllable>(target, multiplexIndex);
-
 	if (c == nullptr) return;
+
+	if (value == nullptr) return;
 
 	if (action == SET_VALUE)
 	{
@@ -93,7 +97,7 @@ void GenericControllableCommand::onContainerParameterChanged(Parameter* p)
 						jassertfalse;
 					}
 
-					c->setNiceName("Value");
+					tc->setNiceName("Value");
 					Parameter* tp = dynamic_cast<Parameter*>(tc);
 					setValueParameter(tp);
 				}

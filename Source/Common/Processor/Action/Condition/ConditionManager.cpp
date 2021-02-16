@@ -68,6 +68,11 @@ void ConditionManager::multiplexCountChanged()
 	sequentialConditionIndices.fill(0);
 }
 
+void ConditionManager::multiplexPreviewIndexChanged()
+{
+	conditionManagerAsyncNotifier.addMessage(new ConditionManagerEvent(ConditionManagerEvent::MULTIPLEX_PREVIEW_CHANGED, this));
+}
+
 void ConditionManager::setHasActivationDefinitions(bool value)
 {
 	if (value)

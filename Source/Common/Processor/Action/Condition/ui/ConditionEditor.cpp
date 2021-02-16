@@ -29,7 +29,7 @@ ConditionEditor::~ConditionEditor()
 
 void ConditionEditor::paintOverChildren(Graphics & g)
 {
-	if (condition->getIsValid() || isCurrentInSequential)
+	if (condition->getIsValid(condition->getPreviewIndex()) || isCurrentInSequential)
 	{
 		g.setColour(condition->enabled->boolValue() ? (isCurrentInSequential? BLUE_COLOR : GREEN_COLOR) : LIGHTCONTOUR_COLOR);
 		g.drawRoundedRectangle(getLocalBounds().toFloat(), 2, 2);
@@ -52,10 +52,16 @@ void ConditionEditor::newMessage(const Condition::ConditionEvent &e)
 	case Condition::ConditionEvent::SOURCE_CHANGED:
 		conditionSourceChangedAsync(e.condition);
 		break;
+
+	case Condition::ConditionEvent::MULTIPLEX_PREVIEW_CHANGED:
+		updateUI();
+		break;
 	}
 }
 
 void ConditionEditor::childBoundsChanged(Component *)
 {
 	resized();
+	repaint();
+
 }

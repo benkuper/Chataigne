@@ -191,7 +191,6 @@ void Mapping::process(bool forceOutput, int multiplexIndex)
 		Array<Parameter*> inputs = im.getInputReferences(multiplexIndex);
 		MappingFilter::ProcessResult filterResult = fm.processFilters(inputs, multiplexIndex);
 
-
 		if (filterResult == MappingFilter::CHANGED || (filterResult == MappingFilter::UNCHANGED && !sendOnOutputChangeOnly->boolValue()))
 		{
 			Array<Parameter*> filteredParameters = fm.getLastFilteredParameters(multiplexIndex);

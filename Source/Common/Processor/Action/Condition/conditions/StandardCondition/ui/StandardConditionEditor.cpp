@@ -91,14 +91,14 @@ void StandardConditionEditor::updateUI()
 {
 	if (sourceFeedbackUI != nullptr) removeChildComponent(sourceFeedbackUI.get());
 
-	if (Controllable * c = standardCondition->getSourceControllableAt(0))
+	if (Controllable * c = standardCondition->getSourceControllableAt(standardCondition->getPreviewIndex()))
 	{
 		sourceFeedbackUI.reset(c->createDefaultUI());
 		//sourceFeedbackUI->setForceFeedbackOnly(true);
 		addAndMakeVisible(sourceFeedbackUI.get());
 	}
 
-	if (comparatorUI != nullptr)
+	if (comparatorUI != nullptr && comparatorUI->comparator != standardCondition->comparator.get())
 	{
 		removeChildComponent(comparatorUI.get());
 		comparatorUI = nullptr;

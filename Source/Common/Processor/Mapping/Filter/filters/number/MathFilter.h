@@ -35,7 +35,7 @@ public:
 	void updateFilteredParamsRange();
 	void filterParamChanged(Parameter * p) override;
 
-	float getProcessedValue(float val, int index = -1);
+	float getProcessedValue(float val, int index, int multiplexIndex);
 
 	bool filteredParamShouldHaveRange();
 
