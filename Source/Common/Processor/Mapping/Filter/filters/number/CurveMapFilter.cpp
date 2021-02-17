@@ -12,7 +12,7 @@
 
 
 CurveMapFilter::CurveMapFilter(var params, Multiplex* multiplex) :
-	MappingFilter(getTypeString(), params, multiplex),
+	SimpleRemapFilter(getTypeString(), params, multiplex),
 	curve("Curve")
 {
 	curve.isSelectable = false;
@@ -26,7 +26,7 @@ CurveMapFilter::CurveMapFilter(var params, Multiplex* multiplex) :
 	filterParams.addChildControllableContainer(&curve);
 
 
-	filterTypeFilters.add(Controllable::INT, Controllable::FLOAT);
+	filterTypeFilters.add(Controllable::INT, Controllable::FLOAT, Controllable::POINT2D, Controllable::POINT3D);
 }
 
 CurveMapFilter::~CurveMapFilter()
@@ -35,10 +35,42 @@ CurveMapFilter::~CurveMapFilter()
 
 MappingFilter::ProcessResult CurveMapFilter::processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex)
 {
-	if(multiplexIndex == 0 && source == sourceParams[0].getFirst()) curve.position->setValue(source->getNormalizedValue());
+	if (targetIn == nullptr || targetOut == nullptr || out == nullptr) return STOP_HERE;
 
-	if (source->hasRange()) out->setNormalizedValue(curve.getValueAtPosition(source->getNormalizedValue()));
-	else out->setValue(source->getValue());
+	var remappedVal = getRemappedValueFor(source, multiplexIndex);
+
+	if (multiplexIndex == getPreviewIndex() && source == sourceParams[0].getFirst())
+	{
+		float normVal = 0;
+		if (out->isComplex()) normVal = jmap<float>(remappedVal[0], (float)out->minimumValue[0], (float)out->maximumValue[0], 0.f, 1.f);
+		else normVal = jmap<float>((float)remappedVal, out->minimumValue, out->maximumValue, 0.f, 1.f);
+
+		curve.position->setValue(normVal); //for feedback
+
+	}
+
+	if (source->hasRange())
+	{
+		if (source->isComplex())
+		{
+			var normCurveVal;
+			for (int i = 0; i < source->value.size(); i++)
+			{
+				float normVal = jmap<float>(remappedVal[i], (float)out->minimumValue[i], (float)out->maximumValue[i], 0.f, 1.f);
+				normCurveVal.append(curve.getValueAtPosition(normVal));
+			}
+			out->setNormalizedValue(normCurveVal);
+		}
+		else
+		{
+			float normVal = jmap<float>((float)remappedVal, out->minimumValue, out->maximumValue, 0.f, 1.f); 
+			out->setNormalizedValue(curve.getValueAtPosition(normVal));
+		}
+	}
+	else
+	{
+		out->setValue(source->getValue());
+	}
 
 	return CHANGED;
 }

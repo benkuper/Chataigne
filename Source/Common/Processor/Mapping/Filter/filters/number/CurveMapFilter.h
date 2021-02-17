@@ -10,10 +10,10 @@
 
 #pragma once
 
-#include "../../MappingFilter.h"
+#include "SimpleRemapFilter.h"
 
 class CurveMapFilter :
-	public MappingFilter
+	public SimpleRemapFilter
 {
 public:
 	CurveMapFilter(var params, Multiplex* multiplex);
@@ -21,8 +21,9 @@ public:
 
 	Automation curve;
 
+
 	ProcessResult processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex) override;
-	
+
 	void onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c) override;
 
 	var getJSONData() override;

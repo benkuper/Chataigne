@@ -17,6 +17,7 @@ class SimpleRemapFilter :
 	public MappingFilter
 {
 public:
+	SimpleRemapFilter(const String& name, var params, Multiplex* multiplex);
 	SimpleRemapFilter(var params, Multiplex* multiplex);
 	~SimpleRemapFilter();
 
@@ -27,6 +28,8 @@ public:
 
 	Parameter * setupSingleParameterInternal(Parameter * source, int multiplexIndex) override;
 	ProcessResult processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex) override;
+
+	var getRemappedValueFor(Parameter* source, int multiplexIndex); //allow for child classes to invoke this 
 
 	void filterParamChanged(Parameter *) override;
 
