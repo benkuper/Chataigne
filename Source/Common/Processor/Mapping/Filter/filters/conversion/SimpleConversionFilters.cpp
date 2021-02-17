@@ -28,7 +28,6 @@ SimpleConversionFilter::~SimpleConversionFilter()
 Parameter* SimpleConversionFilter::setupSingleParameterInternal(Parameter* source, int multiplexIndex)
 {
 	Parameter* p = (Parameter *)ControllableFactory::getInstance()->createControllable(outTypeString);
-	if (source->hasRange() && p->canHaveRange) p->setRange(source->minimumValue, source->maximumValue);
 	p->setNiceName(source->niceName);
 
 	if (multiplexIndex != 0) return p; //only setup for 1st if multiplex multiplex
@@ -37,6 +36,7 @@ Parameter* SimpleConversionFilter::setupSingleParameterInternal(Parameter* sourc
 
 	if (p->isComplex() == source->isComplex())
 	{
+		if (source->hasRange() && p->canHaveRange) p->setRange(source->minimumValue, source->maximumValue);
 		transferType = DIRECT;
 		retargetComponent->setEnabled(false);
 		retargetComponent->hideInEditor = true;
@@ -51,9 +51,8 @@ Parameter* SimpleConversionFilter::setupSingleParameterInternal(Parameter* sourc
 		StringArray valueNames = retargetP->getValuesNames();
 		for (int i = 0; i < valueNames.size(); ++i)
 		{
-			retargetComponent->addOption(valueNames[i], i, false);
+			retargetComponent->addOption(valueNames[i], i, true);
 		}
-
 	}
 
 	return p;
@@ -81,6 +80,7 @@ MappingFilter::ProcessResult SimpleConversionFilter::processSingleParameterInter
 	case EXTRACT: 
 	{
 		out->setValue(convertValue(source, source->value[(int)retargetComponent->getValueData()]));
+		DBG("Extracted out value : " << out->floatValue());
 	}
 	break;
 
@@ -105,6 +105,26 @@ MappingFilter::ProcessResult SimpleConversionFilter::processSingleParameterInter
 ToFloatFilter::ToFloatFilter(var params, Multiplex* multiplex) :
 	SimpleConversionFilter(getTypeString(), params, FloatParameter::getTypeStringStatic(), multiplex)
 {
+}
+
+Parameter * ToFloatFilter::setupSingleParameterInternal(Parameter* source, int multiplexIndex)
+{
+	Parameter* p = SimpleConversionFilter::setupSingleParameterInternal(source, multiplexIndex);
+
+	if (source->hasRange())
+	{
+		if (source->minimumValue.isArray())
+		{
+			int index = (int)retargetComponent->getValueData();
+			p->setRange(source->minimumValue[index], source->maximumValue[index]);
+		}
+		else
+		{
+			p->setRange(source->minimumValue, source->maximumValue);
+		}
+	}
+
+	return p;
 }
 
 var ToFloatFilter::convertValue(Parameter * source, var sourceValue)

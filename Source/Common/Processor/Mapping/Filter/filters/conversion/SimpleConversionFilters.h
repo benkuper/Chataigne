@@ -53,6 +53,7 @@ public:
 	ToFloatFilter(var params, Multiplex* multiplex);
 	~ToFloatFilter() {}
 
+	virtual Parameter * setupSingleParameterInternal(Parameter* source, int multiplexIndex) override;
 	var convertValue(Parameter * source, var sourceValue) override;
 
 	String getTypeString() const override { return "Convert To Float"; }
