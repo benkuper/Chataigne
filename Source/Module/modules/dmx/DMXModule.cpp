@@ -310,7 +310,7 @@ void DMXModule::handleRoutedModuleValue(Controllable * c, RouteParams * p)
 		case Parameter::INT:
 		case Parameter::FLOAT:
 		{
-			int value = (sp->hasRange() ? sp->getNormalizedValue() : sp->floatValue()) * (fullRange ? (byteOrder == BIT8 ? 255 : 65535) : 1);
+			int value = (sp->hasRange() ? (float)sp->getNormalizedValue() : sp->floatValue()) * (fullRange ? (byteOrder == BIT8 ? 255 : 65535) : 1);
 
 			if (byteOrder == BIT8) sendDMXValue(rp->channel->intValue(), value);
 			else send16BitDMXValue(rp->channel->intValue(), value, byteOrder);

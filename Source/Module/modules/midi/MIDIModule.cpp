@@ -706,7 +706,7 @@ void MIDIModule::handleRoutedModuleValue(Controllable * c, RouteParams * p)
 		Parameter* sp = c->type == Controllable::TRIGGER ? nullptr : dynamic_cast<Parameter*>(c);
 		if (sp != nullptr)
 		{
-			if (sp->hasRange()) value = sp->getNormalizedValue() * 127;
+			if (sp->hasRange()) value = (float)sp->getNormalizedValue() * 127;
 			else value = jlimit(0, 127, sp->intValue());
 		}
 
