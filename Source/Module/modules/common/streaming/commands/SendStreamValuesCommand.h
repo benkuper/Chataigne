@@ -20,7 +20,7 @@ class SendStreamValuesCommand :
 {
 public:
 	SendStreamValuesCommand(StreamingModule * output, CommandContext context, var params, Multiplex* multiplex = nullptr);
-	~SendStreamValuesCommand();
+	virtual ~SendStreamValuesCommand();
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;

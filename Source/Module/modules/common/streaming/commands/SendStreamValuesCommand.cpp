@@ -20,7 +20,6 @@ SendStreamValuesCommand::SendStreamValuesCommand(StreamingModule * module, Comma
 
 SendStreamValuesCommand::~SendStreamValuesCommand()
 {
-	masterReference.clear();
 }
 
 var SendStreamValuesCommand::getJSONData()

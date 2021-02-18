@@ -20,7 +20,7 @@ class CustomValuesCommandArgumentManager :
 {
 public:
 	CustomValuesCommandArgumentManager(bool _mappingEnabled, bool templateMode = false, Multiplex * multiplex = nullptr);
-	~CustomValuesCommandArgumentManager();
+	virtual ~CustomValuesCommandArgumentManager();
 
 	bool isBeingDestroyed; //to keep track for templates, do not sync on destroy, so we can keep a ghost
 	bool mappingEnabled;

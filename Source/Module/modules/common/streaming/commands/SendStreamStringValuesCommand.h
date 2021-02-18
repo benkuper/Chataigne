@@ -17,7 +17,7 @@ class SendStreamStringValuesCommand :
 {
 public:
 	SendStreamStringValuesCommand(StreamingModule * output, CommandContext context, var params, Multiplex* multiplex = nullptr);
-	~SendStreamStringValuesCommand();
+	virtual ~SendStreamStringValuesCommand();
 
 	StringParameter* prefix;
 	StringParameter * separator;

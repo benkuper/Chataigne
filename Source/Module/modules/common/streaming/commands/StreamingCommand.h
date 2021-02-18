@@ -18,7 +18,7 @@ class StreamingCommand :
 {
 public:
 	StreamingCommand(StreamingModule * _module, CommandContext context, var params, Multiplex* multiplex = nullptr);
-	~StreamingCommand();
+	virtual ~StreamingCommand();
 
 	StreamingModule * streamingModule;
 };

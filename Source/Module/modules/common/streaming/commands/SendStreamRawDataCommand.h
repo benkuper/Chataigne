@@ -17,7 +17,7 @@ class SendStreamRawDataCommand :
 {
 public:
 	SendStreamRawDataCommand(StreamingModule * _module, CommandContext context, var params, Multiplex* multiplex = nullptr);
-	~SendStreamRawDataCommand();
+	virtual ~SendStreamRawDataCommand();
 
 	void triggerInternal(int multiplexIndex) override;
 

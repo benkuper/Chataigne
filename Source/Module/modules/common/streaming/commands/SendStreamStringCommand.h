@@ -17,7 +17,7 @@ class SendStreamStringCommand :
 {
 public:
 	SendStreamStringCommand(StreamingModule * _module, CommandContext context, var params, Multiplex* multiplex = nullptr);
-	~SendStreamStringCommand();
+	virtual ~SendStreamStringCommand();
 
 	enum DataMode { STRING, HEX };
 	DataMode dataMode;

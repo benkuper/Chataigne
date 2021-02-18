@@ -19,7 +19,7 @@ class CustomValuesCommandArgument :
 {
 public:
 	CustomValuesCommandArgument(const String& name = "arg", Parameter* p = nullptr, bool mappingEnabled = false, bool templateMode = false, Multiplex * multiplex = nullptr);
-	~CustomValuesCommandArgument();
+	virtual ~CustomValuesCommandArgument();
 
 	Parameter * param;
 	BoolParameter * editable;
