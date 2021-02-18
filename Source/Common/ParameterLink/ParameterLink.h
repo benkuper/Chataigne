@@ -67,7 +67,7 @@ class ParamLinkContainer :
 {
 public:
     ParamLinkContainer(const String& name, Multiplex * multiplex);
-    ~ParamLinkContainer();
+    virtual ~ParamLinkContainer();
 
     OwnedArray<ParameterLink> paramLinks;
     HashMap<Parameter*, ParameterLink*> paramLinkMap;

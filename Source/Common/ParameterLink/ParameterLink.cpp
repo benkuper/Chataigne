@@ -346,6 +346,8 @@ void ParamLinkContainer::onControllableRemoved(Controllable* c)
 
 ParameterLink* ParamLinkContainer::getLinkedParam(Parameter* p)
 {
+    if (!paramsCanBeLinked) return nullptr;
+
     jassert(paramLinkMap.contains(p));
     return paramLinkMap[p];
 }
