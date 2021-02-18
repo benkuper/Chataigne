@@ -25,11 +25,11 @@ ResolumeModule::ResolumeModule() :
 
 	defManager->add(CommandDefinition::createDef(this, "Composition", "Stop Composition", &OSCCommand::create, CommandContext::ACTION)->addParam("address","/composition/disconnectall")->addParam("args",stopArgs));	
 	
-	defManager->add(CommandDefinition::createDef(this, "Launch / Stop", "Launch Clip", &ResolumeClipCommand::create, CommandContext::ACTION)->addParam("level", ResolumeClipCommand::CLIP)->addParam("suffix", "connect"));
-	defManager->add(CommandDefinition::createDef(this, "Launch / Stop", "Stop Layer", &ResolumeClipCommand::create, CommandContext::ACTION)->addParam("level", ResolumeClipCommand::LAYER)->addParam("suffix", "clear")->addParam("needsOnOff", true));
-	defManager->add(CommandDefinition::createDef(this, "Launch / Stop", "Launch MultiClip", &ResolumeClipCommand::create, CommandContext::ACTION)->addParam("level", ResolumeClipCommand::CLIP)->addParam("suffix", "connect")->addParam("multi",true));
-	defManager->add(CommandDefinition::createDef(this, "Launch / Stop", "Launch Column", &ResolumeClipCommand::create, CommandContext::ACTION)->addParam("level", ResolumeClipCommand::COLUMN)->addParam("suffix", "connect"));
-	defManager->add(CommandDefinition::createDef(this, "Launch / Stop", "Launch MultiColumn", &ResolumeClipCommand::create, CommandContext::ACTION)->addParam("level", ResolumeClipCommand::COLUMN)->addParam("suffix", "connect")->addParam("multi", true));
+	defManager->add(CommandDefinition::createDef(this, "Launch / Stop", "Launch Clip", &ResolumeClipCommand::create, CommandContext::BOTH)->addParam("level", ResolumeClipCommand::CLIP)->addParam("suffix", "connect"));
+	defManager->add(CommandDefinition::createDef(this, "Launch / Stop", "Stop Layer", &ResolumeClipCommand::create, CommandContext::BOTH)->addParam("level", ResolumeClipCommand::LAYER)->addParam("suffix", "clear")->addParam("needsOnOff", true));
+	defManager->add(CommandDefinition::createDef(this, "Launch / Stop", "Launch MultiClip", &ResolumeClipCommand::create, CommandContext::BOTH)->addParam("level", ResolumeClipCommand::CLIP)->addParam("suffix", "connect")->addParam("multi",true));
+	defManager->add(CommandDefinition::createDef(this, "Launch / Stop", "Launch Column", &ResolumeClipCommand::create, CommandContext::BOTH)->addParam("level", ResolumeClipCommand::COLUMN)->addParam("suffix", "connect"));
+	defManager->add(CommandDefinition::createDef(this, "Launch / Stop", "Launch MultiColumn", &ResolumeClipCommand::create, CommandContext::BOTH)->addParam("level", ResolumeClipCommand::COLUMN)->addParam("suffix", "connect")->addParam("multi", true));
 	
 	defManager->add(CommandDefinition::createDef(this, "Effects", "Video Parameter", &ResolumeFXCommand::create, CommandContext::BOTH)->addParam("fxType", "video"));
 	defManager->add(CommandDefinition::createDef(this, "Effects", "Video FX", &ResolumeFXCommand::create, CommandContext::BOTH)->addParam("fxType", "videofx"));
@@ -37,9 +37,9 @@ ResolumeModule::ResolumeModule() :
 	defManager->add(CommandDefinition::createDef(this, "Effects", "Audio FX", &ResolumeFXCommand::create, CommandContext::BOTH)->addParam("fxType", "vst"));
 	defManager->add(CommandDefinition::createDef(this, "Effects", "Source Parameter", &ResolumeFXCommand::create, CommandContext::BOTH)->addParam("fxType", "source"));
 
-	defManager->add(CommandDefinition::createDef(this, "Selection", "Select Clip", &ResolumeClipCommand::create, CommandContext::ACTION)->addParam("level", ResolumeClipCommand::CLIP)->addParam("suffix", "select"));
-	defManager->add(CommandDefinition::createDef(this, "Selection", "Select Layer", &ResolumeClipCommand::create, CommandContext::ACTION)->addParam("level", ResolumeClipCommand::LAYER)->addParam("suffix", "select"));
-	defManager->add(CommandDefinition::createDef(this, "Selection", "Select Deck", &ResolumeClipCommand::create, CommandContext::ACTION)->addParam("level", ResolumeClipCommand::DECK)->addParam("suffix", "select"));
+	defManager->add(CommandDefinition::createDef(this, "Selection", "Select Clip", &ResolumeClipCommand::create, CommandContext::BOTH)->addParam("level", ResolumeClipCommand::CLIP)->addParam("suffix", "select"));
+	defManager->add(CommandDefinition::createDef(this, "Selection", "Select Layer", &ResolumeClipCommand::create, CommandContext::BOTH)->addParam("level", ResolumeClipCommand::LAYER)->addParam("suffix", "select"));
+	defManager->add(CommandDefinition::createDef(this, "Selection", "Select Deck", &ResolumeClipCommand::create, CommandContext::BOTH)->addParam("level", ResolumeClipCommand::DECK)->addParam("suffix", "select"));
 }
 
 /*
