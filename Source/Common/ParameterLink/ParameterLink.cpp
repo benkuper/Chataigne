@@ -140,6 +140,8 @@ void ParameterLink::updateMappingInputValue(var value, int multiplexIndex)
 
     var linkedInputValue = getInputMappingValue(value);
     mappingValues.set(multiplexIndex, value);
+    
+    if (parameter == nullptr || parameter.wasObjectDeleted()) return;
 
     if (linkType == MAPPING_INPUT && !isMultiplexed()) parameter->setValue(linkedInputValue);
 }
@@ -220,6 +222,8 @@ String ParameterLink::getReplacementString(int multiplexIndex)
 
 var ParameterLink::getInputMappingValue(var value)
 {
+    if (parameter == nullptr || parameter.wasObjectDeleted()) return var();
+
     var result = parameter->value.clone();
 
     if (!isLinkable) return result;
@@ -400,6 +404,7 @@ var ParamLinkContainer::getJSONData()
     var pLinkData(new DynamicObject());
     for (auto& pLink : paramLinks)
     {
+        if (pLink->parameter.wasObjectDeleted() || pLink->parameter == nullptr) continue;
         if (pLink->linkType != pLink->NONE) pLinkData.getDynamicObject()->setProperty(pLink->parameter->shortName, pLink->getJSONData());
     }
 
@@ -413,7 +418,9 @@ void ParamLinkContainer::loadJSONDataInternal(var data)
     ghostData = data.getProperty("paramLinks", var()).clone();
     for (auto& pLink : paramLinks)
     {
-        if (ghostData.hasProperty(pLink->parameter->shortName))
+        if (pLink->parameter == nullptr || pLink->parameter.wasObjectDeleted()) continue;
+
+        if (ghostData.isObject() && ghostData.hasProperty(pLink->parameter->shortName))
         {
             pLink->loadJSONData(ghostData.getProperty(pLink->parameter->shortName, var()));
             ghostData.getDynamicObject()->removeProperty(pLink->parameter->shortName);
