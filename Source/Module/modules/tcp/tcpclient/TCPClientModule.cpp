@@ -53,6 +53,12 @@ void TCPClientModule::initThread()
 
 	DBG("Init Thread");
 
+	if (senderIsConnected->boolValue() || sender.isConnected())
+	{
+		sender.close();
+		senderIsConnected->setValue(false);
+	}
+
 	while (!senderIsConnected->boolValue())
 	{
 		String targetHost = useLocal->boolValue() ? "127.0.0.1" : remoteHost->stringValue();
@@ -68,7 +74,7 @@ void TCPClientModule::initThread()
 		else
 		{
 			String s = "Could not connect to " + remoteHost->stringValue() + ":" + remotePort->stringValue();
-			if (getWarningMessage().isEmpty()) NLOGERROR(niceName, s);
+			if (sendCC->getWarningMessage().isEmpty()) NLOGERROR(niceName, s);
 			sendCC->setWarningMessage(s);
 		}
 	}
