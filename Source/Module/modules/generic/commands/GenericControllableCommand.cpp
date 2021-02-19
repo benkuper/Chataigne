@@ -28,6 +28,31 @@ GenericControllableCommand::~GenericControllableCommand()
 {
 }
 
+void GenericControllableCommand::updateValueFromTarget()
+{
+	Controllable* c = getLinkedTargetAs<Controllable>(target, 0); //check first item if multiplex and linked to a list
+
+	if (c == nullptr) setValueParameter(nullptr);
+	else
+	{
+		if (c->type == Controllable::TRIGGER) setValueParameter(nullptr);
+		else
+		{
+			Controllable* tc = ControllableFactory::createParameterFrom(c);
+			if (c == nullptr)
+			{
+				DBG("Should not be null here");
+				jassertfalse;
+			}
+
+			tc->setNiceName("Value");
+			Parameter* tp = dynamic_cast<Parameter*>(tc);
+			setValueParameter(tp);
+		}
+
+	}
+}
+
 void GenericControllableCommand::setValueParameter(Parameter* p)
 {
 	if (!value.wasObjectDeleted() && value != nullptr)
@@ -39,8 +64,8 @@ void GenericControllableCommand::setValueParameter(Parameter* p)
 		removeControllable(tmpVal);
 	}
 
-	Parameter* tp = dynamic_cast<Parameter*>(target->target.get());
-	if (tp == nullptr) return;
+	//Parameter* tp = dynamic_cast<Parameter*>(target->target.get());
+	//if (tp == nullptr) return;
 
 	value = p;
 
@@ -76,33 +101,19 @@ void GenericControllableCommand::triggerInternal(int multiplexIndex)
 	}
 }
 
+void GenericControllableCommand::linkUpdated(ParameterLink* pLink)
+{
+	if (pLink->parameter == target) updateValueFromTarget();
+
+}
+
 void GenericControllableCommand::onContainerParameterChanged(Parameter* p)
 {
 	if (p == target)
 	{
 		if (action == SET_VALUE)
 		{
-			Controllable* c = getLinkedTargetAs<Controllable>(target, 0); //check first item if multiplex and linked to a list
-
-			if (c == nullptr) setValueParameter(nullptr);
-			else
-			{
-				if (c->type == Controllable::TRIGGER) setValueParameter(nullptr);
-				else
-				{
-					Controllable* tc = ControllableFactory::createParameterFrom(c);
-					if (c == nullptr)
-					{
-						DBG("Should not be null here");
-						jassertfalse;
-					}
-
-					tc->setNiceName("Value");
-					Parameter* tp = dynamic_cast<Parameter*>(tc);
-					setValueParameter(tp);
-				}
-
-			}
+			updateValueFromTarget();
 		}
 
 	}
@@ -127,6 +138,8 @@ void GenericControllableCommand::endLoadFile()
 
 	loadJSONData(dataToLoad);
 	dataToLoad = var();
+
+	if(value == nullptr) updateValueFromTarget(); //force generate if not yet
 
 	Engine::mainEngine->removeEngineListener(this);
 }

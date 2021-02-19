@@ -32,10 +32,12 @@ public:
 	var dataToLoad;
 	var ghostValueData; // to keep when target is lost
 
+	void updateValueFromTarget();
 	void setValueParameter(Parameter * p);
 
 	virtual void triggerInternal(int multiplexIndex) override;
 
+	void linkUpdated(ParameterLink* pLink) override;
 	void onContainerParameterChanged(Parameter *) override;
 
 	virtual void loadJSONDataInternal(var data) override;
