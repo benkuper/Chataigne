@@ -31,7 +31,7 @@ SimpleRemapFilter::SimpleRemapFilter(const String& name, var params, Multiplex* 
 }
 
 SimpleRemapFilter::SimpleRemapFilter(var params, Multiplex* multiplex) :
-	SimpleRemapFilter(getTypeString(), params, multiplex)
+	SimpleRemapFilter("Remap", params, multiplex) //using getTypeString makes mac crash...
 {
 
 }

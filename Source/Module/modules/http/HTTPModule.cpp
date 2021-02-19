@@ -139,6 +139,9 @@ void HTTPModule::processRequest(Request* request)
 		}
 
 		break;
+                
+            default:
+                break;
 		}
 
 		args.add(request->url.toString(true));

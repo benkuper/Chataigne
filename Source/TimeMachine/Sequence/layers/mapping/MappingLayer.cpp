@@ -22,10 +22,10 @@
 
 MappingLayer::MappingLayer(const String &name, Sequence *_sequence, var params) :
 	SequenceLayer(_sequence, name),
-	mappingInputSource(nullptr),
-	mappingInput(nullptr),
 	alwaysUpdate(nullptr),
-	sendOnSeek(nullptr)
+	sendOnSeek(nullptr),
+    mappingInputSource(nullptr),
+    mappingInput(nullptr)
 {
 	canInspectChildContainers = true;
 	saveAndLoadRecursiveData = true;

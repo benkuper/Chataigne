@@ -33,7 +33,7 @@ public:
 	void finished(URL::DownloadTask * , bool success) override;
 	*/
 
-	void onContainerTriggerTriggered(Trigger* t);
+	void onContainerTriggerTriggered(Trigger* t) override;
 
 	static LiveOSCModule * create() { return new LiveOSCModule(); }
 	virtual String getDefaultTypeString() const override { return "Ableton Live"; }

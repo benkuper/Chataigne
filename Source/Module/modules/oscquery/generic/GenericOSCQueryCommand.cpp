@@ -10,10 +10,10 @@
 
 #include "GenericOSCQueryCommand.h"
 
-GenericOSCQueryCommand::GenericOSCQueryCommand(GenericOSCQueryModule * oscQuerymodule, CommandContext context, var params, Multiplex * multiplex) :
-	BaseCommand(oscQueryModule, context, params, multiplex),
-	oscQueryModule(oscQueryModule),
-	valueParam(nullptr)
+GenericOSCQueryCommand::GenericOSCQueryCommand(GenericOSCQueryModule * _oscQuerymodule, CommandContext context, var params, Multiplex * multiplex) :
+	BaseCommand(_oscQuerymodule, context, params, multiplex),
+    oscQueryModule(_oscQuerymodule),
+    valueParam(nullptr)
 {
 	target = addTargetParameter("Target", "The target parameter to set", &oscQueryModule->valuesCC);
 	target->targetType = TargetParameter::CONTROLLABLE;

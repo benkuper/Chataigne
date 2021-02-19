@@ -13,8 +13,9 @@
 
 LinkableParameterEditor::LinkableParameterEditor(ParameterLink* pLink, bool showMappingOptions) :
     InspectableEditor(pLink->parameter.get(), false),
-    link(pLink),
-    showMappingOptions(showMappingOptions)
+    showMappingOptions(showMappingOptions),
+    link(pLink)
+    
 {
     link->addAsyncParameterLinkListener(this);
 

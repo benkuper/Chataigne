@@ -68,11 +68,11 @@ void GenericControllableCommand::triggerInternal(int multiplexIndex)
 	{
 		if (value == nullptr) return;
 
-		if (c->type != TRIGGER) ((Parameter *)c)->setValue(getLinkedValue(value, multiplexIndex));
+		if (c->type != Parameter::TRIGGER) ((Parameter *)c)->setValue(getLinkedValue(value, multiplexIndex));
 	}
 	else if (action == TRIGGER)
 	{
-		if (c->type == TRIGGER) ((Trigger*)c)->trigger();
+		if (c->type == Parameter::TRIGGER) ((Trigger*)c)->trigger();
 	}
 }
 
