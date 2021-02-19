@@ -28,6 +28,7 @@ public:
 
     int mappingValueIndex;
     BaseMultiplexList* list;
+    WeakReference<Inspectable> listRef;
 
     Array<var> mappingValues;
     StringArray inputValueNames; //this is also reference to how many mapping inputs are available
@@ -54,8 +55,21 @@ public:
 
     var getInputMappingValue(var value);
 
+    void notifyLinkUpdated();
+
     var getJSONData();
     void loadJSONData(var data);
+
+    class ParameterLinkListener
+    {
+    public:
+        virtual ~ParameterLinkListener() {}
+        virtual void linkUpdated(ParameterLink * pLink) {}
+    };
+
+    ListenerList<ParameterLinkListener> parameterLinkListeners;
+    void addParameterLinkListener(ParameterLinkListener* newListener) { parameterLinkListeners.add(newListener); }
+    void removeParameterLinkListener(ParameterLinkListener* listener) { parameterLinkListeners.remove(listener); }
 
     DECLARE_ASYNC_EVENT(ParameterLink, ParameterLink, paramLink, { LINK_UPDATED })
 };
@@ -63,7 +77,8 @@ public:
 
 class ParamLinkContainer :
     public ControllableContainer,
-    public MultiplexTarget
+    public MultiplexTarget,
+    public ParameterLink::ParameterLinkListener
 {
 public:
     ParamLinkContainer(const String& name, Multiplex * multiplex);

@@ -52,7 +52,11 @@ void CustomValuesCommandArgumentEditor::resizedInternalHeader(Rectangle<int>& r)
 	}
 	else
 	{
-		if (paramUI != nullptr) paramUI->setBounds(r.reduced(2));
+		if (paramUI != nullptr)
+		{
+			r.translate(0, 3);
+			paramUI->setBounds(r.withHeight(paramUI->getHeight()));
+		}
 	}
 }
 
@@ -62,8 +66,8 @@ void CustomValuesCommandArgumentEditor::resizedInternalContent(Rectangle<int>& r
 
 	if (editableUI != nullptr && paramUI != nullptr)
 	{
-		paramUI->setBounds(r.withHeight(paramUI->getHeight()));
-		r.translate(0, paramUI->getHeight() + 2);
+		//paramUI->setBounds(r.withHeight(paramUI->getHeight()));
+		//r.translate(0, paramUI->getHeight() + 2);
 	}
 }
 
@@ -74,7 +78,7 @@ void CustomValuesCommandArgumentEditor::childBoundsChanged(Component * child)
 		if (headerHeight != paramUI->getHeight() + 4)
 		{
 			headerHeight = paramUI->getHeight() + 4;
-			resized();
+			setSize(getWidth(), headerHeight);
 		}
 	}
 }

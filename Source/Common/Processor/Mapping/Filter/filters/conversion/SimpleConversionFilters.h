@@ -134,11 +134,15 @@ public:
 
 
 	enum RetargetMode { HUE = -1, SAT = -2, VAL = -3};
-
 	ColorParameter* baseColor;
+
+	int ghostOption;
 
 	Parameter* setupSingleParameterInternal(Parameter* sourceParam, int multiplexIndex) override;
 	ProcessResult processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex) override;
+
+	var getJSONData() override;
+	void loadJSONDataItemInternal(var data) override;
 
 	String getTypeString() const override { return "Convert To Color"; }
 

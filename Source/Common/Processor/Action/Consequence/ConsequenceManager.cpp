@@ -95,7 +95,7 @@ void ConsequenceManager::launcherFinished(StaggerLauncher* launcher)
 
 InspectableEditor* ConsequenceManager::getEditor(bool isRoot)
 {
-	return new BaseCommandHandlerManagerEditor<Consequence>(this, CommandContext::ACTION, isRoot);
+	return new BaseCommandHandlerManagerEditor<Consequence>(this, CommandContext::ACTION, isRoot, isMultiplexed());
 }
 
 ConsequenceManager::StaggerLauncher::StaggerLauncher(ConsequenceManager* csm, int multiplexIndex) :

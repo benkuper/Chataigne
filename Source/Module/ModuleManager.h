@@ -53,7 +53,7 @@ public:
 	}
 
 	//Command menu
-	PopupMenu getAllModulesCommandMenu(CommandContext context);
+	PopupMenu getAllModulesCommandMenu(CommandContext context, bool multiplexMode = false);
 	CommandDefinition* getCommandDefinitionForItemID(int itemID, Module* lockedModule);
 
 

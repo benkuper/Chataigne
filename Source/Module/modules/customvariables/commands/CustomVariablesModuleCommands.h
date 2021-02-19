@@ -41,10 +41,13 @@ public:
 	Parameter * value;
 	var ghostValueData;
 
+	void updateValueFromTarget();
 	void updateOperatorOptions();
 
 	void onContainerParameterChanged(Parameter * p) override;
 	void triggerInternal(int multiplexIndex) override;
+
+	void linkUpdated(ParameterLink* pLink) override;
 
 	static BaseCommand * create(ControllableContainer * module, CommandContext context, var params, Multiplex * multiplex = nullptr);
 };

@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    CommandChooserUI.cpp
-    Created: 4 Nov 2016 11:23:37am
-    Author:  bkupe
+	CommandChooserUI.cpp
+	Created: 4 Nov 2016 11:23:37am
+	Author:  bkupe
 
   ==============================================================================
 */
@@ -11,11 +11,12 @@
 #include "CommandChooserUI.h"
 #include "../CommandFactory.h"
 
-CommandChooserUI::CommandChooserUI(CommandContext _context) :
-context(_context),
-lockedModule(nullptr),
-commandIsSet(false),
-noTargetText("[Click to select a command]")
+CommandChooserUI::CommandChooserUI(CommandContext _context, bool multiplexMode) :
+	context(_context),
+	multiplexMode(multiplexMode),
+	lockedModule(nullptr),
+	commandIsSet(false),
+	noTargetText("[Click to select a command]")
 {
 	setInterceptsMouseClicks(true, true);
 
@@ -32,22 +33,21 @@ noTargetText("[Click to select a command]")
 	label.setText(noTargetText, dontSendNotification);
 	addAndMakeVisible(label);
 
-	
+
 }
 
 CommandChooserUI::~CommandChooserUI()
 {
 }
 
-void CommandChooserUI::paint(Graphics & g)
+void CommandChooserUI::paint(Graphics& g)
 {
 
-	Colour c = commandIsSet?GREEN_COLOR:NORMAL_COLOR;
+	Colour c = commandIsSet ? GREEN_COLOR : NORMAL_COLOR;
 	if (isMouseOver()) c = c.brighter();
 
 	g.setGradientFill(ColourGradient(c.brighter(), (float)getLocalBounds().getCentreX(), (float)getLocalBounds().getCentreY(), c.darker(), 2.f, 2.f, true));
 	g.fillRoundedRectangle(targetBT->getBounds().expanded(2).toFloat(), 2);
-
 }
 
 void CommandChooserUI::resized()
@@ -59,25 +59,25 @@ void CommandChooserUI::resized()
 }
 
 
-void CommandChooserUI::setLabel(const String & text)
+void CommandChooserUI::setLabel(const String& text)
 {
-	label.setText(text.isNotEmpty()?text:noTargetText, dontSendNotification);
+	label.setText(text.isNotEmpty() ? text : noTargetText, dontSendNotification);
 	commandIsSet = text.isNotEmpty();
 	repaint();
 }
 
 void CommandChooserUI::showPopupAndGetDefinition()
 {
-	CommandDefinition * d = CommandFactory::showMenuAndGetCommand(context,lockedModule);
+	CommandDefinition* d = CommandFactory::showMenuAndGetCommand(context, lockedModule, multiplexMode);
 	if (d != nullptr) chooserListeners.call(&Listener::definitionChosen, d);
 }
 
-void CommandChooserUI::mouseDown(const MouseEvent &)
+void CommandChooserUI::mouseDown(const MouseEvent&)
 {
 	showPopupAndGetDefinition();
 }
 
-void CommandChooserUI::buttonClicked(Button * b)
+void CommandChooserUI::buttonClicked(Button* b)
 {
 	if (b == targetBT.get()) {} // move code here ?
 }

@@ -11,7 +11,7 @@
 #include "MappingOutputManagerEditor.h"
 
 MappingOutputManagerEditor::MappingOutputManagerEditor(MappingOutputManager * output, bool isRoot) :
-	BaseCommandHandlerManagerEditor(output, CommandContext::MAPPING, isRoot),
+	BaseCommandHandlerManagerEditor(output, CommandContext::MAPPING, isRoot, output->isMultiplexed()),
 	outputManager(output)
 {
 	outputManager->addAsyncOutputManagerListener(this);

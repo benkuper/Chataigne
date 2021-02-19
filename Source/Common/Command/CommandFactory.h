@@ -17,5 +17,5 @@ class Module;
 class CommandFactory
 {
 public:
-	static CommandDefinition * showMenuAndGetCommand(CommandContext context, Module * lockedModule = nullptr);
+	static CommandDefinition * showMenuAndGetCommand(CommandContext context, Module * lockedModule = nullptr, bool multiplexMode = false);
 };

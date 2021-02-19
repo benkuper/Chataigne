@@ -116,11 +116,38 @@ CVCommand::~CVCommand()
 
 }
 
+void CVCommand::updateValueFromTarget()
+{
+	if (value != nullptr)
+	{
+		ghostValueData = value->getJSONData();
+		removeControllable(value);
+	}
+
+	Controllable* cvTarget = getLinkedTargetAs<Controllable>(target, 0); //use multiplex 0 to create param
+
+	if (cvTarget != nullptr) value = ControllableFactory::createParameterFrom(cvTarget);
+	else value = nullptr;
+
+	if (value != nullptr)
+	{
+		updateOperatorOptions();
+
+		if (!ghostValueData.isVoid()) value->loadJSONData(ghostValueData);
+		value->setNiceName("Value");
+
+		addParameter(value);
+		linkParamToMappingIndex(value, 0);
+	}
+}
+
 void CVCommand::updateOperatorOptions()
 {
 	var oldData = valueOperator->getValueData();
 	valueOperator->clearOptions();
 	valueOperator->addOption("Equals", EQUAL, false);
+
+	if (value == nullptr) return;
 
 	switch (value->type)
 	{
@@ -147,25 +174,7 @@ void CVCommand::onContainerParameterChanged(Parameter * p)
 {
 	if (p == target && type == SET_VALUE)
 	{
-		if (value != nullptr)
-		{
-			ghostValueData = value->getJSONData();
-			removeControllable(value);
-		}
-
-		if (target->target != nullptr) value = ControllableFactory::createParameterFrom(target->target);
-		else value = nullptr;
-
-		if (value != nullptr)
-		{
-			updateOperatorOptions();
-
-			if (!ghostValueData.isVoid()) value->loadJSONData(ghostValueData);
-			value->setNiceName("Value");
-		
-			addParameter(value);
-			linkParamToMappingIndex(value, 0);
-		}
+		updateValueFromTarget();
 
 	} else if (p == targetPreset || p == targetPreset2)
 	{
@@ -351,6 +360,11 @@ void CVCommand::triggerInternal(int multiplexIndex)
 
 	}
 
+}
+
+void CVCommand::linkUpdated(ParameterLink* pLink)
+{
+	if(pLink->parameter == target) updateValueFromTarget();
 }
 
 BaseCommand * CVCommand::create(ControllableContainer * module, CommandContext context, var params, Multiplex * multiplex)

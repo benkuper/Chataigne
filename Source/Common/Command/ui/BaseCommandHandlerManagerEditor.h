@@ -18,20 +18,23 @@ class BaseCommandHandlerManagerEditor :
 	public GenericManagerEditor<T>
 {
 public:
-	BaseCommandHandlerManagerEditor(BaseManager<T> * manager, CommandContext context,bool isRoot) :
-		GenericManagerEditor<T>(manager,isRoot),
-		context(context)
+	BaseCommandHandlerManagerEditor(BaseManager<T>* manager, CommandContext context, bool isRoot, bool multiplexMode) :
+		GenericManagerEditor<T>(manager, isRoot),
+		context(context),
+		multiplexMode(multiplexMode)
 	{
 
 	}
 
 	CommandContext context;
+	bool multiplexMode;
+
 	~BaseCommandHandlerManagerEditor() {}
 
 	
 	void showMenuAndAddItem(bool /*isFromAddButton*/) override
 	{
-		CommandDefinition * def = CommandFactory::showMenuAndGetCommand(context);
+		CommandDefinition * def = CommandFactory::showMenuAndGetCommand(context, nullptr, multiplexMode);
 		if (def == nullptr) return;
 		else
 		{

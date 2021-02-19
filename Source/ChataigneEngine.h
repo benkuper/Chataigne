@@ -13,6 +13,7 @@
 
 #include "JuceHeader.h"
 #include "Module/modules/generic/ChataigneGenericModule.h"
+#include "Module/modules/multiplex/MultiplexModule.h"
 
 class ChataigneEngine :
 	public Engine
@@ -22,6 +23,7 @@ public:
 	~ChataigneEngine();
 
 	ChataigneGenericModule module;
+	MultiplexModule multiplexModule;
 
 	//Global Settings
 	ControllableContainer defaultBehaviors;

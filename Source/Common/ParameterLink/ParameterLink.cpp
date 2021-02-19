@@ -32,13 +32,12 @@ void ParameterLink::multiplexCountChanged()
     mappingValues.resize(getMultiplexCount());
     mappingValues.fill(parameter->getValue().clone());
 
-    paramLinkNotifier.addMessage(new ParameterLinkEvent(ParameterLinkEvent::LINK_UPDATED, this));
-
+    notifyLinkUpdated();
 }
 
 void ParameterLink::multiplexPreviewIndexChanged()
 {
-    paramLinkNotifier.addMessage(new ParameterLinkEvent(ParameterLinkEvent::LINK_UPDATED, this));
+    notifyLinkUpdated();
 }
 
 void ParameterLink::setLinkType(LinkType type)
@@ -47,7 +46,7 @@ void ParameterLink::setLinkType(LinkType type)
     linkType = type;
     parameter->setControllableFeedbackOnly(linkType != NONE);
 
-    paramLinkNotifier.addMessage(new ParameterLinkEvent(ParameterLinkEvent::LINK_UPDATED, this));
+    notifyLinkUpdated();
 }
 
 var ParameterLink::getLinkedValue(int multiplexIndex)
@@ -86,7 +85,7 @@ var ParameterLink::getLinkedValue(int multiplexIndex)
     break;
 
     case MULTIPLEX_LIST:
-        if (list != nullptr)
+        if (listRef.wasObjectDeleted() && list != nullptr)
         {
             if (Parameter* p = dynamic_cast<Parameter*>(list->list[multiplexIndex]))
             {
@@ -124,7 +123,7 @@ WeakReference<ControllableContainer> ParameterLink::getLinkedTargetContainer(int
         return nullptr;
     };
 
-    if (linkType == MULTIPLEX_LIST && list != nullptr)
+    if (linkType == MULTIPLEX_LIST && list != nullptr && !listRef.wasObjectDeleted())
     {
         if (TargetParameter* p = dynamic_cast<TargetParameter*>(list->list[multiplexIndex])) return p->targetContainer;
     }
@@ -181,9 +180,10 @@ String ParameterLink::getReplacementString(int multiplexIndex)
                 {
                     if (isMultiplexed())
                     {
-                        if (BaseMultiplexList* list = multiplex->listManager.getItemWithName(dotSplit[1]))
+                        if (BaseMultiplexList* curList = multiplex->listManager.getItemWithName(dotSplit[1]))
                         {
-                            if (Parameter* lp = dynamic_cast<Parameter*>(list->list[multiplexIndex]))
+
+                            if (Parameter* lp = dynamic_cast<Parameter*>(curList->list[multiplexIndex]))
                             {
                                 result += lp->stringValue();
                             }
@@ -251,6 +251,14 @@ var ParameterLink::getInputMappingValue(var value)
     return result;
 }
 
+
+void ParameterLink::notifyLinkUpdated()
+{
+    parameterLinkListeners.call(&ParameterLinkListener::linkUpdated, this);
+    paramLinkNotifier.addMessage(new ParameterLinkEvent(ParameterLinkEvent::LINK_UPDATED, this));
+}
+
+
 var ParameterLink::getJSONData()
 {
     var data(new DynamicObject());
@@ -258,7 +266,7 @@ var ParameterLink::getJSONData()
     {
         data.getDynamicObject()->setProperty("linkType", linkType);
         if (linkType == MAPPING_INPUT) data.getDynamicObject()->setProperty("mappingValueIndex", mappingValueIndex);
-        else if (linkType == MULTIPLEX_LIST) data.getDynamicObject()->setProperty("list", list->shortName);
+        else if (linkType == MULTIPLEX_LIST && list != nullptr && !listRef.wasObjectDeleted()) data.getDynamicObject()->setProperty("list", list->shortName);
     }
 
     return data;
@@ -270,7 +278,11 @@ void ParameterLink::loadJSONData(var data)
 
     if (!data.isObject() || !isLinkable)  return;
     if (linkType == MAPPING_INPUT) mappingValueIndex = data.getProperty("mappingValueIndex", 0);
-    else if (linkType == MULTIPLEX_LIST) list = multiplex->listManager.getItemWithName(data.getProperty("list", ""));
+    else if (linkType == MULTIPLEX_LIST)
+    {
+        list = multiplex->listManager.getItemWithName(data.getProperty("list", ""));
+        listRef = list;
+    }
 }
 
 void ParameterLink::setInputNamesFromParams(Array<Parameter *> params)
@@ -290,7 +302,6 @@ void ParameterLink::setInputNamesFromParams(Array<Parameter *> params)
         }
     }
 }
-
 
 
 ParamLinkContainer::ParamLinkContainer(const String& name, Multiplex * multiplex) :
@@ -318,6 +329,8 @@ void ParamLinkContainer::onControllableAdded(Controllable* c)
         ParameterLink* pLink = new ParameterLink(p, multiplex);
         pLink->inputValueNames = inputNames;
 
+        pLink->addParameterLinkListener(this);
+
         paramLinks.add(pLink);
         paramLinkMap.set(p, pLink);
         linkParamMap.set(pLink, p);
@@ -326,6 +339,8 @@ void ParamLinkContainer::onControllableAdded(Controllable* c)
         {
             pLink->loadJSONData(ghostData.getProperty(pLink->parameter->shortName, var()));
         }
+
+
     }
 }
 
@@ -340,6 +355,9 @@ void ParamLinkContainer::onControllableRemoved(Controllable* c)
             {
                 if (ghostData.isVoid()) ghostData = new DynamicObject();
                 ghostData.getDynamicObject()->setProperty(pLink->parameter->shortName, pLink->getJSONData());
+                
+                pLink->removeParameterLinkListener(this);
+
                 linkParamMap.remove(pLink);
                 paramLinkMap.remove(p);
                 paramLinks.removeObject(pLink);

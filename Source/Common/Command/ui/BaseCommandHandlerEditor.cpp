@@ -17,7 +17,7 @@
 BaseCommandHandlerEditor::BaseCommandHandlerEditor(BaseCommandHandler * _handler, bool isRoot) :
 	BaseItemEditor(_handler, isRoot),
 	handler(_handler),
-	chooser(_handler->context)
+	chooser(_handler->context, _handler->isMultiplexed())
 {	
 	chooser.addChooserListener(this);
 	chooser.lockedModule = handler->lockedModule;

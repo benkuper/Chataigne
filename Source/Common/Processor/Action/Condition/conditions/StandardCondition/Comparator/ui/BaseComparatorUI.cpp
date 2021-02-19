@@ -21,6 +21,7 @@ BaseComparatorUI::BaseComparatorUI(BaseComparator * _comparator) :
 		if (comparator->refLink != nullptr)
 		{
 			refEditor.reset(new LinkableParameterEditor(comparator->refLink.get(), comparator->refLink->inputValueNames.size() > 0));
+			((LinkableParameterEditor*)refEditor.get())->paramEditor->setShowLabel(false);
 		}
 		else
 		{

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.8.0b6"
+<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.8.0b7"
               bundleIdentifier="benkuper.Chataigne" includeBinaryInAppConfig="1"
               companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
               companyEmail="benjamin@kuperberg.fr" defines="VST_LOGGING=0&#10;"
@@ -940,6 +940,18 @@
                   file="Source/Module/modules/generic/ChataigneGenericModule.cpp"/>
             <FILE id="H3Ll01" name="ChataigneGenericModule.h" compile="0" resource="0"
                   file="Source/Module/modules/generic/ChataigneGenericModule.h"/>
+          </GROUP>
+          <GROUP id="{CCA6F2B2-6DD2-EBB0-2E53-9FAE66A6048B}" name="multiplex">
+            <GROUP id="{ECA3BB0F-3BDB-C1B2-EF02-7A373ACBEC9A}" name="commands">
+              <FILE id="PjmFgj" name="MultiplexCommands.cpp" compile="1" resource="0"
+                    file="Source/Module/modules/multiplex/commands/MultiplexCommands.cpp"/>
+              <FILE id="THBrtq" name="MultiplexCommands.h" compile="0" resource="0"
+                    file="Source/Module/modules/multiplex/commands/MultiplexCommands.h"/>
+            </GROUP>
+            <FILE id="NZLbam" name="MultiplexModule.cpp" compile="1" resource="0"
+                  file="Source/Module/modules/multiplex/MultiplexModule.cpp"/>
+            <FILE id="rys1sf" name="MultiplexModule.h" compile="0" resource="0"
+                  file="Source/Module/modules/multiplex/MultiplexModule.h"/>
           </GROUP>
           <GROUP id="{72D3A60A-A4E1-7835-BFBD-16EB4B3F22B9}" name="midi">
             <GROUP id="{AA5CEC87-E463-31F8-573F-FFA7FBFDBF6E}" name="commands">

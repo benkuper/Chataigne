@@ -17,10 +17,11 @@ class CommandChooserUI :
 	public Button::Listener
 {
 public:
-	CommandChooserUI(CommandContext context);
+	CommandChooserUI(CommandContext context, bool multiplexMode = false);
 	virtual ~CommandChooserUI();
 
 	CommandContext context;
+	bool multiplexMode;
 
 	Module * lockedModule;
 

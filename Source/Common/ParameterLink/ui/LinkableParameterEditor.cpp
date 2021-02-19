@@ -142,6 +142,7 @@ void LinkableParameterEditor::buttonClicked(Button* b)
             {
                 link->setLinkType(link->MULTIPLEX_LIST);
                 link->list = link->multiplex->listManager.items[result - 1000];
+                link->listRef = link->list;
             }
             else
             {
@@ -169,12 +170,22 @@ String LinkableParameterEditor::getLinkLabel() const
     switch (link->linkType)
     {
     case ParameterLink::MAPPING_INPUT: 
-        s = "Input #" + String(link->mappingValueIndex + 1) + " : " + (link->mappingValues.size() == 0 ? "[notset]" : link->mappingValues[link->getPreviewIndex()][link->mappingValueIndex].toString());
+        s = "Input #" + String(link->mappingValueIndex + 1) + " : ";
+        if (link->mappingValues.size() == 0) s += "[notset]";
+        else
+        {
+            var mappingValue = link->mappingValues[link->getPreviewIndex()];
+            if (mappingValue.size() > link->mappingValueIndex) s += mappingValue[link->mappingValueIndex].toString();
+            else s += "[input #" + String(link->mappingValueIndex) + "]";
+        }
         break;
 
     case ParameterLink::MULTIPLEX_LIST: 
-        s = "List " + (link->list != nullptr ? link->list->niceName : "");
-        if (Parameter * c = dynamic_cast<Parameter *>(link->list->getTargetControllableAt(link->getPreviewIndex()))) s += " : " + c->stringValue();
+        if (link->list != nullptr && !link->listRef.wasObjectDeleted())
+        {
+            s = "List " + (link->list != nullptr ? link->list->niceName : "");
+            if (Parameter* c = dynamic_cast<Parameter*>(link->list->getTargetControllableAt(link->getPreviewIndex()))) s += " : " + c->stringValue();
+        }
         break;
     
     case ParameterLink::INDEX: s = "Index 1-" + String(link->getMultiplexCount()) +" : "+String(link->getPreviewIndex()+1); break;

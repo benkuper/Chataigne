@@ -332,6 +332,12 @@
     <Filter Include="Chataigne\Source\Module\modules\generic">
       <UniqueIdentifier>{3775C723-8EE4-9E22-A82D-231DDAD24CDF}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\multiplex\commands">
+      <UniqueIdentifier>{06FA83A6-5E7A-CCF5-2315-F25FE635434F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\multiplex">
+      <UniqueIdentifier>{BC2C6777-0B4C-49A2-62FA-2C5985C6C438}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Chataigne\Source\Module\modules\midi\commands">
       <UniqueIdentifier>{FE245321-8A8A-4EB7-F917-4E07C7165BAB}</UniqueIdentifier>
     </Filter>
@@ -1959,6 +1965,12 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\generic\ChataigneGenericModule.cpp">
       <Filter>Chataigne\Source\Module\modules\generic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Module\modules\multiplex\commands\MultiplexCommands.cpp">
+      <Filter>Chataigne\Source\Module\modules\multiplex\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Module\modules\multiplex\MultiplexModule.cpp">
+      <Filter>Chataigne\Source\Module\modules\multiplex</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\midi\commands\MIDICommands.cpp">
       <Filter>Chataigne\Source\Module\modules\midi\commands</Filter>
@@ -5849,6 +5861,12 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\generic\ChataigneGenericModule.h">
       <Filter>Chataigne\Source\Module\modules\generic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Module\modules\multiplex\commands\MultiplexCommands.h">
+      <Filter>Chataigne\Source\Module\modules\multiplex\commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Module\modules\multiplex\MultiplexModule.h">
+      <Filter>Chataigne\Source\Module\modules\multiplex</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\midi\commands\MIDICommands.h">
       <Filter>Chataigne\Source\Module\modules\midi\commands</Filter>
