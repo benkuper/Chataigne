@@ -221,8 +221,7 @@ var ToPoint3DFilter::convertValue(Parameter * source, var sourceValue)
 
 ToColorFilter::ToColorFilter(var params, Multiplex* multiplex) :
 	SimpleConversionFilter(getTypeString(), params, ColorParameter::getTypeStringStatic(), multiplex),
-	baseColor(nullptr),
-	ghostOption(-1000)
+	baseColor(nullptr)
 {
 }
 
@@ -265,10 +264,11 @@ Parameter* ToColorFilter::setupSingleParameterInternal(Parameter* sourceParam, i
 
 	}
 
-	if (ghostOption != -1000)
+	if (ghostOptions.isObject())
 	{
-		retargetComponent->setValueWithData(ghostOption);
-		ghostOption = -1000;
+		retargetComponent->setValueWithData(ghostOptions.getProperty("retarget",HUE));
+		if(ghostOptions.hasProperty("color")) baseColor->setValue(ghostOptions.getDynamicObject()->getProperty("color"));
+		ghostOptions = var();
 	}
 
 	return p;
@@ -343,16 +343,19 @@ MappingFilter::ProcessResult ToColorFilter::processSingleParameterInternal(Param
 var ToColorFilter::getJSONData()
 {
 	var data = SimpleConversionFilter::getJSONData();
+	
+	ghostOptions = var(new DynamicObject());
+	ghostOptions.getDynamicObject()->setProperty("retarget", retargetComponent->getValueData());
+	ghostOptions.getDynamicObject()->setProperty("color", baseColor->getValue());
 
-	int retargetOption = (int)retargetComponent->getValueData();
-	if (retargetOption != -1000 && retargetOption < 0) data.getDynamicObject()->setProperty("ghostRetarget", retargetOption);
+	data.getDynamicObject()->setProperty("ghostOptions", ghostOptions);
 	return data;
 }
 
 void ToColorFilter::loadJSONDataItemInternal(var data)
 {
 	SimpleConversionFilter::loadJSONDataItemInternal(data);
-	 ghostOption = data.getProperty("ghostRetarget", -1000);
+	ghostOptions = data.getProperty("ghostOptions", var());
 }
 
 ToBooleanFilter::ToBooleanFilter(var params, Multiplex* multiplex) :

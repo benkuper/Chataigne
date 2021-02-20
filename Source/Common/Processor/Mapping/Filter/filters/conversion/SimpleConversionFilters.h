@@ -136,7 +136,7 @@ public:
 	enum RetargetMode { HUE = -1, SAT = -2, VAL = -3};
 	ColorParameter* baseColor;
 
-	int ghostOption;
+	var ghostOptions;
 
 	Parameter* setupSingleParameterInternal(Parameter* sourceParam, int multiplexIndex) override;
 	ProcessResult processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex) override;
