@@ -50,6 +50,7 @@ MappingInput::MappingInput(var params, Multiplex * processor) :
 MappingInput::~MappingInput()
 {
 	clear();
+	if(list != nullptr) list->removeListListener(this);
 }
 
 void MappingInput::lockInput(Parameter* input)

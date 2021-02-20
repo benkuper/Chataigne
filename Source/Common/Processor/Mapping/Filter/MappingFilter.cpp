@@ -177,6 +177,8 @@ MappingFilter::ProcessResult  MappingFilter::processInternal(Array<Parameter*> i
 
 		Parameter* fParam = mFilteredParams->getUnchecked(i);
 
+		if (mSourceParams[i].wasObjectDeleted() || mSourceParams[i] == nullptr) continue;
+
 		if (!filterTypeFilters.isEmpty() && !filterTypeFilters.contains(mSourceParams[i]->type))
 		{
 			fParam->setValue(inputs[i]->getValue()); //direct transfer if not supposed to be taken

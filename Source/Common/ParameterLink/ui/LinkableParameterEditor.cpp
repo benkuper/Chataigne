@@ -140,9 +140,8 @@ void LinkableParameterEditor::buttonClicked(Button* b)
             else if (result == -3) link->setLinkType(link->INDEX);
             else if (result >= 1000)
             {
-                link->setLinkType(link->MULTIPLEX_LIST);
-                link->list = link->multiplex->listManager.items[result - 1000];
-                link->listRef = link->list;
+                link->setLinkedList(link->multiplex->listManager.items[result - 1000]);
+              
             }
             else
             {
@@ -200,10 +199,14 @@ String LinkableParameterEditor::getLinkLabel() const
 void LinkableParameterEditor::newMessage(const ParameterLink::ParameterLinkEvent& e)
 {
     //linkBT->setToggleState(link->linkType != link->NONE, dontSendNotification);
-    bool visible = link->linkType == link->NONE || !link->isMultiplexed();
-    if (visible) addAndMakeVisible(paramEditor.get());
-    else removeChildComponent(paramEditor.get());
 
+    if (e.type == e.LINK_UPDATED)
+    {
+        bool visible = link->linkType == link->NONE || !link->isMultiplexed();
+        if (visible) addAndMakeVisible(paramEditor.get());
+        else removeChildComponent(paramEditor.get());
+    }
+  
     repaint();
 }
  

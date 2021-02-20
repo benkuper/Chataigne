@@ -13,6 +13,7 @@
 
 class ParameterLink :
     public MultiplexTarget,
+    public BaseMultiplexList::ListListener,
     public Inspectable::InspectableListener
 {
 public:
@@ -39,7 +40,11 @@ public:
     void multiplexCountChanged() override;
     void multiplexPreviewIndexChanged() override;
 
+    void listItemUpdated(int multiplexIndex) override;
+
     void setLinkType(LinkType type);
+
+    void setLinkedList(BaseMultiplexList* _list);
 
     var getLinkedValue(int multiplexIndex = 0);
 
@@ -71,7 +76,7 @@ public:
     void addParameterLinkListener(ParameterLinkListener* newListener) { parameterLinkListeners.add(newListener); }
     void removeParameterLinkListener(ParameterLinkListener* listener) { parameterLinkListeners.remove(listener); }
 
-    DECLARE_ASYNC_EVENT(ParameterLink, ParameterLink, paramLink, { LINK_UPDATED })
+    DECLARE_ASYNC_EVENT(ParameterLink, ParameterLink, paramLink, ENUM_LIST(LINK_UPDATED, LIST_ITEM_UPDATED))
 };
 
 
