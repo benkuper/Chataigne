@@ -17,7 +17,7 @@ class ParameterLink :
     public Inspectable::InspectableListener
 {
 public:
-    enum LinkType {NONE, MAPPING_INPUT, MULTIPLEX_LIST, INDEX, INDEX_ZERO };
+    enum LinkType { NONE, MAPPING_INPUT, MULTIPLEX_LIST, INDEX, INDEX_ZERO, CV_PRESET_PARAM };
     
     ParameterLink(WeakReference<Parameter> p, Multiplex * multiplex = nullptr);
     ~ParameterLink();
@@ -27,9 +27,11 @@ public:
     LinkType linkType;
     WeakReference<Parameter> parameter;
 
+    //links
     int mappingValueIndex;
     BaseMultiplexList* list;
     WeakReference<Inspectable> listRef;
+    String presetParamName;
 
     Array<var> mappingValues;
     StringArray inputValueNames; //this is also reference to how many mapping inputs are available
@@ -45,6 +47,7 @@ public:
     void setLinkType(LinkType type);
 
     void setLinkedList(BaseMultiplexList* _list);
+    void setLinkedPresetParam(CVPresetMultiplexList* list, const String& paramName);
 
     var getLinkedValue(int multiplexIndex = 0);
 

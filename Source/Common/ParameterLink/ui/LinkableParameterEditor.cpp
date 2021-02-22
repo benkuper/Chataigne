@@ -10,6 +10,7 @@
 
 #include "LinkableParameterEditor.h"
 #include "UI/ChataigneAssetManager.h"
+#include "CustomVariables/CVGroup.h"
 
 LinkableParameterEditor::LinkableParameterEditor(ParameterLink* pLink, bool showMappingOptions) :
     InspectableEditor(pLink->parameter.get(), false),
@@ -54,6 +55,10 @@ void LinkableParameterEditor::paint(Graphics& g)
 
     case ParameterLink::MULTIPLEX_LIST:
         c = GREEN_COLOR.withBrightness(.7f);
+        break;
+
+    case ParameterLink::CV_PRESET_PARAM:
+        c = Colours::orange.withBrightness(.7f);
         break;
 
     case ParameterLink::INDEX:
@@ -120,10 +125,30 @@ void LinkableParameterEditor::buttonClicked(Button* b)
             for (int i = 0; i < link->multiplex->listManager.items.size(); i++)
             {
                 BaseMultiplexList* bli = link->multiplex->listManager.items[i];
-                bool t = link->linkType == link->MULTIPLEX_LIST && link->list == bli;
+                bool t = link->linkType == link->CV_PRESET_PARAM && link->list == bli;
                 ticked |= t;
 
-                itMenu.addItem(1000 + i, "List : " + bli->niceName, true, t);
+                if (CVPresetMultiplexList * pList = dynamic_cast<CVPresetMultiplexList *>(bli))
+                {
+                    if (CVGroup* group = dynamic_cast<CVGroup*>(pList->cvTarget->targetContainer.get()))
+                    {
+                        PopupMenu presetMenu;
+                        
+                        for (int j = 0; j < group->values.items.size(); j++)
+                        {
+                            bool pt = link->presetParamName == group->values.items[j]->shortName;
+                            presetMenu.addItem(10000 + i*100+j, group->values.items[j]->niceName, true, pt);
+                        }
+                        
+                        itMenu.addSubMenu("Presets : " + pList->niceName, presetMenu, true, Image(), t);
+                    }
+                }
+                else
+                {
+                    bool t = link->linkType == link->MULTIPLEX_LIST && link->list == bli;
+
+                    itMenu.addItem(1000 + i, "List : " + bli->niceName, true, t);
+                }
             }
 
             p.addSubMenu("From Multiplex", itMenu, true, Image(), ticked);
@@ -138,10 +163,24 @@ void LinkableParameterEditor::buttonClicked(Button* b)
             if (result == -1) link->setLinkType(link->NONE);
             else if (result == -2) link->setLinkType(link->INDEX_ZERO);
             else if (result == -3) link->setLinkType(link->INDEX);
+            else if (result >= 10000)
+            {
+                int r = result - 10000;
+                int listIndex = floorf(r / 100);
+                if (CVPresetMultiplexList* pList = dynamic_cast<CVPresetMultiplexList*>(link->multiplex->listManager.items[listIndex]))
+                {
+                    if (CVGroup* group = dynamic_cast<CVGroup*>(pList->cvTarget->targetContainer.get()))
+                    {
+                        int pIndex = r - listIndex * 100;
+                        String pName = group->values.items[pIndex]->shortName;
+                        link->setLinkedPresetParam(pList, pName);
+
+                    }
+                }
+            }
             else if (result >= 1000)
             {
                 link->setLinkedList(link->multiplex->listManager.items[result - 1000]);
-              
             }
             else
             {
@@ -179,16 +218,36 @@ String LinkableParameterEditor::getLinkLabel() const
         }
         break;
 
-    case ParameterLink::MULTIPLEX_LIST: 
+    case ParameterLink::MULTIPLEX_LIST:
         if (link->list != nullptr && !link->listRef.wasObjectDeleted())
         {
             s = "List " + (link->list != nullptr ? link->list->niceName : "");
             if (Parameter* c = dynamic_cast<Parameter*>(link->list->getTargetControllableAt(link->getPreviewIndex()))) s += " : " + c->stringValue();
         }
         break;
+
+    case ParameterLink::CV_PRESET_PARAM:
+        if (link->list != nullptr && !link->listRef.wasObjectDeleted())
+        {
+            s = (link->list != nullptr ? link->list->niceName : "");
+          
+            if (CVPresetMultiplexList* pList = dynamic_cast<CVPresetMultiplexList*>(link->list))
+            {
+                if (CVPreset* preset = pList->getPresetAt(link->getPreviewIndex()))
+                {
+                    s += " > "+preset->niceName;
+                    if (Parameter* c = pList->getPresetParameter(preset, link->presetParamName))
+                    {
+                        s += " > " + link->presetParamName + " : " + c->stringValue();
+                    }
+                }
+            }
+        }
+        break;
     
     case ParameterLink::INDEX: s = "Index 1-" + String(link->getMultiplexCount()) +" : "+String(link->getPreviewIndex()+1); break;
     case ParameterLink::INDEX_ZERO: s = "Index 0-" + String(link->getMultiplexCount() - 1) + " : " + String(link->getPreviewIndex()); break;
+    
     default:
         break;
     }

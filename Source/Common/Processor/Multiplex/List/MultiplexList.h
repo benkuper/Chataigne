@@ -12,6 +12,8 @@
 
 #include "JuceHeader.h"
 
+class CVPreset;
+
 struct IterativeContext
 {
     int indexInList;
@@ -30,6 +32,8 @@ public:
     void setSize(int size);
     
     virtual void updateControllablesSetup();
+
+    virtual Controllable* createListControllable();
 
     virtual var getJSONData() override;
     virtual void loadJSONData(var data, bool createIfNotThere = false) override;
@@ -59,7 +63,8 @@ class MultiplexList :
     public BaseMultiplexList
 {
 public:
-    MultiplexList(var params = var()) : BaseMultiplexList(T::getTypeStringStatic()+" List") {}
+    MultiplexList(var params = var()) : BaseMultiplexList(T::getTypeStringStatic()+" List", params) {}
+    MultiplexList(const String &name, var params = var()) : BaseMultiplexList(name, params) {}
     ~MultiplexList() {}
 
     void onContainerParameterChangedInternal(Parameter* p) override
@@ -97,7 +102,6 @@ public:
     InspectableEditor* getEditor(bool isRoot) override;
 
     String getTypeString() const override { return EnumParameter::getTypeStringStatic(); }
-
 };
 
 class InputValueMultiplexList :
@@ -121,4 +125,31 @@ public:
 
     String getTypeString() const override { return getTypeStringStatic(); }
     static String getTypeStringStatic() { return "Input Values"; }
+};
+
+class CVPresetMultiplexList :
+    public MultiplexList<EnumParameter>
+{
+public:
+    CVPresetMultiplexList(var params = var());
+    ~CVPresetMultiplexList();
+
+    TargetParameter* cvTarget;
+
+    virtual Controllable* createListControllable();
+
+    void controllableAdded(Controllable* c) override;
+    void onContainerParameterChangedInternal(Parameter* p) override;
+
+    void updateItemList(EnumParameter * p);
+
+
+    CVPreset* getPresetAt(int multiplexIndex);
+    Parameter* getPresetParameter(CVPreset* preset, const String& paramName);
+    Parameter* getPresetParameterAt(int multiplexIndex, const String& paramName);
+
+    InspectableEditor* getEditor(bool isRoot) override;
+
+    String getTypeString() const override { return getTypeStringStatic(); }
+    static String getTypeStringStatic() { return "Custom Variable Presets"; }
 };

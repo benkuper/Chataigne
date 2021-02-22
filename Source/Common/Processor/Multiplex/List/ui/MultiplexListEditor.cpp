@@ -123,3 +123,19 @@ void EnumMultiplexListEditor::EnumListOptionManager::EnumOptionUI::resized()
 	keyLabel.setBounds(getLocalBounds().removeFromLeft(getWidth() / 2).reduced(2));
 	valueLabel.setBounds(getLocalBounds().removeFromRight(getWidth() / 2).reduced(2));
 }
+
+CVPresetMultiplexListEditor::CVPresetMultiplexListEditor(CVPresetMultiplexList* eList, bool isRoot) :
+	BaseItemEditor(eList, isRoot)
+{
+	cvTargetUI.reset(eList->cvTarget->createTargetUI());
+	addAndMakeVisible(cvTargetUI.get());
+}
+
+CVPresetMultiplexListEditor::~CVPresetMultiplexListEditor()
+{
+}
+
+void CVPresetMultiplexListEditor::resizedInternalHeaderItemInternal(Rectangle<int>& r)
+{
+	cvTargetUI->setBounds(r.removeFromRight(120));
+}

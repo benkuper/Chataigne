@@ -29,6 +29,8 @@ MultiplexListManager::MultiplexListManager(Multiplex* mp) :
     factory.defs.add(Factory<BaseMultiplexList>::Definition::createDef<EnumMultiplexList>("Custom", EnumParameter::getTypeStringStatic()));
     factory.defs.add(Factory<BaseMultiplexList>::Definition::createDef<MultiplexList<FileParameter>>("Custom", FileParameter::getTypeStringStatic()));
 
+    factory.defs.add(Factory<BaseMultiplexList>::Definition::createDef<CVPresetMultiplexList>("", CVPresetMultiplexList::getTypeStringStatic()));
+
     managerFactory = &factory;
 }
 

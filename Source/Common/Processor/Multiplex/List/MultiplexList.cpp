@@ -11,6 +11,7 @@
 #include "MultiplexList.h"
 #include "Module/ModuleManager.h"
 #include "ui/MultiplexListEditor.h"
+#include "CustomVariables/CVGroupManager.h"
 
 BaseMultiplexList::BaseMultiplexList(const String& name, var params) :
     BaseItem(name, false),
@@ -42,12 +43,17 @@ void BaseMultiplexList::updateControllablesSetup()
 
     while (list.size() < listSize)
     {
-        Controllable* c = ControllableFactory::createControllable(getTypeString());
+        Controllable* c = createListControllable();
         c->isCustomizableByUser = true;
         c->setNiceName("#" + String(list.size() + 1));
         list.add(c);
         addControllable(c);
     }
+}
+
+Controllable* BaseMultiplexList::createListControllable()
+{
+    return ControllableFactory::createControllable(getTypeString());
 }
 
 var BaseMultiplexList::getJSONData()
@@ -244,3 +250,72 @@ InspectableEditor* EnumMultiplexList::getEditor(bool isRoot)
     return new EnumMultiplexListEditor(this, isRoot);
 }
 
+CVPresetMultiplexList::CVPresetMultiplexList(var params) :
+    MultiplexList(getTypeStringStatic(), params)
+{
+    cvTarget = addTargetParameter("Target", "The Custom Variable Group to target for presets", CVGroupManager::getInstance());
+    cvTarget->targetType = TargetParameter::CONTAINER;
+    cvTarget->customGetTargetContainerFunc = &CVGroupManager::showMenuAndGetGroup;
+    cvTarget->hideInEditor = true;
+}
+
+CVPresetMultiplexList::~CVPresetMultiplexList()
+{
+}
+
+Controllable* CVPresetMultiplexList::createListControllable()
+{
+    return EnumParameter::create();
+}
+
+void CVPresetMultiplexList::controllableAdded(Controllable* c)
+{
+    if (EnumParameter* ep = dynamic_cast<EnumParameter*>(c)) updateItemList(ep);
+}
+
+void CVPresetMultiplexList::onContainerParameterChangedInternal(Parameter* p)
+{
+    if (p == cvTarget)
+    {
+        for (auto& l : list) updateItemList((EnumParameter *)l);
+    }
+}
+
+void CVPresetMultiplexList::updateItemList(EnumParameter* p)
+{
+    var v = p->getValueData();
+    p->clearOptions();
+
+    if (CVGroup* group = dynamic_cast<CVGroup*>(cvTarget->targetContainer.get()))
+    {
+        for (auto& preset : group->pm->items)
+        {
+            p->addOption(preset->niceName, preset->shortName);
+        }
+    }
+}
+
+CVPreset * CVPresetMultiplexList::getPresetAt(int multiplexIndex)
+{
+    EnumParameter* ep = (EnumParameter*)getTargetControllableAt(multiplexIndex);
+    if (CVGroup* group = dynamic_cast<CVGroup*>(cvTarget->targetContainer.get())) return group->pm->getItemWithName(ep->getValueData());
+    return nullptr;
+}
+
+Parameter* CVPresetMultiplexList::getPresetParameter(CVPreset* preset, const String& paramName)
+{
+    if (ParameterPreset* pp = dynamic_cast<ParameterPreset*>(preset->values.getControllableContainerByName(paramName))) return pp->parameter;
+
+    return nullptr;
+}
+
+Parameter* CVPresetMultiplexList::getPresetParameterAt(int multiplexIndex, const String& paramName)
+{
+    if (CVPreset* preset = getPresetAt(multiplexIndex))  return getPresetParameter(preset, paramName);
+    return nullptr;
+}
+
+InspectableEditor* CVPresetMultiplexList::getEditor(bool isRoot)
+{
+    return new CVPresetMultiplexListEditor(this, isRoot);
+}

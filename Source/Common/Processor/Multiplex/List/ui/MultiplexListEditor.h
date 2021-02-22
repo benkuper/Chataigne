@@ -61,3 +61,15 @@ public:
 		void labelTextChanged(Label* l) override;
 	};
 };
+
+class CVPresetMultiplexListEditor :
+	public BaseItemEditor
+{
+public:
+	CVPresetMultiplexListEditor(CVPresetMultiplexList* eList, bool isRoot);
+	~CVPresetMultiplexListEditor();
+
+	std::unique_ptr<TargetParameterUI> cvTargetUI;
+
+	void resizedInternalHeaderItemInternal(Rectangle<int>& r) override;
+};
