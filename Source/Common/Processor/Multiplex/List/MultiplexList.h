@@ -33,6 +33,7 @@ public:
 
     virtual var getJSONData() override;
     virtual void loadJSONData(var data, bool createIfNotThere = false) override;
+    virtual void loadJSONDataMultiplexInternal(var data) {}
 
     virtual Controllable * getTargetControllableAt(int multiplexIndex) { return list[multiplexIndex]; }
 
@@ -72,6 +73,30 @@ public:
     void onContainerTriggerTriggered(Trigger* t) override { notifyItemUpdated(list.indexOf(t)); }
 
     String getTypeString() const override { return T::getTypeStringStatic(); }
+
+};
+
+class EnumMultiplexList :
+    public MultiplexList<EnumParameter>
+{
+public:
+    EnumMultiplexList(var params = var());
+    ~EnumMultiplexList();
+
+    OwnedArray<EnumParameter::EnumValue> referenceOptions;
+
+    void addOption(const String& key, const String& value);
+    void updateOption(int index, const String& key, const String& value);
+    void removeOption(const String& key);
+
+    void controllableAdded(Controllable* c) override;
+
+    var getJSONData() override;
+    void loadJSONDataMultiplexInternal(var data) override;
+
+    InspectableEditor* getEditor(bool isRoot) override;
+
+    String getTypeString() const override { return EnumParameter::getTypeStringStatic(); }
 
 };
 

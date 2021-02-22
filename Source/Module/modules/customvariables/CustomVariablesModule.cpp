@@ -241,6 +241,12 @@ void GenericControllableManagerLinkedContainer::enumOptionAdded(EnumParameter* s
 	syncItem(p, source);
 }
 
+void GenericControllableManagerLinkedContainer::enumOptionUpdated(EnumParameter* source, int index, const String&, const String&)
+{
+	Parameter* p = getParameterForSource(source);
+	syncItem(p, source);
+}
+
 void GenericControllableManagerLinkedContainer::enumOptionRemoved(EnumParameter* source, const String&)
 {
 	Parameter* p = getParameterForSource(source);

@@ -28,6 +28,7 @@
 		10F29E1523D25CF4900175AA /* ../../Source/Module/Routing/ui/ModuleRouterPanelView.cpp */ = {isa = PBXBuildFile; fileRef = A18B69298A0A42084F375802; };
 		117991AF65E7BA6903F22375 /* ../../Source/Module/modules/osc/OSCModule.cpp */ = {isa = PBXBuildFile; fileRef = 769CB47E8FAA18350633224B; };
 		11990C27A005FF3EB6FE95E0 /* ../../Source/Common/Processor/Mapping/Filter/filters/number/DampingFilter.cpp */ = {isa = PBXBuildFile; fileRef = 7CC48BF5AC5A35CF1B60C67F; };
+		11C3CDB95814A0AC6D28CDC7 /* ../../Source/Common/Processor/Multiplex/List/ui/MultiplexListEditor.cpp */ = {isa = PBXBuildFile; fileRef = 0D2CD58EBD7E4F9E6B6D1B69; };
 		12E8AA715EBA96516854D8F4 /* ../../Source/Common/Processor/Action/Condition/conditions/StandardCondition/Comparator/comparators/EnumComparator.cpp */ = {isa = PBXBuildFile; fileRef = 34349D7B20D357A0B5E78362; };
 		131B901A4A0E7AE64E5B3BAD /* ../../Source/Common/Processor/Action/Condition/ConditionManager.cpp */ = {isa = PBXBuildFile; fileRef = 10E36BD392E35F89F77DC7BA; };
 		147B092FC4523DA8CCE8660B /* ../../Source/Module/modules/osc/live/LiveOSCModule.cpp */ = {isa = PBXBuildFile; fileRef = 43FF3B8ECBF69AB0CED363AE; };
@@ -396,6 +397,7 @@
 		0C1C0CBF20BE5722919301E0 /* System/Library/Frameworks/CoreMedia.framework */ /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		0C38530C36FD7305A35DE178 /* ../../Source/Module/modules/controller/mouse/MouseModule.h */ /* MouseModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MouseModule.h; path = ../../Source/Module/modules/controller/mouse/MouseModule.h; sourceTree = SOURCE_ROOT; };
 		0C5AF857C59082628C2BDB1A /* ../../Resources/Templates/Scripts/streamingScriptTemplate.js */ /* streamingScriptTemplate.js */ = {isa = PBXFileReference; lastKnownFileType = file.js; name = streamingScriptTemplate.js; path = ../../Resources/Templates/Scripts/streamingScriptTemplate.js; sourceTree = SOURCE_ROOT; };
+		0D2CD58EBD7E4F9E6B6D1B69 /* ../../Source/Common/Processor/Multiplex/List/ui/MultiplexListEditor.cpp */ /* MultiplexListEditor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MultiplexListEditor.cpp; path = ../../Source/Common/Processor/Multiplex/List/ui/MultiplexListEditor.cpp; sourceTree = SOURCE_ROOT; };
 		0D583563EF3150154E0FA3C4 /* ../../Source/TimeMachine/Sequence/layers/mapping/color/ui/ColorMappingLayerTimeline.h */ /* ColorMappingLayerTimeline.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ColorMappingLayerTimeline.h; path = ../../Source/TimeMachine/Sequence/layers/mapping/color/ui/ColorMappingLayerTimeline.h; sourceTree = SOURCE_ROOT; };
 		0D9B10AF87FB00D8CF4E54A5 /* ../../Resources/stop.png */ /* stop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = stop.png; path = ../../Resources/stop.png; sourceTree = SOURCE_ROOT; };
 		0DBBCDD0D6FD50D57235BDA4 /* ../../Source/Analytics/MatomoAnalytics.cpp */ /* MatomoAnalytics.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MatomoAnalytics.cpp; path = ../../Source/Analytics/MatomoAnalytics.cpp; sourceTree = SOURCE_ROOT; };
@@ -513,6 +515,7 @@
 		37AF4B083458A95A4AC3BF0C /* ../../Source/Module/modules/controller/wiimote/WiimoteManager.cpp */ /* WiimoteManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = WiimoteManager.cpp; path = ../../Source/Module/modules/controller/wiimote/WiimoteManager.cpp; sourceTree = SOURCE_ROOT; };
 		37B0AB4D21E760006E845005 /* ../../Source/Module/modules/controller/wiimote/lib/wiiuse/events.c */ /* events.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = events.c; path = ../../Source/Module/modules/controller/wiimote/lib/wiiuse/events.c; sourceTree = SOURCE_ROOT; };
 		37E289E87C093EDA2DD5E0A9 /* ../../Source/Module/modules/controller/streamdeck/StreamDeck.cpp */ /* StreamDeck.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = StreamDeck.cpp; path = ../../Source/Module/modules/controller/streamdeck/StreamDeck.cpp; sourceTree = SOURCE_ROOT; };
+		37F77FEEC679769D2DEAFF71 /* ../../Source/Common/Processor/Multiplex/List/ui/MultiplexListEditor.h */ /* MultiplexListEditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MultiplexListEditor.h; path = ../../Source/Common/Processor/Multiplex/List/ui/MultiplexListEditor.h; sourceTree = SOURCE_ROOT; };
 		37FEFAEB18EF718BF7E845C1 /* ../../Source/TimeMachine/Sequence/layers/mapping/automation/2d/ui/Mapping2DLayerPanel.cpp */ /* Mapping2DLayerPanel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Mapping2DLayerPanel.cpp; path = ../../Source/TimeMachine/Sequence/layers/mapping/automation/2d/ui/Mapping2DLayerPanel.cpp; sourceTree = SOURCE_ROOT; };
 		38FCCBBA980FF4FF2D1F2DF5 /* ../../Source/Module/modules/multiplex/MultiplexModule.cpp */ /* MultiplexModule.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MultiplexModule.cpp; path = ../../Source/Module/modules/multiplex/MultiplexModule.cpp; sourceTree = SOURCE_ROOT; };
 		394CDA5516B2A8FB43FF8A6C /* ../../Source/Common/Command/BaseCommandHandler.cpp */ /* BaseCommandHandler.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = BaseCommandHandler.cpp; path = ../../Source/Common/Command/BaseCommandHandler.cpp; sourceTree = SOURCE_ROOT; };
@@ -2057,6 +2060,7 @@
 		644BE24AB87D2F051FE4A038 /* List */ = {
 			isa = PBXGroup;
 			children = (
+				8FA907EC03A20C106A1D0B2B,
 				D82215C4C7AB1F977D3D2B92,
 				98E016F4A116225BB074537A,
 				ABBC869EA2728AFB102E4155,
@@ -2435,6 +2439,15 @@
 			children = (
 				44595F730394CFE8407FDC81,
 				6F081A86026874032A18D721,
+			);
+			name = ui;
+			sourceTree = "<group>";
+		};
+		8FA907EC03A20C106A1D0B2B /* ui */ = {
+			isa = PBXGroup;
+			children = (
+				0D2CD58EBD7E4F9E6B6D1B69,
+				37F77FEEC679769D2DEAFF71,
 			);
 			name = ui;
 			sourceTree = "<group>";
@@ -3607,6 +3620,7 @@
 				354F03D3E4769822EA4BC06C,
 				3D0503C2719586ECB61BF520,
 				0FD278AD6A575E11A76D18C9,
+				11C3CDB95814A0AC6D28CDC7,
 				C1D6478B6784F625E959EC8A,
 				19E09108381DD7681315DE1D,
 				FF977AF12F2F7B2F3A7BD28C,
@@ -3964,7 +3978,7 @@
 					"VST_LOGGING=0",
 					"JUCE_SUPPORT_CARBON=0",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
-					"JUCE_APP_VERSION=1.8.0b10",
+					"JUCE_APP_VERSION=1.8.0b11",
 					"JUCE_APP_VERSION_HEX=0x10800",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
@@ -4030,7 +4044,7 @@
 					"VST_LOGGING=0",
 					"JUCE_SUPPORT_CARBON=0",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
-					"JUCE_APP_VERSION=1.8.0b10",
+					"JUCE_APP_VERSION=1.8.0b11",
 					"JUCE_APP_VERSION_HEX=0x10800",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.8.0b10"
+<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.8.0b11"
               bundleIdentifier="benkuper.Chataigne" includeBinaryInAppConfig="1"
               companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
               companyEmail="benjamin@kuperberg.fr" defines="VST_LOGGING=0&#10;"
@@ -515,6 +515,12 @@
           </GROUP>
           <GROUP id="{A5F6C593-CA3D-ABF9-1432-8CA293DE3A8B}" name="Multiplex">
             <GROUP id="{A2CE8EB2-0ECD-FE86-203D-F6A0934CC417}" name="List">
+              <GROUP id="{B9A44C0D-A7A5-3175-8250-2114F4E435AE}" name="ui">
+                <FILE id="GwZNsy" name="MultiplexListEditor.cpp" compile="1" resource="0"
+                      file="Source/Common/Processor/Multiplex/List/ui/MultiplexListEditor.cpp"/>
+                <FILE id="NT5lTc" name="MultiplexListEditor.h" compile="0" resource="0"
+                      file="Source/Common/Processor/Multiplex/List/ui/MultiplexListEditor.h"/>
+              </GROUP>
               <FILE id="wcuzhM" name="MultiplexList.cpp" compile="1" resource="0"
                     file="Source/Common/Processor/Multiplex/List/MultiplexList.cpp"/>
               <FILE id="ICTUSp" name="MultiplexList.h" compile="0" resource="0" file="Source/Common/Processor/Multiplex/List/MultiplexList.h"/>

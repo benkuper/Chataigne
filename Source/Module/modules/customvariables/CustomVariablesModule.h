@@ -64,6 +64,7 @@ public:
 	void itemRemoved(GenericControllableItem*) override;
 	void itemsReordered() override;
 	void enumOptionAdded(EnumParameter* source, const String&) override;
+	void enumOptionUpdated(EnumParameter* source, int index, const String&, const String&) override;
 	void enumOptionRemoved(EnumParameter * source, const String &) override;
 
 	void onContainerParameterChanged(Parameter* p) override;

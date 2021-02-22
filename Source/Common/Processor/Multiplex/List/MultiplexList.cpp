@@ -10,6 +10,7 @@
 
 #include "MultiplexList.h"
 #include "Module/ModuleManager.h"
+#include "ui/MultiplexListEditor.h"
 
 BaseMultiplexList::BaseMultiplexList(const String& name, var params) :
     BaseItem(name, false),
@@ -59,6 +60,7 @@ var BaseMultiplexList::getJSONData()
 void BaseMultiplexList::loadJSONData(var data, bool createIfNotThere)
 {
     setSize(data.getProperty("listSize", 0));
+    loadJSONDataMultiplexInternal(data);
     BaseItem::loadJSONData(data, createIfNotThere);
 }
 
@@ -134,7 +136,6 @@ void InputValueMultiplexList::onContainerParameterChangedInternal(Parameter* p)
             notifyItemUpdated(index);
         }
     }
-
 }
 
 void InputValueMultiplexList::onExternalParameterRangeChanged(Parameter* p)
@@ -151,3 +152,95 @@ void InputValueMultiplexList::onExternalTriggerTriggered(Trigger* t)
 {
     notifyItemUpdated(inputControllables.indexOf(t));
 }
+
+EnumMultiplexList::EnumMultiplexList(var params) :
+    MultiplexList(EnumParameter::getTypeStringStatic() + " List")
+{
+}
+
+EnumMultiplexList::~EnumMultiplexList()
+{
+}
+
+
+void EnumMultiplexList::addOption(const String& key, const String& value)
+{
+   // if (referenceOptions.contains(e)) return;
+    referenceOptions.add(new EnumParameter::EnumValue(key, value));
+
+    for (auto& c : list)
+    {
+        EnumParameter* ep = (EnumParameter*)c;
+        ep->addOption(key, value);
+    }
+}
+
+void EnumMultiplexList::updateOption(int index, const String& key, const String& value)
+{
+    if (index >= referenceOptions.size())
+    {
+        for (int i = 0; i < referenceOptions.size()-1; i++) addOption("#" + String(i + 1), "[notset]");
+        addOption(key, value);
+        return;
+    }
+
+   referenceOptions.set(index, new EnumParameter::EnumValue(key, value));
+   for (auto& c : list)
+   {
+       EnumParameter* ep = (EnumParameter*)c;
+       ep->updateOption(index, key, value);
+   }
+}
+
+void EnumMultiplexList::removeOption(const String& key)
+{
+    //if (!referenceOptions.contains(key)) return;
+    for (int i = 0; i < referenceOptions.size(); i++)
+    {
+        if (referenceOptions[i]->key == key)
+        {
+            referenceOptions.remove(i);
+            break;
+        }
+    }
+
+    for (auto& c : list)
+    {
+        EnumParameter* ep = (EnumParameter*)c;
+        ep->removeOption(key);
+    }
+}
+
+void EnumMultiplexList::controllableAdded(Controllable* c)
+{
+    if (EnumParameter* ep = dynamic_cast<EnumParameter*>(c))
+    {
+        for(auto & ev : referenceOptions) ep->addOption(ev->key, ev->value);
+    }
+
+    MultiplexList::controllableAdded(c);
+}
+
+var EnumMultiplexList::getJSONData()
+{
+    var data = MultiplexList::getJSONData();
+    var enumOptions(new DynamicObject());
+    for(auto & ev : referenceOptions) enumOptions.getDynamicObject()->setProperty(ev->key, ev->value);
+    data.getDynamicObject()->setProperty("enumOptions", enumOptions);
+    return data;
+}
+
+void EnumMultiplexList::loadJSONDataMultiplexInternal(var data)
+{
+    if (data.hasProperty("enumOptions"))
+    {
+       NamedValueSet optionsData = data.getProperty("enumOptions", var()).getDynamicObject()->getProperties();
+       for(auto & op : optionsData) addOption(op.name.toString(), op.value.toString());
+    }
+}
+
+InspectableEditor* EnumMultiplexList::getEditor(bool isRoot)
+{
+    return new EnumMultiplexListEditor(this, isRoot);
+}
+

@@ -146,6 +146,9 @@
     <Filter Include="Chataigne\Source\Common\Processor\Mapping">
       <UniqueIdentifier>{FDD41FA8-0139-F79C-B5C2-E8AFC2FC755B}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Chataigne\Source\Common\Processor\Multiplex\List\ui">
+      <UniqueIdentifier>{C417543D-E42E-B73E-E836-B328AA110978}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Chataigne\Source\Common\Processor\Multiplex\List">
       <UniqueIdentifier>{40D5DA42-C090-A9AE-1457-0BBB9B36FE04}</UniqueIdentifier>
     </Filter>
@@ -1662,6 +1665,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Common\Processor\Mapping\Mapping.cpp">
       <Filter>Chataigne\Source\Common\Processor\Mapping</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Multiplex\List\ui\MultiplexListEditor.cpp">
+      <Filter>Chataigne\Source\Common\Processor\Multiplex\List\ui</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Common\Processor\Multiplex\List\MultiplexList.cpp">
       <Filter>Chataigne\Source\Common\Processor\Multiplex\List</Filter>
@@ -5606,6 +5612,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Mapping.h">
       <Filter>Chataigne\Source\Common\Processor\Mapping</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\Processor\Multiplex\List\ui\MultiplexListEditor.h">
+      <Filter>Chataigne\Source\Common\Processor\Multiplex\List\ui</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\Processor\Multiplex\List\MultiplexList.h">
       <Filter>Chataigne\Source\Common\Processor\Multiplex\List</Filter>
