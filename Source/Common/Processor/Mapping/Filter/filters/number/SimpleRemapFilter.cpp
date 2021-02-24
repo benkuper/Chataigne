@@ -192,13 +192,17 @@ void SimpleRemapFilter::filterParamChanged(Parameter* p)
 	}
 	else if (p == targetOut)
 	{
-		for (auto& mFilteredParams : filteredParameters)
+		for (int i = 0; i < filteredParameters.size(); i++)
 		{
+			auto mFilteredParams = filteredParameters[i];
+
 			for (auto& f : *mFilteredParams)
 			{
+				var mRange = filterParams.getLinkedValue(targetOut, i);
+
 				if (f->type == Controllable::FLOAT || f->type == Controllable::INT)
 				{
-					f->setRange(jmin<float>(targetOut->x, targetOut->y), jmax<float>(targetOut->x, targetOut->y));
+					f->setRange(jmin<float>(mRange[0], mRange[1]), jmax<float>(mRange[0], mRange[1]));
 				}
 				else if(f->type == Controllable::POINT2D || f->type == Controllable::POINT3D)
 				{
@@ -206,8 +210,8 @@ void SimpleRemapFilter::filterParamChanged(Parameter* p)
 					var maxVal;
 					for (int i = 0; i < f->value.size(); i++)
 					{
-						minVal.append(jmin<float>(targetOut->x, targetOut->y));
-						maxVal.append(jmax<float>(targetOut->x, targetOut->y));
+						minVal.append(jmin<float>(mRange[0], mRange[1]));
+						maxVal.append(jmax<float>(mRange[0], mRange[1]));
 					}
 
 					f->setRange(minVal, maxVal);
