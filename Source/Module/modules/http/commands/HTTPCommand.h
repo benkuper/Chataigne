@@ -30,5 +30,8 @@ public:
 
 	void triggerInternal(int multiplexIndex) override;
 
+	var getJSONData() override;
+	void loadJSONDataInternal(var data) override;
+
 	static BaseCommand * create(ControllableContainer * module, CommandContext context, var params, Multiplex * multiplex) { return new HTTPCommand((HTTPModule *)module, context, params, multiplex); }
 };

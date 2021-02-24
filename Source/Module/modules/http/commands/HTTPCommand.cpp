@@ -42,3 +42,17 @@ void HTTPCommand::triggerInternal(int multiplexIndex)
 	
 	httpModule->sendRequest(getLinkedValue(address, multiplexIndex).toString(), method->getValueDataAsEnum<HTTPModule::RequestMethod>(), resultDataType->getValueDataAsEnum<HTTPModule::ResultDataType>(), requestParams, getLinkedValue(extraHeaders, multiplexIndex).toString());
 }
+
+var HTTPCommand::getJSONData()
+{
+	var data = BaseCommand::getJSONData();
+	var customValuesData = customValuesManager->getJSONData();
+	if (!customValuesData.isVoid()) data.getDynamicObject()->setProperty("argManager", customValuesData);
+	return data;
+}
+
+void HTTPCommand::loadJSONDataInternal(var data)
+{
+	BaseCommand::loadJSONDataInternal(data);
+	customValuesManager->loadJSONData(data.getProperty("argManager", var()), true);
+}
