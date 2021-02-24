@@ -48,6 +48,20 @@ void ParameterLink::setLinkType(LinkType type)
 {
 	if (type == linkType) return;
 	linkType = type;
+
+	if (linkType != MULTIPLEX_LIST && linkType != CV_PRESET_PARAM)
+	{
+		if (list != nullptr && !listRef.wasObjectDeleted())
+		{
+			list->removeListListener(this);
+			list = nullptr;
+			listRef = nullptr;
+		}
+	}
+
+	if (linkType != CV_PRESET_PARAM) presetParamName = "";
+
+
 	parameter->setControllableFeedbackOnly(linkType != NONE);
 
 	notifyLinkUpdated();
