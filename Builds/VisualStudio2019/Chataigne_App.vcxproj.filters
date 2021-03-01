@@ -9105,7 +9105,7 @@
     <ClInclude Include="..\..\Modules\juce_organicui\progress\ProgressNotifier.h">
       <Filter>JUCE Modules\juce_organicui\progress</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Modules\juce_organicui\remotecontrol\OSCInputHelper.h">
+    <ClInclude Include="..\..\Modules\juce_organicui\remotecontrol\OSCPacketHelper.h">
       <Filter>JUCE Modules\juce_organicui\remotecontrol</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Modules\juce_organicui\remotecontrol\OSCRemoteControl.h">
