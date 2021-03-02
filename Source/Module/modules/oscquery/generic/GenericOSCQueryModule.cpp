@@ -91,6 +91,7 @@ void GenericOSCQueryModule::sendOSCMessage(OSCMessage m)
 void GenericOSCQueryModule::sendOSCForControllable(Controllable* c)
 {
 	if (!enabled->boolValue()) return;
+	if (noFeedbackList.contains(c)) return;
 
 	String s = c->getControlAddress(&valuesCC);
 	try
@@ -463,7 +464,14 @@ void GenericOSCQueryModule::dataReceived(const MemoryBlock& data)
 		LOGERROR("Empty message");
 		return;
 	}
-	OSCHelpers::findControllableAndHandleMessage(&valuesCC, m);
+
+	if (Controllable* c = OSCHelpers::findControllable(&valuesCC, m))
+	{
+		noFeedbackList.add(c);
+		OSCHelpers::handleControllableForOSCMessage(c, m);
+		noFeedbackList.removeAllInstancesOf(c);
+	}
+
 }
 
 void GenericOSCQueryModule::messageReceived(const String& message)

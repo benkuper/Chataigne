@@ -59,11 +59,12 @@ public:
 	IntParameter * remotePort;
 	IntParameter* remoteOSCPort;
 	
-
 	OSCSender sender;
 	std::unique_ptr<SimpleWebSocketClient> wsClient;
 	bool hasListenExtension;
 	var treeData; //to keep on save
+
+	Array<Controllable*> noFeedbackList;
 
 
 	void setupWSClient();
