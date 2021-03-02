@@ -341,7 +341,7 @@
 #endif
 
 #ifndef    JUCE_IP_AND_PORT_DETECTION
- //#define JUCE_IP_AND_PORT_DETECTION 0
+ #define   JUCE_IP_AND_PORT_DETECTION 1
 #endif
 
 //==============================================================================
