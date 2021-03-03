@@ -31,6 +31,10 @@ ChataigneSequence::ChataigneSequence() :
 	midiSyncDevice = new MIDIDeviceParameter("Sync Devices");
 	addParameter(midiSyncDevice);
 	
+	mtcSyncOffset = addFloatParameter("Sync Offset", "The time to offset when sending and receiving", 0, 0);
+	mtcSyncOffset->defaultUI = FloatParameter::TIME;
+	reverseOffset = addBoolParameter("Reverse Offset", "This allows negative offset", false);
+
 	layerManager->factory.defs.add(SequenceLayerManager::LayerDefinition::createDef("", "Trigger", &ChataigneTriggerLayer::create, this));
 	layerManager->factory.defs.add(SequenceLayerManager::LayerDefinition::createDef("", Mapping1DLayer::getTypeStringStatic(), &Mapping1DLayer::create, this));
 	layerManager->factory.defs.add(SequenceLayerManager::LayerDefinition::createDef("", Mapping2DLayer::getTypeStringStatic(), &Mapping2DLayer::create, this));
@@ -165,14 +169,16 @@ void ChataigneSequence::onContainerParameterChangedInternal(Parameter* p)
 
 	if (mtcSender != nullptr)
 	{
+		float time = jlimit<float>(0, totalTime->floatValue(), currentTime->floatValue() - (mtcSyncOffset->floatValue() * (reverseOffset->boolValue() ? -1 : 1)));
+
 		if (p == currentTime)
 		{
-			if ((!isPlaying->boolValue() || isSeeking)) mtcSender->setPosition(currentTime->floatValue(), true);
+			if ((!isPlaying->boolValue() || isSeeking)) mtcSender->setPosition(time, true);
 		}
 		else if (p == playSpeed) mtcSender->setSpeedFactor(playSpeed->floatValue());
 		else if (p == isPlaying)
 		{
-			if (isPlaying->boolValue()) mtcSender->start(currentTime->floatValue());
+			if (isPlaying->boolValue()) mtcSender->start(time);
 			else  mtcSender->pause();
 		}
 	}
@@ -228,7 +234,7 @@ void ChataigneSequence::mtcTimeUpdated(bool isFullFrame)
 {
 	if (mtcReceiver == nullptr) return;
 
-	double time = mtcReceiver->getTime();
-	double diff = fabsf(currentTime->floatValue() - mtcReceiver->getTime());
+	double time = jlimit<float>(0, totalTime->floatValue(), mtcReceiver->getTime() + (mtcSyncOffset->floatValue() * (reverseOffset->boolValue() ? -1 : 1)));
+	double diff = fabsf(currentTime->floatValue() - time);
 	setCurrentTime(time, diff > 0.1, isFullFrame && !mtcReceiver->isPlaying);
 }

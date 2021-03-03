@@ -36,6 +36,8 @@ public:
 	MIDIDeviceParameter* midiSyncDevice;
 	std::unique_ptr<MTCSender> mtcSender;
 	std::unique_ptr<MTCReceiver> mtcReceiver;
+	FloatParameter* mtcSyncOffset;
+	BoolParameter* reverseOffset;
 
 	Factory<SequenceLayer> layerFactory;
 
