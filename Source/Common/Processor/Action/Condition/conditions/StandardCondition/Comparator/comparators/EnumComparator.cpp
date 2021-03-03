@@ -17,14 +17,14 @@ EnumComparator::EnumComparator(Parameter * sourceParam, Multiplex* multiplex) :
 	EnumParameter* ep = (EnumParameter *)sourceParam;
 
 	setReferenceParam(new EnumParameter("Reference", "Comparison Reference to check against source value"));
+	enumRef = (EnumParameter*)reference;
+
 	for (auto &ev : ep->enumValues) enumRef->addOption(ev->key, ev->value);
 
 	addCompareOption("=", equalsId);
 	addCompareOption("!=", differentId);
 
 	enumRef->setValue(ep->value, false, true, true);
-
-	reference = enumRef;
 }
 
 EnumComparator::~EnumComparator()
