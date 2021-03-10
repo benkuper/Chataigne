@@ -30,7 +30,6 @@
 		368B92472DCB538CCCA262BF /* ../../Source/Common/Serial/SerialDevice.cpp */ = {isa = PBXBuildFile; fileRef = 00EA533560FC6B154E4101C7; };
 		38055C0D7E224BD402A18C2A /* ../../Source/Module/modules/controller/wiimote/lib/wiiuse/os_nix.c */ = {isa = PBXBuildFile; fileRef = F4F243B4A118FB7C15ADC97A; };
 		382ACC3B858F0CF59BEA300D /* System/Library/Frameworks/OpenGL.framework */ = {isa = PBXBuildFile; fileRef = ACEC0AB4D367F7C1DA170CD9; };
-		3AB325F6B297ED2CDBC072A7 /* ../../Source/Common/Command/Template/CommandTemplateFactory.cpp */ = {isa = PBXBuildFile; fileRef = 5BE87C0D237209C94ED71DBB; };
 		3DA4FBFA38B39CDCD14B1EBC /* ../../Source/Common/DMX/device/DMXEnttecProDevice.cpp */ = {isa = PBXBuildFile; fileRef = D8760E30AE57946C8041AB52; };
 		41036DAC07D5075CB3AD6D33 /* ../../Source/Common/ParameterLink/ParameterLink.cpp */ = {isa = PBXBuildFile; fileRef = EA1E97F19E0B43C7EC126720; };
 		4218F765091045FC822AA302 /* ../../Source/TimeMachine/TimeMachineIncludes.cpp */ = {isa = PBXBuildFile; fileRef = 693EFA1B8916691D7568591A; };
@@ -94,7 +93,6 @@
 		AF39E567B08EC2A6120300D6 /* System/Library/Frameworks/CoreAudioKit.framework */ = {isa = PBXBuildFile; fileRef = F7C65A10F005D2BA26D357E8; };
 		B050F5083544AB5C4F060D54 /* ../../Source/Common/Command/CustomValues/ui/CustomValuesCommandArgumentEditor.cpp */ = {isa = PBXBuildFile; fileRef = F56AD1F7A1FFB055336F6891; };
 		B12202FBA35A3441BBBD93BD /* ../../Source/Common/DMX/DMXManager.cpp */ = {isa = PBXBuildFile; fileRef = 4DE022C03AD2CDF75870B6DE; };
-		B1E03C9E738F6A6C372470A2 /* ../../Source/Common/Command/CommandIncludes.cpp */ = {isa = PBXBuildFile; fileRef = 276305E4ADA161E7950ECB23; };
 		B6614E8CDCC9AE8C59BF4C65 /* ../../JuceLibraryCode/include_juce_organicui4.cpp */ = {isa = PBXBuildFile; fileRef = 23DDF3B6DEC463FC8B8F1644; };
 		B7D1E9B2DB666FD0C4DA9CA2 /* ../../JuceLibraryCode/include_juce_events.mm */ = {isa = PBXBuildFile; fileRef = F7B87FFA7807F632CD294BA4; };
 		B84C47FC81D491DE8352F7A7 /* ../../JuceLibraryCode/include_juce_gui_basics.mm */ = {isa = PBXBuildFile; fileRef = 767E6C14CD8A82E65606EB02; };
@@ -249,7 +247,6 @@
 		25F87024F7686AF5C7769784 /* ../../Source/Common/DMX/device/DMXDevice.cpp */ /* DMXDevice.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DMXDevice.cpp; path = ../../Source/Common/DMX/device/DMXDevice.cpp; sourceTree = SOURCE_ROOT; };
 		2665551D6E0BDFF36D46306C /* ../../Source/Common/Command/CustomValues/CustomValuesCommandArgument.cpp */ /* CustomValuesCommandArgument.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CustomValuesCommandArgument.cpp; path = ../../Source/Common/Command/CustomValues/CustomValuesCommandArgument.cpp; sourceTree = SOURCE_ROOT; };
 		26B8DFD37FED7C63E88E3D25 /* ../../Source/TimeMachine/Sequence/layers/audio/ui/ChataigneAudioLayerTimeline.h */ /* ChataigneAudioLayerTimeline.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ChataigneAudioLayerTimeline.h; path = ../../Source/TimeMachine/Sequence/layers/audio/ui/ChataigneAudioLayerTimeline.h; sourceTree = SOURCE_ROOT; };
-		276305E4ADA161E7950ECB23 /* ../../Source/Common/Command/CommandIncludes.cpp */ /* CommandIncludes.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CommandIncludes.cpp; path = ../../Source/Common/Command/CommandIncludes.cpp; sourceTree = SOURCE_ROOT; };
 		278F096FADEA555F2103718E /* ../../Resources/Modules/Millumin.png */ /* Millumin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Millumin.png; path = ../../Resources/Modules/Millumin.png; sourceTree = SOURCE_ROOT; };
 		2836B9A143627258BC150671 /* ../../Source/Module/modules/osc/reaper/ReaperModule.h */ /* ReaperModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ReaperModule.h; path = ../../Source/Module/modules/osc/reaper/ReaperModule.h; sourceTree = SOURCE_ROOT; };
 		28EFBBA8F54380644B9AFDF2 /* ../../Source/Module/Routing/ModuleRouter.h */ /* ModuleRouter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ModuleRouter.h; path = ../../Source/Module/Routing/ModuleRouter.h; sourceTree = SOURCE_ROOT; };
@@ -407,7 +404,6 @@
 		5A60F64718B023B15C6B6F70 /* ../../Resources/Modules/Metronome.png */ /* Metronome.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Metronome.png; path = ../../Resources/Modules/Metronome.png; sourceTree = SOURCE_ROOT; };
 		5B9E2B5BB241EBB715F08431 /* ../../Source/CustomVariables/Preset/Morpher/ui/MorpherViewUI.cpp */ /* MorpherViewUI.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MorpherViewUI.cpp; path = ../../Source/CustomVariables/Preset/Morpher/ui/MorpherViewUI.cpp; sourceTree = SOURCE_ROOT; };
 		5BB5895E78590A3C0C655891 /* ../../Source/Module/modules/osc/resolume/commands/ResolumeFXCommand.h */ /* ResolumeFXCommand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ResolumeFXCommand.h; path = ../../Source/Module/modules/osc/resolume/commands/ResolumeFXCommand.h; sourceTree = SOURCE_ROOT; };
-		5BE87C0D237209C94ED71DBB /* ../../Source/Common/Command/Template/CommandTemplateFactory.cpp */ /* CommandTemplateFactory.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CommandTemplateFactory.cpp; path = ../../Source/Common/Command/Template/CommandTemplateFactory.cpp; sourceTree = SOURCE_ROOT; };
 		5C12A4316D9EC6B2970870E9 /* ../../Source/Common/MIDI/MIDIDeviceParameter.h */ /* MIDIDeviceParameter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MIDIDeviceParameter.h; path = ../../Source/Common/MIDI/MIDIDeviceParameter.h; sourceTree = SOURCE_ROOT; };
 		5C13AE7A8B665A7EA4229092 /* ../../Resources/Modules/TCP Client.png */ /* TCP Client.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "TCP Client.png"; path = "../../Resources/Modules/TCP Client.png"; sourceTree = SOURCE_ROOT; };
 		5C7B7096B6336C01EC92FB5D /* ../../Source/Common/Serial/lib/serial/impl/unix.cc */ /* unix.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = unix.cc; path = ../../Source/Common/Serial/lib/serial/impl/unix.cc; sourceTree = SOURCE_ROOT; };
@@ -616,7 +612,6 @@
 		A73E903AE8660391CF8BAD95 /* ../../Source/Module/Routing/ui/ModuleRouterPanelView.h */ /* ModuleRouterPanelView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ModuleRouterPanelView.h; path = ../../Source/Module/Routing/ui/ModuleRouterPanelView.h; sourceTree = SOURCE_ROOT; };
 		A744DB2EF1F3D5C1A1E99373 /* ../../Source/Module/modules/osc/resolume/commands/ResolumeFXCommand.cpp */ /* ResolumeFXCommand.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ResolumeFXCommand.cpp; path = ../../Source/Module/modules/osc/resolume/commands/ResolumeFXCommand.cpp; sourceTree = SOURCE_ROOT; };
 		A827068B7EA45A80070F2DFD /* ../../Source/Module/modules/system/os/commands/OSPowerCommand.h */ /* OSPowerCommand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OSPowerCommand.h; path = ../../Source/Module/modules/system/os/commands/OSPowerCommand.h; sourceTree = SOURCE_ROOT; };
-		A87E71AE27655568A3C3889D /* ../../Source/Common/Command/Template/CommandTemplateFactory.h */ /* CommandTemplateFactory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CommandTemplateFactory.h; path = ../../Source/Common/Command/Template/CommandTemplateFactory.h; sourceTree = SOURCE_ROOT; };
 		A87E90F4FDB303B941D32E3D /* ../../Source/Common/MIDI/MIDIDevice.h */ /* MIDIDevice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MIDIDevice.h; path = ../../Source/Common/MIDI/MIDIDevice.h; sourceTree = SOURCE_ROOT; };
 		A89E9815C9ABE0721FF8CB75 /* ../../Source/MainComponentCommands.cpp */ /* MainComponentCommands.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MainComponentCommands.cpp; path = ../../Source/MainComponentCommands.cpp; sourceTree = SOURCE_ROOT; };
 		A8E384B682BC530A73A99320 /* ../../Source/Common/Processor/Action/Condition/conditions/StandardCondition/StandardCondition.cpp */ /* StandardCondition.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = StandardCondition.cpp; path = ../../Source/Common/Processor/Action/Condition/conditions/StandardCondition/StandardCondition.cpp; sourceTree = SOURCE_ROOT; };
@@ -762,7 +757,6 @@
 		D536C855ED7831E4FFE3E4AF /* ../../Source/Common/InputSystem/InputDeviceHelpers.h */ /* InputDeviceHelpers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = InputDeviceHelpers.h; path = ../../Source/Common/InputSystem/InputDeviceHelpers.h; sourceTree = SOURCE_ROOT; };
 		D54C06A1B7C04F210C6039B8 /* ../../Source/Module/Routing/ui/ModuleRouterValueEditor.cpp */ /* ModuleRouterValueEditor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ModuleRouterValueEditor.cpp; path = ../../Source/Module/Routing/ui/ModuleRouterValueEditor.cpp; sourceTree = SOURCE_ROOT; };
 		D579C550266882E67F15AF24 /* ../../Source/Common/Processor/ui/ProcessorUI.cpp */ /* ProcessorUI.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ProcessorUI.cpp; path = ../../Source/Common/Processor/ui/ProcessorUI.cpp; sourceTree = SOURCE_ROOT; };
-		D59168A4AC7ED62AD0422F5C /* ../../Source/Common/Command/CommandIncludes.h */ /* CommandIncludes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CommandIncludes.h; path = ../../Source/Common/Command/CommandIncludes.h; sourceTree = SOURCE_ROOT; };
 		D59B4E874F4D619796456E27 /* ../../Source/Module/modules/osc/resolume/commands/ui/ResolumeBaseCommandEditor.cpp */ /* ResolumeBaseCommandEditor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ResolumeBaseCommandEditor.cpp; path = ../../Source/Module/modules/osc/resolume/commands/ui/ResolumeBaseCommandEditor.cpp; sourceTree = SOURCE_ROOT; };
 		D5A2ED2C3B119393DD165E8F /* ../../Source/Common/Processor/Action/Condition/conditions/StandardCondition/Comparator/comparators/BoolComparators.h */ /* BoolComparators.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = BoolComparators.h; path = ../../Source/Common/Processor/Action/Condition/conditions/StandardCondition/Comparator/comparators/BoolComparators.h; sourceTree = SOURCE_ROOT; };
 		D5FBA39828DF0F3D12B63CFF /* ../../Resources/Templates/Scripts/midiScriptTemplate.js */ /* midiScriptTemplate.js */ = {isa = PBXFileReference; lastKnownFileType = file.js; name = midiScriptTemplate.js; path = ../../Resources/Templates/Scripts/midiScriptTemplate.js; sourceTree = SOURCE_ROOT; };
@@ -1129,8 +1123,6 @@
 				9468DCF8AB612DCE2D6575E3,
 				55061C5BEAC3CA82CAED15A2,
 				6DAB0FB37CD6A7C9A1BC50D2,
-				5BE87C0D237209C94ED71DBB,
-				A87E71AE27655568A3C3889D,
 				B659B9A2F92F0E7A59C628DD,
 				F368B34014E1E66273070D7B,
 				B63560F060FE73D4403EF4A9,
@@ -1401,8 +1393,6 @@
 		308900D44331CCF323509065 /* Command */ = {
 			isa = PBXGroup;
 			children = (
-				276305E4ADA161E7950ECB23,
-				D59168A4AC7ED62AD0422F5C,
 				75C8AB5DDD8267904045E02C,
 				AA3DEB38832446780B66F822,
 				198522C2EAE1DBF87F07B849,
@@ -3356,7 +3346,6 @@
 				6648A28A780225272E677EAE,
 				43E1EC2D9919CC1742754AA5,
 				D5BA72E6B1F43C42CFDDCE35,
-				B1E03C9E738F6A6C372470A2,
 				B050F5083544AB5C4F060D54,
 				A17D02536AB8DADE3DA7150D,
 				9E241D38C497513417EC38B7,
@@ -3368,7 +3357,6 @@
 				0816AC57CC5C0DAE9EBFAC02,
 				A697B6FF5E6F510842584121,
 				FD6683580365B8A9DC4A396B,
-				3AB325F6B297ED2CDBC072A7,
 				723E8B142792CA2A7AFC31A8,
 				46C66B985D744A5FB6A3D13A,
 				783703DEB06726F193EAB671,

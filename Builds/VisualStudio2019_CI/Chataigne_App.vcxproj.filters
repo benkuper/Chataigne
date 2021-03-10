@@ -1426,9 +1426,6 @@
     <ClCompile Include="..\..\Source\Common\InputSystem\InputSystemManager.cpp">
       <Filter>Chataigne\Source\Common\InputSystem</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\Common\Command\CommandIncludes.cpp">
-      <Filter>Chataigne\Source\Common\Command</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Source\Common\Command\CustomValues\ui\CustomValuesCommandArgumentEditor.cpp">
       <Filter>Chataigne\Source\Common\Command\CustomValues\ui</Filter>
     </ClCompile>
@@ -1460,9 +1457,6 @@
       <Filter>Chataigne\Source\Common\Command\Template\ui</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Common\Command\Template\CommandTemplate.cpp">
-      <Filter>Chataigne\Source\Common\Command\Template</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Common\Command\Template\CommandTemplateFactory.cpp">
       <Filter>Chataigne\Source\Common\Command\Template</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Common\Command\Template\CommandTemplateManager.cpp">
@@ -5400,9 +5394,6 @@
     <ClInclude Include="..\..\Source\Common\InputSystem\InputSystemManager.h">
       <Filter>Chataigne\Source\Common\InputSystem</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\Common\Command\CommandIncludes.h">
-      <Filter>Chataigne\Source\Common\Command</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Source\Common\Command\CustomValues\ui\CustomValuesCommandArgumentEditor.h">
       <Filter>Chataigne\Source\Common\Command\CustomValues\ui</Filter>
     </ClInclude>
@@ -5437,9 +5428,6 @@
       <Filter>Chataigne\Source\Common\Command\Template\ui</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\Command\Template\CommandTemplate.h">
-      <Filter>Chataigne\Source\Common\Command\Template</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Common\Command\Template\CommandTemplateFactory.h">
       <Filter>Chataigne\Source\Common\Command\Template</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\Command\Template\CommandTemplateManager.h">

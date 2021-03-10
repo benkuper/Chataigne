@@ -153,10 +153,6 @@
                 file="Source/Common/InputSystem/InputSystemManager.h"/>
         </GROUP>
         <GROUP id="{E7C8AAFC-E2FA-90D0-859B-423BC528A52F}" name="Command">
-          <FILE id="rt4jjJ" name="CommandIncludes.cpp" compile="1" resource="0"
-                file="Source/Common/Command/CommandIncludes.cpp"/>
-          <FILE id="N6IZGd" name="CommandIncludes.h" compile="0" resource="0"
-                file="Source/Common/Command/CommandIncludes.h"/>
           <GROUP id="{47696C8D-14D3-710C-A88D-F786B79035DC}" name="CustomValues">
             <GROUP id="{F51CB230-4406-9766-8E80-5A71D7A5CA68}" name="ui">
               <FILE id="Pb2gPb" name="CustomValuesCommandArgumentEditor.cpp" compile="1"
@@ -169,11 +165,13 @@
                     compile="0" resource="0" file="Source/Common/Command/CustomValues/ui/CustomValuesCommandArgumentManagerEditor.h"/>
             </GROUP>
             <FILE id="BeSdkj" name="CustomValuesCommandArgument.cpp" compile="1"
-                  resource="0" file="Source/Common/Command/CustomValues/CustomValuesCommandArgument.cpp"/>
+                  resource="0" file="Source/Common/Command/CustomValues/CustomValuesCommandArgument.cpp"
+                  xcodeResource="0"/>
             <FILE id="N8nNxA" name="CustomValuesCommandArgument.h" compile="0"
                   resource="0" file="Source/Common/Command/CustomValues/CustomValuesCommandArgument.h"/>
             <FILE id="R5TQdV" name="CustomValuesCommandArgumentManager.cpp" compile="1"
-                  resource="0" file="Source/Common/Command/CustomValues/CustomValuesCommandArgumentManager.cpp"/>
+                  resource="0" file="Source/Common/Command/CustomValues/CustomValuesCommandArgumentManager.cpp"
+                  xcodeResource="0"/>
             <FILE id="HzlPDS" name="CustomValuesCommandArgumentManager.h" compile="0"
                   resource="0" file="Source/Common/Command/CustomValues/CustomValuesCommandArgumentManager.h"/>
           </GROUP>
@@ -212,10 +210,6 @@
                   file="Source/Common/Command/Template/CommandTemplate.cpp"/>
             <FILE id="p1OFbG" name="CommandTemplate.h" compile="0" resource="0"
                   file="Source/Common/Command/Template/CommandTemplate.h"/>
-            <FILE id="i5GkMB" name="CommandTemplateFactory.cpp" compile="1" resource="0"
-                  file="Source/Common/Command/Template/CommandTemplateFactory.cpp"/>
-            <FILE id="ezTNk5" name="CommandTemplateFactory.h" compile="0" resource="0"
-                  file="Source/Common/Command/Template/CommandTemplateFactory.h"/>
             <FILE id="fKhJTJ" name="CommandTemplateManager.cpp" compile="1" resource="0"
                   file="Source/Common/Command/Template/CommandTemplateManager.cpp"/>
             <FILE id="Im6koP" name="CommandTemplateManager.h" compile="0" resource="0"

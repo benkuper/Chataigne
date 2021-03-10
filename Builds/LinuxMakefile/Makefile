@@ -76,7 +76,6 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/ZeroconfManager_68129d03.o \
   $(JUCE_OBJDIR)/InputDeviceHelpers_f77a7a0.o \
   $(JUCE_OBJDIR)/InputSystemManager_a791f74f.o \
-  $(JUCE_OBJDIR)/CommandIncludes_84bb7e97.o \
   $(JUCE_OBJDIR)/CustomValuesCommandArgumentEditor_97209c24.o \
   $(JUCE_OBJDIR)/CustomValuesCommandArgumentManagerEditor_dc11806d.o \
   $(JUCE_OBJDIR)/CustomValuesCommandArgument_cf882c82.o \
@@ -88,7 +87,6 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/CommandTemplateManagerUI_dc305a4b.o \
   $(JUCE_OBJDIR)/CommandTemplateParameterEditor_a7196f80.o \
   $(JUCE_OBJDIR)/CommandTemplate_5181ffb9.o \
-  $(JUCE_OBJDIR)/CommandTemplateFactory_66cf2d1b.o \
   $(JUCE_OBJDIR)/CommandTemplateManager_6487023e.o \
   $(JUCE_OBJDIR)/CommandTemplateParameter_bfe2213a.o \
   $(JUCE_OBJDIR)/BaseCommand_2318dc9b.o \
@@ -226,11 +224,6 @@ $(JUCE_OBJDIR)/InputSystemManager_a791f74f.o: ../../Source/Common/InputSystem/In
 	@echo "Compiling InputSystemManager.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
-$(JUCE_OBJDIR)/CommandIncludes_84bb7e97.o: ../../Source/Common/Command/CommandIncludes.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling CommandIncludes.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
 $(JUCE_OBJDIR)/CustomValuesCommandArgumentEditor_97209c24.o: ../../Source/Common/Command/CustomValues/ui/CustomValuesCommandArgumentEditor.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling CustomValuesCommandArgumentEditor.cpp"
@@ -284,11 +277,6 @@ $(JUCE_OBJDIR)/CommandTemplateParameterEditor_a7196f80.o: ../../Source/Common/Co
 $(JUCE_OBJDIR)/CommandTemplate_5181ffb9.o: ../../Source/Common/Command/Template/CommandTemplate.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling CommandTemplate.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/CommandTemplateFactory_66cf2d1b.o: ../../Source/Common/Command/Template/CommandTemplateFactory.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling CommandTemplateFactory.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/CommandTemplateManager_6487023e.o: ../../Source/Common/Command/Template/CommandTemplateManager.cpp
