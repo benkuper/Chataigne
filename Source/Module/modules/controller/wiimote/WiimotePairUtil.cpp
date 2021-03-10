@@ -8,7 +8,6 @@
   ==============================================================================
 */
 
-#include "WiimotePairUtil.h"
 #pragma warning(disable:4995)
 
 bool WiiPairUtil::shouldStop = false;

@@ -10,8 +10,6 @@
 
 #pragma once
 
-#include "../MappingLayer.h"
-
 class MappingLayerEditor :
 	public BaseItemEditor
 {

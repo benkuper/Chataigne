@@ -10,7 +10,7 @@
 
 #include "ProcessorManagerUI.h"
 #include "Common/Command/CommandDefinition.h"
-#include "Module/ui/ModuleUI.h"
+#include "Module/ModuleIncludes.h"
 #include "StateMachine/StateManager.h"
 #include "Common/Processor/Action/Consequence/Consequence.h"
 #include "CustomVariables/CVGroup.h"

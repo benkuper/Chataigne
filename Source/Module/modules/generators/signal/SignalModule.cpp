@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "SignalModule.h"
-
 SignalModule::SignalModule() :
 	Module(getTypeString()),
 	Thread("Signal"),

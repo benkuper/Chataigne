@@ -10,11 +10,10 @@
 
 #pragma once
 
-#include "Module/modules/sequence/SequenceModule.h"
-
 class SequenceLayer;
 class TimeCue;
 class ChataigneSequence;
+class SequenceModule;
 
 class ChataigneSequenceManager :
 	public SequenceManager
@@ -27,7 +26,7 @@ public:
 
 	Sequence * createItem() override;
 
-	SequenceModule module;
+	std::unique_ptr<SequenceModule> module;
 
 	static Sequence* showMenuAndGetSequenceStatic();
 	static SequenceLayer* showmMenuAndGetLayerStatic();

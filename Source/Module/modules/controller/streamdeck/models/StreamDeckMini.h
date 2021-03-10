@@ -9,7 +9,6 @@
 */
 
 #pragma once
-#include "../StreamDeck.h"
 
 class StreamDeckMini :
 	public StreamDeck

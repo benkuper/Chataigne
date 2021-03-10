@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "Mapping1DLayer.h"
-#include "ui/Mapping1DLayerPanel.h"
-
 #include "Module/modules/midi/MIDIModule.h"
 #include "Module/modules/dmx/DMXModule.h"
 

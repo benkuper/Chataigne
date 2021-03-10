@@ -10,9 +10,6 @@
 
 #pragma once
 
-#include "../../ui/AutomationMappingLayerTimeline.h"
-#include "../Mapping2DLayer.h"
-
 class Mapping2DTimeline :
 	public AutomationMappingLayerTimeline
 {

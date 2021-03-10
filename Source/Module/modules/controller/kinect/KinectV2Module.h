@@ -10,8 +10,6 @@
 
 #pragma once
 
-#include "Module/Module.h"
-
 #if !JUCE_WINDOWS
 #define USE_KINECT 0
 #endif

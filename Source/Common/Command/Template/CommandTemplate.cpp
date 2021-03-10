@@ -10,7 +10,7 @@
 
 #include "CommandTemplate.h"
 #include "Common/Command/CommandDefinition.h"
-#include "Module/ModuleManager.h"
+#include "Module/ModuleIncludes.h"
 #include "ui/CommandTemplateEditor.h"
 
 CommandTemplate::CommandTemplate(Module * m, var params) :

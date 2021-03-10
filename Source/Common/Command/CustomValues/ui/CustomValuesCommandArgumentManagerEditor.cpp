@@ -10,7 +10,6 @@
 
 #include "CustomValuesCommandArgumentManagerEditor.h"
 
-
 CustomValuesCommandArgumentManagerEditor::CustomValuesCommandArgumentManagerEditor(CustomValuesCommandArgumentManager * manager, bool isRoot) :
 	GenericManagerEditor(manager, isRoot),
 	aManager(manager)

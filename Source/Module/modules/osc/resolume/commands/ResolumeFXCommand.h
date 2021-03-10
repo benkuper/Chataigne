@@ -10,8 +10,6 @@
 
 #pragma once
 
-#include "ResolumeBaseCommand.h"
-
 class ResolumeFXCommand :
 	public ResolumeBaseCommand
 {

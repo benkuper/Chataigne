@@ -11,7 +11,7 @@
 #pragma once
 
 #include "../BaseGuide.h"
-#include "Module/ModuleManager.h"
+#include "Module/ModuleIncludes.h"
 #include "Module/modules/controller/keyboard/KeyboardModule.h"
 #include "StateMachine/ui/StateMachineView.h"
 #include "Common/Processor/Action/Condition/conditions/StandardCondition/StandardCondition.h"

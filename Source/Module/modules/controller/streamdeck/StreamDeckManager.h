@@ -10,8 +10,6 @@
 
 #pragma once
 
-#include "StreamDeck.h"
-
 class StreamDeckManager :
 	public Timer
 {

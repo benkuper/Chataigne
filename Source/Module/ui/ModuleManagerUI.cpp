@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "ModuleManagerUI.h"
-#include "../ModuleFactory.h"
-
 ModuleManagerUI::ModuleManagerUI(const String &contentName, ModuleManager * _manager) :
 	BaseManagerShapeShifterUI<ModuleManager, Module, ModuleUI>(contentName, _manager)
 {

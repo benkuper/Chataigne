@@ -9,7 +9,7 @@
 */
 
 #include "MultiplexList.h"
-#include "Module/ModuleManager.h"
+#include "Module/ModuleIncludes.h"
 #include "ui/MultiplexListEditor.h"
 #include "CustomVariables/CVGroupManager.h"
 

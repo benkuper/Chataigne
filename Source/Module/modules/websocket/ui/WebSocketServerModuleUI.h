@@ -11,10 +11,6 @@
 #pragma once
 
 
-
-#include "../WebSocketServerModule.h"
-#include "Module/ui/ModuleUI.h"
-
 class WebSocketServerModuleUI :
 	public ModuleUI
 {

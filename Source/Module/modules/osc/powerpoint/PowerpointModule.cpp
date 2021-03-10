@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "PowerpointModule.h"
-#include "../commands/OSCCommand.h"
-
 ApplicationProperties& getAppProperties();
 
 PowerPointModule::PowerPointModule() :

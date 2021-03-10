@@ -9,7 +9,7 @@
 */
 
 #include "MappingInput.h"
-#include "Module/ModuleManager.h"
+#include "Module/ModuleIncludes.h"
 #include "ui/MappingInputEditor.h"
 
 MappingInput::MappingInput(var params, Multiplex * processor) :

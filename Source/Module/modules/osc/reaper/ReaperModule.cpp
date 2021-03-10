@@ -8,10 +8,6 @@
   ==============================================================================
 */
 
-#include "ReaperModule.h"
-#include "../commands/OSCCommand.h"
-#include "commands/ReaperTimeCommand.h"
-
 ReaperModule::ReaperModule() :
 	OSCModule("Reaper",9000,8000,false,true)
 {

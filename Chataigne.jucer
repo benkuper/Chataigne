@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.8.0b16"
+<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.8.0b17"
               bundleIdentifier="benkuper.Chataigne" includeBinaryInAppConfig="1"
               companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
               companyEmail="benjamin@kuperberg.fr" defines="VST_LOGGING=0&#10;"
@@ -95,17 +95,22 @@
     <GROUP id="{31908E9E-F626-E2D6-1A6D-E188C9D72C25}" name="Source">
       <GROUP id="{F784235F-A65F-E1E7-A5F1-8414A8D681B3}" name="Guider">
         <GROUP id="{48A8CB31-FB6F-D3BB-9B53-BCE38E8AF3B4}" name="guides">
-          <FILE id="zczlRA" name="BasicsGuide.cpp" compile="1" resource="0" file="Source/Guider/guides/BasicsGuide.cpp"/>
+          <FILE id="zczlRA" name="BasicsGuide.cpp" compile="0" resource="0" file="Source/Guider/guides/BasicsGuide.cpp"/>
           <FILE id="kOFuLO" name="BasicsGuide.h" compile="0" resource="0" file="Source/Guider/guides/BasicsGuide.h"/>
         </GROUP>
-        <FILE id="NyAvOG" name="BaseGuide.cpp" compile="1" resource="0" file="Source/Guider/BaseGuide.cpp"/>
+        <FILE id="NyAvOG" name="BaseGuide.cpp" compile="0" resource="0" file="Source/Guider/BaseGuide.cpp"
+              skipPCH="0"/>
         <FILE id="qKw3wA" name="BaseGuide.h" compile="0" resource="0" file="Source/Guider/BaseGuide.h"/>
-        <FILE id="ly4Ih6" name="GuideComponents.cpp" compile="1" resource="0"
+        <FILE id="ly4Ih6" name="GuideComponents.cpp" compile="0" resource="0"
               file="Source/Guider/GuideComponents.cpp"/>
         <FILE id="v6RsrQ" name="GuideComponents.h" compile="0" resource="0"
               file="Source/Guider/GuideComponents.h"/>
-        <FILE id="ZWl1KJ" name="Guider.cpp" compile="1" resource="0" file="Source/Guider/Guider.cpp"/>
+        <FILE id="ZWl1KJ" name="Guider.cpp" compile="0" resource="0" file="Source/Guider/Guider.cpp"/>
         <FILE id="djiZVX" name="Guider.h" compile="0" resource="0" file="Source/Guider/Guider.h"/>
+        <FILE id="bL3qql" name="GuiderIncludes.cpp" compile="1" resource="0"
+              file="Source/Guider/GuiderIncludes.cpp"/>
+        <FILE id="N5kOHU" name="GuiderIncludes.h" compile="0" resource="0"
+              file="Source/Guider/GuiderIncludes.h"/>
       </GROUP>
       <GROUP id="{C6C9402E-3E5F-DA24-8E22-DE4CD0AB4FD4}" name="Analytics">
         <FILE id="in1fwI" name="MatomoAnalytics.cpp" compile="1" resource="0"
@@ -114,6 +119,10 @@
               file="Source/Analytics/MatomoAnalytics.h"/>
       </GROUP>
       <GROUP id="{6C7DFFF7-D47E-97B5-FE74-27F24C7A349F}" name="Common">
+        <FILE id="eScte3" name="CommonIncludes.cpp" compile="1" resource="0"
+              file="Source/Common/CommonIncludes.cpp"/>
+        <FILE id="Vk4Wrq" name="CommonIncludes.h" compile="0" resource="0"
+              file="Source/Common/CommonIncludes.h"/>
         <GROUP id="{AEA2EA11-5F83-3667-AEAB-0100A58E13D4}" name="ParameterLink">
           <GROUP id="{FCEF77D8-67E9-75D4-5AED-A5132D3F6C5A}" name="ui">
             <FILE id="zV6kqB" name="LinkableParameterEditor.cpp" compile="1" resource="0"
@@ -144,6 +153,26 @@
                 file="Source/Common/InputSystem/InputSystemManager.h"/>
         </GROUP>
         <GROUP id="{E7C8AAFC-E2FA-90D0-859B-423BC528A52F}" name="Command">
+          <GROUP id="{47696C8D-14D3-710C-A88D-F786B79035DC}" name="CustomValues">
+            <GROUP id="{F51CB230-4406-9766-8E80-5A71D7A5CA68}" name="ui">
+              <FILE id="Pb2gPb" name="CustomValuesCommandArgumentEditor.cpp" compile="1"
+                    resource="0" file="Source/Common/Command/CustomValues/ui/CustomValuesCommandArgumentEditor.cpp"/>
+              <FILE id="c0lqaI" name="CustomValuesCommandArgumentEditor.h" compile="0"
+                    resource="0" file="Source/Common/Command/CustomValues/ui/CustomValuesCommandArgumentEditor.h"/>
+              <FILE id="L4GtPy" name="CustomValuesCommandArgumentManagerEditor.cpp"
+                    compile="1" resource="0" file="Source/Common/Command/CustomValues/ui/CustomValuesCommandArgumentManagerEditor.cpp"/>
+              <FILE id="iGnRKP" name="CustomValuesCommandArgumentManagerEditor.h"
+                    compile="0" resource="0" file="Source/Common/Command/CustomValues/ui/CustomValuesCommandArgumentManagerEditor.h"/>
+            </GROUP>
+            <FILE id="BeSdkj" name="CustomValuesCommandArgument.cpp" compile="1"
+                  resource="0" file="Source/Common/Command/CustomValues/CustomValuesCommandArgument.cpp"/>
+            <FILE id="N8nNxA" name="CustomValuesCommandArgument.h" compile="0"
+                  resource="0" file="Source/Common/Command/CustomValues/CustomValuesCommandArgument.h"/>
+            <FILE id="R5TQdV" name="CustomValuesCommandArgumentManager.cpp" compile="1"
+                  resource="0" file="Source/Common/Command/CustomValues/CustomValuesCommandArgumentManager.cpp"/>
+            <FILE id="HzlPDS" name="CustomValuesCommandArgumentManager.h" compile="0"
+                  resource="0" file="Source/Common/Command/CustomValues/CustomValuesCommandArgumentManager.h"/>
+          </GROUP>
           <GROUP id="{D2DBE4AC-35AB-8D3A-FE4E-BF5B8540D68E}" name="ui">
             <FILE id="Zp6xMX" name="BaseCommandEditor.cpp" compile="1" resource="0"
                   file="Source/Common/Command/ui/BaseCommandEditor.cpp"/>
@@ -625,6 +654,10 @@
           <FILE id="iadEms" name="CVGroupManagerUI.h" compile="0" resource="0"
                 file="Source/CustomVariables/ui/CVGroupManagerUI.h"/>
         </GROUP>
+        <FILE id="oZ6HgS" name="CustomVariablesIncludes.cpp" compile="1" resource="0"
+              file="Source/CustomVariables/CustomVariablesIncludes.cpp"/>
+        <FILE id="EadSEU" name="CustomVariablesIncludes.h" compile="0" resource="0"
+              file="Source/CustomVariables/CustomVariablesIncludes.h"/>
         <FILE id="ff4BwR" name="CVGroup.cpp" compile="1" resource="0" file="Source/CustomVariables/CVGroup.cpp"/>
         <FILE id="Kw9Hct" name="CVGroup.h" compile="0" resource="0" file="Source/CustomVariables/CVGroup.h"/>
         <FILE id="yrIHgg" name="CVGroupManager.cpp" compile="1" resource="0"
@@ -635,16 +668,16 @@
       <GROUP id="{8FC20544-FEBB-B3BA-CF48-50962AA7C07C}" name="Module">
         <GROUP id="{A24B14A8-FF67-ADCB-9E46-46C5033BFA49}" name="Community">
           <GROUP id="{B0B256D2-DAF2-F548-FCFC-1DCE42C15269}" name="ui">
-            <FILE id="mF1hZz" name="CommunityModuleInfoEditor.cpp" compile="1"
+            <FILE id="mF1hZz" name="CommunityModuleInfoEditor.cpp" compile="0"
                   resource="0" file="Source/Module/Community/ui/CommunityModuleInfoEditor.cpp"/>
             <FILE id="o923lk" name="CommunityModuleInfoEditor.h" compile="0" resource="0"
                   file="Source/Module/Community/ui/CommunityModuleInfoEditor.h"/>
           </GROUP>
-          <FILE id="V0waQO" name="CommunityModuleInfo.cpp" compile="1" resource="0"
+          <FILE id="V0waQO" name="CommunityModuleInfo.cpp" compile="0" resource="0"
                 file="Source/Module/Community/CommunityModuleInfo.cpp"/>
           <FILE id="VvXghT" name="CommunityModuleInfo.h" compile="0" resource="0"
                 file="Source/Module/Community/CommunityModuleInfo.h"/>
-          <FILE id="l8HbuY" name="CommunityModuleManager.cpp" compile="1" resource="0"
+          <FILE id="l8HbuY" name="CommunityModuleManager.cpp" compile="0" resource="0"
                 file="Source/Module/Community/CommunityModuleManager.cpp"/>
           <FILE id="F78gHh" name="CommunityModuleManager.h" compile="0" resource="0"
                 file="Source/Module/Community/CommunityModuleManager.h"/>
@@ -652,12 +685,12 @@
         <GROUP id="{6A9D374B-2C22-DB11-15C8-CA446252E36A}" name="modules">
           <GROUP id="{1845D9E2-AABC-AF10-DF83-FE7DD092D098}" name="customvariables">
             <GROUP id="{E384A9A3-5D10-939D-8450-418396EF3123}" name="commands">
-              <FILE id="flaypv" name="CustomVariablesModuleCommands.cpp" compile="1"
+              <FILE id="flaypv" name="CustomVariablesModuleCommands.cpp" compile="0"
                     resource="0" file="Source/Module/modules/customvariables/commands/CustomVariablesModuleCommands.cpp"/>
               <FILE id="yBDsj3" name="CustomVariablesModuleCommands.h" compile="0"
                     resource="0" file="Source/Module/modules/customvariables/commands/CustomVariablesModuleCommands.h"/>
             </GROUP>
-            <FILE id="wfIMCu" name="CustomVariablesModule.cpp" compile="1" resource="0"
+            <FILE id="wfIMCu" name="CustomVariablesModule.cpp" compile="0" resource="0"
                   file="Source/Module/modules/customvariables/CustomVariablesModule.cpp"/>
             <FILE id="fZhjtl" name="CustomVariablesModule.h" compile="0" resource="0"
                   file="Source/Module/modules/customvariables/CustomVariablesModule.h"/>
@@ -665,24 +698,24 @@
           <GROUP id="{0A217116-DCE5-942C-8079-6BBFE1C91ECE}" name="audio">
             <GROUP id="{71C72045-E424-24CD-C308-4E38FBAD64EE}" name="analysis">
               <GROUP id="{35423F5E-B088-ECF3-7E38-B45E7E33B141}" name="ui">
-                <FILE id="NY5u9u" name="FFTAnalyzerEditor.cpp" compile="1" resource="0"
+                <FILE id="NY5u9u" name="FFTAnalyzerEditor.cpp" compile="0" resource="0"
                       file="Source/Module/modules/audio/analysis/ui/FFTAnalyzerEditor.cpp"/>
                 <FILE id="KTzXK9" name="FFTAnalyzerEditor.h" compile="0" resource="0"
                       file="Source/Module/modules/audio/analysis/ui/FFTAnalyzerEditor.h"/>
-                <FILE id="stDStO" name="FFTAnalyzerManagerEditor.cpp" compile="1" resource="0"
+                <FILE id="stDStO" name="FFTAnalyzerManagerEditor.cpp" compile="0" resource="0"
                       file="Source/Module/modules/audio/analysis/ui/FFTAnalyzerManagerEditor.cpp"/>
                 <FILE id="y9bqPT" name="FFTAnalyzerManagerEditor.h" compile="0" resource="0"
                       file="Source/Module/modules/audio/analysis/ui/FFTAnalyzerManagerEditor.h"/>
               </GROUP>
-              <FILE id="HqFhXP" name="FFTAnalyzer.cpp" compile="1" resource="0" file="Source/Module/modules/audio/analysis/FFTAnalyzer.cpp"/>
+              <FILE id="HqFhXP" name="FFTAnalyzer.cpp" compile="0" resource="0" file="Source/Module/modules/audio/analysis/FFTAnalyzer.cpp"/>
               <FILE id="trkJIZ" name="FFTAnalyzer.h" compile="0" resource="0" file="Source/Module/modules/audio/analysis/FFTAnalyzer.h"/>
-              <FILE id="LBcrv3" name="FFTAnalyzerManager.cpp" compile="1" resource="0"
+              <FILE id="LBcrv3" name="FFTAnalyzerManager.cpp" compile="0" resource="0"
                     file="Source/Module/modules/audio/analysis/FFTAnalyzerManager.cpp"/>
               <FILE id="NzxWgS" name="FFTAnalyzerManager.h" compile="0" resource="0"
                     file="Source/Module/modules/audio/analysis/FFTAnalyzerManager.h"/>
             </GROUP>
             <GROUP id="{4A79FC82-A066-3853-4D6D-541B206D82F3}" name="commands">
-              <FILE id="zCTO4L" name="PlayAudioFileCommand.cpp" compile="1" resource="0"
+              <FILE id="zCTO4L" name="PlayAudioFileCommand.cpp" compile="0" resource="0"
                     file="Source/Module/modules/audio/commands/PlayAudioFileCommand.cpp"/>
               <FILE id="LENesG" name="PlayAudioFileCommand.h" compile="0" resource="0"
                     file="Source/Module/modules/audio/commands/PlayAudioFileCommand.h"/>
@@ -695,84 +728,63 @@
               </GROUP>
             </GROUP>
             <GROUP id="{D6A79DF6-7E0F-077A-2563-E293C99C916B}" name="ui">
-              <FILE id="KWlnaf" name="AudioModuleHardwareEditor.cpp" compile="1"
+              <FILE id="KWlnaf" name="AudioModuleHardwareEditor.cpp" compile="0"
                     resource="0" file="Source/Module/modules/audio/ui/AudioModuleHardwareEditor.cpp"/>
               <FILE id="pjesBX" name="AudioModuleHardwareEditor.h" compile="0" resource="0"
                     file="Source/Module/modules/audio/ui/AudioModuleHardwareEditor.h"/>
             </GROUP>
-            <FILE id="I4Tpyn" name="AudioModule.cpp" compile="1" resource="0" file="Source/Module/modules/audio/AudioModule.cpp"/>
+            <FILE id="I4Tpyn" name="AudioModule.cpp" compile="0" resource="0" file="Source/Module/modules/audio/AudioModule.cpp"/>
             <FILE id="o6qW7O" name="AudioModule.h" compile="0" resource="0" file="Source/Module/modules/audio/AudioModule.h"/>
           </GROUP>
           <GROUP id="{01EC461B-4BC5-C8F7-D379-477B101B8032}" name="common">
             <GROUP id="{FAB3DA65-9EC2-9C28-3056-B0C9309EFBEE}" name="commands">
               <GROUP id="{D2E06C78-3A38-5C4B-026F-DE4BEE83F13E}" name="scriptcallback">
-                <FILE id="kJSyrI" name="ScriptCallbackCommand.cpp" compile="1" resource="0"
+                <FILE id="kJSyrI" name="ScriptCallbackCommand.cpp" compile="0" resource="0"
                       file="Source/Module/modules/common/commands/scriptcallback/ScriptCallbackCommand.cpp"/>
                 <FILE id="EPqsRa" name="ScriptCallbackCommand.h" compile="0" resource="0"
                       file="Source/Module/modules/common/commands/scriptcallback/ScriptCallbackCommand.h"/>
               </GROUP>
               <GROUP id="{B061FF30-9D17-6208-8F0E-14FF411E0ACD}" name="scriptcommands">
-                <GROUP id="{93968D0B-6B90-7857-AA1F-30385F5B26FE}" name="ui"/>
-                <FILE id="Zh93Yg" name="ScriptCommand.cpp" compile="1" resource="0"
+                <FILE id="Zh93Yg" name="ScriptCommand.cpp" compile="0" resource="0"
                       file="Source/Module/modules/common/commands/scriptcommands/ScriptCommand.cpp"/>
                 <FILE id="TyysmI" name="ScriptCommand.h" compile="0" resource="0" file="Source/Module/modules/common/commands/scriptcommands/ScriptCommand.h"/>
-              </GROUP>
-              <GROUP id="{2A876849-C752-3B69-E7EB-761B1BAE2706}" name="customvalues">
-                <GROUP id="{C47D037A-FB57-ED07-BE4F-35E522DBD129}" name="ui">
-                  <FILE id="Iyg9rt" name="CustomValuesCommandArgumentEditor.cpp" compile="1"
-                        resource="0" file="Source/Module/modules/common/commands/customvalues/ui/CustomValuesCommandArgumentEditor.cpp"/>
-                  <FILE id="PVrwFl" name="CustomValuesCommandArgumentEditor.h" compile="0"
-                        resource="0" file="Source/Module/modules/common/commands/customvalues/ui/CustomValuesCommandArgumentEditor.h"/>
-                  <FILE id="EX3FYF" name="CustomValuesCommandArgumentManagerEditor.cpp"
-                        compile="1" resource="0" file="Source/Module/modules/common/commands/customvalues/ui/CustomValuesCommandArgumentManagerEditor.cpp"/>
-                  <FILE id="XjyHhP" name="CustomValuesCommandArgumentManagerEditor.h"
-                        compile="0" resource="0" file="Source/Module/modules/common/commands/customvalues/ui/CustomValuesCommandArgumentManagerEditor.h"/>
-                </GROUP>
-                <FILE id="UpbUq3" name="CustomValuesCommandArgument.cpp" compile="1"
-                      resource="0" file="Source/Module/modules/common/commands/customvalues/CustomValuesCommandArgument.cpp"/>
-                <FILE id="q0MsJ2" name="CustomValuesCommandArgument.h" compile="0"
-                      resource="0" file="Source/Module/modules/common/commands/customvalues/CustomValuesCommandArgument.h"/>
-                <FILE id="PgQdYo" name="CustomValuesCommandArgumentManager.cpp" compile="1"
-                      resource="0" file="Source/Module/modules/common/commands/customvalues/CustomValuesCommandArgumentManager.cpp"/>
-                <FILE id="unv17d" name="CustomValuesCommandArgumentManager.h" compile="0"
-                      resource="0" file="Source/Module/modules/common/commands/customvalues/CustomValuesCommandArgumentManager.h"/>
               </GROUP>
             </GROUP>
             <GROUP id="{237C1328-20FA-8B54-1D17-AB1BE288E59B}" name="streaming">
               <GROUP id="{A0F1C2FF-7AA5-F78E-9B40-5C542FF926EC}" name="commands">
-                <FILE id="ee1iuE" name="SendStreamRawDataCommand.cpp" compile="1" resource="0"
+                <FILE id="ee1iuE" name="SendStreamRawDataCommand.cpp" compile="0" resource="0"
                       file="Source/Module/modules/common/streaming/commands/SendStreamRawDataCommand.cpp"/>
                 <FILE id="aNpCEg" name="SendStreamRawDataCommand.h" compile="0" resource="0"
                       file="Source/Module/modules/common/streaming/commands/SendStreamRawDataCommand.h"/>
-                <FILE id="I1DsSL" name="SendStreamStringCommand.cpp" compile="1" resource="0"
+                <FILE id="I1DsSL" name="SendStreamStringCommand.cpp" compile="0" resource="0"
                       file="Source/Module/modules/common/streaming/commands/SendStreamStringCommand.cpp"/>
                 <FILE id="diugVS" name="SendStreamStringCommand.h" compile="0" resource="0"
                       file="Source/Module/modules/common/streaming/commands/SendStreamStringCommand.h"/>
-                <FILE id="nr0jls" name="SendStreamStringValuesCommand.cpp" compile="1"
+                <FILE id="nr0jls" name="SendStreamStringValuesCommand.cpp" compile="0"
                       resource="0" file="Source/Module/modules/common/streaming/commands/SendStreamStringValuesCommand.cpp"/>
                 <FILE id="y7Irad" name="SendStreamStringValuesCommand.h" compile="0"
                       resource="0" file="Source/Module/modules/common/streaming/commands/SendStreamStringValuesCommand.h"/>
-                <FILE id="s5jCcF" name="SendStreamValuesCommand.cpp" compile="1" resource="0"
+                <FILE id="s5jCcF" name="SendStreamValuesCommand.cpp" compile="0" resource="0"
                       file="Source/Module/modules/common/streaming/commands/SendStreamValuesCommand.cpp"/>
                 <FILE id="AXJdjt" name="SendStreamValuesCommand.h" compile="0" resource="0"
                       file="Source/Module/modules/common/streaming/commands/SendStreamValuesCommand.h"/>
-                <FILE id="S2X5WG" name="StreamingCommand.cpp" compile="1" resource="0"
+                <FILE id="S2X5WG" name="StreamingCommand.cpp" compile="0" resource="0"
                       file="Source/Module/modules/common/streaming/commands/StreamingCommand.cpp"/>
                 <FILE id="Of3gey" name="StreamingCommand.h" compile="0" resource="0"
                       file="Source/Module/modules/common/streaming/commands/StreamingCommand.h"/>
               </GROUP>
-              <FILE id="uGanro" name="NetworkStreamingModule.cpp" compile="1" resource="0"
+              <FILE id="uGanro" name="NetworkStreamingModule.cpp" compile="0" resource="0"
                     file="Source/Module/modules/common/streaming/NetworkStreamingModule.cpp"/>
               <FILE id="ap7EKF" name="NetworkStreamingModule.h" compile="0" resource="0"
                     file="Source/Module/modules/common/streaming/NetworkStreamingModule.h"/>
-              <FILE id="RAJ9uY" name="StreamingModule.cpp" compile="1" resource="0"
+              <FILE id="RAJ9uY" name="StreamingModule.cpp" compile="0" resource="0"
                     file="Source/Module/modules/common/streaming/StreamingModule.cpp"/>
               <FILE id="jj5gm0" name="StreamingModule.h" compile="0" resource="0"
                     file="Source/Module/modules/common/streaming/StreamingModule.h"/>
             </GROUP>
             <GROUP id="{2DA254DA-4DA5-79AD-A8DA-0FB366C902E9}" name="ui">
               <FILE id="IdQLT9" name="EnablingNetworkControllableContainerEditor.cpp"
-                    compile="1" resource="0" file="Source/Module/modules/common/ui/EnablingNetworkControllableContainerEditor.cpp"/>
+                    compile="0" resource="0" file="Source/Module/modules/common/ui/EnablingNetworkControllableContainerEditor.cpp"/>
               <FILE id="oPonTR" name="EnablingNetworkControllableContainerEditor.h"
                     compile="0" resource="0" file="Source/Module/modules/common/ui/EnablingNetworkControllableContainerEditor.h"/>
             </GROUP>
@@ -780,81 +792,81 @@
           <GROUP id="{A597C064-C7DE-23AD-F74A-2E029F90FCEA}" name="controller">
             <GROUP id="{188E8CA2-04CC-D878-F91F-A3EDE5E6A665}" name="mouse">
               <GROUP id="{76214040-3E5D-6DDE-134B-66DC1FAC3DDD}" name="commands">
-                <FILE id="qKD2RO" name="MouseModuleCommands.cpp" compile="1" resource="0"
+                <FILE id="qKD2RO" name="MouseModuleCommands.cpp" compile="0" resource="0"
                       file="Source/Module/modules/controller/mouse/commands/MouseModuleCommands.cpp"/>
                 <FILE id="LceN6H" name="MouseModuleCommands.h" compile="0" resource="0"
                       file="Source/Module/modules/controller/mouse/commands/MouseModuleCommands.h"/>
               </GROUP>
               <FILE id="fsxmhm" name="MouseMacFunctions.h" compile="0" resource="0"
                     file="Source/Module/modules/controller/mouse/MouseMacFunctions.h"/>
-              <FILE id="YSaYns" name="MouseModule.cpp" compile="1" resource="0" file="Source/Module/modules/controller/mouse/MouseModule.cpp"/>
+              <FILE id="YSaYns" name="MouseModule.cpp" compile="0" resource="0" file="Source/Module/modules/controller/mouse/MouseModule.cpp"/>
               <FILE id="pM3zML" name="MouseModule.h" compile="0" resource="0" file="Source/Module/modules/controller/mouse/MouseModule.h"/>
             </GROUP>
             <GROUP id="{8F6890F4-73F1-C709-3041-54E6E08838F1}" name="streamdeck">
               <GROUP id="{5846E3A2-6CB1-A070-1811-E4E3C52C814C}" name="models">
-                <FILE id="lChxs5" name="StreamDeckMini.cpp" compile="1" resource="0"
+                <FILE id="lChxs5" name="StreamDeckMini.cpp" compile="0" resource="0"
                       file="Source/Module/modules/controller/streamdeck/models/StreamDeckMini.cpp"/>
                 <FILE id="VxMi3I" name="StreamDeckMini.h" compile="0" resource="0"
                       file="Source/Module/modules/controller/streamdeck/models/StreamDeckMini.h"/>
-                <FILE id="tnjUQM" name="StreamDeckV1.cpp" compile="1" resource="0"
+                <FILE id="tnjUQM" name="StreamDeckV1.cpp" compile="0" resource="0"
                       file="Source/Module/modules/controller/streamdeck/models/StreamDeckV1.cpp"/>
                 <FILE id="OimxR1" name="StreamDeckV1.h" compile="0" resource="0" file="Source/Module/modules/controller/streamdeck/models/StreamDeckV1.h"/>
-                <FILE id="JWHOlg" name="StreamDeckV2.cpp" compile="1" resource="0"
+                <FILE id="JWHOlg" name="StreamDeckV2.cpp" compile="0" resource="0"
                       file="Source/Module/modules/controller/streamdeck/models/StreamDeckV2.cpp"/>
                 <FILE id="HsPC1y" name="StreamDeckV2.h" compile="0" resource="0" file="Source/Module/modules/controller/streamdeck/models/StreamDeckV2.h"/>
-                <FILE id="sW7OAf" name="StreamDeckXL.cpp" compile="1" resource="0"
+                <FILE id="sW7OAf" name="StreamDeckXL.cpp" compile="0" resource="0"
                       file="Source/Module/modules/controller/streamdeck/models/StreamDeckXL.cpp"/>
                 <FILE id="yEI2V5" name="StreamDeckXL.h" compile="0" resource="0" file="Source/Module/modules/controller/streamdeck/models/StreamDeckXL.h"/>
               </GROUP>
               <GROUP id="{913B8A45-77B5-B711-04D5-75EC35D70E4C}" name="commands">
-                <FILE id="iVwQ3o" name="StreamDeckCommand.cpp" compile="1" resource="0"
+                <FILE id="iVwQ3o" name="StreamDeckCommand.cpp" compile="0" resource="0"
                       file="Source/Module/modules/controller/streamdeck/commands/StreamDeckCommand.cpp"/>
                 <FILE id="w8vTKb" name="StreamDeckCommand.h" compile="0" resource="0"
                       file="Source/Module/modules/controller/streamdeck/commands/StreamDeckCommand.h"/>
               </GROUP>
-              <FILE id="d5RAM9" name="StreamDeck.cpp" compile="1" resource="0" file="Source/Module/modules/controller/streamdeck/StreamDeck.cpp"/>
+              <FILE id="d5RAM9" name="StreamDeck.cpp" compile="0" resource="0" file="Source/Module/modules/controller/streamdeck/StreamDeck.cpp"/>
               <FILE id="XnBZLE" name="StreamDeck.h" compile="0" resource="0" file="Source/Module/modules/controller/streamdeck/StreamDeck.h"/>
-              <FILE id="UgZLTU" name="StreamDeckManager.cpp" compile="1" resource="0"
+              <FILE id="UgZLTU" name="StreamDeckManager.cpp" compile="0" resource="0"
                     file="Source/Module/modules/controller/streamdeck/StreamDeckManager.cpp"/>
               <FILE id="RTRxqS" name="StreamDeckManager.h" compile="0" resource="0"
                     file="Source/Module/modules/controller/streamdeck/StreamDeckManager.h"/>
-              <FILE id="RWJ5Wj" name="StreamDeckModule.cpp" compile="1" resource="0"
+              <FILE id="RWJ5Wj" name="StreamDeckModule.cpp" compile="0" resource="0"
                     file="Source/Module/modules/controller/streamdeck/StreamDeckModule.cpp"/>
               <FILE id="MRe3Zu" name="StreamDeckModule.h" compile="0" resource="0"
                     file="Source/Module/modules/controller/streamdeck/StreamDeckModule.h"/>
             </GROUP>
             <GROUP id="{1D8065A9-6361-47B1-8256-D348748068B3}" name="joystick">
-              <FILE id="LydpTA" name="JoystickModule.cpp" compile="1" resource="0"
+              <FILE id="LydpTA" name="JoystickModule.cpp" compile="0" resource="0"
                     file="Source/Module/modules/controller/joystick/JoystickModule.cpp"/>
               <FILE id="aiNFeG" name="JoystickModule.h" compile="0" resource="0"
                     file="Source/Module/modules/controller/joystick/JoystickModule.h"/>
             </GROUP>
             <GROUP id="{81CA9ED1-A78B-1B6C-6449-0316B6990BA0}" name="gamepad">
-              <FILE id="qZW7y5" name="GamepadModule.cpp" compile="1" resource="0"
+              <FILE id="qZW7y5" name="GamepadModule.cpp" compile="0" resource="0"
                     file="Source/Module/modules/controller/gamepad/GamepadModule.cpp"/>
               <FILE id="K56p4X" name="GamepadModule.h" compile="0" resource="0" file="Source/Module/modules/controller/gamepad/GamepadModule.h"/>
             </GROUP>
             <GROUP id="{B2643A70-9424-FF0A-99E1-F824ED6B791A}" name="joycon">
-              <FILE id="zxI9EX" name="JoyConModule.cpp" compile="1" resource="0"
+              <FILE id="zxI9EX" name="JoyConModule.cpp" compile="0" resource="0"
                     file="Source/Module/modules/controller/joycon/JoyConModule.cpp"/>
               <FILE id="G3w16g" name="JoyConModule.h" compile="0" resource="0" file="Source/Module/modules/controller/joycon/JoyConModule.h"/>
             </GROUP>
             <GROUP id="{DD0E5C56-EE3B-3CF9-A333-D5778991DBAE}" name="keyboard">
               <GROUP id="{860517DB-8700-72CA-E905-B3BC181BC7E1}" name="commands">
-                <FILE id="mJHtL3" name="KeyboardModuleCommands.cpp" compile="1" resource="0"
+                <FILE id="mJHtL3" name="KeyboardModuleCommands.cpp" compile="0" resource="0"
                       file="Source/Module/modules/controller/keyboard/commands/KeyboardModuleCommands.cpp"/>
                 <FILE id="kfQ62u" name="KeyboardModuleCommands.h" compile="0" resource="0"
                       file="Source/Module/modules/controller/keyboard/commands/KeyboardModuleCommands.h"/>
               </GROUP>
               <FILE id="HIGkaL" name="KeyboardMacFunctions.h" compile="0" resource="0"
                     file="Source/Module/modules/controller/keyboard/KeyboardMacFunctions.h"/>
-              <FILE id="nudXpb" name="KeyboardModule.cpp" compile="1" resource="0"
+              <FILE id="nudXpb" name="KeyboardModule.cpp" compile="0" resource="0"
                     file="Source/Module/modules/controller/keyboard/KeyboardModule.cpp"/>
               <FILE id="CYr9Wv" name="KeyboardModule.h" compile="0" resource="0"
                     file="Source/Module/modules/controller/keyboard/KeyboardModule.h"/>
             </GROUP>
             <GROUP id="{122191F4-B849-F53D-521E-9F1E09A3A5C0}" name="kinect">
-              <FILE id="vmVn7s" name="KinectV2Module.cpp" compile="1" resource="0"
+              <FILE id="vmVn7s" name="KinectV2Module.cpp" compile="0" resource="0"
                     file="Source/Module/modules/controller/kinect/KinectV2Module.cpp"/>
               <FILE id="gkYUw8" name="KinectV2Module.h" compile="0" resource="0"
                     file="Source/Module/modules/controller/kinect/KinectV2Module.h"/>
@@ -884,14 +896,14 @@
                   <FILE id="HD6A7F" name="wiiuse.c" compile="1" resource="0" file="Source/Module/modules/controller/wiimote/lib/wiiuse/wiiuse.c"/>
                 </GROUP>
               </GROUP>
-              <FILE id="dICXsz" name="WiimoteManager.cpp" compile="1" resource="0"
+              <FILE id="dICXsz" name="WiimoteManager.cpp" compile="0" resource="0"
                     file="Source/Module/modules/controller/wiimote/WiimoteManager.cpp"/>
               <FILE id="QsA4bx" name="WiimoteManager.h" compile="0" resource="0"
                     file="Source/Module/modules/controller/wiimote/WiimoteManager.h"/>
-              <FILE id="t2BdyX" name="WiimoteModule.cpp" compile="1" resource="0"
+              <FILE id="t2BdyX" name="WiimoteModule.cpp" compile="0" resource="0"
                     file="Source/Module/modules/controller/wiimote/WiimoteModule.cpp"/>
               <FILE id="znEpon" name="WiimoteModule.h" compile="0" resource="0" file="Source/Module/modules/controller/wiimote/WiimoteModule.h"/>
-              <FILE id="hESUtE" name="WiimotePairUtil.cpp" compile="1" resource="0"
+              <FILE id="hESUtE" name="WiimotePairUtil.cpp" compile="0" resource="0"
                     file="Source/Module/modules/controller/wiimote/WiimotePairUtil.cpp"/>
               <FILE id="XcRtFc" name="WiimotePairUtil.h" compile="0" resource="0"
                     file="Source/Module/modules/controller/wiimote/WiimotePairUtil.h"/>
@@ -899,96 +911,96 @@
           </GROUP>
           <GROUP id="{EDF4ADAF-A6E6-5AE0-4BD1-F931B7209F8B}" name="dmx">
             <GROUP id="{69B4662D-C130-89C8-DA0B-1B6F04D71E02}" name="ui">
-              <FILE id="iGPlyP" name="DMXModuleUI.cpp" compile="1" resource="0" file="Source/Module/modules/dmx/ui/DMXModuleUI.cpp"/>
+              <FILE id="iGPlyP" name="DMXModuleUI.cpp" compile="0" resource="0" file="Source/Module/modules/dmx/ui/DMXModuleUI.cpp"/>
               <FILE id="goClo4" name="DMXModuleUI.h" compile="0" resource="0" file="Source/Module/modules/dmx/ui/DMXModuleUI.h"/>
             </GROUP>
             <GROUP id="{A202753D-C048-98A7-A8E3-8C78CCB509E3}" name="commands">
-              <FILE id="AJX20W" name="DMXCommand.cpp" compile="1" resource="0" file="Source/Module/modules/dmx/commands/DMXCommand.cpp"/>
+              <FILE id="AJX20W" name="DMXCommand.cpp" compile="0" resource="0" file="Source/Module/modules/dmx/commands/DMXCommand.cpp"/>
               <FILE id="Amd8dc" name="DMXCommand.h" compile="0" resource="0" file="Source/Module/modules/dmx/commands/DMXCommand.h"/>
             </GROUP>
-            <FILE id="wcRbI2" name="DMXModule.cpp" compile="1" resource="0" file="Source/Module/modules/dmx/DMXModule.cpp"/>
+            <FILE id="wcRbI2" name="DMXModule.cpp" compile="0" resource="0" file="Source/Module/modules/dmx/DMXModule.cpp"/>
             <FILE id="GosIxq" name="DMXModule.h" compile="0" resource="0" file="Source/Module/modules/dmx/DMXModule.h"/>
           </GROUP>
           <GROUP id="{F6E07A0F-0600-0FCB-C256-D4B83B1E0B0B}" name="generators">
             <GROUP id="{C041203B-F83E-A4BE-0FE7-BF297E2E733A}" name="metronome">
-              <FILE id="Npgc2J" name="MetronomeModule.cpp" compile="1" resource="0"
+              <FILE id="Npgc2J" name="MetronomeModule.cpp" compile="0" resource="0"
                     file="Source/Module/modules/generators/metronome/MetronomeModule.cpp"/>
               <FILE id="tHtCwC" name="MetronomeModule.h" compile="0" resource="0"
                     file="Source/Module/modules/generators/metronome/MetronomeModule.h"/>
             </GROUP>
             <GROUP id="{11BB05B6-3F6D-288D-3AA4-57A7354DAD26}" name="signal">
               <FILE id="SIH4dN" name="PerlinNoise.hpp" compile="0" resource="0" file="Source/Module/modules/generators/signal/PerlinNoise.hpp"/>
-              <FILE id="TxXTrl" name="SignalModule.cpp" compile="1" resource="0"
+              <FILE id="TxXTrl" name="SignalModule.cpp" compile="0" resource="0"
                     file="Source/Module/modules/generators/signal/SignalModule.cpp"/>
               <FILE id="d1nw10" name="SignalModule.h" compile="0" resource="0" file="Source/Module/modules/generators/signal/SignalModule.h"/>
             </GROUP>
           </GROUP>
           <GROUP id="{A3667F6F-03F6-7734-8482-D48D3C9DFDA3}" name="generic">
             <GROUP id="{DEF53CAE-03FA-CF0E-98A7-40ADDB9226DB}" name="commands">
-              <FILE id="E7ahvm" name="ChataigneLogCommand.cpp" compile="1" resource="0"
+              <FILE id="E7ahvm" name="ChataigneLogCommand.cpp" compile="0" resource="0"
                     file="Source/Module/modules/generic/commands/ChataigneLogCommand.cpp"/>
               <FILE id="ozjwZn" name="ChataigneLogCommand.h" compile="0" resource="0"
                     file="Source/Module/modules/generic/commands/ChataigneLogCommand.h"/>
-              <FILE id="kEIzuK" name="GenericAppCommand.cpp" compile="1" resource="0"
+              <FILE id="kEIzuK" name="GenericAppCommand.cpp" compile="0" resource="0"
                     file="Source/Module/modules/generic/commands/GenericAppCommand.cpp"/>
               <FILE id="BFIwYv" name="GenericAppCommand.h" compile="0" resource="0"
                     file="Source/Module/modules/generic/commands/GenericAppCommand.h"/>
-              <FILE id="b5ieQu" name="GenericControllableCommand.cpp" compile="1"
+              <FILE id="b5ieQu" name="GenericControllableCommand.cpp" compile="0"
                     resource="0" file="Source/Module/modules/generic/commands/GenericControllableCommand.cpp"/>
               <FILE id="wKdZSf" name="GenericControllableCommand.h" compile="0" resource="0"
                     file="Source/Module/modules/generic/commands/GenericControllableCommand.h"/>
-              <FILE id="Df8tfL" name="GenericScriptCommand.cpp" compile="1" resource="0"
+              <FILE id="Df8tfL" name="GenericScriptCommand.cpp" compile="0" resource="0"
                     file="Source/Module/modules/generic/commands/GenericScriptCommand.cpp"/>
               <FILE id="uU5f3k" name="GenericScriptCommand.h" compile="0" resource="0"
                     file="Source/Module/modules/generic/commands/GenericScriptCommand.h"/>
             </GROUP>
-            <FILE id="ltRfBR" name="ChataigneGenericModule.cpp" compile="1" resource="0"
+            <FILE id="ltRfBR" name="ChataigneGenericModule.cpp" compile="0" resource="0"
                   file="Source/Module/modules/generic/ChataigneGenericModule.cpp"/>
             <FILE id="H3Ll01" name="ChataigneGenericModule.h" compile="0" resource="0"
                   file="Source/Module/modules/generic/ChataigneGenericModule.h"/>
           </GROUP>
           <GROUP id="{CCA6F2B2-6DD2-EBB0-2E53-9FAE66A6048B}" name="multiplex">
             <GROUP id="{ECA3BB0F-3BDB-C1B2-EF02-7A373ACBEC9A}" name="commands">
-              <FILE id="PjmFgj" name="MultiplexCommands.cpp" compile="1" resource="0"
+              <FILE id="PjmFgj" name="MultiplexCommands.cpp" compile="0" resource="0"
                     file="Source/Module/modules/multiplex/commands/MultiplexCommands.cpp"/>
               <FILE id="THBrtq" name="MultiplexCommands.h" compile="0" resource="0"
                     file="Source/Module/modules/multiplex/commands/MultiplexCommands.h"/>
             </GROUP>
-            <FILE id="NZLbam" name="MultiplexModule.cpp" compile="1" resource="0"
+            <FILE id="NZLbam" name="MultiplexModule.cpp" compile="0" resource="0"
                   file="Source/Module/modules/multiplex/MultiplexModule.cpp"/>
             <FILE id="rys1sf" name="MultiplexModule.h" compile="0" resource="0"
                   file="Source/Module/modules/multiplex/MultiplexModule.h"/>
           </GROUP>
           <GROUP id="{72D3A60A-A4E1-7835-BFBD-16EB4B3F22B9}" name="midi">
             <GROUP id="{AA5CEC87-E463-31F8-573F-FFA7FBFDBF6E}" name="commands">
-              <FILE id="b959uH" name="MIDICommands.cpp" compile="1" resource="0"
+              <FILE id="b959uH" name="MIDICommands.cpp" compile="0" resource="0"
                     file="Source/Module/modules/midi/commands/MIDICommands.cpp"/>
               <FILE id="XXXL2t" name="MIDICommands.h" compile="0" resource="0" file="Source/Module/modules/midi/commands/MIDICommands.h"/>
             </GROUP>
-            <FILE id="GmYxyc" name="MIDIModule.cpp" compile="1" resource="0" file="Source/Module/modules/midi/MIDIModule.cpp"/>
+            <FILE id="GmYxyc" name="MIDIModule.cpp" compile="0" resource="0" file="Source/Module/modules/midi/MIDIModule.cpp"/>
             <FILE id="dCkFW4" name="MIDIModule.h" compile="0" resource="0" file="Source/Module/modules/midi/MIDIModule.h"/>
           </GROUP>
           <GROUP id="{0754417A-571D-6824-559A-C013C27E6BB2}" name="oscquery">
             <GROUP id="{A8905D5C-D284-7610-ACAB-905643C4A5E1}" name="madmapper">
-              <FILE id="j0Tt2h" name="MadMapperModule.cpp" compile="1" resource="0"
+              <FILE id="j0Tt2h" name="MadMapperModule.cpp" compile="0" resource="0"
                     file="Source/Module/modules/oscquery/MadMapperModule.cpp"/>
               <FILE id="oPzvE4" name="MadMapperModule.h" compile="0" resource="0"
                     file="Source/Module/modules/oscquery/MadMapperModule.h"/>
             </GROUP>
             <GROUP id="{AB2CCFAF-5B6F-0D08-58C1-933226EB65A5}" name="generic">
               <GROUP id="{9FBFA086-D182-6172-C899-66C4DC7A1422}" name="ui">
-                <FILE id="rmWrBv" name="OSCQueryModuleEditor.cpp" compile="1" resource="0"
+                <FILE id="rmWrBv" name="OSCQueryModuleEditor.cpp" compile="0" resource="0"
                       file="Source/Module/modules/oscquery/generic/ui/OSCQueryModuleEditor.cpp"/>
                 <FILE id="Cm6wY6" name="OSCQueryModuleEditor.h" compile="0" resource="0"
                       file="Source/Module/modules/oscquery/generic/ui/OSCQueryModuleEditor.h"/>
               </GROUP>
               <GROUP id="{3754DBAA-42A4-087C-B68E-B1E881D2D0E0}" name="commands">
-                <FILE id="pNjHwd" name="GenericOSCQueryCommand.cpp" compile="1" resource="0"
+                <FILE id="pNjHwd" name="GenericOSCQueryCommand.cpp" compile="0" resource="0"
                       file="Source/Module/modules/oscquery/generic/GenericOSCQueryCommand.cpp"/>
                 <FILE id="lQP4P5" name="GenericOSCQueryCommand.h" compile="0" resource="0"
                       file="Source/Module/modules/oscquery/generic/GenericOSCQueryCommand.h"/>
               </GROUP>
-              <FILE id="Z3VTSG" name="GenericOSCQueryModule.cpp" compile="1" resource="0"
+              <FILE id="Z3VTSG" name="GenericOSCQueryModule.cpp" compile="0" resource="0"
                     file="Source/Module/modules/oscquery/generic/GenericOSCQueryModule.cpp"/>
               <FILE id="YNR13N" name="GenericOSCQueryModule.h" compile="0" resource="0"
                     file="Source/Module/modules/oscquery/generic/GenericOSCQueryModule.h"/>
@@ -997,228 +1009,228 @@
           <GROUP id="{69C80207-6257-F263-BF16-4493C9A16861}" name="osc">
             <GROUP id="{3B0A89A4-F322-A731-CDC9-D211F66D5BF2}" name="qlab">
               <GROUP id="{A79B5A6E-717E-4B85-ABAE-9F423A9CEC03}" name="commands">
-                <FILE id="daffUV" name="QLabWorkspaceCommand.cpp" compile="1" resource="0"
+                <FILE id="daffUV" name="QLabWorkspaceCommand.cpp" compile="0" resource="0"
                       file="Source/Module/modules/osc/qlab/commands/QLabWorkspaceCommand.cpp"/>
                 <FILE id="msF4jb" name="QLabWorkspaceCommand.h" compile="0" resource="0"
                       file="Source/Module/modules/osc/qlab/commands/QLabWorkspaceCommand.h"/>
               </GROUP>
-              <FILE id="L2Lu1J" name="QLabModule.cpp" compile="1" resource="0" file="Source/Module/modules/osc/qlab/QLabModule.cpp"/>
+              <FILE id="L2Lu1J" name="QLabModule.cpp" compile="0" resource="0" file="Source/Module/modules/osc/qlab/QLabModule.cpp"/>
               <FILE id="ObJuB7" name="QLabModule.h" compile="0" resource="0" file="Source/Module/modules/osc/qlab/QLabModule.h"/>
             </GROUP>
             <GROUP id="{DD297107-6126-0DF6-97C5-7161A333CE96}" name="ui">
-              <FILE id="UEXg8w" name="OSCOutputEditor.cpp" compile="1" resource="0"
+              <FILE id="UEXg8w" name="OSCOutputEditor.cpp" compile="0" resource="0"
                     file="Source/Module/modules/osc/ui/OSCOutputEditor.cpp"/>
               <FILE id="YSZGvi" name="OSCOutputEditor.h" compile="0" resource="0"
                     file="Source/Module/modules/osc/ui/OSCOutputEditor.h"/>
             </GROUP>
             <GROUP id="{FA62B64A-4702-4B4D-FA34-5F23C168ED2C}" name="heavym">
-              <FILE id="WLmnmM" name="HeavyMModule.cpp" compile="1" resource="0"
+              <FILE id="WLmnmM" name="HeavyMModule.cpp" compile="0" resource="0"
                     file="Source/Module/modules/osc/heavym/HeavyMModule.cpp"/>
               <FILE id="QXWXaD" name="HeavyMModule.h" compile="0" resource="0" file="Source/Module/modules/osc/heavym/HeavyMModule.h"/>
             </GROUP>
             <GROUP id="{1B95CD2F-342F-3FD8-868A-6AE9D1B94B50}" name="commands">
-              <FILE id="ozAL3O" name="OSCCommand.cpp" compile="1" resource="0" file="Source/Module/modules/osc/commands/OSCCommand.cpp"/>
+              <FILE id="ozAL3O" name="OSCCommand.cpp" compile="0" resource="0" file="Source/Module/modules/osc/commands/OSCCommand.cpp"/>
               <FILE id="UL19nP" name="OSCCommand.h" compile="0" resource="0" file="Source/Module/modules/osc/commands/OSCCommand.h"/>
             </GROUP>
             <GROUP id="{4A0A8D04-83DA-560A-7267-B8BB6DE976B1}" name="custom">
               <GROUP id="{BBC0F9D6-F906-1B01-36A4-C3C36BDFCF35}" name="commands">
-                <FILE id="AZHD58" name="CustomOSCCommand.cpp" compile="1" resource="0"
+                <FILE id="AZHD58" name="CustomOSCCommand.cpp" compile="0" resource="0"
                       file="Source/Module/modules/osc/custom/commands/CustomOSCCommand.cpp"/>
                 <FILE id="j9kqDf" name="CustomOSCCommand.h" compile="0" resource="0"
                       file="Source/Module/modules/osc/custom/commands/CustomOSCCommand.h"/>
               </GROUP>
-              <FILE id="zsmxfd" name="CustomOSCModule.cpp" compile="1" resource="0"
+              <FILE id="zsmxfd" name="CustomOSCModule.cpp" compile="0" resource="0"
                     file="Source/Module/modules/osc/custom/CustomOSCModule.cpp"/>
               <FILE id="zBRcyQ" name="CustomOSCModule.h" compile="0" resource="0"
                     file="Source/Module/modules/osc/custom/CustomOSCModule.h"/>
             </GROUP>
             <GROUP id="{1B69938C-5F18-929B-E83F-5EA5CC7448C8}" name="dlight">
-              <FILE id="q1VH1u" name="DLightModule.cpp" compile="1" resource="0"
+              <FILE id="q1VH1u" name="DLightModule.cpp" compile="0" resource="0"
                     file="Source/Module/modules/osc/dlight/DLightModule.cpp"/>
               <FILE id="Teqzbc" name="DLightModule.h" compile="0" resource="0" file="Source/Module/modules/osc/dlight/DLightModule.h"/>
             </GROUP>
             <GROUP id="{48C349FF-6022-D448-D43A-DC73517FFEE6}" name="live">
               <GROUP id="{2765901B-8389-3C48-0034-68D98EA1B68E}" name="commands">
-                <FILE id="ZgU7a0" name="LiveOSCCommandBase.cpp" compile="1" resource="0"
+                <FILE id="ZgU7a0" name="LiveOSCCommandBase.cpp" compile="0" resource="0"
                       file="Source/Module/modules/osc/live/commands/LiveOSCCommandBase.cpp"/>
                 <FILE id="LfOKnf" name="LiveOSCCommandBase.h" compile="0" resource="0"
                       file="Source/Module/modules/osc/live/commands/LiveOSCCommandBase.h"/>
               </GROUP>
-              <FILE id="ruPiq3" name="LiveOSCModule.cpp" compile="1" resource="0"
+              <FILE id="ruPiq3" name="LiveOSCModule.cpp" compile="0" resource="0"
                     file="Source/Module/modules/osc/live/LiveOSCModule.cpp"/>
               <FILE id="gspvOE" name="LiveOSCModule.h" compile="0" resource="0" file="Source/Module/modules/osc/live/LiveOSCModule.h"/>
             </GROUP>
             <GROUP id="{69F3A713-E22E-D85F-CC7C-F19C96BBA192}" name="millumin">
-              <FILE id="eio6eq" name="MilluminModule.cpp" compile="1" resource="0"
+              <FILE id="eio6eq" name="MilluminModule.cpp" compile="0" resource="0"
                     file="Source/Module/modules/osc/millumin/MilluminModule.cpp"/>
               <FILE id="mnP1Oo" name="MilluminModule.h" compile="0" resource="0"
                     file="Source/Module/modules/osc/millumin/MilluminModule.h"/>
             </GROUP>
             <GROUP id="{88D89CC2-0F11-F9D4-467D-F7DCB753EB24}" name="reaper">
               <GROUP id="{D7999668-7E30-E1C3-9372-F0C5A8F8BEE3}" name="commands">
-                <FILE id="r4pLqR" name="ReaperTimeCommand.cpp" compile="1" resource="0"
+                <FILE id="r4pLqR" name="ReaperTimeCommand.cpp" compile="0" resource="0"
                       file="Source/Module/modules/osc/reaper/commands/ReaperTimeCommand.cpp"/>
                 <FILE id="rrTiVc" name="ReaperTimeCommand.h" compile="0" resource="0"
                       file="Source/Module/modules/osc/reaper/commands/ReaperTimeCommand.h"/>
               </GROUP>
-              <FILE id="ULxz7P" name="ReaperModule.cpp" compile="1" resource="0"
+              <FILE id="ULxz7P" name="ReaperModule.cpp" compile="0" resource="0"
                     file="Source/Module/modules/osc/reaper/ReaperModule.cpp"/>
               <FILE id="d5SUR6" name="ReaperModule.h" compile="0" resource="0" file="Source/Module/modules/osc/reaper/ReaperModule.h"/>
             </GROUP>
             <GROUP id="{94535CB0-6240-3CBD-06EA-EEE9C5794826}" name="resolume">
               <GROUP id="{FEFD5F27-6EE8-B2F7-0339-E5C38C648DB2}" name="commands">
                 <GROUP id="{994CA7F4-BF82-A093-6686-D346520302A9}" name="ui">
-                  <FILE id="AaYybo" name="ResolumeBaseCommandEditor.cpp" compile="1"
+                  <FILE id="AaYybo" name="ResolumeBaseCommandEditor.cpp" compile="0"
                         resource="0" file="Source/Module/modules/osc/resolume/commands/ui/ResolumeBaseCommandEditor.cpp"/>
                   <FILE id="WI38DX" name="ResolumeBaseCommandEditor.h" compile="0" resource="0"
                         file="Source/Module/modules/osc/resolume/commands/ui/ResolumeBaseCommandEditor.h"/>
                 </GROUP>
-                <FILE id="YNbgjn" name="ResolumeBaseCommand.cpp" compile="1" resource="0"
+                <FILE id="YNbgjn" name="ResolumeBaseCommand.cpp" compile="0" resource="0"
                       file="Source/Module/modules/osc/resolume/commands/ResolumeBaseCommand.cpp"/>
                 <FILE id="ro63ME" name="ResolumeBaseCommand.h" compile="0" resource="0"
                       file="Source/Module/modules/osc/resolume/commands/ResolumeBaseCommand.h"/>
-                <FILE id="Cas4pc" name="ResolumeClipCommand.cpp" compile="1" resource="0"
+                <FILE id="Cas4pc" name="ResolumeClipCommand.cpp" compile="0" resource="0"
                       file="Source/Module/modules/osc/resolume/commands/ResolumeClipCommand.cpp"/>
                 <FILE id="HweJQM" name="ResolumeClipCommand.h" compile="0" resource="0"
                       file="Source/Module/modules/osc/resolume/commands/ResolumeClipCommand.h"/>
-                <FILE id="WVRb0E" name="ResolumeFXCommand.cpp" compile="1" resource="0"
+                <FILE id="WVRb0E" name="ResolumeFXCommand.cpp" compile="0" resource="0"
                       file="Source/Module/modules/osc/resolume/commands/ResolumeFXCommand.cpp"/>
                 <FILE id="QnQ8ES" name="ResolumeFXCommand.h" compile="0" resource="0"
                       file="Source/Module/modules/osc/resolume/commands/ResolumeFXCommand.h"/>
               </GROUP>
-              <FILE id="QqPTPX" name="ResolumeModule.cpp" compile="1" resource="0"
+              <FILE id="QqPTPX" name="ResolumeModule.cpp" compile="0" resource="0"
                     file="Source/Module/modules/osc/resolume/ResolumeModule.cpp"/>
               <FILE id="MQRitU" name="ResolumeModule.h" compile="0" resource="0"
                     file="Source/Module/modules/osc/resolume/ResolumeModule.h"/>
             </GROUP>
             <GROUP id="{A4DDA752-3106-5CE3-F9F1-151BBE95684A}" name="powerpoint">
-              <FILE id="RSWiK8" name="PowerpointModule.cpp" compile="1" resource="0"
+              <FILE id="RSWiK8" name="PowerpointModule.cpp" compile="0" resource="0"
                     file="Source/Module/modules/osc/powerpoint/PowerpointModule.cpp"/>
               <FILE id="f1qYoS" name="PowerpointModule.h" compile="0" resource="0"
                     file="Source/Module/modules/osc/powerpoint/PowerpointModule.h"/>
             </GROUP>
-            <FILE id="G7KYlG" name="OSCModule.cpp" compile="1" resource="0" file="Source/Module/modules/osc/OSCModule.cpp"/>
+            <FILE id="G7KYlG" name="OSCModule.cpp" compile="0" resource="0" file="Source/Module/modules/osc/OSCModule.cpp"/>
             <FILE id="CTrveI" name="OSCModule.h" compile="0" resource="0" file="Source/Module/modules/osc/OSCModule.h"/>
           </GROUP>
           <GROUP id="{6854EEF3-7B84-E51F-E79E-0915F38F4484}" name="sequence">
             <GROUP id="{831BBAD9-461B-0A0D-14AD-A205FE1C3A70}" name="commands">
-              <FILE id="u8PCjB" name="SequenceAudioCommand.cpp" compile="1" resource="0"
+              <FILE id="u8PCjB" name="SequenceAudioCommand.cpp" compile="0" resource="0"
                     file="Source/Module/modules/sequence/commands/SequenceAudioCommand.cpp"/>
               <FILE id="WQaXdN" name="SequenceAudioCommand.h" compile="0" resource="0"
                     file="Source/Module/modules/sequence/commands/SequenceAudioCommand.h"/>
-              <FILE id="M0EFJg" name="SequenceCommand.cpp" compile="1" resource="0"
+              <FILE id="M0EFJg" name="SequenceCommand.cpp" compile="0" resource="0"
                     file="Source/Module/modules/sequence/commands/SequenceCommand.cpp"/>
               <FILE id="hl2hJX" name="SequenceCommand.h" compile="0" resource="0"
                     file="Source/Module/modules/sequence/commands/SequenceCommand.h"/>
             </GROUP>
-            <FILE id="oznl1r" name="SequenceModule.cpp" compile="1" resource="0"
+            <FILE id="oznl1r" name="SequenceModule.cpp" compile="0" resource="0"
                   file="Source/Module/modules/sequence/SequenceModule.cpp"/>
             <FILE id="KQyxlb" name="SequenceModule.h" compile="0" resource="0"
                   file="Source/Module/modules/sequence/SequenceModule.h"/>
           </GROUP>
           <GROUP id="{46658ADA-BDE8-458B-9B28-AC9BE95EA2DA}" name="serial">
-            <FILE id="BA2Jbv" name="SerialModule.cpp" compile="1" resource="0"
+            <FILE id="BA2Jbv" name="SerialModule.cpp" compile="0" resource="0"
                   file="Source/Module/modules/serial/SerialModule.cpp"/>
             <FILE id="rqcIBj" name="SerialModule.h" compile="0" resource="0" file="Source/Module/modules/serial/SerialModule.h"/>
           </GROUP>
           <GROUP id="{41A1CFAA-D972-C25C-1442-8D09D843CD2A}" name="state">
             <GROUP id="{9D766034-D96C-AD16-8084-EE1BBF66BA8B}" name="commands">
-              <FILE id="AiO4l8" name="StateCommand.cpp" compile="1" resource="0"
+              <FILE id="AiO4l8" name="StateCommand.cpp" compile="0" resource="0"
                     file="Source/Module/modules/state/commands/StateCommand.cpp"/>
               <FILE id="pQ6mIl" name="StateCommand.h" compile="0" resource="0" file="Source/Module/modules/state/commands/StateCommand.h"/>
             </GROUP>
-            <FILE id="Uz16jj" name="StateModule.cpp" compile="1" resource="0" file="Source/Module/modules/state/StateModule.cpp"/>
+            <FILE id="Uz16jj" name="StateModule.cpp" compile="0" resource="0" file="Source/Module/modules/state/StateModule.cpp"/>
             <FILE id="rTOd8w" name="StateModule.h" compile="0" resource="0" file="Source/Module/modules/state/StateModule.h"/>
           </GROUP>
           <GROUP id="{8130DE57-5D2E-CFBD-2BEF-CC72F42E64AA}" name="system">
             <GROUP id="{F66C40AA-E21C-D448-B0D3-26444099488A}" name="os">
               <GROUP id="{281EDB81-1834-FA75-0E15-20521938A211}" name="commands">
                 <GROUP id="{9C4AE9D5-9736-D363-49B0-076DDD4273FF}" name="ui">
-                  <FILE id="yVozYV" name="WakeOnLanCommandEditor.cpp" compile="1" resource="0"
+                  <FILE id="yVozYV" name="WakeOnLanCommandEditor.cpp" compile="0" resource="0"
                         file="Source/Module/modules/system/os/commands/ui/WakeOnLanCommandEditor.cpp"/>
                   <FILE id="Oaljm3" name="WakeOnLanCommandEditor.h" compile="0" resource="0"
                         file="Source/Module/modules/system/os/commands/ui/WakeOnLanCommandEditor.h"/>
                 </GROUP>
-                <FILE id="JQuQlg" name="OSExecCommand.cpp" compile="1" resource="0"
+                <FILE id="JQuQlg" name="OSExecCommand.cpp" compile="0" resource="0"
                       file="Source/Module/modules/system/os/commands/OSExecCommand.cpp"/>
                 <FILE id="MPQ4Q5" name="OSExecCommand.h" compile="0" resource="0" file="Source/Module/modules/system/os/commands/OSExecCommand.h"/>
-                <FILE id="XPJvHA" name="OSPowerCommand.cpp" compile="1" resource="0"
+                <FILE id="XPJvHA" name="OSPowerCommand.cpp" compile="0" resource="0"
                       file="Source/Module/modules/system/os/commands/OSPowerCommand.cpp"/>
                 <FILE id="uRplxR" name="OSPowerCommand.h" compile="0" resource="0"
                       file="Source/Module/modules/system/os/commands/OSPowerCommand.h"/>
-                <FILE id="GqkIP5" name="OSWindowCommand.cpp" compile="1" resource="0"
+                <FILE id="GqkIP5" name="OSWindowCommand.cpp" compile="0" resource="0"
                       file="Source/Module/modules/system/os/commands/OSWindowCommand.cpp"/>
                 <FILE id="XoRTue" name="OSWindowCommand.h" compile="0" resource="0"
                       file="Source/Module/modules/system/os/commands/OSWindowCommand.h"/>
-                <FILE id="UVisev" name="WakeOnLanCommand.cpp" compile="1" resource="0"
+                <FILE id="UVisev" name="WakeOnLanCommand.cpp" compile="0" resource="0"
                       file="Source/Module/modules/system/os/commands/WakeOnLanCommand.cpp"/>
                 <FILE id="KRSW2s" name="WakeOnLanCommand.h" compile="0" resource="0"
                       file="Source/Module/modules/system/os/commands/WakeOnLanCommand.h"/>
               </GROUP>
-              <FILE id="vKtN5d" name="OSModule.cpp" compile="1" resource="0" file="Source/Module/modules/system/os/OSModule.cpp"/>
+              <FILE id="vKtN5d" name="OSModule.cpp" compile="0" resource="0" file="Source/Module/modules/system/os/OSModule.cpp"/>
               <FILE id="jz2p8w" name="OSModule.h" compile="0" resource="0" file="Source/Module/modules/system/os/OSModule.h"/>
             </GROUP>
             <GROUP id="{22A85F58-C826-E11F-212D-265B4847C487}" name="time">
-              <FILE id="Ijc9Mu" name="TimeModule.cpp" compile="1" resource="0" file="Source/Module/modules/system/time/TimeModule.cpp"/>
+              <FILE id="Ijc9Mu" name="TimeModule.cpp" compile="0" resource="0" file="Source/Module/modules/system/time/TimeModule.cpp"/>
               <FILE id="rJZ74V" name="TimeModule.h" compile="0" resource="0" file="Source/Module/modules/system/time/TimeModule.h"/>
             </GROUP>
           </GROUP>
           <GROUP id="{107701F8-73B1-73F7-59D6-85F8A804B35D}" name="http">
             <GROUP id="{6069A587-3ED1-6515-CE10-AED8384CFB00}" name="commands">
-              <FILE id="nCg1pd" name="HTTPCommand.cpp" compile="1" resource="0" file="Source/Module/modules/http/commands/HTTPCommand.cpp"/>
+              <FILE id="nCg1pd" name="HTTPCommand.cpp" compile="0" resource="0" file="Source/Module/modules/http/commands/HTTPCommand.cpp"/>
               <FILE id="o5u5G9" name="HTTPCommand.h" compile="0" resource="0" file="Source/Module/modules/http/commands/HTTPCommand.h"/>
             </GROUP>
-            <FILE id="El7GQo" name="HTTPModule.cpp" compile="1" resource="0" file="Source/Module/modules/http/HTTPModule.cpp"/>
+            <FILE id="El7GQo" name="HTTPModule.cpp" compile="0" resource="0" file="Source/Module/modules/http/HTTPModule.cpp"/>
             <FILE id="JLZs5a" name="HTTPModule.h" compile="0" resource="0" file="Source/Module/modules/http/HTTPModule.h"/>
           </GROUP>
           <GROUP id="{60EE0B8D-6DCD-2F5E-B462-3F4F3DCA4184}" name="tcp">
             <GROUP id="{8D7C6264-1681-0666-5410-2523AE1B6FC1}" name="tcpserver">
               <GROUP id="{3586C115-8317-8ED7-FDFE-E0428B2754C4}" name="ui">
-                <FILE id="BTLrla" name="TCPServerModuleUI.cpp" compile="1" resource="0"
+                <FILE id="BTLrla" name="TCPServerModuleUI.cpp" compile="0" resource="0"
                       file="Source/Module/modules/tcp/tcpserver/ui/TCPServerModuleUI.cpp"/>
                 <FILE id="Y7qDDE" name="TCPServerModuleUI.h" compile="0" resource="0"
                       file="Source/Module/modules/tcp/tcpserver/ui/TCPServerModuleUI.h"/>
               </GROUP>
-              <FILE id="KPXcik" name="TCPServerConnectionManager.cpp" compile="1"
+              <FILE id="KPXcik" name="TCPServerConnectionManager.cpp" compile="0"
                     resource="0" file="Source/Module/modules/tcp/tcpserver/TCPServerConnectionManager.cpp"/>
               <FILE id="WneJRn" name="TCPServerConnectionManager.h" compile="0" resource="0"
                     file="Source/Module/modules/tcp/tcpserver/TCPServerConnectionManager.h"/>
-              <FILE id="dfI4o7" name="TCPServerModule.cpp" compile="1" resource="0"
+              <FILE id="dfI4o7" name="TCPServerModule.cpp" compile="0" resource="0"
                     file="Source/Module/modules/tcp/tcpserver/TCPServerModule.cpp"/>
               <FILE id="l0K6Zw" name="TCPServerModule.h" compile="0" resource="0"
                     file="Source/Module/modules/tcp/tcpserver/TCPServerModule.h"/>
             </GROUP>
             <GROUP id="{EADB0130-532F-2520-BBA3-A72E5A2C0C1E}" name="tcpclient">
               <GROUP id="{D1DD19AA-A54A-A2C4-74C2-387FA9D7D733}" name="pjlink">
-                <FILE id="GN4KEU" name="PJLinkModule.cpp" compile="1" resource="0"
+                <FILE id="GN4KEU" name="PJLinkModule.cpp" compile="0" resource="0"
                       file="Source/Module/modules/tcp/tcpclient/pjlink/PJLinkModule.cpp"/>
                 <FILE id="WlzAAJ" name="PJLinkModule.h" compile="0" resource="0" file="Source/Module/modules/tcp/tcpclient/pjlink/PJLinkModule.h"/>
               </GROUP>
               <GROUP id="{9D17EC97-106B-0725-8345-5F980F75F41B}" name="watchout">
                 <GROUP id="{2737ADD7-CED7-52D1-1D60-B63B50947807}" name="commands">
-                  <FILE id="Hxn6iB" name="WatchoutCommand.cpp" compile="1" resource="0"
+                  <FILE id="Hxn6iB" name="WatchoutCommand.cpp" compile="0" resource="0"
                         file="Source/Module/modules/tcp/tcpclient/watchout/commands/WatchoutCommand.cpp"/>
                   <FILE id="DUVk4w" name="WatchoutCommand.h" compile="0" resource="0"
                         file="Source/Module/modules/tcp/tcpclient/watchout/commands/WatchoutCommand.h"/>
                 </GROUP>
-                <FILE id="Wo0ptc" name="WatchoutModule.cpp" compile="1" resource="0"
+                <FILE id="Wo0ptc" name="WatchoutModule.cpp" compile="0" resource="0"
                       file="Source/Module/modules/tcp/tcpclient/watchout/WatchoutModule.cpp"/>
                 <FILE id="mHtiqP" name="WatchoutModule.h" compile="0" resource="0"
                       file="Source/Module/modules/tcp/tcpclient/watchout/WatchoutModule.h"/>
               </GROUP>
-              <FILE id="C2MK5S" name="TCPClientModule.cpp" compile="1" resource="0"
+              <FILE id="C2MK5S" name="TCPClientModule.cpp" compile="0" resource="0"
                     file="Source/Module/modules/tcp/tcpclient/TCPClientModule.cpp"/>
               <FILE id="F0NvXo" name="TCPClientModule.h" compile="0" resource="0"
                     file="Source/Module/modules/tcp/tcpclient/TCPClientModule.h"/>
             </GROUP>
           </GROUP>
           <GROUP id="{7D2E89CA-CA8A-BD26-BC58-F2AE92B13C90}" name="udp">
-            <FILE id="uUdZAS" name="UDPModule.cpp" compile="1" resource="0" file="Source/Module/modules/udp/UDPModule.cpp"/>
+            <FILE id="uUdZAS" name="UDPModule.cpp" compile="0" resource="0" file="Source/Module/modules/udp/UDPModule.cpp"/>
             <FILE id="LfgisU" name="UDPModule.h" compile="0" resource="0" file="Source/Module/modules/udp/UDPModule.h"/>
           </GROUP>
           <GROUP id="{7E905842-BBAC-896D-3E86-DAE3BBB297BC}" name="gpio">
             <GROUP id="{3B0DBB9B-E6BE-6589-44DE-B6980C1711CF}" name="commands">
-              <FILE id="NLMSFw" name="GPIOCommands.cpp" compile="1" resource="0"
+              <FILE id="NLMSFw" name="GPIOCommands.cpp" compile="0" resource="0"
                     file="Source/Module/modules/gpio/commands/GPIOCommands.cpp"/>
               <FILE id="LoBh0H" name="GPIOCommands.h" compile="0" resource="0" file="Source/Module/modules/gpio/commands/GPIOCommands.h"/>
             </GROUP>
@@ -1229,21 +1241,21 @@
               <FILE id="LsucgL" name="pigpio.c" compile="1" resource="0" file="Source/Module/modules/gpio/pigpio/pigpio.c"/>
               <FILE id="cJkWSq" name="pigpio.h" compile="0" resource="0" file="Source/Module/modules/gpio/pigpio/pigpio.h"/>
             </GROUP>
-            <FILE id="r5gPbq" name="GPIOModule.cpp" compile="1" resource="0" file="Source/Module/modules/gpio/GPIOModule.cpp"/>
+            <FILE id="r5gPbq" name="GPIOModule.cpp" compile="0" resource="0" file="Source/Module/modules/gpio/GPIOModule.cpp"/>
             <FILE id="vShhSX" name="GPIOModule.h" compile="0" resource="0" file="Source/Module/modules/gpio/GPIOModule.h"/>
           </GROUP>
           <GROUP id="{82D5E4C7-8C1C-9378-EEE7-C988DD90549E}" name="websocket">
             <GROUP id="{4FA7479C-2A94-C90F-41FE-7D5B84A26E65}" name="ui">
-              <FILE id="XUeIev" name="WebSocketServerModuleUI.cpp" compile="1" resource="0"
+              <FILE id="XUeIev" name="WebSocketServerModuleUI.cpp" compile="0" resource="0"
                     file="Source/Module/modules/websocket/ui/WebSocketServerModuleUI.cpp"/>
               <FILE id="VYJFr2" name="WebSocketServerModuleUI.h" compile="0" resource="0"
                     file="Source/Module/modules/websocket/ui/WebSocketServerModuleUI.h"/>
             </GROUP>
-            <FILE id="hmZuQg" name="WebSocketClientModule.cpp" compile="1" resource="0"
+            <FILE id="hmZuQg" name="WebSocketClientModule.cpp" compile="0" resource="0"
                   file="Source/Module/modules/websocket/WebSocketClientModule.cpp"/>
             <FILE id="ak7RaZ" name="WebSocketClientModule.h" compile="0" resource="0"
                   file="Source/Module/modules/websocket/WebSocketClientModule.h"/>
-            <FILE id="EPOMFm" name="WebSocketServerModule.cpp" compile="1" resource="0"
+            <FILE id="EPOMFm" name="WebSocketServerModule.cpp" compile="0" resource="0"
                   file="Source/Module/modules/websocket/WebSocketServerModule.cpp"/>
             <FILE id="hfMYYs" name="WebSocketServerModule.h" compile="0" resource="0"
                   file="Source/Module/modules/websocket/WebSocketServerModule.h"/>
@@ -1251,64 +1263,70 @@
         </GROUP>
         <GROUP id="{B44A4903-3CA1-862E-68D6-9486E9CB25F1}" name="Routing">
           <GROUP id="{B27A659D-2523-8ADC-8C94-E5AFCB25ABF5}" name="ui">
-            <FILE id="gl1vIj" name="ModuleRouterPanelView.cpp" compile="1" resource="0"
+            <FILE id="gl1vIj" name="ModuleRouterPanelView.cpp" compile="0" resource="0"
                   file="Source/Module/Routing/ui/ModuleRouterPanelView.cpp"/>
             <FILE id="nepa3Q" name="ModuleRouterPanelView.h" compile="0" resource="0"
                   file="Source/Module/Routing/ui/ModuleRouterPanelView.h"/>
-            <FILE id="INLqI5" name="ModuleRouterValueEditor.cpp" compile="1" resource="0"
+            <FILE id="INLqI5" name="ModuleRouterValueEditor.cpp" compile="0" resource="0"
                   file="Source/Module/Routing/ui/ModuleRouterValueEditor.cpp"/>
             <FILE id="xsGVLv" name="ModuleRouterValueEditor.h" compile="0" resource="0"
                   file="Source/Module/Routing/ui/ModuleRouterValueEditor.h"/>
-            <FILE id="X1kSfv" name="ModuleRouterView.cpp" compile="1" resource="0"
+            <FILE id="X1kSfv" name="ModuleRouterView.cpp" compile="0" resource="0"
                   file="Source/Module/Routing/ui/ModuleRouterView.cpp"/>
             <FILE id="xTynib" name="ModuleRouterView.h" compile="0" resource="0"
                   file="Source/Module/Routing/ui/ModuleRouterView.h"/>
           </GROUP>
-          <FILE id="ioyDXp" name="ModuleRouter.cpp" compile="1" resource="0"
+          <FILE id="ioyDXp" name="ModuleRouter.cpp" compile="0" resource="0"
                 file="Source/Module/Routing/ModuleRouter.cpp"/>
           <FILE id="J9bush" name="ModuleRouter.h" compile="0" resource="0" file="Source/Module/Routing/ModuleRouter.h"/>
-          <FILE id="wdfupX" name="ModuleRouterController.cpp" compile="1" resource="0"
+          <FILE id="wdfupX" name="ModuleRouterController.cpp" compile="0" resource="0"
                 file="Source/Module/Routing/ModuleRouterController.cpp"/>
           <FILE id="MfDLmy" name="ModuleRouterController.h" compile="0" resource="0"
                 file="Source/Module/Routing/ModuleRouterController.h"/>
-          <FILE id="xy7cy8" name="ModuleRouterManager.cpp" compile="1" resource="0"
+          <FILE id="xy7cy8" name="ModuleRouterManager.cpp" compile="0" resource="0"
                 file="Source/Module/Routing/ModuleRouterManager.cpp"/>
           <FILE id="HickjO" name="ModuleRouterManager.h" compile="0" resource="0"
                 file="Source/Module/Routing/ModuleRouterManager.h"/>
-          <FILE id="YclrGL" name="ModuleRouterValue.cpp" compile="1" resource="0"
+          <FILE id="YclrGL" name="ModuleRouterValue.cpp" compile="0" resource="0"
                 file="Source/Module/Routing/ModuleRouterValue.cpp"/>
           <FILE id="zKbUMB" name="ModuleRouterValue.h" compile="0" resource="0"
                 file="Source/Module/Routing/ModuleRouterValue.h"/>
         </GROUP>
         <GROUP id="{67BC73CD-B94B-C59C-7AE7-3A6E8643517A}" name="ui">
-          <FILE id="gEM7Ok" name="ModuleChooserUI.cpp" compile="1" resource="0"
+          <FILE id="gEM7Ok" name="ModuleChooserUI.cpp" compile="0" resource="0"
                 file="Source/Module/ui/ModuleChooserUI.cpp"/>
           <FILE id="AvHWEd" name="ModuleChooserUI.h" compile="0" resource="0"
                 file="Source/Module/ui/ModuleChooserUI.h"/>
-          <FILE id="xR8g1P" name="ModuleCommandTesterEditor.cpp" compile="1"
+          <FILE id="xR8g1P" name="ModuleCommandTesterEditor.cpp" compile="0"
                 resource="0" file="Source/Module/ui/ModuleCommandTesterEditor.cpp"/>
           <FILE id="nZR3Mh" name="ModuleCommandTesterEditor.h" compile="0" resource="0"
                 file="Source/Module/ui/ModuleCommandTesterEditor.h"/>
-          <FILE id="TU6kvM" name="ModuleEditor.cpp" compile="1" resource="0"
+          <FILE id="TU6kvM" name="ModuleEditor.cpp" compile="0" resource="0"
                 file="Source/Module/ui/ModuleEditor.cpp"/>
           <FILE id="kkuHTn" name="ModuleEditor.h" compile="0" resource="0" file="Source/Module/ui/ModuleEditor.h"/>
-          <FILE id="qXt9jm" name="ModuleManagerUI.cpp" compile="1" resource="0"
+          <FILE id="qXt9jm" name="ModuleManagerUI.cpp" compile="0" resource="0"
                 file="Source/Module/ui/ModuleManagerUI.cpp"/>
           <FILE id="yWzCuQ" name="ModuleManagerUI.h" compile="0" resource="0"
                 file="Source/Module/ui/ModuleManagerUI.h"/>
-          <FILE id="WePLRY" name="ModuleUI.cpp" compile="1" resource="0" file="Source/Module/ui/ModuleUI.cpp"/>
+          <FILE id="WePLRY" name="ModuleUI.cpp" compile="0" resource="0" file="Source/Module/ui/ModuleUI.cpp"/>
           <FILE id="TYCtuK" name="ModuleUI.h" compile="0" resource="0" file="Source/Module/ui/ModuleUI.h"/>
         </GROUP>
-        <FILE id="I7xDJJ" name="Module.cpp" compile="1" resource="0" file="Source/Module/Module.cpp"/>
+        <FILE id="I7xDJJ" name="Module.cpp" compile="0" resource="0" file="Source/Module/Module.cpp"/>
         <FILE id="Lh5WP9" name="Module.h" compile="0" resource="0" file="Source/Module/Module.h"/>
-        <FILE id="Ndfi0K" name="ModuleCommandTester.cpp" compile="1" resource="0"
+        <FILE id="Ndfi0K" name="ModuleCommandTester.cpp" compile="0" resource="0"
               file="Source/Module/ModuleCommandTester.cpp"/>
         <FILE id="F5xK3Z" name="ModuleCommandTester.h" compile="0" resource="0"
               file="Source/Module/ModuleCommandTester.h"/>
-        <FILE id="qYVnqI" name="ModuleFactory.cpp" compile="1" resource="0"
+        <FILE id="qYVnqI" name="ModuleFactory.cpp" compile="0" resource="0"
               file="Source/Module/ModuleFactory.cpp"/>
         <FILE id="UBR5Wu" name="ModuleFactory.h" compile="0" resource="0" file="Source/Module/ModuleFactory.h"/>
-        <FILE id="earYnW" name="ModuleManager.cpp" compile="1" resource="0"
+        <FILE id="GpyGp2" name="ModuleIncludes.cpp" compile="1" resource="0"
+              file="Source/Module/ModuleIncludes.cpp"/>
+        <FILE id="SBTX6r" name="ModuleIncludes2.cpp" compile="1" resource="0"
+              file="Source/Module/ModuleIncludes2.cpp"/>
+        <FILE id="D2X31p" name="ModuleIncludes.h" compile="0" resource="0"
+              file="Source/Module/ModuleIncludes.h"/>
+        <FILE id="earYnW" name="ModuleManager.cpp" compile="0" resource="0"
               file="Source/Module/ModuleManager.cpp"/>
         <FILE id="Ts1rVW" name="ModuleManager.h" compile="0" resource="0" file="Source/Module/ModuleManager.h"/>
       </GROUP>
@@ -1353,6 +1371,10 @@
           <FILE id="R4LiHd" name="StateManagerUI.h" compile="0" resource="0"
                 file="Source/StateMachine/ui/StateManagerUI.h"/>
         </GROUP>
+        <FILE id="uVcJrP" name="StateMachineIncludes.cpp" compile="1" resource="0"
+              file="Source/StateMachine/StateMachineIncludes.cpp"/>
+        <FILE id="XJ3D8Z" name="StateMachineIncludes.h" compile="0" resource="0"
+              file="Source/StateMachine/StateMachineIncludes.h"/>
         <FILE id="xFsdUZ" name="StateManager.cpp" compile="1" resource="0"
               file="Source/StateMachine/StateManager.cpp"/>
         <FILE id="UliENL" name="StateManager.h" compile="0" resource="0" file="Source/StateMachine/StateManager.h"/>
@@ -1361,27 +1383,27 @@
         <GROUP id="{34E053CC-6BB4-AEF4-A5AE-B46B09297363}" name="Sequence">
           <GROUP id="{D10B0FB5-159B-06C6-95CF-79B2E2FE1F11}" name="layers">
             <GROUP id="{11579F84-0750-EA75-82AA-9E0475910F93}" name="trigger">
-              <FILE id="eaRx9H" name="ChataigneTriggerLayer.cpp" compile="1" resource="0"
+              <FILE id="eaRx9H" name="ChataigneTriggerLayer.cpp" compile="0" resource="0"
                     file="Source/TimeMachine/Sequence/layers/trigger/ChataigneTriggerLayer.cpp"/>
               <FILE id="wPyEZW" name="ChataigneTriggerLayer.h" compile="0" resource="0"
                     file="Source/TimeMachine/Sequence/layers/trigger/ChataigneTriggerLayer.h"/>
-              <FILE id="eFjJCi" name="ChataigneTimeTrigger.cpp" compile="1" resource="0"
+              <FILE id="eFjJCi" name="ChataigneTimeTrigger.cpp" compile="0" resource="0"
                     file="Source/TimeMachine/Sequence/layers/trigger/ChataigneTimeTrigger.cpp"/>
               <FILE id="QVCq4r" name="ChataigneTimeTrigger.h" compile="0" resource="0"
                     file="Source/TimeMachine/Sequence/layers/trigger/ChataigneTimeTrigger.h"/>
             </GROUP>
             <GROUP id="{FB6A16ED-AF1A-4851-B4BF-65CA88B1942C}" name="audio">
               <GROUP id="{40C039F6-5D82-E09C-0BCC-4CBF9F98F4F9}" name="ui">
-                <FILE id="q7qyC5" name="ChataigneAudioLayerPanel.cpp" compile="1" resource="0"
+                <FILE id="q7qyC5" name="ChataigneAudioLayerPanel.cpp" compile="0" resource="0"
                       file="Source/TimeMachine/Sequence/layers/audio/ui/ChataigneAudioLayerPanel.cpp"/>
                 <FILE id="FwvBpL" name="ChataigneAudioLayerPanel.h" compile="0" resource="0"
                       file="Source/TimeMachine/Sequence/layers/audio/ui/ChataigneAudioLayerPanel.h"/>
-                <FILE id="ZOY2g4" name="ChataigneAudioLayerTimeline.cpp" compile="1"
+                <FILE id="ZOY2g4" name="ChataigneAudioLayerTimeline.cpp" compile="0"
                       resource="0" file="Source/TimeMachine/Sequence/layers/audio/ui/ChataigneAudioLayerTimeline.cpp"/>
                 <FILE id="nWEmhp" name="ChataigneAudioLayerTimeline.h" compile="0"
                       resource="0" file="Source/TimeMachine/Sequence/layers/audio/ui/ChataigneAudioLayerTimeline.h"/>
               </GROUP>
-              <FILE id="crs36i" name="ChataigneAudioLayer.cpp" compile="1" resource="0"
+              <FILE id="crs36i" name="ChataigneAudioLayer.cpp" compile="0" resource="0"
                     file="Source/TimeMachine/Sequence/layers/audio/ChataigneAudioLayer.cpp"/>
               <FILE id="cyfYIR" name="ChataigneAudioLayer.h" compile="0" resource="0"
                     file="Source/TimeMachine/Sequence/layers/audio/ChataigneAudioLayer.h"/>
@@ -1391,88 +1413,92 @@
             <GROUP id="{43CDA754-BA40-749C-1F35-8733A474B6F9}" name="mapping">
               <GROUP id="{C7E90FCA-FCE6-0938-2459-5EDE9655B2E5}" name="automation">
                 <GROUP id="{497E0A64-276F-5258-B82E-3295818D25A0}" name="ui">
-                  <FILE id="vozDgK" name="AutomationMappingLayerPanel.cpp" compile="1"
+                  <FILE id="vozDgK" name="AutomationMappingLayerPanel.cpp" compile="0"
                         resource="0" file="Source/TimeMachine/Sequence/layers/mapping/automation/ui/AutomationMappingLayerPanel.cpp"/>
                   <FILE id="XcbARi" name="AutomationMappingLayerPanel.h" compile="0"
                         resource="0" file="Source/TimeMachine/Sequence/layers/mapping/automation/ui/AutomationMappingLayerPanel.h"/>
-                  <FILE id="uMSGxh" name="AutomationMappingLayerTimeline.cpp" compile="1"
+                  <FILE id="uMSGxh" name="AutomationMappingLayerTimeline.cpp" compile="0"
                         resource="0" file="Source/TimeMachine/Sequence/layers/mapping/automation/ui/AutomationMappingLayerTimeline.cpp"/>
                   <FILE id="ZJbWsg" name="AutomationMappingLayerTimeline.h" compile="0"
                         resource="0" file="Source/TimeMachine/Sequence/layers/mapping/automation/ui/AutomationMappingLayerTimeline.h"/>
                 </GROUP>
                 <GROUP id="{056AC38B-8A54-1798-4436-05495EAE3919}" name="1d">
                   <GROUP id="{1678B326-4AE4-9E40-F5C5-7BF9787912F9}" name="ui">
-                    <FILE id="jDAWVt" name="Mapping1DLayerPanel.cpp" compile="1" resource="0"
+                    <FILE id="jDAWVt" name="Mapping1DLayerPanel.cpp" compile="0" resource="0"
                           file="Source/TimeMachine/Sequence/layers/mapping/automation/1d/ui/Mapping1DLayerPanel.cpp"/>
                     <FILE id="PqMNVn" name="Mapping1DLayerPanel.h" compile="0" resource="0"
                           file="Source/TimeMachine/Sequence/layers/mapping/automation/1d/ui/Mapping1DLayerPanel.h"/>
                   </GROUP>
-                  <FILE id="XDqpsx" name="Mapping1DLayer.cpp" compile="1" resource="0"
+                  <FILE id="XDqpsx" name="Mapping1DLayer.cpp" compile="0" resource="0"
                         file="Source/TimeMachine/Sequence/layers/mapping/automation/1d/Mapping1DLayer.cpp"/>
                   <FILE id="FmxPuw" name="Mapping1DLayer.h" compile="0" resource="0"
                         file="Source/TimeMachine/Sequence/layers/mapping/automation/1d/Mapping1DLayer.h"/>
                 </GROUP>
                 <GROUP id="{91044AED-92C4-815B-2BD7-B66B8E52C51C}" name="2d">
                   <GROUP id="{64B3E1EF-FF8D-7F0B-77ED-95F1F08C504A}" name="ui">
-                    <FILE id="C4yyq5" name="Mapping2DLayerPanel.cpp" compile="1" resource="0"
+                    <FILE id="C4yyq5" name="Mapping2DLayerPanel.cpp" compile="0" resource="0"
                           file="Source/TimeMachine/Sequence/layers/mapping/automation/2d/ui/Mapping2DLayerPanel.cpp"/>
                     <FILE id="d3ovBS" name="Mapping2DLayerPanel.h" compile="0" resource="0"
                           file="Source/TimeMachine/Sequence/layers/mapping/automation/2d/ui/Mapping2DLayerPanel.h"/>
-                    <FILE id="UBYpfW" name="Mapping2DLayerTimeline.cpp" compile="1" resource="0"
+                    <FILE id="UBYpfW" name="Mapping2DLayerTimeline.cpp" compile="0" resource="0"
                           file="Source/TimeMachine/Sequence/layers/mapping/automation/2d/ui/Mapping2DLayerTimeline.cpp"/>
                     <FILE id="o0CzJ4" name="Mapping2DLayerTimeline.h" compile="0" resource="0"
                           file="Source/TimeMachine/Sequence/layers/mapping/automation/2d/ui/Mapping2DLayerTimeline.h"/>
                   </GROUP>
-                  <FILE id="RnHeRx" name="Mapping2DLayer.cpp" compile="1" resource="0"
+                  <FILE id="RnHeRx" name="Mapping2DLayer.cpp" compile="0" resource="0"
                         file="Source/TimeMachine/Sequence/layers/mapping/automation/2d/Mapping2DLayer.cpp"/>
                   <FILE id="kA47dP" name="Mapping2DLayer.h" compile="0" resource="0"
                         file="Source/TimeMachine/Sequence/layers/mapping/automation/2d/Mapping2DLayer.h"/>
                 </GROUP>
-                <FILE id="xOagnY" name="AutomationMappingLayer.cpp" compile="1" resource="0"
+                <FILE id="xOagnY" name="AutomationMappingLayer.cpp" compile="0" resource="0"
                       file="Source/TimeMachine/Sequence/layers/mapping/automation/AutomationMappingLayer.cpp"/>
                 <FILE id="XxoCsa" name="AutomationMappingLayer.h" compile="0" resource="0"
                       file="Source/TimeMachine/Sequence/layers/mapping/automation/AutomationMappingLayer.h"/>
               </GROUP>
               <GROUP id="{7CF7C72F-139D-BE32-4A80-D7F4965A04B1}" name="color">
                 <GROUP id="{10659B85-B7BE-82AF-88A1-AF33687EAFF5}" name="ui">
-                  <FILE id="ztmGRz" name="ColorMappingLayerTimeline.cpp" compile="1"
+                  <FILE id="ztmGRz" name="ColorMappingLayerTimeline.cpp" compile="0"
                         resource="0" file="Source/TimeMachine/Sequence/layers/mapping/color/ui/ColorMappingLayerTimeline.cpp"/>
                   <FILE id="oCwuj3" name="ColorMappingLayerTimeline.h" compile="0" resource="0"
                         file="Source/TimeMachine/Sequence/layers/mapping/color/ui/ColorMappingLayerTimeline.h"/>
                 </GROUP>
-                <FILE id="c1F6G4" name="ColorMappingLayer.cpp" compile="1" resource="0"
+                <FILE id="c1F6G4" name="ColorMappingLayer.cpp" compile="0" resource="0"
                       file="Source/TimeMachine/Sequence/layers/mapping/color/ColorMappingLayer.cpp"/>
                 <FILE id="SX0Awq" name="ColorMappingLayer.h" compile="0" resource="0"
                       file="Source/TimeMachine/Sequence/layers/mapping/color/ColorMappingLayer.h"/>
               </GROUP>
               <GROUP id="{071E6E14-B2B7-5D15-02BF-BCC713578CF2}" name="ui">
-                <FILE id="u3Ftks" name="MappingLayerEditor.cpp" compile="1" resource="0"
+                <FILE id="u3Ftks" name="MappingLayerEditor.cpp" compile="0" resource="0"
                       file="Source/TimeMachine/Sequence/layers/mapping/ui/MappingLayerEditor.cpp"/>
                 <FILE id="JS8hYq" name="MappingLayerEditor.h" compile="0" resource="0"
                       file="Source/TimeMachine/Sequence/layers/mapping/ui/MappingLayerEditor.h"/>
-                <FILE id="L2jHkN" name="MappingLayerPanel.cpp" compile="1" resource="0"
+                <FILE id="L2jHkN" name="MappingLayerPanel.cpp" compile="0" resource="0"
                       file="Source/TimeMachine/Sequence/layers/mapping/ui/MappingLayerPanel.cpp"/>
                 <FILE id="wJQyUC" name="MappingLayerPanel.h" compile="0" resource="0"
                       file="Source/TimeMachine/Sequence/layers/mapping/ui/MappingLayerPanel.h"/>
-                <FILE id="gXuMS4" name="MappingLayerTimeline.cpp" compile="1" resource="0"
+                <FILE id="gXuMS4" name="MappingLayerTimeline.cpp" compile="0" resource="0"
                       file="Source/TimeMachine/Sequence/layers/mapping/ui/MappingLayerTimeline.cpp"/>
                 <FILE id="bqsE58" name="MappingLayerTimeline.h" compile="0" resource="0"
                       file="Source/TimeMachine/Sequence/layers/mapping/ui/MappingLayerTimeline.h"/>
               </GROUP>
-              <FILE id="wxLkNN" name="MappingLayer.cpp" compile="1" resource="0"
+              <FILE id="wxLkNN" name="MappingLayer.cpp" compile="0" resource="0"
                     file="Source/TimeMachine/Sequence/layers/mapping/MappingLayer.cpp"/>
               <FILE id="WBJmQT" name="MappingLayer.h" compile="0" resource="0" file="Source/TimeMachine/Sequence/layers/mapping/MappingLayer.h"/>
             </GROUP>
           </GROUP>
-          <FILE id="AgsPCv" name="ChataigneSequence.cpp" compile="1" resource="0"
+          <FILE id="AgsPCv" name="ChataigneSequence.cpp" compile="0" resource="0"
                 file="Source/TimeMachine/Sequence/ChataigneSequence.cpp"/>
           <FILE id="NAOj5I" name="ChataigneSequence.h" compile="0" resource="0"
                 file="Source/TimeMachine/Sequence/ChataigneSequence.h"/>
         </GROUP>
-        <FILE id="SBO8Vt" name="ChataigneSequenceManager.cpp" compile="1" resource="0"
+        <FILE id="SBO8Vt" name="ChataigneSequenceManager.cpp" compile="0" resource="0"
               file="Source/TimeMachine/ChataigneSequenceManager.cpp"/>
         <FILE id="EadjSJ" name="ChataigneSequenceManager.h" compile="0" resource="0"
               file="Source/TimeMachine/ChataigneSequenceManager.h"/>
+        <FILE id="nRqrn3" name="TimeMachineIncludes.cpp" compile="1" resource="0"
+              file="Source/TimeMachine/TimeMachineIncludes.cpp"/>
+        <FILE id="hqbk4i" name="TimeMachineIncludes.h" compile="0" resource="0"
+              file="Source/TimeMachine/TimeMachineIncludes.h"/>
       </GROUP>
       <GROUP id="{FA0E78EC-9F83-99D0-4BB9-C686CC8B957D}" name="UI">
         <FILE id="HYpDUa" name="AboutWindow.cpp" compile="1" resource="0" file="Source/UI/AboutWindow.cpp"/>

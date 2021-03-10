@@ -12,10 +12,8 @@
 #include "MainComponent.h"
 #include "UI/AboutWindow.h"
 #include "UI/WelcomeScreen.h"
-#include "Guider/Guider.h"
-#include "Module/Community/CommunityModuleManager.h"
-#include "Module/ModuleManager.h"
-#include "Module/ModuleFactory.h"
+#include "Guider/GuiderIncludes.h"
+#include "Module/ModuleIncludes.h"
 #include "ChataigneEngine.h"
 
 namespace ChataigneCommandIDs

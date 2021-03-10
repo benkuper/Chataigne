@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "ResolumeFXCommand.h"
-#include "../ResolumeModule.h"
-
 ResolumeFXCommand::ResolumeFXCommand(ResolumeModule * _module, CommandContext context, var params, Multiplex * multiplex) :
 	ResolumeBaseCommand(_module,context,params, multiplex, true),
     nameParam(nullptr),

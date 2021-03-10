@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "SequenceAudioCommand.h"
-#include "../SequenceModule.h"
 #include "TimeMachine/ChataigneSequenceManager.h"
 
 SequenceAudioCommand::SequenceAudioCommand(SequenceModule* _module, CommandContext context, var params, Multiplex * multiplex) :

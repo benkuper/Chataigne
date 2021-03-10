@@ -10,9 +10,6 @@
 
 #pragma once
 
-#include "../ModuleRouterManager.h"
-#include "ModuleRouterView.h"
-
 class ModuleRouterPanelView :
 	public ShapeShifterContentComponent
 {

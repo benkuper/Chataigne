@@ -10,7 +10,6 @@
 
 #pragma once
 
-#include "../ModuleCommandTester.h"
 #include "Common/Command/ui/BaseCommandHandlerEditor.h"
 
 class ModuleCommandTesterEditor :

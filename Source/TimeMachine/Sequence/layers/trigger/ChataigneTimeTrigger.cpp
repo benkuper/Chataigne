@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "ChataigneTimeTrigger.h"
-
 ChataigneTimeTrigger::ChataigneTimeTrigger(StringRef name) :
 	TimeTrigger(name)
 {

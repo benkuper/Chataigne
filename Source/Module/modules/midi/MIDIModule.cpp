@@ -8,12 +8,7 @@
   ==============================================================================
 */
 
-#include "MIDIModule.h"
-#include "commands/MIDICommands.h"
 #include "Common/MIDI/MIDIManager.h"
-#include "UI/ChataigneAssetManager.h"
-#include "Module/ModuleManager.h"
-#include "Module/Routing/ModuleRouter.h"
 
 MIDIValueComparator MIDIModule::midiValueComparator;
 

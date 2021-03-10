@@ -10,11 +10,6 @@
 
 #pragma once
 
-
-
-#pragma once
-#include "../OSCModule.h"
-
 class HeavyMModule :
 	public OSCModule
 {

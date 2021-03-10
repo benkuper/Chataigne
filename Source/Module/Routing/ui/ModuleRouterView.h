@@ -10,10 +10,6 @@
 
 #pragma once
 
-#include "../ModuleRouter.h"
-#include "Module/ui/ModuleChooserUI.h"
-#include "ModuleRouterValueEditor.h"
-
 class ModuleRouterControllerUI;
 
 class ModuleRouterView :

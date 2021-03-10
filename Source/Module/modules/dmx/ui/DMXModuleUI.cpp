@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "DMXModuleUI.h"
-
 DMXValueParameterUI::DMXValueParameterUI(DMXValueParameter* dmxP) :
 	IntStepperUI(dmxP),
 	dmxP(dmxP)

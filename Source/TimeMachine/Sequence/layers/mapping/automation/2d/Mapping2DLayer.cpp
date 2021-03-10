@@ -8,10 +8,6 @@
   ==============================================================================
 */
 
-#include "Mapping2DLayer.h"
-#include "ui/Mapping2DLayerTimeline.h"
-#include "ui/Mapping2DLayerPanel.h"
-
 Mapping2DLayer::Mapping2DLayer(Sequence* s, var params) :
 	AutomationMappingLayer(getTypeString(), s, params)
 {

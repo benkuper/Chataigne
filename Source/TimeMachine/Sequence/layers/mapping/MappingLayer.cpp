@@ -9,16 +9,8 @@
   ==============================================================================
 */
 
-#include "MappingLayer.h"
-
-#include "../../ChataigneSequence.h"
-
 #include "Common/Processor/Mapping/Mapping.h"
-#include "Module/ModuleManager.h"
-
-#include "ui/MappingLayerPanel.h"
-#include "ui/MappingLayerTimeline.h"
-#include "ui/MappingLayerEditor.h"
+#include "Module/ModuleIncludes.h"
 
 MappingLayer::MappingLayer(const String &name, Sequence *_sequence, var params) :
 	SequenceLayer(_sequence, name),

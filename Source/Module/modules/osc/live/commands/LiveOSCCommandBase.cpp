@@ -8,10 +8,6 @@
   ==============================================================================
 */
 
-#include "LiveOSCCommandBase.h"
-
-
-
 LiveOSCCommandBase::LiveOSCCommandBase(LiveOSCModule* _module, CommandContext context, var params, Multiplex * multiplex) :
 	OSCCommand(_module, context, params),
 	liveModule(_module),

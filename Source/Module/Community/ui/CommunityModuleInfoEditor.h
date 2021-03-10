@@ -10,8 +10,6 @@
 
 #pragma once
 
-#include "../CommunityModuleInfo.h"
-
 class CommunityModuleInfoEditor :
 	public GenericControllableContainerEditor
 {

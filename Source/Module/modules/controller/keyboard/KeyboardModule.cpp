@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "KeyboardModule.h"
-#include "commands/KeyboardModuleCommands.h"
-
 OrganicApplication::MainWindow* getMainWindow();
 
 #if JUCE_WINDOWS

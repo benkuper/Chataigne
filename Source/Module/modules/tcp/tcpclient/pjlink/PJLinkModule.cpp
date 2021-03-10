@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "PJLinkModule.h"
-#include "../../../common/streaming/commands/SendStreamStringCommand.h"
-
 PJLinkModule::PJLinkModule() :
 	TCPClientModule(getDefaultTypeString(), 4352),
 	passBytes(0)

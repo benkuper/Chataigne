@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "FFTAnalyzerEditor.h"
-
 FFTAnalyzerEditor::FFTAnalyzerEditor(FFTAnalyzer* analyzer, bool isRoot) :
 	BaseItemEditor(analyzer, isRoot),
 	analyzer(analyzer)

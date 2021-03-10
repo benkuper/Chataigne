@@ -11,7 +11,6 @@
 #pragma once
 
 #include "CustomVariables/CVGroupManager.h"
-#include "../../Module.h"
 
 class GenericControllableManagerLinkedContainer;
 

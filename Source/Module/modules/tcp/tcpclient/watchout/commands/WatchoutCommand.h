@@ -10,9 +10,6 @@
 
 #pragma once
 
-#include "../../../../common/streaming/commands/SendStreamStringCommand.h"
-#include "../WatchoutModule.h"
-
 class WatchoutCommand :
 	public SendStreamStringCommand
 {

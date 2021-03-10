@@ -9,10 +9,8 @@
 */
 
 
-#include "StateModule.h"
 #include "StateMachine/StateManager.h"
 #include "Common/Command/CommandDefinition.h"
-#include "commands/StateCommand.h"
 
 StateModule::StateModule(StateManager * _manager) :
 	Module("State Machine"),

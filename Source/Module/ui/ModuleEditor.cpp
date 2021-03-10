@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "ModuleEditor.h"
-
 ModuleEditor::ModuleEditor(Module * _module, bool isRoot) :
 	BaseItemEditor(_module,isRoot),
 	module(_module)

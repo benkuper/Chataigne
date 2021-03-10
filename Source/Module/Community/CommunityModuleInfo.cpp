@@ -8,11 +8,6 @@
   ==============================================================================
 */
 
-#include "CommunityModuleInfo.h"
-#include "ui/CommunityModuleInfoEditor.h"
-#include "Module/ModuleManager.h"
-#include "Module/ModuleFactory.h"
-
 CommunityModuleInfo::CommunityModuleInfo(StringRef name, var onlineData) :
 	BaseItem(name, false)
 {

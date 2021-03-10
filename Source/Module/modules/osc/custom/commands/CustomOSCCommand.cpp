@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "CustomOSCCommand.h"
-
 CustomOSCCommand::CustomOSCCommand(OSCModule * module, CommandContext context, var params, Multiplex * multiplex) :
 	OSCCommand(module, context, params, multiplex),
 	wildcardsContainer("Address Parameters")

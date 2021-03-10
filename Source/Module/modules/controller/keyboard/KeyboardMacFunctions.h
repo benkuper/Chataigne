@@ -10,6 +10,8 @@
 
 #pragma once
 
+#include "JuceHeader.h"
+
 #if JUCE_SUPPORT_CARBON
 #include <CoreGraphics/CGEventSource.h>
 #include <CoreGraphics/CoreGraphics.h>

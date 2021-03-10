@@ -8,15 +8,13 @@
   ==============================================================================
 */
 
-#include "ChataigneSequenceManager.h"
 juce_ImplementSingleton(ChataigneSequenceManager)
 
-#include "Sequence/ChataigneSequence.h"
-
 ChataigneSequenceManager::ChataigneSequenceManager() :
-	SequenceManager(),
-	module(this)
+	SequenceManager()
 {
+	module.reset(new SequenceModule(this));
+
 	itemDataType = "Sequence";
 	helpID = "TimeMachine";
 }

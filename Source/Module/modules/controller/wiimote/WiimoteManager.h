@@ -10,7 +10,6 @@
 
 #pragma once
 
-#include "JuceHeader.h"
 #include "wiiuse.h"
 
 #define MAX_WIIMOTES 2

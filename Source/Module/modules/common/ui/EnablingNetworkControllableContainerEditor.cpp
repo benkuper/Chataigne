@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "EnablingNetworkControllableContainerEditor.h"
-
 EnablingNetworkControllableContainerEditor::EnablingNetworkControllableContainerEditor(EnablingControllableContainer * cc, bool isRoot) :
 	EnablingControllableContainerEditor(cc, isRoot)
 {

@@ -38,6 +38,12 @@
     <Filter Include="Chataigne\Source\Common\InputSystem">
       <UniqueIdentifier>{2B092B7F-E42F-F28A-4047-78487812BEA9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Chataigne\Source\Common\Command\CustomValues\ui">
+      <UniqueIdentifier>{D6EC1191-6492-CBD5-4DC6-665E5DDF3B32}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Common\Command\CustomValues">
+      <UniqueIdentifier>{BBCFFD13-C008-69BB-31AA-CC161B571B1C}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Chataigne\Source\Common\Command\ui">
       <UniqueIdentifier>{9DC719BC-0221-FA4E-5A0E-C23170388D98}</UniqueIdentifier>
     </Filter>
@@ -241,12 +247,6 @@
     </Filter>
     <Filter Include="Chataigne\Source\Module\modules\common\commands\scriptcommands">
       <UniqueIdentifier>{53B20FE0-4E29-FA6A-BC6A-DBB1AD8A5AAD}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\common\commands\customvalues\ui">
-      <UniqueIdentifier>{AFD76BDC-CCF2-4D8F-91E8-F55ACAA432DD}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\common\commands\customvalues">
-      <UniqueIdentifier>{D557D038-37A7-3B6F-F6C8-3439299FF0FD}</UniqueIdentifier>
     </Filter>
     <Filter Include="Chataigne\Source\Module\modules\common\commands">
       <UniqueIdentifier>{1F7ECF34-1297-CD6A-C2ED-9ED3052016CE}</UniqueIdentifier>
@@ -1402,8 +1402,14 @@
     <ClCompile Include="..\..\Source\Guider\Guider.cpp">
       <Filter>Chataigne\Source\Guider</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Guider\GuiderIncludes.cpp">
+      <Filter>Chataigne\Source\Guider</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Analytics\MatomoAnalytics.cpp">
       <Filter>Chataigne\Source\Analytics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\CommonIncludes.cpp">
+      <Filter>Chataigne\Source\Common</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Common\ParameterLink\ui\LinkableParameterEditor.cpp">
       <Filter>Chataigne\Source\Common\ParameterLink\ui</Filter>
@@ -1419,6 +1425,18 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Common\InputSystem\InputSystemManager.cpp">
       <Filter>Chataigne\Source\Common\InputSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Command\CustomValues\ui\CustomValuesCommandArgumentEditor.cpp">
+      <Filter>Chataigne\Source\Common\Command\CustomValues\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Command\CustomValues\ui\CustomValuesCommandArgumentManagerEditor.cpp">
+      <Filter>Chataigne\Source\Common\Command\CustomValues\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Command\CustomValues\CustomValuesCommandArgument.cpp">
+      <Filter>Chataigne\Source\Common\Command\CustomValues</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Command\CustomValues\CustomValuesCommandArgumentManager.cpp">
+      <Filter>Chataigne\Source\Common\Command\CustomValues</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Common\Command\ui\BaseCommandEditor.cpp">
       <Filter>Chataigne\Source\Common\Command\ui</Filter>
@@ -1750,6 +1768,9 @@
     <ClCompile Include="..\..\Source\CustomVariables\ui\CVGroupManagerUI.cpp">
       <Filter>Chataigne\Source\CustomVariables\ui</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\CustomVariables\CustomVariablesIncludes.cpp">
+      <Filter>Chataigne\Source\CustomVariables</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\CustomVariables\CVGroup.cpp">
       <Filter>Chataigne\Source\CustomVariables</Filter>
     </ClCompile>
@@ -1797,18 +1818,6 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\common\commands\scriptcommands\ScriptCommand.cpp">
       <Filter>Chataigne\Source\Module\modules\common\commands\scriptcommands</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Module\modules\common\commands\customvalues\ui\CustomValuesCommandArgumentEditor.cpp">
-      <Filter>Chataigne\Source\Module\modules\common\commands\customvalues\ui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Module\modules\common\commands\customvalues\ui\CustomValuesCommandArgumentManagerEditor.cpp">
-      <Filter>Chataigne\Source\Module\modules\common\commands\customvalues\ui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Module\modules\common\commands\customvalues\CustomValuesCommandArgument.cpp">
-      <Filter>Chataigne\Source\Module\modules\common\commands\customvalues</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Module\modules\common\commands\customvalues\CustomValuesCommandArgumentManager.cpp">
-      <Filter>Chataigne\Source\Module\modules\common\commands\customvalues</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\common\streaming\commands\SendStreamRawDataCommand.cpp">
       <Filter>Chataigne\Source\Module\modules\common\streaming\commands</Filter>
@@ -2191,6 +2200,12 @@
     <ClCompile Include="..\..\Source\Module\ModuleFactory.cpp">
       <Filter>Chataigne\Source\Module</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Module\ModuleIncludes.cpp">
+      <Filter>Chataigne\Source\Module</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Module\ModuleIncludes2.cpp">
+      <Filter>Chataigne\Source\Module</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Module\ModuleManager.cpp">
       <Filter>Chataigne\Source\Module</Filter>
     </ClCompile>
@@ -2220,6 +2235,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\StateMachine\ui\StateManagerUI.cpp">
       <Filter>Chataigne\Source\StateMachine\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\StateMachine\StateMachineIncludes.cpp">
+      <Filter>Chataigne\Source\StateMachine</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\StateMachine\StateManager.cpp">
       <Filter>Chataigne\Source\StateMachine</Filter>
@@ -2285,6 +2303,9 @@
       <Filter>Chataigne\Source\TimeMachine\Sequence</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\TimeMachine\ChataigneSequenceManager.cpp">
+      <Filter>Chataigne\Source\TimeMachine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\TimeMachine\TimeMachineIncludes.cpp">
       <Filter>Chataigne\Source\TimeMachine</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\UI\AboutWindow.cpp">
@@ -5346,8 +5367,14 @@
     <ClInclude Include="..\..\Source\Guider\Guider.h">
       <Filter>Chataigne\Source\Guider</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\Guider\GuiderIncludes.h">
+      <Filter>Chataigne\Source\Guider</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\Analytics\MatomoAnalytics.h">
       <Filter>Chataigne\Source\Analytics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\CommonIncludes.h">
+      <Filter>Chataigne\Source\Common</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\ParameterLink\ui\LinkableParameterEditor.h">
       <Filter>Chataigne\Source\Common\ParameterLink\ui</Filter>
@@ -5363,6 +5390,18 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\InputSystem\InputSystemManager.h">
       <Filter>Chataigne\Source\Common\InputSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\Command\CustomValues\ui\CustomValuesCommandArgumentEditor.h">
+      <Filter>Chataigne\Source\Common\Command\CustomValues\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\Command\CustomValues\ui\CustomValuesCommandArgumentManagerEditor.h">
+      <Filter>Chataigne\Source\Common\Command\CustomValues\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\Command\CustomValues\CustomValuesCommandArgument.h">
+      <Filter>Chataigne\Source\Common\Command\CustomValues</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\Command\CustomValues\CustomValuesCommandArgumentManager.h">
+      <Filter>Chataigne\Source\Common\Command\CustomValues</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\Command\ui\BaseCommandEditor.h">
       <Filter>Chataigne\Source\Common\Command\ui</Filter>
@@ -5688,6 +5727,9 @@
     <ClInclude Include="..\..\Source\CustomVariables\ui\CVGroupManagerUI.h">
       <Filter>Chataigne\Source\CustomVariables\ui</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\CustomVariables\CustomVariablesIncludes.h">
+      <Filter>Chataigne\Source\CustomVariables</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\CustomVariables\CVGroup.h">
       <Filter>Chataigne\Source\CustomVariables</Filter>
     </ClInclude>
@@ -5744,18 +5786,6 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\common\commands\scriptcommands\ScriptCommand.h">
       <Filter>Chataigne\Source\Module\modules\common\commands\scriptcommands</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Module\modules\common\commands\customvalues\ui\CustomValuesCommandArgumentEditor.h">
-      <Filter>Chataigne\Source\Module\modules\common\commands\customvalues\ui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Module\modules\common\commands\customvalues\ui\CustomValuesCommandArgumentManagerEditor.h">
-      <Filter>Chataigne\Source\Module\modules\common\commands\customvalues\ui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Module\modules\common\commands\customvalues\CustomValuesCommandArgument.h">
-      <Filter>Chataigne\Source\Module\modules\common\commands\customvalues</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Module\modules\common\commands\customvalues\CustomValuesCommandArgumentManager.h">
-      <Filter>Chataigne\Source\Module\modules\common\commands\customvalues</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\common\streaming\commands\SendStreamRawDataCommand.h">
       <Filter>Chataigne\Source\Module\modules\common\streaming\commands</Filter>
@@ -6096,6 +6126,9 @@
     <ClInclude Include="..\..\Source\Module\ModuleFactory.h">
       <Filter>Chataigne\Source\Module</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\Module\ModuleIncludes.h">
+      <Filter>Chataigne\Source\Module</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\Module\ModuleManager.h">
       <Filter>Chataigne\Source\Module</Filter>
     </ClInclude>
@@ -6125,6 +6158,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\StateMachine\ui\StateManagerUI.h">
       <Filter>Chataigne\Source\StateMachine\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\StateMachine\StateMachineIncludes.h">
+      <Filter>Chataigne\Source\StateMachine</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\StateMachine\StateManager.h">
       <Filter>Chataigne\Source\StateMachine</Filter>
@@ -6193,6 +6229,9 @@
       <Filter>Chataigne\Source\TimeMachine\Sequence</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\TimeMachine\ChataigneSequenceManager.h">
+      <Filter>Chataigne\Source\TimeMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\TimeMachine\TimeMachineIncludes.h">
       <Filter>Chataigne\Source\TimeMachine</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\UI\AboutWindow.h">

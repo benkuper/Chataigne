@@ -10,9 +10,6 @@
 
 #pragma once
 
-#include "Common/Command/BaseCommand.h"
-#include "GenericOSCQueryModule.h"
-
 class GenericOSCQueryCommand :
 	public BaseCommand
 {

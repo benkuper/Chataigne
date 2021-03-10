@@ -8,9 +8,7 @@
   ==============================================================================
 */
 
-#include "CustomOSCModule.h"
 #include "Common/Command/CommandFactory.h"
-
 
 CustomOSCModule::CustomOSCModule() :
 	OSCModule("OSC"),

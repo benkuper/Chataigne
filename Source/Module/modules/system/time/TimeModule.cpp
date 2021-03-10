@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "TimeModule.h"
-
 TimeModule::TimeModule(const String & name) :
 	Module(name)
 {

@@ -7,7 +7,7 @@ env:
 jobs:
   windows:
     name: Windows
-    if: false # always skip job (heap space needs fix)
+    #if: false # always skip job (heap space needs fix)
     runs-on: windows-latest
     strategy:
       matrix:

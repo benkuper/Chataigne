@@ -10,9 +10,6 @@
 
 #pragma once
 
-#include "../GenericOSCQueryModule.h"
-#include "Module/ui/ModuleEditor.h"
-
 class GenericOSCQueryValueContainerEditor :
 	public GenericControllableContainerEditor
 {

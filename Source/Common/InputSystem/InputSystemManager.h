@@ -9,10 +9,9 @@
 */
 
 #pragma once
+
 #include "JuceHeader.h"
-
 #include "SDL.h"
-
 
 class Joystick
 {

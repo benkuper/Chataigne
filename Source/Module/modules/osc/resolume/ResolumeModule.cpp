@@ -8,10 +8,7 @@
   ==============================================================================
 */
 
-#include "ResolumeModule.h"
 #include "Common/Command/CommandFactory.h"
-#include "commands/ResolumeClipCommand.h"
-#include "commands/ResolumeFXCommand.h"
 
 ResolumeModule::ResolumeModule() :
 	OSCModule(getDefaultTypeString(),7001,7000,false,true)

@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "TCPClientModule.h"
-
 TCPClientModule::TCPClientModule(const String & name, int defaultRemotePort) :
 	NetworkStreamingModule(name,false, true, 0, defaultRemotePort)
 {

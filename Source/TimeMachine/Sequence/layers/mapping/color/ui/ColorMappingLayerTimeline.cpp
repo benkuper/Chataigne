@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "ColorMappingLayerTimeline.h"
-
 ColorMappingLayerTimeline::ColorMappingLayerTimeline(ColorMappingLayer* layer) :
 	MappingLayerTimeline(layer, new GradientColorManagerUI(&layer->colorManager)),
 	cml(layer)

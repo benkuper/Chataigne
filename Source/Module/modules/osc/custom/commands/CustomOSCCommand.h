@@ -10,10 +10,6 @@
 
 #pragma once
 
-#include "../../commands/OSCCommand.h"
-#include "../CustomOSCModule.h"
-#include "Module/modules/common/commands/customvalues/CustomValuesCommandArgumentManager.h"
-
 class CustomOSCCommand :
 	public OSCCommand
 {

@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "MIDICommands.h"
-#include "../MIDIModule.h"
-
 MIDICommand::MIDICommand(MIDIModule * module, CommandContext context, var params, Multiplex * multiplex) :
 	BaseCommand(module, context, params, multiplex),
 	midiModule(module)

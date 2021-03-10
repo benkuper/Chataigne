@@ -9,7 +9,7 @@
 */
 
 #include "CommandFactory.h"
-#include "Module/ModuleManager.h"
+#include "Module/ModuleIncludes.h"
 
 CommandDefinition* CommandFactory::showMenuAndGetCommand(CommandContext context, Module* lockedModule, bool multiplexMode)
 {

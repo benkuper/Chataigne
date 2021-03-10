@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "OSWindowCommand.h"
-
 #pragma warning(disable:4804)
 
 OSWindowCommand::OSWindowCommand(OSModule* _module, CommandContext context, var params, Multiplex * multiplex) :

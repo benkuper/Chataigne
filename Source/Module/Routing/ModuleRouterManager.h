@@ -10,8 +10,6 @@
 
 #pragma once
 
-#include "ModuleRouter.h"
-
 class ModuleRouterManager :
 	public BaseManager<ModuleRouter>
 {

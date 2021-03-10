@@ -8,17 +8,10 @@
   ==============================================================================
 */
 
-#include "Module.h"
 #include "Common/Command/CommandFactory.h"
-#include "ui/ModuleEditor.h"
-#include "ui/ModuleUI.h"
 #include "Common/Command/Template/CommandTemplateManager.h"
-#include "Module/modules/common/commands/scriptcommands/ScriptCommand.h"
-#include "UI/ChataigneAssetManager.h"
 #include "Common/Command/BaseCommandHandler.h"
-#include "ModuleCommandTester.h"
-#include "modules/common/commands/scriptcallback/ScriptCallbackCommand.h"
-#include "Routing/ModuleRouter.h"
+
 
 Module::Module(const String& name) :
 	BaseItem(name, true, true),

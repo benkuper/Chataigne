@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "Mapping1DLayerPanel.h"
-
 Mapping1DLayerPanel::Mapping1DLayerPanel(Mapping1DLayer* layer) :
     AutomationMappingLayerPanel(layer),
     ml(layer)

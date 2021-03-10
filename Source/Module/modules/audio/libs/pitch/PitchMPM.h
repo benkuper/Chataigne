@@ -5,9 +5,7 @@
 
 #pragma once
 
-#include "JuceHeader.h"
 #include <float.h>
-#include "PitchDetector.h"
 
 #define CUTOFF 0.93 //0.97 is default
 #define SMALL_CUTOFF 0.5

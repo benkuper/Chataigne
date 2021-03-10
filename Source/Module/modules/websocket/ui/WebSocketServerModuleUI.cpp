@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "WebSocketServerModuleUI.h"
-
 WebSocketServerModuleUI::WebSocketServerModuleUI(WebSocketServerModule* m) :
 	ModuleUI(m),
 	serverModule(m)

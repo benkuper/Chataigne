@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "ModuleCommandTester.h"
-#include "ui/ModuleCommandTesterEditor.h"
-
 ModuleCommandTester::ModuleCommandTester(Module * module) :
 	BaseCommandHandler("Command Tester", ACTION, module)
 {

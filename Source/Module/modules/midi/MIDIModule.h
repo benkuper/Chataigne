@@ -10,7 +10,6 @@
 
 #pragma once
 
-#include "Module/Module.h"
 #include "Common/MIDI/MIDIManager.h"
 #include "Common/MIDI/MIDIDeviceParameter.h"
 

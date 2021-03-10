@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "StreamDeckCommand.h"
-
 StreamDeckCommand::StreamDeckCommand(StreamDeckModule* _module, CommandContext context, var params, Multiplex* multiplex) :
 	BaseCommand(_module, context, params, multiplex),
 	streamDeckModule(_module),

@@ -8,20 +8,8 @@
   ==============================================================================
 */
 
-#include "ChataigneSequence.h"
-
-#include "Module/modules/audio/AudioModule.h"
-#include "Module/modules/midi/MIDIModule.h"
 #include "Common/MIDI/MTCSender.h"
 #include "Common/MIDI/MIDIDeviceParameter.h"
-
-#include "layers/trigger/ChataigneTriggerLayer.h"
-#include "layers/mapping/automation/1d/Mapping1DLayer.h"
-#include "layers/mapping/automation/2d/Mapping2DLayer.h"
-#include "layers/mapping/color/ColorMappingLayer.h"
-#include "layers/mapping/MappingLayer.h"
-#include "layers/audio/ChataigneAudioLayer.h"
-#include "../ChataigneSequenceManager.h"
 
 ChataigneSequence::ChataigneSequence() :
 	Sequence(),

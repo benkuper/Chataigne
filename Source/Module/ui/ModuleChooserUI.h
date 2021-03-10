@@ -10,7 +10,6 @@
 
 #pragma once
 
-#include "ModuleManagerUI.h"
 #include "CustomVariables/CVGroupManager.h"
 
 class ModuleChooserUI :

@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "FFTAnalyzer.h"
-#include "ui/FFTAnalyzerEditor.h"
-
 FFTAnalyzer::FFTAnalyzer() :
 	BaseItem("Analyzer 1")
 {

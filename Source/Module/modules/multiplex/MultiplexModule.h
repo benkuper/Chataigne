@@ -9,7 +9,6 @@
 */
 
 #pragma once
-#include "../../Module.h"
 
 class MultiplexModule :
 	public Module

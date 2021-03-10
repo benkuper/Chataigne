@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "SendStreamRawDataCommand.h"
-
 SendStreamRawDataCommand::SendStreamRawDataCommand(StreamingModule* _module, CommandContext context, var params, Multiplex* multiplex) :
 	SendStreamValuesCommand(_module, context, params, multiplex)
 {

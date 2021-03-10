@@ -8,10 +8,6 @@
   ==============================================================================
 */
 
-#include "ResolumeBaseCommand.h"
-#include "../ResolumeModule.h"
-#include "ui/ResolumeBaseCommandEditor.h"
-
 ResolumeBaseCommand::ResolumeBaseCommand(ResolumeModule * _module, CommandContext context, var params, Multiplex * multiplex, bool customRebuild) :
 	OSCCommand(_module, context, params, multiplex),
 	resolumeModule(_module),

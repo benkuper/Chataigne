@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "FFTAnalyzerManager.h"
-#include "ui/FFTAnalyzerManagerEditor.h"
-
 FFTAnalyzerManager::FFTAnalyzerManager() :
 	BaseManager("FFT Analysis"),
 	forwardFFT(fftOrder),

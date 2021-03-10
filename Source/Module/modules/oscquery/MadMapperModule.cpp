@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "MadMapperModule.h"
-
 MadMapperModule::MadMapperModule() :
 	GenericOSCQueryModule("MadMapper",8010)
 {

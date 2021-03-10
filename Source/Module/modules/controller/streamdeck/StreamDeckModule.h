@@ -10,9 +10,6 @@
 
 #pragma once
 
-#include "Module/Module.h"
-#include "StreamDeckManager.h"
-
 #define USE_FAKE_DEVICE 0
 
 class StreamDeckModule :

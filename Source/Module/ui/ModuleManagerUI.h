@@ -10,9 +10,6 @@
 
 #pragma once
 
-#include "ModuleUI.h"
-#include "../ModuleManager.h"
-
 class ModuleManagerUI :
 	public BaseManagerShapeShifterUI<ModuleManager, Module, ModuleUI>
 {

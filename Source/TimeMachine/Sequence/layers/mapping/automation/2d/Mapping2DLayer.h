@@ -9,7 +9,6 @@
 */
 
 #pragma once
-#include "../AutomationMappingLayer.h"
 
 class Mapping2DLayer :
 	public AutomationMappingLayer

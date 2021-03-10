@@ -10,7 +10,6 @@
 
 #pragma once
 
-#include "../common/streaming/StreamingModule.h"
 #include "Common/Serial/SerialManager.h"
 #include "Common/Serial/SerialDeviceParameter.h"
 

@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "FFTAnalyzerManagerEditor.h"
-
 FFTAnalyzerManagerEditor::FFTAnalyzerManagerEditor(FFTAnalyzerManager* _manager, bool isRoot) :
 	GenericManagerEditor(_manager, isRoot),
 	analyzerManager(_manager),

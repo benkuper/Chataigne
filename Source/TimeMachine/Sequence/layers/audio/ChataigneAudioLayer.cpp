@@ -8,12 +8,6 @@
   ==============================================================================
 */
 
-#include "ChataigneAudioLayer.h"
-#include "ui/ChataigneAudioLayerPanel.h"
-#include "ui/ChataigneAudioLayerTimeline.h"
-#include "../..//ChataigneSequence.h"
-
-
 ChataigneAudioLayer::ChataigneAudioLayer(ChataigneSequence* _sequence, var params) :
 	AudioLayer(_sequence, params),
 	audioModule(nullptr),

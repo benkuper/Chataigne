@@ -8,12 +8,7 @@
   ==============================================================================
 */
 
-#include "AudioModule.h"
 #include "Common/MIDI/MIDIManager.h"
-#include "ui/AudioModuleHardwareEditor.h"
-#include "commands/PlayAudioFileCommand.h"
-#include "libs/pitch/PitchMPM.h"
-#include "libs/pitch/PitchYIN.h"
 
 AudioModule::AudioModule(const String & name) :
 	Module(name),

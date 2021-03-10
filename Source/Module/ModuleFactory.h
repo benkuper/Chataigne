@@ -10,8 +10,6 @@
 
 #pragma once
 
-#include "Module.h"
-
 class ModuleDefinition :
 	public FactoryDefinition<Module, std::function<Module* ()>>
 {

@@ -12,8 +12,8 @@
 
 #include "CommandDefinition.h"
 #include "BaseCommand.h"
-#include "Common/Command/Template/CommandTemplateManager.h"
-#include "Module/ModuleManager.h"
+#include "Template/CommandTemplateManager.h"
+#include "Module/ModuleIncludes.h"
 
 class BaseCommandHandler :
 	public BaseItem,

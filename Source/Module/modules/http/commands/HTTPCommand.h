@@ -10,8 +10,6 @@
 
 #pragma once
 
-#include "../HTTPModule.h"
-
 class HTTPCommand :
 	public BaseCommand
 {

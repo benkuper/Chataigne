@@ -10,8 +10,6 @@
 
 #pragma once
 
-#include "../Module.h"
-
 class ModuleUI :
 	public BaseItemUI<Module>,
 	public Module::ModuleListener

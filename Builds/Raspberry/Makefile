@@ -35,7 +35,7 @@ ifeq ($(CONFIG),Debug)
     TARGET_ARCH := -march=native
   endif
 
-  JUCE_CPPFLAGS := $(DEPFLAGS) "-DLINUX=1" "-DDEBUG=1" "-D_DEBUG=1" "-DVST_LOGGING=0" "-DJUCER_LINUX_MAKE_9C1B7400=1" "-DJUCE_APP_VERSION=1.8.0b16" "-DJUCE_APP_VERSION_HEX=0x10800" $(shell pkg-config --cflags alsa freetype2 libcurl webkit2gtk-4.0 gtk+-x11-3.0) -pthread -I../../JuceLibraryCode -I../../JUCE/modules -I../../Modules -I../../External/wiiuse -I../../External/serial/include -I../../External/servus/include -I../../External/dnssd/include -I../../External/sdl/include -I/usr/include/freetype2 -I../../External/hidapi/include -I../../External/libusb/include/libusb-1.0 -I../../Source $(CPPFLAGS)
+  JUCE_CPPFLAGS := $(DEPFLAGS) "-DLINUX=1" "-DDEBUG=1" "-D_DEBUG=1" "-DVST_LOGGING=0" "-DJUCER_LINUX_MAKE_9C1B7400=1" "-DJUCE_APP_VERSION=1.8.0b17" "-DJUCE_APP_VERSION_HEX=0x10800" $(shell pkg-config --cflags alsa freetype2 libcurl webkit2gtk-4.0 gtk+-x11-3.0) -pthread -I../../JuceLibraryCode -I../../JUCE/modules -I../../Modules -I../../External/wiiuse -I../../External/serial/include -I../../External/servus/include -I../../External/dnssd/include -I../../External/sdl/include -I/usr/include/freetype2 -I../../External/hidapi/include -I../../External/libusb/include/libusb-1.0 -I../../Source $(CPPFLAGS)
   JUCE_CPPFLAGS_APP :=  "-DJucePlugin_Build_VST=0" "-DJucePlugin_Build_VST3=0" "-DJucePlugin_Build_AU=0" "-DJucePlugin_Build_AUv3=0" "-DJucePlugin_Build_RTAS=0" "-DJucePlugin_Build_AAX=0" "-DJucePlugin_Build_Standalone=0" "-DJucePlugin_Build_Unity=0"
   JUCE_TARGET_APP := Chataigne
 
@@ -56,7 +56,7 @@ ifeq ($(CONFIG),Release)
     TARGET_ARCH := -march=native
   endif
 
-  JUCE_CPPFLAGS := $(DEPFLAGS) "-DLINUX=1" "-DNDEBUG=1" "-DVST_LOGGING=0" "-DJUCER_LINUX_MAKE_9C1B7400=1" "-DJUCE_APP_VERSION=1.8.0b16" "-DJUCE_APP_VERSION_HEX=0x10800" $(shell pkg-config --cflags alsa freetype2 libcurl webkit2gtk-4.0 gtk+-x11-3.0) -pthread -I../../JuceLibraryCode -I../../JUCE/modules -I../../Modules -I../../External/wiiuse -I../../External/serial/include -I../../External/servus/include -I../../External/dnssd/include -I../../External/sdl/include -I/usr/include/freetype2 -I../../External/hidapi/include -I../../External/libusb/include/libusb-1.0 -I../../Source $(CPPFLAGS)
+  JUCE_CPPFLAGS := $(DEPFLAGS) "-DLINUX=1" "-DNDEBUG=1" "-DVST_LOGGING=0" "-DJUCER_LINUX_MAKE_9C1B7400=1" "-DJUCE_APP_VERSION=1.8.0b17" "-DJUCE_APP_VERSION_HEX=0x10800" $(shell pkg-config --cflags alsa freetype2 libcurl webkit2gtk-4.0 gtk+-x11-3.0) -pthread -I../../JuceLibraryCode -I../../JUCE/modules -I../../Modules -I../../External/wiiuse -I../../External/serial/include -I../../External/servus/include -I../../External/dnssd/include -I../../External/sdl/include -I/usr/include/freetype2 -I../../External/hidapi/include -I../../External/libusb/include/libusb-1.0 -I../../Source $(CPPFLAGS)
   JUCE_CPPFLAGS_APP :=  "-DJucePlugin_Build_VST=0" "-DJucePlugin_Build_VST3=0" "-DJucePlugin_Build_AU=0" "-DJucePlugin_Build_AUv3=0" "-DJucePlugin_Build_RTAS=0" "-DJucePlugin_Build_AAX=0" "-DJucePlugin_Build_Standalone=0" "-DJucePlugin_Build_Unity=0"
   JUCE_TARGET_APP := Chataigne
 
@@ -68,16 +68,18 @@ ifeq ($(CONFIG),Release)
 endif
 
 OBJECTS_APP := \
-  $(JUCE_OBJDIR)/BasicsGuide_9fe891d9.o \
-  $(JUCE_OBJDIR)/BaseGuide_47922a3b.o \
-  $(JUCE_OBJDIR)/GuideComponents_1e634f02.o \
-  $(JUCE_OBJDIR)/Guider_52ec0c30.o \
+  $(JUCE_OBJDIR)/GuiderIncludes_fc55989b.o \
   $(JUCE_OBJDIR)/MatomoAnalytics_a3cfd84d.o \
+  $(JUCE_OBJDIR)/CommonIncludes_97d07afb.o \
   $(JUCE_OBJDIR)/LinkableParameterEditor_ed91bbd8.o \
   $(JUCE_OBJDIR)/ParameterLink_e54bbf1c.o \
   $(JUCE_OBJDIR)/ZeroconfManager_68129d03.o \
   $(JUCE_OBJDIR)/InputDeviceHelpers_f77a7a0.o \
   $(JUCE_OBJDIR)/InputSystemManager_a791f74f.o \
+  $(JUCE_OBJDIR)/CustomValuesCommandArgumentEditor_97209c24.o \
+  $(JUCE_OBJDIR)/CustomValuesCommandArgumentManagerEditor_dc11806d.o \
+  $(JUCE_OBJDIR)/CustomValuesCommandArgument_cf882c82.o \
+  $(JUCE_OBJDIR)/CustomValuesCommandArgumentManager_77439155.o \
   $(JUCE_OBJDIR)/BaseCommandEditor_eeffa8d5.o \
   $(JUCE_OBJDIR)/BaseCommandHandlerEditor_d6f421f9.o \
   $(JUCE_OBJDIR)/CommandChooserUI_dcc0e740.o \
@@ -188,50 +190,9 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/CVPreset_3c4a8f1a.o \
   $(JUCE_OBJDIR)/CVPresetManager_6d2193bd.o \
   $(JUCE_OBJDIR)/CVGroupManagerUI_95d59108.o \
+  $(JUCE_OBJDIR)/CustomVariablesIncludes_d7a15e29.o \
   $(JUCE_OBJDIR)/CVGroup_5e5064a4.o \
   $(JUCE_OBJDIR)/CVGroupManager_45344ef3.o \
-  $(JUCE_OBJDIR)/CommunityModuleInfoEditor_122ae75f.o \
-  $(JUCE_OBJDIR)/CommunityModuleInfo_23b085c3.o \
-  $(JUCE_OBJDIR)/CommunityModuleManager_e575a282.o \
-  $(JUCE_OBJDIR)/CustomVariablesModuleCommands_edf5eec8.o \
-  $(JUCE_OBJDIR)/CustomVariablesModule_cdc46d67.o \
-  $(JUCE_OBJDIR)/FFTAnalyzerEditor_79640ae4.o \
-  $(JUCE_OBJDIR)/FFTAnalyzerManagerEditor_2297f9ad.o \
-  $(JUCE_OBJDIR)/FFTAnalyzer_1855382c.o \
-  $(JUCE_OBJDIR)/FFTAnalyzerManager_c64bf26b.o \
-  $(JUCE_OBJDIR)/PlayAudioFileCommand_45dfa479.o \
-  $(JUCE_OBJDIR)/AudioModuleHardwareEditor_e9c8a821.o \
-  $(JUCE_OBJDIR)/AudioModule_84057627.o \
-  $(JUCE_OBJDIR)/ScriptCallbackCommand_716549cb.o \
-  $(JUCE_OBJDIR)/ScriptCommand_658cfed3.o \
-  $(JUCE_OBJDIR)/CustomValuesCommandArgumentEditor_1cc8b6de.o \
-  $(JUCE_OBJDIR)/CustomValuesCommandArgumentManagerEditor_8192c073.o \
-  $(JUCE_OBJDIR)/CustomValuesCommandArgument_96a63888.o \
-  $(JUCE_OBJDIR)/CustomValuesCommandArgumentManager_fc7128f.o \
-  $(JUCE_OBJDIR)/SendStreamRawDataCommand_ca89c0e3.o \
-  $(JUCE_OBJDIR)/SendStreamStringCommand_d6c0655a.o \
-  $(JUCE_OBJDIR)/SendStreamStringValuesCommand_814cbb58.o \
-  $(JUCE_OBJDIR)/SendStreamValuesCommand_7fe403a9.o \
-  $(JUCE_OBJDIR)/StreamingCommand_19b7802b.o \
-  $(JUCE_OBJDIR)/NetworkStreamingModule_a6ae39cf.o \
-  $(JUCE_OBJDIR)/StreamingModule_8e8f50a9.o \
-  $(JUCE_OBJDIR)/EnablingNetworkControllableContainerEditor_5d799d9a.o \
-  $(JUCE_OBJDIR)/MouseModuleCommands_191ee0d.o \
-  $(JUCE_OBJDIR)/MouseModule_8daf6b60.o \
-  $(JUCE_OBJDIR)/StreamDeckMini_4ac810b0.o \
-  $(JUCE_OBJDIR)/StreamDeckV1_857241d4.o \
-  $(JUCE_OBJDIR)/StreamDeckV2_85805955.o \
-  $(JUCE_OBJDIR)/StreamDeckXL_8a586dad.o \
-  $(JUCE_OBJDIR)/StreamDeckCommand_bb7407fa.o \
-  $(JUCE_OBJDIR)/StreamDeck_4e210288.o \
-  $(JUCE_OBJDIR)/StreamDeckManager_8875088f.o \
-  $(JUCE_OBJDIR)/StreamDeckModule_c82304d4.o \
-  $(JUCE_OBJDIR)/JoystickModule_4129a194.o \
-  $(JUCE_OBJDIR)/GamepadModule_fc770758.o \
-  $(JUCE_OBJDIR)/JoyConModule_1410c7f4.o \
-  $(JUCE_OBJDIR)/KeyboardModuleCommands_aabffc2b.o \
-  $(JUCE_OBJDIR)/KeyboardModule_965e79f4.o \
-  $(JUCE_OBJDIR)/KinectV2Module_99832bf0.o \
   $(JUCE_OBJDIR)/os_mac_a23c8a30.o \
   $(JUCE_OBJDIR)/classic_e456a893.o \
   $(JUCE_OBJDIR)/dynamics_a64483fd.o \
@@ -246,93 +207,10 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/util_7a46226b.o \
   $(JUCE_OBJDIR)/wiiboard_b3f0e298.o \
   $(JUCE_OBJDIR)/wiiuse_8bc34039.o \
-  $(JUCE_OBJDIR)/WiimoteManager_c0441739.o \
-  $(JUCE_OBJDIR)/WiimoteModule_144278ea.o \
-  $(JUCE_OBJDIR)/WiimotePairUtil_320e063a.o \
-  $(JUCE_OBJDIR)/DMXModuleUI_438f4900.o \
-  $(JUCE_OBJDIR)/DMXCommand_23f829a1.o \
-  $(JUCE_OBJDIR)/DMXModule_c47853d9.o \
-  $(JUCE_OBJDIR)/MetronomeModule_6453731e.o \
-  $(JUCE_OBJDIR)/SignalModule_9a14db38.o \
-  $(JUCE_OBJDIR)/ChataigneLogCommand_8373a622.o \
-  $(JUCE_OBJDIR)/GenericAppCommand_b0de605e.o \
-  $(JUCE_OBJDIR)/GenericControllableCommand_caf6da58.o \
-  $(JUCE_OBJDIR)/GenericScriptCommand_99bd8596.o \
-  $(JUCE_OBJDIR)/ChataigneGenericModule_d6802829.o \
-  $(JUCE_OBJDIR)/MultiplexCommands_9cdcd25c.o \
-  $(JUCE_OBJDIR)/MultiplexModule_d88b474b.o \
-  $(JUCE_OBJDIR)/MIDICommands_121216e.o \
-  $(JUCE_OBJDIR)/MIDIModule_d3422ef9.o \
-  $(JUCE_OBJDIR)/MadMapperModule_33fa8ca3.o \
-  $(JUCE_OBJDIR)/OSCQueryModuleEditor_f12aa46b.o \
-  $(JUCE_OBJDIR)/GenericOSCQueryCommand_341c3887.o \
-  $(JUCE_OBJDIR)/GenericOSCQueryModule_e955523a.o \
-  $(JUCE_OBJDIR)/QLabWorkspaceCommand_c4efb3e2.o \
-  $(JUCE_OBJDIR)/QLabModule_907af449.o \
-  $(JUCE_OBJDIR)/OSCOutputEditor_6171624e.o \
-  $(JUCE_OBJDIR)/HeavyMModule_344d2fc9.o \
-  $(JUCE_OBJDIR)/OSCCommand_779cc3a1.o \
-  $(JUCE_OBJDIR)/CustomOSCCommand_61f60882.o \
-  $(JUCE_OBJDIR)/CustomOSCModule_1d5ea018.o \
-  $(JUCE_OBJDIR)/DLightModule_37bf0649.o \
-  $(JUCE_OBJDIR)/LiveOSCCommandBase_2512fc69.o \
-  $(JUCE_OBJDIR)/LiveOSCModule_ae0bbb38.o \
-  $(JUCE_OBJDIR)/MilluminModule_e03eaa89.o \
-  $(JUCE_OBJDIR)/ReaperTimeCommand_2fc352d6.o \
-  $(JUCE_OBJDIR)/ReaperModule_95c95bc9.o \
-  $(JUCE_OBJDIR)/ResolumeBaseCommandEditor_c6593aa0.o \
-  $(JUCE_OBJDIR)/ResolumeBaseCommand_9ab5c8d0.o \
-  $(JUCE_OBJDIR)/ResolumeClipCommand_ac9cb6f1.o \
-  $(JUCE_OBJDIR)/ResolumeFXCommand_82bf808f.o \
-  $(JUCE_OBJDIR)/ResolumeModule_61b1e469.o \
-  $(JUCE_OBJDIR)/PowerpointModule_7e076149.o \
-  $(JUCE_OBJDIR)/OSCModule_5d38d7b9.o \
-  $(JUCE_OBJDIR)/SequenceAudioCommand_dfc2885b.o \
-  $(JUCE_OBJDIR)/SequenceCommand_5137c44f.o \
-  $(JUCE_OBJDIR)/SequenceModule_6db3e719.o \
-  $(JUCE_OBJDIR)/SerialModule_a9d8bfb9.o \
-  $(JUCE_OBJDIR)/StateCommand_1e7fa1.o \
-  $(JUCE_OBJDIR)/StateModule_898183dd.o \
-  $(JUCE_OBJDIR)/WakeOnLanCommandEditor_98ea2f4d.o \
-  $(JUCE_OBJDIR)/OSExecCommand_1adb1a06.o \
-  $(JUCE_OBJDIR)/OSPowerCommand_8563ee44.o \
-  $(JUCE_OBJDIR)/OSWindowCommand_605e1b87.o \
-  $(JUCE_OBJDIR)/WakeOnLanCommand_f0bfe78f.o \
-  $(JUCE_OBJDIR)/OSModule_9cf844c7.o \
-  $(JUCE_OBJDIR)/TimeModule_26aecc47.o \
-  $(JUCE_OBJDIR)/HTTPCommand_7771e2e1.o \
-  $(JUCE_OBJDIR)/HTTPModule_da757f59.o \
-  $(JUCE_OBJDIR)/TCPServerModuleUI_4a6f5a6e.o \
-  $(JUCE_OBJDIR)/TCPServerConnectionManager_d34fdc90.o \
-  $(JUCE_OBJDIR)/TCPServerModule_dab9835.o \
-  $(JUCE_OBJDIR)/PJLinkModule_32fc4f28.o \
-  $(JUCE_OBJDIR)/WatchoutCommand_7f96a6c2.o \
-  $(JUCE_OBJDIR)/WatchoutModule_12f7dcc8.o \
-  $(JUCE_OBJDIR)/TCPClientModule_9b5f8345.o \
-  $(JUCE_OBJDIR)/UDPModule_4d12fb3d.o \
-  $(JUCE_OBJDIR)/GPIOCommands_563bb04a.o \
   $(JUCE_OBJDIR)/command_20531fa2.o \
   $(JUCE_OBJDIR)/pigpio_c63733db.o \
-  $(JUCE_OBJDIR)/GPIOModule_1c347bb9.o \
-  $(JUCE_OBJDIR)/WebSocketServerModuleUI_2743a483.o \
-  $(JUCE_OBJDIR)/WebSocketClientModule_5755214.o \
-  $(JUCE_OBJDIR)/WebSocketServerModule_20a978c.o \
-  $(JUCE_OBJDIR)/ModuleRouterPanelView_3de9a86.o \
-  $(JUCE_OBJDIR)/ModuleRouterValueEditor_7fd5857b.o \
-  $(JUCE_OBJDIR)/ModuleRouterView_be67d052.o \
-  $(JUCE_OBJDIR)/ModuleRouter_b990f562.o \
-  $(JUCE_OBJDIR)/ModuleRouterController_c6eb42de.o \
-  $(JUCE_OBJDIR)/ModuleRouterManager_84510c75.o \
-  $(JUCE_OBJDIR)/ModuleRouterValue_107f14f9.o \
-  $(JUCE_OBJDIR)/ModuleChooserUI_a3310ecc.o \
-  $(JUCE_OBJDIR)/ModuleCommandTesterEditor_aa102db4.o \
-  $(JUCE_OBJDIR)/ModuleEditor_e010c1a.o \
-  $(JUCE_OBJDIR)/ModuleManagerUI_da55b3be.o \
-  $(JUCE_OBJDIR)/ModuleUI_510b19a1.o \
-  $(JUCE_OBJDIR)/Module_14b9fb70.o \
-  $(JUCE_OBJDIR)/ModuleCommandTester_b6d1b8a4.o \
-  $(JUCE_OBJDIR)/ModuleFactory_f0ade584.o \
-  $(JUCE_OBJDIR)/ModuleManager_ee65baa7.o \
+  $(JUCE_OBJDIR)/ModuleIncludes_95e047db.o \
+  $(JUCE_OBJDIR)/ModuleIncludes2_2648c981.o \
   $(JUCE_OBJDIR)/StateUI_cf33c402.o \
   $(JUCE_OBJDIR)/StateViewUI_87e08687.o \
   $(JUCE_OBJDIR)/State_6ea1d8c3.o \
@@ -342,28 +220,9 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/StateTransitionManager_c1fd5031.o \
   $(JUCE_OBJDIR)/StateMachineView_e5e08766.o \
   $(JUCE_OBJDIR)/StateManagerUI_a2d9b59b.o \
+  $(JUCE_OBJDIR)/StateMachineIncludes_87fb5fdb.o \
   $(JUCE_OBJDIR)/StateManager_ec4bbd6.o \
-  $(JUCE_OBJDIR)/ChataigneTriggerLayer_f5de836d.o \
-  $(JUCE_OBJDIR)/ChataigneTimeTrigger_17ca38c1.o \
-  $(JUCE_OBJDIR)/ChataigneAudioLayerPanel_4ae871a.o \
-  $(JUCE_OBJDIR)/ChataigneAudioLayerTimeline_e6bc1a75.o \
-  $(JUCE_OBJDIR)/ChataigneAudioLayer_3f84aced.o \
-  $(JUCE_OBJDIR)/AutomationMappingLayerPanel_99c91a53.o \
-  $(JUCE_OBJDIR)/AutomationMappingLayerTimeline_464e909c.o \
-  $(JUCE_OBJDIR)/Mapping1DLayerPanel_3aba419b.o \
-  $(JUCE_OBJDIR)/Mapping1DLayer_5bd46012.o \
-  $(JUCE_OBJDIR)/Mapping2DLayerPanel_459c03fb.o \
-  $(JUCE_OBJDIR)/Mapping2DLayerTimeline_9b7365f4.o \
-  $(JUCE_OBJDIR)/Mapping2DLayer_fd520854.o \
-  $(JUCE_OBJDIR)/AutomationMappingLayer_e5df229e.o \
-  $(JUCE_OBJDIR)/ColorMappingLayerTimeline_1b2ea276.o \
-  $(JUCE_OBJDIR)/ColorMappingLayer_6c153fc6.o \
-  $(JUCE_OBJDIR)/MappingLayerEditor_a17bc097.o \
-  $(JUCE_OBJDIR)/MappingLayerPanel_65736d24.o \
-  $(JUCE_OBJDIR)/MappingLayerTimeline_80a002b.o \
-  $(JUCE_OBJDIR)/MappingLayer_dc860121.o \
-  $(JUCE_OBJDIR)/ChataigneSequence_6a3640ef.o \
-  $(JUCE_OBJDIR)/ChataigneSequenceManager_cd775ccc.o \
+  $(JUCE_OBJDIR)/TimeMachineIncludes_8f797311.o \
   $(JUCE_OBJDIR)/AboutWindow_970e3d2b.o \
   $(JUCE_OBJDIR)/ChataigneAssetManager_b7ab91a9.o \
   $(JUCE_OBJDIR)/WelcomeScreen_e38192fc.o \
@@ -408,29 +267,19 @@ $(JUCE_OUTDIR)/$(JUCE_TARGET_APP) : $(OBJECTS_APP) $(RESOURCES)
 	-$(V_AT)mkdir -p $(JUCE_OUTDIR)
 	$(V_AT)$(CXX) -o $(JUCE_OUTDIR)/$(JUCE_TARGET_APP) $(OBJECTS_APP) $(JUCE_LDFLAGS) $(JUCE_LDFLAGS_APP) $(RESOURCES) $(TARGET_ARCH)
 
-$(JUCE_OBJDIR)/BasicsGuide_9fe891d9.o: ../../Source/Guider/guides/BasicsGuide.cpp
+$(JUCE_OBJDIR)/GuiderIncludes_fc55989b.o: ../../Source/Guider/GuiderIncludes.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling BasicsGuide.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/BaseGuide_47922a3b.o: ../../Source/Guider/BaseGuide.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling BaseGuide.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/GuideComponents_1e634f02.o: ../../Source/Guider/GuideComponents.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling GuideComponents.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/Guider_52ec0c30.o: ../../Source/Guider/Guider.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling Guider.cpp"
+	@echo "Compiling GuiderIncludes.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/MatomoAnalytics_a3cfd84d.o: ../../Source/Analytics/MatomoAnalytics.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling MatomoAnalytics.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/CommonIncludes_97d07afb.o: ../../Source/Common/CommonIncludes.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling CommonIncludes.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/LinkableParameterEditor_ed91bbd8.o: ../../Source/Common/ParameterLink/ui/LinkableParameterEditor.cpp
@@ -456,6 +305,26 @@ $(JUCE_OBJDIR)/InputDeviceHelpers_f77a7a0.o: ../../Source/Common/InputSystem/Inp
 $(JUCE_OBJDIR)/InputSystemManager_a791f74f.o: ../../Source/Common/InputSystem/InputSystemManager.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling InputSystemManager.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/CustomValuesCommandArgumentEditor_97209c24.o: ../../Source/Common/Command/CustomValues/ui/CustomValuesCommandArgumentEditor.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling CustomValuesCommandArgumentEditor.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/CustomValuesCommandArgumentManagerEditor_dc11806d.o: ../../Source/Common/Command/CustomValues/ui/CustomValuesCommandArgumentManagerEditor.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling CustomValuesCommandArgumentManagerEditor.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/CustomValuesCommandArgument_cf882c82.o: ../../Source/Common/Command/CustomValues/CustomValuesCommandArgument.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling CustomValuesCommandArgument.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/CustomValuesCommandArgumentManager_77439155.o: ../../Source/Common/Command/CustomValues/CustomValuesCommandArgumentManager.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling CustomValuesCommandArgumentManager.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/BaseCommandEditor_eeffa8d5.o: ../../Source/Common/Command/ui/BaseCommandEditor.cpp
@@ -1008,6 +877,11 @@ $(JUCE_OBJDIR)/CVGroupManagerUI_95d59108.o: ../../Source/CustomVariables/ui/CVGr
 	@echo "Compiling CVGroupManagerUI.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
+$(JUCE_OBJDIR)/CustomVariablesIncludes_d7a15e29.o: ../../Source/CustomVariables/CustomVariablesIncludes.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling CustomVariablesIncludes.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
 $(JUCE_OBJDIR)/CVGroup_5e5064a4.o: ../../Source/CustomVariables/CVGroup.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling CVGroup.cpp"
@@ -1016,216 +890,6 @@ $(JUCE_OBJDIR)/CVGroup_5e5064a4.o: ../../Source/CustomVariables/CVGroup.cpp
 $(JUCE_OBJDIR)/CVGroupManager_45344ef3.o: ../../Source/CustomVariables/CVGroupManager.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling CVGroupManager.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/CommunityModuleInfoEditor_122ae75f.o: ../../Source/Module/Community/ui/CommunityModuleInfoEditor.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling CommunityModuleInfoEditor.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/CommunityModuleInfo_23b085c3.o: ../../Source/Module/Community/CommunityModuleInfo.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling CommunityModuleInfo.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/CommunityModuleManager_e575a282.o: ../../Source/Module/Community/CommunityModuleManager.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling CommunityModuleManager.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/CustomVariablesModuleCommands_edf5eec8.o: ../../Source/Module/modules/customvariables/commands/CustomVariablesModuleCommands.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling CustomVariablesModuleCommands.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/CustomVariablesModule_cdc46d67.o: ../../Source/Module/modules/customvariables/CustomVariablesModule.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling CustomVariablesModule.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/FFTAnalyzerEditor_79640ae4.o: ../../Source/Module/modules/audio/analysis/ui/FFTAnalyzerEditor.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling FFTAnalyzerEditor.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/FFTAnalyzerManagerEditor_2297f9ad.o: ../../Source/Module/modules/audio/analysis/ui/FFTAnalyzerManagerEditor.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling FFTAnalyzerManagerEditor.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/FFTAnalyzer_1855382c.o: ../../Source/Module/modules/audio/analysis/FFTAnalyzer.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling FFTAnalyzer.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/FFTAnalyzerManager_c64bf26b.o: ../../Source/Module/modules/audio/analysis/FFTAnalyzerManager.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling FFTAnalyzerManager.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/PlayAudioFileCommand_45dfa479.o: ../../Source/Module/modules/audio/commands/PlayAudioFileCommand.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling PlayAudioFileCommand.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/AudioModuleHardwareEditor_e9c8a821.o: ../../Source/Module/modules/audio/ui/AudioModuleHardwareEditor.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling AudioModuleHardwareEditor.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/AudioModule_84057627.o: ../../Source/Module/modules/audio/AudioModule.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling AudioModule.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/ScriptCallbackCommand_716549cb.o: ../../Source/Module/modules/common/commands/scriptcallback/ScriptCallbackCommand.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling ScriptCallbackCommand.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/ScriptCommand_658cfed3.o: ../../Source/Module/modules/common/commands/scriptcommands/ScriptCommand.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling ScriptCommand.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/CustomValuesCommandArgumentEditor_1cc8b6de.o: ../../Source/Module/modules/common/commands/customvalues/ui/CustomValuesCommandArgumentEditor.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling CustomValuesCommandArgumentEditor.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/CustomValuesCommandArgumentManagerEditor_8192c073.o: ../../Source/Module/modules/common/commands/customvalues/ui/CustomValuesCommandArgumentManagerEditor.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling CustomValuesCommandArgumentManagerEditor.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/CustomValuesCommandArgument_96a63888.o: ../../Source/Module/modules/common/commands/customvalues/CustomValuesCommandArgument.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling CustomValuesCommandArgument.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/CustomValuesCommandArgumentManager_fc7128f.o: ../../Source/Module/modules/common/commands/customvalues/CustomValuesCommandArgumentManager.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling CustomValuesCommandArgumentManager.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/SendStreamRawDataCommand_ca89c0e3.o: ../../Source/Module/modules/common/streaming/commands/SendStreamRawDataCommand.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling SendStreamRawDataCommand.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/SendStreamStringCommand_d6c0655a.o: ../../Source/Module/modules/common/streaming/commands/SendStreamStringCommand.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling SendStreamStringCommand.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/SendStreamStringValuesCommand_814cbb58.o: ../../Source/Module/modules/common/streaming/commands/SendStreamStringValuesCommand.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling SendStreamStringValuesCommand.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/SendStreamValuesCommand_7fe403a9.o: ../../Source/Module/modules/common/streaming/commands/SendStreamValuesCommand.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling SendStreamValuesCommand.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/StreamingCommand_19b7802b.o: ../../Source/Module/modules/common/streaming/commands/StreamingCommand.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling StreamingCommand.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/NetworkStreamingModule_a6ae39cf.o: ../../Source/Module/modules/common/streaming/NetworkStreamingModule.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling NetworkStreamingModule.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/StreamingModule_8e8f50a9.o: ../../Source/Module/modules/common/streaming/StreamingModule.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling StreamingModule.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/EnablingNetworkControllableContainerEditor_5d799d9a.o: ../../Source/Module/modules/common/ui/EnablingNetworkControllableContainerEditor.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling EnablingNetworkControllableContainerEditor.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/MouseModuleCommands_191ee0d.o: ../../Source/Module/modules/controller/mouse/commands/MouseModuleCommands.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling MouseModuleCommands.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/MouseModule_8daf6b60.o: ../../Source/Module/modules/controller/mouse/MouseModule.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling MouseModule.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/StreamDeckMini_4ac810b0.o: ../../Source/Module/modules/controller/streamdeck/models/StreamDeckMini.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling StreamDeckMini.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/StreamDeckV1_857241d4.o: ../../Source/Module/modules/controller/streamdeck/models/StreamDeckV1.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling StreamDeckV1.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/StreamDeckV2_85805955.o: ../../Source/Module/modules/controller/streamdeck/models/StreamDeckV2.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling StreamDeckV2.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/StreamDeckXL_8a586dad.o: ../../Source/Module/modules/controller/streamdeck/models/StreamDeckXL.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling StreamDeckXL.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/StreamDeckCommand_bb7407fa.o: ../../Source/Module/modules/controller/streamdeck/commands/StreamDeckCommand.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling StreamDeckCommand.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/StreamDeck_4e210288.o: ../../Source/Module/modules/controller/streamdeck/StreamDeck.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling StreamDeck.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/StreamDeckManager_8875088f.o: ../../Source/Module/modules/controller/streamdeck/StreamDeckManager.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling StreamDeckManager.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/StreamDeckModule_c82304d4.o: ../../Source/Module/modules/controller/streamdeck/StreamDeckModule.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling StreamDeckModule.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/JoystickModule_4129a194.o: ../../Source/Module/modules/controller/joystick/JoystickModule.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling JoystickModule.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/GamepadModule_fc770758.o: ../../Source/Module/modules/controller/gamepad/GamepadModule.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling GamepadModule.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/JoyConModule_1410c7f4.o: ../../Source/Module/modules/controller/joycon/JoyConModule.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling JoyConModule.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/KeyboardModuleCommands_aabffc2b.o: ../../Source/Module/modules/controller/keyboard/commands/KeyboardModuleCommands.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling KeyboardModuleCommands.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/KeyboardModule_965e79f4.o: ../../Source/Module/modules/controller/keyboard/KeyboardModule.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling KeyboardModule.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/KinectV2Module_99832bf0.o: ../../Source/Module/modules/controller/kinect/KinectV2Module.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling KinectV2Module.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/os_mac_a23c8a30.o: ../../Source/Module/modules/controller/wiimote/lib/wiiuse/os_mac/os_mac.c
@@ -1298,331 +962,6 @@ $(JUCE_OBJDIR)/wiiuse_8bc34039.o: ../../Source/Module/modules/controller/wiimote
 	@echo "Compiling wiiuse.c"
 	$(V_AT)$(CC) $(JUCE_CFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
-$(JUCE_OBJDIR)/WiimoteManager_c0441739.o: ../../Source/Module/modules/controller/wiimote/WiimoteManager.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling WiimoteManager.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/WiimoteModule_144278ea.o: ../../Source/Module/modules/controller/wiimote/WiimoteModule.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling WiimoteModule.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/WiimotePairUtil_320e063a.o: ../../Source/Module/modules/controller/wiimote/WiimotePairUtil.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling WiimotePairUtil.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/DMXModuleUI_438f4900.o: ../../Source/Module/modules/dmx/ui/DMXModuleUI.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling DMXModuleUI.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/DMXCommand_23f829a1.o: ../../Source/Module/modules/dmx/commands/DMXCommand.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling DMXCommand.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/DMXModule_c47853d9.o: ../../Source/Module/modules/dmx/DMXModule.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling DMXModule.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/MetronomeModule_6453731e.o: ../../Source/Module/modules/generators/metronome/MetronomeModule.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling MetronomeModule.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/SignalModule_9a14db38.o: ../../Source/Module/modules/generators/signal/SignalModule.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling SignalModule.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/ChataigneLogCommand_8373a622.o: ../../Source/Module/modules/generic/commands/ChataigneLogCommand.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling ChataigneLogCommand.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/GenericAppCommand_b0de605e.o: ../../Source/Module/modules/generic/commands/GenericAppCommand.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling GenericAppCommand.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/GenericControllableCommand_caf6da58.o: ../../Source/Module/modules/generic/commands/GenericControllableCommand.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling GenericControllableCommand.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/GenericScriptCommand_99bd8596.o: ../../Source/Module/modules/generic/commands/GenericScriptCommand.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling GenericScriptCommand.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/ChataigneGenericModule_d6802829.o: ../../Source/Module/modules/generic/ChataigneGenericModule.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling ChataigneGenericModule.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/MultiplexCommands_9cdcd25c.o: ../../Source/Module/modules/multiplex/commands/MultiplexCommands.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling MultiplexCommands.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/MultiplexModule_d88b474b.o: ../../Source/Module/modules/multiplex/MultiplexModule.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling MultiplexModule.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/MIDICommands_121216e.o: ../../Source/Module/modules/midi/commands/MIDICommands.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling MIDICommands.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/MIDIModule_d3422ef9.o: ../../Source/Module/modules/midi/MIDIModule.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling MIDIModule.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/MadMapperModule_33fa8ca3.o: ../../Source/Module/modules/oscquery/MadMapperModule.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling MadMapperModule.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/OSCQueryModuleEditor_f12aa46b.o: ../../Source/Module/modules/oscquery/generic/ui/OSCQueryModuleEditor.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling OSCQueryModuleEditor.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/GenericOSCQueryCommand_341c3887.o: ../../Source/Module/modules/oscquery/generic/GenericOSCQueryCommand.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling GenericOSCQueryCommand.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/GenericOSCQueryModule_e955523a.o: ../../Source/Module/modules/oscquery/generic/GenericOSCQueryModule.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling GenericOSCQueryModule.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/QLabWorkspaceCommand_c4efb3e2.o: ../../Source/Module/modules/osc/qlab/commands/QLabWorkspaceCommand.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling QLabWorkspaceCommand.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/QLabModule_907af449.o: ../../Source/Module/modules/osc/qlab/QLabModule.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling QLabModule.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/OSCOutputEditor_6171624e.o: ../../Source/Module/modules/osc/ui/OSCOutputEditor.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling OSCOutputEditor.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/HeavyMModule_344d2fc9.o: ../../Source/Module/modules/osc/heavym/HeavyMModule.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling HeavyMModule.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/OSCCommand_779cc3a1.o: ../../Source/Module/modules/osc/commands/OSCCommand.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling OSCCommand.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/CustomOSCCommand_61f60882.o: ../../Source/Module/modules/osc/custom/commands/CustomOSCCommand.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling CustomOSCCommand.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/CustomOSCModule_1d5ea018.o: ../../Source/Module/modules/osc/custom/CustomOSCModule.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling CustomOSCModule.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/DLightModule_37bf0649.o: ../../Source/Module/modules/osc/dlight/DLightModule.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling DLightModule.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/LiveOSCCommandBase_2512fc69.o: ../../Source/Module/modules/osc/live/commands/LiveOSCCommandBase.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling LiveOSCCommandBase.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/LiveOSCModule_ae0bbb38.o: ../../Source/Module/modules/osc/live/LiveOSCModule.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling LiveOSCModule.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/MilluminModule_e03eaa89.o: ../../Source/Module/modules/osc/millumin/MilluminModule.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling MilluminModule.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/ReaperTimeCommand_2fc352d6.o: ../../Source/Module/modules/osc/reaper/commands/ReaperTimeCommand.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling ReaperTimeCommand.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/ReaperModule_95c95bc9.o: ../../Source/Module/modules/osc/reaper/ReaperModule.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling ReaperModule.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/ResolumeBaseCommandEditor_c6593aa0.o: ../../Source/Module/modules/osc/resolume/commands/ui/ResolumeBaseCommandEditor.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling ResolumeBaseCommandEditor.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/ResolumeBaseCommand_9ab5c8d0.o: ../../Source/Module/modules/osc/resolume/commands/ResolumeBaseCommand.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling ResolumeBaseCommand.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/ResolumeClipCommand_ac9cb6f1.o: ../../Source/Module/modules/osc/resolume/commands/ResolumeClipCommand.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling ResolumeClipCommand.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/ResolumeFXCommand_82bf808f.o: ../../Source/Module/modules/osc/resolume/commands/ResolumeFXCommand.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling ResolumeFXCommand.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/ResolumeModule_61b1e469.o: ../../Source/Module/modules/osc/resolume/ResolumeModule.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling ResolumeModule.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/PowerpointModule_7e076149.o: ../../Source/Module/modules/osc/powerpoint/PowerpointModule.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling PowerpointModule.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/OSCModule_5d38d7b9.o: ../../Source/Module/modules/osc/OSCModule.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling OSCModule.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/SequenceAudioCommand_dfc2885b.o: ../../Source/Module/modules/sequence/commands/SequenceAudioCommand.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling SequenceAudioCommand.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/SequenceCommand_5137c44f.o: ../../Source/Module/modules/sequence/commands/SequenceCommand.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling SequenceCommand.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/SequenceModule_6db3e719.o: ../../Source/Module/modules/sequence/SequenceModule.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling SequenceModule.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/SerialModule_a9d8bfb9.o: ../../Source/Module/modules/serial/SerialModule.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling SerialModule.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/StateCommand_1e7fa1.o: ../../Source/Module/modules/state/commands/StateCommand.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling StateCommand.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/StateModule_898183dd.o: ../../Source/Module/modules/state/StateModule.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling StateModule.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/WakeOnLanCommandEditor_98ea2f4d.o: ../../Source/Module/modules/system/os/commands/ui/WakeOnLanCommandEditor.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling WakeOnLanCommandEditor.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/OSExecCommand_1adb1a06.o: ../../Source/Module/modules/system/os/commands/OSExecCommand.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling OSExecCommand.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/OSPowerCommand_8563ee44.o: ../../Source/Module/modules/system/os/commands/OSPowerCommand.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling OSPowerCommand.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/OSWindowCommand_605e1b87.o: ../../Source/Module/modules/system/os/commands/OSWindowCommand.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling OSWindowCommand.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/WakeOnLanCommand_f0bfe78f.o: ../../Source/Module/modules/system/os/commands/WakeOnLanCommand.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling WakeOnLanCommand.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/OSModule_9cf844c7.o: ../../Source/Module/modules/system/os/OSModule.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling OSModule.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/TimeModule_26aecc47.o: ../../Source/Module/modules/system/time/TimeModule.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling TimeModule.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/HTTPCommand_7771e2e1.o: ../../Source/Module/modules/http/commands/HTTPCommand.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling HTTPCommand.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/HTTPModule_da757f59.o: ../../Source/Module/modules/http/HTTPModule.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling HTTPModule.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/TCPServerModuleUI_4a6f5a6e.o: ../../Source/Module/modules/tcp/tcpserver/ui/TCPServerModuleUI.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling TCPServerModuleUI.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/TCPServerConnectionManager_d34fdc90.o: ../../Source/Module/modules/tcp/tcpserver/TCPServerConnectionManager.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling TCPServerConnectionManager.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/TCPServerModule_dab9835.o: ../../Source/Module/modules/tcp/tcpserver/TCPServerModule.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling TCPServerModule.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/PJLinkModule_32fc4f28.o: ../../Source/Module/modules/tcp/tcpclient/pjlink/PJLinkModule.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling PJLinkModule.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/WatchoutCommand_7f96a6c2.o: ../../Source/Module/modules/tcp/tcpclient/watchout/commands/WatchoutCommand.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling WatchoutCommand.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/WatchoutModule_12f7dcc8.o: ../../Source/Module/modules/tcp/tcpclient/watchout/WatchoutModule.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling WatchoutModule.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/TCPClientModule_9b5f8345.o: ../../Source/Module/modules/tcp/tcpclient/TCPClientModule.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling TCPClientModule.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/UDPModule_4d12fb3d.o: ../../Source/Module/modules/udp/UDPModule.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling UDPModule.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/GPIOCommands_563bb04a.o: ../../Source/Module/modules/gpio/commands/GPIOCommands.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling GPIOCommands.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
 $(JUCE_OBJDIR)/command_20531fa2.o: ../../Source/Module/modules/gpio/pigpio/command.c
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling command.c"
@@ -1633,104 +972,14 @@ $(JUCE_OBJDIR)/pigpio_c63733db.o: ../../Source/Module/modules/gpio/pigpio/pigpio
 	@echo "Compiling pigpio.c"
 	$(V_AT)$(CC) $(JUCE_CFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
-$(JUCE_OBJDIR)/GPIOModule_1c347bb9.o: ../../Source/Module/modules/gpio/GPIOModule.cpp
+$(JUCE_OBJDIR)/ModuleIncludes_95e047db.o: ../../Source/Module/ModuleIncludes.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling GPIOModule.cpp"
+	@echo "Compiling ModuleIncludes.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
-$(JUCE_OBJDIR)/WebSocketServerModuleUI_2743a483.o: ../../Source/Module/modules/websocket/ui/WebSocketServerModuleUI.cpp
+$(JUCE_OBJDIR)/ModuleIncludes2_2648c981.o: ../../Source/Module/ModuleIncludes2.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling WebSocketServerModuleUI.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/WebSocketClientModule_5755214.o: ../../Source/Module/modules/websocket/WebSocketClientModule.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling WebSocketClientModule.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/WebSocketServerModule_20a978c.o: ../../Source/Module/modules/websocket/WebSocketServerModule.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling WebSocketServerModule.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/ModuleRouterPanelView_3de9a86.o: ../../Source/Module/Routing/ui/ModuleRouterPanelView.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling ModuleRouterPanelView.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/ModuleRouterValueEditor_7fd5857b.o: ../../Source/Module/Routing/ui/ModuleRouterValueEditor.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling ModuleRouterValueEditor.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/ModuleRouterView_be67d052.o: ../../Source/Module/Routing/ui/ModuleRouterView.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling ModuleRouterView.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/ModuleRouter_b990f562.o: ../../Source/Module/Routing/ModuleRouter.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling ModuleRouter.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/ModuleRouterController_c6eb42de.o: ../../Source/Module/Routing/ModuleRouterController.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling ModuleRouterController.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/ModuleRouterManager_84510c75.o: ../../Source/Module/Routing/ModuleRouterManager.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling ModuleRouterManager.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/ModuleRouterValue_107f14f9.o: ../../Source/Module/Routing/ModuleRouterValue.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling ModuleRouterValue.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/ModuleChooserUI_a3310ecc.o: ../../Source/Module/ui/ModuleChooserUI.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling ModuleChooserUI.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/ModuleCommandTesterEditor_aa102db4.o: ../../Source/Module/ui/ModuleCommandTesterEditor.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling ModuleCommandTesterEditor.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/ModuleEditor_e010c1a.o: ../../Source/Module/ui/ModuleEditor.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling ModuleEditor.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/ModuleManagerUI_da55b3be.o: ../../Source/Module/ui/ModuleManagerUI.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling ModuleManagerUI.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/ModuleUI_510b19a1.o: ../../Source/Module/ui/ModuleUI.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling ModuleUI.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/Module_14b9fb70.o: ../../Source/Module/Module.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling Module.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/ModuleCommandTester_b6d1b8a4.o: ../../Source/Module/ModuleCommandTester.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling ModuleCommandTester.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/ModuleFactory_f0ade584.o: ../../Source/Module/ModuleFactory.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling ModuleFactory.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/ModuleManager_ee65baa7.o: ../../Source/Module/ModuleManager.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling ModuleManager.cpp"
+	@echo "Compiling ModuleIncludes2.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/StateUI_cf33c402.o: ../../Source/StateMachine/State/ui/StateUI.cpp
@@ -1778,114 +1027,19 @@ $(JUCE_OBJDIR)/StateManagerUI_a2d9b59b.o: ../../Source/StateMachine/ui/StateMana
 	@echo "Compiling StateManagerUI.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
+$(JUCE_OBJDIR)/StateMachineIncludes_87fb5fdb.o: ../../Source/StateMachine/StateMachineIncludes.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling StateMachineIncludes.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
 $(JUCE_OBJDIR)/StateManager_ec4bbd6.o: ../../Source/StateMachine/StateManager.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling StateManager.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
-$(JUCE_OBJDIR)/ChataigneTriggerLayer_f5de836d.o: ../../Source/TimeMachine/Sequence/layers/trigger/ChataigneTriggerLayer.cpp
+$(JUCE_OBJDIR)/TimeMachineIncludes_8f797311.o: ../../Source/TimeMachine/TimeMachineIncludes.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling ChataigneTriggerLayer.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/ChataigneTimeTrigger_17ca38c1.o: ../../Source/TimeMachine/Sequence/layers/trigger/ChataigneTimeTrigger.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling ChataigneTimeTrigger.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/ChataigneAudioLayerPanel_4ae871a.o: ../../Source/TimeMachine/Sequence/layers/audio/ui/ChataigneAudioLayerPanel.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling ChataigneAudioLayerPanel.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/ChataigneAudioLayerTimeline_e6bc1a75.o: ../../Source/TimeMachine/Sequence/layers/audio/ui/ChataigneAudioLayerTimeline.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling ChataigneAudioLayerTimeline.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/ChataigneAudioLayer_3f84aced.o: ../../Source/TimeMachine/Sequence/layers/audio/ChataigneAudioLayer.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling ChataigneAudioLayer.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/AutomationMappingLayerPanel_99c91a53.o: ../../Source/TimeMachine/Sequence/layers/mapping/automation/ui/AutomationMappingLayerPanel.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling AutomationMappingLayerPanel.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/AutomationMappingLayerTimeline_464e909c.o: ../../Source/TimeMachine/Sequence/layers/mapping/automation/ui/AutomationMappingLayerTimeline.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling AutomationMappingLayerTimeline.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/Mapping1DLayerPanel_3aba419b.o: ../../Source/TimeMachine/Sequence/layers/mapping/automation/1d/ui/Mapping1DLayerPanel.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling Mapping1DLayerPanel.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/Mapping1DLayer_5bd46012.o: ../../Source/TimeMachine/Sequence/layers/mapping/automation/1d/Mapping1DLayer.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling Mapping1DLayer.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/Mapping2DLayerPanel_459c03fb.o: ../../Source/TimeMachine/Sequence/layers/mapping/automation/2d/ui/Mapping2DLayerPanel.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling Mapping2DLayerPanel.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/Mapping2DLayerTimeline_9b7365f4.o: ../../Source/TimeMachine/Sequence/layers/mapping/automation/2d/ui/Mapping2DLayerTimeline.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling Mapping2DLayerTimeline.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/Mapping2DLayer_fd520854.o: ../../Source/TimeMachine/Sequence/layers/mapping/automation/2d/Mapping2DLayer.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling Mapping2DLayer.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/AutomationMappingLayer_e5df229e.o: ../../Source/TimeMachine/Sequence/layers/mapping/automation/AutomationMappingLayer.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling AutomationMappingLayer.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/ColorMappingLayerTimeline_1b2ea276.o: ../../Source/TimeMachine/Sequence/layers/mapping/color/ui/ColorMappingLayerTimeline.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling ColorMappingLayerTimeline.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/ColorMappingLayer_6c153fc6.o: ../../Source/TimeMachine/Sequence/layers/mapping/color/ColorMappingLayer.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling ColorMappingLayer.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/MappingLayerEditor_a17bc097.o: ../../Source/TimeMachine/Sequence/layers/mapping/ui/MappingLayerEditor.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling MappingLayerEditor.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/MappingLayerPanel_65736d24.o: ../../Source/TimeMachine/Sequence/layers/mapping/ui/MappingLayerPanel.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling MappingLayerPanel.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/MappingLayerTimeline_80a002b.o: ../../Source/TimeMachine/Sequence/layers/mapping/ui/MappingLayerTimeline.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling MappingLayerTimeline.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/MappingLayer_dc860121.o: ../../Source/TimeMachine/Sequence/layers/mapping/MappingLayer.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling MappingLayer.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/ChataigneSequence_6a3640ef.o: ../../Source/TimeMachine/Sequence/ChataigneSequence.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling ChataigneSequence.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/ChataigneSequenceManager_cd775ccc.o: ../../Source/TimeMachine/ChataigneSequenceManager.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling ChataigneSequenceManager.cpp"
+	@echo "Compiling TimeMachineIncludes.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/AboutWindow_970e3d2b.o: ../../Source/UI/AboutWindow.cpp

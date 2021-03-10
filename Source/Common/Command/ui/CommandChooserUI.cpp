@@ -10,6 +10,7 @@
 
 #include "CommandChooserUI.h"
 #include "../CommandFactory.h"
+#include "Module/ModuleIncludes.h"
 
 CommandChooserUI::CommandChooserUI(CommandContext _context, bool multiplexMode) :
 	context(_context),

@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "MouseModule.h"
-#include "commands/MouseModuleCommands.h"
-
 #if JUCE_WINDOWS
 #include <windows.h>
 #define LEFT_DOWN MOUSEEVENTF_LEFTDOWN

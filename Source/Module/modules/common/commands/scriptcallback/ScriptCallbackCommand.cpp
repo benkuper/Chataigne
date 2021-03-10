@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "ScriptCallbackCommand.h"
-
 ScriptCallbackCommand::ScriptCallbackCommand(Module* module, CommandContext context, var params, Multiplex* multiplex) :
 	BaseCommand(module, context, params, multiplex)
 {

@@ -10,8 +10,6 @@
 
 #pragma once
 
-#include "../ModuleRouterValue.h"
-
 class ModuleRouterValueEditor : 
 	public BaseItemUI<ModuleRouterValue>,
 	public ModuleRouterValue::ValueListener

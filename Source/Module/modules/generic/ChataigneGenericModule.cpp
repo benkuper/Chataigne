@@ -8,12 +8,6 @@
   ==============================================================================
 */
 
-#include "ChataigneGenericModule.h"
-#include "commands/GenericControllableCommand.h"
-#include "commands/ChataigneLogCommand.h"
-#include "commands/GenericScriptCommand.h"
-#include "commands/GenericAppCommand.h"
-
 ChataigneGenericModule::ChataigneGenericModule() :
 	Module("Generic")
 {

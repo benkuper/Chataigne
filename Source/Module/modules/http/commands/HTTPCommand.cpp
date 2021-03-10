@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "HTTPCommand.h"
-
 HTTPCommand::HTTPCommand(HTTPModule * _module, CommandContext context, var params, Multiplex* multiplex) :
 	BaseCommand(_module, context, params, multiplex),
 	httpModule(_module)

@@ -8,11 +8,6 @@
   ==============================================================================
 */
 
-#include "DMXModule.h"
-#include "commands/DMXCommand.h"
-#include "Module/Routing/ModuleRouter.h"
-#include "ui/DMXModuleUI.h"
-
 DMXModule::DMXModule() :
 	Module("DMX"),
 	dmxDevice(nullptr)

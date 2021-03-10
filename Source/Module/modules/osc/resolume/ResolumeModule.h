@@ -10,8 +10,6 @@
 
 #pragma once
 
-#include "../OSCModule.h"
-
 class ResolumeModule :
 	public OSCModule
 {

@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "ModuleCommandTesterEditor.h"
-
 ModuleCommandTesterEditor::ModuleCommandTesterEditor(ModuleCommandTester * tester, bool isRoot) :
 	BaseCommandHandlerEditor(tester, isRoot)
 {

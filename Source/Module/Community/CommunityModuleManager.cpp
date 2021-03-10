@@ -8,10 +8,6 @@
   ==============================================================================
 */
 
-#include "CommunityModuleManager.h"
-#include "Module/ModuleFactory.h"
-#include "Module/ModuleManager.h"
-
 juce_ImplementSingleton(CommunityModuleManager)
 
 CommunityModuleManager::CommunityModuleManager() :

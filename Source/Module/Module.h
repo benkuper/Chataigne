@@ -10,10 +10,8 @@
 
 #pragma once
 
-#include "JuceHeader.h"
 #include "Common/Command/CommandContext.h"
-#include  "Common/Command/CommandDefinitionManager.h"
-#include "Routing/ModuleRouterController.h"
+#include "Common/Command/CommandDefinitionManager.h"
 
 class ModuleCommandTester;
 class BaseCommandHandler;
@@ -21,6 +19,7 @@ class CommandDefinition;
 class CommandTemplateManager;
 class ModuleUI;
 class ModuleRouter;
+class ModuleRouterController;
 
 class Module :
 	public BaseItem

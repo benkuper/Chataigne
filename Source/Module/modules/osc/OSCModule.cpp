@@ -8,13 +8,6 @@
   ==============================================================================
 */
 
-#include "OSCModule.h"
-#include "Module/modules/common//ui/EnablingNetworkControllableContainerEditor.h"
-#include "UI/ChataigneAssetManager.h"
-#include "ui/OSCOutputEditor.h"
-#include "custom/commands/CustomOSCCommand.h"
-#include "Module/ModuleManager.h"
-
 OSCModule::OSCModule(const String & name, int defaultLocalPort, int defaultRemotePort, bool canHaveInput, bool canHaveOutput) :
 	Module(name),
 	Thread("OSCZeroconf"),

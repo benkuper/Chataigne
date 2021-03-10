@@ -10,8 +10,6 @@
 
 #pragma once
 
-#include "../DMXModule.h"
-
 class DMXValueParameterUI :
     public IntStepperUI
 {

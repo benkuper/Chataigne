@@ -10,8 +10,6 @@
 
 #pragma once
 
-#include "../WakeOnLanCommand.h"
-
 class WakeOnLanCommandEditor :
 	public GenericControllableContainerEditor
 {

@@ -8,7 +8,6 @@
   ==============================================================================
 */
 
-#include "MappingLayerEditor.h"
 #include "Common/Processor/Mapping/Mapping.h"
 
 MappingLayerEditor::MappingLayerEditor(MappingLayer * layer, bool isRoot) :

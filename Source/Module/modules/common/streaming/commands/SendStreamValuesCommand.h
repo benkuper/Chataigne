@@ -10,11 +10,6 @@
 
 #pragma once
 
-#include "JuceHeader.h"
-
-#include "StreamingCommand.h"
-#include "../../commands/customvalues/CustomValuesCommandArgumentManager.h"
-
 class SendStreamValuesCommand :
 	public StreamingCommand
 {

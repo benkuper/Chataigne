@@ -10,8 +10,6 @@
 
 #pragma once
 
-#include "../OSCModule.h"
-
 class LiveOSCModule :
 	public OSCModule
 	//public URL::DownloadTask::Listener

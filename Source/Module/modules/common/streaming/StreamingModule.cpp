@@ -8,14 +8,7 @@
   ==============================================================================
 */
 
-#include "StreamingModule.h"
-#include "commands/SendStreamRawDataCommand.h"
-#include "commands/SendStreamStringCommand.h"
-#include "commands/SendStreamValuesCommand.h"
-#include "commands/SendStreamStringValuesCommand.h"
-#include "UI/ChataigneAssetManager.h"
 #include "Common/Serial/lib/cobs/cobs.h"
-#include "Module/ModuleManager.h"
 
 StreamingModule::StreamingModule(const String & name) :
 	Module(name)

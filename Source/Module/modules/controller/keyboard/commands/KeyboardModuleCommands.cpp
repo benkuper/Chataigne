@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "KeyboardModuleCommands.h"
-
 KeyboardModuleCommands::KeyboardModuleCommands(KeyboardModule* _module, CommandContext context, var params, Multiplex* multiplex) :
 	BaseCommand(_module, context, params, multiplex),
 	keyboardModule(_module),

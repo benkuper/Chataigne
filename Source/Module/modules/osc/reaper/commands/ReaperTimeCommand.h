@@ -10,9 +10,6 @@
 
 #pragma once
 
-#include "../../commands/OSCCommand.h"
-#include "../ReaperModule.h"
-
 class ReaperTimeCommand :
 	public OSCCommand
 {

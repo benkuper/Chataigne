@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "WebSocketServerModule.h"
-#include "ui/WebSocketServerModuleUI.h"
-
 WebSocketServerModule::WebSocketServerModule(const String& name, int defaultRemotePort) :
 	StreamingModule(name)
 {

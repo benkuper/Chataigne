@@ -8,10 +8,6 @@
   ==============================================================================
 */
 
-#include "StreamDeckModule.h"
-#include "hidapi.h"
-#include "commands/StreamDeckCommand.h"
-
 StreamDeckModule::StreamDeckModule(const String& name) :
 	Module(name),
     isConnected(nullptr),

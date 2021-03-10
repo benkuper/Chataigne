@@ -10,8 +10,6 @@
 
 #pragma once
 
-#include "StreamingModule.h"
-
 class NetworkStreamingModule :
 	public StreamingModule,
 	public Thread

@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "WatchoutCommand.h"
-
 WatchoutCommand::WatchoutCommand(WatchoutModule * _module, CommandContext context, var params, Multiplex * multiplex) :
 	SendStreamStringCommand(_module,context,params),
 	wModule(_module)

@@ -9,8 +9,6 @@
 */
 
 
-#include "WiimoteModule.h"
-
 WiimoteModule::WiimoteModule(const String & name) :
 	Module(name),
 	device(nullptr)

@@ -11,6 +11,7 @@
 
 #include "Common/Processor/Action/Consequence/Consequence.h"
 #include "CommandChooserUI.h"
+#include "../BaseCommandHandler.h"
 
 class BaseCommandHandlerEditor :
 	public BaseItemEditor,

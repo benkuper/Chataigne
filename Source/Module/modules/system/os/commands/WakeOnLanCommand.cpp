@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "WakeOnLanCommand.h"
-#include "ui/WakeOnLanCommandEditor.h"
-
 WakeOnLanCommand::WakeOnLanCommand(OSModule * _module, CommandContext context, var params, Multiplex * multiplex) :
 	BaseCommand(_module, context, params, multiplex),
 	osModule(_module)

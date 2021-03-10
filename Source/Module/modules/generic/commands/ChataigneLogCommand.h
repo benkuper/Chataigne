@@ -9,8 +9,6 @@
 */
 
 #pragma once
-#include "Common/Command/BaseCommand.h"
-#include "../ChataigneGenericModule.h"
 
 class ChataigneLogCommand :
 	public BaseCommand

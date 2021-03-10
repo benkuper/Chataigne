@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "AudioModuleHardwareEditor.h"
-
 AudioModuleHardwareEditor::AudioModuleHardwareEditor(AudioModuleHardwareSettings * hs, bool isRoot) :
 	GenericControllableContainerEditor(hs,isRoot),
 	hs(hs),

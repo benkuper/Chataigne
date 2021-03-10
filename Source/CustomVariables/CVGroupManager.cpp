@@ -9,7 +9,7 @@
 */
 
 #include "CVGroupManager.h"
-#include "Module/modules/customvariables/CustomVariablesModule.h"
+#include "Module/ModuleIncludes.h"
 #include "Preset/CVPresetManager.h"
 
 juce_ImplementSingleton(CVGroupManager)

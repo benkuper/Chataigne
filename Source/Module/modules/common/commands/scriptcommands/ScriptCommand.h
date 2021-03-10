@@ -10,9 +10,6 @@
 
 #pragma once
 
-#include "Module/Module.h" 
-#include "Common/Command/BaseCommand.h"
-
 class ScriptCommand :
 	public BaseCommand
 {
