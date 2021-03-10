@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "CVPresetEditor.h"
-#include "../../CVGroup.h"
-
 CVPresetEditor::CVPresetEditor(CVPreset * preset, bool isRoot) :
     BaseItemEditor(preset, isRoot),
 	preset(preset)

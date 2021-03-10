@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "StateManagerUI.h"
-
 StateManagerUI::StateManagerUI(const String &contentName, StateManager * _manager) :
 	BaseManagerShapeShifterUI<StateManager, State, StateUI>(contentName, _manager)
 {

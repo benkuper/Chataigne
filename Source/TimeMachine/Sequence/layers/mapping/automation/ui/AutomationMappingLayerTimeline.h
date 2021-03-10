@@ -9,8 +9,6 @@
 */
 
 #pragma once
-#include "../../ui/MappingLayerTimeline.h"
-#include "../AutomationMappingLayer.h"
 
 class AutomationMappingLayerTimeline :
     public MappingLayerTimeline

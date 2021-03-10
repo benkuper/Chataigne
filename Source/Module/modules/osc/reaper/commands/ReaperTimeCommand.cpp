@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "ReaperTimeCommand.h"
-
 ReaperTimeCommand::ReaperTimeCommand(ReaperModule * _module, CommandContext context, var params, Multiplex * multiplex) :
 	OSCCommand(_module,context,params),
 	reaperModule(_module)

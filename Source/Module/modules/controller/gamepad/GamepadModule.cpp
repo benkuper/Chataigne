@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "GamepadModule.h"
-
-
 GamepadModule::GamepadModule(const String & name) :
 	Module(name),
 	calibCC("Calibration")

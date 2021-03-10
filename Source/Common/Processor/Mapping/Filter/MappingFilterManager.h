@@ -10,8 +10,6 @@
 
 #pragma once
 
-#include "MappingFilter.h"
-#include "Common/Processor/Multiplex/Multiplex.h"
 
 class MappingFilterManager :
 	public BaseManager<MappingFilter>,

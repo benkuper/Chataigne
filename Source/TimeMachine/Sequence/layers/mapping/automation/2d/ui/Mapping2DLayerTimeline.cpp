@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "Mapping2DLayerTimeline.h"
-
 Mapping2DTimeline::Mapping2DTimeline(Mapping2DLayer * layer) :
 	AutomationMappingLayerTimeline(layer),
 	mappingLayer(layer)

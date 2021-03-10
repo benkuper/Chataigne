@@ -10,8 +10,6 @@
 
 
 #pragma once
-#include "Common/Command/BaseCommand.h"
-#include "../OSModule.h"
 
 class WakeOnLanCommand :
 	public BaseCommand

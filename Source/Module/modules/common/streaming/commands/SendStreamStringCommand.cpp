@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "SendStreamStringCommand.h"
-
 SendStreamStringCommand::SendStreamStringCommand(StreamingModule* _module, CommandContext context, var params, Multiplex* multiplex) :
 	StreamingCommand(_module, context, params, multiplex),
 	appendCR(nullptr),

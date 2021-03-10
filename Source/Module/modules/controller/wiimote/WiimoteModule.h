@@ -11,10 +11,6 @@
 
 #pragma once
 
-#include "Module/Module.h"
-#include "WiimoteManager.h"
-
-
 class WiimoteModule :
 	public Module,
 	public WiimoteManager::Listener,

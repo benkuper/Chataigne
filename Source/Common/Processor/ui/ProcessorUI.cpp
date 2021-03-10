@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "ProcessorUI.h"
-
 ProcessorUI::ProcessorUI(Processor * processor, bool showMiniModeBT) :
 	BaseItemUI<Processor>(processor, NONE, showMiniModeBT),
 	baseBGColor(PANEL_COLOR),

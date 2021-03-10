@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "SerialModule.h"
-
-
 SerialModule::SerialModule(const String &name) :
 	StreamingModule(name),
 	port(nullptr)

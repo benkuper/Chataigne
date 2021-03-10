@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "MorphTarget.h"
-
 MorphTarget::MorphTarget(StringRef name) :
 	BaseItem(name)
 {

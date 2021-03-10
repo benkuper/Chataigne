@@ -8,7 +8,6 @@
   ==============================================================================
 */
 
-#include "OSCOutputEditor.h"
 #include "Common/Zeroconf/ZeroconfManager.h"
 
 OSCOutputEditor::OSCOutputEditor(OSCOutput * output, bool isRoot) :

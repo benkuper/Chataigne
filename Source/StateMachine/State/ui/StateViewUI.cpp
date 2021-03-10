@@ -8,20 +8,20 @@
   ==============================================================================
 */
 
-#include "StateViewUI.h"
 
 StateViewUI::StateViewUI(State * state) :
 	BaseItemUI(state, Direction::ALL, true),
-	pmui(&state->pm),
 	transitionReceptionMode(NONE)
 {
+	pmui.reset(new ProcessorManagerUI(state->pm.get()));
+		
 	activeUI.reset(state->active->createToggle());
 
 	addAndMakeVisible(activeUI.get());
 
-	pmui.addManagerUIListener(this);
-	addAndMakeVisible(&pmui);
-	contentComponents.add(&pmui);
+	//pmui.addManagerUIListener(this);
+	addAndMakeVisible(pmui.get());
+	contentComponents.add(pmui.get());
 
 	autoHideWhenDragging = false;
 	drawEmptyDragIcon = true;
@@ -37,7 +37,7 @@ StateViewUI::~StateViewUI()
 void StateViewUI::setTransitionReceptionMode(TransitionReceptionMode value)
 {
 	transitionReceptionMode = value;
-	pmui.setEnabled(transitionReceptionMode == NONE);
+	pmui->setEnabled(transitionReceptionMode == NONE);
 	setRepaintsOnMouseActivity(transitionReceptionMode != NONE);
 }
 
@@ -56,10 +56,10 @@ void StateViewUI::mouseDown(const MouseEvent & e)
 	{
 		if (e.mods.isLeftButtonDown())
 		{
-			if (e.originalComponent == &pmui) item->selectThis();
+			if (e.originalComponent == pmui.get()) item->selectThis();
 		}else if (e.mods.isRightButtonDown())
 		{
-			if (e.originalComponent != &pmui 
+			if (e.originalComponent != pmui.get() 
 				&& e.originalComponent->findParentComponentOfClass<ProcessorManagerUI>() == nullptr
 				&& e.originalComponent != activeUI.get() && e.originalComponent != enabledBT.get())
 			{
@@ -96,7 +96,7 @@ void StateViewUI::mouseDoubleClick(const MouseEvent& e)
 
 bool StateViewUI::isUsingMouseWheel()
 {
-	return pmui.viewport.getVerticalScrollBar().isVisible();// < pmui.container.getHeight();
+	return pmui->viewport.getVerticalScrollBar().isVisible();// < pmui.container.getHeight();
 }
 
 
@@ -131,7 +131,7 @@ void StateViewUI::resizedInternalHeader(Rectangle<int>& r)
 
 void StateViewUI::resizedInternalContent(Rectangle<int>& r)
 {
-	pmui.setBounds(r);
+	pmui->setBounds(r);
 }
 
 void StateViewUI::childBoundsChanged(Component * c)

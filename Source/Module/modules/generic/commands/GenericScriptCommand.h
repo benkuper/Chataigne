@@ -10,9 +10,6 @@
 
 #pragma once
 
-#include "../ChataigneGenericModule.h"
-#include "Common/Command/BaseCommand.h"
-
 class GenericScriptCommand :
 	public BaseCommand
 {

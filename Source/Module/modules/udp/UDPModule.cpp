@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "UDPModule.h"
-
 UDPModule::UDPModule(const String & name, bool canHaveInput, bool canHaveOutput, int defaultLocalPort, int defaultRemotePort) :
 	NetworkStreamingModule(name, canHaveInput,canHaveOutput,defaultLocalPort,defaultRemotePort)
 {

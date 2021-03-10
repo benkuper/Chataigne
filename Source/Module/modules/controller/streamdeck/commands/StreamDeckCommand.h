@@ -10,8 +10,6 @@
 
 #pragma once
 
-#include "../StreamDeckModule.h"
-
 class StreamDeckCommand :
 	public BaseCommand
 {

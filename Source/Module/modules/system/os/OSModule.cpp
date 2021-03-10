@@ -8,12 +8,6 @@
   ==============================================================================
 */
 
-#include "OSModule.h"
-#include "commands/OSPowerCommand.h"
-#include "commands/OSExecCommand.h"
-#include "commands/WakeOnLanCommand.h"
-#include "commands/OSWindowCommand.h"
-
 OSModule::OSModule() :
 	Module(getDefaultTypeString()),
 	Thread("OS-ChildProcess")

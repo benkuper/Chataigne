@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "ConditionFilter.h"
-#include "Common/Processor/Action/Condition/conditions/StandardCondition/StandardCondition.h"
-
 ConditionFilter::ConditionFilter(var params, Multiplex* multiplex) :
     MappingFilter(getTypeString(), params, multiplex),
     cdm(multiplex)

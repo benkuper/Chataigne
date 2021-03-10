@@ -10,8 +10,6 @@
 
 #pragma once
 
-#include "../MappingFilter.h"
-
 class MappingFilterEditor :
 	public BaseItemEditor,
 	public MappingFilter::AsyncFilterListener

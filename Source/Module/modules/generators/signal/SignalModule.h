@@ -10,9 +10,6 @@
 
 #pragma once
 
-#include "Module/Module.h"
-#include "PerlinNoise.hpp"
-
 using namespace siv;
 
 class SignalModule :

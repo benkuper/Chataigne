@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "TCPServerModuleUI.h"
-
 TCPServerModuleUI::TCPServerModuleUI(TCPServerModule* m) :
 	ModuleUI(m),
 	tcpServerModule(m)

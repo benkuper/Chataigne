@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "HeavyMModule.h"
-#include "../commands/OSCCommand.h"
-
 HeavyMModule::HeavyMModule() :
 	OSCModule(getDefaultTypeString(), 9000, 7000, true, true)
 {

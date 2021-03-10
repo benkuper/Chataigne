@@ -10,8 +10,6 @@
 
 #pragma once
 
-#include "../../Module.h"
-
 class HTTPModule :
 	public Module,
 	public Thread

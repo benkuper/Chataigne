@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "MultiplexListEditor.h"
-
 EnumMultiplexListEditor::EnumMultiplexListEditor(EnumMultiplexList* eList, bool isRoot) :
 	BaseItemEditor(eList, isRoot),
 	eList(eList),

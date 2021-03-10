@@ -10,8 +10,7 @@
 
 #pragma once
 
-#include "JuceHeader.h"
-#include "Common/ParameterLink/ParameterLink.h"
+class ParameterLink;
 class BaseComparatorUI;
 
 class BaseComparator :

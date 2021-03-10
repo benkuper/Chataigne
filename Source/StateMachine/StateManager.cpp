@@ -1,25 +1,22 @@
 /*
   ==============================================================================
 
-    StateManager.cpp
-    Created: 28 Oct 2016 8:19:15pm
-    Author:  bkupe
+	StateManager.cpp
+	Created: 28 Oct 2016 8:19:15pm
+	Author:  bkupe
 
   ==============================================================================
 */
 
-#include "StateManager.h"
-#include "Common/Processor/Action/Action.h"
-#include "Common/Processor/Mapping/Mapping.h"
-#include "Common/Processor/Action/Condition/conditions/StandardCondition/StandardCondition.h"
-
 juce_ImplementSingleton(StateManager)
 
 StateManager::StateManager() :
-BaseManager<State>("States"),
-module(this),
-stm(this)
+	BaseManager<State>("States"),
+	stm(this)
 {
+
+	module.reset(new StateModule(this));
+
 	itemDataType = "State";
 	helpID = "StateMachine";
 
@@ -33,7 +30,7 @@ stm(this)
 
 StateManager::~StateManager()
 {
-	if(Engine::mainEngine != nullptr) Engine::mainEngine->removeEngineListener(this);
+	if (Engine::mainEngine != nullptr) Engine::mainEngine->removeEngineListener(this);
 }
 
 
@@ -44,16 +41,16 @@ void StateManager::clear()
 	BaseManager::clear();
 }
 
-void StateManager::setStateActive(State * s)
+void StateManager::setStateActive(State* s)
 {
-	Array<State *> linkedStates = getLinkedStates(s);
-	for (auto &ss : linkedStates)
+	Array<State*> linkedStates = getLinkedStates(s);
+	for (auto& ss : linkedStates)
 	{
 		ss->active->setValue(false);
 	}
 }
 
-void StateManager::addItemInternal(State * s, var data)
+void StateManager::addItemInternal(State* s, var data)
 {
 	s->addStateListener(this);
 	if (!Engine::mainEngine->isLoadingFile)
@@ -62,7 +59,7 @@ void StateManager::addItemInternal(State * s, var data)
 	}
 }
 
-void StateManager::removeItemInternal(State * s)
+void StateManager::removeItemInternal(State* s)
 {
 	s->removeStateListener(this);
 
@@ -72,9 +69,9 @@ void StateManager::removeItemInternal(State * s)
 	for (auto& ls : linkedStates) checkStartActivationOverlap(ls, avoid);
 }
 
-Array<UndoableAction *> StateManager::getRemoveItemUndoableAction(State * item)
+Array<UndoableAction*> StateManager::getRemoveItemUndoableAction(State* item)
 {
-	Array<UndoableAction *> result;
+	Array<UndoableAction*> result;
 	result.addArray(stm.getRemoveAllLinkedTransitionsAction(item));
 	result.addArray(BaseManager::getRemoveItemUndoableAction(item));
 
@@ -83,13 +80,13 @@ Array<UndoableAction *> StateManager::getRemoveItemUndoableAction(State * item)
 
 Array<UndoableAction*> StateManager::getRemoveItemsUndoableAction(Array<State*> itemsToRemove)
 {
-	Array<UndoableAction *> result;
-	for (auto &i : itemsToRemove) result.addArray(stm.getRemoveAllLinkedTransitionsAction(i));
+	Array<UndoableAction*> result;
+	for (auto& i : itemsToRemove) result.addArray(stm.getRemoveAllLinkedTransitionsAction(i));
 	result.addArray(BaseManager::getRemoveItemsUndoableAction(itemsToRemove));
 	return result;
 }
 
-void StateManager::stateActivationChanged(State * s)
+void StateManager::stateActivationChanged(State* s)
 {
 	if (s->active->boolValue())
 	{
@@ -123,12 +120,12 @@ void StateManager::checkStartActivationOverlap(State* s, Array<State*> statesToA
 	else if (forceActiveStates.size() > 0) forceActiveStates[0]->clearWarning();
 }
 
-void StateManager::itemAdded(StateTransition * s)
+void StateManager::itemAdded(StateTransition* s)
 {
 	if (!Engine::mainEngine->isLoadingFile)
 	{
-		if(s->sourceState->active->boolValue()) setStateActive(s->sourceState);
-		else if(s->destState->active->boolValue()) setStateActive(s->destState);
+		if (s->sourceState->active->boolValue()) setStateActive(s->sourceState);
+		else if (s->destState->active->boolValue()) setStateActive(s->destState);
 
 		checkStartActivationOverlap(s->sourceState);
 	}
@@ -174,13 +171,13 @@ void StateManager::itemsRemoved(Array<StateTransition*> states)
 }
 
 
-State * StateManager::showMenuAndGetState()
+State* StateManager::showMenuAndGetState()
 {
 	PopupMenu menu;
-	StateManager * sm = StateManager::getInstance();
+	StateManager* sm = StateManager::getInstance();
 	for (int i = 0; i < sm->items.size(); ++i)
 	{
-		menu.addItem(1+i,sm->items[i]->niceName);
+		menu.addItem(1 + i, sm->items[i]->niceName);
 	}
 
 	int result = menu.show();
@@ -188,17 +185,17 @@ State * StateManager::showMenuAndGetState()
 	return sm->items[result - 1];
 }
 
-Action * StateManager::showMenuAndGetAction()
+Action* StateManager::showMenuAndGetAction()
 {
 	PopupMenu menu;
-	StateManager * sm = StateManager::getInstance();
+	StateManager* sm = StateManager::getInstance();
 
 	Array<Action*> actions;
 
-	for (auto & s : sm->items)
+	for (auto& s : sm->items)
 	{
 		PopupMenu sMenu;
-		for (auto & p : s->pm.items)
+		for (auto& p : s->pm->items)
 		{
 			if (p->type == Processor::ACTION)
 			{
@@ -211,10 +208,10 @@ Action * StateManager::showMenuAndGetAction()
 
 	int result = menu.show();
 	if (result <= 0) return nullptr;
-	return actions[result-1];
+	return actions[result - 1];
 }
 
-Mapping * StateManager::showMenuAndGetMapping()
+Mapping* StateManager::showMenuAndGetMapping()
 {
 	PopupMenu menu;
 	StateManager* sm = StateManager::getInstance();
@@ -224,7 +221,7 @@ Mapping * StateManager::showMenuAndGetMapping()
 	for (auto& s : sm->items)
 	{
 		PopupMenu sMenu;
-		for (auto& p : s->pm.items)
+		for (auto& p : s->pm->items)
 		{
 			if (p->type == Processor::MAPPING)
 			{
@@ -250,7 +247,7 @@ StandardCondition* StateManager::showMenuAndGetToggleCondition()
 	for (auto& s : sm->items)
 	{
 		PopupMenu sMenu;
-		for (auto& p : s->pm.items)
+		for (auto& p : s->pm->items)
 		{
 			if (p->type == Processor::ACTION)
 			{
@@ -267,7 +264,7 @@ StandardCondition* StateManager::showMenuAndGetToggleCondition()
 						}
 					}
 				}
-				sMenu.addSubMenu(a->niceName,  aMenu);
+				sMenu.addSubMenu(a->niceName, aMenu);
 			}
 		}
 		menu.addSubMenu(s->niceName, sMenu);
@@ -279,9 +276,9 @@ StandardCondition* StateManager::showMenuAndGetToggleCondition()
 }
 
 
-Array<State *> StateManager::getLinkedStates(State * s, Array<State *> * statesToAvoid)
+Array<State*> StateManager::getLinkedStates(State* s, Array<State*>* statesToAvoid)
 {
-	Array<State *> sAvoid;
+	Array<State*> sAvoid;
 	if (statesToAvoid == nullptr)
 	{
 		statesToAvoid = &sAvoid;
@@ -289,15 +286,15 @@ Array<State *> StateManager::getLinkedStates(State * s, Array<State *> * statesT
 
 	statesToAvoid->add(s);
 
-	Array<State *> result;
+	Array<State*> result;
 
-	Array<State *> linkStates = stm.getAllStatesLinkedTo(s);
-	for (auto &ss : linkStates)
+	Array<State*> linkStates = stm.getAllStatesLinkedTo(s);
+	for (auto& ss : linkStates)
 	{
 		if (statesToAvoid->contains(ss)) continue;
 		result.add(ss);
 		statesToAvoid->add(ss);
-		Array<State *> linkedSS = getLinkedStates(ss, statesToAvoid);
+		Array<State*> linkedSS = getLinkedStates(ss, statesToAvoid);
 		result.addArray(linkedSS);
 	}
 
@@ -310,7 +307,7 @@ var StateManager::getJSONData()
 	var data = BaseManager::getJSONData();
 
 	var tData = stm.getJSONData();
-	if (!tData.isVoid() && tData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(stm.shortName,tData);
+	if (!tData.isVoid() && tData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(stm.shortName, tData);
 	var cData = commentManager.getJSONData();
 	if (!cData.isVoid() && cData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(commentManager.shortName, cData);
 	return data;
@@ -331,7 +328,7 @@ void StateManager::loadJSONDataInternal(var data)
 			setStateActive(s);
 			checkStartActivationOverlap(s);
 		}
-		
+
 	}
 }
 

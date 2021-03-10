@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "ModuleRouterValueEditor.h"
-
 ModuleRouterValueEditor::ModuleRouterValueEditor(ModuleRouterValue * mrv) :
 	BaseItemUI(mrv)
 {

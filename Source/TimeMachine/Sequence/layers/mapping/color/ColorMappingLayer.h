@@ -10,9 +10,6 @@
 
 #pragma once
 
-
-#include "../MappingLayer.h"
-
 class ColorMappingLayer :
     public MappingLayer
 {

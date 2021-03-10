@@ -10,8 +10,6 @@
 
 #pragma once
 
-#include "SendStreamValuesCommand.h"
-
 class SendStreamRawDataCommand :
 	public SendStreamValuesCommand
 {

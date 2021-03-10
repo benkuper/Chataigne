@@ -10,11 +10,6 @@
 
 #pragma once
 
-#include "../Processor.h"
-#include "Condition/ConditionManager.h"
-#include "Consequence/ConsequenceManager.h"
-#include "../Multiplex/Multiplex.h"
-
 class Action :
 	public Processor,
 	public MultiplexTarget,

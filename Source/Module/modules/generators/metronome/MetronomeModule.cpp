@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "MetronomeModule.h"
-
 MetronomeModule::MetronomeModule() :
 	Module(getTypeString()),
 	Thread("Metronome")

@@ -10,8 +10,6 @@
 
 #pragma once
 
-#include "../common/streaming/NetworkStreamingModule.h"
-
 class UDPModule :
 	public NetworkStreamingModule
 {

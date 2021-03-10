@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "MouseModuleCommands.h"
-
 MouseModuleCommands::MouseModuleCommands(MouseModule* _module, CommandContext context, var params, Multiplex* multiplex) :
 	BaseCommand(_module, context, params, multiplex),
 	mouseModule(_module),

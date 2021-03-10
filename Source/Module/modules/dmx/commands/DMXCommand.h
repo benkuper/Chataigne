@@ -10,10 +10,6 @@
 
 #pragma once
 
-#include "Common/Command/BaseCommand.h"
-#include "../DMXModule.h"
-#include "Module/modules/common/commands/customvalues/CustomValuesCommandArgumentManager.h"
-
 class DMXCommand :
 	public BaseCommand
 {

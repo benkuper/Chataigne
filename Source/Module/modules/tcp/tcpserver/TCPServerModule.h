@@ -10,9 +10,6 @@
 
 #pragma once
 
-#include "../../common/streaming/NetworkStreamingModule.h"
-#include "TCPServerConnectionManager.h"
-
 class TCPServerModule :
 	public NetworkStreamingModule,
 	public TCPServerConnectionManager::ConnectionManagerListener

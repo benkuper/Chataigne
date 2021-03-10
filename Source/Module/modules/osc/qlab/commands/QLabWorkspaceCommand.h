@@ -10,9 +10,6 @@
 
 #pragma once
 
-#include "../QLabModule.h"
-#include "../../commands/OSCCommand.h"
-
 class QLabWorkspaceCommand :
     public OSCCommand
 {

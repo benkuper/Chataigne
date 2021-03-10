@@ -10,10 +10,7 @@
 
 #pragma once
 
-#include "Module/ModuleManager.h"
-#include "Module/modules/audio/AudioModule.h"
-#include "../../ChataigneSequence.h"
-#include "ChataigneAudioLayerListener.h"
+#include "Module/ModuleIncludes.h"
 
 class ChataigneAudioLayerProcessor;
 

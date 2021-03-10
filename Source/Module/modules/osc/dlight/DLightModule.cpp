@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "DLightModule.h"
-#include "../commands/OSCCommand.h"
-
 DLightModule::DLightModule() :
 	OSCModule(getDefaultTypeString(),7001,7000,false,true)
 {

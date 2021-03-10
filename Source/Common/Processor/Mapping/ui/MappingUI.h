@@ -10,9 +10,6 @@
 
 #pragma once
 
-#include "../Mapping.h"
-#include "../../ui/ProcessorUI.h"
-
 class MappingUI :
 	public ProcessorUI,
 	public Mapping::AsyncListener

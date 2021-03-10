@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "StateTransitionManager.h"
-#include "../StateManager.h"
-
 StateTransitionManager::StateTransitionManager(StateManager * _sm) :
 	BaseManager("Transitions"),
 	sm(_sm)

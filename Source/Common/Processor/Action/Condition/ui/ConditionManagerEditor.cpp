@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "ConditionManagerEditor.h"
-
 ConditionManagerEditor::ConditionManagerEditor(ConditionManager * _manager, bool isRoot) :
 	GenericManagerEditor<Condition>(_manager, isRoot),
 	conditionManager(_manager)

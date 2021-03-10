@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "MilluminModule.h"
-#include "../commands/OSCCommand.h"
-
 MilluminModule::MilluminModule() :
 	OSCModule(getDefaultTypeString(),8001,8000,false,true)
 {

@@ -10,9 +10,6 @@
 
 #pragma once
 
-#include "../Action.h"
-#include "../../ui/ProcessorUI.h"
- 
 class ActionUI :
 	public ProcessorUI,
 	public Action::AsyncListener

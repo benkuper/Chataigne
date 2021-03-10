@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "Mapping2DLayerPanel.h"
-
 Mapping2DLayerPanel::Mapping2DLayerPanel(Mapping2DLayer* layer) :
     AutomationMappingLayerPanel(layer),
     mappingLayer(layer),

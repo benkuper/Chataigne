@@ -10,9 +10,6 @@
 
 #pragma once
 
-#include "../Multiplex.h"
-#include "../../ui/ProcessorManagerUI.h"
-
 class MultiplexUI :
 	public ProcessorUI,
 	public ProcessorManagerUI::ManagerUIListener

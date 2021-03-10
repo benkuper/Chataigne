@@ -10,8 +10,6 @@
 
 #pragma once
 
-#include "generic/GenericOSCQueryModule.h"
-
 class MadMapperModule :
 	public GenericOSCQueryModule
 {

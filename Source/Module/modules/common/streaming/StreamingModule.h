@@ -10,8 +10,6 @@
 
 #pragma once
 
-#include "Module/Module.h"
-
 class StreamingModule :
 	public Module
 {

@@ -8,7 +8,6 @@
   ==============================================================================
 */
 
-#include "MappingInputEditor.h"
 
 MappingInputEditor::MappingInputEditor(MappingInput * _input, bool isRoot) :
 	BaseItemEditor(_input,isRoot),

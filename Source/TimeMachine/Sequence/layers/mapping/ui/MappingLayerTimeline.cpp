@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "MappingLayerTimeline.h"
-
 MappingLayerTimeline::MappingLayerTimeline(MappingLayer * layer, Component * component) :
 	SequenceLayerTimeline(layer),
 	mappingLayer(layer)

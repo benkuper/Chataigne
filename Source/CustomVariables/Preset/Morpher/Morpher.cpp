@@ -9,9 +9,7 @@
 */
 
 #define JC_VORONOI_IMPLEMENTATION
-
-#include "Morpher.h"
-
+#include "jc_voronoi.h"
 
 Morpher::Morpher(CVPresetManager* presetManager) :
 	ControllableContainer("Morpher"),

@@ -8,9 +8,10 @@
   ==============================================================================
 */
 
-#include "LinkableParameterEditor.h"
 #include "UI/ChataigneAssetManager.h"
-#include "CustomVariables/CVGroup.h"
+#include "LinkableParameterEditor.h"
+#include "CustomVariables/CustomVariablesIncludes.h"
+#include "Common/Processor/ProcessorIncludes.h"
 
 LinkableParameterEditor::LinkableParameterEditor(ParameterLink* pLink, bool showMappingOptions) :
     InspectableEditor(pLink->parameter.get(), false),

@@ -8,26 +8,6 @@
   ==============================================================================
 */
 
-#include "MappingFilterManager.h"
-
-#include "filters/condition/ConditionFilter.h"
-#include "filters/ScriptFilter.h"
-
-#include "filters/number/SimpleRemapFilter.h"
-#include "filters/number/CurveMapFilter.h"
-#include "filters/number/InverseFilter.h"
-#include "filters/number/SimpleSmoothFilter.h"
-#include "filters/number/DampingFilter.h"
-#include "filters/number/LagFilter.h"
-#include "filters/number/CropFilter.h"
-#include "filters/number/MathFilter.h"
-
-#include "filters/conversion/ConversionFilter.h"
-#include "filters/conversion/SimpleConversionFilters.h"
-
-#include "filters/color/ColorShiftFilter.h"
-
-
 MappingFilterManager::MappingFilterManager(Multiplex * multiplex) :
 	BaseManager<MappingFilter>("Filters"),
 	MultiplexTarget(multiplex)

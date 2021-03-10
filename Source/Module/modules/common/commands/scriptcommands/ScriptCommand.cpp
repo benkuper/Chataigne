@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "ScriptCommand.h"
-
 ScriptCommand::ScriptCommand(Module * module, CommandContext context, var params, Multiplex* multiplex) :
 	BaseCommand(module, context, params, multiplex)
 {

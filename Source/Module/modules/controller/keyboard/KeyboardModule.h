@@ -10,7 +10,6 @@
 
 #pragma once
 
-#include "Module/Module.h"
 using namespace juce;
 
 class KeyboardModule :

@@ -10,11 +10,6 @@
 
 #pragma once
 
-#include "Module/Module.h"
-#include "libs/pitch/PitchDetector.h"
-
-#include "analysis/FFTAnalyzerManager.h"
-
 #define AUDIO_INPUT_GRAPH_ID 1
 #define AUDIO_OUTPUT_GRAPH_ID 2
 

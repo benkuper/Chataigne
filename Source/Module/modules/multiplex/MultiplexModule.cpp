@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "MultiplexModule.h"
-#include "commands/MultiplexCommands.h"
-
 MultiplexModule::MultiplexModule() :
 	Module("Multiplex")
 {

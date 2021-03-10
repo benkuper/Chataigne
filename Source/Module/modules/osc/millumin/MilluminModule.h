@@ -9,7 +9,6 @@
 */
 
 #pragma once
-#include "../OSCModule.h"
 
 class MilluminModule :
 	public OSCModule

@@ -9,11 +9,6 @@
 */
 
 #pragma once
-#include "../ConversionFilter.h"
-#include "../../../ui/MappingFilterEditor.h"
-#include "ConvertedParameterManagerEditor.h"
-#include "ConversionParamValueLinkUI.h"
-#include "ConversionSourceParameterUI.h"
 
 class ConversionFilterEditor :
 	public MappingFilterEditor,

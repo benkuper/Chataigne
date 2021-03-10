@@ -10,8 +10,6 @@
 
 #pragma once
 
-#include "../Condition.h"
-
 class ConditionEditor :
 	public BaseItemEditor,
 	public Condition::AsyncListener

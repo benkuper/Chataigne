@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "StateTransitionUI.h"
-#include "../../State/ui/StateViewUI.h"
-
 StateTransitionUI::StateTransitionUI(StateTransition * st, StateViewUI * _sourceSUI, StateViewUI * _destSUI) :
 	BaseItemMinimalUI(st),
 	sourceSUI(_sourceSUI),

@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "Mapping.h"
-#include "ui/MappingUI.h"
-
 Mapping::Mapping(var params, Multiplex * multiplex, bool canBeDisabled) :
 	Processor("Mapping", canBeDisabled),
 	MultiplexTarget(multiplex),

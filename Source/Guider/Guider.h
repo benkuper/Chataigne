@@ -9,9 +9,6 @@
 */
 
 #pragma once
-
-#include "BaseGuide.h"
-
 class Guider :
 	public BaseGuide::GuideListener, 
 	public ComponentListener

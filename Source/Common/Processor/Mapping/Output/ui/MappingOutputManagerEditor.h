@@ -10,7 +10,6 @@
 
 #pragma once
 
-#include "../MappingOutputManager.h"
 #include "Common/Command/ui/BaseCommandHandlerManagerEditor.h"
 
 class MappingOutputManagerEditor :

@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "AutomationMappingLayer.h"
-#include "ui/AutomationMappingLayerPanel.h"
-#include "ui/AutomationMappingLayerTimeline.h"
 
 AutomationMappingLayer::AutomationMappingLayer(const String& name, Sequence* s, var params) :
     MappingLayer(name, s, params),

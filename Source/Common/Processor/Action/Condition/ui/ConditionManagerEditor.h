@@ -10,9 +10,6 @@
 
 #pragma once
 
-#include "ConditionEditor.h"
-#include "../ConditionManager.h"
-
 class ConditionManagerEditor :
 	public GenericManagerEditor<Condition>,
 	public ConditionManager::AsyncListener

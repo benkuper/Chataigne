@@ -8,59 +8,6 @@
   ==============================================================================
 */
 
-#include "ModuleFactory.h"
-
-#include "modules/controller/joycon/JoyConModule.h" //must be included before some other, don't know which one
-
-#include "modules/osc/custom/CustomOSCModule.h"
-#include "modules/osc/resolume/ResolumeModule.h"
-#include "modules/osc/millumin/MilluminModule.h"
-#include "modules/osc/reaper/ReaperModule.h"
-#include "modules/osc/live/LiveOSCModule.h"
-#include "modules/osc/dlight/DLightModule.h"
-#include "modules/osc/powerpoint/PowerpointModule.h"
-#include "modules/osc/heavym/HeavyMModule.h"
-#include "modules/osc/qlab/QLabModule.h"
-
-#include "modules/oscquery/generic/GenericOSCQueryModule.h"
-#include "modules/oscquery/MadMapperModule.h"
-
-#include "modules/tcp/tcpclient/TCPClientModule.h"
-#include "modules/tcp/tcpclient/watchout/WatchoutModule.h"
-#include "modules/tcp/tcpclient/pjlink/PJLinkModule.h"
-
-#include "modules/tcp/tcpserver/TCPServerModule.h"
-
-#include "modules/midi/MIDIModule.h"
-
-#include "modules/serial/SerialModule.h"
-#include "modules/udp/UDPModule.h"
-#include "modules/http/HTTPModule.h"
-#include "modules/dmx/DMXModule.h"
-
-#include "modules/controller/gamepad/GamepadModule.h"
-#include "modules/controller/joystick/JoystickModule.h"
-#include "modules/controller/wiimote/WiimoteModule.h"
-#include "modules/controller/keyboard/KeyboardModule.h"
-#include "modules/controller/mouse/MouseModule.h"
-#include "modules/controller/kinect/KinectV2Module.h"
-#include "modules/controller/streamdeck/StreamDeckModule.h"
-
-#include "modules/gpio/GPIOModule.h"
-
-#include "modules/generators/metronome/MetronomeModule.h"
-#include "modules/generators/signal/SignalModule.h"
-
-#include "modules/system/time/TimeModule.h"
-#include "modules/system//os/OSModule.h"
-
-#include "modules/websocket/WebSocketClientModule.h"
-#include "modules/websocket/WebSocketServerModule.h"
-
-#include "modules/audio/AudioModule.h"
-
-#include "Community/CommunityModuleManager.h"
-
 ModuleFactory::ModuleFactory() {
 	
 	defs.add(new ModuleDefinition("Protocol", "OSC", &CustomOSCModule::create));

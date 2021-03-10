@@ -8,9 +8,7 @@
   ==============================================================================
 */
 
-#include "MappingInput.h"
-#include "Module/ModuleManager.h"
-#include "ui/MappingInputEditor.h"
+#include "Module/ModuleIncludes.h"
 
 MappingInput::MappingInput(var params, Multiplex * processor) :
 	BaseItem(getTypeStringStatic(params.getProperty("listMode", false)), false, false),

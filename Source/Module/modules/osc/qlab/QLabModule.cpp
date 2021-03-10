@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "QLabModule.h"
-#include "commands/QLabWorkspaceCommand.h"
-
 QLabModule::QLabModule() :
 	OSCModule(getDefaultTypeString(),53001,53000,false,true)
 {

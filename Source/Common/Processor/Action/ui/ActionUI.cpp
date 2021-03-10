@@ -8,13 +8,10 @@
   ==============================================================================
 */
 
-#include "ActionUI.h"
+#include "Module/ModuleIncludes.h"
+#include "StateMachine/StateMachineIncludes.h"
+#include "CustomVariables/CustomVariablesIncludes.h"
 
-#include "Module/ui/ModuleUI.h"
-#include "StateMachine/StateManager.h"
-#include "Common/Processor/Action/Consequence/Consequence.h"
-#include "CustomVariables/CVGroup.h"
-#include "../Condition/conditions/StandardCondition/StandardCondition.h"
 
 ActionUI::ActionUI(Action* _action) :
 	ProcessorUI(_action),
@@ -164,7 +161,7 @@ void ActionUI::itemDropped(const SourceDetails& details)
 			if (tui != nullptr)
 			{
 				CommandTemplateManager* ctm = dynamic_cast<CommandTemplateManager*>(tui->item->parentContainer.get());
-				if (ctm != nullptr) def = ctm->defManager.getCommandDefinitionFor(ctm->menuName, tui->item->niceName);
+				if (ctm != nullptr) def = ctm->defManager->getCommandDefinitionFor(ctm->menuName, tui->item->niceName);
 			}
 		}
 	}

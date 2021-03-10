@@ -12,13 +12,6 @@
 #pragma once
 
 
-#include "../../CVPresetManager.h"
-#include "../Morpher.h"
-
-#include "CVPresetMorphUI.h"
-#include "MorphTargetUI.h"
-#include "CustomVariables/CVGroupManager.h"
-
 class MorpherViewUI;
 
 class MorpherPanel :

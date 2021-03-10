@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "TCPServerModule.h"
-#include "ui/TCPServerModuleUI.h"
-
 TCPServerModule::TCPServerModule(const String& name, int defaultLocalPort) :
 	NetworkStreamingModule(name, true, false, 6000)
 {

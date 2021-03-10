@@ -16,17 +16,11 @@
 #include "Common/DMX/DMXManager.h"
 
 #include "UI/ChataigneAssetManager.h"
-#include "CustomVariables/CVGroupManager.h"
-#include "Guider/Guider.h"
 
-#include "Module/ModuleManager.h"
-#include "Module/modules/controller/wiimote/WiimoteManager.h"
-#include "Module/modules/controller/streamdeck/StreamDeckManager.h"
-#include "Module/Routing/ModuleRouterManager.h"
-#include "Module/Community/CommunityModuleManager.h"
-
-#include "StateMachine/StateManager.h"
-#include "TimeMachine/ChataigneSequenceManager.h"
+#include "CustomVariables/CustomVariablesIncludes.h"
+#include "Guider/GuiderIncludes.h"
+#include "TimeMachine/TimeMachineIncludes.h"
+#include "StateMachine/StateMachineIncludes.h"
 
 
 ControllableContainer* getAppSettings();

@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "ConvertedParameter.h"
-#include "ui/ConvertedParameterEditor.h"
-
 ConvertedParameter::ConvertedParameter(var params) :
 	BaseItem(params.getProperty("type", ""), false),
 	conversionMode(nullptr),

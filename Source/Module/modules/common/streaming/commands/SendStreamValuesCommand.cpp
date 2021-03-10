@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "SendStreamValuesCommand.h"
-
 SendStreamValuesCommand::SendStreamValuesCommand(StreamingModule * module, CommandContext context, var params, Multiplex* multiplex) :
 	StreamingCommand(module, context, params, multiplex)
 {

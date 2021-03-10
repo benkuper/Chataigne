@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "WebSocketClientModule.h"
-
 WebSocketClientModule::WebSocketClientModule(const String& name, const String& defaultServerPath) :
 	StreamingModule(name),
 	connectFirstTry(true)
@@ -90,7 +88,7 @@ void WebSocketClientModule::messageReceived(const String& message)
 	case TYPE_JSON:
 	{
 		var result;
-		Result r = JSON::parse(message, result);
+		juce::Result r = JSON::parse(message, result);
 		if (r.failed()) NLOGWARNING(niceName, "Error parsing message :\n" << r.getErrorMessage());
 		processDataJSON(result);
 	}

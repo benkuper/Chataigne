@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "QLabWorkspaceCommand.h"
-
 QLabWorkspaceCommand::QLabWorkspaceCommand(QLabModule* m, CommandContext context, var params, Multiplex * multiplex) :
     OSCCommand(m, context, params, multiplex),
     qlabModule(m)

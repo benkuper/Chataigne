@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "LagFilter.h"
-
-
 LagFilter::LagFilter(var params, Multiplex* multiplex) :
 	MappingFilter(getTypeString(), params, multiplex)
 {

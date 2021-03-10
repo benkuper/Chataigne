@@ -8,12 +8,9 @@
   ==============================================================================
 */
 
-#include "MappingUI.h"
-
-#include "Module/ui/ModuleUI.h"
-#include "StateMachine/StateManager.h"
-#include "Common/Processor/Action/Consequence/Consequence.h"
-#include "CustomVariables/CVGroup.h"
+#include "Module/ModuleIncludes.h"
+#include "StateMachine/StateMachineIncludes.h"
+#include "CustomVariables/CustomVariablesIncludes.h"
 
 MappingUI::MappingUI(Mapping * mapping) :
 	ProcessorUI(mapping),
@@ -128,7 +125,7 @@ void MappingUI::itemDropped(const SourceDetails & details)
 		if (tui != nullptr)
 		{
 			CommandTemplateManager * ctm = dynamic_cast<CommandTemplateManager *>(tui->item->parentContainer.get());
-			if (ctm != nullptr) def = ctm->defManager.getCommandDefinitionFor(ctm->menuName, tui->item->niceName);
+			if (ctm != nullptr) def = ctm->defManager->getCommandDefinitionFor(ctm->menuName, tui->item->niceName);
 		}
 	}
 

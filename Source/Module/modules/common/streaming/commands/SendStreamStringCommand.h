@@ -10,8 +10,6 @@
 
 #pragma once
 
-#include "StreamingCommand.h"
-
 class SendStreamStringCommand :
 	public StreamingCommand
 {

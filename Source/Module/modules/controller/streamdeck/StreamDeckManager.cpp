@@ -8,14 +8,6 @@
   ==============================================================================
 */
 
-#include "StreamDeckManager.h"
-#include "hidapi.h"
-
-#include "models/StreamDeckMini.h"
-#include "models/StreamDeckV1.h"
-#include "models/StreamDeckV2.h"
-#include "models/StreamDeckXL.h"
-
 juce_ImplementSingleton(StreamDeckManager)
 
 StreamDeckManager::StreamDeckManager() :

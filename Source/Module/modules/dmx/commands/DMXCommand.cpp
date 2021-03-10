@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "DMXCommand.h"
-
 DMXCommand::DMXCommand(DMXModule* _module, CommandContext context, var params, Multiplex* multiplex) :
 	BaseCommand(_module, context, params, multiplex),
 	dmxModule(_module),

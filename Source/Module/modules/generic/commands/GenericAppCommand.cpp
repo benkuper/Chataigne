@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "GenericAppCommand.h"
-
 static OrganicApplication& getApp() { return *dynamic_cast<OrganicApplication*>(JUCEApplication::getInstance()); }
 
 

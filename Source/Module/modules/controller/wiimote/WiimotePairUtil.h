@@ -10,8 +10,6 @@
 
 #pragma once
 
-#include "JuceHeader.h"
-
 #if JUCE_WINDOWS
 
 #ifndef _WIN32_WINNT

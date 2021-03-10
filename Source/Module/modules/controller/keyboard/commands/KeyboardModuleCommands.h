@@ -10,9 +10,6 @@
 
 #pragma once
 
-
-#include "../KeyboardModule.h"
-
 class KeyboardModuleCommands :
 	public BaseCommand
 {

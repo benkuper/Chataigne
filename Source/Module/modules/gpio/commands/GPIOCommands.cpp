@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "GPIOCommands.h"
-#include "../GPIOModule.h"
-
 GPIOCommand::GPIOCommand(GPIOModule* m, CommandContext context, var params, Multiplex* multiplex) :
     BaseCommand(m, context, params, multiplex),
     gpioModule(m),

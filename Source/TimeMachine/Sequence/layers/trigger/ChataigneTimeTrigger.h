@@ -10,7 +10,7 @@
 
 #pragma once
 
-#include "Common/Processor/Action/Action.h"
+class ConsequenceManager;
 
 class ChataigneTimeTrigger :
 	public TimeTrigger
@@ -19,7 +19,7 @@ public:
 	ChataigneTimeTrigger(StringRef name = "Trigger");
 	virtual ~ChataigneTimeTrigger();
 
-	ConsequenceManager csm;
+	std::unique_ptr<ConsequenceManager> csm;
 
 	virtual void onContainerParameterChangedInternal(Parameter* p) override;
 

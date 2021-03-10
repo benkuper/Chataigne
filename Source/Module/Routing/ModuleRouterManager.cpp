@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "ModuleRouterManager.h"
-
 juce_ImplementSingleton(ModuleRouterManager)
 
 ModuleRouterManager::ModuleRouterManager() :

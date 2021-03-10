@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "KinectV2Module.h"
-
 KinectV2Module::KinectV2Module() :
 	Module("Kinect V2"),
 	Thread("Kinect V2")

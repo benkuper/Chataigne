@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "AutomationMappingLayerPanel.h"
-#include "UI/ChataigneAssetManager.h"
-
 AutomationMappingLayerPanel::AutomationMappingLayerPanel(AutomationMappingLayer* layer) :
     MappingLayerPanel(layer),
     aml(layer)

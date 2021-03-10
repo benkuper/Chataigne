@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "CustomVariablesModule.h"
-#include "commands/CustomVariablesModuleCommands.h"
-#include "CustomVariables/Preset/CVPreset.h"
 
 CustomVariablesModule::CustomVariablesModule(CVGroupManager * manager) :
 	Module("Custom Variables"),

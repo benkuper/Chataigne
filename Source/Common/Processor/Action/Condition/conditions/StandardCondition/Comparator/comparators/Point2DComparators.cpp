@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "Point2DComparators.h"
-
-
 Point2DComparator::Point2DComparator(Parameter* sourceParam, Multiplex* multiplex) :
 	BaseComparator(multiplex),
 	sourceParam(sourceParam)

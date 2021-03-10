@@ -11,7 +11,6 @@
 #pragma once
 
 #pragma once
-#include "../TCPClientModule.h"
 
 class PJLinkModule :
 	public TCPClientModule

@@ -8,9 +8,9 @@
   ==============================================================================
 */
 
-#include "Condition.h"
-#include "ui/ConditionEditor.h"
-#include "Module/ModuleManager.h"
+//#include "Condition.h" //??
+
+#include "Module/ModuleIncludes.h"
 
 Condition::Condition(const String& n, var params, Multiplex * multiplex) :
 	BaseItem(n),

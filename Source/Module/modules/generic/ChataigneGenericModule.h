@@ -10,8 +10,6 @@
 
 #pragma once
 
-#include "Module/Module.h"
-
 class ChataigneGenericModule :
 	public Module
 {

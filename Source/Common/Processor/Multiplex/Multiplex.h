@@ -10,9 +10,6 @@
 
 #pragma once
 
-#include "../ProcessorManager.h"
-#include "List/MultiplexListManager.h"
-
 class Multiplex :
     public Processor
 {
@@ -32,15 +29,6 @@ public:
 
     BaseMultiplexList* showAndGetList();
 
-
-    class MultiplexListener
-    {
-    public:
-        virtual ~MultiplexListener() {}
-        virtual void multiplexCountChanged() {}
-        virtual void multiplexPreviewIndexChanged() {}
-    };
-
     ListenerList<MultiplexListener> multiplexListeners;
     void addMultiplexListener(MultiplexListener* newListener) { multiplexListeners.add(newListener); }
     void removeMultiplexListener(MultiplexListener* listener) { multiplexListeners.remove(listener); }
@@ -48,21 +36,6 @@ public:
     ProcessorUI* getUI() override;
     String getTypeString() const override { return "Multiplex"; };
 };
-
-class MultiplexTarget :
-    public Multiplex::MultiplexListener
-{
-public:
-    MultiplexTarget(Multiplex* mp);
-    virtual ~MultiplexTarget();
-
-    Multiplex* multiplex;
-
-    bool isMultiplexed() const;
-    int getMultiplexCount() const;
-    int getPreviewIndex() const;
-};
-
 
 template<class T>
 class MultiplexTargetDefinition :

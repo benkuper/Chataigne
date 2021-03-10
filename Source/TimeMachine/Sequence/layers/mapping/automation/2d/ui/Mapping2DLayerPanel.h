@@ -10,9 +10,6 @@
 
 #pragma once
 
-#include "../Mapping2DLayer.h"
-#include "../../ui/AutomationMappingLayerPanel.h"
-
 class Mapping2DLayerPanel :
     public AutomationMappingLayerPanel
 {

@@ -10,10 +10,6 @@
 
 #pragma once
 
-#include "../../../ui/ConditionEditor.h"
-#include "../StandardCondition.h"
-#include "../Comparator/ui/BaseComparatorUI.h"
-
 class StandardConditionEditor :
 	public ConditionEditor
 {

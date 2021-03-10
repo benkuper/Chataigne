@@ -8,7 +8,6 @@
   ==============================================================================
 */
 
-#include "WakeOnLanCommandEditor.h"
 #include "Common/Zeroconf/ZeroconfManager.h"
 
 WakeOnLanCommandEditor::WakeOnLanCommandEditor(WakeOnLanCommand * wolCommand, bool isRoot) :

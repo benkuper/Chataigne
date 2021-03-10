@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "CommunityModuleInfoEditor.h"
-
 CommunityModuleInfoEditor::CommunityModuleInfoEditor(CommunityModuleInfo * cmi, bool isRoot) :
 	GenericControllableContainerEditor(cmi, isRoot, false),
 	cmi(cmi),

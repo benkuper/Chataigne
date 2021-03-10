@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "AutomationMappingLayerTimeline.h"
-
 AutomationMappingLayerTimeline::AutomationMappingLayerTimeline(AutomationMappingLayer* layer) :
     MappingLayerTimeline(layer, new AutomationUI(layer->automation)),
     aml(layer)

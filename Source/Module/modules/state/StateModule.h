@@ -11,9 +11,6 @@
 #pragma once 
 
 
-#include "Module/Module.h"
-#include "commands/StateCommand.h"
-
 class StateManager;
 
 class StateModule :

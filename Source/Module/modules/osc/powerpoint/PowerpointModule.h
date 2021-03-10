@@ -10,8 +10,6 @@
 
 #pragma once
 
-#include "../OSCModule.h"
-
 class PowerPointModule :
 	public OSCModule,
 	public URL::DownloadTask::Listener 

@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "StreamDeckV1.h"
-
 #define ICON_SIZE 72
 #define ICON_PIXELS ICON_SIZE*ICON_SIZE
 #define ICON_BYTES ICON_PIXELS * 3

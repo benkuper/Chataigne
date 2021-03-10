@@ -9,12 +9,16 @@
 */
 
 #include "CommandTemplateManager.h"
-#include "Module/Module.h"
+
+#include "../CommandDefinitionManager.h"
+#include "Module/ModuleIncludes.h"
 
 CommandTemplateManager::CommandTemplateManager(Module * module) :
 	BaseManager("Templates"),
 	module(module)
 {
+	defManager.reset(new CommandDefinitionManager());
+
 	managerFactory = &factory;
 	selectItemWhenCreated = false;
 }
@@ -25,14 +29,14 @@ CommandTemplateManager::~CommandTemplateManager()
 
 void CommandTemplateManager::addItemInternal(CommandTemplate * item, var)
 {
-	defManager.add(CommandDefinition::createDef(module, menuName, item->niceName, &BaseCommand::create)->addParam("template", item->shortName), items.indexOf(item));
+	defManager->add(CommandDefinition::createDef(module, menuName, item->niceName, &BaseCommand::create)->addParam("template", item->shortName), items.indexOf(item));
 	item->addCommandTemplateListener(this);
 }
 
 void CommandTemplateManager::removeItemInternal(CommandTemplate * item)
 {
-	CommandDefinition * d = defManager.getCommandDefinitionFor(menuName, item->niceName); 
-	defManager.remove(d);
+	CommandDefinition * d = defManager->getCommandDefinitionFor(menuName, item->niceName); 
+	defManager->remove(d);
 	item->removeCommandTemplateListener(this);
 }
 
@@ -70,8 +74,8 @@ void CommandTemplateManager::reorderDefinitions()
 	int index = 0;
 	for (auto& item : items)
 	{
-		CommandDefinition* d = defManager.getCommandDefinitionFor(menuName, item->niceName);
-		if (d != nullptr) defManager.definitions.move(defManager.definitions.indexOf(d), index++);
+		CommandDefinition* d = defManager->getCommandDefinitionFor(menuName, item->niceName);
+		if (d != nullptr) defManager->definitions.move(defManager->definitions.indexOf(d), index++);
 	}
 }
 
@@ -80,7 +84,7 @@ void CommandTemplateManager::templateNameChanged(CommandTemplate * ct)
 {
 	if (isCurrentlyLoadingData || Engine::mainEngine->isLoadingFile || Engine::mainEngine->isClearing) return;
 
-	CommandDefinition* def = defManager.definitions[items.indexOf(ct)];
+	CommandDefinition* def = defManager->definitions[items.indexOf(ct)];
 	jassert(def != nullptr);
 
 	def->commandType = ct->niceName;

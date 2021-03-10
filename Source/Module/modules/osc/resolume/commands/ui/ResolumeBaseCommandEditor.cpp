@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "ResolumeBaseCommandEditor.h"
-
 ResolumeBaseCommandEditor::ResolumeBaseCommandEditor(ResolumeBaseCommand * _command, bool isRoot) :
 	BaseCommandContainerEditor(_command, _command,isRoot),
 	resolumeCommand(_command)

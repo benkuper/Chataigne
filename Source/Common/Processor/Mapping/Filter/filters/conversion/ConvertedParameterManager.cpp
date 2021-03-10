@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "ConvertedParameterManager.h"
-#include "ui/ConvertedParameterManagerEditor.h"
 
 ConvertedParameterManager::ConvertedParameterManager() :
 	BaseManager("Converted Parameters")

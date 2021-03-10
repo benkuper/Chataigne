@@ -10,8 +10,7 @@
 
 #pragma once
 
-#include "ModuleManagerUI.h"
-#include "CustomVariables/CVGroupManager.h"
+#include "CustomVariables/CustomVariablesIncludes.h"
 
 class ModuleChooserUI :
 	public ModuleManager::AsyncListener,

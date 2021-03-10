@@ -10,9 +10,6 @@
 
 #pragma once
 
-#include "JuceHeader.h"
-#include "ConversionConnector.h"
-
 class ConversionSourceParameterUI :
 	public InspectableContentComponent
 {

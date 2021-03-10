@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "MathFilter.h"
-
-
 MathFilter::MathFilter(var params, Multiplex* multiplex) :
 	MappingFilter(getTypeString(), params, multiplex),
 	operationValue(nullptr)

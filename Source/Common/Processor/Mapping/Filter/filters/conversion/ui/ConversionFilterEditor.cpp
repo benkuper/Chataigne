@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "ConversionFilterEditor.h"
-#include "ConvertedParameterEditor.h"
-
 ConversionFilterEditor::ConversionFilterEditor(ConversionFilter* filter, bool isRoot) :
 	MappingFilterEditor(filter, isRoot),
 	cf(filter),

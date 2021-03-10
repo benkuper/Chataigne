@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "SimpleRemapFilter.h"
-
 SimpleRemapFilter::SimpleRemapFilter(const String& name, var params, Multiplex* multiplex) :
 	MappingFilter(name, params, multiplex),
 	targetIn(nullptr),

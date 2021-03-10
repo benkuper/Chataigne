@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "MultiplexListManager.h"
-#include "../Multiplex.h"
-
 MultiplexListManager::MultiplexListManager(Multiplex* mp) :
     BaseManager("Lists"),
     multiplex(mp)

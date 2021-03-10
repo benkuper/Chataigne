@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "TCPServerConnectionManager.h"
-
 TCPServerConnectionManager::TCPServerConnectionManager() :
 	Thread("TCP Server Connections"),
 	portToBind(0),

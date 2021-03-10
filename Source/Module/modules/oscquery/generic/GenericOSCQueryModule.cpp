@@ -8,10 +8,6 @@
   ==============================================================================
 */
 
-#include "GenericOSCQueryModule.h"
-#include "ui/OSCQueryModuleEditor.h"
-#include "GenericOSCQueryCommand.h"
-
 GenericOSCQueryModule::GenericOSCQueryModule(const String& name, int defaultRemotePort) :
 	Module(name),
 	Thread("OSCQuery"),

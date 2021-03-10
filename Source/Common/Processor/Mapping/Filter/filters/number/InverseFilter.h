@@ -10,9 +10,6 @@
 
 #pragma once
 
-#include "../../MappingFilter.h"
-
-
 class InverseFilter :
 	public MappingFilter
 {

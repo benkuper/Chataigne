@@ -10,7 +10,6 @@
 
 #pragma once
 
-#include "Module/Module.h"
 #include "servus/servus.h"
 using namespace servus;
 

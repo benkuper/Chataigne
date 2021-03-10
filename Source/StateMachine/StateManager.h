@@ -10,13 +10,11 @@
 
 #pragma once
 
-#include "State/State.h"
-#include "Transition/StateTransitionManager.h"
-#include "Module/modules/state/StateModule.h"
 
 class Action;
 class Mapping;
 class StandardCondition;
+class StateModule;
 
 class StateManager :
 	public BaseManager<State>,
@@ -30,7 +28,7 @@ public:
 	StateManager();
 	~StateManager();
 
-	StateModule module;
+	std::unique_ptr<StateModule> module;
 
 	StateTransitionManager stm;
 

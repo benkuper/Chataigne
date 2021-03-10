@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "ConvertedParameterManagerEditor.h"
-
 ConvertedParameterManagerEditor::ConvertedParameterManagerEditor(ConvertedParameterManager* manager, bool isRoot) :
 	GenericManagerEditor(manager, isRoot)
 {

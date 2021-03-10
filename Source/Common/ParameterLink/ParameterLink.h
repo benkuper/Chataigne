@@ -9,11 +9,16 @@
 */
 
 #pragma once
-#include "../Processor/Multiplex/Multiplex.h"
+
+#include "JuceHeader.h"
+#include "Common/Processor/Multiplex/MultiplexTarget.h"
+
+class BaseMultiplexList;
+class CVPresetMultiplexList;
 
 class ParameterLink :
     public MultiplexTarget,
-    public BaseMultiplexList::ListListener,
+    public MultiplexListListener,
     public Inspectable::InspectableListener
 {
 public:

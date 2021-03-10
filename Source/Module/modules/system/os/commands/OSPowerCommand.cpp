@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "OSPowerCommand.h"
-
 OSPowerCommand::OSPowerCommand(OSModule * _module, CommandContext context, var params, Multiplex * multiplex) :
 	BaseCommand(_module, context, params, multiplex)
 {

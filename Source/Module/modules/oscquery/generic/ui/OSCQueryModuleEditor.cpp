@@ -8,7 +8,6 @@
   ==============================================================================
 */
 
-#include "OSCQueryModuleEditor.h"
 #include "Common/Zeroconf/ZeroconfManager.h"
 
 OSCQueryModuleOutputEditor::OSCQueryModuleOutputEditor(OSCQueryOutput * output, bool isRoot) :

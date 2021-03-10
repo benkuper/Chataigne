@@ -9,8 +9,6 @@
 */
 
 #pragma once
-#include "MappingInput.h"
-#include "Common/Processor/Multiplex/Multiplex.h"
 
 class MappingInputManager :
 	public BaseManager<MappingInput>,

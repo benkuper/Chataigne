@@ -8,11 +8,6 @@
   ==============================================================================
 */
 
-#include "ChataigneTriggerLayer.h"
-
-#include "../../ChataigneSequence.h"
-#include "ChataigneTimeTrigger.h"
-
 ChataigneTriggerLayer::ChataigneTriggerLayer(Sequence* _sequence, var params) :
 	TriggerLayer(_sequence, getTypeString(), params)
 {

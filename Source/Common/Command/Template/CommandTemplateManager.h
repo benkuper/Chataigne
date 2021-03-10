@@ -11,9 +11,9 @@
 #pragma once
 
 #include "CommandTemplate.h"
-#include "../CommandDefinitionManager.h"
 
 class Module;
+class CommandDefinitionManager;
 
 class CommandTemplateManager :
 	public BaseManager<CommandTemplate>,
@@ -28,7 +28,7 @@ public:
 
 	const String menuName = "Templates";
 
-	CommandDefinitionManager defManager;
+	std::unique_ptr<CommandDefinitionManager> defManager;
 
 	void addItemInternal(CommandTemplate * item, var data) override;
 	void removeItemInternal(CommandTemplate * item) override;

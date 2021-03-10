@@ -9,8 +9,6 @@
 */
 
 #pragma once
-#include "../../MappingFilter.h"
-#include "Common/Processor/Action/Condition/ConditionManager.h"
 
 class ConditionFilter :
 	public MappingFilter

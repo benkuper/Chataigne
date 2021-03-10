@@ -9,7 +9,6 @@
 */
 
 #pragma once
-#include "JuceHeader.h"
 
 class ConvertedParameter :
 	public BaseItem

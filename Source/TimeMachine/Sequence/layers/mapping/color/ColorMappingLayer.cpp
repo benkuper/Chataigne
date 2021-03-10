@@ -8,10 +8,6 @@
   ==============================================================================
 */
 
-#include "ColorMappingLayer.h"
-#include "ui/ColorMappingLayerTimeline.h"
-#include "../ui/MappingLayerPanel.h"
-
 ColorMappingLayer::ColorMappingLayer(Sequence* s, var params) :
     MappingLayer(getTypeString(), s, params),
     colorManager(sequence->totalTime->floatValue(),false, false)

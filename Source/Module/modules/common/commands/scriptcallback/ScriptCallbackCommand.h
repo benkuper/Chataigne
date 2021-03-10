@@ -9,7 +9,6 @@
 */
 
 #pragma once
-#include "Module/Module.h"
 
 class ScriptCallbackCommand :
 	public BaseCommand

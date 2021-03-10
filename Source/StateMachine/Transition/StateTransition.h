@@ -10,8 +10,6 @@
 
 #pragma once
 
-#include "Common/Processor/Action/Action.h"
-
 class State;
 
 class StateTransition :

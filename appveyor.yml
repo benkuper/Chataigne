@@ -1,0 +1,53 @@
+version: '{build}'
+max_jobs: 8
+image: Visual Studio 2019
+configuration: Release
+platform: x64
+environment:
+  BINARY_FOLDER: C:\projects\chataigne\Binaries\CI\App
+before_build:
+- ps: "if($env:APPVEYOR_REPO_TAG -eq $True)\n{ \n	echo \"TAG BUILD\";\n	$env:DEPS=\"release\"\n\n	if($env:APPVEYOR_REPO_TAG_NAME -contains 'b')\n	{\n	  echo \"Beta tag\"\n          $env:SUFFIX=$env:APPVEYOR_REPO_TAG_NAME\n	}else\n	{\n	   echo \"Release tag\"\n           $env:SUFFIX=$env:APPVEYOR_REPO_TAG_NAME\n	}\n}else\n{\n	echo \"No tag, bleeding-edge build\"\n	$env:SUFFIX=\"bleedingedge\"\n	$env:CONFIGURATION=\"Debug\"\n	$env:DEPS=\"debug\"\n}\n\ngit submodule update --init --recursive 2> $null\n\ngit clone --depth=1 --branch=develop-local https://github.com/benkuper/JUCE.git JUCE 2> $null\nls\n\ncmd.exe /c \"call `\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Auxiliary\\Build\\vcvars64.bat`\" && set > %temp%\\vcvars.txt\"\n\nGet-Content \"$env:temp\\vcvars.txt\" | Foreach-Object {\n  if ($_ -match \"^(.*?)=(.*)$\") {\n    Set-Content \"env:\\$($matches[1])\" $matches[2]\n  }\n}\n\n#Copy-Item -Path \"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.26.28801\\bin\\HostX64\\x64\\*\" -Destination #\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.26.28801\\bin\\HostX86\\x64\" -Recurse -Force"
+build:
+  project: Builds/VisualStudio2019_CI/Chataigne.sln
+  parallel: true
+  verbosity: normal
+after_build:
+- ps: >-
+    echo "After build, suffix : $env:SUFFIX , deps : $env:DEPS"
+
+    cd C:\projects\chataigne\Binaries\CI\App
+
+    Start-FileDownload "http://benjamin.kuperberg.fr/chataigne/user/data/Chataigne-win-x64-$env:DEPS-dependencies.zip"
+
+    7z e Chataigne-win-x64-$env:DEPS-dependencies.zip -aoa
+
+    rm Chataigne-win-x64-$env:DEPS-dependencies.zip
+
+    &"C:\Program Files (x86)\Inno Setup 6\ISCC.exe" "C:\projects\chataigne\install.iss" /FChataigne-win-x64-$env:SUFFIX
+
+
+    if($env:APPVEYOR_REPO_TAG -eq $True)
+
+    {
+         echo "Push release PDB"
+         cd C:\projects\chataigne\Builds\VisualStudio2019_CI\x64\Release\App
+         cp Chataigne.pdb C:\projects\chataigne\Chataigne-$env:SUFFIX.pdb
+    }else
+
+    {
+        echo "Push debug pdb"
+         cd C:\projects\chataigne\Binaries\CI\App
+         cp Chataigne.pdb C:\projects\chataigne\Chataigne-$env:SUFFIX.pdb
+    }
+artifacts:
+- path: Chataigne-win-x64-*.exe
+  name: chataigne-installer
+- path: Chataigne-*.pdb
+  name: chataigne-pdb
+deploy:
+- provider: Environment
+  debug: true
+  name: BK - Chataigne Installer
+- provider: Environment
+  debug: true
+  name: BK - Chataigne PDB

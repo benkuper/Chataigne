@@ -10,10 +10,6 @@
 
 #pragma once
 
-
-#include "ProcessorUI.h"
-#include "../ProcessorManager.h"
-
 class ProcessorManagerUI :
 	public BaseManagerUI<ProcessorManager, Processor, ProcessorUI>
 {

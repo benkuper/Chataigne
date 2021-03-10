@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "CurveMapFilter.h"
-
-
 CurveMapFilter::CurveMapFilter(var params, Multiplex* multiplex) :
 	SimpleRemapFilter(getTypeString(), params, multiplex),
 	curve("Curve")

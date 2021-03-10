@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "NumberComparators.h"
-
 NumberComparator::NumberComparator(Parameter * sourceParam, Multiplex* multiplex) :
 	BaseComparator(multiplex)
 {

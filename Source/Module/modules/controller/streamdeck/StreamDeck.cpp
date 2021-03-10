@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "StreamDeck.h"
-
 StreamDeck::StreamDeck(hid_device* device, String serialNumber, Model model, int numColumns, int numRows, bool invertX, int iconSize, int keyDataOffset) :
 	Thread("StreamDeck"),
 	model(model),

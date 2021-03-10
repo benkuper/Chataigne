@@ -9,7 +9,6 @@
 */
 
 #include "TimeMachine/ChataigneSequenceManager.h"
-#include "commands/SequenceAudioCommand.h"
 
 SequenceModule::SequenceModule(ChataigneSequenceManager * _manager) :
 	Module("Sequences"),

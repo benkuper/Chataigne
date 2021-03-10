@@ -10,9 +10,6 @@
 
 #pragma once
 
-#include "Module/Module.h"
-#include "commands/SequenceCommand.h"
-
 class ChataigneSequenceManager;
 
 class SequenceModule :

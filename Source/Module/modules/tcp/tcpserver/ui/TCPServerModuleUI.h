@@ -10,9 +10,6 @@
 
 #pragma once
 
-#include "../TCPServerModule.h"
-#include "Module/ui/ModuleUI.h"
-
 class TCPServerModuleUI :
 	public ModuleUI,
 	public TCPServerConnectionManager::AsyncListener

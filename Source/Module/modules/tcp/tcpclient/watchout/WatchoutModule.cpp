@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "WatchoutModule.h"
-#include "commands/WatchoutCommand.h"
-
 WatchoutModule::WatchoutModule() :
 	TCPClientModule("Watchout",3040)
 {

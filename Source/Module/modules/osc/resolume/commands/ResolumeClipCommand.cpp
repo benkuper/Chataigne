@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "ResolumeClipCommand.h"
-
 ResolumeClipCommand::ResolumeClipCommand(ResolumeModule * _module, CommandContext context, var params, Multiplex * multiplex) :
 	ResolumeBaseCommand(_module,context,params, multiplex, true),
 	firstClip(nullptr),

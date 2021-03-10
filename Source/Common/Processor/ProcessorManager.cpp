@@ -10,12 +10,6 @@
 
 #include "ProcessorManager.h"
 
-
-#include "Action/Action.h"
-#include "Mapping/Mapping.h"
-#include "Action/Condition/conditions/ActivationCondition/ActivationCondition.h"
-#include "Multiplex/Multiplex.h"
-
 ProcessorManager::ProcessorManager(const String &name, Multiplex * multiplex) :
 	BaseManager<Processor>(name),
 	forceDisabled(false)

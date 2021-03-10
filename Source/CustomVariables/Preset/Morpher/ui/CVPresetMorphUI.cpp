@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "CVPresetMorphUI.h"
-
 CVPresetMorphUI::CVPresetMorphUI(CVPreset* preset) :
 	BaseItemMinimalUI(preset)
 {

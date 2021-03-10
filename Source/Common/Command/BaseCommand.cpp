@@ -9,8 +9,11 @@
 */
 
 #include "BaseCommand.h"
+
+#include "Common/Processor/ProcessorIncludes.h"
+#include "Module/ModuleIncludes.h"
+
 #include "Template/CommandTemplateManager.h"
-#include "Module/Module.h"
 #include "ui/BaseCommandEditor.h"
 
 BaseCommand::BaseCommand(Module* _module, CommandContext _context, var _params, Multiplex* multiplex) :

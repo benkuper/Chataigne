@@ -8,9 +8,7 @@
   ==============================================================================
 */
 
-#include "ConsequenceManager.h"
 #include "Common/Command/ui/BaseCommandHandlerManagerEditor.h"
-
 
 ConsequenceManager::ConsequenceManager(const String& name, Multiplex* multiplex) :
 	MultiplexTarget(multiplex),

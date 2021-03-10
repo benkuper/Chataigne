@@ -8,10 +8,6 @@
   ==============================================================================
 */
 
-#include "ModuleRouterView.h"
-#include "../ModuleRouterManager.h"
-#include "../ModuleRouterController.h"
-
 ModuleRouterView::ModuleRouterView() :
 	currentRouter(nullptr),
 	sourceLabel("SourceModule","Source Module"),

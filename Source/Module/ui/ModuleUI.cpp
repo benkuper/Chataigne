@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "ModuleUI.h"
-#include "UI/ChataigneAssetManager.h"
-
 ModuleUI::ModuleUI(Module * module) :
 	BaseItemUI<Module>(module)
 {

@@ -10,9 +10,6 @@
 
 #pragma once
 
-#include "MorphTargetUI.h"
-#include "../../CVPreset.h"
-
 class CVPresetMorphUI :
 	public BaseItemMinimalUI<CVPreset>
 {

@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "ModuleRouterValue.h"
-#include "../Module.h"
-
 ModuleRouterValue::ModuleRouterValue(Controllable * _sourceValue, int _index) :
 	BaseItem(_sourceValue->niceName),
 	valueIndex(_index),

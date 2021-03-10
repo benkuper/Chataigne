@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "ConversionConnector.h"
-
 ConversionConnector::ConversionConnector(StringRef label, Parameter *param,  int valueIndex) :
 	Component("Connector" + label),
 	isSource(true),

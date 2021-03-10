@@ -10,8 +10,6 @@
 
 #pragma once
 
-#include "../AudioModule.h"
-
 class AudioModuleHardwareEditor :
 	public GenericControllableContainerEditor
 {

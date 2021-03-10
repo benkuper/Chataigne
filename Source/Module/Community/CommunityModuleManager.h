@@ -9,7 +9,6 @@
 */
 
 #pragma once
-#include "CommunityModuleInfo.h"
 
 class CommunityModuleManager :
 	public BaseManager<CommunityModuleInfo>,

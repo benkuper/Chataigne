@@ -10,8 +10,6 @@
 
 #pragma once
 
-#include "../../commands/OSCCommand.h"
-
 class ResolumeModule;
 
 class ResolumeBaseCommand :

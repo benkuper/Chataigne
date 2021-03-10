@@ -10,9 +10,6 @@
 
 #pragma once
 
-#include "JuceHeader.h"
-#include "GuideComponents.h"
-
 class BaseGuide :
 	public Component,
 	public GuideFocusComponent::GuideComponentListener

@@ -7,14 +7,14 @@
 */
 
 #include "MainComponent.h"
-#include "Module/ui/ModuleManagerUI.h"
-#include "StateMachine/ui/StateMachineView.h"
-#include "Module/Routing/ui/ModuleRouterPanelView.h"
-#include "StateMachine/ui/StateManagerUI.h"
-#include "CustomVariables/ui/CVGroupManagerUI.h"
-#include "CustomVariables/Preset/Morpher/ui/MorpherViewUI.h"
+
+#include "Module/ModuleIncludes.h"
+#include "StateMachine/StateMachineIncludes.h"
+#include "TimeMachine/TimeMachineIncludes.h"
+#include "CustomVariables/CustomVariablesIncludes.h"
+
 #include "Common/Command/Template/ui/CommandTemplateManagerUI.h"
-#include "TimeMachine/ChataigneSequenceManager.h"
+
 #include "UI/WelcomeScreen.h"
 
 String getAppVersion();

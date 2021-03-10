@@ -10,8 +10,6 @@
 
 #pragma once
 
-#include "../CVGroupManager.h"
-
 class CVGroupManagerUI :
 	public BaseManagerShapeShifterUI<BaseManager<CVGroup>, CVGroup, BaseItemUI<CVGroup>>
 {

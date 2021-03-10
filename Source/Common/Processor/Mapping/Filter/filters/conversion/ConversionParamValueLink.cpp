@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "ConversionParamValueLink.h"
-#include "ConvertedParameter.h"
-
 ConversionParamValueLink::ConversionParamValueLink(int sourceIndex, int sourceValueIndex, ConvertedParameter* out, int outValueIndex) :
 	sourceIndex(sourceIndex),
 	sourceValueIndex(sourceValueIndex),

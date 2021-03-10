@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "ModuleRouterPanelView.h"
-
 ModuleRouterPanelView::ModuleRouterPanelView(const String & contentName,ModuleRouterManager * manager) :
 	ShapeShifterContentComponent(contentName),
 	mui("Routers",manager)

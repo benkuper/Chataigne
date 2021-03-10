@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "GPIOModule.h"
-#include "commands//GPIOCommands.h"
-
 GPIOModule::GPIOModule() :
     Module("GPIO"),
     Thread("GPIO"),

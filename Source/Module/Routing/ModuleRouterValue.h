@@ -10,9 +10,6 @@
 
 #pragma once
 
-
-#include "Module/Module.h"
-
 class ModuleRouterValue :
 	public BaseItem
 {

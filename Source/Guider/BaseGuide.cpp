@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "BaseGuide.h"
-
 BaseGuide::BaseGuide(const String &name) :
 	guideName(name),
 	numSteps(1),

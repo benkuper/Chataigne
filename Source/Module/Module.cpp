@@ -8,17 +8,10 @@
   ==============================================================================
 */
 
-#include "Module.h"
 #include "Common/Command/CommandFactory.h"
-#include "ui/ModuleEditor.h"
-#include "ui/ModuleUI.h"
 #include "Common/Command/Template/CommandTemplateManager.h"
-#include "Module/modules/common/commands/scriptcommands/ScriptCommand.h"
-#include "UI/ChataigneAssetManager.h"
 #include "Common/Command/BaseCommandHandler.h"
-#include "ModuleCommandTester.h"
-#include "modules/common/commands/scriptcallback/ScriptCallbackCommand.h"
-#include "Routing/ModuleRouter.h"
+
 
 Module::Module(const String& name) :
 	BaseItem(name, true, true),
@@ -115,7 +108,7 @@ Array<CommandDefinition*> Module::getCommands(bool includeTemplateCommands)
 	for (auto &d : defManager->definitions) result.add(d);
 	if (includeTemplateCommands)
 	{
-		for (auto &td : templateManager->defManager.definitions) result.add(td);
+		for (auto &td : templateManager->defManager->definitions) result.add(td);
 	}
 
 	result.add(scriptCommanDef.get());
@@ -125,7 +118,7 @@ Array<CommandDefinition*> Module::getCommands(bool includeTemplateCommands)
 
 CommandDefinition * Module::getCommandDefinitionFor(StringRef menu, StringRef name)
 {
-	if (menu == templateManager->menuName) return templateManager->defManager.getCommandDefinitionFor(menu, name);
+	if (menu == templateManager->menuName) return templateManager->defManager->getCommandDefinitionFor(menu, name);
 	if (name == String("Script callback")) return scriptCommanDef.get();
 	return defManager->getCommandDefinitionFor(menu, name);
 }
@@ -134,7 +127,7 @@ PopupMenu Module::getCommandMenu(int offset, CommandContext context)
 {
 	PopupMenu m = defManager->getCommandMenu(offset, context);
 	m.addSeparator();
-	templateManager->defManager.addCommandsToMenu(&m,offset + 500, context);
+	templateManager->defManager->addCommandsToMenu(&m,offset + 500, context);
 	m.addItem(offset+401, "Script callback");
 	return m;
 }
@@ -142,7 +135,7 @@ PopupMenu Module::getCommandMenu(int offset, CommandContext context)
 CommandDefinition * Module::getCommandDefinitionForItemID(int itemID)
 {
 	if (itemID == 400) return scriptCommanDef.get();
-	if(itemID >= 500) return templateManager->defManager.definitions[itemID-500];
+	if(itemID >= 500) return templateManager->defManager->definitions[itemID-500];
 	else return defManager->definitions[itemID];
 }
 

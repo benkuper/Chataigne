@@ -8,10 +8,6 @@
   ==============================================================================
 */
 
-#include "CVPreset.h"
-#include "../CVGroup.h"
-#include "ui/CVPresetEditor.h"
-
 CVPreset::CVPreset(CVGroup * group) :
 	MorphTarget("Preset"),
 	group(group),

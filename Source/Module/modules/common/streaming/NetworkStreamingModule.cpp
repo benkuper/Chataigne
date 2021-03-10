@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "NetworkStreamingModule.h"
-#include "../ui/EnablingNetworkControllableContainerEditor.h"
 #include "Common/Serial/lib/cobs/cobs.h"
 
 NetworkStreamingModule::NetworkStreamingModule(const String &name, bool canHaveInput, bool canHaveOutput, int defaultLocalPort, int defaultRemotePort) :

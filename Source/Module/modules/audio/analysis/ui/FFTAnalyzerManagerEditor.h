@@ -10,8 +10,6 @@
 
 #pragma once
 
-#include "../FFTAnalyzerManager.h"
-
 class FFTAnalyzerManagerEditor :
 	public GenericManagerEditor<FFTAnalyzer>
 {

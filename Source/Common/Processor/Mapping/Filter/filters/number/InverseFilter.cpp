@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "InverseFilter.h"
-
-
 InverseFilter::InverseFilter(var params, Multiplex* multiplex) :
 	MappingFilter(getTypeString(), params, multiplex)
 {

@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "ModuleChooserUI.h"
-#include "Module/modules/customvariables/CustomVariablesModule.h"
-
 ModuleChooserUI::ModuleChooserUI(bool includeCVModule) :
 	includeCVModule(includeCVModule),
 	filterModuleFunc(nullptr)

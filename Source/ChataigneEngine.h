@@ -11,9 +11,7 @@
 
 #pragma once
 
-#include "JuceHeader.h"
-#include "Module/modules/generic/ChataigneGenericModule.h"
-#include "Module/modules/multiplex/MultiplexModule.h"
+#include "Module/ModuleIncludes.h"
 
 class ChataigneEngine :
 	public Engine

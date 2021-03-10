@@ -9,10 +9,6 @@
 */
 
 
-#include "WiimoteManager.h"
-#include "WiimotePairUtil.h"
-
-
 juce_ImplementSingleton(WiimoteManager)
 
 WiimoteManager::WiimoteManager() :

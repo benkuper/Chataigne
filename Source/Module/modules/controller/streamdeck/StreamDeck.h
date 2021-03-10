@@ -10,11 +10,7 @@
 
 #pragma once
 
-#include "JuceHeader.h"
 #include "hidapi.h"
-
-
-
 
 #define STREAMDECK_MAX_ROWS 4
 #define STREAMDECK_MAX_COLUMNS 8

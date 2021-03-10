@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "BoolComparators.h"
-
 BoolComparator::BoolComparator(Parameter * sourceParam, Multiplex* multiplex) :
 	BaseComparator(multiplex)
 {

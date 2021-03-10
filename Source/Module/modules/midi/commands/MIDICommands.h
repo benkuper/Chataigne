@@ -10,8 +10,6 @@
 
 #pragma once
 
-#include "Common/Command/BaseCommand.h"
-
 class MIDIModule;
 
 class MIDICommand :

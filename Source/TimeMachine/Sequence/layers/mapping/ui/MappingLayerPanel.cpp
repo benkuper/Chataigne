@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "MappingLayerPanel.h"
-#include "UI/ChataigneAssetManager.h"
 
 MappingLayerPanel::MappingLayerPanel(MappingLayer * layer) :
 	SequenceLayerPanel(layer),

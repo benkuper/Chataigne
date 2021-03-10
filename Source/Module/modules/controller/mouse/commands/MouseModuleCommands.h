@@ -10,8 +10,6 @@
 
 #pragma once
 
-#include "../MouseModule.h"
-
 class MouseModuleCommands :
 	public BaseCommand
 {

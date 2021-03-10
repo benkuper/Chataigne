@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "CVPresetManager.h"
-#include "../CVGroup.h"
-
 CVPresetManager::CVPresetManager(CVGroup * group) :
 	BaseManager("Presets"),
 	group(group)

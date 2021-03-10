@@ -10,7 +10,11 @@
 
 #pragma once
 
-#include "Module/ModuleManager.h"
+#include "JuceHeader.h"
+#include "../CommandContext.h"
+
+class Module;
+class CommandDefinition;
 
 class CommandChooserUI :
 	public Component,

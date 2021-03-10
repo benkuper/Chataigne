@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "../SequenceModule.h"
-#include "SequenceCommand.h"
 #include "TimeMachine/ChataigneSequenceManager.h"
 
 SequenceCommand::SequenceCommand(SequenceModule* _module, CommandContext context, var params, Multiplex* multiplex) :

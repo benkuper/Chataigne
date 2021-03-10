@@ -10,14 +10,6 @@
 
 #pragma once
 
-#include "BaseComparator.h"
-#include "comparators/BoolComparators.h"
-#include "comparators/NumberComparators.h"
-#include "comparators/StringComparators.h"
-#include "comparators/EnumComparator.h"
-#include "comparators/Point2DComparators.h"
-#include "comparators/Point3DComparators.h"
-
 class ComparatorFactory
 {
 public:

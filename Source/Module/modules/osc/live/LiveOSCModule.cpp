@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "LiveOSCModule.h"
-#include "commands/LiveOSCCommandBase.h"
 LiveOSCModule::LiveOSCModule() :
 	OSCModule(getDefaultTypeString(), 11001, 11000, false, true)
 {

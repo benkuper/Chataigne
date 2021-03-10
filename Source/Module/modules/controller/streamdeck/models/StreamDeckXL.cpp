@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "StreamDeckXL.h"
-
 StreamDeckXL::StreamDeckXL(hid_device* device, String serialNumber) :
 	StreamDeck(device, serialNumber, STANDARD_V2, 8, 4, false, 96, 4)
 {

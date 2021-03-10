@@ -8,10 +8,6 @@
   ==============================================================================
 */
 
-#include "HTTPModule.h"
-#include "commands/HTTPCommand.h"
-#include "UI/ChataigneAssetManager.h"
-
 const String HTTPModule::requestMethodNames[TYPE_MAX]{ "GET", "POST","PUT", "PATCH", "DELETE" };
 
 HTTPModule::HTTPModule(const String& name) :

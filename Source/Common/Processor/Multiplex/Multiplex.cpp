@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "Multiplex.h"
-#include "ui/MultiplexUI.h"
-
 Multiplex::Multiplex(var params) :
     Processor(getTypeString()),
     listManager(this),
@@ -65,30 +62,4 @@ BaseMultiplexList* Multiplex::showAndGetList()
 ProcessorUI* Multiplex::getUI()
 {
     return new MultiplexUI(this);
-}
-
-MultiplexTarget::MultiplexTarget(Multiplex* mp) :
-    multiplex(mp)
-{
-    if(multiplex != nullptr) multiplex->addMultiplexListener(this);
-}
-
-MultiplexTarget::~MultiplexTarget()
-{
-    if(multiplex != nullptr) multiplex->removeMultiplexListener(this);
-}
-
-bool MultiplexTarget::isMultiplexed() const
-{
-    return multiplex != nullptr;
-}
-
-int MultiplexTarget::getMultiplexCount() const
-{
-    return isMultiplexed() ? multiplex->count->intValue() : 1;
-}
-
-int MultiplexTarget::getPreviewIndex() const
-{
-    return isMultiplexed() ? multiplex->previewIndex->intValue() - 1 : 0;
 }

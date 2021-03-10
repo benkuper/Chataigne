@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "GenericOSCQueryCommand.h"
-
 GenericOSCQueryCommand::GenericOSCQueryCommand(GenericOSCQueryModule * _oscQuerymodule, CommandContext context, var params, Multiplex * multiplex) :
 	BaseCommand(_oscQuerymodule, context, params, multiplex),
     oscQueryModule(_oscQuerymodule),

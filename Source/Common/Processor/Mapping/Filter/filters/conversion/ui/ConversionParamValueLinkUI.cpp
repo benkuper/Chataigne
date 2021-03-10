@@ -8,7 +8,6 @@
   ==============================================================================
 */
 
-#include "ConversionParamValueLinkUI.h"
 #include <math.h>
 
 ConversionParamValueLinkUI::ConversionParamValueLinkUI(ConversionConnector* sourceConnector, ConversionConnector* outConnector, ConversionParamValueLink* link) :

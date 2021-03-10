@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "GenericScriptCommand.h"
-#include "UI/ChataigneAssetManager.h"
-
 String GenericScriptCommand::commandScriptTemplate = "";
 
 GenericScriptCommand::GenericScriptCommand(ChataigneGenericModule * _module, CommandContext context, var params, Multiplex* multiplex) :

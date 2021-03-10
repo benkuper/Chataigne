@@ -1,5 +1,3 @@
-#include "JuceHeader.h"
-#include "PitchDetector.h"
 
 class PitchYIN :
 	public PitchDetector

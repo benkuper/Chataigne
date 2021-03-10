@@ -10,9 +10,6 @@
 
 #pragma once
 
-#include "../ColorMappingLayer.h"
-#include "../../ui/MappingLayerTimeline.h"
-
 class ColorMappingLayerTimeline :
     public MappingLayerTimeline
 {

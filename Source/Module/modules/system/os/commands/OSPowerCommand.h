@@ -9,8 +9,6 @@
 */
 
 #pragma once
-#include "Common/Command/BaseCommand.h"
-#include "../OSModule.h"
 
 class OSPowerCommand :
 	public BaseCommand

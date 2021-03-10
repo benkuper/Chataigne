@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "OSExecCommand.h"
-
 #if JUCE_WINDOWS
 #include <windows.h>
 #include <Tlhelp32.h>

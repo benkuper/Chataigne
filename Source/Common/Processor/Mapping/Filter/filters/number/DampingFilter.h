@@ -10,8 +10,6 @@
 
 #pragma once
 
-#include "../../MappingFilter.h"
-
 class DampingFilter :
 	public MappingFilter
 {

@@ -8,11 +8,6 @@
   ==============================================================================
 */
 
-#include "StateTransition.h"
-#include "../State/State.h"
-#include "../StateManager.h"
-
-
 StateTransition::StateTransition(State * source, State * dest) :
 	Action("transition"),//String(source->niceName << "_" << dest->niceName)),
 	sourceState(source),

@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "ScriptCondition.h"
-#include "UI/ChataigneAssetManager.h"
-
 String ScriptCondition::conditionTemplate = "";
 
 ScriptCondition::ScriptCondition(var params,Multiplex * processor) :

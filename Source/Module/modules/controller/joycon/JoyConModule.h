@@ -10,7 +10,6 @@
 
 #pragma once
 
-#include "Module/Module.h"
 #if JUCE_WINDOWS
 #include "joytime-input-hidapi.hpp"
 #elif JUCE_MAC

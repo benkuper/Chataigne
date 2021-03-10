@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "JoyConModule.h"
-
 JoyConModule::JoyConModule() :
 	Module(getDefaultTypeString()),
 	Thread("joycon"),

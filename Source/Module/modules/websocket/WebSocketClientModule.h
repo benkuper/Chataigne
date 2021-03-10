@@ -13,8 +13,6 @@
 
 #pragma once
 
-#include "../common/streaming/NetworkStreamingModule.h"
-
 class WebSocketClientModule :
 	public StreamingModule,
 	public SimpleWebSocketClient::Listener,

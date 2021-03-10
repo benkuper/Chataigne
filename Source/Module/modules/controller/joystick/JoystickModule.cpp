@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "JoystickModule.h"
-
 JoystickModule::JoystickModule(const String & name) :
 	Module(name),
 	calibCC("Calibration")

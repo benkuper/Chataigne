@@ -10,8 +10,7 @@
 
 #pragma once
 
-#include "Common/Processor/ProcessorManager.h"
-#include "../Transition/StateTransition.h"
+class ProcessorManager;
 
 class State :
 	public BaseItem
@@ -32,7 +31,7 @@ public:
 	Array<StateTransition *> inTransitions;
 	Array<StateTransition *> outTransitions;
 
-	ProcessorManager pm;
+	std::unique_ptr<ProcessorManager> pm;
 
 	void onContainerParameterChangedInternal(Parameter *) override;
 

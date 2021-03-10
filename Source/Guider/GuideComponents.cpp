@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "GuideComponents.h"
-
 GuideFocusComponent::GuideFocusComponent() :
 	nextBT("NextBT")
 {
