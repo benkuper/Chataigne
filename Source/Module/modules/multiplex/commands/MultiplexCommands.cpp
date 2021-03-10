@@ -13,8 +13,7 @@
 MultiplexCommand::MultiplexCommand(MultiplexModule* _module, CommandContext context, var params, Multiplex* multiplex) :
     BaseCommand(_module, context, params, multiplex),
     listTarget(nullptr),
-    value(nullptr),
-    
+    value(nullptr)
 {
     type = (Type)(int)(params.getProperty("type", SET_LIST_VALUE));
 
