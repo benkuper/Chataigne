@@ -32,7 +32,6 @@
 #include <juce_osc/juce_osc.h>
 #include <juce_simpleweb/juce_simpleweb.h>
 #include <juce_timeline/juce_timeline.h>
-#include <juce_video/juce_video.h>
 
 #include "BinaryData.h"
 

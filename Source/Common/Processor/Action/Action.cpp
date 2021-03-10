@@ -14,9 +14,9 @@ Action::Action(var params, Multiplex * multiplex) :
     autoTriggerWhenAllConditionAreActives(true),
     forceNoOffConsequences(false),
 	hasOffConsequences(false),
-	triggerOn(nullptr),
 	cdm(multiplex),
-	forceChecking(false),
+    triggerOn(nullptr),
+    forceChecking(false),
     actionAsyncNotifier(10)
 {
 	helpID = "Action"; 

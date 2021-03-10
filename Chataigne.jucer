@@ -1548,24 +1548,23 @@
                        binaryPath="Binaries/Debug" winArchitecture="x64"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
-        <MODULEPATH id="juce_video" path="D:\Softwares\JUCE\modules"/>
-        <MODULEPATH id="juce_osc" path="D:\Softwares\JUCE\modules"/>
+        <MODULEPATH id="juce_osc"/>
         <MODULEPATH id="juce_organicui" path="Modules"/>
-        <MODULEPATH id="juce_opengl" path="D:\Softwares\JUCE\modules"/>
-        <MODULEPATH id="juce_gui_extra" path="D:\Softwares\JUCE\modules"/>
-        <MODULEPATH id="juce_gui_basics" path="D:\Softwares\JUCE\modules"/>
-        <MODULEPATH id="juce_graphics" path="D:\Softwares\JUCE\modules"/>
-        <MODULEPATH id="juce_events" path="D:\Softwares\JUCE\modules"/>
-        <MODULEPATH id="juce_data_structures" path="D:\Softwares\JUCE\modules"/>
-        <MODULEPATH id="juce_cryptography" path="D:\Softwares\JUCE\modules"/>
-        <MODULEPATH id="juce_core" path="D:\Softwares\JUCE\modules"/>
-        <MODULEPATH id="juce_audio_utils" path="D:\Softwares\JUCE\modules"/>
-        <MODULEPATH id="juce_audio_processors" path="D:\Softwares\JUCE\modules"/>
-        <MODULEPATH id="juce_audio_devices" path="D:\Softwares\JUCE\modules"/>
+        <MODULEPATH id="juce_opengl"/>
+        <MODULEPATH id="juce_gui_extra"/>
+        <MODULEPATH id="juce_gui_basics"/>
+        <MODULEPATH id="juce_graphics"/>
+        <MODULEPATH id="juce_events"/>
+        <MODULEPATH id="juce_data_structures"/>
+        <MODULEPATH id="juce_cryptography"/>
+        <MODULEPATH id="juce_core"/>
+        <MODULEPATH id="juce_audio_utils"/>
+        <MODULEPATH id="juce_audio_processors"/>
+        <MODULEPATH id="juce_audio_devices"/>
         <MODULEPATH id="juce_audio_basics"/>
-        <MODULEPATH id="juce_dsp" path="D:\Softwares\JUCE\modules"/>
+        <MODULEPATH id="juce_dsp"/>
         <MODULEPATH id="juce_timeline" path="Modules"/>
-        <MODULEPATH id="juce_audio_formats" path="D:\Softwares\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_formats"/>
         <MODULEPATH id="juce_simpleweb" path="Modules"/>
       </MODULEPATHS>
     </VS2019>
@@ -1584,24 +1583,23 @@
                        enablePluginBinaryCopyStep="1" osxCompatibility="10.8 SDK" libraryPath="../../External/servus/lib/osx/release&#10;../../External/libartnet/lib/osx&#10;../../External/joycon/lib/osx&#10;../../External/sdl/lib/osx"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
-        <MODULEPATH id="juce_video" path="~/JUCE/modules"/>
-        <MODULEPATH id="juce_osc" path="~/JUCE/modules"/>
-        <MODULEPATH id="juce_opengl" path="~/JUCE/modules"/>
-        <MODULEPATH id="juce_gui_basics" path="~/JUCE/modules"/>
-        <MODULEPATH id="juce_graphics" path="~/JUCE/modules"/>
-        <MODULEPATH id="juce_events" path="~/JUCE/modules"/>
-        <MODULEPATH id="juce_data_structures" path="~/JUCE/modules"/>
-        <MODULEPATH id="juce_cryptography" path="~/JUCE/modules"/>
-        <MODULEPATH id="juce_core" path="~/JUCE/modules"/>
-        <MODULEPATH id="juce_audio_processors" path="~/JUCE/modules"/>
-        <MODULEPATH id="juce_audio_devices" path="~/JUCE/modules"/>
+        <MODULEPATH id="juce_osc"/>
+        <MODULEPATH id="juce_opengl"/>
+        <MODULEPATH id="juce_gui_basics"/>
+        <MODULEPATH id="juce_graphics"/>
+        <MODULEPATH id="juce_events"/>
+        <MODULEPATH id="juce_data_structures"/>
+        <MODULEPATH id="juce_cryptography"/>
+        <MODULEPATH id="juce_core"/>
+        <MODULEPATH id="juce_audio_processors"/>
+        <MODULEPATH id="juce_audio_devices"/>
         <MODULEPATH id="juce_audio_basics"/>
-        <MODULEPATH id="juce_audio_utils" path="~/JUCE/modules"/>
-        <MODULEPATH id="juce_gui_extra" path="~/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_utils"/>
+        <MODULEPATH id="juce_gui_extra"/>
         <MODULEPATH id="juce_organicui" path="Modules"/>
-        <MODULEPATH id="juce_dsp" path="~/JUCE/modules"/>
+        <MODULEPATH id="juce_dsp"/>
         <MODULEPATH id="juce_timeline" path="Modules"/>
-        <MODULEPATH id="juce_audio_formats" path="~/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_formats"/>
         <MODULEPATH id="juce_simpleweb" path="Modules"/>
       </MODULEPATHS>
     </XCODE_MAC>
@@ -1616,7 +1614,6 @@
                        linuxArchitecture="-m64" libraryPath="../../External/servus/lib/linux&#10;../../External/sdl/lib/linux&#10;/usr/lib/x86_64-linux-gnu/"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
-        <MODULEPATH id="juce_video" path="JUCE/modules"/>
         <MODULEPATH id="juce_osc" path="JUCE/modules"/>
         <MODULEPATH id="juce_organicui" path="Modules"/>
         <MODULEPATH id="juce_opengl" path="JUCE/modules"/>
@@ -1650,7 +1647,6 @@
                        winArchitecture="x64"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
-        <MODULEPATH id="juce_video" path="JUCE/modules"/>
         <MODULEPATH id="juce_timeline" path="Modules"/>
         <MODULEPATH id="juce_osc" path="JUCE/modules"/>
         <MODULEPATH id="juce_organicui" path="Modules"/>
@@ -1683,7 +1679,6 @@
                        binaryPath="Binaries/Win7CI" winArchitecture="x64"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
-        <MODULEPATH id="juce_video" path="JUCE/Modules"/>
         <MODULEPATH id="juce_timeline" path="Modules"/>
         <MODULEPATH id="juce_osc" path="JUCE/Modules"/>
         <MODULEPATH id="juce_organicui" path="Modules"/>
@@ -1719,7 +1714,6 @@
                        osxCompatibility="10.8 SDK"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
-        <MODULEPATH id="juce_video" path="JUCE/modules"/>
         <MODULEPATH id="juce_timeline" path="Modules"/>
         <MODULEPATH id="juce_osc" path="JUCE/modules"/>
         <MODULEPATH id="juce_organicui" path="Modules"/>
@@ -1752,7 +1746,6 @@
                        linuxArchitecture="-march=native"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
-        <MODULEPATH id="juce_video" path="JUCE/modules"/>
         <MODULEPATH id="juce_osc" path="JUCE/modules"/>
         <MODULEPATH id="juce_organicui" path="Modules"/>
         <MODULEPATH id="juce_opengl" path="JUCE/modules"/>
@@ -1793,7 +1786,6 @@
     <MODULE id="juce_osc" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_simpleweb" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_timeline" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
-    <MODULE id="juce_video" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
   </MODULES>
   <JUCEOPTIONS JUCE_ASIO="1" JUCE_WASAPI="1" JUCE_JACK="1" ORGANICUI_USE_SERVUS="1"
                JUCE_ALLOW_SPECIAL_CHARS_IN_ADDRESS="1" TIMELINE_USE_SEQUENCEMANAGER_SINGLETON="0"

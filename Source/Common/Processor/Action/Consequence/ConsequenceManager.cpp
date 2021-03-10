@@ -11,8 +11,8 @@
 #include "Common/Command/ui/BaseCommandHandlerManagerEditor.h"
 
 ConsequenceManager::ConsequenceManager(const String& name, Multiplex* multiplex) :
-	MultiplexTarget(multiplex),
-	BaseManager<Consequence>(name),
+    BaseManager<Consequence>(name),
+    MultiplexTarget(multiplex),
 	forceDisabled(false)
 {
 	canBeDisabled = false;

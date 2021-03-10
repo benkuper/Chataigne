@@ -125,7 +125,7 @@ public:
 
     TargetParameter* cvTarget;
 
-    virtual Controllable* createListControllable();
+    virtual Controllable* createListControllable() override;
 
     void controllableAdded(Controllable* c) override;
     void onContainerParameterChangedInternal(Parameter* p) override;

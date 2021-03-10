@@ -339,7 +339,7 @@ int ConditionManager::getNumValidConditions(int multiplexIndex)
 
 bool ConditionManager::getIsValid(int multiplexIndex, bool emptyIsValid)
 {
-	return multiplexIndex >= 0 && isValids[multiplexIndex] || (emptyIsValid && items.size() == 0);
+	return (multiplexIndex >= 0 && isValids[multiplexIndex]) || (emptyIsValid && items.size() == 0);
 }
 
 void ConditionManager::dispatchConditionValidationChanged(int multiplexIndex, bool dispatchOnlyOnValidationChange)
