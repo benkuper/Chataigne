@@ -8,9 +8,7 @@
   ==============================================================================
 */
 
-#include "StateMachine/StateManager.h"
-#include "Common/Processor/Action/Condition/conditions/StandardCondition/StandardCondition.h"
-#include "Common/Processor/Mapping/Mapping.h"
+#include "StateMachine/StateMachineIncludes.h"
 
 StateCommand::StateCommand(StateModule* _module, CommandContext context, var params, Multiplex* multiplex) :
 	BaseCommand(_module, context, params, multiplex),

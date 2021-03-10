@@ -8,10 +8,6 @@
   ==============================================================================
 */
 
-#include "MappingOutput.h"
-#include "Common/Command/BaseCommand.h"
- 
-
 MappingOutput::MappingOutput(Multiplex * multiplex) :
 	BaseCommandHandler("MappingOutput",CommandContext::MAPPING, nullptr, multiplex)
 {

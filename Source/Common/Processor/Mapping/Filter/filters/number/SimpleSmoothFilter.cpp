@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "SimpleSmoothFilter.h"
-
 SimpleSmoothFilter::SimpleSmoothFilter(var params, Multiplex* multiplex) :
 	MappingFilter(getTypeString(),params, multiplex)
 {

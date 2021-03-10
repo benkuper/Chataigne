@@ -10,12 +10,6 @@
 
 #pragma once
 
-#include "../Processor.h"
-#include "Input/MappingInputManager.h"
-#include "Filter/MappingFilterManager.h"
-#include "Output/MappingOutputManager.h"
-#include "../Action/Condition/ConditionManager.h"
-
 class Mapping :
 	public Processor,
 	public MultiplexTarget,

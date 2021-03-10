@@ -10,10 +10,6 @@
 
 #pragma once
 
-#include "../../MappingFilter.h"
-
-
-
 class LagFilter :
 	public MappingFilter,
 	public HighResolutionTimer

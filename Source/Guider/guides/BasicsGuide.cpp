@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "BasicsGuide.h"
-
 BasicsGuide::BasicsGuide() :
 	BaseGuide("Getting Started"),
 	keyboardModule(nullptr),
@@ -118,7 +116,7 @@ void BasicsGuide::handleStep(int step)
 	{
 		if (svui != nullptr)
 		{
-			Rectangle<int> r = getLocalArea(svui->pmui.addItemBT.get(), svui->pmui.addItemBT->getLocalBounds()).expanded(10);
+			Rectangle<int> r = getLocalArea(svui->pmui->addItemBT.get(), svui->pmui->addItemBT->getLocalBounds()).expanded(10);
 			fc.setFocus(r, fc.CIRCLE, "Ok, we have an empty State.\nStates can contain Actions, that are triggered when certain conditions are met, or Mappings, that create a continuous relationship between values.\nLet's add a new Action inside this State.");
 		}
 	}

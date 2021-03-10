@@ -10,8 +10,6 @@
 
 #pragma once
 
-#include "../../Condition.h"
-
 class ActivationCondition :
 	public Condition
 {

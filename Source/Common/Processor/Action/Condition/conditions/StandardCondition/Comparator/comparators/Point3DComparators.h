@@ -10,8 +10,6 @@
 
 #pragma once
 
-#include "../BaseComparator.h"
-
 class Point3DComparator :
 	public BaseComparator
 {

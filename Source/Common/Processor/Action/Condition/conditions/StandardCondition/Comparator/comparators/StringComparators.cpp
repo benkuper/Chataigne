@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "StringComparators.h"
-
-
 StringComparator::StringComparator(Parameter *sourceParam, Multiplex* multiplex) :
 	BaseComparator(multiplex)
 {

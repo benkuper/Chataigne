@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "CVGroupManagerUI.h"
-
 CVGroupManagerUI::CVGroupManagerUI(const String & contentName) :
 	BaseManagerShapeShifterUI(contentName, CVGroupManager::getInstance())
 {

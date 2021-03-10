@@ -10,8 +10,6 @@
 
 #pragma once
 
-#include "JuceHeader.h"
-
 class CVPreset;
 
 struct IterativeContext
@@ -44,18 +42,9 @@ public:
     void notifyItemUpdated(int multiplexIndex);
 
    
-
-    class ListListener
-    {
-    public:
-        virtual ~ListListener() {}
-        virtual void listReferenceUpdated() {}
-        virtual void listItemUpdated(int multiplexIndex) {}
-    };
-
-    ListenerList<ListListener> listListeners;
-    void addListListener(ListListener* newListener) { listListeners.add(newListener); }
-    void removeListListener(ListListener* listener) { listListeners.remove(listener); }
+    ListenerList<MultiplexListListener> listListeners;
+    void addListListener(MultiplexListListener* newListener) { listListeners.add(newListener); }
+    void removeListListener(MultiplexListListener* listener) { listListeners.remove(listener); }
 };
 
 template<class T>
@@ -70,7 +59,7 @@ public:
     void onContainerParameterChangedInternal(Parameter* p) override
     {
         int index = list.indexOf(p);
-        if (index != -1) listListeners.call(&ListListener::listItemUpdated, index);
+        if (index != -1) listListeners.call(&MultiplexListListener::listItemUpdated, index);
         BaseMultiplexList::onContainerParameterChangedInternal(p);
     }
 

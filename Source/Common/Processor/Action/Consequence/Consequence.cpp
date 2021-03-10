@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "Consequence.h"
-
 Consequence::Consequence(Multiplex * multiplex) :
 	BaseCommandHandler("Consequence",CommandContext::ACTION, nullptr, multiplex),
 	forceDisabled(false)

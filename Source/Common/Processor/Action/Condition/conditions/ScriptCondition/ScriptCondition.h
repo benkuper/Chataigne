@@ -10,9 +10,6 @@
 
 #pragma once
 
-#include "../../Condition.h"
-
-
 class ScriptCondition :
 	public Condition
 {

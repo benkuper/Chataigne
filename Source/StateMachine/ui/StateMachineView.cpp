@@ -8,10 +8,6 @@
   ==============================================================================
 */
 
-#include "StateMachineView.h"
-
-#include "../Transition/ui/StateTransitionManagerUI.h"
-
 StateMachineView::StateMachineView(const String &contentName, StateManager * _manager) :
 	BaseManagerShapeShifterViewUI(contentName, _manager),
 	manager(_manager),

@@ -10,6 +10,8 @@
 
 #pragma once
 
+#include "JuceHeader.h"
+
 #include "GuideComponents.h"
 #include "BaseGuide.h"
 #include "Guider.h"

@@ -10,7 +10,8 @@
 
 #pragma once
 
-#include "Common/Processor/Multiplex/Multiplex.h"
+#include "JuceHeader.h"
+#include "Common/Processor/Multiplex/MultiplexTarget.h"
 #include "Common/ParameterLink/ParameterLink.h"
 
 class CustomValuesCommandArgument :

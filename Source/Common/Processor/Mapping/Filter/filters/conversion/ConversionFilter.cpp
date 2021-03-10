@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "ConversionFilter.h"
-#include "ui/ConversionFilterEditor.h"
-
 ConversionFilter::ConversionFilter(var params, Multiplex * multiplex) :
 	MappingFilter(getTypeString(), params, multiplex),
 	conversionFilterAsyncNotifier(10)

@@ -8,10 +8,6 @@
   ==============================================================================
 */
 
-#include "MorpherViewUI.h"
-#include "CustomVariables/CVGroup.h"
-
-
 MorpherPanel::MorpherPanel(StringRef contentName) :
 	ShapeShifterContentComponent(contentName),
 	currentGroup(nullptr),

@@ -10,12 +10,10 @@
 
 #pragma once
 
-#include "Common/Processor/Multiplex/Multiplex.h"
-
 class MappingInput :
 	public BaseItem,
 	public MultiplexTarget,
-	public BaseMultiplexList::ListListener
+	public MultiplexListListener
 {
 public:
 	MappingInput(var params = var(), Multiplex * multiplex = nullptr);

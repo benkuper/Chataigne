@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "ConversionSourceParameterUI.h"
-
 ConversionSourceParameterUI::ConversionSourceParameterUI(Parameter* source) :
 	InspectableContentComponent(source),
 	source(source)

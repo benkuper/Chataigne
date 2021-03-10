@@ -8,6 +8,8 @@
   ==============================================================================
 */
 
+#include "Common/Processor/ProcessorIncludes.h"
+
 MultiplexCommand::MultiplexCommand(MultiplexModule* _module, CommandContext context, var params, Multiplex* multiplex) :
     BaseCommand(_module, context, params, multiplex),
     value(nullptr),

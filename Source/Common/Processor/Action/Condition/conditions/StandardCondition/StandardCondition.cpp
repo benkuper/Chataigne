@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "StandardCondition.h"
-#include "Comparator/ComparatorFactory.h"
-#include "ui/StandardConditionEditor.h"
 #include "Module/ModuleIncludes.h"
 
 StandardCondition::StandardCondition(var params, Multiplex* processor) :

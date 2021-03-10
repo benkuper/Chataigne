@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "CropFilter.h"
-
 
 CropFilter::CropFilter(var params, Multiplex * multiplex) :
 	MappingFilter(getTypeString(), params, multiplex)

@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "ScriptFilter.h"
-#include "UI/ChataigneAssetManager.h"
-
 String ScriptFilter::scriptTemplate = "";
 
 ScriptFilter::ScriptFilter(var params, Multiplex* multiplex) :

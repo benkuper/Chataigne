@@ -10,9 +10,6 @@
 
 #pragma once
 
-#include "Condition.h"
-#include "../../Multiplex/Multiplex.h"
-
 class ConditionManager :
 	public MultiplexTarget,
 	public BaseManager<Condition>,

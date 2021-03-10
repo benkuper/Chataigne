@@ -10,17 +10,12 @@
 
 #pragma once
 
-#include "../BaseGuide.h"
 #include "Module/ModuleIncludes.h"
-#include "Module/modules/controller/keyboard/KeyboardModule.h"
-#include "StateMachine/ui/StateMachineView.h"
-#include "Common/Processor/Action/Condition/conditions/StandardCondition/StandardCondition.h"
-#include "Common/Processor/Action/Condition/conditions/StandardCondition/ui/StandardConditionEditor.h"
+#include "StateMachine/StateMachineIncludes.h"
+#include "Common/Processor/ProcessorIncludes.h"
+
 #include "Common/Command/ui/BaseCommandHandlerManagerEditor.h"
 #include "Common/Command/ui/BaseCommandHandlerEditor.h"
-#include "Module/ui/ModuleManagerUI.h"
-#include "Module/modules/audio/AudioModule.h"
-#include "Module/modules/audio/commands/PlayAudioFileCommand.h"
 
 class BasicsGuide :
 	public BaseGuide,

@@ -10,19 +10,17 @@
 
 #pragma once
 
-#include "../State.h"
-#include "Common/Processor/ui/ProcessorManagerUI.h"
+class ProcessorManagerUI;
 
 class StateViewUI :
-	public BaseItemUI<State>,
-	public ProcessorManagerUI::ManagerUIListener
+	public BaseItemUI<State>
 {
 public:
 	StateViewUI(State * state);
 	~StateViewUI();
 
 	std::unique_ptr<BoolToggleUI> activeUI;
-	ProcessorManagerUI pmui;
+	std::unique_ptr<ProcessorManagerUI> pmui;
 
 	//transition
 	enum TransitionReceptionMode { NONE, START, FINISH };

@@ -10,9 +10,6 @@
 
 #pragma once
 
-#include "../../Transition/StateTransitionManager.h"
-#include "StateTransitionUI.h"
-
 class StateMachineView;
 
 class StateTransitionManagerUI :

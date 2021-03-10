@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "ConditionEditor.h"
-
 ConditionEditor::ConditionEditor(Condition * _condition, bool isRoot) :
 	BaseItemEditor(_condition, isRoot),
 	condition(_condition),

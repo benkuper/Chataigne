@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "ConditionGroup.h"
-
 ConditionGroup::ConditionGroup(var params, Multiplex* multiplex) :
 	Condition(ConditionGroup::getTypeStringStatic(), params, multiplex),
 	manager(multiplex)

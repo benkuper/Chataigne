@@ -10,10 +10,6 @@
 
 #pragma once
 
-#include "../../MappingFilter.h"
-#include "ConvertedParameterManager.h"
-#include "ConversionParamValueLink.h"
-
 class ConversionFilter :
 	public MappingFilter,
 	public ConvertedParameterManager::ManagerListener,

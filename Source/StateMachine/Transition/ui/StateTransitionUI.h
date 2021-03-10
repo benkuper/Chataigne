@@ -10,9 +10,6 @@
 
 #pragma once
 
-#include "../StateTransition.h"
-#include "../../State/ui/StateViewUI.h"
-
 class StateTransitionUI :
 	public BaseItemMinimalUI<StateTransition>,
 	public StateViewUI::Listener,

@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "MultiplexUI.h"
-
 MultiplexUI::MultiplexUI(Multiplex* mp) :
     ProcessorUI(mp, true),
     multiplex(mp),

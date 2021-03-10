@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "Guider.h"
-#include "guides/BasicsGuide.h"
-
 OrganicApplication& getApp() { return *dynamic_cast<OrganicApplication*>(JUCEApplication::getInstance()); }
 
 juce_ImplementSingleton(Guider)

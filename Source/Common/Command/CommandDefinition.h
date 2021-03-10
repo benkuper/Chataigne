@@ -12,7 +12,8 @@
 
 #include "BaseCommand.h"
 #include "CommandContext.h"
-#include "Common/Processor/Multiplex/Multiplex.h"
+
+class Multiplex;
 
 typedef std::function<BaseCommand*(ControllableContainer *, CommandContext, var params, Multiplex * multiplex)> CreateCommandFunc;
 

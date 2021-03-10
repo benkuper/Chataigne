@@ -10,8 +10,6 @@
 
 #pragma once
 
-#include "../State.h"
-
 class StateUI :
 	public BaseItemUI<State>
 {

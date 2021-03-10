@@ -8,8 +8,8 @@
   ==============================================================================
 */
 
-#include "Condition.h"
-#include "ui/ConditionEditor.h"
+//#include "Condition.h" //??
+
 #include "Module/ModuleIncludes.h"
 
 Condition::Condition(const String& n, var params, Multiplex * multiplex) :

@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "MorphTargetUI.h"
-
 MorphTargetUI::MorphTargetUI(MorphTarget* mt) :
 	BaseItemMinimalUI(mt)
 {

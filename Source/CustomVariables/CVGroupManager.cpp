@@ -8,9 +8,7 @@
   ==============================================================================
 */
 
-#include "CVGroupManager.h"
 #include "Module/ModuleIncludes.h"
-#include "Preset/CVPresetManager.h"
 
 juce_ImplementSingleton(CVGroupManager)
 

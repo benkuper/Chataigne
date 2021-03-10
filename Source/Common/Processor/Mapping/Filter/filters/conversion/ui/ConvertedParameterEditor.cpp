@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "ConvertedParameterEditor.h"
-
 ConvertedParameterEditor::ConvertedParameterEditor(ConvertedParameter* cp, bool isRoot) :
 	BaseItemEditor(cp, isRoot),
 	cp(cp)

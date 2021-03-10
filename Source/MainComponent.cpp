@@ -8,14 +8,11 @@
 
 #include "MainComponent.h"
 
-#include "StateMachine/ui/StateMachineView.h"
-#include "StateMachine/ui/StateManagerUI.h"
-
 #include "Module/ModuleIncludes.h"
+#include "StateMachine/StateMachineIncludes.h"
 #include "TimeMachine/TimeMachineIncludes.h"
+#include "CustomVariables/CustomVariablesIncludes.h"
 
-#include "CustomVariables/ui/CVGroupManagerUI.h"
-#include "CustomVariables/Preset/Morpher/ui/MorpherViewUI.h"
 #include "Common/Command/Template/ui/CommandTemplateManagerUI.h"
 
 #include "UI/WelcomeScreen.h"

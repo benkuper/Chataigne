@@ -10,9 +10,6 @@
 
 #pragma once
 
-#include "../../Condition.h"
-#include "../../ConditionManager.h"
-
 class ConditionGroup :
 	public Condition,
 	public ConditionManager::ConditionManagerListener

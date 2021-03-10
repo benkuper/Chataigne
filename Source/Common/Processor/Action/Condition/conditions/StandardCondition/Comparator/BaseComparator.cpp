@@ -8,8 +8,7 @@
   ==============================================================================
 */
 
-#include "BaseComparator.h"
-#include "ui/BaseComparatorUI.h"
+#include "Common/ParameterLink/ParameterLink.h"
 
 BaseComparator::BaseComparator(Multiplex * multiplex) :
 	ControllableContainer("Comparator"),

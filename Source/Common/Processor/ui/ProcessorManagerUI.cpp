@@ -8,14 +8,11 @@
   ==============================================================================
 */
 
-#include "ProcessorManagerUI.h"
 #include "Common/Command/CommandDefinition.h"
+
 #include "Module/ModuleIncludes.h"
-#include "StateMachine/StateManager.h"
-#include "Common/Processor/Action/Consequence/Consequence.h"
-#include "CustomVariables/CVGroup.h"
-#include "../Action/Condition/conditions/StandardCondition/StandardCondition.h"
-#include "Common/Processor/Mapping/Mapping.h"
+#include "StateMachine/StateMachineIncludes.h"
+#include "CustomVariables/CustomVariablesIncludes.h"
 
 ProcessorManagerUI::ProcessorManagerUI(ProcessorManager * _manager, bool useViewport) :
 	BaseManagerUI("Processors", _manager, useViewport)
@@ -116,7 +113,7 @@ void ProcessorManagerUI::itemDropped(const SourceDetails & details)
 				isForAction = result == 1;
 
 				CommandTemplateManager * ctm = dynamic_cast<CommandTemplateManager *>(tui->item->parentContainer.get());
-				if (ctm != nullptr) def = ctm->defManager.getCommandDefinitionFor(ctm->menuName, tui->item->niceName);
+				if (ctm != nullptr) def = ctm->defManager->getCommandDefinitionFor(ctm->menuName, tui->item->niceName);
 			}
 		}
 	}

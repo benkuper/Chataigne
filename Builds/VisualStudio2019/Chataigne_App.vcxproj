@@ -177,6 +177,7 @@
     <ClCompile Include="..\..\Source\Common\Zeroconf\ZeroconfManager.cpp"/>
     <ClCompile Include="..\..\Source\Common\InputSystem\InputDeviceHelpers.cpp"/>
     <ClCompile Include="..\..\Source\Common\InputSystem\InputSystemManager.cpp"/>
+    <ClCompile Include="..\..\Source\Common\Command\CommandIncludes.cpp"/>
     <ClCompile Include="..\..\Source\Common\Command\CustomValues\ui\CustomValuesCommandArgumentEditor.cpp"/>
     <ClCompile Include="..\..\Source\Common\Command\CustomValues\ui\CustomValuesCommandArgumentManagerEditor.cpp"/>
     <ClCompile Include="..\..\Source\Common\Command\CustomValues\CustomValuesCommandArgument.cpp"/>
@@ -209,69 +210,197 @@
     <ClCompile Include="..\..\Source\Common\MIDI\MIDIManager.cpp"/>
     <ClCompile Include="..\..\Source\Common\MIDI\MTCReceiver.cpp"/>
     <ClCompile Include="..\..\Source\Common\MIDI\MTCSender.cpp"/>
-    <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\conditions\ActivationCondition\ActivationCondition.cpp"/>
-    <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\conditions\ConditionGroup\ConditionGroup.cpp"/>
-    <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\conditions\StandardCondition\Comparator\comparators\BoolComparators.cpp"/>
-    <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\conditions\StandardCondition\Comparator\comparators\EnumComparator.cpp"/>
-    <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\conditions\StandardCondition\Comparator\comparators\NumberComparators.cpp"/>
-    <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\conditions\StandardCondition\Comparator\comparators\Point2DComparators.cpp"/>
-    <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\conditions\StandardCondition\Comparator\comparators\Point3DComparators.cpp"/>
-    <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\conditions\StandardCondition\Comparator\comparators\StringComparators.cpp"/>
-    <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\conditions\StandardCondition\Comparator\ui\BaseComparatorUI.cpp"/>
-    <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\conditions\StandardCondition\Comparator\BaseComparator.cpp"/>
-    <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\conditions\StandardCondition\ui\StandardConditionEditor.cpp"/>
-    <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\conditions\StandardCondition\StandardCondition.cpp"/>
-    <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\conditions\ScriptCondition\ScriptCondition.cpp"/>
-    <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\ui\ConditionEditor.cpp"/>
-    <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\ui\ConditionManagerEditor.cpp"/>
-    <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\Condition.cpp"/>
-    <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\ConditionManager.cpp"/>
-    <ClCompile Include="..\..\Source\Common\Processor\Action\Consequence\Consequence.cpp"/>
-    <ClCompile Include="..\..\Source\Common\Processor\Action\Consequence\ConsequenceManager.cpp"/>
-    <ClCompile Include="..\..\Source\Common\Processor\Action\ui\ActionUI.cpp"/>
-    <ClCompile Include="..\..\Source\Common\Processor\Action\Action.cpp"/>
-    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\MappingFilter.cpp"/>
-    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\MappingFilterManager.cpp"/>
-    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\ui\MappingFilterEditor.cpp"/>
-    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\condition\ConditionFilter.cpp"/>
-    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\CropFilter.cpp"/>
-    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\CurveMapFilter.cpp"/>
-    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\DampingFilter.cpp"/>
-    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\InverseFilter.cpp"/>
-    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\LagFilter.cpp"/>
-    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\MathFilter.cpp"/>
-    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\SimpleRemapFilter.cpp"/>
-    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\SimpleSmoothFilter.cpp"/>
-    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\conversion\ConversionParamValueLink.cpp"/>
-    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\conversion\ui\ConversionConnector.cpp"/>
-    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\conversion\ui\ConversionFilterEditor.cpp"/>
-    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\conversion\ui\ConversionParamValueLinkUI.cpp"/>
-    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\conversion\ui\ConversionSourceParameterUI.cpp"/>
-    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\conversion\ui\ConvertedParameterManagerEditor.cpp"/>
-    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\conversion\ui\ConvertedParameterEditor.cpp"/>
-    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\conversion\ConversionFilter.cpp"/>
-    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\conversion\SimpleConversionFilters.cpp"/>
-    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\conversion\ConvertedParameter.cpp"/>
-    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\conversion\ConvertedParameterManager.cpp"/>
-    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\color\ColorShiftFilter.cpp"/>
-    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\ScriptFilter.cpp"/>
-    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Input\ui\MappingInputEditor.cpp"/>
-    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Input\MappingInput.cpp"/>
-    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Input\MappingInputManager.cpp"/>
-    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Output\ui\MappingOutputManagerEditor.cpp"/>
-    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Output\MappingOutput.cpp"/>
-    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Output\MappingOutputManager.cpp"/>
-    <ClCompile Include="..\..\Source\Common\Processor\Mapping\ui\MappingUI.cpp"/>
-    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Mapping.cpp"/>
-    <ClCompile Include="..\..\Source\Common\Processor\Multiplex\List\ui\MultiplexListEditor.cpp"/>
-    <ClCompile Include="..\..\Source\Common\Processor\Multiplex\List\MultiplexList.cpp"/>
-    <ClCompile Include="..\..\Source\Common\Processor\Multiplex\List\MultiplexListManager.cpp"/>
-    <ClCompile Include="..\..\Source\Common\Processor\Multiplex\ui\MultiplexUI.cpp"/>
-    <ClCompile Include="..\..\Source\Common\Processor\Multiplex\Multiplex.cpp"/>
-    <ClCompile Include="..\..\Source\Common\Processor\ui\ProcessorManagerUI.cpp"/>
-    <ClCompile Include="..\..\Source\Common\Processor\ui\ProcessorUI.cpp"/>
-    <ClCompile Include="..\..\Source\Common\Processor\Processor.cpp"/>
-    <ClCompile Include="..\..\Source\Common\Processor\ProcessorManager.cpp"/>
+    <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\conditions\ActivationCondition\ActivationCondition.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\conditions\ConditionGroup\ConditionGroup.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\conditions\StandardCondition\Comparator\comparators\BoolComparators.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\conditions\StandardCondition\Comparator\comparators\EnumComparator.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\conditions\StandardCondition\Comparator\comparators\NumberComparators.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\conditions\StandardCondition\Comparator\comparators\Point2DComparators.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\conditions\StandardCondition\Comparator\comparators\Point3DComparators.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\conditions\StandardCondition\Comparator\comparators\StringComparators.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\conditions\StandardCondition\Comparator\ui\BaseComparatorUI.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\conditions\StandardCondition\Comparator\BaseComparator.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\conditions\StandardCondition\ui\StandardConditionEditor.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\conditions\StandardCondition\StandardCondition.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\conditions\ScriptCondition\ScriptCondition.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\ui\ConditionEditor.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\ui\ConditionManagerEditor.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\ConditionManager.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Action\Consequence\Consequence.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Action\Consequence\ConsequenceManager.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Action\ui\ActionUI.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Action\Action.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\MappingFilter.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\MappingFilterManager.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\ui\MappingFilterEditor.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\condition\ConditionFilter.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\CropFilter.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\CurveMapFilter.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\DampingFilter.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\InverseFilter.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\LagFilter.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\MathFilter.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\SimpleRemapFilter.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\SimpleSmoothFilter.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\conversion\ConversionParamValueLink.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\conversion\ui\ConversionConnector.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\conversion\ui\ConversionFilterEditor.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\conversion\ui\ConversionParamValueLinkUI.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\conversion\ui\ConversionSourceParameterUI.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\conversion\ui\ConvertedParameterManagerEditor.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\conversion\ui\ConvertedParameterEditor.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\conversion\ConversionFilter.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\conversion\SimpleConversionFilters.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\conversion\ConvertedParameter.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\conversion\ConvertedParameterManager.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\color\ColorShiftFilter.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\ScriptFilter.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Input\ui\MappingInputEditor.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Input\MappingInput.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Input\MappingInputManager.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Output\ui\MappingOutputManagerEditor.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Output\MappingOutput.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Output\MappingOutputManager.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Mapping\ui\MappingUI.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Mapping.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Multiplex\List\ui\MultiplexListEditor.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Multiplex\List\MultiplexList.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Multiplex\List\MultiplexListManager.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Multiplex\ui\MultiplexUI.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Multiplex\Multiplex.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Multiplex\MultiplexTarget.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\ui\ProcessorManagerUI.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\ui\ProcessorUI.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Processor.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\ProcessorIncludes.cpp"/>
+    <ClCompile Include="..\..\Source\Common\Processor\ProcessorIncludes2.cpp"/>
+    <ClCompile Include="..\..\Source\Common\Processor\ProcessorManager.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Common\Serial\lib\cobs\cobs.cpp"/>
     <ClCompile Include="..\..\Source\Common\Serial\lib\serial\serial.cc"/>
     <ClCompile Include="..\..\Source\Common\Serial\lib\serial\impl\list_ports\list_ports_linux.cc"/>
@@ -282,18 +411,40 @@
     <ClCompile Include="..\..\Source\Common\Serial\SerialDevice.cpp"/>
     <ClCompile Include="..\..\Source\Common\Serial\SerialDeviceParameter.cpp"/>
     <ClCompile Include="..\..\Source\Common\Serial\SerialManager.cpp"/>
-    <ClCompile Include="..\..\Source\CustomVariables\Preset\Morpher\ui\CVPresetMorphUI.cpp"/>
-    <ClCompile Include="..\..\Source\CustomVariables\Preset\Morpher\ui\MorpherViewUI.cpp"/>
-    <ClCompile Include="..\..\Source\CustomVariables\Preset\Morpher\ui\MorphTargetUI.cpp"/>
-    <ClCompile Include="..\..\Source\CustomVariables\Preset\Morpher\Morpher.cpp"/>
-    <ClCompile Include="..\..\Source\CustomVariables\Preset\Morpher\MorphTarget.cpp"/>
-    <ClCompile Include="..\..\Source\CustomVariables\Preset\ui\CVPresetEditor.cpp"/>
-    <ClCompile Include="..\..\Source\CustomVariables\Preset\CVPreset.cpp"/>
-    <ClCompile Include="..\..\Source\CustomVariables\Preset\CVPresetManager.cpp"/>
-    <ClCompile Include="..\..\Source\CustomVariables\ui\CVGroupManagerUI.cpp"/>
+    <ClCompile Include="..\..\Source\CustomVariables\Preset\Morpher\ui\CVPresetMorphUI.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\CustomVariables\Preset\Morpher\ui\MorpherViewUI.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\CustomVariables\Preset\Morpher\ui\MorphTargetUI.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\CustomVariables\Preset\Morpher\Morpher.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\CustomVariables\Preset\Morpher\MorphTarget.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\CustomVariables\Preset\ui\CVPresetEditor.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\CustomVariables\Preset\CVPreset.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\CustomVariables\Preset\CVPresetManager.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\CustomVariables\ui\CVGroupManagerUI.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\Source\CustomVariables\CustomVariablesIncludes.cpp"/>
-    <ClCompile Include="..\..\Source\CustomVariables\CVGroup.cpp"/>
-    <ClCompile Include="..\..\Source\CustomVariables\CVGroupManager.cpp"/>
+    <ClCompile Include="..\..\Source\CustomVariables\CVGroup.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\CustomVariables\CVGroupManager.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Module\Community\ui\CommunityModuleInfoEditor.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -681,17 +832,37 @@
     <ClCompile Include="..\..\Source\Module\ModuleManager.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\Source\StateMachine\State\ui\StateUI.cpp"/>
-    <ClCompile Include="..\..\Source\StateMachine\State\ui\StateViewUI.cpp"/>
-    <ClCompile Include="..\..\Source\StateMachine\State\State.cpp"/>
-    <ClCompile Include="..\..\Source\StateMachine\Transition\ui\StateTransitionManagerUI.cpp"/>
-    <ClCompile Include="..\..\Source\StateMachine\Transition\ui\StateTransitionUI.cpp"/>
-    <ClCompile Include="..\..\Source\StateMachine\Transition\StateTransition.cpp"/>
-    <ClCompile Include="..\..\Source\StateMachine\Transition\StateTransitionManager.cpp"/>
-    <ClCompile Include="..\..\Source\StateMachine\ui\StateMachineView.cpp"/>
-    <ClCompile Include="..\..\Source\StateMachine\ui\StateManagerUI.cpp"/>
+    <ClCompile Include="..\..\Source\StateMachine\State\ui\StateUI.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\StateMachine\State\ui\StateViewUI.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\StateMachine\State\State.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\StateMachine\Transition\ui\StateTransitionManagerUI.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\StateMachine\Transition\ui\StateTransitionUI.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\StateMachine\Transition\StateTransition.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\StateMachine\Transition\StateTransitionManager.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\StateMachine\ui\StateMachineView.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\StateMachine\ui\StateManagerUI.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\Source\StateMachine\StateMachineIncludes.cpp"/>
-    <ClCompile Include="..\..\Source\StateMachine\StateManager.cpp"/>
+    <ClCompile Include="..\..\Source\StateMachine\StateManager.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\Source\TimeMachine\Sequence\layers\trigger\ChataigneTriggerLayer.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -3590,6 +3761,7 @@
     <ClInclude Include="..\..\Source\Common\Zeroconf\ZeroconfManager.h"/>
     <ClInclude Include="..\..\Source\Common\InputSystem\InputDeviceHelpers.h"/>
     <ClInclude Include="..\..\Source\Common\InputSystem\InputSystemManager.h"/>
+    <ClInclude Include="..\..\Source\Common\Command\CommandIncludes.h"/>
     <ClInclude Include="..\..\Source\Common\Command\CustomValues\ui\CustomValuesCommandArgumentEditor.h"/>
     <ClInclude Include="..\..\Source\Common\Command\CustomValues\ui\CustomValuesCommandArgumentManagerEditor.h"/>
     <ClInclude Include="..\..\Source\Common\Command\CustomValues\CustomValuesCommandArgument.h"/>
@@ -3684,9 +3856,11 @@
     <ClInclude Include="..\..\Source\Common\Processor\Multiplex\List\MultiplexListManager.h"/>
     <ClInclude Include="..\..\Source\Common\Processor\Multiplex\ui\MultiplexUI.h"/>
     <ClInclude Include="..\..\Source\Common\Processor\Multiplex\Multiplex.h"/>
+    <ClInclude Include="..\..\Source\Common\Processor\Multiplex\MultiplexTarget.h"/>
     <ClInclude Include="..\..\Source\Common\Processor\ui\ProcessorManagerUI.h"/>
     <ClInclude Include="..\..\Source\Common\Processor\ui\ProcessorUI.h"/>
     <ClInclude Include="..\..\Source\Common\Processor\Processor.h"/>
+    <ClInclude Include="..\..\Source\Common\Processor\ProcessorIncludes.h"/>
     <ClInclude Include="..\..\Source\Common\Processor\ProcessorManager.h"/>
     <ClInclude Include="..\..\Source\Common\Serial\lib\cobs\cobs.h"/>
     <ClInclude Include="..\..\Source\Common\Serial\SerialDevice.h"/>

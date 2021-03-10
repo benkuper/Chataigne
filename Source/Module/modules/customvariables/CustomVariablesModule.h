@@ -10,7 +10,7 @@
 
 #pragma once
 
-#include "CustomVariables/CVGroupManager.h"
+#include "CustomVariables/CustomVariablesIncludes.h"
 
 class GenericControllableManagerLinkedContainer;
 

@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "MappingInputManager.h"
-
 MappingInputManager::MappingInputManager(Multiplex * multiplex) :
 	BaseManager("Inputs"),
 	MultiplexTarget(multiplex)

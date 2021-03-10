@@ -12,11 +12,10 @@
 
 #include "Template/CommandTemplate.h"
 #include "CommandContext.h"
-#include "Common/Processor/Multiplex/Multiplex.h"
 #include "Common/ParameterLink/ParameterLink.h"
-
 #include "CustomValues/CustomValuesCommandArgumentManager.h"
 
+class Multiplex;
 class Module;
 
 class BaseCommand :

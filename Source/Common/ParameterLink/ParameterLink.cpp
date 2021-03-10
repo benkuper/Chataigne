@@ -10,6 +10,7 @@
 
 #include "ParameterLink.h"
 #include "ui/LinkableParameterEditor.h"
+#include "Common/Processor/ProcessorIncludes.h"
 
 ParameterLink::ParameterLink(WeakReference<Parameter> p, Multiplex* multiplex) :
 	MultiplexTarget(multiplex),

@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "DampingFilter.h"
-
 DampingFilter::DampingFilter(var params, Multiplex* multiplex) :
 	MappingFilter(getTypeString(), params, multiplex)
 {

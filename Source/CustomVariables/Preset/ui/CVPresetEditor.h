@@ -10,8 +10,6 @@
 
 #pragma once
 
-#include "../CVPreset.h"
-
 class CVPresetEditor :
 	public BaseItemEditor,
 	public Parameter::AsyncListener

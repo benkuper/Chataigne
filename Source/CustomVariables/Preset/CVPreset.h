@@ -10,9 +10,6 @@
 
 #pragma once
 
-#include "JuceHeader.h"
-#include "Morpher/MorphTarget.h"
-
 class CVGroup;
 
 class ParameterPreset :

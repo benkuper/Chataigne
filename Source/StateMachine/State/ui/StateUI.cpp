@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "StateUI.h"
-#include "StateMachine/ui/StateMachineView.h"
-
 StateUI::StateUI(State * state) :
 	BaseItemUI<State>(state)
 {

@@ -10,9 +10,6 @@
 
 #pragma once
 
-#include "../ConvertedParameter.h"
-#include "ConversionConnector.h"
-
 class ConvertedParameterEditor :
 	public BaseItemEditor,
 	public ConvertedParameter::AsyncCPListener

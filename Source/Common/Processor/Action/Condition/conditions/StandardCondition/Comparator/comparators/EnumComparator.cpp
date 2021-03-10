@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "EnumComparator.h"
-
-
 EnumComparator::EnumComparator(Parameter * sourceParam, Multiplex* multiplex) :
 	BaseComparator(multiplex)
 {

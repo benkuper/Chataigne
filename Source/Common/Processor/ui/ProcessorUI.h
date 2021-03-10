@@ -10,9 +10,6 @@
 
 #pragma once
 
-
-#include "../Processor.h"
-
 class ProcessorUI :
 	public BaseItemUI<Processor>,
 	public Processor::AsyncListener,

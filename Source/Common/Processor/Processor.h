@@ -10,8 +10,6 @@
 
 #pragma once
 
-#include "JuceHeader.h"
-
 class ProcessorUI;
 
 class Processor :

@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "StateTransitionManagerUI.h"
-#include "../../ui/StateMachineView.h"
-
 StateTransitionManagerUI::StateTransitionManagerUI(StateMachineView * sv, StateTransitionManager * stm) :
 	BaseManagerUI("Transitions",stm,false),
 	stateView(sv)

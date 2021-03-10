@@ -9,8 +9,6 @@
   ==============================================================================
 */
 
-#include "Common/Processor/Mapping/Mapping.h"
-#include "Module/ModuleIncludes.h"
 
 MappingLayer::MappingLayer(const String &name, Sequence *_sequence, var params) :
 	SequenceLayer(_sequence, name),

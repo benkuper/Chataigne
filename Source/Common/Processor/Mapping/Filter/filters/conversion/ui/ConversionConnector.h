@@ -10,9 +10,6 @@
 
 #pragma once
 
-#include "JuceHeader.h"
-#include "../ConvertedParameter.h"
-
 class ConversionConnector :
 	public Component
 {

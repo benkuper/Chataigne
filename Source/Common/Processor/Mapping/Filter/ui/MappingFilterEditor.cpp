@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "MappingFilterEditor.h"
-
 MappingFilterEditor::MappingFilterEditor(MappingFilter * m, bool isRoot) :
 	BaseItemEditor(m,isRoot),
 	filter(m),

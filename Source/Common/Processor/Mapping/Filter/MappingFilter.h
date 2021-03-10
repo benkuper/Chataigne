@@ -11,7 +11,6 @@
 #pragma once
 
 
-#include "Common/Processor/Multiplex/Multiplex.h"
 #include "Common/ParameterLink/ParameterLink.h"
 
 class MappingFilter :

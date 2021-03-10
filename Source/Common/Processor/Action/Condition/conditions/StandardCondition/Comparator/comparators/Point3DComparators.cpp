@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "Point3DComparators.h"
-
 Point3DComparator::Point3DComparator(Parameter* sourceParam, Multiplex* multiplex) :
 	BaseComparator(multiplex),
 	sourceParam(sourceParam)

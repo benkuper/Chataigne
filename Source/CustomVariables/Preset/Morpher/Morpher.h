@@ -11,9 +11,6 @@
 
 #pragma once
 
-#include "../CVPresetManager.h"
-#include "jc_voronoi.h"
-
 class Morpher :
 	public ControllableContainer,
 	public CVPresetManager::ManagerListener,

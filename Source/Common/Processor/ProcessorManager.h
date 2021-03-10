@@ -10,8 +10,6 @@
 
 #pragma once
 
-#include "Processor.h"
-
 class Mapping;
 class Action;
 class Multiplex;

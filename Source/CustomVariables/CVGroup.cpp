@@ -8,10 +8,6 @@
   ==============================================================================
 */
 
-#include "CVGroup.h"
-#include "Preset/CVPresetManager.h"
-#include "Preset/Morpher/Morpher.h"
-
 CVGroup::CVGroup(const String & name) :
 	BaseItem(name),
 	Thread("CV Interpolation"),

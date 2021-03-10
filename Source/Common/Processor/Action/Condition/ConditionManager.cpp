@@ -8,14 +8,6 @@
   ==============================================================================
 */
 
-#include "ConditionManager.h"
-#include "ui/ConditionManagerEditor.h"
-#include "conditions/StandardCondition/StandardCondition.h"
-#include "conditions/ConditionGroup/ConditionGroup.h"
-#include "conditions/ScriptCondition/ScriptCondition.h"
-#include "conditions/ActivationCondition/ActivationCondition.h"
-#include "Common/Processor/Action/Action.h"
-
 ConditionManager::ConditionManager(Multiplex * multiplex) :
 	MultiplexTarget(multiplex),
 	BaseManager<Condition>("Conditions"),

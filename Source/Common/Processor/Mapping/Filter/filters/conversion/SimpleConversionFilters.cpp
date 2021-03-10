@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "SimpleConversionFilters.h"
-
 SimpleConversionFilter::SimpleConversionFilter(const String &name, var params, StringRef outTypeString, Multiplex* multiplex) :
 	MappingFilter(name, params, multiplex),
 	retargetComponent(nullptr),

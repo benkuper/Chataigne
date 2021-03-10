@@ -10,8 +10,6 @@
 
 #pragma once
 
-
-#include "CVPreset.h"
 class CVGroup;
 
 class CVPresetManager :

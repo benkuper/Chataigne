@@ -8,10 +8,8 @@
   ==============================================================================
 */
 
-#include "MultiplexList.h"
 #include "Module/ModuleIncludes.h"
-#include "ui/MultiplexListEditor.h"
-#include "CustomVariables/CVGroupManager.h"
+#include "CustomVariables/CustomVariablesIncludes.h"
 
 BaseMultiplexList::BaseMultiplexList(const String& name, var params) :
     BaseItem(name, false),
@@ -73,7 +71,7 @@ void BaseMultiplexList::loadJSONData(var data, bool createIfNotThere)
 void BaseMultiplexList::notifyItemUpdated(int multiplexIndex)
 {
     jassert(multiplexIndex >= 0);
-    listListeners.call(&ListListener::listItemUpdated, multiplexIndex);
+    listListeners.call(&MultiplexListListener::listItemUpdated, multiplexIndex);
 }
 
 
@@ -100,7 +98,7 @@ void InputValueMultiplexList::updateControllablesSetup()
         Controllable* c = list[index];
         list.removeAllInstancesOf(c);
         removeControllable(c);
-        if (Controllable * c = inputControllables[index])
+        if (Controllable* c = inputControllables[index])
         {
             if (c->type == c->TRIGGER) ((Trigger*)c)->removeTriggerListener(this);
             else((Parameter*)c)->removeParameterListener(this);
@@ -138,7 +136,7 @@ void InputValueMultiplexList::onContainerParameterChangedInternal(Parameter* p)
             else((Parameter*)c)->addParameterListener(this);
             inputControllables.set(index, c);
 
-            if(index == 0) listListeners.call(&ListListener::listReferenceUpdated);
+            if (index == 0) listListeners.call(&MultiplexListListener::listReferenceUpdated);
             notifyItemUpdated(index);
         }
     }
@@ -146,7 +144,7 @@ void InputValueMultiplexList::onContainerParameterChangedInternal(Parameter* p)
 
 void InputValueMultiplexList::onExternalParameterRangeChanged(Parameter* p)
 {
-    if (inputControllables.indexOf(p) == 0) listListeners.call(&ListListener::listReferenceUpdated);
+    if (inputControllables.indexOf(p) == 0) listListeners.call(&MultiplexListListener::listReferenceUpdated);
 }
 
 void InputValueMultiplexList::onExternalParameterValueChanged(Parameter* p)

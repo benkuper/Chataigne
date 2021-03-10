@@ -16,13 +16,11 @@
 #include "Common/DMX/DMXManager.h"
 
 #include "UI/ChataigneAssetManager.h"
-#include "CustomVariables/CVGroupManager.h"
 
+#include "CustomVariables/CustomVariablesIncludes.h"
 #include "Guider/GuiderIncludes.h"
-
 #include "TimeMachine/TimeMachineIncludes.h"
-
-#include "StateMachine/StateManager.h"
+#include "StateMachine/StateMachineIncludes.h"
 
 
 ControllableContainer* getAppSettings();

@@ -9,8 +9,6 @@
 */
 
 #pragma once
-#include "../ConversionFilter.h"
-#include "ConversionConnector.h"
 
 class ConversionParamValueLinkUI :
 	public Component

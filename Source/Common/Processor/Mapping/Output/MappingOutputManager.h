@@ -10,8 +10,6 @@
 
 #pragma once
 
-#include "MappingOutput.h"
-
 class MappingOutputManager :
 	public BaseManager<MappingOutput>,
 	public MultiplexTarget,

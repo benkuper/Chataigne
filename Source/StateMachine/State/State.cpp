@@ -8,12 +8,10 @@
   ==============================================================================
 */
 
-#include "State.h"
-
 State::State() :
-	BaseItem(getTypeString(),true),
-	pm("Processors")
+	BaseItem(getTypeString(),true)
 { 
+
 	itemDataType = "State";
 
 	active = addBoolParameter("Active", "If active, the state's actions and mappings will be effective, otherwise this state won't do anything.", false);
@@ -22,9 +20,10 @@ State::State() :
 	checkTransitionsOnActivate = addBoolParameter("Check transitions on activate", "If checked, this will automatically check for already valid conditions on activate.\n \
 		Otherwise, already valid transition will need to be unvalidated and then validated again to be activated.", false);
 
-	addChildControllableContainer(&pm);
+	pm.reset(new ProcessorManager("Processors"));
+	addChildControllableContainer(pm.get());
 
-	pm.setForceDisabled(true);
+	pm->setForceDisabled(true);
 
 	//set default value
 	viewUISize->setBounds(50, 50,1000,1000);
@@ -53,21 +52,21 @@ void State::onContainerParameterChangedInternal(Parameter *p)
 			if (p == enabled)
 			{
 				stateListeners.call(&StateListener::stateActivationChanged, this);
-				pm.setForceDisabled(!active->boolValue() || !enabled->boolValue());
+				pm->setForceDisabled(!active->boolValue() || !enabled->boolValue());
 
 				if (enabled->boolValue() && active->boolValue())
-					pm.processAllMappings();
+					pm->processAllMappings();
 			}
 			else if (enabled->boolValue())
 			{
 
 				if (active->boolValue())
 				{
-					pm.setForceDisabled(!active->boolValue() || !enabled->boolValue());
+					pm->setForceDisabled(!active->boolValue() || !enabled->boolValue());
 					stateListeners.call(&StateListener::stateActivationChanged, this);
 
-					pm.checkAllActivateActions();
-					pm.processAllMappings();
+					pm->checkAllActivateActions();
+					pm->processAllMappings();
 
 
 					for (auto& t : outTransitions)
@@ -87,9 +86,9 @@ void State::onContainerParameterChangedInternal(Parameter *p)
 				}
 				else
 				{
-					pm.checkAllDeactivateActions();
+					pm->checkAllDeactivateActions();
 					stateListeners.call(&StateListener::stateActivationChanged, this);
-					pm.setForceDisabled(!active->boolValue() || !enabled->boolValue());
+					pm->setForceDisabled(!active->boolValue() || !enabled->boolValue());
 				}
 
 			}
@@ -104,15 +103,15 @@ void State::onContainerParameterChangedInternal(Parameter *p)
 var State::getJSONData()
 {
 	var data = BaseItem::getJSONData();
-	var pData = pm.getJSONData();
-	if(!pData.isVoid() && pData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(pm.shortName, pData);
+	var pData = pm->getJSONData();
+	if(!pData.isVoid() && pData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(pm->shortName, pData);
 	return data;
 }
 
 void State::loadJSONDataInternal(var data)
 {
 	BaseItem::loadJSONDataInternal(data);
-	pm.loadJSONData(data.getProperty(pm.shortName, var()));
+	pm->loadJSONData(data.getProperty(pm->shortName, var()));
 
 	LoadBehavior b = loadActivationBehavior->getValueDataAsEnum<LoadBehavior>();
 	if (b != KEEP) active->setValue(b == ACTIVE);
@@ -120,13 +119,13 @@ void State::loadJSONDataInternal(var data)
 
 bool State::paste()
 {
-	Array<Processor *> p = pm.addItemsFromClipboard(false);
+	Array<Processor *> p = pm->addItemsFromClipboard(false);
 	if (p.isEmpty()) return BaseItem::paste();
 	return true;
 }
 
 void State::selectAll(bool addToSelection)
 {
-	deselectThis(pm.items.size() == 0);
-	pm.askForSelectAllItems(addToSelection);
+	deselectThis(pm->items.size() == 0);
+	pm->askForSelectAllItems(addToSelection);
 }

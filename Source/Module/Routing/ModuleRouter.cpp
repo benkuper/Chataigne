@@ -8,7 +8,7 @@
   ==============================================================================
 */
 
-#include "CustomVariables/CVGroupManager.h"
+#include "CustomVariables/CustomVariablesIncludes.h"
 
 ModuleRouter::ModuleRouter() :
 	BaseItem("Router"),

@@ -9,10 +9,8 @@
 */
 
 #pragma once
-#include "JuceHeader.h"
 
 class ConvertedParameter;
-
 class ConversionParamValueLink
 {
 public:

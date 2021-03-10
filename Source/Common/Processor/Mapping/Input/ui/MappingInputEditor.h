@@ -10,7 +10,6 @@
 
 #pragma once
 
-#include "../MappingInput.h"
 
 class MappingInputEditor :
 	public BaseItemEditor,

@@ -10,7 +10,6 @@
 
 #pragma once
 
-#include "../BaseComparator.h"
 #include "Common/ParameterLink/ui/LinkableParameterEditor.h"
 
 class BaseComparatorUI :

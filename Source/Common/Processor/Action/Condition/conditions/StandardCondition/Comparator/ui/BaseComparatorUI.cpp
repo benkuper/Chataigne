@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "BaseComparatorUI.h"
-
 BaseComparatorUI::BaseComparatorUI(BaseComparator * _comparator) :
 	comparator(_comparator),
 	comparatorRef(_comparator)

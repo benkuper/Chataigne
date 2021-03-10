@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "ColorShiftFilter.h"
-
 ColorShiftFilter::ColorShiftFilter(var params, Multiplex * multiplex) :
 	MappingFilter(getTypeString(), params, multiplex)
 {

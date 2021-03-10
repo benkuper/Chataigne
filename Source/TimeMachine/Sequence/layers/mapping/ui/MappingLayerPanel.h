@@ -10,8 +10,6 @@
 
 #pragma once
 
-#include "Common/Processor/Mapping/Mapping.h"
-
 class MappingLayerPanel :
 	public SequenceLayerPanel
 {

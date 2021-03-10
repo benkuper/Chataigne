@@ -9,9 +9,6 @@
 */
 
 #include "BaseCommandHandlerEditor.h"
-
-
-#include "BaseCommandHandlerEditor.h"
 #include "../CommandFactory.h"
 
 BaseCommandHandlerEditor::BaseCommandHandlerEditor(BaseCommandHandler * _handler, bool isRoot) :

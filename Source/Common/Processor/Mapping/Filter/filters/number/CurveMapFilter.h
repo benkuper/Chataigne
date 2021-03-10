@@ -10,8 +10,6 @@
 
 #pragma once
 
-#include "SimpleRemapFilter.h"
-
 class CurveMapFilter :
 	public SimpleRemapFilter
 {

@@ -10,8 +10,6 @@
 
 #pragma once
 
-#include "ConvertedParameter.h"
-
 class ConvertedParameterManager :
 	public BaseManager<ConvertedParameter>
 {

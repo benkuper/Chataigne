@@ -10,9 +10,6 @@
 
 #pragma once
 
-#include "Consequence.h"
-#include "../../Multiplex/Multiplex.h"
-
 class ConsequenceManager :
 	public BaseManager<Consequence>,
 	public MultiplexTarget,

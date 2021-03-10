@@ -11,9 +11,6 @@
 #pragma once
 
 
-#include "../StateManager.h"
-#include "../State/ui/StateUI.h"
-
 class StateManagerUI :
 	public BaseManagerShapeShifterUI<StateManager, State, StateUI>
 {

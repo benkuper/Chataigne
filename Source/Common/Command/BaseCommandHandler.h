@@ -12,8 +12,10 @@
 
 #include "CommandDefinition.h"
 #include "BaseCommand.h"
+
 #include "Template/CommandTemplateManager.h"
 #include "Module/ModuleIncludes.h"
+#include "Common/Processor/Multiplex/MultiplexTarget.h"
 
 class BaseCommandHandler :
 	public BaseItem,

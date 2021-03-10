@@ -10,12 +10,9 @@
 
 #pragma once
 
-#include "../../Condition.h"
-#include "Comparator/BaseComparator.h"
-
 class StandardCondition :
 	public Condition,
-	public BaseMultiplexList::ListListener
+	public MultiplexListListener
 {
 public:
 	StandardCondition(var params = var(), Multiplex* processor = nullptr);

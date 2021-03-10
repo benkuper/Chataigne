@@ -10,8 +10,6 @@
 
 #pragma once
 
-#include "CVGroup.h"
-
 class CustomVariablesModule;
 
 class CVGroupManager :

@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "MappingFilter.h"
-#include "ui/MappingFilterEditor.h"
-
 MappingFilter::MappingFilter(const String& name, var params, Multiplex* multiplex) :
 	BaseItem(name),
 	MultiplexTarget(multiplex),

@@ -1426,6 +1426,9 @@
     <ClCompile Include="..\..\Source\Common\InputSystem\InputSystemManager.cpp">
       <Filter>Chataigne\Source\Common\InputSystem</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Command\CommandIncludes.cpp">
+      <Filter>Chataigne\Source\Common\Command</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Common\Command\CustomValues\ui\CustomValuesCommandArgumentEditor.cpp">
       <Filter>Chataigne\Source\Common\Command\CustomValues\ui</Filter>
     </ClCompile>
@@ -1567,9 +1570,6 @@
     <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\ui\ConditionManagerEditor.cpp">
       <Filter>Chataigne\Source\Common\Processor\Action\Condition\ui</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\Condition.cpp">
-      <Filter>Chataigne\Source\Common\Processor\Action\Condition</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\ConditionManager.cpp">
       <Filter>Chataigne\Source\Common\Processor\Action\Condition</Filter>
     </ClCompile>
@@ -1699,6 +1699,9 @@
     <ClCompile Include="..\..\Source\Common\Processor\Multiplex\Multiplex.cpp">
       <Filter>Chataigne\Source\Common\Processor\Multiplex</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Multiplex\MultiplexTarget.cpp">
+      <Filter>Chataigne\Source\Common\Processor\Multiplex</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Common\Processor\ui\ProcessorManagerUI.cpp">
       <Filter>Chataigne\Source\Common\Processor\ui</Filter>
     </ClCompile>
@@ -1706,6 +1709,12 @@
       <Filter>Chataigne\Source\Common\Processor\ui</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Common\Processor\Processor.cpp">
+      <Filter>Chataigne\Source\Common\Processor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\ProcessorIncludes.cpp">
+      <Filter>Chataigne\Source\Common\Processor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\ProcessorIncludes2.cpp">
       <Filter>Chataigne\Source\Common\Processor</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Common\Processor\ProcessorManager.cpp">
@@ -5391,6 +5400,9 @@
     <ClInclude Include="..\..\Source\Common\InputSystem\InputSystemManager.h">
       <Filter>Chataigne\Source\Common\InputSystem</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\Common\Command\CommandIncludes.h">
+      <Filter>Chataigne\Source\Common\Command</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\Common\Command\CustomValues\ui\CustomValuesCommandArgumentEditor.h">
       <Filter>Chataigne\Source\Common\Command\CustomValues\ui</Filter>
     </ClInclude>
@@ -5673,6 +5685,9 @@
     <ClInclude Include="..\..\Source\Common\Processor\Multiplex\Multiplex.h">
       <Filter>Chataigne\Source\Common\Processor\Multiplex</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\Common\Processor\Multiplex\MultiplexTarget.h">
+      <Filter>Chataigne\Source\Common\Processor\Multiplex</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\Common\Processor\ui\ProcessorManagerUI.h">
       <Filter>Chataigne\Source\Common\Processor\ui</Filter>
     </ClInclude>
@@ -5680,6 +5695,9 @@
       <Filter>Chataigne\Source\Common\Processor\ui</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\Processor\Processor.h">
+      <Filter>Chataigne\Source\Common\Processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\Processor\ProcessorIncludes.h">
       <Filter>Chataigne\Source\Common\Processor</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\Processor\ProcessorManager.h">
