@@ -17,7 +17,6 @@
 #include "Preset/CVPreset.h"
 #include "Preset/CVPresetManager.h"
 
-
 #include "Preset/Morpher/jc_voronoi.h"
 #include "Preset/Morpher/Morpher.h"
 
