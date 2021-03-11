@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "Common/Zeroconf/ZeroconfManager.h"
-
 OSCOutputEditor::OSCOutputEditor(OSCOutput * output, bool isRoot) :
 	BaseItemEditor(output, isRoot),
 	zeroconfMenu("Auto detect")

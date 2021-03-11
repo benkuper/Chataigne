@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "DMXArtNetDevice.h"
-
 DMXArtNetDevice::DMXArtNetDevice() :
 	DMXDevice("ArtNet", ARTNET, true),
 	Thread("ArtNetReceive"),

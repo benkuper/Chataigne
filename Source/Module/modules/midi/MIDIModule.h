@@ -10,9 +10,6 @@
 
 #pragma once
 
-#include "Common/MIDI/MIDIManager.h"
-#include "Common/MIDI/MIDIDeviceParameter.h"
-
 class MIDIValueComparator :
 	public ControllableComparator
 {

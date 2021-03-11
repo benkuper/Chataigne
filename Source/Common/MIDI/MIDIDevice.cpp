@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "MIDIDevice.h"
-
 MIDIDevice::MIDIDevice(const String & deviceName, Type t) :
 	name(deviceName),
 	type(t)

@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "Common/Zeroconf/ZeroconfManager.h"
-
 WakeOnLanCommandEditor::WakeOnLanCommandEditor(WakeOnLanCommand * wolCommand, bool isRoot) :
 	GenericControllableContainerEditor(wolCommand, isRoot),
 	zeroconfMenu("Auto detect"),

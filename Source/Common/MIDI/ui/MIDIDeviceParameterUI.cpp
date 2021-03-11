@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "MIDIDeviceParameterUI.h"
-
 MIDIDeviceParameterUI::MIDIDeviceParameterUI(MIDIDeviceParameter * _midiParam) :
 	ParameterUI(_midiParam),
 	midiParam(_midiParam)

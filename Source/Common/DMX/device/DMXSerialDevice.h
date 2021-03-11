@@ -10,10 +10,6 @@
 
 #pragma once
 
-#include "DMXDevice.h"
-#include "Common/Serial/SerialManager.h"
-#include "Common/Serial/SerialDeviceParameter.h"
-
 class DMXSerialDevice :
 	public DMXDevice,
 	public SerialManager::SerialManagerListener,

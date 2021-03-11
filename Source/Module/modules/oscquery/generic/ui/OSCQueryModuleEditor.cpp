@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "Common/Zeroconf/ZeroconfManager.h"
-
 OSCQueryModuleOutputEditor::OSCQueryModuleOutputEditor(OSCQueryOutput * output, bool isRoot) :
 	EnablingControllableContainerEditor(output, isRoot),
 	zeroconfMenu("Auto detect")

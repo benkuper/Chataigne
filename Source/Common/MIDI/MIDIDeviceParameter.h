@@ -10,8 +10,6 @@
 
 #pragma once
 
-#include "MIDIManager.h"
-
 class MIDIDeviceParameterUI;
 
 class MIDIDeviceParameter :

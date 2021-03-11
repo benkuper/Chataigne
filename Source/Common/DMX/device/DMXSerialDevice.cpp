@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "DMXSerialDevice.h"
-
-
 DMXSerialDevice::DMXSerialDevice(const String &name, Type type, bool canReceive) :
 	DMXDevice(name, type, canReceive),
 	dmxPort(nullptr)

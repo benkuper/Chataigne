@@ -1,9 +1,5 @@
 #pragma once
 
-#include "../JuceLibraryCode/JuceHeader.h"
-
-#include "MIDIDevice.h"
-
 class MTCSender : 
 	Thread
 {

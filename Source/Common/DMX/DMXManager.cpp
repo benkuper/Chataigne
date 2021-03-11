@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "DMXManager.h"
-
 juce_ImplementSingleton(DMXManager)
 
 DMXManager::DMXManager() :

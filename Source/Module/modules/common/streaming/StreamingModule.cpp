@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "Common/Serial/lib/cobs/cobs.h"
-
 StreamingModule::StreamingModule(const String & name) :
 	Module(name)
 {

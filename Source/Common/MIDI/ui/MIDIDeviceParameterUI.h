@@ -10,9 +10,6 @@
 
 #pragma once
 
-#include "../MIDIDeviceParameter.h"
-#include "MIDIDeviceChooser.h"
-
 class MIDIDeviceParameterUI :
 	public ParameterUI,
 	public MIDIDeviceChooser::ChooserListener

@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "SerialDevice.h"
-#include "SerialManager.h"
-
 #if SERIALSUPPORT
 SerialDevice::SerialDevice(Serial * _port, SerialDeviceInfo  * _info, PortMode _mode) :
 thread(_info->port, this),

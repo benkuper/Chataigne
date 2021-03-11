@@ -10,9 +10,6 @@
 
 #pragma once
 
-#include "Common/Serial/SerialManager.h"
-#include "Common/Serial/SerialDeviceParameter.h"
-
 class SerialModule : 
 	public StreamingModule,
 	public SerialDevice::SerialDeviceListener,

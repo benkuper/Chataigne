@@ -10,7 +10,6 @@
 
 #pragma once
 
-#include "Common/DMX/device/DMXDevice.h"
 
 enum DMXByteOrder { BIT8, MSB, LSB };
 

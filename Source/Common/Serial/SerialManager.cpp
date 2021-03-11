@@ -8,7 +8,6 @@
   ==============================================================================
 */
 
-#include "SerialManager.h"
 juce_ImplementSingleton(SerialManager)
 
 SerialManager::SerialManager()

@@ -10,8 +10,6 @@
 
 #pragma once
 
-#include "DMXSerialDevice.h"
-
 #define DMXPRO_START_MESSAGE 0x7E
 #define DMXPRO_END_MESSAGE 0xE7
 

@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "MTCReceiver.h"
-
 MTCReceiver::MTCReceiver(MIDIInputDevice* device) :
 	isPlaying(false),
 	hours(0), minutes(0), seconds(0), frames(0), type(MidiMessage::SmpteTimecodeType::fps30),

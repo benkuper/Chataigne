@@ -10,8 +10,6 @@
 
 #pragma once
 
-#include "SerialDevice.h"
-
 class SerialManager :
 	public Timer
 {

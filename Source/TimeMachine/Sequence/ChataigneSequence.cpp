@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "Common/MIDI/MTCSender.h"
-#include "Common/MIDI/MIDIDeviceParameter.h"
-
 ChataigneSequence::ChataigneSequence() :
 	Sequence(),
 	masterAudioModule(nullptr),

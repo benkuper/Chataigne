@@ -10,9 +10,6 @@
 
 #pragma once
 
-#include "SerialDevice.h"
-#include "SerialManager.h"
-
 class SerialDeviceParameter :
 	public EnumParameter,
 	public SerialManager::SerialManagerListener

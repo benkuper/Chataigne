@@ -12,10 +12,12 @@
 
 #include "JuceHeader.h"
 
+
 #include "Module.h"
 #include "ModuleFactory.h"
 #include "ModuleManager.h"
 
+#include "Common/CommonIncludes.h"
 #include "Common/Command/BaseCommand.h" //to change to CommonInclude or CommandIncludes
 
 #include "Community/CommunityModuleInfo.h"

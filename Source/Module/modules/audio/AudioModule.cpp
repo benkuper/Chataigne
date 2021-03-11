@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "Common/MIDI/MIDIManager.h"
-
 AudioModule::AudioModule(const String & name) :
 	Module(name),
 	hs(&am),

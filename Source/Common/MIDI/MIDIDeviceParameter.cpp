@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "MIDIDeviceParameter.h"
-#include "ui/MIDIDeviceParameterUI.h"
-
 MIDIDeviceParameter::MIDIDeviceParameter(const String & name) :
 	Parameter(CUSTOM, name, "MIDI Devices",var(), var(),var()),
 	inputDevice(nullptr),

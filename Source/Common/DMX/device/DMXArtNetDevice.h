@@ -10,9 +10,6 @@
 
 #pragma once
 
-#include "DMXDevice.h"
-
-
 #define DMX_OPCODE 0x5000
 #define PROTOCOL_VERSION 14
 #define NUM_CHANNELS 512

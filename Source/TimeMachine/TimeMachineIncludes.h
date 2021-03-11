@@ -13,6 +13,7 @@
 #include "JuceHeader.h"
 
 #include "Sequence/layers/audio/ChataigneAudioLayerListener.h"
+#include "Common/CommonIncludes.h"
 
 #include "ChataigneSequenceManager.h"
 #include "Sequence/ChataigneSequence.h"

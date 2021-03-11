@@ -73,7 +73,6 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/CommonIncludes_97d07afb.o \
   $(JUCE_OBJDIR)/LinkableParameterEditor_ed91bbd8.o \
   $(JUCE_OBJDIR)/ParameterLink_e54bbf1c.o \
-  $(JUCE_OBJDIR)/ZeroconfManager_68129d03.o \
   $(JUCE_OBJDIR)/InputDeviceHelpers_f77a7a0.o \
   $(JUCE_OBJDIR)/InputSystemManager_a791f74f.o \
   $(JUCE_OBJDIR)/CustomValuesCommandArgumentEditor_97209c24.o \
@@ -94,31 +93,14 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/CommandDefinition_7c3c255f.o \
   $(JUCE_OBJDIR)/CommandDefinitionManager_7c0c55d8.o \
   $(JUCE_OBJDIR)/CommandFactory_3a72e748.o \
-  $(JUCE_OBJDIR)/DMXArtNetDevice_5a61b42b.o \
-  $(JUCE_OBJDIR)/DMXDevice_462f8cd1.o \
-  $(JUCE_OBJDIR)/DMXEnttecProDevice_e054588b.o \
-  $(JUCE_OBJDIR)/DMXOpenUSBDevice_ad4fdeff.o \
-  $(JUCE_OBJDIR)/DMXSerialDevice_44a8d965.o \
-  $(JUCE_OBJDIR)/DMXManager_b583f7e3.o \
-  $(JUCE_OBJDIR)/MIDIDeviceChooser_959781bc.o \
-  $(JUCE_OBJDIR)/MIDIDeviceParameterUI_bf16f57e.o \
-  $(JUCE_OBJDIR)/MIDIDevice_3c053f6a.o \
-  $(JUCE_OBJDIR)/MIDIDeviceParameter_f25cf8a9.o \
-  $(JUCE_OBJDIR)/MIDIManager_a5993663.o \
-  $(JUCE_OBJDIR)/MTCReceiver_b0ff4722.o \
-  $(JUCE_OBJDIR)/MTCSender_7b4a4be8.o \
   $(JUCE_OBJDIR)/ProcessorIncludes_efd64865.o \
   $(JUCE_OBJDIR)/ProcessorIncludes2_b12da37.o \
-  $(JUCE_OBJDIR)/cobs_e77e740f.o \
   $(JUCE_OBJDIR)/serial_82f97e54.o \
   $(JUCE_OBJDIR)/list_ports_linux_203b2613.o \
   $(JUCE_OBJDIR)/list_ports_osx_d93ade33.o \
   $(JUCE_OBJDIR)/list_ports_win_e6502c6b.o \
   $(JUCE_OBJDIR)/unix_d5f5c79d.o \
   $(JUCE_OBJDIR)/win_4c1bdbbb.o \
-  $(JUCE_OBJDIR)/SerialDevice_e404848a.o \
-  $(JUCE_OBJDIR)/SerialDeviceParameter_2de97789.o \
-  $(JUCE_OBJDIR)/SerialManager_fd829543.o \
   $(JUCE_OBJDIR)/CustomVariablesIncludes_d7a15e29.o \
   $(JUCE_OBJDIR)/os_mac_a23c8a30.o \
   $(JUCE_OBJDIR)/classic_e456a893.o \
@@ -206,11 +188,6 @@ $(JUCE_OBJDIR)/LinkableParameterEditor_ed91bbd8.o: ../../Source/Common/Parameter
 $(JUCE_OBJDIR)/ParameterLink_e54bbf1c.o: ../../Source/Common/ParameterLink/ParameterLink.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling ParameterLink.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/ZeroconfManager_68129d03.o: ../../Source/Common/Zeroconf/ZeroconfManager.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling ZeroconfManager.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/InputDeviceHelpers_f77a7a0.o: ../../Source/Common/InputSystem/InputDeviceHelpers.cpp
@@ -313,71 +290,6 @@ $(JUCE_OBJDIR)/CommandFactory_3a72e748.o: ../../Source/Common/Command/CommandFac
 	@echo "Compiling CommandFactory.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
-$(JUCE_OBJDIR)/DMXArtNetDevice_5a61b42b.o: ../../Source/Common/DMX/device/DMXArtNetDevice.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling DMXArtNetDevice.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/DMXDevice_462f8cd1.o: ../../Source/Common/DMX/device/DMXDevice.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling DMXDevice.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/DMXEnttecProDevice_e054588b.o: ../../Source/Common/DMX/device/DMXEnttecProDevice.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling DMXEnttecProDevice.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/DMXOpenUSBDevice_ad4fdeff.o: ../../Source/Common/DMX/device/DMXOpenUSBDevice.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling DMXOpenUSBDevice.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/DMXSerialDevice_44a8d965.o: ../../Source/Common/DMX/device/DMXSerialDevice.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling DMXSerialDevice.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/DMXManager_b583f7e3.o: ../../Source/Common/DMX/DMXManager.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling DMXManager.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/MIDIDeviceChooser_959781bc.o: ../../Source/Common/MIDI/ui/MIDIDeviceChooser.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling MIDIDeviceChooser.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/MIDIDeviceParameterUI_bf16f57e.o: ../../Source/Common/MIDI/ui/MIDIDeviceParameterUI.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling MIDIDeviceParameterUI.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/MIDIDevice_3c053f6a.o: ../../Source/Common/MIDI/MIDIDevice.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling MIDIDevice.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/MIDIDeviceParameter_f25cf8a9.o: ../../Source/Common/MIDI/MIDIDeviceParameter.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling MIDIDeviceParameter.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/MIDIManager_a5993663.o: ../../Source/Common/MIDI/MIDIManager.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling MIDIManager.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/MTCReceiver_b0ff4722.o: ../../Source/Common/MIDI/MTCReceiver.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling MTCReceiver.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/MTCSender_7b4a4be8.o: ../../Source/Common/MIDI/MTCSender.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling MTCSender.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
 $(JUCE_OBJDIR)/ProcessorIncludes_efd64865.o: ../../Source/Common/Processor/ProcessorIncludes.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling ProcessorIncludes.cpp"
@@ -386,11 +298,6 @@ $(JUCE_OBJDIR)/ProcessorIncludes_efd64865.o: ../../Source/Common/Processor/Proce
 $(JUCE_OBJDIR)/ProcessorIncludes2_b12da37.o: ../../Source/Common/Processor/ProcessorIncludes2.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling ProcessorIncludes2.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/cobs_e77e740f.o: ../../Source/Common/Serial/lib/cobs/cobs.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling cobs.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/serial_82f97e54.o: ../../Source/Common/Serial/lib/serial/serial.cc
@@ -421,21 +328,6 @@ $(JUCE_OBJDIR)/unix_d5f5c79d.o: ../../Source/Common/Serial/lib/serial/impl/unix.
 $(JUCE_OBJDIR)/win_4c1bdbbb.o: ../../Source/Common/Serial/lib/serial/impl/win.cc
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling win.cc"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/SerialDevice_e404848a.o: ../../Source/Common/Serial/SerialDevice.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling SerialDevice.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/SerialDeviceParameter_2de97789.o: ../../Source/Common/Serial/SerialDeviceParameter.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling SerialDeviceParameter.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/SerialManager_fd829543.o: ../../Source/Common/Serial/SerialManager.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling SerialManager.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/CustomVariablesIncludes_d7a15e29.o: ../../Source/CustomVariables/CustomVariablesIncludes.cpp

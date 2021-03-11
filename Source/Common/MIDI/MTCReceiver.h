@@ -10,11 +10,6 @@
 
 #pragma once
 
-#include "../JuceLibraryCode/JuceHeader.h"
-
-#include "MIDIDevice.h"
-#include "MIDIManager.h"
-
 class MTCReceiver :
 	public MIDIInputDevice::MIDIInputListener,
 	public MIDIManager::Listener,

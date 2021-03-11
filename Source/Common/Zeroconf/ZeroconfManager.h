@@ -10,7 +10,6 @@
 
 #pragma once
 
-#include "JuceHeader.h"
 #include "servus/servus.h"
 
 using namespace servus;

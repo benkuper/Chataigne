@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "MIDIDeviceChooser.h"
-
 MIDIDeviceChooser::MIDIDeviceChooser(bool _showInputs, bool _showOutputs) :
 showInputs(_showInputs),
 showOutputs(_showOutputs),

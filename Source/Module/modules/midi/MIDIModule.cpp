@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "Common/MIDI/MIDIManager.h"
-
 MIDIValueComparator MIDIModule::midiValueComparator;
 
 MIDIModule::MIDIModule(const String & name, bool _useGenericControls) :

@@ -9,11 +9,7 @@
  */
 #include "ChataigneEngine.h"
 
-#include "Common/MIDI/MIDIManager.h"
-#include "Common/Serial/SerialManager.h"
-#include "Common/Zeroconf/ZeroconfManager.h"
 #include "Common/InputSystem/InputSystemManager.h"
-#include "Common/DMX/DMXManager.h"
 
 #include "UI/ChataigneAssetManager.h"
 
@@ -21,6 +17,7 @@
 #include "Guider/GuiderIncludes.h"
 #include "TimeMachine/TimeMachineIncludes.h"
 #include "StateMachine/StateMachineIncludes.h"
+#include "Common/CommonIncludes.h"
 
 
 ControllableContainer* getAppSettings();

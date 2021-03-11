@@ -19,10 +19,6 @@
 using namespace serial;
 #endif
 
-#include "lib/cobs/cobs.h"
-
-#include "JuceHeader.h"
-
 class SerialDevice;
 
 class SerialReadThread :

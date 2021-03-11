@@ -10,8 +10,6 @@
 
 #pragma once
 
-#include "Common/MIDI/MTCReceiver.h"
-
 class ChataigneAudioLayer;
 
 class AudioModule;

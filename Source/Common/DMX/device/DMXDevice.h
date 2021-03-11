@@ -9,8 +9,6 @@
 */
 #pragma once
 
-#include "../DMXManager.h"
-
 class DMXDevice :
 	public ControllableContainer,
 	public DMXManager::DMXManagerListener,

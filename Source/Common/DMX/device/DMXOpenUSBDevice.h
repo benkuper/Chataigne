@@ -10,8 +10,6 @@
 
 #pragma once
 
-#include "DMXSerialDevice.h"
-
 class DMXOpenUSBDevice :
 	public DMXSerialDevice
 {

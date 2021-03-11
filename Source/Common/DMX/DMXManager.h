@@ -10,8 +10,6 @@
 
 #pragma once
 
-#include "JuceHeader.h"
-
 #define ARTNET_PORT 3333
 
 #define ARTNET_ACK_ONLY 0

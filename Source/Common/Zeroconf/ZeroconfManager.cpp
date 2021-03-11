@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "ZeroconfManager.h"
-
 #ifdef JUCE_WINDOWS
 #include <Winsock2.h>
 #include <Ws2tcpip.h>

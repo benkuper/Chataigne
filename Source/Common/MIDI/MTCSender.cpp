@@ -1,6 +1,3 @@
-#include "../JuceLibraryCode/JuceHeader.h"
-#include "MTCSender.h"
-
 #include <math.h>
 
 MTCSender::MTCSender(MIDIOutputDevice* device) :

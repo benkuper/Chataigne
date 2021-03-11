@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "DMXOpenUSBDevice.h"
-
 #if JUCE_LINUX
 	#include <sys/ioctl.h>
 	#include <asm/termbits.h>

@@ -10,8 +10,6 @@
 
 #pragma once
 
-#include "../MIDIManager.h"
-
 class MIDIDeviceChooser :
 	public Component,
 	public ComboBox::Listener,

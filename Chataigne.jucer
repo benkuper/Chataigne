@@ -135,7 +135,7 @@
           <FILE id="u94kgP" name="ParameterLink.h" compile="0" resource="0" file="Source/Common/ParameterLink/ParameterLink.h"/>
         </GROUP>
         <GROUP id="{1B487EA1-C305-46F0-D55D-17FDE1399960}" name="Zeroconf">
-          <FILE id="r5sscj" name="ZeroconfManager.cpp" compile="1" resource="0"
+          <FILE id="r5sscj" name="ZeroconfManager.cpp" compile="0" resource="0"
                 file="Source/Common/Zeroconf/ZeroconfManager.cpp"/>
           <FILE id="FXxC07" name="ZeroconfManager.h" compile="0" resource="0"
                 file="Source/Common/Zeroconf/ZeroconfManager.h"/>
@@ -242,50 +242,50 @@
         </GROUP>
         <GROUP id="{672CD9A6-0B3A-28B4-B3F7-2C0B1183CBBB}" name="DMX">
           <GROUP id="{E9C61B40-A648-980E-2FF5-28709FE98F53}" name="device">
-            <FILE id="gf0iKS" name="DMXArtNetDevice.cpp" compile="1" resource="0"
+            <FILE id="gf0iKS" name="DMXArtNetDevice.cpp" compile="0" resource="0"
                   file="Source/Common/DMX/device/DMXArtNetDevice.cpp"/>
             <FILE id="U4PYuN" name="DMXArtNetDevice.h" compile="0" resource="0"
                   file="Source/Common/DMX/device/DMXArtNetDevice.h"/>
-            <FILE id="bgaV9E" name="DMXDevice.cpp" compile="1" resource="0" file="Source/Common/DMX/device/DMXDevice.cpp"/>
+            <FILE id="bgaV9E" name="DMXDevice.cpp" compile="0" resource="0" file="Source/Common/DMX/device/DMXDevice.cpp"/>
             <FILE id="cDXRwK" name="DMXDevice.h" compile="0" resource="0" file="Source/Common/DMX/device/DMXDevice.h"/>
-            <FILE id="a3s1Kn" name="DMXEnttecProDevice.cpp" compile="1" resource="0"
+            <FILE id="a3s1Kn" name="DMXEnttecProDevice.cpp" compile="0" resource="0"
                   file="Source/Common/DMX/device/DMXEnttecProDevice.cpp"/>
             <FILE id="sQz4xs" name="DMXEnttecProDevice.h" compile="0" resource="0"
                   file="Source/Common/DMX/device/DMXEnttecProDevice.h"/>
-            <FILE id="NKMSRx" name="DMXOpenUSBDevice.cpp" compile="1" resource="0"
+            <FILE id="NKMSRx" name="DMXOpenUSBDevice.cpp" compile="0" resource="0"
                   file="Source/Common/DMX/device/DMXOpenUSBDevice.cpp"/>
             <FILE id="JsesTI" name="DMXOpenUSBDevice.h" compile="0" resource="0"
                   file="Source/Common/DMX/device/DMXOpenUSBDevice.h"/>
-            <FILE id="j3znjL" name="DMXSerialDevice.cpp" compile="1" resource="0"
+            <FILE id="j3znjL" name="DMXSerialDevice.cpp" compile="0" resource="0"
                   file="Source/Common/DMX/device/DMXSerialDevice.cpp"/>
             <FILE id="BQnYUa" name="DMXSerialDevice.h" compile="0" resource="0"
                   file="Source/Common/DMX/device/DMXSerialDevice.h"/>
           </GROUP>
-          <FILE id="qcXTQm" name="DMXManager.cpp" compile="1" resource="0" file="Source/Common/DMX/DMXManager.cpp"/>
+          <FILE id="qcXTQm" name="DMXManager.cpp" compile="0" resource="0" file="Source/Common/DMX/DMXManager.cpp"/>
           <FILE id="OIayX5" name="DMXManager.h" compile="0" resource="0" file="Source/Common/DMX/DMXManager.h"/>
         </GROUP>
         <GROUP id="{00DB7CFA-CACA-0D02-4E20-E907A0900C31}" name="MIDI">
           <GROUP id="{6A517320-E014-4F0A-1B7F-E6E464B84224}" name="ui">
-            <FILE id="Tj3fnl" name="MIDIDeviceChooser.cpp" compile="1" resource="0"
+            <FILE id="Tj3fnl" name="MIDIDeviceChooser.cpp" compile="0" resource="0"
                   file="Source/Common/MIDI/ui/MIDIDeviceChooser.cpp"/>
             <FILE id="oNeQjn" name="MIDIDeviceChooser.h" compile="0" resource="0"
                   file="Source/Common/MIDI/ui/MIDIDeviceChooser.h"/>
-            <FILE id="LfpQms" name="MIDIDeviceParameterUI.cpp" compile="1" resource="0"
+            <FILE id="LfpQms" name="MIDIDeviceParameterUI.cpp" compile="0" resource="0"
                   file="Source/Common/MIDI/ui/MIDIDeviceParameterUI.cpp"/>
             <FILE id="fZ6fxX" name="MIDIDeviceParameterUI.h" compile="0" resource="0"
                   file="Source/Common/MIDI/ui/MIDIDeviceParameterUI.h"/>
           </GROUP>
-          <FILE id="AyAj2b" name="MIDIDevice.cpp" compile="1" resource="0" file="Source/Common/MIDI/MIDIDevice.cpp"/>
+          <FILE id="AyAj2b" name="MIDIDevice.cpp" compile="0" resource="0" file="Source/Common/MIDI/MIDIDevice.cpp"/>
           <FILE id="Nn8IZL" name="MIDIDevice.h" compile="0" resource="0" file="Source/Common/MIDI/MIDIDevice.h"/>
-          <FILE id="TkGH6j" name="MIDIDeviceParameter.cpp" compile="1" resource="0"
+          <FILE id="TkGH6j" name="MIDIDeviceParameter.cpp" compile="0" resource="0"
                 file="Source/Common/MIDI/MIDIDeviceParameter.cpp"/>
           <FILE id="cJJ8wA" name="MIDIDeviceParameter.h" compile="0" resource="0"
                 file="Source/Common/MIDI/MIDIDeviceParameter.h"/>
-          <FILE id="yx6DYy" name="MIDIManager.cpp" compile="1" resource="0" file="Source/Common/MIDI/MIDIManager.cpp"/>
+          <FILE id="yx6DYy" name="MIDIManager.cpp" compile="0" resource="0" file="Source/Common/MIDI/MIDIManager.cpp"/>
           <FILE id="rVJbQL" name="MIDIManager.h" compile="0" resource="0" file="Source/Common/MIDI/MIDIManager.h"/>
-          <FILE id="uBbjBk" name="MTCReceiver.cpp" compile="1" resource="0" file="Source/Common/MIDI/MTCReceiver.cpp"/>
+          <FILE id="uBbjBk" name="MTCReceiver.cpp" compile="0" resource="0" file="Source/Common/MIDI/MTCReceiver.cpp"/>
           <FILE id="zIscrU" name="MTCReceiver.h" compile="0" resource="0" file="Source/Common/MIDI/MTCReceiver.h"/>
-          <FILE id="lLH5id" name="MTCSender.cpp" compile="1" resource="0" file="Source/Common/MIDI/MTCSender.cpp"/>
+          <FILE id="lLH5id" name="MTCSender.cpp" compile="0" resource="0" file="Source/Common/MIDI/MTCSender.cpp"/>
           <FILE id="Y5NAoh" name="MTCSender.h" compile="0" resource="0" file="Source/Common/MIDI/MTCSender.h"/>
         </GROUP>
         <GROUP id="{54EAB5D0-4FF9-8475-F580-32A4B6B32B16}" name="Processor">
@@ -593,7 +593,7 @@
         <GROUP id="{46F300BE-6F45-7C57-D999-3BCD373218D9}" name="Serial">
           <GROUP id="{5875158B-18E1-BB0F-C63F-26D3DBAFC305}" name="lib">
             <GROUP id="{66E90C1C-C294-0C15-82BA-E70D377ABA68}" name="cobs">
-              <FILE id="ieTvpW" name="cobs.cpp" compile="1" resource="0" file="Source/Common/Serial/lib/cobs/cobs.cpp"/>
+              <FILE id="ieTvpW" name="cobs.cpp" compile="0" resource="0" file="Source/Common/Serial/lib/cobs/cobs.cpp"/>
               <FILE id="bWHz2v" name="cobs.h" compile="0" resource="0" file="Source/Common/Serial/lib/cobs/cobs.h"/>
             </GROUP>
             <GROUP id="{92EE4ECC-23E4-581B-58DB-BC692CD6FA0B}" name="serial">
@@ -612,14 +612,14 @@
               </GROUP>
             </GROUP>
           </GROUP>
-          <FILE id="q91GWk" name="SerialDevice.cpp" compile="1" resource="0"
+          <FILE id="q91GWk" name="SerialDevice.cpp" compile="0" resource="0"
                 file="Source/Common/Serial/SerialDevice.cpp"/>
           <FILE id="O9JZZi" name="SerialDevice.h" compile="0" resource="0" file="Source/Common/Serial/SerialDevice.h"/>
-          <FILE id="CIXMqV" name="SerialDeviceParameter.cpp" compile="1" resource="0"
+          <FILE id="CIXMqV" name="SerialDeviceParameter.cpp" compile="0" resource="0"
                 file="Source/Common/Serial/SerialDeviceParameter.cpp"/>
           <FILE id="oaPlB6" name="SerialDeviceParameter.h" compile="0" resource="0"
                 file="Source/Common/Serial/SerialDeviceParameter.h"/>
-          <FILE id="PSE8rv" name="SerialManager.cpp" compile="1" resource="0"
+          <FILE id="PSE8rv" name="SerialManager.cpp" compile="0" resource="0"
                 file="Source/Common/Serial/SerialManager.cpp"/>
           <FILE id="LR59dJ" name="SerialManager.h" compile="0" resource="0" file="Source/Common/Serial/SerialManager.h"/>
         </GROUP>

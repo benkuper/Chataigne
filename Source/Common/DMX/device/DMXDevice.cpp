@@ -8,12 +8,6 @@
   ==============================================================================
 */
 
-#include "DMXDevice.h"
-
-#include "DMXOpenUSBDevice.h"
-#include "DMXEnttecProDevice.h"
-#include "DMXArtNetDevice.h"
-
 DMXDevice::DMXDevice(const String& name, Type _type, bool canReceive) :
 	ControllableContainer(name),
 	type(_type),
