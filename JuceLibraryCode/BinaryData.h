@@ -38,6 +38,9 @@ namespace BinaryData
     extern const char*   KinectV2_png;
     const int            KinectV2_pngSize = 2254;
 
+    extern const char*   Loupedeck_png;
+    const int            Loupedeck_pngSize = 2195;
+
     extern const char*   MadMapper_png;
     const int            MadMapper_pngSize = 3783;
 
@@ -138,7 +141,13 @@ namespace BinaryData
     const int            oscScriptTemplate_jsSize = 798;
 
     extern const char*   streamingScriptTemplate_js;
-    const int            streamingScriptTemplate_jsSize = 1091;
+    const int            streamingScriptTemplate_jsSize = 1078;
+
+    extern const char*   wsClientScriptTemplate_js;
+    const int            wsClientScriptTemplate_jsSize = 546;
+
+    extern const char*   wsServerScriptTemplate_js;
+    const int            wsServerScriptTemplate_jsSize = 694;
 
     extern const char*   about_png;
     const int            about_pngSize = 36971;
@@ -201,7 +210,7 @@ namespace BinaryData
     const int            custom_cextSize = 1165;
 
     // Number of elements in the namedResourceList and originalFileNames arrays.
-    const int namedResourceListSize = 64;
+    const int namedResourceListSize = 67;
 
     // Points to the start of a list of resource names.
     extern const char* namedResourceList[];

@@ -25,6 +25,9 @@ public:
 
 	std::unique_ptr<SimpleWebSocketServer> server;
 
+	const Identifier wsMessageReceivedId = "wsMessageReceived";
+	const Identifier wsDataReceivedId = "wsDataReceived";
+
 	void setupServer();
 
 	virtual bool isReadyToSend() override;
@@ -36,8 +39,8 @@ public:
 	void connectionClosed(const String &connectionId, int status, const String &reason) override;
 	void connectionError(const String& connectionId, const String& errorMessage) override;
 
-	void messageReceived(const String& connectionId, const String& message) override;
-	
+	virtual void messageReceived(const String& connectionId, const String& message) override;
+	virtual void dataReceived(const String& connectionId, const MemoryBlock &data) override;
 
 	void onContainerParameterChangedInternal(Parameter* p) override;
 	void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) override;

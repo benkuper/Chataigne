@@ -1,4 +1,4 @@
-/* ********** STREAMING MODULE (UDP, SERIAL) SPECIFIC SCRIPTING ********************* */
+/* ********** WEBSOCKET  MODULE SPECIFIC SCRIPTING ********************* */
 /*
 
 Streaming Modules (i.e. UDP and Serial Module) have specific methods that can be used to handle receiving and sendin data over the connection.

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.8.0b17"
+<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.8.0b18"
               bundleIdentifier="benkuper.Chataigne" includeBinaryInAppConfig="1"
               companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
               companyEmail="benjamin@kuperberg.fr" defines="VST_LOGGING=0&#10;"
@@ -20,6 +20,7 @@
         <FILE id="c0VYrw" name="Joystick.png" compile="0" resource="1" file="Resources/Modules/Joystick.png"/>
         <FILE id="lCZ3px" name="Keyboard.png" compile="0" resource="1" file="Resources/Modules/Keyboard.png"/>
         <FILE id="E3etXD" name="KinectV2.png" compile="0" resource="1" file="Resources/Modules/KinectV2.png"/>
+        <FILE id="vosuIA" name="Loupedeck.png" compile="0" resource="1" file="Resources/Modules/Loupedeck.png"/>
         <FILE id="XESC79" name="MadMapper.png" compile="0" resource="1" file="Resources/Modules/MadMapper.png"/>
         <FILE id="Cwbr53" name="Metronome.png" compile="0" resource="1" file="Resources/Modules/Metronome.png"/>
         <FILE id="rV6E05" name="MIDI.png" compile="0" resource="1" file="Resources/Modules/MIDI.png"/>
@@ -68,6 +69,10 @@
                 file="Resources/Templates/Scripts/oscScriptTemplate.js"/>
           <FILE id="GYfwUG" name="streamingScriptTemplate.js" compile="0" resource="1"
                 file="Resources/Templates/Scripts/streamingScriptTemplate.js"/>
+          <FILE id="jx5aVt" name="wsClientScriptTemplate.js" compile="0" resource="1"
+                file="Resources/Templates/Scripts/wsClientScriptTemplate.js"/>
+          <FILE id="x9DFz9" name="wsServerScriptTemplate.js" compile="0" resource="1"
+                file="Resources/Templates/Scripts/wsServerScriptTemplate.js"/>
         </GROUP>
       </GROUP>
       <FILE id="qDQaKu" name="about.png" compile="0" resource="1" file="Resources/about.png"/>
@@ -800,6 +805,12 @@
             </GROUP>
           </GROUP>
           <GROUP id="{A597C064-C7DE-23AD-F74A-2E029F90FCEA}" name="controller">
+            <GROUP id="{0BC48C1A-AFCC-56DC-9F76-56DEF83E7B10}" name="loupedeck">
+              <FILE id="ZFRhI4" name="LoupedeckModule.cpp" compile="0" resource="0"
+                    file="Source/Module/modules/controller/loupedeck/LoupedeckModule.cpp"/>
+              <FILE id="qcckZ6" name="LoupedeckModule.h" compile="0" resource="0"
+                    file="Source/Module/modules/controller/loupedeck/LoupedeckModule.h"/>
+            </GROUP>
             <GROUP id="{188E8CA2-04CC-D878-F91F-A3EDE5E6A665}" name="mouse">
               <GROUP id="{76214040-3E5D-6DDE-134B-66DC1FAC3DDD}" name="commands">
                 <FILE id="qKD2RO" name="MouseModuleCommands.cpp" compile="0" resource="0"

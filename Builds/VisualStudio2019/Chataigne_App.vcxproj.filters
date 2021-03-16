@@ -263,6 +263,9 @@
     <Filter Include="Chataigne\Source\Module\modules\common">
       <UniqueIdentifier>{E89D3705-9633-01AF-C6F5-82B057BCA7D4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\controller\loupedeck">
+      <UniqueIdentifier>{85973C59-52A4-8089-A406-3CF2DE0CCF2A}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Chataigne\Source\Module\modules\controller\mouse\commands">
       <UniqueIdentifier>{4D1FEBF2-D35F-9CA0-374C-B54DA62A5B26}</UniqueIdentifier>
     </Filter>
@@ -1833,6 +1836,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\common\ui\EnablingNetworkControllableContainerEditor.cpp">
       <Filter>Chataigne\Source\Module\modules\common\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Module\modules\controller\loupedeck\LoupedeckModule.cpp">
+      <Filter>Chataigne\Source\Module\modules\controller\loupedeck</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\controller\mouse\commands\MouseModuleCommands.cpp">
       <Filter>Chataigne\Source\Module\modules\controller\mouse\commands</Filter>
@@ -5789,6 +5795,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\common\ui\EnablingNetworkControllableContainerEditor.h">
       <Filter>Chataigne\Source\Module\modules\common\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Module\modules\controller\loupedeck\LoupedeckModule.h">
+      <Filter>Chataigne\Source\Module\modules\controller\loupedeck</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\controller\mouse\commands\MouseModuleCommands.h">
       <Filter>Chataigne\Source\Module\modules\controller\mouse\commands</Filter>
@@ -10748,6 +10757,9 @@
     <None Include="..\..\Resources\Modules\KinectV2.png">
       <Filter>Chataigne\Resources\Modules</Filter>
     </None>
+    <None Include="..\..\Resources\Modules\Loupedeck.png">
+      <Filter>Chataigne\Resources\Modules</Filter>
+    </None>
     <None Include="..\..\Resources\Modules\MadMapper.png">
       <Filter>Chataigne\Resources\Modules</Filter>
     </None>
@@ -10848,6 +10860,12 @@
       <Filter>Chataigne\Resources\Templates\Scripts</Filter>
     </None>
     <None Include="..\..\Resources\Templates\Scripts\streamingScriptTemplate.js">
+      <Filter>Chataigne\Resources\Templates\Scripts</Filter>
+    </None>
+    <None Include="..\..\Resources\Templates\Scripts\wsClientScriptTemplate.js">
+      <Filter>Chataigne\Resources\Templates\Scripts</Filter>
+    </None>
+    <None Include="..\..\Resources\Templates\Scripts\wsServerScriptTemplate.js">
       <Filter>Chataigne\Resources\Templates\Scripts</Filter>
     </None>
     <None Include="..\..\Resources\about.png">

@@ -120,7 +120,7 @@ void CVCommand::updateValueFromTarget()
 		removeControllable(value);
 	}
 
-	Controllable* cvTarget = getLinkedTargetAs<Controllable>(target, 0); //use multiplex 0 to create param
+	Controllable* cvTarget = getLinkedTargetAs<Controllable>(target, 0); //use multiplex 0 to create param, should be better
 
 	if (cvTarget != nullptr) value = ControllableFactory::createParameterFrom(cvTarget);
 	else value = nullptr;
@@ -131,6 +131,7 @@ void CVCommand::updateValueFromTarget()
 
 		if (!ghostValueData.isVoid()) value->loadJSONData(ghostValueData);
 		value->setNiceName("Value");
+		if (isMultiplexed()) value->clearRange(); //don't fix a range for multilex, there could be many ranges
 
 		addParameter(value);
 		linkParamToMappingIndex(value, 0);
@@ -185,9 +186,11 @@ void CVCommand::onContainerParameterChanged(Parameter * p)
 		if (value != nullptr)
 		{
 			Operator o = valueOperator->getValueDataAsEnum<Operator>();
+			if (o != SET_VALUE) value->clearRange(); //to clean more
 			bool curHide = value->hideInEditor;
 			value->hideInEditor = o == INVERSE;
 			if (curHide != value->hideInEditor) queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, this));
+
 		}
 	}
 }

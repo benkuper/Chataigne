@@ -20,6 +20,9 @@ WebSocketServerModule::WebSocketServerModule(const String& name, int defaultRemo
 
 	connectionFeedbackRef = isConnected;
 
+	scriptManager->scriptTemplate += ChataigneAssetManager::getInstance()->getScriptTemplate("wsServer");
+
+
 	setupServer();
 }
 
@@ -81,13 +84,19 @@ void WebSocketServerModule::connectionClosed(const String& connectionId, int sta
 void WebSocketServerModule::connectionError(const String& connectionId, const String& errorMessage)
 {
 	if (enabled->boolValue()) NLOGERROR(niceName, "Connection error from : " << connectionId << " : " << errorMessage);
-	
+
 	numClients->setValue(server->getNumActiveConnections());
 }
 
 void WebSocketServerModule::messageReceived(const String& connectionId, const String& message)
 {
 	StreamingType t = streamingType->getValueDataAsEnum<StreamingType>();
+
+	Array<var> args;
+	args.add(connectionId);
+	args.add(message);
+	scriptManager->callFunctionOnAllItems(wsMessageReceivedId, args);
+
 	switch (t)
 	{
 	case LINES:
@@ -103,9 +112,34 @@ void WebSocketServerModule::messageReceived(const String& connectionId, const St
 		break;
 
 	default:
-		DBG("Not handled");
+		//DBG("Not handled");
+		if (logIncomingData->boolValue())
+		{
+			NLOG(niceName, "[Not handled] : " << message);
+		}
+		inActivityTrigger->trigger();
 		break;
 	}
+}
+
+void WebSocketServerModule::dataReceived(const String& connectionId, const MemoryBlock& data)
+{
+	inActivityTrigger->trigger();
+
+	Array<uint8_t> bytes((const uint8_t*)data.getData(), data.getSize());
+	if (logIncomingData->boolValue())
+	{
+		String s = "";
+		for (auto & b : bytes) s += String(b) + "\n";
+		NLOG(niceName, "Received " << bytes.size() << " bytes :\n" << s);
+	}
+
+	Array<var> args;
+	args.add(connectionId);
+	var bytesData;
+	for(auto & b : bytes) bytesData.append(b);
+	args.add(bytesData);
+	scriptManager->callFunctionOnAllItems(wsDataReceivedId, args);
 }
 
 void WebSocketServerModule::onContainerParameterChangedInternal(Parameter* p)

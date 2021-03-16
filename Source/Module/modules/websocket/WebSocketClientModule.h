@@ -29,23 +29,27 @@ public:
 
 	std::unique_ptr<SimpleWebSocketClient> client;
 
-	void setupClient();
+	const Identifier wsMessageReceivedId = "wsMessageReceived";
+	const Identifier wsDataReceivedId = "wsDataReceived";
+
+	virtual void setupClient();
 
 	virtual bool isReadyToSend() override;
 
 	virtual void sendMessageInternal(const String& message, var) override;
 	virtual void sendBytesInternal(Array<uint8> data, var) override;
 
-	void connectionOpened() override;
-	void connectionClosed(int status, const String& reason) override;
-	void connectionError(const String& errorMessage) override;
+	virtual void connectionOpened() override;
+	virtual void connectionClosed(int status, const String& reason) override;
+	virtual void connectionError(const String& errorMessage) override;
 
-	void messageReceived(const String& message) override;
+	virtual void messageReceived(const String& message) override;
+	virtual void dataReceived(const MemoryBlock& data) override;
 
-	void onContainerParameterChangedInternal(Parameter* p) override;
-	void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) override;
+	virtual void onContainerParameterChangedInternal(Parameter* p) override;
+	virtual void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) override;
 
-	void timerCallback() override;
+	virtual void timerCallback() override;
 
 	ModuleUI* getModuleUI() override;
 

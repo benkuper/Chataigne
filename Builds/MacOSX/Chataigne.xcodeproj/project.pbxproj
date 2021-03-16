@@ -166,6 +166,7 @@
 		10B33E7F3EE7009BEA77D0AC /* ../../Source/Common/Processor/Mapping/Mapping.h */ /* Mapping.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Mapping.h; path = ../../Source/Common/Processor/Mapping/Mapping.h; sourceTree = SOURCE_ROOT; };
 		10C259C57E6992D9DC19D7DF /* ../../Source/ChataigneEngine.cpp */ /* ChataigneEngine.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ChataigneEngine.cpp; path = ../../Source/ChataigneEngine.cpp; sourceTree = SOURCE_ROOT; };
 		10E36BD392E35F89F77DC7BA /* ../../Source/Common/Processor/Action/Condition/ConditionManager.cpp */ /* ConditionManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ConditionManager.cpp; path = ../../Source/Common/Processor/Action/Condition/ConditionManager.cpp; sourceTree = SOURCE_ROOT; };
+		10FDEE6F099540F5DC2B246B /* ../../Resources/Templates/Scripts/wsServerScriptTemplate.js */ /* wsServerScriptTemplate.js */ = {isa = PBXFileReference; lastKnownFileType = file.js; name = wsServerScriptTemplate.js; path = ../../Resources/Templates/Scripts/wsServerScriptTemplate.js; sourceTree = SOURCE_ROOT; };
 		119888D65DE05EACD18D1B11 /* ../../Resources/Modules/HTTP.png */ /* HTTP.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = HTTP.png; path = ../../Resources/Modules/HTTP.png; sourceTree = SOURCE_ROOT; };
 		126E6696F8B855707269C2AF /* ../../Source/Common/DMX/device/DMXArtNetDevice.h */ /* DMXArtNetDevice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DMXArtNetDevice.h; path = ../../Source/Common/DMX/device/DMXArtNetDevice.h; sourceTree = SOURCE_ROOT; };
 		12DDF7A00AC1057D87937493 /* ../../Source/StateMachine/State/State.cpp */ /* State.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = State.cpp; path = ../../Source/StateMachine/State/State.cpp; sourceTree = SOURCE_ROOT; };
@@ -196,6 +197,7 @@
 		1D3EEDB3310C60C71DD26A0C /* Info-App.plist */ /* Info-App.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Info-App.plist"; path = "Info-App.plist"; sourceTree = SOURCE_ROOT; };
 		1DA1A4B47B6494AC2A79311C /* ../../Source/Module/modules/system/time/TimeModule.cpp */ /* TimeModule.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = TimeModule.cpp; path = ../../Source/Module/modules/system/time/TimeModule.cpp; sourceTree = SOURCE_ROOT; };
 		1E8699D50A40FE59A2B9A024 /* ../../Source/Module/modules/controller/wiimote/lib/wiiuse/os_mac/os_mac.m */ /* os_mac.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = os_mac.m; path = ../../Source/Module/modules/controller/wiimote/lib/wiiuse/os_mac/os_mac.m; sourceTree = SOURCE_ROOT; };
+		1F3CEEAEBD28A89F449A06F3 /* ../../Source/Module/modules/controller/loupedeck/LoupedeckModule.cpp */ /* LoupedeckModule.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LoupedeckModule.cpp; path = ../../Source/Module/modules/controller/loupedeck/LoupedeckModule.cpp; sourceTree = SOURCE_ROOT; };
 		1FC22E16506F967E05CD4819 /* ../../Source/CustomVariables/Preset/Morpher/ui/MorphTargetUI.cpp */ /* MorphTargetUI.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MorphTargetUI.cpp; path = ../../Source/CustomVariables/Preset/Morpher/ui/MorphTargetUI.cpp; sourceTree = SOURCE_ROOT; };
 		203B23CC8571848A67B12459 /* ../../Source/Module/modules/http/commands/HTTPCommand.cpp */ /* HTTPCommand.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = HTTPCommand.cpp; path = ../../Source/Module/modules/http/commands/HTTPCommand.cpp; sourceTree = SOURCE_ROOT; };
 		20A44377EAC767480769BEA5 /* ../../Resources/Templates/Scripts/moduleScriptTemplate.js */ /* moduleScriptTemplate.js */ = {isa = PBXFileReference; lastKnownFileType = file.js; name = moduleScriptTemplate.js; path = ../../Resources/Templates/Scripts/moduleScriptTemplate.js; sourceTree = SOURCE_ROOT; };
@@ -420,6 +422,7 @@
 		6CFA3DB0B33499174D9A5C98 /* ../../Source/Main.cpp */ /* Main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Main.cpp; path = ../../Source/Main.cpp; sourceTree = SOURCE_ROOT; };
 		6D345DAA00F1B0D0BA52A97A /* ../../Source/Module/modules/osc/resolume/commands/ui/ResolumeBaseCommandEditor.h */ /* ResolumeBaseCommandEditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ResolumeBaseCommandEditor.h; path = ../../Source/Module/modules/osc/resolume/commands/ui/ResolumeBaseCommandEditor.h; sourceTree = SOURCE_ROOT; };
 		6D5261F2E7952B94DBFD7FD7 /* ../../Source/Common/Processor/Mapping/Filter/filters/number/CurveMapFilter.h */ /* CurveMapFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CurveMapFilter.h; path = ../../Source/Common/Processor/Mapping/Filter/filters/number/CurveMapFilter.h; sourceTree = SOURCE_ROOT; };
+		6D63D2E0E1F5D5A14FD739C4 /* ../../Resources/Templates/Scripts/wsClientScriptTemplate.js */ /* wsClientScriptTemplate.js */ = {isa = PBXFileReference; lastKnownFileType = file.js; name = wsClientScriptTemplate.js; path = ../../Resources/Templates/Scripts/wsClientScriptTemplate.js; sourceTree = SOURCE_ROOT; };
 		6DA48147D997BF10B507F9B9 /* ../../Source/Common/Processor/Mapping/Input/ui/MappingInputEditor.cpp */ /* MappingInputEditor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MappingInputEditor.cpp; path = ../../Source/Common/Processor/Mapping/Input/ui/MappingInputEditor.cpp; sourceTree = SOURCE_ROOT; };
 		6DAB0FB37CD6A7C9A1BC50D2 /* ../../Source/Common/Command/Template/CommandTemplate.h */ /* CommandTemplate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CommandTemplate.h; path = ../../Source/Common/Command/Template/CommandTemplate.h; sourceTree = SOURCE_ROOT; };
 		6DBB1A3C473C2388AD85BC2C /* ../../Source/Common/Processor/Mapping/Filter/filters/conversion/ui/ConvertedParameterManagerEditor.cpp */ /* ConvertedParameterManagerEditor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ConvertedParameterManagerEditor.cpp; path = ../../Source/Common/Processor/Mapping/Filter/filters/conversion/ui/ConvertedParameterManagerEditor.cpp; sourceTree = SOURCE_ROOT; };
@@ -712,6 +715,7 @@
 		D0FA69340D3CAF9809B29B29 /* ../../Source/Common/Processor/Mapping/Filter/ui/MappingFilterEditor.cpp */ /* MappingFilterEditor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MappingFilterEditor.cpp; path = ../../Source/Common/Processor/Mapping/Filter/ui/MappingFilterEditor.cpp; sourceTree = SOURCE_ROOT; };
 		D1471EBF90391F73F895EB4B /* ../../Source/Module/modules/oscquery/generic/GenericOSCQueryModule.cpp */ /* GenericOSCQueryModule.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = GenericOSCQueryModule.cpp; path = ../../Source/Module/modules/oscquery/generic/GenericOSCQueryModule.cpp; sourceTree = SOURCE_ROOT; };
 		D186E23672CC910C8904260B /* ../../Source/Common/Command/CommandFactory.h */ /* CommandFactory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CommandFactory.h; path = ../../Source/Common/Command/CommandFactory.h; sourceTree = SOURCE_ROOT; };
+		D1E111CDD35EEAB543675AFB /* ../../Source/Module/modules/controller/loupedeck/LoupedeckModule.h */ /* LoupedeckModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LoupedeckModule.h; path = ../../Source/Module/modules/controller/loupedeck/LoupedeckModule.h; sourceTree = SOURCE_ROOT; };
 		D200ACD3EE45F2CAF4398070 /* ../../Source/Common/Processor/Action/ui/ActionUI.h */ /* ActionUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ActionUI.h; path = ../../Source/Common/Processor/Action/ui/ActionUI.h; sourceTree = SOURCE_ROOT; };
 		D2069FDD45985C94F69B02FD /* ../../Source/UI/WelcomeScreen.h */ /* WelcomeScreen.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = WelcomeScreen.h; path = ../../Source/UI/WelcomeScreen.h; sourceTree = SOURCE_ROOT; };
 		D23825BA334AC10DBBA1FD1C /* ../../Source/Common/Processor/Multiplex/Multiplex.cpp */ /* Multiplex.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Multiplex.cpp; path = ../../Source/Common/Processor/Multiplex/Multiplex.cpp; sourceTree = SOURCE_ROOT; };
@@ -807,6 +811,7 @@
 		EE57E9D5209F785B203A64C8 /* ../../Source/Module/modules/http/commands/HTTPCommand.h */ /* HTTPCommand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = HTTPCommand.h; path = ../../Source/Module/modules/http/commands/HTTPCommand.h; sourceTree = SOURCE_ROOT; };
 		EE6E908FC2B0B6A0D3CFD5E1 /* ../../Source/TimeMachine/Sequence/layers/trigger/ChataigneTimeTrigger.h */ /* ChataigneTimeTrigger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ChataigneTimeTrigger.h; path = ../../Source/TimeMachine/Sequence/layers/trigger/ChataigneTimeTrigger.h; sourceTree = SOURCE_ROOT; };
 		EE7734BE83426C490017DACD /* ../../Source/Module/modules/common/ui/EnablingNetworkControllableContainerEditor.cpp */ /* EnablingNetworkControllableContainerEditor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = EnablingNetworkControllableContainerEditor.cpp; path = ../../Source/Module/modules/common/ui/EnablingNetworkControllableContainerEditor.cpp; sourceTree = SOURCE_ROOT; };
+		EE897A41625D5D593EECE4E8 /* ../../Resources/Modules/Loupedeck.png */ /* Loupedeck.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Loupedeck.png; path = ../../Resources/Modules/Loupedeck.png; sourceTree = SOURCE_ROOT; };
 		EEBA25008E39A370BDE9EACD /* ../../Source/Common/Processor/Multiplex/MultiplexTarget.h */ /* MultiplexTarget.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MultiplexTarget.h; path = ../../Source/Common/Processor/Multiplex/MultiplexTarget.h; sourceTree = SOURCE_ROOT; };
 		EF2BF6BA3CC96A950AE71602 /* ../../Source/StateMachine/Transition/StateTransitionManager.cpp */ /* StateTransitionManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = StateTransitionManager.cpp; path = ../../Source/StateMachine/Transition/StateTransitionManager.cpp; sourceTree = SOURCE_ROOT; };
 		EF81E1C0EB0D80EDA3D24847 /* ../../Source/Common/Processor/Processor.h */ /* Processor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Processor.h; path = ../../Source/Common/Processor/Processor.h; sourceTree = SOURCE_ROOT; };
@@ -1717,6 +1722,7 @@
 				D0E586C56C805B4A09C03550,
 				9C71210A77B55F5535E5EC03,
 				197076D5A22E98797D3FB07B,
+				EE897A41625D5D593EECE4E8,
 				FDC68A7B4E5FD9E5DB23819F,
 				5A60F64718B023B15C6B6F70,
 				E3D81D58A2F55922C54F1F18,
@@ -2234,6 +2240,8 @@
 				20A44377EAC767480769BEA5,
 				1542C0258C8286E5FD5F1206,
 				0C5AF857C59082628C2BDB1A,
+				6D63D2E0E1F5D5A14FD739C4,
+				10FDEE6F099540F5DC2B246B,
 			);
 			name = Scripts;
 			sourceTree = "<group>";
@@ -2607,6 +2615,15 @@
 				6CA54F330A265B66584BC7CC,
 			);
 			name = ui;
+			sourceTree = "<group>";
+		};
+		C06277AE11620744E584C6AC /* loupedeck */ = {
+			isa = PBXGroup;
+			children = (
+				1F3CEEAEBD28A89F449A06F3,
+				D1E111CDD35EEAB543675AFB,
+			);
+			name = loupedeck;
 			sourceTree = "<group>";
 		};
 		C121694CAA30EFD0C8527A69 /* audio */ = {
@@ -3110,6 +3127,7 @@
 		F8AE04C7094D4FF5D9786FDE /* controller */ = {
 			isa = PBXGroup;
 			children = (
+				C06277AE11620744E584C6AC,
 				6FCADFA56546ADD440BAE600,
 				F3330C384960BC2EFE9674FD,
 				8F6EAC12C7E1A5C5DC92DA84,
@@ -3510,7 +3528,7 @@
 					"VST_LOGGING=0",
 					"JUCE_SUPPORT_CARBON=0",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
-					"JUCE_APP_VERSION=1.8.0b17",
+					"JUCE_APP_VERSION=1.8.0b18",
 					"JUCE_APP_VERSION_HEX=0x10800",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
@@ -3576,7 +3594,7 @@
 					"VST_LOGGING=0",
 					"JUCE_SUPPORT_CARBON=0",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
-					"JUCE_APP_VERSION=1.8.0b17",
+					"JUCE_APP_VERSION=1.8.0b18",
 					"JUCE_APP_VERSION_HEX=0x10800",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",

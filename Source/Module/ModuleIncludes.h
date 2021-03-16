@@ -63,6 +63,10 @@
 #include "modules/common/ui/EnablingNetworkControllableContainerEditor.h"
 
 
+#include "modules/udp/UDPModule.h"
+#include "modules/websocket/WebSocketClientModule.h"
+#include "modules/websocket/WebSocketServerModule.h"
+
 //#include "modules/controller/keyboard/KeyboardMacFunctions.h" //with #if JUCE_MAC inside KeyboardModule.cpp
 #include "modules/controller/keyboard/KeyboardModule.h"
 #include "modules/controller/keyboard/commands/KeyboardModuleCommands.h"
@@ -81,6 +85,8 @@
 #include "modules/controller/streamdeck/models/StreamDeckV1.h"
 #include "modules/controller/streamdeck/models/StreamDeckV2.h"
 #include "modules/controller/streamdeck/models/StreamDeckXL.h"
+
+#include "modules/controller/loupedeck/LoupedeckModule.h"
 
 #include "modules/controller/wiimote/WiimotePairUtil.h"
 #include "modules/controller/wiimote/WiimoteManager.h"
@@ -177,9 +183,6 @@
 #include "modules/tcp/tcpserver/TCPServerModule.h"
 
 
-#include "modules/udp/UDPModule.h"
-#include "modules/websocket/WebSocketClientModule.h"
-#include "modules/websocket/WebSocketServerModule.h"
 
 #include "ui/ModuleChooserUI.h"
 #include "ui/ModuleUI.h"

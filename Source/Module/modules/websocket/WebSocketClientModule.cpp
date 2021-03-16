@@ -17,7 +17,10 @@ WebSocketClientModule::WebSocketClientModule(const String& name, const String& d
 	isConnected->setControllableFeedbackOnly(true);
 	connectionFeedbackRef = isConnected;
 
+	scriptManager->scriptTemplate += ChataigneAssetManager::getInstance()->getScriptTemplate("wsClient");
+
 	setupClient();
+	startTimer(1000);
 }
 
 WebSocketClientModule::~WebSocketClientModule()
@@ -33,6 +36,7 @@ void WebSocketClientModule::setupClient()
 	isConnected->setValue(false);
 
 	if (!enabled->intValue()) return;
+
 	client.reset(new SimpleWebSocketClient());
 	client->addWebSocketListener(this);
 	client->start(serverPath->stringValue());
@@ -50,7 +54,7 @@ void WebSocketClientModule::sendMessageInternal(const String& message, var)
 
 void WebSocketClientModule::sendBytesInternal(Array<uint8> data, var)
 {
-	//client->send((const char*)data.getRawDataPointer(), data.size());
+	client->send((const char*)data.getRawDataPointer(), data.size());
 }
 
 void WebSocketClientModule::connectionOpened()
@@ -98,6 +102,26 @@ void WebSocketClientModule::messageReceived(const String& message)
 		DBG("Not handled");
 		break;
 	}
+}
+
+void WebSocketClientModule::dataReceived(const MemoryBlock& data)
+{
+	inActivityTrigger->trigger();
+
+	Array<uint8_t> bytes((const uint8_t *)data.getData(), data.getSize());
+
+	if (logIncomingData->boolValue())
+	{
+		String s = "";
+		for (auto& b : bytes) s += String(b) + "\n";
+		NLOG(niceName, "Received " << bytes.size() << " bytes :\n" << s);
+	}
+
+	Array<var> args;
+	var bytesData;
+	for (auto& b : bytes) bytesData.append(b);
+	args.add(bytesData);
+	scriptManager->callFunctionOnAllItems(wsDataReceivedId, args);
 }
 
 void WebSocketClientModule::onContainerParameterChangedInternal(Parameter* p)

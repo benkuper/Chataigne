@@ -69,7 +69,7 @@
       <Optimization>Disabled</Optimization>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <AdditionalIncludeDirectories>..\..\JuceLibraryCode;..\..\JUCE\Modules;..\..\Modules;../../External/wiiuse;../../External/serial/include;../../External/asio;../../External/joycon/include;../../External/servus/include;../../External/dnssd/include;../../External/sdl/include;../../External/hidapi/include;../../Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;DEBUG;_DEBUG;VST_LOGGING=0;USE_KINECT=0;JUCER_VS2019_4E886FDA=1;JUCE_APP_VERSION=1.8.0b17;JUCE_APP_VERSION_HEX=0x10800;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_RTAS=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;DEBUG;_DEBUG;VST_LOGGING=0;USE_KINECT=0;JUCER_VS2019_4E886FDA=1;JUCE_APP_VERSION=1.8.0b18;JUCE_APP_VERSION_HEX=0x10800;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_RTAS=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
@@ -117,7 +117,7 @@
     <ClCompile>
       <Optimization>Full</Optimization>
       <AdditionalIncludeDirectories>..\..\JuceLibraryCode;..\..\JUCE\Modules;..\..\Modules;../../External/wiiuse;../../External/serial/include;../../External/asio;../../External/joycon/include;../../External/servus/include;../../External/dnssd/include;../../External/sdl/include;../../External/hidapi/include;../../Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;NDEBUG;VST_LOGGING=0;USE_KINECT=0;JUCER_VS2019_4E886FDA=1;JUCE_APP_VERSION=1.8.0b17;JUCE_APP_VERSION_HEX=0x10800;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_RTAS=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;NDEBUG;VST_LOGGING=0;USE_KINECT=0;JUCER_VS2019_4E886FDA=1;JUCE_APP_VERSION=1.8.0b18;JUCE_APP_VERSION_HEX=0x10800;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_RTAS=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
@@ -544,6 +544,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\common\ui\EnablingNetworkControllableContainerEditor.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Module\modules\controller\loupedeck\LoupedeckModule.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\controller\mouse\commands\MouseModuleCommands.cpp">
@@ -3927,6 +3930,7 @@
     <ClInclude Include="..\..\Source\Module\modules\common\streaming\NetworkStreamingModule.h"/>
     <ClInclude Include="..\..\Source\Module\modules\common\streaming\StreamingModule.h"/>
     <ClInclude Include="..\..\Source\Module\modules\common\ui\EnablingNetworkControllableContainerEditor.h"/>
+    <ClInclude Include="..\..\Source\Module\modules\controller\loupedeck\LoupedeckModule.h"/>
     <ClInclude Include="..\..\Source\Module\modules\controller\mouse\commands\MouseModuleCommands.h"/>
     <ClInclude Include="..\..\Source\Module\modules\controller\mouse\MouseMacFunctions.h"/>
     <ClInclude Include="..\..\Source\Module\modules\controller\mouse\MouseModule.h"/>
@@ -5581,6 +5585,7 @@
     <None Include="..\..\Resources\Modules\Joystick.png"/>
     <None Include="..\..\Resources\Modules\Keyboard.png"/>
     <None Include="..\..\Resources\Modules\KinectV2.png"/>
+    <None Include="..\..\Resources\Modules\Loupedeck.png"/>
     <None Include="..\..\Resources\Modules\MadMapper.png"/>
     <None Include="..\..\Resources\Modules\Metronome.png"/>
     <None Include="..\..\Resources\Modules\MIDI.png"/>
@@ -5615,6 +5620,8 @@
     <None Include="..\..\Resources\Templates\Scripts\moduleScriptTemplate.js"/>
     <None Include="..\..\Resources\Templates\Scripts\oscScriptTemplate.js"/>
     <None Include="..\..\Resources\Templates\Scripts\streamingScriptTemplate.js"/>
+    <None Include="..\..\Resources\Templates\Scripts\wsClientScriptTemplate.js"/>
+    <None Include="..\..\Resources\Templates\Scripts\wsServerScriptTemplate.js"/>
     <None Include="..\..\Resources\about.png"/>
     <None Include="..\..\Resources\add.png"/>
     <None Include="..\..\Resources\connected.png"/>
