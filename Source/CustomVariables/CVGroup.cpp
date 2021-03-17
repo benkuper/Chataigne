@@ -142,7 +142,7 @@ void CVGroup::lerpPresets(Array<var> sourceValues, CVPreset* endPreset, float we
 
 void CVGroup::goToPreset(CVPreset* p, float time, Automation* curve)
 {
-	stopThread(100);
+	stopThread(1000);
 
 	targetPreset = p;
 	if (interpolationAutomation != nullptr) interpolationAutomation->removeInspectableListener(this);
@@ -157,7 +157,7 @@ void CVGroup::goToPreset(CVPreset* p, float time, Automation* curve)
 
 void CVGroup::stopInterpolation()
 {
-	stopThread(200);
+	stopThread(1000);
 }
 
 void CVGroup::computeValues()

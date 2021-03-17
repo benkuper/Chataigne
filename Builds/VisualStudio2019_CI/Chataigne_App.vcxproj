@@ -547,6 +547,9 @@
     <ClCompile Include="..\..\Source\Module\modules\common\ui\EnablingNetworkControllableContainerEditor.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Module\modules\controller\loupedeck\commands\LoupedeckCommands.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\controller\loupedeck\LoupedeckModule.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -3931,6 +3934,7 @@
     <ClInclude Include="..\..\Source\Module\modules\common\streaming\NetworkStreamingModule.h"/>
     <ClInclude Include="..\..\Source\Module\modules\common\streaming\StreamingModule.h"/>
     <ClInclude Include="..\..\Source\Module\modules\common\ui\EnablingNetworkControllableContainerEditor.h"/>
+    <ClInclude Include="..\..\Source\Module\modules\controller\loupedeck\commands\LoupedeckCommands.h"/>
     <ClInclude Include="..\..\Source\Module\modules\controller\loupedeck\LoupedeckModule.h"/>
     <ClInclude Include="..\..\Source\Module\modules\controller\mouse\commands\MouseModuleCommands.h"/>
     <ClInclude Include="..\..\Source\Module\modules\controller\mouse\MouseMacFunctions.h"/>

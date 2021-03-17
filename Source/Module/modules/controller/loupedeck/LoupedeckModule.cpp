@@ -1,4 +1,3 @@
-#include "LoupedeckModule.h"
 /*
   ==============================================================================
 
@@ -8,6 +7,9 @@
 
   ==============================================================================
 */
+
+#pragma warning(push)
+#pragma warning(disable:4838)
 
 LoupedeckModule::LoupedeckModule() :
 	WebSocketClientModule(getDefaultTypeString(), "100.127.1.1:80"),
@@ -30,6 +32,8 @@ LoupedeckModule::LoupedeckModule() :
 
 	brightness = moduleParams.addFloatParameter("Screen Brightness", "Backlight intensity", .5f, 0, 1);
 	knobSensitivity = moduleParams.addFloatParameter("Knob sensitivity", "Sensitivity for the relative computing of the knobs", .5f, 0, 1);
+	highlightOnTouch = moduleParams.addBoolParameter("Highlight On Touch", "If checked, this will force highlighting the touched pad", true);
+	vibrateOnTouch = moduleParams.addBoolParameter("Vibrate On Touch", "If checked, this will vibrate when touching the pad", false);
 
 	const int numSliders = 2;
 	const String sliderNames[numSliders] = { "Left","Right" };
@@ -50,8 +54,15 @@ LoupedeckModule::LoupedeckModule() :
 
 	for (int i = 0; i < numSliders; i++)
 	{
-		ColorParameter* c = sliderParamsCC.addColorParameter(sliderNames[i] + " Color", "Color for this slider", Colours::black);
+		ColorParameter* c = sliderParamsCC.addColorParameter(sliderNames[i] + " Slider Color", "Color for this slider", Colours::black);
 		sliderColors.add(c);
+
+		FileParameter* fc = sliderParamsCC.addFileParameter(sliderNames[i] + " Slider Image", "Image for this pad");
+		fc->fileTypeFilter = "*.png; *.jpg; *.jpeg";
+		sliderImages.add(fc);
+
+		StringParameter* sc = sliderParamsCC.addStringParameter(sliderNames[i] + " Slider Text", "Overlay text for this slider", "");
+		sliderTexts.add(sc);
 
 		BoolParameter* b = slidersCC.addBoolParameter(sliderNames[i] + " Pressed", "Is this slider pressed by at least one touch", false);
 		b->setControllableFeedbackOnly(true);
@@ -68,6 +79,7 @@ LoupedeckModule::LoupedeckModule() :
 		padColors.add(c);
 
 		FileParameter* fc = padParamsCC.addFileParameter("Pad " + String(i + 1) + " Image", "Image for this pad");
+		fc->fileTypeFilter = "*.png; *.jpg; *.jpeg";
 		padImages.add(fc);
 
 		StringParameter* sc = padParamsCC.addStringParameter("Pad " + String(i + 1) + " Text", "Overlay text for this pad", "");
@@ -117,6 +129,25 @@ LoupedeckModule::LoupedeckModule() :
 	serverPath->setValue(getLoupedeckServerPath());
 
 	defManager->clear();
+	defManager->add(CommandDefinition::createDef(this, "Pad", "Set Color", &LoupedeckCommand::create)->addParam("action", LoupedeckCommand::SET_COLOR)->addParam("screenTarget", LoupedeckCommand::PADS));
+	defManager->add(CommandDefinition::createDef(this, "Pad", "Set Image", &LoupedeckCommand::create)->addParam("action", LoupedeckCommand::SET_IMAGE)->addParam("screenTarget", LoupedeckCommand::PADS));
+	defManager->add(CommandDefinition::createDef(this, "Pad", "Set Text", &LoupedeckCommand::create)->addParam("action", LoupedeckCommand::SET_TEXT)->addParam("screenTarget", LoupedeckCommand::PADS));
+	
+	defManager->add(CommandDefinition::createDef(this, "Slider Left", "Set Color", &LoupedeckCommand::create)->addParam("action", LoupedeckCommand::SET_COLOR)->addParam("screenTarget", LoupedeckCommand::LEFT_SLIDER));
+	defManager->add(CommandDefinition::createDef(this, "Slider Left", "Set Image", &LoupedeckCommand::create)->addParam("action", LoupedeckCommand::SET_IMAGE)->addParam("screenTarget", LoupedeckCommand::LEFT_SLIDER));
+	defManager->add(CommandDefinition::createDef(this, "Slider Left", "Set Text", &LoupedeckCommand::create)->addParam("action", LoupedeckCommand::SET_TEXT)->addParam("screenTarget", LoupedeckCommand::LEFT_SLIDER));
+
+	defManager->add(CommandDefinition::createDef(this, "Slider Right", "Set Color", &LoupedeckCommand::create)->addParam("action", LoupedeckCommand::SET_COLOR)->addParam("screenTarget", LoupedeckCommand::RIGHT_SLIDER));
+	defManager->add(CommandDefinition::createDef(this, "Slider Right", "Set Image", &LoupedeckCommand::create)->addParam("action", LoupedeckCommand::SET_IMAGE)->addParam("screenTarget", LoupedeckCommand::RIGHT_SLIDER));;
+	defManager->add(CommandDefinition::createDef(this, "Slider Right", "Set Text", &LoupedeckCommand::create)->addParam("action", LoupedeckCommand::SET_TEXT)->addParam("screenTarget", LoupedeckCommand::RIGHT_SLIDER));
+
+	defManager->add(CommandDefinition::createDef(this, "Button", "Set Button Color", &LoupedeckCommand::create)->addParam("action", LoupedeckCommand::SET_COLOR)->addParam("screenTarget", LoupedeckCommand::BUTTONS));
+	defManager->add(CommandDefinition::createDef(this, "Button", "Set All Color", &LoupedeckCommand::create)->addParam("action", LoupedeckCommand::SET_ALL_COLOR)->addParam("screenTarget", LoupedeckCommand::BUTTONS));
+
+	defManager->add(CommandDefinition::createDef(this, "", "Set All Screen Color", &LoupedeckCommand::create)->addParam("action", LoupedeckCommand::SET_ALL_COLOR));
+	defManager->add(CommandDefinition::createDef(this, "", "Set Brightness", &LoupedeckCommand::create)->addParam("action", LoupedeckCommand::SET_BRIGHTNESS));
+	defManager->add(CommandDefinition::createDef(this, "", "Vibrate", &LoupedeckCommand::create)->addParam("action", LoupedeckCommand::VIBRATE));
+	defManager->add(CommandDefinition::createDef(this, "", "Refresh Screen", &LoupedeckCommand::create)->addParam("action", LoupedeckCommand::REFRESH_SCREEN));
 
 	moduleParams.addChildControllableContainer(&buttonParamsCC);
 	moduleParams.addChildControllableContainer(&sliderParamsCC);
@@ -128,6 +159,8 @@ LoupedeckModule::LoupedeckModule() :
 	valuesCC.addChildControllableContainer(&slidersCC);
 	valuesCC.addChildControllableContainer(&padsCC);
 
+
+	timerCallback(); //force setting server path
 }
 
 LoupedeckModule::~LoupedeckModule()
@@ -136,7 +169,6 @@ LoupedeckModule::~LoupedeckModule()
 
 void LoupedeckModule::dataReceived(const MemoryBlock& data)
 {
-	WebSocketClientModule::dataReceived(data);
 
 	Array<uint8> bytes((const uint8*)data.getData(), data.getSize());
 	uint8 id = bytes[0];
@@ -144,7 +176,7 @@ void LoupedeckModule::dataReceived(const MemoryBlock& data)
 	switch (id)
 	{
 	case 4:
-
+		return;
 		break;
 
 	case 5:
@@ -174,88 +206,78 @@ void LoupedeckModule::dataReceived(const MemoryBlock& data)
 	case 9:
 		processTouchData(bytes);
 		break;
-
 	}
+
+	WebSocketClientModule::dataReceived(data);
 }
 
 void LoupedeckModule::processTouchData(Array<uint8_t> data)
 {
 	bool touched = data[1] == 77;
 
-	int touchId = data[3];
+	int touchID = data[3];
 	int x = (data[4] << 8) | data[5];
 	int y = (data[6] << 8) | data[7];
 	//int pressure = data[8];
 
-	int btID = getPadIDForPos(Point<int>(x, y));
+	Point<int> curPos = Point<int>(x, y);
+
+	if (!touchPadMap.contains(touchID))
+	{
+		int pad = getPadIDForPos(curPos);
+		touchPadMap.set(touchID, pad);
+		posOnTouchMap.set(touchID, curPos);
+		if(pad >= 0) padsTouchPositions[pad]->setPoint(0, 0);
+	}
+
+	int curPad = touchPadMap[touchID] ;
+	Point<int> posOnTouch = posOnTouchMap[touchID];
 
 	if (touched)
 	{
-		if (posOnTouch.x < 0 && posOnTouch.y < 0)
-		{
-			posOnTouch.setXY(x, y);
-		}
-		else
-		{
-			btID = getPadIDForPos(posOnTouch);
-		}
-	}
-	else
-	{
-		btID = getPadIDForPos(posOnTouch);
-	}
-
-	if (touched)
-	{
-		if (btID == -1)
+		if (curPad == -1)
 		{
 			sliderTouches[0]->setValue(true);
 			sliderAbsolutes[0]->setValue(1 - (y / 270.0f));
 		}
-		else if (btID == -2)
+		else if (curPad == -2)
 		{
 			sliderTouches[1]->setValue(true);
 			sliderAbsolutes[1]->setValue(1 - (y / 270.0f));
 		}
 		else
 		{
-			if (!pads[btID - 1]->boolValue())
-			{
-				pads[btID - 1]->setValue(true);
-				padsTouchPositions[btID - 1]->setPoint(0, 0);
-			}
+			if (!pads[curPad]->boolValue()) pads[curPad]->setValue(true);
 			else
 			{
-				Point<float> diff = (Point<int>(x, y) - posOnTouch).toFloat() / Point<float>(460, 270);
-				padsTouchPositions[btID - 1]->setPoint(diff);
+				Point<float> diff = ((curPos - posOnTouch).toFloat() / Point<float>(460, 270));
+				padsTouchPositions[curPad]->setPoint(diff);
 			}
 		}
+
+		if(touchID == 0) touchPosition->setPoint(curPos.toFloat() / Point<float>(460, 270));
 	}
 	else
 	{
-		if (btID == -1) //slider1
-		{
-			sliderTouches[0]->setValue(false);
-		}
-		else if (btID == -2) //slider2
-		{
-			sliderTouches[1]->setValue(false);
-		}
-		else //middle
-		{
-			int btID = getPadIDForPos(posOnTouch);
-			if (btID >= 1) pads[btID - 1]->setValue(false);
-		}
-		posOnTouch.setXY(-1, -1);
+		if (curPad == -1)  sliderTouches[0]->setValue(false);
+		else if (curPad == -2) sliderTouches[1]->setValue(false);
+		else  pads[curPad]->setValue(false);
+
+		touchPadMap.remove(touchID);
+		posOnTouchMap.remove(touchID);
 	}
-
-
-
 }
 
 void LoupedeckModule::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c)
 {
-	if (cc == &moduleParams)
+	if (c == isConnected)
+	{
+		for (int i = 0; i < pads.size(); i++)
+		{
+			updatePadContent(i);
+			refreshScreen(2);
+		}
+	}else if (cc == &moduleParams)
 	{
 		if (c == brightness)
 		{
@@ -276,9 +298,42 @@ void LoupedeckModule::onControllableFeedbackUpdateInternal(ControllableContainer
 			int id = -1;
 			if (ColorParameter* colP = dynamic_cast<ColorParameter*>(c)) id = padColors.indexOf(colP);
 			else if (FileParameter* fp = dynamic_cast<FileParameter*>(c)) id = padImages.indexOf(fp);
-			else if (StringParameter* tp = dynamic_cast<FileParameter*>(c)) id = padTexts.indexOf(tp);
+			else if (StringParameter* tp = dynamic_cast<StringParameter*>(c)) id = padTexts.indexOf(tp);
 
-			if (id != -1) updatePadContent(id+1); //1-based
+			if (id != -1) updatePadContent(id); //1-based
+		}
+		else if (c->parentContainer == &sliderParamsCC)
+		{
+			int id = -1;
+			if (ColorParameter* colP = dynamic_cast<ColorParameter*>(c)) id = sliderColors.indexOf(colP);
+			else if (FileParameter* fp = dynamic_cast<FileParameter*>(c)) id = sliderImages.indexOf(fp);
+			else if (StringParameter* tp = dynamic_cast<StringParameter*>(c)) id = sliderTexts.indexOf(tp);
+
+			if (id != -1) updateSliderContent(id); //1-based
+		}
+	}
+	else if (cc == &valuesCC)
+	{
+		if (c->parentContainer == &padsCC)
+		{
+			if (BoolParameter* p = dynamic_cast<BoolParameter*>(c))
+			{
+				int index = pads.indexOf(p);
+				if (index >= 0) {
+					if (vibrateOnTouch->boolValue() && p->boolValue()) vibrate(50);
+					if (highlightOnTouch->boolValue()) updatePadContent(index);
+				}
+			}
+		}else if (c->parentContainer == &slidersCC)
+		{
+			if (BoolParameter* p = dynamic_cast<BoolParameter*>(c))
+			{
+				int index = sliderTouches.indexOf(p);
+				if (index >= 0) {
+					if (vibrateOnTouch->boolValue() && p->boolValue()) vibrate(50);
+					if (highlightOnTouch->boolValue()) updateSliderContent(index);
+				}
+			}
 		}
 	}
 }
@@ -294,41 +349,86 @@ void LoupedeckModule::sendLoupedeckCommand(LDCommand command, Array<uint8> data)
 	sendBytes(dataToSend);
 }
 
-void LoupedeckModule::updatePadContent(int padID)
+void LoupedeckModule::updatePadContent(int padID, bool refresh)
 {
 	Rectangle<int> r = getPadCoords(padID).translated(-60, 0);
 
-	LDScreen screen = screens[2];
+	Colour c = padColors[padID]->getColor();
+	if (pads[padID]->boolValue() && highlightOnTouch->boolValue()) c = c.brighter();
+	setScreenContent(2, r, ImageCache::getFromFile(padImages[padID]->getFile()), c, padTexts[padID]->stringValue(), refresh);
+}
 
-	//updateScreenImage(, imageBytes, { x = x, y = y, w = 90,h = 90 }, callbackFn)
+void LoupedeckModule::updateSliderContent(int sliderID, bool refresh)
+{
+	Rectangle<int> r(0, 0, 60, 270);
+	Colour c = sliderColors[sliderID]->getColor();
+	if (sliderTouches[sliderID]->boolValue() && highlightOnTouch->boolValue()) c = c.brighter();
+	setScreenContent(sliderID, r, ImageCache::getFromFile(sliderImages[sliderID]->getFile()), c, sliderTexts[sliderID]->stringValue(), refresh);
+}
 
-	Array<uint8> data = { (screen.id >> 8) & 0xFF, screen.id & 0xFF, 
-		(r.getX() >> 8) & 0xFF, r.getX() & 0xFF, 
-		(r.getY() >> 8) & 0xFF, r.getY() & 0xFF, 
-		(r.getWidth() >> 8) & 0xFF, r.getWidth() & 0xFF, 
-		(r.getHeight() >> 8) & 0xFF, r.getHeight() & 0xFF
+void LoupedeckModule::setScreenContent(int screenIndex, const Rectangle<int>& r, const Image& img, const Colour& color, const String& text, bool refresh)
+{
+	int w = r.getWidth();
+	int h = r.getHeight();
+
+	Image iconImage(Image::RGB, w, h, true);
+	Graphics g(iconImage);
+	g.setColour(img.isNull() ? color : Colours::black);
+	g.fillAll();
+	if (img.isValid())
+	{
+		g.drawImage(img, g.getClipBounds().toFloat());
+		g.setColour(color.withMultipliedAlpha(.5f));
+		g.fillAll();
+	}
+
+	if (text.isNotEmpty())
+	{
+		MessageManagerLock mmLock;
+		g.setColour(color.getPerceivedBrightness() > .5f ? Colours::black : Colours::white);
+		g.drawFittedText(text, g.getClipBounds().reduced(5), Justification::centred, 5);
+	}
+
+	Image::BitmapData bitmapData(iconImage, Image::BitmapData::ReadWriteMode::readOnly);
+
+	LDScreen screen = screens[screenIndex];
+	
+	Array<uint8> data = { (screen.id >> 8) & 0xFF, screen.id & 0xFF,
+		(r.getX() >> 8) & 0xFF, r.getX() & 0xFF,
+		(r.getY() >> 8) & 0xFF, r.getY() & 0xFF,
+		(r.getWidth() >> 8) & 0xFF, w & 0xFF,
+		(r.getHeight() >> 8) & 0xFF, h & 0xFF
 		,0x00
 	};
 
-	Colour bgColor = padColors[padID-1]->getColor();
+	data.resize(r.getWidth() * r.getHeight() * 2 + 11);
 
-	for (int x = 0; x< r.getWidth(); x++)
+	for (int i = 0; i < h; i++)
 	{
-		for (int y = 0; y < r.getHeight(); y++)
+		for (int j = 0; j < w; j++)
 		{
-			int r = bgColor.getRed();
-			int g = bgColor.getGreen();
-			int b = bgColor.getBlue();
+			Colour c = iconImage.getPixelAt(j, i);
+			uint8 r = c.getRed();
+			uint8 g = c.getGreen();
+			uint8 b = c.getBlue();
+
 			short rgb565 = (((r & 0xf8) << 8) + ((g & 0xfc) << 3) + (b >> 3));
 
-			data.add((rgb565 >> 8) & 0xFF);
-			data.add(rgb565 & 0xFF);
+			int pixIndex = i * w + j;
+			int byteIndex = 11 + pixIndex * 2;
+			data.set(byteIndex, ((rgb565 >> 8) & 0xFF));
+			data.set(byteIndex + 1, (rgb565 & 0xFF));
 		}
 	}
 
 	sendLoupedeckCommand(ScreenImage, data);
+	if (refresh) refreshScreen(screenIndex);
+}
 
-	sendLoupedeckCommand(RefreshScreen, {(screen.id >> 8) & 0xFF, screen.id & 0xFF});
+void LoupedeckModule::refreshScreen(int screenIndex)
+{
+	short id = screens[screenIndex].id;
+	sendLoupedeckCommand(RefreshScreen, { (id >> 8) & 0xFF, id & 0xFF });
 }
 
 int LoupedeckModule::getPadIDForPos(Point<int> pos)
@@ -338,15 +438,20 @@ int LoupedeckModule::getPadIDForPos(Point<int> pos)
 
 	int tx = floorf((pos.x - 60) / 90);
 	int ty = floor(pos.y / 90);
-	return (tx + ty * 4) + 1; //1 based
+	return (tx + ty * 4); //0 based
 }
 
-Rectangle<int> LoupedeckModule::getPadCoords(int buttonID)
+Rectangle<int> LoupedeckModule::getPadCoords(int padID)
 {
 	//1 based
-	int tx = (buttonID - 1) % 4;
-	int ty = floorf((buttonID - 1) / 4);
+	int tx = padID % 4;
+	int ty = floorf(padID / 4);
 	return Rectangle<int>(60 + tx * 90, ty * 90, 90, 90);
+}
+
+void LoupedeckModule::vibrate(int vibrationIndex)
+{
+	sendLoupedeckCommand(Vibrate, { vibrationIndex });
 }
 
 String LoupedeckModule::getLoupedeckServerPath() const
@@ -385,3 +490,5 @@ void LoupedeckModule::timerCallback()
 
 	WebSocketClientModule::timerCallback();
 }
+
+#pragma warning(pop)

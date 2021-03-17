@@ -263,6 +263,9 @@
     <Filter Include="Chataigne\Source\Module\modules\common">
       <UniqueIdentifier>{E89D3705-9633-01AF-C6F5-82B057BCA7D4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\controller\loupedeck\commands">
+      <UniqueIdentifier>{DE84E9F5-4E88-A3AA-C6E5-FF2B63A687D0}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Chataigne\Source\Module\modules\controller\loupedeck">
       <UniqueIdentifier>{85973C59-52A4-8089-A406-3CF2DE0CCF2A}</UniqueIdentifier>
     </Filter>
@@ -1836,6 +1839,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\common\ui\EnablingNetworkControllableContainerEditor.cpp">
       <Filter>Chataigne\Source\Module\modules\common\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Module\modules\controller\loupedeck\commands\LoupedeckCommands.cpp">
+      <Filter>Chataigne\Source\Module\modules\controller\loupedeck\commands</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\controller\loupedeck\LoupedeckModule.cpp">
       <Filter>Chataigne\Source\Module\modules\controller\loupedeck</Filter>
@@ -5795,6 +5801,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\common\ui\EnablingNetworkControllableContainerEditor.h">
       <Filter>Chataigne\Source\Module\modules\common\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Module\modules\controller\loupedeck\commands\LoupedeckCommands.h">
+      <Filter>Chataigne\Source\Module\modules\controller\loupedeck\commands</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\controller\loupedeck\LoupedeckModule.h">
       <Filter>Chataigne\Source\Module\modules\controller\loupedeck</Filter>

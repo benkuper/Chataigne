@@ -806,6 +806,12 @@
           </GROUP>
           <GROUP id="{A597C064-C7DE-23AD-F74A-2E029F90FCEA}" name="controller">
             <GROUP id="{0BC48C1A-AFCC-56DC-9F76-56DEF83E7B10}" name="loupedeck">
+              <GROUP id="{38A15E82-C3AD-94A4-CE38-06056BF89907}" name="commands">
+                <FILE id="S3sSco" name="LoupedeckCommands.cpp" compile="0" resource="0"
+                      file="Source/Module/modules/controller/loupedeck/commands/LoupedeckCommands.cpp"/>
+                <FILE id="bIOPff" name="LoupedeckCommands.h" compile="0" resource="0"
+                      file="Source/Module/modules/controller/loupedeck/commands/LoupedeckCommands.h"/>
+              </GROUP>
               <FILE id="ZFRhI4" name="LoupedeckModule.cpp" compile="0" resource="0"
                     file="Source/Module/modules/controller/loupedeck/LoupedeckModule.cpp"/>
               <FILE id="qcckZ6" name="LoupedeckModule.h" compile="0" resource="0"

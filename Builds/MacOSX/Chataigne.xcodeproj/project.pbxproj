@@ -190,6 +190,7 @@
 		197076D5A22E98797D3FB07B /* ../../Resources/Modules/KinectV2.png */ /* KinectV2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = KinectV2.png; path = ../../Resources/Modules/KinectV2.png; sourceTree = SOURCE_ROOT; };
 		197C3A8890035B180289E60E /* ../../Source/Common/Processor/Mapping/Filter/filters/number/InverseFilter.h */ /* InverseFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = InverseFilter.h; path = ../../Source/Common/Processor/Mapping/Filter/filters/number/InverseFilter.h; sourceTree = SOURCE_ROOT; };
 		1991D78FED2DCE9A56B1220B /* ../../Source/Module/Community/CommunityModuleManager.cpp */ /* CommunityModuleManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CommunityModuleManager.cpp; path = ../../Source/Module/Community/CommunityModuleManager.cpp; sourceTree = SOURCE_ROOT; };
+		19E9399CD34EDAE0468721D9 /* ../../Source/Module/modules/controller/loupedeck/commands/LoupedeckCommands.h */ /* LoupedeckCommands.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LoupedeckCommands.h; path = ../../Source/Module/modules/controller/loupedeck/commands/LoupedeckCommands.h; sourceTree = SOURCE_ROOT; };
 		1B9A73C8CB3C33D68C682295 /* ../../Source/Module/modules/common/streaming/commands/SendStreamRawDataCommand.h */ /* SendStreamRawDataCommand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SendStreamRawDataCommand.h; path = ../../Source/Module/modules/common/streaming/commands/SendStreamRawDataCommand.h; sourceTree = SOURCE_ROOT; };
 		1BD724662F7C81A7DBEDBA66 /* ../../Source/Module/modules/system/os/commands/WakeOnLanCommand.h */ /* WakeOnLanCommand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = WakeOnLanCommand.h; path = ../../Source/Module/modules/system/os/commands/WakeOnLanCommand.h; sourceTree = SOURCE_ROOT; };
 		1BFA6EEFCE2A4D8498AB36DA /* ../../Source/Module/modules/common/streaming/commands/SendStreamValuesCommand.cpp */ /* SendStreamValuesCommand.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SendStreamValuesCommand.cpp; path = ../../Source/Module/modules/common/streaming/commands/SendStreamValuesCommand.cpp; sourceTree = SOURCE_ROOT; };
@@ -849,6 +850,7 @@
 		FA28A6E3D992D8E5E14F097E /* ../../Source/Module/modules/controller/streamdeck/commands/StreamDeckCommand.cpp */ /* StreamDeckCommand.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = StreamDeckCommand.cpp; path = ../../Source/Module/modules/controller/streamdeck/commands/StreamDeckCommand.cpp; sourceTree = SOURCE_ROOT; };
 		FA4C14B931E890BB595FF1AA /* ../../Source/TimeMachine/Sequence/ChataigneSequence.h */ /* ChataigneSequence.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ChataigneSequence.h; path = ../../Source/TimeMachine/Sequence/ChataigneSequence.h; sourceTree = SOURCE_ROOT; };
 		FB167DE6387AEA2CF355751D /* ../../Source/Module/modules/audio/libs/pitch/PitchYIN.h */ /* PitchYIN.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PitchYIN.h; path = ../../Source/Module/modules/audio/libs/pitch/PitchYIN.h; sourceTree = SOURCE_ROOT; };
+		FB7AAA10465529C282C2101E /* ../../Source/Module/modules/controller/loupedeck/commands/LoupedeckCommands.cpp */ /* LoupedeckCommands.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LoupedeckCommands.cpp; path = ../../Source/Module/modules/controller/loupedeck/commands/LoupedeckCommands.cpp; sourceTree = SOURCE_ROOT; };
 		FC4F8E36F23BD11587DB882F /* ../../Source/Module/modules/controller/wiimote/lib/wiiuse/motion_plus.c */ /* motion_plus.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = motion_plus.c; path = ../../Source/Module/modules/controller/wiimote/lib/wiiuse/motion_plus.c; sourceTree = SOURCE_ROOT; };
 		FC76F2E50BCEC7920127A00D /* ../../Source/TimeMachine/Sequence/layers/mapping/ui/MappingLayerEditor.cpp */ /* MappingLayerEditor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MappingLayerEditor.cpp; path = ../../Source/TimeMachine/Sequence/layers/mapping/ui/MappingLayerEditor.cpp; sourceTree = SOURCE_ROOT; };
 		FD7380F983823A057E46080D /* ../../Source/Module/modules/osc/resolume/commands/ResolumeBaseCommand.h */ /* ResolumeBaseCommand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ResolumeBaseCommand.h; path = ../../Source/Module/modules/osc/resolume/commands/ResolumeBaseCommand.h; sourceTree = SOURCE_ROOT; };
@@ -1485,6 +1487,15 @@
 				18BEE3D308EBE1EB8F857535,
 			);
 			name = Output;
+			sourceTree = "<group>";
+		};
+		3FE6542C6A626D710BBB340F /* commands */ = {
+			isa = PBXGroup;
+			children = (
+				FB7AAA10465529C282C2101E,
+				19E9399CD34EDAE0468721D9,
+			);
+			name = commands;
 			sourceTree = "<group>";
 		};
 		4399A76234750612FB4F8405 /* ui */ = {
@@ -2620,6 +2631,7 @@
 		C06277AE11620744E584C6AC /* loupedeck */ = {
 			isa = PBXGroup;
 			children = (
+				3FE6542C6A626D710BBB340F,
 				1F3CEEAEBD28A89F449A06F3,
 				D1E111CDD35EEAB543675AFB,
 			);

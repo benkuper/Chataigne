@@ -20,7 +20,7 @@ public:
     enum LDCommand
     {
         BacklightLevel = 0x0409,
-        Vibrate =  0x04B1,
+        Vibrate =  0x041B,
         ButtonColor = 0x0702,
         ScreenImage = 0xFF10,
         RefreshScreen = 0x050F
@@ -31,6 +31,8 @@ public:
     //params
     FloatParameter * brightness;
     FloatParameter* knobSensitivity;
+    BoolParameter* highlightOnTouch;
+    BoolParameter* vibrateOnTouch;
 
     ControllableContainer buttonParamsCC;
     Array<ColorParameter*> buttonColors;
@@ -58,8 +60,8 @@ public:
     ControllableContainer touchScreenCC;
     
     Point2DParameter* touchPosition;
-    Point<int> posOnTouch;
 
+    HashMap<int, Point<int>> posOnTouchMap;
     HashMap<int, int> touchPadMap;
 
     ControllableContainer slidersCC;
@@ -90,17 +92,23 @@ public:
 
     void dataReceived(const MemoryBlock& data) override;
     void processTouchData(Array<uint8_t> data);
+
     void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) override;
 
     void sendLoupedeckCommand(LDCommand command, Array<uint8> data);
 
 
-    void updatePadContent(int padID);
+    void updatePadContent(int padID, bool refresh = true);
+    void updateSliderContent(int sliderID, bool refresh = true);
+    void setScreenContent(int screenIndex, const Rectangle<int>& r, const Image& img = Image(), const Colour& color = Colours::black, const String& text= "", bool refresh = true);
+    void refreshScreen(int screenIndex);
+
 
     int getPadIDForPos(Point<int> pos);
     Rectangle<int> getPadCoords(int buttonID);
 
-    //values
+    void vibrate(int vibrationIndex = 1);
+
     String getLoupedeckServerPath() const;
     virtual void timerCallback() override;
 

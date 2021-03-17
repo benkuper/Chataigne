@@ -87,6 +87,7 @@
 #include "modules/controller/streamdeck/models/StreamDeckXL.h"
 
 #include "modules/controller/loupedeck/LoupedeckModule.h"
+#include "modules/controller/loupedeck/commands/LoupedeckCommands.h"
 
 #include "modules/controller/wiimote/WiimotePairUtil.h"
 #include "modules/controller/wiimote/WiimoteManager.h"
