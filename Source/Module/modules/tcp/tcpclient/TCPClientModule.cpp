@@ -57,7 +57,7 @@ void TCPClientModule::initThread()
 		senderIsConnected->setValue(false);
 	}
 
-	while (!senderIsConnected->boolValue())
+	while (!senderIsConnected->boolValue() && !threadShouldExit())
 	{
 		String targetHost = useLocal->boolValue() ? "127.0.0.1" : remoteHost->stringValue();
 		bool result = sender.connect(targetHost, remotePort->intValue(), 200);
@@ -74,6 +74,8 @@ void TCPClientModule::initThread()
 			String s = "Could not connect to " + remoteHost->stringValue() + ":" + remotePort->stringValue();
 			if (sendCC->getWarningMessage().isEmpty()) NLOGERROR(niceName, s);
 			sendCC->setWarningMessage(s);
+
+			wait(1000);
 		}
 	}
 }
@@ -156,6 +158,7 @@ void TCPClientModule::runInternal()
 	{
 		senderIsConnected->setValue(false);
 		wait(1000);
+		if (threadShouldExit()) return;
 		initThread();
 	}
 }
