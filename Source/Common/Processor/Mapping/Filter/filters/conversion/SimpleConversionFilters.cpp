@@ -1,3 +1,4 @@
+#include "SimpleConversionFilters.h"
 /*
   ==============================================================================
 
@@ -51,6 +52,8 @@ Parameter* SimpleConversionFilter::setupSingleParameterInternal(Parameter* sourc
 		{
 			retargetComponent->addOption(valueNames[i], i, true);
 		}
+
+		retargetComponent->setValueWithData(ghostOptions.getProperty("retarget", valueNames[0]));
 	}
 
 	return p;
@@ -98,7 +101,22 @@ MappingFilter::ProcessResult SimpleConversionFilter::processSingleParameterInter
 	return CHANGED;
 }
 
+var SimpleConversionFilter::getJSONData()
+{
+	var data = MappingFilter::getJSONData();
 
+	ghostOptions = var(new DynamicObject());
+	ghostOptions.getDynamicObject()->setProperty("retarget", retargetComponent->getValueData());
+
+	data.getDynamicObject()->setProperty("ghostOptions", ghostOptions);
+	return data;
+}
+
+void SimpleConversionFilter::loadJSONDataItemInternal(var data)
+{
+	MappingFilter::loadJSONDataItemInternal(data);
+	ghostOptions = data.getProperty("ghostOptions", var());
+}
 
 ToFloatFilter::ToFloatFilter(var params, Multiplex* multiplex) :
 	SimpleConversionFilter(getTypeString(), params, FloatParameter::getTypeStringStatic(), multiplex)
@@ -227,6 +245,13 @@ ToColorFilter::~ToColorFilter()
 {
 }
 
+var ToColorFilter::getJSONData()
+{
+	var data = SimpleConversionFilter::getJSONData();
+	data.getProperty("ghostOptions",var()).getDynamicObject()->setProperty("color", baseColor->getValue());
+	return data;
+}
+
 Parameter* ToColorFilter::setupSingleParameterInternal(Parameter* sourceParam, int multiplexIndex)
 {
 	Parameter* p = SimpleConversionFilter::setupSingleParameterInternal(sourceParam, multiplexIndex);
@@ -252,7 +277,7 @@ Parameter* ToColorFilter::setupSingleParameterInternal(Parameter* sourceParam, i
 
 	case TARGET:
 		retargetComponent->addOption("Hue", HUE)->addOption("Saturation", SAT)->addOption("Brightness", VAL);
-		retargetComponent->setValueWithData(HUE);
+		retargetComponent->setValueWithData(ghostOptions.getProperty("retarget", HUE));
 		if(baseColor != nullptr) baseColor->hideInEditor = false;
 		break;
             
@@ -264,7 +289,6 @@ Parameter* ToColorFilter::setupSingleParameterInternal(Parameter* sourceParam, i
 
 	if (ghostOptions.isObject())
 	{
-		retargetComponent->setValueWithData(ghostOptions.getProperty("retarget",HUE));
 		if(ghostOptions.hasProperty("color")) baseColor->setValue(ghostOptions.getDynamicObject()->getProperty("color"));
 		ghostOptions = var();
 	}
@@ -338,23 +362,6 @@ MappingFilter::ProcessResult ToColorFilter::processSingleParameterInternal(Param
 	return CHANGED;
 }
 
-var ToColorFilter::getJSONData()
-{
-	var data = SimpleConversionFilter::getJSONData();
-	
-	ghostOptions = var(new DynamicObject());
-	ghostOptions.getDynamicObject()->setProperty("retarget", retargetComponent->getValueData());
-	ghostOptions.getDynamicObject()->setProperty("color", baseColor->getValue());
-
-	data.getDynamicObject()->setProperty("ghostOptions", ghostOptions);
-	return data;
-}
-
-void ToColorFilter::loadJSONDataItemInternal(var data)
-{
-	SimpleConversionFilter::loadJSONDataItemInternal(data);
-	ghostOptions = data.getProperty("ghostOptions", var());
-}
 
 ToBooleanFilter::ToBooleanFilter(var params, Multiplex* multiplex) :
 	SimpleConversionFilter(getTypeString(), params, BoolParameter::getTypeStringStatic(), multiplex)

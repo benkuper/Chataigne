@@ -20,6 +20,12 @@ public:
 	EnumParameter * retargetComponent;
 	var retargetValues; //ghosting
 	String outTypeString;
+
+
+	var ghostOptions;
+
+	var getJSONData() override;
+	void loadJSONDataItemInternal(var data) override;
 	
 	enum TransferType { DIRECT, EXTRACT, TARGET};
 	TransferType transferType;
@@ -133,13 +139,11 @@ public:
 	enum RetargetMode { HUE = -1, SAT = -2, VAL = -3};
 	ColorParameter* baseColor;
 
-	var ghostOptions;
+	var getJSONData() override;
 
 	Parameter* setupSingleParameterInternal(Parameter* sourceParam, int multiplexIndex) override;
 	ProcessResult processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex) override;
 
-	var getJSONData() override;
-	void loadJSONDataItemInternal(var data) override;
 
 	String getTypeString() const override { return "Convert To Color"; }
 
