@@ -220,7 +220,8 @@ void CVCommand::triggerInternal(int multiplexIndex)
 					break;
 
 				case INVERSE:
-					p->setNormalizedValue(1 - (float)val / ((float)p->maximumValue - (float)p->minimumValue));
+					if (p->type == Parameter::BOOL)  p->setValue(!p->boolValue());
+					else p->setNormalizedValue(1 - (float)val / ((float)p->maximumValue - (float)p->minimumValue));
 					break;
 
 				case ADD:
