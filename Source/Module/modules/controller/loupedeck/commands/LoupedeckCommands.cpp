@@ -25,7 +25,7 @@ LoupedeckCommand::LoupedeckCommand(LoupedeckModule* _module, CommandContext cont
 	}
 	else if (screenTarget == BUTTONS && action == SET_COLOR)
 	{
-		row = addIntParameter("Button", "The button to change", 0, 0, 7);
+		column = addIntParameter("Button", "The button to change", 0, 0, 7);
 	}
 
 	switch (action)
@@ -141,12 +141,12 @@ LoupedeckCommand::~LoupedeckCommand()
 
 void LoupedeckCommand::triggerInternal(int multiplexIndex)
 {
-	int r = row != nullptr ? row->intValue() - 1 : 0;
-	int c = column != nullptr ? column->intValue() - 1 : 0;
-	int index = screenTarget == PADS ? r * 4 + c : (int)screenTarget;
+	int r = row != nullptr ? (int)getLinkedValue(row, multiplexIndex) - 1 : 0;
+	int c = column != nullptr ? (int)getLinkedValue(column, multiplexIndex) - 1 : 0;
+
+	int index = screenTarget == PADS ? r * 4 + c : screenTarget == BUTTONS? c+1 : (int)screenTarget;
 
 	var val = getLinkedValue(valueParam, multiplexIndex);
-
 
 	switch (action)
 	{
