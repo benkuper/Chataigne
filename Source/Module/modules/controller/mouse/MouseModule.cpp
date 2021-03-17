@@ -113,6 +113,8 @@ void MouseModule::setButtonClick(int buttonID)
 
 void MouseModule::sendButtonEvent(int buttonEvent)
 {
+	if (!enabled->boolValue()) return;
+
 #if JUCE_WINDOWS
 	INPUT    Input = { 0 };
 	// left down 
@@ -127,6 +129,8 @@ void MouseModule::sendButtonEvent(int buttonEvent)
 
 void MouseModule::mouseDown(const MouseEvent& e)
 {
+	if (!enabled->boolValue()) return;
+	
 	inActivityTrigger->trigger();
 	leftButtonDown->setValue(e.mods.isLeftButtonDown());
 	middleButtonDown->setValue(e.mods.isMiddleButtonDown());
@@ -136,7 +140,9 @@ void MouseModule::mouseDown(const MouseEvent& e)
 
 void MouseModule::mouseUp(const MouseEvent& e)
 {
-	inActivityTrigger->trigger(); 
+	if (!enabled->boolValue()) return;
+	
+	inActivityTrigger->trigger();
 	leftButtonDown->setValue(false);
 	middleButtonDown->setValue(false);
 	rightButtonDown->setValue(false);
@@ -160,6 +166,8 @@ void MouseModule::onControllableFeedbackUpdateInternal(ControllableContainer* cc
 
 void MouseModule::updateMouseInfos()
 {
+	if (!enabled->boolValue()) return;
+
 	Point<float> pos = Desktop::getInstance().getMainMouseSource().getScreenPosition();
 	absolutePosition->setPoint(pos);
 
