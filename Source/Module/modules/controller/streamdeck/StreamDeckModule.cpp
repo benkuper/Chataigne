@@ -46,7 +46,7 @@ StreamDeckModule::StreamDeckModule(const String& name) :
 
 	defManager->add(CommandDefinition::createDef(this, "", "Set Color", &StreamDeckCommand::create)->addParam("action", StreamDeckCommand::SET_COLOR));
 	defManager->add(CommandDefinition::createDef(this, "", "Set Image", &StreamDeckCommand::create)->addParam("action", StreamDeckCommand::SET_IMAGE));
-	defManager->add(CommandDefinition::createDef(this, "", "Set All", &StreamDeckCommand::create)->addParam("action", StreamDeckCommand::SET_ALL_COLOR));
+	defManager->add(CommandDefinition::createDef(this, "", "Set All Color", &StreamDeckCommand::create)->addParam("action", StreamDeckCommand::SET_ALL_COLOR));
 	defManager->add(CommandDefinition::createDef(this, "", "Set Brightness", &StreamDeckCommand::create)->addParam("action", StreamDeckCommand::SET_BRIGHTNESS));
 
 
