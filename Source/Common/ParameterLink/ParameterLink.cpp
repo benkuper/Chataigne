@@ -369,15 +369,18 @@ void ParameterLink::loadJSONData(var data)
 
 	if (!data.isObject() || !isLinkable)  return;
 	if (linkType == MAPPING_INPUT) mappingValueIndex = data.getProperty("mappingValueIndex", 0);
-	else if (linkType == MULTIPLEX_LIST)
+	else if (isMultiplexed())
 	{
-		setLinkedList(multiplex->listManager.getItemWithName(data.getProperty("list", "")));
-	}
-	else if (linkType == CV_PRESET_PARAM)
-	{
-		CVPresetMultiplexList* pList = dynamic_cast<CVPresetMultiplexList*>(multiplex->listManager.getItemWithName(data.getProperty("list", "")));
-		String paramName = data.getProperty("presetParamName", "");
-		setLinkedPresetParam(pList, paramName);
+		if (linkType == MULTIPLEX_LIST)
+		{
+			setLinkedList(multiplex->listManager.getItemWithName(data.getProperty("list", "")));
+		}
+		else if (linkType == CV_PRESET_PARAM)
+		{
+			CVPresetMultiplexList* pList = dynamic_cast<CVPresetMultiplexList*>(multiplex->listManager.getItemWithName(data.getProperty("list", "")));
+			String paramName = data.getProperty("presetParamName", "");
+			setLinkedPresetParam(pList, paramName);
+		}
 	}
 }
 
@@ -537,7 +540,12 @@ void ParamLinkContainer::loadJSONDataInternal(var data)
 			pLink->loadJSONData(ghostData.getProperty(pLink->parameter->shortName, var()));
 			ghostData.getDynamicObject()->removeProperty(pLink->parameter->shortName);
 		}
+		else
+		{
+			pLink->setLinkType(ParameterLink::NONE);
+		}
 	}
+
 }
 
 InspectableEditor* ParamLinkContainer::getEditor(bool isRoot)
