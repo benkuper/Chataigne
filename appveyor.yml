@@ -36,8 +36,8 @@ after_build:
 
     {
         echo "Push debug pdb"
-         cd C:\projects\chataigne\Binaries\CI\App
-         cp Chataigne.pdb C:\projects\chataigne\Chataigne-$env:SUFFIX.pdb
+          cd C:\projects\chataigne\Builds\VisualStudio2019_CI\x64\Debug\App
+          cp Chataigne.pdb C:\projects\chataigne\Chataigne-$env:SUFFIX.pdb
     }
 artifacts:
 - path: Chataigne-win-x64-*.exe
