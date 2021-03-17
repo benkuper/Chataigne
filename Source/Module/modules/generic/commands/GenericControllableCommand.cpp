@@ -90,7 +90,23 @@ void GenericControllableCommand::triggerInternal(int multiplexIndex)
 	{
 		if (value == nullptr) return;
 
-		if (c->type != Parameter::TRIGGER) ((Parameter *)c)->setValue(getLinkedValue(value, multiplexIndex));
+		if (c->type != Parameter::TRIGGER)
+		{
+			var v = getLinkedValue(value, multiplexIndex);
+			if (EnumParameter * ep = dynamic_cast<EnumParameter *>(c))
+			{
+				if (v.isInt() || v.isDouble())
+				{
+					if ((int)v < ep->enumValues.size()) ep->setValueWithKey((ep->enumValues[v]->key));
+				}
+				else if (v.isString()) ep->setValueWithKey(v);
+				else ep->setValueWithData(v);
+			}
+			else
+			{
+				((Parameter*)c)->setValue(v);
+			}
+		}
 	}
 	else if (action == TRIGGER)
 	{
