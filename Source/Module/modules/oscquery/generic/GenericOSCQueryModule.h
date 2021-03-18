@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    GenericOSCQueryModule.h
-    Created: 28 Feb 2019 10:33:17pm
-    Author:  bkupe
+	GenericOSCQueryModule.h
+	Created: 28 Feb 2019 10:33:17pm
+	Author:  bkupe
 
   ==============================================================================
 */
@@ -14,7 +14,7 @@ class GenericOSCQueryValueContainer :
 	public ControllableContainer
 {
 public:
-	GenericOSCQueryValueContainer(const String &name);
+	GenericOSCQueryValueContainer(const String& name);
 	~GenericOSCQueryValueContainer();
 
 	BoolParameter* enableListen;
@@ -27,11 +27,11 @@ class OSCQueryOutput :
 	public EnablingControllableContainer
 {
 public:
-	OSCQueryOutput(GenericOSCQueryModule * module);
+	OSCQueryOutput(GenericOSCQueryModule* module);
 	~OSCQueryOutput();
 
-	GenericOSCQueryModule * module;
-	InspectableEditor * getEditor(bool isRoot) override;
+	GenericOSCQueryModule* module;
+	InspectableEditor* getEditor(bool isRoot) override;
 };
 
 class GenericOSCQueryModule :
@@ -40,22 +40,22 @@ class GenericOSCQueryModule :
 	public Thread
 {
 public:
-	GenericOSCQueryModule(const String &name = "OSCQuery",int defaultRemotePort = 5678);
+	GenericOSCQueryModule(const String& name = "OSCQuery", int defaultRemotePort = 5678);
 	virtual ~GenericOSCQueryModule();
 
 	const Identifier dataStructureEventId = "dataStructureEvent";
 
-	Trigger * syncTrigger;
+	Trigger* syncTrigger;
 	BoolParameter* keepValuesOnSync;
 	StringParameter* serverName;
 	Trigger* listenAllTrigger;
 
 	std::unique_ptr<OSCQueryOutput> sendCC;
-	BoolParameter * useLocal;
-	StringParameter * remoteHost;
-	IntParameter * remotePort;
+	BoolParameter* useLocal;
+	StringParameter* remoteHost;
+	IntParameter* remotePort;
 	IntParameter* remoteOSCPort;
-	
+
 	OSCSender sender;
 	std::unique_ptr<SimpleWebSocketClient> wsClient;
 	bool hasListenExtension;
@@ -67,26 +67,26 @@ public:
 	void setupWSClient();
 
 	void sendOSCMessage(OSCMessage m);
-	void sendOSCForControllable(Controllable * c);
-	
+	void sendOSCForControllable(Controllable* c);
+
 	//Script
-	static var sendOSCFromScript(const var::NativeFunctionArgs &args);
-	
-	static OSCArgument varToArgument(const var &v);
+	static var sendOSCFromScript(const var::NativeFunctionArgs& args);
+
+	static OSCArgument varToArgument(const var& v);
 
 	virtual void syncData();
-	virtual void createTreeFromData(var data);
-	virtual void fillContainerFromData(ControllableContainer * cc, var data);
-	virtual Controllable * createControllableFromData(StringRef name, var data);
+	virtual void updateTreeFromData(var data);
+	virtual void updateContainerFromData(ControllableContainer* cc, var data);
+	virtual void createOrUpdateControllableFromData(ControllableContainer * parentCC, Controllable* c, StringRef name, var data);
 
 	void updateListenToContainer(GenericOSCQueryValueContainer* gcc);
 
-	virtual void onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c) override;
+	virtual void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) override;
 
 	void connectionOpened() override;
 	void connectionClosed(int status, const String& reason) override;
 	void connectionError(const String& errorMessage) override;
-	
+
 	void dataReceived(const MemoryBlock& data) override;
 	void messageReceived(const String& message) override;
 
@@ -116,12 +116,12 @@ public:
 
 		void onContainerParameterChanged(Parameter* p) override;
 
-		void inspectableDestroyed(Inspectable * i) override;
+		void inspectableDestroyed(Inspectable* i) override;
 	};
 
 	virtual RouteParams* createRouteParamsForSourceValue(Module* sourceModule, Controllable* c, int /*index*/) override { return new OSCQueryRouteParams(this, sourceModule, c); }
 	virtual void handleRoutedModuleValue(Controllable* c, RouteParams* p) override;
-	
+
 
 	static GenericOSCQueryModule* create() { return new GenericOSCQueryModule(); }
 	virtual String getDefaultTypeString() const override { return "OSCQuery"; }

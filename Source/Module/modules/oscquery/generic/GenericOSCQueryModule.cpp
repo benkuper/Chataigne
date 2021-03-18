@@ -1,3 +1,4 @@
+#include "GenericOSCQueryModule.h"
 /*
   ==============================================================================
 
@@ -31,7 +32,7 @@ GenericOSCQueryModule::GenericOSCQueryModule(const String& name, int defaultRemo
 
 	sendCC.reset(new OSCQueryOutput(this));
 	moduleParams.addChildControllableContainer(sendCC.get());
-	
+
 	useLocal = sendCC->addBoolParameter("Local", "Send to Local IP (127.0.0.1). Allow to quickly switch between local and remote IP.", true);
 	remoteHost = sendCC->addStringParameter("Remote Host", "Remote Host to send to.", "127.0.0.1");
 	remoteHost->autoTrim = true;
@@ -44,7 +45,8 @@ GenericOSCQueryModule::GenericOSCQueryModule(const String& name, int defaultRemo
 	//Script
 	scriptObject.setMethod("send", GenericOSCQueryModule::sendOSCFromScript);
 
-	defManager->add(CommandDefinition::createDef(this, "", "Set Value", &GenericOSCQueryCommand::create, CommandContext::BOTH));
+	defManager->add(CommandDefinition::createDef(this, "", "Set Value", &GenericOSCQueryCommand::create)->addParam("action", GenericOSCQueryCommand::SET_VALUE));
+	defManager->add(CommandDefinition::createDef(this, "", "Trigger", &GenericOSCQueryCommand::create)->addParam("action", GenericOSCQueryCommand::TRIGGER));
 
 	sender.connect("0.0.0.0", 0);
 
@@ -54,6 +56,7 @@ GenericOSCQueryModule::~GenericOSCQueryModule()
 {
 	if (wsClient != nullptr) wsClient->stop();
 	stopThread(2000);
+	valuesCC.clear();
 }
 
 void GenericOSCQueryModule::setupWSClient()
@@ -66,7 +69,7 @@ void GenericOSCQueryModule::setupWSClient()
 	NLOG(niceName, "Server has LISTEN extension, setting up websocket");
 	wsClient.reset(new SimpleWebSocketClient());
 	wsClient->addWebSocketListener(this);
-	wsClient->start(remoteHost->stringValue()+":"+remotePort->stringValue()+"/");
+	wsClient->start(remoteHost->stringValue() + ":" + remotePort->stringValue() + "/");
 }
 
 void GenericOSCQueryModule::sendOSCMessage(OSCMessage m)
@@ -110,7 +113,7 @@ void GenericOSCQueryModule::sendOSCForControllable(Controllable* c)
 		}
 		sendOSCMessage(m);
 	}
-	catch (OSCFormatError & e)
+	catch (OSCFormatError& e)
 	{
 		NLOGERROR(niceName, "Can't send to address " << s << " : " << e.description);
 	}
@@ -142,7 +145,7 @@ var GenericOSCQueryModule::sendOSCFromScript(const var::NativeFunctionArgs& a)
 
 		m->sendOSCMessage(msg);
 	}
-	catch (OSCFormatError & e)
+	catch (OSCFormatError& e)
 	{
 		NLOGERROR(m->niceName, "Error sending message : " << e.description);
 	}
@@ -170,7 +173,7 @@ void GenericOSCQueryModule::syncData()
 	startThread();
 }
 
-void GenericOSCQueryModule::createTreeFromData(var data)
+void GenericOSCQueryModule::updateTreeFromData(var data)
 {
 	if (data.isVoid()) return;
 
@@ -184,18 +187,27 @@ void GenericOSCQueryModule::createTreeFromData(var data)
 		{
 			if (GenericOSCQueryValueContainer* gcc = dynamic_cast<GenericOSCQueryValueContainer*>(cc.get()))
 			{
-				if (gcc->enableListen->boolValue()) enableListenContainers.add(gcc->getControlAddress(&valuesCC));
-				if (!gcc->editorIsCollapsed) expandedContainers.add(gcc->getControlAddress(&valuesCC));
+				if (gcc->enableListen->boolValue())
+				{
+					enableListenContainers.add(gcc->getControlAddress(&valuesCC));
+					gcc->enableListen->setValue(false);
+					if (!gcc->editorIsCollapsed) expandedContainers.add(gcc->getControlAddress(&valuesCC));
+				}
 			}
 		}
 	}
+	
 
-	var vData = valuesCC.getJSONData();
-	valuesCC.clear();
-	fillContainerFromData(&valuesCC, data);
+	var vData;
+	if (keepValuesOnSync->boolValue()) vData = valuesCC.getJSONData();
+
+	//valuesCC.clear();
+
+	updateContainerFromData(&valuesCC, data);
+
 	if (keepValuesOnSync->boolValue())
 	{
-		if(!vData.isVoid()) valuesCC.loadJSONData(vData);
+		if (!vData.isVoid()) valuesCC.loadJSONData(vData);
 	}
 	else
 	{
@@ -203,13 +215,13 @@ void GenericOSCQueryModule::createTreeFromData(var data)
 		{
 			if (GenericOSCQueryValueContainer* gcc = dynamic_cast<GenericOSCQueryValueContainer*>(valuesCC.getControllableContainerForAddress(addr)))
 			{
-				gcc->enableListen->setValue(true);
+				gcc->enableListen->setValue(true, false, true);
 			}
 		}
 
 		for (auto& addr : expandedContainers)
 		{
-			if (ControllableContainer * cc = valuesCC.getControllableContainerForAddress(addr))
+			if (ControllableContainer* cc = valuesCC.getControllableContainerForAddress(addr))
 			{
 				cc->editorIsCollapsed = false;
 				cc->queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerCollapsedChanged, cc)); //should move to a setCollapsed from ControllableContainer.cpp
@@ -220,9 +232,15 @@ void GenericOSCQueryModule::createTreeFromData(var data)
 	treeData = data;
 }
 
-void GenericOSCQueryModule::fillContainerFromData(ControllableContainer* cc, var data)
+void GenericOSCQueryModule::updateContainerFromData(ControllableContainer* cc, var data)
 {
 	DynamicObject* dataObject = data.getProperty("CONTENTS", var()).getDynamicObject();
+
+	Array<WeakReference<ControllableContainer>> containersToDelete = cc->getAllContainers();
+	Array<WeakReference<Controllable>> controllablesToDelete = cc->getAllControllables();
+	
+	if (GenericOSCQueryValueContainer* vc = dynamic_cast<GenericOSCQueryValueContainer*>(cc)) controllablesToDelete.removeAllInstancesOf(vc->enableListen);
+
 	if (dataObject != nullptr)
 	{
 		NamedValueSet nvSet = dataObject->getProperties();
@@ -235,26 +253,37 @@ void GenericOSCQueryModule::fillContainerFromData(ControllableContainer* cc, var
 				String ccNiceName = nv.value.getProperty("DESCRIPTION", "");
 				if (ccNiceName.isEmpty()) ccNiceName = nv.name.toString();
 
-				GenericOSCQueryValueContainer* childCC = new GenericOSCQueryValueContainer(ccNiceName);
-				childCC->saveAndLoadRecursiveData = true;
-				childCC->setCustomShortName(nv.name.toString());
-				fillContainerFromData(childCC, nv.value);
-				childCC->editorIsCollapsed = true;
+				GenericOSCQueryValueContainer* childCC = dynamic_cast<GenericOSCQueryValueContainer*>(cc->getControllableContainerByName(ccNiceName, true));
 
-				cc->addChildControllableContainer(childCC, true);
+				if (childCC == nullptr)
+				{
+					childCC = new GenericOSCQueryValueContainer(ccNiceName);
+					childCC->saveAndLoadRecursiveData = true;
+					childCC->setCustomShortName(nv.name.toString());
+					childCC->editorIsCollapsed = true;
+				}
+				else containersToDelete.removeAllInstancesOf(childCC);
+
+				updateContainerFromData(childCC, nv.value);
+
+				if (childCC->parentContainer != cc) cc->addChildControllableContainer(childCC, true);
 			}
 			else
 			{
-				Controllable* c = createControllableFromData(nv.name, nv.value);
-				if (c != nullptr) cc->addControllable(c);
+				Controllable* c = cc->getControllableByName(nv.name.toString());
+				if (c != nullptr) controllablesToDelete.removeAllInstancesOf(c);
+				createOrUpdateControllableFromData(cc, c, nv.name, nv.value);
 			}
 		}
 	}
+
+	for (auto& cd : controllablesToDelete) cc->removeControllable(cd);
+	for (auto& ccd : containersToDelete) cc->removeChildControllableContainer(ccd);	
 }
 
-Controllable* GenericOSCQueryModule::createControllableFromData(StringRef name, var data)
+void GenericOSCQueryModule::createOrUpdateControllableFromData(ControllableContainer* parentCC, Controllable* sourceC, StringRef name, var data)
 {
-	Controllable* c = nullptr;
+	Controllable* c = sourceC;
 
 	String cNiceName = data.getProperty("DESCRIPTION", "");
 	if (cNiceName.isEmpty()) cNiceName = name;
@@ -285,71 +314,115 @@ Controllable* GenericOSCQueryModule::createControllableFromData(StringRef name, 
 		maxVal.append(range[i].getProperty("MAX", INT32_MAX));
 	}
 
-	if (type == "N" || type == "I")
+	Controllable::Type targetType;
+	if (type == "N" || type == "I") targetType = Controllable::TRIGGER;
+	else if (type == "i" || type == "h") targetType = Controllable::INT;
+	else if (type == "f" || type == "d") targetType = Controllable::FLOAT;
+	else if (type == "ii" || type == "ff" || type == "hh" || type == "dd") targetType = Controllable::POINT2D;
+	else if (type == "iii" || type == "fff" || type == "hhh" || type == "ddd") targetType = Controllable::POINT3D;
+	else if (type == "ffff" || type == "dddd" || type == "iiii" || type == "hhhh" || type == "r") targetType = Controllable::COLOR;
+	else if (type == "s" || type == "S" || type == "c")
 	{
-		c = new Trigger(cNiceName, cNiceName);
+		if (range[0].isObject()) targetType = Controllable::ENUM;
+		else targetType = Controllable::STRING;
 	}
-	else if (type == "i" || type == "h")
+	else if (type == "T" || type == "F") targetType = Controllable::BOOL;
+
+
+	if (c != nullptr && targetType != c->type)
 	{
-		c = new IntParameter(cNiceName, cNiceName, value[0], minVal[0], maxVal[0]);
+		parentCC->removeControllable(c);
+		c = nullptr;
 	}
-	else if (type == "f" || type == "d")
+
+	bool addToContainer = c == nullptr;
+
+	switch (targetType)
 	{
-		c = new FloatParameter(cNiceName, cNiceName, value[0], minVal[0], maxVal[0]);
+	case Controllable::TRIGGER:
+	{
+		if (c == nullptr) c = new Trigger(cNiceName, cNiceName);
 	}
-	else if (type == "ii" || type == "ff"  || type == "hh"  || type == "dd")
+	break;
+
+	case Controllable::INT:
 	{
-        if(value.isVoid()) for(int i=0;i<2; ++i) value.append(0);
-		c = new Point2DParameter(cNiceName, cNiceName);
+		if (c == nullptr) c = new IntParameter(cNiceName, cNiceName, value[0], minVal[0], maxVal[0]);
+		else
+		{
+			((Parameter*)c)->setValue(value[0]);
+			((Parameter*)c)->setRange(minVal[0], maxVal[0]);
+		}
+	}
+	break;
+
+	case Controllable::FLOAT:
+	{
+		if (c == nullptr) c = new FloatParameter(cNiceName, cNiceName, value[0], minVal[0], maxVal[0]);
+		else
+		{
+			((Parameter*)c)->setValue(value[0]);
+			((Parameter*)c)->setRange(minVal[0], maxVal[0]);
+		}
+	}
+	break;
+
+	case Controllable::POINT2D:
+	{
+		if (value.isVoid()) for (int i = 0; i < 2; ++i) value.append(0);
+		if (c == nullptr) c = new Point2DParameter(cNiceName, cNiceName);
 		if (value.size() >= 2) ((Point2DParameter*)c)->setValue(value);
 		if (range.size() >= 2) ((Point2DParameter*)c)->setRange(minVal, maxVal);
 	}
-	else if (type == "iii" || type == "fff" || type == "hhh" || type == "ddd")
+	break;
+
+	case Controllable::POINT3D:
 	{
 		if (value.isVoid()) for (int i = 0; i < 3; ++i) value.append(0);
-        c = new Point3DParameter(cNiceName, cNiceName);
-		if(value.size() >= 3) ((Point3DParameter*)c)->setValue(value);
-		if(range.size() >= 3) ((Point3DParameter*)c)->setRange(minVal, maxVal);
+		if (c == nullptr) c = new Point3DParameter(cNiceName, cNiceName);
+		if (value.size() >= 3) ((Point3DParameter*)c)->setValue(value);
+		if (range.size() >= 3) ((Point3DParameter*)c)->setRange(minVal, maxVal);
 	}
-	else if (type == "ffff" || type == "dddd")
-	{
-		Colour col = value.size() >= 4 ? Colour::fromFloatRGBA(value[0], value[1], value[2], value[3]) : Colours::black;
-        c = new ColorParameter(cNiceName, cNiceName, col);
-	}
-	else if (type == "iiii" || type == "hhhh")
-	{
-		Colour col = value.size() >= 4 ? Colour::fromRGBA((int)value[0], (int)value[1], (int)value[2], (int)value[3]) : Colours::black;
-        c = new ColorParameter(cNiceName, cNiceName, col);
-	}
-	else if (type == "s" || type == "S"  || type == "c")
-	{
-		if (range[0].isObject()) //enum
-		{
-			var options = range[0].getProperty("VALS", var());
+	break;
 
-			if (options.isArray())
-			{
-				EnumParameter* ep = new EnumParameter(cNiceName, cNiceName);
-				for (int i = 0; i < options.size(); ++i) ep->addOption(options[i], options[i], false);
-				ep->setValueWithKey(value[0]);
+	case Controllable::COLOR:
+	{
+		Colour col = Colours::black;
+		if (type == "ffff" || type == "dddd") col = value.size() >= 4 ? Colour::fromFloatRGBA(value[0], value[1], value[2], value[3]) : Colours::black;
+		else if (type == "iiii" || type == "hhhh") col = value.size() >= 4 ? Colour::fromRGBA((int)value[0], (int)value[1], (int)value[2], (int)value[3]) : Colours::black;
+		else if (type == "r") col = Colour::fromString(value[0].toString());
 
-				c = ep;
-			}
-		}
-		else
+		if (c == nullptr)  c = new ColorParameter(cNiceName, cNiceName, col);
+		else ((ColorParameter*)c)->setColor(col);
+	}
+	break;
+
+	case Controllable::STRING:
+	{
+		if (c == nullptr) c = new StringParameter(cNiceName, cNiceName, value[0]);
+		else ((StringParameter*)c)->setValue(value[0]);
+	}
+	break;
+
+	case Controllable::ENUM:
+	{
+		var options = range[0].getProperty("VALS", var());
+		if (options.isArray())
 		{
-			c = new StringParameter(cNiceName, cNiceName, value[0]);
+			if (c == nullptr) c = new EnumParameter(cNiceName, cNiceName);
+
+			for (int i = 0; i < options.size(); ++i) ((EnumParameter*)c)->addOption(options[i], options[i], false);
+			((EnumParameter*)c)->setValueWithKey(value[0]);
 		}
 	}
-	else if (type == "r")
+	break;
+
+	case Controllable::BOOL:
 	{
-		Colour col = Colour::fromString(value[0].toString());
-		Colour goodCol = Colour(col.getAlpha(), col.getRed(), col.getGreen(), col.getBlue()); //inverse RGBA > ARGB
-		c = new ColorParameter(cNiceName, cNiceName, goodCol);
+		if (c == nullptr) c = new BoolParameter(cNiceName, cNiceName, value[0]);
+		else ((BoolParameter*)c)->setValue(value[0]);
 	}
-	else if (type == "T" || type == "F")
-	{
-		c = new BoolParameter(cNiceName, cNiceName, value[0]);
+	break;
 	}
 
 	if (c != nullptr)
@@ -358,8 +431,9 @@ Controllable* GenericOSCQueryModule::createControllableFromData(StringRef name, 
 		if (access == 1) c->setControllableFeedbackOnly(true);
 	}
 
-	return c;
+	if (addToContainer) parentCC->addControllable(c);
 }
+
 
 void GenericOSCQueryModule::updateListenToContainer(GenericOSCQueryValueContainer* gcc)
 {
@@ -372,10 +446,10 @@ void GenericOSCQueryModule::updateListenToContainer(GenericOSCQueryValueContaine
 
 	String command = gcc->enableListen->boolValue() ? "LISTEN" : "IGNORE";
 	Array<WeakReference<Parameter>> params = gcc->getAllParameters();
-	
+
 	var o(new DynamicObject());
 	o.getDynamicObject()->setProperty("COMMAND", command);
-	
+
 	for (auto& p : params)
 	{
 		if (p == gcc->enableListen) continue;
@@ -389,7 +463,7 @@ void GenericOSCQueryModule::updateListenToContainer(GenericOSCQueryValueContaine
 void GenericOSCQueryModule::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c)
 {
 	Module::onControllableFeedbackUpdateInternal(cc, c);
-	
+
 	if (c == useLocal)
 	{
 		remoteHost->setEnabled(!useLocal->boolValue());
@@ -490,7 +564,7 @@ var GenericOSCQueryModule::getJSONData()
 
 void GenericOSCQueryModule::loadJSONDataInternal(var data)
 {
-	createTreeFromData(data.getProperty("treeData",var()));
+	updateTreeFromData(data.getProperty("treeData", var()));
 	Module::loadJSONDataInternal(data);
 }
 
@@ -513,7 +587,7 @@ void GenericOSCQueryModule::run()
 
 void GenericOSCQueryModule::requestHostInfo()
 {
-	URL url("http://" + (useLocal->boolValue() ? "127.0.0.1" : remoteHost->stringValue()) + ":" + String(remotePort->intValue())+"?HOST_INFO");
+	URL url("http://" + (useLocal->boolValue() ? "127.0.0.1" : remoteHost->stringValue()) + ":" + String(remotePort->intValue()) + "?HOST_INFO");
 	StringPairArray responseHeaders;
 	int statusCode = 0;
 	std::unique_ptr<InputStream> stream(url.createInputStream(false, nullptr, nullptr, String(),
@@ -549,7 +623,7 @@ void GenericOSCQueryModule::requestHostInfo()
 				remoteOSCPort->setValue(oscPort);
 			}
 
-			hasListenExtension =  data.getProperty("EXTENSIONS",var()).getProperty("LISTEN", false);
+			hasListenExtension = data.getProperty("EXTENSIONS", var()).getProperty("LISTEN", false);
 			setupWSClient();
 		}
 	}
@@ -588,7 +662,7 @@ void GenericOSCQueryModule::requestStructure()
 		{
 			//if (logIncomingData->boolValue()) NLOG(niceName, "Received structure :\n" << JSON::toString(data));
 
-			createTreeFromData(data);
+			updateTreeFromData(data);
 
 			Array<var> args;
 			args.add(data);
@@ -672,7 +746,7 @@ void GenericOSCQueryModule::OSCQueryRouteParams::inspectableDestroyed(Inspectabl
 	if (i == cRef) setControllable(nullptr);
 }
 
-GenericOSCQueryValueContainer::GenericOSCQueryValueContainer(const String &name) :
+GenericOSCQueryValueContainer::GenericOSCQueryValueContainer(const String& name) :
 	ControllableContainer(name)
 {
 	enableListen = addBoolParameter("Listen", "This will activate listening to this container", false);

@@ -11,27 +11,40 @@
 #pragma once
 
 class GenericOSCQueryCommand :
-	public BaseCommand
+	public BaseCommand,
+	public EngineListener
 {
 public:
+	
+	enum Action { SET_VALUE, TRIGGER };
+	
 	GenericOSCQueryCommand(GenericOSCQueryModule * module, CommandContext context, var params, Multiplex * multiplex = nullptr);
 	~GenericOSCQueryCommand();
 
 	GenericOSCQueryModule * oscQueryModule;
+	enum Operator { EQUAL, INVERSE, ADD, SUBTRACT, MULTIPLY, DIVIDE, MAX, MIN };
 
-	TargetParameter * target;
-	WeakReference<Parameter> valueParam;
+	Action action;
+	TargetParameter* target;
+	EnumParameter* valueOperator;
+	WeakReference<Parameter> value;
+	var dataToLoad;
+	var ghostValueData; // to keep when target is lost
+	var ghostOperator;
 
-	var valueGhostData; //when loading/reloading data
+	void updateValueFromTarget();
+	void setValueParameter(Parameter* p);
 
-	void setupParamFromTarget();
+	void updateOperatorOptions();
 
-	void onContainerParameterChanged(Parameter *) override;
+	virtual void triggerInternal(int multiplexIndex) override;
 
-	var getJSONData() override;
-	void loadJSONDataInternal(var data) override;
+	void linkUpdated(ParameterLink* pLink) override;
+	void onContainerParameterChanged(Parameter*) override;
 
-	void triggerInternal(int multiplexIndex) override;
+	virtual void loadJSONDataInternal(var data) override;
+	virtual void endLoadFile() override;
 
-	static GenericOSCQueryCommand * create(ControllableContainer * module, CommandContext context, var params, Multiplex * multiplex) { return new GenericOSCQueryCommand((GenericOSCQueryModule *)module, context, params, multiplex); }
+	static GenericOSCQueryCommand * create(ControllableContainer * module, CommandContext context, var params, Multiplex * multiplex) { 
+		return new GenericOSCQueryCommand((GenericOSCQueryModule *)module, context, params, multiplex); }
 };
