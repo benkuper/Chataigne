@@ -21,16 +21,22 @@ public:
 	GenericControllableCommand(ChataigneGenericModule * _module, CommandContext context, var params, Multiplex* multiplex = nullptr);
 	virtual ~GenericControllableCommand();
 	
+	enum Operator { EQUAL, INVERSE, ADD, SUBTRACT, MULTIPLY, DIVIDE, MAX, MIN };
+
 	ChataigneGenericModule * sequenceModule;
 
 	Action action;
 	TargetParameter * target;
+	EnumParameter* valueOperator;
 	WeakReference<Parameter> value;
 	var dataToLoad;
 	var ghostValueData; // to keep when target is lost
+	var ghostOperator;
 
 	void updateValueFromTarget();
 	void setValueParameter(Parameter * p);
+
+	void updateOperatorOptions();
 
 	virtual void triggerInternal(int multiplexIndex) override;
 

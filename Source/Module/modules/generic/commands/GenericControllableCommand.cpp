@@ -10,7 +10,8 @@
 
 GenericControllableCommand::GenericControllableCommand(ChataigneGenericModule* _module, CommandContext context, var params, Multiplex* multiplex) :
 	BaseCommand(_module, context, params, multiplex),
-	value(nullptr)
+	value(nullptr),
+	valueOperator(nullptr)
 {
 	target = addTargetParameter("Target", "Target to set the value");
 
@@ -18,7 +19,11 @@ GenericControllableCommand::GenericControllableCommand(ChataigneGenericModule* _
 	action = (Action)(int)params.getProperty("action", SET_VALUE);
 
 	if (action == TRIGGER) target->typesFilter.add(Trigger::getTypeStringStatic());
-	else if (action == SET_VALUE) target->excludeTypesFilter.add(Trigger::getTypeStringStatic());
+	else if (action == SET_VALUE)
+	{
+		target->excludeTypesFilter.add(Trigger::getTypeStringStatic());
+		valueOperator = addEnumParameter("Operator", "The operator to apply. If you simply want to set the value, leave at the = option.", false);
+	}
 }
 
 GenericControllableCommand::~GenericControllableCommand()
@@ -44,6 +49,7 @@ void GenericControllableCommand::updateValueFromTarget()
 
 			tc->setNiceName("Value");
 			Parameter* tp = dynamic_cast<Parameter*>(tc);
+			if (isMultiplexed()) tp->clearRange();
 			setValueParameter(tp);
 		}
 
@@ -68,12 +74,49 @@ void GenericControllableCommand::setValueParameter(Parameter* p)
 
 	if (value != nullptr)
 	{
+		updateOperatorOptions();
+
 		addParameter(value);
 		if (!ghostValueData.isVoid()) value->loadJSONData(ghostValueData);
 		ghostValueData = var();
 
 		linkParamToMappingIndex(value, 0);
 	}
+}
+
+void GenericControllableCommand::updateOperatorOptions()
+{
+	String oldData = ghostOperator.isVoid() ? valueOperator->getValueKey() : ghostOperator;
+	valueOperator->clearOptions();
+	valueOperator->addOption("Equals", EQUAL, false);
+
+	if (value == nullptr)
+	{
+		ghostOperator = oldData;
+		return;
+	}
+
+	switch (value->type)
+	{
+	case Controllable::FLOAT:
+	case Controllable::INT:
+		valueOperator->addOption("Add", ADD)->addOption("Inverse", INVERSE)->addOption("Subtract", SUBTRACT)->addOption("Multiply", MULTIPLY)->addOption("Divide", DIVIDE)->addOption("Max", MAX)->addOption("Min", MIN);
+		break;
+
+	case Controllable::BOOL:
+		valueOperator->addOption("Inverse", INVERSE, false);
+		break;
+
+	default:
+		break;
+	}
+
+	if (oldData.isNotEmpty()) valueOperator->setValueWithKey(oldData);
+	else valueOperator->setValueWithData(EQUAL);
+	valueOperator->setEnabled(valueOperator->getAllKeys().size() > 1);
+
+	value->hideInEditor = valueOperator->getValueDataAsEnum<Operator>() == INVERSE;
+	ghostOperator = var();
 }
 
 
@@ -84,27 +127,65 @@ void GenericControllableCommand::triggerInternal(int multiplexIndex)
 	Controllable* c = getLinkedTargetAs<Controllable>(target, multiplexIndex);
 	if (c == nullptr) return;
 
-	if (value == nullptr) return;
 
 	if (action == SET_VALUE)
 	{
 		if (value == nullptr) return;
 
-		if (c->type != Parameter::TRIGGER)
+		if (Parameter* p = dynamic_cast<Parameter*>(c))
 		{
-			var v = getLinkedValue(value, multiplexIndex);
-			if (EnumParameter * ep = dynamic_cast<EnumParameter *>(c))
+			var val = getLinkedValue(value, multiplexIndex);
+
+			Operator o = valueOperator->getValueDataAsEnum<Operator>();
+
+			switch (o)
 			{
-				if (v.isInt() || v.isDouble())
+			case EQUAL:
+			{
+				if (EnumParameter* ep = dynamic_cast<EnumParameter*>(p))
 				{
-					if ((int)v < ep->enumValues.size()) ep->setValueWithKey((ep->enumValues[v]->key));
+					if (val.isInt() || val.isDouble())
+					{
+						if ((int)val < ep->enumValues.size()) ep->setValueWithKey((ep->enumValues[val]->key));
+					}
+					else if (val.isString()) ep->setValueWithKey(val);
+					else ep->setValueWithData(val);
 				}
-				else if (v.isString()) ep->setValueWithKey(v);
-				else ep->setValueWithData(v);
+				else
+				{
+					p->setValue(val);
+				}
 			}
-			else
-			{
-				((Parameter*)c)->setValue(v);
+			break;
+
+			case INVERSE:
+				if (p->type == Parameter::BOOL)  p->setValue(!p->boolValue());
+				else p->setNormalizedValue(1 - (float)val / ((float)p->maximumValue - (float)p->minimumValue));
+				break;
+
+			case ADD:
+				p->setValue(p->floatValue() + (float)val);
+				break;
+
+			case SUBTRACT:
+				p->setValue(p->floatValue() - (float)val);
+				break;
+
+			case MULTIPLY:
+				p->setValue(p->floatValue() * (float)val);
+				break;
+
+			case DIVIDE:
+				p->setValue(p->floatValue() / (float)val);
+				break;
+
+			case MAX:
+				p->setValue(std::max(p->floatValue(), (float)val));
+				break;
+
+			case MIN:
+				p->setValue(std::min(p->floatValue(), (float)val));
+				break;
 			}
 		}
 	}
@@ -129,6 +210,17 @@ void GenericControllableCommand::onContainerParameterChanged(Parameter* p)
 			updateValueFromTarget();
 		}
 
+	}else if (p == valueOperator)
+	{
+		if (value != nullptr)
+		{
+			Operator o = valueOperator->getValueDataAsEnum<Operator>();
+			if (o != SET_VALUE) value->clearRange(); //to clean more
+			bool curHide = value->hideInEditor;
+			value->hideInEditor = o == INVERSE;
+			if (curHide != value->hideInEditor) queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, this));
+
+		}
 	}
 }
 
@@ -141,6 +233,8 @@ void GenericControllableCommand::loadJSONDataInternal(var data)
 		dataToLoad = data;
 	}
 	else BaseCommand::loadJSONDataInternal(data);
+
+	
 }
 
 void GenericControllableCommand::endLoadFile()
@@ -152,7 +246,20 @@ void GenericControllableCommand::endLoadFile()
 	loadJSONData(dataToLoad);
 	dataToLoad = var();
 
-	if(value == nullptr) updateValueFromTarget(); //force generate if not yet
+	if (value == nullptr) updateValueFromTarget(); //force generate if not yet
+	
+	if (value == nullptr)
+	{
+		var paramsData = dataToLoad.getProperty("parameters", var());
+		for (int i = 0; i < paramsData.size(); i++)
+		{
+			if (paramsData[i].getProperty("controlAddress", "") == "/operator")
+			{
+				ghostOperator = paramsData[i].getProperty("value", var());
+				break;
+			}
+		}
+	}
 
 	Engine::mainEngine->removeEngineListener(this);
 }
