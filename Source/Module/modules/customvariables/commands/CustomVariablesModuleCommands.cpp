@@ -10,16 +10,16 @@
 
 #include "CustomVariables/CustomVariablesIncludes.h"
 
-CVCommand::CVCommand(CustomVariablesModule * _module, CommandContext context, var params, Multiplex* multiplex) :
+CVCommand::CVCommand(CustomVariablesModule* _module, CommandContext context, var params, Multiplex* multiplex) :
 	BaseCommand(_module, context, params, multiplex),
 	target(nullptr),
 	targetPreset(nullptr),
 	targetPreset2(nullptr),
 	presetFile(nullptr),
 	time(nullptr),
-    automation(nullptr),
-    valueOperator(nullptr),
-    value(nullptr)
+	automation(nullptr),
+	valueOperator(nullptr),
+	value(nullptr)
 
 {
 	saveAndLoadRecursiveData = true;
@@ -32,10 +32,11 @@ CVCommand::CVCommand(CustomVariablesModule * _module, CommandContext context, va
 		target = addTargetParameter("Target Value", "The value to target for this command", CVGroupManager::getInstance());
 		target->customGetTargetFunc = &CVGroupManager::showMenuAndGetVariable;
 		target->defaultParentLabelLevel = 2;
-		
+
 		valueOperator = addEnumParameter("Operator", "The operator to apply. If you simply want to set the value, leave at the = option.", false);
-		
-	} else if (type == SET_2DTARGET || type == KILL_GO_TO_PRESET)
+
+	}
+	else if (type == SET_2DTARGET || type == KILL_GO_TO_PRESET)
 	{
 		target = addTargetParameter("Target Group", "The group to target for this command", CVGroupManager::getInstance());
 		target->targetType = TargetParameter::CONTAINER;
@@ -47,7 +48,8 @@ CVCommand::CVCommand(CustomVariablesModule * _module, CommandContext context, va
 			value = addPoint2DParameter("Position", "The target position in the 2D interpolator");
 			linkParamToMappingIndex(value, 0);
 		}
-	} else if (type == SET_PRESET || type == LERP_PRESETS || type == SET_PRESET_WEIGHT || type == SAVE_PRESET || type == LOAD_PRESET || type == GO_TO_PRESET)
+	}
+	else if (type == SET_PRESET || type == LERP_PRESETS || type == SET_PRESET_WEIGHT || type == SAVE_PRESET || type == LOAD_PRESET || type == GO_TO_PRESET)
 	{
 		targetPreset = addTargetParameter("Target Preset", "The Preset to get the values from and set the variables to", CVGroupManager::getInstance());
 		targetPreset->targetType = TargetParameter::CONTAINER;
@@ -160,28 +162,30 @@ void CVCommand::updateOperatorOptions()
 	default:
 		break;
 	}
-	
-	valueOperator->setValueWithData(oldData.isVoid()?EQUAL:(Operator)(int)(oldData));
+
+	valueOperator->setValueWithData(oldData.isVoid() ? EQUAL : (Operator)(int)(oldData));
 	valueOperator->setEnabled(valueOperator->getAllKeys().size() > 1);
 
 	value->hideInEditor = valueOperator->getValueDataAsEnum<Operator>() == INVERSE;
 }
 
-void CVCommand::onContainerParameterChanged(Parameter * p)
+void CVCommand::onContainerParameterChanged(Parameter* p)
 {
 	if (p == target && type == SET_VALUE)
 	{
 		updateValueFromTarget();
 
-	} else if (p == targetPreset || p == targetPreset2)
+	}
+	else if (p == targetPreset || p == targetPreset2)
 	{
-		CVPreset * p1 = static_cast<CVPreset *>(targetPreset->targetContainer.get());
-		CVPreset * p2 = static_cast<CVPreset *>(targetPreset->targetContainer.get());
+		CVPreset* p1 = static_cast<CVPreset*>(targetPreset->targetContainer.get());
+		CVPreset* p2 = static_cast<CVPreset*>(targetPreset->targetContainer.get());
 		if (p1 != nullptr && p2 != nullptr && p1->group != p2->group)
 		{
 			LOGWARNING("The 2 presets are not from the same group !\nThis command won't have any effect until you choose presets from the same group.");
 		}
-	} else if (p == valueOperator)
+	}
+	else if (p == valueOperator)
 	{
 		if (value != nullptr)
 		{
@@ -205,7 +209,7 @@ void CVCommand::triggerInternal(int multiplexIndex)
 
 		if (c != nullptr && value != nullptr)
 		{
-			Parameter * p = static_cast<Parameter *>(c);
+			Parameter* p = static_cast<Parameter*>(c);
 
 			if (p != nullptr)
 			{
@@ -216,8 +220,22 @@ void CVCommand::triggerInternal(int multiplexIndex)
 				switch (o)
 				{
 				case EQUAL:
-					p->setValue(val);
-					break;
+				{
+					if (EnumParameter* ep = dynamic_cast<EnumParameter*>(p))
+					{
+						if (val.isInt() || val.isDouble())
+						{
+							if ((int)val < ep->enumValues.size()) ep->setValueWithKey((ep->enumValues[val]->key));
+						}
+						else if (val.isString()) ep->setValueWithKey(val);
+						else ep->setValueWithData(val);
+					}
+					else
+					{
+						p->setValue(val);
+					}
+				}
+				break;
 
 				case INVERSE:
 					if (p->type == Parameter::BOOL)  p->setValue(!p->boolValue());
@@ -241,7 +259,7 @@ void CVCommand::triggerInternal(int multiplexIndex)
 					break;
 
 				case MAX:
-					p->setValue(std::max(p->floatValue(),(float)val));
+					p->setValue(std::max(p->floatValue(), (float)val));
 					break;
 
 				case MIN:
@@ -257,7 +275,7 @@ void CVCommand::triggerInternal(int multiplexIndex)
 	{
 		if (targetPreset->targetContainer != nullptr)
 		{
-			CVPreset * p = static_cast<CVPreset *>(targetPreset->targetContainer.get());
+			CVPreset* p = static_cast<CVPreset*>(targetPreset->targetContainer.get());
 			if (p != nullptr) p->group->setValuesToPreset(p);
 		}
 	}
@@ -268,7 +286,7 @@ void CVCommand::triggerInternal(int multiplexIndex)
 		if (targetPreset->targetContainer != nullptr)
 		{
 			CVPreset* p1 = static_cast<CVPreset*>(targetPreset->targetContainer.get());
-			p1->group->goToPreset(p1, time->enabled?time->floatValue():p1->defaultLoadTime->floatValue(), automation->enabled->boolValue()?automation:&p1->group->defaultInterpolation);
+			p1->group->goToPreset(p1, time->enabled ? time->floatValue() : p1->defaultLoadTime->floatValue(), automation->enabled->boolValue() ? automation : &p1->group->defaultInterpolation);
 		}
 	}
 	break;
@@ -287,12 +305,13 @@ void CVCommand::triggerInternal(int multiplexIndex)
 	{
 		if (targetPreset->targetContainer != nullptr && targetPreset2->targetContainer != nullptr)
 		{
-			CVPreset * p1 = static_cast<CVPreset *>(targetPreset->targetContainer.get());
-			CVPreset * p2 = static_cast<CVPreset *>(targetPreset2->targetContainer.get());
+			CVPreset* p1 = static_cast<CVPreset*>(targetPreset->targetContainer.get());
+			CVPreset* p2 = static_cast<CVPreset*>(targetPreset2->targetContainer.get());
 			if (p1->group != p2->group)
 			{
 				LOGWARNING("The 2 presets are not from the same group !\nThis command won't have any effect until you choose presets from the same group.");
-			} else
+			}
+			else
 			{
 				p1->group->lerpPresets(p1, p2, value->floatValue());
 			}
@@ -304,7 +323,7 @@ void CVCommand::triggerInternal(int multiplexIndex)
 	{
 		if (targetPreset->targetContainer != nullptr)
 		{
-			CVPreset * p = static_cast<CVPreset *>(targetPreset->targetContainer.get());
+			CVPreset* p = static_cast<CVPreset*>(targetPreset->targetContainer.get());
 			if (p != nullptr) p->weight->setValue(getLinkedValue(value, multiplexIndex));
 		}
 	}
@@ -314,7 +333,7 @@ void CVCommand::triggerInternal(int multiplexIndex)
 	{
 		if (!target->targetContainer.wasObjectDeleted() && target->targetContainer != nullptr)
 		{
-			CVGroup * g = static_cast<CVGroup *>(target->targetContainer.get());
+			CVGroup* g = static_cast<CVGroup*>(target->targetContainer.get());
 			var val = getLinkedValue(value, multiplexIndex);
 			Point<float> f(val[0], val[1]);
 			if (g != nullptr && g->morpher != nullptr) g->morpher->targetPosition->setPoint(f);
@@ -364,10 +383,10 @@ void CVCommand::triggerInternal(int multiplexIndex)
 
 void CVCommand::linkUpdated(ParameterLink* pLink)
 {
-	if(pLink->parameter == target) updateValueFromTarget();
+	if (pLink->parameter == target) updateValueFromTarget();
 }
 
-BaseCommand * CVCommand::create(ControllableContainer * module, CommandContext context, var params, Multiplex * multiplex)
+BaseCommand* CVCommand::create(ControllableContainer* module, CommandContext context, var params, Multiplex* multiplex)
 {
-	return new CVCommand((CustomVariablesModule *)module, context, params, multiplex);
+	return new CVCommand((CustomVariablesModule*)module, context, params, multiplex);
 }
