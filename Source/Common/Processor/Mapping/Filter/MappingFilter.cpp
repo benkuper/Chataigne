@@ -60,7 +60,9 @@ bool MappingFilter::setupSources(Array<Parameter*> sources, int multiplexIndex)
 	}
 
 	sourceParams[multiplexIndex].clear();
-	previousValues = var();
+
+	previousValues.clear();
+	for (int i = 0; i < getMultiplexCount();i++) previousValues.add(var());
 
 	sourceParams.set(multiplexIndex, Array<WeakReference<Parameter>>(sources.getRawDataPointer(), sources.size()));
 	mSourceParams = sourceParams[multiplexIndex];
@@ -133,23 +135,25 @@ MappingFilter::ProcessResult MappingFilter::process(Array<Parameter*> inputs, in
 
 	if (!processOnSameValue && !filterParamsAreDirty)
 	{
-		if (inputs.size() == previousValues.size() && previousValues.isArray())
+		var mPrevValues = previousValues[multiplexIndex];
+
+		if (inputs.size() == previousValues.size() && mPrevValues.isArray())
 		{
 			bool hasChanged = false;
 			for (int i = 0; i < inputs.size(); i++)
 			{
 				//if (inputs[i].wasObjectDeleted()) break; //multiplex refactor : should put that back ?
 
-				hasChanged |= !inputs[i]->checkValueIsTheSame(inputs[i]->getValue(), previousValues[i]);
-				previousValues[i] = inputs[i]->getValue().clone();
+				hasChanged |= !inputs[i]->checkValueIsTheSame(inputs[i]->getValue(), mPrevValues[i]);
+				mPrevValues[i] = inputs[i]->getValue().clone();
 			}
 
 			if (!hasChanged) return UNCHANGED;
 		}
 		else
 		{
-			previousValues = var();
-			for (int i = 0; i < inputs.size(); i++) previousValues.append(inputs[i]->getValue().clone());
+			previousValues.set(multiplexIndex, var());
+			for (int i = 0; i < inputs.size(); i++) previousValues[multiplexIndex].append(inputs[i]->getValue().clone());
 		}
 
 	}

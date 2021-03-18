@@ -1,3 +1,4 @@
+#include "LoupedeckModule.h"
 /*
   ==============================================================================
 
@@ -132,7 +133,7 @@ LoupedeckModule::LoupedeckModule() :
 	defManager->add(CommandDefinition::createDef(this, "Pad", "Set Color", &LoupedeckCommand::create)->addParam("action", LoupedeckCommand::SET_COLOR)->addParam("screenTarget", LoupedeckCommand::PADS));
 	defManager->add(CommandDefinition::createDef(this, "Pad", "Set Image", &LoupedeckCommand::create)->addParam("action", LoupedeckCommand::SET_IMAGE)->addParam("screenTarget", LoupedeckCommand::PADS));
 	defManager->add(CommandDefinition::createDef(this, "Pad", "Set Text", &LoupedeckCommand::create)->addParam("action", LoupedeckCommand::SET_TEXT)->addParam("screenTarget", LoupedeckCommand::PADS));
-	
+
 	defManager->add(CommandDefinition::createDef(this, "Slider Left", "Set Color", &LoupedeckCommand::create)->addParam("action", LoupedeckCommand::SET_COLOR)->addParam("screenTarget", LoupedeckCommand::LEFT_SLIDER));
 	defManager->add(CommandDefinition::createDef(this, "Slider Left", "Set Image", &LoupedeckCommand::create)->addParam("action", LoupedeckCommand::SET_IMAGE)->addParam("screenTarget", LoupedeckCommand::LEFT_SLIDER));
 	defManager->add(CommandDefinition::createDef(this, "Slider Left", "Set Text", &LoupedeckCommand::create)->addParam("action", LoupedeckCommand::SET_TEXT)->addParam("screenTarget", LoupedeckCommand::LEFT_SLIDER));
@@ -152,6 +153,7 @@ LoupedeckModule::LoupedeckModule() :
 	moduleParams.addChildControllableContainer(&buttonParamsCC);
 	moduleParams.addChildControllableContainer(&sliderParamsCC);
 	moduleParams.addChildControllableContainer(&padParamsCC);
+	moduleParams.addChildControllableContainer(&shapeManager);
 
 	valuesCC.addChildControllableContainer(&buttonsCC);
 	valuesCC.addChildControllableContainer(&knobsCC);
@@ -227,10 +229,10 @@ void LoupedeckModule::processTouchData(Array<uint8_t> data)
 		int pad = getPadIDForPos(curPos);
 		touchPadMap.set(touchID, pad);
 		posOnTouchMap.set(touchID, curPos);
-		if(pad >= 0) padsTouchPositions[pad]->setPoint(0, 0);
+		if (pad >= 0) padsTouchPositions[pad]->setPoint(0, 0);
 	}
 
-	int curPad = touchPadMap[touchID] ;
+	int curPad = touchPadMap[touchID];
 	Point<int> posOnTouch = posOnTouchMap[touchID];
 
 	if (touched)
@@ -255,7 +257,7 @@ void LoupedeckModule::processTouchData(Array<uint8_t> data)
 			}
 		}
 
-		if(touchID == 0) touchPosition->setPoint(curPos.toFloat() / Point<float>(460, 270));
+		if (touchID == 0) touchPosition->setPoint(curPos.toFloat() / Point<float>(460, 270));
 	}
 	else
 	{
@@ -277,7 +279,8 @@ void LoupedeckModule::onControllableFeedbackUpdateInternal(ControllableContainer
 			updatePadContent(i);
 			refreshScreen(2);
 		}
-	}else if (cc == &moduleParams)
+	}
+	else if (cc == &moduleParams)
 	{
 		if (c == brightness)
 		{
@@ -311,6 +314,25 @@ void LoupedeckModule::onControllableFeedbackUpdateInternal(ControllableContainer
 
 			if (id != -1) updateSliderContent(id); //1-based
 		}
+		else if (LoupedeckShape* s = dynamic_cast<LoupedeckShape*>(c->parentContainer.get()))
+		{
+			int sScreen = (int)s->screen->getValueData();
+			if (sScreen < 2) updateSliderContent(sScreen, true);
+			else
+			{
+				Rectangle<float> sBounds = s->getBounds().translated(60, 0);
+
+				for (int i = 0; i < pads.size(); i++)
+				{
+					if (getPadCoords(i).toFloat().intersects(sBounds))
+					{
+						updatePadContent(i);
+					}
+				}
+
+				refreshScreen(2);
+			}
+		}
 	}
 	else if (cc == &valuesCC)
 	{
@@ -324,7 +346,8 @@ void LoupedeckModule::onControllableFeedbackUpdateInternal(ControllableContainer
 					if (highlightOnTouch->boolValue()) updatePadContent(index);
 				}
 			}
-		}else if (c->parentContainer == &slidersCC)
+		}
+		else if (c->parentContainer == &slidersCC)
 		{
 			if (BoolParameter* p = dynamic_cast<BoolParameter*>(c))
 			{
@@ -354,7 +377,7 @@ void LoupedeckModule::updatePadContent(int padID, bool refresh)
 	Rectangle<int> r = getPadCoords(padID).translated(-60, 0);
 
 	Colour c = padColors[padID]->getColor();
-	if (pads[padID]->boolValue() && highlightOnTouch->boolValue()) c = c.brighter();
+	if (pads[padID]->boolValue() && highlightOnTouch->boolValue()) c = c.brighter(.1f);
 	setScreenContent(2, r, ImageCache::getFromFile(padImages[padID]->getFile()), c, padTexts[padID]->stringValue(), refresh);
 }
 
@@ -362,7 +385,7 @@ void LoupedeckModule::updateSliderContent(int sliderID, bool refresh)
 {
 	Rectangle<int> r(0, 0, 60, 270);
 	Colour c = sliderColors[sliderID]->getColor();
-	if (sliderTouches[sliderID]->boolValue() && highlightOnTouch->boolValue()) c = c.brighter();
+	if (sliderTouches[sliderID]->boolValue() && highlightOnTouch->boolValue()) c = c.brighter(.1f);
 	setScreenContent(sliderID, r, ImageCache::getFromFile(sliderImages[sliderID]->getFile()), c, sliderTexts[sliderID]->stringValue(), refresh);
 }
 
@@ -382,6 +405,8 @@ void LoupedeckModule::setScreenContent(int screenIndex, const Rectangle<int>& r,
 		g.fillAll();
 	}
 
+	shapeManager.draw(g, screenIndex, r);
+
 	if (text.isNotEmpty())
 	{
 		MessageManagerLock mmLock;
@@ -389,10 +414,10 @@ void LoupedeckModule::setScreenContent(int screenIndex, const Rectangle<int>& r,
 		g.drawFittedText(text, g.getClipBounds().reduced(5), Justification::centred, 5);
 	}
 
-	Image::BitmapData bitmapData(iconImage, Image::BitmapData::ReadWriteMode::readOnly);
+	//Image::BitmapData bitmapData(iconImage, Image::BitmapData::ReadWriteMode::readOnly);
 
 	LDScreen screen = screens[screenIndex];
-	
+
 	Array<uint8> data = { (screen.id >> 8) & 0xFF, screen.id & 0xFF,
 		(r.getX() >> 8) & 0xFF, r.getX() & 0xFF,
 		(r.getY() >> 8) & 0xFF, r.getY() & 0xFF,
@@ -489,6 +514,19 @@ void LoupedeckModule::timerCallback()
 	}
 
 	WebSocketClientModule::timerCallback();
+}
+
+var LoupedeckModule::getJSONData()
+{
+	var data = Module::getJSONData();
+	data.getDynamicObject()->setProperty("shapeManager", shapeManager.getJSONData());
+	return data;
+}
+
+void LoupedeckModule::loadJSONDataItemInternal(var data)
+{
+	shapeManager.loadJSONData(data.getProperty("shapeManager", var()));
+	Module::loadJSONDataItemInternal(data);
 }
 
 #pragma warning(pop)

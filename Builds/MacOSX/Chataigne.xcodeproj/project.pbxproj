@@ -390,6 +390,7 @@
 		5DACFADA47B796E8671A31A1 /* ../../Source/Module/modules/audio/analysis/FFTAnalyzer.cpp */ /* FFTAnalyzer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = FFTAnalyzer.cpp; path = ../../Source/Module/modules/audio/analysis/FFTAnalyzer.cpp; sourceTree = SOURCE_ROOT; };
 		5E64FD363DAEBC97B49C0E98 /* ../../Resources/Modules/DLight.png */ /* DLight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DLight.png; path = ../../Resources/Modules/DLight.png; sourceTree = SOURCE_ROOT; };
 		5FA54638369A3C34CEB7FE3C /* ../../Resources/default.chalayout */ /* default.chalayout */ = {isa = PBXFileReference; lastKnownFileType = file.chalayout; name = default.chalayout; path = ../../Resources/default.chalayout; sourceTree = SOURCE_ROOT; };
+		5FAFCDEFF94F762D189E98EF /* ../../Source/Module/modules/controller/loupedeck/LoupedeckShapeManager.cpp */ /* LoupedeckShapeManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LoupedeckShapeManager.cpp; path = ../../Source/Module/modules/controller/loupedeck/LoupedeckShapeManager.cpp; sourceTree = SOURCE_ROOT; };
 		60C2F429971AA38584B05844 /* ../../Source/Common/Processor/Mapping/Filter/filters/ScriptFilter.cpp */ /* ScriptFilter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ScriptFilter.cpp; path = ../../Source/Common/Processor/Mapping/Filter/filters/ScriptFilter.cpp; sourceTree = SOURCE_ROOT; };
 		619FE26D927D040CE08081F5 /* ../../Source/Module/modules/osc/qlab/QLabModule.h */ /* QLabModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = QLabModule.h; path = ../../Source/Module/modules/osc/qlab/QLabModule.h; sourceTree = SOURCE_ROOT; };
 		6289E76712F09C66C8822260 /* ../../Source/Module/modules/tcp/tcpclient/watchout/WatchoutModule.h */ /* WatchoutModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = WatchoutModule.h; path = ../../Source/Module/modules/tcp/tcpclient/watchout/WatchoutModule.h; sourceTree = SOURCE_ROOT; };
@@ -586,6 +587,7 @@
 		A50FF9242BE570B75142ACEE /* ../../Source/TimeMachine/TimeMachineIncludes.h */ /* TimeMachineIncludes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TimeMachineIncludes.h; path = ../../Source/TimeMachine/TimeMachineIncludes.h; sourceTree = SOURCE_ROOT; };
 		A58C745D1F37BDB174FAB845 /* ../../Resources/crash.png */ /* crash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = crash.png; path = ../../Resources/crash.png; sourceTree = SOURCE_ROOT; };
 		A60987F239C18CD85E333A80 /* ../../Source/MainComponent.h */ /* MainComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MainComponent.h; path = ../../Source/MainComponent.h; sourceTree = SOURCE_ROOT; };
+		A62E1C36DBE67FDD245C95E8 /* ../../Source/Module/modules/controller/loupedeck/LoupedeckShapeManager.h */ /* LoupedeckShapeManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LoupedeckShapeManager.h; path = ../../Source/Module/modules/controller/loupedeck/LoupedeckShapeManager.h; sourceTree = SOURCE_ROOT; };
 		A73E903AE8660391CF8BAD95 /* ../../Source/Module/Routing/ui/ModuleRouterPanelView.h */ /* ModuleRouterPanelView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ModuleRouterPanelView.h; path = ../../Source/Module/Routing/ui/ModuleRouterPanelView.h; sourceTree = SOURCE_ROOT; };
 		A744DB2EF1F3D5C1A1E99373 /* ../../Source/Module/modules/osc/resolume/commands/ResolumeFXCommand.cpp */ /* ResolumeFXCommand.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ResolumeFXCommand.cpp; path = ../../Source/Module/modules/osc/resolume/commands/ResolumeFXCommand.cpp; sourceTree = SOURCE_ROOT; };
 		A827068B7EA45A80070F2DFD /* ../../Source/Module/modules/system/os/commands/OSPowerCommand.h */ /* OSPowerCommand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OSPowerCommand.h; path = ../../Source/Module/modules/system/os/commands/OSPowerCommand.h; sourceTree = SOURCE_ROOT; };
@@ -636,6 +638,7 @@
 		B58F472712F98039790C5BD8 /* ../../Source/Module/modules/tcp/tcpclient/TCPClientModule.h */ /* TCPClientModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TCPClientModule.h; path = ../../Source/Module/modules/tcp/tcpclient/TCPClientModule.h; sourceTree = SOURCE_ROOT; };
 		B5C6C01816DB10267E81F0A4 /* ../../Source/CustomVariables/ui/CVGroupManagerUI.cpp */ /* CVGroupManagerUI.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CVGroupManagerUI.cpp; path = ../../Source/CustomVariables/ui/CVGroupManagerUI.cpp; sourceTree = SOURCE_ROOT; };
 		B63560F060FE73D4403EF4A9 /* ../../Source/Common/Command/Template/CommandTemplateParameter.cpp */ /* CommandTemplateParameter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CommandTemplateParameter.cpp; path = ../../Source/Common/Command/Template/CommandTemplateParameter.cpp; sourceTree = SOURCE_ROOT; };
+		B64022B64377679A44212506 /* ../../Source/Module/modules/controller/loupedeck/LoupedeckShape.h */ /* LoupedeckShape.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LoupedeckShape.h; path = ../../Source/Module/modules/controller/loupedeck/LoupedeckShape.h; sourceTree = SOURCE_ROOT; };
 		B659B9A2F92F0E7A59C628DD /* ../../Source/Common/Command/Template/CommandTemplateManager.cpp */ /* CommandTemplateManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CommandTemplateManager.cpp; path = ../../Source/Common/Command/Template/CommandTemplateManager.cpp; sourceTree = SOURCE_ROOT; };
 		B68AA40E425DF28AFA78226B /* ../../Source/Common/InputSystem/InputSystemManager.cpp */ /* InputSystemManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = InputSystemManager.cpp; path = ../../Source/Common/InputSystem/InputSystemManager.cpp; sourceTree = SOURCE_ROOT; };
 		B6A29DF2E614A624B07ADD6A /* ../../Source/Module/modules/dmx/DMXModule.h */ /* DMXModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DMXModule.h; path = ../../Source/Module/modules/dmx/DMXModule.h; sourceTree = SOURCE_ROOT; };
@@ -800,6 +803,7 @@
 		E8DC5C1C68E6DD9A36068D0D /* ../../Source/Guider/GuiderIncludes.h */ /* GuiderIncludes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GuiderIncludes.h; path = ../../Source/Guider/GuiderIncludes.h; sourceTree = SOURCE_ROOT; };
 		E91A8E434241E4DDFB355A23 /* ../../Source/Module/modules/websocket/WebSocketClientModule.cpp */ /* WebSocketClientModule.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = WebSocketClientModule.cpp; path = ../../Source/Module/modules/websocket/WebSocketClientModule.cpp; sourceTree = SOURCE_ROOT; };
 		E9DC14E295FEC8CF62406CB1 /* ../../Source/Common/Processor/Mapping/Filter/filters/color/ColorShiftFilter.h */ /* ColorShiftFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ColorShiftFilter.h; path = ../../Source/Common/Processor/Mapping/Filter/filters/color/ColorShiftFilter.h; sourceTree = SOURCE_ROOT; };
+		E9FCE3C0E118986111DBEC1E /* ../../Source/Module/modules/controller/loupedeck/LoupedeckShape.cpp */ /* LoupedeckShape.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LoupedeckShape.cpp; path = ../../Source/Module/modules/controller/loupedeck/LoupedeckShape.cpp; sourceTree = SOURCE_ROOT; };
 		EA1E97F19E0B43C7EC126720 /* ../../Source/Common/ParameterLink/ParameterLink.cpp */ /* ParameterLink.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ParameterLink.cpp; path = ../../Source/Common/ParameterLink/ParameterLink.cpp; sourceTree = SOURCE_ROOT; };
 		EABFE337CDC445EABA98B7E3 /* ../../Source/Common/Processor/Mapping/Filter/filters/conversion/ui/ConversionConnector.cpp */ /* ConversionConnector.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ConversionConnector.cpp; path = ../../Source/Common/Processor/Mapping/Filter/filters/conversion/ui/ConversionConnector.cpp; sourceTree = SOURCE_ROOT; };
 		EAF33109C5A8A991D0758364 /* ../../Source/CustomVariables/Preset/Morpher/jc_voronoi.h */ /* jc_voronoi.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = jc_voronoi.h; path = ../../Source/CustomVariables/Preset/Morpher/jc_voronoi.h; sourceTree = SOURCE_ROOT; };
@@ -2634,6 +2638,10 @@
 				3FE6542C6A626D710BBB340F,
 				1F3CEEAEBD28A89F449A06F3,
 				D1E111CDD35EEAB543675AFB,
+				E9FCE3C0E118986111DBEC1E,
+				B64022B64377679A44212506,
+				5FAFCDEFF94F762D189E98EF,
+				A62E1C36DBE67FDD245C95E8,
 			);
 			name = loupedeck;
 			sourceTree = "<group>";
@@ -3540,7 +3548,7 @@
 					"VST_LOGGING=0",
 					"JUCE_SUPPORT_CARBON=0",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
-					"JUCE_APP_VERSION=1.8.0b18",
+					"JUCE_APP_VERSION=1.8.0b19",
 					"JUCE_APP_VERSION_HEX=0x10800",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
@@ -3606,7 +3614,7 @@
 					"VST_LOGGING=0",
 					"JUCE_SUPPORT_CARBON=0",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
-					"JUCE_APP_VERSION=1.8.0b18",
+					"JUCE_APP_VERSION=1.8.0b19",
 					"JUCE_APP_VERSION_HEX=0x10800",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",

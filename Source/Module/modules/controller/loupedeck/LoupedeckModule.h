@@ -90,6 +90,8 @@ public:
     };
     Array<LDScreen> screens;
 
+    LoupedeckShapeManager shapeManager;
+
     void dataReceived(const MemoryBlock& data) override;
     void processTouchData(Array<uint8_t> data);
 
@@ -111,6 +113,9 @@ public:
 
     String getLoupedeckServerPath() const;
     virtual void timerCallback() override;
+
+    var getJSONData() override;
+    void loadJSONDataItemInternal(var data) override;
 
 
     static LoupedeckModule* create() { return new LoupedeckModule(); }

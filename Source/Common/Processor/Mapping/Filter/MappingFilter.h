@@ -30,7 +30,7 @@ public:
 	Array<Array<WeakReference<Parameter>>> sourceParams;
 	OwnedArray<OwnedArray<Parameter>> filteredParameters; //not in hierarchy, first dimension is multiplex
 
-	var previousValues; //for checking
+	Array<var> previousValues; //for checking, multiplexed
 
 	bool processOnSameValue; //disabling this allows for fast checking and stopping if source and dest values are the same
 	bool autoSetRange; //if true, will check at process if ranges are differents between source and filtered, and if so, will reassign

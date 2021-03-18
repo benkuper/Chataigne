@@ -1,4 +1,3 @@
-#include "SimpleConversionFilters.h"
 /*
   ==============================================================================
 
@@ -254,6 +253,9 @@ var ToColorFilter::getJSONData()
 
 Parameter* ToColorFilter::setupSingleParameterInternal(Parameter* sourceParam, int multiplexIndex)
 {
+	String oldKey = "";
+	if (retargetComponent != nullptr) oldKey = retargetComponent->getValueKey();
+
 	Parameter* p = SimpleConversionFilter::setupSingleParameterInternal(sourceParam, multiplexIndex);
 
 	if (multiplexIndex != 0) return p; //only setup for 1st if multiplex
@@ -277,7 +279,9 @@ Parameter* ToColorFilter::setupSingleParameterInternal(Parameter* sourceParam, i
 
 	case TARGET:
 		retargetComponent->addOption("Hue", HUE)->addOption("Saturation", SAT)->addOption("Brightness", VAL);
-		retargetComponent->setValueWithData(ghostOptions.getProperty("retarget", HUE));
+		if (oldKey.isNotEmpty()) retargetComponent->setValueWithKey(oldKey);
+		else retargetComponent->setValueWithData(ghostOptions.getProperty("retarget", HUE));
+
 		if(baseColor != nullptr) baseColor->hideInEditor = false;
 		break;
             
@@ -298,6 +302,8 @@ Parameter* ToColorFilter::setupSingleParameterInternal(Parameter* sourceParam, i
 
 MappingFilter::ProcessResult ToColorFilter::processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex)
 {
+	
+
 	if (source->value.isArray())
 	{
 		if (source->value.size() >= 3)
@@ -318,25 +324,28 @@ MappingFilter::ProcessResult ToColorFilter::processSingleParameterInternal(Param
 	{
 		int comp = retargetComponent->getValueData();
 
+		var baseColorVal = filterParams.getLinkedValue(baseColor, multiplexIndex);
+		Colour mBaseColor = Colour::fromFloatRGBA((float)baseColorVal[0], (float)baseColorVal[1], (float)baseColorVal[2], baseColorVal.size() > 3 ? (float)baseColorVal[3] : 1.0f);
+
 		switch (comp)
 		{
 		case HUE:
 		{
-			Colour c = baseColor->getColor().withHue(source->value);
+			Colour c = mBaseColor.withHue(source->value);
 			((ColorParameter*)out)->setColor(c);
 		}
 		break;
 
 		case SAT:
 		{
-			Colour c = baseColor->getColor().withSaturation(source->value);
+			Colour c = mBaseColor.withSaturation(source->value);
 			((ColorParameter*)out)->setColor(c);
 		}
 		break;
 
 		case VAL:
 		{
-			Colour c = baseColor->getColor().withBrightness(source->value);
+			Colour c = mBaseColor.withBrightness(source->value);
 			((ColorParameter*)out)->setColor(c);
 		}
 		break;
@@ -344,7 +353,7 @@ MappingFilter::ProcessResult ToColorFilter::processSingleParameterInternal(Param
 		default:
 		{
 			var val = var();
-			for (int i = 0; i < out->value.size(); ++i) val.append(baseColor->value[i]); //force alpha to 1
+			for (int i = 0; i < out->value.size() && i < baseColorVal.size(); ++i) val.append(baseColorVal[i]); //force alpha to 1
 			val[(int)retargetComponent->getValueData()] = convertValue(source, source->getValue());
 			out->setValue(val);
 		}

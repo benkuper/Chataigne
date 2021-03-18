@@ -86,6 +86,8 @@
 #include "modules/controller/streamdeck/models/StreamDeckV2.h"
 #include "modules/controller/streamdeck/models/StreamDeckXL.h"
 
+#include "modules/controller/loupedeck/LoupedeckShape.h"
+#include "modules/controller/loupedeck/LoupedeckShapeManager.h"
 #include "modules/controller/loupedeck/LoupedeckModule.h"
 #include "modules/controller/loupedeck/commands/LoupedeckCommands.h"
 

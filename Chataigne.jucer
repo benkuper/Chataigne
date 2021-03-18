@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.8.0b18"
+<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.8.0b19"
               bundleIdentifier="benkuper.Chataigne" includeBinaryInAppConfig="1"
               companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
               companyEmail="benjamin@kuperberg.fr" defines="VST_LOGGING=0&#10;"
@@ -816,6 +816,14 @@
                     file="Source/Module/modules/controller/loupedeck/LoupedeckModule.cpp"/>
               <FILE id="qcckZ6" name="LoupedeckModule.h" compile="0" resource="0"
                     file="Source/Module/modules/controller/loupedeck/LoupedeckModule.h"/>
+              <FILE id="ENIv1q" name="LoupedeckShape.cpp" compile="0" resource="0"
+                    file="Source/Module/modules/controller/loupedeck/LoupedeckShape.cpp"/>
+              <FILE id="ud3rgM" name="LoupedeckShape.h" compile="0" resource="0"
+                    file="Source/Module/modules/controller/loupedeck/LoupedeckShape.h"/>
+              <FILE id="eyiiGB" name="LoupedeckShapeManager.cpp" compile="0" resource="0"
+                    file="Source/Module/modules/controller/loupedeck/LoupedeckShapeManager.cpp"/>
+              <FILE id="JD2mSN" name="LoupedeckShapeManager.h" compile="0" resource="0"
+                    file="Source/Module/modules/controller/loupedeck/LoupedeckShapeManager.h"/>
             </GROUP>
             <GROUP id="{188E8CA2-04CC-D878-F91F-A3EDE5E6A665}" name="mouse">
               <GROUP id="{76214040-3E5D-6DDE-134B-66DC1FAC3DDD}" name="commands">
