@@ -94,7 +94,7 @@
       <SubSystem>Windows</SubSystem>
       <AdditionalLibraryDirectories>../../External/joycon/lib/win;../../External/servus/lib/win/x64/debug;../../External/dnssd/lib;../../External/sdl/lib/win;../../External/hidapi/lib/win/x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <LargeAddressAware>true</LargeAddressAware>
-      <AdditionalDependencies>Setupapi.lib;hid.lib;joytime-core.lib;joytime-input-hidapi.lib;Servus.lib;dnssd.lib;SDL2.lib;iphlpapi.lib;hid.lib;hidapi_static.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Setupapi.lib;hid.lib;JoyShockLibrary.lib;Servus.lib;dnssd.lib;SDL2.lib;iphlpapi.lib;hid.lib;hidapi_static.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions>/HEAP:0x400000,0x10000 %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <Bscmake>
@@ -102,7 +102,7 @@
       <OutputFile>$(IntDir)\Chataigne.bsc</OutputFile>
     </Bscmake>
     <Lib>
-      <AdditionalDependencies>Setupapi.lib;hid.lib;joytime-core.lib;joytime-input-hidapi.lib;Servus.lib;dnssd.lib;SDL2.lib;iphlpapi.lib;hid.lib;hidapi_static.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Setupapi.lib;hid.lib;JoyShockLibrary.lib;Servus.lib;dnssd.lib;SDL2.lib;iphlpapi.lib;hid.lib;hidapi_static.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>../../External/joycon/lib/win;../../External/servus/lib/win/x64/debug;../../External/dnssd/lib;../../External/sdl/lib/win;../../External/hidapi/lib/win/x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
@@ -145,7 +145,7 @@
       <AdditionalLibraryDirectories>../../External/joycon/lib/win;../../External/servus/lib/win/x64/release;../../External/dnssd/lib;../../External/sdl/lib/win;../../External/hidapi/lib/win/x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <LargeAddressAware>true</LargeAddressAware>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
-      <AdditionalDependencies>Setupapi.lib;hid.lib;joytime-core.lib;joytime-input-hidapi.lib;Servus.lib;dnssd.lib;SDL2.lib;iphlpapi.lib;hid.lib;hidapi_static.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Setupapi.lib;hid.lib;JoyShockLibrary.lib;Servus.lib;dnssd.lib;SDL2.lib;iphlpapi.lib;hid.lib;hidapi_static.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions>/HEAP:0x400000,0x10000 %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <Bscmake>
@@ -153,7 +153,7 @@
       <OutputFile>$(IntDir)\Chataigne.bsc</OutputFile>
     </Bscmake>
     <Lib>
-      <AdditionalDependencies>Setupapi.lib;hid.lib;joytime-core.lib;joytime-input-hidapi.lib;Servus.lib;dnssd.lib;SDL2.lib;iphlpapi.lib;hid.lib;hidapi_static.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Setupapi.lib;hid.lib;JoyShockLibrary.lib;Servus.lib;dnssd.lib;SDL2.lib;iphlpapi.lib;hid.lib;hidapi_static.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>../../External/joycon/lib/win;../../External/servus/lib/win/x64/release;../../External/dnssd/lib;../../External/sdl/lib/win;../../External/hidapi/lib/win/x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
