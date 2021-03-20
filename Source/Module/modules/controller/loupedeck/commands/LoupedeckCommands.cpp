@@ -41,6 +41,7 @@ LoupedeckCommand::LoupedeckCommand(LoupedeckModule* _module, CommandContext cont
 		break;
 
 	case SET_TEXT:
+	case SET_ALL_TEXT:
 		valueParam = addStringParameter("Text", "The text to put", "Cool");
 		break;
 
@@ -122,6 +123,11 @@ LoupedeckCommand::LoupedeckCommand(LoupedeckModule* _module, CommandContext cont
 			->addOption("Down & Up (ver-ehhhh)", 123)
 			->addOption("Ramp Up (ver-eh)", 125);
 		break;
+
+	case SET_AUTO_REFRESH:
+		valueParam = addBoolParameter("Value", "If checked, this will force refreshing on every change. Otherwise this will not...", false);
+		break;
+
 	}
 
 	/*
@@ -144,9 +150,10 @@ void LoupedeckCommand::triggerInternal(int multiplexIndex)
 	int r = row != nullptr ? (int)getLinkedValue(row, multiplexIndex) - 1 : 0;
 	int c = column != nullptr ? (int)getLinkedValue(column, multiplexIndex) - 1 : 0;
 
-	int index = screenTarget == PADS ? r * 4 + c : screenTarget == BUTTONS? c+1 : (int)screenTarget;
+	int index = screenTarget == PADS ? r * 4 + c : screenTarget == BUTTONS ? c + 1 : (int)screenTarget;
 
-	var val = getLinkedValue(valueParam, multiplexIndex);
+	var val;
+	if(valueParam != nullptr) val = getLinkedValue(valueParam, multiplexIndex);
 
 	switch (action)
 	{
@@ -178,10 +185,35 @@ void LoupedeckCommand::triggerInternal(int multiplexIndex)
 		{
 			for (auto& cp : loupedeckModule->buttonColors) cp->setColor(col);
 		}
-		else
+		else if (screenTarget == PADS)
 		{
-			for (auto& cp : loupedeckModule->padColors) cp->setColor(col);
-			for (auto& cp : loupedeckModule->sliderColors) cp->setColor(col);
+			for (int i = 0; i < loupedeckModule->padColors.size(); i++)
+			{
+				loupedeckModule->padColors[i]->setColor(col);
+				loupedeckModule->updatePadContent(i, false);
+			}
+			if(loupedeckModule->autoRefresh->boolValue()) loupedeckModule->refreshScreen(2);
+
+		}
+		else if (screenTarget == LEFT_SLIDER || screenTarget == RIGHT_SLIDER)
+		{
+			loupedeckModule->sliderColors[(int)screenTarget]->setColor(col);
+			loupedeckModule->updateSliderContent((int)screenTarget, loupedeckModule->autoRefresh->boolValue());
+		}
+	}
+	break;
+
+	case SET_ALL_TEXT:
+	{
+		if (screenTarget == PADS)
+		{
+			for (int i = 0; i < loupedeckModule->padTexts.size(); i++)
+			{
+				loupedeckModule->padTexts[i]->setValue(val.toString());
+				loupedeckModule->updatePadContent(i, false);
+			}
+			if (loupedeckModule->autoRefresh->boolValue()) loupedeckModule->refreshScreen(2);
+
 		}
 	}
 	break;
@@ -192,6 +224,10 @@ void LoupedeckCommand::triggerInternal(int multiplexIndex)
 
 	case VIBRATE:
 		loupedeckModule->vibrate(val);
+		break;
+
+	case SET_AUTO_REFRESH:
+		loupedeckModule->autoRefresh->setValue(val);
 		break;
 
 	case REFRESH_SCREEN:

@@ -11,11 +11,15 @@
 #pragma once
 
 #if JUCE_WINDOWS
-#include "joytime-input-hidapi.hpp"
+#include "JoyShockLibrary.h"
+
+/*
 #elif JUCE_MAC
 #define JOYTIME_CORE_BUILT_AS_STATIC
 #define JOYTIME_INPUT_HIDAPI_BUILT_AS_STATIC
 #include "joytime-input-hidapi.hpp"
+*/
+
 #endif
 
 class JoyConModule :
@@ -26,16 +30,12 @@ public:
 	JoyConModule();
 	~JoyConModule();
 
-#if JUCE_WINDOWS || JUCE_MAC
-	Array<Joytime::Controller *> controllers;
+#if JUCE_WINDOWS
+	Array<int> controllers;
 #endif
 
 	ControllableContainer leftValues;
 	ControllableContainer rightValues;
-	EnablingControllableContainer imuParams;
-
-	FloatParameter * imuFilterWeight;
-	Trigger * resetIMU;
 
 	//Left controller
 	FloatParameter * leftAccelX;
@@ -88,11 +88,9 @@ public:
 	Vector3D<float> i_b_;
 	Vector3D<float> w_a, w_g;
 
-#if JUCE_WINDOWS || JUCE_MAC
-	void updateController(Joytime::Controller * c);
-	void processIMU(Joytime::Controller * c);
+#if JUCE_WINDOWS
+	void updateController(int id);
     void onControllableFeedbackUpdateInternal(ControllableContainer *, Controllable *c) override;
-    void onContainerTriggerTriggered(Trigger * t) override;
 #endif
     
 

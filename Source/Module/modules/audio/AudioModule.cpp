@@ -85,7 +85,7 @@ AudioModule::AudioModule(const String & name) :
 
 	for (auto &c : valuesCC.controllables) c->setControllableFeedbackOnly(true);
 
-	defManager->add(CommandDefinition::createDef(this,"","Play audio file", &PlayAudioFileCommand::create, CommandContext::ACTION));
+	defManager->add(CommandDefinition::createDef(this,"","Play audio file", &PlayAudioFileCommand::create));
 
 	
 }

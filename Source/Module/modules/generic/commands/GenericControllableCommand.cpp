@@ -78,9 +78,7 @@ void GenericControllableCommand::setValueParameter(Parameter* p)
 
 		addParameter(value);
 		if (!ghostValueData.isVoid()) value->loadJSONData(ghostValueData);
-		ghostValueData = var();
-
-		linkParamToMappingIndex(value, 0);
+		if(!isCurrentlyLoadingData) linkParamToMappingIndex(value, 0);
 	}
 }
 
@@ -113,7 +111,7 @@ void GenericControllableCommand::updateOperatorOptions()
 
 	if (oldData.isNotEmpty()) valueOperator->setValueWithKey(oldData);
 	else valueOperator->setValueWithData(EQUAL);
-	valueOperator->setEnabled(valueOperator->getAllKeys().size() > 1);
+	valueOperator->setEnabled(valueOperator->getAllKeys().size() >= 1);
 
 	value->hideInEditor = valueOperator->getValueDataAsEnum<Operator>() == INVERSE;
 	ghostOperator = var();
@@ -146,9 +144,15 @@ void GenericControllableCommand::triggerInternal(int multiplexIndex)
 				{
 					if (val.isInt() || val.isDouble())
 					{
-						if ((int)val < ep->enumValues.size()) ep->setValueWithKey((ep->enumValues[val]->key));
+						int lVal = jlimit(0, ep->enumValues.size() - 1, (int)val);
+						ep->setValueWithKey((ep->enumValues[lVal]->key));
 					}
-					else if (val.isString()) ep->setValueWithKey(val);
+					else if (val.isString())
+					{
+						StringArray keys = ep->getAllKeys();
+						if (keys.contains(val.toString())) ep->setValueWithKey(val);
+						else ep->setValueWithData(val);
+					}
 					else ep->setValueWithData(val);
 				}
 				else
@@ -232,36 +236,42 @@ void GenericControllableCommand::loadJSONDataInternal(var data)
 		Engine::mainEngine->addEngineListener(this);
 		dataToLoad = data;
 	}
-	else BaseCommand::loadJSONDataInternal(data);
-
-	
+	else
+	{
+		BaseCommand::loadJSONDataInternal(data);
+		loadGhostData(data);
+	}
 }
 
 void GenericControllableCommand::endLoadFile()
 {
-	//reset data we want to reload
-	target->setValue("", true);
-	//DBG("Engine after load, load command data");
-
+	target->resetValue();
 	loadJSONData(dataToLoad);
+	loadGhostData(dataToLoad);
 	dataToLoad = var();
 
-	if (value == nullptr) updateValueFromTarget(); //force generate if not yet
-	
+	Engine::mainEngine->removeEngineListener(this);
+}
+
+void GenericControllableCommand::loadGhostData(var data)
+{
 	if (value == nullptr)
 	{
-		var paramsData = dataToLoad.getProperty("parameters", var());
+		var paramsData = data.getProperty("parameters", var());
 		for (int i = 0; i < paramsData.size(); i++)
 		{
-			if (paramsData[i].getProperty("controlAddress", "") == "/operator")
+			if (paramsData[i].getProperty("controlAddress", "") == "/value")
+			{
+				ghostValueData = paramsData[i];
+			}
+			else if (paramsData[i].getProperty("controlAddress", "") == "/operator")
 			{
 				ghostOperator = paramsData[i].getProperty("value", var());
-				break;
 			}
 		}
-	}
 
-	Engine::mainEngine->removeEngineListener(this);
+		updateValueFromTarget(); //force generate if not yet
+	}
 }
 
 BaseCommand* GenericControllableCommand::create(ControllableContainer* module, CommandContext context, var params, Multiplex* multiplex)

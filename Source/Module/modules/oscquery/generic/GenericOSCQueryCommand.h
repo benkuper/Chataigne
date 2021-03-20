@@ -45,6 +45,8 @@ public:
 	virtual void loadJSONDataInternal(var data) override;
 	virtual void endLoadFile() override;
 
+	virtual void loadGhostData(var data);
+
 	static GenericOSCQueryCommand * create(ControllableContainer * module, CommandContext context, var params, Multiplex * multiplex) { 
 		return new GenericOSCQueryCommand((GenericOSCQueryModule *)module, context, params, multiplex); }
 };

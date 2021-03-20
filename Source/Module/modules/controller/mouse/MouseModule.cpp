@@ -54,10 +54,10 @@ MouseModule::MouseModule() :
 
 	Desktop::getInstance().addGlobalMouseListener(this);
 
-	defManager->add(CommandDefinition::createDef(this, "", "Set Cursor Pos", &MouseModuleCommands::create, CommandContext::BOTH)->addParam("type", MouseModuleCommands::SET_CURSOR_POSITION));
-	defManager->add(CommandDefinition::createDef(this, "", "Button Down", &MouseModuleCommands::create, CommandContext::ACTION)->addParam("type", MouseModuleCommands::BUTTON_DOWN));
-	defManager->add(CommandDefinition::createDef(this, "", "Button Up", &MouseModuleCommands::create, CommandContext::ACTION)->addParam("type", MouseModuleCommands::BUTTON_UP));
-	defManager->add(CommandDefinition::createDef(this, "", "Button Click",&MouseModuleCommands::create, CommandContext::ACTION)->addParam("type", MouseModuleCommands::BUTTON_CLICK));
+	defManager->add(CommandDefinition::createDef(this, "", "Set Cursor Pos", &MouseModuleCommands::create)->addParam("type", MouseModuleCommands::SET_CURSOR_POSITION));
+	defManager->add(CommandDefinition::createDef(this, "", "Button Down", &MouseModuleCommands::create)->addParam("type", MouseModuleCommands::BUTTON_DOWN));
+	defManager->add(CommandDefinition::createDef(this, "", "Button Up", &MouseModuleCommands::create)->addParam("type", MouseModuleCommands::BUTTON_UP));
+	defManager->add(CommandDefinition::createDef(this, "", "Button Click",&MouseModuleCommands::create)->addParam("type", MouseModuleCommands::BUTTON_CLICK));
 
 	startTimerHz(updateRate->intValue());
 }

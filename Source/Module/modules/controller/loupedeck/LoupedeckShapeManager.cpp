@@ -11,6 +11,7 @@
 LoupedeckShapeManager::LoupedeckShapeManager() :
     BaseManager("Custom Shapes")
 {
+    selectItemWhenCreated = false;
 }
 
 LoupedeckShapeManager::~LoupedeckShapeManager()

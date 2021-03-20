@@ -9,6 +9,7 @@
 */
 
 #include "CustomVariables/CustomVariablesIncludes.h"
+#include "CustomVariablesModuleCommands.h"
 
 CVCommand::CVCommand(CustomVariablesModule* _module, CommandContext context, var params, Multiplex* multiplex) :
 	BaseCommand(_module, context, params, multiplex),
@@ -142,11 +143,16 @@ void CVCommand::updateValueFromTarget()
 
 void CVCommand::updateOperatorOptions()
 {
-	var oldData = valueOperator->getValueData();
+	String oldData = ghostOperator.isVoid() ? valueOperator->getValueKey() : ghostOperator;
+	
 	valueOperator->clearOptions();
 	valueOperator->addOption("Equals", EQUAL, false);
 
-	if (value == nullptr) return;
+	if (value == nullptr)
+	{
+		ghostOperator = oldData;
+		return;
+	}
 
 	switch (value->type)
 	{
@@ -159,13 +165,18 @@ void CVCommand::updateOperatorOptions()
 		valueOperator->addOption("Inverse", INVERSE, false);
 		break;
 
+	case Controllable::ENUM:
+		valueOperator->addOption("Next Option", NEXT_ENUM)->addOption("Previous Option", PREV_ENUM);
+		break;
+
 	default:
 		break;
 	}
 
-	valueOperator->setValueWithData(oldData.isVoid() ? EQUAL : (Operator)(int)(oldData));
-	valueOperator->setEnabled(valueOperator->getAllKeys().size() > 1);
-
+	if (oldData.isNotEmpty()) valueOperator->setValueWithKey(oldData);
+	else valueOperator->setValueWithData(EQUAL);
+	
+	valueOperator->setEnabled(valueOperator->getAllKeys().size() >= 1);
 	value->hideInEditor = valueOperator->getValueDataAsEnum<Operator>() == INVERSE;
 }
 
@@ -225,9 +236,16 @@ void CVCommand::triggerInternal(int multiplexIndex)
 					{
 						if (val.isInt() || val.isDouble())
 						{
-							if ((int)val < ep->enumValues.size()) ep->setValueWithKey((ep->enumValues[val]->key));
+							int index = (int)val % ep->enumValues.size();
+							while (index < 0) index += ep->enumValues.size();
+							ep->setValueWithKey((ep->enumValues[index]->key));
 						}
-						else if (val.isString()) ep->setValueWithKey(val);
+						else if (val.isString())
+						{
+							StringArray keys = ep->getAllKeys();
+							if (keys.contains(val.toString())) ep->setValueWithKey(val);
+							else ep->setValueWithData(val);
+						}
 						else ep->setValueWithData(val);
 					}
 					else
@@ -264,6 +282,14 @@ void CVCommand::triggerInternal(int multiplexIndex)
 
 				case MIN:
 					p->setValue(std::min(p->floatValue(), (float)val));
+					break;
+
+				case NEXT_ENUM:
+					if (EnumParameter* ep = dynamic_cast<EnumParameter*>(p)) ep->setNext();
+					break;
+
+				case PREV_ENUM:
+					if (EnumParameter* ep = dynamic_cast<EnumParameter*>(p)) ep->setPrev();
 					break;
 				}
 			}
@@ -384,6 +410,33 @@ void CVCommand::triggerInternal(int multiplexIndex)
 void CVCommand::linkUpdated(ParameterLink* pLink)
 {
 	if (pLink->parameter == target) updateValueFromTarget();
+}
+
+void CVCommand::loadJSONDataInternal(var data)
+{
+	BaseCommand::loadJSONDataInternal(data);
+	loadGhostData(data);
+}
+
+void CVCommand::loadGhostData(var data)
+{
+	if (value == nullptr)
+	{
+		var paramsData = data.getProperty("parameters", var());
+		for (int i = 0; i < paramsData.size(); i++)
+		{
+			if (paramsData[i].getProperty("controlAddress", "") == "/value")
+			{
+				ghostValueData = paramsData[i];
+			}
+			else if (paramsData[i].getProperty("controlAddress", "") == "/operator")
+			{
+				ghostOperator = paramsData[i].getProperty("value", var());
+			}
+		}
+
+		updateValueFromTarget(); //force generate if not yet
+	}
 }
 
 BaseCommand* CVCommand::create(ControllableContainer* module, CommandContext context, var params, Multiplex* multiplex)

@@ -41,9 +41,9 @@ KeyboardModule::KeyboardModule() :
 	command = valuesCC.addBoolParameter("Command", "Is command down ?", false);
 	alt = valuesCC.addBoolParameter("Alt", "Is alt down ?", false);
 
-	defManager->add(CommandDefinition::createDef(this, "", "Key Down", &KeyboardModuleCommands::create, CommandContext::ACTION)->addParam("type", KeyboardModuleCommands::KEY_DOWN));
-	defManager->add(CommandDefinition::createDef(this, "", "Key Up", &KeyboardModuleCommands::create, CommandContext::ACTION)->addParam("type", KeyboardModuleCommands::KEY_UP));
-	defManager->add(CommandDefinition::createDef(this, "", "Key hit", &KeyboardModuleCommands::create, CommandContext::ACTION)->addParam("type", KeyboardModuleCommands::KEY_HIT));
+	defManager->add(CommandDefinition::createDef(this, "", "Key Down", &KeyboardModuleCommands::create)->addParam("type", KeyboardModuleCommands::KEY_DOWN));
+	defManager->add(CommandDefinition::createDef(this, "", "Key Up", &KeyboardModuleCommands::create)->addParam("type", KeyboardModuleCommands::KEY_UP));
+	defManager->add(CommandDefinition::createDef(this, "", "Key hit", &KeyboardModuleCommands::create)->addParam("type", KeyboardModuleCommands::KEY_HIT));
 
 }
 

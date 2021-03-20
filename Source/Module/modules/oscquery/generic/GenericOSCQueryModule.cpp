@@ -314,7 +314,8 @@ void GenericOSCQueryModule::createOrUpdateControllableFromData(ControllableConta
 		maxVal.append(range[i].getProperty("MAX", INT32_MAX));
 	}
 
-	Controllable::Type targetType;
+	Controllable::Type targetType = Controllable::Type::CUSTOM;
+
 	if (type == "N" || type == "I") targetType = Controllable::TRIGGER;
 	else if (type == "i" || type == "h") targetType = Controllable::INT;
 	else if (type == "f" || type == "d") targetType = Controllable::FLOAT;
@@ -410,9 +411,10 @@ void GenericOSCQueryModule::createOrUpdateControllableFromData(ControllableConta
 		if (options.isArray())
 		{
 			if (c == nullptr) c = new EnumParameter(cNiceName, cNiceName);
-
-			for (int i = 0; i < options.size(); ++i) ((EnumParameter*)c)->addOption(options[i], options[i], false);
-			((EnumParameter*)c)->setValueWithKey(value[0]);
+			EnumParameter* ep = (EnumParameter*)c;
+			ep->clearOptions();
+			for (int i = 0; i < options.size(); ++i) ep->addOption(options[i], options[i], false);
+			ep->setValueWithKey(value[0]);
 		}
 	}
 	break;
@@ -429,9 +431,9 @@ void GenericOSCQueryModule::createOrUpdateControllableFromData(ControllableConta
 	{
 		c->setCustomShortName(name);
 		if (access == 1) c->setControllableFeedbackOnly(true);
+		if (addToContainer) parentCC->addControllable(c);
 	}
 
-	if (addToContainer) parentCC->addControllable(c);
 }
 
 

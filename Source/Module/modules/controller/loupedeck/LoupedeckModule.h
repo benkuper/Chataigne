@@ -29,6 +29,7 @@ public:
     EnumParameter* model; //not used right now
 
     //params
+    BoolParameter* autoRefresh;
     FloatParameter * brightness;
     FloatParameter* knobSensitivity;
     BoolParameter* highlightOnTouch;

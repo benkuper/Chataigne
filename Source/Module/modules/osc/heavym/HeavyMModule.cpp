@@ -18,7 +18,7 @@ HeavyMModule::HeavyMModule() :
 	var intTriggerArgs = var();
 	intTriggerArgs.append(ControllableUtil::createDataForParam(IntParameter::getTypeStringStatic(), "Trigger", "Just here to force trigger, from the HeavyM doc.", 1, 1, 1, false));
 
-	defManager->add(CommandDefinition::createDef(this, "Group", "Select Group", &OSCCommand::create, CommandContext::ACTION)->addParam("address", "/SelectGroup[group]")->addParam("params", groupIndexParams)->addParam("args", intTriggerArgs)->addParam("hideArgs", true));
+	defManager->add(CommandDefinition::createDef(this, "Group", "Select Group", &OSCCommand::create)->addParam("address", "/SelectGroup[group]")->addParam("params", groupIndexParams)->addParam("args", intTriggerArgs)->addParam("hideArgs", true));
 
 	//SEQUENCE
 	var indexArgs = var();
@@ -30,7 +30,7 @@ HeavyMModule::HeavyMModule() :
 	boolValueArgs.append(boolValueArg);
 
 	defManager->add(CommandDefinition::createDef(this, "Sequence", "Toggle Play-Pause Sequence", &OSCCommand::create, CommandContext::ACTION)->addParam("address", "/SeqControlPlay")->addParam("args", intTriggerArgs)->addParam("hideArgs", true));
-	defManager->add(CommandDefinition::createDef(this, "Sequence", "Select Sequence", &OSCCommand::create, CommandContext::ACTION)->addParam("address", "/changeSeq")->addParam("args", indexArgs));
+	defManager->add(CommandDefinition::createDef(this, "Sequence", "Select Sequence", &OSCCommand::create)->addParam("address", "/changeSeq")->addParam("args", indexArgs));
 	defManager->add(CommandDefinition::createDef(this, "Sequence", "Select Previous Sequence", &OSCCommand::create, CommandContext::ACTION)->addParam("address", "/SeqControlPrevious")->addParam("args", intTriggerArgs)->addParam("hideArgs", true));
 	defManager->add(CommandDefinition::createDef(this, "Sequence", "Select Next Sequence", &OSCCommand::create, CommandContext::ACTION)->addParam("address", "/SeqControlNext")->addParam("args", intTriggerArgs)->addParam("hideArgs", true));
 	defManager->add(CommandDefinition::createDef(this, "Sequence", "Set Shuffle Sequence", &OSCCommand::create, CommandContext::ACTION)->addParam("address", "/SeqControlShuffle")->addParam("args", boolValueArg));
@@ -42,7 +42,7 @@ HeavyMModule::HeavyMModule() :
 	var tempoArgs = var();
 	tempoArgs.append(ControllableUtil::createDataForParam(IntParameter::getTypeStringStatic(), "Value", "New tempo value, in BPM", 120, 20, 400));
 	//tempoArgs.append(ControllableUtil::createDataForParam(IntParameter::getTypeStringStatic(), "Trigger", "Just here to force trigger, from the HeavyM doc.", 1, 1, 1, false));
-	defManager->add(CommandDefinition::createDef(this, "Tempo", "Set Tempo", &OSCCommand::create, CommandContext::ACTION)->addParam("address", "/Tempo")->addParam("args", tempoArgs));
+	defManager->add(CommandDefinition::createDef(this, "Tempo", "Set Tempo", &OSCCommand::create)->addParam("address", "/Tempo")->addParam("args", tempoArgs));
 	defManager->add(CommandDefinition::createDef(this, "Tempo", "Tap Tempo", &OSCCommand::create, CommandContext::ACTION)->addParam("address", "/TapTempo")->addParam("args", intTriggerArgs)->addParam("hideArgs", true));
 
 	//PLAYERS

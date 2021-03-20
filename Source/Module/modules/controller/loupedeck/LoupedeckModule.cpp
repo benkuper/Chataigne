@@ -1,4 +1,3 @@
-#include "LoupedeckModule.h"
 /*
   ==============================================================================
 
@@ -30,6 +29,8 @@ LoupedeckModule::LoupedeckModule() :
 	screens.add({ 0x0052, 60, 270 }); //right
 	screens.add({ 0x0041, 360, 270 });//middle
 	//screens.add({0x0057,240, ,240, circular = true}); //wheel
+
+	autoRefresh = moduleParams.addBoolParameter("Auto Refresh Screen", "If checked, this will force a refresh on every change. This is useful to optimize refresh speed when changing multiple values at once", true);
 
 	brightness = moduleParams.addFloatParameter("Screen Brightness", "Backlight intensity", .5f, 0, 1);
 	knobSensitivity = moduleParams.addFloatParameter("Knob sensitivity", "Sensitivity for the relative computing of the knobs", .5f, 0, 1);
@@ -133,6 +134,8 @@ LoupedeckModule::LoupedeckModule() :
 	defManager->add(CommandDefinition::createDef(this, "Pad", "Set Color", &LoupedeckCommand::create)->addParam("action", LoupedeckCommand::SET_COLOR)->addParam("screenTarget", LoupedeckCommand::PADS));
 	defManager->add(CommandDefinition::createDef(this, "Pad", "Set Image", &LoupedeckCommand::create)->addParam("action", LoupedeckCommand::SET_IMAGE)->addParam("screenTarget", LoupedeckCommand::PADS));
 	defManager->add(CommandDefinition::createDef(this, "Pad", "Set Text", &LoupedeckCommand::create)->addParam("action", LoupedeckCommand::SET_TEXT)->addParam("screenTarget", LoupedeckCommand::PADS));
+	defManager->add(CommandDefinition::createDef(this, "Pad", "Set All Color", &LoupedeckCommand::create)->addParam("action", LoupedeckCommand::SET_ALL_COLOR));
+	defManager->add(CommandDefinition::createDef(this, "Pad", "Set All Text", &LoupedeckCommand::create)->addParam("action", LoupedeckCommand::SET_ALL_TEXT)->addParam("screenTarget", LoupedeckCommand::PADS));
 
 	defManager->add(CommandDefinition::createDef(this, "Slider Left", "Set Color", &LoupedeckCommand::create)->addParam("action", LoupedeckCommand::SET_COLOR)->addParam("screenTarget", LoupedeckCommand::LEFT_SLIDER));
 	defManager->add(CommandDefinition::createDef(this, "Slider Left", "Set Image", &LoupedeckCommand::create)->addParam("action", LoupedeckCommand::SET_IMAGE)->addParam("screenTarget", LoupedeckCommand::LEFT_SLIDER));
@@ -145,9 +148,9 @@ LoupedeckModule::LoupedeckModule() :
 	defManager->add(CommandDefinition::createDef(this, "Button", "Set Button Color", &LoupedeckCommand::create)->addParam("action", LoupedeckCommand::SET_COLOR)->addParam("screenTarget", LoupedeckCommand::BUTTONS));
 	defManager->add(CommandDefinition::createDef(this, "Button", "Set All Color", &LoupedeckCommand::create)->addParam("action", LoupedeckCommand::SET_ALL_COLOR)->addParam("screenTarget", LoupedeckCommand::BUTTONS));
 
-	defManager->add(CommandDefinition::createDef(this, "", "Set All Screen Color", &LoupedeckCommand::create)->addParam("action", LoupedeckCommand::SET_ALL_COLOR));
 	defManager->add(CommandDefinition::createDef(this, "", "Set Brightness", &LoupedeckCommand::create)->addParam("action", LoupedeckCommand::SET_BRIGHTNESS));
 	defManager->add(CommandDefinition::createDef(this, "", "Vibrate", &LoupedeckCommand::create)->addParam("action", LoupedeckCommand::VIBRATE));
+	defManager->add(CommandDefinition::createDef(this, "", "Set Auto Refresh", &LoupedeckCommand::create)->addParam("action", LoupedeckCommand::SET_AUTO_REFRESH));
 	defManager->add(CommandDefinition::createDef(this, "", "Refresh Screen", &LoupedeckCommand::create)->addParam("action", LoupedeckCommand::REFRESH_SCREEN));
 
 	moduleParams.addChildControllableContainer(&buttonParamsCC);
@@ -274,17 +277,19 @@ void LoupedeckModule::onControllableFeedbackUpdateInternal(ControllableContainer
 {
 	if (c == isConnected)
 	{
-		for (int i = 0; i < pads.size(); i++)
-		{
-			updatePadContent(i);
-			refreshScreen(2);
-		}
+		for (int i = 0; i < pads.size(); i++) updatePadContent(i, false);
+		refreshScreen(2);
+
 	}
 	else if (cc == &moduleParams)
 	{
 		if (c == brightness)
 		{
 			sendLoupedeckCommand(BacklightLevel, { (uint8)(brightness->floatValue() * 10) });
+		}
+		else if (c == autoRefresh)
+		{
+			if (autoRefresh->boolValue()) for (int i = 0; i < screens.size(); i++) refreshScreen(i);
 		}
 		else if (c->parentContainer == &buttonParamsCC)
 		{
@@ -303,7 +308,7 @@ void LoupedeckModule::onControllableFeedbackUpdateInternal(ControllableContainer
 			else if (FileParameter* fp = dynamic_cast<FileParameter*>(c)) id = padImages.indexOf(fp);
 			else if (StringParameter* tp = dynamic_cast<StringParameter*>(c)) id = padTexts.indexOf(tp);
 
-			if (id != -1) updatePadContent(id); //1-based
+			if (id != -1) updatePadContent(id, autoRefresh->boolValue()); //1-based
 		}
 		else if (c->parentContainer == &sliderParamsCC)
 		{
@@ -312,25 +317,22 @@ void LoupedeckModule::onControllableFeedbackUpdateInternal(ControllableContainer
 			else if (FileParameter* fp = dynamic_cast<FileParameter*>(c)) id = sliderImages.indexOf(fp);
 			else if (StringParameter* tp = dynamic_cast<StringParameter*>(c)) id = sliderTexts.indexOf(tp);
 
-			if (id != -1) updateSliderContent(id); //1-based
+			if (id != -1) updateSliderContent(id, autoRefresh->boolValue()); //1-based
 		}
 		else if (LoupedeckShape* s = dynamic_cast<LoupedeckShape*>(c->parentContainer.get()))
 		{
 			int sScreen = (int)s->screen->getValueData();
-			if (sScreen < 2) updateSliderContent(sScreen, true);
+			if (sScreen < 2) updateSliderContent(sScreen, autoRefresh->boolValue());
 			else
 			{
 				Rectangle<float> sBounds = s->getBounds().translated(60, 0);
 
 				for (int i = 0; i < pads.size(); i++)
 				{
-					if (getPadCoords(i).toFloat().intersects(sBounds))
-					{
-						updatePadContent(i);
-					}
+					if (getPadCoords(i).toFloat().intersects(sBounds)) updatePadContent(i, false);
 				}
 
-				refreshScreen(2);
+				if(autoRefresh->boolValue()) refreshScreen(2);
 			}
 		}
 	}
@@ -343,7 +345,7 @@ void LoupedeckModule::onControllableFeedbackUpdateInternal(ControllableContainer
 				int index = pads.indexOf(p);
 				if (index >= 0) {
 					if (vibrateOnTouch->boolValue() && p->boolValue()) vibrate(50);
-					if (highlightOnTouch->boolValue()) updatePadContent(index);
+					if (highlightOnTouch->boolValue()) updatePadContent(index, autoRefresh->boolValue());
 				}
 			}
 		}
@@ -354,11 +356,12 @@ void LoupedeckModule::onControllableFeedbackUpdateInternal(ControllableContainer
 				int index = sliderTouches.indexOf(p);
 				if (index >= 0) {
 					if (vibrateOnTouch->boolValue() && p->boolValue()) vibrate(50);
-					if (highlightOnTouch->boolValue()) updateSliderContent(index);
+					if (highlightOnTouch->boolValue()) updateSliderContent(index, autoRefresh->boolValue());
 				}
 			}
 		}
 	}
+
 }
 
 void LoupedeckModule::sendLoupedeckCommand(LDCommand command, Array<uint8> data)

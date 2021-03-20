@@ -34,9 +34,10 @@ public:
 	FloatParameter* time;
 	Automation* automation;
 	
-	enum Operator { EQUAL, INVERSE, ADD, SUBTRACT, MULTIPLY, DIVIDE, MAX, MIN };
+	enum Operator { EQUAL, INVERSE, ADD, SUBTRACT, MULTIPLY, DIVIDE, MAX, MIN, NEXT_ENUM, PREV_ENUM };
 	EnumParameter * valueOperator; 
 	Parameter * value;
+	var ghostOperator;
 	var ghostValueData;
 
 	void updateValueFromTarget();
@@ -46,6 +47,10 @@ public:
 	void triggerInternal(int multiplexIndex) override;
 
 	void linkUpdated(ParameterLink* pLink) override;
+
+
+	virtual void loadJSONDataInternal(var data) override;
+	virtual void loadGhostData(var data);
 
 	static BaseCommand * create(ControllableContainer * module, CommandContext context, var params, Multiplex * multiplex = nullptr);
 };

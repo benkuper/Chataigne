@@ -14,7 +14,7 @@ class LoupedeckCommand :
 	public BaseCommand
 {
 public:
-	enum LoupedeckAction { SET_COLOR, SET_IMAGE, SET_ALL_COLOR, SET_TEXT, SET_BRIGHTNESS, VIBRATE, REFRESH_SCREEN };
+	enum LoupedeckAction { SET_COLOR, SET_IMAGE, SET_ALL_COLOR, SET_TEXT, SET_ALL_TEXT, SET_BRIGHTNESS, VIBRATE, SET_AUTO_REFRESH, REFRESH_SCREEN };
 
 	LoupedeckCommand(LoupedeckModule* _module, CommandContext context, var params, Multiplex* multiplex = nullptr);
 	~LoupedeckCommand();
