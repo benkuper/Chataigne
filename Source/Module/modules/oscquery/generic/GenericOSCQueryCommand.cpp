@@ -222,7 +222,7 @@ void GenericOSCQueryCommand::onContainerParameterChanged(Parameter* p)
 		if (value != nullptr)
 		{
 			Operator o = valueOperator->getValueDataAsEnum<Operator>();
-			if (o != SET_VALUE) value->clearRange(); //to clean more
+			if (o != EQUAL) value->clearRange(); //to clean more
 			bool curHide = value->hideInEditor;
 			value->hideInEditor = o == INVERSE;
 			if (curHide != value->hideInEditor) queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, this));
