@@ -260,7 +260,7 @@ void LinkableParameterEditor::newMessage(const ParameterLink::ParameterLinkEvent
 {
     //linkBT->setToggleState(link->linkType != link->NONE, dontSendNotification);
 
-    if (e.type == e.LINK_UPDATED)
+    if (e.type == ParameterLink::ParameterLinkEvent::LINK_UPDATED || e.type == ParameterLink::ParameterLinkEvent::PREVIEW_UPDATED)
     {
         bool visible = link->linkType == link->NONE || !link->isMultiplexed();
         if (visible) addAndMakeVisible(paramEditor.get());

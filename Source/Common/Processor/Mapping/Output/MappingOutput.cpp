@@ -1,3 +1,4 @@
+#include "MappingOutput.h"
 /*
   ==============================================================================
 
@@ -9,13 +10,19 @@
 */
 
 MappingOutput::MappingOutput(Multiplex * multiplex) :
-	BaseCommandHandler("MappingOutput",CommandContext::MAPPING, nullptr, multiplex)
+	BaseCommandHandler("MappingOutput",CommandContext::MAPPING, nullptr, multiplex),
+	forceDisabled(false)
 {
 	isSelectable = false;
 }
 
 MappingOutput::~MappingOutput()
 {
+}
+
+void MappingOutput::setForceDisabled(bool value)
+{
+	forceDisabled = value;
 }
 
 void MappingOutput::setOutParams(Array<WeakReference<Parameter>> mOutParams, int multiplexIndex)
@@ -50,6 +57,6 @@ void MappingOutput::setCommand(CommandDefinition * cd)
 
 void MappingOutput::setValue(var value, int multiplexIndex)
 {
-	if (!enabled->boolValue()) return;
+	if (!enabled->boolValue() || forceDisabled) return;
 	if(command != nullptr) command->setValue(value, multiplexIndex);
 }

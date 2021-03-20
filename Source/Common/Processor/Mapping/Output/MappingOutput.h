@@ -19,7 +19,11 @@ public:
 	MappingOutput(Multiplex * multiplex = nullptr);
 	virtual ~MappingOutput();
 
+	bool forceDisabled;
+
 	Array<Array<WeakReference<Parameter>>> outParams;
+
+	void setForceDisabled(bool value);
 
 	virtual void setOutParams(Array<WeakReference<Parameter>> outParams, int multiplexIndex);
 	void updateCommandOutParams();

@@ -9,10 +9,12 @@
 */
 
 #include "Common/Command/ui/BaseCommandHandlerManagerEditor.h"
+#include "MappingOutputManager.h"
 
 MappingOutputManager::MappingOutputManager(Multiplex * multiplex) :
 	BaseManager<MappingOutput>("Outputs"),
 	MultiplexTarget(multiplex),
+	forceDisabled(false),
 	omAsyncNotifier(5)
 {
 	canBeCopiedAndPasted = true;
@@ -32,7 +34,15 @@ void MappingOutputManager::clear()
 
 MappingOutput* MappingOutputManager::createItem()
 {
-	return new MappingOutput(multiplex);
+	MappingOutput * o = new MappingOutput(multiplex);
+	o->setForceDisabled(forceDisabled);
+	return o;
+}
+
+void MappingOutputManager::setForceDisabled(bool value)
+{
+	forceDisabled = value;
+	for (auto& i : items) i->forceDisabled = value;
 }
 
 void MappingOutputManager::setOutParams(Array<Parameter *> params, int multiplexIndex)
@@ -57,8 +67,10 @@ void MappingOutputManager::updateOutputValues(int multiplexIndex, bool sendOnOut
 
 void MappingOutputManager::updateOutputValue(MappingOutput * o, int multiplexIndex)
 {
+	if (forceDisabled) return;
 	if (outParams.size() == 0) return;
 	if (o == nullptr) return;
+
 	o->setValue(getMergedOutValue(multiplexIndex), multiplexIndex);
 }
 

@@ -45,12 +45,15 @@ public:
 	void lockInputTo(Array<Parameter*> lockParam);
 	void checkFiltersNeedContinuousProcess();
 
-	void updateMappingChain(MappingFilter * afterThisFilter = nullptr); //will host warnings and type change checks
+	void updateMappingChain(MappingFilter * afterThisFilter = nullptr, bool processAfter = true); //will host warnings and type change checks
 	virtual void multiplexCountChanged() override;
 	virtual void multiplexPreviewIndexChanged() override;
 
 	void process(bool forceOutput = false, int multiplexIndex = 0);
 
+	void updateContinuousProcess();
+
+	void setForceDisabled(bool value, bool force = false) override;
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;

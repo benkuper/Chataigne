@@ -285,18 +285,12 @@ String ParameterLink::getReplacementString(int multiplexIndex)
 				{
 					replacementHasMappingInputToken = true;
 					int valueIndex = dotSplit[1].getIntValue() - 1; //1-based to be compliant with UI naming
-					if (mappingValues.size() > 0 && valueIndex < mappingValues[multiplexIndex].size()) result += mappingValues[multiplexIndex][valueIndex].toString();
-					else result += "0"; //default stuff..
+					if (mappingValues.size() > 0 && valueIndex >= 0 && valueIndex < mappingValues[multiplexIndex].size()) result += mappingValues[multiplexIndex][valueIndex].toString();
+					else result += "[bad index : " + String(valueIndex) + "]";
 				}
-				else
-				{
-					result += matchStr;
-				}
+				else result += matchStr;
 			}
-			else
-			{
-				result += matchStr;
-			}
+			else result += matchStr;
 		}
 
 		lastPos = (int)m.position() + matchStr.length();
@@ -341,8 +335,8 @@ var ParameterLink::getInputMappingValue(var value)
 
 void ParameterLink::notifyLinkUpdated()
 {
-	parameterLinkListeners.call(&ParameterLinkListener::linkUpdated, this);
-	paramLinkNotifier.addMessage(new ParameterLinkEvent(ParameterLinkEvent::LINK_UPDATED, this));
+	//parameterLinkListeners.call(&ParameterLinkListener::linkUpdated, this);
+	paramLinkNotifier.addMessage(new ParameterLinkEvent(ParameterLinkEvent::PREVIEW_UPDATED, this));
 }
 
 
@@ -473,6 +467,7 @@ ParameterLink* ParamLinkContainer::getLinkedParam(Parameter* p)
 
 var ParamLinkContainer::getLinkedValue(Parameter* p, int multiplexIndex)
 {
+	if (p == nullptr) return var();
 	if (!paramsCanBeLinked) return p->getValue();
 	if (ParameterLink* pLink = getLinkedParam(p)) return pLink->getLinkedValue(multiplexIndex);
 	return p->getValue();

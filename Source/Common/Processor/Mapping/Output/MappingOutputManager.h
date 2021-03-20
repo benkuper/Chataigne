@@ -19,12 +19,16 @@ public:
 	MappingOutputManager(Multiplex * multiplex = nullptr);
 	~MappingOutputManager();
 
+	bool forceDisabled;
+
 	Array<Array<WeakReference<Parameter>>> outParams;
 	var prevMergedValue;
 
 	void clear() override;
 
 	MappingOutput* createItem() override;
+
+	void setForceDisabled(bool value);
 
 	void setOutParams(Array<Parameter *> params, int multiplexIndex);
 

@@ -84,7 +84,7 @@ public:
     void addParameterLinkListener(ParameterLinkListener* newListener) { parameterLinkListeners.add(newListener); }
     void removeParameterLinkListener(ParameterLinkListener* listener) { parameterLinkListeners.remove(listener); }
 
-    DECLARE_ASYNC_EVENT(ParameterLink, ParameterLink, paramLink, ENUM_LIST(LINK_UPDATED, LIST_ITEM_UPDATED))
+    DECLARE_ASYNC_EVENT(ParameterLink, ParameterLink, paramLink, ENUM_LIST(LINK_UPDATED, PREVIEW_UPDATED, LIST_ITEM_UPDATED))
 };
 
 

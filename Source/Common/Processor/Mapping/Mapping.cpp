@@ -1,3 +1,4 @@
+#include "Mapping.h"
 /*
   ==============================================================================
 
@@ -102,7 +103,7 @@ void Mapping::checkFiltersNeedContinuousProcess()
 	updateRate->setEnabled(need);
 }
 
-void Mapping::updateMappingChain(MappingFilter * afterThisFilter)
+void Mapping::updateMappingChain(MappingFilter* afterThisFilter, bool processAfter)
 {
 	if (isCurrentlyLoadingData || isClearing) return;
 	if (isRebuilding) return;
@@ -159,8 +160,10 @@ void Mapping::updateMappingChain(MappingFilter * afterThisFilter)
 	}
 
 
-	process();
+	if(processAfter) process();
 }
+
+
 
 void Mapping::multiplexCountChanged()
 {
@@ -221,6 +224,25 @@ void Mapping::process(bool forceOutput, int multiplexIndex)
 
 }
 
+void Mapping::updateContinuousProcess()
+{
+	if ((!canBeDisabled || enabled->boolValue()) && !forceDisabled)
+	{
+		if (updateRate->enabled) startThread();
+		//for (int i = 0; i < getMultiplexCount(); i++) process(false, i);
+	}
+	else
+	{
+		stopThread(1000);
+	}
+}
+
+void Mapping::setForceDisabled(bool value, bool force)
+{
+	Processor::setForceDisabled(value, force);
+	updateContinuousProcess();
+}
+
 var Mapping::getJSONData()
 {
 	var data = Processor::getJSONData();
@@ -244,7 +266,8 @@ void Mapping::loadJSONDataInternal(var data)
 
 void Mapping::afterLoadJSONDataInternal()
 {
-	updateMappingChain();
+	updateMappingChain(nullptr, false);
+	updateContinuousProcess();
 }
 
 void Mapping::itemAdded(MappingInput* item)
@@ -294,17 +317,10 @@ void Mapping::inputParameterRangeChanged(MappingInput *)
 void Mapping::onContainerParameterChangedInternal(Parameter * p)
 {
 	Processor::onContainerParameterChangedInternal(p);
+
 	if (p == enabled)
 	{
-		if (enabled->boolValue() && !forceDisabled)
-		{
-			if (updateRate->enabled) startThread();
-			for (int i = 0; i < getMultiplexCount(); i++) process(false, i);
-		}
-		else
-		{
-			stopThread(1000);
-		}
+		updateContinuousProcess();
 	}
 }
 
@@ -342,6 +358,8 @@ void Mapping::clearItem()
 
 void Mapping::run()
 {
+	wait(50); //make sure direct calls have been done before running this (especially if it was loading)
+
 	uint32 millis;
 
 	while (!threadShouldExit())
