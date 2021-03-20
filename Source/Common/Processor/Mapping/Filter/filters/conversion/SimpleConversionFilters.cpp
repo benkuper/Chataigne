@@ -175,6 +175,9 @@ ToStringFilter::ToStringFilter(var params, Multiplex* multiplex) :
 	format = filterParams.addEnumParameter("Format", "The format of the string");
 	format->addOption("Number", NUMBER)->addOption("Time", TIME);
 	numDecimals = filterParams.addIntParameter("Number of Decimals", "Maximum number of decimals", 3, 0, 26);
+	fixedLeading = filterParams.addIntParameter("Fixed Leading", "If enabled, this will force the output to be with a certain mount of digits before the decimals", 3, 0, 100, false);
+	fixedLeading->canBeDisabledByUser = true;
+
 	prefix = filterParams.addStringParameter("Prefix", "Something prepended to the result", "");
 	suffix = filterParams.addStringParameter("Suffix", "Something appended  to the result", "");
 }
@@ -188,17 +191,34 @@ var ToStringFilter::convertValue(Parameter * source, var sourceValue)
 		if (sourceValue.isString()) result += sourceValue.toString();
 		else
 		{
-			Format f = format->getValueDataAsEnum<Format>();
-			switch (f)
+			if (sourceValue.isArray())
 			{
-			case NUMBER:
-				result += String((float)sourceValue, numDecimals->intValue());
-				break;
-
-			case TIME:
-				result += StringUtil::valueToTimeString((float)sourceValue);
-				break;
+				result = "[";
+				for (int i = 0; i < sourceValue.size(); i++) result += String(i >= 0 ? "," : "") + sourceValue[i].toString();
+				result += "]";
 			}
+			else if(sourceValue.isDouble() || sourceValue.isInt() || sourceValue.isInt64())
+			{
+				Format f = format->getValueDataAsEnum<Format>();
+				switch (f)
+				{
+				case NUMBER:
+					result += String((float)sourceValue, numDecimals->intValue());
+					if (fixedLeading->enabled)
+					{
+						StringArray s;
+						s.addTokens(result, ".", "");
+						String first = String::repeatedString("0", fixedLeading->intValue() - s[0].length()) + s[0];
+						result = first + (s.size() > 1 ? "." + s[1] : "");
+					}
+					break;
+
+				case TIME:
+					result += StringUtil::valueToTimeString((float)sourceValue);
+					break;
+				}
+			}
+			
 		}
 	}
 	

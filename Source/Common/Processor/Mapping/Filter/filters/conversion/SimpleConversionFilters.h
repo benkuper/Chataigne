@@ -87,7 +87,8 @@ public:
 
 	enum Format { NUMBER, TIME };
 	EnumParameter* format;
-	IntParameter * numDecimals;
+	IntParameter* numDecimals;
+	IntParameter * fixedLeading;
 	StringParameter* prefix;
 	StringParameter* suffix;
 	//IntParameter * numLeadingZeros;
