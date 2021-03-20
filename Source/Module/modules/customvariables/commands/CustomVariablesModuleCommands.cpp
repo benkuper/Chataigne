@@ -143,7 +143,7 @@ void CVCommand::updateValueFromTarget()
 
 void CVCommand::updateOperatorOptions()
 {
-	String oldData = ghostOperator.isVoid() ? valueOperator->getValueKey() : ghostOperator;
+	String oldData = ghostOperator.isVoid() ? valueOperator->getValueKey() : ghostOperator.toString();
 	
 	valueOperator->clearOptions();
 	valueOperator->addOption("Equals", EQUAL, false);

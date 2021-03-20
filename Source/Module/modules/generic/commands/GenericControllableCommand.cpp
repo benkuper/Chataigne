@@ -84,7 +84,7 @@ void GenericControllableCommand::setValueParameter(Parameter* p)
 
 void GenericControllableCommand::updateOperatorOptions()
 {
-	String oldData = ghostOperator.isVoid() ? valueOperator->getValueKey() : ghostOperator;
+	String oldData = ghostOperator.isVoid() ? valueOperator->getValueKey() : ghostOperator.toString();
 	valueOperator->clearOptions();
 	valueOperator->addOption("Equals", EQUAL, false);
 
