@@ -10,7 +10,7 @@
 
 #pragma once
 
-#if JUCE_WINDOWS
+#if JUCE_WINDOWS || JUCE_MAC
 #include "JoyShockLibrary.h"
 
 /*
@@ -30,7 +30,7 @@ public:
 	JoyConModule();
 	~JoyConModule();
 
-#if JUCE_WINDOWS
+#if JUCE_WINDOWS || JUCE_MAC
 	Array<int> controllers;
 #endif
 
@@ -88,7 +88,7 @@ public:
 	Vector3D<float> i_b_;
 	Vector3D<float> w_a, w_g;
 
-#if JUCE_WINDOWS
+#if JUCE_WINDOWS || JUCE_MAC
 	void updateController(int id);
     void onControllableFeedbackUpdateInternal(ControllableContainer *, Controllable *c) override;
 #endif

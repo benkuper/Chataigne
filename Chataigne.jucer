@@ -1596,8 +1596,8 @@
     <XCODE_MAC targetFolder="Builds/MacOSX" smallIcon="nVz6Li" bigIcon="nVz6Li"
                extraFrameworks="IOBluetooth, ForceFeedback, IOKit" extraCompilerFlags=""
                documentExtensions="noisette" customPList="&lt;plist&gt;&#10;&lt;dict&gt;&#10;&lt;key&gt;NSAppTransportSecurity&lt;/key&gt;&#10;&#9;&lt;dict&gt;&#10;&#9;&#9;&lt;key&gt;NSAllowsArbitraryLoads&lt;/key&gt;&#10;&#9;&#9;&lt;true/&gt;&#10;&#9;&lt;/dict&gt;&#10;&lt;/dict&gt;&#10;&lt;/plist&gt;"
-               externalLibraries="Servus&#10;hidapi&#10;SDL2&#10;iconv" microphonePermissionNeeded="1"
-               hardenedRuntimeOptions="com.apple.security.cs.allow-jit,com.apple.security.device.audio-input"
+               externalLibraries="Servus&#10;hidapi&#10;SDL2&#10;iconv&#10;JoyShockLibrary"
+               microphonePermissionNeeded="1" hardenedRuntimeOptions="com.apple.security.cs.allow-jit,com.apple.security.device.audio-input"
                extraDefs="JUCE_SUPPORT_CARBON=0" xcodeValidArchs="x86_64">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" isDebug="1" optimisation="1" targetName="Chataigne"
@@ -1724,7 +1724,7 @@
         <MODULEPATH id="juce_simpleweb" path="Modules"/>
       </MODULEPATHS>
     </VS2019>
-    <XCODE_MAC targetFolder="Builds/MacOSX_CI" externalLibraries="Servus&#10;hidapi&#10;SDL2&#10;iconv"
+    <XCODE_MAC targetFolder="Builds/MacOSX_CI" externalLibraries="Servus&#10;hidapi&#10;SDL2&#10;iconv&#10;JoyShockLibrary"
                smallIcon="nVz6Li" bigIcon="nVz6Li" hardenedRuntimeOptions="com.apple.security.cs.allow-jit"
                customPList="&lt;plist&gt;&#10;&lt;dict&gt;&#10;&lt;key&gt;NSAppTransportSecurity&lt;/key&gt;&#10;&#9;&lt;dict&gt;&#10;&#9;&#9;&lt;key&gt;NSAllowsArbitraryLoads&lt;/key&gt;&#10;&#9;&#9;&lt;true/&gt;&#10;&#9;&lt;/dict&gt;&#10;&lt;/dict&gt;&#10;&lt;/plist&gt;"
                microphonePermissionNeeded="1" extraFrameworks="IOBluetooth, ForceFeedback, IOKit"

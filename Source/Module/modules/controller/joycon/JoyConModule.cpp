@@ -70,7 +70,7 @@ JoyConModule::~JoyConModule()
 	stopThread(1000);
 }
 
-#if JUCE_WINDOWS
+#if JUCE_WINDOWS || JUCE_MAC
 
 void JoyConModule::updateController(int controller)
 {
@@ -145,7 +145,7 @@ void JoyConModule::onControllableFeedbackUpdateInternal(ControllableContainer * 
 
 void JoyConModule::run()
 {
-#if JUCE_WINDOWS
+#if JUCE_WINDOWS || JUCE_MAC
 
 	int numConnected = JslConnectDevices();
 	int connectedDevices[32];
