@@ -44,6 +44,7 @@ You can check the tutorials to better understand what and how you can use Chatai
     - Joycon
     - Sound card
     - StreamDeck
+    - Loupedeck
     - GPIO (Raspberry only)
     
   - Pre-configured modules for controlling softwares :
