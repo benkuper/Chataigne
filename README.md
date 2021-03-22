@@ -154,6 +154,8 @@ This list contains all the references to projects and libraries that Chataigne u
 - HIDAPI : https://github.com/signal11/hidapi
 - Microsoft Kinect SDK 2.0 : https://developer.microsoft.com/en-us/windows/kinect
 
+Thanks to Chris Hocking (https://github.com/latenitefilms) for his help and work on reverse engineering the Loupedeck
+
 ## Perhaps the most important
 
 I do this on my own free time, feel free to buy me a beer :)
