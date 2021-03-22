@@ -70,7 +70,7 @@ jobs:
           pass: ${{ secrets.UPLOADPASS }}
 
   osx:
-    if: false # tmp disable
+    #if: false # tmp disable
     name: OSX
     runs-on: macos-latest
 
@@ -127,7 +127,7 @@ jobs:
           pass: ${{ secrets.UPLOADPASS }}
           
   linux:
-    if: false # tmp disable
+    #if: false # tmp disable
 
     name: Linux
     runs-on: ubuntu-18.04
