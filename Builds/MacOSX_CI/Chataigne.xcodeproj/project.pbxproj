@@ -65,6 +65,7 @@
 		9162BCE79A7FD1E0C8EE0B42 /* ../../Source/Module/modules/controller/wiimote/lib/wiiuse/dynamics.c */ = {isa = PBXBuildFile; fileRef = C95C470933856CCB6E5E6CC4; };
 		92BE03372C8379806DD57A5E /* System/Library/Frameworks/ForceFeedback.framework */ = {isa = PBXBuildFile; fileRef = B2AE5AB8212F91ACEEB0E80E; };
 		93ECA58744F8B5DD181D35F4 /* ../../Source/Common/Command/ui/BaseCommandHandlerEditor.cpp */ = {isa = PBXBuildFile; fileRef = CDE9EF9B0E1277DC6C2D8577; };
+		971F1FB7CB12C74DE5E71C42 /* ../../JuceLibraryCode/include_juce_organicui2b.cpp */ = {isa = PBXBuildFile; fileRef = 36244C4F19953080AD5DF2B8; };
 		9A70BB0E51767661AD48D0AF /* ../../Source/Module/ModuleIncludes2.cpp */ = {isa = PBXBuildFile; fileRef = C8FA3E7EC300454C0F1480FA; };
 		9B5065AA8C19C8DF58253515 /* ../../Source/Common/ParameterLink/ui/LinkableParameterEditor.cpp */ = {isa = PBXBuildFile; fileRef = 24B8EBDE4FCE8C5E4A4A84F5; };
 		9E241D38C497513417EC38B7 /* ../../Source/Common/Command/CustomValues/CustomValuesCommandArgument.cpp */ = {isa = PBXBuildFile; fileRef = 2665551D6E0BDFF36D46306C; };
@@ -270,6 +271,7 @@
 		35509A411A3E24FE92D2FFAE /* ../../Source/Module/modules/tcp/tcpclient/watchout/commands/WatchoutCommand.cpp */ /* WatchoutCommand.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = WatchoutCommand.cpp; path = ../../Source/Module/modules/tcp/tcpclient/watchout/commands/WatchoutCommand.cpp; sourceTree = SOURCE_ROOT; };
 		35977A9DDCCE3222324C96F9 /* ../../Resources/Modules/Sound Card.png */ /* Sound Card.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Sound Card.png"; path = "../../Resources/Modules/Sound Card.png"; sourceTree = SOURCE_ROOT; };
 		360A95B17201CF4B7B98859D /* ../../Source/Common/Processor/Action/Condition/conditions/ConditionGroup/ConditionGroup.h */ /* ConditionGroup.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ConditionGroup.h; path = ../../Source/Common/Processor/Action/Condition/conditions/ConditionGroup/ConditionGroup.h; sourceTree = SOURCE_ROOT; };
+		36244C4F19953080AD5DF2B8 /* ../../JuceLibraryCode/include_juce_organicui2b.cpp */ /* include_juce_organicui2b.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = include_juce_organicui2b.cpp; path = ../../JuceLibraryCode/include_juce_organicui2b.cpp; sourceTree = SOURCE_ROOT; };
 		366AA3F45F51FF497A90AE85 /* ../../Source/Module/modules/osc/resolume/ResolumeModule.cpp */ /* ResolumeModule.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ResolumeModule.cpp; path = ../../Source/Module/modules/osc/resolume/ResolumeModule.cpp; sourceTree = SOURCE_ROOT; };
 		369FBB2DB0E0660EFDAED91F /* ../../Source/Common/Processor/Multiplex/List/MultiplexListManager.h */ /* MultiplexListManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MultiplexListManager.h; path = ../../Source/Common/Processor/Multiplex/List/MultiplexListManager.h; sourceTree = SOURCE_ROOT; };
 		3765782F2F46916420A76039 /* ../../Source/Common/Processor/ProcessorIncludes.h */ /* ProcessorIncludes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ProcessorIncludes.h; path = ../../Source/Common/Processor/ProcessorIncludes.h; sourceTree = SOURCE_ROOT; };
@@ -1280,6 +1282,7 @@
 				F4590876F89E291434F6B792,
 				066DA60AFB60B8BE77E819E7,
 				03B34F65CD67AA62113F23C3,
+				36244C4F19953080AD5DF2B8,
 				CD28AA5204CAAB7963FC2387,
 				23DDF3B6DEC463FC8B8F1644,
 				8AB58B2FA156DD075B892850,
@@ -3422,6 +3425,7 @@
 				2231890C46C454B84C7D5049,
 				2270C7A2C18C1C8F04F83D18,
 				212B67A3534DE8B8475EFD36,
+				971F1FB7CB12C74DE5E71C42,
 				A13C813B7B915C202AE05F52,
 				B6614E8CDCC9AE8C59BF4C65,
 				A2C0DA5E1710F15AA0E3F840,

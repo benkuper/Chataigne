@@ -3571,6 +3571,9 @@
     <ClCompile Include="..\..\Modules\juce_organicui\juce_organicui2.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\juce_organicui2b.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\juce_organicui3.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -3780,6 +3783,7 @@
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_opengl.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_organicui.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_organicui2.cpp"/>
+    <ClCompile Include="..\..\JuceLibraryCode\include_juce_organicui2b.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_organicui3.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_organicui4.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_osc.cpp"/>

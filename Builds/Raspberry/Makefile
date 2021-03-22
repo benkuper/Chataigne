@@ -146,6 +146,7 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/include_juce_opengl_a8a032b.o \
   $(JUCE_OBJDIR)/include_juce_organicui_2c36794d.o \
   $(JUCE_OBJDIR)/include_juce_organicui2_5ab8c64f.o \
+  $(JUCE_OBJDIR)/include_juce_organicui2b_ff2481bd.o \
   $(JUCE_OBJDIR)/include_juce_organicui3_5ac6ddd0.o \
   $(JUCE_OBJDIR)/include_juce_organicui4_5ad4f551.o \
   $(JUCE_OBJDIR)/include_juce_osc_f3df604d.o \
@@ -553,6 +554,11 @@ $(JUCE_OBJDIR)/include_juce_organicui_2c36794d.o: ../../JuceLibraryCode/include_
 $(JUCE_OBJDIR)/include_juce_organicui2_5ab8c64f.o: ../../JuceLibraryCode/include_juce_organicui2.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling include_juce_organicui2.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/include_juce_organicui2b_ff2481bd.o: ../../JuceLibraryCode/include_juce_organicui2b.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling include_juce_organicui2b.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/include_juce_organicui3_5ac6ddd0.o: ../../JuceLibraryCode/include_juce_organicui3.cpp
