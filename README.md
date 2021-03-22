@@ -147,7 +147,7 @@ This list contains all the references to projects and libraries that Chataigne u
 - Serial Library : https://github.com/wjwwood/serial
 - MIDI Timecode, from MStarPlayer : https://github.com/ServiusHack/MStarPlayer
 - Wiimote library Wiiuse : https://github.com/wiiuse/wiiuse
-- Joycon library : https://github.com/CTCaer/joytime-core
+- JoyShockLibrary : https://github.com/JibbSmart/JoyShockLibrary
 - Zeroconf library Servus : https://github.com/HBPVIS/Servus
 - Libartnet : https://github.com/OpenLightingProject/libartnet
 - Joystick Library SDL : https://www.libsdl.org/
