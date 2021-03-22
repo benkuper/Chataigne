@@ -149,7 +149,7 @@ void JoyConModule::run()
 
 	int numConnected = JslConnectDevices();
 	int connectedDevices[32];
-	int deviceHandles = JslGetConnectedDeviceHandles(connectedDevices, 32);
+	int deviceHandles = JslGetConnectedDeviceHandles(connectedDevices, numConnected);
 
 	controllers.clear();
 
